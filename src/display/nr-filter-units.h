@@ -15,6 +15,7 @@
 #include "sp-filter-units.h"
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-rect.h"
+#include "libnr/nr-rect-l.h"
 
 namespace NR {
 
@@ -83,6 +84,13 @@ public:
      * matrix
      */
     Matrix get_matrix_pb2display() const;
+
+    /**
+     * Returns the filter area in pixblock coordinates.
+     * NOTE: use only in filters, that define TRAIT_PARALLER in
+     * get_input_traits. The filter effects area may not be representable
+     * by simple rectangle otherwise. */
+    IRect get_pixblock_filterarea_paraller() const;
 
     FilterUnits& operator=(FilterUnits const &other);
 

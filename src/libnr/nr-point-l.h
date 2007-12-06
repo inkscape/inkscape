@@ -73,7 +73,15 @@ public:
         }
         return *this;
     }
-  
+
+    bool operator==(IPoint const &other) const {
+        return _pt[X] == other[X] && _pt[Y] == other[Y];
+    }
+
+    bool operator!=(IPoint const &other) const {
+        return _pt[X] != other[X] || _pt[Y] != other[Y];
+    }
+
 private:
     ICoord _pt[2];
 };

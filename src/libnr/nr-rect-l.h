@@ -19,7 +19,7 @@ class IRect {
 public:
     IRect(const NRRectL& r) : _min(r.x0, r.y0), _max(r.x1, r.y1) {}
     IRect(const IRect& r) : _min(r._min), _max(r._max) {}
-    IRect(const IPoint &p0, const IPoint &p1);
+    IRect(const IPoint &p0, const IPoint &p1) : _min(p0), _max(p1) {}
     
     /** as not all Rects are representable by IRects this gives the smallest IRect that contains
      * r. */
@@ -83,6 +83,14 @@ public:
 
     /** Returns the smallest rectangle that encloses both rectangles. */
     static IRect union_bounds(const IRect &a, const IRect &b);
+
+    bool operator==(const IRect &other) const {
+        return (min() == other.min()) && (max() == other.max());
+    }
+
+    bool operator!=(const IRect &other) const {
+        return (min() != other.min()) || (max() != other.max());
+    }
 
 private:
     IRect() {}

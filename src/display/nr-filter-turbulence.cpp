@@ -14,6 +14,7 @@
 #include "display/nr-filter-turbulence.h"
 #include "display/nr-filter-units.h"
 #include "display/nr-filter-utils.h"
+#include "libnr/nr-rect-l.h"
 #include <math.h>
 
 namespace NR {
@@ -24,6 +25,7 @@ FilterTurbulence::FilterTurbulence()
   numOctaves(1),
   seed(0),
   updated(false),
+  updated_area(IPoint(), IPoint()),
   pix(NULL),
   fTileWidth(10), //guessed
   fTileHeight(10), //guessed
@@ -37,7 +39,12 @@ FilterPrimitive * FilterTurbulence::create() {
 }
 
 FilterTurbulence::~FilterTurbulence()
-{}
+{
+    if (pix) {
+        nr_pixblock_release(pix);
+        delete pix;
+    }
+}
 
 void FilterTurbulence::set_baseFrequency(int axis, double freq){
     if (axis==0) XbaseFrequency=freq;
@@ -64,19 +71,28 @@ void FilterTurbulence::set_updated(bool u){
     updated=u;
 }
 
-void FilterTurbulence::update_pixbuffer(FilterSlot &slot) {
+void FilterTurbulence::update_pixbuffer(FilterSlot &slot, IRect &area) {
 //g_warning("update_pixbuf");
-    int bbox_x0 = (int) slot.get_arenaitem()->bbox.x0;
-    int bbox_y0 = (int) slot.get_arenaitem()->bbox.y0;
-    int bbox_x1 = (int) slot.get_arenaitem()->bbox.x1;
-    int bbox_y1 = (int) slot.get_arenaitem()->bbox.y1;
+    int bbox_x0 = area.min()[X];
+    int bbox_y0 = area.min()[Y];
+    int bbox_x1 = area.max()[X];
+    int bbox_y1 = area.max()[Y];
 
     int w = bbox_x1 - bbox_x0;
     int h = bbox_y1 - bbox_y0;
 
     if (!pix){
         pix = new NRPixBlock;
-        nr_pixblock_setup_fast(pix, NR_PIXBLOCK_MODE_R8G8B8A8P, bbox_x0, bbox_y0, bbox_x1, bbox_y1, true);
+        nr_pixblock_setup_fast(pix, NR_PIXBLOCK_MODE_R8G8B8A8N, bbox_x0, bbox_y0, bbox_x1, bbox_y1, true);
+        pix_data = NR_PIXBLOCK_PX(pix);
+    }
+    else if (bbox_x0 != pix->area.x0 || bbox_y0 != pix->area.y0 ||
+        bbox_x1 != pix->area.x1 || bbox_y1 != pix->area.y1)
+    {
+        /* TODO: release-setup cycle not actually needed, if pixblock
+         * width and height don't change */
+        nr_pixblock_release(pix);
+        nr_pixblock_setup_fast(pix, NR_PIXBLOCK_MODE_R8G8B8A8N, bbox_x0, bbox_y0, bbox_x1, bbox_y1, true);
         pix_data = NR_PIXBLOCK_PX(pix);
     }
 
@@ -104,11 +120,14 @@ void FilterTurbulence::update_pixbuffer(FilterSlot &slot) {
         }
     }
     updated=true;
+    updated_area = area;
 }
 
-int FilterTurbulence::render(FilterSlot &slot, FilterUnits const &/*units*/) {
+int FilterTurbulence::render(FilterSlot &slot, FilterUnits const &units) {
 //g_warning("render");
-    if (!updated) update_pixbuffer(slot);
+    IRect area = units.get_pixblock_filterarea_paraller();
+    // TODO: could be faster - updated_area only has to be same size as area
+    if (!updated || updated_area != area) update_pixbuffer(slot, area);
 
     NRPixBlock *in = slot.get(_input);
     NRPixBlock *out = new NRPixBlock;
@@ -116,16 +135,17 @@ int FilterTurbulence::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     int x0 = in->area.x0, y0 = in->area.y0;
     int x1 = in->area.x1, y1 = in->area.y1;
     int w = x1 - x0;
-    nr_pixblock_setup_fast(out, in->mode, x0, y0, x1, y1, true);
+    nr_pixblock_setup_fast(out, NR_PIXBLOCK_MODE_R8G8B8A8N, x0, y0, x1, y1, true);
 
-    int bbox_x0 = (int) slot.get_arenaitem()->bbox.x0;
-    int bbox_y0 = (int) slot.get_arenaitem()->bbox.y0;
-    int bbox_x1 = (int) slot.get_arenaitem()->bbox.x1;
+    int bbox_x0 = area.min()[X];
+    int bbox_y0 = area.min()[Y];
+    int bbox_x1 = area.max()[X];
+    int bbox_y1 = area.max()[Y];
     int bbox_w = bbox_x1 - bbox_x0;
 
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
-    for (x=x0; x < x1; x++){
-        for (y=y0; y < y1; y++){
+    for (x = std::max(x0, bbox_x0); x < std::min(x1, bbox_x1); x++){
+        for (y = std::max(y0, bbox_y0); y < std::min(y1, bbox_y1); y++){
             out_data[4*((x - x0)+w*(y - y0))] = pix_data[4*(x - bbox_x0 + bbox_w*(y - bbox_y0)) ];
             out_data[4*((x - x0)+w*(y - y0)) + 1] = pix_data[4*(x - bbox_x0 + bbox_w*(y - bbox_y0))+1];
             out_data[4*((x - x0)+w*(y - y0)) + 2] = pix_data[4*(x - bbox_x0 + bbox_w*(y - bbox_y0))+2];
@@ -154,7 +174,7 @@ long FilterTurbulence::TurbulenceRandom(long lSeed)
 
 void FilterTurbulence::TurbulenceInit(long lSeed)
 {
-g_warning("init");
+//g_warning("init");
   double s;
   int i, j, k;
   lSeed = Turbulence_setup_seed(lSeed);

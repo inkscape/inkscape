@@ -14,6 +14,7 @@
 #include "display/nr-filter-units.h"
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-rect.h"
+#include "libnr/nr-rect-l.h"
 #include "libnr/nr-scale.h"
 #include "sp-filter-units.h"
 
@@ -71,8 +72,8 @@ Matrix FilterUnits::get_matrix_user2pb() const {
         u2pb[1] = 0;
         u2pb[2] = 0;
         u2pb[3] = resolution_y / (filter_area.max()[Y] - filter_area.min()[Y]);
-        u2pb[4] = 0;
-        u2pb[5] = 0;
+        u2pb[4] = ctm[4];
+        u2pb[5] = ctm[5];
     }
 
     return u2pb;
@@ -124,6 +125,22 @@ Matrix FilterUnits::get_matrix_pb2display() const {
     Matrix pb2d = get_matrix_user2pb().inverse();
     pb2d *= ctm;
     return pb2d;
+}
+
+IRect FilterUnits::get_pixblock_filterarea_paraller() const {
+    int min_x = INT_MAX, min_y = INT_MAX, max_x = INT_MIN, max_y = INT_MIN;
+    Matrix u2pb = get_matrix_user2pb();
+
+    for (int i = 0 ; i < 4 ; i++) {
+        Point p = filter_area.corner(i);
+        p *= u2pb;
+        if (p[X] < min_x) min_x = (int)std::floor(p[X]);
+        if (p[X] > max_x) max_x = (int)std::ceil(p[X]);
+        if (p[Y] < min_y) min_y = (int)std::floor(p[Y]);
+        if (p[Y] > max_y) max_y = (int)std::ceil(p[Y]);
+    }
+    IRect ret(IPoint(min_x, min_y), IPoint(max_x, max_y));
+    return ret;
 }
 
 FilterUnits& FilterUnits::operator=(FilterUnits const &other) {

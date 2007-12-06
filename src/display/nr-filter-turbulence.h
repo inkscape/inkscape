@@ -16,6 +16,7 @@
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
+#include "libnr/nr-rect-l.h"
 
 namespace NR {
 
@@ -59,14 +60,14 @@ public:
     virtual ~FilterTurbulence();
 
     virtual int render(FilterSlot &slot, FilterUnits const &units);
-    virtual void update_pixbuffer(FilterSlot &slot);
+    void update_pixbuffer(FilterSlot &slot, IRect &area);
     
-    virtual void set_baseFrequency(int axis, double freq);
-    virtual void set_numOctaves(int num);
-    virtual void set_seed(double s);
-    virtual void set_stitchTiles(bool st);
-    virtual void set_type(FilterTurbulenceType t);
-    virtual void set_updated(bool u);
+    void set_baseFrequency(int axis, double freq);
+    void set_numOctaves(int num);
+    void set_seed(double s);
+    void set_stitchTiles(bool st);
+    void set_type(FilterTurbulenceType t);
+    void set_updated(bool u);
     virtual FilterTraits get_input_traits();
 private:
 
@@ -82,6 +83,7 @@ private:
     bool stitchTiles;
     FilterTurbulenceType type;
     bool updated;
+    IRect updated_area;
     NRPixBlock *pix;
     unsigned char *pix_data;
 
