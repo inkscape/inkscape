@@ -4355,16 +4355,7 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
 
     if (g_object_get_data (tbl, "size-block")) return;
 
-#if GTK_CHECK_VERSION(2,6,0)
     char *text = gtk_combo_box_get_active_text (cbox);
-#else // GTK_CHECK_VERSION(2,6,0)
-    GtkTreeModel *model = gtk_combo_box_get_model (cbox);
-    GtkTreeIter iter;
-    char *text = NULL;
-
-    if (gtk_combo_box_get_active_iter (cbox, &iter) && model)
-        gtk_tree_model_get (model, &iter, 0, &text, -1);
-#endif // GTK_CHECK_VERSION(2,6,0)
 
     SPCSSAttr *css = sp_repr_css_attr_new ();
     sp_repr_css_set_property (css, "font-size", text);
@@ -4531,9 +4522,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
 
     gtk_tree_view_set_model (GTK_TREE_VIEW (treeview), GTK_TREE_MODEL (Glib::unwrap(store)));
     gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
-#if GTK_CHECK_VERSION(2,6,0)
     gtk_tree_view_set_fixed_height_mode (GTK_TREE_VIEW (treeview), TRUE);
-#endif // GTK_CHECK_VERSION(2,6,0)
 
     //gtk_tree_view_set_enable_search (GTK_TREE_VIEW (treeview), TRUE);
 

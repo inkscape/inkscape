@@ -6,7 +6,7 @@
  * Authors:
  *   Chris Lahey <clahey@ximian.com>
  *   Lauris Kaplinski <lauris@kaplinski.com>
- *   bulia byak <buliabyak@users.sf.net> 
+ *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
  * Copyright (C) 1999-2001 Ximian, Inc.
@@ -48,16 +48,16 @@
 struct SPFontSelector
 {
     GtkHBox hbox;
-    
+
     unsigned int block_emit : 1;
-    
+
     GtkWidget *family;
     GtkWidget *style;
     GtkWidget *size;
 
     GtkWidget *family_treeview;
     GtkWidget *style_treeview;
-    
+
     NRNameList families;
     NRStyleList styles;
     int familyidx;
@@ -71,7 +71,7 @@ struct SPFontSelector
 struct SPFontSelectorClass
 {
     GtkHBoxClass parent_class;
-	
+
     void (* font_set) (SPFontSelector *fsel, font_instance *font);
 };
 
@@ -89,7 +89,7 @@ static void sp_font_selector_family_select_row  (GtkTreeSelection       *selecti
 
 static void sp_font_selector_style_select_row   (GtkTreeSelection       *selection,
                                                  SPFontSelector         *fsel);
- 
+
 static void sp_font_selector_size_changed       (GtkComboBox            *combobox,
                                                  SPFontSelector         *fsel);
 
@@ -97,10 +97,10 @@ static void sp_font_selector_emit_set           (SPFontSelector         *fsel);
 
 namespace {
     const char *sizes[] = {
-	"4", "6", "8", "9", "10", "11", "12", "13", "14",
-	"16", "18", "20", "22", "24", "28",
-	"32", "36", "40", "48", "56", "64", "72", "144",
-	NULL
+        "4", "6", "8", "9", "10", "11", "12", "13", "14",
+        "16", "18", "20", "22", "24", "28",
+        "32", "36", "40", "48", "56", "64", "72", "144",
+        NULL
     };
 }
 
@@ -127,9 +127,9 @@ GtkType sp_font_selector_get_type()
 static void sp_font_selector_class_init(SPFontSelectorClass *c)
 {
     GtkObjectClass *object_class = (GtkObjectClass *) c;
-  
+
     fs_parent_class = (GtkHBoxClass* )gtk_type_class(GTK_TYPE_HBOX);
-	
+
     fs_signals[FONT_SET] = gtk_signal_new ("font_set",
                                            GTK_RUN_FIRST,
                                            GTK_CLASS_TYPE(object_class),
@@ -137,26 +137,26 @@ static void sp_font_selector_class_init(SPFontSelectorClass *c)
                                            gtk_marshal_NONE__POINTER,
                                            GTK_TYPE_NONE,
                                            1, GTK_TYPE_POINTER);
-	
-	object_class->destroy = sp_font_selector_destroy;
+
+    object_class->destroy = sp_font_selector_destroy;
 }
 
 static void sp_font_selector_init(SPFontSelector *fsel)
 {
-	gtk_box_set_homogeneous(GTK_BOX(fsel), TRUE);
-	gtk_box_set_spacing(GTK_BOX(fsel), 4);
-	
-	/* Family frame */
-	GtkWidget *f = gtk_frame_new(_("Font family"));
-	gtk_widget_show (f);
-	gtk_box_pack_start (GTK_BOX(fsel), f, TRUE, TRUE, 0);
-	
-	GtkWidget *sw = gtk_scrolled_window_new(NULL, NULL);
-	gtk_widget_show(sw);
-	gtk_container_set_border_width(GTK_CONTAINER (sw), 4);
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(sw), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+        gtk_box_set_homogeneous(GTK_BOX(fsel), TRUE);
+        gtk_box_set_spacing(GTK_BOX(fsel), 4);
+
+        /* Family frame */
+        GtkWidget *f = gtk_frame_new(_("Font family"));
+        gtk_widget_show (f);
+        gtk_box_pack_start (GTK_BOX(fsel), f, TRUE, TRUE, 0);
+
+        GtkWidget *sw = gtk_scrolled_window_new(NULL, NULL);
+        gtk_widget_show(sw);
+        gtk_container_set_border_width(GTK_CONTAINER (sw), 4);
+        gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(sw), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
-	gtk_container_add(GTK_CONTAINER(f), sw);
+        gtk_container_add(GTK_CONTAINER(f), sw);
 
         Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
 
@@ -169,30 +169,30 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(fsel->family_treeview), FALSE);
         Glib::RefPtr<Gtk::ListStore> store = fontlister->get_font_list();
         gtk_tree_view_set_model (GTK_TREE_VIEW(fsel->family_treeview), GTK_TREE_MODEL (Glib::unwrap (store)));
-	gtk_container_add(GTK_CONTAINER(sw), fsel->family_treeview);
+        gtk_container_add(GTK_CONTAINER(sw), fsel->family_treeview);
         gtk_widget_show_all (sw);
 
         GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(fsel->family_treeview));
         g_signal_connect (G_OBJECT(selection), "changed", G_CALLBACK (sp_font_selector_family_select_row), fsel);
         g_object_set_data (G_OBJECT(fsel), "family-treeview", fsel->family_treeview);
-        
-	
-	/* Style frame */
-	f = gtk_frame_new(_("Style"));
-	gtk_widget_show(f);
-	gtk_box_pack_start(GTK_BOX (fsel), f, TRUE, TRUE, 0);
-	
-	GtkWidget *vb = gtk_vbox_new(FALSE, 4);
-	gtk_widget_show(vb);
-	gtk_container_set_border_width(GTK_CONTAINER (vb), 4);
-	gtk_container_add(GTK_CONTAINER(f), vb);
-	
-	sw = gtk_scrolled_window_new(NULL, NULL);
-	gtk_widget_show(sw);
-	gtk_container_set_border_width(GTK_CONTAINER (sw), 4);
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW (sw), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+
+
+        /* Style frame */
+        f = gtk_frame_new(_("Style"));
+        gtk_widget_show(f);
+        gtk_box_pack_start(GTK_BOX (fsel), f, TRUE, TRUE, 0);
+
+        GtkWidget *vb = gtk_vbox_new(FALSE, 4);
+        gtk_widget_show(vb);
+        gtk_container_set_border_width(GTK_CONTAINER (vb), 4);
+        gtk_container_add(GTK_CONTAINER(f), vb);
+
+        sw = gtk_scrolled_window_new(NULL, NULL);
+        gtk_widget_show(sw);
+        gtk_container_set_border_width(GTK_CONTAINER (sw), 4);
+        gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW (sw), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
-	gtk_box_pack_start(GTK_BOX (vb), sw, TRUE, TRUE, 0);
+        gtk_box_pack_start(GTK_BOX (vb), sw, TRUE, TRUE, 0);
 
         fsel->style_treeview = gtk_tree_view_new ();
         column = gtk_tree_view_column_new ();
@@ -201,58 +201,58 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_tree_view_column_set_attributes (column, cell, "text", 0, NULL);
         gtk_tree_view_append_column (GTK_TREE_VIEW(fsel->style_treeview), column);
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(fsel->style_treeview), FALSE);
-	gtk_container_add(GTK_CONTAINER(sw), fsel->style_treeview);
+        gtk_container_add(GTK_CONTAINER(sw), fsel->style_treeview);
         gtk_widget_show_all (sw);
 
         selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(fsel->style_treeview));
         g_signal_connect (G_OBJECT(selection), "changed", G_CALLBACK (sp_font_selector_style_select_row), fsel);
 
-	GtkWidget *hb = gtk_hbox_new(FALSE, 4);
-	gtk_widget_show(hb);
-	gtk_box_pack_start(GTK_BOX(vb), hb, FALSE, FALSE, 0);
-	
-	fsel->size = gtk_combo_box_entry_new_text ();
-	gtk_widget_set_size_request(fsel->size, 90, -1);
-	g_signal_connect (G_OBJECT(fsel->size), "changed", G_CALLBACK (sp_font_selector_size_changed), fsel);
-	gtk_box_pack_end (GTK_BOX(hb), fsel->size, FALSE, FALSE, 0);
-	
-	GtkWidget *l = gtk_label_new(_("Font size:"));
-	gtk_widget_show_all (l);
-	gtk_box_pack_end(GTK_BOX (hb), l, FALSE, FALSE, 0);
-	
+        GtkWidget *hb = gtk_hbox_new(FALSE, 4);
+        gtk_widget_show(hb);
+        gtk_box_pack_start(GTK_BOX(vb), hb, FALSE, FALSE, 0);
+
+        fsel->size = gtk_combo_box_entry_new_text ();
+        gtk_widget_set_size_request(fsel->size, 90, -1);
+        g_signal_connect (G_OBJECT(fsel->size), "changed", G_CALLBACK (sp_font_selector_size_changed), fsel);
+        gtk_box_pack_end (GTK_BOX(hb), fsel->size, FALSE, FALSE, 0);
+
+        GtkWidget *l = gtk_label_new(_("Font size:"));
+        gtk_widget_show_all (l);
+        gtk_box_pack_end(GTK_BOX (hb), l, FALSE, FALSE, 0);
+
         for (unsigned int n = 0; sizes[n]; ++n)
             {
                 gtk_combo_box_append_text (GTK_COMBO_BOX(fsel->size), sizes[n]);
             }
 
-	gtk_widget_show_all (fsel->size);
-	
-	fsel->familyidx = 0;
-	fsel->styleidx = 0;
-	fsel->fontsize = 10.0;
-	fsel->fontsize_dirty = false;
-	fsel->font = NULL;
+        gtk_widget_show_all (fsel->size);
+
+        fsel->familyidx = 0;
+        fsel->styleidx = 0;
+        fsel->fontsize = 10.0;
+        fsel->fontsize_dirty = false;
+        fsel->font = NULL;
 }
 
 static void sp_font_selector_destroy(GtkObject *object)
 {
     SPFontSelector *fsel = SP_FONT_SELECTOR (object);
-    
+
     if (fsel->font) {
         fsel->font->Unref();
         fsel->font = NULL;
     }
-    
+
     if (fsel->families.length > 0) {
         nr_name_list_release(&fsel->families);
         fsel->families.length = 0;
     }
-    
+
     if (fsel->styles.length > 0) {
         nr_style_list_release(&fsel->styles);
         fsel->styles.length = 0;
     }
-    
+
     if (GTK_OBJECT_CLASS(fs_parent_class)->destroy) {
         GTK_OBJECT_CLASS(fs_parent_class)->destroy(object);
     }
@@ -276,7 +276,7 @@ static void sp_font_selector_family_select_row(GtkTreeSelection *selection,
 
     store = gtk_list_store_new (1, G_TYPE_STRING);
 
-    for ( ; list ; list = list->next ) 
+    for ( ; list ; list = list->next )
     {
         gtk_list_store_append (store, &iter);
         gtk_list_store_set (store, &iter, 0, (char*)list->data, -1);
@@ -292,7 +292,7 @@ static void sp_font_selector_family_select_row(GtkTreeSelection *selection,
 static void sp_font_selector_style_select_row (GtkTreeSelection *selection,
                                                SPFontSelector   *fsel)
 {
-    GtkTreeModel *model; 
+    GtkTreeModel *model;
     GtkTreePath  *path;
     GtkTreeIter   iter;
 
@@ -307,25 +307,16 @@ static void sp_font_selector_style_select_row (GtkTreeSelection *selection,
     }
 }
 
-static void sp_font_selector_size_changed (GtkComboBox *cbox, SPFontSelector *fsel)
+static void sp_font_selector_size_changed( GtkComboBox */*cbox*/, SPFontSelector *fsel )
 {
-#if GTK_CHECK_VERSION(2,6,0)
     char *sstr = gtk_combo_box_get_active_text (GTK_COMBO_BOX (fsel->size));
-#else // GTK_CHECK_VERSION(2,6,0)
-    GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (fsel->size));
-    GtkTreeIter iter;
-    char *sstr = NULL;
-
-    if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (fsel->size), &iter) && model)
-        gtk_tree_model_get (model, &iter, 0, &sstr, -1);
-#endif // GTK_CHECK_VERSION(2,6,0)
     gfloat old_size = fsel->fontsize;
     fsel->fontsize = MAX(atof(sstr), 0.1);
     if ( fabs(fsel->fontsize-old_size) > 0.001)
     {
         fsel->fontsize_dirty = true;
     }
-	
+
     sp_font_selector_emit_set (fsel);
 
     free (sstr);
@@ -334,7 +325,7 @@ static void sp_font_selector_size_changed (GtkComboBox *cbox, SPFontSelector *fs
 static void sp_font_selector_emit_set (SPFontSelector *fsel)
 {
     font_instance *font;
-   
+
     GtkTreeSelection *selection_family;
     GtkTreeSelection *selection_style;
     GtkTreeModel     *model_family;
@@ -363,7 +354,7 @@ static void sp_font_selector_emit_set (SPFontSelector *fsel)
     if ((!family) || (!style)) return;
 
     font = (font_factory::Default())->FaceFromDescr (family, style);
-    
+
     // FIXME: when a text object uses non-available font, font==NULL and we can't set size
     // (and the size shown in the widget is invalid). To fix, here we must always get some
     // default font, exactly the same as sptext uses for on-canvas display, so that
@@ -388,7 +379,7 @@ static void sp_font_selector_emit_set (SPFontSelector *fsel)
 GtkWidget *sp_font_selector_new()
 {
     SPFontSelector *fsel = (SPFontSelector*) gtk_type_new(SP_TYPE_FONT_SELECTOR);
-  
+
     return (GtkWidget *) fsel;
 }
 
@@ -398,7 +389,7 @@ void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, doubl
     {
             gchar family[256];
             font->Family (family, 256);
-            
+
             Gtk::TreePath path;
 
             try {
@@ -429,8 +420,8 @@ void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, doubl
 
             unsigned int i = 0;
             unsigned int best_i = 0;
-            
-            // try to find best match with style description (i.e. bold, italic ?)                         
+
+            // try to find best match with style description (i.e. bold, italic ?)
             for (list = list->next ; list ; list = list->next)
             {
                 i++;
@@ -453,7 +444,7 @@ void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, doubl
             gtk_tree_path_append_index (path_c, best_i);
             gtk_tree_selection_select_path (gtk_tree_view_get_selection (GTK_TREE_VIEW (fsel->style_treeview)), path_c);
             gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (fsel->style_treeview), path_c, NULL, TRUE, 0.5, 0.5);
-        
+
             if (size != fsel->fontsize)
             {
                 gchar s[8];
@@ -469,7 +460,7 @@ font_instance* sp_font_selector_get_font(SPFontSelector *fsel)
     if (fsel->font) {
         fsel->font->Ref();
     }
-    
+
     return fsel->font;
 }
 
@@ -483,7 +474,7 @@ double sp_font_selector_get_size(SPFontSelector *fsel)
 struct SPFontPreview
 {
     GtkDrawingArea darea;
-    
+
     font_instance *font;
     raster_font *rfont;
     gchar *phrase;
@@ -525,11 +516,11 @@ static void sp_font_preview_class_init (SPFontPreviewClass *c)
 {
     GtkObjectClass *object_class = (GtkObjectClass *) c;
     GtkWidgetClass *widget_class = (GtkWidgetClass *) c;
-    
+
     fp_parent_class = (GtkDrawingAreaClass*) gtk_type_class(GTK_TYPE_DRAWING_AREA);
-    
+
     object_class->destroy = sp_font_preview_destroy;
-	
+
     widget_class->size_request = sp_font_preview_size_request;
     widget_class->expose_event = sp_font_preview_expose;
 }
@@ -542,26 +533,26 @@ static void sp_font_preview_init(SPFontPreview *fprev)
 static void sp_font_preview_destroy(GtkObject *object)
 {
     SPFontPreview *fprev = SP_FONT_PREVIEW (object);
-	
+
     if (fprev->rfont) {
         fprev->rfont->Unref();
         fprev->rfont = NULL;
     }
-	
+
     if (fprev->font) {
         fprev->font->Unref();
         fprev->font = NULL;
     }
-	
+
     g_free(fprev->phrase);
     fprev->phrase = NULL;
-	
+
     if (GTK_OBJECT_CLASS (fp_parent_class)->destroy) {
         GTK_OBJECT_CLASS (fp_parent_class)->destroy(object);
     }
 }
 
-void sp_font_preview_size_request(GtkWidget *widget, GtkRequisition *req)
+void sp_font_preview_size_request(GtkWidget */*widget*/, GtkRequisition *req)
 {
     req->width = 256;
     req->height = 32;
@@ -572,17 +563,17 @@ void sp_font_preview_size_request(GtkWidget *widget, GtkRequisition *req)
 static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
 {
     SPFontPreview *fprev = SP_FONT_PREVIEW(widget);
-	
+
     if (GTK_WIDGET_DRAWABLE (widget)) {
         if (fprev->rfont) {
-            
+
             int glyphs[SPFP_MAX_LEN];
             double hpos[SPFP_MAX_LEN];
-            
+
             font_instance *tface = fprev->rfont->daddy;
-            
+
             double theSize = NR_MATRIX_DF_EXPANSION (&fprev->rfont->style.transform);
-            
+
             gchar const *p;
             if (fprev->phrase) {
                 p = fprev->phrase;
@@ -591,13 +582,13 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
                  * text has been entered) to get a preview of the font.  Choose
                  * some representative characters that users of your locale will be
                  * interested in. */
-		p = _("AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()");
+                p = _("AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()");
             }
             int len = 0;
-            
+
             NRRect bbox;
             bbox.x0 = bbox.y0 = bbox.x1 = bbox.y1 = 0.0;
-            
+
             text_wrapper* str_text=new text_wrapper;
             str_text->SetDefaultFont(tface);
             str_text->AppendUTF8(p,-1);
@@ -621,7 +612,7 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
                         }
                         NR::Point base_pt(str_text->glyph_text[i].x, str_text->glyph_text[i].y);
                         base_pt *= theSize;
-						
+
                         glyphs[len] = str_text->glyph_text[i].gl;
                         hpos[len] = base_pt[0];
                         len++;
@@ -640,10 +631,10 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
                     }
                 }
             }
-            
+
             // XXX: FIXME: why does this code ignore adv.y
-            /*			while (p && *p && (len < SPFP_MAX_LEN)) {
-				unsigned int unival;
+            /*                  while (p && *p && (len < SPFP_MAX_LEN)) {
+                                unsigned int unival;
                                 NRRect gbox;
                                 unival = g_utf8_get_char (p);
                                 glyphs[len] =  tface->MapUnicodeChar( unival);
@@ -658,10 +649,10 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
                                 len += 1;
                                 p = g_utf8_next_char (p);
                                 }*/
-            
+
             float startx = (widget->allocation.width - (bbox.x1 - bbox.x0)) / 2;
             float starty = widget->allocation.height - (widget->allocation.height - (bbox.y1 - bbox.y0)) / 2 - bbox.y1;
-			
+
             for (int y = event->area.y; y < event->area.y + event->area.height; y += 64) {
                 for (int x = event->area.x; x < event->area.x + event->area.width; x += 64) {
                     NRPixBlock pb, m;
@@ -673,7 +664,7 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
                     nr_pixblock_setup_extern(&pb, NR_PIXBLOCK_MODE_R8G8B8, x0, y0, x1, y1, ps, 3 * (x1 - x0), FALSE, FALSE);
                     nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, x0, y0, x1, y1, TRUE);
                     pb.empty = FALSE;
-                    
+
                     PangoFont *curPF = NULL;
                     font_instance *curF = NULL;
                     raster_font *curRF = NULL;
@@ -708,7 +699,7 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
                     if (curF) {
                         curF->Unref();
                     }
-                    
+
                     nr_blit_pixblock_mask_rgba32(&pb, &m, fprev->rgba);
                     gdk_draw_rgb_image(widget->window, widget->style->black_gc,
                                        x0, y0, x1 - x0, y1 - y0,
@@ -718,23 +709,23 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
                     nr_pixelstore_16K_free(ps);
                 }
             }
-            
+
             delete str_text;
-            
+
         } else {
             nr_gdk_draw_gray_garbage(widget->window, widget->style->black_gc,
                                      event->area.x, event->area.y,
                                      event->area.width, event->area.height);
         }
     }
-    
+
     return TRUE;
 }
 
 GtkWidget * sp_font_preview_new()
 {
     GtkWidget *w = (GtkWidget*) gtk_type_new(SP_TYPE_FONT_PREVIEW);
-    
+
     return w;
 }
 
@@ -751,7 +742,7 @@ void sp_font_preview_set_font(SPFontPreview *fprev, font_instance *font, SPFontS
         }
 
         fprev->font = font;
-	
+
         if (fprev->rfont)
         {
             fprev->rfont->Unref();
