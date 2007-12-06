@@ -14,8 +14,8 @@
   */
 
  /*
-  * TODO:  LOTS LOTS LOTS. Clean up code. dirty as hell
-  * THIS FILE AND THE HEADER FILE NEED HUGE CLEANING UP. PLEASE DO NOT HESISTATE TO DO SO.
+  * TODO:
+  * THIS FILE AND THE HEADER FILE NEED CLEANING UP. PLEASE DO NOT HESISTATE TO DO SO.
   * For example: the line drawing code should not be here. There _must_ be a function somewhere else that can provide this functionality...
   */
 
