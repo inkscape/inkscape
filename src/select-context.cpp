@@ -805,7 +805,9 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     break;
                 case GDK_bracketleft:
                     if (MOD__ALT) {
-                        sp_selection_rotate_screen(selection, 1);
+                        gint mul = 1 + gobble_key_events(
+                            get_group0_keyval(&event->key), 0); // with any mask
+                        sp_selection_rotate_screen(selection, mul*1);
                     } else if (MOD__CTRL) {
                         sp_selection_rotate(selection, 90);
                     } else if (snaps) {
@@ -815,7 +817,9 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     break;
                 case GDK_bracketright:
                     if (MOD__ALT) {
-                        sp_selection_rotate_screen(selection, -1);
+                        gint mul = 1 + gobble_key_events(
+                            get_group0_keyval(&event->key), 0); // with any mask
+                        sp_selection_rotate_screen(selection, -1*mul);
                     } else if (MOD__CTRL) {
                         sp_selection_rotate(selection, -90);
                     } else if (snaps) {
@@ -826,22 +830,30 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_less:
                 case GDK_comma:
                     if (MOD__ALT) {
-                        sp_selection_scale_screen(selection, -2);
+                        gint mul = 1 + gobble_key_events(
+                            get_group0_keyval(&event->key), 0); // with any mask
+                        sp_selection_scale_screen(selection, -2*mul);
                     } else if (MOD__CTRL) {
                         sp_selection_scale_times(selection, 0.5);
                     } else {
-                        sp_selection_scale(selection, -offset);
+                        gint mul = 1 + gobble_key_events(
+                            get_group0_keyval(&event->key), 0); // with any mask
+                        sp_selection_scale(selection, -offset*mul);
                     }
                     ret = TRUE;
                     break;
                 case GDK_greater:
                 case GDK_period:
                     if (MOD__ALT) {
-                        sp_selection_scale_screen(selection, 2);
+                        gint mul = 1 + gobble_key_events(
+                            get_group0_keyval(&event->key), 0); // with any mask
+                        sp_selection_scale_screen(selection, 2*mul);
                     } else if (MOD__CTRL) {
                         sp_selection_scale_times(selection, 2);
                     } else {
-                        sp_selection_scale(selection, offset);
+                        gint mul = 1 + gobble_key_events(
+                            get_group0_keyval(&event->key), 0); // with any mask
+                        sp_selection_scale(selection, offset*mul);
                     }
                     ret = TRUE;
                     break;
