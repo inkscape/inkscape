@@ -848,8 +848,7 @@ static void toggle_show_handles (GtkToggleAction *act, gpointer /*data*/) {
     if (shape_editor) shape_editor->show_handles(show);
 }
 
-void
-sp_node_path_edit_nextLPEparam (GtkAction *act, gpointer data) {
+void sp_node_path_edit_nextLPEparam (GtkAction */*act*/, gpointer data) {
     sp_selection_next_patheffect_param( reinterpret_cast<SPDesktop*>(data) );
 }
 
