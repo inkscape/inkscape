@@ -107,7 +107,7 @@ FillAndStroke::FillAndStroke()
     g_signal_connect ( G_OBJECT (INKSCAPE), "modify_selection", G_CALLBACK (on_selection_modified), this );
     g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (on_selection_changed), this );
 
-    selectionChanged(INKSCAPE, sp_desktop_selection(SP_ACTIVE_DESKTOP));
+    selectionChanged(INKSCAPE, sp_desktop_selection(getDesktop()));
 
     show_all_children();
 }
@@ -167,7 +167,7 @@ FillAndStroke::_blendBlurValueChanged()
     _blocked = true;
 
     //get desktop
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPDesktop *desktop = getDesktop();
     if (!desktop) {
         return;
     }
@@ -217,7 +217,7 @@ FillAndStroke::_blendBlurValueChanged()
         }
     }
 
-    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "fillstroke:blur", SP_VERB_DIALOG_FILL_STROKE,  _("Change blur"));
+    sp_document_maybe_done (sp_desktop_document (desktop), "fillstroke:blur", SP_VERB_DIALOG_FILL_STROKE,  _("Change blur"));
 
     // resume interruptibility
     sp_canvas_end_forced_full_redraws(sp_desktop_canvas(desktop));
@@ -232,10 +232,12 @@ FillAndStroke::_opacityValueChanged()
         return;
     _blocked = true;
 
+    SPDesktop *desktop = getDesktop();
+
     // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in crash 1580903
     // UPDATE: crash fixed in GTK+ 2.10.7 (bug 374378), remove this as soon as it's reasonably common
     // (though this only fixes the crash, not the multiple change events)
-    sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(SP_ACTIVE_DESKTOP), 0);
+    sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(desktop), 0);
 
     SPCSSAttr *css = sp_repr_css_attr_new ();
 
@@ -243,15 +245,15 @@ FillAndStroke::_opacityValueChanged()
     os << CLAMP (_opacity_adjustment.get_value() / 100, 0.0, 1.0);
     sp_repr_css_set_property (css, "opacity", os.str().c_str());
 
-    sp_desktop_set_style (SP_ACTIVE_DESKTOP, css);
+    sp_desktop_set_style (desktop, css);
 
     sp_repr_css_attr_unref (css);
 
-    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "fillstroke:opacity", SP_VERB_DIALOG_FILL_STROKE,
+    sp_document_maybe_done (sp_desktop_document (desktop), "fillstroke:opacity", SP_VERB_DIALOG_FILL_STROKE,
                             _("Change opacity"));
 
     // resume interruptibility
-    sp_canvas_end_forced_full_redraws(sp_desktop_canvas(SP_ACTIVE_DESKTOP));
+    sp_canvas_end_forced_full_redraws(sp_desktop_canvas(desktop));
 
     _blocked = false;
 }
@@ -264,10 +266,12 @@ FillAndStroke::selectionChanged(Inkscape::Application */*inkscape*/,
         return;
     _blocked = true;
 
+    SPDesktop *desktop = getDesktop();
+
     // create temporary style
-    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
+    SPStyle *query = sp_style_new (sp_desktop_document(desktop));
     // query style from desktop into it. This returns a result flag and fills query with the style of subselection, if any, or selection
-    int result = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
+    int result = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
 
     switch (result) {
         case QUERY_STYLE_NOTHING:
@@ -283,7 +287,7 @@ FillAndStroke::selectionChanged(Inkscape::Application */*inkscape*/,
     }
 
     //query now for current filter mode and average blurring of selection
-    const int blend_result = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_BLEND);
+    const int blend_result = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_BLEND);
     switch(blend_result) {
         case QUERY_STYLE_NOTHING:
             _fe_cb.set_sensitive(false);
@@ -300,7 +304,7 @@ FillAndStroke::selectionChanged(Inkscape::Application */*inkscape*/,
     }
 
     if(blend_result == QUERY_STYLE_SINGLE || blend_result == QUERY_STYLE_MULTIPLE_SAME) {
-        int blur_result = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_BLUR);
+        int blur_result = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_BLUR);
         switch (blur_result) {
             case QUERY_STYLE_NOTHING: //no blurring
                 _fe_cb.set_blur_sensitive(false);
@@ -308,7 +312,7 @@ FillAndStroke::selectionChanged(Inkscape::Application */*inkscape*/,
             case QUERY_STYLE_SINGLE:
             case QUERY_STYLE_MULTIPLE_AVERAGED:
             case QUERY_STYLE_MULTIPLE_SAME:
-                NR::Maybe<NR::Rect> bbox = sp_desktop_selection(SP_ACTIVE_DESKTOP)->bounds();
+                NR::Maybe<NR::Rect> bbox = sp_desktop_selection(desktop)->bounds();
                 if (bbox) {
                     double perimeter = bbox->extent(NR::X) + bbox->extent(NR::Y);
                     _fe_cb.set_blur_sensitive(true);

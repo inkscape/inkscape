@@ -44,11 +44,14 @@ public:
     static DocumentMetadata &getInstance();
 
     static void destroy();
-    sigc::connection _doc_replaced_connection;
 
 protected:
     void  build_metadata();
     void  init();
+
+    void _handleDocumentReplaced(SPDesktop* desktop, SPDocument *document);
+    void _handleActivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
+    void _handleDeactivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
 
     Gtk::Tooltips _tt;
     Gtk::Notebook  _notebook;

@@ -25,18 +25,13 @@ namespace Dialogs {
 
 using Inkscape::Extension::Extension;
 
-ExtensionsPanel* ExtensionsPanel::instance = 0;
-
-
-ExtensionsPanel& ExtensionsPanel::getInstance()
+ExtensionsPanel &ExtensionsPanel::getInstance()
 {
-    if ( !instance ) {
-        instance = new ExtensionsPanel();
-    }
+    ExtensionsPanel &instance = *new ExtensionsPanel();
 
-    instance->rescan();
+    instance.rescan();
 
-    return *instance;
+    return instance;
 }
 
 

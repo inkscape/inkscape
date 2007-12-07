@@ -50,7 +50,7 @@ SessionPlaybackDialog::create()
 SessionPlaybackDialogImpl::SessionPlaybackDialogImpl() 
 	: _delay(100, 1, 5000, 10, 100), _delayentry(_delay)
 {
-	this->_desktop = SP_ACTIVE_DESKTOP;
+        this->_desktop = this->getDesktop();
 	this->_sm = this->_desktop->whiteboard_session_manager();
 	this->_sfp = this->_sm->session_player();
 	this->_openfile.set_text(this->_sfp->filename());

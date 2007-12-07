@@ -34,7 +34,7 @@ class ExtensionsPanel : public Inkscape::UI::Widget::Panel
 public:
     ExtensionsPanel();
 
-    static ExtensionsPanel& getInstance();
+    static ExtensionsPanel &getInstance();
 
     void set_full(bool full);
 
@@ -42,9 +42,7 @@ private:
     ExtensionsPanel(ExtensionsPanel const &); // no copy
     ExtensionsPanel &operator=(ExtensionsPanel const &); // no assign
 
-    static ExtensionsPanel* instance;
-
-    static void listCB( Inkscape::Extension::Extension * in_plug, gpointer in_data );
+    static void listCB(Inkscape::Extension::Extension *in_plug, gpointer in_data);
 
     void rescan();
 

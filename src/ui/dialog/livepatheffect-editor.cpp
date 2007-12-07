@@ -52,16 +52,6 @@ static void lpeeditor_selection_modified( Inkscape::Selection *selection, guint 
 }
 
 
-static void lpeeditor_desktop_change(Inkscape::Application*, SPDesktop* desktop, void *data)
-{
-    if (!desktop) {
-        return;
-    }
-    LivePathEffectEditor* editor = reinterpret_cast<LivePathEffectEditor*>(data);
-    editor->setDesktop(desktop);
-}
-
-
 /*#######################
  * LivePathEffectEditor
  */
@@ -98,14 +88,6 @@ LivePathEffectEditor::LivePathEffectEditor()
     button_apply.signal_clicked().connect(sigc::mem_fun(*this, &LivePathEffectEditor::onApply));
     button_remove.signal_clicked().connect(sigc::mem_fun(*this, &LivePathEffectEditor::onRemove));
 
-    // connect callback functions to changes in selected desktop.
-    g_signal_connect( G_OBJECT(INKSCAPE), "activate_desktop",
-                       G_CALLBACK(lpeeditor_desktop_change), this);
-
-    g_signal_connect( G_OBJECT(INKSCAPE), "deactivate_desktop",
-                       G_CALLBACK(lpeeditor_desktop_change), this);
-
-    setDesktop(SP_ACTIVE_DESKTOP);
     show_all_children();
 
     button_remove.hide();
@@ -202,6 +184,7 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
 void 
 LivePathEffectEditor::setDesktop(SPDesktop *desktop)
 {
+    Panel::setDesktop(desktop);
 
     if ( desktop == current_desktop ) {
         return;

@@ -27,6 +27,7 @@
 #include <gtkmm/table.h>
 #include <gtkmm/tooltips.h>
 
+#include "inkscape.h"
 #include "ui/previewfillable.h"
 #include "selection.h"
 
@@ -54,6 +55,9 @@ public:
 
     void restorePanelPrefs();
 
+    virtual void setDesktop(SPDesktop *desktop);
+    SPDesktop *getDesktop() { return _desktop; }
+    
     /** Signal accessors */
     virtual sigc::signal<void, int> &signalResponse();
     virtual sigc::signal<void> &signalPresent();
@@ -64,6 +68,10 @@ public:
     Gtk::Button* addResponseButton (const Gtk::StockID &stock_id, int response_id);
     void setDefaultResponse(int response_id);
     void setResponseSensitive(int response_id, bool setting);
+
+    virtual sigc::signal<void, SPDesktop *, SPDocument *> &signalDocumentReplaced();
+    virtual sigc::signal<void, Inkscape::Application *, SPDesktop *> &signalActivateDesktop();
+    virtual sigc::signal<void, Inkscape::Application *, SPDesktop *> &signalDeactiveDesktop();
 
 protected:
     Gtk::Box *_getContents() { return &_contents; }
@@ -90,6 +98,9 @@ protected:
     /** Signals */
     sigc::signal<void, int> _signal_response;
     sigc::signal<void>      _signal_present;
+    sigc::signal<void, SPDesktop *, SPDocument *> _signal_document_replaced;
+    sigc::signal<void, Inkscape::Application *, SPDesktop *> _signal_activate_desktop;
+    sigc::signal<void, Inkscape::Application *, SPDesktop *> _signal_deactive_desktop;
 
 private:
     void _init();
@@ -97,6 +108,8 @@ private:
 
     void _popper(GdkEventButton *btn);
     void _wrapToggled(Gtk::CheckMenuItem *toggler);
+
+    SPDesktop       *_desktop;
 
     Glib::ustring    _label;
     Glib::ustring    _apply_label;

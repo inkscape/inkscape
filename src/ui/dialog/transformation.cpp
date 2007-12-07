@@ -446,7 +446,7 @@ void
 Transformation::onSwitchPage(GtkNotebookPage */*page*/,
                                    guint pagenum)
 {
-    updateSelection((PageType)pagenum, sp_desktop_selection(SP_ACTIVE_DESKTOP));
+    updateSelection((PageType)pagenum, sp_desktop_selection(getDesktop()));
 }
 
 void

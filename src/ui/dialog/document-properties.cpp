@@ -53,14 +53,9 @@ namespace Dialog {
 
 //---------------------------------------------------
 
-static DocumentProperties *_instance = 0;
-
 static void on_child_added(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, void * data);
 static void on_child_removed(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, void * data);
 static void on_repr_attr_changed (Inkscape::XML::Node *, gchar const *, gchar const *, gchar const *, bool, gpointer);
-static void on_doc_replaced (SPDesktop* dt, SPDocument* doc);
-static void on_activate_desktop (Inkscape::Application *, SPDesktop* dt, void*);
-static void on_deactivate_desktop (Inkscape::Application *, SPDesktop* dt, void*);
 
 static Inkscape::XML::NodeEventVector const _repr_events = {
     on_child_added, /* child_added */
@@ -74,20 +69,10 @@ static Inkscape::XML::NodeEventVector const _repr_events = {
 DocumentProperties &
 DocumentProperties::getInstance()
 {
-    if (_instance) return *_instance;
-    _instance = new DocumentProperties();
-    _instance->init();
-    return *_instance;
-}
+    DocumentProperties &instance = *new DocumentProperties();
+    instance.init();
 
-void
-DocumentProperties::destroy()
-{
-    if (_instance)
-    {
-        delete _instance;
-        _instance = 0;
-    }
+    return instance;
 }
 
 DocumentProperties::DocumentProperties()
@@ -118,6 +103,10 @@ DocumentProperties::DocumentProperties()
 
     _grids_button_new.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onNewGrid));
     _grids_button_remove.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onRemoveGrid));
+
+    signalDocumentReplaced().connect(sigc::mem_fun(*this, &DocumentProperties::_handleDocumentReplaced));
+    signalActivateDesktop().connect(sigc::mem_fun(*this, &DocumentProperties::_handleActivateDesktop));
+    signalDeactiveDesktop().connect(sigc::mem_fun(*this, &DocumentProperties::_handleDeactivateDesktop));
 }
 
 void
@@ -125,18 +114,10 @@ DocumentProperties::init()
 {
     update();
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(getDesktop()));
     repr->addListener (&_repr_events, this);
-    Inkscape::XML::Node *root = SP_OBJECT_REPR(sp_desktop_document(SP_ACTIVE_DESKTOP)->root);
+    Inkscape::XML::Node *root = SP_OBJECT_REPR(sp_desktop_document(getDesktop())->root);
     root->addListener (&_repr_events, this);
-
-    _doc_replaced_connection = SP_ACTIVE_DESKTOP->connectDocumentReplaced (sigc::ptr_fun (on_doc_replaced));
-
-    g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop",
-                     G_CALLBACK(on_activate_desktop), 0);
-
-    g_signal_connect(G_OBJECT(INKSCAPE), "deactivate_desktop",
-                     G_CALLBACK(on_deactivate_desktop), 0);
 
     show_all_children();
     _grids_button_remove.hide();
@@ -144,11 +125,10 @@ DocumentProperties::init()
 
 DocumentProperties::~DocumentProperties()
 {
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(getDesktop()));
     repr->removeListenerByData (this);
-    Inkscape::XML::Node *root = SP_OBJECT_REPR(sp_desktop_document(SP_ACTIVE_DESKTOP)->root);
+    Inkscape::XML::Node *root = SP_OBJECT_REPR(sp_desktop_document(getDesktop())->root);
     root->removeListenerByData (this);
-    _doc_replaced_connection.disconnect();
 }
 
 //========================================================================
@@ -405,7 +385,7 @@ DocumentProperties::build_snap_dtls()
 void
 DocumentProperties::update_gridspage()
 {
-    SPDesktop *dt = SP_ACTIVE_DESKTOP;
+    SPDesktop *dt = getDesktop();
     SPNamedView *nv = sp_desktop_namedview(dt);
 
     //remove all tabs
@@ -437,7 +417,7 @@ DocumentProperties::build_gridspage()
     /// \todo FIXME: gray out snapping when grid is off.
     /// Dissenting view: you want snapping without grid.
 
-    SPDesktop *dt = SP_ACTIVE_DESKTOP;
+    SPDesktop *dt = getDesktop();
     SPNamedView *nv = sp_desktop_namedview(dt);
 
     _grids_label_crea.set_markup(_("<b>Creation</b>"));
@@ -477,7 +457,7 @@ DocumentProperties::update()
 {
     if (_wr.isUpdating()) return;
 
-    SPDesktop *dt = SP_ACTIVE_DESKTOP;
+    SPDesktop *dt = getDesktop();
     SPNamedView *nv = sp_desktop_namedview(dt);
 
     _wr.setUpdating (true);
@@ -542,24 +522,47 @@ DocumentProperties::on_response (int id)
         hide();
 }
 
-
-
-static void
-on_child_added(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node */*child*/, Inkscape::XML::Node */*ref*/, void * /*data*/)
+void 
+DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *document)
 {
-    if (!_instance)
-        return;
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
+    repr->addListener(&_repr_events, this);
+    Inkscape::XML::Node *root = SP_OBJECT_REPR(document->root);
+    root->addListener(&_repr_events, this);
+    update();
+}
 
-    _instance->update_gridspage();
+void 
+DocumentProperties::_handleActivateDesktop(Inkscape::Application *, SPDesktop *desktop)
+{
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
+    repr->addListener(&_repr_events, this);
+    Inkscape::XML::Node *root = SP_OBJECT_REPR(sp_desktop_document(desktop)->root);
+    root->addListener(&_repr_events, this);
+    update();
+}
+
+void
+DocumentProperties::_handleDeactivateDesktop(Inkscape::Application *, SPDesktop *desktop)
+{
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
+    repr->removeListenerByData(this);
+    Inkscape::XML::Node *root = SP_OBJECT_REPR(sp_desktop_document(desktop)->root);
+    root->removeListenerByData(this);
 }
 
 static void
-on_child_removed(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node */*child*/, Inkscape::XML::Node */*ref*/, void * /*data*/)
+on_child_added(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node */*child*/, Inkscape::XML::Node */*ref*/, void *data)
 {
-    if (!_instance)
-        return;
+    if (DocumentProperties *dialog = static_cast<DocumentProperties *>(data))
+	dialog->update_gridspage();
+}
 
-    _instance->update_gridspage();
+static void
+on_child_removed(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node */*child*/, Inkscape::XML::Node */*ref*/, void *data)
+{
+    if (DocumentProperties *dialog = static_cast<DocumentProperties *>(data))
+	dialog->update_gridspage();
 }
 
 
@@ -568,55 +571,11 @@ on_child_removed(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node */*child*/, 
  * Called when XML node attribute changed; updates dialog widgets.
  */
 static void
-on_repr_attr_changed (Inkscape::XML::Node *, gchar const *, gchar const *, gchar const *, bool, gpointer)
+on_repr_attr_changed (Inkscape::XML::Node *, gchar const *, gchar const *, gchar const *, bool, gpointer data)
 {
-    if (!_instance)
-        return;
-
-    _instance->update();
+    if (DocumentProperties *dialog = static_cast<DocumentProperties *>(data))
+	dialog->update();
 }
-
-static void
-on_activate_desktop (Inkscape::Application *, SPDesktop* /*dt*/, void*)
-{
-    if (!_instance)
-        return;
-
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
-    repr->addListener (&_repr_events, _instance);
-    Inkscape::XML::Node *root = SP_OBJECT_REPR(sp_desktop_document(SP_ACTIVE_DESKTOP)->root);
-    root->addListener (&_repr_events, _instance);
-    _instance->_doc_replaced_connection = SP_ACTIVE_DESKTOP->connectDocumentReplaced (sigc::ptr_fun (on_doc_replaced));
-    _instance->update();
-}
-
-static void
-on_deactivate_desktop (Inkscape::Application *, SPDesktop* /*dt*/, void*)
-{
-    if (!_instance)
-        return;
-
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
-    repr->removeListenerByData (_instance);
-    Inkscape::XML::Node *root = SP_OBJECT_REPR(sp_desktop_document(SP_ACTIVE_DESKTOP)->root);
-    root->removeListenerByData (_instance);
-    _instance->_doc_replaced_connection.disconnect();
-}
-
-static void
-on_doc_replaced (SPDesktop* dt, SPDocument* doc)
-{
-    if (!_instance)
-        return;
-
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(dt));
-    repr->addListener (&_repr_events, _instance);
-    Inkscape::XML::Node *root = SP_OBJECT_REPR(doc->root);
-    root->addListener (&_repr_events, _instance);
-    _instance->update();
-}
-
-
 
 
 /*########################################################################
@@ -626,7 +585,7 @@ on_doc_replaced (SPDesktop* dt, SPDocument* doc)
 void
 DocumentProperties::onNewGrid()
 {
-    SPDesktop *dt = SP_ACTIVE_DESKTOP;
+    SPDesktop *dt = getDesktop();
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(dt));
     SPDocument *doc = sp_desktop_document(dt);
 
@@ -648,7 +607,7 @@ DocumentProperties::onRemoveGrid()
     Glib::ustring tabtext = _grids_notebook.get_tab_label_text(*page);
 
     // find the grid with name tabtext (it's id) and delete that one.
-    SPDesktop *dt = SP_ACTIVE_DESKTOP;
+    SPDesktop *dt = getDesktop();
     SPNamedView *nv = sp_desktop_namedview(dt);
     Inkscape::CanvasGrid * found_grid = NULL;
     for (GSList const * l = nv->grids; l != NULL; l = l->next) {

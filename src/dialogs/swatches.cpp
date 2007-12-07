@@ -41,8 +41,6 @@ namespace Inkscape {
 namespace UI {
 namespace Dialogs {
 
-SwatchesPanel* SwatchesPanel::instance = 0;
-
 
 ColorItem::ColorItem( unsigned int r, unsigned int g, unsigned int b, Glib::ustring& name ) :
     def( r, g, b, name ),
@@ -989,11 +987,7 @@ static void loadEmUp()
 
 SwatchesPanel& SwatchesPanel::getInstance()
 {
-    if ( !instance ) {
-        instance = new SwatchesPanel();
-    }
-
-    return *instance;
+    return *new SwatchesPanel();
 }
 
 

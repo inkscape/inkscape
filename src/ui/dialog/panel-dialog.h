@@ -16,21 +16,35 @@
 # include <config.h>
 #endif
 
-#include "verbs.h"
+#include <gtkmm/stock.h>
 
+#include "verbs.h"
 #include "dialog.h"
 #include "dialogs/swatches.h"
-#include "ui/dialog/undo-history.h"
+#include "ui/dialog/floating-behavior.h"
+#include "ui/dialog/dock-behavior.h"
 #include "prefs-utils.h"
 
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
+/* local desktop event handlers */
+static void handle_activate_desktop(Inkscape::Application *, SPDesktop *, void *);
+static void handle_deactivate_desktop(Inkscape::Application *, SPDesktop *, void *);
+
 struct PanelDialogBase {
     virtual void present() =0;
     virtual Panel &getPanel() =0;
     virtual ~PanelDialogBase() {}
+
+private:
+    virtual void _propagateDocumentReplaced(SPDesktop* desktop, SPDocument *document) =0;
+    virtual void _propagateDesktopActivated(Inkscape::Application *, SPDesktop *) =0;
+    virtual void _propagateDesktopDeactivated(Inkscape::Application *, SPDesktop *) =0;
+
+    friend void handle_activate_desktop(Inkscape::Application *, SPDesktop *, void *);
+    friend void handle_deactivate_desktop(Inkscape::Application *, SPDesktop *, void *);
 };
 
 template <typename Behavior>
@@ -50,14 +64,18 @@ public:
     Panel &getPanel() { return _panel; }
 
 private:
+    void _propagateDocumentReplaced(SPDesktop* desktop, SPDocument *document);
+    void _propagateDesktopActivated(Inkscape::Application *, SPDesktop *);
+    void _propagateDesktopDeactivated(Inkscape::Application *, SPDesktop *);
+
     Panel &_panel;
+    sigc::connection _document_replaced_connection;
 
     PanelDialog();  // no constructor without params
     PanelDialog(PanelDialog<Behavior> const &d);                      // no copy
     PanelDialog<Behavior>& operator=(PanelDialog<Behavior> const &d); // no assign
+
 };
-
-
 
 template <typename B>
 PanelDialog<B>::PanelDialog(Panel &panel, char const *prefs_path, int const verb_num, Glib::ustring const &apply_label) :
@@ -69,6 +87,13 @@ PanelDialog<B>::PanelDialog(Panel &panel, char const *prefs_path, int const verb
     _panel.signalPresent().connect(sigc::mem_fun(*this, &PanelDialog::present));
 
     vbox->pack_start(_panel, true, true, 0);
+
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+
+    _propagateDesktopActivated(INKSCAPE, desktop);
+
+    _document_replaced_connection = 
+        desktop->connectDocumentReplaced(sigc::mem_fun(*this, &PanelDialog::_propagateDocumentReplaced));
 
     if (prefs_get_int_attribute ("dialogs", "showclose", 0) || !apply_label.empty()) {
         // TODO: make the order of buttons obey the global preference
@@ -87,8 +112,26 @@ PanelDialog<B> *
 PanelDialog<B>::create()
 {
     Panel &panel = P::getInstance();
-    return new PanelDialog<B>(panel, panel.getPrefsPath(), 
-                              panel.getVerb(), panel.getApplyLabel());
+    return new PanelDialog<B>(panel, panel.getPrefsPath(), panel.getVerb(), panel.getApplyLabel());
+}
+
+/** 
+ * Specialize factory method for panel dialogs with floating behavior in order to make them work as
+ * singletons, i.e. allow them track the current active desktop.
+ */
+template <> template <typename P>
+PanelDialog<Behavior::FloatingBehavior> *
+PanelDialog<Behavior::FloatingBehavior>::create()
+{
+    Panel &panel = P::getInstance();
+    PanelDialog<Behavior::FloatingBehavior> *instance = 
+        new PanelDialog<Behavior::FloatingBehavior>(panel, panel.getPrefsPath(), 
+                                                    panel.getVerb(), panel.getApplyLabel());
+
+    g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop", G_CALLBACK(handle_activate_desktop), instance);
+    g_signal_connect(G_OBJECT(INKSCAPE), "deactivate_desktop", G_CALLBACK(handle_deactivate_desktop), instance);
+
+    return instance;
 }
 
 template <typename B>
@@ -96,6 +139,45 @@ void
 PanelDialog<B>::present()
 {
     Dialog::present();
+}
+
+template <typename B>
+void
+PanelDialog<B>::_propagateDocumentReplaced(SPDesktop *desktop, SPDocument *document)
+{
+    _panel.signalDocumentReplaced().emit(desktop, document);
+}
+
+template <typename B>
+void
+PanelDialog<B>::_propagateDesktopActivated(Inkscape::Application *application, SPDesktop *desktop)
+{
+    _document_replaced_connection = 
+        desktop->connectDocumentReplaced(sigc::mem_fun(*this, &PanelDialog::_propagateDocumentReplaced));
+    _panel.signalActivateDesktop().emit(application, desktop);
+}
+
+template <typename B>
+void
+PanelDialog<B>::_propagateDesktopDeactivated(Inkscape::Application *application, SPDesktop *desktop)
+{
+    _document_replaced_connection.disconnect();
+    _panel.signalDeactiveDesktop().emit(application, desktop);
+}
+
+
+static void
+handle_activate_desktop(Inkscape::Application *application, SPDesktop *desktop, void *data)
+{
+    g_return_if_fail(data != NULL);
+    static_cast<PanelDialogBase *>(data)->_propagateDesktopActivated(application, desktop);
+}
+
+static void
+handle_deactivate_desktop(Inkscape::Application *application, SPDesktop *desktop, void *data)
+{
+    g_return_if_fail(data != NULL);
+    static_cast<PanelDialogBase *>(data)->_propagateDesktopDeactivated(application, desktop);
 }
 
 } // namespace Dialog

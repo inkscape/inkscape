@@ -4,9 +4,11 @@
  * Authors:
  *   Bryce Harrington <bryce@bryceharrington.org>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Gustav Broberg <broberg@kth.se>
  *
  * Copyright (C) 2004 Bryce Harrington
  * Copyright (C) 2005 Jon A. Cruz
+ * Copyright (C) 2007 Gustav Broberg
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information
  */
@@ -44,6 +46,7 @@ Panel::Panel(Glib::ustring const &label, gchar const *prefs_path,
              bool menu_desired) :
     _prefs_path(prefs_path),
     _menu_desired(menu_desired),
+    _desktop(SP_ACTIVE_DESKTOP),
     _label(label),
     _apply_label(apply_label),
     _verb_num(verb_num),
@@ -180,6 +183,8 @@ void Panel::_init()
     pack_start(*boxy, true, true);
 
     signalResponse().connect(sigc::mem_fun(*this, &Panel::_handleResponse));
+
+    signalActivateDesktop().connect(sigc::hide<0>(sigc::mem_fun(*this, &Panel::setDesktop)));
 
     show_all_children();
 
@@ -383,6 +388,11 @@ Glib::ustring const &Panel::getApplyLabel() const
     return _apply_label;
 }
 
+void Panel::setDesktop(SPDesktop *desktop)
+{
+    _desktop = desktop;
+}
+
 void Panel::_setTargetFillable(PreviewFillable *target)
 {
     _fillable = target;
@@ -461,6 +471,24 @@ Panel::setResponseSensitive(int response_id, bool setting)
         _response_map[response_id]->set_sensitive(setting);
 }
 
+sigc::signal<void, SPDesktop *, SPDocument *> &
+Panel::signalDocumentReplaced()
+{
+    return _signal_document_replaced;
+}
+
+sigc::signal<void, Inkscape::Application *, SPDesktop *> &
+Panel::signalActivateDesktop()
+{
+    return _signal_activate_desktop;
+}
+
+sigc::signal<void, Inkscape::Application *, SPDesktop *> &
+Panel::signalDeactiveDesktop()
+{
+    return _signal_deactive_desktop;
+}
+
 void
 Panel::_handleResponse(int response_id)
 {
@@ -474,7 +502,7 @@ Panel::_handleResponse(int response_id)
 
 Inkscape::Selection *Panel::_getSelection()
 {
-    return sp_desktop_selection(SP_ACTIVE_DESKTOP);
+    return sp_desktop_selection(_desktop);
 }
 
 } // namespace Widget

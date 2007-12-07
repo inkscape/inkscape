@@ -116,7 +116,7 @@ private :
 
     virtual void on_button_click() {
         //Retreive selected objects
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        SPDesktop *desktop = _dialog.getDesktop();
         if (!desktop) return;
 
         Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -300,7 +300,7 @@ public :
 private :
     virtual void on_button_click() {
         //Retreive selected objects
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        SPDesktop *desktop = _dialog.getDesktop();
         if (!desktop) return;
 
         Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -426,8 +426,8 @@ private :
     virtual void on_button_click()
     {
 
-        if (!SP_ACTIVE_DESKTOP) return;
-	SPEventContext *event_context = sp_desktop_event_context(SP_ACTIVE_DESKTOP);
+        if (!_dialog.getDesktop()) return;
+	SPEventContext *event_context = sp_desktop_event_context(_dialog.getDesktop());
 	if (!SP_IS_NODE_CONTEXT (event_context)) return ;
 
         if (_distribute)
@@ -486,7 +486,7 @@ public:
 private :
     virtual void on_button_click()
     {
-        if (!SP_ACTIVE_DESKTOP) return;
+        if (!_dialog.getDesktop()) return;
 
         // see comment in ActionAlign above
         int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
@@ -495,13 +495,13 @@ private :
         // xGap and yGap are the minimum space required between bounding rectangles.
         double const xGap = removeOverlapXGap.get_value();
         double const yGap = removeOverlapYGap.get_value();
-        removeoverlap(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList(),
+        removeoverlap(sp_desktop_selection(_dialog.getDesktop())->itemList(),
                       xGap, yGap);
 
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+        sp_document_done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
                          _("Remove overlaps"));
     }
 };
@@ -520,18 +520,18 @@ public:
 private :
     virtual void on_button_click()
     {
-        if (!SP_ACTIVE_DESKTOP) return;
+        if (!_dialog.getDesktop()) return;
 
         // see comment in ActionAlign above
         int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
         prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
 
-        graphlayout(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
+        graphlayout(sp_desktop_selection(_dialog.getDesktop())->itemList());
 
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+        sp_document_done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
                          _("Arrange connector network"));
     }
 };
@@ -550,18 +550,18 @@ public :
 private :
     virtual void on_button_click()
     {
-        if (!SP_ACTIVE_DESKTOP) return;
+        if (!_dialog.getDesktop()) return;
 
         // see comment in ActionAlign above
         int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
         prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
 
-        unclump ((GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
+        unclump ((GSList *) sp_desktop_selection(_dialog.getDesktop())->itemList());
 
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+        sp_document_done (sp_desktop_document (_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
                           _("Unclump"));
     }
 };
@@ -580,7 +580,7 @@ public :
 private :
     virtual void on_button_click()
     {
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        SPDesktop *desktop = _dialog.getDesktop();
         if (!desktop) return;
 
         Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -631,7 +631,7 @@ private :
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+        sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
                           _("Randomize positions"));
     }
 };
@@ -673,7 +673,7 @@ private :
     bool _distribute;
     virtual void on_button_click()
     {
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        SPDesktop *desktop = _dialog.getDesktop();
         if (!desktop) return;
 
         Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -728,7 +728,7 @@ private :
             }
 
             if (changed) {
-                sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+                sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
                                   _("Distribute text baselines"));
             }
 
@@ -748,7 +748,7 @@ private :
             }
 
             if (changed) {
-                sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+                sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
                                   _("Align text baselines"));
             }
         }

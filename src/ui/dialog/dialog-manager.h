@@ -29,6 +29,8 @@ public:
     DialogManager();
     virtual ~DialogManager();
 
+    static DialogManager &getInstance();
+
     sigc::signal<void> show_dialogs;
     sigc::signal<void> show_f12;
     sigc::signal<void> hide_dialogs;

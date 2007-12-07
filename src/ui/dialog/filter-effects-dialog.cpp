@@ -932,7 +932,7 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
     g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop",
                      G_CALLBACK(&FilterModifier::on_activate_desktop), this);
 
-    on_activate_desktop(INKSCAPE, SP_ACTIVE_DESKTOP, this);
+    on_activate_desktop(INKSCAPE, d.getDesktop(), this);
     update_filters();
 }
 
@@ -1024,7 +1024,7 @@ void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustri
     Gtk::TreeIter iter = _model->get_iter(path);
 
     if(iter) {
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        SPDesktop *desktop = _dialog.getDesktop();
         SPDocument *doc = sp_desktop_document(desktop);
         SPFilter* filter = (*iter)[_columns.filter];
         Inkscape::Selection *sel = sp_desktop_selection(desktop);
@@ -1057,7 +1057,7 @@ void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustri
    Keeps the same selection if possible, otherwise selects the first element */
 void FilterEffectsDialog::FilterModifier::update_filters()
 {
-    SPDesktop* desktop = SP_ACTIVE_DESKTOP;
+    SPDesktop* desktop = _dialog.getDesktop();
     SPDocument* document = sp_desktop_document(desktop);
     const GSList* filters = sp_document_get_resource_list(document, "filter");
 
@@ -1112,7 +1112,7 @@ void FilterEffectsDialog::FilterModifier::filter_list_button_release(GdkEventBut
 
 void FilterEffectsDialog::FilterModifier::add_filter()
 {
-    SPDocument* doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
+    SPDocument* doc = sp_desktop_document(_dialog.getDesktop());
     SPFilter* filter = new_filter(doc);
 
     const int count = _model->children().size();
@@ -2007,7 +2007,7 @@ void FilterEffectsDialog::remove_primitive()
     if(prim) {
         sp_repr_unparent(prim->repr);
 
-        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_FILTER_EFFECTS,
+        sp_document_done(sp_desktop_document(getDesktop()), SP_VERB_DIALOG_FILTER_EFFECTS,
                          _("Remove filter primitive"));
 
         _primitive_list.update();

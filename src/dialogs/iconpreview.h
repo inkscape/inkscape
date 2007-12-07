@@ -53,8 +53,6 @@ private:
     void renderPreview( SPObject* obj );
     void updateMagnify();
 
-    static IconPreviewPanel* instance;
-
     Gtk::Tooltips   tips;
 
     Gtk::VBox       iconBox;

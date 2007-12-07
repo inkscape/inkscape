@@ -127,7 +127,6 @@ public:
 
 protected:
 
-    SPDesktop *_desktop;
     SPDocument *_document;
     EventLog *_event_log;
 

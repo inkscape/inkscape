@@ -44,16 +44,10 @@ namespace Inkscape {
 namespace UI {
 namespace Dialogs {
 
-LayersPanel* LayersPanel::instance = 0;
-
 LayersPanel&
 LayersPanel::getInstance()
 {
-    if ( !instance ) {
-        instance = new LayersPanel();
-    }
-
-    return *instance;
+    return *new LayersPanel();
 }
 
 enum {
@@ -193,7 +187,7 @@ static gboolean layers_panel_activated( GtkObject */*object*/, GdkEvent * /*even
     if ( data )
     {
         LayersPanel* panel = reinterpret_cast<LayersPanel*>(data);
-        panel->setDesktop( SP_ACTIVE_DESKTOP );
+        panel->setDesktop(panel->getDesktop());
     }
 
     return FALSE;
@@ -783,7 +777,7 @@ LayersPanel::LayersPanel() :
 
     _opacityConnection = _opacity.get_adjustment()->signal_value_changed().connect( sigc::mem_fun(*this, &LayersPanel::_opacityChanged) );
 
-    SPDesktop* targetDesktop = SP_ACTIVE_DESKTOP;
+    SPDesktop* targetDesktop = getDesktop();
 
     _buttonsRow.set_child_min_width( 16 );
 
@@ -880,6 +874,8 @@ LayersPanel::~LayersPanel()
 
 void LayersPanel::setDesktop( SPDesktop* desktop )
 {
+    Panel::setDesktop(desktop);
+
     if ( desktop != _desktop ) {
         _layerChangedConnection.disconnect();
         _layerUpdatedConnection.disconnect();
@@ -891,7 +887,7 @@ void LayersPanel::setDesktop( SPDesktop* desktop )
             _desktop = 0;
         }
 
-        _desktop = SP_ACTIVE_DESKTOP;
+        _desktop = getDesktop();
         if ( _desktop ) {
             //setLabel( _desktop->doc()->name );
 

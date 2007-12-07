@@ -169,7 +169,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     sp_document_ensure_up_to_date (document);
 
     /* Setup Dialog Manager */
-    _dlg_mgr = new Inkscape::UI::Dialog::DialogManager();
+    _dlg_mgr = &Inkscape::UI::Dialog::DialogManager::getInstance();
 
     dkey = sp_item_display_key_new (1);
 

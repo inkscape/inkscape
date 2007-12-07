@@ -60,8 +60,8 @@ WhiteboardShareWithChatroomDialogImpl::~WhiteboardShareWithChatroomDialogImpl()
 void
 WhiteboardShareWithChatroomDialogImpl::setSessionManager()
 {
-	this->_desktop = SP_ACTIVE_DESKTOP;
-	this->_sm = SP_ACTIVE_DESKTOP->whiteboard_session_manager();
+        this->_desktop = this->getDesktop();
+	this->_sm = this->_desktop->whiteboard_session_manager();
 
 }
 

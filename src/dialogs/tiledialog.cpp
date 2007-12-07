@@ -161,7 +161,7 @@ void TileDialog::Grid_Arrange ()
     grid_left = 99999;
     grid_top = 99999;
 
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPDesktop *desktop = getDesktop();
     sp_document_ensure_up_to_date(sp_desktop_document(desktop));
 
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
@@ -378,7 +378,7 @@ void TileDialog::on_row_spinbutton_changed()
 
     // in turn, prevent listener from responding
     updating = true;
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPDesktop *desktop = getDesktop();
 
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
@@ -403,7 +403,7 @@ void TileDialog::on_col_spinbutton_changed()
 
     // in turn, prevent listener from responding
     updating = true;
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPDesktop *desktop = getDesktop();
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     GSList const *items = selection->itemList();
@@ -565,7 +565,7 @@ void TileDialog::updateSelection()
     row_height=0;
     // in turn, prevent listener from responding
     updating = true;
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPDesktop *desktop = getDesktop();
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
     const GSList *items = selection->itemList();
     int selcount = g_slist_length((GSList *)items);
@@ -632,7 +632,7 @@ TileDialog::TileDialog()
 
     //##Set up the panel
 
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPDesktop *desktop = getDesktop();
 
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
     int selcount = 1;

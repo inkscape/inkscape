@@ -47,18 +47,14 @@ namespace UI {
 namespace Dialogs {
 
 
-IconPreviewPanel* IconPreviewPanel::instance = 0;
-
 IconPreviewPanel&
 IconPreviewPanel::getInstance()
 {
-    if ( !instance ) {
-        instance = new IconPreviewPanel();
-    }
+    IconPreviewPanel &instance = *new IconPreviewPanel();
 
-    instance->refreshPreview();
+    instance.refreshPreview();
 
-    return *instance;
+    return instance;
 }
 
 //#########################################################################
@@ -214,7 +210,7 @@ IconPreviewPanel::IconPreviewPanel() :
 
 void IconPreviewPanel::refreshPreview()
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPDesktop *desktop = getDesktop();
     if ( desktop ) {
 
         if ( selectionButton && selectionButton->get_active() )

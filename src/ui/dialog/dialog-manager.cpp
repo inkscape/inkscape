@@ -147,6 +147,23 @@ DialogManager::~DialogManager() {
     //        Appears to cause a segfault if we do
 }
 
+
+DialogManager &DialogManager::getInstance()
+{
+    int dialogs_type = prefs_get_int_attribute_limited ("options.dialogtype", "value", DOCK, 0, 1);
+
+    /* Use singleton behavior for floating dialogs */
+    if (dialogs_type == FLOATING) {
+        static DialogManager *instance = 0;
+        
+        if (!instance)
+            instance = new DialogManager();
+        return *instance;
+    } 
+
+    return *new DialogManager();
+}
+
 /**
  * Registers a dialog factory function used to create the named dialog.
  */

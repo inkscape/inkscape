@@ -40,7 +40,6 @@ public:
     void  update();
     static DocumentProperties &getInstance();
     static void destroy();
-    sigc::connection _doc_replaced_connection;
 
     void  update_gridspage();
     
@@ -53,6 +52,10 @@ protected:
     void  build_gridspage();
     void  init();
     virtual void  on_response (int);
+
+    void _handleDocumentReplaced(SPDesktop* desktop, SPDocument *document);
+    void _handleActivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
+    void _handleDeactivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
 
     Gtk::Tooltips _tt;
     Gtk::Notebook  _notebook;

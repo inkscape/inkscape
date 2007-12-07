@@ -275,7 +275,7 @@ Find::filter_fields (GSList *l, bool exact)
 bool
 Find::item_type_match (SPItem *item)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPDesktop *desktop = getDesktop();
 
     if (SP_IS_RECT(item)) {
         return (_check_all_shapes.get_active() || _check_rects.get_active());
@@ -337,7 +337,7 @@ Find::filter_list (GSList *l, bool exact)
 GSList *
 Find::all_items (SPObject *r, GSList *l, bool hidden, bool locked)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPDesktop *desktop = getDesktop();
 
     if (SP_IS_DEFS(r))
         return l; // we're not interested in items in defs
@@ -359,9 +359,9 @@ Find::all_items (SPObject *r, GSList *l, bool hidden, bool locked)
 GSList *
 Find::all_selection_items (Inkscape::Selection *s, GSList *l, SPObject *ancestor, bool hidden, bool locked)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPDesktop *desktop = getDesktop();
 
-   for (GSList *i = (GSList *) s->itemList(); i != NULL; i = i->next) {
+    for (GSList *i = (GSList *) s->itemList(); i != NULL; i = i->next) {
         if (SP_IS_ITEM (i->data) && !SP_OBJECT_IS_CLONED (i->data) && !desktop->isLayer(SP_ITEM(i->data))) {
             if (!ancestor || ancestor->isAncestorOf(SP_OBJECT (i->data))) {
                 if ((hidden || !desktop->itemIsHidden(SP_ITEM(i->data))) && (locked || !SP_ITEM(i->data)->isLocked())) {
@@ -398,7 +398,7 @@ Find::onClear()
 void
 Find::onFind()
 {   
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPDesktop *desktop = getDesktop();
 
     bool hidden = _check_include_hidden.get_active();
     bool locked = _check_include_locked.get_active();

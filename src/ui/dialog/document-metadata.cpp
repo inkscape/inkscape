@@ -46,12 +46,7 @@ namespace Dialog {
 
 //---------------------------------------------------
 
-static DocumentMetadata *_instance = 0;
-
 static void on_repr_attr_changed (Inkscape::XML::Node *, gchar const *, gchar const *, gchar const *, bool, gpointer);
-static void on_doc_replaced (SPDesktop* dt, SPDocument* doc);
-static void on_activate_desktop (Inkscape::Application *, SPDesktop* dt, void*);
-static void on_deactivate_desktop (Inkscape::Application *, SPDesktop* dt, void*);
 
 static Inkscape::XML::NodeEventVector const _repr_events = {
     NULL, /* child_added */
@@ -65,21 +60,11 @@ static Inkscape::XML::NodeEventVector const _repr_events = {
 DocumentMetadata &
 DocumentMetadata::getInstance()
 {
-    if (_instance) return *_instance;
-    _instance = new DocumentMetadata();
-    _instance->init();
-    return *_instance;
+    DocumentMetadata &instance = *new DocumentMetadata();
+    instance.init();
+    return instance;
 }
 
-void
-DocumentMetadata::destroy()
-{
-    if (_instance)
-    {
-        delete _instance;
-        _instance = 0;
-    }
-}
 
 DocumentMetadata::DocumentMetadata()
     : UI::Widget::Panel ("", "dialogs.documentmetadata", SP_VERB_DIALOG_METADATA),
@@ -94,6 +79,10 @@ DocumentMetadata::DocumentMetadata()
     _notebook.append_page(_page_metadata1, _("Metadata"));
     _notebook.append_page(_page_metadata2, _("License"));
 
+    signalDocumentReplaced().connect(sigc::mem_fun(*this, &DocumentMetadata::_handleDocumentReplaced));
+    signalActivateDesktop().connect(sigc::mem_fun(*this, &DocumentMetadata::_handleActivateDesktop));
+    signalDeactiveDesktop().connect(sigc::mem_fun(*this, &DocumentMetadata::_handleDeactivateDesktop));
+
     build_metadata();
 }
 
@@ -102,25 +91,16 @@ DocumentMetadata::init()
 {
     update();
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(getDesktop()));
     repr->addListener (&_repr_events, this);
-
-    _doc_replaced_connection = SP_ACTIVE_DESKTOP->connectDocumentReplaced (sigc::ptr_fun (on_doc_replaced));
-
-    g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop",
-                     G_CALLBACK(on_activate_desktop), 0);
-
-    g_signal_connect(G_OBJECT(INKSCAPE), "deactivate_desktop",
-                     G_CALLBACK(on_deactivate_desktop), 0);
 
     show_all_children();
 }
 
 DocumentMetadata::~DocumentMetadata()
 {
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(getDesktop()));
     repr->removeListenerByData (this);
-    _doc_replaced_connection.disconnect();
 
     for (RDElist::iterator it = _rdflist.begin(); it != _rdflist.end(); it++)
         delete (*it);
@@ -232,55 +212,40 @@ DocumentMetadata::update()
     _wr.setUpdating (false);
 }
 
-//--------------------------------------------------------------------
+void 
+DocumentMetadata::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *)
+{
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
+    repr->addListener (&_repr_events, this);
+    update();
+}
 
+void 
+DocumentMetadata::_handleActivateDesktop(Inkscape::Application *, SPDesktop *desktop)
+{
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
+    repr->addListener(&_repr_events, this);
+    update();
+}
+
+void
+DocumentMetadata::_handleDeactivateDesktop(Inkscape::Application *, SPDesktop *desktop)
+{
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
+    repr->removeListenerByData(this);
+}
+
+//--------------------------------------------------------------------
 
 /**
  * Called when XML node attribute changed; updates dialog widgets.
  */
 static void
-on_repr_attr_changed (Inkscape::XML::Node *, gchar const *, gchar const *, gchar const *, bool, gpointer)
+on_repr_attr_changed (Inkscape::XML::Node *, gchar const *, gchar const *, gchar const *, bool, gpointer data)
 {
-    if (!_instance)
-        return;
-
-    _instance->update();
+    if (DocumentMetadata *dialog = static_cast<DocumentMetadata *>(data))
+	dialog->update();
 }
-
-static void
-on_activate_desktop (Inkscape::Application *, SPDesktop* /*dt*/, void*)
-{
-    if (!_instance)
-        return;
-
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
-    repr->addListener (&_repr_events, _instance);
-    _instance->_doc_replaced_connection = SP_ACTIVE_DESKTOP->connectDocumentReplaced (sigc::ptr_fun (on_doc_replaced));
-    _instance->update();
-}
-
-static void
-on_deactivate_desktop (Inkscape::Application *, SPDesktop* /*dt*/, void*)
-{
-    if (!_instance)
-        return;
-
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
-    repr->removeListenerByData (_instance);
-    _instance->_doc_replaced_connection.disconnect();
-}
-
-static void
-on_doc_replaced (SPDesktop* dt, SPDocument* /*doc*/)
-{
-    if (!_instance)
-        return;
-
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(dt));
-    repr->addListener (&_repr_events, _instance);
-    _instance->update();
-}
-
 
 } // namespace Dialog
 } // namespace UI
