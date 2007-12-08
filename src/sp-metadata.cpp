@@ -84,6 +84,7 @@ sp_metadata_class_init (SPMetadataClass *klass)
 static void
 sp_metadata_init (SPMetadata *metadata)
 {
+    (void)metadata;
     debug("0x%08x",(unsigned int)metadata);
 }
 

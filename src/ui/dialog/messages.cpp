@@ -102,8 +102,8 @@ void Messages::message(char *msg)
 }
 
 
-void dialogLoggingFunction(const gchar *log_domain,
-                           GLogLevelFlags log_level,
+void dialogLoggingFunction(const gchar */*log_domain*/,
+                           GLogLevelFlags /*log_level*/,
                            const gchar *messageText,
                            gpointer user_data)
 {

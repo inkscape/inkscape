@@ -71,7 +71,7 @@ void FilterTurbulence::set_updated(bool u){
     updated=u;
 }
 
-void FilterTurbulence::update_pixbuffer(FilterSlot &slot, IRect &area) {
+void FilterTurbulence::update_pixbuffer(FilterSlot &/*slot*/, IRect &area) {
 //g_warning("update_pixbuf");
     int bbox_x0 = area.min()[X];
     int bbox_y0 = area.min()[Y];
