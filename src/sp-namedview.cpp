@@ -159,7 +159,7 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:snap-guide");
     sp_object_read_attr(object, "inkscape:snap-center");
     sp_object_read_attr(object, "inkscape:snap-intersection-grid-guide");
-    sp_object_read_attr(object, "inkscape:snap-snap-intersection-line-segments");
+    sp_object_read_attr(object, "inkscape:snap-intersection-line-segments");
     sp_object_read_attr(object, "inkscape:object-paths");
     sp_object_read_attr(object, "inkscape:object-nodes");
     sp_object_read_attr(object, "inkscape:bbox-paths");
@@ -374,7 +374,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_INTERS_GRIDGUIDE:
-            nv->snap_manager.setSnapIntersectionGG(value ? sp_str_to_bool(value) : FALSE);
+            nv->snap_manager.setSnapIntersectionGG(value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_INTERS_LINESEGM:

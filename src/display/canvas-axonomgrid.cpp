@@ -22,9 +22,9 @@
 #include "sp-canvas-util.h"
 #include "canvas-axonomgrid.h"
 #include "util/mathfns.h" 
+#include "2geom/geom.h"
 #include "display-forward.h"
 #include <libnr/nr-pixops.h>
-
 
 #include "canvas-grid.h"
 #include "desktop-handles.h"
@@ -619,20 +619,74 @@ CanvasAxonomGridSnapper::_getSnapLines(NR::Point const &p) const
     }
 
     /* This is to make sure we snap to only visible grid lines */
-    double scaled_spacing = grid->spacing_ylines; // this is spacing of visible lines if screen pixels
+    double scaled_spacing_h = grid->spacing_ylines; // this is spacing of visible lines if screen pixels
+    double scaled_spacing_v = grid->lyw; // vertical
 
     // convert screen pixels to px
     // FIXME: after we switch to snapping dist in screen pixels, this will be unnecessary
     if (SP_ACTIVE_DESKTOP) {
-        scaled_spacing /= SP_ACTIVE_DESKTOP->current_zoom();
+        scaled_spacing_h /= SP_ACTIVE_DESKTOP->current_zoom();
+        scaled_spacing_v /= SP_ACTIVE_DESKTOP->current_zoom();
     }
 
-    NR::Coord rounded;
-    rounded = Inkscape::Util::round_to_nearest_multiple_plus(p[0], scaled_spacing, grid->origin[0]);
-    s.push_back(std::make_pair(NR::Dim2(0), rounded));
-    rounded = Inkscape::Util::round_to_lower_multiple_plus(p[0], scaled_spacing, grid->origin[0]);
-    s.push_back(std::make_pair(NR::Dim2(0), rounded));
-
+    // In an axonometric grid, any point will be surrounded by 6 grid lines:
+    // - 2 vertical grid lines, one left and one right from the point
+    // - 2 angled z grid lines, one above and one below the point
+    // - 2 angled x grid lines, one above and one below the point
+    
+    // Calculate the x coordinate of the vertical grid lines
+    NR::Coord x_max = Inkscape::Util::round_to_upper_multiple_plus(p[NR::X], scaled_spacing_h, grid->origin[NR::X]);
+    NR::Coord x_min = Inkscape::Util::round_to_lower_multiple_plus(p[NR::X], scaled_spacing_h, grid->origin[NR::X]);
+    
+    // Calculate the y coordinate of the intersection of the angled grid lines with the y-axis
+    double y_proj_along_z = p[NR::Y] - grid->tan_angle[Z]*(p[NR::X] - grid->origin[NR::X]);  
+    double y_proj_along_x = p[NR::Y] + grid->tan_angle[X]*(p[NR::X] - grid->origin[NR::X]);    
+    double y_proj_along_z_max = Inkscape::Util::round_to_upper_multiple_plus(y_proj_along_z, scaled_spacing_v, grid->origin[NR::Y]);
+    double y_proj_along_z_min = Inkscape::Util::round_to_lower_multiple_plus(y_proj_along_z, scaled_spacing_v, grid->origin[NR::Y]);    
+    double y_proj_along_x_max = Inkscape::Util::round_to_upper_multiple_plus(y_proj_along_x, scaled_spacing_v, grid->origin[NR::Y]);
+    double y_proj_along_x_min = Inkscape::Util::round_to_lower_multiple_plus(y_proj_along_x, scaled_spacing_v, grid->origin[NR::Y]);
+    
+    // Calculate the normal for the angled grid lines
+    NR::Point norm_x = NR::rot90(NR::Point(1, -grid->tan_angle[X]));
+    NR::Point norm_z = NR::rot90(NR::Point(1, grid->tan_angle[Z]));
+    
+    // The four angled grid lines form a parallellogram, enclosing the point
+    // One of the two vertical grid lines divides this parallellogram in two triangles
+    // We will now try to find out in which half (i.e. triangle) our point is, and return 
+    // only the three grid lines defining that triangle 
+    
+    // The vertical grid line is at the intersection of two angled grid lines. 
+    // Now go find that intersection!
+    Geom::Point result;
+    Geom::IntersectorKind is = line_intersection(norm_x.to_2geom(), norm_x[NR::Y]*y_proj_along_x_max,
+                                           norm_z.to_2geom(), norm_z[NR::Y]*y_proj_along_z_max,
+                                           result);
+                         
+    // Determine which half of the parallellogram to use 
+    bool use_left_half = true;
+    bool use_right_half = true;
+    
+    if (is == Geom::intersects) {
+        use_left_half = (p[NR::X] - grid->origin[NR::X]) < result[Geom::X];
+        use_right_half = !use_left_half; 
+    }
+    
+    //std::cout << "intersection at " << result << " leads to use_left_half = " << use_left_half << " and use_right_half = " << use_right_half << std::endl;
+       
+    // Return the three grid lines which define the triangle that encloses our point
+    // If we didn't find an intersection above, all 6 grid lines will be returned
+    if (use_left_half) {
+        s.push_back(std::make_pair(norm_z, NR::Point(grid->origin[NR::X], y_proj_along_z_max)));
+        s.push_back(std::make_pair(norm_x, NR::Point(grid->origin[NR::X], y_proj_along_x_min)));
+        s.push_back(std::make_pair(component_vectors[NR::X], NR::Point(x_max, 0)));            
+    }
+    
+    if (use_right_half) {
+        s.push_back(std::make_pair(norm_z, NR::Point(grid->origin[NR::X], y_proj_along_z_min)));
+        s.push_back(std::make_pair(norm_x, NR::Point(grid->origin[NR::X], y_proj_along_x_max)));
+        s.push_back(std::make_pair(component_vectors[NR::X], NR::Point(x_min, 0)));        
+    } 
+    
     return s;
 }
 

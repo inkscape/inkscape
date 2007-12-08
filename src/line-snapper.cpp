@@ -1,8 +1,22 @@
+/**
+ * \file line-snapper.cpp
+ * \brief LineSnapper class.
+ *
+ * Authors:
+ *   Diederik van Lierop <mail@diedenrezi.nl>
+ *   And others...
+ * 
+ * Copyright (C) 1999-2007 Authors
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+ */
+
 #include "libnr/nr-values.h"
 #include "libnr/nr-point-fns.h"
 #include <2geom/geom.h>
 #include "line-snapper.h"
 #include "snapped-line.cpp"
+#include <gtk/gtk.h>
 
 Inkscape::LineSnapper::LineSnapper(SPNamedView const *nv, NR::Coord const d) : Snapper(nv, d)
 {
@@ -13,14 +27,41 @@ void Inkscape::LineSnapper::_doFreeSnap(SnappedConstraints &sc,
                                                     Inkscape::Snapper::PointType const &t,
                                                     NR::Point const &p,
                                                     bool const &f,
-                                                     std::vector<NR::Point> &points_to_snap,
+                                                    std::vector<NR::Point> &points_to_snap,
                                                     std::list<SPItem const *> const &it) const
 {
-    /* Snap along x (i.e. to vertical lines) */
-    _doConstrainedSnap(sc, t, p, f, points_to_snap, component_vectors[NR::X], it);
-    /* Snap along y (i.e. to horizontal lines) */
-    _doConstrainedSnap(sc, t, p, f, points_to_snap, component_vectors[NR::Y], it);
+    Inkscape::SnappedPoint s = SnappedPoint(p, NR_HUGE);
 
+    /* Get the lines that we will try to snap to */
+    const LineList lines = _getSnapLines(p);
+
+    // std::cout << "snap point " << p << " to: " << std::endl;
+
+    for (LineList::const_iterator i = lines.begin(); i != lines.end(); i++) {
+        NR::Point const p1 = i->second; // point at guide/grid line
+        NR::Point const p2 = p1 + NR::rot90(i->first); // 2nd point at guide/grid line
+        
+        // std::cout << "  line through " << i->second << " with normal " << i->first;
+        
+        g_assert(i->first != NR::Point(0,0)); // otherwise we'll have div. by zero because NR::L2(d2) = 0
+        
+        // p_proj = projection of p on the grid/guide line running from p1 to p2
+        // p_proj = p1 + u (p2 - p1)
+        // calculate u according to "Minimum Distance between a Point and a Line"
+        // see http://local.wasp.uwa.edu.au/~pbourke/geometry/pointline/        
+        NR::Point const d1(p-p1); // delta 1
+        NR::Point const d2(p2-p1); // delta 1
+        double const u = (d1[NR::X] * d2[NR::X] + d1[NR::Y] * d2[NR::Y]) / (NR::L2(d2) * NR::L2(d2));
+        
+        NR::Point const p_proj(p1 + u*(p2-p1));
+        NR::Coord const dist = NR::L2(p_proj - p);
+        //Store any line that's within snapping range
+        if (dist < getDistance()) {
+            _addSnappedLine(sc, p_proj, dist, i->first, i->second);
+            // std::cout << " -> distance = " << dist; 
+        }     
+        // std::cout << std::endl;
+    }    
 }
 
 void Inkscape::LineSnapper::_doConstrainedSnap(SnappedConstraints &sc,
@@ -45,11 +86,13 @@ void Inkscape::LineSnapper::_doConstrainedSnap(SnappedConstraints &sc,
         NR::Point const point_on_line = c.hasPoint() ? c.getPoint() : p;
 
         /* Constant term of the line we're trying to snap along */
-        NR::Coord const q = dot(n, point_on_line);
+        NR::Coord const q0 = dot(n, point_on_line);
+        /* Constant term of the grid or guide line */
+        NR::Coord const q1 = dot(i->first, i->second);        
 
         /* Try to intersect this line with the target line */
         Geom::Point t_2geom(NR_HUGE, NR_HUGE);
-        Geom::IntersectorKind const k = Geom::line_intersection(n.to_2geom(), q, component_vectors[i->first].to_2geom(), i->second, t_2geom);
+        Geom::IntersectorKind const k = Geom::line_intersection(n.to_2geom(), q0, i->first.to_2geom(), q1, t_2geom);
         NR::Point t(t_2geom);
 
         if (k == Geom::intersects) {
@@ -57,8 +100,6 @@ void Inkscape::LineSnapper::_doConstrainedSnap(SnappedConstraints &sc,
             //Store any line that's within snapping range
             if (dist < getDistance()) {
 				_addSnappedLine(sc, t, dist, c.getDirection(), t);
-                //SnappedLine dummy = SnappedLine(t, dist, c.getDirection(), t);
-                //sc.infinite_lines.push_back(dummy);
             }
         }
     }

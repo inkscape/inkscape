@@ -886,10 +886,15 @@ CanvasXYGridSnapper::_getSnapLines(NR::Point const &p) const
         }
 
         NR::Coord rounded;        
+        NR::Point point_on_line;
+        
         rounded = Inkscape::Util::round_to_upper_multiple_plus(p[i], scaled_spacing, grid->origin[i]);
-        s.push_back(std::make_pair(NR::Dim2(i), rounded));
+        point_on_line = i ? NR::Point(0, rounded) : NR::Point(rounded, 0);
+        s.push_back(std::make_pair(component_vectors[i], point_on_line));
+        
         rounded = Inkscape::Util::round_to_lower_multiple_plus(p[i], scaled_spacing, grid->origin[i]);
-        s.push_back(std::make_pair(NR::Dim2(i), rounded));
+        point_on_line = i ? NR::Point(0, rounded) : NR::Point(rounded, 0);
+        s.push_back(std::make_pair(component_vectors[i], point_on_line));
     }
 
     return s;
