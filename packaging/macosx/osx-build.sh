@@ -25,7 +25,7 @@ CONFFLAGS="--disable-static --enable-shared --enable-osxapp"
 # Libraries prefix (Warning: NO trailing slash)
 LIBPREFIX="/opt/local"
 # User name on Modevia
-MODEVIA_USER=""
+MODEVIA_NAME=""
 
 ############################################################
 
@@ -307,6 +307,11 @@ fi
 
 if [[ "$UPLOAD" == "t" ]]
 then
+	# Provide default for user name on modevia
+	if [[ "$MODEVIA_NAME" == "" ]]; then
+		MODEVIA_NAME=$USER
+	fi
+	# Uploasd file
 	scp $DMGFILE $INFOFILE "$MODEVIA_NAME"@inkscape.modevia.com:inkscape/docs/macosx-snap/
 	status=$?
 	if [[ $status -ne 0 ]]; then
