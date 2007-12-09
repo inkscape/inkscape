@@ -488,6 +488,8 @@ DocumentProperties::update()
     _rcbsnn.setActive (nv->snap_manager.getSnapModeNode());
     _rcbsng.setActive (nv->snap_manager.getSnapModeGuide());
     _rcbic.setActive (nv->snap_manager.getIncludeItemCenter());
+    _rcbsigg.setActive (nv->snap_manager.getSnapIntersectionGG());
+    _rcbsils.setActive (nv->snap_manager.getSnapIntersectionLS());    
     _rcbsnop.setActive(nv->snap_manager.object.getSnapToItemPath());
     _rcbsnon.setActive(nv->snap_manager.object.getSnapToItemNode());
     _rcbsnbbp.setActive(nv->snap_manager.object.getSnapToBBoxPath());
