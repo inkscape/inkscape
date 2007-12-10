@@ -46,6 +46,8 @@ ui_dialog_libuidialog_a_SOURCES =		\
 	ui/dialog/memory.h			\
 	ui/dialog/messages.cpp			\
 	ui/dialog/messages.h			\
+	ui/dialog/print.cpp			\
+	ui/dialog/print.h			\
 	ui/dialog/scriptdialog.cpp		\
 	ui/dialog/scriptdialog.h		\
 	ui/dialog/text-properties.cpp		\

@@ -52,6 +52,8 @@ ui_widget_libuiwidget_a_SOURCES =	\
 	ui/widget/registered-enums.h   \
 	ui/widget/registry.cpp          \
 	ui/widget/registry.h            \
+	ui/widget/rendering-options.cpp          \
+	ui/widget/rendering-options.h            \
 	ui/widget/rotateable.h            \
 	ui/widget/rotateable.cpp            \
 	ui/widget/ruler.cpp             \

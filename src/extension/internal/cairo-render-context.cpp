@@ -647,6 +647,10 @@ CairoRenderContext::addClippingRect(double x, double y, double width, double hei
 bool
 CairoRenderContext::setupSurface(double width, double height)
 {
+    // Is the surface already set up?
+    if (_is_valid)
+        return true;
+
     if (_vector_based_target && _stream == NULL)
         return false;
 
@@ -674,11 +678,12 @@ CairoRenderContext::setupSurface(double width, double height)
 }
 
 bool
-CairoRenderContext::setSurface(cairo_surface_t *surface)
+CairoRenderContext::setSurfaceTarget(cairo_surface_t *surface, bool is_vector)
 {
     if (_is_valid || !surface)
         return false;
 
+    _vector_based_target = is_vector;
     bool ret = _finishSurfaceSetup (surface);
     if (ret)
         cairo_surface_reference (surface);
@@ -724,7 +729,7 @@ CairoRenderContext::finish(void)
 
     _is_valid = FALSE;
 
-    if (_vector_based_target) {
+    if (_vector_based_target && _stream) {
         /* Flush stream to be sure. */
         (void) fflush(_stream);
 

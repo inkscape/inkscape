@@ -83,13 +83,13 @@ public:
     bool setImageTarget(cairo_format_t format);
     bool setPdfTarget(gchar const *utf8_fn);
     bool setPsTarget(gchar const *utf8_fn);
+    /** Set the cairo_surface_t from an external source */
+    bool setSurfaceTarget(cairo_surface_t *surface, bool is_vector);
 
     /** Creates the cairo_surface_t for the context with the
     given width, height and with the currently set target
     surface type. */
     bool setupSurface(double width, double height);
-    /** Set the cairo_surface_t from an external source */
-    bool setSurface(cairo_surface_t *surface);
 
     cairo_surface_t *getSurface(void);
 
