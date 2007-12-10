@@ -166,8 +166,6 @@ EXTRA_DIST =	\
 	widgets/makefile.in	\
 	xml/makefile.in		\
 	2geom/makefile.in	\
-	extension/internal/gnome.cpp	\
-	extension/internal/gnome.h	\
 	extension/internal/win32.cpp	\
 	extension/internal/win32.h	\
 	extension/internal/emf-win32-inout.cpp	\
