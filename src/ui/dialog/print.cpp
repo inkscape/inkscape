@@ -14,6 +14,7 @@
 #endif
 
 #include <gtkmm/stock.h>
+#include <io.h>
 #include "print.h"
 
 #include "extension/internal/cairo-render-context.h"
