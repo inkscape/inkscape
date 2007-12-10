@@ -13,6 +13,7 @@
 # include <config.h>
 #endif
 
+#include <io.h>
 #include <gtkmm/stock.h>
 #include <io.h>
 #include "print.h"
