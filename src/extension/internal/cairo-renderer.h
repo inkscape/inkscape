@@ -17,8 +17,6 @@
 # include "config.h"
 #endif
 
-#ifdef HAVE_CAIRO_PDF
-
 #include "extension/extension.h"
 #include <set>
 #include <string>
@@ -68,8 +66,6 @@ void calculatePreserveAspectRatio(unsigned int aspect_align, unsigned int aspect
 }  /* namespace Internal */
 }  /* namespace Extension */
 }  /* namespace Inkscape */
-
-#endif /* HAVE_CAIRO_PDF */
 
 #endif /* !EXTENSION_INTERNAL_CAIRO_RENDERER_H_SEEN */
 

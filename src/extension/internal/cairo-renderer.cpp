@@ -16,8 +16,6 @@
 # include "config.h"
 #endif
 
-#ifdef HAVE_CAIRO_PDF
-
 #ifndef PANGO_ENABLE_BACKEND
 #define PANGO_ENABLE_BACKEND
 #endif
@@ -597,9 +595,6 @@ calculatePreserveAspectRatio(unsigned int aspect_align, unsigned int aspect_clip
 #undef TRACE
 
 /* End of GNU GPL code */
-
-#endif /* HAVE_CAIRO_PDF */
-
 
 /*
   Local Variables:

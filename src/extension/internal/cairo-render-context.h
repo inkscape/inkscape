@@ -17,8 +17,6 @@
 # include "config.h"
 #endif
 
-#ifdef HAVE_CAIRO_PDF
-
 #include "extension/extension.h"
 #include <set>
 #include <string>
@@ -90,6 +88,8 @@ public:
     given width, height and with the currently set target
     surface type. */
     bool setupSurface(double width, double height);
+    /** Set the cairo_surface_t from an external source */
+    bool setSurface(cairo_surface_t *surface);
 
     cairo_surface_t *getSurface(void);
 
@@ -169,6 +169,7 @@ protected:
    
     unsigned int _showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoGlyphInfo> const &glyphtext, bool is_stroke);
 
+    bool _finishSurfaceSetup(cairo_surface_t *surface);
     void _setFillStyle(SPStyle const *style, NRRect const *pbox);
     void _setStrokeStyle(SPStyle const *style, NRRect const *pbox);
     
@@ -182,8 +183,6 @@ protected:
 }  /* namespace Internal */
 }  /* namespace Extension */
 }  /* namespace Inkscape */
-
-#endif /* HAVE_CAIRO_PDF */
 
 #endif /* !EXTENSION_INTERNAL_CAIRO_RENDER_CONTEXT_H_SEEN */
 

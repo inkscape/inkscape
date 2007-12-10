@@ -16,8 +16,6 @@
 # include "config.h"
 #endif
 
-#ifdef HAVE_CAIRO_PDF
-
 #ifndef PANGO_ENABLE_BACKEND
 #define PANGO_ENABLE_BACKEND
 #endif
@@ -672,6 +670,24 @@ CairoRenderContext::setupSurface(double width, double height)
             break;
     }
 
+    return _finishSurfaceSetup (surface);
+}
+
+bool
+CairoRenderContext::setSurface(cairo_surface_t *surface)
+{
+    if (_is_valid || !surface)
+        return false;
+
+    bool ret = _finishSurfaceSetup (surface);
+    if (ret)
+        cairo_surface_reference (surface);
+    return ret;
+}
+
+bool
+CairoRenderContext::_finishSurfaceSetup(cairo_surface_t *surface)
+{
     _cr = cairo_create(surface);
     _surface = surface;
 
@@ -1501,8 +1517,6 @@ _write_callback(void *closure, const unsigned char *data, unsigned int length)
 #undef TEST
 
 /* End of GNU GPL code */
-
-#endif /* HAVE_CAIRO_PDF */
 
 
 /*
