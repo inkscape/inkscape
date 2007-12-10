@@ -63,7 +63,7 @@ ui_dialog_libuidialog_a_SOURCES =		\
 	ui/dialog/xml-editor.h			\
 	ui/dialog/aboutbox.cpp		    \
 	ui/dialog/aboutbox.h            \
-    ui/dialog/ocaldialogs.cpp       \
-    ui/dialog/ocaldialogs.h
+	ui/dialog/ocaldialogs.cpp       \
+	ui/dialog/ocaldialogs.h
 
 ui/dialog/aboutbox.$(OBJEXT): inkscape_version.h
