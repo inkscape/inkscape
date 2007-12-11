@@ -12,10 +12,11 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
+#ifdef WIN32
+#include <io.h>
+#endif
 
-#include <io.h>
 #include <gtkmm/stock.h>
-#include <io.h>
 #include "print.h"
 
 #include "extension/internal/cairo-render-context.h"
