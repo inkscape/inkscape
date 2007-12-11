@@ -82,6 +82,7 @@ libinkpre_a_SOURCES =	\
 	gradient-context.cpp gradient-context.h \
 	gradient-drag.cpp gradient-drag.h \
 	help.cpp help.h	\
+	helper-fns.h \
         icon-size.h \
 	inkscape-stock.cpp inkscape-stock.h\
 	inkscape.cpp inkscape.h inkscape-private.h	\
@@ -141,6 +142,7 @@ libinkpre_a_SOURCES =	\
 	shape-editor.cpp shape-editor.h \
 	shortcuts.cpp shortcuts.h	\
 	snap.cpp snap.h	\
+	snapped-line.cpp snapped-line.h \
 	snapped-point.cpp snapped-point.h \
 	snapper.cpp snapper.h \
 	line-snapper.cpp line-snapper.h \
