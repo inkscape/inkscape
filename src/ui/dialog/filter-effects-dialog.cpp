@@ -1477,9 +1477,11 @@ void FilterEffectsDialog::PrimitiveList::draw_connection(const Gtk::TreeIter& in
             const int row_index = find_index(res);
             const int x2 = rct.get_x() + fheight * (row_count - row_index) - fheight / 2;
             const int y2 = rct.get_y() + rct.get_height();
-            
-            get_bin_window()->draw_line(gc, x1, y1, x2, y1);
-            get_bin_window()->draw_line(gc, x2, y1, x2, y2);
+
+            // Draw a bevelled 'L'-shaped connection
+            get_bin_window()->draw_line(get_style()->get_black_gc(), x1, y1, x2-fheight/4, y1);
+            get_bin_window()->draw_line(get_style()->get_black_gc(), x2-fheight/4, y1, x2, y1-fheight/4);
+            get_bin_window()->draw_line(get_style()->get_black_gc(), x2, y1-fheight/4, x2, y2);            
         }
     }
 }
