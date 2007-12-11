@@ -372,10 +372,9 @@
     <link command="${arch}g++" out="${build}/inkscape.exe"
               strip="true" symfile="${build}/inkscape.dbg"
               stripcommand="${archutil}strip"
-              objcopycommand="${archutil}objcopy"
-			  >
+              objcopycommand="${archutil}objcopy">
        <flags>
-           -mwindows
+           -mwindows -g
        </flags>
        <fileset dir="${build}">
            <include name="inkres.o"/>
@@ -438,8 +437,7 @@
     <link command="${arch}g++" out="${build}/inkview.exe"
               strip="true" symfile="${build}/inkview.dbg"
               stripcommand="${archutil}strip"
-              objcopycommand="${archutil}objcopy"
-              >
+              objcopycommand="${archutil}objcopy">
        <flags>
        </flags>
        <fileset dir="${build}">
@@ -449,6 +447,7 @@
        </fileset>
        <libs>
            -L${gtk}/lib
+           -lpoppler-cairo -lpoppler-glib -lpoppler.dll 
            -lgtkmm-2.4 -lgdkmm-2.4 -lglibmm-2.4
            -latkmm-1.6 -lpangomm-1.4 -lsigc-2.0
            -lgtk-win32-2.0 -lgdk-win32-2.0 -latk-1.0
@@ -458,16 +457,17 @@
            <!-- PERL -->
            -L${gtk}/perl/lib/CORE -lperl58
            <!-- PYTHON -->
-           -L${gtk}/python/libs -lpython24
+           -L${gtk}/python/libs -lpython25
            ${gtk}/bin/libxml2.dll
            ${gtk}/bin/libxslt.dll
            ${gtk}/lib/iconv.lib
-		   -lcairo.dll
-		   -lcairomm-1.0.dll
+		   -lcairo.dll -lcairomm-1.0.dll
+           -lwpg-0.1.dll -lwpg-stream-0.1.dll
+           -lMagick++ -lWand -lMagick
            -lfreetype.dll -lfontconfig.dll
            -llcms.dll
            -lssl -lcrypto
-           -lpng -lpopt ${gtk}/lib/zdll.lib
+           -lpng -ljpeg.dll -ltiff.dll -lpopt ${gtk}/lib/zdll.lib
            -lgc -mwindows -lws2_32 -lintl -lm
        </libs>
     </link>
