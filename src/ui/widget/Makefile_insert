@@ -6,6 +6,7 @@ ui/widget/clean:
 	rm -f ui/widget/libuiwidget.a $(ui_libuiwidget_a_OBJECTS)
 
 ui_widget_libuiwidget_a_SOURCES =	\
+	ui/widget/attr-widget.h	\
 	ui/widget/button.h	\
 	ui/widget/button.cpp	\
 	ui/widget/color-picker.cpp     \
