@@ -63,7 +63,7 @@ libinkpre_a_SOURCES =	\
 	document-undo.cpp	\
 	document.cpp document.h document-private.h	\
 	document-subset.cpp document-subset.h	\
-        doxygen-main.cpp \
+	doxygen-main.cpp \
 	draw-anchor.cpp	\
 	draw-anchor.h	\
 	draw-context.cpp draw-context.h	\
@@ -83,11 +83,11 @@ libinkpre_a_SOURCES =	\
 	gradient-drag.cpp gradient-drag.h \
 	help.cpp help.h	\
 	helper-fns.h \
-        icon-size.h \
+	icon-size.h \
 	inkscape-stock.cpp inkscape-stock.h\
 	inkscape.cpp inkscape.h inkscape-private.h	\
 	interface.cpp interface.h	\
-	isnan.h \
+	isnan.h isinf.h \
 	isnormal.h \
 	knot-enums.h	\
 	knot-holder-entity.h	\
