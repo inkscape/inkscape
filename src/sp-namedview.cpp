@@ -154,7 +154,8 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:window-height");
     sp_object_read_attr(object, "inkscape:window-x");
     sp_object_read_attr(object, "inkscape:window-y");
-    sp_object_read_attr(object, "inkscape:snap-bbox");
+    sp_object_read_attr(object, "inkscape:snap-global");
+    sp_object_read_attr(object, "inkscape:snap-bbox");    
     sp_object_read_attr(object, "inkscape:snap-nodes");
     sp_object_read_attr(object, "inkscape:snap-guide");
     sp_object_read_attr(object, "inkscape:snap-center");
@@ -355,6 +356,10 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             break;
     case SP_ATTR_INKSCAPE_WINDOW_Y:
             nv->window_y = value ? atoi(value) : -1; // -1 means not set
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+    case SP_ATTR_INKSCAPE_SNAP_GLOBAL:
+            nv->snap_manager.setSnapEnabledGlobally(value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_BBOX:

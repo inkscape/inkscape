@@ -254,6 +254,9 @@ DocumentProperties::build_snap()
 {
     _page_snap.show();
 	//General options
+    _rcbsg.init (_("Enable snapping"),
+                _("When disabled, nothing will snap"),
+                "inkscape:snap-global", _wr);    
 	_rcbsnbb.init (_("_Bounding box corners"),
                 _("Snap bounding box corners to grid lines, to guides, and to other bounding boxes (Snapping of bounding boxes is only available in the selector tool)"),
                 "inkscape:snap-bbox", _wr);
@@ -303,9 +306,17 @@ DocumentProperties::build_snap()
     slaves.push_back(_rcbsnbbp._button);
     slaves.push_back(_rcbsnbbn._button);
     _rcbsnbb.setSlaveButton(slaves);
+    
+    slaves.clear();
+    slaves.push_back(_rcbsnn._button);
+    slaves.push_back(_rcbsnbb._button);
+    
+    _rcbsg.setSlaveButton(slaves);
 
     Gtk::Label *label_g = manage (new Gtk::Label);
-    label_g->set_markup (_("<b>What snaps</b>"));
+    label_g->set_markup (_("<b>Global snapping toggle</b>"));
+    Gtk::Label *label_w = manage (new Gtk::Label);
+    label_w->set_markup (_("<b>What snaps</b>"));    
     Gtk::Label *label_o = manage (new Gtk::Label);
     label_o->set_markup (_("<b>Snap to objects</b>"));
     Gtk::Label *label_gr = manage (new Gtk::Label);
@@ -315,7 +326,10 @@ DocumentProperties::build_snap()
     
     Gtk::Widget *const array[] =
     {
-        label_g,           0,
+        label_g,            0,
+        0,                  _rcbsg._button,
+        0,                  0,
+        label_w,            0,
         0,                  _rcbsnn._button,
         0,                  _rcbsnbb._button,
         0, 					0,
@@ -494,6 +508,8 @@ DocumentProperties::update()
     _rsu_sn.setValue (nv->gridtolerance);
 
     _rsu_gusn.setValue (nv->guidetolerance);
+    
+    _rcbsg.setActive (nv->snap_manager.getSnapEnabledGlobally());    
 
     //-----------------------------------------------------------grids page
 

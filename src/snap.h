@@ -140,6 +140,14 @@ public:
     bool getIncludeItemCenter() const {
         return _include_item_center;
     }
+    
+    void setSnapEnabledGlobally(bool enabled) {
+        _snap_enabled_globally = enabled;   
+    }
+        
+    bool getSnapEnabledGlobally() const {
+        return _snap_enabled_globally;   
+    }
         
 protected:
     SPNamedView const *_named_view;
@@ -156,6 +164,7 @@ private:
     bool _include_item_center; //If true, snapping nodes will also snap the item's center
     bool _intersectionGG;
     bool _intersectionLS;
+    bool _snap_enabled_globally; //Toggles ALL snapping
     
     std::pair<NR::Point, bool> _snapTransformed(Inkscape::Snapper::PointType type,
                                                 std::vector<NR::Point> const &points,

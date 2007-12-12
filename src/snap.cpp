@@ -44,9 +44,9 @@ SnapManager::SnapManager(SPNamedView const *v) :
     guide(v, 0),
     object(v, 0),
     _named_view(v),
-    _include_item_center(false)
-{
-    
+    _include_item_center(false),
+    _snap_enabled_globally(true)
+{    
 }
 
 
@@ -92,6 +92,10 @@ SnapManager::getGridSnappers() const
 
 bool SnapManager::SomeSnapperMightSnap() const
 {
+    if (!_snap_enabled_globally) {
+        return false;
+    }
+    
     SnapperList const s = getSnappers();
     SnapperList::const_iterator i = s.begin();
     while (i != s.end() && (*i)->ThisSnapperMightSnap() == false) {
@@ -327,7 +331,9 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
     ** appropriate transformation with `true'; otherwise we return the original scale with `false'.
     */
 
-    /* Quick check to see if we have any snappers that are enabled */
+    /* Quick check to see if we have any snappers that are enabled
+    ** Also used to globally disable all snapping 
+    */
     if (SomeSnapperMightSnap() == false) {
         return std::make_pair(transformation, false);
     }
