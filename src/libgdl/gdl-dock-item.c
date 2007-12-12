@@ -1298,7 +1298,7 @@ gdl_dock_item_dock (GdlDockObject    *object,
             }
             if (req.width > 1)
                 g_object_set (object, "preferred-width", req.width, NULL);
-            if (req.height > 1)
+            if (req.height > 1 && object_req.height > req.height)
                 g_object_set (object, "preferred-height",
                               object_req.height - req.height, NULL);
             break;
