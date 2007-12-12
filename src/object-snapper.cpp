@@ -411,7 +411,7 @@ void Inkscape::ObjectSnapper::guideSnap(SnappedConstraints &sc,
 bool Inkscape::ObjectSnapper::ThisSnapperMightSnap() const
 {
     bool snap_to_something = _snap_to_itempath || _snap_to_itemnode || _snap_to_bboxpath || _snap_to_bboxnode;
-    return (_enabled && _snap_from != 0 && snap_to_something);
+    return (_snap_enabled && _snap_from != 0 && snap_to_something);
 }
 
 

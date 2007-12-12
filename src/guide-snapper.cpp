@@ -44,7 +44,7 @@ Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(NR::Point
  */
 bool Inkscape::GuideSnapper::ThisSnapperMightSnap() const
 {
-    return _named_view == NULL ? false : (_enabled && _snap_from != 0 && _named_view->showguides);
+    return _named_view == NULL ? false : (_snap_enabled && _snap_from != 0 && _named_view->showguides);
 }
 
 void Inkscape::GuideSnapper::_addSnappedLine(SnappedConstraints &sc, NR::Point const snapped_point, NR::Coord const snapped_distance, NR::Point const normal_to_line, NR::Point const point_on_line) const

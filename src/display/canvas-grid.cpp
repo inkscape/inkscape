@@ -159,7 +159,7 @@ grid_canvasitem_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
     };
 
 CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc, GridType type)
-    : namelabel("", Gtk::ALIGN_CENTER), visible(true), snap_enabled(true), gridtype(type)
+    : namelabel("", Gtk::ALIGN_CENTER), visible(true), gridtype(type)
 {
     repr = in_repr;
     doc = in_doc;
@@ -336,6 +336,14 @@ CanvasGrid::on_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gc
     ((CanvasGrid*) data)->onReprAttrChanged(repr, key, oldval, newval, is_interactive);
 }
 
+bool CanvasGrid::isSnapEnabled() 
+{ 
+    if (snapper == NULL) {
+       return false;
+    } 
+    
+    return snapper->getEnabled();    
+}
 
 // ##########################################################
 //   CanvasXYGrid
@@ -644,6 +652,11 @@ CanvasXYGrid::readRepr()
     if ( (value = repr->attribute("visible")) ) {
         visible = (strcmp(value,"true") == 0);
     }
+    
+    if ( (value = repr->attribute("snap_enabled")) ) {
+        g_assert(snapper != NULL);
+        snapper->setEnabled(strcmp(value,"true") == 0);
+    }
 
     for (GSList *l = canvasitems; l != NULL; l = l->next) {
         sp_canvas_item_request_update ( SP_CANVAS_ITEM(l->data) );
@@ -685,7 +698,9 @@ CanvasXYGrid::updateWidgets()
     _wr.setUpdating (true);
 
     _rcb_visible.setActive(visible);
-    _rcb_snap_enabled.setActive(snap_enabled);
+    if (snapper != NULL) {
+        _rcb_snap_enabled.setActive(snapper->getEnabled());
+    }
 
     _rumg.setUnit (gridunit);
 
@@ -905,6 +920,15 @@ void CanvasXYGridSnapper::_addSnappedLine(SnappedConstraints &sc, NR::Point cons
     SnappedLine dummy = SnappedLine(snapped_point, snapped_distance, normal_to_line, point_on_line);
     sc.grid_lines.push_back(dummy);
 }
+
+/**
+ *  \return true if this Snapper will snap at least one kind of point.
+ */
+bool CanvasXYGridSnapper::ThisSnapperMightSnap() const
+{
+    return _named_view == NULL ? false : (_snap_enabled && _snap_from != 0);
+}
+
 
 
 

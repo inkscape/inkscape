@@ -55,9 +55,10 @@ public:
     /**
     *  \return true if this Snapper will snap at least one kind of point.
     */
-    virtual bool ThisSnapperMightSnap() const {return (_enabled && _snap_from != 0);} // will likely be overridden by derived classes
+    virtual bool ThisSnapperMightSnap() const {return (_snap_enabled && _snap_from != 0);} // will likely be overridden by derived classes
 
     void setEnabled(bool s);
+    bool getEnabled() const {return _snap_enabled;}
 
     void freeSnap(SnappedConstraints &sc,
                           PointType const &t,
@@ -117,7 +118,7 @@ public:
 protected:
     SPNamedView const *_named_view;
     int _snap_from; ///< bitmap of point types that we will snap from
-    bool _enabled; ///< true if this snapper is enabled, otherwise false
+    bool _snap_enabled; ///< true if this snapper is enabled, otherwise false
     
 private:
 

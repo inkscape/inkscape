@@ -99,7 +99,7 @@ public:
     static void on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive, void * data);
 
     bool isVisible() { return visible; };
-    bool isSnapEnabled() { return snap_enabled; };
+    bool isSnapEnabled();
 
 protected:
     CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc, GridType type);
@@ -115,8 +115,7 @@ protected:
     Inkscape::UI::Widget::RegisteredCheckButton _rcb_visible;
     bool visible;
     Inkscape::UI::Widget::RegisteredCheckButton _rcb_snap_enabled;
-    bool snap_enabled;
-
+    
     GridType gridtype;
 
 private:
@@ -173,6 +172,7 @@ class CanvasXYGridSnapper : public LineSnapper
 {
 public:
     CanvasXYGridSnapper(CanvasXYGrid *grid, SPNamedView const *nv, NR::Coord const d);
+    bool ThisSnapperMightSnap() const;
 
 private:
     LineList _getSnapLines(NR::Point const &p) const;

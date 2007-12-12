@@ -395,7 +395,8 @@ CanvasAxonomGrid::readRepr()
     }
 
     if ( (value = repr->attribute("snap_enabled")) ) {
-        snap_enabled = (strcmp(value,"true") == 0);
+        g_assert(snapper != NULL);
+        snapper->setEnabled(strcmp(value,"true") == 0);
     }
 
     for (GSList *l = canvasitems; l != NULL; l = l->next) {
@@ -437,7 +438,9 @@ CanvasAxonomGrid::updateWidgets()
     _wr.setUpdating (true);
 
     _rcb_visible.setActive(visible);
-    _rcb_snap_enabled.setActive(snap_enabled);
+    if (snapper != NULL) {
+        _rcb_snap_enabled.setActive(snapper->getEnabled());
+    }
 
     _rumg.setUnit (gridunit);
 
