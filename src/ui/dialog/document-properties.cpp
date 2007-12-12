@@ -231,7 +231,7 @@ DocumentProperties::build_guides()
                     "guidehicolor", "guidehiopacity", _wr);
                     
     _rcbsng.init (_("_Snap guides while dragging"),
-                  _("While dragging a guide, snap to object nodes or bounding box corners ('Nodes' or 'Bounding box corners' must be enabled in the 'Snap' tab)"),
+                  _("While dragging a guide, snap to object nodes or bounding box corners ('Snap to nodes' or 'snap to bounding box corners' must be enabled in the 'Snap' tab)"),
                   "inkscape:snap-guide", _wr);
                     
     Gtk::Label *label_gui = manage (new Gtk::Label);
@@ -304,54 +304,36 @@ DocumentProperties::build_snap()
     slaves.push_back(_rcbsnbbn._button);
     _rcbsnbb.setSlaveButton(slaves);
 
+    Gtk::Label *label_g = manage (new Gtk::Label);
+    label_g->set_markup (_("<b>What snaps</b>"));
     Gtk::Label *label_o = manage (new Gtk::Label);
-    label_o->set_markup (_("Snap to objects"));
+    label_o->set_markup (_("<b>Snap to objects</b>"));
     Gtk::Label *label_gr = manage (new Gtk::Label);
-    label_gr->set_markup (_("Snap to grids"));
+    label_gr->set_markup (_("<b>Snap to grids</b>"));
     Gtk::Label *label_gu = manage (new Gtk::Label);
-    label_gu->set_markup (_("Snap to guides"));
+    label_gu->set_markup (_("<b>Snap to guides</b>"));
     
-    Gtk::Widget *const array_from[] =
+    Gtk::Widget *const array[] =
     {
+        label_g,           0,
         0,                  _rcbsnn._button,
-        0,                  _rcbsnbb._button
-    };
-
-    attach_all(_snap_table_from, array_from, G_N_ELEMENTS(array_from));
-    
-    _snap_frame_from.set_label(_("What snaps"));
-    _page_snap.pack_start (_snap_frame_from, false, false, 0);
-    _snap_table_from.resize(3, 2);
-    _snap_table_from.set_border_width (4);
-    _snap_table_from.set_row_spacings (4);
-    _snap_table_from.set_col_spacings (4);
-    _snap_frame_from.add(_snap_table_from);
-    
-    Gtk::Widget *const array_to[] =
-    {
+        0,                  _rcbsnbb._button,
+        0, 					0,
         label_o,            0,
-        0,                  _rcbsnop._button,
-        0,                  _rcbsnon._button,
+        0, 					_rcbsnop._button,
+        0, 					_rcbsnon._button,
         0,                  _rcbsnbbp._button,
         0,                  _rcbsnbbn._button,
         0,                  _rsu_sno._vbox,
-        0,                  0,
+        0, 					0,
         label_gr,           0,
         0,                  _rsu_sn._vbox,
-        0,                  0,
-        label_gu,           0,
-        0,                  _rsu_gusn._vbox
+        0, 					0,
+        label_gu,         	0,
+        0,                	_rsu_gusn._vbox
     };
-    
-    attach_all(_snap_table_to, array_to, G_N_ELEMENTS(array_to));
-    
-    _snap_frame_to.set_label(_("What to snap to"));
-    _page_snap.pack_start (_snap_frame_to, false, false, 0);
-    _snap_table_to.resize(3, 2);
-    _snap_table_to.set_border_width (4);
-    _snap_table_to.set_row_spacings (4);
-    _snap_table_to.set_col_spacings (4);
-    _snap_frame_to.add(_snap_table_to);
+
+    attach_all(_page_snap.table(), array, G_N_ELEMENTS(array));
  }
 
 void
@@ -375,7 +357,7 @@ DocumentProperties::build_snap_dtls()
     //Other options to locate here: e.g. visual snapping indicators on/off
 
     Gtk::Label *label_i= manage (new Gtk::Label);
-    label_i->set_markup (_("<b>Snap to intersections of</b>"));
+    label_i->set_markup (_("<b>Snapping to intersections of</b>"));
     Gtk::Label *label_m = manage (new Gtk::Label);
     label_m->set_markup (_("<b>Miscellaneous</b>"));
 

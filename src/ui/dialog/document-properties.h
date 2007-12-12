@@ -77,10 +77,6 @@ protected:
     RegisteredUnitMenu    _rum_gusn;
     RegisteredColorPicker _rcp_gui, _rcp_hgui;
     //---------------------------------------------------------------
-    Gtk::Frame           _snap_frame_from;
-    Gtk::Frame           _snap_frame_to;
-    Gtk::Table           _snap_table_from;
-    Gtk::Table           _snap_table_to;
     RegisteredCheckButton _rcbsnbb, _rcbsnn, _rcbsnop;
     RegisteredCheckButton _rcbsnon, _rcbsnbbp, _rcbsnbbn;
     RegisteredUnitMenu    _rumso;
