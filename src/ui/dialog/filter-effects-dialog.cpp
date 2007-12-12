@@ -1894,7 +1894,6 @@ FilterEffectsDialog::FilterEffectsDialog()
     show_all_children();
     init_settings_widgets();
     _primitive_list.update();
-    update_settings_view();
 }
 
 FilterEffectsDialog::~FilterEffectsDialog()
@@ -1905,6 +1904,13 @@ FilterEffectsDialog::~FilterEffectsDialog()
 void FilterEffectsDialog::set_attrs_locked(const bool l)
 {
     _locked = l;
+}
+
+void FilterEffectsDialog::show_all_vfunc()
+{
+    UI::Widget::Panel::show_all_vfunc();
+
+    update_settings_view();
 }
 
 void FilterEffectsDialog::init_settings_widgets()

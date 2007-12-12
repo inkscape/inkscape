@@ -48,6 +48,8 @@ public:
     { return *new FilterEffectsDialog(); }
 
     void set_attrs_locked(const bool);
+protected:
+    virtual void show_all_vfunc();
 private:
     class SignalObserver;
 
