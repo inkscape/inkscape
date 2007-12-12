@@ -1207,6 +1207,8 @@ FilterEffectsDialog::PrimitiveList::PrimitiveList(FilterEffectsDialog& d)
       _in_drag(0),
       _observer(new SignalObserver)
 {
+    d.signal_expose_event().connect(sigc::mem_fun(*this, &PrimitiveList::on_expose_signal));
+    
     add_events(Gdk::POINTER_MOTION_MASK | Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK);
     signal_expose_event().connect(sigc::mem_fun(*this, &PrimitiveList::on_expose_signal));
 
