@@ -468,7 +468,8 @@
            -llcms.dll
            -lssl -lcrypto
            -lpng -ljpeg.dll -ltiff.dll -lpopt ${gtk}/lib/zdll.lib
-           -lgc -mwindows -lws2_32 -lintl -lm
+           -lgc -mwindows
+		   -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
        </libs>
     </link>
   </target>
