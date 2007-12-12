@@ -32,8 +32,7 @@ namespace UI {
 namespace Dialog {
 
 void
-Print::_draw_page (const Glib::RefPtr<Gtk::PrintContext> &context,
-                     int page_nr)
+Print::_draw_page (const Glib::RefPtr<Gtk::PrintContext> &context, int /*page_nr*/)
 {
     if (_tab.as_bitmap()) {
         // Render as exported PNG
@@ -116,7 +115,7 @@ Print::_create_custom_widget ()
 }
 
 void
-Print::_custom_widget_apply (Gtk::Widget *widget)
+Print::_custom_widget_apply (Gtk::Widget */*widget*/)
 {
     g_warning (_("custom widget apply"));
 }

@@ -486,8 +486,6 @@ bool sp_svg_read_icc_color( gchar const *str, gchar const **end_ptr, SVGICCColor
                         dest->colorProfile += *str;
                     }
                     str++;
-                    gboolean aa = g_ascii_isalpha(*str);
-                    gboolean bb = aa;
                 }
                 while ( g_ascii_isspace(*str) || *str == ',' ) {
                     str++;

@@ -123,7 +123,7 @@ sp_print_preview_document(SPDocument *doc)
 }
 
 void
-sp_print_document(SPDocument *doc, unsigned int direct)
+sp_print_document(SPDocument *doc, unsigned int /*direct*/)
 {
     sp_document_ensure_up_to_date(doc);
 
@@ -136,6 +136,7 @@ sp_print_document(SPDocument *doc, unsigned int direct)
     // Run print dialog
     Inkscape::UI::Dialog::Print printop(doc,base);
     Gtk::PrintOperationResult res = printop.run(Gtk::PRINT_OPERATION_ACTION_PRINT_DIALOG);
+    (void)res; // TODO handle this
 
     // Release arena
     sp_item_invoke_hide(base, dkey);
