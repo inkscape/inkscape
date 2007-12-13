@@ -64,18 +64,6 @@ determinant3v (const double a[3], const double b[3], const double c[3]) {
             a[2]*b[1]*c[0]);
 }
 
-/* Fills the matrix A with random values between lower and upper */
-template <int S, int T>
-inline void fill_random (double A[S][T], double lower = 0.0, double upper = 1.0) {
-    srand(time(NULL));
-    double range = upper - lower;
-    for (int i = 0; i < S; ++i) {
-        for (int j = 0; j < T; ++j) {
-            A[i][j] = range*(random()/(RAND_MAX + 1.0)) - lower;
-        }
-    }
-}
-
 /* Copy the elements of A into B */
 template <int S, int T>
 inline void copy_mat(double A[S][T], double B[S][T]) {
