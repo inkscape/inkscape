@@ -374,7 +374,7 @@
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
        <flags>
-           -mwindows -g
+           -mwindows
        </flags>
        <fileset dir="${build}">
            <include name="inkres.o"/>
