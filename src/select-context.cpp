@@ -38,6 +38,7 @@
 #include "message-stack.h"
 #include "selection-describer.h"
 #include "seltrans.h"
+#include "box3d.h"
 
 static void sp_select_context_class_init(SPSelectContextClass *klass);
 static void sp_select_context_init(SPSelectContext *select_context);
@@ -412,7 +413,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             if (event->button.button == 1) {
                 if (!selection->isEmpty()) {
                     SPItem *clicked_item = (SPItem *) selection->itemList()->data;
-                    if (SP_IS_GROUP (clicked_item)) { // enter group
+                    if (SP_IS_GROUP(clicked_item) && !SP_IS_BOX3D(clicked_item)) { // enter group if it's not a 3D box
                         desktop->setCurrentLayer(reinterpret_cast<SPObject *>(clicked_item));
                         sp_desktop_selection(desktop)->clear();
                         sc->dragging = false;
@@ -861,7 +862,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     if (MOD__CTRL_ONLY) {
                         if (selection->singleItem()) {
                             SPItem *clicked_item = selection->singleItem();
-                            if (SP_IS_GROUP (clicked_item)) { // enter group
+                            if ( SP_IS_GROUP(clicked_item) &&
+                                !SP_IS_BOX3D(clicked_item)) { // enter group if it's not a 3D box
                                 desktop->setCurrentLayer(reinterpret_cast<SPObject *>(clicked_item));
                                 sp_desktop_selection(desktop)->clear();
                             } else {

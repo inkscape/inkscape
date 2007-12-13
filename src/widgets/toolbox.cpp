@@ -105,7 +105,7 @@ static void       sp_zoom_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainA
 static void       sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
-static void       sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
+static void       box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_pen_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
@@ -129,7 +129,7 @@ static struct {
     { "SPTweakContext",    "tweak_tool",     SP_VERB_CONTEXT_TWEAK, SP_VERB_CONTEXT_TWEAK_PREFS },
     { "SPZoomContext",     "zoom_tool",      SP_VERB_CONTEXT_ZOOM, SP_VERB_CONTEXT_ZOOM_PREFS },
     { "SPRectContext",     "rect_tool",      SP_VERB_CONTEXT_RECT, SP_VERB_CONTEXT_RECT_PREFS },
-//    { "SP3DBoxContext",    "3dbox_tool",     SP_VERB_CONTEXT_3DBOX, SP_VERB_CONTEXT_3DBOX_PREFS },
+    { "Box3DContext",      "3dbox_tool",     SP_VERB_CONTEXT_3DBOX, SP_VERB_CONTEXT_3DBOX_PREFS },
     { "SPArcContext",      "arc_tool",       SP_VERB_CONTEXT_ARC, SP_VERB_CONTEXT_ARC_PREFS },
     { "SPStarContext",     "star_tool",      SP_VERB_CONTEXT_STAR, SP_VERB_CONTEXT_STAR_PREFS },
     { "SPSpiralContext",   "spiral_tool",    SP_VERB_CONTEXT_SPIRAL, SP_VERB_CONTEXT_SPIRAL_PREFS },
@@ -166,7 +166,7 @@ static struct {
       SP_VERB_CONTEXT_STAR_PREFS,   "tools.shapes.star",     _("Style of new stars")},
     { "SPRectContext",   "rect_toolbox",   0, sp_rect_toolbox_prep,              "RectToolbar",
       SP_VERB_CONTEXT_RECT_PREFS,   "tools.shapes.rect",     _("Style of new rectangles")},
-    { "SP3DBoxContext",  "3dbox_toolbox",  0, sp_3dbox_toolbox_prep,             "3DBoxToolbar",
+    { "Box3DContext",  "3dbox_toolbox",  0, box3d_toolbox_prep,             "3DBoxToolbar",
       SP_VERB_CONTEXT_3DBOX_PREFS,  "tools.shapes.3dbox",    _("Style of new 3D boxes")},
     { "SPArcContext",    "arc_toolbox",    0, sp_arc_toolbox_prep,               "ArcToolbar",
       SP_VERB_CONTEXT_ARC_PREFS,    "tools.shapes.arc",      _("Style of new ellipses")},
@@ -2343,26 +2343,35 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 //##       3D Box       ##
 //########################
 
-static void sp_3dbox_toggle_vp_changed (GtkToggleAction */*act*/, GObject *dataKludge, Box3D::Axis axis)
+static void box3d_toggle_vp_changed (GtkToggleAction *act, GObject *dataKludge, Proj::Axis axis)
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data (dataKludge, "desktop");
     SPDocument *document = sp_desktop_document (desktop);
-    Box3D::Perspective3D *persp = document->current_perspective;
+    // FIXME: Make sure document->current_persp3d is set correctly!
+    Persp3D *persp = document->current_persp3d;
 
-    g_return_if_fail (is_single_axis_direction (axis));
     g_return_if_fail (persp);
 
-    persp->toggle_boxes (axis);
+    // quit if run by the attr_changed listener
+    if (g_object_get_data(dataKludge, "freeze")) {
+        return;
+    }
 
-    gchar *str;
+    // in turn, prevent listener from responding
+    g_object_set_data(dataKludge, "freeze", GINT_TO_POINTER(TRUE));
+
+    persp3d_set_VP_state(persp, axis, gtk_toggle_action_get_active(act) ? Proj::INFINITE : Proj::FINITE);
+
+    // FIXME: Can we merge this functionality with the one in box3d_persp_tb_event_attr_changed()?
+    gchar *str;    
     switch (axis) {
-        case Box3D::X:
+        case Proj::X:
             str = g_strdup ("box3d_angle_x_action");
             break;
-        case Box3D::Y:
+        case Proj::Y:
             str = g_strdup ("box3d_angle_y_action");
             break;
-        case Box3D::Z:
+        case Proj::Z:
             str = g_strdup ("box3d_angle_z_action");
             break;
         default:
@@ -2370,67 +2379,77 @@ static void sp_3dbox_toggle_vp_changed (GtkToggleAction */*act*/, GObject *dataK
     }
     GtkAction* angle_action = GTK_ACTION (g_object_get_data (dataKludge, str));
     if (angle_action) {
-        gtk_action_set_sensitive (angle_action, !persp->get_vanishing_point (axis)->is_finite() );
+        gtk_action_set_sensitive (angle_action, !persp3d_VP_is_finite(persp, axis));
     }
 
-    // FIXME: Given how it is realized in the other tools, this is probably not the right way to do it,
-    //        but without the if construct, we get continuous segfaults. Needs further investigation.
-    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
-                         _("3D Box: Change perspective"));
-    }
+    sp_document_maybe_done(sp_desktop_document(desktop), "toggle_vp", SP_VERB_CONTEXT_3DBOX,
+                           _("3D Box: Toggle VP"));
+    //sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,_("3D Box: Toggle VP"));
+
+    g_object_set_data(dataKludge, "freeze", GINT_TO_POINTER(FALSE));
 }
 
-static void sp_3dbox_toggle_vp_x_changed(GtkToggleAction *act, GObject *dataKludge)
+static void box3d_toggle_vp_x_changed(GtkToggleAction *act, GObject *dataKludge)
 {
-    sp_3dbox_toggle_vp_changed (act, dataKludge, Box3D::X);
+    box3d_toggle_vp_changed (act, dataKludge, Proj::X);
 }
 
-static void sp_3dbox_toggle_vp_y_changed(GtkToggleAction *act, GObject *dataKludge)
+static void box3d_toggle_vp_y_changed(GtkToggleAction *act, GObject *dataKludge)
 {
-    sp_3dbox_toggle_vp_changed (act, dataKludge, Box3D::Y);
+    box3d_toggle_vp_changed (act, dataKludge, Proj::Y);
 }
 
-static void sp_3dbox_toggle_vp_z_changed(GtkToggleAction *act, GObject *dataKludge)
+static void box3d_toggle_vp_z_changed(GtkToggleAction *act, GObject *dataKludge)
 {
-    sp_3dbox_toggle_vp_changed (act, dataKludge, Box3D::Z);
+    box3d_toggle_vp_changed (act, dataKludge, Proj::Z);
 }
 
-static void sp_3dbox_vp_angle_changed(GtkAdjustment *adj, GObject *dataKludge, Box3D::Axis axis )
+static void box3d_vp_angle_changed(GtkAdjustment *adj, GObject *dataKludge, Proj::Axis axis )
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data(dataKludge, "desktop");
-    Box3D::Perspective3D *persp = sp_desktop_document (desktop)->current_perspective;
+    Persp3D *persp = sp_desktop_document (desktop)->current_persp3d;
+
+    // quit if run by the attr_changed listener
+    if (g_object_get_data(dataKludge, "freeze")) {
+        return;
+    }
+
+    // in turn, prevent listener from responding
+    g_object_set_data(dataKludge, "freeze", GINT_TO_POINTER(TRUE));
 
     if (persp) {
-        double angle = adj->value * M_PI/180;
-        persp->set_infinite_direction (axis, NR::Point (cos (angle), sin (angle)));
-
-        // FIXME: See comment above; without the if construct we get segfaults during undo.
-        if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-            sp_document_maybe_done(sp_desktop_document(desktop), "perspectiveangle", SP_VERB_CONTEXT_3DBOX,
-                             _("3D Box: Change perspective"));
+        double angle = adj->value;
+        // FIXME: Shouldn't we set the angle via the SVG attributes of the perspective instead of directly?
+        if (persp3d_VP_is_finite(persp, axis)) {
+            return; 
         }
+        persp->tmat.set_infinite_direction (axis, angle);
+        persp3d_update_box_reprs (persp);
+
+        sp_document_maybe_done(sp_desktop_document(desktop), "perspectiveangle", SP_VERB_CONTEXT_3DBOX,
+                               _("3D Box: Change perspective"));
     }
-    //g_object_set_data(G_OBJECT(dataKludge), "freeze", GINT_TO_POINTER(FALSE));
+
+    g_object_set_data(dataKludge, "freeze", GINT_TO_POINTER(FALSE));
 }
 
-static void sp_3dbox_vpx_angle_changed(GtkAdjustment *adj, GObject *dataKludge )
+static void box3d_vpx_angle_changed(GtkAdjustment *adj, GObject *dataKludge )
 {
-    sp_3dbox_vp_angle_changed (adj, dataKludge, Box3D::X);
+    box3d_vp_angle_changed (adj, dataKludge, Proj::X);
 }
 
-static void sp_3dbox_vpy_angle_changed(GtkAdjustment *adj, GObject *dataKludge )
+static void box3d_vpy_angle_changed(GtkAdjustment *adj, GObject *dataKludge )
 {
-    sp_3dbox_vp_angle_changed (adj, dataKludge, Box3D::Y);
+    box3d_vp_angle_changed (adj, dataKludge, Proj::Y);
 }
 
-static void sp_3dbox_vpz_angle_changed(GtkAdjustment *adj, GObject *dataKludge )
+static void box3d_vpz_angle_changed(GtkAdjustment *adj, GObject *dataKludge )
 {
-    sp_3dbox_vp_angle_changed (adj, dataKludge, Box3D::Z);
+    box3d_vp_angle_changed (adj, dataKludge, Proj::Z);
 }
 
 // normalize angle so that it lies in the interval [0,360]
-static double sp_3dbox_normalize_angle (double a) {
+static double box3d_normalize_angle (double a) {
     double angle = a + ((int) (a/360.0))*360;
     if (angle < 0) {
         angle += 360.0;
@@ -2438,48 +2457,88 @@ static double sp_3dbox_normalize_angle (double a) {
     return angle;
 }
 
-static void sp_3dbox_tb_event_attr_changed(Inkscape::XML::Node */*repr*/, gchar const *name,
-                                           gchar const */*old_value*/, gchar const */*new_value*/,
-                                           bool /*is_interactive*/, gpointer data)
+static void box3d_persp_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
+                                              gchar const *old_value, gchar const *new_value,
+                                              bool is_interactive, gpointer data)
 {
     GtkWidget *tbl = GTK_WIDGET(data);
 
     // FIXME: if we check for "freeze" as in other tools, no action is performed at all ...
-    /***
     // quit if run by the _changed callbacks
     if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
-        return;
+        //return;
     }
 
     // in turn, prevent callbacks from responding
-    g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
-    ***/
+    //g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
 
-    if (!strcmp(name, "inkscape:perspective")) {
-        GtkAdjustment *adj = 0;
-        double angle;
-        SPDesktop *desktop = (SPDesktop *) g_object_get_data(G_OBJECT(tbl), "desktop");
-        Box3D::Perspective3D *persp = sp_desktop_document (desktop)->current_perspective;
+    GtkAdjustment *adj = 0;
+    double angle;
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data(G_OBJECT(tbl), "desktop");
+    // FIXME: Get the persp from the box (should be the same, but ...)
+    Persp3D *persp = sp_desktop_document (desktop)->current_persp3d;
+    if (!strcmp(name, "inkscape:vp_x")) {
+        GtkAction* act = GTK_ACTION (gtk_object_get_data (GTK_OBJECT(tbl), "box3d_angle_x_action"));
+        GtkToggleAction* tact = GTK_TOGGLE_ACTION (gtk_object_get_data (GTK_OBJECT(tbl), "toggle_vp_x_action"));
+        if (!persp3d_VP_is_finite(persp, Proj::X)) {
+            gtk_action_set_sensitive(GTK_ACTION(act), TRUE);
+            gtk_toggle_action_set_active(tact, TRUE);
+        } else {
+            gtk_action_set_sensitive(GTK_ACTION(act), FALSE);
+            gtk_toggle_action_set_active(tact, FALSE);
+        }
 
         adj = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(tbl), "dir_vp_x"));
-        angle = sp_3dbox_normalize_angle (persp->get_vanishing_point (Box3D::X)->get_angle());
-        gtk_adjustment_set_value(adj, angle);
+        angle = persp3d_get_infinite_angle(persp, Proj::X);
+        if (angle != NR_HUGE) { // FIXME: We should catch this error earlier (don't show the spinbutton at all)
+            gtk_adjustment_set_value(adj, box3d_normalize_angle(angle));
+        }
+    }
+
+    if (!strcmp(name, "inkscape:vp_y")) {
+        GtkAction* act = GTK_ACTION (gtk_object_get_data (GTK_OBJECT(tbl), "box3d_angle_y_action"));
+        GtkToggleAction* tact = GTK_TOGGLE_ACTION (gtk_object_get_data (GTK_OBJECT(tbl), "toggle_vp_y_action"));
+        if (!persp3d_VP_is_finite(persp, Proj::Y)) {
+            gtk_action_set_sensitive(GTK_ACTION(act), TRUE);
+            gtk_toggle_action_set_active(tact, TRUE);
+        } else {
+            gtk_action_set_sensitive(GTK_ACTION(act), FALSE);
+            gtk_toggle_action_set_active(tact, FALSE);
+        }
 
         adj = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(tbl), "dir_vp_y"));
-        angle = sp_3dbox_normalize_angle (persp->get_vanishing_point (Box3D::Y)->get_angle());
-        gtk_adjustment_set_value(adj, angle);
+        angle = persp3d_get_infinite_angle(persp, Proj::Y);
+        if (angle != NR_HUGE) { // FIXME: We should catch this error earlier (don't show the spinbutton at all)
+            gtk_adjustment_set_value(adj, box3d_normalize_angle(angle));
+        }
+    }
+
+    if (!strcmp(name, "inkscape:vp_z")) {
+        GtkAction* act = GTK_ACTION (gtk_object_get_data (GTK_OBJECT(tbl), "box3d_angle_z_action"));
+        GtkToggleAction* tact = GTK_TOGGLE_ACTION (gtk_object_get_data (GTK_OBJECT(tbl), "toggle_vp_z_action"));
+        if (!persp3d_VP_is_finite(persp, Proj::Z)) {
+            gtk_action_set_sensitive(GTK_ACTION(act), TRUE);
+            gtk_toggle_action_set_active(tact, TRUE);
+        } else {
+            gtk_action_set_sensitive(GTK_ACTION(act), FALSE);
+            gtk_toggle_action_set_active(tact, FALSE);
+        }
 
         adj = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(tbl), "dir_vp_z"));
-        angle = sp_3dbox_normalize_angle (persp->get_vanishing_point (Box3D::Z)->get_angle());
-        gtk_adjustment_set_value(adj, angle);
+        angle = persp3d_get_infinite_angle(persp, Proj::Z);
+        if (angle != NR_HUGE) { // FIXME: We should catch this error earlier (don't show the spinbutton at all)
+            gtk_adjustment_set_value(adj, box3d_normalize_angle(angle));
+        }
     }
+    
+    //g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
 }
 
-static Inkscape::XML::NodeEventVector sp_3dbox_tb_repr_events =
+static Inkscape::XML::NodeEventVector box3d_persp_tb_repr_events =
 {
     NULL, /* child_added */
     NULL, /* child_removed */
-    sp_3dbox_tb_event_attr_changed,
+    box3d_persp_tb_event_attr_changed,
     NULL, /* content_changed */
     NULL  /* order_changed */
 };
@@ -2487,43 +2546,46 @@ static Inkscape::XML::NodeEventVector sp_3dbox_tb_repr_events =
 /**
  *  \param selection Should not be NULL.
  */
+// FIXME: This should rather be put into persp3d-reference.cpp or something similar so that it reacts upon each
+//        Change of the perspective, and not of the current selection (but how to refer to the toolbar then?)
 static void
-sp_3dbox_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl)
+box3d_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl)
 {
     Inkscape::XML::Node *repr = NULL;
     purge_repr_listener(tbl, tbl);
 
     SPItem *item = selection->singleItem();
-    if (item) {
-        repr = SP_OBJECT_REPR(item);
+    if (item && SP_IS_BOX3D(item)) {
+        //repr = SP_OBJECT_REPR(item);
+        repr = SP_OBJECT_REPR(SP_BOX3D(item)->persp_ref->getObject());
         if (repr) {
             g_object_set_data(tbl, "repr", repr);
             Inkscape::GC::anchor(repr);
-            sp_repr_add_listener(repr, &sp_3dbox_tb_repr_events, tbl);
-            sp_repr_synthesize_events(repr, &sp_3dbox_tb_repr_events, tbl);
+            sp_repr_add_listener(repr, &box3d_persp_tb_repr_events, tbl);
+            sp_repr_synthesize_events(repr, &box3d_persp_tb_repr_events, tbl);
         }
     }
 }
 
-static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
+static void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     EgeAdjustmentAction* eact = 0;
     SPDocument *document = sp_desktop_document (desktop);
-    Box3D::Perspective3D *persp = document->current_perspective;
+    Persp3D *persp = document->current_persp3d;
     bool toggled = false;
 
     /* angle of VP in X direction */
     eact = create_adjustment_action("3DBoxPosAngleXAction",
                                     _("Angle X"), _("Angle X:"), _("Angle of infinite vanishing point in X direction"),
-                                    "tools.shapes.3dbox", "dir_vp_x", persp->get_vanishing_point (Box3D::X)->get_angle(),
-                                    GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
-                                    0.0, 360.0, 1.0, 10.0,
+                                    "tools.shapes.3dbox", "dir_vp_x", persp3d_get_infinite_angle(persp, Proj::X),
+                                    GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-box3d",
+                                    -360.0, 360.0, 1.0, 10.0,
                                     0, 0, 0, // labels, values, G_N_ELEMENTS(labels),
-                                    sp_3dbox_vpx_angle_changed,
+                                    box3d_vpx_angle_changed,
                                     0.1, 1);
     gtk_action_group_add_action(mainActions, GTK_ACTION(eact));
     g_object_set_data(holder, "box3d_angle_x_action", eact);
-    if (!persp->get_vanishing_point (Box3D::X)->is_finite()) {
+    if (!persp3d_VP_is_finite(persp, Proj::X)) {
         gtk_action_set_sensitive(GTK_ACTION(eact), TRUE);
     } else {
         gtk_action_set_sensitive(GTK_ACTION(eact), FALSE);
@@ -2533,30 +2595,28 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
     {
     InkToggleAction* act = ink_toggle_action_new("3DBoxVPXAction",
                                                   _("Toggle VP in X direction"),
-                                                  _("Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"),
+                                                  _("Toggle VP in X direction between 'finite' and 'infinite' (= parallel)"),
                                                   "toggle_vp_x",
                                                   Inkscape::ICON_SIZE_DECORATION);
     gtk_action_group_add_action(mainActions, GTK_ACTION(act));
-    if (persp) {
-        toggled = !persp->get_vanishing_point(Box3D::X)->is_finite();
-    }
-    gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), toggled);
+    g_object_set_data(holder, "toggle_vp_x_action", act);
+    gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), !persp3d_VP_is_finite(persp, Proj::X));
     /* we connect the signal after setting the state to avoid switching the state again */
-    g_signal_connect_after(G_OBJECT(act), "toggled", G_CALLBACK(sp_3dbox_toggle_vp_x_changed), holder);
+    g_signal_connect_after(G_OBJECT(act), "toggled", G_CALLBACK(box3d_toggle_vp_x_changed), holder);
     }
 
     /* angle of VP in Y direction */
     eact = create_adjustment_action("3DBoxPosAngleYAction",
                                     _("Angle Y"), _("Angle Y:"), _("Angle of infinite vanishing point in Y direction"),
-                                    "tools.shapes.3dbox", "dir_vp_y", persp->get_vanishing_point (Box3D::Y)->get_angle(),
+                                    "tools.shapes.3dbox", "dir_vp_y", persp3d_get_infinite_angle(persp, Proj::Y),
                                     GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
-                                    0.0, 360.0, 1.0, 10.0,
+                                    -360.0, 360.0, 1.0, 10.0,
                                     0, 0, 0, // labels, values, G_N_ELEMENTS(labels),
-                                    sp_3dbox_vpy_angle_changed,
+                                    box3d_vpy_angle_changed,
                                     0.1, 1);
     gtk_action_group_add_action(mainActions, GTK_ACTION(eact));
     g_object_set_data(holder, "box3d_angle_y_action", eact);
-    if (!persp->get_vanishing_point (Box3D::Y)->is_finite()) {
+    if (!persp3d_VP_is_finite(persp, Proj::Y)) {
         gtk_action_set_sensitive(GTK_ACTION(eact), TRUE);
     } else {
         gtk_action_set_sensitive(GTK_ACTION(eact), FALSE);
@@ -2566,31 +2626,29 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
     {
     InkToggleAction* act = ink_toggle_action_new("3DBoxVPYAction",
                                                  _("Toggle VP in Y direction"),
-                                                 _("Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"),
+                                                 _("Toggle VP in Y direction between 'finite' and 'infinite' (= parallel)"),
                                                  "toggle_vp_y",
                                                  Inkscape::ICON_SIZE_DECORATION);
     gtk_action_group_add_action(mainActions, GTK_ACTION(act));
-    if (persp) {
-        toggled = !persp->get_vanishing_point(Box3D::Y)->is_finite();
-    }
-    gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), toggled);
+    gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), !persp3d_VP_is_finite(persp, Proj::Y));
+    g_object_set_data(holder, "toggle_vp_y_action", act);
     /* we connect the signal after setting the state to avoid switching the state again */
-    g_signal_connect_after(G_OBJECT(act), "toggled", G_CALLBACK(sp_3dbox_toggle_vp_y_changed), holder);
+    g_signal_connect_after(G_OBJECT(act), "toggled", G_CALLBACK(box3d_toggle_vp_y_changed), holder);
     }
 
     /* angle of VP in Z direction */
     eact = create_adjustment_action("3DBoxPosAngleZAction",
                                     _("Angle Z"), _("Angle Z:"), _("Angle of infinite vanishing point in Z direction"),
-                                    "tools.shapes.3dbox", "dir_vp_z", persp->get_vanishing_point (Box3D::Z)->get_angle(),
+                                    "tools.shapes.3dbox", "dir_vp_z", persp3d_get_infinite_angle(persp, Proj::Z),
                                     GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
-                                     0.0, 360.0, 1.0, 10.0,
+                                    -360.0, 360.0, 1.0, 10.0,
                                     0, 0, 0, // labels, values, G_N_ELEMENTS(labels),
-                                    sp_3dbox_vpz_angle_changed,
+                                    box3d_vpz_angle_changed,
                                     0.1, 1);
 
     gtk_action_group_add_action(mainActions, GTK_ACTION(eact));
     g_object_set_data(holder, "box3d_angle_z_action", eact);
-    if (!persp->get_vanishing_point (Box3D::Z)->is_finite()) {
+    if (!persp3d_VP_is_finite(persp, Proj::Z)) {
         gtk_action_set_sensitive(GTK_ACTION(eact), TRUE);
     } else {
         gtk_action_set_sensitive(GTK_ACTION(eact), FALSE);
@@ -2600,20 +2658,19 @@ static void sp_3dbox_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
     {
     InkToggleAction* act = ink_toggle_action_new("3DBoxVPZAction",
                                                  _("Toggle VP in Z direction"),
-                                                 _("Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"),
+                                                 _("Toggle VP in Z direction between 'finite' and 'infinite' (= parallel)"),
                                                  "toggle_vp_z",
                                                  Inkscape::ICON_SIZE_DECORATION);
     gtk_action_group_add_action(mainActions, GTK_ACTION(act));
-    if (persp) {
-        toggled = !persp->get_vanishing_point(Box3D::Z)->is_finite();
-    }
+
+    gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), !persp3d_VP_is_finite(persp, Proj::Z));
+    g_object_set_data(holder, "toggle_vp_z_action", act);
     /* we connect the signal after setting the state to avoid switching the state again */
-    gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), toggled);
-    g_signal_connect_after(G_OBJECT(act), "toggled", G_CALLBACK(sp_3dbox_toggle_vp_z_changed), holder);
+    g_signal_connect_after(G_OBJECT(act), "toggled", G_CALLBACK(box3d_toggle_vp_z_changed), holder);
     }
 
     sigc::connection *connection = new sigc::connection(
-        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_3dbox_toolbox_selection_changed), (GObject *)holder))
+        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(box3d_toolbox_selection_changed), (GObject *)holder))
        );
     g_signal_connect(holder, "destroy", G_CALLBACK(delete_connection), connection);
     g_signal_connect(holder, "destroy", G_CALLBACK(purge_repr_listener), holder);

@@ -42,7 +42,6 @@
 
 #include <libnr/nr-scale-ops.h>
 
-
 #include "xml/repr.h"
 
 #include "isnan.h"
@@ -50,8 +49,7 @@
 #define sp_round(v,m) (((v) < 0.0) ? ((ceil((v) / (m) - 0.5)) * (m)) : ((floor((v) / (m) + 0.5)) * (m)))
 
 static SPKnotHolder *sp_rect_knot_holder(SPItem *item, SPDesktop *desktop);
-//static
-SPKnotHolder *sp_3dbox_knot_holder(SPItem *item, SPDesktop *desktop);
+static SPKnotHolder *box3d_knot_holder(SPItem *item, SPDesktop *desktop);
 static SPKnotHolder *sp_arc_knot_holder(SPItem *item, SPDesktop *desktop);
 static SPKnotHolder *sp_star_knot_holder(SPItem *item, SPDesktop *desktop);
 static SPKnotHolder *sp_spiral_knot_holder(SPItem *item, SPDesktop *desktop);
@@ -65,8 +63,8 @@ sp_item_knot_holder(SPItem *item, SPDesktop *desktop)
 {
     if (SP_IS_RECT(item)) {
         return sp_rect_knot_holder(item, desktop);
-    } else if (SP_IS_3DBOX(item)) {
-        return sp_3dbox_knot_holder(item, desktop);
+    } else if (SP_IS_BOX3D(item)) {
+        return box3d_knot_holder(item, desktop);
     } else if (SP_IS_ARC(item)) {
         return sp_arc_knot_holder(item, desktop);
     } else if (SP_IS_STAR(item)) {
@@ -528,332 +526,212 @@ static SPKnotHolder *sp_rect_knot_holder(SPItem *item, SPDesktop *desktop)
     return knot_holder;
 }
 
-/* 3D Box */
+/* Box3D (= the new 3D box structure) */
 
-static inline Box3D::Axis movement_axis_of_3dbox_corner (guint corner, guint state)
-{
-    // this function has the purpose to simplify a change in the resizing behaviour of boxes
-    switch (corner) {
-        case 0:
-        case 1:
-        case 2:
-        case 3:
-            return ((state & GDK_SHIFT_MASK) ? Box3D::Z : Box3D::XY);
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-            return ((state & GDK_SHIFT_MASK) ? Box3D::XY : Box3D::Z);
-    }
-    return Box3D::NONE;
-}
-
-/*
- * To keep the snappoint from jumping randomly between the two lines when the mouse pointer is close to
- * their intersection, we remember the last snapped line and keep snapping to this specific line as long
- * as the distance from the intersection to the mouse pointer is less than remember_snap_threshold.
- */
-
-// Should we make the threshold settable in the preferences?
-static double remember_snap_threshold = 30;
-static guint remember_snap_index = 0;
-static guint remember_snap_index_center = 0;
-
-static NR::Point snap_knot_position_3dbox (SP3DBox *box, guint corner, Box3D::Axis direction, NR::Point const &origin, NR::Point const &p, guint /*state*/)
-{
-    SPDesktop * desktop = inkscape_active_desktop();
-    Box3D::Perspective3D *persp = sp_desktop_document (desktop)->get_persp_of_box (box);
-
-    if (is_single_axis_direction (direction)) return p;
-
-    Box3D::Axis axis1 = Box3D::extract_first_axis_direction (direction);
-    Box3D::Axis axis2 = Box3D::extract_second_axis_direction (direction);
-
-    NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM (box)));
-    NR::Point origin_dt = origin * i2d;
-    NR::Point p_dt = p * i2d;
-
-    Box3D::PerspectiveLine pl1 (origin_dt, axis1, persp);
-    Box3D::PerspectiveLine pl2 (origin_dt, axis2, persp);
-    Box3D::Line diag1 (origin_dt, box->corners[corner ^ Box3D::XY]);
-
-    int num_snap_lines = 3;
-    NR::Point snap_pts[num_snap_lines];
-
-    snap_pts[0] = pl1.closest_to (p_dt);
-    snap_pts[1] = pl2.closest_to (p_dt);
-    snap_pts[2] = diag1.closest_to (p_dt);
-
-    gdouble const zoom = desktop->current_zoom();
-
-    double snap_dists[num_snap_lines];
-
-    for (int i = 0; i < num_snap_lines; ++i) {
-        snap_dists[i] = NR::L2 (snap_pts[i] - p_dt) * zoom;
-    }
-
-    bool within_tolerance = true;
-    for (int i = 0; i < num_snap_lines; ++i) {
-        if (snap_dists[i] > remember_snap_threshold) {
-            within_tolerance = false;
-            break;
-        }
-    }
-
-    int snap_index = -1;
-    double snap_dist = NR_HUGE;
-    for (int i = 0; i < num_snap_lines; ++i) {
-        if (snap_dists[i] < snap_dist) {
-            snap_index = i;
-            snap_dist = snap_dists[i];
-        }
-    }
-
-    if (within_tolerance) {
-        return snap_pts[remember_snap_index] * i2d.inverse();
-    } else {
-        remember_snap_index = snap_index;
-        return snap_pts[snap_index] * i2d.inverse();
-    }
-}
-
-static NR::Point snap_center_position_3dbox (SP3DBox *box, NR::Point const &origin, NR::Point const &p)
-{
-    SPDesktop * desktop = inkscape_active_desktop();
-    Box3D::Perspective3D *persp = sp_desktop_document (desktop)->get_persp_of_box (box);
-
-    Box3D::Axis axis1 = Box3D::X;
-    Box3D::Axis axis2 = Box3D::Y;
-
-    NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM (box)));
-    NR::Point origin_dt = origin * i2d;
-    NR::Point p_dt = p * i2d;
-
-    Box3D::PerspectiveLine pl1 (origin_dt, axis1, persp);
-    Box3D::PerspectiveLine pl2 (origin_dt, axis2, persp);
-    NR::Point midpt1 = sp_3dbox_get_midpoint_in_axis_direction (box->old_corner1, box->old_corner5, Box3D::Z, persp);
-    NR::Point midpt2 = sp_3dbox_get_midpoint_in_axis_direction (box->old_corner3, box->old_corner7, Box3D::Z, persp);
-    Box3D::Line diag1 (origin_dt, midpt1);
-    Box3D::Line diag2 (origin_dt, midpt2);
-
-    int num_snap_lines = 4;
-    NR::Point snap_pts[num_snap_lines];
-
-    // should we snap to the closest point or to the projection along perspective lines?
-    snap_pts[0] = pl1.closest_to (p_dt);
-    snap_pts[1] = pl2.closest_to (p_dt);
-    snap_pts[2] = diag1.closest_to (p_dt);
-    snap_pts[3] = diag2.closest_to (p_dt);
-
-    gdouble const zoom = desktop->current_zoom();
-
-    double snap_dists[num_snap_lines];
-
-    for (int i = 0; i < num_snap_lines; ++i) {
-        snap_dists[i] = NR::L2 (snap_pts[i] - p_dt) * zoom;
-    }
-
-    bool within_tolerance = true;
-    for (int i = 0; i < num_snap_lines; ++i) {
-        if (snap_dists[i] > remember_snap_threshold) {
-            within_tolerance = false;
-            break;
-        }
-    }
-
-    int snap_index = -1;
-    double snap_dist = NR_HUGE;
-    for (int i = 0; i < num_snap_lines; ++i) {
-        if (snap_dists[i] < snap_dist) {
-            snap_index = i;
-            snap_dist = snap_dists[i];
-        }
-    }
-
-    if (within_tolerance) {
-        return snap_pts[remember_snap_index_center] * i2d.inverse();
-    } else {
-        remember_snap_index_center = snap_index;
-        return snap_pts[snap_index] * i2d.inverse();
-    }
-}
-
-static NR::Point sp_3dbox_knot_get(SPItem *item, guint knot_id)
+static NR::Point box3d_knot_get(SPItem *item, guint knot_id)
 {
     g_assert(item != NULL);
-    SP3DBox *box = SP_3DBOX(item);
+    SPBox3D *box = SP_BOX3D(item);
 
     NR::Matrix const i2d (sp_item_i2d_affine (item));
-    return sp_3dbox_get_corner(box, knot_id) * i2d;
+    return box3d_get_corner_screen(box, knot_id) * i2d;
 }
 
-static void sp_3dbox_knot_set(SPItem *item, guint knot_id, NR::Point const &new_pos, NR::Point const &origin, guint state)
+static void box3d_knot_set(SPItem *item, guint knot_id, NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
     g_assert(item != NULL);
-    SP3DBox *box = SP_3DBOX(item);
-
+    SPBox3D *box = SP_BOX3D(item);
     NR::Matrix const i2d (sp_item_i2d_affine (item));
-    Box3D::Axis direction = movement_axis_of_3dbox_corner (knot_id, state);
-    if ((state & GDK_CONTROL_MASK) && !is_single_axis_direction (direction)) {
-        // snap if Ctrl is pressed and movement isn't already constrained to a single axis
-        NR::Point const s = snap_knot_position_3dbox (box, knot_id, direction, origin, new_pos, state);
-        sp_3dbox_move_corner_in_Z_direction (box, knot_id, s * i2d, false);
+
+    Box3D::Axis movement;
+    if ((knot_id < 4) != (state & GDK_SHIFT_MASK)) {
+        movement = Box3D::XY;
     } else {
-        if (direction == Box3D::Z) {
-            sp_3dbox_move_corner_in_Z_direction (box, knot_id, new_pos * i2d, true);
-        } else {
-            sp_3dbox_move_corner_in_Z_direction (box, knot_id, new_pos * i2d, false);
-        }
+        movement = Box3D::Z;
     }
-    sp_3dbox_update_curves (box);
-    sp_3dbox_set_ratios (box);
-    sp_3dbox_update_perspective_lines ();
-    sp_3dbox_set_z_orders_later_on (box);
+
+    box3d_set_corner (box, knot_id, new_pos * i2d, movement, (state & GDK_CONTROL_MASK));
+    box3d_set_z_orders(box);
+    box3d_position_set(box);
 }
 
-static void sp_3dbox_knot_center_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+static NR::Point box3d_knot_center_get (SPItem *item)
 {
-    SP3DBox *box = SP_3DBOX(item);
-
     NR::Matrix const i2d (sp_item_i2d_affine (item));
-    NR::Point new_pt (new_pos);
-
-    if ((state & GDK_CONTROL_MASK) && !(state & GDK_SHIFT_MASK)) {
-        // snap if Ctrl is pressed and movement isn't already constrained to a single axis
-        new_pt = snap_center_position_3dbox (box, origin, new_pos);
-    }
-
-    if (state & GDK_SHIFT_MASK) {
-        sp_3dbox_recompute_Z_corners_from_new_center (box, new_pt * i2d);
-    } else {
-        sp_3dbox_recompute_XY_corners_from_new_center (box, new_pt * i2d);
-    }
-
-    sp_3dbox_update_curves (box);
-    sp_3dbox_set_z_orders_later_on (box);
+    return box3d_get_center_screen (SP_BOX3D(item)) * i2d;
 }
 
-static NR::Point sp_3dbox_knot_center_get(SPItem *item)
+static void box3d_knot_center_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
-    NR::Maybe<NR::Point> center = sp_3dbox_get_center(SP_3DBOX(item));
-    if (!center) return NR::Point (0, 0);
+    SPBox3D *box = SP_BOX3D(item);
     NR::Matrix const i2d (sp_item_i2d_affine (item));
-    return (*center) * i2d;
+
+    box3d_set_center (SP_BOX3D(item), new_pos * i2d, origin * i2d, !(state & GDK_SHIFT_MASK) ? Box3D::XY : Box3D::Z,
+                      state & GDK_CONTROL_MASK);
+
+    box3d_set_z_orders(box);
+    box3d_position_set(box);
 }
 
-static void sp_3dbox_knot0_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+static void box3d_knot0_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
-    sp_3dbox_knot_set(item, 0, new_pos, origin, state);
+    box3d_knot_set(item, 0, new_pos, origin, state);
 }
 
-static void sp_3dbox_knot1_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+static void box3d_knot1_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
-    sp_3dbox_knot_set(item, 1, new_pos, origin, state);
+    box3d_knot_set(item, 1, new_pos, origin, state);
 }
 
-static void sp_3dbox_knot2_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+static void box3d_knot2_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
-    sp_3dbox_knot_set(item, 2, new_pos, origin, state);
+    box3d_knot_set(item, 2, new_pos, origin, state);
 }
 
-static void sp_3dbox_knot3_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+static void box3d_knot3_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
-    sp_3dbox_knot_set(item, 3, new_pos, origin, state);
+    box3d_knot_set(item, 3, new_pos, origin, state);
 }
 
-static void sp_3dbox_knot4_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+static void box3d_knot4_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
-    sp_3dbox_knot_set(item, 4, new_pos, origin, state);
+    box3d_knot_set(item, 4, new_pos, origin, state);
 }
 
-static void sp_3dbox_knot5_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+static void box3d_knot5_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
-    sp_3dbox_knot_set(item, 5, new_pos, origin, state);
+    box3d_knot_set(item, 5, new_pos, origin, state);
 }
 
-static void sp_3dbox_knot6_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+static void box3d_knot6_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
-    sp_3dbox_knot_set(item, 6, new_pos, origin, state);
+    box3d_knot_set(item, 6, new_pos, origin, state);
 }
 
-static void sp_3dbox_knot7_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+static void box3d_knot7_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
-    sp_3dbox_knot_set(item, 7, new_pos, origin, state);
+    box3d_knot_set(item, 7, new_pos, origin, state);
 }
 
-static NR::Point sp_3dbox_knot0_get(SPItem *item)
+static NR::Point box3d_knot0_get(SPItem *item)
 {
-    return sp_3dbox_knot_get(item, 0);
+    return box3d_knot_get(item, 0);
 }
 
-static NR::Point sp_3dbox_knot1_get(SPItem *item)
+static NR::Point box3d_knot1_get(SPItem *item)
 {
-    return sp_3dbox_knot_get(item, 1);
+    return box3d_knot_get(item, 1);
 }
 
-static NR::Point sp_3dbox_knot2_get(SPItem *item)
+static NR::Point box3d_knot2_get(SPItem *item)
 {
-    return sp_3dbox_knot_get(item, 2);
+    return box3d_knot_get(item, 2);
 }
 
-static NR::Point sp_3dbox_knot3_get(SPItem *item)
+static NR::Point box3d_knot3_get(SPItem *item)
 {
-    return sp_3dbox_knot_get(item, 3);
+    return box3d_knot_get(item, 3);
 }
 
-static NR::Point sp_3dbox_knot4_get(SPItem *item)
+static NR::Point box3d_knot4_get(SPItem *item)
 {
-    return sp_3dbox_knot_get(item, 4);
+    return box3d_knot_get(item, 4);
 }
 
-static NR::Point sp_3dbox_knot5_get(SPItem *item)
+static NR::Point box3d_knot5_get(SPItem *item)
 {
-    return sp_3dbox_knot_get(item, 5);
+    return box3d_knot_get(item, 5);
 }
 
-static NR::Point sp_3dbox_knot6_get(SPItem *item)
+static NR::Point box3d_knot6_get(SPItem *item)
 {
-    return sp_3dbox_knot_get(item, 6);
+    return box3d_knot_get(item, 6);
 }
 
-static NR::Point sp_3dbox_knot7_get(SPItem *item)
+static NR::Point box3d_knot7_get(SPItem *item)
 {
-    return sp_3dbox_knot_get(item, 7);
+    return box3d_knot_get(item, 7);
+}
+
+static void box3d_knot_click(SPItem *item, guint state, guint id)
+{
+    g_print ("Corner %d was clicked\n", id);
+}
+
+static void box3d_knot0_click(SPItem *item, guint state)
+{
+    box3d_knot_click(item, state, 0);
+}
+
+static void box3d_knot1_click(SPItem *item, guint state)
+{
+    box3d_knot_click(item, state, 1);
+}
+
+static void box3d_knot2_click(SPItem *item, guint state)
+{
+    box3d_knot_click(item, state, 2);
+}
+
+static void box3d_knot3_click(SPItem *item, guint state)
+{
+    box3d_knot_click(item, state, 3);
+}
+
+static void box3d_knot4_click(SPItem *item, guint state)
+{
+    box3d_knot_click(item, state, 4);
+}
+
+static void box3d_knot5_click(SPItem *item, guint state)
+{
+    box3d_knot_click(item, state, 5);
+}
+
+static void box3d_knot6_click(SPItem *item, guint state)
+{
+    box3d_knot_click(item, state, 6);
+}
+
+static void box3d_knot7_click(SPItem *item, guint state)
+{
+    box3d_knot_click(item, state, 7);
 }
 
 
-//static
 SPKnotHolder *
-sp_3dbox_knot_holder(SPItem *item, SPDesktop *desktop)
+box3d_knot_holder(SPItem *item, SPDesktop *desktop)
 {
     g_assert(item != NULL);
     SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
 
-    sp_knot_holder_add(knot_holder, sp_3dbox_knot0_set, sp_3dbox_knot0_get, NULL,
+    sp_knot_holder_add(knot_holder, box3d_knot0_set, box3d_knot0_get, box3d_knot0_click,
                        _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, sp_3dbox_knot1_set, sp_3dbox_knot1_get, NULL,
+    sp_knot_holder_add(knot_holder, box3d_knot1_set, box3d_knot1_get, box3d_knot1_click,
                        _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, sp_3dbox_knot2_set, sp_3dbox_knot2_get, NULL,
+    sp_knot_holder_add(knot_holder, box3d_knot2_set, box3d_knot2_get, box3d_knot2_click,
                        _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, sp_3dbox_knot3_set, sp_3dbox_knot3_get, NULL,
+    sp_knot_holder_add(knot_holder, box3d_knot3_set, box3d_knot3_get, box3d_knot3_click,
                        _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, sp_3dbox_knot4_set, sp_3dbox_knot4_get, NULL,
+    sp_knot_holder_add(knot_holder, box3d_knot4_set, box3d_knot4_get, box3d_knot4_click,
                        _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, sp_3dbox_knot5_set, sp_3dbox_knot5_get, NULL,
+    sp_knot_holder_add(knot_holder, box3d_knot5_set, box3d_knot5_get, box3d_knot5_click,
                        _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, sp_3dbox_knot6_set, sp_3dbox_knot6_get, NULL,
+    sp_knot_holder_add(knot_holder, box3d_knot6_set, box3d_knot6_get, box3d_knot6_click,
                        _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, sp_3dbox_knot7_set, sp_3dbox_knot7_get, NULL,
+    sp_knot_holder_add(knot_holder, box3d_knot7_set, box3d_knot7_get, box3d_knot7_click,
                        _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
 
     // center dragging
-    sp_knot_holder_add_full(knot_holder, sp_3dbox_knot_center_set, sp_3dbox_knot_center_get, NULL,
+    sp_knot_holder_add_full(knot_holder, box3d_knot_center_set, box3d_knot_center_get, NULL,
                             SP_KNOT_SHAPE_CROSS, SP_KNOT_MODE_XOR,_("Move the box in perspective."));
 
     sp_pat_knot_holder(item, knot_holder);
 
     return knot_holder;
 }
+
+
 
 /* SPArc */
 

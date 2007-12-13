@@ -72,6 +72,7 @@ void Anchored::anchor() const {
 
 void Anchored::release() const {
     Debug::EventTracker<ReleaseEvent> tracker(this);
+    g_return_if_fail(_anchor);
     if (!--_anchor->refcount) {
         _free_anchor(_anchor);
         _anchor = NULL;

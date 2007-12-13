@@ -157,7 +157,7 @@ tools_switch(SPDesktop *dt, int num)
             dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and resize. <b>Click</b> to select."));
             break;
         case TOOLS_SHAPES_3DBOX:
-            dt->set_event_context(SP_TYPE_3DBOX_CONTEXT, tool_names[num]);
+            dt->set_event_context(SP_TYPE_BOX3D_CONTEXT, tool_names[num]);
             dt->activate_guides(false);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
             dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> to create a 3D box. <b>Drag controls</b> to resize in perspective. <b>Click</b> to select (with <b>Ctrl+Alt</b> for single faces)."));
@@ -248,6 +248,8 @@ void tools_switch_by_item(SPDesktop *dt, SPItem *item)
 {
     if (SP_IS_RECT(item)) {
         tools_switch(dt, TOOLS_SHAPES_RECT);
+    } else if (SP_IS_BOX3D(item)) {
+        tools_switch(dt, TOOLS_SHAPES_3DBOX);
     } else if (SP_IS_GENERICELLIPSE(item)) {
         tools_switch(dt, TOOLS_SHAPES_ARC);
     } else if (SP_IS_STAR(item)) {

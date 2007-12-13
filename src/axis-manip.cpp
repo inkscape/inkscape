@@ -13,6 +13,13 @@
 
 #include "axis-manip.h"
 
+namespace Proj {
+
+Axis axes[4]   = { X,  Y,  Z, W };
+
+} // namespace Proj
+
+
 namespace Box3D {
 
 Axis axes[3]   = { X,  Y,  Z };

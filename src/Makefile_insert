@@ -44,7 +44,7 @@ libinkpre_a_SOURCES =	\
 	bad-uri-exception.h	\
 	box3d.cpp box3d.h \
 	box3d-context.cpp box3d-context.h \
-	box3d-face.cpp box3d-face.h \
+	box3d-side.cpp box3d-side.h \
 	brokenimage.xpm	\
 	color-rgba.h	\
 	color-profile.cpp color-profile.h	\
@@ -116,8 +116,9 @@ libinkpre_a_SOURCES =	\
 	pen-context.h	\
 	pencil-context.cpp	\
 	pencil-context.h	\
+	persp3d.cpp persp3d.h	\
+	persp3d-reference.cpp persp3d-reference.h	\
 	perspective-line.cpp perspective-line.h	\
-	perspective3d.cpp perspective3d.h	\
 	preferences.cpp preferences.h \
 	preferences-skeleton.h	\
 	menus-skeleton.h	\
@@ -128,6 +129,7 @@ libinkpre_a_SOURCES =	\
 	print.cpp print.h	\
 	profile-manager.cpp	\
 	profile-manager.h	\
+	proj_pt.cpp proj_pt.h	\
 	rect-context.cpp rect-context.h	\
 	require-config.h \
 	rubberband.cpp rubberband.h	\
@@ -145,6 +147,8 @@ libinkpre_a_SOURCES =	\
 	snapped-line.cpp snapped-line.h \
 	snapped-point.cpp snapped-point.h \
 	snapper.cpp snapper.h \
+	syseq.h \
+	transf_mat_3x4.cpp transf_mat_3x4.h	\
 	line-snapper.cpp line-snapper.h \
 	guide-snapper.cpp guide-snapper.h \
 	object-snapper.cpp object-snapper.h \

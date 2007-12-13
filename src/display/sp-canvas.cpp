@@ -2118,10 +2118,10 @@ sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear,
 
     /*  update perspective lines if we are in the 3D box tool (so that infinite ones are shown correctly) */
     SPEventContext *ec = inkscape_active_event_context();
-    if (SP_IS_3DBOX_CONTEXT (ec)) {
+    if (SP_IS_BOX3D_CONTEXT (ec)) {
         // We could avoid redraw during panning by checking the status of is_scrolling, but this is
         // neither faster nor does it get rid of artefacts, so we update PLs unconditionally
-        SP3DBoxContext *bc = SP_3DBOX_CONTEXT (ec);
+        Box3DContext *bc = SP_BOX3D_CONTEXT (ec);
         bc->_vpdrag->updateLines();
     }
 }

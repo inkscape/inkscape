@@ -36,6 +36,9 @@
 #include "libnr/n-art-bpath.h"
 #include "context-fns.h"
 #include "sp-namedview.h"
+#include "xml/repr.h"
+#include "document.h"
+#include "desktop-style.h"
 
 static void sp_pencil_context_class_init(SPPencilContextClass *klass);
 static void sp_pencil_context_init(SPPencilContext *pc);
@@ -223,6 +226,30 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                 break;
             default:
                 /* Set first point of sequence */
+                if (bevent.state & GDK_CONTROL_MASK) {
+                    /* Create object */
+                    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+                    Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
+                    repr->setAttribute("sodipodi:type", "arc");
+                    SPItem *item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
+                    Inkscape::GC::release(repr);
+                    NR::Matrix const i2d (sp_item_i2d_affine (item));
+                    NR::Point pp = p * i2d;
+                    sp_repr_set_svg_double (repr, "sodipodi:cx", pp[NR::X]);
+                    sp_repr_set_svg_double (repr, "sodipodi:cy", pp[NR::Y]);
+                    sp_repr_set_int (repr, "sodipodi:rx", 10);
+                    sp_repr_set_int (repr, "sodipodi:ry", 10);
+
+                    /* Set style */
+                    sp_desktop_apply_style_tool(desktop, repr, "tools.shapes.arc", false);
+
+                    item->updateRepr();
+                    desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating single point"));
+                    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_PENCIL, _("Create single point"));
+                    ret = true;
+                    break;
+                    
+                }
                 if (anchor) {
                     p = anchor->dp;
                     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Continuing selected path"));
@@ -255,6 +282,11 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
 static gint
 pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mevent)
 {
+    if (mevent.state & GDK_CONTROL_MASK) {
+        // mouse was accidentally moved during Ctrl+click;
+        // ignore the motion and create a single point
+        return TRUE;
+    }
     gint ret = FALSE;
     SPDesktop *const dt = pc->desktop;
 
@@ -359,7 +391,10 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
             case SP_PENCIL_CONTEXT_IDLE:
                 /* Releasing button in idle mode means single click */
                 /* We have already set up start point/anchor in button_press */
-                pc->state = SP_PENCIL_CONTEXT_ADDLINE;
+                if (!(revent.state & GDK_CONTROL_MASK)) {
+                    // Ctrl+click creates a single point so only set context in ADDLINE mode when Ctrl isn't pressed
+                    pc->state = SP_PENCIL_CONTEXT_ADDLINE;
+                }
                 ret = TRUE;
                 break;
             case SP_PENCIL_CONTEXT_ADDLINE:

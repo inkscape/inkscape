@@ -118,13 +118,18 @@ enum SPAttributeEnum {
     /* SPRect */
     SP_ATTR_RX,
     SP_ATTR_RY,
-    /* SP3DBox */
-    SP_ATTR_INKSCAPE_3DBOX,
-    SP_ATTR_INKSCAPE_3DBOX_CORNER_A, // "upper left front" corner
-    SP_ATTR_INKSCAPE_3DBOX_CORNER_B, // "lower right front" corner
-    SP_ATTR_INKSCAPE_3DBOX_CORNER_C, // "lower right rear" corner
-    SP_ATTR_INKSCAPE_3DBOX_PERSPECTIVE,
-    SP_ATTR_INKSCAPE_3DBOX_FACE,
+    /* Box3D */
+    SP_ATTR_INKSCAPE_BOX3D_PERSPECTIVE_ID,
+    SP_ATTR_INKSCAPE_BOX3D_CORNER0, // "upper left front" corner (as a point in 3-space)
+    SP_ATTR_INKSCAPE_BOX3D_CORNER7, // "lower right rear" corner (as a point in 3-space)
+    /* Box3DSide */
+    SP_ATTR_INKSCAPE_BOX3D_SIDE_TYPE,
+    /* Persp3D */
+    SP_ATTR_INKSCAPE_PERSP3D,
+    SP_ATTR_INKSCAPE_PERSP3D_VP_X,
+    SP_ATTR_INKSCAPE_PERSP3D_VP_Y,
+    SP_ATTR_INKSCAPE_PERSP3D_VP_Z,
+    SP_ATTR_INKSCAPE_PERSP3D_ORIGIN,
     /* SPEllipse */
     SP_ATTR_R,
     SP_ATTR_CX,

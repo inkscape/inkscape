@@ -118,13 +118,18 @@ static SPStyleProp const props[] = {
     /* SPRect */
     {SP_ATTR_RX, "rx"},
     {SP_ATTR_RY, "ry"},
-    /* SP3DBox */
-    {SP_ATTR_INKSCAPE_3DBOX, "inkscape:3dbox"},
-    {SP_ATTR_INKSCAPE_3DBOX_CORNER_A, "inkscape:box3dcornerA"}, // "upper left front" corner
-    {SP_ATTR_INKSCAPE_3DBOX_CORNER_B, "inkscape:box3dcornerB"}, // "lower right front" corner
-    {SP_ATTR_INKSCAPE_3DBOX_CORNER_C, "inkscape:box3dcornerC"}, // "lower right rear" corner
-    {SP_ATTR_INKSCAPE_3DBOX_PERSPECTIVE, "inkscape:perspective"},
-    {SP_ATTR_INKSCAPE_3DBOX_FACE, "inkscape:box3dface"},
+    /* Box3D */
+    {SP_ATTR_INKSCAPE_BOX3D_PERSPECTIVE_ID, "inkscape:perspectiveID"},
+    {SP_ATTR_INKSCAPE_BOX3D_CORNER0, "inkscape:corner0"},
+    {SP_ATTR_INKSCAPE_BOX3D_CORNER7, "inkscape:corner7"},
+    /* Box3DSide */
+    {SP_ATTR_INKSCAPE_BOX3D_SIDE_TYPE, "inkscape:box3dsidetype"}, // XYfront, etc.
+    /* Persp3D */
+    {SP_ATTR_INKSCAPE_PERSP3D, "inkscape:persp3d"},
+    {SP_ATTR_INKSCAPE_PERSP3D_VP_X, "inkscape:vp_x"},
+    {SP_ATTR_INKSCAPE_PERSP3D_VP_Y, "inkscape:vp_y"},
+    {SP_ATTR_INKSCAPE_PERSP3D_VP_Z, "inkscape:vp_z"},
+    {SP_ATTR_INKSCAPE_PERSP3D_ORIGIN, "inkscape:persp3d-origin"},
     /* SPEllipse */
     {SP_ATTR_R, "r"},
     {SP_ATTR_CX, "cx"},

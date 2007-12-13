@@ -15,6 +15,48 @@
 #include <gtk/gtk.h>
 #include "libnr/nr-point.h"
 
+namespace Proj {
+
+enum VPState {
+    FINITE = 0,
+    INFINITE
+};
+
+// The X-/Y-/Z-axis corresponds to the first/second/third digit
+// in binary representation, respectively.
+enum Axis {
+    X = 0,
+    Y = 1,
+    Z = 2,
+    W = 3,
+    NONE
+};
+
+extern Axis axes[4];
+
+inline gchar * string_from_axis (Proj::Axis axis) {
+    switch (axis) {
+    case X:
+        return "X";
+        break;
+    case Y:
+        return "Y";
+        break;
+    case Z:
+        return "Z";
+        break;
+    case W:
+        return "W";
+        break;
+    case NONE:
+        return "NONE";
+        break;
+    }
+    return "";
+}
+
+} // namespace Proj
+
 namespace Box3D {
 
 const double epsilon = 1e-6;
@@ -39,15 +81,74 @@ enum FrontOrRear { // find a better name
     REAR = 8
 };
 
+// converts X, Y, Z respectively to 0, 1, 2 (for use as array indices, e.g)
+inline int axis_to_int(Box3D::Axis axis) {
+    switch (axis) {
+    case Box3D::X:
+        return 0;
+        break;
+    case Box3D::Y:
+        return 1;
+        break;
+    case Box3D::Z:
+        return 2;
+        break;
+    case Box3D::NONE:
+        return -1;
+        break;
+    default:
+        g_assert_not_reached();
+    }
+}
+
+inline Proj::Axis toProj(Box3D::Axis axis) {
+    switch (axis) {
+    case Box3D::X:
+        return Proj::X;
+    case Box3D::Y:
+        return Proj::Y;
+    case Box3D::Z:
+        return Proj::Z;
+    case Box3D::NONE:
+        return Proj::NONE;
+    default:
+        g_assert_not_reached();
+    }
+}
+
 extern Axis axes[3];
 extern Axis planes[3];
 extern FrontOrRear face_positions [2];
+
+} // namespace Box3D
+
+namespace Proj {
+
+inline Box3D::Axis toAffine(Proj::Axis axis) {
+    switch (axis) {
+    case Proj::X:
+        return Box3D::X;
+    case Proj::Y:
+        return Box3D::Y;
+    case Proj::Z:
+        return Box3D::Z;
+    case Proj::NONE:
+        return Box3D::NONE;
+    default:
+        g_assert_not_reached();
+    }
+}
+
+} // namespace Proj
+
+namespace Box3D {
 
 // Given a bit sequence that unambiguously specifies the face of a 3D box,
 // return a number between 0 and 5 corresponding to that particular face
 // (which is normally used to index an array). Return -1 if the bit sequence
 // does not specify a face. A face can either be given by its plane (e.g, XY)
 // or by the axis that is orthogonal to it (e.g., Z).
+/***
 inline gint face_to_int (guint face_id) {
     switch (face_id) {
       case 1:  return 0;
@@ -67,10 +168,75 @@ inline gint face_to_int (guint face_id) {
     default: return -1;
     }
 }
+***/
 
-inline gint opposite_face (guint face_id) {
-    return face_id + ((face_id % 2 == 0) ? 1 : -1);
+/***
+inline gint int_to_face (guint id) {
+    switch (id) {
+      case 0: return  6;
+      case 1: return 14;
+      case 2: return  5;
+      case 3: return 13;
+      case 4: return  3;
+      case 5: return 11;
+
+    default: return -1;
+    }
 }
+***/
+
+/* 
+ * New version:
+ * Identify the axes X, Y, Z with the numbers 0, 1, 2.
+ * A box's face is identified by the axis perpendicular to it.
+ * For a rear face, add 3.
+ */
+// Given a bit sequence that unambiguously specifies the face of a 3D box,
+// return a number between 0 and 5 corresponding to that particular face
+// (which is normally used to index an array). Return -1 if the bit sequence
+// does not specify a face. A face can either be given by its plane (e.g, XY)
+// or by the axis that is orthogonal to it (e.g., Z).
+inline gint face_to_int (guint face_id) {
+    switch (face_id) {
+      case 1:  return 0;
+      case 2:  return 1;
+      case 4:  return 2;
+      case 3:  return 2;
+      case 5:  return 1;
+      case 6:  return 0;
+
+      case 9:  return 3;
+      case 10: return 4;
+      case 12: return 5;
+      case 11: return 5;
+      case 13: return 4;
+      case 14: return 3;
+
+    default: return -1;
+    }
+}
+
+inline gint int_to_face (guint id) {
+    switch (id) {
+    case 0: return Box3D::YZ ^ Box3D::FRONT;
+    case 1: return Box3D::XZ ^ Box3D::FRONT;
+    case 2: return Box3D::XY ^ Box3D::FRONT;
+    case 3: return Box3D::YZ ^ Box3D::REAR;
+    case 4: return Box3D::XZ ^ Box3D::REAR;
+    case 5: return Box3D::XY ^ Box3D::REAR;
+    }
+    return Box3D::NONE; // should not be reached
+}
+
+inline bool is_face_id (guint face_id) {
+    return !((face_id & 0x7) == 0x7);
+}
+
+/**
+inline gint opposite_face (guint face_id) {
+    return face_id + (((face_id % 2) == 0) ? 1 : -1);
+}
+**/
 
 inline guint number_of_axis_directions (Box3D::Axis axis) {
     guint num = 0;
@@ -90,6 +256,7 @@ inline bool is_single_axis_direction (Box3D::Axis dir) {
     return (!(dir & (dir - 1)) && dir);
 }
 
+/***
 // Warning: We don't check that axis really unambiguously specifies a plane.
 //          Make sure this is the case when calling this function.
 inline gint face_containing_corner (Box3D::Axis axis, guint corner) {
@@ -98,7 +265,7 @@ inline gint face_containing_corner (Box3D::Axis axis, guint corner) {
     }
     return face_to_int (axis ^ ((corner & axis) ? Box3D::REAR : Box3D::FRONT));
 }
-
+***/
 
 /**
  * Given two axis directions out of {X, Y, Z} or the corresponding plane, return the remaining one

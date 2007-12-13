@@ -41,6 +41,7 @@
 
 #include "desktop-style.h"
 #include "svg/svg-icc-color.h"
+#include "box3d-side.h"
 
 /**
  * Set color on selection on desktop.
@@ -165,9 +166,11 @@ sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write
         sp_repr_css_change(inkscape_get_repr(INKSCAPE, "desktop"), css_write, "style");
         for (const GSList *i = desktop->selection->itemList(); i != NULL; i = i->next) {
             /* last used styles for 3D box faces are stored separately */
-            if (SP_IS_PATH (i->data)) {
-                const char * descr  = SP_OBJECT_REPR (G_OBJECT (i->data))->attribute ("inkscape:box3dface");
+            if (SP_IS_BOX3D_SIDE (i->data)) {
+                //const char * descr  = SP_OBJECT_REPR (G_OBJECT (i->data))->attribute ("inkscape:box3dside");
+                const char * descr  = box3d_side_axes_string(SP_BOX3D_SIDE(i->data));
                 if (descr != NULL) {
+                    g_print ("################ Box3DSide description found.\n");
                     gchar *style_grp = g_strconcat ("desktop.", descr, NULL);
                     sp_repr_css_change(inkscape_get_repr(INKSCAPE, style_grp), css_write, "style");
                     g_free (style_grp);

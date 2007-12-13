@@ -15,6 +15,7 @@
  */
 
 #include "config.h"
+#include "inkscape.h"
 
 #include <gdk/gdkkeysyms.h>
 
@@ -393,6 +394,19 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
         case GDK_X:
             if (MOD__ALT_ONLY) {
                 desktop->setToolboxFocusTo ("altx-rect");
+                ret = TRUE;
+            }
+            break;
+
+        case GDK_T:
+            {
+                Inkscape::Selection *selection = sp_desktop_selection (inkscape_active_desktop());
+                SPItem *item = selection->singleItem();
+                if (item && SP_IS_RECT (item)) {
+                    g_print ("Scaling transformation matrix\n");
+                    SP_RECT (item)->transform = nr_matrix_set_scale(SP_RECT (item)->transform, 1.25, 1.5);
+                    SP_OBJECT (item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+                }
                 ret = TRUE;
             }
             break;

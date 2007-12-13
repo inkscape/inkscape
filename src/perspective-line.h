@@ -12,9 +12,7 @@
 #ifndef SEEN_PERSPECTIVE_LINE_H
 #define SEEN_PERSPECTIVE_LINE_H
 
-#include "vanishing-point.h"
 #include "line-geometry.h"
-#include "box3d-context.h" 
 #include <glib.h>
 
 class SPDesktop;
@@ -29,28 +27,15 @@ public:
      * PL runs through it; otherwise it has the direction specified by the v_dir vector
      * of the VP.
      */
-    PerspectiveLine (NR::Point const &pt, Box3D::Axis const axis, Perspective3D *perspective);
-    NR::Maybe<NR::Point> intersect (Line const &line); // FIXME: Can we make this return only a NR::Point to remove the extra method meet()?
-    NR::Point meet (Line const &line);
-    NR::Point pt_with_given_cross_ratio (NR::Point const &C, NR::Point const &D, double gamma);
-    NR::Maybe<NR::Point> intersection_with_viewbox (SPDesktop *desktop);
+    PerspectiveLine (NR::Point const &pt, Proj::Axis const axis, Persp3D *persp);
 
 private:
-    Box3D::Axis vp_dir; // direction of the associated VP
-    Perspective3D *persp;
+    Proj::Axis vp_dir; // direction of the associated VP
+    Persp3D *persp;
 };
 
 
 } // namespace Box3D
-
-
-/** A function to print out the VanishingPoint (prints the coordinates) **/
-/***
-inline std::ostream &operator<< (std::ostream &out_file, const VanishingPoint &vp) {
-    out_file << vp;
-    return out_file;
-}
-***/
 
 
 #endif /* !SEEN_PERSPECTIVE_LINE_H */

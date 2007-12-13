@@ -60,7 +60,7 @@ type2term(GType type)
         { return _("Polyline"); }
     if (type == SP_TYPE_RECT)
         { return _("Rectangle"); }
-    if (type == SP_TYPE_3DBOX)
+    if (type == SP_TYPE_BOX3D)
         { return _("3D Box"); }
     if (type == SP_TYPE_TEXT)
         { return _("Text"); }

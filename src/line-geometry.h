@@ -17,7 +17,7 @@
 #include "libnr/nr-maybe.h"
 #include "glib.h"
 #include "display/sp-ctrlline.h"
-#include "vanishing-point.h"
+#include "axis-manip.h" // FIXME: This is only for Box3D::epsilon; move that to a better location
 
 #include "document.h"
 #include "ui/view/view.h"
@@ -36,7 +36,13 @@ public:
     NR::Point closest_to(NR::Point const &pt); // returns the point on the line closest to pt 
 
     friend inline std::ostream &operator<< (std::ostream &out_file, const Line &in_line);
-    friend NR::Point fourth_pt_with_given_cross_ratio (NR::Point const &A, NR::Point const &C, NR::Point const &D, double gamma);
+    NR::Maybe<NR::Point> intersection_with_viewbox (SPDesktop *desktop);
+    inline bool lie_on_same_side (NR::Point const &A, NR::Point const &B) {
+        /* If A is a point in the plane and n is the normal vector of the line then
+           the sign of dot(A, n) specifies the half-plane in which A lies.
+           Thus A and B lie on the same side if the dot products have equal sign. */
+        return ((NR::dot(A, normal) - d0) * (NR::dot(B, normal) - d0)) > 0;
+    }
 
     double lambda (NR::Point const pt);
     inline NR::Point point_from_lambda (double const lambda) { 
@@ -66,14 +72,10 @@ std::pair<NR::Point, NR::Point> side_of_intersection (NR::Point const &A, NR::Po
                                                       NR::Point const &C, NR::Point const &D,
                                                       NR::Point const &pt, NR::Point const &dir);
 
-double cross_ratio (NR::Point const &A, NR::Point const &B, NR::Point const &C, NR::Point const &D);
-double cross_ratio (VanishingPoint const &V, NR::Point const &B, NR::Point const &C, NR::Point const &D);
-NR::Point fourth_pt_with_given_cross_ratio (NR::Point const &A, NR::Point const &C, NR::Point const &D, double gamma);
-
-/*** For testing purposes: Draw a knot/node of specified size and color at the given position ***/
+/*** For debugging purposes: Draw a knot/node of specified size and color at the given position ***/
 void create_canvas_point(NR::Point const &pos, double size = 4.0, guint32 rgba = 0xff00007f);
 
-/*** For testing purposes: Draw a line between the specified points ***/
+/*** For debugging purposes: Draw a line between the specified points ***/
 void create_canvas_line(NR::Point const &p1, NR::Point const &p2, guint32 rgba = 0xff00007f);
 
 

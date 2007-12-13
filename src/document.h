@@ -29,6 +29,7 @@
 #include <glibmm/ustring.h>
 #include "verbs.h"
 #include <vector>
+#include <set>
 
 namespace Avoid {
 class Router;
@@ -53,10 +54,10 @@ namespace Inkscape {
 }
 
 class SP3DBox;
+class Persp3D;
 
-namespace Box3D {
-  class Perspective3D;
-  class VanishingPoint;
+namespace Proj {
+  class TransfMat3x4;
 }
 
 class SPDocumentPrivate;
@@ -103,17 +104,12 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 	Avoid::Router *router;
 
         GSList *perspectives;
-        Box3D::Perspective3D *current_perspective;
 
-        // FIXME: Perspectives should be linked to the list of existing ones automatically in the constructor
-        //        and removed in the destructor!
-        void add_perspective (Box3D::Perspective3D * const persp);
-        void remove_perspective (Box3D::Perspective3D * const persp);
-        /* find an existing perspective whose VPs are equal to those of persp */
-        Box3D::Perspective3D * find_perspective (const Box3D::Perspective3D * persp);
+    Persp3D *current_persp3d; // "currently active" perspective (e.g., newly created boxes are attached to this one)
+    std::set<Persp3D *> persps_sel; // perspectives associated to currently selected boxes
 
-        Box3D::Perspective3D * get_persp_of_box (const SP3DBox *box);
-        Box3D::Perspective3D * get_persp_of_VP (const Box3D::VanishingPoint *vp);
+        void add_persp3d (Persp3D * const persp);
+        void remove_persp3d (Persp3D * const persp);
 
 	sigc::connection connectModified(ModifiedSignal::slot_type slot);
 	sigc::connection connectURISet(URISetSignal::slot_type slot);
@@ -266,3 +262,14 @@ void sp_document_resized_signal_emit (SPDocument *doc, gdouble width, gdouble he
 unsigned int vacuum_document (SPDocument *document);
 
 #endif
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

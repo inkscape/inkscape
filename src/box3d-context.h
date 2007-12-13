@@ -1,5 +1,5 @@
-#ifndef __SP_3DBOX_CONTEXT_H__
-#define __SP_3DBOX_CONTEXT_H__
+#ifndef __SP_BOX3D_CONTEXT_H__
+#define __SP_BOX3D_CONTEXT_H__
 
 /*
  * 3D box drawing context
@@ -17,22 +17,23 @@
 
 #include <sigc++/sigc++.h>
 #include "event-context.h"
-#include "perspective3d.h"
+#include "proj_pt.h"
+#include "vanishing-point.h"
 
 struct SPKnotHolder;
 
-#define SP_TYPE_3DBOX_CONTEXT            (sp_3dbox_context_get_type ())
-#define SP_3DBOX_CONTEXT(obj)            (GTK_CHECK_CAST ((obj), SP_TYPE_3DBOX_CONTEXT, SP3DBoxContext))
-#define SP_3DBOX_CONTEXT_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), SP_TYPE_3DBOX_CONTEXT, SP3DBoxContextClass))
-#define SP_IS_3DBOX_CONTEXT(obj)         (GTK_CHECK_TYPE ((obj), SP_TYPE_3DBOX_CONTEXT))
-#define SP_IS_3DBOX_CONTEXT_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), SP_TYPE_3DBOX_CONTEXT))
+#define SP_TYPE_BOX3D_CONTEXT            (sp_box3d_context_get_type ())
+#define SP_BOX3D_CONTEXT(obj)            (GTK_CHECK_CAST ((obj), SP_TYPE_BOX3D_CONTEXT, Box3DContext))
+#define SP_BOX3D_CONTEXT_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), SP_TYPE_BOX3D_CONTEXT, Box3DContextClass))
+#define SP_IS_BOX3D_CONTEXT(obj)         (GTK_CHECK_TYPE ((obj), SP_TYPE_BOX3D_CONTEXT))
+#define SP_IS_BOX3D_CONTEXT_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), SP_TYPE_BOX3D_CONTEXT))
 
-class SP3DBoxContext;
-class SP3DBoxContextClass;
+class Box3DContext;
+class Box3DContextClass;
 
-struct SP3DBoxContext : public SPEventContext {
-	SPItem *item;
-	NR::Point center;
+struct Box3DContext : public SPEventContext {
+    SPItem *item;
+    NR::Point center;
 
     /**
      * save three corners while dragging:
@@ -45,22 +46,38 @@ struct SP3DBoxContext : public SPEventContext {
     NR::Point drag_origin;
     NR::Point drag_ptB;
     NR::Point drag_ptC;
+
+    Proj::Pt3 drag_origin_proj;
+    Proj::Pt3 drag_ptB_proj;
+    Proj::Pt3 drag_ptC_proj;
+
     bool ctrl_dragged; /* whether we are ctrl-dragging */
     bool extruded; /* whether shift-dragging already occured (i.e. the box is already extruded) */
 
     Box3D::VPDrag * _vpdrag;
 
-	sigc::connection sel_changed_connection;
+    sigc::connection sel_changed_connection;
 
-	Inkscape::MessageContext *_message_context;
+    Inkscape::MessageContext *_message_context;
 };
 
-struct SP3DBoxContextClass {
-	SPEventContextClass parent_class;
+struct Box3DContextClass {
+    SPEventContextClass parent_class;
 };
 
 /* Standard Gtk function */
 
-GtkType sp_3dbox_context_get_type (void);
+GtkType sp_box3d_context_get_type (void);
 
-#endif
+#endif /* __SP_BOX3D_CONTEXT_H__ */
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

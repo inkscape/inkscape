@@ -12,14 +12,19 @@
 #ifndef SEEN_VANISHING_POINT_H
 #define SEEN_VANISHING_POINT_H
 
+#include <set>
 #include "libnr/nr-point.h"
 #include "knot.h"
 #include "selection.h"
 #include "axis-manip.h"
+#include "inkscape.h"
+#include "persp3d.h"
+#include "box3d.h"
+#include "persp3d-reference.h"
 
 #include "line-geometry.h" // TODO: Remove this include as soon as we don't need create_canvas_(point|line) any more.
 
-class SP3DBox;
+class SPBox3D;
 
 namespace Box3D {
 
@@ -28,59 +33,98 @@ enum VPState {
     VP_INFINITE    // perspective lines are parallel
 };
 
-// FIXME: Store the Axis of the VP inside the class
-class VanishingPoint : public NR::Point {
+/* VanishingPoint is a simple wrapper class to easily extract VP data from perspectives.
+ * A VanishingPoint represents a VP in a certain direction (X, Y, Z) of a single perspective.
+ * In particular, it can potentially have more than one box linked to it (although in facth they
+ * are rather linked to the parent perspective).
+ */
+// FIXME: Don't store the box in the VP but rather the perspective (and link the box to it)!!
+class VanishingPoint {
 public:
-    inline VanishingPoint() : NR::Point() {};
-    /***
-    inline VanishingPoint(NR::Point const &pt, NR::Point const &ref = NR::Point(0,0))
-                         : NR::Point (pt),
-                           ref_pt (ref),
-                           v_dir (pt[NR::X] - ref[NR::X], pt[NR::Y] - ref[NR::Y]) {}
-    inline VanishingPoint(NR::Coord x, NR::Coord y, NR::Point const &ref = NR::Point(0,0))
-                         : NR::Point (x, y),
-                           ref_pt (ref),
-                           v_dir (x - ref[NR::X], y - ref[NR::Y]) {}
-    ***/
-    VanishingPoint(NR::Point const &pt, NR::Point const &inf_dir, VPState st);
-    VanishingPoint(NR::Point const &pt);
-    VanishingPoint(NR::Point const &dir, VPState const state);
-    VanishingPoint(NR::Point const &pt, NR::Point const &direction);
-    VanishingPoint(NR::Coord x, NR::Coord y);
-    VanishingPoint(NR::Coord x, NR::Coord y, VPState const state);
-    VanishingPoint(NR::Coord x, NR::Coord y, NR::Coord dir_x, NR::Coord dir_y);
-    VanishingPoint(VanishingPoint const &rhs);
-    ~VanishingPoint();
+    VanishingPoint() : my_counter(VanishingPoint::global_counter++), _persp(NULL), _axis(Proj::NONE) {}
+    VanishingPoint(Persp3D *persp, Proj::Axis axis) : my_counter(VanishingPoint::global_counter++), _persp(persp), _axis(axis) {}
+    VanishingPoint(const VanishingPoint &other) : my_counter(VanishingPoint::global_counter++), _persp(other._persp), _axis(other._axis) {}
 
-    bool operator== (VanishingPoint const &other);
+    inline VanishingPoint &operator=(VanishingPoint const &rhs) {
+        _persp = rhs._persp;
+        _axis = rhs._axis;
+        return *this;
+    }
+    inline bool operator==(VanishingPoint const &rhs) const {
+        /* vanishing points coincide if they belong to the same perspective */
+        return (_persp == rhs._persp && _axis == rhs._axis);
+    }
 
-    inline NR::Point get_pos() const { return NR::Point ((*this)[NR::X], (*this)[NR::Y]); }
-    inline double get_angle() const { return NR::atan2 (this->v_dir) * 180/M_PI; } // return angle of infinite direction is in degrees
-    inline void set_pos(NR::Point const &pt) { (*this)[NR::X] = pt[NR::X];
-                                               (*this)[NR::Y] = pt[NR::Y]; }
-    inline void set_pos(const double pt_x, const double pt_y) { (*this)[NR::X] = pt_x;
-                                                                (*this)[NR::Y] = pt_y; }
-    inline void set_infinite_direction (const NR::Point dir) { v_dir = dir; }
-    inline void set_infinite_direction (const double dir_x, const double dir_y) { v_dir = NR::Point (dir_x, dir_y); }
+    inline bool operator<(VanishingPoint const &rhs) const {
+        return my_counter < rhs.my_counter;
+    }
 
-    bool is_finite() const;
-    VPState toggle_parallel();
-    void draw(Box3D::Axis const axis); // Draws a point on the canvas if state == VP_FINITE
-    //inline VPState state() { return state; }
-	
-    VPState state;
-    //NR::Point ref_pt; // point of reference to compute the direction of parallel lines
-    NR::Point v_dir; // direction of perslective lines if the VP has state == VP_INFINITE
+    inline void set(Persp3D *persp, Proj::Axis axis) {
+        _persp = persp;
+        _axis = axis;
+    }
+    void set_pos(Proj::Pt2 const &pt);
+    inline bool is_finite() const {
+        g_return_val_if_fail (_persp, false);
+        return persp3d_get_VP (_persp, _axis).is_finite();
+    }
+    inline NR::Point get_pos() const {
+        g_return_val_if_fail (_persp, NR::Point (NR_HUGE, NR_HUGE));
+        return persp3d_get_VP (_persp,_axis).affine();
+    }
+    inline Persp3D * get_perspective() const {
+        return _persp;
+    }
+    inline Persp3D * set_perspective(Persp3D *persp) {
+        return _persp = persp;
+    }
 
+    inline bool hasBox (SPBox3D *box) {
+        return persp3d_has_box(_persp, box);
+    }
+    inline unsigned int numberOfBoxes() const {
+        return persp3d_num_boxes(_persp);
+    }
+
+    /* returns all selected boxes sharing this perspective */
+    std::list<SPBox3D *> selectedBoxes(Inkscape::Selection *sel);
+
+    inline void updateBoxDisplays() const {
+        g_return_if_fail (_persp);
+        persp3d_update_box_displays(_persp);
+    }
+    inline void updateBoxReprs() const {
+        g_return_if_fail (_persp);
+        persp3d_update_box_reprs(_persp);
+    }
+    inline void updatePerspRepr() const {
+        g_return_if_fail (_persp);
+        SP_OBJECT(_persp)->updateRepr(SP_OBJECT_WRITE_EXT);
+    }
+    inline void printPt() const {
+        g_return_if_fail (_persp);
+        persp3d_get_VP (_persp, _axis).print("");
+    }
+    inline gchar *axisString () { return Proj::string_from_axis (_axis); }
+
+    unsigned int my_counter;
+    static unsigned int global_counter; // FIXME: Only to implement operator< so that we can merge lists. Do this in a better way!!
 private:
+    Persp3D *_persp;
+    Proj::Axis _axis;
 };
 
-class Perspective3D;
 class VPDrag;
+
+struct less_ptr : public std::binary_function<VanishingPoint *, VanishingPoint *, bool> {
+    bool operator()(VanishingPoint *vp1, VanishingPoint *vp2) {
+        return GPOINTER_TO_INT(vp1) < GPOINTER_TO_INT(vp2);
+    }
+};
 
 struct VPDragger {
 public:
-    VPDragger(VPDrag *parent, NR::Point p, VanishingPoint *vp);
+    VPDragger(VPDrag *parent, NR::Point p, VanishingPoint &vp);
     ~VPDragger();
 
     VPDrag *parent;
@@ -91,24 +135,27 @@ public:
     // position of the knot before it began to drag; updated when released
     NR::Point point_original;
 
-    GSList *vps; // the list of vanishing points
+    bool dragging_started;
 
-    void addVP(VanishingPoint *vp);
-    void removeVP(VanishingPoint *vp);
-    /* returns the VP of the dragger that belongs to the given perspective */
-    VanishingPoint *getVPofPerspective (Perspective3D *persp);
+    std::list<VanishingPoint> vps;
+
+    void addVP(VanishingPoint &vp, bool update_pos = false);
+    void removeVP(const VanishingPoint &vp);
 
     void updateTip();
 
-    bool hasBox (const SP3DBox *box);
     guint numberOfBoxes(); // the number of boxes linked to all VPs of the dragger
+    VanishingPoint *findVPWithBox(SPBox3D *box);
+    std::set<VanishingPoint*, less_ptr> VPsOfSelectedBoxes();
 
-    bool hasPerspective (const Perspective3D *perps);
-    void mergePerspectives (); // remove duplicate perspectives
+    bool hasPerspective(const Persp3D *persp);
+    void mergePerspectives(); // remove duplicate perspectives
 
-    void reshapeBoxes(NR::Point const &p, Box3D::Axis axes);
-    void updateBoxReprs();
+    void updateBoxDisplays();
+    void updateVPs(NR::Point const &pt);
     void updateZOrders();
+
+    void printVPs();
 };
 
 struct VPDrag {
@@ -118,19 +165,24 @@ public:
 
     VPDragger *getDraggerFor (VanishingPoint const &vp);
 
-    //void grabKnot (VanishingPoint const &vp, gint x, gint y, guint32 etime);
-
-    bool local_change;
     bool dragging;
 
     SPDocument *document;
     GList *draggers;
     GSList *lines;
 
+    void printDraggers(); // convenience for debugging
+    /* 
+     * FIXME: Should the following functions be merged?
+     *        Also, they should make use of the info in a VanishingPoint structure (regarding boxes
+     *        and perspectives) rather than each time iterating over the whole list of selected items?
+     */
     void updateDraggers ();
     void updateLines ();
     void updateBoxHandles ();
-    void drawLinesForFace (const SP3DBox *box, Box3D::Axis axis); //, guint corner1, guint corner2, guint corner3, guint corner4);
+    void updateBoxReprs ();
+    void updateBoxDisplays ();
+    void drawLinesForFace (const SPBox3D *box, Proj::Axis axis); //, guint corner1, guint corner2, guint corner3, guint corner4);
     bool show_lines; /* whether perspective lines are drawn at all */
     guint front_or_rear_lines; /* whether we draw perspective lines from all corners or only the
                                   front/rear corners (indicated by the first/second bit, respectively  */
@@ -142,7 +194,9 @@ public:
 
     // FIXME: Should this be private? (It's the case with the corresponding function in gradient-drag.h)
     //        But vp_knot_grabbed_handler
-    void addDragger (VanishingPoint *vp);
+    void addDragger (VanishingPoint &vp);
+
+    void swap_perspectives_of_VPs(Persp3D *persp2, Persp3D *persp1);
 
 private:
     //void deselect_all();
@@ -155,15 +209,6 @@ private:
 };
 
 } // namespace Box3D
-
-
-/** A function to print out the VanishingPoint (prints the coordinates) **/
-/***
-inline std::ostream &operator<< (std::ostream &out_file, const VanishingPoint &vp) {
-    out_file << vp;
-    return out_file;
-}
-***/
 
 
 #endif /* !SEEN_VANISHING_POINT_H */

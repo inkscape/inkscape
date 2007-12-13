@@ -238,7 +238,7 @@ static void knot_clicked_handler(SPKnot *knot, guint state, gpointer data)
 
     if (SP_IS_RECT(item))
         object_verb = SP_VERB_CONTEXT_RECT;
-    else if (SP_IS_3DBOX(item))
+    else if (SP_IS_BOX3D(item))
         object_verb = SP_VERB_CONTEXT_3DBOX;
     else if (SP_IS_GENERICELLIPSE(item))
         object_verb = SP_VERB_CONTEXT_ARC;
@@ -293,7 +293,7 @@ static void knot_ungrabbed_handler(SPKnot */*knot*/, unsigned int /*state*/, SPK
 
         if (SP_IS_RECT(object))
             object_verb = SP_VERB_CONTEXT_RECT;
-        else if (SP_IS_3DBOX(object))
+        else if (SP_IS_BOX3D(object))
             object_verb = SP_VERB_CONTEXT_3DBOX;
         else if (SP_IS_GENERICELLIPSE(object))
             object_verb = SP_VERB_CONTEXT_ARC;

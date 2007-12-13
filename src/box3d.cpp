@@ -1,12 +1,12 @@
-#define __SP_3DBOX_C__
+#define __SP_BOX3D_C__
 
 /*
  * SVG <box3d> implementation
  *
  * Authors:
+ *   Maximilian Albert <Anhalter42@gmx.de>
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
- *   Maximilian Albert <Anhalter42@gmx.de>
  *
  * Copyright (C) 2007      Authors
  * Copyright (C) 1999-2002 Lauris Kaplinski
@@ -17,91 +17,104 @@
 
 #include <glibmm/i18n.h>
 #include "attributes.h"
-#include "svg/stringstream.h"
+#include "xml/document.h"
+#include "xml/repr.h"
+
 #include "box3d.h"
-#include "desktop-handles.h"
+#include "box3d-side.h"
+#include "box3d-context.h"
+#include "proj_pt.h"
+#include "transf_mat_3x4.h"
+#include "perspective-line.h"
+#include "inkscape.h"
+#include "persp3d.h"
+#include "line-geometry.h"
+#include "persp3d-reference.h"
+#include "uri.h"
+#include "2geom/geom.h"
 
-static void sp_3dbox_class_init(SP3DBoxClass *klass);
-static void sp_3dbox_init(SP3DBox *box3d);
+#include "desktop.h"
+#include "macros.h"
 
-static void sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void sp_3dbox_release (SPObject *object);
-static void sp_3dbox_set(SPObject *object, unsigned int key, const gchar *value);
-static void sp_3dbox_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static void box3d_class_init(SPBox3DClass *klass);
+static void box3d_init(SPBox3D *box3d);
 
-static gchar *sp_3dbox_description(SPItem *item);
+static void box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void box3d_release(SPObject *object);
+static void box3d_set(SPObject *object, unsigned int key, const gchar *value);
+static void box3d_update(SPObject *object, SPCtx *ctx, guint flags);
+static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
 
-//static void sp_3dbox_set_shape(SPShape *shape);
-//static void sp_3dbox_set_shape(SP3DBox *box3d);
+static gchar *box3d_description(SPItem *item);
+static NR::Matrix box3d_set_transform(SPItem *item, NR::Matrix const &xform);
 
-static void sp_3dbox_update_corner_with_value_from_svg (SPObject *object, guint corner_id, const gchar *value);
-static void sp_3dbox_update_perspective (Box3D::Perspective3D *persp, const gchar *value);
-static gchar * sp_3dbox_get_corner_coords_string (SP3DBox *box, guint id);
-static std::pair<gdouble, gdouble> sp_3dbox_get_coord_pair_from_string (const gchar *);
-static gchar * sp_3dbox_get_perspective_string (SP3DBox *box);
+static void box3d_ref_changed(SPObject *old_ref, SPObject *ref, SPBox3D *box);
+static void box3d_ref_modified(SPObject *href, guint flags, SPBox3D *box);
+//static void box3d_ref_changed(SPObject *old_ref, SPObject *ref, Persp3D *persp);
+//static void box3d_ref_modified(SPObject *href, guint flags, Persp3D *persp);
 
 static SPGroupClass *parent_class;
 
 static gint counter = 0;
 
 GType
-sp_3dbox_get_type(void)
+box3d_get_type(void)
 {
     static GType type = 0;
 
     if (!type) {
         GTypeInfo info = {
-            sizeof(SP3DBoxClass),
+            sizeof(SPBox3DClass),
             NULL,   /* base_init */
             NULL,   /* base_finalize */
-            (GClassInitFunc) sp_3dbox_class_init,
+            (GClassInitFunc) box3d_class_init,
             NULL,   /* class_finalize */
             NULL,   /* class_data */
-            sizeof(SP3DBox),
+            sizeof(SPBox3D),
             16,     /* n_preallocs */
-            (GInstanceInitFunc) sp_3dbox_init,
+            (GInstanceInitFunc) box3d_init,
             NULL,   /* value_table */
         };
-        type = g_type_register_static(SP_TYPE_GROUP, "SP3DBox", &info, (GTypeFlags) 0);
+        type = g_type_register_static(SP_TYPE_GROUP, "SPBox3D", &info, (GTypeFlags) 0);
     }
 
     return type;
 }
 
 static void
-sp_3dbox_class_init(SP3DBoxClass *klass)
+box3d_class_init(SPBox3DClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
     SPItemClass *item_class = (SPItemClass *) klass;
 
     parent_class = (SPGroupClass *) g_type_class_ref(SP_TYPE_GROUP);
 
-    sp_object_class->build = sp_3dbox_build;
-    sp_object_class->set = sp_3dbox_set;
-    sp_object_class->write = sp_3dbox_write;
-    sp_object_class->update = sp_3dbox_update;
-    sp_object_class->release = sp_3dbox_release;
+    sp_object_class->build = box3d_build;
+    sp_object_class->release = box3d_release;
+    sp_object_class->set = box3d_set;
+    sp_object_class->write = box3d_write;
+    sp_object_class->update = box3d_update;
 
-    item_class->description = sp_3dbox_description;
+    item_class->description = box3d_description;
+    item_class->set_transform = box3d_set_transform;
 }
 
 static void
-sp_3dbox_init(SP3DBox *box)
+box3d_init(SPBox3D *box)
 {
-    for (int i = 0; i < 8; ++i) box->corners[i] = NR::Point(0,0);
-    for (int i = 0; i < 6; ++i) box->faces[i] = NULL;
+    box->persp_href = NULL;
+    box->persp_ref = new Persp3DReference(SP_OBJECT(box));
+    new (&box->modified_connection) sigc::connection();
 }
 
 static void
-sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) (parent_class))->build) {
         ((SPObjectClass *) (parent_class))->build(object, document, repr);
     }
 
-    SP3DBox *box = SP_3DBOX (object);
-
+    SPBox3D *box = SP_BOX3D (object);
     box->my_counter = counter++;
 
     /* we initialize the z-orders to zero so that they are updated during dragging */
@@ -109,197 +122,199 @@ sp_3dbox_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr
         box->z_orders[i] = 0;
     }
 
-    box->front_bits = 0x0;
+    // TODO: Create/link to the correct perspective
 
-    
-    if (repr->attribute ("inkscape:perspective") == NULL) {
-        // we are creating a new box; link it to the current perspective
-        document->current_perspective->add_box (box);
-    } else {
-        // create a new perspective that we can compare with existing ones
-        Box3D::Perspective3D *persp = new Box3D::Perspective3D (Box3D::VanishingPoint (0,0),
-                                                                Box3D::VanishingPoint (0,0),
-                                                                Box3D::VanishingPoint (0,0),
-                                                                document);
-        sp_3dbox_update_perspective (persp, repr->attribute ("inkscape:perspective"));
-        Box3D::Perspective3D *comp =  document->find_perspective (persp);
-        if (comp == NULL) {
-            // perspective doesn't exist yet
-            document->add_perspective (persp);
-            persp->add_box (box);
-        } else {
-            // link the box to the existing perspective and delete the temporary one
-            comp->add_box (box);
-            delete persp;
-            //g_assert (Box3D::get_persp_of_box (box) == comp);
+    SPDocument *doc = SP_OBJECT_DOCUMENT(box);
+    if (!doc) {
+        g_print ("No document for the box!!!!\n");
+        return;
+    }
+    /**
+    if (!box->persp3d) {
+        g_print ("Box seems to be newly created since no perspective is referenced yet. We reference the current perspective.\n");
+        box->persp3d = doc->current_persp3d;
+    }
+    **/
 
-            // FIXME: If the paths of the box's faces do not correspond to the svg representation of the perspective
-            //        the box is shown with a "wrong" initial shape that is only corrected after dragging.
-            //        Should we "repair" this by updating the paths at the end of sp_3dbox_build()?
-            //        Maybe it would be better to simply destroy and rebuild them in sp_3dbox_link_to_existing_paths().
-        }
+    box->persp_ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(box3d_ref_changed), box));
+
+    sp_object_read_attr(object, "inkscape:perspectiveID");
+    sp_object_read_attr(object, "inkscape:corner0");
+    sp_object_read_attr(object, "inkscape:corner7");
+}
+
+/**
+ * Virtual release of SPBox3D members before destruction.
+ */
+static void
+box3d_release(SPObject *object)
+{
+    SPBox3D *box = (SPBox3D *) object;
+
+    if (box->persp_href) {
+        g_free(box->persp_href);
+    }
+    if (box->persp_ref) {
+        box->persp_ref->detach();
+        delete box->persp_ref;
+        box->persp_ref = NULL;
     }
 
-    sp_object_read_attr(object, "inkscape:box3dcornerA");
-    sp_object_read_attr(object, "inkscape:box3dcornerB");
-    sp_object_read_attr(object, "inkscape:box3dcornerC");
+    box->modified_connection.disconnect();
+    box->modified_connection.~connection();
 
-    // TODO: We create all faces in the beginning, but only the non-degenerate ones
-    //       should be written to the svg representation later in sp_3dbox_write.
-    Box3D::Axis cur_plane, axis, dir1, dir2;
-    Box3D::FrontOrRear cur_pos;
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < 2; ++j) {
-            cur_plane = Box3D::planes[i];
-            cur_pos = Box3D::face_positions[j];
-            // FIXME: The following code could theoretically be moved to
-            //        the constructor of Box3DFace (but see the comment there).
-            axis = (cur_pos == Box3D::FRONT ? Box3D::NONE : Box3D::third_axis_direction (cur_plane));
-            dir1 = extract_first_axis_direction (cur_plane);
-            dir2 = extract_second_axis_direction (cur_plane);
-            
-            box->faces[Box3D::face_to_int(cur_plane ^ cur_pos)] =
-                new Box3DFace (box, box->corners[axis], box->corners[axis ^ dir1],
-                                    box->corners[axis ^ dir1 ^ dir2], box->corners[axis ^ dir2],
-                                    cur_plane, cur_pos);
-        }
-    }
+    //persp3d_remove_box (box->persp_ref->getObject(), box);
 
-    // Check whether the paths of the faces of the box need to be linked to existing paths in the
-    // document (e.g., after a 'redo' operation or after opening a file) and do so if necessary.
-    sp_3dbox_link_to_existing_paths (box, repr);
-
-    sp_3dbox_set_ratios (box, Box3D::XYZ);
-
-    // Store the center (if it already exists) and certain corners for later use during center-dragging
-    NR::Maybe<NR::Point> cen = sp_3dbox_get_center (box);
-    if (cen) {
-        box->old_center = *cen;
-    }
-    box->old_corner2 = box->corners[2];
-    box->old_corner1 = box->corners[1];
-    box->old_corner0 = box->corners[0];
-    box->old_corner3 = box->corners[3];
-    box->old_corner5 = box->corners[5];
-    box->old_corner7 = box->corners[7];
+    if (((SPObjectClass *) parent_class)->release)
+        ((SPObjectClass *) parent_class)->release(object);
 }
 
 static void
-sp_3dbox_release (SPObject *object)
+box3d_set(SPObject *object, unsigned int key, const gchar *value)
 {
-	SP3DBox *box = SP_3DBOX(object);
-        for (int i = 0; i < 6; ++i) {
-            if (box->faces[i]) {
-                delete box->faces[i]; // FIXME: Anything else to do? Do we need to clean up the face first?
-            }
-        }
+    SPBox3D *box = SP_BOX3D(object);
 
-        // FIXME: We do not duplicate perspectives if they are the same for several boxes.
-        //        Thus, don't delete the perspective when deleting a box but rather unlink the box from it.
-        SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box)->remove_box (box);
-
-	if (((SPObjectClass *) parent_class)->release) {
-	  ((SPObjectClass *) parent_class)->release (object);
-	}
-}
-
-static void sp_3dbox_set(SPObject *object, unsigned int key, const gchar *value)
-{
     switch (key) {
-        case SP_ATTR_INKSCAPE_3DBOX_CORNER_A:
-            sp_3dbox_update_corner_with_value_from_svg (object, 2, value);
+        case SP_ATTR_INKSCAPE_BOX3D_PERSPECTIVE_ID:
+            if ( value && box->persp_href && ( strcmp(value, box->persp_href) == 0 ) ) {
+                /* No change, do nothing. */
+            } else {
+                if (box->persp_href) {
+                    g_free(box->persp_href);
+                    box->persp_href = NULL;
+                }
+                if (value) {
+                    box->persp_href = g_strdup(value);
+
+                    // Now do the attaching, which emits the changed signal.
+                    try {
+                        box->persp_ref->attach(Inkscape::URI(value));
+                    } catch (Inkscape::BadURIException &e) {
+                        g_warning("%s", e.what());
+                        box->persp_ref->detach();
+                    }
+                } else {
+                    // Detach, which emits the changed signal.
+                    box->persp_ref->detach();
+                        // TODO: Clean this up (also w.r.t the surrounding if construct)
+                        /***
+                        g_print ("No perspective given. Attaching to current perspective instead.\n");
+                        g_free(box->persp_href);
+                        Inkscape::XML::Node *repr = SP_OBJECT_REPR(inkscape_active_document()->current_persp3d);
+                        box->persp_href = g_strdup(repr->attribute("id"));
+                        box->persp_ref->attach(Inkscape::URI(box->persp_href));
+                        ***/
+                }
+            }
+
+            // FIXME: Is the following update doubled by some call in either persp3d.cpp or vanishing_point_new.cpp?
+            box3d_position_set(box);
             break;
-        case SP_ATTR_INKSCAPE_3DBOX_CORNER_B:
-            sp_3dbox_update_corner_with_value_from_svg (object, 1, value);
+        case SP_ATTR_INKSCAPE_BOX3D_CORNER0:
+            if (value && strcmp(value, "0 : 0 : 0 : 0")) {
+                box->orig_corner0 = Proj::Pt3(value);
+                box->save_corner0 = box->orig_corner0;
+                box3d_position_set(box);
+            }
             break;
-        case SP_ATTR_INKSCAPE_3DBOX_CORNER_C:
-            sp_3dbox_update_corner_with_value_from_svg (object, 5, value);
+        case SP_ATTR_INKSCAPE_BOX3D_CORNER7:
+            if (value && strcmp(value, "0 : 0 : 0 : 0")) {
+                box->orig_corner7 = Proj::Pt3(value);
+                box->save_corner7 = box->orig_corner7;
+                box3d_position_set(box);
+            }
             break;
-        case SP_ATTR_INKSCAPE_3DBOX_PERSPECTIVE:
-        {
-            SP3DBox *box = SP_3DBOX (object);
-            sp_3dbox_update_perspective (SP_OBJECT_DOCUMENT (object)->get_persp_of_box (box), value);
-            break;
-        }
 	default:
             if (((SPObjectClass *) (parent_class))->set) {
                 ((SPObjectClass *) (parent_class))->set(object, key, value);
             }
             break;
     }
+    //object->updateRepr(); // This ensures correct update of the box after undo/redo. FIXME: Why is this not present in sp-rect.cpp and similar files?
+}
+
+/**
+ * Gets called when (re)attached to another perspective.
+ */
+static void
+box3d_ref_changed(SPObject *old_ref, SPObject *ref, SPBox3D *box)
+{
+    if (old_ref) {
+        sp_signal_disconnect_by_data(old_ref, box);
+        persp3d_remove_box (SP_PERSP3D(old_ref), box);
+    }
+    if ( SP_IS_PERSP3D(ref) && ref != box ) // FIXME: Comparisons sane?
+    {
+        box->modified_connection.disconnect();
+        box->modified_connection = ref->connectModified(sigc::bind(sigc::ptr_fun(&box3d_ref_modified), box));
+        box3d_ref_modified(ref, 0, box);
+        persp3d_add_box (SP_PERSP3D(ref), box);
+    }
 }
 
 static void
-sp_3dbox_update(SPObject *object, SPCtx *ctx, guint flags)
+box3d_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-        SP3DBox *box = SP_3DBOX(object);
-        Inkscape::XML::Node *repr = SP_OBJECT_REPR(object);
-        sp_3dbox_link_to_existing_paths (box, repr);
-        SPEventContext *ec = inkscape_active_event_context();
-        if (SP_IS_3DBOX_CONTEXT (ec)) {
-            SP_3DBOX_CONTEXT (ec)->_vpdrag->updateDraggers();
-            // FIXME: Should we update the corners here, too? Maybe this is the reason why the handles
-            //        are off after an undo/redo! On the other hand, if we do so we get warnings about
-            //        updates occuring while other updats are in progress ...
-        }
+
+        /* FIXME?: Perhaps the display updates of box sides should be instantiated from here, but this
+           causes evil update loops so it's all done from box3d_position_set, which is called from
+           various other places (like the handlers in object-edit.cpp, vanishing-point.cpp, etc. */
+
     }
 
-    /* Invoke parent method */
+    // Invoke parent method
     if (((SPObjectClass *) (parent_class))->update)
         ((SPObjectClass *) (parent_class))->update(object, ctx, flags);
 }
 
-static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+
+static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
-    SP3DBox *box = SP_3DBOX(object);
-    // FIXME: How to handle other contexts???
-    // FIXME: Is tools_isactive(..) more recommended to check for the current context/tool?
-    if (!SP_IS_3DBOX_CONTEXT(inkscape_active_event_context()))
-        return repr;
+    SPBox3D *box = SP_BOX3D(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
+        g_print ("Do we ever end up here?\n");
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:g");
-        repr->setAttribute("sodipodi:type", "inkscape:3dbox");
-        /* Hook paths to the faces of the box */
-        for (int i = 0; i < 6; ++i) {
-            box->faces[i]->hook_path_to_3dbox();
-        }
-    }
-
-    for (int i = 0; i < 6; ++i) {
-        box->faces[i]->set_path_repr();
+        repr->setAttribute("sodipodi:type", "inkscape:box3d");
     }
 
     if (flags & SP_OBJECT_WRITE_EXT) {
-        gchar *str;
-        str = sp_3dbox_get_corner_coords_string (box, 2);
-        repr->setAttribute("inkscape:box3dcornerA", str);
 
-        str = sp_3dbox_get_corner_coords_string (box, 1);
-        repr->setAttribute("inkscape:box3dcornerB", str);
-
-        str = sp_3dbox_get_corner_coords_string (box, 5);
-        repr->setAttribute("inkscape:box3dcornerC", str);
-
-        str = sp_3dbox_get_perspective_string (box);
-        repr->setAttribute("inkscape:perspective", str);
-        sp_3dbox_set_ratios (box);
-
-        g_free ((void *) str);
-
-        /* store center and construction-corners for later use during center-dragging */
-        NR::Maybe<NR::Point> cen = sp_3dbox_get_center (box);
-        if (cen) {
-            box->old_center = *cen;
+        if (box->persp_href) {
+            repr->setAttribute("inkscape:perspectiveID", box->persp_href);
+        } else {
+            /* box is not yet linked to a perspective; use the document's current perspective */
+            SPDocument *doc = inkscape_active_document();
+            if (box->persp_ref->getURI()) {
+                gchar *uri_string = box->persp_ref->getURI()->toString();
+                repr->setAttribute("inkscape:perspectiveID", uri_string);
+                g_free(uri_string);
+            } else if (doc) {
+                //persp3d_add_box (doc->current_persp3d, box);
+                Inkscape::XML::Node *persp_repr = SP_OBJECT_REPR(doc->current_persp3d);
+                const gchar *persp_id = persp_repr->attribute("id");
+                gchar *href = g_strdup_printf("#%s", persp_id);
+                repr->setAttribute("inkscape:perspectiveID", href);
+                g_free(href);
+            } else {
+                g_print ("No active document while creating perspective!!!\n");
+            }
         }
-        box->old_corner2 = box->corners[2];
-        box->old_corner1 = box->corners[1];
-        box->old_corner0 = box->corners[0];
-        box->old_corner3 = box->corners[3];
-        box->old_corner5 = box->corners[5];
-        box->old_corner7 = box->corners[7];
+
+        gchar *coordstr0 = box->orig_corner0.coord_string();
+        gchar *coordstr7 = box->orig_corner7.coord_string();
+        repr->setAttribute("inkscape:corner0", coordstr0);
+        repr->setAttribute("inkscape:corner7", coordstr7);
+        g_free(coordstr0);
+        g_free(coordstr7);
+
+        box->orig_corner0.normalize();
+        box->orig_corner7.normalize();
+
+        box->save_corner0 = box->orig_corner0;
+        box->save_corner7 = box->orig_corner7;
     }
 
     if (((SPObjectClass *) (parent_class))->write) {
@@ -310,420 +325,885 @@ static Inkscape::XML::Node *sp_3dbox_write(SPObject *object, Inkscape::XML::Node
 }
 
 static gchar *
-sp_3dbox_description(SPItem *item)
+box3d_description(SPItem *item)
 {
-    g_return_val_if_fail(SP_IS_3DBOX(item), NULL);
+    g_return_val_if_fail(SP_IS_BOX3D(item), NULL);
 
     return g_strdup(_("<b>3D Box</b>"));
 }
 
-void sp_3dbox_set_ratios (SP3DBox *box, Box3D::Axis axes)
+void
+box3d_position_set (SPBox3D *box)
 {
-    Box3D::Perspective3D *persp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box);
-    NR::Point pt;
-
-    if (axes & Box3D::X) {
-        pt = persp->get_vanishing_point (Box3D::X)->get_pos();
-        box->ratio_x = NR::L2 (pt - box->corners[2]) / NR::L2 (pt - box->corners[3]);
-    }
-
-    if (axes & Box3D::Y) {
-        pt = persp->get_vanishing_point (Box3D::Y)->get_pos();
-        box->ratio_y = NR::L2 (pt - box->corners[2]) / NR::L2 (pt - box->corners[0]);
-    }
-
-    if (axes & Box3D::Z) {
-        pt = persp->get_vanishing_point (Box3D::Z)->get_pos();
-        box->ratio_z = NR::L2 (pt - box->corners[4]) / NR::L2 (pt - box->corners[0]);
+    /* This draws the curve and calls requestDisplayUpdate() for each side (the latter is done in
+       box3d_side_position_set() to avoid update conflicts with the parent box) */
+    for (SPObject *child = sp_object_first_child(SP_OBJECT (box)); child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        box3d_side_position_set (SP_BOX3D_SIDE (child));
     }
 }
 
-void
-sp_3dbox_switch_front_face (SP3DBox *box, Box3D::Axis axis)
+static NR::Matrix
+box3d_set_transform(SPItem *item, NR::Matrix const &xform)
 {
-    if (SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box)->get_vanishing_point (axis)->is_finite()) {
-        box->front_bits = box->front_bits ^ axis;
+    SPBox3D *box = SP_BOX3D(item);
+
+    Persp3D *persp = box->persp_ref->getObject();
+
+    persp3d_apply_affine_transformation(persp, xform); // also triggers repr updates
+
+    /***
+    // FIXME: We somehow have to apply the transformation to strokes, patterns, and gradients. How?
+    NR::Matrix ret(NR::transform(xform));
+    gdouble const sw = hypot(ret[0], ret[1]);
+    gdouble const sh = hypot(ret[2], ret[3]);
+
+    SPItem *sideitem = NULL;
+    for (SPObject *side = sp_object_first_child(box); side != NULL; side = SP_OBJECT_NEXT(side)) {
+        sideitem = SP_ITEM(side);
+
+        // Adjust stroke width
+        sp_item_adjust_stroke(sideitem, sqrt(fabs(sw * sh)));
+
+        // Adjust pattern fill
+        sp_item_adjust_pattern(sideitem, xform);
+
+        // Adjust gradient fill
+        sp_item_adjust_gradient(sideitem, xform);
     }
-}
-
-
-void
-sp_3dbox_position_set (SP3DBoxContext &bc)
-{
-    SP3DBox *box3d = SP_3DBOX(bc.item);
-
-    sp_3dbox_set_shape(box3d);
-
-    // FIXME: Why does the following call not automatically update the children
-    //        of box3d (which is an SPGroup, which should do this)?
-    //SP_OBJECT(box3d)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-
-    /**
-    SP_OBJECT(box3d->path_face1)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-    SP_OBJECT(box3d->path_face2)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-    SP_OBJECT(box3d->path_face3)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-    SP_OBJECT(box3d->path_face4)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-    SP_OBJECT(box3d->path_face5)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-    SP_OBJECT(box3d->path_face6)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
     ***/
+
+    return NR::identity();
 }
 
+
+/**
+ * Gets called when persp(?) repr contents change: i.e. parameter change.
+ */
 static void
-sp_3dbox_set_shape_from_points (SP3DBox *box, NR::Point const &cornerA, NR::Point const &cornerB, NR::Point const &cornerC)
+box3d_ref_modified(SPObject *href, guint flags, SPBox3D *box)
 {
-    sp_3dbox_recompute_corners (box, cornerA, cornerB, cornerC);
+    /***
+    g_print ("FIXME: box3d_ref_modified was called. What should we do?\n");
+    g_print ("Here is at least the the href's id: %s\n", SP_OBJECT_REPR(href)->attribute("id"));
+    g_print ("             ... and the box's, too: %s\n", SP_OBJECT_REPR(box)->attribute("id"));
+    ***/
+    
+}
 
-    // FIXME: How to handle other contexts???
-    // FIXME: Is tools_isactive(..) more recommended to check for the current context/tool?
-    if (!SP_IS_3DBOX_CONTEXT(inkscape_active_event_context()))
-        return;
-    SP3DBoxContext *bc = SP_3DBOX_CONTEXT(inkscape_active_event_context());
+Proj::Pt3
+box3d_get_proj_corner (guint id, Proj::Pt3 const &c0, Proj::Pt3 const &c7) {
+    return Proj::Pt3 ((id & Box3D::X) ? c7[Proj::X] : c0[Proj::X],
+                      (id & Box3D::Y) ? c7[Proj::Y] : c0[Proj::Y],
+                      (id & Box3D::Z) ? c7[Proj::Z] : c0[Proj::Z],
+                      1.0);
+}
 
-    if (bc->extruded) {
-        box->faces[0]->set_corners (box->corners[0], box->corners[4], box->corners[6], box->corners[2]);
-        box->faces[1]->set_corners (box->corners[1], box->corners[5], box->corners[7], box->corners[3]);
-        box->faces[2]->set_corners (box->corners[0], box->corners[1], box->corners[5], box->corners[4]);
-        box->faces[3]->set_corners (box->corners[2], box->corners[3], box->corners[7], box->corners[6]);
-        box->faces[5]->set_corners (box->corners[4], box->corners[5], box->corners[7], box->corners[6]);
+Proj::Pt3
+box3d_get_proj_corner (SPBox3D const *box, guint id) {
+    return Proj::Pt3 ((id & Box3D::X) ? box->orig_corner7[Proj::X] : box->orig_corner0[Proj::X],
+                      (id & Box3D::Y) ? box->orig_corner7[Proj::Y] : box->orig_corner0[Proj::Y],
+                      (id & Box3D::Z) ? box->orig_corner7[Proj::Z] : box->orig_corner0[Proj::Z],
+                      1.0);
+}
+
+NR::Point
+box3d_get_corner_screen (SPBox3D const *box, guint id) {
+    Proj::Pt3 proj_corner (box3d_get_proj_corner (box, id));
+    if (!box->persp_ref->getObject()) {
+        //g_print ("No perspective present in box!! Should we simply use the currently active perspective?\n");
+        return NR::Point (NR_HUGE, NR_HUGE);
     }
-    box->faces[4]->set_corners (box->corners[0], box->corners[1], box->corners[3], box->corners[2]);
+    return box->persp_ref->getObject()->tmat.image(proj_corner).affine();
+}
 
-    sp_3dbox_update_curves (box);
+Proj::Pt3
+box3d_get_proj_center (SPBox3D *box) {
+    box->orig_corner0.normalize();
+    box->orig_corner7.normalize();
+    return Proj::Pt3 ((box->orig_corner0[Proj::X] + box->orig_corner7[Proj::X]) / 2,
+                      (box->orig_corner0[Proj::Y] + box->orig_corner7[Proj::Y]) / 2,
+                      (box->orig_corner0[Proj::Z] + box->orig_corner7[Proj::Z]) / 2,
+                      1.0);
+}
+
+NR::Point
+box3d_get_center_screen (SPBox3D *box) {
+    Proj::Pt3 proj_center (box3d_get_proj_center (box));
+    if (!box->persp_ref->getObject()) {
+        //g_print ("No perspective present in box!! Should we simply use the currently active perspective?\n");
+        return NR::Point (NR_HUGE, NR_HUGE);
+    }
+    return box->persp_ref->getObject()->tmat.image(proj_center).affine();
+}
+
+/* 
+ * To keep the snappoint from jumping randomly between the two lines when the mouse pointer is close to
+ * their intersection, we remember the last snapped line and keep snapping to this specific line as long
+ * as the distance from the intersection to the mouse pointer is less than remember_snap_threshold.
+ */
+
+// Should we make the threshold settable in the preferences?
+static double remember_snap_threshold = 30;
+//static guint remember_snap_index = 0;
+static guint remember_snap_index_center = 0;
+
+static Proj::Pt3
+box3d_snap (SPBox3D *box, int id, Proj::Pt3 const &pt_proj, Proj::Pt3 const &start_pt) {
+    double z_coord = start_pt[Proj::Z];
+    double diff_x = box->save_corner7[Proj::X] - box->save_corner0[Proj::X];
+    double diff_y = box->save_corner7[Proj::Y] - box->save_corner0[Proj::Y];
+    double x_coord = start_pt[Proj::X];
+    double y_coord = start_pt[Proj::Y];
+    Proj::Pt3 A_proj (x_coord,          y_coord,          z_coord, 1.0);
+    Proj::Pt3 B_proj (x_coord + diff_x, y_coord,          z_coord, 1.0);
+    Proj::Pt3 C_proj (x_coord + diff_x, y_coord + diff_y, z_coord, 1.0);
+    Proj::Pt3 D_proj (x_coord,          y_coord + diff_y, z_coord, 1.0);
+    Proj::Pt3 E_proj (x_coord - diff_x, y_coord + diff_y, z_coord, 1.0);
+
+    NR::Point A = box->persp_ref->getObject()->tmat.image(A_proj).affine();
+    NR::Point B = box->persp_ref->getObject()->tmat.image(B_proj).affine();
+    NR::Point C = box->persp_ref->getObject()->tmat.image(C_proj).affine();
+    NR::Point D = box->persp_ref->getObject()->tmat.image(D_proj).affine();
+    NR::Point E = box->persp_ref->getObject()->tmat.image(E_proj).affine();
+    NR::Point pt = box->persp_ref->getObject()->tmat.image(pt_proj).affine();
+
+    // TODO: Replace these lines between corners with lines from a corner to a vanishing point
+    //       (this might help to prevent rounding errors if the box is small)
+    Box3D::Line pl1(A, B);
+    Box3D::Line pl2(A, D);
+    Box3D::Line diag1(A, (id == -1 || (!(id & Box3D::X) == !(id & Box3D::Y))) ? C : E);
+    Box3D::Line diag2(A, E); // diag2 is only taken into account if id equals -1, i.e., if we are snapping the center
+
+    int num_snap_lines = (id != -1) ? 3 : 4;
+    NR::Point snap_pts[num_snap_lines];
+
+    snap_pts[0] = pl1.closest_to (pt);
+    snap_pts[1] = pl2.closest_to (pt);
+    snap_pts[2] = diag1.closest_to (pt);
+    if (id == -1) {
+        snap_pts[3] = diag2.closest_to (pt);
+    }
+
+    gdouble const zoom = inkscape_active_desktop()->current_zoom();
+
+    // determine the distances to all potential snapping points
+    double snap_dists[num_snap_lines];
+    for (int i = 0; i < num_snap_lines; ++i) {
+        snap_dists[i] = NR::L2 (snap_pts[i] - pt) * zoom;
+    }
+
+    // while we are within a given tolerance of the starting point,
+    // keep snapping to the same point to avoid jumping
+    bool within_tolerance = true;
+    for (int i = 0; i < num_snap_lines; ++i) {
+        if (snap_dists[i] > remember_snap_threshold) {
+            within_tolerance = false;
+            break;
+        }
+    }
+
+    // find the closest snapping point
+    int snap_index = -1;
+    double snap_dist = NR_HUGE;
+    for (int i = 0; i < num_snap_lines; ++i) {
+        if (snap_dists[i] < snap_dist) {
+            snap_index = i;
+            snap_dist = snap_dists[i];
+        }
+    }
+
+    // snap to the closest point (or the previously remembered one
+    // if we are within tolerance of the starting point)
+    NR::Point result;
+    if (within_tolerance) {
+        result = snap_pts[remember_snap_index_center];
+    } else {
+        remember_snap_index_center = snap_index;
+        result = snap_pts[snap_index];
+    }
+    return box->persp_ref->getObject()->tmat.preimage (result, z_coord, Proj::Z);
 }
 
 void
-// FIXME: Note that this is _not_ the virtual set_shape() method inherited from SPShape,
-//        since SP3DBox is inherited from SPGroup. The following method is "artificially"
-//        called from sp_3dbox_update().
-//sp_3dbox_set_shape(SPShape *shape)
-sp_3dbox_set_shape(SP3DBox *box, bool use_previous_corners)
-{
-    if (!SP_IS_3DBOX_CONTEXT(inkscape_active_event_context()))
-        return;
-    SP3DBoxContext *bc = SP_3DBOX_CONTEXT(inkscape_active_event_context());
+box3d_set_corner (SPBox3D *box, const guint id, NR::Point const &new_pos, const Box3D::Axis movement, bool constrained) {
+    g_return_if_fail ((movement != Box3D::NONE) && (movement != Box3D::XYZ));
 
-    if (!use_previous_corners) {
-        sp_3dbox_set_shape_from_points (box, bc->drag_origin, bc->drag_ptB, bc->drag_ptC);
-    } else {
-        sp_3dbox_set_shape_from_points (box, box->corners[2], box->corners[1], box->corners[5]);
-    }
-}
+    box->orig_corner0.normalize();
+    box->orig_corner7.normalize();
 
-
-void sp_3dbox_recompute_corners (SP3DBox *box, NR::Point const A, NR::Point const B, NR::Point const C)
-{
-    sp_3dbox_move_corner_in_XY_plane (box, 2, A);
-    sp_3dbox_move_corner_in_XY_plane (box, 1, B);
-    sp_3dbox_move_corner_in_Z_direction (box, 5, C);
-}
-
-inline static double
-normalized_angle (double angle) {
-    if (angle < -M_PI) {
-        return angle + 2*M_PI;
-    } else if (angle > M_PI) {
-        return angle - 2*M_PI;
-    }
-    return angle;
-}
-
-static gdouble
-sp_3dbox_corner_angle_to_VP (SP3DBox *box, Box3D::Axis axis, guint extreme_corner)
-{
-    Box3D::VanishingPoint *vp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box)->get_vanishing_point (axis);
-    NR::Point dir;
-
-    if (vp->is_finite()) {
-        dir = NR::unit_vector (vp->get_pos() - box->corners[extreme_corner]);
-    } else {
-        dir = NR::unit_vector (vp->v_dir);
-    }
-
-    return atan2 (dir[NR::Y], dir[NR::X]);
-}
-
-
-bool sp_3dbox_recompute_z_orders (SP3DBox *box)
-{
-    gint new_z_orders[6];
-
-    // TODO: Determine the front corner depending on the distance from VPs and/or the user presets
-    guint front_corner = sp_3dbox_get_front_corner_id (box);
-
-    gdouble dir_1x = sp_3dbox_corner_angle_to_VP (box, Box3D::X, front_corner);
-    gdouble dir_3x = sp_3dbox_corner_angle_to_VP (box, Box3D::X, front_corner ^ Box3D::Y);
-
-    gdouble dir_1y = sp_3dbox_corner_angle_to_VP (box, Box3D::Y, front_corner);
-    //gdouble dir_0y = sp_3dbox_corner_angle_to_VP (box, Box3D::Y, front_corner ^ Box3D::X);
-
-    gdouble dir_1z = sp_3dbox_corner_angle_to_VP (box, Box3D::Z, front_corner);
-    gdouble dir_3z = sp_3dbox_corner_angle_to_VP (box, Box3D::Z, front_corner ^ Box3D::Y);
-
-    // Still not perfect, but only fails in some rather degenerate cases.
-    // I suspect that there is a more elegant model, though. :)
-    new_z_orders[0] = Box3D::face_containing_corner (Box3D::XY, front_corner);
-    if (normalized_angle (dir_1y - dir_1z) > 0) {
-        new_z_orders[1] = Box3D::face_containing_corner (Box3D::YZ, front_corner);
-        if (normalized_angle (dir_1x - dir_1z) > 0) {
-            new_z_orders[2] = Box3D::face_containing_corner (Box3D::XZ, front_corner ^ Box3D::Y);
-        } else {
-            new_z_orders[2] = Box3D::face_containing_corner (Box3D::XZ, front_corner);
+    /* update corners 0 and 7 according to which handle was moved and to the axes of movement */
+    if (!(movement & Box3D::Z)) {
+        Proj::Pt3 pt_proj (box->persp_ref->getObject()->tmat.preimage (new_pos, (id < 4) ? box->orig_corner0[Proj::Z] :
+                                                                                box->orig_corner7[Proj::Z],
+                                                            Proj::Z));
+        if (constrained) {
+            pt_proj = box3d_snap (box, id, pt_proj, box3d_get_proj_corner (id, box->save_corner0, box->save_corner7));
         }
+
+        // normalizing pt_proj is essential because we want to mingle affine coordinates
+        pt_proj.normalize();
+        box->orig_corner0 = Proj::Pt3 ((id & Box3D::X) ? box->save_corner0[Proj::X] : pt_proj[Proj::X],
+                                       (id & Box3D::Y) ? box->save_corner0[Proj::Y] : pt_proj[Proj::Y],
+                                       box->save_corner0[Proj::Z],
+                                       1.0);
+        box->orig_corner7 = Proj::Pt3 ((id & Box3D::X) ? pt_proj[Proj::X] : box->save_corner7[Proj::X],
+                                       (id & Box3D::Y) ? pt_proj[Proj::Y] : box->save_corner7[Proj::Y],
+                                       box->save_corner7[Proj::Z],
+                                       1.0);
     } else {
-        if (normalized_angle (dir_3x - dir_3z) > 0) {
-            new_z_orders[1] = Box3D::face_containing_corner (Box3D::XZ, front_corner ^ Box3D::Y);
-            new_z_orders[2] = Box3D::face_containing_corner (Box3D::YZ, front_corner ^ Box3D::X);
-        } else {
-            if (normalized_angle (dir_1x - dir_1z) > 0) {
-                new_z_orders[1] = Box3D::face_containing_corner (Box3D::YZ, front_corner ^ Box3D::X);
-                new_z_orders[2] = Box3D::face_containing_corner (Box3D::XZ, front_corner);
-            } else {
-                new_z_orders[1] = Box3D::face_containing_corner (Box3D::XZ, front_corner);
-                new_z_orders[2] = Box3D::face_containing_corner (Box3D::YZ, front_corner ^ Box3D::X);
-            }
-        }
+        Box3D::PerspectiveLine pl(box->persp_ref->getObject()->tmat.image(
+                                      box3d_get_proj_corner (id, box->save_corner0, box->save_corner7)).affine(),
+                                  Proj::Z, box->persp_ref->getObject());
+        NR::Point new_pos_snapped(pl.closest_to(new_pos));
+        Proj::Pt3 pt_proj (box->persp_ref->getObject()->
+                           tmat.preimage (new_pos_snapped,
+                                          box3d_get_proj_corner (box, id)[(movement & Box3D::Y) ? Proj::X : Proj::Y],
+                                          (movement & Box3D::Y) ? Proj::X : Proj::Y));
+        bool corner0_move_x = !(id & Box3D::X) && (movement & Box3D::X);
+        bool corner0_move_y = !(id & Box3D::Y) && (movement & Box3D::Y);
+        bool corner7_move_x =  (id & Box3D::X) && (movement & Box3D::X);
+        bool corner7_move_y =  (id & Box3D::Y) && (movement & Box3D::Y);
+        // normalizing pt_proj is essential because we want to mingle affine coordinates
+        pt_proj.normalize();        
+        box->orig_corner0 = Proj::Pt3 (corner0_move_x ? pt_proj[Proj::X] : box->orig_corner0[Proj::X],
+                                       corner0_move_y ? pt_proj[Proj::Y] : box->orig_corner0[Proj::Y],
+                                       (id & Box3D::Z) ? box->orig_corner0[Proj::Z] : pt_proj[Proj::Z],
+                                       1.0);
+        box->orig_corner7 = Proj::Pt3 (corner7_move_x ? pt_proj[Proj::X] : box->orig_corner7[Proj::X],
+                                       corner7_move_y ? pt_proj[Proj::Y] : box->orig_corner7[Proj::Y],
+                                       (id & Box3D::Z) ? pt_proj[Proj::Z] : box->orig_corner7[Proj::Z],
+                                       1.0);
     }
-
-    new_z_orders[3] = Box3D::opposite_face (new_z_orders[2]);
-    new_z_orders[4] = Box3D::opposite_face (new_z_orders[1]);
-    new_z_orders[5] = Box3D::opposite_face (new_z_orders[0]);
-
-    /* We only need to look for changes among the topmost three faces because the order
-       of the other ones is just inverted. */
-    if ((box->z_orders[0] != new_z_orders[0]) ||
-        (box->z_orders[1] != new_z_orders[1]) ||
-        (box->z_orders[2] != new_z_orders[2]))
-    {
-        for (int i = 0; i < 6; ++i) {
-            box->z_orders[i] = new_z_orders[i];
-        }
-        return true;
-    }
-
-    return false;
+    // FIXME: Should we update the box here? If so, how?
 }
 
-// convenience
-static bool sp_3dbox_is_subset_or_superset (std::vector<gint> const &list1, std::vector<gint> const &list2)
-{
-    return (std::includes (list1.begin(), list1.end(), list2.begin(), list2.end()) ||
-            std::includes (list2.begin(), list2.end(), list1.begin(), list1.end()));
+void box3d_set_center (SPBox3D *box, NR::Point const &new_pos, NR::Point const &old_pos, const Box3D::Axis movement, bool constrained) {
+    g_return_if_fail ((movement != Box3D::NONE) && (movement != Box3D::XYZ));
+
+    if (!(movement & Box3D::Z)) {
+        double coord = (box->orig_corner0[Proj::Z] + box->orig_corner7[Proj::Z]) / 2;
+        double radx = (box->orig_corner7[Proj::X] - box->orig_corner0[Proj::X]) / 2;
+        double rady = (box->orig_corner7[Proj::Y] - box->orig_corner0[Proj::Y]) / 2;
+
+        Proj::Pt3 pt_proj (box->persp_ref->getObject()->tmat.preimage (new_pos, coord, Proj::Z));
+        if (constrained) {
+            Proj::Pt3 old_pos_proj (box->persp_ref->getObject()->tmat.preimage (old_pos, coord, Proj::Z));
+            pt_proj = box3d_snap (box, -1, pt_proj, old_pos_proj);
+        }
+        // normalizing pt_proj is essential because we want to mingle affine coordinates
+        pt_proj.normalize();        
+        box->orig_corner0 = Proj::Pt3 ((movement & Box3D::X) ? pt_proj[Proj::X] - radx : box->orig_corner0[Proj::X],
+                                       (movement & Box3D::Y) ? pt_proj[Proj::Y] - rady : box->orig_corner0[Proj::Y],
+                                       box->orig_corner0[Proj::Z],
+                                       1.0);
+        box->orig_corner7 = Proj::Pt3 ((movement & Box3D::X) ? pt_proj[Proj::X] + radx : box->orig_corner7[Proj::X],
+                                       (movement & Box3D::Y) ? pt_proj[Proj::Y] + rady : box->orig_corner7[Proj::Y],
+                                       box->orig_corner7[Proj::Z],
+                                       1.0);
+    } else {
+        double coord = (box->orig_corner0[Proj::X] + box->orig_corner7[Proj::X]) / 2;
+        double radz = (box->orig_corner7[Proj::Z] - box->orig_corner0[Proj::Z]) / 2;
+
+        Box3D::PerspectiveLine pl(old_pos, Proj::Z, box->persp_ref->getObject());
+        NR::Point new_pos_snapped(pl.closest_to(new_pos));
+        Proj::Pt3 pt_proj (box->persp_ref->getObject()->tmat.preimage (new_pos_snapped, coord, Proj::X));
+
+        /* normalizing pt_proj is essential because we want to mingle affine coordinates */
+        pt_proj.normalize();        
+        box->orig_corner0 = Proj::Pt3 (box->orig_corner0[Proj::X],
+                                       box->orig_corner0[Proj::Y],
+                                       pt_proj[Proj::Z] - radz,
+                                       1.0);
+        box->orig_corner7 = Proj::Pt3 (box->orig_corner7[Proj::X],
+                                       box->orig_corner7[Proj::Y],
+                                       pt_proj[Proj::Z] + radz,
+                                       1.0);
+    }
 }
 
-static bool sp_3dbox_differ_by_opposite_faces (std::vector<gint> const &list1, std::vector<gint> const &list2)
+/*
+ * Manipulates corner1 through corner4 to contain the indices of the corners
+ * from which the perspective lines in the direction of 'axis' emerge
+ */
+void box3d_corners_for_PLs (const SPBox3D * box, Proj::Axis axis, 
+                            NR::Point &corner1, NR::Point &corner2, NR::Point &corner3, NR::Point &corner4)
 {
-    std::vector<gint> diff1;
-    std::vector<gint> diff2;
-    std::set_difference (list1.begin(), list1.end(), list2.begin(), list2.end(),
-                         std::insert_iterator<std::vector<gint> >(diff1, diff1.begin()));
-    std::set_difference (list2.begin(), list2.end(), list1.begin(), list1.end(),
-                         std::insert_iterator<std::vector<gint> >(diff2, diff2.begin()));
+    g_return_if_fail (box->persp_ref->getObject());
+    //box->orig_corner0.normalize();
+    //box->orig_corner7.normalize();
+    double coord = (box->orig_corner0[axis] > box->orig_corner7[axis]) ?
+        box->orig_corner0[axis] :
+        box->orig_corner7[axis];
 
-    if (diff1.size() == 3 || diff1.size() != diff2.size())
+    Proj::Pt3 c1, c2, c3, c4;
+    // FIXME: This can certainly be done more elegantly/efficiently than by a case-by-case analysis.
+    switch (axis) {
+        case Proj::X:
+            c1 = Proj::Pt3 (coord, box->orig_corner0[Proj::Y], box->orig_corner0[Proj::Z], 1.0);
+            c2 = Proj::Pt3 (coord, box->orig_corner7[Proj::Y], box->orig_corner0[Proj::Z], 1.0);
+            c3 = Proj::Pt3 (coord, box->orig_corner7[Proj::Y], box->orig_corner7[Proj::Z], 1.0);
+            c4 = Proj::Pt3 (coord, box->orig_corner0[Proj::Y], box->orig_corner7[Proj::Z], 1.0);
+            break;
+        case Proj::Y:
+            c1 = Proj::Pt3 (box->orig_corner0[Proj::X], coord, box->orig_corner0[Proj::Z], 1.0);
+            c2 = Proj::Pt3 (box->orig_corner7[Proj::X], coord, box->orig_corner0[Proj::Z], 1.0);
+            c3 = Proj::Pt3 (box->orig_corner7[Proj::X], coord, box->orig_corner7[Proj::Z], 1.0);
+            c4 = Proj::Pt3 (box->orig_corner0[Proj::X], coord, box->orig_corner7[Proj::Z], 1.0);
+            break;
+        case Proj::Z:
+            c1 = Proj::Pt3 (box->orig_corner7[Proj::X], box->orig_corner7[Proj::Y], coord, 1.0);
+            c2 = Proj::Pt3 (box->orig_corner7[Proj::X], box->orig_corner0[Proj::Y], coord, 1.0);
+            c3 = Proj::Pt3 (box->orig_corner0[Proj::X], box->orig_corner0[Proj::Y], coord, 1.0);
+            c4 = Proj::Pt3 (box->orig_corner0[Proj::X], box->orig_corner7[Proj::Y], coord, 1.0);
+            break;
+        default:
+            return;
+    }
+    corner1 = box->persp_ref->getObject()->tmat.image(c1).affine();
+    corner2 = box->persp_ref->getObject()->tmat.image(c2).affine();
+    corner3 = box->persp_ref->getObject()->tmat.image(c3).affine();
+    corner4 = box->persp_ref->getObject()->tmat.image(c4).affine();
+}
+
+/* Auxiliary function: Checks whether the half-line from A to B crosses the line segment joining C and D */
+static bool
+box3d_half_line_crosses_joining_line (Geom::Point const &A, Geom::Point const &B,
+                                      Geom::Point const &C, Geom::Point const &D) {
+    Geom::Point E; // the point of intersection
+    Geom::Point n0 = (B - A).ccw();
+    double d0 = dot(n0,A);
+
+    Geom::Point n1 = (D - C).ccw();
+    double d1 = dot(n1,C);
+    Geom::IntersectorKind intersects = Geom::line_intersection(n0, d0, n1, d1, E);
+    if (intersects == Geom::coincident || intersects == Geom::parallel) {
         return false;
-
-    for (guint i = 0; i < diff1.size(); ++i) {
-        if (std::find (diff2.begin(), diff2.end(), Box3D::opposite_face (diff1[i])) == diff2.end()) {
-            return false;
-        }
     }
+
+    if ((dot(C,n0) < d0) == (dot(D,n0) < d0)) {
+        // C and D lie on the same side of the line AB
+        return false;
+    }
+    if ((dot(A,n1) < d1) != (dot(B,n1) < d1)) {
+        // A and B lie on different sides of the line CD
+        return true;
+    } else if (Geom::distance(E,A) < Geom::distance(E,B)) {
+        // The line CD passes on the "wrong" side of A
+        return false;
+    }
+
+    // The line CD passes on the "correct" side of A
     return true;
 }
 
-static gint
-sp_3dbox_face_containing_diagonal_corners (guint corner1, guint corner2)
-{
-    Box3D::Axis plane = (Box3D::Axis) (corner1 ^ corner2);
-    if (!Box3D::is_plane (plane)) {
-        g_warning ("Corners %d and %d should span a plane.\n", corner1, corner2);
-        return 0;
-    }
-
-    return Box3D::face_containing_corner (plane, corner1);
-}
-
-static std::vector<gint> sp_3dbox_adjacent_faces_of_edge (guint corner1, guint corner2) {
-    std::vector<gint> adj_faces;
-    Box3D::Axis edge = (Box3D::Axis) (corner1 ^ corner2);
-    if (!Box3D::is_single_axis_direction (edge)) {
-        return adj_faces;
-    }
-
-    Box3D::Axis plane = Box3D::orth_plane_or_axis (edge);
-    Box3D::Axis axis1 = Box3D::extract_first_axis_direction (plane);
-    Box3D::Axis axis2 = Box3D::extract_second_axis_direction (plane);
-    adj_faces.push_back (Box3D::face_containing_corner ((Box3D::Axis) (edge ^ axis1), corner1));
-    adj_faces.push_back (Box3D::face_containing_corner ((Box3D::Axis) (edge ^ axis2), corner1));
-    return adj_faces;
-}
-
-static std::vector<gint> sp_3dbox_faces_meeting_in_corner (guint corner) {
-    std::vector<gint> faces;
-    for (int i = 0; i < 3; ++i) {
-        faces.push_back (sp_3dbox_face_containing_diagonal_corners (corner, corner ^ Box3D::planes[i]));
-    }
-    return faces;
-}
-
-static void sp_3dbox_remaining_faces (std::vector<gint> const &faces, std::vector<gint> &rem_faces)
-{
-    rem_faces.clear();
-    for (gint i = 0; i < 6; ++i) {
-        if (std::find (faces.begin(), faces.end(), i) == faces.end()) {
-            rem_faces.push_back (i);
-        }
-    }
-}
-
-/*
- * Given two adjacent edges (\a c2,\a c1) and (\a c2, \a c3) of \a box (with common corner \a c2),
- * check whether both lie on the convex hull of the point configuration given by \a box's corners.
- */
 static bool
-sp_3dbox_is_border_edge_pair (SP3DBox *box, guint const c1, guint const c2, guint const c3)
-{
-    Box3D::Axis edge21 = (Box3D::Axis) (c2 ^ c1);
-    Box3D::Axis edge23 = (Box3D::Axis) (c2 ^ c3);
-    Box3D::Axis rear_axis = Box3D::orth_plane_or_axis ((Box3D::Axis) (edge21 ^ edge23));
- 
-    NR::Point corner2 = box->corners[c2];
-    NR::Point dir21 = box->corners[c1] - corner2;
-    NR::Point dir23 = box->corners[c3] - corner2;
+box3d_XY_axes_are_swapped (SPBox3D *box) {
+    Persp3D *persp = box->persp_ref->getObject();
+    g_return_val_if_fail(persp, false);
+    Box3D::PerspectiveLine l1(box3d_get_corner_screen(box, 3), Proj::X, persp);
+    Box3D::PerspectiveLine l2(box3d_get_corner_screen(box, 3), Proj::Y, persp);
+    NR::Point v1(l1.direction());
+    NR::Point v2(l2.direction());
+    v1.normalize();
+    v2.normalize();
 
-    if (!Box3D::lies_in_sector (dir21, dir23, box->corners[c2 ^ edge21 ^ edge23] - corner2) ||
-        !Box3D::lies_in_sector (dir21, dir23, box->corners[c2 ^ rear_axis] - corner2) ||
-        !Box3D::lies_in_sector (dir21, dir23, box->corners[c2 ^ rear_axis ^ edge21] - corner2) ||
-        !Box3D::lies_in_sector (dir21, dir23, box->corners[c2 ^ rear_axis ^ edge21 ^ edge23] - corner2) ||
-        !Box3D::lies_in_sector (dir21, dir23, box->corners[c2 ^ rear_axis ^ edge23] - corner2)) {
-        // corner triple c1, c2, c3 doesn't bound the convex hull
-        return false;
+    return (v1[NR::X]*v2[NR::Y] - v1[NR::Y]*v2[NR::X] > 0);
+}
+
+static inline void
+box3d_aux_set_z_orders (int z_orders[6], int a, int b, int c, int d, int e, int f) {
+    z_orders[0] = a;
+    z_orders[1] = b;
+    z_orders[2] = c;
+    z_orders[3] = d;
+    z_orders[4] = e;
+    z_orders[5] = f;
+}
+
+static inline void
+box3d_swap_z_orders (int z_orders[6]) {
+    int tmp;
+    for (int i = 0; i < 3; ++i) {
+        tmp = z_orders[i];
+        z_orders[i] = z_orders[5-i];
+        z_orders[5-i] = tmp;
     }
-    // corner triple c1, c2, c3 bounds the convex hull
-    return true;    
 }
 
 /*
- * Test whether there are any adjacent corners of \a corner (i.e., connected with it along one of the axes)
- * such that the corresponding edges bound the convex hull of the box (as a point configuration in the plane)
- * If this is the case, return the corresponding two adjacent corners; otherwise return (-1, -1).
+ * In der Standard-Perspektive:
+ * 2 = vorne
+ * 1 = oben
+ * 0 = links
+ * 3 = rechts
+ * 4 = unten
+ * 5 = hinten
+ */
+
+/* All VPs infinite */
+static void
+box3d_set_new_z_orders_case0 (SPBox3D *box, int z_orders[6], Box3D::Axis central_axis) {
+    Persp3D *persp = box->persp_ref->getObject();
+    NR::Point xdir(persp3d_get_infinite_dir(persp, Proj::X));
+    NR::Point ydir(persp3d_get_infinite_dir(persp, Proj::Y));
+    NR::Point zdir(persp3d_get_infinite_dir(persp, Proj::Z));
+
+    bool swapped = box3d_XY_axes_are_swapped(box);
+
+    //g_print ("3 infinite VPs; ");
+    switch(central_axis) {
+        case Box3D::X:
+            if (!swapped) {
+                //g_print ("central axis X (case a)");
+                box3d_aux_set_z_orders (z_orders, 2, 0, 4, 1, 3, 5);
+            } else {
+                //g_print ("central axis X (case b)");
+                box3d_aux_set_z_orders (z_orders, 3, 1, 5, 2, 4, 0);
+            }
+            break;
+        case Box3D::Y:
+            if (!swapped) {
+                //g_print ("central axis Y (case a)");
+                box3d_aux_set_z_orders (z_orders, 2, 3, 1, 4, 0, 5);
+            } else {
+                //g_print ("central axis Y (case b)");
+                box3d_aux_set_z_orders (z_orders, 5, 0, 4, 1, 3, 2);
+            }
+            break;
+        case Box3D::Z:
+            if (!swapped) {
+                //g_print ("central axis Z (case a)");
+                box3d_aux_set_z_orders (z_orders, 2, 0, 1, 4, 3, 5);
+            } else {
+                //g_print ("central axis Z (case b)");
+                box3d_aux_set_z_orders (z_orders, 5, 3, 4, 1, 0, 2);
+            }
+            break;
+        case Box3D::NONE:
+            if (!swapped) {
+                //g_print ("central axis NONE (case a)");
+                box3d_aux_set_z_orders (z_orders, 2, 3, 4, 1, 0, 5);
+            } else {
+                //g_print ("central axis NONE (case b)");
+                box3d_aux_set_z_orders (z_orders, 5, 0, 1, 4, 3, 2);
+            }
+            break;
+        default:
+            g_assert_not_reached();
+            break;
+    }
+    /**
+    if (swapped) {
+        g_print ("; swapped");
+    }
+    g_print ("\n");
+    **/
+}
+
+/* Precisely one finite VP */
+static void
+box3d_set_new_z_orders_case1 (SPBox3D *box, int z_orders[6], Box3D::Axis central_axis, Box3D::Axis fin_axis) {
+    Persp3D *persp = box->persp_ref->getObject();
+    NR::Point vp(persp3d_get_VP(persp, Box3D::toProj(fin_axis)).affine());
+
+    // note: in some of the case distinctions below we rely upon the fact that oaxis1 and oaxis2 are ordered
+    Box3D::Axis oaxis1 = Box3D::get_remaining_axes(fin_axis).first;
+    Box3D::Axis oaxis2 = Box3D::get_remaining_axes(fin_axis).second;
+    //g_print ("oaxis1  = %s, oaxis2  = %s\n", Box3D::string_from_axes(oaxis1), Box3D::string_from_axes(oaxis2));
+    int inside1 = 0;
+    int inside2 = 0;
+    inside1 = box3d_pt_lies_in_PL_sector (box, vp, 3, 3 ^ oaxis2, oaxis1);
+    inside2 = box3d_pt_lies_in_PL_sector (box, vp, 3, 3 ^ oaxis1, oaxis2);
+    //g_print ("inside1 = %d, inside2 = %d\n", inside1, inside2);
+
+    bool swapped = box3d_XY_axes_are_swapped(box);
+
+    //g_print ("2 infinite VPs; ");
+    //g_print ("finite axis: %s; ", Box3D::string_from_axes(fin_axis));
+    switch(central_axis) {
+        case Box3D::X:
+            if (!swapped) {
+                //g_print ("central axis X (case a)");
+                box3d_aux_set_z_orders (z_orders, 2, 4, 0, 1, 3, 5);
+            } else {
+                //if (inside2) {
+                    //g_print ("central axis X (case b)");
+                    box3d_aux_set_z_orders (z_orders, 5, 3, 1, 0, 2, 4);
+                //} else {
+                    //g_print ("central axis X (case c)");
+                    //box3d_aux_set_z_orders (z_orders, 5, 3, 1, 2, 0, 4);
+                //}
+            }
+            break;
+        case Box3D::Y:
+            if (inside2 > 0) {
+                //g_print ("central axis Y (case a)");
+                box3d_aux_set_z_orders (z_orders, 1, 2, 3, 0, 5, 4);
+            } else if (inside2 < 0) {
+                //g_print ("central axis Y (case b)");
+                box3d_aux_set_z_orders (z_orders, 2, 3, 1, 4, 0, 5);
+            } else {
+                if (!swapped) {
+                    //g_print ("central axis Y (case c1)");
+                    box3d_aux_set_z_orders (z_orders, 2, 3, 1, 5, 0, 4);
+                } else {
+                    //g_print ("central axis Y (case c2)");
+                    box3d_aux_set_z_orders (z_orders, 5, 0, 4, 1, 3, 2);
+                }
+            }
+            break;
+        case Box3D::Z:
+            if (inside2) {
+                if (!swapped) {
+                    //g_print ("central axis Z (case a1)");
+                    box3d_aux_set_z_orders (z_orders, 2, 1, 3, 0, 4, 5);
+                } else {
+                    //g_print ("central axis Z (case a2)");
+                    box3d_aux_set_z_orders (z_orders, 5, 3, 4, 0, 1, 2);
+                }
+            } else if (inside1) {
+                if (!swapped) {
+                    //g_print ("central axis Z (case b1)");
+                    box3d_aux_set_z_orders (z_orders, 2, 0, 1, 4, 3, 5);
+                } else {
+                    //g_print ("central axis Z (case b2)");
+                    box3d_aux_set_z_orders (z_orders, 5, 3, 4, 1, 0, 2);
+                    //box3d_aux_set_z_orders (z_orders, 5, 3, 0, 1, 2, 4);
+                }                    
+            } else {
+                // "regular" case
+                if (!swapped) {
+                    //g_print ("central axis Z (case c1)");
+                    box3d_aux_set_z_orders (z_orders, 0, 1, 2, 5, 4, 3);
+                } else {
+                    //g_print ("central axis Z (case c2)");
+                    box3d_aux_set_z_orders (z_orders, 5, 3, 4, 0, 2, 1);
+                    //box3d_aux_set_z_orders (z_orders, 5, 3, 4, 0, 2, 1);
+                }
+            }
+            break;
+        case Box3D::NONE:
+            if (!swapped) {
+                //g_print ("central axis NONE (case a)");
+                box3d_aux_set_z_orders (z_orders, 2, 3, 4, 5, 0, 1);
+            } else {
+                //g_print ("central axis NONE (case b)");
+                box3d_aux_set_z_orders (z_orders, 5, 0, 1, 3, 2, 4);
+                //box3d_aux_set_z_orders (z_orders, 2, 3, 4, 1, 0, 5);
+            }
+            break;
+        default:
+            g_assert_not_reached();
+    }
+    /**
+    if (swapped) {
+        g_print ("; swapped");
+    }
+    g_print ("\n");
+    **/
+}
+
+/* Precisely 2 finite VPs */
+static void
+box3d_set_new_z_orders_case2 (SPBox3D *box, int z_orders[6], Box3D::Axis central_axis, Box3D::Axis infinite_axis) {
+    Persp3D *persp = box->persp_ref->getObject();
+
+    NR::Point c3(box3d_get_corner_screen(box, 3));
+    NR::Point xdir(persp3d_get_PL_dir_from_pt(persp, c3, Proj::X));
+    NR::Point ydir(persp3d_get_PL_dir_from_pt(persp, c3, Proj::Y));
+    NR::Point zdir(persp3d_get_PL_dir_from_pt(persp, c3, Proj::Z));
+
+    bool swapped = box3d_XY_axes_are_swapped(box);
+
+    int insidexy = box3d_VP_lies_in_PL_sector (box, Proj::X, 3, 3 ^ Box3D::Z, Box3D::Y);
+    int insidexz = box3d_VP_lies_in_PL_sector (box, Proj::X, 3, 3 ^ Box3D::Y, Box3D::Z);
+
+    int insideyx = box3d_VP_lies_in_PL_sector (box, Proj::Y, 3, 3 ^ Box3D::Z, Box3D::X);
+    int insideyz = box3d_VP_lies_in_PL_sector (box, Proj::Y, 3, 3 ^ Box3D::X, Box3D::Z);
+
+    int insidezx = box3d_VP_lies_in_PL_sector (box, Proj::Z, 3, 3 ^ Box3D::Y, Box3D::X);
+    int insidezy = box3d_VP_lies_in_PL_sector (box, Proj::Z, 3, 3 ^ Box3D::X, Box3D::Y);
+
+    //g_print ("Insides: xy = %d, xz = %d, yx = %d, yz = %d, zx = %d, zy = %d\n",
+    //         insidexy, insidexz, insideyx, insideyz, insidezx, insidezy);
+
+    //g_print ("1 infinite VP; ");
+    switch(central_axis) {
+        case Box3D::X:
+            if (!swapped) {
+                if (insidezy == -1) {
+                    //g_print ("central axis X (case a1)");
+                    box3d_aux_set_z_orders (z_orders, 2, 4, 0, 1, 3, 5);
+                } else if (insidexy == 1) {
+                    //g_print ("central axis X (case a2)");
+                    box3d_aux_set_z_orders (z_orders, 2, 4, 0, 5, 1, 3);
+                } else {
+                    //g_print ("central axis X (case a3)");
+                    box3d_aux_set_z_orders (z_orders, 2, 4, 0, 1, 3, 5);
+                }
+            } else {
+                if (insideyz == -1) {
+                    //g_print ("central axis X (case b1)");
+                    box3d_aux_set_z_orders (z_orders, 3, 1, 5, 0, 2, 4);
+                } else {
+                    if (!swapped) {
+                        //g_print ("central axis X (case b2)");
+                        box3d_aux_set_z_orders (z_orders, 3, 1, 5, 2, 4, 0);
+                    } else {
+                        //g_print ("central axis X (case b3)");
+                        box3d_aux_set_z_orders (z_orders, 1, 3, 5, 0, 2, 4);
+                    }
+                }
+            }
+            break;
+        case Box3D::Y:
+            if (!swapped) {
+                if (insideyz == 1) {
+                    //g_print ("central axis Y (case a1)");
+                    box3d_aux_set_z_orders (z_orders, 2, 3, 1, 0, 5, 4);
+                } else {
+                    //g_print ("central axis Y (case a2)");
+                    box3d_aux_set_z_orders (z_orders, 2, 3, 1, 5, 0, 4);
+                }
+            } else {
+                //g_print ("central axis Y (case b)");
+                box3d_aux_set_z_orders (z_orders, 5, 0, 4, 1, 3, 2);
+            }
+            break;
+        case Box3D::Z:
+            if (!swapped) {
+                if (insidezy == 1) {
+                    //g_print ("central axis Z (case a1)");
+                    box3d_aux_set_z_orders (z_orders, 2, 1, 0, 4, 3, 5);
+                } else if (insidexy == -1) {
+                    //g_print ("central axis Z (case a2)");
+                    box3d_aux_set_z_orders (z_orders, 2, 1, 0, 5, 4, 3);
+                } else {
+                    //g_print ("central axis Z (case a3)");
+                    box3d_aux_set_z_orders (z_orders, 2, 0, 1, 5, 3, 4);
+                }
+            } else {
+                //g_print ("central axis Z (case b)");
+                box3d_aux_set_z_orders (z_orders, 5, 3, 4, 1, 0, 2);
+            }
+            break;
+        case Box3D::NONE:
+            if (!swapped) {
+                //g_print ("central axis NONE (case a)");
+                box3d_aux_set_z_orders (z_orders, 2, 3, 4, 1, 0, 5);
+            } else {
+                //g_print ("central axis NONE (case b)");
+                box3d_aux_set_z_orders (z_orders, 5, 0, 1, 4, 3, 2);
+            }
+            break;
+        default:
+            g_assert_not_reached();
+            break;
+    }
+    /**
+    if (swapped) {
+        g_print ("; swapped");
+    }
+    g_print ("\n");
+    **/
+}
+
+/*
+ * It can happen that during dragging the box is everted.
+ * In this case the opposite sides in this direction need to be swapped
  */
 static Box3D::Axis
-sp_3dbox_axis_pair_bounding_convex_hull (SP3DBox *box, guint corner)
- {
-    guint adj1 = corner ^ Box3D::X;
-    guint adj2 = corner ^ Box3D::Y;
-    guint adj3 = corner ^ Box3D::Z;
+box3d_everted_directions (SPBox3D *box) {
+    Box3D::Axis ev = Box3D::NONE;
 
-    if (sp_3dbox_is_border_edge_pair (box, adj1, corner, adj2)) {
-        return Box3D::XY;
-    }
-    if (sp_3dbox_is_border_edge_pair (box, adj1, corner, adj3)) {
-        return Box3D::XZ;
-    }
-    if (sp_3dbox_is_border_edge_pair (box, adj2, corner, adj3)) {
-        return Box3D::YZ;
-    }
-    return Box3D::NONE;
+    box->orig_corner0.normalize();
+    box->orig_corner7.normalize();
+
+    if (box->orig_corner0[Proj::X] < box->orig_corner7[Proj::X])
+        ev = (Box3D::Axis) (ev ^ Box3D::X);
+    if (box->orig_corner0[Proj::Y] < box->orig_corner7[Proj::Y])
+        ev = (Box3D::Axis) (ev ^ Box3D::Y);
+    if (box->orig_corner0[Proj::Z] > box->orig_corner7[Proj::Z]) // FIXME: Remove the need to distinguish signs among the cases
+        ev = (Box3D::Axis) (ev ^ Box3D::Z);
+
+    return ev;
 }
 
-// inside_hull is modified 'in place' by the following function
-static void sp_3dbox_corner_configuration (SP3DBox *box, std::vector<gint> &on_hull, std::vector<gint> &inside_hull)
-{
-    for (int i = 0; i < 8; ++i) {
-        Box3D::Axis bounding_edges = sp_3dbox_axis_pair_bounding_convex_hull (box, i);
-        if (bounding_edges != Box3D::NONE) {
-            on_hull.push_back (i);
-        } else {
-            inside_hull.push_back (i);
-        }
-    }
-}
+static void
+box3d_swap_sides(int z_orders[6], Box3D::Axis axis) {
+    int pos1 = -1;
+    int pos2 = -1;
 
-/* returns true if there was a change in the z-orders (which triggers an update of the repr) */
-static bool sp_3dbox_recompute_z_orders_by_corner_configuration (SP3DBox *box)
-{
-    gint new_z_orders[6];
-    Box3D::Axis front_rear_axis = Box3D::Z;
-
-    std::vector<gint> on_hull;
-    std::vector<gint> inside_hull;
-    std::vector<gint> visible_faces;
-
-    sp_3dbox_corner_configuration (box, on_hull, inside_hull);
-
-    switch (on_hull.size()) {
-        case 4:
-            {
-                // the following works because on_hull is sorted
-                gint front_face = sp_3dbox_face_containing_diagonal_corners (on_hull[0], on_hull[3]);
-                visible_faces.push_back (front_face);
-            }
-            break;
-
-        case 6:
-        {
-            guint c1 = inside_hull[0] ^ Box3D::XYZ;
-            guint c2 = inside_hull[1] ^ Box3D::XYZ;
-            Box3D::Axis edge = (Box3D::Axis) (c1 ^ c2);
-            if (Box3D::is_single_axis_direction (edge)) {
-                visible_faces = sp_3dbox_adjacent_faces_of_edge (c1, c2);
-            } else if (c1 == c2 ^ Box3D::XYZ) {
-                guint c_cmp = sp_3dbox_get_corner_id_along_edge (box, 0, front_rear_axis, Box3D::FRONT);
-                guint visible_front_corner = (((c_cmp & front_rear_axis) == (c1 & front_rear_axis)) ? c1 : c2);
-                visible_faces = sp_3dbox_faces_meeting_in_corner (visible_front_corner);
-            } else {
-                /* Under what conditions do we end up here? Can we safely ignore this case? */
-                return false;
-            }
-            break;
-        }
-
-        default:
-            /* Under what conditions do we end up here? Can we safely ignore this case? */
-            return false;
-    }
-
-    /* catch weird corner configurations; these should be theoretically impossible, but maybe
-       occur in (almost) degenerate cases due to rounding errors, for example */
-    if (std::find (visible_faces.begin(), visible_faces.end(), -1) != visible_faces.end()) {
-        return false;
-    }
-
-    /* sort the list of visible faces for later use (although it may be already sorted anyway) */
-    std::sort (visible_faces.begin(), visible_faces.end());
-
-    std::vector<gint> invisible_faces;
-    sp_3dbox_remaining_faces (visible_faces, invisible_faces);
-
-
-    if (!sp_3dbox_is_subset_or_superset (visible_faces, box->currently_visible_faces) &&
-        !sp_3dbox_differ_by_opposite_faces (visible_faces, box->currently_visible_faces)) {
-        std::swap (visible_faces, invisible_faces);
-        if (!sp_3dbox_is_subset_or_superset (visible_faces, box->currently_visible_faces) &&
-            !sp_3dbox_differ_by_opposite_faces (visible_faces, box->currently_visible_faces)) {
-            /* Hopefully this case is only caused by rounding errors or something similar;
-               does it need further investigation? */
-            return false;
-        }
-    }
-
-    box->currently_visible_faces = visible_faces;
-
-    // set new z-orders according to the visible/invisible faces
-    guint vis_size = visible_faces.size();
-    for (guint i = 0; i < vis_size; ++i) {
-        new_z_orders[i] = visible_faces[i];
-    }
-    for (guint i = 0; i < invisible_faces.size(); ++i) {
-        new_z_orders[vis_size + i] = invisible_faces[i];
-    }
-
-    // test whether any z-orders actually changed and indicate this in the return status
     for (int i = 0; i < 6; ++i) {
-        if (box->z_orders[i] != new_z_orders[i]) {
-            // we update the z-orders starting from the index where the change occurs
+        if (!(Box3D::int_to_face(z_orders[i]) & axis)) {
+            if (pos1 == -1) {
+                pos1 = i;
+            } else {
+                pos2 = i;
+                break;
+            }
+        }
+    }
+
+    int tmp = z_orders[pos1];
+    z_orders[pos1] = z_orders[pos2];
+    z_orders[pos2] = tmp;
+}
+
+
+bool
+box3d_recompute_z_orders (SPBox3D *box) {
+    Persp3D *persp = box->persp_ref->getObject();
+
+    //g_return_val_if_fail(persp, false);
+    if (!persp)
+        return false;
+
+    int z_orders[6];
+
+    NR::Point c3(box3d_get_corner_screen(box, 3));
+
+    // determine directions from corner3 to the VPs
+    int num_finite = 0;
+    Box3D::Axis axis_finite = Box3D::NONE;
+    Box3D::Axis axis_infinite = Box3D::NONE;
+    NR::Point dirs[3];
+    for (int i = 0; i < 3; ++i) {
+        dirs[i] = persp3d_get_PL_dir_from_pt(persp, c3, Box3D::toProj(Box3D::axes[i]));
+        if (persp3d_VP_is_finite(persp, Proj::axes[i])) {
+            num_finite++;
+            axis_finite = Box3D::axes[i];
+        } else {
+            axis_infinite = Box3D::axes[i];
+        }
+    }
+
+    // determine the "central" axis (if there is one)
+    Box3D::Axis central_axis = Box3D::NONE;
+    if(Box3D::lies_in_sector(dirs[0], dirs[1], dirs[2])) {
+        central_axis = Box3D::Z;
+    } else if(Box3D::lies_in_sector(dirs[1], dirs[2], dirs[0])) {
+        central_axis = Box3D::X;
+    } else if(Box3D::lies_in_sector(dirs[2], dirs[0], dirs[1])) {
+        central_axis = Box3D::Y;
+    }
+
+    switch (num_finite) {
+        case 0:
+            // TODO: Remark: In this case (and maybe one of the others, too) the z-orders for all boxes
+            //               coincide, hence only need to be computed once in a more central location.
+            box3d_set_new_z_orders_case0(box, z_orders, central_axis);
+            break;
+        case 1:
+            box3d_set_new_z_orders_case1(box, z_orders, central_axis, axis_finite);
+            break;
+        case 2:
+        case 3:
+            box3d_set_new_z_orders_case2(box, z_orders, central_axis, axis_infinite);
+            break;
+        default:
+        /*
+         * For each VP F, check wether the half-line from the corner3 to F crosses the line segment
+         * joining the other two VPs. If this is the case, it determines the "central" corner from
+         * which the visible sides can be deduced. Otherwise, corner3 is the central corner.
+         */
+        // FIXME: We should eliminate the use of NR::Point altogether
+        Box3D::Axis central_axis = Box3D::NONE;
+        NR::Point vp_x = persp3d_get_VP(persp, Proj::X).affine();
+        NR::Point vp_y = persp3d_get_VP(persp, Proj::Y).affine();
+        NR::Point vp_z = persp3d_get_VP(persp, Proj::Z).affine();
+        Geom::Point vpx(vp_x[NR::X], vp_x[NR::Y]);
+        Geom::Point vpy(vp_y[NR::X], vp_y[NR::Y]);
+        Geom::Point vpz(vp_z[NR::X], vp_z[NR::Y]);
+
+        NR::Point c3 = box3d_get_corner_screen(box, 3);
+        Geom::Point corner3(c3[NR::X], c3[NR::Y]);
+
+        if (box3d_half_line_crosses_joining_line (corner3, vpx, vpy, vpz)) {
+            central_axis = Box3D::X;
+        } else if (box3d_half_line_crosses_joining_line (corner3, vpy, vpz, vpx)) {
+            central_axis = Box3D::Y;
+        } else if (box3d_half_line_crosses_joining_line (corner3, vpz, vpx, vpy)) {
+            central_axis = Box3D::Z;
+        }
+        //g_print ("Crossing: %s\n", Box3D::string_from_axes(central_axis));
+
+        unsigned int central_corner = 3 ^ central_axis;
+        if (central_axis == Box3D::Z) {
+            central_corner = central_corner ^ Box3D::XYZ;
+        }
+        if (box3d_XY_axes_are_swapped(box)) {
+            //g_print ("Axes X and Y are swapped\n");
+            central_corner = central_corner ^ Box3D::XYZ;
+        }
+
+        NR::Point c1(box3d_get_corner_screen(box, 1));
+        NR::Point c2(box3d_get_corner_screen(box, 2));
+        NR::Point c7(box3d_get_corner_screen(box, 7));
+
+        Geom::Point corner1(c1[NR::X], c1[NR::Y]);
+        Geom::Point corner2(c2[NR::X], c2[NR::Y]);
+        Geom::Point corner7(c7[NR::X], c7[NR::Y]);
+        // FIXME: At present we don't use the information about central_corner computed above.
+        switch (central_axis) {
+            case Box3D::Y:
+                if (!box3d_half_line_crosses_joining_line(vpz, vpy, corner3, corner2)) {
+                    box3d_aux_set_z_orders (z_orders, 2, 3, 1, 5, 0, 4);
+                } else {
+                    // degenerate case
+                    //g_print ("Degenerate case #1\n");
+                    box3d_aux_set_z_orders (z_orders, 2, 1, 3, 0, 5, 4);
+                }
+                break;
+
+            case Box3D::Z:
+                if (box3d_half_line_crosses_joining_line(vpx, vpz, corner3, corner1)) {
+                    // degenerate case
+                    //g_print ("Degenerate case #2\n");
+                    box3d_aux_set_z_orders (z_orders, 2, 0, 1, 4, 3, 5);
+                } else if (box3d_half_line_crosses_joining_line(vpx, vpy, corner3, corner7)) {
+                    // degenerate case
+                    //g_print ("Degenerate case #3\n");
+                    box3d_aux_set_z_orders (z_orders, 2, 1, 0, 5, 3, 4);
+                } else {
+                    box3d_aux_set_z_orders (z_orders, 2, 1, 0, 3, 4, 5);
+                }
+                break;
+
+            case Box3D::X:
+                if (box3d_half_line_crosses_joining_line(vpz, vpx, corner3, corner1)) {
+                    // degenerate case
+                    //g_print ("Degenerate case #4\n");
+                    box3d_aux_set_z_orders (z_orders, 2, 1, 0, 4, 5, 3);
+                } else {
+                    box3d_aux_set_z_orders (z_orders, 2, 4, 0, 5, 1, 3);
+                }
+                break;
+
+            case Box3D::NONE:
+                box3d_aux_set_z_orders (z_orders, 2, 3, 4, 1, 0, 5);
+                break;
+
+            default:
+                g_assert_not_reached();
+                break;
+        } // end default case
+    }
+
+    // TODO: If there are still errors in z-orders of everted boxes, we need to choose a variable corner
+    //       instead of the hard-coded corner #3 in the computations above
+    Box3D::Axis ev = box3d_everted_directions(box);
+    for (int i = 0; i < 3; ++i) {
+        if (ev & Box3D::axes[i]) {
+            box3d_swap_sides(z_orders, Box3D::axes[i]);
+        }
+    }
+
+    // Check whether anything actually changed
+    for (int i = 0; i < 6; ++i) {
+        if (box->z_orders[i] != z_orders[i]) {
             for (int j = i; j < 6; ++j) {
-                box->z_orders[j] = new_z_orders[j];
+                box->z_orders[j] = z_orders[j];
             }
             return true;
         }
@@ -731,567 +1211,117 @@ static bool sp_3dbox_recompute_z_orders_by_corner_configuration (SP3DBox *box)
     return false;
 }
 
-// FIXME: Can we unify this and the next function for setting the z-orders?
-void sp_3dbox_set_z_orders_in_the_first_place (SP3DBox *box)
-{
+static std::map<int, Box3DSide *>
+box3d_get_sides (SPBox3D *box) {
+    std::map<int, Box3DSide *> sides;
+    for (SPObject *side = sp_object_first_child(box); side != NULL; side = SP_OBJECT_NEXT(side)) {
+        sides[Box3D::face_to_int(sp_repr_get_int_attribute(SP_OBJECT_REPR(side),
+                                                           "inkscape:box3dsidetype", -1))] = SP_BOX3D_SIDE(side);
+    }
+    sides.erase(-1);
+    return sides;
+}
+
+
+// TODO: Check whether the box is everted in any direction and swap the sides opposite to this direction
+void
+box3d_set_z_orders (SPBox3D *box) {
     // For efficiency reasons, we only set the new z-orders if something really changed
-    if (sp_3dbox_recompute_z_orders (box)) {
-        box->faces[box->z_orders[0]]->lower_to_bottom ();
-        box->faces[box->z_orders[1]]->lower_to_bottom ();
-        box->faces[box->z_orders[2]]->lower_to_bottom ();
-        box->faces[box->z_orders[3]]->lower_to_bottom ();
-        box->faces[box->z_orders[4]]->lower_to_bottom ();
-        box->faces[box->z_orders[5]]->lower_to_bottom ();
-    }
-}
-
-void sp_3dbox_set_z_orders_later_on (SP3DBox *box)
-{
-    // For efficiency reasons, we only set the new z-orders if something really changed
-    if (sp_3dbox_recompute_z_orders_by_corner_configuration (box)) {
-        box->faces[box->z_orders[0]]->lower_to_bottom ();
-        box->faces[box->z_orders[1]]->lower_to_bottom ();
-        box->faces[box->z_orders[2]]->lower_to_bottom ();
-        box->faces[box->z_orders[3]]->lower_to_bottom ();
-        box->faces[box->z_orders[4]]->lower_to_bottom ();
-        box->faces[box->z_orders[5]]->lower_to_bottom ();
-    }
-}
-
-void
-sp_3dbox_update_curves (SP3DBox *box) {
-    for (int i = 0; i < 6; ++i) {
-        if (box->faces[i]) box->faces[i]->set_curve();
-    }
-}
-
-/**
- * In some situations (e.g., after cloning boxes, undo & redo, or reading boxes from a file) there are
- * paths already present in the document which correspond to the faces of newly created boxes, but their
- * 'path' members don't link to them yet. The following function corrects this if necessary.
- */
-void
-sp_3dbox_link_to_existing_paths (SP3DBox *box, Inkscape::XML::Node *repr) {
-    // TODO: We should probably destroy the existing paths and recreate them because we don't know
-    //       precisely which path corresponds to which face. Does this make a difference?
-    //       In sp_3dbox_write we write the correct paths anyway, don't we? But we could get into
-    //       trouble at a later stage when we only write single faces for degenerate boxes.
-
-    SPDocument *document = SP_OBJECT_DOCUMENT(box);
-    guint face_id = 0;
-
-    for (Inkscape::XML::Node *i = sp_repr_children(repr); i != NULL; i = sp_repr_next(i)) {
-        if (face_id > 5) {
-            g_warning ("SVG representation of 3D boxes must contain 6 paths or less.\n");
-            break;
+    if (box3d_recompute_z_orders (box)) {
+        std::map<int, Box3DSide *> sides = box3d_get_sides(box);
+        std::map<int, Box3DSide *>::iterator side;
+        for (unsigned int i = 0; i < 6; ++i) {
+            side = sides.find(box->z_orders[i]);
+            if (side != sides.end()) {
+                SP_ITEM((*side).second)->lowerToBottom();
+            }
         }
-
-        SPObject *face_object = document->getObjectByRepr((Inkscape::XML::Node *) i);
-        if (!SP_IS_PATH(face_object)) {
-            g_warning ("SVG representation of 3D boxes should only contain paths.\n");
-            continue;
+        /**
+        g_print ("Resetting z-orders: ");
+        for (int i = 0; i < 6; ++i) {
+            g_print ("%d ", box->z_orders[i]);
         }
-        // TODO: Currently we don't check whether all paths are being linked to different faces.
-        //       This is no problem with valid SVG files. It may lead to crashes, however,
-        //       in case a file is corrupt (e.g., two or more faces have identical descriptions).
-        gint id = Box3DFace::descr_to_id (i->attribute ("inkscape:box3dface"));
-        box->faces[id]->hook_path_to_3dbox(SP_PATH(face_object));
-        ++face_id;
+        g_print ("\n");
+        **/
     }
-    if (face_id < 6) {
-        //g_warning ("SVG representation of 3D boxes should contain exactly 6 paths (degenerate boxes are not yet supported).\n");
-        // TODO: Check whether it is safe to add the remaining paths to the box and do so in case it is.
-        //       (But we also land here for newly created boxes where we shouldn't add any paths because
-        //       This is done in sp_3dbox_write later on.
-    }
-}
-
-void
-sp_3dbox_reshape_after_VP_rotation (SP3DBox *box, Box3D::Axis axis)
-{
-    Box3D::Perspective3D *persp = inkscape_active_document()->get_persp_of_box (box);
-    Box3D::VanishingPoint *vp = persp->get_vanishing_point (axis);
-
-    guint c1 = (axis == Box3D::Z) ? 1 : sp_3dbox_get_front_corner_id (box); // hack
-    guint c2 = c1 ^ axis;
-    NR::Point v = box->corners[c1] - box->corners[c2];
-    double dist = NR::L2 (v) * ((NR::dot (v, vp->v_dir) < 0) ? 1 : -1); // "directed" distance
-
-    Box3D::PerspectiveLine pline (box->corners[c1], axis, persp);
-    NR::Point pt = pline.point_from_lambda (dist);
-
-    sp_3dbox_move_corner_in_Z_direction (box, c2, pt, axis == Box3D::Z);
-}
-
-void
-sp_3dbox_move_corner_in_XY_plane (SP3DBox *box, guint id, NR::Point pt, Box3D::Axis axes)
-{
-    Box3D::Perspective3D * persp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box);
-
-    NR::Point A (box->corners[id ^ Box3D::XY]);
-    if (Box3D::is_single_axis_direction (axes)) {
-        pt = Box3D::PerspectiveLine (box->corners[id], axes, persp).closest_to(pt);
-    }
-
-    /* set the 'front' corners */
-    box->corners[id] = pt;
-
-    Box3D::PerspectiveLine pl_one (A, Box3D::Y, persp);
-    Box3D::PerspectiveLine pl_two (pt, Box3D::X, persp);
-    box->corners[id ^ Box3D::X] = pl_one.meet(pl_two);
-
-    pl_one = Box3D::PerspectiveLine (A, Box3D::X, persp);
-    pl_two = Box3D::PerspectiveLine (pt, Box3D::Y, persp);
-    box->corners[id ^ Box3D::Y] = pl_one.meet(pl_two);
-
-    /* set the 'rear' corners */
-    NR::Point B (box->corners[id ^ Box3D::XYZ]);
-
-    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::X], Box3D::Z, persp);
-    pl_two = Box3D::PerspectiveLine (B, Box3D::Y, persp);
-    box->corners[id ^ Box3D::XZ] = pl_one.meet(pl_two);
-
-    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::XZ], Box3D::X, persp);
-    pl_two = Box3D::PerspectiveLine (pt, Box3D::Z, persp);
-    box->corners[id ^ Box3D::Z] = pl_one.meet(pl_two);
-
-    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::Z], Box3D::Y, persp);
-    pl_two = Box3D::PerspectiveLine (B, Box3D::X, persp);
-    box->corners[id ^ Box3D::YZ] = pl_one.meet(pl_two);
-    
-}
-
-void
-sp_3dbox_move_corner_in_Z_direction (SP3DBox *box, guint id, NR::Point pt, bool constrained)
-{
-    if (!constrained) sp_3dbox_move_corner_in_XY_plane (box, id, pt, Box3D::XY);
-
-    Box3D::Perspective3D * persp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box);
-
-    /* set the four corners of the face containing corners[id] */
-    box->corners[id] = Box3D::PerspectiveLine (box->corners[id], Box3D::Z, persp).closest_to(pt);
-
-    Box3D::PerspectiveLine pl_one (box->corners[id], Box3D::X, persp);
-    Box3D::PerspectiveLine pl_two (box->corners[id ^ Box3D::XZ], Box3D::Z, persp);
-    box->corners[id ^ Box3D::X] = pl_one.meet(pl_two);
-
-    pl_one = Box3D::PerspectiveLine (box->corners[id ^ Box3D::X], Box3D::Y, persp);
-    pl_two = Box3D::PerspectiveLine (box->corners[id ^ Box3D::XYZ], Box3D::Z, persp);
-    box->corners[id ^ Box3D::XY] = pl_one.meet(pl_two);
-
-    pl_one = Box3D::PerspectiveLine (box->corners[id], Box3D::Y, persp);
-    pl_two = Box3D::PerspectiveLine (box->corners[id ^ Box3D::YZ], Box3D::Z, persp);
-    box->corners[id ^ Box3D::Y] = pl_one.meet(pl_two);
-}
-
-static void
-sp_3dbox_reshape_edge_after_VP_toggling (SP3DBox *box, const guint corner, const Box3D::Axis axis, Box3D::Perspective3D *persp)
-{
-    /* Hmm, perhaps we should simply use one of the corners as the pivot point.
-       But this way we minimize the amount of reshaping.
-       On second thought, we need to find a way to ensure that all boxes sharing the same
-       perspective are updated consistently _as a group_. That is, they should also retain
-       their relative positions towards each other. */
-    NR::Maybe<NR::Point> pt = sp_3dbox_get_midpoint_between_corners (box, corner, corner ^ axis);
-    g_return_if_fail (pt);
-
-    Box3D::Axis axis2 = ((axis == Box3D::Y) ? Box3D::X : Box3D::Y);
-
-    Box3D::PerspectiveLine line1 (box->corners[corner], axis2, persp);
-    Box3D::PerspectiveLine line2 (box->corners[corner ^ axis], axis2, persp);
-
-    Box3D::PerspectiveLine line3 (*pt, axis, persp);
-
-    NR::Point new_corner1 = line1.meet (line3);
-    NR::Point new_corner2 = line2.meet (line3);
-
-    box->corners[corner] = new_corner1;
-    box->corners[corner ^ axis] = new_corner2;
-}
-
-void
-sp_3dbox_reshape_after_VP_toggling (SP3DBox *box, Box3D::Axis axis)
-{
-    Box3D::Perspective3D *persp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box);
-    std::pair<Box3D::Axis, Box3D::Axis> dirs = Box3D::get_remaining_axes (axis);
-
-    sp_3dbox_reshape_edge_after_VP_toggling (box, 0, axis, persp);
-    sp_3dbox_reshape_edge_after_VP_toggling (box, 0 ^ dirs.first, axis, persp);
-    sp_3dbox_reshape_edge_after_VP_toggling (box, 0 ^ dirs.first ^ dirs.second, axis, persp);
-    sp_3dbox_reshape_edge_after_VP_toggling (box, 0 ^ dirs.second, axis, persp);
-}
-
-NR::Maybe<NR::Point>
-sp_3dbox_get_center (SP3DBox *box)
-{
-    return sp_3dbox_get_midpoint_between_corners (box, 0, 7);
-}
-
-NR::Point
-sp_3dbox_get_midpoint_in_axis_direction (NR::Point const &C, NR::Point const &D, Box3D::Axis axis, Box3D::Perspective3D *persp)
-{
-    Box3D::PerspectiveLine pl (D, axis, persp);
-    return pl.pt_with_given_cross_ratio (C, D, -1.0);
-}
-
-// TODO: The following function can probably be rewritten in a much more elegant and robust way
-//        by using projective coordinates for all points and using the cross ratio.
-NR::Maybe<NR::Point>
-sp_3dbox_get_midpoint_between_corners (SP3DBox *box, guint id_corner1, guint id_corner2)
-{
-    Box3D::Axis corner_axes = (Box3D::Axis) (id_corner1 ^ id_corner2);
-
-    // Is all this sufficiently precise also for degenerate cases?
-    if (sp_3dbox_corners_are_adjacent (id_corner1, id_corner2)) {
-        Box3D::Axis orth_dir = get_perpendicular_axis_direction (corner_axes);
-
-        Box3D::Line diag1 (box->corners[id_corner1], box->corners[id_corner2 ^ orth_dir]);
-        Box3D::Line diag2 (box->corners[id_corner1 ^ orth_dir], box->corners[id_corner2]);
-        NR::Maybe<NR::Point> adjacent_face_center = diag1.intersect(diag2);
-
-        if (!adjacent_face_center) return NR::Nothing();
-
-        Box3D::Perspective3D * persp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box);
-
-        Box3D::PerspectiveLine pl (*adjacent_face_center, orth_dir, persp);
-        return pl.intersect(Box3D::PerspectiveLine(box->corners[id_corner1], corner_axes, persp));
-    } else {
-        Box3D::Axis dir = Box3D::extract_first_axis_direction (corner_axes);
-        Box3D::Line diag1 (box->corners[id_corner1], box->corners[id_corner2]);
-        Box3D::Line diag2 (box->corners[id_corner1 ^ dir], box->corners[id_corner2 ^ dir]);
-        return diag1.intersect(diag2);
-    }
-}
-
-static gchar *
-sp_3dbox_get_corner_coords_string (SP3DBox *box, guint id)
-{
-    id = id % 8;
-    Inkscape::SVGOStringStream os;
-    os << box->corners[id][NR::X] << "," << box->corners[id][NR::Y];
-    return g_strdup(os.str().c_str());
-}
-
-static std::pair<gdouble, gdouble>
-sp_3dbox_get_coord_pair_from_string (const gchar *coords)
-{
-    gchar **coordpair = g_strsplit( coords, ",", 0);
-    // We might as well rely on g_ascii_strtod to convert the NULL pointer to 0.0,
-    // but we include the following test anyway
-    if (coordpair[0] == NULL || coordpair[1] == NULL) {
-        g_strfreev (coordpair);
-        g_warning ("Coordinate conversion failed.\n");
-        return std::make_pair(0.0, 0.0);
-    }
-
-    gdouble coord1 = g_ascii_strtod(coordpair[0], NULL);
-    gdouble coord2 = g_ascii_strtod(coordpair[1], NULL);
-    g_strfreev (coordpair);
-
-    return std::make_pair(coord1, coord2);
-}
-
-static gchar *
-sp_3dbox_get_perspective_string (SP3DBox *box)
-{
-    
-    return sp_3dbox_get_svg_descr_of_persp (SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box));
-}
-  
-gchar *
-sp_3dbox_get_svg_descr_of_persp (Box3D::Perspective3D *persp)
-{
-    // FIXME: We should move this code to perspective3d.cpp, but this yields compiler errors. Why?
-    Inkscape::SVGOStringStream os;
-
-    Box3D::VanishingPoint vp = *(persp->get_vanishing_point (Box3D::X));
-    os << vp[NR::X] << "," << vp[NR::Y] << ",";
-    os << vp.v_dir[NR::X] << "," << vp.v_dir[NR::Y] << ",";
-    if (vp.is_finite()) {
-        os << "finite,";
-    } else {
-        os << "infinite,";
-    }
-
-    vp = *(persp->get_vanishing_point (Box3D::Y));
-    os << vp[NR::X] << "," << vp[NR::Y] << ",";
-    os << vp.v_dir[NR::X] << "," << vp.v_dir[NR::Y] << ",";
-    if (vp.is_finite()) {
-        os << "finite,";
-    } else {
-        os << "infinite,";
-    }
-
-    vp = *(persp->get_vanishing_point (Box3D::Z));
-    os << vp[NR::X] << "," << vp[NR::Y] << ",";
-    os << vp.v_dir[NR::X] << "," << vp.v_dir[NR::Y] << ",";
-    if (vp.is_finite()) {
-        os << "finite";
-    } else {
-        os << "infinite";
-    }
-
-    return g_strdup(os.str().c_str());
-}
-
-// auxiliary function
-static std::pair<NR::Point, NR::Point>
-sp_3dbox_new_midpoints (Box3D::Perspective3D *persp, Box3D::Axis axis, NR::Point const &M0, NR::Point const &M, NR::Point const &A, NR::Point const &B)
-{
-    double cr1 = Box3D::cross_ratio (*persp->get_vanishing_point (axis), M0, M, A);
-    double cr2 = Box3D::cross_ratio (*persp->get_vanishing_point (axis), M, B, M0);
-    if (fabs (cr1 - 1) < Box3D::epsilon) {
-        // FIXME: cr == 1 is a degenerate case; how should we deal with it?
-        return std::make_pair (NR::Point (0,0), NR::Point (0,0));
-    }
-    if (cr1 == NR_HUGE) {
-        return std::make_pair (A, B);
-    }
-    Box3D::PerspectiveLine pl (M0, axis, persp);
-    NR::Point B_new = pl.pt_with_given_cross_ratio (M0, M, cr1 / (cr1 - 1));
-    NR::Point A_new = pl.pt_with_given_cross_ratio (M0, M, 1 - cr2);
-    return std::make_pair (A_new, B_new);
-}
-
-void sp_3dbox_recompute_Z_corners_from_new_center (SP3DBox *box, NR::Point const new_center)
-{
-    // TODO: Clean this function up
-
-    Box3D::Perspective3D *persp = sp_desktop_document (inkscape_active_desktop())->get_persp_of_box (box);
-    NR::Point old_center = box->old_center;
-
-    Box3D::PerspectiveLine aux_line1 (old_center, Box3D::Z, persp);
-    Box3D::PerspectiveLine aux_line2 (new_center, Box3D::Y, persp);
-    NR::Point Z1 = aux_line1.meet (aux_line2);
-
-    NR::Point A0 (sp_3dbox_get_midpoint_in_axis_direction (box->old_corner2, box->old_corner0, Box3D::Y, persp));
-    NR::Point B0 (sp_3dbox_get_midpoint_in_axis_direction (box->old_corner7, box->old_corner5, Box3D::Y, persp));
-    Box3D::PerspectiveLine aux_line3 (A0, Box3D::X, persp);
-    Box3D::PerspectiveLine aux_line4 (B0, Box3D::X, persp);
-
-    NR::Point C0 = aux_line3.meet (aux_line1);
-    NR::Point D0 = aux_line4.meet (aux_line1);
-
-    std::pair<NR::Point, NR::Point> new_midpts = sp_3dbox_new_midpoints (persp, Box3D::Z, old_center, Z1, C0, D0);
-    NR::Point C1 (new_midpts.first);
-    NR::Point D1 (new_midpts.second);
-    Box3D::PerspectiveLine aux_line5 (C1, Box3D::X, persp);
-    Box3D::PerspectiveLine aux_line6 (D1, Box3D::X, persp);
-
-    Box3D::PerspectiveLine aux_line7 (A0, Box3D::Z, persp);
-    Box3D::PerspectiveLine aux_line8 (B0, Box3D::Z, persp);
-
-    NR::Point A1 = aux_line5.meet (aux_line7);
-    NR::Point B1 = aux_line6.meet (aux_line8);
-
-    Box3D::PerspectiveLine aux_line9  (box->old_corner2, Box3D::Z, persp);
-    Box3D::PerspectiveLine aux_line10 (box->old_corner5, Box3D::Z, persp);
-
-    Box3D::PerspectiveLine aux_line11 (A1, Box3D::Y, persp);
-    Box3D::PerspectiveLine aux_line12 (B1, Box3D::Y, persp);
-
-    NR::Point new_corner2 = aux_line9.meet (aux_line11);
-    NR::Point new_corner5 = aux_line10.meet (aux_line12);
-
-    Box3D::PerspectiveLine aux_line13 (A1, Box3D::X, persp);
-    NR::Point E1 = aux_line13.meet (aux_line8);
-    Box3D::PerspectiveLine aux_line14 (E1, Box3D::Y, persp);
-
-    NR::Point new_corner1 = aux_line10.meet (aux_line14);
-
-    sp_3dbox_set_shape_from_points (box, new_corner2, new_corner1, new_corner5);
-}
-
-void sp_3dbox_recompute_XY_corners_from_new_center (SP3DBox *box, NR::Point const new_center)
-{
-    // TODO: Clean this function up
-
-    Box3D::Perspective3D *persp = sp_desktop_document (inkscape_active_desktop())->get_persp_of_box (box);
-    NR::Point old_center = box->old_center;
-
-    NR::Point A0 (sp_3dbox_get_midpoint_in_axis_direction (box->old_corner2, box->old_corner0, Box3D::Y, persp));
-    NR::Point B0 (sp_3dbox_get_midpoint_in_axis_direction (box->old_corner1, box->old_corner3, Box3D::Y, persp));
-
-    /* we first move the box along the X-axis ... */
-    Box3D::PerspectiveLine aux_line1 (old_center, Box3D::X, persp);
-    Box3D::PerspectiveLine aux_line2 (new_center, Box3D::Y, persp);
-    NR::Point Z1 = aux_line1.meet (aux_line2);
-
-    Box3D::PerspectiveLine ref_line (B0, Box3D::X, persp);
-    Box3D::PerspectiveLine pline2 (old_center, Box3D::Z, persp);
-    Box3D::PerspectiveLine pline3 (Z1, Box3D::Z, persp);
-    NR::Point M0 = ref_line.meet (pline2);
-    NR::Point M1 = ref_line.meet (pline3);
-
-    std::pair<NR::Point, NR::Point> new_midpts = sp_3dbox_new_midpoints (persp, Box3D::X, M0, M1, A0, B0);
-    NR::Point A1 (new_midpts.first);
-    NR::Point B1 (new_midpts.second);
-
-    /* ... and then along the Y-axis */
-    Box3D::PerspectiveLine pline4 (box->old_corner1, Box3D::X, persp);
-    Box3D::PerspectiveLine pline5 (box->old_corner3, Box3D::X, persp);
-    Box3D::PerspectiveLine aux_line3 (M1, Box3D::Y, persp);
-    NR::Point C1 = aux_line3.meet (pline4);
-    NR::Point D1 = aux_line3.meet (pline5);
-
-    Box3D::PerspectiveLine aux_line4 (new_center, Box3D::Z, persp);
-    NR::Point M2 = aux_line4.meet (aux_line3);
-
-    std::pair<NR::Point, NR::Point> other_new_midpts = sp_3dbox_new_midpoints (persp, Box3D::Y, M1, M2, C1, D1);
-    NR::Point C2 (other_new_midpts.first);
-    NR::Point D2 (other_new_midpts.second);
-
-    Box3D::PerspectiveLine plXC (C2, Box3D::X, persp);
-    Box3D::PerspectiveLine plXD (D2, Box3D::X, persp);
-    Box3D::PerspectiveLine plYA (A1, Box3D::Y, persp);
-    Box3D::PerspectiveLine plYB (B1, Box3D::Y, persp);
-
-    NR::Point new_corner2 (plXD.meet (plYA));
-    NR::Point new_corner1 (plXC.meet (plYB));
-
-    NR::Point tmp_corner1 (pline4.meet (plYB));
-    Box3D::PerspectiveLine pline6 (box->old_corner5, Box3D::X, persp);
-    Box3D::PerspectiveLine pline7 (tmp_corner1, Box3D::Z, persp);
-    NR::Point tmp_corner5 (pline6.meet (pline7));
-
-    Box3D::PerspectiveLine pline8 (tmp_corner5, Box3D::Y, persp);
-    Box3D::PerspectiveLine pline9 (new_corner1, Box3D::Z, persp);
-    NR::Point new_corner5 (pline8.meet (pline9));
-
-    sp_3dbox_set_shape_from_points (box, new_corner2, new_corner1, new_corner5);
-}
-
-void sp_3dbox_update_perspective_lines()
-{
-    SPEventContext *ec = inkscape_active_event_context();
-    if (!SP_IS_3DBOX_CONTEXT (ec))
-        return;
-
-    SP_3DBOX_CONTEXT (ec)->_vpdrag->updateLines();
 }
 
 /*
- * Manipulates corner1 through corner4 to contain the indices of the corners
- * from which the perspective lines in the direction of 'axis' emerge
+ * Auxiliary function for z-order recomputing:
+ * Determines whether \a pt lies in the sector formed by the two PLs from the corners with IDs
+ * \a i21 and \a id2 to the VP in direction \a axis. If the VP is infinite, we say that \a pt
+ * lies in the sector if it lies between the two (parallel) PLs.
+ * \ret *  0 if \a pt doesn't lie in the sector
+ *      *  1 if \a pt lies in the sector and either VP is finite of VP is infinite and the direction
+ *           from the edge between the two corners to \a pt points towards the VP
+ *      * -1 otherwise
  */
-void sp_3dbox_corners_for_perspective_lines (const SP3DBox * box, Box3D::Axis axis, 
-        				     NR::Point &corner1, NR::Point &corner2, NR::Point &corner3, NR::Point &corner4)
-{
-    // along which axis to switch when takint
-    Box3D::Axis switch_axis;
-    if (axis == Box3D::X || axis == Box3D::Y) {
-        switch_axis = (box->front_bits & axis) ? Box3D::Z : Box3D::NONE;
+// TODO: Maybe it would be useful to have a similar method for projective points pt because then we
+//       can use it for VPs and perhaps merge the case distinctions during z-order recomputation.
+int
+box3d_pt_lies_in_PL_sector (SPBox3D const *box, NR::Point const &pt, int id1, int id2, Box3D::Axis axis) {
+    Persp3D *persp = box->persp_ref->getObject();
+
+    // the two corners
+    NR::Point c1(box3d_get_corner_screen(box, id1));
+    NR::Point c2(box3d_get_corner_screen(box, id2));
+
+    int ret = 0;
+    if (persp3d_VP_is_finite(persp, Box3D::toProj(axis))) {
+        NR::Point vp(persp3d_get_VP(persp, Box3D::toProj(axis)).affine());
+        NR::Point v1(c1 - vp);
+        NR::Point v2(c2 - vp);
+        NR::Point w(pt - vp);
+        ret = static_cast<int>(Box3D::lies_in_sector(v1, v2, w));
+        //g_print ("Case 0 - returning %d\n", ret);
     } else {
-        switch_axis = (box->front_bits & axis) ? Box3D::X : Box3D::NONE;
-    }
-
-    switch (axis) {
-        case Box3D::X:
-            corner1 = sp_3dbox_get_corner_along_edge (box, 0 ^ switch_axis, axis, Box3D::REAR);
-            corner2 = sp_3dbox_get_corner_along_edge (box, 2 ^ switch_axis, axis, Box3D::REAR);
-            corner3 = sp_3dbox_get_corner_along_edge (box, 4 ^ switch_axis, axis, Box3D::REAR);
-            corner4 = sp_3dbox_get_corner_along_edge (box, 6 ^ switch_axis, axis, Box3D::REAR);
-            break;
-        case Box3D::Y:
-            corner1 = sp_3dbox_get_corner_along_edge (box, 0 ^ switch_axis, axis, Box3D::REAR);
-            corner2 = sp_3dbox_get_corner_along_edge (box, 1 ^ switch_axis, axis, Box3D::REAR);
-            corner3 = sp_3dbox_get_corner_along_edge (box, 4 ^ switch_axis, axis, Box3D::REAR);
-            corner4 = sp_3dbox_get_corner_along_edge (box, 5 ^ switch_axis, axis, Box3D::REAR);
-            break;
-        case Box3D::Z:
-            corner1 = sp_3dbox_get_corner_along_edge (box, 1 ^ switch_axis, axis, Box3D::REAR);
-            corner2 = sp_3dbox_get_corner_along_edge (box, 3 ^ switch_axis, axis, Box3D::REAR);
-            corner3 = sp_3dbox_get_corner_along_edge (box, 0 ^ switch_axis, axis, Box3D::REAR);
-            corner4 = sp_3dbox_get_corner_along_edge (box, 2 ^ switch_axis, axis, Box3D::REAR);
-            break;
-        default:
-            // do nothing
-            break;
-    }            
-}
-
-/**
- * Returns the id of the corner on the edge along 'axis' and passing through 'corner' that
- * lies on the front/rear face in this direction.
- */
-guint
-sp_3dbox_get_corner_id_along_edge (const SP3DBox *box, guint corner, Box3D::Axis axis, Box3D::FrontOrRear rel_pos)
-{
-    guint result;
-    guint other_corner = corner ^ axis;
-    Box3D::VanishingPoint *vp = SP_OBJECT_DOCUMENT (G_OBJECT (box))->get_persp_of_box (box)->get_vanishing_point(axis);
-    if (vp->is_finite()) {
-        result = (  NR::L2 (vp->get_pos() - box->corners[corner])
-                  < NR::L2 (vp->get_pos() - box->corners[other_corner]) ? other_corner : corner);
-    } else {
-        // clear the axis bit and switch to the appropriate corner along axis, depending on the value of front_bits
-        result = ((corner & (0xF ^ axis)) ^ (box->front_bits & axis));
-    }
-
-    if (rel_pos == Box3D::FRONT) {
-        return result;
-    } else {
-        return result ^ axis;
-    }
-}
-
-NR::Point
-sp_3dbox_get_corner_along_edge (const SP3DBox *box, guint corner, Box3D::Axis axis, Box3D::FrontOrRear rel_pos)
-{
-    return box->corners[sp_3dbox_get_corner_id_along_edge (box, corner, axis, rel_pos)];
-}
-
-guint
-sp_3dbox_get_front_corner_id (const SP3DBox *box)
-{
-    guint front_corner = 1; // this could in fact be any corner, but we choose the one that is normally in front
-    front_corner = sp_3dbox_get_corner_id_along_edge (box, front_corner, Box3D::X, Box3D::FRONT);
-    front_corner = sp_3dbox_get_corner_id_along_edge (box, front_corner, Box3D::Y, Box3D::FRONT);
-    front_corner = sp_3dbox_get_corner_id_along_edge (box, front_corner, Box3D::Z, Box3D::FRONT);
-    return front_corner;
-}
-
-// auxiliary functions
-static void
-sp_3dbox_update_corner_with_value_from_svg (SPObject *object, guint corner_id, const gchar *value)
-{
-    if (value == NULL) return;
-    SP3DBox *box = SP_3DBOX(object);
-
-    std::pair<gdouble, gdouble> coord_pair = sp_3dbox_get_coord_pair_from_string (value);
-    box->corners[corner_id] = NR::Point (coord_pair.first, coord_pair.second);
-    sp_3dbox_recompute_corners (box, box->corners[2], box->corners[1], box->corners[5]);
-    object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-}
-
-static void
-sp_3dbox_update_perspective (Box3D::Perspective3D *persp, const gchar *value)
-{
-    // WARNING! This function changes the perspective associated to 'box'. Since there may be
-    // many other boxes linked to the same perspective, their perspective is also changed.
-    // If this behaviour is not desired in all cases, we need a different function.
-    if (value == NULL) return;
-
-    gchar **vps = g_strsplit( value, ",", 0);
-    for (int i = 0; i < 15; ++i) {
-        if (vps[i] == NULL) {
-            g_warning ("Malformed svg attribute 'perspective'\n");
-            return;
+        Box3D::PerspectiveLine pl1(c1, Box3D::toProj(axis), persp);
+        Box3D::PerspectiveLine pl2(c2, Box3D::toProj(axis), persp);
+        if (pl1.lie_on_same_side(pt, c2) && pl2.lie_on_same_side(pt, c1)) {
+            // test whether pt lies "towards" or "away from" the VP
+            Box3D::Line edge(c1,c2);
+            NR::Point c3(box3d_get_corner_screen(box, id1 ^ axis));
+            if (edge.lie_on_same_side(pt, c3)) {
+                ret = 1;
+            } else {
+                ret = -1;
+            }
         }
+        //g_print ("Case 1 - returning %d\n", ret);
     }
+    return ret;
+}
 
-    persp->set_vanishing_point (Box3D::X, g_ascii_strtod (vps[0], NULL), g_ascii_strtod (vps[1], NULL),
-                                          g_ascii_strtod (vps[2], NULL), g_ascii_strtod (vps[3], NULL),
-                                          strcmp (vps[4], "finite") == 0 ? Box3D::VP_FINITE : Box3D::VP_INFINITE);
-    persp->set_vanishing_point (Box3D::Y, g_ascii_strtod (vps[5], NULL), g_ascii_strtod (vps[6], NULL),
-                                          g_ascii_strtod (vps[7], NULL), g_ascii_strtod (vps[8], NULL),
-                                          strcmp (vps[9], "finite") == 0 ? Box3D::VP_FINITE : Box3D::VP_INFINITE);
-    persp->set_vanishing_point (Box3D::Z, g_ascii_strtod (vps[10], NULL), g_ascii_strtod (vps[11], NULL),
-                                          g_ascii_strtod (vps[12], NULL), g_ascii_strtod (vps[13], NULL),
-                                          strcmp (vps[14], "finite") == 0 ? Box3D::VP_FINITE : Box3D::VP_INFINITE);
+int
+box3d_VP_lies_in_PL_sector (SPBox3D const *box, Proj::Axis vpdir, int id1, int id2, Box3D::Axis axis) {
+    Persp3D *persp = box->persp_ref->getObject();
 
-    // update the other boxes linked to the same perspective
-    persp->reshape_boxes (Box3D::XYZ);
+    if (!persp3d_VP_is_finite(persp, vpdir)) {
+        return 0;
+    } else {
+        return box3d_pt_lies_in_PL_sector(box, persp3d_get_VP(persp, vpdir).affine(), id1, id2, axis);
+    }
+}
+
+/* swap the coordinates of corner0 and corner7 along the specified axis */
+static void
+box3d_swap_coords(SPBox3D *box, Proj::Axis axis, bool smaller = true) {
+    box->orig_corner0.normalize();
+    box->orig_corner7.normalize();
+    if ((box->orig_corner0[axis] < box->orig_corner7[axis]) != smaller) {
+        double tmp = box->orig_corner0[axis];
+        box->orig_corner0[axis] = box->orig_corner7[axis];
+        box->orig_corner7[axis] = tmp;
+    }
+    // FIXME: Should we also swap the coordinates of save_corner0 and save_corner7?
+}
+
+/* ensure that the coordinates of corner0 and corner7 are in the correct order (to prevent everted boxes) */
+void
+box3d_relabel_corners(SPBox3D *box) {
+    box3d_swap_coords(box, Proj::X, false);
+    box3d_swap_coords(box, Proj::Y, false);
+    box3d_swap_coords(box, Proj::Z, true);
 }
 
 /*

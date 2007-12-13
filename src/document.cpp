@@ -53,12 +53,14 @@
 #include "libavoid/router.h"
 #include "libnr/nr-rect.h"
 #include "sp-item-group.h"
-#include "perspective3d.h"
 #include "profile-manager.h"
+#include "persp3d.h"
 
 #include "display/nr-arena-item.h"
 
 #include "dialogs/rdf.h"
+
+#include "transf_mat_3x4.h"
 
 #define A4_WIDTH_STR "210mm"
 #define A4_HEIGHT_STR "297mm"
@@ -99,21 +101,6 @@ SPDocument::SPDocument() {
     router->ConsolidateMoves = false;
 
     perspectives = NULL;
-
-    /* Create an initial perspective, make it current and append it to the list of existing perspectives */
-    current_perspective = new Box3D::Perspective3D (
-                              // VP in x-direction
-                              Box3D::VanishingPoint( NR::Point(-50.0, 600.0),
-                                                     NR::Point( -1.0,   0.0), Box3D::VP_FINITE),
-                              // VP in y-direction
-                              Box3D::VanishingPoint( NR::Point(500.0,1000.0),
-                                                     NR::Point(  0.0,   1.0), Box3D::VP_INFINITE),
-                              // VP in z-direction
-                              Box3D::VanishingPoint( NR::Point(700.0, 600.0),
-                                                     NR::Point(sqrt(3.0),1.0), Box3D::VP_FINITE),
-                              this);
-
-    add_perspective (current_perspective);    
 
     p = new SPDocumentPrivate();
 
@@ -213,65 +200,26 @@ SPDocument::~SPDocument() {
 
     //delete this->_whiteboard_session_manager;
 
-    current_perspective = NULL;
-    // TODO: Do we have to delete the perspectives?
-    /***
-    for (GSList *i = perspectives; i != NULL; ++i) {
-        delete ((Box3D::Perspective3D *) i->data);
-    }
-    g_slist_free (perspectives);
-    ***/
 }
 
-void SPDocument::add_perspective (Box3D::Perspective3D * const persp)
+void SPDocument::add_persp3d (Persp3D * const persp)
 {
-    // FIXME: Should we handle the case that the perspectives have equal VPs but are not identical?
-    //        If so, we need to take care of relinking the boxes, etc.
-    if (persp == NULL || g_slist_find (perspectives, persp)) return;
-    perspectives = g_slist_prepend (perspectives, persp);
-}
-
-void SPDocument::remove_perspective (Box3D::Perspective3D * const persp)
-{
-    if (persp == NULL || !g_slist_find (perspectives, persp)) return;
-    perspectives = g_slist_remove (perspectives, persp);
-}
-
-// find an existing perspective whose VPs are equal to those of persp
-Box3D::Perspective3D * SPDocument::find_perspective (const Box3D::Perspective3D * persp)
-{
-    for (GSList *p = perspectives; p != NULL; p = p->next) {
-        if (*((Box3D::Perspective3D *) p->data) == *persp) {
-            return ((Box3D::Perspective3D *) p->data);
+    SPDefs *defs = SP_ROOT(this->root)->defs;
+    for (SPObject *i = sp_object_first_child(SP_OBJECT(defs)); i != NULL; i = SP_OBJECT_NEXT(i) ) {
+        if (SP_IS_PERSP3D(i)) {
+            g_print ("Encountered a Persp3D in defs\n");
         }
     }
-    return NULL; // perspective was not found
+
+    g_print ("Adding Persp3D to defs\n");
+    persp3d_create_xml_element (this);
 }
 
-Box3D::Perspective3D * SPDocument::get_persp_of_box (const SP3DBox *box)
+void SPDocument::remove_persp3d (Persp3D * const persp)
 {
-    for (GSList *p = perspectives; p != NULL; p = p->next) {
-        if (((Box3D::Perspective3D *) p->data)->has_box (box))
-            return (Box3D::Perspective3D *) p->data;
-    }
-    g_warning ("Stray 3D box!\n");
-    g_assert_not_reached();
-}
-
-Box3D::Perspective3D * SPDocument::get_persp_of_VP (const Box3D::VanishingPoint *vp)
-{
-    Box3D::Perspective3D *persp;
-    for (GSList *p = perspectives; p != NULL; p = p->next) {
-        persp = (Box3D::Perspective3D *) p->data;
-        // we compare the pointers, not the position/state of the VPs; is this correct?
-        if (persp->get_vanishing_point (Box3D::X) == vp ||
-            persp->get_vanishing_point (Box3D::Y) == vp ||
-            persp->get_vanishing_point (Box3D::Z) == vp)
-            return persp;
-    }
-
-    g_warning ("Stray vanishing point!\n");
-    g_assert_not_reached();
+    // TODO: Delete the repr, maybe perform a check if any boxes are still linked to the perspective.
+    //       Anything else?
+    g_print ("Please implement deletion of perspectives here.\n");
 }
 
 unsigned long SPDocument::serial() const {
@@ -396,6 +344,59 @@ sp_document_create(Inkscape::XML::Document *rdoc,
     if (keepalive) {
         inkscape_ref();
     }
+
+    /* Create an initial perspective, make it current and append it to the list of existing perspectives */
+    /***
+    document->current_perspective = new Box3D::Perspective3D (
+                              // VP in x-direction
+                              Box3D::VanishingPoint( NR::Point(-50.0, 600.0),
+                                                     NR::Point( -1.0,   0.0), Box3D::VP_FINITE),
+                              // VP in y-direction
+                              Box3D::VanishingPoint( NR::Point(500.0,1000.0),
+                                                     NR::Point(  0.0,   1.0), Box3D::VP_INFINITE),
+                              // VP in z-direction
+                              Box3D::VanishingPoint( NR::Point(700.0, 600.0),
+                                                     NR::Point(sqrt(3.0),1.0), Box3D::VP_FINITE),
+                              document);
+
+    document->add_perspective (document->current_perspective);
+    ***/
+
+    // Remark: Here, we used to create a "currentpersp3d" element in the document defs.
+    // But this is probably a bad idea since we need to adapt it for every change of selection, which will
+    // completely clutter the undo history. Maybe rather save it to prefs on exit and re-read it on startup?
+
+    Proj::Pt2 proj_vp_x = Proj::Pt2 (-50.0, 600.0, 1.0);
+    Proj::Pt2 proj_vp_y = Proj::Pt2 (  0.0,1000.0, 0.0);
+    Proj::Pt2 proj_vp_z = Proj::Pt2 (700.0, 600.0, 1.0);
+    Proj::Pt2 proj_origin = Proj::Pt2 (300.0, 400.0, 1.0);
+
+    document->current_persp3d = (Persp3D *) persp3d_create_xml_element (document);
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(document->current_persp3d);
+
+    gchar *str = NULL;
+    str = proj_vp_x.coord_string();
+    repr->setAttribute("inkscape:vp_x", str);
+    g_free (str);
+    str = proj_vp_y.coord_string();
+    repr->setAttribute("inkscape:vp_y", str);
+    g_free (str);
+    str = proj_vp_z.coord_string();
+    repr->setAttribute("inkscape:vp_z", str);
+    g_free (str);
+    str = proj_origin.coord_string();
+    repr->setAttribute("inkscape:persp3d-origin", str);
+    g_free (str);
+    Inkscape::GC::release(repr);
+
+    /***
+    document->current_persp3d = (Persp3D *) sp_object_get_child_by_repr (SP_OBJECT(defs), repr);
+    g_assert (document->current_persp3d != NULL);
+    persp3d_update_with_point (document->current_persp3d, Proj::X, proj_vp_x);
+    persp3d_update_with_point (document->current_persp3d, Proj::Y, proj_vp_y);
+    persp3d_update_with_point (document->current_persp3d, Proj::Z, proj_vp_z);
+    persp3d_update_with_point (document->current_persp3d, Proj::W, proj_origin);
+    ***/
 
     sp_document_set_undo_sensitive(document, true);
 

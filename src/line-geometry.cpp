@@ -13,11 +13,11 @@
 
 #include "line-geometry.h"
 #include "inkscape.h"
+#include "desktop.h"
 #include "desktop-style.h"
 #include "desktop-handles.h"
 #include "display/sp-canvas.h"
 #include "display/sodipodi-ctrl.h"
-//#include "display/curve.cpp"
 
 namespace Box3D {
 
@@ -178,57 +178,21 @@ side_of_intersection (NR::Point const &A, NR::Point const &B, NR::Point const &C
     }
 }
 
-double cross_ratio (NR::Point const &A, NR::Point const &B, NR::Point const &C, NR::Point const &D)
+NR::Maybe<NR::Point> Line::intersection_with_viewbox (SPDesktop *desktop)
 {
-    Line line (A, D);
-    double lambda_A = line.lambda (A);
-    double lambda_B = line.lambda (B);
-    double lambda_C = line.lambda (C);
-    double lambda_D = line.lambda (D);
+    NR::Rect vb = desktop->get_display_area();
+    /* remaining viewbox corners */
+    NR::Point ul (vb.min()[NR::X], vb.max()[NR::Y]);
+    NR::Point lr (vb.max()[NR::X], vb.min()[NR::Y]);
 
-    if (fabs (lambda_D - lambda_A) < epsilon || fabs (lambda_C - lambda_B) < epsilon) {
-        // We return NR_HUGE so that we can catch this case in the calling functions
-        return NR_HUGE;
+    std::pair <NR::Point, NR::Point> e = side_of_intersection (vb.min(), lr, vb.max(), ul, this->pt, this->v_dir);
+    if (e.first == e.second) {
+        // perspective line lies outside the canvas
+        return NR::Nothing();
     }
-    return (((lambda_C - lambda_A) / (lambda_D - lambda_A)) * ((lambda_D - lambda_B) / (lambda_C - lambda_B)));
-}
 
-double cross_ratio (VanishingPoint const &V, NR::Point const &B, NR::Point const &C, NR::Point const &D)
-{
-    if (V.is_finite()) {
-        return cross_ratio (V.get_pos(), B, C, D);
-    } else {
-        if (B == D) {
-            // catch this case so that the line BD below is non-degenerate
-            return 0;
-        }
-        Line line (B, D);
-        double lambda_B = line.lambda (B);
-        double lambda_C = line.lambda (C);
-        double lambda_D = line.lambda (D);
-
-        if (fabs (lambda_C - lambda_B) < epsilon) {
-            // We return NR_HUGE so that we can catch this case in the calling functions
-            return NR_HUGE;
-        }
-        return (lambda_D - lambda_B) / (lambda_C - lambda_B);
-    }
-}
-
-NR::Point fourth_pt_with_given_cross_ratio (NR::Point const &A, NR::Point const &C, NR::Point const &D, double gamma)
-{
-    Line line (A, D);
-    double lambda_A = line.lambda (A);
-    double lambda_C = line.lambda (C);
-    double lambda_D = line.lambda (D);
-
-    double beta = (lambda_C - lambda_A) / (lambda_D - lambda_A);
-    if (fabs (beta - gamma) < epsilon) {
-        // FIXME: How to handle the case when the point can't be computed?
-        // g_warning ("Cannot compute point with given cross ratio.\n");
-        return NR::Point (0.0, 0.0);
-    }
-    return line.point_from_lambda ((beta * lambda_D - gamma * lambda_C) / (beta - gamma));
+    Line line (e.first, e.second);
+    return this->intersect (line);
 }
 
 void create_canvas_point(NR::Point const &pos, double size, guint32 rgba)
