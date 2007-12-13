@@ -125,11 +125,7 @@ vp_knot_moved_handler (SPKnot *knot, NR::Point const *ppointer, guint state, gpo
                         /* if a box in the VP is unselected, move it to the
                            newly created perspective so that it doesn't get dragged **/
                         //g_print ("   switching box #%d to new perspective.\n", (*i)->my_counter);
-                        persp3d_remove_box (old_persp, *i);
-                        persp3d_add_box (new_persp, *i);
-                        gchar *href = g_strdup_printf("#%s", SP_OBJECT_REPR(new_persp)->attribute("id"));
-                        SP_OBJECT_REPR(*i)->setAttribute("inkscape:perspectiveID", href);
-                        g_free(href);
+                        box3d_switch_perspectives(*i, old_persp, new_persp);
                     }
                 }
             }

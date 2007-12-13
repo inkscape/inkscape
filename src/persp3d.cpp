@@ -129,6 +129,8 @@ static void persp3d_build(SPObject *object, SPDocument *document, Inkscape::XML:
 static void persp3d_release(SPObject *object) {
     //Persp3D *persp = (Persp3D *) object;
 
+    SP_OBJECT_REPR(object)->removeListenerByData(object);
+
     // FIXME: What precisely does this do and is it necessary for perspectives?
     /**
     if (SP_OBJECT_DOCUMENT(object)) {
@@ -356,6 +358,7 @@ void
 persp3d_apply_affine_transformation (Persp3D *persp, NR::Matrix const &xform) {
     persp->tmat *= xform;
     persp3d_update_box_reprs(persp);
+    SP_OBJECT(persp)->updateRepr(SP_OBJECT_WRITE_EXT);
 }
 
 gchar *
@@ -489,8 +492,8 @@ persp3d_on_repr_attr_changed ( Inkscape::XML::Node * repr,
 
 /* returns a std::set() of all perspectives of the currently selected boxes */
 std::set<Persp3D *>
-persp3d_currently_selected (Box3DContext *bc) {
-    Inkscape::Selection *selection = sp_desktop_selection (bc->desktop);
+persp3d_currently_selected_persps (SPEventContext *ec) {
+    Inkscape::Selection *selection = sp_desktop_selection (ec->desktop);
 
     std::set<Persp3D *> p;
     for (GSList *i = (GSList *) selection->itemList(); i != NULL; i = i->next) {
@@ -499,6 +502,33 @@ persp3d_currently_selected (Box3DContext *bc) {
         }
     }
     return p;
+}
+
+/* checks whether all boxes linked to this perspective are currently selected */
+bool
+persp3d_has_all_boxes_in_selection (Persp3D *persp) {
+    const GSList *selection = sp_desktop_selection (inkscape_active_desktop())->itemList();
+
+    for (std::vector<SPBox3D *>::iterator i = persp->boxes.begin(); i != persp->boxes.end(); ++i) {
+        if (g_slist_find((GSList *) selection, *i) == NULL) {
+            // we have an unselected box in the perspective
+            return false;
+        }
+    }
+    return true;
+}
+
+std::list<SPBox3D *>
+persp3d_selected_boxes (Persp3D *persp) {
+    const GSList *selection = sp_desktop_selection (inkscape_active_desktop())->itemList();
+    std::list<SPBox3D *> sel;
+
+    for (std::vector<SPBox3D *>::iterator i = persp->boxes.begin(); i != persp->boxes.end(); ++i) {
+        if (g_slist_find((GSList *) selection, *i) != NULL) {
+            sel.push_back(SP_BOX3D(*i));
+        }
+    }
+    return sel;
 }
 
 void

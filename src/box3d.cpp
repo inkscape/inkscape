@@ -345,11 +345,29 @@ box3d_position_set (SPBox3D *box)
 static NR::Matrix
 box3d_set_transform(SPItem *item, NR::Matrix const &xform)
 {
-    SPBox3D *box = SP_BOX3D(item);
+    /* check whether we need to unlink any boxes from their perspectives */
+    std::set<Persp3D *> p_sel = persp3d_currently_selected_persps(inkscape_active_event_context());
+    Persp3D *persp;
+    Persp3D *transf_persp;
+    for (std::set<Persp3D *>::iterator p = p_sel.begin(); p != p_sel.end(); ++p) {
+        persp = (*p);
+        if (!persp3d_has_all_boxes_in_selection (persp)) {
+            std::list<SPBox3D *> sel = persp3d_selected_boxes (persp);
 
-    Persp3D *persp = box->persp_ref->getObject();
+            /* create a new perspective as a copy of the current one and link the selected boxes to it */
+            transf_persp = persp3d_create_xml_element (SP_OBJECT_DOCUMENT(persp), persp);
 
-    persp3d_apply_affine_transformation(persp, xform); // also triggers repr updates
+            for (std::list<SPBox3D *>::iterator b = sel.begin(); b != sel.end(); ++b) {
+                box3d_switch_perspectives(*b, persp, transf_persp);
+            }
+        } else {
+            transf_persp = persp;
+        }
+
+        /* concatenate the affine transformation with the perspective mapping; this
+           function also triggers repr updates of boxes and the perspective itself */
+        persp3d_apply_affine_transformation(transf_persp, xform);
+    }
 
     /***
     // FIXME: We somehow have to apply the transformation to strokes, patterns, and gradients. How?
@@ -1323,6 +1341,16 @@ box3d_relabel_corners(SPBox3D *box) {
     box3d_swap_coords(box, Proj::Y, false);
     box3d_swap_coords(box, Proj::Z, true);
 }
+
+void
+box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp) {
+    persp3d_remove_box (old_persp, box);
+    persp3d_add_box (new_persp, box);
+    gchar *href = g_strdup_printf("#%s", SP_OBJECT_REPR(new_persp)->attribute("id"));
+    SP_OBJECT_REPR(box)->setAttribute("inkscape:perspectiveID", href);
+    g_free(href);
+}
+
 
 /*
   Local Variables:
