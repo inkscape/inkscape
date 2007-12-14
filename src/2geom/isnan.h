@@ -42,6 +42,8 @@
 
 
 #if defined(__isfinite)
+# define is_finite(_a) (__isfinite(_a))
+#elif defined(__APPLE__) && __GNUC__ == 3
 # define is_finite(_a) (__isfinite(_a))	/* MacOSX/Darwin definition < 10.4 */
 #elif defined(isfinite)
 # define is_finite(_a) (isfinite(_a))
