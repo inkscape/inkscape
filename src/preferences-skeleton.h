@@ -245,6 +245,29 @@ static char const preferences_skeleton[] =
 "           masks=\"65535\"/>\n" // 0x0000ffff
 "    <group id=\"svgoutput\" usenamedcolors=\"0\" numericprecision=\"8\" minimumexponent=\"-8\" inlineattrs=\"0\" indent=\"2\"/>\n"
 "    <group id=\"forkgradientvectors\" value=\"1\"/>\n"
+"    <group id=\"grids\">"
+"      <group id=\"xy\" "
+"             units=\"px\"\n"
+"             origin_x=\"0.0\"\n"
+"             origin_y=\"0.0\"\n"
+"             spacing_x=\"1.0\"\n"
+"             spacing_y=\"1.0\"\n"
+"             color=\"65312\"\n"  // 0x0000FF20
+"             empcolor=\"65344\"\n" // 0x0000FF40
+"             empspacing=\"5\"\n"
+"             dotted=\"0\"/>\n"
+"      <group id=\"axonom\" "
+"             units=\"mm\"\n"
+"             origin_x=\"0.0\"\n"
+"             origin_y=\"0.0\"\n"
+"             spacing_y=\"1.0\"\n"
+"             angle_x=\"30.0\"\n"
+"             angle_z=\"30.0\"\n"
+"             color=\"65312\"\n"  // 0x0000FF20
+"             empcolor=\"65344\"\n" // 0x0000FF40
+"             empspacing=\"5\"\n"
+"             dotted=\"0\"/>\n"
+"    </group>\n"
 "  </group>\n"
 "\n"
 "  <group id=\"extensions\">"

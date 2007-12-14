@@ -29,14 +29,12 @@
 #include "desktop.h"
 
 #include "../document.h"
+#include "prefs-utils.h"
 
 #include "canvas-grid.h"
 #include "canvas-axonomgrid.h"
 
 namespace Inkscape {
-
-#define DEFAULTGRIDCOLOR    0x0000FF20
-#define DEFAULTGRIDEMPCOLOR 0x0000FF40
 
 static gchar const *const grid_name[] = {
     N_("Rectangular grid"),
@@ -393,13 +391,15 @@ attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int
 CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc)
     : CanvasGrid(nv, in_repr, in_doc, GRID_RECTANGULAR), table(1, 1)
 {
-    origin[NR::X] = origin[NR::Y] = 0.0;
-    color = DEFAULTGRIDCOLOR;
-    empcolor = DEFAULTGRIDEMPCOLOR;
-    empspacing = 5;
-    spacing[NR::X] = spacing[NR::Y] = 1.0;
+    origin[NR::X] = prefs_get_double_attribute ("options.grids.xy", "origin_x", 0.0);
+    origin[NR::Y] = prefs_get_double_attribute ("options.grids.xy", "origin_y", 0.0);
+    color = prefs_get_int_attribute("options.grids.xy", "color", 0x0000ff20);
+    empcolor = prefs_get_int_attribute("options.grids.xy", "empcolor", 0x0000ff40);
+    empspacing = prefs_get_int_attribute("options.grids.xy", "empspacing", 5);
+    spacing[NR::X] = prefs_get_double_attribute ("options.grids.xy", "spacing_x", 0.0);
+    spacing[NR::Y] = prefs_get_double_attribute ("options.grids.xy", "spacing_y", 0.0);
     gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
-    render_dotted = false;
+    render_dotted = prefs_get_int_attribute ("options.grids.xy", "dotted", 0) == 1;
 
     snapper = new CanvasXYGridSnapper(this, namedview, 0);
 

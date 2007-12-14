@@ -27,6 +27,8 @@
 #include <sigc++/sigc++.h>
 //#include <glibmm/i18n.h>
 
+#include "ui/widget/color-picker.h"
+
 namespace Inkscape {
 namespace UI {
 namespace Widget {
@@ -127,6 +129,22 @@ protected:
     std::string _attr;
     void onFileChanged();
 };
+
+class PrefColorPicker : public ColorPicker
+{
+public:
+    PrefColorPicker() : ColorPicker("", "", 0, false) {};
+    virtual ~PrefColorPicker() {};
+
+    void init(const Glib::ustring& label, const std::string& prefs_path, const std::string& attr,
+              guint32 default_rgba);
+
+protected:
+    std::string _prefs_path;
+    std::string _attr;
+    virtual void on_changed (guint32 rgba);
+};
+
 
 class DialogPage : public Gtk::Table
 {

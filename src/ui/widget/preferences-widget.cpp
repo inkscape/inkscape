@@ -339,6 +339,23 @@ void PrefEntry::on_changed()
     }
 }
 
+void PrefColorPicker::init(const Glib::ustring& label, const std::string& prefs_path, const std::string& attr,
+                           guint32 default_rgba)
+{
+    _prefs_path = prefs_path;
+    _attr = attr;
+    _title = label;
+    this->setRgba32( prefs_get_int_attribute (_prefs_path.c_str(), _attr.c_str(), (int)default_rgba) );
+}
+
+void PrefColorPicker::on_changed (guint32 rgba)
+{
+    if (this->is_visible()) //only take action if the user toggled it
+    {
+        prefs_set_int_attribute (_prefs_path.c_str(), _attr.c_str(), (int) rgba);
+    }
+}
+
 } // namespace Widget
 } // namespace UI
 } // namespace Inkscape

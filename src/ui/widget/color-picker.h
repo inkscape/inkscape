@@ -58,7 +58,7 @@ protected:
     ColorPreview        _preview;
     Gtk::Tooltips       _tt;
 
-    const Glib::ustring _title;
+    /*const*/ Glib::ustring _title;
     sigc::signal<void,guint32> _changed_signal;
     guint32             _rgba;
     bool                _undo;

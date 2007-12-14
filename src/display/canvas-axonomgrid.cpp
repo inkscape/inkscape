@@ -38,11 +38,9 @@
 #include "desktop.h"
 
 #include "document.h"
+#include "prefs-utils.h"
 
 #define SAFE_SETPIXEL   //undefine this when it is certain that setpixel is never called with invalid params
-
-#define DEFAULTGRIDCOLOR    0x0000FF20
-#define DEFAULTGRIDEMPCOLOR 0x0000FF50
 
 enum Dim3 { X=0, Y, Z };
 
@@ -197,14 +195,16 @@ attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int
 CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc)
     : CanvasGrid(nv, in_repr, in_doc, GRID_AXONOMETRIC), table(1, 1)
 {
-    origin[NR::X] = origin[NR::Y] = 0.0;
-    color = DEFAULTGRIDCOLOR;
-    empcolor = DEFAULTGRIDEMPCOLOR;
-    empspacing = 5;
+    origin[NR::X] = prefs_get_double_attribute ("options.grids.axonom", "origin_x", 0.0);
+    origin[NR::Y] = prefs_get_double_attribute ("options.grids.axonom", "origin_y", 0.0);
+    color = prefs_get_int_attribute("options.grids.axonom", "color", 0x0000ff20);
+    empcolor = prefs_get_int_attribute("options.grids.axonom", "empcolor", 0x0000ff40);
+    empspacing = prefs_get_int_attribute("options.grids.axonom", "empspacing", 5);
     gridunit = &sp_unit_get_by_id(SP_UNIT_MM);
-    angle_deg[X] = angle_deg[Z] = 30;
+    lengthy = prefs_get_double_attribute ("options.grids.axonom", "spacing_y", 1.0);
+    angle_deg[X] = prefs_get_double_attribute ("options.grids.axonom", "angle_x", 30.0);
+    angle_deg[Z] = prefs_get_double_attribute ("options.grids.axonom", "angle_z", 30.0);
     angle_deg[Y] =0;
-    lengthy = sp_units_get_pixels(1.0, *(gridunit));
 
     angle_rad[X] = deg_to_rad(angle_deg[X]);
     tan_angle[X] = tan(angle_rad[X]);

@@ -38,6 +38,7 @@
 #include "ui/widget/style-swatch.h"
 #include "display/nr-filter-gaussian.h"
 #include "color-profile-fns.h"
+#include "display/canvas-grid.h"
 
 namespace Inkscape {
 namespace UI {
@@ -104,6 +105,7 @@ InkscapePreferences::InkscapePreferences()
     initPageSelecting();
     initPageImportExport();
     initPageCMS();
+    initPageGrids();
     initPageMisc();
 
     signalPresent().connect(sigc::mem_fun(*this, &InkscapePreferences::_presentPages));
@@ -785,6 +787,54 @@ void InkscapePreferences::initPageCMS()
 #endif // ENABLE_LCMS
 
     this->AddPage(_page_cms, _("Color Management"), PREFS_PAGE_CMS);
+}
+
+void InkscapePreferences::initPageGrids()
+{
+    _page_grids.add_group_header( _("Default grid settings"));
+
+    _page_grids.add_line( false, "", _grids_notebook, "", "", false);
+    _grids_notebook.append_page(_grids_xy,     CanvasGrid::getName( GRID_RECTANGULAR ));
+    _grids_notebook.append_page(_grids_axonom, CanvasGrid::getName( GRID_AXONOMETRIC ));
+        //_grids_xy.add_line( false, _("Grid units"), _grids_xy_units, "", "", false);
+        _grids_xy_origin_x.init("options.grids.xy", "origin_x", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
+        _grids_xy_origin_y.init("options.grids.xy", "origin_y", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
+        _grids_xy.add_line( false, _("Origin X"), _grids_xy_origin_x, "", _("X coordinate of grid origin"), false);
+        _grids_xy.add_line( false, _("Origin Y"), _grids_xy_origin_y, "", _("Y coordinate of grid origin"), false);
+        _grids_xy_spacing_x.init("options.grids.xy", "spacing_x", -10000.0, 10000.0, 0.1, 1.0, 1.0, false, false);
+        _grids_xy_spacing_y.init("options.grids.xy", "spacing_y", -10000.0, 10000.0, 0.1, 1.0, 1.0, false, false);
+        _grids_xy.add_line( false, _("Spacing X"), _grids_xy_spacing_x, "", _("Distance between vertical grid lines"), false);
+        _grids_xy.add_line( false, _("Spacing Y"), _grids_xy_spacing_y, "", _("Distance between horizontal grid lines"), false);
+        
+        _grids_xy_color.init(_("Grid line color"), "options.grids.xy", "color", 0x0000ff20);
+        _grids_xy.add_line( false, _("Grid line color"), _grids_xy_color, "", _("Selects the color used for normal grid lines."), false);
+        _grids_xy_empcolor.init(_("Major grid line color"), "options.grids.xy", "empcolor", 0x0000ff40);
+        _grids_xy.add_line( false, _("Major grid line color"), _grids_xy_empcolor, "", _("Selects the color used for major (highlighted) grid lines."), false);
+        _grids_xy_empspacing.init("options.grids.xy", "empspacing", 1.0, 1000.0, 1.0, 5.0, 5.0, true, false);
+        _grids_xy.add_line( false, _("Major grid line every"), _grids_xy_empspacing, "", "", false);
+        _grids_xy_dotted.init( _("Show dots instead of lines"), "options.grids.xy", "dotted", false);
+        _grids_xy.add_line( false, "", _grids_xy_dotted, "", _("If set, displays dots at gridpoints instead of gridlines"), false);
+
+    // CanvasAxonomGrid properties:
+        //_grids_axonom.add_line( false, _("Grid units"), _grids_axonom_units, "", "", false);
+        _grids_axonom_origin_x.init("options.grids.axonom", "origin_x", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
+        _grids_axonom_origin_y.init("options.grids.axonom", "origin_y", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
+        _grids_axonom.add_line( false, _("Origin X"), _grids_axonom_origin_x, "", _("X coordinate of grid origin"), false);
+        _grids_axonom.add_line( false, _("Origin Y"), _grids_axonom_origin_y, "", _("Y coordinate of grid origin"), false);
+        _grids_axonom_spacing_y.init("options.grids.axonom", "spacing_y", -10000.0, 10000.0, 0.1, 1.0, 1.0, false, false);
+        _grids_axonom.add_line( false, _("Spacing Y"), _grids_axonom_spacing_y, "", _("Base length of z-axis"), false);
+        _grids_axonom_angle_x.init("options.grids.axonom", "angle_x", -360.0, 360.0, 1.0, 10.0, 30.0, false, false);
+        _grids_axonom_angle_z.init("options.grids.axonom", "angle_z", -360.0, 360.0, 1.0, 10.0, 30.0, false, false);
+        _grids_axonom.add_line( false, _("Angle X"), _grids_axonom_angle_x, "", _("Angle of x-axis"), false);
+        _grids_axonom.add_line( false, _("Angle Z"), _grids_axonom_angle_z, "", _("Angle of z-axis"), false);
+        _grids_axonom_color.init(_("Grid line color"), "options.grids.axonom", "color", 0x0000ff20);
+        _grids_axonom.add_line( false, _("Grid line color"), _grids_axonom_color, "", _("Selects the color used for normal grid lines."), false);
+        _grids_axonom_empcolor.init(_("Major grid line color"), "options.grids.axonom", "empcolor", 0x0000ff40);
+        _grids_axonom.add_line( false, _("Major grid line color"), _grids_axonom_empcolor, "", _("Selects the color used for major (highlighted) grid lines."), false);
+        _grids_axonom_empspacing.init("options.grids.axonom", "empspacing", 1.0, 1000.0, 1.0, 5.0, 5.0, true, false);
+        _grids_axonom.add_line( false, _("Major grid line every"), _grids_axonom_empspacing, "", "", false);
+
+    this->AddPage(_page_grids, _("Grids"), PREFS_PAGE_GRIDS);
 }
 
 void InkscapePreferences::initPageMisc()
