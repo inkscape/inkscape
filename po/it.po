@@ -4,8 +4,7 @@
 # Brisa Francesco <fbrisa@yahoo.it>, 2000.
 # Alessio Frusciante <algol@firenze.linux.it>, 2002, 2003.
 # Luca Ferretti <elle.uca@infinito.it>, 2005.
-# Luca Bruno <luca.br@uno.it>, 2005-2007.
-# Luca Bruno <luca.br@uno.it>, 2007.
+# Luca Bruno <lucab@debian.org>, 2005-2007.
 # 
 # 
 msgid ""
@@ -14,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-11-15 18:06-0300\n"
 "PO-Revision-Date: 2007-11-11 22:55+0100\n"
-"Last-Translator: Luca Bruno <luca.br@uno.it>\n"
+"Last-Translator: Luca Bruno <lucab@debian.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1036,7 +1035,7 @@ msgstr "Modifica regola di riempimento"
 
 #: ../src/dialogs/fill-style.cpp:323 ../src/dialogs/fill-style.cpp:397
 msgid "Set fill color"
-msgstr "Imposta colore di riempimentoo"
+msgstr "Imposta colore di riempimento"
 
 #: ../src/dialogs/fill-style.cpp:385 ../src/ui/widget/selected-style.cpp:248
 #: ../src/ui/widget/selected-style.cpp:471
@@ -1256,7 +1255,7 @@ msgstr "Includi bloccati"
 
 #: ../src/dialogs/find.cpp:740 ../src/ui/dialog/find.cpp:68
 msgid "Include locked objects in search"
-msgstr "Inlcude nella selezione gli oggetti bloccati"
+msgstr "Include nella selezione gli oggetti bloccati"
 
 #: ../src/dialogs/find.cpp:751 ../src/ui/dialog/find.cpp:83
 msgid "Clear values"
@@ -2185,7 +2184,7 @@ msgstr "_Origine X:"
 
 #: ../src/display/canvas-grid.cpp:363
 msgid "X coordinate of grid origin"
-msgstr "Cordinata X dell'origine della griglia"
+msgstr "Coordinata X dell'origine della griglia"
 
 #: ../src/display/canvas-grid.cpp:365
 msgid "O_rigin Y:"
@@ -2193,7 +2192,7 @@ msgstr "_Origine Y:"
 
 #: ../src/display/canvas-grid.cpp:365
 msgid "Y coordinate of grid origin"
-msgstr "Cordinate Y dell'origine della griglia"
+msgstr "Coordinate Y dell'origine della griglia"
 
 #: ../src/display/canvas-grid.cpp:367
 msgid "Spacing _X:"
@@ -2313,7 +2312,7 @@ msgid ""
 msgstr ""
 "<b>Cliccare</b> per impostare il colore di riempimento, <b>Maiusc+click</b> "
 "per impostare il colore del contorno; <b>trascinare</b> per prelevare il "
-"colore medio di un area; con <b>Alt</b> per prelevare il colore inverso; "
+"colore medio di un'area; con <b>Alt</b> per prelevare il colore inverso; "
 "<b>Ctrl+C</b> per copiare negli appunti il colore sotto al mouse"
 
 #: ../src/dropper-context.cpp:390
@@ -2442,7 +2441,7 @@ msgstr "la descrizione XML è andata perduta."
 
 #: ../src/extension/extension.cpp:264
 msgid "no implementation was defined for the extension."
-msgstr "non è stata definita nessuna implementazione per l'estansione."
+msgstr "non è stata definita nessuna implementazione per l'estensione."
 
 #. std::cout << "Failed: " << *(_deps[i]) << std::endl;
 #: ../src/extension/extension.cpp:271
@@ -2455,7 +2454,7 @@ msgstr "Estensione \""
 
 #: ../src/extension/extension.cpp:291
 msgid "\" failed to load because "
-msgstr "\" perchè "
+msgstr "\" non caricata perchè "
 
 #: ../src/extension/extension.cpp:622
 #, c-format
@@ -3261,7 +3260,7 @@ msgid ""
 "will be rendered exactly as displayed."
 msgstr ""
 "Stampa tutto come bitmap. L'immagine risultante solitamente è di dimensioni "
-"maggiori e non può essere ridimensionata senza una perdità di qualità, ma "
+"maggiori e non può essere ridimensionata senza una perdita di qualità, ma "
 "tutti gli oggetti verranno disegnati esattamente come vengono mostrati."
 
 #: ../src/extension/internal/pdf-cairo.cpp:168
@@ -3447,7 +3446,7 @@ msgstr "Formato nativo di Inkscape e standard W3C"
 
 #: ../src/extension/internal/svg.cpp:69
 msgid "SVG Output Inkscape"
-msgstr "Ouput Inkscape SVG"
+msgstr "Output Inkscape SVG"
 
 #: ../src/extension/internal/svg.cpp:74
 msgid "Inkscape SVG (*.svg)"
@@ -3467,7 +3466,7 @@ msgstr "SVG puro (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:89
 msgid "Scalable Vector Graphics format as defined by the W3C"
-msgstr "Fomrato Scalable Vector Graphics come definito dal W3C"
+msgstr "Formato Scalable Vector Graphics come definito dal W3C"
 
 #: ../src/extension/internal/svgz.cpp:47
 #: ../share/extensions/svgz_input.inx.h:3
@@ -4518,7 +4517,7 @@ msgstr "Muovi maniglia"
 
 #: ../src/libnrtype/FontFactory.cpp:358
 msgid "Ignoring font without family that will crash Pango"
-msgstr "I font senza famiglia che fanno andare in Crash Pango vengono ingorati"
+msgstr "I font senza famiglia che fanno andare in crash Pango vengono ignorati"
 
 #. {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
 #: ../src/live_effects/effect.cpp:46
@@ -4593,7 +4592,7 @@ msgstr "Tracciato contorno"
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 #, fuzzy
 msgid "The path that will be used as stitch."
-msgstr "Numero di tracciatti che verranno generati."
+msgstr "Numero di tracciati che verranno generati."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid "Nr of paths"
@@ -4601,7 +4600,7 @@ msgstr "Numero di tracciati"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid "The number of paths that will be generated."
-msgstr "Numero di tracciatti che verranno generati."
+msgstr "Numero di tracciati che verranno generati."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 #, fuzzy
@@ -4894,7 +4893,7 @@ msgstr "Esporta il documento come file PDF"
 
 #: ../src/main.cpp:324
 msgid "Export document to an Enhanced Metafile (EMF) File"
-msgstr "Esporta il documento come file Enhanced·Metafile·(EMF)"
+msgstr "Esporta il documento come file Enhanced Metafile (EMF)"
 
 #: ../src/main.cpp:330
 msgid "Convert text object to paths on export (EPS)"
@@ -4915,7 +4914,7 @@ msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr ""
-"Richiede la cordinata X del disegno o dell'oggetto se specificato con --"
+"Richiede la coordinata X del disegno o dell'oggetto se specificato con --"
 "query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
@@ -4924,7 +4923,7 @@ msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr ""
-"Richiede la cordinata Y del disegno o dell'oggetto se specificato con --"
+"Richiede la coordinata Y del disegno o dell'oggetto se specificato con --"
 "query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
@@ -6660,7 +6659,7 @@ msgstr "Intrudi tracciaton"
 
 #: ../src/splivarot.cpp:1409
 msgid "<b>No paths</b> to inset/outset in the selection."
-msgstr "<b>Nessun tracciato</b>da intrudere/estrudere nella selezione."
+msgstr "<b>Nessun tracciato</b> da intrudere/estrudere nella selezione."
 
 #: ../src/splivarot.cpp:1570
 msgid "Simplifying paths (separately):"
@@ -6823,7 +6822,7 @@ msgstr "Crea testo"
 
 #: ../src/text-context.cpp:532
 msgid "Non-printable character"
-msgstr "Carattare non stampabile"
+msgstr "Carattere non stampabile"
 
 #: ../src/text-context.cpp:547
 msgid "Insert Unicode character"
@@ -7291,7 +7290,7 @@ msgstr "about.svg"
 #: ../src/ui/dialog/aboutbox.cpp:336
 msgid "translator-credits"
 msgstr ""
-"Luca Bruno (luca.br@uno.it)\n"
+"Luca Bruno (lucab@debian.org)\n"
 "Luca Ferretti (elle.uca@infinito.it)\n"
 "Francesco Ricci (tardo2002@libero.it)"
 
@@ -7393,7 +7392,7 @@ msgstr "Allinea i lati superiori"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:816
 msgid "Center on horizontal axis"
-msgstr "Centra sull'asse orizzonatle"
+msgstr "Centra sull'asse orizzontale"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:819
 msgid "Align bottoms"
@@ -7467,7 +7466,7 @@ msgid ""
 "Move objects as little as possible so that their bounding boxes do not "
 "overlap"
 msgstr ""
-"Sposta gli oggetti il minimo indispensabile affinchè i loro riquadri non si "
+"Sposta gli oggetti il minimo indispensabile affinché i loro riquadri non si "
 "sovrappongano"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:884
@@ -8474,7 +8473,7 @@ msgstr "Selettore"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:333
 msgid "When transforming, show:"
-msgstr "Durante la strasformazione, mostra:"
+msgstr "Durante la trasformazione, mostra:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:334
 msgid "Objects"
@@ -8517,7 +8516,7 @@ msgstr "Riquadro"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:349
 msgid "Each selected object displays its bounding box"
-msgstr "Ongi oggetto selezionato mostra il proprio riquadro"
+msgstr "Ogni oggetto selezionato mostra il proprio riquadro"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:351
 msgid "Bounding box to use:"
@@ -8897,7 +8896,7 @@ msgid ""
 "If possible, apply transformation to objects without adding a transform= "
 "attribute"
 msgstr ""
-"Se possibile, applica le traformazioni all'oggetto senza aggiungere un "
+"Se possibile, applica le trasformazioni all'oggetto senza aggiungere un "
 "attributo transfom="
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:549
@@ -8937,8 +8936,8 @@ msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
 msgstr ""
-"Qualità ottima, ma la visualizzaione può essere molto lenta ad alti "
-"ingrandimenti (l'esportazione bitmpa usa sempre l'ottima qualità)"
+"Qualità ottima, ma la visualizzazione può essere molto lenta ad alti "
+"ingrandimenti (l'esportazione bitmap usa sempre l'ottima qualità)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:571
 msgid "Better quality, but slower display"
@@ -9217,8 +9216,8 @@ msgid ""
 "may affect other objects using the same gradient"
 msgstr ""
 "Quando impostato, le definizioni di gradiente vengono automaticamente "
-"duplicatequando modificate; deselezionare per abilitare la condivisione "
-"delle definizioni di gradiente,affinché la modifica do un oggetto condizioni "
+"duplicate quando modificate; deselezionare per abilitare la condivisione "
+"delle definizioni di gradiente, affinché la modifica di un oggetto condizioni "
 "gli altri oggetti che usano lo stesso gradiente."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:808
@@ -13639,7 +13638,7 @@ msgid ""
 "Pick both the color and the alpha (transparency) under cursor; otherwise, "
 "pick only the visible color premultiplied by alpha"
 msgstr ""
-"Preleva sia il colore che l'alpha (trasparenza) sotto il cursoe; altrimenti "
+"Preleva sia il colore che l'alpha (trasparenza) sotto il cursore; altrimenti "
 "preleva solo il colore visibile premoltiplicato per il valore alpha"
 
 #: ../src/widgets/toolbox.cpp:3633
@@ -14682,7 +14681,7 @@ msgstr "mAIuScoLe CaSUAli"
 
 #: ../share/extensions/text_replace.inx.h:1
 msgid "Replace text..."
-msgstr "Sotituisci testo..."
+msgstr "Sostituisci testo..."
 
 #: ../share/extensions/text_titlecase.inx.h:2
 msgid "Title Case"
