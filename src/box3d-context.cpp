@@ -612,7 +612,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
     return ret;
 }
 
-static void sp_box3d_drag(Box3DContext &bc, guint state)
+static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&bc)->desktop;
 

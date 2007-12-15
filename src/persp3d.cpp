@@ -471,12 +471,12 @@ persp3d_absorb(Persp3D *persp1, Persp3D *persp2) {
     persp1->boxes.insert(persp1->boxes.begin(), persp2->boxes.begin(), persp2->boxes.end());
 }
 
-static void 
-persp3d_on_repr_attr_changed ( Inkscape::XML::Node * repr, 
-                               const gchar *key, 
-                               const gchar *oldval, 
-                               const gchar *newval, 
-                               bool is_interactive, 
+static void
+persp3d_on_repr_attr_changed ( Inkscape::XML::Node * /*repr*/,
+                               const gchar */*key*/,
+                               const gchar */*oldval*/,
+                               const gchar */*newval*/,
+                               bool /*is_interactive*/,
                                void * data )
 {
     //g_print("persp3d_on_repr_attr_changed!!!! TODO: Do we need to trigger any further updates than the box reprs?");

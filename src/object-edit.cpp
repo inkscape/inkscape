@@ -537,7 +537,7 @@ static NR::Point box3d_knot_get(SPItem *item, guint knot_id)
     return box3d_get_corner_screen(box, knot_id) * i2d;
 }
 
-static void box3d_knot_set(SPItem *item, guint knot_id, NR::Point const &new_pos, NR::Point const &origin, guint state)
+static void box3d_knot_set(SPItem *item, guint knot_id, NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
 {
     g_assert(item != NULL);
     SPBox3D *box = SP_BOX3D(item);
@@ -653,7 +653,7 @@ static NR::Point box3d_knot7_get(SPItem *item)
     return box3d_knot_get(item, 7);
 }
 
-static void box3d_knot_click(SPItem *item, guint state, guint id)
+static void box3d_knot_click(SPItem */*item*/, guint /*state*/, guint id)
 {
     g_print ("Corner %d was clicked\n", id);
 }

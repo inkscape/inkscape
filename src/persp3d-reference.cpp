@@ -149,7 +149,7 @@ persp3dreference_delete_self(SPObject */*deleted*/, Persp3DReference *persp3dref
 }
 
 static void
-persp3dreference_source_modified(SPObject *iSource, guint flags, Persp3DReference *persp3dref)
+persp3dreference_source_modified(SPObject */*iSource*/, guint /*flags*/, Persp3DReference *persp3dref)
 {
     /**
     g_print ("persp3dreference_source_modified; FIXME: Can we leave this to the parent URIReference?\n");

@@ -42,7 +42,7 @@ static void box3d_side_update (SPObject *object, SPCtx *ctx, guint flags);
 static void box3d_side_apply_style (Box3DSide *side);
 static Proj::Pt3 box3d_side_corner (Box3DSide *side, guint index);
 static std::vector<Proj::Pt3> box3d_side_corners (Box3DSide *side);
-static gint box3d_side_descr_to_id (gchar const *descr);
+// static gint box3d_side_descr_to_id (gchar const *descr);
 
 static SPShapeClass *parent_class;
 
@@ -286,6 +286,7 @@ box3d_side_set_shape (SPShape *shape)
     }
 
     Inkscape::XML::Node *repr = SP_OBJECT_REPR (shape);
+    (void)repr;
     Persp3D *persp = box3d_side_perspective(side);
     //g_return_if_fail (persp != NULL);
     if (!persp) {
@@ -392,6 +393,7 @@ box3d_side_corners (Box3DSide *side) {
     return corners;
 }
 
+/*
 static gint
 box3d_side_descr_to_id (gchar const *descr)
 {
@@ -406,6 +408,7 @@ box3d_side_descr_to_id (gchar const *descr)
     g_print ("         (description is: %s)\n", descr);
     return -1;
 }
+*/
 
 Persp3D *
 box3d_side_perspective(Box3DSide *side) {

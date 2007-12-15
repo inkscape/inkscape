@@ -343,7 +343,7 @@ box3d_position_set (SPBox3D *box)
 }
 
 static NR::Matrix
-box3d_set_transform(SPItem *item, NR::Matrix const &xform)
+box3d_set_transform(SPItem */*item*/, NR::Matrix const &xform)
 {
     /* check whether we need to unlink any boxes from their perspectives */
     std::set<Persp3D *> p_sel = persp3d_currently_selected_persps(inkscape_active_event_context());
@@ -398,14 +398,14 @@ box3d_set_transform(SPItem *item, NR::Matrix const &xform)
  * Gets called when persp(?) repr contents change: i.e. parameter change.
  */
 static void
-box3d_ref_modified(SPObject *href, guint flags, SPBox3D *box)
+box3d_ref_modified(SPObject */*href*/, guint /*flags*/, SPBox3D */*box*/)
 {
     /***
     g_print ("FIXME: box3d_ref_modified was called. What should we do?\n");
     g_print ("Here is at least the the href's id: %s\n", SP_OBJECT_REPR(href)->attribute("id"));
     g_print ("             ... and the box's, too: %s\n", SP_OBJECT_REPR(box)->attribute("id"));
     ***/
-    
+
 }
 
 Proj::Pt3
@@ -454,7 +454,7 @@ box3d_get_center_screen (SPBox3D *box) {
     return box->persp_ref->getObject()->tmat.image(proj_center).affine();
 }
 
-/* 
+/*
  * To keep the snappoint from jumping randomly between the two lines when the mouse pointer is close to
  * their intersection, we remember the last snapped line and keep snapping to this specific line as long
  * as the distance from the intersection to the mouse pointer is less than remember_snap_threshold.
@@ -582,7 +582,7 @@ box3d_set_corner (SPBox3D *box, const guint id, NR::Point const &new_pos, const 
         bool corner7_move_x =  (id & Box3D::X) && (movement & Box3D::X);
         bool corner7_move_y =  (id & Box3D::Y) && (movement & Box3D::Y);
         // normalizing pt_proj is essential because we want to mingle affine coordinates
-        pt_proj.normalize();        
+        pt_proj.normalize();
         box->orig_corner0 = Proj::Pt3 (corner0_move_x ? pt_proj[Proj::X] : box->orig_corner0[Proj::X],
                                        corner0_move_y ? pt_proj[Proj::Y] : box->orig_corner0[Proj::Y],
                                        (id & Box3D::Z) ? box->orig_corner0[Proj::Z] : pt_proj[Proj::Z],
@@ -609,7 +609,7 @@ void box3d_set_center (SPBox3D *box, NR::Point const &new_pos, NR::Point const &
             pt_proj = box3d_snap (box, -1, pt_proj, old_pos_proj);
         }
         // normalizing pt_proj is essential because we want to mingle affine coordinates
-        pt_proj.normalize();        
+        pt_proj.normalize();
         box->orig_corner0 = Proj::Pt3 ((movement & Box3D::X) ? pt_proj[Proj::X] - radx : box->orig_corner0[Proj::X],
                                        (movement & Box3D::Y) ? pt_proj[Proj::Y] - rady : box->orig_corner0[Proj::Y],
                                        box->orig_corner0[Proj::Z],
@@ -627,7 +627,7 @@ void box3d_set_center (SPBox3D *box, NR::Point const &new_pos, NR::Point const &
         Proj::Pt3 pt_proj (box->persp_ref->getObject()->tmat.preimage (new_pos_snapped, coord, Proj::X));
 
         /* normalizing pt_proj is essential because we want to mingle affine coordinates */
-        pt_proj.normalize();        
+        pt_proj.normalize();
         box->orig_corner0 = Proj::Pt3 (box->orig_corner0[Proj::X],
                                        box->orig_corner0[Proj::Y],
                                        pt_proj[Proj::Z] - radz,
@@ -643,7 +643,7 @@ void box3d_set_center (SPBox3D *box, NR::Point const &new_pos, NR::Point const &
  * Manipulates corner1 through corner4 to contain the indices of the corners
  * from which the perspective lines in the direction of 'axis' emerge
  */
-void box3d_corners_for_PLs (const SPBox3D * box, Proj::Axis axis, 
+void box3d_corners_for_PLs (const SPBox3D * box, Proj::Axis axis,
                             NR::Point &corner1, NR::Point &corner2, NR::Point &corner3, NR::Point &corner4)
 {
     g_return_if_fail (box->persp_ref->getObject());
@@ -887,7 +887,7 @@ box3d_set_new_z_orders_case1 (SPBox3D *box, int z_orders[6], Box3D::Axis central
                     //g_print ("central axis Z (case b2)");
                     box3d_aux_set_z_orders (z_orders, 5, 3, 4, 1, 0, 2);
                     //box3d_aux_set_z_orders (z_orders, 5, 3, 0, 1, 2, 4);
-                }                    
+                }
             } else {
                 // "regular" case
                 if (!swapped) {
@@ -923,7 +923,7 @@ box3d_set_new_z_orders_case1 (SPBox3D *box, int z_orders[6], Box3D::Axis central
 
 /* Precisely 2 finite VPs */
 static void
-box3d_set_new_z_orders_case2 (SPBox3D *box, int z_orders[6], Box3D::Axis central_axis, Box3D::Axis infinite_axis) {
+box3d_set_new_z_orders_case2 (SPBox3D *box, int z_orders[6], Box3D::Axis central_axis, Box3D::Axis /*infinite_axis*/) {
     Persp3D *persp = box->persp_ref->getObject();
 
     NR::Point c3(box3d_get_corner_screen(box, 3));
@@ -944,6 +944,9 @@ box3d_set_new_z_orders_case2 (SPBox3D *box, int z_orders[6], Box3D::Axis central
 
     //g_print ("Insides: xy = %d, xz = %d, yx = %d, yz = %d, zx = %d, zy = %d\n",
     //         insidexy, insidexz, insideyx, insideyz, insidezx, insidezy);
+    (void)insidexz;
+    (void)insideyx;
+    (void)insidezx;
 
     //g_print ("1 infinite VP; ");
     switch(central_axis) {
