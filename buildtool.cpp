@@ -38,7 +38,7 @@
  *     
  */  
 
-#define BUILDTOOL_VERSION  "BuildTool v0.7.3, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.7.4, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -3885,7 +3885,7 @@ bool MakeBase::getSubstitutions(const String &str, String &result)
                     {
                     std::map<String, String>::iterator iter;
                     varname = trim(varname);
-                    if (varname.compare(0, envPrefix.size(), envPrefix) == 0)
+                    if (envPrefix.size() > 0 && varname.compare(0, envPrefix.size(), envPrefix) == 0)
                         {
                         varname = varname.substr(envPrefix.size());
                         char *envstr = getenv(varname.c_str());
@@ -6675,20 +6675,88 @@ class TaskJavac : public Task
 public:
 
     TaskJavac(MakeBase &par) : Task(par)
-        { type = TASK_JAVAC; name = "javac"; }
+        { 
+        type = TASK_JAVAC; name = "javac";
+        command = "javac";
+        }
 
     virtual ~TaskJavac()
         {}
 
     virtual bool execute()
         {
-        return true;
+        std::vector<String> fileList;
+        if (!listFiles(srcdir, "", fileList))
+            {
+            return false;
+            }
+        String cmd = command;
+        cmd.append(" -d ");
+        cmd.append(destdir);
+        cmd.append(" -sourcepath ");
+        cmd.append(srcdir);
+        cmd.append(" ");
+        for (unsigned int i=0 ; i<fileList.size() ; i++)
+            {
+            String fname = fileList[i];
+            String srcName = fname;
+            if (fname.size()<6) //x.java
+                continue;
+            if (fname.compare(fname.size()-5, 5, ".java") != 0)
+                continue;
+            String baseName = fname.substr(0, fname.size()-5);
+            String destName = baseName;
+            destName.append(".class");
+
+            String fullSrc = srcdir;
+            fullSrc.append("/");
+            fullSrc.append(fname);
+            String fullDest = destdir;
+            fullDest.append("/");
+            fullDest.append(destName);
+            //trace("fullsrc:%s fulldest:%s", fullSrc.c_str(), fullDest.c_str());
+            if (!isNewerThan(fullSrc, fullDest))
+                continue;
+
+            String execCmd = cmd;
+            execCmd.append(fullSrc);
+
+            String outString, errString;
+            bool ret = executeCommand(execCmd.c_str(), "", outString, errString);
+            if (!ret)
+                {
+                error("<javac> command '%s' failed :\n %s",
+                                          execCmd.c_str(), errString.c_str());
+                return false;
+                }
+            }
         }
 
     virtual bool parse(Element *elem)
         {
+        String s;
+        if (!parent.getAttribute(elem, "command", s))
+            return false;
+        if (s.size() > 0)
+            command = s;
+        if (!parent.getAttribute(elem, "srcdir", srcdir))
+            return false;
+        if (!parent.getAttribute(elem, "destdir", destdir))
+            return false;
+        if (srcdir.size() == 0 || destdir.size() == 0)
+            {
+            error("<javac> required both srcdir and destdir attributes to be set");
+            return false;
+            }
         return true;
         }
+
+private:
+
+    String command;
+    String srcdir;
+    String destdir;
+
 };
 
 
@@ -6704,8 +6772,8 @@ public:
         type = TASK_LINK; name = "link";
         command = "g++";
         doStrip = false;
-                stripCommand = "strip";
-                objcopyCommand = "objcopy";
+        stripCommand = "strip";
+        objcopyCommand = "objcopy";
         }
 
     virtual ~TaskLink()
