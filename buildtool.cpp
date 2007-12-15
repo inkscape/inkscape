@@ -38,7 +38,7 @@
  *     
  */  
 
-#define BUILDTOOL_VERSION  "BuildTool v0.7.2, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.7.3, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -2957,6 +2957,16 @@ protected:
      *    The path to the file associated with this object
      */     
     URI uri;
+    
+    /**
+     *    If this prefix is seen in a substitution, use an environment
+     *    variable.
+     *             example:  <property environment="env"/>
+     *             ${env.JAVA_HOME}              
+     */     
+    String envPrefix;
+
+
 
 
     /**
@@ -3874,15 +3884,30 @@ bool MakeBase::getSubstitutions(const String &str, String &result)
                 else if (ch == '}')
                     {
                     std::map<String, String>::iterator iter;
-                    iter = properties.find(trim(varname));
-                    if (iter != properties.end())
+                    varname = trim(varname);
+                    if (varname.compare(0, envPrefix.size(), envPrefix) == 0)
                         {
-                        val.append(iter->second);
+                        varname = varname.substr(envPrefix.size());
+                        char *envstr = getenv(varname.c_str());
+                        if (!envstr)
+                            {
+                            error("environment variable '%s' not defined", varname.c_str());
+                            return false;
+                            }
+                        val.append(envstr);
                         }
                     else
                         {
-                        error("property ${%s} not found", varname.c_str());
-                        return false;
+                        iter = properties.find(varname);
+                        if (iter != properties.end())
+                            {
+                            val.append(iter->second);
+                            }
+                        else
+                            {
+                            error("property ${%s} not found", varname.c_str());
+                            return false;
+                            }
                         }
                     break;
                     }
@@ -8109,8 +8134,6 @@ private:
 
     String description;
     
-    String envAlias;
-
     //std::vector<Property> properties;
     
     std::map<String, Target> targets;
@@ -8138,7 +8161,7 @@ void Make::init()
     specifiedTarget = "";
     baseDir         = "";
     description     = "";
-    envAlias        = "";
+    envPrefix       = "";
     properties.clear();
     for (unsigned int i = 0 ; i < allTasks.size() ; i++)
         delete allTasks[i];
@@ -8519,12 +8542,18 @@ bool Make::parseProperty(Element *elem)
             }
         else if (attrName == "environment")
             {
-            if (envAlias.size() > 0)
+            if (envPrefix.size() > 0)
                 {
-                error("environment property can only be set once");
+                error("environment prefix can only be set once");
                 return false;
                 }
-            envAlias = attrVal;
+            if (attrVal.find('.') != attrVal.npos)
+                {
+                error("environment prefix cannot have a '.' in it");
+                return false;
+                }
+            envPrefix = attrVal;
+            envPrefix.push_back('.');
             }
         }
 
