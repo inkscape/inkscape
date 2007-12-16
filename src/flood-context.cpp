@@ -1044,7 +1044,7 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
                     event_context->xp = (gint) button_w[NR::X];
                     event_context->yp = (gint) button_w[NR::Y];
                     event_context->within_tolerance = true;
-                    
+                      
                     dragging = true;
                     
                     NR::Point const p(desktop->w2d(button_w));
@@ -1100,7 +1100,10 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
                 }
 
                 r->stop();
-                event_context->defaultMessageContext()->clear();
+
+                if (SP_IS_EVENT_CONTEXT(event_context)) {
+                    event_context->defaultMessageContext()->clear();
+                }
             }
         }
         break;
