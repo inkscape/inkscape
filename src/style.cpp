@@ -3597,7 +3597,7 @@ sp_style_write_ipaint(gchar *b, gint const len, gchar const *const key,
         }
 
         if ( !css.str().empty() ) {
-            retval = g_snprintf( b, len, "%s:%s;", key, css.gcharp() );
+            retval = g_snprintf( b, len, "%s:%s;", key, css.str().c_str() );
         }
     }
 
