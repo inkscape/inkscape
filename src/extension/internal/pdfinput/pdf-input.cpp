@@ -59,7 +59,7 @@ static Glib::ustring crop_setting_choices[] = {
 
 PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar *uri)
 {
-
+    _poppler_doc = NULL;
     _pdf_doc = doc;
 
     cancelbutton = Gtk::manage(new class Gtk::Button(Gtk::StockID("gtk-cancel")));
@@ -445,6 +445,7 @@ static void copy_cairo_surface_to_pixbuf (cairo_surface_t *surface,
         }
     }
 }
+
 #endif
 
 /**
@@ -576,13 +577,45 @@ PdfInput::open(::Inkscape::Extension::Input * mod, const gchar * uri) {
     if (!globalParams) {
         globalParams = new GlobalParams();
     }
+    // poppler does not use glib g_open. So on win32 we must use unicode call. code was copied from glib gstdio.c
+#ifndef WIN32
     GooString *filename_goo = new GooString(uri);
     PDFDoc *pdf_doc = new PDFDoc(filename_goo, NULL, NULL, NULL);   // TODO: Could ask for password
+    delete filename_goo;
+#else
+    wchar_t *wfilename = (wchar_t*)g_utf8_to_utf16 (uri, -1, NULL, NULL, NULL);
+
+    if (wfilename == NULL) {
+      return NULL;
+    }
+
+    PDFDoc *pdf_doc = new PDFDoc(wfilename, wcslen(wfilename), NULL, NULL, NULL);   // TODO: Could ask for password
+    g_free (wfilename);
+#endif
+
     if (!pdf_doc->isOk()) {
         int error = pdf_doc->getErrorCode();
         delete pdf_doc;
         if (error == errEncrypted) {
             g_message("Document is encrypted.");
+        } else if (error == errOpenFile) {
+            g_message("couldn't open the PDF file.");
+        } else if (error == errBadCatalog) {
+            g_message("couldn't read the page catalog.");
+        } else if (error == errDamaged) {
+            g_message("PDF file was damaged and couldn't be repaired.");
+        } else if (error == errHighlightFile) {
+            g_message("nonexistent or invalid highlight file.");
+        } else if (error == errBadPrinter) {
+            g_message("invalid printer.");
+        } else if (error == errPrinting) {
+            g_message("Error during printing.");
+        } else if (error == errPermission) {
+            g_message("PDF file does not allow that operation.");
+        } else if (error == errBadPageNum) {
+            g_message("invalid page number.");
+        } else if (error == errFileIO) {
+            g_message("file IO error.");
         } else {
             g_message("Failed to load document from data (error %d)", error);
         }
