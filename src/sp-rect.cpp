@@ -349,7 +349,6 @@ sp_rect_set_ry(SPRect *rect, gboolean set, gdouble value)
 static NR::Matrix
 sp_rect_set_transform(SPItem *item, NR::Matrix const &xform)
 {
-    g_print ("sp_rect_set_transform\n");
     SPRect *rect = SP_RECT(item);
 
     /* Calculate rect start in parent coords. */
