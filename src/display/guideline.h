@@ -2,12 +2,14 @@
 #define __SP_GUIDELINE_H__
 
 /*
- * Infinite horizontal/vertical line; the visual representation of SPGuide.
+ * The visual representation of SPGuide.
  *
- * Author:
+ * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Johan Engelen
  *
  * Copyright (C) 2000-2002 Lauris Kaplinski
+ * Copyright (C) 2007 Johan Engelen
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -26,7 +28,7 @@ struct SPGuideLine {
 
     int position;
     Geom::Point normal;
-//    unsigned int vertical : 1;
+
     unsigned int sensitive : 1;
 };
 

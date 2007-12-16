@@ -1,12 +1,14 @@
 #define __SP_GUIDELINE_C__
 
 /*
- * Infinite horizontal/vertical line
+ * Horizontal/vertical but can also be angled line
  *
- * Author:
+ * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Johan Engelen
  *
  * Copyright (C) 2000-2002 Lauris Kaplinski
+ * Copyright (C) 2007 Johan Engelen
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -87,37 +89,40 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
     unsigned int const b = NR_RGBA32_B (gl->rgba);
     unsigned int const a = NR_RGBA32_A (gl->rgba);
 
-    int p0, p1, step;
-    unsigned char *d;
-
     if (gl->normal[Geom::Y] == 0.) {
-
         if (gl->position < buf->rect.x0 || gl->position >= buf->rect.x1) {
             return;
         }
 
-        p0 = buf->rect.y0;
-        p1 = buf->rect.y1;
-        step = buf->buf_rowstride;
-        d = buf->buf + 3 * (gl->position - buf->rect.x0);
+        int p0 = buf->rect.y0;
+        int p1 = buf->rect.y1;
+        int step = buf->buf_rowstride;
+        unsigned char *d = buf->buf + 3 * (gl->position - buf->rect.x0);
 
-    } else {
-
+        for (int p = p0; p < p1; p++) {
+            d[0] = NR_COMPOSEN11_1111(r, a, d[0]);
+            d[1] = NR_COMPOSEN11_1111(g, a, d[1]);
+            d[2] = NR_COMPOSEN11_1111(b, a, d[2]);
+            d += step;
+        }
+    } else if (gl->normal[Geom::X] == 0.) {
         if (gl->position < buf->rect.y0 || gl->position >= buf->rect.y1) {
             return;
         }
 
-        p0 = buf->rect.x0;
-        p1 = buf->rect.x1;
-        step = 3;
-        d = buf->buf + (gl->position - buf->rect.y0) * buf->buf_rowstride;
-    }
+        int p0 = buf->rect.x0;
+        int p1 = buf->rect.x1;
+        int step = 3;
+        unsigned char *d = buf->buf + (gl->position - buf->rect.y0) * buf->buf_rowstride;
 
-    for (int p = p0; p < p1; p++) {
-        d[0] = NR_COMPOSEN11_1111(r, a, d[0]);
-        d[1] = NR_COMPOSEN11_1111(g, a, d[1]);
-        d[2] = NR_COMPOSEN11_1111(b, a, d[2]);
-        d += step;
+        for (int p = p0; p < p1; p++) {
+            d[0] = NR_COMPOSEN11_1111(r, a, d[0]);
+            d[1] = NR_COMPOSEN11_1111(g, a, d[1]);
+            d[2] = NR_COMPOSEN11_1111(b, a, d[2]);
+            d += step;
+        }
+    } else {
+        // render angled line
     }
 }
 
