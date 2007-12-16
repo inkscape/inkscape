@@ -356,6 +356,23 @@ void PrefColorPicker::on_changed (guint32 rgba)
     }
 }
 
+void PrefUnit::init(const std::string& prefs_path, const std::string& attr)
+{
+    _prefs_path = prefs_path;
+    _attr = attr;
+    setUnitType(UNIT_TYPE_LINEAR);
+    gchar const * prefval = prefs_get_string_attribute(_prefs_path.c_str(), _attr.c_str());
+    setUnit(prefval);
+}
+
+void PrefUnit::on_changed()
+{
+    if (this->is_visible()) //only take action if user changed value
+    {
+        prefs_set_string_attribute(_prefs_path.c_str(), _attr.c_str(), getUnitAbbr().c_str());
+    }
+}
+
 } // namespace Widget
 } // namespace UI
 } // namespace Inkscape

@@ -200,7 +200,7 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
     color = prefs_get_int_attribute("options.grids.axonom", "color", 0x0000ff20);
     empcolor = prefs_get_int_attribute("options.grids.axonom", "empcolor", 0x0000ff40);
     empspacing = prefs_get_int_attribute("options.grids.axonom", "empspacing", 5);
-    gridunit = &sp_unit_get_by_id(SP_UNIT_MM);
+    gridunit = sp_unit_get_by_abbreviation( prefs_get_string_attribute("options.grids.axonom", "units") );
     lengthy = prefs_get_double_attribute ("options.grids.axonom", "spacing_y", 1.0);
     angle_deg[X] = prefs_get_double_attribute ("options.grids.axonom", "angle_x", 30.0);
     angle_deg[Z] = prefs_get_double_attribute ("options.grids.axonom", "angle_z", 30.0);
@@ -218,13 +218,23 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
     table.set_spacings(2);
     vbox.pack_start(table, false, false, 0);
 
+    Inkscape::UI::Widget::ScalarUnit * sutemp;
     _rumg.init (_("Grid _units:"), "units", _wr, repr, doc);
     _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"),
                   "originx", _rumg, _wr, repr, doc);
+        sutemp = _rsu_ox.getSU();
+        sutemp->setDigits(4);
+        sutemp->setIncrements(0.1, 1.0);
     _rsu_oy.init (_("O_rigin Y:"), _("Y coordinate of grid origin"),
                   "originy", _rumg, _wr, repr, doc);
+        sutemp = _rsu_oy.getSU();
+        sutemp->setDigits(4);
+        sutemp->setIncrements(0.1, 1.0);
     _rsu_sy.init (_("Spacing _Y:"), _("Base length of z-axis"),
                   "spacingy", _rumg, _wr, repr, doc);
+        sutemp = _rsu_sy.getSU();
+        sutemp->setDigits(4);
+        sutemp->setIncrements(0.1, 1.0);
     _rsu_ax.init (_("Angle X:"), _("Angle of x-axis"),
                   "gridanglex", _rumg, _wr, repr, doc);
     _rsu_az.init (_("Angle Z:"), _("Angle of z-axis"),

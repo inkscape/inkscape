@@ -398,7 +398,7 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPD
     empspacing = prefs_get_int_attribute("options.grids.xy", "empspacing", 5);
     spacing[NR::X] = prefs_get_double_attribute ("options.grids.xy", "spacing_x", 0.0);
     spacing[NR::Y] = prefs_get_double_attribute ("options.grids.xy", "spacing_y", 0.0);
-    gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
+    gridunit = sp_unit_get_by_abbreviation( prefs_get_string_attribute("options.grids.xy", "units") );
     render_dotted = prefs_get_int_attribute ("options.grids.xy", "dotted", 0) == 1;
 
     snapper = new CanvasXYGridSnapper(this, namedview, 0);

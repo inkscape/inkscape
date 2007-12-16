@@ -179,7 +179,7 @@ protected:
     Gtk::Notebook       _grids_notebook;
     DialogPage          _grids_xy, _grids_axonom;
     // CanvasXYGrid properties:
-        //_grids_xy_units;
+        PrefUnit            _grids_xy_units;
         PrefSpinButton      _grids_xy_origin_x;
         PrefSpinButton      _grids_xy_origin_y;
         PrefSpinButton      _grids_xy_spacing_x;
@@ -189,7 +189,7 @@ protected:
         PrefSpinButton      _grids_xy_empspacing;
         PrefCheckButton     _grids_xy_dotted;
     // CanvasAxonomGrid properties:
-        //_grids_axonom_units;
+        PrefUnit            _grids_axonom_units;
         PrefSpinButton      _grids_axonom_origin_x;
         PrefSpinButton      _grids_axonom_origin_y;
         PrefSpinButton      _grids_axonom_spacing_y;

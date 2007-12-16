@@ -265,8 +265,7 @@ static char const preferences_skeleton[] =
 "             angle_z=\"30.0\"\n"
 "             color=\"65312\"\n"  // 0x0000FF20
 "             empcolor=\"65344\"\n" // 0x0000FF40
-"             empspacing=\"5\"\n"
-"             dotted=\"0\"/>\n"
+"             empspacing=\"5\"/>\n"
 "    </group>\n"
 "  </group>\n"
 "\n"

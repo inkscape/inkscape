@@ -28,6 +28,7 @@
 //#include <glibmm/i18n.h>
 
 #include "ui/widget/color-picker.h"
+#include "ui/widget/unit-menu.h"
 
 namespace Inkscape {
 namespace UI {
@@ -145,6 +146,15 @@ protected:
     virtual void on_changed (guint32 rgba);
 };
 
+class PrefUnit : public UnitMenu
+{
+public:
+    void init(const std::string& prefs_path, const std::string& attr);
+protected:
+    std::string _prefs_path;
+    std::string _attr;
+    void on_changed();
+};
 
 class DialogPage : public Gtk::Table
 {
