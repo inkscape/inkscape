@@ -195,16 +195,18 @@ attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int
 CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc)
     : CanvasGrid(nv, in_repr, in_doc, GRID_AXONOMETRIC), table(1, 1)
 {
-    origin[NR::X] = prefs_get_double_attribute ("options.grids.axonom", "origin_x", 0.0);
-    origin[NR::Y] = prefs_get_double_attribute ("options.grids.axonom", "origin_y", 0.0);
+    gridunit = sp_unit_get_by_abbreviation( prefs_get_string_attribute("options.grids.axonom", "units") );
+    if (!gridunit)
+        gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
+    origin[NR::X] = sp_units_get_pixels( prefs_get_double_attribute ("options.grids.axonom", "origin_x", 0.0), *(gridunit) );
+    origin[NR::Y] = sp_units_get_pixels( prefs_get_double_attribute ("options.grids.axonom", "origin_y", 0.0), *(gridunit) );
     color = prefs_get_int_attribute("options.grids.axonom", "color", 0x0000ff20);
     empcolor = prefs_get_int_attribute("options.grids.axonom", "empcolor", 0x0000ff40);
     empspacing = prefs_get_int_attribute("options.grids.axonom", "empspacing", 5);
-    gridunit = sp_unit_get_by_abbreviation( prefs_get_string_attribute("options.grids.axonom", "units") );
-    lengthy = prefs_get_double_attribute ("options.grids.axonom", "spacing_y", 1.0);
+    lengthy = sp_units_get_pixels( prefs_get_double_attribute ("options.grids.axonom", "spacing_y", 1.0), *(gridunit) );
     angle_deg[X] = prefs_get_double_attribute ("options.grids.axonom", "angle_x", 30.0);
     angle_deg[Z] = prefs_get_double_attribute ("options.grids.axonom", "angle_z", 30.0);
-    angle_deg[Y] =0;
+    angle_deg[Y] = 0;
 
     angle_rad[X] = deg_to_rad(angle_deg[X]);
     tan_angle[X] = tan(angle_rad[X]);
