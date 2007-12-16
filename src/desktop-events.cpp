@@ -66,7 +66,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 double const guide_pos_dt = event_dt[ horiz
                                                       ? NR::Y
                                                       : NR::X ];
-                guide = sp_guideline_new(desktop->guides, guide_pos_dt, !horiz);
+                guide = sp_guideline_new(desktop->guides, guide_pos_dt, horiz ? Geom::Point(0.,1.) : Geom::Point(1.,0.));
                 sp_guideline_set_color(SP_GUIDELINE(guide), desktop->namedview->guidehicolor);
                 gdk_pointer_grab(widget->window, FALSE,
                                  (GdkEventMask)(GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK ),

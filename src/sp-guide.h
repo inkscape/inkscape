@@ -7,6 +7,7 @@
  * A guideline
  *
  * Copyright (C) Lauris Kaplinski 2000
+ * Copyright (C) Johan Engelen 2007
  *
  */
 

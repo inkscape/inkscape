@@ -67,7 +67,7 @@ static void sp_guideline_init(SPGuideLine *gl)
 {
     gl->rgba = 0x0000ff7f;
 
-    gl->vertical = 0;
+    gl->normal = Geom::Point(0,1);
     gl->sensitive = 0;
 }
 
@@ -90,7 +90,7 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
     int p0, p1, step;
     unsigned char *d;
 
-    if (gl->vertical) {
+    if (gl->normal[Geom::Y] == 0.) {
 
         if (gl->position < buf->rect.x0 || gl->position >= buf->rect.x1) {
             return;
@@ -129,7 +129,7 @@ static void sp_guideline_update(SPCanvasItem *item, NR::Matrix const &affine, un
         ((SPCanvasItemClass *) parent_class)->update(item, affine, flags);
     }
 
-    if (gl->vertical) {
+    if (gl->normal[Geom::Y] == 0.) {
         gl->position = (int) (affine[4] + 0.5);
         sp_canvas_update_bbox (item, gl->position, -1000000, gl->position + 1, 1000000);
     } else {
@@ -148,20 +148,21 @@ static double sp_guideline_point(SPCanvasItem *item, NR::Point p, SPCanvasItem *
 
     *actual_item = item;
 
-    if (gl->vertical) {
+    if (gl->normal[Geom::Y] == 0.) {
         return MAX(fabs(gl->position - p[NR::X])-1, 0);
     } else {
         return MAX(fabs(gl->position - p[NR::Y])-1, 0);
     }
 }
 
-SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, double position, unsigned int vertical)
+SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, double position, Geom::Point normal)
 {
     SPCanvasItem *item = sp_canvas_item_new(parent, SP_TYPE_GUIDELINE, NULL);
 
     SPGuideLine *gl = SP_GUIDELINE(item);
 
-    gl->vertical = vertical;
+    normal.normalize();
+    gl->normal = normal;
     sp_guideline_set_position(gl, position);
 
     return item;

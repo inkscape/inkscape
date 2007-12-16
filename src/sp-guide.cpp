@@ -6,9 +6,11 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Peter Moulder <pmoulder@mail.csse.monash.edu.au>
+ *   Johan Engelen
  *
  * Copyright (C) 2000-2002 authors
  * Copyright (C) 2004 Monash University
+ * Copyright (C) 2007 Johan Engelen
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -172,7 +174,24 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
             if (value && !strcmp(value, "horizontal")) {
                 /* Visual representation of a horizontal line, constrain vertically (y coordinate). */
                 guide->normal = component_vectors[NR::Y];
+            } else if (value && !strcmp(value, "vertical")) {
+                guide->normal = component_vectors[NR::X];
+            } else if (value) {
+                gchar ** strarray = g_strsplit(value, ",", 2);
+                double newx, newy;
+                unsigned int success = sp_svg_number_read_d(strarray[0], &newx);
+                success += sp_svg_number_read_d(strarray[1], &newy);
+                g_strfreev (strarray);
+                if (success == 2) {
+                    Geom::Point direction(newx, newy);
+                    direction.normalize();
+                    guide->normal = direction;
+                } else {
+                    // default to vertical line for bad arguments
+                    guide->normal = component_vectors[NR::X];
+                }
             } else {
+                // default to vertical line for bad arguments
                 guide->normal = component_vectors[NR::X];
             }
             break;
@@ -195,7 +214,7 @@ void sp_guide_show(SPGuide *guide, SPCanvasGroup *group, GCallback handler)
     bool const vertical_line_p = ( guide->normal == component_vectors[NR::X] );
     g_assert(( guide->normal == component_vectors[NR::X] )  ||
              ( guide->normal == component_vectors[NR::Y] ) );
-    SPCanvasItem *item = sp_guideline_new(group, guide->position, vertical_line_p);
+    SPCanvasItem *item = sp_guideline_new(group, guide->position, vertical_line_p ? Geom::Point(1.,0.) : Geom::Point(0.,1.));
     sp_guideline_set_color(SP_GUIDELINE(item), guide->color);
 
     g_signal_connect(G_OBJECT(item), "event", G_CALLBACK(handler), guide);
