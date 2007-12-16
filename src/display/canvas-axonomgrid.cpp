@@ -218,6 +218,7 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
     table.set_spacings(2);
     vbox.pack_start(table, false, false, 0);
 
+_wr.setUpdating (true);
     Inkscape::UI::Widget::ScalarUnit * sutemp;
     _rumg.init (_("Grid _units:"), "units", _wr, repr, doc);
     _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"),
@@ -245,6 +246,7 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
                      _("Color of the major (highlighted) grid lines"),
                      "empcolor", "empopacity", _wr, repr, doc);
     _rsi.init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr, doc);
+_wr.setUpdating (false);
 
     Gtk::Widget const *const widget_array[] = {
         0,                  _rcbgrid._button,

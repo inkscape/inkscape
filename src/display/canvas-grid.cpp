@@ -408,6 +408,7 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPD
     table.set_spacings(2);
     vbox.pack_start(table, false, false, 0);
 
+_wr.setUpdating (true);
     Inkscape::UI::Widget::ScalarUnit * sutemp;
     _rumg.init (_("Grid _units:"), "units", _wr, repr, doc);
     _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"),
@@ -439,6 +440,7 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPD
     _rcb_dotted.init ( _("_Show dots instead of lines"),
                        _("If set, displays dots at gridpoints instead of gridlines"),
                         "dotted", _wr, false, repr, doc);
+_wr.setUpdating (false);
 
     Gtk::Widget const *const widget_array[] = {
         _rumg._label,       _rumg._sel,
