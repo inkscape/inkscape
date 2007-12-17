@@ -76,18 +76,18 @@ public:
     }
 
 private:
-    Gtk::Widget *_a; 
+    Gtk::Widget *_a;
     Gtk::Widget *_b;
     bool _state;
 };
 
 }
 
-/** LayerSelector constructor.  Creates lock and hide buttons, 
+/** LayerSelector constructor.  Creates lock and hide buttons,
  *  initalizes the layer dropdown selector with a label renderer,
  *  and hooks up signal for setting the desktop layer when the
  *  selector is changed.
- */ 
+ */
 LayerSelector::LayerSelector(SPDesktop *desktop)
 : _desktop(NULL), _layer(NULL)
 {
@@ -150,7 +150,7 @@ LayerSelector::LayerSelector(SPDesktop *desktop)
     setDesktop(desktop);
 }
 
-/**  Destructor - disconnects signal handler 
+/**  Destructor - disconnects signal handler
  */
 LayerSelector::~LayerSelector() {
     setDesktop(NULL);
@@ -159,7 +159,7 @@ LayerSelector::~LayerSelector() {
 
 namespace {
 
-/** Helper function - detaches desktop from selector 
+/** Helper function - detaches desktop from selector
  */
 bool detach(LayerSelector *selector) {
     selector->setDesktop(NULL);
@@ -225,7 +225,7 @@ private:
 
 }
 
-/** Selects the given layer in the dropdown selector.  
+/** Selects the given layer in the dropdown selector.
  */
 void LayerSelector::_selectLayer(SPObject *layer) {
     using Inkscape::Util::List;
@@ -361,9 +361,9 @@ struct Callbacks {
     sigc::slot<void> update_list;
 };
 
-void attribute_changed(Inkscape::XML::Node *repr, gchar const *name,
-                       gchar const *old_value, gchar const *new_value,
-                       bool is_interactive, void *data) 
+void attribute_changed(Inkscape::XML::Node */*repr*/, gchar const *name,
+                       gchar const */*old_value*/, gchar const */*new_value*/,
+                       bool /*is_interactive*/, void *data)
 {
     if ( !std::strcmp(name, "inkscape:groupmode") ) {
         reinterpret_cast<Callbacks *>(data)->update_list();
@@ -372,22 +372,22 @@ void attribute_changed(Inkscape::XML::Node *repr, gchar const *name,
     }
 }
 
-void node_added(Inkscape::XML::Node *parent, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, void *data) {
+void node_added(Inkscape::XML::Node */*parent*/, Inkscape::XML::Node *child, Inkscape::XML::Node */*ref*/, void *data) {
     gchar const *mode=child->attribute("inkscape:groupmode");
     if ( mode && !std::strcmp(mode, "layer") ) {
         reinterpret_cast<Callbacks *>(data)->update_list();
     }
 }
 
-void node_removed(Inkscape::XML::Node *parent, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, void *data) {
+void node_removed(Inkscape::XML::Node */*parent*/, Inkscape::XML::Node *child, Inkscape::XML::Node */*ref*/, void *data) {
     gchar const *mode=child->attribute("inkscape:groupmode");
     if ( mode && !std::strcmp(mode, "layer") ) {
         reinterpret_cast<Callbacks *>(data)->update_list();
     }
 }
 
-void node_reordered(Inkscape::XML::Node *parent, Inkscape::XML::Node *child,
-                    Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref,
+void node_reordered(Inkscape::XML::Node */*parent*/, Inkscape::XML::Node *child,
+                    Inkscape::XML::Node */*old_ref*/, Inkscape::XML::Node */*new_ref*/,
                     void *data)
 {
     gchar const *mode=child->attribute("inkscape:groupmode");
@@ -520,7 +520,7 @@ void LayerSelector::_destroyEntry(Gtk::ListStore::iterator const &row) {
     delete callbacks;
 }
 
-/** Formats the label for a given layer row 
+/** Formats the label for a given layer row
  */
 void LayerSelector::_prepareLabelRenderer(
     Gtk::TreeModel::const_iterator const &row
@@ -564,7 +564,7 @@ void LayerSelector::_prepareLabelRenderer(
             label = _("(root)");
         }
 
-        gchar *text = g_markup_printf_escaped(format, label); 
+        gchar *text = g_markup_printf_escaped(format, label);
         _label_renderer.property_markup() = text;
         g_free(text);
         g_free(format);
@@ -581,7 +581,7 @@ void LayerSelector::_prepareLabelRenderer(
 void LayerSelector::_lockLayer(bool lock) {
     if ( _layer && SP_IS_ITEM(_layer) ) {
         SP_ITEM(_layer)->setLocked(lock);
-        sp_document_done(sp_desktop_document(_desktop), SP_VERB_NONE, 
+        sp_document_done(sp_desktop_document(_desktop), SP_VERB_NONE,
                          lock? _("Lock layer") : _("Unlock layer"));
     }
 }
@@ -589,7 +589,7 @@ void LayerSelector::_lockLayer(bool lock) {
 void LayerSelector::_hideLayer(bool hide) {
     if ( _layer && SP_IS_ITEM(_layer) ) {
         SP_ITEM(_layer)->setHidden(hide);
-        sp_document_done(sp_desktop_document(_desktop), SP_VERB_NONE, 
+        sp_document_done(sp_desktop_document(_desktop), SP_VERB_NONE,
                          hide? _("Hide layer") : _("Unhide layer"));
     }
 }

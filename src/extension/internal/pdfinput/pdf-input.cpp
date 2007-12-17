@@ -1,6 +1,6 @@
  /** \file
  * Native PDF import using libpoppler.
- * 
+ *
  * Authors:
  *   miklos erdelyi
  *
@@ -57,9 +57,11 @@ static Glib::ustring crop_setting_choices[] = {
     Glib::ustring(_("art box"))
 };
 
-PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar *uri)
+PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
 {
+#ifdef HAVE_POPPLER_CAIRO
     _poppler_doc = NULL;
+#endif // HAVE_POPPLER_CAIRO
     _pdf_doc = doc;
 
     cancelbutton = Gtk::manage(new class Gtk::Button(Gtk::StockID("gtk-cancel")));
@@ -100,7 +102,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar *uri)
     _pageSettingsFrame = Gtk::manage(new class Gtk::Frame());
     _labelPrecision = Gtk::manage(new class Gtk::Label(_("Precision of approximating gradient meshes:")));
     _labelPrecisionWarning = Gtk::manage(new class Gtk::Label(_("<b>Note</b>: setting the precision too high may result in a large SVG file and slow performance.")));
-   
+
     _fallbackPrecisionSlider_adj = Gtk::manage(new class Gtk::Adjustment(2, 1, 256, 1, 10, 10));
     _fallbackPrecisionSlider = Gtk::manage(new class Gtk::HScale(*_fallbackPrecisionSlider_adj));
     _fallbackPrecisionSlider->set_value(2.0);
@@ -112,7 +114,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar *uri)
     _textHandlingCombo = Gtk::manage(new class Gtk::ComboBoxText());
     _textHandlingCombo->append_text(_("Import text as text"));
     _textHandlingCombo->set_active_text(_("Import text as text"));
-    
+
     hbox5 = Gtk::manage(new class Gtk::HBox(false, 4));
     _embedImagesCheck = Gtk::manage(new class Gtk::CheckButton(_("Embed images")));
     vbox3 = Gtk::manage(new class Gtk::VBox(false, 4));
@@ -451,7 +453,7 @@ static void copy_cairo_surface_to_pixbuf (cairo_surface_t *surface,
 /**
  * \brief Updates the preview area with the previously rendered thumbnail
  */
-bool PdfImportDialog::_onExposePreview(GdkEventExpose *event) {
+bool PdfImportDialog::_onExposePreview(GdkEventExpose */*event*/) {
 
     // Check if we have a thumbnail at all
     if (!_thumb_data) {
@@ -571,7 +573,7 @@ void PdfImportDialog::_setPreviewPage(int page) {
  * Parses the selected page of the given PDF document using PdfParser.
  */
 SPDocument *
-PdfInput::open(::Inkscape::Extension::Input * mod, const gchar * uri) {
+PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
 
     // Initialize the globalParams variable for poppler
     if (!globalParams) {
@@ -619,7 +621,7 @@ PdfInput::open(::Inkscape::Extension::Input * mod, const gchar * uri) {
         } else {
             g_message("Failed to load document from data (error %d)", error);
         }
- 
+
         return NULL;
     }
     PdfImportDialog *dlg = new PdfImportDialog(pdf_doc, uri);
@@ -693,14 +695,14 @@ PdfInput::open(::Inkscape::Extension::Input * mod, const gchar * uri) {
     for ( int i = 1 ; i <= pdfNumShadingTypes ; i++ ) {
         pdf_parser->setApproximationPrecision(i, color_delta, 6);
     }
-    
+
     // Parse the document structure
     Object obj;
     page->getContents(&obj);
     if (!obj.isNull()) {
         pdf_parser->parse(&obj);
     }
-    
+
     // Cleanup
     obj.free();
     delete pdf_parser;
