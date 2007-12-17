@@ -113,13 +113,13 @@ ToleranceSlider::setValue (double val)
 
     if (val > 9999.9) // magic value 10000.0
     {
-        _button->set_active (true);
+        _button->set_active (false);
         _hbox->set_sensitive (false);
         val = 50.0;
     }
     else
     {
-        _button->set_active (false);
+        _button->set_active (true);
         _hbox->set_sensitive (true);
     }
     _hscale->set_value (val);
@@ -142,7 +142,7 @@ ToleranceSlider::on_scale_changed()
 void
 ToleranceSlider::on_toggled()
 {
-    if (_button->get_active())
+    if (!_button->get_active())
     {
         _old_val = _hscale->get_value();
         _hbox->set_sensitive (false);

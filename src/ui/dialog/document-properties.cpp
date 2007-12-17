@@ -255,7 +255,7 @@ DocumentProperties::build_snap()
     _page_snap.show();
 	//General options
     _rcbsg.init (_("Enable snapping"),
-                _("When disabled, nothing will snap"),
+                _("Toggle snapping on or off"),
                 "inkscape:snap-global", _wr);    
 	_rcbsnbb.init (_("_Bounding box corners"),
                 _("Snap bounding box corners to grid lines, to guides, and to other bounding boxes (Snapping of bounding boxes is only available in the selector tool)"),
@@ -278,21 +278,21 @@ DocumentProperties::build_snap()
                 _("Snap bounding box corners and guides to bounding box edges"),
                 "inkscape:bbox-paths", _wr);
 
-    _rsu_sno.init (_("Snap _distance"), _("Snap at any d_istance"),
+    _rsu_sno.init (_("Snap _distance"), _("Snap at specified d_istance"),
                   _("Snapping distance, in screen pixels, for snapping to objects"),
-                  _("If set, objects snap to the nearest object, regardless of distance"),
+                  _("If set, objects only snap to another object when it's within the range specified below"),
                   "objecttolerance", _wr);
 
     //Options for snapping to grids
-    _rsu_sn.init (_("Snap di_stance"), _("Snap at any dis_tance"),
+    _rsu_sn.init (_("Snap di_stance"), _("Snap at specified dis_tance"),
                   _("Snapping distance, in screen pixels, for snapping to grid"),
-                  _("If set, objects snap to the nearest grid line, regardless of distance"),
+                  _("If set, objects only snap to a grid line when it's within the range specified below"),
                   "gridtolerance", _wr);
 
 	//Options for snapping to guides
-    _rsu_gusn.init (_("Snap dist_ance"), _("Snap at any distan_ce"),
+    _rsu_gusn.init (_("Snap dist_ance"), _("Snap at specified distan_ce"),
                 _("Snapping distance, in screen pixels, for snapping to guides"),
-                _("If set, objects snap to the nearest guide, regardless of distance"),
+                _("If set, objects only snap to a guide when it's within the range specified below"),
                 "guidetolerance", _wr);
 
     //Other options to locate here: e.g. visual snapping indicators on/off
@@ -314,7 +314,7 @@ DocumentProperties::build_snap()
     _rcbsg.setSlaveButton(slaves);
 
     Gtk::Label *label_g = manage (new Gtk::Label);
-    label_g->set_markup (_("<b>Global snapping toggle</b>"));
+    label_g->set_markup (_("<b>Snapping</b>"));
     Gtk::Label *label_w = manage (new Gtk::Label);
     label_w->set_markup (_("<b>What snaps</b>"));    
     Gtk::Label *label_o = manage (new Gtk::Label);
