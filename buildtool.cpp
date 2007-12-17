@@ -6730,6 +6730,7 @@ public:
                 return false;
                 }
             }
+        return true;
         }
 
     virtual bool parse(Element *elem)
