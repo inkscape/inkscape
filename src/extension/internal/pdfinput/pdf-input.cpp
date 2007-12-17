@@ -57,7 +57,7 @@ static Glib::ustring crop_setting_choices[] = {
     Glib::ustring(_("art box"))
 };
 
-PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
+PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar *uri)
 {
 #ifdef HAVE_POPPLER_CAIRO
     _poppler_doc = NULL;
