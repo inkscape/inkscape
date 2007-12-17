@@ -26,9 +26,9 @@ cdouble laguerre_internal_complex(Poly const & p,
             b = xk*b + p[j];
             err = abs(b) + abx*err;
         }
-        
+
         err *= 1e-7; // magic epsilon for convergence, should be computed from tol
-        
+
         cdouble px = b;
         if(abs(b) < err)
             return xk;
@@ -36,7 +36,7 @@ cdouble laguerre_internal_complex(Poly const & p,
         //    return xk;
         cdouble G = d / px;
         cdouble H = G*G - f / px;
-        
+
         //std::cout << "G = " << G << "H = " << H;
         cdouble radicand = (n - 1)*(n*H-G*G);
         //assert(radicand.real() > 0);
@@ -78,7 +78,7 @@ double laguerre_internal(Poly const & p,
             return xk;
         double G = pp(xk) / px;
         double H = G*G - ppp(xk) / px;
-        
+
         //std::cout << "G = " << G << "H = " << H;
         double radicand = (n - 1)*(n*H-G*G);
         assert(radicand > 0);
@@ -97,7 +97,7 @@ double laguerre_internal(Poly const & p,
 }
 
 
-std::vector<cdouble > 
+std::vector<cdouble >
 laguerre(Poly p, const double tol) {
     std::vector<cdouble > solutions;
     //std::cout << "p = " << p << " = ";
@@ -113,13 +113,13 @@ laguerre(Poly p, const double tol) {
             dvs.push_back(-(sol + conj(sol)).real());
             dvs.push_back(1.0);
             //std::cout << "(" <<  dvs << ")";
-	    //solutions.push_back(sol);
-	    //solutions.push_back(conj(sol));
+            //solutions.push_back(sol);
+            //solutions.push_back(conj(sol));
         } else {
             //std::cout << sol << std::endl;
             dvs.push_back(-sol.real());
             dvs.push_back(1.0);
-	    solutions.push_back(sol);
+            solutions.push_back(sol);
             //std::cout << "(" <<  dvs << ")";
         }
         Poly r;
@@ -129,10 +129,10 @@ laguerre(Poly p, const double tol) {
     return solutions;
 }
 
-std::vector<double> 
-laguerre_real_interval(Poly const & ply, 
-		       const double lo, const double hi,
-		       const double tol) {
+std::vector<double>
+laguerre_real_interval(Poly const & ply,
+                       const double lo, const double hi,
+                       const double tol) {
 }
 
 /*

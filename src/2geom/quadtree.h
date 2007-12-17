@@ -20,7 +20,7 @@ public:
     double by0, by1;
 
     QuadTree() : root(0), scale(1) {}
-    
+
     Quad* search(double x0, double y0, double x1, double y1);
     void insert(double x0, double y0, double x1, double y1, int shape);
     void erase(Quad *q, int shape);

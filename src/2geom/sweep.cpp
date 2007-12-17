@@ -7,7 +7,7 @@ namespace Geom {
 std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> rs) {
     std::vector<Event> events; events.reserve(rs.size()*2);
     std::vector<std::vector<unsigned> > pairs(rs.size());
-    
+
     for(unsigned i = 0; i < rs.size(); i++) {
         events.push_back(Event(rs[i].left(), i, false));
         events.push_back(Event(rs[i].right(), i, true));
@@ -40,7 +40,7 @@ std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> a, std::vecto
     std::vector<Event> events[2];
     events[0].reserve(a.size()*2);
     events[1].reserve(b.size()*2);
-    
+
     for(unsigned n = 0; n < 2; n++) {
         unsigned sz = n ? b.size() : a.size();
         events[n].reserve(sz*2);
@@ -90,14 +90,14 @@ std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> a, std::vecto
 //Fake cull, until the switch to the real sweep is made.
 std::vector<std::vector<unsigned> > fake_cull(unsigned a, unsigned b) {
     std::vector<std::vector<unsigned> > ret;
-    
+
     std::vector<unsigned> all;
     for(unsigned j = 0; j < b; j++)
         all.push_back(j);
-    
+
     for(unsigned i = 0; i < a; i++)
         ret.push_back(all);
-    
+
     return ret;
 }
 

@@ -90,7 +90,7 @@ class Piecewise {
     }
     //Convenience/implementation hiding function to add cuts.
     inline void push_cut(double c) {
-        assert_invariants(cuts.empty() || c > cuts.back()); 
+        assert_invariants(cuts.empty() || c > cuts.back());
         cuts.push_back(c);
     }
     //Convenience/implementation hiding function to add segments.
@@ -129,7 +129,7 @@ class Piecewise {
 
     inline double mapToDomain(double t, unsigned i) const {
         return (1-t)*cuts[i] + t*cuts[i+1]; //same as: t * (cuts[i+1] - cuts[i]) + cuts[i]
-    }    
+    }
 
     //Offsets the piecewise domain
     inline void offsetDomain(double o) {
@@ -170,13 +170,13 @@ class Piecewise {
     inline void concat(const Piecewise<T> &other) {
         if(other.empty()) return;
 
-        if(empty()) { 
+        if(empty()) {
             cuts = other.cuts; segs = other.segs;
             return;
         }
 
         segs.insert(segs.end(), other.segs.begin(), other.segs.end());
-        double t = cuts.back() - other.cuts.front();        
+        double t = cuts.back() - other.cuts.front();
         for(unsigned i = 0; i < other.size(); i++)
             push_cut(other.cuts[i + 1] + t);
     }
@@ -216,42 +216,42 @@ class Piecewise {
 template<typename T>
 inline typename FragmentConcept<T>::BoundsType bounds_fast(const Piecewise<T> &f) {
     boost::function_requires<FragmentConcept<T> >();
-    
+
     if(f.empty()) return typename FragmentConcept<T>::BoundsType();
     typename FragmentConcept<T>::BoundsType ret(bounds_fast(f[0]));
     for(unsigned i = 1; i < f.size(); i++)
-        ret.unionWith(bounds_fast(f[i])); 
+        ret.unionWith(bounds_fast(f[i]));
     return ret;
 }
 
 template<typename T>
 inline typename FragmentConcept<T>::BoundsType bounds_exact(const Piecewise<T> &f) {
     boost::function_requires<FragmentConcept<T> >();
-    
+
     if(f.empty()) return typename FragmentConcept<T>::BoundsType();
     typename FragmentConcept<T>::BoundsType ret(bounds_exact(f[0]));
     for(unsigned i = 1; i < f.size(); i++)
-        ret.unionWith(bounds_exact(f[i])); 
+        ret.unionWith(bounds_exact(f[i]));
     return ret;
 }
 
 template<typename T>
 inline typename FragmentConcept<T>::BoundsType bounds_local(const Piecewise<T> &f, const Interval &m) {
     boost::function_requires<FragmentConcept<T> >();
-    
+
     if(f.empty()) return typename FragmentConcept<T>::BoundsType();
     if(m.isEmpty()) return typename FragmentConcept<T>::BoundsType(f(m.min()));
-    
+
     unsigned fi = f.segN(m.min()), ti = f.segN(m.max());
     double ft = f.segT(m.min(), fi), tt = f.segT(m.max(), ti);
-    
+
     if(fi == ti) return bounds_local(f[fi], Interval(ft, tt));
-    
+
     typename FragmentConcept<T>::BoundsType ret(bounds_local(f[fi], Interval(ft, 1.)));
     for(unsigned i = fi + 1; i < ti; i++)
         ret.unionWith(bounds_exact(f[i]));
     if(tt != 0.) ret.unionWith(bounds_local(f[ti], Interval(0., tt)));
-    
+
     return ret;
 }
 
@@ -266,7 +266,7 @@ T elem_portion(const Piecewise<T> &a, unsigned i, double from, double to) {
 /**Piecewise<T> partition(const Piecewise<T> &pw, std::vector<double> const &c);
  * Further subdivides the Piecewise<T> such that there is a cut at every value in c.
  * Precondition: c sorted lower to higher.
- * 
+ *
  * //Given Piecewise<T> a and b:
  * Piecewise<T> ac = a.partition(b.cuts);
  * Piecewise<T> bc = b.partition(a.cuts);
@@ -325,7 +325,7 @@ Piecewise<T> partition(const Piecewise<T> &pw, std::vector<double> const &c) {
             ci++;
         }
     }
-    
+
     //input cuts extend further than this Piecewise<T>, extend the last segment.
     while(ci < c.size()) {
         if(c[ci] > prev) {
@@ -349,7 +349,7 @@ Piecewise<T> portion(const Piecewise<T> &pw, double from, double to) {
     double temp = from;
     from = std::min(from, to);
     to = std::max(temp, to);
-    
+
     unsigned i = pw.segN(from);
     ret.push_cut(from);
     if(i == pw.size() - 1 || to < pw.cuts[i + 1]) {    //to/from inhabit the same segment
@@ -568,14 +568,14 @@ inline Piecewise<T> operator*=(Piecewise<T> &a, Piecewise<T> const &b) {
 Piecewise<SBasis> divide(Piecewise<SBasis> const &a, Piecewise<SBasis> const &b, unsigned k);
 //TODO: replace divide(a,b,k) by divide(a,b,tol,k)?
 //TODO: atm, relative error is ~(tol/a)%. Find a way to make it independant of a.
-//Nota: the result is 'truncated' where b is smaller than 'zero': ~ a/max(b,zero). 
-Piecewise<SBasis> 
+//Nota: the result is 'truncated' where b is smaller than 'zero': ~ a/max(b,zero).
+Piecewise<SBasis>
 divide(Piecewise<SBasis> const &a, Piecewise<SBasis> const &b, double tol, unsigned k, double zero=1.e-3);
-Piecewise<SBasis> 
+Piecewise<SBasis>
 divide(SBasis const &a, Piecewise<SBasis> const &b, double tol, unsigned k, double zero=1.e-3);
-Piecewise<SBasis> 
+Piecewise<SBasis>
 divide(Piecewise<SBasis> const &a, SBasis const &b, double tol, unsigned k, double zero=1.e-3);
-Piecewise<SBasis> 
+Piecewise<SBasis>
 divide(SBasis const &a, SBasis const &b, double tol, unsigned k, double zero=1.e-3);
 
 //Composition: functions called compose_* are pieces of compose that are factored out in pw.cpp.
@@ -595,20 +595,20 @@ Piecewise<T> compose(Piecewise<T> const &f, SBasis const &g){
         double t0 = f.cuts[0], width = f.cuts[1] - t0;
         return (Piecewise<T>) compose(f.segs[0],compose(Linear(-t0 / width, (1-t0) / width), g));
     }
-    
+
     //first check bounds...
     Interval bs = bounds_fast(g);
     if (f.cuts.front() > bs.max()  || bs.min() > f.cuts.back()){
         int idx = (bs.max() < f.cuts[1]) ? 0 : f.cuts.size()-2;
         double t0 = f.cuts[idx], width = f.cuts[idx+1] - t0;
-        return (Piecewise<T>) compose(f.segs[idx],compose(Linear(-t0 / width, (1-t0) / width), g));  
+        return (Piecewise<T>) compose(f.segs[idx],compose(Linear(-t0 / width, (1-t0) / width), g));
     }
-    
+
     std::vector<double> levels;//we can forget first and last cuts...
     levels.insert(levels.begin(),f.cuts.begin()+1,f.cuts.end()-1);
     //TODO: use a std::vector<pairs<double,unsigned> > instead of a map<double,unsigned>.
     std::map<double,unsigned> cuts_pb = compose_pullback(levels,g);
-    
+
     //-- Compose each piece of g with the relevant seg of f.
     result.cuts.push_back(0.);
     std::map<double,unsigned>::iterator cut=cuts_pb.begin();
@@ -620,7 +620,7 @@ Piecewise<T> compose(Piecewise<T> const &f, SBasis const &g){
         int idx = compose_findSegIdx(cut,next,levels,g);
         double t0=(*cut).first;
         double t1=(*next).first;
-        
+
         SBasis sub_g=compose(g, Linear(t0,t1));
         sub_g=compose(Linear(-f.cuts[idx]/(f.cuts[idx+1]-f.cuts[idx]),
                              (1-f.cuts[idx])/(f.cuts[idx+1]-f.cuts[idx])),sub_g);
@@ -629,7 +629,7 @@ Piecewise<T> compose(Piecewise<T> const &f, SBasis const &g){
         next++;
     }
     return(result);
-} 
+}
 
 //TODO: add concept check for following composition functions
 template<typename T>

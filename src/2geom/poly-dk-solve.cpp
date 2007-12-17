@@ -6,7 +6,7 @@
 std::complex<double> evalu(Poly const & p, std::complex<double> x) {
     std::complex<double> result = 0;
     std::complex<double> xx = 1;
-    
+
     for(unsigned i = 0; i < p.size(); i++) {
         result += p[i]*xx;
         xx *= x;
@@ -17,7 +17,7 @@ std::complex<double> evalu(Poly const & p, std::complex<double> x) {
 std::vector<std::complex<double> > DK(Poly const & ply, const double tol) {
     std::vector<std::complex<double> > roots;
     const int N = ply.degree();
-    
+
     std::complex<double> b(0.4, 0.9);
     std::complex<double> p = 1;
     for(int i = 0; i < N; i++) {
@@ -25,7 +25,7 @@ std::vector<std::complex<double> > DK(Poly const & ply, const double tol) {
         p *= b;
     }
     assert(roots.size() == ply.degree());
-    
+
     double error = 0;
     int i;
     for( i = 0; i < 30; i++) {
@@ -38,7 +38,7 @@ std::vector<std::complex<double> > DK(Poly const & ply, const double tol) {
                     denom *= R-roots[d_i];
             }
             assert(norm(denom) != 0);
-	    std::complex<double> dr = evalu(ply, R)/denom;
+            std::complex<double> dr = evalu(ply, R)/denom;
             error += norm(dr);
             roots[r_i] = R - dr;
         }
