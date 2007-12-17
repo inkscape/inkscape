@@ -299,6 +299,9 @@ void LayerSelector::_setDesktopLayer() {
 
         _selectLayer(_desktop->currentLayer());
     }
+    if (_desktop && _desktop->canvas) {
+        gtk_widget_grab_focus (GTK_WIDGET(_desktop->canvas));
+    }
 }
 
 /** Creates rows in the _layer_model data structure for each item
