@@ -40,6 +40,8 @@
 #include "prefs-utils.h"
 #include "context-fns.h"
 
+//static const double goldenratio = 1.61803398874989484820; // golden ratio
+
 static void sp_rect_context_class_init(SPRectContextClass *klass);
 static void sp_rect_context_init(SPRectContext *rect_context);
 static void sp_rect_context_dispose(GObject *object);
@@ -507,14 +509,29 @@ static void sp_rect_drag(SPRectContext &rc, NR::Point const pt, guint state)
     GString *ys = SP_PX_TO_METRIC_STRING(rdimy, desktop->namedview->getDefaultMetric());
     if (state & GDK_CONTROL_MASK) {
         int ratio_x, ratio_y;
+        bool is_golden_ratio = false;
         if (fabs (rdimx) > fabs (rdimy)) {
+            if (fabs(rdimx / rdimy - goldenratio) < 1e-6) {
+                is_golden_ratio = true;
+            }
             ratio_x = (int) rint (rdimx / rdimy);
             ratio_y = 1;
         } else {
+            if (fabs(rdimy / rdimx - goldenratio) < 1e-6) {
+                is_golden_ratio = true;
+            }
             ratio_x = 1;
             ratio_y = (int) rint (rdimy / rdimx);
         }
-        rc._message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"), xs->str, ys->str, ratio_x, ratio_y);
+        if (!is_golden_ratio) {
+            rc._message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"), xs->str, ys->str, ratio_x, ratio_y);
+        } else {
+            if (ratio_y == 1) {
+                rc._message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
+            } else {
+                rc._message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
+            }
+        }
     } else {
         rc._message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"), xs->str, ys->str);
     }

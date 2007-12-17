@@ -1,6 +1,8 @@
 #include <gdk/gdkevents.h>
 struct SPDesktop;
 
+const double goldenratio = 1.61803398874989484820; // golden ratio
+
 namespace Inkscape
 {
 

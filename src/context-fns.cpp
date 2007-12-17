@@ -13,6 +13,9 @@
 #include "event-context.h"
 #include "sp-namedview.h"
 
+static const double midpt_1_goldenratio = (1 + goldenratio) / 2;
+static const double midpt_goldenratio_2 = (goldenratio + 2) / 2;
+
 /* FIXME: could probably use a template here */
 
 /**
@@ -90,11 +93,25 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
         /* Vector from the centre of the box to the point we are dragging to */
         NR::Point delta = pt - center;
 
-        /* Round it so that we have an integer-ratio box */
+        /* Round it so that we have an integer-ratio (or golden ratio) box */
         if (fabs(delta[NR::X]) > fabs(delta[NR::Y]) && (delta[NR::Y] != 0.0)) {
-            delta[NR::X] = floor(delta[NR::X] / delta[NR::Y] + 0.5) * delta[NR::Y];
+            double ratio = delta[NR::X] / delta[NR::Y];
+            double ratioabs = fabs (ratio);
+            double sign = (ratio < 0 ? -1 : 1);
+            if (midpt_1_goldenratio < ratioabs && ratioabs < midpt_goldenratio_2) {
+                delta[NR::X] = sign * goldenratio * delta[NR::Y];
+            } else {
+                delta[NR::X] = floor(ratio + 0.5) * delta[NR::Y];
+            }
         } else if (delta[NR::X] != 0.0) {
-            delta[NR::Y] = floor(delta[NR::Y] / delta[NR::X] + 0.5) * delta[NR::X];
+            double ratio = delta[NR::Y] / delta[NR::X];
+            double ratioabs = fabs (ratio);
+            double sign = (ratio < 0 ? -1 : 1);
+            if (midpt_1_goldenratio < ratioabs && ratioabs < midpt_goldenratio_2) {
+                delta[NR::Y] = sign * goldenratio * delta[NR::X];
+            } else {
+                delta[NR::Y] = floor(delta[NR::Y] / delta[NR::X] + 0.5) * delta[NR::X];
+            }
         }
 
         /* p[1] is the dragged point with the integer-ratio constraint */
