@@ -148,6 +148,10 @@ public:
     bool getSnapEnabledGlobally() const {
         return _snap_enabled_globally;   
     }
+    
+    void toggleSnapEnabledGlobally() {
+        _snap_enabled_globally = !_snap_enabled_globally;   
+    }
         
 protected:
     SPNamedView const *_named_view;
