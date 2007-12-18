@@ -69,6 +69,10 @@ static GObjectClass *parent_class;
 static bool selector_toggled = FALSE;
 static int switch_selector_to = 0;
 
+// globals for temporary switching to dropper by 'D'
+static bool dropper_toggled = FALSE;
+static int switch_dropper_to = 0;
+
 static gint xp = 0, yp = 0; // where drag started
 static gint tolerance = 0;
 static bool within_tolerance = false;
@@ -273,6 +277,27 @@ sp_toggle_selector(SPDesktop *dt)
         selector_toggled = TRUE;
         switch_selector_to = tools_active(dt);
         tools_switch (dt, TOOLS_SELECT);
+    }
+}
+
+/**
+ * Toggles current tool between active tool and selector tool.
+ * Subroutine of sp_event_context_private_root_handler().
+ */
+static void
+sp_toggle_dropper(SPDesktop *dt)
+{
+    if (!dt->event_context) return;
+
+    if (tools_isactive(dt, TOOLS_DROPPER)) {
+        if (dropper_toggled) {
+            if (switch_dropper_to) tools_switch (dt, switch_dropper_to);
+            dropper_toggled = FALSE;
+        } else return;
+    } else {
+        dropper_toggled = TRUE;
+        switch_dropper_to = tools_active(dt);
+        tools_switch (dt, TOOLS_DROPPER);
     }
 }
 
@@ -495,6 +520,11 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                     ret = sp_shortcut_invoke(shortcut, desktop);
                     break;
 
+                case GDK_D:
+                case GDK_d:
+                    sp_toggle_dropper(desktop);
+                    ret = TRUE;
+                    break;
                 case GDK_W:
                 case GDK_w:
                 case GDK_F4:
