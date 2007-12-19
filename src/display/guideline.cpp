@@ -141,7 +141,9 @@ static void sp_guideline_update(SPCanvasItem *item, NR::Matrix const &affine, un
     gl->point_on_line[Geom::Y] = affine[5];
 
     if (gl->normal_to_line[Geom::Y] == 1.) {
-        sp_canvas_update_bbox (item, -1000000, -1000000, 1000000, 1000000);
+        sp_canvas_update_bbox (item, -1000000, gl->point_on_line[Geom::Y], 1000000, gl->point_on_line[Geom::Y] + 1);
+    } else if (gl->normal_to_line[Geom::X] == 1.) {
+        sp_canvas_update_bbox (item, gl->point_on_line[Geom::X], -1000000, gl->point_on_line[Geom::X]+1, 1000000);
     } else {
         sp_canvas_update_bbox (item, -1000000, -1000000, 1000000, 1000000);
     }
