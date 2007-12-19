@@ -199,6 +199,7 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
                 // default to vertical line for bad arguments
                 guide->normal_to_line = component_vectors[NR::X];
             }
+            sp_guide_set_normal(*guide, guide->normal_to_line.to_2geom(), false);
         }
         break;
     case SP_ATTR_POSITION:
@@ -301,10 +302,40 @@ void sp_guide_moveto(SPGuide const &guide, Geom::Point const point_on_line, bool
         sp_guideline_set_position(SP_GUIDELINE(l->data), point_on_line);
     }
 
-    /* Calling sp_repr_set_svg_double must precede calling sp_item_notify_moveto in the commit
+    /* Calling sp_repr_set_svg_point must precede calling sp_item_notify_moveto in the commit
        case, so that the guide's new position is available for sp_item_rm_unsatisfied_cns. */
     if (commit) {
         sp_repr_set_svg_point(SP_OBJECT(&guide)->repr, "position", point_on_line);
+    }
+
+/*  DISABLED CODE BECAUSE  SPGuideAttachment  IS NOT USE AT THE MOMENT (johan)
+    for (vector<SPGuideAttachment>::const_iterator i(guide.attached_items.begin()),
+             iEnd(guide.attached_items.end());
+         i != iEnd; ++i)
+    {
+        SPGuideAttachment const &att = *i;
+        sp_item_notify_moveto(*att.item, guide, att.snappoint_ix, position, commit);
+    }
+*/
+}
+
+/**
+ * \arg commit False indicates temporary moveto in response to motion event while dragging,
+ *      true indicates a "committing" version: in response to button release event after
+ *      dragging a guideline, or clicking OK in guide editing dialog.
+ */
+void sp_guide_set_normal(SPGuide const &guide, Geom::Point const normal_to_line, bool const commit)
+{
+    g_assert(SP_IS_GUIDE(&guide));
+
+    for (GSList *l = guide.views; l != NULL; l = l->next) {
+        sp_guideline_set_normal(SP_GUIDELINE(l->data), normal_to_line);
+    }
+
+    /* Calling sp_repr_set_svg_point must precede calling sp_item_notify_moveto in the commit
+       case, so that the guide's new position is available for sp_item_rm_unsatisfied_cns. */
+    if (commit) {
+        sp_repr_set_svg_point(SP_OBJECT(&guide)->repr, "orientation", normal_to_line);
     }
 
 /*  DISABLED CODE BECAUSE  SPGuideAttachment  IS NOT USE AT THE MOMENT (johan)

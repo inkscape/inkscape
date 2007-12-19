@@ -41,6 +41,7 @@ GType sp_guideline_get_type();
 SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, Geom::Point point_on_line, Geom::Point normal);
 
 void sp_guideline_set_position(SPGuideLine *gl, Geom::Point point_on_line);
+void sp_guideline_set_normal(SPGuideLine *gl, Geom::Point normal_to_line);
 void sp_guideline_set_color(SPGuideLine *gl, unsigned int rgba);
 void sp_guideline_set_sensitive(SPGuideLine *gl, int sensitive);
 

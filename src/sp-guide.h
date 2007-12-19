@@ -48,6 +48,7 @@ void sp_guide_sensitize(SPGuide *guide, SPCanvas *canvas, gboolean sensitive);
 Geom::Point sp_guide_position_from_pt(SPGuide const *guide, NR::Point const &pt);
 double sp_guide_distance_from_pt(SPGuide const *guide, Geom::Point const &pt);
 void sp_guide_moveto(SPGuide const &guide, Geom::Point const point_on_line, bool const commit);
+void sp_guide_set_normal(SPGuide const &guide, Geom::Point const normal_to_line, bool const commit);
 void sp_guide_remove(SPGuide *guide);
 
 char *sp_guide_description(SPGuide const *guide);

@@ -183,6 +183,12 @@ void sp_guideline_set_position(SPGuideLine *gl, Geom::Point point_on_line)
                                    NR::Matrix(NR::translate(point_on_line)));
 }
 
+void sp_guideline_set_normal(SPGuideLine *gl, Geom::Point normal_to_line)
+{
+    gl->normal_to_line = normal_to_line;
+    sp_canvas_item_request_update(SP_CANVAS_ITEM (gl));
+}
+
 void sp_guideline_set_color(SPGuideLine *gl, unsigned int rgba)
 {
     gl->rgba = rgba;
