@@ -20,7 +20,7 @@ void sp_item_notify_moveto(SPItem &item, SPGuide const &mv_g, int const snappoin
 {
     g_return_if_fail(SP_IS_ITEM(&item));
     g_return_if_fail( unsigned(snappoint_ix) < 8 );
-    NR::Point const dir( mv_g.normal );
+    NR::Point const dir( mv_g.normal_to_line );
     double const dir_lensq(dot(dir, dir));
     g_return_if_fail( dir_lensq != 0 );
 

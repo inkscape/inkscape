@@ -101,7 +101,7 @@ static void sp_guide_class_init(SPGuideClass *gc)
 
 static void sp_guide_init(SPGuide *guide)
 {
-    guide->normal = component_vectors[NR::Y];
+    guide->normal_to_line = component_vectors[NR::Y];
     /* constrain y coordinate; horizontal line.  I doubt it ever matters what we initialize
        this to. */
     guide->position = 0.0;
@@ -170,12 +170,13 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
     SPGuide *guide = SP_GUIDE(object);
 
     switch (key) {
-	case SP_ATTR_ORIENTATION:
+    case SP_ATTR_ORIENTATION:
+        {
             if (value && !strcmp(value, "horizontal")) {
                 /* Visual representation of a horizontal line, constrain vertically (y coordinate). */
-                guide->normal = component_vectors[NR::Y];
+                guide->normal_to_line = component_vectors[NR::Y];
             } else if (value && !strcmp(value, "vertical")) {
-                guide->normal = component_vectors[NR::X];
+                guide->normal_to_line = component_vectors[NR::X];
             } else if (value) {
                 gchar ** strarray = g_strsplit(value, ",", 2);
                 double newx, newy;
@@ -185,23 +186,43 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
                 if (success == 2) {
                     Geom::Point direction(newx, newy);
                     direction.normalize();
-                    guide->normal = direction;
+                    guide->normal_to_line = direction;
                 } else {
                     // default to vertical line for bad arguments
-                    guide->normal = component_vectors[NR::X];
+                    guide->normal_to_line = component_vectors[NR::X];
                 }
             } else {
                 // default to vertical line for bad arguments
-                guide->normal = component_vectors[NR::X];
+                guide->normal_to_line = component_vectors[NR::X];
             }
-            break;
-	case SP_ATTR_POSITION:
+        }
+        break;
+    case SP_ATTR_POSITION:
+        {
+            gchar ** strarray = g_strsplit(value, ",", 2);
+            double newx, newy;
+            unsigned int success = sp_svg_number_read_d(strarray[0], &newx);
+            success += sp_svg_number_read_d(strarray[1], &newy);
+            g_strfreev (strarray);
+            if (success == 2) {
+                guide->point_on_line = Geom::Point(newx, newy);
+            } else if (success == 1) {
+                // before 0.46 style guideline definition.
+                const gchar *attr = SP_OBJECT_REPR(object)->attribute("orientation");
+                if (attr && !strcmp(attr, "horizontal")) {
+                    guide->point_on_line = Geom::Point(0, newx);
+                } else {
+                    guide->point_on_line = Geom::Point(newx, 0);
+                }
+            }
             sp_svg_number_read_d(value, &guide->position);
+
             // update position in non-committing way
             // fixme: perhaps we need to add an update method instead, and request_update here
             sp_guide_moveto(*guide, guide->position, false);
-            break;
-	default:
+        }
+        break;
+    default:
             if (((SPObjectClass *) (parent_class))->set) {
                 ((SPObjectClass *) (parent_class))->set(object, key, value);
             }
@@ -211,9 +232,9 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
 
 void sp_guide_show(SPGuide *guide, SPCanvasGroup *group, GCallback handler)
 {
-    bool const vertical_line_p = ( guide->normal == component_vectors[NR::X] );
-    g_assert(( guide->normal == component_vectors[NR::X] )  ||
-             ( guide->normal == component_vectors[NR::Y] ) );
+    bool const vertical_line_p = ( guide->normal_to_line == component_vectors[NR::X] );
+    g_assert(( guide->normal_to_line == component_vectors[NR::X] )  ||
+             ( guide->normal_to_line == component_vectors[NR::Y] ) );
     SPCanvasItem *item = sp_guideline_new(group, guide->position, vertical_line_p ? Geom::Point(1.,0.) : Geom::Point(0.,1.));
     sp_guideline_set_color(SP_GUIDELINE(item), guide->color);
 
@@ -259,7 +280,7 @@ void sp_guide_sensitize(SPGuide *guide, SPCanvas *canvas, gboolean sensitive)
 
 double sp_guide_position_from_pt(SPGuide const *guide, NR::Point const &pt)
 {
-    return dot(guide->normal, pt);
+    return dot(guide->normal_to_line, pt);
 }
 
 /**
@@ -302,13 +323,13 @@ char *sp_guide_description(SPGuide const *guide)
     using NR::X;
     using NR::Y;
 
-    if ( guide->normal == component_vectors[X] ) {
+    if ( guide->normal_to_line == component_vectors[X] ) {
         return g_strdup(_("vertical guideline"));
-    } else if ( guide->normal == component_vectors[Y] ) {
+    } else if ( guide->normal_to_line == component_vectors[Y] ) {
         return g_strdup(_("horizontal guideline"));
     } else {
-        double const radians = atan2(guide->normal[X],
-                                     guide->normal[Y]);
+        double const radians = atan2(guide->normal_to_line[X],
+                                     guide->normal_to_line[Y]);
         /* flip y axis and rotate 90 degrees to convert to line angle */
         double const degrees = ( radians / M_PI ) * 180.0;
         int const degrees_int = (int) floor( degrees + .5 );

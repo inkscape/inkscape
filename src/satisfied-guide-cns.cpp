@@ -13,7 +13,7 @@ void satisfied_guide_cns(SPDesktop const &desktop,
     for (GSList const *l = nv.guides; l != NULL; l = l->next) {
         SPGuide &g = *SP_GUIDE(l->data);
         for (unsigned int i = 0; i < snappoints.size(); ++i) {
-            if (approx_equal(dot(g.normal, snappoints[i]), g.position)) {
+            if (approx_equal(dot(g.normal_to_line, snappoints[i]), g.position)) {
                 cns.push_back(SPGuideConstraint(&g, i));
             }
         }

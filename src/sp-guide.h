@@ -26,7 +26,8 @@
 
 /* Represents the constraint on p that dot(g.direction, p) == g.position. */
 struct SPGuide : public SPObject {
-    NR::Point normal;
+    NR::Point normal_to_line;
+    Geom::Point point_on_line;
     gdouble position;
     guint32 color;
     guint32 hicolor;
@@ -35,7 +36,7 @@ struct SPGuide : public SPObject {
 };
 
 struct SPGuideClass {
-	SPObjectClass parent_class;
+    SPObjectClass parent_class;
 };
 
 GType sp_guide_get_type();

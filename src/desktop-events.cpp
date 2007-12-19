@@ -176,7 +176,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 // This is for snapping while dragging existing guidelines. New guidelines, 
                 // which are dragged off the ruler, are being snapped in sp_dt_ruler_event
                 SnapManager const &m = desktop->namedview->snap_manager;
-                motion_dt = m.guideSnap(motion_dt, guide->normal).getPoint();
+                motion_dt = m.guideSnap(motion_dt, guide->normal_to_line).getPoint();
                 
                 sp_guide_moveto(*guide, sp_guide_position_from_pt(guide, motion_dt), false);
                 moved = true;
@@ -193,7 +193,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     NR::Point event_dt(desktop->w2d(event_w));
                     
                     SnapManager const &m = desktop->namedview->snap_manager;
-                	event_dt = m.guideSnap(event_dt, guide->normal).getPoint();
+                	event_dt = m.guideSnap(event_dt, guide->normal_to_line).getPoint();
                 
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {
                         sp_guide_moveto(*guide, sp_guide_position_from_pt(guide, event_dt), true);

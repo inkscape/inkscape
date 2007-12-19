@@ -32,8 +32,8 @@ Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(NR::Point
 
     for (GSList const *l = _named_view->guides; l != NULL; l = l->next) {
         SPGuide const *g = SP_GUIDE(l->data);
-        NR::Point point_on_line = (g->normal == component_vectors[NR::X]) ? NR::Point(g->position, 0) : NR::Point(0, g->position);
-        s.push_back(std::make_pair(g->normal, point_on_line)); 
+        NR::Point point_on_line = (g->normal_to_line == component_vectors[NR::X]) ? NR::Point(g->position, 0) : NR::Point(0, g->position);
+        s.push_back(std::make_pair(g->normal_to_line, point_on_line)); 
     }
 
     return s;
