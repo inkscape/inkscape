@@ -63,10 +63,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 sp_repr_set_boolean(repr, "showguides", TRUE);
                 sp_repr_set_boolean(repr, "inkscape:guide-bbox", TRUE);
 
-                double const guide_pos_dt = event_dt[ horiz
-                                                      ? NR::Y
-                                                      : NR::X ];
-                guide = sp_guideline_new(desktop->guides, guide_pos_dt, horiz ? Geom::Point(0.,1.) : Geom::Point(1.,0.));
+                guide = sp_guideline_new(desktop->guides, event_dt.to_2geom(), horiz ? Geom::Point(0.,1.) : Geom::Point(1.,0.));
                 sp_guideline_set_color(SP_GUIDELINE(guide), desktop->namedview->guidehicolor);
                 gdk_pointer_grab(widget->window, FALSE,
                                  (GdkEventMask)(GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK ),
@@ -82,11 +79,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 SnapManager const &m = desktop->namedview->snap_manager;
                 event_dt = m.guideSnap(event_dt, component_vectors[horiz ? NR::Y : NR::X]).getPoint();
                 
-                double const guide_pos_dt = event_dt[ horiz
-                                                      ? NR::Y
-                                                      : NR::X ];
-                
-                sp_guideline_set_position(SP_GUIDELINE(guide), guide_pos_dt);
+                sp_guideline_set_position(SP_GUIDELINE(guide), event_dt.to_2geom());
                 desktop->set_coordinate_status(event_dt);
                 desktop->setPosition (event_dt);
             }
@@ -107,10 +100,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
                     Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
                     repr->setAttribute("orientation", (horiz) ? "horizontal" : "vertical");
-                    double const guide_pos_dt = event_dt[ horiz
-                                                          ? NR::Y
-                                                          : NR::X ];
-                    sp_repr_set_svg_double(repr, "position", guide_pos_dt);
+                    sp_repr_set_svg_point(repr, "position", event_dt.to_2geom());
                     SP_OBJECT_REPR(desktop->namedview)->appendChild(repr);
                     Inkscape::GC::release(repr);
                     sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
@@ -167,7 +157,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 ret = TRUE;
             }
             break;
-	case GDK_MOTION_NOTIFY:
+    case GDK_MOTION_NOTIFY:
             if (dragging) {
                 NR::Point const motion_w(event->motion.x,
                                          event->motion.y);
@@ -185,23 +175,23 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 ret = TRUE;
             }
             break;
-	case GDK_BUTTON_RELEASE:
+    case GDK_BUTTON_RELEASE:
             if (dragging && event->button.button == 1) {
                 if (moved) {
                     NR::Point const event_w(event->button.x,
                                             event->button.y);
                     NR::Point event_dt(desktop->w2d(event_w));
-                    
+
                     SnapManager const &m = desktop->namedview->snap_manager;
-                	event_dt = m.guideSnap(event_dt, guide->normal_to_line).getPoint();
-                
+                    event_dt = m.guideSnap(event_dt, guide->normal_to_line).getPoint();
+
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {
                         sp_guide_moveto(*guide, sp_guide_position_from_pt(guide, event_dt), true);
                         sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE,
                                      _("Move guide"));
                     } else {
                         /* Undo movement of any attached shapes. */
-                        sp_guide_moveto(*guide, guide->position, false);
+                        sp_guide_moveto(*guide, guide->point_on_line, false);
                         sp_guide_remove(guide);
                         sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE,
                                      _("Delete guide"));
@@ -214,25 +204,20 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 sp_canvas_item_ungrab(item, event->button.time);
                 ret=TRUE;
             }
-	case GDK_ENTER_NOTIFY:
-	{
-
+    case GDK_ENTER_NOTIFY:
+    {
             sp_guideline_set_color(SP_GUIDELINE(item), guide->hicolor);
 
-            GString *position_string = SP_PX_TO_METRIC_STRING(guide->position, desktop->namedview->getDefaultMetric());
             char *guide_description = sp_guide_description(guide);
-
-            desktop->guidesMessageContext()->setF(Inkscape::NORMAL_MESSAGE, _("%s at %s"), guide_description, position_string->str);
-
+            desktop->guidesMessageContext()->setF(Inkscape::NORMAL_MESSAGE, "%s", guide_description);
             g_free(guide_description);
-            g_string_free(position_string, TRUE);
             break;
-	}
-	case GDK_LEAVE_NOTIFY:
+    }
+    case GDK_LEAVE_NOTIFY:
             sp_guideline_set_color(SP_GUIDELINE(item), guide->color);
             desktop->guidesMessageContext()->clear();
             break;
-	default:
+    default:
             break;
     }
 

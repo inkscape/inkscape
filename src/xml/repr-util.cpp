@@ -576,6 +576,17 @@ sp_repr_set_svg_double(Inkscape::XML::Node *repr, gchar const *key, double val)
     return true;
 }
 
+unsigned sp_repr_set_svg_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point val)
+{
+    g_return_val_if_fail(repr != NULL, FALSE);
+    g_return_val_if_fail(key != NULL, FALSE);
+
+    Inkscape::SVGOStringStream os;
+    os << val[Geom::X] << "," << val[Geom::Y];
+
+    repr->setAttribute(key, os.str().c_str());
+    return true;
+}
 
 /*
   Local Variables:

@@ -69,7 +69,8 @@ static void sp_guideline_init(SPGuideLine *gl)
 {
     gl->rgba = 0x0000ff7f;
 
-    gl->normal = Geom::Point(0,1);
+    gl->normal_to_line = Geom::Point(0,1);
+    gl->point_on_line = Geom::Point(0,0);
     gl->sensitive = 0;
 }
 
@@ -89,15 +90,16 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
     unsigned int const b = NR_RGBA32_B (gl->rgba);
     unsigned int const a = NR_RGBA32_A (gl->rgba);
 
-    if (gl->normal[Geom::Y] == 0.) {
-        if (gl->position < buf->rect.x0 || gl->position >= buf->rect.x1) {
+    if (gl->normal_to_line[Geom::Y] == 0.) {
+        int position = gl->point_on_line[Geom::X];
+        if (position < buf->rect.x0 || position >= buf->rect.x1) {
             return;
         }
 
         int p0 = buf->rect.y0;
         int p1 = buf->rect.y1;
         int step = buf->buf_rowstride;
-        unsigned char *d = buf->buf + 3 * (gl->position - buf->rect.x0);
+        unsigned char *d = buf->buf + 3 * (position - buf->rect.x0);
 
         for (int p = p0; p < p1; p++) {
             d[0] = NR_COMPOSEN11_1111(r, a, d[0]);
@@ -105,15 +107,16 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
             d[2] = NR_COMPOSEN11_1111(b, a, d[2]);
             d += step;
         }
-    } else if (gl->normal[Geom::X] == 0.) {
-        if (gl->position < buf->rect.y0 || gl->position >= buf->rect.y1) {
+    } else if (gl->normal_to_line[Geom::X] == 0.) {
+        int position = gl->point_on_line[Geom::Y];
+        if (position < buf->rect.y0 || position >= buf->rect.y1) {
             return;
         }
 
         int p0 = buf->rect.x0;
         int p1 = buf->rect.x1;
         int step = 3;
-        unsigned char *d = buf->buf + (gl->position - buf->rect.y0) * buf->buf_rowstride;
+        unsigned char *d = buf->buf + (position - buf->rect.y0) * buf->buf_rowstride;
 
         for (int p = p0; p < p1; p++) {
             d[0] = NR_COMPOSEN11_1111(r, a, d[0]);
@@ -134,15 +137,17 @@ static void sp_guideline_update(SPCanvasItem *item, NR::Matrix const &affine, un
         ((SPCanvasItemClass *) parent_class)->update(item, affine, flags);
     }
 
-    if (gl->normal[Geom::Y] == 0.) {
-        gl->position = (int) (affine[4] + 0.5);
-        sp_canvas_update_bbox (item, gl->position, -1000000, gl->position + 1, 1000000);
+    gl->point_on_line[Geom::X] = affine[4];
+    gl->point_on_line[Geom::Y] = affine[5];
+
+    if (gl->normal_to_line[Geom::Y] == 1.) {
+        sp_canvas_update_bbox (item, -1000000, -1000000, 1000000, 1000000);
     } else {
-        gl->position = (int) (affine[5] - 0.5);
-        sp_canvas_update_bbox (item, -1000000, gl->position, 1000000, gl->position + 1);
+        sp_canvas_update_bbox (item, -1000000, -1000000, 1000000, 1000000);
     }
 }
 
+// Returns 0.0 if point is on the guideline
 static double sp_guideline_point(SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item)
 {
     SPGuideLine *gl = SP_GUIDELINE (item);
@@ -153,30 +158,27 @@ static double sp_guideline_point(SPCanvasItem *item, NR::Point p, SPCanvasItem *
 
     *actual_item = item;
 
-    if (gl->normal[Geom::Y] == 0.) {
-        return MAX(fabs(gl->position - p[NR::X])-1, 0);
-    } else {
-        return MAX(fabs(gl->position - p[NR::Y])-1, 0);
-    }
+    double distance = Geom::dot((p.to_2geom() - gl->point_on_line), gl->normal_to_line);
+    return MAX(fabs(distance)-1, 0);
 }
 
-SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, double position, Geom::Point normal)
+SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, Geom::Point point_on_line, Geom::Point normal)
 {
     SPCanvasItem *item = sp_canvas_item_new(parent, SP_TYPE_GUIDELINE, NULL);
 
     SPGuideLine *gl = SP_GUIDELINE(item);
 
     normal.normalize();
-    gl->normal = normal;
-    sp_guideline_set_position(gl, position);
+    gl->normal_to_line = normal;
+    sp_guideline_set_position(gl, point_on_line);
 
     return item;
 }
 
-void sp_guideline_set_position(SPGuideLine *gl, double position)
+void sp_guideline_set_position(SPGuideLine *gl, Geom::Point point_on_line)
 {
     sp_canvas_item_affine_absolute(SP_CANVAS_ITEM (gl),
-                                   NR::Matrix(NR::translate(position, position)));
+                                   NR::Matrix(NR::translate(point_on_line)));
 }
 
 void sp_guideline_set_color(SPGuideLine *gl, unsigned int rgba)

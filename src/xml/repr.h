@@ -21,6 +21,8 @@
 #include "xml/document.h"
 #include "xml/sp-css-attr.h"
 
+#include <2geom/point.h>
+
 #define SP_SODIPODI_NS_URI "http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
 #define SP_BROKEN_SODIPODI_NS_URI "http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
 #define SP_INKSCAPE_NS_URI "http://www.inkscape.org/namespaces/inkscape"
@@ -127,6 +129,10 @@
  * Kees Cook  2004-07-01, updated MenTaLguY 2005-01-25
  */
 
+namespace Geom {
+class Point;
+}
+
 /* SPXMLNs */
 char const *sp_xml_ns_uri_prefix(gchar const *uri, gchar const *suggested);
 char const *sp_xml_ns_prefix_uri(gchar const *prefix);
@@ -215,6 +221,7 @@ unsigned sp_repr_set_boolean(Inkscape::XML::Node *repr, gchar const *key, unsign
 unsigned sp_repr_set_int(Inkscape::XML::Node *repr, gchar const *key, int val);
 unsigned sp_repr_set_css_double(Inkscape::XML::Node *repr, gchar const *key, double val);
 unsigned sp_repr_set_svg_double(Inkscape::XML::Node *repr, gchar const *key, double val);
+unsigned sp_repr_set_svg_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point val);
 
 /// \deprecated !
 double sp_repr_get_double_attribute(Inkscape::XML::Node *repr, gchar const *key, double def);

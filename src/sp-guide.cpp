@@ -20,6 +20,7 @@
 #endif
 #include "display/guideline.h"
 #include "svg/svg.h"
+#include "svg/stringstream.h"
 #include "attributes.h"
 #include "sp-guide.h"
 #include <sp-item-notify-moveto.h>
@@ -28,6 +29,11 @@
 #include <glibmm/i18n.h>
 #include <xml/repr.h>
 #include <remove-last.h>
+#include "sp-metrics.h"
+#include "inkscape.h"
+#include "desktop.h"
+#include "sp-namedview.h"
+
 using std::vector;
 
 enum {
@@ -102,9 +108,7 @@ static void sp_guide_class_init(SPGuideClass *gc)
 static void sp_guide_init(SPGuide *guide)
 {
     guide->normal_to_line = component_vectors[NR::Y];
-    /* constrain y coordinate; horizontal line.  I doubt it ever matters what we initialize
-       this to. */
-    guide->position = 0.0;
+    guide->point_on_line = Geom::Point(0.,0.);
     guide->color = 0x0000ff7f;
     guide->hicolor = 0xff00007f;
 }
@@ -215,11 +219,10 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
                     guide->point_on_line = Geom::Point(newx, 0);
                 }
             }
-            sp_svg_number_read_d(value, &guide->position);
 
             // update position in non-committing way
             // fixme: perhaps we need to add an update method instead, and request_update here
-            sp_guide_moveto(*guide, guide->position, false);
+            sp_guide_moveto(*guide, guide->point_on_line, false);
         }
         break;
     default:
@@ -232,10 +235,7 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
 
 void sp_guide_show(SPGuide *guide, SPCanvasGroup *group, GCallback handler)
 {
-    bool const vertical_line_p = ( guide->normal_to_line == component_vectors[NR::X] );
-    g_assert(( guide->normal_to_line == component_vectors[NR::X] )  ||
-             ( guide->normal_to_line == component_vectors[NR::Y] ) );
-    SPCanvasItem *item = sp_guideline_new(group, guide->position, vertical_line_p ? Geom::Point(1.,0.) : Geom::Point(0.,1.));
+    SPCanvasItem *item = sp_guideline_new(group, guide->point_on_line, guide->normal_to_line.to_2geom());
     sp_guideline_set_color(SP_GUIDELINE(item), guide->color);
 
     g_signal_connect(G_OBJECT(item), "event", G_CALLBACK(handler), guide);
@@ -278,32 +278,36 @@ void sp_guide_sensitize(SPGuide *guide, SPCanvas *canvas, gboolean sensitive)
     g_assert_not_reached();
 }
 
-double sp_guide_position_from_pt(SPGuide const *guide, NR::Point const &pt)
+Geom::Point sp_guide_position_from_pt(SPGuide const *guide, NR::Point const &pt)
 {
-    return dot(guide->normal_to_line, pt);
+    return -(pt.to_2geom() - guide->point_on_line);
+}
+
+double sp_guide_distance_from_pt(SPGuide const *guide, Geom::Point const &pt)
+{
+    return dot(pt - guide->point_on_line, guide->normal_to_line);
 }
 
 /**
  * \arg commit False indicates temporary moveto in response to motion event while dragging,
- *		true indicates a "committing" version: in response to button release event after
- *		dragging a guideline, or clicking OK in guide editing dialog.
+ *      true indicates a "committing" version: in response to button release event after
+ *      dragging a guideline, or clicking OK in guide editing dialog.
  */
-void sp_guide_moveto(SPGuide const &guide, gdouble const position, bool const commit)
+void sp_guide_moveto(SPGuide const &guide, Geom::Point const point_on_line, bool const commit)
 {
     g_assert(SP_IS_GUIDE(&guide));
 
     for (GSList *l = guide.views; l != NULL; l = l->next) {
-        sp_guideline_set_position(SP_GUIDELINE(l->data),
-                                  position);
+        sp_guideline_set_position(SP_GUIDELINE(l->data), point_on_line);
     }
 
     /* Calling sp_repr_set_svg_double must precede calling sp_item_notify_moveto in the commit
        case, so that the guide's new position is available for sp_item_rm_unsatisfied_cns. */
     if (commit) {
-        sp_repr_set_svg_double(SP_OBJECT(&guide)->repr,
-                           "position", position);
+        sp_repr_set_svg_point(SP_OBJECT(&guide)->repr, "position", point_on_line);
     }
 
+/*  DISABLED CODE BECAUSE  SPGuideAttachment  IS NOT USE AT THE MOMENT (johan)
     for (vector<SPGuideAttachment>::const_iterator i(guide.attached_items.begin()),
              iEnd(guide.attached_items.end());
          i != iEnd; ++i)
@@ -311,6 +315,7 @@ void sp_guide_moveto(SPGuide const &guide, gdouble const position, bool const co
         SPGuideAttachment const &att = *i;
         sp_item_notify_moveto(*att.item, guide, att.snappoint_ix, position, commit);
     }
+*/
 }
 
 /**
@@ -322,20 +327,26 @@ char *sp_guide_description(SPGuide const *guide)
 {
     using NR::X;
     using NR::Y;
+            
+    GString *position_string_x = SP_PX_TO_METRIC_STRING(guide->point_on_line[X], SP_ACTIVE_DESKTOP->namedview->getDefaultMetric());
+    GString *position_string_y = SP_PX_TO_METRIC_STRING(guide->point_on_line[Y], SP_ACTIVE_DESKTOP->namedview->getDefaultMetric());
 
     if ( guide->normal_to_line == component_vectors[X] ) {
-        return g_strdup(_("vertical guideline"));
+        return g_strdup_printf(_("vertical guideline at %s"), position_string_x->str);
     } else if ( guide->normal_to_line == component_vectors[Y] ) {
-        return g_strdup(_("horizontal guideline"));
+        return g_strdup_printf(_("horizontal guideline at %s"), position_string_y->str);
     } else {
         double const radians = atan2(guide->normal_to_line[X],
                                      guide->normal_to_line[Y]);
         /* flip y axis and rotate 90 degrees to convert to line angle */
         double const degrees = ( radians / M_PI ) * 180.0;
         int const degrees_int = (int) floor( degrees + .5 );
-        return g_strdup_printf("%d degree guideline", degrees_int);
+        return g_strdup_printf("%d degree guideline at (%s,%s)", degrees_int, position_string_x->str, position_string_y->str);
         /* Alternative suggestion: "angled guideline". */
     }
+
+    g_string_free(position_string_x, TRUE);
+    g_string_free(position_string_y, TRUE);
 }
 
 void sp_guide_remove(SPGuide *guide)

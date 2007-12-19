@@ -105,8 +105,7 @@ Ruler::on_button_press_event(GdkEventButton *evb)
         _dragging = true;
         sp_repr_set_boolean(repr, "showguides", TRUE);
         sp_repr_set_boolean(repr, "inkscape:guide-bbox", TRUE);
-        double const guide_pos_dt = event_dt[ _horiz_f ? NR::Y : NR::X ];
-        _guide = sp_guideline_new(_dt->guides, guide_pos_dt, _horiz_f ? Geom::Point(0.,1.) : Geom::Point(1.,0.));
+        _guide = sp_guideline_new(_dt->guides, event_dt.to_2geom(), _horiz_f ? Geom::Point(0.,1.) : Geom::Point(1.,0.));
         sp_guideline_set_color(SP_GUIDELINE(_guide), _dt->namedview->guidehicolor);
         (void) get_window()->pointer_grab(false,
                         Gdk::BUTTON_RELEASE_MASK |
@@ -124,8 +123,7 @@ Ruler::on_motion_notify_event(GdkEventMotion *)
     NR::Point const &event_dt = get_event_dt();
 
     if (_dragging) {
-        double const guide_pos_dt = event_dt[ _horiz_f ? NR::Y : NR::X ];
-        sp_guideline_set_position(SP_GUIDELINE(_guide), guide_pos_dt);
+        sp_guideline_set_position(SP_GUIDELINE(_guide), event_dt.to_2geom());
         _dt->set_coordinate_status(event_dt);
         _dt->setPosition(event_dt);
     }

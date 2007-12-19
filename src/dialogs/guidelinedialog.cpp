@@ -69,10 +69,13 @@ void GuidelinePropertiesDialog::_onApply()
     gdouble const raw_dist = _spin_button.get_value();
     SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(_unit_selector->gobj()));
     gdouble const points = sp_units_get_pixels(raw_dist, unit);
-    gdouble const newpos = ( _mode
-                             ? points
-                             : _guide->position + points );
-    sp_guide_moveto(*_guide, newpos, true);
+    if (_guide->normal_to_line[Geom::Y] == 1.) {
+        gdouble const newpos = ( _mode ? points : _guide->point_on_line[Geom::Y] + points );
+        sp_guide_moveto(*_guide, Geom::Point(0, newpos), true);
+    } else {
+        gdouble const newpos = ( _mode ? points : _guide->point_on_line[Geom::Y] + points );
+        sp_guide_moveto(*_guide, Geom::Point(newpos, 0), true);
+    }
     sp_document_done(SP_OBJECT_DOCUMENT(_guide), SP_VERB_NONE, 
                      _("Set guide properties"));
 }
@@ -169,7 +172,11 @@ void GuidelinePropertiesDialog::_setup() {
     signal_response().connect(sigc::mem_fun(*this, &GuidelinePropertiesDialog::_response));
 
     // initialize dialog
-    _oldpos = _guide->position;
+    if (_guide->normal_to_line[Geom::Y] == 0.) {
+        _oldpos = _guide->point_on_line[Geom::X];
+    } else {
+        _oldpos = _guide->point_on_line[Geom::Y];
+    }
     {
         gchar *guide_description = sp_guide_description(_guide);
         Inkscape::XML::Node *repr = SP_OBJECT_REPR (_guide);

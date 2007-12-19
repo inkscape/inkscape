@@ -26,8 +26,8 @@ struct SPGuideLine {
 
     guint32 rgba;
 
-    int position;
-    Geom::Point normal;
+    Geom::Point normal_to_line;
+    Geom::Point point_on_line;
 
     unsigned int sensitive : 1;
 };
@@ -38,9 +38,9 @@ struct SPGuideLineClass {
 
 GType sp_guideline_get_type();
 
-SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, double position, Geom::Point normal);
+SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, Geom::Point point_on_line, Geom::Point normal);
 
-void sp_guideline_set_position(SPGuideLine *gl, double position);
+void sp_guideline_set_position(SPGuideLine *gl, Geom::Point point_on_line);
 void sp_guideline_set_color(SPGuideLine *gl, unsigned int rgba);
 void sp_guideline_set_sensitive(SPGuideLine *gl, int sensitive);
 

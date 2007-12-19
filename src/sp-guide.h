@@ -28,7 +28,7 @@
 struct SPGuide : public SPObject {
     NR::Point normal_to_line;
     Geom::Point point_on_line;
-    gdouble position;
+
     guint32 color;
     guint32 hicolor;
     GSList *views;
@@ -45,8 +45,9 @@ void sp_guide_show(SPGuide *guide, SPCanvasGroup *group, GCallback handler);
 void sp_guide_hide(SPGuide *guide, SPCanvas *canvas);
 void sp_guide_sensitize(SPGuide *guide, SPCanvas *canvas, gboolean sensitive);
 
-double sp_guide_position_from_pt(SPGuide const *guide, NR::Point const &pt);
-void sp_guide_moveto(SPGuide const &guide, gdouble const position, bool const commit);
+Geom::Point sp_guide_position_from_pt(SPGuide const *guide, NR::Point const &pt);
+double sp_guide_distance_from_pt(SPGuide const *guide, Geom::Point const &pt);
+void sp_guide_moveto(SPGuide const &guide, Geom::Point const point_on_line, bool const commit);
 void sp_guide_remove(SPGuide *guide);
 
 char *sp_guide_description(SPGuide const *guide);
