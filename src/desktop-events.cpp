@@ -168,7 +168,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 SnapManager const &m = desktop->namedview->snap_manager;
                 motion_dt = m.guideSnap(motion_dt, guide->normal_to_line).getPoint();
                 
-                sp_guide_moveto(*guide, sp_guide_position_from_pt(guide, motion_dt), false);
+                sp_guide_moveto(*guide, motion_dt.to_2geom(), false);
                 moved = true;
                 desktop->set_coordinate_status(motion_dt);
                 desktop->setPosition (motion_dt);
@@ -186,7 +186,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     event_dt = m.guideSnap(event_dt, guide->normal_to_line).getPoint();
 
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {
-                        sp_guide_moveto(*guide, sp_guide_position_from_pt(guide, event_dt), true);
+                        sp_guide_moveto(*guide, event_dt.to_2geom(), true);
                         sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE,
                                      _("Move guide"));
                     } else {
