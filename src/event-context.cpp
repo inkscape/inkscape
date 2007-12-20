@@ -522,6 +522,10 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
 
                 case GDK_D:
                 case GDK_d:
+                    if (MOD__SHIFT && MOD__CTRL) {
+                        // don't catch Shift+Ctrl+D (Document Properties dialog)
+                        break;
+                    }
                     sp_toggle_dropper(desktop);
                     ret = TRUE;
                     break;
