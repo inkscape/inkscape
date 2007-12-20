@@ -1612,7 +1612,7 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
             sp_namedview_toggle_guides(doc, repr);
             break;
         case SP_VERB_TOGGLE_SNAPPING:
-            dt->namedview->snap_manager.toggleSnapEnabledGlobally();
+            dt->toggleSnapping();
             break;        
         case SP_VERB_TOGGLE_GRID:
             dt->toggleGrids();

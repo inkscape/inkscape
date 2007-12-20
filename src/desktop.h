@@ -263,6 +263,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     void toggleColorProfAdjust();
 
     void toggleGrids();
+    void toggleSnapping();
     bool gridsEnabled() { return grids_visible; }
     void showGrids(bool show, bool dirty_document = true);
 

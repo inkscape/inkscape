@@ -121,7 +121,10 @@ override) the bindings in the main default.xml.
 
   <bind action="ArcPrefs" />
 
-  <bind key="F9" modifiers="Shift" action="ToolStar" display="true"/>
+  <bind key="F9" modifiers="Shift" action="ToolStar" />
+  <bind key="asterisk" modifiers="Shift" action="ToolStar" /> 	 
+  <bind key="asterisk" action="ToolStar" /> 	 
+  <bind key="KP_Multiply" action="ToolStar" display="true"/>
 
   <bind action="StarPrefs" />
 
@@ -230,9 +233,8 @@ override) the bindings in the main default.xml.
   <bind key="numbersign" modifiers="Shift" action="ToggleGrid" /> <!-- # -->
   <bind key="numbersign" action="ToggleGrid" display="true"/>
   
-  <bind key="KP_Multiply" action="ToggleSnapping" display="true"/> <!-- # -->
-  <bind key="asterisk" modifiers="Shift" action="ToggleSnapping" />
-  <bind key="asterisk" action="ToggleSnapping" />
+  <bind key="percent" action="ToggleSnapping" display="true"/> <!-- # -->
+  <bind key="percent" modifiers="Shift" action="ToggleSnapping" />
 
   <bind action="ViewNew"/>
   <bind action="ViewNewPreview"/>

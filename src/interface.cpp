@@ -467,9 +467,10 @@ sp_key_name(guint keyval)
     else if (!strcmp(n, "Page_Down"  ))  return "PgDn";
     else if (!strcmp(n, "grave"      ))  return "`";
     else if (!strcmp(n, "numbersign" ))  return "#";
-    else if (!strcmp(n, "bar" ))  return "|";
-    else if (!strcmp(n, "slash" ))  return "/";
-    else if (!strcmp(n, "exclam" ))  return "!";
+    else if (!strcmp(n, "bar"        ))  return "|";
+    else if (!strcmp(n, "slash"      ))  return "/";
+    else if (!strcmp(n, "exclam"     ))  return "!";
+    else if (!strcmp(n, "percent"    ))  return "%";
     else return n;
 }
 

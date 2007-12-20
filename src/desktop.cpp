@@ -1212,6 +1212,12 @@ void SPDesktop::showGrids(bool show, bool dirty_document)
     }
 }
 
+void SPDesktop::toggleSnapping()
+{
+    bool v = namedview->snap_manager.getSnapEnabledGlobally();
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(namedview);
+    sp_repr_set_boolean(repr, "inkscape:snap-global", !v);
+}
 
 //----------------------------------------------------------------------
 // Callback implementations. The virtual ones are connected by the view.
