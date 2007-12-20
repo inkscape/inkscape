@@ -72,6 +72,7 @@ static void sp_guideline_init(SPGuideLine *gl)
     gl->rgba = 0x0000ff7f;
 
     gl->normal_to_line = Geom::Point(0,1);
+    gl->angle = 3.14159265358979323846/2;
     gl->point_on_line = Geom::Point(0,0);
     gl->sensitive = 0;
 }
@@ -127,7 +128,43 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
             d += step;
         }
     } else {
-        // render angled line
+        // render angled line, once intersection has been detected, draw from there.
+        Geom::Point parallel_to_line( gl->normal_to_line[Geom::Y],
+                                      /*should be minus, but inverted y axis*/ gl->normal_to_line[Geom::X]); 
+
+        //try to intersect with left vertical of rect
+        double y_intersect_left = (buf->rect.x0 - gl->point_on_line[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + gl->point_on_line[Geom::Y];
+        if ( (y_intersect_left >= buf->rect.y0) && (y_intersect_left <= buf->rect.y1) ) {
+            // intersects with left vertical!
+            double y_intersect_right = (buf->rect.x1 - gl->point_on_line[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + gl->point_on_line[Geom::Y];
+            sp_guideline_drawline (buf, buf->rect.x0, round(y_intersect_left), buf->rect.x1, round(y_intersect_right), gl->rgba);
+            return;
+        }
+
+        //try to intersect with right vertical of rect
+        double y_intersect_right = (buf->rect.x1 - gl->point_on_line[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + gl->point_on_line[Geom::Y];
+        if ( (y_intersect_right >= buf->rect.y0) && (y_intersect_right <= buf->rect.y1) ) {
+            // intersects with right vertical!
+            sp_guideline_drawline (buf, buf->rect.x1, round(y_intersect_right), buf->rect.x0, round(y_intersect_left), gl->rgba);
+            return;
+        }
+
+        //try to intersect with top horizontal of rect
+        double x_intersect_top = (buf->rect.y0 - gl->point_on_line[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + gl->point_on_line[Geom::X];
+        if ( (x_intersect_top >= buf->rect.x0) && (x_intersect_top <= buf->rect.x1) ) {
+            // intersects with top horizontal!
+            double x_intersect_bottom = (buf->rect.y1 - gl->point_on_line[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + gl->point_on_line[Geom::X];
+            sp_guideline_drawline (buf, round(x_intersect_top), buf->rect.y0, round(x_intersect_bottom), buf->rect.y1, gl->rgba);
+            return;
+        }
+
+        //try to intersect with bottom horizontal of rect
+        double x_intersect_bottom = (buf->rect.y1 - gl->point_on_line[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + gl->point_on_line[Geom::X];
+        if ( (x_intersect_top >= buf->rect.x0) && (x_intersect_top <= buf->rect.x1) ) {
+            // intersects with bottom horizontal!
+            sp_guideline_drawline (buf, round(x_intersect_bottom), buf->rect.y1, round(x_intersect_top), buf->rect.y0, gl->rgba);
+            return;
+        }
     }
 }
 
@@ -142,9 +179,9 @@ static void sp_guideline_update(SPCanvasItem *item, NR::Matrix const &affine, un
     gl->point_on_line[Geom::X] = affine[4] +0.5;
     gl->point_on_line[Geom::Y] = affine[5] -0.5;
 
-    if (gl->normal_to_line[Geom::Y] == 1.) {
+    if (gl->normal_to_line[Geom::X] == 0.) {
         sp_canvas_update_bbox (item, -1000000, gl->point_on_line[Geom::Y], 1000000, gl->point_on_line[Geom::Y] + 1);
-    } else if (gl->normal_to_line[Geom::X] == 1.) {
+    } else if (gl->normal_to_line[Geom::Y] == 0.) {
         sp_canvas_update_bbox (item, gl->point_on_line[Geom::X], -1000000, gl->point_on_line[Geom::X]+1, 1000000);
     } else {
         sp_canvas_update_bbox (item, -1000000, -1000000, 1000000, 1000000);
@@ -162,7 +199,8 @@ static double sp_guideline_point(SPCanvasItem *item, NR::Point p, SPCanvasItem *
 
     *actual_item = item;
 
-    double distance = Geom::dot((p.to_2geom() - gl->point_on_line), gl->normal_to_line);
+    Geom::Point vec(gl->normal_to_line[Geom::X], - gl->normal_to_line[Geom::Y]);
+    double distance = Geom::dot((p.to_2geom() - gl->point_on_line), vec);
     return MAX(fabs(distance)-1, 0);
 }
 
@@ -174,6 +212,7 @@ SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, Geom::Point point_on_line,
 
     normal.normalize();
     gl->normal_to_line = normal;
+    gl->angle = tan( -gl->normal_to_line[Geom::X] / gl->normal_to_line[Geom::Y]);
     sp_guideline_set_position(gl, point_on_line);
 
     return item;
@@ -188,6 +227,8 @@ void sp_guideline_set_position(SPGuideLine *gl, Geom::Point point_on_line)
 void sp_guideline_set_normal(SPGuideLine *gl, Geom::Point normal_to_line)
 {
     gl->normal_to_line = normal_to_line;
+    gl->angle = tan( -normal_to_line[Geom::X] / normal_to_line[Geom::Y]);
+
     sp_canvas_item_request_update(SP_CANVAS_ITEM (gl));
 }
 

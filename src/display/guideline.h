@@ -28,6 +28,7 @@ struct SPGuideLine {
 
     Geom::Point normal_to_line;
     Geom::Point point_on_line;
+    double angle;
 
     unsigned int sensitive : 1;
 };
