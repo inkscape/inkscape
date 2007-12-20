@@ -221,7 +221,8 @@ unsigned sp_repr_set_boolean(Inkscape::XML::Node *repr, gchar const *key, unsign
 unsigned sp_repr_set_int(Inkscape::XML::Node *repr, gchar const *key, int val);
 unsigned sp_repr_set_css_double(Inkscape::XML::Node *repr, gchar const *key, double val);
 unsigned sp_repr_set_svg_double(Inkscape::XML::Node *repr, gchar const *key, double val);
-unsigned sp_repr_set_svg_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point val);
+unsigned sp_repr_set_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point val);
+unsigned sp_repr_get_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point *val);
 
 /// \deprecated !
 double sp_repr_get_double_attribute(Inkscape::XML::Node *repr, gchar const *key, double def);

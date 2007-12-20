@@ -302,10 +302,10 @@ void sp_guide_moveto(SPGuide const &guide, Geom::Point const point_on_line, bool
         sp_guideline_set_position(SP_GUIDELINE(l->data), point_on_line);
     }
 
-    /* Calling sp_repr_set_svg_point must precede calling sp_item_notify_moveto in the commit
+    /* Calling sp_repr_set_point must precede calling sp_item_notify_moveto in the commit
        case, so that the guide's new position is available for sp_item_rm_unsatisfied_cns. */
     if (commit) {
-        sp_repr_set_svg_point(SP_OBJECT(&guide)->repr, "position", point_on_line);
+        sp_repr_set_point(SP_OBJECT(&guide)->repr, "position", point_on_line);
     }
 
 /*  DISABLED CODE BECAUSE  SPGuideAttachment  IS NOT USE AT THE MOMENT (johan)
@@ -335,7 +335,7 @@ void sp_guide_set_normal(SPGuide const &guide, Geom::Point const normal_to_line,
     /* Calling sp_repr_set_svg_point must precede calling sp_item_notify_moveto in the commit
        case, so that the guide's new position is available for sp_item_rm_unsatisfied_cns. */
     if (commit) {
-        sp_repr_set_svg_point(SP_OBJECT(&guide)->repr, "orientation", normal_to_line);
+        sp_repr_set_point(SP_OBJECT(&guide)->repr, "orientation", normal_to_line);
     }
 
 /*  DISABLED CODE BECAUSE  SPGuideAttachment  IS NOT USE AT THE MOMENT (johan)

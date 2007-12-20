@@ -100,7 +100,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
                     Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
                     repr->setAttribute("orientation", (horiz) ? "horizontal" : "vertical");
-                    sp_repr_set_svg_point(repr, "position", event_dt.to_2geom());
+                    sp_repr_set_point(repr, "position", event_dt.to_2geom());
                     SP_OBJECT_REPR(desktop->namedview)->appendChild(repr);
                     Inkscape::GC::release(repr);
                     sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 

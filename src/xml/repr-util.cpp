@@ -576,7 +576,7 @@ sp_repr_set_svg_double(Inkscape::XML::Node *repr, gchar const *key, double val)
     return true;
 }
 
-unsigned sp_repr_set_svg_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point val)
+unsigned sp_repr_set_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point val)
 {
     g_return_val_if_fail(repr != NULL, FALSE);
     g_return_val_if_fail(key != NULL, FALSE);
@@ -586,6 +586,30 @@ unsigned sp_repr_set_svg_point(Inkscape::XML::Node *repr, gchar const *key, Geom
 
     repr->setAttribute(key, os.str().c_str());
     return true;
+}
+
+unsigned int
+sp_repr_get_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point *val)
+{
+    g_return_val_if_fail(repr != NULL, FALSE);
+    g_return_val_if_fail(key != NULL, FALSE);
+    g_return_val_if_fail(val != NULL, FALSE);
+
+    gchar const *v = repr->attribute(key);
+
+    gchar ** strarray = g_strsplit(v, ",", 2);
+
+    if (strarray && strarray[0] && strarray[1]) {
+        double newx, newy;
+        newx = g_ascii_strtod(strarray[0], NULL);
+        newy = g_ascii_strtod(strarray[1], NULL);
+        g_strfreev (strarray);
+        *val = Geom::Point(newx, newy);
+        return TRUE;
+    }
+
+    g_strfreev (strarray);
+    return FALSE;
 }
 
 /*

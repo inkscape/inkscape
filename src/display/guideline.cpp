@@ -28,6 +28,8 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf);
 
 static double sp_guideline_point(SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item);
 
+static void sp_guideline_drawline (SPCanvasBuf *buf, gint x0, gint y0, gint x1, gint y1, guint32 rgba);
+
 static SPCanvasItemClass *parent_class;
 
 GType sp_guideline_get_type()
@@ -137,8 +139,8 @@ static void sp_guideline_update(SPCanvasItem *item, NR::Matrix const &affine, un
         ((SPCanvasItemClass *) parent_class)->update(item, affine, flags);
     }
 
-    gl->point_on_line[Geom::X] = affine[4];
-    gl->point_on_line[Geom::Y] = affine[5];
+    gl->point_on_line[Geom::X] = affine[4] +0.5;
+    gl->point_on_line[Geom::Y] = affine[5] -0.5;
 
     if (gl->normal_to_line[Geom::Y] == 1.) {
         sp_canvas_update_bbox (item, -1000000, gl->point_on_line[Geom::Y], 1000000, gl->point_on_line[Geom::Y] + 1);
@@ -201,6 +203,83 @@ void sp_guideline_set_sensitive(SPGuideLine *gl, int sensitive)
     gl->sensitive = sensitive;
 }
 
+//##########################################################
+// Line rendering
+#define SAFE_SETPIXEL   //undefine this when it is certain that setpixel is never called with invalid params
+
+/**
+    \brief  This function renders a pixel on a particular buffer.
+
+    The topleft of the buffer equals
+                        ( rect.x0 , rect.y0 )  in screen coordinates
+                        ( 0 , 0 )  in setpixel coordinates
+    The bottomright of the buffer equals
+                        ( rect.x1 , rect,y1 )  in screen coordinates
+                        ( rect.x1 - rect.x0 , rect.y1 - rect.y0 )  in setpixel coordinates
+*/
+static void
+sp_guideline_setpixel (SPCanvasBuf *buf, gint x, gint y, guint32 rgba)
+{
+#ifdef SAFE_SETPIXEL
+    if ( (x >= buf->rect.x0) && (x < buf->rect.x1) && (y >= buf->rect.y0) && (y < buf->rect.y1) ) {
+#endif
+        guint r, g, b, a;
+        r = NR_RGBA32_R (rgba);
+        g = NR_RGBA32_G (rgba);
+        b = NR_RGBA32_B (rgba);
+        a = NR_RGBA32_A (rgba);
+        guchar * p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 3;
+        p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
+        p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
+        p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
+#ifdef SAFE_SETPIXEL
+    }
+#endif
+}
+
+/**
+    \brief  This function renders a line on a particular canvas buffer,
+            using Bresenham's line drawing function.
+            http://www.cs.unc.edu/~mcmillan/comp136/Lecture6/Lines.html
+            Coordinates are interpreted as SCREENcoordinates
+*/
+static void
+sp_guideline_drawline (SPCanvasBuf *buf, gint x0, gint y0, gint x1, gint y1, guint32 rgba)
+{
+    int dy = y1 - y0;
+    int dx = x1 - x0;
+    int stepx, stepy;
+
+    if (dy < 0) { dy = -dy;  stepy = -1; } else { stepy = 1; }
+    if (dx < 0) { dx = -dx;  stepx = -1; } else { stepx = 1; }
+    dy <<= 1;                                                  // dy is now 2*dy
+    dx <<= 1;                                                  // dx is now 2*dx
+
+    sp_guideline_setpixel(buf, x0, y0, rgba);
+    if (dx > dy) {
+        int fraction = dy - (dx >> 1);                         // same as 2*dy - dx
+        while (x0 != x1) {
+            if (fraction >= 0) {
+                y0 += stepy;
+                fraction -= dx;                                // same as fraction -= 2*dx
+            }
+            x0 += stepx;
+            fraction += dy;                                    // same as fraction -= 2*dy
+            sp_guideline_setpixel(buf, x0, y0, rgba);
+        }
+    } else {
+        int fraction = dx - (dy >> 1);
+        while (y0 != y1) {
+            if (fraction >= 0) {
+                x0 += stepx;
+                fraction -= dy;
+            }
+            y0 += stepy;
+            fraction += dx;
+            sp_guideline_setpixel(buf, x0, y0, rgba);
+        }
+    }
+}
 
 /*
   Local Variables:
