@@ -567,6 +567,8 @@ Section $(lng_Core) SecCore
   File /a "..\..\inkscape\COPYING"
   File /a "..\..\inkscape\COPYING.LIB"
   File /a "..\..\inkscape\NEWS"
+  File /a "..\..\inkscape\gspawn-win32-helper.exe"
+  File /a "..\..\inkscape\gspawn-win32-helper-console.exe"
   File /nonfatal /a "..\..\inkscape\HACKING.txt"
   File /a "..\..\inkscape\README"
   File /nonfatal /a "..\..\inkscape\README.txt"
