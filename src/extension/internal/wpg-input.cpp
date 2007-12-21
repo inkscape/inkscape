@@ -40,6 +40,8 @@
 
 #include <stdio.h>
 
+#ifdef WITH_LIBWPG
+
 #include "wpg-input.h"
 #include "extension/system.h"
 #include "extension/input.h"
@@ -47,6 +49,7 @@
 
 #include "libwpg/libwpg.h"
 #include "libwpg/WPGStreamImplementation.h"
+
 
 using namespace libwpg;
 
@@ -107,6 +110,7 @@ WpgInput::init(void) {
 } // init
 
 } } }  /* namespace Inkscape, Extension, Implementation */
+#endif /* WITH_LIBWPG */
 
 /*
   Local Variables:

@@ -13,6 +13,8 @@
 #ifndef __EXTENSION_INTERNAL_WPGOUTPUT_H__
 #define __EXTENSION_INTERNAL_WPGOUTPUT_H__
 
+#ifndef WITH_LIBWPG
+
 #include "../implementation/implementation.h"
 
 namespace Inkscape {
@@ -29,7 +31,10 @@ public:
 };
 
 } } }  /* namespace Inkscape, Extension, Implementation */
+
+#endif /* WITH_LIBWPG */
 #endif /* __EXTENSION_INTERNAL_WPGOUTPUT_H__ */
+
 
 /*
   Local Variables:
