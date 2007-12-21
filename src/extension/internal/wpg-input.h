@@ -13,7 +13,7 @@
 #ifndef __EXTENSION_INTERNAL_WPGOUTPUT_H__
 #define __EXTENSION_INTERNAL_WPGOUTPUT_H__
 
-#ifndef WITH_LIBWPG
+#ifdef WITH_LIBWPG
 
 #include "../implementation/implementation.h"
 
