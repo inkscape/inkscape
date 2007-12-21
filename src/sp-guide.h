@@ -33,6 +33,9 @@ struct SPGuide : public SPObject {
     guint32 hicolor;
     GSList *views;
     std::vector<SPGuideAttachment> attached_items;
+
+    inline bool is_horizontal() const { return (normal_to_line[Geom::X] == 0.); };
+    inline bool is_vertical() const { return (normal_to_line[Geom::Y] == 0.); };
 };
 
 struct SPGuideClass {

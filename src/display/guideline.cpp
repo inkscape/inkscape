@@ -93,7 +93,7 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
     unsigned int const b = NR_RGBA32_B (gl->rgba);
     unsigned int const a = NR_RGBA32_A (gl->rgba);
 
-    if (gl->normal_to_line[Geom::Y] == 0.) {
+    if (gl->is_vertical()) {
         int position = gl->point_on_line[Geom::X];
         if (position < buf->rect.x0 || position >= buf->rect.x1) {
             return;
@@ -110,7 +110,7 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
             d[2] = NR_COMPOSEN11_1111(b, a, d[2]);
             d += step;
         }
-    } else if (gl->normal_to_line[Geom::X] == 0.) {
+    } else if (gl->is_horizontal()) {
         int position = gl->point_on_line[Geom::Y];
         if (position < buf->rect.y0 || position >= buf->rect.y1) {
             return;
@@ -179,9 +179,9 @@ static void sp_guideline_update(SPCanvasItem *item, NR::Matrix const &affine, un
     gl->point_on_line[Geom::X] = affine[4] +0.5;
     gl->point_on_line[Geom::Y] = affine[5] -0.5;
 
-    if (gl->normal_to_line[Geom::X] == 0.) {
+    if (gl->is_horizontal()) {
         sp_canvas_update_bbox (item, -1000000, gl->point_on_line[Geom::Y], 1000000, gl->point_on_line[Geom::Y] + 1);
-    } else if (gl->normal_to_line[Geom::Y] == 0.) {
+    } else if (gl->is_vertical()) {
         sp_canvas_update_bbox (item, gl->point_on_line[Geom::X], -1000000, gl->point_on_line[Geom::X]+1, 1000000);
     } else {
         sp_canvas_update_bbox (item, -1000000, -1000000, 1000000, 1000000);

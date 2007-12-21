@@ -31,6 +31,9 @@ struct SPGuideLine {
     double angle;
 
     unsigned int sensitive : 1;
+
+    inline bool is_horizontal() const { return (normal_to_line[Geom::X] == 0.); };
+    inline bool is_vertical() const { return (normal_to_line[Geom::Y] == 0.); };
 };
 
 struct SPGuideLineClass {
