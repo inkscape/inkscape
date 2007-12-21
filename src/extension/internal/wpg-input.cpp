@@ -39,6 +39,7 @@
  */
 
 #include <stdio.h>
+#include "config.h"
 
 #ifdef WITH_LIBWPG
 
