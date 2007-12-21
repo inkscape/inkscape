@@ -239,9 +239,9 @@ _wr.setUpdating (true);
         sutemp->setDigits(4);
         sutemp->setIncrements(0.1, 1.0);
     _rsu_ax.init (_("Angle X:"), _("Angle of x-axis"),
-                  "gridanglex", _rumg, _wr, repr, doc);
+                  "gridanglex", _wr, repr, doc);
     _rsu_az.init (_("Angle Z:"), _("Angle of z-axis"),
-                  "gridanglez", _rumg, _wr, repr, doc);
+                  "gridanglez", _wr, repr, doc);
     _rcp_gcol.init (_("Grid line _color:"), _("Grid line color"),
                     _("Color of grid lines"), "color", "opacity", _wr, repr, doc);
     _rcp_gmcol.init (_("Ma_jor grid line color:"), _("Major grid line color"),
@@ -256,8 +256,8 @@ _wr.setUpdating (false);
         0,                  _rsu_ox.getSU(),
         0,                  _rsu_oy.getSU(),
         0,                  _rsu_sy.getSU(),
-        0,                  _rsu_ax.getSU(),
-        0,                  _rsu_az.getSU(),
+        0,                  _rsu_ax.getS(),
+        0,                  _rsu_az.getS(),
         _rcp_gcol._label,   _rcp_gcol._cp,
         0,                  0,
         _rcp_gmcol._label,  _rcp_gmcol._cp,
