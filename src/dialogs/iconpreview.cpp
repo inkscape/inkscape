@@ -126,7 +126,7 @@ IconPreviewPanel::IconPreviewPanel() :
         sizes[1] = 24;
         sizes[2] = 32;
         sizes[3] = 48;
-        sizes[5] = 128;
+        sizes[4] = 128;
     }
 
     pixMem = new guchar*[numEntries];
