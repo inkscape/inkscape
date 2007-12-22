@@ -48,7 +48,7 @@ public:
     }
     
     void str (std::string &s) {
-        return ostr.str(s);
+        ostr.str(s);
     }
 
     std::streamsize precision() const {
