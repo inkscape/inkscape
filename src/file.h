@@ -179,12 +179,12 @@ would be useful as instance methods
 /**
  *
  */
-void sp_file_print (void);
+void sp_file_print (Gtk::Window& parentWindow);
 
 /**
  *
  */
-void sp_file_print_direct (void);
+void sp_file_print_direct (Gtk::Window& parentWindow);
 
 /**
  *

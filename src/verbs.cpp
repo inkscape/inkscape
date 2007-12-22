@@ -779,13 +779,13 @@ FileVerb::perform(SPAction *action, void *data, void */*pdata*/)
             sp_file_save_a_copy(*parent, NULL, NULL);
             break;
         case SP_VERB_FILE_PRINT:
-            sp_file_print();
+            sp_file_print(*parent);
             break;
         case SP_VERB_FILE_VACUUM:
             sp_file_vacuum();
             break;
         case SP_VERB_FILE_PRINT_DIRECT:
-            sp_file_print_direct();
+            sp_file_print_direct(*parent);
             break;
         case SP_VERB_FILE_PRINT_PREVIEW:
             sp_file_print_preview(NULL, NULL);

@@ -30,7 +30,7 @@ class Print {
 public:
     Print(SPDocument *doc, SPItem *base);
 
-    Gtk::PrintOperationResult run(Gtk::PrintOperationAction action);
+    Gtk::PrintOperationResult run(Gtk::PrintOperationAction action, Gtk::Window& parentWindow);
     //GtkPrintOperationResult run(GtkPrintOperationAction action);
 
 protected:

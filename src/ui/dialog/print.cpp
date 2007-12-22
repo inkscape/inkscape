@@ -158,10 +158,10 @@ Print::Print(SPDocument *doc, SPItem *base) :
 }
 
 Gtk::PrintOperationResult
-Print::run(Gtk::PrintOperationAction action)
+Print::run(Gtk::PrintOperationAction action, Gtk::Window& parent)
 {
     Gtk::PrintOperationResult res;
-    res = _printop->run (action);
+    res = _printop->run (action, parent);
     return res;
 }
 
