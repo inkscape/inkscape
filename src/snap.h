@@ -181,7 +181,7 @@ private:
                                                 NR::Dim2 dim,
                                                 bool uniform) const;
                                                 
-    Inkscape::SnappedPoint findBestSnap(NR::Point const &p, SnappedConstraints &sc) const;
+    Inkscape::SnappedPoint findBestSnap(NR::Point const &p, SnappedConstraints &sc, bool constrained) const;
 };
 
 #endif /* !SEEN_SNAP_H */

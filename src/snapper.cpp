@@ -172,11 +172,10 @@ void Inkscape::Snapper::constrainedSnap(SnappedConstraints &sc,
  */
 
 void Inkscape::Snapper::constrainedSnap(SnappedConstraints &sc, 
-                                                          
                                                           PointType const &t,
                                                           NR::Point const &p,
                                                           bool const &first_point,
-                                                           std::vector<NR::Point> &points_to_snap,                         
+                                                          std::vector<NR::Point> &points_to_snap,                         
                                                           ConstraintLine const &c,
                                                           std::list<SPItem const *> const &it) const
 {

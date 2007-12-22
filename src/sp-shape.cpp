@@ -1111,39 +1111,33 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
     if (shape->curve == NULL) {
         return;
     }
-
-    NR::Matrix const i2d (sp_item_i2d_affine (item));
-
-    NArtBpath const *b = SP_CURVE_BPATH(shape->curve);    
-    g_assert((b->code == NR_MOVETO) || (b->code == NR_MOVETO_OPEN));
- 
-    // Consider the first point in the path
-    NR::Point pos = b->c(3) * i2d;
-    if (b->code == NR_MOVETO_OPEN) { // Indicates the start of a open subpath, see nr-path-code.h
-        *p = pos;
-        // If at the other hand we're looking at a closed subpath, then we can
-        // skip this first point because it's coincident with the last point.  
-    }
-    b++;
     
-    // Cycle through the subsequent nodes in the path
-    while (b->code == NR_LINETO || b->code == NR_CURVETO) {
-        pos = b->c(3) * i2d; // this is the current node
+    NR::Matrix const i2d (sp_item_i2d_affine (item));
+    NArtBpath const *b = SP_CURVE_BPATH(shape->curve);    
+    
+    // Cycle through the nodes in the concatenated subpaths
+    while (b->code != NR_END) {
+        NR::Point pos = b->c(3) * i2d; // this is the current node
         
-        if (b->code == NR_LINETO || b[1].code == NR_LINETO || b[1].code == NR_END) {
-            // end points of a line segment are always considered for snapping
-            *p = pos; 
-        } else {        
-            NR::Point ppos, npos;
-            ppos = b->code == NR_CURVETO ? b->c(2) * i2d : pos; // backward handle 
-            npos = b[1].code == NR_CURVETO ? b[1].c(1) * i2d : pos; // forward handle
-        
-            // Determine whether a node is at a smooth part of the path, by 
-            // calculating a measure for the collinearity of the handles
-            bool c1 = fabs (Inkscape::Util::triangle_area (pos, ppos, npos)) < 1; // points are (almost) collinear
-            bool c2 = NR::L2(pos - ppos) < 1e-6 || NR::L2(pos - npos) < 1e-6; // endnode, or a node with a retracted handle
-            if (!(c1 & !c2)) {
-                *p = pos; // only return non-smooth nodes ("cusps")
+        // NR_MOVETO Indicates the start of a closed subpath, see nr-path-code.h
+        // If we're looking at a closed subpath, then we can skip this first 
+        // point of the subpath because it's coincident with the last point.  
+        if (b->code != NR_MOVETO) {
+            if (b->code == NR_MOVETO_OPEN || b->code == NR_LINETO || b[1].code == NR_LINETO || b[1].code == NR_END) {
+                // end points of a line segment are always considered for snapping
+                *p = pos; 
+            } else {        
+                // g_assert(b->code == NR_CURVETO);
+                NR::Point ppos, npos;
+                ppos = b->code == NR_CURVETO ? b->c(2) * i2d : pos; // backward handle 
+                npos = b[1].code == NR_CURVETO ? b[1].c(1) * i2d : pos; // forward handle            
+                // Determine whether a node is at a smooth part of the path, by 
+                // calculating a measure for the collinearity of the handles
+                bool c1 = fabs (Inkscape::Util::triangle_area (pos, ppos, npos)) < 1; // points are (almost) collinear
+                bool c2 = NR::L2(pos - ppos) < 1e-6 || NR::L2(pos - npos) < 1e-6; // endnode, or a node with a retracted handle
+                if (!(c1 & !c2)) {
+                    *p = pos; // only return non-smooth nodes ("cusps")
+                }
             }
         }
         
