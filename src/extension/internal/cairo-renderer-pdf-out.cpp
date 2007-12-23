@@ -56,7 +56,7 @@ pdf_render_document_to_file(SPDocument *doc, gchar const *filename)
     NRArena *arena = NRArena::create();
     unsigned dkey = sp_item_display_key_new(1);
     NRArenaItem *root = sp_item_invoke_show(base, arena, dkey, SP_ITEM_SHOW_DISPLAY);
-    
+
     /* Create renderer and context */
     CairoRenderer *renderer = new CairoRenderer();
     CairoRenderContext *ctx = renderer->createContext();

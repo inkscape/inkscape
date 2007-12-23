@@ -31,6 +31,8 @@ public:
               SPDocument *doc,
               gchar const *uri);
     static void init();
+    bool textToPath(Inkscape::Extension::Print *ext);
+
 };
 
 } } }  /* namespace Inkscape, Extension, Implementation */

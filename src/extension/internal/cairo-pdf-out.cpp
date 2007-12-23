@@ -65,14 +65,14 @@ pdf_print_document_to_file(SPDocument *doc, gchar const *filename)
     mod->arena = NRArena::create();
     mod->dkey = sp_item_display_key_new(1);
     mod->root = sp_item_invoke_show(mod->base, mod->arena, mod->dkey, SP_ITEM_SHOW_DISPLAY);
-    
+
     /* Print document */
     ret = mod->begin(doc);
     if (ret) {
         sp_item_invoke_print(mod->base, &context);
         ret = mod->finish();
     }
-    
+
     /* Release arena */
     sp_item_invoke_hide(mod->base, mod->dkey);
     mod->base = NULL;
@@ -113,13 +113,14 @@ CairoPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const g
 	final_name = g_strdup_printf("> %s", uri);
 	ret = pdf_print_document_to_file(doc, final_name);
 	g_free(final_name);
-        
+
 	if (!ret)
 	    throw Inkscape::Extension::Output::save_failed();
 
 	return;
 }
 
+#include "clear-n_.h"
 /**
 	\brief   A function allocate a copy of this function.
 
@@ -134,6 +135,10 @@ CairoPdfOutput::init (void)
 		"<inkscape-extension>\n"
 			"<name>Cairo PDF Output</name>\n"
 			"<id>org.inkscape.output.pdf.cairo</id>\n"
+			"<param name=\"PDFversion\" gui-text=\"" N_("Restrict to PDF version") "\" type=\"enum\" >\n"
+				"<item value='PDF14'>" N_("PDF 1.4") "</item>\n"
+            "</param>\n"
+			"<param name=\"blurToBitmap\" gui-text=\"" N_("Convert blur effects to bitmaps") "\" type=\"boolean\">false</param>\n"
 			"<output>\n"
 				"<extension>.pdf</extension>\n"
 				"<mimetype>application/pdf</mimetype>\n"
