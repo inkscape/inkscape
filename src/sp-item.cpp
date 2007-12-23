@@ -597,8 +597,8 @@ sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
             }
         }
 
-        SPClipPath *clip_path = item->clip_ref->getObject();
-        SPMask *mask = item->mask_ref->getObject();
+        SPClipPath *clip_path = item->clip_ref ? item->clip_ref->getObject() : NULL;
+        SPMask *mask = item->mask_ref ? item->mask_ref->getObject() : NULL;
 
         if ( clip_path || mask ) {
             NRRect bbox;
@@ -637,7 +637,8 @@ sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
     }
 
     // Update libavoid with item geometry (for connector routing).
-    item->avoidRef->handleSettingChange();
+    if (item->avoidRef)
+        item->avoidRef->handleSettingChange();
 }
 
 static Inkscape::XML::Node *
