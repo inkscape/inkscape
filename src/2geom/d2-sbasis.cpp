@@ -147,8 +147,19 @@ Piecewise<D2<SBasis> > force_continuity(Piecewise<D2<SBasis> > const &f,
         if (tol<=0 || L2sq(pt0-pt1)<tol*tol){
             pt0 = (pt0+pt1)/2;
             for (unsigned dim=0; dim<2; dim++){
-                result.segs[prev][dim][0][1]=pt0[dim];
-                result.segs[cur ][dim][0][0]=pt0[dim];
+                SBasis &prev_sb=result.segs[prev][dim];
+                SBasis &cur_sb =result.segs[cur][dim];
+                Coord const c=pt0[dim];
+                if (prev_sb.empty()) {
+                  prev_sb.push_back(Linear(0.0, c));
+                } else {
+                  prev_sb[0][1] = c;
+                }
+                if (cur_sb.empty()) {
+                  cur_sb.push_back(Linear(c, 0.0));
+                } else {
+                  cur_sb[0][0] = c;
+                }
             }
         }
         prev = cur++;
