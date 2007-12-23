@@ -72,7 +72,9 @@ void GuidelinePropertiesDialog::_modeChanged()
 
 void GuidelinePropertiesDialog::_onApply()
 {
-    double const deg_angle = _spin_angle.get_value();
+    double deg_angle = _spin_angle.get_value();
+    if (!_mode)
+        deg_angle += _oldangle;
     Geom::Point normal;
     if ( deg_angle == 90. || deg_angle == 270. || deg_angle == -90. || deg_angle == -270.) {
         normal = Geom::Point(1.,0.);
