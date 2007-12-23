@@ -492,7 +492,8 @@ public:
     Piecewise<D2<SBasis> > ret;
     ret.push_cut(0);
     unsigned i = 1;
-    for(const_iterator it = begin(); it != end_default(); ++it, i++) {
+    // ignore that path is closed or open. pw<d2<>> is always open.
+    for(const_iterator it = begin(); it != end(); ++it, i++) {
       ret.push(it->toSBasis(), i);
     }
     return ret;

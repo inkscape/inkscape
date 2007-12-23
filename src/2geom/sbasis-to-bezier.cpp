@@ -212,15 +212,15 @@ path_from_piecewise(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &B, double to
     for(unsigned i = 0; ; i++) {
         if(i+1 == B.size() || !are_near(B[i+1].at0(), B[i].at1(), tol)) {
             //start of a new path
+            if(are_near(start, B[i].at1()) && sbasis_size(B[i]) <= 1) {
+                //last line seg already there
+                goto no_add;
+            }
+            build_from_sbasis(pb, B[i], tol);
             if(are_near(start, B[i].at1())) {
                 //it's closed
                 pb.closePath();
-                if(sbasis_size(B[i]) <= 1) {
-                    //last line seg already there
-                    goto no_add;
-                }
             }
-            build_from_sbasis(pb, B[i], tol);
           no_add:
             if(i+1 >= B.size()) break;
             start = B[i+1].at0();
