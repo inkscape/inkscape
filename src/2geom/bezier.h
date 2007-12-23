@@ -136,6 +136,12 @@ public:
         }
         return true;
     }
+    inline bool isConstant() const {
+        for(unsigned i = 1; i <= order(); i++) {
+            if(c_[i] != c_[0]) return false;
+        }
+        return true;
+    }
     inline bool isFinite() const {
         for(unsigned i = 0; i <= order(); i++) {
             if(!is_finite(c_[i])) return false;

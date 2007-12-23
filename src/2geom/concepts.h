@@ -72,6 +72,7 @@ struct FragmentConcept {
     void constraints() {
         t = T(o);
         b = t.isZero();
+        b = t.isConstant();
         b = t.isFinite();
         o = t.at0();
         o = t.at1();

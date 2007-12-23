@@ -56,6 +56,8 @@ public:
   virtual Point initialPoint() const = 0;
   virtual Point finalPoint() const = 0;
 
+  virtual bool isDegenerate() const = 0;
+
   virtual Curve *duplicate() const = 0;
 
   virtual Rect boundsFast() const = 0;
@@ -94,6 +96,7 @@ public:
 
   Point initialPoint() const    { return inner.at0(); }
   Point finalPoint() const      { return inner.at1(); }
+  bool isDegenerate() const     { return inner.isConstant(); }
   Point pointAt(Coord t) const  { return inner.valueAt(t); }
   std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const {
       return inner.valueAndDerivatives(t, n);
@@ -167,6 +170,8 @@ public:
 
   Point initialPoint() const { return inner.at0(); }
   Point finalPoint() const { return inner.at1(); }
+
+  bool isDegenerate() const { return inner.isConstant(); }
 
   void setInitial(Point v) { setPoint(0, v); }
   void setFinal(Point v)   { setPoint(1, v); }
@@ -284,6 +289,7 @@ public:
 
   //TODO: implement funcs
 
+  bool isDegenerate() const { return toSBasis().isConstant(); }
   Rect boundsFast() const;
   Rect boundsExact() const;
   Rect boundsLocal(Interval i, unsigned deg) const;
@@ -493,8 +499,10 @@ public:
     ret.push_cut(0);
     unsigned i = 1;
     // ignore that path is closed or open. pw<d2<>> is always open.
-    for(const_iterator it = begin(); it != end(); ++it, i++) {
-      ret.push(it->toSBasis(), i);
+    for(const_iterator it = begin(); it != end(); ++it) {
+      if (!it->isDegenerate()) {
+        ret.push(it->toSBasis(), i++);
+      }
     }
     return ret;
   }

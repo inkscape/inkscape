@@ -67,6 +67,14 @@ public:
         }
         return true;
     }
+    inline bool isConstant() const {
+        if (empty()) return true;
+        for (unsigned i = 0; i < size(); i++) {
+            if(!(*this)[i].isConstant()) return false;
+        }
+        return true;
+    }
+
     bool isFinite() const;
     inline double at0() const { 
         if(empty()) return 0; else return (*this)[0][0];

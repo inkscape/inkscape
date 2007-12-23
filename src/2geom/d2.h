@@ -68,6 +68,10 @@ class D2{
         boost::function_requires<FragmentConcept<T> >();
         return f[X].isZero() && f[Y].isZero();
     }
+    bool isConstant() const {
+        boost::function_requires<FragmentConcept<T> >();
+        return f[X].isConstant() && f[Y].isConstant();
+    }
     bool isFinite() const {
         boost::function_requires<FragmentConcept<T> >();
         return f[X].isFinite() && f[Y].isFinite();
