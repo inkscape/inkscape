@@ -71,8 +71,6 @@ Future improvements:
   <bind key="p" modifiers="Ctrl" action="FilePrint" display="true"/>
   <bind key="P" modifiers="Ctrl" action="FilePrint" />
 
-  <bind action="FilePrintDirect" />
-
   <bind key="i" modifiers="Ctrl" action="FileImport" display="true"/>
   <bind key="I" modifiers="Ctrl" action="FileImport" />
 

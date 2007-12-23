@@ -86,8 +86,6 @@ Hom/end keys-select minimum or maximum feather values
   <bind key="p" modifiers="Ctrl" action="FilePrint" display="true"/>
   <bind key="P" modifiers="Ctrl" action="FilePrint" />
 
-  <bind action="FilePrintDirect" />
-
   <bind key="I" modifiers="Ctrl,Shift" action="FileImport" display="true"/>
   <bind key="i" modifiers="Ctrl,Shift" action="FileImport" />
 

@@ -85,10 +85,6 @@ File, Edit, View, Modify, Text, Xtras, Window, Help.
 
   <bind key="p" modifiers="Ctrl" action="FilePrint" display="true"/>
   <bind key="P" modifiers="Ctrl" action="FilePrint" />
-  <!-- FilePrintDirect, not worth the risk of ever accidentally hitting it, 
-  and wasting a whole lot of time or resources.  It will inevitably bite 
-  someone in the ass and it not a feature I would ever put it an application 
-  where anyone had to provide techincal support.  (TODO: Shorten this warning.) -->
 
   <bind key="r" modifiers="Ctrl" action="FileImport" display="true"/>
   <bind key="R" modifiers="Ctrl" action="FileImport" />
