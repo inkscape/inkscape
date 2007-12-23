@@ -611,7 +611,7 @@ VPDrag::updateDraggers ()
 
         VanishingPoint vp;
         for (int i = 0; i < 3; ++i) {
-            vp.set (box->persp_ref->getObject(), Proj::axes[i]);
+            vp.set(box3d_get_perspective(box), Proj::axes[i]);
             addDragger (vp);
         }
     }
@@ -709,8 +709,8 @@ VPDrag::drawLinesForFace (const SPBox3D *box, Proj::Axis axis) //, guint corner1
     NR::Point corner1, corner2, corner3, corner4;
     box3d_corners_for_PLs (box, axis, corner1, corner2, corner3, corner4);
 
-    g_return_if_fail (box->persp_ref->getObject());
-    Proj::Pt2 vp = persp3d_get_VP (box->persp_ref->getObject(), axis);
+    g_return_if_fail (box3d_get_perspective(box));
+    Proj::Pt2 vp = persp3d_get_VP (box3d_get_perspective(box), axis);
     if (vp.is_finite()) {
         // draw perspective lines for finite VPs
         NR::Point pt = vp.affine();
@@ -727,7 +727,7 @@ VPDrag::drawLinesForFace (const SPBox3D *box, Proj::Axis axis) //, guint corner1
     } else {
         // draw perspective lines for infinite VPs
         NR::Maybe<NR::Point> pt1, pt2, pt3, pt4;
-        Persp3D *persp = box->persp_ref->getObject();
+        Persp3D *persp = box3d_get_perspective(box);
         SPDesktop *desktop = inkscape_active_desktop (); // FIXME: Store the desktop in VPDrag
         Box3D::PerspectiveLine pl (corner1, axis, persp);
         pt1 = pl.intersection_with_viewbox(desktop);

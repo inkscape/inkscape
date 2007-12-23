@@ -70,6 +70,11 @@ int box3d_VP_lies_in_PL_sector (SPBox3D const *box, Proj::Axis vpdir, int id1, i
 /* ensures that the coordinates of corner0 and corner7 are in the correct order (to prevent everted boxes) */
 void box3d_relabel_corners(SPBox3D *box);
 
+void box3d_add_to_selection(SPBox3D *box);
+void box3d_remove_from_selection(SPBox3D *box);
+void box3d_mark_transformed(SPBox3D *box);
+
+Persp3D *box3d_get_perspective(SPBox3D const *box);
 void box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp);
 
 #endif /* __SP_BOX3D_H__ */

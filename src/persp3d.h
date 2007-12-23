@@ -20,6 +20,7 @@
 
 #include <set>
 #include <vector>
+#include <map>
 #include "sp-item.h"
 #include "transf_mat_3x4.h"
 
@@ -32,6 +33,7 @@ struct Persp3D : public SPObject {
 
     // TODO: Also write the list of boxes into the xml repr and vice versa link boxes to their persp3d?
     std::vector<SPBox3D *> boxes;
+    std::map<SPBox3D *, bool> boxes_transformed; // TODO: eventually we should merge this with 'boxes'
     SPDocument *document; // FIXME: should this rather be the SPDesktop?
 
     // for debugging only
@@ -64,6 +66,14 @@ gchar * persp3d_pt_to_str (Persp3D *persp, Proj::Axis const axis);
 void persp3d_add_box (Persp3D *persp, SPBox3D *box);
 void persp3d_remove_box (Persp3D *persp, SPBox3D *box);
 bool persp3d_has_box (Persp3D *persp, SPBox3D *box);
+
+void persp3d_add_box_transform (Persp3D *persp, SPBox3D *box);
+void persp3d_remove_box_transform (Persp3D *persp, SPBox3D *box);
+void persp3d_set_box_transformed (Persp3D *persp, SPBox3D *box, bool transformed = true);
+bool persp3d_was_transformed (Persp3D *persp);
+bool persp3d_all_transformed(Persp3D *persp);
+void persp3d_unset_transforms(Persp3D *persp);
+
 void persp3d_update_box_displays (Persp3D *persp);
 void persp3d_update_box_reprs (Persp3D *persp);
 void persp3d_update_z_orders (Persp3D *persp);
@@ -81,6 +91,7 @@ std::list<SPBox3D *> persp3d_selected_boxes (Persp3D *persp);
 
 void persp3d_print_debugging_info (Persp3D *persp);
 void persp3d_print_debugging_info_all(SPDocument *doc);
+void persp3d_print_all_selected();
 
 #endif /* __PERSP3D_H__ */
 

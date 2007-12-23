@@ -29,6 +29,7 @@
 #include "sp-shape.h"
 #include "sp-path.h"
 #include "sp-item-group.h"
+#include "box3d.h"
 
 #include <sigc++/functors/mem_fun.h>
 
@@ -166,6 +167,11 @@ void Selection::_add(SPObject *obj) {
 
     _objs = g_slist_prepend(_objs, obj);
 
+    if (SP_IS_BOX3D(obj)) {
+        // keep track of selected boxes for transformations
+        box3d_add_to_selection(SP_BOX3D(obj));
+    }
+
     _release_connections[obj] = obj->connectRelease(sigc::mem_fun(*this, (void (Selection::*)(SPObject *))&Selection::remove));
     _modified_connections[obj] = obj->connectModified(sigc::mem_fun(*this, &Selection::_schedule_modified));
 }
@@ -199,6 +205,11 @@ void Selection::_remove(SPObject *obj) {
 
     _release_connections[obj].disconnect();
     _release_connections.erase(obj);
+
+    if (SP_IS_BOX3D(obj)) {
+        // keep track of selected boxes for transformations
+        box3d_remove_from_selection(SP_BOX3D(obj));
+    }
 
     _objs = g_slist_remove(_objs, obj);
 }

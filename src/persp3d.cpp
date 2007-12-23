@@ -94,6 +94,7 @@ persp3d_init(Persp3D *persp)
     persp->tmat = Proj::TransfMat3x4 ();
 
     //persp->boxes = NULL;
+    persp->boxes_transformed.clear();
     persp->document = NULL;
 
     persp->my_counter = global_counter++;
@@ -402,6 +403,75 @@ persp3d_has_box (Persp3D *persp, SPBox3D *box) {
 }
 
 void
+persp3d_add_box_transform (Persp3D *persp, SPBox3D *box) {
+    std::map<SPBox3D *, bool>::iterator i = persp->boxes_transformed.find(box);
+    if (i != persp->boxes_transformed.end() && (*i).second == true) {
+        g_print ("Warning! In %s (%d): trying to add transform status for box %d twice when it's already listed as true.\n",
+                 SP_OBJECT_REPR(persp)->attribute("id"), persp->my_counter,
+                 box->my_counter, persp->boxes_transformed[box]);
+        return;
+    }
+ 
+    persp->boxes_transformed[box] = false;
+}
+
+void
+persp3d_remove_box_transform (Persp3D *persp, SPBox3D *box) {
+    persp->boxes_transformed.erase(box);
+}
+
+void
+persp3d_set_box_transformed (Persp3D *persp, SPBox3D *box, bool transformed) {
+    if (persp->boxes_transformed.find(box) == persp->boxes_transformed.end()) {
+        g_print ("Warning! In %s (%d): trying to set transform status for box %d, but it is not listed in the perspective!! Aborting.\n",
+                 SP_OBJECT_REPR(persp)->attribute("id"), persp->my_counter,
+                 box->my_counter);
+        return;
+    }
+
+    persp->boxes_transformed[box] = transformed;
+}
+
+bool
+persp3d_was_transformed (Persp3D *persp) {
+    if (persp->boxes_transformed.size() == 1) {
+        /* either the transform has not been applied to the single box associated to this perspective yet
+           or the transform was already reset; in both cases we need to return false because upcoming
+           transforms need to be applied */
+        (*persp->boxes_transformed.begin()).second = false; // make sure the box is marked as untransformed (in case more boxes are added later)
+        return false;
+    }
+
+    for (std::map<SPBox3D *, bool>::iterator i = persp->boxes_transformed.begin();
+         i != persp->boxes_transformed.end(); ++i) {
+        if ((*i).second == true) {
+            // at least one of the boxes in the perspective has already been transformed;
+            return true;
+        }
+    }
+    return false; // all boxes in the perspective are still untransformed; a pending transformation should be applied
+}
+
+bool
+persp3d_all_transformed(Persp3D *persp) {
+    for (std::map<SPBox3D *, bool>::iterator i = persp->boxes_transformed.begin();
+         i != persp->boxes_transformed.end(); ++i) {
+        if ((*i).second == false) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void
+persp3d_unset_transforms(Persp3D *persp) {
+    for (std::map<SPBox3D *, bool>::iterator i = persp->boxes_transformed.begin();
+         i != persp->boxes_transformed.end(); ++i) {
+        (*i).second = false;
+    }
+}
+
+void
 persp3d_update_box_displays (Persp3D *persp) {
     if (persp->boxes.empty())
         return;
@@ -498,7 +568,7 @@ persp3d_currently_selected_persps (SPEventContext *ec) {
     std::set<Persp3D *> p;
     for (GSList *i = (GSList *) selection->itemList(); i != NULL; i = i->next) {
         if (SP_IS_BOX3D (i->data)) {
-            p.insert(SP_BOX3D(i->data)->persp_ref->getObject());
+            p.insert(box3d_get_perspective(SP_BOX3D(i->data)));
         }
     }
     return p;
@@ -546,7 +616,7 @@ persp3d_print_debugging_info (Persp3D *persp) {
 
     g_print ("  Boxes: ");
     for (std::vector<SPBox3D *>::iterator i = persp->boxes.begin(); i != persp->boxes.end(); ++i) {
-        g_print ("%d (%d)", (*i)->my_counter, (*i)->persp_ref->getObject()->my_counter);
+        g_print ("%d (%d)  ", (*i)->my_counter, box3d_get_perspective(*i)->my_counter);
     }
     g_print ("\n");
     g_print ("========================\n");
@@ -562,7 +632,33 @@ persp3d_print_debugging_info_all(SPDocument *document) {
             persp3d_print_debugging_info(SP_PERSP3D(child));
         }
     }
+    persp3d_print_all_selected();
 }
+
+void
+persp3d_print_all_selected() {
+    /**
+    if (persp3d->boxes_transformed.empty()) {
+        g_print ("No selected perspectives in document\n");
+        return;
+    }
+    **/
+    g_print ("\n======================================\n");
+    g_print ("Selected perspectives and their boxes:\n");
+
+    std::set<Persp3D *> sel_persps = persp3d_currently_selected_persps (inkscape_active_event_context());
+
+    for (std::set<Persp3D *>::iterator j = sel_persps.begin(); j != sel_persps.end(); ++j) {
+        Persp3D *persp = SP_PERSP3D(*j);
+        g_print ("  %s (%d):  ", SP_OBJECT_REPR(persp)->attribute("id"), persp->my_counter);
+        for (std::map<SPBox3D *, bool>::iterator i = persp->boxes_transformed.begin();
+             i != persp->boxes_transformed.end(); ++i) {
+            g_print ("<%d,%d> ", (*i).first->my_counter, (*i).second);
+        }
+        g_print ("\n");
+    }
+    g_print ("======================================\n\n");
+ }
 
 /*
   Local Variables:
