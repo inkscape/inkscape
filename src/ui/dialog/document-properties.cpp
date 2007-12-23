@@ -406,6 +406,7 @@ DocumentProperties::update_gridspage()
     bool grids_present = false;
     for (GSList const * l = nv->grids; l != NULL; l = l->next) {
         Inkscape::CanvasGrid * grid = (Inkscape::CanvasGrid*) l->data;
+        if (!grid->repr->attribute("id")) continue; // update_gridspage is called again when "id" is added
         _grids_notebook.append_page(grid->getWidget(), grid->repr->attribute("id"));
         grids_present = true;
     }
