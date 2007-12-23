@@ -6,8 +6,9 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Andrius R. <knutux@gmail.com>
+ *   Johan Engelen
  *
- * Copyright (C) 1999-2006 Authors
+ * Copyright (C) 1999-2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -30,7 +31,8 @@
 #include "dialogs/dialog-events.h"
 #include "message-context.h"
 #include "xml/repr.h"
-
+#include <2geom/point.h>
+#include <2geom/angle.h>
 #include "guidelinedialog.h"
 
 namespace Inkscape {
@@ -40,8 +42,10 @@ namespace Dialogs {
 GuidelinePropertiesDialog::GuidelinePropertiesDialog(SPGuide *guide, SPDesktop *desktop)
 : _desktop(desktop), _guide(guide),
   _relative_toggle(_("Rela_tive move"), _("Move guide relative to current position")),
-  _adjustment(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0),  
-  _unit_selector(NULL), _mode(true), _oldpos(0.0)
+  _adjustment_x(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0),  
+  _adjustment_y(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0),  
+  _adj_angle(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0),  
+  _unit_selector(NULL), _mode(true), _oldpos(0.,0.), _oldangle(0.0)
 {
 }
 
@@ -59,23 +63,38 @@ void GuidelinePropertiesDialog::_modeChanged()
     _mode = !_relative_toggle.get_active();
     if (!_mode) {
         _label_move.set_label(_("Move by:"));
+        _label_angle.set_label(_("Increase angle by:"));
     } else {
         _label_move.set_label(_("Move to:"));
+        _label_angle.set_label(_("Set angle to:"));
     }
 }
 
 void GuidelinePropertiesDialog::_onApply()
 {
-    gdouble const raw_dist = _spin_button.get_value();
-    SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(_unit_selector->gobj()));
-    gdouble const points = sp_units_get_pixels(raw_dist, unit);
-    if (_guide->is_horizontal()) {
-        gdouble const newpos = ( _mode ? points : _guide->point_on_line[Geom::Y] + points );
-        sp_guide_moveto(*_guide, Geom::Point(0, newpos), true);
+    double const deg_angle = _spin_angle.get_value();
+    Geom::Point normal;
+    if ( deg_angle == 90. || deg_angle == 270. || deg_angle == -90. || deg_angle == -270.) {
+        normal = Geom::Point(1.,0.);
+    } else if ( deg_angle == 0. || deg_angle == 180. || deg_angle == -180.) {
+        normal = Geom::Point(0.,1.);
     } else {
-        gdouble const newpos = ( _mode ? points : _guide->point_on_line[Geom::X] + points );
-        sp_guide_moveto(*_guide, Geom::Point(newpos, 0), true);
+        double rad_angle = Geom::deg_to_rad( deg_angle );
+        normal = Geom::rot90(Geom::Point::polar(rad_angle, 1.0));
     }
+    sp_guide_set_normal(*_guide, normal, true);
+
+    SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(_unit_selector->gobj()));
+    gdouble const raw_dist_x = _spin_button_x.get_value();
+    gdouble const points_x = sp_units_get_pixels(raw_dist_x, unit);
+    gdouble const raw_dist_y = _spin_button_y.get_value();
+    gdouble const points_y = sp_units_get_pixels(raw_dist_y, unit);
+    Geom::Point newpos(points_x, points_y);
+    if (!_mode)
+        newpos += _oldpos;
+
+    sp_guide_moveto(*_guide, newpos, true);
+
     sp_document_done(SP_OBJECT_DOCUMENT(_guide), SP_VERB_NONE, 
                      _("Set guide properties"));
 }
@@ -136,6 +155,11 @@ void GuidelinePropertiesDialog::_setup() {
     _layout_table.attach(_label_move,
                          0, 2, 1, 2, Gtk::FILL, Gtk::FILL);
     _label_move.set_alignment(0, 0.5);
+
+    _layout_table.attach(_label_angle,
+                         0, 2, 5, 6, Gtk::FILL, Gtk::FILL);
+    _label_angle.set_alignment(0, 0.5);
+
     _modeChanged();
 
     // indent
@@ -144,7 +168,7 @@ void GuidelinePropertiesDialog::_setup() {
 
     // mode radio button
     _layout_table.attach(_relative_toggle,
-                         1, 3, 3, 4, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+                         1, 3, 7, 8, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     _relative_toggle.signal_toggled().connect(sigc::mem_fun(*this, &GuidelinePropertiesDialog::_modeChanged));
 
     // unitmenu
@@ -153,18 +177,30 @@ void GuidelinePropertiesDialog::_setup() {
     sp_unit_selector_set_unit(SP_UNIT_SELECTOR(unit_selector), _desktop->namedview->doc_units);
     _unit_selector = Gtk::manage(Glib::wrap(unit_selector));
 
-    // spinbutton
-    sp_unit_selector_add_adjustment(SP_UNIT_SELECTOR(unit_selector), GTK_ADJUSTMENT(_adjustment.gobj()));
-    _spin_button.configure(_adjustment, 1.0 , 3);
-    _spin_button.set_numeric(TRUE);
-    _layout_table.attach(_spin_button,
-                         1, 2, 2, 3, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-    gtk_signal_connect_object(GTK_OBJECT(_spin_button.gobj()), "activate",
+    // position spinbuttons
+    sp_unit_selector_add_adjustment(SP_UNIT_SELECTOR(unit_selector), GTK_ADJUSTMENT(_adjustment_x.gobj()));
+    sp_unit_selector_add_adjustment(SP_UNIT_SELECTOR(unit_selector), GTK_ADJUSTMENT(_adjustment_y.gobj()));
+    _spin_button_x.configure(_adjustment_x, 1.0 , 3);
+    _spin_button_x.set_numeric();
+    _spin_button_y.configure(_adjustment_y, 1.0 , 3);
+    _spin_button_y.set_numeric();
+    _layout_table.attach(_spin_button_x,
+                         1, 2, 3, 4, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+    _layout_table.attach(_spin_button_y,
+                         1, 2, 4, 5, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+    gtk_signal_connect_object(GTK_OBJECT(_spin_button_x.gobj()), "activate",
                               GTK_SIGNAL_FUNC(gtk_window_activate_default),
                               gobj());
 
     _layout_table.attach(*_unit_selector,
-                         2, 3, 2, 3, Gtk::FILL, Gtk::FILL);
+                         1, 2, 2, 3, Gtk::FILL, Gtk::FILL);
+
+    // angle spinbutton
+    _spin_angle.configure(_adj_angle, 5.0 , 3);
+    _spin_angle.set_numeric();
+    _spin_angle.show();
+    _layout_table.attach(_spin_angle,
+                         1, 2, 6, 7, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
 
 
     // dialog
@@ -172,10 +208,13 @@ void GuidelinePropertiesDialog::_setup() {
     signal_response().connect(sigc::mem_fun(*this, &GuidelinePropertiesDialog::_response));
 
     // initialize dialog
+    _oldpos = _guide->point_on_line;
     if (_guide->is_vertical()) {
-        _oldpos = _guide->point_on_line[Geom::X];
+        _oldangle = 90;
+    } else if (_guide->is_horizontal()) {
+        _oldangle = 0;
     } else {
-        _oldpos = _guide->point_on_line[Geom::Y];
+        _oldangle = Geom::rad_to_deg( std::atan2( - _guide->normal_to_line[Geom::X], _guide->normal_to_line[Geom::Y] ) );
     }
     {
         gchar *guide_description = sp_guide_description(_guide);
@@ -187,11 +226,15 @@ void GuidelinePropertiesDialog::_setup() {
         g_free(label);
     }
 
+    _spin_angle.set_value(_oldangle);
+
     SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(unit_selector));
-    gdouble const val = sp_pixels_get_units(_oldpos, unit);
-    _spin_button.set_value(val);
-    _spin_button.grab_focus();
-    _spin_button.select_region(0, 20);
+    gdouble const val_y = sp_pixels_get_units(_oldpos[Geom::Y], unit);
+    _spin_button_y.set_value(val_y);
+    gdouble const val_x = sp_pixels_get_units(_oldpos[Geom::X], unit);
+    _spin_button_x.set_value(val_x);
+    _spin_button_x.grab_focus();
+    _spin_button_x.select_region(0, 20);
     set_position(Gtk::WIN_POS_MOUSE);
 
     show_all_children();

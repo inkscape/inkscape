@@ -4,8 +4,9 @@
  *
  * Author:
  *   Andrius R. <knutux@gmail.com>
+ *   Johan Engelen
  *
- * Copyright (C) 2006 Authors
+ * Copyright (C) 2006-2007 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information
  */
@@ -20,6 +21,7 @@
 #include <gtkmm/stock.h>
 #include <gtkmm/adjustment.h>
 #include "ui/widget/button.h"
+#include <2geom/point.h>
 
 namespace Inkscape {
 namespace UI {
@@ -53,13 +55,20 @@ private:
     Gtk::Table  _layout_table;
     Gtk::Label  _label_descr;
     Gtk::Label  _label_move;
+    Gtk::Label  _label_angle;
     Inkscape::UI::Widget::CheckButton _relative_toggle;
-    Gtk::Adjustment _adjustment;
-    Gtk::SpinButton _spin_button;
+    Gtk::Adjustment _adjustment_x;
+    Gtk::SpinButton _spin_button_x;
+    Gtk::Adjustment _adjustment_y;
+    Gtk::SpinButton _spin_button_y;
+
+    Gtk::Adjustment _adj_angle;
+    Gtk::SpinButton _spin_angle;
 
     Gtk::Widget *_unit_selector;
     bool _mode;
-    gdouble _oldpos;
+    Geom::Point _oldpos;
+    gdouble _oldangle;
 };
 
 } // namespace
