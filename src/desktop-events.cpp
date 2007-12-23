@@ -44,6 +44,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
 {
     static bool dragging = false;
     static SPCanvasItem *guide = NULL;
+    static Geom::Point normal;
     int wx, wy;
 
     SPDesktop *desktop = dtw->desktop;
@@ -63,7 +64,8 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 sp_repr_set_boolean(repr, "showguides", TRUE);
                 sp_repr_set_boolean(repr, "inkscape:guide-bbox", TRUE);
 
-                guide = sp_guideline_new(desktop->guides, event_dt.to_2geom(), horiz ? Geom::Point(0.,1.) : Geom::Point(1.,0.));
+                normal = horiz ? Geom::Point(0.,1.) : Geom::Point(1.,0.);
+                guide = sp_guideline_new(desktop->guides, event_dt.to_2geom(), normal);
                 sp_guideline_set_color(SP_GUIDELINE(guide), desktop->namedview->guidehicolor);
                 gdk_pointer_grab(widget->window, FALSE,
                                  (GdkEventMask)(GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK ),
@@ -77,7 +79,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 NR::Point event_dt(desktop->w2d(event_w));
                 
                 SnapManager const &m = desktop->namedview->snap_manager;
-                event_dt = m.guideSnap(event_dt, component_vectors[horiz ? NR::Y : NR::X]).getPoint();
+                event_dt = m.guideSnap(event_dt, normal).getPoint();
                 
                 sp_guideline_set_position(SP_GUIDELINE(guide), event_dt.to_2geom());
                 desktop->set_coordinate_status(event_dt);
@@ -91,7 +93,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 NR::Point event_dt(desktop->w2d(event_w));
                 
                 SnapManager const &m = desktop->namedview->snap_manager;
-                event_dt = m.guideSnap(event_dt, component_vectors[horiz ? NR::Y : NR::X]).getPoint();
+                event_dt = m.guideSnap(event_dt, normal).getPoint();
                                 
                 dragging = false;
                 gtk_object_destroy(GTK_OBJECT(guide));
@@ -99,7 +101,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 if ((horiz ? wy : wx) >= 0) {
                     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
                     Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
-                    repr->setAttribute("orientation", (horiz) ? "horizontal" : "vertical");
+                    sp_repr_set_point(repr, "orientation", normal);
                     sp_repr_set_point(repr, "position", event_dt.to_2geom());
                     SP_OBJECT_REPR(desktop->namedview)->appendChild(repr);
                     Inkscape::GC::release(repr);
