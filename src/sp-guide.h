@@ -36,6 +36,7 @@ struct SPGuide : public SPObject {
 
     inline bool is_horizontal() const { return (normal_to_line[Geom::X] == 0.); };
     inline bool is_vertical() const { return (normal_to_line[Geom::Y] == 0.); };
+    inline double angle() const { return std::atan2( - normal_to_line[Geom::X], normal_to_line[Geom::Y] ); };
 };
 
 struct SPGuideClass {

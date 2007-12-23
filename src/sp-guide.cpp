@@ -33,6 +33,7 @@
 #include "inkscape.h"
 #include "desktop.h"
 #include "sp-namedview.h"
+#include <2geom/angle.h>
 
 using std::vector;
 
@@ -367,11 +368,9 @@ char *sp_guide_description(SPGuide const *guide)
     } else if ( guide->normal_to_line == component_vectors[Y] ) {
         return g_strdup_printf(_("horizontal guideline at %s"), position_string_y->str);
     } else {
-        double const radians = atan2(guide->normal_to_line[X],
-                                     guide->normal_to_line[Y]);
-        /* flip y axis and rotate 90 degrees to convert to line angle */
-        double const degrees = ( radians / M_PI ) * 180.0;
-        int const degrees_int = (int) floor( degrees + .5 );
+        double const radians = guide->angle();
+        double const degrees = Geom::rad_to_deg(radians);
+        int const degrees_int = (int) round(degrees);
         return g_strdup_printf("%d degree guideline at (%s,%s)", degrees_int, position_string_x->str, position_string_y->str);
         /* Alternative suggestion: "angled guideline". */
     }
