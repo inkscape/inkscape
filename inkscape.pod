@@ -551,7 +551,29 @@ Inkscape was formed in 2003 by four active Sodipodi developers, Bryce
 Harrington, MenTaLguY, Nathan Hurst, and Ted Gould, wanting to take a
 different direction with the codebase in terms of focus on
 SVG compliance, interface look-and-feel, and a desire to open
-development opportunities to more participants.  
+development opportunities to more participants.  The project progressed
+rapidly, gaining a number of very active contributors and features.
+
+Much work in the early days of the project focused on code stablization
+and internationalization.  The original renderer inherited from Sodipodi
+was laced with a number of mathematical corner cases which led to
+unexpected crashes when the program was pushed beyond routine uses; this
+renderer was replaced with Livarot which, while not perfect either, was
+significantly less error prone.  The project also adopted a practice of
+committing code frequently, and encouraging users to run developmental
+snapshots of the program; this helped identify new bugs swiftly, and
+ensure it was easy for users to verify the fixes.  As a result, Inkscape
+releases have generally earned a reputation for being robust and
+reliable.
+
+Similarly, efforts were taken to internationalize and localize the
+interface, which has helped the program gain contributors worldwide.
+
+Inkscape has had a beneficial impact on the visual attractiveness of
+Open Source in general, by providing a tool for creating and sharing
+icons, splash screens, website art, and so on.  In a way, despite being
+"just an drawing program", Inkscape has played an important role in
+making Open Source more visually stimulating to larger audiences.
 
 =head1 COPYRIGHT AND LICENSE
 
