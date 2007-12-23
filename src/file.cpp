@@ -1379,22 +1379,8 @@ sp_file_print(Gtk::Window& parentWindow)
 {
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
     if (doc)
-        sp_print_document(parentWindow, doc, FALSE);
+        sp_print_document(parentWindow, doc);
 }
-
-
-/**
- *  Print the current document, if any.  Do not use
- *  the machine's print drivers.
- */
-void
-sp_file_print_direct(Gtk::Window& parentWindow)
-{
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
-    if (doc)
-        sp_print_document(parentWindow, doc, TRUE);
-}
-
 
 /**
  * Display what the drawing would look like, if

@@ -34,13 +34,6 @@ static char const menus_skeleton[] =
 "       <verb verb-id=\"FileExportToOCAL\" />\n"
 #endif
 "       <separator/>\n"
-/* These are ugly, but what needs to happen here is allowing users
-   to use the native PS support if they are using another print driver.
-   This is done through the "Print Direct" command.  Which is inserted
-   here based on if those other drivers are being built. */
-#ifdef WIN32
-"       <verb verb-id=\"FilePrintDirect\" />\n"
-#endif
 "       <verb verb-id=\"FilePrint\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"FileVacuum\" />\n"

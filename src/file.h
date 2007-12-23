@@ -184,11 +184,6 @@ void sp_file_print (Gtk::Window& parentWindow);
 /**
  *
  */
-void sp_file_print_direct (Gtk::Window& parentWindow);
-
-/**
- *
- */
 void sp_file_print_preview (gpointer object, gpointer data);
 
 /*#####################

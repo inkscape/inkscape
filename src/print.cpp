@@ -123,7 +123,7 @@ sp_print_preview_document(SPDocument *doc)
 }
 
 void
-sp_print_document(Gtk::Window& parentWindow, SPDocument *doc, unsigned int /*direct*/)
+sp_print_document(Gtk::Window& parentWindow, SPDocument *doc)
 {
     sp_document_ensure_up_to_date(doc);
 

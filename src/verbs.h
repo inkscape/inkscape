@@ -37,7 +37,6 @@ enum {
     SP_VERB_FILE_SAVE_A_COPY,      /**< Save a copy of the current file */ 
     SP_VERB_FILE_PRINT,
     SP_VERB_FILE_VACUUM,
-    SP_VERB_FILE_PRINT_DIRECT,
     SP_VERB_FILE_PRINT_PREVIEW,
     SP_VERB_FILE_IMPORT,
     SP_VERB_FILE_EXPORT,
