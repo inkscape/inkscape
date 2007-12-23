@@ -285,8 +285,6 @@ box3d_side_set_shape (SPShape *shape)
         return;
     }
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR (shape);
-    (void)repr;
     Persp3D *persp = box3d_side_perspective(side);
     //g_return_if_fail (persp != NULL);
     if (!persp) {
