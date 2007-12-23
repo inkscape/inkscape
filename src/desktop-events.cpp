@@ -53,8 +53,11 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
     gdk_window_get_pointer(GTK_WIDGET(dtw->canvas)->window, &wx, &wy, NULL);
     NR::Point const event_win(wx, wy);
 
+    gint width, height;
+    gdk_window_get_geometry(GTK_WIDGET(dtw->canvas)->window, NULL /*x*/, NULL /*y*/, &width, &height, NULL/*depth*/);
+
     switch (event->type) {
-	case GDK_BUTTON_PRESS:
+    case GDK_BUTTON_PRESS:
             if (event->button.button == 1) {
                 dragging = true;
                 NR::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
@@ -64,7 +67,28 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 sp_repr_set_boolean(repr, "showguides", TRUE);
                 sp_repr_set_boolean(repr, "inkscape:guide-bbox", TRUE);
 
-                normal = horiz ? Geom::Point(0.,1.) : Geom::Point(1.,0.);
+                if (horiz) {
+                    if (wx < 50) {
+                        normal = Geom::Point(-1.,1.);
+                        normal.normalize();
+                    } else if (wx > width - 50) {
+                        normal = Geom::Point(1.,1.);
+                        normal.normalize();
+                    } else {
+                        normal = Geom::Point(0.,1.);
+                    }
+                } else {
+                    if (wy < 50) {
+                        normal = Geom::Point(-1.,1.);
+                        normal.normalize();
+                    } else if (wy > height - 50) {
+                        normal = Geom::Point(1.,1.);
+                        normal.normalize();
+                    } else {
+                        normal = Geom::Point(1.,0.);
+                    }
+                }
+
                 guide = sp_guideline_new(desktop->guides, event_dt.to_2geom(), normal);
                 sp_guideline_set_color(SP_GUIDELINE(guide), desktop->namedview->guidehicolor);
                 gdk_pointer_grab(widget->window, FALSE,
@@ -73,7 +97,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                                  event->button.time);
             }
             break;
-	case GDK_MOTION_NOTIFY:
+    case GDK_MOTION_NOTIFY:
             if (dragging) {
                 NR::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
                 NR::Point event_dt(desktop->w2d(event_w));
@@ -86,7 +110,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 desktop->setPosition (event_dt);
             }
             break;
-	case GDK_BUTTON_RELEASE:
+    case GDK_BUTTON_RELEASE:
             if (dragging && event->button.button == 1) {
                 gdk_pointer_ungrab(event->button.time);
                 NR::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
