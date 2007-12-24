@@ -149,17 +149,22 @@ void GuidelinePropertiesDialog::_setup() {
 
     mainVBox->pack_start(_layout_table, false, false, 0);
 
+    _label_name.set_label("foo0");
+    _layout_table.attach(_label_name,
+                         0, 3, 0, 1, Gtk::FILL, Gtk::FILL);
+    _label_name.set_alignment(0, 0.5);
+
     _label_descr.set_label("foo1");
     _layout_table.attach(_label_descr,
-                         0, 3, 0, 1, Gtk::FILL, Gtk::FILL);
+                         0, 3, 1, 2, Gtk::FILL, Gtk::FILL);
     _label_descr.set_alignment(0, 0.5);
 
     _layout_table.attach(_label_move,
-                         0, 2, 1, 2, Gtk::FILL, Gtk::FILL);
+                         0, 2, 3, 4, Gtk::FILL, Gtk::FILL);
     _label_move.set_alignment(0, 0.5);
 
     _layout_table.attach(_label_angle,
-                         0, 2, 5, 6, Gtk::FILL, Gtk::FILL);
+                         0, 2, 7, 8, Gtk::FILL, Gtk::FILL);
     _label_angle.set_alignment(0, 0.5);
 
     _modeChanged();
@@ -170,7 +175,7 @@ void GuidelinePropertiesDialog::_setup() {
 
     // mode radio button
     _layout_table.attach(_relative_toggle,
-                         1, 3, 7, 8, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+                         1, 3, 9, 10, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     _relative_toggle.signal_toggled().connect(sigc::mem_fun(*this, &GuidelinePropertiesDialog::_modeChanged));
 
     // unitmenu
@@ -187,22 +192,22 @@ void GuidelinePropertiesDialog::_setup() {
     _spin_button_y.configure(_adjustment_y, 1.0 , 3);
     _spin_button_y.set_numeric();
     _layout_table.attach(_spin_button_x,
-                         1, 2, 3, 4, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+                         1, 2, 5, 6, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     _layout_table.attach(_spin_button_y,
-                         1, 2, 4, 5, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+                         1, 2, 6, 7, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     gtk_signal_connect_object(GTK_OBJECT(_spin_button_x.gobj()), "activate",
                               GTK_SIGNAL_FUNC(gtk_window_activate_default),
                               gobj());
 
     _layout_table.attach(*_unit_selector,
-                         1, 2, 2, 3, Gtk::FILL, Gtk::FILL);
+                         1, 2, 4, 5, Gtk::FILL, Gtk::FILL);
 
     // angle spinbutton
     _spin_angle.configure(_adj_angle, 5.0 , 3);
     _spin_angle.set_numeric();
     _spin_angle.show();
     _layout_table.attach(_spin_angle,
-                         1, 2, 6, 7, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+                         1, 2, 8, 9, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
 
 
     // dialog
@@ -218,11 +223,17 @@ void GuidelinePropertiesDialog::_setup() {
     } else {
         _oldangle = Geom::rad_to_deg( std::atan2( - _guide->normal_to_line[Geom::X], _guide->normal_to_line[Geom::Y] ) );
     }
+
     {
-        gchar *guide_description = sp_guide_description(_guide);
         Inkscape::XML::Node *repr = SP_OBJECT_REPR (_guide);
         const gchar *guide_id = repr->attribute("id");
-        gchar *label = g_strdup_printf(_("Moving %s %s"), guide_description, guide_id);
+        gchar *label = g_strdup_printf(_("Guideline: %s"), guide_id);
+        _label_name.set_label(label);
+        g_free(label);
+    }
+    {
+        gchar *guide_description = sp_guide_description(_guide);
+        gchar *label = g_strdup_printf(_("Current settings: %s"), guide_description);
         g_free(guide_description);
         _label_descr.set_label(label);
         g_free(label);

@@ -53,6 +53,7 @@ private:
     SPDesktop *_desktop;
     SPGuide *_guide;
     Gtk::Table  _layout_table;
+    Gtk::Label  _label_name;
     Gtk::Label  _label_descr;
     Gtk::Label  _label_move;
     Gtk::Label  _label_angle;
