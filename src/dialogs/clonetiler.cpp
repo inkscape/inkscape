@@ -222,76 +222,204 @@ enum {
 
 static NR::Matrix
 clonetiler_get_transform (
+
     // symmetry group
     int type,
+
     // row, column
-    int x, int y,
+    int i, int j,
+
     // center, width, height of the tile
     double cx, double cy,
-    double w, double h,
+    double w,  double h,
 
     // values from the dialog:
-    double d_x_per_x, double d_y_per_x, double d_x_per_y, double d_y_per_y,
-    int alternate_x, int alternate_y, double rand_x, double rand_y,
-    double d_per_x_exp, double d_per_y_exp,
-    double d_rot_per_x, double d_rot_per_y, int alternate_rotx, int alternate_roty, double rand_rot,
-    double d_scalex_per_x, double d_scaley_per_x, double d_scalex_per_y, double d_scaley_per_y,
-    int alternate_scalex, int alternate_scaley, double rand_scalex, double rand_scaley
+    // Shift
+    double shiftx_per_i,      double shifty_per_i,
+    double shiftx_per_j,      double shifty_per_j,
+    double shiftx_rand,       double shifty_rand,
+    double shiftx_exp,        double shifty_exp,
+    int    shiftx_alternate,  int    shifty_alternate,
+    int    shiftx_cumulate,   int    shifty_cumulate,
+    int    shiftx_excludew,   int    shifty_excludeh,
+
+    // Scale
+    double scalex_per_i,      double scaley_per_i,
+    double scalex_per_j,      double scaley_per_j,
+    double scalex_rand,       double scaley_rand,
+    double scalex_exp,        double scaley_exp,
+    double scalex_log,        double scaley_log,
+    int    scalex_alternate,  int    scaley_alternate,
+    int    scalex_cumulate,   int    scaley_cumulate,
+
+    // Rotation
+    double rotate_per_i,      double rotate_per_j,
+    double rotate_rand,
+    int    rotate_alternatei, int    rotate_alternatej,
+    int    rotate_cumulatei,  int    rotate_cumulatej
     )
 {
-    // in abs units
-    double eff_x = (alternate_x? (x%2) : pow ((double) x, d_per_x_exp));
-    double eff_y = (alternate_y? (y%2) : pow ((double) y, d_per_y_exp));
-    double dx = d_x_per_x * w * eff_x + d_x_per_y  * w * eff_y + rand_x * w * g_random_double_range (-1, 1);
-    double dy = d_y_per_x * h * eff_x + d_y_per_y  * h * eff_y + rand_y * h * g_random_double_range (-1, 1);
 
-    NR::Matrix rect_translate (NR::translate (w * pow ((double) x, d_per_x_exp) + dx, h * pow ((double) y, d_per_y_exp) + dy));
+    // Shift (in units of tile width or height) -------------
+    double delta_shifti = 0.0;
+    double delta_shiftj = 0.0;
 
-    // in deg
-    double eff_x_rot = (alternate_rotx? (x%2) : (x));
-    double eff_y_rot = (alternate_roty? (y%2) : (y));
-    double drot = d_rot_per_x * eff_x_rot + d_rot_per_y * eff_y_rot + rand_rot * 180 * g_random_double_range (-1, 1);
-
-    // times the original
-    double eff_x_s = (alternate_scalex? (x%2) : (x));
-    double eff_y_s = (alternate_scaley? (y%2) : (y));
-    double rand_scale_x, rand_scale_y;
-    if (rand_scaley == rand_scalex) {
-        // if rands are equal, scale proportionally
-        rand_scale_x = rand_scale_y = rand_scalex * 1 * g_random_double_range (-1, 1);
+    if( shiftx_alternate ) {
+        delta_shifti = (double)(i%2);
     } else {
-        rand_scale_x = rand_scalex * 1 * g_random_double_range (-1, 1);
-        rand_scale_y = rand_scaley * 1 * g_random_double_range (-1, 1);
+        if( shiftx_cumulate ) {  // Should the delta shifts be cumulative (i.e. 1, 1+2, 1+2+3, ...)
+            delta_shifti = (double)(i*i);
+        } else {
+            delta_shifti = (double)i;
+        }
     }
-    double dscalex = 1 + d_scalex_per_x * eff_x_s + d_scalex_per_y * eff_y_s + rand_scale_x;
-    if (dscalex < 0) dscalex = 0;
-    double dscaley = 1 + d_scaley_per_x * eff_x_s + d_scaley_per_y * eff_y_s + rand_scale_y;
-    if (dscaley < 0) dscaley = 0;
 
-    NR::Matrix drot_c = NR::translate(-cx, -cy) * NR::rotate (M_PI*drot/180) * NR::translate(cx, cy);
+    if( shifty_alternate ) {
+        delta_shiftj = (double)(j%2);
+    } else {
+        if( shifty_cumulate ) {
+            delta_shiftj = (double)(j*j);
+        } else {
+            delta_shiftj = (double)j;
+        }
+    }
 
-    NR::Matrix dscale_c = NR::translate(-cx, -cy) * NR::scale (dscalex, dscaley) * NR::translate(cx, cy);
+    // Random shift, only calculate if non-zero.
+    double delta_shiftx_rand = 0.0;
+    double delta_shifty_rand = 0.0;
+    if( shiftx_rand != 0.0 ) delta_shiftx_rand = shiftx_rand * g_random_double_range (-1, 1);
+    if( shifty_rand != 0.0 ) delta_shifty_rand = shifty_rand * g_random_double_range (-1, 1);
+
+
+    // Delta shift (units of tile width/height)
+    double di = shiftx_per_i * delta_shifti  + shiftx_per_j * delta_shiftj + delta_shiftx_rand;
+    double dj = shifty_per_i * delta_shifti  + shifty_per_j * delta_shiftj + delta_shifty_rand;
+
+    // Shift in actual x and y, used below
+    double dx = w * di;
+    double dy = h * dj;
+
+    double shifti = di;
+    double shiftj = dj;
+
+    // Include tile width and height in shift if required
+    if( !shiftx_excludew ) shifti += i;
+    if( !shifty_excludeh ) shiftj += j;
+
+    // Add exponential shift if necessary
+    if ( shiftx_exp != 1.0 ) shifti = pow( shifti, shiftx_exp );
+    if ( shifty_exp != 1.0 ) shiftj = pow( shiftj, shifty_exp );
+
+    // Final shift
+    NR::Matrix rect_translate (NR::translate (w * shifti, h * shiftj));
+
+    // Rotation (in degrees) ------------
+    double delta_rotationi = 0.0;
+    double delta_rotationj = 0.0;
+
+    if( rotate_alternatei ) {
+        delta_rotationi = (double)(i%2);
+    } else {
+        if( rotate_cumulatei ) {
+            delta_rotationi = (double)(i*i + i)/2.0;
+        } else {
+            delta_rotationi = (double)i;
+        }
+    }
+
+    if( rotate_alternatej ) {
+        delta_rotationj = (double)(j%2);
+    } else {
+        if( rotate_cumulatej ) {
+            delta_rotationj = (double)(j*j + j)/2.0;
+        } else {
+            delta_rotationj = (double)j;
+        }
+    }
+
+    double delta_rotate_rand = 0.0;
+    if( rotate_rand != 0.0 ) delta_rotate_rand = rotate_rand * 180.0 * g_random_double_range (-1, 1);
+
+    double dr = rotate_per_i * delta_rotationi + rotate_per_j * delta_rotationj + delta_rotate_rand;
+
+    // Scale (times the original) -----------
+    double delta_scalei = 0.0;
+    double delta_scalej = 0.0;
+
+    if( scalex_alternate ) {
+        delta_scalei = (double)(i%2);
+    } else {
+        if( scalex_cumulate ) {  // Should the delta scales be cumulative (i.e. 1, 1+2, 1+2+3, ...)
+            delta_scalei = (double)(i*i + i)/2.0;
+        } else {
+            delta_scalei = (double)i;
+        }
+    }
+
+    if( scaley_alternate ) {
+        delta_scalej = (double)(j%2);
+    } else {
+        if( scaley_cumulate ) {
+            delta_scalej = (double)(j*j + j)/2.0;
+        } else {
+            delta_scalej = (double)j;
+        }
+    }
+
+    // Random scale, only calculate if non-zero.
+    double delta_scalex_rand = 0.0;
+    double delta_scaley_rand = 0.0;
+    if( scalex_rand != 0.0 ) delta_scalex_rand = scalex_rand * g_random_double_range (-1, 1);
+    if( scaley_rand != 0.0 ) delta_scaley_rand = scaley_rand * g_random_double_range (-1, 1);
+    // But if random factors are same, scale x and y proportionally
+    if( scalex_rand == scaley_rand ) delta_scalex_rand = delta_scaley_rand;
+
+    // Total delta scale
+    double scalex = 1.0 + scalex_per_i * delta_scalei  + scalex_per_j * delta_scalej + delta_scalex_rand;
+    double scaley = 1.0 + scaley_per_i * delta_scalei  + scaley_per_j * delta_scalej + delta_scaley_rand;
+
+    if( scalex < 0.0 ) scalex = 0.0;
+    if( scaley < 0.0 ) scaley = 0.0;
+
+    // Add exponential scale if necessary
+    if ( scalex_exp != 1.0 ) scalex = pow( scalex, scalex_exp );
+    if ( scaley_exp != 1.0 ) scaley = pow( scaley, scaley_exp );
+
+    // Add logarithmic factor if necessary
+    if ( scalex_log  > 0.0 ) scalex = pow( scalex_log, scalex - 1.0 );
+    if ( scaley_log  > 0.0 ) scaley = pow( scaley_log, scaley - 1.0 );
+    // Alternative using rotation angle
+    //if ( scalex_log  != 1.0 ) scalex *= pow( scalex_log, M_PI*dr/180 );
+    //if ( scaley_log  != 1.0 ) scaley *= pow( scaley_log, M_PI*dr/180 );
+
+
+    // Calculate transformation matrices, translating back to "center of tile" (rotation center) before transforming
+    NR::Matrix drot_c   = NR::translate(-cx, -cy) * NR::rotate (M_PI*dr/180)    * NR::translate(cx, cy);
+
+    NR::Matrix dscale_c = NR::translate(-cx, -cy) * NR::scale (scalex, scaley)  * NR::translate(cx, cy);
 
     NR::Matrix d_s_r = dscale_c * drot_c;
 
-    NR::Matrix rotate_180_c = NR::translate(-cx, -cy) * NR::rotate (M_PI) * NR::translate(cx, cy);
+    NR::Matrix rotate_180_c  = NR::translate(-cx, -cy) * NR::rotate (M_PI)      * NR::translate(cx, cy);
 
-    NR::Matrix rotate_90_c = NR::translate(-cx, -cy) * NR::rotate (-M_PI/2) * NR::translate(cx, cy);
-    NR::Matrix rotate_m90_c = NR::translate(-cx, -cy) * NR::rotate (M_PI/2) * NR::translate(cx, cy);
+    NR::Matrix rotate_90_c   = NR::translate(-cx, -cy) * NR::rotate (-M_PI/2)   * NR::translate(cx, cy);
+    NR::Matrix rotate_m90_c  = NR::translate(-cx, -cy) * NR::rotate ( M_PI/2)   * NR::translate(cx, cy);
 
-    NR::Matrix rotate_120_c = NR::translate(-cx, -cy) * NR::rotate (-2*M_PI/3) * NR::translate(cx, cy);
-    NR::Matrix rotate_m120_c = NR::translate(-cx, -cy) * NR::rotate (2*M_PI/3) * NR::translate(cx, cy);
+    NR::Matrix rotate_120_c  = NR::translate(-cx, -cy) * NR::rotate (-2*M_PI/3) * NR::translate(cx, cy);
+    NR::Matrix rotate_m120_c = NR::translate(-cx, -cy) * NR::rotate ( 2*M_PI/3) * NR::translate(cx, cy);
 
-    NR::Matrix rotate_60_c = NR::translate(-cx, -cy) * NR::rotate (-M_PI/3) * NR::translate(cx, cy);
-    NR::Matrix rotate_m60_c = NR::translate(-cx, -cy) * NR::rotate (M_PI/3) * NR::translate(cx, cy);
+    NR::Matrix rotate_60_c   = NR::translate(-cx, -cy) * NR::rotate (-M_PI/3)   * NR::translate(cx, cy);
+    NR::Matrix rotate_m60_c  = NR::translate(-cx, -cy) * NR::rotate ( M_PI/3)   * NR::translate(cx, cy);
 
-    double cos60 = cos(M_PI/3);
-    double sin60 = sin(M_PI/3);
-    double cos30 = cos(M_PI/6);
-    double sin30 = sin(M_PI/6);
+    NR::Matrix flip_x        = NR::translate(-cx, -cy) * NR::scale (-1, 1)      * NR::translate(cx, cy);
+    NR::Matrix flip_y        = NR::translate(-cx, -cy) * NR::scale (1, -1)      * NR::translate(cx, cy);
 
-    NR::Matrix flip_x = NR::translate(-cx, -cy) * NR::scale (-1, 1) * NR::translate(cx, cy);
-    NR::Matrix flip_y = NR::translate(-cx, -cy) * NR::scale (1, -1) * NR::translate(cx, cy);
+
+    // Create tile with required symmetry
+    const double cos60 = cos(M_PI/3);
+    const double sin60 = sin(M_PI/3);
+    const double cos30 = cos(M_PI/6);
+    const double sin30 = sin(M_PI/6);
 
     switch (type) {
 
@@ -300,7 +428,7 @@ clonetiler_get_transform (
         break;
 
     case TILE_P2:
-        if (x % 2 == 0) {
+        if (i % 2 == 0) {
             return d_s_r * rect_translate;
         } else {
             return d_s_r * rotate_180_c * rect_translate;
@@ -308,7 +436,7 @@ clonetiler_get_transform (
         break;
 
     case TILE_PM:
-        if (x % 2 == 0) {
+        if (i % 2 == 0) {
             return d_s_r * rect_translate;
         } else {
             return d_s_r * flip_x * rect_translate;
@@ -316,7 +444,7 @@ clonetiler_get_transform (
         break;
 
     case TILE_PG:
-        if (y % 2 == 0) {
+        if (j % 2 == 0) {
             return d_s_r * rect_translate;
         } else {
             return d_s_r * flip_x * rect_translate;
@@ -324,7 +452,7 @@ clonetiler_get_transform (
         break;
 
     case TILE_CM:
-        if ((x + y) % 2 == 0) {
+        if ((i + j) % 2 == 0) {
             return d_s_r * rect_translate;
         } else {
             return d_s_r * flip_x * rect_translate;
@@ -332,14 +460,14 @@ clonetiler_get_transform (
         break;
 
     case TILE_PMM:
-        if (y % 2 == 0) {
-            if (x % 2 == 0) {
+        if (j % 2 == 0) {
+            if (i % 2 == 0) {
                 return d_s_r * rect_translate;
             } else {
                 return d_s_r * flip_x * rect_translate;
             }
         } else {
-            if (x % 2 == 0) {
+            if (i % 2 == 0) {
                 return d_s_r * flip_y * rect_translate;
             } else {
                 return d_s_r * flip_x * flip_y * rect_translate;
@@ -348,14 +476,14 @@ clonetiler_get_transform (
         break;
 
     case TILE_PMG:
-        if (y % 2 == 0) {
-            if (x % 2 == 0) {
+        if (j % 2 == 0) {
+            if (i % 2 == 0) {
                 return d_s_r * rect_translate;
             } else {
                 return d_s_r * rotate_180_c * rect_translate;
             }
         } else {
-            if (x % 2 == 0) {
+            if (i % 2 == 0) {
                 return d_s_r * flip_y * rect_translate;
             } else {
                 return d_s_r * rotate_180_c * flip_y * rect_translate;
@@ -364,14 +492,14 @@ clonetiler_get_transform (
         break;
 
     case TILE_PGG:
-        if (y % 2 == 0) {
-            if (x % 2 == 0) {
+        if (j % 2 == 0) {
+            if (i % 2 == 0) {
                 return d_s_r * rect_translate;
             } else {
                 return d_s_r * flip_y * rect_translate;
             }
         } else {
-            if (x % 2 == 0) {
+            if (i % 2 == 0) {
                 return d_s_r * rotate_180_c * rect_translate;
             } else {
                 return d_s_r * rotate_180_c * flip_y * rect_translate;
@@ -380,26 +508,26 @@ clonetiler_get_transform (
         break;
 
     case TILE_CMM:
-        if (y % 4 == 0) {
-            if (x % 2 == 0) {
+        if (j % 4 == 0) {
+            if (i % 2 == 0) {
                 return d_s_r * rect_translate;
             } else {
                 return d_s_r * flip_x * rect_translate;
             }
-        } else if (y % 4 == 1) {
-            if (x % 2 == 0) {
+        } else if (j % 4 == 1) {
+            if (i % 2 == 0) {
                 return d_s_r * flip_y * rect_translate;
             } else {
                 return d_s_r * flip_x * flip_y * rect_translate;
             }
-        } else if (y % 4 == 2) {
-            if (x % 2 == 1) {
+        } else if (j % 4 == 2) {
+            if (i % 2 == 1) {
                 return d_s_r * rect_translate;
             } else {
                 return d_s_r * flip_x * rect_translate;
             }
         } else {
-            if (x % 2 == 1) {
+            if (i % 2 == 1) {
                 return d_s_r * flip_y * rect_translate;
             } else {
                 return d_s_r * flip_x * flip_y * rect_translate;
@@ -409,17 +537,17 @@ clonetiler_get_transform (
 
     case TILE_P4:
     {
-        NR::Matrix ori (NR::translate ((w + h) * pow((x/2), d_per_x_exp) + dx,  (h + w) * pow((y/2), d_per_y_exp) + dy));
+        NR::Matrix ori  (NR::translate ((w + h) * pow((i/2), shiftx_exp) + dx,  (h + w) * pow((j/2), shifty_exp) + dy));
         NR::Matrix dia1 (NR::translate (w/2 + h/2, -h/2 + w/2));
         NR::Matrix dia2 (NR::translate (-w/2 + h/2, h/2 + w/2));
-        if (y % 2 == 0) {
-            if (x % 2 == 0) {
+        if (j % 2 == 0) {
+            if (i % 2 == 0) {
                 return d_s_r * ori;
             } else {
                 return d_s_r * rotate_m90_c * dia1 * ori;
             }
         } else {
-            if (x % 2 == 0) {
+            if (i % 2 == 0) {
                 return d_s_r * rotate_90_c * dia2 * ori;
             } else {
                 return d_s_r * rotate_180_c * dia1 * dia2 * ori;
@@ -431,27 +559,27 @@ clonetiler_get_transform (
     case TILE_P4M:
     {
         double max = MAX(w, h);
-        NR::Matrix ori (NR::translate ((max + max) * pow((x/4), d_per_x_exp) + dx,  (max + max) * pow((y/2), d_per_y_exp) + dy));
-        NR::Matrix dia1 (NR::translate (w/2 - h/2, h/2 - w/2));
+        NR::Matrix ori (NR::translate ((max + max) * pow((i/4), shiftx_exp) + dx,  (max + max) * pow((j/2), shifty_exp) + dy));
+        NR::Matrix dia1 (NR::translate ( w/2 - h/2, h/2 - w/2));
         NR::Matrix dia2 (NR::translate (-h/2 + w/2, w/2 - h/2));
-        if (y % 2 == 0) {
-            if (x % 4 == 0) {
+        if (j % 2 == 0) {
+            if (i % 4 == 0) {
                 return d_s_r * ori;
-            } else if (x % 4 == 1) {
+            } else if (i % 4 == 1) {
                 return d_s_r * flip_y * rotate_m90_c * dia1 * ori;
-            } else if (x % 4 == 2) {
+            } else if (i % 4 == 2) {
                 return d_s_r * rotate_m90_c * dia1 * NR::translate (h, 0) * ori;
-            } else if (x % 4 == 3) {
+            } else if (i % 4 == 3) {
                 return d_s_r * flip_x * NR::translate (w, 0) * ori;
             }
         } else {
-            if (x % 4 == 0) {
+            if (i % 4 == 0) {
                 return d_s_r * flip_y * NR::translate(0, h) * ori;
-            } else if (x % 4 == 1) {
+            } else if (i % 4 == 1) {
                 return d_s_r * rotate_90_c * dia2 * NR::translate(0, h) * ori;
-            } else if (x % 4 == 2) {
+            } else if (i % 4 == 2) {
                 return d_s_r * flip_y * rotate_90_c * dia2 * NR::translate(h, 0) * NR::translate(0, h) * ori;
-            } else if (x % 4 == 3) {
+            } else if (i % 4 == 3) {
                 return d_s_r * flip_y * flip_x * NR::translate(w, 0) * NR::translate(0, h) * ori;
             }
         }
@@ -461,27 +589,27 @@ clonetiler_get_transform (
     case TILE_P4G:
     {
         double max = MAX(w, h);
-        NR::Matrix ori (NR::translate ((max + max) * pow((x/4), d_per_x_exp) + dx,  (max + max) * pow(y, d_per_y_exp) + dy));
-        NR::Matrix dia1 (NR::translate (w/2 + h/2, h/2 - w/2));
+        NR::Matrix ori (NR::translate ((max + max) * pow((i/4), shiftx_exp) + dx,  (max + max) * pow(j, shifty_exp) + dy));
+        NR::Matrix dia1 (NR::translate ( w/2 + h/2, h/2 - w/2));
         NR::Matrix dia2 (NR::translate (-h/2 + w/2, w/2 + h/2));
-        if (((x/4) + y) % 2 == 0) {
-            if (x % 4 == 0) {
+        if (((i/4) + j) % 2 == 0) {
+            if (i % 4 == 0) {
                 return d_s_r * ori;
-            } else if (x % 4 == 1) {
+            } else if (i % 4 == 1) {
                 return d_s_r * rotate_m90_c * dia1 * ori;
-            } else if (x % 4 == 2) {
+            } else if (i % 4 == 2) {
                 return d_s_r * rotate_90_c * dia2 * ori;
-            } else if (x % 4 == 3) {
+            } else if (i % 4 == 3) {
                 return d_s_r * rotate_180_c * dia1 * dia2 * ori;
             }
         } else {
-            if (x % 4 == 0) {
+            if (i % 4 == 0) {
                 return d_s_r * flip_y * NR::translate (0, h) * ori;
-            } else if (x % 4 == 1) {
+            } else if (i % 4 == 1) {
                 return d_s_r * flip_y * rotate_m90_c * dia1 * NR::translate (-h, 0) * ori;
-            } else if (x % 4 == 2) {
+            } else if (i % 4 == 2) {
                 return d_s_r * flip_y * rotate_90_c * dia2 * NR::translate (h, 0) * ori;
-            } else if (x % 4 == 3) {
+            } else if (i % 4 == 3) {
                 return d_s_r * flip_x * NR::translate (w, 0) * ori;
             }
         }
@@ -495,7 +623,7 @@ clonetiler_get_transform (
         NR::Matrix dia1;
         NR::Matrix dia2;
         if (w > h) {
-            width = w + w * cos60;
+            width  = w + w * cos60;
             height = 2 * w * sin60;
             dia1 = NR::Matrix (NR::translate (w/2 + w/2 * cos60, -(w/2 * sin60)));
             dia2 = dia1 * NR::Matrix (NR::translate (0, 2 * (w/2 * sin60)));
@@ -505,12 +633,12 @@ clonetiler_get_transform (
             dia1 = NR::Matrix (NR::translate (h/2 * cos30, -(h/2 * sin30)));
             dia2 = dia1 * NR::Matrix (NR::translate (0, h/2));
         }
-        NR::Matrix ori (NR::translate (width * pow((2*(x/3) + y%2), d_per_x_exp) + dx,  (height/2) * pow(y, d_per_y_exp) + dy));
-        if (x % 3 == 0) {
+        NR::Matrix ori (NR::translate (width * pow((2*(i/3) + j%2), shiftx_exp) + dx,  (height/2) * pow(j, shifty_exp) + dy));
+        if (i % 3 == 0) {
             return d_s_r * ori;
-        } else if (x % 3 == 1) {
+        } else if (i % 3 == 1) {
             return d_s_r * rotate_m120_c * dia1 * ori;
-        } else if (x % 3 == 2) {
+        } else if (i % 3 == 2) {
             return d_s_r * rotate_120_c * dia2 * ori;
         }
     }
@@ -524,13 +652,13 @@ clonetiler_get_transform (
         NR::Matrix dia3;
         NR::Matrix dia4;
         if (w > h) {
-            ori = NR::Matrix(NR::translate (w * pow((x/6) + 1/2 * (y%2), d_per_x_exp) + dx,  (w * cos30) * pow(y, d_per_y_exp) + dy));
+            ori = NR::Matrix(NR::translate (w * pow((i/6) + 1/2 * (j%2), shiftx_exp) + dx,  (w * cos30) * pow(j, shifty_exp) + dy));
             dia1 = NR::Matrix (NR::translate (0, h/2) * NR::translate (w/2, 0) * NR::translate (w/2 * cos60, -w/2 * sin60) * NR::translate (-h/2 * cos30, -h/2 * sin30) );
             dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, h * sin30));
             dia3 = dia2 * NR::Matrix (NR::translate (0, 2 * (w/2 * sin60 - h/2 * sin30)));
             dia4 = dia3 * NR::Matrix (NR::translate (-h * cos30, h * sin30));
         } else {
-            ori  = NR::Matrix (NR::translate (2*h * cos30  * pow((x/6 + 0.5*(y%2)), d_per_x_exp) + dx,  (2*h - h * sin30) * pow(y, d_per_y_exp) + dy));
+            ori  = NR::Matrix (NR::translate (2*h * cos30  * pow((i/6 + 0.5*(j%2)), shiftx_exp) + dx,  (2*h - h * sin30) * pow(j, shifty_exp) + dy));
             dia1 = NR::Matrix (NR::translate (0, -h/2) * NR::translate (h/2 * cos30, h/2 * sin30));
             dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, h * sin30));
             dia3 = dia2 * NR::Matrix (NR::translate (0, h/2));
@@ -575,7 +703,7 @@ clonetiler_get_transform (
             dia3 = dia2 * NR::Matrix (NR::translate (0, h/2));
             dia4 = dia3 * NR::Matrix (NR::translate (-h * cos30, h * sin30));
         }
-        NR::Matrix ori (NR::translate (width * pow((2*(x/6) + y%2), d_per_x_exp) + dx,  (height/2) * pow(y, d_per_y_exp) + dy));
+        NR::Matrix ori (NR::translate (width * pow((2*(i/6) + j%2), shiftx_exp) + dx,  (height/2) * pow(i, shifty_exp) + dy));
         if (x % 6 == 0) {
             return d_s_r * ori;
         } else if (x % 6 == 1) {
@@ -601,14 +729,14 @@ clonetiler_get_transform (
         NR::Matrix dia4;
         NR::Matrix dia5;
         if (w > h) {
-            ori = NR::Matrix(NR::translate (w * pow((2*(x/6) + (y%2)), d_per_x_exp) + dx,  (2*w * sin60) * pow(y, d_per_y_exp) + dy));
+            ori = NR::Matrix(NR::translate (w * pow((2*(i/6) + (j%2)), shiftx_exp) + dx,  (2*w * sin60) * pow(j, shifty_exp) + dy));
             dia1 = NR::Matrix (NR::translate (w/2 * cos60, -w/2 * sin60));
             dia2 = dia1 * NR::Matrix (NR::translate (w/2, 0));
             dia3 = dia2 * NR::Matrix (NR::translate (w/2 * cos60, w/2 * sin60));
             dia4 = dia3 * NR::Matrix (NR::translate (-w/2 * cos60, w/2 * sin60));
             dia5 = dia4 * NR::Matrix (NR::translate (-w/2, 0));
         } else {
-            ori = NR::Matrix(NR::translate (2*h * cos30 * pow((x/6 + 0.5*(y%2)), d_per_x_exp) + dx,  (h + h * sin30) * pow(y, d_per_y_exp) + dy));
+            ori = NR::Matrix(NR::translate (2*h * cos30 * pow((i/6 + 0.5*(j%2)), shiftx_exp) + dx,  (h + h * sin30) * pow(j, shifty_exp) + dy));
             dia1 = NR::Matrix (NR::translate (-w/2, -h/2) * NR::translate (h/2 * cos30, -h/2 * sin30) * NR::translate (w/2 * cos60, w/2 * sin60));
             dia2 = dia1 * NR::Matrix (NR::translate (-w/2 * cos60, -w/2 * sin60) * NR::translate (h/2 * cos30, -h/2 * sin30) * NR::translate (h/2 * cos30, h/2 * sin30) * NR::translate (-w/2 * cos60, w/2 * sin60));
             dia3 = dia2 * NR::Matrix (NR::translate (w/2 * cos60, -w/2 * sin60) * NR::translate (h/2 * cos30, h/2 * sin30) * NR::translate (-w/2, h/2));
@@ -637,7 +765,7 @@ clonetiler_get_transform (
         NR::Matrix ori;
         NR::Matrix dia1, dia2, dia3, dia4, dia5, dia6, dia7, dia8, dia9, dia10;
         if (w > h) {
-            ori = NR::Matrix(NR::translate (w * pow((2*(x/12) + (y%2)), d_per_x_exp) + dx,  (2*w * sin60) * pow(y, d_per_y_exp) + dy));
+            ori = NR::Matrix(NR::translate (w * pow((2*(i/12) + (j%2)), shiftx_exp) + dx,  (2*w * sin60) * pow(j, shifty_exp) + dy));
             dia1 = NR::Matrix (NR::translate (w/2, h/2) * NR::translate (-w/2 * cos60, -w/2 * sin60) * NR::translate (-h/2 * cos30, h/2 * sin30));
             dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, -h * sin30));
             dia3 = dia2 * NR::Matrix (NR::translate (-h/2 * cos30, h/2 * sin30) * NR::translate (w * cos60, 0) * NR::translate (-h/2 * cos30, -h/2 * sin30));
@@ -649,7 +777,7 @@ clonetiler_get_transform (
             dia9 = dia6 * dia3.inverse();
             dia10 = dia6 * dia4.inverse();
         } else {
-            ori = NR::Matrix(NR::translate (4*h * cos30 * pow((x/12 + 0.5*(y%2)), d_per_x_exp) + dx,  (2*h  + 2*h * sin30) * pow(y, d_per_y_exp) + dy));
+            ori = NR::Matrix(NR::translate (4*h * cos30 * pow((i/12 + 0.5*(j%2)), shiftx_exp) + dx,  (2*h  + 2*h * sin30) * pow(y, shifty_exp) + dy));
             dia1 = NR::Matrix (NR::translate (-w/2, -h/2) * NR::translate (h/2 * cos30, -h/2 * sin30) * NR::translate (w/2 * cos60, w/2 * sin60));
             dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, -h * sin30));
             dia3 = dia2 * NR::Matrix (NR::translate (-w/2 * cos60, -w/2 * sin60) * NR::translate (h * cos30, 0) * NR::translate (-w/2 * cos60, w/2 * sin60));
@@ -992,63 +1120,75 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
 
     clonetiler_remove (NULL, NULL, false);
 
-    double d_x_per_x = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_x_per_x", 0, -100, 1000);
-    double d_y_per_x = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_y_per_x", 0, -100, 1000);
-    double d_per_x_exp = prefs_get_double_attribute_limited (prefs_path, "d_per_x_exp", 1, 0, 10);
-    double d_x_per_y = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_x_per_y", 0, -100, 1000);
-    double d_y_per_y = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_y_per_y", 0, -100, 1000);
-    double d_per_y_exp = prefs_get_double_attribute_limited (prefs_path, "d_per_y_exp", 1, 0, 10);
-    int alternate_x = prefs_get_int_attribute (prefs_path, "alternate_x", 0);
-    int alternate_y = prefs_get_int_attribute (prefs_path, "alternate_y", 0);
-    double rand_x = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_x", 0, 0, 1000);
-    double rand_y = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_y", 0, 0, 1000);
+    double shiftx_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shiftx_per_i", 0, -100, 1000);
+    double shifty_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shifty_per_i", 0, -100, 1000);
+    double shiftx_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shiftx_per_j", 0, -100, 1000);
+    double shifty_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shifty_per_j", 0, -100, 1000);
+    double shiftx_rand  = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shiftx_rand", 0, 0, 1000);
+    double shifty_rand  = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shifty_rand", 0, 0, 1000);
+    double shiftx_exp   =        prefs_get_double_attribute_limited (prefs_path, "shiftx_exp",   1, 0, 10);
+    double shifty_exp   =        prefs_get_double_attribute_limited (prefs_path, "shifty_exp", 1, 0, 10);
+    int    shiftx_alternate =    prefs_get_int_attribute (prefs_path, "shiftx_alternate", 0);
+    int    shifty_alternate =    prefs_get_int_attribute (prefs_path, "shifty_alternate", 0);
+    int    shiftx_cumulate  =    prefs_get_int_attribute (prefs_path, "shiftx_cumulate", 0);
+    int    shifty_cumulate  =    prefs_get_int_attribute (prefs_path, "shifty_cumulate", 0);
+    int    shiftx_excludew  =    prefs_get_int_attribute (prefs_path, "shiftx_excludew", 0);
+    int    shifty_excludeh  =    prefs_get_int_attribute (prefs_path, "shifty_excludeh", 0);
 
-    double d_scalex_per_x = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_scalex_per_x", 0, -100, 1000);
-    double d_scaley_per_x = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_scaley_per_x", 0, -100, 1000);
-    double d_scalex_per_y = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_scalex_per_y", 0, -100, 1000);
-    double d_scaley_per_y = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_scaley_per_y", 0, -100, 1000);
-    int alternate_scalex = prefs_get_int_attribute (prefs_path, "alternate_scalex", 0);
-    int alternate_scaley = prefs_get_int_attribute (prefs_path, "alternate_scaley", 0);
-    double rand_scalex = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_scalex", 0, 0, 1000);
-    double rand_scaley = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_scaley", 0, 0, 1000);
+    double scalex_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "scalex_per_i", 0, -100, 1000);
+    double scaley_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "scaley_per_i", 0, -100, 1000);
+    double scalex_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "scalex_per_j", 0, -100, 1000);
+    double scaley_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "scaley_per_j", 0, -100, 1000);
+    double scalex_rand  = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_scalex",  0, 0, 1000);
+    double scaley_rand  = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_scaley",  0, 0, 1000);
+    double scalex_exp   =        prefs_get_double_attribute_limited (prefs_path, "scalex_exp",   1, 0, 10);
+    double scaley_exp   =        prefs_get_double_attribute_limited (prefs_path, "scaley_exp",   1, 0, 10);
+    double scalex_log       =    prefs_get_double_attribute_limited (prefs_path, "scalex_log",   0, 0, 10);
+    double scaley_log       =    prefs_get_double_attribute_limited (prefs_path, "scaley_log",   0, 0, 10);
+    int    scalex_alternate =    prefs_get_int_attribute (prefs_path, "scalex_alternate", 0);
+    int    scaley_alternate =    prefs_get_int_attribute (prefs_path, "scaley_alternate", 0);
+    int    scalex_cumulate  =    prefs_get_int_attribute (prefs_path, "scalex_cumulate", 0);
+    int    scaley_cumulate  =    prefs_get_int_attribute (prefs_path, "scaley_cumulate", 0);
 
-    double d_rot_per_x = prefs_get_double_attribute_limited (prefs_path, "d_rot_per_x", 0, -180, 180);
-    double d_rot_per_y = prefs_get_double_attribute_limited (prefs_path, "d_rot_per_y", 0, -180, 180);
-    int alternate_rotx = prefs_get_int_attribute (prefs_path, "alternate_rotx", 0);
-    int alternate_roty = prefs_get_int_attribute (prefs_path, "alternate_roty", 0);
-    double rand_rot = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_rot", 0, 0, 100);
+    double rotate_per_i =        prefs_get_double_attribute_limited (prefs_path, "rotate_per_i", 0, -180, 180);
+    double rotate_per_j =        prefs_get_double_attribute_limited (prefs_path, "rotate_per_j", 0, -180, 180);
+    double rotate_rand =  0.01 * prefs_get_double_attribute_limited (prefs_path, "rotate_rand", 0, 0, 100);
+    int    rotate_alternatei   = prefs_get_int_attribute (prefs_path, "rotate_alternatei", 0);
+    int    rotate_alternatej   = prefs_get_int_attribute (prefs_path, "rotate_alternatej", 0);
+    int    rotate_cumulatei    = prefs_get_int_attribute (prefs_path, "rotate_cumulatei", 0);
+    int    rotate_cumulatej    = prefs_get_int_attribute (prefs_path, "rotate_cumulatej", 0);
 
-    double d_blur_per_y = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_blur_per_y", 0, 0, 100);
-    double d_blur_per_x = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_blur_per_x", 0, 0, 100);
-    int alternate_blury = prefs_get_int_attribute (prefs_path, "alternate_blury", 0);
-    int alternate_blurx = prefs_get_int_attribute (prefs_path, "alternate_blurx", 0);
-    double rand_blur = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_blur", 0, 0, 100);
+    double blur_per_i =   0.01 * prefs_get_double_attribute_limited (prefs_path, "blur_per_i", 0, 0, 100);
+    double blur_per_j =   0.01 * prefs_get_double_attribute_limited (prefs_path, "blur_per_j", 0, 0, 100);
+    int    blur_alternatei =     prefs_get_int_attribute (prefs_path, "blur_alternatei", 0);
+    int    blur_alternatej =     prefs_get_int_attribute (prefs_path, "blur_alternatej", 0);
+    double blur_rand =    0.01 * prefs_get_double_attribute_limited (prefs_path, "blur_rand", 0, 0, 100);
 
-    double d_opacity_per_y = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_opacity_per_y", 0, 0, 100);
-    double d_opacity_per_x = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_opacity_per_x", 0, 0, 100);
-    int alternate_opacityy = prefs_get_int_attribute (prefs_path, "alternate_opacityy", 0);
-    int alternate_opacityx = prefs_get_int_attribute (prefs_path, "alternate_opacityx", 0);
-    double rand_opacity = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_opacity", 0, 0, 100);
+    double opacity_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "opacity_per_i", 0, 0, 100);
+    double opacity_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "opacity_per_j", 0, 0, 100);
+    int    opacity_alternatei =   prefs_get_int_attribute (prefs_path, "opacity_alternatei", 0);
+    int    opacity_alternatej =   prefs_get_int_attribute (prefs_path, "opacity_alternatej", 0);
+    double opacity_rand =  0.01 * prefs_get_double_attribute_limited (prefs_path, "opacity_rand", 0, 0, 100);
 
-    const gchar *initial_color = prefs_get_string_attribute (prefs_path, "initial_color");
-    double d_hue_per_y = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_hue_per_y", 0, -100, 100);
-    double d_hue_per_x = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_hue_per_x", 0, -100, 100);
-    double rand_hue = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_hue", 0, 0, 100);
-    double d_saturation_per_y = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_saturation_per_y", 0, -100, 100);
-    double d_saturation_per_x = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_saturation_per_x", 0, -100, 100);
-    double rand_saturation = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_saturation", 0, 0, 100);
-    double d_lightness_per_y = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_lightness_per_y", 0, -100, 100);
-    double d_lightness_per_x = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_lightness_per_x", 0, -100, 100);
-    double rand_lightness = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_lightness", 0, 0, 100);
-    int alternate_color_y = prefs_get_int_attribute (prefs_path, "alternate_color_y", 0);
-    int alternate_color_x = prefs_get_int_attribute (prefs_path, "alternate_color_x", 0);
+    const gchar *initial_color =     prefs_get_string_attribute (prefs_path, "initial_color");
+    double hue_per_j =        0.01 * prefs_get_double_attribute_limited (prefs_path, "hue_per_j", 0, -100, 100);
+    double hue_per_i =        0.01 * prefs_get_double_attribute_limited (prefs_path, "hue_per_i", 0, -100, 100);
+    double hue_rand  =        0.01 * prefs_get_double_attribute_limited (prefs_path, "hue_rand", 0, 0, 100);
+    double saturation_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "saturation_per_j", 0, -100, 100);
+    double saturation_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "saturation_per_i", 0, -100, 100);
+    double saturation_rand =  0.01 * prefs_get_double_attribute_limited (prefs_path, "saturation_rand", 0, 0, 100);
+    double lightness_per_j =  0.01 * prefs_get_double_attribute_limited (prefs_path, "lightness_per_j", 0, -100, 100);
+    double lightness_per_i =  0.01 * prefs_get_double_attribute_limited (prefs_path, "lightness_per_i", 0, -100, 100);
+    double lightness_rand =   0.01 * prefs_get_double_attribute_limited (prefs_path, "lightness_rand", 0, 0, 100);
+    int    color_alternatej = prefs_get_int_attribute (prefs_path, "color_alternatej", 0);
+    int    color_alternatei = prefs_get_int_attribute (prefs_path, "color_alternatei", 0);
 
     int type = prefs_get_int_attribute (prefs_path, "symmetrygroup", 0);
 
     int keepbbox = prefs_get_int_attribute (prefs_path, "keepbbox", 1);
 
-    int xmax = prefs_get_int_attribute (prefs_path, "xmax", 2);
-    int ymax = prefs_get_int_attribute (prefs_path, "ymax", 2);
+    int imax = prefs_get_int_attribute (prefs_path, "imax", 2);
+    int jmax = prefs_get_int_attribute (prefs_path, "jmax", 2);
 
     int fillrect = prefs_get_int_attribute (prefs_path, "fillrect", 0);
     double fillwidth = prefs_get_double_attribute_limited (prefs_path, "fillwidth", 50, 0, 1e6);
@@ -1122,26 +1262,41 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
     NR::Rect bbox_original = NR::Rect (NR::Point (x0, y0), NR::Point (x0 + w, y0 + h));
     double perimeter_original = (w + h)/4;
 
-    for (int x = 0;
+    // The integers i and j are reserved for tile column and row.
+    // The doubles x and y are used for coordinates
+    for (int i = 0;
          fillrect?
-             (fabs(cur[NR::X]) < fillwidth && x < 200) // prevent "freezing" with too large fillrect, arbitrarily limit rows
-             : (x < xmax);
-         x ++) {
-        for (int y = 0;
+             (fabs(cur[NR::X]) < fillwidth && i < 200) // prevent "freezing" with too large fillrect, arbitrarily limit rows
+             : (i < imax);
+         i ++) {
+        for (int j = 0;
              fillrect?
-                 (fabs(cur[NR::Y]) < fillheight && y < 200) // prevent "freezing" with too large fillrect, arbitrarily limit cols
-                 : (y < ymax);
-             y ++) {
+                 (fabs(cur[NR::Y]) < fillheight && j < 200) // prevent "freezing" with too large fillrect, arbitrarily limit cols
+                 : (j < jmax);
+             j ++) {
 
             // Note: We create a clone at 0,0 too, right over the original, in case our clones are colored
 
             // Get transform from symmetry, shift, scale, rotation
-            NR::Matrix t = clonetiler_get_transform (type, x, y, center[NR::X], center[NR::Y], w, h,
-                                                     d_x_per_x, d_y_per_x, d_x_per_y, d_y_per_y, alternate_x, alternate_y, rand_x, rand_y,
-                                                     d_per_x_exp, d_per_y_exp,
-                                                     d_rot_per_x, d_rot_per_y, alternate_rotx, alternate_roty, rand_rot,
-                                                     d_scalex_per_x, d_scaley_per_x, d_scalex_per_y, d_scaley_per_y,
-                                                     alternate_scalex, alternate_scaley, rand_scalex, rand_scaley);
+            NR::Matrix t = clonetiler_get_transform (type, i, j, center[NR::X], center[NR::Y], w, h,
+                                                     shiftx_per_i,     shifty_per_i,
+                                                     shiftx_per_j,     shifty_per_j,
+                                                     shiftx_rand,      shifty_rand,
+                                                     shiftx_exp,       shifty_exp,
+                                                     shiftx_alternate, shifty_alternate,
+                                                     shiftx_cumulate,  shifty_cumulate,
+                                                     shiftx_excludew,  shifty_excludeh,
+                                                     scalex_per_i,     scaley_per_i,
+                                                     scalex_per_j,     scaley_per_j,
+                                                     scalex_rand,      scaley_rand,
+                                                     scalex_exp,       scaley_exp,
+                                                     scalex_log,       scaley_log,
+                                                     scalex_alternate, scaley_alternate,
+                                                     scalex_cumulate,  scaley_cumulate,
+                                                     rotate_per_i,     rotate_per_j,
+                                                     rotate_rand,
+                                                     rotate_alternatei, rotate_alternatej,
+                                                     rotate_cumulatei,  rotate_cumulatej      );
 
             cur = center * t - center;
             if (fillrect) {
@@ -1158,15 +1313,15 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
                 float hsl[3];
                 sp_color_rgb_to_hsl_floatv (hsl, SP_RGBA32_R_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_B_F(rgba));
 
-                double eff_x = (alternate_color_x? (x%2) : (x));
-                double eff_y = (alternate_color_y? (y%2) : (y));
+                double eff_i = (color_alternatei? (i%2) : (i));
+                double eff_j = (color_alternatej? (j%2) : (j));
 
-                hsl[0] += d_hue_per_x * eff_x + d_hue_per_y * eff_y + rand_hue * g_random_double_range (-1, 1);
-                if (hsl[0] < 0) hsl[0] += 1;
-                if (hsl[0] > 1) hsl[0] -= 1;
-                hsl[1] += d_saturation_per_x * eff_x + d_saturation_per_y * eff_y + rand_saturation * g_random_double_range (-1, 1);
+                hsl[0] += hue_per_i * eff_i + hue_per_j * eff_j + hue_rand * g_random_double_range (-1, 1);
+                double notused;
+                hsl[0] = modf( hsl[0], &notused ); // Restrict to 0-1
+                hsl[1] += saturation_per_i * eff_i + saturation_per_j * eff_j + saturation_rand * g_random_double_range (-1, 1);
                 hsl[1] = CLAMP (hsl[1], 0, 1);
-                hsl[2] += d_lightness_per_x * eff_x + d_lightness_per_y * eff_y + rand_lightness * g_random_double_range (-1, 1);
+                hsl[2] += lightness_per_i * eff_i + lightness_per_j * eff_j + lightness_rand * g_random_double_range (-1, 1);
                 hsl[2] = CLAMP (hsl[2], 0, 1);
 
                 float rgb[3];
@@ -1177,18 +1332,18 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
             // Blur
             double blur = 0.0;
             {
-            int eff_x = (alternate_blurx? (x%2) : (x));
-            int eff_y = (alternate_blury? (y%2) : (y));
-            blur =  (d_blur_per_x * eff_x + d_blur_per_y * eff_y + rand_blur * g_random_double_range (-1, 1));
+            int eff_i = (blur_alternatei? (i%2) : (i));
+            int eff_j = (blur_alternatej? (j%2) : (j));
+            blur =  (blur_per_i * eff_i + blur_per_j * eff_j + blur_rand * g_random_double_range (-1, 1));
             blur = CLAMP (blur, 0, 1);
             }
 
             // Opacity
             double opacity = 1.0;
             {
-            int eff_x = (alternate_opacityx? (x%2) : (x));
-            int eff_y = (alternate_opacityy? (y%2) : (y));
-            opacity = 1 - (d_opacity_per_x * eff_x + d_opacity_per_y * eff_y + rand_opacity * g_random_double_range (-1, 1));
+            int eff_i = (opacity_alternatei? (i%2) : (i));
+            int eff_j = (opacity_alternatej? (j%2) : (j));
+            opacity = 1 - (opacity_per_i * eff_i + opacity_per_j * eff_j + opacity_rand * g_random_double_range (-1, 1));
             opacity = CLAMP (opacity, 0, 1);
             }
 
@@ -1797,7 +1952,7 @@ clonetiler_dialog (void)
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
                     // xgettext:no-c-format
-                                                   _("Horizontal shift per row (in % of tile width)"), "d_x_per_y",
+                                                   _("Horizontal shift per row (in % of tile width)"), "shiftx_per_j",
                                                    -100, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 2, 2);
             }
@@ -1805,14 +1960,14 @@ clonetiler_dialog (void)
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
                     // xgettext:no-c-format
-                                                   _("Horizontal shift per column (in % of tile width)"), "d_x_per_x",
+                                                   _("Horizontal shift per column (in % of tile width)"), "shiftx_per_i",
                                                    -100, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 2, 3);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the horizontal shift by this percentage"), "rand_x",
+                                                   _("Randomize the horizontal shift by this percentage"), "shiftx_rand",
                                                    0, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 2, 4);
             }
@@ -1830,7 +1985,7 @@ clonetiler_dialog (void)
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
                     // xgettext:no-c-format
-                                                   _("Vertical shift per row (in % of tile height)"), "d_y_per_y",
+                                                   _("Vertical shift per row (in % of tile height)"), "shifty_per_j",
                                                    -100, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 3, 2);
             }
@@ -1838,14 +1993,14 @@ clonetiler_dialog (void)
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
                     // xgettext:no-c-format
-                                                   _("Vertical shift per column (in % of tile height)"), "d_y_per_x",
+                                                   _("Vertical shift per column (in % of tile height)"), "shifty_per_i",
                                                    -100, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 3, 3);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the vertical shift by this percentage"), "rand_y",
+                                                   _("Randomize the vertical shift by this percentage"), "shifty_rand",
                                                    0, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 3, 4);
             }
@@ -1860,14 +2015,14 @@ clonetiler_dialog (void)
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"), "d_per_y_exp",
+                                                   _("Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"), "shifty_exp",
                                                    0, 10, "", true);
                 clonetiler_table_attach (table, l, 0, 4, 2);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"), "d_per_x_exp",
+                                                   _("Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"), "shiftx_exp",
                                                    0, 10, "", true);
                 clonetiler_table_attach (table, l, 0, 4, 3);
             }
@@ -1881,13 +2036,49 @@ clonetiler_dialog (void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of shifts for each row"), "alternate_y");
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of shifts for each row"), "shifty_alternate");
                 clonetiler_table_attach (table, l, 0, 5, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of shifts for each column"), "alternate_x");
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of shifts for each column"), "shiftx_alternate");
                 clonetiler_table_attach (table, l, 0, 5, 3);
+            }
+
+            { // Cumulate
+                GtkWidget *l = gtk_label_new ("");
+                // TRANSLATORS: "Cumulate" is a verb here
+                gtk_label_set_markup (GTK_LABEL(l), _("<small>Cumulate:</small>"));
+                gtk_size_group_add_widget(table_row_labels, l);
+                clonetiler_table_attach (table, l, 1, 6, 1);
+            }
+
+            {
+                GtkWidget *l = clonetiler_checkbox (tt, _("Cumulate the shifts for each row"), "shifty_cumulate");
+                clonetiler_table_attach (table, l, 0, 6, 2);
+            }
+
+            {
+                GtkWidget *l = clonetiler_checkbox (tt, _("Cumulate the shifts for each column"), "shiftx_cumulate");
+                clonetiler_table_attach (table, l, 0, 6, 3);
+            }
+
+            { // Exclude tile width and height in shift
+                GtkWidget *l = gtk_label_new ("");
+                // TRANSLATORS: "Cumulate" is a verb here
+                gtk_label_set_markup (GTK_LABEL(l), _("<small>Exclude tile:</small>"));
+                gtk_size_group_add_widget(table_row_labels, l);
+                clonetiler_table_attach (table, l, 1, 7, 1);
+            }
+
+            {
+                GtkWidget *l = clonetiler_checkbox (tt, _("Exclude tile height in shift"), "shifty_excludeh");
+                clonetiler_table_attach (table, l, 0, 7, 2);
+            }
+
+            {
+                GtkWidget *l = clonetiler_checkbox (tt, _("Exclude tile width in shift"), "shiftx_excludew");
+                clonetiler_table_attach (table, l, 0, 7, 3);
             }
 
         }
@@ -1911,7 +2102,7 @@ clonetiler_dialog (void)
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
                     // xgettext:no-c-format
-                                                   _("Horizontal scale per row (in % of tile width)"), "d_scalex_per_y",
+                                                   _("Horizontal scale per row (in % of tile width)"), "scalex_per_j",
                                                    -100, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 2, 2);
             }
@@ -1919,14 +2110,14 @@ clonetiler_dialog (void)
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
                     // xgettext:no-c-format
-                                                   _("Horizontal scale per column (in % of tile width)"), "d_scalex_per_x",
+                                                   _("Horizontal scale per column (in % of tile width)"), "scalex_per_i",
                                                    -100, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 2, 3);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the horizontal scale by this percentage"), "rand_scalex",
+                                                   _("Randomize the horizontal scale by this percentage"), "scalex_rand",
                                                    0, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 2, 4);
             }
@@ -1942,7 +2133,7 @@ clonetiler_dialog (void)
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
                     // xgettext:no-c-format
-                                                   _("Vertical scale per row (in % of tile height)"), "d_scaley_per_y",
+                                                   _("Vertical scale per row (in % of tile height)"), "scaley_per_j",
                                                    -100, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 3, 2);
             }
@@ -1950,16 +2141,60 @@ clonetiler_dialog (void)
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
                     // xgettext:no-c-format
-                                                   _("Vertical scale per column (in % of tile height)"), "d_scaley_per_x",
+                                                   _("Vertical scale per column (in % of tile height)"), "scaley_per_i",
                                                    -100, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 3, 3);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the vertical scale by this percentage"), "rand_scaley",
+                                                   _("Randomize the vertical scale by this percentage"), "scaley_rand",
                                                    0, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 3, 4);
+            }
+
+            // Exponent
+            {
+                GtkWidget *l = gtk_label_new ("");
+                gtk_label_set_markup (GTK_LABEL(l), _("<b>Exponent:</b>"));
+                gtk_size_group_add_widget(table_row_labels, l);
+                clonetiler_table_attach (table, l, 1, 4, 1);
+            }
+
+            {
+                GtkWidget *l = clonetiler_spinbox (tt,
+                                                   _("Whether row scaling is uniform (1), converge (<1) or diverge (>1)"), "scaley_exp",
+                                                   0, 10, "", true);
+                clonetiler_table_attach (table, l, 0, 4, 2);
+            }
+
+            {
+                GtkWidget *l = clonetiler_spinbox (tt,
+                                                   _("Whether column scaling is uniform (1), converge (<1) or diverge (>1)"), "scalex_exp",
+                                                   0, 10, "", true);
+                clonetiler_table_attach (table, l, 0, 4, 3);
+            }
+
+            // Logarithmic (as in logarithmic spiral)
+            {
+                GtkWidget *l = gtk_label_new ("");
+                gtk_label_set_markup (GTK_LABEL(l), _("<b>Base:</b>"));
+                gtk_size_group_add_widget(table_row_labels, l);
+                clonetiler_table_attach (table, l, 1, 5, 1);
+            }
+
+            {
+                GtkWidget *l = clonetiler_spinbox (tt,
+                                                   _("Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"), "scaley_log",
+                                                   0, 10, "", false);
+                clonetiler_table_attach (table, l, 0, 5, 2);
+            }
+
+            {
+                GtkWidget *l = clonetiler_spinbox (tt,
+                                                   _("Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"), "scalex_log",
+                                                   0, 10, "", false);
+                clonetiler_table_attach (table, l, 0, 5, 3);
             }
 
             { // alternates
@@ -1967,17 +2202,35 @@ clonetiler_dialog (void)
                 // TRANSLATORS: "Alternate" is a verb here
                 gtk_label_set_markup (GTK_LABEL(l), _("<small>Alternate:</small>"));
                 gtk_size_group_add_widget(table_row_labels, l);
-                clonetiler_table_attach (table, l, 1, 4, 1);
+                clonetiler_table_attach (table, l, 1, 6, 1);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of scales for each row"), "alternate_scaley");
-                clonetiler_table_attach (table, l, 0, 4, 2);
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of scales for each row"), "scaley_alternate");
+                clonetiler_table_attach (table, l, 0, 6, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of scales for each column"), "alternate_scalex");
-                clonetiler_table_attach (table, l, 0, 4, 3);
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of scales for each column"), "scalex_alternate");
+                clonetiler_table_attach (table, l, 0, 6, 3);
+            }
+
+            { // Cumulate
+                GtkWidget *l = gtk_label_new ("");
+                // TRANSLATORS: "Cumulate" is a verb here
+                gtk_label_set_markup (GTK_LABEL(l), _("<small>Cumulate:</small>"));
+                gtk_size_group_add_widget(table_row_labels, l);
+                clonetiler_table_attach (table, l, 1, 7, 1);
+            }
+
+            {
+                GtkWidget *l = clonetiler_checkbox (tt, _("Cumulate the scales for each row"), "scaley_cumulate");
+                clonetiler_table_attach (table, l, 0, 7, 2);
+            }
+
+            {
+                GtkWidget *l = clonetiler_checkbox (tt, _("Cumulate the scales for each column"), "scalex_cumulate");
+                clonetiler_table_attach (table, l, 0, 7, 3);
             }
 
         }
@@ -2001,7 +2254,7 @@ clonetiler_dialog (void)
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
                     // xgettext:no-c-format
-                                                   _("Rotate tiles by this angle for each row"), "d_rot_per_y",
+                                                   _("Rotate tiles by this angle for each row"), "rotate_per_j",
                                                    -180, 180, "&#176;");
                 clonetiler_table_attach (table, l, 0, 2, 2);
             }
@@ -2009,14 +2262,14 @@ clonetiler_dialog (void)
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
                     // xgettext:no-c-format
-                                                   _("Rotate tiles by this angle for each column"), "d_rot_per_x",
+                                                   _("Rotate tiles by this angle for each column"), "rotate_per_i",
                                                    -180, 180, "&#176;");
                 clonetiler_table_attach (table, l, 0, 2, 3);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the rotation angle by this percentage"), "rand_rot",
+                                                   _("Randomize the rotation angle by this percentage"), "rotate_rand",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 4);
             }
@@ -2030,14 +2283,33 @@ clonetiler_dialog (void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the rotation direction for each row"), "alternate_roty");
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the rotation direction for each row"), "rotate_alternatej");
                 clonetiler_table_attach (table, l, 0, 3, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the rotation direction for each column"), "alternate_rotx");
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the rotation direction for each column"), "rotate_alternatei");
                 clonetiler_table_attach (table, l, 0, 3, 3);
             }
+
+            { // Cumulate
+                GtkWidget *l = gtk_label_new ("");
+                // TRANSLATORS: "Cumulate" is a verb here
+                gtk_label_set_markup (GTK_LABEL(l), _("<small>Cumulate:</small>"));
+                gtk_size_group_add_widget(table_row_labels, l);
+                clonetiler_table_attach (table, l, 1, 4, 1);
+            }
+
+            {
+                GtkWidget *l = clonetiler_checkbox (tt, _("Cumulate the rotation for each row"), "rotate_cumulatej");
+                clonetiler_table_attach (table, l, 0, 4, 2);
+            }
+
+            {
+                GtkWidget *l = clonetiler_checkbox (tt, _("Cumulate the rotation for each column"), "rotate_cumulatei");
+                clonetiler_table_attach (table, l, 0, 4, 3);
+            }
+
         }
 
 
@@ -2059,21 +2331,21 @@ clonetiler_dialog (void)
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Blur tiles by this percentage for each row"), "d_blur_per_y",
+                                                   _("Blur tiles by this percentage for each row"), "blur_per_j",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 2);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Blur tiles by this percentage for each column"), "d_blur_per_x",
+                                                   _("Blur tiles by this percentage for each column"), "blur_per_i",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 3);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the tile blur by this percentage"), "rand_blur",
+                                                   _("Randomize the tile blur by this percentage"), "blur_rand",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 4);
             }
@@ -2087,12 +2359,12 @@ clonetiler_dialog (void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of blur change for each row"), "alternate_blury");
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of blur change for each row"), "blur_alternatej");
                 clonetiler_table_attach (table, l, 0, 3, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of blur change for each column"), "alternate_blurx");
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of blur change for each column"), "blur_alternatei");
                 clonetiler_table_attach (table, l, 0, 3, 3);
             }
 
@@ -2108,21 +2380,21 @@ clonetiler_dialog (void)
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Decrease tile opacity by this percentage for each row"), "d_opacity_per_y",
+                                                   _("Decrease tile opacity by this percentage for each row"), "opacity_per_j",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 4, 2);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Decrease tile opacity by this percentage for each column"), "d_opacity_per_x",
+                                                   _("Decrease tile opacity by this percentage for each column"), "opacity_per_i",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 4, 3);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the tile opacity by this percentage"), "rand_opacity",
+                                                   _("Randomize the tile opacity by this percentage"), "opacity_rand",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 4, 4);
             }
@@ -2136,12 +2408,12 @@ clonetiler_dialog (void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of opacity change for each row"), "alternate_opacityy");
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of opacity change for each row"), "opacity_alternatej");
                 clonetiler_table_attach (table, l, 0, 5, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of opacity change for each column"), "alternate_opacityx");
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of opacity change for each column"), "opacity_alternatei");
                 clonetiler_table_attach (table, l, 0, 5, 3);
             }
         }
@@ -2180,21 +2452,21 @@ clonetiler_dialog (void)
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Change the tile hue by this percentage for each row"), "d_hue_per_y",
+                                                   _("Change the tile hue by this percentage for each row"), "hue_per_j",
                                                    -100, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 2);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Change the tile hue by this percentage for each column"), "d_hue_per_x",
+                                                   _("Change the tile hue by this percentage for each column"), "hue_per_i",
                                                    -100, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 3);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the tile hue by this percentage"), "rand_hue",
+                                                   _("Randomize the tile hue by this percentage"), "hue_rand",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 4);
             }
@@ -2210,21 +2482,21 @@ clonetiler_dialog (void)
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Change the color saturation by this percentage for each row"), "d_saturation_per_y",
+                                                   _("Change the color saturation by this percentage for each row"), "saturation_per_j",
                                                    -100, 100, "%");
                 clonetiler_table_attach (table, l, 0, 3, 2);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Change the color saturation by this percentage for each column"), "d_saturation_per_x",
+                                                   _("Change the color saturation by this percentage for each column"), "saturation_per_i",
                                                    -100, 100, "%");
                 clonetiler_table_attach (table, l, 0, 3, 3);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the color saturation by this percentage"), "rand_saturation",
+                                                   _("Randomize the color saturation by this percentage"), "saturation_rand",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 3, 4);
             }
@@ -2239,21 +2511,21 @@ clonetiler_dialog (void)
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Change the color lightness by this percentage for each row"), "d_lightness_per_y",
+                                                   _("Change the color lightness by this percentage for each row"), "lightness_per_j",
                                                    -100, 100, "%");
                 clonetiler_table_attach (table, l, 0, 4, 2);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Change the color lightness by this percentage for each column"), "d_lightness_per_x",
+                                                   _("Change the color lightness by this percentage for each column"), "lightness_per_i",
                                                    -100, 100, "%");
                 clonetiler_table_attach (table, l, 0, 4, 3);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the color lightness by this percentage"), "rand_lightness",
+                                                   _("Randomize the color lightness by this percentage"), "lightness_rand",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 4, 4);
             }
@@ -2267,12 +2539,12 @@ clonetiler_dialog (void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of color changes for each row"), "alternate_color_y");
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of color changes for each row"), "color_alternatej");
                 clonetiler_table_attach (table, l, 0, 5, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of color changes for each column"), "alternate_color_x");
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of color changes for each column"), "color_alternatei");
                 clonetiler_table_attach (table, l, 0, 5, 3);
             }
 
@@ -2500,7 +2772,7 @@ clonetiler_dialog (void)
 
                 {
                     GtkObject *a = gtk_adjustment_new(0.0, 1, 500, 1, 10, 10);
-                    int value = prefs_get_int_attribute (prefs_path, "ymax", 2);
+                    int value = prefs_get_int_attribute (prefs_path, "jmax", 2);
                     gtk_adjustment_set_value (GTK_ADJUSTMENT (a), value);
                     GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 0);
                     gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), sb, _("How many rows in the tiling"), NULL);
@@ -2508,7 +2780,7 @@ clonetiler_dialog (void)
                     gtk_box_pack_start (GTK_BOX (hb), sb, TRUE, TRUE, 0);
 
                     gtk_signal_connect(GTK_OBJECT(a), "value_changed",
-                                       GTK_SIGNAL_FUNC(clonetiler_xy_changed), (gpointer) "ymax");
+                                       GTK_SIGNAL_FUNC(clonetiler_xy_changed), (gpointer) "jmax");
                 }
 
                 {
@@ -2520,7 +2792,7 @@ clonetiler_dialog (void)
 
                 {
                     GtkObject *a = gtk_adjustment_new(0.0, 1, 500, 1, 10, 10);
-                    int value = prefs_get_int_attribute (prefs_path, "xmax", 2);
+                    int value = prefs_get_int_attribute (prefs_path, "imax", 2);
                     gtk_adjustment_set_value (GTK_ADJUSTMENT (a), value);
                     GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 0);
                     gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), sb, _("How many columns in the tiling"), NULL);
@@ -2528,7 +2800,7 @@ clonetiler_dialog (void)
                     gtk_box_pack_start (GTK_BOX (hb), sb, TRUE, TRUE, 0);
 
                     gtk_signal_connect(GTK_OBJECT(a), "value_changed",
-                                       GTK_SIGNAL_FUNC(clonetiler_xy_changed), (gpointer) "xmax");
+                                       GTK_SIGNAL_FUNC(clonetiler_xy_changed), (gpointer) "imax");
                 }
 
                 clonetiler_table_attach (table, hb, 0.0, 1, 2);
