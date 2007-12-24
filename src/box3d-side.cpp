@@ -190,19 +190,15 @@ box3d_side_set (SPObject *object, unsigned int key, const gchar *value)
 static void
 box3d_side_update (SPObject *object, SPCtx *ctx, guint flags)
 {
+    if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
+        flags &= ~SP_OBJECT_USER_MODIFIED_FLAG_B; // since we change the description, it's not a "just translation" anymore
+    }
+
     //g_print ("box3d_side_update\n");
     if (flags & (SP_OBJECT_MODIFIED_FLAG |
                  //SP_OBJECT_CHILD_MODIFIED_FLAG |
                  SP_OBJECT_STYLE_MODIFIED_FLAG |
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-        /***
-        g_print ("\n\nIn box3d_side_update: ");
-        if (flags & SP_OBJECT_MODIFIED_FLAG) g_print ("SP_OBJECT_MODIFIED_FLAG ");
-        if (flags & SP_OBJECT_CHILD_MODIFIED_FLAG) g_print ("SP_OBJECT_CHILD_MODIFIED_FLAG ");
-        if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) g_print ("SP_OBJECT_STYLE_MODIFIED_FLAG ");
-        if (flags & SP_OBJECT_VIEWPORT_MODIFIED_FLAG) g_print ("SP_OBJECT_VIEWPORT_MODIFIED_FLAG ");
-        g_print ("\n");
-        ***/
         sp_shape_set_shape ((SPShape *) object);
     }
 
