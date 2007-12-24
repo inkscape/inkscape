@@ -408,7 +408,7 @@ CanvasAxonomGrid::readRepr()
         visible = (strcmp(value,"true") == 0);
     }
 
-    if ( (value = repr->attribute("snap_enabled")) ) {
+    if ( (value = repr->attribute("enabled")) ) {
         g_assert(snapper != NULL);
         snapper->setEnabled(strcmp(value,"true") == 0);
     }
@@ -453,7 +453,7 @@ CanvasAxonomGrid::updateWidgets()
 
     _rcb_visible.setActive(visible);
     if (snapper != NULL) {
-        _rcb_snap_enabled.setActive(snapper->getEnabled());
+        _rcb_enabled.setActive(snapper->getEnabled());
     }
 
     _rumg.setUnit (gridunit);

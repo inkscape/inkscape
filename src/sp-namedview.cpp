@@ -950,6 +950,20 @@ SPMetric SPNamedView::getDefaultMetric() const
     }
 }
 
+/**
+ * Returns the first grid it could find that isEnabled(). Returns NULL, if none is enabled
+ */
+Inkscape::CanvasGrid * sp_namedview_get_first_enabled_grid(SPNamedView *namedview)
+{
+    for (GSList const * l = namedview->grids; l != NULL; l = l->next) {
+        Inkscape::CanvasGrid * grid = (Inkscape::CanvasGrid*) l->data;
+        if (grid->isEnabled())
+            return grid;
+    }
+
+    return NULL;
+}
+
 
 /*
   Local Variables:

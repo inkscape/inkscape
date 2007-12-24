@@ -31,6 +31,9 @@
 #include "xml/repr.h"
 #include "dialogs/guidelinedialog.h"
 #include "snap.h"
+#include "display/canvas-grid.h"
+#include "display/canvas-axonomgrid.h"
+#include <2geom/point.h>
 
 /* Root item handler */
 
@@ -67,23 +70,36 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 sp_repr_set_boolean(repr, "showguides", TRUE);
                 sp_repr_set_boolean(repr, "inkscape:guide-bbox", TRUE);
 
+                // calculate the normal of the guidelines when dragged from the edges of rulers.
+                Geom::Point normal_bl_to_tr(-1.,1.); //bottomleft to topright
+                Geom::Point normal_tr_to_bl(1.,1.); //topright to bottomleft
+                normal_bl_to_tr.normalize();
+                normal_tr_to_bl.normalize();
+                Inkscape::CanvasGrid * grid = sp_namedview_get_first_enabled_grid(desktop->namedview);
+                if ( grid && grid->getGridType() == Inkscape::GRID_AXONOMETRIC ) {
+                    Inkscape::CanvasAxonomGrid *axonomgrid = dynamic_cast<Inkscape::CanvasAxonomGrid *>(grid);
+                    if (event->button.state & GDK_CONTROL_MASK) {
+                        // guidelines normal to gridlines
+                        normal_bl_to_tr = Geom::Point::polar(-axonomgrid->angle_rad[0], 1.0);
+                        normal_tr_to_bl = Geom::Point::polar(axonomgrid->angle_rad[2], 1.0);
+                    } else {
+                        normal_bl_to_tr = rot90(Geom::Point::polar(axonomgrid->angle_rad[2], 1.0));
+                        normal_tr_to_bl = rot90(Geom::Point::polar(-axonomgrid->angle_rad[0], 1.0));
+                    }
+                }
                 if (horiz) {
                     if (wx < 50) {
-                        normal = Geom::Point(-1.,1.);
-                        normal.normalize();
+                        normal = normal_bl_to_tr;
                     } else if (wx > width - 50) {
-                        normal = Geom::Point(1.,1.);
-                        normal.normalize();
+                        normal = normal_tr_to_bl;
                     } else {
                         normal = Geom::Point(0.,1.);
                     }
                 } else {
                     if (wy < 50) {
-                        normal = Geom::Point(-1.,1.);
-                        normal.normalize();
+                        normal = normal_bl_to_tr;
                     } else if (wy > height - 50) {
-                        normal = Geom::Point(1.,1.);
-                        normal.normalize();
+                        normal = normal_tr_to_bl;
                     } else {
                         normal = Geom::Point(1.,0.);
                     }

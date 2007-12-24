@@ -98,8 +98,8 @@ public:
 
     static void on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive, void * data);
 
-    bool isVisible() { return visible; };
-    bool isSnapEnabled();
+    bool isVisible() { return (isEnabled() &&visible); };
+    bool isEnabled();
 
 protected:
     CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc, GridType type);
@@ -114,7 +114,7 @@ protected:
     Inkscape::UI::Widget::Registry _wr;
     Inkscape::UI::Widget::RegisteredCheckButton _rcb_visible;
     bool visible;
-    Inkscape::UI::Widget::RegisteredCheckButton _rcb_snap_enabled;
+    Inkscape::UI::Widget::RegisteredCheckButton _rcb_enabled;
     
     GridType gridtype;
 

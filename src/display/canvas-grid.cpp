@@ -174,15 +174,15 @@ CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocume
     namelabel.set_markup(str);
     vbox.pack_start(namelabel, true, true);
 
+    _rcb_enabled.init ( _("_Enabled"),
+                        _("Determines whether to snap to this grid or not. Can be 'on' for invisible grids."),
+                         "enabled", _wr, false, repr, doc);
+    vbox.pack_start(*dynamic_cast<Gtk::Widget*>(_rcb_enabled._button), true, true);
+
     _rcb_visible.init ( _("_Visible"),
                         _("Determines whether the grid is displayed or not. Objects are still snapped to invisible grids."),
-                         "visible", _wr, false, repr, doc);
+                         "visible", _wr, true, repr, doc);
     vbox.pack_start(*dynamic_cast<Gtk::Widget*>(_rcb_visible._button), true, true);
-
-    _rcb_snap_enabled.init ( _("_Snapping enabled"),
-                        _("Determines whether to snap to this grid or not. Can be 'on' for invisible grids."),
-                         "snap_enabled", _wr, false, repr, doc);
-    vbox.pack_start(*dynamic_cast<Gtk::Widget*>(_rcb_snap_enabled._button), true, true);
 }
 
 CanvasGrid::~CanvasGrid()
@@ -334,7 +334,7 @@ CanvasGrid::on_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gc
     ((CanvasGrid*) data)->onReprAttrChanged(repr, key, oldval, newval, is_interactive);
 }
 
-bool CanvasGrid::isSnapEnabled() 
+bool CanvasGrid::isEnabled() 
 { 
     if (snapper == NULL) {
        return false;
@@ -657,7 +657,7 @@ CanvasXYGrid::readRepr()
         visible = (strcmp(value,"true") == 0);
     }
     
-    if ( (value = repr->attribute("snap_enabled")) ) {
+    if ( (value = repr->attribute("enabled")) ) {
         g_assert(snapper != NULL);
         snapper->setEnabled(strcmp(value,"true") == 0);
     }
@@ -703,7 +703,7 @@ CanvasXYGrid::updateWidgets()
 
     _rcb_visible.setActive(visible);
     if (snapper != NULL) {
-        _rcb_snap_enabled.setActive(snapper->getEnabled());
+        _rcb_enabled.setActive(snapper->getEnabled());
     }
 
     _rumg.setUnit (gridunit);
