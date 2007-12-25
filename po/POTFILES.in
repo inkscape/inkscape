@@ -442,6 +442,7 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/dxf_input.inx
 [type: gettext/xml] share/extensions/dxf_outlines.inx
 [type: gettext/xml] share/extensions/dxf_output.inx
+[type: gettext/xml] share/extensions/edge3d.inx
 [type: gettext/xml] share/extensions/embedimage.inx
 [type: gettext/xml] share/extensions/eps_input.inx
 [type: gettext/xml] share/extensions/epsi_output.inx
