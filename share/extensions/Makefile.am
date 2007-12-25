@@ -40,6 +40,7 @@ extensions = \
 	dia2svg.sh \
 	dots.py \
 	dxf_outlines.py \
+	edge3d.py \
 	embedimage.py \
 	embed_raster_in_svg.pl \
 	eqtexsvg.py \
@@ -139,6 +140,7 @@ modules = \
 	dxf_input.inx \
 	dxf_outlines.inx \
 	dxf_output.inx \
+	edge3d.inx \
 	embedimage.inx \
 	eps_input.inx \
 	epsi_output.inx \
