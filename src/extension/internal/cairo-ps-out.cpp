@@ -164,7 +164,7 @@ CairoPsOutput::init (void)
 			"<id>org.inkscape.print.ps.cairo</id>\n"
 			"<param name=\"PSlevel\" gui-text=\"" N_("Restrict to PS level") "\" type=\"enum\" >\n"
 				"<item value='PS3'>" N_("PostScript 3") "</item>\n"
-#if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 5, 2)
+#if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 5, 2))
                 "<item value='PS2'>" N_("PostScript level 2") "</item>\n"
 #endif
             "</param>\n"
