@@ -1428,7 +1428,19 @@ box3d_get_perspective(SPBox3D const *box) {
 }
 
 void
-box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp) {
+box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp, bool recompute_corners) {
+    if (recompute_corners) {
+        box->orig_corner0.normalize();
+        box->orig_corner7.normalize();
+        double z0 = box->orig_corner0[Proj::Z];
+        double z7 = box->orig_corner7[Proj::Z];
+        NR::Point corner0_screen = box3d_get_corner_screen(box, 0);
+        NR::Point corner7_screen = box3d_get_corner_screen(box, 7);
+
+        box->orig_corner0 = new_persp->tmat.preimage(corner0_screen, z0, Proj::Z);
+        box->orig_corner7 = new_persp->tmat.preimage(corner7_screen, z7, Proj::Z);
+    }
+
     persp3d_remove_box (old_persp, box);
     persp3d_add_box (new_persp, box);
 

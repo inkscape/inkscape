@@ -79,7 +79,7 @@ void box3d_remove_from_selection(SPBox3D *box);
 void box3d_mark_transformed(SPBox3D *box);
 
 Persp3D *box3d_get_perspective(SPBox3D const *box);
-void box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp);
+void box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp, bool recompute_corners = false);
 
 #endif /* __SP_BOX3D_H__ */
 

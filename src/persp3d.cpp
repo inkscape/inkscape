@@ -529,16 +529,10 @@ persp3d_absorb(Persp3D *persp1, Persp3D *persp2) {
     //       otherwise the loop below gets confused when perspectives are reattached.
     std::list<SPBox3D *> boxes_of_persp2 = persp3d_list_of_boxes(persp2);
 
-    Inkscape::XML::Node *persp_repr = SP_OBJECT_REPR(persp1);
-    const gchar *persp_id = persp_repr->attribute("id");
-    gchar *href = g_strdup_printf("#%s", persp_id);
-
     for (std::list<SPBox3D *>::iterator i = boxes_of_persp2.begin(); i != boxes_of_persp2.end(); ++i) {
-        SP_OBJECT_REPR(*i)->setAttribute("inkscape:perspectiveID", href);
+        box3d_switch_perspectives((*i), persp2, persp1, true);
+        SP_OBJECT(*i)->updateRepr(SP_OBJECT_WRITE_EXT); // so that undo/redo can do its job properly
     }
-    g_free(href);
-
-    persp1->boxes.insert(persp1->boxes.begin(), persp2->boxes.begin(), persp2->boxes.end());
 }
 
 static void
