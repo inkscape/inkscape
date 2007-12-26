@@ -693,7 +693,7 @@ CairoRenderContext::setupSurface(double width, double height)
 #ifdef CAIRO_HAS_PS_SURFACE
         case CAIRO_SURFACE_TYPE_PS:
             surface = cairo_ps_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, width, height);
-#if (CAIRO_VERSION >= 010502)
+#if (CAIRO_VERSION < CAIRO_VERSION_ENCODE(1, 5, 2))
             cairo_ps_surface_restrict_to_level (surface, (cairo_ps_level_t)_ps_level);
 #endif
             break;
