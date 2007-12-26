@@ -42,7 +42,7 @@ CairoPdfOutput::check (Inkscape::Extension::Extension * module)
 
 
 static unsigned int
-pdf_print_document_to_file(SPDocument *doc, gchar const *filename)
+pdf_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int pdf_level, bool texttopath, bool filtertobitmap)
 {
     Inkscape::Extension::Print *mod;
     SPPrintContext context;
