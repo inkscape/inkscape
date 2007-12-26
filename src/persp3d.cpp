@@ -241,7 +241,10 @@ persp3d_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     Persp3D *persp = SP_PERSP3D(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = SP_OBJECT_REPR(persp3d_create_xml_element (document));
+        // this is where we end up when saving as plain SVG (also in other circumstances?);
+        // hence we don't set the sodipodi:type attribute
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
+        repr = xml_doc->createElement("inkscape:perspective");
     }
 
     if (flags & SP_OBJECT_WRITE_EXT) {
@@ -406,9 +409,7 @@ void
 persp3d_add_box_transform (Persp3D *persp, SPBox3D *box) {
     std::map<SPBox3D *, bool>::iterator i = persp->boxes_transformed.find(box);
     if (i != persp->boxes_transformed.end() && (*i).second == true) {
-        g_print ("Warning! In %s (%d): trying to add transform status for box %d twice when it's already listed as true.\n",
-                 SP_OBJECT_REPR(persp)->attribute("id"), persp->my_counter,
-                 box->my_counter, persp->boxes_transformed[box]);
+        g_print ("Warning! In %s (%d): trying to add transform status for box %d twice when it's already listed as true.\n", SP_OBJECT_REPR(persp)->attribute("id"), persp->my_counter, box->my_counter);
         return;
     }
  
