@@ -1,4 +1,4 @@
-dfa#!/usr/bin/env python
+#!/usr/bin/env python
 """
 Copyright (C) 2005 Aaron Spike, aaron@ekips.org
 
