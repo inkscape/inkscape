@@ -43,6 +43,8 @@ struct SPBox3D : public SPGroup {
     Proj::Pt3 save_corner0;
     Proj::Pt3 save_corner7;
 
+    Box3D::Axis swapped; // to indicate which coordinates are swapped during dragging
+
     gint my_counter; // for debugging only
 };
 
@@ -69,6 +71,8 @@ int box3d_VP_lies_in_PL_sector (SPBox3D const *box, Proj::Axis vpdir, int id1, i
 
 /* ensures that the coordinates of corner0 and corner7 are in the correct order (to prevent everted boxes) */
 void box3d_relabel_corners(SPBox3D *box);
+
+void box3d_check_for_swapped_coords(SPBox3D *box);
 
 void box3d_add_to_selection(SPBox3D *box);
 void box3d_remove_from_selection(SPBox3D *box);

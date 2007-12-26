@@ -1362,6 +1362,41 @@ box3d_relabel_corners(SPBox3D *box) {
     box3d_swap_coords(box, Proj::Z, true);
 }
 
+static void
+box3d_check_for_swapped_coords(SPBox3D *box, Proj::Axis axis, bool smaller) {
+    box->orig_corner0.normalize();
+    box->orig_corner7.normalize();
+
+    if ((box->orig_corner0[axis] < box->orig_corner7[axis]) != smaller) {
+        box->swapped = (Box3D::Axis) (box->swapped | Proj::toAffine(axis));
+    } else {
+        box->swapped = (Box3D::Axis) (box->swapped & ~Proj::toAffine(axis));
+    }
+}
+
+static void
+box3d_exchange_coords(SPBox3D *box) {
+    box->orig_corner0.normalize();
+    box->orig_corner7.normalize();
+
+    for (int i = 0; i < 3; ++i) {
+        if (box->swapped & Box3D::axes[i]) {
+            double tmp = box->orig_corner0[i];
+            box->orig_corner0[i] = box->orig_corner7[i];
+            box->orig_corner7[i] = tmp;
+        }
+    }
+}
+
+void
+box3d_check_for_swapped_coords(SPBox3D *box) {
+    box3d_check_for_swapped_coords(box, Proj::X, false);
+    box3d_check_for_swapped_coords(box, Proj::Y, false);
+    box3d_check_for_swapped_coords(box, Proj::Z, true);
+
+    box3d_exchange_coords(box);
+}
+
 void
 box3d_add_to_selection(SPBox3D *box) {
     Persp3D *persp = box3d_get_perspective(box);

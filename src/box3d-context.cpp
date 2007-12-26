@@ -669,11 +669,13 @@ static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
     box->orig_corner0 = bc.drag_origin_proj;
     box->orig_corner7 = bc.drag_ptC_proj;
 
+    box3d_check_for_swapped_coords(box);
+
     /* we need to call this from here (instead of from box3d_position_set(), for example)
        because z-order setting must not interfere with display updates during undo/redo */
     box3d_set_z_orders (box);
 
-    box3d_position_set(SP_BOX3D(bc.item));
+    box3d_position_set(box);
 
     // status text
     //GString *Ax = SP_PX_TO_METRIC_STRING(origin[NR::X], desktop->namedview->getDefaultMetric());
