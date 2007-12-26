@@ -9,7 +9,7 @@
  * 	   Miklos Erdelyi <erdelyim@gmail.com>
  *
  * Copyright (C) 2006 Miklos Erdelyi
- * 
+ *
  * Licensed under GNU GPL
  */
 
@@ -53,6 +53,7 @@ struct CairoRenderState {
     unsigned int has_overflow : 1;
     unsigned int parent_has_userspace : 1;  // whether the parent's ctm should be applied
     float opacity;
+    bool has_filtereffect;
 
     SPClipPath *clip_path;
     SPMask* mask;
@@ -74,17 +75,22 @@ public:
         RENDER_MODE_NORMAL,
         RENDER_MODE_CLIP
     };
-    
+
     typedef enum CairoClipMode {
         CLIP_MODE_PATH,
         CLIP_MODE_MASK
     };
-    
+
     bool setImageTarget(cairo_format_t format);
     bool setPdfTarget(gchar const *utf8_fn);
     bool setPsTarget(gchar const *utf8_fn);
     /** Set the cairo_surface_t from an external source */
     bool setSurfaceTarget(cairo_surface_t *surface, bool is_vector);
+
+    void setPSLevel(unsigned int level);
+    void setPDFLevel(unsigned int level);
+    void setTextToPath(bool texttopath);
+    void setFilterToBitmap(bool filtertobitmap);
 
     /** Creates the cairo_surface_t for the context with the
     given width, height and with the currently set target
@@ -101,10 +107,10 @@ public:
     CairoRenderMode getRenderMode(void) const;
     void setClipMode(CairoClipMode mode);
     CairoClipMode getClipMode(void) const;
-    
+
     void addBpath(NArtBpath const *bp);
     void setBpath(NArtBpath const *bp);
-    
+
     void pushLayer(void);
     void popLayer(void);
 
@@ -136,13 +142,17 @@ public:
 protected:
     CairoRenderContext(CairoRenderer *renderer);
     virtual ~CairoRenderContext(void);
-    
+
     float _width;
     float _height;
     unsigned short _dpi;
-    
+    unsigned int _pdf_level;
+    unsigned int _ps_level;
+    bool _is_texttopath;
+    bool _is_filtertobitmap;
+
     FILE *_stream;
-    
+
     unsigned int _is_valid : 1;
     unsigned int _vector_based_target : 1;
 
@@ -151,13 +161,13 @@ protected:
     cairo_surface_type_t _target;
     cairo_format_t _target_format;
     PangoLayout *_layout;
-    
+
     unsigned int _clip_rule : 8;
     unsigned int _clip_winding_failed : 1;
-    
+
     GSList *_state_stack;
     CairoRenderState *_state;    // the current state
-    
+
     CairoRenderer *_renderer;
 
     CairoRenderMode _render_mode;
@@ -166,13 +176,13 @@ protected:
     cairo_pattern_t *_createPatternForPaintServer(SPPaintServer const *const paintserver,
                                                   NRRect const *pbox, float alpha);
     cairo_pattern_t *_createPatternPainter(SPPaintServer const *const paintserver, NRRect const *pbox);
-   
+
     unsigned int _showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoGlyphInfo> const &glyphtext, bool is_stroke);
 
     bool _finishSurfaceSetup(cairo_surface_t *surface);
     void _setFillStyle(SPStyle const *style, NRRect const *pbox);
     void _setStrokeStyle(SPStyle const *style, NRRect const *pbox);
-    
+
     void _initCairoMatrix(cairo_matrix_t *matrix, NRMatrix const *transform);
     void _concatTransform(cairo_t *cr, double xx, double yx, double xy, double yy, double x0, double y0);
     void _concatTransform(cairo_t *cr, NRMatrix const *transform);

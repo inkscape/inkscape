@@ -51,7 +51,7 @@ CairoPsOutput::check (Inkscape::Extension::Extension * module)
 }
 
 static bool
-ps_print_document_to_file(SPDocument *doc, gchar const *filename)
+ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int level, bool texttopath, bool filtertobitmap)
 {
     CairoRenderer *renderer;
     CairoRenderContext *ctx;
@@ -68,6 +68,10 @@ ps_print_document_to_file(SPDocument *doc, gchar const *filename)
     /* Create renderer and context */
     renderer = new CairoRenderer();
     ctx = renderer->createContext();
+    ctx->setPSLevel(level);
+    ctx->setTextToPath(texttopath);
+    ctx->setFilterToBitmap(filtertobitmap);
+
     bool ret = ctx->setPsTarget(filename);
     if(ret) {
         /* Render document */
@@ -106,18 +110,24 @@ CairoPsOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gc
     if (ext == NULL)
         return;
 
+    const gchar *old_level = ext->get_param_enum("PSlevel");
+    const gchar *new_level = mod->get_param_enum("PSlevel");
+    int level = 1;
+
     bool old_textToPath  = ext->get_param_bool("textToPath");
-    bool new_val         = mod->get_param_bool("textToPath");
-    ext->set_param_bool("textToPath", new_val);
+    bool new_textToPath  = mod->get_param_bool("textToPath");
+    ext->set_param_bool("textToPath", new_textToPath);
 
     bool old_blurToBitmap  = ext->get_param_bool("blurToBitmap");
-    new_val         = mod->get_param_bool("blurToBitmap");
-    ext->set_param_bool("blurToBitmap", new_val);
+    bool new_blurToBitmap  = mod->get_param_bool("blurToBitmap");
+    ext->set_param_bool("blurToBitmap", new_blurToBitmap);
 
 
+    if(g_ascii_strcasecmp("PS2", new_level) == 0)
+        level = 0;
 	gchar * final_name;
 	final_name = g_strdup_printf("> %s", uri);
-	ret = ps_print_document_to_file(doc, final_name);
+	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap);
 	g_free(final_name);
 
     ext->set_param_bool("blurToBitmap", old_blurToBitmap);
@@ -153,18 +163,18 @@ CairoPsOutput::init (void)
 			"<name>Cairo PS Output</name>\n"
 			"<id>org.inkscape.print.ps.cairo</id>\n"
 			"<param name=\"PSlevel\" gui-text=\"" N_("Restrict to PS level") "\" type=\"enum\" >\n"
+				"<item value='PS3'>" N_("PostScript 3") "</item>\n"
 #if (CAIRO_VERSION >= 010502)
                 "<item value='PS2'>" N_("PostScript level 2") "</item>\n"
 #endif
-				"<item value='PS3'>" N_("PostScript 3") "</item>\n"
             "</param>\n"
 			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">true</param>\n"
 			"<param name=\"blurToBitmap\" gui-text=\"" N_("Convert blur effects to bitmaps") "\" type=\"boolean\">false</param>\n"
 			"<output>\n"
 				"<extension>.ps</extension>\n"
                 "<mimetype>application/ps</mimetype>\n"
-				"<filetypename>Cairo PS (*.ps)</filetypename>\n"
-				"<filetypetooltip>PS File</filetypetooltip>\n"
+				"<filetypename>PostScript via Cairo (*.ps)</filetypename>\n"
+				"<filetypetooltip>PostScript File</filetypetooltip>\n"
 			"</output>\n"
 		"</inkscape-extension>", new CairoPsOutput());
 

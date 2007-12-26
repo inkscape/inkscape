@@ -8,7 +8,7 @@
  *   Miklos Erdelyi <erdelyim@gmail.com>
  *
  * Copyright (C) 2006 Miklos Erdelyi
- * 
+ *
  * Licensed under GNU GPL
  */
 
@@ -133,7 +133,7 @@ CairoRenderer::createContext(void)
 void
 CairoRenderer::destroyContext(CairoRenderContext *ctx)
 {
-    delete ctx;    
+    delete ctx;
 }
 
 /*
@@ -201,13 +201,13 @@ static void sp_group_render(SPItem *item, CairoRenderContext *ctx)
     SPGroup *group = SP_GROUP(item);
     CairoRenderer *renderer = ctx->getRenderer();
     TRACE(("group op: %f\n", SP_SCALE24_TO_FLOAT(SP_OBJECT_STYLE(item)->opacity.value)));
-    
+
     GSList *l = g_slist_reverse(group->childList(false));
     while (l) {
         SPObject *o = SP_OBJECT (l->data);
         if (SP_IS_ITEM(o)) {
             renderer->renderItem (ctx, SP_ITEM (o));
-        }        
+        }
         l = g_slist_remove (l, o);
     }
 }
@@ -273,12 +273,12 @@ static void sp_image_render(SPItem *item, CairoRenderContext *ctx)
         calculatePreserveAspectRatio (image->aspect_align, image->aspect_clip, (double)w, (double)h,
                                                      &x, &y, &width, &height);
     }
-    
+
     if (image->aspect_clip == SP_ASPECT_SLICE && !ctx->getCurrentState()->has_overflow) {
         ctx->addClippingRect(image->x.computed, image->y.computed, image->width.computed, image->height.computed);
     }
 
-    nr_matrix_set_translate (&tp, x, y);    
+    nr_matrix_set_translate (&tp, x, y);
     nr_matrix_set_scale (&s, width / (double)w, height / (double)h);
     nr_matrix_multiply (&t, &s, &tp);
 
@@ -290,11 +290,11 @@ static void sp_symbol_render(SPItem *item, CairoRenderContext *ctx)
     SPSymbol *symbol = SP_SYMBOL(item);
     if (!SP_OBJECT_IS_CLONED (symbol))
         return;
-    
+
     /* Cloned <symbol> is actually renderable */
     ctx->pushState();
     ctx->transform(&symbol->c2p);
-        
+
     // apply viewbox if set
     if (0 /*symbol->viewBox_set*/) {
         NRMatrix vb2user;
@@ -304,10 +304,10 @@ static void sp_symbol_render(SPItem *item, CairoRenderContext *ctx)
         y = 0.0;
         width = 1.0;
         height = 1.0;
-        
+
         view_width = symbol->viewBox.x1 - symbol->viewBox.x0;
         view_height = symbol->viewBox.y1 - symbol->viewBox.y0;
-        
+
         calculatePreserveAspectRatio(symbol->aspect_align, symbol->aspect_clip, view_width, view_height,
                                      &x, &y,&width, &height);
 
@@ -320,7 +320,7 @@ static void sp_symbol_render(SPItem *item, CairoRenderContext *ctx)
 
         ctx->transform(&vb2user);
     }
-    
+
     sp_group_render(item, ctx);
     ctx->popState();
 }
@@ -342,6 +342,11 @@ static void sp_root_render(SPItem *item, CairoRenderContext *ctx)
 
 static void sp_item_invoke_render(SPItem *item, CairoRenderContext *ctx)
 {
+    /*
+    if(ctx->_state->has_filtereffect)
+        printf("\nhas filtereffects");
+    */
+
     if (SP_IS_ROOT(item)) {
         TRACE(("root\n"));
         return sp_root_render(item, ctx);
@@ -375,7 +380,7 @@ CairoRenderer::setStateForItem(CairoRenderContext *ctx, SPItem const *item)
 {
     SPStyle const *style = SP_OBJECT_STYLE(item);
     ctx->setStateForStyle(style);
-    
+
     CairoRenderState *state = ctx->getCurrentState();
     state->clip_path = item->clip_ref->getObject();
     state->mask = item->mask_ref->getObject();
@@ -395,7 +400,7 @@ CairoRenderer::renderItem(CairoRenderContext *ctx, SPItem *item)
 {
     ctx->pushState();
     setStateForItem(ctx, item);
-    
+
     CairoRenderState *state = ctx->getCurrentState();
     state->need_layer = ( state->mask || state->clip_path || state->opacity != 1.0 );
 
@@ -444,7 +449,7 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc)
         }
     }
     TRACE(("%f x %f\n", ctx->_width, ctx->_height));
-    
+
     return ctx->setupSurface(d.x1-d.x0, d.y1-d.y0);
 }
 
@@ -454,10 +459,10 @@ void
 CairoRenderer::applyClipPath(CairoRenderContext *ctx, SPClipPath const *cp)
 {
     g_assert( ctx != NULL && ctx->_is_valid );
-        
+
     if (cp == NULL)
         return;
-    
+
     CairoRenderContext::CairoRenderMode saved_mode = ctx->getRenderMode();
     ctx->setRenderMode(CairoRenderContext::RENDER_MODE_CLIP);
 
@@ -499,7 +504,7 @@ void
 CairoRenderer::applyMask(CairoRenderContext *ctx, SPMask const *mask)
 {
     g_assert( ctx != NULL && ctx->_is_valid );
-        
+
     if (mask == NULL)
         return;
 
@@ -539,7 +544,7 @@ calculatePreserveAspectRatio(unsigned int aspect_align, unsigned int aspect_clip
 {
     if (aspect_align == SP_ASPECT_NONE)
         return;
-        
+
     double scalex, scaley, scale;
     double new_width, new_height;
     scalex = *width / vp_width;

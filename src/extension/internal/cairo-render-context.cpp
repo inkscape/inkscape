@@ -104,6 +104,10 @@ static cairo_status_t _write_callback(void *closure, const unsigned char *data, 
 
 CairoRenderContext::CairoRenderContext(CairoRenderer *parent) :
     _dpi(72),
+    _pdf_level(0),
+    _ps_level(1),
+    _is_texttopath(FALSE),
+    _is_filtertobitmap(FALSE),
     _stream(NULL),
     _is_valid(FALSE),
     _vector_based_target(FALSE),
@@ -154,6 +158,7 @@ CairoRenderContext::setStateForStyle(SPStyle const *style)
     // only opacity & overflow is stored for now
     _state->opacity = SP_SCALE24_TO_FLOAT(style->opacity.value);
     _state->has_overflow = (style->overflow.set && style->overflow.value != SP_CSS_OVERFLOW_VISIBLE);
+    _state->has_filtereffect = (style->filter.set != 0) ? TRUE : FALSE;
 
     if (style->fill.isPaintserver() || style->stroke.isPaintserver())
         _state->merge_opacity = FALSE;
@@ -384,6 +389,26 @@ CairoRenderContext::setPsTarget(gchar const *utf8_fn)
     return true;
 }
 
+void CairoRenderContext::setPSLevel(unsigned int level)
+{
+    _ps_level = level;
+}
+
+void CairoRenderContext::setPDFLevel(unsigned int level)
+{
+    _pdf_level = level;
+}
+
+void CairoRenderContext::setTextToPath(bool texttopath)
+{
+    _is_texttopath = texttopath;
+}
+
+void CairoRenderContext::setFilterToBitmap(bool filtertobitmap)
+{
+    _is_filtertobitmap = filtertobitmap;
+}
+
 cairo_surface_t*
 CairoRenderContext::getSurface(void)
 {
@@ -448,6 +473,7 @@ CairoRenderContext::_createState(void)
     CairoRenderState *state = (CairoRenderState*)g_malloc(sizeof(CairoRenderState));
     g_assert( state != NULL );
 
+    state->has_filtereffect = FALSE;
     state->merge_opacity = TRUE;
     state->opacity = 1.0;
     state->need_layer = FALSE;
@@ -667,6 +693,9 @@ CairoRenderContext::setupSurface(double width, double height)
 #ifdef CAIRO_HAS_PS_SURFACE
         case CAIRO_SURFACE_TYPE_PS:
             surface = cairo_ps_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, width, height);
+#if (CAIRO_VERSION >= 010502)
+            cairo_ps_surface_restrict_to_level (surface, (cairo_ps_level_t)_ps_level);
+#endif
             break;
 #endif
         default:
@@ -1344,7 +1373,7 @@ CairoRenderContext::_showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoG
         i++;
     }
 
-    if (is_stroke)
+    if (is_stroke || _is_texttopath)
         cairo_glyph_path(cr, glyphs, num_glyphs - num_invalid_glyphs);
     else
         cairo_show_glyphs(cr, glyphs, num_glyphs - num_invalid_glyphs);

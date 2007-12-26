@@ -86,8 +86,8 @@ PsOutput::init (void)
 			"<output>\n"
 				"<extension>.ps</extension>\n"
 				"<mimetype>image/x-postscript</mimetype>\n"
-				"<filetypename>" N_("Postscript (*.ps)") "</filetypename>\n"
-				"<filetypetooltip>" N_("Postscript File") "</filetypetooltip>\n"
+				"<filetypename>" N_("PostScript (*.ps)") "</filetypename>\n"
+				"<filetypetooltip>" N_("PostScript File") "</filetypetooltip>\n"
 			"</output>\n"
 		"</inkscape-extension>", new PsOutput());
 
