@@ -119,17 +119,17 @@ box3d_side_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
     Box3DSide *side = SP_BOX3D_SIDE (object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        g_print ("Do we ever end up here?\n");
+        // this is where we end up when saving as plain SVG (also in other circumstances?)
+        // thus we don' set "sodipodi:type" so that the box is only saved as an ordinary svg:path
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:path");
-        repr->setAttribute("sodipodi:type", "inkscape:box3dside"); // FIXME: Does this double the 
     }
 
     if (flags & SP_OBJECT_WRITE_EXT) {
         sp_repr_set_int(repr, "inkscape:box3dsidetype", side->dir1 ^ side->dir2 ^ side->front_or_rear);
     }
 
-    sp_shape_set_shape ((SPShape *) object); // FIXME: necessary? YES!
+    sp_shape_set_shape ((SPShape *) object);
 
     /* Duplicate the path */
     SPCurve *curve = ((SPShape *) object)->curve;

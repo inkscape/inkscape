@@ -280,10 +280,10 @@ static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Node *r
     SPBox3D *box = SP_BOX3D(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        g_print ("Do we ever end up here?\n");
+        // this is where we end up when saving as plain SVG (also in other circumstances?)
+        // thus we don' set "sodipodi:type" so that the box is only saved as an ordinary svg:g
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:g");
-        repr->setAttribute("sodipodi:type", "inkscape:box3d");
     }
 
     if (flags & SP_OBJECT_WRITE_EXT) {
