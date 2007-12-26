@@ -237,7 +237,6 @@ persp3d_create_xml_element (SPDocument *document, Persp3D *dup) {// if dup is gi
 static Inkscape::XML::Node *
 persp3d_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
-    SPDocument *document = SP_OBJECT_DOCUMENT(object);
     Persp3D *persp = SP_PERSP3D(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
