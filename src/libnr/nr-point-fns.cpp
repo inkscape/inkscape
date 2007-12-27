@@ -111,6 +111,8 @@ project_on_linesegment(NR::Point const p, NR::Point const p1, NR::Point const p2
     // calculate u according to "Minimum Distance between a Point and a Line"
     // see http://local.wasp.uwa.edu.au/~pbourke/geometry/pointline/        
     
+    // Warning: projected points will not necessarily be in between the endpoints of the linesegments!  
+    
     if (p1 == p2) { // to avoid div. by zero below
         return p;
     }

@@ -101,7 +101,14 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* r,
                                 double d = getDistance();
                                 bool withinX = ((*i)[NR::X] >= b_min[NR::X] - d) && ((*i)[NR::X] <= b_max[NR::X] + d);
                                 bool withinY = ((*i)[NR::Y] >= b_min[NR::Y] - d) && ((*i)[NR::Y] <= b_max[NR::Y] + d);
-                                if (snap_dim == SNAP_X && withinX || snap_dim == SNAP_Y && withinY || snap_dim == SNAP_XY && withinX && withinY) {
+                                bool c1 = snap_dim == GUIDE_TRANSL_SNAP_X && withinX;
+                                bool c2 = snap_dim == GUIDE_TRANSL_SNAP_Y && withinY;
+                                bool c3 = snap_dim == TRANSL_SNAP_XY && withinX && withinY;
+                                // For an angled guide at e.g 45 deg., the bbox is very large and might even span
+                                // the full desktop. Therefore we will simply return _any_ candidate, without looking at
+                                // the bbox and the snapping distance.
+                                bool c4 = snap_dim == ANGLED_GUIDE_TRANSL_SNAP || snap_dim == ANGLED_GUIDE_ROT_SNAP; 
+                                if ( c1 || c2 || c3 || c4) {
                                     //We've found a point that is within snapping range
                                     //of this object, so record it as a candidate
                                     _candidates->push_back(SP_ITEM(o));
@@ -173,36 +180,19 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::Snapper::PointType const &
 void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
                                          Inkscape::Snapper::PointType const &t,
                                          NR::Point const &p,
-                                         bool const &first_point,
-                                         DimensionToSnap const snap_dim) const
+                                         bool const &first_point) const
 {
+    // Iterate through all nodes, find out which one is the closest to p, and snap to it!
+    
     _collectNodes(t, first_point);
     
-    //Do the snapping, using all the nodes and corners collected before
-    NR::Point snapped_point;        
     SnappedPoint s;
     bool success = false;
     
     for (std::vector<NR::Point>::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
-        /* Try to snap to this node of the path */
-        NR::Coord dist = NR_HUGE;
-        switch (snap_dim) {
-            case SNAP_X:
-                dist = fabs((*k)[NR::X] - p[NR::X]);
-                snapped_point = NR::Point((*k)[NR::X], p[NR::Y]);
-                break;
-            case SNAP_Y:
-                dist = fabs((*k)[NR::Y] - p[NR::Y]);
-                snapped_point = NR::Point(p[NR::X], (*k)[NR::Y]);
-                break;
-            case SNAP_XY:
-                dist = NR::L2(*k - p);
-                snapped_point = *k;
-                break;
-        }
-
+        NR::Coord dist = NR::L2(*k - p);        
         if (dist < getDistance() && dist < s.getDistance()) {
-            s = SnappedPoint(snapped_point, dist);
+            s = SnappedPoint(*k, dist);
             success = true;
         }
     }
@@ -212,6 +202,31 @@ void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
     }
 }
 
+void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &sc,
+                                         Inkscape::Snapper::PointType const &t,
+                                         NR::Point const &p,
+                                         NR::Point const &guide_normal) const
+{
+    // Iterate through all nodes, find out which one is the closest to this guide, and snap to it!
+    _collectNodes(t, true);
+    
+    SnappedPoint s;
+    bool success = false;
+    
+    for (std::vector<NR::Point>::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
+        // Project each node (*k) on the guide line (running through point p)
+        NR::Point p_proj = project_on_linesegment(*k, p, p + NR::rot90(guide_normal));
+        NR::Coord dist = NR::L2(*k - p_proj);         
+        if (dist < getDistance() && dist < s.getDistance()) {
+            s = SnappedPoint(*k, dist);
+            success = true;
+        }
+    }
+
+    if (success) {
+        sc.points.push_back(s); 
+    }
+}
 
 void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &t,
                                          bool const &first_point) const
@@ -436,11 +451,11 @@ void Inkscape::ObjectSnapper::_doFreeSnap(SnappedConstraints &sc,
 
     /* Get a list of all the SPItems that we will try to snap to */
     if (first_point) {
-        _findCandidates(sp_document_root(_named_view->document), it, first_point, points_to_snap, SNAP_XY);
+        _findCandidates(sp_document_root(_named_view->document), it, first_point, points_to_snap, TRANSL_SNAP_XY);
     }
 
     if (_snap_to_itemnode || _snap_to_bboxnode) {
-        _snapNodes(sc, t, p, first_point, SNAP_XY);
+        _snapNodes(sc, t, p, first_point);
     }
     if (_snap_to_itempath || _snap_to_bboxpath) {
         _snapPaths(sc, t, p, first_point);
@@ -463,7 +478,7 @@ void Inkscape::ObjectSnapper::_doConstrainedSnap( SnappedConstraints &sc,
 
     /* Get a list of all the SPItems that we will try to snap to */
     if (first_point) {
-        _findCandidates(sp_document_root(_named_view->document), it, first_point, points_to_snap, SNAP_XY);
+        _findCandidates(sp_document_root(_named_view->document), it, first_point, points_to_snap, TRANSL_SNAP_XY);
     }
     
     // A constrained snap, is a snap in only one degree of freedom (specified by the constraint line).
@@ -483,8 +498,8 @@ void Inkscape::ObjectSnapper::_doConstrainedSnap( SnappedConstraints &sc,
 
 
 void Inkscape::ObjectSnapper::guideSnap(SnappedConstraints &sc,
-										  NR::Point const &p,
-	                                      DimensionToSnap const snap_dim) const
+										NR::Point const &p,
+	                                    NR::Point const &guide_normal) const
 {
     if ( NULL == _named_view ) {
         return;
@@ -497,8 +512,29 @@ void Inkscape::ObjectSnapper::guideSnap(SnappedConstraints &sc,
     std::vector<NR::Point> points_to_snap;
     points_to_snap.push_back(p);
 
+    // This method is used to snap a guide to nodes, while dragging the guide around
+    DimensionToSnap snap_dim;
+    if (guide_normal == component_vectors[NR::Y]) {
+        snap_dim = GUIDE_TRANSL_SNAP_Y;
+    } else if (guide_normal == component_vectors[NR::X]) {
+        snap_dim = GUIDE_TRANSL_SNAP_X;
+    } else {
+        snap_dim = ANGLED_GUIDE_TRANSL_SNAP;
+    }
+    // We don't support ANGLED_GUIDE_ROT_SNAP yet. 
+    
+    // It would be cool to allow the user to rotate a guide by dragging it, instead of
+    // only translating it. (For example when CTRL is pressed). We will need an UI part 
+    // for that first; and some important usability choices need to be made: 
+    // E.g. which point should be used for pivoting? A previously snapped point,
+    // or a transformation center (which can be moved after clicking for the
+    // second time on an object; but should this point then be constrained to the
+    // line, or can it be located anywhere?)
+
     _findCandidates(sp_document_root(_named_view->document), it, true, points_to_snap, snap_dim);
-	_snapNodes(sc, Inkscape::Snapper::SNAPPOINT_GUIDE, p, true, snap_dim);
+	_snapTranslatingGuideToNodes(sc, Inkscape::Snapper::SNAPPOINT_GUIDE, p, guide_normal);
+    
+    // _snapRotatingGuideToNodes has not been implemented yet. 
 }
 
 /**

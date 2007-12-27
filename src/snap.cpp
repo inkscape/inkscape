@@ -285,29 +285,16 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
 }
 
 Inkscape::SnappedPoint SnapManager::guideSnap(NR::Point const &p,
-                                             NR::Point const &guide_normal) const
+                                              NR::Point const &guide_normal) const
 {
-    if (!object.ThisSnapperMightSnap()) {
+    // This method is used to snap a guide to nodes, while dragging the guide around
+    
+    if (!(object.ThisSnapperMightSnap() && _snap_enabled_globally)) {
         return Inkscape::SnappedPoint(p, NR_HUGE);
     }
     
-    // This method is used to snap a guide to nodes, while dragging the guide around
-    Inkscape::ObjectSnapper::DimensionToSnap snap_dim;
-    if (guide_normal == component_vectors[NR::Y]) {
-        snap_dim = Inkscape::ObjectSnapper::SNAP_Y;
-    } else if (guide_normal == component_vectors[NR::X]) {
-        snap_dim = Inkscape::ObjectSnapper::SNAP_X;
-    } else {
-        g_warning("WARNING: snapping of angled guides is not supported yet!");
-        // this is because _snapnodes, called in object.guideSnap, cannot only handle
-        // vertical or horizontal lines for now....
-        // Rotating an agled guide will require some additional code, as it would be great to
-        // have it rotate around a snapped point
-        snap_dim = Inkscape::ObjectSnapper::SNAP_XY;
-    }
-    
     SnappedConstraints sc;
-    object.guideSnap(sc, p, snap_dim);
+    object.guideSnap(sc, p, guide_normal);
     
     return findBestSnap(p, sc, false);    
 }

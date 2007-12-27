@@ -32,7 +32,12 @@ public:
   ObjectSnapper(SPNamedView const *nv, NR::Coord const d);
   ~ObjectSnapper();
 
-  enum DimensionToSnap {SNAP_X, SNAP_Y, SNAP_XY};
+  enum DimensionToSnap {
+    GUIDE_TRANSL_SNAP_X, // For snapping a vertical guide (normal in the X-direction) to objects, 
+    GUIDE_TRANSL_SNAP_Y, // For snapping a horizontal guide (normal in the Y-direction) to objects
+    ANGLED_GUIDE_TRANSL_SNAP, // For snapping an angled guide, while translating it accross the desktop
+    ANGLED_GUIDE_ROT_SNAP, // For snapping an angled guide, while rotating it around some pivot point
+    TRANSL_SNAP_XY}; // All other cases; for snapping to objects, other than guides
 
   void setSnapToItemNode(bool s) {
     _snap_to_itemnode = s;
@@ -80,7 +85,7 @@ public:
   
   void guideSnap(SnappedConstraints &sc,
   				 NR::Point const &p,
-                 DimensionToSnap const snap_dim) const;
+                 NR::Point const &guide_normal) const;
   
   bool ThisSnapperMightSnap() const;
   
@@ -114,9 +119,13 @@ private:
   void _snapNodes(SnappedConstraints &sc,
                       Inkscape::Snapper::PointType const &t,
                       NR::Point const &p, 
-                      bool const &first_point,
-                      DimensionToSnap const snap_dim) const;
-
+                      bool const &first_point) const;
+                      
+  void _snapTranslatingGuideToNodes(SnappedConstraints &sc,
+                     Inkscape::Snapper::PointType const &t,
+                     NR::Point const &p,
+                     NR::Point const &guide_normal) const;
+                     
   void _collectNodes(Inkscape::Snapper::PointType const &t,
                   bool const &first_point) const;
   
