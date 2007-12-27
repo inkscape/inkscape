@@ -109,18 +109,45 @@ CairoPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const g
     if (ext == NULL)
         return;
 
-    bool old_textToPath  = ext->get_param_bool("textToPath");
-    bool new_textToPath  = mod->get_param_bool("textToPath");
-    ext->set_param_bool("textToPath", new_textToPath);
+    bool old_textToPath  = FALSE;
+    bool new_textToPath  = FALSE;
+    try {
+        old_textToPath  = ext->get_param_bool("textToPath");
+        new_textToPath  = mod->get_param_bool("textToPath");
+        ext->set_param_bool("textToPath", new_textToPath);
+    }
+    catch(...) {
+        g_warning("Parameter <textToPath> might not exists");
+    }
 
-    bool old_blurToBitmap  = ext->get_param_bool("blurToBitmap");
-    bool new_blurToBitmap  = mod->get_param_bool("blurToBitmap");
-    ext->set_param_bool("blurToBitmap", new_blurToBitmap);
+    bool old_blurToBitmap  = FALSE;
+    bool new_blurToBitmap  = FALSE;
+    try {
+        old_blurToBitmap  = ext->get_param_bool("blurToBitmap");
+        new_blurToBitmap  = mod->get_param_bool("blurToBitmap");
+        ext->set_param_bool("blurToBitmap", new_blurToBitmap);
+    }
+    catch(...) {
+        g_warning("Parameter <blurToBitmap> might not exists");
+    }
 
 	gchar * final_name;
 	final_name = g_strdup_printf("> %s", uri);
 	ret = pdf_print_document_to_file(doc, final_name, 0, new_textToPath, new_blurToBitmap);
 	g_free(final_name);
+
+    try {
+        ext->set_param_bool("blurToBitmap", old_blurToBitmap);
+    }
+    catch(...) {
+        g_warning("Parameter <blurToBitmap> might not exists");
+    }
+    try {
+        ext->set_param_bool("textToPath", old_textToPath);
+    }
+    catch(...) {
+        g_warning("Parameter <textToPath> might not exists");
+    }
 
 	if (!ret)
 	    throw Inkscape::Extension::Output::save_failed();
@@ -146,7 +173,7 @@ CairoPdfOutput::init (void)
 			"<param name=\"PDFversion\" gui-text=\"" N_("Restrict to PDF version") "\" type=\"enum\" >\n"
 				"<item value='PDF14'>" N_("PDF 1.4") "</item>\n"
             "</param>\n"
-			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">true</param>\n"
+			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"blurToBitmap\" gui-text=\"" N_("Convert blur effects to bitmaps") "\" type=\"boolean\">false</param>\n"
 			"<output>\n"
 				"<extension>.pdf</extension>\n"
