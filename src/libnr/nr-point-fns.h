@@ -96,6 +96,8 @@ NR::Point snap_vector_midpoint (NR::Point p, NR::Point begin, NR::Point end, dou
 
 double get_offset_between_points (NR::Point p, NR::Point begin, NR::Point end);
 
+NR::Point project_on_linesegment(NR::Point const p, NR::Point const p1, NR::Point const p2); 
+
 #endif /* !__NR_POINT_OPS_H__ */
 
 /*

@@ -40,20 +40,10 @@ void Inkscape::LineSnapper::_doFreeSnap(SnappedConstraints &sc,
     for (LineList::const_iterator i = lines.begin(); i != lines.end(); i++) {
         NR::Point const p1 = i->second; // point at guide/grid line
         NR::Point const p2 = p1 + NR::rot90(i->first); // 2nd point at guide/grid line
-        
         // std::cout << "  line through " << i->second << " with normal " << i->first;
+        g_assert(i->first != NR::Point(0,0)); // we cannot project on an linesegment of zero length
         
-        g_assert(i->first != NR::Point(0,0)); // otherwise we'll have div. by zero because NR::L2(d2) = 0
-        
-        // p_proj = projection of p on the grid/guide line running from p1 to p2
-        // p_proj = p1 + u (p2 - p1)
-        // calculate u according to "Minimum Distance between a Point and a Line"
-        // see http://local.wasp.uwa.edu.au/~pbourke/geometry/pointline/        
-        NR::Point const d1(p-p1); // delta 1
-        NR::Point const d2(p2-p1); // delta 1
-        double const u = (d1[NR::X] * d2[NR::X] + d1[NR::Y] * d2[NR::Y]) / (NR::L2(d2) * NR::L2(d2));
-        
-        NR::Point const p_proj(p1 + u*(p2-p1));
+        NR::Point const p_proj = project_on_linesegment(p, p1, p2);
         NR::Coord const dist = NR::L2(p_proj - p);
         //Store any line that's within snapping range
         if (dist < getDistance()) {
@@ -97,9 +87,12 @@ void Inkscape::LineSnapper::_doConstrainedSnap(SnappedConstraints &sc,
 
         if (k == Geom::intersects) {
             const NR::Coord dist = L2(t - p);
-            //Store any line that's within snapping range
             if (dist < getDistance()) {
-				_addSnappedLine(sc, t, dist, c.getDirection(), t);
+				// When doing a constrained snap, we're already at an intersection.
+                // This snappoint is therefore fully constrained, so there's no need
+                // to look for additional intersections; just return the snapped point
+                // and forget about the line
+                sc.points.push_back(SnappedPoint(t, dist)); 
             }
         }
     }

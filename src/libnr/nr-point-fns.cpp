@@ -103,6 +103,24 @@ get_offset_between_points (NR::Point p, NR::Point begin, NR::Point end)
     return (r / length);
 }
 
+NR::Point
+project_on_linesegment(NR::Point const p, NR::Point const p1, NR::Point const p2) 
+{
+    // p_proj = projection of p on the linesegment running from p1 to p2
+    // p_proj = p1 + u (p2 - p1)
+    // calculate u according to "Minimum Distance between a Point and a Line"
+    // see http://local.wasp.uwa.edu.au/~pbourke/geometry/pointline/        
+    
+    if (p1 == p2) { // to avoid div. by zero below
+        return p;
+    }
+    
+    NR::Point const d1(p-p1); // delta 1
+    NR::Point const d2(p2-p1); // delta 2
+    double const u = (d1[NR::X] * d2[NR::X] + d1[NR::Y] * d2[NR::Y]) / (NR::L2(d2) * NR::L2(d2));
+    
+    return (p1 + u*(p2-p1));
+}
 
 /*
   Local Variables:

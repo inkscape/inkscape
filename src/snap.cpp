@@ -9,6 +9,7 @@
  *   Frank Felfe <innerspace@iname.com>
  *   Nathan Hurst <njh@njhurst.com>
  *   Carl Hetherington <inkscape@carlh.net>
+ *   Diederik van Lierop <mail@diedenrezi.nl>
  *
  * Copyright (C) 2006-2007 Johan Engelen <johan@shouraizou.nl>
  * Copyrigth (C) 2004      Nathan Hurst
@@ -207,6 +208,9 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
                                              std::vector<NR::Point> &points_to_snap,
                                              std::list<SPItem const *> const &it) const
 {
+    if (!SomeSnapperMightSnap()) {
+        return Inkscape::SnappedPoint(p, NR_HUGE);
+    }
     
     SnappedConstraints sc;        
     
@@ -266,6 +270,9 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
                                                     Inkscape::Snapper::ConstraintLine const &c,
                                                     std::list<SPItem const *> const &it) const
 {
+    if (!SomeSnapperMightSnap()) {
+        return Inkscape::SnappedPoint(p, NR_HUGE);
+    }
     
     SnappedConstraints sc;
         
@@ -280,6 +287,9 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
 Inkscape::SnappedPoint SnapManager::guideSnap(NR::Point const &p,
                                              NR::Point const &guide_normal) const
 {
+    if (!object.ThisSnapperMightSnap()) {
+        return Inkscape::SnappedPoint(p, NR_HUGE);
+    }
     
     // This method is used to snap a guide to nodes, while dragging the guide around
     Inkscape::ObjectSnapper::DimensionToSnap snap_dim;
@@ -397,9 +407,21 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
 
     for (std::vector<NR::Point>::const_iterator i = points.begin(); i != points.end(); i++) {
         
-        /* Snap it */
-        Inkscape::SnappedPoint const snapped = constrained ?
-            constrainedSnap(type, *j, i == points.begin(), transformed_points, constraint, ignore) : freeSnap(type, *j, i == points.begin(), transformed_points, ignore);
+        /* Snap it */        
+        Inkscape::SnappedPoint snapped;
+                
+        if (constrained) {    
+            Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
+            if (transformation_type == SCALE) {
+                // When constrained scaling, each point will have its own unique constraint line,
+                // running from the scaling origin to the original untransformed point. We will
+                // calculate that line here 
+                dedicated_constraint = Inkscape::Snapper::ConstraintLine(origin, (*i) - origin);
+            }
+            snapped = constrainedSnap(type, *j, i == points.begin(), transformed_points, dedicated_constraint, ignore);
+        } else {
+            snapped = freeSnap(type, *j, i == points.begin(), transformed_points, ignore);
+        }
 
         NR::Point result;
         NR::Coord metric = NR_HUGE;
@@ -428,8 +450,14 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
                 {
                     NR::Point const a = (snapped.getPoint() - origin);
                     NR::Point const b = (*i - origin);
-                    result = NR::Point(a[NR::X] / b[NR::X], a[NR::Y] / b[NR::Y]);
+                    // This is the scaling that results after snapping
+                    result = NR::Point(a[NR::X] / b[NR::X], a[NR::Y] / b[NR::Y]); 
+                    // Compare the resulting scaling with the desired scaling
                     metric = std::abs(NR::L2(result) - NR::L2(transformation));
+                    // TODO: (Diederik) This only works for snapping of the diagonals 
+                    // as the resulting scale cannot be calculated for points aligned
+                    // vertically or horizontally to the origin, and therefore the the
+                    // metric will also be useless. BTW, what about protection for 1/0?  
                     break;
                 }
                 case STRETCH:
@@ -564,12 +592,11 @@ std::pair<NR::scale, bool> SnapManager::freeSnapScale(Inkscape::Snapper::PointTy
 std::pair<NR::scale, bool> SnapManager::constrainedSnapScale(Inkscape::Snapper::PointType t,
                                                              std::vector<NR::Point> const &p,
                                                              std::list<SPItem const *> const &it,
-                                                             Inkscape::Snapper::ConstraintLine const &c,
                                                              NR::scale const &s,
                                                              NR::Point const &o) const
 {
     return _snapTransformed(
-        t, p, it, true, c, SCALE, NR::Point(s[NR::X], s[NR::Y]), o, NR::X, false
+        t, p, it, true, NR::Point(), SCALE, NR::Point(s[NR::X], s[NR::Y]), o, NR::X, false
         );
 }
 

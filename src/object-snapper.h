@@ -7,8 +7,9 @@
  *
  * Authors:
  *   Carl Hetherington <inkscape@carlh.net>
+ *   Diederik van Lierop <mail@diedenrezi.nl>
  *
- * Copyright (C) 2005 Authors 
+ * Copyright (C) 2005 - 2007 Authors 
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -87,6 +88,7 @@ private:
   //store some lists of candidates, points and paths, so we don't have to rebuild them for each point we want to snap
   std::vector<SPItem*> *_candidates; 
   std::vector<NR::Point> *_points_to_snap_to;
+  std::vector<NArtBpath*> *_bpaths_to_snap_to;
   std::vector<Path*> *_paths_to_snap_to;
   void _doFreeSnap(SnappedConstraints &sc,
                       Inkscape::Snapper::PointType const &t,
@@ -114,11 +116,24 @@ private:
                       NR::Point const &p, 
                       bool const &first_point,
                       DimensionToSnap const snap_dim) const;
-                      
+
+  void _collectNodes(Inkscape::Snapper::PointType const &t,
+                  bool const &first_point) const;
+  
   void _snapPaths(SnappedConstraints &sc,
                       Inkscape::Snapper::PointType const &t, 
                       NR::Point const &p,
                       bool const &first_point) const;
+                      
+  void _snapPathsConstrained(SnappedConstraints &sc,
+                 Inkscape::Snapper::PointType const &t,
+                 NR::Point const &p,
+                 bool const &first_point,
+                 ConstraintLine const &c) const;
+  
+  void _collectPaths(Inkscape::Snapper::PointType const &t, 
+                  bool const &first_point) const;
+  void _clear_paths() const;
   
   bool _snap_to_itemnode;
   bool _snap_to_itempath;

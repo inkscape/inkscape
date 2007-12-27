@@ -1711,13 +1711,56 @@ Ancetre(Inkscape::XML::Node *a, Inkscape::XML::Node *who)
 Path *
 Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
 {
-    SPCurve *curve = NULL;
+    SPCurve *curve = curve_for_item(item);
+    NArtBpath *bpath = bpath_for_curve(item, curve, doTransformation, transformFull);
+    
+    if (bpath == NULL) {
+        return NULL;
+    }
+    
+    Path *dest = bpath_to_Path(bpath);
 
+    if (doTransformation) {
+        g_free(bpath); // see comment in bpath_for_curve
+    }
+    
+    sp_curve_unref(curve);
+    
+    return dest;
+}
+
+NArtBpath *
+bpath_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transformFull)
+{
+    if (curve == NULL)
+        return NULL;
+
+    NArtBpath *bpath = SP_CURVE_BPATH(curve);
+    if (bpath == NULL) {
+        return NULL;
+    }
+    
+    if (doTransformation) {
+        NArtBpath *new_bpath; // we will get a duplicate which has to be freed at some point!
+        if (transformFull) {
+            new_bpath = nr_artpath_affine(bpath, sp_item_i2doc_affine(item));
+        } else {
+            new_bpath = nr_artpath_affine(bpath, item->transform);
+        }
+        bpath = new_bpath;
+    }
+
+    return bpath;
+}
+
+SPCurve* curve_for_item(SPItem *item)
+{
     if (!item)
         return NULL;
 
-    if (SP_IS_SHAPE(item))
-    {
+    SPCurve *curve = NULL;
+
+    if (SP_IS_SHAPE(item)) {
         if (SP_IS_PATH(item)) {
             curve = sp_path_get_curve_for_edit(SP_PATH(item));
         } else {
@@ -1732,33 +1775,8 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
     {
         curve = sp_image_get_curve(SP_IMAGE(item));
     }
-
-    if (!curve)
-        return NULL;
-
-    NArtBpath *bpath = SP_CURVE_BPATH(curve);
-    if (bpath == NULL)
-        return NULL;
-
-    if ( doTransformation ) {
-        if (transformFull)
-            bpath = nr_artpath_affine(SP_CURVE_BPATH(curve), sp_item_i2doc_affine(item));
-        else
-            bpath = nr_artpath_affine(SP_CURVE_BPATH(curve), item->transform);
-        sp_curve_unref(curve);
-        curve=NULL;
-    } else {
-        bpath=SP_CURVE_BPATH(curve);
-    }
-
-    Path *dest = bpath_to_Path(bpath);
-
-    if ( doTransformation ) {
-        if ( bpath ) g_free(bpath);
-    } else {
-        sp_curve_unref(curve);
-    }
-    return dest;
+    
+    return curve; // do not forget to unref the curve at some point!
 }
 
 Path *bpath_to_Path(NArtBpath const *bpath) {

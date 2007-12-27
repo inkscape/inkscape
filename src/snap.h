@@ -9,6 +9,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
  *   Carl Hetherington <inkscape@carlh.net>
+ *   Diederik van Lierop <mail@diedenrezi.nl>
  *
  * Copyright (C) 2006-2007 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2000-2002 Lauris Kaplinski
@@ -90,7 +91,6 @@ public:
     std::pair<NR::scale, bool> constrainedSnapScale(Inkscape::Snapper::PointType t,
                                                     std::vector<NR::Point> const &p,
                                                     std::list<SPItem const *> const &it,
-                                                    Inkscape::Snapper::ConstraintLine const &c,
                                                     NR::scale const &s,
                                                     NR::Point const &o) const;
 

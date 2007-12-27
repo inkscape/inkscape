@@ -907,28 +907,15 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
             }
 
         // Snap along a suitable constraint vector from the origin.
-
-        // The inclination of the constraint vector is calculated from the aspect ratio
-        NR::Point bbox_dim = _bbox->dimensions();
-        double const aspect_ratio = bbox_dim[1] / bbox_dim[0]; // = height / width
-
-        // Determine direction of the constraint vector
-        NR::Point const cv = NR::Point(
-            pt[NR::X] > _origin[NR::X] ? 1 : -1,
-            pt[NR::Y] > _origin[NR::Y] ? aspect_ratio : -aspect_ratio
-            );
-
         std::pair<NR::scale, bool> bb = m.constrainedSnapScale(Snapper::SNAPPOINT_BBOX,
                                                                _bbox_points,
                                                                it,
-                                                               Snapper::ConstraintLine(_origin_for_bboxpoints, cv),
                                                                s,
                                                                _origin_for_bboxpoints);
 
         std::pair<NR::scale, bool> sn = m.constrainedSnapScale(Snapper::SNAPPOINT_NODE,
                                                                _snap_points,
                                                                it,
-                                                               Snapper::ConstraintLine(_origin_for_specpoints, cv),
                                                                s,
                                                                _origin_for_specpoints);
 
