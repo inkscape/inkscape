@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-12-16 13:30+0100\n"
-"PO-Revision-Date: 2007-12-16 21:17+0100\n"
+"PO-Revision-Date: 2007-12-27 15:48+0100\n"
 "Last-Translator: Luca Bruno <lucab@debian.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -2760,7 +2760,7 @@ msgstr "Nitidezza"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:44
 msgid "Enhance intensity differences in selected bitmap(s)."
-msgstr ""
+msgstr "Amplifica le differenze di intensità delle bitmap selezionate"
 
 #. TRANSLATORS: see http://docs.gimp.org/en/gimp-tool-convolve.html
 #: ../src/extension/internal/bitmap/convolve.cpp:50
@@ -2805,11 +2805,11 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/edge.cpp:36
 msgid "Edge"
-msgstr ""
+msgstr "Bordatura"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
 msgid "Hilight edges of selected bitmap(s)."
-msgstr ""
+msgstr "Evidenzia i bordi delle bitmap selezionate."
 
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
@@ -2825,7 +2825,7 @@ msgstr "Migliora"
 
 #: ../src/extension/internal/bitmap/enhance.cpp:41
 msgid "Enhance selected bitmap(s) -- minimize noise."
-msgstr ""
+msgstr "Migliora le bitmap selezionate - minimizza i disturbi."
 
 #: ../src/extension/internal/bitmap/equalize.cpp:34
 msgid "Equalize"
@@ -2893,17 +2893,18 @@ msgstr "Livello"
 msgid ""
 "Level selected bitmap(s) by scaling values falling between the given ranges "
 "to the full color range."
-msgstr ""
+msgstr "Livella le bitmap selezionate riportando i valori che cadono nell'intervallo selezionato a tutta la scala cromatica."
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
 msgid "Median Filter"
-msgstr "Filtro medio"
+msgstr "Filtro mediano"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
 msgid ""
 "Filter selected bitmap(s) by replacing each pixel component with the median "
 "color in a circular neighborhood."
-msgstr ""
+msgstr "Filtra le bitmap selezionate rimpiazzando tutte le componenti di un pixel con il colore mediano"
+" dei vicini prossimi."
 
 #: ../src/extension/internal/bitmap/modulate.cpp:39
 msgid "Modulate"
@@ -3052,7 +3053,7 @@ msgstr "Gradi"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:44
 msgid "Swirl selected bitmap(s) around center point."
-msgstr ""
+msgstr "Ruota a spirale la bitmap selezionata attorno ad un centro."
 
 #. TRANSLATORS: see http://docs.gimp.org/en/gimp-tool-threshold.html
 #: ../src/extension/internal/bitmap/threshold.cpp:37
@@ -3378,7 +3379,8 @@ msgstr ""
 msgid ""
 "<b>Note</b>: setting the precision too high may result in a large SVG file "
 "and slow performance."
-msgstr ""
+msgstr "<b>Nota</b>: impostare la precisione ad un valore troppo alto può comportare file SVG molto grossi"
+"e un peggioramento delle performance."
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:107
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:376
@@ -3971,12 +3973,12 @@ msgstr "<b>Troppa intrusione</b>, il risultato è vuoto."
 #, c-format
 msgid ""
 "Area filled, path with <b>%d</b> nodes created and unioned with selection."
-msgstr ""
+msgstr "Area riempita, creato un tracciato di <b>%d</b> nodi unito con la selezione."
 
 #: ../src/flood-context.cpp:461
 #, c-format
 msgid "Area filled, path with <b>%d</b> nodes created."
-msgstr ""
+msgstr "Area riempita, creato un tracciato di <b>%d</b> nodi."
 
 #: ../src/flood-context.cpp:677 ../src/flood-context.cpp:972
 msgid "<b>Area is not bounded</b>, cannot fill."
@@ -8073,7 +8075,7 @@ msgstr "Divisore"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1953
 msgid "Bias"
-msgstr ""
+msgstr "Bias"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1954
 msgid "Edge Mode"
@@ -8100,7 +8102,7 @@ msgstr "Costante"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1961
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1989
 msgid "Kernel Unit Length"
-msgstr ""
+msgstr "Unità lunghezza nocciolo"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1966
 msgid "X Channel"
@@ -8136,7 +8138,7 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1995
 msgid "Base Frequency"
-msgstr ""
+msgstr "Frequenza base"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1996
 msgid "Octaves"
@@ -8533,7 +8535,7 @@ msgstr "Riquadro visivo"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:352
 msgid "This bounding box includes stroke width, markers, filter margins, etc."
-msgstr ""
+msgstr "Questo riquadro include la larghezza dei contorni, i delimitatori, i margini dei filtri, ecc."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:353
 msgid "Geometric bounding box"
@@ -8541,7 +8543,7 @@ msgstr "Riquadro geometrico"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:355
 msgid "This bounding box includes only the bare path"
-msgstr ""
+msgstr "Questo riquadro include solo il tracciato"
 
 #. Node
 #: ../src/ui/dialog/inkscape-preferences.cpp:358
@@ -13899,7 +13901,7 @@ msgstr "Cambia spaziatura connettori"
 
 #: ../src/widgets/toolbox.cpp:4933
 msgid "Avoid"
-msgstr ""
+msgstr "Evita"
 
 #: ../src/widgets/toolbox.cpp:4943
 msgid "Ignore"
@@ -13937,7 +13939,7 @@ msgstr "Lunghezza ideale dei connettori quando il modello è applicato"
 
 #: ../src/widgets/toolbox.cpp:4990
 msgid "Downwards"
-msgstr ""
+msgstr "Contrario"
 
 #: ../src/widgets/toolbox.cpp:4991
 msgid "Make connectors with end-markers (arrows) point downwards"
