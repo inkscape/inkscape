@@ -22,12 +22,11 @@ TOP="`dirname \"$CWD\"`"
 #	MacPorts (former DarwinPorts)
 export PATH="/opt/local/bin:/sw/bin/:/Library/Frameworks/Python.framework/Versions/Current/bin:/usr/local/bin:$CWD:$PATH"
 
-# Test wether we are using the stock python install
-# In which case we can use the python modules shipped alongside Inkscape, in the app bundle
-if [ `which python` = "/usr/bin/python" ]; then
-	export PYTHONPATH="$TOP/python/site-packages"
-	# NB: we are only preprending some stuff to the default python path so if the directory does not exist it should not harm the rest
-fi
+# Setup PYTHONPATH to use python modules shipped with Inkscape
+ARCH=`arch`
+PYTHON_VERS=`python -V 2>&1 | cut -c 8-10`
+export PYTHONPATH="$TOP/python/site-packages/$ARCH/$PYTHON_VERS"
+# NB: we are only preprending some stuff to the default python path so if the directory does not exist it should not harm the rest
 
 export DYLD_LIBRARY_PATH="$TOP/lib"
 
