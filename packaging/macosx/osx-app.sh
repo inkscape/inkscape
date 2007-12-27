@@ -71,7 +71,7 @@ Create an app bundle for OS X
 		has been run
 
 \033[1mEXAMPLE\033[0m
-	$0 -s -py /Library/Python/2.3/site-packages/ -l /opt/local -b ../../Build/bin/inkscape -p ../../Info.plist
+	$0 -s -py ~/python-modules -l /opt/local -b ../../Build/bin/inkscape -p ../../Info.plist
 "
 }
 
@@ -218,7 +218,7 @@ rsync -av --exclude ".svn" "$resdir"/Resources/* "$package"/Contents/Resources/
 
 # Add python modules if requested
 if [ ${add_python} = "true" ]; then
-	# copy python site-packages
+	# copy python site-packages. They need to be organized in a hierarchical set of directories, by architecture and python major+minor version, e.g. i386/2.3/ for Ptyhon 2.3 on Intel; ppc/2.4/ for Python 2.4 on PPC
 	cp -rvf "$python_dir"/* "$pkgpython"
 fi
 
