@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-11-15 17:32-0300\n"
-"PO-Revision-Date: 2007-12-22 21:18-0300\n"
-"Last-Translator: Samy <samynascimento@gmail.com>\n"
+"PO-Revision-Date: 2007-12-27 18:53+0100\n"
+"Last-Translator: Adib Taraben <theAdib@yahoo.com>\n"
 "Language-Team: Português Brasil <inkscape-brasil@listas.softwarelivre.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -79,9 +79,7 @@ msgstr "<b>Ponto de conexão</b>: clique ou arraste para criar um novo conector"
 
 #: ../src/connector-context.cpp:1203
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
-msgstr ""
-"<b>Ponto final do conector</b>: arraste para redefinir ou conectar a novas "
-"formas"
+msgstr "<b>Ponto final do conector</b>: arraste para redefinir ou conectar a novas formas"
 
 #: ../src/connector-context.cpp:1314
 msgid "Select <b>at least one non-connector object</b>."
@@ -1326,10 +1324,7 @@ msgid "_Id"
 msgstr "_Id"
 
 #: ../src/dialogs/item-properties.cpp:129
-msgid ""
-""
-"_:The id= attribute (only letters, digits, and the characters .-_: allowed)"
-""
+msgid "_:The id= attribute (only letters, digits, and the characters .-_: allowed)"
 msgstr "_:O id= atributo (apenas letras, dígitos, e caracteres .-_: permitidos)"
 
 #. Button for setting the object's id, label, title and description.
@@ -4059,7 +4054,7 @@ msgstr "<b>Centro</b> e <b>foco</b> do degradê radial; arraste com <b>Shift</b>
 msgid "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to separate"
 msgid_plural "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to separate"
 msgstr[0] "Ponto do degradê compartilhado pelo degradê <b>%d</b>; arraste com <b>Shift</b> para separar"
-msgstr[1] "Ponto do degradê compartilhado pelos degradês <b>%d</d>; arraste com <n>Shift</b> para separar"
+msgstr[1] "Ponto do degradê compartilhado pelos degradês <b>%d</b>; arraste com <b>Shift</b> para separar"
 
 #: ../src/gradient-drag.cpp:1815
 msgid "Move gradient handle(s)"
@@ -5221,9 +5216,7 @@ msgstr "Ajustar a <b>largura e altura</b> do retângulo; com <b>Ctrl</b>para tra
 #: ../src/object-edit.cpp:837
 #: ../src/object-edit.cpp:839
 msgid "Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"
-msgstr ""
-"Redimensionar caixa na direção X/Y; com <b>Shift</b> ao longo do eixo Z; com "
-"<b>Ctrl</b> para restringir às direções das bordas ou diagonais"
+msgstr "Redimensionar caixa na direção X/Y; com <b>Shift</b> ao longo do eixo Z; com <b>Ctrl</b> para restringir às direções das bordas ou diagonais"
 
 #: ../src/object-edit.cpp:841
 #: ../src/object-edit.cpp:843
@@ -12007,9 +12000,7 @@ msgid "System"
 msgstr "Sistema"
 
 #: ../src/widgets/sp-color-notebook.cpp:324
-msgid ""
-"_:RGBA_:"
-""
+msgid "_:RGBA_:"
 msgstr "_:RGBA_:"
 
 #: ../src/widgets/sp-color-notebook.cpp:332
@@ -14079,3 +14070,4 @@ msgstr "Entrada de Metaarquivo do Windows"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Entrada XAML"
+
