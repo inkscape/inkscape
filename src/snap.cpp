@@ -314,7 +314,7 @@ Inkscape::SnappedPoint SnapManager::guideSnap(NR::Point const &p,
  *  \param transformation Description of the transformation; details depend on the type.
  *  \param origin Origin of the transformation, if applicable.
  *  \param dim Dimension of the transformation, if applicable.
- *  \param uniform true if the transformation should be uniform, if applicable.
+ *  \param uniform true if the transformation should be uniform; only applicable for stretching and scaling.
  */
 
 std::pair<NR::Point, bool> SnapManager::_snapTransformed(
@@ -399,11 +399,14 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
                 
         if (constrained) {    
             Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
-            if (transformation_type == SCALE) {
-                // When constrained scaling, each point will have its own unique constraint line,
+            if (transformation_type == SCALE && uniform) {
+                // When uniformly scaling, each point will have its own unique constraint line,
                 // running from the scaling origin to the original untransformed point. We will
                 // calculate that line here 
                 dedicated_constraint = Inkscape::Snapper::ConstraintLine(origin, (*i) - origin);
+            } // else: leave the original constraint, e.g. for constrained translation 
+            if (transformation_type == SCALE && !uniform) {
+                g_warning("Non-uniform constrained scaling is not supported!");   
             }
             snapped = constrainedSnap(type, *j, i == points.begin(), transformed_points, dedicated_constraint, ignore);
         } else {
@@ -437,14 +440,32 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
                 {
                     NR::Point const a = (snapped.getPoint() - origin);
                     NR::Point const b = (*i - origin);
-                    // This is the scaling that results after snapping
-                    result = NR::Point(a[NR::X] / b[NR::X], a[NR::Y] / b[NR::Y]); 
-                    // Compare the resulting scaling with the desired scaling
-                    metric = std::abs(NR::L2(result) - NR::L2(transformation));
-                    // TODO: (Diederik) This only works for snapping of the diagonals 
-                    // as the resulting scale cannot be calculated for points aligned
-                    // vertically or horizontally to the origin, and therefore the the
-                    // metric will also be useless. BTW, what about protection for 1/0?  
+                    result = transformation;
+                    if (fabs(b[NR::X]) > 1e-6 && fabs(b[NR::Y]) > 1e-6) {
+                        // This is the default scaling that results after snapping
+                        result = NR::Point(a[NR::X] / b[NR::X], a[NR::Y] / b[NR::Y]);
+                    } else {
+                        // If this point *i is horizontally or vertically aligned with
+                        // the origin of the scaling, then it will scale purely in X or Y 
+                        // We can therefore only calculate the scaling in this direction
+                        // and the scaling factor for the other direction should remain
+                        // untouched (unless scaling is uniform ofcourse)
+                        for (int index = 0; index < 2; index++) {
+                            if (fabs(b[index]) > 1e-6) {
+                                result[index] = a[index] / b[index];
+                                if (uniform) {
+                                    result[1-index] = result[index];
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (fabs(b[NR::X]) <= 1e-6 && fabs(b[NR::Y]) <= 1e-6) {
+                        metric = NR_HUGE;
+                    } else {                        
+                        // Compare the resulting scaling with the desired scaling
+                        metric = std::abs(NR::L2(result) - NR::L2(transformation));
+                    }
                     break;
                 }
                 case STRETCH:
@@ -582,8 +603,9 @@ std::pair<NR::scale, bool> SnapManager::constrainedSnapScale(Inkscape::Snapper::
                                                              NR::scale const &s,
                                                              NR::Point const &o) const
 {
+    // When constrained scaling, only uniform scaling is supported.
     return _snapTransformed(
-        t, p, it, true, NR::Point(), SCALE, NR::Point(s[NR::X], s[NR::Y]), o, NR::X, false
+        t, p, it, true, NR::Point(), SCALE, NR::Point(s[NR::X], s[NR::Y]), o, NR::X, true
         );
 }
 
