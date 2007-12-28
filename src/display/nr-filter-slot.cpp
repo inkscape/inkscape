@@ -144,7 +144,10 @@ NRPixBlock *FilterSlot::get(int slot_nr)
         }
     }
 
-    _slot[index]->empty = false;
+    if (_slot[index]) {
+        _slot[index]->empty = false;
+    }
+
     assert(slot_nr == NR_FILTER_SLOT_NOT_SET ||_slot_number[index] == slot_nr);
     return _slot[index];
 }
