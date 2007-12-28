@@ -55,8 +55,10 @@ private:
     Gtk::Table  _layout_table;
     Gtk::Label  _label_name;
     Gtk::Label  _label_descr;
-    Gtk::Label  _label_move;
-    Gtk::Label  _label_angle;
+    Gtk::Label  _label_units;
+    Gtk::Label  _label_X;
+    Gtk::Label  _label_Y;
+    Gtk::Label  _label_degrees;
     Inkscape::UI::Widget::CheckButton _relative_toggle;
     Gtk::Adjustment _adjustment_x;
     Gtk::SpinButton _spin_button_x;

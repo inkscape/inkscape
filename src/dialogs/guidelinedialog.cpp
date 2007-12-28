@@ -41,7 +41,11 @@ namespace Dialogs {
 
 GuidelinePropertiesDialog::GuidelinePropertiesDialog(SPGuide *guide, SPDesktop *desktop)
 : _desktop(desktop), _guide(guide),
-  _relative_toggle(_("Rela_tive move"), _("Move guide relative to current position")),
+  _label_units(_("Measure unit:")),
+  _label_X(_("X:")),
+  _label_Y(_("Y:")),
+  _label_degrees(_("Degrees:")),
+  _relative_toggle(_("Rela_tive change"), _("Move and rotate guide relative to current settings")),
   _adjustment_x(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0),  
   _adjustment_y(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0),  
   _adj_angle(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0),  
@@ -62,11 +66,20 @@ void GuidelinePropertiesDialog::_modeChanged()
 {
     _mode = !_relative_toggle.get_active();
     if (!_mode) {
-        _label_move.set_label(_("Move by:"));
-        _label_angle.set_label(_("Increase angle by:"));
+        // relative
+        _spin_angle.set_value(0);
+
+        _spin_button_y.set_value(0);
+        _spin_button_x.set_value(0);
     } else {
-        _label_move.set_label(_("Move to:"));
-        _label_angle.set_label(_("Set angle to:"));
+        // absolute
+        _spin_angle.set_value(_oldangle);
+
+        SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(_unit_selector->gobj()));
+        gdouble const val_y = sp_pixels_get_units(_oldpos[Geom::Y], unit);
+        _spin_button_y.set_value(val_y);
+        gdouble const val_x = sp_pixels_get_units(_oldpos[Geom::X], unit);
+        _spin_button_x.set_value(val_x);
     }
 }
 
@@ -123,7 +136,7 @@ void GuidelinePropertiesDialog::_response(gint response)
 	case -12:
             _onDelete();
             break;
-	case Gtk::RESPONSE_CLOSE:
+	case Gtk::RESPONSE_CANCEL:
             break;
 	case Gtk::RESPONSE_DELETE_EVENT:
             break;
@@ -140,7 +153,7 @@ void GuidelinePropertiesDialog::_setup() {
     set_title(_("Guideline"));
     add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
     add_button(Gtk::Stock::DELETE, -12);
-    add_button(Gtk::Stock::CLOSE, Gtk::RESPONSE_CLOSE);
+    add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
 
     Gtk::VBox *mainVBox = get_vbox();
 
@@ -158,16 +171,6 @@ void GuidelinePropertiesDialog::_setup() {
     _layout_table.attach(_label_descr,
                          0, 3, 1, 2, Gtk::FILL, Gtk::FILL);
     _label_descr.set_alignment(0, 0.5);
-
-    _layout_table.attach(_label_move,
-                         0, 2, 3, 4, Gtk::FILL, Gtk::FILL);
-    _label_move.set_alignment(0, 0.5);
-
-    _layout_table.attach(_label_angle,
-                         0, 2, 7, 8, Gtk::FILL, Gtk::FILL);
-    _label_angle.set_alignment(0, 0.5);
-
-    _modeChanged();
 
     // indent
     _layout_table.attach(*manage(new Gtk::Label(" ")),
@@ -191,23 +194,31 @@ void GuidelinePropertiesDialog::_setup() {
     _spin_button_x.set_numeric();
     _spin_button_y.configure(_adjustment_y, 1.0 , 3);
     _spin_button_y.set_numeric();
-    _layout_table.attach(_spin_button_x,
+    _layout_table.attach(_label_X,
                          1, 2, 5, 6, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-    _layout_table.attach(_spin_button_y,
+    _layout_table.attach(_spin_button_x,
+                         2, 3, 5, 6, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+    _layout_table.attach(_label_Y,
                          1, 2, 6, 7, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+    _layout_table.attach(_spin_button_y,
+                         2, 3, 6, 7, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     gtk_signal_connect_object(GTK_OBJECT(_spin_button_x.gobj()), "activate",
                               GTK_SIGNAL_FUNC(gtk_window_activate_default),
                               gobj());
 
+    _layout_table.attach(_label_units,
+                         1, 2, 4, 5, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     _layout_table.attach(*_unit_selector,
-                         1, 2, 4, 5, Gtk::FILL, Gtk::FILL);
+                         2, 3, 4, 5, Gtk::FILL, Gtk::FILL);
 
     // angle spinbutton
     _spin_angle.configure(_adj_angle, 5.0 , 3);
     _spin_angle.set_numeric();
     _spin_angle.show();
-    _layout_table.attach(_spin_angle,
+    _layout_table.attach(_label_degrees,
                          1, 2, 8, 9, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+    _layout_table.attach(_spin_angle,
+                         2, 3, 8, 9, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
 
 
     // dialog
@@ -239,15 +250,19 @@ void GuidelinePropertiesDialog::_setup() {
         g_free(label);
     }
 
-    _spin_angle.set_value(_oldangle);
+    _modeChanged(); // sets values of spinboxes.
 
-    SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(unit_selector));
-    gdouble const val_y = sp_pixels_get_units(_oldpos[Geom::Y], unit);
-    _spin_button_y.set_value(val_y);
-    gdouble const val_x = sp_pixels_get_units(_oldpos[Geom::X], unit);
-    _spin_button_x.set_value(val_x);
-    _spin_button_x.grab_focus();
-    _spin_button_x.select_region(0, 20);
+    if ( _oldangle == 90. || _oldangle == 270. || _oldangle == -90. || _oldangle == -270.) {
+        _spin_button_x.grab_focus();
+        _spin_button_x.select_region(0, 20);
+    } else if ( _oldangle == 0. || _oldangle == 180. || _oldangle == -180.) {
+        _spin_button_y.grab_focus();
+        _spin_button_y.select_region(0, 20);
+    } else {
+        _spin_angle.grab_focus();
+        _spin_angle.select_region(0, 20);
+    }
+
     set_position(Gtk::WIN_POS_MOUSE);
 
     show_all_children();
