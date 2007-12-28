@@ -70,7 +70,7 @@ LPEPathAlongPath::LPEPathAlongPath(LivePathEffectObject *lpeobject) :
     copytype(_("Path copies"), _("How many copies to place along the skeleton path"), "copytype", PAPCopyTypeConverter, &wr, this, PAPCT_SINGLE_STRETCHED),
     prop_scale(_("Width"), _("Width of the path"), "prop_scale", &wr, this, 1),
     scale_y_rel(_("Width in units of length"), _("Scale the width of the path in units of its length"), "scale_y_rel", &wr, this, false),
-    vertical_pattern(_("Original path is vertical"), "", "vertical", &wr, this, false)
+    vertical_pattern(_("Original path is vertical"), _("Rotates the original 90 degrees, before bending it along the bend path"), "vertical", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&bend_path) );
 /* Delayed until 0.47
