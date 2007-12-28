@@ -35,11 +35,25 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     if  (!feImageHref) return 0;
 
     if (!image_pixbuf){
-            if ( (image = Gdk::Pixbuf::create_from_file(feImageHref)) < 0 ) return 0;
-            width = image->get_width();
-            height = image->get_height();
-            rowstride = image->get_rowstride();
-            image_pixbuf = image->get_pixels();
+        try {
+            image = Gdk::Pixbuf::create_from_file(feImageHref);
+        }
+        catch (const Glib::FileError & e)
+        {
+            g_warning("caught Glib::FileError in FilterImage::render");
+            return 0;
+        }
+        catch (const Gdk::PixbufError & e)
+        {
+            g_warning("Gdk::PixbufError in FilterImage::render");
+            return 0;
+        }
+        if ( !image ) return 0;
+
+        width = image->get_width();
+        height = image->get_height();
+        rowstride = image->get_rowstride();
+        image_pixbuf = image->get_pixels();
     }
     int w,x,y;
     NRPixBlock *in = slot.get(_input);
