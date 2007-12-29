@@ -456,11 +456,6 @@ DocumentProperties::build_gridspage()
     }
     _grids_combo_gridtype.set_active_text( CanvasGrid::getName(GRID_RECTANGULAR) );
 
-    for (GSList const * l = nv->grids; l != NULL; l = l->next) {
-        Inkscape::CanvasGrid * grid = (Inkscape::CanvasGrid*) l->data;
-        _grids_notebook.append_page(grid->getWidget(), grid->repr->attribute("id"));
-    }
-
     _grids_space.set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
 
     _grids_vbox.set_spacing(4);
@@ -471,6 +466,8 @@ DocumentProperties::build_gridspage()
     _grids_vbox.pack_start(_grids_notebook, false, false);
     _grids_vbox.pack_start(_grids_button_remove, false, false);
     _grids_button_remove.hide();
+
+    update_gridspage();
 }
 
 
