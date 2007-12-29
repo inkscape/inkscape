@@ -34,7 +34,7 @@ RenderingOptions::RenderingOptions () :
       _radio_cairo ( new Gtk::RadioButton () ),
       //_radio_bitmap( new Gtk::RadioButton (_radio_cairo->get_group ()), 
       _radio_bitmap( new Gtk::RadioButton () ),
-      _widget_cairo( Glib::ustring(_("_Cairo")),
+      _widget_cairo( Glib::ustring(_("_Vector")),
                      Glib::ustring(_("Render using Cairo vector operations.  The resulting image is usually smaller in file "
                         "size and can be arbitrarily scaled, but some "
                         "filter effects will not be correctly rendered.")),

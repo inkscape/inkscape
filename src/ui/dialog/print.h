@@ -13,7 +13,7 @@
 #define INKSCAPE_UI_DIALOG_PRINT_H
 
 #include <glibmm/i18n.h>
-#include <gtkmm/printoperation.h> // GtkMM
+#include <gtkmm/printoperation.h> // GtkMM printoperation
 #include <gtk/gtkprintoperation.h> // Gtk
 
 #include "desktop.h"
@@ -26,20 +26,16 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-class Print {
+class Print : public Gtk::PrintOperation {
 public:
     Print(SPDocument *doc, SPItem *base);
 
-    Gtk::PrintOperationResult run(Gtk::PrintOperationAction action, Gtk::Window& parentWindow);
-    //GtkPrintOperationResult run(GtkPrintOperationAction action);
-
 protected:
-    Glib::RefPtr<Gtk::PrintOperation> _printop;
-    //GtkPrintOperation *_printop;
+    Gtk::Widget *on_create_custom_widget ();
 
-    Gtk::Widget *_create_custom_widget ();
-    void    _custom_widget_apply (Gtk::Widget *widget);
-    void    _draw_page (const Glib::RefPtr<Gtk::PrintContext> &context,
+    void    on_begin_print(const Glib::RefPtr<Gtk::PrintContext> &context);
+    bool    on_paginate(const Glib::RefPtr<Gtk::PrintContext> &context);
+    void    on_draw_page (const Glib::RefPtr<Gtk::PrintContext> &context,
                           int page_nr);
 
 private:

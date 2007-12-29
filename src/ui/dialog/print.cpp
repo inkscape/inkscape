@@ -32,8 +32,25 @@ namespace UI {
 namespace Dialog {
 
 void
-Print::_draw_page (const Glib::RefPtr<Gtk::PrintContext> &context, int /*page_nr*/)
+Print::on_begin_print(const Glib::RefPtr<Gtk::PrintContext> &context)
 {
+    //printf("%s\n",__FUNCTION__);
+    set_n_pages (1);
+}
+
+bool
+Print::on_paginate(const Glib::RefPtr<Gtk::PrintContext> &context)
+{
+    /* this should not be called since begin-print sets the n pages */
+    //printf("%s\n",__FUNCTION__);
+    set_n_pages (1);
+    return false;
+}
+
+void
+Print::on_draw_page (const Glib::RefPtr<Gtk::PrintContext> &context, int page_nr)
+{
+    //printf("%s %d\n",__FUNCTION__, page_nr);
     if (_tab.as_bitmap()) {
         // Render as exported PNG
         gdouble width = sp_document_width(_doc);
@@ -55,8 +72,8 @@ Print::_draw_page (const Glib::RefPtr<Gtk::PrintContext> &context, int /*page_nr
 
             sp_export_png_file(_doc, tmp_png.c_str(), 0.0, 0.0,
                 width, height,
-                (unsigned long)width * dpi / PX_PER_IN,
-                (unsigned long)height * dpi / PX_PER_IN,
+                (unsigned long)(width * dpi / PX_PER_IN),
+                (unsigned long)(height * dpi / PX_PER_IN),
                 dpi, dpi, bgcolor, NULL, NULL, true, NULL);
 
             // This doesn't seem to work:
@@ -109,18 +126,13 @@ Print::_draw_page (const Glib::RefPtr<Gtk::PrintContext> &context, int /*page_nr
 }
 
 Gtk::Widget *
-Print::_create_custom_widget ()
+Print::on_create_custom_widget ()
 {
     return &_tab;
 }
 
-void
-Print::_custom_widget_apply (Gtk::Widget */*widget*/)
-{
-    g_warning (_("custom widget apply"));
-}
-
 Print::Print(SPDocument *doc, SPItem *base) :
+    Gtk::PrintOperation (),
     _doc (doc),
     _base (base),
     _tab ()
@@ -128,15 +140,13 @@ Print::Print(SPDocument *doc, SPItem *base) :
     g_assert (_doc);
     g_assert (_base);
 
-    _printop = Gtk::PrintOperation::create();
-
     // set up dialog title, based on document name
     gchar *jobname = _doc->name ? _doc->name : _("SVG Document");
     Glib::ustring title = _("Print");
     title += " ";
     title += jobname;
-    _printop->set_job_name (title);
-    _printop->set_n_pages (1);
+    set_job_name (title);
+    set_n_pages (1);
 
     // set up paper size to match the document size
     Glib::RefPtr<Gtk::PageSetup> page_setup = Gtk::PageSetup::create();
@@ -145,24 +155,10 @@ Print::Print(SPDocument *doc, SPItem *base) :
     Gtk::PaperSize paper_size(Glib::ustring("custom"), Glib::ustring("custom"),
                               doc_width, doc_height, Gtk::UNIT_POINTS);
     page_setup->set_paper_size (paper_size);
-    _printop->set_default_page_setup (page_setup);
+    set_default_page_setup (page_setup);
 
     // build custom preferences tab
-    _printop->set_custom_tab_label (Glib::ustring(_("Rendering")));
-    _printop->signal_create_custom_widget().connect(sigc::mem_fun(*this, &Print::_create_custom_widget));
-//    _printop->signal_custom_widget_apply().connect(sigc::mem_fun(*this, &Print::_custom_widget_apply));
-
-    // register actual page surface drawing callback
-    _printop->signal_draw_page().connect(sigc::mem_fun(*this, &Print::_draw_page));
-
-}
-
-Gtk::PrintOperationResult
-Print::run(Gtk::PrintOperationAction action, Gtk::Window& parent)
-{
-    Gtk::PrintOperationResult res;
-    res = _printop->run (action, parent);
-    return res;
+    set_custom_tab_label (Glib::ustring(_("Rendering")));
 }
 
 
