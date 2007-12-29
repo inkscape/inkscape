@@ -270,7 +270,7 @@ CanvasGrid::writeNewGridToRepr(Inkscape::XML::Node * repr, SPDocument * doc, Gri
     newnode->setAttribute("type", getSVGName(gridtype));
 
     repr->appendChild(newnode);
-//    Inkscape::GC::release(repr);  FIX THIS. THIS SHOULD BE HERE!!!
+    Inkscape::GC::release(newnode);
 
     sp_document_done(doc, SP_VERB_DIALOG_NAMEDVIEW, _("Create new grid"));
 }

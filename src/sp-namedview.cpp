@@ -105,6 +105,7 @@ static void sp_namedview_init(SPNamedView *nv)
 {
     nv->editable = TRUE;
     nv->showguides = TRUE;
+    nv->grids_visible = false;
     nv->showborder = TRUE;
     nv->showpageshadow = TRUE;
 
@@ -117,6 +118,94 @@ static void sp_namedview_init(SPNamedView *nv)
     nv->connector_spacing = defaultConnSpacing;
 
     new (&nv->snap_manager) SnapManager(nv);
+}
+
+static void sp_namedview_generate_old_grid(SPNamedView * nv, SPDocument *document, Inkscape::XML::Node *repr) {
+    bool old_grid_settings_present = false;
+
+    // set old settings
+    const char* gridspacingx    = "1px";
+    const char* gridspacingy    = "1px";
+    const char* gridoriginy     = "0px";
+    const char* gridoriginx     = "0px";
+    const char* gridempspacing  = "5";
+    const char* gridcolor       = "#0000ff";
+    const char* gridempcolor    = "#0000ff";
+    const char* gridopacity     = "0.2";
+    const char* gridempopacity  = "0.4";
+
+    const char* value = NULL;
+    if ((value = repr->attribute("gridoriginx"))) {
+        gridspacingx = value;
+        old_grid_settings_present = true;
+    }
+    if ((value = repr->attribute("gridoriginy"))) {
+        gridoriginy = value;
+        old_grid_settings_present = true;
+    }
+    if ((value = repr->attribute("gridspacingx"))) {
+        gridspacingx = value;
+        old_grid_settings_present = true;
+    }
+    if ((value = repr->attribute("gridspacingy"))) {
+        gridspacingy = value;
+        old_grid_settings_present = true;
+    }
+    if ((value = repr->attribute("gridcolor"))) {
+        gridcolor = value;
+        old_grid_settings_present = true;
+    }
+    if ((value = repr->attribute("gridempcolor"))) {
+        gridempcolor = value;
+        old_grid_settings_present = true;
+    }
+    if ((value = repr->attribute("gridempspacing"))) {
+        gridempspacing = value;
+        old_grid_settings_present = true;
+    }
+    if ((value = repr->attribute("gridopacity"))) {
+        gridopacity = value;
+        old_grid_settings_present = true;
+    }
+    if ((value = repr->attribute("gridempopacity"))) {
+        gridempopacity = value;
+        old_grid_settings_present = true;
+    }
+
+    if (old_grid_settings_present) {
+        // generate new xy grid with the correct settings
+        // first create the child xml node, then hook it to repr. This order is important, to not set off listeners to repr before the new node is complete.
+
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+        Inkscape::XML::Node *newnode = xml_doc->createElement("inkscape:grid");
+        newnode->setAttribute("id", "GridFromPre046Settings");
+        newnode->setAttribute("type", Inkscape::CanvasGrid::getSVGName(Inkscape::GRID_RECTANGULAR));
+        newnode->setAttribute("originx", gridoriginx);
+        newnode->setAttribute("originy", gridoriginy);
+        newnode->setAttribute("spacingx", gridspacingx);
+        newnode->setAttribute("spacingy", gridspacingy);
+        newnode->setAttribute("color", gridcolor);
+        newnode->setAttribute("empcolor", gridempcolor);
+        newnode->setAttribute("opacity", gridopacity);
+        newnode->setAttribute("empopacity", gridempopacity);
+        newnode->setAttribute("empspacing", gridempspacing);
+
+        repr->appendChild(newnode);
+        Inkscape::GC::release(newnode);
+
+        // remove all old settings
+        repr->setAttribute("gridoriginx", NULL);
+        repr->setAttribute("gridoriginy", NULL);
+        repr->setAttribute("gridspacingx", NULL);
+        repr->setAttribute("gridspacingy", NULL);
+        repr->setAttribute("gridcolor", NULL);
+        repr->setAttribute("gridempcolor", NULL);
+        repr->setAttribute("gridopacity", NULL);
+        repr->setAttribute("gridempopacity", NULL);
+        repr->setAttribute("gridempspacing", NULL);
+
+//        sp_document_done(doc, SP_VERB_DIALOG_NAMEDVIEW, _("Create new grid from pre0.46 grid settings"));
+    }
 }
 
 static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
@@ -169,7 +258,6 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:connector-spacing");
 
     /* Construct guideline list */
-
     for (SPObject *o = sp_object_first_child(SP_OBJECT(og)) ; o != NULL; o = SP_OBJECT_NEXT(o) ) {
         if (SP_IS_GUIDE(o)) {
             SPGuide * g = SP_GUIDE(o);
@@ -177,6 +265,9 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
             g_object_set(G_OBJECT(g), "color", nv->guidecolor, "hicolor", nv->guidehicolor, NULL);
         }
     }
+
+    // backwards compatibility with grid settings (pre 0.46)
+    sp_namedview_generate_old_grid(nv, document, repr);
 }
 
 static void sp_namedview_release(SPObject *object)
@@ -222,7 +313,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_SHOWGRIDS:
-            if (!value) { // show grids if not specified, for backwards compatibility
+            if (!value) { // don't show grids if not specified, for backwards compatibility
                 nv->grids_visible = false;
             } else {
                 nv->grids_visible = sp_str_to_bool(value);
