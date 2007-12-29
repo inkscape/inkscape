@@ -946,36 +946,52 @@ sp_pat_fill (SPPainter *painter, NRPixBlock *pb)
 		ba.y0 = pb->area.y0;
 		ba.x1 = pb->area.x1;
 		ba.y1 = pb->area.y1;
-		nr_rect_d_matrix_transform (&psa, &ba, &pp->px2ps);
 		
-		psa.x0 = floor ((psa.x0 - pattern_x (pp->pat)) / pattern_width (pp->pat)) -1;
-		psa.y0 = floor ((psa.y0 - pattern_y (pp->pat)) / pattern_height (pp->pat)) -1;
-		psa.x1 = ceil ((psa.x1 - pattern_x (pp->pat)) / pattern_width (pp->pat)) +1;
-		psa.y1 = ceil ((psa.y1 - pattern_y (pp->pat)) / pattern_height (pp->pat)) +1;
-		
-		for (y = psa.y0; y < psa.y1; y++) {
-			for (x = psa.x0; x < psa.x1; x++) {
-				NRPixBlock ppb;
-				double psx, psy;
-				
-				psx = x * pattern_width (pp->pat);
-				psy = y * pattern_height (pp->pat);
-				
-				area.x0 = (gint32)(pb->area.x0 - (pp->ps2px.c[0] * psx + pp->ps2px.c[2] * psy));
-				area.y0 = (gint32)(pb->area.y0 - (pp->ps2px.c[1] * psx + pp->ps2px.c[3] * psy));
-				area.x1 = area.x0 + pb->area.x1 - pb->area.x0;
-				area.y1 = area.y0 + pb->area.y1 - pb->area.y0;
-				
-				// We do not update here anymore
-
-				// Set up buffer
-				// fixme: (Lauris)
-				nr_pixblock_setup_extern (&ppb, pb->mode, area.x0, area.y0, area.x1, area.y1, NR_PIXBLOCK_PX (pb), pb->rs, FALSE, FALSE);
-				
-				nr_arena_item_invoke_render (NULL, pp->root, &area, &ppb, 0);
-				
-				nr_pixblock_release (&ppb);
-			}
-		}
+        // Trying to solve this bug: https://bugs.launchpad.net/inkscape/+bug/167416
+        // Bail out if the transformation matrix has extreme values. If we bail out
+        // however, then something (which was meaningless anyway) won't be rendered, 
+        // which is better than getting stuck in a virtually infinite loop
+        if (fabs(pp->px2ps.c[0]) < 1e6 && 
+            fabs(pp->px2ps.c[3]) < 1e6 &&
+            fabs(pp->px2ps.c[4]) < 1e6 &&
+            fabs(pp->px2ps.c[5]) < 1e6) 
+        {
+            nr_rect_d_matrix_transform (&psa, &ba, &pp->px2ps);
+    		
+    		psa.x0 = floor ((psa.x0 - pattern_x (pp->pat)) / pattern_width (pp->pat)) -1;
+    		psa.y0 = floor ((psa.y0 - pattern_y (pp->pat)) / pattern_height (pp->pat)) -1;
+    		psa.x1 = ceil ((psa.x1 - pattern_x (pp->pat)) / pattern_width (pp->pat)) +1;
+    		psa.y1 = ceil ((psa.y1 - pattern_y (pp->pat)) / pattern_height (pp->pat)) +1;
+    		
+            // If psa is too wide or tall, then something must be wrong! This is due to
+            // nr_rect_d_matrix_transform (&psa, &ba, &pp->px2ps) using a weird transformation matrix pp->px2ps.
+            g_assert(std::abs(psa.x1 - psa.x0) < 1e6);
+            g_assert(std::abs(psa.y1 - psa.y0) < 1e6);
+            
+            for (y = psa.y0; y < psa.y1; y++) {
+    			for (x = psa.x0; x < psa.x1; x++) {
+    				NRPixBlock ppb;
+    				double psx, psy;
+    				
+    				psx = x * pattern_width (pp->pat);
+    				psy = y * pattern_height (pp->pat);
+    				
+    				area.x0 = (gint32)(pb->area.x0 - (pp->ps2px.c[0] * psx + pp->ps2px.c[2] * psy));
+    				area.y0 = (gint32)(pb->area.y0 - (pp->ps2px.c[1] * psx + pp->ps2px.c[3] * psy));
+    				area.x1 = area.x0 + pb->area.x1 - pb->area.x0;
+    				area.y1 = area.y0 + pb->area.y1 - pb->area.y0;
+    				
+    				// We do not update here anymore
+    
+    				// Set up buffer
+    				// fixme: (Lauris)
+    				nr_pixblock_setup_extern (&ppb, pb->mode, area.x0, area.y0, area.x1, area.y1, NR_PIXBLOCK_PX (pb), pb->rs, FALSE, FALSE);
+    				
+    				nr_arena_item_invoke_render (NULL, pp->root, &area, &ppb, 0);
+    				
+    				nr_pixblock_release (&ppb);
+    			}
+    		}
+        } 
 	}
 }
