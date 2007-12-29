@@ -634,6 +634,9 @@ DocumentProperties::onNewGrid()
 
     Glib::ustring typestring = _grids_combo_gridtype.get_active_text();
     CanvasGrid::writeNewGridToRepr(repr, doc, CanvasGrid::getGridTypeFromName(typestring.c_str()));
+
+    // toggle grid showing to ON:
+    dt->showGrids(true);
 }
 
 
