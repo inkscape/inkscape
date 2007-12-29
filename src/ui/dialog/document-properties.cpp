@@ -35,7 +35,7 @@
 #include "desktop-handles.h"
 #include "desktop.h"
 #include "sp-namedview.h"
-
+#include "widgets/icon.h"
 #include "document-properties.h"
 
 #include "display/canvas-grid.h"
@@ -48,6 +48,10 @@ namespace Dialog {
 
 #define SPACE_SIZE_X 15
 #define SPACE_SIZE_Y 10
+
+#define INKSCAPE_ICON_GRID_XY     "grid_xy"
+#define INKSCAPE_ICON_GRID_AXONOM "grid_axonom"
+
 
 //===================================================
 
@@ -407,7 +411,19 @@ DocumentProperties::update_gridspage()
     for (GSList const * l = nv->grids; l != NULL; l = l->next) {
         Inkscape::CanvasGrid * grid = (Inkscape::CanvasGrid*) l->data;
         if (!grid->repr->attribute("id")) continue; // update_gridspage is called again when "id" is added
-        _grids_notebook.append_page(grid->getWidget(), grid->repr->attribute("id"));
+        Glib::ustring name(grid->repr->attribute("id"));
+        const char *icon = NULL;
+        switch (grid->getGridType()) {
+            case GRID_RECTANGULAR:
+                icon = INKSCAPE_ICON_GRID_XY;
+                break;
+            case GRID_AXONOMETRIC:
+                icon = INKSCAPE_ICON_GRID_AXONOM;
+                break;
+            default:
+                break;
+        }
+        _grids_notebook.append_page(grid->getWidget(), _createPageTabLabel(name, icon));
         grids_present = true;
     }
     _grids_notebook.show_all();
@@ -517,6 +533,22 @@ DocumentProperties::update()
     update_gridspage();
 
     _wr.setUpdating (false);
+}
+
+// TODO: copied from fill-and-stroke.cpp factor out into new ui/widget file?
+Gtk::HBox&
+DocumentProperties::_createPageTabLabel(const Glib::ustring& label, const char *label_image)
+{
+    Gtk::HBox *_tab_label_box = manage(new Gtk::HBox(false, 0));
+    _tab_label_box->set_spacing(4);
+    _tab_label_box->pack_start(*Glib::wrap(sp_icon_new(Inkscape::ICON_SIZE_DECORATION,
+                                                       label_image)));
+
+    Gtk::Label *_tab_label = manage(new Gtk::Label(label, true));
+    _tab_label_box->pack_start(*_tab_label);
+    _tab_label_box->show_all();
+
+    return *_tab_label_box;
 }
 
 //--------------------------------------------------------------------

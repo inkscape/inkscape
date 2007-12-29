@@ -99,6 +99,8 @@ protected:
     gchar const *_prefs_path;
     Registry _wr;
 
+    Gtk::HBox& _createPageTabLabel(const Glib::ustring& label, const char *label_image);
+
 private:
     DocumentProperties();
     virtual ~DocumentProperties();
