@@ -226,8 +226,7 @@ SPDesktopWidget::setMessage (Inkscape::MessageType type, const gchar *message)
         gdk_window_process_updates(GTK_WIDGET(sb)->window, TRUE);
     }
 
-    // FIXME: TODO: remove <b></b> before displaying as tooltip
-    gtk_tooltips_set_tip (this->tt, this->select_status_eventbox, message ? message : "", NULL);
+    gtk_tooltips_set_tip (this->tt, this->select_status_eventbox, gtk_label_get_text (sb) , NULL);
 }
 
 NR::Point
