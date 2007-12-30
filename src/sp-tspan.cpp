@@ -592,7 +592,7 @@ sp_textpath_to_text(SPObject *tp)
         Inkscape::XML::Node *copy = ((Inkscape::XML::Node *) i->data)->duplicate(SP_OBJECT_REPR(text)->document());
         // remove the old repr from under textpath
         SP_OBJECT_REPR(tp)->removeChild((Inkscape::XML::Node *) i->data);
-        // put its copy into under textPath
+        // put its copy under text
         SP_OBJECT_REPR(text)->addChild(copy, NULL); // fixme: copy id
     }
 
