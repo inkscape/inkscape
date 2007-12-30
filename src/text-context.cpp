@@ -1469,8 +1469,9 @@ sp_text_context_style_query(SPStyle *style, int property, SPTextContext *tc)
         SPObject const *pos_obj = 0;
         void *rawptr = 0;
         layout->getSourceOfCharacter(it, &rawptr);
+        if (!rawptr || !SP_IS_OBJECT(rawptr))
+            continue;
         pos_obj = SP_OBJECT(rawptr);
-        if (pos_obj == 0) continue;
         while (SP_IS_STRING(pos_obj) && SP_OBJECT_PARENT(pos_obj)) {
            pos_obj = SP_OBJECT_PARENT(pos_obj);   // SPStrings don't have style
         }

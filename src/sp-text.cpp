@@ -194,7 +194,7 @@ sp_text_child_added (SPObject *object, Inkscape::XML::Node *rch, Inkscape::XML::
     if (((SPObjectClass *) text_parent_class)->child_added)
         ((SPObjectClass *) text_parent_class)->child_added (object, rch, ref);
 
-    text->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_CONTENT_MODIFIED_FLAG);
+    text->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_CONTENT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
 }
 
 static void
