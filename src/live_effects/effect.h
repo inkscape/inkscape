@@ -90,16 +90,16 @@ public:
 protected:
     Effect(LivePathEffectObject *lpeobject);
 
-    // provide a set of doEffect functions so the developer has a choice 
+    // provide a set of doEffect functions so the developer has a choice
     // of what kind of input/output parameters he desires.
-    // the order in which they appear is the order in which they are 
+    // the order in which they appear is the order in which they are
     // called by this base class. (i.e. doEffect(SPCurve * curve) defaults to calling
     // doEffect(std::vector<Geom::Path> )
     virtual NArtBpath *
             doEffect_nartbpath (NArtBpath * path_in);
-    virtual std::vector<Geom::Path> 
+    virtual std::vector<Geom::Path>
             doEffect_path (std::vector<Geom::Path> & path_in);
-    virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > 
+    virtual Geom::Piecewise<Geom::D2<Geom::SBasis> >
             doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
 
     void registerParameter(Parameter * param);
@@ -109,7 +109,7 @@ protected:
     int oncanvasedit_it;
 
 
-    Inkscape::UI::Widget::Registry wr; 
+    Inkscape::UI::Widget::Registry wr;
     Gtk::VBox * vbox;
     Gtk::Tooltips * tooltips;
 

@@ -107,7 +107,7 @@ Effect::~Effect()
     }
 }
 
-Glib::ustring 
+Glib::ustring
 Effect::getName()
 {
     if (lpeobj->effecttype_set && lpeobj->effecttype < INVALID_LPE)

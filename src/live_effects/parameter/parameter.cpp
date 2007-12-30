@@ -86,13 +86,13 @@ ScalarParam::param_writeSVGValue() const
 }
 
 void
-ScalarParam::param_set_default() 
+ScalarParam::param_set_default()
 {
     param_set_value(defvalue);
 }
 
 void
-ScalarParam::param_set_value(gdouble val) 
+ScalarParam::param_set_value(gdouble val)
 {
     value = val;
     if (integer)
@@ -107,12 +107,12 @@ ScalarParam::param_set_value(gdouble val)
 }
 
 void
-ScalarParam::param_set_range(gdouble min, gdouble max) 
+ScalarParam::param_set_range(gdouble min, gdouble max)
 {
     this->min = min;
     this->max = max;
     if (rsu)
-        rsu->getS()->setRange(min, max);
+        rsu->getS()->setRange(this->min, this->max);
 
     param_set_value(value); // reset value to see whether it is in ranges
 }
@@ -139,6 +139,7 @@ ScalarParam::param_getWidget()
         rsu->setValue(value);
         rsu->getS()->setDigits(digits);
         rsu->getS()->setIncrements(inc_step, inc_page);
+        rsu->getS()->setRange(min, max);
 
         rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
     }

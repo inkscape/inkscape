@@ -256,14 +256,14 @@ RegisteredScalar::RegisteredScalar()
 
 RegisteredScalar::~RegisteredScalar()
 {
-    if (_widget) 
+    if (_widget)
         delete _widget;
 
     _value_changed_connection.disconnect();
 }
 
 void
-RegisteredScalar::init ( const Glib::ustring& label, const Glib::ustring& tip, 
+RegisteredScalar::init ( const Glib::ustring& label, const Glib::ustring& tip,
                          const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
                          SPDocument * doc_in )
 {

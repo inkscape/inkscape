@@ -1,5 +1,5 @@
 /** \file
- * \brief 
+ * \brief
  *
  * Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
@@ -93,15 +93,15 @@ public:
 
     Gtk::ToggleButton *_button;
     std::list<Gtk::ToggleButton*> _slavebuttons;
-    
+
     // a slave button is only sensitive when the master button is active
     // i.e. a slave button is greyed-out when the master button is not checked
-    
+
     void setSlaveButton(std::list<Gtk::ToggleButton*> btns) {
     	_slavebuttons = btns;
     }
 
-    bool setProgrammatically; // true if the value was set by setValue, not changed by the user; 
+    bool setProgrammatically; // true if the value was set by setValue, not changed by the user;
                                 // if a callback checks it, it must reset it back to false
 
 
@@ -138,16 +138,16 @@ class RegisteredScalarUnit : public RegisteredWidget {
 public:
     RegisteredScalarUnit();
     ~RegisteredScalarUnit();
-    void init (const Glib::ustring& label, 
-            const Glib::ustring& tip, 
-            const Glib::ustring& key, 
+    void init (const Glib::ustring& label,
+            const Glib::ustring& tip,
+            const Glib::ustring& key,
             const RegisteredUnitMenu &rum,
             Registry& wr,
             Inkscape::XML::Node* repr_in,
             SPDocument *doc_in);
-    inline void init ( const Glib::ustring& label, 
-                       const Glib::ustring& tip, 
-                       const Glib::ustring& key, 
+    inline void init ( const Glib::ustring& label,
+                       const Glib::ustring& tip,
+                       const Glib::ustring& key,
                        const RegisteredUnitMenu &rum,
                        Registry& wr)
         { init(label, tip, key, rum, wr, NULL, NULL); };
@@ -166,15 +166,15 @@ class RegisteredScalar : public RegisteredWidget {
 public:
     RegisteredScalar();
     ~RegisteredScalar();
-    void init (const Glib::ustring& label, 
-            const Glib::ustring& tip, 
-            const Glib::ustring& key, 
+    void init (const Glib::ustring& label,
+            const Glib::ustring& tip,
+            const Glib::ustring& key,
             Registry& wr,
             Inkscape::XML::Node* repr_in,
             SPDocument *doc_in);
-    inline void init ( const Glib::ustring& label, 
-                       const Glib::ustring& tip, 
-                       const Glib::ustring& key, 
+    inline void init ( const Glib::ustring& label,
+                       const Glib::ustring& tip,
+                       const Glib::ustring& key,
                        Registry& wr)
         { init(label, tip, key, wr, NULL, NULL); };
 

@@ -26,41 +26,41 @@ public:
     double pitch_diameter() {return (_number_of_teeth * _module) / M_PI;}
     double pitch_radius() {return pitch_diameter() / 2.0;}
     void pitch_radius(double R) {_module = (2 * M_PI * R) / _number_of_teeth;}
-    
+
     // base circle serves as the basis for the involute toothe profile
     double base_diameter() {return pitch_diameter() * cos(_pressure_angle);}
     double base_radius() {return base_diameter() / 2.0;}
-    
+
     // diametrical pitch
     double diametrical_pitch() {return _number_of_teeth / pitch_diameter();}
-    
+
     // height of the tooth above the pitch circle
     double addendum() {return 1.0 / diametrical_pitch();}
     // depth of the tooth below the pitch circle
     double dedendum() {return addendum() + _clearance;}
-    
+
     // root circle specifies the bottom of the fillet between teeth
     double root_radius() {return pitch_radius() - dedendum();}
     double root_diameter() {return root_radius() * 2.0;}
-    
+
     // outer circle is the outside diameter of the gear
     double outer_radius() {return pitch_radius() + addendum();}
     double outer_diameter() {return outer_radius() * 2.0;}
-    
+
     // angle covered by the tooth on the pitch circle
     double tooth_thickness_angle() {return M_PI / _number_of_teeth;}
-    
+
     Geom::Point centre() {return _centre;}
     void centre(Geom::Point c) {_centre = c;}
-    
+
     double angle() {return _angle;}
     void angle(double a) {_angle = a;}
-    
+
     int number_of_teeth() {return _number_of_teeth;}
-    
+
     Geom::Path path();
     Gear spawn(Geom::Point p);
-    
+
     Gear(int n, double m, double phi) {
         _number_of_teeth = n;
         _module = m;
@@ -80,10 +80,10 @@ private:
         D2<SBasis> B;
         D2<SBasis> I;
         Linear bo = Linear(start,stop);
-        
+
         B[0] = cos(bo,2);
         B[1] = sin(bo,2);
-        
+
         I = B - Linear(0,1) * derivative(B);
         I = I*base_radius() + _centre;
         return I;
@@ -91,10 +91,10 @@ private:
     D2<SBasis> _arc(double start, double stop, double R) {
         D2<SBasis> B;
         Linear bo = Linear(start,stop);
-        
+
         B[0] = cos(bo,2);
         B[1] = sin(bo,2);
-        
+
         B = B*R + _centre;
         return B;
     }
@@ -118,7 +118,7 @@ void makeContinuous(D2<SBasis> &a, Point const b) {
 
 Geom::Path Gear::path() {
     Geom::Path pb;
-    
+
     // angle covered by a full tooth and fillet
     double tooth_rotation = 2.0 * tooth_thickness_angle();
     // angle covered by an involute
@@ -129,10 +129,10 @@ Geom::Path Gear::path() {
     double root_advance = (tooth_rotation - tip_advance) - (2.0 * involute_advance);
     // begin drawing the involute at t if the root circle is larger than the base circle
     double involute_t = involute_swath_angle(root_radius())/involute_swath_angle(outer_radius());
-    
+
     //rewind angle to start drawing from the leading edge of the tooth
     double first_tooth_angle = _angle - ((0.5 * tip_advance) + involute_advance);
-    
+
     Geom::Point prev;
     for (int i=0; i < _number_of_teeth; i++)
     {
@@ -162,13 +162,13 @@ Geom::Path Gear::path() {
             prev = leading_end;
             pb.appendNew<LineSegment>(leading_end);
         }
-        
+
         D2<SBasis> root = _arc(cursor, cursor+root_advance, root_radius());
         makeContinuous(root, prev);
         pb.append(SBasisCurve(root));
         cursor += root_advance;
         prev = root.at1();
-        
+
         if (base_radius() > root_radius()) {
             Geom::Point trailing_start = root.at1();
             Geom::Point trailing_end = (base_radius() * unit_vector(trailing_start - _centre)) + _centre;
@@ -176,7 +176,7 @@ Geom::Path Gear::path() {
             prev = trailing_end;
         }
     }
-    
+
     return pb;
 }
 
@@ -212,6 +212,8 @@ LPEGears::LPEGears(LivePathEffectObject *lpeobject) :
     teeth(_("Teeth"), _("The number of teeth"), "teeth", &wr, this, 10),
     phi(_("Phi"), _("???"), "phi", &wr, this, 5)
 {
+    teeth.param_make_integer();
+    teeth.param_set_range(3, NR_HUGE);
     registerParameter( dynamic_cast<Parameter *>(&teeth) );
     registerParameter( dynamic_cast<Parameter *>(&phi) );
 }
