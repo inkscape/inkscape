@@ -21,27 +21,39 @@
 
 #include "ui/widget/rendering-options.h"
 
+/*
+ * gtk 2.12.0 has a bug (http://bugzilla.gnome.org/show_bug.cgi?id=482089)
+ * where it fails to correctly deal with gtkmm signal management.  As a result
+ * we have call gtk directly instead of doing a much cleaner version of
+ * this printing dialog, using full gtkmmification.  (The bug was fixed
+ * in 2.12.1, so when the Inkscape gtk minimum version is bumped there,
+ * we can revert Inkscape commit 16865.
+ */
+struct workaround_gtkmm
+{
+    SPDocument *_doc;
+    SPItem     *_base;
+    Inkscape::UI::Widget::RenderingOptions *_tab;
+};
 
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-class Print : public Gtk::PrintOperation {
+class Print {
 public:
     Print(SPDocument *doc, SPItem *base);
+    Gtk::PrintOperationResult run(Gtk::PrintOperationAction, Gtk::Window&);
 
 protected:
-    Gtk::Widget *on_create_custom_widget ();
-
-    void    on_begin_print(const Glib::RefPtr<Gtk::PrintContext> &context);
-    bool    on_paginate(const Glib::RefPtr<Gtk::PrintContext> &context);
-    void    on_draw_page (const Glib::RefPtr<Gtk::PrintContext> &context,
-                          int page_nr);
 
 private:
+    GtkPrintOperation *_printop;
     SPDocument *_doc;
     SPItem     *_base;
     Inkscape::UI::Widget::RenderingOptions _tab;
+
+    struct workaround_gtkmm _workaround;
 };
 
 } // namespace Dialog
