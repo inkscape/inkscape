@@ -13,7 +13,7 @@
 #define INKSCAPE_UI_DIALOG_PRINT_H
 
 #include <glibmm/i18n.h>
-#include <gtkmm/printoperation.h> // GtkMM printoperation
+#include <gtkmm/printoperation.h> // GtkMM
 #include <gtk/gtkprintoperation.h> // Gtk
 
 #include "desktop.h"

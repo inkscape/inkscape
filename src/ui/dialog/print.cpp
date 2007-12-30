@@ -89,7 +89,7 @@ Print::on_draw_page (const Glib::RefPtr<Gtk::PrintContext> &context, int page_nr
                 Cairo::RefPtr<Cairo::ImageSurface> png = Cairo::ImageSurface::create_from_png (tmp_png);
                 cairo_t *cr = context->get_cairo_context ()->cobj();
                 // FIXME: why is the origin offset??
-                cairo_set_source_surface(cr, png->cobj(), -20.0, -20.0);
+                cairo_set_source_surface(cr, png->cobj(), -16.0, -16.0);
             }
             context->get_cairo_context ()->paint ();
 
