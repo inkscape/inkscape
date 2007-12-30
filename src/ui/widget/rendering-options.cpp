@@ -23,6 +23,12 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+void
+RenderingOptions::_toggled()
+{
+    _frame_bitmap.set_sensitive(as_bitmap());
+}
+
 /**
  *    Construct a Rendering Options widget
  *
@@ -30,45 +36,62 @@ namespace Widget {
   
 RenderingOptions::RenderingOptions () :
       Gtk::VBox (),
-      //Labelled(label, tooltip, new Gtk::VBox(), suffix, icon, mnemonic),
-      _radio_cairo ( new Gtk::RadioButton () ),
-      //_radio_bitmap( new Gtk::RadioButton (_radio_cairo->get_group ()), 
-      _radio_bitmap( new Gtk::RadioButton () ),
-      _widget_cairo( Glib::ustring(_("_Vector")),
-                     Glib::ustring(_("Render using Cairo vector operations.  The resulting image is usually smaller in file "
+      _radio_vector ( Glib::ustring(_("Vector")) ),
+      _radio_bitmap ( Glib::ustring(_("Bitmap")) ),
+      _frame_backends ( Glib::ustring(_("Backend")) ),
+      _frame_bitmap ( Glib::ustring(_("Bitmap options")) ),
+      _dpi( _("DPI"),
+            Glib::ustring(_("Preferred resolution of rendering, "
+                            "in dots per inch.")),
+            1,
+            Glib::ustring(""), Glib::ustring(""),
+            false)
+{
+    // set up tooltips
+    _tt.set_tip (_radio_vector, Glib::ustring(
+                        _("Render using Cairo vector operations.  "
+                        "The resulting image is usually smaller in file "
                         "size and can be arbitrarily scaled, but some "
-                        "filter effects will not be correctly rendered.")),
-                     _radio_cairo,
-                     Glib::ustring(""), Glib::ustring(""),
-                     true),
-      _widget_bitmap(Glib::ustring(_("_Bitmap")),
-                     Glib::ustring(_("Render everything as bitmap.  The resulting image "
+                        "filter effects will not be correctly rendered.")));
+    _tt.set_tip (_radio_bitmap, Glib::ustring(
+                        _("Render everything as bitmap.  The resulting image "
                         "is usually larger in file size and cannot be "
                         "arbitrarily scaled without quality loss, but all "
-                        "objects will be rendered exactly as displayed.")),
-                     _radio_bitmap,
-                     Glib::ustring(""), Glib::ustring(""),
-                     true),
-      _dpi( _("DPI"), Glib::ustring(_("Preferred resolution of rendering, in dots per inch.")),
-                     1,
-                     Glib::ustring(""), Glib::ustring(""),
-                     false)
-{
+                        "objects will be rendered exactly as displayed.")));
+
     set_border_width(2);
 
-    // default to cairo operations
-    _radio_cairo->set_active (true);
-    Gtk::RadioButtonGroup group = _radio_cairo->get_group ();
-    _radio_bitmap->set_group (group);
+    // default to vector operations
+    _radio_vector.set_active (true);
+    Gtk::RadioButtonGroup group = _radio_vector.get_group ();
+    _radio_bitmap.set_group (group);
+    _radio_bitmap.signal_toggled().connect(sigc::mem_fun(*this, &RenderingOptions::_toggled));
 
     // configure default DPI
     _dpi.setRange(PT_PER_IN,2400.0);
     _dpi.setValue(PT_PER_IN);
+    _dpi.setIncrements(1.0,10.0);
+    _dpi.setDigits(0);
+    _dpi.update();
+
+    // fill frames
+    Gtk::VBox *box_vector = Gtk::manage( new Gtk::VBox () );
+    box_vector->set_border_width (2);
+    box_vector->add (_radio_vector);
+    box_vector->add (_radio_bitmap);
+    _frame_backends.add (*box_vector);
+
+    Gtk::HBox *box_bitmap = Gtk::manage( new Gtk::HBox () );
+    box_bitmap->set_border_width (2);
+    box_bitmap->add (_dpi);
+    _frame_bitmap.add (*box_bitmap);
 
     // fill up container
-    add (_widget_cairo);
-    add (_widget_bitmap);
-    add (_dpi);
+    add (_frame_backends);
+    add (_frame_bitmap);
+
+    // initialize states
+    _toggled();
 
     show_all_children ();
 }
@@ -76,7 +99,7 @@ RenderingOptions::RenderingOptions () :
 bool
 RenderingOptions::as_bitmap ()
 {
-    return _radio_bitmap->get_active();
+    return _radio_bitmap.get_active();
 }
 
 double

@@ -13,7 +13,7 @@
 #ifndef INKSCAPE_UI_WIDGET_RENDERING_OPTIONS_H
 #define INKSCAPE_UI_WIDGET_RENDERING_OPTIONS_H
 
-#include "labelled.h"
+#include <gtkmm.h>
 #include "scalar.h"
 
 namespace Inkscape {
@@ -30,11 +30,19 @@ public:
 
 protected:
     // Radio buttons to select desired rendering
-    Gtk::RadioButton    *_radio_cairo;
-    Gtk::RadioButton    *_radio_bitmap;
-    Labelled    _widget_cairo;
-    Labelled    _widget_bitmap;
-    Scalar      _dpi; // DPI of bitmap to render
+    Gtk::Frame       _frame_backends;
+    Gtk::RadioButton _radio_vector;
+    Gtk::RadioButton _radio_bitmap;
+
+    // Bitmap options
+    Gtk::Frame       _frame_bitmap;
+    Scalar           _dpi; // DPI of bitmap to render
+
+    // Tooltip manager
+    Gtk::Tooltips    _tt;
+
+    // callback for bitmap button
+    void _toggled();
 };
 
 } // namespace Widget
