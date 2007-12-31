@@ -23,6 +23,7 @@
 #include "xml/repr.h"
 #include "rdf.h"
 #include "sp-item-group.h"
+#include "prefs-utils.h"
 
 /*
 
@@ -976,6 +977,20 @@ struct rdf_entity_default_t {
 struct rdf_entity_default_t rdf_defaults[] = {
     { "format",      "image/svg+xml", },
     { "type",        "http://purl.org/dc/dcmitype/StillImage", },
+    { "title",       "", },
+    { "date",        "", },
+    { "creator",     "", },
+    { "rights",      "", },
+    { "publisher",   "", },
+    { "identifier",  "", },
+    { "source",      "", },
+    { "relation",    "", },
+    { "language",    "", },
+    { "subject",     "", },
+    { "coverage",    "", },
+    { "description", "", },
+    { "contributor", "", },
+    { "license_uri", "", },
     { NULL,          NULL, }
 };
 
@@ -1004,8 +1019,11 @@ rdf_set_defaults ( SPDocument * doc )
         struct rdf_work_entity_t * entity = rdf_find_entity ( rdf_default->name );
         g_assert ( entity != NULL );
 
+        //get default matedata defined by user preferences
+        const gchar * text = prefs_get_string_attribute ("options.defaultmetadata", rdf_default->name);
+
         if ( rdf_get_work_entity ( doc, entity ) == NULL ) {
-            rdf_set_work_entity ( doc, entity, rdf_default->text );
+            rdf_set_work_entity ( doc, entity, text ? text : rdf_default->text );
         }
     }
 }
