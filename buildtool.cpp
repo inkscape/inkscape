@@ -25,18 +25,18 @@
  * To use this file, compile with:
  * <pre>
  * g++ -O3 buildtool.cpp -o btool.exe
- * (or whatever your compiler might be) 
+ * (or whatever your compiler might be)
  * Then
  * btool
- * or 
+ * or
  * btool {target}
- * 
+ *
  * Note: if you are using MinGW, and a not very recent version of it,
  * gettimeofday() might be missing.  If so, just build this file with
  * this command:
  * g++ -O3 -DNEED_GETTIMEOFDAY buildtool.cpp -o btool.exe
- *     
- */  
+ *
+ */
 
 #define BUILDTOOL_VERSION  "BuildTool v0.7.4, 2007 Bob Jamison"
 
