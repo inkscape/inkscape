@@ -44,6 +44,7 @@ options:
     -Y, --query-y
     -W, --query-width
     -H, --query-height
+    -S, --query-all
 
     -x, --extension-directory
 
@@ -281,6 +282,11 @@ Query the width of of the drawing or, if specified, of the object with --query-i
 =item B<-H>, B<--query-height>
 
 Query the height of of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
+
+=item B<-S>, B<--query-all>
+
+Prints a comma delimited listing of all objects in the SVG document with
+IDs defined, along with their x, y, width, and height values.
 
 =item B<--vacuum-defs>
 
