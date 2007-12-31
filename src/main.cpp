@@ -148,6 +148,7 @@ enum {
     SP_ARG_QUERY_Y,
     SP_ARG_QUERY_WIDTH,
     SP_ARG_QUERY_HEIGHT,
+    SP_ARG_QUERY_ALL,
     SP_ARG_QUERY_ID,
     SP_ARG_VERSION,
     SP_ARG_VACUUM_DEFS,
@@ -166,7 +167,8 @@ static void do_export_pdf(SPDocument* doc, gchar const* uri, char const *mime);
 static void do_export_emf(SPDocument* doc, gchar const* uri, char const *mime);
 #endif //WIN32
 static void do_query_dimension (SPDocument *doc, bool extent, NR::Dim2 const axis, const gchar *id);
-
+static void do_query_all (SPDocument *doc);
+static void do_query_all_recurse (SPObject *o);
 
 static gchar *sp_global_printer = NULL;
 static gchar *sp_export_png = NULL;
@@ -196,6 +198,7 @@ static gboolean sp_query_x = FALSE;
 static gboolean sp_query_y = FALSE;
 static gboolean sp_query_width = FALSE;
 static gboolean sp_query_height = FALSE;
+static gboolean sp_query_all = FALSE;
 static gchar *sp_query_id = NULL;
 static int sp_new_gui = FALSE;
 static gboolean sp_vacuum_defs = FALSE;
@@ -367,6 +370,11 @@ struct poptOption options[] = {
      N_("Query the height of the drawing or, if specified, of the object with --query-id"),
      NULL},
 
+    {"query-all", 'S',
+     POPT_ARG_NONE, &sp_query_all, SP_ARG_QUERY_ALL,
+     N_("List id,x,y,w,h for all objects"),
+     NULL},
+
     {"query-id", 'I',
      POPT_ARG_STRING, &sp_query_id, SP_ARG_QUERY_ID,
      N_("The ID of the object whose dimensions are queried"),
@@ -496,6 +504,8 @@ main(int argc, char **argv)
             || !strncmp(argv[i], "--query-width", 13)
             || !strcmp(argv[i], "-H")
             || !strncmp(argv[i], "--query-height", 14)
+            || !strcmp(argv[i], "-S")
+            || !strncmp(argv[i], "--query-all", 11)
             || !strcmp(argv[i], "-X")
             || !strncmp(argv[i], "--query-x", 13)
             || !strcmp(argv[i], "-Y")
@@ -791,7 +801,9 @@ sp_main_console(int argc, char const **argv)
                 do_export_emf(doc, sp_export_emf, "image/x-emf");
             }
 #endif //WIN32
-            if (sp_query_width || sp_query_height) {
+            if (sp_query_all) {
+                do_query_all (doc);
+            } else if (sp_query_width || sp_query_height) {
                 do_query_dimension (doc, true, sp_query_width? NR::X : NR::Y, sp_query_id);
             } else if (sp_query_x || sp_query_y) {
                 do_query_dimension (doc, false, sp_query_x? NR::X : NR::Y, sp_query_id);
@@ -843,6 +855,43 @@ do_query_dimension (SPDocument *doc, bool extent, NR::Dim2 const axis, const gch
         } else {
             g_print("0");
         }
+    }
+}
+
+static void
+do_query_all (SPDocument *doc)
+{
+    SPObject *o = NULL;
+
+    o = SP_DOCUMENT_ROOT(doc);
+
+    if (o) {
+        sp_document_ensure_up_to_date (doc);
+        do_query_all_recurse(o);
+    }
+}
+
+static void
+do_query_all_recurse (SPObject *o)
+{
+    SPItem *item = ((SPItem *) o);
+    if (o->id && SP_IS_ITEM(item)) {
+        NR::Maybe<NR::Rect> area = item->getBounds(sp_item_i2doc_affine(item));
+        if (area) {
+            Inkscape::SVGOStringStream os;
+            os << o->id;
+            os << "," << area->min()[NR::X];
+            os << "," << area->min()[NR::Y];
+            os << "," << area->extent(NR::X);
+            os << "," << area->extent(NR::Y);
+            g_print ("%s\n", os.str().c_str());
+        }
+    }
+
+    SPObject *child = o->children;
+    while (child) {
+        do_query_all_recurse (child);
+        child = child->next;
     }
 }
 
