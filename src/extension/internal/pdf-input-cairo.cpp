@@ -1,6 +1,6 @@
  /*
  * Simple PDF import extension using libpoppler and Cairo's SVG surface.
- * 
+ *
  * Authors:
  *   miklos erdelyi
  *
@@ -25,7 +25,7 @@
 #include <poppler/glib/poppler.h>
 #include <poppler/glib/poppler-document.h>
 #include <poppler/glib/poppler-page.h>
-        
+
 namespace Inkscape {
 namespace Extension {
 namespace Internal {
@@ -36,7 +36,7 @@ SPDocument *
 PdfInputCairo::open(Inkscape::Extension::Input * mod, const gchar * uri) {
 
     gchar* filename_uri = g_filename_to_uri(uri, NULL, NULL);
-    
+
     PopplerDocument* document = poppler_document_new_from_file(filename_uri, NULL, NULL);
     if (document == NULL)
         return NULL;
@@ -49,19 +49,19 @@ PdfInputCairo::open(Inkscape::Extension::Input * mod, const gchar * uri) {
     cairo_surface_t* surface = cairo_svg_surface_create_for_stream(Inkscape::Extension::Internal::_write_ustring_cb,
                                                                    output, width, height);
     cairo_t* cr = cairo_create(surface);
-    
+
     poppler_page_render(page, cr);
     cairo_show_page(cr);
-    
+
     cairo_destroy(cr);
     cairo_surface_destroy(surface);
 
     SPDocument * doc = sp_document_new_from_mem(output->c_str(), output->length(), TRUE);
-    
+
     delete output;
     g_object_unref(page);
     g_object_unref(document);
-    
+
     return doc;
 }
 
