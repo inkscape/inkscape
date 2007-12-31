@@ -64,21 +64,21 @@ public:
     }
 //TODO: what if _in_path = false?
     void lineTo(Point p) {
-        _path.appendNew<LineSegment>(p);
+        _path.template appendNew<LineSegment>(p);
     }
 
     void quadTo(Point c, Point p) {
-        _path.appendNew<QuadraticBezier>(c, p);
+        _path.template appendNew<QuadraticBezier>(c, p);
     }
 
     void curveTo(Point c0, Point c1, Point p) {
-        _path.appendNew<CubicBezier>(c0, c1, p);
+        _path.template appendNew<CubicBezier>(c0, c1, p);
     }
 
     void arcTo(double rx, double ry, double angle,
                bool large_arc, bool sweep, Point p)
     {
-        _path.appendNew<SVGEllipticalArc>(rx, ry, angle,
+        _path.template appendNew<SVGEllipticalArc>(rx, ry, angle,
                                                  large_arc, sweep, p);
     }
 
