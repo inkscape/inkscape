@@ -12,6 +12,7 @@
 !define PRODUCT_WEB_SITE "http://www.inkscape.org"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\inkscape.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
+;!define UNINST_EXE "uninstall.exe"
 
 
 
@@ -47,6 +48,10 @@ SetCompressor /SOLID lzma
 
 ;!insertmacro UNATTENDED_UNINSTALL
 !insertmacro INTERACTIVE_UNINSTALL
+
+!addplugindir .
+!include "FileFunc.nsh"
+!insertmacro un.GetParent
 
 
 ; Welcome page
@@ -482,7 +487,9 @@ FunctionEnd
     ReadRegStr $2 HKU "$1\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" AppData
     StrCmp $2 "" delprefs-Loop
 	DetailPrint "$2\Inkscape will be removed"
-    RMDir /r "$2\Inkscape"
+    Delete "$2\Inkscape\preferences.xml"
+    Delete "$2\Inkscape\extension-errors.log"
+    RMDir "$2\Inkscape"
     Goto delprefs-Loop
   delprefs-End:
 !macroend
@@ -490,54 +497,26 @@ FunctionEnd
 
 ;--------------------------------
 ; Installer Sections
-; @todo better idea is to call the original uninstaller first
 Section -removeInkscape
   ; check for an old installation and clean that dlls and stuff
-  ClearErrors
-  IfFileExists $INSTDIR\etc 0 doDeleteLib
-    DetailPrint "$INSTDIR\etc exists, will be removed"
-    RmDir /r $INSTDIR\etc
-	IfErrors 0 +4
-      DetailPrint "fatal: failed to delete $INSTDIR\etc"
-      DetailPrint "aborting installation"
-	  Abort
-  doDeleteLib:
 
-  ClearErrors
-  IfFileExists $INSTDIR\lib 0 doDeleteLocale
-    DetailPrint "$INSTDIR\lib exists, will be removed"  
-    RmDir /r $INSTDIR\lib
-	IfErrors 0 +4
-      DetailPrint "fatal: failed to delete $INSTDIR\lib"
-      DetailPrint "aborting installation"
-	  Abort
-  doDeleteLocale:
-
-  ClearErrors
-  IfFileExists $INSTDIR\locale 0 doDeleteDll
-    DetailPrint "$INSTDIR\locale exists, will be removed"
-    RmDir /r $INSTDIR\locale
-	IfErrors 0 +4
-      DetailPrint "fatal: failed to delete $INSTDIR\locale"
-      DetailPrint "aborting installation"
-	  Abort
-  doDeleteDll:
-
-  ClearErrors
-  FindFirst $0 $1 $INSTDIR\*.dll
-    FindNextLoop:
-    StrCmp $1 "" FindNextDone
-    DetailPrint "$INSTDIR\$1 exists, will be removed"
-    Delete $INSTDIR\$1
-    IfErrors 0 +4
-      DetailPrint "fatal: failed to delete $INSTDIR\$1"
-      DetailPrint "aborting installation"
-      Abort
+FindFirstINSTDIR:
+    FindFirst $0 $1 $INSTDIR\*.*
+FindINSTDIR:
+    StrCmp $1 "" FindNextDoneINSTDIR
+    StrCmp $1 "." FindNextINSTDIR
+	StrCmp $1 ".." FindNextINSTDIR
+	Goto FoundSomethingINSTDIR
+FindNextINSTDIR:
     FindNext $0 $1
-    Goto FindNextLoop
-  FindNextDone:
-  
-  ;remove the old inkscape shortcuts from the startmenu
+	Goto FindINSTDIR
+FoundSomethingINSTDIR:
+; @TODO translate
+	MessageBox MB_RETRYCANCEL "${PRODUCT_NAME} must be installed in an empty directory. $INSTDIR ($1) is not empty. Please clear this directory first!$(lng_OK_CANCEL_DESC)" /SD IDCANCEL IDRETRY FindFirstINSTDIR
+	Quit
+FindNextDoneINSTDIR:
+
+    ;remove the old inkscape shortcuts from the startmenu
   ;just in case they are still there
   SetShellVarContext current
   Delete "$SMPROGRAMS\Inkscape\Uninstall Inkscape.lnk"
@@ -980,6 +959,7 @@ SectionGroupEnd
 
 
 Section -FinalizeInstallation
+	DetailPrint "finalize installation"
   StrCmp $MultiUser "1" "" SingleUser
     DetailPrint "admin mode, registry root will be HKLM"
     SetShellVarContext all
@@ -1011,7 +991,7 @@ Section -FinalizeInstallation
   ; uninstall settings
   ClearErrors
   ; WriteUninstaller "$INSTDIR\uninst.exe"
-  WriteRegExpandStr SHCTX "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\${UNINST_EXE}"
+  WriteRegExpandStr SHCTX "${PRODUCT_UNINST_KEY}" "UninstallString" "${UNINST_EXE}"
   WriteRegExpandStr SHCTX "${PRODUCT_UNINST_KEY}" "InstallDir" "$INSTDIR"
   WriteRegExpandStr SHCTX "${PRODUCT_UNINST_KEY}" "InstallLocation" "$INSTDIR"
   WriteRegStr SHCTX "${PRODUCT_UNINST_KEY}" "DisplayName" "${PRODUCT_NAME} ${PRODUCT_VERSION}"
@@ -1021,6 +1001,36 @@ Section -FinalizeInstallation
   WriteRegDWORD SHCTX "${PRODUCT_UNINST_KEY}" "NoRepair" "1"
   IfErrors 0 +2
     DetailPrint "fatal: failed to write to registry un-installation info"
+
+  ;create/update log always within .onInstSuccess function
+  !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
+  
+	DetailPrint "create MD5 sums"
+	md5dll::GetMD5File /NOUNLOAD "$INSTDIR\inkscape.exe"
+	Pop $1 ;md5 of file
+	DetailPrint $1
+	ClearErrors
+	FileOpen $0 $INSTDIR\uninstall.dat r
+	FileOpen $9 $INSTDIR\uninstall.log w
+	IfErrors doneinstall
+readnextlineinstall:
+	ClearErrors
+	FileRead $0 $1
+	IfErrors doneinstall
+	StrCpy $1 $1 -2
+	DetailPrint $1
+	md5dll::GetMD5File /NOUNLOAD $1
+	Pop $2
+	DetailPrint $2
+	StrCmp $2 "" +2
+	FileWrite $9 "$2  $1$\r$\n"
+	Goto readnextlineinstall
+doneinstall:
+	FileClose $0
+	FileClose $9
+	; this file is not needed anymore
+	Delete $INSTDIR\uninstall.dat
+	
 SectionEnd
  
 ; Last the Descriptions
@@ -1120,9 +1130,10 @@ Function .onInit
 	ReadRegStr $R1  HKCU ${PRODUCT_UNINST_KEY} "DisplayName"
 	StrCmp $R0 "" uninstall_before_done
 	 
-	  MessageBox MB_YESNO|MB_ICONEXCLAMATION $(lng_WANT_UNINSTALL_BEFORE) /SD IDNO IDYES +1 IDNO uninstall_before_done 
+	  MessageBox MB_YESNO|MB_ICONEXCLAMATION $(lng_WANT_UNINSTALL_BEFORE) /SD IDNO IDNO uninstall_before_done 
 	  ;Run the uninstaller
 	  ;uninst:
+		DetailPrint "execute $R0 in $INSTDIR"
 	    ClearErrors
 	    ExecWait '$R0 _?=$INSTDIR' ;Do not copy the uninstaller to a temp file
  	  uninstall_before_done:
@@ -1230,8 +1241,7 @@ FunctionEnd
 
 
 Function .onInstSuccess
-  ;create/update log always within .onInstSuccess function
-  !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
+
 FunctionEnd
 
 ; --------------------------------------------------
@@ -1251,7 +1261,7 @@ FunctionEnd
 
 Function un.onInit
   ;begin uninstall, could be added on top of uninstall section instead
-  !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
+  ;!insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
 
   ClearErrors
   StrCpy $User ""
@@ -1292,6 +1302,61 @@ Function un.onInit
    
 FunctionEnd
 
+# removes a file and if the directory is empty afterwards the directory also
+# push md5, push filename, call unremovefilename
+Function un.RemoveFile
+	Var /Global filename
+	Var /Global md5sum
+	Var /Global ismd5sum
+	Var /Global removenever	; never remove a touched file
+	Var /Global removealways	; always remove files touched by user
+	Pop $filename
+	Pop $md5sum
+	
+	IfFileExists $filename +2 0
+		Return
+	StrCmp $removealways "always" unremovefile 0
+	md5dll::GetMD5File /NOUNLOAD $filename
+	Pop $ismd5sum ;md5 of file
+	StrCmp $md5sum $ismd5sum  unremovefile 0
+	DetailPrint "uups MD5 does not match"
+	StrCmp $removenever "never" 0 +2
+		Return
+	; the md5 sums does not match so we ask
+	; @TODO translate
+	messagebox::show MB_DEFBUTTON3|MB_TOPMOST "deleting changed file" "0,103" \
+		"The file has been changed after installation.$\r$\nDo you still want to delete that file?" \
+		"Yes" "always answer YES" "No" "always answer NO"
+	;DetailPrint "messagebox finished"
+	Pop $md5sum
+	;DetailPrint "messagebox call returned... $md5sum"
+	StrCmp $md5sum "1" unremovefile 0	; Yes
+	StrCmp $md5sum "2" 0 unremoveno	; Yes always
+	StrCpy $removealways "always"
+	;DetailPrint "removealways"
+	Goto unremovefile
+unremoveno:
+	StrCmp $md5sum "3" 0 unremovenever	; No
+	;DetailPrint "No remove"
+	Return
+unremovenever:
+	StrCpy $removenever "never"
+	;DetailPrint "removenever"
+	Return
+unremovefile:
+	;DetailPrint "removefile"
+	ClearErrors
+	Delete $filename
+	;now recursivly remove the path
+unrmdir:
+	${un.GetParent} $filename $filename
+	IfErrors 0 +2
+		Return
+	RMDir $filename
+	IfErrors +2
+		Goto unrmdir
+FunctionEnd
+
 Section Uninstall
 
   ; remove personal settings
@@ -1300,7 +1365,7 @@ Section Uninstall
     DetailPrint "purge personal settings in $APPDATA\Inkscape"
     ;RMDir /r "$APPDATA\Inkscape"
 	!insertmacro delprefs
-  endPurge:
+	endPurge:
 
   ; Remove file associations for svg editor
   DetailPrint "removing file associations for svg editor"
@@ -1426,24 +1491,63 @@ Section Uninstall
   DetailPrint "removing uninstall info"
 
   ;uninstall from path, must be repeated for every install logged path individual
-  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\lib\locale"
-  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\locale"
-  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\doc"
-  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\tutorials"
-  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\templates"
-  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\screens"
-  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\clipart"
-  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\extensions"
-  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\icons"
-  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share"
-  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\modules"
-  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\python"
-  !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR"
+  ;!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\lib\locale"
+  ;!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\locale"
+  ;!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\doc"
+  ;!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\tutorials"
+  ;!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\templates"
+  ;!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\screens"
+  ;!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\clipart"
+  ;!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\extensions"
+  ;!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share\icons"
+  ;!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\share"
+  ;!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\modules"
+  ;!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\python"
+  ;!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR"
 
   ;end uninstall, after uninstall from all logged paths has been performed
-  !insertmacro UNINSTALL.LOG_END_UNINSTALL
+  ;!insertmacro UNINSTALL.LOG_END_UNINSTALL
 
   ;RMDir /r "$INSTDIR"
+  
+	StrCpy $removenever ""
+	StrCpy $removealways ""
+	
+	InitPluginsDir
+	SetPluginUnload manual
+	
+	ClearErrors
+	FileOpen $0 $INSTDIR\uninstall.log r
+	IfErrors uninstallnotfound
+readnextline:  
+	ClearErrors
+	FileRead $0 $1
+	IfErrors done
+	; cat the line into md5 and filename
+	StrLen $2 $1
+	IntCmp $2 35 readnextline readnextline
+	StrCpy $3 $1 32
+	StrCpy $4 $1 $2-36 34	#remove trailing CR/LF
+	StrCpy $4 $4 -2
+	Push $3
+	Push $4
+	Call un.RemoveFile
+	Goto readnextline
+uninstallnotfound:
+; @TODO translate
+	MessageBox MB_OK "Fatal! $INSTDIR\uninstall.log not found! Please clear directory $INSTDIR yourself!" /SD IDOK
+done:
+	FileClose $0
+
+	Delete "$INSTDIR\uninstall.log"
+	Delete "$INSTDIR\uninstall.exe"
+	; remove empty directories
+	RMDir "$INSTDIR\data"
+	RMDir "$INSTDIR\doc"
+	RMDir "$INSTDIR\modules"
+	RMDir "$INSTDIR\plugins"
+	
+	RMDir $INSTDIR
 
   SetAutoClose false
 
