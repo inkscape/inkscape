@@ -41,16 +41,17 @@ void ObjectCompositeSettings::_on_desktop_switch(
     }
 }
 
-ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char const *history_prefix)
+ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char const *history_prefix, bool blur_enabled)
 : _verb_code(verb_code),
-  _opacity_tag(Glib::ustring(history_prefix) + ":opacity"),
   _blur_tag(Glib::ustring(history_prefix) + ":blur"),
+  _opacity_tag(Glib::ustring(history_prefix) + ":opacity"),
   _opacity_vbox(false, 0),
   _opacity_label_box(false, 0),
   _opacity_label(_("Opacity, %"), 0.0, 1.0, true),
   _opacity_adjustment(100.0, 0.0, 100.0, 1.0, 1.0, 0.0),
   _opacity_hscale(_opacity_adjustment),
   _opacity_spin_button(_opacity_adjustment, 0.01, 1),
+  _fe_cb(blur_enabled),
   _fe_vbox(false, 0),
   _fe_alignment(1, 1, 1, 1),
   _blocked(false)
@@ -111,14 +112,15 @@ ObjectCompositeSettings::_blendBlurValueChanged()
     sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(desktop), 0);
 
     NR::Maybe<NR::Rect> bbox = _subject->getBounds();
-    if (!bbox) {
-        return;
+    double radius;
+    if (bbox) {
+        double perimeter = bbox->extent(NR::X) + bbox->extent(NR::Y);
+        radius = _fe_cb.get_blur_value() * perimeter / 400;
+    } else {
+        radius = 0;
     }
 
-    double perimeter = bbox->extent(NR::X) + bbox->extent(NR::Y);
-
     const Glib::ustring blendmode = _fe_cb.get_blend_mode();
-    double radius = _fe_cb.get_blur_value() * perimeter / 400;
 
     SPFilter *filter = 0;
     const bool remfilter = (blendmode == "normal" && radius == 0) || (blendmode == "filter" && !filter);

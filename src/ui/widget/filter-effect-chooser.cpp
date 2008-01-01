@@ -21,7 +21,7 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-SimpleFilterModifier::SimpleFilterModifier()
+SimpleFilterModifier::SimpleFilterModifier(bool blur_enabled)
     : _lb_blend(_("_Blend mode:")),
       _lb_blur(_("B_lur:"), Gtk::ALIGN_LEFT),
       _blend(BlendModeConverter),
@@ -31,8 +31,10 @@ SimpleFilterModifier::SimpleFilterModifier()
     add(_vb_blur);
     _hb_blend.pack_start(_lb_blend, false, false);
     _hb_blend.pack_start(_blend);
-    _vb_blur.add(_lb_blur);
-    _vb_blur.add(_blur);
+    if (blur_enabled) {
+        _vb_blur.add(_lb_blur);
+        _vb_blur.add(_blur);
+    }
 
     show_all_children();
 

@@ -32,7 +32,7 @@ namespace Widget {
 class SimpleFilterModifier : public Gtk::VBox
 {
 public:
-    SimpleFilterModifier();
+    SimpleFilterModifier(bool blur_enabled);
 
     sigc::signal<void>& signal_blend_blur_changed();
 

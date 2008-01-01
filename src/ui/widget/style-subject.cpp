@@ -124,6 +124,7 @@ void StyleSubject::CurrentLayer::_setLayer(SPObject *layer) {
         _layer_release = layer->connectRelease(sigc::hide(sigc::bind(sigc::mem_fun(*this, &CurrentLayer::_setLayer), (SPObject *)NULL)));
         _layer_modified = layer->connectModified(sigc::hide(sigc::hide(sigc::mem_fun(*this, &CurrentLayer::_emitChanged))));
     }
+    _emitChanged();
 }
 
 SPObject *StyleSubject::CurrentLayer::_getLayer() const {

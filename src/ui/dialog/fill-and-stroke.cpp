@@ -43,7 +43,7 @@ FillAndStroke::FillAndStroke()
       _page_fill(1, 1, true, true),
       _page_stroke_paint(1, 1, true, true),
       _page_stroke_style(1, 1, true, true),
-      _composite_settings(SP_VERB_DIALOG_FILL_STROKE, "fillstroke")
+      _composite_settings(SP_VERB_DIALOG_FILL_STROKE, "fillstroke", true)
 {
     Gtk::Box *contents = _getContents();
     contents->set_spacing(0);
