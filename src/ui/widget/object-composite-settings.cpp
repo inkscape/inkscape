@@ -36,7 +36,9 @@ void ObjectCompositeSettings::_on_desktop_switch(
   SPDesktop *desktop,
   ObjectCompositeSettings *w
 ) {
-    w->_subject.setDesktop(desktop);
+    if (w->_subject) {
+        w->_subject->setDesktop(desktop);
+    }
 }
 
 ObjectCompositeSettings::ObjectCompositeSettings()
@@ -70,18 +72,30 @@ ObjectCompositeSettings::ObjectCompositeSettings()
     show_all_children();
 
     _desktop_activated = g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (&ObjectCompositeSettings::_on_desktop_switch), this );
-    _subject.connectChanged(sigc::mem_fun(*this, &ObjectCompositeSettings::_subjectChanged));
-    _subject.setDesktop(SP_ACTIVE_DESKTOP);
 }
 
 ObjectCompositeSettings::~ObjectCompositeSettings() {
+    setSubject(NULL);
     g_signal_handler_disconnect(G_OBJECT(INKSCAPE), _desktop_activated);
+}
+
+void ObjectCompositeSettings::setSubject(StyleSubject *subject) {
+    _subject_changed.disconnect();
+    if (subject) {
+        _subject = subject;
+        _subject_changed = _subject->connectChanged(sigc::mem_fun(*this, &ObjectCompositeSettings::_subjectChanged));
+        _subject->setDesktop(SP_ACTIVE_DESKTOP);
+    }
 }
 
 void
 ObjectCompositeSettings::_blendBlurValueChanged()
 {
-    SPDesktop *desktop = _subject.getDesktop();
+    if (!_subject) {
+        return;
+    }
+
+    SPDesktop *desktop = _subject->getDesktop();
     if (!desktop) {
         return;
     }
@@ -93,7 +107,7 @@ ObjectCompositeSettings::_blendBlurValueChanged()
     // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in crash 1580903
     sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(desktop), 0);
 
-    NR::Maybe<NR::Rect> bbox = _subject.getBounds();
+    NR::Maybe<NR::Rect> bbox = _subject->getBounds();
     if (!bbox) {
         return;
     }
@@ -110,7 +124,7 @@ ObjectCompositeSettings::_blendBlurValueChanged()
         SPDocument *document = sp_desktop_document (desktop);
 
         //apply created filter to every selected item
-        for (StyleSubject::iterator i = _subject.begin() ; i != _subject.end() ; ++i ) {
+        for (StyleSubject::iterator i = _subject->begin() ; i != _subject->end() ; ++i ) {
             if (!SP_IS_ITEM(*i)) {
                 continue;
             }
@@ -145,7 +159,11 @@ ObjectCompositeSettings::_blendBlurValueChanged()
 void
 ObjectCompositeSettings::_opacityValueChanged()
 {
-    SPDesktop *desktop = _subject.getDesktop();
+    if (!_subject) {
+        return;
+    }
+
+    SPDesktop *desktop = _subject->getDesktop();
     if (!desktop) {
         return;
     }
@@ -165,7 +183,7 @@ ObjectCompositeSettings::_opacityValueChanged()
     os << CLAMP (_opacity_adjustment.get_value() / 100, 0.0, 1.0);
     sp_repr_css_set_property (css, "opacity", os.str().c_str());
 
-    _subject.setCSS(css);
+    _subject->setCSS(css);
 
     sp_repr_css_attr_unref (css);
 
@@ -180,7 +198,11 @@ ObjectCompositeSettings::_opacityValueChanged()
 
 void
 ObjectCompositeSettings::_subjectChanged() {
-    SPDesktop *desktop = _subject.getDesktop();
+    if (!_subject) {
+        return;
+    }
+
+    SPDesktop *desktop = _subject->getDesktop();
     if (!desktop) {
         return;
     }
@@ -190,7 +212,7 @@ ObjectCompositeSettings::_subjectChanged() {
     _blocked = true;
 
     SPStyle *query = sp_style_new (sp_desktop_document(desktop));
-    int result = _subject.queryStyle(query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
+    int result = _subject->queryStyle(query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
 
     switch (result) {
         case QUERY_STYLE_NOTHING:
@@ -206,7 +228,7 @@ ObjectCompositeSettings::_subjectChanged() {
     }
 
     //query now for current filter mode and average blurring of selection
-    const int blend_result = _subject.queryStyle(query, QUERY_STYLE_PROPERTY_BLEND);
+    const int blend_result = _subject->queryStyle(query, QUERY_STYLE_PROPERTY_BLEND);
     switch(blend_result) {
         case QUERY_STYLE_NOTHING:
             _fe_cb.set_sensitive(false);
@@ -223,7 +245,7 @@ ObjectCompositeSettings::_subjectChanged() {
     }
 
     if(blend_result == QUERY_STYLE_SINGLE || blend_result == QUERY_STYLE_MULTIPLE_SAME) {
-        int blur_result = _subject.queryStyle(query, QUERY_STYLE_PROPERTY_BLUR);
+        int blur_result = _subject->queryStyle(query, QUERY_STYLE_PROPERTY_BLUR);
         switch (blur_result) {
             case QUERY_STYLE_NOTHING: //no blurring
                 _fe_cb.set_blur_sensitive(false);
@@ -231,7 +253,7 @@ ObjectCompositeSettings::_subjectChanged() {
             case QUERY_STYLE_SINGLE:
             case QUERY_STYLE_MULTIPLE_AVERAGED:
             case QUERY_STYLE_MULTIPLE_SAME:
-                NR::Maybe<NR::Rect> bbox = _subject.getBounds();
+                NR::Maybe<NR::Rect> bbox = _subject->getBounds();
                 if (bbox) {
                     double perimeter = bbox->extent(NR::X) + bbox->extent(NR::Y);
                     _fe_cb.set_blur_sensitive(true);

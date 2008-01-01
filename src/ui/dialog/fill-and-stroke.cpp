@@ -60,10 +60,13 @@ FillAndStroke::FillAndStroke()
     contents->pack_start(_composite_settings, false, false, 0);
 
     show_all_children();
+
+    _composite_settings.setSubject(&_subject);
 }
 
 FillAndStroke::~FillAndStroke()
 {
+    _composite_settings.setSubject(NULL);
 }
 
 void

@@ -32,6 +32,8 @@ public:
     ObjectCompositeSettings();
     ~ObjectCompositeSettings();
 
+    void setSubject(StyleSubject *subject);
+
 private:
     Gtk::VBox       _opacity_vbox;
     Gtk::HBox       _opacity_label_box;
@@ -41,7 +43,7 @@ private:
     Gtk::HScale     _opacity_hscale;
     Gtk::SpinButton _opacity_spin_button;
 
-    StyleSubject::Selection _subject;
+    StyleSubject *_subject;
 
     SimpleFilterModifier _fe_cb;
     Gtk::VBox       _fe_vbox;
@@ -49,6 +51,7 @@ private:
 
     static void _on_desktop_switch(Inkscape::Application *application, SPDesktop *desktop, ObjectCompositeSettings *w);
     void _subjectChanged();
+    sigc::connection _subject_changed;
 
     void _blendBlurValueChanged();
     void _opacityValueChanged();

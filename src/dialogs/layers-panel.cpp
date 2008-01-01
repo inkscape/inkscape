@@ -530,14 +530,6 @@ void LayersPanel::_checkTreeSelection()
             sensitiveNonTop = (Inkscape::next_layer(inTree->parent, inTree) != 0);
             sensitiveNonBottom = (Inkscape::previous_layer(inTree->parent, inTree) != 0);
 
-            if ( inTree->repr ) {
-                SPCSSAttr *css = sp_repr_css_attr(inTree->repr, "style");
-                if ( css ) {
-                    _opacityConnection.block();
-                    _opacity.set_value( sp_repr_css_double_property( css, "opacity", 1.0 ) * 100 );
-                    _opacityConnection.unblock();
-                }
-            }
         }
     }
 
@@ -670,35 +662,6 @@ bool LayersPanel::_rowSelectFunction( Glib::RefPtr<Gtk::TreeModel> const & /*mod
     return val;
 }
 
-
-void LayersPanel::_opacityChanged()
-{
-    SPObject* layer = _selectedLayer();
-
-    if ( _desktop && layer && !_opacityConnection.blocked() ) {
-        _opacityConnection.block();
-
-        Gtk::Adjustment* adj = _opacity.get_adjustment();
-        SPCSSAttr *css = sp_repr_css_attr_new();
-
-        Inkscape::CSSOStringStream os;
-        os << CLAMP( adj->get_value() / 100, 0.0, 1.0 );
-        sp_repr_css_set_property( css, "opacity", os.str().c_str() );
-
-        sp_desktop_apply_css_recursive( layer, css, true );
-        layer->updateRepr();
-
-        sp_repr_css_attr_unref( css );
-
-        sp_document_maybe_done( _desktop->doc(), "layers:opacity", SP_VERB_DIALOG_LAYERS, 
-                                _("Change layer opacity"));
-
-        _opacityConnection.unblock();
-    }
-}
-
-
-
 /**
  * Constructor
  */
@@ -745,6 +708,7 @@ LayersPanel::LayersPanel() :
 
     _tree.set_expander_column( *_tree.get_column(nameColNum) );
 
+    _compositeSettings.setSubject(&_subject);
 
     _selectedConnection = _tree.get_selection()->signal_changed().connect( sigc::mem_fun(*this, &LayersPanel::_pushTreeSelectionToCurrent) );
     _tree.get_selection()->set_select_function( sigc::mem_fun(*this, &LayersPanel::_rowSelectFunction) );
@@ -755,27 +719,12 @@ LayersPanel::LayersPanel() :
     _scroller.add( _tree );
     _scroller.set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC );
 
-
-    _opacityBox.pack_start( *manage( new Gtk::Label(_("Opacity, %:"))), Gtk::PACK_SHRINK );
-
-    _opacity.set_draw_value(false);
-    _opacity.set_value(100.0);
-    _opacity.set_range(0.0, 100.0);
-    _opacity.set_increments(1, 10);
-    _opacityBox.pack_start( _opacity, Gtk::PACK_EXPAND_WIDGET );
-
-    _spinBtn.configure(*_opacity.get_adjustment(), 0, 1);
-
-    _spinBtn.set_width_chars(5);
-    _opacityBox.pack_end( _spinBtn, Gtk::PACK_SHRINK );
-    _watching.push_back( &_opacityBox );
+    _watching.push_back( &_compositeSettings );
 
     _getContents()->pack_start( _scroller, Gtk::PACK_EXPAND_WIDGET );
 
-    _getContents()->pack_end(_opacityBox, Gtk::PACK_SHRINK);
+    _getContents()->pack_end(_compositeSettings, Gtk::PACK_SHRINK);
     _getContents()->pack_end(_buttonsRow, Gtk::PACK_SHRINK);
-
-    _opacityConnection = _opacity.get_adjustment()->signal_value_changed().connect( sigc::mem_fun(*this, &LayersPanel::_opacityChanged) );
 
     SPDesktop* targetDesktop = getDesktop();
 
@@ -859,6 +808,8 @@ LayersPanel::LayersPanel() :
 
 LayersPanel::~LayersPanel()
 {
+    _compositeSettings.setSubject(NULL);
+
     if ( _model )
     {
         delete _model;

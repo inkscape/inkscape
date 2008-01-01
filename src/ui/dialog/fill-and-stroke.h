@@ -52,6 +52,7 @@ protected:
     NotebookPage    _page_stroke_paint;
     NotebookPage    _page_stroke_style;
 
+    StyleSubject::Selection _subject;
     ObjectCompositeSettings _composite_settings;
 
     Gtk::HBox &_createPageTabLabel(const Glib::ustring &label, 

@@ -22,6 +22,7 @@
 
 //#include "ui/previewholder.h"
 #include "ui/widget/panel.h"
+#include "ui/widget/object-composite-settings.h"
 
 class SPObject;
 
@@ -85,8 +86,6 @@ private:
     void _layersChanged();
     void _addLayer( SPDocument* doc, SPObject* layer, Gtk::TreeModel::Row* parentRow, SPObject* target, int level );
 
-    void _opacityChanged();
-
     SPObject* _selectedLayer();
 
     // Hooked to the layer manager:
@@ -95,7 +94,6 @@ private:
     sigc::connection _changedConnection;
     sigc::connection _addedConnection;
     sigc::connection _removedConnection;
-    sigc::connection _opacityConnection;
 
     // Internal
     sigc::connection _selectedConnection;
@@ -115,10 +113,11 @@ private:
     Gtk::TreeView _tree;
     Gtk::HButtonBox _buttonsRow;
     Gtk::ScrolledWindow _scroller;
-    Gtk::HBox _opacityBox;
-    Gtk::HScale _opacity;
     Gtk::Menu _popupMenu;
     Gtk::SpinButton _spinBtn;
+
+    UI::Widget::StyleSubject::CurrentLayer _subject;
+    UI::Widget::ObjectCompositeSettings _compositeSettings;
 };
 
 
