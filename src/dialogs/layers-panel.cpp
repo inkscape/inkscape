@@ -672,7 +672,8 @@ LayersPanel::LayersPanel() :
     _desktop(0),
     _model(0),
     _pending(0),
-    _toggleEvent(0)
+    _toggleEvent(0),
+    _compositeSettings(SP_VERB_DIALOG_LAYERS, "layers")
 {
     _maxNestDepth = prefs_get_int_attribute_limited("dialogs.layers", "maxDepth", 20, 1, 1000);
 

@@ -20,6 +20,8 @@
 #include <gtkmm/spinbutton.h>
 #include <gtkmm/scale.h>
 
+#include <glibmm/ustring.h>
+
 #include "ui/widget/filter-effect-chooser.h"
 #include "ui/widget/style-subject.h"
 
@@ -29,12 +31,16 @@ namespace Widget {
 
 class ObjectCompositeSettings : public Gtk::VBox {
 public:
-    ObjectCompositeSettings();
+    ObjectCompositeSettings(unsigned int verb_code, char const *history_prefix);
     ~ObjectCompositeSettings();
 
     void setSubject(StyleSubject *subject);
 
 private:
+    unsigned int    _verb_code;
+    Glib::ustring   _blur_tag;
+    Glib::ustring   _opacity_tag;
+
     Gtk::VBox       _opacity_vbox;
     Gtk::HBox       _opacity_label_box;
     Gtk::HBox       _opacity_hbox;

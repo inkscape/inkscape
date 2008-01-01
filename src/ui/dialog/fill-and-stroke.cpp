@@ -42,7 +42,8 @@ FillAndStroke::FillAndStroke()
     : UI::Widget::Panel ("", "dialogs.fillstroke", SP_VERB_DIALOG_FILL_STROKE),
       _page_fill(1, 1, true, true),
       _page_stroke_paint(1, 1, true, true),
-      _page_stroke_style(1, 1, true, true)
+      _page_stroke_style(1, 1, true, true),
+      _composite_settings(SP_VERB_DIALOG_FILL_STROKE, "fillstroke")
 {
     Gtk::Box *contents = _getContents();
     contents->set_spacing(0);

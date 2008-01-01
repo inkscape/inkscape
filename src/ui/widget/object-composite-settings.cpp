@@ -41,8 +41,11 @@ void ObjectCompositeSettings::_on_desktop_switch(
     }
 }
 
-ObjectCompositeSettings::ObjectCompositeSettings()
-: _opacity_vbox(false, 0),
+ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char const *history_prefix)
+: _verb_code(verb_code),
+  _opacity_tag(Glib::ustring(history_prefix) + ":opacity"),
+  _blur_tag(Glib::ustring(history_prefix) + ":blur"),
+  _opacity_vbox(false, 0),
   _opacity_label_box(false, 0),
   _opacity_label(_("Opacity, %"), 0.0, 1.0, true),
   _opacity_adjustment(100.0, 0.0, 100.0, 1.0, 1.0, 0.0),
@@ -148,7 +151,7 @@ ObjectCompositeSettings::_blendBlurValueChanged()
         }
     }
 
-    sp_document_maybe_done (sp_desktop_document (desktop), "fillstroke:blur", SP_VERB_DIALOG_FILL_STROKE,  _("Change blur"));
+    sp_document_maybe_done (sp_desktop_document (desktop), _blur_tag.c_str(), _verb_code, _("Change blur"));
 
     // resume interruptibility
     sp_canvas_end_forced_full_redraws(sp_desktop_canvas(desktop));
@@ -187,7 +190,7 @@ ObjectCompositeSettings::_opacityValueChanged()
 
     sp_repr_css_attr_unref (css);
 
-    sp_document_maybe_done (sp_desktop_document (desktop), "fillstroke:opacity", SP_VERB_DIALOG_FILL_STROKE,
+    sp_document_maybe_done (sp_desktop_document (desktop), _opacity_tag.c_str(), _verb_code,
                             _("Change opacity"));
 
     // resume interruptibility
