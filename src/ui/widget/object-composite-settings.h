@@ -21,6 +21,7 @@
 #include <gtkmm/scale.h>
 
 #include "ui/widget/filter-effect-chooser.h"
+#include "ui/widget/style-subject.h"
 
 namespace Inkscape {
 namespace UI {
@@ -40,30 +41,20 @@ private:
     Gtk::HScale     _opacity_hscale;
     Gtk::SpinButton _opacity_spin_button;
 
+    StyleSubject::Selection _subject;
+
     SimpleFilterModifier _fe_cb;
     Gtk::VBox       _fe_vbox;
     Gtk::Alignment  _fe_alignment;
 
-    void selectionChanged(Inkscape::Application *inkscape,
-                          Inkscape::Selection *selection);
-
-    static void on_selection_changed(Inkscape::Application *inkscape,
-                                     Inkscape::Selection *selection,
-                                     ObjectCompositeSettings *w);
-
-    static void on_selection_modified(Inkscape::Application *inkscape,
-                                      Inkscape::Selection *selection,
-                                      guint flags,
-                                      ObjectCompositeSettings *w);
+    static void _on_desktop_switch(Inkscape::Application *application, SPDesktop *desktop, ObjectCompositeSettings *w);
+    void _subjectChanged();
 
     void _blendBlurValueChanged();
     void _opacityValueChanged();
 
     bool _blocked;
 
-    gulong _sel_changed;
-    gulong _subsel_changed;
-    gulong _sel_modified;
     gulong _desktop_activated;
 };
 

@@ -31,32 +31,23 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-void ObjectCompositeSettings::on_selection_changed(
-  Inkscape::Application *inkscape,
-  Inkscape::Selection *selection,
+void ObjectCompositeSettings::_on_desktop_switch(
+  Inkscape::Application *application,
+  SPDesktop *desktop,
   ObjectCompositeSettings *w
 ) {
-    w->selectionChanged(inkscape, selection);
-}
-
-void ObjectCompositeSettings::on_selection_modified(
-  Inkscape::Application *inkscape,
-  Inkscape::Selection *selection,
-  guint /*flags*/,
-  ObjectCompositeSettings *w
-) {
-    w->selectionChanged(inkscape, selection);
+    w->_subject.setDesktop(desktop);
 }
 
 ObjectCompositeSettings::ObjectCompositeSettings()
-: _fe_vbox(false, 0),
-  _fe_alignment(1, 1, 1, 1),
-  _opacity_vbox(false, 0),
+: _opacity_vbox(false, 0),
   _opacity_label_box(false, 0),
   _opacity_label(_("Opacity, %"), 0.0, 1.0, true),
   _opacity_adjustment(100.0, 0.0, 100.0, 1.0, 1.0, 0.0),
   _opacity_hscale(_opacity_adjustment),
   _opacity_spin_button(_opacity_adjustment, 0.01, 1),
+  _fe_vbox(false, 0),
+  _fe_alignment(1, 1, 1, 1),
   _blocked(false)
 {
     // Filter Effects
@@ -76,50 +67,36 @@ ObjectCompositeSettings::ObjectCompositeSettings()
     _opacity_hscale.set_draw_value(false);
     _opacity_adjustment.signal_value_changed().connect(sigc::mem_fun(*this, &ObjectCompositeSettings::_opacityValueChanged));
 
-    _sel_changed = g_signal_connect ( G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (on_selection_changed), this );
-    _subsel_changed = g_signal_connect ( G_OBJECT (INKSCAPE), "change_subselection", G_CALLBACK (on_selection_changed), this );
-    _sel_modified = g_signal_connect ( G_OBJECT (INKSCAPE), "modify_selection", G_CALLBACK (on_selection_modified), this );
-    _desktop_activated = g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (on_selection_changed), this );
-
-    selectionChanged(INKSCAPE, sp_desktop_selection(SP_ACTIVE_DESKTOP));
-
     show_all_children();
+
+    _desktop_activated = g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (&ObjectCompositeSettings::_on_desktop_switch), this );
+    _subject.connectChanged(sigc::mem_fun(*this, &ObjectCompositeSettings::_subjectChanged));
+    _subject.setDesktop(SP_ACTIVE_DESKTOP);
 }
 
 ObjectCompositeSettings::~ObjectCompositeSettings() {
-    g_signal_handler_disconnect(G_OBJECT(INKSCAPE), _sel_changed);
-    g_signal_handler_disconnect(G_OBJECT(INKSCAPE), _subsel_changed);
-    g_signal_handler_disconnect(G_OBJECT(INKSCAPE), _sel_modified);
     g_signal_handler_disconnect(G_OBJECT(INKSCAPE), _desktop_activated);
 }
 
 void
 ObjectCompositeSettings::_blendBlurValueChanged()
 {
-    if (_blocked)
-        return;
-    _blocked = true;
-
-    //get desktop
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPDesktop *desktop = _subject.getDesktop();
     if (!desktop) {
         return;
     }
 
+    if (_blocked)
+        return;
+    _blocked = true;
+
     // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in crash 1580903
     sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(desktop), 0);
 
-    //get current selection
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
-
-    NR::Maybe<NR::Rect> bbox = selection->bounds();
+    NR::Maybe<NR::Rect> bbox = _subject.getBounds();
     if (!bbox) {
         return;
     }
-    //get list of selected items
-    GSList const *items = selection->itemList();
-    //get current document
-    SPDocument *document = sp_desktop_document (desktop);
 
     double perimeter = bbox->extent(NR::X) + bbox->extent(NR::Y);
 
@@ -130,12 +107,17 @@ ObjectCompositeSettings::_blendBlurValueChanged()
     const bool remfilter = (blendmode == "normal" && radius == 0) || (blendmode == "filter" && !filter);
 
     if(blendmode != "filter" || filter) {
+        SPDocument *document = sp_desktop_document (desktop);
+
         //apply created filter to every selected item
-        for (GSList const *i = items; i != NULL; i = i->next) {
-            SPItem * item = SP_ITEM(i->data);
+        for (StyleSubject::iterator i = _subject.begin() ; i != _subject.end() ; ++i ) {
+            if (!SP_IS_ITEM(*i)) {
+                continue;
+            }
+
+            SPItem * item = SP_ITEM(*i);
             SPStyle *style = SP_OBJECT_STYLE(item);
             g_assert(style != NULL);
-
 
             if(remfilter) {
                 remove_filter (item, false);
@@ -163,11 +145,14 @@ ObjectCompositeSettings::_blendBlurValueChanged()
 void
 ObjectCompositeSettings::_opacityValueChanged()
 {
+    SPDesktop *desktop = _subject.getDesktop();
+    if (!desktop) {
+        return;
+    }
+
     if (_blocked)
         return;
     _blocked = true;
-
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
     // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in crash 1580903
     // UPDATE: crash fixed in GTK+ 2.10.7 (bug 374378), remove this as soon as it's reasonably common
@@ -180,7 +165,7 @@ ObjectCompositeSettings::_opacityValueChanged()
     os << CLAMP (_opacity_adjustment.get_value() / 100, 0.0, 1.0);
     sp_repr_css_set_property (css, "opacity", os.str().c_str());
 
-    sp_desktop_set_style (desktop, css);
+    _subject.setCSS(css);
 
     sp_repr_css_attr_unref (css);
 
@@ -194,19 +179,18 @@ ObjectCompositeSettings::_opacityValueChanged()
 }
 
 void
-ObjectCompositeSettings::selectionChanged(Inkscape::Application */*inkscape*/,
-                                          Inkscape::Selection */*selection*/)
-{
+ObjectCompositeSettings::_subjectChanged() {
+    SPDesktop *desktop = _subject.getDesktop();
+    if (!desktop) {
+        return;
+    }
+
     if (_blocked)
         return;
     _blocked = true;
 
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
-    // create temporary style
     SPStyle *query = sp_style_new (sp_desktop_document(desktop));
-    // query style from desktop into it. This returns a result flag and fills query with the style of subselection, if any, or selection
-    int result = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
+    int result = _subject.queryStyle(query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
 
     switch (result) {
         case QUERY_STYLE_NOTHING:
@@ -222,7 +206,7 @@ ObjectCompositeSettings::selectionChanged(Inkscape::Application */*inkscape*/,
     }
 
     //query now for current filter mode and average blurring of selection
-    const int blend_result = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_BLEND);
+    const int blend_result = _subject.queryStyle(query, QUERY_STYLE_PROPERTY_BLEND);
     switch(blend_result) {
         case QUERY_STYLE_NOTHING:
             _fe_cb.set_sensitive(false);
@@ -239,7 +223,7 @@ ObjectCompositeSettings::selectionChanged(Inkscape::Application */*inkscape*/,
     }
 
     if(blend_result == QUERY_STYLE_SINGLE || blend_result == QUERY_STYLE_MULTIPLE_SAME) {
-        int blur_result = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_BLUR);
+        int blur_result = _subject.queryStyle(query, QUERY_STYLE_PROPERTY_BLUR);
         switch (blur_result) {
             case QUERY_STYLE_NOTHING: //no blurring
                 _fe_cb.set_blur_sensitive(false);
@@ -247,7 +231,7 @@ ObjectCompositeSettings::selectionChanged(Inkscape::Application */*inkscape*/,
             case QUERY_STYLE_SINGLE:
             case QUERY_STYLE_MULTIPLE_AVERAGED:
             case QUERY_STYLE_MULTIPLE_SAME:
-                NR::Maybe<NR::Rect> bbox = sp_desktop_selection(desktop)->bounds();
+                NR::Maybe<NR::Rect> bbox = _subject.getBounds();
                 if (bbox) {
                     double perimeter = bbox->extent(NR::X) + bbox->extent(NR::Y);
                     _fe_cb.set_blur_sensitive(true);

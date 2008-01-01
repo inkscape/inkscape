@@ -69,6 +69,8 @@ ui_widget_libuiwidget_a_SOURCES =	\
 	ui/widget/selected-style.cpp	\
 	ui/widget/spin-slider.h		\
 	ui/widget/spin-slider.cpp	\
+	ui/widget/style-subject.h	\
+	ui/widget/style-subject.cpp	\
 	ui/widget/style-swatch.h        \
 	ui/widget/style-swatch.cpp      \
 	ui/widget/svg-canvas.cpp        \
