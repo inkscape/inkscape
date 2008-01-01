@@ -31,7 +31,7 @@ namespace Widget {
 
 class ObjectCompositeSettings : public Gtk::VBox {
 public:
-    ObjectCompositeSettings(unsigned int verb_code, char const *history_prefix, bool blur_enabled=false);
+    ObjectCompositeSettings(unsigned int verb_code, char const *history_prefix, int flags);
     ~ObjectCompositeSettings();
 
     void setSubject(StyleSubject *subject);

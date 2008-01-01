@@ -32,7 +32,13 @@ namespace Widget {
 class SimpleFilterModifier : public Gtk::VBox
 {
 public:
-    SimpleFilterModifier(bool blur_enabled);
+    enum Flags {
+      NONE=0,
+      BLUR=1,
+      BLEND=2
+    };
+
+    SimpleFilterModifier(int flags);
 
     sigc::signal<void>& signal_blend_blur_changed();
 
@@ -43,6 +49,7 @@ public:
     double get_blur_value() const;
     void set_blur_value(const double);
     void set_blur_sensitive(const bool);
+
 private:
     Gtk::HBox _hb_blend;
     Gtk::VBox _vb_blur;

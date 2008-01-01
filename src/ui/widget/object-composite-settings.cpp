@@ -41,7 +41,7 @@ void ObjectCompositeSettings::_on_desktop_switch(
     }
 }
 
-ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char const *history_prefix, bool blur_enabled)
+ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char const *history_prefix, int flags)
 : _verb_code(verb_code),
   _blur_tag(Glib::ustring(history_prefix) + ":blur"),
   _opacity_tag(Glib::ustring(history_prefix) + ":opacity"),
@@ -51,7 +51,7 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
   _opacity_adjustment(100.0, 0.0, 100.0, 1.0, 1.0, 0.0),
   _opacity_hscale(_opacity_adjustment),
   _opacity_spin_button(_opacity_adjustment, 0.01, 1),
-  _fe_cb(blur_enabled),
+  _fe_cb(flags),
   _fe_vbox(false, 0),
   _fe_alignment(1, 1, 1, 1),
   _blocked(false)
