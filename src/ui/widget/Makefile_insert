@@ -38,6 +38,8 @@ ui_widget_libuiwidget_a_SOURCES =	\
 	ui/widget/licensor.h		\
 	ui/widget/notebook-page.cpp	\
 	ui/widget/notebook-page.h	\
+	ui/widget/object-composite-settings.cpp	\
+	ui/widget/object-composite-settings.h	\
 	ui/widget/page-sizer.cpp        \
 	ui/widget/page-sizer.h          \
 	ui/widget/panel.cpp		\

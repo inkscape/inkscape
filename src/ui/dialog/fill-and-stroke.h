@@ -23,7 +23,7 @@
 
 #include "ui/widget/panel.h"
 #include "ui/widget/notebook-page.h"
-#include "ui/widget/filter-effect-chooser.h"
+#include "ui/widget/object-composite-settings.h"
 
 using namespace Inkscape::UI::Widget;
 
@@ -52,29 +52,14 @@ protected:
     NotebookPage    _page_stroke_paint;
     NotebookPage    _page_stroke_style;
 
-    Gtk::VBox       _fe_vbox;
-    Gtk::Alignment  _fe_alignment;
-
-    Gtk::VBox       _opacity_vbox;
-    Gtk::HBox       _opacity_label_box;
-    Gtk::HBox       _opacity_hbox;
-    Gtk::Label      _opacity_label;
-    Gtk::Adjustment _opacity_adjustment;
-    Gtk::HScale     _opacity_hscale;
-    Gtk::SpinButton _opacity_spin_button;
+    ObjectCompositeSettings _composite_settings;
 
     Gtk::HBox &_createPageTabLabel(const Glib::ustring &label, 
                                    const char *label_image);
-    SimpleFilterModifier _fe_cb;
 
     void _layoutPageFill();
     void _layoutPageStrokePaint();
     void _layoutPageStrokeStyle();
-
-    void _blendBlurValueChanged();
-    void _opacityValueChanged();
-
-    bool _blocked;
 
 private:
     FillAndStroke(FillAndStroke const &d);
