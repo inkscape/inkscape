@@ -388,6 +388,8 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
     return repr;
 }
 
+
+// FIXME: THIS DOES NOT REVERSE THE NODETYPES ORDER!
 void
 sp_selected_path_reverse()
 {
@@ -410,16 +412,20 @@ sp_selected_path_reverse()
 
     for (GSList *i = items; i != NULL; i = i->next) {
 
-        if (!SP_IS_SHAPE(i->data))
+        if (!SP_IS_PATH(i->data))
             continue;
 
         did = true;
-        SPShape *shape = SP_SHAPE(i->data);
+        SPPath *path = SP_PATH(i->data);
 
-        SPCurve *rcurve = sp_curve_reverse(shape->curve);
+        SPCurve *rcurve = sp_curve_reverse(sp_path_get_curve_reference(path));
 
         gchar *str = sp_svg_write_path(SP_CURVE_BPATH(rcurve));
-        SP_OBJECT_REPR(shape)->setAttribute("d", str);
+        if ( sp_shape_has_path_effect(SP_SHAPE(path)) ) {
+            SP_OBJECT_REPR(path)->setAttribute("inkscape:original-d", str);
+        } else {
+            SP_OBJECT_REPR(path)->setAttribute("d", str);
+        }
         g_free(str);
 
         sp_curve_unref(rcurve);

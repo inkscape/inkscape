@@ -452,6 +452,20 @@ sp_path_get_curve_for_edit (SPPath *path)
     }
 }
 
+/**
+ * Return a reference to original_curve if it exists or
+ * shape->curve if not.
+ */
+const SPCurve*
+sp_path_get_curve_reference (SPPath *path)
+{
+    if (path->original_curve) {
+        return path->original_curve;
+    } else {
+        return path->curve;
+    }
+}
+
 /*
   Local Variables:
   mode:c++

@@ -37,6 +37,7 @@ gint sp_nodes_in_path(SPPath *path);
 void     sp_path_set_original_curve (SPPath *path, SPCurve *curve, unsigned int owner, bool write);
 SPCurve* sp_path_get_original_curve (SPPath *path);
 SPCurve* sp_path_get_curve_for_edit (SPPath *path);
+const SPCurve* sp_path_get_curve_reference (SPPath *path);
 
 #endif
 
