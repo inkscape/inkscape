@@ -13,6 +13,7 @@
 ; february 15 2007 new language bn, en_AU, eo, id, ro
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
+; January 2008 new uninstaller messages
 
 !insertmacro MUI_LANGUAGE "Slovak"
 
@@ -207,3 +208,19 @@ LangString lng_UInstOpt1  ${LANG_SLOVAK} "Zvoæte prosÌm Ôalöie moûnosti"
 
 ; Ask to purge the personal preferences
 LangString lng_PurgePrefs ${LANG_SLOVAK} "Ponechaù osobnÈ nastavenia"
+
+LangString lng_RETRY_CANCEL_DESC ${LANG_SLOVAK} "$\n$\nPress RETRY to continue or press CANCEL to abort."
+
+LangString lng_ClearDirectoryBefore ${LANG_SLOVAK} "${PRODUCT_NAME} must be installed in an empty directory. $INSTDIR is not empty. Please clear this directory first!$(lng_RETRY_CANCEL_DESC)"
+
+LangString lng_UninstallLogNotFound ${LANG_SLOVAK} "$INSTDIR\uninstall.log not found!$\r$\nPlease uninstall by clearing directory $INSTDIR yourself!"
+
+LangString lng_FileChanged ${LANG_SLOVAK} "The file $filename has been changed after installation.$\r$\nDo you still want to delete that file?"
+
+LangString lng_Yes ${LANG_SLOVAK} "Yes"
+
+LangString lng_AlwaysYes ${LANG_SLOVAK} "always answer Yes"
+
+LangString lng_No ${LANG_SLOVAK} "No"
+
+LangString lng_AlwaysNo ${LANG_SLOVAK} "always answer No"

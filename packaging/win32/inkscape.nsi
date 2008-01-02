@@ -511,8 +511,7 @@ FindNextINSTDIR:
     FindNext $0 $1
 	Goto FindINSTDIR
 FoundSomethingINSTDIR:
-; @TODO translate
-	MessageBox MB_RETRYCANCEL "${PRODUCT_NAME} must be installed in an empty directory. $INSTDIR ($1) is not empty. Please clear this directory first!$(lng_OK_CANCEL_DESC)" /SD IDCANCEL IDRETRY FindFirstINSTDIR
+	MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "$(lng_ClearDirectoryBefore)" /SD IDCANCEL IDRETRY FindFirstINSTDIR
 	Quit
 FindNextDoneINSTDIR:
 
@@ -1006,9 +1005,6 @@ Section -FinalizeInstallation
   !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
   
 	DetailPrint "create MD5 sums"
-	md5dll::GetMD5File /NOUNLOAD "$INSTDIR\inkscape.exe"
-	Pop $1 ;md5 of file
-	DetailPrint $1
 	ClearErrors
 	FileOpen $0 $INSTDIR\uninstall.dat r
 	FileOpen $9 $INSTDIR\uninstall.log w
@@ -1018,10 +1014,10 @@ readnextlineinstall:
 	FileRead $0 $1
 	IfErrors doneinstall
 	StrCpy $1 $1 -2
-	DetailPrint $1
+	;DetailPrint $1
 	md5dll::GetMD5File /NOUNLOAD $1
 	Pop $2
-	DetailPrint $2
+	;DetailPrint $2
 	StrCmp $2 "" +2
 	FileWrite $9 "$2  $1$\r$\n"
 	Goto readnextlineinstall
@@ -1254,7 +1250,7 @@ Function un.CustomPageUninstall
   !insertmacro MUI_INSTALLOPTIONS_DISPLAY "inkscape.nsi.uninstall"
   !insertmacro MUI_INSTALLOPTIONS_READ $MultiUser "inkscape.nsi.uninstall" "Field 2" "State"
   DetailPrint "keepfiles = $MultiUser" 
-	  ;MessageBox MB_OK "adminmode = $MultiUser MultiUserOS = $askMultiUser" 
+	  ;MessageBox MB_OK "adminmode = $MultiUser MultiUserOS = $askMultiUser"
 
 FunctionEnd
 
@@ -1262,7 +1258,10 @@ FunctionEnd
 Function un.onInit
   ;begin uninstall, could be added on top of uninstall section instead
   ;!insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
-
+	IfFileExists $INSTDIR\uninstall.log uninstalllogpresent
+	MessageBox MB_OK|MB_ICONEXCLAMATION "$(lng_UninstallLogNotFound)" /SD IDOK
+	Quit
+uninstalllogpresent:
   ClearErrors
   StrCpy $User ""
 	UserInfo::GetName
@@ -1319,14 +1318,12 @@ Function un.RemoveFile
 	md5dll::GetMD5File /NOUNLOAD $filename
 	Pop $ismd5sum ;md5 of file
 	StrCmp $md5sum $ismd5sum  unremovefile 0
-	DetailPrint "uups MD5 does not match"
+	;DetailPrint "uups MD5 does not match"
 	StrCmp $removenever "never" 0 +2
 		Return
 	; the md5 sums does not match so we ask
-	; @TODO translate
-	messagebox::show MB_DEFBUTTON3|MB_TOPMOST "deleting changed file" "0,103" \
-		"The file has been changed after installation.$\r$\nDo you still want to delete that file?" \
-		"Yes" "always answer YES" "No" "always answer NO"
+	messagebox::show MB_DEFBUTTON3|MB_TOPMOST "" "0,103" \
+		"$(lng_FileChanged)" "$(lng_Yes)" "$(lng_AlwaysYes)" "$(lng_No)" "$(lng_AlwaysNo)"
 	;DetailPrint "messagebox finished"
 	Pop $md5sum
 	;DetailPrint "messagebox call returned... $md5sum"
@@ -1534,8 +1531,7 @@ readnextline:
 	Call un.RemoveFile
 	Goto readnextline
 uninstallnotfound:
-; @TODO translate
-	MessageBox MB_OK "Fatal! $INSTDIR\uninstall.log not found! Please clear directory $INSTDIR yourself!" /SD IDOK
+	MessageBox MB_OK|MB_ICONEXCLAMATION "$(lng_UninstallLogNotFound)" /SD IDOK
 done:
 	FileClose $0
 

@@ -13,6 +13,7 @@
 ; february 15 2007 new language bn, en_AU, eo, id, ro
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
+; January 2008 new uninstaller messages
 
 !insertmacro MUI_LANGUAGE "German"
 
@@ -211,3 +212,19 @@ LangString lng_UInstOpt1  ${LANG_GERMAN} "Bitte wählen Sie die optionalen Deinst
 ; Ask to purge the personal preferences
 ;LangString lng_PurgePrefs ${LANG_GERMAN} "Keep Inkscape preferences"
 LangString lng_PurgePrefs ${LANG_GERMAN}  "behalte persönliche Inkscape-Vorgaben"
+
+LangString lng_RETRY_CANCEL_DESC ${LANG_GERMAN} "$\n$\nWiederholen um fortzufahren oder Abbrechen zum sofortigen Beenden."
+
+LangString lng_ClearDirectoryBefore ${LANG_GERMAN} "${PRODUCT_NAME} kann nur in einem leeren Verzeichnis installiert werden. $INSTDIR ist nicht leer. Bitte löschen Sie den verzeichnisinhalt und versuchen Sie es erneut!$(lng_RETRY_CANCEL_DESC)"
+
+LangString lng_UninstallLogNotFound ${LANG_GERMAN} "Datei $INSTDIR\uninstall.log nicht gefunden!$\r$\nBitte deinstallieren Sie selbst durch Löschen von $INSTDIR!"
+
+LangString lng_FileChanged ${LANG_GERMAN} "Die Datei $filename wurde nach der Installation geändert.$\r$\nMöchten Sie trotzden diese Datei löschen?"
+
+LangString lng_Yes ${LANG_GERMAN} "Ja"
+
+LangString lng_AlwaysYes ${LANG_GERMAN} "immer mit Ja antworten"
+
+LangString lng_No ${LANG_GERMAN} "Nein"
+
+LangString lng_AlwaysNo ${LANG_GERMAN} "immer mit Nein antworten"

@@ -13,6 +13,7 @@
 ; february 15 2007 new language bn, en_AU, eo, id, ro
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
+; January 2008 new uninstaller messages
 
 !insertmacro MUI_LANGUAGE "Spanish"
 
@@ -206,3 +207,19 @@ LangString lng_UInstOpt1  ${LANG_SPANISH} "Elija sus opciones adicionales"
 
 ; Ask to purge the personal preferences
 LangString lng_PurgePrefs ${LANG_SPANISH} "Guardar las preferencias personales"
+
+LangString lng_RETRY_CANCEL_DESC ${LANG_SPANISH} "$\n$\nPress RETRY to continue or press CANCEL to abort."
+
+LangString lng_ClearDirectoryBefore ${LANG_SPANISH} "${PRODUCT_NAME} must be installed in an empty directory. $INSTDIR is not empty. Please clear this directory first!$(lng_RETRY_CANCEL_DESC)"
+
+LangString lng_UninstallLogNotFound ${LANG_SPANISH} "$INSTDIR\uninstall.log not found!$\r$\nPlease uninstall by clearing directory $INSTDIR yourself!"
+
+LangString lng_FileChanged ${LANG_SPANISH} "The file $filename has been changed after installation.$\r$\nDo you still want to delete that file?"
+
+LangString lng_Yes ${LANG_SPANISH} "Yes"
+
+LangString lng_AlwaysYes ${LANG_SPANISH} "always answer Yes"
+
+LangString lng_No ${LANG_SPANISH} "No"
+
+LangString lng_AlwaysNo ${LANG_SPANISH} "always answer No"
