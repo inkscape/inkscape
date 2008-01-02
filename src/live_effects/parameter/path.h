@@ -47,7 +47,7 @@ public:
     void param_set_and_write_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > newpath);
 
     void param_editOncanvas(SPItem * item, SPDesktop * dt);
-    void param_setup_notepath(Inkscape::NodePath::Path *np);
+    void param_setup_nodepath(Inkscape::NodePath::Path *np);
 
     virtual void param_transform_multiply(Geom::Matrix const& /*postmul*/, bool /*set*/) {};
 

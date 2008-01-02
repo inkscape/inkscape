@@ -255,9 +255,9 @@ LPEGears::doEffect_path (std::vector<Geom::Path> & path_in)
 }
 
 void
-LPEGears::setup_notepath(Inkscape::NodePath::Path *np)
+LPEGears::setup_nodepath(Inkscape::NodePath::Path *np)
 {
-    Effect::setup_notepath(np);
+    Effect::setup_nodepath(np);
     np->straight_path = true;
 }
 

@@ -142,7 +142,7 @@ PathParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
 }
 
 void
-PathParam::param_setup_notepath(Inkscape::NodePath::Path *np)
+PathParam::param_setup_nodepath(Inkscape::NodePath::Path *np)
 {
     np->show_helperpath = true;
     np->helperpath_rgba = 0x009000ff;

@@ -24,7 +24,7 @@ public:
 
     virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> & path_in);
 
-    virtual void setup_notepath(Inkscape::NodePath::Path *np);
+    virtual void setup_nodepath(Inkscape::NodePath::Path *np);
 
 private:
     ScalarParam teeth;

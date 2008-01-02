@@ -78,7 +78,7 @@ public:
 
     virtual void resetDefaults(SPItem * item);
 
-    virtual void setup_notepath(Inkscape::NodePath::Path *np);
+    virtual void setup_nodepath(Inkscape::NodePath::Path *np);
 
     virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
 

@@ -222,7 +222,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
         np->repr_nodetypes_key = g_strconcat(np->repr_key, "-nodetypes", NULL);
         Inkscape::LivePathEffect::Parameter *lpeparam = LIVEPATHEFFECT(object)->lpe->getParameter(repr_key_in);
         if (lpeparam) {
-            lpeparam->param_setup_notepath(np);
+            lpeparam->param_setup_nodepath(np);
         }
     } else {
         np->repr_nodetypes_key = g_strdup("sodipodi:nodetypes");
@@ -231,7 +231,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
 
             LivePathEffectObject *lpeobj = sp_shape_get_livepatheffectobject(SP_SHAPE(np->object));
             if (lpeobj && lpeobj->lpe) {
-                lpeobj->lpe->setup_notepath(np);
+                lpeobj->lpe->setup_nodepath(np);
             }
         } else {
             np->repr_key = g_strdup("d");
