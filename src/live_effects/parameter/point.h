@@ -43,6 +43,8 @@ public:
     void param_setValue(Geom::Point newpoint);
     void param_set_default();
 
+    virtual void param_transform_multiply(Geom::Matrix const& /*postmul*/, bool /*set*/) {};
+
 private:
     PointParam(const PointParam&);
     PointParam& operator=(const PointParam&);

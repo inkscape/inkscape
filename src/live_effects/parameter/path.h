@@ -49,6 +49,8 @@ public:
     void param_editOncanvas(SPItem * item, SPDesktop * dt);
     void param_setup_notepath(Inkscape::NodePath::Path *np);
 
+    virtual void param_transform_multiply(Geom::Matrix const& /*postmul*/, bool /*set*/) {};
+
     sigc::signal <void> signal_path_pasted;
     sigc::signal <void> signal_path_changed;
 
