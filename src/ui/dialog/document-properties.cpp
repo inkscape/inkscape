@@ -647,19 +647,13 @@ DocumentProperties::onRemoveGrid()
     if (pagenum == -1) // no pages
       return;
 
-    Gtk::Widget *page = _grids_notebook.get_nth_page(pagenum);
-    if (!page) return;
-
-    Glib::ustring tabtext = _grids_notebook.get_tab_label_text(*page);
-
-    // find the grid with name tabtext (it's id) and delete that one.
     SPDesktop *dt = getDesktop();
     SPNamedView *nv = sp_desktop_namedview(dt);
     Inkscape::CanvasGrid * found_grid = NULL;
-    for (GSList const * l = nv->grids; l != NULL; l = l->next) {
+    int i = 0;
+    for (GSList const * l = nv->grids; l != NULL; l = l->next, i++) {  // not a very nice fix, but works.
         Inkscape::CanvasGrid * grid = (Inkscape::CanvasGrid*) l->data;
-        gchar const *idtext = grid->repr->attribute("id");
-        if ( !strcmp(tabtext.c_str(), idtext) ) {
+        if (pagenum == i) {
             found_grid = grid;
             break; // break out of for-loop
         }
