@@ -404,6 +404,14 @@ sp_item_release(SPObject *object)
     item->_clip_ref_connection.disconnect();
     item->_mask_ref_connection.disconnect();
 
+    // Note: do this here before the clip_ref is deleted, since calling 
+    // sp_document_ensure_up_to_date for triggered routing may reference 
+    // the deleted clip_ref.
+    if (item->avoidRef) {
+        delete item->avoidRef;
+        item->avoidRef = NULL;
+    }
+
     if (item->clip_ref) {
         item->clip_ref->detach();
         delete item->clip_ref;
@@ -414,11 +422,6 @@ sp_item_release(SPObject *object)
         item->mask_ref->detach();
         delete item->mask_ref;
         item->mask_ref = NULL;
-    }
-
-    if (item->avoidRef) {
-        delete item->avoidRef;
-        item->avoidRef = NULL;
     }
 
     if (((SPObjectClass *) (parent_class))->release) {
