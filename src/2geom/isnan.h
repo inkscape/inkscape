@@ -27,6 +27,8 @@
  */
 
 #if defined(__isnan)
+# define is_nan(_a) (__isnan(_a))
+#elif defined(__APPLE__) && __GNUC__ == 3
 # define is_nan(_a) (__isnan(_a))	/* MacOSX/Darwin definition < 10.4 */
 #elif defined(WIN32) || defined(_isnan)
 # define is_nan(_a) (_isnan(_a)) 	/* Win32 definition */
