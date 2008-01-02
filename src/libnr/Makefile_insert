@@ -23,6 +23,7 @@ libnr_libnr_a_SOURCES =	\
 	libnr/nr-compose-transform.h	\
 	libnr/nr-compose.cpp	\
 	libnr/nr-compose.h	\
+	libnr/nr-convert2geom.h	\
 	libnr/nr-convex-hull.h	\
 	libnr/nr-coord.h	\
 	libnr/nr-dim2.h	\
