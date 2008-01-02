@@ -1391,7 +1391,8 @@ void sp_node_selected_move_absolute(Inkscape::NodePath::Path *nodepath, NR::Coor
  */
 NR::Maybe<NR::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis)
 {
-    g_return_val_if_fail(nodepath->selected, NR::Nothing());
+    NR::Maybe<NR::Coord> no_coord = NR::Nothing();
+    g_return_val_if_fail(nodepath->selected, no_coord);
 
     // determine coordinate of first selected node
     GList *nsel = nodepath->selected;
