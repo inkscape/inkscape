@@ -694,6 +694,9 @@ CairoRenderContext::setupSurface(double width, double height)
         case CAIRO_SURFACE_TYPE_PS:
             surface = cairo_ps_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, width, height);
 #if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 5, 2))
+            if(CAIRO_STATUS_SUCCESS != cairo_surface_status(surface)) {
+                return FALSE;
+            }
             cairo_ps_surface_restrict_to_level (surface, (cairo_ps_level_t)_ps_level);
 #endif
             break;
@@ -722,6 +725,13 @@ CairoRenderContext::setSurfaceTarget(cairo_surface_t *surface, bool is_vector)
 bool
 CairoRenderContext::_finishSurfaceSetup(cairo_surface_t *surface)
 {
+    if(surface == NULL) {
+        return FALSE;
+    }
+    if(CAIRO_STATUS_SUCCESS != cairo_surface_status(surface)) {
+        return FALSE;
+    }
+
     _cr = cairo_create(surface);
     _surface = surface;
 
