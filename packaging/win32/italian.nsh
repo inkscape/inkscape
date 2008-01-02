@@ -30,10 +30,10 @@ LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_ITALIAN} "$(^Name) è rilasciato sott
 LangString lng_DIFFERENT_USER ${LANG_ITALIAN} "Inkscape è stato installato dall'utente $0.  Potrebbe non essere possibile portare a termine l'installazione.   Accedere come $0 e riprovare."
 
 ; want to uninstall before install
-LangString lng_WANT_UNINSTALL_BEFORE ${LANG_ITALIAN} "$R1 has already been installed. $\nDo you want to remove the previous version before installing $(^Name) ?"
+LangString lng_WANT_UNINSTALL_BEFORE ${LANG_ITALIAN} "$R1 è già stata installata. $\nRimuovere la versione precedente prima di installare $(^Name) ?"
 
 ; press OK to continue press Cancel to abort
-LangString lng_OK_CANCEL_DESC ${LANG_ITALIAN} "$\n$\nPress OK to continue or press CANCEL to abort."
+LangString lng_OK_CANCEL_DESC ${LANG_ITALIAN} "$\n$\nPremere OK per continuare o Annulla per uscire."
 
 ; you have no admin rigths
 LangString lng_NO_ADMIN ${LANG_ITALIAN} "Non si posseggono i diritti di amministratore.  Potrebbe non essere possibile installare Inkscape per tutti gli utenti.  Non selezionare l'opzione 'Per Tutti Gli Utenti'"
@@ -105,10 +105,10 @@ LangString lng_ContextMenu ${LANG_ITALIAN} "Menu Contestuale"
 LangString lng_ContextMenuDesc ${LANG_ITALIAN} "Aggiunge ${PRODUCT_NAME} nel Menu Contestuale per i file SVG"
 
 ; remove personal preferences
-LangString lng_DeletePrefs ${LANG_ITALIAN} "Delete personal preferences"
+LangString lng_DeletePrefs ${LANG_ITALIAN} "Rimuovere impostazioni personali"
 
 ; remove personal preferences description
-LangString lng_DeletePrefsDesc ${LANG_ITALIAN} "Delete personal preferences leftover from previous installations"
+LangString lng_DeletePrefsDesc ${LANG_ITALIAN} "Rimuove le impostazioni personali lasciate da installazioni precedenti"
 
 
 ; Additional files section
@@ -121,13 +121,13 @@ LangString lng_AddfilesDesc $(LANG_ITALIAN) "File Aggiuntivi"
 LangString lng_Examples $(LANG_ITALIAN) "Esempi"
 
 ; Examples section description
-LangString lng_ExamplesDesc $(LANG_ITALIAN) "Esempi usando ${PRODUCT_NAME}"
+LangString lng_ExamplesDesc $(LANG_ITALIAN) "Esempi d'uso di ${PRODUCT_NAME}"
 
 ; Tutorials section
 LangString lng_Tutorials $(LANG_ITALIAN) "Tutorial"
 
 ; Tutorials section description
-LangString lng_TutorialsDesc $(LANG_ITALIAN) "Tutorial usando ${PRODUCT_NAME}"
+LangString lng_TutorialsDesc $(LANG_ITALIAN) "Tutorial per l'uso di ${PRODUCT_NAME}"
 
 
 ; Languages section
@@ -142,7 +142,7 @@ LangString lng_be $(LANG_ITALIAN) "be  Bielorusso"
 LangString lng_bg $(LANG_ITALIAN) "bg  Bulgarian"
 LangString lng_bn $(LANG_ITALIAN) "bn  Bengali"
 LangString lng_ca $(LANG_ITALIAN) "ca  Catalano"
-LangString lng_ca@valencia $(LANG_ITALIAN) "ca@valencia  Valencian Catalan"
+LangString lng_ca@valencia $(LANG_ITALIAN) "ca@valencia  Catalano Valenciane"
 LangString lng_cs $(LANG_ITALIAN) "cs  Ceco"
 LangString lng_da $(LANG_ITALIAN) "da  Danese"
 LangString lng_de $(LANG_ITALIAN) "de  Tedesco"
@@ -209,18 +209,18 @@ LangString lng_UInstOpt1  ${LANG_ITALIAN} "Scegli ulteriori Opzioni"
 ; Ask to purge the personal preferences
 LangString lng_PurgePrefs ${LANG_ITALIAN} "Mantieni le Impostazioni personali"
 
-LangString lng_RETRY_CANCEL_DESC ${LANG_ITALIAN} "$\n$\nPress RETRY to continue or press CANCEL to abort."
+LangString lng_RETRY_CANCEL_DESC ${LANG_ITALIAN} "$\n$\nPremere Riprova per continuare o Annulla per uscire."
 
-LangString lng_ClearDirectoryBefore ${LANG_ITALIAN} "${PRODUCT_NAME} must be installed in an empty directory. $INSTDIR is not empty. Please clear this directory first!$(lng_RETRY_CANCEL_DESC)"
+LangString lng_ClearDirectoryBefore ${LANG_ITALIAN} "${PRODUCT_NAME} deve essere installato in una cartella vuota. $INSTDIR non è vuota. Prima di procedere occorre rimuoverne il contenuto!$(lng_RETRY_CANCEL_DESC)"
 
-LangString lng_UninstallLogNotFound ${LANG_ITALIAN} "$INSTDIR\uninstall.log not found!$\r$\nPlease uninstall by clearing directory $INSTDIR yourself!"
+LangString lng_UninstallLogNotFound ${LANG_ITALIAN} "Impossibile trovare $INSTDIR\uninstall.log !$\r$\nPer continuare la rimozione, cancellare la cartella $INSTDIR a mano."
 
-LangString lng_FileChanged ${LANG_ITALIAN} "The file $filename has been changed after installation.$\r$\nDo you still want to delete that file?"
+LangString lng_FileChanged ${LANG_ITALIAN} "Il file $filename è stato modificato rispetto all'ultima installazione.$\r$\nRimuoverlo comunque?"
 
-LangString lng_Yes ${LANG_ITALIAN} "Yes"
+LangString lng_Yes ${LANG_ITALIAN} "Sì"
 
-LangString lng_AlwaysYes ${LANG_ITALIAN} "always answer Yes"
+LangString lng_AlwaysYes ${LANG_ITALIAN} "rispondere sempre Sì"
 
 LangString lng_No ${LANG_ITALIAN} "No"
 
-LangString lng_AlwaysNo ${LANG_ITALIAN} "always answer No"
+LangString lng_AlwaysNo ${LANG_ITALIAN} "rispondere sempre No"
