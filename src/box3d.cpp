@@ -402,6 +402,9 @@ box3d_set_transform(SPItem *item, NR::Matrix const &xform)
 
         // Adjust gradient fill
         sp_item_adjust_gradient(sideitem, xform);
+
+        // Adjust LPE
+        sp_item_adjust_livepatheffect(item, xform);
     }
     ***/
 

@@ -363,6 +363,9 @@ sp_path_set_transform(SPItem *item, NR::Matrix const &xform)
     // Adjust gradient fill
     sp_item_adjust_gradient(item, xform);
 
+    // Adjust LPE
+    sp_item_adjust_livepatheffect(item, xform);
+
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
 
     // nothing remains - we've written all of the transform, so return identity

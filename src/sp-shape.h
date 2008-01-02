@@ -9,6 +9,7 @@
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
+ * Copyright (C) 2008 Johan Engelen
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -32,6 +33,7 @@ struct LivePathEffectObject;
 namespace Inkscape{ 
 namespace LivePathEffect{
     class LPEObjectReference;
+    class Effect;
 };
 };
 
@@ -78,10 +80,12 @@ NR::Matrix sp_shape_marker_get_transform(SPShape const *shape, NArtBpath const *
 bool sp_shape_marker_required(SPShape const *shape, int const m, NArtBpath *bp);
 
 LivePathEffectObject * sp_shape_get_livepatheffectobject(SPShape *shape);
+Inkscape::LivePathEffect::Effect * sp_shape_get_livepatheffect(SPShape *shape);
 void sp_shape_update_patheffect (SPShape *shape, bool write);
 void sp_shape_perform_path_effect(SPCurve *curve, SPShape *shape);
 
 void sp_shape_set_path_effect(SPShape *shape, gchar *value);
+void sp_shape_set_path_effect(SPShape *shape, LivePathEffectObject * new_lpeobj);
 void sp_shape_remove_path_effect(SPShape *shape);
 bool sp_shape_has_path_effect(SPShape *shape);
 

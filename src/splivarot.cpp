@@ -455,6 +455,7 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
     sp_item_adjust_stroke(item_source, i2root.expansion());
     sp_item_adjust_pattern(item_source, i2root);
     sp_item_adjust_gradient(item_source, i2root);
+    sp_item_adjust_livepatheffect(item_source, i2root);
 
     Inkscape::XML::Node *repr_source = SP_OBJECT_REPR(source);
 

@@ -4,7 +4,7 @@
 /*
  * Inkscape::LivePathEffect
  *
-* Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+* Copyright (C) Johan Engelen 2007-2008 <j.b.c.engelen@utwente.nl>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -31,6 +31,10 @@ namespace Gtk {
     class Widget;
     class VBox;
     class Tooltips;
+}
+
+namespace Geom {
+    class Matrix;
 }
 
 namespace Inkscape {
@@ -74,6 +78,10 @@ public:
 
     virtual void resetDefaults(SPItem * item);
 
+    virtual void setup_notepath(Inkscape::NodePath::Path *np);
+
+    virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
+
     Glib::ustring          getName();
     Inkscape::XML::Node *  getRepr();
     SPDocument *           getSPDoc();
@@ -84,8 +92,6 @@ public:
     void setParameter(const gchar * key, const gchar * new_value);
 
     void editNextParamOncanvas(SPItem * item, SPDesktop * desktop);
-
-    virtual void setup_notepath(Inkscape::NodePath::Path *np);
 
 protected:
     Effect(LivePathEffectObject *lpeobject);

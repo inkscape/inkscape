@@ -1,21 +1,23 @@
 #define INKSCAPE_LIVEPATHEFFECT_OBJECT_CPP
 
 /*
- * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+ * Copyright (C) Johan Engelen 2007-2008 <j.b.c.engelen@utwente.nl>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#include "live_effects/lpeobject.h"
+
+#include "live_effects/effect.h"
 
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
 #include "sp-object.h"
 #include "attributes.h"
-
 #include "document.h"
-#include <glibmm/i18n.h>
+#include "document-private.h"
 
-#include "live_effects/lpeobject.h"
-#include "live_effects/effect.h"
+#include <glibmm/i18n.h>
 
 //#define LIVEPATHEFFECT_VERBOSE
 
@@ -251,6 +253,25 @@ livepatheffect_on_repr_attr_changed ( Inkscape::XML::Node * /*repr*/,
     lpeobj->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
+/**
+ * If this has other users, create a new private duplicate and return it
+ * returns 'this' when no forking was necessary (and therefore no duplicate was made)
+ */
+LivePathEffectObject *
+LivePathEffectObject::fork_private_if_necessary(int nr_of_allowed_users)
+{
+    if (SP_OBJECT_HREFCOUNT(this) > nr_of_allowed_users) {
+        SPDocument *doc = SP_OBJECT_DOCUMENT(this);
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+
+        Inkscape::XML::Node *repr = SP_OBJECT_REPR (this)->duplicate(xml_doc);
+        SP_OBJECT_REPR (SP_DOCUMENT_DEFS (doc))->addChild(repr, NULL);
+        LivePathEffectObject *lpeobj_new = (LivePathEffectObject *) doc->getObjectByRepr(repr);
+        Inkscape::GC::release(repr);
+        return lpeobj_new;
+    }
+    return this;
+}
 
 /*
   Local Variables:

@@ -76,6 +76,8 @@
 #include "xml/simple-document.h"
 #include "sp-filter-reference.h"
 #include "gradient-drag.h"
+#include "uri-references.h"
+#include "live_effects/lpeobject.h"
 
 using NR::X;
 using NR::Y;
@@ -1268,11 +1270,12 @@ void sp_selection_paste_livepatheffect()
         return;
     }
 
-    paste_defs (&defs_clipboard, sp_desktop_document(desktop));
+    SPDocument *doc = sp_desktop_document(desktop);
+    paste_defs (&defs_clipboard, doc);
 
     Inkscape::XML::Node *repr = (Inkscape::XML::Node *) clipboard->data;
-    char const *effectstr = repr->attribute("inkscape:path-effect");
-    if (!effectstr) {
+    char const *effecturi = repr->attribute("inkscape:path-effect");
+    if (!effecturi) {
         SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Clipboard does not contain a live path effect."));
         return;
     }
@@ -1280,8 +1283,13 @@ void sp_selection_paste_livepatheffect()
     for ( GSList const *itemlist = selection->itemList(); itemlist != NULL; itemlist = g_slist_next(itemlist) ) {
         SPItem *item = reinterpret_cast<SPItem*>(itemlist->data);
         if ( item && SP_IS_SHAPE(item) ) {
-            Inkscape::XML::Node *selrepr = (Inkscape::XML::Node *) SP_OBJECT_REPR(item);
-            selrepr->setAttribute("inkscape:path-effect", effectstr);
+            SPShape * shape = SP_SHAPE(item);
+
+            // create a private LPE object!
+            SPObject * obj = sp_uri_reference_resolve(doc, effecturi);
+            LivePathEffectObject * lpeobj = LIVEPATHEFFECT(obj)->fork_private_if_necessary(0);
+            
+            sp_shape_set_path_effect(shape, lpeobj);
 
             // set inkscape:original-d for paths. the other shapes don't need this.
             if ( SP_IS_PATH(item) ) {

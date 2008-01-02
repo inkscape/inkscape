@@ -58,11 +58,15 @@
 #include "libnr/nr-matrix-translate-ops.h"
 #include "libnr/nr-scale-translate-ops.h"
 #include "libnr/nr-translate-scale-ops.h"
+#include "libnr/nr-convert2geom.h"
 #include "algorithms/find-last-if.h"
 #include "util/reverse-list.h"
 
 #include "xml/repr.h"
 #include "extract-uri.h"
+
+#include "live_effects/lpeobject.h"
+#include "live_effects/effect.h"
 
 #define noSP_ITEM_DEBUG_IDLE
 
@@ -1153,6 +1157,27 @@ sp_item_adjust_paint_recursive (SPItem *item, NR::Matrix advertized_transform, N
     else
         sp_item_adjust_gradient (item, paint_delta);
 
+}
+
+void
+sp_item_adjust_livepatheffect (SPItem *item, NR::Matrix const &postmul, bool set)
+{
+    if ( !SP_IS_SHAPE(item) )
+        return;
+
+    SPShape *shape = SP_SHAPE (item);
+    if ( sp_shape_has_path_effect(shape) ) {
+        LivePathEffectObject *lpeobj = sp_shape_get_livepatheffectobject(shape);
+        LivePathEffectObject *new_lpeobj = lpeobj->fork_private_if_necessary();
+        if (new_lpeobj != lpeobj) {
+            sp_shape_set_path_effect(shape, new_lpeobj);
+        }
+
+        Inkscape::LivePathEffect::Effect * effect = sp_shape_get_livepatheffect(shape);
+        if (effect) {
+            effect->transform_multiply (to_2geom(postmul), set);
+        }
+    }
 }
 
 /**

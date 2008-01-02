@@ -6,6 +6,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "live_effects/effect.h"
+
 #include "display/display-forward.h"
 #include "xml/node-event-vector.h"
 #include "sp-object.h"
@@ -16,16 +18,18 @@
 #include "document.h"
 #include <glibmm/i18n.h>
 
-#include "live_effects/effect.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/parameter/parameter.h"
 #include <glibmm/ustring.h>
 #include "live_effects/n-art-bpath-2geom.h"
 #include "display/curve.h"
-#include <2geom/sbasis-to-bezier.h>
 #include <gtkmm.h>
 
 #include <exception>
+
+#include <2geom/sbasis-to-bezier.h>
+#include <2geom/matrix.h>
+
 
 // include effects:
 #include "live_effects/lpe-skeletalstrokes.h"
@@ -351,6 +355,14 @@ Effect::setup_notepath(Inkscape::NodePath::Path *np)
     np->helperpath_width = 1.0;
 }
 
+void
+Effect::transform_multiply(Geom::Matrix const& postmul, bool set)
+{
+    // cycle through all parameters. Most parameters will not need transformation, but path and point params do.
+    for (std::vector<Parameter *>::iterator it = param_vector.begin(); it != param_vector.end(); it++) {
+        Parameter * param = *it;
+    }
+}
 
 } /* namespace LivePathEffect */
 

@@ -4,7 +4,7 @@
 /*
  * Inkscape::LivePathEffect
  *
-* Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+* Copyright (C) Johan Engelen 2007-2008 <j.b.c.engelen@utwente.nl>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -16,19 +16,13 @@
 #define LIVEPATHEFFECT(o)    (G_TYPE_CHECK_INSTANCE_CAST((o), TYPE_LIVEPATHEFFECT, LivePathEffectObject))
 #define IS_LIVEPATHEFFECT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), TYPE_LIVEPATHEFFECT))
 
-/*
-namespace Inkscape {
-namespace LivePathEffect {
-    class Effect;
-};
-};
-*/
-
 struct LivePathEffectObject : public SPObject {
-    Inkscape::LivePathEffect::EffectType effecttype;  // fixme: i think this is not needed
+    Inkscape::LivePathEffect::EffectType effecttype;
     Inkscape::LivePathEffect::Effect *lpe;
 
     bool effecttype_set;
+
+    LivePathEffectObject * fork_private_if_necessary(int nr_of_allowed_users = 1);
 };
 
 /// The LivePathEffect vtable.

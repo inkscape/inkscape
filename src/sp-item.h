@@ -228,6 +228,7 @@ void sp_item_adjust_gradient(SPItem *item, /* NR::Matrix const &premul, */ NR::M
 void sp_item_adjust_stroke(SPItem *item, gdouble ex);
 void sp_item_adjust_stroke_width_recursive(SPItem *item, gdouble ex);
 void sp_item_adjust_paint_recursive(SPItem *item, NR::Matrix advertized_transform, NR::Matrix t_ancestors, bool is_pattern);
+void sp_item_adjust_livepatheffect(SPItem *item, NR::Matrix const &postmul, bool set = false);
 
 void sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NRMatrix const *transform, NR::Matrix const *adv = NULL);
 void sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix const &transform, NR::Matrix const *adv = NULL, bool compensate = true);

@@ -9,6 +9,7 @@
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
  * Copyright (C) 2004 John Cliff
+ * Copyright (C) 2007-2008 Johan Engelen
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -1157,6 +1158,17 @@ sp_shape_get_livepatheffectobject(SPShape *shape) {
     }
 }
 
+Inkscape::LivePathEffect::Effect *
+sp_shape_get_livepatheffect(SPShape *shape) {
+    if (!shape) return NULL;
+
+    LivePathEffectObject * lpeobj = sp_shape_get_livepatheffectobject(shape);
+    if (lpeobj)
+        return lpeobj->lpe;
+    else
+        return NULL;
+}
+
 /**
  * Calls any registered handlers for the update_patheffect action
  */
@@ -1217,6 +1229,14 @@ void sp_shape_set_path_effect(SPShape *shape, gchar *value)
     } else {
         SP_OBJECT_REPR(shape)->setAttribute("inkscape:path-effect", value);
     }
+}
+
+void sp_shape_set_path_effect(SPShape *shape, LivePathEffectObject * new_lpeobj)
+{
+    const gchar * repr_id = SP_OBJECT_REPR(new_lpeobj)->attribute("id");
+    gchar *hrefstr = g_strdup_printf("#%s", repr_id);
+    sp_shape_set_path_effect(shape, hrefstr);
+    g_free(hrefstr);
 }
 
 void sp_shape_remove_path_effect(SPShape *shape)
