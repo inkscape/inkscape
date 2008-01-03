@@ -1431,14 +1431,14 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, NRMatrix const *font_matrix
         }
     } else {
 
-        if (style->fill.type == SP_PAINT_TYPE_COLOR || style->fill.type == SP_PAINT_TYPE_PAINTSERVER) {
+        if (style->fill.isColor() || style->fill.isPaintserver()) {
             // set fill style
             _setFillStyle(style, NULL);
 
             _showGlyphs(_cr, font, glyphtext, FALSE);
         }
 
-        if (style->stroke.type == SP_PAINT_TYPE_COLOR || style->stroke.type == SP_PAINT_TYPE_PAINTSERVER) {
+        if (style->stroke.isColor() || style->stroke.isPaintserver()) {
             // set stroke style
             _setStrokeStyle(style, NULL);
 
