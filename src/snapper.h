@@ -7,6 +7,7 @@
  *
  *    Authors:
  *      Carl Hetherington <inkscape@carlh.net>
+ *      Diederik van Lierop <mail@diedenrezi.nl>
  *
  *    Released under GNU GPL, read the file 'COPYING' for more information.
  */
@@ -47,11 +48,12 @@ public:
     static const PointType SNAPPOINT_GUIDE;
 
     void setSnapFrom(PointType t, bool s);
-    void setDistance(::NR::Coord d);
-
     bool getSnapFrom(PointType t) const;
-    ::NR::Coord getDistance() const;
-
+    
+    void setSnapperTolerance(NR::Coord t);    
+    NR::Coord getSnapperTolerance() const; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
+    bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
+    
     /**
     *  \return true if this Snapper will snap at least one kind of point.
     */
@@ -121,6 +123,10 @@ protected:
     bool _snap_enabled; ///< true if this snapper is enabled, otherwise false
     
 private:
+    NR::Coord _snapper_tolerance;   ///< snap tolerance in desktop coordinates 
+                                    // must be private to enforce the usage of getTolerance(), which retrieves 
+                                    // the tolerance in screen pixels (making it zoom independent)
+
 
     /**
      *  Try to snap a point to whatever this snapper is interested in.  Any
@@ -155,8 +161,6 @@ private:
                                             std::vector<NR::Point> &points_to_snap,
                                             ConstraintLine const &c,
                                             std::list<SPItem const *> const &it) const = 0;
-    
-    NR::Coord _distance; ///< snap distance (desktop coordinates)
 };
 
 }

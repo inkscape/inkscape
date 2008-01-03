@@ -26,11 +26,16 @@ class SnappedPoint
 {
 public:
     SnappedPoint();
-    SnappedPoint(::NR::Point p, ::NR::Coord d, bool at_intersection = false, NR::Coord d2 = NR_HUGE);
+    SnappedPoint(NR::Point p, NR::Coord d, NR::Coord t, bool a, bool at_intersection, NR::Coord d2, NR::Coord t2, bool a2);
+    SnappedPoint(NR::Point p, NR::Coord d, NR::Coord t, bool a);
     ~SnappedPoint();
 
     NR::Coord getDistance() const;
+    NR::Coord getTolerance() const;
+    bool getAlwaysSnap() const;
     NR::Coord getSecondDistance() const;
+    NR::Coord getSecondTolerance() const;
+    bool getSecondAlwaysSnap() const;
     NR::Point getPoint() const;
     bool getAtIntersection() const {return _at_intersection;}
     
@@ -42,12 +47,18 @@ protected:
        an intersection of e.g. two lines, then this is the distance to the closest
        line */    
     NR::Coord _distance; 
+    /* The snapping tolerance in screen pixels (depends on zoom)*/  
+    NR::Coord _tolerance;
+    /* If true then "Always snap" is on */
+    bool _always_snap;
     
     /* If the snapped point is at an intersection of e.g. two lines, then this is
        the distance to the fartest line */    
-    NR::Coord _second_distance; 
-    
-    
+    NR::Coord _second_distance;
+    /* The snapping tolerance in screen pixels (depends on zoom)*/
+    NR::Coord _second_tolerance;
+    /* If true then "Always snap" is on */
+    bool _second_always_snap;
 };    
 
 }

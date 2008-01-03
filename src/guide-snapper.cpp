@@ -48,7 +48,7 @@ bool Inkscape::GuideSnapper::ThisSnapperMightSnap() const
 
 void Inkscape::GuideSnapper::_addSnappedLine(SnappedConstraints &sc, NR::Point const snapped_point, NR::Coord const snapped_distance, NR::Point const normal_to_line, NR::Point const point_on_line) const
 {
-    SnappedLine dummy = SnappedLine(snapped_point, snapped_distance, normal_to_line, point_on_line);
+    SnappedLine dummy = SnappedLine(snapped_point, snapped_distance, getSnapperTolerance(), getSnapperAlwaysSnap(), normal_to_line, point_on_line);
     sc.guide_lines.push_back(dummy);
 }
 

@@ -209,7 +209,7 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
                                              std::list<SPItem const *> const &it) const
 {
     if (!SomeSnapperMightSnap()) {
-        return Inkscape::SnappedPoint(p, NR_HUGE);
+        return Inkscape::SnappedPoint(p, NR_HUGE, 0, false);
     }
     
     SnappedConstraints sc;        
@@ -271,7 +271,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
                                                     std::list<SPItem const *> const &it) const
 {
     if (!SomeSnapperMightSnap()) {
-        return Inkscape::SnappedPoint(p, NR_HUGE);
+        return Inkscape::SnappedPoint(p, NR_HUGE, 0, false);
     }
     
     SnappedConstraints sc;
@@ -290,7 +290,7 @@ Inkscape::SnappedPoint SnapManager::guideSnap(NR::Point const &p,
     // This method is used to snap a guide to nodes, while dragging the guide around
     
     if (!(object.ThisSnapperMightSnap() && _snap_enabled_globally)) {
-        return Inkscape::SnappedPoint(p, NR_HUGE);
+        return Inkscape::SnappedPoint(p, NR_HUGE, 0, false);
     }
     
     SnappedConstraints sc;
@@ -386,7 +386,9 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
     */
     NR::Coord best_metric = NR_HUGE;
     NR::Coord best_second_metric = NR_HUGE;
+    NR::Point best_scale_metric(NR_HUGE, NR_HUGE);
     bool best_at_intersection = false;
+    bool best_always_snap = false;
 
     std::vector<NR::Point>::const_iterator j = transformed_points.begin();
 
@@ -416,6 +418,7 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
         NR::Point result;
         NR::Coord metric = NR_HUGE;
         NR::Coord second_metric = NR_HUGE;
+        NR::Point scale_metric(NR_HUGE, NR_HUGE);
         
         if (snapped.getDistance() < NR_HUGE) {
             /* We snapped.  Find the transformation that describes where the snapped point has
@@ -438,48 +441,38 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
                     break;
                 case SCALE:
                 {
-                    NR::Point const a = (snapped.getPoint() - origin);
-                    NR::Point const b = (*i - origin);
-                    result = transformation;
-                    if (fabs(b[NR::X]) > 1e-6 && fabs(b[NR::Y]) > 1e-6) {
-                        // This is the default scaling that results after snapping
-                        result = NR::Point(a[NR::X] / b[NR::X], a[NR::Y] / b[NR::Y]);
-                    } else {
-                        // If this point *i is horizontally or vertically aligned with
-                        // the origin of the scaling, then it will scale purely in X or Y 
-                        // We can therefore only calculate the scaling in this direction
-                        // and the scaling factor for the other direction should remain
-                        // untouched (unless scaling is uniform ofcourse)
-                        for (int index = 0; index < 2; index++) {
-                            if (fabs(b[index]) > 1e-6) {
-                                result[index] = a[index] / b[index];
-                                if (uniform) {
-                                    result[1-index] = result[index];
-                                }
+                    NR::Point const a = (snapped.getPoint() - origin); // vector to snapped point
+                    NR::Point const b = (*i - origin); // vector to original point
+                    result = NR::Point(NR_HUGE, NR_HUGE);
+                    // If this point *i is horizontally or vertically aligned with
+                    // the origin of the scaling, then it will scale purely in X or Y 
+                    // We can therefore only calculate the scaling in this direction
+                    // and the scaling factor for the other direction should remain
+                    // untouched (unless scaling is uniform ofcourse)
+                    for (int index = 0; index < 2; index++) {
+                        if (fabs(b[index]) > 1e-6) { // if SCALING CAN occur in this direction
+                            if (fabs(fabs(a[index]/b[index]) - fabs(transformation[index])) > 1e-12) { // if SNAPPING DID occur in this direction
+                                result[index] = a[index] / b[index]; // then calculate it!
                             }
+                            // we might leave result[1-index] = NR_HUGE
+                            // if scaling didn't occur in the other direction
                         }
                     }
                     
-                    if (fabs(b[NR::X]) <= 1e-6 && fabs(b[NR::Y]) <= 1e-6) {
-                        metric = NR_HUGE;
-                    } else {                        
-                        // Compare the resulting scaling with the desired scaling
-                        metric = std::abs(NR::L2(result) - NR::L2(transformation));
-                    }
+                    // Compare the resulting scaling with the desired scaling
+                    scale_metric = result - transformation; // One or both of its components might be NR_HUGE
                     break;
                 }
                 case STRETCH:
-                {
-                    for (int a = 0; a < 2; a++) {
-                        if (uniform || a == dim) {
-                            result[a] = (snapped.getPoint()[dim] - origin[dim]) / ((*i)[dim] - origin[dim]);
+                    for (int index = 0; index < 2; index++) {
+                        if (uniform || index == dim) {
+                            result[index] = (snapped.getPoint()[dim] - origin[dim]) / ((*i)[dim] - origin[dim]);
                         } else {
-                            result[a] = 1;
+                            result[index] = 1;
                         }
                     }
                     metric = std::abs(result[dim] - transformation[dim]);
                     break;
-                }
                 case SKEW:
                     result[dim] = (snapped.getPoint()[dim] - (*i)[dim]) / ((*i)[1 - dim] - origin[1 - dim]);
                     metric = std::abs(result[dim] - transformation[dim]);
@@ -489,22 +482,61 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
             }
             
             /* Note it if it's the best so far */
-            bool const c1 = metric < best_metric;
-            bool const c2 = metric == best_metric && snapped.getAtIntersection() == true && best_at_intersection == false;
-			bool const c3a = metric == best_metric && snapped.getAtIntersection() == true && best_at_intersection == true;
-            bool const c3b = second_metric < best_second_metric;
-            
-            if (c1 || c2 || c3a && c3b) {
-                best_transformation = result;
-                best_metric = metric;
-                best_second_metric = second_metric;
-                best_at_intersection = snapped.getAtIntersection(); 
-                //std::cout << "SEL ";
-            } //else { std::cout << "    ";}
+            if (transformation_type == SCALE) {
+                for (int index = 0; index < 2; index++) {
+                    if (fabs(scale_metric[index]) < fabs(best_scale_metric[index])) {
+                        best_transformation[index] = result[index];
+                        best_scale_metric[index] = fabs(scale_metric[index]);
+                        //std::cout << "SEL ";
+                    } //else { std::cout << "    ";}   
+                }
+                if (uniform) {
+                    if (best_scale_metric[0] < best_scale_metric[1]) {
+                        best_transformation[1] = best_transformation[0];
+                        best_scale_metric[1] = best_scale_metric[0]; 
+                    } else {
+                        best_transformation[0] = best_transformation[1];
+                        best_scale_metric[0] = best_scale_metric[1];
+                    }
+                }
+                best_metric = std::min(best_scale_metric[0], best_scale_metric[1]);
+                //std::cout << "P_orig = " << (*i) << " | scale_metric = " << scale_metric << " | distance = " << snapped.getDistance() << " | P_snap = " << snapped.getPoint() << std::endl;
+            } else {
+                bool const c1 = metric < best_metric;
+                bool const c2 = metric == best_metric && snapped.getAtIntersection() == true && best_at_intersection == false;
+    			bool const c3a = metric == best_metric && snapped.getAtIntersection() == true && best_at_intersection == true;
+                bool const c3b = second_metric < best_second_metric;
+                bool const c4 = snapped.getAlwaysSnap() == true && best_always_snap == false;
+                bool const c4n = snapped.getAlwaysSnap() == false && best_always_snap == true;
+                
+                if ((c1 || c2 || (c3a && c3b) || c4) && !c4n) {
+                    best_transformation = result;
+                    best_metric = metric;
+                    best_second_metric = second_metric;
+                    best_at_intersection = snapped.getAtIntersection();
+                    best_always_snap = snapped.getAlwaysSnap(); 
+                    //std::cout << "SEL ";
+                } //else { std::cout << "    ";}
+                //std::cout << "P_orig = " << (*i) << " | metric = " << metric << " | distance = " << snapped.getDistance() << " | second metric = " << second_metric << " | P_snap = " << snapped.getPoint() << std::endl;
+            }
         }
         
-        //std::cout << "P_orig = " << (*i) << " | metric = " << metric << " | distance = " << snapped.getDistance() << " | second metric = " << second_metric << " | P_snap = " << snapped.getPoint() << std::endl;
+        
         j++;
+    }
+    
+    if (transformation_type == SCALE) {
+        // When scaling, don't ever exit with one of scaling components set to NR_HUGE
+        if (best_transformation == NR::Point(NR_HUGE, NR_HUGE)) {
+            best_transformation == transformation; // return the original (i.e. un-snapped) transformation        
+        } else {
+            // Still one of the transformation components could be NR_HUGE
+            for (int index = 0; index < 2; index++) {
+                if (best_transformation[index] == NR_HUGE) {
+                    best_transformation[index] == uniform ? best_transformation[1-index] : transformation[index];
+                }
+            }
+        }
     }
     
     // Using " < 1e6" instead of " < NR_HUGE" for catching some rounding errors
@@ -669,54 +701,54 @@ std::pair<NR::Coord, bool> SnapManager::freeSnapSkew(Inkscape::Snapper::PointTyp
 
 Inkscape::SnappedPoint SnapManager::findBestSnap(NR::Point const &p, SnappedConstraints &sc, bool constrained) const
 {
-    NR::Coord const guide_sens = guide.getDistance();
-    NR::Coord grid_sens = 0;
+    NR::Coord const guide_tol = guide.getSnapperTolerance();
+    NR::Coord grid_tol = 0;
     
     SnapManager::SnapperList const gs = getGridSnappers();
     SnapperList::const_iterator i = gs.begin();
     if (i != gs.end()) {        
-        grid_sens = (*i)->getDistance();
+        grid_tol = (*i)->getSnapperTolerance(); // there's only a single tolerance, equal for all grids
     }
     
-    // Store all snappoints, optionally together with their specific snapping range
-    std::list<std::pair<Inkscape::SnappedPoint, NR::Coord> > sp_list;
+    // Store all snappoints
+    std::list<Inkscape::SnappedPoint> sp_list;
     // Most of these snapped points are already within the snapping range, because
     // they have already been filtered by their respective snappers. In that case
     // we can set the snapping range to NR_HUGE here. If however we're looking at
     // intersections of e.g. a grid and guide line, then we'll have to determine 
     // once again whether we're within snapping range. In this case we will set
-    // the snapping range to e.g. min(guide_sens, grid_sens)
+    // the snapping range to e.g. min(guide_sens, grid_tol)
     
     // search for the closest snapped point
     Inkscape::SnappedPoint closestPoint;
     if (getClosestSP(sc.points, closestPoint)) {
-        sp_list.push_back(std::make_pair(closestPoint, NR_HUGE));
+        sp_list.push_back(closestPoint);
     } 
     
     // search for the closest snapped line segment
     Inkscape::SnappedLineSegment closestLineSegment;
     if (getClosestSLS(sc.lines, closestLineSegment)) {    
-        sp_list.push_back(std::make_pair(Inkscape::SnappedPoint(closestLineSegment), NR_HUGE));
+        sp_list.push_back(Inkscape::SnappedPoint(closestLineSegment));
     }
     
     if (_intersectionLS) {
 	    // search for the closest snapped intersection of line segments
 	    Inkscape::SnappedPoint closestLineSegmentIntersection;
 	    if (getClosestIntersectionSLS(sc.lines, closestLineSegmentIntersection)) {
-	        sp_list.push_back(std::make_pair(closestLineSegmentIntersection, NR_HUGE));
+	        sp_list.push_back(closestLineSegmentIntersection);
 	    }
     }    
 
     // search for the closest snapped grid line
     Inkscape::SnappedLine closestGridLine;
     if (getClosestSL(sc.grid_lines, closestGridLine)) {    
-        sp_list.push_back(std::make_pair(Inkscape::SnappedPoint(closestGridLine), NR_HUGE));
+        sp_list.push_back(Inkscape::SnappedPoint(closestGridLine));
     }
     
     // search for the closest snapped guide line
     Inkscape::SnappedLine closestGuideLine;
     if (getClosestSL(sc.guide_lines, closestGuideLine)) {
-        sp_list.push_back(std::make_pair(Inkscape::SnappedPoint(closestGuideLine), NR_HUGE));
+        sp_list.push_back(Inkscape::SnappedPoint(closestGuideLine));
     }
     
     // When freely snapping to a grid/guide/path, only one degree of freedom is eliminated
@@ -729,44 +761,49 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(NR::Point const &p, SnappedCons
         // search for the closest snapped intersection of grid lines
         Inkscape::SnappedPoint closestGridPoint;
         if (getClosestIntersectionSL(sc.grid_lines, closestGridPoint)) {
-            sp_list.push_back(std::make_pair(closestGridPoint, NR_HUGE));
+            sp_list.push_back(closestGridPoint);
         }
         
         // search for the closest snapped intersection of guide lines
         Inkscape::SnappedPoint closestGuidePoint;
         if (getClosestIntersectionSL(sc.guide_lines, closestGuidePoint)) {
-            sp_list.push_back(std::make_pair(closestGuidePoint, NR_HUGE));
+            sp_list.push_back(closestGuidePoint);
         }
         
         // search for the closest snapped intersection of grid with guide lines
         if (_intersectionGG) {
     	    Inkscape::SnappedPoint closestGridGuidePoint;
     	    if (getClosestIntersectionSL(sc.grid_lines, sc.guide_lines, closestGridGuidePoint)) {
-    	        sp_list.push_back(std::make_pair(closestGridGuidePoint, std::min(guide_sens, grid_sens)));
+    	        sp_list.push_back(closestGridGuidePoint);
     	    }
         }
     }
     
     // now let's see which snapped point gets a thumbs up
-    Inkscape::SnappedPoint bestPoint(p, NR_HUGE);
-    for (std::list<std::pair<Inkscape::SnappedPoint, NR::Coord> >::const_iterator i = sp_list.begin(); i != sp_list.end(); i++) {
+    Inkscape::SnappedPoint bestSnappedPoint = Inkscape::SnappedPoint(p, NR_HUGE, 0, false);
+    for (std::list<Inkscape::SnappedPoint>::const_iterator i = sp_list.begin(); i != sp_list.end(); i++) {
 		// first find out if this snapped point is within snapping range
-	    if ((*i).first.getDistance() <= (*i).second) {
+        if ((*i).getDistance() <= (*i).getTolerance()) {
 	        // if it's the first point
 	        bool c1 = (i == sp_list.begin());  
 	        // or, if it's closer
-	        bool c2 = (*i).first.getDistance() < bestPoint.getDistance(); 
-	        // or, if it's just as close then consider the second distance
+	        bool c2 = (*i).getDistance() < bestSnappedPoint.getDistance();
+            // or, if it's for a snapper with "always snap" turned on, and the previous wasn't
+            bool c3 = (*i).getAlwaysSnap() && !bestSnappedPoint.getAlwaysSnap();
+	        // But in no case fall back from a snapper with "always snap" on to one with "always snap" off
+            bool c3n = !(*i).getAlwaysSnap() && bestSnappedPoint.getAlwaysSnap();
+            // or, if it's just as close then consider the second distance
 	        // (which is only relevant for points at an intersection)
-	        bool c3a = ((*i).first.getDistance() == bestPoint.getDistance()); 
-	        bool c3b = (*i).first.getSecondDistance() < bestPoint.getSecondDistance();
+	        bool c4a = ((*i).getDistance() == bestSnappedPoint.getDistance()); 
+	        bool c4b = (*i).getSecondDistance() < bestSnappedPoint.getSecondDistance();
 	        // then prefer this point over the previous one
-	        if (c1 || c2 || c3a && c3b) {
-                bestPoint = (*i).first;
+            if ((c1 || c2 || c3 || (c4a && c4b)) && !c3n) {
+                bestSnappedPoint = *i;
             }
         }
     }
-    return bestPoint;         
+    
+    return bestSnappedPoint;         
 }
 
 /*

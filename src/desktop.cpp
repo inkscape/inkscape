@@ -1535,15 +1535,15 @@ _update_snap_distances (SPDesktop *desktop)
     //tell all grid snappers
     for ( GSList const *l = nv.grids; l != NULL; l = l->next) {
         Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
-        grid->snapper->setDistance(sp_convert_distance_full(nv.gridtolerance,
+        grid->snapper->setSnapperTolerance(sp_convert_distance_full(nv.gridtolerance,
                                                                       *nv.gridtoleranceunit,
                                                                       px));
     }
 
-    nv.snap_manager.guide.setDistance(sp_convert_distance_full(nv.guidetolerance,
+    nv.snap_manager.guide.setSnapperTolerance(sp_convert_distance_full(nv.guidetolerance,
                                                                        *nv.guidetoleranceunit,
                                                                        px));
-    nv.snap_manager.object.setDistance(sp_convert_distance_full(nv.objecttolerance,
+    nv.snap_manager.object.setSnapperTolerance(sp_convert_distance_full(nv.objecttolerance,
                                                                         *nv.objecttoleranceunit,
                                                                         px));
 }

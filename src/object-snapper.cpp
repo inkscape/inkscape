@@ -98,9 +98,9 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* r,
                             for (std::vector<NR::Point>::const_iterator i = points_to_snap.begin(); i != points_to_snap.end(); i++) {
                                 NR::Point b_min = b->min();
                                 NR::Point b_max = b->max();
-                                double d = getDistance();
-                                bool withinX = ((*i)[NR::X] >= b_min[NR::X] - d) && ((*i)[NR::X] <= b_max[NR::X] + d);
-                                bool withinY = ((*i)[NR::Y] >= b_min[NR::Y] - d) && ((*i)[NR::Y] <= b_max[NR::Y] + d);
+                                NR::Coord t = getSnapperTolerance();
+                                bool withinX = ((*i)[NR::X] >= b_min[NR::X] - t) && ((*i)[NR::X] <= b_max[NR::X] + t);
+                                bool withinY = ((*i)[NR::Y] >= b_min[NR::Y] - t) && ((*i)[NR::Y] <= b_max[NR::Y] + t);
                                 bool c1 = snap_dim == GUIDE_TRANSL_SNAP_X && withinX;
                                 bool c2 = snap_dim == GUIDE_TRANSL_SNAP_Y && withinY;
                                 bool c3 = snap_dim == TRANSL_SNAP_XY && withinX && withinY;
@@ -191,8 +191,8 @@ void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
     
     for (std::vector<NR::Point>::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
         NR::Coord dist = NR::L2(*k - p);        
-        if (dist < getDistance() && dist < s.getDistance()) {
-            s = SnappedPoint(*k, dist);
+        if (dist < getSnapperTolerance() && dist < s.getDistance()) {
+            s = SnappedPoint(*k, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
             success = true;
         }
     }
@@ -217,8 +217,8 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &s
         // Project each node (*k) on the guide line (running through point p)
         NR::Point p_proj = project_on_linesegment(*k, p, p + NR::rot90(guide_normal));
         NR::Coord dist = NR::L2(*k - p_proj);         
-        if (dist < getDistance() && dist < s.getDistance()) {
-            s = SnappedPoint(*k, dist);
+        if (dist < getSnapperTolerance() && dist < s.getDistance()) {
+            s = SnappedPoint(*k, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
             success = true;
         }
     }
@@ -351,7 +351,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                 NR::Point const o_dt = desktop->doc2dt(o_it);                
                 NR::Coord const dist = NR::L2(o_dt - p);
 
-                if (dist < getDistance()) {
+                if (dist < getSnapperTolerance()) {
 	                // if we snap to a straight line segment (within a path), then return this line segment
 	                if ((*k)->IsLineSegment(o->piece)) {
 	                    NR::Point start_point;
@@ -360,11 +360,11 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
 	                    (*k)->PointAt(o->piece, 1, end_point);
 	                    start_point = desktop->doc2dt(start_point);
 	                    end_point = desktop->doc2dt(end_point);
-	                    sc.lines.push_back(Inkscape::SnappedLineSegment(o_dt, dist, start_point, end_point));    
+	                    sc.lines.push_back(Inkscape::SnappedLineSegment(o_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), start_point, end_point));    
 	                } else {                
 	                    // for segments other than straight lines of a path, we'll return just the closest snapped point
 	                    if (dist < s.getDistance()) {
-	                        s = SnappedPoint(o_dt, dist);
+	                        s = SnappedPoint(o_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
 	                        success = true;
 	                    }
 	                }
@@ -404,10 +404,10 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
     
     // The intersection point of the constraint line with any path, 
     // must lie within two points on the constraintline: p_min_on_cl and p_max_on_cl
-    // The distance between those points is twice the max. snapping distance
+    // The distance between those points is twice the snapping tolerance
     NR::Point const p_proj_on_cl = project_on_linesegment(p, p1_on_cl, p2_on_cl);
-    NR::Point const p_min_on_cl = desktop->dt2doc(p_proj_on_cl - getDistance() * direction_vector);    
-    NR::Point const p_max_on_cl = desktop->dt2doc(p_proj_on_cl + getDistance() * direction_vector);
+    NR::Point const p_min_on_cl = desktop->dt2doc(p_proj_on_cl - getSnapperTolerance() * direction_vector);    
+    NR::Point const p_max_on_cl = desktop->dt2doc(p_proj_on_cl + getSnapperTolerance() * direction_vector);
     
     Geom::Path cl;
     cl.start(p_min_on_cl.to_2geom());
@@ -416,7 +416,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
     for (std::vector<NArtBpath*>::const_iterator k = _bpaths_to_snap_to->begin(); k != _bpaths_to_snap_to->end(); k++) {
         if (*k) {                        
             // convert a Path object (see src/livarot/Path.h) to a 2geom's path object (see 2geom/path.h)
-            // TODO (Diederik) Only do this once for the first point, needs some storage of pointers in a member variable
+            // TODO: (Diederik) Only do this once for the first point, needs some storage of pointers in a member variable
             std::vector<Geom::Path> path_2geom = BPath_to_2GeomPath(*k);  
             
             for (std::vector<Geom::Path>::const_iterator l = path_2geom.begin(); l != path_2geom.end(); l++) {
@@ -428,7 +428,8 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
                     // When it's within snapping range, then return it
                     // (within snapping range == between p_min_on_cl and p_max_on_cl == 0 < tb < 1)
                     if ((*m).tb >= 0 && (*m).tb <= 1 ) {
-                        SnappedPoint s(desktop->doc2dt(p_inters), NR::L2(p_proj_on_cl - p_inters));
+                        NR::Coord dist = NR::L2(desktop->dt2doc(p_proj_on_cl) - p_inters);
+                        SnappedPoint s(desktop->doc2dt(p_inters), dist, getSnapperTolerance(), getSnapperAlwaysSnap());
                         sc.points.push_back(s);    
                     }  
                 } 

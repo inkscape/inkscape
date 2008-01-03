@@ -11,17 +11,32 @@
 
 #include "snapped-point.h"
 
-Inkscape::SnappedPoint::SnappedPoint(NR::Point p, NR::Coord d, bool at_intersection, NR::Coord d2)
-    : _distance(d), _point(p), _at_intersection(at_intersection), _second_distance(d2)
+// overloaded constructor
+Inkscape::SnappedPoint::SnappedPoint(NR::Point p, NR::Coord d, NR::Coord t, bool a)
+    : _point(p), _distance(d), _tolerance(t), _always_snap(a)
+{
+    _at_intersection = false;
+    _second_distance = NR_HUGE;
+    _second_tolerance = 0;
+    _second_always_snap = false;
+}
+
+Inkscape::SnappedPoint::SnappedPoint(NR::Point p, NR::Coord d, NR::Coord t, bool a, bool at_intersection, NR::Coord d2, NR::Coord t2, bool a2)
+    : _point(p), _distance(d), _tolerance(t), _always_snap(a), _at_intersection(at_intersection), 
+    _second_distance(d2), _second_tolerance(t2), _second_always_snap(a2)
 {
 }
 
 Inkscape::SnappedPoint::SnappedPoint()
 {
-    _distance = NR_HUGE;
     _point = NR::Point(0,0);
+    _distance = NR_HUGE;
+    _tolerance = 0;
+    _always_snap = false;
     _at_intersection = false;
     _second_distance = NR_HUGE;
+    _second_tolerance = 0;
+    _second_always_snap = false;
 }
 
 
@@ -35,9 +50,29 @@ NR::Coord Inkscape::SnappedPoint::getDistance() const
     return _distance;
 }
 
+NR::Coord Inkscape::SnappedPoint::getTolerance() const
+{
+    return _tolerance;
+}
+
+bool Inkscape::SnappedPoint::getAlwaysSnap() const
+{
+    return _always_snap;
+}
+
 NR::Coord Inkscape::SnappedPoint::getSecondDistance() const
 {
     return _second_distance;
+}
+
+NR::Coord Inkscape::SnappedPoint::getSecondTolerance() const
+{
+    return _second_tolerance;
+}
+
+bool Inkscape::SnappedPoint::getSecondAlwaysSnap() const
+{
+    return _second_always_snap;
 }
 
 

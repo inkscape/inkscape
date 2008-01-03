@@ -20,9 +20,9 @@ Inkscape::Snapper::PointType const Inkscape::Snapper::SNAPPOINT_GUIDE = 0x4;
 /**
  *  Construct new Snapper for named view.
  *  \param nv Named view.
- *  \param d Snap distance.
+ *  \param d Snap tolerance.
  */
-Inkscape::Snapper::Snapper(SPNamedView const *nv, NR::Coord const d) : _named_view(nv), _snap_enabled(true), _distance(d)
+Inkscape::Snapper::Snapper(SPNamedView const *nv, NR::Coord const t) : _named_view(nv), _snap_enabled(true), _snapper_tolerance(t)
 {
     g_assert(_named_view != NULL);
     g_assert(SP_IS_NAMEDVIEW(_named_view));
@@ -31,20 +31,25 @@ Inkscape::Snapper::Snapper(SPNamedView const *nv, NR::Coord const d) : _named_vi
 }
 
 /**
- *  Set snap distance.
- *  \param d New snap distance (desktop coordinates)
+ *  Set snap tolerance.
+ *  \param d New snap tolerance (desktop coordinates)
  */
-void Inkscape::Snapper::setDistance(NR::Coord const d)
+void Inkscape::Snapper::setSnapperTolerance(NR::Coord const d)
 {
-    _distance = d;
+    _snapper_tolerance = d;
 }
 
 /**
- *  \return Snap distance (desktop coordinates); depends on current zoom so that it's always the same in screen pixels
+ *  \return Snap tolerance (desktop coordinates); depends on current zoom so that it's always the same in screen pixels
  */
-NR::Coord Inkscape::Snapper::getDistance() const
+NR::Coord Inkscape::Snapper::getSnapperTolerance() const
 {
-    return _distance / SP_ACTIVE_DESKTOP->current_zoom();
+    return _snapper_tolerance / SP_ACTIVE_DESKTOP->current_zoom();
+}
+
+bool Inkscape::Snapper::getSnapperAlwaysSnap() const
+{
+    return _snapper_tolerance == 10000; //TODO: Replace this threshold of 10000 by a constant; see also tolerance-slider.cpp
 }
 
 /**

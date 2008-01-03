@@ -26,7 +26,7 @@ class SnappedLineSegment : public SnappedPoint
 {
 public:
     SnappedLineSegment();
-    SnappedLineSegment(NR::Point snapped_point, NR::Coord snapped_distance, NR::Point start_point_of_line, NR::Point end_point_of_line);
+    SnappedLineSegment(NR::Point snapped_point, NR::Coord snapped_distance, NR::Coord snapped_tolerance, bool always_snap, NR::Point start_point_of_line, NR::Point end_point_of_line);
     ~SnappedLineSegment();
     Inkscape::SnappedPoint intersect(SnappedLineSegment const &line) const; //intersect with another SnappedLineSegment
     
@@ -41,13 +41,13 @@ class SnappedLine : public SnappedPoint
 {
 public:
     SnappedLine();
-    SnappedLine(NR::Point snapped_point, NR::Coord snapped_distance, NR::Point normal_to_line, NR::Point point_on_line);
+    SnappedLine(NR::Point snapped_point, NR::Coord snapped_distance, NR::Coord snapped_tolerance, bool always_snap, NR::Point normal_to_line, NR::Point point_on_line);
     ~SnappedLine();
     Inkscape::SnappedPoint intersect(SnappedLine const &line) const; //intersect with another SnappedLine
     // This line is described by this equation:
     //        a*x + b*y = c  <->  nx*px + ny+py = c  <->  n.p = c
     NR::Point getNormal() const {return _normal_to_line;}                             // n = (nx, ny)
-    NR::Point getPointOnLine() const {return _point_on_line;}                        // p = (px, py)
+    NR::Point getPointOnLine() const {return _point_on_line;}                         // p = (px, py)
     NR::Coord getConstTerm() const {return dot(_normal_to_line, _point_on_line);}     // c = n.p = nx*px + ny*py;
     
 private:

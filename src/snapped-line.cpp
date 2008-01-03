@@ -12,23 +12,31 @@
 #include <2geom/geom.h>
 #include "libnr/nr-values.h"
 
-Inkscape::SnappedLineSegment::SnappedLineSegment(NR::Point snapped_point, NR::Coord snapped_distance, NR::Point start_point_of_line, NR::Point end_point_of_line)
+Inkscape::SnappedLineSegment::SnappedLineSegment(NR::Point snapped_point, NR::Coord snapped_distance, NR::Coord snapped_tolerance, bool always_snap, NR::Point start_point_of_line, NR::Point end_point_of_line)
     : _start_point_of_line(start_point_of_line), _end_point_of_line(end_point_of_line) 
 {
-	_distance = snapped_distance;
 	_point = snapped_point;
+    _distance = snapped_distance;
+	_tolerance = snapped_tolerance;
+    _always_snap = always_snap;
 	_at_intersection = false;
 	_second_distance = NR_HUGE;
+    _second_tolerance = 0;
+    _second_always_snap = false;
 }
 
 Inkscape::SnappedLineSegment::SnappedLineSegment() 
 {
 	_start_point_of_line = NR::Point(0,0);
 	_end_point_of_line = NR::Point(0,0);
-	_distance = NR_HUGE;
 	_point = NR::Point(0,0);
+    _distance = NR_HUGE;
+	_tolerance = 0;
+    _always_snap = false;
 	_at_intersection = false;
 	_second_distance = NR_HUGE;
+    _second_tolerance = 0;
+    _second_always_snap = false;
 }
 
 
@@ -39,31 +47,45 @@ Inkscape::SnappedLineSegment::~SnappedLineSegment()
 Inkscape::SnappedPoint Inkscape::SnappedLineSegment::intersect(SnappedLineSegment const &line) const 
 {
 	Geom::Point intersection_2geom(NR_HUGE, NR_HUGE);
-	NR::Coord distance = NR_HUGE;
-	NR::Coord second_distance = NR_HUGE;
-	 
 	Geom::IntersectorKind result = segment_intersect(_start_point_of_line.to_2geom(), _end_point_of_line.to_2geom(),
                               						 line._start_point_of_line.to_2geom(), line._end_point_of_line.to_2geom(),
                               						 intersection_2geom);
   	NR::Point intersection(intersection_2geom);
 	
 	if (result == Geom::intersects) {
-		/* The relevant snapped distance is the distance to the closest snapped line, not the
-		distance to the intersection. See the comment in Inkscape::SnappedLine::intersect
+		/* If a snapper has been told to "always snap", then this one should be preferred
+         * over the other, if that other one has not been told so. (The preferred snapper
+         * will be labelled "primary" below)
+        */
+        bool const c1 = this->getAlwaysSnap() && !line.getAlwaysSnap(); //do not use _tolerance directly!
+        /* If neither or both have been told to "always snap", then cast a vote based on
+         * the snapped distance. For this we should consider the distance to the snapped
+         * line, not the distance to the intersection. 
+         * See the comment in Inkscape::SnappedLine::intersect
 		*/
-		distance = std::min(_distance, line.getDistance());
-		second_distance = std::max(_distance, line.getDistance());
+        bool const c2 = _distance < line.getDistance();
+        bool const use_this_as_primary = c1 || c2;
+        Inkscape::SnappedLineSegment const *primarySLS = use_this_as_primary ? this : &line;
+        Inkscape::SnappedLineSegment const *secondarySLS = use_this_as_primary ? &line : this;
+        return SnappedPoint(intersection, primarySLS->getDistance(), primarySLS->getTolerance(), primarySLS->getAlwaysSnap(), true, 
+                                          secondarySLS->getDistance(), secondarySLS->getTolerance(), secondarySLS->getAlwaysSnap());
 	}
-	return SnappedPoint(intersection, distance, result == Geom::intersects, second_distance);
+    
+    // No intersection
+    return SnappedPoint(intersection, NR_HUGE, 0, false, false, NR_HUGE, 0, false);
 };
 
 
 
-Inkscape::SnappedLine::SnappedLine(NR::Point snapped_point, NR::Coord snapped_distance, NR::Point normal_to_line, NR::Point point_on_line)
+Inkscape::SnappedLine::SnappedLine(NR::Point snapped_point, NR::Coord snapped_distance, NR::Coord snapped_tolerance, bool always_snap, NR::Point normal_to_line, NR::Point point_on_line)
     : _normal_to_line(normal_to_line), _point_on_line(point_on_line)
 {
 	_distance = snapped_distance;
+    _tolerance = snapped_tolerance;
+    _always_snap = always_snap;
 	_second_distance = NR_HUGE;
+    _second_tolerance = 0;
+    _second_always_snap = false;
 	_point = snapped_point;
 	_at_intersection = false;
 }
@@ -73,7 +95,11 @@ Inkscape::SnappedLine::SnappedLine()
 	_normal_to_line = NR::Point(0,0);
 	_point_on_line = NR::Point(0,0);
 	_distance = NR_HUGE;
+    _tolerance = 0;
+    _always_snap = false;
 	_second_distance = NR_HUGE;
+    _second_tolerance = 0;
+    _second_always_snap = false;
 	_point = NR::Point(0,0);
 	_at_intersection = false;
 }
@@ -84,31 +110,44 @@ Inkscape::SnappedLine::~SnappedLine()
 
 Inkscape::SnappedPoint Inkscape::SnappedLine::intersect(SnappedLine const &line) const 
 {
-	// Calculate the intersection of to lines, which are both within snapping range
+	// Calculate the intersection of two lines, which are both within snapping range
+    // One could be a grid line, whereas the other could be a guide line
 	// The point of intersection should be considered for snapping, but might be outside the snapping range
 	
 	Geom::Point intersection_2geom(NR_HUGE, NR_HUGE);
-	NR::Coord distance = NR_HUGE;
-	NR::Coord second_distance = NR_HUGE;
-	
-    Geom::IntersectorKind result = Geom::line_intersection(getNormal().to_2geom(), getConstTerm(), 
+	Geom::IntersectorKind result = Geom::line_intersection(getNormal().to_2geom(), getConstTerm(), 
                                    line.getNormal().to_2geom(), line.getConstTerm(), intersection_2geom);
 	NR::Point intersection(intersection_2geom);
 	 
 	if (result == Geom::intersects) {
-		/* The relevant snapped distance is the distance to the closest snapped line, not the
-		distance to the intersection. For example, when a box is almost aligned with a grid
-		in both horizontal and vertical directions, the distance to the intersection of the
-		grid lines will always be larger then the distance to a grid line. We will be snapping
-		to the closest snapped point however, so if we ever want to snap to the intersection
-		then the distance to it should at least be equal to the other distance, not greater 
-		than it, as that would rule the intersection out
-		*/
-		distance = std::min(_distance, line.getDistance());
-		second_distance = std::max(_distance, line.getDistance());
-	}
-
-    return SnappedPoint(intersection, distance, result == Geom::intersects, second_distance);
+        /* If a snapper has been told to "always snap", then this one should be preferred
+         * over the other, if that other one has not been told so. (The preferred snapper
+         * will be labelled "primary" below)
+        */
+        bool const c1 = this->getAlwaysSnap() && !line.getAlwaysSnap();
+        /* If neither or both have been told to "always snap", then cast a vote based on
+         * the snapped distance. For this we should consider the distance to the snapped
+         * line, not the distance to the intersection.
+         * 
+         * The relevant snapped distance is the distance to the closest snapped line, not the
+         * distance to the intersection. For example, when a box is almost aligned with a grid
+         * in both horizontal and vertical directions, the distance to the intersection of the
+         * grid lines will always be larger then the distance to a grid line. We will be snapping
+         * to the closest snapped point however, so if we ever want to snap to the intersection
+         * then the distance to it should at least be equal to the other distance, not greater
+         * than it, as that would rule the intersection out when comparing it with regular snappoint,
+         * as the latter will always be closer
+        */
+        bool const c2 = _distance < line.getDistance();
+        bool const use_this_as_primary = c1 || c2;
+        Inkscape::SnappedLine const *primarySL = use_this_as_primary ? this : &line;
+        Inkscape::SnappedLine const *secondarySL = use_this_as_primary ? &line : this;
+        return SnappedPoint(intersection, primarySL->getDistance(), primarySL->getTolerance(), primarySL->getAlwaysSnap(), true, 
+                                          secondarySL->getDistance(), secondarySL->getTolerance(), secondarySL->getAlwaysSnap());
+    }
+    
+    // No intersection
+    return SnappedPoint(intersection, NR_HUGE, 0, false, false, NR_HUGE, 0, false);
 }
 
 // search for the closest snapped line segment
