@@ -1230,7 +1230,7 @@ CairoRenderContext::renderPath(NRBPath const *bpath, SPStyle const *style, NRRec
                 cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_WINDING);
             }
             cairo_fill(_cr);
-            cairo_surface_write_to_png (_surface, "gtar2.png");
+            TEST(cairo_surface_write_to_png (_surface, "pathmask.png"));
         }
         return true;
     }
@@ -1424,11 +1424,7 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, NRMatrix const *font_matrix
             } else {
                 cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_WINDING);
             }
-            cairo_set_source_rgba (_cr, 1.0, 1.0, 1.0, 1.0);
-            cairo_rectangle (_cr, 0, 0, 30, 40);
-            cairo_fill (_cr);
             _showGlyphs(_cr, font, glyphtext, FALSE);
-            //cairo_fill(_cr);
         } else {
             // just add the glyph paths to the current context
             _showGlyphs(_cr, font, glyphtext, TRUE);
@@ -1458,6 +1454,8 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, NRMatrix const *font_matrix
 #else
     (void)size;
     (void)fc_pattern;
+
+    cairo_restore(_cr);
 #endif
 
     return true;
