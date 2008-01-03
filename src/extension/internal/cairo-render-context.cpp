@@ -70,7 +70,7 @@
 #endif
 
 
-#ifndef PANGO_ENABLE_BACKEND
+#ifdef CAIRO_HAS_FT_FONT
 #include <cairo-ft.h>
 #endif
 
@@ -1405,7 +1405,7 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, NRMatrix const *font_matrix
 
     cairo_save(_cr);
 
-#ifndef PANGO_ENABLE_BACKEND
+#ifdef CAIRO_HAS_FT_FONT
     cairo_font_face_t *font_face = cairo_ft_font_face_create_for_pattern(fc_pattern);
     cairo_set_font_face(_cr, font_face);
 
