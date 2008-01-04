@@ -97,6 +97,7 @@ ShowUninstDetails hide
 !include "czech.nsh" 
 !include "finnish.nsh" 
 !include "french.nsh" 
+!include "galician.nsh" 
 !include "german.nsh" 
 !include "italian.nsh" 
 !include "japanese.nsh"
