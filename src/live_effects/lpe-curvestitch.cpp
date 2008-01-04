@@ -41,9 +41,9 @@ using namespace Geom;
 LPECurveStitch::LPECurveStitch(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     strokepath(_("Stroke path"), _("The path that will be used as stitch."), "strokepath", &wr, this, "M0,0 L1,0"),
-    nrofpaths(_("Nr of paths"), _("The number of paths that will be generated."), "count", &wr, this, 5),
-    startpoint_variation(_("Startpoint variation"), _("..."), "startpoint_variation", &wr, this, 0),
-    endpoint_variation(_("Endpoint variation"), _("..."), "endpoint_variation", &wr, this, 0),
+    nrofpaths(_("Number of paths"), _("The number of paths that will be generated."), "count", &wr, this, 5),
+    startpoint_variation(_("Start point jitter"), _("The amount of random jitter to apply to the start points of the stitches"), "startpoint_variation", &wr, this, 0),
+    endpoint_variation(_("End point jitter"), _("The amount of random jitter to apply to the end points of the stitches"), "endpoint_variation", &wr, this, 0),
     spacing_variation(_("Spacing variation"), _("Determines whether lines cluster together or have an equal spacing between each other."), "spacing_variation", &wr, this, 0),
     prop_scale(_("Scale width"), _("Scaling of the width of the stroke path"), "prop_scale", &wr, this, 1),
     scale_y_rel(_("Scale width relative"), _("Scale the width of the stroke path relative to its length"), "scale_y_rel", &wr, this, false)
