@@ -205,7 +205,11 @@ void FilterSlot::set(int slot_nr, NRPixBlock *pb)
                                    min_x, min_y,
                                    max_x, max_y, true);
             if (trans_pb->size != NR_PIXBLOCK_SIZE_TINY && trans_pb->data.px == NULL) {
-                // memory allocation failed
+                /* TODO: this gets hit occasionally. Worst case scenario:
+                 * images are exported in horizontal stripes. One stripe
+                 * is not too high, but can get thousands of pixels wide.
+                 * Rotate this 45 degrees -> _huge_ image */
+                g_warning("Memory allocation failed in NR::FilterSlot::set (transform)");
                 return;
             }
             transform_nearest(trans_pb, pb, trans);
@@ -231,7 +235,7 @@ void FilterSlot::set(int slot_nr, NRPixBlock *pb)
             nr_pixblock_setup_fast(trans_pb, pb->mode,
                                    min_x, min_y, max_x, max_y, true);
             if (trans_pb->size != NR_PIXBLOCK_SIZE_TINY && trans_pb->data.px == NULL) {
-                //memory allocation failed
+                g_warning("Memory allocation failed in NR::FilterSlot::set (scaling)");
                 return;
             }
             scale_bicubic(trans_pb, pb);

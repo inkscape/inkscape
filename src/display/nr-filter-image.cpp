@@ -57,6 +57,11 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     }
     int w,x,y;
     NRPixBlock *in = slot.get(_input);
+    if (!in) {
+        g_warning("Missing source image for feImage (in=%d)", _input);
+        return 1;
+    }
+
     NRPixBlock *out = new NRPixBlock;
 
     int x0 = in->area.x0, y0 = in->area.y0;

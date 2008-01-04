@@ -34,13 +34,13 @@ FilterOffset::~FilterOffset()
 
 int FilterOffset::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in = slot.get(_input);
-    NRPixBlock *out = new NRPixBlock;
-
     // Bail out if source image is missing
     if (!in) {
         g_warning("Missing source image for feOffset (in=%d)", _input);
         return 1;
     }
+
+    NRPixBlock *out = new NRPixBlock;
 
     Matrix trans = units.get_matrix_primitiveunits2pb();
     Point offset(dx, dy);

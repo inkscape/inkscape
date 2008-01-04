@@ -52,6 +52,11 @@ do {\
 
 int FilterDiffuseLighting::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in = filter_get_alpha(slot.get(_input));
+    if (!in) {
+        g_warning("Missing source image for feDiffuseLighting (in=%d)", _input);
+        return 1;
+    }
+
     NRPixBlock *out = new NRPixBlock;
 
     int w = in->area.x1 - in->area.x0;

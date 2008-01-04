@@ -57,12 +57,14 @@ int FilterMerge::render(FilterSlot &slot, FilterUnits const &/*units*/) {
 
     NRPixBlock *out;
 
-    // Bail out if either one of source images is missing
+    // Bail out if one of source images is missing
     for (unsigned int i = 0 ; i < _input_image.size() ; i++) {
+        bool missing = false;
         if (!in[i]) {
             g_warning("Missing source image for feMerge (number=%d slot=%d)", i, _input_image[i]);
-            return 1;
+            missing = true;
         }
+        if (missing) return 1;
     }
 
     out = new NRPixBlock;

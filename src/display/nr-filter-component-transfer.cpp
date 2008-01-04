@@ -28,6 +28,11 @@ FilterComponentTransfer::~FilterComponentTransfer()
 
 int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     NRPixBlock *in = slot.get(_input);
+    if (!in) {
+        g_warning("Missing source image for feComponentTransfer (in=%d)", _input);
+        return 1;
+    }
+
     NRPixBlock *out = new NRPixBlock;
 
     nr_pixblock_setup_fast(out, in->mode,
@@ -38,6 +43,7 @@ int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &/*units
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
 
 //IMPLEMENT ME!
+    g_warning("Renderer for feComponentTransfer is not implemented.");
     (void)in_data;
     (void)out_data;
 

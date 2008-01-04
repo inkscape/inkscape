@@ -84,7 +84,6 @@ void FilterTurbulence::update_pixbuffer(FilterSlot &/*slot*/, IRect &area) {
     if (!pix){
         pix = new NRPixBlock;
         nr_pixblock_setup_fast(pix, NR_PIXBLOCK_MODE_R8G8B8A8N, bbox_x0, bbox_y0, bbox_x1, bbox_y1, true);
-        pix_data = NR_PIXBLOCK_PX(pix);
     }
     else if (bbox_x0 != pix->area.x0 || bbox_y0 != pix->area.y0 ||
         bbox_x1 != pix->area.x1 || bbox_y1 != pix->area.y1)
@@ -93,8 +92,16 @@ void FilterTurbulence::update_pixbuffer(FilterSlot &/*slot*/, IRect &area) {
          * width and height don't change */
         nr_pixblock_release(pix);
         nr_pixblock_setup_fast(pix, NR_PIXBLOCK_MODE_R8G8B8A8N, bbox_x0, bbox_y0, bbox_x1, bbox_y1, true);
-        pix_data = NR_PIXBLOCK_PX(pix);
     }
+
+    if (!pix || (pix->size != NR_PIXBLOCK_SIZE_TINY && pix->data.px == NULL)) {
+        /* TODO: Should render the visible area or something instead. */
+        g_warning("Unable to reserve image buffer for feTurbulence");
+        pix_data = NULL;
+        return;
+    }
+
+    pix_data = NR_PIXBLOCK_PX(pix);
 
     TurbulenceInit((long)seed);
 
@@ -128,9 +135,17 @@ int FilterTurbulence::render(FilterSlot &slot, FilterUnits const &units) {
     IRect area = units.get_pixblock_filterarea_paraller();
     // TODO: could be faster - updated_area only has to be same size as area
     if (!updated || updated_area != area) update_pixbuffer(slot, area);
-
+    if (!pix_data) {
+        /* update_pixbuffer couldn't render the turbulence */
+        return 1;
+    }
     NRPixBlock *in = slot.get(_input);
+    if (!in) {
+        g_warning("Missing source image for feTurbulence (in=%d)", _input);
+        return 1;
+    }
     NRPixBlock *out = new NRPixBlock;
+
     int x,y;
     int x0 = in->area.x0, y0 = in->area.y0;
     int x1 = in->area.x1, y1 = in->area.y1;

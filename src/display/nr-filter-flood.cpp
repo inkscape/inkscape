@@ -28,6 +28,11 @@ FilterFlood::~FilterFlood()
 
 int FilterFlood::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     NRPixBlock *in = slot.get(_input);
+    if (!in) {
+        g_warning("Missing source image for feFlood (in=%d)", _input);
+        return 1;
+    }
+
     NRPixBlock *out = new NRPixBlock;
 
     nr_pixblock_setup_fast(out, in->mode,

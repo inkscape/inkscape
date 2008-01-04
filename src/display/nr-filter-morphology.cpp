@@ -27,6 +27,11 @@ FilterMorphology::~FilterMorphology()
 
 int FilterMorphology::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     NRPixBlock *in = slot.get(_input);
+    if (!in) {
+        g_warning("Missing source image for feMorphology (in=%d)", _input);
+        return 1;
+    }
+
     NRPixBlock *out = new NRPixBlock;
 
     int x0=in->area.x0;

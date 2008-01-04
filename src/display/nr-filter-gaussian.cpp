@@ -508,9 +508,14 @@ upsample(PT *const dst, int const dstr1, int const dstr2, unsigned int const dn1
 
 int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
 {
-    Matrix trans = units.get_matrix_primitiveunits2pb();
     /* in holds the input pixblock */
     NRPixBlock *in = slot.get(_input);
+    if (!in) {
+        g_warning("Missing source image for feGaussianBlur (in=%d)", _input);
+        return 1;
+    }
+
+    Matrix trans = units.get_matrix_primitiveunits2pb();
 
     /* If to either direction, the standard deviation is zero or
      * input image is not defined,

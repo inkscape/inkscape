@@ -36,6 +36,11 @@ static bool inside_area(int px, int py, int w, int h){
 
 int FilterConvolveMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     NRPixBlock *in = slot.get(_input);
+    if (!in) {
+        g_warning("Missing source image for feConvolveMatrix (in=%d)", _input);
+        return 1;
+    }
+
     NRPixBlock *out = new NRPixBlock;
 
     nr_pixblock_setup_fast(out, in->mode,

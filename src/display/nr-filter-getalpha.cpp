@@ -21,6 +21,11 @@ NRPixBlock *filter_get_alpha(NRPixBlock *src)
     nr_pixblock_setup_fast(dst, NR_PIXBLOCK_MODE_R8G8B8A8P,
                            src->area.x0, src->area.y0,
                            src->area.x1, src->area.y1, false);
+    if (!dst || (dst->size != NR_PIXBLOCK_SIZE_TINY && dst->data.px == NULL)) {
+        g_warning("Memory allocation failed in filter_get_alpha");
+        delete dst;
+        return NULL;
+    }
     nr_blit_pixblock_pixblock(dst, src);
 
     unsigned char *data = NR_PIXBLOCK_PX(dst);

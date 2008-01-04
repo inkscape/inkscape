@@ -61,6 +61,11 @@ do {\
 
 int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in = filter_get_alpha(slot.get(_input));
+    if (!in) {
+        g_warning("Missing source image for feSpecularLighting (in=%d)", _input);
+        return 1;
+    }
+
     NRPixBlock *out = new NRPixBlock;
 
     //Fvector *L = NULL; //vector to the light
