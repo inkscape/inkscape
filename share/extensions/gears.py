@@ -149,14 +149,14 @@ class Gears(inkex.Effect):
         # Embed gear in group to make animation easier:
         #  Translate group, Rotate path.
         t = 'translate(' + str( self.view_center[0] ) + ',' + str( self.view_center[1] ) + ')'
-        g_attribs = {'inkscape:label':'Gear' + str( teeth ),
+        g_attribs = {inkex.addNS('label','inkscape'):'Gear' + str( teeth ),
                    'transform':t }
         g = inkex.etree.SubElement(self.current_layer, 'g', g_attribs)
 
         # Create SVG Path for gear
         style = { 'stroke': '#000000', 'fill': 'none' }
         gear_attribs = {'style':simplestyle.formatStyle(style), 'd':path}
-        gear = inkex.etree.SubElement(g, 'svg:path', gear_attribs )
+        gear = inkex.etree.SubElement(g, inkex.addNS('path','svg'), gear_attribs )
 
 e = Gears()
 e.affect()

@@ -23,13 +23,14 @@ import sys, copy, optparse, random, re
 
 #a dictionary of all of the xmlns prefixes in a standard inkscape doc
 NSS = {
-u'sodipodi'    :u'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd',
-u'cc'        :u'http://web.resource.org/cc/',
-u'svg'        :u'http://www.w3.org/2000/svg',
-u'dc'        :u'http://purl.org/dc/elements/1.1/',
-u'rdf'        :u'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-u'inkscape'    :u'http://www.inkscape.org/namespaces/inkscape',
-u'xlink'    :u'http://www.w3.org/1999/xlink'
+u'sodipodi' :u'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd',
+u'cc'       :u'http://web.resource.org/cc/',
+u'svg'      :u'http://www.w3.org/2000/svg',
+u'dc'       :u'http://purl.org/dc/elements/1.1/',
+u'rdf'      :u'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+u'inkscape' :u'http://www.inkscape.org/namespaces/inkscape',
+u'xlink'    :u'http://www.w3.org/1999/xlink',
+u'xml'      :u'http://www.w3.org/XML/1998/namespace'
 }
 
 #a dictionary of unit to user unit conversion factors
@@ -55,7 +56,7 @@ def unittouu(string):
 try:
     from lxml import etree
 except:
-    sys.exit('The fantabulous lxml wrapper for libxml2 is required by inkex_lxml.py and therefore this extension. Please download the latest version from <http://cheeseshop.python.org/pypi/lxml/>.')
+    sys.exit('The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore this extension. Please download and install the latest version from <http://cheeseshop.python.org/pypi/lxml/>.')
 
 def debug(what):
     sys.stderr.write(str(what) + "\n")
