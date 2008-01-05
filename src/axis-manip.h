@@ -12,6 +12,7 @@
 #ifndef SEEN_AXIS_MANIP_H
 #define SEEN_AXIS_MANIP_H
 
+#include <glib/gtestutils.h>
 #include <gtk/gtk.h>
 #include "libnr/nr-point.h"
 

@@ -33,6 +33,7 @@
 # include <ieeefp.h>
 #endif
 
+#include <glib/gtestutils.h>
 #include <glib/gmessages.h>
 #include <glib/gmem.h>
 #include "bezier-utils.h"

@@ -17,6 +17,7 @@
 # include "config.h"
 #endif
 
+#include <glib/gtestutils.h>
 #include <glib/ghash.h>
 #include "attributes.h"
 

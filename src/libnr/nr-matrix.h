@@ -17,6 +17,7 @@
  * This code is in public domain.
  */
 
+#include <glib/gtestutils.h>
 #include <glib/gmessages.h>
 
 #include "libnr/nr-coord.h"

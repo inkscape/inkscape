@@ -1,7 +1,7 @@
 /** \file color-rgba.h
 
     A class to handle a RGBA color as one unit.
-    
+
     Authors:
       bulia byak <buliabyak@gmail.com>
 
@@ -12,6 +12,7 @@
 #ifndef SEEN_COLOR_RGBA_H
 #define SEEN_COLOR_RGBA_H
 
+#include <glib/gtestutils.h>
 #include <glib/gmessages.h>
 #include "libnr/nr-pixops.h"
 #include "decimal-round.h"

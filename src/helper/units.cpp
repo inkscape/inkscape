@@ -20,6 +20,7 @@
 #endif
 
 #include "helper/units.h"
+#include <glib/gtestutils.h>
 #include <glibmm/i18n.h>
 #include "unit-constants.h"
 #include "svg/svg-length.h"

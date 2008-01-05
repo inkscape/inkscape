@@ -16,6 +16,7 @@
 #include "config.h"
 #endif
 
+#include <glib/gtestutils.h>
 #include <glib/gmessages.h>
 #include <glib/gstrfuncs.h>
 #include <glib/gfileutils.h>

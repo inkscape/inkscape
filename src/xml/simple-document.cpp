@@ -12,6 +12,8 @@
  *
  */
 
+#include <glib/gtestutils.h>
+
 #include "xml/simple-document.h"
 #include "xml/event-fns.h"
 #include "xml/element-node.h"

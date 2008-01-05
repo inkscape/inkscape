@@ -14,8 +14,10 @@
 
 #include <stdarg.h>
 #include <vector>
-#include "glib/gstrfuncs.h"
-#include "glib/gmessages.h"
+#include <glib/gtestutils.h>
+#include <glib/gstrfuncs.h>
+#include <glib/gmessages.h>
+
 #include "gc-alloc.h"
 #include "debug/event.h"
 

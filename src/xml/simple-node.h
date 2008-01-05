@@ -15,6 +15,8 @@
 #ifndef SEEN_INKSCAPE_XML_SIMPLE_NODE_H
 #define SEEN_INKSCAPE_XML_SIMPLE_NODE_H
 
+#include <glib/gtestutils.h>
+
 #include "xml/node.h"
 #include "xml/attribute-record.h"
 #include "xml/composite-node-observer.h"

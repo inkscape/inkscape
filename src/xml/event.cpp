@@ -13,6 +13,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glib/gtestutils.h>
+
 #include "event.h"
 #include "event-fns.h"
 #include "util/reverse-list.h"
