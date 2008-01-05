@@ -14,7 +14,7 @@
 
 #include <stdarg.h>
 #include <vector>
-#include <glib/gtestutils.h>
+#include <glib.h> // g_assert()
 #include <glib/gstrfuncs.h>
 #include <glib/gmessages.h>
 

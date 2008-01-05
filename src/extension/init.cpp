@@ -151,6 +151,8 @@ update_pref(gchar const *pref_path, gchar const *pref_attr,
 void
 init()
 {
+    printf("Initting inputs\n");
+
     /* TODO: Change to Internal */
     Internal::Svg::init();
     Internal::Svgz::init();
@@ -167,10 +169,13 @@ init()
     Internal::CairoPsOutput::init();
 #endif
 #ifdef HAVE_POPPLER
+    printf("Initting PdfInput for poppler");
     Internal::PdfInput::init();
 #endif
 #ifdef HAVE_POPPLER_GLIB
+    printf("We have POPPLER GLIB\n");
     if (1) {
+        printf("Initting PdfInputCairo\n");
     Internal::PdfInputCairo::init();
     }
 #endif

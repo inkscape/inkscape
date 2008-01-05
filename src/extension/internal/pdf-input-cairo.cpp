@@ -35,6 +35,8 @@ static cairo_status_t _write_ustring_cb(void *closure, const unsigned char *data
 SPDocument *
 PdfInputCairo::open(Inkscape::Extension::Input * mod, const gchar * uri) {
 
+    printf("Attempting to open using PdfInputCairo\n");
+
     gchar* filename_uri = g_filename_to_uri(uri, NULL, NULL);
 
     PopplerDocument* document = poppler_document_new_from_file(filename_uri, NULL, NULL);
