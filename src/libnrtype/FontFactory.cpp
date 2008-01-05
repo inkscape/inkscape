@@ -11,6 +11,8 @@
 #include "FontFactory.h"
 #include <libnrtype/font-instance.h>
 
+#include <glibmm.h>
+
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
@@ -202,8 +204,8 @@ is_swash(char const *s)
  * Q:  Shouldn't this include the other tests such as is_outline, etc.?
  * Q:  Is there a problem with strcasecmp on Win32?  Should it use stricmp?
  */
-static int
-style_name_compare(void const *aa, void const *bb)
+int
+style_name_compare(char const *aa, char const *bb)
 {
     char const *a = (char const *) aa;
     char const *b = (char const *) bb;
@@ -254,8 +256,8 @@ static void font_factory_style_list_destructor(NRStyleList *list)
 /**
  * On Win32 performs a stricmp(a,b), otherwise does a strcasecmp(a,b)
  */
-static int
-family_name_compare(void const *a, void const *b)
+int
+family_name_compare(char const *a, char const *b)
 {
 #ifndef WIN32
     return strcasecmp((*((char const **) a)), (*((char const **) b)));
@@ -323,6 +325,349 @@ font_factory::~font_factory(void)
     //pango_ft2_shutdown_display();
 #endif
     //g_object_unref(fontContext);
+    
+    // Delete the pango font pointers in the string to instance map
+    PangoStringToDescrMap::iterator it = fontInstanceMap.begin();
+    while (it != fontInstanceMap.end()) {
+        pango_font_description_free((*it).second);
+        it++;
+    }
+}
+
+
+Glib::ustring font_factory::ConstructFontSpecification(PangoFontDescription *font)
+{
+    Glib::ustring pangoString;
+    
+    g_assert(font);
+    
+    if (font) {
+        // Once the format for the font specification is decided, it must be
+        // kept.. if it is absolutely necessary to change it, the attribute
+        // it is written to needs to have a new version so the legacy files
+        // can be read.
+        
+        PangoFontDescription *copy = pango_font_description_copy(font);
+        
+        pango_font_description_unset_fields (copy, PANGO_FONT_MASK_SIZE);
+        pangoString = Glib::ustring(pango_font_description_to_string(copy));
+        
+        pango_font_description_free(copy);
+        
+    }
+    
+    return pangoString;
+}
+
+Glib::ustring font_factory::ConstructFontSpecification(font_instance *font)
+{
+    Glib::ustring pangoString;
+    
+    g_assert(font);
+    
+    if (font) {
+        pangoString = ConstructFontSpecification(font->descr);
+    }
+    
+    return pangoString;
+}
+
+Glib::ustring font_factory::GetUIFamilyString(PangoFontDescription const *fontDescr)
+{
+    Glib::ustring family;
+    
+    g_assert(fontDescr);
+    
+    if (fontDescr) {
+        // For now, keep it as family name taken from pango
+        family = pango_font_description_get_family(fontDescr);
+    }
+    
+    return family;
+}
+
+Glib::ustring font_factory::GetUIStyleString(PangoFontDescription const *fontDescr)
+{
+    Glib::ustring style;
+    
+    g_assert(fontDescr);
+    
+    if (fontDescr) {
+        PangoFontDescription *fontDescrCopy = pango_font_description_copy(fontDescr);
+        
+        pango_font_description_unset_fields(fontDescrCopy, PANGO_FONT_MASK_FAMILY);
+        pango_font_description_unset_fields(fontDescrCopy, PANGO_FONT_MASK_SIZE);
+        
+        // For now, keep it as style name taken from pango
+        style = pango_font_description_to_string(fontDescrCopy);
+        
+        pango_font_description_free(fontDescrCopy);
+    }
+    
+    return style; 
+}
+
+Glib::ustring font_factory::ReplaceFontSpecificationFamily(const Glib::ustring & fontSpec, const Glib::ustring & newFamily)
+{
+    Glib::ustring newFontSpec;
+    
+    // Although we are using the string from pango_font_description_to_string for the
+    // font specification, we definitely cannot just set the new family in the
+    // PangoFontDescription structure and ask for a new string.  This is because
+    // what constitutes a "family" in our own UI may be different from how Pango
+    // sees it.
+    
+    // Find the PangoFontDescription associated to this fontSpec
+    PangoStringToDescrMap::iterator it = fontInstanceMap.find(fontSpec);
+    
+    g_assert(it != fontInstanceMap.end());
+    
+    if (it != fontInstanceMap.end()) {
+        PangoFontDescription *descr = pango_font_description_copy((*it).second);
+        
+        // Grab the UI Family string from the descr
+        Glib::ustring uiFamily = GetUIFamilyString(descr);
+        
+        // Replace the UI Family name with the new family name
+        std::size_t found = fontSpec.find(uiFamily);
+        if (found != Glib::ustring::npos) {
+            newFontSpec = fontSpec;
+            newFontSpec.erase(found, uiFamily.size());
+            newFontSpec.insert(found, newFamily);
+            
+            // If the new font specification does not exist in the reference maps,
+            // search for the next best match for the faces in that style 
+            it = fontInstanceMap.find(newFontSpec);
+            if (it == fontInstanceMap.end()) {
+                
+                PangoFontDescription *newFontDescr = pango_font_description_from_string(newFontSpec.c_str());
+                
+                PangoFontDescription *bestMatchForNewDescr = NULL;
+                Glib::ustring bestMatchFontDescription;
+                
+                bool setFirstFamilyMatch = false;
+                for (it = fontInstanceMap.begin(); it != fontInstanceMap.end(); it++) {
+                    
+                    Glib::ustring currentFontSpec = (*it).first;
+                    
+                    // Save some time by only looking at the right family
+                    if (currentFontSpec.find(newFamily) != Glib::ustring::npos) {
+                        if (!setFirstFamilyMatch) {
+	                        // This ensures that the closest match is at least within the correct
+	                        // family rather than the first font in the list
+                            bestMatchForNewDescr = pango_font_description_copy((*it).second);
+                            bestMatchFontDescription = currentFontSpec;
+                            setFirstFamilyMatch = true;
+                        } else {
+                            // Get the font description that corresponds, and
+                            // then see if we've found a better match
+                            PangoFontDescription *possibleMatch = pango_font_description_copy((*it).second);
+                            
+                            if (pango_font_description_better_match(
+                                    newFontDescr, bestMatchForNewDescr, possibleMatch)) {
+                                
+                                pango_font_description_free(bestMatchForNewDescr);
+                                bestMatchForNewDescr = possibleMatch;
+                                bestMatchFontDescription = currentFontSpec;
+                            } else {
+                                pango_font_description_free(possibleMatch);
+                            }
+                        }
+                    }
+                }
+                
+                newFontSpec = bestMatchFontDescription;
+                
+                pango_font_description_free(newFontDescr);
+                pango_font_description_free(bestMatchForNewDescr);
+            }
+        }
+        
+        pango_font_description_free(descr);
+    }
+    
+    return newFontSpec;
+}
+
+Glib::ustring font_factory::FontSpecificationSetItalic(const Glib::ustring & fontSpec, bool turnOn)
+{
+    Glib::ustring newFontSpec;
+    
+    // Find the PangoFontDesecription that goes with this font specification string
+    PangoStringToDescrMap::iterator it = fontInstanceMap.find(fontSpec);
+    
+    g_assert(it != fontInstanceMap.end());
+    
+    if (it != fontInstanceMap.end()) {
+        // If we did find one, make a copy and set/unset the italic as needed
+        PangoFontDescription *descr = pango_font_description_copy((*it).second);
+        
+        PangoStyle style;
+        if (turnOn) {
+            style = PANGO_STYLE_ITALIC;
+        } else {
+            style = PANGO_STYLE_NORMAL;
+        }
+        pango_font_description_set_style(descr, style);
+        
+        newFontSpec = ConstructFontSpecification(descr);
+        if (fontInstanceMap.find(newFontSpec) == fontInstanceMap.end()) {
+            // If the new font does not have an italic face, don't
+            // allow italics to be set!
+            newFontSpec = fontSpec;
+        }
+        
+        pango_font_description_free(descr);
+    }
+    
+    return newFontSpec;    
+}
+
+Glib::ustring font_factory::FontSpecificationSetBold(const Glib::ustring & fontSpec, bool turnOn)
+{
+    Glib::ustring newFontSpec;
+    
+    // Find the PangoFontDesecription that goes with this font specification string
+    PangoStringToDescrMap::iterator it = fontInstanceMap.find(fontSpec);
+    
+    if (it != fontInstanceMap.end()) {
+        // If we did find one, make a copy and set/unset the bold as needed
+        PangoFontDescription *descr = pango_font_description_copy((*it).second);
+        
+        PangoWeight weight;
+        if (turnOn) {
+            weight = PANGO_WEIGHT_BOLD;
+        } else {
+            weight = PANGO_WEIGHT_NORMAL;
+        }
+        pango_font_description_set_weight(descr, weight);
+        
+        newFontSpec = ConstructFontSpecification(descr);
+        if (fontInstanceMap.find(newFontSpec) == fontInstanceMap.end()) {
+            // If the new font does not have a bold face, don't
+            // allow bold to be set!
+            newFontSpec = fontSpec;
+        }
+        
+        pango_font_description_free(descr);
+    }
+    
+    return newFontSpec;  
+}
+
+/////
+
+static bool StyleNameCompareInternal(Glib::ustring style1, Glib::ustring style2)
+{
+    return (style_name_compare(style1.c_str(), style2.c_str()) < 0);
+}
+
+void font_factory::GetUIFamiliesAndStyles(FamilyToStylesMap *map)
+{
+    g_assert(map);
+    
+    if (map) {
+        
+        // Gather the family names as listed by Pango
+        PangoFontFamily**  families = NULL;
+        int numFamilies = 0;
+        pango_font_map_list_families(fontServer, &families, &numFamilies);
+           
+        for (int currentFamily=0; currentFamily < numFamilies; currentFamily++) {
+            
+            // Gather the styles for this family
+            PangoFontFace** faces = NULL;
+            int numFaces = 0;
+            pango_font_family_list_faces(families[currentFamily], &faces, &numFaces);
+            
+            for (int currentFace=0; currentFace < numFaces; currentFace++) {
+                
+                // If the face has a name, describe it, and then use the 
+                // description to get the UI family and face strings
+                
+                if (pango_font_face_get_face_name(faces[currentFace]) == NULL) {
+                    continue;
+                }
+                
+                PangoFontDescription *faceDescr = pango_font_face_describe(faces[currentFace]);
+                if (faceDescr) {
+                    Glib::ustring familyUIName = GetUIFamilyString(faceDescr);
+                    Glib::ustring styleUIName = GetUIStyleString(faceDescr);
+                    
+                    if (!familyUIName.empty() && !styleUIName.empty()) {
+                        // Find the right place to put the style information, adding
+                        // a map entry for the family name if it doesn't yet exist
+                        
+                        FamilyToStylesMap::iterator iter = map->find(familyUIName);
+                        
+                        if (iter == map->end()) {
+                            map->insert(std::make_pair(familyUIName, std::list<Glib::ustring>()));
+                        }
+                        
+                        // Insert into the style list and save the info in the reference maps
+                        // only if the style does not yet exist
+                        
+                        bool exists = false;
+                        std::list<Glib::ustring> &styleList = (*map)[familyUIName];
+                        
+                        for (std::list<Glib::ustring>::iterator it=styleList.begin();
+                                 it != styleList.end();
+                                 it++) {
+                            if (*it == styleUIName) {
+                                exists = true;
+                                break;
+                            }
+                        }
+                        
+                        if (!exists) {
+                            styleList.push_back(styleUIName);
+                            
+                            // Add the string info needed in the reference maps
+                            fontStringMap.insert(
+                                    std::make_pair(
+                                            Glib::ustring(familyUIName) + Glib::ustring(styleUIName),
+                                            ConstructFontSpecification(faceDescr)));
+                            fontInstanceMap.insert(
+                                    std::make_pair(ConstructFontSpecification(faceDescr), faceDescr));
+                        } else {
+                            pango_font_description_free(faceDescr);
+                        }
+                    } else {
+                        pango_font_description_free(faceDescr);
+                    }
+                }
+            }
+        }
+       
+        // Sort the style lists
+        for (FamilyToStylesMap::iterator iter = map->begin() ; iter != map->end(); iter++) {
+            (*iter).second.sort(StyleNameCompareInternal);
+        }
+    }
+}
+
+font_instance* font_factory::FaceFromStyle(SPStyle const *style)
+{
+    font_instance *font = NULL;
+    
+    g_assert(style);
+    
+    if (style) {
+        //  First try to use the font specification if it is set
+        if (style->text->font_specification.set
+            && style->text->font_specification.value
+            && *style->text->font_specification.value) {
+            
+            font = FaceFromFontSpecification(style->text->font_specification.value);
+        }
+        
+        // If that failed, try using the CSS information in the style
+        if (!font) {
+            font = Face(style->text->font_family.value, font_style_to_pos(*style));
+        }
+    }
+    
+    return font;
 }
 
 font_instance *font_factory::FaceFromDescr(char const *family, char const *style)
@@ -333,6 +678,81 @@ font_instance *font_factory::FaceFromDescr(char const *family, char const *style
     pango_font_description_free(temp_descr);
     return res;
 }
+
+font_instance* font_factory::FaceFromUIStrings(char const *uiFamily, char const *uiStyle)
+{
+    font_instance *fontInstance = NULL;
+    
+    g_assert(uiFamily && uiStyle);
+    if (uiFamily && uiStyle) {
+        Glib::ustring uiString = Glib::ustring(uiFamily) + Glib::ustring(uiStyle);
+        
+        UIStringToPangoStringMap::iterator uiToPangoIter = fontStringMap.find(uiString);
+        
+        if (uiToPangoIter != fontStringMap.end ()) {
+            PangoStringToDescrMap::iterator pangoToDescrIter = fontInstanceMap.find((*uiToPangoIter).second);
+            if (pangoToDescrIter != fontInstanceMap.end()) {
+                // We found the pango description - now we can make a font_instance
+                PangoFontDescription *tempDescr = pango_font_description_copy((*pangoToDescrIter).second);
+                fontInstance = Face(tempDescr);
+                pango_font_description_free(tempDescr);
+            }
+        }
+    }
+    
+    return fontInstance;
+}
+
+font_instance* font_factory::FaceFromPangoString(char const *pangoString)
+{
+    font_instance *fontInstance = NULL;
+        
+    g_assert(pangoString);
+    
+    if (pangoString) {
+        PangoFontDescription *descr = NULL;
+         
+        // First attempt to find the font specification in the reference map
+        PangoStringToDescrMap::iterator it = fontInstanceMap.find(Glib::ustring(pangoString));
+        if (it != fontInstanceMap.end()) {
+            descr = pango_font_description_copy((*it).second);
+        }
+         
+        // Or create a font description from the string - this may fail or
+        // produce unexpected results if the string does not have a good format
+        if (!descr) {
+            descr = pango_font_description_from_string(pangoString);
+        }
+        
+        if (descr && (pango_font_description_get_family(descr) != NULL)) {
+            fontInstance = Face(descr);
+        }
+        
+        if (descr) {
+            pango_font_description_free(descr);
+        }
+    }
+     
+    return fontInstance;
+}
+
+font_instance* font_factory::FaceFromFontSpecification(char const *fontSpecification)
+{
+    font_instance *font = NULL;
+    
+    g_assert(fontSpecification);
+    
+    if (fontSpecification) {
+        // How the string is used to reconstruct a font depends on how it
+        // was constructed in ConstructFontSpecification.  As it stands,
+        // the font specification is a pango-created string
+        font = FaceFromPangoString(fontSpecification);
+    }
+    
+    return font;
+}
+
+
 
 font_instance *font_factory::Face(PangoFontDescription *descr, bool canFail)
 {
@@ -485,106 +905,6 @@ void font_factory::UnrefFace(font_instance *who)
         loadedFaces.erase(loadedFaces.find(who->descr));
         //			printf("unrefFace %p: success\n",who);
     }
-}
-
-NRNameList *font_factory::Families(NRNameList *flist)
-{
-    PangoFontFamily**  fams = NULL;
-    int                nbFam = 0;
-    pango_font_map_list_families(fontServer, &fams, &nbFam);
-	
-    PANGO_DEBUG("got %d families\n", nbFam);
-	
-    flist->length = nbFam;
-    flist->names = (guchar **)g_malloc(nbFam*sizeof(guchar*));
-    flist->destructor = font_factory_name_list_destructor;
-	
-    for (int i = 0;i < nbFam;i++) {
-// Note: on Windows, pango_font_family_get_name always returns lowercase name.
-// As a result the list of fonts in the dialog is lowercase.
-// We could work around by loading the font and taking pango_font_description_get_family from its descr (that gives correct case),
-// but this is slow, and it's better to fix Pango instead.
-        flist->names[i]=(guchar*)strdup(pango_font_family_get_name(fams[i]));
-    }
-	
-    qsort(flist->names, nbFam, sizeof(guchar *), family_name_compare);
-	
-    g_free(fams);
-	
-    return flist;
-}
-
-NRStyleList *font_factory::Styles(gchar const *family, NRStyleList *slist)
-{
-    PangoFontFamily *theFam = NULL;
-	
-    // search available families
-    {
-        PangoFontFamily**  fams = NULL;
-        int                nbFam = 0;
-        pango_font_map_list_families(fontServer, &fams, &nbFam);
-		
-        for (int i = 0;i < nbFam;i++) {
-            char const *fname = pango_font_family_get_name(fams[i]);
-            if ( fname && strcmp(family,fname) == 0 ) {
-                theFam = fams[i];
-                break;
-            }
-        }
-		
-        g_free(fams);
-    }
-	
-    // nothing found
-    if ( theFam == NULL ) {
-        slist->length = 0;
-        slist->records = NULL;
-        slist->destructor = NULL;
-        return slist;
-    }
-	
-    // search faces in the found family
-    PangoFontFace**  faces = NULL;
-    int nFaces = 0;
-    pango_font_family_list_faces(theFam, &faces, &nFaces);
-	
-    slist->records = (NRStyleRecord *) g_malloc(nFaces * sizeof(NRStyleRecord));
-    slist->destructor = font_factory_style_list_destructor;
-	
-    int nr = 0;
-    for (int i = 0; i < nFaces; i++) {
-		
-        // no unnamed faces
-        if (pango_font_face_get_face_name(faces[i]) == NULL)
-            continue;
-        PangoFontDescription *nd = pango_font_face_describe(faces[i]);
-        if (nd == NULL)
-            continue;
-        char const *descr = pango_font_description_to_string(nd);
-        if (descr == NULL) {
-            pango_font_description_free(nd);
-            continue;
-        }
-		
-        char const *name = g_strdup(pango_font_face_get_face_name(faces[i]));
-        pango_font_description_free(nd);
-		
-        slist->records[nr].name = name;
-        slist->records[nr].descr = descr;
-        nr ++;
-    }
-	
-    slist->length = nr;
-	
-    qsort(slist->records, slist->length, sizeof(NRStyleRecord), style_record_compare);
-    /* effic: Consider doing strdown and all the is_italic etc. tests once off and store the
-     * results in a table, rather than having the sort invoke multiple is_italic tests per
-     * record.
-     */
-	
-    g_free(faces);
-	
-    return slist;
 }
 
 void font_factory::AddInCache(font_instance *who)

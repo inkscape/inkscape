@@ -7,6 +7,8 @@
 #ifndef my_font_factory
 #define my_font_factory
 
+//#include <glibmm/ustring.h>
+
 #include <functional>
 #include <algorithm>
 #include <ext/hash_map>
@@ -21,7 +23,9 @@
 #include <pango/pango.h>
 #include "nr-type-primitives.h"
 #include "nr-type-pos-def.h"
+#include "font-style-to-pos.h"
 #include <libnrtype/nrtype-forward.h>
+#include "../style.h"
 
 /* Freetype */
 #ifdef USE_PANGO_WIN32
@@ -31,6 +35,11 @@
 #include <freetype/freetype.h>
 #endif
 
+namespace Glib
+{
+    class ustring;
+}
+
 // the font_factory keeps a hashmap of all the loaded font_instances, and uses the PangoFontDescription
 // as index (nota: since pango already does that, using the PangoFont could work too)
 struct font_descr_hash : public std::unary_function<PangoFontDescription*,size_t> {
@@ -39,6 +48,13 @@ struct font_descr_hash : public std::unary_function<PangoFontDescription*,size_t
 struct font_descr_equal : public std::binary_function<PangoFontDescription*, PangoFontDescription*, bool> {
     bool operator()(PangoFontDescription *const &a, PangoFontDescription *const &b);
 };
+
+// Comparison functions for style names
+int style_name_compare(char const *aa, char const *bb);
+int family_name_compare(char const *a, char const *b);
+
+// Map type for gathering UI family and style strings
+typedef std::map<Glib::ustring, std::list<Glib::ustring> > FamilyToStylesMap;
 
 class font_factory {
 public:
@@ -75,9 +91,32 @@ public:
 
     /// Returns the default font_factory.
     static font_factory*  Default();
+    
+    /// Constructs a pango string for use with the fontStringMap (see below)
+    Glib::ustring         ConstructFontSpecification(PangoFontDescription *font);
+    Glib::ustring         ConstructFontSpecification(font_instance *font);
+    
+    /// Returns strings to be used in the UI for family and face (or "style" as the column is labeled)
+    Glib::ustring         GetUIFamilyString(PangoFontDescription const *fontDescr);
+    Glib::ustring         GetUIStyleString(PangoFontDescription const *fontDescr);
+    
+    /// Modifiers for the font specification (returns new font specification)
+    Glib::ustring         ReplaceFontSpecificationFamily(const Glib::ustring & fontSpec, const Glib::ustring & newFamily);
+    Glib::ustring         FontSpecificationSetItalic(const Glib::ustring & fontSpec, bool turnOn);
+    Glib::ustring         FontSpecificationSetBold(const Glib::ustring & fontSpec, bool turnOn);
+    
+    // Gathers all strings needed for UI while storing pango information in
+    // fontInstanceMap and fontStringMap
+    void                  GetUIFamiliesAndStyles(FamilyToStylesMap *map);
+    
+    /// Retrieve a font_instance from a style object, first trying to use the font-specification, the CSS information
+    font_instance*        FaceFromStyle(SPStyle const *style);
 
     // Various functions to get a font_instance from different descriptions.
     font_instance*        FaceFromDescr(char const *family, char const *style);
+    font_instance*        FaceFromUIStrings(char const *uiFamily, char const *uiStyle);
+    font_instance*        FaceFromPangoString(char const *pangoString);
+    font_instance*        FaceFromFontSpecification(char const *fontSpecification);
     font_instance*        Face(PangoFontDescription *descr, bool canFail=true);
     font_instance*        Face(char const *family,
                                int variant=PANGO_VARIANT_NORMAL, int style=PANGO_STYLE_NORMAL,
@@ -88,12 +127,23 @@ public:
     /// Semi-private: tells the font_factory taht the font_instance 'who' has died and should be removed from loadedFaces
     void                  UnrefFace(font_instance* who);
 
-    // Queries for the font-selector.
-    NRNameList*           Families(NRNameList *flist);
-    NRStyleList*           Styles(const gchar *family, NRStyleList *slist);
-
     // internal
     void                  AddInCache(font_instance *who);
+    
+private:
+    // These two maps are used for translating between what's in the UI and a pango
+    // font description.  This is necessary because Pango cannot always
+    // reproduce these structures from the names it gave us in the first place.
+    
+    // Key: A string produced by font_factory::ConstructFontSpecification
+    // Value: The associated PangoFontDescription
+    typedef std::map<Glib::ustring, PangoFontDescription *> PangoStringToDescrMap;
+    PangoStringToDescrMap fontInstanceMap;
+    
+    // Key: Family name in UI + Style name in UI
+    // Value: The associated string that should be produced with font_factory::ConstructFontSpecification
+    typedef std::map<Glib::ustring, Glib::ustring> UIStringToPangoStringMap;
+    UIStringToPangoStringMap fontStringMap;
 };
 
 

@@ -329,7 +329,7 @@ persp3d_toggle_VPs (std::set<Persp3D *> p, Proj::Axis axis) {
 
 void
 persp3d_set_VP_state (Persp3D *persp, Proj::Axis axis, Proj::VPState state) {
-    if (persp3d_VP_is_finite(persp, axis) != (state == Proj::FINITE)) {
+    if (persp3d_VP_is_finite(persp, axis) != (state == Proj::VP_FINITE)) {
         persp3d_toggle_VP(persp, axis);
     }
 }

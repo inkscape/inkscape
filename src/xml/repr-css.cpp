@@ -155,7 +155,9 @@ sp_repr_css_write_string(SPCSSAttr *css)
 
         buffer.append(g_quark_to_string(iter->key));
         buffer.push_back(':');
-        if (!strcmp(g_quark_to_string(iter->key), "font-family")) { // we only quote font-family, as SPStyle does
+        if (!strcmp(g_quark_to_string(iter->key), "font-family")
+                || !strcmp(g_quark_to_string(iter->key), "-inkscape-font-specification")) { 
+            // we only quote font-family/font-specification, as SPStyle does
             gchar *t = g_strdup (iter->value);
             g_free (t);
             gchar *val_quoted = css2_escape_quote (iter->value);

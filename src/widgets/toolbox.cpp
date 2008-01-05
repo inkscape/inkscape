@@ -76,6 +76,7 @@
 #include "document-private.h"
 #include "desktop-style.h"
 #include "../libnrtype/font-lister.h"
+#include "../libnrtype/font-instance.h"
 #include "../connection-pool.h"
 #include "../prefs-utils.h"
 #include "../inkscape-stock.h"
@@ -2360,7 +2361,7 @@ static void box3d_toggle_vp_changed (GtkToggleAction *act, GObject *dataKludge, 
     // in turn, prevent listener from responding
     g_object_set_data(dataKludge, "freeze", GINT_TO_POINTER(TRUE));
 
-    persp3d_set_VP_state(persp, axis, gtk_toggle_action_get_active(act) ? Proj::INFINITE : Proj::FINITE);
+    persp3d_set_VP_state(persp, axis, (gtk_toggle_action_get_active(act) ? Proj::VP_INFINITE : Proj::VP_FINITE));
 
     // FIXME: Can we merge this functionality with the one in box3d_persp_tb_event_attr_changed()?
     gchar *str;    
@@ -3948,6 +3949,9 @@ sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *
 {
     SPStyle *query =
         sp_style_new (SP_ACTIVE_DOCUMENT);
+    
+    int result_fontspec =
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
     int result_family =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
@@ -3981,15 +3985,27 @@ sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *
             GtkWidget *entry = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "family-entry"));
             gtk_entry_set_text (GTK_ENTRY (entry), "");
 
-        } else if (query->text->font_family.value) {
+        } else if (query->text->font_specification.value || query->text->font_family.value) {
 
             GtkWidget *entry = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "family-entry"));
-            gtk_entry_set_text (GTK_ENTRY (entry), query->text->font_family.value);
+            
+            // Get the font that corresponds 
+            Glib::ustring familyName;
+            
+            font_instance * font = font_factory::Default()->FaceFromStyle(query);
+            if (font) {
+                familyName = font_factory::Default()->GetUIFamilyString(font->descr);
+                font->Unref();
+                font = NULL;
+            }
+            
+            gtk_entry_set_text (GTK_ENTRY (entry), familyName.c_str());
 
             Gtk::TreePath path;
             try {
-                path = Inkscape::FontLister::get_instance()->get_row_for_font (query->text->font_family.value);
+                path = Inkscape::FontLister::get_instance()->get_row_for_font (familyName);
             } catch (...) {
+                g_warning("Family name %s does not have an entry in the font lister.", familyName.c_str());
                 return;
             }
 
@@ -4142,14 +4158,46 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
     SPStyle *query =
         sp_style_new (SP_ACTIVE_DOCUMENT);
 
-    int result_numbers =
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
-
+    int result_fontspec =
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
+    
     SPCSSAttr *css = sp_repr_css_attr_new ();
-    sp_repr_css_set_property (css, "font-family", family);
+    
+    std::string fontSpec = query->text->font_specification.value;
+    if (!fontSpec.empty()) {
+        Glib::ustring newFontSpec = font_factory::Default()->ReplaceFontSpecificationFamily(fontSpec, family);
+        if (!newFontSpec.empty() && fontSpec != newFontSpec) {
+            font_instance *font = font_factory::Default()->FaceFromFontSpecification(newFontSpec.c_str());
+            if (font) {
+                sp_repr_css_set_property (css, "-inkscape-font-specification", newFontSpec.c_str());
+                
+                // Set all the these just in case they were altered when finding the best
+                // match for the new family and old style...
+                
+                gchar c[256];
+                
+                font->Family(c, 256);
+                sp_repr_css_set_property (css, "font-family", c);
+                
+                font->Attribute( "weight", c, 256);
+                sp_repr_css_set_property (css, "font-weight", c);
+                
+                font->Attribute("style", c, 256);
+                sp_repr_css_set_property (css, "font-style", c);
+                
+                font->Attribute("stretch", c, 256);
+                sp_repr_css_set_property (css, "font-stretch", c);
+                
+                font->Attribute("variant", c, 256);
+                sp_repr_css_set_property (css, "font-variant", c);
+                
+                font->Unref();
+            }
+        }
+    }
 
     // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
-    if (result_numbers == QUERY_STYLE_NOTHING)
+    if (result_fontspec == QUERY_STYLE_NOTHING)
     {
         sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
         sp_text_edit_dialog_default_set_insensitive (); //FIXME: Replace trough a verb
@@ -4264,29 +4312,45 @@ sp_text_toolbox_style_toggled (GtkToggleButton  *button,
     int          prop       = GPOINTER_TO_INT(data);
     bool         active     = gtk_toggle_button_get_active (button);
 
+    SPStyle *query =
+        sp_style_new (SP_ACTIVE_DOCUMENT);
+    int result_fontspec =
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
+    
+    Glib::ustring fontSpec = query->text->font_specification.value;
+    Glib::ustring newFontSpec;
 
     switch (prop)
     {
         case 0:
         {
-            sp_repr_css_set_property (css, "font-weight", active ? "bold" : "normal" );
+            if (!fontSpec.empty()) {
+                newFontSpec = font_factory::Default()->FontSpecificationSetBold(fontSpec, active);
+            }
+            if (fontSpec != newFontSpec) {
+                sp_repr_css_set_property (css, "font-weight", active ? "bold" : "normal" );
+            }
             break;
         }
 
         case 1:
         {
-            sp_repr_css_set_property (css, "font-style", active ? "italic" : "normal");
+            if (!fontSpec.empty()) {
+                newFontSpec = font_factory::Default()->FontSpecificationSetItalic(fontSpec, active);
+            }
+            if (fontSpec != newFontSpec) {
+                sp_repr_css_set_property (css, "font-style", active ? "italic" : "normal");
+            }
             break;
         }
     }
 
-    SPStyle *query =
-        sp_style_new (SP_ACTIVE_DOCUMENT);
-    int result_numbers =
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+    if (!fontSpec.empty()) {
+        sp_repr_css_set_property (css, "-inkscape-font-specification", fontSpec.c_str()); 
+    }
 
     // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
-    if (result_numbers == QUERY_STYLE_NOTHING)
+    if (result_fontspec == QUERY_STYLE_NOTHING)
     {
         sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
     }
@@ -5199,4 +5263,6 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
   End:
 */
 // vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+
+
 

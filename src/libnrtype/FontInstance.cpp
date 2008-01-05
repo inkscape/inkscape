@@ -278,8 +278,10 @@ unsigned int font_instance::Attribute(const gchar *key, gchar *str, unsigned int
 			res="normal";
 		} else if ( v <= PANGO_WEIGHT_BOLD ) {
 			res="bold";
-		} else {
-			res="800";
+		} else if ( v <= PANGO_WEIGHT_ULTRABOLD ) {
+		    res="800";
+		} else { // HEAVY
+			res="900";
 		}
 		free_res=false;
 	} else if ( strcmp(key,"stretch") == 0 ) {

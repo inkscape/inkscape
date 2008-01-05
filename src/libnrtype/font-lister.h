@@ -45,7 +45,7 @@ namespace Inkscape
                             public:
                                 /** Column containing the family name
                                  */
-                                Gtk::TreeModelColumn<std::string> font; 
+                                Gtk::TreeModelColumn<Glib::ustring> font; 
 
                                 /** Column containing an std::vector<std::string> with style names
                                  * for the corresponding family 
@@ -60,7 +60,7 @@ namespace Inkscape
                         };
 
                         FontListClass FontList;
-                        typedef std::map<std::string, Gtk::TreePath> IterMapType; 
+                        typedef std::map<Glib::ustring, Gtk::TreePath> IterMapType; 
 
                         /** Returns the ListStore with the font names
                          *
@@ -79,7 +79,7 @@ namespace Inkscape
                         }
 
                         Gtk::TreePath
-                        get_row_for_font (std::string family)
+                        get_row_for_font (Glib::ustring family)
                         {
                             IterMapType::iterator iter = font_list_store_iter_map.find (family);
                             if (iter == font_list_store_iter_map.end ()) throw FAMILY_NOT_FOUND; 

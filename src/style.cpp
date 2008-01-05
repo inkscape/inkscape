@@ -715,6 +715,17 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
             style->stroke_dashoffset_set = FALSE;
         }
     }
+    
+    /* -inkscape-font-specification */
+    if (!style->text_private || !style->text->font_specification.set) {
+        val = repr->attribute("-inkscape-font-specification");
+        if (val) {
+            if (!style->text_private) sp_style_privatize_text(style);
+            gchar *val_unquoted = attribute_unquote(val);
+            sp_style_read_istring(&style->text->font_specification, val_unquoted);
+            if (val_unquoted) g_free (val_unquoted);
+        }
+    }
 
     /* font-family */
     if (!style->text_private || !style->text->font_family.set) {
@@ -817,6 +828,14 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
     g_return_if_fail(val != NULL);
 
     switch (id) {
+        case SP_PROP_INKSCAPE_FONT_SPEC:
+            if (!style->text_private) sp_style_privatize_text(style);
+            if (!style->text->font_specification.set) {
+                gchar *val_unquoted = attribute_unquote(val);
+                sp_style_read_istring(&style->text->font_specification, val_unquoted);
+                if (val_unquoted) g_free (val_unquoted);
+            }
+            break;
         /* CSS2 */
         /* Font */
         case SP_PROP_FONT_FAMILY:
@@ -1500,6 +1519,13 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
         }
     }
 
+    if (style->text && parent->text) {
+        if (!style->text->font_specification.set || style->text->font_specification.inherit) {
+            g_free(style->text->font_specification.value);
+            style->text->font_specification.value = g_strdup(parent->text->font_specification.value);
+        }
+    }
+
     /* Markers - Free the old value and make copy of the new */
     for (unsigned i = SP_MARKER_LOC; i < SP_MARKER_LOC_QTY; i++) {
         if (!style->marker[i].set || style->marker[i].inherit) {
@@ -1885,9 +1911,13 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
     /* Font */
 
     if (style->text && parent->text) {
+        sp_style_merge_string_prop_from_dying_parent(style->text->font_specification,
+                                                     parent->text->font_specification);
+        
         sp_style_merge_string_prop_from_dying_parent(style->text->font_family,
                                                      parent->text->font_family);
     }
+
 
     /* Properties that don't inherit by default.  Most of these need special handling. */
     {
@@ -2453,7 +2483,7 @@ sp_style_clear(SPStyle *style)
     style->text = text;
     style->text_private = text_private;
 
-    /* fixme: */
+    style->text->font_specification.set = FALSE;
     style->text->font.set = FALSE;
     style->text->font_family.set = FALSE;
 
@@ -2633,6 +2663,7 @@ sp_text_style_new()
     ts->refcount = 1;
     sp_text_style_clear(ts);
 
+    ts->font_specification.value = g_strdup("Bitstream Vera Sans");
     ts->font.value = g_strdup("Bitstream Vera Sans");
     ts->font_family.value = g_strdup("Bitstream Vera Sans");
 
@@ -2646,6 +2677,7 @@ sp_text_style_new()
 static void
 sp_text_style_clear(SPTextStyle *ts)
 {
+    ts->font_specification.set = FALSE;
     ts->font.set = FALSE;
     ts->font_family.set = FALSE;
 }
@@ -2661,6 +2693,7 @@ sp_text_style_unref(SPTextStyle *st)
     st->refcount -= 1;
 
     if (st->refcount < 1) {
+        g_free(st->font_specification.value);
         g_free(st->font.value);
         g_free(st->font_family.value);
         g_free(st);
@@ -2680,6 +2713,7 @@ sp_text_style_duplicate_unset(SPTextStyle *st)
     SPTextStyle *nt = g_new0(SPTextStyle, 1);
     nt->refcount = 1;
 
+    nt->font_specification.value = g_strdup(st->font_specification.value);
     nt->font.value = g_strdup(st->font.value);
     nt->font_family.value = g_strdup(st->font_family.value);
 
@@ -2701,6 +2735,7 @@ sp_text_style_write(gchar *p, guint const len, SPTextStyle const *const st, guin
         flags = SP_STYLE_FLAG_IFSET;
 
     d += sp_style_write_istring(p + d, len - d, "font-family", &st->font_family, NULL, flags);
+    d += sp_style_write_istring(p + d, len - d, "-inkscape-font-specification", &st->font_specification, NULL, flags);
     return d;
 }
 
@@ -3797,6 +3832,9 @@ sp_style_unset_property_attrs(SPObject *o)
     if (style->stroke_dashoffset_set) {
         repr->setAttribute("stroke-dashoffset", NULL);
     }
+    if (style->text_private && style->text->font_specification.set) {
+        repr->setAttribute("-inkscape-font-specification", NULL);
+    }
     if (style->text_private && style->text->font_family.set) {
         repr->setAttribute("font-family", NULL);
     }
@@ -3856,6 +3894,7 @@ SPCSSAttr *
 sp_css_attr_unset_text(SPCSSAttr *css)
 {
     sp_repr_css_set_property(css, "font", NULL); // not implemented yet
+    sp_repr_css_set_property(css, "-inkscape-font-specification", NULL);
     sp_repr_css_set_property(css, "font-size", NULL);
     sp_repr_css_set_property(css, "font-size-adjust", NULL); // not implemented yet
     sp_repr_css_set_property(css, "font-style", NULL);

@@ -830,7 +830,7 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
     }
 
     // create font instance from style and use it
-    font_instance *tf = (font_factory::Default())->Face(style->text->font_family.value, font_style_to_pos(*style));
+    font_instance *tf = font_factory::Default()->FaceFromStyle(style);
     if (tf == NULL) {   // do something
         g_printf("Warning: trouble getting font_instance\n");
         tf = (font_factory::Default())->Face("sans", font_style_to_pos(*style));

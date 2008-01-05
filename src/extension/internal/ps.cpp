@@ -913,7 +913,7 @@ PrintPS::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w, unsi
 char const *
 PrintPS::PSFontName(SPStyle const *style)
 {
-    font_instance *tf = (font_factory::Default())->Face(style->text->font_family.value, font_style_to_pos(*style));
+    font_instance *tf = font_factory::Default()->FaceFromStyle(style);
 
     char const *n;
     char name_buf[256];
@@ -1273,7 +1273,8 @@ PrintPS::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
     * that's why using PSFontName() method just to get the PS fontname
     * is not enough and not appropriate
     */
-    font_instance *tf = (font_factory::Default())->Face(style->text->font_family.value, font_style_to_pos(*style));
+    font_instance *tf = font_factory::Default()->FaceFromStyle(style);
+    
     const gchar *fn = NULL;
     char name_buf[256];
 

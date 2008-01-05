@@ -1051,6 +1051,59 @@ objects_query_fontfamily (GSList *objects, SPStyle *style_res)
 }
 
 int
+objects_query_fontspecification (GSList *objects, SPStyle *style_res)
+{
+    bool different = false;
+    int texts = 0;
+
+    if (style_res->text->font_specification.value) {
+        g_free(style_res->text->font_specification.value);
+        style_res->text->font_specification.value = NULL;
+    }
+    style_res->text->font_specification.set = FALSE;
+
+    for (GSList const *i = objects; i != NULL; i = i->next) {
+        SPObject *obj = SP_OBJECT (i->data);
+
+        if (!SP_IS_TEXT(obj) && !SP_IS_FLOWTEXT(obj)
+            && !SP_IS_TSPAN(obj) && !SP_IS_TREF(obj) && !SP_IS_TEXTPATH(obj)
+            && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj))
+            continue;
+
+        SPStyle *style = SP_OBJECT_STYLE (obj);
+        if (!style) continue;
+
+        texts ++;
+
+        if (style_res->text->font_specification.value && style->text->font_specification.value &&
+            strcmp (style_res->text->font_specification.value, style->text->font_specification.value)) {
+            different = true;  // different fonts
+        }
+
+        if (style_res->text->font_specification.value) {
+            g_free(style_res->text->font_specification.value);
+            style_res->text->font_specification.value = NULL;
+        }
+
+        style_res->text->font_specification.set = TRUE;
+        style_res->text->font_specification.value = g_strdup(style->text->font_specification.value);
+    }
+
+    if (texts == 0 || !style_res->text->font_specification.set)
+        return QUERY_STYLE_NOTHING;
+
+    if (texts > 1) {
+        if (different) {
+            return QUERY_STYLE_MULTIPLE_DIFFERENT;
+        } else {
+            return QUERY_STYLE_MULTIPLE_SAME;
+        }
+    } else {
+        return QUERY_STYLE_SINGLE;
+    }
+}
+
+int
 objects_query_blend (GSList *objects, SPStyle *style_res)
 {
     const int empty_prev = -2;
@@ -1221,7 +1274,9 @@ sp_desktop_query_style_from_list (GSList *list, SPStyle *style, int property)
 
     } else if (property == QUERY_STYLE_PROPERTY_MASTEROPACITY) {
         return objects_query_opacity (list, style);
-
+        
+    } else if (property == QUERY_STYLE_PROPERTY_FONT_SPECIFICATION) {
+        return objects_query_fontspecification (list, style);
     } else if (property == QUERY_STYLE_PROPERTY_FONTFAMILY) {
         return objects_query_fontfamily (list, style);
     } else if (property == QUERY_STYLE_PROPERTY_FONTSTYLE) {

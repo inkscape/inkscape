@@ -43,6 +43,7 @@ enum { // which property was queried (add when you need more)
     QUERY_STYLE_PROPERTY_STROKEJOIN,  // stroke join
     QUERY_STYLE_PROPERTY_STROKECAP,  // stroke cap
     QUERY_STYLE_PROPERTY_STROKESTYLE, // markers, dasharray, miterlimit, stroke-width, stroke-cap, stroke-join
+    QUERY_STYLE_PROPERTY_FONT_SPECIFICATION, //-inkscape-font-specification
     QUERY_STYLE_PROPERTY_FONTFAMILY, // font-family
     QUERY_STYLE_PROPERTY_FONTSTYLE, // font style 
     QUERY_STYLE_PROPERTY_FONTNUMBERS, // size, spacings

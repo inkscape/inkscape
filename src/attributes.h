@@ -23,7 +23,7 @@ unsigned char const *sp_attribute_name(unsigned int id);
  * True iff k is a property in SVG, i.e. something that can be written either in a style attribute
  * or as its own XML attribute.
  */
-#define SP_ATTRIBUTE_IS_CSS(k) (((k) >= SP_PROP_FONT) && ((k) <= SP_PROP_TEXT_RENDERING))
+#define SP_ATTRIBUTE_IS_CSS(k) (((k) >= SP_PROP_INKSCAPE_FONT_SPEC) && ((k) <= SP_PROP_TEXT_RENDERING))
 
 enum SPAttributeEnum {
     SP_ATTR_INVALID,  ///< Must have value 0.
@@ -321,6 +321,8 @@ enum SPAttributeEnum {
     SP_ATTR_LAYOUT_OPTIONS,
 
     /* CSS2 */
+    /* Custom full font name because Font stuff below is inadequate */
+    SP_PROP_INKSCAPE_FONT_SPEC,
     /* Font */
     SP_PROP_FONT,
     SP_PROP_FONT_FAMILY,

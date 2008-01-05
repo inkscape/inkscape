@@ -402,8 +402,8 @@ sp_text_description(SPItem *item)
     SPText *text = (SPText *) item;
     SPStyle *style = SP_OBJECT_STYLE(text);
 
-    font_instance *tf = (font_factory::Default())->Face(style->text->font_family.value,
-                                                        font_style_to_pos(*style));
+    font_instance *tf = font_factory::Default()->FaceFromStyle(style);
+    
     char name_buf[256];
     char *n;
     if (tf) {

@@ -538,6 +538,9 @@ struct SPTextStyle {
     /* CSS font properties */
     SPIString font_family;
 
+    /* Full font name, as font_factory::ConstructFontSpecification would give */
+    SPIString font_specification;
+    
     /** \todo fixme: The 'font' property is ugly, and not working (lauris) */
     SPIString font;
 };

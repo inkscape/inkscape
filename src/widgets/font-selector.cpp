@@ -353,7 +353,7 @@ static void sp_font_selector_emit_set (SPFontSelector *fsel)
 
     if ((!family) || (!style)) return;
 
-    font = (font_factory::Default())->FaceFromDescr (family, style);
+    font = (font_factory::Default())->FaceFromUIStrings (family, style);
 
     // FIXME: when a text object uses non-available font, font==NULL and we can't set size
     // (and the size shown in the widget is invalid). To fix, here we must always get some
@@ -386,73 +386,103 @@ GtkWidget *sp_font_selector_new()
 void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, double size)
 {
     if (font)
-    {
-            gchar family[256];
-            font->Family (family, 256);
+    {  
+        Gtk::TreePath path;
+        font_instance *tempFont = NULL;
+        
+        Glib::ustring family = font_factory::Default()->GetUIFamilyString(font->descr);
 
-            Gtk::TreePath path;
+        try {
+            path = Inkscape::FontLister::get_instance()->get_row_for_font (family);
+        } catch (...) {
+            return;
+        }
 
-            try {
-                path = Inkscape::FontLister::get_instance()->get_row_for_font (family);
-            } catch (...) {
-                return;
+        fsel->block_emit = TRUE;
+        gtk_tree_selection_select_path (gtk_tree_view_get_selection (GTK_TREE_VIEW (fsel->family_treeview)), path.gobj());
+        gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (fsel->family_treeview), path.gobj(), NULL, TRUE, 0.5, 0.5);
+        fsel->block_emit = FALSE;
+
+        GList *list = 0;
+        GtkTreeIter iter;
+        GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW(fsel->family_treeview));
+        gtk_tree_model_get_iter (model, &iter, path.gobj());
+        gtk_tree_model_get (model, &iter, 1, &list, -1);
+
+        unsigned int currentStyleNumber = 0;
+        unsigned int bestStyleNumber = 0;
+        
+        PangoFontDescription *incomingFont = pango_font_description_copy(font->descr);
+        pango_font_description_unset_fields(incomingFont, PANGO_FONT_MASK_SIZE);
+        
+        char *incomingFontString = pango_font_description_to_string(incomingFont);
+        
+        tempFont = (font_factory::Default())->FaceFromUIStrings(family.c_str(), (char*)list->data);
+        
+        PangoFontDescription *bestMatchForFont = NULL;
+        if (tempFont) {
+            bestMatchForFont = pango_font_description_copy(tempFont->descr);
+            tempFont->Unref();
+            tempFont = NULL;
+        }
+        
+        pango_font_description_unset_fields(bestMatchForFont, PANGO_FONT_MASK_SIZE);
+        
+        list = list->next;
+        
+        while (list) {
+            currentStyleNumber++;
+            
+            tempFont = font_factory::Default()->FaceFromUIStrings(family.c_str(), (char*)list->data);
+            
+            PangoFontDescription *currentMatchForFont = NULL;
+            if (tempFont) {
+                currentMatchForFont = pango_font_description_copy(tempFont->descr);
+                tempFont->Unref();
+                tempFont = NULL;
             }
-
-            fsel->block_emit = TRUE;
-            gtk_tree_selection_select_path (gtk_tree_view_get_selection (GTK_TREE_VIEW (fsel->family_treeview)), path.gobj());
-            gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (fsel->family_treeview), path.gobj(), NULL, TRUE, 0.5, 0.5);
-            fsel->block_emit = FALSE;
-
-            GList *list = 0;
-            GtkTreeIter iter;
-            GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW(fsel->family_treeview));
-            gtk_tree_model_get_iter (model, &iter, path.gobj());
-            gtk_tree_model_get (model, &iter, 1, &list, -1);
-
-            gchar descr[256];
-            font->Name(descr, 256);
-            std::string descr_best (family);
-            descr_best += " ";
-            descr_best += ((char*)list->data);
-
-            PangoFontDescription *descr_ = pango_font_description_from_string(descr);
-            PangoFontDescription *best_ = pango_font_description_from_string(descr_best.c_str());
-
-            unsigned int i = 0;
-            unsigned int best_i = 0;
-
-            // try to find best match with style description (i.e. bold, italic ?)
-            for (list = list->next ; list ; list = list->next)
-            {
-                i++;
-                std::string descr_try (family);
-                descr_try += " ";
-                descr_try += ((char*)list->data);
-                PangoFontDescription *try_ = pango_font_description_from_string(descr_try.c_str());
-                if (pango_font_description_better_match (descr_, best_, try_))
-                {
-                    pango_font_description_free (best_);
-                    best_ = pango_font_description_from_string (descr_try.c_str ());
-                    best_i = i;
+            
+            if (currentMatchForFont) {
+                pango_font_description_unset_fields(currentMatchForFont, PANGO_FONT_MASK_SIZE);
+                
+                char *currentMatchString = pango_font_description_to_string(currentMatchForFont);
+                
+                if (!strcmp(incomingFontString, currentMatchString)
+                        || pango_font_description_better_match(incomingFont, bestMatchForFont, currentMatchForFont)) {
+                    // Found a better match for the font we are looking for
+                    pango_font_description_free(bestMatchForFont);
+                    bestMatchForFont = pango_font_description_copy(currentMatchForFont);
+                    bestStyleNumber = currentStyleNumber;
                 }
-                pango_font_description_free(try_);
+                
+                g_free(currentMatchString);
+                
+                pango_font_description_free(currentMatchForFont);
             }
-            pango_font_description_free(descr_);
-            pango_font_description_free(best_);
+            
+            list = list->next;
+        }
+        
+        if (bestMatchForFont)
+            pango_font_description_free(bestMatchForFont);
+        if (incomingFont)
+            pango_font_description_free(incomingFont);
+        g_free(incomingFontString);
 
-            GtkTreePath *path_c = gtk_tree_path_new ();
-            gtk_tree_path_append_index (path_c, best_i);
-            gtk_tree_selection_select_path (gtk_tree_view_get_selection (GTK_TREE_VIEW (fsel->style_treeview)), path_c);
-            gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (fsel->style_treeview), path_c, NULL, TRUE, 0.5, 0.5);
-
-            if (size != fsel->fontsize)
-            {
-                gchar s[8];
-                g_snprintf (s, 8, "%.5g", size); // UI, so printf is ok
-                gtk_entry_set_text (GTK_ENTRY (GTK_BIN(fsel->size)->child), s);
-                fsel->fontsize = size;
-            }
+        GtkTreePath *path_c = gtk_tree_path_new ();
+        gtk_tree_path_append_index (path_c, bestStyleNumber);
+        gtk_tree_selection_select_path (gtk_tree_view_get_selection (GTK_TREE_VIEW (fsel->style_treeview)), path_c);
+        gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (fsel->style_treeview), path_c, NULL, TRUE, 0.5, 0.5);
+    
+        if (size != fsel->fontsize)
+        {
+            gchar s[8];
+            g_snprintf (s, 8, "%.5g", size); // UI, so printf is ok
+            gtk_entry_set_text (GTK_ENTRY (GTK_BIN(fsel->size)->child), s);
+            fsel->fontsize = size;
+        }
     }
+    
 }
 
 font_instance* sp_font_selector_get_font(SPFontSelector *fsel)

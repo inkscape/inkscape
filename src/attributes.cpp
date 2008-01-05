@@ -321,6 +321,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_LAYOUT_OPTIONS,"inkscape:layoutOptions"},
 
     /* CSS2 */
+    {SP_PROP_INKSCAPE_FONT_SPEC, "-inkscape-font-specification"},
     /* Font */
     {SP_PROP_FONT, "font"},
     {SP_PROP_FONT_FAMILY, "font-family"},

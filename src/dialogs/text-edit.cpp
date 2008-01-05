@@ -527,7 +527,11 @@ sp_get_text_dialog_style ()
         font_instance *font = sp_font_selector_get_font (SP_FONT_SELECTOR (fontsel));
 
 				if ( font ) {
+				    Glib::ustring fontName = font_factory::Default()->ConstructFontSpecification(font);
+					sp_repr_css_set_property (css, "-inkscape-font-specification", fontName.c_str());
+					
 					gchar c[256];
+					
 					font->Family(c, 256);
 					sp_repr_css_set_property (css, "font-family", c);
 
@@ -736,12 +740,15 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
         // create temporary style
         SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
         // query style from desktop into it. This returns a result flag and fills query with the style of subselection, if any, or selection
-        int result_family = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
-        int result_style = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
+        int result_fontspec = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
+        int result_family = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY); 
+        int result_style = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE); 
         int result_numbers = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
 
         // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
-        if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING || result_numbers == QUERY_STYLE_NOTHING) {
+        // (Ok to not get a font specification - must just rely on the family and style in that case)
+        if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING
+                || result_numbers == QUERY_STYLE_NOTHING) {
             repr = inkscape_get_repr (INKSCAPE, "tools.text");
             if (repr) {
                 gtk_widget_set_sensitive (notebook, TRUE);
@@ -752,7 +759,11 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
         }
 
         // FIXME: process result_family/style == QUERY_STYLE_MULTIPLE_DIFFERENT by showing "Many" in the lists
-        font_instance *font = (font_factory::Default())->Face ( query->text->font_family.value, font_style_to_pos(*query) );
+        
+        // Get a font_instance using the font-specification attribute stored in SPStyle if available
+        font_instance *font = font_factory::Default()->FaceFromStyle(query);
+
+        
         if (font) {
             // the font is oversized, so we need to pass the true size separately
             sp_font_selector_set_font (SP_FONT_SELECTOR (fontsel), font, query->font_size.computed);

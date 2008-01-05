@@ -1169,7 +1169,14 @@ void SvgBuilder::_flushText() {
                 break;
             } else {
                 tspan_node = _xml_doc->createElement("svg:tspan");
-                tspan_node->setAttribute("inkscape:font-specification", glyph.font_specification);
+                
+                ///////
+                // Create a font specification string and save the attribute in the style
+                PangoFontDescription *descr = pango_font_description_from_string(glyph.font_specification);
+                Glib::ustring properFontSpec = font_factory::Default()->ConstructFontSpecification(descr);
+                pango_font_description_free(descr);
+                sp_repr_css_set_property(glyph.style, "-inkscape-font-specification", properFontSpec.c_str());
+                
                 // Set style and unref SPCSSAttr if it won't be needed anymore
                 sp_repr_css_change(tspan_node, glyph.style, "style");
                 if ( glyph.style_changed && i != _glyphs.begin() ) {    // Free previous style
