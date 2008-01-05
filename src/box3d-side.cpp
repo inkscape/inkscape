@@ -39,7 +39,6 @@ static void box3d_side_update (SPObject *object, SPCtx *ctx, guint flags);
 //static void box3d_side_set_shape (SPShape *shape);
 //static void box3d_side_update_patheffect (SPShape *shape, bool write);
 
-static void box3d_side_apply_style (Box3DSide *side);
 static Proj::Pt3 box3d_side_corner (Box3DSide *side, guint index);
 static std::vector<Proj::Pt3> box3d_side_corners (Box3DSide *side);
 // static gint box3d_side_descr_to_id (gchar const *descr);
@@ -110,7 +109,7 @@ box3d_side_build (SPObject * object, SPDocument * document, Inkscape::XML::Node 
     if (((SPObjectClass *) parent_class)->build)
         ((SPObjectClass *) parent_class)->build (object, document, repr);
 
-    sp_object_read_attr (object, "inkscape:box3dsidetype");
+    sp_object_read_attr(object, "inkscape:box3dsidetype");
 }
 
 static Inkscape::XML::Node *
@@ -144,8 +143,6 @@ box3d_side_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
     char *d = sp_svg_write_path ( bpath );
     repr->setAttribute("d", d);
     g_free (d);
-
-    box3d_side_apply_style (side);
 
     if (((SPObjectClass *) (parent_class))->write)
         ((SPObjectClass *) (parent_class))->write (object, repr, flags);
@@ -196,7 +193,6 @@ box3d_side_update (SPObject *object, SPCtx *ctx, guint flags)
 
     //g_print ("box3d_side_update\n");
     if (flags & (SP_OBJECT_MODIFIED_FLAG |
-                 //SP_OBJECT_CHILD_MODIFIED_FLAG |
                  SP_OBJECT_STYLE_MODIFIED_FLAG |
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
         sp_shape_set_shape ((SPShape *) object);
@@ -311,18 +307,9 @@ box3d_side_set_shape (SPShape *shape)
     sp_curve_unref (c);
 }
 
-static void
-//box3d_side_apply_style (SPBox3D *box, bool extruded) {
+void
 box3d_side_apply_style (Box3DSide *side) {
     Inkscape::XML::Node *repr_face = SP_OBJECT_REPR(SP_OBJECT(side));
-
-    /**
-    if (!extruded && !strcmp (box3d_side_axes_string (), "XYrear")) {
-        // to avoid "flashing" during the initial dragging process, we make the rear face invisible in this case
-        repr_face->setAttribute("style", "fill:none");
-        return;
-    }
-    **/
 
     gchar *descr = g_strconcat ("desktop.", box3d_side_axes_string (side), NULL);
     const gchar * cur_style = prefs_get_string_attribute(descr, "style");

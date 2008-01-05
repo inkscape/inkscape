@@ -634,6 +634,7 @@ static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
         Inkscape::GC::release(repr);
         /**** bc.item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer()); ****/
         Inkscape::XML::Node *repr_side;
+        // TODO: Incorporate this in box3d-side.cpp!
         for (int i = 0; i < 6; ++i) {
             repr_side = xml_doc->createElement("svg:path");
             repr_side->setAttribute("sodipodi:type", "inkscape:box3dside");
@@ -648,6 +649,9 @@ static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
             side->dir1 = Box3D::extract_first_axis_direction(plane);
             side->dir2 = Box3D::extract_second_axis_direction(plane);
             side->front_or_rear = (Box3D::FrontOrRear) (desc & 0x8);
+
+            /* Set style */
+            box3d_side_apply_style(side);
 
             SP_OBJECT(side)->updateRepr(); // calls box3d_side_write() and updates, e.g., the axes string description
         }
