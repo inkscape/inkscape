@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-11-15 18:06-0300\n"
-"PO-Revision-Date: 2008-01-03 15:56+0100\n"
+"PO-Revision-Date: 2008-01-05 01:26+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -730,7 +730,7 @@ msgstr "Výška obdĺžnika, ktorý sa má vyplniť"
 
 #: ../src/dialogs/clonetiler.cpp:2592
 msgid "Rows, columns: "
-msgstr "Riadkov, stĺpcov:"
+msgstr "Riadkov, stĺpcov: "
 
 #: ../src/dialogs/clonetiler.cpp:2593
 msgid "Create the specified number of rows and columns"
@@ -738,7 +738,7 @@ msgstr "Vytvoriť určený počet riadkov a stĺpcov"
 
 #: ../src/dialogs/clonetiler.cpp:2602
 msgid "Width, height: "
-msgstr "Šírka, výška:"
+msgstr "Šírka, výška: "
 
 #: ../src/dialogs/clonetiler.cpp:2603
 msgid "Fill the specified width and height with the tiling"
@@ -767,7 +767,7 @@ msgstr "Vytvoriť a vydláždiť klony výberu"
 #. So unclumping is the process of spreading a number of objects out more evenly.
 #: ../src/dialogs/clonetiler.cpp:2663
 msgid " _Unclump "
-msgstr "_Rozptýliť"
+msgstr "_Rozptýliť "
 
 #: ../src/dialogs/clonetiler.cpp:2664
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
@@ -775,7 +775,7 @@ msgstr "Rozptýliť klony, aby sa zabránilo ich zomknutiu; je možné použiť 
 
 #: ../src/dialogs/clonetiler.cpp:2670
 msgid " Re_move "
-msgstr "O_dstrániť"
+msgstr " O_dstrániť "
 
 #: ../src/dialogs/clonetiler.cpp:2671
 msgid "Remove existing tiled clones of the selected object (siblings only)"
@@ -783,7 +783,7 @@ msgstr "Odstrániť existujúce dlaždicové klony vybraného objektu (iba súro
 
 #: ../src/dialogs/clonetiler.cpp:2687
 msgid " R_eset "
-msgstr "O_bnoviť"
+msgstr " O_bnoviť "
 
 #. TRANSLATORS: "change" is a noun here
 #: ../src/dialogs/clonetiler.cpp:2689
@@ -962,7 +962,7 @@ msgstr "Nebolo možné exportovať do súboru s názvom %s.\n"
 
 #: ../src/dialogs/export.cpp:1151
 msgid "You have to enter a filename"
-msgstr "Musíte vložiť názov súboru."
+msgstr "Musíte zadať názov súboru"
 
 #: ../src/dialogs/export.cpp:1156
 msgid "The chosen area to be exported is invalid"
@@ -1020,9 +1020,9 @@ msgstr "Zrušiť výplň"
 #, c-format
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
 msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
-msgstr[0] "%d objekt nájdených (z %d), %s zhoda."
-msgstr[1] "%d objektov nájdených (z %d), %s zhoda."
-msgstr[2] "%d objektov nájdených (z %d), %s zhoda."
+msgstr[0] "<b>%d</b> objekt nájdený (z <b>%d</b>), %s zhoda."
+msgstr[1] "<b>%d</b> objekty nájdené (z <b>%d</b> ), %s zhoda."
+msgstr[2] "<b>%d</b> objektov nájdených (z <b>%d</b> ), %s zhoda."
 
 #: ../src/dialogs/find.cpp:375
 #: ../src/ui/dialog/find.cpp:438
@@ -1261,7 +1261,7 @@ msgstr "_Hľadať"
 #: ../src/dialogs/find.cpp:752
 #: ../src/ui/dialog/find.cpp:84
 msgid "Select objects matching all of the fields you filled in"
-msgstr "Vyberie objekty, ktoré zodpovedajú všetkým poliam, ktoré ste vyplnili."
+msgstr "Vyberie objekty, ktoré zodpovedajú všetkým poliam, ktoré ste vyplnili"
 
 #: ../src/dialogs/guidelinedialog.cpp:42
 #: ../src/ui/dialog/transformation.cpp:102
@@ -1395,11 +1395,11 @@ msgstr "Odkryť objekt"
 
 #: ../src/dialogs/item-properties.cpp:394
 msgid "Id invalid! "
-msgstr "ID je neplatný!"
+msgstr "ID je neplatný! "
 
 #: ../src/dialogs/item-properties.cpp:396
 msgid "Id exists! "
-msgstr "ID už existuje!"
+msgstr "ID už existuje! "
 
 #: ../src/dialogs/item-properties.cpp:403
 msgid "Set object ID"
@@ -1643,7 +1643,7 @@ msgstr "Typ"
 
 #: ../src/dialogs/rdf.cpp:248
 msgid "Type of document (DCMI Type)."
-msgstr "Typ dokumentu (DCMI typ)"
+msgstr "Typ dokumentu (DCMI typ)."
 
 #: ../src/dialogs/rdf.cpp:251
 msgid "Creator"
@@ -1659,7 +1659,7 @@ msgstr "Práva"
 
 #: ../src/dialogs/rdf.cpp:255
 msgid "Name of entity with rights to the Intellectual Property of this document."
-msgstr "Názov entity primárne s právami na Intelektuálne vlastníctvo tohoto dokumentu.."
+msgstr "Názov entity primárne s právami na Duševné vlastníctvo tohoto dokumentu."
 
 #: ../src/dialogs/rdf.cpp:257
 msgid "Publisher"
@@ -1687,11 +1687,11 @@ msgstr "Jedinečné URI odkaz na zdroj tohoto dokumentu."
 
 #: ../src/dialogs/rdf.cpp:267
 msgid "Relation"
-msgstr "vzťah"
+msgstr "Vzťah"
 
 #: ../src/dialogs/rdf.cpp:268
 msgid "Unique URI to a related document."
-msgstr "Jedinečné URI vzťahujúce sa k dokumentu"
+msgstr "Jedinečné URI vzťahujúce sa k dokumentu."
 
 #: ../src/dialogs/rdf.cpp:270
 msgid "Language"
@@ -1699,7 +1699,7 @@ msgstr "Jazyk"
 
 #: ../src/dialogs/rdf.cpp:271
 msgid "Two-letter language tag with optional subtags for the language of this document.  (e.g. 'en-GB')"
-msgstr "Dvojpísmenové označenie jazyka s voliteľným podoznačením jazyka tohto dokumentu (napr „en-GB“)."
+msgstr "Dvojpísmenové označenie jazyka s voliteľným podoznačením jazyka tohto dokumentu. (napr. „en-GB“)."
 
 #: ../src/dialogs/rdf.cpp:273
 msgid "Keywords"
@@ -2381,7 +2381,7 @@ msgstr "  popis: "
 
 #: ../src/extension/effect.cpp:35
 msgid " (No preferences)"
-msgstr "(žiadne nastavenia)"
+msgstr " (bez preferencií)"
 
 #. This is some filler text, needs to change before relase
 #: ../src/extension/error-file.cpp:53
@@ -2420,7 +2420,7 @@ msgstr "názov preň nebol definovaný."
 
 #: ../src/extension/extension.cpp:260
 msgid "the XML description of it got lost."
-msgstr "jeho XML popis sa stratil"
+msgstr "jeho XML popis sa stratil."
 
 #: ../src/extension/extension.cpp:264
 msgid "no implementation was defined for the extension."
@@ -2437,7 +2437,7 @@ msgstr "Rozšírenie „"
 
 #: ../src/extension/extension.cpp:291
 msgid "\" failed to load because "
-msgstr "“ sa nepodarilo načítať, lebo"
+msgstr "“ sa nepodarilo načítať, lebo "
 
 #: ../src/extension/extension.cpp:622
 #, c-format
@@ -2674,7 +2674,7 @@ msgstr "Uhlík"
 
 #: ../src/extension/internal/bitmap/charcoal.cpp:46
 msgid "Apply charcoal stylization to selected bitmap(s)."
-msgstr "Použiť na zvolené bitmapy štylizáciu uhlíkom"
+msgstr "Použiť na zvolené bitmapy štylizáciu uhlíkom."
 
 #: ../src/extension/internal/bitmap/colorize.cpp:49
 msgid "Colorize"
@@ -3282,7 +3282,7 @@ msgstr "Nastavenia stránky:"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:95
 msgid "Precision of approximating gradient meshes:"
-msgstr "Presnosť aproximácie mriežok farebných prechodov."
+msgstr "Presnosť aproximácie mriežok farebných prechodov:"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:96
 msgid "<b>Note</b>: setting the precision too high may result in a large SVG file and slow performance."
@@ -3464,7 +3464,7 @@ msgstr "Pripnúť dialóg"
 
 #: ../src/extension/prefdialog.cpp:230
 msgid "Toggles whether the dialog stays for multiple executions or disappears after one"
-msgstr "Prepína, či dialóg zostane počas viacerých vykonaní alebo sa po jdnom vykonaní stratí."
+msgstr "Prepína, či dialóg zostane počas viacerých vykonaní alebo sa po jdnom vykonaní stratí"
 
 #: ../src/extension/prefdialog.cpp:231
 msgid "Live Preview"
@@ -3472,7 +3472,7 @@ msgstr "Živý náhľad"
 
 #: ../src/extension/prefdialog.cpp:231
 msgid "Controls whether the effect settings are rendered live on canvas"
-msgstr "Určuje, či sa nastavenia efektov prejavia na živom plátne."
+msgstr "Určuje, či sa nastavenia efektov prejavia na živom plátne"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -4104,7 +4104,7 @@ msgstr "Body"
 
 #: ../src/helper/units.cpp:37
 msgid "Pt"
-msgstr "b."
+msgstr "bd"
 
 #: ../src/helper/units.cpp:38
 msgid "Pixel"
@@ -4497,7 +4497,7 @@ msgstr "Počas vykonávania Efektu cesty sa vyskytla chyba."
 #: ../src/live_effects/effect.cpp:317
 #, c-format
 msgid "Editing parameter <b>%s</b>."
-msgstr "Úprava parametra <b>%s</b>"
+msgstr "Úprava parametra <b>%s</b>."
 
 #: ../src/live_effects/effect.cpp:322
 msgid "None of the applied path effect's parameters can be edited on-canvas."
@@ -4553,7 +4553,7 @@ msgstr "..."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "Endpoint variation"
-msgstr "Variácia koncového bodu."
+msgstr "Variácia koncového bodu"
 
 # TODO: check
 #: ../src/live_effects/lpe-curvestitch.cpp:47
@@ -5022,7 +5022,7 @@ msgstr "Posúvať uzly"
 
 #: ../src/nodepath.cpp:1366
 msgid "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
-msgstr "<b>Páčka uzlu</b>: ťahaním sa tvaruje krivka; s <b>Ctrl</b> prichytává k uhlu; s <b>Alt</b> uzamyká dĺžku; s <b>Shift</b> otáča obe páčky."
+msgstr "<b>Páčka uzlu</b>: ťahaním sa tvaruje krivka; s <b>Ctrl</b> prichytává k uhlu; s <b>Alt</b> uzamyká dĺžku; s <b>Shift</b> otáča obe páčky"
 
 #: ../src/nodepath.cpp:1536
 msgid "Align nodes"
@@ -5172,7 +5172,7 @@ msgstr "<b>Ťahajte</b> uzol alebo jeho páčky; klávesami <b>šípok</b> pohyb
 #: ../src/nodepath.cpp:4395
 #: ../src/nodepath.cpp:4407
 msgid "Select a single object to edit its nodes or handles."
-msgstr "Vybrať jediný objekt pre úpravu uzlov alebo páčok"
+msgstr "Vybrať jediný objekt pre úpravu uzlov alebo páčok."
 
 #: ../src/nodepath.cpp:4399
 #, c-format
@@ -5282,11 +5282,11 @@ msgstr "Prispôsobiť <b>vzdialenosť posunu</b>"
 #. TRANSLATORS: This refers to the pattern that's inside the object
 #: ../src/object-edit.cpp:1382
 msgid "<b>Move</b> the pattern fill inside the object"
-msgstr "<b>Presunúť</b> vzorku výplne dovnútra objektu."
+msgstr "<b>Presunúť</b> vzorku výplne dovnútra objektu"
 
 #: ../src/object-edit.cpp:1384
 msgid "<b>Scale</b> the pattern fill uniformly"
-msgstr "<b>Mierka</b> vzorky vyplní rovnomerne."
+msgstr "<b>Mierka</b> vzorky vyplní rovnomerne"
 
 #: ../src/object-edit.cpp:1386
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
@@ -5667,7 +5667,7 @@ msgstr "Vyberte <b>objekt</b>, ktorý sa má posunúť o vrstvu vyššie."
 
 #: ../src/selection-chemistry.cpp:1355
 msgid "Raise to next layer"
-msgstr "Presunúť do nasledujúcej vrstvy."
+msgstr "Presunúť do nasledujúcej vrstvy"
 
 #: ../src/selection-chemistry.cpp:1361
 msgid "No more layers above."
@@ -5957,23 +5957,23 @@ msgstr " vo %s"
 #: ../src/selection-describer.cpp:151
 #, c-format
 msgid " in group %s (%s)"
-msgstr "V skupine %s (%s)"
+msgstr " v skupine %s (%s)"
 
 #: ../src/selection-describer.cpp:153
 #, c-format
 msgid " in <b>%i</b> parents (%s)"
 msgid_plural " in <b>%i</b> parents (%s)"
-msgstr[0] "v <b>%i</b> rodičovi (%s)"
-msgstr[1] "v <b>%i</b> rodičoch (%s)"
-msgstr[2] "v <b>%i</b> rodičoch (%s)"
+msgstr[0] " v <b>%i</b> rodičovi (%s)"
+msgstr[1] " v <b>%i</b> rodičoch (%s)"
+msgstr[2] " v <b>%i</b> rodičoch (%s)"
 
 #: ../src/selection-describer.cpp:156
 #, c-format
 msgid " in <b>%i</b> layers"
 msgid_plural " in <b>%i</b> layers"
-msgstr[0] "v <b>%i</b> vrstve."
-msgstr[1] "v <b>%i</b> vrstvách."
-msgstr[2] "v <b>%i</b> vrstvách."
+msgstr[0] " v <b>%i</b> vrstve"
+msgstr[1] " v <b>%i</b> vrstvách"
+msgstr[2] " v <b>%i</b> vrstvách"
 
 #: ../src/selection-describer.cpp:166
 msgid "Use <b>Shift+D</b> to look up original"
@@ -6693,7 +6693,7 @@ msgstr "Cestu doladíte tlačením tak, že ju vyberiete a ťaháte ponad ňu my
 
 #: ../src/tools-switch.cpp:157
 msgid "<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and resize. <b>Click</b> to select."
-msgstr "Tvorba obdĺžnikov a štvorcov s možnosťou oblých hrán"
+msgstr "<b>Ťahaním</b> vytvoríte obdĺžnik. <b>Ťahaním ovládacích prvkov</b> zaoblíte rohy a zmeníte veľkosť. <b>Kliknutím</b> vyberiete."
 
 #: ../src/tools-switch.cpp:163
 msgid "<b>Drag</b> to create a 3D box. <b>Drag controls</b> to resize in perspective. <b>Click</b> to select (with <b>Ctrl+Alt</b> for single faces)."
@@ -6750,11 +6750,11 @@ msgstr "Vektorizácia: %d.  %ld uzlov"
 #: ../src/trace/trace.cpp:142
 #: ../src/trace/trace.cpp:241
 msgid "Select an <b>image</b> to trace"
-msgstr "Výber <b>obrázka</b> na vektorizovanie."
+msgstr "Výber <b>obrázka</b> na vektorizáciu"
 
 #: ../src/trace/trace.cpp:104
 msgid "Select only one <b>image</b> to trace"
-msgstr "Výberte iba jeden <b>obrázok</b> na vektorizovanie."
+msgstr "Výberte iba jeden <b>obrázok</b> na vektorizáciu"
 
 #: ../src/trace/trace.cpp:122
 msgid "Select one image and one or more shapes above it"
@@ -7137,7 +7137,7 @@ msgstr "Rovnomerne rozmiestniť dolné strany objektov"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:864
 msgid "Distribute baseline anchors of texts horizontally"
-msgstr "Rozmiestniť ukotvenia základní textu vodorovne "
+msgstr "Rozmiestniť ukotvenia základní textu vodorovne"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:867
 msgid "Distribute baseline anchors of texts vertically"
@@ -7231,7 +7231,7 @@ msgstr "_Odstrániť"
 
 #: ../src/ui/dialog/document-properties.cpp:98
 msgid "Remove selected grid."
-msgstr "odstrániť vybranú mriežku"
+msgstr "Odstrániť vybranú mriežku."
 
 #: ../src/ui/dialog/document-properties.cpp:107
 msgid "Guides"
@@ -7501,7 +7501,7 @@ msgstr "_Zahrnúť stred otáčania objektu"
 
 #: ../src/ui/dialog/document-properties.cpp:377
 msgid "Also snap the rotation center of an object when snapping nodes or guides"
-msgstr "Pri prichytávaní k uzlom alebo vodidlám tiež prichytávať stred otáčania objektu."
+msgstr "Pri prichytávaní k uzlom alebo vodidlám tiež prichytávať stred otáčania objektu"
 
 #: ../src/ui/dialog/document-properties.cpp:383
 msgid "<b>Snapping to intersections of</b>"
@@ -7509,7 +7509,7 @@ msgstr "<b>Prichytávanie k priesečníkom</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:441
 msgid "<b>Creation</b>"
-msgstr "<b>Vytvorenie</b> "
+msgstr "<b>Vytvorenie</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:443
 msgid "Gridtype"
@@ -8592,7 +8592,7 @@ msgstr "Zapnúť kalibráciu displeja"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:690
 msgid "Enables application of the display using an ICC profile."
-msgstr "Zapnúť aplikáciu displeja pomocou ICC profilu"
+msgstr "Zapnúť aplikáciu displeja pomocou ICC profilu."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:692
 msgid "Display profile:"
@@ -8630,7 +8630,7 @@ msgstr "Vyznačiť farby mimo gamut"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:707
 msgid "Highlights colors that are out of gamut for the target device."
-msgstr "Zvýrazí farby, ktoré sú na cieľovom zariadení mimo gamut"
+msgstr "Zvýrazí farby, ktoré sú na cieľovom zariadení mimo gamut."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:712
 msgid "Out of gamut warning color:"
@@ -8723,7 +8723,7 @@ msgstr "Prevzorkovanie bitmáp:"
 #. consider moving this to an UI tab:
 #: ../src/ui/dialog/inkscape-preferences.cpp:819
 msgid "Make commands toolbar smaller"
-msgstr "Zmenšiť panel nástrojov príkazov "
+msgstr "Zmenšiť panel nástrojov príkazov"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:821
 msgid "Make the commands toolbar use the 'secondary' toolbar size (requires restart)"
@@ -8860,7 +8860,7 @@ msgstr "Vyhľadávací štítok"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:539
 msgid "No files matched your search"
-msgstr "Vášmu hľadaniu nezodpovedajú žiadne súbory."
+msgstr "Vášmu hľadaniu nezodpovedajú žiadne súbory"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:548
 msgid "Search"
@@ -9959,7 +9959,7 @@ msgstr "Krytie: %.3g"
 
 #: ../src/verbs.cpp:1158
 msgid "Switch to next layer"
-msgstr "Prepnúť do nasledujúcej vrstvy."
+msgstr "Prepnúť do nasledujúcej vrstvy"
 
 #: ../src/verbs.cpp:1159
 msgid "Switched to next layer."
@@ -11363,7 +11363,7 @@ msgstr "Zarovnaná a rozmiestneni objekty"
 
 #: ../src/verbs.cpp:2530
 msgid "Undo _History..."
-msgstr "_História vrátení"
+msgstr "_História vrátení..."
 
 #: ../src/verbs.cpp:2531
 msgid "Undo History"
@@ -11612,7 +11612,7 @@ msgstr "Veľkosť strany podľa výberu alebo kresby"
 
 #: ../src/verbs.cpp:2602
 msgid "Fit the page to the current selection or the drawing if there is no selection"
-msgstr "Prispôsobiť stránku súčasnému výberu alebo kresbe ak nie je nič vybrané."
+msgstr "Prispôsobiť stránku súčasnému výberu alebo kresbe ak nie je nič vybrané"
 
 #. LockAndHide
 #: ../src/verbs.cpp:2604
@@ -12600,7 +12600,7 @@ msgstr "(štandardné)"
 # TODO: check
 #: ../src/widgets/toolbox.cpp:2761
 msgid "(broad tweak)"
-msgstr " (široké ladenie)"
+msgstr "(široké ladenie)"
 
 # TODO: check
 #: ../src/widgets/toolbox.cpp:2764
@@ -12744,7 +12744,7 @@ msgstr "Vernosť:"
 
 #: ../src/widgets/toolbox.cpp:2936
 msgid "Low fidelity simplifies paths; high fidelity preserves path features but may generate a lot of new nodes"
-msgstr "Nízka vernosť zjednodušuje cesty; vysoká vernosť zachováva všetky vlastnosti cesty, ale môže vytvoriť množstvo nových uzlov."
+msgstr "Nízka vernosť zjednodušuje cesty; vysoká vernosť zachováva všetky vlastnosti cesty, ale môže vytvoriť množstvo nových uzlov"
 
 #: ../src/widgets/toolbox.cpp:2953
 #: ../src/widgets/toolbox.cpp:3197
@@ -12763,7 +12763,7 @@ msgstr "(hrúbka vlasu)"
 
 #: ../src/widgets/toolbox.cpp:3060
 msgid "(broad stroke)"
-msgstr " (široký ťah)"
+msgstr "(široký ťah)"
 
 #: ../src/widgets/toolbox.cpp:3063
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
@@ -13692,7 +13692,7 @@ msgstr "Veľkosť písma [px]"
 #. <param name="unit" type="string" _gui-text="Unit {km|m|cm|mm|in|px|pt}">mm</param>
 #: ../share/extensions/measure.inx.h:4
 msgid "Length Unit: "
-msgstr "Jednotka dĺžky:"
+msgstr "Jednotka dĺžky: "
 
 #: ../share/extensions/measure.inx.h:5
 msgid "Measure"
@@ -13834,11 +13834,11 @@ msgstr "Príklad RadioButton"
 
 #: ../share/extensions/radiobutton_example.inx.h:3
 msgid "Select option: "
-msgstr "Výberte možnosť:"
+msgstr "Výberte možnosť: "
 
 #: ../share/extensions/radiobutton_example.inx.h:4
 msgid "Select second option: "
-msgstr "Vyberte druhú možnosť:"
+msgstr "Vyberte druhú možnosť: "
 
 #: ../share/extensions/radiusrand.inx.h:1
 msgid "Jitter nodes"
