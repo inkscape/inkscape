@@ -3,7 +3,7 @@
 #endif
 
 #include <map>
-#include <glib/gtestutils.h>
+#include <glib.h> // g_assert()
 
 #include "xml/node-iterators.h"
 #include "algorithms/find-if-before.h"

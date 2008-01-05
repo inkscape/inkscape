@@ -17,7 +17,7 @@
 # include "config.h"
 #endif
 
-#include <glib/gtestutils.h>
+#include <glib.h> // g_assert()
 #include <glib/ghash.h>
 #include "attributes.h"
 

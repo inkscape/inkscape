@@ -12,7 +12,7 @@
  *
  */
 
-#include <glib/gtestutils.h>
+#include <glib.h> // g_assert()
 
 #include "xml/simple-document.h"
 #include "xml/event-fns.h"

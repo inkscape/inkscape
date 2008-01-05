@@ -30,7 +30,7 @@
 #include <glib/gmem.h>
 #include <glib/gmessages.h>
 #include <glib/gstrfuncs.h>
-#include <glib/gtestutils.h>
+#include <glib.h> // g_assert()
 
 #include "libnr/n-art-bpath.h"
 #include "gnome-canvas-bpath-util.h"

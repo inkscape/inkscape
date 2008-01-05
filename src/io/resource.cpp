@@ -16,7 +16,7 @@
 #include "config.h"
 #endif
 
-#include <glib/gtestutils.h>
+#include <glib.h> // g_assert()
 #include <glib/gmessages.h>
 #include <glib/gstrfuncs.h>
 #include <glib/gfileutils.h>

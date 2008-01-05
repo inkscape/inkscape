@@ -15,7 +15,7 @@
 #ifndef SEEN_INKSCAPE_XML_SIMPLE_NODE_H
 #define SEEN_INKSCAPE_XML_SIMPLE_NODE_H
 
-#include <glib/gtestutils.h>
+#include <glib.h> // g_assert()
 
 #include "xml/node.h"
 #include "xml/attribute-record.h"

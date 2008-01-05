@@ -23,7 +23,7 @@
 #include <cassert>
 #include <math.h>
 #include <glib/gmem.h>
-#include <glib/gtestutils.h>
+#include <glib.h> // g_assert
 #include <glib/gmessages.h>
 #include <glib/gstrfuncs.h>
 #include <glib/ghash.h>
