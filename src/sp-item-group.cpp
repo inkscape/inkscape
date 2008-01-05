@@ -328,11 +328,6 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 	SPItem *pitem = SP_ITEM (SP_OBJECT_PARENT (gitem));
 	Inkscape::XML::Node *prepr = SP_OBJECT_REPR (pitem);
 
-        /* When ungrouping a 3D box, we must convert the sides to ordinary paths */
-        if (SP_IS_BOX3D (gitem)) {
-            g_print ("============== Ungrouping a 3D box ===============\n");
-        }
-
 	/* Step 1 - generate lists of children objects */
 	GSList *items = NULL;
 	GSList *objects = NULL;
@@ -622,50 +617,14 @@ void CGroup::onUpdate(SPCtx *ctx, unsigned int flags) {
     while (l) {
         SPObject *child = SP_OBJECT (l->data);
         l = g_slist_remove (l, child);
-        //g_print ("sp-item-group: onUpdate working on child with flags ");
         if (flags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
-            /***
-            g_print ("  On parent object: ");
-            if (flags & SP_OBJECT_MODIFIED_FLAG) {
-                g_print("SP_OBJECT_MODIFIED_FLAG ");
-            }
-            if (flags & SP_OBJECT_CHILD_MODIFIED_FLAG) {
-                g_print("SP_OBJECT_CHILD_MODIFIED_FLAG ");
-            }
-            g_print ("\n");
-            g_print ("  On child object: ");
-            if (child->uflags & SP_OBJECT_MODIFIED_FLAG) {
-                g_print("SP_OBJECT_MODIFIED_FLAG ");
-            }
-            if (child->uflags & SP_OBJECT_CHILD_MODIFIED_FLAG) {
-                g_print("SP_OBJECT_CHILD_MODIFIED_FLAG ");
-            }
-            ***/
             if (SP_IS_ITEM (child)) {
                 SPItem const &chi = *SP_ITEM(child);
                 cctx.i2doc = chi.transform * ictx->i2doc;
                 cctx.i2vp = chi.transform * ictx->i2vp;
-                /**
-                g_print ("case 1\n");
-                g_print ("\n  On parent object: flags=%d   ", flags);
-                g_print ("\n  On child object: uflags=%d  ", child->uflags);
-                if (flags & SP_OBJECT_MODIFIED_FLAG) g_print("SP_OBJECT_MODIFIED_FLAG ");
-                if (flags & SP_OBJECT_CHILD_MODIFIED_FLAG) g_print("SP_OBJECT_CHILD_MODIFIED_FLAG ");
-                g_print ("\n");
-                if (child->uflags & SP_OBJECT_MODIFIED_FLAG) {
-                    g_print("SP_OBJECT_MODIFIED_FLAG ");
-                }
-                if (child->uflags & SP_OBJECT_CHILD_MODIFIED_FLAG) {
-                    g_print("SP_OBJECT_CHILD_MODIFIED_FLAG ");
-                }
-                g_print ("\n");
-                **/
-                //g_print ("Caution! The changed code applies! Does this change any behaviour?\n");
                 child->updateDisplay((SPCtx *)&cctx, flags);
-                //child->updateDisplay((SPCtx *)&cctx, child->uflags);
             } else {
                 child->updateDisplay(ctx, flags);
-                //g_print ("case 2\n");
             }
         }
         g_object_unref (G_OBJECT (child));
