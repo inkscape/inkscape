@@ -162,7 +162,7 @@ void FilterSlot::get_final(int slot_nr, NRPixBlock *result) {
     memset(NR_PIXBLOCK_PX(result), 0, size);
 
     if (fabs(trans[1]) > 1e-6 || fabs(trans[2]) > 1e-6) {
-        transform_nearest(result, final_usr, trans);
+        transform_bicubic(result, final_usr, trans);
     } else if (fabs(trans[0] - 1) > 1e-6 || fabs(trans[3] - 1) > 1e-6) {
         scale_bicubic(result, final_usr);
     } else {
@@ -212,7 +212,7 @@ void FilterSlot::set(int slot_nr, NRPixBlock *pb)
                 g_warning("Memory allocation failed in NR::FilterSlot::set (transform)");
                 return;
             }
-            transform_nearest(trans_pb, pb, trans);
+            transform_bicubic(trans_pb, pb, trans);
             nr_pixblock_release(pb);
             delete pb;
             pb = trans_pb;

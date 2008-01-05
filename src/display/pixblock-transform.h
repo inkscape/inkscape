@@ -18,6 +18,7 @@
 namespace NR {
 
 void transform_nearest(NRPixBlock *to, NRPixBlock *from, Matrix &trans);
+void transform_bicubic(NRPixBlock *to, NRPixBlock *from, Matrix &trans);
 
 } /* namespace NR */
 
