@@ -111,7 +111,7 @@ class Barcode:
         text.set( 'x', str(int(self.x) + int(barwidth / 2)) )
         text.set( 'y', str(int(self.height) + 10 + int(self.y)) )
         text.set( 'style', 'font-size:' + self.fontSize() + 'px;text-align:center;text-anchor:middle;' )
-        text.set( 'xml:space', 'preserve' )
+        text.set( '{http://www.w3.org/XML/1998/namespace}space', 'preserve' )
         text.set( 'id', name + '_bottomtext' )
 
         text.text = str(self.label)
