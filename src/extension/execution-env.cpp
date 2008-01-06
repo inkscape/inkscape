@@ -121,7 +121,9 @@ ExecutionEnv::killDocCache (void) {
 void
 ExecutionEnv::preferencesChange (void) {
     _timersig.disconnect();
-    _timersig = Glib::signal_timeout().connect(sigc::mem_fun(this, &ExecutionEnv::preferencesTimer), 100, Glib::PRIORITY_DEFAULT_IDLE);
+	if (_livePreview) {
+		_timersig = Glib::signal_timeout().connect(sigc::mem_fun(this, &ExecutionEnv::preferencesTimer), 100, Glib::PRIORITY_DEFAULT_IDLE);
+	}
     return;
 }
 
