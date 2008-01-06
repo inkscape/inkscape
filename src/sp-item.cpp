@@ -691,17 +691,81 @@ NR::Maybe<NR::Rect> SPItem::getBounds(NR::Matrix const &transform,
                                       SPItem::BBoxType type,
                                       unsigned int /*dkey*/) const
 {
-    NRRect r;
+    NR::Maybe<NR::Rect> r = NR::Nothing();
     sp_item_invoke_bbox_full(this, &r, transform, type, TRUE);
     return r;
 }
 
+void
+sp_item_invoke_bbox(SPItem const *item, NR::Maybe<NR::Rect> *bbox, NR::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
+{
+    sp_item_invoke_bbox_full(item, bbox, transform, type, clear);
+}
+
+// DEPRECATED to phase out the use of NRRect in favor of NR::Maybe<NR::Rect>
 void
 sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
 {
     sp_item_invoke_bbox_full(item, bbox, transform, type, clear);
 }
 
+/** Calls \a item's subclass' bounding box method; clips it by the bbox of clippath, if any; and
+ * unions the resulting bbox with \a bbox. If \a clear is true, empties \a bbox first. Passes the
+ * transform and the flags to the actual bbox methods. Note that many of subclasses (e.g. groups,
+ * clones), in turn, call this function in their bbox methods. */
+void
+sp_item_invoke_bbox_full(SPItem const *item, NR::Maybe<NR::Rect> *bbox, NR::Matrix const &transform, unsigned const flags, unsigned const clear)
+{
+    g_assert(item != NULL);
+    g_assert(SP_IS_ITEM(item));
+    g_assert(bbox != NULL);
+
+    if (clear) {
+        *bbox = NR::Nothing();
+    }
+
+    // TODO: replace NRRect by NR::Rect, for all SPItemClasses, and for SP_CLIPPATH
+
+    NRRect temp_bbox;
+    temp_bbox.x0 = temp_bbox.y0 = NR_HUGE;
+    temp_bbox.x1 = temp_bbox.y1 = -NR_HUGE;
+
+    // call the subclass method
+    if (((SPItemClass *) G_OBJECT_GET_CLASS(item))->bbox) {
+        ((SPItemClass *) G_OBJECT_GET_CLASS(item))->bbox(item, &temp_bbox, transform, flags);
+    }
+
+    // unless this is geometric bbox, crop the bbox by clip path, if any
+    if ((SPItem::BBoxType) flags != SPItem::GEOMETRIC_BBOX && item->clip_ref->getObject()) {
+        NRRect b;
+        sp_clippath_get_bbox(SP_CLIPPATH(item->clip_ref->getObject()), &b, transform, flags);
+        nr_rect_d_intersect (&temp_bbox, &temp_bbox, &b);
+    }
+    
+    if (temp_bbox.x0 > temp_bbox.x1 || temp_bbox.y0 > temp_bbox.y1) {
+        // We'll assume here that when x0 > x1 or y0 > y1, the bbox is "nothing"
+        // However it has never been explicitely defined this way for NRRects
+        // (as opposed to NR::Maybe<NR::Rect>)
+        *bbox = NR::Nothing();
+        return;
+    } 
+    
+    if (temp_bbox.x0 == temp_bbox.y0 == NR_HUGE && temp_bbox.x1 == temp_bbox.y1 == -NR_HUGE) {
+        // The bbox hasn't been touched by the SPItemClass' bbox method
+        // or it has explicitely been set to be like this (e.g. in sp_shape_bbox)
+        *bbox = NR::Nothing();
+        return;
+    }
+    
+    // Do not use temp_bbox.upgrade() here, because it uses a test that returns NR::Nothing
+    // for any rectangle with zero area. The geometrical bbox of for example a vertical line
+    // would therefore be translated into NR::Nothing (see bug https://bugs.launchpad.net/inkscape/+bug/168684) 
+    NR::Maybe<NR::Rect> temp_bbox_new = NR::Rect(NR::Point(temp_bbox.x0, temp_bbox.y0), NR::Point(temp_bbox.x1, temp_bbox.y1));
+    
+    *bbox = NR::union_bounds(*bbox, temp_bbox_new);
+}
+
+// DEPRECATED to phase out the use of NRRect in favor of NR::Maybe<NR::Rect>
 /** Calls \a item's subclass' bounding box method; clips it by the bbox of clippath, if any; and
  * unions the resulting bbox with \a bbox. If \a clear is true, empties \a bbox first. Passes the
  * transform and the flags to the actual bbox methods. Note that many of subclasses (e.g. groups,
@@ -777,9 +841,9 @@ sp_item_bbox_desktop(SPItem *item, NRRect *bbox, SPItem::BBoxType type)
 
 NR::Maybe<NR::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type)
 {
-    NRRect ret;
-    sp_item_invoke_bbox(item, &ret, sp_item_i2d_affine(item), TRUE, type);
-    return ret.upgrade();
+    NR::Maybe<NR::Rect> rect = NR::Nothing();
+    sp_item_invoke_bbox(item, &rect, sp_item_i2d_affine(item), TRUE, type);
+    return rect;
 }
 
 static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p)
