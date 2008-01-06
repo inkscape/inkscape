@@ -1874,7 +1874,6 @@ static void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     }
 
     {
-        //EgeAdjustmentAction* calligraphy_angle = 0;
         EgeAdjustmentAction* eact = 0;
         gchar const *flatsidedstr = prefs_get_string_attribute( "tools.shapes.star", "isflatsided" );
         bool isFlatSided = flatsidedstr ? (strcmp(flatsidedstr, "false") != 0) : true;
