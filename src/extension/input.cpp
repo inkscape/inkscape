@@ -46,8 +46,6 @@ Input::Input (Inkscape::XML::Node * in_repr, Implementation::Implementation * in
     filetypetooltip = NULL;
     output_extension = NULL;
 
-    printf("Input::Input\n");
-
     if (repr != NULL) {
         Inkscape::XML::Node * child_repr;
 
@@ -147,8 +145,6 @@ Input::check (void)
 SPDocument *
 Input::open (const gchar *uri)
 {
-    printf("Input::open\n");
-
     if (!loaded()) {
         set_state(Extension::STATE_LOADED);
     }
