@@ -370,7 +370,7 @@ box3d_set_transform(SPItem *item, NR::Matrix const &xform)
         transf_persp = persp;
     }
 
-    /* only transform the perspective once, even it it has several selected boxes */
+    /* only transform the perspective once, even if it has several selected boxes */
     if(!persp3d_was_transformed (transf_persp)) {
         /* concatenate the affine transformation with the perspective mapping; this
            function also triggers repr updates of boxes and the perspective itself */
@@ -384,8 +384,6 @@ box3d_set_transform(SPItem *item, NR::Matrix const &xform)
         persp3d_unset_transforms(transf_persp);
     }
 
-    /***
-    // FIXME: We somehow have to apply the transformation to strokes, patterns, and gradients. How?
     NR::Matrix ret(NR::transform(xform));
     gdouble const sw = hypot(ret[0], ret[1]);
     gdouble const sh = hypot(ret[2], ret[3]);
@@ -406,7 +404,6 @@ box3d_set_transform(SPItem *item, NR::Matrix const &xform)
         // Adjust LPE
         sp_item_adjust_livepatheffect(item, xform);
     }
-    ***/
 
     return NR::identity();
 }
