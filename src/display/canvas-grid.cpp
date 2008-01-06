@@ -839,10 +839,10 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
         for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[NR::Y], ylinenum++) {
             gint const y0 = (gint) Inkscape::round(y);
 
-            if (!scaled[NR::Y] && (ylinenum % empspacing) == 0) {
-                grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, empcolor);
-            } else {
+            if (!scaled[NR::Y] && (ylinenum % empspacing) != 0) {
                 grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, color);
+            } else {
+                grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, empcolor);
             }
         }
 
@@ -850,10 +850,10 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
         gdouble x;
         for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[NR::X], xlinenum++) {
             gint const ix = (gint) Inkscape::round(x);
-            if (!scaled[NR::X] && (xlinenum % empspacing) == 0) {
-                grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, empcolor);
-            } else {
+            if (!scaled[NR::X] && (xlinenum % empspacing) != 0) {
                 grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, color);
+            } else {
+                grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, empcolor);
             }
         }
     } else {
