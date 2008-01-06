@@ -61,7 +61,7 @@ public:
 
     virtual int render(FilterSlot &slot, FilterUnits const &units);
     void update_pixbuffer(FilterSlot &slot, IRect &area);
-    
+
     void set_baseFrequency(int axis, double freq);
     void set_numOctaves(int num);
     void set_seed(double s);

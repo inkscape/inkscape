@@ -2000,7 +2000,7 @@ void FilterEffectsDialog::init_settings_widgets()
 void FilterEffectsDialog::add_primitive()
 {
     SPFilter* filter = _filter_modifier.get_selected_filter();
-    
+
     if(filter) {
         SPFilterPrimitive* prim = filter_add_primitive(filter, _add_primitive_type.get_active_data()->id);
 

@@ -156,10 +156,10 @@ sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
     double read_num;
     bool read_bool;
     NR::FilterTurbulenceType read_type;
-    
+
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
-	
+
         case SP_ATTR_BASEFREQUENCY:
             feTurbulence->baseFrequency.set(value);
                 //From SVG spec: If two <number>s are provided, the first number represents a base frequency in the X direction and the second value represents a base frequency in the Y direction. If one number is provided, then that value is used for both X and Y.
@@ -188,7 +188,7 @@ sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
             read_bool = sp_feTurbulence_read_stitchTiles(value);
             if (read_bool != feTurbulence->stitchTiles){
                 feTurbulence->stitchTiles = read_bool;
-                feTurbulence->updated = false;                
+                feTurbulence->updated = false;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -196,7 +196,7 @@ sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
             read_type = sp_feTurbulence_read_type(value);
             if (read_type != feTurbulence->type){
                 feTurbulence->type = read_type;
-                feTurbulence->updated = false;                
+                feTurbulence->updated = false;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;

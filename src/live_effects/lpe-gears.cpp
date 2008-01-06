@@ -210,8 +210,15 @@ namespace LivePathEffect {
 LPEGears::LPEGears(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     teeth(_("Teeth"), _("The number of teeth"), "teeth", &wr, this, 10),
-    phi(_("Phi"), _("???"), "phi", &wr, this, 5)
+    phi(_("Phi"), _("Tooth pressure angle (typically 20-25 deg).  The ratio of teeth not in contact."), "phi", &wr, this, 5)
 {
+    /* Tooth pressure angle: The angle between the tooth profile and a perpendicular to the pitch
+     * circle, usually at the point where the pitch circle meets the tooth profile. Standard angles
+     * are 20 and 25 degrees. The pressure angle affects the force that tends to separate mating
+     * gears. A high pressure angle means that higher ratio of teeth not in contact. However, this
+     * allows the teeth to have higher capacity and also allows fewer teeth without undercutting.
+     */
+
     teeth.param_make_integer();
     teeth.param_set_range(3, NR_HUGE);
     registerParameter( dynamic_cast<Parameter *>(&teeth) );

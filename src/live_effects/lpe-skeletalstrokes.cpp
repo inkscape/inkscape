@@ -66,7 +66,7 @@ LPESkeletalStrokes::LPESkeletalStrokes(LivePathEffectObject *lpeobject) :
     spacing(_("Spacing"), _("Space between copies of the pattern"), "spacing", &wr, this, 0),
     normal_offset(_("Normal offset"), "", "normal_offset", &wr, this, 0),
     tang_offset(_("Tangential offset"), "", "tang_offset", &wr, this, 0),
-    vertical_pattern(_("Pattern is vertical"), "", "vertical_pattern", &wr, this, false)
+    vertical_pattern(_("Pattern is vertical"), "Rotate pattern 90 deg before applying", "vertical_pattern", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&pattern) );
     registerParameter( dynamic_cast<Parameter *>(&copytype) );
