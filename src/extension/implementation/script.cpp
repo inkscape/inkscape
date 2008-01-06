@@ -41,6 +41,7 @@ FIXME:
 
 #include "ui/view/view.h"
 #include "desktop-handles.h"
+#include "desktop.h"
 #include "selection.h"
 #include "sp-namedview.h"
 #include "io/sys.h"
@@ -737,6 +738,11 @@ Script::effect(Inkscape::Extension::Effect *module,
 		exit(1);
 	}
 
+    SPDesktop *desktop = (SPDesktop *)doc;
+    sp_namedview_document_from_window(desktop);
+
+	gchar * orig_output_extension = g_strdup(sp_document_repr_root(desktop->doc())->attribute("inkscape:output_extension"));
+
     std::list<std::string> params;
     module->paramListString(params);
 
@@ -759,9 +765,6 @@ Script::effect(Inkscape::Extension::Effect *module,
         /// \todo Popup dialog here
         return;
     }
-
-    SPDesktop *desktop = (SPDesktop *) doc;
-    sp_namedview_document_from_window(desktop);
 
     if (desktop != NULL) {
         Inkscape::Util::GSListConstIterator<SPItem *> selected =
@@ -803,7 +806,10 @@ Script::effect(Inkscape::Extension::Effect *module,
         doc->doc()->emitReconstructionFinish();
         mydoc->release();
         sp_namedview_update_layers_from_document(desktop);
+
+		sp_document_repr_root(desktop->doc())->setAttribute("inkscape:output_extension", orig_output_extension);
     }
+	g_free(orig_output_extension);
 
     return;
 }
