@@ -1256,7 +1256,7 @@ EditWidget::shutdown()
         /// name contains markup characters
         markup = g_strdup_printf(
                 _("<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n\n"
-                  "Do you want to save this file in another format?"),
+                  "Do you want to save this file as an Inkscape SVG?"),
                 SP_DOCUMENT_NAME(doc),
                 Inkscape::Extension::db.get(sp_document_repr_root(doc)->attribute("inkscape:output_extension"))->get_name());
 
@@ -1270,8 +1270,10 @@ EditWidget::shutdown()
         Gtk::Button close_button (_("Close _without saving"), true);
         dlg.add_action_widget (close_button, Gtk::RESPONSE_NO);
         close_button.show();
+        Gtk::Button save_button (_("_Save as SVG"), true);
         dlg.add_button (Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-        dlg.add_button (Gtk::Stock::SAVE, Gtk::RESPONSE_YES);
+        dlg.add_action_widget (save_button, Gtk::RESPONSE_YES);
+        save_button.show();
         dlg.set_default_response (Gtk::RESPONSE_YES);
 
         int response = dlg.run();

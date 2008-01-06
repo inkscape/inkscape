@@ -874,7 +874,7 @@ SPDesktopWidget::shutdown()
                 GTK_MESSAGE_WARNING,
                 GTK_BUTTONS_NONE,
                 _("<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n\n"
-                  "Do you want to save this file in another format?"),
+                  "Do you want to save this file as an Inkscape SVG?"),
                 SP_DOCUMENT_NAME(doc),
                 Inkscape::Extension::db.get(sp_document_repr_root(doc)->attribute("inkscape:output_extension"))->get_name());
             // fix for bug 1767940:
@@ -883,10 +883,13 @@ SPDesktopWidget::shutdown()
             GtkWidget *close_button;
             close_button = gtk_button_new_with_mnemonic(_("Close _without saving"));
             gtk_widget_show(close_button);
+            GtkWidget *save_button;
+            save_button = gtk_button_new_with_mnemonic(_("_Save as SVG"));
+            gtk_widget_show(save_button);
             gtk_dialog_add_action_widget(GTK_DIALOG(dialog), close_button, GTK_RESPONSE_NO);
 
             gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
-            gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_SAVE, GTK_RESPONSE_YES);
+            gtk_dialog_add_action_widget(GTK_DIALOG(dialog), save_button, GTK_RESPONSE_YES);
             gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_YES);
 
             gint response;
