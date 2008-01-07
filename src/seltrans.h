@@ -128,7 +128,7 @@ private:
     gdouble _strokewidth;
     NR::Matrix _current;
     NR::Point _opposite; ///< opposite point to where a scale is taking place
-    
+
     NR::Point _opposite_for_specpoints;
     NR::Point _opposite_for_bboxpoints;
     NR::Point _origin_for_specpoints;
@@ -145,7 +145,7 @@ private:
     SPCanvasItem *_l[4];
     guint _sel_changed_id;
     guint _sel_modified_id;
-    GSList *_stamp_cache;    
+    GSList *_stamp_cache;
 
     NR::Point _origin; ///< position of origin for transforms
     NR::Point _point; ///< original position of the knot being used for the current transform
