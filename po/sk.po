@@ -2,14 +2,14 @@
 # Copyright (C) 2002-2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Inkscape package.
 # Zdenko Podobný <zdpo@mailbox.sk>, 2003, 2004.
-# Ivan Masár <helix84@centrum.sk>, 2007.
+# Ivan Masár <helix84@centrum.sk>, 2006, 2007, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-01-06 10:33+0100\n"
-"PO-Revision-Date: 2008-01-06 22:31+0100\n"
+"PO-Revision-Date: 2008-01-07 18:02+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "<b>Shift</b>: kresliť okolo štartovacieho bodu"
 #: ../src/arc-context.cpp:486
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
-msgstr "<b>Elipsa</b>: %s &#215; %s (ombedzenie na pomer %d:%d); so <b>Shift</b> kresliť okolo štartovacieho bodu"
+msgstr "<b>Elipsa</b>: %s &#215; %s (obmedzenie na pomer %d:%d); so <b>Shift</b> kresliť okolo štartovacieho bodu"
 
 #: ../src/arc-context.cpp:488
 #, c-format
@@ -2814,7 +2814,7 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:36
 msgid "Cycle Colormap"
-msgstr ""
+msgstr "Opakovať farebnú mapu"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:38
 #: ../src/extension/internal/bitmap/spread.cpp:38
@@ -2824,7 +2824,7 @@ msgstr "Množstvo"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:44
 msgid "Cycle colormap(s) of selected bitmap(s)."
-msgstr ""
+msgstr "Opakovať farebnú mapu vybraných bitmáp."
 
 #: ../src/extension/internal/bitmap/despeckle.cpp:35
 msgid "Despeckle"
@@ -2836,19 +2836,19 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/edge.cpp:36
 msgid "Edge"
-msgstr ""
+msgstr "Hrany"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
 msgid "Hilight edges of selected bitmap(s)."
-msgstr ""
+msgstr "Zvýrazniť hrany vybraných bitmáp."
 
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
-msgstr ""
+msgstr "Vytepať"
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
 msgid "Emboss selected bitmap(s) -- hilight edges with 3D effect."
-msgstr ""
+msgstr "Vytepať vybrané bitmapy -- zvýrazniť hrany trojrozmerným efektom."
 
 #: ../src/extension/internal/bitmap/enhance.cpp:34
 msgid "Enhance"
@@ -2856,7 +2856,7 @@ msgstr "Rozšíriť"
 
 #: ../src/extension/internal/bitmap/enhance.cpp:41
 msgid "Enhance selected bitmap(s) -- minimize noise."
-msgstr ""
+msgstr "Vylepšiť vybrané bitmapy -- minimalizovať šum."
 
 #: ../src/extension/internal/bitmap/equalize.cpp:34
 msgid "Equalize"
@@ -2864,7 +2864,7 @@ msgstr "Ekvalizovať"
 
 #: ../src/extension/internal/bitmap/equalize.cpp:41
 msgid "Equalize selected bitmap(s) -- histogram equalization."
-msgstr ""
+msgstr "Ekvalizovať vybrané bitmapy -- ekvalizácia podľa histogramu."
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:37
 #: ../src/filter-enums.cpp:28
@@ -2956,7 +2956,7 @@ msgstr "Odtieň"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:49
 msgid "Modulate percent hue, saturation, and brightness of selected bitmap(s)."
-msgstr ""
+msgstr "Modulovať percená odtieňa, sýtosti a jasu zvolených bitmáp."
 
 #: ../src/extension/internal/bitmap/negate.cpp:35
 msgid "Negate"
@@ -3059,7 +3059,7 @@ msgstr "Náhodne rozmiestniť pixely v zvolených bitmapách v rámci polomeru d
 
 #: ../src/extension/internal/bitmap/swirl.cpp:36
 msgid "Swirl"
-msgstr ""
+msgstr "Vírenie"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:38
 msgid "Degrees"
@@ -3067,7 +3067,7 @@ msgstr "Stupňov"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:44
 msgid "Swirl selected bitmap(s) around center point."
-msgstr ""
+msgstr "Víriť vybrané bitmapy okolo ich stredu."
 
 #. TRANSLATORS: see http://docs.gimp.org/en/gimp-tool-threshold.html
 #: ../src/extension/internal/bitmap/threshold.cpp:37
@@ -3082,11 +3082,11 @@ msgstr "Použiť prah na iba vybrané bitmapy."
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:40
 msgid "Unsharp Mask"
-msgstr ""
+msgstr "Neostrá maska"
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:51
 msgid "Sharpen selected bitmap(s) using unsharp mask algorithms."
-msgstr ""
+msgstr "Zaostriť vybrané bitmapy pomocou algoritmov neostrej masky."
 
 #: ../src/extension/internal/bitmap/wave.cpp:37
 msgid "Wave"
@@ -3369,23 +3369,23 @@ msgstr "Tlač PDF"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:53
 msgid "media box"
-msgstr ""
+msgstr "ohraničenie nosiča"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:54
 msgid "crop box"
-msgstr ""
+msgstr "ohraničenie orezania"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:55
 msgid "trim box"
-msgstr ""
+msgstr "ohraničenie upravenia"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:56
 msgid "bleed box"
-msgstr ""
+msgstr "ohraničenie okraja stránky"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:57
 msgid "art box"
-msgstr ""
+msgstr "ohraničenie diela"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:69
 msgid "Select page:"
@@ -3750,9 +3750,10 @@ msgstr "Zmiešať"
 msgid "Color Matrix"
 msgstr "Matica farieb"
 
+# TODO: check
 #: ../src/filter-enums.cpp:22
 msgid "Component Transfer"
-msgstr ""
+msgstr "Prenos zložky"
 
 #: ../src/filter-enums.cpp:23
 #, fuzzy
@@ -3835,10 +3836,10 @@ msgstr "Normálne"
 msgid "Multiply"
 msgstr "Viaceré štýly"
 
+# TODO: check
 #: ../src/filter-enums.cpp:53
-#, fuzzy
 msgid "Screen"
-msgstr "Zelená"
+msgstr "Obrazovka"
 
 #: ../src/filter-enums.cpp:54
 msgid "Darken"
@@ -3854,9 +3855,8 @@ msgid "Matrix"
 msgstr "_Matica"
 
 #: ../src/filter-enums.cpp:62
-#, fuzzy
 msgid "Saturate"
-msgstr "Sýtosť"
+msgstr "Nasýtiť"
 
 #: ../src/filter-enums.cpp:63
 msgid "Hue Rotate"
@@ -3955,14 +3955,12 @@ msgid "Alpha"
 msgstr "Alfa"
 
 #: ../src/filter-enums.cpp:109
-#, fuzzy
 msgid "Erode"
-msgstr "Uzol"
+msgstr "Erodovať"
 
 #: ../src/filter-enums.cpp:110
-#, fuzzy
 msgid "Dilate"
-msgstr "Dátum"
+msgstr "Dilatovať"
 
 #: ../src/filter-enums.cpp:116
 msgid "Fractal Noise"
@@ -4088,17 +4086,17 @@ msgstr "%s vybraných z %d páčok farebných prechodov na %d zvolených objekto
 #: ../src/gradient-context.cpp:163
 #, c-format
 msgid "One handle merging %d stops (drag with <b>Shift</b> to separate) selected out of %d gradient handles on %d selected object(s)"
-msgstr ""
+msgstr "Jedna páčka spájajúca %d priehradiek (oddelíte ťahaním so <b>Shift</b>) vybraná z %d páčok farebných prechodov na %d vybraných objektoch"
 
 #: ../src/gradient-context.cpp:167
 #, c-format
 msgid "<b>%d</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr ""
+msgstr "<b>%d</b> z %d páčok farebných prechodov vybraných na %d vybraných objektoch"
 
 #: ../src/gradient-context.cpp:170
 #, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr ""
+msgstr "Žiadna z %d páčok farebných prechodov nebola vybraná na %d vybraných objektoch"
 
 #: ../src/gradient-context.cpp:368
 #: ../src/gradient-context.cpp:461
@@ -4116,7 +4114,7 @@ msgstr "Vytvoriť predvolený farebný prechod"
 
 #: ../src/gradient-context.cpp:565
 msgid "<b>Draw around</b> handles to select them"
-msgstr ""
+msgstr "<b>Kreslením okolo</b> páčok ich vyberiete"
 
 #: ../src/gradient-context.cpp:663
 msgid "<b>Ctrl</b>: snap gradient angle"
@@ -4664,7 +4662,7 @@ msgstr "Variácia počiatočného bodu"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "The amount of random jitter to apply to the start points of the stitches"
-msgstr ""
+msgstr "Množstvo náhodného chvenia, ktoré sa má použiť na počiatočné body stehov"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "End point jitter"
@@ -4672,7 +4670,7 @@ msgstr "Variácia koncového bodu"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "The amount of random jitter to apply to the end points of the stitches"
-msgstr ""
+msgstr "Množstvo náhodného chvenia, ktoré sa má použiť na koncové body stehov"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid "Spacing variation"
@@ -4680,7 +4678,7 @@ msgstr "Variácia rozostupov"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid "Determines whether lines cluster together or have an equal spacing between each other."
-msgstr ""
+msgstr "Určuje, či sa čiary zhlukujú alebo majú medzi sebou rovnomerné rozostupy."
 
 # TODO: check
 #: ../src/live_effects/lpe-curvestitch.cpp:48
@@ -4775,7 +4773,7 @@ msgstr "Zmeniť skalárny parameter"
 #: ../src/live_effects/parameter/path.cpp:113
 #: ../src/live_effects/parameter/point.cpp:108
 msgid "Edit on-canvas"
-msgstr ""
+msgstr "Upravovať na plátne"
 
 #: ../src/live_effects/parameter/path.cpp:124
 msgid "Paste path"
@@ -4798,7 +4796,7 @@ msgstr "Prilepiť parameter cesty"
 
 #: ../src/live_effects/parameter/path.cpp:204
 msgid "Clipboard does not contain a path."
-msgstr ""
+msgstr "Schránka neobsahuje cestu."
 
 #: ../src/live_effects/parameter/point.cpp:89
 msgid "Change point parameter"
@@ -7555,7 +7553,7 @@ msgstr "Vzdialenosť prichytávania v obrazových bodoch pre prichytávanie k ob
 
 #: ../src/ui/dialog/document-properties.cpp:287
 msgid "If set, objects only snap to another object when it's within the range specified below"
-msgstr ""
+msgstr "Ak je voľba zapnutá, objekty sa prichytávajú k iným objektom, keď sú v dolu uvedenom dosahu"
 
 #. Options for snapping to grids
 #: ../src/ui/dialog/document-properties.cpp:291
@@ -7572,7 +7570,7 @@ msgstr "Vzdialenosť prichytávania v obrazových bodoch pre prichytávanie k mr
 
 #: ../src/ui/dialog/document-properties.cpp:293
 msgid "If set, objects only snap to a grid line when it's within the range specified below"
-msgstr ""
+msgstr "Ak je voľba zapnutá, objekty sa prichytávajú k čiaram mriežky, keď sú v dolu uvedenom dosahu"
 
 #. Options for snapping to guides
 #: ../src/ui/dialog/document-properties.cpp:297
@@ -7589,7 +7587,7 @@ msgstr "Vzdialenosť prichytávania v obrazových bodoch pre prichytávanie k vo
 
 #: ../src/ui/dialog/document-properties.cpp:299
 msgid "If set, objects only snap to a guide when it's within the range specified below"
-msgstr ""
+msgstr "Ak je voľba zapnutá, objekty sa prichytávajú k vodidlám, keď sú v dolu uvedenom dosahu"
 
 #: ../src/ui/dialog/document-properties.cpp:321
 msgid "<b>Snapping</b>"
@@ -12884,7 +12882,7 @@ msgstr "Vytvoriť ostré rohy"
 
 #: ../src/widgets/toolbox.cpp:2387
 msgid "3D Box: Toggle VP"
-msgstr ""
+msgstr "Kváder: Prepnúť spojnicu"
 
 #: ../src/widgets/toolbox.cpp:2431
 msgid "3D Box: Change perspective"
@@ -13325,9 +13323,8 @@ msgid "(long protruding caps)"
 msgstr "(dlhé, prečnievajúce zakončenia)"
 
 #: ../src/widgets/toolbox.cpp:3381
-#, fuzzy
 msgid "Cap rounding"
-msgstr "Zaoblenie"
+msgstr "Zaoblenie zakončenia"
 
 #: ../src/widgets/toolbox.cpp:3381
 msgid "Caps:"
@@ -13648,7 +13645,7 @@ msgstr "O koľko zväčšiť (kladné číslo) alebo zmenšiť (záporné) vytvo
 #: ../src/widgets/toolbox.cpp:5234
 #, fuzzy
 msgid "Close gaps"
-msgstr "Blízke medzery:"
+msgstr "Blízke medzery"
 
 # TODO: check
 #: ../src/widgets/toolbox.cpp:5235
@@ -14285,10 +14282,10 @@ msgstr "Vzorka pozdĺž cesty"
 msgid "Space between copies:"
 msgstr "Rozostup medzi kópiami:"
 
+# TODO: check
 #: ../share/extensions/perfectboundcover.inx.h:1
-#, fuzzy
 msgid "Bleed (in)"
-msgstr "Bleed (pl)"
+msgstr "Veľkosť okraja (pl)"
 
 #: ../share/extensions/perfectboundcover.inx.h:2
 msgid "Book Height (inches)"
