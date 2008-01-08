@@ -5,7 +5,6 @@ EXTRA_DIST = API \
 	architecture.txt \
 	class-hierarchy.dia \
 	coordinates.txt \
-	fonts.txt \
 	inkscape-shadow.README \
 	keys.README \
 	keys.xml \
