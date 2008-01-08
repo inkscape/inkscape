@@ -49,7 +49,7 @@ public:
     void param_editOncanvas(SPItem * item, SPDesktop * dt);
     void param_setup_nodepath(Inkscape::NodePath::Path *np);
 
-    virtual void param_transform_multiply(Geom::Matrix const& /*postmul*/, bool /*set*/) {};
+    virtual void param_transform_multiply(Geom::Matrix const& /*postmul*/, bool /*set*/);
 
     sigc::signal <void> signal_path_pasted;
     sigc::signal <void> signal_path_changed;
@@ -60,8 +60,6 @@ private:
 
     Gtk::Widget * _widget;
     Gtk::Tooltips * _tooltips;
-
-    void param_write_to_repr(const char * svgd);
 
     void on_edit_button_click();
     void on_paste_button_click();

@@ -118,6 +118,22 @@ PointParam::param_setValue(Geom::Point newpoint)
         pointwdg->setValue(newpoint[0], newpoint[1]);
 }
 
+void
+PointParam::param_set_and_write_new_value (Geom::Point newpoint)
+{
+    Inkscape::SVGOStringStream os;
+    os << newpoint[0] << "," << newpoint[1];
+    gchar * str = g_strdup(os.str().c_str());
+    param_write_to_repr(str);
+    g_free(str);
+}
+
+void
+PointParam::param_transform_multiply(Geom::Matrix const& postmul, bool /*set*/)
+{
+    param_set_and_write_new_value( (*this) * postmul );
+}
+
 
 // CALLBACKS:
 

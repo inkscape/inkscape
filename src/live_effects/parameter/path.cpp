@@ -150,11 +150,10 @@ PathParam::param_setup_nodepath(Inkscape::NodePath::Path *np)
 }
 
 void
-PathParam::param_write_to_repr(const char * svgd)
+PathParam::param_transform_multiply(Geom::Matrix const& postmul, bool /*set*/)
 {
-    param_effect->getRepr()->setAttribute(param_key.c_str(), svgd);
+    param_set_and_write_new_value( (*this) * postmul );
 }
-
 
 void
 PathParam::param_set_and_write_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > newpath)

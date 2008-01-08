@@ -68,6 +68,8 @@ protected:
 
     Effect* param_effect;
 
+    void param_write_to_repr(const char * svgd);
+
 private:
     Parameter(const Parameter&);
     Parameter& operator=(const Parameter&);
