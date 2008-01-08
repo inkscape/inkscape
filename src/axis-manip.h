@@ -12,15 +12,14 @@
 #ifndef SEEN_AXIS_MANIP_H
 #define SEEN_AXIS_MANIP_H
 
-#include <glib.h> // g_assert()
 #include <gtk/gtk.h>
 #include "libnr/nr-point.h"
 
 namespace Proj {
 
 enum VPState {
-    VP_FINITE = 0,
-    VP_INFINITE
+    FINITE = 0,
+    INFINITE
 };
 
 // The X-/Y-/Z-axis corresponds to the first/second/third digit

@@ -455,37 +455,51 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
 
         case GDK_bracketright:
             persp3d_rotate_VP (inkscape_active_document()->current_persp3d, Proj::X, -180/snaps, MOD__ALT);
+            sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
+                             _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_bracketleft:
             persp3d_rotate_VP (inkscape_active_document()->current_persp3d, Proj::X, 180/snaps, MOD__ALT);
+            sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
+                             _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_parenright:
             persp3d_rotate_VP (inkscape_active_document()->current_persp3d, Proj::Y, -180/snaps, MOD__ALT);
+            sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
+                             _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_parenleft:
             persp3d_rotate_VP (inkscape_active_document()->current_persp3d, Proj::Y, 180/snaps, MOD__ALT);
+            sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
+                             _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_braceright:
             persp3d_rotate_VP (inkscape_active_document()->current_persp3d, Proj::Z, -180/snaps, MOD__ALT);
+            sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
+                             _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_braceleft:
             persp3d_rotate_VP (inkscape_active_document()->current_persp3d, Proj::Z, 180/snaps, MOD__ALT);
+            sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
+                             _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_O:
-            Box3D::create_canvas_point(persp3d_get_VP(inkscape_active_document()->current_persp3d, Proj::W).affine(),
-                                       6, 0xff00ff00);
+            if (MOD__CTRL && MOD__SHIFT) {
+                Box3D::create_canvas_point(persp3d_get_VP(inkscape_active_document()->current_persp3d, Proj::W).affine(),
+                                           6, 0xff00ff00);
+            }
             ret = true;
             break;
 

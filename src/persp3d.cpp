@@ -309,7 +309,7 @@ persp3d_toggle_VP (Persp3D *persp, Proj::Axis axis, bool set_undo) {
     //        On the other hand, vp_drag_sel_modified() would update all boxes;
     //        here we can confine ourselves to the boxes of this particular perspective.
     persp3d_update_box_reprs (persp);
-    persp3d_update_z_orders (persp);
+    //persp3d_update_z_orders (persp);
     SP_OBJECT(persp)->updateRepr(SP_OBJECT_WRITE_EXT);
     if (set_undo) {
         sp_document_done(sp_desktop_document(inkscape_active_desktop()), SP_VERB_CONTEXT_3DBOX,
@@ -329,7 +329,7 @@ persp3d_toggle_VPs (std::set<Persp3D *> p, Proj::Axis axis) {
 
 void
 persp3d_set_VP_state (Persp3D *persp, Proj::Axis axis, Proj::VPState state) {
-    if (persp3d_VP_is_finite(persp, axis) != (state == Proj::VP_FINITE)) {
+    if (persp3d_VP_is_finite(persp, axis) != (state == Proj::FINITE)) {
         persp3d_toggle_VP(persp, axis);
     }
 }
@@ -348,7 +348,7 @@ persp3d_rotate_VP (Persp3D *persp, Proj::Axis axis, double angle, bool alt_press
     persp->tmat.set_infinite_direction (axis, a);
 
     persp3d_update_box_reprs (persp);
-    persp3d_update_z_orders (persp);
+    //persp3d_update_z_orders (persp);
     SP_OBJECT(persp)->updateRepr(SP_OBJECT_WRITE_EXT);
 }
 
@@ -488,6 +488,7 @@ persp3d_update_box_reprs (Persp3D *persp) {
     //g_print ("Requesting repr update for %d boxes in the perspective.\n", persp->boxes.size());
     for (std::vector<SPBox3D *>::iterator i = persp->boxes.begin(); i != persp->boxes.end(); ++i) {
         SP_OBJECT(*i)->updateRepr(SP_OBJECT_WRITE_EXT);
+        box3d_set_z_orders(*i);
     }
 }
 

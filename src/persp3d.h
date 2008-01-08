@@ -23,8 +23,9 @@
 #include <map>
 #include "sp-item.h"
 #include "transf_mat_3x4.h"
+#include "document.h"
+#include "inkscape.h"
 
-class SPDocument;
 class SPBox3D;
 class Box3DContext;
 
@@ -49,7 +50,12 @@ struct Persp3DClass {
 GType persp3d_get_type (void);
 
 // FIXME: Make more of these inline!
-inline Proj::Pt2 persp3d_get_VP (Persp3D *persp, Proj::Axis axis) { return persp->tmat.column(axis); }
+inline Persp3D * persp3d_get_from_repr (Inkscape::XML::Node *repr) {
+    return SP_PERSP3D(SP_ACTIVE_DOCUMENT->getObjectByRepr(repr));
+}
+inline Proj::Pt2 persp3d_get_VP (Persp3D *persp, Proj::Axis axis) {
+    return persp->tmat.column(axis);
+}
 NR::Point persp3d_get_PL_dir_from_pt (Persp3D *persp, NR::Point const &pt, Proj::Axis axis); // convenience wrapper around the following two
 NR::Point persp3d_get_finite_dir (Persp3D *persp, NR::Point const &pt, Proj::Axis axis);
 NR::Point persp3d_get_infinite_dir (Persp3D *persp, Proj::Axis axis);
