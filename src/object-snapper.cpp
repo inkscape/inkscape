@@ -70,50 +70,62 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* r,
                                               std::vector<NR::Point> &points_to_snap,
                                               DimensionToSnap const snap_dim) const
 {
-    if (ThisSnapperMightSnap()) {
-        SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
+    bool const c1 = (snap_dim == TRANSL_SNAP_XY) && ThisSnapperMightSnap();
+    bool const c2 = (snap_dim != TRANSL_SNAP_XY) && GuidesMightSnap();
+    bool const c3 = points_to_snap.size() == 0;
+    
+    if (!(c1 || c2) || c3) {
+        return;        
+    }
+    
+    SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
 
-        if (first_point) {
-            _candidates->clear();
-        }
+    if (first_point) {
+        _candidates->clear();
+    }
+    
+    NR::Maybe<NR::Rect> bbox = NR::Rect(); // a default NR::Rect is infinitely large
+    NR::Coord t = getSnapperTolerance();
+    
+    // When dragging a guide...
+    NR::Point p_guide = points_to_snap[0];
+    if (!getSnapperAlwaysSnap()) {
+        bbox = NR::Rect(p_guide, p_guide); // bbox is now just a single point: p_guide
+        bbox->growBy(t); // bbox width and height now measure 2x snapper tolerance
+        // for angled guidelines the bbox is now larger than really needed
+        // (up to sqrt(2) for 45 deg. guidelines) but we'll leave it like that
+    } // else: use an infinitely large bbox to find candidates 
 
-        for (SPObject* o = sp_object_first_child(r); o != NULL; o = SP_OBJECT_NEXT(o)) {
-            if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !desktop->itemIsHidden(SP_ITEM(o))) {
+    for (SPObject* o = sp_object_first_child(r); o != NULL; o = SP_OBJECT_NEXT(o)) {
+        if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !desktop->itemIsHidden(SP_ITEM(o))) {
 
-                /* See if this item is on the ignore list */
-                std::list<SPItem const *>::const_iterator i = it.begin();
-                while (i != it.end() && *i != o) {
-                    i++;
-                }
+            /* See if this item is on the ignore list */
+            std::list<SPItem const *>::const_iterator i = it.begin();
+            while (i != it.end() && *i != o) {
+                i++;
+            }
 
-                if (i == it.end()) {
-                    /* See if the item is within range */
-                    if (SP_IS_GROUP(o)) {
-                        _findCandidates(o, it, false, points_to_snap, snap_dim);
-                    } else {
-                        // Now let's see if any of the snapping points is within
-                        // snapping range of this object
-                        NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(SP_ITEM(o));
-                        if (b) {
-                            for (std::vector<NR::Point>::const_iterator i = points_to_snap.begin(); i != points_to_snap.end(); i++) {
-                                NR::Point b_min = b->min();
-                                NR::Point b_max = b->max();
-                                NR::Coord t = getSnapperTolerance();
-                                bool withinX = ((*i)[NR::X] >= b_min[NR::X] - t) && ((*i)[NR::X] <= b_max[NR::X] + t);
-                                bool withinY = ((*i)[NR::Y] >= b_min[NR::Y] - t) && ((*i)[NR::Y] <= b_max[NR::Y] + t);
-                                bool c1 = snap_dim == GUIDE_TRANSL_SNAP_X && withinX;
-                                bool c2 = snap_dim == GUIDE_TRANSL_SNAP_Y && withinY;
-                                bool c3 = snap_dim == TRANSL_SNAP_XY && withinX && withinY;
-                                // For an angled guide at e.g 45 deg., the bbox is very large and might even span
-                                // the full desktop. Therefore we will simply return _any_ candidate, without looking at
-                                // the bbox and the snapping distance.
-                                bool c4 = snap_dim == ANGLED_GUIDE_TRANSL_SNAP || snap_dim == ANGLED_GUIDE_ROT_SNAP; 
-                                if ( c1 || c2 || c3 || c4) {
-                                    //We've found a point that is within snapping range
-                                    //of this object, so record it as a candidate
-                                    _candidates->push_back(SP_ITEM(o));
-                                    break;
-                                }
+            if (i == it.end()) {
+                /* See if the item is within range */
+                if (SP_IS_GROUP(o)) {
+                    _findCandidates(o, it, false, points_to_snap, snap_dim);
+                } else {
+                    // Now let's see if any of the snapping points is within snapping range of this object
+                    if (snap_dim == TRANSL_SNAP_XY) {
+                        bbox = sp_item_bbox_desktop(SP_ITEM(o));
+                    } // else: we're snapping a guide to an object and we will use the bbox as defined above
+                    
+                    if (bbox) {
+                        for (std::vector<NR::Point>::const_iterator i = points_to_snap.begin(); i != points_to_snap.end(); i++) {
+                            NR::Point b_min = bbox->min();
+                            NR::Point b_max = bbox->max();
+                            bool withinX = ((*i)[NR::X] >= b_min[NR::X] - t) && ((*i)[NR::X] <= b_max[NR::X] + t);
+                            bool withinY = ((*i)[NR::Y] >= b_min[NR::Y] - t) && ((*i)[NR::Y] <= b_max[NR::Y] + t);
+                            if (withinX && withinY) {
+                                //We've found a point that is within snapping range
+                                //of this object, so record it as a candidate
+                                _candidates->push_back(SP_ITEM(o));
+                                break;
                             }
                         }
                     }
@@ -213,12 +225,15 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &s
     SnappedPoint s;
     bool success = false;
     
+    NR::Coord tol = getSnapperTolerance();
+    
     for (std::vector<NR::Point>::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
         // Project each node (*k) on the guide line (running through point p)
         NR::Point p_proj = project_on_linesegment(*k, p, p + NR::rot90(guide_normal));
-        NR::Coord dist = NR::L2(*k - p_proj);         
-        if (dist < getSnapperTolerance() && dist < s.getDistance()) {
-            s = SnappedPoint(*k, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
+        NR::Coord dist = NR::L2(*k - p_proj); // distance from node to the guide         
+        NR::Coord dist2 = NR::L2(p - p_proj); // distance from projection of node on the guide, to the mouse location
+        if ((dist < tol && dist2 < tol || getSnapperAlwaysSnap()) && dist < s.getDistance()) {
+            s = SnappedPoint(*k, dist, tol, getSnapperAlwaysSnap());
             success = true;
         }
     }
@@ -497,7 +512,7 @@ void Inkscape::ObjectSnapper::_doConstrainedSnap( SnappedConstraints &sc,
 }
 
 
-
+// This method is used to snap a guide to nodes, while dragging the guide around
 void Inkscape::ObjectSnapper::guideSnap(SnappedConstraints &sc,
 										NR::Point const &p,
 	                                    NR::Point const &guide_normal) const
@@ -505,7 +520,7 @@ void Inkscape::ObjectSnapper::guideSnap(SnappedConstraints &sc,
     if ( NULL == _named_view ) {
         return;
     }
-
+    
     /* Get a list of all the SPItems that we will try to snap to */
     std::vector<SPItem*> cand;
     std::list<SPItem const *> const it; //just an empty list
@@ -513,7 +528,6 @@ void Inkscape::ObjectSnapper::guideSnap(SnappedConstraints &sc,
     std::vector<NR::Point> points_to_snap;
     points_to_snap.push_back(p);
 
-    // This method is used to snap a guide to nodes, while dragging the guide around
     DimensionToSnap snap_dim;
     if (guide_normal == component_vectors[NR::Y]) {
         snap_dim = GUIDE_TRANSL_SNAP_Y;
@@ -545,6 +559,12 @@ bool Inkscape::ObjectSnapper::ThisSnapperMightSnap() const
 {
     bool snap_to_something = _snap_to_itempath || _snap_to_itemnode || _snap_to_bboxpath || _snap_to_bboxnode;
     return (_snap_enabled && _snap_from != 0 && snap_to_something);
+}
+
+bool Inkscape::ObjectSnapper::GuidesMightSnap() const
+{
+    bool snap_to_something = _snap_to_itemnode || _snap_to_bboxnode;
+    return (_snap_enabled && (_snap_from & SNAPPOINT_GUIDE) && snap_to_something);
 }
 
 void Inkscape::ObjectSnapper::_clear_paths() const 

@@ -235,7 +235,7 @@ DocumentProperties::build_guides()
                     "guidehicolor", "guidehiopacity", _wr);
                     
     _rcbsng.init (_("_Snap guides while dragging"),
-                  _("While dragging a guide, snap to object nodes or bounding box corners ('Snap to nodes' or 'snap to bounding box corners' must be enabled in the 'Snap' tab)"),
+                  _("While dragging a guide, snap to object nodes or bounding box corners ('Snap to nodes' or 'snap to bounding box corners' must be enabled in the 'Snap' tab; only a small part of the guide near the cursor will snap)"),
                   "inkscape:snap-guide", _wr);
                     
     Gtk::Label *label_gui = manage (new Gtk::Label);

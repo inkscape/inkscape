@@ -289,7 +289,7 @@ Inkscape::SnappedPoint SnapManager::guideSnap(NR::Point const &p,
 {
     // This method is used to snap a guide to nodes, while dragging the guide around
     
-    if (!(object.ThisSnapperMightSnap() && _snap_enabled_globally)) {
+    if (!(object.GuidesMightSnap() && _snap_enabled_globally)) {
         return Inkscape::SnappedPoint(p, NR_HUGE, 0, false);
     }
     

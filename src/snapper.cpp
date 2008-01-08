@@ -4,6 +4,7 @@
  *
  *  Authors:
  *    Carl Hetherington <inkscape@carlh.net>
+ *    Diederik van Lierop <mail@diedenrezi.nl>
  *
  *  Released under GNU GPL, read the file 'COPYING' for more information.
  */

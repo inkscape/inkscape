@@ -88,6 +88,7 @@ public:
                  NR::Point const &guide_normal) const;
   
   bool ThisSnapperMightSnap() const;
+  bool GuidesMightSnap() const;
   
 private:
   //store some lists of candidates, points and paths, so we don't have to rebuild them for each point we want to snap
