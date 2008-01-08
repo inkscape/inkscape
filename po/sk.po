@@ -2,14 +2,14 @@
 # Copyright (C) 2002-2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Inkscape package.
 # Zdenko Podobný <zdpo@mailbox.sk>, 2003, 2004.
-# Ivan Masár <helix84@centrum.sk>, 2006, 2007, 2008.
+# Ivan Masár <helix84@centrum.sk>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-01-06 10:33+0100\n"
-"PO-Revision-Date: 2008-01-07 18:02+0100\n"
+"PO-Revision-Date: 2008-01-08 09:45+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -1862,7 +1862,7 @@ msgstr "Zrušiť ťah"
 #: ../src/ui/dialog/inkscape-preferences.cpp:949
 #: ../src/verbs.cpp:2116
 msgid "None"
-msgstr "Žiadne"
+msgstr "Žiadna"
 
 #: ../src/dialogs/stroke-style.cpp:848
 #: ../src/widgets/gradient-vector.cpp:264
@@ -1949,7 +1949,7 @@ msgstr "Štvorcové zakončenie"
 #. Dash
 #: ../src/dialogs/stroke-style.cpp:1218
 msgid "Dashes:"
-msgstr "Čiarky:"
+msgstr "Typ čiary:"
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
@@ -2124,12 +2124,12 @@ msgstr "<b>Kliknutím</b> vyberte uzly, <b>ťahaním</b> preskupte."
 
 #: ../src/dialogs/xml-tree.cpp:185
 msgid "<b>Click</b> attribute to edit."
-msgstr "<b>Kliknutím </b> upravujte atribút."
+msgstr "<b>Kliknutím</b> upravujte atribút."
 
 #: ../src/dialogs/xml-tree.cpp:189
 #, c-format
 msgid "Attribute <b>%s</b> selected. Press <b>Ctrl+Enter</b> when done editing to commit changes."
-msgstr "Zvolený atribút <b>%s</b>. Stlačte <b>Ctrl+Enter</b> na potvrdenie zmien po ukončení."
+msgstr "Zvolený atribút <b>%s</b>. Stlačte <b>Ctrl+Enter</b> po ukončení pre potvrdenie zmien."
 
 #: ../src/dialogs/xml-tree.cpp:284
 msgid "Drag to reorder nodes"
@@ -2361,7 +2361,7 @@ msgstr "Pamäťový dokument %d"
 #: ../src/document.cpp:630
 #, c-format
 msgid "Unnamed document %d"
-msgstr "Nepomenovaný dokument %d"
+msgstr "Dokument bez názvu %d"
 
 #. We hit green anchor, closing Green-Blue-Red
 #: ../src/draw-context.cpp:418
@@ -2382,7 +2382,7 @@ msgstr "Kresliť cestu"
 #: ../src/dropper-context.cpp:353
 #, c-format
 msgid " alpha %.3g"
-msgstr " alpha %.3g"
+msgstr " alfa %.3g"
 
 #. where the color is picked, to show in the statusbar
 #: ../src/dropper-context.cpp:355
@@ -2398,12 +2398,12 @@ msgstr " pod kurzorom"
 #. message, to show in the statusbar
 #: ../src/dropper-context.cpp:357
 msgid "<b>Release mouse</b> to set color."
-msgstr "<b>Uvoľnite myš</b> na nastavenie farby."
+msgstr "Farbu nastavíte <b>uvoľnením myši</b>."
 
 #: ../src/dropper-context.cpp:357
 #: ../src/tools-switch.cpp:223
 msgid "<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> to copy the color under mouse to clipboard"
-msgstr "<b>Kliknutie</b> nastaví farbu výplne, <b>Shift+kliknitie</b> nastaví farbu ťahu; <b>kliknutie a ťahanie</b> vyberie priemernú farbu oblasti; s <b>Alt</b> výber inverznej farby; <b>Ctrl+C</b> skopíruje farbu pod murzorom do schránky"
+msgstr "<b>Kliknutie</b> nastaví farbu výplne, <b>Shift+kliknitie</b> nastaví farbu ťahu; <b>kliknutie a ťahanie</b> vyberie priemernú farbu oblasti; s <b>Alt</b> výber inverznej farby; <b>Ctrl+C</b> skopíruje farbu pod kurzorom do schránky"
 
 #: ../src/dropper-context.cpp:390
 msgid "Set picked color"
@@ -2964,7 +2964,7 @@ msgstr "Negatív"
 
 #: ../src/extension/internal/bitmap/negate.cpp:42
 msgid "Negate (take inverse) selected bitmap(s)."
-msgstr "Negovať (vytvoriť negatív) zvolených bitmáp."
+msgstr "Negovať (vytvoriť negatív) zvolené bitmapy."
 
 #: ../src/extension/internal/bitmap/normalize.cpp:35
 msgid "Normalize"
@@ -3199,7 +3199,7 @@ msgstr "Rozšírený Metasúbor"
 
 #: ../src/extension/internal/eps-out.cpp:89
 msgid "Encapsulated Postscript Output"
-msgstr "Výstup Zapúzdrený Postscript"
+msgstr "Výstup Zapuzdrený Postscript"
 
 #: ../src/extension/internal/eps-out.cpp:91
 msgid "Make bounding box around full page"
@@ -3213,11 +3213,11 @@ msgstr "Vložiť písma (iba Typ 1)"
 #: ../src/extension/internal/eps-out.cpp:97
 #: ../share/extensions/eps_input.inx.h:3
 msgid "Encapsulated Postscript (*.eps)"
-msgstr "Zapúzdrený Postscript (*.eps)"
+msgstr "Zapuzdrený Postscript (*.eps)"
 
 #: ../src/extension/internal/eps-out.cpp:98
 msgid "Encapsulated Postscript File"
-msgstr "Súbor Zapúzdrený Postscript"
+msgstr "Súbor Zapuzdrený Postscript"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:113
 #, c-format
@@ -3569,7 +3569,7 @@ msgstr "Scalable Vector Graphics formát komprimovaný pomocou GZip"
 
 #: ../src/extension/internal/win32.cpp:491
 msgid "Windows 32-bit Print"
-msgstr "Tlač 32-bitvých Windows"
+msgstr "Tlač 32-bitových Windows"
 
 #: ../src/extension/internal/wpg-input.cpp:102
 msgid "WPG Input"
@@ -3735,7 +3735,7 @@ msgstr "Chyba pri exporte dokumentu. Overte správnosť názvu servera, použív
 
 #: ../src/file.cpp:1310
 msgid "Document exported..."
-msgstr "Dokument bol exporotvaný."
+msgstr "Dokument bol exportovaný."
 
 #: ../src/file.cpp:1338
 #: ../src/verbs.cpp:2142
@@ -3905,10 +3905,12 @@ msgstr "Identita"
 msgid "Table"
 msgstr "Tabuľka"
 
+# TODO: check
 #: ../src/filter-enums.cpp:84
 msgid "Discrete"
-msgstr "Doskrétne"
+msgstr "Diskrétne"
 
+# TODO: check
 #: ../src/filter-enums.cpp:85
 msgid "Linear"
 msgstr "Lineárne"
@@ -4018,7 +4020,7 @@ msgstr "Oblasť vyplnená, vytvorená cesta s <b>%d</b> uzlami."
 #: ../src/flood-context.cpp:677
 #: ../src/flood-context.cpp:972
 msgid "<b>Area is not bounded</b>, cannot fill."
-msgstr "<b>Oblast nie je ohraničené</b>, nie je možné ju vyplniť."
+msgstr "<b>Oblasť nie je ohraničená</b>, nie je možné ju vyplniť."
 
 #: ../src/flood-context.cpp:977
 msgid "<b>Only the visible part of the bounded area was filled.</b> If you want to fill all of the area, undo, zoom out, and fill again."
@@ -4027,7 +4029,7 @@ msgstr "<b>Iba viditeľná časť ohraničenej oblasti bola vyplnená.</b> Ak ch
 #: ../src/flood-context.cpp:993
 #: ../src/flood-context.cpp:1153
 msgid "Fill bounded area"
-msgstr "Výplňiť ohraničenú oblasť"
+msgstr "Vyplňiť ohraničenú oblasť"
 
 #: ../src/flood-context.cpp:1013
 msgid "Set style on object"
@@ -4208,7 +4210,7 @@ msgstr "Jednotky"
 
 #: ../src/helper/units.cpp:38
 msgid "Point"
-msgstr "Bod"
+msgstr "bod"
 
 #: ../src/helper/units.cpp:38
 #: ../src/ui/widget/selected-style.cpp:283
@@ -4217,7 +4219,7 @@ msgstr "bd"
 
 #: ../src/helper/units.cpp:38
 msgid "Points"
-msgstr "Body"
+msgstr "body"
 
 #: ../src/helper/units.cpp:38
 msgid "Pt"
@@ -4225,7 +4227,7 @@ msgstr "bd"
 
 #: ../src/helper/units.cpp:39
 msgid "Pixel"
-msgstr "Bod"
+msgstr "bod"
 
 #: ../src/helper/units.cpp:39
 #: ../src/ui/dialog/inkscape-preferences.cpp:197
@@ -4237,17 +4239,17 @@ msgstr "bd"
 
 #: ../src/helper/units.cpp:39
 msgid "Pixels"
-msgstr "Body"
+msgstr "body"
 
 #: ../src/helper/units.cpp:39
 msgid "Px"
-msgstr "Bd"
+msgstr "bd"
 
 #. You can add new elements from this point forward
 #: ../src/helper/units.cpp:41
 #: ../share/extensions/straightseg.inx.h:3
 msgid "Percent"
-msgstr "Percento"
+msgstr "percento"
 
 #: ../src/helper/units.cpp:41
 #: ../src/ui/dialog/inkscape-preferences.cpp:217
@@ -4260,7 +4262,7 @@ msgstr "percent"
 
 #: ../src/helper/units.cpp:42
 msgid "Millimeter"
-msgstr "Milimeter"
+msgstr "milimeter"
 
 #: ../src/helper/units.cpp:42
 #: ../src/ui/widget/selected-style.cpp:287
@@ -4269,11 +4271,11 @@ msgstr "mm"
 
 #: ../src/helper/units.cpp:42
 msgid "Millimeters"
-msgstr "Milimetre"
+msgstr "milimetre"
 
 #: ../src/helper/units.cpp:43
 msgid "Centimeter"
-msgstr "Centimeter"
+msgstr "centimeter"
 
 #: ../src/helper/units.cpp:43
 msgid "cm"
@@ -4281,7 +4283,7 @@ msgstr "cm"
 
 #: ../src/helper/units.cpp:43
 msgid "Centimeters"
-msgstr "Centimetre"
+msgstr "centimetre"
 
 #: ../src/helper/units.cpp:44
 msgid "Meter"
@@ -4298,21 +4300,21 @@ msgstr "metre"
 #. no svg_unit
 #: ../src/helper/units.cpp:45
 msgid "Inch"
-msgstr "Palec"
-
-#: ../src/helper/units.cpp:45
-msgid "in"
 msgstr "palec"
 
 #: ../src/helper/units.cpp:45
+msgid "in"
+msgstr "pl"
+
+#: ../src/helper/units.cpp:45
 msgid "Inches"
-msgstr "Palce"
+msgstr "palce"
 
 #. Volatiles do not have default, so there are none here
 #. TRANSLATORS: for info, see http://www.w3.org/TR/REC-CSS2/syndata.html#length-units
 #: ../src/helper/units.cpp:48
 msgid "Em square"
-msgstr "Em štvorec"
+msgstr "em štvorec"
 
 #: ../src/helper/units.cpp:48
 msgid "em"
@@ -4320,12 +4322,12 @@ msgstr "em"
 
 #: ../src/helper/units.cpp:48
 msgid "Em squares"
-msgstr "Em štvorce"
+msgstr "em štvorce"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/REC-CSS2/syndata.html#length-units
 #: ../src/helper/units.cpp:50
 msgid "Ex square"
-msgstr "Ex štvorec"
+msgstr "ex štvorec"
 
 #: ../src/helper/units.cpp:50
 msgid "ex"
@@ -4333,11 +4335,11 @@ msgstr "ex"
 
 #: ../src/helper/units.cpp:50
 msgid "Ex squares"
-msgstr "Ex štvorce"
+msgstr "ex štvorce"
 
 #: ../src/inkscape.cpp:484
 msgid "Untitled document"
-msgstr "Nepomenovaný dokument"
+msgstr "Dokument bez názvu"
 
 #. Show nice dialog box
 #: ../src/inkscape.cpp:513
@@ -4394,7 +4396,7 @@ msgid ""
 "and any changes made in preferences will not be saved."
 msgstr ""
 "Hoci sa Inkscape spustí, použije predvolené nastavenia,\n"
-"a žiadne zmeny v nastaveiach sa neuložia."
+"a žiadne zmeny v nastaveniach sa neuložia."
 
 #: ../src/inkscape.cpp:732
 #: ../src/preferences.cpp:56
@@ -4662,7 +4664,7 @@ msgstr "Variácia počiatočného bodu"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "The amount of random jitter to apply to the start points of the stitches"
-msgstr "Množstvo náhodného chvenia, ktoré sa má použiť na počiatočné body stehov"
+msgstr "Množstvo náhodnej variácie, ktorá sa má použiť na počiatočné body stehov"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "End point jitter"
@@ -4670,7 +4672,7 @@ msgstr "Variácia koncového bodu"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "The amount of random jitter to apply to the end points of the stitches"
-msgstr "Množstvo náhodného chvenia, ktoré sa má použiť na koncové body stehov"
+msgstr "Množstvo náhodnej variácie, ktorá sa má použiť na koncové body stehov"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid "Spacing variation"
@@ -4699,12 +4701,12 @@ msgstr "Zmena mierky šírky cesty ťahu relatívne k jej dĺžke"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:53
 msgid "Single"
-msgstr "Jednotlivý"
+msgstr "Jednotlivá"
 
 # TODO: check
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:54
 msgid "Single, stretched"
-msgstr "Jednoduchá, natiahnutá"
+msgstr "Jednotlivá, natiahnutá"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:55
 msgid "Repeated"
@@ -4777,7 +4779,7 @@ msgstr "Upravovať na plátne"
 
 #: ../src/live_effects/parameter/path.cpp:124
 msgid "Paste path"
-msgstr "Prilepiť cestu"
+msgstr "Vložiť cestu"
 
 #: ../src/live_effects/parameter/path.cpp:184
 #: ../src/selection-chemistry.cpp:1263
@@ -4792,7 +4794,7 @@ msgstr "Tentoi efekt zatiaľ nepodporuje oblúky, skúste konvertovať na cestu.
 
 #: ../src/live_effects/parameter/path.cpp:200
 msgid "Paste path parameter"
-msgstr "Prilepiť parameter cesty"
+msgstr "Vložiť parameter cesty"
 
 #: ../src/live_effects/parameter/path.cpp:204
 msgid "Clipboard does not contain a path."
@@ -4820,7 +4822,7 @@ msgstr "Nepoužívať X server (iba spracovať súbory z konzoly)"
 
 #: ../src/main.cpp:227
 msgid "Try to use X server (even if $DISPLAY is not set)"
-msgstr "Pokúsiť sa použiť X server (aj keď $DISPLAY nie je nastavená)"
+msgstr "Pokúsiť sa použiť X server (aj keď premenná $DISPLAY nie je nastavená)"
 
 #: ../src/main.cpp:232
 msgid "Open specified document(s) (option string may be excluded)"
@@ -4918,7 +4920,7 @@ msgstr "FARBA"
 
 #: ../src/main.cpp:304
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
-msgstr "Krytie pozadia exportovanej bitmapy (buď od 0.0 do 1.0, alebo do 1 po 255)"
+msgstr "Krytie pozadia exportovanej bitmapy (buď od 0,0 do 1,0 alebo od 1 do 255)"
 
 #: ../src/main.cpp:305
 msgid "VALUE"
@@ -4942,11 +4944,11 @@ msgstr "Exportovať dokument do PDF súboru"
 
 #: ../src/main.cpp:330
 msgid "Export document to an Enhanced Metafile (EMF) File"
-msgstr "Exportovať dokument do súboru Enhanced Metafile (EMF)"
+msgstr "Exportovať dokument do súboru Rozšírený metasúbor (EMF)"
 
 #: ../src/main.cpp:336
 msgid "Convert text object to paths on export (EPS)"
-msgstr "Konvertovať objekt na cesty pri exporte (EPS)"
+msgstr "Konvertovať textový objekt na cesty pri exporte (EPS)"
 
 #: ../src/main.cpp:341
 msgid "Embed fonts on export (Type 1 only) (EPS)"
@@ -5040,7 +5042,7 @@ msgstr "_Nový"
 
 #: ../src/menus-skeleton.h:22
 msgid "Open _Recent"
-msgstr "Otvoriť ne_dávane"
+msgstr "Otvoriť ne_dávne"
 
 #: ../src/menus-skeleton.h:49
 msgid "_Edit"
@@ -5121,7 +5123,7 @@ msgstr "<b>Ctrl</b> prepne typ uzlu, prichytáva uhol páčky, presúva zvisle/v
 
 #: ../src/node-context.cpp:186
 msgid "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
-msgstr "<b>Shift</b>: prepína pridanie uzlu k výberu, vypína prichytávanie, otáčí obomi páčkami"
+msgstr "<b>Shift</b>: prepína pridanie uzlu k výberu, vypína prichytávanie, otáča obomi páčkami"
 
 #: ../src/node-context.cpp:187
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
@@ -5151,7 +5153,7 @@ msgstr "Posúvať uzly"
 
 #: ../src/nodepath.cpp:1424
 msgid "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
-msgstr "<b>Páčka uzlu</b>: ťahaním sa tvaruje krivka; s <b>Ctrl</b> prichytává k uhlu; s <b>Alt</b> uzamyká dĺžku; s <b>Shift</b> otáča obe páčky"
+msgstr "<b>Páčka uzlu</b>: ťahaním sa tvaruje krivka; s <b>Ctrl</b> prichytáva k uhlu; s <b>Alt</b> uzamyká dĺžku; s <b>Shift</b> otáča obe páčky"
 
 #: ../src/nodepath.cpp:1594
 msgid "Align nodes"
@@ -5288,7 +5290,7 @@ msgstr "jedna páčka bola stiahnutá (ťahaním spolu s <b>Shift</b> ju znova v
 
 #: ../src/nodepath.cpp:4415
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
-msgstr "obe páčky bola stiahnutá (ťahaním spolu s <b>Shift</b> ich znova vytiahnete)"
+msgstr "obe páčky bola stiahnuté (ťahaním spolu s <b>Shift</b> ich znova vytiahnete)"
 
 #: ../src/nodepath.cpp:4427
 msgid "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; <b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to rotate"
@@ -5656,7 +5658,7 @@ msgstr "Zmazať"
 
 #: ../src/selection-chemistry.cpp:271
 msgid "Select <b>object(s)</b> to duplicate."
-msgstr "Vyberte <b>objekt</b>, ktorá sa má duplikovať."
+msgstr "Vyberte <b>objekt</b>, ktorý sa má duplikovať."
 
 #: ../src/selection-chemistry.cpp:321
 msgid "Delete all"
@@ -5673,7 +5675,7 @@ msgstr "Zoskupiť"
 
 #: ../src/selection-chemistry.cpp:533
 msgid "Select a <b>group</b> to ungroup."
-msgstr "Vyberte <b>skupinu</b>, na odstránenie zoskupenia."
+msgstr "Vyberte <b>skupinu</b> na odstránenie zoskupenia."
 
 #: ../src/selection-chemistry.cpp:574
 msgid "<b>No groups</b> to ungroup in the selection."
@@ -5693,7 +5695,7 @@ msgstr "Vyberte <b>objekty</b>, ktoré sa majú presunúť vyššie."
 #: ../src/selection-chemistry.cpp:742
 #: ../src/selection-chemistry.cpp:807
 msgid "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
-msgstr "nNemôžete zdvihnúť/znížiť objekty z <b>rozličných skupín</b> alebo <b>vrstiev</b>."
+msgstr "Nemôžete zdvihnúť/znížiť objekty z <b>rozličných skupín</b> alebo <b>vrstiev</b>."
 
 #: ../src/selection-chemistry.cpp:699
 msgid "Select <b>object(s)</b> to raise to top."
@@ -5737,7 +5739,7 @@ msgstr "V schránke nič nie je."
 
 #: ../src/selection-chemistry.cpp:1224
 msgid "Paste"
-msgstr "Prilepiť"
+msgstr "Vložiť"
 
 #: ../src/selection-chemistry.cpp:1236
 msgid "Nothing on the style clipboard."
@@ -5745,15 +5747,15 @@ msgstr "V schránke štýlu nič nie je."
 
 #: ../src/selection-chemistry.cpp:1242
 msgid "Select <b>object(s)</b> to paste style to."
-msgstr "Vyberte <b>objekt</b>, na ktorý sa má prilepiť štýl."
+msgstr "Vyberte <b>objekt</b>, na ktorý sa má vložiť štýl."
 
 #: ../src/selection-chemistry.cpp:1251
 msgid "Paste style"
-msgstr "Prilepiť štýl"
+msgstr "Vložiť štýl"
 
 #: ../src/selection-chemistry.cpp:1269
 msgid "Select <b>object(s)</b> to paste live path effect to."
-msgstr "Vyberte <b>objekt(y)</b>, na ktorý sa má prilepiť efekt živej cesty."
+msgstr "Vyberte <b>objekt(y)</b>, na ktorý sa má vložiť efekt živej cesty."
 
 #: ../src/selection-chemistry.cpp:1279
 msgid "Clipboard does not contain a live path effect."
@@ -5761,12 +5763,12 @@ msgstr "Schránka neobsahuje efekt živej cesty."
 
 #: ../src/selection-chemistry.cpp:1305
 msgid "Paste live path effect"
-msgstr "Prilepiť efekt živej cesty"
+msgstr "Vložiť efekt živej cesty"
 
 #: ../src/selection-chemistry.cpp:1323
 #: ../src/selection-chemistry.cpp:1359
 msgid "Select <b>object(s)</b> to paste size to."
-msgstr "Vyberte <b>objekt</b>, na ktorý sa má prilepiť veľkosť."
+msgstr "Vyberte <b>objekt</b>, na ktorý sa má vložiť veľkosť."
 
 #: ../src/selection-chemistry.cpp:1341
 msgid "Paste size"
@@ -5774,7 +5776,7 @@ msgstr "Vložiť veľkosť"
 
 #: ../src/selection-chemistry.cpp:1382
 msgid "Paste size separately"
-msgstr "Prilepiť veľkosť oddelene"
+msgstr "Vložiť veľkosť oddelene"
 
 #: ../src/selection-chemistry.cpp:1393
 msgid "Select <b>object(s)</b> to move to the layer above."
@@ -5891,12 +5893,12 @@ msgstr "Objekt, ktorý sa pokúšate vybrať <b>nie je viditeľný</b> (je v &lt
 
 #: ../src/selection-chemistry.cpp:2375
 msgid "Select <b>object(s)</b> to convert to marker."
-msgstr "Vyberte <b>objekt(y)</b>, ktorý sa má konvertovať na vzor."
+msgstr "Vyberte <b>objekt(y)</b>, ktorý sa má konvertovať na zakončenie čiary."
 
 # TODO: check
 #: ../src/selection-chemistry.cpp:2440
 msgid "Objects to marker"
-msgstr "Objekty na vzor"
+msgstr "Objekty na zakončenie čiary"
 
 #: ../src/selection-chemistry.cpp:2457
 msgid "Select <b>object(s)</b> to convert to pattern."
@@ -6790,7 +6792,7 @@ msgstr "Zväčšiť rozostupy medzi písmenami"
 
 #: ../src/text-context.cpp:1312
 msgid "Paste text"
-msgstr "Prilepiť text"
+msgstr "Vložiť text"
 
 #: ../src/text-context.cpp:1542
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
@@ -10091,7 +10093,7 @@ msgstr "Kopírovať farbu"
 
 #: ../src/ui/widget/selected-style.cpp:234
 msgid "Paste color"
-msgstr "Prilepiť farbu"
+msgstr "Vložiť farbu"
 
 #: ../src/ui/widget/selected-style.cpp:238
 #: ../src/ui/widget/selected-style.cpp:775
@@ -10277,7 +10279,7 @@ msgstr "Nastaviť veľkosť stránky:"
 
 #: ../src/ui/widget/style-swatch.cpp:296
 msgid "L Gradient"
-msgstr "L Farebný prechod"
+msgstr "L farebný prechod"
 
 #: ../src/ui/widget/style-swatch.cpp:300
 msgid "R Gradient"
@@ -10306,7 +10308,7 @@ msgstr "K:%.3g"
 #: ../src/ui/widget/style-swatch.cpp:368
 #, c-format
 msgid "O:.%d"
-msgstr "O:.%d"
+msgstr "K:.%d"
 
 #: ../src/ui/widget/style-swatch.cpp:373
 #, c-format
@@ -10607,11 +10609,11 @@ msgstr "Skopíruje výber do schránky"
 
 #: ../src/verbs.cpp:2161
 msgid "_Paste"
-msgstr "_Prilepiť"
+msgstr "_Vložiť"
 
 #: ../src/verbs.cpp:2162
 msgid "Paste objects from clipboard to mouse point, or paste text"
-msgstr "Vloží objekty zo schránky na miesto pod myšou alebo prilepiť text"
+msgstr "Vloží objekty zo schránky na miesto pod myšou alebo vloží text"
 
 #: ../src/verbs.cpp:2163
 msgid "Paste _Style"
@@ -10627,7 +10629,7 @@ msgstr "Zmení mierku výberu aby sa zhodoval s veľkosťou kopírovaného objek
 
 #: ../src/verbs.cpp:2167
 msgid "Paste _Width"
-msgstr "Prilepiť _šírku"
+msgstr "Vložiť _šírku"
 
 #: ../src/verbs.cpp:2168
 msgid "Scale selection horizontally to match the width of the copied object"
@@ -10635,7 +10637,7 @@ msgstr "Zmení mierku výberu vodorovne aby sa zhodoval s šírkou kopírovanéh
 
 #: ../src/verbs.cpp:2169
 msgid "Paste _Height"
-msgstr "Prilepiť _výšku"
+msgstr "Vložiť _výšku"
 
 #: ../src/verbs.cpp:2170
 msgid "Scale selection vertically to match the height of the copied object"
@@ -10643,7 +10645,7 @@ msgstr "Zmení mierku výberu zvisle aby sa zhodoval s výškou kopírovaného o
 
 #: ../src/verbs.cpp:2171
 msgid "Paste Size Separately"
-msgstr "Prilepiť veľkosť zvlášť"
+msgstr "Vložiť veľkosť samostatne"
 
 #: ../src/verbs.cpp:2172
 msgid "Scale each selected object to match the size of the copied object"
@@ -10651,7 +10653,7 @@ msgstr "Zmení mierku každého vybraného objektu aby sa zhodoval s veľkosťou
 
 #: ../src/verbs.cpp:2173
 msgid "Paste Width Separately"
-msgstr "Prilepiť šírku zvlášť"
+msgstr "Vložiť šírku samostatne"
 
 #: ../src/verbs.cpp:2174
 msgid "Scale each selected object horizontally to match the width of the copied object"
@@ -10659,7 +10661,7 @@ msgstr "Zmení mierku každého zvoleného objektu vodorovne, aby sa zhodoval s 
 
 #: ../src/verbs.cpp:2175
 msgid "Paste Height Separately"
-msgstr "Prilepiť výšku zvlášť"
+msgstr "Vložiť výšku samostatne"
 
 #: ../src/verbs.cpp:2176
 msgid "Scale each selected object vertically to match the height of the copied object"
@@ -10675,7 +10677,7 @@ msgstr "Prilepí objekty zo schránky na pôvodné umiestnenie"
 
 #: ../src/verbs.cpp:2179
 msgid "Paste Path _Effect"
-msgstr "Prilepiť _Efekt cesty"
+msgstr "Vložiť _Efekt cesty"
 
 #: ../src/verbs.cpp:2180
 msgid "Apply the path effect of the copied object to selection"
@@ -10721,24 +10723,19 @@ msgstr "Vybrať _originál"
 msgid "Select the object to which the selected clone is linked"
 msgstr "Vyberie objekt, na ktorý je klon prepojený"
 
-# TODO: check
-# vzor?
 #. TRANSLATORS: Convert selection to a line marker
 #: ../src/verbs.cpp:2192
-#, fuzzy
 msgid "Objects to _Marker"
-msgstr "Objekty na _Ukončenie čiary"
+msgstr "Objekty na _Zakončenie čiary"
 
-# TODO: check
 #: ../src/verbs.cpp:2193
-#, fuzzy
 msgid "Convert selection to a line marker"
-msgstr "Konvertovať výber na ukončenie čiary"
+msgstr "Konvertovať výber na zakončenie čiary"
 
 #. TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
 #: ../src/verbs.cpp:2195
 msgid "Objects to Patter_n"
-msgstr "O_bjeky na vzorku"
+msgstr "O_bjekty na vzorku"
 
 #: ../src/verbs.cpp:2196
 msgid "Convert selection to a rectangle with tiled pattern fill"
@@ -10747,7 +10744,7 @@ msgstr "Skonvertuje výber na obdĺžnik vyplnený vzorkou"
 #. TRANSLATORS: Extract objects from a tiled pattern fill
 #: ../src/verbs.cpp:2198
 msgid "Pattern to _Objects"
-msgstr "Vzorka na _objekty"
+msgstr "Vzorku na _objekty"
 
 #: ../src/verbs.cpp:2199
 msgid "Extract objects from a tiled pattern fill"
@@ -11032,7 +11029,7 @@ msgstr "_Obrátiť"
 
 #: ../src/verbs.cpp:2289
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
-msgstr "Obráti smer zvolených ciest (vhodné pre preklápanie koncových značiek)"
+msgstr "Obráti smer zvolených ciest (vhodné pre preklápanie značiek zakončenia čiar)"
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2291
@@ -13607,7 +13604,7 @@ msgstr "Smerom dolu"
 
 #: ../src/widgets/toolbox.cpp:5055
 msgid "Make connectors with end-markers (arrows) point downwards"
-msgstr "Nech konektory s koncovými symbolmi (šípkami) ukazujú nadol"
+msgstr "Nech konektory so značkami zakončenia čiar (šípkami) ukazujú nadol"
 
 #: ../src/widgets/toolbox.cpp:5071
 msgid "Do not allow overlapping shapes"
@@ -13925,7 +13922,7 @@ msgstr "Vstup EPS"
 
 #: ../share/extensions/eps_input.inx.h:2
 msgid "Encapsulated Postscript"
-msgstr "Zapúzdrený Postscript"
+msgstr "Zapuzdrený Postscript"
 
 #: ../share/extensions/epsi_output.inx.h:1
 msgid "EPSI Output"
@@ -13933,11 +13930,11 @@ msgstr "Výstup EPSI"
 
 #: ../share/extensions/epsi_output.inx.h:2
 msgid "Encapsulated Postscript Interchange (*.epsi)"
-msgstr "Zapúzdrený Postscript Interchange (*.epsi)"
+msgstr "Zapuzdrený Postscript Interchange (*.epsi)"
 
 #: ../share/extensions/epsi_output.inx.h:3
 msgid "Encapsulated Postscript with a thumbnail"
-msgstr "Zapúzdrený Postscript s náhľadom"
+msgstr "Zapuzdrený Postscript s náhľadom"
 
 #: ../share/extensions/eqtexsvg.inx.h:1
 msgid "LaTeX formula"
@@ -14029,7 +14026,7 @@ msgstr "Funkcie"
 
 #: ../share/extensions/funcplot.inx.h:8
 msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
-msgstr "Izotropická zmena mierky (používa minimum z šírka/rozsah x alebo výška/rozsah y)"
+msgstr "Izotropická zmena mierky (používa minimum z pomeru šírka/rozsah x alebo výška/rozsah y)"
 
 #: ../share/extensions/funcplot.inx.h:9
 msgid "Multiply x-range by 2*pi"
@@ -14318,7 +14315,7 @@ msgstr "Vnútorné stránky"
 
 #: ../share/extensions/perfectboundcover.inx.h:9
 msgid "Note: Bond Weight # calculations are a best-guess estimate."
-msgstr "Pozn.: Výpočty # hmotnosti väzby  sú najlepšie odhady."
+msgstr "Pozn.: Výpočty # hmotnosti väzby sú najlepšie odhady."
 
 #: ../share/extensions/perfectboundcover.inx.h:10
 msgid "Number of Pages"
