@@ -10,7 +10,7 @@
  * Copyright (C) 2004-2007 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
- */
+ */ 
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
@@ -39,7 +39,6 @@
 #include "display/nr-filter-gaussian.h"
 #include "color-profile-fns.h"
 #include "display/canvas-grid.h"
-#include "dialogs/rdf.h"
 
 namespace Inkscape {
 namespace UI {
@@ -47,10 +46,10 @@ namespace Dialog {
 
 InkscapePreferences::InkscapePreferences()
     : UI::Widget::Panel ("", "dialogs.preferences", SP_VERB_DIALOG_DISPLAY),
-      _max_dialog_width(0),
+      _max_dialog_width(0), 
       _max_dialog_height(0),
       _current_page(0)
-{
+{ 
     //get the width of a spinbutton
     Gtk::SpinButton* sb = new Gtk::SpinButton;
     sb->set_width_chars(6);
@@ -107,8 +106,6 @@ InkscapePreferences::InkscapePreferences()
     initPageImportExport();
     initPageCMS();
     initPageGrids();
-    initPageMetadata();
-    initPageLicense();
     initPageMisc();
 
     signalPresent().connect(sigc::mem_fun(*this, &InkscapePreferences::_presentPages));
@@ -841,97 +838,6 @@ void InkscapePreferences::initPageGrids()
 
     this->AddPage(_page_grids, _("Grids"), PREFS_PAGE_GRIDS);
 }
-
-void InkscapePreferences::initPageMetadata()
-{
-    _metadata_title.init        ( "options.defaultmetadata", "title", true);
-    _metadata_date.init         ( "options.defaultmetadata", "date", true);
-    _metadata_format.init       ( "options.defaultmetadata", "format", true);
-    _metadata_type.init         ( "options.defaultmetadata", "type", true);
-    _metadata_creator.init      ( "options.defaultmetadata", "creator", true);
-    _metadata_rights.init       ( "options.defaultmetadata", "rights", true);
-    _metadata_publisher.init    ( "options.defaultmetadata", "publisher", true);
-    _metadata_identifier.init   ( "options.defaultmetadata", "identifier", true);
-    _metadata_source.init       ( "options.defaultmetadata", "source", true);
-    _metadata_relation.init     ( "options.defaultmetadata", "relation", true);
-    _metadata_language.init     ( "options.defaultmetadata", "language", true);
-    _metadata_subject.init      ( "options.defaultmetadata", "subject", true);
-    _metadata_coverage.init     ( "options.defaultmetadata", "coverage", true);
-    _metadata_description.init  ( "options.defaultmetadata", "description", true);
-    _metadata_contributor.init  ( "options.defaultmetadata", "contributor", true);
-
-    _page_metadata.add_group_header( _("Default metadata that will be used for new documents:"));
-
-    _page_metadata.add_line(true, _("Title:"), _metadata_title, "", _("These values will be used as default metadata for new documents"));
-    _page_metadata.add_line(true, _("Date:"), _metadata_date, "", _("These values will be used as default metadata for new documents"));
-    _page_metadata.add_line(true, _("Format:"), _metadata_format, "", _("These values will be used as default metadata for new documents"));
-    _page_metadata.add_line(true, _("Type:"), _metadata_type, "", _("These values will be used as default metadata for new documents"));
-    _page_metadata.add_line(true, _("Creator:"), _metadata_creator, "", _("These values will be used as default metadata for new documents"));
-    _page_metadata.add_line(true, _("Rights:"), _metadata_rights, "", _("These values will be used as default metadata for new documents"));
-    _page_metadata.add_line(true, _("Publisher:"), _metadata_publisher, "", _("These values will be used as default metadata for new documents"));
-    _page_metadata.add_line(true, _("Identifier:"), _metadata_identifier, "", _("These values will be used as default metadata for new documents"));
-    _page_metadata.add_line(true, _("Source:"), _metadata_source, "", _("These values will be used as default metadata for new documents"));
-    _page_metadata.add_line(true, _("Relation:"), _metadata_relation, "", _("These values will be used as default metadata for new documents"));
-    _page_metadata.add_line(true, _("Language:"), _metadata_language, "", _("These values will be used as default metadata for new documents"));
-    _page_metadata.add_line(true, _("Subject:"), _metadata_subject, "", _("These values will be used as default metadata for new documents"));
-    _page_metadata.add_line(true, _("Coverage:"), _metadata_coverage, "", _("These values will be used as default metadata for new documents"));
-    _page_metadata.add_line(true, _("Description:"), _metadata_description, "", _("These values will be used as default metadata for new documents"));
-    _page_metadata.add_line(true, _("Contributor:"), _metadata_contributor, "", _("These values will be used as default metadata for new documents"));
-
-    this->AddPage(_page_metadata, _("Default Metadata"), PREFS_PAGE_METADATA);
-}
-
-void InkscapePreferences::on_license_changed(){
-    int i = prefs_get_int_attribute("options.defaultmetadata", "license", 0);
-    if (i)
-        _license_uri.set_text( rdf_licenses[i - 1].uri );
-    else
-        _license_uri.set_text("");
-}
-
-void InkscapePreferences::initPageLicense()
-{
-    _license_proprietary.init( _("Proprietary"), "options.defaultmetadata", "license", LICENSE_PROPRIETARY, true, 0);
-    _license_ccby.init( _("Creative Commons By 3.0"), "options.defaultmetadata", "license", LICENSE_CC_BY, false, &_license_proprietary);
-    _license_ccbysa.init( _("Creative Commons By Sa 3.0"), "options.defaultmetadata", "license", LICENSE_CC_BY_SA, false, &_license_proprietary);
-    _license_ccbynd.init( _("Creative Commons By Nd 3.0"), "options.defaultmetadata", "license", LICENSE_CC_BY_ND, false, &_license_proprietary);
-    _license_ccbync.init( _("Creative Commons By Nc 3.0"), "options.defaultmetadata", "license", LICENSE_CC_BY_NC, false, &_license_proprietary);
-    _license_ccbyncsa.init( _("Creative Commons By Nc Sa 3.0"), "options.defaultmetadata", "license", LICENSE_CC_BY_NC_SA, false, &_license_proprietary);
-    _license_ccbyncnd.init( _("Creative Commons By Nc Nd 3.0"), "options.defaultmetadata", "license", LICENSE_CC_BY_NC_ND, false, &_license_proprietary);
-    _license_pdomain.init( _("Public Domain"), "options.defaultmetadata", "license", LICENSE_PUBLIC_DOMAIN, false, &_license_proprietary);
-    _license_freeart.init( _("FreeArt"), "options.defaultmetadata", "license", LICENSE_FREE_ART, false, &_license_proprietary);
-    _license_openfont.init( _("Open Font License"), "options.defaultmetadata", "license", LICENSE_OPEN_FONT, false, &_license_proprietary);
-    _license_uri.init( "options.defaultmetadata", "license_uri", true);
-
-    _license_proprietary.signal_toggled().connect(sigc::mem_fun( *this, &InkscapePreferences::on_license_changed ));
-    _license_ccby.signal_toggled().connect(sigc::mem_fun( *this, &InkscapePreferences::on_license_changed));
-    _license_ccbysa.signal_toggled().connect(sigc::mem_fun( *this, &InkscapePreferences::on_license_changed));
-    _license_ccbynd.signal_toggled().connect(sigc::mem_fun( *this, &InkscapePreferences::on_license_changed));
-    _license_ccbync.signal_toggled().connect(sigc::mem_fun( *this, &InkscapePreferences::on_license_changed));
-    _license_ccbyncsa.signal_toggled().connect(sigc::mem_fun( *this, &InkscapePreferences::on_license_changed));
-    _license_ccbyncnd.signal_toggled().connect(sigc::mem_fun( *this, &InkscapePreferences::on_license_changed));
-    _license_pdomain.signal_toggled().connect(sigc::mem_fun( *this, &InkscapePreferences::on_license_changed));
-    _license_freeart.signal_toggled().connect(sigc::mem_fun( *this, &InkscapePreferences::on_license_changed));
-    _license_openfont.signal_toggled().connect(sigc::mem_fun( *this, &InkscapePreferences::on_license_changed));
-
-    _page_license.add_group_header( _("Default Licensing for new documents:"));
-
-    _page_license.add_line(true, "", _license_proprietary, "", _("All Rights Reserved"));
-    _page_license.add_line(true, "", _license_ccby, "", _("Creative Commons: Attribution"));
-    _page_license.add_line(true, "", _license_ccbysa, "", _("Creative Commons: Attribution-ShareAlike"));
-    _page_license.add_line(true, "", _license_ccbynd, "", _("Creative Commons: Attribution-NoDerivatives"));
-    _page_license.add_line(true, "", _license_ccbync, "", _("Creative Commons: Attribution-NonCommercial"));
-    _page_license.add_line(true, "", _license_ccbyncsa, "", _("Creative Commons: Attribution-NonCommercial-ShareAlike"));
-    _page_license.add_line(true, "", _license_ccbyncnd, "", _("Creative Commons: Attribution-NonCommercial-NoDerivatives"));
-    _page_license.add_line(true, "", _license_pdomain, "", _("Public Domain"));
-    _page_license.add_line(true, "", _license_freeart, "", _("Free Art License"));
-    _page_license.add_line(true, "", _license_openfont, "", _("Open Font License"));
-
-    _page_license.add_line(true, _("URL:"), _license_uri, "", "");
-
-    this->AddPage(_page_license, _("Default License"), PREFS_PAGE_LICENSE);
-}
-
 
 void InkscapePreferences::initPageMisc()
 {

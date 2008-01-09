@@ -67,22 +67,7 @@ enum {
     PREFS_PAGE_IMPORTEXPORT,
     PREFS_PAGE_CMS,
     PREFS_PAGE_GRIDS,
-    PREFS_PAGE_METADATA,
-    PREFS_PAGE_LICENSE,
     PREFS_PAGE_MISC
-};
-
-enum {
-    LICENSE_PROPRIETARY = 0,
-    LICENSE_CC_BY = 1,
-    LICENSE_CC_BY_SA = 2,
-    LICENSE_CC_BY_ND = 3,
-    LICENSE_CC_BY_NC = 4,
-    LICENSE_CC_BY_NC_SA = 5,
-    LICENSE_CC_BY_NC_ND = 6,
-    LICENSE_PUBLIC_DOMAIN = 7,
-    LICENSE_FREE_ART = 8,
-    LICENSE_OPEN_FONT = 9
 };
 
 using namespace Inkscape::UI::Widget;
@@ -100,7 +85,7 @@ public:
 protected:
     Gtk::Frame _page_frame;
     Gtk::Label _page_title;
-    Gtk::TreeView _page_list;
+    Gtk::TreeView _page_list;  
     Glib::RefPtr<Gtk::TreeStore> _page_list_model;
 
     //Pagelist model columns:
@@ -119,8 +104,8 @@ protected:
     Gtk::TreeModel::Path _path_shapes;
 
     DialogPage _page_mouse, _page_scrolling, _page_steps, _page_tools, _page_windows,
-        _page_clones, _page_mask, _page_transforms, _page_filters, _page_select,
-        _page_importexport, _page_cms, _page_grids, _page_metadata, _page_license, _page_misc;
+        _page_clones, _page_mask, _page_transforms, _page_filters, _page_select, 
+        _page_importexport, _page_cms, _page_grids, _page_misc;
     DialogPage _page_selector, _page_node, _page_zoom, _page_shapes, _page_pencil, _page_pen,
                _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper;
     DialogPage _page_rectangle, _page_3dbox, _page_ellipse, _page_star, _page_spiral, _page_paintbucket;
@@ -147,31 +132,20 @@ protected:
     PrefCheckButton _win_hide_task, _win_zoom_resize , _win_show_close;
 
 // FIXME: Temporary Win32 special code to enable transient dialogs
-#ifdef WIN32
-    PrefCheckButton _win_ontop_win32;
-#endif
+#ifdef WIN32 
+    PrefCheckButton _win_ontop_win32;   
+#endif    
 
     PrefCheckButton _calligrapy_use_abs_size;
     PrefCheckButton _calligrapy_keep_selected;
 
     PrefCheckButton _connector_ignore_text;
-
+    
     PrefRadioButton _clone_option_parallel, _clone_option_stay, _clone_option_transform,
                     _clone_option_unlink, _clone_option_delete;
 
     PrefCheckButton _mask_mask_on_top;
     PrefCheckButton _mask_mask_remove;
-
-    PrefEntry _metadata_title, _metadata_date, _metadata_format, _metadata_type, _metadata_creator;
-    PrefEntry _metadata_rights, _metadata_publisher, _metadata_identifier, _metadata_source;
-    PrefEntry _metadata_relation, _metadata_language, _metadata_subject, _metadata_coverage;
-    PrefEntry _metadata_description, _metadata_contributor;
-
-    PrefRadioButton _license_ccby, _license_ccbysa, _license_ccbync, _license_ccbynd;
-    PrefRadioButton _license_ccbyncsa, _license_ccbyncnd;
-    PrefRadioButton _license_freeart, _license_pdomain, _license_openfont, _license_proprietary;
-    PrefEntry _license_uri;
-    void on_license_changed();
 
     PrefRadioButton _blur_quality_best, _blur_quality_better, _blur_quality_normal, _blur_quality_worse, _blur_quality_worst;
 
@@ -257,8 +231,6 @@ protected:
     void initPageImportExport();
     void initPageCMS();
     void initPageGrids();
-    void initPageMetadata();
-    void initPageLicense();
     void initPageMisc();
 
     void _presentPages();
