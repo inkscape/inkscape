@@ -18,8 +18,8 @@
 namespace Proj {
 
 enum VPState {
-    FINITE = 0,
-    INFINITE
+    VP_FINITE = 0,
+    VP_INFINITE
 };
 
 // The X-/Y-/Z-axis corresponds to the first/second/third digit

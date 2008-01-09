@@ -2544,7 +2544,7 @@ static void box3d_vp_state_changed( GtkToggleAction *act, GtkAction *box3d_angle
     Persp3D *persp = *(sel_persps.begin());
 
     bool set_infinite = gtk_toggle_action_get_active(act);
-    persp3d_set_VP_state (persp, axis, set_infinite ? Proj::INFINITE : Proj::FINITE);
+    persp3d_set_VP_state (persp, axis, set_infinite ? Proj::VP_INFINITE : Proj::VP_FINITE);
 }
 
 static void box3d_vp_x_state_changed( GtkToggleAction *act, GtkAction *box3d_angle )
