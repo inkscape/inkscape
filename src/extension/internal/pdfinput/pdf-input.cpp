@@ -627,7 +627,7 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     PdfImportDialog *dlg = new PdfImportDialog(pdf_doc, uri);
     if (!dlg->showDialog()) {
         delete dlg;
-        delete pdf_doc;
+        //delete pdf_doc;
 
         return NULL;
     }
