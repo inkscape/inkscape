@@ -60,7 +60,8 @@ public:
     virtual ~FilterTurbulence();
 
     virtual int render(FilterSlot &slot, FilterUnits const &units);
-    void update_pixbuffer(FilterSlot &slot, IRect &area);
+    void update_pixbuffer(IRect &area, FilterUnits const &units);
+    void render_area(NRPixBlock *pix, IRect &full_area, FilterUnits const &units);
 
     void set_baseFrequency(int axis, double freq);
     void set_numOctaves(int num);

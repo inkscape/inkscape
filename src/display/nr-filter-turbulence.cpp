@@ -15,6 +15,7 @@
 #include "display/nr-filter-units.h"
 #include "display/nr-filter-utils.h"
 #include "libnr/nr-rect-l.h"
+#include "libnr/nr-blit.h"
 #include <math.h>
 
 namespace NR {
@@ -71,15 +72,57 @@ void FilterTurbulence::set_updated(bool u){
     updated=u;
 }
 
-void FilterTurbulence::update_pixbuffer(FilterSlot &/*slot*/, IRect &area) {
+void FilterTurbulence::render_area(NRPixBlock *pix, IRect &full_area, FilterUnits const &units) {
+    const int bbox_x0 = full_area.min()[X];
+    const int bbox_y0 = full_area.min()[Y];
+    const int bbox_x1 = full_area.max()[X];
+    const int bbox_y1 = full_area.max()[Y];
+
+    Matrix unit_trans = units.get_matrix_primitiveunits2pb().inverse();
+
+    double point[2];
+
+    unsigned char *pb = NR_PIXBLOCK_PX(pix);
+
+    if (type==TURBULENCE_TURBULENCE){
+        for (int y = std::max(bbox_y0, pix->area.y0); y < std::min(bbox_y1, pix->area.y1); y++){
+            int out_line = (y - pix->area.y0) * pix->rs;
+            point[1] = y * unit_trans[3] + unit_trans[5];
+            for (int x = std::max(bbox_x0, pix->area.x0); x < std::min(bbox_x1, pix->area.x1); x++){
+                int out_pos = out_line + 4 * (x - pix->area.x0);
+                point[0] = x * unit_trans[0] + unit_trans[4];
+                pb[out_pos] = CLAMP_D_TO_U8( turbulence(0,point)*255 );
+                pb[out_pos + 1] = CLAMP_D_TO_U8( turbulence(1,point)*255 );
+                pb[out_pos + 2] = CLAMP_D_TO_U8( turbulence(2,point)*255 );
+                pb[out_pos + 3] = CLAMP_D_TO_U8( turbulence(3,point)*255 );
+            }
+        }
+    } else {
+        for (int y = std::max(bbox_y0, pix->area.y0); y < std::min(bbox_y1, pix->area.y1); y++){
+            int out_line = (y - pix->area.y0) * pix->rs;
+            point[1] = y * unit_trans[3] + unit_trans[5];
+            for (int x = std::max(bbox_x0, pix->area.x0); x < std::min(bbox_x1, pix->area.x1); x++){
+                int out_pos = out_line + 4 * (x - pix->area.x0);
+                point[0] = x * unit_trans[0] + unit_trans[4];
+                pb[out_pos] = CLAMP_D_TO_U8( ((turbulence(0,point)*255) +255)/2 );
+                pb[out_pos + 1] = CLAMP_D_TO_U8( ((turbulence(1,point)*255)+255)/2 );
+                pb[out_pos + 2] = CLAMP_D_TO_U8( ((turbulence(2,point)*255) +255)/2 );
+                pb[out_pos + 3] = CLAMP_D_TO_U8( ((turbulence(3,point)*255) +255)/2 );
+            }
+        }
+    }
+
+    pix->empty = FALSE;
+}
+
+void FilterTurbulence::update_pixbuffer(IRect &area, FilterUnits const &units) {
 //g_warning("update_pixbuf");
     int bbox_x0 = area.min()[X];
     int bbox_y0 = area.min()[Y];
     int bbox_x1 = area.max()[X];
     int bbox_y1 = area.max()[Y];
 
-    int w = bbox_x1 - bbox_x0;
-    int h = bbox_y1 - bbox_y0;
+    TurbulenceInit((long)seed);
 
     if (!pix){
         pix = new NRPixBlock;
@@ -94,38 +137,19 @@ void FilterTurbulence::update_pixbuffer(FilterSlot &/*slot*/, IRect &area) {
         nr_pixblock_setup_fast(pix, NR_PIXBLOCK_MODE_R8G8B8A8N, bbox_x0, bbox_y0, bbox_x1, bbox_y1, true);
     }
 
-    if (!pix || (pix->size != NR_PIXBLOCK_SIZE_TINY && pix->data.px == NULL)) {
-        /* TODO: Should render the visible area or something instead. */
-        g_warning("Unable to reserve image buffer for feTurbulence");
+    /* This limits pre-rendered turbulence to two megapixels. This is
+     * arbitary limit and could be something other, too.
+     * If bigger area is needed, visible area is rendered on demand. */
+    if (!pix || (pix->size != NR_PIXBLOCK_SIZE_TINY && pix->data.px == NULL) ||
+        ((bbox_x1 - bbox_x0) * (bbox_y1 - bbox_y0) > 2*1024*1024)) {
         pix_data = NULL;
         return;
     }
 
+    render_area(pix, area, units);
+
     pix_data = NR_PIXBLOCK_PX(pix);
-
-    TurbulenceInit((long)seed);
-
-    double point[2];
-
-    if (type==TURBULENCE_TURBULENCE){
-        for (point[0]=0; point[0] < w; point[0]++){
-            for (point[1]=0; point[1] < h; point[1]++){
-                pix_data[4*(int(point[0]) + w*int(point[1]))] = CLAMP_D_TO_U8( turbulence(0,point)*255 );
-                pix_data[4*(int(point[0]) + w*int(point[1])) + 1] = CLAMP_D_TO_U8( turbulence(1,point)*255 );
-                pix_data[4*(int(point[0]) + w*int(point[1])) + 2] = CLAMP_D_TO_U8( turbulence(2,point)*255 );
-                pix_data[4*(int(point[0]) + w*int(point[1])) + 3] = CLAMP_D_TO_U8( turbulence(3,point)*255 );
-            }
-        }
-    } else {
-        for (point[0]=0; point[0] < w; point[0]++){
-            for (point[1]=0; point[1] < h; point[1]++){
-                pix_data[4*(int(point[0]) + w*int(point[1]))] = CLAMP_D_TO_U8( ((turbulence(0,point)*255) +255)/2 );
-                pix_data[4*(int(point[0]) + w*int(point[1])) + 1] = CLAMP_D_TO_U8( ((turbulence(1,point)*255)+255)/2 );
-                pix_data[4*(int(point[0]) + w*int(point[1])) + 2] = CLAMP_D_TO_U8( ((turbulence(2,point)*255) +255)/2 );
-                pix_data[4*(int(point[0]) + w*int(point[1])) + 3] = CLAMP_D_TO_U8( ((turbulence(3,point)*255) +255)/2 );
-            }
-        }
-    }
+    
     updated=true;
     updated_area = area;
 }
@@ -134,39 +158,27 @@ int FilterTurbulence::render(FilterSlot &slot, FilterUnits const &units) {
 //g_warning("render");
     IRect area = units.get_pixblock_filterarea_paraller();
     // TODO: could be faster - updated_area only has to be same size as area
-    if (!updated || updated_area != area) update_pixbuffer(slot, area);
-    if (!pix_data) {
-        /* update_pixbuffer couldn't render the turbulence */
-        return 1;
-    }
+    if (!updated || updated_area != area) update_pixbuffer(area, units);
+
     NRPixBlock *in = slot.get(_input);
     if (!in) {
         g_warning("Missing source image for feTurbulence (in=%d)", _input);
         return 1;
     }
-    NRPixBlock *out = new NRPixBlock;
 
-    int x,y;
+    NRPixBlock *out = new NRPixBlock;
     int x0 = in->area.x0, y0 = in->area.y0;
     int x1 = in->area.x1, y1 = in->area.y1;
-    int w = x1 - x0;
     nr_pixblock_setup_fast(out, NR_PIXBLOCK_MODE_R8G8B8A8N, x0, y0, x1, y1, true);
 
-    int bbox_x0 = area.min()[X];
-    int bbox_y0 = area.min()[Y];
-    int bbox_x1 = area.max()[X];
-    int bbox_y1 = area.max()[Y];
-    int bbox_w = bbox_x1 - bbox_x0;
-
-    unsigned char *out_data = NR_PIXBLOCK_PX(out);
-    for (x = std::max(x0, bbox_x0); x < std::min(x1, bbox_x1); x++){
-        for (y = std::max(y0, bbox_y0); y < std::min(y1, bbox_y1); y++){
-            out_data[4*((x - x0)+w*(y - y0))] = pix_data[4*(x - bbox_x0 + bbox_w*(y - bbox_y0)) ];
-            out_data[4*((x - x0)+w*(y - y0)) + 1] = pix_data[4*(x - bbox_x0 + bbox_w*(y - bbox_y0))+1];
-            out_data[4*((x - x0)+w*(y - y0)) + 2] = pix_data[4*(x - bbox_x0 + bbox_w*(y - bbox_y0))+2];
-            out_data[4*((x - x0)+w*(y - y0)) + 3] = pix_data[4*(x - bbox_x0 + bbox_w*(y - bbox_y0))+3];
-        }
+    if (pix_data) {
+        /* If pre-rendered output of whole filter area exists, just copy it. */
+        nr_blit_pixblock_pixblock(out, pix);
+    } else {
+        /* No pre-rendered output, render the required area here. */
+        render_area(out, area, units);
     }
+
     out->empty = FALSE;
     slot.set(_output, out);
     return 0;

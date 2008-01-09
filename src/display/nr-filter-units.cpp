@@ -102,7 +102,7 @@ Matrix FilterUnits::get_matrix_units2pb(SPFilterUnits units) const {
     } else if (units == SP_FILTER_UNITS_USERSPACEONUSE) {
         return get_matrix_user2pb();
     } else {
-        g_warning("Error in NR::FilterUnits::get_matrix_units2pb: unrecognized value of filterUnits");
+        g_warning("Error in NR::FilterUnits::get_matrix_units2pb: unrecognized unit type (%d)", units);
         return Matrix();
     }
 }
@@ -125,6 +125,33 @@ Matrix FilterUnits::get_matrix_pb2display() const {
     Matrix pb2d = get_matrix_user2pb().inverse();
     pb2d *= ctm;
     return pb2d;
+}
+
+Matrix FilterUnits::get_matrix_user2units(SPFilterUnits units) const {
+    if (units == SP_FILTER_UNITS_OBJECTBOUNDINGBOX) {
+        /* No need to worry about rotations: bounding box coordinates
+         * always have base vectors paraller with userspace coordinates */
+        Point min(item_bbox.min());
+        Point max(item_bbox.max());
+        double scale_x = 1.0 / (max[X] - min[X]);
+        double scale_y = 1.0 / (max[Y] - min[Y]);
+        return Matrix(scale_x, 0,
+                      0, scale_y,
+                      min[X] * scale_x, min[Y] * scale_y);
+    } else if (units == SP_FILTER_UNITS_USERSPACEONUSE) {
+        return Matrix(NULL);
+    } else {
+        g_warning("Error in NR::FilterUnits::get_matrix_user2units: unrecognized unit type (%d)", units);
+        return Matrix();
+    }
+}
+
+Matrix FilterUnits::get_matrix_user2filterunits() const {
+    return get_matrix_user2units(filterUnits);
+}
+
+Matrix FilterUnits::get_matrix_user2primitiveunits() const {
+    return get_matrix_user2units(primitiveUnits);
 }
 
 IRect FilterUnits::get_pixblock_filterarea_paraller() const {

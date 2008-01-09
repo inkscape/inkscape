@@ -86,6 +86,16 @@ public:
     Matrix get_matrix_pb2display() const;
 
     /**
+     * Gets the user coordinates to filterUnits transformation matrix.
+     */
+    Matrix get_matrix_user2filterunits() const;
+
+    /**
+     * Gets the user coordinates to primitiveUnits transformation matrix.
+     */
+    Matrix get_matrix_user2primitiveunits() const;
+
+    /**
      * Returns the filter area in pixblock coordinates.
      * NOTE: use only in filters, that define TRAIT_PARALLER in
      * get_input_traits. The filter effects area may not be representable
@@ -96,6 +106,7 @@ public:
 
 private:
     Matrix get_matrix_units2pb(SPFilterUnits units) const;
+    Matrix get_matrix_user2units(SPFilterUnits units) const;
 
     SPFilterUnits filterUnits, primitiveUnits;
     double resolution_x, resolution_y;
