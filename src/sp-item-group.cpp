@@ -36,7 +36,6 @@
 #include "sp-mask.h"
 #include "sp-path.h"
 #include "box3d.h"
-#include "box3d-side.h"
 
 static void sp_group_class_init (SPGroupClass *klass);
 static void sp_group_init (SPGroup *group);
@@ -328,6 +327,12 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 	SPItem *pitem = SP_ITEM (SP_OBJECT_PARENT (gitem));
 	Inkscape::XML::Node *prepr = SP_OBJECT_REPR (pitem);
 
+        if (SP_IS_BOX3D(gitem)) {
+            group = box3d_convert_to_group(SP_BOX3D(gitem));
+            gitem = SP_ITEM(group);
+            grepr = SP_OBJECT_REPR(gitem);
+        }
+
 	/* Step 1 - generate lists of children objects */
 	GSList *items = NULL;
 	GSList *objects = NULL;
@@ -336,13 +341,6 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 		if (SP_IS_ITEM (child)) {
 
 			SPItem *citem = SP_ITEM (child);
-
-                        if (SP_IS_BOX3D_SIDE(child)) {
-                            Inkscape::XML::Node *repr = SP_OBJECT_REPR(child);
-                            // FIXME: This doesn't remove the attribute "inkscape:box3dsidetype". Why?
-                            repr->setAttribute("inkscape:box3dsidetype", NULL);
-                            repr->setAttribute("sodipodi:type", NULL);
-                        }
 
 			/* Merging of style */
 			// this converts the gradient/pattern fill/stroke, if any, to userSpaceOnUse; we need to do

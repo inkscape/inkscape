@@ -46,6 +46,8 @@ void box3d_side_apply_style (Box3DSide *side);
 gchar *box3d_side_axes_string(Box3DSide *side);
 Persp3D *box3d_side_perspective(Box3DSide *side);
 
+Inkscape::XML::Node *box3d_side_convert_to_path(Box3DSide *side);
+
 #endif /* __BOX3D_SIDE_H__ */
 
 /*

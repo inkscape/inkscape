@@ -396,6 +396,19 @@ box3d_side_perspective(Box3DSide *side) {
     return SP_BOX3D(SP_OBJECT(side)->parent)->persp_ref->getObject();
 }
 
+Inkscape::XML::Node *
+box3d_side_convert_to_path(Box3DSide *side) {
+    // TODO: Copy over all important attributes (see sp_selected_item_to_curved_repr() for an example)
+    SPDocument *doc = SP_OBJECT_DOCUMENT(side);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+
+    Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
+    repr->setAttribute("d", SP_OBJECT_REPR(side)->attribute("d"));
+    repr->setAttribute("style", SP_OBJECT_REPR(side)->attribute("style"));
+
+    return repr;
+}
+
 /*
   Local Variables:
   mode:c++

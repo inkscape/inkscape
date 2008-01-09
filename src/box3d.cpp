@@ -1452,6 +1452,39 @@ box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp, 
     g_free(href);
 }
 
+/* Converts the 3D box to an ordinary SPGroup, adds it to the XML tree at the same position as
+   the original box and deletes the latter */
+// TODO: Copy over all important attributes (see sp_selected_item_to_curved_repr() for an example)
+SPGroup *
+box3d_convert_to_group(SPBox3D *box) {
+    SPDocument *doc = SP_OBJECT_DOCUMENT(box);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+
+    // remember position of the box
+    int pos = SP_OBJECT_REPR(box)->position();
+
+    // create a new group and add the sides (converted to ordinary paths) as its children
+    Inkscape::XML::Node *grepr = xml_doc->createElement("svg:g");
+
+    Inkscape::XML::Node *repr;
+    for (SPObject *child = sp_object_first_child(SP_OBJECT(box)); child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        if (SP_IS_BOX3D_SIDE(child)) {
+            repr = box3d_side_convert_to_path(SP_BOX3D_SIDE(child));
+            grepr->appendChild(repr);
+        } else {
+            g_warning("Non-side object encountered as child of a 3D box.\n");
+        }
+    }
+
+    // add the new group to the box's parent and set remembered position
+    SPObject *parent = SP_OBJECT_PARENT(box);
+    SP_OBJECT_REPR(parent)->appendChild(grepr);
+    grepr->setPosition(pos);
+
+    SP_OBJECT(box)->deleteObject(true);
+
+    return SP_GROUP(doc->getObjectByRepr(grepr));
+}
 
 /*
   Local Variables:

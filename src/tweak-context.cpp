@@ -71,6 +71,7 @@
 #include "isnan.h"
 #include "prefs-utils.h"
 #include "style.h"
+#include "box3d.h"
 
 #include "tweak-context.h"
 
@@ -834,6 +835,12 @@ sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point v
          items = items->next) {
 
         SPItem *item = (SPItem *) items->data;
+
+        if (SP_IS_BOX3D(item)) {
+            // convert 3D boxes to ordinary groups before tweaking their shapes
+            item = SP_ITEM(box3d_convert_to_group(SP_BOX3D(item)));
+            selection->add(item);
+        }
 
         if (tc->mode == TWEAK_MODE_COLORPAINT || tc->mode == TWEAK_MODE_COLORJITTER) {
             if (do_fill || do_stroke || do_opacity) {

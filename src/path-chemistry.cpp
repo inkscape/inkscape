@@ -33,6 +33,7 @@
 #include "message-stack.h"
 #include "selection.h"
 #include "desktop-handles.h"
+#include "box3d.h"
 
 #include "path-chemistry.h"
 
@@ -290,6 +291,18 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 /*text_grouping_policy
 
         if (SP_IS_PATH(item) && !SP_PATH(item)->original_curve) {
             continue; // already a path, and no path effect
+        }
+
+        if (SP_IS_BOX3D(item)) {
+            // convert 3D box to ordinary group of paths; replace the old element in 'selected' with the new group
+            GSList *sel_it = g_slist_find(selected, item);
+            sel_it->data = box3d_convert_to_group(SP_BOX3D(item));
+            item = SP_ITEM(sel_it->data);
+
+            did = true;
+            selected = g_slist_remove (selected, item);
+
+            continue;
         }
 
         Inkscape::XML::Node *repr = sp_selected_item_to_curved_repr(item, 0);
