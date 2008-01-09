@@ -153,16 +153,22 @@ EXTRA_DIST = \
 	packaging/win32/english.nsh	\
 	packaging/win32/finnish.nsh	\
 	packaging/win32/french.nsh	\
+	packaging/win32/galician.nsh	\
+	packaging/win32/german.nsh	\
 	packaging/win32/italian.nsh	\
 	packaging/win32/japanese.nsh	\
 	packaging/win32/polish.nsh	\
-	packaging/win32/german.nsh	\
-	packaging/win32/japanese.nsh	\
 	packaging/win32/russian.nsh	\
 	packaging/win32/slovak.nsh	\
 	packaging/win32/slovenian.nsh	\
 	packaging/win32/spanish.nsh	\
 	packaging/win32/header.bmp	\
+	packaging/win32/AdvUninstLog.nsh	\
+	packaging/win32/AdvUninstLog.txt	\
+	packaging/win32/md5dll.dll	\
+	packaging/win32/md5dll.txt	\
+	packaging/win32/messagebox.dll	\
+	packaging/win32/MessageBox.txt	\
         po/inkscape.pot \
         po/update_po_files.sh \
 	src/inkscape.rc	src/inkview.rc
