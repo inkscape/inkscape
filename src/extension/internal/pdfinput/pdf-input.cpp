@@ -583,7 +583,7 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
 #ifndef WIN32
     GooString *filename_goo = new GooString(uri);
     PDFDoc *pdf_doc = new PDFDoc(filename_goo, NULL, NULL, NULL);   // TODO: Could ask for password
-    delete filename_goo;
+    //delete filename_goo;
 #else
     wchar_t *wfilename = (wchar_t*)g_utf8_to_utf16 (uri, -1, NULL, NULL, NULL);
 
@@ -627,7 +627,7 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     PdfImportDialog *dlg = new PdfImportDialog(pdf_doc, uri);
     if (!dlg->showDialog()) {
         delete dlg;
-        //delete pdf_doc;
+        delete pdf_doc;
 
         return NULL;
     }
@@ -708,7 +708,7 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     delete pdf_parser;
     delete builder;
     g_free(docname);
-    //delete pdf_doc;
+    delete pdf_doc;
 
     // Restore undo
     sp_document_set_undo_sensitive(doc, saved);
