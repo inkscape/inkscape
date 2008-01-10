@@ -766,13 +766,13 @@ box3d_swap_z_orders (int z_orders[6]) {
 }
 
 /*
- * In der Standard-Perspektive:
- * 2 = vorne
- * 1 = oben
- * 0 = links
- * 3 = rechts
- * 4 = unten
- * 5 = hinten
+ * In standard perspective we have:
+ * 2 = front face
+ * 1 = top face
+ * 0 = left face
+ * 3 = right face
+ * 4 = bottom face
+ * 5 = rear face
  */
 
 /* All VPs infinite */
@@ -989,7 +989,7 @@ box3d_set_new_z_orders_case2 (SPBox3D *box, int z_orders[6], Box3D::Axis central
                         box3d_aux_set_z_orders (z_orders, 3, 1, 5, 2, 4, 0);
                     } else {
                         //g_print ("central axis X (case b3)");
-                        box3d_aux_set_z_orders (z_orders, 1, 3, 5, 0, 2, 4);
+                        box3d_aux_set_z_orders (z_orders, 3, 1, 5, 0, 2, 4);
                     }
                 }
             }
@@ -1022,7 +1022,7 @@ box3d_set_new_z_orders_case2 (SPBox3D *box, int z_orders[6], Box3D::Axis central
                 }
             } else {
                 //g_print ("central axis Z (case b)");
-                box3d_aux_set_z_orders (z_orders, 5, 3, 4, 1, 0, 2);
+                box3d_aux_set_z_orders (z_orders, 3, 4, 5, 1, 0, 2);
             }
             break;
         case Box3D::NONE:
