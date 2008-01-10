@@ -1075,18 +1075,22 @@ objects_query_fontspecification (GSList *objects, SPStyle *style_res)
 
         texts ++;
 
-        if (style_res->text->font_specification.value && style->text->font_specification.value &&
+        if (style_res->text->font_specification.value && style_res->text->font_specification.set &&   
+            style->text->font_specification.value && style->text->font_specification.set &&
             strcmp (style_res->text->font_specification.value, style->text->font_specification.value)) {
             different = true;  // different fonts
         }
+        
+        if (style->text->font_specification.set) {
 
-        if (style_res->text->font_specification.value) {
-            g_free(style_res->text->font_specification.value);
-            style_res->text->font_specification.value = NULL;
+            if (style_res->text->font_specification.value) {
+                g_free(style_res->text->font_specification.value);
+                style_res->text->font_specification.value = NULL;
+            }
+    
+            style_res->text->font_specification.set = TRUE;
+            style_res->text->font_specification.value = g_strdup(style->text->font_specification.value);
         }
-
-        style_res->text->font_specification.set = TRUE;
-        style_res->text->font_specification.value = g_strdup(style->text->font_specification.value);
     }
 
     if (texts == 0 || !style_res->text->font_specification.set)

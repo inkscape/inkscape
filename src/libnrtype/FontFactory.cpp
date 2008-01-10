@@ -420,8 +420,6 @@ Glib::ustring font_factory::ReplaceFontSpecificationFamily(const Glib::ustring &
     // Find the PangoFontDescription associated to this fontSpec
     PangoStringToDescrMap::iterator it = fontInstanceMap.find(fontSpec);
     
-    g_assert(it != fontInstanceMap.end());
-    
     if (it != fontInstanceMap.end()) {
         PangoFontDescription *descr = pango_font_description_copy((*it).second);
         
@@ -495,8 +493,6 @@ Glib::ustring font_factory::FontSpecificationSetItalic(const Glib::ustring & fon
     
     // Find the PangoFontDesecription that goes with this font specification string
     PangoStringToDescrMap::iterator it = fontInstanceMap.find(fontSpec);
-    
-    g_assert(it != fontInstanceMap.end());
     
     if (it != fontInstanceMap.end()) {
         // If we did find one, make a copy and set/unset the italic as needed

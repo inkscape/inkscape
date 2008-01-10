@@ -4181,9 +4181,21 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
     int result_fontspec =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
     
+    font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
+    
     SPCSSAttr *css = sp_repr_css_attr_new ();
     
-    std::string fontSpec = query->text->font_specification.value;
+    
+    // First try to get the font spec from the stored value
+    Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
+    
+    if (fontSpec.empty()) {
+        // Construct a new font specification if it does not yet exist
+        font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
+        fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
+        fontFromStyle->Unref();
+    }
+    
     if (!fontSpec.empty()) {
         Glib::ustring newFontSpec = font_factory::Default()->ReplaceFontSpecificationFamily(fontSpec, family);
         if (!newFontSpec.empty() && fontSpec != newFontSpec) {
@@ -4334,12 +4346,29 @@ sp_text_toolbox_style_toggled (GtkToggleButton  *button,
 
     SPStyle *query =
         sp_style_new (SP_ACTIVE_DOCUMENT);
+    
     int result_fontspec =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
-    
-    Glib::ustring fontSpec = query->text->font_specification.value;
-    Glib::ustring newFontSpec;
 
+    int result_family =
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
+
+    int result_style =
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
+
+    int result_numbers =
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+    
+    Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
+    Glib::ustring newFontSpec = "";
+    
+    if (fontSpec.empty()) {
+        // Construct a new font specification if it does not yet exist
+        font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
+        fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
+        fontFromStyle->Unref();
+    }
+    
     switch (prop)
     {
         case 0:
@@ -4348,6 +4377,7 @@ sp_text_toolbox_style_toggled (GtkToggleButton  *button,
                 newFontSpec = font_factory::Default()->FontSpecificationSetBold(fontSpec, active);
             }
             if (fontSpec != newFontSpec) {
+                // Don't even set the bold if the font didn't exist on the system
                 sp_repr_css_set_property (css, "font-weight", active ? "bold" : "normal" );
             }
             break;
@@ -4359,14 +4389,15 @@ sp_text_toolbox_style_toggled (GtkToggleButton  *button,
                 newFontSpec = font_factory::Default()->FontSpecificationSetItalic(fontSpec, active);
             }
             if (fontSpec != newFontSpec) {
+                // Don't even set the italic if the font didn't exist on the system
                 sp_repr_css_set_property (css, "font-style", active ? "italic" : "normal");
             }
             break;
         }
     }
 
-    if (!fontSpec.empty()) {
-        sp_repr_css_set_property (css, "-inkscape-font-specification", fontSpec.c_str()); 
+    if (!newFontSpec.empty()) {
+        sp_repr_css_set_property (css, "-inkscape-font-specification", newFontSpec.c_str()); 
     }
 
     // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
@@ -5283,6 +5314,7 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
   End:
 */
 // vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+
 
 
 
