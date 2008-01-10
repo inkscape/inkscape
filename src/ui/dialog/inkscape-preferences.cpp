@@ -671,11 +671,11 @@ void InkscapePreferences::initPageCMS()
     int intentValues[numIntents] = {0, 1, 2, 3};
 
 #if !ENABLE_LCMS
-    Gtk::Label* lbl = new Gtk::Label(_("(Note: Color Management has been disabled in this build)"));
+    Gtk::Label* lbl = new Gtk::Label(_("(Note: Color management has been disabled in this build)"));
     _page_cms.add_line( false, "", *lbl, "", "", true);
 #endif // !ENABLE_LCMS
 
-    _page_cms.add_group_header( _("Display Adjustment"));
+    _page_cms.add_group_header( _("Display adjustment"));
 
     _page_cms.add_line( false, _("Display profile:"), _cms_display_profile, "",
                         _("The ICC profile to use to calibrate display output."), false);
@@ -716,7 +716,7 @@ void InkscapePreferences::initPageCMS()
     _page_cms.add_line( false, _("Device rendering intent:"), _cms_proof_intent, "",
                         _("The rendering intent to use to calibrate display output."), false);
 
-    _cms_proof_blackpoint.init( _("Black Point Compensation"), "options.softproof", "bpc", false);
+    _cms_proof_blackpoint.init( _("Black point compensation"), "options.softproof", "bpc", false);
     _page_cms.add_line( false, "", _cms_proof_blackpoint, "",
                         _("Enables black point compensation."), false);
 
@@ -727,7 +727,7 @@ void InkscapePreferences::initPageCMS()
 #else
                         _("(LittleCMS 1.15 or later required)"),
 #endif // defined(cmsFLAGS_PRESERVEBLACK)
-                        _("Preserve K channel on CMYK -> CMYK transforms"), false);
+                        _("Preserve K channel in CMYK -> CMYK transforms"), false);
 
 #if !defined(cmsFLAGS_PRESERVEBLACK)
     _cms_proof_preserveblack.set_sensitive( false );
@@ -786,7 +786,7 @@ void InkscapePreferences::initPageCMS()
     _cms_proof_preserveblack.set_sensitive( false );
 #endif // ENABLE_LCMS
 
-    this->AddPage(_page_cms, _("Color Management"), PREFS_PAGE_CMS);
+    this->AddPage(_page_cms, _("Color management"), PREFS_PAGE_CMS);
 }
 
 void InkscapePreferences::initPageGrids()
