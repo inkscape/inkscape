@@ -583,8 +583,8 @@ void InkscapePreferences::initPageSelecting()
     _sel_all.init ( _("Select in all layers"), "options.kbselection", "inlayer", PREFS_SELECTION_ALL, false, 0);
     _sel_current.init ( _("Select only within current layer"), "options.kbselection", "inlayer", PREFS_SELECTION_LAYER, true, &_sel_all);
     _sel_recursive.init ( _("Select in current layer and sublayers"), "options.kbselection", "inlayer", PREFS_SELECTION_LAYER_RECURSIVE, false, &_sel_all);
-    _sel_hidden.init ( _("Ignore hidden objects"), "options.kbselection", "onlyvisible", true);
-    _sel_locked.init ( _("Ignore locked objects"), "options.kbselection", "onlysensitive", true);
+    _sel_hidden.init ( _("Ignore hidden objects and layers"), "options.kbselection", "onlyvisible", true);
+    _sel_locked.init ( _("Ignore locked objects and layers"), "options.kbselection", "onlysensitive", true);
     _sel_layer_deselects.init ( _("Deselect upon layer change"), "options.selection", "layerdeselect", true);
 
     _page_select.add_group_header( _("Ctrl+A, Tab, Shift+Tab:"));
@@ -595,9 +595,9 @@ void InkscapePreferences::initPageSelecting()
     _page_select.add_line( true, "", _sel_recursive, "", 
                            _("Make keyboard selection commands work on objects in current layer and all its sublayers"));
     _page_select.add_line( true, "", _sel_hidden, "", 
-                           _("Uncheck this to be able to select objects that are hidden (either by themselves or by being in a hidden group or layer)"));
+                           _("Uncheck this to be able to select objects that are hidden (either by themselves or by being in a hidden layer)"));
     _page_select.add_line( true, "", _sel_locked, "", 
-                           _("Uncheck this to be able to select objects that are locked (either by themselves or by being in a locked group or layer)"));
+                           _("Uncheck this to be able to select objects that are locked (either by themselves or by being in a locked layer)"));
 
     _page_select.add_line( false, "", _sel_layer_deselects, "", 
                            _("Uncheck this to be able to keep the current objects selected when the current layer changes"));
