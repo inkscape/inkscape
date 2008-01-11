@@ -434,7 +434,8 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     style = gtk_style_copy (GTK_WIDGET (dtw->canvas)->style);
     style->bg[GTK_STATE_NORMAL] = style->white;
     gtk_widget_set_style (GTK_WIDGET (dtw->canvas), style);
-    gtk_widget_set_extension_events(GTK_WIDGET (dtw->canvas) , GDK_EXTENSION_EVENTS_ALL);
+    if ( prefs_get_int_attribute ("options.useextinput", "value", 1) ) 
+      gtk_widget_set_extension_events(GTK_WIDGET (dtw->canvas) , GDK_EXTENSION_EVENTS_ALL); //set extension events for tablets, unless disabled in preferences
     g_signal_connect (G_OBJECT (dtw->canvas), "event", G_CALLBACK (sp_desktop_widget_event), dtw);
     gtk_table_attach (GTK_TABLE (canvas_tbl), GTK_WIDGET(dtw->canvas), 1, 2, 1, 2, (GtkAttachOptions)(GTK_FILL | GTK_EXPAND), (GtkAttachOptions)(GTK_FILL | GTK_EXPAND), 0, 0);
 
