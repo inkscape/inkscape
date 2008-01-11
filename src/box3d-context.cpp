@@ -574,35 +574,35 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             break;
 
         case GDK_x:
+        case GDK_X:
             if (MOD__ALT_ONLY) {
                 desktop->setToolboxFocusTo ("altx-box3d");
                 ret = TRUE;
             }
-            break;
-        case GDK_X:
-            if (MOD__CTRL) break; // Don't catch Ctrl+X ('cut') and Ctrl+Shift+X ('open XML editor')
-            persp3d_toggle_VPs(persp3d_currently_selected_persps(event_context), Proj::X);
-            bc->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
-            ret = true;
+            if (MOD__SHIFT_ONLY) {
+                persp3d_toggle_VPs(persp3d_currently_selected_persps(event_context), Proj::X);
+                bc->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
+                ret = true;
+            }
             break;
 
+        case GDK_y:
         case GDK_Y:
-        {
-            if (MOD__CTRL) break; // Don't catch Ctrl+Y ("redo")
-            persp3d_toggle_VPs(persp3d_currently_selected_persps(event_context), Proj::Y);
-            bc->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
-            ret = true;
+            if (MOD__SHIFT_ONLY) {
+                persp3d_toggle_VPs(persp3d_currently_selected_persps(event_context), Proj::Y);
+                bc->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
+                ret = true;
+            }
             break;
-        }
 
+        case GDK_z:
         case GDK_Z:
-        {
-            if (MOD__CTRL) break; // Don't catch Ctrl+Z ("undo")
-            persp3d_toggle_VPs(persp3d_currently_selected_persps(event_context), Proj::Z);
-            bc->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
-            ret = true;
+            if (MOD__SHIFT_ONLY) {
+                persp3d_toggle_VPs(persp3d_currently_selected_persps(event_context), Proj::Z);
+                bc->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
+                ret = true;
+            }
             break;
-        }
 
         case GDK_Escape:
             sp_desktop_selection(desktop)->clear();
