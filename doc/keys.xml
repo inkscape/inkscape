@@ -942,11 +942,15 @@ groups) with the same effect as Alt+click.)</note>
 *<section title="Ellipse tool" color="ffece8">
 <group>
 <title>Draw</title>
+<note>Without Alt the starting end ending point of the mouse drag mark the corners of the bounding box.</note>
+<note>With Alt the ellipse is enlarged so that its circumference passes through these two points (Ctrl+Alt is a special case; see below).</note>
 <mouse><key><left-drag/></key> <action>draw an ellipse</action></mouse>
 <mouse><key><ctrl/><left-drag/></key>	<action>make circle or integer-ratio ellipse</action></mouse>
 <note>This restricts ellipse so its height/width ratio is a whole number.</note>
 <mouse><key><shift/><left-drag/></key> <action>draw around the starting point</action></mouse>
 <note>This creates an ellipse symmetric around the starting point of the mouse drag.</note>
+<mouse><key><ctrl/><alt/><left-drag/></key>create circle passing through the starting and ending point<action></action></mouse>
+<note>This creates a perfect circle whose diameter is defined by the starting and ending point of the mouse drag.</note>
 </group>
 
 <group>
