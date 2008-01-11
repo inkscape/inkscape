@@ -630,14 +630,9 @@ sp_aux_toolbox_new()
 {
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
 
-    GtkWidget *tb_s = gtk_vbox_new(FALSE, 0);
-    GtkWidget *tb_e = gtk_vbox_new(FALSE, 0);
     gtk_box_set_spacing(GTK_BOX(tb), AUX_SPACING);
-    gtk_box_pack_start(GTK_BOX(tb), GTK_WIDGET(tb_s), FALSE, FALSE, 0);
-    gtk_box_pack_end(GTK_BOX(tb), GTK_WIDGET(tb_e), FALSE, FALSE, 0);
 
     g_object_set_data(G_OBJECT(tb), "desktop", NULL);
-    g_object_set_data(G_OBJECT(tb), "top_spacer", tb_s);
 
     gtk_widget_set_sensitive(tb, FALSE);
 
@@ -667,11 +662,7 @@ sp_commands_toolbox_new()
 {
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
 
-    GtkWidget *tb_s = gtk_vbox_new(FALSE, 0);
-    GtkWidget *tb_e = gtk_vbox_new(FALSE, 0);
     gtk_box_set_spacing(GTK_BOX(tb), AUX_SPACING);
-    gtk_box_pack_start(GTK_BOX(tb), GTK_WIDGET(tb_s), FALSE, FALSE, 0);
-    gtk_box_pack_end(GTK_BOX(tb), GTK_WIDGET(tb_e), FALSE, FALSE, 0);
 
     g_object_set_data(G_OBJECT(tb), "desktop", NULL);
     gtk_widget_set_sensitive(tb, FALSE);
@@ -1438,10 +1429,6 @@ void show_aux_toolbox(GtkWidget *toolbox_toplevel)
         return;
     }
     gtk_widget_show(toolbox);
-
-    // need to show the spacer, or the padding will be off
-    GtkWidget *spacer = GTK_WIDGET(g_object_get_data(G_OBJECT(toolbox), "top_spacer"));
-    gtk_widget_show(spacer);
 
     gtk_widget_show_all(shown_toolbox);
 }
