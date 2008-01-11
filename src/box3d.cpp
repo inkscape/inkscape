@@ -32,6 +32,8 @@
 #include "persp3d-reference.h"
 #include "uri.h"
 #include "2geom/geom.h"
+#include "sp-guide.h"
+#include "sp-namedview.h"
 
 #include "desktop.h"
 #include "macros.h"
@@ -1484,6 +1486,47 @@ box3d_convert_to_group(SPBox3D *box) {
     SP_OBJECT(box)->deleteObject(true);
 
     return SP_GROUP(doc->getObjectByRepr(grepr));
+}
+
+static void
+box3d_push_back_corner_pair(SPBox3D *box, std::list<std::pair<Geom::Point, Geom::Point> > &pts, int c1, int c2) {
+    pts.push_back(std::make_pair(box3d_get_corner_screen(box, c1).to_2geom(),
+                                 box3d_get_corner_screen(box, c2).to_2geom()));
+}
+
+void
+box3d_convert_to_guides(SPBox3D *box, bool write_undo) {
+    SPDocument *doc = SP_OBJECT_DOCUMENT(box);
+    //SPDesktop *desktop = inkscape_active_desktop();
+    //Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+
+    std::list<std::pair<Geom::Point, Geom::Point> > pts;
+
+    /* perspective lines in X direction */
+    box3d_push_back_corner_pair(box, pts, 0, 1);
+    box3d_push_back_corner_pair(box, pts, 2, 3);
+    box3d_push_back_corner_pair(box, pts, 4, 5);
+    box3d_push_back_corner_pair(box, pts, 6, 7);
+
+    /* perspective lines in Y direction */
+    box3d_push_back_corner_pair(box, pts, 0, 2);
+    box3d_push_back_corner_pair(box, pts, 1, 3);
+    box3d_push_back_corner_pair(box, pts, 4, 6);
+    box3d_push_back_corner_pair(box, pts, 5, 7);
+
+    /* perspective lines in Z direction */
+    box3d_push_back_corner_pair(box, pts, 0, 4);
+    box3d_push_back_corner_pair(box, pts, 1, 5);
+    box3d_push_back_corner_pair(box, pts, 2, 6);
+    box3d_push_back_corner_pair(box, pts, 3, 7);
+
+    sp_guide_pt_pairs_to_guides(doc, pts);
+
+    SP_OBJECT(box)->deleteObject(true);
+
+    if (write_undo) {
+        sp_document_done(doc, SP_VERB_CONTEXT_3DBOX, _("Convert to guides"));
+    }
 }
 
 /*

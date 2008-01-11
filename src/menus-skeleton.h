@@ -171,6 +171,7 @@ static char const menus_skeleton[] =
 "           <verb verb-id=\"ObjectsFromPattern\" />\n"
 "       </submenu>\n"
 "       <verb verb-id=\"ObjectsToMarker\" />\n"
+"       <verb verb-id=\"ObjectsToGuides\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"SelectionRaise\" />\n"
 "       <verb verb-id=\"SelectionLower\" />\n"

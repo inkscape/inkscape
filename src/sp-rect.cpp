@@ -28,6 +28,7 @@
 #include "sp-rect.h"
 #include <glibmm/i18n.h>
 #include "xml/repr.h"
+#include "sp-guide.h"
 
 #define noRECT_VERBOSE
 
@@ -576,6 +577,32 @@ static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p)
     *p = NR::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d;
     *p = NR::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2d;
     *p = NR::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2d;
+}
+
+void
+sp_rect_convert_to_guides(SPRect *rect, bool write_undo) {
+    SPDocument *doc = SP_OBJECT_DOCUMENT(rect);
+    std::list<std::pair<Geom::Point, Geom::Point> > pts;
+
+    NR::Matrix const i2d (sp_item_i2d_affine(SP_ITEM(rect)));
+
+    NR::Point A1(NR::Point(rect->x.computed, rect->y.computed) * i2d);
+    NR::Point A2(NR::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d);
+    NR::Point A3(NR::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2d);
+    NR::Point A4(NR::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2d);
+
+    pts.push_back(std::make_pair(A1.to_2geom(), A2.to_2geom()));
+    pts.push_back(std::make_pair(A2.to_2geom(), A3.to_2geom()));
+    pts.push_back(std::make_pair(A3.to_2geom(), A4.to_2geom()));
+    pts.push_back(std::make_pair(A4.to_2geom(), A1.to_2geom()));
+
+    sp_guide_pt_pairs_to_guides(doc, pts);
+
+    SP_OBJECT(rect)->deleteObject(true);
+
+    if (write_undo) {
+        sp_document_done(doc, SP_VERB_CONTEXT_RECT, _("Convert to guides"));
+    }
 }
 
 /*

@@ -25,6 +25,7 @@
 #include "document.h"
 #include "sp-namedview.h"
 #include "selection.h"
+#include "selection-chemistry.h"
 #include "desktop-handles.h"
 #include "snap.h"
 #include "desktop.h"
@@ -410,6 +411,14 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
                     SP_OBJECT (item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
                 }
                 ret = TRUE;
+            }
+            break;
+
+        case GDK_g:
+        case GDK_G:
+            if (MOD__SHIFT_ONLY) {
+                sp_selection_to_guides();
+                ret = true;
             }
             break;
 

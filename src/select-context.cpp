@@ -888,6 +888,13 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         ret = TRUE;
                     }
                     break;                  
+                case GDK_g:
+                case GDK_G:
+                    if (MOD__SHIFT_ONLY) {
+                        sp_selection_to_guides();
+                        ret = true;
+                    }
+                    break;
                 default:
                     break;
             }

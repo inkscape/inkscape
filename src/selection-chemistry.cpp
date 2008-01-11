@@ -72,12 +72,14 @@
 #include <map>
 #include "helper/units.h"
 #include "sp-item.h"
+#include "box3d.h"
 #include "unit-constants.h"
 #include "xml/simple-document.h"
 #include "sp-filter-reference.h"
 #include "gradient-drag.h"
 #include "uri-references.h"
 #include "live_effects/lpeobject.h"
+#include "sp-rect.h"
 
 using NR::X;
 using NR::Y;
@@ -2438,6 +2440,39 @@ void sp_selection_to_marker(bool apply)
 
     sp_document_done (doc, SP_VERB_EDIT_SELECTION_2_MARKER,
                       _("Objects to marker"));
+}
+
+void sp_selection_to_guides()
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop == NULL)
+        return;
+
+    SPDocument *doc = sp_desktop_document(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    // we need to copy the list because it gets reset when objects are deleted
+    GSList *items = g_slist_copy((GSList *) selection->itemList());
+ 
+    bool performed = false;
+    for (GSList const *i = items; i != NULL; i = i->next) {
+        if (SP_IS_RECT(i->data)) {
+            sp_rect_convert_to_guides(SP_RECT(i->data), false);
+            performed = true;
+        } else if (SP_IS_BOX3D(i->data)) {
+            box3d_convert_to_guides(SP_BOX3D(i->data), false);
+            performed = true;
+        }
+    }
+
+    if (!performed) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to convert to guides (selection must contain at least one rectangle or 3D box)."));
+        return;
+    }
+
+    if (performed) {
+        sp_document_done (doc, SP_VERB_EDIT_SELECTION_2_GUIDES,
+                          _("Objects to guides"));
+    }
 }
 
 void

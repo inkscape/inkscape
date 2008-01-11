@@ -62,4 +62,6 @@ gdouble sp_rect_get_visible_height (SPRect *rect);
 
 void sp_rect_compensate_rxry (SPRect *rect, NR::Matrix xform);
 
+void sp_rect_convert_to_guides(SPRect *rect, bool write_undo = true);
+
 #endif

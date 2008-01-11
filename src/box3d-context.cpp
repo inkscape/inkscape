@@ -24,6 +24,7 @@
 #include "document.h"
 #include "sp-namedview.h"
 #include "selection.h"
+#include "selection-chemistry.h"
 #include "desktop-handles.h"
 #include "snap.h"
 #include "display/curve.h"
@@ -530,6 +531,14 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
                 persp3d_print_debugging_info (inkscape_active_document()->current_persp3d);
             }
             ret = true;
+            break;
+
+        case GDK_g:
+        case GDK_G:
+            if (MOD__SHIFT_ONLY) {
+                sp_selection_to_guides();
+                ret = true;
+            }
             break;
 
         case GDK_P:

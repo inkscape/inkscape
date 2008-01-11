@@ -888,6 +888,9 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_EDIT_SELECTION_2_MARKER:
             sp_selection_to_marker();
             break;
+        case SP_VERB_EDIT_SELECTION_2_GUIDES:
+            sp_selection_to_guides();
+            break;
         case SP_VERB_EDIT_TILE:
             sp_selection_tile();
             break;
@@ -2191,6 +2194,9 @@ Verb *Verb::_base_verbs[] = {
     // TRANSLATORS: Convert selection to a line marker
     new EditVerb(SP_VERB_EDIT_SELECTION_2_MARKER, "ObjectsToMarker", N_("Objects to _Marker"),
                  N_("Convert selection to a line marker"), NULL),
+    // TRANSLATORS: Convert selection to a collection of guidelines
+    new EditVerb(SP_VERB_EDIT_SELECTION_2_GUIDES, "ObjectsToGuides", N_("Objects to Gu_ides"),
+                 N_("Convert selected objects to a collection of guidelines aligned with their edges"), NULL),
     // TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
     new EditVerb(SP_VERB_EDIT_TILE, "ObjectsToPattern", N_("Objects to Patter_n"),
                  N_("Convert selection to a rectangle with tiled pattern fill"), NULL),

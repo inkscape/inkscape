@@ -36,6 +36,7 @@ void sp_selection_unlink();
 void sp_select_clone_original ();
 
 void sp_selection_to_marker(bool apply = true);
+void sp_selection_to_guides();
 
 void sp_selection_tile(bool apply = true);
 void sp_selection_untile();

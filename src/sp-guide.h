@@ -45,6 +45,9 @@ struct SPGuideClass {
 
 GType sp_guide_get_type();
 
+SPGuide *sp_guide_create(SPDesktop *desktop, Geom::Point const &pt1, Geom::Point const &pt2);
+void sp_guide_pt_pairs_to_guides(SPDocument *doc, std::list<std::pair<Geom::Point, Geom::Point> > &pts);
+
 void sp_guide_show(SPGuide *guide, SPCanvasGroup *group, GCallback handler);
 void sp_guide_hide(SPGuide *guide, SPCanvas *canvas);
 void sp_guide_sensitize(SPGuide *guide, SPCanvas *canvas, gboolean sensitive);

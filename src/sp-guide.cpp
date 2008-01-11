@@ -34,6 +34,7 @@
 #include "desktop.h"
 #include "sp-namedview.h"
 #include <2geom/angle.h>
+#include "document.h"
 
 using std::vector;
 
@@ -232,6 +233,32 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
                 ((SPObjectClass *) (parent_class))->set(object, key, value);
             }
             break;
+    }
+}
+
+SPGuide *
+sp_guide_create(SPDocument *doc, Geom::Point const &pt1, Geom::Point const &pt2) {
+    SPDesktop *desktop = inkscape_active_desktop();
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+
+    Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
+
+    Geom::Point n = Geom::rot90(pt2 - pt1);
+
+    sp_repr_set_point(repr, "position", pt1);
+    sp_repr_set_point(repr, "orientation", n);
+
+    SP_OBJECT_REPR(desktop->namedview)->appendChild(repr);
+    Inkscape::GC::release(repr);
+
+    SPGuide *guide= SP_GUIDE(doc->getObjectByRepr(repr));
+    return guide;
+}
+
+void
+sp_guide_pt_pairs_to_guides(SPDocument *doc, std::list<std::pair<Geom::Point, Geom::Point> > &pts) {
+    for (std::list<std::pair<Geom::Point, Geom::Point> >::iterator i = pts.begin(); i != pts.end(); ++i) {
+        sp_guide_create(doc, (*i).first, (*i).second);
     }
 }
 
