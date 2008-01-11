@@ -337,6 +337,12 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 {
     bool did = false;
 
+    if (SP_IS_BOX3D(item)) {
+        // convert 3D boxes to ordinary groups before tweaking their shapes
+        item = SP_ITEM(box3d_convert_to_group(SP_BOX3D(item)));
+        selection->add(item);
+    }
+
     if (SP_IS_GROUP(item)) {
         for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
             if (SP_IS_ITEM(child)) {
@@ -843,12 +849,6 @@ sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point v
          items = items->next) {
 
         SPItem *item = (SPItem *) items->data;
-
-        if (SP_IS_BOX3D(item)) {
-            // convert 3D boxes to ordinary groups before tweaking their shapes
-            item = SP_ITEM(box3d_convert_to_group(SP_BOX3D(item)));
-            selection->add(item);
-        }
 
         if (tc->mode == TWEAK_MODE_COLORPAINT || tc->mode == TWEAK_MODE_COLORJITTER) {
             if (do_fill || do_stroke || do_opacity) {
