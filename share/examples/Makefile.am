@@ -25,6 +25,7 @@ example_DATA = \
 	blend_modes.svg \
 	flow-go.svg \
 	lighting_effects.svg \
+	turbulence_effects.svg \
 	live-path-effects-curvestitch.svg \
 	live-path-effects-gears.svg \
 	live-path-effects-pathalongpath.svg
