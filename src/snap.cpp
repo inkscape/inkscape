@@ -527,13 +527,12 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
     
     if (transformation_type == SCALE) {
         // When scaling, don't ever exit with one of scaling components set to NR_HUGE
-        if (best_transformation == NR::Point(NR_HUGE, NR_HUGE)) {
-            best_transformation == transformation; // return the original (i.e. un-snapped) transformation        
-        } else {
-            // Still one of the transformation components could be NR_HUGE
-            for (int index = 0; index < 2; index++) {
-                if (best_transformation[index] == NR_HUGE) {
-                    best_transformation[index] == uniform ? best_transformation[1-index] : transformation[index];
+        for (int index = 0; index < 2; index++) {
+            if (best_transformation[index] == NR_HUGE) {
+                if (uniform && best_transformation[1-index] < NR_HUGE) {
+                	best_transformation[index] = best_transformation[1-index];
+                } else {
+                	best_transformation[index] = transformation[index];	
                 }
             }
         }
