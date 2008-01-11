@@ -12743,7 +12743,7 @@ msgid ""
 "create a new pattern from selection."
 msgstr "Dùng:\n"
 " • <b>Công cụ Nút</b> để điều chỉnh vị trí, tỷ lệ và hệ số xoay của mẫu trên vùng vẽ.\n"
-" • <b>Đối tượng > Mẫu > Đối tượng sang Mẫu</b> để tạo một mẫu mới từ vùng chọn."
+" • <b>Đối tượng &gt; Mẫu &gt; Đối tượng sang Mẫu</b> để tạo một mẫu mới từ vùng chọn."
 
 #: ../src/widgets/select-toolbar.cpp:238
 msgid "Transform by toolbar"
