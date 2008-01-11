@@ -206,6 +206,24 @@ static void sp_box3d_context_selection_changed(Inkscape::Selection *selection, g
     }
 }
 
+/* create a default perspective in document defs if none is present
+   (can happen after 'vacuum defs' or when a pre-0.46 file is opened) */   
+static void sp_box3d_context_check_for_persp_in_defs(SPDocument *document) {
+    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
+
+    bool has_persp = false;
+    for (SPObject *child = sp_object_first_child(defs); child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        if (SP_IS_PERSP3D(child)) {
+            has_persp = true;
+            break;
+        }
+    }
+
+    if (!has_persp) {
+        document->current_persp3d = persp3d_create_xml_element (document);
+    }
+}
+
 static void sp_box3d_context_setup(SPEventContext *ec)
 {
     Box3DContext *bc = SP_BOX3D_CONTEXT(ec);
@@ -213,6 +231,8 @@ static void sp_box3d_context_setup(SPEventContext *ec)
     if (((SPEventContextClass *) parent_class)->setup) {
         ((SPEventContextClass *) parent_class)->setup(ec);
     }
+
+    sp_box3d_context_check_for_persp_in_defs(sp_desktop_document (ec->desktop));
 
     SPItem *item = sp_desktop_selection(ec->desktop)->singleItem();
     if (item) {

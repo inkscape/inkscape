@@ -345,58 +345,11 @@ sp_document_create(Inkscape::XML::Document *rdoc,
         inkscape_ref();
     }
 
-    /* Create an initial perspective, make it current and append it to the list of existing perspectives */
-    /***
-    document->current_perspective = new Box3D::Perspective3D (
-                              // VP in x-direction
-                              Box3D::VanishingPoint( NR::Point(-50.0, 600.0),
-                                                     NR::Point( -1.0,   0.0), Box3D::VP_FINITE),
-                              // VP in y-direction
-                              Box3D::VanishingPoint( NR::Point(500.0,1000.0),
-                                                     NR::Point(  0.0,   1.0), Box3D::VP_INFINITE),
-                              // VP in z-direction
-                              Box3D::VanishingPoint( NR::Point(700.0, 600.0),
-                                                     NR::Point(sqrt(3.0),1.0), Box3D::VP_FINITE),
-                              document);
-
-    document->add_perspective (document->current_perspective);
-    ***/
-
     // Remark: Here, we used to create a "currentpersp3d" element in the document defs.
     // But this is probably a bad idea since we need to adapt it for every change of selection, which will
     // completely clutter the undo history. Maybe rather save it to prefs on exit and re-read it on startup?
 
-    Proj::Pt2 proj_vp_x = Proj::Pt2 (-50.0, 600.0, 1.0);
-    Proj::Pt2 proj_vp_y = Proj::Pt2 (  0.0,1000.0, 0.0);
-    Proj::Pt2 proj_vp_z = Proj::Pt2 (700.0, 600.0, 1.0);
-    Proj::Pt2 proj_origin = Proj::Pt2 (300.0, 400.0, 1.0);
-
-    document->current_persp3d = (Persp3D *) persp3d_create_xml_element (document);
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(document->current_persp3d);
-
-    gchar *str = NULL;
-    str = proj_vp_x.coord_string();
-    repr->setAttribute("inkscape:vp_x", str);
-    g_free (str);
-    str = proj_vp_y.coord_string();
-    repr->setAttribute("inkscape:vp_y", str);
-    g_free (str);
-    str = proj_vp_z.coord_string();
-    repr->setAttribute("inkscape:vp_z", str);
-    g_free (str);
-    str = proj_origin.coord_string();
-    repr->setAttribute("inkscape:persp3d-origin", str);
-    g_free (str);
-    Inkscape::GC::release(repr);
-
-    /***
-    document->current_persp3d = (Persp3D *) sp_object_get_child_by_repr (SP_OBJECT(defs), repr);
-    g_assert (document->current_persp3d != NULL);
-    persp3d_update_with_point (document->current_persp3d, Proj::X, proj_vp_x);
-    persp3d_update_with_point (document->current_persp3d, Proj::Y, proj_vp_y);
-    persp3d_update_with_point (document->current_persp3d, Proj::Z, proj_vp_z);
-    persp3d_update_with_point (document->current_persp3d, Proj::W, proj_origin);
-    ***/
+    document->current_persp3d = persp3d_create_xml_element (document);
 
     sp_document_set_undo_sensitive(document, true);
 

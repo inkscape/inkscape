@@ -220,8 +220,29 @@ persp3d_create_xml_element (SPDocument *document, Persp3D *dup) {// if dup is gi
     if (dup) {
         repr = SP_OBJECT_REPR(dup)->duplicate (xml_doc);
     } else {
+        /* if no perspective is given, create a default one */
         repr = xml_doc->createElement("inkscape:perspective");
         repr->setAttribute("sodipodi:type", "inkscape:persp3d");
+
+        Proj::Pt2 proj_vp_x = Proj::Pt2 (-50.0, 600.0, 1.0);
+        Proj::Pt2 proj_vp_y = Proj::Pt2 (  0.0,1000.0, 0.0);
+        Proj::Pt2 proj_vp_z = Proj::Pt2 (700.0, 600.0, 1.0);
+        Proj::Pt2 proj_origin = Proj::Pt2 (300.0, 400.0, 1.0);
+
+        gchar *str = NULL;
+        str = proj_vp_x.coord_string();
+        repr->setAttribute("inkscape:vp_x", str);
+        g_free (str);
+        str = proj_vp_y.coord_string();
+        repr->setAttribute("inkscape:vp_y", str);
+        g_free (str);
+        str = proj_vp_z.coord_string();
+        repr->setAttribute("inkscape:vp_z", str);
+        g_free (str);
+        str = proj_origin.coord_string();
+        repr->setAttribute("inkscape:persp3d-origin", str);
+        g_free (str);
+        Inkscape::GC::release(repr);
     }
 
     /* Append the new persp3d to defs */
