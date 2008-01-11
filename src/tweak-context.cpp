@@ -264,6 +264,14 @@ sp_tweak_context_setup(SPEventContext *ec)
     tc->style_set_connection = ec->desktop->connectSetStyle( // catch style-setting signal in this tool
         sigc::bind(sigc::ptr_fun(&sp_tweak_context_style_set), tc)
     );
+
+    if (prefs_get_int_attribute("tools.tweak", "selcue", 0) != 0) {
+        ec->enableSelectionCue();
+    }
+
+    if (prefs_get_int_attribute("tools.tweak", "gradientdrag", 0) != 0) {
+        ec->enableGrDrag();
+    }
 }
 
 static void

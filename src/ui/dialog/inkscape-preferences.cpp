@@ -358,6 +358,10 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_node, _("Node"), iter_tools, PREFS_PAGE_TOOLS_NODE);
     AddSelcueCheckbox(_page_node, "tools.nodes", true);
     AddGradientCheckbox(_page_node, "tools.nodes", true);
+    //Tweak
+    this->AddPage(_page_tweak, _("Tweak"), iter_tools, PREFS_PAGE_TOOLS_NODE);
+    AddSelcueCheckbox(_page_tweak, "tools.tweak", true);
+    AddGradientCheckbox(_page_tweak, "tools.tweak", false);
     //Zoom
     this->AddPage(_page_zoom, _("Zoom"), iter_tools, PREFS_PAGE_TOOLS_ZOOM);
     AddSelcueCheckbox(_page_zoom, "tools.zoom", true);
@@ -396,6 +400,7 @@ void InkscapePreferences::initPageTools()
     this->AddNewObjectsStyle(_page_pen, "tools.freehand.pen");
     //Calligraphy
     this->AddPage(_page_calligraphy, _("Calligraphy"), iter_tools, PREFS_PAGE_TOOLS_CALLIGRAPHY);
+    this->AddSelcueCheckbox(_page_calligraphy, "tools.calligraphic", false);
     this->AddNewObjectsStyle(_page_calligraphy, "tools.calligraphic");
     _page_calligraphy.add_line( false, "", _calligrapy_use_abs_size, "", 
                             _("If on, pen width is in absolute units (px) independent of zoom; otherwise pen width depends on zoom so that it looks the same at any zoom"));
@@ -403,6 +408,7 @@ void InkscapePreferences::initPageTools()
                             _("If on, each newly created object will be selected (deselecting previous selection)"));
     //Paint Bucket
     this->AddPage(_page_paintbucket, _("Paint Bucket"), iter_tools, PREFS_PAGE_TOOLS_PAINTBUCKET);
+    this->AddSelcueCheckbox(_page_paintbucket, "tools.paintbucket", false);
     this->AddNewObjectsStyle(_page_paintbucket, "tools.paintbucket");
     //Text
     this->AddPage(_page_text, _("Text"), iter_tools, PREFS_PAGE_TOOLS_TEXT);

@@ -221,6 +221,10 @@ static void sp_flood_context_setup(SPEventContext *ec)
     );
 
     rc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
+
+    if (prefs_get_int_attribute("tools.paintbucket", "selcue", 0) != 0) {
+        rc->enableSelectionCue();
+    }
 }
 
 inline static void

@@ -106,7 +106,7 @@ protected:
     DialogPage _page_mouse, _page_scrolling, _page_steps, _page_tools, _page_windows,
         _page_clones, _page_mask, _page_transforms, _page_filters, _page_select, 
         _page_importexport, _page_cms, _page_grids, _page_misc;
-    DialogPage _page_selector, _page_node, _page_zoom, _page_shapes, _page_pencil, _page_pen,
+    DialogPage _page_selector, _page_node, _page_tweak, _page_zoom, _page_shapes, _page_pencil, _page_pen,
                _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper;
     DialogPage _page_rectangle, _page_3dbox, _page_ellipse, _page_star, _page_spiral, _page_paintbucket;
 

@@ -45,6 +45,7 @@
 #include "desktop-affine.h"
 #include "desktop-style.h"
 #include "message-context.h"
+#include "prefs-utils.h"
 #include "pixmaps/cursor-calligraphy.xpm"
 #include "libnr/n-art-bpath.h"
 #include "libnr/nr-path.h"
@@ -294,6 +295,10 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
     ddc->is_drawing = false;
 
     ddc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
+
+    if (prefs_get_int_attribute("tools.calligraphic", "selcue", 0) != 0) {
+        ec->enableSelectionCue();
+    }
 }
 
 static void
