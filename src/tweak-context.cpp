@@ -390,8 +390,9 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 
         Shape *theShape = new Shape;
         Shape *theRes = new Shape;
+        NR::Matrix i2doc(sp_item_i2doc_affine(item));
 
-        orig->ConvertWithBackData(0.08 - (0.07 * fidelity)); // default 0.059
+        orig->ConvertWithBackData((0.08 - (0.07 * fidelity)) / i2doc.expansion()); // default 0.059
         orig->Fill(theShape, 0);
 
         SPCSSAttr *css = sp_repr_css_attr(SP_OBJECT_REPR(item), "style");
@@ -413,7 +414,6 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
             vector = 1/NR::L2(vector) * vector;
 
         bool did_this = false;
-        NR::Matrix i2doc(sp_item_i2doc_affine(item));
         if (mode == TWEAK_MODE_SHRINK || mode == TWEAK_MODE_GROW) {
             if (theShape->MakeTweak(tweak_mode_grow, theRes,
                                  mode == TWEAK_MODE_GROW? force : -force,
@@ -428,7 +428,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
               did_this = true;
         } else if (mode == TWEAK_MODE_PUSH) {
             if (theShape->MakeTweak(tweak_mode_push, theRes,
-                                 0,
+                                 1.0,
                                  join_straight, 4.0,
                                  true, p, force*2*vector, radius, &i2doc) == 0)
               did_this = true;
@@ -447,10 +447,10 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
             res->Reset();
             theRes->ConvertToForme(res);
 
-            double th_max = 0.6 - 0.59*sqrt(fidelity);
+            double th_max = (0.6 - 0.59*sqrt(fidelity)) / i2doc.expansion();
             double threshold = MAX(th_max, th_max*force);
             res->ConvertEvenLines(threshold);
-            res->Simplify(threshold);
+            res->Simplify(threshold / (SP_ACTIVE_DESKTOP->current_zoom()));
 
             if (newrepr) { // converting to path, need to replace the repr
                 bool is_selected = selection->includes(item);

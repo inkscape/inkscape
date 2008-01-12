@@ -524,20 +524,13 @@ Shape::ConvertToFormeNested (Path * dest, int nbP, Path * *orig, int wildPath,in
 
 
 int
-Shape::MakeTweak (int mode, Shape *a, double dec, JoinType join, double miter, bool do_profile, NR::Point c, NR::Point vector, double radius, NR::Matrix *i2doc)
+Shape::MakeTweak (int mode, Shape *a, double power, JoinType join, double miter, bool do_profile, NR::Point c, NR::Point vector, double radius, NR::Matrix *i2doc)
 {
   Reset (0, 0);
   MakeBackData(a->_has_back_data);
 
 	bool done_something = false;
 
-  double power;
-  if (mode == tweak_mode_push) {
-		power = NR::L2(vector);
-	} else {
-		power = dec;
-	}
-  
   if (power == 0)
   {
     _pts = a->_pts;
@@ -604,10 +597,6 @@ Shape::MakeTweak (int mode, Shape *a, double dec, JoinType join, double miter, b
     int stNo, enNo;
     ptP = a->getPoint(a->getEdge(i).st).x;
 
-    if (mode == tweak_mode_push) {
-			power = 1;
-		}
-
   	NR::Point to_center = ptP * (*i2doc) - c;
   	NR::Point to_center_normalized = (1/NR::L2(to_center)) * to_center;
 
@@ -642,14 +631,19 @@ Shape::MakeTweak (int mode, Shape *a, double dec, JoinType join, double miter, b
 		if (this_power != 0)
 			done_something = true;
 
+		double scaler = 1 / (*i2doc).expansion();
+
 		NR::Point this_vec(0,0);
     if (mode == tweak_mode_push) {
-			this_vec = this_power * vector;
+			NR::Matrix tovec (*i2doc);
+			tovec[4] = tovec[5] = 0;
+			tovec = tovec.inverse();
+			this_vec = this_power * (vector * tovec) ;
 		} else if (mode == tweak_mode_repel) {
-			this_vec = this_power * to_center_normalized;
+			this_vec = this_power * scaler * to_center_normalized;
 		} else if (mode == tweak_mode_roughen) {
   		double angle = g_random_double_range(0, 2*M_PI);
-	  	this_vec = g_random_double_range(0, 1) * this_power * NR::Point(sin(angle), cos(angle));
+	  	this_vec = g_random_double_range(0, 1) * this_power * scaler * NR::Point(sin(angle), cos(angle));
 		}
 
     int   usePathID=-1;
@@ -675,12 +669,12 @@ Shape::MakeTweak (int mode, Shape *a, double dec, JoinType join, double miter, b
 			a->swsData[stB].enPt = stNo;
 		} else {
 			if (power > 0) {
-				Path::DoRightJoin (this, this_power, join, ptP, stD, seD, miter, stL, seL,
+				Path::DoRightJoin (this, this_power * scaler, join, ptP, stD, seD, miter, stL, seL,
 													 stNo, enNo,usePathID,usePieceID,useT);
 				a->swsData[i].stPt = enNo;
 				a->swsData[stB].enPt = stNo;
 			} else {
-				Path::DoLeftJoin (this, -this_power, join, ptP, stD, seD, miter, stL, seL,
+				Path::DoLeftJoin (this, -this_power * scaler, join, ptP, stD, seD, miter, stL, seL,
 													stNo, enNo,usePathID,usePieceID,useT);
 				a->swsData[i].stPt = enNo;
 				a->swsData[stB].enPt = stNo;
