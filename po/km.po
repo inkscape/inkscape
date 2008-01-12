@@ -407,7 +407,7 @@ msgstr "ធ្វើ​មាត្រដ្ឋាន​បញ្ឈរ​ដោ
 
 #: ../src/dialogs/clonetiler.cpp:2166
 msgid "Whether row scaling is uniform (1), converge (<1) or diverge (>1)"
-msgstr "ថាតើ​កា​រធ្វើ​មាត្រដ្ឋាន​ជួរដេក​គឺ​ដូចគ្នា (១) ប្រសព្វគ្នា (<១) ឬញែក​ពី​​គ្នា (>១)"
+msgstr "ថាតើ​កា​រធ្វើ​មាត្រដ្ឋាន​ជួរដេក​គឺ​ដូចគ្នា (១) ប្រសព្វគ្នា (&lt;១) ឬញែក​ពី​​គ្នា (&gt;១)"
 
 #: ../src/dialogs/clonetiler.cpp:2173
 msgid "Whether column scaling is uniform (1), converge (<1) or diverge (>1)"
@@ -420,7 +420,7 @@ msgstr "<b>មូលដ្ឋាន ៖</b>"
 #: ../src/dialogs/clonetiler.cpp:2188
 #: ../src/dialogs/clonetiler.cpp:2195
 msgid "Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
-msgstr "មូលដ្ឋាន​សម្រាប់​ការ​គួច​លោការីត ៖ មិន​បាន​ប្រើ (០) ប្រសព្វ​គ្នា (<១) ឬ​ញែក​ពីគ្នា (>១)"
+msgstr "មូលដ្ឋាន​សម្រាប់​ការ​គួច​លោការីត ៖ មិន​បាន​ប្រើ (០) ប្រសព្វ​គ្នា (&lt;១) ឬ​ញែក​ពីគ្នា (&gt;១)"
 
 #: ../src/dialogs/clonetiler.cpp:2209
 msgid "Alternate the sign of scales for each row"
