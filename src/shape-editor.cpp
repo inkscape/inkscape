@@ -286,13 +286,12 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
     delta = desktop->d2w(delta);
 
     double stroke_tolerance =
-        ( !SP_OBJECT_STYLE(item)->stroke.isNone() ?
-         desktop->current_zoom() *
-         SP_OBJECT_STYLE (item)->stroke_width.computed *
-         sp_item_i2d_affine (item).expansion() * 0.5
+        (( !SP_OBJECT_STYLE(item)->stroke.isNone() ?
+           desktop->current_zoom() *
+           SP_OBJECT_STYLE (item)->stroke_width.computed * 0.5 *
+           sp_item_i2d_affine (item).expansion()
          : 0.0)
-        + prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100); //(double) SP_EVENT_CONTEXT(nc)->tolerance;
-
+         + prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100)) /sp_item_i2d_affine (item).expansion(); 
     bool close = (NR::L2 (delta) < stroke_tolerance);
 
     if (remember && close) {
