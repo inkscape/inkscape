@@ -31,8 +31,11 @@ enum FilterSlotType {
     NR_FILTER_BACKGROUNDIMAGE = -4,
     NR_FILTER_BACKGROUNDALPHA = -5,
     NR_FILTER_FILLPAINT = -6,
-    NR_FILTER_STROKEPAINT = -7
+    NR_FILTER_STROKEPAINT = -7,
+    NR_FILTER_UNNAMED_SLOT = -8
 };
+/* Unnamed slot is for NR::FilterSlot internal use. Passing it as
+ * parameter to NR::FilterSlot accessors may have unforeseen consequences. */
 
 } /* namespace NR */
 

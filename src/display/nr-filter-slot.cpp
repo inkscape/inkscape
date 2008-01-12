@@ -172,8 +172,18 @@ void FilterSlot::get_final(int slot_nr, NRPixBlock *result) {
 
 void FilterSlot::set(int slot_nr, NRPixBlock *pb)
 {
-    int index = _get_index(slot_nr);
+    /* Unnamed slot is for saving filter primitive results, when parameter
+     * 'result' is not set. Only the filter immediately after this one
+     * can access unnamed results, so we don't have to worry about overwriting
+     * previous results in filter chain. On the other hand, we may not
+     * overwrite any other image with this one, because they might be
+     * accessed later on. */
+    int index = ((slot_nr != NR_FILTER_SLOT_NOT_SET)
+                 ? _get_index(slot_nr)
+                 : _get_index(NR_FILTER_UNNAMED_SLOT));
     assert(index >= 0);
+    // Unnamed slot is only for NR::FilterSlot internal use.
+    assert(slot_nr != NR_FILTER_UNNAMED_SLOT);
     assert(slot_nr == NR_FILTER_SLOT_NOT_SET ||_slot_number[index] == slot_nr);
 
     if (slot_nr == NR_FILTER_SOURCEGRAPHIC || slot_nr == NR_FILTER_BACKGROUNDIMAGE) {
@@ -277,7 +287,8 @@ int FilterSlot::_get_index(int slot_nr)
            slot_nr == NR_FILTER_BACKGROUNDIMAGE ||
            slot_nr == NR_FILTER_BACKGROUNDALPHA ||
            slot_nr == NR_FILTER_FILLPAINT ||
-           slot_nr == NR_FILTER_STROKEPAINT);
+           slot_nr == NR_FILTER_STROKEPAINT ||
+           slot_nr == NR_FILTER_UNNAMED_SLOT);
 
     int index = -1;
     if (slot_nr == NR_FILTER_SLOT_NOT_SET) {
