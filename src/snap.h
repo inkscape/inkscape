@@ -94,7 +94,7 @@ public:
                                                     NR::scale const &s,
                                                     NR::Point const &o) const;
 
-    std::pair<NR::Coord, bool> freeSnapStretch(Inkscape::Snapper::PointType t,
+    std::pair<NR::Coord, bool> constrainedSnapStretch(Inkscape::Snapper::PointType t,
                                                std::vector<NR::Point> const &p,
                                                std::list<SPItem const *> const &it,
                                                NR::Coord const &s,

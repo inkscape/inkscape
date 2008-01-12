@@ -919,9 +919,7 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
                                                                s,
                                                                _origin_for_specpoints);
 
-        if (bb.second == false && sn.second == false) {
-            /* We didn't snap, so just keep the locked aspect ratio */
-        } else {
+        if (bb.second || sn.second) { // If we snapped to something
             /* Choose the smaller difference in scale.  Since s[X] == s[Y] we can
             ** just compare difference in s[X].
             */
@@ -944,16 +942,18 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
                                                         s,
                                                         _origin_for_specpoints);
 
-	/* Pick the snap that puts us closest to the original scale */
-        NR::Coord bd = bb.second ?
-            fabs(NR::L2(NR::Point(bb.first[NR::X], bb.first[NR::Y])) -
-                 NR::L2(NR::Point(s[NR::X], s[NR::Y])))
-            : NR_HUGE;
-        NR::Coord sd = sn.second ?
-            fabs(NR::L2(NR::Point(sn.first[NR::X], sn.first[NR::Y])) -
-                 NR::L2(NR::Point(s[NR::X], s[NR::Y])))
-            : NR_HUGE;
-        s = (bd < sd) ? bb.first : sn.first;
+        if (bb.second || sn.second) { // If we snapped to something
+            /* Pick the snap that puts us closest to the original scale */
+            NR::Coord bd = bb.second ?
+                fabs(NR::L2(NR::Point(bb.first[NR::X], bb.first[NR::Y])) -
+                     NR::L2(NR::Point(s[NR::X], s[NR::Y])))
+                : NR_HUGE;
+            NR::Coord sd = sn.second ?
+                fabs(NR::L2(NR::Point(sn.first[NR::X], sn.first[NR::Y])) -
+                     NR::L2(NR::Point(s[NR::X], s[NR::Y])))
+                : NR_HUGE;
+            s = (bd < sd) ? bb.first : sn.first;
+        }
     }
 
     /* Update the knot position */
@@ -1022,7 +1022,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
         // on ctrl, apply symmetrical scaling instead of stretching
         s[perp] = fabs(s[axis]);
 
-        std::pair<NR::Coord, bool> const bb = m.freeSnapStretch(
+        std::pair<NR::Coord, bool> const bb = m.constrainedSnapStretch(
             Snapper::SNAPPOINT_BBOX,
             _bbox_points,
             it,
@@ -1031,7 +1031,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
             axis,
             true);
 
-        std::pair<NR::Coord, bool> const sn = m.freeSnapStretch(
+        std::pair<NR::Coord, bool> const sn = m.constrainedSnapStretch(
             Snapper::SNAPPOINT_NODE,
             _snap_points,
             it,
@@ -1040,15 +1040,20 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
             axis,
             true);
 
-        NR::Coord const bd = bb.second ? fabs(bb.first - s[axis]) : NR_HUGE;
-        NR::Coord const sd = sn.second ? fabs(sn.first - s[axis]) : NR_HUGE;
-        NR::Coord const ratio = (bd < sd) ? bb.first : sn.first;
-        
-        s[axis] = fabs(ratio) * sign(s[axis]);
-        s[perp] = fabs(s[axis]);
+        if (bb.second || sn.second) { // If we snapped to something
+            /* Choose the smaller difference in scale */
+            NR::Coord const bd = bb.second ? fabs(bb.first - s[axis]) : NR_HUGE;
+            NR::Coord const sd = sn.second ? fabs(sn.first - s[axis]) : NR_HUGE;
+            NR::Coord const ratio = (bd < sd) ? bb.first : sn.first;
+            
+            if (fabs(ratio) < NR_HUGE) {
+                s[axis] = fabs(ratio) * sign(s[axis]);
+            }
+            s[perp] = fabs(s[axis]);
+        }
     } else {
 
-        std::pair<NR::Coord, bool> const bb = m.freeSnapStretch(
+        std::pair<NR::Coord, bool> const bb = m.constrainedSnapStretch(
             Snapper::SNAPPOINT_BBOX,
             _bbox_points,
             it,
@@ -1057,7 +1062,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
             axis,
             false);
 
-        std::pair<NR::Coord, bool> const sn = m.freeSnapStretch(
+        std::pair<NR::Coord, bool> const sn = m.constrainedSnapStretch(
             Snapper::SNAPPOINT_NODE,
             _snap_points,
             it,
@@ -1066,12 +1071,16 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
             axis,
             false);
 
-        /* Choose the smaller difference in scale */
-        NR::Coord const bd = bb.second ? fabs(bb.first - s[axis]) : NR_HUGE;
-        NR::Coord const sd = sn.second ? fabs(sn.first - s[axis]) : NR_HUGE;
-        s[axis] = (bd < sd) ? bb.first : sn.first;
-        
-        s[perp] = 1;
+        if (bb.second || sn.second) { // If we snapped to something
+            /* Choose the smaller difference in scale */
+            NR::Coord const bd = bb.second ? fabs(bb.first - s[axis]) : NR_HUGE;
+            NR::Coord const sd = sn.second ? fabs(sn.first - s[axis]) : NR_HUGE;
+            NR::Coord const nw = (bd < sd) ? bb.first : sn.first; // new stretch scale
+            if (fabs(nw) < NR_HUGE) {
+                s[axis] = nw;
+            }
+            s[perp] = 1;
+        }
     }
 
     pt = ( _point - _origin ) * NR::scale(s) + _origin;
