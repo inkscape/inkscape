@@ -51,6 +51,7 @@
 #include "conn-avoid-ref.h"
 #include "conditions.h"
 #include "sp-filter-reference.h"
+#include "sp-guide.h"
 
 #include "libnr/nr-matrix-div.h"
 #include "libnr/nr-matrix-fns.h"
@@ -1576,6 +1577,30 @@ sp_item_first_item_child (SPObject *obj)
     return NULL;
 }
 
+void
+sp_item_convert_to_guides(SPItem *item) {
+    NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(item, SPItem::GEOMETRIC_BBOX);
+    if (!bbox) {
+        g_print ("Cannot determine bounding box. Doing nothing.\n");
+        return;
+    }
+
+    std::list<std::pair<Geom::Point, Geom::Point> > pts;
+
+    NR::Point A((*bbox).min());
+    NR::Point C((*bbox).max());
+    NR::Point B(A[NR::X], C[NR::Y]);
+    NR::Point D(C[NR::X], A[NR::Y]);
+
+    pts.push_back(std::make_pair(A.to_2geom(), B.to_2geom()));
+    pts.push_back(std::make_pair(B.to_2geom(), C.to_2geom()));
+    pts.push_back(std::make_pair(C.to_2geom(), D.to_2geom()));
+    pts.push_back(std::make_pair(D.to_2geom(), A.to_2geom()));
+
+    sp_guide_pt_pairs_to_guides(SP_OBJECT_DOCUMENT(item), pts);
+        
+    SP_OBJECT(item)->deleteObject(true);
+}
 
 /*
   Local Variables:

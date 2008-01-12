@@ -270,6 +270,8 @@ NR::Matrix sp_item_dt2i_affine(SPItem const *item);
 int sp_item_repr_compare_position(SPItem *first, SPItem *second);
 SPItem *sp_item_first_item_child (SPObject *obj);
 
+void sp_item_convert_to_guides(SPItem *item);
+
 #endif
 
 /*

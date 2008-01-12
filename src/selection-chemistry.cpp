@@ -2442,6 +2442,20 @@ void sp_selection_to_marker(bool apply)
                       _("Objects to marker"));
 }
 
+static void sp_selection_to_guides_recursive(SPItem *item) {
+    if (SP_IS_RECT(item)) {
+        sp_rect_convert_to_guides(SP_RECT(item), false);
+    } else if (SP_IS_BOX3D(item)) {
+        box3d_convert_to_guides(SP_BOX3D(item), false);
+    } else if (SP_IS_GROUP(item)) {
+        for (GSList *i = sp_item_group_item_list (SP_GROUP(item)); i != NULL; i = i->next) {
+            sp_selection_to_guides_recursive(SP_ITEM(i->data));
+        }
+    } else {
+        sp_item_convert_to_guides(item);
+    }
+}
+
 void sp_selection_to_guides()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -2452,27 +2466,17 @@ void sp_selection_to_guides()
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     // we need to copy the list because it gets reset when objects are deleted
     GSList *items = g_slist_copy((GSList *) selection->itemList());
- 
-    bool performed = false;
-    for (GSList const *i = items; i != NULL; i = i->next) {
-        if (SP_IS_RECT(i->data)) {
-            sp_rect_convert_to_guides(SP_RECT(i->data), false);
-            performed = true;
-        } else if (SP_IS_BOX3D(i->data)) {
-            box3d_convert_to_guides(SP_BOX3D(i->data), false);
-            performed = true;
-        }
-    }
 
-    if (!performed) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to convert to guides (selection must contain at least one rectangle or 3D box)."));
+    if (!items) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to convert to guides."));
         return;
     }
-
-    if (performed) {
-        sp_document_done (doc, SP_VERB_EDIT_SELECTION_2_GUIDES,
-                          _("Objects to guides"));
+ 
+    for (GSList const *i = items; i != NULL; i = i->next) {
+        sp_selection_to_guides_recursive(SP_ITEM(i->data));
     }
+
+    sp_document_done (doc, SP_VERB_EDIT_SELECTION_2_GUIDES, _("Objects to guides"));
 }
 
 void
