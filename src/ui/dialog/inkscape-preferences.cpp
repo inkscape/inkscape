@@ -229,6 +229,12 @@ void InkscapePreferences::AddGradientCheckbox(DialogPage& p, const std::string& 
     p.add_line( false, "", *cb, "", _("Whether selected objects display gradient editing controls"));
 }
 
+void InkscapePreferences::AddConvertGuidesCheckbox(DialogPage& p, const std::string& prefs_path, bool def_value) {
+    PrefCheckButton* cb = Gtk::manage( new PrefCheckButton);
+    cb->init ( _("Conversion to guides uses edges instead of bounding box"), prefs_path, "convertguides", def_value);
+    p.add_line( false, "", *cb, "", _("Converting an object to guides places these along the object's true edges (imitating the object's shape), not along the bounding box."));
+}
+
 void StyleFromSelectionToTool(gchar const *prefs_path, StyleSwatch *swatch)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -374,9 +380,11 @@ void InkscapePreferences::initPageTools()
     //Rectangle
     this->AddPage(_page_rectangle, _("Rectangle"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_RECT);
     this->AddNewObjectsStyle(_page_rectangle, "tools.shapes.rect");
+    this->AddConvertGuidesCheckbox(_page_rectangle, "tools.shapes.rect", true);
     //3D box
     this->AddPage(_page_3dbox, _("3D Box"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_3DBOX);
     this->AddNewObjectsStyle(_page_3dbox, "tools.shapes.3dbox");
+    this->AddConvertGuidesCheckbox(_page_3dbox, "tools.shapes.3dbox", true);
     //ellipse
     this->AddPage(_page_ellipse, _("Ellipse"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_ELLIPSE);
     this->AddNewObjectsStyle(_page_ellipse, "tools.shapes.arc");

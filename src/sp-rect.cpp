@@ -29,6 +29,7 @@
 #include <glibmm/i18n.h>
 #include "xml/repr.h"
 #include "sp-guide.h"
+#include "prefs-utils.h"
 
 #define noRECT_VERBOSE
 
@@ -581,6 +582,11 @@ static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p)
 
 void
 sp_rect_convert_to_guides(SPRect *rect, bool write_undo) {
+    if (prefs_get_int_attribute("tools.shapes.rect", "convertguides", 1) == 0) {
+        sp_item_convert_to_guides(SP_ITEM(rect));
+        return;
+    }
+
     SPDocument *doc = SP_OBJECT_DOCUMENT(rect);
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 

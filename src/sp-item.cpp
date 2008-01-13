@@ -34,6 +34,8 @@
 #include "attributes.h"
 #include "document.h"
 #include "uri.h"
+#include "inkscape.h"
+#include "desktop-handles.h"
 
 #include "style.h"
 #include <glibmm/i18n.h>
@@ -1579,9 +1581,15 @@ sp_item_first_item_child (SPObject *obj)
 
 void
 sp_item_convert_to_guides(SPItem *item) {
-    NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(item, SPItem::GEOMETRIC_BBOX);
+    SPDesktop *dt = inkscape_active_desktop();
+    SPNamedView *nv = sp_desktop_namedview(dt);
+
+    gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
+    SPItem::BBoxType bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::RENDERING_BBOX;
+
+    NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(item, bbox_type);
     if (!bbox) {
-        g_print ("Cannot determine bounding box. Doing nothing.\n");
+        g_warning ("Cannot determine item's bounding box during conversion to guides.\n");
         return;
     }
 
