@@ -258,18 +258,18 @@ DocumentProperties::build_snap()
 {
     _page_snap.show();
 	//General options
-    _rcbsg.init (_("Enable snapping"),
+    _rcbsg.init (_("_Enable snapping"),
                 _("Toggle snapping on or off"),
                 "inkscape:snap-global", _wr);    
 	_rcbsnbb.init (_("_Bounding box corners"),
-                _("Snap bounding box corners to grid lines, to guides, and to other bounding boxes (Snapping of bounding boxes is only available in the selector tool)"),
+                _("Only available in the selector tool: snap bounding box corners to guides, to grids, and to other bounding boxes (but not to nodes or paths)"),
                 "inkscape:snap-bbox", _wr);
     _rcbsnn.init (_("_Nodes"),
-                _("Snap nodes to grid lines, to guides, to paths, and to other nodes"),
+                _("Snap nodes (e.g. path nodes, special points in shapes, gradient handles, text base points, transformation origins, etc.) to guides, to grids, to paths and to other nodes"),
                 "inkscape:snap-nodes", _wr);
 
     //Options for snapping to objects
-    _rcbsnop.init (_("Snap to pat_hs"),
+    _rcbsnop.init (_("Snap to path_s"),
                 _("Snap nodes to object paths"),
                 "inkscape:object-paths", _wr);
     _rcbsnon.init (_("Snap to n_odes"),
@@ -278,23 +278,23 @@ DocumentProperties::build_snap()
     _rcbsnbbn.init (_("Snap to bounding box co_rners"),
                 _("Snap bounding box corners to other bounding box corners"),
                 "inkscape:bbox-nodes", _wr);
-    _rcbsnbbp.init (_("Snap to bounding box _edges"),
+    _rcbsnbbp.init (_("Snap to bounding bo_x edges"),
                 _("Snap bounding box corners and guides to bounding box edges"),
                 "inkscape:bbox-paths", _wr);
 
-    _rsu_sno.init (_("Snap _distance"), _("Snap at specified d_istance"),
+    _rsu_sno.init (_("Snap _distance"), _("Snap only when _closer than:"),
                   _("Snapping distance, in screen pixels, for snapping to objects"),
                   _("If set, objects only snap to another object when it's within the range specified below"),
                   "objecttolerance", _wr);
 
     //Options for snapping to grids
-    _rsu_sn.init (_("Snap di_stance"), _("Snap at specified dis_tance"),
+    _rsu_sn.init (_("Snap d_istance"), _("Snap only when c_loser than:"),
                   _("Snapping distance, in screen pixels, for snapping to grid"),
                   _("If set, objects only snap to a grid line when it's within the range specified below"),
                   "gridtolerance", _wr);
 
 	//Options for snapping to guides
-    _rsu_gusn.init (_("Snap dist_ance"), _("Snap at specified distan_ce"),
+    _rsu_gusn.init (_("Snap dist_ance"), _("Snap only when close_r than:"),
                 _("Snapping distance, in screen pixels, for snapping to guides"),
                 _("If set, objects only snap to a guide when it's within the range specified below"),
                 "guidetolerance", _wr);
@@ -368,8 +368,8 @@ DocumentProperties::build_snap_dtls()
                 "inkscape:snap-intersection-line-segments", _wr);
     
     //Applies to both nodes and guides, but not to bboxes, that's why its located here
-    _rcbic.init (_("_Include the object's rotation center"),
-                _("Also snap the rotation center of an object when snapping nodes or guides"),
+    _rcbic.init (_("Rotation _center"),
+                _("Consider the rotation center of an object when snapping"),
                 "inkscape:snap-center", _wr);
     
     //Other options to locate here: e.g. visual snapping indicators on/off
@@ -377,7 +377,7 @@ DocumentProperties::build_snap_dtls()
     Gtk::Label *label_i= manage (new Gtk::Label);
     label_i->set_markup (_("<b>Snapping to intersections of</b>"));
     Gtk::Label *label_m = manage (new Gtk::Label);
-    label_m->set_markup (_("<b>Miscellaneous</b>"));
+    label_m->set_markup (_("<b>Snapping to special nodes</b>"));
 
     Gtk::Widget *const array[] =
     {
