@@ -188,7 +188,7 @@ sp_genericellipse_update_patheffect(SPShape *shape, bool write)
 
 static void sp_genericellipse_set_shape(SPShape *shape)
 {
-    double cx, cy, rx, ry, s, e;
+    double rx, ry, s, e;
     double x0, y0, x1, y1, x2, y2, x3, y3;
     double len;
     gint slice = FALSE;
@@ -201,8 +201,6 @@ static void sp_genericellipse_set_shape(SPShape *shape)
 
     sp_genericellipse_normalize(ellipse);
 
-    cx = 0.0;
-    cy = 0.0;
     rx = ellipse->rx.computed;
     ry = ellipse->ry.computed;
 
@@ -283,14 +281,53 @@ static void sp_genericellipse_set_shape(SPShape *shape)
 
 static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p)
 {
-    SPGenericEllipse const *ge = SP_GENERICELLIPSE(item);
-
+    g_assert(item != NULL);
+    g_assert(SP_IS_GENERICELLIPSE(item));
+    
+    SPGenericEllipse *ellipse = SP_GENERICELLIPSE(item);
+    sp_genericellipse_normalize(ellipse);
     NR::Matrix const i2d = sp_item_i2d_affine(item);
 
-    /* Add the centre */
-    *p = NR::Point(ge->cx.computed, ge->cy.computed) * i2d;
+    // figure out if we have a slice, whilst guarding against rounding errors
+    bool slice = false;
+    double len = fmod(ellipse->end - ellipse->start, SP_2PI);
+    if (len < 0.0) len += SP_2PI;
+    if (fabs(len) < 1e-8 || fabs(len - SP_2PI) < 1e-8) {
+        slice = false;
+        ellipse->end = ellipse->start + SP_2PI;
+    } else {
+        slice = true;
+    }
 
-    // TODO: add the ends of radii
+    double rx = ellipse->rx.computed;
+    double ry = ellipse->ry.computed;    
+    double cx = ellipse->cx.computed;
+    double cy = ellipse->cy.computed;
+    
+    // Snap to the 4 quadrant points of the ellipse, but only if the arc
+    // spans far enough to include them
+    double angle = 0;
+    for (angle = 0; angle < SP_2PI; angle += M_PI_2) {
+        if (angle >= ellipse->start && angle <= ellipse->end) {
+            *p = NR::Point(cx + cos(angle)*rx, cy + sin(angle)*ry) * i2d;
+        }
+    }
+    
+    // And if we have a slice, also snap to the endpoints and the centre point 
+    if (slice) {
+        // Add the centre, if we have a closed slice
+        if (ellipse->closed) {
+            *p = NR::Point(cx, cy) * i2d;
+        }
+        // Add the start point, if it's not coincident with a quadrant point
+        if (fmod(ellipse->start, M_PI_2) != 0.0 ) {    
+            *p = NR::Point(cx + cos(ellipse->start)*rx, cy + sin(ellipse->start)*ry) * i2d;
+        } 
+        // Add the end point, if it's not coincident with a quadrant point
+        if (fmod(ellipse->end, M_PI_2) != 0.0 ) {    
+            *p = NR::Point(cx + cos(ellipse->end)*rx, cy + sin(ellipse->end)*ry) * i2d;
+        }
+    }
 }
 
 void
