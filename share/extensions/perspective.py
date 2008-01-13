@@ -24,7 +24,7 @@ try:
     from numpy import *
     from numpy.linalg import *
 except:
-    inkex.debug("Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.")
+    inkex.debug("Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy.")
     sys.exit()
 
 uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'pc':15.0}
