@@ -543,9 +543,6 @@ static void usage()
 #ifdef WITH_INKJAR
 	    " or archives of SVGs (.sxw, .jar)"
 #endif
-	    "\n\n"
-	    "Available options:\n"
-	    "\t-t\t\tTimer for automatically changing slides in seconds.\n"
 	    "\n");
     exit(1);
 }
