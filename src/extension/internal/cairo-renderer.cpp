@@ -377,22 +377,6 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     GSList *items = NULL; //g_slist_copy ((GSList *) selection->itemList());
     items = g_slist_append(items, item);
 
-    // Generate a random value from the current time (you may create bitmap from the same object(s)
-    // multiple times, and this is done so that they don't clash)
-    GTimeVal cu;
-    g_get_current_time (&cu);
-    guint current = (int) (cu.tv_sec * 1000000 + cu.tv_usec) % 1024;
-
-    // Create the filename
-    gchar *filename = g_strdup_printf ("%s-%s-%u.png", document->name, SP_OBJECT_REPR(items->data)->attribute("id"), current);
-    // Imagemagick is known not to handle spaces in filenames, so we replace anything but letters,
-    // digits, and a few other chars, with "_"
-    filename = g_strcanon (filename, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.=+~$#@^&!?", '_');
-    // Build the complete path by adding document->base if set
-    gchar *filepath = g_build_filename (document->base?document->base:"", filename, NULL);
-
-    //g_print ("%s\n", filepath);
-
     // Remember parent and z-order of the topmost one
     gint pos = SP_OBJECT_REPR(g_slist_last(items)->data)->position();
     SPObject *parent_object = SP_OBJECT_PARENT(g_slist_last(items)->data);
@@ -444,20 +428,14 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
         shift_x = round (shift_x);
         shift_y = -round (-shift_y); // this gets correct rounding despite coordinate inversion, remove the negations when the inversion is gone
     }
-    t = (NR::Matrix)(NR::scale(1, -1) * (NR::Matrix)(NR::translate (shift_x, shift_y) * eek.inverse()));
+    t = (NR::Matrix)(NR::scale(1, -1) * (NR::Matrix)(NR::translate (shift_x, shift_y)* eek.inverse()));
+
+    //t = t * ((NR::Matrix)ctx->getCurrentState()->transform).inverse();
 
     // Do the export
-    GdkPixbuf *pb = sp_generate_internal_bitmap(document, filepath,
+    GdkPixbuf *pb = sp_generate_internal_bitmap(document, NULL,
         bbox.x0, bbox.y0, bbox.x1, bbox.y1, width, height, res, res, (guint32) 0xffffff00, items );
 
-    /*sp_export_png_file(document, filepath,
-                   bbox.x0, bbox.y0, bbox.x1, bbox.y1,
-                   width, height, res, res,
-                   (guint32) 0xffffff00,
-                   NULL, NULL,
-                   true,  //bool force_overwrite,
-                   items);
-    */
     // Run filter, if any
     /*
     if (run) {
@@ -465,14 +443,14 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
         system (run);
     }
     */
-    // Import the image back
-    //GdkPixbuf *pb = gdk_pixbuf_new_from_file (filepath, NULL);
     if (pb) {
         unsigned char *px = gdk_pixbuf_get_pixels (pb);
         unsigned int w = gdk_pixbuf_get_width(pb);
         unsigned int h = gdk_pixbuf_get_height(pb);
         unsigned int rs = gdk_pixbuf_get_rowstride(pb);
-        NRMatrix matrix = t;
+        NRMatrix matrix;
+        matrix = t;
+        //matrix = ((NR::Matrix)ctx->getCurrentState()->transform).inverse();
         //nr_matrix_set_identity(&matrix);
 
         ctx->renderImage (px, w, h, rs, &matrix, SP_OBJECT_STYLE (item));
@@ -499,27 +477,18 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
 
         // move to the saved position
         repr->setPosition(pos > 0 ? pos + 1 : 1);
-
-        // Clean up
-        Inkscape::GC::release(repr);
     */
         gdk_pixbuf_unref (pb);
-
-        // Complete undoable transaction
-        // sp_document_done (document, SP_VERB_SELECTION_CREATE_BITMAP, _("Create bitmap"));
     }
     g_slist_free (items);
-
-    g_free (filename);
-    g_free (filepath);
 }
 
 static void sp_item_invoke_render(SPItem *item, CairoRenderContext *ctx)
 {
-    /*
-    if(ctx->_state->has_filtereffect)
-        printf("\nhas filtereffects");
-    */
+    SPStyle* style = SP_OBJECT_STYLE (item);
+    if(style->filter.set != 0) {
+        return sp_asbitmap_render(item, ctx);
+    }
 
     if (SP_IS_ROOT(item)) {
         TRACE(("root\n"));
