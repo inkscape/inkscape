@@ -2,10 +2,18 @@
  * feTurbulence filter primitive renderer
  *
  * Authors:
+ *   World Wide Web Consortium <http://www.w3.org/>
  *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
  *
- * Copyright (C) 2007 authors
+ * This file has a considerable amount of code adapted from
+ *  the W3C SVG filter specs, available at:
+ *  http://www.w3.org/TR/SVG11/filters.html#feTurbulence
  *
+ * W3C original code is licensed under the terms of
+ *  the (GPL compatible) W3C® SOFTWARE NOTICE AND LICENSE:
+ *  http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+ *
+ * Copyright (C) 2007 authors
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
