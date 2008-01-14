@@ -48,6 +48,9 @@ EXTRA_DIST = \
 	TRANSLATORS \
 	inkscape.png \
 	inkscape.ico inkscape16.ico inkscape32-16.ico inkscape32.ico inkscape64.ico \
+	src/helper/sp-marshal.cpp.mingw src/helper/sp-marshal.h.mingw \
+	src/2geom/angle.h \
+	src/inkscape-manifest.xml src/inkview-manifest.xml \
 	cxxtest/COPYING	\
 	cxxtest/cxxtestgen.pl \
 	cxxtest/cxxtestgen.py \
