@@ -34,6 +34,14 @@
 #include <libnr/nr-matrix-translate-ops.h>
 #include <libnr/nr-scale-matrix-ops.h>
 
+#include "libnr/nr-matrix-rotate-ops.h"
+#include "libnr/nr-matrix-translate-ops.h"
+#include "libnr/nr-rotate-fns.h"
+#include "libnr/nr-scale-ops.h"
+#include "libnr/nr-scale-translate-ops.h"
+#include "libnr/nr-translate-matrix-ops.h"
+#include "libnr/nr-translate-scale-ops.h"
+
 #include <glib/gmem.h>
 
 #include <glibmm/i18n.h>
@@ -60,6 +68,8 @@
 #include "sp-clippath.h"
 
 #include <unit-constants.h>
+#include "helper/png-write.h"
+#include "helper/pixbuf-ops.h"
 
 #include "cairo-renderer.h"
 #include "cairo-render-context.h"
@@ -151,6 +161,7 @@ static void sp_text_render(SPItem *item, CairoRenderContext *ctx);
 static void sp_flowtext_render(SPItem *item, CairoRenderContext *ctx);
 static void sp_image_render(SPItem *item, CairoRenderContext *ctx);
 static void sp_symbol_render(SPItem *item, CairoRenderContext *ctx);
+static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx);
 
 static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
 {
@@ -165,6 +176,10 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
     NR::Matrix const i2d = sp_item_i2d_affine(item);
 
     SPStyle* style = SP_OBJECT_STYLE (item);
+    if(style->filter.set != 0) {
+        sp_asbitmap_render(item, ctx);
+        return;
+    }
     CairoRenderer *renderer = ctx->getRenderer();
 
     NRBPath bp;
@@ -338,6 +353,165 @@ static void sp_root_render(SPItem *item, CairoRenderContext *ctx)
     ctx->transform(root->c2p);
     sp_group_render(item, ctx);
     ctx->popState();
+}
+
+/**
+    this function convert the item to a raster image and include the raster into the cairo renderer
+*/
+static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
+{
+    g_warning("render as bitmap");
+
+    //the code now was copied from sp_selection_create_bitmap_copy
+
+    SPDocument *document = SP_OBJECT(item)->document;
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+
+    // Get the bounding box of the selection
+    //NR::Maybe<NR::Rect> _bbox = item->getBounds(sp_item_i2d_affine(item));
+    // NRRect bbox = item->getBounds(sp_item_i2d_affine(item));
+    NRRect bbox(item->getBounds(sp_item_i2d_affine(item)));
+
+
+    // List of the items to show; all others will be hidden
+    GSList *items = NULL; //g_slist_copy ((GSList *) selection->itemList());
+    items = g_slist_append(items, item);
+
+    // Generate a random value from the current time (you may create bitmap from the same object(s)
+    // multiple times, and this is done so that they don't clash)
+    GTimeVal cu;
+    g_get_current_time (&cu);
+    guint current = (int) (cu.tv_sec * 1000000 + cu.tv_usec) % 1024;
+
+    // Create the filename
+    gchar *filename = g_strdup_printf ("%s-%s-%u.png", document->name, SP_OBJECT_REPR(items->data)->attribute("id"), current);
+    // Imagemagick is known not to handle spaces in filenames, so we replace anything but letters,
+    // digits, and a few other chars, with "_"
+    filename = g_strcanon (filename, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.=+~$#@^&!?", '_');
+    // Build the complete path by adding document->base if set
+    gchar *filepath = g_build_filename (document->base?document->base:"", filename, NULL);
+
+    //g_print ("%s\n", filepath);
+
+    // Remember parent and z-order of the topmost one
+    gint pos = SP_OBJECT_REPR(g_slist_last(items)->data)->position();
+    SPObject *parent_object = SP_OBJECT_PARENT(g_slist_last(items)->data);
+    Inkscape::XML::Node *parent = SP_OBJECT_REPR(parent_object);
+
+    // Calculate resolution
+    double res;
+    /** @TODO reimplement the resolution stuff
+    */
+    res = PX_PER_IN;
+
+    // The width and height of the bitmap in pixels
+    unsigned width = (unsigned) floor ((bbox.x1 - bbox.x0) * res / PX_PER_IN);
+    unsigned height =(unsigned) floor ((bbox.y1 - bbox.y0) * res / PX_PER_IN);
+
+    // Find out if we have to run a filter
+    gchar const *run = NULL;
+    gchar const *filter = NULL;
+    /** @TODO reimplement the filter stuff
+    //gchar const *filter = prefs_get_string_attribute ("options.createbitmap", "filter");
+    if (filter) {
+        // filter command is given;
+        // see if we have a parameter to pass to it
+        gchar const *param1 = prefs_get_string_attribute ("options.createbitmap", "filter_param1");
+        if (param1) {
+            if (param1[strlen(param1) - 1] == '%') {
+                // if the param string ends with %, interpret it as a percentage of the image's max dimension
+                gchar p1[256];
+                g_ascii_dtostr (p1, 256, ceil (g_ascii_strtod (param1, NULL) * MAX(width, height) / 100));
+                // the first param is always the image filename, the second is param1
+                run = g_strdup_printf ("%s \"%s\" %s", filter, filepath, p1);
+            } else {
+                // otherwise pass the param1 unchanged
+                run = g_strdup_printf ("%s \"%s\" %s", filter, filepath, param1);
+            }
+        } else {
+            // run without extra parameter
+            run = g_strdup_printf ("%s \"%s\"", filter, filepath);
+        }
+    }
+    */
+    // Calculate the matrix that will be applied to the image so that it exactly overlaps the source objects
+    NR::Matrix eek = sp_item_i2d_affine (SP_ITEM(parent_object));
+    NR::Matrix t;
+
+    double shift_x = bbox.x0;
+    double shift_y = bbox.y1;
+    if (res == PX_PER_IN) { // for default 90 dpi, snap it to pixel grid
+        shift_x = round (shift_x);
+        shift_y = -round (-shift_y); // this gets correct rounding despite coordinate inversion, remove the negations when the inversion is gone
+    }
+    t = (NR::Matrix)(NR::scale(1, -1) * (NR::Matrix)(NR::translate (shift_x, shift_y) * eek.inverse()));
+
+    // Do the export
+    GdkPixbuf *pb = sp_generate_internal_bitmap(document, filepath,
+        bbox.x0, bbox.y0, bbox.x1, bbox.y1, width, height, res, res, (guint32) 0xffffff00, items );
+
+    /*sp_export_png_file(document, filepath,
+                   bbox.x0, bbox.y0, bbox.x1, bbox.y1,
+                   width, height, res, res,
+                   (guint32) 0xffffff00,
+                   NULL, NULL,
+                   true,  //bool force_overwrite,
+                   items);
+    */
+    // Run filter, if any
+    /*
+    if (run) {
+        g_print ("Running external filter: %s\n", run);
+        system (run);
+    }
+    */
+    // Import the image back
+    //GdkPixbuf *pb = gdk_pixbuf_new_from_file (filepath, NULL);
+    if (pb) {
+        unsigned char *px = gdk_pixbuf_get_pixels (pb);
+        unsigned int w = gdk_pixbuf_get_width(pb);
+        unsigned int h = gdk_pixbuf_get_height(pb);
+        unsigned int rs = gdk_pixbuf_get_rowstride(pb);
+        NRMatrix matrix = t;
+        //nr_matrix_set_identity(&matrix);
+
+        ctx->renderImage (px, w, h, rs, &matrix, SP_OBJECT_STYLE (item));
+    /*
+        // Create the repr for the image
+        Inkscape::XML::Node * repr = xml_doc->createElement("svg:image");
+        repr->setAttribute("xlink:href", filename);
+        repr->setAttribute("sodipodi:absref", filepath);
+        if (res == PX_PER_IN) { // for default 90 dpi, snap it to pixel grid
+            sp_repr_set_svg_double(repr, "width", width);
+            sp_repr_set_svg_double(repr, "height", height);
+        } else {
+            sp_repr_set_svg_double(repr, "width", (bbox.x1 - bbox.x0));
+            sp_repr_set_svg_double(repr, "height", (bbox.y1 - bbox.y0));
+        }
+
+        // Write transform
+        gchar *c=sp_svg_transform_write(t);
+        repr->setAttribute("transform", c);
+        g_free(c);
+
+        // add the new repr to the parent
+        parent->appendChild(repr);
+
+        // move to the saved position
+        repr->setPosition(pos > 0 ? pos + 1 : 1);
+
+        // Clean up
+        Inkscape::GC::release(repr);
+    */
+        gdk_pixbuf_unref (pb);
+
+        // Complete undoable transaction
+        // sp_document_done (document, SP_VERB_SELECTION_CREATE_BITMAP, _("Create bitmap"));
+    }
+    g_slist_free (items);
+
+    g_free (filename);
+    g_free (filepath);
 }
 
 static void sp_item_invoke_render(SPItem *item, CairoRenderContext *ctx)

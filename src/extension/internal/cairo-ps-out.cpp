@@ -47,8 +47,10 @@ namespace Internal {
 bool
 CairoPsOutput::check (Inkscape::Extension::Extension * module)
 {
-	return TRUE;
-}
+	if (NULL == Inkscape::Extension::db.get(SP_MODULE_KEY_PRINT_CAIRO_PS))
+		return FALSE;
+
+	return TRUE;}
 
 static bool
 ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int level, bool texttopath, bool filtertobitmap)
@@ -75,11 +77,11 @@ ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int l
     bool ret = ctx->setPsTarget(filename);
     if(ret) {
         /* Render document */
-	ret = renderer->setupDocument(ctx, doc);
-	if (ret) {
-	    renderer->renderItem(ctx, base);
-	    ret = ctx->finish();
-	}
+        ret = renderer->setupDocument(ctx, doc);
+        if (ret) {
+            renderer->renderItem(ctx, base);
+            ret = ctx->finish();
+        }
     }
     renderer->destroyContext(ctx);
 
@@ -91,6 +93,7 @@ ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int l
     delete renderer;
 
     return ret;
+
 }
 
 
@@ -110,28 +113,66 @@ CairoPsOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gc
     if (ext == NULL)
         return;
 
-    const gchar *old_level = ext->get_param_enum("PSlevel");
-    const gchar *new_level = mod->get_param_enum("PSlevel");
+    const gchar *old_level = NULL;
+    const gchar *new_level = NULL;
     int level = 1;
+    try {
+        old_level = ext->get_param_enum("PSlevel");
+        new_level = mod->get_param_enum("PSlevel");
+        if((new_level != NULL) && (g_ascii_strcasecmp("PS2", new_level) == 0))
+            level = 0;
+//        ext->set_param_enum("PSlevel", new_level);
+    }
+    catch(...) {
+        g_warning("Parameter <PSlevel> might not exists");
+    }
 
-    bool old_textToPath  = ext->get_param_bool("textToPath");
-    bool new_textToPath  = mod->get_param_bool("textToPath");
-    ext->set_param_bool("textToPath", new_textToPath);
+    bool old_textToPath  = FALSE;
+    bool new_textToPath  = FALSE;
+    try {
+        old_textToPath  = ext->get_param_bool("textToPath");
+        new_textToPath  = mod->get_param_bool("textToPath");
+        ext->set_param_bool("textToPath", new_textToPath);
+    }
+    catch(...) {
+        g_warning("Parameter <textToPath> might not exists");
+    }
 
-    bool old_blurToBitmap  = ext->get_param_bool("blurToBitmap");
-    bool new_blurToBitmap  = mod->get_param_bool("blurToBitmap");
-    ext->set_param_bool("blurToBitmap", new_blurToBitmap);
+    bool old_blurToBitmap  = FALSE;
+    bool new_blurToBitmap  = FALSE;
+    try {
+        old_blurToBitmap  = ext->get_param_bool("blurToBitmap");
+        new_blurToBitmap  = mod->get_param_bool("blurToBitmap");
+        ext->set_param_bool("blurToBitmap", new_blurToBitmap);
+    }
+    catch(...) {
+        g_warning("Parameter <blurToBitmap> might not exists");
+    }
 
-
-    if(g_ascii_strcasecmp("PS2", new_level) == 0)
-        level = 0;
 	gchar * final_name;
 	final_name = g_strdup_printf("> %s", uri);
 	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap);
 	g_free(final_name);
 
-    ext->set_param_bool("blurToBitmap", old_blurToBitmap);
-    ext->set_param_bool("textToPath", old_textToPath);
+    try {
+        ext->set_param_bool("blurToBitmap", old_blurToBitmap);
+    }
+    catch(...) {
+        g_warning("Parameter <blurToBitmap> might not exists");
+    }
+    try {
+        ext->set_param_bool("textToPath", old_textToPath);
+    }
+    catch(...) {
+        g_warning("Parameter <textToPath> might not exists");
+    }
+    try {
+//        ext->set_param_enum("PSlevel", old_level);
+    }
+    catch(...) {
+        g_warning("Parameter <PSlevel> might not exists");
+    }
+
 
 	if (!ret)
 	    throw Inkscape::Extension::Output::save_failed();
@@ -161,14 +202,14 @@ CairoPsOutput::init (void)
 	Inkscape::Extension::build_from_mem(
 		"<inkscape-extension>\n"
 			"<name>Cairo PS Output</name>\n"
-			"<id>org.inkscape.print.ps.cairo</id>\n"
+			"<id>" SP_MODULE_KEY_PRINT_CAIRO_PS "</id>\n"
 			"<param name=\"PSlevel\" gui-text=\"" N_("Restrict to PS level") "\" type=\"enum\" >\n"
 				"<item value='PS3'>" N_("PostScript 3") "</item>\n"
 #if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 5, 2))
                 "<item value='PS2'>" N_("PostScript level 2") "</item>\n"
 #endif
             "</param>\n"
-			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">true</param>\n"
+			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"blurToBitmap\" gui-text=\"" N_("Convert blur effects to bitmaps") "\" type=\"boolean\">false</param>\n"
 			"<output>\n"
 				"<extension>.ps</extension>\n"

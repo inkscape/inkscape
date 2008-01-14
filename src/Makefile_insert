@@ -285,6 +285,7 @@ libinkpre_a_SOURCES =	\
 	version.cpp version.h	\
 	zoom-context.cpp zoom-context.h
 
+
 # Force libinkpost.a to be rebuilt if we add files to libinkpost_a_SOURCES.
 libinkpost_a_DEPENDENCIES = Makefile_insert
 
@@ -324,7 +325,9 @@ libinkpost_a_SOURCES =	\
 	composite-undo-stack-observer.cpp \
 	undo-stack-observer.h \
 	unit-constants.h	\
-	uri.cpp uri.h
+	uri.cpp uri.h	\
+	helper/pixbuf-ops.cpp	\
+	helper/pixbuf-ops.h
 
 inkscape_private_libs =	\
 	libinkpre.a		\
