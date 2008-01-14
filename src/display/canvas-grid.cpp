@@ -833,16 +833,24 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
     gdouble const syg = floor ((buf->rect.y0 - ow[NR::Y]) / sw[NR::Y]) * sw[NR::Y] + ow[NR::Y];
     gint const  ylinestart = (gint) Inkscape::round((syg - ow[NR::Y]) / sw[NR::Y]);
 
+    //set correct coloring, depending preference (when zoomed out, always major coloring or minor coloring)
+    guint32 _empcolor;
+    bool preference = prefs_get_int_attribute ("options.grids", "no_emphasize_when_zoomedout", 0) == 1;
+    if( (scaled[NR::X] || scaled[NR::Y]) && preference ) {
+        _empcolor = color;
+    } else {
+        _empcolor = empcolor;
+    }
+
     if (!render_dotted) {
         gint ylinenum;
         gdouble y;
         for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[NR::Y], ylinenum++) {
             gint const y0 = (gint) Inkscape::round(y);
-
             if (!scaled[NR::Y] && (ylinenum % empspacing) != 0) {
                 grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, color);
             } else {
-                grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, empcolor);
+                grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, _empcolor);
             }
         }
 
@@ -853,7 +861,7 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
             if (!scaled[NR::X] && (xlinenum % empspacing) != 0) {
                 grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, color);
             } else {
-                grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, empcolor);
+                grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, _empcolor);
             }
         }
     } else {
@@ -869,7 +877,7 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
                 if ( (!scaled[NR::X] && (xlinenum % empspacing) == 0)
                      || (!scaled[NR::Y] && (ylinenum % empspacing) == 0) )
                 {
-                    grid_dot (buf, ix, iy, empcolor | (guint32)0x000000FF); // put alpha to max value
+                    grid_dot (buf, ix, iy, _empcolor | (guint32)0x000000FF); // put alpha to max value
                 } else {
                     grid_dot (buf, ix, iy, color | (guint32)0x000000FF);  // put alpha to max value
                 }

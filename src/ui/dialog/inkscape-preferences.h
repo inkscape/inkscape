@@ -177,6 +177,7 @@ protected:
     PrefCheckButton     _cms_proof_preserveblack;
 
     Gtk::Notebook       _grids_notebook;
+    PrefCheckButton     _grids_no_emphasize_on_zoom;
     DialogPage          _grids_xy, _grids_axonom;
     // CanvasXYGrid properties:
         PrefUnit            _grids_xy_units;

@@ -246,7 +246,8 @@ static char const preferences_skeleton[] =
 "           masks=\"65535\"/>\n" // 0x0000ffff
 "    <group id=\"svgoutput\" usenamedcolors=\"0\" numericprecision=\"8\" minimumexponent=\"-8\" inlineattrs=\"0\" indent=\"2\"/>\n"
 "    <group id=\"forkgradientvectors\" value=\"1\"/>\n"
-"    <group id=\"grids\">"
+"    <group id=\"grids\""
+"      no_emphasize_when_zoomedout=\"0\">\n"
 "      <group id=\"xy\" "
 "             units=\"px\"\n"
 "             origin_x=\"0.0\"\n"
