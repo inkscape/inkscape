@@ -116,7 +116,6 @@ void FilterTurbulence::render_area(NRPixBlock *pix, IRect &full_area, FilterUnit
 }
 
 void FilterTurbulence::update_pixbuffer(IRect &area, FilterUnits const &units) {
-//g_warning("update_pixbuf");
     int bbox_x0 = area.min()[X];
     int bbox_y0 = area.min()[Y];
     int bbox_x1 = area.max()[X];
@@ -155,7 +154,6 @@ void FilterTurbulence::update_pixbuffer(IRect &area, FilterUnits const &units) {
 }
 
 int FilterTurbulence::render(FilterSlot &slot, FilterUnits const &units) {
-//g_warning("render");
     IRect area = units.get_pixblock_filterarea_paraller();
     // TODO: could be faster - updated_area only has to be same size as area
     if (!updated || updated_area != area) update_pixbuffer(area, units);
@@ -201,7 +199,6 @@ long FilterTurbulence::TurbulenceRandom(long lSeed)
 
 void FilterTurbulence::TurbulenceInit(long lSeed)
 {
-//g_warning("init");
   double s;
   int i, j, k;
   lSeed = Turbulence_setup_seed(lSeed);
@@ -282,7 +279,6 @@ double FilterTurbulence::TurbulenceNoise2(int nColorChannel, double vec[2], Stit
 
 double FilterTurbulence::turbulence(int nColorChannel, double *point)
 {
-//g_warning("turbulence");
   StitchInfo stitch;
   StitchInfo *pStitchInfo = NULL; // Not stitching when NULL.
   // Adjust the base frequencies if necessary for stitching.
