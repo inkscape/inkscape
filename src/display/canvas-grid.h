@@ -89,7 +89,7 @@ public:
     virtual void readRepr() = 0;
     virtual void onReprAttrChanged (Inkscape::XML::Node * /*repr*/, const gchar */*key*/, const gchar */*oldval*/, const gchar */*newval*/, bool /*is_interactive*/) = 0;
 
-    virtual Gtk::Widget & getWidget() = 0;
+    Gtk::Widget * newWidget();
 
     Inkscape::XML::Node * repr;
     SPDocument *doc;
@@ -104,18 +104,15 @@ public:
 protected:
     CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc, GridType type);
 
+    virtual Gtk::Widget * newSpecificWidget() = 0;
+
     GSList * canvasitems;  // list of created canvasitems
 
     SPNamedView * namedview;
 
-    Gtk::VBox vbox;
-    Gtk::Label namelabel;
-
     Inkscape::UI::Widget::Registry _wr;
-    Inkscape::UI::Widget::RegisteredCheckButton _rcb_visible;
     bool visible;
-    Inkscape::UI::Widget::RegisteredCheckButton _rcb_enabled;
-    
+
     GridType gridtype;
 
 private:
@@ -135,8 +132,6 @@ public:
     void readRepr();
     void onReprAttrChanged (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive);
 
-    Gtk::Widget & getWidget();
-
     NR::Point origin;
     guint32 color;
     guint32 empcolor;
@@ -149,19 +144,15 @@ public:
                             variables */
     NR::Point ow;      /**< Transformed origin by the affine for the zoom */
     NR::Point sw;      /**< Transformed spacing by the affine for the zoom */
+
+protected:
+    virtual Gtk::Widget * newSpecificWidget();
+
 private:
     CanvasXYGrid(const CanvasXYGrid&);
     CanvasXYGrid& operator=(const CanvasXYGrid&);
 
     void updateWidgets();
-
-    Gtk::Table table;
-
-    Inkscape::UI::Widget::RegisteredUnitMenu    _rumg, _rums;
-    Inkscape::UI::Widget::RegisteredScalarUnit  _rsu_ox, _rsu_oy, _rsu_sx, _rsu_sy;
-    Inkscape::UI::Widget::RegisteredColorPicker _rcp_gcol, _rcp_gmcol;
-    Inkscape::UI::Widget::RegisteredSuffixedInteger _rsi;
-    Inkscape::UI::Widget::RegisteredCheckButton _rcb_dotted;
 
     bool render_dotted;
 };

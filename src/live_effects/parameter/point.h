@@ -51,9 +51,6 @@ private:
     PointParam(const PointParam&);
     PointParam& operator=(const PointParam&);
 
-    Gtk::Widget * _widget;
-    Gtk::Tooltips * _tooltips;
-    Inkscape::UI::Widget::RegisteredPoint * pointwdg;
     void on_button_click();
 
     SPKnot *knot;

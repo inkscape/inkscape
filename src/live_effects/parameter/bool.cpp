@@ -28,13 +28,10 @@ BoolParam::BoolParam( const Glib::ustring& label, const Glib::ustring& tip,
                       Effect* effect, bool default_value )
     : Parameter(label, tip, key, wr, effect), value(default_value), defvalue(default_value)
 {
-    checkwdg = NULL;
 }
 
 BoolParam::~BoolParam()
 {
-    if (checkwdg)
-        delete checkwdg;
 }
 
 void
@@ -60,23 +57,25 @@ BoolParam::param_writeSVGValue() const
 Gtk::Widget *
 BoolParam::param_newWidget(Gtk::Tooltips * tooltips)
 {
-    // WIDGET TODO: This implementation is incorrect, it should create a *new* widget for the caller, not just return an already created widget
-    g_warning("BoolParam::param_newWidget still needs recoding to work with multiple document views");
-    if (!checkwdg) {
-        checkwdg = new Inkscape::UI::Widget::RegisteredCheckButton();
-        checkwdg->init(param_label, param_tooltip, param_key, *param_wr, false, param_effect->getRepr(), param_effect->getSPDoc());
-        checkwdg->setActive(value);
-        checkwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change bool parameter"));
-    }
-    return dynamic_cast<Gtk::Widget *> (checkwdg->_button);
+    Inkscape::UI::Widget::RegisteredCheckButton * checkwdg = Gtk::manage( 
+        new Inkscape::UI::Widget::RegisteredCheckButton( param_label,
+                                                         param_tooltip,
+                                                         param_key,
+                                                         *param_wr,
+                                                         false,
+                                                         param_effect->getRepr(),
+                                                         param_effect->getSPDoc()) );
+
+    checkwdg->setActive(value);
+    checkwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change bool parameter"));
+
+    return dynamic_cast<Gtk::Widget *> (checkwdg);
 }
 
 void
 BoolParam::param_setValue(bool newvalue)
 {
     value = newvalue;
-    if (checkwdg)
-        checkwdg->setActive(newvalue);
 }
 
 } /* namespace LivePathEffect */

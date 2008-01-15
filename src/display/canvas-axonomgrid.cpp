@@ -193,7 +193,7 @@ attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int
 }
 
 CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc)
-    : CanvasGrid(nv, in_repr, in_doc, GRID_AXONOMETRIC), table(1, 1)
+    : CanvasGrid(nv, in_repr, in_doc, GRID_AXONOMETRIC)
 {
     gridunit = sp_unit_get_by_abbreviation( prefs_get_string_attribute("options.grids.axonom", "units") );
     if (!gridunit)
@@ -214,62 +214,6 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
     tan_angle[Z] = tan(angle_rad[Z]);
 
     snapper = new CanvasAxonomGridSnapper(this, namedview, 0);
-
-    // initialize widgets:
-    vbox.set_border_width(2);
-    table.set_spacings(2);
-    vbox.pack_start(table, false, false, 0);
-
-_wr.setUpdating (true);
-    Inkscape::UI::Widget::ScalarUnit * sutemp;
-    _rumg.init (_("Grid _units:"), "units", _wr, repr, doc);
-    _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"),
-                  "originx", _rumg, _wr, repr, doc);
-        sutemp = _rsu_ox.getSU();
-        sutemp->setDigits(4);
-        sutemp->setIncrements(0.1, 1.0);
-    _rsu_oy.init (_("O_rigin Y:"), _("Y coordinate of grid origin"),
-                  "originy", _rumg, _wr, repr, doc);
-        sutemp = _rsu_oy.getSU();
-        sutemp->setDigits(4);
-        sutemp->setIncrements(0.1, 1.0);
-    _rsu_sy.init (_("Spacing _Y:"), _("Base length of z-axis"),
-                  "spacingy", _rumg, _wr, repr, doc);
-        sutemp = _rsu_sy.getSU();
-        sutemp->setDigits(4);
-        sutemp->setIncrements(0.1, 1.0);
-    _rsu_ax.init (_("Angle X:"), _("Angle of x-axis"),
-                  "gridanglex", _wr, repr, doc);
-    _rsu_az.init (_("Angle Z:"), _("Angle of z-axis"),
-                  "gridanglez", _wr, repr, doc);
-    _rcp_gcol.init (_("Grid line _color:"), _("Grid line color"),
-                    _("Color of grid lines"), "color", "opacity", _wr, repr, doc);
-    _rcp_gmcol.init (_("Ma_jor grid line color:"), _("Major grid line color"),
-                     _("Color of the major (highlighted) grid lines"),
-                     "empcolor", "empopacity", _wr, repr, doc);
-    _rsi.init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr, doc);
-_wr.setUpdating (false);
-
-    Gtk::Widget const *const widget_array[] = {
-        0,                  _rcbgrid._button,
-        _rumg._label,       _rumg._sel,
-        0,                  _rsu_ox.getSU(),
-        0,                  _rsu_oy.getSU(),
-        0,                  _rsu_sy.getSU(),
-        0,                  _rsu_ax.getS(),
-        0,                  _rsu_az.getS(),
-        _rcp_gcol._label,   _rcp_gcol._cp,
-        0,                  0,
-        _rcp_gmcol._label,  _rcp_gmcol._cp,
-        _rsi._label,        &_rsi._hbox,
-    };
-
-    attach_all (table, widget_array, sizeof(widget_array));
-
-    vbox.show();
-
-    if (repr) readRepr();
-    updateWidgets();
 }
 
 CanvasAxonomGrid::~CanvasAxonomGrid ()
@@ -434,10 +378,72 @@ CanvasAxonomGrid::onReprAttrChanged(Inkscape::XML::Node */*repr*/, gchar const *
 
 
 
-Gtk::Widget &
-CanvasAxonomGrid::getWidget()
+Gtk::Widget *
+CanvasAxonomGrid::newSpecificWidget()
 {
-    return vbox;
+    Gtk::Table * table = Gtk::manage( new Gtk::Table(1,1) );
+
+    Inkscape::UI::Widget::RegisteredUnitMenu *_rumg = new Inkscape::UI::Widget::RegisteredUnitMenu();
+    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_ox = new Inkscape::UI::Widget::RegisteredScalarUnit();
+    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_oy = new Inkscape::UI::Widget::RegisteredScalarUnit();
+    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_sy = new Inkscape::UI::Widget::RegisteredScalarUnit();
+    Inkscape::UI::Widget::RegisteredScalar *_rsu_ax = new Inkscape::UI::Widget::RegisteredScalar();
+    Inkscape::UI::Widget::RegisteredScalar *_rsu_az = new Inkscape::UI::Widget::RegisteredScalar();
+    Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gcol = new Inkscape::UI::Widget::RegisteredColorPicker();
+    Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gmcol = new Inkscape::UI::Widget::RegisteredColorPicker();
+    Inkscape::UI::Widget::RegisteredSuffixedInteger *_rsi = new Inkscape::UI::Widget::RegisteredSuffixedInteger();
+
+    // initialize widgets:
+    table->set_spacings(2);
+
+_wr.setUpdating (true);
+    Inkscape::UI::Widget::ScalarUnit * sutemp = NULL;
+    _rumg->init (_("Grid _units:"), "units", _wr, repr, doc);
+    _rsu_ox->init (_("_Origin X:"), _("X coordinate of grid origin"),
+                  "originx", *_rumg, _wr, repr, doc);
+        sutemp = _rsu_ox->getSU();
+        sutemp->setDigits(4);
+        sutemp->setIncrements(0.1, 1.0);
+    _rsu_oy->init (_("O_rigin Y:"), _("Y coordinate of grid origin"),
+                  "originy", *_rumg, _wr, repr, doc);
+        sutemp = _rsu_oy->getSU();
+        sutemp->setDigits(4);
+        sutemp->setIncrements(0.1, 1.0);
+    _rsu_sy->init (_("Spacing _Y:"), _("Base length of z-axis"),
+                  "spacingy", *_rumg, _wr, repr, doc);
+        sutemp = _rsu_sy->getSU();
+        sutemp->setDigits(4);
+        sutemp->setIncrements(0.1, 1.0);
+    _rsu_ax->init (_("Angle X:"), _("Angle of x-axis"),
+                  "gridanglex", _wr, repr, doc);
+    _rsu_az->init (_("Angle Z:"), _("Angle of z-axis"),
+                  "gridanglez", _wr, repr, doc);
+    _rcp_gcol->init (_("Grid line _color:"), _("Grid line color"),
+                    _("Color of grid lines"), "color", "opacity", _wr, repr, doc);
+    _rcp_gmcol->init (_("Ma_jor grid line color:"), _("Major grid line color"),
+                     _("Color of the major (highlighted) grid lines"),
+                     "empcolor", "empopacity", _wr, repr, doc);
+    _rsi->init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr, doc);
+_wr.setUpdating (false);
+
+    Gtk::Widget const *const widget_array[] = {
+        _rumg->_label,       _rumg->_sel,
+        0,                  _rsu_ox->getSU(),
+        0,                  _rsu_oy->getSU(),
+        0,                  _rsu_sy->getSU(),
+        0,                  _rsu_ax->getS(),
+        0,                  _rsu_az->getS(),
+        _rcp_gcol->_label,   _rcp_gcol->_cp,
+        0,                  0,
+        _rcp_gmcol->_label,  _rcp_gmcol->_cp,
+        _rsi->_label,        &_rsi->_hbox,
+    };
+
+    attach_all (*table, widget_array, sizeof(widget_array));
+
+    if (repr) readRepr();
+    updateWidgets();
+    return table;
 }
 
 
@@ -447,7 +453,7 @@ CanvasAxonomGrid::getWidget()
 void
 CanvasAxonomGrid::updateWidgets()
 {
-    if (_wr.isUpdating()) return;
+/*    if (_wr.isUpdating()) return;
 
     _wr.setUpdating (true);
 
@@ -479,6 +485,7 @@ CanvasAxonomGrid::updateWidgets()
     _wr.setUpdating (false);
 
     return;
+    */
 }
 
 

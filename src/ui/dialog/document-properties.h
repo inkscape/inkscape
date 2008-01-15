@@ -5,7 +5,7 @@
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *
- * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
+ * Copyright (C) 2006-2008 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2004, 2005 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
@@ -65,26 +65,26 @@ protected:
     Gtk::VBox      _grids_vbox;
 
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcb_canb, _rcb_bord, _rcb_shad;
+    RegisteredCheckButton *_rcb_canb, *_rcb_bord, *_rcb_shad;
     RegisteredColorPicker _rcp_bg, _rcp_bord;
     RegisteredUnitMenu    _rum_deflt;
     PageSizer             _page_sizer;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcbgrid;
+    RegisteredCheckButton *_rcbgrid;
     RegisteredUnitMenu    _rums;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcb_sgui, _rcbsng;
+    RegisteredCheckButton *_rcb_sgui, *_rcbsng;
     RegisteredUnitMenu    _rum_gusn;
     RegisteredColorPicker _rcp_gui, _rcp_hgui;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcbsg, _rcbsnbb, _rcbsnn, _rcbsnop;
-    RegisteredCheckButton _rcbsnon, _rcbsnbbp, _rcbsnbbn;
+    RegisteredCheckButton *_rcbsg, *_rcbsnbb, *_rcbsnn, *_rcbsnop;
+    RegisteredCheckButton *_rcbsnon, *_rcbsnbbp, *_rcbsnbbn;
     RegisteredUnitMenu    _rumso;
     ToleranceSlider       _rsu_sno, _rsu_sn, _rsu_gusn;
     RegisteredRadioButtonPair _rrb_pix;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcbic;
-    RegisteredCheckButton _rcbsigg, _rcbsils;
+    RegisteredCheckButton *_rcbic;
+    RegisteredCheckButton *_rcbsigg, *_rcbsils;
     //---------------------------------------------------------------
     Gtk::Notebook   _grids_notebook;
     Gtk::HBox       _grids_hbox_crea;

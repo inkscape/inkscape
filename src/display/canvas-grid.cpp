@@ -157,7 +157,7 @@ grid_canvasitem_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
     };
 
 CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc, GridType type)
-    : namelabel("", Gtk::ALIGN_CENTER), visible(true), gridtype(type)
+    : visible(true), gridtype(type)
 {
     repr = in_repr;
     doc = in_doc;
@@ -167,22 +167,6 @@ CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocume
 
     namedview = nv;
     canvasitems = NULL;
-
-    Glib::ustring str("<b>");
-    str += getName();
-    str += "</b>";
-    namelabel.set_markup(str);
-    vbox.pack_start(namelabel, true, true);
-
-    _rcb_enabled.init ( _("_Enabled"),
-                        _("Determines whether to snap to this grid or not. Can be 'on' for invisible grids."),
-                         "enabled", _wr, false, repr, doc);
-    vbox.pack_start(*dynamic_cast<Gtk::Widget*>(_rcb_enabled._button), true, true);
-
-    _rcb_visible.init ( _("_Visible"),
-                        _("Determines whether the grid is displayed or not. Objects are still snapped to invisible grids."),
-                         "visible", _wr, true, repr, doc);
-    vbox.pack_start(*dynamic_cast<Gtk::Widget*>(_rcb_visible._button), true, true);
 }
 
 CanvasGrid::~CanvasGrid()
@@ -325,6 +309,34 @@ CanvasGrid::createCanvasItem(SPDesktop * desktop)
     return item;
 }
 
+Gtk::Widget *
+CanvasGrid::newWidget()
+{
+    Gtk::VBox * vbox = Gtk::manage( new Gtk::VBox() );
+    Gtk::Label * namelabel = Gtk::manage(new Gtk::Label("", Gtk::ALIGN_CENTER) );
+
+    Glib::ustring str("<b>");
+    str += getName();
+    str += "</b>";
+    namelabel->set_markup(str);
+    vbox->pack_start(*namelabel, true, true);
+
+    Inkscape::UI::Widget::RegisteredCheckButton * _rcb_visible = Gtk::manage(
+        new Inkscape::UI::Widget::RegisteredCheckButton( _("_Enabled"),
+                        _("Determines whether to snap to this grid or not. Can be 'on' for invisible grids."),
+                         "enabled", _wr, false, repr, doc) );
+    Inkscape::UI::Widget::RegisteredCheckButton * _rcb_enabled = Gtk::manage(
+        new Inkscape::UI::Widget::RegisteredCheckButton( _("_Visible"),
+                        _("Determines whether the grid is displayed or not. Objects are still snapped to invisible grids."),
+                         "visible", _wr, true, repr, doc) );
+
+    vbox->pack_start(*_rcb_enabled, true, true);
+    vbox->pack_start(*_rcb_visible, true, true);
+    vbox->pack_start(*newSpecificWidget(), true, true);
+
+    return dynamic_cast<Gtk::Widget *> (vbox);
+}
+
 void
 CanvasGrid::on_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gchar const *oldval, gchar const *newval, bool is_interactive, void *data)
 {
@@ -389,7 +401,7 @@ attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int
 }
 
 CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc)
-    : CanvasGrid(nv, in_repr, in_doc, GRID_RECTANGULAR), table(1, 1)
+    : CanvasGrid(nv, in_repr, in_doc, GRID_RECTANGULAR)
 {
     gridunit = sp_unit_get_by_abbreviation( prefs_get_string_attribute("options.grids.xy", "units") );
     if (!gridunit)
@@ -404,65 +416,6 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPD
     render_dotted = prefs_get_int_attribute ("options.grids.xy", "dotted", 0) == 1;
 
     snapper = new CanvasXYGridSnapper(this, namedview, 0);
-
-    // initialize widgets:
-    vbox.set_border_width(2);
-    table.set_spacings(2);
-    vbox.pack_start(table, false, false, 0);
-
-_wr.setUpdating (true);
-    Inkscape::UI::Widget::ScalarUnit * sutemp;
-    _rumg.init (_("Grid _units:"), "units", _wr, repr, doc);
-    _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"),
-                  "originx", _rumg, _wr, repr, doc);
-        sutemp = _rsu_ox.getSU();
-        sutemp->setDigits(4);
-        sutemp->setIncrements(0.1, 1.0);
-    _rsu_oy.init (_("O_rigin Y:"), _("Y coordinate of grid origin"),
-                  "originy", _rumg, _wr, repr, doc);
-        sutemp = _rsu_oy.getSU();
-        sutemp->setDigits(4);
-        sutemp->setIncrements(0.1, 1.0);
-    _rsu_sx.init (_("Spacing _X:"), _("Distance between vertical grid lines"),
-                  "spacingx", _rumg, _wr, repr, doc);
-        sutemp = _rsu_sx.getSU();
-        sutemp->setDigits(4);
-        sutemp->setIncrements(0.1, 1.0);
-    _rsu_sy.init (_("Spacing _Y:"), _("Distance between horizontal grid lines"),
-                  "spacingy", _rumg, _wr, repr, doc);
-        sutemp = _rsu_sy.getSU();
-        sutemp->setDigits(4);
-        sutemp->setIncrements(0.1, 1.0);
-    _rcp_gcol.init (_("Grid line _color:"), _("Grid line color"),
-                    _("Color of grid lines"), "color", "opacity", _wr, repr, doc);
-    _rcp_gmcol.init (_("Ma_jor grid line color:"), _("Major grid line color"),
-                     _("Color of the major (highlighted) grid lines"),
-                     "empcolor", "empopacity", _wr, repr, doc);
-    _rsi.init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr, doc);
-    _rcb_dotted.init ( _("_Show dots instead of lines"),
-                       _("If set, displays dots at gridpoints instead of gridlines"),
-                        "dotted", _wr, false, repr, doc);
-_wr.setUpdating (false);
-
-    Gtk::Widget const *const widget_array[] = {
-        _rumg._label,       _rumg._sel,
-        0,                  _rsu_ox.getSU(),
-        0,                  _rsu_oy.getSU(),
-        0,                  _rsu_sx.getSU(),
-        0,                  _rsu_sy.getSU(),
-        _rcp_gcol._label,   _rcp_gcol._cp,
-        0,                  0,
-        _rcp_gmcol._label,  _rcp_gmcol._cp,
-        _rsi._label,        &_rsi._hbox,
-        0,                  _rcb_dotted._button,
-    };
-
-    attach_all (table, widget_array, sizeof(widget_array));
-
-    vbox.show();
-
-    if (repr) readRepr();
-    updateWidgets();
 }
 
 CanvasXYGrid::~CanvasXYGrid ()
@@ -550,8 +503,7 @@ static gboolean sp_nv_read_opacity(gchar const *str, guint32 *color)
     @param widget Widget associated with the scalar.
 */
 static void validateScalar(double oldVal,
-                           double* pTarget,
-                           Inkscape::UI::Widget::RegisteredScalarUnit& widget)
+                           double* pTarget)
 {
     // Avoid nullness.
     if ( pTarget == NULL )
@@ -565,7 +517,6 @@ static void validateScalar(double oldVal,
 
         // Reset the scalar and associated widget to the old value.
         *pTarget = oldVal;
-        widget.setValue( *pTarget);
     } //if
 
 } //validateScalar
@@ -579,8 +530,7 @@ static void validateScalar(double oldVal,
     @param widget Widget associated with the int.
 */
 static void validateInt(gint oldVal,
-                        gint* pTarget,
-                        Inkscape::UI::Widget::RegisteredSuffixedInteger& widget)
+                        gint* pTarget)
 {
     // Avoid nullness.
     if ( pTarget == NULL )
@@ -594,7 +544,6 @@ static void validateInt(gint oldVal,
 
         // Reset the int and associated widget to the old value.
         *pTarget = oldVal;
-        widget.setValue( *pTarget);
     } //if
 
 } //validateInt
@@ -616,14 +565,14 @@ CanvasXYGrid::readRepr()
     if ( (value = repr->attribute("spacingx")) ) {
         double oldVal = spacing[NR::X];
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &spacing[NR::X], &gridunit);
-        validateScalar( oldVal, &spacing[NR::X], _rsu_sx );
+        validateScalar( oldVal, &spacing[NR::X]);
         spacing[NR::X] = sp_units_get_pixels(spacing[NR::X], *(gridunit));
 
     }
     if ( (value = repr->attribute("spacingy")) ) {
         double oldVal = spacing[NR::Y];
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &spacing[NR::Y], &gridunit);
-        validateScalar( oldVal, &spacing[NR::Y], _rsu_sy );
+        validateScalar( oldVal, &spacing[NR::Y]);
         spacing[NR::Y] = sp_units_get_pixels(spacing[NR::Y], *(gridunit));
 
     }
@@ -646,7 +595,7 @@ CanvasXYGrid::readRepr()
     if ( (value = repr->attribute("empspacing")) ) {
         gint oldVal = empspacing;
         empspacing = atoi(value);
-        validateInt( oldVal, &empspacing, _rsi );
+        validateInt( oldVal, &empspacing);
     }
 
     if ( (value = repr->attribute("dotted")) ) {
@@ -684,10 +633,79 @@ CanvasXYGrid::onReprAttrChanged(Inkscape::XML::Node */*repr*/, gchar const */*ke
 
 
 
-Gtk::Widget &
-CanvasXYGrid::getWidget()
+Gtk::Widget *
+CanvasXYGrid::newSpecificWidget()
 {
-    return vbox;
+    Gtk::Table * table = Gtk::manage( new Gtk::Table(1,1) );
+
+    Inkscape::UI::Widget::RegisteredUnitMenu *_rumg = new Inkscape::UI::Widget::RegisteredUnitMenu();
+    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_ox = new Inkscape::UI::Widget::RegisteredScalarUnit();
+    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_oy = new Inkscape::UI::Widget::RegisteredScalarUnit();
+    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_sx = new Inkscape::UI::Widget::RegisteredScalarUnit();
+    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_sy = new Inkscape::UI::Widget::RegisteredScalarUnit();
+    Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gcol = new Inkscape::UI::Widget::RegisteredColorPicker();
+    Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gmcol = new Inkscape::UI::Widget::RegisteredColorPicker();
+    Inkscape::UI::Widget::RegisteredSuffixedInteger *_rsi = new Inkscape::UI::Widget::RegisteredSuffixedInteger();
+
+    // initialize widgets:
+    table->set_spacings(2);
+
+_wr.setUpdating (true);
+    Inkscape::UI::Widget::ScalarUnit * sutemp;
+    _rumg->init (_("Grid _units:"), "units", _wr, repr, doc);
+    _rsu_ox->init (_("_Origin X:"), _("X coordinate of grid origin"),
+                  "originx", *_rumg, _wr, repr, doc);
+        sutemp = _rsu_ox->getSU();
+        sutemp->setDigits(4);
+        sutemp->setIncrements(0.1, 1.0);
+    _rsu_oy->init (_("O_rigin Y:"), _("Y coordinate of grid origin"),
+                  "originy", *_rumg, _wr, repr, doc);
+        sutemp = _rsu_oy->getSU();
+        sutemp->setDigits(4);
+        sutemp->setIncrements(0.1, 1.0);
+    _rsu_sx->init (_("Spacing _X:"), _("Distance between vertical grid lines"),
+                  "spacingx", *_rumg, _wr, repr, doc);
+        sutemp = _rsu_sx->getSU();
+        sutemp->setDigits(4);
+        sutemp->setIncrements(0.1, 1.0);
+    _rsu_sy->init (_("Spacing _Y:"), _("Distance between horizontal grid lines"),
+                  "spacingy", *_rumg, _wr, repr, doc);
+        sutemp = _rsu_sy->getSU();
+        sutemp->setDigits(4);
+        sutemp->setIncrements(0.1, 1.0);
+    _rcp_gcol->init (_("Grid line _color:"), _("Grid line color"),
+                    _("Color of grid lines"), "color", "opacity", _wr, repr, doc);
+    _rcp_gmcol->init (_("Ma_jor grid line color:"), _("Major grid line color"),
+                     _("Color of the major (highlighted) grid lines"),
+                     "empcolor", "empopacity", _wr, repr, doc);
+    _rsi->init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr, doc);
+
+    Inkscape::UI::Widget::RegisteredCheckButton * _rcb_dotted = Gtk::manage(
+                new Inkscape::UI::Widget::RegisteredCheckButton( _("_Show dots instead of lines"),
+                       _("If set, displays dots at gridpoints instead of gridlines"),
+                        "dotted", _wr, false, repr, doc) 
+                );
+_wr.setUpdating (false);
+
+    Gtk::Widget const *const widget_array[] = {
+        _rumg->_label,       _rumg->_sel,
+        0,                  _rsu_ox->getSU(),
+        0,                  _rsu_oy->getSU(),
+        0,                  _rsu_sx->getSU(),
+        0,                  _rsu_sy->getSU(),
+        _rcp_gcol->_label,   _rcp_gcol->_cp,
+        0,                  0,
+        _rcp_gmcol->_label,  _rcp_gmcol->_cp,
+        _rsi->_label,        &_rsi->_hbox,
+        0,                  _rcb_dotted,
+    };
+
+    attach_all (*table, widget_array, sizeof(widget_array));
+
+    if (repr) readRepr();
+    updateWidgets();
+
+    return table;
 }
 
 
@@ -697,6 +715,7 @@ CanvasXYGrid::getWidget()
 void
 CanvasXYGrid::updateWidgets()
 {
+/*
     if (_wr.isUpdating()) return;
 
     _wr.setUpdating (true);
@@ -731,6 +750,7 @@ CanvasXYGrid::updateWidgets()
     _wr.setUpdating (false);
 
     return;
+*/
 }
 
 

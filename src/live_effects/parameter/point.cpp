@@ -32,19 +32,11 @@ PointParam::PointParam( const Glib::ustring& label, const Glib::ustring& tip,
                         Effect* effect, Geom::Point default_value )
     : Geom::Point(default_value), Parameter(label, tip, key, wr, effect), defvalue(default_value)
 {
-    _widget = NULL;
-    pointwdg = NULL;
     knot = NULL;
-    _tooltips = NULL;
 }
 
 PointParam::~PointParam()
 {
-    if (pointwdg)
-        delete pointwdg;
-    if (_tooltips)
-        delete _tooltips;
-
     if (knot)
         g_object_unref (G_OBJECT (knot));
 }
@@ -84,39 +76,41 @@ PointParam::param_newWidget(Gtk::Tooltips * tooltips)
 {
     // WIDGET TODO: This implementation is incorrect, it should create a *new* widget for the caller, not just return an already created widget
     g_warning("PointParam::param_newWidget still needs recoding to work with multiple document views");
-    if (!_widget) {
-        pointwdg = new Inkscape::UI::Widget::RegisteredPoint();
-        pointwdg->init(param_label, param_tooltip, param_key, *param_wr, param_effect->getRepr(), param_effect->getSPDoc());
-        pointwdg->setValue( (*this)[0], (*this)[1] );
-        pointwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change point parameter"));
+    Inkscape::UI::Widget::RegisteredPoint * pointwdg = Gtk::manage(
+        new Inkscape::UI::Widget::RegisteredPoint( param_label,
+                                                   param_tooltip,
+                                                   param_key,
+                                                   *param_wr,
+                                                   param_effect->getRepr(),
+                                                   param_effect->getSPDoc() ) );
+    pointwdg->setValue( (*this)[0], (*this)[1] );
+    pointwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change point parameter"));
 
-        Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( "draw_node", Inkscape::ICON_SIZE_BUTTON) );
-        Gtk::Button * pButton = Gtk::manage(new Gtk::Button());
-        pButton->set_relief(Gtk::RELIEF_NONE);
-        pIcon->show();
-        pButton->add(*pIcon);
-        pButton->show();
-        pButton->signal_clicked().connect(sigc::mem_fun(*this, &PointParam::on_button_click));
+    Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( "draw_node", Inkscape::ICON_SIZE_BUTTON) );
+    Gtk::Button * pButton = Gtk::manage(new Gtk::Button());
+    pButton->set_relief(Gtk::RELIEF_NONE);
+    pIcon->show();
+    pButton->add(*pIcon);
+    pButton->show();
+    pButton->signal_clicked().connect(sigc::mem_fun(*this, &PointParam::on_button_click));
 #ifndef LPEPOINTPARAM_DEBUG
-        pButton->set_sensitive(false);
+    pButton->set_sensitive(false);
 #endif
 
-        _widget = Gtk::manage( new Gtk::HBox() );
-        static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
-        static_cast<Gtk::HBox*>(_widget)->pack_start(*(pointwdg->getPoint()), true, true);
-        static_cast<Gtk::HBox*>(_widget)->show_all_children();
+    Gtk::HBox * hbox = Gtk::manage( new Gtk::HBox() );
+    static_cast<Gtk::HBox*>(hbox)->pack_start(*pButton, true, true);
+    static_cast<Gtk::HBox*>(hbox)->pack_start(*pointwdg, true, true);
+    static_cast<Gtk::HBox*>(hbox)->show_all_children();
 
-        tooltips->set_tip(*pButton, _("Edit on-canvas"));
-    }
-    return dynamic_cast<Gtk::Widget *> (_widget);
+    tooltips->set_tip(*pButton, _("Edit on-canvas"));
+
+    return dynamic_cast<Gtk::Widget *> (hbox);
 }
 
 void
 PointParam::param_setValue(Geom::Point newpoint)
 {
     *dynamic_cast<Geom::Point *>( this ) = newpoint;
-    if (pointwdg)
-        pointwdg->setValue(newpoint[0], newpoint[1]);
 }
 
 void

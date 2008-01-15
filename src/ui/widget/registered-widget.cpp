@@ -107,37 +107,31 @@ RegisteredWdg::write_to_xml(const char * svgstr)
 
 //====================================================
 
-RegisteredCheckButton::RegisteredCheckButton()
-: _button(0),
-   setProgrammatically(false)
-{
-}
-
 RegisteredCheckButton::~RegisteredCheckButton()
 {
     _toggled_connection.disconnect();
-    if (_button) delete _button;
 }
 
-void
-RegisteredCheckButton::init (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+RegisteredCheckButton::RegisteredCheckButton (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+    : RegisteredWidget<Gtk::CheckButton>()
 {
     init_parent(key, wr, repr_in, doc_in);
 
-    _button = new Gtk::CheckButton;
-    _tt.set_tip (*_button, tip);
+    setProgrammatically = false;
+
+    _tt.set_tip (*this, tip);
     Gtk::Label *l = new Gtk::Label (label);
     l->set_use_underline (true);
-    _button->add (*manage (l));
-    _button->set_alignment (right? 1.0 : 0.0, 0.5);
-    _toggled_connection = _button->signal_toggled().connect (sigc::mem_fun (*this, &RegisteredCheckButton::on_toggled));
+    add (*manage (l));
+    set_alignment (right? 1.0 : 0.0, 0.5);
+    _toggled_connection = signal_toggled().connect (sigc::mem_fun (*this, &RegisteredCheckButton::on_toggled));
 }
 
 void
 RegisteredCheckButton::setActive (bool b)
 {
     setProgrammatically = true;
-    _button->set_active (b);
+    set_active (b);
     //The slave button is greyed out if the master button is unchecked
     for (std::list<Gtk::ToggleButton*>::const_iterator i = _slavebuttons.begin(); i != _slavebuttons.end(); i++) {
         (*i)->set_sensitive(b);
@@ -157,10 +151,10 @@ RegisteredCheckButton::on_toggled()
         return;
     _wr->setUpdating (true);
 
-    write_to_xml(_button->get_active() ? "true" : "false");
+    write_to_xml(get_active() ? "true" : "false");
     //The slave button is greyed out if the master button is unchecked
     for (std::list<Gtk::ToggleButton*>::const_iterator i = _slavebuttons.begin(); i != _slavebuttons.end(); i++) {
-        (*i)->set_sensitive(_button->get_active());
+        (*i)->set_sensitive(get_active());
     }
 
     _wr->setUpdating (false);
@@ -546,53 +540,31 @@ RegisteredRadioButtonPair::on_value_changed()
  * Registered POINT
  */
 
-RegisteredPoint::RegisteredPoint()
-{
-    _widget = NULL;
-}
-
 RegisteredPoint::~RegisteredPoint()
 {
-    if (_widget) 
-        delete _widget;
-
     _value_x_changed_connection.disconnect();
     _value_y_changed_connection.disconnect();
 }
 
-void
-RegisteredPoint::init ( const Glib::ustring& label, const Glib::ustring& tip, 
+RegisteredPoint::RegisteredPoint ( const Glib::ustring& label, const Glib::ustring& tip, 
                         const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, 
                         SPDocument* doc_in )
+    : RegisteredWidget<Point> (label, tip)
 {
     init_parent(key, wr, repr_in, doc_in);
 
-    _widget = new Point (label, tip);
-    _widget->setRange (-1e6, 1e6);
-    _widget->setDigits (2);
-    _widget->setIncrements(0.1, 1.0);
-    _value_x_changed_connection = _widget->signal_x_value_changed().connect (sigc::mem_fun (*this, &RegisteredPoint::on_value_changed));
-    _value_y_changed_connection = _widget->signal_y_value_changed().connect (sigc::mem_fun (*this, &RegisteredPoint::on_value_changed));
-}
-
-Point*
-RegisteredPoint::getPoint()
-{
-    return _widget;
-}
-
-void
-RegisteredPoint::setValue (double xval, double yval)
-{
-    if (_widget)
-        _widget->setValue(xval, yval);
+    setRange (-1e6, 1e6);
+    setDigits (2);
+    setIncrements(0.1, 1.0);
+    _value_x_changed_connection = signal_x_value_changed().connect (sigc::mem_fun (*this, &RegisteredPoint::on_value_changed));
+    _value_y_changed_connection = signal_y_value_changed().connect (sigc::mem_fun (*this, &RegisteredPoint::on_value_changed));
 }
 
 void
 RegisteredPoint::on_value_changed()
 {
-    if (_widget->setProgrammatically()) {
-        _widget->clearProgrammatically();
+    if (setProgrammatically()) {
+        clearProgrammatically();
         return;
     }
 
@@ -602,7 +574,7 @@ RegisteredPoint::on_value_changed()
     _wr->setUpdating (true);
 
     Inkscape::SVGOStringStream os;
-    os << _widget->getXValue() << "," << _widget->getYValue();
+    os << getXValue() << "," << getYValue();
 
     write_to_xml(os.str().c_str());
 

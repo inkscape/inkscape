@@ -41,8 +41,6 @@ public:
     
     void readRepr();
     void onReprAttrChanged (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive);
-    
-    Gtk::Widget & getWidget();
 
     SPUnit const* gridunit;
 
@@ -63,22 +61,15 @@ public:
     double spacing_ylines;
                           
     NR::Point sw;          /**< the scaling factors of the affine transform */
-    
-    
+
+protected:
+    virtual Gtk::Widget * newSpecificWidget();
+
 private:
     CanvasAxonomGrid(const CanvasAxonomGrid&);
     CanvasAxonomGrid& operator=(const CanvasAxonomGrid&);
     
     void updateWidgets();
-
-    Gtk::Table table;
-    
-    Inkscape::UI::Widget::RegisteredCheckButton _rcbgrid, _rcbsnbb, _rcbsnnod;
-    Inkscape::UI::Widget::RegisteredUnitMenu    _rumg, _rums;
-    Inkscape::UI::Widget::RegisteredScalarUnit  _rsu_ox, _rsu_oy, _rsu_sy;
-    Inkscape::UI::Widget::RegisteredScalar      _rsu_ax, _rsu_az;
-    Inkscape::UI::Widget::RegisteredColorPicker _rcp_gcol, _rcp_gmcol;
-    Inkscape::UI::Widget::RegisteredSuffixedInteger _rsi;
 };
 
 

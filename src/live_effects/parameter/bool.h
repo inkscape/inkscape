@@ -45,8 +45,6 @@ private:
     BoolParam(const BoolParam&);
     BoolParam& operator=(const BoolParam&);
 
-    Inkscape::UI::Widget::RegisteredCheckButton * checkwdg;
-
     bool value;
     bool defvalue;
 };

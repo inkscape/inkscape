@@ -3,8 +3,9 @@
  *
  * Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
+ *   Johan Engelen <j.b.c.engelen@utwente.nl>
  *
- * Copyright (C) 2005 Authors
+ * Copyright (C) 2005-2008 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
@@ -15,10 +16,12 @@
 #include <gtkmm/box.h>
 #include <gtkmm/adjustment.h>
 #include <gtkmm/tooltips.h>
+#include <gtkmm/togglebutton.h>
 
 #include "xml/node.h"
 #include "registry.h"
 
+#include "ui/widget/point.h"
 #include "ui/widget/random.h"
 
 class SPUnit;
@@ -28,7 +31,6 @@ namespace Gtk {
     class HScale;
     class RadioButton;
     class SpinButton;
-    class ToggleButton;
 }
 
 namespace Inkscape {
@@ -40,7 +42,6 @@ class Registry;
 class Scalar;
 class ScalarUnit;
 class UnitMenu;
-class Point;
 
 template <class W>
 class RegisteredWidget : public W {
@@ -137,24 +138,23 @@ protected:
 
 //#######################################################
 
-class RegisteredCheckButton : public RegisteredWdg {
+class RegisteredCheckButton : public RegisteredWidget<Gtk::CheckButton> {
 public:
-    RegisteredCheckButton();
-    ~RegisteredCheckButton();
-    void init (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right=true, Inkscape::XML::Node* repr_in=NULL, SPDocument *doc_in=NULL);
+    virtual ~RegisteredCheckButton();
+    RegisteredCheckButton (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right=true, Inkscape::XML::Node* repr_in=NULL, SPDocument *doc_in=NULL);
+
     void setActive (bool);
 
-    Gtk::ToggleButton *_button;
     std::list<Gtk::ToggleButton*> _slavebuttons;
 
     // a slave button is only sensitive when the master button is active
     // i.e. a slave button is greyed-out when the master button is not checked
 
     void setSlaveButton(std::list<Gtk::ToggleButton*> btns) {
-    	_slavebuttons = btns;
+        _slavebuttons = btns;
     }
 
-    bool setProgrammatically; // true if the value was set by setValue, not changed by the user;
+    bool setProgrammatically; // true if the value was set by setActive, not changed by the user;
                                 // if a callback checks it, it must reset it back to false
 
 
@@ -336,27 +336,17 @@ protected:
     void on_value_changed();
 };
 
-class RegisteredPoint : public RegisteredWdg {
+class RegisteredPoint : public RegisteredWidget<Point> {
 public:
-    RegisteredPoint();
-    ~RegisteredPoint();
-    void init (const Glib::ustring& label, 
-               const Glib::ustring& tip, 
-               const Glib::ustring& key, 
-               Registry& wr,
-               Inkscape::XML::Node* repr_in,
-               SPDocument *doc_in);
-    inline void init ( const Glib::ustring& label, 
-                       const Glib::ustring& tip, 
-                       const Glib::ustring& key, 
-                       Registry& wr)
-        { init(label, tip, key, wr, NULL, NULL); };
-
-    Point* getPoint();
-    void setValue (double xval, double yval);
+    virtual ~RegisteredPoint();
+    RegisteredPoint ( const Glib::ustring& label, 
+                      const Glib::ustring& tip, 
+                      const Glib::ustring& key, 
+                      Registry& wr,
+                      Inkscape::XML::Node* repr_in = NULL,
+                      SPDocument *doc_in = NULL );
 
 protected:
-    Point   *_widget;
     sigc::connection  _value_x_changed_connection;
     sigc::connection  _value_y_changed_connection;
     void on_value_changed();

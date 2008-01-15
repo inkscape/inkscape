@@ -9,7 +9,7 @@
  *   Jon Phillips <jon@rejon.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de> (Gtkmm)
  *
- * Copyright (C) 2006-2007 Johan Engelen  <johan@shouraizou.nl>
+ * Copyright (C) 2006-2008 Johan Engelen  <johan@shouraizou.nl>
  * Copyright (C) 2000 - 2005 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information
@@ -185,14 +185,24 @@ DocumentProperties::build_page()
 {
     _page_page.show();
 
-    _rcp_bg.init (_("Back_ground:"), _("Background color"), _("Color and transparency of the page background (also used for bitmap export)"),
+    _rcp_bg.init(
+                   _("Back_ground:"),
+                   _("Background color"), 
+                   _("Color and transparency of the page background (also used for bitmap export)"),
                    "pagecolor", "inkscape:pageopacity", _wr);
-    _rcb_canb.init (_("Show page _border"), _("If set, rectangular page border is shown"), "showborder", _wr, false);
-    _rcb_bord.init (_("Border on _top of drawing"), _("If set, border is always on top of the drawing"), "borderlayer", _wr, false);
+    _rcb_canb = Gtk::manage( new RegisteredCheckButton(
+                   _("Show page _border"), 
+                   _("If set, rectangular page border is shown"), "showborder", _wr, false) );
+    _rcb_bord = Gtk::manage( new RegisteredCheckButton(
+                   _("Border on _top of drawing"),
+                   _("If set, border is always on top of the drawing"), "borderlayer", _wr, false) );
     _rcp_bord.init (_("Border _color:"), _("Page border color"),
                     _("Color of the page border"),
                     "bordercolor", "borderopacity", _wr);
-    _rcb_shad.init (_("_Show border shadow"), _("If set, page border shows a shadow on its right and lower side"), "inkscape:showpageshadow", _wr, false);
+    _rcb_shad = Gtk::manage( new RegisteredCheckButton(
+                    _("_Show border shadow"),
+                    _("If set, page border shows a shadow on its right and lower side"),
+                    "inkscape:showpageshadow", _wr, false) );
     _rum_deflt.init (_("Default _units:"), "inkscape:document-units", _wr);
 
     Gtk::Label* label_gen = manage (new Gtk::Label);
@@ -213,9 +223,9 @@ DocumentProperties::build_page()
         0,                 &_page_sizer,
         0,                 0,
         label_bor,         0,
-        0,                 _rcb_canb._button,
-        0,                 _rcb_bord._button,
-        0,                 _rcb_shad._button,
+        0,                 _rcb_canb,
+        0,                 _rcb_bord,
+        0,                 _rcb_shad,
         _rcp_bord._label,  _rcp_bord._cp,
     };
 
@@ -227,27 +237,29 @@ DocumentProperties::build_guides()
 {
     _page_guides.show();
 
-    _rcb_sgui.init (_("Show _guides"), _("Show or hide guides"), "showguides", _wr);
+    _rcb_sgui = Gtk::manage( new RegisteredCheckButton(
+                _("Show _guides"), _("Show or hide guides"), "showguides", _wr) );
     _rcp_gui.init (_("Guide co_lor:"), _("Guideline color"),
                    _("Color of guidelines"), "guidecolor", "guideopacity", _wr);
     _rcp_hgui.init (_("_Highlight color:"), _("Highlighted guideline color"),
                     _("Color of a guideline when it is under mouse"),
                     "guidehicolor", "guidehiopacity", _wr);
-                    
-    _rcbsng.init (_("_Snap guides while dragging"),
+
+    _rcbsng = Gtk::manage( new RegisteredCheckButton(
+                  _("_Snap guides while dragging"),
                   _("While dragging a guide, snap to object nodes or bounding box corners ('Snap to nodes' or 'snap to bounding box corners' must be enabled in the 'Snap' tab; only a small part of the guide near the cursor will snap)"),
-                  "inkscape:snap-guide", _wr);
-                    
+                  "inkscape:snap-guide", _wr) );
+
     Gtk::Label *label_gui = manage (new Gtk::Label);
     label_gui->set_markup (_("<b>Guides</b>"));
 
     Gtk::Widget *const widget_array[] =
     {
         label_gui,       0,
-        0,               _rcb_sgui._button,
+        0,               _rcb_sgui,
         _rcp_gui._label, _rcp_gui._cp,
         _rcp_hgui._label, _rcp_hgui._cp,
-        0,                  _rcbsng._button,        
+        0,                  _rcbsng,
     };
 
     attach_all(_page_guides.table(), widget_array, G_N_ELEMENTS(widget_array));
@@ -257,30 +269,30 @@ void
 DocumentProperties::build_snap()
 {
     _page_snap.show();
-	//General options
-    _rcbsg.init (_("_Enable snapping"),
+    //General options
+    _rcbsg = Gtk::manage( new RegisteredCheckButton( _("_Enable snapping"),
                 _("Toggle snapping on or off"),
-                "inkscape:snap-global", _wr);    
-	_rcbsnbb.init (_("_Bounding box corners"),
+                "inkscape:snap-global", _wr) );
+    _rcbsnbb = Gtk::manage( new RegisteredCheckButton( _("_Bounding box corners"),
                 _("Only available in the selector tool: snap bounding box corners to guides, to grids, and to other bounding boxes (but not to nodes or paths)"),
-                "inkscape:snap-bbox", _wr);
-    _rcbsnn.init (_("_Nodes"),
+                "inkscape:snap-bbox", _wr) );
+    _rcbsnn = Gtk::manage( new RegisteredCheckButton( _("_Nodes"),
                 _("Snap nodes (e.g. path nodes, special points in shapes, gradient handles, text base points, transformation origins, etc.) to guides, to grids, to paths and to other nodes"),
-                "inkscape:snap-nodes", _wr);
+                "inkscape:snap-nodes", _wr) );
 
     //Options for snapping to objects
-    _rcbsnop.init (_("Snap to path_s"),
+    _rcbsnop = Gtk::manage( new RegisteredCheckButton( _("Snap to path_s"),
                 _("Snap nodes to object paths"),
-                "inkscape:object-paths", _wr);
-    _rcbsnon.init (_("Snap to n_odes"),
+                "inkscape:object-paths", _wr) );
+    _rcbsnon = Gtk::manage( new RegisteredCheckButton( _("Snap to n_odes"),
                 _("Snap nodes and guides to object nodes"),
-                "inkscape:object-nodes", _wr);
-    _rcbsnbbn.init (_("Snap to bounding box co_rners"),
+                "inkscape:object-nodes", _wr) );
+    _rcbsnbbn = Gtk::manage( new RegisteredCheckButton( _("Snap to bounding box co_rners"),
                 _("Snap bounding box corners to other bounding box corners"),
-                "inkscape:bbox-nodes", _wr);
-    _rcbsnbbp.init (_("Snap to bounding bo_x edges"),
+                "inkscape:bbox-nodes", _wr) );
+    _rcbsnbbp = Gtk::manage( new RegisteredCheckButton( _("Snap to bounding bo_x edges"),
                 _("Snap bounding box corners and guides to bounding box edges"),
-                "inkscape:bbox-paths", _wr);
+                "inkscape:bbox-paths", _wr) );
 
     _rsu_sno.init (_("Snap _distance"), _("Snap only when _closer than:"),
                   _("Snapping distance, in screen pixels, for snapping to objects"),
@@ -302,20 +314,20 @@ DocumentProperties::build_snap()
     //Other options to locate here: e.g. visual snapping indicators on/off
 
     std::list<Gtk::ToggleButton*> slaves;
-    slaves.push_back(_rcbsnop._button);
-    slaves.push_back(_rcbsnon._button);
-    _rcbsnn.setSlaveButton(slaves);
+    slaves.push_back(_rcbsnop);
+    slaves.push_back(_rcbsnon);
+    _rcbsnn->setSlaveButton(slaves);
 
     slaves.clear();
-    slaves.push_back(_rcbsnbbp._button);
-    slaves.push_back(_rcbsnbbn._button);
-    _rcbsnbb.setSlaveButton(slaves);
+    slaves.push_back(_rcbsnbbp);
+    slaves.push_back(_rcbsnbbn);
+    _rcbsnbb->setSlaveButton(slaves);
     
     slaves.clear();
-    slaves.push_back(_rcbsnn._button);
-    slaves.push_back(_rcbsnbb._button);
+    slaves.push_back(_rcbsnn);
+    slaves.push_back(_rcbsnbb);
     
-    _rcbsg.setSlaveButton(slaves);
+    _rcbsg->setSlaveButton(slaves);
 
     Gtk::Label *label_g = manage (new Gtk::Label);
     label_g->set_markup (_("<b>Snapping</b>"));
@@ -331,17 +343,17 @@ DocumentProperties::build_snap()
     Gtk::Widget *const array[] =
     {
         label_g,            0,
-        0,                  _rcbsg._button,
+        0,                  _rcbsg,
         0,                  0,
         label_w,            0,
-        0,                  _rcbsnn._button,
-        0,                  _rcbsnbb._button,
+        0,                  _rcbsnn,
+        0,                  _rcbsnbb,
         0, 					0,
         label_o,            0,
-        0, 					_rcbsnop._button,
-        0, 					_rcbsnon._button,
-        0,                  _rcbsnbbp._button,
-        0,                  _rcbsnbbn._button,
+        0, 					_rcbsnop,
+        0, 					_rcbsnon,
+        0,                  _rcbsnbbp,
+        0,                  _rcbsnbbn,
         0,                  _rsu_sno._vbox,
         0, 					0,
         label_gr,           0,
@@ -358,19 +370,19 @@ void
 DocumentProperties::build_snap_dtls()
 {
     _page_snap_dtls.show();
-	
-	_rcbsigg.init (_("_Grid with guides"),
+
+    _rcbsigg = Gtk::manage( new RegisteredCheckButton( _("_Grid with guides"),
                 _("Snap to grid-guide intersections"),
-                "inkscape:snap-intersection-grid-guide", _wr);
-	
-	_rcbsils.init (_("_Line segments"),
+                "inkscape:snap-intersection-grid-guide", _wr) );
+
+    _rcbsils = Gtk::manage( new RegisteredCheckButton( _("_Line segments"),
                 _("Snap to intersections of line segments ('snap to paths' must be enabled, see the previous tab)"),
-                "inkscape:snap-intersection-line-segments", _wr);
+                "inkscape:snap-intersection-line-segments", _wr) );
     
     //Applies to both nodes and guides, but not to bboxes, that's why its located here
-    _rcbic.init (_("Rotation _center"),
+    _rcbic = Gtk::manage( new RegisteredCheckButton( _("Rotation _center"),
                 _("Consider the rotation center of an object when snapping"),
-                "inkscape:snap-center", _wr);
+                "inkscape:snap-center", _wr) );
     
     //Other options to locate here: e.g. visual snapping indicators on/off
 
@@ -382,11 +394,11 @@ DocumentProperties::build_snap_dtls()
     Gtk::Widget *const array[] =
     {
         label_i,            0,
-        0,                  _rcbsigg._button,
-        0,                  _rcbsils._button,
+        0,                  _rcbsigg,
+        0,                  _rcbsils,
         0,                  0,
         label_m,            0,
-        0,                  _rcbic._button,
+        0,                  _rcbic,
     };
 
     attach_all(_page_snap_dtls.table(), array, G_N_ELEMENTS(array));
@@ -402,8 +414,8 @@ DocumentProperties::update_gridspage()
     SPNamedView *nv = sp_desktop_namedview(dt);
 
     //remove all tabs
-    while (_grids_notebook.get_current_page() != -1) {
-        _grids_notebook.remove_page(-1);
+    while (_grids_notebook.get_n_pages() != 0) {
+        _grids_notebook.remove_page(-1); // this also deletes the page.
     }
 
     //add tabs
@@ -423,7 +435,7 @@ DocumentProperties::update_gridspage()
             default:
                 break;
         }
-        _grids_notebook.append_page(grid->getWidget(), _createPageTabLabel(name, icon));
+        _grids_notebook.append_page(*grid->newWidget(), _createPageTabLabel(name, icon));
         grids_present = true;
     }
     _grids_notebook.show_all();
@@ -488,10 +500,10 @@ DocumentProperties::update()
 
     //-----------------------------------------------------------page page
     _rcp_bg.setRgba32 (nv->pagecolor);
-    _rcb_canb.setActive (nv->showborder);
-    _rcb_bord.setActive (nv->borderlayer == SP_BORDER_LAYER_TOP);
+    _rcb_canb->setActive (nv->showborder);
+    _rcb_bord->setActive (nv->borderlayer == SP_BORDER_LAYER_TOP);
     _rcp_bord.setRgba32 (nv->bordercolor);
-    _rcb_shad.setActive (nv->showpageshadow);
+    _rcb_shad->setActive (nv->showpageshadow);
 
     if (nv->doc_units)
         _rum_deflt.setUnit (nv->doc_units);
@@ -501,29 +513,29 @@ DocumentProperties::update()
     _page_sizer.setDim (doc_w_px, doc_h_px);
 
     //-----------------------------------------------------------guide
-    _rcb_sgui.setActive (nv->showguides);
+    _rcb_sgui->setActive (nv->showguides);
     _rcp_gui.setRgba32 (nv->guidecolor);
     _rcp_hgui.setRgba32 (nv->guidehicolor);
 
     //-----------------------------------------------------------snap
 
-    _rcbsnbb.setActive (nv->snap_manager.getSnapModeBBox());
-    _rcbsnn.setActive (nv->snap_manager.getSnapModeNode());
-    _rcbsng.setActive (nv->snap_manager.getSnapModeGuide());
-    _rcbic.setActive (nv->snap_manager.getIncludeItemCenter());
-    _rcbsigg.setActive (nv->snap_manager.getSnapIntersectionGG());
-    _rcbsils.setActive (nv->snap_manager.getSnapIntersectionLS());    
-    _rcbsnop.setActive(nv->snap_manager.object.getSnapToItemPath());
-    _rcbsnon.setActive(nv->snap_manager.object.getSnapToItemNode());
-    _rcbsnbbp.setActive(nv->snap_manager.object.getSnapToBBoxPath());
-    _rcbsnbbn.setActive(nv->snap_manager.object.getSnapToBBoxNode());
+    _rcbsnbb->setActive (nv->snap_manager.getSnapModeBBox());
+    _rcbsnn->setActive (nv->snap_manager.getSnapModeNode());
+    _rcbsng->setActive (nv->snap_manager.getSnapModeGuide());
+    _rcbic->setActive (nv->snap_manager.getIncludeItemCenter());
+    _rcbsigg->setActive (nv->snap_manager.getSnapIntersectionGG());
+    _rcbsils->setActive (nv->snap_manager.getSnapIntersectionLS());    
+    _rcbsnop->setActive(nv->snap_manager.object.getSnapToItemPath());
+    _rcbsnon->setActive(nv->snap_manager.object.getSnapToItemNode());
+    _rcbsnbbp->setActive(nv->snap_manager.object.getSnapToBBoxPath());
+    _rcbsnbbn->setActive(nv->snap_manager.object.getSnapToBBoxNode());
     _rsu_sno.setValue (nv->objecttolerance);
 
     _rsu_sn.setValue (nv->gridtolerance);
 
     _rsu_gusn.setValue (nv->guidetolerance);
     
-    _rcbsg.setActive (nv->snap_manager.getSnapEnabledGlobally());    
+    _rcbsg->setActive (nv->snap_manager.getSnapEnabledGlobally());    
 
     //-----------------------------------------------------------grids page
 
