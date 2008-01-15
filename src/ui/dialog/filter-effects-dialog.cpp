@@ -1243,7 +1243,7 @@ int FilterEffectsDialog::PrimitiveList::init_text()
 
     int maxfont = 0;
     for(int i = 0; i < FPInputConverter.end; ++i) {
-        _vertical_layout->set_text(FPInputConverter.get_label((FilterPrimitiveInput)i));
+        _vertical_layout->set_text(_(FPInputConverter.get_label((FilterPrimitiveInput)i).c_str()));
         int fontw, fonth;
         _vertical_layout->get_pixel_size(fontw, fonth);
         if(fonth > maxfont)
@@ -1354,7 +1354,7 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
 
         text_start_x = rct.get_x() + rct.get_width() - _connection_cell.get_text_width() * (FPInputConverter.end + 1) + 1;
         for(int i = 0; i < FPInputConverter.end; ++i) {
-            _vertical_layout->set_text(FPInputConverter.get_label((FilterPrimitiveInput)i));
+            _vertical_layout->set_text(_(FPInputConverter.get_label((FilterPrimitiveInput)i).c_str()));
             const int x = text_start_x + _connection_cell.get_text_width() * (i + 1);
             get_bin_window()->draw_rectangle(get_style()->get_bg_gc(Gtk::STATE_NORMAL), true, x, vis_y, _connection_cell.get_text_width(), vis.get_height());
             get_bin_window()->draw_layout(get_style()->get_text_gc(Gtk::STATE_NORMAL), x + 1, vis_y, _vertical_layout);
