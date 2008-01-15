@@ -66,6 +66,15 @@
 #include "debug/timestamp.h"
 #include "event.h"
 
+bool SPDocument::isModified() const {
+    return rroot ? rroot->attribute("sodipodi:modified") != NULL : false;
+}
+void SPDocument::setModified(bool modified) {
+    if (rroot) {
+        rroot->setAttribute("sodipodi:modified", "true");
+    }
+}
+
 
 /*
  * Undo & redo
@@ -199,9 +208,7 @@ sp_document_maybe_done (SPDocument *doc, const gchar *key, const unsigned int ev
 	doc->actionkey = key;
 
 	doc->virgin = FALSE;
-	if (!doc->rroot->attribute("sodipodi:modified")) {
-		doc->rroot->setAttribute("sodipodi:modified", "true");
-	}
+        doc->setModified();
 
 	sp_repr_begin_transaction (doc->rdoc);
 
@@ -267,7 +274,7 @@ sp_document_undo (SPDocument *doc)
 		sp_repr_undo_log (log->event);
 		doc->priv->redo = g_slist_prepend (doc->priv->redo, log);
 
-		doc->rroot->setAttribute("sodipodi:modified", "true");
+                doc->setModified();
                 doc->priv->undoStackObservers.notifyUndoEvent(log);
 
 		ret = TRUE;
@@ -313,7 +320,7 @@ sp_document_redo (SPDocument *doc)
 		sp_repr_replay_log (log->event);
 		doc->priv->undo = g_slist_prepend (doc->priv->undo, log);
 
-		doc->rroot->setAttribute("sodipodi:modified", "true");
+                doc->setModified();
 		doc->priv->undoStackObservers.notifyRedoEvent(log);
 
 		ret = TRUE;

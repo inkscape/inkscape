@@ -1203,8 +1203,7 @@ EditWidget::shutdown()
         return false;
 
     SPDocument *doc = _desktop->doc();
-    if (sp_document_repr_root(doc)->attribute("sodipodi:modified") != NULL)
-    {
+    if (doc->isModified()) {
         gchar *markup;
         /// \todo FIXME !!! obviously this will have problems if the document
         /// name contains markup characters

@@ -431,7 +431,7 @@ inkscape_crash_handler (int /*signum*/)
         Inkscape::XML::Node *repr;
         doc = (SPDocument *) l->data;
         repr = sp_document_repr_root (doc);
-        if (repr->attribute("sodipodi:modified")) {
+        if (doc->isModified()) {
             const gchar *docname, *d0, *d;
             gchar n[64], c[1024];
             FILE *file;

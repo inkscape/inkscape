@@ -807,7 +807,7 @@ SPDesktopWidget::shutdown()
 
     if (inkscape_is_sole_desktop_for_document(*desktop)) {
         SPDocument *doc = desktop->doc();
-        if (sp_document_repr_root(doc)->attribute("sodipodi:modified") != NULL) {
+        if (doc->isModified()) {
             GtkWidget *dialog;
 
             /** \todo

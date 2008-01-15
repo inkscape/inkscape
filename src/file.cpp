@@ -249,7 +249,7 @@ sp_file_revert_dialog()
     }
 
     bool do_revert = true;
-    if (repr->attribute("sodipodi:modified") != NULL) {
+    if (doc->isModified()) {
         gchar *text = g_strdup_printf(_("Changes will be lost!  Are you sure you want to reload document %s?"), uri);
 
         bool response = desktop->warnDialog (text);
@@ -771,16 +771,14 @@ sp_file_save_document(Gtk::Window &parentWindow, SPDocument *doc)
 {
     bool success = true;
 
-    Inkscape::XML::Node *repr = sp_document_repr_root(doc);
-
-    gchar const *fn = repr->attribute("sodipodi:modified");
-    if (fn != NULL) {
+    if (doc->isModified()) {
+        Inkscape::XML::Node *repr = sp_document_repr_root(doc);
         if ( doc->uri == NULL
             || repr->attribute("inkscape:output_extension") == NULL )
         {
             return sp_file_save_dialog(parentWindow, doc, FALSE);
         } else {
-            fn = g_strdup(doc->uri);
+            gchar const *fn = g_strdup(doc->uri);
             gchar const *ext = repr->attribute("inkscape:output_extension");
             success = file_save(parentWindow, doc, fn, Inkscape::Extension::db.get(ext), FALSE, TRUE);
             g_free((void *) fn);
@@ -1187,13 +1185,11 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     static bool gotSuccess = false;
 
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);
-    // Verify whether the document is saved, so save this as temporary
 
-    char *str = (char *) repr->attribute("sodipodi:modified");
-    if ((!doc->uri) && (!str))
+    if (!doc->uri && !doc->isModified())
         return false;
 
-   //  Get the default extension name
+    //  Get the default extension name
     Glib::ustring default_extension = "org.inkscape.output.svg.inkscape";
     char formatBuf[256];
 

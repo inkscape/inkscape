@@ -884,7 +884,7 @@ void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr)
 
     sp_repr_set_boolean(repr, "showguides", v);
 
-    doc->rroot->setAttribute("sodipodi:modified", "true");
+    doc->setModified();
     sp_document_set_undo_sensitive(doc, saved);
 }
 
@@ -903,7 +903,7 @@ void sp_namedview_show_grids(SPNamedView * namedview, bool show, bool dirty_docu
     /* we don't want the document to get dirty on startup; that's when
        we call this function with dirty_document = false */
     if (dirty_document) {
-        doc->rroot->setAttribute("sodipodi:modified", "true");
+        doc->setModified();
     }
     sp_document_set_undo_sensitive(doc, saved);
 }

@@ -104,10 +104,9 @@ open(Extension *key, gchar const *filename)
 
     /* This kinda overkill as most of these are already set, but I want
        to make sure for this release -- TJG */
-    Inkscape::XML::Node *repr = sp_document_repr_root(doc);
     bool saved = sp_document_get_undo_sensitive(doc);
     sp_document_set_undo_sensitive(doc, false);
-    repr->setAttribute("sodipodi:modified", NULL);
+    doc->setModified(false);
     sp_document_set_undo_sensitive(doc, saved);
 
     sp_document_set_uri(doc, filename);
@@ -249,14 +248,12 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);
 
     // remember attributes in case this is an unofficial save
-    gchar *saved_sodipodi_modified = NULL;
+    bool saved_modified = false;
     gchar *saved_output_extension = NULL;
     gchar *saved_dataloss = NULL;
     gchar *saved_uri = NULL;
     if (!official) {
-        if (repr->attribute("sodipodi:modified")) {
-            saved_sodipodi_modified = g_strdup(repr->attribute("sodipodi:modified"));
-        }
+        saved_modified = doc->isModified();
         if (repr->attribute("inkscape:output_extension")) {
             saved_output_extension = g_strdup(repr->attribute("inkscape:output_extension"));
         }
@@ -271,7 +268,7 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
     // update attributes:
     bool saved = sp_document_get_undo_sensitive(doc);
     sp_document_set_undo_sensitive (doc, false); 
-        repr->setAttribute("sodipodi:modified", NULL); 
+        doc->setModified(false);
         // save the filename for next use
         sp_document_set_uri(doc, fileName);
         // also save the extension for next use
@@ -289,14 +286,13 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
     if ( !official) {
         saved = sp_document_get_undo_sensitive(doc);
         sp_document_set_undo_sensitive (doc, false);
-            repr->setAttribute("sodipodi:modified", saved_sodipodi_modified);
+            doc->setModified(saved_modified);
             repr->setAttribute("inkscape:output_extension", saved_output_extension);
             repr->setAttribute("inkscape:dataloss", saved_dataloss);
             sp_document_set_uri(doc, saved_uri);
         sp_document_set_undo_sensitive (doc, saved);
     }
     
-    if (saved_sodipodi_modified) g_free(saved_sodipodi_modified);
     if (saved_output_extension)  g_free(saved_output_extension);
     if (saved_dataloss)          g_free(saved_dataloss);
     if (saved_uri)               g_free(saved_uri);    

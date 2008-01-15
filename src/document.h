@@ -140,6 +140,9 @@ sigc::connection connectCommit(CommitSignal::slot_type slot);
     /// Are we currently in a transition between two "known good" states of the document?
     bool isSeeking() const;
 
+    bool isModified() const;
+    void setModified(bool modified=true);
+
 private:
     SPDocument(SPDocument const &); // no copy
     void operator=(SPDocument const &); // no assign

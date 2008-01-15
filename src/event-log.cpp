@@ -364,10 +364,9 @@ void
 EventLog::checkForVirginity() {
     g_return_if_fail (_document);
     if (_curr_event == _last_saved) {
-        Inkscape::XML::Node *repr = sp_document_repr_root(_document);
         bool saved = sp_document_get_undo_sensitive(_document);
         sp_document_set_undo_sensitive(_document, false);
-        repr->setAttribute("sodipodi:modified", NULL);
+        _document->setModified(false);
         sp_document_set_undo_sensitive(_document, saved);
     }
 }

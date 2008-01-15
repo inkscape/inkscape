@@ -1237,7 +1237,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
             }
 
             if (modified)
-                repr->setAttribute("sodipodi:modified", "TRUE");
+                doc->setModified();
             sp_document_set_undo_sensitive(doc, saved);
             break;
         }
@@ -1277,8 +1277,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
             }
 
             if (modified) {
-                Inkscape::XML::Node * repr = sp_document_repr_root(doc);
-                repr->setAttribute("sodipodi:modified", "TRUE");
+                doc->setModified();
             }
 
             sp_document_set_undo_sensitive(doc, saved);

@@ -69,7 +69,7 @@ RegisteredWidget::write_to_xml(const char * svgstr)
     sp_document_set_undo_sensitive (local_doc, false);
 
     if (!write_undo) local_repr->setAttribute(_key.c_str(), svgstr);
-    local_doc->rroot->setAttribute("sodipodi:modified", "true");
+    local_doc->setModified();
 
     sp_document_set_undo_sensitive (local_doc, saved);
     if (write_undo) {
@@ -378,7 +378,7 @@ RegisteredColorPicker::on_changed (guint32 rgba)
     sp_document_set_undo_sensitive (local_doc, false);
     local_repr->setAttribute(_ckey.c_str(), c);
     sp_repr_set_css_double(local_repr, _akey.c_str(), (rgba & 0xff) / 255.0);
-    local_doc->rroot->setAttribute("sodipodi:modified", "true");
+    local_doc->setModified();
     sp_document_set_undo_sensitive (local_doc, saved);
     sp_document_done (local_doc, SP_VERB_NONE,
                       /* TODO: annotate */ "registered-widget.cpp: RegisteredColorPicker::on_changed");
