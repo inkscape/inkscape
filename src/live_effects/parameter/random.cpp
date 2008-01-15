@@ -35,7 +35,6 @@ RandomParam::RandomParam( const Glib::ustring& label, const Glib::ustring& tip,
     min = -NR_HUGE;
     max = NR_HUGE;
     integer = false;
-    regrandom = NULL;
 
     defseed = default_seed;
     startseed = defseed;
@@ -44,8 +43,6 @@ RandomParam::RandomParam( const Glib::ustring& label, const Glib::ustring& tip,
 
 RandomParam::~RandomParam()
 {
-    if (regrandom)
-        delete regrandom;
 }
 
 bool
@@ -96,9 +93,6 @@ RandomParam::param_set_value(gdouble val, long newseed)
 
     startseed = setup_seed(newseed);
     seed = startseed;
-
-    if (regrandom)
-        regrandom->setValue(value, startseed);
 }
 
 void
@@ -106,20 +100,12 @@ RandomParam::param_set_range(gdouble min, gdouble max)
 {
     this->min = min;
     this->max = max;
-    if (regrandom)
-        regrandom->getR()->setRange(min, max);
-
-    param_set_value(value, startseed); // reset value, to check whether it is in range
 }
 
 void
 RandomParam::param_make_integer(bool yes)
 {
     integer = yes;
-    if (regrandom) {
-        regrandom->getR()->setDigits(0);
-        regrandom->getR()->setIncrements(1, 10);
-    }
 }
 
 void
@@ -132,19 +118,24 @@ RandomParam::resetRandomizer()
 Gtk::Widget *
 RandomParam::param_newWidget(Gtk::Tooltips * tooltips)
 {
-    // WIDGET TODO: This implementation is incorrect, it should create a *new* widget for the caller, not just return an already created widget
-    g_warning("RandomParam::param_newWidget still needs recoding to work with multiple document views");
-    // TODO: add  a button to set a different startseed
-    if (!regrandom) {
-        regrandom = new Inkscape::UI::Widget::RegisteredRandom();
-        regrandom->init(param_label, param_tooltip, param_key, *param_wr, param_effect->getRepr(), param_effect->getSPDoc());
-        regrandom->setValue(value, startseed);
-        if (integer)
-            param_make_integer();
+    Inkscape::UI::Widget::RegisteredRandom* regrandom = Gtk::manage( 
+        new Inkscape::UI::Widget::RegisteredRandom( param_label,
+                                                    param_tooltip,
+                                                    param_key,
+                                                    *param_wr,
+                                                    param_effect->getRepr(),
+                                                    param_effect->getSPDoc() )  );
 
-        regrandom->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change random parameter"));
+    regrandom->setValue(value, startseed);
+    if (integer) {
+        regrandom->setDigits(0);
+        regrandom->setIncrements(1, 10);
     }
-    return dynamic_cast<Gtk::Widget *> (regrandom->getR());
+    regrandom->setRange(min, max);
+
+    regrandom->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change random parameter"));
+
+    return dynamic_cast<Gtk::Widget *> (regrandom);
 }
 
 RandomParam::operator gdouble()

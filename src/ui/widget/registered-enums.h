@@ -19,7 +19,7 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-template<typename E> class RegisteredEnum : public RegisteredWidget
+template<typename E> class RegisteredEnum : public RegisteredWdg
 {
 public:
     RegisteredEnum() {

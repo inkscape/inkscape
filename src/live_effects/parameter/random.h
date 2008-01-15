@@ -15,7 +15,6 @@
 #include <2geom/path.h>
 
 #include "ui/widget/registry.h"
-#include "ui/widget/registered-widget.h"
 
 namespace Inkscape {
 
@@ -58,8 +57,6 @@ protected:
     gdouble max;
     bool integer;
     gdouble defvalue;
-
-    Inkscape::UI::Widget::RegisteredRandom * regrandom;
 
 private:
     long setup_seed(long);

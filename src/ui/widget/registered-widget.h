@@ -19,6 +19,8 @@
 #include "xml/node.h"
 #include "registry.h"
 
+#include "ui/widget/random.h"
+
 class SPUnit;
 class SPDocument;
 
@@ -39,9 +41,9 @@ class Scalar;
 class ScalarUnit;
 class UnitMenu;
 class Point;
-class Random;
 
-class RegisteredWidget {
+template <class W>
+class RegisteredWidget : public W {
 public:
     void set_undo_parameters(const unsigned int _event_type, Glib::ustring _event_description)
     {
@@ -53,7 +55,58 @@ public:
     bool is_updating() {if (_wr) return _wr->isUpdating(); else return false;}
 
 protected:
-    RegisteredWidget()
+    RegisteredWidget() : W() { construct(); }
+    template< typename A >
+    explicit RegisteredWidget( A& a ): W( a ) { construct(); }
+    template< typename A, typename B >
+    RegisteredWidget( A& a, B& b ): W( a, b ) { construct(); }
+    template< typename A, typename B, typename C >
+    RegisteredWidget( A& a, B& b, C& c ): W( a, b, c ) { construct(); }
+
+    virtual ~RegisteredWidget() {};
+
+    void init_parent(const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+    {
+        _wr = &wr;
+        _key = key;
+        repr = repr_in;
+        doc = doc_in;
+        if (repr && !doc)  // doc cannot be NULL when repr is not NULL
+            g_warning("Initialization of registered widget using defined repr but with doc==NULL");
+    }
+
+    void write_to_xml(const char * svgstr);
+
+    Registry * _wr;
+    Glib::ustring _key;
+    Inkscape::XML::Node * repr;
+    SPDocument * doc;
+    unsigned int event_type;
+    Glib::ustring event_description;
+    bool write_undo;
+
+private:
+    void construct() {
+        _wr = NULL;
+        repr = NULL;
+        doc = NULL;
+        write_undo = false;
+    }
+};
+
+class RegisteredWdg {
+public:
+    void set_undo_parameters(const unsigned int _event_type, Glib::ustring _event_description)
+    {
+        event_type = _event_type;
+        event_description = _event_description;
+        write_undo = true;
+    }
+
+    bool is_updating() {if (_wr) return _wr->isUpdating(); else return false;}
+
+protected:
+    RegisteredWdg()
     {
         _wr = NULL;
         repr = NULL;
@@ -84,7 +137,7 @@ protected:
 
 //#######################################################
 
-class RegisteredCheckButton : public RegisteredWidget {
+class RegisteredCheckButton : public RegisteredWdg {
 public:
     RegisteredCheckButton();
     ~RegisteredCheckButton();
@@ -111,7 +164,7 @@ protected:
     void on_toggled();
 };
 
-class RegisteredUnitMenu : public RegisteredWidget {
+class RegisteredUnitMenu : public RegisteredWdg {
 public:
     RegisteredUnitMenu();
     ~RegisteredUnitMenu();
@@ -134,7 +187,7 @@ protected:
     void on_changed();
 };
 
-class RegisteredScalarUnit : public RegisteredWidget {
+class RegisteredScalarUnit : public RegisteredWdg {
 public:
     RegisteredScalarUnit();
     ~RegisteredScalarUnit();
@@ -162,7 +215,7 @@ protected:
     void on_value_changed();
 };
 
-class RegisteredScalar : public RegisteredWidget {
+class RegisteredScalar : public RegisteredWdg {
 public:
     RegisteredScalar();
     ~RegisteredScalar();
@@ -187,7 +240,7 @@ protected:
     void on_value_changed();
 };
 
-class RegisteredColorPicker : public RegisteredWidget {
+class RegisteredColorPicker : public RegisteredWdg {
 public:
     RegisteredColorPicker();
     ~RegisteredColorPicker();
@@ -219,7 +272,7 @@ protected:
     sigc::connection _changed_connection;
 };
 
-class RegisteredSuffixedInteger : public RegisteredWidget {
+class RegisteredSuffixedInteger : public RegisteredWdg {
 public:
     RegisteredSuffixedInteger();
     ~RegisteredSuffixedInteger();
@@ -249,7 +302,7 @@ protected:
     void on_value_changed();
 };
 
-class RegisteredRadioButtonPair : public RegisteredWidget {
+class RegisteredRadioButtonPair : public RegisteredWdg {
 public:
     RegisteredRadioButtonPair();
     ~RegisteredRadioButtonPair();
@@ -283,7 +336,7 @@ protected:
     void on_value_changed();
 };
 
-class RegisteredPoint : public RegisteredWidget {
+class RegisteredPoint : public RegisteredWdg {
 public:
     RegisteredPoint();
     ~RegisteredPoint();
@@ -309,27 +362,20 @@ protected:
     void on_value_changed();
 };
 
-class RegisteredRandom : public RegisteredWidget {
+
+class RegisteredRandom : public RegisteredWidget<Random> {
 public:
-    RegisteredRandom();
-    ~RegisteredRandom();
-    void init (const Glib::ustring& label, 
-            const Glib::ustring& tip, 
-            const Glib::ustring& key, 
-            Registry& wr,
-            Inkscape::XML::Node* repr_in,
-            SPDocument *doc_in);
-    inline void init ( const Glib::ustring& label, 
+    virtual ~RegisteredRandom();
+    RegisteredRandom ( const Glib::ustring& label, 
                        const Glib::ustring& tip, 
                        const Glib::ustring& key, 
-                       Registry& wr)
-        { init(label, tip, key, wr, NULL, NULL); };
+                       Registry& wr,
+                       Inkscape::XML::Node* repr_in = NULL,
+                       SPDocument *doc_in = NULL);
 
-    Random* getR();
     void setValue (double val, long startseed);
 
 protected:
-    Random   *_widget;
     sigc::connection  _value_changed_connection;
     sigc::connection  _reseeded_connection;
     void on_value_changed();

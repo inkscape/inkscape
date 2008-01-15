@@ -18,6 +18,7 @@
 # include <config.h>
 #endif
 
+#include "registered-widget.h"
 
 #include "ui/widget/color-picker.h"
 #include "ui/widget/registry.h"
@@ -36,7 +37,6 @@
 #include "desktop-handles.h"
 #include "sp-namedview.h"
 
-#include "registered-widget.h"
 #include "verbs.h"
 
 // for interruptability bug:
@@ -51,8 +51,35 @@ namespace Widget {
 //---------------------------------------------------
 
 
+
+template<class W>
+void RegisteredWidget<W>::write_to_xml(const char * svgstr)
+{
+    // Use local repr here. When repr is specified, use that one, but
+    // if repr==NULL, get the repr of namedview of active desktop.
+    Inkscape::XML::Node *local_repr = repr;
+    SPDocument *local_doc = doc;
+    if (!local_repr) {
+        // no repr specified, use active desktop's namedview's repr
+        SPDesktop* dt = SP_ACTIVE_DESKTOP;
+        local_repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
+        local_doc = sp_desktop_document(dt);
+    }
+
+    bool saved = sp_document_get_undo_sensitive (local_doc);
+    sp_document_set_undo_sensitive (local_doc, false);
+    if (!write_undo) local_repr->setAttribute(_key.c_str(), svgstr);
+    sp_document_set_undo_sensitive (local_doc, saved);
+
+    local_doc->setModifiedSinceSave();
+    if (write_undo) {
+        local_repr->setAttribute(_key.c_str(), svgstr);
+        sp_document_done (local_doc, event_type, event_description);
+    }
+}
+
 void
-RegisteredWidget::write_to_xml(const char * svgstr)
+RegisteredWdg::write_to_xml(const char * svgstr)
 {
     // Use local repr here. When repr is specified, use that one, but
     // if repr==NULL, get the repr of namedview of active desktop.
@@ -586,56 +613,38 @@ RegisteredPoint::on_value_changed()
  * Registered RANDOM
  */
 
-RegisteredRandom::RegisteredRandom()
-{
-    _widget = NULL;
-}
-
 RegisteredRandom::~RegisteredRandom()
 {
-    if (_widget) 
-        delete _widget;
-
     _value_changed_connection.disconnect();
     _reseeded_connection.disconnect();
 }
 
-void
-RegisteredRandom::init ( const Glib::ustring& label, const Glib::ustring& tip, 
+RegisteredRandom::RegisteredRandom ( const Glib::ustring& label, const Glib::ustring& tip, 
                          const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
                          SPDocument * doc_in )
+    : RegisteredWidget<Random> (label, tip)
 {
     init_parent(key, wr, repr_in, doc_in);
 
-    _widget = new Random (label, tip);
-    _widget->setRange (-1e6, 1e6);
-    _widget->setDigits (2);
-    _widget->setIncrements(0.1, 1.0);
-    _value_changed_connection = _widget->signal_value_changed().connect (sigc::mem_fun (*this, &RegisteredRandom::on_value_changed));
-    _reseeded_connection = _widget->signal_reseeded.connect(sigc::mem_fun(*this, &RegisteredRandom::on_value_changed));
-}
-
-Random*
-RegisteredRandom::getR()
-{
-    return _widget;
+    setRange (-1e6, 1e6);
+    setDigits (2);
+    setIncrements(0.1, 1.0);
+    _value_changed_connection = signal_value_changed().connect (sigc::mem_fun (*this, &RegisteredRandom::on_value_changed));
+    _reseeded_connection = signal_reseeded.connect(sigc::mem_fun(*this, &RegisteredRandom::on_value_changed));
 }
 
 void
 RegisteredRandom::setValue (double val, long startseed)
 {
-    if (!_widget)
-        return;
-
-    _widget->setValue (val);
-    _widget->setStartSeed(startseed);
+    static_cast<Scalar*>(this)->setValue (val);
+    setStartSeed(startseed);
 }
 
 void
 RegisteredRandom::on_value_changed()
 {
-    if (_widget->setProgrammatically) {
-        _widget->setProgrammatically = false;
+    if (setProgrammatically) {
+        setProgrammatically = false;
         return;
     }
 
@@ -645,15 +654,14 @@ RegisteredRandom::on_value_changed()
     _wr->setUpdating (true);
 
     Inkscape::SVGOStringStream os;
-    os << _widget->getValue() << ';' << _widget->getStartSeed();
+    os << getValue() << ';' << getStartSeed();
 
-    _widget->set_sensitive(false);
+    set_sensitive(false);
     write_to_xml(os.str().c_str());
-    _widget->set_sensitive(true);
+    set_sensitive(true);
 
     _wr->setUpdating (false);
 }
-
 
 } // namespace Dialog
 } // namespace UI
