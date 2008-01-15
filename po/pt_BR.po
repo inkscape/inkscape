@@ -801,7 +801,7 @@ msgstr ""
 #: ../src/dialogs/clonetiler.cpp:2728
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1948
 msgid "Size"
-msgstr "Tamanho"
+msgstr "Dimensões"
 
 #: ../src/dialogs/clonetiler.cpp:2731
 msgid "Each clone's size is determined by the picked value in that point"
@@ -2824,7 +2824,7 @@ msgstr "Melhorar diferenças de intensidade no(s) bitmap(s) selecionado(s)."
 #. TRANSLATORS: see http://docs.gimp.org/en/gimp-tool-convolve.html
 #: ../src/extension/internal/bitmap/convolve.cpp:50
 msgid "Convolve"
-msgstr "Convolver"
+msgstr "Convoluir"
 
 #: ../src/extension/internal/bitmap/convolve.cpp:52
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:41
@@ -2839,7 +2839,7 @@ msgstr "Disposição Central"
 
 #: ../src/extension/internal/bitmap/convolve.cpp:59
 msgid "Apply Convolve Effect"
-msgstr "Aplicar Efeito Convolver"
+msgstr "Aplicar Efeito de Convolução"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:36
 msgid "Cycle Colormap"
@@ -2900,7 +2900,7 @@ msgstr "Equalizar bitmap(s) selecionado(s) -- equalização por histograma."
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:37
 #: ../src/filter-enums.cpp:28
 msgid "Gaussian Blur"
-msgstr "Desfocagem gaussiana"
+msgstr "Desfoque gaussiano"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:39
 #: ../src/extension/internal/bitmap/implode.cpp:38
@@ -2910,7 +2910,7 @@ msgstr "Fator"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:46
 msgid "Gaussian blur selected bitmap(s)."
-msgstr "Aplicar desfocagem gaussiana no(s) bitmap(s) selecionado(s)."
+msgstr "Aplicar desfoque gaussiano no(s) bitmap(s) selecionado(s)."
 
 #: ../src/extension/internal/bitmap/implode.cpp:36
 msgid "Implode"
@@ -3856,7 +3856,7 @@ msgstr "Composição"
 
 #: ../src/filter-enums.cpp:24
 msgid "Convolve Matrix"
-msgstr "Convolver Matriz"
+msgstr "Matriz de Convolução"
 
 #: ../src/filter-enums.cpp:25
 msgid "Diffuse Lighting"
@@ -3868,7 +3868,7 @@ msgstr "Mapa de Deslocamento"
 
 #: ../src/filter-enums.cpp:27
 msgid "Flood"
-msgstr "Inundar"
+msgstr "Preenchimento"
 
 #: ../src/filter-enums.cpp:29 ../src/selection-describer.cpp:52
 msgid "Image"
@@ -3896,11 +3896,11 @@ msgstr "Turbulência"
 
 #: ../src/filter-enums.cpp:40
 msgid "Source Graphic"
-msgstr "Gráfico Fonte"
+msgstr "Gráfico da Entrada"
 
 #: ../src/filter-enums.cpp:41
 msgid "Source Alpha"
-msgstr "Alfa Fonte "
+msgstr "Canal Alfa da Entrada"
 
 #: ../src/filter-enums.cpp:42
 msgid "Background Image"
@@ -3912,11 +3912,11 @@ msgstr "Alfa de Fundo"
 
 #: ../src/filter-enums.cpp:44
 msgid "Fill Paint"
-msgstr "Preencher com Tinta"
+msgstr "Cor do Preenchimento"
 
 #: ../src/filter-enums.cpp:45
 msgid "Stroke Paint"
-msgstr "Pintura de Traço"
+msgstr "Cor do Traço"
 
 #: ../src/filter-enums.cpp:51 ../src/ui/dialog/inkscape-preferences.cpp:442
 msgid "Normal"
@@ -3973,7 +3973,7 @@ msgstr "Fora"
 
 #: ../src/filter-enums.cpp:74
 msgid "Atop"
-msgstr "Atop"
+msgstr "Topo"
 
 #: ../src/filter-enums.cpp:75
 msgid "XOR"
@@ -3981,7 +3981,7 @@ msgstr "XOR"
 
 #: ../src/filter-enums.cpp:76
 msgid "Arithmetic"
-msgstr "Aritmética"
+msgstr "Aritmético"
 
 #: ../src/filter-enums.cpp:82
 msgid "Identity"
@@ -3989,7 +3989,7 @@ msgstr "Identidade"
 
 #: ../src/filter-enums.cpp:83
 msgid "Table"
-msgstr "Tabela"
+msgstr "Tabelado"
 
 #: ../src/filter-enums.cpp:84
 msgid "Discrete"
@@ -6239,7 +6239,7 @@ msgstr "Ajustar à página a seleção"
 
 #: ../src/selection-describer.cpp:42
 msgid "Link"
-msgstr "Ligação"
+msgstr "Vínculo"
 
 #: ../src/selection-describer.cpp:44
 msgid "Circle"
@@ -8199,12 +8199,11 @@ msgstr "Modo"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1929
 msgid "Value(s)"
-msgstr "Valore(s)"
+msgstr "Valor(es)"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1934
-#, fuzzy
 msgid "Slope"
-msgstr "Envelope"
+msgstr "Inclinação"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1935
 msgid "Intercept"
@@ -8251,21 +8250,19 @@ msgstr "Divisor"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1953
 msgid "Bias"
-msgstr "Bias"
+msgstr "Componente constante"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1954
 msgid "Edge Mode"
 msgstr "Modo Limite"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1955
-#, fuzzy
 msgid "Preserve Alpha"
-msgstr "Preservada"
+msgstr "Preservar canal alfa"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1958
-#, fuzzy
 msgid "Diffuse Color"
-msgstr "Cores Visíveis"
+msgstr "Cor"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1959
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1986
@@ -8280,7 +8277,7 @@ msgstr "Constante"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1961
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1989
 msgid "Kernel Unit Length"
-msgstr ""
+msgstr "Largura da Grade de Pixels"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1966
 msgid "X Channel"
@@ -8292,7 +8289,7 @@ msgstr "Canal Y"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1970
 msgid "Flood Color"
-msgstr "Flood Color"
+msgstr "Cor de preenchimento"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1974
 msgid "Standard Deviation"
@@ -8311,9 +8308,8 @@ msgid "Specular Color"
 msgstr "Cor especular"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1993
-#, fuzzy
 msgid "Stitch Tiles"
-msgstr "Curativo Ladrilhado"
+msgstr "Costurar Ladrilhos"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1995
 msgid "Base Frequency"
@@ -8321,7 +8317,7 @@ msgstr "Freqüência Base"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1996
 msgid "Octaves"
-msgstr "Oitavos"
+msgstr "Oitavas"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1997
 msgid "Seed"
@@ -8329,7 +8325,7 @@ msgstr "Semente"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2009
 msgid "Add filter primitive"
-msgstr "Adicionar filtro "
+msgstr "Adicionar primitiva de filtro"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2021
 msgid "Remove filter primitive"
@@ -12467,7 +12463,7 @@ msgstr "Gerenciar caminhos de efeitos"
 
 #: ../src/verbs.cpp:2527
 msgid "Filter Effects..."
-msgstr "Filtro de Efeitos..."
+msgstr "Filtros de Efeitos..."
 
 #: ../src/verbs.cpp:2528
 msgid "Manage SVG filter effects"
