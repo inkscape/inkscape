@@ -43,7 +43,9 @@ public:
             delete regenum;
     };
 
-    Gtk::Widget * param_getWidget() {
+    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips) {
+        // WIDGET TODO: This implementation is incorrect, it should create a *new* widget for the caller, not just return an already created widget
+        g_warning("EnumParam::param_newWidget still needs recoding to work with multiple document views");
         if (!regenum) {
             regenum = new Inkscape::UI::Widget::RegisteredEnum<E>();
             regenum->init(param_label, param_tooltip, param_key, *enumdataconv, *param_wr, param_effect->getRepr(), param_effect->getSPDoc());

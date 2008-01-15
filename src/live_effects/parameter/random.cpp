@@ -130,8 +130,10 @@ RandomParam::resetRandomizer()
 
 
 Gtk::Widget *
-RandomParam::param_getWidget()
+RandomParam::param_newWidget(Gtk::Tooltips * tooltips)
 {
+    // WIDGET TODO: This implementation is incorrect, it should create a *new* widget for the caller, not just return an already created widget
+    g_warning("RandomParam::param_newWidget still needs recoding to work with multiple document views");
     // TODO: add  a button to set a different startseed
     if (!regrandom) {
         regrandom = new Inkscape::UI::Widget::RegisteredRandom();

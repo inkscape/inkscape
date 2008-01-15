@@ -58,8 +58,10 @@ BoolParam::param_writeSVGValue() const
 }
 
 Gtk::Widget *
-BoolParam::param_getWidget()
+BoolParam::param_newWidget(Gtk::Tooltips * tooltips)
 {
+    // WIDGET TODO: This implementation is incorrect, it should create a *new* widget for the caller, not just return an already created widget
+    g_warning("BoolParam::param_newWidget still needs recoding to work with multiple document views");
     if (!checkwdg) {
         checkwdg = new Inkscape::UI::Widget::RegisteredCheckButton();
         checkwdg->init(param_label, param_tooltip, param_key, *param_wr, false, param_effect->getRepr(), param_effect->getSPDoc());

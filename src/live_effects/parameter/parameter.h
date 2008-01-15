@@ -21,6 +21,7 @@ struct SPItem;
 
 namespace Gtk {
     class Widget;
+    class Tooltips;
 }
 
 namespace Inkscape {
@@ -47,9 +48,9 @@ public:
 
     virtual void param_set_default() = 0;
 
-    // This returns pointer to the parameter's widget to be put in the live-effects dialog. Must also create the
-    // necessary widget if it does not exist yet.
-    virtual Gtk::Widget * param_getWidget() = 0;
+    // This creates a new widget (newed with Gtk::manage(new ...);)
+    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips) = 0;
+
     virtual Glib::ustring * param_getTooltip() { return &param_tooltip; };
 
     virtual void param_editOncanvas(SPItem * /*item*/, SPDesktop * /*dt*/) {};
@@ -96,7 +97,7 @@ public:
     void param_set_digits(unsigned digits);
     void param_set_increments(double step, double page);
 
-    virtual Gtk::Widget * param_getWidget();
+    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
 
     inline operator gdouble()
         { return value; };

@@ -37,7 +37,7 @@ public:
                 const gchar * default_value = "M0,0 L1,1");
     virtual ~PathParam();
 
-    Gtk::Widget * param_getWidget();
+    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
 
     bool param_readSVGValue(const gchar * strvalue);
     gchar * param_writeSVGValue() const;
@@ -57,9 +57,6 @@ public:
 private:
     PathParam(const PathParam&);
     PathParam& operator=(const PathParam&);
-
-    Gtk::Widget * _widget;
-    Gtk::Tooltips * _tooltips;
 
     void on_edit_button_click();
     void on_paste_button_click();

@@ -98,17 +98,12 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
 
 Effect::Effect(LivePathEffectObject *lpeobject)
 {
-    vbox = NULL;
-    tooltips = NULL;
     lpeobj = lpeobject;
     oncanvasedit_it = 0;
 }
 
 Effect::~Effect()
 {
-    if (tooltips) {
-        delete tooltips;
-    }
 }
 
 Glib::ustring
@@ -236,30 +231,30 @@ Effect::registerParameter(Parameter * param)
     param_vector.push_back(param);
 }
 
+/**
+* This *creates* a new widget, management of deletion should be done by the caller
+*/
 Gtk::Widget *
-Effect::getWidget()
+Effect::newWidget(Gtk::Tooltips * tooltips)
 {
-    if (!vbox) {
-        vbox = Gtk::manage( new Gtk::VBox() ); // use manage here, because after deletion of Effect object, others might still be pointing to this widget.
-        //if (!tooltips)
-            tooltips = new Gtk::Tooltips();
+    // use manage here, because after deletion of Effect object, others might still be pointing to this widget.
+    Gtk::VBox * vbox = Gtk::manage( new Gtk::VBox() );
 
-        vbox->set_border_width(5);
+    vbox->set_border_width(5);
 
-        std::vector<Parameter *>::iterator it = param_vector.begin();
-        while (it != param_vector.end()) {
-            Parameter * param = *it;
-            Gtk::Widget * widg = param->param_getWidget();
-            Glib::ustring * tip = param->param_getTooltip();
-            if (widg) {
-               vbox->pack_start(*widg, true, true, 2);
-                if (tip != NULL) {
-                    tooltips->set_tip(*widg, *tip);
-                }
+    std::vector<Parameter *>::iterator it = param_vector.begin();
+    while (it != param_vector.end()) {
+        Parameter * param = *it;
+        Gtk::Widget * widg = param->param_newWidget(tooltips);
+        Glib::ustring * tip = param->param_getTooltip();
+        if (widg) {
+           vbox->pack_start(*widg, true, true, 2);
+            if (tip != NULL) {
+                tooltips->set_tip(*widg, *tip);
             }
-
-            it++;
         }
+
+        it++;
     }
 
     return dynamic_cast<Gtk::Widget *>(vbox);

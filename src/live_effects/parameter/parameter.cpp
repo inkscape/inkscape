@@ -136,8 +136,10 @@ ScalarParam::param_make_integer(bool yes)
 }
 
 Gtk::Widget *
-ScalarParam::param_getWidget()
+ScalarParam::param_newWidget(Gtk::Tooltips * tooltips)
 {
+    // WIDGET TODO: This implementation is incorrect, it should create a *new* widget for the caller, not just return an already created widget
+    g_warning("ScalarParam::param_newWidget still needs recoding to work with multiple document views");
     if (!rsu) {
         rsu = new Inkscape::UI::Widget::RegisteredScalar();
         rsu->init(param_label, param_tooltip, param_key, *param_wr, param_effect->getRepr(), param_effect->getSPDoc());

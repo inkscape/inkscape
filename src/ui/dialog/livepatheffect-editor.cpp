@@ -97,6 +97,7 @@ LivePathEffectEditor::~LivePathEffectEditor()
 {
     if (effectwidget) {
         effectcontrol_vbox.remove(*effectwidget);
+        delete effectwidget;
         effectwidget = NULL;
     }
 
@@ -111,11 +112,12 @@ LivePathEffectEditor::showParams(LivePathEffect::Effect* effect)
 {
     if (effectwidget) {
         effectcontrol_vbox.remove(*effectwidget);
+        delete effectwidget;
         effectwidget = NULL;
     }
 
     explain_label.set_markup("<b>" + effect->getName() + "</b>");
-    effectwidget = effect->getWidget();
+    effectwidget = effect->newWidget(&tooltips);
     if (effectwidget) {
         effectcontrol_vbox.pack_start(*effectwidget, true, true);
     }
@@ -130,6 +132,7 @@ LivePathEffectEditor::showText(Glib::ustring const &str)
 {
     if (effectwidget) {
         effectcontrol_vbox.remove(*effectwidget);
+        delete effectwidget;
         effectwidget = NULL;
     }
 

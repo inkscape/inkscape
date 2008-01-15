@@ -80,8 +80,10 @@ PointParam::param_writeSVGValue() const
 }
 
 Gtk::Widget *
-PointParam::param_getWidget()
+PointParam::param_newWidget(Gtk::Tooltips * tooltips)
 {
+    // WIDGET TODO: This implementation is incorrect, it should create a *new* widget for the caller, not just return an already created widget
+    g_warning("PointParam::param_newWidget still needs recoding to work with multiple document views");
     if (!_widget) {
         pointwdg = new Inkscape::UI::Widget::RegisteredPoint();
         pointwdg->init(param_label, param_tooltip, param_key, *param_wr, param_effect->getRepr(), param_effect->getSPDoc());
@@ -104,8 +106,7 @@ PointParam::param_getWidget()
         static_cast<Gtk::HBox*>(_widget)->pack_start(*(pointwdg->getPoint()), true, true);
         static_cast<Gtk::HBox*>(_widget)->show_all_children();
 
-        _tooltips = new Gtk::Tooltips();
-        _tooltips->set_tip(*pButton, _("Edit on-canvas"));
+        tooltips->set_tip(*pButton, _("Edit on-canvas"));
     }
     return dynamic_cast<Gtk::Widget *> (_widget);
 }

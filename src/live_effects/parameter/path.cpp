@@ -42,8 +42,6 @@ PathParam::PathParam( const Glib::ustring& label, const Glib::ustring& tip,
                       Effect* effect, const gchar * default_value)
     : Parameter(label, tip, key, wr, effect)
 {
-    _widget = NULL;
-    _tooltips = NULL;
     edit_button = NULL;
     defvalue = g_strdup(default_value);
     param_readSVGValue(defvalue);
@@ -52,10 +50,6 @@ PathParam::PathParam( const Glib::ustring& label, const Glib::ustring& tip,
 
 PathParam::~PathParam()
 {
-    if (_tooltips)
-        delete _tooltips;
-    // _widget is managed by GTK so do not delete!
-
     g_free(defvalue);
 }
 
@@ -92,40 +86,37 @@ PathParam::param_writeSVGValue() const
 }
 
 Gtk::Widget *
-PathParam::param_getWidget()
+PathParam::param_newWidget(Gtk::Tooltips * tooltips)
 {
-    if (!_widget) {
-        _widget = Gtk::manage(new Gtk::HBox());
-        _tooltips = new Gtk::Tooltips();
+    Gtk::HBox * _widget = Gtk::manage(new Gtk::HBox());
 
-        Gtk::Label* pLabel = Gtk::manage(new Gtk::Label(param_label));
-        static_cast<Gtk::HBox*>(_widget)->pack_start(*pLabel, true, true);
-        _tooltips->set_tip(*pLabel, param_tooltip);
+    Gtk::Label* pLabel = Gtk::manage(new Gtk::Label(param_label));
+    static_cast<Gtk::HBox*>(_widget)->pack_start(*pLabel, true, true);
+    tooltips->set_tip(*pLabel, param_tooltip);
 
-        Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( "draw_node", Inkscape::ICON_SIZE_BUTTON) );
-        Gtk::Button * pButton = Gtk::manage(new Gtk::Button());
-        pButton->set_relief(Gtk::RELIEF_NONE);
-        pIcon->show();
-        pButton->add(*pIcon);
-        pButton->show();
-        pButton->signal_clicked().connect(sigc::mem_fun(*this, &PathParam::on_edit_button_click));
-        static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
-        _tooltips->set_tip(*pButton, _("Edit on-canvas"));
-        edit_button = pButton;
+    Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( "draw_node", Inkscape::ICON_SIZE_BUTTON) );
+    Gtk::Button * pButton = Gtk::manage(new Gtk::Button());
+    pButton->set_relief(Gtk::RELIEF_NONE);
+    pIcon->show();
+    pButton->add(*pIcon);
+    pButton->show();
+    pButton->signal_clicked().connect(sigc::mem_fun(*this, &PathParam::on_edit_button_click));
+    static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
+    tooltips->set_tip(*pButton, _("Edit on-canvas"));
+    edit_button = pButton;
 
-        pIcon = Gtk::manage( sp_icon_get_icon( GTK_STOCK_PASTE, Inkscape::ICON_SIZE_BUTTON) );
-        pButton = Gtk::manage(new Gtk::Button());
-        pButton->set_relief(Gtk::RELIEF_NONE);
-        pIcon->show();
-        pButton->add(*pIcon);
-        pButton->show();
-        pButton->signal_clicked().connect(sigc::mem_fun(*this, &PathParam::on_paste_button_click));
-        static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
-        _tooltips->set_tip(*pButton, _("Paste path"));
+    pIcon = Gtk::manage( sp_icon_get_icon( GTK_STOCK_PASTE, Inkscape::ICON_SIZE_BUTTON) );
+    pButton = Gtk::manage(new Gtk::Button());
+    pButton->set_relief(Gtk::RELIEF_NONE);
+    pIcon->show();
+    pButton->add(*pIcon);
+    pButton->show();
+    pButton->signal_clicked().connect(sigc::mem_fun(*this, &PathParam::on_paste_button_click));
+    static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
+    tooltips->set_tip(*pButton, _("Paste path"));
 
-        static_cast<Gtk::HBox*>(_widget)->show_all_children();
+    static_cast<Gtk::HBox*>(_widget)->show_all_children();
 
-    }
     return dynamic_cast<Gtk::Widget *> (_widget);
 }
 

@@ -74,7 +74,7 @@ public:
 
     virtual void doEffect (SPCurve * curve);
 
-    virtual Gtk::Widget * getWidget();
+    virtual Gtk::Widget * newWidget(Gtk::Tooltips * tooltips);
 
     virtual void resetDefaults(SPItem * item);
 
@@ -116,8 +116,6 @@ protected:
 
 
     Inkscape::UI::Widget::Registry wr;
-    Gtk::VBox * vbox;
-    Gtk::Tooltips * tooltips;
 
     LivePathEffectObject *lpeobj;
 
