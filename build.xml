@@ -481,7 +481,7 @@
   ## T A R G E T    :    D I S T
   ########################################################################
   -->
-  <target name="dist" depends="link,linkview,i18n"
+  <target name="dist" depends="link,linkinkview,i18n"
       description="generate the distribution directory with all needed files">
 
     <!-- Create the distribution directory -->
