@@ -18,7 +18,7 @@
 #include <gtkmm/label.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/frame.h>
-#include <gtkmm/tooltip.h>
+#include <gtkmm/tooltips.h>
 #include "ui/widget/combo-enums.h"
 #include "live_effects/effect.h"
 
