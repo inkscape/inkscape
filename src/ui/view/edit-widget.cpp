@@ -1203,7 +1203,7 @@ EditWidget::shutdown()
         return false;
 
     SPDocument *doc = _desktop->doc();
-    if (doc->isModified()) {
+    if (doc->isModifiedSinceSave()) {
         gchar *markup;
         /// \todo FIXME !!! obviously this will have problems if the document
         /// name contains markup characters

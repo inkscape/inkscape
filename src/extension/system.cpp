@@ -104,10 +104,7 @@ open(Extension *key, gchar const *filename)
 
     /* This kinda overkill as most of these are already set, but I want
        to make sure for this release -- TJG */
-    bool saved = sp_document_get_undo_sensitive(doc);
-    sp_document_set_undo_sensitive(doc, false);
-    doc->setModified(false);
-    sp_document_set_undo_sensitive(doc, saved);
+    doc->setModifiedSinceSave(false);
 
     sp_document_set_uri(doc, filename);
 
@@ -253,7 +250,7 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
     gchar *saved_dataloss = NULL;
     gchar *saved_uri = NULL;
     if (!official) {
-        saved_modified = doc->isModified();
+        saved_modified = doc->isModifiedSinceSave();
         if (repr->attribute("inkscape:output_extension")) {
             saved_output_extension = g_strdup(repr->attribute("inkscape:output_extension"));
         }
@@ -268,7 +265,6 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
     // update attributes:
     bool saved = sp_document_get_undo_sensitive(doc);
     sp_document_set_undo_sensitive (doc, false); 
-        doc->setModified(false);
         // save the filename for next use
         sp_document_set_uri(doc, fileName);
         // also save the extension for next use
@@ -279,6 +275,7 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
             repr->setAttribute("inkscape:dataloss", "true");
         }
     sp_document_set_undo_sensitive (doc, saved);
+    doc->setModifiedSinceSave(false);
 
     omod->save(doc, fileName);
     
@@ -286,11 +283,11 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
     if ( !official) {
         saved = sp_document_get_undo_sensitive(doc);
         sp_document_set_undo_sensitive (doc, false);
-            doc->setModified(saved_modified);
             repr->setAttribute("inkscape:output_extension", saved_output_extension);
             repr->setAttribute("inkscape:dataloss", saved_dataloss);
             sp_document_set_uri(doc, saved_uri);
         sp_document_set_undo_sensitive (doc, saved);
+        doc->setModifiedSinceSave(saved_modified);
     }
     
     if (saved_output_extension)  g_free(saved_output_extension);

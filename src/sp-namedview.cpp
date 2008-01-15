@@ -881,11 +881,10 @@ void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr)
 
     bool saved = sp_document_get_undo_sensitive(doc);
     sp_document_set_undo_sensitive(doc, false);
-
     sp_repr_set_boolean(repr, "showguides", v);
-
-    doc->setModified();
     sp_document_set_undo_sensitive(doc, saved);
+
+    doc->setModifiedSinceSave();
 }
 
 void sp_namedview_show_grids(SPNamedView * namedview, bool show, bool dirty_document)
@@ -897,15 +896,14 @@ void sp_namedview_show_grids(SPNamedView * namedview, bool show, bool dirty_docu
 
     bool saved = sp_document_get_undo_sensitive(doc);
     sp_document_set_undo_sensitive(doc, false);
-
     sp_repr_set_boolean(repr, "showgrid", namedview->grids_visible);
+    sp_document_set_undo_sensitive(doc, saved);
 
     /* we don't want the document to get dirty on startup; that's when
        we call this function with dirty_document = false */
     if (dirty_document) {
-        doc->setModified();
+        doc->setModifiedSinceSave();
     }
-    sp_document_set_undo_sensitive(doc, saved);
 }
 
 gchar const *SPNamedView::getName() const

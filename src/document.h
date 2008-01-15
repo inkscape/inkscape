@@ -81,6 +81,7 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 
     unsigned int keepalive : 1;
     unsigned int virgin    : 1; ///< Has the document never been touched?
+    unsigned int modified_since_save : 1;
 
     Inkscape::XML::Document *rdoc; ///< Our Inkscape::XML::Document
     Inkscape::XML::Node *rroot; ///< Root element of Inkscape::XML::Document
@@ -140,8 +141,10 @@ sigc::connection connectCommit(CommitSignal::slot_type slot);
     /// Are we currently in a transition between two "known good" states of the document?
     bool isSeeking() const;
 
-    bool isModified() const;
-    void setModified(bool modified=true);
+    bool isModifiedSinceSave() const { return modified_since_save; }
+    void setModifiedSinceSave(bool modified=true) {
+        modified_since_save = modified;
+    }
 
 private:
     SPDocument(SPDocument const &); // no copy

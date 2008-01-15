@@ -431,7 +431,7 @@ inkscape_crash_handler (int /*signum*/)
         Inkscape::XML::Node *repr;
         doc = (SPDocument *) l->data;
         repr = sp_document_repr_root (doc);
-        if (doc->isModified()) {
+        if (doc->isModifiedSinceSave()) {
             const gchar *docname, *d0, *d;
             gchar n[64], c[1024];
             FILE *file;

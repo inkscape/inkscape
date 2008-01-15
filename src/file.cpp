@@ -249,7 +249,7 @@ sp_file_revert_dialog()
     }
 
     bool do_revert = true;
-    if (doc->isModified()) {
+    if (doc->isModifiedSinceSave()) {
         gchar *text = g_strdup_printf(_("Changes will be lost!  Are you sure you want to reload document %s?"), uri);
 
         bool response = desktop->warnDialog (text);
@@ -771,7 +771,7 @@ sp_file_save_document(Gtk::Window &parentWindow, SPDocument *doc)
 {
     bool success = true;
 
-    if (doc->isModified()) {
+    if (doc->isModifiedSinceSave()) {
         Inkscape::XML::Node *repr = sp_document_repr_root(doc);
         if ( doc->uri == NULL
             || repr->attribute("inkscape:output_extension") == NULL )
@@ -1186,7 +1186,7 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
 
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);
 
-    if (!doc->uri && !doc->isModified())
+    if (!doc->uri && !doc->isModifiedSinceSave())
         return false;
 
     //  Get the default extension name

@@ -807,7 +807,7 @@ SPDesktopWidget::shutdown()
 
     if (inkscape_is_sole_desktop_for_document(*desktop)) {
         SPDocument *doc = desktop->doc();
-        if (doc->isModified()) {
+        if (doc->isModifiedSinceSave()) {
             GtkWidget *dialog;
 
             /** \todo

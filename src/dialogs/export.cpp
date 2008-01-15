@@ -1235,10 +1235,11 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
                 sp_repr_set_svg_double(repr, "inkscape:export-ydpi", ydpi);
                 modified = true;
             }
-
-            if (modified)
-                doc->setModified();
             sp_document_set_undo_sensitive(doc, saved);
+
+            if (modified) {
+                doc->setModifiedSinceSave();
+            }
             break;
         }
         case SELECTION_SELECTION: {
@@ -1275,12 +1276,11 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
                     modified = true;
                 }
             }
+            sp_document_set_undo_sensitive(doc, saved);
 
             if (modified) {
-                doc->setModified();
+                doc->setModifiedSinceSave();
             }
-
-            sp_document_set_undo_sensitive(doc, saved);
             break;
         }
         default:

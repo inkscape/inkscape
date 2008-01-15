@@ -364,10 +364,7 @@ void
 EventLog::checkForVirginity() {
     g_return_if_fail (_document);
     if (_curr_event == _last_saved) {
-        bool saved = sp_document_get_undo_sensitive(_document);
-        sp_document_set_undo_sensitive(_document, false);
-        _document->setModified(false);
-        sp_document_set_undo_sensitive(_document, saved);
+        _document->setModifiedSinceSave(false);
     }
 }
 

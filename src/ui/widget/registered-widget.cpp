@@ -67,11 +67,10 @@ RegisteredWidget::write_to_xml(const char * svgstr)
 
     bool saved = sp_document_get_undo_sensitive (local_doc);
     sp_document_set_undo_sensitive (local_doc, false);
-
     if (!write_undo) local_repr->setAttribute(_key.c_str(), svgstr);
-    local_doc->setModified();
-
     sp_document_set_undo_sensitive (local_doc, saved);
+
+    local_doc->setModifiedSinceSave();
     if (write_undo) {
         local_repr->setAttribute(_key.c_str(), svgstr);
         sp_document_done (local_doc, event_type, event_description);
@@ -378,8 +377,9 @@ RegisteredColorPicker::on_changed (guint32 rgba)
     sp_document_set_undo_sensitive (local_doc, false);
     local_repr->setAttribute(_ckey.c_str(), c);
     sp_repr_set_css_double(local_repr, _akey.c_str(), (rgba & 0xff) / 255.0);
-    local_doc->setModified();
     sp_document_set_undo_sensitive (local_doc, saved);
+
+    local_doc->setModifiedSinceSave();
     sp_document_done (local_doc, SP_VERB_NONE,
                       /* TODO: annotate */ "registered-widget.cpp: RegisteredColorPicker::on_changed");
 
