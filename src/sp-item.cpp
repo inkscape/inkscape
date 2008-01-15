@@ -1368,6 +1368,22 @@ sp_item_set_item_transform(SPItem *item, NR::Matrix const &transform)
     }
 }
 
+void
+sp_item_convert_item_to_guides(SPItem *item) {
+    g_return_if_fail(item != NULL);
+    g_return_if_fail(SP_IS_ITEM(item));
+
+    /* Use derived method if present ... */
+    if (((SPItemClass *) G_OBJECT_GET_CLASS(item))->convert_to_guides) {
+        (*((SPItemClass *) G_OBJECT_GET_CLASS(item))->convert_to_guides)(item);
+        return;
+    }
+
+    /* .. otherwise simply place the guides around the item's bounding box */
+
+    sp_item_convert_to_guides(item);
+}
+
 
 /**
  * \pre \a ancestor really is an ancestor (\>=) of \a object, or NULL.

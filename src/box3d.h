@@ -82,7 +82,6 @@ Persp3D *box3d_get_perspective(SPBox3D const *box);
 void box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp, bool recompute_corners = false);
 
 SPGroup *box3d_convert_to_group(SPBox3D *box);
-void box3d_convert_to_guides(SPBox3D *box, bool write_undo = true);
 
 
 #endif /* __SP_BOX3D_H__ */

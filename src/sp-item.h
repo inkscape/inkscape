@@ -197,6 +197,9 @@ struct SPItemClass {
     
     /** Apply the transform optimally, and return any residual transformation */
     NR::Matrix (* set_transform)(SPItem *item, NR::Matrix const &transform);
+
+    /** Convert the item to guidelines */
+    void (* convert_to_guides)(SPItem *item);
     
     /** Emit event, if applicable */
     gint (* event) (SPItem *item, SPEvent *event);
@@ -236,6 +239,8 @@ void sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NRMatrix c
 void sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix const &transform, NR::Matrix const *adv = NULL, bool compensate = true);
 
 void sp_item_set_item_transform(SPItem *item, NR::Matrix const &transform);
+
+void sp_item_convert_item_to_guides(SPItem *item);
 
 gint sp_item_event (SPItem *item, SPEvent *event);
 

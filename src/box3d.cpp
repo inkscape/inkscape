@@ -50,6 +50,7 @@ static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Node *r
 
 static gchar *box3d_description(SPItem *item);
 static NR::Matrix box3d_set_transform(SPItem *item, NR::Matrix const &xform);
+static void box3d_convert_to_guides(SPItem *item);
 
 static void box3d_ref_changed(SPObject *old_ref, SPObject *ref, SPBox3D *box);
 static void box3d_ref_modified(SPObject *href, guint flags, SPBox3D *box);
@@ -98,6 +99,7 @@ box3d_class_init(SPBox3DClass *klass)
 
     item_class->description = box3d_description;
     item_class->set_transform = box3d_set_transform;
+    item_class->convert_to_guides = box3d_convert_to_guides;
 }
 
 static void
@@ -1491,22 +1493,22 @@ box3d_convert_to_group(SPBox3D *box) {
     return SP_GROUP(doc->getObjectByRepr(grepr));
 }
 
-static void
+static inline void
 box3d_push_back_corner_pair(SPBox3D *box, std::list<std::pair<Geom::Point, Geom::Point> > &pts, int c1, int c2) {
     pts.push_back(std::make_pair(box3d_get_corner_screen(box, c1).to_2geom(),
                                  box3d_get_corner_screen(box, c2).to_2geom()));
 }
 
 void
-box3d_convert_to_guides(SPBox3D *box, bool write_undo) {
+box3d_convert_to_guides(SPItem *item) {
+    SPBox3D *box = SP_BOX3D(item);
+
     if (prefs_get_int_attribute("tools.shapes.3dbox", "convertguides", 1) == 0) {
         sp_item_convert_to_guides(SP_ITEM(box));
         return;
     }
 
     SPDocument *doc = SP_OBJECT_DOCUMENT(box);
-    //SPDesktop *desktop = inkscape_active_desktop();
-    //Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
@@ -1531,10 +1533,6 @@ box3d_convert_to_guides(SPBox3D *box, bool write_undo) {
     sp_guide_pt_pairs_to_guides(doc, pts);
 
     SP_OBJECT(box)->deleteObject(true);
-
-    if (write_undo) {
-        sp_document_done(doc, SP_VERB_CONTEXT_3DBOX, _("Convert to guides"));
-    }
 }
 
 /*

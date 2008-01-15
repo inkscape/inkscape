@@ -79,7 +79,6 @@
 #include "gradient-drag.h"
 #include "uri-references.h"
 #include "live_effects/lpeobject.h"
-#include "sp-rect.h"
 
 using NR::X;
 using NR::Y;
@@ -2443,16 +2442,12 @@ void sp_selection_to_marker(bool apply)
 }
 
 static void sp_selection_to_guides_recursive(SPItem *item) {
-    if (SP_IS_RECT(item)) {
-        sp_rect_convert_to_guides(SP_RECT(item), false);
-    } else if (SP_IS_BOX3D(item)) {
-        box3d_convert_to_guides(SP_BOX3D(item), false);
-    } else if (SP_IS_GROUP(item)) {
+    if (SP_IS_GROUP(item) && !SP_IS_BOX3D(item)) {
         for (GSList *i = sp_item_group_item_list (SP_GROUP(item)); i != NULL; i = i->next) {
             sp_selection_to_guides_recursive(SP_ITEM(i->data));
         }
     } else {
-        sp_item_convert_to_guides(item);
+        sp_item_convert_item_to_guides(item);
     }
 }
 
