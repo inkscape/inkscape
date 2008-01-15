@@ -3840,7 +3840,7 @@ msgstr "Importar de Open Clip Art Library"
 
 #: ../src/filter-enums.cpp:20
 msgid "Blend"
-msgstr "Misturar"
+msgstr "Mistura"
 
 #: ../src/filter-enums.cpp:21
 msgid "Color Matrix"
@@ -3848,7 +3848,7 @@ msgstr "Matriz de Cores"
 
 #: ../src/filter-enums.cpp:22
 msgid "Component Transfer"
-msgstr "Transferência de Componente"
+msgstr "Transferência de Componentes"
 
 #: ../src/filter-enums.cpp:23
 msgid "Composite"
@@ -3876,7 +3876,7 @@ msgstr "Imagem"
 
 #: ../src/filter-enums.cpp:30
 msgid "Merge"
-msgstr "Mesclar"
+msgstr "Mesclagem"
 
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
@@ -4056,7 +4056,7 @@ msgstr "Apontar Luz"
 
 #: ../src/filter-enums.cpp:125
 msgid "Spot Light"
-msgstr "Lugar de Luz"
+msgstr "Fonte de Luz"
 
 #: ../src/flood-context.cpp:245
 msgid "Visible Colors"
