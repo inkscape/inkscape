@@ -67,95 +67,95 @@ struct SPDocument : public Inkscape::GC::Managed<>,
                     public Inkscape::GC::Finalized,
                     public Inkscape::GC::Anchored
 {
-	typedef sigc::signal<void, SPObject *> IDChangedSignal;
-	typedef sigc::signal<void> ResourcesChangedSignal;
-	typedef sigc::signal<void, guint> ModifiedSignal;
-	typedef sigc::signal<void, gchar const *> URISetSignal;
-	typedef sigc::signal<void, double, double> ResizedSignal;
-	typedef sigc::signal<void> ReconstructionStart;
-	typedef sigc::signal<void> ReconstructionFinish;
+    typedef sigc::signal<void, SPObject *> IDChangedSignal;
+    typedef sigc::signal<void> ResourcesChangedSignal;
+    typedef sigc::signal<void, guint> ModifiedSignal;
+    typedef sigc::signal<void, gchar const *> URISetSignal;
+    typedef sigc::signal<void, double, double> ResizedSignal;
+    typedef sigc::signal<void> ReconstructionStart;
+    typedef sigc::signal<void> ReconstructionFinish;
     typedef sigc::signal<void> CommitSignal;
 
-	SPDocument();
+    SPDocument();
     virtual ~SPDocument();
 
-	unsigned int keepalive : 1;
-	unsigned int virgin    : 1; ///< Has the document never been touched?
+    unsigned int keepalive : 1;
+    unsigned int virgin    : 1; ///< Has the document never been touched?
 
-	Inkscape::XML::Document *rdoc; ///< Our Inkscape::XML::Document
-	Inkscape::XML::Node *rroot; ///< Root element of Inkscape::XML::Document
-	SPObject *root;             ///< Our SPRoot
-	CRCascade *style_cascade;
+    Inkscape::XML::Document *rdoc; ///< Our Inkscape::XML::Document
+    Inkscape::XML::Node *rroot; ///< Root element of Inkscape::XML::Document
+    SPObject *root;             ///< Our SPRoot
+    CRCascade *style_cascade;
 
-	gchar *uri; ///< URI string or NULL
-	gchar *base;
-	gchar *name;
+    gchar *uri; ///< URI string or NULL
+    gchar *base;
+    gchar *name;
 
-	SPDocumentPrivate *priv;
+    SPDocumentPrivate *priv;
 
-	/// Last action key
-	const gchar *actionkey;
-	/// Handler ID
-	guint modified_id;
+    /// Last action key
+    const gchar *actionkey;
+    /// Handler ID
+    guint modified_id;
 
     Inkscape::ProfileManager* profileManager;
 
-	// Instance of the connector router
-	Avoid::Router *router;
+    // Instance of the connector router
+    Avoid::Router *router;
 
-        GSList *perspectives;
+    GSList *perspectives;
 
     Persp3D *current_persp3d; // "currently active" perspective (e.g., newly created boxes are attached to this one)
     std::set<Persp3D *> persps_sel; // perspectives associated to currently selected boxes
 
-        void add_persp3d (Persp3D * const persp);
-        void remove_persp3d (Persp3D * const persp);
+    void add_persp3d (Persp3D * const persp);
+    void remove_persp3d (Persp3D * const persp);
 
-	sigc::connection connectModified(ModifiedSignal::slot_type slot);
-	sigc::connection connectURISet(URISetSignal::slot_type slot);
-	sigc::connection connectResized(ResizedSignal::slot_type slot);
-  sigc::connection connectCommit(CommitSignal::slot_type slot);
+    sigc::connection connectModified(ModifiedSignal::slot_type slot);
+    sigc::connection connectURISet(URISetSignal::slot_type slot);
+    sigc::connection connectResized(ResizedSignal::slot_type slot);
+sigc::connection connectCommit(CommitSignal::slot_type slot);
 
-	void bindObjectToId(gchar const *id, SPObject *object);
-	SPObject *getObjectById(gchar const *id);
-	sigc::connection connectIdChanged(const gchar *id, IDChangedSignal::slot_type slot);
+    void bindObjectToId(gchar const *id, SPObject *object);
+    SPObject *getObjectById(gchar const *id);
+    sigc::connection connectIdChanged(const gchar *id, IDChangedSignal::slot_type slot);
 
-	void bindObjectToRepr(Inkscape::XML::Node *repr, SPObject *object);
-	SPObject *getObjectByRepr(Inkscape::XML::Node *repr);
+    void bindObjectToRepr(Inkscape::XML::Node *repr, SPObject *object);
+    SPObject *getObjectByRepr(Inkscape::XML::Node *repr);
 
     Glib::ustring getLanguage();
 
-	void queueForOrphanCollection(SPObject *object);
-	void collectOrphans();
+    void queueForOrphanCollection(SPObject *object);
+    void collectOrphans();
 
-	void _emitModified();
+    void _emitModified();
 
-	GSList *_collection_queue;
+    GSList *_collection_queue;
 
-	void addUndoObserver(Inkscape::UndoStackObserver& observer);
-	void removeUndoObserver(Inkscape::UndoStackObserver& observer);
+    void addUndoObserver(Inkscape::UndoStackObserver& observer);
+    void removeUndoObserver(Inkscape::UndoStackObserver& observer);
 
-        bool _updateDocument();
+    bool _updateDocument();
 
-	/// Are we currently in a transition between two "known good" states of the document?
-	bool isSeeking() const;
+    /// Are we currently in a transition between two "known good" states of the document?
+    bool isSeeking() const;
 
 private:
-	SPDocument(SPDocument const &); // no copy
-	void operator=(SPDocument const &); // no assign
+    SPDocument(SPDocument const &); // no copy
+    void operator=(SPDocument const &); // no assign
 
 public:
-	sigc::connection connectReconstructionStart(ReconstructionStart::slot_type slot);
-	sigc::connection connectReconstructionFinish (ReconstructionFinish::slot_type  slot);
-	void emitReconstructionStart (void);
-	void emitReconstructionFinish  (void);
+    sigc::connection connectReconstructionStart(ReconstructionStart::slot_type slot);
+    sigc::connection connectReconstructionFinish (ReconstructionFinish::slot_type  slot);
+    void emitReconstructionStart (void);
+    void emitReconstructionFinish  (void);
 
-	unsigned long serial() const;
-        void reset_key (void *dummy);
-        sigc::connection _selection_changed_connection;
-        sigc::connection _desktop_activated_connection;
+    unsigned long serial() const;
+    void reset_key (void *dummy);
+    sigc::connection _selection_changed_connection;
+    sigc::connection _desktop_activated_connection;
 
-	void fitToRect(NR::Rect const &rect);
+    void fitToRect(NR::Rect const &rect);
 };
 
 SPDocument *sp_document_new (const gchar *uri, unsigned int keepalive, bool make_new = false);
