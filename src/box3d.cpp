@@ -53,8 +53,6 @@ static NR::Matrix box3d_set_transform(SPItem *item, NR::Matrix const &xform);
 
 static void box3d_ref_changed(SPObject *old_ref, SPObject *ref, SPBox3D *box);
 static void box3d_ref_modified(SPObject *href, guint flags, SPBox3D *box);
-//static void box3d_ref_changed(SPObject *old_ref, SPObject *ref, Persp3D *persp);
-//static void box3d_ref_modified(SPObject *href, guint flags, Persp3D *persp);
 
 static SPGroupClass *parent_class;
 
@@ -616,6 +614,9 @@ box3d_set_corner (SPBox3D *box, const guint id, NR::Point const &new_pos, const 
 void box3d_set_center (SPBox3D *box, NR::Point const &new_pos, NR::Point const &old_pos, const Box3D::Axis movement, bool constrained) {
     g_return_if_fail ((movement != Box3D::NONE) && (movement != Box3D::XYZ));
 
+    box->orig_corner0.normalize();
+    box->orig_corner7.normalize();
+
     Persp3D *persp = box3d_get_perspective(box);
     if (!(movement & Box3D::Z)) {
         double coord = (box->orig_corner0[Proj::Z] + box->orig_corner7[Proj::Z]) / 2;
@@ -625,6 +626,7 @@ void box3d_set_center (SPBox3D *box, NR::Point const &new_pos, NR::Point const &
         Proj::Pt3 pt_proj (persp->tmat.preimage (new_pos, coord, Proj::Z));
         if (constrained) {
             Proj::Pt3 old_pos_proj (persp->tmat.preimage (old_pos, coord, Proj::Z));
+            old_pos_proj.normalize();
             pt_proj = box3d_snap (box, -1, pt_proj, old_pos_proj);
         }
         // normalizing pt_proj is essential because we want to mingle affine coordinates
