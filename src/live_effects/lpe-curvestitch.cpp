@@ -44,7 +44,7 @@ LPECurveStitch::LPECurveStitch(LivePathEffectObject *lpeobject) :
     nrofpaths(_("Number of paths"), _("The number of paths that will be generated."), "count", &wr, this, 5),
     startpoint_variation(_("Start point jitter"), _("The amount of random jitter to apply to the start points of the stitches"), "startpoint_variation", &wr, this, 0),
     endpoint_variation(_("End point jitter"), _("The amount of random jitter to apply to the end points of the stitches"), "endpoint_variation", &wr, this, 0),
-    spacing_variation(_("Spacing variation"), _("Determines whether lines cluster together or have an equal spacing between each other."), "spacing_variation", &wr, this, 0),
+    spacing_variation(_("Spacing variation"), _("Determines the random deviation from the normal start and end points along the sub-paths (whether lines cluster together or have an equal spacing between each other)."), "spacing_variation", &wr, this, 0),
     prop_scale(_("Scale width"), _("Scaling of the width of the stroke path"), "prop_scale", &wr, this, 1),
     scale_y_rel(_("Scale width relative"), _("Scale the width of the stroke path relative to its length"), "scale_y_rel", &wr, this, false)
 {
@@ -71,6 +71,8 @@ LPECurveStitch::~LPECurveStitch()
 std::vector<Geom::Path>
 LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
 {
+    bool scislac = true;
+
     if (path_in.size() >= 2) {
         startpoint_variation.resetRandomizer();
         endpoint_variation.resetRandomizer();
@@ -93,6 +95,8 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
         gdouble incrementB = (bndsB.max()-bndsB.min()) / (nrofpaths-1);
         gdouble tA = bndsA.min();
         gdouble tB = bndsB.min();
+        gdouble tAclean = tA; // the tA without spacing_variation
+        gdouble tBclean = tB; // the tB without spacing_variation
         for (int i = 0; i < nrofpaths; i++) {
             Point start = A(tA);
             Point end = B(tB);
@@ -116,9 +120,12 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
             // add stuff to one big pw<d2<sbasis> > and then outside the loop convert to path?
             std::vector<Geom::Path> result = Geom::path_from_piecewise(pwd2_out, LPE_CONVERSION_TOLERANCE);
             path_out[i] = result[0];
-            gdouble sv = spacing_variation;
-            tA += incrementA * (1 + sv - spacing_variation.get_value()/2);
-            tB += incrementB * (1 + sv - spacing_variation.get_value()/2);
+            gdouble svA = spacing_variation - spacing_variation.get_value()/2;
+            gdouble svB = scislac ? 0 : svA;
+            tAclean += incrementA;
+            tBclean += incrementB;
+            tA = tAclean + incrementA * svA;
+            tB = tBclean + incrementB * svB;
             if (tA > bndsA.max())
                 tA = bndsA.max();
             if (tB > bndsB.max())
