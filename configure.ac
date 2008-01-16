@@ -9,7 +9,7 @@ dnl version is going to be called until about the time we release it
 dnl (whereas we always know what the previous version was called).
 AC_CANONICAL_HOST
 AC_CONFIG_SRCDIR(src/main.cpp)
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([dist-zip dist-bzip2 tar-pax])
 
 AC_ARG_ENABLE([lsb], AS_HELP_STRING([--enable-lsb], [LSB-compatible build configuration]), [
   prefix=/opt/inkscape
