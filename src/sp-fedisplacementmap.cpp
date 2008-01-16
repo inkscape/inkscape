@@ -22,6 +22,7 @@
 #include "sp-fedisplacementmap.h"
 #include "xml/repr.h"
 #include "display/nr-filter-displacement-map.h"
+#include "helper-fns.h"
 
 /* FeDisplacementMap base class */
 
@@ -136,20 +137,6 @@ static int sp_feDisplacementMap_readChannelSelector(gchar const *value)
     return 3; //default is Alpha Channel
 }
 
-static double
-sp_feDisplacementMap_read_number(gchar const *value) {
-    if (!value) return 0;
-    char *end;
-    double ret = g_ascii_strtod(value, &end);
-    if (*end) {
-        g_warning("Unable to convert \"%s\" to number", value);
-        // We could leave this out, too. If strtod can't convert
-        // anything, it will return zero.
-        ret = 0;
-    }
-    return ret;
-}
-
 /**
  * Sets a specific value in the SPFeDisplacementMap.
  */
@@ -178,7 +165,7 @@ sp_feDisplacementMap_set(SPObject *object, unsigned int key, gchar const *value)
             }
             break;
         case SP_ATTR_SCALE:
-            read_num = sp_feDisplacementMap_read_number(value);
+            read_num = helperfns_read_number(value);
             if (read_num != feDisplacementMap->scale) {
                 feDisplacementMap->scale = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
