@@ -395,7 +395,7 @@ sp_export_dialog (void)
         gchar title[500];
         sp_ui_dialog_title_string (Inkscape::Verb::get(SP_VERB_FILE_EXPORT), title);
 
-        dlg = sp_window_new (title, TRUE);
+        dlg = sp_window_new (title, FALSE);
 
         if (x == -1000 || y == -1000) {
             x = prefs_get_int_attribute (prefs_path, "x", 0);
