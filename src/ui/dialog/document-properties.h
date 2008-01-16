@@ -64,27 +64,25 @@ protected:
     NotebookPage   _page_snap, _page_snap_dtls;
     Gtk::VBox      _grids_vbox;
 
+    Registry _wr;
     //---------------------------------------------------------------
-    RegisteredCheckButton *_rcb_canb, *_rcb_bord, *_rcb_shad;
+    RegisteredCheckButton _rcb_canb, _rcb_bord, _rcb_shad;
     RegisteredColorPicker _rcp_bg, _rcp_bord;
     RegisteredUnitMenu    _rum_deflt;
     PageSizer             _page_sizer;
     //---------------------------------------------------------------
-    RegisteredCheckButton *_rcbgrid;
-    RegisteredUnitMenu    _rums;
-    //---------------------------------------------------------------
-    RegisteredCheckButton *_rcb_sgui, *_rcbsng;
+    RegisteredCheckButton _rcb_sgui, _rcbsng;
     RegisteredUnitMenu    _rum_gusn;
     RegisteredColorPicker _rcp_gui, _rcp_hgui;
     //---------------------------------------------------------------
-    RegisteredCheckButton *_rcbsg, *_rcbsnbb, *_rcbsnn, *_rcbsnop;
-    RegisteredCheckButton *_rcbsnon, *_rcbsnbbp, *_rcbsnbbn;
+    RegisteredCheckButton _rcbsg, _rcbsnbb, _rcbsnn, _rcbsnop;
+    RegisteredCheckButton _rcbsnon, _rcbsnbbp, _rcbsnbbn;
     RegisteredUnitMenu    _rumso;
     ToleranceSlider       _rsu_sno, _rsu_sn, _rsu_gusn;
     RegisteredRadioButtonPair _rrb_pix;
     //---------------------------------------------------------------
-    RegisteredCheckButton *_rcbic;
-    RegisteredCheckButton *_rcbsigg, *_rcbsils;
+    RegisteredCheckButton _rcbic;
+    RegisteredCheckButton _rcbsigg, _rcbsils;
     //---------------------------------------------------------------
     Gtk::Notebook   _grids_notebook;
     Gtk::HBox       _grids_hbox_crea;
@@ -97,7 +95,6 @@ protected:
     //---------------------------------------------------------------
 
     gchar const *_prefs_path;
-    Registry _wr;
 
     Gtk::HBox& _createPageTabLabel(const Glib::ustring& label, const char *label_image);
 
