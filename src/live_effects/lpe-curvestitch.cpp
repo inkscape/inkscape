@@ -71,7 +71,7 @@ LPECurveStitch::~LPECurveStitch()
 std::vector<Geom::Path>
 LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
 {
-    bool scislac = true;
+    bool scislac = false;
 
     if (path_in.size() >= 2) {
         startpoint_variation.resetRandomizer();
