@@ -41,7 +41,7 @@
     </description>
 
   <!-- set global properties for this build -->
-  <property name="version"     value="0.46dev"/>
+  <property name="version"     value="0.45+0.46pre0"/>
   <property name="arch"        value="i686-pc-mingw32-"/>
   <property name="archutil"    value="${arch}"/>
   <!--<property name="archutil"    value=""/>-->
