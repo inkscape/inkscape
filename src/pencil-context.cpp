@@ -21,6 +21,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "selection.h"
+#include "selection-chemistry.h"
 #include "draw-anchor.h"
 #include "message-stack.h"
 #include "message-context.h"
@@ -39,6 +40,7 @@
 #include "xml/repr.h"
 #include "document.h"
 #include "desktop-style.h"
+#include "macros.h"
 
 static void sp_pencil_context_class_init(SPPencilContextClass *klass);
 static void sp_pencil_context_init(SPPencilContext *pc);
@@ -507,6 +509,13 @@ pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint con
                     pencil_cancel (pc);
                     ret = TRUE;
                 }
+            }
+            break;
+        case GDK_g:
+        case GDK_G:
+            if (mod_shift_only(state)) {
+                sp_selection_to_guides();
+                ret = true;
             }
             break;
         default:

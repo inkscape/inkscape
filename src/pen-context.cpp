@@ -23,6 +23,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "selection.h"
+#include "selection-chemistry.h"
 #include "draw-anchor.h"
 #include "message-stack.h"
 #include "message-context.h"
@@ -977,6 +978,13 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
                 // if drawing, cancel, otherwise pass it up for undo
                 pen_cancel (pc);
                 ret = TRUE;
+            }
+            break;
+        case GDK_g:
+        case GDK_G:
+            if (MOD__SHIFT_ONLY) {
+                sp_selection_to_guides();
+                ret = true;
             }
             break;
         case GDK_BackSpace:

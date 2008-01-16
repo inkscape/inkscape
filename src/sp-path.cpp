@@ -30,6 +30,7 @@
 #include "attributes.h"
 
 #include "sp-path.h"
+#include "sp-guide.h"
 
 #include "document.h"
 
@@ -46,6 +47,7 @@ static void sp_path_set(SPObject *object, unsigned key, gchar const *value);
 static Inkscape::XML::Node *sp_path_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
 static NR::Matrix sp_path_set_transform(SPItem *item, NR::Matrix const &xform);
 static gchar * sp_path_description(SPItem *item);
+static void sp_path_convert_to_guides(SPItem *item);
 
 static void sp_path_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_path_update_patheffect(SPShape *shape, bool write);
@@ -101,6 +103,7 @@ sp_path_class_init(SPPathClass * klass)
 
     item_class->description = sp_path_description;
     item_class->set_transform = sp_path_set_transform;
+    item_class->convert_to_guides = sp_path_convert_to_guides;
 
     shape_class->update_patheffect = sp_path_update_patheffect;
 }
@@ -131,6 +134,39 @@ sp_path_description(SPItem * item)
         return g_strdup_printf(ngettext("<b>Path</b> (%i node)",
                                         "<b>Path</b> (%i nodes)",count), count);
     }
+}
+
+static void
+sp_path_convert_to_guides(SPItem *item)
+{
+    SPPath *path = SP_PATH(item);
+
+    SPDocument *doc = SP_OBJECT_DOCUMENT(path);
+    std::list<std::pair<Geom::Point, Geom::Point> > pts;
+
+    NR::Matrix const i2d (sp_item_i2d_affine(SP_ITEM(path)));
+
+    SPCurve *curve = SP_SHAPE(path)->curve;
+    if (!curve) return;
+    NArtBpath *bpath = SP_CURVE_BPATH(curve);
+
+    NR::Point last_pt;
+    NR::Point pt;
+    for (int i = 0; bpath[i].code != NR_END; i++){
+        if (bpath[i].code == NR_LINETO) {
+            /* we only convert straight line segments (converting curve segments would be unintuitive) */
+            pt = bpath[i].c(3) * i2d;
+            pts.push_back(std::make_pair(last_pt.to_2geom(), pt.to_2geom()));
+        }
+
+        /* remember current point for potential reuse in the next step
+           (e.g., in case this was an NR_MOVETO or NR_MOVETO_OPEN) */
+        last_pt = bpath[i].c(3) * i2d;
+    }
+
+    sp_guide_pt_pairs_to_guides(doc, pts);
+
+    SP_OBJECT(path)->deleteObject(true);
 }
 
 /**
