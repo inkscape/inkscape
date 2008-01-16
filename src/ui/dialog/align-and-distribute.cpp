@@ -908,7 +908,7 @@ AlignAndDistribute::AlignAndDistribute()
     _combo.append_text(_("Drawing"));
     _combo.append_text(_("Selection"));
 
-    _combo.set_active(6);
+    _combo.set_active(prefs_get_int_attribute("dialogs.align", "align-to", 6));
     _combo.signal_changed().connect(sigc::mem_fun(*this, &AlignAndDistribute::on_ref_change));
 
     _anchorBox.pack_start(_anchorLabel);
@@ -957,7 +957,10 @@ AlignAndDistribute::~AlignAndDistribute()
 }
 
 void AlignAndDistribute::on_ref_change(){
-//Make blink the master
+
+    prefs_set_int_attribute("dialogs.align", "align-to", _combo.get_active_row_number());
+
+    //Make blink the master
 }
 
 
