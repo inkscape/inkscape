@@ -2621,7 +2621,7 @@ msgstr "Altura:"
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
 #: ../src/filter-enums.cpp:32 ../src/ui/dialog/filter-effects-dialog.cpp:1938
 msgid "Offset"
-msgstr "Deslocamentos"
+msgstr "Deslocamento"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:46
 #: ../src/extension/internal/bitmap/addNoise.cpp:57
@@ -8281,7 +8281,7 @@ msgstr "_Duplicar"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:910
 msgid "_Filter"
-msgstr "_Filtrar"
+msgstr "_Filtro"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:924
 msgid "R_ename"
