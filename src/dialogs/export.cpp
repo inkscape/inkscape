@@ -1301,7 +1301,7 @@ sp_export_browse_clicked (GtkButton */*button*/, gpointer /*userdata*/)
     const gchar *filename;
 
     fs = gtk_file_chooser_dialog_new (_("Select a filename for exporting"),
-                                      NULL,
+                                      (GtkWindow*)dlg,
                                       GTK_FILE_CHOOSER_ACTION_SAVE,
                                       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                       GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
