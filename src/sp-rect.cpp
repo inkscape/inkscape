@@ -607,8 +607,6 @@ sp_rect_convert_to_guides(SPItem *item) {
     pts.push_back(std::make_pair(A4.to_2geom(), A1.to_2geom()));
 
     sp_guide_pt_pairs_to_guides(doc, pts);
-
-    SP_OBJECT(rect)->deleteObject(true);
 }
 
 /*

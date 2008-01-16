@@ -165,8 +165,6 @@ sp_path_convert_to_guides(SPItem *item)
     }
 
     sp_guide_pt_pairs_to_guides(doc, pts);
-
-    SP_OBJECT(path)->deleteObject(true);
 }
 
 /**

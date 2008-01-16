@@ -123,6 +123,7 @@ protected:
 
     PrefRadioButton _t_sel_trans_obj, _t_sel_trans_outl, _t_sel_cue_none, _t_sel_cue_mark,
                     _t_sel_cue_box, _t_bbox_visual, _t_bbox_geometric;
+    PrefCheckButton _t_cvg_keep_objects;
 
     PrefSpinButton  _t_pencil_tolerance;
 

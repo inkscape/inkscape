@@ -334,6 +334,11 @@ void InkscapePreferences::initPageTools()
     _page_tools.add_line( true, "", _t_bbox_geometric, "",
                             _("This bounding box includes only the bare path"));
 
+    _page_tools.add_group_header( _("Conversion to guides:"));
+    _t_cvg_keep_objects.init ( _("Keep objects after conversion to guides"), "tools", "cvg_keep_objects", false);
+    _page_tools.add_line( true, "", _t_cvg_keep_objects, "",
+                            _("When converting an object to guides, don't delete the object after the conversion."));
+
     _calligrapy_use_abs_size.init ( _("Width is in absolute units"), "tools.calligraphic", "abs_width", false);
     _calligrapy_keep_selected.init ( _("Select new path"), "tools.calligraphic", "keep_selected", true);
     _connector_ignore_text.init( _("Don't attach connectors to text objects"), "tools.connector", "ignoretext", true);

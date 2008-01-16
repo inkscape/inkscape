@@ -1531,8 +1531,6 @@ box3d_convert_to_guides(SPItem *item) {
     box3d_push_back_corner_pair(box, pts, 3, 7);
 
     sp_guide_pt_pairs_to_guides(doc, pts);
-
-    SP_OBJECT(box)->deleteObject(true);
 }
 
 /*
