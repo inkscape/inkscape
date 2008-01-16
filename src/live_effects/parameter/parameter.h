@@ -108,7 +108,6 @@ protected:
     gdouble max;
     bool integer;
     gdouble defvalue;
-    Inkscape::UI::Widget::RegisteredScalar * rsu;
     unsigned digits;
     double inc_step;
     double inc_page;

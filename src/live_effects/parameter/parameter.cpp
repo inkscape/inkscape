@@ -57,7 +57,6 @@ ScalarParam::ScalarParam( const Glib::ustring& label, const Glib::ustring& tip,
     min = -NR_HUGE;
     max = NR_HUGE;
     integer = false;
-    rsu = NULL;
     inc_step = 0.1;
     inc_page = 1;
     digits = 2;
@@ -65,8 +64,6 @@ ScalarParam::ScalarParam( const Glib::ustring& label, const Glib::ustring& tip,
 
 ScalarParam::~ScalarParam()
 {
-    if (rsu)
-        delete rsu;
 }
 
 bool
@@ -106,9 +103,6 @@ ScalarParam::param_set_value(gdouble val)
         value = max;
     if (value < min)
         value = min;
-
-    if (rsu && !rsu->is_updating())
-        rsu->setValue(value);
 }
 
 void
@@ -116,8 +110,6 @@ ScalarParam::param_set_range(gdouble min, gdouble max)
 {
     this->min = min;
     this->max = max;
-    if (rsu)
-        rsu->getS()->setRange(this->min, this->max);
 
     param_set_value(value); // reset value to see whether it is in ranges
 }
@@ -129,37 +121,28 @@ ScalarParam::param_make_integer(bool yes)
     digits = 0;
     inc_step = 1;
     inc_page = 10;
-    if (rsu) {
-        rsu->getS()->setDigits(digits);
-        rsu->getS()->setIncrements(inc_step, inc_page);
-    }
 }
 
 Gtk::Widget *
 ScalarParam::param_newWidget(Gtk::Tooltips * tooltips)
 {
-    // WIDGET TODO: This implementation is incorrect, it should create a *new* widget for the caller, not just return an already created widget
-    g_warning("ScalarParam::param_newWidget still needs recoding to work with multiple document views");
-    if (!rsu) {
-        rsu = new Inkscape::UI::Widget::RegisteredScalar();
-        rsu->init(param_label, param_tooltip, param_key, *param_wr, param_effect->getRepr(), param_effect->getSPDoc());
-        rsu->setValue(value);
-        rsu->getS()->setDigits(digits);
-        rsu->getS()->setIncrements(inc_step, inc_page);
-        rsu->getS()->setRange(min, max);
+    Inkscape::UI::Widget::RegisteredScalar *rsu = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalar(
+        param_label, param_tooltip, param_key, *param_wr, param_effect->getRepr(), param_effect->getSPDoc() ) );
 
-        rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
-    }
-    return dynamic_cast<Gtk::Widget *> (rsu->getS());
+    rsu->setValue(value);
+    rsu->setDigits(digits);
+    rsu->setIncrements(inc_step, inc_page);
+    rsu->setRange(min, max);
+
+    rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
+
+    return dynamic_cast<Gtk::Widget *> (rsu);
 }
 
 void
 ScalarParam::param_set_digits(unsigned digits)
 {
     this->digits = digits;
-    if (rsu) {
-        rsu->getS()->setDigits(digits);
-    }
 }
 
 void
@@ -167,9 +150,6 @@ ScalarParam::param_set_increments(double step, double page)
 {
     inc_step = step;
     inc_page = page;
-    if (rsu) {
-        rsu->getS()->setIncrements(inc_step, inc_page);
-    }
 }
 
 

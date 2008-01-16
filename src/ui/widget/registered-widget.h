@@ -218,27 +218,17 @@ protected:
     void on_value_changed();
 };
 
-class RegisteredScalar : public RegisteredWdg {
+class RegisteredScalar : public RegisteredWidget<Scalar> {
 public:
-    RegisteredScalar();
-    ~RegisteredScalar();
-    void init (const Glib::ustring& label,
+    virtual ~RegisteredScalar();
+    RegisteredScalar (const Glib::ustring& label,
             const Glib::ustring& tip,
             const Glib::ustring& key,
             Registry& wr,
-            Inkscape::XML::Node* repr_in,
-            SPDocument *doc_in);
-    inline void init ( const Glib::ustring& label,
-                       const Glib::ustring& tip,
-                       const Glib::ustring& key,
-                       Registry& wr)
-        { init(label, tip, key, wr, NULL, NULL); };
-
-    Scalar* getS();
-    void setValue (double);
+            Inkscape::XML::Node* repr_in = NULL,
+            SPDocument *doc_in = NULL );
 
 protected:
-    Scalar   *_widget;
     sigc::connection  _value_changed_connection;
     void on_value_changed();
 };

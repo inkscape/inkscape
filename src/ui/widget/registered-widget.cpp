@@ -270,51 +270,33 @@ RegisteredScalarUnit::on_value_changed()
 }
 
 
-RegisteredScalar::RegisteredScalar()
-{
-    _widget = NULL;
-}
+/*#########################################
+ * Registered SCALAR
+ */
 
 RegisteredScalar::~RegisteredScalar()
 {
-    if (_widget)
-        delete _widget;
-
     _value_changed_connection.disconnect();
 }
 
-void
-RegisteredScalar::init ( const Glib::ustring& label, const Glib::ustring& tip,
+RegisteredScalar::RegisteredScalar ( const Glib::ustring& label, const Glib::ustring& tip,
                          const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
                          SPDocument * doc_in )
+    : RegisteredWidget<Scalar>(label, tip)
 {
     init_parent(key, wr, repr_in, doc_in);
 
-    _widget = new Scalar (label, tip);
-    _widget->setRange (-1e6, 1e6);
-    _widget->setDigits (2);
-    _widget->setIncrements(0.1, 1.0);
-    _value_changed_connection = _widget->signal_value_changed().connect (sigc::mem_fun (*this, &RegisteredScalar::on_value_changed));
-}
-
-Scalar*
-RegisteredScalar::getS()
-{
-    return _widget;
-}
-
-void
-RegisteredScalar::setValue (double val)
-{
-    if (_widget)
-        _widget->setValue (val);
+    setRange (-1e6, 1e6);
+    setDigits (2);
+    setIncrements(0.1, 1.0);
+    _value_changed_connection = signal_value_changed().connect (sigc::mem_fun (*this, &RegisteredScalar::on_value_changed));
 }
 
 void
 RegisteredScalar::on_value_changed()
 {
-    if (_widget->setProgrammatically) {
-        _widget->setProgrammatically = false;
+    if (setProgrammatically) {
+        setProgrammatically = false;
         return;
     }
 
@@ -324,15 +306,19 @@ RegisteredScalar::on_value_changed()
     _wr->setUpdating (true);
 
     Inkscape::SVGOStringStream os;
-    os << _widget->getValue();
+    os << getValue();
 
-    _widget->set_sensitive(false);
+    set_sensitive(false);
     write_to_xml(os.str().c_str());
-    _widget->set_sensitive(true);
+    set_sensitive(true);
 
     _wr->setUpdating (false);
 }
 
+
+/*#########################################
+ * Registered COLORPICKER
+ */
 
 RegisteredColorPicker::RegisteredColorPicker()
 : _label(0), _cp(0)

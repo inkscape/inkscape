@@ -382,21 +382,22 @@ Gtk::Widget *
 CanvasAxonomGrid::newSpecificWidget()
 {
     Gtk::Table * table = Gtk::manage( new Gtk::Table(1,1) );
+    table->set_spacings(2);
+
+_wr.setUpdating (true);
 
     Inkscape::UI::Widget::RegisteredUnitMenu *_rumg = new Inkscape::UI::Widget::RegisteredUnitMenu();
     Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_ox = new Inkscape::UI::Widget::RegisteredScalarUnit();
     Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_oy = new Inkscape::UI::Widget::RegisteredScalarUnit();
     Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_sy = new Inkscape::UI::Widget::RegisteredScalarUnit();
-    Inkscape::UI::Widget::RegisteredScalar *_rsu_ax = new Inkscape::UI::Widget::RegisteredScalar();
-    Inkscape::UI::Widget::RegisteredScalar *_rsu_az = new Inkscape::UI::Widget::RegisteredScalar();
+    Inkscape::UI::Widget::RegisteredScalar *_rsu_ax = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalar(
+            _("Angle X:"), _("Angle of x-axis"), "gridanglex", _wr, repr, doc ) );
+    Inkscape::UI::Widget::RegisteredScalar *_rsu_az = Gtk::manage(  new Inkscape::UI::Widget::RegisteredScalar(
+            _("Angle Z:"), _("Angle of z-axis"), "gridanglez", _wr, repr, doc ) );
     Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gcol = new Inkscape::UI::Widget::RegisteredColorPicker();
     Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gmcol = new Inkscape::UI::Widget::RegisteredColorPicker();
     Inkscape::UI::Widget::RegisteredSuffixedInteger *_rsi = new Inkscape::UI::Widget::RegisteredSuffixedInteger();
 
-    // initialize widgets:
-    table->set_spacings(2);
-
-_wr.setUpdating (true);
     Inkscape::UI::Widget::ScalarUnit * sutemp = NULL;
     _rumg->init (_("Grid _units:"), "units", _wr, repr, doc);
     _rsu_ox->init (_("_Origin X:"), _("X coordinate of grid origin"),
@@ -414,10 +415,6 @@ _wr.setUpdating (true);
         sutemp = _rsu_sy->getSU();
         sutemp->setDigits(4);
         sutemp->setIncrements(0.1, 1.0);
-    _rsu_ax->init (_("Angle X:"), _("Angle of x-axis"),
-                  "gridanglex", _wr, repr, doc);
-    _rsu_az->init (_("Angle Z:"), _("Angle of z-axis"),
-                  "gridanglez", _wr, repr, doc);
     _rcp_gcol->init (_("Grid line _color:"), _("Grid line color"),
                     _("Color of grid lines"), "color", "opacity", _wr, repr, doc);
     _rcp_gmcol->init (_("Ma_jor grid line color:"), _("Major grid line color"),
@@ -431,8 +428,8 @@ _wr.setUpdating (false);
         0,                  _rsu_ox->getSU(),
         0,                  _rsu_oy->getSU(),
         0,                  _rsu_sy->getSU(),
-        0,                  _rsu_ax->getS(),
-        0,                  _rsu_az->getS(),
+        0,                  _rsu_ax,
+        0,                  _rsu_az,
         _rcp_gcol->_label,   _rcp_gcol->_cp,
         0,                  0,
         _rcp_gmcol->_label,  _rcp_gmcol->_cp,
