@@ -334,6 +334,12 @@ CanvasGrid::newWidget()
     vbox->pack_start(*_rcb_visible, true, true);
     vbox->pack_start(*newSpecificWidget(), true, true);
 
+    // set widget values
+    _rcb_visible->setActive(visible);
+    if (snapper != NULL) {
+        _rcb_enabled->setActive(snapper->getEnabled());
+    }
+
     return dynamic_cast<Gtk::Widget *> (vbox);
 }
 
@@ -703,7 +709,29 @@ _wr.setUpdating (false);
     attach_all (*table, widget_array, sizeof(widget_array));
 
     if (repr) readRepr();
-    updateWidgets();
+
+    // set widget values
+    _rumg->setUnit (gridunit);
+
+    gdouble val;
+    val = origin[NR::X];
+    val = sp_pixels_get_units (val, *(gridunit));
+    _rsu_ox->setValue (val);
+    val = origin[NR::Y];
+    val = sp_pixels_get_units (val, *(gridunit));
+    _rsu_oy->setValue (val);
+    val = spacing[NR::X];
+    double gridx = sp_pixels_get_units (val, *(gridunit));
+    _rsu_sx->setValue (gridx);
+    val = spacing[NR::Y];
+    double gridy = sp_pixels_get_units (val, *(gridunit));
+    _rsu_sy->setValue (gridy);
+
+    _rcp_gcol->setRgba32 (color);
+    _rcp_gmcol->setRgba32 (empcolor);
+    _rsi->setValue (empspacing);
+
+    _rcb_dotted->setActive(render_dotted);
 
     return table;
 }

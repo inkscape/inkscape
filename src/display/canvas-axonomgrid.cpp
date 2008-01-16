@@ -439,7 +439,28 @@ _wr.setUpdating (false);
     attach_all (*table, widget_array, sizeof(widget_array));
 
     if (repr) readRepr();
-    updateWidgets();
+
+    // set widget values
+    _rumg->setUnit (gridunit);
+
+    gdouble val;
+    val = origin[NR::X];
+    val = sp_pixels_get_units (val, *(gridunit));
+    _rsu_ox->setValue (val);
+    val = origin[NR::Y];
+    val = sp_pixels_get_units (val, *(gridunit));
+    _rsu_oy->setValue (val);
+    val = lengthy;
+    double gridy = sp_pixels_get_units (val, *(gridunit));
+    _rsu_sy->setValue (gridy);
+
+    _rsu_ax->setValue(angle_deg[X]);
+    _rsu_az->setValue(angle_deg[Z]);
+
+    _rcp_gcol->setRgba32 (color);
+    _rcp_gmcol->setRgba32 (empcolor);
+    _rsi->setValue (empspacing);
+
     return table;
 }
 
