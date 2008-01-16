@@ -86,12 +86,9 @@ fi
 
 echo -n "checking for automake >= $AUTOMAKE_REQUIRED_VERSION ... "
 # Prefer earlier versions just so that the earliest supported version gets test coverage by developers.
-if (automake-1.7 --version) < /dev/null > /dev/null 2>&1; then
-   AUTOMAKE=automake-1.7
-   ACLOCAL=aclocal-1.7
-elif (automake-1.8 --version) < /dev/null > /dev/null 2>&1; then
-   AUTOMAKE=automake-1.8
-   ACLOCAL=aclocal-1.8
+if (automake-1.10 --version) < /dev/null > /dev/null 2>&1; then
+   AUTOMAKE=automake-1.10
+   ACLOCAL=aclocal-1.10
 elif (automake --version) < /dev/null > /dev/null 2>&1; then
    # Leave unversioned automake for a last resort: it may be a version earlier
    # than what we require.
@@ -101,7 +98,7 @@ elif (automake --version) < /dev/null > /dev/null 2>&1; then
    ACLOCAL=aclocal
 else
     echo
-    echo "  You must have automake 1.7 or newer installed to compile $PROJECT."
+    echo "  You must have automake 1.10 or newer installed to compile $PROJECT."
     echo "  Get ftp://ftp.gnu.org/pub/gnu/automake/automake-1.8.5.tar.gz"
     echo "  (or a newer version of 1.8 if it is available; note that 1.9 is buggy)"
     DIE=1
