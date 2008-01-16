@@ -114,7 +114,7 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
             transform.setTranslation( start );
             Piecewise<D2<SBasis> > pwd2_out = (strokepath-stroke_origin) * transform;
             // add stuff to one big pw<d2<sbasis> > and then outside the loop convert to path?
-            std::vector<Path> result = Geom::path_from_piecewise(pwd2_out, LPE_CONVERSION_TOLERANCE);
+            std::vector<Geom::Path> result = Geom::path_from_piecewise(pwd2_out, LPE_CONVERSION_TOLERANCE);
             path_out[i] = result[0];
             gdouble sv = spacing_variation;
             tA += incrementA * (1 + sv - spacing_variation.get_value()/2);
@@ -140,7 +140,7 @@ LPECurveStitch::resetDefaults(SPItem * item)
 
     // set the stroke path to run horizontally in the middle of the bounding box of the original path
     Piecewise<D2<SBasis> > pwd2;
-    std::vector<Path> temppath = SVGD_to_2GeomPath( SP_OBJECT_REPR(item)->attribute("inkscape:original-d"));
+    std::vector<Geom::Path> temppath = SVGD_to_2GeomPath( SP_OBJECT_REPR(item)->attribute("inkscape:original-d"));
     for (unsigned int i=0; i < temppath.size(); i++) {
         pwd2.concat( temppath[i].toPwSb() );
     }

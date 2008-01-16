@@ -19,70 +19,43 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-template<typename E> class RegisteredEnum : public RegisteredWdg
+template<typename E> class RegisteredEnum : public RegisteredWidget< LabelledComboBoxEnum<E> >
 {
 public:
-    RegisteredEnum() {
-        labelled = NULL;
-    }
-
-    ~RegisteredEnum() {
+    virtual ~RegisteredEnum() {
         _changed_connection.disconnect();
-        if (labelled)
-            delete labelled;
     }
 
-    void init ( const Glib::ustring& label,
+    RegisteredEnum ( const Glib::ustring& label,
                 const Glib::ustring& tip,
                 const Glib::ustring& key,
                 const Util::EnumDataConverter<E>& c,
                 Registry& wr,
-                Inkscape::XML::Node* repr_in,
-                SPDocument *doc_in)
+                Inkscape::XML::Node* repr_in = NULL,
+                SPDocument *doc_in = NULL )
+        : RegisteredWidget< LabelledComboBoxEnum<E> >(label, tip, c)
     {
-        init_parent(key, wr, repr_in, doc_in);
-
-        labelled = new LabelledComboBoxEnum<E> (label, tip, c);
+        RegisteredWidget< LabelledComboBoxEnum<E> >::init_parent(key, wr, repr_in, doc_in);
 
         _changed_connection = combobox()->signal_changed().connect (sigc::mem_fun (*this, &RegisteredEnum::on_changed));
     }
 
-    inline void init ( const Glib::ustring& label,
-                       const Glib::ustring& key,
-                       Registry& wr)
-    {
-        init(label, key, wr, NULL, NULL);
-    }
-
     void set_active_by_id (E id) {
-        ComboBoxEnum<E> * cb = combobox();
-        if (cb)
-            cb->set_active_by_id(id);
+        combobox()->set_active_by_id(id);
     };
 
     void set_active_by_key (const Glib::ustring& key) {
-        ComboBoxEnum<E> * cb = combobox();
-        if (cb)
-        cb->set_active_by_key(key);
+        combobox()->set_active_by_key(key);
     }
 
     inline const Util::EnumData<E>* get_active_data() {
-        ComboBoxEnum<E> * cb = combobox();
-        if (cb)
-            return cb->get_active_data();
-        else
-            return NULL;
+        combobox()->get_active_data();
     }
 
     ComboBoxEnum<E> * combobox() {
-        if (labelled) {
-            return labelled->getCombobox();
-        } else {
-            return NULL;
-        }
+        return LabelledComboBoxEnum<E>::getCombobox();
     }
 
-    LabelledComboBoxEnum<E> * labelled;
     sigc::connection _changed_connection;
 
 protected:
@@ -92,16 +65,17 @@ protected:
             return;
         }
 
-        if (_wr->isUpdating())
+        if (RegisteredWidget< LabelledComboBoxEnum<E> >::_wr->isUpdating())
             return;
-        _wr->setUpdating (true);
+
+        RegisteredWidget< LabelledComboBoxEnum<E> >::_wr->setUpdating (true);
 
         const Util::EnumData<E>* data = combobox()->get_active_data();
         if (data) {
-            write_to_xml(data->key.c_str());
+            RegisteredWidget< LabelledComboBoxEnum<E> >::write_to_xml(data->key.c_str());
         }
 
-        _wr->setUpdating (false);
+        RegisteredWidget< LabelledComboBoxEnum<E> >::_wr->setUpdating (false);
     }
 };
 

@@ -32,11 +32,6 @@
 #include "svg/svg-color.h"
 #include "svg/stringstream.h"
 
-#include "inkscape.h"
-#include "document.h"
-#include "desktop-handles.h"
-#include "sp-namedview.h"
-
 #include "verbs.h"
 
 // for interruptability bug:
@@ -47,37 +42,6 @@ namespace UI {
 namespace Widget {
 
 //===================================================
-
-//---------------------------------------------------
-
-
-
-template<class W>
-void RegisteredWidget<W>::write_to_xml(const char * svgstr)
-{
-    // Use local repr here. When repr is specified, use that one, but
-    // if repr==NULL, get the repr of namedview of active desktop.
-    Inkscape::XML::Node *local_repr = repr;
-    SPDocument *local_doc = doc;
-    if (!local_repr) {
-        // no repr specified, use active desktop's namedview's repr
-        SPDesktop* dt = SP_ACTIVE_DESKTOP;
-        local_repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
-        local_doc = sp_desktop_document(dt);
-    }
-
-    bool saved = sp_document_get_undo_sensitive (local_doc);
-    sp_document_set_undo_sensitive (local_doc, false);
-    if (!write_undo) local_repr->setAttribute(_key.c_str(), svgstr);
-    sp_document_set_undo_sensitive (local_doc, saved);
-
-    local_doc->setModifiedSinceSave();
-
-    if (write_undo) {
-        local_repr->setAttribute(_key.c_str(), svgstr);
-        sp_document_done (local_doc, event_type, event_description);
-    }
-}
 
 void
 RegisteredWdg::write_to_xml(const char * svgstr)

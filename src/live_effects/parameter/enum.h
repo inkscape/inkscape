@@ -33,26 +33,22 @@ public:
                 E default_value)
         : Parameter(label, tip, key, wr, effect)
     {
-        regenum = NULL;
         enumdataconv = &c;
         defvalue = default_value;
         value = defvalue;
     };
-    virtual ~EnumParam() {
-        if (regenum)
-            delete regenum;
-    };
+
+    virtual ~EnumParam() { };
 
     virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips) {
-        // WIDGET TODO: This implementation is incorrect, it should create a *new* widget for the caller, not just return an already created widget
-        g_warning("EnumParam::param_newWidget still needs recoding to work with multiple document views");
-        if (!regenum) {
-            regenum = new Inkscape::UI::Widget::RegisteredEnum<E>();
-            regenum->init(param_label, param_tooltip, param_key, *enumdataconv, *param_wr, param_effect->getRepr(), param_effect->getSPDoc());
-            regenum->combobox()->set_active_by_id(value);
-            regenum->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change enum parameter"));
-        }
-        return dynamic_cast<Gtk::Widget *> (regenum->labelled);
+        Inkscape::UI::Widget::RegisteredEnum<E> *regenum = Gtk::manage ( 
+            new Inkscape::UI::Widget::RegisteredEnum<E>( param_label, param_tooltip,
+                       param_key, *enumdataconv, *param_wr, param_effect->getRepr(), param_effect->getSPDoc() ) );
+
+        regenum->set_active_by_id(value);
+        regenum->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change enum parameter"));
+
+        return dynamic_cast<Gtk::Widget *> (regenum);
     };
 
     bool param_readSVGValue(const gchar * strvalue) {
@@ -80,15 +76,12 @@ public:
 
     void param_set_value(E val) {
         value = val;
-        if (regenum)
-            regenum->combobox()->set_active_by_id(value);
     }
 
 private:
     EnumParam(const EnumParam&);
     EnumParam& operator=(const EnumParam&);
 
-    UI::Widget::RegisteredEnum<E> * regenum;
     E value;
     E defvalue;
 

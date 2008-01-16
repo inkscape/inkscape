@@ -179,7 +179,7 @@ LPEPathAlongPath::resetDefaults(SPItem * item)
 
     // set the bend path to run horizontally in the middle of the bounding box of the original path
     Piecewise<D2<SBasis> > pwd2;
-    std::vector<Path> temppath = SVGD_to_2GeomPath( SP_OBJECT_REPR(item)->attribute("inkscape:original-d"));
+    std::vector<Geom::Path> temppath = SVGD_to_2GeomPath( SP_OBJECT_REPR(item)->attribute("inkscape:original-d"));
     for (unsigned int i=0; i < temppath.size(); i++) {
         pwd2.concat( temppath[i].toPwSb() );
     }
