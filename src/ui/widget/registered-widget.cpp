@@ -73,7 +73,6 @@ void RegisteredWidget<W>::write_to_xml(const char * svgstr)
 
     local_doc->setModifiedSinceSave();
 
-    local_doc->setModifiedSinceSave();
     if (write_undo) {
         local_repr->setAttribute(_key.c_str(), svgstr);
         sp_document_done (local_doc, event_type, event_description);
