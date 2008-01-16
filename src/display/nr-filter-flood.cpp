@@ -10,14 +10,12 @@
  */
 
 #include "display/nr-filter-flood.h"
-#include "display/nr-filter-units.h"
+#include "display/nr-filter-utils.h"
 
 namespace NR {
 
 FilterFlood::FilterFlood()
-{
-    g_warning("FilterFlood::render not implemented.");
-}
+{}
 
 FilterPrimitive * FilterFlood::create() {
     return new FilterFlood();
@@ -33,22 +31,42 @@ int FilterFlood::render(FilterSlot &slot, FilterUnits const &/*units*/) {
         return 1;
     }
 
+    int i;
+    int in_w = in->area.x1 - in->area.x0;
+    int in_h = in->area.y1 - in->area.y0;
+ 
     NRPixBlock *out = new NRPixBlock;
 
     nr_pixblock_setup_fast(out, in->mode,
                            in->area.x0, in->area.y0, in->area.x1, in->area.y1,
                            true);
 
-    unsigned char *in_data = NR_PIXBLOCK_PX(in);
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
 
-//IMPLEMENT ME!
-    (void)in_data;
-    (void)out_data;
+    unsigned char r,g,b,a;
+    r = (unsigned char) (color >> 24) % 256;
+    g = (unsigned char) (color >> 16) % 256;
+    b = (unsigned char) (color >>  8) % 256;
+    a = CLAMP_D_TO_U8(opacity*256);
+
+    for(i=0; i < 4*in_h*in_w; i+=4){
+            out_data[i]=r;
+            out_data[i+1]=g;
+            out_data[i+2]=b;
+            out_data[i+3]=a;
+    }
 
     out->empty = FALSE;
     slot.set(_output, out);
     return 0;
+}
+
+void FilterFlood::set_color(guint32 c) {
+    color = c;
+}
+
+void FilterFlood::set_opacity(double o) {
+    opacity = o;
 }
 
 void FilterFlood::area_enlarge(NRRectL &/*area*/, Matrix const &/*trans*/)

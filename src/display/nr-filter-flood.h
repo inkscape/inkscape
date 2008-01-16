@@ -23,9 +23,14 @@ public:
     FilterFlood();
     static FilterPrimitive *create();
     virtual ~FilterFlood();
-
+    
+    virtual void set_opacity(double o);
+    virtual void set_color(guint32 c);
     virtual int render(FilterSlot &slot, FilterUnits const &units);
     virtual void area_enlarge(NRRectL &area, Matrix const &trans);
+private:
+    double opacity;
+    guint32 color;
 };
 
 } /* namespace NR */

@@ -21,7 +21,8 @@
 #include "svg/svg.h"
 #include "sp-feflood.h"
 #include "xml/repr.h"
-
+#include "helper-fns.h"
+#include "svg/svg-color.h"
 
 /* FeFlood base class */
 
@@ -92,6 +93,8 @@ sp_feFlood_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
+    sp_object_read_attr(object, "flood-opacity");
+    sp_object_read_attr(object, "flood-color");
 }
 
 /**
@@ -112,9 +115,27 @@ sp_feFlood_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeFlood *feFlood = SP_FEFLOOD(object);
     (void)feFlood;
-
+    gchar const *cend_ptr = NULL;
+    guint32 read_color;
+    double read_num;
+    
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
+        case SP_PROP_FLOOD_COLOR:
+            cend_ptr = NULL;
+            read_color = sp_svg_read_color(value, &cend_ptr, 0xffffffff);
+            if (cend_ptr && read_color != feFlood->color){
+                feFlood->color = read_color;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+            break;
+        case SP_PROP_FLOOD_OPACITY:
+            read_num = helperfns_read_number(value);
+            if (read_num != feFlood->opacity){
+                feFlood->opacity = read_num;
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+            break;
         default:
             if (((SPObjectClass *) feFlood_parent_class)->set)
                 ((SPObjectClass *) feFlood_parent_class)->set(object, key, value);
@@ -177,6 +198,9 @@ static void sp_feFlood_build_renderer(SPFilterPrimitive *primitive, NR::Filter *
     g_assert(nr_flood != NULL);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);
+    
+    nr_flood->set_opacity(sp_flood->opacity);
+    nr_flood->set_color(sp_flood->color);
 }
 
 

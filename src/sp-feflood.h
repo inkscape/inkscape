@@ -24,7 +24,8 @@ class SPFeFloodClass;
 
 struct SPFeFlood : public SPFilterPrimitive {
     /** FLOOD ATTRIBUTES HERE */
-    
+    guint32 color;
+    double opacity;
 };
 
 struct SPFeFloodClass {
