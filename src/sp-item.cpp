@@ -1600,7 +1600,7 @@ sp_item_convert_to_guides(SPItem *item) {
     SPDesktop *dt = inkscape_active_desktop();
     SPNamedView *nv = sp_desktop_namedview(dt);
 
-    gchar const *prefs_bbox = prefs_get_string_attribute("tools.select", "bounding_box");
+    gchar const *prefs_bbox = prefs_get_string_attribute("tools", "bounding_box");
     SPItem::BBoxType bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::RENDERING_BBOX;
 
     NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(item, bbox_type);

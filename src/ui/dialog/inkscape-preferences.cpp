@@ -326,6 +326,14 @@ void InkscapePreferences::initPageTools()
     Gtk::TreeModel::iterator iter_tools = this->AddPage(_page_tools, _("Tools"), PREFS_PAGE_TOOLS);    
     _path_tools = _page_list.get_model()->get_path(iter_tools);
 
+    _page_tools.add_group_header( _("Bounding box to use:"));
+    _t_bbox_visual.init ( _("Visual bounding box"), "tools", "bounding_box", "visual", false, 0);
+    _page_tools.add_line( true, "", _t_bbox_visual, "",
+                            _("This bounding box includes stroke width, markers, filter margins, etc."));
+    _t_bbox_geometric.init ( _("Geometric bounding box"), "tools", "bounding_box", "geometric", true, &_t_bbox_visual);
+    _page_tools.add_line( true, "", _t_bbox_geometric, "",
+                            _("This bounding box includes only the bare path"));
+
     _calligrapy_use_abs_size.init ( _("Width is in absolute units"), "tools.calligraphic", "abs_width", false);
     _calligrapy_keep_selected.init ( _("Select new path"), "tools.calligraphic", "keep_selected", true);
     _connector_ignore_text.init( _("Don't attach connectors to text objects"), "tools.connector", "ignoretext", true);
@@ -351,14 +359,6 @@ void InkscapePreferences::initPageTools()
     _t_sel_cue_box.init ( _("Box"), "options.selcue", "value", Inkscape::SelCue::BBOX, false, &_t_sel_cue_none);
     _page_selector.add_line( true, "", _t_sel_cue_box, "", 
                             _("Each selected object displays its bounding box"));
-
-    _page_selector.add_group_header( _("Bounding box to use:"));
-    _t_sel_bbox_visual.init ( _("Visual bounding box"), "tools.select", "bounding_box", "visual", false, 0);
-    _page_selector.add_line( true, "", _t_sel_bbox_visual, "",
-                            _("This bounding box includes stroke width, markers, filter margins, etc."));
-    _t_sel_bbox_geometric.init ( _("Geometric bounding box"), "tools.select", "bounding_box", "geometric", true, &_t_sel_bbox_visual);
-    _page_selector.add_line( true, "", _t_sel_bbox_geometric, "",
-                            _("This bounding box includes only the bare path"));
 
     //Node
     this->AddPage(_page_node, _("Node"), iter_tools, PREFS_PAGE_TOOLS_NODE);

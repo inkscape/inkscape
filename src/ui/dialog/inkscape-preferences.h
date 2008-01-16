@@ -122,7 +122,7 @@ protected:
     PrefSpinButton  _steps_arrow, _steps_scale, _steps_inset, _steps_zoom;
 
     PrefRadioButton _t_sel_trans_obj, _t_sel_trans_outl, _t_sel_cue_none, _t_sel_cue_mark,
-                    _t_sel_cue_box, _t_sel_bbox_visual, _t_sel_bbox_geometric;
+                    _t_sel_cue_box, _t_bbox_visual, _t_bbox_geometric;
 
     PrefSpinButton  _t_pencil_tolerance;
 
