@@ -53,7 +53,7 @@ CairoPsOutput::check (Inkscape::Extension::Extension * module)
 	return TRUE;}
 
 static bool
-ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int level, bool texttopath, bool filtertobitmap)
+ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int level, bool texttopath, bool filtertobitmap, int resolution)
 {
     CairoRenderer *renderer;
     CairoRenderContext *ctx;
@@ -73,6 +73,7 @@ ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int l
     ctx->setPSLevel(level);
     ctx->setTextToPath(texttopath);
     ctx->setFilterToBitmap(filtertobitmap);
+    ctx->setBitmapResolution(resolution);
 
     bool ret = ctx->setPsTarget(filename);
     if(ret) {
@@ -149,11 +150,28 @@ CairoPsOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gc
         g_warning("Parameter <blurToBitmap> might not exists");
     }
 
+    int old_bitmapResolution  = 72;
+    int new_bitmapResolution  = 72;
+    try {
+        old_bitmapResolution  = ext->get_param_int("resolution");
+        new_bitmapResolution = mod->get_param_int("resolution");
+        ext->set_param_int("resolution", new_bitmapResolution);
+    }
+    catch(...) {
+        g_warning("Parameter <resolution> might not exists");
+    }
+
 	gchar * final_name;
 	final_name = g_strdup_printf("> %s", uri);
-	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap);
+	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap, new_bitmapResolution);
 	g_free(final_name);
 
+    try {
+        ext->set_param_int("resolution", old_bitmapResolution);
+    }
+    catch(...) {
+        g_warning("Parameter <resolution> might not exists");
+    }
     try {
         ext->set_param_bool("blurToBitmap", old_blurToBitmap);
     }

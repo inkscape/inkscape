@@ -88,9 +88,14 @@ public:
     bool setSurfaceTarget(cairo_surface_t *surface, bool is_vector);
 
     void setPSLevel(unsigned int level);
+    unsigned int getPSLevel(void);
     void setPDFLevel(unsigned int level);
     void setTextToPath(bool texttopath);
+    bool getTextToPath(void);
     void setFilterToBitmap(bool filtertobitmap);
+    bool getFilterToBitmap(void);
+    void setBitmapResolution(int resolution);
+    int getBitmapResolution(void);
 
     /** Creates the cairo_surface_t for the context with the
     given width, height and with the currently set target
@@ -150,6 +155,7 @@ protected:
     unsigned int _ps_level;
     bool _is_texttopath;
     bool _is_filtertobitmap;
+    int _bitmapresolution;
 
     FILE *_stream;
 

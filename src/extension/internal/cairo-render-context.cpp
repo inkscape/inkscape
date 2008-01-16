@@ -108,6 +108,7 @@ CairoRenderContext::CairoRenderContext(CairoRenderer *parent) :
     _ps_level(1),
     _is_texttopath(FALSE),
     _is_filtertobitmap(FALSE),
+    _bitmapresolution(72),
     _stream(NULL),
     _is_valid(FALSE),
     _vector_based_target(FALSE),
@@ -394,6 +395,11 @@ void CairoRenderContext::setPSLevel(unsigned int level)
     _ps_level = level;
 }
 
+unsigned int CairoRenderContext::getPSLevel(void)
+{
+    return _ps_level;
+}
+
 void CairoRenderContext::setPDFLevel(unsigned int level)
 {
     _pdf_level = level;
@@ -407,6 +413,21 @@ void CairoRenderContext::setTextToPath(bool texttopath)
 void CairoRenderContext::setFilterToBitmap(bool filtertobitmap)
 {
     _is_filtertobitmap = filtertobitmap;
+}
+
+bool CairoRenderContext::getFilterToBitmap(void)
+{
+    return _is_filtertobitmap;
+}
+
+void CairoRenderContext::setBitmapResolution(int resolution)
+{
+    _bitmapresolution = resolution;
+}
+
+int CairoRenderContext::getBitmapResolution(void)
+{
+    return _bitmapresolution;
 }
 
 cairo_surface_t*

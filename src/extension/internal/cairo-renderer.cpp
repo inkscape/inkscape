@@ -176,10 +176,6 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
     NR::Matrix const i2d = sp_item_i2d_affine(item);
 
     SPStyle* style = SP_OBJECT_STYLE (item);
-    if(style->filter.set != 0) {
-        sp_asbitmap_render(item, ctx);
-        return;
-    }
     CairoRenderer *renderer = ctx->getRenderer();
 
     NRBPath bp;
@@ -386,7 +382,11 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     double res;
     /** @TODO reimplement the resolution stuff
     */
-    res = PX_PER_IN;
+    res = ctx->getBitmapResolution();
+    if(res == 0) {
+        res = PX_PER_IN;
+    }
+
 
     // The width and height of the bitmap in pixels
     unsigned width = (unsigned) floor ((bbox.x1 - bbox.x0) * res / PX_PER_IN);
@@ -486,7 +486,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
 static void sp_item_invoke_render(SPItem *item, CairoRenderContext *ctx)
 {
     SPStyle* style = SP_OBJECT_STYLE (item);
-    if(style->filter.set != 0) {
+    if((ctx->getFilterToBitmap() == TRUE) && (style->filter.set != 0)) {
         return sp_asbitmap_render(item, ctx);
     }
 
