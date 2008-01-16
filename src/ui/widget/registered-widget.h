@@ -205,8 +205,8 @@ public:
                 Registry& wr,
                 Inkscape::XML::Node* repr_in,
                 SPDocument *doc_in);
-    inline void init ( const Glib::ustring& label, 
-                       const Glib::ustring& key, 
+    inline void init ( const Glib::ustring& label,
+                       const Glib::ustring& key,
                        Registry& wr)
         { init(label, key, wr, NULL, NULL); };
 
@@ -266,19 +266,19 @@ class RegisteredColorPicker : public RegisteredWdg {
 public:
     RegisteredColorPicker();
     ~RegisteredColorPicker();
-    void init (const Glib::ustring& label, 
-            const Glib::ustring& title, 
-            const Glib::ustring& tip, 
-            const Glib::ustring& ckey, 
+    void init (const Glib::ustring& label,
+            const Glib::ustring& title,
+            const Glib::ustring& tip,
+            const Glib::ustring& ckey,
             const Glib::ustring& akey,
             Registry& wr,
             Inkscape::XML::Node* repr_in,
             SPDocument *doc_in);
-    inline void init ( const Glib::ustring& label, 
-                       const Glib::ustring& title, 
-                       const Glib::ustring& tip, 
-                       const Glib::ustring& ckey, 
-                       const Glib::ustring& akey, 
+    inline void init ( const Glib::ustring& label,
+                       const Glib::ustring& title,
+                       const Glib::ustring& tip,
+                       const Glib::ustring& ckey,
+                       const Glib::ustring& akey,
                        Registry& wr)
         { init(label, title, tip, ckey, akey, wr, NULL, NULL); };
 
@@ -298,22 +298,22 @@ class RegisteredSuffixedInteger : public RegisteredWdg {
 public:
     RegisteredSuffixedInteger();
     ~RegisteredSuffixedInteger();
-    void init (const Glib::ustring& label1, 
-               const Glib::ustring& label2, 
+    void init (const Glib::ustring& label1,
+               const Glib::ustring& label2,
                const Glib::ustring& key,
                Registry& wr,
                Inkscape::XML::Node* repr_in,
                SPDocument *doc_in);
-    inline void init ( const Glib::ustring& label1, 
-                       const Glib::ustring& label2, 
-                       const Glib::ustring& key, 
+    inline void init ( const Glib::ustring& label1,
+                       const Glib::ustring& label2,
+                       const Glib::ustring& key,
                        Registry& wr)
         { init(label1, label2, key, wr, NULL, NULL); };
 
     void setValue (int);
     Gtk::Label *_label;
     Gtk::HBox _hbox;
-    bool setProgrammatically; // true if the value was set by setValue, not changed by the user; 
+    bool setProgrammatically; // true if the value was set by setValue, not changed by the user;
                                 // if a callback checks it, it must reset it back to false
 
 protected:
@@ -328,28 +328,28 @@ class RegisteredRadioButtonPair : public RegisteredWdg {
 public:
     RegisteredRadioButtonPair();
     ~RegisteredRadioButtonPair();
-    void init (const Glib::ustring& label, 
-               const Glib::ustring& label1, 
-               const Glib::ustring& label2, 
-               const Glib::ustring& tip1, 
-               const Glib::ustring& tip2, 
+    void init (const Glib::ustring& label,
+               const Glib::ustring& label1,
+               const Glib::ustring& label2,
+               const Glib::ustring& tip1,
+               const Glib::ustring& tip2,
                const Glib::ustring& key,
                Registry& wr,
                Inkscape::XML::Node* repr_in,
                SPDocument *doc_in);
-    inline void init ( const Glib::ustring& label, 
-                       const Glib::ustring& label1, 
-                       const Glib::ustring& label2, 
-                       const Glib::ustring& tip1, 
-                       const Glib::ustring& tip2, 
-                       const Glib::ustring& key, 
+    inline void init ( const Glib::ustring& label,
+                       const Glib::ustring& label1,
+                       const Glib::ustring& label2,
+                       const Glib::ustring& tip1,
+                       const Glib::ustring& tip2,
+                       const Glib::ustring& key,
                        Registry& wr)
         { init(label, label1, label2, tip1, tip2, key, wr, NULL, NULL); };
 
     void setValue (bool second);
     Gtk::HBox *_hbox;
 
-    bool setProgrammatically; // true if the value was set by setValue, not changed by the user; 
+    bool setProgrammatically; // true if the value was set by setValue, not changed by the user;
                                     // if a callback checks it, it must reset it back to false
 protected:
     Gtk::RadioButton *_rb1, *_rb2;
@@ -361,9 +361,9 @@ protected:
 class RegisteredPoint : public RegisteredWidget<Point> {
 public:
     virtual ~RegisteredPoint();
-    RegisteredPoint ( const Glib::ustring& label, 
-                      const Glib::ustring& tip, 
-                      const Glib::ustring& key, 
+    RegisteredPoint ( const Glib::ustring& label,
+                      const Glib::ustring& tip,
+                      const Glib::ustring& key,
                       Registry& wr,
                       Inkscape::XML::Node* repr_in = NULL,
                       SPDocument *doc_in = NULL );
@@ -378,9 +378,9 @@ protected:
 class RegisteredRandom : public RegisteredWidget<Random> {
 public:
     virtual ~RegisteredRandom();
-    RegisteredRandom ( const Glib::ustring& label, 
-                       const Glib::ustring& tip, 
-                       const Glib::ustring& key, 
+    RegisteredRandom ( const Glib::ustring& label,
+                       const Glib::ustring& tip,
+                       const Glib::ustring& key,
                        Registry& wr,
                        Inkscape::XML::Node* repr_in = NULL,
                        SPDocument *doc_in = NULL);

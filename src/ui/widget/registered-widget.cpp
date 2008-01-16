@@ -41,8 +41,6 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-//===================================================
-
 void
 RegisteredWdg::write_to_xml(const char * svgstr)
 {
@@ -70,7 +68,9 @@ RegisteredWdg::write_to_xml(const char * svgstr)
 }
 
 
-//====================================================
+/*#########################################
+ * Registered CHECKBUTTON
+ */
 
 RegisteredCheckButton::~RegisteredCheckButton()
 {
@@ -125,6 +125,11 @@ RegisteredCheckButton::on_toggled()
     _wr->setUpdating (false);
 }
 
+
+/*#########################################
+ * Registered UNITMENU
+ */
+
 RegisteredUnitMenu::RegisteredUnitMenu()
 : _label(0), _sel(0)
 {
@@ -172,6 +177,10 @@ RegisteredUnitMenu::on_changed()
     _wr->setUpdating (false);
 }
 
+
+/*#########################################
+ * Registered SCALARUNIT
+ */
 
 RegisteredScalarUnit::RegisteredScalarUnit()
 : _widget(0), _um(0)
@@ -358,6 +367,11 @@ RegisteredColorPicker::on_changed (guint32 rgba)
     _wr->setUpdating (false);
 }
 
+
+/*#########################################
+ * Registered SUFFIXEDINTEGER
+ */
+
 RegisteredSuffixedInteger::RegisteredSuffixedInteger()
 : _label(0),
   setProgrammatically(false),
@@ -421,6 +435,11 @@ RegisteredSuffixedInteger::on_value_changed()
 
     _wr->setUpdating (false);
 }
+
+
+/*#########################################
+ * Registered RADIOBUTTONPAIR
+ */
 
 RegisteredRadioButtonPair::RegisteredRadioButtonPair()
 : _hbox(0),
@@ -487,6 +506,7 @@ RegisteredRadioButtonPair::on_value_changed()
     _wr->setUpdating (false);
 }
 
+
 /*#########################################
  * Registered POINT
  */
@@ -497,8 +517,8 @@ RegisteredPoint::~RegisteredPoint()
     _value_y_changed_connection.disconnect();
 }
 
-RegisteredPoint::RegisteredPoint ( const Glib::ustring& label, const Glib::ustring& tip, 
-                        const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, 
+RegisteredPoint::RegisteredPoint ( const Glib::ustring& label, const Glib::ustring& tip,
+                        const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
                         SPDocument* doc_in )
     : RegisteredWidget<Point> (label, tip)
 {
@@ -532,6 +552,7 @@ RegisteredPoint::on_value_changed()
     _wr->setUpdating (false);
 }
 
+
 /*#########################################
  * Registered RANDOM
  */
@@ -542,7 +563,7 @@ RegisteredRandom::~RegisteredRandom()
     _reseeded_connection.disconnect();
 }
 
-RegisteredRandom::RegisteredRandom ( const Glib::ustring& label, const Glib::ustring& tip, 
+RegisteredRandom::RegisteredRandom ( const Glib::ustring& label, const Glib::ustring& tip,
                          const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
                          SPDocument * doc_in )
     : RegisteredWidget<Random> (label, tip)
@@ -559,7 +580,7 @@ RegisteredRandom::RegisteredRandom ( const Glib::ustring& label, const Glib::ust
 void
 RegisteredRandom::setValue (double val, long startseed)
 {
-    static_cast<Scalar*>(this)->setValue (val);
+    Scalar::setValue (val);
     setStartSeed(startseed);
 }
 
