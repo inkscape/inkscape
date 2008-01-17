@@ -1883,6 +1883,8 @@ FilterEffectsDialog::FilterEffectsDialog()
     _sizegroup->set_ignore_hidden();
 
     _add_primitive_type.remove_row(NR_FILTER_IMAGE);
+    _add_primitive_type.remove_row(NR_FILTER_TILE);
+    _add_primitive_type.remove_row(NR_FILTER_COMPONENTTRANSFER);
         
     // Initialize widget hierarchy
     Gtk::HPaned* hpaned = Gtk::manage(new Gtk::HPaned);
@@ -1955,12 +1957,13 @@ void FilterEffectsDialog::init_settings_widgets()
     colmat->signal_attr_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::update_color_matrix));
 
     _settings->type(NR_FILTER_COMPONENTTRANSFER);
-    _settings->add_combo(SP_ATTR_TYPE, _("Type"), ComponentTransferTypeConverter);
+    _settings->add_notimplemented();
+    /*_settings->add_combo(SP_ATTR_TYPE, _("Type"), ComponentTransferTypeConverter);
     _ct_slope = _settings->add_spinslider(SP_ATTR_SLOPE, _("Slope"), -100, 100, 1, 0.01, 1);
     _ct_intercept = _settings->add_spinslider(SP_ATTR_INTERCEPT, _("Intercept"), -100, 100, 1, 0.01, 1);
     _ct_amplitude = _settings->add_spinslider(SP_ATTR_AMPLITUDE, _("Amplitude"), 0, 100, 1, 0.01, 1);
     _ct_exponent = _settings->add_spinslider(SP_ATTR_EXPONENT, _("Exponent"), 0, 100, 1, 0.01, 1);
-    _ct_offset = _settings->add_spinslider(SP_ATTR_OFFSET, _("Offset"), -100, 100, 1, 0.01, 1);
+    _ct_offset = _settings->add_spinslider(SP_ATTR_OFFSET, _("Offset"), -100, 100, 1, 0.01, 1);*/
 
     _settings->type(NR_FILTER_COMPOSITE);
     _settings->add_combo(SP_ATTR_OPERATOR, _("Operator"), CompositeOperatorConverter);
@@ -2016,6 +2019,9 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_spinslider(SP_ATTR_SPECULAREXPONENT, _("Exponent"), 1, 128, 1, 0.01, 1);
     _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length"), 0.01, 10, 1, 0.01, 1);
     _settings->add_lightsource();
+    
+    _settings->type(NR_FILTER_TILE);
+    _settings->add_notimplemented();
 
     _settings->type(NR_FILTER_TURBULENCE);
     _settings->add_checkbutton(SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
