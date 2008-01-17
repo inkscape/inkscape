@@ -944,8 +944,6 @@ FilterEffectsDialog::FilterModifier::~FilterModifier()
 
 void FilterEffectsDialog::FilterModifier::on_activate_desktop(Application*, SPDesktop* desktop, FilterModifier* me)
 {
-    me->update_filters();
-
     me->_doc_replaced.disconnect();
     me->_doc_replaced = desktop->connectDocumentReplaced(
         sigc::mem_fun(me, &FilterModifier::on_document_replaced));
@@ -954,6 +952,10 @@ void FilterEffectsDialog::FilterModifier::on_activate_desktop(Application*, SPDe
     me->_resource_changed =
         sp_document_resources_changed_connect(sp_desktop_document(desktop), "filter",
                                               sigc::mem_fun(me, &FilterModifier::update_filters));
+
+    me->_dialog.setDesktop(desktop);
+
+    me->update_filters();
 }
 
 
