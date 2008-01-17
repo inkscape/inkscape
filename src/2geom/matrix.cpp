@@ -120,7 +120,7 @@ bool Matrix::isIdentity(Coord const eps) const {
 bool Matrix::isTranslation(Coord const eps) const {
     return are_near(_c[0], 1.0) && are_near(_c[1], 0.0) &&
            are_near(_c[2], 0.0) && are_near(_c[3], 1.0) &&
-           !are_near(_c[4], 0.0) && !are_near(_c[5], 0.0);
+           (!are_near(_c[4], 0.0) || !are_near(_c[5], 0.0));
 }
 
 /** Answers the question "Does this matrix perform a scale, and \em{only} a Scale?"
