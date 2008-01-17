@@ -42,16 +42,18 @@ LPECurveStitch::LPECurveStitch(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     strokepath(_("Stroke path"), _("The path that will be used as stitch."), "strokepath", &wr, this, "M0,0 L1,0"),
     nrofpaths(_("Number of paths"), _("The number of paths that will be generated."), "count", &wr, this, 5),
-    startpoint_variation(_("Start point jitter"), _("The amount of random jitter to apply to the start points of the stitches"), "startpoint_variation", &wr, this, 0),
-    endpoint_variation(_("End point jitter"), _("The amount of random jitter to apply to the end points of the stitches"), "endpoint_variation", &wr, this, 0),
-    spacing_variation(_("Spacing variation"), _("Determines the random deviation from the normal start and end points along the sub-paths (whether lines cluster together or have an equal spacing between each other)."), "spacing_variation", &wr, this, 0),
+    startpoint_edge_variation(_("Start edge variance"), _("The amount of random jitter to move the start points of the stitches inside & outside the guide path"), "startpoint_edge_variation", &wr, this, 0),
+    startpoint_spacing_variation(_("Start spacing variance"), _("The amount of random shifting to move the start points of the stitches back & forth along the guide path"), "startpoint_spacing_variation", &wr, this, 0),
+    endpoint_edge_variation(_("End edge variance"), _("The amount of randomness that moves the end points of the stitches inside & outside the guide path"), "endpoint_edge_variation", &wr, this, 0),
+    endpoint_spacing_variation(_("End spacing variance"), _("The amount of random shifting to move the end points of the stitches back & forth along the guide path"), "endpoint_spacing_variation", &wr, this, 0),
     prop_scale(_("Scale width"), _("Scaling of the width of the stroke path"), "prop_scale", &wr, this, 1),
     scale_y_rel(_("Scale width relative"), _("Scale the width of the stroke path relative to its length"), "scale_y_rel", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&nrofpaths) );
-    registerParameter( dynamic_cast<Parameter *>(&startpoint_variation) );
-    registerParameter( dynamic_cast<Parameter *>(&endpoint_variation) );
-    registerParameter( dynamic_cast<Parameter *>(&spacing_variation) );
+    registerParameter( dynamic_cast<Parameter *>(&startpoint_edge_variation) );
+    registerParameter( dynamic_cast<Parameter *>(&startpoint_spacing_variation) );
+    registerParameter( dynamic_cast<Parameter *>(&endpoint_edge_variation) );
+    registerParameter( dynamic_cast<Parameter *>(&endpoint_spacing_variation) );
     registerParameter( dynamic_cast<Parameter *>(&strokepath) );
     registerParameter( dynamic_cast<Parameter *>(&prop_scale) );
     registerParameter( dynamic_cast<Parameter *>(&scale_y_rel) );
@@ -71,12 +73,11 @@ LPECurveStitch::~LPECurveStitch()
 std::vector<Geom::Path>
 LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
 {
-    bool scislac = false;
-
     if (path_in.size() >= 2) {
-        startpoint_variation.resetRandomizer();
-        endpoint_variation.resetRandomizer();
-        spacing_variation.resetRandomizer();
+        startpoint_edge_variation.resetRandomizer();
+        endpoint_edge_variation.resetRandomizer();
+        startpoint_spacing_variation.resetRandomizer();
+        endpoint_spacing_variation.resetRandomizer();
 
         D2<Piecewise<SBasis> > stroke = make_cuts_independant(strokepath);
         Interval bndsStroke = bounds_exact(stroke[0]);
@@ -100,10 +101,10 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
         for (int i = 0; i < nrofpaths; i++) {
             Point start = A(tA);
             Point end = B(tB);
-            if (startpoint_variation.get_value() != 0)
-                start = start + (startpoint_variation - startpoint_variation.get_value()/2) * (end - start);
-            if (endpoint_variation.get_value() != 0)
-                end = end + (endpoint_variation - endpoint_variation.get_value()/2)* (end - start);
+            if (startpoint_edge_variation.get_value() != 0)
+                start = start + (startpoint_edge_variation - startpoint_edge_variation.get_value()/2) * (end - start);
+            if (endpoint_edge_variation.get_value() != 0)
+                end = end + (endpoint_edge_variation - endpoint_edge_variation.get_value()/2)* (end - start);
     
             gdouble scaling_y = 1.0;
             if (scale_y_rel.get_value()) {
@@ -120,8 +121,8 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
             // add stuff to one big pw<d2<sbasis> > and then outside the loop convert to path?
             std::vector<Geom::Path> result = Geom::path_from_piecewise(pwd2_out, LPE_CONVERSION_TOLERANCE);
             path_out[i] = result[0];
-            gdouble svA = spacing_variation - spacing_variation.get_value()/2;
-            gdouble svB = scislac ? 0 : svA;
+            gdouble svA = startpoint_spacing_variation - startpoint_spacing_variation.get_value()/2;
+            gdouble svB = endpoint_spacing_variation - endpoint_spacing_variation.get_value()/2;
             tAclean += incrementA;
             tBclean += incrementB;
             tA = tAclean + incrementA * svA;

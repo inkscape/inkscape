@@ -35,9 +35,10 @@ public:
 private:
     PathParam strokepath;
     ScalarParam nrofpaths;
-    RandomParam startpoint_variation;
-    RandomParam endpoint_variation;
-    RandomParam spacing_variation;
+    RandomParam startpoint_edge_variation;
+    RandomParam startpoint_spacing_variation;
+    RandomParam endpoint_edge_variation;
+    RandomParam endpoint_spacing_variation;
     ScalarParam prop_scale;
     BoolParam scale_y_rel;
 
