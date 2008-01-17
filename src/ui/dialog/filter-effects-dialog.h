@@ -165,6 +165,7 @@ private:
 
         SPFilterPrimitive* get_selected();
         void select(SPFilterPrimitive *prim);
+        void remove_selected();
 
         int primitive_count() const;
     protected:

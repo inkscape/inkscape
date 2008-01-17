@@ -1331,7 +1331,21 @@ void FilterEffectsDialog::PrimitiveList::select(SPFilterPrimitive* prim)
     }
 }
 
+void FilterEffectsDialog::PrimitiveList::remove_selected()
+{
+    SPFilterPrimitive* prim = get_selected();
 
+    if(prim) {
+        _observer->set(0);
+
+        sp_repr_unparent(prim->repr);
+
+        sp_document_done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_FILTER_EFFECTS,
+                         _("Remove filter primitive"));
+
+        update();
+    }
+}
 
 bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
 {
@@ -1889,7 +1903,7 @@ FilterEffectsDialog::FilterEffectsDialog()
     ((Gtk::Label*)fr_settings->get_label_widget())->set_use_markup();
     _add_primitive.signal_clicked().connect(sigc::mem_fun(*this, &FilterEffectsDialog::add_primitive));
     _primitive_list.set_menu(create_popup_menu(*this, sigc::mem_fun(*this, &FilterEffectsDialog::duplicate_primitive),
-                                               sigc::mem_fun(*this, &FilterEffectsDialog::remove_primitive)));
+                                               sigc::mem_fun(_primitive_list, &PrimitiveList::remove_selected)));
     
     show_all_children();
     init_settings_widgets();
@@ -2007,20 +2021,6 @@ void FilterEffectsDialog::add_primitive()
         _primitive_list.select(prim);
 
         sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Add filter primitive"));
-    }
-}
-
-void FilterEffectsDialog::remove_primitive()
-{
-    SPFilterPrimitive* prim = _primitive_list.get_selected();
-
-    if(prim) {
-        sp_repr_unparent(prim->repr);
-
-        sp_document_done(sp_desktop_document(getDesktop()), SP_VERB_DIALOG_FILTER_EFFECTS,
-                         _("Remove filter primitive"));
-
-        _primitive_list.update();
     }
 }
 
