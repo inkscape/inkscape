@@ -165,6 +165,22 @@ LPECurveStitch::resetDefaults(SPItem * item)
     strokepath.param_set_and_write_new_value( path.toPwSb() );
 }
 
+void
+LPECurveStitch::transform_multiply(Geom::Matrix const& postmul, bool set)
+{
+    // only take translations into account
+    if (postmul.isTranslation()) {
+        strokepath.param_transform_multiply(postmul, set);
+    } else if (!scale_y_rel.get_value()) {
+  // this basically means that for this transformation, the result should be the same as normal scaling the result path
+  // don't know how to do this yet.
+//        Geom::Matrix new_postmul;
+        //new_postmul.setIdentity();
+//        new_postmul.setTranslation(postmul.translation());
+//        Effect::transform_multiply(new_postmul, set);
+    }
+}
+
 } //namespace LivePathEffect
 } /* namespace Inkscape */
 
