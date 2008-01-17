@@ -53,6 +53,7 @@ public:
 protected:
     std::string msgstr;
 };
+#define throwException(message) throw(Geom::Exception(message, __FILE__, __LINE__))
 
 //-----------------------------------------------------------------------
 // Two main exception classes: LogicalError and RangeError.

@@ -13,6 +13,7 @@ This is wrong, it should read
 #include "choose.h"
 #include "svg-path.h"
 #include <iostream>
+#include "exception.h"
 
 namespace Geom{
 
@@ -179,7 +180,9 @@ subpath_from_sbasis_incremental(Geom::OldPathSetBuilder &pb, D2<SBasis> B, doubl
 #endif
 
 void build_from_sbasis(Geom::PathBuilder &pb, D2<SBasis> const &B, double tol) {
-    assert(B.isFinite());
+    if (!B.isFinite()) {
+        throwException("assertion failed: B.isFinite()");
+    }
     if(tail_error(B, 2) < tol || sbasis_size(B) == 2) { // nearly cubic enough
         if(sbasis_size(B) <= 1) {
             pb.lineTo(B.at1());
