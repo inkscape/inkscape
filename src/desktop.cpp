@@ -314,6 +314,8 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
 
 void SPDesktop::destroy()
 {
+    namedview->hide(this);
+
     _activate_connection.disconnect();
     _deactivate_connection.disconnect();
     _sel_modified_connection.disconnect();
@@ -1086,9 +1088,11 @@ SPDesktop::shutdown()
 
 bool SPDesktop::onDeleteUI (GdkEventAny*)
 {
-	if(shutdown()) return true;
-	destroyWidget();
-	return false;
+    if(shutdown()) 
+        return true;
+
+    destroyWidget();
+    return false;
 }
 
 /**

@@ -281,9 +281,9 @@ static void sp_namedview_release(SPObject *object)
 
     // delete grids:
     while ( namedview->grids ) {
-        Inkscape::CanvasGrid *gr = (Inkscape::CanvasGrid *)namedview->grids->data;
+        Inkscape::CanvasGrid *gr = (Inkscape::CanvasGrid *)namedview->grids->data; // get first entry
         delete gr;
-        namedview->grids = g_slist_remove_link(namedview->grids, namedview->grids);
+        namedview->grids = g_slist_remove_link(namedview->grids, namedview->grids); // deletes first entry
     }
 
     if (((SPObjectClass *) parent_class)->release) {
@@ -575,6 +575,10 @@ sp_namedview_add_grid(SPNamedView *nv, Inkscape::XML::Node *repr, SPDesktop *des
             doc = sp_desktop_document(desktop);
         else
             doc = sp_desktop_document(static_cast<SPDesktop*>(nv->views->data));
+        if (!doc) {
+            g_warning("sp_namedview_add_grid - how come doc is null here?!");
+            return NULL;
+        }
         grid = Inkscape::CanvasGrid::NewGrid(nv, repr, doc, gridtype);
         nv->grids = g_slist_append(nv->grids, grid);
         //Initialize the snapping parameters for the new grid
@@ -833,13 +837,6 @@ void SPNamedView::hide(SPDesktop const *desktop)
     }
 
     views = g_slist_remove(views, desktop);
-
-    // delete grids:
-    while ( grids ) {
-        Inkscape::CanvasGrid *gr = (Inkscape::CanvasGrid *)grids->data;
-        delete gr;
-        grids = g_slist_remove_link(grids, grids);
-    }
 }
 
 void SPNamedView::activateGuides(gpointer desktop, gboolean active)
