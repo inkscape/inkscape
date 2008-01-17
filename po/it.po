@@ -1126,8 +1126,9 @@ msgstr "Disattiva riempimento"
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
 msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
 msgstr[0] ""
-"<b>%d</b> oggetto trovato (su un totale di <b>%d</b>), corrispondenza %s.<b>%"
-"d</b> oggetti trovati (su un totale di <b>%d</b>), corrispondenza %s."
+"<b>%d</b> oggetto trovato (su un totale di <b>%d</b>), corrispondenza %s."
+msgstr[1] ""
+"<b>%d</b> oggetti trovati (su un totale di <b>%d</b>), corrispondenza %s."
 
 #: ../src/dialogs/find.cpp:375 ../src/ui/dialog/find.cpp:437
 msgid "exact"
@@ -4215,7 +4216,9 @@ msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] ""
 "<b>Gradiente</b> per %d oggetto; con <b>Ctrl</b> per far scattare "
-"l'angolo<b>Gradiente</b> per %d oggetti; con <b>Ctrl</b> per far scattare "
+"l'angolo"
+msgstr[1] ""
+"<b>Gradiente</b> per %d oggetti; con <b>Ctrl</b> per far scattare "
 "l'angolo"
 
 #: ../src/gradient-context.cpp:897
@@ -7324,8 +7327,8 @@ msgstr[1] "<b>Distorsione</b> di %d oggetti selezionati"
 #, c-format
 msgid "<b>Shrinking %d</b> selected object"
 msgid_plural "<b>Shrinking %d</b> selected objects"
-msgstr[0] "<b>Riduzione</b> di % oggetto selezionato"
-msgstr[1] "<b>Riduzione</b> di % oggetti selezionati"
+msgstr[0] "<b>Riduzione</b> di %d oggetto selezionato"
+msgstr[1] "<b>Riduzione</b> di %d oggetti selezionati"
 
 #: ../src/tweak-context.cpp:974
 #, c-format
@@ -7353,7 +7356,7 @@ msgstr[1] "<b>Repulsione</b> di %d oggetti selezionati"
 msgid "<b>Roughening %d</b> selected object"
 msgid_plural "<b>Roughening %d</b> selected objects"
 msgstr[0] "<b>Increspatura</b> di %d oggetto selezionato"
-msgstr[1] "<b>Niente</b> da eliminare."
+msgstr[1] "<b>Increspatura</b> di %d oggetti selezionati"
 
 #: ../src/tweak-context.cpp:993
 #, c-format

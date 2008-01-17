@@ -14,8 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"Program Version: 0.44-pre2\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
@@ -4214,7 +4213,7 @@ msgstr "反转渐变"
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] "%d个对象<b>渐变</b>；按住 <b>Ctrl</b> 捕捉角"
-msgstr[1] ""
+msgstr[1] "%d个对象<b>渐变</b>；按住 <b>Ctrl</b> 捕捉角"
 
 #: ../src/gradient-context.cpp:897
 msgid "Select <b>objects</b> on which to create gradient."
@@ -4238,7 +4237,7 @@ msgid ""
 "%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl"
 "+Alt</b> to delete stop"
 msgstr ""
-"%s 为： %s%s；按住 <b>Ctrl</b> 拖动捕捉角，按住 <b>Ctrl+Alt</b> 保持角度，按"
+"%s %d 为： %s%s；按住 <b>Ctrl</b> 拖动捕捉角，按住 <b>Ctrl+Alt</b> 保持角度，按"
 "住 <b>Ctrl+Shift</b> 以中心缩放"
 
 #: ../src/gradient-drag.cpp:1125 ../src/gradient-drag.cpp:1132
@@ -5466,6 +5465,8 @@ msgid ""
 msgid_plural ""
 "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgstr[0] ""
+"<b>%i</b> / <b>%i</b> 节点已选择在 <b>%i</b> / <b>%i</b> 子路径中 %s。"
+msgstr[1] ""
 "<b>%i</b> / <b>%i</b> 节点已选择在 <b>%i</b> / <b>%i</b> 子路径中 %s。"
 
 #: ../src/nodepath.cpp:4484

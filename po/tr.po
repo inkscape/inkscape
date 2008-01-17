@@ -18,7 +18,7 @@ msgstr ""
 "X-Poedit-Country: TURKEY\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Generator: KBabel 1.11\n"
-"Plural-Forms:  nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
@@ -6803,14 +6803,12 @@ msgstr ""
 msgid "<b>Path</b> (%i node, path effect)"
 msgid_plural "<b>Path</b> (%i nodes, path effect)"
 msgstr[0] "<b>Yol</b> (%i düğüm)"
-msgstr[1] "<b>Yol</b> (%i düğümler)"
 
 #: ../src/sp-path.cpp:131
 #, c-format
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
 msgstr[0] "<b>Yol</b> (%i düğüm)"
-msgstr[1] "<b>Yol</b> (%i düğümler)"
 
 #: ../src/sp-polygon.cpp:235
 msgid "<b>Polygon</b>"
@@ -6843,14 +6841,14 @@ msgstr ""
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
 msgstr[0] "<b>Çokgen</b>%d vertex"
-msgstr[1] ""
+
 
 #: ../src/sp-star.cpp:311
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
 msgstr[0] "<b>Çokgen</b>%d vertex"
-msgstr[1] ""
+
 
 #: ../src/sp-switch.cpp:100
 #, c-format
