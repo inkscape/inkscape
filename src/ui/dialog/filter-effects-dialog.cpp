@@ -597,6 +597,13 @@ public:
         _current_type = t;
     }
 
+    void add_notimplemented()
+    {
+        Gtk::Label* lbl = Gtk::manage(new Gtk::Label("This SVG filter effect is not yet implemented in Inkscape."));
+
+        add_widget(lbl, "");
+    }
+
     // LightSource
     LightSourceControl* add_lightsource();
 
@@ -1874,6 +1881,8 @@ FilterEffectsDialog::FilterEffectsDialog()
                              NR_FILTER_ENDPRIMITIVETYPE);
     _sizegroup = Gtk::SizeGroup::create(Gtk::SIZE_GROUP_HORIZONTAL);
     _sizegroup->set_ignore_hidden();
+
+    _add_primitive_type.remove_row(NR_FILTER_IMAGE);
         
     // Initialize widget hierarchy
     Gtk::HPaned* hpaned = Gtk::manage(new Gtk::HPaned);
@@ -1992,6 +2001,9 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->type(NR_FILTER_MORPHOLOGY);
     _settings->add_combo(SP_ATTR_OPERATOR, _("Operator"), MorphologyOperatorConverter);
     _settings->add_dualspinslider(SP_ATTR_RADIUS, _("Radius"), 0, 100, 1, 0.01, 1);
+
+    _settings->type(NR_FILTER_IMAGE);
+    _settings->add_notimplemented();
 
     _settings->type(NR_FILTER_OFFSET);
     _settings->add_spinslider(SP_ATTR_DX, _("Delta X"), -100, 100, 1, 0.01, 1);

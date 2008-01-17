@@ -77,6 +77,20 @@ public:
         row[_columns.label] = s;
     }
 
+    void remove_row(E id) {
+        Gtk::TreeModel::iterator i;
+        
+        for(i = _model->children().begin(); i != _model->children().end(); ++i) {
+            const Util::EnumData<E>* data = (*i)[_columns.data];
+
+            if(data->id == id)
+                break;
+        }
+
+        if(i != _model->children().end())
+            _model->erase(i);
+    }
+
     void set_active_by_id(E id) {
         setProgrammatically = true;
         for(Gtk::TreeModel::iterator i = _model->children().begin();
