@@ -87,11 +87,15 @@ DocumentProperties::DocumentProperties()
       _rcb_canb(_("Show page _border"), _("If set, rectangular page border is shown"), "showborder", _wr, false),
       _rcb_bord(_("Border on _top of drawing"), _("If set, border is always on top of the drawing"), "borderlayer", _wr, false),
       _rcb_shad(_("_Show border shadow"), _("If set, page border shows a shadow on its right and lower side"), "inkscape:showpageshadow", _wr, false),
+      _rcp_bg(_("Back_ground:"), _("Background color"), _("Color and transparency of the page background (also used for bitmap export)"), "pagecolor", "inkscape:pageopacity", _wr),
+      _rcp_bord(_("Border _color:"), _("Page border color"), _("Color of the page border"), "bordercolor", "borderopacity", _wr),
     //---------------------------------------------------------------
       //General snap options
       _rcb_sgui(_("Show _guides"), _("Show or hide guides"), "showguides", _wr),
       _rcbsng(_("_Snap guides while dragging"), _("While dragging a guide, snap to object nodes or bounding box corners ('Snap to nodes' or 'snap to bounding box corners' must be enabled in the 'Snap' tab; only a small part of the guide near the cursor will snap)"),
                   "inkscape:snap-guide", _wr),
+      _rcp_gui(_("Guide co_lor:"), _("Guideline color"), _("Color of guidelines"), "guidecolor", "guideopacity", _wr),
+      _rcp_hgui(_("_Highlight color:"), _("Highlighted guideline color"), _("Color of a guideline when it is under mouse"), "guidehicolor", "guidehiopacity", _wr),
     //---------------------------------------------------------------
       _rcbsg(_("_Enable snapping"), _("Toggle snapping on or off"), "inkscape:snap-global", _wr),
       _rcbsnbb(_("_Bounding box corners"), _("Only available in the selector tool: snap bounding box corners to guides, to grids, and to other bounding boxes (but not to nodes or paths)"),
@@ -101,8 +105,8 @@ DocumentProperties::DocumentProperties()
       //Options for snapping to objects
       _rcbsnop(_("Snap to path_s"), _("Snap nodes to object paths"), "inkscape:object-paths", _wr),
       _rcbsnon(_("Snap to n_odes"), _("Snap nodes and guides to object nodes"), "inkscape:object-nodes", _wr),
-      _rcbsnbbn(_("Snap to bounding box co_rners"), _("Snap bounding box corners to other bounding box corners"), "inkscape:bbox-nodes", _wr),
       _rcbsnbbp(_("Snap to bounding bo_x edges"), _("Snap bounding box corners and guides to bounding box edges"), "inkscape:bbox-paths", _wr),
+      _rcbsnbbn(_("Snap to bounding box co_rners"), _("Snap bounding box corners to other bounding box corners"), "inkscape:bbox-nodes", _wr),
     //---------------------------------------------------------------
        //Applies to both nodes and guides, but not to bboxes, that's why its located here
       _rcbic( _("Rotation _center"), _("Consider the rotation center of an object when snapping"), "inkscape:snap-center", _wr),
@@ -213,13 +217,6 @@ DocumentProperties::build_page()
 {
     _page_page.show();
 
-    _rcp_bg.init(  _("Back_ground:"),
-                   _("Background color"), 
-                   _("Color and transparency of the page background (also used for bitmap export)"),
-                   "pagecolor", "inkscape:pageopacity", _wr);
-    _rcp_bord.init (_("Border _color:"), _("Page border color"),
-                    _("Color of the page border"),
-                    "bordercolor", "borderopacity", _wr);
     _rum_deflt.init (_("Default _units:"), "inkscape:document-units", _wr);
 
     Gtk::Label* label_gen = manage (new Gtk::Label);
@@ -234,7 +231,7 @@ DocumentProperties::build_page()
     {
         label_gen,         0,
         _rum_deflt._label, _rum_deflt._sel,
-        _rcp_bg._label,    _rcp_bg._cp,
+        _rcp_bg._label,    &_rcp_bg,
         0,                 0,
         label_for,         0,
         0,                 &_page_sizer,
@@ -243,7 +240,7 @@ DocumentProperties::build_page()
         0,                 &_rcb_canb,
         0,                 &_rcb_bord,
         0,                 &_rcb_shad,
-        _rcp_bord._label,  _rcp_bord._cp,
+        _rcp_bord._label,  &_rcp_bord,
     };
 
     attach_all(_page_page.table(), widget_array, G_N_ELEMENTS(widget_array));
@@ -254,22 +251,16 @@ DocumentProperties::build_guides()
 {
     _page_guides.show();
 
-    _rcp_gui.init (_("Guide co_lor:"), _("Guideline color"),
-                   _("Color of guidelines"), "guidecolor", "guideopacity", _wr);
-    _rcp_hgui.init (_("_Highlight color:"), _("Highlighted guideline color"),
-                    _("Color of a guideline when it is under mouse"),
-                    "guidehicolor", "guidehiopacity", _wr);
-
     Gtk::Label *label_gui = manage (new Gtk::Label);
     label_gui->set_markup (_("<b>Guides</b>"));
 
     Gtk::Widget *const widget_array[] =
     {
-        label_gui,       0,
-        0,               &_rcb_sgui,
-        _rcp_gui._label, _rcp_gui._cp,
-        _rcp_hgui._label, _rcp_hgui._cp,
-        0,               &_rcbsng,
+        label_gui,        0,
+        0,                &_rcb_sgui,
+        _rcp_gui._label,  &_rcp_gui,
+        _rcp_hgui._label, &_rcp_hgui,
+        0,                &_rcbsng,
     };
 
     attach_all(_page_guides.table(), widget_array, G_N_ELEMENTS(widget_array));

@@ -394,8 +394,18 @@ _wr.setUpdating (true);
             _("Angle X:"), _("Angle of x-axis"), "gridanglex", _wr, repr, doc ) );
     Inkscape::UI::Widget::RegisteredScalar *_rsu_az = Gtk::manage(  new Inkscape::UI::Widget::RegisteredScalar(
             _("Angle Z:"), _("Angle of z-axis"), "gridanglez", _wr, repr, doc ) );
-    Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gcol = new Inkscape::UI::Widget::RegisteredColorPicker();
-    Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gmcol = new Inkscape::UI::Widget::RegisteredColorPicker();
+
+    Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gcol = Gtk::manage(
+        new Inkscape::UI::Widget::RegisteredColorPicker(
+            _("Grid line _color:"), _("Grid line color"), _("Color of grid lines"), 
+            "color", "opacity", _wr, repr, doc));
+
+    Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gmcol = Gtk::manage(
+        new Inkscape::UI::Widget::RegisteredColorPicker(
+            _("Ma_jor grid line color:"), _("Major grid line color"), 
+            _("Color of the major (highlighted) grid lines"),
+            "empcolor", "empopacity", _wr, repr, doc));
+
     Inkscape::UI::Widget::RegisteredSuffixedInteger *_rsi = new Inkscape::UI::Widget::RegisteredSuffixedInteger();
 
     Inkscape::UI::Widget::ScalarUnit * sutemp = NULL;
@@ -415,11 +425,6 @@ _wr.setUpdating (true);
         sutemp = _rsu_sy->getSU();
         sutemp->setDigits(4);
         sutemp->setIncrements(0.1, 1.0);
-    _rcp_gcol->init (_("Grid line _color:"), _("Grid line color"),
-                    _("Color of grid lines"), "color", "opacity", _wr, repr, doc);
-    _rcp_gmcol->init (_("Ma_jor grid line color:"), _("Major grid line color"),
-                     _("Color of the major (highlighted) grid lines"),
-                     "empcolor", "empopacity", _wr, repr, doc);
     _rsi->init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr, doc);
 _wr.setUpdating (false);
 
@@ -430,9 +435,9 @@ _wr.setUpdating (false);
         0,                  _rsu_sy->getSU(),
         0,                  _rsu_ax,
         0,                  _rsu_az,
-        _rcp_gcol->_label,   _rcp_gcol->_cp,
+        _rcp_gcol->_label,   _rcp_gcol,
         0,                  0,
-        _rcp_gmcol->_label,  _rcp_gmcol->_cp,
+        _rcp_gmcol->_label,  _rcp_gmcol,
         _rsi->_label,        &_rsi->_hbox,
     };
 

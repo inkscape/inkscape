@@ -293,42 +293,41 @@ RegisteredScalar::on_value_changed()
  * Registered COLORPICKER
  */
 
-RegisteredColorPicker::RegisteredColorPicker()
-: _label(0), _cp(0)
-{
-}
-
-RegisteredColorPicker::~RegisteredColorPicker()
-{
-    _changed_connection.disconnect();
-    if (_cp) delete _cp;
-    if (_label) delete _label;
-}
-
-void
-RegisteredColorPicker::init (const Glib::ustring& label, const Glib::ustring& title, const Glib::ustring& tip, const Glib::ustring& ckey, const Glib::ustring& akey, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+RegisteredColorPicker::RegisteredColorPicker(const Glib::ustring& label,
+                                             const Glib::ustring& title,
+                                             const Glib::ustring& tip,
+                                             const Glib::ustring& ckey,
+                                             const Glib::ustring& akey,
+                                             Registry& wr,
+                                             Inkscape::XML::Node* repr_in,
+                                             SPDocument *doc_in)
+    : RegisteredWidget<ColorPicker> (title, tip, 0, true)
 {
     init_parent("", wr, repr_in, doc_in);
 
     _label = new Gtk::Label (label, 1.0, 0.5);
     _label->set_use_underline (true);
-    _cp = new ColorPicker (title,tip,0,true);
-    _label->set_mnemonic_widget (*_cp);
+    _label->set_mnemonic_widget (*this);
     _ckey = ckey;
     _akey = akey;
-    _changed_connection = _cp->connectChanged (sigc::mem_fun (*this, &RegisteredColorPicker::on_changed));
+    _changed_connection = connectChanged (sigc::mem_fun (*this, &RegisteredColorPicker::on_changed));
+}
+
+RegisteredColorPicker::~RegisteredColorPicker()
+{
+    _changed_connection.disconnect();
 }
 
 void
 RegisteredColorPicker::setRgba32 (guint32 rgba)
 {
-    _cp->setRgba32 (rgba);
+    ColorPicker::setRgba32 (rgba);
 }
 
 void
 RegisteredColorPicker::closeWindow()
 {
-    _cp->closeWindow();
+    ColorPicker::closeWindow();
 }
 
 void

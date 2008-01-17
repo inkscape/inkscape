@@ -23,6 +23,7 @@
 
 #include "ui/widget/point.h"
 #include "ui/widget/random.h"
+#include "ui/widget/color-picker.h"
 #include "inkscape.h"
 
 #include "document.h"
@@ -42,7 +43,6 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-class ColorPicker;
 class Registry;
 class Scalar;
 class ScalarUnit;
@@ -71,6 +71,8 @@ protected:
     RegisteredWidget( A& a, B& b ): W( a, b ) { construct(); }
     template< typename A, typename B, typename C >
     RegisteredWidget( A& a, B& b, C& c ): W( a, b, c ) { construct(); }
+    template< typename A, typename B, typename C, typename D >
+    RegisteredWidget( A& a, B& b, C c, D d ): W( a, b, c, d ) { construct(); }
 
     virtual ~RegisteredWidget() {};
 
@@ -262,31 +264,23 @@ protected:
     void on_value_changed();
 };
 
-class RegisteredColorPicker : public RegisteredWdg {
+class RegisteredColorPicker : public RegisteredWidget<ColorPicker> {
 public:
-    RegisteredColorPicker();
-    ~RegisteredColorPicker();
-    void init (const Glib::ustring& label,
-            const Glib::ustring& title,
-            const Glib::ustring& tip,
-            const Glib::ustring& ckey,
-            const Glib::ustring& akey,
-            Registry& wr,
-            Inkscape::XML::Node* repr_in,
-            SPDocument *doc_in);
-    inline void init ( const Glib::ustring& label,
-                       const Glib::ustring& title,
-                       const Glib::ustring& tip,
-                       const Glib::ustring& ckey,
-                       const Glib::ustring& akey,
-                       Registry& wr)
-        { init(label, title, tip, ckey, akey, wr, NULL, NULL); };
+    virtual ~RegisteredColorPicker();
+
+    RegisteredColorPicker (const Glib::ustring& label,
+                           const Glib::ustring& title,
+                           const Glib::ustring& tip,
+                           const Glib::ustring& ckey,
+                           const Glib::ustring& akey,
+                           Registry& wr,
+                           Inkscape::XML::Node* repr_in = NULL,
+                           SPDocument *doc_in = NULL);
 
     void setRgba32 (guint32);
     void closeWindow();
 
     Gtk::Label *_label;
-    ColorPicker *_cp;
 
 protected:
     Glib::ustring _ckey, _akey;
