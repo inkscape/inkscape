@@ -2470,7 +2470,7 @@ Verb *Verb::_base_verbs[] = {
     new ZoomVerb(SP_VERB_VIEW_MODE_TOGGLE, "ViewModeToggle", N_("_Toggle"),
                  N_("Toggle between normal and outline display modes"), NULL),
 
-    new ZoomVerb(SP_VERB_VIEW_CMS_TOGGLE, "ViewCmsToggle", N_("Color manage view"),
+    new ZoomVerb(SP_VERB_VIEW_CMS_TOGGLE, "ViewCmsToggle", N_("Color managed view"),
                  N_("Toggle color managed display adjustment for this document window"), "color_management"),
 
     new ZoomVerb(SP_VERB_VIEW_ICON_PREVIEW, "ViewIconPreview", N_("Ico_n Preview..."),
