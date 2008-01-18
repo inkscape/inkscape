@@ -34,6 +34,8 @@ public:
 
     virtual void resetDefaults(SPItem * item);
 
+    virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
+
 private:
     PathParam  bend_path;
     //PathParam  width_path;

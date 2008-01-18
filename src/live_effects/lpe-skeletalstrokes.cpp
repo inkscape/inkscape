@@ -153,6 +153,13 @@ LPESkeletalStrokes::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pw
     return output;
 }
 
+void
+LPESkeletalStrokes::transform_multiply(Geom::Matrix const& postmul, bool set)
+{
+    // TODO: implement correct transformation instead of this default behavior
+    Effect::transform_multiply(postmul, set);
+}
+
 
 } // namespace LivePathEffect
 } /* namespace Inkscape */

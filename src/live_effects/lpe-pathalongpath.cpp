@@ -206,6 +206,14 @@ LPEPathAlongPath::resetDefaults(SPItem * item)
 */
 }
 
+void
+LPEPathAlongPath::transform_multiply(Geom::Matrix const& postmul, bool set)
+{
+    // TODO: implement correct transformation instead of this default behavior
+    Effect::transform_multiply(postmul, set);
+}
+
+
 } // namespace LivePathEffect
 } /* namespace Inkscape */
 
