@@ -67,15 +67,6 @@ src/event-context.cpp
 src/event-log.cpp
 src/extension/db.cpp
 src/extension/dependency.cpp
-src/extension/dxf2svg/aci2rgb.cpp
-src/extension/dxf2svg/blocks.cpp
-src/extension/dxf2svg/dxf2svg.cpp
-src/extension/dxf2svg/entities2elements.cpp
-src/extension/dxf2svg/entities.cpp
-src/extension/dxf2svg/read_dxf.cpp
-src/extension/dxf2svg/tables2svg_info.cpp
-src/extension/dxf2svg/tables.cpp
-src/extension/dxf2svg/test_dxf.cpp
 src/extension/effect.cpp
 src/extension/error-file.cpp
 src/extension/execution-env.cpp
@@ -92,7 +83,6 @@ src/extension/internal/bitmap/channel.cpp
 src/extension/internal/bitmap/charcoal.cpp
 src/extension/internal/bitmap/colorize.cpp
 src/extension/internal/bitmap/contrast.cpp
-src/extension/internal/bitmap/convolve.cpp
 src/extension/internal/bitmap/cycleColormap.cpp
 src/extension/internal/bitmap/despeckle.cpp
 src/extension/internal/bitmap/edge.cpp
@@ -163,8 +153,6 @@ src/extension/paramstring.cpp
 src/extension/patheffect.cpp
 src/extension/prefdialog.cpp
 src/extension/print.cpp
-src/extension/script/bindtest.cpp
-src/extension/script/cpptest.cpp
 src/extension/script/InkscapeBinding.cpp
 src/extension/script/InkscapeInterpreter.cpp
 src/extension/script/InkscapePerl.cpp
