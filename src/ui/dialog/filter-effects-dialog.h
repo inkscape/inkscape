@@ -215,9 +215,14 @@ private:
     void update_settings_view();
     void update_settings_sensitivity();
     void update_color_matrix();
+    void update_primitive_infobox();
 
     // Filter effect selection
     FilterModifier _filter_modifier;
+
+    // Primitives Info Box  
+    Gtk::Label _infobox_desc;
+    Gtk::Image _infobox_icon;
 
     // View/add primitives
     Gtk::VBox _primitive_box;
