@@ -19,13 +19,12 @@
 #include "widget-sizes.h"
 #include "ruler.h"
 #include "unit-constants.h"
+#include <iostream>
 
 #define MINIMUM_INCR          5
 #define MAXIMUM_SUBDIVIDE     5
 #define MAXIMUM_SCALES        10
-
-#define ROUND(x) int (std::floor ((x) + 0.5000000001))
-
+#define UNUSED_PIXELS         2     // There appear to be two pixels that are not being used at each end of the ruler
 
 static void sp_hruler_class_init    (SPHRulerClass *klass);
 static void sp_hruler_init          (SPHRuler      *hruler);
@@ -97,18 +96,15 @@ sp_hruler_motion_notify (GtkWidget      *widget,
 			  GdkEventMotion *event)
 {
   GtkRuler *ruler;
-  gint x;
-
+  
   g_return_val_if_fail (widget != NULL, FALSE);
   g_return_val_if_fail (SP_IS_HRULER (widget), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
 
   ruler = GTK_RULER (widget);
-
-  x = (int)event->x;
-
-  ruler->position = ruler->lower + ((ruler->upper - ruler->lower) * x) / widget->allocation.width;
-
+  double x = event->x; //Although event->x is double according to the docs, it only appears to return integers
+  ruler->position = ruler->lower + (ruler->upper - ruler->lower) * (x + UNUSED_PIXELS) / (widget->allocation.width + 2*UNUSED_PIXELS);
+  
   /*  Make sure the ruler has been allocated already  */
   if (ruler->backing_store != NULL)
     gtk_ruler_draw_pos (ruler);
@@ -167,7 +163,7 @@ sp_hruler_draw_ticks (GtkRuler *ruler)
   xthickness = widget->style->xthickness;
   ythickness = widget->style->ythickness;
 
-  width = widget->allocation.width;
+  width = widget->allocation.width; // in pixels; is apparently 2 pixels shorter than the canvas at each end
   height = widget->allocation.height;// - ythickness * 2;
 
   gtk_paint_box (widget->style, ruler->backing_store,
@@ -181,7 +177,7 @@ sp_hruler_draw_ticks (GtkRuler *ruler)
 
   if ((upper - lower) == 0) 
     return;
-  increment = (double) width / (upper - lower);
+  increment = (double) (width + 2*UNUSED_PIXELS) / (upper - lower);
 
   /* determine the scale
    *  We calculate the text size as for the vruler instead of using
@@ -231,7 +227,7 @@ sp_hruler_draw_ticks (GtkRuler *ruler)
 
 	while (cur <= end)
 	{
-	  pos = ROUND ((cur - lower) * increment);
+	  pos = int(round ((cur - lower) * increment) - UNUSED_PIXELS);
 
 	  gdk_draw_line (ruler->backing_store, gc,
 			 pos, height + ythickness, 
@@ -287,7 +283,7 @@ sp_hruler_draw_pos (GtkRuler *ruler)
       gc = widget->style->fg_gc[GTK_STATE_NORMAL];
       xthickness = widget->style->xthickness;
       ythickness = widget->style->ythickness;
-      width = widget->allocation.width;
+      width = widget->allocation.width; // in pixels; is apparently 2 pixels shorter than the canvas at each end
       height = widget->allocation.height - ythickness * 2;
 
       bs_width = height / 2;
@@ -305,9 +301,9 @@ sp_hruler_draw_pos (GtkRuler *ruler)
 			     ruler->xsrc, ruler->ysrc,
 			     bs_width, bs_height);
 
-	  increment = (gfloat) width / (ruler->upper - ruler->lower);
+	  increment = (gfloat) (width + 2*UNUSED_PIXELS) / (ruler->upper - ruler->lower);
 
-	  x = ROUND ((ruler->position - ruler->lower) * increment) + (xthickness - bs_width) / 2 - 1;
+	  x = int(round ((ruler->position - ruler->lower) * increment) + (xthickness - bs_width) / 2 - 1);
 	  y = (height + bs_height) / 2 + ythickness;
 
 	  for (i = 0; i < bs_height; i++)
@@ -398,17 +394,14 @@ sp_vruler_motion_notify (GtkWidget      *widget,
 			  GdkEventMotion *event)
 {
   GtkRuler *ruler;
-  gint y;
-
+  
   g_return_val_if_fail (widget != NULL, FALSE);
   g_return_val_if_fail (SP_IS_VRULER (widget), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
 
   ruler = GTK_RULER (widget);
-
-  y = (int)event->y;
-
-  ruler->position = ruler->lower + ((ruler->upper - ruler->lower) * y) / widget->allocation.height;
+  double y = event->y; //Although event->y is double according to the docs, it only appears to return integers
+  ruler->position = ruler->lower + (ruler->upper - ruler->lower) * (y + UNUSED_PIXELS) / (widget->allocation.height + 2*UNUSED_PIXELS);
 
   /*  Make sure the ruler has been allocated already  */
   if (ruler->backing_store != NULL)
@@ -469,7 +462,7 @@ sp_vruler_draw_ticks (GtkRuler *ruler)
   xthickness = widget->style->xthickness;
   ythickness = widget->style->ythickness;
 
-  width = widget->allocation.height;
+  width = widget->allocation.height; //in pixels; is apparently 2 pixels shorter than the canvas at each end
   height = widget->allocation.width;// - ythickness * 2;
 
   gtk_paint_box (widget->style, ruler->backing_store,
@@ -483,7 +476,7 @@ sp_vruler_draw_ticks (GtkRuler *ruler)
 
   if ((upper - lower) == 0)
     return;
-  increment = (double) width / (upper - lower);
+  increment = (double) (width + 2*UNUSED_PIXELS) / (upper - lower);
 
   /* determine the scale
    *   use the maximum extents of the ruler to determine the largest
@@ -532,7 +525,7 @@ sp_vruler_draw_ticks (GtkRuler *ruler)
     cur = start;        
 
     while (cur < end) {
-			pos = ROUND ((cur - lower) * increment);
+			pos = int(round ((cur - lower) * increment) - UNUSED_PIXELS);
 
 			gdk_draw_line (ruler->backing_store, gc,
 										 height + xthickness - length, pos,
@@ -595,7 +588,7 @@ sp_vruler_draw_pos (GtkRuler *ruler)
       xthickness = widget->style->xthickness;
       ythickness = widget->style->ythickness;
       width = widget->allocation.width - xthickness * 2;
-      height = widget->allocation.height;
+      height = widget->allocation.height; // in pixels; is apparently 2 pixels shorter than the canvas at each end
 
       bs_height = width / 2;
       bs_height |= 1;  /* make sure it's odd */
@@ -612,10 +605,10 @@ sp_vruler_draw_pos (GtkRuler *ruler)
 			     ruler->xsrc, ruler->ysrc,
 			     bs_width, bs_height);
 
-	  increment = (gfloat) height / (ruler->upper - ruler->lower);
+	  increment = (gfloat) (height + 2*UNUSED_PIXELS) / (ruler->upper - ruler->lower);
 
 	  x = (width + bs_width) / 2 + xthickness;
-	  y = ROUND ((ruler->position - ruler->lower) * increment) + (ythickness - bs_height) / 2 - 1;
+	  y = int(round ((ruler->position - ruler->lower) * increment) + (ythickness - bs_height) / 2 - 1);
 
 	  for (i = 0; i < bs_width; i++)
 	    gdk_draw_line (widget->window, gc,

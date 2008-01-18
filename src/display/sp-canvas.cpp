@@ -2092,8 +2092,8 @@ sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear,
     g_return_if_fail (canvas != NULL);
     g_return_if_fail (SP_IS_CANVAS (canvas));
 
-    int ix = (int) (cx + 0.5);
-    int iy = (int) (cy + 0.5);
+    int ix = (int) round(cx); //cx might be negative, so (int)(cx + 0.5) will not do!
+    int iy = (int) round(cy);
     int dx = ix - canvas->x0;
     int dy = iy - canvas->y0;
 
