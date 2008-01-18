@@ -2,6 +2,7 @@
 iconsdir = $(datadir)/inkscape/icons
 
 pixmaps = \
+    ticotico.jpg \
 	feBlend-icon.png \
     feBlend-icon.svg \
 	feColorMatrix-icon.png \
