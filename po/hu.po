@@ -1093,8 +1093,7 @@ msgstr "Definiálatlan kitöltés"
 #: ../src/ui/dialog/find.cpp:434
 #, c-format
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
-msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
-msgstr[0] "<b>%d</b> találat (<b>%d</b> objektumból), %s egyezés."
+msgstr "<b>%d</b> találat (<b>%d</b> objektumból), %s egyezés."
 
 #: ../src/dialogs/find.cpp:375
 #: ../src/ui/dialog/find.cpp:437
@@ -3725,8 +3724,7 @@ msgstr "Takarítás a definíciók közt"
 #: ../src/file.cpp:489
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
-msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
-msgstr[0] "<b>%i</b> felhasználatlan &lt;defs&gt;-definíció eltávolítva."
+msgstr "<b>%i</b> felhasználatlan &lt;defs&gt;-definíció eltávolítva."
 
 #: ../src/file.cpp:494
 msgid "No unused definitions in &lt;defs&gt;."
@@ -4212,8 +4210,7 @@ msgstr "Színátmenet invertálása"
 #: ../src/gradient-context.cpp:893
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
-msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
-msgstr[0] "<b>Színátmenet</b> %d objektumhoz. Szöghöz való illesztés: <b>Ctrl</b>."
+msgstr "<b>Színátmenet</b> %d objektumhoz. Szöghöz való illesztés: <b>Ctrl</b>."
 
 #: ../src/gradient-context.cpp:897
 msgid "Select <b>objects</b> on which to create gradient."
@@ -4257,8 +4254,7 @@ msgstr "Sugárirányú színátmenet <b>középpontja</b> és <b>fókusza</b>. A
 #: ../src/gradient-drag.cpp:1140
 #, c-format
 msgid "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to separate"
-msgid_plural "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to separate"
-msgstr[0] "<b>%d</b> színátmenet közös színátmenet-pontja. Különválasztás: <b>Shift</b>+húzás."
+msgstr "<b>%d</b> színátmenet közös színátmenet-pontja. Különválasztás: <b>Shift</b>+húzás."
 
 # TODO: ellenőrizni
 #: ../src/gradient-drag.cpp:1815
@@ -5407,8 +5403,7 @@ msgstr "Jelölje ki az objektumot, amelynek csomópontjait illetve vezérlőelem
 #: ../src/nodepath.cpp:4457
 #, c-format
 msgid "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select."
-msgid_plural "<b>0</b> out of <b>%i</b> nodes selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select."
-msgstr[0] "<b>%i</b> csomópontból <b>0</b> van kijelölve. Kijelölés: <b>kattintással</b>, <b>Shift+kattintással</b>, vagy egy terület <b>húzással való kijelölésével</b>."
+msgstr "<b>%i</b> csomópontból <b>0</b> van kijelölve. Kijelölés: <b>kattintással</b>, <b>Shift+kattintással</b>, vagy egy terület <b>húzással való kijelölésével</b>."
 
 #: ../src/nodepath.cpp:4463
 msgid "Drag the handles of the object to modify it."
@@ -5417,20 +5412,17 @@ msgstr "Az objektum módosítása a vezérlőelemeinek a húzásával végezhet�
 #: ../src/nodepath.cpp:4471
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
-msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
-msgstr[0] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>); %s. %s."
+msgstr "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>); %s. %s."
 
 #: ../src/nodepath.cpp:4478
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgid_plural "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgstr[0] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>) <b>%i</b> alláncban (összesen: <b>%i</b>). %s."
+msgstr "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>) <b>%i</b> alláncban (összesen: <b>%i</b>). %s."
 
 #: ../src/nodepath.cpp:4484
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
-msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
-msgstr[0] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>). %s."
+msgstr "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>). %s."
 
 #: ../src/object-edit.cpp:501
 msgid "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the vertical radius the same"
@@ -6189,14 +6181,12 @@ msgstr " a(z) %s csoportban (%s)"
 #: ../src/selection-describer.cpp:153
 #, c-format
 msgid " in <b>%i</b> parents (%s)"
-msgid_plural " in <b>%i</b> parents (%s)"
-msgstr[0] " <b>%i</b> szülőben (%s)"
+msgstr " <b>%i</b> szülőben (%s)"
 
 #: ../src/selection-describer.cpp:156
 #, c-format
 msgid " in <b>%i</b> layers"
-msgid_plural " in <b>%i</b> layers"
-msgstr[0] " <b>%i</b> rétegben"
+msgstr " <b>%i</b> rétegben"
 
 # kiíráskor tesz egy pontot a végére
 #: ../src/selection-describer.cpp:166
@@ -6217,36 +6207,31 @@ msgstr "A keret meghatározása: <b>Shift+D</b>"
 #: ../src/selection-describer.cpp:189
 #, c-format
 msgid "<b>%i</b> object selected"
-msgid_plural "<b>%i</b> objects selected"
-msgstr[0] "<b>%i</b> objektum kijelölve"
+msgstr "<b>%i</b> objektum kijelölve"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:194
 #, c-format
 msgid "<b>%i</b> object of type <b>%s</b>"
-msgid_plural "<b>%i</b> objects of type <b>%s</b>"
-msgstr[0] "<b>%i</b> darab objektum (típus: <b>%s</b>)"
+msgstr "<b>%i</b> darab objektum (típus: <b>%s</b>)"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:199
 #, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>"
-msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>"
-msgstr[0] "<b>%i</b> darab objektum (típus: <b>%s</b> illetve <b>%s</b>)"
+msgstr "<b>%i</b> darab objektum (típus: <b>%s</b> illetve <b>%s</b>)"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:204
 #, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
-msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
-msgstr[0] "<b>%i</b> darab objektum (típus: <b>%s</b>, <b>%s</b> illetve <b>%s</b>)"
+msgstr "<b>%i</b> darab objektum (típus: <b>%s</b>, <b>%s</b> illetve <b>%s</b>)"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:209
 #, c-format
 msgid "<b>%i</b> object of <b>%i</b> types"
-msgid_plural "<b>%i</b> objects of <b>%i</b> types"
-msgstr[0] "<b>%i</b> darab objektum (<b>%i</b> féle típusból)"
+msgstr "<b>%i</b> darab objektum (<b>%i</b> féle típusból)"
 
 #: ../src/selection-describer.cpp:214
 #, c-format
@@ -6364,14 +6349,12 @@ msgstr "Tördelésből kizárt terület"
 #: ../src/sp-flowtext.cpp:376
 #, c-format
 msgid "<b>Flowed text</b> (%d character)"
-msgid_plural "<b>Flowed text</b> (%d characters)"
-msgstr[0] "<b>Tördelt szöveg</b> (%d karakter)"
+msgstr "<b>Tördelt szöveg</b> (%d karakter)"
 
 #: ../src/sp-flowtext.cpp:378
 #, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
-msgid_plural "<b>Linked flowed text</b> (%d characters)"
-msgstr[0] "<b>Kapcsolt tördelt szöveg</b> (%d karakter)"
+msgstr "<b>Kapcsolt tördelt szöveg</b> (%d karakter)"
 
 #: ../src/sp-guide.cpp:367
 #, fuzzy, c-format
@@ -6400,8 +6383,7 @@ msgstr "%d &#215; %d méretű <b>kép</b>: %s"
 #: ../src/sp-item-group.cpp:696
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
-msgid_plural "<b>Group</b> of <b>%d</b> objects"
-msgstr[0] "<b>%d</b> objektumot tartalmazó <b>csoport</b>"
+msgstr "<b>%d</b> objektumot tartalmazó <b>csoport</b>"
 
 #: ../src/sp-item.cpp:838
 msgid "Object"
@@ -6446,14 +6428,12 @@ msgstr "<b>Dinamikus perem</b>; %s %f ponttal (pt)"
 #: ../src/sp-path.cpp:128
 #, fuzzy, c-format
 msgid "<b>Path</b> (%i node, path effect)"
-msgid_plural "<b>Path</b> (%i nodes, path effect)"
-msgstr[0] "<b>Lánc</b> (%i csomópont)"
+msgstr "<b>Lánc</b> (%i csomópont)"
 
 #: ../src/sp-path.cpp:131
 #, c-format
 msgid "<b>Path</b> (%i node)"
-msgid_plural "<b>Path</b> (%i nodes)"
-msgstr[0] "<b>Lánc</b> (%i csomópont)"
+msgstr "<b>Lánc</b> (%i csomópont)"
 
 #: ../src/sp-polygon.cpp:235
 msgid "<b>Polygon</b>"
@@ -6477,20 +6457,17 @@ msgstr "%3f fordulatú <b>spirál</b>"
 #: ../src/sp-star.cpp:307
 #, c-format
 msgid "<b>Star</b> with %d vertex"
-msgid_plural "<b>Star</b> with %d vertices"
-msgstr[0] "%d csúcsú <b>csillag</b>"
+msgstr "%d csúcsú <b>csillag</b>"
 
 #: ../src/sp-star.cpp:311
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
-msgid_plural "<b>Polygon</b> with %d vertices"
-msgstr[0] "%d csúcsú <b>sokszög</b>"
+msgstr "%d csúcsú <b>sokszög</b>"
 
 #: ../src/sp-switch.cpp:100
 #, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
-msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
-msgstr[0] "<b>%d</b> objektumot tartalmazó <b>feltételes csoport</b>"
+msgstr "<b>%d</b> objektumot tartalmazó <b>feltételes csoport</b>"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:415
@@ -7007,50 +6984,42 @@ msgstr "<b>Semmi sincs kijelölve!</b> Ki kell választani a megváltoztatandó 
 #: ../src/tweak-context.cpp:949
 #, fuzzy, c-format
 msgid "<b>Pushing %d</b> selected object"
-msgid_plural "<b>Pushing %d</b> selected objects"
-msgstr[0] "<b>Nem történt</b> törlés."
+msgstr "<b>Nem történt</b> törlés."
 
 #: ../src/tweak-context.cpp:954
 #, fuzzy, c-format
 msgid "<b>Shrinking %d</b> selected object"
-msgid_plural "<b>Shrinking %d</b> selected objects"
-msgstr[0] "A kijelölt objektumok elrendezése"
+msgstr "A kijelölt objektumok elrendezése"
 
 #: ../src/tweak-context.cpp:959
 #, fuzzy, c-format
 msgid "<b>Growing %d</b> selected object"
-msgid_plural "<b>Growing %d</b> selected objects"
-msgstr[0] "A kijelölt objektumok csoportba foglalása"
+msgstr "A kijelölt objektumok csoportba foglalása"
 
 #: ../src/tweak-context.cpp:964
 #, fuzzy, c-format
 msgid "<b>Attracting %d</b> selected object"
-msgid_plural "<b>Attracting %d</b> selected objects"
-msgstr[0] "A kijelölt objektumok elrendezése"
+msgstr "A kijelölt objektumok elrendezése"
 
 #: ../src/tweak-context.cpp:969
 #, fuzzy, c-format
 msgid "<b>Repelling %d</b> selected object"
-msgid_plural "<b>Repelling %d</b> selected objects"
-msgstr[0] "A kijelölt objektumok kettőzése"
+msgstr "A kijelölt objektumok kettőzése"
 
 #: ../src/tweak-context.cpp:974
 #, fuzzy, c-format
 msgid "<b>Roughening %d</b> selected object"
-msgid_plural "<b>Roughening %d</b> selected objects"
-msgstr[0] "<b>Nem történt</b> törlés."
+msgstr "<b>Nem történt</b> törlés."
 
 #: ../src/tweak-context.cpp:978
 #, fuzzy, c-format
 msgid "<b>Painting %d</b> selected object"
-msgid_plural "<b>Painting %d</b> selected objects"
-msgstr[0] "A kijelölt objektumok elrendezése"
+msgstr "A kijelölt objektumok elrendezése"
 
 #: ../src/tweak-context.cpp:983
 #, fuzzy, c-format
 msgid "<b>Jittering colors in %d</b> selected object"
-msgid_plural "<b>Jittering colors in %d</b> selected objects"
-msgstr[0] "A kapcsok kerüljék ki a kijelölt objektumokat"
+msgstr "A kapcsok kerüljék ki a kijelölt objektumokat"
 
 #: ../src/tweak-context.cpp:1023
 msgid "Push tweak"
@@ -14808,98 +14777,3 @@ msgstr "Windows Metafile-bemenet"
 #, fuzzy
 msgid "XAML Input"
 msgstr "DXF-bemenet"
-
-#~ msgid "%s at %s"
-#~ msgstr "%s, pozíció: %s"
-#~ msgid "Move by:"
-#~ msgstr "Áthelyezés ennyivel:"
-#~ msgid "Move to:"
-#~ msgstr "Áthelyezés ide:"
-#~ msgid "Moving %s %s"
-#~ msgstr "\"%2$s\" %1$s áthelyezése"
-#~ msgid "Change layer opacity"
-#~ msgstr "Réteg-átlátszatlanság módosítása"
-#~ msgid "Opacity, %:"
-#~ msgstr "Átlátszatlanság, %:"
-
-#, fuzzy
-#~ msgid "Path along path"
-#~ msgstr "Minta a lánc mentén"
-
-#, fuzzy
-#~ msgid "Pattern along path"
-#~ msgstr "Minta a lánc mentén"
-
-#, fuzzy
-#~ msgid "Print"
-#~ msgstr "Pont"
-
-#, fuzzy
-#~ msgid "Could not set print source: %s"
-#~ msgstr "Nem sikerült \"%s\" nevű fájlba exportálni.\n"
-
-#, fuzzy
-#~ msgid "unknown error"
-#~ msgstr "Ismeretlen"
-
-#, fuzzy
-#~ msgid "Print Preview not available"
-#~ msgstr "N_yomtatási kép"
-
-#, fuzzy
-#~ msgid "SVG Document"
-#~ msgstr "Dokumentum"
-
-#, fuzzy
-#~ msgid "Snap details"
-#~ msgstr "Illesztés az objektum_láncokhoz"
-
-#, fuzzy
-#~ msgid "If set, objects snap to the nearest object, regardless of distance"
-#~ msgstr ""
-#~ "Ha az opció be van jelölve, akkor az objektumok elmozdításkor illesztve "
-#~ "lesznek a legközelebbi objektumhoz - függetlenül a távolságtól"
-
-#, fuzzy
-#~ msgid ""
-#~ "If set, objects snap to the nearest grid line, regardless of distance"
-#~ msgstr ""
-#~ "Ha az opció be van jelölve, akkor az objektumok elmozdításkor illesztve "
-#~ "lesznek a legközelebbi rácsvonalhoz - függetlenül a távolságtól"
-
-#, fuzzy
-#~ msgid "If set, objects snap to the nearest guide, regardless of distance"
-#~ msgstr ""
-#~ "Ha az opció be van jelölve, akkor az objektumok elmozdításkor illesztve "
-#~ "lesznek a legközelebbi segédvonalhoz - függetlenül a távolságtól"
-
-#, fuzzy
-#~ msgid "Gridtype"
-#~ msgstr "Rácstípus:"
-#~ msgid "Change blur"
-#~ msgstr "Elmosás módosítása"
-#~ msgid "Print _Direct"
-#~ msgstr "Köz_vetlen nyomtatás"
-#~ msgid "Print directly without prompting to a file or pipe"
-#~ msgstr ""
-#~ "Nyomtatás közvetlenül (megerősítés-kérés nélkül) fájlba vagy egy program "
-#~ "felé (csővezetékbe)"
-
-#, fuzzy
-#~ msgid "Lock"
-#~ msgstr "_Zárolás"
-
-#, fuzzy
-#~ msgid "Gradients"
-#~ msgstr "Színátmenet"
-#~ msgid "Spacing between letters"
-#~ msgstr "Helykihagyás a betűk között"
-#~ msgid "Spacing between lines"
-#~ msgstr "Helykihagyás a sorok között"
-#~ msgid "Horizontal kerning"
-#~ msgstr "Vízszintes alávágás"
-#~ msgid "Vertical kerning"
-#~ msgstr "Függőleges alávágás"
-#~ msgid "Letter rotation"
-#~ msgstr "Betű-elforgatás"
-

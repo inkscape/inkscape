@@ -1129,8 +1129,7 @@ msgstr ""
 #: ../src/dialogs/find.cpp:372 ../src/ui/dialog/find.cpp:434
 #, c-format
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
-msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
-msgstr[0] ""
+msgstr ""
 
 #: ../src/dialogs/find.cpp:375 ../src/ui/dialog/find.cpp:437
 msgid "exact"
@@ -3843,8 +3842,7 @@ msgstr "Tanım Bölümünü Temizle"
 #: ../src/file.cpp:489
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
-msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
-msgstr[0] ""
+msgstr ""
 
 #: ../src/file.cpp:494
 msgid "No unused definitions in &lt;defs&gt;."
@@ -4355,8 +4353,7 @@ msgstr "Çizgisel artımlı geçiş"
 #: ../src/gradient-context.cpp:893
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
-msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
-msgstr[0] ""
+msgstr ""
 
 #: ../src/gradient-context.cpp:897
 #, fuzzy
@@ -4408,10 +4405,7 @@ msgstr ""
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
 "separate"
-msgid_plural ""
-"Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to "
-"separate"
-msgstr[0] ""
+msgstr ""
 
 #: ../src/gradient-drag.cpp:1815
 #, fuzzy
@@ -5612,10 +5606,7 @@ msgstr "Tüm nesneleri veya tüm düğümleri seçer"
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
 "or <b>drag around</b> nodes to select."
-msgid_plural ""
-"<b>0</b> out of <b>%i</b> nodes selected. <b>Click</b>, <b>Shift+click</b>, "
-"or <b>drag around</b> nodes to select."
-msgstr[0] ""
+msgstr ""
 "Hiçbir nesne seçilmedi. Fareyi ile tıklayın, Shift+tıklayın veya seçmek için "
 "nesnelerin etrafında sürükleyin."
 
@@ -5627,22 +5618,18 @@ msgstr "Nesne sınırlandırma kutusunun gölgesini ayır"
 #: ../src/nodepath.cpp:4471
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
-msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
-msgstr[0] ""
+msgstr ""
 
 #: ../src/nodepath.cpp:4478
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgid_plural ""
-"<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgstr[0] ""
+msgstr ""
 
 #: ../src/nodepath.cpp:4484
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
-msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
-msgstr[0] ""
+msgstr ""
 
 #: ../src/object-edit.cpp:501
 msgid ""
@@ -6518,14 +6505,12 @@ msgstr "Gruba gir #%s"
 #: ../src/selection-describer.cpp:153
 #, c-format
 msgid " in <b>%i</b> parents (%s)"
-msgid_plural " in <b>%i</b> parents (%s)"
-msgstr[0] ""
+msgstr ""
 
 #: ../src/selection-describer.cpp:156
 #, c-format
 msgid " in <b>%i</b> layers"
-msgid_plural " in <b>%i</b> layers"
-msgstr[0] ""
+msgstr ""
 
 #: ../src/selection-describer.cpp:166
 msgid "Use <b>Shift+D</b> to look up original"
@@ -6543,36 +6528,31 @@ msgstr ""
 #: ../src/selection-describer.cpp:189
 #, c-format
 msgid "<b>%i</b> object selected"
-msgid_plural "<b>%i</b> objects selected"
-msgstr[0] ""
+msgstr ""
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:194
 #, c-format
 msgid "<b>%i</b> object of type <b>%s</b>"
-msgid_plural "<b>%i</b> objects of type <b>%s</b>"
-msgstr[0] ""
+msgstr ""
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:199
 #, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>"
-msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>"
-msgstr[0] ""
+msgstr ""
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:204
 #, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
-msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
-msgstr[0] ""
+msgstr ""
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:209
 #, c-format
 msgid "<b>%i</b> object of <b>%i</b> types"
-msgid_plural "<b>%i</b> objects of <b>%i</b> types"
-msgstr[0] ""
+msgstr ""
 
 #: ../src/selection-describer.cpp:214
 #, c-format
@@ -6719,14 +6699,12 @@ msgstr ""
 #: ../src/sp-flowtext.cpp:376
 #, c-format
 msgid "<b>Flowed text</b> (%d character)"
-msgid_plural "<b>Flowed text</b> (%d characters)"
-msgstr[0] ""
+msgstr ""
 
 #: ../src/sp-flowtext.cpp:378
 #, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
-msgid_plural "<b>Linked flowed text</b> (%d characters)"
-msgstr[0] ""
+msgstr ""
 
 #: ../src/sp-guide.cpp:394
 #, fuzzy, c-format
@@ -6755,8 +6733,7 @@ msgstr ""
 #: ../src/sp-item-group.cpp:694
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
-msgid_plural "<b>Group</b> of <b>%d</b> objects"
-msgstr[0] ""
+msgstr ""
 
 #: ../src/sp-item.cpp:905
 msgid "Object"
@@ -6801,14 +6778,12 @@ msgstr ""
 #: ../src/sp-path.cpp:128
 #, fuzzy, c-format
 msgid "<b>Path</b> (%i node, path effect)"
-msgid_plural "<b>Path</b> (%i nodes, path effect)"
-msgstr[0] "<b>Yol</b> (%i düğüm)"
+msgstr "<b>Yol</b> (%i düğüm)"
 
 #: ../src/sp-path.cpp:131
 #, c-format
 msgid "<b>Path</b> (%i node)"
-msgid_plural "<b>Path</b> (%i nodes)"
-msgstr[0] "<b>Yol</b> (%i düğüm)"
+msgstr "<b>Yol</b> (%i düğüm)"
 
 #: ../src/sp-polygon.cpp:235
 msgid "<b>Polygon</b>"
@@ -6839,22 +6814,19 @@ msgstr ""
 #: ../src/sp-star.cpp:307
 #, fuzzy, c-format
 msgid "<b>Star</b> with %d vertex"
-msgid_plural "<b>Star</b> with %d vertices"
-msgstr[0] "<b>Çokgen</b>%d vertex"
+msgstr "<b>Çokgen</b>%d vertex"
 
 
 #: ../src/sp-star.cpp:311
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
-msgid_plural "<b>Polygon</b> with %d vertices"
-msgstr[0] "<b>Çokgen</b>%d vertex"
+msgstr "<b>Çokgen</b>%d vertex"
 
 
 #: ../src/sp-switch.cpp:100
 #, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
-msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
-msgstr[0] ""
+msgstr ""
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:415
@@ -7444,50 +7416,42 @@ msgstr ""
 #: ../src/tweak-context.cpp:964
 #, fuzzy, c-format
 msgid "<b>Pushing %d</b> selected object"
-msgid_plural "<b>Pushing %d</b> selected objects"
-msgstr[0] "Seçili nesnelerin birleşimi"
+msgstr "Seçili nesnelerin birleşimi"
 
 #: ../src/tweak-context.cpp:969
 #, fuzzy, c-format
 msgid "<b>Shrinking %d</b> selected object"
-msgid_plural "<b>Shrinking %d</b> selected objects"
-msgstr[0] "Seçili nesnelerin birleşimi"
+msgstr "Seçili nesnelerin birleşimi"
 
 #: ../src/tweak-context.cpp:974
 #, fuzzy, c-format
 msgid "<b>Growing %d</b> selected object"
-msgid_plural "<b>Growing %d</b> selected objects"
-msgstr[0] "Seçili nesneleri gruplar"
+msgstr "Seçili nesneleri gruplar"
 
 #: ../src/tweak-context.cpp:979
 #, fuzzy, c-format
 msgid "<b>Attracting %d</b> selected object"
-msgid_plural "<b>Attracting %d</b> selected objects"
-msgstr[0] "Seçili nesneleri gruplar"
+msgstr "Seçili nesneleri gruplar"
 
 #: ../src/tweak-context.cpp:984
 #, fuzzy, c-format
 msgid "<b>Repelling %d</b> selected object"
-msgid_plural "<b>Repelling %d</b> selected objects"
-msgstr[0] "Seçili nesnelerin birleşimi"
+msgstr "Seçili nesnelerin birleşimi"
 
 #: ../src/tweak-context.cpp:989
 #, fuzzy, c-format
 msgid "<b>Roughening %d</b> selected object"
-msgid_plural "<b>Roughening %d</b> selected objects"
-msgstr[0] "Seçili nesnelerin birleşimi"
+msgstr "Seçili nesnelerin birleşimi"
 
 #: ../src/tweak-context.cpp:993
 #, fuzzy, c-format
 msgid "<b>Painting %d</b> selected object"
-msgid_plural "<b>Painting %d</b> selected objects"
-msgstr[0] "Seçili nesnelerin birleşimi"
+msgstr "Seçili nesnelerin birleşimi"
 
 #: ../src/tweak-context.cpp:998
 #, fuzzy, c-format
 msgid "<b>Jittering colors in %d</b> selected object"
-msgid_plural "<b>Jittering colors in %d</b> selected objects"
-msgstr[0] "Seçili nesnelerden kaçınarak bağlayıcılar oluştur"
+msgstr "Seçili nesnelerden kaçınarak bağlayıcılar oluştur"
 
 #: ../src/tweak-context.cpp:1038
 msgid "Push tweak"
@@ -15762,169 +15726,3 @@ msgstr ""
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Snap at specified d_istance"
-#~ msgstr "Yakalama uzaklığı:"
-
-#, fuzzy
-#~ msgid "Snap di_stance"
-#~ msgstr "Yakalama uzaklığı:"
-
-#, fuzzy
-#~ msgid "Snap at specified dis_tance"
-#~ msgstr "Yakalama uzaklığı:"
-
-#, fuzzy
-#~ msgid "Snap at specified distan_ce"
-#~ msgstr "Yakalama uzaklığı:"
-
-#, fuzzy
-#~ msgid "_Include the object's rotation center"
-#~ msgstr "Kilitli nesneleri engelle"
-
-#, fuzzy
-#~ msgid "<b>Miscellaneous</b>"
-#~ msgstr "Çeşitli ipuçları ve önemli noktalar"
-
-#, fuzzy
-#~ msgid "Date:"
-#~ msgstr "Tarih"
-
-#, fuzzy
-#~ msgid "Format:"
-#~ msgstr "Biçim"
-
-#, fuzzy
-#~ msgid "Creator:"
-#~ msgstr "Oluşturan"
-
-#, fuzzy
-#~ msgid "Rights:"
-#~ msgstr "Haklar"
-
-#, fuzzy
-#~ msgid "Publisher:"
-#~ msgstr "Yayıncı"
-
-#, fuzzy
-#~ msgid "Identifier:"
-#~ msgstr "Tanımlayıcı"
-
-#, fuzzy
-#~ msgid "Source:"
-#~ msgstr "Kaynak"
-
-#, fuzzy
-#~ msgid "Relation:"
-#~ msgstr "İlişki"
-
-#, fuzzy
-#~ msgid "Language:"
-#~ msgstr "Dil"
-
-#, fuzzy
-#~ msgid "Subject:"
-#~ msgstr "Nesne"
-
-#, fuzzy
-#~ msgid "Coverage:"
-#~ msgstr "Kapsama"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "Tanım"
-
-#, fuzzy
-#~ msgid "Contributor:"
-#~ msgstr "Katkıda bulunanlar"
-
-#, fuzzy
-#~ msgid "Default Metadata"
-#~ msgstr "Metaverisi"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution"
-#~ msgstr "Özellik"
-
-#, fuzzy
-#~ msgid "Free Art License"
-#~ msgstr "_Oturum dosyası aç"
-
-#, fuzzy
-#~ msgid "Default License"
-#~ msgstr "Varsayılanlar"
-
-#, fuzzy
-#~ msgid "Angle Y"
-#~ msgstr "Açı:"
-
-#~ msgid "%s at %s"
-#~ msgstr "%s de %s"
-
-#, fuzzy
-#~ msgid "Move by:"
-#~ msgstr "Taşı %s"
-
-#, fuzzy
-#~ msgid "Move to:"
-#~ msgstr "Taşı %s"
-
-#, fuzzy
-#~ msgid "Moving %s %s"
-#~ msgstr "Taşı %s"
-
-#, fuzzy
-#~ msgid "Change layer opacity"
-#~ msgstr "Ana _matlık:"
-
-#, fuzzy
-#~ msgid "Opacity, %:"
-#~ msgstr "Matlık"
-
-#, fuzzy
-#~ msgid "Path along path"
-#~ msgstr "_Çizgiden yola"
-
-#, fuzzy
-#~ msgid "Pattern along path"
-#~ msgstr "_Çizgiden yola"
-
-#, fuzzy
-#~ msgid "Print"
-#~ msgstr "Nokta"
-
-#, fuzzy
-#~ msgid "Could not set print source: %s"
-#~ msgstr "%s dosyası aktarılamadı.\n"
-
-#, fuzzy
-#~ msgid "unknown error"
-#~ msgstr "Bilinmeyen"
-
-#, fuzzy
-#~ msgid "Print Preview not available"
-#~ msgstr "_Baskı Önizleme"
-
-#, fuzzy
-#~ msgid "Snap details"
-#~ msgstr "Bitmap nesnesini yollara dönüştürür"
-
-#, fuzzy
-#~ msgid "Gridtype"
-#~ msgstr "Tip:"
-
-#~ msgid "Print _Direct"
-#~ msgstr "_Doğrudan Yazdır"
-
-#, fuzzy
-#~ msgid "Gradients"
-#~ msgstr "Artımlı geçiş"
-
-#, fuzzy
-#~ msgid "Horizontal kerning"
-#~ msgstr "Yatay yazı"
-
-#, fuzzy
-#~ msgid "Vertical kerning"
-#~ msgstr "Dikey yazı"
