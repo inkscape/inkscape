@@ -1,10 +1,14 @@
+﻿2008-01-18  Clytie Siddall <clytie@riverland.net.au>
+
+	* vi.po: Updated Vietnamese translation with review by Nguyễn Định Trung.
+
 2008-01-09  Clytie Siddall <clytie@riverland.net.au>
 
 	* vi.po: Updated Vietnamese translation.
 
 2006-07-06  Colin Marquardt  <colin@marquardt-home.de>
 
-	* da.po: Update by Rune R�nde Laursen from patch 1518249.
+	* da.po: Update by Rune R¯nde Laursen from patch 1518249.
 
 2006-06-08  Colin Marquardt  <colin@marquardt-home.de>
 
@@ -78,7 +82,7 @@
 
 2004-04-11  a_b
 
-	* es_MX.po: update from Daniel D�az
+	* es_MX.po: update from Daniel DÌaz
 
 2004-04-07  buliabyak@users.sf.net
 
@@ -133,7 +137,7 @@
 
 	* nl.po: Dutch translation updated.
 
-2003-08-17  Danilo Šegan  <dsegan@gmx.net>
+2003-08-17  Danilo ≈†egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Added Serbian translation by Serbian 
 	team (Prevod.org).
@@ -441,7 +445,7 @@ Mon Sep 23 19:15:05 2002  Mitsuru Oka  <oka326@parkcity.ne.jp>
 
 2002-08-26  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokmål) translation.
+	* no.po: Updated Norwegian (bokm√•l) translation.
 
 2002-08-25  Duarte Loreto <happyguy_pt@hotmail.com>
 
@@ -449,7 +453,7 @@ Mon Sep 23 19:15:05 2002  Mitsuru Oka  <oka326@parkcity.ne.jp>
 
 2002-08-24  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokmål) translation.
+	* no.po: Updated Norwegian (bokm√•l) translation.
 	* POTFILES.in: Added missing files.
 	
 2002-08-24  Duarte Loreto <happyguy_pt@hotmail.com>
@@ -497,7 +501,7 @@ Wed Apr 10 00:59:46 2002  Mitsuru Oka  <oka326@parkcity.ne.jp>
 
 2002-03-05  Carlos Perello Marin <carlos@gnome-db.org>
 
-	* es.po: Updated by José Antonio Salgueiro <joseantsa@retemail.es>
+	* es.po: Updated by Jos√© Antonio Salgueiro <joseantsa@retemail.es>
 
 2002-03-03  Christopher R. Gabriel  <cgabriel@cgabriel.org>
 
@@ -527,7 +531,7 @@ Wed Apr 10 00:59:46 2002  Mitsuru Oka  <oka326@parkcity.ne.jp>
 
 2002-02-02  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokmål) translation.
+	* no.po: Updated Norwegian (bokm√•l) translation.
 	
 2002-02-02  Christophe Merlet  <christophe@merlet.net>
 
@@ -612,7 +616,7 @@ Wed Apr 10 00:59:46 2002  Mitsuru Oka  <oka326@parkcity.ne.jp>
 2001-12-04  German Poo-Caaman~o <gpoo@ubiobio.cl>
 
 	* sv.po: Updated spanish translation from
-	José Antonio Salgueiro <joseantonio@salgueiro.c.telefonica.net>
+	Jos√© Antonio Salgueiro <joseantonio@salgueiro.c.telefonica.net>
 
 2001-11-25 Duarte Loreto <happyguy_pt@hotmail.com>
 
@@ -635,7 +639,7 @@ Wed Apr 10 00:59:46 2002  Mitsuru Oka  <oka326@parkcity.ne.jp>
 
 	* sv.po: Updated Swedish translation.
 
-2001-11-04  Carlos Perelló Marín <carlos@gnome-db.org>
+2001-11-04  Carlos Perell√≥ Mar√≠n <carlos@gnome-db.org>
 
 	* es.po: Updated Spanish translation by Jose antonio s.a.
 	<joseantsa@eresmas.net>
@@ -671,7 +675,7 @@ Wed Apr 10 00:59:46 2002  Mitsuru Oka  <oka326@parkcity.ne.jp>
 	use cyrillic!!!)
 	* pl.po: Enabled header
 
-2001-09-09  Carlos Perelló Marín <carlos@gnome-db.org>
+2001-09-09  Carlos Perell√≥ Mar√≠n <carlos@gnome-db.org>
 
         * es.po: Updated Spanish translation by Jose Antonio
 	Salgueiro <joseantsa@retemail.es>
@@ -688,7 +692,7 @@ Wed Apr 10 00:59:46 2002  Mitsuru Oka  <oka326@parkcity.ne.jp>
 
 	* sv.po: Updated Swedish translation.
 
-2001-07-08  Carlos Perelló Marín <carlos@gnome-db.org>
+2001-07-08  Carlos Perell√≥ Mar√≠n <carlos@gnome-db.org>
 
         * es.po: Updated Spanish translation by Jose Antonio
 	Salgueiro <joseantsa@retemail.es>
@@ -742,7 +746,7 @@ Wed Apr 10 00:59:46 2002  Mitsuru Oka  <oka326@parkcity.ne.jp>
 
 	* de.po: Updated German translation for Matthias Warkus.
 
-2001-03-11  Carlos Perelló Marín <carlos@gnome-db.org>
+2001-03-11  Carlos Perell√≥ Mar√≠n <carlos@gnome-db.org>
 
 	* es.po: Updated Spanish translation by Jose Antonio
 	  Salgueiro <joseantsa@retemail.es>
@@ -773,7 +777,7 @@ Wed Apr 10 00:59:46 2002  Mitsuru Oka  <oka326@parkcity.ne.jp>
 
 2001-02-16  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokmål) translation.
+	* no.po: Updated Norwegian (bokm√•l) translation.
 	
 2001-01-12  Valek Filippov  <frob@df.ru>
 
