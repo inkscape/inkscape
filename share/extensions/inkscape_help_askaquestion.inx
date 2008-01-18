@@ -1,0 +1,12 @@
+<inkscape-extension>
+    <_name>Ask Us a Question</_name>
+    <id>org.inkscape.help.askaquestion</id>
+	<dependency type="executable" location="extensions">webbrowser_askaquestion.py</dependency>
+    <effect needs-document="no">
+		<object-type>all</object-type>
+		<effects-menu hidden="yes"/>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">webbrowser_askaquestion.py</command>
+    </script>
+</inkscape-extension>

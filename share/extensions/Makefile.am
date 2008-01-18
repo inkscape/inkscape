@@ -96,6 +96,7 @@ extensions = \
 	text_randomcase.py \
 	text_replace.py \
 	txt2svg.pl \
+	webbrowser_askaquestion.py \
 	webbrowser_commandline.py \
 	webbrowser_faq.py\
 	webbrowser_manual.py \
@@ -154,6 +155,7 @@ modules = \
 	gears.inx\
 	gimp_xcf.inx \
 	handles.inx \
+	inkscape_help_askaquestion.inx \
 	inkscape_help_commandline.inx \
 	inkscape_help_faq.inx\
 	inkscape_help_manual.inx \

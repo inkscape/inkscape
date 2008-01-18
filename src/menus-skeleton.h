@@ -241,6 +241,7 @@ static char const menus_skeleton[] =
 "   <submenu name=\"" N_("_Help") "\">\n"
 "       <verb verb-id=\"org.inkscape.help.manual\" />\n"
 "       <verb verb-id=\"org.inkscape.help.keys\" />\n"
+"       <verb verb-id=\"org.inkscape.help.askaquestion\" />\n"
 "       <submenu name=\"" N_("Tutorials") "\">\n"
 "           <verb verb-id=\"TutorialsBasic\" />\n"
 "           <verb verb-id=\"TutorialsShapes\" />\n"
