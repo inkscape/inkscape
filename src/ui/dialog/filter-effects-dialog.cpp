@@ -2133,12 +2133,14 @@ void FilterEffectsDialog::update_settings_sensitivity()
         SPFeComponentTransfer* ct = SP_FECOMPONENTTRANSFER(prim);
         const bool linear = ct->type == COMPONENTTRANSFER_TYPE_LINEAR;
         const bool gamma = ct->type == COMPONENTTRANSFER_TYPE_GAMMA;
-        //_ct_table->set_sensitive(ct->type == COMPONENTTRANSFER_TYPE_TABLE || ct->type == COMPONENTTRANSFER_TYPE_DISCRETE);
+
+        // Component transfer not yet implemented
+        /*_ct_table->set_sensitive(ct->type == COMPONENTTRANSFER_TYPE_TABLE || ct->type == COMPONENTTRANSFER_TYPE_DISCRETE);
         _ct_slope->set_sensitive(linear);
         _ct_intercept->set_sensitive(linear);
         _ct_amplitude->set_sensitive(gamma);
         _ct_exponent->set_sensitive(gamma);
-        _ct_offset->set_sensitive(gamma);
+        _ct_offset->set_sensitive(gamma);*/
     }
 }
 
