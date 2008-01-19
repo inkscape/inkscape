@@ -12399,7 +12399,7 @@ msgid "Use the <b>Node tool</b> to adjust position, scale, and rotation of the p
 msgstr ""
 "Dùng:\n"
 " • <b>Công cụ Nút</b> để điều chỉnh vị trí, tỷ lệ và hệ số xoay của mẫu trên vùng vẽ.\n"
-" • <b>Đối tượng > Mẫu > Đối tượng sang Mẫu</b> để tạo một mẫu mới từ vùng chọn."
+" • <b>Đối tượng &gt; Mẫu &gt; Đối tượng sang Mẫu</b> để tạo một mẫu mới từ vùng chọn."
 
 #: ../src/widgets/select-toolbar.cpp:238
 msgid "Transform by toolbar"
