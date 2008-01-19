@@ -408,6 +408,12 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                     case SP_PEN_CONTEXT_POINT:
                         if (pc->npoints == 0) {
 
+                            if (bevent.state & GDK_CONTROL_MASK) {
+                                freehand_create_single_dot(event_context, event_dt, "tools.freehand.pen", bevent.state & GDK_SHIFT_MASK);
+                                ret = TRUE;
+                                break;
+                            }
+
                             /* Set start anchor */
                             pc->sa = anchor;
                             NR::Point p;

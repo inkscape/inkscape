@@ -235,6 +235,16 @@ void InkscapePreferences::AddConvertGuidesCheckbox(DialogPage& p, const std::str
     p.add_line( false, "", *cb, "", _("Converting an object to guides places these along the object's true edges (imitating the object's shape), not along the bounding box."));
 }
 
+void InkscapePreferences::AddDotSizeSpinbutton(DialogPage& p, const std::string& prefs_path, double def_value)
+{
+    PrefSpinButton* sb = Gtk::manage( new PrefSpinButton);
+    sb->init ( prefs_path, "dot-size", 0.0, 1000.0, 0.1, 10.0, def_value, false, false);
+    p.add_line( false, _("Dot size:"), *sb, "times current stroke width", 
+                       _("Size of dots created with Ctrl+click (relative to current stroke width)"),
+                       false );
+}
+
+
 void StyleFromSelectionToTool(gchar const *prefs_path, StyleSwatch *swatch)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -406,10 +416,12 @@ void InkscapePreferences::initPageTools()
     _page_pencil.add_line( false, _("Tolerance:"), _t_pencil_tolerance, "", 
                            _("This value affects the amount of smoothing applied to freehand lines; lower values produce more uneven paths with more nodes"),
                            false );
+    this->AddDotSizeSpinbutton(_page_pencil, "tools.freehand.pencil", 3.0);
     this->AddNewObjectsStyle(_page_pencil, "tools.freehand.pencil");
     //Pen
     this->AddPage(_page_pen, _("Pen"), iter_tools, PREFS_PAGE_TOOLS_PEN);
     this->AddSelcueCheckbox(_page_pen, "tools.freehand.pen", true);
+    this->AddDotSizeSpinbutton(_page_pen, "tools.freehand.pen", 3.0);
     this->AddNewObjectsStyle(_page_pen, "tools.freehand.pen");
     //Calligraphy
     this->AddPage(_page_calligraphy, _("Calligraphy"), iter_tools, PREFS_PAGE_TOOLS_CALLIGRAPHY);

@@ -33,6 +33,14 @@
 #include "sp-guide.h"
 
 #include "document.h"
+#include "desktop.h"
+#include "desktop-handles.h"
+#include "desktop-style.h"
+#include "event-context.h"
+#include "inkscape.h"
+#include "style.h"
+#include "message-stack.h"
+#include "prefs-utils.h"
 
 #define noPATH_VERBOSE
 
@@ -501,6 +509,62 @@ sp_path_get_curve_reference (SPPath *path)
     } else {
         return path->curve;
     }
+}
+
+/* Create a single dot represented by a circle */
+void freehand_create_single_dot(SPEventContext *ec, NR::Point const &pt, char const *tool, bool randomize) {
+    g_return_if_fail(!strcmp(tool, "tools.freehand.pen") || !strcmp(tool, "tools.freehand.pencil"));
+
+    SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(ec);
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+    Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
+    repr->setAttribute("sodipodi:type", "arc");
+    SPItem *item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
+    Inkscape::GC::release(repr);
+
+    /* apply the tool's current style */
+    sp_desktop_apply_style_tool(desktop, repr, tool, false);
+
+    /* find out stroke width (TODO: is there an easier way??) */
+    double stroke_width = 3.0;
+    gchar const *style_str = NULL;
+    style_str = repr->attribute("style");
+    if (style_str) {
+        SPStyle *style = sp_style_new(SP_ACTIVE_DOCUMENT);
+        sp_style_merge_from_style_string(style, style_str);
+        stroke_width = style->stroke_width.computed;
+        style->stroke_width.computed = 0;
+        sp_style_unref(style);
+    }
+    /* unset stroke and set fill color to former stroke color */
+    gchar * str;
+    str = g_strdup_printf("fill:#%06x;stroke:none;", sp_desktop_get_color_tool(desktop, tool, false) >> 8);
+    repr->setAttribute("style", str);
+    g_free(str);
+
+    /* put the circle where the mouse click occurred and set the diameter to the
+       current stroke width, multiplied by the amount specified in the preferences */
+    NR::Matrix const i2d (sp_item_i2d_affine (item));
+    NR::Point pp = pt * i2d;
+    double rad = 0.5 * prefs_get_double_attribute(tool, "dot-size", 3.0);
+    if (randomize) {
+        /* TODO: We vary the dot size between 0.5*rad and 1.5*rad, where rad is the dot size
+           as specified in prefs. Very simple, but it might be sufficient in practice. If not,
+           we need to devise something more sophisticated. */
+        double s = g_random_double_range(-0.5, 0.5);
+        rad *= (1 + s);
+    }
+
+    sp_repr_set_svg_double (repr, "sodipodi:cx", pp[NR::X]);
+    sp_repr_set_svg_double (repr, "sodipodi:cy", pp[NR::Y]);
+    sp_repr_set_svg_double (repr, "sodipodi:rx", rad * stroke_width);
+    sp_repr_set_svg_double (repr, "sodipodi:ry", rad * stroke_width);
+    item->updateRepr();
+
+    unsigned int tool_code = !strcmp(tool, "tools.freehand.pencil") ? SP_VERB_CONTEXT_PENCIL : SP_VERB_CONTEXT_PEN;
+
+    desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating single dot"));
+    sp_document_done(sp_desktop_document(desktop), tool_code, _("Create single dot"));
 }
 
 /*

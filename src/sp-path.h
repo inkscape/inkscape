@@ -39,6 +39,8 @@ SPCurve* sp_path_get_original_curve (SPPath *path);
 SPCurve* sp_path_get_curve_for_edit (SPPath *path);
 const SPCurve* sp_path_get_curve_reference (SPPath *path);
 
+void freehand_create_single_dot(SPEventContext *ec, NR::Point const &pt, char const *tool, bool randomize = false);
+
 #endif
 
 /*

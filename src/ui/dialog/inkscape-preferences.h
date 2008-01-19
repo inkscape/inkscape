@@ -218,6 +218,7 @@ protected:
     static void AddSelcueCheckbox(DialogPage& p, const std::string& prefs_path, bool def_value);
     static void AddGradientCheckbox(DialogPage& p, const std::string& prefs_path, bool def_value);
     static void AddConvertGuidesCheckbox(DialogPage& p, const std::string& prefs_path, bool def_value);
+    static void AddDotSizeSpinbutton(DialogPage& p, const std::string& prefs_path, double def_value);
     static void AddNewObjectsStyle(DialogPage& p, const std::string& prefs_path);
 
     void on_pagelist_selection_changed();
