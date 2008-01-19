@@ -392,7 +392,7 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
         dpb = &cpb;
         // Set nocache flag for downstream rendering
         flags |= NR_ARENA_ITEM_RENDER_NO_CACHE;
-    } 
+    }
 
     /* Determine, whether we need temporary buffer */
     if (item->clip || item->mask
