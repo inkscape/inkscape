@@ -996,7 +996,11 @@ box3d_set_new_z_orders_case2 (SPBox3D *box, int z_orders[6], Box3D::Axis central
                         box3d_aux_set_z_orders (z_orders, 3, 1, 5, 2, 4, 0);
                     } else {
                         //g_print ("central axis X (case b3)");
-                        box3d_aux_set_z_orders (z_orders, 3, 1, 5, 0, 2, 4);
+                        if (insidexy == 0) {
+                            box3d_aux_set_z_orders (z_orders, 3, 5, 1, 0, 2, 4);
+                        } else {
+                            box3d_aux_set_z_orders (z_orders, 3, 1, 5, 0, 2, 4);
+                        }
                     }
                 }
             }
@@ -1012,7 +1016,11 @@ box3d_set_new_z_orders_case2 (SPBox3D *box, int z_orders[6], Box3D::Axis central
                 }
             } else {
                 //g_print ("central axis Y (case b)");
-                box3d_aux_set_z_orders (z_orders, 5, 0, 4, 1, 3, 2);
+                if (insideyx == 1) {
+                    box3d_aux_set_z_orders (z_orders, 4, 0, 5, 1, 3, 2);
+                } else {
+                    box3d_aux_set_z_orders (z_orders, 5, 0, 4, 1, 3, 2);
+                }
             }
             break;
         case Box3D::Z:
