@@ -41,6 +41,7 @@
 #include "style.h"
 #include "message-stack.h"
 #include "prefs-utils.h"
+#include "selection.h"
 
 #define noPATH_VERBOSE
 
@@ -512,7 +513,7 @@ sp_path_get_curve_reference (SPPath *path)
 }
 
 /* Create a single dot represented by a circle */
-void freehand_create_single_dot(SPEventContext *ec, NR::Point const &pt, char const *tool, bool randomize) {
+void freehand_create_single_dot(SPEventContext *ec, NR::Point const &pt, char const *tool, guint event_state) {
     g_return_if_fail(!strcmp(tool, "tools.freehand.pen") || !strcmp(tool, "tools.freehand.pencil"));
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(ec);
@@ -547,12 +548,16 @@ void freehand_create_single_dot(SPEventContext *ec, NR::Point const &pt, char co
     NR::Matrix const i2d (sp_item_i2d_affine (item));
     NR::Point pp = pt * i2d;
     double rad = 0.5 * prefs_get_double_attribute(tool, "dot-size", 3.0);
-    if (randomize) {
+    if (event_state & GDK_MOD1_MASK) {
         /* TODO: We vary the dot size between 0.5*rad and 1.5*rad, where rad is the dot size
            as specified in prefs. Very simple, but it might be sufficient in practice. If not,
            we need to devise something more sophisticated. */
         double s = g_random_double_range(-0.5, 0.5);
         rad *= (1 + s);
+    }
+    if (event_state & GDK_SHIFT_MASK) {
+        // double the point size
+        rad *= 2;
     }
 
     sp_repr_set_svg_double (repr, "sodipodi:cx", pp[NR::X]);
@@ -560,6 +565,8 @@ void freehand_create_single_dot(SPEventContext *ec, NR::Point const &pt, char co
     sp_repr_set_svg_double (repr, "sodipodi:rx", rad * stroke_width);
     sp_repr_set_svg_double (repr, "sodipodi:ry", rad * stroke_width);
     item->updateRepr();
+
+    sp_desktop_selection(desktop)->set(item);
 
     unsigned int tool_code = !strcmp(tool, "tools.freehand.pencil") ? SP_VERB_CONTEXT_PENCIL : SP_VERB_CONTEXT_PEN;
 
