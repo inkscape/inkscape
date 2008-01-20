@@ -41,7 +41,6 @@ public:
 
 private:
     sigc::connection selection_changed_connection;
-    sigc::connection selection_modified_connection;
 
     void set_sensitize_all(bool sensitive);
 
@@ -64,8 +63,6 @@ private:
     Gtk::Tooltips tooltips;
 
     SPDesktop * current_desktop;
-
-    LivePathEffect::Effect* currect_effect;
 
     LivePathEffectEditor(LivePathEffectEditor const &d);
     LivePathEffectEditor& operator=(LivePathEffectEditor const &d);

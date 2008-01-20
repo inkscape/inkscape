@@ -46,11 +46,6 @@ static void lpeeditor_selection_changed (Inkscape::Selection * selection, gpoint
     lpeeditor->onSelectionChanged(selection);
 }
 
-static void lpeeditor_selection_modified( Inkscape::Selection *selection, guint /*flags*/, gpointer data )
-{
-    lpeeditor_selection_changed (selection, data);
-}
-
 
 /*#######################
  * LivePathEffectEditor
@@ -65,8 +60,7 @@ LivePathEffectEditor::LivePathEffectEditor()
       explain_label("", Gtk::ALIGN_CENTER),
       effectapplication_frame(_("Apply new effect")),
       effectcontrol_frame(_("Current effect")),
-      current_desktop(NULL),
-      currect_effect(NULL)
+      current_desktop(NULL)
 {
     Gtk::Box *contents = _getContents();
     contents->set_spacing(4);
@@ -104,32 +98,27 @@ LivePathEffectEditor::~LivePathEffectEditor()
 
     if (current_desktop) {
         selection_changed_connection.disconnect();
-        selection_modified_connection.disconnect();
     }
 }
 
 void
 LivePathEffectEditor::showParams(LivePathEffect::Effect* effect)
 {
-    if (currect_effect != effect) {
-        currect_effect = effect;
-
-        if (effectwidget) {
-            effectcontrol_vbox.remove(*effectwidget);
-            delete effectwidget;
-            effectwidget = NULL;
-        }
-
-        explain_label.set_markup("<b>" + effect->getName() + "</b>");
-        effectwidget = effect->newWidget(&tooltips);
-        if (effectwidget) {
-            effectcontrol_vbox.pack_start(*effectwidget, true, true);
-        }
-        button_remove.show();
-
-        effectcontrol_vbox.show_all_children();
-        // fixme: add resizing of dialog
+    if (effectwidget) {
+        effectcontrol_vbox.remove(*effectwidget);
+        delete effectwidget;
+        effectwidget = NULL;
     }
+
+    explain_label.set_markup("<b>" + effect->getName() + "</b>");
+    effectwidget = effect->newWidget(&tooltips);
+    if (effectwidget) {
+        effectcontrol_vbox.pack_start(*effectwidget, true, true);
+    }
+    button_remove.show();
+
+    effectcontrol_vbox.show_all_children();
+    // fixme: add resizing of dialog
 }
 
 void
@@ -200,7 +189,6 @@ LivePathEffectEditor::setDesktop(SPDesktop *desktop)
 
     if (current_desktop) {
         selection_changed_connection.disconnect();
-        selection_modified_connection.disconnect();
     }
 
     current_desktop = desktop;
@@ -208,8 +196,6 @@ LivePathEffectEditor::setDesktop(SPDesktop *desktop)
         Inkscape::Selection *selection = sp_desktop_selection(desktop);
         selection_changed_connection = selection->connectChanged(
             sigc::bind (sigc::ptr_fun(&lpeeditor_selection_changed), this ) );
-        selection_modified_connection = selection->connectModified(
-            sigc::bind (sigc::ptr_fun(&lpeeditor_selection_modified), this ) );
 
         onSelectionChanged(selection);
     } else {
