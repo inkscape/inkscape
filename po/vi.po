@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Inkscape package.
 # Copyright © 2008 Free Software Foundation, Inc.
 # Clytie Siddall <clytie@riverland.net.au>, 2006-2008.
-# Nguyễn Dinh Trung <nguyendinhtrung141@gmail.com>, 2008.
+# Nguyen Dinh Trung <nguyendinhtrung141@gmail.com>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-01-06 10:33+0100\n"
-"PO-Revision-Date: 2008-01-10 15:23+0700\n"
+"PO-Revision-Date: 2008-01-19 13:20+0700\n"
 "Last-Translator: Nguyen Dinh Trung <nguyendinhtrung141@gmail.com>\n"
 "Language-Team: Vietnamese <vi-bugs@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -410,19 +410,11 @@ msgstr "Ngẫu nhiên hoá hệ số co giãn theo chiều dọc (theo phần tr
 
 #: ../src/dialogs/clonetiler.cpp:2166
 msgid "Whether row scaling is uniform (1), converge (<1) or diverge (>1)"
-msgstr ""
-"Cách co giãn hàng:\n"
-"\t  1\tcùng một hệ số\n"
-"\t<1\thội tu\n"
-"\t>1\tphân kỳ"
+msgstr "Cách co giãn hàng:  1 cùng một hệ số, <1 hội tu, >1 phân kỳ"
 
 #: ../src/dialogs/clonetiler.cpp:2173
 msgid "Whether column scaling is uniform (1), converge (<1) or diverge (>1)"
-msgstr ""
-"Cách co giãn cột:\n"
-"\t  1\tcùng một hệ số\n"
-"\t<1\thội tu\n"
-"\t>1\tphân kỳ"
+msgstr "Cách co giãn cột: 1 cùng một hệ số, <1 hội tu, >1 phân kỳ"
 
 #: ../src/dialogs/clonetiler.cpp:2181
 msgid "<b>Base:</b>"
@@ -431,10 +423,7 @@ msgstr "<b>Cơ số :</b>"
 #: ../src/dialogs/clonetiler.cpp:2188
 #: ../src/dialogs/clonetiler.cpp:2195
 msgid "Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
-msgstr ""
-"Cơ số cho xoắn ốc loga:\t  0\tkhông dùng\n"
-"\t<1\thội tu\n"
-"\t>1\tphân kỳ"
+msgstr "Cơ số cho xoắn ốc loga:  0 không dùng, <1 hội tụ, t>1 phân kỳ"
 
 #: ../src/dialogs/clonetiler.cpp:2209
 msgid "Alternate the sign of scales for each row"
@@ -1849,7 +1838,7 @@ msgstr "Bỏ nét"
 
 #: ../src/dialogs/stroke-style.cpp:416
 msgid "Set gradient on stroke"
-msgstr "Đặt dải màu trên nét"
+msgstr "Đặt chuyển sắc lên nét"
 
 #: ../src/dialogs/stroke-style.cpp:460
 msgid "Set pattern on stroke"
@@ -2922,7 +2911,7 @@ msgstr "Sửa Gamma"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:72
 msgid "Level the specified channel of selected bitmap(s) by scaling values falling between the given ranges to the full color range."
-msgstr "Chỉnh mức kênh được chỉ định trong (các) ảnh mảng đã chọn, bằng cách giãn dải màu trong phạm vi đã cho thành toàn bộ dải màu."
+msgstr "Chỉnh mức kênh được chỉ định trong (các) ảnh mảng đã chọn, bằng cách giãn vùng màu trong phạm vi đã cho thành toàn bộ vùng màu."
 
 #: ../src/extension/internal/bitmap/level.cpp:40
 msgid "Level"
@@ -2930,7 +2919,7 @@ msgstr "Chỉnh mức"
 
 #: ../src/extension/internal/bitmap/level.cpp:50
 msgid "Level selected bitmap(s) by scaling values falling between the given ranges to the full color range."
-msgstr "Chỉnh mức (các) ảnh mảng đã chọn, bằng cách giãn dải màu trong phạm vi đã chọn thành toàn bộ dải màu."
+msgstr "Chỉnh mức (các) ảnh mảng đã chọn, bằng cách giãn vùng màu trong phạm vi đã chọn thành toàn bộ vùng màu."
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
 msgid "Median Filter"
@@ -2983,7 +2972,7 @@ msgstr "Chuẩn hoá"
 
 #: ../src/extension/internal/bitmap/normalize.cpp:42
 msgid "Normalize selected bitmap(s), expanding color range to the full possible range of color."
-msgstr "Chuẩn hoá (các) ảnh mảng đã chọn, mở rộng dải màu đến hết mức có thể."
+msgstr "Chuẩn hoá (các) ảnh mảng đã chọn, mở rộng vùng màu ra hết mức có thể."
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:36
 msgid "Oil Paint"
@@ -3239,15 +3228,15 @@ msgstr "Dữ liệu nhập đệm điểm ảnh %s GDK"
 
 #: ../src/extension/internal/gimpgrad.cpp:274
 msgid "GIMP Gradients"
-msgstr "Dải màu GIMP"
+msgstr "Chuyển sắc của GIMP"
 
 #: ../src/extension/internal/gimpgrad.cpp:279
 msgid "GIMP Gradient (*.ggr)"
-msgstr "Dải màu GIMP (*.ggr)"
+msgstr "Chuyển sắc của GIMP (*.ggr)"
 
 #: ../src/extension/internal/gimpgrad.cpp:280
 msgid "Gradients used in GIMP"
-msgstr "Các dải màu được dùng trong GIMP."
+msgstr "Các chuyển sắc được dùng trong GIMP."
 
 #: ../src/extension/internal/grid.cpp:192
 #: ../src/ui/widget/panel.cpp:118
@@ -3421,7 +3410,7 @@ msgstr "Thiết lập trang"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:103
 msgid "Precision of approximating gradient meshes:"
-msgstr "Độ chính xác của mắc lưới xấp xỉ của dải màu :"
+msgstr "Độ chính xác của mắc lưới xấp xỉ của chuyển sắc :"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:104
 msgid "<b>Note</b>: setting the precision too high may result in a large SVG file and slow performance."
@@ -4039,42 +4028,40 @@ msgstr "Đặt kiểu dáng cho đối tượng"
 
 #: ../src/flood-context.cpp:1072
 msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
-msgstr ""
-"<b>Vẽ qua</b> các vùng cần thêm vào tiến trình tô đầy; cũng ấn giữ phím\n"
-" • <b>Alt</b> để tô đầy theo sờ"
+msgstr "<b>Vẽ qua</b> các vùng cần thêm vào tiến trình tô đầy; cũng ấn giữ phím <b>Alt</b> để tô đầy theo sờ"
 
 #: ../src/gradient-context.cpp:132
 #: ../src/gradient-drag.cpp:73
 msgid "Linear gradient <b>start</b>"
-msgstr "<b>Đầu</b> của dải màu tuyến"
+msgstr "<b>Đầu</b> của chuyển sắc thẳng"
 
 #. POINT_LG_BEGIN
 #: ../src/gradient-context.cpp:133
 #: ../src/gradient-drag.cpp:74
 msgid "Linear gradient <b>end</b>"
-msgstr "<b>Cuối</b> của dải màu tuyến"
+msgstr "<b>Cuối</b> của chuyển sắc thẳng"
 
 #: ../src/gradient-context.cpp:134
 #: ../src/gradient-drag.cpp:75
 msgid "Linear gradient <b>mid stop</b>"
-msgstr "<b>Chỗ dừng ở giữa</b> của dải màu tuyến"
+msgstr "<b>Chỗ dừng ở giữa</b> của chuyển sắc thẳng"
 
 #: ../src/gradient-context.cpp:135
 #: ../src/gradient-drag.cpp:76
 msgid "Radial gradient <b>center</b>"
-msgstr "<b>Tâm</b> của dải màu xuyên tâm"
+msgstr "<b>Tâm</b> của chuyển sắc tròn"
 
 #: ../src/gradient-context.cpp:136
 #: ../src/gradient-context.cpp:137
 #: ../src/gradient-drag.cpp:77
 #: ../src/gradient-drag.cpp:78
 msgid "Radial gradient <b>radius</b>"
-msgstr "<b>Bán kính</b> của dải màu xuyên tâm"
+msgstr "<b>Bán kính</b> của chuyển sắc tròn"
 
 #: ../src/gradient-context.cpp:138
 #: ../src/gradient-drag.cpp:79
 msgid "Radial gradient <b>focus</b>"
-msgstr "<b>Tiêu điểm</b> của dải màu xuyên tâm"
+msgstr "<b>Tiêu điểm</b> của chuyển sắc tròn"
 
 #. POINT_RG_FOCUS
 #: ../src/gradient-context.cpp:139
@@ -4082,41 +4069,41 @@ msgstr "<b>Tiêu điểm</b> của dải màu xuyên tâm"
 #: ../src/gradient-drag.cpp:80
 #: ../src/gradient-drag.cpp:81
 msgid "Radial gradient <b>mid stop</b>"
-msgstr "<b>Chỗ dừng ở giữa</b> của dải màu xuyên tâm"
+msgstr "<b>Chỗ dừng ở giữa</b> của chuyển sắc tròn"
 
 #: ../src/gradient-context.cpp:160
 #, c-format
 msgid "%s selected out of %d gradient handles on %d selected object(s)"
-msgstr "%s được chọn trên %d chốt kéo dải màu trên %d đối tượng đã chọn"
+msgstr "%s được chọn trên %d chốt kéo của chuyển sắc trên %d đối tượng đã chọn"
 
 #: ../src/gradient-context.cpp:163
 #, c-format
 msgid "One handle merging %d stops (drag with <b>Shift</b> to separate) selected out of %d gradient handles on %d selected object(s)"
-msgstr "Một chốt kéo đang trộn với nhau %d chỗ dừng (kéo bằng phím <b>Shift</b> để phân cách) được chọn trên %d chốt kéo dải màu trên %d đối tượng đã chọn"
+msgstr "Một chốt kéo đang trộn với nhau %d pha (kéo bằng phím <b>Shift</b> để phân cách) được chọn trên %d chốt kéo chuyển sắc trên %d đối tượng đã chọn"
 
 #: ../src/gradient-context.cpp:167
 #, c-format
 msgid "<b>%d</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr "<b>%d</b> chốt kéo dải màu được chọn trên %d trên %d đối tượng đã chọn"
+msgstr "<b>%d</b> chốt kéo chuyển sắc được chọn trên %d trên %d đối tượng đã chọn"
 
 #: ../src/gradient-context.cpp:170
 #, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr "<b>Không có</b> chốt kéo dải màu được chọn trên %d trên %d đối tượng đã chọn"
+msgstr "<b>Không có</b> chốt kéo chuyển sắc được chọn trên %d trên %d đối tượng đã chọn"
 
 #: ../src/gradient-context.cpp:368
 #: ../src/gradient-context.cpp:461
 #: ../src/widgets/gradient-vector.cpp:735
 msgid "Add gradient stop"
-msgstr "Thêm chỗ dừng dải màu"
+msgstr "Thêm pha chuyển sắc"
 
 #: ../src/gradient-context.cpp:436
 msgid "Simplify gradient"
-msgstr "Giản dị hoá dải màu"
+msgstr "Giản dị hoá chuyển sắc"
 
 #: ../src/gradient-context.cpp:512
 msgid "Create default gradient"
-msgstr "Tạo dải màu mặc định"
+msgstr "Tạo chuyển sắc mặc định"
 
 #: ../src/gradient-context.cpp:565
 msgid "<b>Draw around</b> handles to select them"
@@ -4124,48 +4111,43 @@ msgstr "<b>Vẽ vòng quanh</b> chốt kéo để lựa chọn"
 
 #: ../src/gradient-context.cpp:663
 msgid "<b>Ctrl</b>: snap gradient angle"
-msgstr "<b>Ctrl</b>: đính góc dải màu"
+msgstr "<b>Ctrl</b>: đính góc chuyển sắc"
 
 #: ../src/gradient-context.cpp:664
 msgid "<b>Shift</b>: draw gradient around the starting point"
-msgstr "<b>Shift</b>: vẽ dải màu vòng quanh điểm bắt đầu"
+msgstr "<b>Shift</b>: vẽ chuyển sắc vòng quanh điểm bắt đầu"
 
 #: ../src/gradient-context.cpp:784
 msgid "Invert gradient"
-msgstr "Đảo dải màu"
+msgstr "Đảo chuyển sắc"
 
 #: ../src/gradient-context.cpp:893
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
-msgstr[0] ""
-"<b>Dải màu</b> cho %d đối tượng; với phím\n"
-" • <b>Ctrl</b> để đính góc"
+msgstr[0] "<b>Chuyển sắc</b> cho %d đối tượng; với phím <b>Ctrl</b> để đính góc"
 
 #: ../src/gradient-context.cpp:897
 msgid "Select <b>objects</b> on which to create gradient."
-msgstr "Chọn <b>đối tượng</b> trên đó cần tạo dải màu."
+msgstr "Chọn <b>đối tượng</b> trên đó cần tạo chuyển sắc."
 
 #: ../src/gradient-drag.cpp:595
 msgid "Merge gradient handles"
-msgstr "Trộn các chốt dải màu"
+msgstr "Trộn các chốt chuyển sắc"
 
 #: ../src/gradient-drag.cpp:904
 msgid "Move gradient handle"
-msgstr "Chuyển chốt dải màu"
+msgstr "Chuyển chốt chuyển sắc"
 
 #: ../src/gradient-drag.cpp:957
 #: ../src/widgets/gradient-vector.cpp:767
 msgid "Delete gradient stop"
-msgstr "Xoá chỗ dừng dải màu"
+msgstr "Xoá pha chuyển sắc"
 
 #: ../src/gradient-drag.cpp:1121
 #, c-format
 msgid "%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl+Alt</b> to delete stop"
-msgstr ""
-"%s %d cho : %s%s;\n"
-" • kéo khi ẩn giữ phím <b>Ctrl</b> để đính chỗ bù ;\n"
-" • nhấn chuột khi ẩn giữ phím <b>Ctrl+Alt</b> để xoá chỗ dừng."
+msgstr "%s %d cho : %s%s; kéo khi ẩn giữ phím <b>Ctrl</b> để đính chỗ bù ; nhấn chuột khi ẩn giữ phím <b>Ctrl+Alt</b> để xoá pha."
 
 #: ../src/gradient-drag.cpp:1125
 #: ../src/gradient-drag.cpp:1132
@@ -4175,38 +4157,30 @@ msgstr " (nét)"
 #: ../src/gradient-drag.cpp:1129
 #, c-format
 msgid "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to preserve angle, with <b>Ctrl+Shift</b> to scale around center"
-msgstr ""
-"%s đối với: %s%s; kéo bằng phím:\n"
-" • <b>Ctrl</b> để đính góc;\n"
-" • <b>Ctrl+Alt</b> để bảo tồn góc;\n"
-" • <b>Ctrl+Shift</b> để co giãn vòng trung tâm"
+msgstr "%s đối với: %s%s; kéo bằng phím <b>Ctrl</b> để đính góc; <b>Ctrl+Alt</b> để bảo tồn góc; <b>Ctrl+Shift</b> để co giãn vòng trung tâm"
 
 #: ../src/gradient-drag.cpp:1137
 #, c-format
 msgid "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to separate focus"
-msgstr ""
-"<b>Tâm</b> và <b>tiêu điểm</b> của dải màu xuyên tâm; kéo bằng phím\n"
-" • <b>Shift</b> để phân cách tiêu điểm."
+msgstr "<b>Tâm</b> và <b>tiêu điểm</b> của chuyển sắc tròn; kéo bằng phím <b>Shift</b> để phân cách tiêu điểm."
 
 #: ../src/gradient-drag.cpp:1140
 #, c-format
 msgid "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to separate"
 msgid_plural "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to separate"
-msgstr[0] ""
-"Điểm dải màu được dùng chung bởi dải màu <b>%d</b>; kéo bằng phím\n"
-" • <b>Shift</b> để phân cách"
+msgstr[0] "Điểm chung giữa <b>%d</b> chuyển sắc; kéo bằng phím <b>Shift</b> để phân cách"
 
 #: ../src/gradient-drag.cpp:1815
 msgid "Move gradient handle(s)"
-msgstr "Chuyển chốt dải màu"
+msgstr "Chuyển chốt chuyển sắc"
 
 #: ../src/gradient-drag.cpp:1851
 msgid "Move gradient mid stop(s)"
-msgstr "Chuyển chỗ dừng ở giữa dải màu"
+msgstr "Chuyển pha ở giữa chuyển sắc"
 
 #: ../src/gradient-drag.cpp:2139
 msgid "Delete gradient stop(s)"
-msgstr "Xoá chỗ dừng dải màu"
+msgstr "Xoá pha của chuyển sắc"
 
 #: ../src/helper/units.cpp:37
 msgid "Unit"
@@ -4516,7 +4490,7 @@ msgstr "Thả màu"
 
 #: ../src/interface.cpp:1154
 msgid "Drop color on gradient"
-msgstr "Thả màu trên dải màu"
+msgstr "Thả màu trên chuyển sắc"
 
 #: ../src/interface.cpp:1213
 msgid "Could not parse SVG data"
@@ -5131,9 +5105,7 @@ msgstr "Trợ lý"
 
 #: ../src/node-context.cpp:185
 msgid "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl+Alt</b>: move along handles"
-msgstr ""
-"<b>Ctrl</b>: bật/tắt kiểu nút, đính góc chốt, di chuyển theo chiều ngang/dọc;\n"
-" • <b>Ctrl+Alt</b>: di chuyển theo chốt"
+msgstr "<b>Ctrl</b>: bật/tắt kiểu nút, đính góc chốt, di chuyển theo chiều ngang/dọc; <b>Ctrl+Alt</b>: di chuyển theo chốt"
 
 #: ../src/node-context.cpp:186
 msgid "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
@@ -5141,9 +5113,7 @@ msgstr "<b>Shift</b>: bật/tắt chọn nút, tắt chức năng đính, xoay c
 
 #: ../src/node-context.cpp:187
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
-msgstr ""
-" • <b>Alt</b>: khoá chiều dài chốt;\n"
-" • <b>Ctrl+Alt</b>: di chuyển theo chốt"
+msgstr "<b>Alt</b>: khoá chiều dài chốt; <b>Ctrl+Alt</b>: di chuyển theo chốt"
 
 #: ../src/nodepath.cpp:642
 #: ../src/seltrans.cpp:520
@@ -5169,11 +5139,7 @@ msgstr "Di chuyển các nút"
 
 #: ../src/nodepath.cpp:1424
 msgid "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
-msgstr ""
-"<b>Móc nút</b>: kéo để tạo hình của đường cong; với phím:\n"
-" • <b>Ctrl</b> để đính góc;\n"
-" • <b>Alt</b> để khoá chiều dài;\n"
-" • <b>Shift</b> để xoay cả hai chốt"
+msgstr "<b>Chốt nút</b>: kéo để tạo hình của đường cong; với phím <b>Ctrl</b> để đính góc; <b>Alt</b> để khoá chiều dài; <b>Shift</b> để xoay cả hai chốt"
 
 #: ../src/nodepath.cpp:1594
 msgid "Align nodes"
@@ -5262,11 +5228,7 @@ msgstr "Di chuyển chốt nút"
 #: ../src/nodepath.cpp:3630
 #, c-format
 msgid "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
-msgstr ""
-"<b>Móc nút</b>: góc %0.2f&#176;, chiều dài %s; với phím:\n"
-" • <b>Ctrl</b> để đính góc;\n"
-" • <b>Alt</b> để khoá độ dài;\n"
-" • <b>Shift</b> để xoay cả hai chốt"
+msgstr "<b>Móc nút</b>: góc %0.2f&#176;, chiều dài %s; với phím <b>Ctrl</b> để đính góc; <b>Alt</b> để khoá độ dài; <b>Shift</b> để xoay cả hai chốt"
 
 #: ../src/nodepath.cpp:3824
 msgid "Rotate nodes"
@@ -5282,10 +5244,7 @@ msgstr "Lật các nút"
 
 #: ../src/nodepath.cpp:4168
 msgid "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
-msgstr ""
-"<b>Nút</b>: kéo để chỉnh sửa đường nét; với phím:\n"
-" • <b>Ctrl</b> để đính theo chiều ngang/dọc;\n"
-" • <b>Ctrl+Alt</b> để đính hướng của chốt"
+msgstr "<b>Nút</b>: kéo để chỉnh sửa đường nét; với phím: <b>Ctrl</b> để đính theo chiều ngang/dọc; <b>Ctrl+Alt</b> để đính hướng của chốt"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
 #: ../src/nodepath.cpp:4394
@@ -5309,36 +5268,23 @@ msgstr "đối xứng"
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
 #: ../src/nodepath.cpp:4410
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
-msgstr ""
-"nút cuối, chốt bị rụt vào\n"
-" • kéo với phím <b>Shift</b> để kéo dài"
+msgstr "nút cuối, chốt bị rụt vào kéo với phím <b>Shift</b> để kéo dài"
 
 #: ../src/nodepath.cpp:4412
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
-msgstr ""
-"một chốt bị rụt vào\n"
-" • kéo với phím <b>Shift</b> để kéo dài"
+msgstr "một chốt bị rụt vào kéo với phím <b>Shift</b> để kéo dài"
 
 #: ../src/nodepath.cpp:4415
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
-msgstr ""
-"cả hai chốt bị rụt vào\n"
-" • kéo với phím <b>Shift</b> để kéo dài"
+msgstr "cả hai chốt bị rụt vào kéo với phím <b>Shift</b> để kéo dài"
 
 #: ../src/nodepath.cpp:4427
 msgid "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; <b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to rotate"
-msgstr ""
-" • <b>Kéo</b> nút hay chốt của nút;\n"
-" • <b>Alt+kéo</b> nút để điêu khắc;\n"
-" • <b>mũi tên</b> để di chuyển nút;\n"
-" • <b>&lt; &gt;</b> để co giãn;\n"
-" • <b>[ ]</b> để xoay"
+msgstr " <b>Kéo</b> nút hay chốt của nút; <b>Alt+kéo</b> nút để điêu khắc; <b>mũi tên</b> để di chuyển nút; <b>&lt; &gt;</b> để co giãn; <b>[ ]</b> để xoay"
 
 #: ../src/nodepath.cpp:4428
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
-msgstr ""
-" • <b>Kéo</b> nút hay chốt của nó;\n"
-" • <b>mũi tên</b> để di chuyển nút"
+msgstr " <b>Kéo</b> nút hay chốt của nó; <b>mũi tên</b> để di chuyển nút"
 
 #: ../src/nodepath.cpp:4453
 #: ../src/nodepath.cpp:4465
@@ -5349,9 +5295,7 @@ msgstr "Chọn một đối tượng riêng để chỉnh sửa nút hay chốt 
 #, c-format
 msgid "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select."
 msgid_plural "<b>0</b> out of <b>%i</b> nodes selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select."
-msgstr[0] ""
-"<b>0</b> trên <b>%i</b> nút được chọn.\n"
-" • <b>Nhấn</b>, <b>Shift+nhấn</b>, hay <b>kéo vòng quanh</b> nút để lựa chọn."
+msgstr[0] "<b>0</b> trên <b>%i</b> nút được chọn. <b>Nhấn</b>, <b>Shift+nhấn</b>, hay <b>kéo vòng quanh</b> nút để lựa chọn."
 
 #: ../src/nodepath.cpp:4463
 msgid "Drag the handles of the object to modify it."
@@ -5377,42 +5321,30 @@ msgstr[0] "<b>%i</b> trên <b>%i</b> nút được chọn. %s."
 
 #: ../src/object-edit.cpp:501
 msgid "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the vertical radius the same"
-msgstr ""
-"Điều chỉnh bán kính <b>làm tròn theo chiều ngang</b>; với phím:\n"
-" • <b>Ctrl</b> để làm cho bán kính theo chiều dọc là trùng."
+msgstr "Điều chỉnh bán kính <b>làm tròn theo chiều ngang</b>; với phím <b>Ctrl</b> để làm cho bán kính theo chiều dọc là trùng."
 
 #: ../src/object-edit.cpp:507
 msgid "Adjust the <b>vertical rounding</b> radius; with <b>Ctrl</b> to make the horizontal radius the same"
-msgstr ""
-"Điều chỉnh bán kính <b>làm tròn theo chiều dọc</b>; với phím:\n"
-" • <b>Ctrl</b> để làm cho bán kính theo chiều ngang là trùng."
+msgstr "Điều chỉnh bán kính <b>làm tròn theo chiều dọc</b>; với phím <b>Ctrl</b> để làm cho bán kính theo chiều ngang là trùng."
 
 #: ../src/object-edit.cpp:514
 #: ../src/object-edit.cpp:521
 msgid "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to lock ratio or stretch in one dimension only"
-msgstr ""
-"Điều chỉnh <b>chiều rộng và độ cao</b> của hình chữ nhật; với phím:\n"
-" • <b>Ctrl</b> để khoá tỷ lệ hay kéo giãn theo chỉ một chiều."
+msgstr "Điều chỉnh <b>chiều rộng và độ cao</b> của hình chữ nhật; với phím <b>Ctrl</b> để khoá tỷ lệ hay kéo giãn theo chỉ một chiều."
 
 #: ../src/object-edit.cpp:709
 #: ../src/object-edit.cpp:711
 #: ../src/object-edit.cpp:713
 #: ../src/object-edit.cpp:715
 msgid "Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"
-msgstr ""
-"Thay đổi kích cỡ hộp về hướng X/Y; với phím\n"
-" • <b>Shift</b> thì theo trục Z;\n"
-" • <b>Ctrl</b> để hạn chế thành các hướng của cạnh hay đường chéo"
+msgstr "Thay đổi kích cỡ hộp về hướng X/Y; với phím <b>Shift</b> thì theo trục Z; <b>Ctrl</b> để hạn chế thành các hướng của cạnh hay đường chéo"
 
 #: ../src/object-edit.cpp:717
 #: ../src/object-edit.cpp:719
 #: ../src/object-edit.cpp:721
 #: ../src/object-edit.cpp:723
 msgid "Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"
-msgstr ""
-"Thay đổi kích cỡ hộp theo trục Z; với phím\n"
-" • <b>Shift</b> thì về hướng X/Y;\n"
-" • <b>Ctrl</b> để hạn chế thành các hướng của cạnh hay đường chéo"
+msgstr "Thay đổi kích cỡ hộp theo trục Z; với phím <b>Shift</b> thì về hướng X/Y; <b>Ctrl</b> để hạn chế thành các hướng của cạnh hay đường chéo"
 
 #: ../src/object-edit.cpp:727
 msgid "Move the box in perspective."
@@ -5420,60 +5352,35 @@ msgstr "Di chuyển hộp theo phối cảnh."
 
 #: ../src/object-edit.cpp:905
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
-msgstr ""
-"Điều chỉnh <b>chiều rộng</b> của hình bầu dục, với phím:\n"
-" • <b>Ctrl</b> để tạo hình tròn."
+msgstr "Điều chỉnh <b>chiều rộng</b> của hình bầu dục, với phím: <b>Ctrl</b> để tạo hình tròn."
 
 #: ../src/object-edit.cpp:908
 msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
-msgstr ""
-"Điều chỉnh <b>chiều cao</b> của hình bầu dục, với phím:\n"
-" • <b>Ctrl</b> để tạo hình tròn."
+msgstr "Điều chỉnh <b>chiều cao</b> của hình bầu dục, với phím <b>Ctrl</b> để tạo hình tròn."
 
 #: ../src/object-edit.cpp:911
 msgid "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
-msgstr ""
-"Để vị trí của <b>điểm đầu</b> của hình cung hay đoạn; với phím:\n"
-" • <b>Ctrl</b> để đính góc; kéo\n"
-"	◦ <b>bên trong</b> hình bầu dục cho hình cung;\n"
-"	◦ <b>bên ngoài</b> cho đoạn."
+msgstr "Để vị trí của <b>điểm đầu</b> của hình cung hay đoạn; với phím <b>Ctrl</b> để đính góc; kéo <b>bên trong</b> hình bầu dục cho hình cung, <b>bên ngoài</b> cho đoạn."
 
 #: ../src/object-edit.cpp:914
 msgid "Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
-msgstr ""
-"Để vị trí của <b>điểm cuối</b> của hình cung hay đoạn; với phím:\n"
-" • <b>Ctrl</b> để đính góc; kéo\n"
-"	◦ <b>bên trong</b> hình bầu dục cho hình cung;\n"
-"	◦ <b>bên ngoài</b> cho đoạn."
+msgstr "Để vị trí của <b>điểm cuối</b> của hình cung hay đoạn; với phím: <b>Ctrl</b> để đính góc; kéo <b>bên trong</b> hình bầu dục cho hình cung; <b>bên ngoài</b> cho đoạn."
 
 #: ../src/object-edit.cpp:1024
 msgid "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to round; with <b>Alt</b> to randomize"
-msgstr ""
-"Điều chỉnh <b>bán kính đỉnh</b> của hình sao hay hình đa giác: với phím:\n"
-" • <b>Shift</b> để làm tròn;\n"
-" • <b>Alt</b> để ngẫu nhiên hoá."
+msgstr "Điều chỉnh <b>bán kính đỉnh</b> của hình sao hay hình đa giác: với phím <b>Shift</b> để làm tròn; <b>Alt</b> để ngẫu nhiên hoá."
 
 #: ../src/object-edit.cpp:1027
 msgid "Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to randomize"
-msgstr ""
-"Điều chỉnh <b>bán kính cơ bản</b> của hình sao: với phím:\n"
-" • <b>Ctrl</b> để giữ các tia sao là xuyên tâm (không có độ lệch);\n"
-" • <b>Shift</b> để làm tròn;\n"
-" • <b>Alt</b> để ngẫu nhiên hoá."
+msgstr "Điều chỉnh <b>bán kính cơ bản</b> của hình sao: với phím: <b>Ctrl</b> để giữ các tia sao là xuyên tâm (không có độ lệch); <b>Shift</b> để làm tròn; <b>Alt</b> để ngẫu nhiên hoá."
 
 #: ../src/object-edit.cpp:1191
 msgid "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to converge/diverge"
-msgstr ""
-"Cuộn/bỏ cuộn xoắn ốc từ <b>bên trong</b>; với phím:\n"
-" • <b>Ctrl</b> để đính góc;\n"
-" • <b>Alt</b> để hội tụ/phân kỳ."
+msgstr "Cuộn/bỏ cuộn xoắn ốc từ <b>bên trong</b>; với phím: <b>Ctrl</b> để đính góc; <b>Alt</b> để hội tụ/phân kỳ."
 
 #: ../src/object-edit.cpp:1193
 msgid "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to scale/rotate"
-msgstr ""
-"Cuộn/bỏ cuộn xoắn ốc từ <b>bên ngoài</b>; với phím:\n"
-" • <b>Ctrl</b> để đính góc;\n"
-" • <b>Alt</b> để co giãn/xoay."
+msgstr "Cuộn/bỏ cuộn xoắn ốc từ <b>bên ngoài</b>; với phím: <b>Ctrl</b> để đính góc; <b>Alt</b> để co giãn/xoay."
 
 #: ../src/object-edit.cpp:1230
 msgid "Adjust the <b>offset distance</b>"
@@ -5490,9 +5397,7 @@ msgstr "<b>Co giãn</b> đều mẫu tô"
 
 #: ../src/object-edit.cpp:1264
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
-msgstr ""
-"<b>Xoay</b>mẫu tô; với phím:\n"
-" • <b>Ctrl</b> để đính góc."
+msgstr "<b>Xoay</b>mẫu tô; với phím <b>Ctrl</b> để đính góc."
 
 #: ../src/object-edit.cpp:1289
 msgid "Drag to resize the <b>flowed text frame</b>"
@@ -5597,25 +5502,17 @@ msgstr "<b>Nhấn</b> hay <b>nhấn và kéo</b> chuột để tiếp tục đư
 #: ../src/pen-context.cpp:1101
 #, c-format
 msgid "<b>%s</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr ""
-"<b>%s</b>: góc %3.2f&#176;, khoảng cách %s; với phím:\n"
-" • <b>Ctrl</b> để đính góc;\n"
-" • <b>Enter</b> để tạo xong đường nét."
+msgstr "<b>%s</b>: góc %3.2f&#176;, khoảng cách %s; với phím: <b>Ctrl</b> để đính góc; <b>Enter</b> để tạo xong đường nét."
 
 #: ../src/pen-context.cpp:1126
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle"
-msgstr ""
-"<b>Móc đường cong</b>: góc %3.2f&#176;, chiều dài %s; với phím:\n"
-" • <b>Ctrl</b> để đính góc."
+msgstr "<b>Móc đường cong</b>: góc %3.2f&#176;, chiều dài %s; với phím: <b>Ctrl</b> để đính góc."
 
 #: ../src/pen-context.cpp:1156
 #, c-format
 msgid "<b>%s</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr ""
-"<b>%s</b>: góc %3.2f&#176;, độ dài %s; với phím:\n"
-" • <b>Ctrl</b> để đính góc;\n"
-" • <b>Shift</b> để di chuyển chỉ chốt kéo này."
+msgstr "<b>%s</b>: góc %3.2f&#176;, độ dài %s; với phím: <b>Ctrl</b> để đính góc; <b>Shift</b> để di chuyển chỉ chốt kéo này."
 
 #: ../src/pen-context.cpp:1192
 msgid "Drawing finished"
@@ -5670,31 +5567,22 @@ msgstr "Phím <b>Ctrl</b>: làm hình chữ nhất kiểu vuông hay kiểu tỷ
 #: ../src/rect-context.cpp:527
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
-msgstr ""
-"<b>Chữ nhật</b>: %s &#215; %s (bị hạn chế thành tỷ lệ %d:%d); với phím:\n"
-" • <b>Shift</b> để vẽ vòng quanh điểm bắt đầu."
+msgstr "<b>Chữ nhật</b>: %s &#215; %s (bị hạn chế thành tỷ lệ %d:%d); với phím <b>Shift</b> để vẽ vòng quanh điểm bắt đầu."
 
 #: ../src/rect-context.cpp:530
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with <b>Shift</b> to draw around the starting point"
-msgstr ""
-"<b>Chữ nhật</b>: %s &#215; %s (bị hạn chế thành tỷ lệ vàng 1.618 : 1); với phím:\n"
-" • <b>Shift</b> để vẽ vòng quanh điểm bắt đầu."
+msgstr "<b>Chữ nhật</b>: %s &#215; %s (bị hạn chế thành tỷ lệ vàng 1.618 : 1); với phím: <b>Shift</b> để vẽ vòng quanh điểm bắt đầu."
 
 #: ../src/rect-context.cpp:532
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with <b>Shift</b> to draw around the starting point"
-msgstr ""
-"<b>Chữ nhật</b>: %s &#215; %s (bị hạn chế thành tỷ lệ vàng 1 : 1.618); với phím:\n"
-" • <b>Shift</b> để vẽ vòng quanh điểm bắt đầu."
+msgstr "<b>Chữ nhật</b>: %s &#215; %s (bị hạn chế thành tỷ lệ vàng 1 : 1.618); với phím <b>Shift</b> để vẽ vòng quanh điểm bắt đầu."
 
 #: ../src/rect-context.cpp:536
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"
-msgstr ""
-"<b>Chữ nhật</b>: %s &#215; %s; với phím:\n"
-" • <b>Ctrl</b> để tạo hình chữ nhật kiểu vuông hay kiểu tỷ lệ số nguyên;\n"
-" • <b>Shift</b> để vẽ vòng quanh điểm bắt đầu."
+msgstr "<b>Chữ nhật</b>: %s &#215; %s; với phím <b>Ctrl</b> để tạo hình chữ nhật kiểu vuông hay kiểu tỷ lệ số nguyên; <b>Shift</b> để vẽ vòng quanh điểm bắt đầu."
 
 #: ../src/rect-context.cpp:557
 msgid "Create rectangle"
@@ -5710,33 +5598,23 @@ msgstr "Hành động lựa chọn bị thôi."
 
 #: ../src/select-context.cpp:535
 msgid "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to rubberband selection"
-msgstr ""
-"<b>Vẽ qua</b> đối tượng để chọn; buông ra phím\n"
-" • <b>Alt</b> để chuyển đổi sang chức năng chọn kiểu băng cao su."
+msgstr "<b>Vẽ qua</b> đối tượng để chọn; buông ra phím <b>Alt</b> để chuyển đổi sang chức năng chọn kiểu băng cao su."
 
 #: ../src/select-context.cpp:537
 msgid "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to touch selection"
-msgstr ""
-"<b>Kéo vòng quanh</b> đối tượng để chọn; bấm phím\n"
-" • <b>Alt</b> để chuyển đổi sang chức năng chọn kiểu sờ."
+msgstr "<b>Kéo vòng quanh</b> đối tượng để chọn; bấm phím <b>Alt</b> để chuyển đổi sang chức năng chọn kiểu sờ."
 
 #: ../src/select-context.cpp:697
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
-msgstr ""
-"Phím <b>Ctrl</b>: nhấn chuột để chọn theo nhóm;\n"
-" • kéo để di chuyển theo chiều ngang/dọc"
+msgstr "Phím <b>Ctrl</b>: nhấn chuột để chọn theo nhóm; kéo để di chuyển theo chiều ngang/dọc"
 
 #: ../src/select-context.cpp:698
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
-msgstr ""
-"Phím <b>Shift</b>: nhấn chuột để bật/tắt chức năng chọn;\n"
-" • kéo để chọn kiểu băng cao su"
+msgstr "Phím <b>Shift</b>: nhấn chuột để bật/tắt chức năng chọn; kéo để chọn kiểu băng cao su"
 
 #: ../src/select-context.cpp:699
 msgid "<b>Alt</b>: click to select under; drag to move selected or select by touch"
-msgstr ""
-"Phím <b>Alt</b>: nhấn chuột để chọn ở dưới;\n"
-" • kéo để chuyển đồ đã chọn hay chọn theo sờ"
+msgstr "Phím <b>Alt</b>: nhấn chuột để chọn ở dưới; kéo để chuyển đồ đã chọn hay chọn theo sờ"
 
 #: ../src/select-context.cpp:870
 msgid "Selected object is not a group. Cannot enter."
@@ -5980,12 +5858,7 @@ msgstr "Bỏ liên kết bản sao"
 
 #: ../src/selection-chemistry.cpp:2318
 msgid "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> to go to its source. Select a <b>text on path</b> to go to the path. Select a <b>flowed text</b> to go to its frame."
-msgstr ""
-"Chọn một:\n"
-" • <b>bản sao</b> để đi tới bản gốc của nó.\n"
-" • <b>đồ bù đã liên kết</b> để đi tới nguồn của nó.\n"
-" • <b>chuỗi văn bản trên đường nét</b> để đi tới đường nét.\n"
-" • <b>văn bản trôi chảy</b> để đi tới khung của nó."
+msgstr "Chọn một <b>bản sao</b> để đi tới bản gốc của nó. <b>đồ bù đã liên kết</b> để đi tới nguồn của nó. <b>chuỗi văn bản trên đường nét</b> để đi tới đường nét. <b>văn bản trôi chảy</b> để đi tới khung của nó."
 
 #: ../src/selection-chemistry.cpp:2341
 msgid "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, flowed text?)"
@@ -6256,38 +6129,23 @@ msgstr "Đặt tâm"
 
 #: ../src/seltrans.cpp:542
 msgid "<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"
-msgstr ""
-"<b>Tâm</b> của chức năng xoay và lệch:\n"
-" • kéo để đắt lại vị trí;\n"
-" • co giãn với phím Shift cũng theo tâm này"
+msgstr "<b>Tâm</b> của chức năng xoay và lệch: kéo để đắt lại vị trí; co giãn với phím Shift cũng theo tâm này"
 
 #: ../src/seltrans.cpp:569
 msgid "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
-msgstr ""
-"<b>Vắt hay kéo giãn</b> vùng chọn; với phím:\n"
-" • <b>Ctrl</b> để co giãn đều đều;\n"
-" • <b>Shift</b> để co giãn vòng quanh tâm xoay."
+msgstr "<b>Vắt hay kéo giãn</b> vùng chọn; với phím: <b>Ctrl</b> để co giãn đều đều; <b>Shift</b> để co giãn vòng quanh tâm xoay."
 
 #: ../src/seltrans.cpp:570
 msgid "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
-msgstr ""
-"<b>Co giãn</b> vùng chọn; với phím:\n"
-" • <b>Ctrl</b> để co giãn đều đều;\n"
-" • <b>Shift</b> để co giãn vòng quanh tâm xoay."
+msgstr "<b>Co giãn</b> vùng chọn; với phím: <b>Ctrl</b> để co giãn đều đều; <b>Shift</b> để co giãn vòng quanh tâm xoay."
 
 #: ../src/seltrans.cpp:574
 msgid "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"
-msgstr ""
-"<b>Đối xứng lệch</b> vùng chọn; với phím:\n"
-" • <b>Ctrl</b> để đính góc;\n"
-" • <b>Shift</b> để đối xứng lệch quanh bên đối diện."
+msgstr "<b>Đối xứng lệch</b> vùng chọn; với phím: <b>Ctrl</b> để đính góc; <b>Shift</b> để đối xứng lệch quanh bên đối diện."
 
 #: ../src/seltrans.cpp:575
 msgid "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"
-msgstr ""
-"<b>Xoay</b> vùng chọn; với phím:\n"
-" • <b>Ctrl</b> để đính góc;\n"
-" • <b>Shift</b> để xoay quanh góc đối diện."
+msgstr "<b>Xoay</b> vùng chọn; với phím: <b>Ctrl</b> để đính góc; <b>Shift</b> để xoay quanh góc đối diện."
 
 #: ../src/seltrans.cpp:709
 msgid "Reset center"
@@ -6297,27 +6155,21 @@ msgstr "Đặt lại tâm"
 #: ../src/seltrans.cpp:1085
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
-msgstr ""
-"<b>Co giãn</b>: %0.2f%% x %0.2f%%; với phím:\n"
-" • <b>Ctrl</b> để khoá tỷ lệ."
+msgstr "<b>Co giãn</b>: %0.2f%% x %0.2f%%; với phím: <b>Ctrl</b> để khoá tỷ lệ."
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1183
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
-"<b>Đối xứng lệch</b>: %0.2f&#176;; với phím:\n"
-" • <b>Ctrl</b> để đính góc."
+msgstr "<b>Đối xứng lệch</b>: %0.2f&#176;; với phím: <b>Ctrl</b> để đính góc."
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1232
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
-"<b>Xoay</b> %0.2f&#176;; với phím:\n"
-" • <b>Ctrl</b> để đính góc"
+msgstr "<b>Xoay</b> %0.2f&#176;; với phím: <b>Ctrl</b> để đính góc"
 
 #: ../src/seltrans.cpp:1275
 #, c-format
@@ -6327,10 +6179,7 @@ msgstr "Di chuyển <b>tâm</b> sang %s, %s"
 #: ../src/seltrans.cpp:1564
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
-msgstr ""
-"<b>Chuyển</b> theo %s, %s; với phím:\n"
-" • <b>Ctrl</b> để hạn chế thành chiều ngang/dọc;\n"
-" • <b>Shift</b> để tắt chức năng đính."
+msgstr "<b>Chuyển</b> theo %s, %s; với phím: <b>Ctrl</b> để hạn chế thành chiều ngang/dọc; <b>Shift</b> để tắt chức năng đính."
 
 #: ../src/shape-editor.cpp:371
 msgid "Drag curve"
@@ -6553,9 +6402,7 @@ msgstr "<b>Alt</b>: khoá bán kính xoắn ốc"
 #: ../src/spiral-context.cpp:461
 #, c-format
 msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
-"<b>Xoắn ốc</b>: bán kính %s, góc %5g&#176;; với phím:\n"
-" • <b>Ctrl</b> để đính góc."
+msgstr "<b>Xoắn ốc</b>: bán kính %s, góc %5g&#176;; với phím: <b>Ctrl</b> để đính góc."
 
 #: ../src/spiral-context.cpp:482
 msgid "Create spiral"
@@ -6687,16 +6534,12 @@ msgstr "<b>Ctrl</b>: đính góc, giữ tia là xuyên tâm"
 #: ../src/star-context.cpp:471
 #, c-format
 msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
-"<b>Đa giác</b>: bán kính %s, góc %5g&#176;; với phím:\n"
-" • <b>Ctrl</b> để đính góc."
+msgstr "<b>Đa giác</b>: bán kính %s, góc %5g&#176;; với phím: <b>Ctrl</b> để đính góc."
 
 #: ../src/star-context.cpp:472
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
-"<b>Sao</b>: bán kính %s, góc %5g&#176;; với phím:\n"
-" • <b>Ctrl</b> để đính góc."
+msgstr "<b>Sao</b>: bán kính %s, góc %5g&#176;; với phím: <b>Ctrl</b> để đính góc."
 
 #: ../src/star-context.cpp:495
 msgid "Create star"
@@ -6708,9 +6551,7 @@ msgstr "Chọn <b>chuỗi và đường nét</b> để đặt chuỗi văn bản
 
 #: ../src/text-chemistry.cpp:105
 msgid "This text object is <b>already put on a path</b>. Remove it from the path first. Use <b>Shift+D</b> to look up its path."
-msgstr ""
-"Đối tượng văn bản này <b>đã nằm trên đường nét</b>. Trước tiên, hãy gỡ bỏ nó ra đường nét đó. Dùng tổ hợp phím\n"
-" • <b>Shift+D</b> để tra tìm đường nét của nó."
+msgstr "Đối tượng văn bản này <b>đã nằm trên đường nét</b>. Trước tiên, hãy gỡ bỏ nó ra đường nét đó. Dùng tổ hợp phím <b>Shift+D</b> để tra tìm đường nét của nó."
 
 #. rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
 #: ../src/text-chemistry.cpp:111
@@ -6782,15 +6623,11 @@ msgstr "<b>Không có văn bản trôi chảy</b> cần chuyển đổi trong v�
 
 #: ../src/text-context.cpp:452
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
-msgstr ""
-"<b>Nhấn</b> vào để soạn thảo văn bản,\n"
-" • <b>kéo</b> để chọn đoạn của văn bản."
+msgstr "<b>Nhấn</b> vào để soạn thảo văn bản, <b>kéo</b> để chọn đoạn của văn bản."
 
 #: ../src/text-context.cpp:454
 msgid "<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
-msgstr ""
-"<b>Nhấn</b> vào để soạn thảo văn bản trôi chảy,\n"
-" • <b>kéo</b> để chọn đoạn của văn bản."
+msgstr "<b>Nhấn</b> vào để soạn thảo văn bản trôi chảy, <b>kéo</b> để chọn đoạn của văn bản."
 
 #: ../src/text-context.cpp:508
 msgid "Create text"
@@ -6822,9 +6659,7 @@ msgstr "<b>Khung văn bản trôi chảy</b>: %s &#215; %s"
 #: ../src/text-context.cpp:691
 #: ../src/text-context.cpp:1544
 msgid "Type text; <b>Enter</b> to start new line."
-msgstr ""
-"Gỡ văn bản; bấm phím\n"
-" • <b>Enter</b> để bắt đầu dòng mới."
+msgstr "Gỡ văn bản; bấm phím <b>Enter</b> để bắt đầu dòng mới."
 
 #: ../src/text-context.cpp:704
 msgid "Flowed text is created."
@@ -6908,16 +6743,12 @@ msgstr "Dán văn bản"
 
 #: ../src/text-context.cpp:1542
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
-msgstr ""
-"Gỡ văn bản trôi chảy ; bấm phím\n"
-" • <b>Enter</b> để bắt đầu đoạn văn mới."
+msgstr "Gỡ văn bản trôi chảy ; bấm phím <b>Enter</b> để bắt đầu đoạn văn mới."
 
 #: ../src/text-context.cpp:1552
 #: ../src/tools-switch.cpp:205
 msgid "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; then type."
-msgstr ""
-"<b>Nhấn</b> vào để lựa chọn hay tạo văn bản,\n"
-" • <b>kéo</b> để tạo văn bản trôi chảy, rồi gõ phím."
+msgstr "<b>Nhấn</b> vào để lựa chọn hay tạo văn bản, <b>kéo</b> để tạo văn bản trôi chảy, rồi gõ phím."
 
 #: ../src/text-context.cpp:1659
 msgid "Type text"
@@ -6925,10 +6756,7 @@ msgstr "Gõ văn bản"
 
 #: ../src/tools-switch.cpp:145
 msgid "To edit a path, <b>click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select them, then <b>drag</b> nodes and handles. <b>Click</b> on an object to select."
-msgstr ""
-"Để sửa đổi một đường nét nào đó,\n"
-" • <b>nhấn</b>, <b>Shift+click</b>, hay <b>kéo vòng quanh</b> các nút để lựa chọn, rồi <b>kéo</b> nút và chốt.\n"
-" • <b>Nhấn</b> vào đối tượng để lựa chọn."
+msgstr "Để sửa đổi một đường nét nào đó, <b>nhấn</b>, <b>Shift+click</b>, hay <b>kéo vòng quanh</b> các nút để lựa chọn, rồi <b>kéo</b> nút và chốt. <b>Nhấn</b> vào đối tượng để lựa chọn."
 
 #: ../src/tools-switch.cpp:151
 msgid "To tweak a path by pushing, select it and drag over it."
@@ -6936,71 +6764,43 @@ msgstr "Để điều chỉnh đường nét bằng cách đẩy, lựa chọn n
 
 #: ../src/tools-switch.cpp:157
 msgid "<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and resize. <b>Click</b> to select."
-msgstr ""
-"<b>Kéo</b> để tạo một hình chữ nhật.\n"
-" • <b>Kéo điều khiển</b> để làm tròn góc và thay đổi kích cỡ.\n"
-" • <b>Nhấn</b> vào để lựa chọn."
+msgstr "<b>Kéo</b> để tạo một hình chữ nhật. <b>Kéo điều khiển</b> để làm tròn góc và thay đổi kích cỡ. <b>Nhấn</b> vào để lựa chọn."
 
 #: ../src/tools-switch.cpp:163
 msgid "<b>Drag</b> to create a 3D box. <b>Drag controls</b> to resize in perspective. <b>Click</b> to select (with <b>Ctrl+Alt</b> for single faces)."
-msgstr ""
-" • <b>Kéo</b> để tạo một hộp ba chiều (3D).\n"
-" • <b>Kéo điều khiển</b> để thay đổi kích cỡ theo phối cảnh.\n"
-" • <b>Nhấn</b> vào để lựa chọn; với\n"
-"	◦ <b>Ctrl+Alt</b> cho mặt đơn."
+msgstr " <b>Kéo</b> để tạo một hộp ba chiều (3D). <b>Kéo điều khiển</b> để thay đổi kích cỡ theo phối cảnh. <b>Nhấn</b> vào để lựa chọn; với <b>Ctrl+Alt</b> cho mặt đơn."
 
 #: ../src/tools-switch.cpp:169
 msgid "<b>Drag</b> to create an ellipse. <b>Drag controls</b> to make an arc or segment. <b>Click</b> to select."
-msgstr ""
-" • <b>Kéo</b> để tạo một hình bầu dục.\n"
-" • <b>Kéo điều khiển</b> để tạo hình cung hay đoạn.\n"
-" • <b>Nhấn</b> vào để lựa chọn."
+msgstr " <b>Kéo</b> để tạo một hình bầu dục. <b>Kéo điều khiển</b> để tạo hình cung hay đoạn. <b>Nhấn</b> vào để lựa chọn."
 
 #: ../src/tools-switch.cpp:175
 msgid "<b>Drag</b> to create a star. <b>Drag controls</b> to edit the star shape. <b>Click</b> to select."
-msgstr ""
-" • <b>Kéo</b> để tạo một hình sao.\n"
-" • <b>Kéo điều khiển</b> để sửa đổi hình của sao.\n"
-" • <b>Nhấn</b> vào để lựa chọn."
+msgstr " <b>Kéo</b> để tạo một hình sao. <b>Kéo điều khiển</b> để sửa đổi hình của sao. <b>Nhấn</b> vào để lựa chọn."
 
 #: ../src/tools-switch.cpp:181
 msgid "<b>Drag</b> to create a spiral. <b>Drag controls</b> to edit the spiral shape. <b>Click</b> to select."
-msgstr ""
-" • <b>Kéo</b> để tạo một xoắn ốc.\n"
-" • <b>Kéo điều khiển</b> để sửa đổi hình của xoắn ốc.\n"
-" • <b>Nhấn</b> vào để lựa chọn"
+msgstr " <b>Kéo</b> để tạo một xoắn ốc. <b>Kéo điều khiển</b> để sửa đổi hình của xoắn ốc. <b>Nhấn</b> vào để lựa chọn"
 
 #: ../src/tools-switch.cpp:187
 msgid "<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to append to selected path."
-msgstr ""
-" • <b>Kéo</b> để tạo một đường vẽ bằng tay.\n"
-" • Bắt đầu vẽ với phím <b>Shift</b> để phụ thêm đường vào đường nét đã chọn."
+msgstr " <b>Kéo</b> để tạo một đường vẽ bằng tay. Bắt đầu vẽ với phím <b>Shift</b> để phụ thêm đường vào đường nét đã chọn."
 
 #: ../src/tools-switch.cpp:193
 msgid "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to append to selected path."
-msgstr ""
-" • <b>Nhấn</b> vào hay <b>nhấn và kéo</b> để bắt đầu vẽ đường nét; với phím:\n"
-" 	◦ <b>Shift</b> để phụ thêm nó vào đường nét khác đã chọn."
+msgstr " <b>Nhấn</b> vào hay <b>nhấn và kéo</b> để bắt đầu vẽ đường nét; với phím: <b>Shift</b> để phụ thêm nó vào đường nét khác đã chọn."
 
 #: ../src/tools-switch.cpp:199
 msgid "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide, with <b>Alt</b> to thin/thicken. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."
-msgstr ""
-" • <b>Kéo</b> để vẽ một nét thư pháp; với phím\n"
-"	◦ <b>Ctrl</b> để theo vết nét dẫn;\n"
-"	◦ <b>Alt</b> để thay đổi chiều rộng.\n"
-"	◦ <b>phím mũi tên</b> điều chỉnh chiều rộng (bên trái/phải) và góc (bên trên/dưới)."
+msgstr " <b>Kéo</b> để vẽ một nét thư pháp; với phím <b>Ctrl</b> để theo vết nét dẫn; <b>Alt</b> để thay đổi chiều rộng. <b>phím mũi tên</b> điều chỉnh chiều rộng (bên trái/phải) và góc (bên trên/dưới)."
 
 #: ../src/tools-switch.cpp:211
 msgid "<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, <b>drag handles</b> to adjust gradients."
-msgstr ""
-" • <b>Kéo</b> hay <b>nhấn đôi</b> để tạo một dải màu trên các đối tượng đã chọn,\n"
-"  • <b>kéo chốt</b> để điều chỉnh dải màu."
+msgstr " <b>Kéo</b> hay <b>nhấn đôi</b> để tạo một chuyển sắc trên các đối tượng đã chọn, <b>kéo chốt</b> để điều chỉnh chuyển sắc."
 
 #: ../src/tools-switch.cpp:217
 msgid "<b>Click</b> or <b>drag around an area</b> to zoom in, <b>Shift+click</b> to zoom out."
-msgstr ""
-" • <b>Nhấn</b> vào hay <b>kéo vòng quanh vùng</b> để phóng to,\n"
-" • <b>Shift+nhấn</b> để thu nhỏ."
+msgstr " <b>Nhấn</b> vào hay <b>kéo vòng quanh vùng</b> để phóng to, <b>Shift+nhấn</b> để thu nhỏ."
 
 #: ../src/tools-switch.cpp:229
 msgid "<b>Click and drag</b> between shapes to create a connector."
@@ -7008,10 +6808,7 @@ msgstr "<b>Nhấn và kéo</b> giữa hai hình để tạo bộ kết nối."
 
 #: ../src/tools-switch.cpp:235
 msgid "<b>Click</b> to paint a bounded area, <b>Shift+click</b> to union the new fill with the current selection, <b>Ctrl+click</b> to change the clicked object's fill and stroke to the current setting."
-msgstr ""
-" • <b>Nhấn</b> vào để sơn vùng đã giới hạn;\n"
-" • <b>Shift+nhấn</b> để tạo hợp của vùng tô đầy mới và vùng chọn hiện thời;\n"
-" • <b>Ctrl+nhấn</b> để thay đổi kiểu tô đầy và nét của đối tượng đã nhấn thành thiết lập hiện thời."
+msgstr " <b>Nhấn</b> vào để sơn vùng đã giới hạn; <b>Shift+nhấn</b> để tạo hợp của vùng tô đầy mới và vùng chọn hiện thời; <b>Ctrl+nhấn</b> để thay đổi kiểu tô đầy và nét của đối tượng đã nhấn thành thiết lập hiện thời."
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:500
 #: ../src/trace/potrace/inkscape-potrace.cpp:574
@@ -8158,13 +7955,7 @@ msgstr "Bánh xe chuột thu phóng theo mặc định"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:188
 msgid "When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when off, it zooms with Ctrl and scrolls without Ctrl."
-msgstr ""
-"Bật tùy chọn này thì bánh xe chuột:\n"
-" • không ấn Ctrl — thu phóng\n"
-" • ấn giữ Ctrl — cuộn vùng vẽ\n"
-"Không thì\n"
-" • không ấn Ctrl — cuộn vùng vẽ\n"
-" • ấn giữ Ctrl — thu phóng"
+msgstr "Bật tùy chọn này thì bánh xe chuột không ấn Ctrl — thu phóng, ấn giữ Ctrl — cuộn vùng vẽ; Không thì không ấn Ctrl — cuộn vùng vẽ, ấn giữ Ctrl — thu phóng"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:193
 msgid "Steps"
@@ -8234,11 +8025,11 @@ msgstr "Đối tượng đã chọn có nên hiển thị đề tựa lựa ch�
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:231
 msgid "Enable gradient editing"
-msgstr "Bật chỉnh sửa dải màu"
+msgstr "Bật chỉnh sửa chuyển sắc"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:232
 msgid "Whether selected objects display gradient editing controls"
-msgstr "Đối tượng đã chọn có nên hiển thị các điều khiển chỉnh sửa dải màu, hay không"
+msgstr "Đối tượng đã chọn có hiển thị các điều khiển chỉnh sửa chuyển sắc hay không"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:245
 msgid "<b>No objects selected</b> to take the style from."
@@ -8428,7 +8219,7 @@ msgstr "Xô sơn"
 #: ../src/ui/dialog/inkscape-preferences.cpp:416
 #: ../src/verbs.cpp:2386
 msgid "Gradient"
-msgstr "Dải màu"
+msgstr "Chuyển sắc"
 
 #. Connector
 #: ../src/ui/dialog/inkscape-preferences.cpp:419
@@ -8627,7 +8418,7 @@ msgstr "Co giãn góc tròn trong hình chữ nhật"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:533
 msgid "Transform gradients"
-msgstr "Chuyển dạng dải màu"
+msgstr "Chuyển dạng chuyển sắc"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid "Transform patterns"
@@ -8654,7 +8445,7 @@ msgstr "Khi co giãn hình chữ nhật, co giãn những bán kính của góc 
 #: ../src/ui/dialog/inkscape-preferences.cpp:543
 #: ../src/widgets/select-toolbar.cpp:518
 msgid "Move gradients (in fill or stroke) along with the objects"
-msgstr "Chuyển dạng dải màu (trong vùng tô hay nét vẽ) cùng với đối tượng"
+msgstr "Chuyển dạng chuyển sắc (trong vùng tô hay nét vẽ) cùng với đối tượng"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
 #: ../src/widgets/select-toolbar.cpp:529
@@ -9162,11 +8953,11 @@ msgstr "Bật tùy chọn này thì một chú thích sẽ được thêm vào k
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:942
 msgid "Prevent sharing of gradient definitions"
-msgstr "Ngăn cản chia sẻ lời xác định dải màu"
+msgstr "Không chia sẻ các chuyển sắc đã thiết lập"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:944
 msgid "When on, shared gradient definitions are automatically forked on change; uncheck to allow sharing of gradient definitions so that editing one object may affect other objects using the same gradient"
-msgstr "Bật tùy chọn này thì các lời xác định dải màu dùng chung được nhân đôi tự động (tạo tiến trình con) khi thay đổi; bỏ chọn để cho phép chia sẻ lời xác định dải màu để mà hành động chỉnh sửa đối tượng này có thể có tác động đối tượng khác dùng cùng một dải màu."
+msgstr "Bật tùy chọn này để tự động tạo ra một chuyển sắc mới khi thay đổi chuyển sắc đang có, có thể sửa chuyển sắc trên từng đối tượng riêng lẻ; bỏ chọn để cho phép chia sẻ thiết lập chuyển sắc giữa nhiều đối tượng, chỉnh sửa chuyển sắc sẽ tác động lên tất cả các đối tượng chuyển sắc đó."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:946
 msgid "Simplification threshold:"
@@ -10114,7 +9905,7 @@ msgstr "Tô mẫu"
 msgid "Pattern stroke"
 msgstr "Nét mẫu"
 
-# Linear gradient: dải màu tuyến.
+# Linear gradient: chuyển sắc tuyến.
 #: ../src/ui/widget/selected-style.cpp:161
 msgid "<b>L</b>"
 msgstr "<b>T</b>"
@@ -10122,14 +9913,14 @@ msgstr "<b>T</b>"
 #: ../src/ui/widget/selected-style.cpp:164
 #: ../src/ui/widget/style-swatch.cpp:298
 msgid "Linear gradient fill"
-msgstr "Tô dải màu tuyến"
+msgstr "Tô chuyển sắc tuyến"
 
 #: ../src/ui/widget/selected-style.cpp:164
 #: ../src/ui/widget/style-swatch.cpp:298
 msgid "Linear gradient stroke"
-msgstr "Nét dải màu tuyến"
+msgstr "Nét chuyển sắc tuyến"
 
-# Radial gradient: dải màu xuyên tâm
+# Radial gradient: chuyển sắc tròn
 #: ../src/ui/widget/selected-style.cpp:171
 msgid "<b>R</b>"
 msgstr "<b>X</b>"
@@ -10137,12 +9928,12 @@ msgstr "<b>X</b>"
 #: ../src/ui/widget/selected-style.cpp:174
 #: ../src/ui/widget/style-swatch.cpp:302
 msgid "Radial gradient fill"
-msgstr "Tô dải màu xuyên tâm"
+msgstr "Tô chuyển sắc tròn"
 
 #: ../src/ui/widget/selected-style.cpp:174
 #: ../src/ui/widget/style-swatch.cpp:302
 msgid "Radial gradient stroke"
-msgstr "Nét dải màu xuyên tâm"
+msgstr "Nét chuyển sắc tròn"
 
 #: ../src/ui/widget/selected-style.cpp:181
 msgid "Different"
@@ -10342,10 +10133,7 @@ msgstr "Điều chỉnh độ bão hòa"
 #: ../src/ui/widget/selected-style.cpp:1263
 #, c-format
 msgid "Adjusting <b>saturation</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Ctrl</b> to adjust lightness, without modifiers to adjust hue"
-msgstr ""
-"Đang điều chỉnh <b>độ bão hoà</b>: đã %.3g, giờ này <b>%.3g</b> (hiệu %.3g);\n"
-"  • với phím <b>Ctrl</b> để điều chỉnh độ sáng\n"
-" • không có phím bổ trợ để điều chỉnh sắc màu"
+msgstr "Đang điều chỉnh <b>độ bão hoà</b>: đã %.3g, giờ này <b>%.3g</b> (hiệu %.3g); với phím <b>Ctrl</b> để điều chỉnh độ sáng, không có phím bổ trợ để điều chỉnh sắc màu"
 
 #: ../src/ui/widget/selected-style.cpp:1267
 msgid "Adjust lightness"
@@ -10354,10 +10142,7 @@ msgstr "Chỉnh độ sáng"
 #: ../src/ui/widget/selected-style.cpp:1269
 #, c-format
 msgid "Adjusting <b>lightness</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</b> to adjust saturation, without modifiers to adjust hue"
-msgstr ""
-"Đang điều chỉnh <b>độ nhặt</b>: đã %.3g, giờ này <b>%.3g</b> (hiệu %.3g);\n"
-"  • với phím <b>Ctrl</b> để điều chỉnh độ bão hoà\n"
-" • không có phím bổ trợ để điều chỉnh sắc màu"
+msgstr "Đang điều chỉnh <b>độ nhặt</b>: đã %.3g, giờ này <b>%.3g</b> (hiệu %.3g); với phím <b>Ctrl</b> để điều chỉnh độ bão hoà, không có phím bổ trợ để điều chỉnh sắc màu"
 
 #: ../src/ui/widget/selected-style.cpp:1273
 msgid "Adjust hue"
@@ -10366,10 +10151,7 @@ msgstr "Chỉnh sắc màu"
 #: ../src/ui/widget/selected-style.cpp:1275
 #, c-format
 msgid "Adjusting <b>hue</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</b> to adjust saturation, with <b>Ctrl</b> to adjust lightness"
-msgstr ""
-"Đang điều chỉnh <b>sắc màu</b>: đã %.3g, giờ này <b>%.3g</b> (hiệu %.3g);\n"
-"  • với phím <b>Ctrl</b> để điều chỉnh độ bão hoà\n"
-" • không có phím bổ trợ để điều chỉnh độ sáng"
+msgstr "Đang điều chỉnh <b>sắc màu</b>: đã %.3g, giờ này <b>%.3g</b> (hiệu %.3g); với phím <b>Ctrl</b> để điều chỉnh độ bão hoà, không có phím bổ trợ để điều chỉnh độ sáng"
 
 #: ../src/ui/widget/page-sizer.cpp:195
 msgid "Name"
@@ -10426,11 +10208,11 @@ msgstr "Đặt kích cỡ trang"
 
 #: ../src/ui/widget/style-swatch.cpp:296
 msgid "L Gradient"
-msgstr "Dải màu tuyến"
+msgstr "Chuyển sắc thẳng"
 
 #: ../src/ui/widget/style-swatch.cpp:300
 msgid "R Gradient"
-msgstr "Dải màu xuyên tâm"
+msgstr "Chuyển sắc tròn"
 
 #: ../src/ui/widget/style-swatch.cpp:316
 #, c-format
@@ -10662,7 +10444,7 @@ msgstr "Làm _sạch Defs"
 
 #: ../src/verbs.cpp:2134
 msgid "Remove unused definitions (such as gradients or clipping paths) from the &lt;defs&gt; of the document"
-msgstr "Gỡ bỏ các lời xác định không dùng (như dải màu hay đường nét xén) khỏi phần &lt;defs&gt; (lời xác định) của tài liệu."
+msgstr "Gỡ bỏ các lời xác định không dùng (như chuyển sắc hay đường nét xén) khỏi phần &lt;defs&gt; (lời xác định) của tài liệu."
 
 #: ../src/verbs.cpp:2136
 msgid "Print Previe_w"
@@ -11474,7 +11256,7 @@ msgstr "Tạo và chỉnh sửa đối tượng văn bản"
 
 #: ../src/verbs.cpp:2387
 msgid "Create and edit gradients"
-msgstr "Tạo và chỉnh sửa dải màu"
+msgstr "Tạo và chỉnh sửa chuyển sắc"
 
 #: ../src/verbs.cpp:2389
 msgid "Zoom in or out"
@@ -11591,11 +11373,11 @@ msgstr "Mở Tùy thích cho công cụ Văn bản"
 
 #: ../src/verbs.cpp:2422
 msgid "Gradient Preferences"
-msgstr "Tùy thích Dải màu"
+msgstr "Tùy thích Chuyển sắc"
 
 #: ../src/verbs.cpp:2423
 msgid "Open Preferences for the Gradient tool"
-msgstr "Mở Tùy thích cho công cụ Dải màu"
+msgstr "Mở Tùy thích cho công cụ Chuyển sắc"
 
 #: ../src/verbs.cpp:2424
 msgid "Zoom Preferences"
@@ -11834,7 +11616,7 @@ msgstr "_Tô và Nét..."
 
 #: ../src/verbs.cpp:2489
 msgid "Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
-msgstr "Chỉnh sửa màu sắc, dải màu, chiều rộng nét, đầu mũi tên, mẫu gạch gạch v.v. của đối tượng"
+msgstr "Chỉnh sửa màu sắc, chuyển sắc, chiều rộng nét, đầu mũi tên, mẫu gạch gạch v.v. của đối tượng"
 
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2491
@@ -12194,10 +11976,7 @@ msgstr "Sửa..."
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
 #: ../src/widgets/gradient-selector.cpp:156
 msgid "Whether to fill with flat color beyond the ends of the gradient vector (spreadMethod=\"pad\"), or repeat the gradient in the same direction (spreadMethod=\"repeat\"), or repeat the gradient in alternating opposite directions (spreadMethod=\"reflect\")"
-msgstr ""
-"Có nên tô đầy bằng màu phẳng qua những kết thúc của véc-tơ dải màu (spreadMethod=\"pad\")\n"
-"\thoặc lặp lại dải màu theo cùng một hướng (spreadMethod=\"repeat\")\n"
-"\thoặc lặp lại dải màu theo hướng đối diện xen kẽ (spreadMethod=\"reflect\")"
+msgstr "Có nên tô đầy bằng màu phẳng qua những kết thúc của véc-tơ chuyển sắc (spreadMethod=\"pad\"), hoặc lặp lại chuyển sắc theo cùng một hướng (spreadMethod=\"repeat\"), hoặc lặp lại chuyển sắc theo hướng đối diện xen kẽ (spreadMethod=\"reflect\")"
 
 #: ../src/widgets/gradient-selector.cpp:166
 msgid "reflected"
@@ -12213,11 +11992,11 @@ msgstr "Lặp lại:"
 
 #: ../src/widgets/gradient-toolbar.cpp:151
 msgid "Assign gradient to object"
-msgstr "Gán dải màu cho đối tượng"
+msgstr "Gán chuyển sắc cho đối tượng"
 
 #: ../src/widgets/gradient-toolbar.cpp:185
 msgid "<small>No gradients</small>"
-msgstr "<small>Không có dải màu</small>"
+msgstr "<small>Không có chuyển sắc</small>"
 
 #: ../src/widgets/gradient-toolbar.cpp:194
 msgid "<small>Nothing selected</small>"
@@ -12225,16 +12004,16 @@ msgstr "<small>Chưa chọn gì</small>"
 
 #: ../src/widgets/gradient-toolbar.cpp:205
 msgid "<small>No gradients in selection</small>"
-msgstr "<small>Không có dải màu trong vùng chọn</small>"
+msgstr "<small>Không có chuyển sắc trong vùng chọn</small>"
 
 #: ../src/widgets/gradient-toolbar.cpp:215
 msgid "<small>Multiple gradients</small>"
-msgstr "<small>Đa dải màu</small>"
+msgstr "<small>Đa chuyển sắc</small>"
 
 # Stop = phase (pha)
 #: ../src/widgets/gradient-toolbar.cpp:463
 msgid "Edit the stops of the gradient"
-msgstr "Chỉnh sửa các chỗ dừng của dải màu"
+msgstr "Chỉnh sửa các pha của chuyển sắc"
 
 #: ../src/widgets/gradient-toolbar.cpp:522
 #: ../src/widgets/toolbox.cpp:1798
@@ -12250,11 +12029,11 @@ msgstr "<b>Mới:</b>"
 
 #: ../src/widgets/gradient-toolbar.cpp:535
 msgid "Create linear gradient"
-msgstr "Tạo dải màu tuyến"
+msgstr "Tạo chuyển sắc thẳng"
 
 #: ../src/widgets/gradient-toolbar.cpp:549
 msgid "Create radial (elliptic or circular) gradient"
-msgstr "Tạo dải màu xuyên tâm (hình bầu dục hay tròn)"
+msgstr "Tạo chuyển sắc tròn (hình bầu dục hay tròn)"
 
 #: ../src/widgets/gradient-toolbar.cpp:564
 msgid "on"
@@ -12262,11 +12041,11 @@ msgstr "trên"
 
 #: ../src/widgets/gradient-toolbar.cpp:577
 msgid "Create gradient in the fill"
-msgstr "Tạo dải màu trong vùng tô"
+msgstr "Tạo chuyển sắc trong vùng tô"
 
 #: ../src/widgets/gradient-toolbar.cpp:591
 msgid "Create gradient in the stroke"
-msgstr "Tạo dải màu trong nét"
+msgstr "Tạo chuyển sắc trong nét"
 
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
@@ -12283,19 +12062,19 @@ msgstr "<b>Đổi:</b>"
 
 #: ../src/widgets/gradient-vector.cpp:270
 msgid "No gradients in document"
-msgstr "Không có dải màu trong tài liệu"
+msgstr "Không có chuyển sắc trong tài liệu"
 
 #: ../src/widgets/gradient-vector.cpp:276
 msgid "No gradient selected"
-msgstr "Chưa chọn dải màu"
+msgstr "Chưa chọn chuyển sắc"
 
 #: ../src/widgets/gradient-vector.cpp:538
 msgid "No stops in gradient"
-msgstr "Không có pha trong dải màu"
+msgstr "Không có pha trong chuyển sắc"
 
 #: ../src/widgets/gradient-vector.cpp:661
 msgid "Change gradient stop offset"
-msgstr "Đổi khoảng bù pha dải màu"
+msgstr "Đổi khoảng bù pha chuyển sắc"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
 #: ../src/widgets/gradient-vector.cpp:803
@@ -12304,7 +12083,7 @@ msgstr "Thêm pha"
 
 #: ../src/widgets/gradient-vector.cpp:806
 msgid "Add another control stop to gradient"
-msgstr "Tham vào dải màu một pha điều khiển nữa"
+msgstr "Thêm vào chuyển sắc một pha điều khiển nữa"
 
 #: ../src/widgets/gradient-vector.cpp:808
 msgid "Delete stop"
@@ -12312,7 +12091,7 @@ msgstr "Xoá pha"
 
 #: ../src/widgets/gradient-vector.cpp:811
 msgid "Delete current control stop from gradient"
-msgstr "Xoá khỏi dải màu pha điều khiển hiện thời"
+msgstr "Xoá khỏi chuyển sắc pha điều khiển hiện thời"
 
 #. Label
 #: ../src/widgets/gradient-vector.cpp:822
@@ -12326,11 +12105,11 @@ msgstr "Màu pha"
 
 #: ../src/widgets/gradient-vector.cpp:896
 msgid "Gradient editor"
-msgstr "Bộ sửa dải màu"
+msgstr "Bộ sửa chuyển sắc"
 
 #: ../src/widgets/gradient-vector.cpp:1171
 msgid "Change gradient stop color"
-msgstr "Đổi màu pha dải màu"
+msgstr "Đổi màu pha chuyển sắc"
 
 #: ../src/widgets/layer-selector.cpp:113
 msgid "Toggle current layer visibility"
@@ -12361,12 +12140,12 @@ msgstr "Màu phẳng"
 #: ../src/widgets/paint-selector.cpp:181
 #: ../src/widgets/paint-selector.cpp:703
 msgid "Linear gradient"
-msgstr "Dải màu tuyến"
+msgstr "Chuyển sắc thẳng"
 
 #: ../src/widgets/paint-selector.cpp:183
 #: ../src/widgets/paint-selector.cpp:706
 msgid "Radial gradient"
-msgstr "Dải màu xuyên tâm"
+msgstr "Chuyển sắc tròn"
 
 #: ../src/widgets/paint-selector.cpp:187
 msgid "Unset paint (make it undefined so it can be inherited)"
@@ -12396,10 +12175,7 @@ msgstr "Chưa xác định sơn"
 
 #: ../src/widgets/paint-selector.cpp:980
 msgid "Use the <b>Node tool</b> to adjust position, scale, and rotation of the pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to create a new pattern from selection."
-msgstr ""
-"Dùng:\n"
-" • <b>Công cụ Nút</b> để điều chỉnh vị trí, tỷ lệ và hệ số xoay của mẫu trên vùng vẽ.\n"
-" • <b>Đối tượng &gt; Mẫu &gt; Đối tượng sang Mẫu</b> để tạo một mẫu mới từ vùng chọn."
+msgstr "Dùng<b>Công cụ Nút</b> để điều chỉnh vị trí, tỷ lệ và hệ số xoay của mẫu trên vùng vẽ. Dùng <b>Đối tượng &gt; Mẫu &gt; Đối tượng sang Mẫu</b> để tạo một mẫu mới từ vùng chọn."
 
 #: ../src/widgets/select-toolbar.cpp:238
 msgid "Transform by toolbar"
@@ -12423,11 +12199,11 @@ msgstr "Giờ này <b>góc tròn của hình chữ nhật không phải được
 
 #: ../src/widgets/select-toolbar.cpp:315
 msgid "Now <b>gradients</b> are <b>transformed</b> along with their objects when those are transformed (moved, scaled, rotated, or skewed)."
-msgstr "Giờ này khi chuyển dạng (di chuyển, co giãn, xoay hay làm lệch) đối tượng, <b>dải màu</b> của nó cũng được <b>chuyển dạng</b>."
+msgstr "Giờ này khi chuyển dạng (di chuyển, co giãn, xoay hay làm lệch) đối tượng, <b>chuyển sắc</b> của nó cũng được <b>chuyển dạng</b>."
 
 #: ../src/widgets/select-toolbar.cpp:317
 msgid "Now <b>gradients</b> remain <b>fixed</b> when objects are transformed (moved, scaled, rotated, or skewed)."
-msgstr "Giờ này khi chuyển dạng (di chuyển, co giãn, xoay hay làm lệch) đối tượng, <b>dải màu</b> của nó còn lại <b>cố định</b>."
+msgstr "Khi chuyển dạng (di chuyển, co giãn, xoay hay làm lệch) đối tượng, <b>chuyển sắc</b> của nó được giữ <b>cố định</b>."
 
 #: ../src/widgets/select-toolbar.cpp:326
 msgid "Now <b>patterns</b> are <b>transformed</b> along with their objects when those are transformed (moved, scaled, rotated, or skewed)."
@@ -12512,7 +12288,7 @@ msgstr "Co giãn góc tròn"
 
 #: ../src/widgets/select-toolbar.cpp:517
 msgid "Move gradients"
-msgstr "Di chuyển dải màu"
+msgstr "Di chuyển chuyển sắc"
 
 #: ../src/widgets/select-toolbar.cpp:528
 msgid "Move patterns"
@@ -13403,11 +13179,7 @@ msgstr "Thu hẹp:"
 
 #: ../src/widgets/toolbox.cpp:3332
 msgid "How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 makes them broader, 0 makes width independent of velocity)"
-msgstr ""
-"Tốc độ nào thu hẹp nét? Nét nhanh trở thành\n"
-"\t> 0\t\thẹp hơn\n"
-"\t< 0\t\trộng hơn\n"
-"\t   0\t\tbề rộng không phụ thuộc vào tốc độ"
+msgstr "Điều chỉnh tốc độ thu hẹp nét (> 0 - hẹp hơn, < 0 - rộng hơn, 0 bề rộng không phụ thuộc vào tốc độ)"
 
 #. Angle
 #: ../src/widgets/toolbox.cpp:3344
@@ -13577,10 +13349,7 @@ msgstr "Nền theo"
 
 #: ../src/widgets/toolbox.cpp:3446
 msgid "Trace the lightness of the background by the width of the pen (white - minimum width, black - maximum width)"
-msgstr ""
-"Độ nhạt của nền theo chiều rộng của bút:\n"
-" • màu trắng\tbề rộng tối thiểu\n"
-" • màu đen\tbề rộng tối đa"
+msgstr "Độ nhạt của nền theo chiều rộng của bút: màu trắng - bề rộng tối thiểu, màu đen - bề rộng tối đa"
 
 #: ../src/widgets/toolbox.cpp:3458
 msgid "Use the pressure of the input device to alter the width of the pen"
@@ -14729,4 +14498,3 @@ msgstr "Nhập Windows Metafile"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Nhập XAML"
-
