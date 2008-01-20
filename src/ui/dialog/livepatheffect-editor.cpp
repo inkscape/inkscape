@@ -65,7 +65,8 @@ LivePathEffectEditor::LivePathEffectEditor()
       explain_label("", Gtk::ALIGN_CENTER),
       effectapplication_frame(_("Apply new effect")),
       effectcontrol_frame(_("Current effect")),
-      current_desktop(NULL)
+      current_desktop(NULL),
+      currect_effect(NULL)
 {
     Gtk::Box *contents = _getContents();
     contents->set_spacing(4);
@@ -110,21 +111,25 @@ LivePathEffectEditor::~LivePathEffectEditor()
 void
 LivePathEffectEditor::showParams(LivePathEffect::Effect* effect)
 {
-    if (effectwidget) {
-        effectcontrol_vbox.remove(*effectwidget);
-        delete effectwidget;
-        effectwidget = NULL;
-    }
+    if (currect_effect != effect) {
+        currect_effect = effect;
 
-    explain_label.set_markup("<b>" + effect->getName() + "</b>");
-    effectwidget = effect->newWidget(&tooltips);
-    if (effectwidget) {
-        effectcontrol_vbox.pack_start(*effectwidget, true, true);
-    }
-    button_remove.show();
+        if (effectwidget) {
+            effectcontrol_vbox.remove(*effectwidget);
+            delete effectwidget;
+            effectwidget = NULL;
+        }
 
-    effectcontrol_vbox.show_all_children();
-    // fixme: do resizing of dialog 
+        explain_label.set_markup("<b>" + effect->getName() + "</b>");
+        effectwidget = effect->newWidget(&tooltips);
+        if (effectwidget) {
+            effectcontrol_vbox.pack_start(*effectwidget, true, true);
+        }
+        button_remove.show();
+
+        effectcontrol_vbox.show_all_children();
+        // fixme: add resizing of dialog
+    }
 }
 
 void

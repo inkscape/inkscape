@@ -65,6 +65,8 @@ private:
 
     SPDesktop * current_desktop;
 
+    LivePathEffect::Effect* currect_effect;
+
     LivePathEffectEditor(LivePathEffectEditor const &d);
     LivePathEffectEditor& operator=(LivePathEffectEditor const &d);
 };
