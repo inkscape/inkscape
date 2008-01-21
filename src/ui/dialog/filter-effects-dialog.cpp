@@ -2080,7 +2080,7 @@ void FilterEffectsDialog::update_primitive_infobox()
             break;
         case(NR::NR_FILTER_DIFFUSELIGHTING):
             _infobox_icon.set(g_strdup_printf("%s/feDiffuseLighting-icon.png", INKSCAPE_PIXMAPDIR));
-            _infobox_desc.set_markup(_("The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create "embossed" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."));
+            _infobox_desc.set_markup(_("The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."));
             break;
         case(NR::NR_FILTER_DISPLACEMENTMAP):
             _infobox_icon.set(g_strdup_printf("%s/feDisplacementMap-icon.png", INKSCAPE_PIXMAPDIR));
@@ -2112,7 +2112,7 @@ void FilterEffectsDialog::update_primitive_infobox()
             break;
         case(NR::NR_FILTER_SPECULARLIGHTING):
             _infobox_icon.set(g_strdup_printf("%s/feSpecularLighting-icon.png", INKSCAPE_PIXMAPDIR));
-            _infobox_desc.set_markup(_("The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create "embossed" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."));
+            _infobox_desc.set_markup(_("The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."));
             break;
         case(NR::NR_FILTER_TILE):
             _infobox_icon.set(g_strdup_printf("%s/feTile-icon.png", INKSCAPE_PIXMAPDIR));
