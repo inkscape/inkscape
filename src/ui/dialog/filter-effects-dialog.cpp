@@ -2060,15 +2060,15 @@ void FilterEffectsDialog::update_primitive_infobox()
     switch(_add_primitive_type.get_active_data()->id){
         case(NR::NR_FILTER_BLEND):
             _infobox_icon.set(g_strdup_printf("%s/feBlend-icon.png", INKSCAPE_PIXMAPDIR));
-            _infobox_desc.set_markup(_("The <b>feBlend</b> filter primitive gives us 4 image blending modes: screen, multiply, darken and lighten."));
+            _infobox_desc.set_markup(_("The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, multiply, darken and lighten."));
             break;
         case(NR::NR_FILTER_COLORMATRIX):
             _infobox_icon.set(g_strdup_printf("%s/feColorMatrix-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feColorMatrix</b> filter primitive applies a matrix transformation to colour of each rendered pixel. This allows for effects like turning object to grayscale, modifying colour saturation and changing colour hue."));
             break;
         case(NR::NR_FILTER_COMPONENTTRANSFER):
-            //_infobox_icon.set(g_strdup_printf("%s/feComponentTransfer-icon.png", INKSCAPE_PIXMAPDIR));
-            //_infobox_desc.set_markup(_(""));
+            _infobox_icon.set(g_strdup_printf("%s/feComponentTransfer-icon.png", INKSCAPE_PIXMAPDIR));
+            _infobox_desc.set_markup(_("The <b>feComponentTransfer</b> filter primitive manipulates the input's color components (red, green, blue, and alpha) according to particular transfer functions, allowing operations like brightness and contrast adjustment, color balance, and thresholding."));
             break;
         case(NR::NR_FILTER_COMPOSITE):
             _infobox_icon.set(g_strdup_printf("%s/feComposite-icon.png", INKSCAPE_PIXMAPDIR));
@@ -2080,7 +2080,7 @@ void FilterEffectsDialog::update_primitive_infobox()
             break;
         case(NR::NR_FILTER_DIFFUSELIGHTING):
             _infobox_icon.set(g_strdup_printf("%s/feDiffuseLighting-icon.png", INKSCAPE_PIXMAPDIR));
-            _infobox_desc.set_markup(_("Filter primitives <b>feDiffuseLighting</b> and feSpecularLighting create lighting maps for the object in input image. These filters use alpha channel of input image as a height map: the more opaque given point in input image is, the nearer spectator it is considered to be."));
+            _infobox_desc.set_markup(_("The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create "embossed" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."));
             break;
         case(NR::NR_FILTER_DISPLACEMENTMAP):
             _infobox_icon.set(g_strdup_printf("%s/feDisplacementMap-icon.png", INKSCAPE_PIXMAPDIR));
@@ -2088,15 +2088,15 @@ void FilterEffectsDialog::update_primitive_infobox()
             break;
         case(NR::NR_FILTER_FLOOD):
             _infobox_icon.set(g_strdup_printf("%s/feFlood-icon.png", INKSCAPE_PIXMAPDIR));
-            _infobox_desc.set_markup(_("The <b>feFlood</b> filter primitive fills its region with a given color and opacity. It can be used as an auxiliary tool, usualy in combination with other filter primitives, in order to facilitate some common color handling operations."));
+            _infobox_desc.set_markup(_("The <b>feFlood</b> filter primitive fills the region with a given color and opacity.  It is usually used as an input to other filters to apply color to a graphic."));
             break;
         case(NR::NR_FILTER_GAUSSIANBLUR):
             _infobox_icon.set(g_strdup_printf("%s/feGaussianBlur-icon.png", INKSCAPE_PIXMAPDIR));
-            _infobox_desc.set_markup(_("The <b>feGaussianBlur</b> filter primitive gives an out-of-focus aspect to images. It is commonly used toghether with feOffset in order to create a drop shadow effect."));
+            _infobox_desc.set_markup(_("The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is commonly used together with feOffset to create a drop shadow effect."));
             break;
         case(NR::NR_FILTER_IMAGE):
-            //_infobox_icon.set(g_strdup_printf("%s/feImage-icon.png", INKSCAPE_PIXMAPDIR));
-            //_infobox_desc.set_markup(_(""));
+            _infobox_icon.set(g_strdup_printf("%s/feImage-icon.png", INKSCAPE_PIXMAPDIR));
+            _infobox_desc.set_markup(_("The <b>feImage</b> filter primitive fills the region with an external image or another part of the document."));
             break;
         case(NR::NR_FILTER_MERGE):
             _infobox_icon.set(g_strdup_printf("%s/feMerge-icon.png", INKSCAPE_PIXMAPDIR));
@@ -2112,11 +2112,11 @@ void FilterEffectsDialog::update_primitive_infobox()
             break;
         case(NR::NR_FILTER_SPECULARLIGHTING):
             _infobox_icon.set(g_strdup_printf("%s/feSpecularLighting-icon.png", INKSCAPE_PIXMAPDIR));
-            _infobox_desc.set_markup(_("Filter primitives feDiffuseLighting and <b>feSpecularLighting</b> create lighting maps for the object in input image. These filters use alpha channel of input image as a height map: the more opaque given point in input image is, the nearer spectator it is considered to be."));
+            _infobox_desc.set_markup(_("The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create "embossed" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."));
             break;
         case(NR::NR_FILTER_TILE):
-            //_infobox_icon.set(g_strdup_printf("%s/feTile-icon.png", INKSCAPE_PIXMAPDIR));
-            //_infobox_desc.set_markup(_(""));
+            _infobox_icon.set(g_strdup_printf("%s/feTile-icon.png", INKSCAPE_PIXMAPDIR));
+            _infobox_desc.set_markup(_("The <b>feTile</b> filter primitive tiles a region with its input graphic"));
             break;
         case(NR::NR_FILTER_TURBULENCE):
             _infobox_icon.set(g_strdup_printf("%s/feTurbulence-icon.png", INKSCAPE_PIXMAPDIR));
