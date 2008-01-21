@@ -8463,14 +8463,14 @@ msgstr "Adicionar primitiva de filtro"
 msgid ""
 "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, "
 "multiply, darken and lighten."
-msgstr ""
+msgstr "A primitiva <b>feBlend</b> fornece 4 modos de mistura de imagens: tela, multiplicação, escurecimento e clareamento."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2067
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "colour of each rendered pixel. This allows for effects like turning object "
 "to grayscale, modifying colour saturation and changing colour hue."
-msgstr ""
+msgstr "A primitiva <b>feColorMatrix</b> aplica uma transformação linear (representada por uma matriz) às cores de cada pixel. Isto permite, por exemplo, modificar a saturação das cores ou mudar para tons de cinza."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2071
 msgid ""
@@ -8478,7 +8478,7 @@ msgid ""
 "color components (red, green, blue, and alpha) according to particular "
 "transfer functions, allowing operations like brightness and contrast "
 "adjustment, color balance, and thresholding."
-msgstr ""
+msgstr "A primitiva <b>feComponentTransfer</b> manipula as componentes de cor da entrada (vermelho, verde, azul e alfa) de acordo com funções de transferência, permitindo operações de ajuste de brilho e contraste, balanceamento de cores e segmentação por intensidade."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2075
 msgid ""
@@ -8486,7 +8486,7 @@ msgid ""
 "the Porter-Duff blending modes or the aritmetic mode described in SVG "
 "standard. Porter-Duff blending modes are essentially logical operations "
 "between the corresponding pixel values of the images."
-msgstr ""
+msgstr "A primitiva <b>feComposite</b> mescla duas imagens utilizando um dos modos de mistura de Porter-Duff ou o modo aritmético descrito no padrão SVG. Os modos de Porter-Duff são, essencialmente, operações lógicas sobre os pixels  correspondentes de ambas as imagens."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2079
 msgid ""
@@ -8495,7 +8495,7 @@ msgid ""
 "sharpening, embossing and edge detection. Note that while gaussian blur can "
 "be created using this filter primitive, the special gaussian blur primitive "
 "is faster and resolution-independent."
-msgstr ""
+msgstr "A primitiva <b>feConvolveMatrix</b> lhe permite especificar uma operação de convolução a ser aplicada na imagem. Detecção de borda, desfoque, alto-relevo são efeitos típicamente criados com esta primitiva. Note que apesar de ser possível se criar efeito de desfoque gaussiano usando esta primitiva, recomenda-se utilizar a primitiva feGaussianBlur para tal, pois ela é melhor otimizada e independe de resolução."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2083
 msgid ""
@@ -8503,7 +8503,7 @@ msgid ""
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
-msgstr ""
+msgstr "As primitivas <b>feDiffuseLighting</b> e feSpecularLighting criam efeitos de iluminação e sombreamentos em alto-relevo. O canal alfa da entrada é utilizado para prover informação sobre a altura do relevo: áreas de maior opacidade representam superfícies mais projetadas na direção do observador."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2087
 msgid ""
@@ -8511,26 +8511,26 @@ msgid ""
 "first input using the second input as a displacement map, that shows from "
 "how far the pixel should come from. Classical examples are whirl and pinch "
 "effects."
-msgstr ""
+msgstr "A primitiva <b>feDisplacementMap</b> desloca os pixels da primeira entrada usando a segunda entrada como um mapa de deslocamento, que mostra de quão longe o pixel deve vir. Exemplos clássicos são os efeitos de lente, e de distorção em caracol."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2091
 msgid ""
 "The <b>feFlood</b> filter primitive fills the region with a given color and "
 "opacity.  It is usually used as an input to other filters to apply color to "
 "a graphic."
-msgstr ""
+msgstr "A primitiva <b>feFlood</b> preenche uma região com uma determinada cor e opacidade. Isto costuma ser usado como entrada de outras primitivas para aplicar cores a um desenho."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2095
 msgid ""
 "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is "
 "commonly used together with feOffset to create a drop shadow effect."
-msgstr ""
+msgstr "A primitiva <b>feGaussianBlur</b> desfoca uniformemente sua entrada. É cumumente utilizada junto com a primitiva feOffset (Deslocamento) para criar efeitos de sombra deslocada."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2099
 msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
-msgstr ""
+msgstr "A primitiva <b>feImage</b> preenche uma região com uma imagem externa ou com outra parte do documento."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2103
 msgid ""
@@ -8538,21 +8538,21 @@ msgid ""
 "inside the filter primitive to a single image. It uses normal alpha "
 "compositing for this. This is equivalent to using several feBlend primitives "
 "in 'normal' mode or several feComposite primitives in 'over' mode."
-msgstr ""
+msgstr "A primitiva <b>feMerge</b> junta diversas imagens de suas entradas numa só. Ela utiliza composição de alfa comum para tal. Isto é equivalente a utilizar diversas primitivas feBlend (Mistura) no modo 'normal' ou diversas primitivas feComposite (Composição) no modo 'over'."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2107
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
 "For single-colour objects erode makes the object thinner and dilate makes it "
 "thicker."
-msgstr ""
+msgstr "A primitiva <b>feMorphology</b> proporciona efeitos de erosão e de dilatação. Para imagens monocromáticas, o efeito de erosão faz com que o objeto fique mais fino e o efeito de dilatação faz com que o objeto fique mais grosso."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2111
 msgid ""
 "The <b>feOffset</b> filter primitive offsets the image by an user-defined "
 "amount. For example, this is useful for drop shadows, where the shadow is in "
 "a slightly different position than the actual object."
-msgstr ""
+msgstr "A primitiva <b>feOffset</b> desloca a imagem. Isto é útil, por exemplo, para se criar efeitos de sombra."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2115
 msgid ""
@@ -8560,19 +8560,19 @@ msgid ""
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
-msgstr ""
+msgstr "As primitivas feDiffuseLighting e <b>feSpecularLighting</b> criam efeitos de iluminação e sombreamentos em alto-relevo. O canal alfa da entrada é utilizado para prover informação sobre a altura do relevo: áreas de maior opacidade representam superfícies mais projetadas na direção do observador."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2119
 msgid ""
 "The <b>feTile</b> filter primitive tiles a region with its input graphic"
-msgstr ""
+msgstr "A primitiva <b>feTile</b> ladrilha uma região com múltiplas cópias da imagem recebida em sua entrada."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2123
 msgid ""
 "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of "
 "noise is useful in simulating several nature phenomena like clouds, fire and "
 "smoke and in generating complex textures like marble or granite."
-msgstr ""
+msgstr "A primitiva <b>feTurbulence</b> renderiza ruído de Perlin. Este tipo de ruído é útil para simular fenômenos naturais como núvens, fogo e fumaça e para gerar texturas complexas como mármore ou granito."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2138
 msgid "Duplicate filter primitive"
