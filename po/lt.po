@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-01-21 02:47-0200\n"
+"POT-Creation-Date: 2008-01-21 03:46-0200\n"
 "PO-Revision-Date: 2007-02-01 23:48+0300\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
@@ -8686,6 +8686,9 @@ msgstr ""
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2083
 msgid ""
 "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create "
+"\"embossed\" shadings.  The input's alpha channel is used to provide depth "
+"information: higher opacity areas are raised toward the viewer and lower "
+"opacity areas recede away from the viewer."
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2087
@@ -8740,6 +8743,9 @@ msgstr ""
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2115
 msgid ""
 "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create "
+"\"embossed\" shadings.  The input's alpha channel is used to provide depth "
+"information: higher opacity areas are raised toward the viewer and lower "
+"opacity areas recede away from the viewer."
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2119
