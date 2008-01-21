@@ -13,6 +13,8 @@ pixmaps = \
     feConvolveMatrix-icon.svg \
 	feDiffuseLighting-icon.png \
     feDiffuseLighting-icon.svg \
+	feDisplacementMap-icon.png \
+    feDisplacementMap-icon.svg \
 	feFlood-icon.png \
     feFlood-icon.svg \
 	feGaussianBlur-icon.png \
