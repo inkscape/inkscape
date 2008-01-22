@@ -505,7 +505,16 @@ void
 Transformation::updatePageSkew(Inkscape::Selection *selection)
 {
     if (selection && !selection->isEmpty()) {
-        _page_skew.set_sensitive(true);
+        NR::Maybe<NR::Rect> bbox = selection->bounds();
+        if (bbox) {
+            double w = bbox->extent(NR::X);
+            double h = bbox->extent(NR::Y);
+            _scalar_skew_vertical.setHundredPercent(w);
+            _scalar_skew_horizontal.setHundredPercent(h);
+            _page_skew.set_sensitive(true);
+        } else {
+            _page_skew.set_sensitive(false);
+        }
     } else {
         _page_skew.set_sensitive(false);
     }
@@ -943,8 +952,8 @@ Transformation::onClear()
         break;
     }
     case PAGE_SCALE: {
-        _scalar_scale_horizontal.setValue(100);
-        _scalar_scale_vertical.setValue(100);
+        _scalar_scale_horizontal.setValue(100, "%");
+        _scalar_scale_vertical.setValue(100, "%");
         break;
     }
     case PAGE_SKEW: {
