@@ -31,7 +31,7 @@ FilterImage::~FilterImage()
         if (image_pixbuf) g_free(image_pixbuf);
 }
 
-int FilterImage::render(FilterSlot &slot, FilterUnits const &/*units*/) {
+int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
     if  (!feImageHref) return 0;
 
     if (!image_pixbuf){
@@ -66,8 +66,8 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &/*units*/) {
 
     int x0 = in->area.x0, y0 = in->area.y0;
     int x1 = in->area.x1, y1 = in->area.y1;
-    int bbox_x0 = (int) slot.get_arenaitem()->bbox.x0;
-    int bbox_y0 = (int) slot.get_arenaitem()->bbox.y0;
+
+    Matrix unit_trans = units.get_matrix_primitiveunits2pb().inverse();
 
     nr_pixblock_setup_fast(out, in->mode, x0, y0, x1, y1, true);
 
@@ -79,8 +79,8 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     for (x=x0; x < x1; x++){
         for (y=y0; y < y1; y++){
             //TODO: use interpolation
-            coordx = int((x - feImageX - bbox_x0)*scaleX);
-            coordy = int((y - feImageY - bbox_y0)*scaleY);
+            coordx = int(scaleX * ((x * unit_trans[0] + unit_trans[4]) - feImageX));
+            coordy = int(scaleY * ((y * unit_trans[3] + unit_trans[5]) - feImageY));
 
             if (coordx > 0 && coordx < width && coordy > 0 && coordy < height){
                 out_data[4*((x - x0)+w*(y - y0))] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy]; //Red
