@@ -28,7 +28,6 @@ FilterPrimitive * FilterImage::create() {
 FilterImage::~FilterImage()
 {
         if (feImageHref) g_free(feImageHref);
-        if (image_pixbuf) g_free(image_pixbuf);
 }
 
 int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
