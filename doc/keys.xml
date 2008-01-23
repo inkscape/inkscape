@@ -1063,6 +1063,8 @@ groups) with the same effect as Alt+click.)</note>
 <note>If a path is selected, Shift+dragging anywhere creates a new subpath instead of a new independent path.</note>
 <mouse><key><shift/><left-drag/></key> <action>temporarily disable snapping</action></mouse>
 <note>Shift also temporaily disables snapping to grid or guides when you are drawing with grid or guides on.</note>
+<mouse><key><ctrl/><left-click/></key> <action>create a single dot</action></mouse>
+<note>This creates a single dot, represented by a small circle. The dot size (relative to the current stroke width) can be set in the Preferences dialog. With Shift, the size is doubled. Pressing Alt while creating multiple dots randomly varies their size.</note>
 </group>
 </section>
 
@@ -1101,6 +1103,12 @@ groups) with the same effect as Alt+click.)</note>
 <keys><key><shift/>U</key>  <action>make last segment curve</action></keys>
 <note>These commands change the last (red) segment of the path to straight line or curve.</note>
 </group>
+
+<group>
+<title>Create dots</title>
+<mouse><key><ctrl/><left-click/></key> <action>create a single dot</action></mouse>
+<note>This creates a single dot, represented by a small circle. The dot size (relative to the current stroke width) can be set in the Preferences dialog. With Shift, the size is doubled. Pressing Alt while creating multiple dots randomly varies their size.</note>
+
 
 <group>
 <title>Finish</title>
