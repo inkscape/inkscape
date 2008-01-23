@@ -60,7 +60,7 @@ do {\
 }while(0)
 
 int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
-    NRPixBlock *in = filter_get_alpha(slot.get(_input));
+    NRPixBlock *in = slot.get(_input);
     if (!in) {
         g_warning("Missing source image for feSpecularLighting (in=%d)", _input);
         return 1;
@@ -180,8 +180,8 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
 
     //finishing
     slot.set(_output, out);
-    nr_pixblock_release(in);
-    delete in;
+    //nr_pixblock_release(in);
+    //delete in;
     return 0;
 }
 
