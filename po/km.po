@@ -5267,7 +5267,7 @@ msgstr "<b>%i</b> របស់​ថ្នាំង <b>%i</b> បាន​ជ្
 #: ../src/nodepath.cpp:4478
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgstr "<b>%i</b> នៃ​ថ្នាំង <b>%i</b> បាន​ជ្រើ​នៅ​ក្នុង <b>%i</b> របស់<<b>%i</b> ផ្លូវ​រង ។ %s."
+msgstr "<b>%i</b> នៃ​ថ្នាំង <b>%i</b> បាន​ជ្រើ​នៅ​ក្នុង <b>%i</b> របស់ <b>%i</b> ផ្លូវ​រង ។ %s."
 
 #: ../src/nodepath.cpp:4484
 #, c-format
