@@ -29,12 +29,14 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "dialog-manager.h"
+#include "dir-util.h"
 #include "document.h"
 #include "filter-chemistry.h"
 #include "filter-effects-dialog.h"
 #include "filter-enums.h"
 #include "inkscape.h"
 #include "path-prefix.h"
+#include "prefs-utils.h"
 #include "selection.h"
 #include "sp-feblend.h"
 #include "sp-fecolormatrix.h"
@@ -53,12 +55,14 @@
 
 #include "style.h"
 #include "svg/svg-color.h"
+#include "ui/dialog/filedialog.h"
 #include "verbs.h"
 #include "xml/node.h"
 #include "xml/node-observer.h"
 #include "xml/repr.h"
 #include <sstream>
 
+#include "io/sys.h"
 #include <iostream>
 
 using namespace NR;
@@ -545,6 +549,126 @@ private:
     double _angle_store;
 };
 
+static Inkscape::UI::Dialog::FileOpenDialog * selectFeImageFileInstance = NULL;
+
+//Displays a chooser for feImage input
+//It may be a filename or the id for an SVG Element
+//described in xlink:href syntax
+class FileOrElementChooser : public Gtk::HBox, public AttrWidget
+{
+public:
+    FileOrElementChooser(const SPAttributeEnum a)
+        : AttrWidget(a)
+    {
+        pack_start(_entry, false, false);
+        pack_start(_fromFile, false, false);
+        //pack_start(_fromSVGElement, false, false);
+
+        _fromFile.set_label(_("Image File"));
+        _fromFile.signal_clicked().connect(sigc::mem_fun(*this, &FileOrElementChooser::select_file));
+
+        _fromSVGElement.set_label(_("Selected SVG Element"));        
+        _fromSVGElement.signal_clicked().connect(sigc::mem_fun(*this, &FileOrElementChooser::select_svg_element));
+
+        _entry.signal_changed().connect(signal_attr_changed().make_slot());
+
+        show_all();
+
+    }
+    
+    // Returns the element in xlink:href form.
+    Glib::ustring get_as_attribute() const
+    {
+        return _entry.get_text();
+    }
+
+
+    void set_from_attribute(SPObject* o)
+    {
+        const gchar* val = attribute_value(o);
+        if(val) {
+            _entry.set_text(val);
+        }
+    }
+
+    void set_desktop(SPDesktop* d){
+        _desktop = d;
+    }
+
+private:
+    void select_svg_element(){
+        Inkscape::Selection* sel = sp_desktop_selection(_desktop);
+        if (sel->isEmpty()) return;
+        Inkscape::XML::Node* node = (Inkscape::XML::Node*) g_slist_nth_data((GSList *)sel->reprList(), 0);
+        if (!node || !node->matchAttributeName("id")) return;
+        
+        std::ostringstream xlikhref;
+        xlikhref << "#(" << node->attribute("id") << ")";
+        _entry.set_text(xlikhref.str());
+    }
+    
+    void select_file(){
+
+        //# Get the current directory for finding files
+        Glib::ustring open_path;
+        char *attr = (char *)prefs_get_string_attribute("dialogs.open", "path");
+        if (attr)
+            open_path = attr;
+    
+        //# Test if the open_path directory exists
+        if (!Inkscape::IO::file_test(open_path.c_str(),
+                  (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
+            open_path = "";
+    
+        //# If no open path, default to our home directory
+        if (open_path.size() < 1)
+            {
+            open_path = g_get_home_dir();
+            open_path.append(G_DIR_SEPARATOR_S);
+            }
+    
+        //# Create a dialog if we don't already have one
+        if (!selectFeImageFileInstance) {
+            selectFeImageFileInstance =
+                  Inkscape::UI::Dialog::FileOpenDialog::create(
+                     *_desktop->getToplevel(),
+                     open_path,
+                     Inkscape::UI::Dialog::SVG_TYPES,/*TODO: any image, not justy svg*/
+                     (char const *)_("Select an image to be used as feImage input"));
+        }
+    
+        //# Show the dialog
+        bool const success = selectFeImageFileInstance->show();
+        if (!success)
+            return;
+
+        //# User selected something.  Get name and type
+        Glib::ustring fileName = selectFeImageFileInstance->getFilename();
+
+        if (fileName.size() > 0) {
+
+            Glib::ustring newFileName = Glib::filename_to_utf8(fileName);
+
+            if ( newFileName.size() > 0)
+                fileName = newFileName;
+            else
+                g_warning( "ERROR CONVERTING OPEN FILENAME TO UTF-8" );
+
+            open_path = fileName;
+            open_path.append(G_DIR_SEPARATOR_S);
+            prefs_set_string_attribute("dialogs.open", "path", open_path.c_str());
+
+            _entry.set_text(fileName);
+        }
+        return;
+    }
+    
+    Gtk::Entry _entry;
+    Gtk::Button _fromFile;
+    Gtk::Button _fromSVGElement;
+    SPDesktop* _desktop;
+};
+
 class FilterEffectsDialog::Settings
 {
 public:
@@ -676,7 +800,7 @@ public:
         add_attr_widget(dsb);
         return dsb;
     }
-
+    
     // MultiSpinButton
     MultiSpinButton* add_multispinbutton(const SPAttributeEnum attr1, const SPAttributeEnum attr2,
                                          const Glib::ustring& label, const double lo, const double hi,
@@ -704,6 +828,16 @@ public:
         for(unsigned i = 0; i < msb->get_spinbuttons().size(); ++i)
             add_attr_widget(msb->get_spinbuttons()[i]);
         return msb;
+    }
+    
+    // FileOrElementChooser
+    FileOrElementChooser* add_fileorelement(const SPAttributeEnum attr, const Glib::ustring& label)
+    {
+        FileOrElementChooser* foech = new FileOrElementChooser(attr);
+        foech->set_desktop(_dialog.getDesktop());
+        add_widget(foech, label);
+        add_attr_widget(foech);
+        return foech;
     }
 
     // ComboBoxEnum
@@ -1883,7 +2017,6 @@ FilterEffectsDialog::FilterEffectsDialog()
     _sizegroup = Gtk::SizeGroup::create(Gtk::SIZE_GROUP_HORIZONTAL);
     _sizegroup->set_ignore_hidden();
 
-    _add_primitive_type.remove_row(NR_FILTER_IMAGE);
     _add_primitive_type.remove_row(NR_FILTER_TILE);
     _add_primitive_type.remove_row(NR_FILTER_COMPONENTTRANSFER);
         
@@ -2017,8 +2150,10 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_dualspinslider(SP_ATTR_RADIUS, _("Radius"), 0, 100, 1, 0.01, 1);
 
     _settings->type(NR_FILTER_IMAGE);
-    _settings->add_notimplemented();
-
+    _settings->add_fileorelement(SP_ATTR_XLINK_HREF, _("Source of Image"));
+    _settings->add_multispinbutton(SP_ATTR_X, SP_ATTR_Y, _("Coordinates"), -10000, 10000, 1, 1, 0);
+    _settings->add_multispinbutton(SP_ATTR_WIDTH, SP_ATTR_HEIGHT, _("Dimensions"), 0, 10000, 1, 1, 0);
+    
     _settings->type(NR_FILTER_OFFSET);
     _settings->add_spinslider(SP_ATTR_DX, _("Delta X"), -100, 100, 1, 0.01, 1);
     _settings->add_spinslider(SP_ATTR_DY, _("Delta Y"), -100, 100, 1, 0.01, 1);

@@ -14,11 +14,11 @@
    id="svg1901"
    sodipodi:version="0.32"
    inkscape:version="0.45+devel"
-   sodipodi:docname="feConvolveMatrix-icon.svg"
+   sodipodi:docname="feImage-icon.svg"
    sodipodi:docbase="/home/tsoots/ohj/translations/po"
    version="1.0"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   inkscape:export-filename="/home/felipe/devel/inkscape/inkscape/share/icons/feConvolveMatrix-icon.png"
+   inkscape:export-filename="/home/felipe/devel/inkscape/inkscape/share/icons/feImage-icon.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -29,14 +29,14 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_z="700 : 600 : 1"
        inkscape:persp3d-origin="300 : 400 : 1"
-       id="perspective2405" />
+       id="perspective2403" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="-50 : 600 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_z="700 : 600 : 1"
        inkscape:persp3d-origin="300 : 400 : 1"
-       id="perspective2495" />
+       id="perspective2402" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="-50 : 600 : 1"
@@ -86,19 +86,6 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="-50 : 600 : 1"
        sodipodi:type="inkscape:persp3d" />
-    <filter
-       id="filter2688"
-       inkscape:label="filter1">
-      <feConvolveMatrix
-         order="3 3"
-         kernelMatrix="6 10 3 10 -4 -15 3 -5 -6 "
-         id="feConvolveMatrix2690"
-         in="SourceGraphic"
-         divisor="1.6333333333333333"
-         bias="0"
-         targetX="1"
-         targetY="1" />
-    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -107,9 +94,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.4766083"
-     inkscape:cx="33.938552"
-     inkscape:cy="28.549012"
+     inkscape:zoom="3.0729167"
+     inkscape:cx="148.55593"
+     inkscape:cy="48"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      gridtolerance="10000"
@@ -130,8 +117,8 @@
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
         <cc:license
            rdf:resource="http://creativecommons.org/licenses/by-sa/3.0/" />
-        <dc:title>feConvolveMatrix filter primitive example</dc:title>
-        <dc:date>18 Jan 2008</dc:date>
+        <dc:title>feImage filter primitive example</dc:title>
+        <dc:date>23 Jan 2008</dc:date>
         <dc:creator>
           <cc:Agent>
             <dc:title>Felipe Corrêa da Silva Sanches</dc:title>
@@ -144,7 +131,7 @@
         </dc:rights>
         <dc:subject>
           <rdf:Bag>
-            <rdf:li>ConvolveMatrix filter primitive example</rdf:li>
+            <rdf:li>Image filter primitive example</rdf:li>
           </rdf:Bag>
         </dc:subject>
         <dc:description>this is an image originaly intended to be used in Inkscape</dc:description>
@@ -195,8 +182,7 @@
        height="124.7063"
        width="168.06779"
        sodipodi:absref="ticotico.jpg"
-       xlink:href="./ticotico.jpg"
-       style="filter:url(#filter2688)" />
+       xlink:href="./ticotico.jpg" />
     <rect
        style="opacity:0.43324938;fill:none;fill-opacity:0.3678161;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.97574574;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.97574573, 1.95149145;stroke-dashoffset:0;stroke-opacity:1"
        id="rect2686"

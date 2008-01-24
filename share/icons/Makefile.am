@@ -19,6 +19,8 @@ pixmaps = \
     feFlood-icon.svg \
 	feGaussianBlur-icon.png \
     feGaussianBlur-icon.svg \
+    feImage-icon.png \
+    feImage-icon.svg \
 	feMerge-icon.png \
     feMerge-icon.svg \
 	feMorphology-icon.png \
