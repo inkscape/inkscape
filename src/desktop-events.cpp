@@ -251,7 +251,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
             sp_guideline_set_color(SP_GUIDELINE(item), guide->hicolor);
 
             char *guide_description = sp_guide_description(guide);
-            desktop->guidesMessageContext()->setF(Inkscape::NORMAL_MESSAGE, "%s", guide_description);
+            desktop->guidesMessageContext()->setF(Inkscape::NORMAL_MESSAGE, _("<b>Guideline</b>: %s"), guide_description);
             g_free(guide_description);
             break;
     }
