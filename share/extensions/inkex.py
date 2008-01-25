@@ -72,7 +72,7 @@ def check_inkbool(option, opt, value):
 
 def addNS(tag, ns=None):
     val = tag
-    if ns!=None and len(ns)>0 and NSS.has_key(ns):
+    if ns!=None and len(ns)>0 and NSS.has_key(ns) and len(tag)>0 and tag[0]!='{':
         val = "{%s}%s" % (NSS[ns], tag)
     return val
 
