@@ -41,11 +41,11 @@ namespace Dialogs {
 
 GuidelinePropertiesDialog::GuidelinePropertiesDialog(SPGuide *guide, SPDesktop *desktop)
 : _desktop(desktop), _guide(guide),
-  _label_units(_("Measure unit:")),
+  _label_units(_("Unit:")),
   _label_X(_("X:")),
   _label_Y(_("Y:")),
-  _label_degrees(_("Degrees:")),
-  _relative_toggle(_("Rela_tive change"), _("Move and rotate guide relative to current settings")),
+  _label_degrees(_("Angle (degrees):")),
+  _relative_toggle(_("Rela_tive change"), _("Move and/or rotate the guide relative to current settings")),
   _adjustment_x(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0),  
   _adjustment_y(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0),  
   _adj_angle(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0),  
@@ -195,21 +195,21 @@ void GuidelinePropertiesDialog::_setup() {
     _spin_button_y.configure(_adjustment_y, 1.0 , 3);
     _spin_button_y.set_numeric();
     _layout_table.attach(_label_X,
-                         1, 2, 5, 6, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+                         1, 2, 4, 5, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     _layout_table.attach(_spin_button_x,
-                         2, 3, 5, 6, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+                         2, 3, 4, 5, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     _layout_table.attach(_label_Y,
-                         1, 2, 6, 7, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+                         1, 2, 5, 6, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     _layout_table.attach(_spin_button_y,
-                         2, 3, 6, 7, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+                         2, 3, 5, 6, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     gtk_signal_connect_object(GTK_OBJECT(_spin_button_x.gobj()), "activate",
                               GTK_SIGNAL_FUNC(gtk_window_activate_default),
                               gobj());
 
     _layout_table.attach(_label_units,
-                         1, 2, 4, 5, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+                         1, 2, 6, 7, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     _layout_table.attach(*_unit_selector,
-                         2, 3, 4, 5, Gtk::FILL, Gtk::FILL);
+                         2, 3, 6, 7, Gtk::FILL, Gtk::FILL);
 
     // angle spinbutton
     _spin_angle.configure(_adj_angle, 5.0 , 3);
@@ -238,13 +238,13 @@ void GuidelinePropertiesDialog::_setup() {
     {
         Inkscape::XML::Node *repr = SP_OBJECT_REPR (_guide);
         const gchar *guide_id = repr->attribute("id");
-        gchar *label = g_strdup_printf(_("Guideline: %s"), guide_id);
+        gchar *label = g_strdup_printf(_("Guideline ID: %s"), guide_id);
         _label_name.set_label(label);
         g_free(label);
     }
     {
         gchar *guide_description = sp_guide_description(_guide);
-        gchar *label = g_strdup_printf(_("Current settings: %s"), guide_description);
+        gchar *label = g_strdup_printf(_("Current: %s"), guide_description);
         g_free(guide_description);
         _label_descr.set_label(label);
         g_free(label);

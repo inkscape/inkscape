@@ -391,15 +391,14 @@ char *sp_guide_description(SPGuide const *guide)
     GString *position_string_y = SP_PX_TO_METRIC_STRING(guide->point_on_line[Y], SP_ACTIVE_DESKTOP->namedview->getDefaultMetric());
 
     if ( guide->normal_to_line == component_vectors[X] ) {
-        return g_strdup_printf(_("vertical guideline at %s"), position_string_x->str);
+        return g_strdup_printf(_("vertical, at %s"), position_string_x->str);
     } else if ( guide->normal_to_line == component_vectors[Y] ) {
-        return g_strdup_printf(_("horizontal guideline at %s"), position_string_y->str);
+        return g_strdup_printf(_("horizontal, at %s"), position_string_y->str);
     } else {
         double const radians = guide->angle();
         double const degrees = Geom::rad_to_deg(radians);
         int const degrees_int = (int) round(degrees);
-        return g_strdup_printf("%d degree guideline at (%s,%s)", degrees_int, position_string_x->str, position_string_y->str);
-        /* Alternative suggestion: "angled guideline". */
+        return g_strdup_printf(_("at %d degrees, through (%s,%s)"), degrees_int, position_string_x->str, position_string_y->str);
     }
 
     g_string_free(position_string_x, TRUE);
