@@ -14,6 +14,7 @@
 #include <glib/gtypes.h>
 #include "svg/svg-length.h"
 #include <vector>
+#include <string>
 
 struct NArtBpath;
 struct NRMatrix;

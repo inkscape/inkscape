@@ -27,6 +27,7 @@
 # include "config.h"
 #endif
 
+#include <string.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmenu.h>

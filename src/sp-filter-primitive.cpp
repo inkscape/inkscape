@@ -18,6 +18,8 @@
 # include "config.h"
 #endif
 
+#include <string.h>
+
 #include "attributes.h"
 #include "sp-filter-primitive.h"
 #include "xml/repr.h"

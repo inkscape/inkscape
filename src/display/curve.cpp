@@ -15,7 +15,7 @@
  * Released under GNU GPL
  */
 
-
+#include <string.h>
 #include <glib/gmem.h>
 #include <display/curve.h>
 #include <libnr/n-art-bpath.h>

@@ -19,8 +19,8 @@
 // FAST_DIVIDE assumes that 0<=num<=256*denom
 //   (this covers the case that num=255*denom+denom/2, which is used by DIV_ROUND)
 template<unsigned int divisor> static inline unsigned int FAST_DIVIDE(unsigned int v) { return v/divisor; }
-template<> static inline unsigned int FAST_DIVIDE<255>(unsigned int v) { return ((v+1)*0x101) >> 16; }
-template<> static inline unsigned int FAST_DIVIDE<255*255>(unsigned int v) { v=(v+1)<<1; v=v+(v>>7)+((v*0x3)>>16)+(v>>22); return (v>>16)>>1; }
+template<> inline unsigned int FAST_DIVIDE<255>(unsigned int v) { return ((v+1)*0x101) >> 16; }
+template<> inline unsigned int FAST_DIVIDE<255*255>(unsigned int v) { v=(v+1)<<1; v=v+(v>>7)+((v*0x3)>>16)+(v>>22); return (v>>16)>>1; }
 // FAST_DIV_ROUND assumes that 0<=num<=255*denom (DIV_ROUND should work upto num=2^32-1-(denom/2),
 // but FAST_DIVIDE_BY_255 already fails at num=65790=258*255, which is not too far above 255.5*255)
 template<unsigned int divisor> static inline unsigned int FAST_DIV_ROUND(unsigned int v) { return FAST_DIVIDE<divisor>(v+(divisor)/2); }

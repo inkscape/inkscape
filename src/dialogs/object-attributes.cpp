@@ -15,7 +15,10 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
+
+#include <string.h>
 #include <glibmm/i18n.h>
+
 #include "helper/window.h"
 #include "macros.h"
 #include "sp-anchor.h"

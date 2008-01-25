@@ -5,6 +5,8 @@
  * NArtBpath: old-style path segment.
  */
 
+#include <stdlib.h>
+
 #include "libnr/nr-point.h"
 #include "libnr/nr-path-code.h"
 

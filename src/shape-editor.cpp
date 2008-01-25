@@ -12,6 +12,7 @@
 #include "config.h"
 #endif
 
+#include <string.h>
 #include <glibmm/i18n.h>
 
 #include "sp-object.h"

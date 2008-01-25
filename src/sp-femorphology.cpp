@@ -18,6 +18,8 @@
 # include "config.h"
 #endif
 
+#include <string.h>
+
 #include "attributes.h"
 #include "svg/svg.h"
 #include "sp-femorphology.h"

@@ -12,6 +12,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <string.h>
+
 #include "desktop-handles.h"
 #include "selection.h"
 #include "display/sp-canvas-util.h"

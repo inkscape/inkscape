@@ -9,6 +9,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <string.h>
 #include <glib/gstrfuncs.h>
 #include "message-stack.h"
 

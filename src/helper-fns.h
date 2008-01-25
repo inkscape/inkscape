@@ -13,6 +13,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <string.h>
+
 #include <sstream>
 
 // calling helperfns_read_number(string, false), it's not obvious, what

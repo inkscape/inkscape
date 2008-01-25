@@ -16,6 +16,7 @@
  * This code is GPL if done by Ted or David
  */
 
+#include <string.h>
 #include "require-config.h"   /* HAVE_GTK_WINDOW_FULLSCREEN */
 #include "helper/helper-forward.h"
 #include "forward.h"

@@ -49,6 +49,8 @@ We are expecting an xml file with this format:
 #include "pedrodom.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 namespace Pedro
 {
