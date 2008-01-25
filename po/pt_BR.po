@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-01-21 03:47-0200\n"
-"PO-Revision-Date: 2008-01-05 20:20-0300\n"
-"Last-Translator: Aurélio A. Heckert <aurium@gmail.com>\n"
+"POT-Creation-Date: 2008-01-24 22:32-0300\n"
+"PO-Revision-Date: 2008-01-19 12:30-0300\n"
+"Last-Translator: Valessio Brito <valessio@gmail.com>\n"
 "Language-Team: Português Brasil <inkscape-brasil@listas.softwarelivre.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -688,7 +688,7 @@ msgstr "Escolha a cor visível e a opacidade"
 #: ../src/dialogs/clonetiler.cpp:2599 ../src/dialogs/clonetiler.cpp:2748
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/extension/internal/bitmap/opacity.cpp:39
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2010
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2143
 #: ../src/widgets/toolbox.cpp:3177
 msgid "Opacity"
 msgstr "Opacidade"
@@ -799,9 +799,9 @@ msgstr ""
 "ponto"
 
 #: ../src/dialogs/clonetiler.cpp:2728
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1987
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2120
 msgid "Size"
-msgstr "Dimensões"
+msgstr "Tamanho"
 
 #: ../src/dialogs/clonetiler.cpp:2731
 msgid "Each clone's size is determined by the picked value in that point"
@@ -1419,12 +1419,12 @@ msgid "A freeform label for the object"
 msgstr "Um rótulo com forma livre para o objeto"
 
 #. Create the label for the object title
-#: ../src/dialogs/item-properties.cpp:173 ../src/dialogs/rdf.cpp:239
+#: ../src/dialogs/item-properties.cpp:173 ../src/dialogs/rdf.cpp:238
 msgid "Title"
 msgstr "Título"
 
 #. Create the frame for the object description
-#: ../src/dialogs/item-properties.cpp:190 ../src/dialogs/rdf.cpp:283
+#: ../src/dialogs/item-properties.cpp:190 ../src/dialogs/rdf.cpp:282
 #: ../src/ui/widget/page-sizer.cpp:197
 msgid "Description"
 msgstr "Descrição"
@@ -1634,139 +1634,139 @@ msgstr "URL:"
 msgid "%s Properties"
 msgstr "%s Propriedades"
 
-#: ../src/dialogs/rdf.cpp:182
+#: ../src/dialogs/rdf.cpp:181
 msgid "CC Attribution"
 msgstr "Atribuição CC"
 
-#: ../src/dialogs/rdf.cpp:187
+#: ../src/dialogs/rdf.cpp:186
 msgid "CC Attribution-ShareAlike"
 msgstr "CC Atribuição-Compatilhamento pela mesma licença"
 
-#: ../src/dialogs/rdf.cpp:192
+#: ../src/dialogs/rdf.cpp:191
 msgid "CC Attribution-NoDerivs"
 msgstr "CC Atribuição-NãoDerivados"
 
-#: ../src/dialogs/rdf.cpp:197
+#: ../src/dialogs/rdf.cpp:196
 msgid "CC Attribution-NonCommercial"
 msgstr "CC Atribuição-NãoComercial"
 
-#: ../src/dialogs/rdf.cpp:202
+#: ../src/dialogs/rdf.cpp:201
 msgid "CC Attribution-NonCommercial-ShareAlike"
 msgstr "CC Atribuição-NãoComercial-Compatilhamento pela mesma licença"
 
-#: ../src/dialogs/rdf.cpp:207
+#: ../src/dialogs/rdf.cpp:206
 msgid "CC Attribution-NonCommercial-NoDerivs"
 msgstr "CC Atribuição-NãoComercial-NãoDerivados"
 
-#: ../src/dialogs/rdf.cpp:212
+#: ../src/dialogs/rdf.cpp:211
 msgid "Public Domain"
 msgstr "Domínio Público"
 
-#: ../src/dialogs/rdf.cpp:217
+#: ../src/dialogs/rdf.cpp:216
 msgid "FreeArt"
 msgstr "ArteLivre"
 
-#: ../src/dialogs/rdf.cpp:222
+#: ../src/dialogs/rdf.cpp:221
 msgid "Open Font License"
 msgstr "Licença Open Font"
 
-#: ../src/dialogs/rdf.cpp:240
+#: ../src/dialogs/rdf.cpp:239
 msgid "Name by which this document is formally known."
 msgstr "O nome pelo qual este desenho será formalmente conhecido."
 
-#: ../src/dialogs/rdf.cpp:242
+#: ../src/dialogs/rdf.cpp:241
 msgid "Date"
 msgstr "Data"
 
-#: ../src/dialogs/rdf.cpp:243
+#: ../src/dialogs/rdf.cpp:242
 msgid "Date associated with the creation of this document (YYYY-MM-DD)."
 msgstr "Data associada com a criação deste desenho (AAAA-MM-DD)."
 
-#: ../src/dialogs/rdf.cpp:245
+#: ../src/dialogs/rdf.cpp:244
 msgid "Format"
 msgstr "Formato"
 
-#: ../src/dialogs/rdf.cpp:246
+#: ../src/dialogs/rdf.cpp:245
 msgid "The physical or digital manifestation of this document (MIME type)."
 msgstr "A manifestação física ou digital deste desenho (tipo MIME)."
 
-#: ../src/dialogs/rdf.cpp:248 ../src/extension/internal/bitmap/addNoise.cpp:46
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1966
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2039
+#: ../src/dialogs/rdf.cpp:247 ../src/extension/internal/bitmap/addNoise.cpp:46
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2099
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2174
 msgid "Type"
 msgstr "Tipo"
 
-#: ../src/dialogs/rdf.cpp:249
+#: ../src/dialogs/rdf.cpp:248
 msgid "Type of document (DCMI Type)."
 msgstr "Tipo do desenho (tipo DCMI)."
 
-#: ../src/dialogs/rdf.cpp:252
+#: ../src/dialogs/rdf.cpp:251
 msgid "Creator"
 msgstr "Criador"
 
-#: ../src/dialogs/rdf.cpp:253
+#: ../src/dialogs/rdf.cpp:252
 msgid ""
 "Name of entity primarily responsible for making the content of this document."
 msgstr ""
 "Nome da entidade responsável pela elaboração do conteúdo deste desenho."
 
-#: ../src/dialogs/rdf.cpp:255
+#: ../src/dialogs/rdf.cpp:254
 msgid "Rights"
 msgstr "Direitos"
 
-#: ../src/dialogs/rdf.cpp:256
+#: ../src/dialogs/rdf.cpp:255
 msgid ""
 "Name of entity with rights to the Intellectual Property of this document."
 msgstr ""
 "Nome da entidade com os direitos de Propriedade Intelectual deste documento."
 
-#: ../src/dialogs/rdf.cpp:258
+#: ../src/dialogs/rdf.cpp:257
 msgid "Publisher"
 msgstr "Publicador"
 
-#: ../src/dialogs/rdf.cpp:259
+#: ../src/dialogs/rdf.cpp:258
 msgid "Name of entity responsible for making this document available."
 msgstr "Nome da entidade responsável por fazer este desenho disponível."
 
-#: ../src/dialogs/rdf.cpp:262
+#: ../src/dialogs/rdf.cpp:261
 msgid "Identifier"
 msgstr "Identificador"
 
-#: ../src/dialogs/rdf.cpp:263
+#: ../src/dialogs/rdf.cpp:262
 msgid "Unique URI to reference this document."
 msgstr "URL única para referenciar este desenho."
 
-#: ../src/dialogs/rdf.cpp:265 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1455
+#: ../src/dialogs/rdf.cpp:264 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1455
 msgid "Source"
 msgstr "Fonte"
 
-#: ../src/dialogs/rdf.cpp:266
+#: ../src/dialogs/rdf.cpp:265
 msgid "Unique URI to reference the source of this document."
 msgstr "URI única para referenciar a fonte deste desenho."
 
-#: ../src/dialogs/rdf.cpp:268
+#: ../src/dialogs/rdf.cpp:267
 msgid "Relation"
 msgstr "Relação"
 
-#: ../src/dialogs/rdf.cpp:269
+#: ../src/dialogs/rdf.cpp:268
 msgid "Unique URI to a related document."
 msgstr "URL única para um desenho relacionado."
 
-#: ../src/dialogs/rdf.cpp:271
+#: ../src/dialogs/rdf.cpp:270
 msgid "Language"
 msgstr "Linguagem"
 
-#: ../src/dialogs/rdf.cpp:272
+#: ../src/dialogs/rdf.cpp:271
 msgid ""
 "Two-letter language tag with optional subtags for the language of this "
 "document.  (e.g. 'en-GB')"
 msgstr "Etiqueta de linguagem para a linguagem deste desenho. (ex: pt-BR)"
 
-#: ../src/dialogs/rdf.cpp:274
+#: ../src/dialogs/rdf.cpp:273
 msgid "Keywords"
 msgstr "Palavras chave"
 
-#: ../src/dialogs/rdf.cpp:275
+#: ../src/dialogs/rdf.cpp:274
 msgid ""
 "The topic of this document as comma-separated key words, phrases, or "
 "classifications."
@@ -1776,24 +1776,24 @@ msgstr ""
 
 #. TRANSLATORS: "Coverage": the spatial or temporal characteristics of the content.
 #. For info, see Appendix D of http://www.w3.org/TR/1998/WD-rdf-schema-19980409/
-#: ../src/dialogs/rdf.cpp:279
+#: ../src/dialogs/rdf.cpp:278
 msgid "Coverage"
 msgstr "Cobertura"
 
-#: ../src/dialogs/rdf.cpp:280
+#: ../src/dialogs/rdf.cpp:279
 msgid "Extent or scope of this document."
 msgstr "Extensão ou escopo deste documento."
 
-#: ../src/dialogs/rdf.cpp:284
+#: ../src/dialogs/rdf.cpp:283
 msgid "A short account of the content of this document."
 msgstr "Uma esplicação curta para o conteúdo deste desenho."
 
 #. FIXME: need to handle 1 agent per line of input
-#: ../src/dialogs/rdf.cpp:288
+#: ../src/dialogs/rdf.cpp:287
 msgid "Contributors"
 msgstr "Contribuidores"
 
-#: ../src/dialogs/rdf.cpp:289
+#: ../src/dialogs/rdf.cpp:288
 msgid ""
 "Names of entities responsible for making contributions to the content of "
 "this document."
@@ -1801,21 +1801,21 @@ msgstr ""
 "Nome das entidades responsáveis por contribuições ao conteúdo deste desenho."
 
 #. TRANSLATORS: URL to a page that defines the license for the document
-#: ../src/dialogs/rdf.cpp:293
+#: ../src/dialogs/rdf.cpp:292
 msgid "URI"
 msgstr "URL"
 
 #. TRANSLATORS: this is where you put a URL to a page that defines the license
-#: ../src/dialogs/rdf.cpp:295
+#: ../src/dialogs/rdf.cpp:294
 msgid "URI to this document's license's namespace definition."
 msgstr "URL da definição de espaço de nome da licença deste desenho."
 
 #. TRANSLATORS: fragment of XML representing the license of the document
-#: ../src/dialogs/rdf.cpp:299
+#: ../src/dialogs/rdf.cpp:298
 msgid "Fragment"
 msgstr "Fragmento"
 
-#: ../src/dialogs/rdf.cpp:300
+#: ../src/dialogs/rdf.cpp:299
 msgid "XML fragment for the RDF 'License' section."
 msgstr "Fragmento XML para a seção 'Licença' RDF."
 
@@ -1851,7 +1851,7 @@ msgstr "Redefinir o traço"
 
 #: ../src/dialogs/stroke-style.cpp:793 ../src/filter-enums.cpp:94
 #: ../src/flood-context.cpp:264 ../src/interface.cpp:829
-#: ../src/ui/dialog/filter-effects-dialog.cpp:456
+#: ../src/ui/dialog/filter-effects-dialog.cpp:460
 #: ../src/ui/dialog/inkscape-preferences.cpp:207
 #: ../src/ui/dialog/inkscape-preferences.cpp:368
 #: ../src/ui/dialog/inkscape-preferences.cpp:469
@@ -2384,6 +2384,7 @@ msgid ", averaged with radius %d"
 msgstr ", médio com raio %d"
 
 #: ../src/dropper-context.cpp:355
+#, c-format
 msgid " under cursor"
 msgstr " sob cursor"
 
@@ -2619,7 +2620,7 @@ msgstr "Altura:"
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
 #: ../src/filter-enums.cpp:32
 msgid "Offset"
-msgstr "Deslocamento"
+msgstr "Deslocamentos"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:46
 #: ../src/extension/internal/bitmap/addNoise.cpp:57
@@ -2707,7 +2708,7 @@ msgstr "Desfocar"
 #: ../src/extension/internal/bitmap/oilPaint.cpp:38
 #: ../src/extension/internal/bitmap/sharpen.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2017
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2150
 msgid "Radius"
 msgstr "Raio"
 
@@ -2873,7 +2874,7 @@ msgstr "Equalizar bitmap(s) selecionado(s) -- equalização por histograma."
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:37
 #: ../src/filter-enums.cpp:28
 msgid "Gaussian Blur"
-msgstr "Desfoque gaussiano"
+msgstr "Desfocagem gaussiana"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:39
 #: ../src/extension/internal/bitmap/implode.cpp:38
@@ -2883,7 +2884,7 @@ msgstr "Fator"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:46
 msgid "Gaussian blur selected bitmap(s)."
-msgstr "Aplicar desfoque gaussiano no(s) bitmap(s) selecionado(s)."
+msgstr "Aplicar desfocagem gaussiana no(s) bitmap(s) selecionado(s)."
 
 #: ../src/extension/internal/bitmap/implode.cpp:36
 msgid "Implode"
@@ -3058,12 +3059,12 @@ msgid "Shade"
 msgstr "Sombra"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/ui/dialog/filter-effects-dialog.cpp:780
+#: ../src/ui/dialog/filter-effects-dialog.cpp:914
 msgid "Azimuth"
 msgstr "Azimute"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:781
+#: ../src/ui/dialog/filter-effects-dialog.cpp:915
 msgid "Elevation"
 msgstr "Elevação"
 
@@ -3794,6 +3795,7 @@ msgid "Select file to export to"
 msgstr "Selecione o arquivo para exportar"
 
 #: ../src/file.cpp:1245
+#, c-format
 msgid "Error saving a temporary copy"
 msgstr "Erro ao salvar uma cópia temporária"
 
@@ -3802,6 +3804,7 @@ msgid "Open Clip Art Login"
 msgstr "Login do Open Clip Art"
 
 #: ../src/file.cpp:1285
+#, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
 "password are correct. If the server have support for webdav and verify if "
@@ -3821,7 +3824,7 @@ msgstr "Importar de Open Clip Art Library"
 
 #: ../src/filter-enums.cpp:20
 msgid "Blend"
-msgstr "Mistura"
+msgstr "Misturar"
 
 #: ../src/filter-enums.cpp:21
 msgid "Color Matrix"
@@ -3829,7 +3832,7 @@ msgstr "Matriz de Cores"
 
 #: ../src/filter-enums.cpp:22
 msgid "Component Transfer"
-msgstr "Transferência de Componentes"
+msgstr "Transferência de Componente"
 
 #: ../src/filter-enums.cpp:23
 msgid "Composite"
@@ -3837,7 +3840,7 @@ msgstr "Composição"
 
 #: ../src/filter-enums.cpp:24
 msgid "Convolve Matrix"
-msgstr "Matriz de Convolução"
+msgstr "Convolver Matriz"
 
 #: ../src/filter-enums.cpp:25
 msgid "Diffuse Lighting"
@@ -3849,7 +3852,7 @@ msgstr "Mapa de Deslocamento"
 
 #: ../src/filter-enums.cpp:27
 msgid "Flood"
-msgstr "Preenchimento"
+msgstr "Inundar"
 
 #: ../src/filter-enums.cpp:29 ../src/selection-describer.cpp:52
 msgid "Image"
@@ -3857,7 +3860,7 @@ msgstr "Imagem"
 
 #: ../src/filter-enums.cpp:30
 msgid "Merge"
-msgstr "Mesclagem"
+msgstr "Mesclar"
 
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
@@ -3877,11 +3880,11 @@ msgstr "Turbulência"
 
 #: ../src/filter-enums.cpp:40
 msgid "Source Graphic"
-msgstr "Gráfico da Entrada"
+msgstr "Gráfico Fonte"
 
 #: ../src/filter-enums.cpp:41
 msgid "Source Alpha"
-msgstr "Canal Alfa da Entrada"
+msgstr "Alfa Fonte "
 
 #: ../src/filter-enums.cpp:42
 msgid "Background Image"
@@ -3893,11 +3896,11 @@ msgstr "Alfa de Fundo"
 
 #: ../src/filter-enums.cpp:44
 msgid "Fill Paint"
-msgstr "Cor do Preenchimento"
+msgstr "Preencher com Tinta"
 
 #: ../src/filter-enums.cpp:45
 msgid "Stroke Paint"
-msgstr "Cor do Traço"
+msgstr "Pintura de Traço"
 
 #: ../src/filter-enums.cpp:51 ../src/ui/dialog/inkscape-preferences.cpp:470
 msgid "Normal"
@@ -3954,7 +3957,7 @@ msgstr "Fora"
 
 #: ../src/filter-enums.cpp:74
 msgid "Atop"
-msgstr "Topo"
+msgstr "Atop"
 
 #: ../src/filter-enums.cpp:75
 msgid "XOR"
@@ -3962,7 +3965,7 @@ msgstr "XOR"
 
 #: ../src/filter-enums.cpp:76
 msgid "Arithmetic"
-msgstr "Aritmético"
+msgstr "Aritmética"
 
 #: ../src/filter-enums.cpp:82
 msgid "Identity"
@@ -3970,7 +3973,7 @@ msgstr "Identidade"
 
 #: ../src/filter-enums.cpp:83
 msgid "Table"
-msgstr "Tabelado"
+msgstr "Tabela"
 
 #: ../src/filter-enums.cpp:84
 msgid "Discrete"
@@ -4037,7 +4040,7 @@ msgstr "Apontar Luz"
 
 #: ../src/filter-enums.cpp:125
 msgid "Spot Light"
-msgstr "Fonte de Luz"
+msgstr "Lugar de Luz"
 
 #: ../src/flood-context.cpp:249
 msgid "Visible Colors"
@@ -4237,6 +4240,7 @@ msgstr ""
 "a partir de seu centro."
 
 #: ../src/gradient-drag.cpp:1137
+#, c-format
 msgid ""
 "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to "
 "separate focus"
@@ -4256,8 +4260,8 @@ msgstr[0] ""
 "Ponto do degradê compartilhado pelo degradê <b>%d</b>; arraste com <b>Shift</"
 "b> para separar"
 msgstr[1] ""
-"Ponto do degradê compartilhado pelos degradês <b>%d</b>; arraste com "
-"<b>Shift</b> para separar"
+"Ponto do degradê compartilhado pelos degradês <b>%d</d>; arraste com "
+"<n>Shift</b> para separar"
 
 #: ../src/gradient-drag.cpp:1815
 msgid "Move gradient handle(s)"
@@ -6058,7 +6062,7 @@ msgid "Rotate 90&#176; CCW"
 msgstr "Girar 90° (sentido anti-horário)"
 
 #: ../src/selection-chemistry.cpp:1815 ../src/seltrans.cpp:432
-#: ../src/ui/dialog/transformation.cpp:678
+#: ../src/ui/dialog/transformation.cpp:687
 msgid "Rotate"
 msgstr "Girar"
 
@@ -6067,8 +6071,8 @@ msgid "Rotate by pixels"
 msgstr "Girar por pixels"
 
 #: ../src/selection-chemistry.cpp:1877 ../src/seltrans.cpp:429
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2004
-#: ../src/ui/dialog/transformation.cpp:657
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2137
+#: ../src/ui/dialog/transformation.cpp:666
 msgid "Scale"
 msgstr "Ampliar"
 
@@ -6085,7 +6089,7 @@ msgid "Move horizontally"
 msgstr "Mover horizontalmente"
 
 #: ../src/selection-chemistry.cpp:1924 ../src/selection-chemistry.cpp:1952
-#: ../src/seltrans.cpp:426 ../src/ui/dialog/transformation.cpp:601
+#: ../src/seltrans.cpp:426 ../src/ui/dialog/transformation.cpp:610
 msgid "Move"
 msgstr "Mover"
 
@@ -6234,7 +6238,7 @@ msgstr "Ajustar à página a seleção"
 
 #: ../src/selection-describer.cpp:42
 msgid "Link"
-msgstr "Vínculo"
+msgstr "Ligação"
 
 #: ../src/selection-describer.cpp:44
 msgid "Circle"
@@ -6411,7 +6415,7 @@ msgstr[1] "<b>%i</b> objetos de <b>%i</b> tipos"
 msgid "%s%s. %s."
 msgstr "%s%s.·%s."
 
-#: ../src/seltrans.cpp:435 ../src/ui/dialog/transformation.cpp:736
+#: ../src/seltrans.cpp:435 ../src/ui/dialog/transformation.cpp:745
 msgid "Skew"
 msgstr "Enviesar"
 
@@ -6530,6 +6534,7 @@ msgstr "<b>Arco</b>"
 
 #. TRANSLATORS: "Flow region" is an area where text is allowed to flow
 #: ../src/sp-flowregion.cpp:270
+#, c-format
 msgid "Flow region"
 msgstr "Região Fluida"
 
@@ -6538,6 +6543,7 @@ msgstr "Região Fluida"
 #. * http://www.w3.org/TR/2004/WD-SVG12-20041027/flow.html#flowRegion-elem and
 #. * http://www.w3.org/TR/2004/WD-SVG12-20041027/flow.html#flowRegionExclude-elem.
 #: ../src/sp-flowregion.cpp:490
+#, c-format
 msgid "Flow excluded region"
 msgstr "Fluir região excluida"
 
@@ -8201,7 +8207,7 @@ msgstr "Resolução preferida para a figura (pontos por polegada)"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1423
 #, fuzzy
 msgid "Document"
-msgstr "Desenho SVG"
+msgstr "Desenho salvo."
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1435
 #, fuzzy
@@ -8240,345 +8246,380 @@ msgstr "_Pintura de traço"
 msgid "Stroke st_yle"
 msgstr "Estilo de traço"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:763
+#. pack_start(_fromSVGElement, false, false);
+#: ../src/ui/dialog/filter-effects-dialog.cpp:567
+#, fuzzy
+msgid "Image File"
+msgstr "Imagem"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:570
+#, fuzzy
+msgid "Selected SVG Element"
+msgstr "Apagar Segmento"
+
+#. TODO: any image, not justy svg
+#: ../src/ui/dialog/filter-effects-dialog.cpp:637
+#, fuzzy
+msgid "Select an image to be used as feImage input"
+msgstr "Selecione uma imagem e uma ou mais formas acima dela"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:897
 msgid "Light Source:"
 msgstr "Fonte de Luz:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:784
-#: ../src/ui/dialog/filter-effects-dialog.cpp:787
+#: ../src/ui/dialog/filter-effects-dialog.cpp:918
+#: ../src/ui/dialog/filter-effects-dialog.cpp:921
 msgid "Location"
 msgstr "Localização"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:789
+#: ../src/ui/dialog/filter-effects-dialog.cpp:923
 msgid "Points At"
 msgstr "Pontos Em"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:790
+#: ../src/ui/dialog/filter-effects-dialog.cpp:924
 msgid "Specular Exponent"
 msgstr "Exponente Especular"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:791
+#: ../src/ui/dialog/filter-effects-dialog.cpp:925
 msgid "Cone Angle"
 msgstr "Ângulo de Cone"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:851
+#: ../src/ui/dialog/filter-effects-dialog.cpp:985
 msgid "New light source"
 msgstr "Nova fonte de luz"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:892
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1026
 msgid "_Duplicate"
 msgstr "_Duplicar"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:918
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1052
 msgid "_Filter"
-msgstr "_Filtro"
+msgstr "_Filtrar"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:932
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1066
 msgid "R_ename"
 msgstr "R_enomear"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1026
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1160
 msgid "Rename filter"
 msgstr "Renomear filtro"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1062
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1196
 msgid "Apply filter"
 msgstr "Aplicar filtro"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1137
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1271
 msgid "Add filter"
 msgstr "Adicionar filtro"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1148
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1282
 msgid "Remove filter"
 msgstr "Remover filtro"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1163
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1297
 msgid "Duplicate filter"
 msgstr "Duplicar filtro"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1230
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1364
 msgid "_Effect"
 msgstr "_Efeito"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1238
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1372
 msgid "Connections"
 msgstr "Conexões"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1354
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1488
 msgid "Remove filter primitive"
 msgstr "Remover primitiva de filtro"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1724
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1858
 #, fuzzy
 msgid "Remove merge node"
 msgstr "Remover verde"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1840
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1974
 #, fuzzy
 msgid "Reorder filter primitive"
 msgstr "Reordenar primitiva de filtro"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1876
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2010
 msgid "Add Effect:"
 msgstr "Adicionar Efeito:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1877
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2011
 msgid "No effect selected"
 msgstr "Nenhum efeito selecionado"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1895
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2028
 msgid "<b>Effect parameters</b>"
 msgstr "<b>Parâmetros de efeitos</b>"
 
 #. # end multiple scan
 #. ## end mode page
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2096
 #: ../src/ui/dialog/tracedialog.cpp:553 ../src/widgets/toolbox.cpp:3104
 msgid "Mode"
 msgstr "Modo"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1967
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2100
 msgid "Value(s)"
-msgstr "Valor(es)"
+msgstr "Valore(s)"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1980
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2016
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2113
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2149
 msgid "Operator"
 msgstr "Operador"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1981
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2114
 msgid "K1"
 msgstr "K1"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1982
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2115
 msgid "K2"
 msgstr "K2"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1983
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2116
 msgid "K3"
 msgstr "K3"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1984
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2117
 msgid "K4"
 msgstr "K4"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1988
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2121
 msgid "Target"
 msgstr "Alvo"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1989
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2122
 msgid "Kernel"
 msgstr "Kernel"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1991
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2124
 msgid "Divisor"
 msgstr "Divisor"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1992
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2125
 msgid "Bias"
-msgstr "Componente constante"
+msgstr "Bias"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1993
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2126
 msgid "Edge Mode"
 msgstr "Modo Limite"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1994
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2127
+#, fuzzy
 msgid "Preserve Alpha"
-msgstr "Preservar canal alfa"
+msgstr "Preservada"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1997
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2130
+#, fuzzy
 msgid "Diffuse Color"
-msgstr "Cor"
+msgstr "Cores Visíveis"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1998
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2028
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2131
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2163
 msgid "Surface Scale"
 msgstr "Escala da Superfície"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1999
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2029
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2132
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2164
 msgid "Constant"
 msgstr "Constante"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2000
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2031
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2133
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
 msgid "Kernel Unit Length"
-msgstr "Largura da Grade de Pixels"
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2005
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2138
 msgid "X Channel"
 msgstr "Canal X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2006
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2139
 msgid "Y Channel"
 msgstr "Canal Y"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2009
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2142
 msgid "Flood Color"
-msgstr "Cor de preenchimento"
+msgstr "Flood Color"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2013
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2146
 msgid "Standard Deviation"
 msgstr "Desvio Padrão"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2023
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2153
+#, fuzzy
+msgid "Source of Image"
+msgstr "Número de páginas"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2154
+#, fuzzy
+msgid "Coordinates"
+msgstr "Coordenadas do cursor"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2155
+#, fuzzy
+msgid "Dimensions"
+msgstr "Divisão"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2158
 msgid "Delta X"
 msgstr "Delta X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2024
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2159
 msgid "Delta Y"
 msgstr "Delta Y"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2027
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
 msgid "Specular Color"
 msgstr "Cor especular"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2030
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 #: ../share/extensions/interp.inx.h:2
 msgid "Exponent"
 msgstr "Expoente"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2038
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2173
+#, fuzzy
 msgid "Stitch Tiles"
-msgstr "Costurar Ladrilhos"
+msgstr "Curativo Ladrilhado"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2040
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2175
 msgid "Base Frequency"
 msgstr "Freqüência Base"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2041
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2176
 msgid "Octaves"
-msgstr "Oitavas"
+msgstr "Oitavos"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2042
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2177
 msgid "Seed"
 msgstr "Semente"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2054
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
 msgid "Add filter primitive"
-msgstr "Adicionar primitiva de filtro"
+msgstr "Adicionar filtro "
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2063
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid ""
 "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, "
 "multiply, darken and lighten."
-msgstr "A primitiva <b>feBlend</b> fornece 4 modos de mistura de imagens: tela, multiplicação, escurecimento e clareamento."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2067
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "colour of each rendered pixel. This allows for effects like turning object "
 "to grayscale, modifying colour saturation and changing colour hue."
-msgstr "A primitiva <b>feColorMatrix</b> aplica uma transformação linear (representada por uma matriz) às cores de cada pixel. Isto permite, por exemplo, modificar a saturação das cores ou mudar para tons de cinza."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2071
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2206
 msgid ""
 "The <b>feComponentTransfer</b> filter primitive manipulates the input's "
 "color components (red, green, blue, and alpha) according to particular "
 "transfer functions, allowing operations like brightness and contrast "
 "adjustment, color balance, and thresholding."
-msgstr "A primitiva <b>feComponentTransfer</b> manipula as componentes de cor da entrada (vermelho, verde, azul e alfa) de acordo com funções de transferência, permitindo operações de ajuste de brilho e contraste, balanceamento de cores e segmentação por intensidade."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2075
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2210
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
 "the Porter-Duff blending modes or the aritmetic mode described in SVG "
 "standard. Porter-Duff blending modes are essentially logical operations "
 "between the corresponding pixel values of the images."
-msgstr "A primitiva <b>feComposite</b> mescla duas imagens utilizando um dos modos de mistura de Porter-Duff ou o modo aritmético descrito no padrão SVG. Os modos de Porter-Duff são, essencialmente, operações lógicas sobre os pixels  correspondentes de ambas as imagens."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2079
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2214
 msgid ""
 "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on "
 "the image. Common effects created using convolution matrices are blur, "
 "sharpening, embossing and edge detection. Note that while gaussian blur can "
 "be created using this filter primitive, the special gaussian blur primitive "
 "is faster and resolution-independent."
-msgstr "A primitiva <b>feConvolveMatrix</b> lhe permite especificar uma operação de convolução a ser aplicada na imagem. Detecção de borda, desfoque, alto-relevo são efeitos típicamente criados com esta primitiva. Note que apesar de ser possível se criar efeito de desfoque gaussiano usando esta primitiva, recomenda-se utilizar a primitiva feGaussianBlur para tal, pois ela é melhor otimizada e independe de resolução."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2083
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2218
 msgid ""
 "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
-msgstr "As primitivas <b>feDiffuseLighting</b> e feSpecularLighting criam efeitos de iluminação e sombreamentos em alto-relevo. O canal alfa da entrada é utilizado para prover informação sobre a altura do relevo: áreas de maior opacidade representam superfícies mais projetadas na direção do observador."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2087
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
 msgid ""
 "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the "
 "first input using the second input as a displacement map, that shows from "
 "how far the pixel should come from. Classical examples are whirl and pinch "
 "effects."
-msgstr "A primitiva <b>feDisplacementMap</b> desloca os pixels da primeira entrada usando a segunda entrada como um mapa de deslocamento, que mostra de quão longe o pixel deve vir. Exemplos clássicos são os efeitos de lente, e de distorção em caracol."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2091
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2226
 msgid ""
 "The <b>feFlood</b> filter primitive fills the region with a given color and "
 "opacity.  It is usually used as an input to other filters to apply color to "
 "a graphic."
-msgstr "A primitiva <b>feFlood</b> preenche uma região com uma determinada cor e opacidade. Isto costuma ser usado como entrada de outras primitivas para aplicar cores a um desenho."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2095
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
 msgid ""
 "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is "
 "commonly used together with feOffset to create a drop shadow effect."
-msgstr "A primitiva <b>feGaussianBlur</b> desfoca uniformemente sua entrada. É cumumente utilizada junto com a primitiva feOffset (Deslocamento) para criar efeitos de sombra deslocada."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2099
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
 msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
-msgstr "A primitiva <b>feImage</b> preenche uma região com uma imagem externa ou com outra parte do documento."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2103
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2238
 msgid ""
 "The <b>feMerge</b> filter primitive composites several temporary images "
 "inside the filter primitive to a single image. It uses normal alpha "
 "compositing for this. This is equivalent to using several feBlend primitives "
 "in 'normal' mode or several feComposite primitives in 'over' mode."
-msgstr "A primitiva <b>feMerge</b> junta diversas imagens de suas entradas numa só. Ela utiliza composição de alfa comum para tal. Isto é equivalente a utilizar diversas primitivas feBlend (Mistura) no modo 'normal' ou diversas primitivas feComposite (Composição) no modo 'over'."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2107
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2242
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
 "For single-colour objects erode makes the object thinner and dilate makes it "
 "thicker."
-msgstr "A primitiva <b>feMorphology</b> proporciona efeitos de erosão e de dilatação. Para imagens monocromáticas, o efeito de erosão faz com que o objeto fique mais fino e o efeito de dilatação faz com que o objeto fique mais grosso."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2111
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2246
 msgid ""
 "The <b>feOffset</b> filter primitive offsets the image by an user-defined "
 "amount. For example, this is useful for drop shadows, where the shadow is in "
 "a slightly different position than the actual object."
-msgstr "A primitiva <b>feOffset</b> desloca a imagem. Isto é útil, por exemplo, para se criar efeitos de sombra."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2115
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2250
 msgid ""
 "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
-msgstr "As primitivas feDiffuseLighting e <b>feSpecularLighting</b> criam efeitos de iluminação e sombreamentos em alto-relevo. O canal alfa da entrada é utilizado para prover informação sobre a altura do relevo: áreas de maior opacidade representam superfícies mais projetadas na direção do observador."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2119
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2254
 msgid ""
 "The <b>feTile</b> filter primitive tiles a region with its input graphic"
-msgstr "A primitiva <b>feTile</b> ladrilha uma região com múltiplas cópias da imagem recebida em sua entrada."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2123
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2258
 msgid ""
 "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of "
 "noise is useful in simulating several nature phenomena like clouds, fire and "
 "smoke and in generating complex textures like marble or granite."
-msgstr "A primitiva <b>feTurbulence</b> renderiza ruído de Perlin. Este tipo de ruído é útil para simular fenômenos naturais como núvens, fogo e fumaça e para gerar texturas complexas como mármore ou granito."
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2138
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2273
 msgid "Duplicate filter primitive"
 msgstr "Duplicar primitiva de filtro"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2177
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2312
 msgid "Set filter primitive attribute"
 msgstr "Definir atributo de primitiva de filtro"
 
@@ -8937,12 +8978,11 @@ msgstr "Esta caixa delimitadora inclui somente o caminho simples"
 #: ../src/ui/dialog/inkscape-preferences.cpp:347
 #, fuzzy
 msgid "Conversion to guides:"
-msgstr "Converter para Texto"
+msgstr "Remover guias existentes"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:348
-#, fuzzy
 msgid "Keep objects after conversion to guides"
-msgstr "Selecione um ou mais <b>objetos</b> para converter para marcador."
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:350
 msgid ""
@@ -10401,7 +10441,7 @@ msgstr "Reinicie os valores da tabela atual para os valores padrão"
 msgid "Apply transformation to selection"
 msgstr "Aplicar transformação à seleção"
 
-#: ../src/ui/dialog/transformation.cpp:763
+#: ../src/ui/dialog/transformation.cpp:772
 msgid "Edit transformation matrix"
 msgstr "Editar matriz de transformação"
 
@@ -12385,12 +12425,13 @@ msgstr "Alternar entre os modos de visualização"
 
 #: ../src/verbs.cpp:2473
 #, fuzzy
-msgid "Color managed view"
+msgid "Color-managed view"
 msgstr "Gerenciamento de cor"
 
 #: ../src/verbs.cpp:2474
-msgid "Toggle color managed display adjustment for this document window"
-msgstr ""
+#, fuzzy
+msgid "Toggle color-managed display for this document window"
+msgstr "Fechar a janela do documento"
 
 #: ../src/verbs.cpp:2476
 msgid "Ico_n Preview..."
@@ -12602,7 +12643,7 @@ msgstr "Gerenciar caminhos de efeitos"
 
 #: ../src/verbs.cpp:2533
 msgid "Filter Effects..."
-msgstr "Filtros de Efeitos..."
+msgstr "Filtro de Efeitos..."
 
 #: ../src/verbs.cpp:2534
 msgid "Manage SVG filter effects"
@@ -15549,249 +15590,3 @@ msgstr "Entrada de Metaarquivo do Windows"
 msgid "XAML Input"
 msgstr "Entrada XAML"
 
-#~ msgid "Convolve"
-#~ msgstr "Convoluir"
-
-# é uma boa tradução para "Kernel Array" apesar de estranho, dado o objetivo do campo.
-#~ msgid "Kernel Array"
-#~ msgstr "Disposição Central"
-
-#~ msgid "Apply Convolve Effect"
-#~ msgstr "Aplicar Efeito de Convolução"
-
-#, fuzzy
-#~ msgid "Start point jitter"
-#~ msgstr "Variação do ponto de início"
-
-#, fuzzy
-#~ msgid "End point jitter"
-#~ msgstr "Variação de ponto final"
-
-#~ msgid "Slope"
-#~ msgstr "Inclinação"
-
-#~ msgid "Intercept"
-#~ msgstr "Interceptar"
-
-#~ msgid "???"
-#~ msgstr "???"
-
-#~ msgid "Snap nodes to grid lines, to guides, to paths, and to other nodes"
-#~ msgstr ""
-#~ "Ajustar nós às linhas de grade, às guias, aos caminhos e a outros nós"
-
-#, fuzzy
-#~ msgid "Snap at specified d_istance"
-#~ msgstr "Inkscape: _Avançado"
-
-#~ msgid "Snap di_stance"
-#~ msgstr "Distância de ajuste"
-
-#, fuzzy
-#~ msgid "Snap at specified dis_tance"
-#~ msgstr "Inkscape: _Avançado"
-
-#, fuzzy
-#~ msgid "Snap at specified distan_ce"
-#~ msgstr "Ajustar a qualquer distância"
-
-#, fuzzy
-#~ msgid "_Include the object's rotation center"
-#~ msgstr "Incluir objetos ocultos à busca"
-
-#~ msgid "<b>Miscellaneous</b>"
-#~ msgstr "<b>Miscelânia</b>"
-
-#, fuzzy
-#~ msgid "Date:"
-#~ msgstr "Data"
-
-#, fuzzy
-#~ msgid "Format:"
-#~ msgstr "Formato"
-
-#, fuzzy
-#~ msgid "Creator:"
-#~ msgstr "Criador"
-
-#, fuzzy
-#~ msgid "Rights:"
-#~ msgstr "Direitos"
-
-#, fuzzy
-#~ msgid "Publisher:"
-#~ msgstr "Publicador"
-
-#, fuzzy
-#~ msgid "Identifier:"
-#~ msgstr "Identificador"
-
-#, fuzzy
-#~ msgid "Source:"
-#~ msgstr "Fonte"
-
-#, fuzzy
-#~ msgid "Relation:"
-#~ msgstr "Relação"
-
-#, fuzzy
-#~ msgid "Language:"
-#~ msgstr "Linguagem"
-
-#, fuzzy
-#~ msgid "Subject:"
-#~ msgstr "Objeto"
-
-#, fuzzy
-#~ msgid "Coverage:"
-#~ msgstr "Cobertura"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "Descrição"
-
-#, fuzzy
-#~ msgid "Contributor:"
-#~ msgstr "Contribuidores"
-
-#, fuzzy
-#~ msgid "Default Metadata"
-#~ msgstr "Metadados"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution"
-#~ msgstr "Atribuição CC"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution-ShareAlike"
-#~ msgstr "CC Atribuição-Compatilhamento pela mesma licença"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution-NoDerivatives"
-#~ msgstr "CC Atribuição-NãoDerivados"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution-NonCommercial"
-#~ msgstr "CC Atribuição-NãoComercial"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution-NonCommercial-ShareAlike"
-#~ msgstr "CC Atribuição-NãoComercial-Compatilhamento pela mesma licença"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution-NonCommercial-NoDerivatives"
-#~ msgstr "CC Atribuição-NãoComercial-NãoDerivados"
-
-#, fuzzy
-#~ msgid "Free Art License"
-#~ msgstr "Licença Open Font"
-
-#, fuzzy
-#~ msgid "Default License"
-#~ msgstr "Padrões"
-
-#, fuzzy
-#~ msgid "Angle Y"
-#~ msgstr "Ângulo Y:"
-
-#~ msgid "%s at %s"
-#~ msgstr "%s em %s"
-
-#~ msgid "Move by:"
-#~ msgstr "Mover por:"
-
-#~ msgid "Move to:"
-#~ msgstr "Mover para:"
-
-#~ msgid "Moving %s %s"
-#~ msgstr "Movendo %s %s"
-
-#~ msgid "Change layer opacity"
-#~ msgstr "Mudar opacidade da camada"
-
-#~ msgid "Opacity, %:"
-#~ msgstr "Opacidade, %:"
-
-#~ msgid "Path along path"
-#~ msgstr "Caminho ao longo do caminho"
-
-#~ msgid "Pattern along path"
-#~ msgstr "Padrão ao longo do caminho"
-
-#~ msgid "Print"
-#~ msgstr "Imprimir"
-
-#~ msgid "Could not set print source: %s"
-#~ msgstr "Não foi possível definir a origem da impressão: %s"
-
-#~ msgid "unknown error"
-#~ msgstr "erro desconhecido"
-
-#~ msgid "Printer '%s' does not support PS output"
-#~ msgstr "A impressora '%s' não suporta saída PostScript"
-
-#~ msgid "Print Preview not available"
-#~ msgstr "Visualização de Impressão não disponível"
-
-#~ msgid "Failed to create tempfile for printing: %s"
-#~ msgstr "Falha ao criar arquivo temporário para impressão: %s"
-
-#~ msgid "Snap details"
-#~ msgstr "Detalhes de encaixe"
-
-#, fuzzy
-#~ msgid "If set, objects snap to the nearest object, regardless of distance"
-#~ msgstr "Objetos se ajustam ao objeto mais próximo quando movidos"
-
-#, fuzzy
-#~ msgid ""
-#~ "If set, objects snap to the nearest grid line, regardless of distance"
-#~ msgstr "Objetos se ajustam à linha de grade mais próxima quando movidos"
-
-#, fuzzy
-#~ msgid "If set, objects snap to the nearest guide, regardless of distance"
-#~ msgstr "Objetos se ajustam à linha guia mais próxima quando movidos"
-
-#~ msgid "Gridtype"
-#~ msgstr "Tipo de grade"
-
-#~ msgid "Change blur"
-#~ msgstr "Alterar desfoque"
-
-#~ msgid "Display Calibration"
-#~ msgstr "Mostrar Calibragem"
-
-#~ msgid "Enable display calibration"
-#~ msgstr "Habilitar visualização de calibragem"
-
-#, fuzzy
-#~ msgid "Enables application of the display using an ICC profile."
-#~ msgstr "Habilita a mostra da aplicação usando um perfil ICC."
-
-#~ msgid "Print _Direct"
-#~ msgstr "Imprimir _Diretamente"
-
-#~ msgid "Print directly without prompting to a file or pipe"
-#~ msgstr ""
-#~ "Imprimir diretamente para um arquivo ou redirecionamento sem alertas."
-
-#~ msgid "Lock"
-#~ msgstr "Travar"
-
-#~ msgid "Gradients"
-#~ msgstr "Degradês"
-
-#~ msgid "Spacing between letters"
-#~ msgstr "Espaçamento entre letras"
-
-#~ msgid "Spacing between lines"
-#~ msgstr "Espaçamento entre linhas"
-
-#~ msgid "Horizontal kerning"
-#~ msgstr "Espaçamento Horizontal"
-
-#~ msgid "Vertical kerning"
-#~ msgstr "Espaçamento Vertical"
-
-#~ msgid "Letter rotation"
-#~ msgstr "Giro das letras"
