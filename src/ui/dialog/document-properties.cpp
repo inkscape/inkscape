@@ -405,9 +405,9 @@ DocumentProperties::update_gridspage()
     _grids_notebook.show_all();
 
     if (grids_present)
-        _grids_button_remove.show();
+        _grids_button_remove.set_sensitive(true);
     else
-        _grids_button_remove.hide();
+        _grids_button_remove.set_sensitive(false);
 }
 
 /**
@@ -441,7 +441,6 @@ DocumentProperties::build_gridspage()
     _grids_vbox.pack_start(_grids_label_def, false, false);
     _grids_vbox.pack_start(_grids_notebook, false, false);
     _grids_vbox.pack_start(_grids_button_remove, false, false);
-    _grids_button_remove.hide();
 
     update_gridspage();
 }
