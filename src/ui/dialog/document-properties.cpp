@@ -290,21 +290,21 @@ DocumentProperties::build_snap()
 
     //Other options to locate here: e.g. visual snapping indicators on/off
 
-    std::list<Gtk::ToggleButton*> slaves;
+    std::list<Gtk::Widget*> slaves;
     slaves.push_back(&_rcbsnop);
     slaves.push_back(&_rcbsnon);
-    _rcbsnn.setSlaveButton(slaves);
+    _rcbsnn.setSlaveWidgets(slaves);
 
     slaves.clear();
     slaves.push_back(&_rcbsnbbp);
     slaves.push_back(&_rcbsnbbn);
-    _rcbsnbb.setSlaveButton(slaves);
+    _rcbsnbb.setSlaveWidgets(slaves);
     
     slaves.clear();
     slaves.push_back(&_rcbsnn);
     slaves.push_back(&_rcbsnbb);
     
-    _rcbsg.setSlaveButton(slaves);
+    _rcbsg.setSlaveWidgets(slaves);
 
     Gtk::Label *label_g = manage (new Gtk::Label);
     label_g->set_markup (_("<b>Snapping</b>"));

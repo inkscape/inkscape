@@ -179,13 +179,13 @@ public:
 
     void setActive (bool);
 
-    std::list<Gtk::ToggleButton*> _slavebuttons;
+    std::list<Gtk::Widget*> _slavewidgets;
 
     // a slave button is only sensitive when the master button is active
     // i.e. a slave button is greyed-out when the master button is not checked
 
-    void setSlaveButton(std::list<Gtk::ToggleButton*> btns) {
-        _slavebuttons = btns;
+    void setSlaveWidgets(std::list<Gtk::Widget*> btns) {
+        _slavewidgets = btns;
     }
 
     bool setProgrammatically; // true if the value was set by setActive, not changed by the user;

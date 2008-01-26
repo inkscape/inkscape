@@ -98,7 +98,7 @@ RegisteredCheckButton::setActive (bool b)
     setProgrammatically = true;
     set_active (b);
     //The slave button is greyed out if the master button is unchecked
-    for (std::list<Gtk::ToggleButton*>::const_iterator i = _slavebuttons.begin(); i != _slavebuttons.end(); i++) {
+    for (std::list<Gtk::Widget*>::const_iterator i = _slavewidgets.begin(); i != _slavewidgets.end(); i++) {
         (*i)->set_sensitive(b);
     }
     setProgrammatically = false;
@@ -118,7 +118,7 @@ RegisteredCheckButton::on_toggled()
 
     write_to_xml(get_active() ? "true" : "false");
     //The slave button is greyed out if the master button is unchecked
-    for (std::list<Gtk::ToggleButton*>::const_iterator i = _slavebuttons.begin(); i != _slavebuttons.end(); i++) {
+    for (std::list<Gtk::Widget*>::const_iterator i = _slavewidgets.begin(); i != _slavewidgets.end(); i++) {
         (*i)->set_sensitive(get_active());
     }
 

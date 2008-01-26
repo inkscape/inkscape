@@ -332,7 +332,13 @@ CanvasGrid::newWidget()
 
     vbox->pack_start(*_rcb_enabled, true, true);
     vbox->pack_start(*_rcb_visible, true, true);
-    vbox->pack_start(*newSpecificWidget(), true, true);
+    Gtk::Widget * gridwdg = newSpecificWidget();
+    vbox->pack_start(*gridwdg, true, true);
+
+    std::list<Gtk::Widget*> slaves;
+    slaves.push_back(_rcb_visible);
+    slaves.push_back(gridwdg);
+    _rcb_enabled->setSlaveWidgets(slaves);
 
     // set widget values
     _rcb_visible->setActive(visible);
