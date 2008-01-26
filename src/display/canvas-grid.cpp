@@ -321,11 +321,11 @@ CanvasGrid::newWidget()
     namelabel->set_markup(str);
     vbox->pack_start(*namelabel, true, true);
 
-    Inkscape::UI::Widget::RegisteredCheckButton * _rcb_visible = Gtk::manage(
+    Inkscape::UI::Widget::RegisteredCheckButton * _rcb_enabled = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredCheckButton( _("_Enabled"),
                         _("Determines whether to snap to this grid or not. Can be 'on' for invisible grids."),
                          "enabled", _wr, false, repr, doc) );
-    Inkscape::UI::Widget::RegisteredCheckButton * _rcb_enabled = Gtk::manage(
+    Inkscape::UI::Widget::RegisteredCheckButton * _rcb_visible = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredCheckButton( _("_Visible"),
                         _("Determines whether the grid is displayed or not. Objects are still snapped to invisible grids."),
                          "visible", _wr, true, repr, doc) );
