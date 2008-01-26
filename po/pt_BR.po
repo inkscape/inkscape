@@ -4261,7 +4261,7 @@ msgstr[0] ""
 "b> para separar"
 msgstr[1] ""
 "Ponto do degradê compartilhado pelos degradês <b>%d</b>; arraste com "
-"<n>Shift</b> para separar"
+"<b>Shift</b> para separar"
 
 #: ../src/gradient-drag.cpp:1815
 msgid "Move gradient handle(s)"
