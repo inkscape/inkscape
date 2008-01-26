@@ -17,14 +17,6 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
-enum PAPCopyType {
-    PAPCT_SINGLE = 0,
-    PAPCT_SINGLE_STRETCHED,
-    PAPCT_REPEATED,
-    PAPCT_REPEATED_STRETCHED,
-    PAPCT_END // This must be last
-};
-
 class LPEPathAlongPath : public Effect {
 public:
     LPEPathAlongPath(LivePathEffectObject *lpeobject);
@@ -38,9 +30,6 @@ public:
 
 private:
     PathParam  bend_path;
-    //PathParam  width_path;
-    //ScalarParam  width_path_range;
-    EnumParam<PAPCopyType> copytype;
     ScalarParam  prop_scale;
     BoolParam scale_y_rel;
     BoolParam    vertical_pattern;

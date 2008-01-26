@@ -52,32 +52,14 @@ first) but I think we can first forget about them.
 namespace Inkscape {
 namespace LivePathEffect {
 
-static const Util::EnumData<PAPCopyType> PAPCopyTypeData[PAPCT_END] = {
-    {PAPCT_SINGLE,               N_("Single"),               "single"},
-    {PAPCT_SINGLE_STRETCHED,     N_("Single, stretched"),    "single_stretched"},
-    {PAPCT_REPEATED,             N_("Repeated"),             "repeated"},
-    {PAPCT_REPEATED_STRETCHED,   N_("Repeated, stretched"),  "repeated_stretched"}
-};
-static const Util::EnumDataConverter<PAPCopyType> PAPCopyTypeConverter(PAPCopyTypeData, PAPCT_END);
-
 LPEPathAlongPath::LPEPathAlongPath(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     bend_path(_("Bend path"), _("Path along which to bend the original path"), "bendpath", &wr, this, "M0,0 L1,0"),
-/* Delayed until 0.47
-    width_path(_("Width path"), _("..."), "widthpath", &wr, this, "M0,0 L1,0"),
-    width_path_range(_("Width path range"), _("Range of widthpath parameter"), "widthpath_range", &wr, this, 1),
-*/
-    copytype(_("Path copies"), _("How many copies to place along the skeleton path"), "copytype", PAPCopyTypeConverter, &wr, this, PAPCT_SINGLE_STRETCHED),
     prop_scale(_("Width"), _("Width of the path"), "prop_scale", &wr, this, 1),
     scale_y_rel(_("Width in units of length"), _("Scale the width of the path in units of its length"), "scale_y_rel", &wr, this, false),
     vertical_pattern(_("Original path is vertical"), _("Rotates the original 90 degrees, before bending it along the bend path"), "vertical", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&bend_path) );
-/* Delayed until 0.47
-    registerParameter( dynamic_cast<Parameter *>(&width_path) );
-    registerParameter( dynamic_cast<Parameter *>(&width_path_range) );
-*/
-    registerParameter( dynamic_cast<Parameter *>(&copytype) );
     registerParameter( dynamic_cast<Parameter *>(&prop_scale) );
     registerParameter( dynamic_cast<Parameter *>(&scale_y_rel) );
     registerParameter( dynamic_cast<Parameter *>(&vertical_pattern) );
@@ -99,13 +81,8 @@ LPEPathAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2
 
 /* Much credit should go to jfb and mgsloan of lib2geom development for the code below! */
 
-    PAPCopyType type = copytype.get_value();
-
     Piecewise<D2<SBasis> > uskeleton = arc_length_parametrization(Piecewise<D2<SBasis> >(bend_path),2,.1);
     uskeleton = remove_short_cuts(uskeleton,.01);
-    Rect uskeletonbounds = bounds_exact(uskeleton);
-    uskeleton -= uskeletonbounds.midpoint();
-
     Piecewise<D2<SBasis> > n = rot90(derivative(uskeleton));
     n = force_continuity(remove_short_cuts(n,.1));
 
@@ -117,56 +94,19 @@ LPEPathAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2
     Interval pattBndsY = bounds_exact(y);
     y -= pattBndsY.middle();
 
-    int nbCopies = int(uskeleton.cuts.back()/pattBnds.extent());
-    double scaling = 1;
-
-    switch(type) {
-        case PAPCT_REPEATED:
-            break;
-
-        case PAPCT_SINGLE:
-            nbCopies = (nbCopies > 0) ? 1 : 0;
-            break;
-
-        case PAPCT_SINGLE_STRETCHED:
-            nbCopies = 1;
-            scaling = uskeleton.cuts.back()/pattBnds.extent();
-            break;
-
-        case PAPCT_REPEATED_STRETCHED:
-             scaling = uskeleton.cuts.back()/(((double)nbCopies)*pattBnds.extent());
-            break;
-
-        default:
-            return pwd2_in;
-    };
-
-    double pattWidth = pattBnds.extent() * scaling;
+    double scaling = uskeleton.cuts.back()/pattBnds.extent();
 
     if (scaling != 1.0) {
         x*=scaling;
     }
+
     if ( scale_y_rel.get_value() ) {
         y*=(scaling*prop_scale);
     } else {
         if (prop_scale != 1.0) y *= prop_scale;
     }
 
-/* Delayed until 0.47
-    Piecewise<D2<SBasis> > widthpwd2 = arc_length_parametrization(Piecewise<D2<SBasis> >(width_path),2,.1);
-    D2<Piecewise<SBasis> > widthd2pw = make_cuts_independant(widthpwd2);
-    Piecewise<SBasis> width = (Piecewise<SBasis>(widthd2pw[Y]) - uskeletonbounds[Y].middle()) / width_path_range;
-*/
-
-    double offs = 0;
-    Piecewise<D2<SBasis> > output;
-    for (int i=0; i<nbCopies; i++){
-        output.concat(compose(uskeleton,x+offs) + y*/*compose(width,x+offs)**/compose(n,x+offs));
-        offs+=pattWidth;
-    }
-
-    output += Point(pattBnds.middle(), pattBndsY.middle());
-
+    Piecewise<D2<SBasis> > output = compose(uskeleton,x) + y*compose(n,x);
     return output;
 }
 
@@ -194,16 +134,6 @@ LPEPathAlongPath::resetDefaults(SPItem * item)
     path.start( start );
     path.appendNew<Geom::LineSegment>( end );
     bend_path.param_set_and_write_new_value( path.toPwSb() );
-
-/* Delayed until 0.47
-    Point startw(bndsX.min(), bndsY.max());
-    Point endw(bndsX.max(), bndsY.max());
-    Geom::Path pathw;
-    pathw.start( startw );
-    pathw.appendNew<Geom::LineSegment>( endw );
-    width_path.param_set_and_write_new_value( pathw.toPwSb() );
-    width_path_range.param_set_value(startw[Y]-start[Y]);
-*/
 }
 
 void
