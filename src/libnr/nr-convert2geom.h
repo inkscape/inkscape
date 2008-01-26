@@ -11,10 +11,17 @@
 
 #include <2geom/matrix.h>
 #include <libnr/nr-matrix.h>
+#include <2geom/d2.h>
+#include <libnr/nr-rect.h>
 
 inline Geom::Matrix to_2geom(NR::Matrix const & mat) {
     Geom::Matrix mat2geom(mat[0], mat[1], mat[2], mat[3], mat[4], mat[5]);
     return mat2geom;
+}
+
+inline NR::Rect from_2geom(Geom::Rect const & rect2geom) {
+    NR::Rect rect(rect2geom.min(), rect2geom.max());
+    return rect;
 }
 
 #endif

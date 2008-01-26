@@ -56,6 +56,7 @@ private:
 
     void on_edit_button_click();
     void on_paste_button_click();
+    void on_copy_button_click();
 
     gchar * defvalue;
 };

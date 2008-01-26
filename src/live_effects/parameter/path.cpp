@@ -103,6 +103,16 @@ PathParam::param_newWidget(Gtk::Tooltips * tooltips)
     static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
     tooltips->set_tip(*pButton, _("Edit on-canvas"));
 
+    pIcon = Gtk::manage( sp_icon_get_icon( GTK_STOCK_COPY, Inkscape::ICON_SIZE_BUTTON) );
+    pButton = Gtk::manage(new Gtk::Button());
+    pButton->set_relief(Gtk::RELIEF_NONE);
+    pIcon->show();
+    pButton->add(*pIcon);
+    pButton->show();
+    pButton->signal_clicked().connect(sigc::mem_fun(*this, &PathParam::on_copy_button_click));
+    static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
+    tooltips->set_tip(*pButton, _("Copy path"));
+
     pIcon = Gtk::manage( sp_icon_get_icon( GTK_STOCK_PASTE, Inkscape::ICON_SIZE_BUTTON) );
     pButton = Gtk::manage(new Gtk::Button());
     pButton->set_relief(Gtk::RELIEF_NONE);
@@ -194,6 +204,11 @@ PathParam::on_paste_button_click()
     }
 }
 
+void
+PathParam::on_copy_button_click()
+{
+    sp_selection_copy_lpe_pathparam(this);
+}
 
 } /* namespace LivePathEffect */
 

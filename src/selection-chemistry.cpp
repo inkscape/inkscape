@@ -20,6 +20,8 @@
 # include "config.h"
 #endif
 
+#include "selection-chemistry.h"
+
 #include <gtkmm/clipboard.h>
 
 #include "svg/svg.h"
@@ -79,11 +81,11 @@
 #include "gradient-drag.h"
 #include "uri-references.h"
 #include "live_effects/lpeobject.h"
+#include "live_effects/parameter/path.h"
+#include "libnr/nr-convert2geom.h"
 
 using NR::X;
 using NR::Y;
-
-#include "selection-chemistry.h"
 
 /* fixme: find a better place */
 Inkscape::XML::Document *clipboard_document = NULL;
@@ -1122,6 +1124,51 @@ void sp_selection_copy()
 
     g_slist_free ((GSList *) items);
 }
+
+
+void sp_selection_copy_lpe_pathparam(Inkscape::LivePathEffect::PathParam * pathparam)
+{
+    if (pathparam == NULL)
+        return;
+
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop == NULL)
+        return;
+
+    if (!clipboard_document) {
+        clipboard_document = new Inkscape::XML::SimpleDocument();
+    }
+
+    // clear old defs clipboard
+    while (defs_clipboard) {
+        Inkscape::GC::release((Inkscape::XML::Node *) defs_clipboard->data);
+        defs_clipboard = g_slist_remove (defs_clipboard, defs_clipboard->data);
+    }
+
+    // clear style clipboard
+    if (style_clipboard) {
+        sp_repr_css_attr_unref (style_clipboard);
+        style_clipboard = NULL;
+    }
+
+    //clear main clipboard
+    while (clipboard) {
+        Inkscape::GC::release((Inkscape::XML::Node *) clipboard->data);
+        clipboard = g_slist_remove(clipboard, clipboard->data);
+    }
+
+    // make new path node and put svgd as 'd' attribute
+    Inkscape::XML::Node *newnode = clipboard_document->createElement("svg:path");
+    gchar * svgd = pathparam->param_writeSVGValue();
+    newnode->setAttribute("d", svgd);
+    g_free(svgd);
+
+    clipboard = g_slist_prepend(clipboard, newnode);
+
+    Geom::Rect bnds = Geom::bounds_exact(*pathparam);
+    size_clipboard = from_2geom(bnds);
+}
+
 
 //____________________________________________________________________________
 

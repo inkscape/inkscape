@@ -20,6 +20,12 @@
 
 namespace Inkscape { class Selection; }
 
+namespace Inkscape {
+namespace LivePathEffect {
+    class PathParam;
+}
+}
+
 class SPCSSAttr;
 
 void sp_selection_delete();
@@ -53,6 +59,7 @@ SPCSSAttr *take_style_from_item (SPItem *item);
 
 void sp_selection_cut();
 void sp_selection_copy();
+void sp_selection_copy_lpe_pathparam(Inkscape::LivePathEffect::PathParam * pathparam);
 void sp_selection_paste(bool in_place);
 void sp_selection_paste_style();
 void sp_selection_paste_livepatheffect();
