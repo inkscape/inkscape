@@ -67,6 +67,7 @@ BoolParam::param_newWidget(Gtk::Tooltips * tooltips)
                                                          param_effect->getSPDoc()) );
 
     checkwdg->setActive(value);
+    checkwdg->setProgrammatically = false;
     checkwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change bool parameter"));
 
     return dynamic_cast<Gtk::Widget *> (checkwdg);

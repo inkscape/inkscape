@@ -132,6 +132,7 @@ RandomParam::param_newWidget(Gtk::Tooltips * tooltips)
         regrandom->setIncrements(1, 10);
     }
     regrandom->setRange(min, max);
+    regrandom->setProgrammatically = false;
 
     regrandom->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change random parameter"));
 

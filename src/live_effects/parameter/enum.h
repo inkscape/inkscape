@@ -40,13 +40,14 @@ public:
 
     virtual ~EnumParam() { };
 
-    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips) {
+    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * /*tooltips*/) {
         Inkscape::UI::Widget::RegisteredEnum<E> *regenum = Gtk::manage ( 
             new Inkscape::UI::Widget::RegisteredEnum<E>( param_label, param_tooltip,
                        param_key, *enumdataconv, *param_wr, param_effect->getRepr(), param_effect->getSPDoc() ) );
 
         regenum->set_active_by_id(value);
-        regenum->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change enum parameter"));
+        regenum->combobox()->setProgrammatically = false;
+        regenum->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change enumeration parameter"));
 
         return dynamic_cast<Gtk::Widget *> (regenum);
     };

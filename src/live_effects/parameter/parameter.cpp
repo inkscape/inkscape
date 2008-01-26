@@ -133,6 +133,7 @@ ScalarParam::param_newWidget(Gtk::Tooltips * tooltips)
     rsu->setDigits(digits);
     rsu->setIncrements(inc_step, inc_page);
     rsu->setRange(min, max);
+    rsu->setProgrammatically = false;
 
     rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
 
