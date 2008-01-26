@@ -42,7 +42,6 @@ PathParam::PathParam( const Glib::ustring& label, const Glib::ustring& tip,
                       Effect* effect, const gchar * default_value)
     : Parameter(label, tip, key, wr, effect)
 {
-    edit_button = NULL;
     defvalue = g_strdup(default_value);
     param_readSVGValue(defvalue);
     oncanvas_editable = true;
@@ -103,7 +102,6 @@ PathParam::param_newWidget(Gtk::Tooltips * tooltips)
     pButton->signal_clicked().connect(sigc::mem_fun(*this, &PathParam::on_edit_button_click));
     static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
     tooltips->set_tip(*pButton, _("Edit on-canvas"));
-    edit_button = pButton;
 
     pIcon = Gtk::manage( sp_icon_get_icon( GTK_STOCK_PASTE, Inkscape::ICON_SIZE_BUTTON) );
     pButton = Gtk::manage(new Gtk::Button());
