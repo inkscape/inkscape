@@ -691,7 +691,7 @@ void text_wrapper::MakeTextBoundaries(PangoLogAttr *pAttrs, int nAttr)
             last_s_st = i;
         }
         // paragraphs
-        if ( uni32_text[i] == '\n' || uni32_text[i] == '\r' || i == nAttr ) { // too simple to be true?
+        if ( i == nAttr || uni32_text[i] == '\n' || uni32_text[i] == '\r' ) { // too simple to be true?
             nbs.type = nbe.type = bnd_para;
             nbs.uni_pos = last_p_st;
             nbe.uni_pos = i + 1;
