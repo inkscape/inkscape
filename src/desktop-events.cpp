@@ -189,6 +189,13 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
             break;
 	case GDK_BUTTON_PRESS:
             if (event->button.button == 1) {
+                if (event->button.state & GDK_CONTROL_MASK) {
+                    SPDocument *doc = SP_OBJECT_DOCUMENT(guide);
+                    sp_guide_remove(guide);
+                    sp_document_done(doc, SP_VERB_NONE, _("Delete guide"));
+                    ret = TRUE;
+                    break;
+                }
                 dragging = true;
                 sp_canvas_item_grab(item,
                                     ( GDK_BUTTON_RELEASE_MASK  |
