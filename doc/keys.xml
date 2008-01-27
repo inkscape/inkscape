@@ -161,15 +161,17 @@ RFE</a>).</p>
 </group>
 
 <group>
-<title>Guides and grid</title>
+<title>Guides, grids, snapping</title>
 <mouse><key><left-drag/></key> <action>drag off a ruler to create guide</action></mouse>
 <note>Drag off the horizontal or vertical ruler to create a new guideline. Drag a guideline onto the ruler to delete it.</note>
 <keys><key>|</key> <key><shift/>\</key> <action>toggle guides and snapping to guides</action></keys>
-<note>If you want to have different values for guides visibility and snapping, set them via the Document Options dialog.</note>
+<note>If you want to see the guides but not snap to them, use the global snapping toggle (% key).</note>
 <note>When you create a new guide by dragging off the ruler, guide visibility and snapping are turned on.</note>
-<keys><key>#</key> <key><shift/>3</key> <action>toggle grid and snapping to grid</action></keys>
-<note>If you want to have different values for grid visibility and snapping, set them via the Document Options dialog.</note>
+<keys><key>#</key> <key><shift/>3</key> <action>toggle grids and snapping to grids</action></keys>
+<note>If you want to see the grids but not snap to them, use the global snapping toggle (% key).</note>
 <note>Note that only the 3 key on the main keyboard works, not on the keypad.</note>
+<keys><key>%</key> <action>toggle snapping on and off</action></keys>
+<note>This toggle affects snapping to grids, guides, and objects in all tools.</note>
 </group>
 
 <group>
