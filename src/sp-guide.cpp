@@ -398,7 +398,7 @@ char *sp_guide_description(SPGuide const *guide)
         double const radians = guide->angle();
         double const degrees = Geom::rad_to_deg(radians);
         int const degrees_int = (int) round(degrees);
-        return g_strdup_printf(_("at %d degrees, through (%s,%s)"), degrees_int, position_string_x->str, position_string_y->str);
+        return g_strdup_printf(_("at %d degrees, through (%s,%s); <b>Ctrl</b>+click to delete"), degrees_int, position_string_x->str, position_string_y->str);
     }
 
     g_string_free(position_string_x, TRUE);
