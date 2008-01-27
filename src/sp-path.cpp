@@ -568,10 +568,8 @@ void freehand_create_single_dot(SPEventContext *ec, NR::Point const &pt, char co
 
     sp_desktop_selection(desktop)->set(item);
 
-    unsigned int tool_code = !strcmp(tool, "tools.freehand.pencil") ? SP_VERB_CONTEXT_PENCIL : SP_VERB_CONTEXT_PEN;
-
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating single dot"));
-    sp_document_done(sp_desktop_document(desktop), tool_code, _("Create single dot"));
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, _("Create single dot"));
 }
 
 /*
