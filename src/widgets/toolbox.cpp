@@ -4451,26 +4451,6 @@ sp_text_toolbox_orientation_toggled (GtkRadioButton  *button,
 }
 
 gboolean
-sp_text_toolbox_size_keypress (GtkWidget */*w*/, GdkEventKey *event, gpointer /*data*/)
-{
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (!desktop) return FALSE;
-
-    switch (get_group0_keyval (event)) {
-        case GDK_Escape: // defocus
-            gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
-            return TRUE; // I consumed the event
-            break;
-        case GDK_Return: // defocus
-        case GDK_KP_Enter:
-            gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
-            return TRUE; // I consumed the event
-            break;
-    }
-    return FALSE;
-}
-
-gboolean
 sp_text_toolbox_family_keypress (GtkWidget */*w*/, GdkEventKey *event, GObject *tbl)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -4514,6 +4494,15 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
 
     if (g_object_get_data (tbl, "size-block")) return;
 
+    // If this is not from selecting a size in the list (in which case get_active will give the
+    // index of the selected item, otherwise -1) and not from user pressing Enter/Return, do not
+    // process this event. This fixes GTK's stupid insistence on sending an activate change every
+    // time any character gets typed or deleted, which made this control nearly unusable in 0.45.
+    if (gtk_combo_box_get_active (cbox) < 0 && !g_object_get_data (tbl, "enter-pressed"))
+        return;
+
+    g_object_set_data (tbl, "enter-pressed", gpointer(0));
+
     char *text = gtk_combo_box_get_active_text (cbox);
 
     SPCSSAttr *css = sp_repr_css_attr_new ();
@@ -4538,9 +4527,30 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
                                    _("Text: Change font size"));
     sp_repr_css_attr_unref (css);
 
+    gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
+}
 
-    if (gtk_combo_box_get_active (cbox) > 0) // if this was from drop-down (as opposed to type-in), defocus
-        gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
+gboolean
+sp_text_toolbox_size_keypress (GtkWidget */*w*/, GdkEventKey *event, GObject *tbl)
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (!desktop) return FALSE;
+
+    switch (get_group0_keyval (event)) {
+        case GDK_Escape: // defocus
+            gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
+            return TRUE; // I consumed the event
+            break;
+        case GDK_Return: // defocus
+        case GDK_KP_Enter:
+            g_object_set_data (tbl, "enter-pressed", gpointer(1));
+            GtkComboBox *cbox = GTK_COMBO_BOX(g_object_get_data (G_OBJECT (tbl), "combo-box-size"));
+            sp_text_toolbox_size_changed (cbox, tbl);
+            gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
+            return TRUE; // I consumed the event
+            break;
+    }
+    return FALSE;
 }
 
 void
@@ -4734,7 +4744,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     gtk_box_pack_start (GTK_BOX (tbl), cbox, FALSE, FALSE, 0);
     g_object_set_data (G_OBJECT (tbl), "combo-box-size", cbox);
     g_signal_connect (G_OBJECT (cbox), "changed", G_CALLBACK (sp_text_toolbox_size_changed), tbl);
-    gtk_signal_connect(GTK_OBJECT(cbox), "key-press-event", GTK_SIGNAL_FUNC(sp_text_toolbox_size_keypress), NULL);
+    gtk_signal_connect(GTK_OBJECT(gtk_bin_get_child(GTK_BIN(cbox))), "key-press-event", GTK_SIGNAL_FUNC(sp_text_toolbox_size_keypress), tbl);
 
     //spacer
     aux_toolbox_space (tbl, 4);
