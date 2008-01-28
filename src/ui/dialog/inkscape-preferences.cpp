@@ -239,7 +239,7 @@ void InkscapePreferences::AddDotSizeSpinbutton(DialogPage& p, const std::string&
 {
     PrefSpinButton* sb = Gtk::manage( new PrefSpinButton);
     sb->init ( prefs_path, "dot-size", 0.0, 1000.0, 0.1, 10.0, def_value, false, false);
-    p.add_line( false, _("Ctrl+click dot size:"), *sb, "times current stroke width", 
+    p.add_line( false, _("Ctrl+click dot size:"), *sb, _("times current stroke width"), 
                        _("Size of dots created with Ctrl+click (relative to current stroke width)"),
                        false );
 }
