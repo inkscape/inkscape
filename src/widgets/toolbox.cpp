@@ -95,6 +95,8 @@
 #include "ege-select-one-action.h"
 #include "helper/unit-tracker.h"
 
+#include "svg/css-ostringstream.h"
+
 using Inkscape::UnitTracker;
 
 typedef void (*SetupFunction)(GtkWidget *toolbox, SPDesktop *desktop);
@@ -4501,13 +4503,23 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
     if (gtk_combo_box_get_active (cbox) < 0 && !g_object_get_data (tbl, "enter-pressed"))
         return;
 
-    g_object_set_data (tbl, "enter-pressed", gpointer(0));
-
+    gchar *endptr;
+    gdouble value = -1;
     char *text = gtk_combo_box_get_active_text (cbox);
+    if (text) {
+        value = g_strtod (text, &endptr);
+        if (endptr == text) // conversion failed, non-numeric input
+            value = -1;
+        free (text);
+    }
+    if (value <= 0) {
+        return; // could not parse value 
+    }
 
     SPCSSAttr *css = sp_repr_css_attr_new ();
-    sp_repr_css_set_property (css, "font-size", text);
-    free (text);
+    Inkscape::CSSOStringStream osfs;
+    osfs << value;
+    sp_repr_css_set_property (css, "font-size", osfs.str().c_str());
 
     SPStyle *query =
         sp_style_new (SP_ACTIVE_DOCUMENT);
@@ -4531,6 +4543,22 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
 }
 
 gboolean
+sp_text_toolbox_size_focusout (GtkWidget */*w*/, GdkEventFocus *event, GObject *tbl)
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (!desktop) return FALSE;
+
+    if (!g_object_get_data (tbl, "esc-pressed")) {
+        g_object_set_data (tbl, "enter-pressed", gpointer(1));
+        GtkComboBox *cbox = GTK_COMBO_BOX(g_object_get_data (G_OBJECT (tbl), "combo-box-size"));
+        sp_text_toolbox_size_changed (cbox, tbl);
+        g_object_set_data (tbl, "enter-pressed", gpointer(0));
+    }
+    return FALSE; // I consumed the event
+}
+
+
+gboolean
 sp_text_toolbox_size_keypress (GtkWidget */*w*/, GdkEventKey *event, GObject *tbl)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -4538,7 +4566,9 @@ sp_text_toolbox_size_keypress (GtkWidget */*w*/, GdkEventKey *event, GObject *tb
 
     switch (get_group0_keyval (event)) {
         case GDK_Escape: // defocus
+            g_object_set_data (tbl, "esc-pressed", gpointer(1));
             gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
+            g_object_set_data (tbl, "esc-pressed", gpointer(0));
             return TRUE; // I consumed the event
             break;
         case GDK_Return: // defocus
@@ -4547,6 +4577,7 @@ sp_text_toolbox_size_keypress (GtkWidget */*w*/, GdkEventKey *event, GObject *tb
             GtkComboBox *cbox = GTK_COMBO_BOX(g_object_get_data (G_OBJECT (tbl), "combo-box-size"));
             sp_text_toolbox_size_changed (cbox, tbl);
             gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
+            g_object_set_data (tbl, "enter-pressed", gpointer(0));
             return TRUE; // I consumed the event
             break;
     }
@@ -4745,6 +4776,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     g_object_set_data (G_OBJECT (tbl), "combo-box-size", cbox);
     g_signal_connect (G_OBJECT (cbox), "changed", G_CALLBACK (sp_text_toolbox_size_changed), tbl);
     gtk_signal_connect(GTK_OBJECT(gtk_bin_get_child(GTK_BIN(cbox))), "key-press-event", GTK_SIGNAL_FUNC(sp_text_toolbox_size_keypress), tbl);
+    gtk_signal_connect(GTK_OBJECT(gtk_bin_get_child(GTK_BIN(cbox))), "focus-out-event", GTK_SIGNAL_FUNC(sp_text_toolbox_size_focusout), tbl);
 
     //spacer
     aux_toolbox_space (tbl, 4);
