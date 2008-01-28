@@ -246,7 +246,7 @@ void GuidelinePropertiesDialog::_setup() {
         gchar *guide_description = sp_guide_description(_guide);
         gchar *label = g_strdup_printf(_("Current: %s"), guide_description);
         g_free(guide_description);
-        _label_descr.set_label(label);
+        _label_descr.set_markup(label);
         g_free(label);
     }
 
