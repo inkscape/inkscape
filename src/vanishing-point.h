@@ -105,7 +105,7 @@ public:
         g_return_if_fail (_persp);
         persp3d_get_VP (_persp, _axis).print("");
     }
-    inline gchar *axisString () { return Proj::string_from_axis (_axis); }
+    inline gchar const *axisString () { return Proj::string_from_axis(_axis); }
 
     unsigned int my_counter;
     static unsigned int global_counter; // FIXME: Only to implement operator< so that we can merge lists. Do this in a better way!!

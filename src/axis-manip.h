@@ -34,23 +34,14 @@ enum Axis {
 
 extern Axis axes[4];
 
-inline gchar * string_from_axis (Proj::Axis axis) {
+inline gchar const *
+string_from_axis(Proj::Axis axis) {
     switch (axis) {
-    case X:
-        return "X";
-        break;
-    case Y:
-        return "Y";
-        break;
-    case Z:
-        return "Z";
-        break;
-    case W:
-        return "W";
-        break;
-    case NONE:
-        return "NONE";
-        break;
+    case X: return "X"; break;
+    case Y: return "Y"; break;
+    case Z: return "Z"; break;
+    case W: return "W"; break;
+    case NONE: return "NONE"; break;
     }
     return "";
 }

@@ -83,7 +83,7 @@ public:
     NR::Point affine();
     inline bool is_finite() { return pt[2] != 0; } // FIXME: Should we allow for some tolerance?
     gchar *coord_string();
-    inline void print(gchar *s) const { g_print ("%s(%8.2f : %8.2f : %8.2f)\n", s, pt[0], pt[1], pt[2]); }
+    inline void print(gchar const *s) const { g_print ("%s(%8.2f : %8.2f : %8.2f)\n", s, pt[0], pt[1], pt[2]); }
 
 private:
     double pt[3];
@@ -148,7 +148,7 @@ public:
     void normalize();
     inline bool is_finite() { return pt[3] != 0; } // FIXME: Should we allow for some tolerance?
     gchar *coord_string();
-    inline void print(gchar *s) const {
+    inline void print(gchar const *s) const {
         g_print ("%s(%8.2f : %8.2f : %8.2f : %8.2f)\n", s, pt[0], pt[1], pt[2], pt[3]);
     }
 
