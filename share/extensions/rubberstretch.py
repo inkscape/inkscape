@@ -20,7 +20,7 @@ barraud@math.univ-lille1.fr
 '''
 
 import inkex, cubicsuperpath, bezmisc, pathmodifier
-import copy, math, re, random, xml.xpath
+import copy, math, re
 
 class RubberStretch(pathmodifier.Diffeo):
     def __init__(self):
@@ -45,7 +45,7 @@ class RubberStretch(pathmodifier.Diffeo):
         w,h=(self.bbox[1]-self.bbox[0])/2,(self.bbox[3]-self.bbox[2])/2
         
         x,y=(bpt[0]-x0),(bpt[1]-y0)
-            sx=(1+b*(x/w+1)*(x/w-1))*2**(-a)
+        sx=(1+b*(x/w+1)*(x/w-1))*2**(-a)
         sy=(1+b*(y/h+1)*(y/h-1))*2**(-a)
         bpt[0]=x0+x*sy
         bpt[1]=y0+y/sx
@@ -76,4 +76,4 @@ class RubberStretch(pathmodifier.Diffeo):
 e = RubberStretch()
 e.affect()
 
- 	  	 
+    

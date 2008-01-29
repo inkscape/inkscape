@@ -1,38 +1,38 @@
 <inkscape-extension>
     <_name>Pattern along Path</_name>
     <id>math.univ-lille1.barraud.pathdeform</id>
-	<dependency type="executable" location="extensions">pathmodifier.py</dependency>
-	<dependency type="executable" location="extensions">pathalongpath.py</dependency>
-	<dependency type="executable" location="extensions">inkex.py</dependency>
-	<param name="title" type="description">This effect bends a pattern object along an arbitrary "skeleton" path. The pattern can be a path or a group of paths. First, select the pattern object; then add to selection the skeleton path; then call this effect.</param>
+<dependency type="executable" location="extensions">pathmodifier.py</dependency>
+<dependency type="executable" location="extensions">pathalongpath.py</dependency>
+<dependency type="executable" location="extensions">inkex.py</dependency>
+<param name="title" type="description">This effect bends a pattern object along arbitrary "skeleton" paths. The pattern is the top most object in the selection. (groups of paths/shapes/clones... allowed)</param>
 
-	<param name="copymode" type="enum" _gui-text="Copies of the pattern:">
-	       <item value="Single">Single</item>
-	       <item value="Single, stretched">Single, stretched</item>
-	       <item value="Repeated">Repeated</item>
-	       <item value="Repeated, stretched">Repeated, stretched</item>
-	</param>
+<param name="copymode" type="enum" _gui-text="Copies of the pattern:">
+       <item value="Single">Single</item>
+       <item value="Single, stretched">Single, stretched</item>
+       <item value="Repeated">Repeated</item>
+       <item value="Repeated, stretched">Repeated, stretched</item>
+</param>
 
-	<param name="kind" type="enum" _gui-text="Deformation type:">
-	       <item value="Snake">Snake</item>
-	       <item value="Ribbon">Ribbon</item>
-	</param>
+<param name="kind" type="enum" _gui-text="Deformation type:">
+       <item value="Snake">Snake</item>
+       <item value="Ribbon">Ribbon</item>
+</param>
 
-	<param name="space"     type="float"   _gui-text="Space between copies:" min="-10000.0" max="10000.0" >0.0</param>
+<param name="space"     type="float"   _gui-text="Space between copies:" min="-10000.0" max="10000.0" >0.0</param>
 
-	<param name="noffset"   type="float"   _gui-text="Normal offset" min="-10000.0" max="10000.0">0.0</param>
-	<param name="toffset"   type="float"   _gui-text="Tangential offset"  min="-10000.0" max="10000.0" >0.0</param>
+<param name="noffset"   type="float"   _gui-text="Normal offset" min="-10000.0" max="10000.0">0.0</param>
+<param name="toffset"   type="float"   _gui-text="Tangential offset"  min="-10000.0" max="10000.0" >0.0</param>
 
-	<param name="vertical"  type="boolean" _gui-text="Pattern is vertical">false</param>
-	<param name="duplicate" type="boolean" _gui-text="Duplicate the pattern before deformation">true</param>
+<param name="vertical"  type="boolean" _gui-text="Pattern is vertical">false</param>
+<param name="duplicate" type="boolean" _gui-text="Duplicate the pattern before deformation">true</param>
     <effect>
-	<effects-menu>
-		<submenu _name="Generate from Path"/>
-	</effects-menu>
+<effects-menu>
+<submenu _name="Generate from Path"/>
+</effects-menu>
     </effect>
     <script>
         <command reldir="extensions" interpreter="python">pathalongpath.py</command>
     </script>
 </inkscape-extension>
 
- 	  	 
+    

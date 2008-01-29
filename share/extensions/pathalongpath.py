@@ -32,7 +32,7 @@ they move and rotate, deforming the pattern.
 '''
 
 import inkex, cubicsuperpath, bezmisc
-import pathmodifier 
+import pathmodifier,simpletransform
 
 import copy, math, re, random
 
@@ -118,9 +118,16 @@ class PathAlongPath(pathmodifier.Diffeo):
                         help="duplicate pattern before deformation")
 
     def prepareSelectionList(self):
-        ##first selected->pattern, all but first selected-> skeletons
-        id = self.options.ids[-1]
+
+        idList=self.options.ids
+        idList=pathmodifier.zSort(self.document.getroot(),idList)
+        id = idList[-1]
         self.patterns={id:self.selected[id]}
+
+##        ##first selected->pattern, all but first selected-> skeletons
+##        id = self.options.ids[-1]
+##        self.patterns={id:self.selected[id]}
+
         if self.options.duplicate:
             self.patterns=self.duplicateNodes(self.patterns)
         self.expandGroupsUnlinkClones(self.patterns, True, True)
@@ -203,7 +210,8 @@ class PathAlongPath(pathmodifier.Diffeo):
             self.options.repeat =True
             self.options.stretch=True
 
-        bbox=self.computeBBox(self.patterns)
+        bbox=simpletransform.computeBBox(self.patterns.values())
+                    
         if self.options.vertical:
             #flipxy(bbox)...
             bbox=(-bbox[3],-bbox[2],-bbox[1],-bbox[0])
@@ -233,12 +241,13 @@ class PathAlongPath(pathmodifier.Diffeo):
                         xoffset=self.skelcomp[0][0]-bbox[0]+self.options.toffset
                         yoffset=self.skelcomp[0][1]-(bbox[2]+bbox[3])/2-self.options.noffset
 
+
                         if self.options.repeat:
                             NbCopies=max(1,int(round((length+self.options.space)/dx)))
                             width=dx*NbCopies
                             if not self.skelcompIsClosed:
                                 width-=self.options.space
-                            bbox=bbox[0],bbox[0]+width,bbox[2],bbox[3]
+                            bbox=bbox[0],bbox[0]+width, bbox[2],bbox[3]
                             new=[]
                             for sub in p:
                                 for i in range(0,NbCopies,1):
