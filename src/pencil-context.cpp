@@ -265,9 +265,10 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
 static gint
 pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mevent)
 {
-    if (mevent.state & GDK_CONTROL_MASK) {
+    if ((mevent.state & GDK_CONTROL_MASK) && (mevent.state & GDK_BUTTON1_MASK)) {
         // mouse was accidentally moved during Ctrl+click;
         // ignore the motion and create a single point
+        pc->is_drawing = false;
         return TRUE;
     }
     gint ret = FALSE;
