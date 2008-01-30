@@ -71,7 +71,7 @@ public:
     template <typename T>
     static PanelDialog<Behavior> *create();
 
-    virtual void present() { Dialog::present(); }
+    inline virtual void present();
 
 private:
     PanelDialog();  // no constructor without params
@@ -93,7 +93,7 @@ public:
     template <typename T>
     static PanelDialog<Behavior::FloatingBehavior> *create();
 
-    virtual void present() { Dialog::present(); }
+    inline virtual void present();
 
 private:
     PanelDialog();  // no constructor without params
@@ -134,7 +134,6 @@ PanelDialog<B>::PanelDialog(Panel &panel, char const *prefs_path, int const verb
 {
     Gtk::VBox *vbox = get_vbox();
     _panel.signalResponse().connect(sigc::mem_fun(*this, &PanelDialog::_handleResponse));
-    _panel.signalPresent().connect(sigc::mem_fun(*this, &PanelDialog::present));
 
     vbox->pack_start(_panel, true, true, 0);
 
@@ -165,6 +164,13 @@ PanelDialog<B>::create()
     return new PanelDialog<B>(panel, panel.getPrefsPath(), panel.getVerb(), panel.getApplyLabel());
 }
 
+template <typename B>
+void
+PanelDialog<B>::present()
+{
+    Dialog::present(); 
+    _panel.present(); 
+}
 
 PanelDialog<Behavior::FloatingBehavior>::PanelDialog(Panel &panel, char const *prefs_path,
                                                      int const verb_num, Glib::ustring const &apply_label) :
@@ -173,7 +179,6 @@ PanelDialog<Behavior::FloatingBehavior>::PanelDialog(Panel &panel, char const *p
 {
     Gtk::VBox *vbox = get_vbox();
     _panel.signalResponse().connect(sigc::mem_fun(*this, &PanelDialog::_handleResponse));
-    _panel.signalPresent().connect(sigc::mem_fun(*this, &PanelDialog::present));
 
     vbox->pack_start(_panel, true, true, 0);
 
@@ -194,6 +199,13 @@ PanelDialog<Behavior::FloatingBehavior>::PanelDialog(Panel &panel, char const *p
     }
 
     show_all_children();
+}
+
+void
+PanelDialog<Behavior::FloatingBehavior>::present()
+{ 
+    Dialog::present();
+    _panel.present();
 }
 
 /**
