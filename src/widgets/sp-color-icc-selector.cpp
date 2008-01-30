@@ -466,6 +466,7 @@ void ColorICCSelector::_profileSelected( GtkWidget* /*src*/, gpointer data )
 }
 #endif // ENABLE_LCMS
 
+#ifdef ENABLE_LCMS
 void ColorICCSelector::_switchToProfile( gchar const* name )
 {
     bool dirty = false;
@@ -486,7 +487,6 @@ void ColorICCSelector::_switchToProfile( gchar const* name )
                 tmp.icc = new SVGICCColor();
             }
             tmp.icc->colorProfile = name;
-#if ENABLE_LCMS
             Inkscape::ColorProfile* newProf = SP_ACTIVE_DOCUMENT->profileManager->find(name);
             if ( newProf ) {
                 cmsHTRANSFORM trans = newProf->getTransfFromSRGB8();
@@ -529,7 +529,6 @@ void ColorICCSelector::_switchToProfile( gchar const* name )
                     }
                 }
             }
-#endif // ENABLE_LCMS
             dirty = true;
         }
     } else {
@@ -561,9 +560,11 @@ void ColorICCSelector::_switchToProfile( gchar const* name )
 #endif // DEBUG_LCMS
     }
 }
+#endif // ENABLE_LCMS
 
 void ColorICCSelector::_profilesChanged( std::string const & name )
 {
+#ifdef ENABLE_LCMS
     GtkComboBox* combo = GTK_COMBO_BOX(_profileSel);
 
     g_signal_handler_block( G_OBJECT(_profileSel), _profChangedID );
@@ -593,6 +594,7 @@ void ColorICCSelector::_profilesChanged( std::string const & name )
     }
 
     g_signal_handler_unblock( G_OBJECT(_profileSel), _profChangedID );
+#endif // ENABLE_LCMS
 }
 
 /* Helpers for setting color value */
@@ -645,7 +647,7 @@ void ColorICCSelector::_colorChanged()
         }
     }
 #else
-    (void)color;
+    //(void)color;
 #endif // ENABLE_LCMS
     _updateSliders( -1 );
 

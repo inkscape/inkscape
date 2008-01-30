@@ -156,11 +156,13 @@ PrefWatcher::~PrefWatcher()
 
 void PrefWatcher::hook(EgeColorProfTracker */*tracker*/, gint screen, gint monitor, PrefWatcher */*watcher*/)
 {
+#if ENABLE_LCMS
     unsigned char* buf = 0;
     guint len = 0;
 
     ege_color_prof_tracker_get_profile_for( screen, monitor, reinterpret_cast<gpointer*>(&buf), &len );
     Glib::ustring id = Inkscape::colorprofile_set_display_per( buf, len, screen, monitor );
+#endif // ENABLE_LCMS
 }
 
 void PrefWatcher::add( SPDesktopWidget* dtw )
@@ -205,9 +207,9 @@ void PrefWatcher::notifyAttributeChanged( Node &node, GQuark name,
             }
         }
 #else
+    {
         (void)node;
         (void)name;
-        (void)new_value;
 #endif // ENABLE_LCMS
     }
 }
@@ -527,6 +529,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     gtk_box_pack_start(GTK_BOX(dtw->statusbar), GTK_WIDGET(dtw->layer_selector->gobj()), FALSE, FALSE, 1);
 
     dtw->_tracker = ege_color_prof_tracker_new(GTK_WIDGET(dtw->layer_selector->gobj()));
+#if ENABLE_LCMS
     {
         Glib::ustring id = Inkscape::colorprofile_get_display_id( 0, 0 );
         bool enabled = false;
@@ -536,6 +539,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
         }
         cms_adjust_set_sensitive( dtw, enabled );
     }
+#endif // ENABLE_LCMS
     g_signal_connect( G_OBJECT(dtw->_tracker), "changed", G_CALLBACK(sp_dtw_color_profile_event), dtw );
 
     dtw->select_status_eventbox = gtk_event_box_new ();
@@ -744,6 +748,7 @@ sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dt
 
 void sp_dtw_color_profile_event(EgeColorProfTracker */*tracker*/, SPDesktopWidget *dtw)
 {
+#if ENABLE_LCMS
     // Handle profile changes
     GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET(dtw));
     gint screenNum = gdk_screen_get_number(screen);
@@ -756,10 +761,12 @@ void sp_dtw_color_profile_event(EgeColorProfTracker */*tracker*/, SPDesktopWidge
         enabled = !dtw->canvas->cms_key->empty();
     }
     cms_adjust_set_sensitive( dtw, enabled );
+#endif // ENABLE_LCMS
 }
 
 void cms_adjust_toggled( GtkWidget */*button*/, gpointer data )
 {
+#if ENABLE_LCMS
     SPDesktopWidget *dtw = SP_DESKTOP_WIDGET(data);
 
     bool down = SP_BUTTON_IS_DOWN(dtw->cms_adjust);
@@ -768,6 +775,7 @@ void cms_adjust_toggled( GtkWidget */*button*/, gpointer data )
         dtw->requestCanvasUpdate();
         prefs_set_int_attribute( "options.displayprofile", "enable", down ? 1 : 0 );
     }
+#endif // ENABLE_LCMS
 }
 
 void cms_adjust_set_sensitive( SPDesktopWidget *dtw, bool enabled )
