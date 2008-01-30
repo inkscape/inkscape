@@ -145,7 +145,9 @@ Piecewise<SBasis> sqrt(SBasis const &f, double tol, int order){
 
 Piecewise<SBasis> sqrt(Piecewise<SBasis> const &f, double tol, int order){
     Piecewise<SBasis> result;
-    Piecewise<SBasis> ff=max(f,Linear(tol*tol));
+    Piecewise<SBasis> zero = Piecewise<SBasis>(Linear(tol*tol));
+    zero.setDomain(f.domain());
+    Piecewise<SBasis> ff=max(f,zero);
 
     for (unsigned i=0; i<ff.size(); i++){
         Piecewise<SBasis> sqrtfi = sqrt_internal(ff.segs[i],tol,order);
