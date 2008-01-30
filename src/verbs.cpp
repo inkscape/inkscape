@@ -2304,8 +2304,8 @@ Verb *Verb::_base_verbs[] = {
     // Advanced tutorial for more info
     new SelectionVerb(SP_VERB_SELECTION_BREAK_APART, "SelectionBreakApart", N_("Break _Apart"),
                       N_("Break selected paths into subpaths"), "selection_break"),
-    new SelectionVerb(SP_VERB_SELECTION_GRIDTILE, "DialogGridArrange", N_("Gri_d Arrange..."),
-                      N_("Arrange selected objects in a grid pattern"), "grid_arrange"),
+    new SelectionVerb(SP_VERB_SELECTION_GRIDTILE, "DialogGridArrange", N_("Rows and Columns..."),
+                      N_("Arrange selected objects in a table"), "grid_arrange"),
     /* Layer */
     new LayerVerb(SP_VERB_LAYER_NEW, "LayerNew", N_("_Add Layer..."),
                   N_("Create a new layer"), "new_layer"),
