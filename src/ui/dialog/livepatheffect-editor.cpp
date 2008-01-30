@@ -76,8 +76,8 @@ LivePathEffectEditor::LivePathEffectEditor()
     effectcontrol_vbox.pack_end(button_remove, true, true);
     effectcontrol_frame.add(effectcontrol_vbox);
 
-    contents->pack_start(effectapplication_frame, true, true);
-    contents->pack_start(effectcontrol_frame, true, true);
+    contents->pack_start(effectapplication_frame, false, false);
+    contents->pack_start(effectcontrol_frame, false, false);
 
     // connect callback functions to buttons
     button_apply.signal_clicked().connect(sigc::mem_fun(*this, &LivePathEffectEditor::onApply));
@@ -265,6 +265,8 @@ LivePathEffectEditor::onRemove()
         SPItem *item = sel->singleItem();
         if ( item && SP_IS_SHAPE(item) ) {
             sp_shape_remove_path_effect(SP_SHAPE(item));
+            showText(_("No effect applied"));
+            button_remove.set_sensitive(false);
             sp_document_done ( sp_desktop_document (current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
                                _("Remove path effect") );
         }
