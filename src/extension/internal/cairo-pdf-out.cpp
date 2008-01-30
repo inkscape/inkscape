@@ -168,7 +168,7 @@ CairoPdfOutput::init (void)
 {
 	Inkscape::Extension::build_from_mem(
 		"<inkscape-extension>\n"
-			"<name>Cairo PDF Output</name>\n"
+			"<name>" N_("Cairo PDF Output") "</name>\n"
 			"<id>org.inkscape.output.pdf.cairo</id>\n"
 			"<param name=\"PDFversion\" gui-text=\"" N_("Restrict to PDF version") "\" type=\"enum\" >\n"
 				"<item value='PDF14'>" N_("PDF 1.4") "</item>\n"
@@ -179,8 +179,8 @@ CairoPdfOutput::init (void)
             "<output>\n"
 				"<extension>.pdf</extension>\n"
 				"<mimetype>application/pdf</mimetype>\n"
-				"<filetypename>PDF via Cairo (*.pdf)</filetypename>\n"
-				"<filetypetooltip>PDF File</filetypetooltip>\n"
+				"<filetypename>" N_("PDF via Cairo (*.pdf)") "</filetypename>\n"
+				"<filetypetooltip>" N_("PDF File") "</filetypetooltip>\n"
 			"</output>\n"
 		"</inkscape-extension>", new CairoPdfOutput());
 

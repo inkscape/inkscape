@@ -361,6 +361,7 @@ src/ui/widget/panel.cpp
 src/ui/widget/color-picker.cpp
 src/ui/widget/filter-effect-chooser.cpp
 src/ui/widget/licensor.cpp
+src/ui/widget/object-composite-settings.cpp
 src/ui/widget/selected-style.cpp
 src/ui/widget/page-sizer.cpp
 src/ui/widget/panel.cpp
@@ -445,6 +446,7 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/gears.inx
 [type: gettext/xml] share/extensions/gimp_xcf.inx
 [type: gettext/xml] share/extensions/handles.inx
+[type: gettext/xml] share/extensions/inkscape_help_askaquestion.inx
 [type: gettext/xml] share/extensions/inkscape_help_commandline.inx
 [type: gettext/xml] share/extensions/inkscape_help_faq.inx
 [type: gettext/xml] share/extensions/inkscape_help_keys.inx
@@ -469,6 +471,7 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/randompos.inx
 [type: gettext/xml] share/extensions/render_barcode.inx
 [type: gettext/xml] share/extensions/rtree.inx
+[type: gettext/xml] share/extensions/rubberstretch.inx
 [type: gettext/xml] share/extensions/sk_input.inx
 [type: gettext/xml] share/extensions/spirograph.inx
 [type: gettext/xml] share/extensions/straightseg.inx
