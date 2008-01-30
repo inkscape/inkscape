@@ -1342,13 +1342,29 @@ SPDesktopWidget::viewSetPosition (NR::Point p)
 void
 sp_desktop_widget_update_rulers (SPDesktopWidget *dtw)
 {
-    NR::Rect const viewbox = dtw->canvas->getViewbox();
+    sp_desktop_widget_update_hruler(dtw);
+    sp_desktop_widget_update_vruler(dtw);
+}
+
+void
+sp_desktop_widget_update_hruler (SPDesktopWidget *dtw)
+{
+    NR::Rect viewbox = dtw->canvas->getViewbox();
+    
     double const scale = dtw->desktop->current_zoom();
     double s = viewbox.min()[NR::X] / scale - dtw->ruler_origin[NR::X];
     double e = viewbox.max()[NR::X] / scale - dtw->ruler_origin[NR::X];
     gtk_ruler_set_range(GTK_RULER(dtw->hruler), s,  e, GTK_RULER(dtw->hruler)->position, (e - s));
-    s = viewbox.min()[NR::Y] / -scale - dtw->ruler_origin[NR::Y];
-    e = viewbox.max()[NR::Y] / -scale - dtw->ruler_origin[NR::Y];
+}
+
+void
+sp_desktop_widget_update_vruler (SPDesktopWidget *dtw)
+{
+    NR::Rect viewbox = dtw->canvas->getViewbox();
+    
+    double const scale = dtw->desktop->current_zoom();
+    double s = viewbox.min()[NR::Y] / -scale - dtw->ruler_origin[NR::Y];
+    double e = viewbox.max()[NR::Y] / -scale - dtw->ruler_origin[NR::Y];
     gtk_ruler_set_range(GTK_RULER(dtw->vruler), s, e, GTK_RULER(dtw->vruler)->position, (e - s));
 }
 

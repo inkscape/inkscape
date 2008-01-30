@@ -43,6 +43,8 @@ void sp_desktop_widget_fullscreen(SPDesktopWidget *dtw);
 void sp_desktop_widget_layout(SPDesktopWidget *dtw);
 void sp_desktop_widget_update_zoom(SPDesktopWidget *dtw);
 void sp_desktop_widget_update_rulers (SPDesktopWidget *dtw);
+void sp_desktop_widget_update_hruler (SPDesktopWidget *dtw);
+void sp_desktop_widget_update_vruler (SPDesktopWidget *dtw);
 
 /* Show/hide rulers & scrollbars */
 void sp_desktop_widget_toggle_rulers (SPDesktopWidget *dtw);

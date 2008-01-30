@@ -17,9 +17,10 @@
 #include <cstdio>
 #include <string.h>
 #include "widget-sizes.h"
+#include "desktop-widget.h"
 #include "ruler.h"
 #include "unit-constants.h"
-#include <iostream>
+#include "round.h"
 
 #define MINIMUM_INCR          5
 #define MAXIMUM_SUBDIVIDE     5
@@ -28,11 +29,12 @@
 
 static void sp_hruler_class_init    (SPHRulerClass *klass);
 static void sp_hruler_init          (SPHRuler      *hruler);
-static gint sp_hruler_motion_notify (GtkWidget      *widget,
-				      GdkEventMotion *event);
+static gint sp_hruler_motion_notify (GtkWidget      *widget, GdkEventMotion *event);
 static void sp_hruler_draw_ticks    (GtkRuler       *ruler);
 static void sp_hruler_draw_pos      (GtkRuler       *ruler);
+static void sp_hruler_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 
+static GtkWidgetClass *hruler_parent_class;
 
 GtkType
 sp_hruler_get_type (void)
@@ -65,10 +67,13 @@ sp_hruler_class_init (SPHRulerClass *klass)
   GtkWidgetClass *widget_class;
   GtkRulerClass *ruler_class;
 
+  hruler_parent_class = (GtkWidgetClass *) gtk_type_class (GTK_TYPE_RULER);
+
   widget_class = (GtkWidgetClass*) klass;
   ruler_class = (GtkRulerClass*) klass;
 
   widget_class->motion_notify_event = sp_hruler_motion_notify;
+  widget_class->size_allocate = sp_hruler_size_allocate;
 
   ruler_class->draw_ticks = sp_hruler_draw_ticks;
   ruler_class->draw_pos = sp_hruler_draw_pos;
@@ -165,7 +170,7 @@ sp_hruler_draw_ticks (GtkRuler *ruler)
 
   width = widget->allocation.width; // in pixels; is apparently 2 pixels shorter than the canvas at each end
   height = widget->allocation.height;// - ythickness * 2;
-
+    
   gtk_paint_box (widget->style, ruler->backing_store,
 		 GTK_STATE_NORMAL, GTK_SHADOW_NONE, 
 		 NULL, widget, "hruler",
@@ -227,7 +232,7 @@ sp_hruler_draw_ticks (GtkRuler *ruler)
 
 	while (cur <= end)
 	{
-	  pos = int(round ((cur - lower) * increment) - UNUSED_PIXELS);
+	  pos = int(Inkscape::round ((cur - lower) * increment) - UNUSED_PIXELS);
 
 	  gdk_draw_line (ruler->backing_store, gc,
 			 pos, height + ythickness, 
@@ -303,7 +308,7 @@ sp_hruler_draw_pos (GtkRuler *ruler)
 
 	  increment = (gfloat) (width + 2*UNUSED_PIXELS) / (ruler->upper - ruler->lower);
 
-	  x = int(round ((ruler->position - ruler->lower) * increment) + (xthickness - bs_width) / 2 - 1);
+	  x = int(Inkscape::round((ruler->position - ruler->lower) * increment + double(xthickness - bs_width) / 2.0) - 1);
 	  y = (height + bs_height) / 2 + ythickness;
 
 	  for (i = 0; i < bs_height; i++)
@@ -318,6 +323,34 @@ sp_hruler_draw_pos (GtkRuler *ruler)
     }
 }
 
+/**
+ * The hruler widget's size_allocate callback.
+ */
+static void
+sp_hruler_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
+{
+    g_assert (widget != NULL);
+    g_assert (SP_IS_HRULER (widget));    
+    
+    // First call the default gtk_widget_size_allocate() method (which is being overridden here)
+    if (GTK_WIDGET_CLASS (hruler_parent_class)->size_allocate)
+        (* GTK_WIDGET_CLASS (hruler_parent_class)->size_allocate) (widget, allocation);
+ 
+    // Now the size of the ruler has changed, the ruler bounds (upper & lower) need to be updated
+    // For this we first need to obtain a pointer to the desktop, by walking up the tree of ancestors    
+    GtkWidget *parent = gtk_widget_get_parent(widget);    
+    do {
+        if (SP_IS_DESKTOP_WIDGET(parent)) {
+            // Now we've found the desktop widget we can have the ruler boundaries updated 
+            sp_desktop_widget_update_hruler(SP_DESKTOP_WIDGET(parent));
+            // If the size of the ruler has increased, then a blank part is uncovered; therefore
+            // it must be redrawn  
+            sp_hruler_draw_ticks(GTK_RULER(widget));
+            break;   
+        }
+        parent = gtk_widget_get_parent(parent);
+    } while (parent != NULL);
+}
 
 
 
@@ -330,7 +363,9 @@ static gint sp_vruler_motion_notify (GtkWidget      *widget,
 				      GdkEventMotion *event);
 static void sp_vruler_draw_ticks    (GtkRuler       *ruler);
 static void sp_vruler_draw_pos      (GtkRuler       *ruler);
+static void sp_vruler_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 
+static GtkWidgetClass *vruler_parent_class;
 
 GtkType
 sp_vruler_get_type (void)
@@ -363,10 +398,13 @@ sp_vruler_class_init (SPVRulerClass *klass)
   GtkWidgetClass *widget_class;
   GtkRulerClass *ruler_class;
 
+  vruler_parent_class = (GtkWidgetClass *) gtk_type_class (GTK_TYPE_RULER);
+
   widget_class = (GtkWidgetClass*) klass;
   ruler_class = (GtkRulerClass*) klass;
 
   widget_class->motion_notify_event = sp_vruler_motion_notify;
+  widget_class->size_allocate = sp_vruler_size_allocate;
 
   ruler_class->draw_ticks = sp_vruler_draw_ticks;
   ruler_class->draw_pos = sp_vruler_draw_pos;
@@ -473,7 +511,7 @@ sp_vruler_draw_ticks (GtkRuler *ruler)
   
   upper = ruler->upper / ruler->metric->pixels_per_unit;
   lower = ruler->lower / ruler->metric->pixels_per_unit;
-
+  
   if ((upper - lower) == 0)
     return;
   increment = (double) (width + 2*UNUSED_PIXELS) / (upper - lower);
@@ -525,7 +563,7 @@ sp_vruler_draw_ticks (GtkRuler *ruler)
     cur = start;        
 
     while (cur < end) {
-			pos = int(round ((cur - lower) * increment) - UNUSED_PIXELS);
+			pos = int(Inkscape::round ((cur - lower) * increment) - UNUSED_PIXELS);
 
 			gdk_draw_line (ruler->backing_store, gc,
 										 height + xthickness - length, pos,
@@ -608,7 +646,7 @@ sp_vruler_draw_pos (GtkRuler *ruler)
 	  increment = (gfloat) (height + 2*UNUSED_PIXELS) / (ruler->upper - ruler->lower);
 
 	  x = (width + bs_width) / 2 + xthickness;
-	  y = int(round ((ruler->position - ruler->lower) * increment) + (ythickness - bs_height) / 2 - 1);
+	  y = int(Inkscape::round((ruler->position - ruler->lower) * increment + double(ythickness - bs_height) / 2.0) - 1);
 
 	  for (i = 0; i < bs_width; i++)
 	    gdk_draw_line (widget->window, gc,
@@ -620,6 +658,36 @@ sp_vruler_draw_pos (GtkRuler *ruler)
 	}
     }
 }
+
+/**
+ * The vruler widget's size_allocate callback.
+ */
+static void
+sp_vruler_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
+{
+    g_assert (widget != NULL);
+    g_assert (SP_IS_VRULER (widget));    
+    
+    // First call the default gtk_widget_size_allocate() method (which is being overridden here)
+    if (GTK_WIDGET_CLASS (vruler_parent_class)->size_allocate)
+        (* GTK_WIDGET_CLASS (vruler_parent_class)->size_allocate) (widget, allocation);
+ 
+    // Now the size of the ruler has changed, the ruler bounds (upper & lower) need to be updated
+    // For this we first need to obtain a pointer to the desktop, by walking up the tree of ancestors    
+    GtkWidget *parent = gtk_widget_get_parent(widget);    
+    do {
+        if (SP_IS_DESKTOP_WIDGET(parent)) {
+            // Now we've found the desktop widget we can have the ruler boundaries updated 
+            sp_desktop_widget_update_vruler(SP_DESKTOP_WIDGET(parent));
+            // If the size of the ruler has increased, then a blank part is uncovered; therefore
+            // it must be redrawn  
+            sp_vruler_draw_ticks(GTK_RULER(widget));
+            break;   
+        }
+        parent = gtk_widget_get_parent(parent);
+    } while (parent != NULL);
+}
+
 
 /// Ruler metrics.
 static GtkRulerMetric const sp_ruler_metrics[] = {

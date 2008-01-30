@@ -1199,7 +1199,7 @@ sp_canvas_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
     }
 
     widget->allocation = *allocation;
-
+    
     if (GTK_WIDGET_REALIZED (widget)) {
         gdk_window_move_resize (widget->window,
                                 widget->allocation.x, widget->allocation.y,
@@ -2084,7 +2084,7 @@ sp_canvas_root (SPCanvas *canvas)
 }
 
 /**
- * Scrolls canvas to specific position.
+ * Scrolls canvas to specific position (cx and cy are measured in screen pixels)
  */
 void
 sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear, bool is_scrolling)
@@ -2092,12 +2092,12 @@ sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear,
     g_return_if_fail (canvas != NULL);
     g_return_if_fail (SP_IS_CANVAS (canvas));
 
-    int ix = (int) round(cx); //cx might be negative, so (int)(cx + 0.5) will not do!
-    int iy = (int) round(cy);
-    int dx = ix - canvas->x0;
-    int dy = iy - canvas->y0;
+    int ix = (int) round(cx); // ix and iy are the new canvas coordinates (integer screen pixels)
+    int iy = (int) round(cy); // cx might be negative, so (int)(cx + 0.5) will not do!
+    int dx = ix - canvas->x0; // dx and dy specify the displacement (scroll) of the 
+    int dy = iy - canvas->y0; // canvas w.r.t its previous position
 
-    canvas->dx0 = cx;
+    canvas->dx0 = cx; // here the 'd' stands for double, not delta!
     canvas->dy0 = cy;
     canvas->x0 = ix;
     canvas->y0 = iy;

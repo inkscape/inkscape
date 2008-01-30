@@ -645,7 +645,7 @@ SPDesktop::push_current_zoom (GList **history)
 }
 
 /**
- * Set viewbox.
+ * Set viewbox (x0, x1, y0 and y1 are in document pixels. Border is in screen pixels).
  */
 void
 SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double border, bool log)
@@ -673,7 +673,7 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
         newscale = viewbox.dimensions()[NR::Y] / (y1 - y0);
     }
 
-    newscale = CLAMP(newscale, SP_DESKTOP_ZOOM_MIN, SP_DESKTOP_ZOOM_MAX);
+    newscale = CLAMP(newscale, SP_DESKTOP_ZOOM_MIN, SP_DESKTOP_ZOOM_MAX); // unit: 'screen pixels' per 'document pixels'
 
     int clear = FALSE;
     if (!NR_DF_TEST_CLOSE (newscale, scale, 1e-4 * scale)) {
@@ -684,7 +684,7 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
         clear = TRUE;
     }
 
-    /* Calculate top left corner */
+    /* Calculate top left corner (in document pixels) */
     x0 = cx - 0.5 * viewbox.dimensions()[NR::X] / newscale;
     y1 = cy + 0.5 * viewbox.dimensions()[NR::Y] / newscale;
 
