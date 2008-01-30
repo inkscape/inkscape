@@ -309,17 +309,30 @@ static void sp_font_selector_style_select_row (GtkTreeSelection *selection,
 
 static void sp_font_selector_size_changed( GtkComboBox */*cbox*/, SPFontSelector *fsel )
 {
-    char *sstr = gtk_combo_box_get_active_text (GTK_COMBO_BOX (fsel->size));
+    char *text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (fsel->size));
     gfloat old_size = fsel->fontsize;
-    fsel->fontsize = MAX(atof(sstr), 0.1);
+
+    gchar *endptr;
+    gdouble value = -1;
+    if (text) {
+        value = g_strtod (text, &endptr);
+        if (endptr == text) // conversion failed, non-numeric input
+            value = -1;
+        free (text);
+    }
+    if (value <= 0) {
+        return; // could not parse value 
+    }
+    if (value > 10000)
+        value = 10000; // somewhat arbitrary, but text&font preview freezes with too huge fontsizes
+
+    fsel->fontsize = value;
     if ( fabs(fsel->fontsize-old_size) > 0.001)
     {
         fsel->fontsize_dirty = true;
     }
 
     sp_font_selector_emit_set (fsel);
-
-    free (sstr);
 }
 
 static void sp_font_selector_emit_set (SPFontSelector *fsel)
