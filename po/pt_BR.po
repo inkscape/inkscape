@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-01-24 22:32-0300\n"
-"PO-Revision-Date: 2008-01-19 12:30-0300\n"
-"Last-Translator: Valessio Brito <valessio@gmail.com>\n"
+"PO-Revision-Date: 2008-01-31 13:45-0300\n"
+"Last-Translator: Felipe C. da S. Sanches <felipe.sanches@gmail.com>\n"
 "Language-Team: Português Brasil <inkscape-brasil@listas.softwarelivre.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -801,7 +801,7 @@ msgstr ""
 #: ../src/dialogs/clonetiler.cpp:2728
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2120
 msgid "Size"
-msgstr "Tamanho"
+msgstr "Dimensões"
 
 #: ../src/dialogs/clonetiler.cpp:2731
 msgid "Each clone's size is determined by the picked value in that point"
@@ -1399,7 +1399,9 @@ msgstr "_Id"
 #: ../src/dialogs/item-properties.cpp:129
 #, fuzzy
 msgid ""
-"The id= attribute (only letters, digits, and the characters .-_: allowed)"
+""
+"_:The id= attribute (only letters, digits, and the characters .-_: allowed)"
+""
 msgstr ""
 "_:No atributo id= (apenas letras, dígitos, e os caracteres .- são permitidos)"
 
@@ -2620,7 +2622,7 @@ msgstr "Altura:"
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
 #: ../src/filter-enums.cpp:32
 msgid "Offset"
-msgstr "Deslocamentos"
+msgstr "Deslocamento"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:46
 #: ../src/extension/internal/bitmap/addNoise.cpp:57
@@ -2874,7 +2876,7 @@ msgstr "Equalizar bitmap(s) selecionado(s) -- equalização por histograma."
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:37
 #: ../src/filter-enums.cpp:28
 msgid "Gaussian Blur"
-msgstr "Desfocagem gaussiana"
+msgstr "Desfoque gaussiano"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:39
 #: ../src/extension/internal/bitmap/implode.cpp:38
@@ -2884,7 +2886,7 @@ msgstr "Fator"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:46
 msgid "Gaussian blur selected bitmap(s)."
-msgstr "Aplicar desfocagem gaussiana no(s) bitmap(s) selecionado(s)."
+msgstr "Aplicar desfoque gaussiano no(s) bitmap(s) selecionado(s)."
 
 #: ../src/extension/internal/bitmap/implode.cpp:36
 msgid "Implode"
@@ -3824,7 +3826,7 @@ msgstr "Importar de Open Clip Art Library"
 
 #: ../src/filter-enums.cpp:20
 msgid "Blend"
-msgstr "Misturar"
+msgstr "Mistura"
 
 #: ../src/filter-enums.cpp:21
 msgid "Color Matrix"
@@ -3832,7 +3834,7 @@ msgstr "Matriz de Cores"
 
 #: ../src/filter-enums.cpp:22
 msgid "Component Transfer"
-msgstr "Transferência de Componente"
+msgstr "Transferência de Componentes"
 
 #: ../src/filter-enums.cpp:23
 msgid "Composite"
@@ -3840,7 +3842,7 @@ msgstr "Composição"
 
 #: ../src/filter-enums.cpp:24
 msgid "Convolve Matrix"
-msgstr "Convolver Matriz"
+msgstr "Matriz de Convolução"
 
 #: ../src/filter-enums.cpp:25
 msgid "Diffuse Lighting"
@@ -3852,7 +3854,7 @@ msgstr "Mapa de Deslocamento"
 
 #: ../src/filter-enums.cpp:27
 msgid "Flood"
-msgstr "Inundar"
+msgstr "Preenchimento"
 
 #: ../src/filter-enums.cpp:29 ../src/selection-describer.cpp:52
 msgid "Image"
@@ -3860,7 +3862,7 @@ msgstr "Imagem"
 
 #: ../src/filter-enums.cpp:30
 msgid "Merge"
-msgstr "Mesclar"
+msgstr "Mesclagem"
 
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
@@ -3880,11 +3882,11 @@ msgstr "Turbulência"
 
 #: ../src/filter-enums.cpp:40
 msgid "Source Graphic"
-msgstr "Gráfico Fonte"
+msgstr "Gráfico da Entrada"
 
 #: ../src/filter-enums.cpp:41
 msgid "Source Alpha"
-msgstr "Alfa Fonte "
+msgstr "Alfa da Entrada"
 
 #: ../src/filter-enums.cpp:42
 msgid "Background Image"
@@ -3896,11 +3898,11 @@ msgstr "Alfa de Fundo"
 
 #: ../src/filter-enums.cpp:44
 msgid "Fill Paint"
-msgstr "Preencher com Tinta"
+msgstr "Cor  do Preenchimento"
 
 #: ../src/filter-enums.cpp:45
 msgid "Stroke Paint"
-msgstr "Pintura de Traço"
+msgstr "Cor do Traço"
 
 #: ../src/filter-enums.cpp:51 ../src/ui/dialog/inkscape-preferences.cpp:470
 msgid "Normal"
@@ -3957,7 +3959,7 @@ msgstr "Fora"
 
 #: ../src/filter-enums.cpp:74
 msgid "Atop"
-msgstr "Atop"
+msgstr "Topo"
 
 #: ../src/filter-enums.cpp:75
 msgid "XOR"
@@ -3965,7 +3967,7 @@ msgstr "XOR"
 
 #: ../src/filter-enums.cpp:76
 msgid "Arithmetic"
-msgstr "Aritmética"
+msgstr "Aritmético"
 
 #: ../src/filter-enums.cpp:82
 msgid "Identity"
@@ -3973,7 +3975,7 @@ msgstr "Identidade"
 
 #: ../src/filter-enums.cpp:83
 msgid "Table"
-msgstr "Tabela"
+msgstr "Tabelado"
 
 #: ../src/filter-enums.cpp:84
 msgid "Discrete"
@@ -4040,7 +4042,7 @@ msgstr "Apontar Luz"
 
 #: ../src/filter-enums.cpp:125
 msgid "Spot Light"
-msgstr "Lugar de Luz"
+msgstr "Fonte de Luz"
 
 #: ../src/flood-context.cpp:249
 msgid "Visible Colors"
@@ -6238,7 +6240,7 @@ msgstr "Ajustar à página a seleção"
 
 #: ../src/selection-describer.cpp:42
 msgid "Link"
-msgstr "Ligação"
+msgstr "Vínculo"
 
 #: ../src/selection-describer.cpp:44
 msgid "Circle"
@@ -8207,7 +8209,7 @@ msgstr "Resolução preferida para a figura (pontos por polegada)"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1423
 #, fuzzy
 msgid "Document"
-msgstr "Desenho salvo."
+msgstr "Documento"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1435
 #, fuzzy
@@ -8259,9 +8261,8 @@ msgstr "Apagar Segmento"
 
 #. TODO: any image, not justy svg
 #: ../src/ui/dialog/filter-effects-dialog.cpp:637
-#, fuzzy
 msgid "Select an image to be used as feImage input"
-msgstr "Selecione uma imagem e uma ou mais formas acima dela"
+msgstr "Selecione uma imagem para usar como entrada do filtro"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:897
 msgid "Light Source:"
@@ -8294,7 +8295,7 @@ msgstr "_Duplicar"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1052
 msgid "_Filter"
-msgstr "_Filtrar"
+msgstr "_Filtro"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1066
 msgid "R_ename"
@@ -8363,7 +8364,7 @@ msgstr "Modo"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2100
 msgid "Value(s)"
-msgstr "Valore(s)"
+msgstr "Valor(es)"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2113
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2149
@@ -8400,21 +8401,19 @@ msgstr "Divisor"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2125
 msgid "Bias"
-msgstr "Bias"
+msgstr "Parcela Constante"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2126
 msgid "Edge Mode"
 msgstr "Modo Limite"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2127
-#, fuzzy
 msgid "Preserve Alpha"
-msgstr "Preservada"
+msgstr "Preservar Canal Alfa"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2130
-#, fuzzy
 msgid "Diffuse Color"
-msgstr "Cores Visíveis"
+msgstr "Cor"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2131
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2163
@@ -8429,7 +8428,7 @@ msgstr "Constante"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2133
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2166
 msgid "Kernel Unit Length"
-msgstr ""
+msgstr "Largura da Grade de Pixels"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2138
 msgid "X Channel"
@@ -8441,26 +8440,23 @@ msgstr "Canal Y"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2142
 msgid "Flood Color"
-msgstr "Flood Color"
+msgstr "Cor de Preenchimento"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2146
 msgid "Standard Deviation"
 msgstr "Desvio Padrão"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2153
-#, fuzzy
 msgid "Source of Image"
-msgstr "Número de páginas"
+msgstr "Fonte de Imagem"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2154
-#, fuzzy
 msgid "Coordinates"
-msgstr "Coordenadas do cursor"
+msgstr "Coordenadas"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2155
-#, fuzzy
 msgid "Dimensions"
-msgstr "Divisão"
+msgstr "Dimensões"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2158
 msgid "Delta X"
@@ -8480,31 +8476,35 @@ msgid "Exponent"
 msgstr "Expoente"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2173
-#, fuzzy
 msgid "Stitch Tiles"
-msgstr "Curativo Ladrilhado"
+msgstr "Costurar Ladrilhos"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2175
 msgid "Base Frequency"
 msgstr "Freqüência Base"
 
+# oitavas são intervalos de frquência onde f1 é metade (ou o dobro) de f2.
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2176
 msgid "Octaves"
-msgstr "Oitavos"
+msgstr "Oitavas"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2177
 msgid "Seed"
 msgstr "Semente"
 
+# filtro é uma coisa. primitiva de filtro é outra.
+# cada nó <filter/> do SVG pode conter nós filhos que são chamados de primitivas de filtro. Exemplos de promitivas de filtro são: <feImage>, <feBlend>,  <feConvolveMatrix> etc.
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2189
 msgid "Add filter primitive"
-msgstr "Adicionar filtro "
+msgstr "Adicionar primitiva de filtro "
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid ""
 "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, "
 "multiply, darken and lighten."
 msgstr ""
+"A primitiva <b>feBlend</b> fornece 4 modos de mistura de imagens: tela, "
+"multiplicação, escurecimento e clareamento."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 msgid ""
@@ -8512,6 +8512,9 @@ msgid ""
 "colour of each rendered pixel. This allows for effects like turning object "
 "to grayscale, modifying colour saturation and changing colour hue."
 msgstr ""
+"A primitiva <b>feColorMatrix</b> aplica uma transformação linear "
+"(representada por uma matriz) às cores de cada pixel. Isto permite, por "
+"exemplo, modificar a saturação das cores ou mudar para tons de cinza."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2206
 msgid ""
@@ -8520,6 +8523,10 @@ msgid ""
 "transfer functions, allowing operations like brightness and contrast "
 "adjustment, color balance, and thresholding."
 msgstr ""
+"A primitiva <b>feComponentTransfer</b> manipula as componentes de cor da "
+"entrada (vermelho, verde, azul e alfa) de acordo com funções de "
+"transferência, permitindo operações de ajuste de brilho e contraste, "
+"balanceamento de cores e segmentação por intensidade."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2210
 msgid ""
@@ -8528,6 +8535,10 @@ msgid ""
 "standard. Porter-Duff blending modes are essentially logical operations "
 "between the corresponding pixel values of the images."
 msgstr ""
+"A primitiva <b>feComposite</b> mescla duas imagens utilizando um dos modos "
+"de mistura de Porter-Duff ou o modo aritmético descrito no padrão SVG. Os "
+"modos de Porter-Duff são, essencialmente, operações lógicas sobre os pixels "
+" correspondentes de ambas as imagens."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2214
 msgid ""
@@ -8537,6 +8548,12 @@ msgid ""
 "be created using this filter primitive, the special gaussian blur primitive "
 "is faster and resolution-independent."
 msgstr ""
+"A primitiva <b>feConvolveMatrix</b> lhe permite especificar uma operação de "
+"convolução a ser aplicada na imagem. Detecção de borda, desfoque, alto-"
+"relevo são efeitos típicamente criados com esta primitiva. Note que apesar "
+"de ser possível se criar efeito de desfoque gaussiano usando esta primitiva, "
+"recomenda-se utilizar a primitiva feGaussianBlur para tal, pois ela é "
+"melhor otimizada e independe de resolução."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2218
 msgid ""
@@ -8545,6 +8562,10 @@ msgid ""
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
 msgstr ""
+"As primitivas <b>feDiffuseLighting</b> e feSpecularLighting criam efeitos de "
+"iluminação e sombreamentos em alto-relevo. O canal alfa da entrada é "
+"utilizado para prover informação sobre a altura do relevo: áreas de maior "
+"opacidade representam superfícies mais projetadas na direção do observador."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2222
 msgid ""
@@ -8553,6 +8574,10 @@ msgid ""
 "how far the pixel should come from. Classical examples are whirl and pinch "
 "effects."
 msgstr ""
+"A primitiva <b>feDisplacementMap</b> desloca os pixels da primeira entrada "
+"usando a segunda entrada como um mapa de deslocamento, que mostra de quão "
+"longe o pixel deve vir. Exemplos clássicos são os efeitos de lente, e de "
+"distorção em caracol."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2226
 msgid ""
@@ -8560,18 +8585,26 @@ msgid ""
 "opacity.  It is usually used as an input to other filters to apply color to "
 "a graphic."
 msgstr ""
+"A primitiva <b>feFlood</b> preenche uma região com uma determinada cor e "
+"opacidade. Isto costuma ser usado como entrada de outras primitivas para "
+"aplicar cores a um desenho."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2230
 msgid ""
 "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is "
 "commonly used together with feOffset to create a drop shadow effect."
 msgstr ""
+"A primitiva <b>feGaussianBlur</b> desfoca uniformemente sua entrada. É "
+"cumumente utilizada junto com a primitiva feOffset (Deslocamento) para criar "
+"efeitos de sombra deslocada."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2234
 msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
 msgstr ""
+"A primitiva <b>feImage</b> preenche uma região com uma imagem externa ou com "
+"outra parte do documento."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2238
 msgid ""
@@ -8580,6 +8613,10 @@ msgid ""
 "compositing for this. This is equivalent to using several feBlend primitives "
 "in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr ""
+"A primitiva <b>feMerge</b> junta diversas imagens de suas entradas numa só. "
+"Ela utiliza composição de alfa comum para tal. Isto é equivalente a utilizar "
+"diversas primitivas feBlend (Mistura) no modo 'normal' ou diversas "
+"primitivas feComposite (Composição) no modo 'over'."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2242
 msgid ""
@@ -8587,6 +8624,10 @@ msgid ""
 "For single-colour objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
+"A primitiva <b>feMorphology</b> proporciona efeitos de erosão e de "
+"dilatação. Para imagens monocromáticas, o efeito de erosão faz com que o "
+"objeto fique mais fino e o efeito de dilatação faz com que o objeto fique "
+"mais grosso."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2246
 msgid ""
@@ -8594,6 +8635,8 @@ msgid ""
 "amount. For example, this is useful for drop shadows, where the shadow is in "
 "a slightly different position than the actual object."
 msgstr ""
+"A primitiva <b>feOffset</b> desloca a imagem. Isto é útil, por exemplo, para "
+"se criar efeitos de sombra."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2250
 msgid ""
@@ -8602,11 +8645,17 @@ msgid ""
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
 msgstr ""
+"As primitivas feDiffuseLighting e <b>feSpecularLighting</b> criam efeitos de "
+"iluminação e sombreamentos em alto-relevo. O canal alfa da entrada é "
+"utilizado para prover informação sobre a altura do relevo: áreas de maior "
+"opacidade representam superfícies mais projetadas na direção do observador."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2254
 msgid ""
 "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
+"A primitiva <b>feTile</b> ladrilha uma região com múltiplas cópias da imagem "
+"recebida em sua entrada."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2258
 msgid ""
@@ -8614,6 +8663,9 @@ msgid ""
 "noise is useful in simulating several nature phenomena like clouds, fire and "
 "smoke and in generating complex textures like marble or granite."
 msgstr ""
+"A primitiva <b>feTurbulence</b> renderiza ruído de Perlin. Este tipo de "
+"ruído é útil para simular fenômenos naturais como núvens, fogo e fumaça e "
+"para gerar texturas complexas como mármore ou granito."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2273
 msgid "Duplicate filter primitive"
@@ -10655,7 +10707,7 @@ msgstr "Listar"
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:25
 msgid "_Blend mode:"
-msgstr "_Modo misturar:"
+msgstr "_Modo de mistura:"
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:26
 msgid "B_lur:"
@@ -12643,7 +12695,7 @@ msgstr "Gerenciar caminhos de efeitos"
 
 #: ../src/verbs.cpp:2533
 msgid "Filter Effects..."
-msgstr "Filtro de Efeitos..."
+msgstr "Filtros..."
 
 #: ../src/verbs.cpp:2534
 msgid "Manage SVG filter effects"
@@ -13227,7 +13279,9 @@ msgstr "Sistema"
 
 #: ../src/widgets/sp-color-notebook.cpp:324
 #, fuzzy
-msgid "RGBA_:"
+msgid ""
+"_:RGBA_:"
+""
 msgstr "_:RGBA_:"
 
 #: ../src/widgets/sp-color-notebook.cpp:332
@@ -15589,4 +15643,3 @@ msgstr "Entrada de Metaarquivo do Windows"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Entrada XAML"
-
