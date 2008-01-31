@@ -309,7 +309,8 @@ sp_hruler_draw_pos (GtkRuler *ruler)
 
 	  increment = (gfloat) (width + 2*UNUSED_PIXELS) / (ruler->upper - ruler->lower);
 
-	  x = int(Inkscape::round((ruler->position - ruler->lower) * increment + double(xthickness - bs_width) / 2.0) - 1);
+	  // Calculate the coordinates (x, y, in pixels) of the tip of the triangle
+      x = int(Inkscape::round((ruler->position - ruler->lower) * increment + double(xthickness - bs_width) / 2.0) - UNUSED_PIXELS);
 	  y = (height + bs_height) / 2 + ythickness;
 
 	  for (i = 0; i < bs_height; i++)
@@ -646,8 +647,9 @@ sp_vruler_draw_pos (GtkRuler *ruler)
 
 	  increment = (gfloat) (height + 2*UNUSED_PIXELS) / (ruler->upper - ruler->lower);
 
-	  x = (width + bs_width) / 2 + xthickness;
-	  y = int(Inkscape::round((ruler->position - ruler->lower) * increment + double(ythickness - bs_height) / 2.0) - 1);
+	  // Calculate the coordinates (x, y, in pixels) of the tip of the triangle
+      x = (width + bs_width) / 2 + xthickness;
+	  y = int(Inkscape::round((ruler->position - ruler->lower) * increment + double(ythickness - bs_height) / 2.0) - UNUSED_PIXELS);
 
 	  for (i = 0; i < bs_width; i++)
 	    gdk_draw_line (widget->window, gc,
