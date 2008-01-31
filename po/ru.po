@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-01-30 22:00+0300\n"
-"PO-Revision-Date: 2008-01-30 22:01+0300\n"
+"POT-Creation-Date: 2008-01-31 06:23+0300\n"
+"PO-Revision-Date: 2008-01-31 06:26+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3536,7 +3536,7 @@ msgid "PDF Input"
 msgstr "Импорт PDF"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:733
-msgid "Adobe PDF (*.pdf) [via poppler]"
+msgid "Adobe PDF (*.pdf)"
 msgstr "Adobe PDF (*.pdf)"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:734
@@ -3548,13 +3548,12 @@ msgid "AI Input"
 msgstr "Импорт AI"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:746
-msgid "Adobe Illustrator (*.ai) [PDF-based]"
+msgid "Adobe Illustrator 9.0 and above (*.ai)"
 msgstr "Adobe Illustrator 9.0 и выше (*.ai)"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:747
-#, fuzzy
-msgid "Open files saved with recent versions of Adobe Illustrator"
-msgstr "Открыть файлы, сохранённые в Adobe Illustrator 8.0 и ранее"
+msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
+msgstr "Открыть файлы, сохранённые в Adobe Illustrator 9.0 и более новых версиях"
 
 #: ../src/extension/internal/pov-out.cpp:683
 msgid "PovRay Output"
@@ -4887,9 +4886,8 @@ msgid "Edit on-canvas"
 msgstr "Правка на холсте"
 
 #: ../src/live_effects/parameter/path.cpp:114
-#, fuzzy
 msgid "Copy path"
-msgstr "Разрезание контура"
+msgstr "Скопировать контур"
 
 #: ../src/live_effects/parameter/path.cpp:124
 msgid "Paste path"
@@ -13974,9 +13972,8 @@ msgid "AI 8.0 Input"
 msgstr "Импорт файлов AI 8.0"
 
 #: ../share/extensions/ai_input.inx.h:2
-#: ../share/extensions/ai_output.inx.h:2
-msgid "Adobe Illustrator 8.0 (*.ai)"
-msgstr "Файлы Adobe Illustrator 8.0 (*.ai)"
+msgid "Adobe Illustrator 8.0 and below (*.ai)"
+msgstr "Adobe Illustrator 8.0 и ниже (*.ai)"
 
 #: ../share/extensions/ai_input.inx.h:3
 msgid "Open files saved with Adobe Illustrator 8.0 or older"
@@ -13985,6 +13982,10 @@ msgstr "Открыть файлы, сохранённые в Adobe Illustrator 8
 #: ../share/extensions/ai_output.inx.h:1
 msgid "AI 8.0 Output"
 msgstr "Экспорт в AI 8.0"
+
+#: ../share/extensions/ai_output.inx.h:2
+msgid "Adobe Illustrator 8.0 (*.ai)"
+msgstr "Файлы Adobe Illustrator 8.0 (*.ai)"
 
 #: ../share/extensions/ai_output.inx.h:3
 msgid "Write Adobe Illustrator 8.0 (Postscript-based)"
@@ -14278,9 +14279,8 @@ msgid "Smoothness"
 msgstr "Сглаженность"
 
 #: ../share/extensions/fractalize.inx.h:4
-#, fuzzy
 msgid "Subdivisions"
-msgstr "Деление"
+msgstr "Создание и правка изображений в формате SVG"
 
 #: ../share/extensions/funcplot.inx.h:1
 msgid "Calculate first derivative numerically"
@@ -14882,6 +14882,12 @@ msgstr "Импорт файлов Windows Metafile"
 msgid "XAML Input"
 msgstr "Импорт XAML"
 
+#~ msgid "Adobe Illustrator (*.ai) [PDF-based]"
+#~ msgstr "Adobe Illustrator 9.0 и выше (*.ai)"
+
+#, fuzzy
+#~ msgid "Open files saved with recent versions of Adobe Illustrator"
+#~ msgstr "Открыть файлы, сохранённые в Adobe Illustrator 8.0 и ранее"
 #~ msgid "Gri_d Arrange..."
 #~ msgstr "_Расставить по сетке..."
 #~ msgid "Measure unit:"

@@ -6,7 +6,7 @@
     <input>
         <extension>.ai</extension>
         <mimetype>image/x-adobe-illustrator</mimetype>
-        <_filetypename>Adobe Illustrator 8.0 (*.ai)</_filetypename>
+        <_filetypename>Adobe Illustrator 8.0 and below (*.ai)</_filetypename>
         <_filetypetooltip>Open files saved with Adobe Illustrator 8.0 or
         older</_filetypetooltip>
         <output_extension>org.inkscape.output.ai</output_extension>

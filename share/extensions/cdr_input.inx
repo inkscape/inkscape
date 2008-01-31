@@ -1,13 +1,13 @@
 <inkscape-extension>
-    <_name>Corel Draw Input</_name>
+    <_name>Corel DRAW Input</_name>
     <id>org.inkscape.input.cdr</id>
     <dependency type="executable" location="path">uniconv</dependency>
     <dependency type="executable" location="extensions">cdr2svg.sh</dependency>
     <input>
         <extension>.cdr</extension>
         <mimetype>image/x-xcdr</mimetype>
-        <_filetypename>Corel Draw document (*.cdr)</_filetypename>
-        <_filetypetooltip>Open files saved from Corel Draw</_filetypetooltip>
+        <_filetypename>Corel DRAW 7-13 files (*.cdr)</_filetypename>
+        <_filetypetooltip>Open files saved in Corel DRAW 7-14</_filetypetooltip>
         <output_extension>org.inkscape.output.cdr</output_extension>
     </input>
     <script>

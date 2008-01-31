@@ -730,7 +730,7 @@ PdfInput::init(void) {
             "<input>\n"
                 "<extension>.pdf</extension>\n"
                 "<mimetype>application/pdf</mimetype>\n"
-                "<filetypename>" N_("Adobe PDF (*.pdf) [via poppler]") "</filetypename>\n"
+                "<filetypename>" N_("Adobe PDF (*.pdf)") "</filetypename>\n"
                 "<filetypetooltip>" N_("Adobe Portable Document Format") "</filetypetooltip>\n"
             "</input>\n"
         "</inkscape-extension>", new PdfInput());
@@ -743,8 +743,8 @@ PdfInput::init(void) {
             "<input>\n"
                 "<extension>.ai</extension>\n"
                 "<mimetype>image/x-adobe-illustrator</mimetype>\n"
-                "<filetypename>" N_("Adobe Illustrator (*.ai) [PDF-based]") "</filetypename>\n"
-                "<filetypetooltip>" N_("Open files saved with recent versions of Adobe Illustrator") "</filetypetooltip>\n"
+                "<filetypename>" N_("Adobe Illustrator 9.0 and above (*.ai)") "</filetypename>\n"
+                "<filetypetooltip>" N_("Open files saved in Adobe Illustrator 9.0 and newer versions") "</filetypetooltip>\n"
             "</input>\n"
         "</inkscape-extension>", new PdfInput());
 } // init
