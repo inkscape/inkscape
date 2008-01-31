@@ -8,6 +8,98 @@ in the style of Adobe Illustrator.
 See default.xml for more information.  
 -->
 
+<!-- Tools -->
+
+<!-- Selection (arrow) tool -->
+
+  <bind key="V" action="ToolSelector" display="true"/>
+  <bind key="v" action="ToolSelector" />
+
+<!-- Direct Selection tool -->
+
+  <bind key="A" action="ToolNode" display="true"/>
+  <bind key="a" action="ToolNode" />
+
+<!-- Pen tool -->
+
+  <bind key="P" action="ToolPen" display="true"/>
+  <bind key="p" action="ToolPen" />
+
+<!-- Type tool -->
+
+  <bind key="T" action="ToolText" display="true"/>
+  <bind key="t" action="ToolText" />
+
+<!-- Rectangle tool -->
+
+  <bind key="M" action="ToolRect" display="true"/>
+  <bind key="m" action="ToolRect" />
+
+<!-- Ellipse tool -->
+
+  <bind key="L" action="ToolArc" display="true"/>
+  <bind key="l" action="ToolArc" />
+
+<!-- Paintbrush tool -->
+
+  <bind key="B" action="ToolCalligraphic" display="true"/>
+  <bind key="b" action="ToolCalligraphic" />
+
+<!-- Pencil tool -->
+
+  <bind key="N" action="ToolPencil" display="true"/>
+  <bind key="n" action="ToolPencil" />
+
+<!-- Warp/Pucker/Bloat/Wrinkle tool -->
+
+  <bind key="R" modifiers="Shift" action="ToolTweak" display="true"/>
+  <bind key="r" modifiers="Shift" action="ToolTweak"/>
+
+<!-- Free Transform tool -->
+
+  <bind key="E" action="ToolSelector" display="true"/>
+  <bind key="e" action="ToolSelector" />
+
+<!-- Gradient tool -->
+
+  <bind key="G" action="ToolGradient" display="true"/>
+  <bind key="g" action="ToolGradient" />
+
+<!-- Eye-dropper tool -->
+
+  <bind key="I" action="ToolDropper" display="true"/>
+  <bind key="i" action="ToolDropper" />
+
+<!-- Live Paint Bucket tool -->
+
+  <bind key="K" action="ToolPaintBucket" display="true"/>
+  <bind key="k" action="ToolPaintBucket" />
+
+<!-- Zoom tool -->
+
+  <bind key="Z" action="ToolZoom" display="true"/>
+  <bind key="z" action="ToolZoom" />
+
+<!--
+ToolSelector: Select and transform objects
+ToolNode: Edit paths by nodes
+ToolTweak: Tweak objects by sculpting or painting
+ToolRect: Create rectangles and squares
+Tool3DBox: Create 3D boxes
+ToolArc: Create circles, ellipses, and arcs
+ToolStar: Create stars and polygons
+ToolSpiral: Create spirals
+ToolPencil: Draw freehand lines
+ToolPen: Draw Bezier curves and straight lines
+ToolCalligraphic: Draw calligraphic or brush strokes
+ToolText: Create and edit text objects
+ToolGradient: Create and edit gradients
+ToolZoom: Zoom in or out
+ToolDropper: Pick colors from image
+ToolConnector: Create diagram connectors
+ToolPaintBucket: Fill bounded areas -->
+
+
 <!-- File -->
 
   <bind key="n" modifiers="Ctrl" action="FileNew" display="true"/>
@@ -59,13 +151,16 @@ See default.xml for more information.
 
   <bind key="x" modifiers="Ctrl" action="EditCut" display="true"/>
   <bind key="X" modifiers="Ctrl" action="EditCut"/>
+  <bind key="F2" action="EditCut"/>
 
   <bind key="c" modifiers="Ctrl" action="EditCopy" display="true"/>
   <bind key="C" modifiers="Ctrl" action="EditCopy"/>
-
+  <bind key="F3" action="EditCut"/>
+  
   <bind key="v" modifiers="Ctrl" action="EditPaste" display="true"/>
   <bind key="V" modifiers="Ctrl" action="EditPaste"/>
-  
+  <bind key="F4" action="EditCut"/>
+    
   <!--  Paste in Front, Ctrl+F -->
 
   <bind key="f" modifiers="Ctrl" action="EditPaste" display="true"/>
@@ -125,6 +220,10 @@ Compound Path - Release, Alt+Shift+Ctrl+8
 
   <bind key="7" modifiers="Ctrl" action="ObjectSetClipPath" />
   <bind key="7" modifiers="Ctrl,Alt" action="ObjectUnSetClipPath" />
+
+<!-- Add new symbol -->
+
+  <bind key="F8" action="EditClone" display="true"/>
 
 <!-- Type 
 Show Hidden Characters, Alt+Ctrl+I -->
@@ -246,7 +345,7 @@ Transparency Shift+Ctrl+F10
 -->
   <bind key="F10" modifiers="Ctrl,Shift" action="DialogFillStroke" display="true"/>
 
-<--
+<!--
 Type
   Character Ctrl+T
   OpenType Alt+Shift+Ctrl+T
