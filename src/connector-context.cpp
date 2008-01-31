@@ -42,6 +42,8 @@
  */
 
 #include <gdk/gdkkeysyms.h>
+#include <string>
+#include <cstring>
 
 #include "connector-context.h"
 #include "pixmaps/cursor-connector.xpm"

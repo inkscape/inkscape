@@ -17,6 +17,7 @@
 #include <cmath>
 #include <complex>
 #include <glib.h>
+#include <cstdlib>
 #include <limits>
 
 #include "isnan.h"

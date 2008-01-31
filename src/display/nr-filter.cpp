@@ -13,6 +13,8 @@
 
 #include <glib.h>
 #include <cmath>
+#include <cstring>
+#include <string>
 
 #include "display/nr-filter.h"
 #include "display/nr-filter-primitive.h"

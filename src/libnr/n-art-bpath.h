@@ -9,6 +9,7 @@
 
 #include "libnr/nr-point.h"
 #include "libnr/nr-path-code.h"
+#include <cstdlib>
 
 /**
  * Old-style path segment.
@@ -31,7 +32,7 @@ public:
             case 1: return NR::Point(x1, y1);
             case 2: return NR::Point(x2, y2);
             case 3: return NR::Point(x3, y3);
-            default: abort();
+            default: std::abort();
         }
     }
 
@@ -43,7 +44,7 @@ public:
             case 1: x1 = p[X]; y1 = p[Y]; break;
             case 2: x2 = p[X]; y2 = p[Y]; break;
             case 3: x3 = p[X]; y3 = p[Y]; break;
-            default: abort();
+            default: std::abort();
         }
     }
 };

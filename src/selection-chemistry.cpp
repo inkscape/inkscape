@@ -72,6 +72,8 @@
 #include "layer-fns.h"
 #include "context-fns.h"
 #include <map>
+#include <cstring>
+#include <string>
 #include "helper/units.h"
 #include "sp-item.h"
 #include "box3d.h"

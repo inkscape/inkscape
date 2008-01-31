@@ -12,8 +12,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "config.h"
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 
+#include <cstring>
+#include <string>
 #include <libnr/nr-matrix-ops.h>
 #include "libnr/nr-matrix-fns.h"
 #include <libnr/nr-translate-matrix-ops.h>

@@ -14,17 +14,15 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include "path-prefix.h"
 
-
-
+#include <cstring>
 #include <glib/gmem.h>
 #include <gtk/gtkiconfactory.h>
 #include <gtk/gtkstock.h>
 #include <gtk/gtkimage.h>
-
 #include <gtkmm/image.h>
 
+#include "path-prefix.h"
 #include "prefs-utils.h"
 #include "inkscape.h"
 #include "document.h"

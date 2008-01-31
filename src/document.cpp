@@ -38,6 +38,8 @@
 # include "config.h"
 #endif
 #include <gtk/gtkmain.h>
+#include <string>
+#include <cstring>
 #include "application/application.h"
 #include "application/editor.h"
 #include "libnr/nr-matrix-fns.h"

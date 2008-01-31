@@ -28,6 +28,8 @@ using std::pair;
 #include "sp-filter-reference.h"
 #include "uri.h"
 #include "xml/repr.h"
+#include <cstring>
+#include <string>
 
 #define SP_MACROS_SILENT
 #include "macros.h"

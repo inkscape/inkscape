@@ -1,10 +1,10 @@
 /*
  *   bulia byak <buliabyak@users.sf.net>
-*/ 
- 
+*/
+
 #define SP_REPR_CSS_C
 
-
+#include <cstring>
 #include <glibmm/ustring.h>
 
 #include "xml/repr.h"

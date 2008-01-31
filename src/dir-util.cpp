@@ -3,7 +3,8 @@
 #define DIR_UTIL_C
 
 #include <errno.h>
-#include <string.h>
+#include <string>
+#include <cstring>
 #include <glib/gutils.h>
 #include <glib/gmem.h>
 #include <glib/gerror.h>

@@ -7,6 +7,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information.
  */
 
+#include <cstring>
+#include <string>
 #include <string.h>
 
 #include "enums.h"

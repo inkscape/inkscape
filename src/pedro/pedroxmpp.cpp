@@ -22,7 +22,8 @@
  */
 
 
-#include <stdio.h>
+#include <algorithm>
+#include <cstdio>
 #include <stdarg.h>
 #include <stdlib.h>
 

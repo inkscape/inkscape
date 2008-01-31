@@ -17,6 +17,10 @@
 # include "config.h"
 #endif
 
+#include <cstring>
+#include <string>
+#include <cstdlib>
+#include <cstdio>
 #include <glib/gstrfuncs.h>
 #include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-matrix-ops.h>

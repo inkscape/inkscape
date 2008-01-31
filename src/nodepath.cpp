@@ -47,6 +47,8 @@
 #include "display/bezier-utils.h"
 #include <vector>
 #include <algorithm>
+#include <cstring>
+#include <string>
 #include "live_effects/lpeobject.h"
 #include "live_effects/parameter/parameter.h"
 #include "util/mathfns.h"

@@ -12,6 +12,7 @@
 
 #include <set>
 #include <cassert>
+#include <cstdlib>
 #include "generate-constraints.h"
 #include "constraint.h"
 

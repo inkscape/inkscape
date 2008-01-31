@@ -11,13 +11,14 @@
  * Released under the GNU GPL; see COPYING for details
  */
 
+#include <cstring>
+#include <glibmm/i18n.h>
 
 #include "xml/node-event-vector.h"
 #include "sp-xmlview-content.h"
 #include "desktop-handles.h"
 #include "document-private.h"
 #include "inkscape.h"
-#include <glibmm/i18n.h>
 
 static void sp_xmlview_content_class_init (SPXMLViewContentClass * klass);
 static void sp_xmlview_content_init (SPXMLViewContent * text);

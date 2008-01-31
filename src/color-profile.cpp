@@ -10,6 +10,8 @@
 #include <gtk/gtkmessagedialog.h>
 #endif // DEBUG_LCMS
 
+#include <cstring>
+#include <string>
 #include "xml/repr.h"
 #include "color-profile.h"
 #include "color-profile-fns.h"

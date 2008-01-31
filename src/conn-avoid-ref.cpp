@@ -10,6 +10,8 @@
  */
 
 
+#include <cstring>
+#include <string>
 
 #include "sp-item.h"
 #include "conn-avoid-ref.h"

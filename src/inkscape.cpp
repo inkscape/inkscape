@@ -43,6 +43,8 @@ using Inkscape::Extension::Internal::PrintWin32;
 #include <gtk/gtkmessagedialog.h>
 
 #include <glibmm/i18n.h>
+#include <string>
+#include <cstring>
 #include "helper/sp-marshal.h"
 #include "dialogs/debugdialog.h"
 #include "application/application.h"

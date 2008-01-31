@@ -1,5 +1,5 @@
 /*
-** vim: set cindent 
+** vim: set cindent
 ** vim: ts=4 sw=4 et tw=0 wm=0
 */
 /**
@@ -20,6 +20,7 @@
 #include "straightener.h"
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
 
 using std::set;
 using std::vector;

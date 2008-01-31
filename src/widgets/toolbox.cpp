@@ -27,6 +27,9 @@
 # include "config.h"
 #endif
 
+#include <cstring>
+#include <string>
+
 #include <gtkmm.h>
 #include <gtk/gtk.h>
 #include <iostream>

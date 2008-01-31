@@ -11,11 +11,13 @@
  *
  *  Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
  *  Copyright (C) (date unspecified) Authors
- 
+
  * This code is in public domain if done by Lauris
  * This code is GPL if done by Ted or David
  */
 
+#include <cstring>
+#include <string>
 #include <string.h>
 #include "require-config.h"   /* HAVE_GTK_WINDOW_FULLSCREEN */
 #include "helper/helper-forward.h"

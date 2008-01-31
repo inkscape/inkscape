@@ -9,6 +9,8 @@
  * Released under GNU LGPL, read the file 'COPYING.LIB' for more information
  */
 
+#include <cstring>
+#include <string>
 #include <string.h>
 #include <vector>
 #include "streams-zlib.h"

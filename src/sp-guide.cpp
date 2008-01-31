@@ -18,6 +18,10 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
+
+#include <algorithm>
+#include <cstring>
+#include <string>
 #include "display/guideline.h"
 #include "svg/svg.h"
 #include "svg/stringstream.h"

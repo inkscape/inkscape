@@ -3,6 +3,8 @@
 #endif
 
 #include <map>
+#include <cstring>
+#include <string>
 #include <glib.h> // g_assert()
 
 #include "xml/node-iterators.h"

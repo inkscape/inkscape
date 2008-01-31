@@ -15,7 +15,10 @@
  *
  */
 
+#include <cstring>
+#include <string>
 #include <glib/gstrfuncs.h>
+
 #include "xml/simple-node.h"
 #include "xml/node-event-vector.h"
 #include "xml/node-fns.h"

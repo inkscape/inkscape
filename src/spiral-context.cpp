@@ -17,6 +17,8 @@
 #include "config.h"
 
 #include <gdk/gdkkeysyms.h>
+#include <cstring>
+#include <string>
 
 #include "macros.h"
 #include "display/sp-canvas.h"

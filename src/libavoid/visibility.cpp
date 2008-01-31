@@ -20,7 +20,6 @@
  *
 */
 
-
 #include <algorithm>
 #include <cfloat>
 

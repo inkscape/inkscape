@@ -18,6 +18,8 @@
 #endif
 
 #include <glibmm/i18n.h>
+#include <cstring>
+#include <string>
 
 #include "desktop-handles.h"
 #include "selection.h"

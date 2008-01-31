@@ -21,6 +21,8 @@
 #include <libnr/n-art-bpath.h>
 #include <libnr/nr-point-matrix-ops.h>
 #include <libnr/nr-translate-ops.h>
+#include <cstring>
+#include <string>
 
 #define SP_CURVE_LENSTEP 32
 

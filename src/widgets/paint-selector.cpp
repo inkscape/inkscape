@@ -16,7 +16,8 @@
 # include "config.h"
 #endif
 
-
+#include <cstring>
+#include <string>
 
 #include <gtk/gtkhbox.h>
 #include <gtk/gtkradiobutton.h>

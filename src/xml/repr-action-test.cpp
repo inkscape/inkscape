@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <cstdlib>
 #include <glib.h>
 #include "../utest/utest.h"
 

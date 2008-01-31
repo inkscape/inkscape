@@ -32,6 +32,8 @@
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmenu.h>
 #include <glibmm/i18n.h>
+#include <cstring>
+#include <string>
 
 #include "display/sp-canvas.h"
 #include "xml/node-event-vector.h"

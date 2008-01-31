@@ -33,7 +33,8 @@
 #ifdef HAVE_IEEEFP_H
 #include <ieeefp.h>
 #endif
-#include <string.h>
+#include <cstring>
+#include <string>
 #include <locale.h>
 
 #include <popt.h>

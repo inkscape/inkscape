@@ -12,6 +12,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <string>
+#include <cstring>
+
 #include "desktop.h"
 #include "color-rgba.h"
 #include "svg/css-ostringstream.h"

@@ -16,8 +16,10 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include <libnr/nr-matrix-fns.h>
 
+#include <cstring>
+#include <string>
+#include <libnr/nr-matrix-fns.h>
 //#define GDK_PIXBUF_ENABLE_BACKEND 1
 //#include <gdk-pixbuf/gdk-pixbuf-io.h>
 #include "display/nr-arena-image.h"

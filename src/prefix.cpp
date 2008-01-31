@@ -39,10 +39,10 @@
     #include <glib.h> //for GThreads
 #endif /* BR_THREADS */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
 #include <limits.h>
-#include <string.h>
 #include "prefix.h"
 
 #ifdef __cplusplus

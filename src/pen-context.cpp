@@ -16,6 +16,8 @@
  */
 
 #include <gdk/gdkkeysyms.h>
+#include <cstring>
+#include <string>
 
 #include "pen-context.h"
 #include "sp-namedview.h"

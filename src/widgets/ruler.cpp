@@ -13,9 +13,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <cstring>
 #include <cmath>
 #include <cstdio>
-#include <string.h>
+
 #include "widget-sizes.h"
 #include "desktop-widget.h"
 #include "ruler.h"

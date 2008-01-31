@@ -15,6 +15,8 @@
 #define noNR_ARENA_ITEM_VERBOSE
 #define noNR_ARENA_ITEM_DEBUG_CASCADE
 
+#include <cstring>
+#include <string>
 
 #include <libnr/nr-blit.h>
 #include <libnr/nr-pixops.h>

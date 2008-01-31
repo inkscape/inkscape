@@ -33,6 +33,7 @@
 #include "libavoid/router.h"
 #include <algorithm>
 #include <vector>
+#include <climits>
 #include <limits.h>
 #include <math.h>
 

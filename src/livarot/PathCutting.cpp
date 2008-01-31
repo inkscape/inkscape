@@ -13,6 +13,10 @@
  *  Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <cstring>
+#include <string>
+#include <cstdio>
+
 #include "Path.h"
 #include "style.h"
 #include "livarot/path-description.h"
@@ -25,11 +29,11 @@ void  Path::DashPolyline(float head,float tail,float body,int nbD,float *dashs,b
 
   std::vector<path_lineto> orig_pts = pts;
   pts.clear();
-  
+
   int       lastMI=-1;
   int curP = 0;
   int lastMP = -1;
-  
+
   for (int i = 0; i < int(orig_pts.size()); i++) {
     if ( orig_pts[curP].isMoveTo == polyline_moveto ) {
       if ( lastMI >= 0 && lastMI < i-1 ) { // au moins 2 points

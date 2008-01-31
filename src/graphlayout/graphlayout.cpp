@@ -14,6 +14,8 @@
 #include <map>
 #include <vector>
 #include <algorithm>
+#include <cstring>
+#include <cstdlib>
 #include <float.h>
 
 #include "desktop.h"

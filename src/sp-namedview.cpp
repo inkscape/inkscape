@@ -15,6 +15,8 @@
  */
 
 #include "config.h"
+#include <cstring>
+#include <string>
 
 #include "display/canvas-grid.h"
 #include "helper/units.h"

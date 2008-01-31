@@ -13,6 +13,8 @@
 
 #include "uristream.h"
 #include "sys.h"
+#include <string>
+#include <cstring>
 
 #ifdef WIN32
 // For now to get at is_os_wide().

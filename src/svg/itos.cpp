@@ -16,6 +16,7 @@
 // Standard include files
 #include <algorithm>
 #include <string>		// for string
+#include <cstring>
 
 using namespace std;
 

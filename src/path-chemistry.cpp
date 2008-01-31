@@ -16,6 +16,8 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
+#include <cstring>
+#include <string>
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include "display/curve.h"

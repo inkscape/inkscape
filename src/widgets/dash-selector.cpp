@@ -18,10 +18,13 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
+
+#include <cstring>
+#include <string>
 #include <libnr/nr-macros.h>
 #include <gtk/gtk.h>
-
 #include <glibmm/i18n.h>
+
 #include "../style.h"
 #include "../dialogs/dialog-events.h"
 

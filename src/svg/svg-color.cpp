@@ -17,9 +17,10 @@
 # include "config.h"
 #endif
 
-#include "prefs-utils.h"
-#include "svg-color.h"
-#include "svg-icc-color.h"
+#include <cstdlib>
+#include <cstdio> // sprintf
+#include <cstring>
+#include <string>
 #include <cassert>
 #include <math.h>
 #include <glib/gmem.h>
@@ -28,9 +29,13 @@
 #include <glib/gstrfuncs.h>
 #include <glib/ghash.h>
 #include <glib/gutils.h>
-#include <cstdio> // sprintf
 #include <errno.h>
+
 #include "strneq.h"
+#include "prefs-utils.h"
+#include "svg-color.h"
+#include "svg-icc-color.h"
+
 using std::sprintf;
 
 struct SPSVGColor {

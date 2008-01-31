@@ -11,6 +11,8 @@
 
 #include "gc-core.h"
 #include <stdexcept>
+#include <cstring>
+#include <string>
 #include <glib/gmessages.h>
 #include <sigc++/functors/ptr_fun.h>
 #include <glibmm/main.h>

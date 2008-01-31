@@ -14,7 +14,8 @@
  */
 
 #include "gzipstream.h"
-
+#include <cstring>
+#include <string>
 
 namespace Inkscape
 {

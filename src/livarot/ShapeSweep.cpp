@@ -6,6 +6,9 @@
  *
  */
 
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <glib/gmem.h>
 #include "Shape.h"
 #include "livarot/sweep-event-queue.h"

@@ -1,5 +1,10 @@
-#include "svg/strip-trailing-zeros.h"
+
+#include <cstring>
+#include <string>
 #include <glib/gmessages.h>
+
+#include "svg/strip-trailing-zeros.h"
+
 using std::string;
 
 string

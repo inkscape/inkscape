@@ -2,7 +2,7 @@
  *  \file livarot/float-line.cpp
  *
  * Implementation of coverage with floating-point values.
- * 
+ *
  *  \author Fred
  *
  *  public domain
@@ -14,6 +14,7 @@
 #endif
 #include "livarot/float-line.h"
 #include "livarot/int-line.h"
+#include <cstdio>
 
 FloatLigne::FloatLigne()
 {
@@ -23,7 +24,6 @@ FloatLigne::FloatLigne()
 
 FloatLigne::~FloatLigne()
 {
-    
 }
 
 /// Reset the line to  empty (boundaries and runs).

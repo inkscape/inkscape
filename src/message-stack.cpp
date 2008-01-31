@@ -11,6 +11,8 @@
 
 #include <string.h>
 #include <glib/gstrfuncs.h>
+#include <cstring>
+#include <string>
 #include "message-stack.h"
 
 namespace Inkscape {

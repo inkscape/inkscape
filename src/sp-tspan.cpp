@@ -27,6 +27,8 @@
 # include "config.h"
 #endif
 
+#include <cstring>
+#include <string>
 #include <glibmm/i18n.h>
 
 #include <livarot/Path.h>

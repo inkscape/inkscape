@@ -13,6 +13,8 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
+#include <cstring>
+#include <string>
 #include <gdk/gdkkeysyms.h>
 #include "macros.h"
 #include <glibmm/i18n.h>

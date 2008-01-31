@@ -5,6 +5,8 @@
 # include "config.h"
 #endif
 #include <glibmm/i18n.h>
+#include <cstring>
+#include <string>
 
 #include "attributes.h"
 #include "xml/repr.h"

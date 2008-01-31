@@ -19,6 +19,8 @@
 # include "config.h"
 #endif
 
+#include <cstring>
+#include <string>
 
 #include "svg/svg.h"
 #include "attributes.h"

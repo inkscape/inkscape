@@ -16,8 +16,9 @@
 # include "config.h"
 #endif
 
-#include <string.h>
 #include <glibmm/i18n.h>
+#include <string>
+#include <cstring>
 
 #include "helper/window.h"
 #include "macros.h"

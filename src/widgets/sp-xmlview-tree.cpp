@@ -11,6 +11,9 @@
  * Released under the GNU GPL; see COPYING for details
  */
 
+#include <cstring>
+#include <string>
+
 #include "../xml/node-event-vector.h"
 #include "sp-xmlview-tree.h"
 

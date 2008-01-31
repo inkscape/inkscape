@@ -16,8 +16,11 @@
 # include "config.h"
 #endif
 
+#include <cstring>
+#include <string>
 #include <math.h>
 #include <glib/gstrfuncs.h>
+
 #include "svg.h"
 #include "stringstream.h"
 #include "../unit-constants.h"

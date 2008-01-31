@@ -28,7 +28,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <glibmm/i18n.h>
-
+#include <string>
+#include <cstring>
 #include <numeric>
 
 #include "svg/svg.h"

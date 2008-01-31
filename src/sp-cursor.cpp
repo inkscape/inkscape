@@ -13,7 +13,8 @@
  */
 
 #include <cstdio>
-#include <string.h>
+#include <cstring>
+#include <string>
 #include <ctype.h>
 #include "sp-cursor.h"
 
@@ -32,7 +33,7 @@ sp_cursor_bitmap_and_mask_from_xpm(GdkBitmap **bitmap, GdkBitmap **mask, gchar c
 
     int transparent_color = ' ';
     int black_color = '.';
-	
+
     char pixmap_buffer[(32 * 32)/8];
     char mask_buffer[(32 * 32)/8];
 

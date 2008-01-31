@@ -11,6 +11,9 @@
 #include "livarot/Path.h"
 #include "livarot/path-description.h"
 #include <glib.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 /*
  * polygon offset and polyline to path reassembling (when using back data)

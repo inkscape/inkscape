@@ -9,6 +9,9 @@
  * This code is in the Public Domain
  */
 
+#include <cstring>
+#include <string>
+#include <string.h>
 #include <glib/gmem.h>
 #include "nr-pixblock.h"
 

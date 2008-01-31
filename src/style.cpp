@@ -19,6 +19,9 @@
 # include "config.h"
 #endif
 
+#include <cstring>
+#include <string>
+
 #include "libcroco/cr-sel-eng.h"
 #include "xml/croco-node-iface.h"
 

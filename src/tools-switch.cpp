@@ -15,6 +15,9 @@
 # include "config.h"
 #endif
 
+#include <cstring>
+#include <string>
+
 #include "inkscape-private.h"
 #include "desktop.h"
 #include "desktop-handles.h"

@@ -10,6 +10,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <cstring>
+#include <string>
+
 #include "attributes.h"
 #include "sp-conn-end.h"
 #include "uri.h"

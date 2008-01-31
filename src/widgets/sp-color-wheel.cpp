@@ -13,6 +13,9 @@
  * This code is in public domain
  */
 
+#include <cstring>
+#include <string>
+
 #include <gtk/gtksignal.h>
 #include "sp-color-wheel.h"
 

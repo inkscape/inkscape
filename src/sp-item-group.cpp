@@ -19,6 +19,8 @@
 #endif
 
 #include <glibmm/i18n.h>
+#include <cstring>
+#include <string>
 
 #include "display/nr-arena-group.h"
 #include "libnr/nr-matrix-ops.h"

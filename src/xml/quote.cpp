@@ -11,7 +11,7 @@
  * of the GNU General Public License: see the file `COPYING'.
  */
 
-#include <string.h>
+#include <cstring>
 #include <glib/gmem.h>
 
 

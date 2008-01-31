@@ -13,6 +13,9 @@
 # include <config.h>
 #endif
 
+#include <cstring>
+#include <string>
+
 #include "style-swatch.h"
 
 #include "widgets/spw-utilities.h"

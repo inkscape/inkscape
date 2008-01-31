@@ -10,6 +10,10 @@
  *          Raph Levien <raph@acm.org>
  */
 
+#include <cstring>
+#include <string>
+#include <cstdlib>
+#include <cstdio>
 #include <glib/gmem.h>
 #include <glib/gmessages.h>
 

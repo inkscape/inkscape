@@ -12,9 +12,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 #include <glib/gtypes.h>
-#include "svg/svg-length.h"
 #include <vector>
+#include <cstring>
 #include <string>
+
+#include "svg/svg-length.h"
 
 struct NArtBpath;
 struct NRMatrix;

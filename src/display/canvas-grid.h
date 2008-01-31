@@ -11,21 +11,20 @@
  *
  */
 
-#include <display/sp-canvas.h>
-#include "xml/repr.h"
+#include <cstring>
+#include <string>
+
 #include <gtkmm/box.h>
-
-
 #include <gtkmm.h>
+
+#include "display/sp-canvas.h"
+#include "xml/repr.h"
 #include "ui/widget/color-picker.h"
 #include "ui/widget/scalar-unit.h"
-
 #include "ui/widget/registered-widget.h"
 #include "ui/widget/registry.h"
 #include "ui/widget/tolerance-slider.h"
-
 #include "xml/node-event-vector.h"
-
 #include "snapper.h"
 #include "line-snapper.h"
 

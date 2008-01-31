@@ -26,6 +26,8 @@
      Lauris Kaplinski <lauris@ximian.com>
 */
 
+#include <cstring>
+#include <string>
 #include <cassert>
 #include <glib/gmem.h>
 #include <glib/gmessages.h>

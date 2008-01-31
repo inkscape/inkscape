@@ -18,6 +18,8 @@
 
 #define noSP_GRADIENT_VERBOSE
 
+#include <cstring>
+#include <string>
 
 #include <libnr/nr-matrix-div.h>
 #include <libnr/nr-matrix-fns.h>

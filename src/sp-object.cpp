@@ -31,6 +31,8 @@
  * dictionary and so on. Source: doc/architecture.txt
  */
 
+#include <cstring>
+#include <string>
 
 #include "helper/sp-marshal.h"
 #include "xml/node-event-vector.h"

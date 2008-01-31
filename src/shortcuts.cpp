@@ -23,6 +23,8 @@
 #endif
 
 #include <vector>
+#include <cstring>
+#include <string>
 
 #include <gdk/gdkkeys.h>
 #include <gdk/gdkkeysyms.h>

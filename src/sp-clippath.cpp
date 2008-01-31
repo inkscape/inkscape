@@ -12,7 +12,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-
+#include <cstring>
+#include <string>
 
 #include "display/nr-arena.h"
 #include "display/nr-arena-group.h"

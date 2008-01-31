@@ -14,9 +14,13 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
+
+#include <cstring>
+#include <string>
+#include <glibmm/i18n.h>
+
 #include "libnr/nr-matrix-fns.h"
 #include "xml/repr.h"
-#include <glibmm/i18n.h>
 #include "sp-rect.h"
 #include "sp-textpath.h"
 #include "inkscape.h"

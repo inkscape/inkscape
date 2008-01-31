@@ -42,7 +42,9 @@
 #include <fcntl.h>
 //#endif
 
-
+#include <cstring>
+#include <string>
+#include <cstdlib>
 #include <glib.h>
 
 #include "jar.h"

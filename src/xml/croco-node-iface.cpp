@@ -1,6 +1,10 @@
+
+#include <cstring>
+#include <string>
+#include <glib/gstrfuncs.h>
+
 #include "xml/croco-node-iface.h"
 #include "xml/node.h"
-#include <glib/gstrfuncs.h>
 
 static char const *
 local_part(char const *const qname)

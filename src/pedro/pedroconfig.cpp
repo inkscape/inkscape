@@ -49,6 +49,9 @@ We are expecting an xml file with this format:
 #include "pedrodom.h"
 
 #include <stdio.h>
+#include <cstring>
+#include <string>
+#include <cstdlib>
 #include <stdlib.h>
 #include <string.h>
 

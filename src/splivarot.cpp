@@ -17,6 +17,8 @@
 # include <config.h>
 #endif
 
+#include <cstring>
+#include <string>
 #include <vector>
 #include <glib/gmem.h>
 #include "xml/repr.h"

@@ -2,6 +2,7 @@
 #define INKSCAPE_STREQ_H
 
 #include <cstring>
+#include <string>
 
 /** Convenience/readability wrapper for strcmp(a,b)==0. */
 inline bool

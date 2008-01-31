@@ -1,9 +1,12 @@
 
-#include <approx-equal.h>
-#include <remove-last.h>
-#include <sp-guide.h>
-#include <sp-guide-constraint.h>
-#include <sp-item.h>
+#include <algorithm>
+
+#include "approx-equal.h"
+#include "remove-last.h"
+#include "sp-guide.h"
+#include "sp-guide-constraint.h"
+#include "sp-item.h"
+
 using std::vector;
 
 void sp_item_rm_unsatisfied_cns(SPItem &item)

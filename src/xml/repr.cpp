@@ -22,6 +22,8 @@
 # include "config.h"
 #endif
 
+#include <cstring>
+
 #include "xml/repr.h"
 #include "xml/text-node.h"
 #include "xml/element-node.h"

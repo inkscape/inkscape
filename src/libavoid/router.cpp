@@ -17,9 +17,10 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * 
+ *
 */
 
+#include <cstdlib>
 #include "libavoid/shape.h"
 #include "libavoid/router.h"
 #include "libavoid/visibility.h"
@@ -636,7 +637,7 @@ void Router::markConnectors(ShapeRef *shape)
                 if (((int) r_p2.y) != 0)
                 {
                     printf("r_p2.y: %f != 0\n", r_p2.y);
-                    abort();
+                    std::abort();
                 }
                 // This might be slightly off.
                 r_p2.y = 0;

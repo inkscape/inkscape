@@ -16,9 +16,10 @@
 # include "config.h"
 #endif
 
-
+#include <cstring>
+#include <string>
 #include <gtk/gtk.h>
- 
+
 #include "selection.h"
 
 #include "helper/unit-menu.h"
