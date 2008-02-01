@@ -184,8 +184,8 @@ sp_hruler_draw_ticks (GtkRuler *ruler)
   if ((upper - lower) == 0) 
     return;
   increment = (double) (width + 2*UNUSED_PIXELS) / (upper - lower);
-
-  /* determine the scale
+  
+   /* determine the scale
    *  We calculate the text size as for the vruler instead of using
    *  text_width = gdk_string_width(font, unit_str), so that the result
    *  for the scale looks consistent with an accompanying vruler
@@ -208,7 +208,7 @@ sp_hruler_draw_ticks (GtkRuler *ruler)
       subd_incr = ruler->metric->ruler_scale[scale] / 
 	          ruler->metric->subdivide[i];
       if (subd_incr * fabs(increment) <= MINIMUM_INCR) 
-	continue;
+    continue;
 
       /* Calculate the length of the tickmarks. Make sure that
        * this length increases for each set of ticks
@@ -233,8 +233,12 @@ sp_hruler_draw_ticks (GtkRuler *ruler)
 
 	while (cur <= end)
 	{
-	  pos = int(Inkscape::round ((cur - lower) * increment) - UNUSED_PIXELS);
-
+	  // due to the typical values for cur, lower and increment, pos will often end up to
+      // be e.g. 641.50000000000; rounding behaviour is not defined in such a case (see round.h)
+      // and jitter will be apparent (upon redrawing some of the lines on the ruler might jump a
+      // by a pixel, and jump back on the next redraw). This is suppressed by adding 1e-12
+      pos = int(Inkscape::round((cur - lower) * increment + 1e-12)) - UNUSED_PIXELS; 
+      
 	  gdk_draw_line (ruler->backing_store, gc,
 			 pos, height + ythickness, 
 			 pos, height - length + ythickness);
@@ -261,7 +265,7 @@ sp_hruler_draw_ticks (GtkRuler *ruler)
        * errors in subd_incr.
        */
       ++tick_index;
-      cur = start + (((double)tick_index) * (double)ruler->metric->ruler_scale[scale])/ ruler->metric->subdivide[i];
+      cur = start + tick_index * subd_incr;
 	}
     }
 }
@@ -565,7 +569,11 @@ sp_vruler_draw_ticks (GtkRuler *ruler)
     cur = start;        
 
     while (cur < end) {
-			pos = int(Inkscape::round ((cur - lower) * increment) - UNUSED_PIXELS);
+          // due to the typical values for cur, lower and increment, pos will often end up to
+          // be e.g. 641.50000000000; rounding behaviour is not defined in such a case (see round.h)
+          // and jitter will be apparent (upon redrawing some of the lines on the ruler might jump a
+          // by a pixel, and jump back on the next redraw). This is suppressed by adding 1e-12
+            pos = int(Inkscape::round((cur - lower) * increment + 1e-12)) - UNUSED_PIXELS;
 
 			gdk_draw_line (ruler->backing_store, gc,
 										 height + xthickness - length, pos,
@@ -599,7 +607,7 @@ sp_vruler_draw_ticks (GtkRuler *ruler)
 			 * errors in subd_incr.
 			 */
 			++tick_index;
-			cur = start + (((double)tick_index) * (double)ruler->metric->ruler_scale[scale])/ ruler->metric->subdivide[i];
+			cur = start + tick_index * subd_incr;
 		}
 	}
 }
