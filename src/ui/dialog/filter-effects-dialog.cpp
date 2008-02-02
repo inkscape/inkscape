@@ -1812,6 +1812,7 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
             Glib::ustring result;
             Gtk::TreeIter target_iter = _model->get_iter(path);
             target = (*target_iter)[_columns.primitive];
+            col = get_column(1);
 
             Gdk::Rectangle rct;
             get_cell_area(path, *col, rct);
