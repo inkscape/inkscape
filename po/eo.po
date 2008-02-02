@@ -1,18 +1,19 @@
 # translation of eo.po to
 # Esperanto translation of Inkscape.
-# Copyright (C) 2000, 2001, 2002, 2005, 2006, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2000, 2001, 2002, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
 # This file is distributed under the same license as the inkscape package.
 #
 # KEYs:				NOTES about terms:
 #
-# stirklavo = control		stroke = streko, konturo, tuŝo
-# ŝovoklavo = shift		(to) stroke = (kune kun vorto "path") konturi
-# enigoklavo = enter		thinning = subtiliĝo/ subtiligo
-# sagoklavo = arrow
+# stirklavo [Strkl] = control		stroke = streko, konturo, tuŝo
+# ŝovoklavo [Ŝvkl]  = shift		(to) stroke = (kune kun vorto "path") konturi
+# enigoklavo        = enter		thinning = subtiliĝo/ subtiligo
+# sagoklavo         = arrow
 #
 # Esperanto special letters = ĉŝĝĥĵŭ
-# Antonio C. Codazzi "AĈKo la Filozofo" <f_sophia@libero.it>, 2006, 2007.
 #
+# Antonio C. Codazzi "la Filozofo" <f_sophia@libero.it>, 2006, 2007, 2008.
+# N.B.: mi dankas Sebastian Cyprych pro liaj sugestoj [Antonio, 2008]
 #
 #
 msgid ""
@@ -20,9 +21,9 @@ msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-01-21 03:43-0200\n"
-"PO-Revision-Date: 2007-11-18 16:53+0100\n"
-"Last-Translator: A.C.Codazzi\n"
-"Language-Team:  <it@li.org>\n"
+"PO-Revision-Date: 2008-01-31 17:28+0100\n"
+"Last-Translator: Antonio C. Codazzi <f_sophia@libero.it>\n"
+"Language-Team: esperanto <eo@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -38,8 +39,7 @@ msgid "Inkscape Vector Graphics Editor"
 msgstr "Inkscape: Ilustrilo por Vektoraj Bildoj"
 
 #: ../src/arc-context.cpp:339
-msgid ""
-"<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
+msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
 "<b>Stirklavo</b>: desegnas cirklojn aŭ elipsojn laŭskale kaj elklikiĝas "
 "angulojn de arkoj/segmentoj"
@@ -76,7 +76,7 @@ msgstr "Kreo de nova konektilo"
 
 #: ../src/connector-context.cpp:749
 msgid "Connector endpoint drag cancelled."
-msgstr "Finpunkta treno de konekilo estis forigita."
+msgstr "Finpunkta treno de konektilo estis forigita."
 
 #: ../src/connector-context.cpp:797
 msgid "Reroute connector"
@@ -117,8 +117,7 @@ msgstr "<b>Nuna tavolo estas kaŝita</b>. Igu ĝin malkaŝita por desegni sur ĝ
 
 #: ../src/context-fns.cpp:42 ../src/context-fns.cpp:71
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
-msgstr ""
-"<b>Nuna tavolo estas blokita</b>. Igu ĝin malblokita por desegni sur ĝi."
+msgstr "<b>Nuna tavolo estas blokita</b>. Igu ĝin malblokita por desegni sur ĝi."
 
 #: ../src/desktop-events.cpp:149
 msgid "Create guide"
@@ -182,8 +181,8 @@ msgid ""
 "If you want to clone several objects, <b>group</b> them and <b>clone the "
 "group</b>."
 msgstr ""
-"Se vi volas kloni plurajn objektojn, estas necese <b>arigi</b> ilin kaj "
-"<b>kloni aron</b>."
+"Se vi volas kloni plurajn objektojn, estas necese <b>grupigi</b> ilin kaj "
+"<b>kloni grupon</b>."
 
 #: ../src/dialogs/clonetiler.cpp:1514
 msgid "Create tiled clones"
@@ -212,7 +211,7 @@ msgstr "_Simetrio"
 #.
 #: ../src/dialogs/clonetiler.cpp:1880
 msgid "Select one of the 17 symmetry groups for the tiling"
-msgstr "Elektu unu el 17 arojn de simetrio por plenigo"
+msgstr "Elektu unu el 17 grupojn de simetrio por plenigo"
 
 #. TRANSLATORS: "translation" means "shift" / "displacement" here.
 #: ../src/dialogs/clonetiler.cpp:1891
@@ -337,13 +336,13 @@ msgstr "<b>Eksponento:</b>"
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr ""
 "Indiku ke la linioj havas interspacon kostantan (1), konverĝan (<1) aŭ "
-"diverĝa (<1)"
+"diverĝa (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2025
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr ""
 "Indiku ke la kolumnoj havas interspacon kostantan (1), konverĝan (<1) aŭ "
-"diverĝa (<1)"
+"diverĝa (>1)"
 
 #. TRANSLATORS: "Alternate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:2033 ../src/dialogs/clonetiler.cpp:2203
@@ -358,38 +357,34 @@ msgstr "Alternigu signon de ŝovado por ĉiu linio"
 
 #: ../src/dialogs/clonetiler.cpp:2044
 msgid "Alternate the sign of shifts for each column"
-msgstr "Alternigu signon de ŝovado por ĉiu kolumno"
+msgstr "Alternigu la signon de ŝovado por ĉiu kolumno"
 
 #. TRANSLATORS: "Cumulate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:2051 ../src/dialogs/clonetiler.cpp:2221
 #: ../src/dialogs/clonetiler.cpp:2298
-#, fuzzy
 msgid "<small>Cumulate:</small>"
-msgstr "<small>Alternigu:</small>"
+msgstr "<small>Amasigu:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:2057
-#, fuzzy
 msgid "Cumulate the shifts for each row"
-msgstr "Alternigu signon de ŝovado por ĉiu linio"
+msgstr "Amasigu la ŝovaĵojn por ĉiu linio"
 
 #: ../src/dialogs/clonetiler.cpp:2062
-#, fuzzy
 msgid "Cumulate the shifts for each column"
-msgstr "Alternigu signon de ŝovado por ĉiu kolumno"
+msgstr "Amasigu la ŝovaĵojn por ĉiu kolumno"
 
 #. TRANSLATORS: "Cumulate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:2069
-#, fuzzy
 msgid "<small>Exclude tile:</small>"
-msgstr "<small>Alternigu:</small>"
+msgstr "<small>Ekskludu klonon:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:2075
 msgid "Exclude tile height in shift"
-msgstr ""
+msgstr "Ekskludu la alton de la klono en la ŝovado"
 
 #: ../src/dialogs/clonetiler.cpp:2080
 msgid "Exclude tile width in shift"
-msgstr ""
+msgstr "Ekskludu la larĝon de la klono en la ŝovado"
 
 #: ../src/dialogs/clonetiler.cpp:2089
 msgid "Sc_ale"
@@ -432,31 +427,24 @@ msgid "Randomize the vertical scale by this percentage"
 msgstr "Aleatorigu vertikalan skalo per ĉi procento"
 
 #: ../src/dialogs/clonetiler.cpp:2166
-#, fuzzy
 msgid "Whether row scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr ""
 "Indiku ke la linioj havas interspacon kostantan (1), konverĝan (<1) aŭ "
-"diverĝa (<1)"
+"diverĝan (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2173
-#, fuzzy
 msgid "Whether column scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr ""
 "Indiku ke la kolumnoj havas interspacon kostantan (1), konverĝan (<1) aŭ "
-"diverĝa (<1)"
+"diverĝan (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2181
-#, fuzzy
 msgid "<b>Base:</b>"
-msgstr "<b>m</b>"
+msgstr "<b>Bazo:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2188 ../src/dialogs/clonetiler.cpp:2195
-#, fuzzy
-msgid ""
-"Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
-msgstr ""
-"Indiku ke la linioj havas interspacon kostantan (1), konverĝan (<1) aŭ "
-"diverĝa (<1)"
+msgid "Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
+msgstr "Bazo de logaritma spiralo: ne-uzata (1), konverĝa (<1) aŭ diverĝa (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2209
 msgid "Alternate the sign of scales for each row"
@@ -467,14 +455,12 @@ msgid "Alternate the sign of scales for each column"
 msgstr "Alternigu signon de skalo por ĉiu kolumno"
 
 #: ../src/dialogs/clonetiler.cpp:2227
-#, fuzzy
 msgid "Cumulate the scales for each row"
-msgstr "Alternigu signon de skalo por ĉiu linio"
+msgstr "Amasigu la skalaĵojn por ĉiu linio"
 
 #: ../src/dialogs/clonetiler.cpp:2232
-#, fuzzy
 msgid "Cumulate the scales for each column"
-msgstr "Alternigu signon de skalo por ĉiu kolumno"
+msgstr "Amasigu la skalaĵojn por ĉiu kolumno"
 
 #: ../src/dialogs/clonetiler.cpp:2241
 msgid "_Rotation"
@@ -507,14 +493,12 @@ msgid "Alternate the rotation direction for each column"
 msgstr "Alternigu rotacian direkton por ĉiu kolumno"
 
 #: ../src/dialogs/clonetiler.cpp:2304
-#, fuzzy
 msgid "Cumulate the rotation for each row"
-msgstr "Alternigu rotacian direkton por ĉiu linio"
+msgstr "Amasigu la rotaciojn por ĉiu linio"
 
 #: ../src/dialogs/clonetiler.cpp:2309
-#, fuzzy
 msgid "Cumulate the rotation for each column"
-msgstr "Alternigu rotacian direkton por ĉiu kolumno"
+msgstr "Amasigu la rotaciojn por ĉiu kolumno"
 
 #: ../src/dialogs/clonetiler.cpp:2318
 msgid "_Blur & opacity"
@@ -898,12 +882,11 @@ msgstr " Fo_rigu "
 
 #: ../src/dialogs/clonetiler.cpp:2947
 msgid "Remove existing tiled clones of the selected object (siblings only)"
-msgstr ""
-"Forigu ekzistantajn seriajn klonojn de la elektita objekto (nur parencaj)"
+msgstr "Forigu ekzistantajn seriajn klonojn de la elektita objekto (nur parencaj)"
 
 #: ../src/dialogs/clonetiler.cpp:2963
 msgid " R_eset "
-msgstr " R_esetu "
+msgstr " R_eŝargu "
 
 #. TRANSLATORS: "change" is a noun here
 #: ../src/dialogs/clonetiler.cpp:2965
@@ -911,7 +894,7 @@ msgid ""
 "Reset all shifts, scales, rotates, opacity and color changes in the dialog "
 "to zero"
 msgstr ""
-"Resetu ĉiujn ŝovadojn, skalojn, rotaciojn, opakecojn kaj ŝanĝojn de koloro "
+"Reŝargu ĉiujn ŝovadojn, skalojn, rotaciojn, opakecojn kaj ŝanĝojn de koloro "
 "en dialogofenestro per nulo"
 
 #: ../src/dialogs/debugdialog.cpp:135
@@ -1086,9 +1069,9 @@ msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "La %s dosierujo ne ekzistas aŭ ĝi ne estas dosierujo.\n"
 
 #: ../src/dialogs/export.cpp:1182
-#, fuzzy, c-format
+#, c-format
 msgid "Exporting %s (%lu x %lu)"
-msgstr "Eksportante %s (%d x %d) "
+msgstr "Eksportante %s (%lu x %lu) "
 
 #: ../src/dialogs/export.cpp:1303
 msgid "Select a filename for exporting"
@@ -1269,8 +1252,7 @@ msgid "_Style: "
 msgstr "_Stilo: "
 
 #: ../src/dialogs/find.cpp:694 ../src/ui/dialog/find.cpp:63
-msgid ""
-"Find objects by the value of the style attribute (exact or partial match)"
+msgid "Find objects by the value of the style attribute (exact or partial match)"
 msgstr "Trovu objektojn per valoro de Stilo eco (preciza aŭ parciala kongruo)"
 
 #: ../src/dialogs/find.cpp:695 ../src/ui/dialog/find.cpp:64
@@ -1326,9 +1308,8 @@ msgid "Select objects matching all of the fields you filled in"
 msgstr "Serĉu kongruajn objektojn rilate al markitaj fakoj"
 
 #: ../src/dialogs/guidelinedialog.cpp:44
-#, fuzzy
 msgid "Measure unit:"
-msgstr "Streko de Mezuro"
+msgstr "Mezurunito:"
 
 #: ../src/dialogs/guidelinedialog.cpp:45
 #: ../src/dialogs/object-attributes.cpp:53 ../src/widgets/toolbox.cpp:1108
@@ -1341,19 +1322,16 @@ msgid "Y:"
 msgstr "Y:"
 
 #: ../src/dialogs/guidelinedialog.cpp:47
-#, fuzzy
 msgid "Degrees:"
-msgstr "Gradoj"
+msgstr "Gradoj:"
 
 #: ../src/dialogs/guidelinedialog.cpp:48
-#, fuzzy
 msgid "Rela_tive change"
 msgstr "Rela_tiva movo"
 
 #: ../src/dialogs/guidelinedialog.cpp:48
-#, fuzzy
 msgid "Move and rotate guide relative to current settings"
-msgstr "Movu gvidrelon rilatan al nuna pozicio"
+msgstr "Movu kaj turnu gvidrelon rilatan al nuna pozicio"
 
 #: ../src/dialogs/guidelinedialog.cpp:114
 msgid "Set guide properties"
@@ -1364,14 +1342,14 @@ msgid "Guideline"
 msgstr "Gvidolinio"
 
 #: ../src/dialogs/guidelinedialog.cpp:241
-#, fuzzy, c-format
+#, c-format
 msgid "Guideline: %s"
-msgstr "Gvidolinio"
+msgstr "Gvidolinio: %s"
 
 #: ../src/dialogs/guidelinedialog.cpp:247
-#, fuzzy, c-format
+#, c-format
 msgid "Current settings: %s"
-msgstr "Importu agordojn"
+msgstr "Nunaj agordaĵoj: %s"
 
 #: ../src/dialogs/iconpreview.cpp:139
 #, c-format
@@ -1402,8 +1380,7 @@ msgid "_Id"
 msgstr "_Id"
 
 #: ../src/dialogs/item-properties.cpp:129
-msgid ""
-"The id= attribute (only letters, digits, and the characters .-_: allowed)"
+msgid "The id= attribute (only letters, digits, and the characters .-_: allowed)"
 msgstr "La id= eco (estas validaj nur literoj, ciferoj kaj tipoj .-_:)"
 
 #. Button for setting the object's id, label, title and description.
@@ -1670,7 +1647,7 @@ msgstr ""
 
 #: ../src/dialogs/rdf.cpp:222
 msgid "Open Font License"
-msgstr "Malfermu Permesilon de la Tiparoj"
+msgstr ""
 
 #: ../src/dialogs/rdf.cpp:240
 msgid "Name by which this document is formally known."
@@ -1707,8 +1684,7 @@ msgid "Creator"
 msgstr "Kreinto"
 
 #: ../src/dialogs/rdf.cpp:253
-msgid ""
-"Name of entity primarily responsible for making the content of this document."
+msgid "Name of entity primarily responsible for making the content of this document."
 msgstr ""
 "Nomo de la primara estaĵo kiu estas responsa por fari enhavon de ĉi "
 "dokumento."
@@ -1718,8 +1694,7 @@ msgid "Rights"
 msgstr "Rajtoj"
 
 #: ../src/dialogs/rdf.cpp:256
-msgid ""
-"Name of entity with rights to the Intellectual Property of this document."
+msgid "Name of entity with rights to the Intellectual Property of this document."
 msgstr "Nomo de la estaĵo kiu rajtas pri Intelekta Proprieto de ĉi dokumento."
 
 #: ../src/dialogs/rdf.cpp:258
@@ -1832,7 +1807,7 @@ msgstr "Agordu econ"
 
 #: ../src/dialogs/stroke-style.cpp:305 ../src/dialogs/stroke-style.cpp:364
 msgid "Set stroke color"
-msgstr "Agordu koloro de strekoo"
+msgstr "Agordu koloro de streko"
 
 #: ../src/dialogs/stroke-style.cpp:355 ../src/ui/widget/selected-style.cpp:251
 #: ../src/ui/widget/selected-style.cpp:483
@@ -2062,8 +2037,7 @@ msgstr "Sama alto"
 
 #: ../src/dialogs/tiledialog.cpp:676
 msgid "If not set, each row has the height of the tallest object in it"
-msgstr ""
-"Se tio ne estas ebligita, ĉiu linio havas la alton de pli alta objekto en ĝi"
+msgstr "Se tio ne estas ebligita, ĉiu linio havas la alton de pli alta objekto en ĝi"
 
 #. #### Radio buttons to control vertical alignment ####
 #. #### Radio buttons to control horizontal alignment ####
@@ -2211,10 +2185,9 @@ msgstr "Kreu novan tektonodon"
 
 #: ../src/dialogs/xml-tree.cpp:1467
 #, c-format
-msgid ""
-"Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"
+msgid "Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"
 msgstr ""
-"Estas neeble egordi <b>%s</b>: jam ekzistas alia elemento kun valoro <b>%s</"
+"Estas neeble agordi <b>%s</b>: jam ekzistas alia elemento kun valoro <b>%s</"
 "b>!"
 
 #: ../src/dialogs/xml-tree.cpp:1482
@@ -2234,26 +2207,28 @@ msgid "Create new grid"
 msgstr "Kreu novan kradon"
 
 #: ../src/display/canvas-grid.cpp:325
-#, fuzzy
 msgid "_Enabled"
-msgstr "Tabelo"
+msgstr "_Ebligita"
 
 #: ../src/display/canvas-grid.cpp:326
 msgid ""
 "Determines whether to snap to this grid or not. Can be 'on' for invisible "
 "grids."
 msgstr ""
+"Ĝi determinas kion oni agrafas al tiu ĉi krado (aŭ ne). Povus esti 'ek' por "
+"nevideblaj kradoj."
 
 #: ../src/display/canvas-grid.cpp:329
-#, fuzzy
 msgid "_Visible"
-msgstr "Videblaj Koloroj"
+msgstr "_Videbla"
 
 #: ../src/display/canvas-grid.cpp:330
 msgid ""
 "Determines whether the grid is displayed or not. Objects are still snapped "
 "to invisible grids."
 msgstr ""
+"Ĝi determinas la kradon ĉu videblan ĉu nevideblan. La objektoj restas agrafitaj "
+"al la nevideblaj kradoj."
 
 #: ../src/display/canvas-grid.cpp:655
 msgid "Grid line _color:"
@@ -2285,7 +2260,7 @@ msgstr "Koloro de majoraj linioj de la krado"
 
 #: ../src/display/canvas-grid.cpp:661
 msgid "Color of the major (highlighted) grid lines"
-msgstr "Koloro de majoraj (akcentaj) linioj de la krado"
+msgstr "Koloro de majoraj (enfazitaj) linioj de la krado"
 
 #: ../src/display/canvas-grid.cpp:671
 msgid "Grid _units:"
@@ -2413,8 +2388,7 @@ msgid "Set picked color"
 msgstr "Agordu elektitan koloron"
 
 #: ../src/dyna-draw-context.cpp:700
-msgid ""
-"<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"
+msgid "<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"
 msgstr ""
 "<b>Elektita gvidrelo por strekoj</b>;  ĝi komencas desegni longe de gvidrelo "
 "kun <b>Strkl</b>"
@@ -2500,7 +2474,7 @@ msgstr ""
 #. This is some filler text, needs to change before relase
 #: ../src/extension/error-file.cpp:62
 msgid "Show dialog on startup"
-msgstr "Montru dialogofenestron dumstarte"
+msgstr "Vidigu dialogofenestron dumstarte"
 
 #: ../src/extension/execution-env.cpp:165
 #, c-format
@@ -2586,8 +2560,7 @@ msgstr ""
 
 #: ../src/extension/init.cpp:276
 msgid "Null external module directory name.  Modules will not be loaded."
-msgstr ""
-"Neniu nomo por dosierujo de eksteraj modjuloj. La modjuloj ne estos ŝargitaj."
+msgstr "Neniu nomo por dosierujo de eksteraj modjuloj. La modjuloj ne estos ŝargitaj."
 
 #: ../src/extension/init.cpp:290
 #, c-format
@@ -2967,8 +2940,7 @@ msgstr "Nuanco"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:49
 msgid "Modulate percent hue, saturation, and brightness of selected bitmap(s)."
-msgstr ""
-"Ĝi procente modulas nuancon, saturadon kaj heleco de elektita(j) bitmapo(j)."
+msgstr "Ĝi procente modulas nuancon, saturadon kaj heleco de elektita(j) bitmapo(j)."
 
 #: ../src/extension/internal/bitmap/negate.cpp:35
 msgid "Negate"
@@ -3031,21 +3003,20 @@ msgid "Order"
 msgstr "Ordo"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:47
-msgid ""
-"Reduce noise in selected bitmap(s) using a noise peak elimination filter."
+msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter."
 msgstr ""
 "Ĝi malpliigas perturbon en la elektita(j) bitmapo(j) per filtrilo de formovo "
 "de perturbopinto."
 
 #: ../src/extension/internal/bitmap/sample.cpp:38
-#, fuzzy
 msgid "Sample"
-msgstr "Samploj"
+msgstr "Samplo"
 
 #: ../src/extension/internal/bitmap/sample.cpp:47
-msgid ""
-"Alter the resolution of selected image by resizing it by given dimensions."
+msgid "Alter the resolution of selected image by resizing it by given dimensions."
 msgstr ""
+"Ĝi ŝanĝas la difinon de la elektita bildo per readapto de grando laŭ novaj "
+"dimensioj."
 
 #: ../src/extension/internal/bitmap/shade.cpp:39
 msgid "Shade"
@@ -3086,8 +3057,7 @@ msgid "Spread"
 msgstr "Disŝuto"
 
 #: ../src/extension/internal/bitmap/spread.cpp:44
-msgid ""
-"Randomly spread pixels in selected bitmap(s), within the radius of 'amount.'"
+msgid "Randomly spread pixels in selected bitmap(s), within the radius of 'amount.'"
 msgstr ""
 "Ĝi hazarde disŝutas bilderojn en la elektita(j) bitmapo(j) kun la radiuso de "
 "'kvanto.'"
@@ -3165,11 +3135,11 @@ msgstr "Kreu el Strekon"
 
 #: ../src/extension/internal/cairo-pdf-out.cpp:173
 msgid "Restrict to PDF version"
-msgstr ""
+msgstr "Limigu al versio de PDF"
 
 #: ../src/extension/internal/cairo-pdf-out.cpp:174
 msgid "PDF 1.4"
-msgstr ""
+msgstr "PDF 1.4"
 
 #: ../src/extension/internal/cairo-pdf-out.cpp:176
 #: ../src/extension/internal/cairo-ps-out.cpp:230
@@ -3181,29 +3151,25 @@ msgstr "Konvertu tekstojn en strekoj"
 
 #: ../src/extension/internal/cairo-pdf-out.cpp:177
 #: ../src/extension/internal/cairo-ps-out.cpp:231
-#, fuzzy
 msgid "Convert blur effects to bitmaps"
-msgstr "Konvertu tekstojn en strekoj"
+msgstr "Konvertu malfokus-artifikojn en bitmapoj"
 
 #: ../src/extension/internal/cairo-pdf-out.cpp:178
 #: ../src/extension/internal/cairo-ps-out.cpp:232
-#, fuzzy
 msgid "Preferred resolution (DPI) of bitmaps"
-msgstr "Favorata difino de bitmapo (punktoj por colo)"
+msgstr "Favorata difino de bitmapoj (punktoj por colo)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:224
 msgid "Restrict to PS level"
-msgstr ""
+msgstr "Limigu al nivelo de PS"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:225
-#, fuzzy
 msgid "PostScript 3"
-msgstr "Postskripto"
+msgstr "Postskripto 3"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:227
-#, fuzzy
 msgid "PostScript level 2"
-msgstr "Dosiero de Postskripto"
+msgstr "Postskripto (grado 2)"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:1685
 msgid "EMF Input"
@@ -3548,12 +3514,10 @@ msgid "Postscript Output"
 msgstr "Eligo de Postskripto"
 
 #: ../src/extension/internal/ps-out.cpp:89
-#, fuzzy
 msgid "PostScript (*.ps)"
 msgstr "Postskripto (*.ps)"
 
 #: ../src/extension/internal/ps-out.cpp:90
-#, fuzzy
 msgid "PostScript File"
 msgstr "Dosiero de Postskripto"
 
@@ -3651,8 +3615,7 @@ msgstr "Pingla Fenestro"
 msgid ""
 "Toggles whether the dialog stays for multiple executions or disappears after "
 "one"
-msgstr ""
-"Tio ŝangas inter persisto de la fenestro kaj malapero de ĝi post nur unu ago"
+msgstr "Tio ŝangas inter persisto de la fenestro kaj malapero de ĝi post nur unu ago"
 
 #: ../src/extension/prefdialog.cpp:231
 msgid "Live Preview"
@@ -3660,7 +3623,7 @@ msgstr "Rekta Antaŭmonto"
 
 #: ../src/extension/prefdialog.cpp:231
 msgid "Controls whether the effect settings are rendered live on canvas"
-msgstr ""
+msgstr "Ĝi kontrolas ĉu la agordoj rekte efikas en la tolo"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -3668,8 +3631,7 @@ msgstr ""
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
 #: ../src/extension/system.cpp:102
 msgid "Format autodetect failed. The file is being opened as SVG."
-msgstr ""
-"Aŭtomata rekono de formato malsukcesis. La dosiero estos malfermita kiel SVG."
+msgstr "Aŭtomata rekono de formato malsukcesis. La dosiero estos malfermita kiel SVG."
 
 #. TRANSLATORS: default.svg is localizable - this is the name of the default document
 #. template. This way you can localize the default pagesize, translate the name of
@@ -3691,8 +3653,7 @@ msgstr "La dokumento ne estas ankoraŭ konservita. Estas neeble ree ŝargi ĝin.
 #: ../src/file.cpp:253
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
-msgstr ""
-"La ŝanĝoj estos perditaj! Ĉu vi estas certa pri reŝarĝo de la dokumento %s?"
+msgstr "La ŝanĝoj estos perditaj! Ĉu vi estas certa pri reŝarĝo de la dokumento %s?"
 
 #: ../src/file.cpp:282
 msgid "Document reverted."
@@ -3825,7 +3786,7 @@ msgstr "Miksita"
 
 #: ../src/filter-enums.cpp:24
 msgid "Convolve Matrix"
-msgstr "Matrico de ruliĝo"
+msgstr "Matrico de Ruliĝo"
 
 #: ../src/filter-enums.cpp:25
 msgid "Diffuse Lighting"
@@ -3833,7 +3794,7 @@ msgstr "Difuza lumo"
 
 #: ../src/filter-enums.cpp:26
 msgid "Displacement Map"
-msgstr "Mapo"
+msgstr "Mapo de Dismeto"
 
 #: ../src/filter-enums.cpp:27
 msgid "Flood"
@@ -3893,11 +3854,11 @@ msgstr "Normala"
 
 #: ../src/filter-enums.cpp:52
 msgid "Multiply"
-msgstr "Multipliko"
+msgstr "Multiplika"
 
 #: ../src/filter-enums.cpp:53
 msgid "Screen"
-msgstr "Ekrano"
+msgstr "Ekrane"
 
 #: ../src/filter-enums.cpp:54
 msgid "Darken"
@@ -4050,28 +4011,29 @@ msgstr "Granda"
 
 #: ../src/flood-context.cpp:421
 msgid "<b>Too much inset</b>, the result is empty."
-msgstr ""
+msgstr "<b>Tro entrudita</b>; la rezulto estas malplena."
 
 #: ../src/flood-context.cpp:461
 #, c-format
-msgid ""
-"Area filled, path with <b>%d</b> nodes created and unioned with selection."
-msgstr ""
+msgid "Area filled, path with <b>%d</b> nodes created and unioned with selection."
+msgstr "Plenigita areo; streko kun <b>%d</b> nodoj krejta kaj kunigita kun elektaĵo."
 
 #: ../src/flood-context.cpp:465
 #, c-format
 msgid "Area filled, path with <b>%d</b> nodes created."
-msgstr ""
+msgstr "Plenigita areo; streko kun <b>%d</b> nodoj krejta."
 
 #: ../src/flood-context.cpp:681 ../src/flood-context.cpp:976
 msgid "<b>Area is not bounded</b>, cannot fill."
-msgstr ""
+msgstr "<b>La areo ne estas ĉirkaŭlimigita</b>, estas neeble plenigi."
 
 #: ../src/flood-context.cpp:981
 msgid ""
 "<b>Only the visible part of the bounded area was filled.</b> If you want to "
 "fill all of the area, undo, zoom out, and fill again."
 msgstr ""
+"<b>Nur la videbla parto de la ĉirkaŭlimigita areo estis plenigita.</b> Se vi "
+"deziras plenigi la tutan areon, malfaru, malzomu kaj plenigu denove."
 
 #: ../src/flood-context.cpp:997 ../src/flood-context.cpp:1157
 msgid "Fill bounded area"
@@ -4117,7 +4079,7 @@ msgstr "<b>Fokuso</b> de radiala gradiento"
 #: ../src/gradient-context.cpp:139 ../src/gradient-context.cpp:140
 #: ../src/gradient-drag.cpp:80 ../src/gradient-drag.cpp:81
 msgid "Radial gradient <b>mid stop</b>"
-msgstr "<b>Mezhalto</b> de linia gradiento"
+msgstr "<b>Mezhalto</b> de radiala gradiento"
 
 #: ../src/gradient-context.cpp:160
 #, c-format
@@ -4130,18 +4092,18 @@ msgid ""
 "One handle merging %d stops (drag with <b>Shift</b> to separate) selected "
 "out of %d gradient handles on %d selected object(s)"
 msgstr ""
+"Unu prenil-kunfando de %d haltoj (trenu per <b>Ŝvkl</b> por apartigi) elektitaj de "
+"%d preniloj de gradientoj el %d elektita(j) objekto(j)"
 
 #: ../src/gradient-context.cpp:167
 #, c-format
 msgid "<b>%d</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr ""
-"<b>%d</b> preniloj de gradiento elektitaj en %d el %d elektita(j) objekto(j)"
+msgstr "<b>%d</b> preniloj de gradiento elektitaj en %d el %d elektita(j) objekto(j)"
 
 #: ../src/gradient-context.cpp:170
 #, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr ""
-"<b>Neniu</b> prenilo de gradiento elektita en %d el %d elektita(j) objekto(j)"
+msgstr "<b>Neniu</b> prenilo de gradiento elektita en %d el %d elektita(j) objekto(j)"
 
 #: ../src/gradient-context.cpp:368 ../src/gradient-context.cpp:461
 #: ../src/widgets/gradient-vector.cpp:735
@@ -4176,10 +4138,8 @@ msgstr "Inversigu gradienton"
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
-msgstr[0] ""
-"<b>Gradiento</b> por %d objektoj; kun <b>Strkl</b> por elklikigi angulon"
-msgstr[1] ""
-"<b>Gradiento</b> por %d objektoj; kun <b>Strkl</b> por elklikigi angulon"
+msgstr[0] "<b>Gradiento</b> por %d objektoj; kun <b>Strkl</b> por elklikigi angulon"
+msgstr[1] "<b>Gradiento</b> por %d objektoj; kun <b>Strkl</b> por elklikigi angulon"
 
 #: ../src/gradient-context.cpp:897
 msgid "Select <b>objects</b> on which to create gradient."
@@ -4641,12 +4601,10 @@ msgstr "La senfamiliaj tiparoj, kiu kraŝas Pango, estas ignoritaj"
 
 #. {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
 #: ../src/live_effects/effect.cpp:50
-#, fuzzy
 msgid "Bend Path"
-msgstr "Dispecigu strekon"
+msgstr "Kurbigu strekon"
 
 #: ../src/live_effects/effect.cpp:51
-#, fuzzy
 msgid "Pattern Along Path"
 msgstr "Motivo longe de Streko"
 
@@ -4664,25 +4622,24 @@ msgstr "Dentaĵoj"
 
 #: ../src/live_effects/effect.cpp:57
 msgid "Stitch Sub-Paths"
-msgstr ""
+msgstr "Interligu Sub-strekojn"
 
 #: ../src/live_effects/effect.cpp:115
 msgid "No effect"
 msgstr "Neniu artifiko"
 
 #: ../src/live_effects/effect.cpp:149
-#, fuzzy
 msgid "An exception occurred during execution of the Path Effect."
-msgstr "Iu ekscepto okazis dum plenumado de iu Artifikon de Streko."
+msgstr "Iu ekscepto okazis dum plenumado de la Artifiko de Streko."
 
 #: ../src/live_effects/effect.cpp:327
-#, fuzzy, c-format
+#, c-format
 msgid "Editing parameter <b>%s</b>."
-msgstr "<b>Parametroj de artifiko</b>"
+msgstr "Redaktante parametrojn <b>%s</b>."
 
 #: ../src/live_effects/effect.cpp:332
 msgid "None of the applied path effect's parameters can be edited on-canvas."
-msgstr ""
+msgstr "Neniu parametro de la aplikitaj artifikoj de streko estas redaktebla sur-tole."
 
 #: ../src/live_effects/parameter/enum.h:49
 msgid "Change enum parameter"
@@ -4698,74 +4655,79 @@ msgstr "La nombro da dentoj"
 
 #: ../src/live_effects/lpe-gears.cpp:213
 msgid "Phi"
-msgstr ""
+msgstr "Phi"
 
 #: ../src/live_effects/lpe-gears.cpp:213
 msgid ""
 "Tooth pressure angle (typically 20-25 deg).  The ratio of teeth not in "
 "contact."
 msgstr ""
+"Prem-angulo de dentoj (kutime 20-25 gradoj).  La rejŝo de la dentoj ne "
+"estas en kontakto."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "Stroke path"
 msgstr "Strekaĵo"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
-#, fuzzy
 msgid "The path that will be used as stitch."
-msgstr "la nombro da strekoj kiuj estos kreataj."
+msgstr "La streko kiu estos uzata kiel interligo."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
-#, fuzzy
 msgid "Number of paths"
 msgstr "Nombro da strekoj"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid "The number of paths that will be generated."
-msgstr "la nombro da strekoj kiuj estos kreataj."
+msgstr "La nombro da strekoj kiuj estos kreataj."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
-#, fuzzy
 msgid "Start edge variance"
-msgstr "Agordoj de Stelo"
+msgstr "Starto de variado de rando"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid ""
 "The amount of random jitter to move the start points of the stitches inside "
 "& outside the guide path"
 msgstr ""
+"La kvanto de hazardo de tremado por movi la startpunktoj de la interligaĵoj "
+"ene kaj ekster la gvida streko"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
-#, fuzzy
 msgid "Start spacing variance"
-msgstr "Variado de startpunkto"
+msgstr "Starto de variado de interspaco"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid ""
 "The amount of random shifting to move the start points of the stitches back "
 "& forth along the guide path"
 msgstr ""
+"La kvanto de hazardo de ŝovado por movi la startpunktoj de la interligaĵoj "
+"antaŭ kaj malantaŭ la gvida streko"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid "End edge variance"
-msgstr ""
+msgstr "Fino de variado de rando"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid ""
 "The amount of randomness that moves the end points of the stitches inside & "
 "outside the guide path"
 msgstr ""
+"La kvanto de hazardeco kiu movas la finpunktoj de la interligaĵoj ene kaj "
+"ekster la gvida streko"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
-#, fuzzy
 msgid "End spacing variance"
-msgstr "Variado de startpunkto"
+msgstr "Fino de variado de interspaco"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
 msgid ""
 "The amount of random shifting to move the end points of the stitches back & "
 "forth along the guide path"
 msgstr ""
+"La kvanto de hazardo de ŝovado por movi la finpunktoj de la interligaĵoj "
+"antaŭ kaj malantaŭ la gvida streko"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 msgid "Scale width"
@@ -4871,8 +4833,7 @@ msgstr "Nenio en la poŝo."
 
 #: ../src/live_effects/parameter/path.cpp:184
 msgid "This effect does not support arcs yet, try to convert to path."
-msgstr ""
-"Tiu ĉi artifiko ankoraŭ ne subtenas arkojn, do provu konverti ĝin en streko."
+msgstr "Tiu ĉi artifiko ankoraŭ ne subtenas arkojn, do provu konverti ĝin en streko."
 
 #: ../src/live_effects/parameter/path.cpp:190
 msgid "Paste path parameter"
@@ -4918,8 +4879,7 @@ msgstr "DOSIERNOMO"
 
 #: ../src/main.cpp:237
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
-msgstr ""
-"Printu la dokumento(j)n en specifita eligodosiero (uzu'|·programo' por dukto)"
+msgstr "Printu la dokumento(j)n en specifita eligodosiero (uzu'|·programo' por dukto)"
 
 #: ../src/main.cpp:242
 msgid "Export document to a PNG file"
@@ -4988,10 +4948,8 @@ msgstr "ID"
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
 #: ../src/main.cpp:289
-msgid ""
-"Export just the object with export-id, hide all others (only with export-id)"
-msgstr ""
-"Eksportu nur la objekto kun export-id, kaŝu la ceterojn (nur kun export-id)"
+msgid "Export just the object with export-id, hide all others (only with export-id)"
+msgstr "Eksportu nur la objekto kun export-id, kaŝu la ceterojn (nur kun export-id)"
 
 #: ../src/main.cpp:294
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
@@ -5001,8 +4959,7 @@ msgstr ""
 
 #: ../src/main.cpp:299
 msgid "Background color of exported bitmap (any SVG-supported color string)"
-msgstr ""
-"Fona koloro de eksportita bitmapo (ĉiu ĉeno de koloro subtenita de SVG)"
+msgstr "Fona koloro de eksportita bitmapo (ĉiu ĉeno de koloro subtenita de SVG)"
 
 #: ../src/main.cpp:300
 msgid "COLOR"
@@ -5010,8 +4967,7 @@ msgstr "KOLORO"
 
 #: ../src/main.cpp:304
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
-msgstr ""
-"Fona opakeco de eksportita bitmapo (kaj el 0.0 ĝis 1.0, kaj el 1 ĝis 255)"
+msgstr "Fona opakeco de eksportita bitmapo (kaj el 0.0 ĝis 1.0, kaj el 1 ĝis 255)"
 
 #: ../src/main.cpp:305
 msgid "VALUE"
@@ -5089,7 +5045,7 @@ msgstr ""
 
 #: ../src/main.cpp:375
 msgid "List id,x,y,w,h for all objects"
-msgstr ""
+msgstr "Listigu id,x,y,a,l de ĉiuj objektoj"
 
 #: ../src/main.cpp:380
 msgid "The ID of the object whose dimensions are queried"
@@ -5233,16 +5189,14 @@ msgstr ""
 "horiz/vert; <b>Strkl+Alt</b>: movas inter preniloj"
 
 #: ../src/node-context.cpp:186
-msgid ""
-"<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
+msgid "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
 msgstr ""
 "<b>Ŝvkl</b>: ŝanĝas la nodoelekton, malebligas elklikiĝon, rotacias ambaŭ "
 "prenilojn"
 
 #: ../src/node-context.cpp:187
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
-msgstr ""
-"<b>Alt</b>: blokas longon de prenilo; <b>Strkl+Alt</b>: movas inter preniloj"
+msgstr "<b>Alt</b>: blokas longon de prenilo; <b>Strkl+Alt</b>: movas inter preniloj"
 
 #: ../src/nodepath.cpp:642 ../src/seltrans.cpp:520
 msgid "Stamp"
@@ -5426,8 +5380,7 @@ msgstr ""
 
 #: ../src/nodepath.cpp:4428
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
-msgstr ""
-"<b>Trenu</b> nodon aŭ ĝiaj preniloj; uzu <b>sagoklavoj</b> por movi nodon"
+msgstr "<b>Trenu</b> nodon aŭ ĝiaj preniloj; uzu <b>sagoklavoj</b> por movi nodon"
 
 #: ../src/nodepath.cpp:4453 ../src/nodepath.cpp:4465
 msgid "Select a single object to edit its nodes or handles."
@@ -5461,10 +5414,8 @@ msgstr[1] "<b>%i</b> el <b>%i</b> elektitaj nodoj; %s. %s."
 
 #: ../src/nodepath.cpp:4478
 #, c-format
-msgid ""
-"<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgid_plural ""
-"<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
+msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
+msgid_plural "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgstr[0] ""
 "<b>%i</b> de <b>%i</b> elektita nodo en <b>%i</b> de <b>%i</b> substrekoj. %"
 "s."
@@ -5602,8 +5553,7 @@ msgstr "<b>Skalu</b> sammaniere plenigantan motivon"
 
 #: ../src/object-edit.cpp:1264
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
-msgstr ""
-"<b>Turnu</b> plenigantan motivon; uzu <b>Strkl</b> por elklikigi la angulon"
+msgstr "<b>Turnu</b> plenigantan motivon; uzu <b>Strkl</b> por elklikigi la angulon"
 
 #: ../src/object-edit.cpp:1289
 msgid "Drag to resize the <b>flowed text frame</b>"
@@ -5618,10 +5568,8 @@ msgid "At least one of the objects is <b>not a path</b>, cannot combine."
 msgstr "Almenaŭ unu objekto <b>ne estas streko</b>, do estas neeble kombini."
 
 #: ../src/path-chemistry.cpp:74
-msgid ""
-"You cannot combine objects from <b>different groups</b> or <b>layers</b>."
-msgstr ""
-"Estas neeble kombini objektojn el <b>malsamaj grupoj</b> aŭ <b>tavoloj</b>."
+msgid "You cannot combine objects from <b>different groups</b> or <b>layers</b>."
+msgstr "Estas neeble kombini objektojn el <b>malsamaj grupoj</b> aŭ <b>tavoloj</b>."
 
 #: ../src/path-chemistry.cpp:79
 msgid "Combining paths..."
@@ -5700,10 +5648,8 @@ msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr "<b>Klaku</b> aŭ <b>klaku kaj trenu</b> por fermi kaj fini la strekon."
 
 #: ../src/pen-context.cpp:609
-msgid ""
-"<b>Click</b> or <b>click and drag</b> to continue the path from this point."
-msgstr ""
-"<b>Klaku</b> aŭ <b>klaku kaj trenu</b> por daŭrigi strekon el ĉi punkto."
+msgid "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
+msgstr "<b>Klaku</b> aŭ <b>klaku kaj trenu</b> por daŭrigi strekon el ĉi punkto."
 
 #: ../src/pen-context.cpp:1115
 #, c-format
@@ -5784,26 +5730,26 @@ msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</"
 "b> to draw around the starting point"
 msgstr ""
-"<b>Rektangulo</b>: %s x %s (rejŝo: %d:%d); uzu <b>Ŝvkl</b> por desegni "
+"<b>Rektangulo</b>: %s x %s (devigita al la rejŝo %d:%d); uzu <b>Ŝvkl</b> por desegni "
 "ĉirkaŭ la startpunkto"
 
 #: ../src/rect-context.cpp:539
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with "
 "<b>Shift</b> to draw around the starting point"
 msgstr ""
-"<b>Rektangulo</b>: %s x %s (rejŝo: %d:%d); uzu <b>Ŝvkl</b> por desegni "
-"ĉirkaŭ la startpunkto"
+"<b>Rektangulo</b>: %s x %s (devigita al la ora nombro 1.618 : 1); uzu "
+"<b>Ŝvkl</b> por desegni ĉirkaŭ la startpunkto"
 
 #: ../src/rect-context.cpp:541
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with "
 "<b>Shift</b> to draw around the starting point"
 msgstr ""
-"<b>Rektangulo</b>: %s x %s (rejŝo: %d:%d); uzu <b>Ŝvkl</b> por desegni "
-"ĉirkaŭ la startpunkto"
+"<b>Rektangulo</b>: %s x %s (devigita al la ora nombro 1 : 1.618); uzu "
+"<b>Ŝvkl</b> por desegni ĉirkaŭ la startpunkto"
 
 #: ../src/rect-context.cpp:545
 #, c-format
@@ -5853,8 +5799,7 @@ msgstr ""
 "elekton"
 
 #: ../src/select-context.cpp:699
-msgid ""
-"<b>Alt</b>: click to select under; drag to move selected or select by touch"
+msgid "<b>Alt</b>: click to select under; drag to move selected or select by touch"
 msgstr ""
 "<b>Alt</b>: alklaku poe elekti sube; trenu por movi la elektaĵon aŭ por "
 "elekti per tuŝo"
@@ -5886,23 +5831,23 @@ msgstr "Forigu ĉion"
 
 #: ../src/selection-chemistry.cpp:446
 msgid "Select <b>some objects</b> to group."
-msgstr "Elektu <b>plurajn objektojn</b> por arigi."
+msgstr "Elektu <b>plurajn objektojn</b> por grupigi."
 
 #: ../src/selection-chemistry.cpp:519 ../src/selection-describer.cpp:50
 msgid "Group"
-msgstr "Arigu"
+msgstr "Grupigu"
 
 #: ../src/selection-chemistry.cpp:534
 msgid "Select a <b>group</b> to ungroup."
-msgstr "Elektu malarigendan <b>grupon</b>."
+msgstr "Elektu malgrupigendan <b>grupon</b>."
 
 #: ../src/selection-chemistry.cpp:575
 msgid "<b>No groups</b> to ungroup in the selection."
-msgstr "<b>Neniu malarigenda grupo</b> en la elekto."
+msgstr "<b>Neniu malgrupigenda grupo</b> en la elekto."
 
 #: ../src/selection-chemistry.cpp:581 ../src/sp-item-group.cpp:449
 msgid "Ungroup"
-msgstr "Malarigu"
+msgstr "Malgrupigu"
 
 #: ../src/selection-chemistry.cpp:642
 msgid "Select <b>object(s)</b> to raise."
@@ -5910,8 +5855,7 @@ msgstr "Elektu suprentirendan <b>objekton</b>."
 
 #: ../src/selection-chemistry.cpp:648 ../src/selection-chemistry.cpp:708
 #: ../src/selection-chemistry.cpp:743 ../src/selection-chemistry.cpp:808
-msgid ""
-"You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
+msgid "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
 "Estas neeble suprentiri/subentiri objektojn de malsamaj <b>grupoj</b> aŭ "
 "<b>tavoloj</b>."
@@ -5953,7 +5897,6 @@ msgid "Nothing was copied."
 msgstr "Nenio estis kopiita."
 
 #: ../src/selection-chemistry.cpp:1204
-#, fuzzy
 msgid "Nothing in the clipboard."
 msgstr "Nenio en la poŝo."
 
@@ -5962,9 +5905,8 @@ msgid "Paste"
 msgstr "Enmetu"
 
 #: ../src/selection-chemistry.cpp:1237
-#, fuzzy
 msgid "Nothing on the style clipboard."
-msgstr "Nenio en la poŝo."
+msgstr "Nenio en la poŝo de stilo."
 
 #: ../src/selection-chemistry.cpp:1243
 msgid "Select <b>object(s)</b> to paste style to."
@@ -5972,7 +5914,7 @@ msgstr "Elektu <b>objekto(j)n</b> al kiu(j) oni aplikas stilon."
 
 #: ../src/selection-chemistry.cpp:1252
 msgid "Paste style"
-msgstr "Enmetu stilon"
+msgstr "Apliku stilon"
 
 #: ../src/selection-chemistry.cpp:1270
 msgid "Select <b>object(s)</b> to paste live path effect to."
@@ -6075,9 +6017,8 @@ msgid "Move horizontally by pixels"
 msgstr "Movu horizontale je bilderoj"
 
 #: ../src/selection-chemistry.cpp:2078
-#, fuzzy
 msgid "The selection has no applied path effect."
-msgstr "Kreu kaj apliku artifikon de streko"
+msgstr "La elektaĵo ne havas artifikon de streko."
 
 #: ../src/selection-chemistry.cpp:2235
 msgid "action|Clone"
@@ -6117,8 +6058,7 @@ msgstr ""
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
-msgstr ""
-"La elektenda objekto <b>ne estas videbla</b> (ĝi estas en &lt;defs&gt;)"
+msgstr "La elektenda objekto <b>ne estas videbla</b> (ĝi estas en &lt;defs&gt;)"
 
 #: ../src/selection-chemistry.cpp:2376
 msgid "Select <b>object(s)</b> to convert to marker."
@@ -6129,14 +6069,12 @@ msgid "Objects to marker"
 msgstr "Konvertu objektojn en markiloj"
 
 #: ../src/selection-chemistry.cpp:2470
-#, fuzzy
 msgid "Select <b>object(s)</b> to convert to guides."
-msgstr "Elektu <b>objekto(j)n</b> kiu(j) estas konvertenda(j) en markilo(j)."
+msgstr "Elektu <b>objekto(j)n</b> kiu(j) estas konvertenda(j) en gvidrelo(j)."
 
 #: ../src/selection-chemistry.cpp:2480
-#, fuzzy
 msgid "Objects to guides"
-msgstr "Konvertu objektojn en markiloj"
+msgstr "Konvertu objektojn en gvidreloj"
 
 #: ../src/selection-chemistry.cpp:2497
 msgid "Select <b>object(s)</b> to convert to pattern."
@@ -6277,8 +6215,7 @@ msgstr "Klaku elekton por modifi prenilojn de skalo/rotacio"
 
 #. no items
 #: ../src/selection-describer.cpp:108
-msgid ""
-"No objects selected. Click, Shift+click, or drag around objects to select."
+msgid "No objects selected. Click, Shift+click, or drag around objects to select."
 msgstr ""
 "Neniu elektita objekto. Uzu alklakon, Ŝovoklavon+alklakon, aŭ trenon ĉirkaŭ "
 "la objektojn por elekti."
@@ -6310,7 +6247,7 @@ msgstr " en %s"
 #: ../src/selection-describer.cpp:151
 #, c-format
 msgid " in group %s (%s)"
-msgstr " en gropo %s (%s)"
+msgstr " en grupo %s (%s)"
 
 #: ../src/selection-describer.cpp:153
 #, c-format
@@ -6525,14 +6462,14 @@ msgstr[0] "<b>Kunligita moviĝanta teksto</b> (%d tipoj)"
 msgstr[1] "<b>Kunligitaj moviĝantaj tekstoj</b> (%d tipoj)"
 
 #: ../src/sp-guide.cpp:394
-#, fuzzy, c-format
+#, c-format
 msgid "vertical guideline at %s"
-msgstr "vertikala gvidrelo"
+msgstr "vertikala gvidlinio al %s"
 
 #: ../src/sp-guide.cpp:396
-#, fuzzy, c-format
+#, c-format
 msgid "horizontal guideline at %s"
-msgstr "horizontala gvidrelo"
+msgstr "horizontala gvidolinio al %s"
 
 #: ../src/sp-image.cpp:1039
 msgid "embedded"
@@ -6608,14 +6545,12 @@ msgstr[0] "<b>Streko</b> (%i nodo)"
 msgstr[1] "<b>Streko</b> (%i nodoj)"
 
 #: ../src/sp-path.cpp:573
-#, fuzzy
 msgid "Creating single dot"
-msgstr "Kreo de nova streko"
+msgstr "Kreo de unuopa punkto"
 
 #: ../src/sp-path.cpp:574
-#, fuzzy
 msgid "Create single dot"
-msgstr "Kreu seriajn klonojn"
+msgstr "Kreu unuopan punkton"
 
 #: ../src/sp-polygon.cpp:235
 msgid "<b>Polygon</b>"
@@ -6654,8 +6589,8 @@ msgstr[1] "<b>Plurlatero</b> je %d verticoj"
 #, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
-msgstr[0] "<b>Kondiĉa rupo</b> de <b>%d</b> objekto"
-msgstr[1] "<b>Kondiĉa Grupo</b> de <b>%d</b> objektoj"
+msgstr[0] "<b>Kondiĉa grupo</b> de <b>%d</b> objekto"
+msgstr[1] "<b>Kondiĉa grupo</b> de <b>%d</b> objektoj"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:415
@@ -6701,8 +6636,7 @@ msgstr "<b>Alt</b>: tenas radiuson de la spiralo"
 
 #: ../src/spiral-context.cpp:461
 #, c-format
-msgid ""
-"<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
+msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 "<b>Spiralo</b>: radiuso %s, angulo %5g&#176;; uzu <b>Strkl</b> por elklikigi "
 "angulon"
@@ -6760,8 +6694,7 @@ msgstr ""
 "diferenco, XOR, dividon aŭ tranĉon de streko."
 
 #: ../src/splivarot.cpp:192
-msgid ""
-"One of the objects is <b>not a path</b>, cannot perform boolean operation."
+msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr ""
 "Unu el objektoj <b>ne estas streko</b>, do estas neeble plenumi Bulean "
 "operacion."
@@ -6781,8 +6714,7 @@ msgstr "<b>Neniu konturita streko</b>en elekto."
 
 #: ../src/splivarot.cpp:973
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
-msgstr ""
-"La elektita objekto <b>ne estas streko</b>, do estas neeble entrudi/eltrudi."
+msgstr "La elektita objekto <b>ne estas streko</b>, do estas neeble entrudi/eltrudi."
 
 #: ../src/splivarot.cpp:1093 ../src/splivarot.cpp:1162
 msgid "Create linked offset"
@@ -6844,8 +6776,7 @@ msgstr "<b>Strkl</b>: elklikigas angulon; tenu direkton de radiusoj"
 
 #: ../src/star-context.cpp:471
 #, c-format
-msgid ""
-"<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
+msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 "<b>Plurlatero</b>: radiuso %s, angulo %5g&#176;; kun <b>Strkl</b> por "
 "elklikigi angulon"
@@ -6950,12 +6881,10 @@ msgstr "<b>Neniu konvertenda moviĝanta teksto</b> en elekto."
 
 #: ../src/text-context.cpp:452
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
-msgstr ""
-"<b>Klaku</b> por redakti tekston, <b>trenu</b> por elekti parton de teksto."
+msgstr "<b>Klaku</b> por redakti tekston, <b>trenu</b> por elekti parton de teksto."
 
 #: ../src/text-context.cpp:454
-msgid ""
-"<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
+msgid "<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
 msgstr ""
 "<b>Klaku</b> por redakti moviĝantan tekston, <b>trenu</b> por elekti parton "
 "de teksto."
@@ -7076,8 +7005,7 @@ msgstr "Enmetu tekston"
 
 #: ../src/text-context.cpp:1542
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
-msgstr ""
-"Tajpu moviĝantan tekston;<b>Enigoklavo</b> por startigi novan paragrafon."
+msgstr "Tajpu moviĝantan tekston;<b>Enigoklavo</b> por startigi novan paragrafon."
 
 #: ../src/text-context.cpp:1552 ../src/tools-switch.cpp:205
 msgid ""
@@ -7146,22 +7074,20 @@ msgstr ""
 "de la spiralo. <b>Klaku</b> por elekti."
 
 #: ../src/tools-switch.cpp:187
-#, fuzzy
 msgid ""
 "<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to "
 "append to selected path. <b>Ctrl+click</b> to create single dots."
 msgstr ""
-"<b>Trenu</b> por krei libermanan linion. Komencu desegni premente <b>Ŝvkl</"
-"b> por aldoni al elektita streko."
+"<b>Trenu</b> por krei libermanan linion. Komencu desegni premante <b>Ŝvkl</"
+"b> por aldoni al elektita streko. <b>Strkl+alklako</b> por krei unuopajn punktojn."
 
 #: ../src/tools-switch.cpp:193
-#, fuzzy
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to "
 "append to selected path. <b>Ctrl+click</b> to create single dots."
 msgstr ""
 "<b>Klaku</b> aŭ <b>klaku kaj trenu</b> por startigi strekon; uzu <b>Ŝvkl</b> "
-"por aldoni al elektita streko."
+"por aldoni al elektita streko. <b>Strkl+alklako</b> por krei unuopajn punktojn."
 
 #: ../src/tools-switch.cpp:199
 msgid ""
@@ -7199,6 +7125,9 @@ msgid ""
 "fill with the current selection, <b>Ctrl+click</b> to change the clicked "
 "object's fill and stroke to the current setting."
 msgstr ""
+"<b>Alklaku</b> por pentri la ĉirkaŭlimigitan areon, <b>Ŝvkl+alklako</b> por "
+"unuigi la novan plenigon kun la nuna elektaĵo, <b>Strkl+alklako</b> por ŝangi "
+"la plenigon de la alklakita objekto kaj streki laŭ nuna agordaĵo."
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:500
 #: ../src/trace/potrace/inkscape-potrace.cpp:574
@@ -7363,7 +7292,7 @@ msgstr "Kreu kunligon"
 #. "Ungroup"
 #: ../src/ui/context-menu.cpp:193 ../src/verbs.cpp:2236
 msgid "_Ungroup"
-msgstr "_Malarigu"
+msgstr "_Malgrupigu"
 
 #. Link dialog
 #: ../src/ui/context-menu.cpp:233
@@ -7399,7 +7328,7 @@ msgstr "Pri Inkscape"
 
 #: ../src/ui/dialog/aboutbox.cpp:88
 msgid "_Splash"
-msgstr "_Plaŭd"
+msgstr "_Plaŭdo"
 
 #: ../src/ui/dialog/aboutbox.cpp:92
 msgid "_Authors"
@@ -7476,7 +7405,7 @@ msgstr "Aranĝu konektilan reton"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:565
 msgid "Unclump"
-msgstr " Dismetu "
+msgstr "Dismetu"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:635
 msgid "Randomize positions"
@@ -7504,8 +7433,7 @@ msgstr "Rilata al: "
 
 #: ../src/ui/dialog/align-and-distribute.cpp:795
 msgid "Align right sides of objects to left side of anchor"
-msgstr ""
-"Alliniigu la dekstrajn flankojn de objektoj al maldekstra flanko de ankro"
+msgstr "Alliniigu la dekstrajn flankojn de objektoj al maldekstra flanko de ankro"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:798
 msgid "Align left sides"
@@ -7707,8 +7635,7 @@ msgid "Background color"
 msgstr "Fona koloro"
 
 #: ../src/ui/dialog/document-properties.cpp:90
-msgid ""
-"Color and transparency of the page background (also used for bitmap export)"
+msgid "Color and transparency of the page background (also used for bitmap export)"
 msgstr ""
 "Fona koloro kaj fona diafaneco de la paĝo (kiu estas uzitaj ankaŭ por "
 "eksporto de bitmapojn)"
@@ -7737,17 +7664,18 @@ msgstr "Montru aŭ kaŝu gvidrelojn"
 
 #: ../src/ui/dialog/document-properties.cpp:95
 msgid "_Snap guides while dragging"
-msgstr ""
+msgstr "Agraf_u gvidrelojn dum trenado"
 
 #: ../src/ui/dialog/document-properties.cpp:95
-#, fuzzy
 msgid ""
 "While dragging a guide, snap to object nodes or bounding box corners ('Snap "
 "to nodes' or 'snap to bounding box corners' must be enabled in the 'Snap' "
 "tab; only a small part of the guide near the cursor will snap)"
 msgstr ""
-"Dum oni trenas gvidrelon, tio alkroĉas (En 'Agrafu al objektoj',  ankaŭ "
-"'Agrafu al nodoj' devas esti ebligita."
+"Dum oni trenas gvidrelon, tio alkroĉas al la nodoj de la objekto aŭ al la anguloj "
+"de la agrafanta fako ('Elklikigu al la anguloj de agrafanta fako' "
+"aŭ 'Agrafu al nodoj' devas esti ebligitaj en la langeto 'Elklikiĝo'; nur la etan "
+"parton de la gvidrelo, kiu estas najbara al la kursoro, estos agrafataj)."
 
 #: ../src/ui/dialog/document-properties.cpp:97
 msgid "Guide co_lor:"
@@ -7763,11 +7691,11 @@ msgstr "Koloro de la gvidolinioj"
 
 #: ../src/ui/dialog/document-properties.cpp:98
 msgid "_Highlight color:"
-msgstr "Ak_centanta koloro:"
+msgstr "En_faziganta koloro:"
 
 #: ../src/ui/dialog/document-properties.cpp:98
 msgid "Highlighted guideline color"
-msgstr "Akcentanta koloro de gvidolinio"
+msgstr "Enfaziganta koloro de gvidolinio"
 
 #: ../src/ui/dialog/document-properties.cpp:98
 msgid "Color of a guideline when it is under mouse"
@@ -7775,27 +7703,25 @@ msgstr "Koloro de gvidolinio dum ĝi estas sub muso"
 
 #. ---------------------------------------------------------------
 #: ../src/ui/dialog/document-properties.cpp:100
-#, fuzzy
 msgid "_Enable snapping"
-msgstr "Elklikiĝo"
+msgstr "_Ebligu elklikiĝon"
 
 #: ../src/ui/dialog/document-properties.cpp:100 ../src/verbs.cpp:2446
 msgid "Toggle snapping on or off"
-msgstr ""
+msgstr "Ĝi ebligas/malebligas elklikiĝon"
 
 #: ../src/ui/dialog/document-properties.cpp:101
-#, fuzzy
 msgid "_Bounding box corners"
-msgstr "Anguloj de agrafanta fako"
+msgstr "_Anguloj de agrafanta fako"
 
 #: ../src/ui/dialog/document-properties.cpp:101
-#, fuzzy
 msgid ""
 "Only available in the selector tool: snap bounding box corners to guides, to "
 "grids, and to other bounding boxes (but not to nodes or paths)"
 msgstr ""
-"Ĝi elklikigas la angulojn de la agrafanta fako al la linioj de la krado, al "
-"la gvidrelojn kaj al aliaj agrafantaj fakoj (nur uzebla por ilo de elekto)"
+"Tio estas nur uzebla por ilo de elekto: ĝi elklikigas la angulojn de la agrafanta "
+"fako al la gvidreloj, al la kradoj, kaj al aliaj agrafantaj fakoj (sed neniam al nodoj "
+"aŭ al strekoj)"
 
 #: ../src/ui/dialog/document-properties.cpp:103
 msgid "_Nodes"
@@ -7807,10 +7733,12 @@ msgid ""
 "text base points, transformation origins, etc.) to guides, to grids, to "
 "paths and to other nodes"
 msgstr ""
+"Ĝi agrafas la nodojn (e.g. strek-nodoj, specialaj punktoj en la formo, preniloj "
+"de gradientoj, punktoj de teksto, transform-originoj, ktp.) al gvidreloj, "
+"al kradoj, al strekoj kaj al aliaj nodoj"
 
 #. Options for snapping to objects
 #: ../src/ui/dialog/document-properties.cpp:106
-#, fuzzy
 msgid "Snap to path_s"
 msgstr "Agrafu al _strekoj"
 
@@ -7823,66 +7751,56 @@ msgid "Snap to n_odes"
 msgstr "Agrafu al _nodoj"
 
 #: ../src/ui/dialog/document-properties.cpp:107
-#, fuzzy
 msgid "Snap nodes and guides to object nodes"
 msgstr "Ĝi agrafas nodojn aŭ gvidrelojn al la nodoj de la objekto"
 
 #: ../src/ui/dialog/document-properties.cpp:108
-#, fuzzy
 msgid "Snap to bounding bo_x edges"
-msgstr "Agrafu al _nodoj"
+msgstr "Agrafu al la randoj de la agrafanta fa_ko"
 
 #: ../src/ui/dialog/document-properties.cpp:108
-#, fuzzy
 msgid "Snap bounding box corners and guides to bounding box edges"
 msgstr ""
-"Ĝi elklikigas la angulojn de la agrafanta fako al la linioj de la krado, al "
-"la gvidrelojn kaj al aliaj agrafantaj fakoj (nur uzebla por ilo de elekto)"
+"Ĝi agrafas al la randoj de la agrafanta fako la angulojn aŭ la "
+"gvidrelojn de la agrafanta fako"
 
 #: ../src/ui/dialog/document-properties.cpp:109
-#, fuzzy
 msgid "Snap to bounding box co_rners"
-msgstr "Anguloj de agrafanta fako"
+msgstr "Elklikigu angulojn de ag_rafanta fako"
 
 #: ../src/ui/dialog/document-properties.cpp:109
-#, fuzzy
 msgid "Snap bounding box corners to other bounding box corners"
-msgstr ""
-"Ĝi elklikigas la angulojn de la agrafanta fako al la linioj de la krado, al "
-"la gvidrelojn kaj al aliaj agrafantaj fakoj (nur uzebla por ilo de elekto)"
+msgstr "Ĝi elklikigas la angulojn de la agrafanta fako al aliaj anguloj de agrafanta fako"
 
 #. ---------------------------------------------------------------
 #. Applies to both nodes and guides, but not to bboxes, that's why its located here
 #: ../src/ui/dialog/document-properties.cpp:112
-#, fuzzy
 msgid "Rotation _center"
-msgstr "Rotacio (grad)"
+msgstr "_Centro de rotacio"
 
 #: ../src/ui/dialog/document-properties.cpp:112
-#, fuzzy
 msgid "Consider the rotation center of an object when snapping"
-msgstr ""
-"Agrafu ankaŭ la centron de rotacio de objekto kiam oni agrafas nodojn aŭ "
-"gvidrelojn"
+msgstr "Centro de rotacio de objekto kiam oni elklikiĝas"
 
 #: ../src/ui/dialog/document-properties.cpp:113
 msgid "_Grid with guides"
-msgstr ""
+msgstr "Krado kun _gvidreloj"
 
 #: ../src/ui/dialog/document-properties.cpp:113
 msgid "Snap to grid-guide intersections"
-msgstr ""
+msgstr "Ĝi agrafas al la intersektoj de la gvidreloj de la krado"
 
 #: ../src/ui/dialog/document-properties.cpp:114
-#, fuzzy
 msgid "_Line segments"
-msgstr "Kunigu Segmentojn"
+msgstr "_Liniaj segmentoj"
 
 #: ../src/ui/dialog/document-properties.cpp:114
 msgid ""
 "Snap to intersections of line segments ('snap to paths' must be enabled, see "
 "the previous tab)"
 msgstr ""
+"Ĝi agrafas al intersekto de segmentoj de linio ('agrafu al streko' estas "
+"ebligenda, kontrolu la antaŭa langeto)"
 
 #: ../src/ui/dialog/document-properties.cpp:118
 msgid "Create new grid."
@@ -7907,14 +7825,12 @@ msgid "Grids"
 msgstr "Kradoj"
 
 #: ../src/ui/dialog/document-properties.cpp:131 ../src/verbs.cpp:2446
-#, fuzzy
 msgid "Snap"
-msgstr "Stampilo"
+msgstr "Elklikiĝo"
 
 #: ../src/ui/dialog/document-properties.cpp:132
-#, fuzzy
 msgid "Snap points"
-msgstr "Elklikiĝo"
+msgstr "Punktoj de elklikiĝo"
 
 #: ../src/ui/dialog/document-properties.cpp:220
 msgid "Default _units:"
@@ -7942,7 +7858,7 @@ msgstr "_Magneta altiro"
 
 #: ../src/ui/dialog/document-properties.cpp:274
 msgid "Snap only when _closer than:"
-msgstr ""
+msgstr "Altiru _nur pli proksime je:"
 
 #: ../src/ui/dialog/document-properties.cpp:275
 msgid "Snapping distance, in screen pixels, for snapping to objects"
@@ -7953,6 +7869,8 @@ msgid ""
 "If set, objects only snap to another object when it's within the range "
 "specified below"
 msgstr ""
+"Se ĝi estas ebligita, la objektoj agrafas al alia objekto nur kiam ĝi estas "
+"en la distanco specifita sube"
 
 #. Options for snapping to grids
 #: ../src/ui/dialog/document-properties.cpp:280
@@ -7961,7 +7879,7 @@ msgstr "Magneta alt_iro"
 
 #: ../src/ui/dialog/document-properties.cpp:280
 msgid "Snap only when c_loser than:"
-msgstr ""
+msgstr "A_ltiru nur pli proksime je:"
 
 #: ../src/ui/dialog/document-properties.cpp:281
 msgid "Snapping distance, in screen pixels, for snapping to grid"
@@ -7972,16 +7890,17 @@ msgid ""
 "If set, objects only snap to a grid line when it's within the range "
 "specified below"
 msgstr ""
+"Se ĝi estas ebligita, la objektoj agrafas al la gvidlinio nur kiam ĝi estas "
+"en la distanco specifita sube"
 
 #. Options for snapping to guides
 #: ../src/ui/dialog/document-properties.cpp:286
-#, fuzzy
 msgid "Snap dist_ance"
-msgstr "_Magneta altiro"
+msgstr "M_agneta altiro"
 
 #: ../src/ui/dialog/document-properties.cpp:286
 msgid "Snap only when close_r than:"
-msgstr ""
+msgstr "Altiru nur pli p_roksime je:"
 
 #: ../src/ui/dialog/document-properties.cpp:287
 msgid "Snapping distance, in screen pixels, for snapping to guides"
@@ -7992,41 +7911,36 @@ msgid ""
 "If set, objects only snap to a guide when it's within the range specified "
 "below"
 msgstr ""
+"Se ĝi estas ebligita, la objektoj agrafas al la gvidrelo nur kiam ĝi estas "
+"en la distanco specifita sube"
 
 #: ../src/ui/dialog/document-properties.cpp:310
-#, fuzzy
 msgid "<b>Snapping</b>"
-msgstr "<b>Agrafo de </b>"
+msgstr "<b>Agrafo</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:312
-#, fuzzy
 msgid "<b>What snaps</b>"
-msgstr "<b>Teksta vasteco</b>"
+msgstr "<b>Kio agrafas</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:314
-#, fuzzy
 msgid "<b>Snap to objects</b>"
 msgstr "<b>Agrafu al la objektoj</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:316
-#, fuzzy
 msgid "<b>Snap to grids</b>"
 msgstr "<b>Agrafu al la kradoj</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:318
-#, fuzzy
 msgid "<b>Snap to guides</b>"
 msgstr "<b>Agrafu al la gvidreloj</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:354
-#, fuzzy
 msgid "<b>Snapping to intersections of</b>"
-msgstr "<b>Agrafu al la objektoj</b>"
+msgstr "<b>Agrafu al la intersekto de</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:356
-#, fuzzy
 msgid "<b>Snapping to special nodes</b>"
-msgstr "<b>Agrafu al la objektoj</b>"
+msgstr "<b>Agrafu al la specialaj nodoj</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:425
 msgid "<b>Creation</b>"
@@ -8058,36 +7972,31 @@ msgid "Parameters"
 msgstr "Parametroj"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:382
-#, fuzzy
 msgid "No preview"
-msgstr "Antaŭmonto"
+msgstr "Neniu antaŭmonto"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:488
 msgid "too large for preview"
-msgstr ""
+msgstr "Tro larĝa por antaŭmontri"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:626
-#, fuzzy
 msgid "Enable preview"
-msgstr "Elklikiĝo"
+msgstr "Ebligu antaŭmontron"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:758
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:759
-#, fuzzy
 msgid "All Inkscape Files"
-msgstr "Ĉiuj formoj"
+msgstr "Ĉiuj Dosieroj de Inkscape"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:763
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:764
-#, fuzzy
 msgid "All Files"
-msgstr "Ĉiuj specoj"
+msgstr "Ĉiuj dosieroj"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:769
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:770
-#, fuzzy
 msgid "All Images"
-msgstr "Kaŝu Ĉiujn Bildojn"
+msgstr "Ĉiuj Bildoj"
 
 #. ###### Add the file types menu
 #. createFilterMenu();
@@ -8097,89 +8006,76 @@ msgstr "Kaŝu Ĉiujn Bildojn"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:935
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1492
 msgid "Append filename extension automatically"
-msgstr ""
+msgstr "Aldonu aŭtomate la finaĵon al la dosiernomo"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1079
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1357
-#, fuzzy
 msgid "Guess from extension"
-msgstr "Prenu el la elekto"
+msgstr "Akiru el la finaĵo"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1378
-#, fuzzy
 msgid "Left edge of source"
-msgstr "(maldekstra rando supre)"
+msgstr "Maldekstra rando de fonto"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1379
 msgid "Top edge of source"
-msgstr ""
+msgstr "Supra rando de fonto"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1380
-#, fuzzy
 msgid "Right edge of source"
-msgstr "(dekstra rando supre)"
+msgstr "Dekstra rando de fonto"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1381
 msgid "Bottom edge of source"
-msgstr ""
+msgstr "Suba rando de fonto"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1382
-#, fuzzy
 msgid "Source width"
-msgstr "Skalu larĝon"
+msgstr "Larĝo de fonto"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1383
-#, fuzzy
 msgid "Source height"
-msgstr "Alto de Strekkodo:"
+msgstr "Alto de fonto"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1384
-#, fuzzy
 msgid "Destination width"
-msgstr "Presa Fiksado"
+msgstr "Larĝo de fiksado"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1385
-#, fuzzy
 msgid "Destination height"
-msgstr "Malproksima Lumo"
+msgstr "Alto de fiksado"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1386
-#, fuzzy
 msgid "Resolution (dots per inch)"
-msgstr "Favorata difino de bitmapo (punktoj por colo)"
+msgstr "Difino (punktoj por colo)"
 
 #. #########################################
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1423
-#, fuzzy
 msgid "Document"
-msgstr "Dokumento SVG"
+msgstr "Dokumento"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1435
-#, fuzzy
 msgid "Custom"
-msgstr "_Personaligita"
+msgstr "Personaligita"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1475
-#, fuzzy
 msgid "Cairo"
 msgstr "Karbodesegnaĵo"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1478
 msgid "Antialias"
-msgstr ""
+msgstr "Glatigo"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1481
-#, fuzzy
 msgid "Background"
-msgstr "_Fono:"
+msgstr "Fono"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1504
-#, fuzzy
 msgid "Destination"
-msgstr "Presa Fiksado"
+msgstr "Fiksado"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:53
 msgid "Fill"
@@ -8268,7 +8164,7 @@ msgstr "Formovu kunfandantan nodon"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1840
 msgid "Reorder filter primitive"
-msgstr ""
+msgstr "Reordigu prafunkcion de filtrilo"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1876
 msgid "Add Effect:"
@@ -8300,19 +8196,19 @@ msgstr "Operacisimbolo"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1981
 msgid "K1"
-msgstr ""
+msgstr "K1"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1982
 msgid "K2"
-msgstr ""
+msgstr "K2"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1983
 msgid "K3"
-msgstr ""
+msgstr "K3"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1984
 msgid "K4"
-msgstr ""
+msgstr "K4"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1988
 msgid "Target"
@@ -8415,6 +8311,8 @@ msgid ""
 "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, "
 "multiply, darken and lighten."
 msgstr ""
+"La prafunkcion de filtrilo <b>feStompaĵo</b> havigas 4 modusoj por stompi "
+"bildon: ekrane, multiplika, pli malhela kaj pli hela."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2067
 msgid ""
@@ -8422,6 +8320,9 @@ msgid ""
 "colour of each rendered pixel. This allows for effects like turning object "
 "to grayscale, modifying colour saturation and changing colour hue."
 msgstr ""
+"La prafunkcio de filtrilo <b>feMatrico-de-Koloro</b> aplikas matrican "
+"transformadon al koloro de ĉiu bildigita bildero. Tio taŭgas por artifikoj kiel "
+"la ŝangado de objekto al grizgamo, kiel modifo de la saturado aŭ la nuanco de koloro."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2071
 msgid ""
@@ -8430,6 +8331,9 @@ msgid ""
 "transfer functions, allowing operations like brightness and contrast "
 "adjustment, color balance, and thresholding."
 msgstr ""
+"The <b>feTransiro-de-Komponanto</b> mastrumas la komponantoj de la koloro de "
+"enigo (ruĝo, verdo, bluo, kaj alfa) rilate al speciala funkcio de transiro, "
+"ebligante agojn kiel aranĝon de heleco, de kontrasto, de koloro kaj de sojlo."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2075
 msgid ""
@@ -8438,6 +8342,10 @@ msgid ""
 "standard. Porter-Duff blending modes are essentially logical operations "
 "between the corresponding pixel values of the images."
 msgstr ""
+"La prafunkcio de filtrilo <b>feMiksita</b> kummetas du bildojn uzante unu el "
+"modusoj de Porter-Duff por ĉirkaŭlimigi aŭ la aritmetikan moduson kiu estas "
+"priskribita en SVG-standarto. La moduso de Porter-Duff estas logika operacio "
+"inter la valoroj de respondaj bilderoj de la bildoj."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2079
 msgid ""
@@ -8447,6 +8355,11 @@ msgid ""
 "be created using this filter primitive, the special gaussian blur primitive "
 "is faster and resolution-independent."
 msgstr ""
+"La <b>feMatrico-de-Ruliĝo</b> lasas al vi la elekton pri Ruliĝo aplikenda al la "
+"bildo. Kutimaj artifikoj kreitaj de matricoj de ruliĝo estas malfokuso, netigo, "
+"reliefo kaj rekonado de randoj. Notu ke ankaŭ gaŭsa malfokuso estas kreebla per "
+"tiu ĉi prafunkcio de filtrilo; la speciala prafunkcia gaŭsa malfokuso"
+"estas pli rapida kaj sendependa de difino."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2083
 msgid ""
@@ -8455,6 +8368,11 @@ msgid ""
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
 msgstr ""
+"La prafunkcioj de filtrilo <b>feDifuzaLumo</b> kaj feSpegulaLumado kreas "
+"\"reliefigantan\" ombrumon.  La enigo de la alfa-kanalo estas uzata por havigi "
+"informojn pri profundeco: la areoj, kiuj havas pli da opakeco, estas proksimigitaj "
+"al la rigardanto kaj la areoj, kiuj havas malpli da opakeco, estas malproksimigitaj "
+"de la rigardanto."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2087
 msgid ""
@@ -8463,6 +8381,10 @@ msgid ""
 "how far the pixel should come from. Classical examples are whirl and pinch "
 "effects."
 msgstr ""
+"La prafunkcio de filtrilo <b>feMapo-de-Dismeto</b> lokigas la bilderojn en la "
+"unua enigo uzante la dua enigo kiel mapo de dismeto, kiu vidigas kiom da "
+"malproksimeco la bildero havus. Klasikaj ekzemploj estas la artifikoj kirklo "
+"kaj pinĉo."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2091
 msgid ""
@@ -8470,18 +8392,25 @@ msgid ""
 "opacity.  It is usually used as an input to other filters to apply color to "
 "a graphic."
 msgstr ""
+"La prafunkcio de filtrilo <b>fePlenigo</b> plenigas la areojn per havigita koloro "
+"kaj opakeco.  Kutime ĝi estas uzata kiel enigo de aliaj filtriloj por apliki "
+"koloron al grafikaĵo."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2095
 msgid ""
 "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is "
 "commonly used together with feOffset to create a drop shadow effect."
 msgstr ""
+"La prafunkcio de filtrilo <b>feGaŭsaMalfokuso</b> malfokusigas ĝian enigon.  Ĝi "
+"estas kutime uzata kun feDeŝovo por krei artifikon de ombro."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2099
 msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
 msgstr ""
+"La prafunkcio de filtrilo <b>feBildo</b> plenigas la areon per ekstera bildo "
+"aŭ alian parton de la dokumento."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2103
 msgid ""
@@ -8490,6 +8419,10 @@ msgid ""
 "compositing for this. This is equivalent to using several feBlend primitives "
 "in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr ""
+"La prafunkcio de filtrilo <b>feKunfandu</b> kunmetas multajn dumtempajn bildojn "
+"ene la prafunkcio de filtrilo al unuopa bildo. Ĝi uzas normalan alfan "
+"compositing por fari tion. Tio uzi multajn prafunkciojn feStompaĵo "
+"en 'normala' moduso aŭ multajn prafunkciojn feMiksita en 'over' moduso."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2107
 msgid ""
@@ -8497,6 +8430,9 @@ msgid ""
 "For single-colour objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
+"La prafunkcio de filtrilo <b>feMorfologio</b> erodas kaj dilatas la artifikojn. "
+"Por unukoloraj objektoj la erodado igas la objekton pli subtila kaj la dilatado "
+"igas ĝin pli dika."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2111
 msgid ""
@@ -8504,6 +8440,9 @@ msgid ""
 "amount. For example, this is useful for drop shadows, where the shadow is in "
 "a slightly different position than the actual object."
 msgstr ""
+"La prafunkcio de filtrilo <b>feDeŝovo</b> deŝovas la bildon laŭ uzant-difinita "
+"kvanto. Ekzemple, tio estas tre utila por la ombroj, ĉar la ombro estas iom "
+"delokiĝita rilate al la efektiva objekto."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2115
 msgid ""
@@ -8512,11 +8451,15 @@ msgid ""
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
 msgstr ""
+"La prafunkcioj de filtrilo feDifuzaLumo and <b>feSpegulaLumado</b> kreas "
+"\"reliefigantan\" ombrumon.  La enigo de la alfa-kanalo estas uzata por havigi "
+"informojn pri profundeco: la areoj, kiuj havas pli da opakeco, estas proksimigitaj "
+"al la rigardanto kaj la areoj, kiuj havas malpli da opakeco, estas malproksimigitaj "
+"de la rigardanto."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2119
-msgid ""
-"The <b>feTile</b> filter primitive tiles a region with its input graphic"
-msgstr ""
+msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
+msgstr "La prafunkcio de filtrilo <b>feKahelo</b> klonas areon kun ĝia grafikaĵo"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2123
 msgid ""
@@ -8524,6 +8467,9 @@ msgid ""
 "noise is useful in simulating several nature phenomena like clouds, fire and "
 "smoke and in generating complex textures like marble or granite."
 msgstr ""
+"La prafunkcio de filtrilo <b>feTurbulo</b> bildigas la bruon de Perlin. "
+"Tiu speco de bruo estas tre utila por simuli multajn naturajn fenomenojn ekzemple "
+"nubojn aŭ fumon, kaj por krei kompleksajn veftojn ekzemple marmoron aŭ graniton."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2138
 msgid "Duplicate filter primitive"
@@ -8562,8 +8508,7 @@ msgid "Click/drag threshold:"
 msgstr "Sojlo de kliko/treno:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:152
-msgid ""
-"Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
+msgid "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
 msgstr ""
 "Maksimuma muso-treno (en bilderoj de ekrano) kiu estas ankoraŭ kliko kaj ne "
 "treno"
@@ -8708,8 +8653,7 @@ msgid "> and < scale by:"
 msgstr "> kaj < skalita je:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:199
-msgid ""
-"Pressing > or < scales selection up or down by this increment (in px units)"
+msgid "Pressing > or < scales selection up or down by this increment (in px units)"
 msgstr ""
 "Per premo de > aŭ < vi povas laŭskale aranĝi elekton je ĉi kvanto (en "
 "bilderoj)"
@@ -8719,10 +8663,8 @@ msgid "Inset/Outset by:"
 msgstr "Entrudu/Eltrudu je:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:202
-msgid ""
-"Inset and Outset commands displace the path by this distance (in px units)"
-msgstr ""
-"La komandoj Entrudu/Eltrudu delokas la strekon je ĉi distanco (en bilderoj)"
+msgid "Inset and Outset commands displace the path by this distance (in px units)"
+msgstr "La komandoj Entrudu/Eltrudu delokas la strekon je ĉi distanco (en bilderoj)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:203
 msgid "Compass-like display of angles"
@@ -8771,10 +8713,8 @@ msgid "Show selection cue"
 msgstr "Montru sugeston pri elekto"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:222
-msgid ""
-"Whether selected objects display a selection cue (the same as in selector)"
-msgstr ""
-"Iu ajn elektita objekto montru sugeston pri elekto (la samo de selektilo)"
+msgid "Whether selected objects display a selection cue (the same as in selector)"
+msgstr "Iu ajn elektita objekto montru sugeston pri elekto (la samo de selektilo)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:228
 msgid "Enable gradient editing"
@@ -8786,21 +8726,25 @@ msgstr "La elektita objekto montras regojn por la redaktado de gradiento"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:234
 msgid "Conversion to guides uses edges instead of bounding box"
-msgstr ""
+msgstr "Konvertado en gvidreloj uzas randojn anstataŭ agrafantaj fakoj"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:235
 msgid ""
 "Converting an object to guides places these along the object's true edges "
 "(imitating the object's shape), not along the bounding box."
 msgstr ""
+"La konvertado de objekto en gvidreloj lokigas ilin laŭlonge de la randoj de la "
+"objekto (imitante la formon de la objekto), kaj ne laŭlonge de la agrafanta fako."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:242
 msgid "Ctrl+click dot size:"
-msgstr ""
+msgstr "Strkl-Punktogrando:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:243
 msgid "Size of dots created with Ctrl+click (relative to current stroke width)"
 msgstr ""
+"Grando de la punktoj kiuj estas kreitaj per Strkl+alklako (laŭ la nuna larĝo de "
+"streko)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:258
 msgid "<b>No objects selected</b> to take the style from."
@@ -8836,7 +8780,7 @@ msgid ""
 "the button below to set it."
 msgstr ""
 "Ĉiu ilo povas konservi la propran stilon por apliki ĝin al objektoj kiuj "
-"estos kreitaj. Usu suban butonon por agordi tion."
+"estos kreitaj. Uzu suban butonon por agordi tion."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:319
 msgid "Take from selection"
@@ -8864,8 +8808,7 @@ msgstr "Vida agrafanta fako"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:342
 msgid "This bounding box includes stroke width, markers, filter margins, etc."
-msgstr ""
-"Tiu ĉi agrafanta fako entenas strek-larĝon, markilojn, filtrilradojn, ktp."
+msgstr "Tiu ĉi agrafanta fako entenas strek-larĝon, markilojn, filtrilradojn, ktp."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:343
 msgid "Geometric bounding box"
@@ -8876,20 +8819,20 @@ msgid "This bounding box includes only the bare path"
 msgstr "Tiu ĉi agrafanta fako entenas nur simplan strekon"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:347
-#, fuzzy
 msgid "Conversion to guides:"
-msgstr "_Konvertu en Teksto"
+msgstr "Konvertado en gvidrelo:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:348
-#, fuzzy
 msgid "Keep objects after conversion to guides"
-msgstr "Elektu <b>objekto(j)n</b> kiu(j) estas konvertenda(j) en markilo(j)."
+msgstr "Tenu <b>objektojn</b> post la konvertado en gvidreloj."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:350
 msgid ""
 "When converting an object to guides, don't delete the object after the "
 "conversion."
 msgstr ""
+"Kiam oni konvertas objekton en gvidrelo, la objekto mem ne estos forigita post "
+"la konvertado."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:352
 msgid "Width is in absolute units"
@@ -8991,7 +8934,7 @@ msgid ""
 "This value affects the amount of smoothing applied to freehand lines; lower "
 "values produce more uneven paths with more nodes"
 msgstr ""
-"Ĉi valoro estas rilata al kvanto de malakriĝo kiu estas aplikita al "
+"Ĉi tiu valoro estas rilata al kvanto de malakriĝo kiu estas aplikita al "
 "libermanajn strekojn; pli malaltaj estas valoroj kaj la linio estos pli "
 "malebena kaj kun pli nodoj"
 
@@ -9019,6 +8962,8 @@ msgid ""
 "If on, each newly created object will be selected (deselecting previous "
 "selection)"
 msgstr ""
+"Se ĝi estas ebligita, ĉiu novkreita objekto estos elektita (malelektante "
+"antaŭan elektaĵon)"
 
 #. Paint Bucket
 #: ../src/ui/dialog/inkscape-preferences.cpp:435 ../src/verbs.cpp:2400
@@ -9130,8 +9075,7 @@ msgstr "Dialogfenestroj restas super la fenestroj de dokumento"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:499
 msgid "Same as Normal but may work better with some window managers"
-msgstr ""
-"Egale al Normala sed ĝi povus labori pli bone kun kelkaj fenestradministriloj"
+msgstr "Egale al Normala sed ĝi povus labori pli bone kun kelkaj fenestradministriloj"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:502
 msgid ""
@@ -9150,8 +9094,7 @@ msgstr "Diversaĵoj:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:508
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
-msgstr ""
-"La dialogofenestroj estos kaŝitaj en la taskostango de fenestradministilo"
+msgstr "La dialogofenestroj estos kaŝitaj en la taskostango de fenestradministilo"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:511
 msgid ""
@@ -9231,8 +9174,7 @@ msgstr ""
 "streko aŭ masko"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:550
-msgid ""
-"Uncheck this to use the bottom selected object as the clipping path or mask"
+msgid "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 "Malmarku ĉi tiun por uzi fundajn elektitajn objektojn kiel klipa streko aŭ "
 "masko"
@@ -9246,7 +9188,7 @@ msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
 msgstr ""
-"post aplikado, ĝi formovas el desegno objekton uzatan kiel klipa streko aŭ "
+"Post la aplikado, ĝi formovas el desegno objekton uzatan kiel klipa streko aŭ "
 "masko"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:554
@@ -9281,8 +9223,7 @@ msgstr "Protektata"
 #: ../src/ui/dialog/inkscape-preferences.cpp:567
 #: ../src/widgets/select-toolbar.cpp:496
 msgid "When scaling objects, scale the stroke width by the same proportion"
-msgstr ""
-"Skalante objektojn, ĝi laŭskale aranĝas larĝon de strekoj per sama proporcio"
+msgstr "Skalante objektojn, ĝi laŭskale aranĝas larĝon de strekoj per sama proporcio"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:569
 #: ../src/widgets/select-toolbar.cpp:507
@@ -9365,8 +9306,7 @@ msgstr "Plimalbona kvalito (kelkaj artefaktoj), sed bildigo estas pli rapida"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:606
 msgid "Lowest quality (considerable artifacts), but display is fastest"
-msgstr ""
-"Plejmalbona kvalito (multaj artefaktoj), sed bildigo estas la plej rapida"
+msgstr "Plejmalbona kvalito (multaj artefaktoj), sed bildigo estas la plej rapida"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:608
 msgid "Filters"
@@ -9385,14 +9325,12 @@ msgid "Select in current layer and sublayers"
 msgstr "Elektu en nuna tabulo kaj sub-tavoloj"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:617
-#, fuzzy
 msgid "Ignore hidden objects and layers"
-msgstr "Ignoru kaŝitajn objektojn"
+msgstr "Ignoru kaŝitajn objektojn kaj tavolojn"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:618
-#, fuzzy
 msgid "Ignore locked objects and layers"
-msgstr "Ignoru blikitajn objektojn"
+msgstr "Ignoru blokitajn objektojn kaj tavolojn"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:619
 msgid "Deselect upon layer change"
@@ -9419,22 +9357,20 @@ msgstr ""
 "tavoloj"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:629
-#, fuzzy
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden layer)"
 msgstr ""
-"Malmarku ĉi opcio por ebligi la elekton de kaŝitaj objektoj(pro kaŝiĝo aŭ "
-"pro subordo al kaŝita grupo aŭ tavolo)"
+"Malmarku ĉi opcio por ebligi la elekton de kaŝitaj objektoj (pro propra kaŝiĝo "
+"aŭ pro subordo al kaŝita tavolo)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:631
-#, fuzzy
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
 "themselves or by being in a locked layer)"
 msgstr ""
-"Malmarku ĉi opcio por ebligi la elekton de blokitaj objektoj (pro ĝia propra "
-"blokiĝo aŭ pro subordo al blokita grupo aŭ tavolo)"
+"Malmarku ĉi opcio por ebligi la elekton de blokitaj objektoj (pro propra "
+"blokiĝo aŭ pro subordo al blokita tavolo)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:634
 msgid ""
@@ -9454,8 +9390,7 @@ msgstr "Defaŭlta difino por eksporto:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:644
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
-msgstr ""
-"Defaŭlta difino (en punktoj por colo) de bitmapoj en Eksportu dialogfenestro"
+msgstr "Defaŭlta difino (en punktoj por colo) de bitmapoj en Eksportu dialogfenestro"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:646
 msgid "Open Clip Art Library Server Name:"
@@ -9503,14 +9438,12 @@ msgid "Absolute Colorimetric"
 msgstr "Absoluta Kolorimetrio"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:705
-#, fuzzy
 msgid "(Note: Color management has been disabled in this build)"
 msgstr "(Notu: la mastrumado de Koloro estis malebligita en tiu ĉi versio)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:709
-#, fuzzy
 msgid "Display adjustment"
-msgstr "Tempro de la ekrano:"
+msgstr "Aranĝo de la ekrano"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:711
 msgid "Display profile:"
@@ -9522,26 +9455,24 @@ msgstr "La ICC agordaĵo uzenda por kalibrigi la eligon de la ekrano."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:714
 msgid "Retrieve profile from display"
-msgstr ""
+msgstr "Havigu agordaĵon el ekrano"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:717
 msgid "Retrieve profiles from those attached to displays via XICC."
-msgstr ""
+msgstr "Havigu agordaĵojn el tio kio estas kunigita al ekranoj pere de XICC."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:719
 msgid "Retrieve profiles from those attached to displays."
-msgstr ""
+msgstr "Havigu agordaĵojn el tio kio estas kunigita al ekranoj."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:724
-#, fuzzy
 msgid "Display rendering intent:"
 msgstr "Tempro de la ekrano:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:725
 #: ../src/ui/dialog/inkscape-preferences.cpp:748
 msgid "The rendering intent to use to calibrate display output."
-msgstr ""
-"La tempro de bildiĝo kiu estas uzenda por kalibrigi la eligon de la ekrano."
+msgstr "La tempro de bildiĝo kiu estas uzenda por kalibrigi la eligon de la ekrano."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:727
 msgid "Proofing"
@@ -9557,19 +9488,19 @@ msgstr "Ŝajnigu eligon de cel-aparato."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:733
 msgid "Mark out of gamut colors"
-msgstr ""
+msgstr "Enfazigu ekster-kolorgamajn kolorojn"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:735
 msgid "Highlights colors that are out of gamut for the target device."
-msgstr ""
+msgstr "Ĝi enfazigas la kolorojn kiuj estas ekster la kolorgamo de la aparato."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:740
 msgid "Out of gamut warning color:"
-msgstr ""
+msgstr "Averto pri ekster-kolorgamo"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:741
 msgid "Selects the color used for out of gamut warning."
-msgstr ""
+msgstr "Ĝi elektas la koloron uzatan por la averto pri ekster-kolorgamo."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:743
 msgid "Device profile:"
@@ -9580,14 +9511,12 @@ msgid "The ICC profile to use to simulate device output."
 msgstr "La ICC agordaĵo uzenda por simuli la eligon de aparato."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:747
-#, fuzzy
 msgid "Device rendering intent:"
-msgstr "Tembro de aparato:"
+msgstr "Tempro de aparato:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:750
-#, fuzzy
 msgid "Black point compensation"
-msgstr "Kompensado de Nigra Punkto"
+msgstr "Kompensado de la nigra punkto"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:752
 msgid "Enables black point compensation."
@@ -9602,107 +9531,95 @@ msgid "(LittleCMS 1.15 or later required)"
 msgstr "(estas necesa LittleCMS 1.15 aŭ pli nova versio)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:761
-#, fuzzy
 msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "Tenu K kanalon en trasformadoj CMYK -> CMYK"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:774
-#, fuzzy
 msgid "<none>"
-msgstr "nenio"
+msgstr "<nenio>"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:820
-#, fuzzy
 msgid "Color management"
-msgstr "Mastrumado de Koloro"
+msgstr "Mastrumado de koloro"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:825
-#, fuzzy
 msgid "Default grid settings"
-msgstr "Agordoj de paĝo"
+msgstr "Defaŭltaj agordoj de la krado"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:827
 msgid "Don't emphasize gridlines when zoomed out"
-msgstr ""
+msgstr "Ne enfatzigu la gvidliniojn kiam oni malzomas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:828
 msgid ""
 "If set and zoomed out, the gridlines will be shown in normal color instead "
 "of major grid line color."
 msgstr ""
+"Se ĝi estas ebligita kaj se oni malzomas, la gvidlinioj aspektos ordinara "
+"anstataŭ enfazita."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:833
 #: ../src/ui/dialog/inkscape-preferences.cpp:854
-#, fuzzy
 msgid "Grid units"
-msgstr "_Unitoj de la krado:"
+msgstr "Unitoj de la krado"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:836
 #: ../src/ui/dialog/inkscape-preferences.cpp:857
-#, fuzzy
 msgid "Origin X"
-msgstr "_Origino X:"
+msgstr "Origino X"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:837
 #: ../src/ui/dialog/inkscape-preferences.cpp:858
-#, fuzzy
 msgid "Origin Y"
-msgstr "O_rigino Y:"
+msgstr "Origino Y"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:840
-#, fuzzy
 msgid "Spacing X"
-msgstr "Interspaco _X:"
+msgstr "Interspaco X"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:841
 #: ../src/ui/dialog/inkscape-preferences.cpp:860
-#, fuzzy
 msgid "Spacing Y"
-msgstr "Interspaco _Y:"
+msgstr "Interspaco Y"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:844
 #: ../src/ui/dialog/inkscape-preferences.cpp:866
 msgid "Selects the color used for normal grid lines."
-msgstr ""
+msgstr "Koloro uzata por la normalaj linioj de la krado"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:846
 #: ../src/ui/dialog/inkscape-preferences.cpp:868
-#, fuzzy
 msgid "Selects the color used for major (highlighted) grid lines."
-msgstr "Koloro de majoraj (akcentaj) linioj de la krado"
+msgstr "Koloro uzata por la majoraj (enfazitaj) linioj de la krado"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:848
 #: ../src/ui/dialog/inkscape-preferences.cpp:870
-#, fuzzy
 msgid "Major grid line every"
-msgstr "_Majora linio de krado je ĉiu:"
+msgstr "Majora linio de krado je ĉiu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:849
-#, fuzzy
 msgid "Show dots instead of lines"
-msgstr "_Montru punktojn anstataŭ linioj"
+msgstr "Vidigu punktojn anstataŭ linioj"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:860
 msgid "Base length of z-axis"
-msgstr ""
+msgstr "Bazolongo de z-akso"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:863
-#, fuzzy
 msgid "Angle X"
-msgstr "Angulo X:"
+msgstr "Angulo X"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:863
 msgid "Angle of x-axis"
-msgstr ""
+msgstr "Angulo de x-akso"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:864
-#, fuzzy
 msgid "Angle Z"
-msgstr "Angulo Z:"
+msgstr "Angulo Z"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:864
 msgid "Angle of z-axis"
-msgstr ""
+msgstr "Angulo de z-akso"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:877
 msgid "Add label comments to printing output"
@@ -9718,7 +9635,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:881
 msgid "Prevent sharing of gradient definitions"
-msgstr ""
+msgstr "Malhelpu kunhavon de difinoj de gradientoj"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:883
 msgid ""
@@ -9726,6 +9643,10 @@ msgid ""
 "uncheck to allow sharing of gradient definitions so that editing one object "
 "may affect other objects using the same gradient"
 msgstr ""
+"Kiam ĝi estas ebligita, la kunpartigitaj difinoj de gradientoj iĝas aŭtomate "
+"apartaj laŭ ŝanĝado; malmarku la faketon por ebligi kunhavon de difinoj de "
+"gradientoj tial ke la ŝanĝado de unu objekto efikas ankaŭ por la aliaj kiuj uzas "
+"la saman gradienton"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:885
 msgid "Simplification threshold:"
@@ -9764,23 +9685,25 @@ msgstr "Supersamplado de bitmapoj:"
 #. consider moving this to an UI tab:
 #: ../src/ui/dialog/inkscape-preferences.cpp:896
 msgid "Make the commands toolbar icons smaller"
-msgstr ""
+msgstr "Igu la ilarstangon de komandoj pli eta"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:898
-msgid ""
-"Make the commands toolbar use the 'secondary' toolbar size (requires restart)"
+msgid "Make the commands toolbar use the 'secondary' toolbar size (requires restart)"
 msgstr ""
+"Ĝi devigas la ilarstangon de komandoj uzi la 'duan' grandon de ilarstango "
+"(necesas re-startigo)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:900
 msgid "Make the main toolbar icons smaller"
-msgstr ""
+msgstr "Igu la ĉefan ilarstangon pli eta"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:902
 msgid "Make the main tools use the 'secondary' toolbar size (requires restart)"
 msgstr ""
+"Ĝi devigas la ĉefan ilarstangon uzi la 'duan' grandon de ilarstango "
+"(necesas re-startigo)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:905
-#, fuzzy
 msgid "Maximum number of recent documents:"
 msgstr "Maks. nombro de ĵusaj dokumentoj:"
 
@@ -9822,11 +9745,11 @@ msgstr "Neniu aplikita artifiko"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:168
 msgid "Item is not a shape or path"
-msgstr ""
+msgstr "La objekto ne estas formo aŭ streko"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:172
 msgid "Only one item can be selected"
-msgstr ""
+msgstr "Estas elektebla nur unu objekto"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:176
 msgid "Empty selection"
@@ -9900,6 +9823,8 @@ msgid ""
 "Failed to receive the Open Clip Art Library RSS feed. Verify if the server "
 "name is correct in Configuration->Misc (e.g.: openclipart.org)"
 msgstr ""
+"La ricevado el RSS de Open Clip Art Biblioteko malsukcesis. Kontrolu ke "
+"la nomo de la servilo estas ĝusta en Agordoj->Variaĵoj (e.g.: openclipart.org)"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:538
 msgid "Search Tag"
@@ -9907,7 +9832,7 @@ msgstr "Serĉu Etikedon"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:539
 msgid "No files matched your search"
-msgstr ""
+msgstr "Neniu dosiero kongruis kun via serĉado"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:548
 msgid "Search"
@@ -10148,8 +10073,7 @@ msgstr "Ĝisdatigo"
 msgid ""
 "Preview the intermediate bitmap with the current settings, without actual "
 "tracing"
-msgstr ""
-"Ĝi antaŭmontras interan bitmapon kun nunaj agordoj, sen la nuna strekaĵo"
+msgstr "Ĝi antaŭmontras interan bitmapon kun nunaj agordoj, sen la nuna strekaĵo"
 
 #: ../src/ui/dialog/tracedialog.cpp:655
 msgid "Preview"
@@ -10311,7 +10235,7 @@ msgstr "Matri_co"
 
 #: ../src/ui/dialog/transformation.cpp:151
 msgid "Reset the values on the current tab to defaults"
-msgstr "Resetu la valorojn en la nuna langeto per defaŭltaj tiuj"
+msgstr "Reŝargu la valorojn en la nuna langeto per defaŭltaj tiuj"
 
 #: ../src/ui/dialog/transformation.cpp:158
 msgid "Apply transformation to selection"
@@ -10493,7 +10417,7 @@ msgid "Close _without saving"
 msgstr "_Fermu sen konservi"
 
 #: ../src/ui/view/edit-widget.cpp:1257 ../src/widgets/desktop-widget.cpp:877
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
 "format (%s) that may cause data loss!</span>\n"
@@ -10503,11 +10427,11 @@ msgstr ""
 "<span weight=\"bold\" size=\"larger\">La dosiero \"%s\" estis konservita per "
 "formato (%s) kiu povus kaŭzi perdon de datumoj!</span>\n"
 "\n"
-"Ĉu vi volas konservi ĝin per alia formato?"
+"Ĉu vi volas konservi ĝin kiel SVG de Inkscape?"
 
 #: ../src/ui/view/edit-widget.cpp:1272 ../src/widgets/desktop-widget.cpp:888
 msgid "_Save as SVG"
-msgstr ""
+msgstr "Kon_servu kiel SVG"
 
 #: ../src/ui/widget/panel.cpp:98
 msgid "tiny"
@@ -10539,7 +10463,7 @@ msgstr "Ma_lfokuso:"
 
 #: ../src/ui/widget/licensor.cpp:35
 msgid "Proprietary"
-msgstr ""
+msgstr "Ne-libera"
 
 #: ../src/ui/widget/licensor.cpp:38
 msgid "Other"
@@ -10794,13 +10718,12 @@ msgstr "Ŝanĝu larĝon de streko"
 
 #: ../src/ui/widget/selected-style.cpp:980
 msgid ", drag to adjust"
-msgstr ""
+msgstr ", trenu por adapti"
 
 #: ../src/ui/widget/selected-style.cpp:1026
 #: ../src/ui/widget/selected-style.cpp:1027
-#, fuzzy
 msgid "Opacity, %"
-msgstr "Opakeco, %:"
+msgstr "Opakeco, %"
 
 #: ../src/ui/widget/selected-style.cpp:1058
 #, c-format
@@ -10809,7 +10732,7 @@ msgstr "Strekolarĝo: %.5g%s%s"
 
 #: ../src/ui/widget/selected-style.cpp:1062
 msgid " (averaged)"
-msgstr "(mezumita)"
+msgstr " (mezumita)"
 
 #: ../src/ui/widget/selected-style.cpp:1090
 msgid "0 (transparent)"
@@ -10820,9 +10743,8 @@ msgid "100% (opaque)"
 msgstr "100% (opaka)"
 
 #: ../src/ui/widget/selected-style.cpp:1261
-#, fuzzy
 msgid "Adjust saturation"
-msgstr "Malpli da Saturado"
+msgstr "Aranĝu saturadon"
 
 #: ../src/ui/widget/selected-style.cpp:1263
 #, c-format
@@ -10830,11 +10752,12 @@ msgid ""
 "Adjusting <b>saturation</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with "
 "<b>Ctrl</b> to adjust lightness, without modifiers to adjust hue"
 msgstr ""
+"Aranĝo de <b>saturado</b>: ĝi estis %.3g, nun estas <b>%.3g</b> (dif. %.3g); "
+"kun <b>Strkl</b> por aranĝi limecon, sen klavoj por aranĝi nuancon"
 
 #: ../src/ui/widget/selected-style.cpp:1267
-#, fuzzy
 msgid "Adjust lightness"
-msgstr "Lumeco"
+msgstr "Aranĝu lumecon"
 
 #: ../src/ui/widget/selected-style.cpp:1269
 #, c-format
@@ -10842,11 +10765,12 @@ msgid ""
 "Adjusting <b>lightness</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with "
 "<b>Shift</b> to adjust saturation, without modifiers to adjust hue"
 msgstr ""
+"Aranĝo de <b>lumeco</b>: ĝi estis %.3g, nun estas <b>%.3g</b> (dif. %.3g); "
+"kun <b>Ŝvkl</b> por aranĝi saturadon, sen klavoj por aranĝi nuancon"
 
 #: ../src/ui/widget/selected-style.cpp:1273
-#, fuzzy
 msgid "Adjust hue"
-msgstr "nure kurbo"
+msgstr "Aranĝu nuancon"
 
 #: ../src/ui/widget/selected-style.cpp:1275
 #, c-format
@@ -10854,6 +10778,8 @@ msgid ""
 "Adjusting <b>hue</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</"
 "b> to adjust saturation, with <b>Ctrl</b> to adjust lightness"
 msgstr ""
+"Aranĝo de <b>nuanco</b>: ĝi estis %.3g, nun estas <b>%.3g</b> (dif. %.3g); "
+"kun <b>Ŝvkl</b> por aranĝi saturadon, kun <b>Strkl</b> por aranĝi lumecon"
 
 #: ../src/ui/widget/page-sizer.cpp:195
 msgid "Name"
@@ -11247,12 +11173,11 @@ msgstr "En_metu"
 
 #: ../src/verbs.cpp:2165
 msgid "Paste objects from clipboard to mouse point, or paste text"
-msgstr ""
-"Ĝi enmetas objektojn el la poŝo sub la musa indikilo, aŭ enmetas tekston"
+msgstr "Ĝi enmetas objektojn el la poŝo sub la musa indikilo, aŭ enmetas tekston"
 
 #: ../src/verbs.cpp:2166
 msgid "Paste _Style"
-msgstr "Enmetu _Stilon"
+msgstr "Apliku _Stilon"
 
 #: ../src/verbs.cpp:2167
 msgid "Apply the style of the copied object to selection"
@@ -11268,8 +11193,7 @@ msgstr "Enmetu Lar_ĝon"
 
 #: ../src/verbs.cpp:2171
 msgid "Scale selection horizontally to match the width of the copied object"
-msgstr ""
-"Skalu la elekton horizontale por kongrui kun larĝo de la kopiita objekto"
+msgstr "Skalu la elekton horizontale por kongrui kun larĝo de la kopiita objekto"
 
 #: ../src/verbs.cpp:2172
 msgid "Paste _Height"
@@ -11285,8 +11209,7 @@ msgstr "Enmetu Grandon Aparte"
 
 #: ../src/verbs.cpp:2175
 msgid "Scale each selected object to match the size of the copied object"
-msgstr ""
-"Skalu ĉiun elektitan objekton por kongrui kun grando de kopiita objekto"
+msgstr "Skalu ĉiun elektitan objekton por kongrui kun grando de kopiita objekto"
 
 #: ../src/verbs.cpp:2176
 msgid "Paste Width Separately"
@@ -11350,8 +11273,7 @@ msgstr "Kreu Klo_non"
 
 #: ../src/verbs.cpp:2189
 msgid "Create a clone (a copy linked to the original) of selected object"
-msgstr ""
-"Ĝi kreas klonon de elektita objekto (t.e. kopio kunligita al originalo)"
+msgstr "Ĝi kreas klonon de elektita objekto (t.e. kopio kunligita al originalo)"
 
 #: ../src/verbs.cpp:2190
 msgid "Unlin_k Clone"
@@ -11382,15 +11304,16 @@ msgstr "Ĝi konvertu la elektaĵon en linia markilo"
 
 #. TRANSLATORS: Convert selection to a collection of guidelines
 #: ../src/verbs.cpp:2198
-#, fuzzy
 msgid "Objects to Gu_ides"
-msgstr "Konvertu objekton en _markilo"
+msgstr "Konvertu objekton en gv_idrelo"
 
 #: ../src/verbs.cpp:2199
 msgid ""
 "Convert selected objects to a collection of guidelines aligned with their "
 "edges"
 msgstr ""
+"Ĝi konvertas la elektitan objekton en kolekto de gvidlinioj laŭliniigitaj "
+"kun iliaj randoj"
 
 #. TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
 #: ../src/verbs.cpp:2201
@@ -11477,13 +11400,12 @@ msgid "Deselect any selected objects or nodes"
 msgstr "Malelektu ĉiujn elektitajn objektojn aŭ nodojn"
 
 #: ../src/verbs.cpp:2222 ../src/widgets/toolbox.cpp:1094
-#, fuzzy
 msgid "Next Path Effect Parameter"
-msgstr "Enmetu parametron de streko"
+msgstr "Parametro de Sekvanta Artifiko de Streko"
 
 #: ../src/verbs.cpp:2223 ../src/widgets/toolbox.cpp:1095
 msgid "Show next Path Effect parameter for editing"
-msgstr ""
+msgstr "Ĝi vidigas la parametron de la sekvanta Artifiko de Streko por redaktado"
 
 #. Selection
 #: ../src/verbs.cpp:2226
@@ -11520,15 +11442,15 @@ msgstr "Ĝi subentiras elekton je unu tavolo"
 
 #: ../src/verbs.cpp:2234
 msgid "_Group"
-msgstr "Ari_gu"
+msgstr "_Grupigu"
 
 #: ../src/verbs.cpp:2235
 msgid "Group selected objects"
-msgstr "Arigu elektitajn objektojn"
+msgstr "Grupigu elektitajn objektojn"
 
 #: ../src/verbs.cpp:2237
 msgid "Ungroup selected groups"
-msgstr "Malarigu elektitajn grupojn"
+msgstr "Malgrupigu elektitajn grupojn"
 
 #: ../src/verbs.cpp:2239
 msgid "_Put on Path"
@@ -11540,7 +11462,7 @@ msgstr "Fo_rmovu el Strekon"
 
 #: ../src/verbs.cpp:2243
 msgid "Remove Manual _Kerns"
-msgstr "Rimuovi trasformazioni"
+msgstr "Formovu Tras_formojn Mane"
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
@@ -11895,8 +11817,7 @@ msgstr "_Konvertu en Teksto"
 
 #: ../src/verbs.cpp:2351
 msgid "Convert flowed text to regular text object (preserves appearance)"
-msgstr ""
-"Ĝi konvertas moviĝantan tekston en normala teksta objekto (ĝi tenas aspekton)"
+msgstr "Ĝi konvertas moviĝantan tekston en normala teksta objekto (ĝi tenas aspekton)"
 
 #: ../src/verbs.cpp:2353
 msgid "Flip _Horizontal"
@@ -11927,8 +11848,7 @@ msgid "Remove mask from selection"
 msgstr "Formovu maskon el elekto"
 
 #: ../src/verbs.cpp:2363
-msgid ""
-"Apply clipping path to selection (using the topmost object as clipping path)"
+msgid "Apply clipping path to selection (using the topmost object as clipping path)"
 msgstr ""
 "Apliku klipantan strekon al la elekto (uzante pintan objekton kiel klipanta "
 "streko)"
@@ -12290,13 +12210,12 @@ msgid "Toggle between normal and outline display modes"
 msgstr "Mastrumu inter normala kaj faka montromodusoj"
 
 #: ../src/verbs.cpp:2473
-#, fuzzy
 msgid "Color managed view"
-msgstr "Mastrumado de Koloro"
+msgstr "Vido de mastrumita koloro"
 
 #: ../src/verbs.cpp:2474
 msgid "Toggle color managed display adjustment for this document window"
-msgstr ""
+msgstr "Tio sanĝas aranĝon de mastrumita koloro por tiu ĉi fenestro de dokumento"
 
 #: ../src/verbs.cpp:2476
 msgid "Ico_n Preview..."
@@ -12304,8 +12223,7 @@ msgstr "Iko_nigita Antaŭmontro..."
 
 #: ../src/verbs.cpp:2477
 msgid "Open a window to preview objects at different icon resolutions"
-msgstr ""
-"Ĝi malfermas fenestron por montri objektojn per malsamaj difinoj de ikonoj"
+msgstr "Ĝi malfermas fenestron por montri objektojn per malsamaj difinoj de ikonoj"
 
 #: ../src/verbs.cpp:2479
 msgid "Zoom to fit page in window"
@@ -12350,16 +12268,14 @@ msgstr "_Metadatumo de Dokumento..."
 
 #: ../src/verbs.cpp:2493
 msgid "Edit document metadata (to be saved with the document)"
-msgstr ""
-"Ĝi redaktas metadatumon de dokumento (por savi ĝin kun la dokumento mem)"
+msgstr "Ĝi redaktas metadatumon de dokumento (por savi ĝin kun la dokumento mem)"
 
 #: ../src/verbs.cpp:2494
 msgid "_Fill and Stroke..."
 msgstr "P_lenigo kaj Streko..."
 
 #: ../src/verbs.cpp:2495
-msgid ""
-"Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
+msgid "Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
 msgstr ""
 "Ĝi redaktas koloron, gradienton, streklarĝon, sagopinton, punktetojn...de la "
 "objektoj."
@@ -12641,10 +12557,8 @@ msgid "Fit Page to Selection or Drawing"
 msgstr "Adaptu Paĝon al Elekto aŭ al Desegno"
 
 #: ../src/verbs.cpp:2575
-msgid ""
-"Fit the page to the current selection or the drawing if there is no selection"
-msgstr ""
-"Ĝi adaptas la paĝon al la nuna elekto aŭ, se nenio estas elektita, al desegno"
+msgid "Fit the page to the current selection or the drawing if there is no selection"
+msgstr "Ĝi adaptas la paĝon al la nuna elekto aŭ, se nenio estas elektita, al desegno"
 
 #. LockAndHide
 #: ../src/verbs.cpp:2577
@@ -12902,8 +12816,7 @@ msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:210
-msgid ""
-"Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
+msgid "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
 "Pleigo estas solida escepte se substreko estas kontraŭdirekta "
 "(plenigoregulo: ne-nulo)"
@@ -12921,14 +12834,14 @@ msgid "Paint is undefined"
 msgstr "La pentrado ne estas difinita"
 
 #: ../src/widgets/paint-selector.cpp:980
-#, fuzzy
 msgid ""
 "Use the <b>Node tool</b> to adjust position, scale, and rotation of the "
 "pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to "
 "create a new pattern from selection."
 msgstr ""
-"Uzu <b>Objekto &gt; Motivo &gt; Konvertu Objekton en Motivo</b> por krei "
-"novan motivon el elekto."
+"Uzu la <b>Ilo de Nodo</b> por aranĝi lokiĝon, skaladon, rotacion de la motivo "
+"en la tolo. Uzu <b>Objekto &gt; Motivo &gt; Konvertu Objekton en Motivo</b> por "
+"krei novan motivon el elektaĵo."
 
 #: ../src/widgets/select-toolbar.cpp:238
 msgid "Transform by toolbar"
@@ -12936,13 +12849,11 @@ msgstr "Transformu per ilarstango"
 
 #: ../src/widgets/select-toolbar.cpp:293
 msgid "Now <b>stroke width</b> is <b>scaled</b> when objects are scaled."
-msgstr ""
-"Nune <b>strekolarĝo</b> estas <b>skalita</b> kiam objektoj estas skalitaj."
+msgstr "Nune <b>strekolarĝo</b> estas <b>skalita</b> kiam objektoj estas skalitaj."
 
 #: ../src/widgets/select-toolbar.cpp:295
 msgid "Now <b>stroke width</b> is <b>not scaled</b> when objects are scaled."
-msgstr ""
-"Nune <b>strekolarĝo</b> estas <b>ne skalita</b> kiam objektoj estas skalitaj."
+msgstr "Nune <b>strekolarĝo</b> estas <b>ne skalita</b> kiam objektoj estas skalitaj."
 
 #: ../src/widgets/select-toolbar.cpp:304
 msgid ""
@@ -12996,9 +12907,8 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:429
-#, fuzzy
 msgid "select_toolbar|X position"
-msgstr "X"
+msgstr "X-lokiĝo"
 
 #: ../src/widgets/select-toolbar.cpp:429
 msgid "select_toolbar|X"
@@ -13011,9 +12921,8 @@ msgstr "Horizontala koordinato de elekto"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:436
-#, fuzzy
 msgid "select_toolbar|Y position"
-msgstr "Y"
+msgstr "Y-lokiĝo"
 
 #: ../src/widgets/select-toolbar.cpp:436
 msgid "select_toolbar|Y"
@@ -13026,9 +12935,8 @@ msgstr "Vertikala koordinato de elekto"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:443
-#, fuzzy
 msgid "select_toolbar|Width"
-msgstr "L"
+msgstr "Larĝo"
 
 #: ../src/widgets/select-toolbar.cpp:443
 msgid "select_toolbar|W"
@@ -13039,9 +12947,8 @@ msgid "Width of selection"
 msgstr "Larĝo de elekto"
 
 #: ../src/widgets/select-toolbar.cpp:451
-#, fuzzy
 msgid "Lock width and height"
-msgstr "Larĝo, alto: "
+msgstr "Bloku larĝon kaj alton"
 
 #: ../src/widgets/select-toolbar.cpp:452
 msgid "When locked, change both width and height by the same proportion"
@@ -13050,9 +12957,8 @@ msgstr "Kiam ĝi estas blokita, ĝi ŝanĝas alton kaj larĝon tenante proporcio
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:463
-#, fuzzy
 msgid "select_toolbar|Height"
-msgstr "A"
+msgstr "Alto"
 
 #: ../src/widgets/select-toolbar.cpp:463
 msgid "select_toolbar|H"
@@ -13067,19 +12973,16 @@ msgid "Affect:"
 msgstr "Aspekto:"
 
 #: ../src/widgets/select-toolbar.cpp:506
-#, fuzzy
 msgid "Scale rounded corners"
-msgstr "Skalu rondajn angulojn de rektanguloj"
+msgstr "Skalu rondajn angulojn"
 
 #: ../src/widgets/select-toolbar.cpp:517
-#, fuzzy
 msgid "Move gradients"
-msgstr "Movu prenilon de gradiento"
+msgstr "Movu gradientojn"
 
 #: ../src/widgets/select-toolbar.cpp:528
-#, fuzzy
 msgid "Move patterns"
-msgstr "Motivoj"
+msgstr "Movu motivojn"
 
 #: ../src/widgets/sp-color-gtkselector.cpp:50
 msgid "System"
@@ -13241,9 +13144,8 @@ msgid "Style of Paint Bucket fill objects"
 msgstr "Stilo de objektoj de Farbujo"
 
 #: ../src/widgets/toolbox.cpp:970
-#, fuzzy
 msgid "Insert node"
-msgstr "Deŝovo de nodo"
+msgstr "Enmetu nodon"
 
 #: ../src/widgets/toolbox.cpp:971
 msgid "Insert new nodes into selected segments"
@@ -13258,9 +13160,8 @@ msgid "Delete selected nodes"
 msgstr "Ĝi forigas elektitajn nodojn"
 
 #: ../src/widgets/toolbox.cpp:992
-#, fuzzy
 msgid "Join endnodes"
-msgstr "Kunigu nodojn"
+msgstr "Kunigu finnodojn"
 
 #: ../src/widgets/toolbox.cpp:993
 msgid "Join selected endnodes"
@@ -13343,24 +13244,20 @@ msgid "Show the Bezier handles of selected nodes"
 msgstr "Ĝi vidigas prenilojn de Bezier de elektitaj nodoj"
 
 #: ../src/widgets/toolbox.cpp:1108
-#, fuzzy
 msgid "X coordinate:"
-msgstr "Koordinatoj de kursoro"
+msgstr "X-koordinato:"
 
 #: ../src/widgets/toolbox.cpp:1108
-#, fuzzy
 msgid "X coordinate of selected node(s)"
-msgstr "Vertikala koordinato de elekto"
+msgstr "X-koordinato de elektita(j) nodo(j)"
 
 #: ../src/widgets/toolbox.cpp:1126
-#, fuzzy
 msgid "Y coordinate:"
-msgstr "Koordinatoj de kursoro"
+msgstr "Y-koordinato:"
 
 #: ../src/widgets/toolbox.cpp:1126
-#, fuzzy
 msgid "Y coordinate of selected node(s)"
-msgstr "Vertikala koordinato de elekto"
+msgstr "Y-koordinato de elektita(j) nodo(j)"
 
 #: ../src/widgets/toolbox.cpp:1539
 msgid "Star: Change number of corners"
@@ -13447,9 +13344,8 @@ msgid "regular polygon"
 msgstr "regula plurlatero"
 
 #: ../src/widgets/toolbox.cpp:1921
-#, fuzzy
 msgid "Spoke ratio"
-msgstr "Proporcio de radio:"
+msgstr "Proporcio de radio"
 
 #: ../src/widgets/toolbox.cpp:1921
 msgid "Spoke ratio:"
@@ -13498,9 +13394,8 @@ msgid "blown up"
 msgstr "pufigita"
 
 #: ../src/widgets/toolbox.cpp:1945
-#, fuzzy
 msgid "Rounded"
-msgstr "Rondigo:"
+msgstr "Rondigo"
 
 #: ../src/widgets/toolbox.cpp:1945
 msgid "Rounded:"
@@ -13527,9 +13422,8 @@ msgid "strongly randomized"
 msgstr "ege aleatorigita"
 
 #: ../src/widgets/toolbox.cpp:1960
-#, fuzzy
 msgid "Randomized"
-msgstr "Aleatorigita:"
+msgstr "Aleatorigita"
 
 #: ../src/widgets/toolbox.cpp:1960
 msgid "Randomized:"
@@ -13573,9 +13467,8 @@ msgid "not rounded"
 msgstr "ne rondigita"
 
 #: ../src/widgets/toolbox.cpp:2274
-#, fuzzy
 msgid "Horizontal radius"
-msgstr "Horizontala Interspaco"
+msgstr "Horizontala radiuso"
 
 #: ../src/widgets/toolbox.cpp:2274
 msgid "Rx:"
@@ -13586,9 +13479,8 @@ msgid "Horizontal radius of rounded corners"
 msgstr "Horizontala radiuso de rondigita angulo"
 
 #: ../src/widgets/toolbox.cpp:2289
-#, fuzzy
 msgid "Vertical radius"
-msgstr "Vertikala Interspaco"
+msgstr "Vertikala radiuso"
 
 #: ../src/widgets/toolbox.cpp:2289
 msgid "Ry:"
@@ -13608,14 +13500,12 @@ msgstr "Igu akraj la angulojn"
 
 #. TODO: use the correct axis here, too
 #: ../src/widgets/toolbox.cpp:2498
-#, fuzzy
 msgid "3D Box: Change perspective (angle of infinite axis)"
-msgstr "3D Fako: Ŝanĝu perspektivon"
+msgstr "3D Fako: Ŝanĝu perspektivon (angulo de senfina akso)"
 
 #: ../src/widgets/toolbox.cpp:2567
-#, fuzzy
 msgid "Angle in X direction"
-msgstr "Interŝanĝu VP en X akso"
+msgstr "Angulo en X akso"
 
 #: ../src/widgets/toolbox.cpp:2567
 msgid "Angle X:"
@@ -13623,25 +13513,21 @@ msgstr "Angulo X:"
 
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/toolbox.cpp:2569
-#, fuzzy
 msgid "Angle of PLs in X direction"
-msgstr "Interŝanĝu VP en X akso"
+msgstr "Angulo de perspektiva linio en X akso"
 
 #. Translators: VP is short for 'vanishing point'
 #: ../src/widgets/toolbox.cpp:2591
-#, fuzzy
 msgid "State of VP in X direction"
-msgstr "Interŝanĝu VP en X akso"
+msgstr "Stao de malaperanta punkto en X akso"
 
 #: ../src/widgets/toolbox.cpp:2592
-#, fuzzy
 msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
-msgstr "Ĝi interŝanĝas VP en X akso inter 'fina' and 'senfina' (=paralela)"
+msgstr "Interŝanĝu malaperantan punkton en X akso inter 'fina' and 'senfina' (=paralela)"
 
 #: ../src/widgets/toolbox.cpp:2607
-#, fuzzy
 msgid "Angle in Y direction"
-msgstr "Interŝanĝu VP en Y akso"
+msgstr "Angulo en Y akso"
 
 #: ../src/widgets/toolbox.cpp:2607
 msgid "Angle Y:"
@@ -13649,25 +13535,21 @@ msgstr "Angulo Y:"
 
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/toolbox.cpp:2609
-#, fuzzy
 msgid "Angle of PLs in Y direction"
-msgstr "Interŝanĝu VP en Y akso"
+msgstr "Angulo de perspektiva linio en Y akso"
 
 #. Translators: VP is short for 'vanishing point'
 #: ../src/widgets/toolbox.cpp:2630
-#, fuzzy
 msgid "State of VP in Y direction"
-msgstr "Interŝanĝu VP en Y akso"
+msgstr "Stato de malaperanta punkto en Y akso"
 
 #: ../src/widgets/toolbox.cpp:2631
-#, fuzzy
 msgid "Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"
-msgstr "Ĝi interŝanĝas VP en Y akso inter 'fina' and 'senfina' (=paralela)"
+msgstr "Interŝanĝu malaperantan punkton en Y akso inter 'fina' and 'senfina' (=paralela)"
 
 #: ../src/widgets/toolbox.cpp:2646
-#, fuzzy
 msgid "Angle in Z direction"
-msgstr "Interŝanĝu VP en Z akso"
+msgstr "Angulo en Z akso"
 
 #: ../src/widgets/toolbox.cpp:2646
 msgid "Angle Z:"
@@ -13675,20 +13557,17 @@ msgstr "Angulo Z:"
 
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/toolbox.cpp:2648
-#, fuzzy
 msgid "Angle of PLs in Z direction"
-msgstr "Interŝanĝu VP en Z akso"
+msgstr "Angulo de perspektiva linio en Z akso"
 
 #. Translators: VP is short for 'vanishing point'
 #: ../src/widgets/toolbox.cpp:2669
-#, fuzzy
 msgid "State of VP in Z direction"
-msgstr "Interŝanĝu VP en Z akso"
+msgstr "Stato de malaperanta punkto en Z akso"
 
 #: ../src/widgets/toolbox.cpp:2670
-#, fuzzy
 msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
-msgstr "Ĝi interŝanĝas VP en Z akso inter 'fina' and 'senfina' (=paralela)"
+msgstr "Interŝanĝu malaperantan punkton en Z akso inter 'fina' kaj 'senfina' (=paralela)"
 
 #: ../src/widgets/toolbox.cpp:2727
 msgid "Change spiral"
@@ -13703,9 +13582,8 @@ msgid "one full revolution"
 msgstr "unu plena turno"
 
 #: ../src/widgets/toolbox.cpp:2870
-#, fuzzy
 msgid "Number of turns"
-msgstr "Nombro da linioj"
+msgstr "Nombro da turnoj"
 
 #: ../src/widgets/toolbox.cpp:2870
 msgid "Turns:"
@@ -13740,9 +13618,8 @@ msgid "center is much denser"
 msgstr "centro estas multe pli densa"
 
 #: ../src/widgets/toolbox.cpp:2884
-#, fuzzy
 msgid "Divergence"
-msgstr "Diverĝo:"
+msgstr "Diverĝo"
 
 #: ../src/widgets/toolbox.cpp:2884
 msgid "Divergence:"
@@ -13765,9 +13642,8 @@ msgid "starts near edge"
 msgstr "startas el apuda rando"
 
 #: ../src/widgets/toolbox.cpp:2898
-#, fuzzy
 msgid "Inner radius"
-msgstr "Interna radiuso:"
+msgstr "Interna radiuso"
 
 #: ../src/widgets/toolbox.cpp:2898
 msgid "Inner radius:"
@@ -13806,13 +13682,12 @@ msgid "(maximum force)"
 msgstr "(maksimuma forto)"
 
 #: ../src/widgets/toolbox.cpp:3033
-#, fuzzy
 msgid "Force"
 msgstr "Forto"
 
 #: ../src/widgets/toolbox.cpp:3033
 msgid "Force:"
-msgstr "Forto"
+msgstr "Forto:"
 
 #: ../src/widgets/toolbox.cpp:3033
 msgid "The force of the tweak action"
@@ -13932,9 +13807,8 @@ msgid "(fine, but many nodes)"
 msgstr "(fajna, sed kun multaj nodoj)"
 
 #: ../src/widgets/toolbox.cpp:3194
-#, fuzzy
 msgid "Fidelity"
-msgstr "Fideleco:"
+msgstr "Fideleco"
 
 #: ../src/widgets/toolbox.cpp:3194
 msgid "Fidelity:"
@@ -13954,8 +13828,7 @@ msgstr "Premo"
 
 #: ../src/widgets/toolbox.cpp:3213
 msgid "Use the pressure of the input device to alter the force of tweak action"
-msgstr ""
-"Uzu la premon de la eniga aparato por modifi la forton de la ago de korekto"
+msgstr "Uzu la premon de la eniga aparato por modifi la forton de la ago de korekto"
 
 #. Width
 #: ../src/widgets/toolbox.cpp:3319
@@ -13967,9 +13840,8 @@ msgid "(broad stroke)"
 msgstr "(amplekso de streko)"
 
 #: ../src/widgets/toolbox.cpp:3322
-#, fuzzy
 msgid "Pen Width"
-msgstr "Lar_ĝo de paĝo"
+msgstr "Larĝo de Plumo"
 
 #: ../src/widgets/toolbox.cpp:3323
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
@@ -13997,9 +13869,8 @@ msgid "(speed deflates stroke)"
 msgstr "(rapida malpufigo de streko)"
 
 #: ../src/widgets/toolbox.cpp:3338
-#, fuzzy
 msgid "Stroke Thinning"
-msgstr "Peniktuŝo"
+msgstr "Subtiliĝo de Tuŝo"
 
 #: ../src/widgets/toolbox.cpp:3338
 msgid "Thinning:"
@@ -14027,9 +13898,8 @@ msgid "(right edge up)"
 msgstr "(dekstra rando supre)"
 
 #: ../src/widgets/toolbox.cpp:3354
-#, fuzzy
 msgid "Pen Angle"
-msgstr "Konusa Angulo"
+msgstr "Angulo de Plumo"
 
 #: ../src/widgets/toolbox.cpp:3354
 msgid "Angle:"
@@ -14057,9 +13927,8 @@ msgid "(fixed by Angle, \"pen\")"
 msgstr "(fiksa laŭ Angulo, \"plumo\")"
 
 #: ../src/widgets/toolbox.cpp:3371
-#, fuzzy
 msgid "Fixation"
-msgstr "Fiksado:"
+msgstr "Fiksado"
 
 #: ../src/widgets/toolbox.cpp:3371
 msgid "Fixation:"
@@ -14091,9 +13960,8 @@ msgid "(long protruding caps)"
 msgstr "(antaŭenvenaj majuskloj)"
 
 #: ../src/widgets/toolbox.cpp:3388
-#, fuzzy
 msgid "Cap rounding"
-msgstr "Stelo: Ŝanĝu rondigon"
+msgstr "Rondigo de majuskloj"
 
 #: ../src/widgets/toolbox.cpp:3388
 msgid "Caps:"
@@ -14125,9 +13993,8 @@ msgid "(maximum tremor)"
 msgstr "(maksimuma tremado)"
 
 #: ../src/widgets/toolbox.cpp:3404
-#, fuzzy
 msgid "Stroke Tremor"
-msgstr "Agordu koloro de strekoo"
+msgstr "Tremado de Streko"
 
 #: ../src/widgets/toolbox.cpp:3404
 msgid "Tremor:"
@@ -14151,9 +14018,8 @@ msgid "(wild waves and curls)"
 msgstr "(sovaĝaj ondoj kaj bukloj)"
 
 #: ../src/widgets/toolbox.cpp:3421
-#, fuzzy
 msgid "Pen Wiggle"
-msgstr "Svingiĝo:"
+msgstr "Svingiĝo de Plumo"
 
 #: ../src/widgets/toolbox.cpp:3421
 msgid "Wiggle:"
@@ -14181,9 +14047,8 @@ msgid "(maximum inertia)"
 msgstr "(maksimuma inercio)"
 
 #: ../src/widgets/toolbox.cpp:3437
-#, fuzzy
 msgid "Pen Mass"
-msgstr "Maso:"
+msgstr "Maso de Plumo"
 
 #: ../src/widgets/toolbox.cpp:3437
 msgid "Mass:"
@@ -14191,8 +14056,7 @@ msgstr "Maso:"
 
 #: ../src/widgets/toolbox.cpp:3438
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
-msgstr ""
-"Pliigu tion por igi posta trenon de plumo, kiel lantigita far de inercio"
+msgstr "Pliigu tion por igi posta trenon de plumo, kiel lantigita far de inercio"
 
 #: ../src/widgets/toolbox.cpp:3452
 msgid "Trace Background"
@@ -14216,8 +14080,7 @@ msgstr "Kliniĝo"
 
 #: ../src/widgets/toolbox.cpp:3477
 msgid "Use the tilt of the input device to alter the angle of the pen's nib"
-msgstr ""
-"Uzu la kliniĝon de la eniga aparato por modifi angulon de la pinto de plumo"
+msgstr "Uzu la kliniĝon de la eniga aparato por modifi angulon de la pinto de plumo"
 
 #: ../src/widgets/toolbox.cpp:3490
 msgid "Reset all parameters to defaults"
@@ -14232,9 +14095,8 @@ msgid "Arc: Change open/closed"
 msgstr "Arko: Ŝanĝu malfermon/fermon"
 
 #: ../src/widgets/toolbox.cpp:3761
-#, fuzzy
 msgid "Start"
-msgstr "Starto:"
+msgstr "Starto"
 
 #: ../src/widgets/toolbox.cpp:3761
 msgid "Start:"
@@ -14245,9 +14107,8 @@ msgid "The angle (in degrees) from the horizontal to the arc's start point"
 msgstr "La angulo (en gradoj) el horizonta ĝis starta punkto de la arko"
 
 #: ../src/widgets/toolbox.cpp:3774
-#, fuzzy
 msgid "End"
-msgstr "Fino:"
+msgstr "Fino"
 
 #: ../src/widgets/toolbox.cpp:3774
 msgid "End:"
@@ -14298,8 +14159,7 @@ msgid "Set alpha"
 msgstr "Agordu Alfan"
 
 #: ../src/widgets/toolbox.cpp:3903
-msgid ""
-"If alpha was picked, assign it to selection as fill or stroke transparency"
+msgid "If alpha was picked, assign it to selection as fill or stroke transparency"
 msgstr ""
 "Se Alfan estis eltirita, ĝi atribuas tion al la elekto kiel diafaneco de "
 "plenigo aŭ streko"
@@ -14369,9 +14229,8 @@ msgid "Ignore"
 msgstr "Ignoru"
 
 #: ../src/widgets/toolbox.cpp:5057
-#, fuzzy
 msgid "Connector Spacing"
-msgstr "Ŝanĝu spacon de konektiloj"
+msgstr "Interspacigo de konektiloj"
 
 #: ../src/widgets/toolbox.cpp:5057
 msgid "Spacing:"
@@ -14379,17 +14238,15 @@ msgstr "Interspaco:"
 
 #: ../src/widgets/toolbox.cpp:5058
 msgid "The amount of space left around objects by auto-routing connectors"
-msgstr ""
-"La restenda kvanto de spaco ĉirkaŭ objekto per mem-enkursigaj konektiloj"
+msgstr "La restenda kvanto de spaco ĉirkaŭ objekto per mem-enkursigaj konektiloj"
 
 #: ../src/widgets/toolbox.cpp:5069
 msgid "Graph"
 msgstr "Skribo"
 
 #: ../src/widgets/toolbox.cpp:5079
-#, fuzzy
 msgid "Connector Length"
-msgstr "Konektilo"
+msgstr "Longo de Konektilo"
 
 #: ../src/widgets/toolbox.cpp:5079
 msgid "Length:"
@@ -14412,18 +14269,16 @@ msgid "Do not allow overlapping shapes"
 msgstr "Ne ebligu surmetitajn formojn"
 
 #: ../src/widgets/toolbox.cpp:5210
-#, fuzzy
 msgid "Fill by"
-msgstr "Plenigu je:"
+msgstr "Plenigu je"
 
 #: ../src/widgets/toolbox.cpp:5211
 msgid "Fill by:"
 msgstr "Plenigu je:"
 
 #: ../src/widgets/toolbox.cpp:5223
-#, fuzzy
 msgid "Fill Threshold"
-msgstr "Sojlo"
+msgstr "Sojlo de Plenigo"
 
 #: ../src/widgets/toolbox.cpp:5224
 msgid ""
@@ -14434,24 +14289,20 @@ msgstr ""
 "por esti en la plenigo"
 
 #: ../src/widgets/toolbox.cpp:5246
-#, fuzzy
 msgid "Grow/shrink by"
-msgstr "Larĝigu/mallarĝigu je:"
+msgstr "Larĝigu/mallarĝigu je"
 
 #: ../src/widgets/toolbox.cpp:5246
 msgid "Grow/shrink by:"
 msgstr "Larĝigu/mallarĝigu je:"
 
 #: ../src/widgets/toolbox.cpp:5247
-msgid ""
-"The amount to grow (positive) or shrink (negative) the created fill path"
-msgstr ""
-"La kvanto por larĝigi (pozitiva) aŭ mallarĝigi (negativa) kreitan plenigaĵon"
+msgid "The amount to grow (positive) or shrink (negative) the created fill path"
+msgstr "La kvanto por larĝigi (pozitiva) aŭ mallarĝigi (negativa) kreitan plenigaĵon"
 
 #: ../src/widgets/toolbox.cpp:5272
-#, fuzzy
 msgid "Close gaps"
-msgstr "Mankoj:"
+msgstr "Mankoj"
 
 #: ../src/widgets/toolbox.cpp:5273
 msgid "Close gaps:"
@@ -14503,8 +14354,7 @@ msgstr "Adobe-Ilustrilo 8.0 (*.ai)"
 
 #: ../share/extensions/ai_input.inx.h:3
 msgid "Open files saved with Adobe Illustrator 8.0 or older"
-msgstr ""
-"Ĝi malfermas dosierojn konservitajn per Adobe(8.0 aŭ pli malnova)-Ilustrilo"
+msgstr "Ĝi malfermas dosierojn konservitajn per Adobe(8.0 aŭ pli malnova)-Ilustrilo"
 
 #: ../share/extensions/ai_output.inx.h:1
 msgid "AI 8.0 Output"
@@ -14705,38 +14555,32 @@ msgstr ""
 "pstoedit"
 
 #: ../share/extensions/edge3d.inx.h:1
-#, fuzzy
 msgid "Blur height"
-msgstr "Alto de Strekkodo:"
+msgstr "Alto de malfokuso"
 
 #: ../share/extensions/edge3d.inx.h:2
-#, fuzzy
 msgid "Blur stdDeviation"
-msgstr "Standarta Devio"
+msgstr "Standarta Devio de Malfokuso"
 
 #: ../share/extensions/edge3d.inx.h:3
-#, fuzzy
 msgid "Blur width"
-msgstr "Sama larĝo"
+msgstr "Larĝo de malfokuso"
 
 #: ../share/extensions/edge3d.inx.h:4
-#, fuzzy
 msgid "Edge 3D"
-msgstr "Rando"
+msgstr "3D-Rando"
 
 #: ../share/extensions/edge3d.inx.h:5
 msgid "Illumination Angle"
-msgstr ""
+msgstr "Angulo de lumigado"
 
 #: ../share/extensions/edge3d.inx.h:7
-#, fuzzy
 msgid "Only black and white"
-msgstr "Ĝi inversigas blankajn kaj nigrajn areojn"
+msgstr "Nur blanko kaj nigro"
 
 #: ../share/extensions/edge3d.inx.h:8
-#, fuzzy
 msgid "Shades"
-msgstr "Ombrumu"
+msgstr "Ombroj"
 
 #: ../share/extensions/embedimage.inx.h:1
 msgid "Embed All Images"
@@ -14856,8 +14700,7 @@ msgstr "Funkcioj"
 
 #: ../share/extensions/funcplot.inx.h:8
 msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
-msgstr ""
-"Izotropa skalado (uzas pli etan: larĝo/x-intervalo aŭ alto/y-intervalo)"
+msgstr "Izotropa skalado (uzas pli etan: larĝo/x-intervalo aŭ alto/y-intervalo)"
 
 #: ../share/extensions/funcplot.inx.h:9
 msgid "Multiply x-range by 2*pi"
@@ -15138,63 +14981,56 @@ msgid "Space between copies:"
 msgstr "Interspaco inter kopioj:"
 
 #: ../share/extensions/perfectboundcover.inx.h:1
-#, fuzzy
 msgid "Bleed (in)"
-msgstr "Bevela alligiĝo"
+msgstr "Degutigu (en)"
 
 #: ../share/extensions/perfectboundcover.inx.h:2
 msgid "Book Height (inches)"
-msgstr ""
+msgstr "Alto de libro (coloj)"
 
 #: ../share/extensions/perfectboundcover.inx.h:3
-#, fuzzy
 msgid "Book Properties"
-msgstr "Ecoj de %s"
+msgstr "Ecoj de libro"
 
 #: ../share/extensions/perfectboundcover.inx.h:4
 msgid "Book Width (inches)"
-msgstr ""
+msgstr "Larĝo de Libro (coloj)"
 
 #: ../share/extensions/perfectboundcover.inx.h:5
-#, fuzzy
 msgid "Cover"
-msgstr "Vasteco"
+msgstr "Kovrilo"
 
 #: ../share/extensions/perfectboundcover.inx.h:6
 msgid "Cover Thickness Measurement"
-msgstr ""
+msgstr "Mesurado de Dikeco de Kovrilo"
 
 #: ../share/extensions/perfectboundcover.inx.h:7
-#, fuzzy
 msgid "Generate Template"
-msgstr "Kreu el Strekon"
+msgstr "Kreu Modelon"
 
 #: ../share/extensions/perfectboundcover.inx.h:8
-#, fuzzy
 msgid "Interior Pages"
-msgstr "Interpolu"
+msgstr "Internaj Paĝoj"
 
 #: ../share/extensions/perfectboundcover.inx.h:9
 msgid "Note: Bond Weight # calculations are a best-guess estimate."
-msgstr ""
+msgstr "Notu: Pezo # kalkulado estas plej-bone-divenita taksado."
 
 #: ../share/extensions/perfectboundcover.inx.h:10
-#, fuzzy
 msgid "Number of Pages"
-msgstr "Nombro da paŝoj"
+msgstr "Nombro da Paĝoj"
 
 #: ../share/extensions/perfectboundcover.inx.h:11
 msgid "Paper Thickness Measurement"
-msgstr ""
+msgstr "Mesurado de Dikeco de Papero"
 
 #: ../share/extensions/perfectboundcover.inx.h:12
 msgid "Perfect-Bound Cover"
-msgstr ""
+msgstr "Perfekta ĉirkaŭlimiganta kovrilo"
 
 #: ../share/extensions/perfectboundcover.inx.h:13
-#, fuzzy
 msgid "Remove existing guides"
-msgstr "Formovu rektangulon"
+msgstr "Formovu ekzistantajn gvidrelojn"
 
 #: ../share/extensions/perspective.inx.h:2
 msgid "Perspective"
@@ -15447,260 +15283,3 @@ msgstr "Enigo de Vindoza Metadosiero"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Enigo de XAML"
-
-#~ msgid "Convolve"
-#~ msgstr "Ruliĝo"
-
-#~ msgid "Kernel Array"
-#~ msgstr "Kerna Tabelo"
-
-#~ msgid "Apply Convolve Effect"
-#~ msgstr "Apliku artifikon de Ruliĝo"
-
-#, fuzzy
-#~ msgid "Start point jitter"
-#~ msgstr "Variado de startpunkto"
-
-#, fuzzy
-#~ msgid "End point jitter"
-#~ msgstr "Variado de finpunkto"
-
-#~ msgid "Slope"
-#~ msgstr "Dekliveco"
-
-#~ msgid "Intercept"
-#~ msgstr "Interkaptu"
-
-#~ msgid "Snap nodes to grid lines, to guides, to paths, and to other nodes"
-#~ msgstr ""
-#~ "Tio agrafas nodojn al la linioj de krado, al gvidreloj,al strekoj kaj al "
-#~ "aliaj nodoj"
-
-#, fuzzy
-#~ msgid "Snap at specified d_istance"
-#~ msgstr "Magneta altiro ĉiu-dist_anze"
-
-#~ msgid "Snap di_stance"
-#~ msgstr "Magneta a_ltiro"
-
-#, fuzzy
-#~ msgid "Snap at specified dis_tance"
-#~ msgstr "Magneta altiro ĉiu-dist_anze"
-
-#, fuzzy
-#~ msgid "Snap at specified distan_ce"
-#~ msgstr "Magneta altiro ĉiu-distan_ze"
-
-#~ msgid "_Include the object's rotation center"
-#~ msgstr "_Enigu la centron de rotacio de la objekto"
-
-#~ msgid "<b>Miscellaneous</b>"
-#~ msgstr "<b>Diversaĵoj</b>"
-
-#, fuzzy
-#~ msgid "Date:"
-#~ msgstr "Dato"
-
-#, fuzzy
-#~ msgid "Format:"
-#~ msgstr "Formato"
-
-#, fuzzy
-#~ msgid "Creator:"
-#~ msgstr "Kreinto"
-
-#, fuzzy
-#~ msgid "Rights:"
-#~ msgstr "Rajtoj"
-
-#, fuzzy
-#~ msgid "Publisher:"
-#~ msgstr "Eldonisto"
-
-#, fuzzy
-#~ msgid "Identifier:"
-#~ msgstr "Identigilo"
-
-#, fuzzy
-#~ msgid "Source:"
-#~ msgstr "Fonto"
-
-#, fuzzy
-#~ msgid "Relation:"
-#~ msgstr "Rilato"
-
-#, fuzzy
-#~ msgid "Language:"
-#~ msgstr "Linvo"
-
-#, fuzzy
-#~ msgid "Subject:"
-#~ msgstr "Objekto"
-
-#, fuzzy
-#~ msgid "Coverage:"
-#~ msgstr "Vasteco"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "Priskribo"
-
-#, fuzzy
-#~ msgid "Contributor:"
-#~ msgstr "Kunlaborantoj"
-
-#, fuzzy
-#~ msgid "Default Metadata"
-#~ msgstr "Metadatumo"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution"
-#~ msgstr "Atribuo de CC"
-
-#, fuzzy
-#~ msgid "Free Art License"
-#~ msgstr "Malfermu Permesilon de la Tiparoj"
-
-#, fuzzy
-#~ msgid "Default License"
-#~ msgstr "Defaŭltoj"
-
-#~ msgid "Angle of infinite vanishing point in X direction"
-#~ msgstr "La angulo de senfina vatopunkto en X akso"
-
-#, fuzzy
-#~ msgid "Angle Y"
-#~ msgstr "Angulo Y:"
-
-#~ msgid "Angle of infinite vanishing point in Y direction"
-#~ msgstr "La angulo de senfina vatopunkto en Y akso"
-
-#~ msgid "Angle of infinite vanishing point in Z direction"
-#~ msgstr "La angulo de senfina vatopunkto en Z akso"
-
-#~ msgid "%s at %s"
-#~ msgstr "%s en %s"
-
-#~ msgid "Move by:"
-#~ msgstr "Movu je:"
-
-#~ msgid "Move to:"
-#~ msgstr "Movu al:"
-
-#~ msgid "Moving %s %s"
-#~ msgstr "Movu %s %s"
-
-#~ msgid "Change layer opacity"
-#~ msgstr "Ŝanĝu opakecon de tavolo"
-
-#~ msgid "Opacity, %:"
-#~ msgstr "Opakeco, %:"
-
-#, fuzzy
-#~ msgid "Pattern along path"
-#~ msgstr "Motivo longe de Streko"
-
-#~ msgid "Print"
-#~ msgstr "Presu"
-
-#~ msgid "Could not set print source: %s"
-#~ msgstr "Estas neeble agordi la fonton de la presado: %s"
-
-#~ msgid "unknown error"
-#~ msgstr "nekonata eraro"
-
-#~ msgid "Printer '%s' does not support PS output"
-#~ msgstr "Printilo '%s' ne subtenas eligon de PS"
-
-#~ msgid "Print Preview not available"
-#~ msgstr "La presa antaŭmontro estas nedisponebla"
-
-#~ msgid "Failed to create tempfile for printing: %s"
-#~ msgstr "Malsukcesis kreado de tempdosiero por presi: %s"
-
-#, fuzzy
-#~ msgid "Snap details"
-#~ msgstr "Agrafu al _strekoj"
-
-#~ msgid "If set, objects snap to the nearest object, regardless of distance"
-#~ msgstr ""
-#~ "Se ĝi estas ebligita, objekto agrafiĝas al pli najbara objekto, sen zorgo "
-#~ "pri la distanco"
-
-#~ msgid ""
-#~ "If set, objects snap to the nearest grid line, regardless of distance"
-#~ msgstr ""
-#~ "Se ĝi estas ebligita, objekto agrafiĝas al pli najbara krada linio, sen "
-#~ "zorgo pri la distanco"
-
-#~ msgid "If set, objects snap to the nearest guide, regardless of distance"
-#~ msgstr ""
-#~ "Se ĝi estas ebligita, objekto agrafiĝas al pli najbara gvidrelo, sen "
-#~ "zorgo pri distanco"
-
-#~ msgid "Gridtype"
-#~ msgstr "Kradospeco"
-
-#~ msgid "Change blur"
-#~ msgstr "Ŝanĝu malfokuso"
-
-#~ msgid "Display Calibration"
-#~ msgstr "Kalibrigo de Ekrano"
-
-#~ msgid "Print _Direct"
-#~ msgstr "_Rekte Presu"
-
-#~ msgid "Print directly without prompting to a file or pipe"
-#~ msgstr "Rekte presu en dosiero aŭ en dukto sen invito"
-
-#~ msgid "Lock"
-#~ msgstr "Bloku"
-
-#~ msgid "Gradients"
-#~ msgstr "Gradientoj"
-
-#~ msgid "Spacing between letters"
-#~ msgstr "Interspaco de tipoj"
-
-#~ msgid "Spacing between lines"
-#~ msgstr "Interspaco de linioj"
-
-#~ msgid "Horizontal kerning"
-#~ msgstr "Horizontala Interspaco"
-
-#~ msgid "Vertical kerning"
-#~ msgstr "Vertikala Interspaco"
-
-#~ msgid "Letter rotation"
-#~ msgstr "Rotacio de tipoj"
-
-#~ msgid "Path along path"
-#~ msgstr "Streko longe de streko"
-
-#~ msgid "Curve stitching"
-#~ msgstr "Interligado de kurboj"
-
-#~ msgid "The path that will be stroked, whatever, think of good text here."
-#~ msgstr ""
-#~ "La strekota streko, ĉiukaze, pensu pri bona teksto enmetebla ĉi tie."
-
-#~ msgid "Remove empty text"
-#~ msgstr "Formovu malplenan tekston"
-
-#~ msgid "_Guides"
-#~ msgstr "_Gvidreloj"
-
-#~ msgid "Snap at any distanc_e"
-#~ msgstr "Magneta altiro ĉiu-distanz_e"
-
-#~ msgid "Master _opacity, %"
-#~ msgstr "Ĉefa _opakeco, %"
-
-#~ msgid "Enable display calibration"
-#~ msgstr "Ĝi ebligas kalibrigon por la ekrano"
-
-#~ msgid "Enables application of the display using an ICC profile."
-#~ msgstr "Ĝi ebligas programon de la ekrano uzante ICC agordaĵo"
-
-#~ msgid "Master opacity, %"
-#~ msgstr "Ĉef-opakeco, %"
