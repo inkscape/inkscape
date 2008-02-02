@@ -1717,6 +1717,9 @@ static void star_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *n
 
     GtkAdjustment *adj = 0;
 
+    gchar const *flatsidedstr = prefs_get_string_attribute( "tools.shapes.star", "isflatsided" );
+    bool isFlatSided = flatsidedstr ? (strcmp(flatsidedstr, "false") != 0) : true;
+
     if (!strcmp(name, "inkscape:randomized")) {
         adj = GTK_ADJUSTMENT( gtk_object_get_data(GTK_OBJECT(tbl), "randomized") );
         gtk_adjustment_set_value(adj, sp_repr_get_double_attribute(repr, "inkscape:randomized", 0.0));
@@ -1734,7 +1737,7 @@ static void star_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *n
             ege_select_one_action_set_active( flat_action, 0 );
             gtk_action_set_sensitive( prop_action, FALSE );
         }
-    } else if (!strcmp(name, "sodipodi:r1") || !strcmp(name, "sodipodi:r2")) {
+    } else if ((!strcmp(name, "sodipodi:r1") || !strcmp(name, "sodipodi:r2")) && (!isFlatSided) ) {
         adj = (GtkAdjustment*)gtk_object_get_data(GTK_OBJECT(tbl), "proportion");
         gdouble r1 = sp_repr_get_double_attribute(repr, "sodipodi:r1", 1.0);
         gdouble r2 = sp_repr_get_double_attribute(repr, "sodipodi:r2", 1.0);
