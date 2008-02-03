@@ -1149,7 +1149,7 @@ inkscape_add_document (SPDocument *document)
 
     if (!Inkscape::NSApplication::Application::getNewGui())
     {
-        if ( inkscape->document_set.find(document) != inkscape->document_set.end() ) {
+        if ( inkscape->document_set.find(document) == inkscape->document_set.end() ) {
     
             inkscape->documents = g_slist_append (inkscape->documents, document);
         }
@@ -1171,7 +1171,7 @@ inkscape_remove_document (SPDocument *document)
     if (!Inkscape::NSApplication::Application::getNewGui())
     {
         inkscape->document_set.erase(document);
-        if ( inkscape->document_set.find(document) == inkscape->document_set.end() ) {
+        if ( inkscape->document_set.find(document) != inkscape->document_set.end() ) {
             inkscape->documents = g_slist_remove (inkscape->documents, document);
         }
     }
