@@ -7,7 +7,9 @@ enum SPMetric {
     SP_MM,
     SP_CM,
     SP_IN,
+    SP_FT,
     SP_PT,
+    SP_PC,
     SP_PX,
     SP_M
 };

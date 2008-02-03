@@ -36,6 +36,7 @@
 SPUnit const sp_units[] = {
     {SP_UNIT_SCALE, SP_UNIT_DIMENSIONLESS, 1.0, NONE, SVGLength::NONE, N_("Unit"), "", N_("Units"), ""},
     {SP_UNIT_PT, SP_UNIT_ABSOLUTE, PX_PER_PT, SP_PT, SVGLength::PT, N_("Point"), N_("pt"), N_("Points"), N_("Pt")},
+    {SP_UNIT_PC, SP_UNIT_ABSOLUTE, PX_PER_PC, SP_PC, SVGLength::PC, N_("Pica"), N_("pc"), N_("Picas"), N_("Pc")},
     {SP_UNIT_PX, SP_UNIT_DEVICE, PX_PER_PX, SP_PX, SVGLength::PX, N_("Pixel"), N_("px"), N_("Pixels"), N_("Px")}, 
     /* You can add new elements from this point forward */
     {SP_UNIT_PERCENT, SP_UNIT_DIMENSIONLESS, 0.01, NONE, SVGLength::PERCENT, N_("Percent"), N_("%"), N_("Percents"), N_("%")},
@@ -43,6 +44,7 @@ SPUnit const sp_units[] = {
     {SP_UNIT_CM, SP_UNIT_ABSOLUTE, PX_PER_CM, SP_CM, SVGLength::CM, N_("Centimeter"), N_("cm"), N_("Centimeters"), N_("cm")},
     {SP_UNIT_M, SP_UNIT_ABSOLUTE, PX_PER_M, SP_M, SVGLength::NONE, N_("Meter"), N_("m"), N_("Meters"), N_("m")}, // no svg_unit
     {SP_UNIT_IN, SP_UNIT_ABSOLUTE, PX_PER_IN, SP_IN, SVGLength::INCH, N_("Inch"), N_("in"), N_("Inches"), N_("in")},
+    {SP_UNIT_FT, SP_UNIT_ABSOLUTE, PX_PER_FT, SP_FT, SVGLength::FOOT, N_("Foot"), N_("ft"), N_("Feet"), N_("ft")},
     /* Volatiles do not have default, so there are none here */
     // TRANSLATORS: for info, see http://www.w3.org/TR/REC-CSS2/syndata.html#length-units
     {SP_UNIT_EM, SP_UNIT_VOLATILE, 1.0, NONE, SVGLength::EM, N_("Em square"), N_("em"), N_("Em squares"), N_("em")},

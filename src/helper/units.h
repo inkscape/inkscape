@@ -62,6 +62,7 @@ enum SPUnitBase {
 enum SPUnitId {
 	SP_UNIT_SCALE,	// 1.0 == 100%
 	SP_UNIT_PT,	// Postscript points: exactly 72 per inch
+	SP_UNIT_PC,	// Pica; there are 12 points per pica
 	SP_UNIT_PX,	// "Pixels" in the CSS sense; though Inkscape assumes a constant 90 per inch.
 	SP_UNIT_PERCENT,  /* Note: In Inkscape this often means "relative to current value" (for
 			     users to edit a value), rather than the SVG/CSS use of percentages. */
@@ -69,6 +70,7 @@ enum SPUnitId {
 	SP_UNIT_CM,	// centimetres
 	SP_UNIT_M,	// metres
 	SP_UNIT_IN,	// inches
+	SP_UNIT_FT,	// foot
 	SP_UNIT_EM,	// font-size of relevant font
 	SP_UNIT_EX,	// x-height of relevant font
 	sp_max_unit_id = SP_UNIT_EX	// For bounds-checking in sp_unit_get_by_id.

@@ -25,8 +25,14 @@ sp_absolute_metric_to_metric (gdouble length_src, const SPMetric metric_src, con
   case SP_IN:
     src = IN_PER_IN;
     break;
+  case SP_FT:
+    src = FT_PER_IN;
+    break;
   case SP_PT:
     src = PT_PER_IN;
+    break;
+  case SP_PC:
+    src = PC_PER_IN;
     break;
   case SP_PX:
     src = PX_PER_IN;
@@ -49,8 +55,14 @@ sp_absolute_metric_to_metric (gdouble length_src, const SPMetric metric_src, con
   case SP_IN:
     dst = IN_PER_IN;
     break;
+  case SP_FT:
+    dst = FT_PER_IN;
+    break;
   case SP_PT:
     dst = PT_PER_IN;
+    break;
+  case SP_PC:
+    dst = PC_PER_IN;
     break;
   case SP_PX:
     dst = PX_PER_IN;

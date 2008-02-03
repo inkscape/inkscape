@@ -350,7 +350,7 @@ static unsigned sp_svg_length_read_lff(gchar const *str, SVGLength::Unit *unit, 
                     *unit = SVGLength::PC;
                 }
                 if (computed) {
-                    *computed = v * 12 * PX_PER_PT;
+                    *computed = v * PX_PER_PC;
                 }
                 break;
             case UVAL('m','m'):
@@ -375,6 +375,14 @@ static unsigned sp_svg_length_read_lff(gchar const *str, SVGLength::Unit *unit, 
                 }
                 if (computed) {
                     *computed = v * PX_PER_IN;
+                }
+                break;
+            case UVAL('f','t'):
+                if (unit) {
+                    *unit = SVGLength::FOOT;
+                }
+                if (computed) {
+                    *computed = v * PX_PER_FT;
                 }
                 break;
             case UVAL('e','m'):

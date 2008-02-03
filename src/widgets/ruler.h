@@ -15,9 +15,8 @@
 
 #include <gtk/gtkruler.h>
 #include "sp-metric.h"
-#include <iostream.h>
-#include <glib.h>
 
+#include <glib.h>
 
 
 void sp_ruler_set_metric (GtkRuler * ruler, SPMetric  metric);
