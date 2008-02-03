@@ -1,4 +1,4 @@
-	#define __SP_FEIMAGE_CPP__
+#define __SP_FEIMAGE_CPP__
 
 /** \file
  * SVG <feImage> implementation.
@@ -93,6 +93,10 @@ sp_feImage_init(SPFeImage */*feImage*/)
 static void
 sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
+    // Save document reference so we can load images with relative paths.
+    SPFeImage *feImage = SP_FEIMAGE(object);
+    feImage->document = document;
+
     if (((SPObjectClass *) feImage_parent_class)->build) {
         ((SPObjectClass *) feImage_parent_class)->build(object, document, repr);
     }
@@ -213,6 +217,7 @@ static void sp_feImage_build_renderer(SPFilterPrimitive *primitive, NR::Filter *
     sp_filter_primitive_renderer_common(primitive, nr_primitive);
     nr_image->set_region(sp_image->x, sp_image->y, sp_image->width, sp_image->height);
     nr_image->set_href(sp_image->href);
+    nr_image->set_document(sp_image->document);
 }
 
 /*

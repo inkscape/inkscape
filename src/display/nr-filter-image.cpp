@@ -8,6 +8,7 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+#include "document.h"
 #include "display/nr-arena-item.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-image.h"
@@ -19,6 +20,7 @@ FilterImage::FilterImage()
 {
     feImageHref=NULL;
     image_pixbuf=NULL;
+    document=NULL;
 }
 
 FilterPrimitive * FilterImage::create() {
@@ -35,16 +37,28 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
 
     if (!image_pixbuf){
         try {
-            image = Gdk::Pixbuf::create_from_file(feImageHref);
+            gchar *fullname = feImageHref;
+            if ( !g_file_test( fullname, G_FILE_TEST_EXISTS ) ) {
+                // Try to load from relative postion combined with document base
+                if( document ) {
+                    fullname = g_build_filename( document->base, feImageHref, NULL );
+                }
+            }
+            if ( !g_file_test( fullname, G_FILE_TEST_EXISTS ) ) {
+                // Should display Broken Image png.
+                g_warning("FilterImage::render: Can not find: %s", feImageHref  );
+            }
+            image = Gdk::Pixbuf::create_from_file(fullname);
+            if( fullname != feImageHref ) g_free( fullname );
         }
         catch (const Glib::FileError & e)
         {
-            g_warning("caught Glib::FileError in FilterImage::render");
+            g_warning("caught Glib::FileError in FilterImage::render %i", e.code() );
             return 0;
         }
         catch (const Gdk::PixbufError & e)
         {
-            g_warning("Gdk::PixbufError in FilterImage::render");
+            g_warning("Gdk::PixbufError in FilterImage::render: %i", e.code() );
             return 0;
         }
         if ( !image ) return 0;
@@ -78,10 +92,14 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
     for (x=x0; x < x1; x++){
         for (y=y0; y < y1; y++){
             //TODO: use interpolation
-            coordx = int(scaleX * ((x * unit_trans[0] + unit_trans[4]) - feImageX));
-            coordy = int(scaleY * ((y * unit_trans[3] + unit_trans[5]) - feImageY));
-
-            if (coordx > 0 && coordx < width && coordy > 0 && coordy < height){
+            // Temporarily add 0.5 so we sample center of "cell"
+            double indexX = scaleX * (((x+0.5) * unit_trans[0] + unit_trans[4]) - feImageX);
+            double indexY = scaleY * (((y+0.5) * unit_trans[3] + unit_trans[5]) - feImageY);
+            // coordx == 0 and coordy == 0 must be included, but we must protect
+            // against negative numbers which round up to 0 with (int).
+            coordx = ( indexX >= 0 ? int( indexX ) : -1 );
+            coordy = ( indexY >= 0 ? int( indexY ) : -1 );
+            if (coordx >= 0 && coordx < width && coordy >= 0 && coordy < height){
                 out_data[4*((x - x0)+w*(y - y0))] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy]; //Red
                 out_data[4*((x - x0)+w*(y - y0)) + 1] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy + 1]; //Green
                 out_data[4*((x - x0)+w*(y - y0)) + 2] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy + 2]; //Blue
@@ -98,6 +116,10 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
 void FilterImage::set_href(const gchar *href){
     if (feImageHref) g_free (feImageHref);
     feImageHref = (href) ? g_strdup (href) : NULL;
+}
+
+void FilterImage::set_document(SPDocument *doc){
+    document = doc;
 }
 
 void FilterImage::set_region(SVGLength x, SVGLength y, SVGLength width, SVGLength height){

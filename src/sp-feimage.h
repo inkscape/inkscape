@@ -25,6 +25,7 @@ struct SPFeImage : public SPFilterPrimitive {
     /** IMAGE ATTRIBUTES HERE */
     gchar *href;
     SVGLength x, y, height, width;
+    SPDocument *document;
 };
 
 struct SPFeImageClass {
