@@ -46,6 +46,8 @@ void sp_desktop_widget_update_rulers (SPDesktopWidget *dtw);
 void sp_desktop_widget_update_hruler (SPDesktopWidget *dtw);
 void sp_desktop_widget_update_vruler (SPDesktopWidget *dtw);
 
+void sp_desktop_widget_update_namedview (SPDesktopWidget *dtw);
+
 /* Show/hide rulers & scrollbars */
 void sp_desktop_widget_toggle_rulers (SPDesktopWidget *dtw);
 void sp_desktop_widget_toggle_scrollbars (SPDesktopWidget *dtw);

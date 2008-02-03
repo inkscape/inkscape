@@ -42,13 +42,11 @@ typedef struct _GtkWidget GtkWidget;
 struct SPCanvas;
 struct SPCanvasItem;
 struct SPCanvasGroup;
-struct SPDesktopWidget;
 struct SPEventContext;
 struct SPItem;
 struct SPNamedView;
 struct SPObject;
 struct SPStyle;
-struct SPViewWidget;
 
 namespace Gtk
 {

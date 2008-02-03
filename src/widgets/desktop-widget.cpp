@@ -701,6 +701,15 @@ sp_desktop_widget_realize (GtkWidget *widget)
 
     dtw->desktop->set_display_area (d.x0, d.y0, d.x1, d.y1, 10);
 
+    sp_desktop_widget_update_namedview(dtw);
+}
+
+/* This is just to provide access to common functionality from sp_desktop_widget_realize() above
+   as well as from SPDesktop::change_document() */
+void
+sp_desktop_widget_update_namedview (SPDesktopWidget *dtw) {
+    g_return_if_fail(dtw);
+
     /* Listen on namedview modification */
     // originally (prior to the sigc++ conversion) the signal was simply
     // connected twice rather than disconnecting the first connection

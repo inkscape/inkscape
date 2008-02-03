@@ -85,6 +85,7 @@
 #include "layer-manager.h"
 #include "event-log.h"
 #include "display/canvas-grid.h"
+#include "widgets/desktop-widget.h"
 
 #include "display/sp-canvas.h"
 
@@ -501,6 +502,15 @@ SPDesktop::change_document (SPDocument *theDocument)
     selection->clear();
 
     setDocument (theDocument);
+
+    /* update the rulers, connect the desktop widget's signal to the new namedview etc.
+       (this can probably be done in a better way) */
+    Gtk::Window *parent = this->getToplevel();
+    g_assert(parent != NULL);
+    SPDesktopWidget *dtw = (SPDesktopWidget *) parent->get_data("desktopwidget");
+    if (dtw) dtw->desktop = this;
+    sp_desktop_widget_update_namedview(dtw);
+
     _namedview_modified (namedview, SP_OBJECT_MODIFIED_FLAG, this);
     _document_replaced_signal.emit (this, theDocument);
 }
