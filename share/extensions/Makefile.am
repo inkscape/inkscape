@@ -81,6 +81,7 @@ extensions = \
 	simplepath.py \
 	simplepath.rb \
 	simplestyle.py \
+	simpletransform.py \
 	sk2svg.sh \
 	SpSVG.pm \
 	spirograph.py\
@@ -180,6 +181,7 @@ modules = \
 	randompnt.inx \
 	randompos.inx \
 	render_barcode.inx \
+	rubberstretch.inx \
 	rtree.inx \
 	sk_input.inx \
 	straightseg.inx \
