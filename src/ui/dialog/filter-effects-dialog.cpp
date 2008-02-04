@@ -179,13 +179,13 @@ public:
     Glib::ustring get_as_attribute() const
     {
         const double val = get_value();
-        
+
         if(get_digits() == 0)
             return Glib::Ascii::dtostr((int)val);
         else
             return Glib::Ascii::dtostr(val);
     }
-    
+
     void set_from_attribute(SPObject* o)
     {
         const gchar* val = attribute_value(o);
@@ -256,7 +256,7 @@ public:
     {
         double v1 = _s1.get_value();
         double v2 = _s2.get_value();
-        
+
         if(_s1.get_digits() == 0) {
             v1 = (int)v1;
             v2 = (int)v2;
@@ -291,7 +291,7 @@ public:
         col.set_rgb(65535, 65535, 65535);
         set_color(col);
     }
-    
+
     // Returns the color in 'rgb(r,g,b)' form.
     Glib::ustring get_as_attribute() const
     {
@@ -359,17 +359,17 @@ public:
     Glib::ustring get_as_attribute() const
     {
         std::ostringstream os;
-        
+
         for(Gtk::TreeIter iter = _model->children().begin();
             iter != _model->children().end(); ++iter) {
             for(unsigned c = 0; c < _tree.get_columns().size(); ++c) {
                 os << (*iter)[_columns.cols[c]] << " ";
             }
         }
-        
+
         return os.str();
     }
-    
+
     void set_from_attribute(SPObject* o)
     {
         if(o) {
@@ -567,7 +567,7 @@ public:
         _fromFile.set_label(_("Image File"));
         _fromFile.signal_clicked().connect(sigc::mem_fun(*this, &FileOrElementChooser::select_file));
 
-        _fromSVGElement.set_label(_("Selected SVG Element"));        
+        _fromSVGElement.set_label(_("Selected SVG Element"));
         _fromSVGElement.signal_clicked().connect(sigc::mem_fun(*this, &FileOrElementChooser::select_svg_element));
 
         _entry.signal_changed().connect(signal_attr_changed().make_slot());
@@ -575,7 +575,7 @@ public:
         show_all();
 
     }
-    
+
     // Returns the element in xlink:href form.
     Glib::ustring get_as_attribute() const
     {
@@ -601,12 +601,12 @@ private:
         if (sel->isEmpty()) return;
         Inkscape::XML::Node* node = (Inkscape::XML::Node*) g_slist_nth_data((GSList *)sel->reprList(), 0);
         if (!node || !node->matchAttributeName("id")) return;
-        
+
         std::ostringstream xlikhref;
         xlikhref << "#(" << node->attribute("id") << ")";
         _entry.set_text(xlikhref.str());
     }
-    
+
     void select_file(){
 
         //# Get the current directory for finding files
@@ -614,19 +614,19 @@ private:
         char *attr = (char *)prefs_get_string_attribute("dialogs.open", "path");
         if (attr)
             open_path = attr;
-    
+
         //# Test if the open_path directory exists
         if (!Inkscape::IO::file_test(open_path.c_str(),
                   (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
             open_path = "";
-    
+
         //# If no open path, default to our home directory
         if (open_path.size() < 1)
             {
             open_path = g_get_home_dir();
             open_path.append(G_DIR_SEPARATOR_S);
             }
-    
+
         //# Create a dialog if we don't already have one
         if (!selectFeImageFileInstance) {
             selectFeImageFileInstance =
@@ -636,7 +636,7 @@ private:
                      Inkscape::UI::Dialog::SVG_TYPES,/*TODO: any image, not justy svg*/
                      (char const *)_("Select an image to be used as feImage input"));
         }
-    
+
         //# Show the dialog
         bool const success = selectFeImageFileInstance->show();
         if (!success)
@@ -662,7 +662,7 @@ private:
         }
         return;
     }
-    
+
     Gtk::Entry _entry;
     Gtk::Button _fromFile;
     Gtk::Button _fromSVGElement;
@@ -800,7 +800,7 @@ public:
         add_attr_widget(dsb);
         return dsb;
     }
-    
+
     // MultiSpinButton
     MultiSpinButton* add_multispinbutton(const SPAttributeEnum attr1, const SPAttributeEnum attr2,
                                          const Glib::ustring& label, const double lo, const double hi,
@@ -829,7 +829,7 @@ public:
             add_attr_widget(msb->get_spinbuttons()[i]);
         return msb;
     }
-    
+
     // FileOrElementChooser
     FileOrElementChooser* add_fileorelement(const SPAttributeEnum attr, const Glib::ustring& label)
     {
@@ -852,7 +852,7 @@ public:
     }
 private:
     void add_attr_widget(AttrWidget* a)
-    {    
+    {
         _attrwidgets[_current_type].push_back(a);
         a->signal_attr_changed().connect(sigc::bind(_set_attr_slot, a));
     }
@@ -864,14 +864,14 @@ private:
         Gtk::Label *lbl = 0;
         Gtk::HBox *hb = Gtk::manage(new Gtk::HBox);
         hb->set_spacing(12);
-        
+
         if(label != "") {
             lbl = Gtk::manage(new Gtk::Label(label + (label == "" ? "" : ":"), Gtk::ALIGN_LEFT));
             hb->pack_start(*lbl, false, false);
             _dialog._sizegroup->add_widget(*lbl);
             lbl->show();
         }
-        
+
         hb->pack_start(*w);
         _groups[_current_type]->pack_start(*hb);
         hb->show();
@@ -942,7 +942,7 @@ protected:
         _locked = true;
 
         SPObject* child = o->children;
-        
+
         if(SP_IS_FEDISTANTLIGHT(child))
             _light_source.set_active(0);
         else if(SP_IS_FEPOINTLIGHT(child))
@@ -995,7 +995,7 @@ private:
         _box.hide_all();
         _box.show();
         _light_box.show_all();
-        
+
         SPFilterPrimitive* prim = _dialog._primitive_list.get_selected();
         if(prim && prim->children)
             _settings.show_and_update(_light_source.get_active_data()->id, prim->children);
@@ -1063,7 +1063,7 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
     _menu = create_popup_menu(*this, sigc::mem_fun(*this, &FilterModifier::duplicate_filter),
                               sigc::mem_fun(*this, &FilterModifier::remove_filter));
     _menu->items().push_back(Gtk::Menu_Helpers::MenuElem(
-                                 _("R_ename"), sigc::mem_fun(*this, &FilterModifier::rename_filter))); 	 
+                                 _("R_ename"), sigc::mem_fun(*this, &FilterModifier::rename_filter)));
     _menu->accelerate(*this);
 
     _list.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &FilterModifier::on_filter_selection_changed));
@@ -1153,7 +1153,7 @@ void FilterEffectsDialog::FilterModifier::on_filter_selection_changed()
 void FilterEffectsDialog::FilterModifier::on_name_edited(const Glib::ustring& path, const Glib::ustring& text)
 {
     Gtk::TreeModel::iterator iter = _model->get_iter(path);
-    
+
     if(iter) {
         SPFilter* filter = (*iter)[_columns.filter];
         filter->setLabel(text.c_str());
@@ -1178,12 +1178,12 @@ void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustri
             filter = 0;
 
         GSList const *items = sel->itemList();
-            
+
         for (GSList const *i = items; i != NULL; i = i->next) {
             SPItem * item = SP_ITEM(i->data);
             SPStyle *style = SP_OBJECT_STYLE(item);
             g_assert(style != NULL);
-                
+
             if(filter)
                 sp_style_set_property_url(SP_OBJECT(item), "filter", SP_OBJECT(filter), false);
             else
@@ -1191,7 +1191,7 @@ void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustri
 
             SP_OBJECT(item)->requestDisplayUpdate((SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG ));
         }
-    
+
         update_selection(sel);
         sp_document_done(doc, SP_VERB_DIALOG_FILTER_EFFECTS,  _("Apply filter"));
     }
@@ -1352,7 +1352,7 @@ FilterEffectsDialog::PrimitiveList::PrimitiveList(FilterEffectsDialog& d)
       _observer(new SignalObserver)
 {
     d.signal_expose_event().connect(sigc::mem_fun(*this, &PrimitiveList::on_expose_signal));
-    
+
     add_events(Gdk::POINTER_MOTION_MASK | Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK);
     signal_expose_event().connect(sigc::mem_fun(*this, &PrimitiveList::on_expose_signal));
 
@@ -1607,7 +1607,7 @@ void FilterEffectsDialog::PrimitiveList::draw_connection(const Gtk::TreeIter& in
     const bool is_first = input == get_model()->children().begin();
     const bool is_merge = SP_IS_FEMERGE((SPFilterPrimitive*)(*input)[_columns.primitive]);
     const bool use_default = !res && !is_merge;
-    
+
     if(res == input || (use_default && is_first)) {
         // Draw straight connection to a standard input
         // Draw a lighter line for an implicit connection to a standard input
@@ -1629,10 +1629,10 @@ void FilterEffectsDialog::PrimitiveList::draw_connection(const Gtk::TreeIter& in
 
         if(res) {
             Gdk::Rectangle rct;
-            
+
             get_cell_area(get_model()->get_path(_model->children().begin()), *get_column(1), rct);
             const int fheight = CellRendererConnection::size;
-            
+
             get_cell_area(get_model()->get_path(res), *get_column(1), rct);
             const int row_index = find_index(res);
             const int x2 = rct.get_x() + fheight * (row_count - row_index) - fheight / 2;
@@ -1641,7 +1641,7 @@ void FilterEffectsDialog::PrimitiveList::draw_connection(const Gtk::TreeIter& in
             // Draw a bevelled 'L'-shaped connection
             get_bin_window()->draw_line(get_style()->get_black_gc(), x1, y1, x2-fheight/4, y1);
             get_bin_window()->draw_line(get_style()->get_black_gc(), x2-fheight/4, y1, x2, y1-fheight/4);
-            get_bin_window()->draw_line(get_style()->get_black_gc(), x2, y1-fheight/4, x2, y2);            
+            get_bin_window()->draw_line(get_style()->get_black_gc(), x2, y1-fheight/4, x2, y2);
         }
     }
 }
@@ -1739,7 +1739,7 @@ bool FilterEffectsDialog::PrimitiveList::on_button_press_event(GdkEventButton* e
     int cx, cy;
 
     _drag_prim = 0;
-    
+
     if(get_path_at_pos(x, y, path, col, cx, cy)) {
         Gtk::TreeIter iter = _model->get_iter(path);
         std::vector<Gdk::Point> points;
@@ -1753,7 +1753,7 @@ bool FilterEffectsDialog::PrimitiveList::on_button_press_event(GdkEventButton* e
                 break;
             }
         }
-        
+
         queue_draw();
     }
 
@@ -1806,7 +1806,7 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
         Gtk::TreePath path;
         Gtk::TreeViewColumn* col;
         int cx, cy;
-        
+
         if(get_path_at_pos((int)e->x, (int)e->y, path, col, cx, cy)) {
             const gchar *in_val = 0;
             Glib::ustring result;
@@ -2003,7 +2003,7 @@ int FilterEffectsDialog::PrimitiveList::primitive_count() const
 
 /*** FilterEffectsDialog ***/
 
-FilterEffectsDialog::FilterEffectsDialog() 
+FilterEffectsDialog::FilterEffectsDialog()
     : UI::Widget::Panel("", "dialogs.filtereffects", SP_VERB_DIALOG_FILTER_EFFECTS),
       _filter_modifier(*this),
       _primitive_list(*this),
@@ -2020,7 +2020,7 @@ FilterEffectsDialog::FilterEffectsDialog()
 
     _add_primitive_type.remove_row(NR_FILTER_TILE);
     _add_primitive_type.remove_row(NR_FILTER_COMPONENTTRANSFER);
-        
+
     // Initialize widget hierarchy
     Gtk::HPaned* hpaned = Gtk::manage(new Gtk::HPaned);
     Gtk::ScrolledWindow* sw_prims = Gtk::manage(new Gtk::ScrolledWindow);
@@ -2032,19 +2032,19 @@ FilterEffectsDialog::FilterEffectsDialog()
     hpaned->pack1(_filter_modifier);
     hpaned->pack2(_primitive_box);
     _primitive_box.pack_start(*sw_prims);
-    _primitive_box.pack_start(*infobox,false, false);    
+    _primitive_box.pack_start(*infobox,false, false);
     _primitive_box.pack_start(*hb_prims, false, false);
     sw_prims->add(_primitive_list);
     infobox->pack_start(_infobox_icon, false, false);
     infobox->pack_end(_infobox_desc, false, false);
     _infobox_desc.set_line_wrap(true);
-    
+
     hb_prims->pack_end(_add_primitive_type, false, false);
     hb_prims->pack_end(_add_primitive, false, false);
     _getContents()->pack_start(*fr_settings, false, false);
     fr_settings->add(*al_settings);
     al_settings->add(_settings_box);
-    
+
     _primitive_list.signal_primitive_changed().connect(
         sigc::mem_fun(*this, &FilterEffectsDialog::update_settings_view));
     _filter_modifier.signal_filter_changed().connect(
@@ -2052,7 +2052,7 @@ FilterEffectsDialog::FilterEffectsDialog()
 
     _add_primitive_type.signal_changed().connect(
         sigc::mem_fun(*this, &FilterEffectsDialog::update_primitive_infobox));
-          
+
     sw_prims->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
     sw_prims->set_shadow_type(Gtk::SHADOW_IN);
     al_settings->set_padding(0, 0, 12, 0);
@@ -2061,7 +2061,7 @@ FilterEffectsDialog::FilterEffectsDialog()
     _add_primitive.signal_clicked().connect(sigc::mem_fun(*this, &FilterEffectsDialog::add_primitive));
     _primitive_list.set_menu(create_popup_menu(*this, sigc::mem_fun(*this, &FilterEffectsDialog::duplicate_primitive),
                                                sigc::mem_fun(_primitive_list, &PrimitiveList::remove_selected)));
-    
+
     show_all_children();
     init_settings_widgets();
     _primitive_list.update();
@@ -2142,7 +2142,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->type(NR_FILTER_FLOOD);
     _settings->add_color(SP_PROP_FLOOD_COLOR, _("Flood Color"));
     _settings->add_spinslider(SP_PROP_FLOOD_OPACITY, _("Opacity"), 0, 1, 0.1, 0.01, 2);
-    
+
     _settings->type(NR_FILTER_GAUSSIANBLUR);
     _settings->add_dualspinslider(SP_ATTR_STDDEVIATION, _("Standard Deviation"), 0.01, 100, 1, 0.01, 1);
 
@@ -2154,7 +2154,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_fileorelement(SP_ATTR_XLINK_HREF, _("Source of Image"));
     _settings->add_multispinbutton(SP_ATTR_X, SP_ATTR_Y, _("Coordinates"), -10000, 10000, 1, 1, 0);
     _settings->add_multispinbutton(SP_ATTR_WIDTH, SP_ATTR_HEIGHT, _("Dimensions"), 0, 10000, 1, 1, 0);
-    
+
     _settings->type(NR_FILTER_OFFSET);
     _settings->add_spinslider(SP_ATTR_DX, _("Delta X"), -100, 100, 1, 0.01, 1);
     _settings->add_spinslider(SP_ATTR_DY, _("Delta Y"), -100, 100, 1, 0.01, 1);
@@ -2166,7 +2166,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_spinslider(SP_ATTR_SPECULAREXPONENT, _("Exponent"), 1, 128, 1, 0.01, 1);
     _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length"), 0.01, 10, 1, 0.01, 1);
     _settings->add_lightsource();
-    
+
     _settings->type(NR_FILTER_TILE);
     _settings->add_notimplemented();
 
