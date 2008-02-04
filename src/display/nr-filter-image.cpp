@@ -3,6 +3,7 @@
  *
  * Authors:
  *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
+ *   Tavmjong Bah <tavmjong@free.fr>
  *
  * Copyright (C) 2007 authors
  *
@@ -33,7 +34,7 @@ FilterImage::~FilterImage()
 }
 
 int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
-    if  (!feImageHref) return 0;
+    if (!feImageHref) return 0;
 
     if (!image_pixbuf){
         try {
@@ -63,6 +64,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         }
         if ( !image ) return 0;
 
+        // Native size of image
         width = image->get_width();
         height = image->get_height();
         rowstride = image->get_rowstride();
@@ -75,27 +77,41 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         return 1;
     }
 
-    NRPixBlock *out = new NRPixBlock;
+    // This section needs to be fully tested!!
 
+    // Region being drawn on screen
     int x0 = in->area.x0, y0 = in->area.y0;
     int x1 = in->area.x1, y1 = in->area.y1;
-
-    Matrix unit_trans = units.get_matrix_primitiveunits2pb().inverse();
-
+    NRPixBlock *out = new NRPixBlock;
     nr_pixblock_setup_fast(out, in->mode, x0, y0, x1, y1, true);
-
     w = x1 - x0;
+
+    // Get the object bounding box. Image is placed with respect to box.
+    // Array values:  0: width; 3: height; 4: -x; 5: -y.
+    Matrix object_bbox = units.get_matrix_user2filterunits().inverse();
+
+    // feImage is suppose to use the same parameters as a normal SVG image.
+    // If a width or height is set to zero, the image is not suppose to be displayed.
+    // This does not seem to be what Firefox or Opera does, nor does the W3C displacement
+    // filter test expect this behavior. If the width and/or height are zero, we use
+    // the width and height of the object bounding box.
+    if( feImageWidth  == 0 ) feImageWidth  = object_bbox[0];
+    if( feImageHeight == 0 ) feImageHeight = object_bbox[3];
+
     double scaleX = width/feImageWidth;
     double scaleY = height/feImageHeight;
+
     int coordx,coordy;
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
+    Matrix unit_trans = units.get_matrix_primitiveunits2pb().inverse();
     for (x=x0; x < x1; x++){
         for (y=y0; y < y1; y++){
             //TODO: use interpolation
             // Temporarily add 0.5 so we sample center of "cell"
-            double indexX = scaleX * (((x+0.5) * unit_trans[0] + unit_trans[4]) - feImageX);
-            double indexY = scaleY * (((y+0.5) * unit_trans[3] + unit_trans[5]) - feImageY);
-            // coordx == 0 and coordy == 0 must be included, but we must protect
+            double indexX = scaleX * (((x+0.5) * unit_trans[0] + unit_trans[4]) - feImageX + object_bbox[4]);
+            double indexY = scaleY * (((y+0.5) * unit_trans[3] + unit_trans[5]) - feImageY + object_bbox[5]);
+
+            // coordx == 0 and coordy == 0 must be included, but we protect
             // against negative numbers which round up to 0 with (int).
             coordx = ( indexX >= 0 ? int( indexX ) : -1 );
             coordy = ( indexY >= 0 ? int( indexY ) : -1 );
