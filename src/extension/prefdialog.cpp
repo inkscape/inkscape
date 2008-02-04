@@ -47,9 +47,7 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     _button_ok(NULL),
     _button_cancel(NULL),
     _button_preview(NULL),
-    _button_pinned(NULL),
     _param_preview(NULL),
-    _param_pinned(NULL),
     _signal_param_change(changeSignal),
     _effect(effect)
 {
@@ -63,7 +61,7 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     if (_help == NULL)
         help_button->set_sensitive(false);
     */
-    _button_cancel = add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+    _button_cancel = add_button(Gtk::Stock::CLOSE, Gtk::RESPONSE_CANCEL);
     _button_cancel->set_use_stock(true);
 
     _button_ok = add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
@@ -78,10 +76,6 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
             XML::Document * doc = sp_repr_read_mem(live_param_xml, strlen(live_param_xml), NULL);
             _param_preview = Parameter::make(doc->root(), _exEnv->_effect);
         }
-        if (_param_pinned == NULL) {
-            XML::Document * doc = sp_repr_read_mem(pinned_param_xml, strlen(pinned_param_xml), NULL);
-            _param_pinned = Parameter::make(doc->root(), _exEnv->_effect);
-        }
 
         Gtk::HSeparator * sep = Gtk::manage(new Gtk::HSeparator());
         sep->show();
@@ -90,17 +84,12 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
         hbox = Gtk::manage(new Gtk::HBox());
         _button_preview = _param_preview->get_widget(NULL, NULL, &_signal_preview);
         _button_preview->show();
-        _button_pinned  = _param_pinned->get_widget(NULL, NULL, &_signal_pinned);
-        _button_pinned->show();
         hbox->pack_start(*_button_preview, true, true,6);
-        hbox->pack_start(*_button_pinned, true, true,6);
         hbox->show();
         this->get_vbox()->pack_start(*hbox, true, true, 6);
 
         preview_toggle();
-        pinned_toggle();
         _signal_preview.connect(sigc::mem_fun(this, &PrefDialog::preview_toggle));
-        _signal_pinned.connect(sigc::mem_fun(this, &PrefDialog::pinned_toggle));
 
     }
 
@@ -121,9 +110,6 @@ PrefDialog::~PrefDialog ( )
     }
     if (_param_preview != NULL) {
         delete _param_preview;
-    }
-    if (_param_pinned != NULL) {
-        delete _param_pinned;
     }
 
     return;
@@ -161,73 +147,44 @@ PrefDialog::setPreviewState (Glib::ustring state) {
 
 void
 PrefDialog::preview_toggle (void) {
-    if(_param_preview->get_bool(NULL, NULL) && !_param_pinned->get_bool(NULL, NULL)) {
-        _exEnv->livePreview(true);
-    } else {
-        _exEnv->livePreview(false);
-    }
-}
-
-void
-PrefDialog::pinned_toggle (void) {
-    if (_param_pinned->get_bool(NULL, NULL)) {
-        _button_preview->set_sensitive(false);
-        preview_toggle();
-        set_modal(false);
-
-        _button_ok->set_label(Gtk::Stock::EXECUTE.id);
-        _button_cancel->set_label(Gtk::Stock::CLOSE.id);
-
-        if (_exEnv != NULL) {
-            _exEnv->shutdown(_createdExEnv);
-            _exEnv = NULL;
-        }
-    } else {
-        _button_preview->set_sensitive(true);
+    if(_param_preview->get_bool(NULL, NULL)) {
         set_modal(true);
-
-        _button_ok->set_label(Gtk::Stock::OK.id);
-        _button_cancel->set_label(Gtk::Stock::CANCEL.id);
-
         if (_exEnv == NULL) {
             _exEnv = new ExecutionEnv(_effect, SP_ACTIVE_DESKTOP, NULL, _signal_param_change, this);
             _createdExEnv = true;
-            preview_toggle();
+			_exEnv->livePreview(true);
             _exEnv->run();
         }
+    } else {
+		set_modal(false);
+		if (_exEnv != NULL) {
+			_exEnv->livePreview(false);
+            _exEnv->shutdown(_createdExEnv);
+            _exEnv = NULL;
+		}
     }
 }
 
 void
 PrefDialog::on_response (int signal) {
-    if (!_exEnv) {
-        // apparantly this effect does not use the new ExecutionEnv stuff. 
-        // _param_pinned  and _effect will be null, and the code below will crash: return here!
-        return;
-    }
-    //printf("Got signal %d\n", signal);
-    if (!_param_pinned->get_bool(NULL, NULL)) {
-        // Not my job if we're not pinned (either not pinned, or not even a pinned checkbox)
-        // It's the execution environment's job
+    if (_exEnv != NULL) {
+		_param_preview->set_bool(false, NULL, NULL);
         return;
     }
 
     if (signal == Gtk::RESPONSE_OK) {
-        _effect->effect(SP_ACTIVE_DESKTOP);
-    } else {
-        this->hide();
-        delete _signal_param_change; // This is not in the destructor because
-                                     // it is the only situation that we need
-                                     // to delete it in
-        delete this;
+		_effect->effect(SP_ACTIVE_DESKTOP);
     }
+	if (signal == Gtk::RESPONSE_CANCEL) {
+		// close the dialog
+		delete this;
+	}
 
     return;
 }
 
 #include "internal/clear-n_.h"
 
-const char * PrefDialog::pinned_param_xml = "<param name=\"__pinned__\" type=\"boolean\" gui-text=\"" N_("Pin Dialog") "\" gui-description=\"" N_("Toggles whether the dialog stays for multiple executions or disappears after one") "\" scope=\"user\">false</param>";
 const char * PrefDialog::live_param_xml = "<param name=\"__live_effect__\" type=\"boolean\" gui-text=\"" N_("Live Preview") "\" gui-description=\"" N_("Controls whether the effect settings are rendered live on canvas") "\" scope=\"user\">false</param>";
 
 }; }; /* namespace Inkscape, Extension */

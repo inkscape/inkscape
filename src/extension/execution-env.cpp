@@ -89,7 +89,7 @@ ExecutionEnv::~ExecutionEnv (void) {
     if (_prefsVisible) {
         _changesig.disconnect();
     }
-    if (_visibleDialog != NULL && !_shutdown) {
+    if (_visibleDialog != NULL && !_shutdown && !_prefsVisible) {
         delete _visibleDialog;
     }
     if (_changeSignal != NULL && !_shutdown) {
@@ -101,7 +101,7 @@ ExecutionEnv::~ExecutionEnv (void) {
 
 void
 ExecutionEnv::genDocCache (void) {
-	if (_docCache == NULL) {
+if (_docCache == NULL) {
 		// printf("Gen Doc Cache\n");
 		_docCache = _effect->get_imp()->newDocCache(_effect, _doc);
 	}
@@ -178,6 +178,7 @@ ExecutionEnv::createWorkingDialog (void) {
 
 void
 ExecutionEnv::workingCanceled( const int /*resp*/ ) {
+	printf("Working Canceled\n");
     processingCancel();
     documentCancel();
     _finished = true;
