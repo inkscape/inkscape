@@ -822,10 +822,13 @@ void InkscapePreferences::initPageCMS()
 
 void InkscapePreferences::initPageGrids()
 {
-    _page_grids.add_group_header( _("Default grid settings"));
+    _page_grids.add_group_header( _("Major grid line emphasizing"));
 
     _grids_no_emphasize_on_zoom.init( _("Don't emphasize gridlines when zoomed out"), "options.grids", "no_emphasize_when_zoomedout", false);
     _page_grids.add_line( false, "", _grids_no_emphasize_on_zoom, "", _("If set and zoomed out, the gridlines will be shown in normal color instead of major grid line color."), false);
+
+    _page_grids.add_group_header( _("Default grid settings"));
+
     _page_grids.add_line( false, "", _grids_notebook, "", "", false);
     _grids_notebook.append_page(_grids_xy,     CanvasGrid::getName( GRID_RECTANGULAR ));
     _grids_notebook.append_page(_grids_axonom, CanvasGrid::getName( GRID_AXONOMETRIC ));

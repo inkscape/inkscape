@@ -934,12 +934,12 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
             gdouble x;
             for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[NR::X], xlinenum++) {
                 gint const ix = (gint) Inkscape::round(x);
-                if ( (!scaled[NR::X] && (xlinenum % empspacing) == 0)
-                     || (!scaled[NR::Y] && (ylinenum % empspacing) == 0) )
+                if ( (!scaled[NR::X] && (xlinenum % empspacing) != 0)
+                     || (!scaled[NR::Y] && (ylinenum % empspacing) != 0) )
                 {
-                    grid_dot (buf, ix, iy, _empcolor | (guint32)0x000000FF); // put alpha to max value
+                    grid_dot (buf, ix, iy, color | (guint32)0x000000FF); // put alpha to max value
                 } else {
-                    grid_dot (buf, ix, iy, color | (guint32)0x000000FF);  // put alpha to max value
+                    grid_dot (buf, ix, iy, _empcolor | (guint32)0x000000FF);  // put alpha to max value
                 }
             }
 

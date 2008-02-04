@@ -1,7 +1,7 @@
 #define CANVAS_AXONOMGRID_C
 
 /*
- * Copyright (C) 2006-2007 Johan Engelen <johan@shouraizou.nl>
+ * Copyright (C) 2006-2008 Johan Engelen <johan@shouraizou.nl>
  */
 
  /*
@@ -9,8 +9,6 @@
   * axes are bound to a certain range of angles. The z-axis always has an angle
   * smaller than 90 degrees (measured from horizontal, 0 degrees being a line extending
   * to the right). The x-axis will always have an angle between 0 and 90 degrees.
-  * When I quickly think about it: all possibilities are probably covered this way. Eg.
-  * a z-axis with negative angle can be replaced with an x-axis, etc.
   */
 
  /*
@@ -552,6 +550,15 @@ CanvasAxonomGrid::Update (NR::Matrix const &affine, unsigned int /*flags*/)
 void
 CanvasAxonomGrid::Render (SPCanvasBuf *buf)
 {
+    //set correct coloring, depending preference (when zoomed out, always major coloring or minor coloring)
+    guint32 _empcolor;
+    bool preference = prefs_get_int_attribute ("options.grids", "no_emphasize_when_zoomedout", 0) == 1;
+    if( scaled && preference ) {
+        _empcolor = color;
+    } else {
+        _empcolor = empcolor;
+    }
+
     // gc = gridcoordinates (the coordinates calculated from the grids origin 'grid->ow'.
     // sc = screencoordinates ( for example "buf->rect.x0" is in screencoordinates )
     // bc = buffer patch coordinates
@@ -581,10 +588,10 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
         gint const x1 = x0 + (gint) Inkscape::round( (buf->rect.y1 - y) / tan_angle[X] );
         gint const y1 = buf->rect.y1;
 
-        if (!scaled && (xlinenum % empspacing) == 0) {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, empcolor);
-        } else {
+        if (!scaled && (xlinenum % empspacing) != 0) {
             sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
+        } else {
+            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, _empcolor);
         }
     }
     // lines starting from top side
@@ -596,10 +603,10 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
         gint const x0 = (gint) Inkscape::round(x);
         gint const x1 = x0 + (gint) Inkscape::round( (y1 - y0) / tan_angle[X] );
 
-        if (!scaled && (xlinenum % empspacing) == 0) {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, empcolor);
-        } else {
+        if (!scaled && (xlinenum % empspacing) != 0) {
             sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
+        } else {
+            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, _empcolor);
         }
     }
 
@@ -610,10 +617,10 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     for (x = ystart_x_sc; x < buf->rect.x1; x += spacing_ylines, ylinenum++) {
         gint const x0 = (gint) Inkscape::round(x);
 
-        if (!scaled && (ylinenum % empspacing) == 0) {
-            sp_grid_vline (buf, x0, buf->rect.y0, buf->rect.y1 - 1, empcolor);
-        } else {
+        if (!scaled && (ylinenum % empspacing) != 0) {
             sp_grid_vline (buf, x0, buf->rect.y0, buf->rect.y1 - 1, color);
+        } else {
+            sp_grid_vline (buf, x0, buf->rect.y0, buf->rect.y1 - 1, _empcolor);
         }
     }
 
@@ -629,10 +636,10 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
         gint const x1 = x0 + (gint) Inkscape::round( (y - buf->rect.y0 ) / tan_angle[Z] );
         gint const y1 = buf->rect.y0;
 
-        if (!scaled && (zlinenum % empspacing) == 0) {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, empcolor);
-        } else {
+        if (!scaled && (zlinenum % empspacing) != 0) {
             sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
+        } else {
+            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, _empcolor);
         }
     }
     // draw lines from bottom-up
@@ -643,10 +650,10 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
         gint const x0 = (gint) Inkscape::round(x);
         gint const x1 = x0 + (gint) Inkscape::round( (buf->rect.y1 - buf->rect.y0) / tan_angle[Z] );
 
-        if (!scaled && (zlinenum % empspacing) == 0) {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, empcolor);
-        } else {
+        if (!scaled && (zlinenum % empspacing) != 0) {
             sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
+        } else {
+            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, _empcolor);
         }
     }
 }
