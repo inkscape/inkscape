@@ -370,6 +370,7 @@ src/ui/widget/toolbox.cpp
 src/ui/widget/zoom-status.cpp
 src/uri-references.cpp
 src/uri.cpp
+src/vanishing-point.cpp
 src/verbs.cpp
 src/version.cpp
 src/widgets/button.cpp

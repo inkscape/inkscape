@@ -361,6 +361,9 @@ override) the bindings in the main default.xml.
 
   <bind key="i" modifiers="Alt" action="ObjectsToPattern" display="true"/>
   <bind key="I" modifiers="Alt" action="ObjectsToPattern" />
+  
+  <bind key="g" modifiers="Shift" action="ObjectsToGuides" display="true"/>
+  <bind key="G" modifiers="Shift" action="ObjectsToGuides" />
 
   <bind key="i" modifiers="Alt,Shift" action="ObjectsFromPattern" display="true"/>
   <bind key="I" modifiers="Alt,Shift" action="ObjectsFromPattern" />
