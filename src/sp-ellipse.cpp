@@ -427,7 +427,6 @@ sp_ellipse_init(SPEllipse */*ellipse*/)
 static void
 sp_ellipse_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    g_print ("sp_ellipse_build\n");
     if (((SPObjectClass *) ellipse_parent_class)->build)
         (* ((SPObjectClass *) ellipse_parent_class)->build) (object, document, repr);
 
