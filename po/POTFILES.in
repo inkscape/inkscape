@@ -5,6 +5,7 @@ inkscape.desktop.in
 src/application/editor.cpp
 src/arc-context.cpp
 src/attributes.cpp
+src/box3d-context.cpp
 src/color.cpp
 src/conditions.cpp
 src/connector-context.cpp
