@@ -627,7 +627,7 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     // z-axis always goes from bottomleft to topright. (0,1) - (1,0)
     gdouble const zintercept_y_bc = (buf_tl_gc[NR::X] * -tan_angle[Z]) - buf_tl_gc[NR::Y] ;
     gdouble const zstart_y_sc = ( zintercept_y_bc - floor(zintercept_y_bc/lyw)*lyw ) + buf->rect.y0;
-    gint const  zlinestart = (gint) Inkscape::round( (zstart_y_sc + buf->rect.x0*tan_angle[X] - ow[NR::Y]) / lyw );
+    gint const  zlinestart = (gint) Inkscape::round( (zstart_y_sc + buf->rect.x0*tan_angle[Z] - ow[NR::Y]) / lyw );
     gint zlinenum = zlinestart;
     // lines starting from left side
     for (y = zstart_y_sc; y < buf->rect.y1; y += lyw, zlinenum++) {
