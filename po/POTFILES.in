@@ -424,6 +424,7 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/color_morelight.inx
 [type: gettext/xml] share/extensions/color_moresaturation.inx
 [type: gettext/xml] share/extensions/color_negative.inx
+[type: gettext/xml] share/extensions/color_randomize.inx
 [type: gettext/xml] share/extensions/color_removeblue.inx
 [type: gettext/xml] share/extensions/color_removegreen.inx
 [type: gettext/xml] share/extensions/color_removered.inx
