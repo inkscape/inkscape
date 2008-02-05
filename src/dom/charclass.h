@@ -12,7 +12,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005-2007 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -35,6 +35,7 @@
  * Utility classes to test characters for their class, as specified in
  * http://www.w3.org/TR/REC-xml/#CharClasses
  */
+
 
 /**
  * Convenience method.  Not in spec
@@ -105,7 +106,7 @@ bool isBaseChar(int ch);
 
 
 /**
- * [86]	Ideographic ::=
+ * [86]    Ideographic ::=
  *         [#x4E00-#x9FA5] | #x3007 | [#x3021-#x3029]
  */
 bool isIdeographic(int ch);
@@ -115,7 +116,7 @@ bool isIdeographic(int ch);
 
 
 /**
- * [87]	CombiningChar ::=
+ * [87]    CombiningChar ::=
  * [#x0300-#x0345] | [#x0360-#x0361] | [#x0483-#x0486] | [#x0591-#x05A1] |
  * [#x05A3-#x05B9] | [#x05BB-#x05BD] | #x05BF | [#x05C1-#x05C2] | #x05C4 |
  * [#x064B-#x0652] | #x0670 | [#x06D6-#x06DC] | [#x06DD-#x06DF] |
@@ -144,7 +145,7 @@ bool isCombiningChar(int ch);
 
 
 /**
- * [88]	Digit ::=
+ * [88]    Digit ::=
  * [#x0030-#x0039] | [#x0660-#x0669] | [#x06F0-#x06F9] |
  * [#x0966-#x096F] | [#x09E6-#x09EF] | [#x0A66-#x0A6F] | [#x0AE6-#x0AEF] |
  * [#x0B66-#x0B6F] | [#x0BE7-#x0BEF] | [#x0C66-#x0C6F] | [#x0CE6-#x0CEF] |
@@ -156,7 +157,7 @@ bool isDigit(int ch);
 
 
 /**
- * [89]	Extender ::=
+ * [89]    Extender ::=
  * #x00B7 | #x02D0 | #x02D1 | #x0387 | #x0640 | #x0E46 | #x0EC6 |
  * #x3005 | [#x3031-#x3035] | [#x309D-#x309E] | [#x30FC-#x30FE]
  */
@@ -171,32 +172,34 @@ bool isExtender(int ch);
  */
 
 /**
- *
+ * Does it separate purely by space?
+ * UNICODE general class Zs 
  */
 bool isSpaceSeparator(int ch);
 
 /**
- *
+ * Does it separate lines? Not the same as a newline.
+ * UNICODE general class Zl 
  */
 bool isLineSeparator(int ch);
 
 /**
- *
+ *  UNICODE general class Zp
  */
 bool isParagraphSeparator(int ch);
 
 /**
- *
+ * The union of the 3 space types.
  */
 bool isSpaceChar(int ch);
 
 /**
- *
+ * 3 spaces in isSpaceChar() which don't break
  */
 bool isNonBreakingSpace(int ch);
 
 /**
- *
+ *  Union of all non-printing characters
  */
 bool isWhitespace(int ch);
 
