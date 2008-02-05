@@ -2253,9 +2253,18 @@ bool sp_canvas_world_pt_inside_window(SPCanvas const *canvas, NR::Point const &w
 NR::Rect SPCanvas::getViewbox() const
 {
     GtkWidget const *w = GTK_WIDGET(this);
-
     return NR::Rect(NR::Point(dx0, dy0),
                     NR::Point(dx0 + w->allocation.width, dy0 + w->allocation.height));
+}
+
+/**
+ * Return canvas window coordinates as IRect (a rectangle defined by integers).
+ */
+NR::IRect SPCanvas::getViewboxIntegers() const
+{
+    GtkWidget const *w = GTK_WIDGET(this);
+    return NR::IRect(NR::IPoint(x0, y0),
+                    NR::IPoint(x0 + w->allocation.width, y0 + w->allocation.height));
 }
 
 inline int sp_canvas_tile_floor(int x)

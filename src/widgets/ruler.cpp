@@ -178,12 +178,14 @@ sp_hruler_draw_ticks (GtkRuler *ruler)
 		 0, 0, 
 		 widget->allocation.width, widget->allocation.height);
 
-  upper = ruler->upper / ruler->metric->pixels_per_unit;
+  upper = ruler->upper / ruler->metric->pixels_per_unit; // upper and lower are expressed in ruler units
   lower = ruler->lower / ruler->metric->pixels_per_unit;
-
+  /* "pixels_per_unit" should be "points_per_unit". This is the size of the unit
+   * in 1/72nd's of an inch and has nothing to do with screen pixels */
+  
   if ((upper - lower) == 0) 
     return;
-  increment = (double) (width + 2*UNUSED_PIXELS) / (upper - lower);
+  increment = (double) (width + 2*UNUSED_PIXELS) / (upper - lower); // screen pixels per ruler unit
   
    /* determine the scale
    *  We calculate the text size as for the vruler instead of using
@@ -229,17 +231,16 @@ sp_hruler_draw_ticks (GtkRuler *ruler)
 	}
 
     tick_index = 0;
-    cur = start;
+    cur = start; // location (in ruler units) of the first invisible tick at the left side of the canvas 
 
 	while (cur <= end)
 	{
 	  // due to the typical values for cur, lower and increment, pos will often end up to
       // be e.g. 641.50000000000; rounding behaviour is not defined in such a case (see round.h)
       // and jitter will be apparent (upon redrawing some of the lines on the ruler might jump a
-      // by a pixel, and jump back on the next redraw). This is suppressed by adding 1e-12
+      // by a pixel, and jump back on the next redraw). This is suppressed by adding 1e-9 (that's only one nanopixel ;-))
       pos = int(Inkscape::round((cur - lower) * increment + 1e-12)) - UNUSED_PIXELS; 
-      
-	  gdk_draw_line (ruler->backing_store, gc,
+      gdk_draw_line (ruler->backing_store, gc,
 			 pos, height + ythickness, 
 			 pos, height - length + ythickness);
 
@@ -515,12 +516,14 @@ sp_vruler_draw_ticks (GtkRuler *ruler)
 		 0, 0, 
 		 widget->allocation.width, widget->allocation.height);
   
-  upper = ruler->upper / ruler->metric->pixels_per_unit;
+  upper = ruler->upper / ruler->metric->pixels_per_unit; // upper and lower are expressed in ruler units
   lower = ruler->lower / ruler->metric->pixels_per_unit;
+  /* "pixels_per_unit" should be "points_per_unit". This is the size of the unit
+   * in 1/72nd's of an inch and has nothing to do with screen pixels */
   
   if ((upper - lower) == 0)
     return;
-  increment = (double) (width + 2*UNUSED_PIXELS) / (upper - lower);
+  increment = (double) (width + 2*UNUSED_PIXELS) / (upper - lower); // screen pixels per ruler unit
 
   /* determine the scale
    *   use the maximum extents of the ruler to determine the largest
@@ -566,13 +569,13 @@ sp_vruler_draw_ticks (GtkRuler *ruler)
 			}
 
     tick_index = 0;
-    cur = start;        
+    cur = start; // location (in ruler units) of the first invisible tick at the top side of the canvas       
 
     while (cur < end) {
           // due to the typical values for cur, lower and increment, pos will often end up to
           // be e.g. 641.50000000000; rounding behaviour is not defined in such a case (see round.h)
           // and jitter will be apparent (upon redrawing some of the lines on the ruler might jump a
-          // by a pixel, and jump back on the next redraw). This is suppressed by adding 1e-12
+          // by a pixel, and jump back on the next redraw). This is suppressed by adding 1e-9 (that's only one nanopixel ;-))
             pos = int(Inkscape::round((cur - lower) * increment + 1e-12)) - UNUSED_PIXELS;
 
 			gdk_draw_line (ruler->backing_store, gc,

@@ -1366,7 +1366,12 @@ sp_desktop_widget_update_rulers (SPDesktopWidget *dtw)
 void
 sp_desktop_widget_update_hruler (SPDesktopWidget *dtw)
 {
-    NR::Rect viewbox = dtw->canvas->getViewbox();
+    /* The viewbox (in integers) must exactly match the size of SPCanvasbuf's pixel buffer.
+     * This is important because the former is being used for drawing the ruler, whereas
+     * the latter is used for drawing e.g. the grids and guides. Only when the viewbox 
+     * coincides with the pixel buffer, everything will line up nicely.
+     */  
+    NR::IRect viewbox = dtw->canvas->getViewboxIntegers();
     
     double const scale = dtw->desktop->current_zoom();
     double s = viewbox.min()[NR::X] / scale - dtw->ruler_origin[NR::X];
@@ -1377,7 +1382,12 @@ sp_desktop_widget_update_hruler (SPDesktopWidget *dtw)
 void
 sp_desktop_widget_update_vruler (SPDesktopWidget *dtw)
 {
-    NR::Rect viewbox = dtw->canvas->getViewbox();
+    /* The viewbox (in integers) must exactly match the size of SPCanvasbuf's pixel buffer.
+     * This is important because the former is being used for drawing the ruler, whereas
+     * the latter is used for drawing e.g. the grids and guides. Only when the viewbox 
+     * coincides with the pixel buffer, everything will line up nicely.
+     */
+    NR::IRect viewbox = dtw->canvas->getViewboxIntegers();
     
     double const scale = dtw->desktop->current_zoom();
     double s = viewbox.min()[NR::Y] / -scale - dtw->ruler_origin[NR::Y];
