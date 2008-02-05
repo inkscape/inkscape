@@ -112,7 +112,8 @@ sp_filter_init(SPFilter *filter)
 
     filter->_renderer = NULL;
 
-    filter->_image_name = map<gchar *, int, ltstr>();
+    filter->_image_name = new std::map<gchar *, int, ltstr>;
+    filter->_image_name->clear();
 
     filter->filterRes = NumberOptNumber();
 
@@ -169,6 +170,7 @@ sp_filter_release(SPObject *object)
     }
 
     filter->modified_connection.~connection();
+    delete filter->_image_name;
 
     if (((SPObjectClass *) filter_parent_class)->release)
         ((SPObjectClass *) filter_parent_class)->release(object);
@@ -456,9 +458,9 @@ int sp_filter_primitive_count(SPFilter *filter) {
 
 int sp_filter_get_image_name(SPFilter *filter, gchar const *name) {
     gchar *name_copy = strdup(name);
-    map<gchar *, int, ltstr>::iterator result = filter->_image_name.find(name_copy);
+    map<gchar *, int, ltstr>::iterator result = filter->_image_name->find(name_copy);
     free(name_copy);
-    if (result == filter->_image_name.end()) return -1;
+    if (result == filter->_image_name->end()) return -1;
     else return (*result).second;
 }
 
@@ -466,7 +468,8 @@ int sp_filter_set_image_name(SPFilter *filter, gchar const *name) {
     int value = filter->_image_number_next;
     filter->_image_number_next++;
     gchar *name_copy = strdup(name);
-    pair<map<gchar*,int,ltstr>::iterator,bool> ret = filter->_image_name.insert(pair<gchar*,int>(name_copy, value));
+    pair<gchar*,int> new_pair(name_copy, value);
+    pair<map<gchar*,int,ltstr>::iterator,bool> ret = filter->_image_name->insert(new_pair);
     if (ret.second == false) {
         return (*ret.first).second;
     }

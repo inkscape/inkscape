@@ -60,7 +60,7 @@ struct SPFilter : public SPObject {
 
     NR::Filter *_renderer;
 
-    std::map<gchar *, int, ltstr> _image_name;
+    std::map<gchar *, int, ltstr>* _image_name;
     int _image_number_next;
 };
 
