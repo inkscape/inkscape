@@ -264,14 +264,15 @@ NR::Rect Layout::characterBoundingBox(iterator const &it, double *rotation) cons
             NR::Point midpoint;
             NR::Point tangent;
             Span const &span = _characters[char_index].span(this);
-            double top = span.baseline_shift - span.line_height.ascent;
-            double bottom = span.baseline_shift + span.line_height.descent;
 
             const_cast<Path*>(_path_fitted)->PointAndTangentAt(midpoint_otp[0].piece, midpoint_otp[0].t, midpoint, tangent);
             top_left[NR::X] = midpoint[NR::X] - cluster_half_width;
-            top_left[NR::Y] = midpoint[NR::Y] + top;
+            top_left[NR::Y] = midpoint[NR::Y] - span.line_height.ascent;
             bottom_right[NR::X] = midpoint[NR::X] + cluster_half_width;
-            bottom_right[NR::Y] = midpoint[NR::Y] + bottom;
+            bottom_right[NR::Y] = midpoint[NR::Y] + span.line_height.descent;
+            NR::Point normal = tangent.cw();
+            top_left += span.baseline_shift * normal;
+            bottom_right += span.baseline_shift * normal;
             if (rotation)
                 *rotation = atan2(tangent[1], tangent[0]);
         }
