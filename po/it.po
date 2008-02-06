@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-02-01 09:57+0100\n"
-"PO-Revision-Date: 2008-02-02 10:48+0100\n"
+"PO-Revision-Date: 2008-02-05 08:11+0100\n"
 "Last-Translator: Luca Bruno <lucab@debian.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -1353,9 +1353,8 @@ msgid "Rela_tive change"
 msgstr "Cambiamento rela_tivo"
 
 #: ../src/dialogs/guidelinedialog.cpp:48
-#, fuzzy
 msgid "Move and/or rotate the guide relative to current settings"
-msgstr "Sposta e ruota la guida in maniera relativa alle impostazioni attuali"
+msgstr "Sposta o ruota la guida in maniera relativa alle impostazioni attuali"
 
 #: ../src/dialogs/guidelinedialog.cpp:114
 msgid "Set guide properties"
@@ -2117,9 +2116,8 @@ msgstr "La spaziatura orizzontale tra le colonne (unità px)"
 
 #. ## The OK button
 #: ../src/dialogs/tiledialog.cpp:865
-#, fuzzy
 msgid "Arrange"
-msgstr "Angolo"
+msgstr "Applica"
 
 #: ../src/dialogs/tiledialog.cpp:866
 msgid "Arrange selected objects"
@@ -4673,7 +4671,7 @@ msgstr "Phi"
 
 #: ../src/live_effects/lpe-gears.cpp:213
 msgid "Tooth pressure angle (typically 20-25 deg).  The ratio of teeth not in contact."
-msgstr ""
+msgstr "Angolo di pressione dei denti (tipicamente 20-25 gradi). Il rapporto tra i denti non in contatto."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "Stroke path"
@@ -6311,14 +6309,14 @@ msgstr[0] "<b>Testo dinamico collegato</b> (%d carattere)"
 msgstr[1] "<b>Testo dinamico collegato</b> (%d caratteri)"
 
 #: ../src/sp-guide.cpp:398
-#, fuzzy, c-format
+#, c-format
 msgid "vertical, at %s"
-msgstr "linea guida verticale a %s"
+msgstr "verticale, a %s"
 
 #: ../src/sp-guide.cpp:400
-#, fuzzy, c-format
+#, c-format
 msgid "horizontal, at %s"
-msgstr "linea guida orizzontale a %s"
+msgstr "orizzontale, a %s"
 
 #: ../src/sp-guide.cpp:405
 #, c-format
@@ -7618,7 +7616,7 @@ msgstr "Distanza di aggancio agli oggetti, in pixel dello schermo"
 
 #: ../src/ui/dialog/document-properties.cpp:276
 msgid "If set, objects only snap to another object when it's within the range specified below"
-msgstr ""
+msgstr "Se attivo, gli oggetti si attaccano ad altri oggetti solo se nel raggio di azione specificato"
 
 #. Options for snapping to grids
 #: ../src/ui/dialog/document-properties.cpp:280
@@ -7635,7 +7633,7 @@ msgstr "Distanza per l'aggancio alla griglia, in pixel dello schermo"
 
 #: ../src/ui/dialog/document-properties.cpp:282
 msgid "If set, objects only snap to a grid line when it's within the range specified below"
-msgstr ""
+msgstr "Se attivo, gli oggetti si attaccano alle linee della griglia solo se nel raggio di azione specificato"
 
 #. Options for snapping to guides
 #: ../src/ui/dialog/document-properties.cpp:286
@@ -7652,7 +7650,7 @@ msgstr "Distanza per l'aggancio alle guide, in pixel dello schermo"
 
 #: ../src/ui/dialog/document-properties.cpp:288
 msgid "If set, objects only snap to a guide when it's within the range specified below"
-msgstr ""
+msgstr "Se attivo, gli oggetti si attaccano alle guide solo se nel raggio di azione specificato"
 
 #: ../src/ui/dialog/document-properties.cpp:310
 msgid "<b>Snapping</b>"
@@ -7747,31 +7745,28 @@ msgstr "Tutte le immagini"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:935
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1492
 msgid "Append filename extension automatically"
-msgstr ""
+msgstr "Aggiungi automaticamente l'estensione"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1079
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1357
-#, fuzzy
 msgid "Guess from extension"
-msgstr "Prendi dalla selezione"
+msgstr "Rileva tipo dall'estensione"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1378
-#, fuzzy
 msgid "Left edge of source"
-msgstr "(lato sinistro in alto)"
+msgstr "Lato sinistro della sorgente"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1379
 msgid "Top edge of source"
-msgstr ""
+msgstr "Lato superiore della sorgente"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1380
-#, fuzzy
 msgid "Right edge of source"
-msgstr "(lato destro in alto)"
+msgstr "Lato destro della sorgente"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1381
 msgid "Bottom edge of source"
-msgstr ""
+msgstr "Lato inferiore della sorgente"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1382
 msgid "Source width"
@@ -7839,15 +7834,13 @@ msgid "Image File"
 msgstr "File immagine"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:570
-#, fuzzy
 msgid "Selected SVG Element"
-msgstr "Elimina segmento"
+msgstr "Selezionato elemento SVG"
 
 #. TODO: any image, not justy svg
 #: ../src/ui/dialog/filter-effects-dialog.cpp:637
-#, fuzzy
 msgid "Select an image to be used as feImage input"
-msgstr "Seleziona un'immagine ed una o più forme sopra di essa"
+msgstr "Selezionare un'immagine da usare come input per feImage"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:897
 msgid "Light Source:"
@@ -8031,9 +8024,8 @@ msgid "Standard Deviation"
 msgstr "Deviazione standard"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2153
-#, fuzzy
 msgid "Source of Image"
-msgstr "Numero di pagine"
+msgstr "Immagine sorgente"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2154
 msgid "Coordinates"
@@ -8344,7 +8336,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:242
 msgid "Ctrl+click dot size:"
-msgstr ""
+msgstr "Dimensione punto con Ctrl+click:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:242
 #, fuzzy
@@ -8353,7 +8345,7 @@ msgstr "Ridimensiona la larghezza del contorno"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:243
 msgid "Size of dots created with Ctrl+click (relative to current stroke width)"
-msgstr ""
+msgstr "Dimensione dei punti creati con Ctrl+click (relativi alla larghezza del contorno attuale)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:258
 msgid "<b>No objects selected</b> to take the style from."
@@ -8425,9 +8417,8 @@ msgid "Conversion to guides:"
 msgstr "_Converti in testo"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:348
-#, fuzzy
 msgid "Keep objects after conversion to guides"
-msgstr "Selezionare l'<b>oggetto</b> da convertire in delimitatore."
+msgstr "Mantieni gli oggetti dopo averli convertiti in oggetti"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:350
 msgid "When converting an object to guides, don't delete the object after the conversion."
@@ -9076,11 +9067,11 @@ msgstr "Impostazioni predefinite griglia"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:827
 msgid "Don't emphasize gridlines when zoomed out"
-msgstr ""
+msgstr "Non evidenziare le linee della griglia quando rimpicciolito"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:828
 msgid "If set and zoomed out, the gridlines will be shown in normal color instead of major grid line color."
-msgstr ""
+msgstr "Se impostate e rimpicciolito, le linee della griglia saranno mostrate con colori normali invece che con quelli delle linee principali."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:833
 #: ../src/ui/dialog/inkscape-preferences.cpp:854
@@ -10000,7 +9991,7 @@ msgstr "_Chiudi senza salvare"
 
 #: ../src/ui/view/edit-widget.cpp:1257
 #: ../src/widgets/desktop-widget.cpp:885
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n"
 "\n"
@@ -10008,7 +9999,7 @@ msgid ""
 msgstr ""
 "<span weight=\"bold\" size=\"larger\">Il file \"%s\" è stato salvato con un formato (%s) che può provocare perdite di dati!</span>\n"
 "\n"
-"Salvarlo con un altro formato?"
+"Salvarlo come un file SVG di Inkscape?"
 
 #: ../src/ui/view/edit-widget.cpp:1272
 #: ../src/widgets/desktop-widget.cpp:896
@@ -10875,7 +10866,7 @@ msgstr "Da oggetto a gu_ida"
 
 #: ../src/verbs.cpp:2199
 msgid "Convert selected objects to a collection of guidelines aligned with their edges"
-msgstr ""
+msgstr "Converte gli oggetti selezionati in un insieme di linee guida orientate secondo gli spigoli"
 
 #. TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
 #: ../src/verbs.cpp:2201
@@ -11216,9 +11207,8 @@ msgid "Rows and Columns..."
 msgstr "Righe e colonne..."
 
 #: ../src/verbs.cpp:2308
-#, fuzzy
 msgid "Arrange selected objects in a table"
-msgstr "Dispone gli oggetti selezionati su una griglia"
+msgstr "Dispone gli oggetti selezionati in una tabella"
 
 #. Layer
 #: ../src/verbs.cpp:2310
@@ -11746,7 +11736,7 @@ msgstr "Passa alla modalità di visualizzazione normale"
 
 #: ../src/verbs.cpp:2468
 msgid "_Outline"
-msgstr "Cont_orni"
+msgstr "Scheletr_o"
 
 #: ../src/verbs.cpp:2469
 msgid "Switch to outline (wireframe) display mode"
@@ -13156,11 +13146,11 @@ msgstr "parte dal centro"
 
 #: ../src/widgets/toolbox.cpp:2900
 msgid "starts mid-way"
-msgstr ""
+msgstr "parte da metà"
 
 #: ../src/widgets/toolbox.cpp:2900
 msgid "starts near edge"
-msgstr ""
+msgstr "parte vicino al termine"
 
 #: ../src/widgets/toolbox.cpp:2903
 msgid "Inner radius"
@@ -13386,7 +13376,7 @@ msgstr "(lieve assottigliamento, predefinito)"
 
 #: ../src/widgets/toolbox.cpp:3340
 msgid "(speed deflates stroke)"
-msgstr ""
+msgstr "(assotigliato dalla velocità)"
 
 #: ../src/widgets/toolbox.cpp:3343
 msgid "Stroke Thinning"
@@ -13428,15 +13418,15 @@ msgstr "L'angolazione della penna (in gradi; 0 = orizzontale; non ha effetto se 
 #. Fixation
 #: ../src/widgets/toolbox.cpp:3373
 msgid "(perpendicular to stroke, \"brush\")"
-msgstr ""
+msgstr "(perpendicolare alla direzione, \"pennello\")"
 
 #: ../src/widgets/toolbox.cpp:3373
 msgid "(almost fixed, default)"
-msgstr ""
+msgstr "(quasi fisso, predefinito)"
 
 #: ../src/widgets/toolbox.cpp:3373
 msgid "(fixed by Angle, \"pen\")"
-msgstr ""
+msgstr "(fissato dall'Angolo, penna)"
 
 #: ../src/widgets/toolbox.cpp:3376
 msgid "Fixation"
@@ -14038,12 +14028,10 @@ msgid "Blur stdDeviation"
 msgstr "Deviazione standard sfocatura"
 
 #: ../share/extensions/edge3d.inx.h:3
-#, fuzzy
 msgid "Blur width"
-msgstr "Larghezza uguale"
+msgstr "Larghezza sfocatura"
 
 #: ../share/extensions/edge3d.inx.h:4
-#, fuzzy
 msgid "Edge 3D"
 msgstr "Bordatura"
 
@@ -14253,7 +14241,7 @@ msgstr "Disegna maniglie"
 
 #: ../share/extensions/inkscape_help_askaquestion.inx.h:1
 msgid "Ask Us a Question"
-msgstr ""
+msgstr "Domande e risposte"
 
 #: ../share/extensions/inkscape_help_commandline.inx.h:1
 msgid "Command Line Options"
@@ -14435,9 +14423,8 @@ msgid "Space between copies:"
 msgstr "Spaziatura tra le copie:"
 
 #: ../share/extensions/perfectboundcover.inx.h:1
-#, fuzzy
 msgid "Bleed (in)"
-msgstr "Spigolo tagliato"
+msgstr "Margine (in)"
 
 #: ../share/extensions/perfectboundcover.inx.h:2
 msgid "Book Height (inches)"
@@ -14582,7 +14569,7 @@ msgstr "Albero casuale"
 #: ../share/extensions/rubberstretch.inx.h:2
 #, no-c-format
 msgid "Curve (%):"
-msgstr ""
+msgstr "Curvatura (%):"
 
 #: ../share/extensions/rubberstretch.inx.h:4
 #, fuzzy
@@ -14612,15 +14599,15 @@ msgstr "Posizione ingranaggi"
 
 #: ../share/extensions/spirograph.inx.h:2
 msgid "Inside (Hypotrochoid)"
-msgstr ""
+msgstr "Interni (ipotrocoide)"
 
 #: ../share/extensions/spirograph.inx.h:3
 msgid "Outside (Epitrochoid)"
-msgstr ""
+msgstr "Esterni (epitrocoide)"
 
 #: ../share/extensions/spirograph.inx.h:4
 msgid "Quality (Default = 16)"
-msgstr "Quality (predefinita = 16)"
+msgstr "Qualità (predefinita = 16)"
 
 #: ../share/extensions/spirograph.inx.h:5
 msgid "R - Ring Radius (px)"
