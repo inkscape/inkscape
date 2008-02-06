@@ -116,7 +116,7 @@ void compute_surface_normal(Fvector &N, gdouble ss, NRPixBlock *in, int i, int j
     gdouble accu_x;
     gdouble accu_y;
     unsigned char *data = NR_PIXBLOCK_PX (in);
-    g_assert(in->mode == NR_PIXBLOCK_MODE_R8G8B8A8P);
+    g_assert(NR_PIXBLOCK_BPP(in) == 4);
     x_carac = get_carac(j, w, dx); //LEFT, MIDDLE or RIGHT
     y_carac = get_carac(i, h, dy); //TOP, MIDDLE or BOTTOM
     alpha_idx = 4*(i*w + j);
