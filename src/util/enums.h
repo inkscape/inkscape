@@ -12,7 +12,9 @@
 
 /* IMPORTANT
  *  When initializing the EnumData struct, you cannot use _(...) to translate strings.
-  * Instead, one must use N_(...) and do the translation every time the string is retreived.
+ * Instead, one must use N_(...) and do the translation every time the string is retreived.
+ *
+ * Note that get_id_from_key and get_id_from_label return 0 if it cannot find an entry for that key string
  */
 
 
@@ -69,6 +71,11 @@ public:
         }
 
         return false;
+    }
+
+    bool is_valid_id(const E e) const
+    {
+        return ( (int)e < end );
     }
 
     const Glib::ustring& get_label(const E e) const
