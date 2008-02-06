@@ -150,8 +150,8 @@ private:
     NR::Point _origin; ///< position of origin for transforms
     NR::Point _point; ///< original position of the knot being used for the current transform
     Inkscape::MessageContext _message_context;
-    SigC::Connection _sel_changed_connection;
-    SigC::Connection _sel_modified_connection;
+    sigc::connection _sel_changed_connection;
+    sigc::connection _sel_modified_connection;
 };
 
 }
