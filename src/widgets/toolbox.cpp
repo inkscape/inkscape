@@ -5280,7 +5280,9 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
 
     // Create the units menu.
     UnitTracker* tracker = new UnitTracker( SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE );
-    tracker->setActiveUnit(sp_unit_get_by_abbreviation(prefs_get_string_attribute("tools.paintbucket", "offsetunits")));
+    const gchar *stored_unit = prefs_get_string_attribute("tools.paintbucket", "offsetunits");
+    if (stored_unit)
+        tracker->setActiveUnit(sp_unit_get_by_abbreviation(stored_unit));
     g_object_set_data( holder, "tracker", tracker );
     {
         GtkAction* act = tracker->createAction( "PaintbucketUnitsAction", _("Units"), ("") );
