@@ -461,7 +461,10 @@ last_seg_in_subpath(NArtBpath const *bp)
  * http://www.w3.org/TR/SVG11/implnote.html#PathElementImplementationNotes
  */
 
-static double const no_tangent = 128.0;  /* arbitrarily-chosen value outside the range of atan2, i.e. outside of [-pi, pi]. */
+static double const no_tangent = 128.0;  /* arbitrarily-chosen value outside the range of atan2,
+                                          * i.e. outside of [-pi, pi]. This value is incremented by
+                                          * 1 and checked using > to be safe from floating-point
+                                          * equality comparison madness.*/
 
 /**
  * Helper function to calculate the outgoing tangent of a path 
@@ -502,11 +505,11 @@ outgoing_tangent(NArtBpath const *bp0)
                 if (bp == bp0) {
                     /* Gone right around the subpath without finding any different point since the
                      * initial moveto. */
-                    return no_tangent;
+                    return no_tangent + 1;
                 }
                 if (bp->code != NR_MOVETO) {
                     /* Open subpath. */
-                    return no_tangent;
+                    return no_tangent + 1;
                 }
                 other = bp->c(3);
                 if (other != p0) {
@@ -517,7 +520,7 @@ outgoing_tangent(NArtBpath const *bp0)
 
         if (bp == bp0) {
             /* Back where we started, so zero-length subpath. */
-            return no_tangent;
+            return no_tangent + 1;
 
             /* Note: this test must come after we've looked at element bp, in case bp0 is a curve:
              * we must look at c(1) and c(2).  (E.g. single-curve subpath.)
@@ -571,19 +574,19 @@ incoming_tangent(NArtBpath const *bp0)
                 }
                 if (bp->code != NR_MOVETO) {
                     /* Open subpath. */
-                    return no_tangent;
+                    return no_tangent + 1;
                 }
                 bp = last_seg_in_subpath(bp0);
                 break;
 
             default: /* includes NR_END */
                 g_error("Found invalid path code %u in middle of path.", bp->code);
-                return no_tangent;
+                return no_tangent + 1;
         }
 
         if (bp == bp0) {
             /* Back where we started from: zero-length subpath. */
-            return no_tangent;
+            return no_tangent + 1;
         }
     }
 
@@ -615,18 +618,13 @@ sp_shape_marker_get_transform(SPShape const *shape, NArtBpath const *bp)
     double const angle1 = incoming_tangent(bp);
     double const angle2 = outgoing_tangent(bp);
 
-    /* angle1 and angle2 are now each either unset (i.e. still 100 from their initialization) or in
-       [-pi, pi] from atan2. */
-    g_assert((-3.15 < angle1 && angle1 < 3.15) || (angle1 == no_tangent));
-    g_assert((-3.15 < angle2 && angle2 < 3.15) || (angle2 == no_tangent));
-
     double ret_angle;
-    if (angle1 == no_tangent) {
+    if (angle1 > no_tangent) {
         /* First vertex of an open subpath. */
-        ret_angle = ( angle2 == no_tangent
+        ret_angle = ( angle2 > no_tangent
                       ? 0.
                       : angle2 );
-    } else if (angle2 == no_tangent) {
+    } else if (angle2 > no_tangent) {
         /* Last vertex of an open subpath. */
         ret_angle = angle1;
     } else {
