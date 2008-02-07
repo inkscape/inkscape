@@ -94,7 +94,8 @@ class Embedder(inkex.Effect):
                     embed=False
                 if (embed):
                     node.set(inkex.addNS('href','xlink'), 'data:%s;base64,%s' % (type, base64.encodestring(file)))
-                    del node.attrib[inkex.addNS('absref',u'sodipodi')]
+                    if (absref != None):
+                        del node.attrib[inkex.addNS('absref',u'sodipodi')]
                 else:
                     inkex.debug("%s is not of type image/png, image/jpeg, image/bmp, image/gif or image/x-icon" % path)
             else:
