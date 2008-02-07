@@ -2320,6 +2320,9 @@ void FilterEffectsDialog::set_attr(SPObject* o, const SPAttributeEnum attr, cons
 void FilterEffectsDialog::update_settings_view()
 {
     update_settings_sensitivity();
+    _settings_box.hide_all();
+    _settings_box.show();
+    _empty_settings.show();
 
     if(_attr_lock)
         return;
@@ -2329,11 +2332,6 @@ void FilterEffectsDialog::update_settings_view()
     if(prim) {
         _settings->show_and_update(FPConverter.get_id_from_key(prim->repr->name()), prim);
         _empty_settings.hide();
-    }
-    else {
-        _settings_box.hide_all();
-        _settings_box.show();
-        _empty_settings.show();
     }
 }
 
