@@ -26,7 +26,7 @@ FilterPrimitive * FilterDisplacementMap::create() {
 FilterDisplacementMap::~FilterDisplacementMap()
 {}
 
-int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &/*units*/) {
+int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *texture = slot.get(_input);
     NRPixBlock *map = slot.get(_input2);
 
@@ -67,7 +67,11 @@ int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &/*units*/
     int in_w = map->area.x1 - map->area.x0;
     int in_h = map->area.y1 - map->area.y0;
     double coordx, coordy;
-
+    
+    Matrix trans = units.get_matrix_primitiveunits2pb();
+    double scalex = scale*trans.expansionX();
+    double scaley = scale*trans.expansionY();
+    
     for (x=0; x < out_w; x++){
         for (y=0; y < out_h; y++){
             if (x+out_x0-map->area.x0 >= 0 &&
@@ -75,8 +79,8 @@ int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &/*units*/
                 y+out_y0-map->area.y0 >= 0 &&
                 y+out_y0-map->area.y0 < in_h){
 
-                    coordx = out_x0 - map->area.x0 + x + scale * ( double(map_data[4*((x+out_x0-map->area.x0) + in_w*(y+out_y0-map->area.y0)) + Xchannel])/255 - 0.5);
-                    coordy = out_y0 - map->area.y0 + y + scale * ( double(map_data[4*((x+out_x0-map->area.x0) + in_w*(y+out_y0-map->area.y0)) + Ychannel])/255 - 0.5);
+                    coordx = out_x0 - map->area.x0 + x + scalex * ( double(map_data[4*((x+out_x0-map->area.x0) + in_w*(y+out_y0-map->area.y0)) + Xchannel])/255 - 0.5);
+                    coordy = out_y0 - map->area.y0 + y + scaley * ( double(map_data[4*((x+out_x0-map->area.x0) + in_w*(y+out_y0-map->area.y0)) + Ychannel])/255 - 0.5);
 
                     if (coordx>=0 && coordx<in_w && coordy>=0 && coordy<in_h){
                             out_data[4*(x + out_w*y)] = texture_data[4*(int(coordx) + int(coordy)*in_w)];
@@ -121,16 +125,20 @@ void FilterDisplacementMap::set_channel_selector(int s, int channel) {
     if (s == 1) Ychannel = channel;
 }
 
-void FilterDisplacementMap::area_enlarge(NRRectL &area, Matrix const &/*trans*/)
+void FilterDisplacementMap::area_enlarge(NRRectL &area, Matrix const &trans)
 {
     out_x0 = area.x0;
     out_y0 = area.y0;
     out_w = area.x1 - area.x0;
     out_h = area.y1 - area.y0;
-    area.x0 -= (int)(scale/2);
-    area.x1 += (int)(scale/2);
-    area.y0 -= (int)(scale/2);
-    area.y1 += (int)(scale/2);
+    
+    double scalex = scale*trans.expansionX();
+    double scaley = scale*trans.expansionY();
+
+    area.x0 -= (int)(scalex/2);
+    area.x1 += (int)(scalex/2);
+    area.y0 -= (int)(scaley/2);
+    area.y1 += (int)(scaley/2);
 }
 
 FilterTraits FilterDisplacementMap::get_input_traits() {
