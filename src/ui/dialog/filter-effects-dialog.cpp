@@ -2320,13 +2320,14 @@ void FilterEffectsDialog::set_attr(SPObject* o, const SPAttributeEnum attr, cons
 void FilterEffectsDialog::update_settings_view()
 {
     update_settings_sensitivity();
-    _settings_box.hide_all();
-    _settings_box.show();
-    _empty_settings.show();
 
     if(_attr_lock)
         return;
 
+    _settings_box.hide_all();
+    _settings_box.show();
+    _empty_settings.show();
+    
     SPFilterPrimitive* prim = _primitive_list.get_selected();
 
     if(prim) {
