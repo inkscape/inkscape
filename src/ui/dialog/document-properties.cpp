@@ -115,7 +115,8 @@ DocumentProperties::DocumentProperties()
                 "inkscape:snap-intersection-line-segments", _wr),
     //---------------------------------------------------------------
       _grids_label_crea("", Gtk::ALIGN_LEFT),
-      _grids_button_new(_("_New"), _("Create new grid.")),
+      //TRANSLATORS: In Grid|_New translate only the word _New. It ref to grid
+      _grids_button_new(Q_("Grid|_New"), _("Create new grid.")),
       _grids_button_remove(_("_Remove"), _("Remove selected grid.")),
       _grids_label_def("", Gtk::ALIGN_LEFT),
     //---------------------------------------------------------------
