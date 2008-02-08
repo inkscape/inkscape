@@ -16,7 +16,7 @@
 ; January 2008 new uninstaller messages
 
 ; !insertmacro MUI_LANGUAGE "Slovenšèina"
-!insertmacro MUI_LANGUAGE "Slovenian"
+!insertmacro MUI_LANGUAGE "Slovenski jezik"
 
 ; Product name
 LangString lng_Caption   ${LANG_SLOVENIAN} "${PRODUCT_NAME} -- Odprtokodni urejevalnik vektorskih slik"
@@ -37,7 +37,7 @@ LangString lng_WANT_UNINSTALL_BEFORE ${LANG_SLOVENIAN} "$R1 je že namešèen. $\nŽ
 LangString lng_OK_CANCEL_DESC ${LANG_SLOVENIAN} "$\n$\nPritisnite V redu za nadaljevanje ali Preklièi za preklic."
 
 ;you have no admin rigths
-LangString lng_NO_ADMIN ${LANG_SLOVENIAN} "Nimate skrbniških pravic.$\r$\nNamešèanje aplikacije Inkscape za vse uporabnike se morda ne bo konèala uspešno.$\r$\nIzklopite možnost 'za vse uporabnike'."
+LangString lng_NO_ADMIN ${LANG_SLOVENIAN} "Nimate skrbniških pravic.$\r$\nNamešèanje programa Inkscape za vse uporabnike se morda ne bo konèala uspešno.$\r$\nIzklopite možnost 'za vse uporabnike'."
 
 ;win9x is not supported
 LangString lng_NOT_SUPPORTED ${LANG_SLOVENIAN} "Za Inkscape velja, da ne teèe v okoljih Windows 95/98/ME!$\r$\nProsimo, oglejte si uradno spletno stran za podrobnejše informacije."
@@ -73,7 +73,7 @@ LangString lng_ShortcutsDesc $(LANG_SLOVENIAN) "Bližnjice za zagon ${PRODUCT_NAM
 LangString lng_Alluser $(LANG_SLOVENIAN) "Za vse uporabnike"
 
 ; All user install section description
-LangString lng_AlluserDesc $(LANG_SLOVENIAN) "Namesti aplikacijo za vse, ki uporabljajo ta raèunalnik (vsi uporabniki)"
+LangString lng_AlluserDesc $(LANG_SLOVENIAN) "Namesti program za vse, ki uporabljajo ta raèunalnik (vsi uporabniki)"
 
 ; Desktop section
 LangString lng_Desktop $(LANG_SLOVENIAN) "Namizje"
@@ -143,7 +143,7 @@ LangString lng_be $(LANG_SLOVENIAN) "beloruski (be)"
 LangString lng_bg $(LANG_SLOVENIAN) "bolgarski (bg)"
 LangString lng_bn $(LANG_SLOVENIAN) "bengalski (bn)"
 LangString lng_ca $(LANG_SLOVENIAN) "katalonski (ca)"
-LangString lng_ca@valencia $(LANG_SLOVENIAN) "ca@valencia  Valencian Catalan"
+LangString lng_ca@valencia $(LANG_SLOVENIAN) "valencijski katalonski (ca@valencia)"
 LangString lng_cs $(LANG_SLOVENIAN) "èeški (cs)"
 LangString lng_da $(LANG_SLOVENIAN) "danski (da)"
 LangString lng_de $(LANG_SLOVENIAN) "nemški (de)"
@@ -210,18 +210,18 @@ LangString lng_UInstOpt1  ${LANG_SLOVENIAN} "Izberite dodatne možnosti"
 ; Ask to purge the personal preferences
 LangString lng_PurgePrefs ${LANG_SLOVENIAN} "Ohrani osebne nastavitve"
 
-LangString lng_RETRY_CANCEL_DESC ${LANG_SLOVENIAN} "$\n$\nPress RETRY to continue or press CANCEL to abort."
+LangString lng_RETRY_CANCEL_DESC ${LANG_SLOVENIAN} "$\n$\nPritisnite POSKUSI ZNOVA za nadaljevanje ali PREKLIÈI za prekinitev."
 
-LangString lng_ClearDirectoryBefore ${LANG_SLOVENIAN} "${PRODUCT_NAME} must be installed in an empty directory. $INSTDIR is not empty. Please clear this directory first!$(lng_RETRY_CANCEL_DESC)"
+LangString lng_ClearDirectoryBefore ${LANG_SLOVENIAN} "${PRODUCT_NAME} mora biti namešèen v prazni mapi. $INSTDIR ni prazna. Najprej poèistite to mapo!$(lng_RETRY_CANCEL_DESC)"
 
-LangString lng_UninstallLogNotFound ${LANG_SLOVENIAN} "$INSTDIR\uninstall.log not found!$\r$\nPlease uninstall by clearing directory $INSTDIR yourself!"
+LangString lng_UninstallLogNotFound ${LANG_SLOVENIAN} "$INSTDIR\uninstall.log ni mogoèe najti!$\r$\nNamestitev odstranite tako, da sami poèistite mapo $INSTDIR!"
 
-LangString lng_FileChanged ${LANG_SLOVENIAN} "The file $filename has been changed after installation.$\r$\nDo you still want to delete that file?"
+LangString lng_FileChanged ${LANG_SLOVENIAN} "Datoteka $filename je bila spremenjena po namestitvi.$\r$\nJo kljub temu želite izbrisati?"
 
-LangString lng_Yes ${LANG_SLOVENIAN} "Yes"
+LangString lng_Yes ${LANG_SLOVENIAN} "Da"
 
-LangString lng_AlwaysYes ${LANG_SLOVENIAN} "always answer Yes"
+LangString lng_AlwaysYes ${LANG_SLOVENIAN} "vedno odgovori z Da"
 
-LangString lng_No ${LANG_SLOVENIAN} "No"
+LangString lng_No ${LANG_SLOVENIAN} "Ne"
 
-LangString lng_AlwaysNo ${LANG_SLOVENIAN} "always answer No"
+LangString lng_AlwaysNo ${LANG_SLOVENIAN} "vedno odgovori z Ne"
