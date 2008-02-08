@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-01-21 03:42-0200\n"
+"POT-Creation-Date: 2008-02-08 23:00+0100\n"
 "PO-Revision-Date: 2006-11-05 18:36+0100\n"
 "Last-Translator: Spyros Blanas <cid_e@users.sourceforge.net>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -36,7 +36,7 @@ msgstr ""
 "<b>Ctrl</b>: κάνε κύκλο ή ακέραιας αναλογίας έλλειψη, snap γωνία τόξου/"
 "τμήματος"
 
-#: ../src/arc-context.cpp:340 ../src/rect-context.cpp:383
+#: ../src/arc-context.cpp:340 ../src/rect-context.cpp:385
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Shift</b>: ζωγράφισε γύρω από το σημείο εκκίνησης"
 
@@ -63,50 +63,69 @@ msgstr ""
 msgid "Create ellipse"
 msgstr "Νέα Έλλειψη"
 
-#: ../src/connector-context.cpp:520
+#: ../src/box3d-context.cpp:480 ../src/box3d-context.cpp:487
+#: ../src/box3d-context.cpp:494 ../src/box3d-context.cpp:501
+#: ../src/box3d-context.cpp:508 ../src/box3d-context.cpp:515
+#, fuzzy
+msgid "Change perspective (angle of PLs)"
+msgstr "Ψάξε ορθογώνια"
+
+#. status text
+#. GString *Ax = SP_PX_TO_METRIC_STRING(origin[NR::X], desktop->namedview->getDefaultMetric());
+#. GString *Ay = SP_PX_TO_METRIC_STRING(origin[NR::Y], desktop->namedview->getDefaultMetric());
+#: ../src/box3d-context.cpp:730
+msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
+msgstr ""
+
+#: ../src/box3d-context.cpp:757
+#, fuzzy
+msgid "Create 3D box"
+msgstr "Νέα Προβολή"
+
+#: ../src/connector-context.cpp:522
 msgid "Creating new connector"
 msgstr "Δημιουργώ νέα σύνδεση"
 
-#: ../src/connector-context.cpp:749
+#: ../src/connector-context.cpp:751
 msgid "Connector endpoint drag cancelled."
 msgstr ""
 
-#: ../src/connector-context.cpp:797
+#: ../src/connector-context.cpp:799
 #, fuzzy
 msgid "Reroute connector"
 msgstr "Έγγραφο"
 
 #. Flush pending updates
-#: ../src/connector-context.cpp:962
+#: ../src/connector-context.cpp:964
 #, fuzzy
 msgid "Create connector"
 msgstr "Έγγραφο"
 
-#: ../src/connector-context.cpp:986
+#: ../src/connector-context.cpp:988
 msgid "Finishing connector"
 msgstr "Ολοκληρώνω τη σύνδεση"
 
-#: ../src/connector-context.cpp:1130
+#: ../src/connector-context.cpp:1132
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr ""
 "<b>Σημείο σύνδεσης</b>: κάνε κλίκ ή σύρε γα να δημιουργήσεις νέο σύνδεσμο"
 
-#: ../src/connector-context.cpp:1203
+#: ../src/connector-context.cpp:1205
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 "<b>Τελικό σημείο σύνδεσης</b>: σύρε για επανασύνδεση ή για να συνδέσεις σε "
 "νέα σχήματα"
 
-#: ../src/connector-context.cpp:1314
+#: ../src/connector-context.cpp:1316
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Επέλεξε <b>τουλάχιστο ένα αντικείμενο που δεν είναι σύνδεσμος</b>."
 
-#: ../src/connector-context.cpp:1319 ../src/widgets/toolbox.cpp:5036
+#: ../src/connector-context.cpp:1321 ../src/widgets/toolbox.cpp:5084
 #, fuzzy
 msgid "Make connectors avoid selected objects"
 msgstr "Διαγραφή επιλογής"
 
-#: ../src/connector-context.cpp:1320 ../src/widgets/toolbox.cpp:5046
+#: ../src/connector-context.cpp:1322 ../src/widgets/toolbox.cpp:5094
 #, fuzzy
 msgid "Make connectors ignore selected objects"
 msgstr "Διαγραφή επιλογής"
@@ -128,22 +147,28 @@ msgstr ""
 msgid "Create guide"
 msgstr "Νέα Έλλειψη"
 
-#: ../src/desktop-events.cpp:233
-#, fuzzy
-msgid "Move guide"
-msgstr "Επεξεργασία Φακέλων"
-
 #
-#: ../src/desktop-events.cpp:239 ../src/dialogs/guidelinedialog.cpp:127
+#: ../src/desktop-events.cpp:195 ../src/desktop-events.cpp:246
+#: ../src/dialogs/guidelinedialog.cpp:127
 #, fuzzy
 msgid "Delete guide"
 msgstr "Διαγραφή"
 
-#: ../src/desktop.cpp:724
+#: ../src/desktop-events.cpp:240
+#, fuzzy
+msgid "Move guide"
+msgstr "Επεξεργασία Φακέλων"
+
+#: ../src/desktop-events.cpp:261
+#, fuzzy, c-format
+msgid "<b>Guideline</b>: %s"
+msgstr "Επιλογή χρώματος"
+
+#: ../src/desktop.cpp:734
 msgid "No previous zoom."
 msgstr "Όχι προηγούμενη εστίαση."
 
-#: ../src/desktop.cpp:749
+#: ../src/desktop.cpp:759
 msgid "No next zoom."
 msgstr "Όχι επόμενη εστίαση."
 
@@ -186,7 +211,7 @@ msgid "Delete tiled clones"
 msgstr "Διαγραφή επιλογής"
 
 #
-#: ../src/dialogs/clonetiler.cpp:1106 ../src/selection-chemistry.cpp:2199
+#: ../src/dialogs/clonetiler.cpp:1106 ../src/selection-chemistry.cpp:2248
 msgid "Select an <b>object</b> to clone."
 msgstr "Επέλεξε ένα <b>αντικείμενο</b> για κλωνοποίηση."
 
@@ -707,6 +732,7 @@ msgstr "1. Επέλεξε από το σχέδιο:"
 #: ../share/extensions/color_morelight.inx.h:1
 #: ../share/extensions/color_moresaturation.inx.h:1
 #: ../share/extensions/color_negative.inx.h:1
+#: ../share/extensions/color_randomize.inx.h:1
 #: ../share/extensions/color_removeblue.inx.h:1
 #: ../share/extensions/color_removegreen.inx.h:1
 #: ../share/extensions/color_removered.inx.h:1
@@ -723,8 +749,8 @@ msgstr "Επέλεξε το ορατό χρώμα και την διαφάνει
 #: ../src/dialogs/clonetiler.cpp:2599 ../src/dialogs/clonetiler.cpp:2748
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/extension/internal/bitmap/opacity.cpp:39
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2010
-#: ../src/widgets/toolbox.cpp:3177
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2144
+#: ../src/widgets/toolbox.cpp:3185
 msgid "Opacity"
 msgstr "Διαφάνεια"
 
@@ -836,7 +862,7 @@ msgstr ""
 "επιλεγμένη τιμή σε εκείνο το σημείο"
 
 #: ../src/dialogs/clonetiler.cpp:2728
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1987
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2121
 msgid "Size"
 msgstr "Μέγεθος"
 
@@ -1020,9 +1046,9 @@ msgid "x_1:"
 msgstr "x_1:"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:319 ../src/dialogs/object-attributes.cpp:55
-#: ../src/dialogs/stroke-style.cpp:1090 ../src/widgets/toolbox.cpp:3017
-#: ../src/widgets/toolbox.cpp:3322
+#: ../src/dialogs/export.cpp:319 ../src/dialogs/object-attributes.cpp:59
+#: ../src/dialogs/stroke-style.cpp:1090 ../src/widgets/toolbox.cpp:3025
+#: ../src/widgets/toolbox.cpp:3330
 msgid "Width:"
 msgstr "Πλάτος:"
 
@@ -1036,7 +1062,7 @@ msgid "y_1:"
 msgstr "y_1:"
 
 #: ../src/dialogs/export.cpp:335 ../src/dialogs/export.cpp:495
-#: ../src/dialogs/object-attributes.cpp:56
+#: ../src/dialogs/object-attributes.cpp:60
 msgid "Height:"
 msgstr "Ύψος:"
 
@@ -1173,7 +1199,7 @@ msgstr "Σχέδιο"
 #: ../src/dialogs/fill-style.cpp:528 ../src/ui/widget/selected-style.cpp:189
 #: ../src/ui/widget/selected-style.cpp:247
 #: ../src/ui/widget/selected-style.cpp:492
-#: ../src/ui/widget/style-swatch.cpp:330
+#: ../src/ui/widget/style-swatch.cpp:333
 #, fuzzy
 msgid "Unset fill"
 msgstr "_Αρχείο"
@@ -1402,22 +1428,22 @@ msgstr ""
 
 #: ../src/dialogs/guidelinedialog.cpp:44
 #, fuzzy
-msgid "Measure unit:"
-msgstr "Διαγρ."
+msgid "Unit:"
+msgstr "Μονάδες:"
 
 #: ../src/dialogs/guidelinedialog.cpp:45
-#: ../src/dialogs/object-attributes.cpp:53 ../src/widgets/toolbox.cpp:1108
+#: ../src/dialogs/object-attributes.cpp:57 ../src/widgets/toolbox.cpp:1113
 msgid "X:"
 msgstr "Χ:"
 
 #: ../src/dialogs/guidelinedialog.cpp:46
-#: ../src/dialogs/object-attributes.cpp:54 ../src/widgets/toolbox.cpp:1126
+#: ../src/dialogs/object-attributes.cpp:58 ../src/widgets/toolbox.cpp:1131
 msgid "Y:"
 msgstr "Υ:"
 
 #: ../src/dialogs/guidelinedialog.cpp:47
 #, fuzzy
-msgid "Degrees:"
+msgid "Angle (degrees):"
 msgstr "dec"
 
 #: ../src/dialogs/guidelinedialog.cpp:48
@@ -1426,7 +1452,7 @@ msgid "Rela_tive change"
 msgstr "κάθετο"
 
 #: ../src/dialogs/guidelinedialog.cpp:48
-msgid "Move and rotate guide relative to current settings"
+msgid "Move and/or rotate the guide relative to current settings"
 msgstr ""
 
 #: ../src/dialogs/guidelinedialog.cpp:114
@@ -1441,12 +1467,12 @@ msgstr "Επιλογή χρώματος"
 
 #: ../src/dialogs/guidelinedialog.cpp:241
 #, fuzzy, c-format
-msgid "Guideline: %s"
+msgid "Guideline ID: %s"
 msgstr "Επιλογή χρώματος"
 
 #: ../src/dialogs/guidelinedialog.cpp:247
 #, fuzzy, c-format
-msgid "Current settings: %s"
+msgid "Current: %s"
 msgstr "Ρυθμίσεις επιφάνειας εργασίας"
 
 #: ../src/dialogs/iconpreview.cpp:139
@@ -1457,7 +1483,7 @@ msgstr ""
 #: ../src/dialogs/iconpreview.cpp:187
 #: ../src/ui/dialog/align-and-distribute.cpp:909
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1431
-#: ../src/widgets/desktop-widget.cpp:1492
+#: ../src/widgets/desktop-widget.cpp:1535
 msgid "Selection"
 msgstr "Επιλογή"
 
@@ -1504,13 +1530,13 @@ msgstr ""
 
 #
 #. Create the label for the object title
-#: ../src/dialogs/item-properties.cpp:173 ../src/dialogs/rdf.cpp:239
+#: ../src/dialogs/item-properties.cpp:173 ../src/dialogs/rdf.cpp:238
 #, fuzzy
 msgid "Title"
 msgstr "Αρχείο"
 
 #. Create the frame for the object description
-#: ../src/dialogs/item-properties.cpp:190 ../src/dialogs/rdf.cpp:283
+#: ../src/dialogs/item-properties.cpp:190 ../src/dialogs/rdf.cpp:282
 #: ../src/ui/widget/page-sizer.cpp:197
 #, fuzzy
 msgid "Description"
@@ -1592,24 +1618,24 @@ msgstr "Ρυθμίσεις επιφάνειας εργασίας"
 msgid "Set object description"
 msgstr "Θέση"
 
-#: ../src/dialogs/layers-panel.cpp:579 ../src/widgets/layer-selector.cpp:593
+#: ../src/dialogs/layers-panel.cpp:579 ../src/widgets/layer-selector.cpp:595
 #, fuzzy
 msgid "Unhide layer"
 msgstr "Αρχικοποίηση"
 
-#: ../src/dialogs/layers-panel.cpp:579 ../src/widgets/layer-selector.cpp:593
+#: ../src/dialogs/layers-panel.cpp:579 ../src/widgets/layer-selector.cpp:595
 #, fuzzy
 msgid "Hide layer"
 msgstr "Αρχικοποίηση"
 
 #
-#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:585
+#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:587
 #, fuzzy
 msgid "Lock layer"
 msgstr "Επιλογή"
 
 #
-#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:585
+#: ../src/dialogs/layers-panel.cpp:590 ../src/widgets/layer-selector.cpp:587
 #, fuzzy
 msgid "Unlock layer"
 msgstr "Επιλογή"
@@ -1707,194 +1733,194 @@ msgid "New layer created."
 msgstr ""
 
 #
-#: ../src/dialogs/object-attributes.cpp:34
+#: ../src/dialogs/object-attributes.cpp:38
 #, fuzzy
 msgid "Href:"
 msgstr "Απόχρωση:"
 
-#: ../src/dialogs/object-attributes.cpp:35
+#: ../src/dialogs/object-attributes.cpp:39
 #, fuzzy
 msgid "Target:"
 msgstr "μώβ"
 
-#: ../src/dialogs/object-attributes.cpp:36
+#: ../src/dialogs/object-attributes.cpp:40
 msgid "Type:"
 msgstr ""
 
 #
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkRoleAttribute
 #. Identifies the type of the related resource with an absolute URI
-#: ../src/dialogs/object-attributes.cpp:39
+#: ../src/dialogs/object-attributes.cpp:43
 #, fuzzy
 msgid "Role:"
 msgstr "Κόκκινο:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkArcRoleAttribute
 #. For situations where the nature/role alone isn't enough, this offers an additional URI defining the purpose of the link.
-#: ../src/dialogs/object-attributes.cpp:42
+#: ../src/dialogs/object-attributes.cpp:46
 msgid "Arcrole:"
 msgstr ""
 
 #
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkTitleAttribute
-#: ../src/dialogs/object-attributes.cpp:44
+#: ../src/dialogs/object-attributes.cpp:48
 #, fuzzy
 msgid "Title:"
 msgstr "Αρχείο"
 
-#: ../src/dialogs/object-attributes.cpp:45
+#: ../src/dialogs/object-attributes.cpp:49
 msgid "Show:"
 msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkActuateAttribute
-#: ../src/dialogs/object-attributes.cpp:47
+#: ../src/dialogs/object-attributes.cpp:51
 #, fuzzy
 msgid "Actuate:"
 msgstr "Ιδιότητα:"
 
-#: ../src/dialogs/object-attributes.cpp:52
+#: ../src/dialogs/object-attributes.cpp:56
 msgid "URL:"
 msgstr ""
 
-#: ../src/dialogs/object-attributes.cpp:100
+#: ../src/dialogs/object-attributes.cpp:104
 #, fuzzy, c-format
 msgid "%s Properties"
 msgstr " Ιδιότητες"
 
-#: ../src/dialogs/rdf.cpp:182
+#: ../src/dialogs/rdf.cpp:181
 msgid "CC Attribution"
 msgstr "CC Attribution"
 
-#: ../src/dialogs/rdf.cpp:187
+#: ../src/dialogs/rdf.cpp:186
 msgid "CC Attribution-ShareAlike"
 msgstr "CC Attribution-ShareAlike"
 
-#: ../src/dialogs/rdf.cpp:192
+#: ../src/dialogs/rdf.cpp:191
 msgid "CC Attribution-NoDerivs"
 msgstr "CC Attribution-NoDerivs"
 
-#: ../src/dialogs/rdf.cpp:197
+#: ../src/dialogs/rdf.cpp:196
 msgid "CC Attribution-NonCommercial"
 msgstr "CC Attribution-NonCommercial"
 
-#: ../src/dialogs/rdf.cpp:202
+#: ../src/dialogs/rdf.cpp:201
 msgid "CC Attribution-NonCommercial-ShareAlike"
 msgstr "CC Attribution-NonCommercial-ShareAlike"
 
-#: ../src/dialogs/rdf.cpp:207
+#: ../src/dialogs/rdf.cpp:206
 msgid "CC Attribution-NonCommercial-NoDerivs"
 msgstr "CC Attribution-NonCommercial-NoDerivs"
 
-#: ../src/dialogs/rdf.cpp:212
+#: ../src/dialogs/rdf.cpp:211
 msgid "Public Domain"
 msgstr "Public Domain"
 
-#: ../src/dialogs/rdf.cpp:217
+#: ../src/dialogs/rdf.cpp:216
 msgid "FreeArt"
 msgstr "FreeArt"
 
-#: ../src/dialogs/rdf.cpp:222
+#: ../src/dialogs/rdf.cpp:221
 #, fuzzy
 msgid "Open Font License"
 msgstr "Άνοιγμα νέου παραθύρου"
 
-#: ../src/dialogs/rdf.cpp:240
+#: ../src/dialogs/rdf.cpp:239
 msgid "Name by which this document is formally known."
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:242
+#: ../src/dialogs/rdf.cpp:241
 msgid "Date"
 msgstr "Ημερομηνία"
 
-#: ../src/dialogs/rdf.cpp:243
+#: ../src/dialogs/rdf.cpp:242
 msgid "Date associated with the creation of this document (YYYY-MM-DD)."
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:245
+#: ../src/dialogs/rdf.cpp:244
 msgid "Format"
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:246
+#: ../src/dialogs/rdf.cpp:245
 msgid "The physical or digital manifestation of this document (MIME type)."
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:248 ../src/extension/internal/bitmap/addNoise.cpp:46
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1966
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2039
+#: ../src/dialogs/rdf.cpp:247 ../src/extension/internal/bitmap/addNoise.cpp:46
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2100
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2175
 msgid "Type"
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:249
+#: ../src/dialogs/rdf.cpp:248
 msgid "Type of document (DCMI Type)."
 msgstr ""
 
 #
-#: ../src/dialogs/rdf.cpp:252
+#: ../src/dialogs/rdf.cpp:251
 msgid "Creator"
 msgstr "Δημιουργός"
 
-#: ../src/dialogs/rdf.cpp:253
+#: ../src/dialogs/rdf.cpp:252
 msgid ""
 "Name of entity primarily responsible for making the content of this document."
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:255
+#: ../src/dialogs/rdf.cpp:254
 msgid "Rights"
 msgstr "Δκαιώματα"
 
-#: ../src/dialogs/rdf.cpp:256
+#: ../src/dialogs/rdf.cpp:255
 msgid ""
 "Name of entity with rights to the Intellectual Property of this document."
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:258
+#: ../src/dialogs/rdf.cpp:257
 msgid "Publisher"
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:259
+#: ../src/dialogs/rdf.cpp:258
 msgid "Name of entity responsible for making this document available."
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:262
+#: ../src/dialogs/rdf.cpp:261
 #, fuzzy
 msgid "Identifier"
 msgstr "Κέντρο"
 
-#: ../src/dialogs/rdf.cpp:263
+#: ../src/dialogs/rdf.cpp:262
 msgid "Unique URI to reference this document."
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:265 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1455
+#: ../src/dialogs/rdf.cpp:264 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1455
 msgid "Source"
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:266
+#: ../src/dialogs/rdf.cpp:265
 msgid "Unique URI to reference the source of this document."
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:268
+#: ../src/dialogs/rdf.cpp:267
 msgid "Relation"
 msgstr "Σχέση"
 
-#: ../src/dialogs/rdf.cpp:269
+#: ../src/dialogs/rdf.cpp:268
 msgid "Unique URI to a related document."
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:271
+#: ../src/dialogs/rdf.cpp:270
 msgid "Language"
 msgstr "Γλώσσα"
 
-#: ../src/dialogs/rdf.cpp:272
+#: ../src/dialogs/rdf.cpp:271
 msgid ""
 "Two-letter language tag with optional subtags for the language of this "
 "document.  (e.g. 'en-GB')"
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:274
+#: ../src/dialogs/rdf.cpp:273
 msgid "Keywords"
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:275
+#: ../src/dialogs/rdf.cpp:274
 msgid ""
 "The topic of this document as comma-separated key words, phrases, or "
 "classifications."
@@ -1902,46 +1928,46 @@ msgstr ""
 
 #. TRANSLATORS: "Coverage": the spatial or temporal characteristics of the content.
 #. For info, see Appendix D of http://www.w3.org/TR/1998/WD-rdf-schema-19980409/
-#: ../src/dialogs/rdf.cpp:279
+#: ../src/dialogs/rdf.cpp:278
 msgid "Coverage"
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:280
+#: ../src/dialogs/rdf.cpp:279
 msgid "Extent or scope of this document."
 msgstr ""
 
-#: ../src/dialogs/rdf.cpp:284
+#: ../src/dialogs/rdf.cpp:283
 msgid "A short account of the content of this document."
 msgstr ""
 
 #. FIXME: need to handle 1 agent per line of input
-#: ../src/dialogs/rdf.cpp:288
+#: ../src/dialogs/rdf.cpp:287
 msgid "Contributors"
 msgstr "Συνεισφέροντες"
 
-#: ../src/dialogs/rdf.cpp:289
+#: ../src/dialogs/rdf.cpp:288
 msgid ""
 "Names of entities responsible for making contributions to the content of "
 "this document."
 msgstr ""
 
 #. TRANSLATORS: URL to a page that defines the license for the document
-#: ../src/dialogs/rdf.cpp:293
+#: ../src/dialogs/rdf.cpp:292
 msgid "URI"
 msgstr ""
 
 #. TRANSLATORS: this is where you put a URL to a page that defines the license
-#: ../src/dialogs/rdf.cpp:295
+#: ../src/dialogs/rdf.cpp:294
 msgid "URI to this document's license's namespace definition."
 msgstr ""
 
 #. TRANSLATORS: fragment of XML representing the license of the document
-#: ../src/dialogs/rdf.cpp:299
+#: ../src/dialogs/rdf.cpp:298
 #, fuzzy
 msgid "Fragment"
 msgstr "μώβ"
 
-#: ../src/dialogs/rdf.cpp:300
+#: ../src/dialogs/rdf.cpp:299
 msgid "XML fragment for the RDF 'License' section."
 msgstr ""
 
@@ -1978,7 +2004,7 @@ msgstr "Σχέδιο"
 #: ../src/dialogs/stroke-style.cpp:481 ../src/ui/widget/selected-style.cpp:189
 #: ../src/ui/widget/selected-style.cpp:247
 #: ../src/ui/widget/selected-style.cpp:508
-#: ../src/ui/widget/style-swatch.cpp:330
+#: ../src/ui/widget/style-swatch.cpp:333
 #, fuzzy
 msgid "Unset stroke"
 msgstr "ε χρήση"
@@ -1986,17 +2012,17 @@ msgstr "ε χρήση"
 #
 #: ../src/dialogs/stroke-style.cpp:793 ../src/filter-enums.cpp:94
 #: ../src/flood-context.cpp:264 ../src/interface.cpp:829
-#: ../src/ui/dialog/filter-effects-dialog.cpp:456
+#: ../src/ui/dialog/filter-effects-dialog.cpp:460
 #: ../src/ui/dialog/inkscape-preferences.cpp:207
 #: ../src/ui/dialog/inkscape-preferences.cpp:368
 #: ../src/ui/dialog/inkscape-preferences.cpp:469
-#: ../src/ui/dialog/inkscape-preferences.cpp:888 ../src/verbs.cpp:2119
+#: ../src/ui/dialog/inkscape-preferences.cpp:891 ../src/verbs.cpp:2119
 msgid "None"
 msgstr "Κανένα"
 
 #
 #: ../src/dialogs/stroke-style.cpp:848 ../src/widgets/gradient-vector.cpp:264
-#: ../src/widgets/paint-selector.cpp:881
+#: ../src/widgets/paint-selector.cpp:882
 msgid "No document selected"
 msgstr "Κανένα έγγραφο δεν επιλέχθηκε"
 
@@ -2151,11 +2177,11 @@ msgstr "Στοίχιση γραμμών δεξιά"
 msgid "Justify lines"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:302 ../src/widgets/toolbox.cpp:4839
+#: ../src/dialogs/text-edit.cpp:302 ../src/widgets/toolbox.cpp:4887
 msgid "Horizontal text"
 msgstr "Οριζόντιο κείμενο"
 
-#: ../src/dialogs/text-edit.cpp:316 ../src/widgets/toolbox.cpp:4850
+#: ../src/dialogs/text-edit.cpp:316 ../src/widgets/toolbox.cpp:4898
 msgid "Vertical text"
 msgstr "Κατακόρυφες κείμενο"
 
@@ -2169,6 +2195,7 @@ msgstr "Διάστιχο:"
 #: ../src/dialogs/text-edit.cpp:377 ../src/selection-describer.cpp:66
 #: ../src/ui/dialog/inkscape-preferences.cpp:439
 #: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2390
+#: ../share/extensions/lorem_ipsum.inx.h:5
 #: ../share/extensions/text_flipcase.inx.h:1
 #: ../share/extensions/text_lowercase.inx.h:1
 #: ../share/extensions/text_uppercase.inx.h:1
@@ -2256,6 +2283,12 @@ msgstr "Κατακόρυφες Ρίγες"
 msgid "Horizontal spacing between columns (px units)"
 msgstr "οριζόντιο"
 
+#. ## The OK button
+#: ../src/dialogs/tiledialog.cpp:865
+#, fuzzy
+msgid "Arrange"
+msgstr "Διάστημα"
+
 #
 #: ../src/dialogs/tiledialog.cpp:866
 #, fuzzy
@@ -2291,14 +2324,14 @@ msgid "New text node"
 msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:347 ../src/dialogs/xml-tree.cpp:1414
-#: ../src/nodepath.cpp:1878
+#: ../src/nodepath.cpp:1880
 #, fuzzy
 msgid "Duplicate node"
 msgstr "Δημιουργία αντιγράφου"
 
 #
 #: ../src/dialogs/xml-tree.cpp:368 ../src/dialogs/xml-tree.cpp:1431
-#: ../src/nodepath.cpp:3120 ../src/widgets/toolbox.cpp:981
+#: ../src/nodepath.cpp:3122 ../src/widgets/toolbox.cpp:986
 #, fuzzy
 msgid "Delete node"
 msgstr "Διαγραφή"
@@ -2424,127 +2457,127 @@ msgid ""
 "to invisible grids."
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:655
+#: ../src/display/canvas-grid.cpp:661
 #, fuzzy
 msgid "Grid line _color:"
 msgstr "Επιλογή χρώματος"
 
-#: ../src/display/canvas-grid.cpp:655
-#: ../src/ui/dialog/inkscape-preferences.cpp:843
-#: ../src/ui/dialog/inkscape-preferences.cpp:844
-#: ../src/ui/dialog/inkscape-preferences.cpp:865
-#: ../src/ui/dialog/inkscape-preferences.cpp:866
+#: ../src/display/canvas-grid.cpp:661
+#: ../src/ui/dialog/inkscape-preferences.cpp:846
+#: ../src/ui/dialog/inkscape-preferences.cpp:847
+#: ../src/ui/dialog/inkscape-preferences.cpp:868
+#: ../src/ui/dialog/inkscape-preferences.cpp:869
 #, fuzzy
 msgid "Grid line color"
 msgstr "Επιλογή χρώματος"
 
-#: ../src/display/canvas-grid.cpp:655
+#: ../src/display/canvas-grid.cpp:661
 #, fuzzy
 msgid "Color of grid lines"
 msgstr "Επιλογή χρώματος οθόνης για το Abiword"
 
-#: ../src/display/canvas-grid.cpp:660
+#: ../src/display/canvas-grid.cpp:666
 #, fuzzy
 msgid "Ma_jor grid line color:"
 msgstr "Επιλογή χρώματος"
 
-#: ../src/display/canvas-grid.cpp:660
-#: ../src/ui/dialog/inkscape-preferences.cpp:845
-#: ../src/ui/dialog/inkscape-preferences.cpp:846
-#: ../src/ui/dialog/inkscape-preferences.cpp:867
-#: ../src/ui/dialog/inkscape-preferences.cpp:868
+#: ../src/display/canvas-grid.cpp:666
+#: ../src/ui/dialog/inkscape-preferences.cpp:848
+#: ../src/ui/dialog/inkscape-preferences.cpp:849
+#: ../src/ui/dialog/inkscape-preferences.cpp:870
+#: ../src/ui/dialog/inkscape-preferences.cpp:871
 #, fuzzy
 msgid "Major grid line color"
 msgstr "Επιλογή χρώματος"
 
-#: ../src/display/canvas-grid.cpp:661
+#: ../src/display/canvas-grid.cpp:667
 msgid "Color of the major (highlighted) grid lines"
 msgstr ""
 
 #
-#: ../src/display/canvas-grid.cpp:671
+#: ../src/display/canvas-grid.cpp:677
 #, fuzzy
 msgid "Grid _units:"
 msgstr "Γραμματοσειρά Πλέγματος"
 
-#: ../src/display/canvas-grid.cpp:672
+#: ../src/display/canvas-grid.cpp:678
 #, fuzzy
 msgid "_Origin X:"
 msgstr "Προέλευση:"
 
-#: ../src/display/canvas-grid.cpp:672
-#: ../src/ui/dialog/inkscape-preferences.cpp:836
-#: ../src/ui/dialog/inkscape-preferences.cpp:857
+#: ../src/display/canvas-grid.cpp:678
+#: ../src/ui/dialog/inkscape-preferences.cpp:839
+#: ../src/ui/dialog/inkscape-preferences.cpp:860
 #, fuzzy
 msgid "X coordinate of grid origin"
 msgstr "Επιλογή χρώματος οθόνης για το Abiword"
 
-#: ../src/display/canvas-grid.cpp:677
+#: ../src/display/canvas-grid.cpp:683
 #, fuzzy
 msgid "O_rigin Y:"
 msgstr "Προέλευση:"
 
-#: ../src/display/canvas-grid.cpp:677
-#: ../src/ui/dialog/inkscape-preferences.cpp:837
-#: ../src/ui/dialog/inkscape-preferences.cpp:858
+#: ../src/display/canvas-grid.cpp:683
+#: ../src/ui/dialog/inkscape-preferences.cpp:840
+#: ../src/ui/dialog/inkscape-preferences.cpp:861
 #, fuzzy
 msgid "Y coordinate of grid origin"
 msgstr "Επιλογή χρώματος οθόνης για το Abiword"
 
 #
-#: ../src/display/canvas-grid.cpp:682
+#: ../src/display/canvas-grid.cpp:688
 #, fuzzy
 msgid "Spacing _X:"
 msgstr "Διάστιχο:"
 
-#: ../src/display/canvas-grid.cpp:682
-#: ../src/ui/dialog/inkscape-preferences.cpp:840
+#: ../src/display/canvas-grid.cpp:688
+#: ../src/ui/dialog/inkscape-preferences.cpp:843
 #, fuzzy
 msgid "Distance between vertical grid lines"
 msgstr "η απόσταση μεταξύ των %1 και %2"
 
 #
-#: ../src/display/canvas-grid.cpp:687
+#: ../src/display/canvas-grid.cpp:693
 #, fuzzy
 msgid "Spacing _Y:"
 msgstr "Διάστιχο:"
 
-#: ../src/display/canvas-grid.cpp:687
-#: ../src/ui/dialog/inkscape-preferences.cpp:841
+#: ../src/display/canvas-grid.cpp:693
+#: ../src/ui/dialog/inkscape-preferences.cpp:844
 #, fuzzy
 msgid "Distance between horizontal grid lines"
 msgstr "η απόσταση μεταξύ των %1 και %2"
 
-#: ../src/display/canvas-grid.cpp:693
+#: ../src/display/canvas-grid.cpp:699
 #, fuzzy
 msgid "_Major grid line every:"
 msgstr "Επιλογή χρώματος"
 
-#: ../src/display/canvas-grid.cpp:693
+#: ../src/display/canvas-grid.cpp:699
 #, fuzzy
 msgid "lines"
 msgstr "Νέα Προβολή"
 
-#: ../src/display/canvas-grid.cpp:696
+#: ../src/display/canvas-grid.cpp:702
 msgid "_Show dots instead of lines"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:697
-#: ../src/ui/dialog/inkscape-preferences.cpp:850
+#: ../src/display/canvas-grid.cpp:703
+#: ../src/ui/dialog/inkscape-preferences.cpp:853
 msgid "If set, displays dots at gridpoints instead of gridlines"
 msgstr ""
 
-#: ../src/document.cpp:411
+#: ../src/document.cpp:413
 #, fuzzy, c-format
 msgid "New document %d"
 msgstr "Έγγραφο"
 
-#: ../src/document.cpp:443
+#: ../src/document.cpp:445
 #, c-format
 msgid "Memory document %d"
 msgstr ""
 
-#: ../src/document.cpp:583
+#: ../src/document.cpp:585
 #, c-format
 msgid "Unnamed document %d"
 msgstr ""
@@ -2578,6 +2611,7 @@ msgid ", averaged with radius %d"
 msgstr ""
 
 #: ../src/dropper-context.cpp:355
+#, c-format
 msgid " under cursor"
 msgstr ""
 
@@ -2586,7 +2620,7 @@ msgstr ""
 msgid "<b>Release mouse</b> to set color."
 msgstr ""
 
-#: ../src/dropper-context.cpp:357 ../src/tools-switch.cpp:223
+#: ../src/dropper-context.cpp:357 ../src/tools-switch.cpp:226
 msgid ""
 "<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to "
 "average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> "
@@ -2599,34 +2633,34 @@ msgstr ""
 msgid "Set picked color"
 msgstr "Επιλέχθησαν \"%s\""
 
-#: ../src/dyna-draw-context.cpp:700
+#: ../src/dyna-draw-context.cpp:701
 msgid ""
 "<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"
 msgstr ""
 
-#: ../src/dyna-draw-context.cpp:702
+#: ../src/dyna-draw-context.cpp:703
 msgid "<b>Select a guide path</b> to track with <b>Ctrl</b>"
 msgstr ""
 
-#: ../src/dyna-draw-context.cpp:807
+#: ../src/dyna-draw-context.cpp:808
 msgid "Tracking: <b>connection to guide path lost!</b>"
 msgstr ""
 
-#: ../src/dyna-draw-context.cpp:807
+#: ../src/dyna-draw-context.cpp:808
 msgid "<b>Tracking</b> a guide path"
 msgstr ""
 
-#: ../src/dyna-draw-context.cpp:810
+#: ../src/dyna-draw-context.cpp:811
 #, fuzzy
 msgid "<b>Drawing</b> a calligraphic stroke"
 msgstr "Νέα Έλλειψη"
 
-#: ../src/dyna-draw-context.cpp:1091
+#: ../src/dyna-draw-context.cpp:1092
 #, fuzzy
 msgid "Draw calligraphic stroke"
 msgstr "Νέα Έλλειψη"
 
-#: ../src/event-context.cpp:592
+#: ../src/event-context.cpp:595
 msgid "<b>Space+mouse drag</b> to pan canvas"
 msgstr ""
 
@@ -2794,7 +2828,7 @@ msgstr ""
 #: ../src/extension/internal/bitmap/sample.cpp:40
 #: ../src/extension/internal/bluredge.cpp:134
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:64
-#: ../src/widgets/toolbox.cpp:2240 ../src/widgets/toolbox.cpp:3017
+#: ../src/widgets/toolbox.cpp:2248 ../src/widgets/toolbox.cpp:3025
 #, fuzzy
 msgid "Width"
 msgstr "Πλάτος:"
@@ -2802,7 +2836,7 @@ msgstr "Πλάτος:"
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:41
 #: ../src/extension/internal/bitmap/raise.cpp:42
 #: ../src/extension/internal/bitmap/sample.cpp:41
-#: ../src/widgets/toolbox.cpp:2257
+#: ../src/widgets/toolbox.cpp:2265
 #, fuzzy
 msgid "Height"
 msgstr "Ύψος:"
@@ -2903,7 +2937,7 @@ msgstr "Μπλε:"
 #: ../src/extension/internal/bitmap/oilPaint.cpp:38
 #: ../src/extension/internal/bitmap/sharpen.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2017
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2151
 #, fuzzy
 msgid "Radius"
 msgstr "Αρχικοποίηση"
@@ -3182,7 +3216,8 @@ msgstr "Ύψος"
 #: ../src/extension/internal/bitmap/modulate.cpp:42
 #: ../src/flood-context.cpp:254 ../src/ui/dialog/inkscape-preferences.cpp:701
 #: ../src/widgets/sp-color-scales.cpp:428
-#: ../src/widgets/sp-color-scales.cpp:429 ../src/widgets/toolbox.cpp:3149
+#: ../src/widgets/sp-color-scales.cpp:429 ../src/widgets/toolbox.cpp:3157
+#: ../share/extensions/color_randomize.inx.h:5
 #, fuzzy
 msgid "Saturation"
 msgstr "Κορεσμός:"
@@ -3190,7 +3225,8 @@ msgstr "Κορεσμός:"
 #
 #: ../src/extension/internal/bitmap/modulate.cpp:43
 #: ../src/flood-context.cpp:253 ../src/widgets/sp-color-scales.cpp:425
-#: ../src/widgets/sp-color-scales.cpp:426 ../src/widgets/toolbox.cpp:3135
+#: ../src/widgets/sp-color-scales.cpp:426 ../src/widgets/toolbox.cpp:3143
+#: ../share/extensions/color_randomize.inx.h:2
 #, fuzzy
 msgid "Hue"
 msgstr "Απόχρωση:"
@@ -3232,7 +3268,7 @@ msgid "Modify opacity channel(s) of selected bitmap(s)."
 msgstr ""
 
 #: ../src/extension/internal/bitmap/raise.cpp:39
-#: ../src/selection-chemistry.cpp:687
+#: ../src/selection-chemistry.cpp:691
 #, fuzzy
 msgid "Raise"
 msgstr "Αρχικοποίηση"
@@ -3278,12 +3314,12 @@ msgid "Shade"
 msgstr "Σκίαση"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/ui/dialog/filter-effects-dialog.cpp:780
+#: ../src/ui/dialog/filter-effects-dialog.cpp:914
 msgid "Azimuth"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:781
+#: ../src/ui/dialog/filter-effects-dialog.cpp:915
 #, fuzzy
 msgid "Elevation"
 msgstr "Σχέση"
@@ -3402,6 +3438,12 @@ msgstr ""
 msgid "Generate from Path"
 msgstr "Μετασχηματισμός"
 
+#
+#: ../src/extension/internal/cairo-pdf-out.cpp:171
+#, fuzzy
+msgid "Cairo PDF Output"
+msgstr "Αποκοπή"
+
 #: ../src/extension/internal/cairo-pdf-out.cpp:173
 msgid "Restrict to PDF version"
 msgstr ""
@@ -3428,9 +3470,18 @@ msgid "Convert blur effects to bitmaps"
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #: ../src/extension/internal/cairo-pdf-out.cpp:178
-#: ../src/extension/internal/cairo-ps-out.cpp:232
 msgid "Preferred resolution (DPI) of bitmaps"
 msgstr ""
+
+#: ../src/extension/internal/cairo-pdf-out.cpp:182
+msgid "PDF via Cairo (*.pdf)"
+msgstr ""
+
+#
+#: ../src/extension/internal/cairo-pdf-out.cpp:183
+#, fuzzy
+msgid "PDF File"
+msgstr "_Αρχείο"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:224
 msgid "Restrict to PS level"
@@ -3438,12 +3489,27 @@ msgstr ""
 
 #: ../src/extension/internal/cairo-ps-out.cpp:225
 #, fuzzy
-msgid "PostScript 3"
+msgid "PostScript level 3"
 msgstr "Σημείο"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:227
 #, fuzzy
 msgid "PostScript level 2"
+msgstr "Σημείο"
+
+#: ../src/extension/internal/cairo-ps-out.cpp:232
+msgid "Preferred resolution (dpi) of bitmaps"
+msgstr ""
+
+#: ../src/extension/internal/cairo-ps-out.cpp:236
+#, fuzzy
+msgid "PostScript via Cairo (*.ps)"
+msgstr "Σημείο"
+
+#: ../src/extension/internal/cairo-ps-out.cpp:237
+#: ../src/extension/internal/ps-out.cpp:90
+#, fuzzy
+msgid "PostScript File"
 msgstr "Σημείο"
 
 #
@@ -3564,7 +3630,6 @@ msgstr "Κατακόρυφες Ρίγες"
 #: ../src/extension/internal/grid.cpp:202 ../share/extensions/eqtexsvg.inx.h:3
 #: ../share/extensions/funcplot.inx.h:12 ../share/extensions/gears.inx.h:5
 #: ../share/extensions/lindenmayer.inx.h:9
-#: ../share/extensions/lorem_ipsum.inx.h:4
 #: ../share/extensions/render_barcode.inx.h:5
 #: ../share/extensions/rtree.inx.h:4 ../share/extensions/spirograph.inx.h:6
 #, fuzzy
@@ -3780,6 +3845,34 @@ msgid "very fine"
 msgstr "_Αρχείο"
 
 #
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:728
+#, fuzzy
+msgid "PDF Input"
+msgstr "Αποκοπή"
+
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:733
+msgid "Adobe PDF (*.pdf)"
+msgstr ""
+
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:734
+msgid "Adobe Portable Document Format"
+msgstr ""
+
+#
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:741
+#, fuzzy
+msgid "AI Input"
+msgstr "Αποκοπή"
+
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:746
+msgid "Adobe Illustrator 9.0 and above (*.ai)"
+msgstr ""
+
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:747
+msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
+msgstr ""
+
+#
 #: ../src/extension/internal/pov-out.cpp:683
 #, fuzzy
 msgid "PovRay Output"
@@ -3823,11 +3916,6 @@ msgstr "Σημείο"
 #: ../src/extension/internal/ps-out.cpp:89
 #, fuzzy
 msgid "PostScript (*.ps)"
-msgstr "Σημείο"
-
-#: ../src/extension/internal/ps-out.cpp:90
-#, fuzzy
-msgid "PostScript File"
 msgstr "Σημείο"
 
 #
@@ -3928,23 +4016,12 @@ msgstr ""
 msgid "Vector graphics format used by Corel WordPerfect"
 msgstr ""
 
-#: ../src/extension/prefdialog.cpp:230
-#, fuzzy
-msgid "Pin Dialog"
-msgstr "Κατακόρυ_φη Στοίχιση"
-
-#: ../src/extension/prefdialog.cpp:230
-msgid ""
-"Toggles whether the dialog stays for multiple executions or disappears after "
-"one"
-msgstr ""
-
-#: ../src/extension/prefdialog.cpp:231
+#: ../src/extension/prefdialog.cpp:188
 #, fuzzy
 msgid "Live Preview"
 msgstr "Χρήση Προεπισκόπησης"
 
-#: ../src/extension/prefdialog.cpp:231
+#: ../src/extension/prefdialog.cpp:188
 msgid "Controls whether the effect settings are rendered live on canvas"
 msgstr ""
 
@@ -4078,6 +4155,7 @@ msgid "Select file to export to"
 msgstr "Επιλογή αρχείου για φόρτωση"
 
 #: ../src/file.cpp:1245
+#, c-format
 msgid "Error saving a temporary copy"
 msgstr ""
 
@@ -4086,6 +4164,7 @@ msgid "Open Clip Art Login"
 msgstr ""
 
 #: ../src/file.cpp:1285
+#, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
 "password are correct. If the server have support for webdav and verify if "
@@ -4301,7 +4380,7 @@ msgstr "Σύνδεση"
 msgid "Gamma"
 msgstr ""
 
-#: ../src/filter-enums.cpp:92 ../src/selection-chemistry.cpp:297
+#: ../src/filter-enums.cpp:92 ../src/selection-chemistry.cpp:301
 #: ../src/widgets/gradient-selector.cpp:134
 #, fuzzy
 msgid "Duplicate"
@@ -4378,7 +4457,8 @@ msgid "Visible Colors"
 msgstr "Ορατό"
 
 #: ../src/flood-context.cpp:255 ../src/widgets/sp-color-scales.cpp:431
-#: ../src/widgets/sp-color-scales.cpp:432 ../src/widgets/toolbox.cpp:3163
+#: ../src/widgets/sp-color-scales.cpp:432 ../src/widgets/toolbox.cpp:3171
+#: ../share/extensions/color_randomize.inx.h:3
 #, fuzzy
 msgid "Lightness"
 msgstr "Ύψος"
@@ -4438,39 +4518,39 @@ msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
 msgstr ""
 
 #
-#: ../src/gradient-context.cpp:132 ../src/gradient-drag.cpp:73
+#: ../src/gradient-context.cpp:132 ../src/gradient-drag.cpp:75
 #, fuzzy
 msgid "Linear gradient <b>start</b>"
 msgstr "Προσθήκη νέου παροχέα"
 
 #
 #. POINT_LG_BEGIN
-#: ../src/gradient-context.cpp:133 ../src/gradient-drag.cpp:74
+#: ../src/gradient-context.cpp:133 ../src/gradient-drag.cpp:76
 #, fuzzy
 msgid "Linear gradient <b>end</b>"
 msgstr "Προσθήκη νέου παροχέα"
 
 #
-#: ../src/gradient-context.cpp:134 ../src/gradient-drag.cpp:75
+#: ../src/gradient-context.cpp:134 ../src/gradient-drag.cpp:77
 #, fuzzy
 msgid "Linear gradient <b>mid stop</b>"
 msgstr "Προσθήκη νέου παροχέα"
 
 #
-#: ../src/gradient-context.cpp:135 ../src/gradient-drag.cpp:76
+#: ../src/gradient-context.cpp:135 ../src/gradient-drag.cpp:78
 #, fuzzy
 msgid "Radial gradient <b>center</b>"
 msgstr "Προσθήκη νέου παροχέα"
 
 #
 #: ../src/gradient-context.cpp:136 ../src/gradient-context.cpp:137
-#: ../src/gradient-drag.cpp:77 ../src/gradient-drag.cpp:78
+#: ../src/gradient-drag.cpp:79 ../src/gradient-drag.cpp:80
 #, fuzzy
 msgid "Radial gradient <b>radius</b>"
 msgstr "Προσθήκη νέου παροχέα"
 
 #
-#: ../src/gradient-context.cpp:138 ../src/gradient-drag.cpp:79
+#: ../src/gradient-context.cpp:138 ../src/gradient-drag.cpp:81
 #, fuzzy
 msgid "Radial gradient <b>focus</b>"
 msgstr "Προσθήκη νέου παροχέα"
@@ -4478,15 +4558,17 @@ msgstr "Προσθήκη νέου παροχέα"
 #
 #. POINT_RG_FOCUS
 #: ../src/gradient-context.cpp:139 ../src/gradient-context.cpp:140
-#: ../src/gradient-drag.cpp:80 ../src/gradient-drag.cpp:81
+#: ../src/gradient-drag.cpp:82 ../src/gradient-drag.cpp:83
 #, fuzzy
 msgid "Radial gradient <b>mid stop</b>"
 msgstr "Προσθήκη νέου παροχέα"
 
 #: ../src/gradient-context.cpp:160
 #, c-format
-msgid "%s selected out of %d gradient handles on %d selected object(s)"
-msgstr ""
+msgid "%s selected out of %d gradient handles on %d selected object"
+msgid_plural "%s selected out of %d gradient handles on %d selected objects"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/gradient-context.cpp:163
 #, c-format
@@ -4555,22 +4637,22 @@ msgstr[1] ""
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/gradient-drag.cpp:595
+#: ../src/gradient-drag.cpp:597
 #, fuzzy
 msgid "Merge gradient handles"
 msgstr "Αρχικοποίηση"
 
-#: ../src/gradient-drag.cpp:904
+#: ../src/gradient-drag.cpp:906
 #, fuzzy
 msgid "Move gradient handle"
 msgstr "Αρχικοποίηση"
 
-#: ../src/gradient-drag.cpp:957 ../src/widgets/gradient-vector.cpp:767
+#: ../src/gradient-drag.cpp:959 ../src/widgets/gradient-vector.cpp:767
 #, fuzzy
 msgid "Delete gradient stop"
 msgstr "Διαγραφή επιλογής"
 
-#: ../src/gradient-drag.cpp:1121
+#: ../src/gradient-drag.cpp:1123
 #, c-format
 msgid ""
 "%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl"
@@ -4578,25 +4660,26 @@ msgid ""
 msgstr ""
 
 #
-#: ../src/gradient-drag.cpp:1125 ../src/gradient-drag.cpp:1132
+#: ../src/gradient-drag.cpp:1127 ../src/gradient-drag.cpp:1134
 #, fuzzy
 msgid " (stroke)"
 msgstr "ε χρήση"
 
-#: ../src/gradient-drag.cpp:1129
+#: ../src/gradient-drag.cpp:1131
 #, c-format
 msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
 "preserve angle, with <b>Ctrl+Shift</b> to scale around center"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1137
+#: ../src/gradient-drag.cpp:1139
+#, c-format
 msgid ""
 "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to "
 "separate focus"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1140
+#: ../src/gradient-drag.cpp:1142
 #, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
@@ -4607,17 +4690,17 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/gradient-drag.cpp:1815
+#: ../src/gradient-drag.cpp:1817
 #, fuzzy
 msgid "Move gradient handle(s)"
 msgstr "Αρχικοποίηση"
 
-#: ../src/gradient-drag.cpp:1851
+#: ../src/gradient-drag.cpp:1853
 #, fuzzy
 msgid "Move gradient mid stop(s)"
 msgstr "Διαγραφή επιλογής"
 
-#: ../src/gradient-drag.cpp:2139
+#: ../src/gradient-drag.cpp:2141
 #, fuzzy
 msgid "Delete gradient stop(s)"
 msgstr "Διαγραφή επιλογής"
@@ -4629,8 +4712,8 @@ msgstr "&Μονάδες:"
 
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:469
-#: ../src/widgets/toolbox.cpp:1140 ../src/widgets/toolbox.cpp:2301
-#: ../src/widgets/toolbox.cpp:5238
+#: ../src/widgets/toolbox.cpp:1145 ../src/widgets/toolbox.cpp:2309
+#: ../src/widgets/toolbox.cpp:5288
 #, fuzzy
 msgid "Units"
 msgstr "&Μονάδες:"
@@ -4654,10 +4737,27 @@ msgid "Pt"
 msgstr ""
 
 #: ../src/helper/units.cpp:39
+msgid "Pica"
+msgstr ""
+
+#: ../src/helper/units.cpp:39
+msgid "pc"
+msgstr ""
+
+#: ../src/helper/units.cpp:39
+#, fuzzy
+msgid "Picas"
+msgstr "Μονοπάτια"
+
+#: ../src/helper/units.cpp:39
+msgid "Pc"
+msgstr ""
+
+#: ../src/helper/units.cpp:40
 msgid "Pixel"
 msgstr "Εικονοστοιχείο"
 
-#: ../src/helper/units.cpp:39 ../src/ui/dialog/inkscape-preferences.cpp:194
+#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:194
 #: ../src/ui/dialog/inkscape-preferences.cpp:198
 #: ../src/ui/dialog/inkscape-preferences.cpp:201
 #: ../src/ui/widget/selected-style.cpp:279
@@ -4665,141 +4765,155 @@ msgid "px"
 msgstr ""
 
 #
-#: ../src/helper/units.cpp:39
+#: ../src/helper/units.cpp:40
 msgid "Pixels"
 msgstr "Εικονοστοιχεία"
 
-#: ../src/helper/units.cpp:39
+#: ../src/helper/units.cpp:40
 msgid "Px"
 msgstr ""
 
 #. You can add new elements from this point forward
-#: ../src/helper/units.cpp:41 ../share/extensions/straightseg.inx.h:3
+#: ../src/helper/units.cpp:42 ../share/extensions/straightseg.inx.h:3
 msgid "Percent"
 msgstr "Ποσοστό"
 
-#: ../src/helper/units.cpp:41 ../src/ui/dialog/inkscape-preferences.cpp:214
+#: ../src/helper/units.cpp:42 ../src/ui/dialog/inkscape-preferences.cpp:214
 msgid "%"
 msgstr "%"
 
-#: ../src/helper/units.cpp:41
+#: ../src/helper/units.cpp:42
 #, fuzzy
 msgid "Percents"
 msgstr "Ποσοστό"
 
-#: ../src/helper/units.cpp:42
+#: ../src/helper/units.cpp:43
 #, fuzzy
 msgid "Millimeter"
 msgstr "χιλιοστά"
 
-#: ../src/helper/units.cpp:42 ../src/ui/widget/selected-style.cpp:287
+#: ../src/helper/units.cpp:43 ../src/ui/widget/selected-style.cpp:287
 msgid "mm"
 msgstr "mm"
 
-#: ../src/helper/units.cpp:42
+#: ../src/helper/units.cpp:43
 #, fuzzy
 msgid "Millimeters"
 msgstr "χιλιοστά"
 
-#: ../src/helper/units.cpp:43
+#: ../src/helper/units.cpp:44
 #, fuzzy
 msgid "Centimeter"
 msgstr "εκατοστά"
 
-#: ../src/helper/units.cpp:43
+#: ../src/helper/units.cpp:44
 msgid "cm"
 msgstr "cm"
 
-#: ../src/helper/units.cpp:43
+#: ../src/helper/units.cpp:44
 #, fuzzy
 msgid "Centimeters"
 msgstr "εκατοστά"
 
-#: ../src/helper/units.cpp:44
+#: ../src/helper/units.cpp:45
 #, fuzzy
 msgid "Meter"
 msgstr "Κέντρο"
 
-#: ../src/helper/units.cpp:44
+#: ../src/helper/units.cpp:45
 #, fuzzy
 msgid "m"
 msgstr "Δείγμα"
 
-#: ../src/helper/units.cpp:44
+#: ../src/helper/units.cpp:45
 #, fuzzy
 msgid "Meters"
 msgstr "Κέντρο"
 
 #. no svg_unit
-#: ../src/helper/units.cpp:45
+#: ../src/helper/units.cpp:46
 #, fuzzy
 msgid "Inch"
 msgstr "ίντσα"
 
 #
-#: ../src/helper/units.cpp:45
+#: ../src/helper/units.cpp:46
 #, fuzzy
 msgid "in"
 msgstr "ημ"
 
-#: ../src/helper/units.cpp:45
+#: ../src/helper/units.cpp:46
 #, fuzzy
 msgid "Inches"
 msgstr "Αύξηση"
 
+#: ../src/helper/units.cpp:47
+#, fuzzy
+msgid "Foot"
+msgstr "Γραμματοσειρά"
+
+#: ../src/helper/units.cpp:47
+msgid "ft"
+msgstr ""
+
+#: ../src/helper/units.cpp:47
+#, fuzzy
+msgid "Feet"
+msgstr "FreeArt"
+
 #. Volatiles do not have default, so there are none here
 #. TRANSLATORS: for info, see http://www.w3.org/TR/REC-CSS2/syndata.html#length-units
-#: ../src/helper/units.cpp:48
+#: ../src/helper/units.cpp:50
 #, fuzzy
 msgid "Em square"
 msgstr "Τετράγωνο"
 
-#: ../src/helper/units.cpp:48
+#: ../src/helper/units.cpp:50
 #, fuzzy
 msgid "em"
 msgstr "Δείγμα"
 
-#: ../src/helper/units.cpp:48
+#: ../src/helper/units.cpp:50
 #, fuzzy
 msgid "Em squares"
 msgstr "Τετράγωνο"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/REC-CSS2/syndata.html#length-units
-#: ../src/helper/units.cpp:50
+#: ../src/helper/units.cpp:52
 #, fuzzy
 msgid "Ex square"
 msgstr "Τετράγωνο"
 
-#: ../src/helper/units.cpp:50
+#: ../src/helper/units.cpp:52
 #, fuzzy
 msgid "ex"
 msgstr "Δεκαεξαδικό"
 
-#: ../src/helper/units.cpp:50
+#: ../src/helper/units.cpp:52
 #, fuzzy
 msgid "Ex squares"
 msgstr "Τετράγωνο"
 
-#: ../src/inkscape.cpp:484
+#: ../src/inkscape.cpp:486
 msgid "Untitled document"
 msgstr ""
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:513
+#: ../src/inkscape.cpp:515
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr ""
 
-#: ../src/inkscape.cpp:514
+#: ../src/inkscape.cpp:516
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
 msgstr ""
 
-#: ../src/inkscape.cpp:515
+#: ../src/inkscape.cpp:517
 msgid "Automatic backup of the following documents failed:\n"
 msgstr ""
 
-#: ../src/inkscape.cpp:658
+#: ../src/inkscape.cpp:660
 #, c-format
 msgid ""
 "Cannot create directory %s.\n"
@@ -4808,7 +4922,7 @@ msgstr ""
 "Δεν μπορώ να δημιουργήσω το φάκελο %s.\n"
 "%s"
 
-#: ../src/inkscape.cpp:659
+#: ../src/inkscape.cpp:661
 #, c-format
 msgid ""
 "%s is not a valid directory.\n"
@@ -4817,7 +4931,7 @@ msgstr ""
 "%s δεν είναι έγκυρος φάκελος.\n"
 "%s"
 
-#: ../src/inkscape.cpp:660
+#: ../src/inkscape.cpp:662
 #, c-format
 msgid ""
 "Cannot create file %s.\n"
@@ -4826,7 +4940,7 @@ msgstr ""
 "Δεν μπορώ να δημιουργήσω το αρχείο %s.\n"
 "%s"
 
-#: ../src/inkscape.cpp:661
+#: ../src/inkscape.cpp:663
 #, c-format
 msgid ""
 "Cannot write file %s.\n"
@@ -4835,7 +4949,7 @@ msgstr ""
 "Δεν μπορώ να γράψω στο αρχείο %s.\n"
 "%s"
 
-#: ../src/inkscape.cpp:662
+#: ../src/inkscape.cpp:664
 msgid ""
 "Although Inkscape will run, it will use default settings,\n"
 "and any changes made in preferences will not be saved."
@@ -4844,7 +4958,7 @@ msgstr ""
 "ρυθμίσεις,\n"
 "και ότι αλλαγές έγιναν στις επιλογές δεν θα αποθηκευτούν."
 
-#: ../src/inkscape.cpp:732 ../src/preferences.cpp:56
+#: ../src/inkscape.cpp:734 ../src/preferences.cpp:56
 #, c-format
 msgid ""
 "%s is not a regular file.\n"
@@ -4853,7 +4967,7 @@ msgstr ""
 "%s δεν είναι ένα κανονικό αρχείο.\n"
 "%s"
 
-#: ../src/inkscape.cpp:733 ../src/preferences.cpp:57
+#: ../src/inkscape.cpp:735 ../src/preferences.cpp:57
 #, c-format
 msgid ""
 "%s not a valid XML file, or\n"
@@ -4864,7 +4978,7 @@ msgstr ""
 "δεν έχετε δκαιώματα ανάγνωσης σε αυτό.\n"
 "%s"
 
-#: ../src/inkscape.cpp:735
+#: ../src/inkscape.cpp:737
 #, c-format
 msgid ""
 "%s is not a valid menus file.\n"
@@ -4873,7 +4987,7 @@ msgstr ""
 "%s δεν είναι ένα έγκυρο αρχείο μενού.\n"
 "%s"
 
-#: ../src/inkscape.cpp:736
+#: ../src/inkscape.cpp:738
 msgid ""
 "Inkscape will run with default menus.\n"
 "New menus will not be saved."
@@ -5089,9 +5203,9 @@ msgstr "Αλλαγή"
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr ""
 
-#: ../src/live_effects/parameter/enum.h:49
+#: ../src/live_effects/parameter/enum.h:50
 #, fuzzy
-msgid "Change enum parameter"
+msgid "Change enumeration parameter"
 msgstr "Επιλογή Τρέχουσας Συνεδρίας"
 
 #
@@ -5275,39 +5389,44 @@ msgid "Pattern is vertical"
 msgstr "Σχέδιο"
 
 #
-#: ../src/live_effects/parameter/parameter.cpp:137
+#: ../src/live_effects/parameter/parameter.cpp:138
 #, fuzzy
 msgid "Change scalar parameter"
 msgstr "Διαφάνεια:"
 
-#: ../src/live_effects/parameter/path.cpp:105
+#: ../src/live_effects/parameter/path.cpp:104
 #: ../src/live_effects/parameter/point.cpp:105
 msgid "Edit on-canvas"
 msgstr ""
 
-#: ../src/live_effects/parameter/path.cpp:116
+#: ../src/live_effects/parameter/path.cpp:114
+#, fuzzy
+msgid "Copy path"
+msgstr "Αντιγραφή επιλεγμένης εργασίας"
+
+#: ../src/live_effects/parameter/path.cpp:124
 #, fuzzy
 msgid "Paste path"
 msgstr "Πλάτος &Σελίδας"
 
 #
-#: ../src/live_effects/parameter/path.cpp:174
-#: ../src/selection-chemistry.cpp:1264 ../src/selection-chemistry.cpp:1318
-#: ../src/selection-chemistry.cpp:1354
+#: ../src/live_effects/parameter/path.cpp:182
+#: ../src/selection-chemistry.cpp:1313 ../src/selection-chemistry.cpp:1367
+#: ../src/selection-chemistry.cpp:1403
 #, fuzzy
 msgid "Nothing on the clipboard."
 msgstr "Αντιγραφή επιλογής στο τεμάχιο"
 
-#: ../src/live_effects/parameter/path.cpp:184
+#: ../src/live_effects/parameter/path.cpp:192
 msgid "This effect does not support arcs yet, try to convert to path."
 msgstr ""
 
-#: ../src/live_effects/parameter/path.cpp:190
+#: ../src/live_effects/parameter/path.cpp:198
 #, fuzzy
 msgid "Paste path parameter"
 msgstr "Καπνός με άνεμο"
 
-#: ../src/live_effects/parameter/path.cpp:194
+#: ../src/live_effects/parameter/path.cpp:202
 msgid "Clipboard does not contain a path."
 msgstr ""
 
@@ -5318,235 +5437,235 @@ msgid "Change point parameter"
 msgstr "Δημιουργία γραμμής"
 
 #
-#: ../src/live_effects/parameter/bool.cpp:70
+#: ../src/live_effects/parameter/bool.cpp:71
 #, fuzzy
 msgid "Change bool parameter"
 msgstr "Διαφάνεια:"
 
-#: ../src/live_effects/parameter/random.cpp:136
+#: ../src/live_effects/parameter/random.cpp:137
 #, fuzzy
 msgid "Change random parameter"
 msgstr "Σχεδίαση"
 
-#: ../src/main.cpp:217
+#: ../src/main.cpp:218
 msgid "Print the Inkscape version number"
 msgstr ""
 
-#: ../src/main.cpp:222
+#: ../src/main.cpp:223
 msgid "Do not use X server (only process files from console)"
 msgstr ""
 
-#: ../src/main.cpp:227
+#: ../src/main.cpp:228
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr ""
 
-#: ../src/main.cpp:232
+#: ../src/main.cpp:233
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr ""
 
 # gconf/gconftool.c:219
-#: ../src/main.cpp:233 ../src/main.cpp:238 ../src/main.cpp:243
-#: ../src/main.cpp:310 ../src/main.cpp:315 ../src/main.cpp:320
-#: ../src/main.cpp:325 ../src/main.cpp:331
+#: ../src/main.cpp:234 ../src/main.cpp:239 ../src/main.cpp:244
+#: ../src/main.cpp:311 ../src/main.cpp:316 ../src/main.cpp:321
+#: ../src/main.cpp:326 ../src/main.cpp:332
 msgid "FILENAME"
 msgstr "ΟΝΟΜΑ ΑΡΧΕΙΟΥ"
 
-#: ../src/main.cpp:237
+#: ../src/main.cpp:238
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr ""
 
-#: ../src/main.cpp:242
+#: ../src/main.cpp:243
 msgid "Export document to a PNG file"
 msgstr ""
 
-#: ../src/main.cpp:247
+#: ../src/main.cpp:248
 msgid "The resolution used for exporting SVG into bitmap (default 90)"
 msgstr ""
 
-#: ../src/main.cpp:248
+#: ../src/main.cpp:249
 msgid "DPI"
 msgstr ""
 
-#: ../src/main.cpp:252
+#: ../src/main.cpp:253
 msgid ""
 "Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
 "corner)"
 msgstr ""
 
-#: ../src/main.cpp:253
+#: ../src/main.cpp:254
 msgid "x0:y0:x1:y1"
 msgstr ""
 
-#: ../src/main.cpp:257
+#: ../src/main.cpp:258
 msgid "Exported area is the entire drawing (not canvas)"
 msgstr ""
 
-#: ../src/main.cpp:262
+#: ../src/main.cpp:263
 msgid "Exported area is the entire canvas"
 msgstr ""
 
-#: ../src/main.cpp:267
+#: ../src/main.cpp:268
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
 msgstr ""
 
-#: ../src/main.cpp:272
+#: ../src/main.cpp:273
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr ""
 
-#: ../src/main.cpp:273
+#: ../src/main.cpp:274
 msgid "WIDTH"
 msgstr ""
 
-#: ../src/main.cpp:277
+#: ../src/main.cpp:278
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr ""
 
-#: ../src/main.cpp:278
+#: ../src/main.cpp:279
 msgid "HEIGHT"
 msgstr ""
 
-#: ../src/main.cpp:282
+#: ../src/main.cpp:283
 msgid "The ID of the object to export"
 msgstr ""
 
 #
-#: ../src/main.cpp:283 ../src/main.cpp:381
+#: ../src/main.cpp:284 ../src/main.cpp:382
 #, fuzzy
 msgid "ID"
 msgstr "ID"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:289
+#: ../src/main.cpp:290
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
 msgstr ""
 
-#: ../src/main.cpp:294
+#: ../src/main.cpp:295
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr ""
 
-#: ../src/main.cpp:299
+#: ../src/main.cpp:300
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr ""
 
-#: ../src/main.cpp:300
+#: ../src/main.cpp:301
 msgid "COLOR"
 msgstr ""
 
-#: ../src/main.cpp:304
+#: ../src/main.cpp:305
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr ""
 
-#: ../src/main.cpp:305
+#: ../src/main.cpp:306
 msgid "VALUE"
 msgstr ""
 
-#: ../src/main.cpp:309
+#: ../src/main.cpp:310
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
 
-#: ../src/main.cpp:314
+#: ../src/main.cpp:315
 #, fuzzy
 msgid "Export document to a PS file"
 msgstr "Εξαγωγή Αρχείου"
 
-#: ../src/main.cpp:319
+#: ../src/main.cpp:320
 msgid "Export document to an EPS file"
 msgstr ""
 
-#: ../src/main.cpp:324
+#: ../src/main.cpp:325
 #, fuzzy
 msgid "Export document to a PDF file"
 msgstr "Εξαγωγή Αρχείου"
 
-#: ../src/main.cpp:330
+#: ../src/main.cpp:331
 #, fuzzy
 msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr "Εξαγωγή Αρχείου"
 
 #
-#: ../src/main.cpp:336
+#: ../src/main.cpp:337
 #, fuzzy
 msgid "Convert text object to paths on export (EPS)"
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/main.cpp:341
+#: ../src/main.cpp:342
 msgid "Embed fonts on export (Type 1 only) (EPS)"
 msgstr ""
 
-#: ../src/main.cpp:346
+#: ../src/main.cpp:347
 msgid "Export files with the bounding box set to the page size (EPS)"
 msgstr ""
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:352
+#: ../src/main.cpp:353
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr ""
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:358
+#: ../src/main.cpp:359
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr ""
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:364
+#: ../src/main.cpp:365
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr ""
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:370
+#: ../src/main.cpp:371
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr ""
 
-#: ../src/main.cpp:375
+#: ../src/main.cpp:376
 msgid "List id,x,y,w,h for all objects"
 msgstr ""
 
-#: ../src/main.cpp:380
+#: ../src/main.cpp:381
 msgid "The ID of the object whose dimensions are queried"
 msgstr ""
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:386
+#: ../src/main.cpp:387
 msgid "Print out the extension directory and exit"
 msgstr ""
 
-#: ../src/main.cpp:391
+#: ../src/main.cpp:392
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr ""
 
-#: ../src/main.cpp:396
+#: ../src/main.cpp:397
 msgid "List the IDs of all the verbs in Inkscape"
 msgstr ""
 
-#: ../src/main.cpp:401
+#: ../src/main.cpp:402
 msgid "Verb to call when Inkscape opens."
 msgstr ""
 
-#: ../src/main.cpp:402
+#: ../src/main.cpp:403
 msgid "VERB-ID"
 msgstr ""
 
-#: ../src/main.cpp:406
+#: ../src/main.cpp:407
 msgid "Object ID to select when Inkscape opens."
 msgstr ""
 
-#: ../src/main.cpp:407
+#: ../src/main.cpp:408
 msgid "OBJECT-ID"
 msgstr ""
 
-#: ../src/main.cpp:610
+#: ../src/main.cpp:611
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -5563,7 +5682,7 @@ msgstr ""
 msgid "Unable to find node ID: '%s'\n"
 msgstr ""
 
-#: ../src/menus-skeleton.h:17 ../src/ui/dialog/document-properties.cpp:118
+#: ../src/menus-skeleton.h:17
 msgid "_New"
 msgstr "_Νέο"
 
@@ -5668,147 +5787,147 @@ msgstr "_Βοήθεια"
 msgid "Tutorials"
 msgstr ""
 
-#: ../src/node-context.cpp:185
+#: ../src/node-context.cpp:187
 msgid ""
 "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl"
 "+Alt</b>: move along handles"
 msgstr ""
 
-#: ../src/node-context.cpp:186
+#: ../src/node-context.cpp:188
 msgid ""
 "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
 msgstr ""
 
-#: ../src/node-context.cpp:187
+#: ../src/node-context.cpp:189
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr ""
 
-#: ../src/nodepath.cpp:642 ../src/seltrans.cpp:520
+#: ../src/nodepath.cpp:644 ../src/seltrans.cpp:522
 #, fuzzy
 msgid "Stamp"
 msgstr "Στυλ: "
 
-#: ../src/nodepath.cpp:1340 ../src/nodepath.cpp:1367
+#: ../src/nodepath.cpp:1342 ../src/nodepath.cpp:1369
 #, fuzzy
 msgid "Move nodes vertically"
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
-#: ../src/nodepath.cpp:1342 ../src/nodepath.cpp:1369
+#: ../src/nodepath.cpp:1344 ../src/nodepath.cpp:1371
 #, fuzzy
 msgid "Move nodes horizontally"
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
-#: ../src/nodepath.cpp:1344 ../src/nodepath.cpp:1371 ../src/nodepath.cpp:1386
-#: ../src/nodepath.cpp:3206
+#: ../src/nodepath.cpp:1346 ../src/nodepath.cpp:1373 ../src/nodepath.cpp:1388
+#: ../src/nodepath.cpp:3208
 #, fuzzy
 msgid "Move nodes"
 msgstr "Επεξεργασία Φακέλων"
 
-#: ../src/nodepath.cpp:1424
+#: ../src/nodepath.cpp:1426
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
 msgstr ""
 
 #
-#: ../src/nodepath.cpp:1594
+#: ../src/nodepath.cpp:1596
 #, fuzzy
 msgid "Align nodes"
 msgstr "Αντικείμενο"
 
-#: ../src/nodepath.cpp:1656
+#: ../src/nodepath.cpp:1658
 #, fuzzy
 msgid "Distribute nodes"
 msgstr "Ιδιότητες"
 
-#: ../src/nodepath.cpp:1694
+#: ../src/nodepath.cpp:1696
 #, fuzzy
 msgid "Add nodes"
 msgstr "Σημειώσεις"
 
-#: ../src/nodepath.cpp:1696 ../src/nodepath.cpp:1768
+#: ../src/nodepath.cpp:1698 ../src/nodepath.cpp:1770
 #, fuzzy
 msgid "Add node"
 msgstr "Σημειώσεις"
 
-#: ../src/nodepath.cpp:1849
+#: ../src/nodepath.cpp:1851
 #, fuzzy
 msgid "Break path"
 msgstr "πραγματική διαδρομή"
 
-#: ../src/nodepath.cpp:1889 ../src/nodepath.cpp:1904 ../src/nodepath.cpp:1990
-#: ../src/nodepath.cpp:2005
+#: ../src/nodepath.cpp:1891 ../src/nodepath.cpp:1906 ../src/nodepath.cpp:1992
+#: ../src/nodepath.cpp:2007
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr ""
 
-#: ../src/nodepath.cpp:1925
+#: ../src/nodepath.cpp:1927
 msgid "Close subpath"
 msgstr ""
 
-#: ../src/nodepath.cpp:1977
+#: ../src/nodepath.cpp:1979
 #, fuzzy
 msgid "Join nodes"
 msgstr "Επεξεργασία Φακέλων"
 
-#: ../src/nodepath.cpp:2026
+#: ../src/nodepath.cpp:2028
 msgid "Close subpath by segment"
 msgstr ""
 
 #
-#: ../src/nodepath.cpp:2080
+#: ../src/nodepath.cpp:2082
 #, fuzzy
 msgid "Join nodes by segment"
 msgstr "Εκκίνηση επιλεγμένου παροχέα"
 
 #
-#: ../src/nodepath.cpp:2208 ../src/nodepath.cpp:2244 ../src/nodepath.cpp:2248
+#: ../src/nodepath.cpp:2210 ../src/nodepath.cpp:2246 ../src/nodepath.cpp:2250
 #, fuzzy
 msgid "Delete nodes"
 msgstr "Διαγραφή"
 
-#: ../src/nodepath.cpp:2210
+#: ../src/nodepath.cpp:2212
 msgid "Delete nodes preserving shape"
 msgstr ""
 
-#: ../src/nodepath.cpp:2267 ../src/nodepath.cpp:2281
+#: ../src/nodepath.cpp:2269 ../src/nodepath.cpp:2283
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
 msgstr ""
 
 #
-#: ../src/nodepath.cpp:2377
+#: ../src/nodepath.cpp:2379
 #, fuzzy
 msgid "Cannot find path between nodes."
 msgstr "Εκκίνηση επιλεγμένου παροχέα"
 
 #
-#: ../src/nodepath.cpp:2409
+#: ../src/nodepath.cpp:2411
 #, fuzzy
 msgid "Delete segment"
 msgstr "Καθαρισμός της επιλογής"
 
-#: ../src/nodepath.cpp:2430
+#: ../src/nodepath.cpp:2432
 #, fuzzy
 msgid "Change segment type"
 msgstr "Επιλογή Τρέχουσας Συνεδρίας"
 
-#: ../src/nodepath.cpp:2447 ../src/nodepath.cpp:3164
+#: ../src/nodepath.cpp:2449 ../src/nodepath.cpp:3166
 #, fuzzy
 msgid "Change node type"
 msgstr "Σχεδίαση"
 
-#: ../src/nodepath.cpp:3441
+#: ../src/nodepath.cpp:3443
 #, fuzzy
 msgid "Retract handle"
 msgstr "Ορθογώνιο"
 
-#: ../src/nodepath.cpp:3490
+#: ../src/nodepath.cpp:3492
 #, fuzzy
 msgid "Move node handle"
 msgstr "Αρχικοποίηση"
 
-#: ../src/nodepath.cpp:3630
+#: ../src/nodepath.cpp:3632
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -5816,79 +5935,79 @@ msgid ""
 "handles"
 msgstr ""
 
-#: ../src/nodepath.cpp:3824
+#: ../src/nodepath.cpp:3826
 #, fuzzy
 msgid "Rotate nodes"
 msgstr "Αρχικοποίηση"
 
-#: ../src/nodepath.cpp:3955
+#: ../src/nodepath.cpp:3957
 #, fuzzy
 msgid "Scale nodes"
 msgstr "Αρχικοποίηση"
 
-#: ../src/nodepath.cpp:3999
+#: ../src/nodepath.cpp:4001
 #, fuzzy
 msgid "Flip nodes"
 msgstr "Νέα Προβολή"
 
-#: ../src/nodepath.cpp:4168
+#: ../src/nodepath.cpp:4170
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
 msgstr ""
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4394
+#: ../src/nodepath.cpp:4396
 #, fuzzy
 msgid "end node"
 msgstr "Επεξεργασία Φακέλων"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4399
+#: ../src/nodepath.cpp:4401
 #, fuzzy
 msgid "cusp"
 msgstr "Εργ."
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4402
+#: ../src/nodepath.cpp:4404
 msgid "smooth"
 msgstr ""
 
-#: ../src/nodepath.cpp:4404
+#: ../src/nodepath.cpp:4406
 #, fuzzy
 msgid "symmetric"
 msgstr "Χρήση Μετρικού Συστήματος"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4410
+#: ../src/nodepath.cpp:4412
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 
-#: ../src/nodepath.cpp:4412
+#: ../src/nodepath.cpp:4414
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 
-#: ../src/nodepath.cpp:4415
+#: ../src/nodepath.cpp:4417
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 
-#: ../src/nodepath.cpp:4427
+#: ../src/nodepath.cpp:4429
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
 "rotate"
 msgstr ""
 
-#: ../src/nodepath.cpp:4428
+#: ../src/nodepath.cpp:4430
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 
-#: ../src/nodepath.cpp:4453 ../src/nodepath.cpp:4465
+#: ../src/nodepath.cpp:4455 ../src/nodepath.cpp:4467
 #, fuzzy
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
-#: ../src/nodepath.cpp:4457
+#: ../src/nodepath.cpp:4459
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -5899,12 +6018,12 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/nodepath.cpp:4463
+#: ../src/nodepath.cpp:4465
 msgid "Drag the handles of the object to modify it."
 msgstr ""
 
 #
-#: ../src/nodepath.cpp:4471
+#: ../src/nodepath.cpp:4473
 #, fuzzy, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
@@ -5912,7 +6031,7 @@ msgstr[0] "Εκκίνηση επιλεγμένου παροχέα"
 msgstr[1] "Εκκίνηση επιλεγμένου παροχέα"
 
 #
-#: ../src/nodepath.cpp:4478
+#: ../src/nodepath.cpp:4480
 #, fuzzy, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -5922,7 +6041,7 @@ msgstr[0] "Εκκίνηση επιλεγμένου παροχέα"
 msgstr[1] "Εκκίνηση επιλεγμένου παροχέα"
 
 #
-#: ../src/nodepath.cpp:4484
+#: ../src/nodepath.cpp:4486
 #, fuzzy, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -6035,141 +6154,141 @@ msgstr ""
 msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr ""
 
-#: ../src/path-chemistry.cpp:59
+#: ../src/path-chemistry.cpp:61
 #, fuzzy
 msgid "Select <b>at least two objects</b> to combine."
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
 #
-#: ../src/path-chemistry.cpp:66
+#: ../src/path-chemistry.cpp:68
 #, fuzzy
 msgid "At least one of the objects is <b>not a path</b>, cannot combine."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/path-chemistry.cpp:74
+#: ../src/path-chemistry.cpp:76
 msgid ""
 "You cannot combine objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:79
+#: ../src/path-chemistry.cpp:81
 #, fuzzy
 msgid "Combining paths..."
 msgstr "Αντιγραφή επιλεγμένης εργασίας"
 
-#: ../src/path-chemistry.cpp:147
+#: ../src/path-chemistry.cpp:149
 #, fuzzy
 msgid "Combine"
 msgstr "_Μεταγλώττιση"
 
 #
-#: ../src/path-chemistry.cpp:162
+#: ../src/path-chemistry.cpp:164
 #, fuzzy
 msgid "Select <b>path(s)</b> to break apart."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/path-chemistry.cpp:166
+#: ../src/path-chemistry.cpp:168
 #, fuzzy
 msgid "Breaking apart paths..."
 msgstr "Επανεκκίνηση επιλεγμένων αρχείων"
 
-#: ../src/path-chemistry.cpp:247
+#: ../src/path-chemistry.cpp:249
 #, fuzzy
 msgid "Break apart"
 msgstr "πραγματική διαδρομή"
 
-#: ../src/path-chemistry.cpp:249
+#: ../src/path-chemistry.cpp:251
 msgid "<b>No path(s)</b> to break apart in the selection."
 msgstr ""
 
 #
-#: ../src/path-chemistry.cpp:270
+#: ../src/path-chemistry.cpp:272
 #, fuzzy
 msgid "Select <b>object(s)</b> to convert to path."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/path-chemistry.cpp:276
+#: ../src/path-chemistry.cpp:278
 #, fuzzy
 msgid "Converting objects to paths..."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/path-chemistry.cpp:348
+#: ../src/path-chemistry.cpp:350
 #, fuzzy
 msgid "Object to path"
 msgstr "Μετασχηματισμός"
 
 #
-#: ../src/path-chemistry.cpp:350
+#: ../src/path-chemistry.cpp:352
 #, fuzzy
 msgid "<b>No objects</b> to convert to path in the selection."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/path-chemistry.cpp:415
+#: ../src/path-chemistry.cpp:417
 #, fuzzy
 msgid "Select <b>path(s)</b> to reverse."
 msgstr "Αποθήκευση επιλογής"
 
 #
-#: ../src/path-chemistry.cpp:424
+#: ../src/path-chemistry.cpp:426
 #, fuzzy
 msgid "Reversing paths..."
 msgstr "Αρχείο"
 
 #
-#: ../src/path-chemistry.cpp:451
+#: ../src/path-chemistry.cpp:453
 #, fuzzy
 msgid "Reverse path"
 msgstr "Αρχείο"
 
-#: ../src/path-chemistry.cpp:453
+#: ../src/path-chemistry.cpp:455
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr ""
 
 #
-#: ../src/pen-context.cpp:225 ../src/pencil-context.cpp:456
+#: ../src/pen-context.cpp:227 ../src/pencil-context.cpp:457
 #, fuzzy
 msgid "Drawing cancelled"
 msgstr "Εκτύπωση περιεχομένων πλέγματος"
 
-#: ../src/pen-context.cpp:424 ../src/pencil-context.cpp:238
+#: ../src/pen-context.cpp:426 ../src/pencil-context.cpp:238
 #, fuzzy
 msgid "Continuing selected path"
 msgstr "Αντιγραφή επιλεγμένης εργασίας"
 
-#: ../src/pen-context.cpp:435 ../src/pencil-context.cpp:247
+#: ../src/pen-context.cpp:437 ../src/pencil-context.cpp:247
 #, fuzzy
 msgid "Creating new path"
 msgstr "Έγγραφο"
 
-#: ../src/pen-context.cpp:439 ../src/pencil-context.cpp:251
+#: ../src/pen-context.cpp:441 ../src/pencil-context.cpp:251
 #, fuzzy
 msgid "Appending to selected path"
 msgstr "Αντιγραφή ώρας στο επιλεγμένο"
 
-#: ../src/pen-context.cpp:599
+#: ../src/pen-context.cpp:601
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr ""
 
-#: ../src/pen-context.cpp:609
+#: ../src/pen-context.cpp:611
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr ""
 
-#: ../src/pen-context.cpp:1115
+#: ../src/pen-context.cpp:1117
 #, c-format
 msgid ""
 "<b>%s</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, "
 "<b>Enter</b> to finish the path"
 msgstr ""
 
-#: ../src/pen-context.cpp:1140
+#: ../src/pen-context.cpp:1142
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
 msgstr ""
 
-#: ../src/pen-context.cpp:1170
+#: ../src/pen-context.cpp:1172
 #, c-format
 msgid ""
 "<b>%s</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, "
@@ -6177,26 +6296,26 @@ msgid ""
 msgstr ""
 
 #
-#: ../src/pen-context.cpp:1206
+#: ../src/pen-context.cpp:1208
 #, fuzzy
 msgid "Drawing finished"
 msgstr "Εκτύπωση περιεχομένων πλέγματος"
 
-#: ../src/pencil-context.cpp:332
+#: ../src/pencil-context.cpp:333
 msgid "<b>Release</b> here to close and finish the path."
 msgstr ""
 
-#: ../src/pencil-context.cpp:338
+#: ../src/pencil-context.cpp:339
 #, fuzzy
 msgid "Drawing a freehand path"
 msgstr "Λαβή συρταριού"
 
-#: ../src/pencil-context.cpp:343
+#: ../src/pencil-context.cpp:344
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr ""
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:405
+#: ../src/pencil-context.cpp:406
 #, fuzzy
 msgid "Finishing freehand"
 msgstr "Γροιλανδία"
@@ -6214,13 +6333,13 @@ msgid ""
 "New settings will not be saved."
 msgstr ""
 
-#: ../src/rect-context.cpp:382
+#: ../src/rect-context.cpp:384
 msgid ""
 "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner "
 "circular"
 msgstr ""
 
-#: ../src/rect-context.cpp:536
+#: ../src/rect-context.cpp:538
 #, fuzzy, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</"
@@ -6229,7 +6348,7 @@ msgstr ""
 "<b>Έλλειψη</b>: %s &#215; %s &#183; με <b>Ctrl</b> κάνε κύκλο ή ακέραιας "
 "αναλογίας έλλειψη&#183; με <b>Shift</b> ζωγράφισε γύρω από το αρχικό σημείο"
 
-#: ../src/rect-context.cpp:539
+#: ../src/rect-context.cpp:541
 #, fuzzy, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with "
@@ -6238,7 +6357,7 @@ msgstr ""
 "<b>Έλλειψη</b>: %s &#215; %s &#183; με <b>Ctrl</b> κάνε κύκλο ή ακέραιας "
 "αναλογίας έλλειψη&#183; με <b>Shift</b> ζωγράφισε γύρω από το αρχικό σημείο"
 
-#: ../src/rect-context.cpp:541
+#: ../src/rect-context.cpp:543
 #, fuzzy, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with "
@@ -6247,473 +6366,473 @@ msgstr ""
 "<b>Έλλειψη</b>: %s &#215; %s &#183; με <b>Ctrl</b> κάνε κύκλο ή ακέραιας "
 "αναλογίας έλλειψη&#183; με <b>Shift</b> ζωγράφισε γύρω από το αρχικό σημείο"
 
-#: ../src/rect-context.cpp:545
+#: ../src/rect-context.cpp:547
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
 "ratio rectangle; with <b>Shift</b> to draw around the starting point"
 msgstr ""
 
-#: ../src/rect-context.cpp:566
+#: ../src/rect-context.cpp:568
 #, fuzzy
 msgid "Create rectangle"
 msgstr "Ψάξε ορθογώνια"
 
-#: ../src/select-context.cpp:228
+#: ../src/select-context.cpp:230
 #, fuzzy
 msgid "Move canceled."
 msgstr "Επιλογή"
 
-#: ../src/select-context.cpp:236
+#: ../src/select-context.cpp:238
 #, fuzzy
 msgid "Selection canceled."
 msgstr "Επιλογή"
 
-#: ../src/select-context.cpp:535
+#: ../src/select-context.cpp:545
 msgid ""
 "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to "
 "rubberband selection"
 msgstr ""
 
-#: ../src/select-context.cpp:537
+#: ../src/select-context.cpp:547
 msgid ""
 "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to "
 "touch selection"
 msgstr ""
 
-#: ../src/select-context.cpp:697
+#: ../src/select-context.cpp:707
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
 msgstr ""
 
-#: ../src/select-context.cpp:698
+#: ../src/select-context.cpp:708
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr ""
 
-#: ../src/select-context.cpp:699
+#: ../src/select-context.cpp:709
 msgid ""
 "<b>Alt</b>: click to select under; drag to move selected or select by touch"
 msgstr ""
 
 #
-#: ../src/select-context.cpp:870
+#: ../src/select-context.cpp:880
 #, fuzzy
 msgid "Selected object is not a group. Cannot enter."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/selection-chemistry.cpp:231
+#: ../src/selection-chemistry.cpp:235
 #, fuzzy
 msgid "Delete text"
 msgstr "Διαγραφή"
 
-#: ../src/selection-chemistry.cpp:239
+#: ../src/selection-chemistry.cpp:243
 msgid "<b>Nothing</b> was deleted."
 msgstr ""
 
 #
-#: ../src/selection-chemistry.cpp:257 ../src/text-context.cpp:995
-#: ../src/widgets/toolbox.cpp:985
+#: ../src/selection-chemistry.cpp:261 ../src/text-context.cpp:995
+#: ../src/widgets/toolbox.cpp:990
 #, fuzzy
 msgid "Delete"
 msgstr "Διαγραφή"
 
 #
-#: ../src/selection-chemistry.cpp:272
+#: ../src/selection-chemistry.cpp:276
 #, fuzzy
 msgid "Select <b>object(s)</b> to duplicate."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/selection-chemistry.cpp:322
+#: ../src/selection-chemistry.cpp:326
 #, fuzzy
 msgid "Delete all"
 msgstr "Διαγραφή"
 
-#: ../src/selection-chemistry.cpp:446
+#: ../src/selection-chemistry.cpp:450
 #, fuzzy
 msgid "Select <b>some objects</b> to group."
 msgstr "Αποθήκευση επιλογής"
 
-#: ../src/selection-chemistry.cpp:519 ../src/selection-describer.cpp:50
+#: ../src/selection-chemistry.cpp:523 ../src/selection-describer.cpp:50
 #, fuzzy
 msgid "Group"
 msgstr "_Ομαδοποίηση"
 
-#: ../src/selection-chemistry.cpp:534
+#: ../src/selection-chemistry.cpp:538
 #, fuzzy
 msgid "Select a <b>group</b> to ungroup."
 msgstr "Αποθήκευση επιλογής"
 
-#: ../src/selection-chemistry.cpp:575
+#: ../src/selection-chemistry.cpp:579
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:581 ../src/sp-item-group.cpp:449
+#: ../src/selection-chemistry.cpp:585 ../src/sp-item-group.cpp:451
 #, fuzzy
 msgid "Ungroup"
 msgstr "_Απομαδοποίηση"
 
 #
-#: ../src/selection-chemistry.cpp:642
+#: ../src/selection-chemistry.cpp:646
 #, fuzzy
 msgid "Select <b>object(s)</b> to raise."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/selection-chemistry.cpp:648 ../src/selection-chemistry.cpp:708
-#: ../src/selection-chemistry.cpp:743 ../src/selection-chemistry.cpp:808
+#: ../src/selection-chemistry.cpp:652 ../src/selection-chemistry.cpp:712
+#: ../src/selection-chemistry.cpp:747 ../src/selection-chemistry.cpp:812
 msgid ""
 "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
 
 #
-#: ../src/selection-chemistry.cpp:700
+#: ../src/selection-chemistry.cpp:704
 #, fuzzy
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/selection-chemistry.cpp:723
+#: ../src/selection-chemistry.cpp:727
 #, fuzzy
 msgid "Raise to top"
 msgstr "Αποθήκευση επιλογής"
 
 #
-#: ../src/selection-chemistry.cpp:737
+#: ../src/selection-chemistry.cpp:741
 #, fuzzy
 msgid "Select <b>object(s)</b> to lower."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/selection-chemistry.cpp:787
+#: ../src/selection-chemistry.cpp:791
 msgid "Lower"
 msgstr ""
 
 #
-#: ../src/selection-chemistry.cpp:800
+#: ../src/selection-chemistry.cpp:804
 #, fuzzy
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/selection-chemistry.cpp:835
+#: ../src/selection-chemistry.cpp:839
 #, fuzzy
 msgid "Lower to bottom"
 msgstr "Αντιγραφή επιλογής στο τεμάχιο"
 
-#: ../src/selection-chemistry.cpp:842
+#: ../src/selection-chemistry.cpp:846
 msgid "Nothing to undo."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:849
+#: ../src/selection-chemistry.cpp:853
 msgid "Nothing to redo."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1057
+#: ../src/selection-chemistry.cpp:1061
 msgid "Nothing was copied."
 msgstr ""
 
 #
-#: ../src/selection-chemistry.cpp:1204
+#: ../src/selection-chemistry.cpp:1253
 #, fuzzy
 msgid "Nothing in the clipboard."
 msgstr "Αντιγραφή επιλογής στο τεμάχιο"
 
 #
-#: ../src/selection-chemistry.cpp:1225
+#: ../src/selection-chemistry.cpp:1274
 #, fuzzy
 msgid "Paste"
 msgstr "Επικόλληση"
 
 #
-#: ../src/selection-chemistry.cpp:1237
+#: ../src/selection-chemistry.cpp:1286
 #, fuzzy
 msgid "Nothing on the style clipboard."
 msgstr "Αντιγραφή επιλογής στο τεμάχιο"
 
 #
-#: ../src/selection-chemistry.cpp:1243
+#: ../src/selection-chemistry.cpp:1292
 #, fuzzy
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/selection-chemistry.cpp:1252
+#: ../src/selection-chemistry.cpp:1301
 #, fuzzy
 msgid "Paste style"
 msgstr "Καπνός με άνεμο"
 
 #
-#: ../src/selection-chemistry.cpp:1270
+#: ../src/selection-chemistry.cpp:1319
 #, fuzzy
 msgid "Select <b>object(s)</b> to paste live path effect to."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/selection-chemistry.cpp:1280
+#: ../src/selection-chemistry.cpp:1329
 msgid "Clipboard does not contain a live path effect."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1306
+#: ../src/selection-chemistry.cpp:1355
 msgid "Paste live path effect"
 msgstr ""
 
 #
-#: ../src/selection-chemistry.cpp:1324 ../src/selection-chemistry.cpp:1360
+#: ../src/selection-chemistry.cpp:1373 ../src/selection-chemistry.cpp:1409
 #, fuzzy
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/selection-chemistry.cpp:1342
+#: ../src/selection-chemistry.cpp:1391
 #, fuzzy
 msgid "Paste size"
 msgstr "Καπνός με άνεμο"
 
-#: ../src/selection-chemistry.cpp:1383
+#: ../src/selection-chemistry.cpp:1432
 msgid "Paste size separately"
 msgstr ""
 
 #
-#: ../src/selection-chemistry.cpp:1394
+#: ../src/selection-chemistry.cpp:1443
 #, fuzzy
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/selection-chemistry.cpp:1419
+#: ../src/selection-chemistry.cpp:1468
 #, fuzzy
 msgid "Raise to next layer"
 msgstr "Δεν έγινε επιλογή"
 
-#: ../src/selection-chemistry.cpp:1425
+#: ../src/selection-chemistry.cpp:1474
 #, fuzzy
 msgid "No more layers above."
 msgstr "Έγγραφο"
 
 #
-#: ../src/selection-chemistry.cpp:1439
+#: ../src/selection-chemistry.cpp:1488
 #, fuzzy
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/selection-chemistry.cpp:1464
+#: ../src/selection-chemistry.cpp:1513
 #, fuzzy
 msgid "Lower to previous layer"
 msgstr "Αντιγραφή επιλογής στο τεμάχιο"
 
-#: ../src/selection-chemistry.cpp:1470
+#: ../src/selection-chemistry.cpp:1519
 #, fuzzy
 msgid "No more layers below."
 msgstr "Έγγραφο"
 
-#: ../src/selection-chemistry.cpp:1657
+#: ../src/selection-chemistry.cpp:1706
 #, fuzzy
 msgid "Remove transform"
 msgstr "Μετασχηματισμός"
 
 #
-#: ../src/selection-chemistry.cpp:1766
+#: ../src/selection-chemistry.cpp:1815
 #, fuzzy
 msgid "Rotate 90&#176; CW"
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/selection-chemistry.cpp:1794
+#: ../src/selection-chemistry.cpp:1843
 #, fuzzy
 msgid "Rotate 90&#176; CCW"
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/selection-chemistry.cpp:1815 ../src/seltrans.cpp:432
-#: ../src/ui/dialog/transformation.cpp:678
+#: ../src/selection-chemistry.cpp:1864 ../src/seltrans.cpp:434
+#: ../src/ui/dialog/transformation.cpp:687
 #, fuzzy
 msgid "Rotate"
 msgstr "Περιστροφή"
 
-#: ../src/selection-chemistry.cpp:1847
+#: ../src/selection-chemistry.cpp:1896
 msgid "Rotate by pixels"
 msgstr ""
 
 #
-#: ../src/selection-chemistry.cpp:1877 ../src/seltrans.cpp:429
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2004
-#: ../src/ui/dialog/transformation.cpp:657
+#: ../src/selection-chemistry.cpp:1926 ../src/seltrans.cpp:431
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2138
+#: ../src/ui/dialog/transformation.cpp:666
 #, fuzzy
 msgid "Scale"
 msgstr "Κλιμάκωση"
 
 #
-#: ../src/selection-chemistry.cpp:1902
+#: ../src/selection-chemistry.cpp:1951
 #, fuzzy
 msgid "Scale by whole factor"
 msgstr "Αποθήκευση με περιεχόμενα"
 
-#: ../src/selection-chemistry.cpp:1918
+#: ../src/selection-chemistry.cpp:1967
 #, fuzzy
 msgid "Move vertically"
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
-#: ../src/selection-chemistry.cpp:1921
+#: ../src/selection-chemistry.cpp:1970
 #, fuzzy
 msgid "Move horizontally"
 msgstr "οριζόντιο"
 
-#: ../src/selection-chemistry.cpp:1924 ../src/selection-chemistry.cpp:1952
-#: ../src/seltrans.cpp:426 ../src/ui/dialog/transformation.cpp:601
+#: ../src/selection-chemistry.cpp:1973 ../src/selection-chemistry.cpp:2001
+#: ../src/seltrans.cpp:428 ../src/ui/dialog/transformation.cpp:610
 #, fuzzy
 msgid "Move"
 msgstr "Μετακίνηση"
 
-#: ../src/selection-chemistry.cpp:1946
+#: ../src/selection-chemistry.cpp:1995
 #, fuzzy
 msgid "Move vertically by pixels"
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
-#: ../src/selection-chemistry.cpp:1949
+#: ../src/selection-chemistry.cpp:1998
 #, fuzzy
 msgid "Move horizontally by pixels"
 msgstr "οριζόντιο"
 
-#: ../src/selection-chemistry.cpp:2078
+#: ../src/selection-chemistry.cpp:2127
 #, fuzzy
 msgid "The selection has no applied path effect."
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
-#: ../src/selection-chemistry.cpp:2235
+#: ../src/selection-chemistry.cpp:2284
 msgid "action|Clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2252
+#: ../src/selection-chemistry.cpp:2301
 #, fuzzy
 msgid "Select a <b>clone</b> to unlink."
 msgstr "Επιλογή αρχείου προς ανάγνωση"
 
-#: ../src/selection-chemistry.cpp:2301
+#: ../src/selection-chemistry.cpp:2350
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2305
+#: ../src/selection-chemistry.cpp:2354
 msgid "Unlink clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2319
+#: ../src/selection-chemistry.cpp:2368
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
 "a <b>flowed text</b> to go to its frame."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2342
+#: ../src/selection-chemistry.cpp:2391
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2348
+#: ../src/selection-chemistry.cpp:2397
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr ""
 
 #
-#: ../src/selection-chemistry.cpp:2376
+#: ../src/selection-chemistry.cpp:2425
 #, fuzzy
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/selection-chemistry.cpp:2441
+#: ../src/selection-chemistry.cpp:2490
 #, fuzzy
 msgid "Objects to marker"
 msgstr "Μετασχηματισμός"
 
 #
-#: ../src/selection-chemistry.cpp:2470
+#: ../src/selection-chemistry.cpp:2519
 #, fuzzy
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/selection-chemistry.cpp:2480
+#: ../src/selection-chemistry.cpp:2529
 #, fuzzy
 msgid "Objects to guides"
 msgstr "Μετασχηματισμός"
 
 #
-#: ../src/selection-chemistry.cpp:2497
+#: ../src/selection-chemistry.cpp:2546
 #, fuzzy
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/selection-chemistry.cpp:2582
+#: ../src/selection-chemistry.cpp:2631
 #, fuzzy
 msgid "Objects to pattern"
 msgstr "Μετασχηματισμός"
 
 #
-#: ../src/selection-chemistry.cpp:2599
+#: ../src/selection-chemistry.cpp:2648
 #, fuzzy
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/selection-chemistry.cpp:2652
+#: ../src/selection-chemistry.cpp:2701
 #, fuzzy
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/selection-chemistry.cpp:2655
+#: ../src/selection-chemistry.cpp:2704
 #, fuzzy
 msgid "Pattern to objects"
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
 #
-#: ../src/selection-chemistry.cpp:2741
+#: ../src/selection-chemistry.cpp:2790
 #, fuzzy
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/selection-chemistry.cpp:2902
+#: ../src/selection-chemistry.cpp:2951
 #, fuzzy
 msgid "Create bitmap"
 msgstr "Διακοπείσα σωλήνωση"
 
 #
-#: ../src/selection-chemistry.cpp:2935
+#: ../src/selection-chemistry.cpp:2984
 #, fuzzy
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/selection-chemistry.cpp:2938
+#: ../src/selection-chemistry.cpp:2987
 #, fuzzy
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/selection-chemistry.cpp:3044
+#: ../src/selection-chemistry.cpp:3093
 msgid "Set clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3046
+#: ../src/selection-chemistry.cpp:3095
 #, fuzzy
 msgid "Set mask"
 msgstr "Αστερίσκοι"
 
-#: ../src/selection-chemistry.cpp:3060
+#: ../src/selection-chemistry.cpp:3109
 #, fuzzy
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Αποθήκευση επιλογής"
 
-#: ../src/selection-chemistry.cpp:3128
+#: ../src/selection-chemistry.cpp:3177
 msgid "Release clipping path"
 msgstr ""
 
 #
-#: ../src/selection-chemistry.cpp:3130
+#: ../src/selection-chemistry.cpp:3179
 #, fuzzy
 msgid "Release mask"
 msgstr "Αρχείο"
 
 #
-#: ../src/selection-chemistry.cpp:3141
+#: ../src/selection-chemistry.cpp:3190
 #, fuzzy
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/selection-chemistry.cpp:3175
+#: ../src/selection-chemistry.cpp:3224
 #, fuzzy
 msgid "Fit page to selection"
 msgstr "Αποκοπή της επιλογής"
@@ -6753,7 +6872,7 @@ msgstr "Σύνδεση"
 msgid "Path"
 msgstr "Επικόλληση"
 
-#: ../src/selection-describer.cpp:58 ../src/widgets/toolbox.cpp:1874
+#: ../src/selection-describer.cpp:58 ../src/widgets/toolbox.cpp:1882
 msgid "Polygon"
 msgstr ""
 
@@ -6793,7 +6912,7 @@ msgstr "Ειδικό"
 #. star
 #: ../src/selection-describer.cpp:78
 #: ../src/ui/dialog/inkscape-preferences.cpp:407 ../src/verbs.cpp:2380
-#: ../src/widgets/toolbox.cpp:1881
+#: ../src/widgets/toolbox.cpp:1889
 msgid "Star"
 msgstr "Αστερίσκος"
 
@@ -6914,83 +7033,83 @@ msgstr[1] "Εκκίνηση επιλεγμένου παροχέα"
 msgid "%s%s. %s."
 msgstr ""
 
-#: ../src/seltrans.cpp:435 ../src/ui/dialog/transformation.cpp:736
+#: ../src/seltrans.cpp:437 ../src/ui/dialog/transformation.cpp:745
 #, fuzzy
 msgid "Skew"
 msgstr "Καπνός"
 
-#: ../src/seltrans.cpp:447
+#: ../src/seltrans.cpp:449
 #, fuzzy
 msgid "Set center"
 msgstr "Επιλογή"
 
-#: ../src/seltrans.cpp:542
+#: ../src/seltrans.cpp:544
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
 msgstr ""
 
-#: ../src/seltrans.cpp:569
+#: ../src/seltrans.cpp:571
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
 msgstr ""
 
-#: ../src/seltrans.cpp:570
+#: ../src/seltrans.cpp:572
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
 msgstr ""
 
-#: ../src/seltrans.cpp:574
+#: ../src/seltrans.cpp:576
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
 msgstr ""
 
-#: ../src/seltrans.cpp:575
+#: ../src/seltrans.cpp:577
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
 msgstr ""
 
-#: ../src/seltrans.cpp:709
+#: ../src/seltrans.cpp:711
 #, fuzzy
 msgid "Reset center"
 msgstr "Επιλογή"
 
-#: ../src/seltrans.cpp:964 ../src/seltrans.cpp:1094
+#: ../src/seltrans.cpp:966 ../src/seltrans.cpp:1096
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1192
+#: ../src/seltrans.cpp:1194
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1241
+#: ../src/seltrans.cpp:1243
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/seltrans.cpp:1284
+#: ../src/seltrans.cpp:1286
 #, fuzzy, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "σύνδεσμος στο %s"
 
-#: ../src/seltrans.cpp:1573
+#: ../src/seltrans.cpp:1575
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
 "with <b>Shift</b> to disable snapping"
 msgstr ""
 
-#: ../src/shape-editor.cpp:370
+#: ../src/shape-editor.cpp:371
 msgid "Drag curve"
 msgstr ""
 
@@ -7005,30 +7124,30 @@ msgid "<b>Link</b> without URI"
 msgstr "σύνδεσμος στο %s"
 
 #
-#: ../src/sp-ellipse.cpp:500 ../src/sp-ellipse.cpp:881
+#: ../src/sp-ellipse.cpp:499 ../src/sp-ellipse.cpp:880
 #, fuzzy
 msgid "<b>Ellipse</b>"
 msgstr "Έλλειψη"
 
 #
-#: ../src/sp-ellipse.cpp:642
+#: ../src/sp-ellipse.cpp:641
 #, fuzzy
 msgid "<b>Circle</b>"
 msgstr "Αλλαγή"
 
 #
-#: ../src/sp-ellipse.cpp:876
+#: ../src/sp-ellipse.cpp:875
 #, fuzzy
 msgid "<b>Segment</b>"
 msgstr "Αλλαγή"
 
-#: ../src/sp-ellipse.cpp:878
+#: ../src/sp-ellipse.cpp:877
 msgid "<b>Arc</b>"
 msgstr ""
 
 #. TRANSLATORS: "Flow region" is an area where text is allowed to flow
 #: ../src/sp-flowregion.cpp:270
-#, fuzzy
+#, fuzzy, c-format
 msgid "Flow region"
 msgstr "Ακολούθηση συμβολικών συνδέσμων"
 
@@ -7037,50 +7156,56 @@ msgstr "Ακολούθηση συμβολικών συνδέσμων"
 #. * http://www.w3.org/TR/2004/WD-SVG12-20041027/flow.html#flowRegion-elem and
 #. * http://www.w3.org/TR/2004/WD-SVG12-20041027/flow.html#flowRegionExclude-elem.
 #: ../src/sp-flowregion.cpp:490
+#, c-format
 msgid "Flow excluded region"
 msgstr ""
 
-#: ../src/sp-flowtext.cpp:376
+#: ../src/sp-flowtext.cpp:378
 #, c-format
 msgid "<b>Flowed text</b> (%d character)"
 msgid_plural "<b>Flowed text</b> (%d characters)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/sp-flowtext.cpp:378
+#: ../src/sp-flowtext.cpp:380
 #, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
 msgid_plural "<b>Linked flowed text</b> (%d characters)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/sp-guide.cpp:394
+#: ../src/sp-guide.cpp:398
 #, fuzzy, c-format
-msgid "vertical guideline at %s"
+msgid "vertical, at %s"
 msgstr "Κατακόρυφες Ρίγες"
 
-#: ../src/sp-guide.cpp:396
+#: ../src/sp-guide.cpp:400
 #, fuzzy, c-format
-msgid "horizontal guideline at %s"
+msgid "horizontal, at %s"
 msgstr "οριζόντιο"
 
-#: ../src/sp-image.cpp:1039
+#: ../src/sp-guide.cpp:405
+#, c-format
+msgid "at %d degrees, through (%s,%s); <b>Ctrl</b>+click to delete"
+msgstr ""
+
+#: ../src/sp-image.cpp:1041
 msgid "embedded"
 msgstr ""
 
 #
-#: ../src/sp-image.cpp:1047
+#: ../src/sp-image.cpp:1049
 #, fuzzy, c-format
 msgid "<b>Image with bad reference</b>: %s"
 msgstr "Προτιμίσεις Ναυτίλου"
 
-#: ../src/sp-image.cpp:1048
+#: ../src/sp-image.cpp:1050
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr ""
 
 #
-#: ../src/sp-item-group.cpp:694
+#: ../src/sp-item-group.cpp:696
 #, fuzzy, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
@@ -7109,23 +7234,23 @@ msgid "<b>Line</b>"
 msgstr "Αλλαγή"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
-#: ../src/sp-offset.cpp:431
+#: ../src/sp-offset.cpp:433
 #, c-format
 msgid "<b>Linked offset</b>, %s by %f pt"
 msgstr ""
 
-#: ../src/sp-offset.cpp:432 ../src/sp-offset.cpp:436
+#: ../src/sp-offset.cpp:434 ../src/sp-offset.cpp:438
 #, fuzzy
 msgid "outset"
 msgstr "Αντιγραφή επιλεγμένης εργασίας"
 
-#: ../src/sp-offset.cpp:432 ../src/sp-offset.cpp:436
+#: ../src/sp-offset.cpp:434 ../src/sp-offset.cpp:438
 #, fuzzy
 msgid "inset"
 msgstr "ίντσα"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
-#: ../src/sp-offset.cpp:435
+#: ../src/sp-offset.cpp:437
 #, c-format
 msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr ""
@@ -7144,12 +7269,12 @@ msgid_plural "<b>Path</b> (%i nodes)"
 msgstr[0] "σύνδεσμος στο %s"
 msgstr[1] "σύνδεσμος στο %s"
 
-#: ../src/sp-path.cpp:573
+#: ../src/sp-path.cpp:571
 #, fuzzy
 msgid "Creating single dot"
 msgstr "Έγγραφο"
 
-#: ../src/sp-path.cpp:574
+#: ../src/sp-path.cpp:572
 #, fuzzy
 msgid "Create single dot"
 msgstr "Νέα Προβολή"
@@ -7179,14 +7304,14 @@ msgstr "Αλλαγή"
 msgid "<b>Spiral</b> with %3f turns"
 msgstr ""
 
-#: ../src/sp-star.cpp:307
+#: ../src/sp-star.cpp:311
 #, c-format
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/sp-star.cpp:311
+#: ../src/sp-star.cpp:315
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
@@ -7217,7 +7342,7 @@ msgid "<b>Text</b> (%s, %s)"
 msgstr "σύνδεσμος στο %s"
 
 #
-#: ../src/sp-tspan.cpp:283
+#: ../src/sp-tspan.cpp:285
 #, fuzzy
 msgid "<b>Text span</b>"
 msgstr "Αλλαγή"
@@ -7225,267 +7350,267 @@ msgstr "Αλλαγή"
 #
 #. TRANSLATORS: Used for statusbar description for long <use> chains:
 #. * "Clone of: Clone of: ... in Layer 1".
-#: ../src/sp-use.cpp:316
+#: ../src/sp-use.cpp:320
 #, fuzzy
 msgid "..."
 msgstr "_Άνοιγμα"
 
-#: ../src/sp-use.cpp:324
+#: ../src/sp-use.cpp:328
 #, fuzzy, c-format
 msgid "<b>Clone</b> of: %s"
 msgstr "σύνδεσμος στο %s"
 
 #
-#: ../src/sp-use.cpp:328
+#: ../src/sp-use.cpp:332
 #, fuzzy
 msgid "<b>Orphaned clone</b>"
 msgstr "Αλλαγή"
 
-#: ../src/spiral-context.cpp:337
+#: ../src/spiral-context.cpp:339
 msgid "<b>Ctrl</b>: snap angle"
 msgstr ""
 
-#: ../src/spiral-context.cpp:339
+#: ../src/spiral-context.cpp:341
 msgid "<b>Alt</b>: lock spiral radius"
 msgstr ""
 
-#: ../src/spiral-context.cpp:461
+#: ../src/spiral-context.cpp:463
 #, c-format
 msgid ""
 "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
 #
-#: ../src/spiral-context.cpp:482
+#: ../src/spiral-context.cpp:484
 #, fuzzy
 msgid "Create spiral"
 msgstr "Δημιουργία γραμμής"
 
 #
-#: ../src/splivarot.cpp:69 ../src/splivarot.cpp:75
+#: ../src/splivarot.cpp:71 ../src/splivarot.cpp:77
 #, fuzzy
 msgid "Union"
 msgstr "κανένα"
 
-#: ../src/splivarot.cpp:81
+#: ../src/splivarot.cpp:83
 #, fuzzy
 msgid "Intersection"
 msgstr "Δ_ιεπιφάνεια"
 
-#: ../src/splivarot.cpp:87
+#: ../src/splivarot.cpp:89
 #, fuzzy
 msgid "Difference"
 msgstr "πράσινο"
 
-#: ../src/splivarot.cpp:93
+#: ../src/splivarot.cpp:95
 #, fuzzy
 msgid "Exclusion"
 msgstr "Διάσταση"
 
-#: ../src/splivarot.cpp:98
+#: ../src/splivarot.cpp:100
 msgid "Division"
 msgstr ""
 
-#: ../src/splivarot.cpp:103
+#: ../src/splivarot.cpp:105
 #, fuzzy
 msgid "Cut path"
 msgstr "Αντιγραφή επιλεγμένης εργασίας"
 
-#: ../src/splivarot.cpp:120
+#: ../src/splivarot.cpp:122
 #, fuzzy
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
-#: ../src/splivarot.cpp:124
+#: ../src/splivarot.cpp:126
 #, fuzzy
 msgid "Select <b>at least 1 path</b> to perform a boolean union."
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
-#: ../src/splivarot.cpp:130
+#: ../src/splivarot.cpp:132
 msgid ""
 "Select <b>exactly 2 paths</b> to perform difference, XOR, division, or path "
 "cut."
 msgstr ""
 
-#: ../src/splivarot.cpp:147 ../src/splivarot.cpp:162
+#: ../src/splivarot.cpp:149 ../src/splivarot.cpp:164
 msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
 msgstr ""
 
 #
-#: ../src/splivarot.cpp:192
+#: ../src/splivarot.cpp:194
 #, fuzzy
 msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/splivarot.cpp:602
+#: ../src/splivarot.cpp:604
 #, fuzzy
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/splivarot.cpp:886
+#: ../src/splivarot.cpp:888
 #, fuzzy
 msgid "Convert stroke to path"
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:889
+#: ../src/splivarot.cpp:891
 #, fuzzy
 msgid "<b>No stroked paths</b> in the selection."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/splivarot.cpp:973
+#: ../src/splivarot.cpp:975
 #, fuzzy
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/splivarot.cpp:1093 ../src/splivarot.cpp:1162
+#: ../src/splivarot.cpp:1095 ../src/splivarot.cpp:1164
 #, fuzzy
 msgid "Create linked offset"
 msgstr "Δημιουργία γραμμής"
 
-#: ../src/splivarot.cpp:1094 ../src/splivarot.cpp:1163
+#: ../src/splivarot.cpp:1096 ../src/splivarot.cpp:1165
 #, fuzzy
 msgid "Create dynamic offset"
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
 #
-#: ../src/splivarot.cpp:1190
+#: ../src/splivarot.cpp:1192
 #, fuzzy
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/splivarot.cpp:1408
+#: ../src/splivarot.cpp:1410
 #, fuzzy
 msgid "Outset path"
 msgstr "Αντιγραφή επιλεγμένης εργασίας"
 
-#: ../src/splivarot.cpp:1408
+#: ../src/splivarot.cpp:1410
 #, fuzzy
 msgid "Inset path"
 msgstr "Αντιγραφή επιλεγμένης εργασίας"
 
-#: ../src/splivarot.cpp:1410
+#: ../src/splivarot.cpp:1412
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr ""
 
-#: ../src/splivarot.cpp:1571
+#: ../src/splivarot.cpp:1573
 msgid "Simplifying paths (separately):"
 msgstr ""
 
-#: ../src/splivarot.cpp:1573
+#: ../src/splivarot.cpp:1575
 #, fuzzy
 msgid "Simplifying paths:"
 msgstr "Αντιγραφή επιλεγμένης εργασίας"
 
 #
-#: ../src/splivarot.cpp:1610
+#: ../src/splivarot.cpp:1612
 #, fuzzy, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr "Εκκίνηση επιλεγμένου παροχέα"
 
-#: ../src/splivarot.cpp:1621
+#: ../src/splivarot.cpp:1623
 #, c-format
 msgid "<b>%d</b> paths simplified."
 msgstr ""
 
 #
-#: ../src/splivarot.cpp:1637
+#: ../src/splivarot.cpp:1639
 #, fuzzy
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/splivarot.cpp:1651
+#: ../src/splivarot.cpp:1653
 #, fuzzy
 msgid "Simplify"
 msgstr "Αντιγραφή επιλεγμένης εργασίας"
 
-#: ../src/splivarot.cpp:1653
+#: ../src/splivarot.cpp:1655
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr ""
 
-#: ../src/star-context.cpp:348
+#: ../src/star-context.cpp:353
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
 msgstr ""
 
-#: ../src/star-context.cpp:471
+#: ../src/star-context.cpp:476
 #, c-format
 msgid ""
 "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/star-context.cpp:472
+#: ../src/star-context.cpp:477
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/star-context.cpp:495
+#: ../src/star-context.cpp:500
 #, fuzzy
 msgid "Create star"
 msgstr "Διακοπείσα σωλήνωση"
 
-#: ../src/text-chemistry.cpp:100
+#: ../src/text-chemistry.cpp:104
 #, fuzzy
 msgid "Select <b>a text and a path</b> to put text on path."
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
-#: ../src/text-chemistry.cpp:105
+#: ../src/text-chemistry.cpp:109
 msgid ""
 "This text object is <b>already put on a path</b>. Remove it from the path "
 "first. Use <b>Shift+D</b> to look up its path."
 msgstr ""
 
 #. rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
-#: ../src/text-chemistry.cpp:111
+#: ../src/text-chemistry.cpp:115
 msgid ""
 "You cannot put text on a rectangle in this version. Convert rectangle to "
 "path first."
 msgstr ""
 
-#: ../src/text-chemistry.cpp:121
+#: ../src/text-chemistry.cpp:125
 msgid "The flowed text(s) must be <b>visible</b> in order to be put on a path."
 msgstr ""
 
 #
-#: ../src/text-chemistry.cpp:188 ../src/verbs.cpp:2240
+#: ../src/text-chemistry.cpp:192 ../src/verbs.cpp:2240
 #, fuzzy
 msgid "Put text on path"
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/text-chemistry.cpp:200
+#: ../src/text-chemistry.cpp:204
 #, fuzzy
 msgid "Select <b>a text on path</b> to remove it from path."
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
 #
-#: ../src/text-chemistry.cpp:222
+#: ../src/text-chemistry.cpp:226
 #, fuzzy
 msgid "<b>No texts-on-paths</b> in the selection."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/text-chemistry.cpp:225 ../src/verbs.cpp:2242
+#: ../src/text-chemistry.cpp:229 ../src/verbs.cpp:2242
 #, fuzzy
 msgid "Remove text from path"
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/text-chemistry.cpp:265 ../src/text-chemistry.cpp:286
+#: ../src/text-chemistry.cpp:269 ../src/text-chemistry.cpp:290
 #, fuzzy
 msgid "Select <b>text(s)</b> to remove kerns from."
 msgstr "Αποθήκευση επιλογής"
 
-#: ../src/text-chemistry.cpp:289
+#: ../src/text-chemistry.cpp:293
 msgid "Remove manual kerns"
 msgstr ""
 
-#: ../src/text-chemistry.cpp:309
+#: ../src/text-chemistry.cpp:313
 #, fuzzy
 msgid ""
 "Select <b>a text</b> and one or more <b>paths or shapes</b> to flow text "
@@ -7493,39 +7618,39 @@ msgid ""
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
 #
-#: ../src/text-chemistry.cpp:377
+#: ../src/text-chemistry.cpp:381
 #, fuzzy
 msgid "Flow text into shape"
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/text-chemistry.cpp:399
+#: ../src/text-chemistry.cpp:403
 #, fuzzy
 msgid "Select <b>a flowed text</b> to unflow it."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/text-chemistry.cpp:466
+#: ../src/text-chemistry.cpp:470
 msgid "Unflow flowed text"
 msgstr ""
 
 #
-#: ../src/text-chemistry.cpp:478
+#: ../src/text-chemistry.cpp:482
 #, fuzzy
 msgid "Select <b>flowed text(s)</b> to convert."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/text-chemistry.cpp:496
+#: ../src/text-chemistry.cpp:500
 msgid "The flowed text(s) must be <b>visible</b> in order to be converted."
 msgstr ""
 
 #
-#: ../src/text-chemistry.cpp:524
+#: ../src/text-chemistry.cpp:528
 #, fuzzy
 msgid "Convert flowed text to text"
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #
-#: ../src/text-chemistry.cpp:529
+#: ../src/text-chemistry.cpp:533
 #, fuzzy
 msgid "<b>No flowed text(s)</b> to convert in the selection."
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
@@ -7673,7 +7798,7 @@ msgstr "Καπνός με άνεμο"
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr ""
 
-#: ../src/text-context.cpp:1552 ../src/tools-switch.cpp:205
+#: ../src/text-context.cpp:1552 ../src/tools-switch.cpp:208
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -7684,83 +7809,83 @@ msgstr ""
 msgid "Type text"
 msgstr "_Τύπος:"
 
-#: ../src/tools-switch.cpp:145
+#: ../src/tools-switch.cpp:148
 msgid ""
 "To edit a path, <b>click</b>, <b>Shift+click</b>, or <b>drag around</b> "
 "nodes to select them, then <b>drag</b> nodes and handles. <b>Click</b> on an "
 "object to select."
 msgstr ""
 
-#: ../src/tools-switch.cpp:151
+#: ../src/tools-switch.cpp:154
 msgid "To tweak a path by pushing, select it and drag over it."
 msgstr ""
 
-#: ../src/tools-switch.cpp:157
+#: ../src/tools-switch.cpp:160
 msgid ""
 "<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and "
 "resize. <b>Click</b> to select."
 msgstr ""
 
-#: ../src/tools-switch.cpp:163
+#: ../src/tools-switch.cpp:166
 msgid ""
 "<b>Drag</b> to create a 3D box. <b>Drag controls</b> to resize in "
 "perspective. <b>Click</b> to select (with <b>Ctrl+Alt</b> for single faces)."
 msgstr ""
 
-#: ../src/tools-switch.cpp:169
+#: ../src/tools-switch.cpp:172
 msgid ""
 "<b>Drag</b> to create an ellipse. <b>Drag controls</b> to make an arc or "
 "segment. <b>Click</b> to select."
 msgstr ""
 
-#: ../src/tools-switch.cpp:175
+#: ../src/tools-switch.cpp:178
 msgid ""
 "<b>Drag</b> to create a star. <b>Drag controls</b> to edit the star shape. "
 "<b>Click</b> to select."
 msgstr ""
 
-#: ../src/tools-switch.cpp:181
+#: ../src/tools-switch.cpp:184
 msgid ""
 "<b>Drag</b> to create a spiral. <b>Drag controls</b> to edit the spiral "
 "shape. <b>Click</b> to select."
 msgstr ""
 
-#: ../src/tools-switch.cpp:187
+#: ../src/tools-switch.cpp:190
 msgid ""
 "<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to "
 "append to selected path. <b>Ctrl+click</b> to create single dots."
 msgstr ""
 
-#: ../src/tools-switch.cpp:193
+#: ../src/tools-switch.cpp:196
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to "
 "append to selected path. <b>Ctrl+click</b> to create single dots."
 msgstr ""
 
-#: ../src/tools-switch.cpp:199
+#: ../src/tools-switch.cpp:202
 msgid ""
 "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a "
 "guide, with <b>Alt</b> to thin/thicken. <b>Arrow keys</b> adjust width (left/"
 "right) and angle (up/down)."
 msgstr ""
 
-#: ../src/tools-switch.cpp:211
+#: ../src/tools-switch.cpp:214
 msgid ""
 "<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, "
 "<b>drag handles</b> to adjust gradients."
 msgstr ""
 
-#: ../src/tools-switch.cpp:217
+#: ../src/tools-switch.cpp:220
 msgid ""
 "<b>Click</b> or <b>drag around an area</b> to zoom in, <b>Shift+click</b> to "
 "zoom out."
 msgstr ""
 
-#: ../src/tools-switch.cpp:229
+#: ../src/tools-switch.cpp:232
 msgid "<b>Click and drag</b> between shapes to create a connector."
 msgstr ""
 
-#: ../src/tools-switch.cpp:235
+#: ../src/tools-switch.cpp:238
 msgid ""
 "<b>Click</b> to paint a bounded area, <b>Shift+click</b> to union the new "
 "fill with the current selection, <b>Ctrl+click</b> to change the clicked "
@@ -8044,7 +8169,7 @@ msgstr ""
 
 #. TRANSLATORS: Horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:467
-#: ../src/widgets/toolbox.cpp:2257
+#: ../src/widgets/toolbox.cpp:2265
 msgid "H:"
 msgstr ""
 
@@ -8059,13 +8184,13 @@ msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:505
 #: ../src/ui/dialog/align-and-distribute.cpp:782
-#: ../src/widgets/toolbox.cpp:5108
+#: ../src/widgets/toolbox.cpp:5156
 msgid "Remove overlaps"
 msgstr ""
 
 #
 #: ../src/ui/dialog/align-and-distribute.cpp:535
-#: ../src/widgets/toolbox.cpp:4968
+#: ../src/widgets/toolbox.cpp:5016
 #, fuzzy
 msgid "Arrange connector network"
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
@@ -8229,7 +8354,7 @@ msgstr ""
 
 #
 #: ../src/ui/dialog/align-and-distribute.cpp:884
-#: ../src/widgets/toolbox.cpp:5070
+#: ../src/widgets/toolbox.cpp:5118
 #, fuzzy
 msgid "Nicely arrange selected connector network"
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
@@ -8278,14 +8403,14 @@ msgid "Smallest item"
 msgstr "Μικρή καταιγίδα με χαλάζι"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:907
-#: ../src/ui/dialog/document-properties.cpp:128
+#: ../src/ui/dialog/document-properties.cpp:129
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1427
-#: ../src/widgets/desktop-widget.cpp:1484
+#: ../src/widgets/desktop-widget.cpp:1527
 msgid "Page"
 msgstr "Σελίδα"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:908
-#: ../src/widgets/desktop-widget.cpp:1488
+#: ../src/widgets/desktop-widget.cpp:1531
 msgid "Drawing"
 msgstr "Σχεδίαση"
 
@@ -8527,179 +8652,185 @@ msgid ""
 "the previous tab)"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:118
+#. TRANSLATORS: In Grid|_New translate only the word _New. It ref to grid
+#: ../src/ui/dialog/document-properties.cpp:119
+#, fuzzy
+msgid "Grid|_New"
+msgstr "Πλέγμα"
+
+#: ../src/ui/dialog/document-properties.cpp:119
 #, fuzzy
 msgid "Create new grid."
 msgstr "Νέα Έλλειψη"
 
-#: ../src/ui/dialog/document-properties.cpp:119
+#: ../src/ui/dialog/document-properties.cpp:120
 #: ../src/ui/dialog/livepatheffect-editor.cpp:58
 #, fuzzy
 msgid "_Remove"
 msgstr "Διαγραφή συνδέσμου"
 
 #
-#: ../src/ui/dialog/document-properties.cpp:119
+#: ../src/ui/dialog/document-properties.cpp:120
 #, fuzzy
 msgid "Remove selected grid."
 msgstr "Επιλέχθησαν \"%s\""
 
-#: ../src/ui/dialog/document-properties.cpp:129
+#: ../src/ui/dialog/document-properties.cpp:130
 #, fuzzy
 msgid "Guides"
 msgstr "Γουϊνέα"
 
-#: ../src/ui/dialog/document-properties.cpp:130
-#: ../src/ui/dialog/inkscape-preferences.cpp:872
+#: ../src/ui/dialog/document-properties.cpp:131
+#: ../src/ui/dialog/inkscape-preferences.cpp:875
 #, fuzzy
 msgid "Grids"
 msgstr "Πλέγμα"
 
-#: ../src/ui/dialog/document-properties.cpp:131 ../src/verbs.cpp:2446
+#: ../src/ui/dialog/document-properties.cpp:132 ../src/verbs.cpp:2446
 #, fuzzy
 msgid "Snap"
 msgstr "Στυλ: "
 
 #
-#: ../src/ui/dialog/document-properties.cpp:132
+#: ../src/ui/dialog/document-properties.cpp:133
 #, fuzzy
 msgid "Snap points"
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
-#: ../src/ui/dialog/document-properties.cpp:220
+#: ../src/ui/dialog/document-properties.cpp:221
 #, fuzzy
 msgid "Default _units:"
 msgstr "Διαγρ."
 
 #
-#: ../src/ui/dialog/document-properties.cpp:223
+#: ../src/ui/dialog/document-properties.cpp:224
 #, fuzzy
 msgid "<b>General</b>"
 msgstr "Αλλαγή"
 
 #
-#: ../src/ui/dialog/document-properties.cpp:225
+#: ../src/ui/dialog/document-properties.cpp:226
 #, fuzzy
 msgid "<b>Border</b>"
 msgstr "Αλλαγή"
 
 #
-#: ../src/ui/dialog/document-properties.cpp:227
+#: ../src/ui/dialog/document-properties.cpp:228
 #, fuzzy
 msgid "<b>Format</b>"
 msgstr "Αλλαγή"
 
 #
-#: ../src/ui/dialog/document-properties.cpp:255
+#: ../src/ui/dialog/document-properties.cpp:256
 #, fuzzy
 msgid "<b>Guides</b>"
 msgstr "Αλλαγή"
 
-#: ../src/ui/dialog/document-properties.cpp:274
+#: ../src/ui/dialog/document-properties.cpp:275
 #, fuzzy
 msgid "Snap _distance"
 msgstr "Ίσες Αποστάσεις"
 
-#: ../src/ui/dialog/document-properties.cpp:274
+#: ../src/ui/dialog/document-properties.cpp:275
 msgid "Snap only when _closer than:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:275
+#: ../src/ui/dialog/document-properties.cpp:276
 msgid "Snapping distance, in screen pixels, for snapping to objects"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:276
+#: ../src/ui/dialog/document-properties.cpp:277
 msgid ""
 "If set, objects only snap to another object when it's within the range "
 "specified below"
 msgstr ""
 
 #. Options for snapping to grids
-#: ../src/ui/dialog/document-properties.cpp:280
+#: ../src/ui/dialog/document-properties.cpp:281
 #, fuzzy
 msgid "Snap d_istance"
 msgstr "Ίσες Αποστάσεις"
 
-#: ../src/ui/dialog/document-properties.cpp:280
+#: ../src/ui/dialog/document-properties.cpp:281
 msgid "Snap only when c_loser than:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:281
+#: ../src/ui/dialog/document-properties.cpp:282
 msgid "Snapping distance, in screen pixels, for snapping to grid"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:282
+#: ../src/ui/dialog/document-properties.cpp:283
 msgid ""
 "If set, objects only snap to a grid line when it's within the range "
 "specified below"
 msgstr ""
 
 #. Options for snapping to guides
-#: ../src/ui/dialog/document-properties.cpp:286
+#: ../src/ui/dialog/document-properties.cpp:287
 #, fuzzy
 msgid "Snap dist_ance"
 msgstr "Ίσες Αποστάσεις"
 
-#: ../src/ui/dialog/document-properties.cpp:286
+#: ../src/ui/dialog/document-properties.cpp:287
 msgid "Snap only when close_r than:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:287
+#: ../src/ui/dialog/document-properties.cpp:288
 msgid "Snapping distance, in screen pixels, for snapping to guides"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:288
+#: ../src/ui/dialog/document-properties.cpp:289
 msgid ""
 "If set, objects only snap to a guide when it's within the range specified "
 "below"
 msgstr ""
 
 #
-#: ../src/ui/dialog/document-properties.cpp:310
+#: ../src/ui/dialog/document-properties.cpp:311
 #, fuzzy
 msgid "<b>Snapping</b>"
 msgstr "Αλλαγή"
 
 #
-#: ../src/ui/dialog/document-properties.cpp:312
+#: ../src/ui/dialog/document-properties.cpp:313
 #, fuzzy
 msgid "<b>What snaps</b>"
 msgstr "Αλλαγή"
 
-#: ../src/ui/dialog/document-properties.cpp:314
+#: ../src/ui/dialog/document-properties.cpp:315
 #, fuzzy
 msgid "<b>Snap to objects</b>"
 msgstr "Τοπο_θέτηση Σε Πλέγμα"
 
 #
-#: ../src/ui/dialog/document-properties.cpp:316
+#: ../src/ui/dialog/document-properties.cpp:317
 #, fuzzy
 msgid "<b>Snap to grids</b>"
 msgstr "Αλλαγή"
 
-#: ../src/ui/dialog/document-properties.cpp:318
+#: ../src/ui/dialog/document-properties.cpp:319
 #, fuzzy
 msgid "<b>Snap to guides</b>"
 msgstr "Τοπο_θέτηση Σε Πλέγμα"
 
-#: ../src/ui/dialog/document-properties.cpp:354
+#: ../src/ui/dialog/document-properties.cpp:355
 #, fuzzy
 msgid "<b>Snapping to intersections of</b>"
 msgstr "Τοπο_θέτηση Σε Πλέγμα"
 
-#: ../src/ui/dialog/document-properties.cpp:356
+#: ../src/ui/dialog/document-properties.cpp:357
 #, fuzzy
 msgid "<b>Snapping to special nodes</b>"
 msgstr "Τοπο_θέτηση Σε Πλέγμα"
 
 #
-#: ../src/ui/dialog/document-properties.cpp:425
+#: ../src/ui/dialog/document-properties.cpp:426
 #, fuzzy
 msgid "<b>Creation</b>"
 msgstr " <b>_Δημιούργησε</b>"
 
 #
-#: ../src/ui/dialog/document-properties.cpp:426
+#: ../src/ui/dialog/document-properties.cpp:427
 #, fuzzy
 msgid "<b>Defined grids</b>"
 msgstr "Αλλαγή"
@@ -8871,289 +9002,321 @@ msgstr "Καπνός με άνεμο"
 msgid "Stroke st_yle"
 msgstr "Ρυθμίσεις επιφάνειας εργασίας"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:763
+#
+#. pack_start(_fromSVGElement, false, false);
+#: ../src/ui/dialog/filter-effects-dialog.cpp:567
+#, fuzzy
+msgid "Image File"
+msgstr "Εικόνα"
+
+#
+#: ../src/ui/dialog/filter-effects-dialog.cpp:570
+#, fuzzy
+msgid "Selected SVG Element"
+msgstr "Καθαρισμός της επιλογής"
+
+#. TODO: any image, not justy svg
+#: ../src/ui/dialog/filter-effects-dialog.cpp:637
+msgid "Select an image to be used as feImage input"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:897
 msgid "Light Source:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:784
-#: ../src/ui/dialog/filter-effects-dialog.cpp:787
+#: ../src/ui/dialog/filter-effects-dialog.cpp:918
+#: ../src/ui/dialog/filter-effects-dialog.cpp:921
 #, fuzzy
 msgid "Location"
 msgstr "Επιλογή"
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:789
+#: ../src/ui/dialog/filter-effects-dialog.cpp:923
 #, fuzzy
 msgid "Points At"
 msgstr "Στιγμές"
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:790
+#: ../src/ui/dialog/filter-effects-dialog.cpp:924
 #, fuzzy
 msgid "Specular Exponent"
 msgstr "Εξαγωγή"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:791
+#: ../src/ui/dialog/filter-effects-dialog.cpp:925
 #, fuzzy
 msgid "Cone Angle"
 msgstr "Διάστημα"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:851
+#: ../src/ui/dialog/filter-effects-dialog.cpp:985
 msgid "New light source"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:892
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1026
 #, fuzzy
 msgid "_Duplicate"
 msgstr "Δημιουργία αντιγράφου"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:918
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1052
 #, fuzzy
 msgid "_Filter"
 msgstr "χιλιοστά"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:932
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1066
 #, fuzzy
 msgid "R_ename"
 msgstr "Όνομα Αρχείου:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1026
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1160
 #, fuzzy
 msgid "Rename filter"
 msgstr "Διαγραφή συνδέσμου"
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1062
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1196
 #, fuzzy
 msgid "Apply filter"
 msgstr "Επιλογή"
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1137
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1271
 #, fuzzy
 msgid "Add filter"
 msgstr "Επιλογή"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1148
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1282
 #, fuzzy
 msgid "Remove filter"
 msgstr "Διαγραφή συνδέσμου"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1163
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1297
 #, fuzzy
 msgid "Duplicate filter"
 msgstr "Δημιουργία αντιγράφου"
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1230
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1364
 #, fuzzy
 msgid "_Effect"
 msgstr "Αντικείμενο"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1238
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1372
 #, fuzzy
 msgid "Connections"
 msgstr "Νέα Προβολή"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1354
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1488
 msgid "Remove filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1724
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1859
 #, fuzzy
 msgid "Remove merge node"
 msgstr "Διαγραφή συνδέσμου"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1840
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1975
 msgid "Reorder filter primitive"
 msgstr ""
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1876
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2011
 #, fuzzy
 msgid "Add Effect:"
 msgstr "Αντικείμενο"
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1877
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2012
 #, fuzzy
 msgid "No effect selected"
 msgstr "Κανένα έγγραφο δεν επιλέχθηκε"
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1895
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2029
 #, fuzzy
 msgid "<b>Effect parameters</b>"
 msgstr "Αλλαγή"
 
 #. # end multiple scan
 #. ## end mode page
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1963
-#: ../src/ui/dialog/tracedialog.cpp:553 ../src/widgets/toolbox.cpp:3104
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2097
+#: ../src/ui/dialog/tracedialog.cpp:553 ../src/widgets/toolbox.cpp:3112
 #, fuzzy
 msgid "Mode"
 msgstr "Μετακίνηση"
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1967
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2101
 #, fuzzy
 msgid "Value(s)"
 msgstr "Τιμή"
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1980
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2016
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2114
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2150
 #, fuzzy
 msgid "Operator"
 msgstr "Δημιουργός"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1981
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2115
 msgid "K1"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1982
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2116
 msgid "K2"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1983
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2117
 msgid "K3"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1984
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2118
 msgid "K4"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1988
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2122
 #, fuzzy
 msgid "Target"
 msgstr "μώβ"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1989
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2123
 msgid "Kernel"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1991
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2125
 msgid "Divisor"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1992
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2126
 msgid "Bias"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1993
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2127
 #, fuzzy
 msgid "Edge Mode"
 msgstr "Μετακίνηση"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1994
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2128
 msgid "Preserve Alpha"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1997
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2131
 #, fuzzy
 msgid "Diffuse Color"
 msgstr "Ορατό"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1998
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2028
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2132
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2164
 #, fuzzy
 msgid "Surface Scale"
 msgstr "Τετραγωνισμένος τερματισμός"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1999
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2029
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2133
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 #, fuzzy
 msgid "Constant"
 msgstr "Περιεχόμενο"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2000
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2031
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2134
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
 msgid "Kernel Unit Length"
 msgstr ""
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2005
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2139
 #, fuzzy
 msgid "X Channel"
 msgstr "Αλλαγή"
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2006
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2140
 #, fuzzy
 msgid "Y Channel"
 msgstr "Αλλαγή"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2009
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2143
 #, fuzzy
 msgid "Flood Color"
 msgstr "Με Χρώμα"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2013
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2147
 msgid "Standard Deviation"
 msgstr ""
 
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2154
+#, fuzzy
+msgid "Source of Image"
+msgstr "Σημείο"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2155
+#, fuzzy
+msgid "Coordinates"
+msgstr "Κολομβία"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2156
+msgid "Dimensions"
+msgstr ""
+
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2023
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2159
 #, fuzzy
 msgid "Delta X"
 msgstr "Διαγραφή"
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2024
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
 #, fuzzy
 msgid "Delta Y"
 msgstr "Διαγραφή"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2027
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2163
 #, fuzzy
 msgid "Specular Color"
 msgstr " χρώμα"
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2030
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
 #: ../share/extensions/interp.inx.h:2
 #, fuzzy
 msgid "Exponent"
 msgstr "Εξαγωγή"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2038
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2174
 msgid "Stitch Tiles"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2040
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2176
 msgid "Base Frequency"
 msgstr ""
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2041
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2177
 #, fuzzy
 msgid "Octaves"
 msgstr "Ενεργό"
 
 #
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2042
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2178
 #, fuzzy
 msgid "Seed"
 msgstr "Κόκκινο:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2054
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "Add filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2063
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2199
 msgid ""
 "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, "
 "multiply, darken and lighten."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2067
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "colour of each rendered pixel. This allows for effects like turning object "
 "to grayscale, modifying colour saturation and changing colour hue."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2071
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
 msgid ""
 "The <b>feComponentTransfer</b> filter primitive manipulates the input's "
 "color components (red, green, blue, and alpha) according to particular "
@@ -9161,7 +9324,7 @@ msgid ""
 "adjustment, color balance, and thresholding."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2075
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2211
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
 "the Porter-Duff blending modes or the aritmetic mode described in SVG "
@@ -9169,7 +9332,7 @@ msgid ""
 "between the corresponding pixel values of the images."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2079
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
 msgid ""
 "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on "
 "the image. Common effects created using convolution matrices are blur, "
@@ -9178,7 +9341,7 @@ msgid ""
 "is faster and resolution-independent."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2083
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2219
 msgid ""
 "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
@@ -9186,7 +9349,7 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2087
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
 msgid ""
 "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the "
 "first input using the second input as a displacement map, that shows from "
@@ -9194,26 +9357,26 @@ msgid ""
 "effects."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2091
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2227
 msgid ""
 "The <b>feFlood</b> filter primitive fills the region with a given color and "
 "opacity.  It is usually used as an input to other filters to apply color to "
 "a graphic."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2095
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
 msgid ""
 "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is "
 "commonly used together with feOffset to create a drop shadow effect."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2099
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
 msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2103
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2239
 msgid ""
 "The <b>feMerge</b> filter primitive composites several temporary images "
 "inside the filter primitive to a single image. It uses normal alpha "
@@ -9221,21 +9384,21 @@ msgid ""
 "in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2107
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2243
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
 "For single-colour objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2111
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2247
 msgid ""
 "The <b>feOffset</b> filter primitive offsets the image by an user-defined "
 "amount. For example, this is useful for drop shadows, where the shadow is in "
 "a slightly different position than the actual object."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2115
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2251
 msgid ""
 "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
@@ -9243,23 +9406,23 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2119
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2255
 msgid ""
 "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2123
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2259
 msgid ""
 "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of "
 "noise is useful in simulating several nature phenomena like clouds, fire and "
 "smoke and in generating complex textures like marble or granite."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2138
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2274
 msgid "Duplicate filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2177
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2313
 #, fuzzy
 msgid "Set filter primitive attribute"
 msgstr "εμφάνιση ιδιοτήτων"
@@ -9365,7 +9528,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:178
 #: ../src/ui/dialog/tracedialog.cpp:410 ../src/ui/dialog/tracedialog.cpp:443
-#: ../src/ui/dialog/tracedialog.cpp:586 ../src/widgets/toolbox.cpp:5223
+#: ../src/ui/dialog/tracedialog.cpp:586 ../src/widgets/toolbox.cpp:5271
 msgid "Threshold:"
 msgstr ""
 
@@ -9501,6 +9664,11 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:242
 msgid "Ctrl+click dot size:"
 msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:242
+#, fuzzy
+msgid "times current stroke width"
+msgstr "Καπνός με άνεμο"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:243
 msgid "Size of dots created with Ctrl+click (relative to current stroke width)"
@@ -9689,7 +9857,7 @@ msgstr ""
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:387
 #: ../src/ui/view/edit-widget.cpp:1073 ../src/verbs.cpp:2394
-#: ../src/widgets/desktop-widget.cpp:483
+#: ../src/widgets/desktop-widget.cpp:485
 msgid "Zoom"
 msgstr "Εστίαση"
 
@@ -10330,8 +10498,8 @@ msgstr "Εμφάνιση πλέγματος"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:825
 #, fuzzy
-msgid "Default grid settings"
-msgstr "Ρυθμίσεις επιφάνειας εργασίας"
+msgid "Major grid line emphasizing"
+msgstr "Επιλογή χρώματος"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:827
 msgid "Don't emphasize gridlines when zoomed out"
@@ -10343,160 +10511,165 @@ msgid ""
 "of major grid line color."
 msgstr ""
 
+#: ../src/ui/dialog/inkscape-preferences.cpp:830
+#, fuzzy
+msgid "Default grid settings"
+msgstr "Ρυθμίσεις επιφάνειας εργασίας"
+
 #
-#: ../src/ui/dialog/inkscape-preferences.cpp:833
-#: ../src/ui/dialog/inkscape-preferences.cpp:854
+#: ../src/ui/dialog/inkscape-preferences.cpp:836
+#: ../src/ui/dialog/inkscape-preferences.cpp:857
 #, fuzzy
 msgid "Grid units"
 msgstr "Γραμματοσειρά Πλέγματος"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:836
-#: ../src/ui/dialog/inkscape-preferences.cpp:857
+#: ../src/ui/dialog/inkscape-preferences.cpp:839
+#: ../src/ui/dialog/inkscape-preferences.cpp:860
 #, fuzzy
 msgid "Origin X"
 msgstr "Προέλευση:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:837
-#: ../src/ui/dialog/inkscape-preferences.cpp:858
+#: ../src/ui/dialog/inkscape-preferences.cpp:840
+#: ../src/ui/dialog/inkscape-preferences.cpp:861
 #, fuzzy
 msgid "Origin Y"
 msgstr "Προέλευση:"
 
 #
-#: ../src/ui/dialog/inkscape-preferences.cpp:840
+#: ../src/ui/dialog/inkscape-preferences.cpp:843
 #, fuzzy
 msgid "Spacing X"
 msgstr "Διάστιχο:"
 
 #
-#: ../src/ui/dialog/inkscape-preferences.cpp:841
-#: ../src/ui/dialog/inkscape-preferences.cpp:860
+#: ../src/ui/dialog/inkscape-preferences.cpp:844
+#: ../src/ui/dialog/inkscape-preferences.cpp:863
 #, fuzzy
 msgid "Spacing Y"
 msgstr "Διάστιχο:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:844
-#: ../src/ui/dialog/inkscape-preferences.cpp:866
+#: ../src/ui/dialog/inkscape-preferences.cpp:847
+#: ../src/ui/dialog/inkscape-preferences.cpp:869
 msgid "Selects the color used for normal grid lines."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:846
-#: ../src/ui/dialog/inkscape-preferences.cpp:868
+#: ../src/ui/dialog/inkscape-preferences.cpp:849
+#: ../src/ui/dialog/inkscape-preferences.cpp:871
 msgid "Selects the color used for major (highlighted) grid lines."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:848
-#: ../src/ui/dialog/inkscape-preferences.cpp:870
+#: ../src/ui/dialog/inkscape-preferences.cpp:851
+#: ../src/ui/dialog/inkscape-preferences.cpp:873
 #, fuzzy
 msgid "Major grid line every"
 msgstr "Επιλογή χρώματος"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:849
+#: ../src/ui/dialog/inkscape-preferences.cpp:852
 msgid "Show dots instead of lines"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:860
+#: ../src/ui/dialog/inkscape-preferences.cpp:863
 msgid "Base length of z-axis"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:863
+#: ../src/ui/dialog/inkscape-preferences.cpp:866
 #, fuzzy
 msgid "Angle X"
 msgstr "Διάστημα"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:863
+#: ../src/ui/dialog/inkscape-preferences.cpp:866
 msgid "Angle of x-axis"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:864
+#: ../src/ui/dialog/inkscape-preferences.cpp:867
 #, fuzzy
 msgid "Angle Z"
 msgstr "Διάστημα"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:864
+#: ../src/ui/dialog/inkscape-preferences.cpp:867
 msgid "Angle of z-axis"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:877
+#: ../src/ui/dialog/inkscape-preferences.cpp:880
 msgid "Add label comments to printing output"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:879
+#: ../src/ui/dialog/inkscape-preferences.cpp:882
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:881
+#: ../src/ui/dialog/inkscape-preferences.cpp:884
 msgid "Prevent sharing of gradient definitions"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:883
+#: ../src/ui/dialog/inkscape-preferences.cpp:886
 msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
 "may affect other objects using the same gradient"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:885
+#: ../src/ui/dialog/inkscape-preferences.cpp:888
 msgid "Simplification threshold:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:886
+#: ../src/ui/dialog/inkscape-preferences.cpp:889
 msgid ""
 "How strong is the Simplify command by default. If you invoke this command "
 "several times in quick succession, it will act more and more aggressively; "
 "invoking it again after a pause restores the default threshold."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:888
+#: ../src/ui/dialog/inkscape-preferences.cpp:891
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:888
+#: ../src/ui/dialog/inkscape-preferences.cpp:891
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:888
+#: ../src/ui/dialog/inkscape-preferences.cpp:891
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:888
+#: ../src/ui/dialog/inkscape-preferences.cpp:891
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:892
+#: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "Oversample bitmaps:"
 msgstr ""
 
 #. consider moving this to an UI tab:
-#: ../src/ui/dialog/inkscape-preferences.cpp:896
+#: ../src/ui/dialog/inkscape-preferences.cpp:899
 msgid "Make the commands toolbar icons smaller"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:898
+#: ../src/ui/dialog/inkscape-preferences.cpp:901
 msgid ""
 "Make the commands toolbar use the 'secondary' toolbar size (requires restart)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:900
+#: ../src/ui/dialog/inkscape-preferences.cpp:903
 msgid "Make the main toolbar icons smaller"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:902
+#: ../src/ui/dialog/inkscape-preferences.cpp:905
 msgid "Make the main tools use the 'secondary' toolbar size (requires restart)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:905
+#: ../src/ui/dialog/inkscape-preferences.cpp:908
 #, fuzzy
 msgid "Maximum number of recent documents:"
 msgstr "Έγγραφο"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:906
+#: ../src/ui/dialog/inkscape-preferences.cpp:909
 msgid "The maximum length of the Open Recent list in the File menu"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:909
+#: ../src/ui/dialog/inkscape-preferences.cpp:912
 msgid "Misc"
 msgstr ""
 
@@ -10529,6 +10702,7 @@ msgid "Unknown effect is applied"
 msgstr ""
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:164
+#: ../src/ui/dialog/livepatheffect-editor.cpp:268
 msgid "No effect applied"
 msgstr ""
 
@@ -10551,7 +10725,7 @@ msgstr "Καθαρισμός της επιλογής"
 msgid "Create and apply path effect"
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:267
+#: ../src/ui/dialog/livepatheffect-editor.cpp:271
 #, fuzzy
 msgid "Remove path effect"
 msgstr "Διαγραφή συνδέσμου"
@@ -11074,7 +11248,7 @@ msgstr ""
 msgid "Apply transformation to selection"
 msgstr "Επιλέξτε ενέργεια"
 
-#: ../src/ui/dialog/transformation.cpp:763
+#: ../src/ui/dialog/transformation.cpp:772
 #, fuzzy
 msgid "Edit transformation matrix"
 msgstr "Μετασχηματισμός"
@@ -11215,23 +11389,23 @@ msgstr ""
 msgid "PLACEHOLDER, DO NOT TRANSLATE"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1062 ../src/widgets/desktop-widget.cpp:374
+#: ../src/ui/view/edit-widget.cpp:1062 ../src/widgets/desktop-widget.cpp:376
 #, fuzzy
 msgid "Zoom drawing if window size changes"
 msgstr "Αλλαγή κλίμακας για _ταίριασμα"
 
-#: ../src/ui/view/edit-widget.cpp:1083 ../src/widgets/desktop-widget.cpp:503
+#: ../src/ui/view/edit-widget.cpp:1083 ../src/widgets/desktop-widget.cpp:505
 msgid "Cursor coordinates"
 msgstr ""
 
 #. display the initial welcome message in the statusbar
-#: ../src/ui/view/edit-widget.cpp:1100 ../src/widgets/desktop-widget.cpp:549
+#: ../src/ui/view/edit-widget.cpp:1100 ../src/widgets/desktop-widget.cpp:553
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1211 ../src/widgets/desktop-widget.cpp:822
+#: ../src/ui/view/edit-widget.cpp:1211 ../src/widgets/desktop-widget.cpp:839
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -11241,11 +11415,11 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/view/edit-widget.cpp:1222 ../src/ui/view/edit-widget.cpp:1269
-#: ../src/widgets/desktop-widget.cpp:829 ../src/widgets/desktop-widget.cpp:885
+#: ../src/widgets/desktop-widget.cpp:846 ../src/widgets/desktop-widget.cpp:902
 msgid "Close _without saving"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1257 ../src/widgets/desktop-widget.cpp:877
+#: ../src/ui/view/edit-widget.cpp:1257 ../src/widgets/desktop-widget.cpp:894
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -11254,7 +11428,7 @@ msgid ""
 "Do you want to save this file as an Inkscape SVG?"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1272 ../src/widgets/desktop-widget.cpp:888
+#: ../src/ui/view/edit-widget.cpp:1272 ../src/widgets/desktop-widget.cpp:905
 msgid "_Save as SVG"
 msgstr ""
 
@@ -11302,14 +11476,36 @@ msgstr ""
 msgid "Other"
 msgstr "Διάταξη"
 
+#
+#: ../src/ui/widget/object-composite-settings.cpp:50
+#: ../src/ui/widget/selected-style.cpp:1026
+#: ../src/ui/widget/selected-style.cpp:1027
+#, fuzzy
+msgid "Opacity, %"
+msgstr "Διαφάνεια"
+
+#
+#: ../src/ui/widget/object-composite-settings.cpp:156
+#, fuzzy
+msgid "Change blur"
+msgstr "Ιδιότητα"
+
+#
+#: ../src/ui/widget/object-composite-settings.cpp:196
+#: ../src/ui/widget/selected-style.cpp:850
+#: ../src/ui/widget/selected-style.cpp:1141
+#, fuzzy
+msgid "Change opacity"
+msgstr "Διαφάνεια:"
+
 #: ../src/ui/widget/selected-style.cpp:103
-#: ../src/ui/widget/style-swatch.cpp:105
+#: ../src/ui/widget/style-swatch.cpp:108
 #, fuzzy
 msgid "Fill:"
 msgstr "Γέμισμα"
 
 #: ../src/ui/widget/selected-style.cpp:104
-#: ../src/ui/widget/style-swatch.cpp:106
+#: ../src/ui/widget/style-swatch.cpp:109
 #, fuzzy
 msgid "Stroke:"
 msgstr "Καπνός"
@@ -11331,38 +11527,38 @@ msgstr "Διαγραφή επιλογής"
 
 #
 #: ../src/ui/widget/selected-style.cpp:151
-#: ../src/ui/widget/style-swatch.cpp:323
+#: ../src/ui/widget/style-swatch.cpp:326
 #, fuzzy
 msgid "<i>None</i>"
 msgstr "Αλλαγή"
 
 #: ../src/ui/widget/selected-style.cpp:154
-#: ../src/ui/widget/style-swatch.cpp:325
+#: ../src/ui/widget/style-swatch.cpp:328
 #, fuzzy
 msgid "No fill"
 msgstr "Χωρίς Αρχείο"
 
 #
 #: ../src/ui/widget/selected-style.cpp:154
-#: ../src/ui/widget/style-swatch.cpp:325
+#: ../src/ui/widget/style-swatch.cpp:328
 #, fuzzy
 msgid "No stroke"
 msgstr "ε χρήση"
 
 #: ../src/ui/widget/selected-style.cpp:156
-#: ../src/ui/widget/style-swatch.cpp:304 ../src/widgets/paint-selector.cpp:185
+#: ../src/ui/widget/style-swatch.cpp:307 ../src/widgets/paint-selector.cpp:186
 #, fuzzy
 msgid "Pattern"
 msgstr "Σχέδιο"
 
 #: ../src/ui/widget/selected-style.cpp:159
-#: ../src/ui/widget/style-swatch.cpp:306 ../src/widgets/paint-selector.cpp:993
+#: ../src/ui/widget/style-swatch.cpp:309 ../src/widgets/paint-selector.cpp:994
 #, fuzzy
 msgid "Pattern fill"
 msgstr "Σχέδιο"
 
 #: ../src/ui/widget/selected-style.cpp:159
-#: ../src/ui/widget/style-swatch.cpp:306
+#: ../src/ui/widget/style-swatch.cpp:309
 #, fuzzy
 msgid "Pattern stroke"
 msgstr "Σχέδιο"
@@ -11375,14 +11571,14 @@ msgstr "<b>L:</b>"
 
 #
 #: ../src/ui/widget/selected-style.cpp:164
-#: ../src/ui/widget/style-swatch.cpp:298
+#: ../src/ui/widget/style-swatch.cpp:301
 #, fuzzy
 msgid "Linear gradient fill"
 msgstr "Προσθήκη νέου παροχέα"
 
 #
 #: ../src/ui/widget/selected-style.cpp:164
-#: ../src/ui/widget/style-swatch.cpp:298
+#: ../src/ui/widget/style-swatch.cpp:301
 #, fuzzy
 msgid "Linear gradient stroke"
 msgstr "Προσθήκη νέου παροχέα"
@@ -11395,14 +11591,14 @@ msgstr "Αλλαγή"
 
 #
 #: ../src/ui/widget/selected-style.cpp:174
-#: ../src/ui/widget/style-swatch.cpp:302
+#: ../src/ui/widget/style-swatch.cpp:305
 #, fuzzy
 msgid "Radial gradient fill"
 msgstr "Προσθήκη νέου παροχέα"
 
 #
 #: ../src/ui/widget/selected-style.cpp:174
-#: ../src/ui/widget/style-swatch.cpp:302
+#: ../src/ui/widget/style-swatch.cpp:305
 #, fuzzy
 msgid "Radial gradient stroke"
 msgstr "Προσθήκη νέου παροχέα"
@@ -11424,7 +11620,7 @@ msgstr "πράσινο"
 
 #
 #: ../src/ui/widget/selected-style.cpp:186
-#: ../src/ui/widget/style-swatch.cpp:328
+#: ../src/ui/widget/style-swatch.cpp:331
 #, fuzzy
 msgid "<b>Unset</b>"
 msgstr "Αλλαγή"
@@ -11608,13 +11804,6 @@ msgstr "Σχέδιο"
 msgid "Paste stroke"
 msgstr "Σχέδιο"
 
-#
-#: ../src/ui/widget/selected-style.cpp:850
-#: ../src/ui/widget/selected-style.cpp:1141
-#, fuzzy
-msgid "Change opacity"
-msgstr "Διαφάνεια:"
-
 #: ../src/ui/widget/selected-style.cpp:885
 #, fuzzy
 msgid "Change stroke width"
@@ -11623,13 +11812,6 @@ msgstr "Καπνός με άνεμο"
 #: ../src/ui/widget/selected-style.cpp:980
 msgid ", drag to adjust"
 msgstr ""
-
-#
-#: ../src/ui/widget/selected-style.cpp:1026
-#: ../src/ui/widget/selected-style.cpp:1027
-#, fuzzy
-msgid "Opacity, %"
-msgstr "Διαφάνεια"
 
 #: ../src/ui/widget/selected-style.cpp:1058
 #, fuzzy, c-format
@@ -11755,47 +11937,89 @@ msgstr "Αντιγραφή ώρας στο επιλεγμένο"
 msgid "Set page size"
 msgstr "Επιπλέον ύψος:"
 
-#: ../src/ui/widget/style-swatch.cpp:296
+#: ../src/ui/widget/style-swatch.cpp:299
 #, fuzzy
 msgid "L Gradient"
 msgstr "Βαθμίδα"
 
-#: ../src/ui/widget/style-swatch.cpp:300
+#: ../src/ui/widget/style-swatch.cpp:303
 #, fuzzy
 msgid "R Gradient"
 msgstr "Βαθμίδα"
 
-#: ../src/ui/widget/style-swatch.cpp:316
+#: ../src/ui/widget/style-swatch.cpp:319
 #, c-format
 msgid "Fill: %06x/%.3g"
 msgstr ""
 
-#: ../src/ui/widget/style-swatch.cpp:318
+#: ../src/ui/widget/style-swatch.cpp:321
 #, c-format
 msgid "Stroke: %06x/%.3g"
 msgstr ""
 
-#: ../src/ui/widget/style-swatch.cpp:350
+#: ../src/ui/widget/style-swatch.cpp:353
 #, fuzzy, c-format
 msgid "Stroke width: %.5g%s"
 msgstr "Καπνός με άνεμο"
 
 #
-#: ../src/ui/widget/style-swatch.cpp:366
+#: ../src/ui/widget/style-swatch.cpp:369
 #, fuzzy, c-format
 msgid "O:%.3g"
 msgstr "Διαφάνεια:"
 
-#: ../src/ui/widget/style-swatch.cpp:368
+#: ../src/ui/widget/style-swatch.cpp:371
 #, c-format
 msgid "O:.%d"
 msgstr ""
 
 #
-#: ../src/ui/widget/style-swatch.cpp:373
+#: ../src/ui/widget/style-swatch.cpp:376
 #, fuzzy, c-format
 msgid "Opacity: %.3g"
 msgstr "Διαφάνεια:"
+
+#: ../src/vanishing-point.cpp:135
+msgid "Split vanishing points"
+msgstr ""
+
+#: ../src/vanishing-point.cpp:181
+msgid "Merge vanishing points"
+msgstr ""
+
+#: ../src/vanishing-point.cpp:252
+msgid "3D box: Move vanishing point"
+msgstr ""
+
+#: ../src/vanishing-point.cpp:351
+#, c-format
+msgid "<b>Finite</b> vanishing point shared by <b>%d</b> box"
+msgid_plural ""
+"<b>Finite</b> vanishing point shared by <b>%d</b> boxes; drag with <b>Shift</"
+"b> to separate selected box(es)"
+msgstr[0] ""
+msgstr[1] ""
+
+#. This won't make sense any more when infinite VPs are not shown on the canvas,
+#. but currently we update the status message anyway
+#: ../src/vanishing-point.cpp:358
+#, c-format
+msgid "<b>Infinite</b> vanishing point shared by <b>%d</b> box"
+msgid_plural ""
+"<b>Infinite</b> vanishing point shared by <b>%d</b> boxes; drag with "
+"<b>Shift</b> to separate selected box(es)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/vanishing-point.cpp:366
+#, c-format
+msgid ""
+"shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
+msgid_plural ""
+"shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box"
+"(es)"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/verbs.cpp:1116
 #, fuzzy
@@ -12415,12 +12639,12 @@ msgstr "Επιλογή"
 msgid "Deselect any selected objects or nodes"
 msgstr "Διαγραφή επιλογής"
 
-#: ../src/verbs.cpp:2222 ../src/widgets/toolbox.cpp:1094
+#: ../src/verbs.cpp:2222 ../src/widgets/toolbox.cpp:1099
 #, fuzzy
 msgid "Next Path Effect Parameter"
 msgstr "Καπνός με άνεμο"
 
-#: ../src/verbs.cpp:2223 ../src/widgets/toolbox.cpp:1095
+#: ../src/verbs.cpp:2223 ../src/widgets/toolbox.cpp:1100
 msgid "Show next Path Effect parameter for editing"
 msgstr ""
 
@@ -12717,14 +12941,16 @@ msgstr "πραγματική διαδρομή"
 msgid "Break selected paths into subpaths"
 msgstr "Επανεκκίνηση επιλεγμένων αρχείων"
 
+#
 #: ../src/verbs.cpp:2307
-msgid "Gri_d Arrange..."
-msgstr ""
+#, fuzzy
+msgid "Rows and Columns..."
+msgstr "Γραμμές, στήλες: "
 
 #
 #: ../src/verbs.cpp:2308
 #, fuzzy
-msgid "Arrange selected objects in a grid pattern"
+msgid "Arrange selected objects in a table"
 msgstr "Διαγραφή επιλεγμένου αντικειμένου"
 
 #. Layer
@@ -13407,12 +13633,13 @@ msgstr ""
 
 #: ../src/verbs.cpp:2473
 #, fuzzy
-msgid "Color managed view"
+msgid "Color-managed view"
 msgstr "Εμφάνιση πλέγματος"
 
 #: ../src/verbs.cpp:2474
-msgid "Toggle color managed display adjustment for this document window"
-msgstr ""
+#, fuzzy
+msgid "Toggle color-managed display for this document window"
+msgstr "Νέα Προβολή"
 
 #: ../src/verbs.cpp:2476
 #, fuzzy
@@ -13837,32 +14064,32 @@ msgstr "Αρχικοποίηση"
 msgid "Unhide All in All Layers"
 msgstr "Επιλογή"
 
-#: ../src/widgets/dash-selector.cpp:103
+#: ../src/widgets/dash-selector.cpp:106
 #, fuzzy
 msgid "Dash pattern"
 msgstr "Καπνός με άνεμο"
 
-#: ../src/widgets/dash-selector.cpp:118
+#: ../src/widgets/dash-selector.cpp:121
 #, fuzzy
 msgid "Pattern offset"
 msgstr "Σχέδιο"
 
-#: ../src/widgets/desktop-widget.cpp:611
+#: ../src/widgets/desktop-widget.cpp:615
 #, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:613
+#: ../src/widgets/desktop-widget.cpp:617
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:617
+#: ../src/widgets/desktop-widget.cpp:621
 #, fuzzy, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "Συμπαγές"
 
-#: ../src/widgets/desktop-widget.cpp:619
+#: ../src/widgets/desktop-widget.cpp:623
 #, c-format
 msgid "%s - Inkscape"
 msgstr ""
@@ -13886,7 +14113,7 @@ msgstr ""
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:615 ../src/widgets/toolbox.cpp:4612
+#: ../src/widgets/font-selector.cpp:628 ../src/widgets/toolbox.cpp:4659
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr ""
 
@@ -13954,11 +14181,11 @@ msgstr ""
 msgid "Edit the stops of the gradient"
 msgstr "Προσθήκη νέου παροχέα"
 
-#: ../src/widgets/gradient-toolbar.cpp:522 ../src/widgets/toolbox.cpp:1784
-#: ../src/widgets/toolbox.cpp:1856 ../src/widgets/toolbox.cpp:2185
-#: ../src/widgets/toolbox.cpp:2222 ../src/widgets/toolbox.cpp:2836
-#: ../src/widgets/toolbox.cpp:2859 ../src/widgets/toolbox.cpp:3726
-#: ../src/widgets/toolbox.cpp:3752
+#: ../src/widgets/gradient-toolbar.cpp:522 ../src/widgets/toolbox.cpp:1792
+#: ../src/widgets/toolbox.cpp:1864 ../src/widgets/toolbox.cpp:2193
+#: ../src/widgets/toolbox.cpp:2230 ../src/widgets/toolbox.cpp:2844
+#: ../src/widgets/toolbox.cpp:2867 ../src/widgets/toolbox.cpp:3734
+#: ../src/widgets/toolbox.cpp:3760
 msgid "<b>New:</b>"
 msgstr ""
 
@@ -13990,10 +14217,10 @@ msgstr ""
 #
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-#: ../src/widgets/gradient-toolbar.cpp:605 ../src/widgets/toolbox.cpp:1786
-#: ../src/widgets/toolbox.cpp:2193 ../src/widgets/toolbox.cpp:2211
-#: ../src/widgets/toolbox.cpp:2838 ../src/widgets/toolbox.cpp:2849
-#: ../src/widgets/toolbox.cpp:3729 ../src/widgets/toolbox.cpp:3740
+#: ../src/widgets/gradient-toolbar.cpp:605 ../src/widgets/toolbox.cpp:1794
+#: ../src/widgets/toolbox.cpp:2201 ../src/widgets/toolbox.cpp:2219
+#: ../src/widgets/toolbox.cpp:2846 ../src/widgets/toolbox.cpp:2857
+#: ../src/widgets/toolbox.cpp:3737 ../src/widgets/toolbox.cpp:3748
 #, fuzzy
 msgid "<b>Change:</b>"
 msgstr "Αλλαγή"
@@ -14062,78 +14289,78 @@ msgstr "Βαθμίδα"
 msgid "Change gradient stop color"
 msgstr "Προσθήκη νέου παροχέα"
 
-#: ../src/widgets/layer-selector.cpp:113
+#: ../src/widgets/layer-selector.cpp:115
 #, fuzzy
 msgid "Toggle current layer visibility"
 msgstr "Έγγραφο"
 
-#: ../src/widgets/layer-selector.cpp:133
+#: ../src/widgets/layer-selector.cpp:135
 #, fuzzy
 msgid "Lock or unlock current layer"
 msgstr "Έγγραφο"
 
-#: ../src/widgets/layer-selector.cpp:136
+#: ../src/widgets/layer-selector.cpp:138
 #, fuzzy
 msgid "Current layer"
 msgstr "Έγγραφο"
 
-#: ../src/widgets/layer-selector.cpp:564
+#: ../src/widgets/layer-selector.cpp:566
 msgid "(root)"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:177 ../src/widgets/paint-selector.cpp:560
+#: ../src/widgets/paint-selector.cpp:178 ../src/widgets/paint-selector.cpp:561
 #, fuzzy
 msgid "No paint"
 msgstr "Σημείο"
 
-#: ../src/widgets/paint-selector.cpp:179 ../src/widgets/paint-selector.cpp:632
+#: ../src/widgets/paint-selector.cpp:180 ../src/widgets/paint-selector.cpp:633
 #, fuzzy
 msgid "Flat color"
 msgstr " χρώμα"
 
 #
-#: ../src/widgets/paint-selector.cpp:181 ../src/widgets/paint-selector.cpp:703
+#: ../src/widgets/paint-selector.cpp:182 ../src/widgets/paint-selector.cpp:704
 #, fuzzy
 msgid "Linear gradient"
 msgstr "Προσθήκη νέου παροχέα"
 
 #
-#: ../src/widgets/paint-selector.cpp:183 ../src/widgets/paint-selector.cpp:706
+#: ../src/widgets/paint-selector.cpp:184 ../src/widgets/paint-selector.cpp:707
 #, fuzzy
 msgid "Radial gradient"
 msgstr "Προσθήκη νέου παροχέα"
 
-#: ../src/widgets/paint-selector.cpp:187
+#: ../src/widgets/paint-selector.cpp:188
 msgid "Unset paint (make it undefined so it can be inherited)"
 msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:199
+#: ../src/widgets/paint-selector.cpp:200
 msgid ""
 "Any path self-intersections or subpaths create holes in the fill (fill-rule: "
 "evenodd)"
 msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:210
+#: ../src/widgets/paint-selector.cpp:211
 msgid ""
 "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:527
+#: ../src/widgets/paint-selector.cpp:528
 #, fuzzy
 msgid "No objects"
 msgstr "Επιλέξτε αντικείμενο"
 
-#: ../src/widgets/paint-selector.cpp:538
+#: ../src/widgets/paint-selector.cpp:539
 msgid "Multiple styles"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:549
+#: ../src/widgets/paint-selector.cpp:550
 msgid "Paint is undefined"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:980
+#: ../src/widgets/paint-selector.cpp:981
 msgid ""
 "Use the <b>Node tool</b> to adjust position, scale, and rotation of the "
 "pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to "
@@ -14300,11 +14527,11 @@ msgstr "Σχέδιο"
 msgid "System"
 msgstr ""
 
-#: ../src/widgets/sp-color-notebook.cpp:324
+#: ../src/widgets/sp-color-notebook.cpp:326
 msgid "RGBA_:"
 msgstr ""
 
-#: ../src/widgets/sp-color-notebook.cpp:332
+#: ../src/widgets/sp-color-notebook.cpp:334
 msgid "Hexadecimal RGBA value of the color"
 msgstr ""
 
@@ -14407,1377 +14634,1377 @@ msgstr "όνομα"
 msgid "Wheel"
 msgstr ""
 
-#: ../src/widgets/sp-xmlview-attr-list.cpp:43
+#: ../src/widgets/sp-xmlview-attr-list.cpp:46
 #, fuzzy
 msgid "Attribute"
 msgstr "Ιδιότητες"
 
 #
-#: ../src/widgets/sp-xmlview-attr-list.cpp:44
+#: ../src/widgets/sp-xmlview-attr-list.cpp:47
 #: ../share/extensions/perfectboundcover.inx.h:14
 msgid "Value"
 msgstr "Τιμή"
 
-#: ../src/widgets/sp-xmlview-content.cpp:165
+#: ../src/widgets/sp-xmlview-content.cpp:166
 msgid "Type text in a text node"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:163
+#: ../src/widgets/toolbox.cpp:168
 msgid "Color/opacity used for color tweaking"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:167
+#: ../src/widgets/toolbox.cpp:172
 msgid "Style of new stars"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:169
+#: ../src/widgets/toolbox.cpp:174
 #, fuzzy
 msgid "Style of new rectangles"
 msgstr "Αντιγραφή ώρας στο επιλεγμένο"
 
-#: ../src/widgets/toolbox.cpp:171
+#: ../src/widgets/toolbox.cpp:176
 #, fuzzy
 msgid "Style of new 3D boxes"
 msgstr "Αντιγραφή ώρας στο επιλεγμένο"
 
-#: ../src/widgets/toolbox.cpp:173
+#: ../src/widgets/toolbox.cpp:178
 msgid "Style of new ellipses"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:175
+#: ../src/widgets/toolbox.cpp:180
 msgid "Style of new spirals"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:177
+#: ../src/widgets/toolbox.cpp:182
 msgid "Style of new paths created by Pencil"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:179
+#: ../src/widgets/toolbox.cpp:184
 msgid "Style of new paths created by Pen"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:181
+#: ../src/widgets/toolbox.cpp:186
 #, fuzzy
 msgid "Style of new calligraphic strokes"
 msgstr "Νέα Έλλειψη"
 
-#: ../src/widgets/toolbox.cpp:191
+#: ../src/widgets/toolbox.cpp:196
 msgid "Style of Paint Bucket fill objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:970
+#: ../src/widgets/toolbox.cpp:975
 #, fuzzy
 msgid "Insert node"
 msgstr "Επεξεργασία Φακέλων"
 
-#: ../src/widgets/toolbox.cpp:971
+#: ../src/widgets/toolbox.cpp:976
 #, fuzzy
 msgid "Insert new nodes into selected segments"
 msgstr "Ξε-διαγραφή των επιλεγμένων μηνυμάτων"
 
-#: ../src/widgets/toolbox.cpp:974
+#: ../src/widgets/toolbox.cpp:979
 #, fuzzy
 msgid "Insert"
 msgstr "Αντιστροφή:"
 
-#: ../src/widgets/toolbox.cpp:982
+#: ../src/widgets/toolbox.cpp:987
 #, fuzzy
 msgid "Delete selected nodes"
 msgstr "Διαγραφή επιλογής"
 
-#: ../src/widgets/toolbox.cpp:992
+#: ../src/widgets/toolbox.cpp:997
 #, fuzzy
 msgid "Join endnodes"
 msgstr "Επεξεργασία Φακέλων"
 
-#: ../src/widgets/toolbox.cpp:993
+#: ../src/widgets/toolbox.cpp:998
 #, fuzzy
 msgid "Join selected endnodes"
 msgstr "Εκτύπωση επιλεγμένων επαφών"
 
 #
-#: ../src/widgets/toolbox.cpp:996
+#: ../src/widgets/toolbox.cpp:1001
 #, fuzzy
 msgid "Join"
 msgstr "Όνομα χρήστη:"
 
 #
-#: ../src/widgets/toolbox.cpp:1003
+#: ../src/widgets/toolbox.cpp:1008
 #, fuzzy
 msgid "Join Segment"
 msgstr "Εκκίνηση επιλεγμένου παροχέα"
 
 #
-#: ../src/widgets/toolbox.cpp:1004
+#: ../src/widgets/toolbox.cpp:1009
 #, fuzzy
 msgid "Join selected endnodes with a new segment"
 msgstr "Εκκίνηση επιλεγμένου παροχέα"
 
 #
-#: ../src/widgets/toolbox.cpp:1013
+#: ../src/widgets/toolbox.cpp:1018
 #, fuzzy
 msgid "Delete Segment"
 msgstr "Καθαρισμός της επιλογής"
 
-#: ../src/widgets/toolbox.cpp:1014
+#: ../src/widgets/toolbox.cpp:1019
 msgid "Split path between two non-endpoint nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1023
+#: ../src/widgets/toolbox.cpp:1028
 #, fuzzy
 msgid "Node Break"
 msgstr "πραγματική διαδρομή"
 
 #
-#: ../src/widgets/toolbox.cpp:1024
+#: ../src/widgets/toolbox.cpp:1029
 #, fuzzy
 msgid "Break path at selected nodes"
 msgstr "Εκκίνηση επιλεγμένου παροχέα"
 
-#: ../src/widgets/toolbox.cpp:1033
+#: ../src/widgets/toolbox.cpp:1038
 #, fuzzy
 msgid "Node Cusp"
 msgstr "Σημειώσεις"
 
-#: ../src/widgets/toolbox.cpp:1034
+#: ../src/widgets/toolbox.cpp:1039
 #, fuzzy
 msgid "Make selected nodes corner"
 msgstr "Διαγραφή επιλογής"
 
-#: ../src/widgets/toolbox.cpp:1043
+#: ../src/widgets/toolbox.cpp:1048
 #, fuzzy
 msgid "Node Smooth"
 msgstr " Επεξεργασία "
 
-#: ../src/widgets/toolbox.cpp:1044
+#: ../src/widgets/toolbox.cpp:1049
 #, fuzzy
 msgid "Make selected nodes smooth"
 msgstr "Διαγραφή επιλογής"
 
-#: ../src/widgets/toolbox.cpp:1053
+#: ../src/widgets/toolbox.cpp:1058
 #, fuzzy
 msgid "Node Symmetric"
 msgstr "Χρήση Μετρικού Συστήματος"
 
-#: ../src/widgets/toolbox.cpp:1054
+#: ../src/widgets/toolbox.cpp:1059
 #, fuzzy
 msgid "Make selected nodes symmetric"
 msgstr "Διαγραφή επιλογής"
 
-#: ../src/widgets/toolbox.cpp:1063
+#: ../src/widgets/toolbox.cpp:1068
 #, fuzzy
 msgid "Node Line"
 msgstr "Νέα Προβολή"
 
-#: ../src/widgets/toolbox.cpp:1064
+#: ../src/widgets/toolbox.cpp:1069
 #, fuzzy
 msgid "Make selected segments lines"
 msgstr "Μετακίνιση επιλεγμένου μενού πρός τα κάτω"
 
-#: ../src/widgets/toolbox.cpp:1073
+#: ../src/widgets/toolbox.cpp:1078
 #, fuzzy
 msgid "Node Curve"
 msgstr "Όχι προεπισκόπηση"
 
-#: ../src/widgets/toolbox.cpp:1074
+#: ../src/widgets/toolbox.cpp:1079
 #, fuzzy
 msgid "Make selected segments curves"
 msgstr "Μετακίνηση επιλεγμένου μενού πρoς τα επάνω"
 
-#: ../src/widgets/toolbox.cpp:1083
+#: ../src/widgets/toolbox.cpp:1088
 #, fuzzy
 msgid "Show Handles"
 msgstr "Λαβή συρταριού"
 
 #
-#: ../src/widgets/toolbox.cpp:1084
+#: ../src/widgets/toolbox.cpp:1089
 #, fuzzy
 msgid "Show the Bezier handles of selected nodes"
 msgstr "Εκκίνηση επιλεγμένου παροχέα"
 
-#: ../src/widgets/toolbox.cpp:1108
+#: ../src/widgets/toolbox.cpp:1113
 #, fuzzy
 msgid "X coordinate:"
 msgstr "Κολομβία"
 
-#: ../src/widgets/toolbox.cpp:1108
+#: ../src/widgets/toolbox.cpp:1113
 #, fuzzy
 msgid "X coordinate of selected node(s)"
 msgstr "Οριζόντιες Ρίγες"
 
-#: ../src/widgets/toolbox.cpp:1126
+#: ../src/widgets/toolbox.cpp:1131
 #, fuzzy
 msgid "Y coordinate:"
 msgstr "Κολομβία"
 
-#: ../src/widgets/toolbox.cpp:1126
+#: ../src/widgets/toolbox.cpp:1131
 #, fuzzy
 msgid "Y coordinate of selected node(s)"
 msgstr "Οριζόντιες Ρίγες"
 
-#: ../src/widgets/toolbox.cpp:1539
+#: ../src/widgets/toolbox.cpp:1544
 msgid "Star: Change number of corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1581
+#: ../src/widgets/toolbox.cpp:1586
 #, fuzzy
 msgid "Star: Change spoke ratio"
 msgstr "Μετασχηματισμός"
 
-#: ../src/widgets/toolbox.cpp:1624
+#: ../src/widgets/toolbox.cpp:1629
 msgid "Make polygon"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1624
+#: ../src/widgets/toolbox.cpp:1629
 #, fuzzy
 msgid "Make star"
 msgstr "Διακοπείσα σωλήνωση"
 
-#: ../src/widgets/toolbox.cpp:1659
+#: ../src/widgets/toolbox.cpp:1664
 msgid "Star: Change rounding"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1693
+#: ../src/widgets/toolbox.cpp:1698
 #, fuzzy
 msgid "Star: Change randomization"
 msgstr "Μετασχηματισμός"
 
-#: ../src/widgets/toolbox.cpp:1875
+#: ../src/widgets/toolbox.cpp:1883
 msgid "Regular polygon (with one handle) instead of a star"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1882
+#: ../src/widgets/toolbox.cpp:1890
 msgid "Star instead of a regular polygon (with one handle)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1902
+#: ../src/widgets/toolbox.cpp:1910
 msgid "triangle/tri-star"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1902
+#: ../src/widgets/toolbox.cpp:1910
 msgid "square/quad-star"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1902
+#: ../src/widgets/toolbox.cpp:1910
 msgid "pentagon/five-pointed star"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1902
+#: ../src/widgets/toolbox.cpp:1910
 msgid "hexagon/six-pointed star"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1905
+#: ../src/widgets/toolbox.cpp:1913
 #, fuzzy
 msgid "Corners"
 msgstr "Νέα Προβολή"
 
-#: ../src/widgets/toolbox.cpp:1905
+#: ../src/widgets/toolbox.cpp:1913
 msgid "Corners:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1905
+#: ../src/widgets/toolbox.cpp:1913
 msgid "Number of corners of a polygon or star"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1918
+#: ../src/widgets/toolbox.cpp:1926
 msgid "thin-ray star"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1918
+#: ../src/widgets/toolbox.cpp:1926
 msgid "pentagram"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1918
+#: ../src/widgets/toolbox.cpp:1926
 msgid "hexagram"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1918
+#: ../src/widgets/toolbox.cpp:1926
 msgid "heptagram"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1918
+#: ../src/widgets/toolbox.cpp:1926
 msgid "octagram"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1918
+#: ../src/widgets/toolbox.cpp:1926
 msgid "regular polygon"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1921
+#: ../src/widgets/toolbox.cpp:1929
 #, fuzzy
 msgid "Spoke ratio"
 msgstr "Διατήρηση αναλογιών"
 
-#: ../src/widgets/toolbox.cpp:1921
+#: ../src/widgets/toolbox.cpp:1929
 #, fuzzy
 msgid "Spoke ratio:"
 msgstr "Διατήρηση αναλογιών"
 
 #. TRANSLATORS: Tip radius of a star is the distance from the center to the farthest handle.
 #. Base radius is the same for the closest handle.
-#: ../src/widgets/toolbox.cpp:1924
+#: ../src/widgets/toolbox.cpp:1932
 msgid "Base radius to tip radius ratio"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1942
+#: ../src/widgets/toolbox.cpp:1950
 msgid "stretched"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1942
+#: ../src/widgets/toolbox.cpp:1950
 msgid "twisted"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1942
+#: ../src/widgets/toolbox.cpp:1950
 msgid "slightly pinched"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1942
+#: ../src/widgets/toolbox.cpp:1950
 #, fuzzy
 msgid "NOT rounded"
 msgstr "Σημείο προσάρτησης"
 
-#: ../src/widgets/toolbox.cpp:1942
+#: ../src/widgets/toolbox.cpp:1950
 msgid "slightly rounded"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1942
+#: ../src/widgets/toolbox.cpp:1950
 msgid "visibly rounded"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1942
+#: ../src/widgets/toolbox.cpp:1950
 #, fuzzy
 msgid "well rounded"
 msgstr "Ρυθμίσεις επιφάνειας εργασίας"
 
-#: ../src/widgets/toolbox.cpp:1942
+#: ../src/widgets/toolbox.cpp:1950
 msgid "amply rounded"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1942 ../src/widgets/toolbox.cpp:1957
+#: ../src/widgets/toolbox.cpp:1950 ../src/widgets/toolbox.cpp:1965
 msgid "blown up"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1945
+#: ../src/widgets/toolbox.cpp:1953
 #, fuzzy
 msgid "Rounded"
 msgstr "Σημείο προσάρτησης"
 
-#: ../src/widgets/toolbox.cpp:1945
+#: ../src/widgets/toolbox.cpp:1953
 #, fuzzy
 msgid "Rounded:"
 msgstr "Σημείο προσάρτησης"
 
-#: ../src/widgets/toolbox.cpp:1945
+#: ../src/widgets/toolbox.cpp:1953
 msgid "How much rounded are the corners (0 for sharp)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1957
+#: ../src/widgets/toolbox.cpp:1965
 #, fuzzy
 msgid "NOT randomized"
 msgstr "Τυχαιότητα:"
 
-#: ../src/widgets/toolbox.cpp:1957
+#: ../src/widgets/toolbox.cpp:1965
 msgid "slightly irregular"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1957
+#: ../src/widgets/toolbox.cpp:1965
 #, fuzzy
 msgid "visibly randomized"
 msgstr "Αρχικοποίηση"
 
-#: ../src/widgets/toolbox.cpp:1957
+#: ../src/widgets/toolbox.cpp:1965
 #, fuzzy
 msgid "strongly randomized"
 msgstr "Θέση"
 
-#: ../src/widgets/toolbox.cpp:1960
+#: ../src/widgets/toolbox.cpp:1968
 #, fuzzy
 msgid "Randomized"
 msgstr "Τυχαιότητα:"
 
-#: ../src/widgets/toolbox.cpp:1960
+#: ../src/widgets/toolbox.cpp:1968
 msgid "Randomized:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1960
+#: ../src/widgets/toolbox.cpp:1968
 msgid "Scatter randomly the corners and angles"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1975 ../src/widgets/toolbox.cpp:2910
-#: ../src/widgets/toolbox.cpp:3489 ../src/widgets/toolbox.cpp:5284
+#: ../src/widgets/toolbox.cpp:1983 ../src/widgets/toolbox.cpp:2918
+#: ../src/widgets/toolbox.cpp:3497 ../src/widgets/toolbox.cpp:5334
 msgid "Defaults"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1976 ../src/widgets/toolbox.cpp:2911
+#: ../src/widgets/toolbox.cpp:1984 ../src/widgets/toolbox.cpp:2919
 msgid ""
 "Reset shape parameters to defaults (use Inkscape Preferences > Tools to "
 "change defaults)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2048
+#: ../src/widgets/toolbox.cpp:2056
 #, fuzzy
 msgid "Change rectangle"
 msgstr "Ψάξε ορθογώνια"
 
-#: ../src/widgets/toolbox.cpp:2240
+#: ../src/widgets/toolbox.cpp:2248
 msgid "W:"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:2240
+#: ../src/widgets/toolbox.cpp:2248
 #, fuzzy
 msgid "Width of rectangle"
 msgstr "Αποκοπή της επιλογής"
 
-#: ../src/widgets/toolbox.cpp:2257
+#: ../src/widgets/toolbox.cpp:2265
 #, fuzzy
 msgid "Height of rectangle"
 msgstr "Αντιγραφή ώρας στο επιλεγμένο"
 
-#: ../src/widgets/toolbox.cpp:2271 ../src/widgets/toolbox.cpp:2286
+#: ../src/widgets/toolbox.cpp:2279 ../src/widgets/toolbox.cpp:2294
 #, fuzzy
 msgid "not rounded"
 msgstr "Σημείο προσάρτησης"
 
-#: ../src/widgets/toolbox.cpp:2274
+#: ../src/widgets/toolbox.cpp:2282
 #, fuzzy
 msgid "Horizontal radius"
 msgstr "οριζόντιο"
 
 #
-#: ../src/widgets/toolbox.cpp:2274
+#: ../src/widgets/toolbox.cpp:2282
 #, fuzzy
 msgid "Rx:"
 msgstr "1:1"
 
-#: ../src/widgets/toolbox.cpp:2274
+#: ../src/widgets/toolbox.cpp:2282
 #, fuzzy
 msgid "Horizontal radius of rounded corners"
 msgstr "Οριζόντιες Ρίγες"
 
-#: ../src/widgets/toolbox.cpp:2289
+#: ../src/widgets/toolbox.cpp:2297
 #, fuzzy
 msgid "Vertical radius"
 msgstr "Κατακόρυφες Ρίγες"
 
 #
-#: ../src/widgets/toolbox.cpp:2289
+#: ../src/widgets/toolbox.cpp:2297
 #, fuzzy
 msgid "Ry:"
 msgstr "1:1"
 
-#: ../src/widgets/toolbox.cpp:2289
+#: ../src/widgets/toolbox.cpp:2297
 #, fuzzy
 msgid "Vertical radius of rounded corners"
 msgstr "Οριζόντιες Ρίγες"
 
-#: ../src/widgets/toolbox.cpp:2308
+#: ../src/widgets/toolbox.cpp:2316
 msgid "Not rounded"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2309
+#: ../src/widgets/toolbox.cpp:2317
 msgid "Make corners sharp"
 msgstr ""
 
 #. TODO: use the correct axis here, too
-#: ../src/widgets/toolbox.cpp:2498
+#: ../src/widgets/toolbox.cpp:2506
 msgid "3D Box: Change perspective (angle of infinite axis)"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:2567
+#: ../src/widgets/toolbox.cpp:2575
 #, fuzzy
 msgid "Angle in X direction"
 msgstr "Επιλογή λεξικού"
 
-#: ../src/widgets/toolbox.cpp:2567
+#: ../src/widgets/toolbox.cpp:2575
 #, fuzzy
 msgid "Angle X:"
 msgstr "Διάστημα"
 
 #
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:2569
+#: ../src/widgets/toolbox.cpp:2577
 #, fuzzy
 msgid "Angle of PLs in X direction"
 msgstr "Επιλογή λεξικού"
 
 #
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:2591
+#: ../src/widgets/toolbox.cpp:2599
 #, fuzzy
 msgid "State of VP in X direction"
 msgstr "Επιλογή λεξικού"
 
-#: ../src/widgets/toolbox.cpp:2592
+#: ../src/widgets/toolbox.cpp:2600
 msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:2607
+#: ../src/widgets/toolbox.cpp:2615
 #, fuzzy
 msgid "Angle in Y direction"
 msgstr "Επιλογή λεξικού"
 
-#: ../src/widgets/toolbox.cpp:2607
+#: ../src/widgets/toolbox.cpp:2615
 #, fuzzy
 msgid "Angle Y:"
 msgstr "Διάστημα"
 
 #
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:2609
+#: ../src/widgets/toolbox.cpp:2617
 #, fuzzy
 msgid "Angle of PLs in Y direction"
 msgstr "Επιλογή λεξικού"
 
 #
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:2630
+#: ../src/widgets/toolbox.cpp:2638
 #, fuzzy
 msgid "State of VP in Y direction"
 msgstr "Επιλογή λεξικού"
 
-#: ../src/widgets/toolbox.cpp:2631
+#: ../src/widgets/toolbox.cpp:2639
 msgid "Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:2646
+#: ../src/widgets/toolbox.cpp:2654
 #, fuzzy
 msgid "Angle in Z direction"
 msgstr "Επιλογή λεξικού"
 
-#: ../src/widgets/toolbox.cpp:2646
+#: ../src/widgets/toolbox.cpp:2654
 #, fuzzy
 msgid "Angle Z:"
 msgstr "Διάστημα"
 
 #
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:2648
+#: ../src/widgets/toolbox.cpp:2656
 #, fuzzy
 msgid "Angle of PLs in Z direction"
 msgstr "Επιλογή λεξικού"
 
 #
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:2669
+#: ../src/widgets/toolbox.cpp:2677
 #, fuzzy
 msgid "State of VP in Z direction"
 msgstr "Επιλογή λεξικού"
 
-#: ../src/widgets/toolbox.cpp:2670
+#: ../src/widgets/toolbox.cpp:2678
 msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:2727
+#: ../src/widgets/toolbox.cpp:2735
 #, fuzzy
 msgid "Change spiral"
 msgstr "Δημιουργία γραμμής"
 
-#: ../src/widgets/toolbox.cpp:2867
+#: ../src/widgets/toolbox.cpp:2875
 msgid "just a curve"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2867
+#: ../src/widgets/toolbox.cpp:2875
 msgid "one full revolution"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2870
+#: ../src/widgets/toolbox.cpp:2878
 #, fuzzy
 msgid "Number of turns"
 msgstr "Σημείο"
 
-#: ../src/widgets/toolbox.cpp:2870
+#: ../src/widgets/toolbox.cpp:2878
 #, fuzzy
 msgid "Turns:"
 msgstr "Μετασχηματισμός"
 
-#: ../src/widgets/toolbox.cpp:2870
+#: ../src/widgets/toolbox.cpp:2878
 msgid "Number of revolutions"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:2881
+#: ../src/widgets/toolbox.cpp:2889
 #, fuzzy
 msgid "circle"
 msgstr "Αλλαγή"
 
-#: ../src/widgets/toolbox.cpp:2881
+#: ../src/widgets/toolbox.cpp:2889
 msgid "edge is much denser"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2881
+#: ../src/widgets/toolbox.cpp:2889
 msgid "edge is denser"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:2881
+#: ../src/widgets/toolbox.cpp:2889
 #, fuzzy
 msgid "even"
 msgstr "Πράσινο:"
 
-#: ../src/widgets/toolbox.cpp:2881
+#: ../src/widgets/toolbox.cpp:2889
 #, fuzzy
 msgid "center is denser"
 msgstr "Κεντράρισμα γραμμών"
 
-#: ../src/widgets/toolbox.cpp:2881
+#: ../src/widgets/toolbox.cpp:2889
 msgid "center is much denser"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2884
+#: ../src/widgets/toolbox.cpp:2892
 #, fuzzy
 msgid "Divergence"
 msgstr "πράσινο"
 
-#: ../src/widgets/toolbox.cpp:2884
+#: ../src/widgets/toolbox.cpp:2892
 #, fuzzy
 msgid "Divergence:"
 msgstr "πράσινο"
 
-#: ../src/widgets/toolbox.cpp:2884
+#: ../src/widgets/toolbox.cpp:2892
 msgid "How much denser/sparser are outer revolutions; 1 = uniform"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2895
+#: ../src/widgets/toolbox.cpp:2903
 #, fuzzy
 msgid "starts from center"
 msgstr "Επιλέξτε γραμματοσειρά"
 
-#: ../src/widgets/toolbox.cpp:2895
+#: ../src/widgets/toolbox.cpp:2903
 msgid "starts mid-way"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2895
+#: ../src/widgets/toolbox.cpp:2903
 msgid "starts near edge"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:2898
+#: ../src/widgets/toolbox.cpp:2906
 #, fuzzy
 msgid "Inner radius"
 msgstr "Προσθήκη νέου παροχέα"
 
-#: ../src/widgets/toolbox.cpp:2898
+#: ../src/widgets/toolbox.cpp:2906
 msgid "Inner radius:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2898
+#: ../src/widgets/toolbox.cpp:2906
 msgid "Radius of the innermost revolution (relative to the spiral size)"
 msgstr ""
 
 #. Width
-#: ../src/widgets/toolbox.cpp:3014
+#: ../src/widgets/toolbox.cpp:3022
 msgid "(pinch tweak)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3014 ../src/widgets/toolbox.cpp:3030
-#: ../src/widgets/toolbox.cpp:3191 ../src/widgets/toolbox.cpp:3319
-#: ../src/widgets/toolbox.cpp:3351
+#: ../src/widgets/toolbox.cpp:3022 ../src/widgets/toolbox.cpp:3038
+#: ../src/widgets/toolbox.cpp:3199 ../src/widgets/toolbox.cpp:3327
+#: ../src/widgets/toolbox.cpp:3359
 #, fuzzy
 msgid "(default)"
 msgstr "Διαγρ."
 
 #
-#: ../src/widgets/toolbox.cpp:3014
+#: ../src/widgets/toolbox.cpp:3022
 #, fuzzy
 msgid "(broad tweak)"
 msgstr "ε χρήση"
 
-#: ../src/widgets/toolbox.cpp:3017
+#: ../src/widgets/toolbox.cpp:3025
 msgid "The width of the tweak area (relative to the visible canvas area)"
 msgstr ""
 
 #. Force
-#: ../src/widgets/toolbox.cpp:3030
+#: ../src/widgets/toolbox.cpp:3038
 msgid "(minimum force)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3030
+#: ../src/widgets/toolbox.cpp:3038
 msgid "(maximum force)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3033
+#: ../src/widgets/toolbox.cpp:3041
 #, fuzzy
 msgid "Force"
 msgstr "Σημείο"
 
-#: ../src/widgets/toolbox.cpp:3033
+#: ../src/widgets/toolbox.cpp:3041
 #, fuzzy
 msgid "Force:"
 msgstr "Σημείο"
 
-#: ../src/widgets/toolbox.cpp:3033
+#: ../src/widgets/toolbox.cpp:3041
 msgid "The force of the tweak action"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3050
+#: ../src/widgets/toolbox.cpp:3058
 msgid "Push mode"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3051
+#: ../src/widgets/toolbox.cpp:3059
 msgid "Push parts of paths in any direction"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3057
+#: ../src/widgets/toolbox.cpp:3065
 #, fuzzy
 msgid "Shrink mode"
 msgstr "Επεξεργασία Φακέλων"
 
-#: ../src/widgets/toolbox.cpp:3058
+#: ../src/widgets/toolbox.cpp:3066
 #, fuzzy
 msgid "Shrink (inset) parts of paths"
 msgstr "Επανεκκίνηση επιλεγμένων αρχείων"
 
-#: ../src/widgets/toolbox.cpp:3064
+#: ../src/widgets/toolbox.cpp:3072
 msgid "Grow mode"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3065
+#: ../src/widgets/toolbox.cpp:3073
 msgid "Grow (outset) parts of paths"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3071
+#: ../src/widgets/toolbox.cpp:3079
 #, fuzzy
 msgid "Attract mode"
 msgstr "Ιδιότητα:"
 
-#: ../src/widgets/toolbox.cpp:3072
+#: ../src/widgets/toolbox.cpp:3080
 msgid "Attract parts of paths towards cursor"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3078
+#: ../src/widgets/toolbox.cpp:3086
 #, fuzzy
 msgid "Repel mode"
 msgstr "Διαγραφή συνδέσμου"
 
-#: ../src/widgets/toolbox.cpp:3079
+#: ../src/widgets/toolbox.cpp:3087
 msgid "Repel parts of paths from cursor"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3085
+#: ../src/widgets/toolbox.cpp:3093
 #, fuzzy
 msgid "Roughen mode"
 msgstr "Επεξεργασία Φακέλων"
 
-#: ../src/widgets/toolbox.cpp:3086
+#: ../src/widgets/toolbox.cpp:3094
 msgid "Roughen parts of paths"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3092
+#: ../src/widgets/toolbox.cpp:3100
 #, fuzzy
 msgid "Color paint mode"
 msgstr "Εμφάνιση πλέγματος"
 
-#: ../src/widgets/toolbox.cpp:3093
+#: ../src/widgets/toolbox.cpp:3101
 #, fuzzy
 msgid "Paint the tool's color upon selected objects"
 msgstr "Διαγραφή επιλογής"
 
-#: ../src/widgets/toolbox.cpp:3099
+#: ../src/widgets/toolbox.cpp:3107
 #, fuzzy
 msgid "Color jitter mode"
 msgstr "Αρχικοποίηση"
 
-#: ../src/widgets/toolbox.cpp:3100
+#: ../src/widgets/toolbox.cpp:3108
 #, fuzzy
 msgid "Jitter the colors of selected objects"
 msgstr "Διαγραφή επιλεγμένων αντικειμένων"
 
-#: ../src/widgets/toolbox.cpp:3105
+#: ../src/widgets/toolbox.cpp:3113
 #, fuzzy
 msgid "Mode:"
 msgstr "Μετακίνηση"
 
 #
-#: ../src/widgets/toolbox.cpp:3125
+#: ../src/widgets/toolbox.cpp:3133
 #, fuzzy
 msgid "Channels:"
 msgstr "Αλλαγή"
 
-#: ../src/widgets/toolbox.cpp:3136
+#: ../src/widgets/toolbox.cpp:3144
 msgid "In color mode, act on objects' hue"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3139
+#: ../src/widgets/toolbox.cpp:3147
 msgid "H"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3150
+#: ../src/widgets/toolbox.cpp:3158
 msgid "In color mode, act on objects' saturation"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3153
+#: ../src/widgets/toolbox.cpp:3161
 msgid "S"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3164
+#: ../src/widgets/toolbox.cpp:3172
 msgid "In color mode, act on objects' lightness"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3167
+#: ../src/widgets/toolbox.cpp:3175
 msgid "L"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3178
+#: ../src/widgets/toolbox.cpp:3186
 msgid "In color mode, act on objects' opacity"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3181
+#: ../src/widgets/toolbox.cpp:3189
 msgid "O"
 msgstr ""
 
 #. Fidelity
-#: ../src/widgets/toolbox.cpp:3191
+#: ../src/widgets/toolbox.cpp:3199
 msgid "(rough, simplified)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3191
+#: ../src/widgets/toolbox.cpp:3199
 msgid "(fine, but many nodes)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3194
+#: ../src/widgets/toolbox.cpp:3202
 #, fuzzy
 msgid "Fidelity"
 msgstr "Κέντρο"
 
-#: ../src/widgets/toolbox.cpp:3194
+#: ../src/widgets/toolbox.cpp:3202
 msgid "Fidelity:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3195
+#: ../src/widgets/toolbox.cpp:3203
 msgid ""
 "Low fidelity simplifies paths; high fidelity preserves path features but may "
 "generate a lot of new nodes"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:3212 ../src/widgets/toolbox.cpp:3464
+#: ../src/widgets/toolbox.cpp:3220 ../src/widgets/toolbox.cpp:3472
 #, fuzzy
 msgid "Pressure"
 msgstr "Παρουσία"
 
-#: ../src/widgets/toolbox.cpp:3213
+#: ../src/widgets/toolbox.cpp:3221
 msgid "Use the pressure of the input device to alter the force of tweak action"
 msgstr ""
 
 #. Width
-#: ../src/widgets/toolbox.cpp:3319
+#: ../src/widgets/toolbox.cpp:3327
 msgid "(hairline)"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:3319
+#: ../src/widgets/toolbox.cpp:3327
 #, fuzzy
 msgid "(broad stroke)"
 msgstr "ε χρήση"
 
-#: ../src/widgets/toolbox.cpp:3322
+#: ../src/widgets/toolbox.cpp:3330
 #, fuzzy
 msgid "Pen Width"
 msgstr "Πλάτος &Σελίδας"
 
-#: ../src/widgets/toolbox.cpp:3323
+#: ../src/widgets/toolbox.cpp:3331
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
 msgstr ""
 
 #. Thinning
-#: ../src/widgets/toolbox.cpp:3335
+#: ../src/widgets/toolbox.cpp:3343
 msgid "(speed blows up stroke)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3335
+#: ../src/widgets/toolbox.cpp:3343
 msgid "(slight widening)"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:3335
+#: ../src/widgets/toolbox.cpp:3343
 #, fuzzy
 msgid "(constant width)"
 msgstr "Σε εκτύπωση"
 
-#: ../src/widgets/toolbox.cpp:3335
+#: ../src/widgets/toolbox.cpp:3343
 msgid "(slight thinning, default)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3335
+#: ../src/widgets/toolbox.cpp:3343
 msgid "(speed deflates stroke)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3338
+#: ../src/widgets/toolbox.cpp:3346
 #, fuzzy
 msgid "Stroke Thinning"
 msgstr "Καπνός με άνεμο"
 
-#: ../src/widgets/toolbox.cpp:3338
+#: ../src/widgets/toolbox.cpp:3346
 #, fuzzy
 msgid "Thinning:"
 msgstr "3D Rendering"
 
-#: ../src/widgets/toolbox.cpp:3339
+#: ../src/widgets/toolbox.cpp:3347
 msgid ""
 "How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 "
 "makes them broader, 0 makes width independent of velocity)"
 msgstr ""
 
 #. Angle
-#: ../src/widgets/toolbox.cpp:3351
+#: ../src/widgets/toolbox.cpp:3359
 msgid "(left edge up)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3351
+#: ../src/widgets/toolbox.cpp:3359
 #, fuzzy
 msgid "(horizontal)"
 msgstr "οριζόντιο"
 
-#: ../src/widgets/toolbox.cpp:3351
+#: ../src/widgets/toolbox.cpp:3359
 msgid "(right edge up)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3354
+#: ../src/widgets/toolbox.cpp:3362
 #, fuzzy
 msgid "Pen Angle"
 msgstr "Διάστημα"
 
-#: ../src/widgets/toolbox.cpp:3354
+#: ../src/widgets/toolbox.cpp:3362
 #, fuzzy
 msgid "Angle:"
 msgstr "Διάστημα"
 
-#: ../src/widgets/toolbox.cpp:3355
+#: ../src/widgets/toolbox.cpp:3363
 msgid ""
 "The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if "
 "fixation = 0)"
 msgstr ""
 
 #. Fixation
-#: ../src/widgets/toolbox.cpp:3368
+#: ../src/widgets/toolbox.cpp:3376
 msgid "(perpendicular to stroke, \"brush\")"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3368
+#: ../src/widgets/toolbox.cpp:3376
 msgid "(almost fixed, default)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3368
+#: ../src/widgets/toolbox.cpp:3376
 msgid "(fixed by Angle, \"pen\")"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:3371
+#: ../src/widgets/toolbox.cpp:3379
 #, fuzzy
 msgid "Fixation"
 msgstr "Κορεσμός:"
 
 #
-#: ../src/widgets/toolbox.cpp:3371
+#: ../src/widgets/toolbox.cpp:3379
 #, fuzzy
 msgid "Fixation:"
 msgstr "Κορεσμός:"
 
-#: ../src/widgets/toolbox.cpp:3372
+#: ../src/widgets/toolbox.cpp:3380
 msgid ""
 "Angle behavior (0 = nib always perpendicular to stroke direction, 1 = fixed "
 "angle)"
 msgstr ""
 
 #. Cap Rounding
-#: ../src/widgets/toolbox.cpp:3384
+#: ../src/widgets/toolbox.cpp:3392
 msgid "(blunt caps, default)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3384
+#: ../src/widgets/toolbox.cpp:3392
 msgid "(slightly bulging)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3384
+#: ../src/widgets/toolbox.cpp:3392
 msgid "(approximately round)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3384
+#: ../src/widgets/toolbox.cpp:3392
 msgid "(long protruding caps)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3388
+#: ../src/widgets/toolbox.cpp:3396
 msgid "Cap rounding"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3388
+#: ../src/widgets/toolbox.cpp:3396
 #, fuzzy
 msgid "Caps:"
 msgstr "Τερματισμός:"
 
-#: ../src/widgets/toolbox.cpp:3389
+#: ../src/widgets/toolbox.cpp:3397
 msgid ""
 "Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = "
 "round caps)"
 msgstr ""
 
 #. Tremor
-#: ../src/widgets/toolbox.cpp:3401
+#: ../src/widgets/toolbox.cpp:3409
 msgid "(smooth line)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3401
+#: ../src/widgets/toolbox.cpp:3409
 msgid "(slight tremor)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3401
+#: ../src/widgets/toolbox.cpp:3409
 msgid "(noticeable tremor)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3401
+#: ../src/widgets/toolbox.cpp:3409
 msgid "(maximum tremor)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3404
+#: ../src/widgets/toolbox.cpp:3412
 #, fuzzy
 msgid "Stroke Tremor"
 msgstr "Επιλογή Ειδικού Χρώματος"
 
-#: ../src/widgets/toolbox.cpp:3404
+#: ../src/widgets/toolbox.cpp:3412
 msgid "Tremor:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3405
+#: ../src/widgets/toolbox.cpp:3413
 msgid "Increase to make strokes rugged and trembling"
 msgstr ""
 
 #. Wiggle
-#: ../src/widgets/toolbox.cpp:3418
+#: ../src/widgets/toolbox.cpp:3426
 msgid "(no wiggle)"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:3418
+#: ../src/widgets/toolbox.cpp:3426
 #, fuzzy
 msgid "(slight deviation)"
 msgstr "Σε εκτύπωση"
 
-#: ../src/widgets/toolbox.cpp:3418
+#: ../src/widgets/toolbox.cpp:3426
 msgid "(wild waves and curls)"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:3421
+#: ../src/widgets/toolbox.cpp:3429
 #, fuzzy
 msgid "Pen Wiggle"
 msgstr "Αρχείο"
 
 #
-#: ../src/widgets/toolbox.cpp:3421
+#: ../src/widgets/toolbox.cpp:3429
 #, fuzzy
 msgid "Wiggle:"
 msgstr "Αρχείο"
 
-#: ../src/widgets/toolbox.cpp:3422
+#: ../src/widgets/toolbox.cpp:3430
 msgid "Increase to make the pen waver and wiggle"
 msgstr ""
 
 #. Mass
-#: ../src/widgets/toolbox.cpp:3434
+#: ../src/widgets/toolbox.cpp:3442
 msgid "(no inertia)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3434
+#: ../src/widgets/toolbox.cpp:3442
 msgid "(slight smoothing, default)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3434
+#: ../src/widgets/toolbox.cpp:3442
 msgid "(noticeable lagging)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3434
+#: ../src/widgets/toolbox.cpp:3442
 msgid "(maximum inertia)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3437
+#: ../src/widgets/toolbox.cpp:3445
 msgid "Pen Mass"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3437
+#: ../src/widgets/toolbox.cpp:3445
 msgid "Mass:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3438
+#: ../src/widgets/toolbox.cpp:3446
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3452
+#: ../src/widgets/toolbox.cpp:3460
 #, fuzzy
 msgid "Trace Background"
 msgstr " χρώμα"
 
-#: ../src/widgets/toolbox.cpp:3453
+#: ../src/widgets/toolbox.cpp:3461
 msgid ""
 "Trace the lightness of the background by the width of the pen (white - "
 "minimum width, black - maximum width)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3465
+#: ../src/widgets/toolbox.cpp:3473
 msgid "Use the pressure of the input device to alter the width of the pen"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:3476
+#: ../src/widgets/toolbox.cpp:3484
 #, fuzzy
 msgid "Tilt"
 msgstr "Αρχείο"
 
-#: ../src/widgets/toolbox.cpp:3477
+#: ../src/widgets/toolbox.cpp:3485
 msgid "Use the tilt of the input device to alter the angle of the pen's nib"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3490
+#: ../src/widgets/toolbox.cpp:3498
 msgid "Reset all parameters to defaults"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3572
+#: ../src/widgets/toolbox.cpp:3580
 msgid "Arc: Change start/end"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3638
+#: ../src/widgets/toolbox.cpp:3646
 msgid "Arc: Change open/closed"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3761
+#: ../src/widgets/toolbox.cpp:3769
 #, fuzzy
 msgid "Start"
 msgstr "Αστερίσκος"
 
-#: ../src/widgets/toolbox.cpp:3761
+#: ../src/widgets/toolbox.cpp:3769
 #, fuzzy
 msgid "Start:"
 msgstr "Αστερίσκος"
 
-#: ../src/widgets/toolbox.cpp:3762
+#: ../src/widgets/toolbox.cpp:3770
 msgid "The angle (in degrees) from the horizontal to the arc's start point"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3774
+#: ../src/widgets/toolbox.cpp:3782
 msgid "End"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3774
+#: ../src/widgets/toolbox.cpp:3782
 msgid "End:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3775
+#: ../src/widgets/toolbox.cpp:3783
 msgid "The angle (in degrees) from the horizontal to the arc's end point"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3791
+#: ../src/widgets/toolbox.cpp:3799
 #, fuzzy
 msgid "Closed arc"
 msgstr "Νέα Προβολή"
 
-#: ../src/widgets/toolbox.cpp:3792
+#: ../src/widgets/toolbox.cpp:3800
 msgid "Switch to segment (closed shape with two radii)"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:3798
+#: ../src/widgets/toolbox.cpp:3806
 #, fuzzy
 msgid "Open Arc"
 msgstr "_Άνοιγμα"
 
-#: ../src/widgets/toolbox.cpp:3799
+#: ../src/widgets/toolbox.cpp:3807
 msgid "Switch to arc (unclosed shape)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3822
+#: ../src/widgets/toolbox.cpp:3830
 msgid "Make whole"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3823
+#: ../src/widgets/toolbox.cpp:3831
 msgid "Make the shape a whole ellipse, not arc or segment"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3890
+#: ../src/widgets/toolbox.cpp:3898
 msgid "Pick alpha"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3891
+#: ../src/widgets/toolbox.cpp:3899
 msgid ""
 "Pick both the color and the alpha (transparency) under cursor; otherwise, "
 "pick only the visible color premultiplied by alpha"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3902
+#: ../src/widgets/toolbox.cpp:3910
 msgid "Set alpha"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3903
+#: ../src/widgets/toolbox.cpp:3911
 msgid ""
 "If alpha was picked, assign it to selection as fill or stroke transparency"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:4232
+#: ../src/widgets/toolbox.cpp:4240
 #, fuzzy
 msgid "Text: Change font family"
 msgstr "Ρυθμίσεις επιφάνειας εργασίας"
 
-#: ../src/widgets/toolbox.cpp:4317
+#: ../src/widgets/toolbox.cpp:4325
 msgid "Text: Change alignment"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:4400
+#: ../src/widgets/toolbox.cpp:4408
 #, fuzzy
 msgid "Text: Change font style"
 msgstr "Επιλογή Τρέχουσας Συνεδρίας"
 
 #
-#: ../src/widgets/toolbox.cpp:4447
+#: ../src/widgets/toolbox.cpp:4455
 #, fuzzy
 msgid "Text: Change orientation"
 msgstr "Κορεσμός:"
 
-#: ../src/widgets/toolbox.cpp:4538
+#: ../src/widgets/toolbox.cpp:4545
 #, fuzzy
 msgid "Text: Change font size"
 msgstr "Ρυθμίσεις επιφάνειας εργασίας"
 
-#: ../src/widgets/toolbox.cpp:4719
+#: ../src/widgets/toolbox.cpp:4766
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:4757
+#: ../src/widgets/toolbox.cpp:4805
 #, fuzzy
 msgid "Align left"
 msgstr "Στοίχιση γραμμών αριστερά"
 
-#: ../src/widgets/toolbox.cpp:4768
+#: ../src/widgets/toolbox.cpp:4816
 #, fuzzy
 msgid "Center"
 msgstr "Κέντρο Υ"
 
-#: ../src/widgets/toolbox.cpp:4779
+#: ../src/widgets/toolbox.cpp:4827
 #, fuzzy
 msgid "Align right"
 msgstr "Κύλιση από αριστερά προς δεξιά"
 
-#: ../src/widgets/toolbox.cpp:4790
+#: ../src/widgets/toolbox.cpp:4838
 msgid "Justify"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:4806
+#: ../src/widgets/toolbox.cpp:4854
 msgid "Bold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:4817
+#: ../src/widgets/toolbox.cpp:4865
 msgid "Italic"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:4949
+#: ../src/widgets/toolbox.cpp:4997
 #, fuzzy
 msgid "Change connector spacing"
 msgstr "Έγγραφο"
 
-#: ../src/widgets/toolbox.cpp:5035
+#: ../src/widgets/toolbox.cpp:5083
 msgid "Avoid"
 msgstr ""
 
 #
-#: ../src/widgets/toolbox.cpp:5045
+#: ../src/widgets/toolbox.cpp:5093
 #, fuzzy
 msgid "Ignore"
 msgstr "κανένα"
 
-#: ../src/widgets/toolbox.cpp:5057
+#: ../src/widgets/toolbox.cpp:5105
 #, fuzzy
 msgid "Connector Spacing"
 msgstr "Έγγραφο"
 
 #
-#: ../src/widgets/toolbox.cpp:5057
+#: ../src/widgets/toolbox.cpp:5105
 #, fuzzy
 msgid "Spacing:"
 msgstr "Διάστιχο:"
 
-#: ../src/widgets/toolbox.cpp:5058
+#: ../src/widgets/toolbox.cpp:5106
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5069
+#: ../src/widgets/toolbox.cpp:5117
 #, fuzzy
 msgid "Graph"
 msgstr "_Ομαδοποίηση"
 
-#: ../src/widgets/toolbox.cpp:5079
+#: ../src/widgets/toolbox.cpp:5127
 #, fuzzy
 msgid "Connector Length"
 msgstr "Νέα Προβολή"
 
-#: ../src/widgets/toolbox.cpp:5079
+#: ../src/widgets/toolbox.cpp:5127
 msgid "Length:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5080
+#: ../src/widgets/toolbox.cpp:5128
 msgid "Ideal length for connectors when layout is applied"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5092
+#: ../src/widgets/toolbox.cpp:5140
 msgid "Downwards"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5093
+#: ../src/widgets/toolbox.cpp:5141
 #, fuzzy
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Διαγραφή επιλογής"
 
-#: ../src/widgets/toolbox.cpp:5109
+#: ../src/widgets/toolbox.cpp:5157
 msgid "Do not allow overlapping shapes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5210
+#: ../src/widgets/toolbox.cpp:5258
 #, fuzzy
 msgid "Fill by"
 msgstr "Γέμισμα"
 
-#: ../src/widgets/toolbox.cpp:5211
+#: ../src/widgets/toolbox.cpp:5259
 #, fuzzy
 msgid "Fill by:"
 msgstr "Γέμισμα"
 
-#: ../src/widgets/toolbox.cpp:5223
+#: ../src/widgets/toolbox.cpp:5271
 msgid "Fill Threshold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5224
+#: ../src/widgets/toolbox.cpp:5272
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5246
+#: ../src/widgets/toolbox.cpp:5296
 msgid "Grow/shrink by"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5246
+#: ../src/widgets/toolbox.cpp:5296
 msgid "Grow/shrink by:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5247
+#: ../src/widgets/toolbox.cpp:5297
 msgid ""
 "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5272
+#: ../src/widgets/toolbox.cpp:5322
 #, fuzzy
 msgid "Close gaps"
 msgstr "Νέα Προβολή"
 
-#: ../src/widgets/toolbox.cpp:5273
+#: ../src/widgets/toolbox.cpp:5323
 #, fuzzy
 msgid "Close gaps:"
 msgstr "Νέα Προβολή"
 
-#: ../src/widgets/toolbox.cpp:5285
+#: ../src/widgets/toolbox.cpp:5335
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
@@ -15799,7 +16026,7 @@ msgid "Add Nodes"
 msgstr "Σημειώσεις"
 
 #: ../share/extensions/addnodes.inx.h:2
-msgid "Maximum segment length"
+msgid "Maximum segment length (px)"
 msgstr ""
 
 #: ../share/extensions/addnodes.inx.h:3 ../share/extensions/edge3d.inx.h:6
@@ -15807,6 +16034,7 @@ msgstr ""
 #: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/perspective.inx.h:1
 #: ../share/extensions/radiusrand.inx.h:3
+#: ../share/extensions/rubberstretch.inx.h:3
 #: ../share/extensions/straightseg.inx.h:2
 #: ../share/extensions/summersnight.inx.h:2 ../share/extensions/whirl.inx.h:2
 msgid "Modify Path"
@@ -15818,8 +16046,8 @@ msgstr ""
 msgid "AI 8.0 Input"
 msgstr "Αποκοπή"
 
-#: ../share/extensions/ai_input.inx.h:2 ../share/extensions/ai_output.inx.h:2
-msgid "Adobe Illustrator 8.0 (*.ai)"
+#: ../share/extensions/ai_input.inx.h:2
+msgid "Adobe Illustrator 8.0 and below (*.ai)"
 msgstr ""
 
 #: ../share/extensions/ai_input.inx.h:3
@@ -15831,6 +16059,10 @@ msgstr ""
 #, fuzzy
 msgid "AI 8.0 Output"
 msgstr "Αποκοπή"
+
+#: ../share/extensions/ai_output.inx.h:2
+msgid "Adobe Illustrator 8.0 (*.ai)"
+msgstr ""
 
 #: ../share/extensions/ai_output.inx.h:3
 msgid "Write Adobe Illustrator 8.0 (Postscript-based)"
@@ -15924,6 +16156,11 @@ msgstr "Κορεσμός:"
 #, fuzzy
 msgid "Negative"
 msgstr "Απενεργοποιημένο"
+
+#: ../share/extensions/color_randomize.inx.h:4
+#, fuzzy
+msgid "Randomize"
+msgstr "Τυχαιότητα:"
 
 #: ../share/extensions/color_removeblue.inx.h:2
 #, fuzzy
@@ -16307,6 +16544,10 @@ msgstr ""
 msgid "Draw Handles"
 msgstr "Λαβή συρταριού"
 
+#: ../share/extensions/inkscape_help_askaquestion.inx.h:1
+msgid "Ask Us a Question"
+msgstr ""
+
 #: ../share/extensions/inkscape_help_commandline.inx.h:1
 #, fuzzy
 msgid "Command Line Options"
@@ -16408,7 +16649,7 @@ msgstr ""
 msgid "Paragraph length fluctuation (sentences)"
 msgstr ""
 
-#: ../share/extensions/lorem_ipsum.inx.h:5
+#: ../share/extensions/lorem_ipsum.inx.h:4
 msgid "Sentences per paragraph"
 msgstr ""
 
@@ -16674,6 +16915,20 @@ msgstr "Ελάχιστο μέγεθος"
 msgid "Random Tree"
 msgstr ""
 
+#: ../share/extensions/rubberstretch.inx.h:2
+#, no-c-format
+msgid "Curve (%):"
+msgstr ""
+
+#: ../share/extensions/rubberstretch.inx.h:4
+msgid "Rubber Stretch"
+msgstr ""
+
+#: ../share/extensions/rubberstretch.inx.h:6
+#, no-c-format
+msgid "Strength (%):"
+msgstr ""
+
 #: ../share/extensions/sk_input.inx.h:1
 msgid "A diagram created with the program Sketch"
 msgstr ""
@@ -16841,6 +17096,22 @@ msgstr ""
 #, fuzzy
 msgid "XAML Input"
 msgstr "Αποκοπή"
+
+#, fuzzy
+#~ msgid "Measure unit:"
+#~ msgstr "Διαγρ."
+
+#, fuzzy
+#~ msgid "Degrees:"
+#~ msgstr "dec"
+
+#, fuzzy
+#~ msgid "PostScript 3"
+#~ msgstr "Σημείο"
+
+#, fuzzy
+#~ msgid "Pin Dialog"
+#~ msgstr "Κατακόρυ_φη Στοίχιση"
 
 #, fuzzy
 #~ msgid "Convolve"
@@ -17034,11 +17305,6 @@ msgstr "Αποκοπή"
 #, fuzzy
 #~ msgid "Gridtype"
 #~ msgstr "Όλες οι ρυθμίσεις"
-
-#
-#, fuzzy
-#~ msgid "Change blur"
-#~ msgstr "Ιδιότητα"
 
 #, fuzzy
 #~ msgid "Display Calibration"
