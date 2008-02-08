@@ -1,6 +1,8 @@
 '''
 Copyright (C) 2007 Martin Owens
 
+Debugged by Ralf Heinecke & Martin Siepmann 09/07/2007
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
@@ -14,6 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+
 '''
 
 from Base import Barcode
@@ -33,7 +38,7 @@ def mapExtra(sd, chars):
 
 # The mapExtra method is used to slim down the amount
 # of pre code and instead we generate the lists
-charAB = list(r' !"#$%&\()*+,./0123456789:;<=>?@ABCDEFGHIJKLMNOPQSTUVWXYZ\]^_')
+charAB = list(' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_')
 charA = mapExtra(charAB, range(0, 31)) # Offset 64
 charB = mapExtra(charAB, range(96, 125)) # Offset -32
 
@@ -65,8 +70,8 @@ class Object(Barcode):
 	def bestBlock(self, block):
 		# If this has lower case then select B over A
 		if block.upper() == block:
-			return [ 'B', block ]
-		return [ 'A', block ]
+			return [ 'A', block ]
+		return [ 'B', block ]
 		
 	def encodeBlocks(self, blocks):
 		total  = 0
@@ -83,11 +88,11 @@ class Object(Barcode):
 			# C   :  99, 105
 			num = 0;
 			if set == 'A':
-				num = 101
+				num = 103
 			elif set == 'B':
-				num = 100
+				num = 104
 			elif set == 'C':
-				num = 99
+				num = 105
 
 			i = pos
 			if pos:
@@ -101,7 +106,7 @@ class Object(Barcode):
 
 			if set == 'A' or set == 'B':
 				chars = charB
-				if set == 'B':
+				if set == 'A':
 					chars = charA
 
 				for char in datum:
