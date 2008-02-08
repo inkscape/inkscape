@@ -19,7 +19,7 @@
 #include "libavoid/polyutil.h"
 #include "libavoid/router.h"
 #include "libavoid/connector.h"
-#include "xml/simple-node.cpp"
+#include "xml/simple-node.h"
 #include "document.h"
 #include "prefs-utils.h"
 
