@@ -10,7 +10,7 @@
     <effect>
         <object-type>all</object-type>
         <effects-menu>
-            <submenu _name="Render"/>
+            <submenu _name="Text"/>
         </effects-menu>
     </effect>
     <script>
