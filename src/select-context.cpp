@@ -505,6 +505,14 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         if (!sc->moved) {
                             item_in_group = desktop->item_at_point(NR::Point(event->button.x, event->button.y), TRUE);
                             group_at_point = desktop->group_at_point(NR::Point(event->button.x, event->button.y));
+
+                            // group-at-point is meant to be topmost item if it's a group, 
+                            // not topmost group of all items at point
+                            if (group_at_point != item_in_group && 
+                                !(group_at_point && item_at_point && 
+                                  group_at_point->isAncestorOf(item_at_point)))
+                                group_at_point = NULL;
+
                             // if neither a group nor an item (possibly in a group) at point are selected, set selection to the item at point
                             if ((!item_in_group || !selection->includes(item_in_group)) &&
                                 (!group_at_point || !selection->includes(group_at_point))
