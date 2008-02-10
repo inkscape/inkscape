@@ -84,15 +84,15 @@ class PerfectBoundCover(inkex.Effect):
                         help="dummy")
     def effect(self):
         switch = {
-          "Pages Per Inch (PPI)": lambda x: x,
-          "Caliper (inches)": lambda x: caliper_to_ppi(x),
-          "Bond Weight #": lambda x: bond_weight_to_ppi(x),
-          "Points": lambda x: points_to_ppi(x),
-          "Specify Width": lambda x: x
+          "ppi": lambda x: x,
+          "caliper": lambda x: caliper_to_ppi(x),
+          "bond_weight": lambda x: bond_weight_to_ppi(x),
+          "points": lambda x: points_to_ppi(x),
+          "width": lambda x: x
         }
 
         if self.options.paperthickness > 0:
-            if self.options.paperthicknessmeasurement == "Specify Width":
+            if self.options.paperthicknessmeasurement == "width":
                 paper_spine = self.options.paperthickness
             else:
                 paper_spine = self.options.pages / switch[self.options.paperthicknessmeasurement](self.options.paperthickness)
@@ -100,7 +100,7 @@ class PerfectBoundCover(inkex.Effect):
             paper_spine = 0
 
         if self.options.coverthickness > 0:
-            if self.options.coverthicknessmeasurement == "Specify Width":
+            if self.options.coverthicknessmeasurement == "width":
                 cover_spine = self.options.coverthickness
             else:
                 cover_spine = 4.0 / switch[self.options.coverthicknessmeasurement](self.options.coverthickness)
