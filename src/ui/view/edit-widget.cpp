@@ -1000,7 +1000,7 @@ EditWidget::initUriBar()
 
     _uri_ctrl = new Gtk::Toolbar();
 
-    _uri_label.set_label(_("PLACEHOLDER, DO NOT TRANSLATE"));
+    _uri_label.set_label(_("PLACEHOLDER, do not translate"));
     _uri_ctrl->add(_uri_label);
     _uri_ctrl->add(_uri_entry);
 
