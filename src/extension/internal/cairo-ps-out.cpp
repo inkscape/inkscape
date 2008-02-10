@@ -219,7 +219,7 @@ CairoPsOutput::init (void)
 {
 	Inkscape::Extension::build_from_mem(
 		"<inkscape-extension>\n"
-			"<name>Cairo PS Output</name>\n"
+			"<name>" N_("Cairo PS Output") "</name>\n"
 			"<id>" SP_MODULE_KEY_PRINT_CAIRO_PS "</id>\n"
 			"<param name=\"PSlevel\" gui-text=\"" N_("Restrict to PS level") "\" type=\"enum\" >\n"
 				"<item value='PS3'>" N_("PostScript level 3") "</item>\n"
@@ -229,7 +229,7 @@ CairoPsOutput::init (void)
             "</param>\n"
 			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"blurToBitmap\" gui-text=\"" N_("Convert blur effects to bitmaps") "\" type=\"boolean\">false</param>\n"
-			"<param name=\"resolution\" gui-text=\"" N_("Preferred resolution (dpi) of bitmaps") "\" type=\"int\" min=\"72\" max=\"2400\">90</param>\n"
+			"<param name=\"resolution\" gui-text=\"" N_("Preferred resolution (DPI) of bitmaps") "\" type=\"int\" min=\"72\" max=\"2400\">90</param>\n"
 			"<output>\n"
 				"<extension>.ps</extension>\n"
                 "<mimetype>application/ps</mimetype>\n"
