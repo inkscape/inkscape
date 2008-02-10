@@ -26,18 +26,18 @@ class MyEffect(inkex.Effect):
         pass
     def effect(self):
         svg_file = self.args[-1]
-        node = inkex.xml.xpath.Evaluate('/svg',self.document)[0]
-        docname = node.attributes.getNamedItemNS(inkex.NSS[u'sodipodi'],'docname').value[:-4]
+        docname = self.xpathSingle('/svg:svg/@sodipodi:docname')[:-4]
 
         #create os temp dir
         tmp_dir = tempfile.mkdtemp()
 
         area = '--export-area-canvas'
         pngs = []
-	names = []
-        path = "/svg/*[name()='g' or @style][@id]"
-        for node in inkex.xml.xpath.Evaluate(path,self.document):
-            id = node.attributes.getNamedItem('id').value
+        names = []
+        path = "/svg:svg/*[name()='g' or @style][@id]"
+        for node in self.document.xpath(path,inkex.NSS):
+            id = node.get('id')
+            inkex.debug(id)
             name = "%s.png" % id
             filename = os.path.join(tmp_dir, name)
             command = "inkscape -i %s -j %s -e %s %s " % (id, area, filename, svg_file)
@@ -49,7 +49,7 @@ class MyEffect(inkex.Effect):
             names.append(id)
 
         filelist = '"%s"' % '" "'.join(pngs)
-	namelist = '"%s"' % '" "'.join(names)
+        namelist = '"%s"' % '" "'.join(names)
         xcf = os.path.join(tmp_dir, "%s.xcf" % docname)
         script_fu = """
 (define
