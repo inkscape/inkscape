@@ -506,7 +506,7 @@ static GtkAction* create_action_for_verb( Inkscape::Verb* verb, Inkscape::UI::Vi
     GtkAction* act = 0;
 
     SPAction* targetAction = verb->get_action(view);
-    InkAction* inky = ink_action_new( verb->get_id(), verb->get_name(), verb->get_tip(), verb->get_image(), size  );
+    InkAction* inky = ink_action_new( verb->get_id(), verb->get_name(), _(verb->get_tip()), verb->get_image(), size  );
     act = GTK_ACTION(inky);
     gtk_action_set_sensitive( act, targetAction->sensitive );
 
