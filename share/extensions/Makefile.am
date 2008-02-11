@@ -38,6 +38,7 @@ extensions = \
 	cspsubdiv.py \
 	cubicsuperpath.py \
 	dia2svg.sh \
+	dimension.py \
 	dots.py \
 	dxf_outlines.py \
 	edge3d.py \
@@ -138,6 +139,7 @@ modules = \
 	color_rgbbarrel.inx\
 	color_replace.inx\
 	dia.inx \
+	dimension.inx \
 	dots.inx \
 	dxf_input.inx \
 	dxf_outlines.inx \
