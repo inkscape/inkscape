@@ -37,22 +37,13 @@ public:
     virtual int render(FilterSlot &slot, FilterUnits const &units);
     virtual void area_enlarge(NRRectL &area, Matrix const &trans);
 
-    void set_type(FilterComponentTransferType t);    
-    void set_tableValues(std::vector<gdouble>& tv);
-    void set_slope(double s);
-    void set_intercept(double i);
-    void set_amplitude(double a);
-    void set_exponent(double e);
-    void set_offset(double o);
-
-private:
-    FilterComponentTransferType type;
-    std::vector<gdouble> tableValues;
-    double slope;
-    double intercept;
-    double amplitude;
-    double exponent;
-    double offset;
+    FilterComponentTransferType type[4];
+    std::vector<gdouble> tableValues[4];
+    double slope[4];
+    double intercept[4];
+    double amplitude[4];
+    double exponent[4];
+    double offset[4];
 };
 
 } /* namespace NR */

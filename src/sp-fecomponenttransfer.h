@@ -23,13 +23,8 @@ class SPFeComponentTransferClass;
 
 struct SPFeComponentTransfer : public SPFilterPrimitive {
     /** COMPONENTTRANSFER ATTRIBUTES HERE */
-    NR::FilterComponentTransferType type;
-    std::vector<double> tableValues;
-    double slope;
-    double intercept;
-    double amplitude;
-    double exponent;
-    double offset;
+
+    NR::FilterComponentTransfer *renderer;
 };
 
 struct SPFeComponentTransferClass {

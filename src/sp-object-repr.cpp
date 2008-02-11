@@ -52,6 +52,7 @@
 #include "sp-feblend.h"
 #include "sp-fecolormatrix.h"
 #include "sp-fecomponenttransfer.h"
+#include "sp-fecomponenttransfer-funcnode.h"
 #include "sp-fecomposite.h"
 #include "sp-feconvolvematrix.h"
 #include "sp-fediffuselighting.h"
@@ -148,6 +149,10 @@ populate_dtables()
         { "svg:feDistantLight", SP_TYPE_FEDISTANTLIGHT },
         { "svg:feDisplacementMap", SP_TYPE_FEDISPLACEMENTMAP },
         { "svg:feFlood", SP_TYPE_FEFLOOD },
+        { "svg:feFuncR", SP_TYPE_FEFUNCR },
+        { "svg:feFuncG", SP_TYPE_FEFUNCG },
+        { "svg:feFuncB", SP_TYPE_FEFUNCB },
+        { "svg:feFuncA", SP_TYPE_FEFUNCA },
         { "svg:feGaussianBlur", SP_TYPE_GAUSSIANBLUR },
         { "svg:feImage", SP_TYPE_FEIMAGE },
         { "svg:feMerge", SP_TYPE_FEMERGE },

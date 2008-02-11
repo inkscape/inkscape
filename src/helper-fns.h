@@ -61,6 +61,16 @@ inline std::vector<gdouble> helperfns_read_vector(const gchar* value, int size){
         return v;
 }
 
+inline std::vector<gdouble> helperfns_read_vector(const gchar* value){
+        std::vector<gdouble> v;
+        std::istringstream is(value);
+        gdouble d;
+        while (is >> d){
+            v.push_back(d);
+        }
+        return v;
+}
+
 #endif /* !SEEN_HELPER_FNS_H */
 
 /*

@@ -165,6 +165,7 @@ libinkpre_a_SOURCES =	\
 	sp-fecolormatrix.cpp sp-fecolormatrix.h	\
 	sp-fecolormatrix-fns.h	\
 	sp-fecomponenttransfer.cpp sp-fecomponenttransfer.h	\
+	sp-fecomponenttransfer-funcnode.cpp sp-fecomponenttransfer-funcnode.h	\
 	sp-fecomponenttransfer-fns.h	\
 	sp-fecomposite.cpp sp-fecomposite.h	\
 	sp-fecomposite-fns.h	\

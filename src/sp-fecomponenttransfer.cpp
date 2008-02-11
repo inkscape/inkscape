@@ -19,11 +19,13 @@
 
 #include <string.h>
 
+#include "document.h"
 #include "attributes.h"
 #include "svg/svg.h"
 #include "sp-fecomponenttransfer.h"
+#include "sp-fecomponenttransfer-funcnode.h"
 #include "xml/repr.h"
-#include "display/nr-filter-component-transfer.h"
+//#include "display/nr-filter-component-transfer.h"
 
 /* FeComponentTransfer base class */
 
@@ -34,8 +36,10 @@ static void sp_feComponentTransfer_build(SPObject *object, SPDocument *document,
 static void sp_feComponentTransfer_release(SPObject *object);
 static void sp_feComponentTransfer_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feComponentTransfer_update(SPObject *object, SPCtx *ctx, guint flags);
+static void sp_feComponentTransfer_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
+static void sp_feComponentTransfer_remove_child(SPObject *object, Inkscape::XML::Node *child);
+static void sp_feComponentTransfer_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
 static Inkscape::XML::Node *sp_feComponentTransfer_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
-
 static SPFilterPrimitiveClass *feComponentTransfer_parent_class;
 
 GType
@@ -63,7 +67,7 @@ static void
 sp_feComponentTransfer_class_init(SPFeComponentTransferClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-
+    SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
     feComponentTransfer_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feComponentTransfer_build;
@@ -71,20 +75,15 @@ sp_feComponentTransfer_class_init(SPFeComponentTransferClass *klass)
     sp_object_class->write = sp_feComponentTransfer_write;
     sp_object_class->set = sp_feComponentTransfer_set;
     sp_object_class->update = sp_feComponentTransfer_update;
+    sp_object_class->child_added = sp_feComponentTransfer_child_added;
+    sp_object_class->remove_child = sp_feComponentTransfer_remove_child;
+
+    sp_primitive_class->build_renderer = sp_feComponentTransfer_build_renderer;
 }
 
 static void
 sp_feComponentTransfer_init(SPFeComponentTransfer *feComponentTransfer)
-{
-    //Setting default values:
-//TODO: tableValues = "" (empty list);
-    feComponentTransfer->slope = 1;
-    feComponentTransfer->intercept = 0;
-    feComponentTransfer->amplitude = 1;
-    feComponentTransfer->exponent = 1;
-    feComponentTransfer->offset = 0;
-//    feComponentTransfer->type = NR::COMPONENTTRANSFER_TYPE_ERROR;
-}
+{}
 
 /**
  * Reads the Inkscape::XML::Node, and initializes SPFeComponentTransfer variables.  For this to get called,
@@ -99,13 +98,63 @@ sp_feComponentTransfer_build(SPObject *object, SPDocument *document, Inkscape::X
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
-    sp_object_read_attr(object, "type");
-    sp_object_read_attr(object, "tableValues");
-    sp_object_read_attr(object, "slope");
-    sp_object_read_attr(object, "intercept");
-    sp_object_read_attr(object, "amplitude");
-    sp_object_read_attr(object, "exponent");
-    sp_object_read_attr(object, "offset");
+
+    //do we need this?
+    sp_document_add_resource(document, "feComponentTransfer", object);
+}
+
+static void sp_feComponentTransfer_children_modified(SPFeComponentTransfer *sp_componenttransfer)
+{
+    if (sp_componenttransfer->renderer) {
+        SPObject* node = sp_componenttransfer->children;
+        for(;node;node=node->next){
+            int i=4;
+            if (SP_IS_FEFUNCR(node)) i=0;
+            if (SP_IS_FEFUNCG(node)) i=1;
+            if (SP_IS_FEFUNCB(node)) i=2;
+            if (SP_IS_FEFUNCA(node)) i=3;
+            if (i==4) break;
+            sp_componenttransfer->renderer->type[i] = ((SPFeFuncNode *) node)->type;
+            sp_componenttransfer->renderer->tableValues[i] = ((SPFeFuncNode *) node)->tableValues;
+            sp_componenttransfer->renderer->slope[i] = ((SPFeFuncNode *) node)->slope;
+            sp_componenttransfer->renderer->intercept[i] = ((SPFeFuncNode *) node)->intercept;
+            sp_componenttransfer->renderer->amplitude[i] = ((SPFeFuncNode *) node)->amplitude;
+            sp_componenttransfer->renderer->exponent[i] = ((SPFeFuncNode *) node)->exponent;
+            sp_componenttransfer->renderer->offset[i] = ((SPFeFuncNode *) node)->offset;
+        }
+    }
+}
+
+/**
+ * Callback for child_added event.
+ */
+static void
+sp_feComponentTransfer_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
+{
+    g_warning("child_added");
+    SPFeComponentTransfer *f = SP_FECOMPONENTTRANSFER(object);
+
+    if (((SPObjectClass *) feComponentTransfer_parent_class)->child_added)
+        (* ((SPObjectClass *) feComponentTransfer_parent_class)->child_added)(object, child, ref);
+
+    sp_feComponentTransfer_children_modified(f);
+    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+}
+            
+
+/**
+ * Callback for remove_child event.
+ */
+static void
+sp_feComponentTransfer_remove_child(SPObject *object, Inkscape::XML::Node *child)
+{   
+    SPFeComponentTransfer *f = SP_FECOMPONENTTRANSFER(object);
+
+    if (((SPObjectClass *) feComponentTransfer_parent_class)->remove_child)
+        (* ((SPObjectClass *) feComponentTransfer_parent_class)->remove_child)(object, child);   
+
+    sp_feComponentTransfer_children_modified(f);
+    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /**
@@ -118,28 +167,6 @@ sp_feComponentTransfer_release(SPObject *object)
         ((SPObjectClass *) feComponentTransfer_parent_class)->release(object);
 }
 
-static NR::FilterComponentTransferType sp_feComponenttransfer_read_type(gchar const *value){
-    if (!value) return NR::COMPONENTTRANSFER_TYPE_ERROR; //type attribute is REQUIRED.
-    switch(value[0]){
-        case 'i':
-            if (strncmp(value, "identity", 8) == 0) return NR::COMPONENTTRANSFER_TYPE_IDENTITY;
-            break;
-        case 't':
-            if (strncmp(value, "table", 5) == 0) return NR::COMPONENTTRANSFER_TYPE_TABLE;
-            break;
-        case 'd':
-            if (strncmp(value, "discrete", 8) == 0) return NR::COMPONENTTRANSFER_TYPE_DISCRETE;
-            break;
-        case 'l':
-            if (strncmp(value, "linear", 6) == 0) return NR::COMPONENTTRANSFER_TYPE_LINEAR;
-            break;
-        case 'g':
-            if (strncmp(value, "gamma", 5) == 0) return NR::COMPONENTTRANSFER_TYPE_GAMMA;
-            break;
-    }
-    return NR::COMPONENTTRANSFER_TYPE_ERROR; //type attribute is REQUIRED.
-}
-
 /**
  * Sets a specific value in the SPFeComponentTransfer.
  */
@@ -149,15 +176,7 @@ sp_feComponentTransfer_set(SPObject *object, unsigned int key, gchar const *valu
     SPFeComponentTransfer *feComponentTransfer = SP_FECOMPONENTTRANSFER(object);
     (void)feComponentTransfer;
 
-    NR::FilterComponentTransferType type;
     switch(key) {
-        case SP_ATTR_TYPE:
-            type = sp_feComponenttransfer_read_type(value);
-            if(type != feComponentTransfer->type) {
-                feComponentTransfer->type = type;
-                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            }
-            break;
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
         default:
             if (((SPObjectClass *) feComponentTransfer_parent_class)->set)
@@ -208,6 +227,23 @@ sp_feComponentTransfer_write(SPObject *object, Inkscape::XML::Node *repr, guint 
     return repr;
 }
 
+static void sp_feComponentTransfer_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+    g_assert(primitive != NULL);
+    g_assert(filter != NULL);
+
+    SPFeComponentTransfer *sp_componenttransfer = SP_FECOMPONENTTRANSFER(primitive);
+
+    int primitive_n = filter->add_primitive(NR::NR_FILTER_COMPONENTTRANSFER);
+    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    NR::FilterComponentTransfer *nr_componenttransfer = dynamic_cast<NR::FilterComponentTransfer*>(nr_primitive);
+    g_assert(nr_componenttransfer != NULL);
+
+    sp_componenttransfer->renderer = nr_componenttransfer;
+    sp_filter_primitive_renderer_common(primitive, nr_primitive);
+
+
+    sp_feComponentTransfer_children_modified(sp_componenttransfer);    //do we need it?!
+}
 
 /*
   Local Variables:
