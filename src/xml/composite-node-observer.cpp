@@ -13,6 +13,7 @@
  */
 
 #include <cstring>
+#include <glib.h>
 
 #include "algorithms/find-if-before.h"
 #include "xml/composite-node-observer.h"
