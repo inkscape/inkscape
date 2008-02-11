@@ -275,7 +275,7 @@ void PrefEntryButtonHBox::init(const std::string& prefs_path, const std::string&
     _attr = attr;
     _default_string = default_string;
     relatedEntry = new Gtk::Entry();
-    relatedButton = new Gtk::Button("Reset");
+    relatedButton = new Gtk::Button(_("Reset"));
     relatedEntry->set_invisible_char('*');
     relatedEntry->set_visibility(visibility);
     relatedEntry->set_text(prefs_get_string_attribute(_prefs_path.c_str(), _attr.c_str()));

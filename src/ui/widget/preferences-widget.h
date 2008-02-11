@@ -25,7 +25,7 @@
 #include <gtkmm/frame.h>
 #include <gtkmm/filechooserbutton.h>
 #include <sigc++/sigc++.h>
-//#include <glibmm/i18n.h>
+#include <glibmm/i18n.h>
 
 #include "ui/widget/color-picker.h"
 #include "ui/widget/unit-menu.h"
