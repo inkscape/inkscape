@@ -15,6 +15,7 @@
 
 #include <stdexcept>
 #include <string>
+#include <algorithm>
 
 namespace NR {
 

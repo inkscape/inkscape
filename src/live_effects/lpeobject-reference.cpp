@@ -6,6 +6,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information.
  */
 
+#include <string.h>
+
 #include "enums.h"
 #include "live_effects/lpeobject-reference.h"
 #include "live_effects/lpeobject.h"

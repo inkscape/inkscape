@@ -273,7 +273,7 @@ static void dijkstraPath(ConnRef *lineRef, VertInf *src, VertInf *tar)
 {
     Router *router = src->_router;
 
-    double unseen = (double) INT_MAX;
+    double unseen = (double) __INT_MAX__;
 
     // initialize arrays
     VertInf *finish = router->vertices.end();

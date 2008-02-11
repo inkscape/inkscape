@@ -12,6 +12,7 @@
 #ifdef faster_flatten
 # include <cmath>  // std::abs(float)
 #endif
+#include <stdio.h>
 #include "livarot/float-line.h"
 #include "livarot/int-line.h"
 #include <cstdio>

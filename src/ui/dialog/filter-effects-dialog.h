@@ -12,6 +12,8 @@
 #ifndef INKSCAPE_UI_DIALOG_FILTER_EFFECTS_H
 #define INKSCAPE_UI_DIALOG_FILTER_EFFECTS_H
 
+#include <memory>
+
 #include <gtkmm/adjustment.h>
 #include <gtkmm/alignment.h>
 #include <gtkmm/box.h>

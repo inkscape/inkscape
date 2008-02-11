@@ -15,6 +15,7 @@
 #ifndef SEEN_INKSCAPE_XML_COMPOSITE_NODE_OBSERVER_H
 #define SEEN_INKSCAPE_XML_COMPOSITE_NODE_OBSERVER_H
 
+#include <glib/gtestutils.h>
 #include "gc-managed.h"
 #include "xml/node-observer.h"
 #include "util/list-container.h"

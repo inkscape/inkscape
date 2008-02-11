@@ -14,6 +14,7 @@
  */
 
 #include <assert.h>
+#include <string.h>
 
 #include "display/nr-arena-item.h"
 #include "display/nr-filter-types.h"
