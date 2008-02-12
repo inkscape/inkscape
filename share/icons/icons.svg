@@ -8,7 +8,7 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   inkscape:version="0.46dev+devel"
+   inkscape:version="0.45+devel+devel"
    sodipodi:docname="icons.svg"
    height="1000.0000pt"
    width="1000.0000pt"
@@ -17,6 +17,20 @@
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs3">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-50 : 600 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="700 : 600 : 1"
+       inkscape:persp3d-origin="300 : 400 : 1"
+       id="perspective2377" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-50 : 600 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="700 : 600 : 1"
+       inkscape:persp3d-origin="300 : 400 : 1"
+       id="perspective2376" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient5740"
@@ -4714,12 +4728,12 @@
      inkscape:window-x="0"
      inkscape:window-height="971"
      inkscape:window-width="1241"
-     inkscape:cy="781.93472"
-     inkscape:cx="858.36364"
-     inkscape:zoom="1"
+     inkscape:cy="884.84678"
+     inkscape:cx="517.38195"
+     inkscape:zoom="22.627417"
      gridtolerance="6"
      snaptogrid="false"
-     showgrid="false"
+     showgrid="true"
      id="base"
      inkscape:document-units="px"
      inkscape:grid-points="true"
@@ -4739,7 +4753,9 @@
        originy="0px"
        spacingx="0.5px"
        spacingy="0.5px"
-       empspacing="2" />
+       empspacing="2"
+       visible="true"
+       enabled="true" />
     <sodipodi:guide
        orientation="-0.5,0.8660254"
        position="462.99911,893.99772"
@@ -4764,18 +4780,6 @@
        orientation="0.5,0.8660254"
        position="60.5,975.5"
        id="guide4718" />
-    <inkscape:grid
-       id="GridFromPre046Settings"
-       type="xygrid"
-       originx="0px"
-       originy="0.0000000px"
-       spacingx="0.5px"
-       spacingy="0.5px"
-       color="#0000ff"
-       empcolor="#0000ff"
-       opacity="0.2"
-       empopacity="0.4"
-       empspacing="2" />
   </sodipodi:namedview>
   <metadata
      id="metadata1810">
