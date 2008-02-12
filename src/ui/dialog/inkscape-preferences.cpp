@@ -605,6 +605,10 @@ void InkscapePreferences::initPageFilters()
     _page_filters.add_line( true, "", _blur_quality_worst, "",
                            _("Lowest quality (considerable artifacts), but display is fastest"));
 
+    _show_filters_info_box.init( _("Show filter primitives infobox"), "options.showfiltersinfobox", "value", true);
+    _page_filters.add_line(true, "", _show_filters_info_box, "",
+                        _("Show icons and descriptions for the filter primitives available at the filter effects dialog."));
+
     this->AddPage(_page_filters, _("Filters"), PREFS_PAGE_FILTERS);
 }
 

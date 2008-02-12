@@ -2193,6 +2193,13 @@ void FilterEffectsDialog::add_primitive()
 
 void FilterEffectsDialog::update_primitive_infobox()
 {
+    if (prefs_get_int_attribute ("options.showfiltersinfobox", "value", 1)){
+        _infobox_icon.show();
+        _infobox_desc.show();
+    } else {
+        _infobox_icon.hide();
+        _infobox_desc.hide();
+    }
     switch(_add_primitive_type.get_active_data()->id){
         case(NR::NR_FILTER_BLEND):
             _infobox_icon.set(g_strdup_printf("%s/feBlend-icon.png", INKSCAPE_PIXMAPDIR));
@@ -2327,6 +2334,14 @@ void FilterEffectsDialog::update_settings_view()
     _settings_box.hide_all();
     _settings_box.show();
     _empty_settings.show();
+
+    if (prefs_get_int_attribute ("options.showfiltersinfobox", "value", 1)){
+        _infobox_icon.show();
+        _infobox_desc.show();
+    } else {
+        _infobox_icon.hide();
+        _infobox_desc.hide();
+    }
     
     SPFilterPrimitive* prim = _primitive_list.get_selected();
 
