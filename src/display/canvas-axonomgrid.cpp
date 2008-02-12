@@ -212,6 +212,8 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
     tan_angle[Z] = tan(angle_rad[Z]);
 
     snapper = new CanvasAxonomGridSnapper(this, namedview, 0);
+
+    if (repr) readRepr();
 }
 
 CanvasAxonomGrid::~CanvasAxonomGrid ()
@@ -440,8 +442,6 @@ _wr.setUpdating (false);
     };
 
     attach_all (*table, widget_array, sizeof(widget_array));
-
-    if (repr) readRepr();
 
     // set widget values
     _rumg->setUnit (gridunit);

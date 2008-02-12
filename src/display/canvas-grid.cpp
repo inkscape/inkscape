@@ -428,6 +428,8 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPD
     render_dotted = prefs_get_int_attribute ("options.grids.xy", "dotted", 0) == 1;
 
     snapper = new CanvasXYGridSnapper(this, namedview, 0);
+
+    if (repr) readRepr();
 }
 
 CanvasXYGrid::~CanvasXYGrid ()
@@ -719,8 +721,6 @@ _wr.setUpdating (false);
     };
 
     attach_all (*table, widget_array, sizeof(widget_array));
-
-    if (repr) readRepr();
 
     // set widget values
     _rumg->setUnit (gridunit);
