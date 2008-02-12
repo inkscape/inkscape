@@ -47,7 +47,7 @@ int FilterFlood::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     r = (unsigned char) (color >> 24) % 256;
     g = (unsigned char) (color >> 16) % 256;
     b = (unsigned char) (color >>  8) % 256;
-    a = CLAMP_D_TO_U8(opacity*256);
+    a = CLAMP_D_TO_U8(opacity*255);
 
     for(i=0; i < 4*in_h*in_w; i+=4){
             out_data[i]=r;
