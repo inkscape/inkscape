@@ -137,13 +137,13 @@ do
 	-p|--prefix)
 	  	INSTALLPREFIX=$2
 	  	shift 1 ;;
-	-s|-strip)
+	-s|--strip)
 	     	STRIP="-s" ;;
 	-py|--with-python)
 		PYTHON_MODULES="$2"
 		shift 1 ;;
 	*)
-		echo "Invalid command line option" 
+		echo "Invalid command line option: $1" 
 		exit 2 ;;
 	esac
 	shift 1
@@ -251,11 +251,12 @@ then
 	
 	# Set python command line option (if PYTHON_MODULES location is not empty, then add the python call to the command line, otherwise, stay empty)
 	if [[ "$PYTHON_MODULES" != "" ]]; then
-		PYTHON_MODULES="-py '$PYTHON_MODULES'"
+		PYTHON_MODULES="-py $PYTHON_MODULES"
+		# TODO: fix this: it does not allow for spaces in the PATH under this form and cannot be quoted
 	fi
 
 	# Create app bundle
-	./osx-app.sh $STRIP -b $INSTALLPREFIX/bin/inkscape -p $SRCROOT/Info.plist "$PYTHON_MODULES"
+	./osx-app.sh $STRIP -b $INSTALLPREFIX/bin/inkscape -p $SRCROOT/Info.plist $PYTHON_MODULES
 	status=$?
 	if [[ $status -ne 0 ]]; then
 		echo -e "\nApplication bundle creation failed"

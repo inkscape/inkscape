@@ -100,7 +100,7 @@ do
 			help
 			exit 0 ;;
 		*)
-			echo "Invalid command line option" 
+			echo "Invalid command line option: $1" 
 			exit 2 ;;
 	esac
 	shift 1
