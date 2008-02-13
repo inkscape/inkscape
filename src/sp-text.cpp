@@ -748,11 +748,14 @@ void TextTagAttributes::mergeInto(Inkscape::Text::Layout::OptionalTextTagAttrs *
 
 void TextTagAttributes::mergeSingleAttribute(std::vector<SVGLength> *output_list, std::vector<SVGLength> const &parent_list, unsigned parent_offset, std::vector<SVGLength> const *overlay_list)
 {
+    output_list->clear();
     if (overlay_list == NULL) {
-        output_list->resize(std::max(0, (int)parent_list.size() - (int)parent_offset));
-        std::copy(parent_list.begin() + parent_offset, parent_list.end(), output_list->begin());
+        if (parent_list.size() > parent_offset)
+        {
+            output_list->reserve(parent_list.size() - parent_offset);
+            std::copy(parent_list.begin() + parent_offset, parent_list.end(), std::back_inserter(*output_list));
+        }
     } else {
-        output_list->clear();
         output_list->reserve(std::max((int)parent_list.size() - (int)parent_offset, (int)overlay_list->size()));
         unsigned overlay_offset = 0;
         while (parent_offset < parent_list.size() || overlay_offset < overlay_list->size()) {
