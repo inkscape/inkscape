@@ -724,12 +724,16 @@ generate_marker (GSList *reprs, NR::Rect bounds, SPDocument *document, NR::Matri
     Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
 
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:marker");
-    repr->setAttribute("markerUnits", "userSpaceOnUse");
+
+    // Uncommenting this will make the marker fixed-size independent of stroke width.
+    // Commented out for consistency with standard markers which scale when you change
+    // stroke width:
+    //repr->setAttribute("markerUnits", "userSpaceOnUse");
+
     sp_repr_set_svg_double(repr, "markerWidth", bounds.extent(NR::X));
     sp_repr_set_svg_double(repr, "markerHeight", bounds.extent(NR::Y));
 
     repr->setAttribute("orient", "auto");
-
 
     defsrepr->appendChild(repr);
     const gchar *mark_id = repr->attribute("id");
