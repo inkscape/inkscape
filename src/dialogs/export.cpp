@@ -679,7 +679,7 @@ sp_export_update_checkbuttons (GtkObject *base)
     GtkWidget *he = (GtkWidget *)gtk_object_get_data(base, "hide_checkbox");
     if (num >= 2) {
         gtk_widget_set_sensitive (be, true);
-        gtk_button_set_label (GTK_BUTTON(be), g_strdup_printf (_("Batch export %d selected objects"), num));
+        gtk_button_set_label (GTK_BUTTON(be), g_strdup_printf (ngettext("Batch export %d selected object","Batch export %d selected objects",num), num));
     } else {
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(be), FALSE);
         gtk_widget_set_sensitive (be, FALSE);

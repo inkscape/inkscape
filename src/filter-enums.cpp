@@ -48,7 +48,8 @@ const EnumDataConverter<FilterPrimitiveInput> FPInputConverter(FPInputData, FPIN
 
 // feBlend
 const EnumData<NR::FilterBlendMode> BlendModeData[NR::BLEND_ENDMODE] = {
-    {NR::BLEND_NORMAL,   _("Normal"),   "normal"},
+    //TRANSLATORS: This is a context string, only put the word "Normal" in your translation
+    {NR::BLEND_NORMAL,   Q_("filterBlendMode|Normal"),   "normal"},
     {NR::BLEND_MULTIPLY, _("Multiply"), "multiply"},
     {NR::BLEND_SCREEN,   _("Screen"),   "screen"},
     {NR::BLEND_DARKEN,   _("Darken"),   "darken"},

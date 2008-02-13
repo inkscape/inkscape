@@ -458,11 +458,11 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform, bo
             pathRepr->setPosition(-1);
 
             if (union_with_selection) {
-                desktop->messageStack()->flashF(Inkscape::WARNING_MESSAGE, _("Area filled, path with <b>%d</b> nodes created and unioned with selection."), sp_nodes_in_path(SP_PATH(reprobj)));
+                desktop->messageStack()->flashF(Inkscape::WARNING_MESSAGE, ngettext("Area filled, path with <b>%d</b> node created and unioned with selection.","Area filled, path with <b>%d</b> nodes created and unioned with selection.",sp_nodes_in_path(SP_PATH(reprobj))), sp_nodes_in_path(SP_PATH(reprobj)));
                 selection->add(reprobj);
                 sp_selected_path_union_skip_undo();
             } else {
-                desktop->messageStack()->flashF(Inkscape::WARNING_MESSAGE, _("Area filled, path with <b>%d</b> nodes created."), sp_nodes_in_path(SP_PATH(reprobj)));
+                desktop->messageStack()->flashF(Inkscape::WARNING_MESSAGE, ngettext("Area filled, path with <b>%d</b> node created.","Area filled, path with <b>%d</b> nodes created.",sp_nodes_in_path(SP_PATH(reprobj))), sp_nodes_in_path(SP_PATH(reprobj)));
                 selection->set(reprobj);
             }
 

@@ -2153,7 +2153,8 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->type(NR_FILTER_IMAGE);
     _settings->add_fileorelement(SP_ATTR_XLINK_HREF, _("Source of Image"));
     _settings->add_multispinbutton(SP_ATTR_X, SP_ATTR_Y, _("Coordinates"), -10000, 10000, 1, 1, 0);
-    _settings->add_multispinbutton(SP_ATTR_WIDTH, SP_ATTR_HEIGHT, _("Dimensions"), 0, 10000, 1, 1, 0);
+    //TRANSLATORS: This is a context string, only put the word "Dimensions" in your translation
+    _settings->add_multispinbutton(SP_ATTR_WIDTH, SP_ATTR_HEIGHT, Q_("imageFilter|Dimensions"), 0, 10000, 1, 1, 0);
 
     _settings->type(NR_FILTER_OFFSET);
     _settings->add_spinslider(SP_ATTR_DX, _("Delta X"), -100, 100, 1, 0.01, 1);
