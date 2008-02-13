@@ -37,16 +37,16 @@ int FilterFlood::render(FilterSlot &slot, FilterUnits const &/*units*/) {
  
     NRPixBlock *out = new NRPixBlock;
 
-    nr_pixblock_setup_fast(out, in->mode,
+    nr_pixblock_setup_fast(out, NR_PIXBLOCK_MODE_R8G8B8A8N,
                            in->area.x0, in->area.y0, in->area.x1, in->area.y1,
                            true);
 
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
 
     unsigned char r,g,b,a;
-    r = (unsigned char) (color >> 24) % 256;
-    g = (unsigned char) (color >> 16) % 256;
-    b = (unsigned char) (color >>  8) % 256;
+    r = CLAMP_D_TO_U8((color >> 24) % 256);
+    g = CLAMP_D_TO_U8((color >> 16) % 256);
+    b = CLAMP_D_TO_U8((color >>  8) % 256);
     a = CLAMP_D_TO_U8(opacity*255);
 
     for(i=0; i < 4*in_h*in_w; i+=4){
