@@ -2428,12 +2428,13 @@ void sp_selection_to_marker(bool apply)
 
     sp_document_ensure_up_to_date(doc);
     NR::Maybe<NR::Rect> r = selection->bounds();
-    if ( !r || r->isEmpty() ) {
+    NR::Maybe<NR::Point> c = selection->center();
+    if ( !r || !c || r->isEmpty() ) {
         return;
     }
 
     // calculate the transform to be applied to objects to move them to 0,0
-    NR::Point move_p = NR::Point(0, sp_document_height(doc)) - (r->min() + NR::Point ((r->extent(NR::X))/2, (r->extent(NR::Y))/2));
+    NR::Point move_p = NR::Point(0, sp_document_height(doc)) - *c;
     move_p[NR::Y] = -move_p[NR::Y];
     NR::Matrix move = NR::Matrix (NR::translate (move_p));
 
