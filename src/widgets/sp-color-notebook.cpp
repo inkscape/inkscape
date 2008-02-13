@@ -1,7 +1,7 @@
 #define __SP_COLOR_NOTEBOOK_C__
 
 /*
- * A block of 3 color sliders plus spinbuttons
+ * A notebook with RGB, CMYK, CMS, HSL, and Wheel pages
  *
  * Author:
  *	 Lauris Kaplinski <lauris@kaplinski.com>
@@ -30,8 +30,8 @@
 #include "sp-color-notebook.h"
 #include "spw-utilities.h"
 #include "sp-color-scales.h"
-#include "sp-color-wheel-selector.h"
 #include "sp-color-icc-selector.h"
+#include "sp-color-wheel-selector.h"
 
 struct SPColorNotebookTracker {
 	const gchar* name;

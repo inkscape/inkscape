@@ -2,7 +2,7 @@
 #define SEEN_SP_COLOR_NOTEBOOK_H
 
 /*
- * A block of 3 color sliders plus spinbuttons
+ * A notebook with RGB, CMYK, CMS, HSL, and Wheel pages
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
