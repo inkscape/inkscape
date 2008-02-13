@@ -68,7 +68,7 @@ Insert the new markers into the <defs>.
       </g>
     </marker>
 
-<marker inkscape:stockid="DistanceIn" orient="auto" refY="0.0" refX="0.0" id="DistanceIn" style="overflow:visible">
+<marker inkscape:stockid="DistanceStart" orient="auto" refY="0.0" refX="0.0" id="DistanceStart" style="overflow:visible">
       <g id="g2300">
         <path id="path2306" d="M 0,0 L 2,0" style="fill:none;stroke:#ffffff;stroke-width:1.15;stroke-linecap:square"/>
         <path id="path2302" d="M 0,0 L 13,4 L 9,0 13,-4 L 0,0 z " style="fill:#000000;fill-rule:evenodd;stroke:none"/>
@@ -78,7 +78,7 @@ Insert the new markers into the <defs>.
     </marker>
 
     <!-- distance markers -->
-    <marker inkscape:stockid="DistanceOut" orient="auto" refY="0.0" refX="0.0" id="DistanceOut" style="overflow:visible">
+    <marker inkscape:stockid="DistanceEnd" orient="auto" refY="0.0" refX="0.0" id="DistanceEnd" style="overflow:visible">
       <g id="g2300">
         <path id="path2316" d="M 0,0 L -2,0" style="fill:none;stroke:#ffffff;stroke-width:1.15;stroke-linecap:square"/>
         <path id="path2312" d="M 0,0 L -13,4 L -9,0 -13,-4 L 0,0 z " style="fill:#000000;fill-rule:evenodd;stroke:none"/>
@@ -88,13 +88,13 @@ Insert the new markers into the <defs>.
     </marker>
 
     <!-- round dots -->
-    <marker style="overflow:visible" id="Dot_l" refX="0.0" refY="0.0" orient="auto" inkscape:stockid="Dot_l">
+    <marker style="overflow:visible" id="DotL" refX="0.0" refY="0.0" orient="auto" inkscape:stockid="DotL">
       <path transform="scale(0.8) translate(7.4, 1)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;marker-end:none" d="M -2.5,-1.0 C -2.5,1.7600000 -4.7400000,4.0 -7.5,4.0 C -10.260000,4.0 -12.5,1.7600000 -12.5,-1.0 C -12.5,-3.7600000 -10.260000,-6.0 -7.5,-6.0 C -4.7400000,-6.0 -2.5,-3.7600000 -2.5,-1.0 z "/>
     </marker>
-    <marker style="overflow:visible" id="Dot_m" refX="0.0" refY="0.0" orient="auto" inkscape:stockid="Dot_m">
+    <marker style="overflow:visible" id="DotM" refX="0.0" refY="0.0" orient="auto" inkscape:stockid="DotM">
       <path transform="scale(0.4) translate(7.4, 1)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;marker-end:none" d="M -2.5,-1.0 C -2.5,1.7600000 -4.7400000,4.0 -7.5,4.0 C -10.260000,4.0 -12.5,1.7600000 -12.5,-1.0 C -12.5,-3.7600000 -10.260000,-6.0 -7.5,-6.0 C -4.7400000,-6.0 -2.5,-3.7600000 -2.5,-1.0 z "/>
     </marker>
-    <marker style="overflow:visible" id="Dot_s" refX="0.0" refY="0.0" orient="auto" inkscape:stockid="Dot_s">
+    <marker style="overflow:visible" id="DotS" refX="0.0" refY="0.0" orient="auto" inkscape:stockid="DotS">
       <path transform="scale(0.2) translate(7.4, 1)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;marker-end:none" d="M -2.5,-1.0 C -2.5,1.7600000 -4.7400000,4.0 -7.5,4.0 C -10.260000,4.0 -12.5,1.7600000 -12.5,-1.0 C -12.5,-3.7600000 -10.260000,-6.0 -7.5,-6.0 C -4.7400000,-6.0 -2.5,-3.7600000 -2.5,-1.0 z "/>
     </marker>
 
