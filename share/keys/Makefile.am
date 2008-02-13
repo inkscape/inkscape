@@ -10,7 +10,7 @@ keys_DATA = \
 	right-handed-illustration.xml \
 	corel-draw-x4.xml \
 	zoner-draw.xml \
-	share/keys/acd-canvas.xml
+	acd-canvas.xml
 
 EXTRA_DIST = $(keys_DATA)
 
