@@ -265,14 +265,16 @@ static gboolean handleButtonPress( GtkWidget* widget, GdkEventButton* event, gpo
             popupMenu = gtk_menu_new();
             GtkWidget* child = 0;
 
-            child = gtk_menu_item_new_with_label("Set fill");
+            //TRANSLATORS: An item in context menu on a colour in the swatches
+            child = gtk_menu_item_new_with_label(_("Set fill"));
             g_signal_connect( G_OBJECT(child),
                               "activate",
                               G_CALLBACK(redirClick),
                               user_data);
             gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
 
-            child = gtk_menu_item_new_with_label("Set stroke");
+            //TRANSLATORS: An item in context menu on a colour in the swatches
+            child = gtk_menu_item_new_with_label(_("Set stroke"));
 
             g_signal_connect( G_OBJECT(child),
                               "activate",
