@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-02-08 23:00+0100\n"
-"PO-Revision-Date: 2008-02-12 23:48+0100\n"
+"PO-Revision-Date: 2008-02-14 22:54+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -5746,7 +5746,7 @@ msgstr ""
 "módosítani kívánja."
 
 #: ../src/nodepath.cpp:4459
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
 "or <b>drag around</b> nodes to select."
@@ -5767,14 +5767,14 @@ msgid "Drag the handles of the object to modify it."
 msgstr "Az objektum módosítása a vezérlőelemeinek a húzásával végezhető."
 
 #: ../src/nodepath.cpp:4473
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>); %s. %s."
 msgstr[1] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>); %s. %s."
 
 #: ../src/nodepath.cpp:4480
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgstr[0] ""
@@ -5785,7 +5785,7 @@ msgstr[1] ""
 "(összesen: <b>%i</b>). %s."
 
 #: ../src/nodepath.cpp:4486
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
 msgstr[0] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>). %s."
@@ -6156,28 +6156,27 @@ msgstr "objektum"
 msgid ""
 "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to "
 "touch selection"
-msgstr "objektum"
+msgstr ""
+"objektum "
+"érintéses kijelölés"
 
 #: ../src/select-context.cpp:707
-#, fuzzy
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
 msgstr ""
-"<b>Ctrl</b>: kijelölés csoporton belül, illetve vízszintes/függőleges "
-"áthelyezés"
+"<b>Ctrl</b>: kijelölés csoporton belül: kattintással; vízszintes/függőleges "
+"áthelyezés: húzással"
 
 #: ../src/select-context.cpp:708
-#, fuzzy
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr ""
-"<b>Shift</b>: kijelölés bekapcsolása/kikapcsolása; területkijelölés; "
-"illesztés kikapcsolása"
+"<b>Shift</b>: kijelölés bekapcsolása/kikapcsolása: kattintással; területkijelölés: "
+"húzással"
 
 #: ../src/select-context.cpp:709
-#, fuzzy
 msgid "<b>Alt</b>: click to select under; drag to move selected or select by touch"
 msgstr ""
-"<b>Alt</b>: lejjebb levő objektum kijelölése, illetve kijelölt objektumok "
-"áthelyezése"
+"<b>Alt</b>: lejjebb levő objektum kijelölése: kattintással; kijelölt objektumok "
+"áthelyezése vagy érintéses kijelölés: húzással"
 
 #: ../src/select-context.cpp:880
 msgid "Selected object is not a group. Cannot enter."
@@ -6641,14 +6640,14 @@ msgid " in group %s (%s)"
 msgstr " a(z) %s csoportban (%s)"
 
 #: ../src/selection-describer.cpp:153
-#, fuzzy, c-format
+#, c-format
 msgid " in <b>%i</b> parents (%s)"
 msgid_plural " in <b>%i</b> parents (%s)"
 msgstr[0] " <b>%i</b> szülőben (%s)"
 msgstr[1] " <b>%i</b> szülőben (%s)"
 
 #: ../src/selection-describer.cpp:156
-#, fuzzy, c-format
+#, c-format
 msgid " in <b>%i</b> layers"
 msgid_plural " in <b>%i</b> layers"
 msgstr[0] " <b>%i</b> rétegben"
@@ -6671,7 +6670,7 @@ msgstr "A keret meghatározása: <b>Shift+D</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:189
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object selected"
 msgid_plural "<b>%i</b> objects selected"
 msgstr[0] "<b>%i</b> objektum kijelölve"
@@ -6679,7 +6678,7 @@ msgstr[1] "<b>%i</b> objektum kijelölve"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:194
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object of type <b>%s</b>"
 msgid_plural "<b>%i</b> objects of type <b>%s</b>"
 msgstr[0] "<b>%i</b> darab objektum (típus: <b>%s</b>)"
@@ -6687,23 +6686,23 @@ msgstr[1] "<b>%i</b> darab objektum (típus: <b>%s</b>)"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:199
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>"
-msgstr[0] "<b>%i</b> darab objektum (típus: <b>%s</b> illetve <b>%s</b>)"
-msgstr[1] "<b>%i</b> darab objektum (típus: <b>%s</b> illetve <b>%s</b>)"
+msgstr[0] "<b>%i</b> darab objektum (típus: <b>%s</b>, illetve <b>%s</b>)"
+msgstr[1] "<b>%i</b> darab objektum (típus: <b>%s</b>, illetve <b>%s</b>)"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:204
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
-msgstr[0] "<b>%i</b> darab objektum (típus: <b>%s</b>, <b>%s</b> illetve <b>%s</b>)"
-msgstr[1] "<b>%i</b> darab objektum (típus: <b>%s</b>, <b>%s</b> illetve <b>%s</b>)"
+msgstr[0] "<b>%i</b> darab objektum (típus: <b>%s</b>, <b>%s</b>, illetve <b>%s</b>)"
+msgstr[1] "<b>%i</b> darab objektum (típus: <b>%s</b>, <b>%s</b>, illetve <b>%s</b>)"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:209
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object of <b>%i</b> types"
 msgid_plural "<b>%i</b> objects of <b>%i</b> types"
 msgstr[0] "<b>%i</b> darab objektum (<b>%i</b> féle típusból)"
@@ -6844,14 +6843,14 @@ msgid "Flow excluded region"
 msgstr "Tördelésből kizárt terület"
 
 #: ../src/sp-flowtext.cpp:378
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Flowed text</b> (%d character)"
 msgid_plural "<b>Flowed text</b> (%d characters)"
 msgstr[0] "<b>Tördelt szöveg</b> (%d karakter)"
 msgstr[1] "<b>Tördelt szöveg</b> (%d karakter)"
 
 #: ../src/sp-flowtext.cpp:380
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
 msgid_plural "<b>Linked flowed text</b> (%d characters)"
 msgstr[0] "<b>Kapcsolt tördelt szöveg</b> (%d karakter)"
@@ -6887,7 +6886,7 @@ msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "%d &#215; %d méretű <b>kép</b>: %s"
 
 #: ../src/sp-item-group.cpp:696
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] "<b>%d</b> objektumot tartalmazó <b>csoport</b>"
@@ -6932,14 +6931,14 @@ msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>Dinamikus perem</b>; %s %f ponttal (pt)"
 
 #: ../src/sp-path.cpp:140
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Path</b> (%i node, path effect)"
 msgid_plural "<b>Path</b> (%i nodes, path effect)"
 msgstr[0] "<b>Lánc</b> (%i csomópont, lánceffektus)"
 msgstr[1] "<b>Lánc</b> (%i csomópont, lánceffektus)"
 
 #: ../src/sp-path.cpp:143
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
 msgstr[0] "<b>Lánc</b> (%i csomópont)"
@@ -6973,21 +6972,21 @@ msgid "<b>Spiral</b> with %3f turns"
 msgstr "%3f fordulatú <b>spirál</b>"
 
 #: ../src/sp-star.cpp:311
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
 msgstr[0] "%d csúcsú <b>csillag</b>"
 msgstr[1] "%d csúcsú <b>csillag</b>"
 
 #: ../src/sp-star.cpp:315
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
 msgstr[0] "%d csúcsú <b>sokszög</b>"
 msgstr[1] "%d csúcsú <b>sokszög</b>"
 
 #: ../src/sp-switch.cpp:100
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
 msgstr[0] "<b>%d</b> objektumot tartalmazó <b>feltételes csoport</b>"
@@ -13983,9 +13982,8 @@ msgid "Regular polygon (with one handle) instead of a star"
 msgstr "Csillag helyett (1 vezérlőelemmel rendelkező) szabályos sokszög"
 
 #: ../src/widgets/toolbox.cpp:1890
-#, fuzzy
 msgid "Star instead of a regular polygon (with one handle)"
-msgstr "Csillag helyett (1 vezérlőelemmel rendelkező) szabályos sokszög"
+msgstr "Szabályos sokszög helyett (1 vezérlőelemmel rendelkező) csillag"
 
 #: ../src/widgets/toolbox.cpp:1910
 msgid "triangle/tri-star"
