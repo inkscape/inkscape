@@ -1317,8 +1317,8 @@ sp_desktop_query_style(SPDesktop *desktop, SPStyle *style, int property)
 }
 
 /**
- * Do the same as sp_desktop_query_style for all (defined) style properties, return true if none of
- * the properties returned QUERY_STYLE_NOTHING.
+ * Do the same as sp_desktop_query_style for all (defined) style properties, return true if at 
+ * least one of the properties did not return QUERY_STYLE_NOTHING.
  */
 bool
 sp_desktop_query_style_all (SPDesktop *desktop, SPStyle *query)
@@ -1335,7 +1335,17 @@ sp_desktop_query_style_all (SPDesktop *desktop, SPStyle *query)
         int result_opacity = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
         int result_blur = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_BLUR);
         
-        return (result_family != QUERY_STYLE_NOTHING && result_fstyle != QUERY_STYLE_NOTHING && result_fnumbers != QUERY_STYLE_NOTHING && result_fill != QUERY_STYLE_NOTHING && result_stroke != QUERY_STYLE_NOTHING && result_opacity != QUERY_STYLE_NOTHING && result_strokewidth != QUERY_STYLE_NOTHING && result_strokemiterlimit != QUERY_STYLE_NOTHING && result_strokecap != QUERY_STYLE_NOTHING && result_strokejoin != QUERY_STYLE_NOTHING && result_blur != QUERY_STYLE_NOTHING);
+        return (result_family != QUERY_STYLE_NOTHING || 
+                result_fstyle != QUERY_STYLE_NOTHING || 
+                result_fnumbers != QUERY_STYLE_NOTHING || 
+                result_fill != QUERY_STYLE_NOTHING || 
+                result_stroke != QUERY_STYLE_NOTHING || 
+                result_opacity != QUERY_STYLE_NOTHING || 
+                result_strokewidth != QUERY_STYLE_NOTHING || 
+                result_strokemiterlimit != QUERY_STYLE_NOTHING ||
+                result_strokecap != QUERY_STYLE_NOTHING ||
+                result_strokejoin != QUERY_STYLE_NOTHING ||
+                result_blur != QUERY_STYLE_NOTHING);
 }
 
 
