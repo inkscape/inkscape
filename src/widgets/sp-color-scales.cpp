@@ -285,7 +285,6 @@ void ColorScales::_colorChanged()
         break;
     case SP_COLOR_SCALES_MODE_HSV:
         sp_color_get_rgb_floatv( &_color, tmp );
-        c[0] = getScaled( _a[0] );
         sp_color_rgb_to_hsl_floatv (c, tmp[0], tmp[1], tmp[2]);
         c[3] = _alpha;
         c[4] = 0.0;
@@ -532,12 +531,6 @@ guint ColorScales::getSubmode() const
 
 void ColorScales::_adjustmentAnyChanged( GtkAdjustment *adjustment, SPColorScales *cs )
 {
-// TODO check this. It looks questionable:
-	// if a value is entered between 0 and 1 exclusive, normalize it to (int) 0..255  or 0..100
-	if (adjustment->value > 0.0 && adjustment->value < 1.0) {
-		gtk_adjustment_set_value( adjustment, floor ((adjustment->value) * adjustment->upper + 0.5) );
-	}
-
 	gint channel = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (adjustment), "channel"));
 
 	_adjustmentChanged(cs, channel);
