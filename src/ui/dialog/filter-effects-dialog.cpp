@@ -3,6 +3,8 @@
  *
  * Authors:
  *   Nicholas Bishop <nicholasbishop@gmail.org>
+ *   Rodrigo Kumpera <kumpera@gmail.com>
+ *   Felipe C. da S. Sanches <felipe.sanches@gmail.com>
  *
  * Copyright (C) 2007 Authors
  *
@@ -137,7 +139,7 @@ public:
                     const Glib::ustring& tv, const Glib::ustring& fv,
                     const SPAttributeEnum a)
         : Gtk::CheckButton(label),
-          AttrWidget(a),
+          AttrWidget(a, true),//TO-DO: receive a defaultvalue parameter in the constructor
           _true_val(tv), _false_val(fv)
     {
         signal_toggled().connect(signal_attr_changed().make_slot());
@@ -156,6 +158,8 @@ public:
                 set_active(true);
             else if(_false_val == val)
                 set_active(false);
+        } else {
+            set_active(get_default()->as_bool());
         }
     }
 private:
@@ -168,7 +172,7 @@ public:
     SpinButtonAttr(double lower, double upper, double step_inc,
                    double climb_rate, int digits, const SPAttributeEnum a)
         : Gtk::SpinButton(climb_rate, digits),
-          AttrWidget(a)
+          AttrWidget(a, lower)
     {
         set_range(lower, upper);
         set_increments(step_inc, step_inc * 5);
@@ -189,8 +193,11 @@ public:
     void set_from_attribute(SPObject* o)
     {
         const gchar* val = attribute_value(o);
-        if(val)
+        if(val){
             set_value(Glib::Ascii::strtod(val));
+        } else {
+            set_value(get_default()->as_double());
+        }
     }
 };
 
@@ -227,7 +234,7 @@ class DualSpinButton : public Gtk::HBox, public AttrWidget
 public:
     DualSpinButton(double lower, double upper, double step_inc,
                    double climb_rate, int digits, const SPAttributeEnum a)
-        : AttrWidget(a),
+        : AttrWidget(a), //TO-DO: receive default num-opt-num as parameter in the constructor
           _s1(climb_rate, digits), _s2(climb_rate, digits)
     {
         _s1.set_range(lower, upper);
@@ -268,12 +275,16 @@ public:
     virtual void set_from_attribute(SPObject* o)
     {
         const gchar* val = attribute_value(o);
+        NumberOptNumber n;
         if(val) {
-            NumberOptNumber n;
             n.set(val);
-            _s1.set_value(n.getNumber());
-            _s2.set_value(n.getOptNumber());
+        } else {
+            n.set("0 0"); //TO-DO: replace this line by the next one that is currently commented out
+//            n.set(default_value(o));
         }
+        _s1.set_value(n.getNumber());
+        _s2.set_value(n.getOptNumber());
+        
     }
 private:
     Gtk::SpinButton _s1, _s2;
@@ -297,7 +308,7 @@ public:
     {
         std::ostringstream os;
         const Gdk::Color c = get_color();
-        const int r = c.get_red() / 257, g = c.get_green() / 257, b = c.get_blue() / 257;
+        const int r = c.get_red() / 257, g = c.get_green() / 257, b = c.get_blue() / 257;//TO-DO: verify this. This sounds a lot strange! shouldn't it be 256?
         os << "rgb(" << r << "," << g << "," << b << ")";
         return os.str();
     }
@@ -306,13 +317,17 @@ public:
     void set_from_attribute(SPObject* o)
     {
         const gchar* val = attribute_value(o);
+        guint32 i = 0;
         if(val) {
-            const guint32 i = sp_svg_read_color(val, 0xFFFFFFFF);
-            const int r = SP_RGBA32_R_U(i), g = SP_RGBA32_G_U(i), b = SP_RGBA32_B_U(i);
-            Gdk::Color col;
-            col.set_rgb(r * 257, g * 257, b * 257);
-            set_color(col);
+            i = sp_svg_read_color(val, 0xFFFFFFFF);
+        } else {
+            //TO-DO: read from constructor attribute
+            //i = default_value(o);
         }
+        const int r = SP_RGBA32_R_U(i), g = SP_RGBA32_G_U(i), b = SP_RGBA32_B_U(i);
+        Gdk::Color col;
+        col.set_rgb(r * 256, g * 256, b * 256);
+        set_color(col);
     }
 };
 
@@ -588,6 +603,8 @@ public:
         const gchar* val = attribute_value(o);
         if(val) {
             _entry.set_text(val);
+        } else {
+            _entry.set_text("");
         }
     }
 
@@ -603,7 +620,7 @@ private:
         if (!node || !node->matchAttributeName("id")) return;
 
         std::ostringstream xlikhref;
-        xlikhref << "#(" << node->attribute("id") << ")";
+        xlikhref << "#" << node->attribute("id");
         _entry.set_text(xlikhref.str());
     }
 
@@ -882,7 +899,7 @@ private:
 
     FilterEffectsDialog& _dialog;
     SetAttrSlot _set_attr_slot;
-    std::vector<std::vector<AttrWidget*> > _attrwidgets;
+    std::vector<std::vector< AttrWidget*> > _attrwidgets;
     int _current_type, _max_types;
 };
 

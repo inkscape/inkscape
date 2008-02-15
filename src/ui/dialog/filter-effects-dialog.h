@@ -3,6 +3,7 @@
  *
  * Authors:
  *   Nicholas Bishop <nicholasbishop@gmail.com>
+ *   Rodrigo Kumpera <kumpera@gmail.com>
  *
  * Copyright (C) 2007 Authors
  *

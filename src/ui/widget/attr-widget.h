@@ -3,6 +3,7 @@
  *
  * Authors:
  *   Nicholas Bishop <nicholasbishop@gmail.com>
+ *   Rodrigo Kumpera <kumpera@gmail.com>
  *
  * Copyright (C) 2007 Authors
  *
@@ -20,11 +21,81 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+enum DefaultValueType
+{
+    T_NONE,
+    T_DOUBLE,
+    T_VECT_DOUBLE,
+    T_BOOL
+};
+
+class DefaultValueHolder
+{
+    DefaultValueType type;
+    union {
+        double d_val;
+        std::vector<double>* vt_val;
+        bool b_val;
+    } value;
+
+    //FIXME remove copy ctor and assignment operator as private to avoid double free of the vector
+public:
+    DefaultValueHolder () {
+        type = T_NONE;
+    }
+
+    DefaultValueHolder (double d) {
+        type = T_DOUBLE;
+        value.d_val = d;
+    }
+
+    DefaultValueHolder (std::vector<double>* d) {
+        type = T_VECT_DOUBLE;
+        value.vt_val = d;
+    }
+
+    DefaultValueHolder (bool d) {
+        type = T_BOOL;
+        value.b_val = d;
+    }
+
+    ~DefaultValueHolder() {
+        if (type == T_VECT_DOUBLE)
+            delete value.vt_val;
+    }
+
+    bool as_bool() {
+        g_assert (type == T_BOOL);
+        return value.b_val;
+    }
+
+    double as_double() {
+        g_assert (type == T_DOUBLE);
+        return value.d_val;
+    }
+
+    std::vector<double>* as_vector() {
+        g_assert (type == T_VECT_DOUBLE);
+        return value.vt_val;
+    }
+};
+
 class AttrWidget
 {
 public:
+    AttrWidget(const SPAttributeEnum a, double value)
+        : _attr(a),
+          _default(value)
+    {}
+
+    AttrWidget(const SPAttributeEnum a, bool value)
+        : _attr(a),
+          _default(value)
+    {}
+
     AttrWidget(const SPAttributeEnum a)
-        : _attr(a)
+        : _attr(a),
+          _default()
     {}
 
     virtual ~AttrWidget()
@@ -43,6 +114,7 @@ public:
         return _signal;
     }
 protected:
+    DefaultValueHolder* get_default() { return &_default; }
     const gchar* attribute_value(SPObject* o) const
     {
         const gchar* name = (const gchar*)sp_attribute_name(_attr);
@@ -55,6 +127,7 @@ protected:
 
 private:
     const SPAttributeEnum _attr;
+    DefaultValueHolder _default;
     sigc::signal<void> _signal;
 };
 

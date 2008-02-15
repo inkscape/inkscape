@@ -3,6 +3,7 @@
  *
  * Author:
  *   Nicholas Bishop <nicholasbishop@gmail.com>
+ *   Felipe C. da S. Sanches <felipe.sanches@gmail.com>
  *
  * Copyright (C) 2007 Author
  *
@@ -20,7 +21,7 @@ namespace Widget {
 
 SpinSlider::SpinSlider(double value, double lower, double upper, double step_inc,
                        double climb_rate, int digits, const SPAttributeEnum a)
-    : AttrWidget(a), _adjustment(value, lower, upper, step_inc),
+    : AttrWidget(a, value), _adjustment(value, lower, upper, step_inc),
       _scale(_adjustment), _spin(_adjustment, climb_rate, digits)
 {
     signal_value_changed().connect(signal_attr_changed().make_slot());
@@ -48,6 +49,8 @@ void SpinSlider::set_from_attribute(SPObject* o)
     const gchar* val = attribute_value(o);
     if(val)
         _adjustment.set_value(Glib::Ascii::strtod(val));
+    else
+        _adjustment.set_value(get_default()->as_double());
 }
 
 Glib::SignalProxy0<void> SpinSlider::signal_value_changed()
