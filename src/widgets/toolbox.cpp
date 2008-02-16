@@ -40,6 +40,7 @@
 #include "widgets/spw-utilities.h"
 #include "widgets/spinbutton-events.h"
 #include "dialogs/text-edit.h"
+#include "dialogs/dialog-events.h"
 
 #include "ui/widget/style-swatch.h"
 
@@ -3957,7 +3958,8 @@ sp_text_letter_rotation_changed(GtkAdjustment *adj, GtkWidget *tbl)
 
 namespace {
 
-bool visible = false;
+bool popdown_visible = false;
+bool popdown_hasfocus = false;
 
 void
 sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *tbl)
@@ -4146,12 +4148,9 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
 {
     SPDesktop    *desktop = SP_ACTIVE_DESKTOP;
     GtkTreeModel *model = 0;
-    GtkWidget    *popdown = GTK_WIDGET (g_object_get_data (tbl, "family-popdown-window"));
     GtkWidget    *entry = GTK_WIDGET (g_object_get_data (tbl, "family-entry"));
     GtkTreeIter   iter;
     char         *family = 0;
-
-    (void)popdown;
 
     gdk_pointer_ungrab (GDK_CURRENT_TIME);
     gdk_keyboard_ungrab (GDK_CURRENT_TIME);
@@ -4175,7 +4174,7 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
 
     int result_fontspec =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
-    
+
     font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
     
     SPCSSAttr *css = sp_repr_css_attr_new ();
@@ -4183,7 +4182,7 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
     
     // First try to get the font spec from the stored value
     Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
-    
+
     if (fontSpec.empty()) {
         // Construct a new font specification if it does not yet exist
         font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
@@ -4223,7 +4222,7 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
         }
     }
 
-    // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
+    // If querying returned nothing, set the default style of the tool (for new texts)
     if (result_fontspec == QUERY_STYLE_NOTHING)
     {
         sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
@@ -4485,9 +4484,18 @@ sp_text_toolbox_family_list_keypress (GtkWidget *w, GdkEventKey *event, GObject 
         case GDK_Return:
         case GDK_Escape: // defocus
             gtk_widget_hide (w);
-            visible = false;
+            popdown_visible = false;
             gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
             return TRUE; // I consumed the event
+            break;
+        case GDK_w: 
+        case GDK_W: 
+            if (event->state & GDK_CONTROL_MASK) {
+                gtk_widget_hide (w);
+                popdown_visible = false;
+                gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
+                return TRUE; // I consumed the event
+            }
             break;
     }
     return FALSE;
@@ -4598,11 +4606,12 @@ sp_text_toolbox_text_popdown_clicked    (GtkButton          */*button*/,
     GtkWidget *widget = GTK_WIDGET (g_object_get_data (tbl, "family-entry"));
     int x, y;
 
-    if (!visible)
+    if (!popdown_visible)
     {
         gdk_window_get_origin (widget->window, &x, &y);
         gtk_window_move (GTK_WINDOW (popdown), x, y + widget->allocation.height + 2); //2px of grace space
         gtk_widget_show_all (popdown);
+        //sp_transientize (popdown);
 
         gdk_pointer_grab (widget->window, TRUE,
                           GdkEventMask (GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
@@ -4612,14 +4621,16 @@ sp_text_toolbox_text_popdown_clicked    (GtkButton          */*button*/,
 
         gdk_keyboard_grab (widget->window, TRUE, GDK_CURRENT_TIME);
 
-        visible = true;
+        popdown_visible = true;
     }
     else
     {
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         gdk_pointer_ungrab (GDK_CURRENT_TIME);
         gdk_keyboard_ungrab (GDK_CURRENT_TIME);
+        gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
         gtk_widget_hide (popdown);
-        visible = false;
+        popdown_visible = false;
     }
 }
 
@@ -4639,11 +4650,25 @@ sp_text_toolbox_popdown_focus_out (GtkWidget        *popdown,
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    gtk_widget_hide (popdown);
-    visible = false;
-    gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
+    if (popdown_hasfocus) {
+        gtk_widget_hide (popdown);
+        popdown_hasfocus = false;
+        popdown_visible = false;
+        gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
+        return TRUE;
+    }
+    return FALSE;
+}
+
+gboolean
+sp_text_toolbox_popdown_focus_in (GtkWidget        *popdown,
+                                   GdkEventFocus    */*event*/,
+                                   GObject          */*tbl*/)
+{
+    popdown_hasfocus = true;
     return TRUE;
 }
+
 
 void
 cell_data_func  (GtkTreeViewColumn */*column*/,
@@ -4745,6 +4770,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     g_signal_connect (G_OBJECT (button), "clicked", G_CALLBACK (sp_text_toolbox_text_popdown_clicked), tbl);
 
     g_signal_connect (G_OBJECT (window), "focus-out-event", G_CALLBACK (sp_text_toolbox_popdown_focus_out), tbl);
+    g_signal_connect (G_OBJECT (window), "focus-in-event", G_CALLBACK (sp_text_toolbox_popdown_focus_in), tbl);
     g_signal_connect (G_OBJECT (window), "key-press-event", G_CALLBACK(sp_text_toolbox_family_list_keypress), tbl);
 
     GtkTreeSelection *tselection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
