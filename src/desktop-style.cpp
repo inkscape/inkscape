@@ -1096,7 +1096,7 @@ objects_query_fontspecification (GSList *objects, SPStyle *style_res)
         }
     }
 
-    if (texts == 0 || !style_res->text->font_specification.set)
+    if (texts == 0)
         return QUERY_STYLE_NOTHING;
 
     if (texts > 1) {
