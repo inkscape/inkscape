@@ -24,6 +24,7 @@
 #include <gtkmm/frame.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/menu.h>
+#include <gtkmm/notebook.h>
 #include <gtkmm/sizegroup.h>
 #include <gtkmm/treeview.h>
 
@@ -214,8 +215,10 @@ private:
 
     void set_attr_direct(const AttrWidget*);
     void set_child_attr_direct(const AttrWidget*);
+    void set_filternode_attr(const AttrWidget*);
     void set_attr(SPObject*, const SPAttributeEnum, const gchar* val);
     void update_settings_view();
+    void update_filter_general_settings_view();
     void update_settings_sensitivity();
     void update_color_matrix();
     void update_primitive_infobox();
@@ -234,14 +237,18 @@ private:
     Gtk::Button _add_primitive;
 
     // Bottom pane (filter effect primitive settings)
-    Gtk::VBox _settings_box;
+    Gtk::Notebook _settings_tabs;
+    Gtk::VBox _settings_tab2;
+    Gtk::VBox _settings_tab1;
     Gtk::Label _empty_settings;
+    Gtk::Label _no_filter_selected;
 
     class Settings;
     class MatrixAttr;
     class ColorMatrixValues;
     class LightSourceControl;
     Settings* _settings;
+    Settings* _filter_general_settings;
     Glib::RefPtr<Gtk::SizeGroup> _sizegroup;
 
     // Color Matrix

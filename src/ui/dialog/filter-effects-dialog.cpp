@@ -170,9 +170,9 @@ class SpinButtonAttr : public Gtk::SpinButton, public AttrWidget
 {
 public:
     SpinButtonAttr(double lower, double upper, double step_inc,
-                   double climb_rate, int digits, const SPAttributeEnum a)
+                   double climb_rate, int digits, const SPAttributeEnum a, double def)
         : Gtk::SpinButton(climb_rate, digits),
-          AttrWidget(a, lower)
+          AttrWidget(a, def)
     {
         set_range(lower, upper);
         set_increments(step_inc, step_inc * 5);
@@ -206,10 +206,11 @@ class MultiSpinButton : public Gtk::HBox
 {
 public:
     MultiSpinButton(double lower, double upper, double step_inc,
-                    double climb_rate, int digits, std::vector<SPAttributeEnum> attrs)
+                    double climb_rate, int digits, std::vector<SPAttributeEnum> attrs, std::vector<double> default_values)
     {
+        g_assert(attrs.size()==default_values.size());
         for(unsigned i = 0; i < attrs.size(); ++i) {
-            _spins.push_back(new SpinButtonAttr(lower, upper, step_inc, climb_rate, digits, attrs[i]));
+            _spins.push_back(new SpinButtonAttr(lower, upper, step_inc, climb_rate, digits, attrs[i], default_values[i]));
             pack_start(*_spins.back(), false, false);
         }
     }
@@ -696,11 +697,13 @@ public:
     {
         _groups.resize(_max_types);
         _attrwidgets.resize(_max_types);
+        _size_group = Gtk::SizeGroup::create(Gtk::SIZE_GROUP_HORIZONTAL);
 
         for(int i = 0; i < _max_types; ++i) {
             _groups[i] = new Gtk::VBox;
-            b.add(*_groups[i]);
+            b.pack_start(*_groups[i], false, false);
         }
+        _current_type = 0;
     }
 
     ~Settings()
@@ -741,7 +744,7 @@ public:
 
     void add_notimplemented()
     {
-        Gtk::Label* lbl = Gtk::manage(new Gtk::Label("This SVG filter effect is not yet implemented in Inkscape."));
+        Gtk::Label* lbl = Gtk::manage(new Gtk::Label(_("This SVG filter effect is not yet implemented in Inkscape.")));
 
         add_widget(lbl, "");
     }
@@ -819,20 +822,24 @@ public:
     }
 
     // MultiSpinButton
-    MultiSpinButton* add_multispinbutton(const SPAttributeEnum attr1, const SPAttributeEnum attr2,
+    MultiSpinButton* add_multispinbutton(double def1, double def2, const SPAttributeEnum attr1, const SPAttributeEnum attr2,
                                          const Glib::ustring& label, const double lo, const double hi,
                                          const double step_inc, const double climb, const int digits)
     {
         std::vector<SPAttributeEnum> attrs;
         attrs.push_back(attr1);
         attrs.push_back(attr2);
-        MultiSpinButton* msb = new MultiSpinButton(lo, hi, step_inc, climb, digits, attrs);
+
+        std::vector<double> default_values;
+        default_values.push_back(def1);
+        default_values.push_back(def2);
+        MultiSpinButton* msb = new MultiSpinButton(lo, hi, step_inc, climb, digits, attrs, default_values);
         add_widget(msb, label);
         for(unsigned i = 0; i < msb->get_spinbuttons().size(); ++i)
             add_attr_widget(msb->get_spinbuttons()[i]);
         return msb;
     }
-    MultiSpinButton* add_multispinbutton(const SPAttributeEnum attr1, const SPAttributeEnum attr2,
+    MultiSpinButton* add_multispinbutton(double def1, double def2, double def3, const SPAttributeEnum attr1, const SPAttributeEnum attr2,
                                          const SPAttributeEnum attr3, const Glib::ustring& label, const double lo,
                                          const double hi, const double step_inc, const double climb, const int digits)
     {
@@ -840,7 +847,13 @@ public:
         attrs.push_back(attr1);
         attrs.push_back(attr2);
         attrs.push_back(attr3);
-        MultiSpinButton* msb = new MultiSpinButton(lo, hi, step_inc, climb, digits, attrs);
+
+        std::vector<double> default_values;
+        default_values.push_back(def1);
+        default_values.push_back(def2);
+        default_values.push_back(def3);
+
+        MultiSpinButton* msb = new MultiSpinButton(lo, hi, step_inc, climb, digits, attrs, default_values);
         add_widget(msb, label);
         for(unsigned i = 0; i < msb->get_spinbuttons().size(); ++i)
             add_attr_widget(msb->get_spinbuttons()[i]);
@@ -885,7 +898,7 @@ private:
         if(label != "") {
             lbl = Gtk::manage(new Gtk::Label(label + (label == "" ? "" : ":"), Gtk::ALIGN_LEFT));
             hb->pack_start(*lbl, false, false);
-            _dialog._sizegroup->add_widget(*lbl);
+            _size_group->add_widget(*lbl);
             lbl->show();
         }
 
@@ -896,7 +909,7 @@ private:
     }
 
     std::vector<Gtk::VBox*> _groups;
-
+    Glib::RefPtr<Gtk::SizeGroup> _size_group;
     FilterEffectsDialog& _dialog;
     SetAttrSlot _set_attr_slot;
     std::vector<std::vector< AttrWidget*> > _attrwidgets;
@@ -932,11 +945,12 @@ public:
         _settings.add_spinslider(SP_ATTR_ELEVATION, _("Elevation"), 0, 360, 1, 1, 0);
 
         _settings.type(LIGHT_POINT);
-        _settings.add_multispinbutton(SP_ATTR_X, SP_ATTR_Y, SP_ATTR_Z, _("Location"), -99999, 99999, 1, 100, 0);
+        _settings.add_multispinbutton(/*default x:*/ (double) 0, /*default y:*/ (double) 0, /*default z:*/ (double) 0, SP_ATTR_X, SP_ATTR_Y, SP_ATTR_Z, _("Location"), -99999, 99999, 1, 100, 0);
 
         _settings.type(LIGHT_SPOT);
-        _settings.add_multispinbutton(SP_ATTR_X, SP_ATTR_Y, SP_ATTR_Z, _("Location"), -99999, 99999, 1, 100, 0);
-        _settings.add_multispinbutton(SP_ATTR_POINTSATX, SP_ATTR_POINTSATY, SP_ATTR_POINTSATZ,
+        _settings.add_multispinbutton(/*default x:*/ (double) 0, /*default y:*/ (double) 0, /*default z:*/ (double) 0, SP_ATTR_X, SP_ATTR_Y, SP_ATTR_Z, _("Location"), -99999, 99999, 1, 100, 0);
+        _settings.add_multispinbutton(/*default x:*/ (double) 0, /*default y:*/ (double) 0, /*default z:*/ (double) 0,
+                                      SP_ATTR_POINTSATX, SP_ATTR_POINTSATY, SP_ATTR_POINTSATZ,
                                       _("Points At"), -99999, 99999, 1, 100, 0);
         _settings.add_spinslider(SP_ATTR_SPECULAREXPONENT, _("Specular Exponent"), 1, 100, 1, 1, 0);
         _settings.add_spinslider(SP_ATTR_LIMITINGCONEANGLE, _("Cone Angle"), 1, 100, 1, 1, 0);
@@ -1234,6 +1248,7 @@ void FilterEffectsDialog::FilterModifier::update_filters()
     }
 
     update_selection(desktop->selection);
+    _dialog.update_filter_general_settings_view();
 }
 
 SPFilter* FilterEffectsDialog::FilterModifier::get_selected_filter()
@@ -1438,7 +1453,7 @@ void FilterEffectsDialog::PrimitiveList::update()
 
     if(f) {
         _dialog._primitive_box.set_sensitive(true);
-
+        _dialog.update_filter_general_settings_view();
         for(SPObject *prim_obj = f->children;
                 prim_obj && SP_IS_FILTER_PRIMITIVE(prim_obj);
                 prim_obj = prim_obj->next) {
@@ -2027,11 +2042,14 @@ FilterEffectsDialog::FilterEffectsDialog()
       _add_primitive_type(FPConverter),
       _add_primitive(_("Add Effect:")),
       _empty_settings(_("No effect selected"), Gtk::ALIGN_LEFT),
+      _no_filter_selected(_("No filter selected"), Gtk::ALIGN_LEFT),
       _locked(false),
       _attr_lock(false)
 {
-    _settings = new Settings(*this, _settings_box, sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_direct),
+    _settings = new Settings(*this, _settings_tab1, sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_direct),
                              NR_FILTER_ENDPRIMITIVETYPE);
+    _filter_general_settings = new Settings(*this, _settings_tab2, sigc::mem_fun(*this, &FilterEffectsDialog::set_filternode_attr),
+                             1);
     _sizegroup = Gtk::SizeGroup::create(Gtk::SIZE_GROUP_HORIZONTAL);
     _sizegroup->set_ignore_hidden();
 
@@ -2043,8 +2061,7 @@ FilterEffectsDialog::FilterEffectsDialog()
     Gtk::ScrolledWindow* sw_prims = Gtk::manage(new Gtk::ScrolledWindow);
     Gtk::HBox* infobox = Gtk::manage(new Gtk::HBox);
     Gtk::HBox* hb_prims = Gtk::manage(new Gtk::HBox);
-    Gtk::Frame* fr_settings = Gtk::manage(new Gtk::Frame(_("<b>Effect parameters</b>")));
-    Gtk::Alignment* al_settings = Gtk::manage(new Gtk::Alignment);
+
     _getContents()->add(*hpaned);
     hpaned->pack1(_filter_modifier);
     hpaned->pack2(_primitive_box);
@@ -2053,14 +2070,14 @@ FilterEffectsDialog::FilterEffectsDialog()
     _primitive_box.pack_start(*hb_prims, false, false);
     sw_prims->add(_primitive_list);
     infobox->pack_start(_infobox_icon, false, false);
-    infobox->pack_end(_infobox_desc, false, false);
+    infobox->pack_start(_infobox_desc, false, false);
     _infobox_desc.set_line_wrap(true);
 
     hb_prims->pack_end(_add_primitive_type, false, false);
     hb_prims->pack_end(_add_primitive, false, false);
-    _getContents()->pack_start(*fr_settings, false, false);
-    fr_settings->add(*al_settings);
-    al_settings->add(_settings_box);
+    _getContents()->pack_start(_settings_tabs, false, false);
+    _settings_tabs.append_page(_settings_tab1, _("Effect parameters"));
+    _settings_tabs.append_page(_settings_tab2, _("Filter General Settings"));
 
     _primitive_list.signal_primitive_changed().connect(
         sigc::mem_fun(*this, &FilterEffectsDialog::update_settings_view));
@@ -2072,9 +2089,9 @@ FilterEffectsDialog::FilterEffectsDialog()
 
     sw_prims->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
     sw_prims->set_shadow_type(Gtk::SHADOW_IN);
-    al_settings->set_padding(0, 0, 12, 0);
-    fr_settings->set_shadow_type(Gtk::SHADOW_NONE);
-    ((Gtk::Label*)fr_settings->get_label_widget())->set_use_markup();
+//    al_settings->set_padding(0, 0, 12, 0);
+//    fr_settings->set_shadow_type(Gtk::SHADOW_NONE);
+//    ((Gtk::Label*)fr_settings->get_label_widget())->set_use_markup();
     _add_primitive.signal_clicked().connect(sigc::mem_fun(*this, &FilterEffectsDialog::add_primitive));
     _primitive_list.set_menu(create_popup_menu(*this, sigc::mem_fun(*this, &FilterEffectsDialog::duplicate_primitive),
                                                sigc::mem_fun(_primitive_list, &PrimitiveList::remove_selected)));
@@ -2088,6 +2105,7 @@ FilterEffectsDialog::FilterEffectsDialog()
 FilterEffectsDialog::~FilterEffectsDialog()
 {
     delete _settings;
+    delete _filter_general_settings;
 }
 
 void FilterEffectsDialog::set_attrs_locked(const bool l)
@@ -2108,7 +2126,14 @@ void FilterEffectsDialog::init_settings_widgets()
     //       most of the current values are complete guesses!
 
     _empty_settings.set_sensitive(false);
-    _settings_box.pack_start(_empty_settings);
+    _settings_tab1.pack_start(_empty_settings);
+    
+    _no_filter_selected.set_sensitive(false);
+    _settings_tab2.pack_start(_no_filter_selected);
+
+    _filter_general_settings->type(0);
+    _filter_general_settings->add_multispinbutton(/*default x:*/ (double) -0.1, /*default y:*/ (double) -0.1, SP_ATTR_X, SP_ATTR_Y, _("Coordinates"), -100, 100, 0.01, 0.1, 2);
+    _filter_general_settings->add_multispinbutton(/*default width:*/ (double) 1.2, /*default height:*/ (double) 1.2, SP_ATTR_WIDTH, SP_ATTR_HEIGHT, _("Dimensions"), 0, 1000, 0.01, 0.1, 2);
 
     _settings->type(NR_FILTER_BLEND);
     _settings->add_combo(SP_ATTR_MODE, _("Mode"), BlendModeConverter);
@@ -2136,7 +2161,7 @@ void FilterEffectsDialog::init_settings_widgets()
 
     _settings->type(NR_FILTER_CONVOLVEMATRIX);
     _convolve_order = _settings->add_dualspinbutton(SP_ATTR_ORDER, _("Size"), 1, 5, 1, 1, 0);
-    _convolve_target = _settings->add_multispinbutton(SP_ATTR_TARGETX, SP_ATTR_TARGETY, _("Target"), 0, 4, 1, 1, 0);
+    _convolve_target = _settings->add_multispinbutton(/*default x:*/ (double) 0, /*default y:*/ (double) 0, SP_ATTR_TARGETX, SP_ATTR_TARGETY, _("Target"), 0, 4, 1, 1, 0);
     _convolve_matrix = _settings->add_matrix(SP_ATTR_KERNELMATRIX, _("Kernel"));
     _convolve_order->signal_attr_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::convolve_order_changed));
     _settings->add_spinslider(SP_ATTR_DIVISOR, _("Divisor"), 1, 20, 1, 0.1, 2);
@@ -2169,9 +2194,6 @@ void FilterEffectsDialog::init_settings_widgets()
 
     _settings->type(NR_FILTER_IMAGE);
     _settings->add_fileorelement(SP_ATTR_XLINK_HREF, _("Source of Image"));
-    _settings->add_multispinbutton(SP_ATTR_X, SP_ATTR_Y, _("Coordinates"), -10000, 10000, 1, 1, 0);
-    //TRANSLATORS: This is a context string, only put the word "Dimensions" in your translation
-    _settings->add_multispinbutton(SP_ATTR_WIDTH, SP_ATTR_HEIGHT, Q_("imageFilter|Dimensions"), 0, 10000, 1, 1, 0);
 
     _settings->type(NR_FILTER_OFFSET);
     _settings->add_spinslider(SP_ATTR_DX, _("Delta X"), -100, 100, 1, 0.01, 1);
@@ -2314,6 +2336,20 @@ void FilterEffectsDialog::set_attr_direct(const AttrWidget* input)
     set_attr(_primitive_list.get_selected(), input->get_attribute(), input->get_as_attribute().c_str());
 }
 
+void FilterEffectsDialog::set_filternode_attr(const AttrWidget* input)
+{
+    if(!_locked) {
+        _attr_lock = true;
+        SPFilter *filter = _filter_modifier.get_selected_filter();
+        const gchar* name = (const gchar*)sp_attribute_name(input->get_attribute());
+        if (filter && name && SP_OBJECT_REPR(filter)){
+            SP_OBJECT_REPR(filter)->setAttribute(name, input->get_as_attribute().c_str());
+            filter->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        }
+        _attr_lock = false;
+    }
+}
+
 void FilterEffectsDialog::set_child_attr_direct(const AttrWidget* input)
 {
     set_attr(_primitive_list.get_selected()->children, input->get_attribute(), input->get_as_attribute().c_str());
@@ -2342,6 +2378,27 @@ void FilterEffectsDialog::set_attr(SPObject* o, const SPAttributeEnum attr, cons
     }
 }
 
+void FilterEffectsDialog::update_filter_general_settings_view()
+{
+    if(!_locked) {
+        _attr_lock = true;
+
+        SPFilter* filter = _filter_modifier.get_selected_filter();
+
+        if(filter) {
+            _filter_general_settings->show_and_update(0, filter);
+            _no_filter_selected.hide();
+        }
+        else {
+            std::vector<Gtk::Widget*> vect = _settings_tab2.get_children();
+            vect[0]->hide_all();
+            _no_filter_selected.show();
+        }
+
+        _attr_lock = false;
+    }
+}
+
 void FilterEffectsDialog::update_settings_view()
 {
     update_settings_sensitivity();
@@ -2349,8 +2406,10 @@ void FilterEffectsDialog::update_settings_view()
     if(_attr_lock)
         return;
 
-    _settings_box.hide_all();
-    _settings_box.show();
+//First Tab
+
+    std::vector<Gtk::Widget*> vect1 = _settings_tab1.get_children();
+    for(int i=0; i<vect1.size(); i++) vect1[i]->hide_all();
     _empty_settings.show();
 
     if (prefs_get_int_attribute ("options.showfiltersinfobox", "value", 1)){
@@ -2367,6 +2426,20 @@ void FilterEffectsDialog::update_settings_view()
         _settings->show_and_update(FPConverter.get_id_from_key(prim->repr->name()), prim);
         _empty_settings.hide();
     }
+
+//Second Tab
+
+    std::vector<Gtk::Widget*> vect2 = _settings_tab2.get_children();
+    vect2[0]->hide_all();
+    _no_filter_selected.show();
+
+    SPFilter* filter = _filter_modifier.get_selected_filter();
+
+    if(filter) {
+        _filter_general_settings->show_and_update(0, filter);
+        _no_filter_selected.hide();
+    }
+
 }
 
 void FilterEffectsDialog::update_settings_sensitivity()
