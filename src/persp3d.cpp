@@ -260,7 +260,7 @@ persp3d_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
     Persp3D *persp = SP_PERSP3D(object);
 
-    if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
+    if ((flags & SP_OBJECT_WRITE_BUILD & SP_OBJECT_WRITE_EXT) && !repr) {
         // this is where we end up when saving as plain SVG (also in other circumstances?);
         // hence we don't set the sodipodi:type attribute
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
