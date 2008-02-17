@@ -382,6 +382,8 @@ Glib::ustring FileListViewText::getFilename()
     return myFilename;
 }
 
+
+#ifdef WITH_GNOME_VFS
 /**
  * Read callback for xmlReadIO(), used below
  */
@@ -402,6 +404,8 @@ static int vfs_read_callback (GnomeVFSHandle *handle, char* buf, int nb)
         return -1;
     }
 }
+#endif
+
 
 /**
  * Callback for user input into searchTagEntry
@@ -476,6 +480,7 @@ void FileImportFromOCALDialog::searchTagEntryChangedCallback()
     return;
 #endif    
 }
+
 
 /**
  * Prints the names of the all the xml elements 
