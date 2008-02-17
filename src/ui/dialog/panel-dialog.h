@@ -74,6 +74,8 @@ public:
     inline virtual void present();
 
 private:
+    inline void _presentDialog();
+
     PanelDialog();  // no constructor without params
     PanelDialog(PanelDialog<Behavior> const &d);                      // no copy
     PanelDialog<Behavior>& operator=(PanelDialog<Behavior> const &d); // no assign
@@ -134,6 +136,7 @@ PanelDialog<B>::PanelDialog(Panel &panel, char const *prefs_path, int const verb
 {
     Gtk::VBox *vbox = get_vbox();
     _panel.signalResponse().connect(sigc::mem_fun(*this, &PanelDialog::_handleResponse));
+    _panel.signalPresent().connect(sigc::mem_fun(*this, &PanelDialog::_presentDialog));
 
     vbox->pack_start(_panel, true, true, 0);
 
@@ -168,8 +171,14 @@ template <typename B>
 void
 PanelDialog<B>::present()
 {
-    Dialog::present(); 
     _panel.present(); 
+}
+
+template <typename B>
+void
+PanelDialog<B>::_presentDialog()
+{
+    Dialog::present(); 
 }
 
 PanelDialog<Behavior::FloatingBehavior>::PanelDialog(Panel &panel, char const *prefs_path,
