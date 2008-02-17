@@ -117,11 +117,11 @@ bool Rotateable::on_release(GdkEventButton *event) {
         if (fabs(force) < 0.002)
             force = 0; // snap to zero
         do_release(force, modifier);
-        dragging = false;
-        working = false;
         current_axis = axis;
         return true;
 		}
+    dragging = false;
+    working = false;
 		return false;
 }
 
