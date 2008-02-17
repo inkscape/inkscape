@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-02-08 23:00+0100\n"
-"PO-Revision-Date: 2008-02-14 22:54+0100\n"
+"PO-Revision-Date: 2008-02-17 23:56+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -62,21 +62,19 @@ msgstr "Ellipszis létrehozása"
 #: ../src/box3d-context.cpp:480 ../src/box3d-context.cpp:487
 #: ../src/box3d-context.cpp:494 ../src/box3d-context.cpp:501
 #: ../src/box3d-context.cpp:508 ../src/box3d-context.cpp:515
-#, fuzzy
 msgid "Change perspective (angle of PLs)"
-msgstr "3D téglatest: csúcsok számának módosítása"
+msgstr "Perspektíva módosítása (perspektívavonalak szöge)"
 
 #. status text
 #. GString *Ax = SP_PX_TO_METRIC_STRING(origin[NR::X], desktop->namedview->getDefaultMetric());
 #. GString *Ay = SP_PX_TO_METRIC_STRING(origin[NR::Y], desktop->namedview->getDefaultMetric());
 #: ../src/box3d-context.cpp:730
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
-msgstr ""
+msgstr "<b>3D téglatest</b>. Kihúzás a Z-tengely mentén: <b>Shift</b>."
 
 #: ../src/box3d-context.cpp:757
-#, fuzzy
 msgid "Create 3D box"
-msgstr "3D téglatestek létrehozása"
+msgstr "3D téglatest létrehozása"
 
 #: ../src/connector-context.cpp:522
 msgid "Creating new connector"
@@ -1141,7 +1139,7 @@ msgstr "Definiálatlan kitöltés"
 
 #. TRANSLATORS: "%s" is replaced with "exact" or "partial" when this string is displayed
 #: ../src/dialogs/find.cpp:372 ../src/ui/dialog/find.cpp:434
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
 msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
 msgstr[0] "<b>%d</b> találat (<b>%d</b> objektumból), %s egyezés."
@@ -3058,7 +3056,10 @@ msgstr "Árnyalat"
 #: ../src/extension/internal/bitmap/modulate.cpp:49
 #, fuzzy
 msgid "Modulate percent hue, saturation, and brightness of selected bitmap(s)."
-msgstr "A kijelölt bitkép(ek)"
+msgstr ""
+"A kijelölt bitkép(ek) "
+"árnyalatának "
+"telítettség"
 
 #: ../src/extension/internal/bitmap/negate.cpp:35
 #, fuzzy
@@ -3112,7 +3113,9 @@ msgstr "Feljebb helyezés"
 msgid ""
 "Alter lightness the edges of selected bitmap(s) to create a raised "
 "appearance."
-msgstr "A kijelölt bitkép(ek)"
+msgstr ""
+"A kijelölt bitkép(ek) "
+"fényesség"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:39
 #, fuzzy
@@ -3188,7 +3191,9 @@ msgstr "Spirál"
 #: ../src/extension/internal/bitmap/spread.cpp:44
 #, fuzzy
 msgid "Randomly spread pixels in selected bitmap(s), within the radius of 'amount.'"
-msgstr "képpontA kijelölt bitkép(ek)"
+msgstr ""
+"véletlenszerű"
+"képpontA kijelölt bitkép(ek)"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:36
 #, fuzzy
@@ -4109,7 +4114,9 @@ msgstr "Telítettség"
 #: ../src/filter-enums.cpp:63
 #, fuzzy
 msgid "Hue Rotate"
-msgstr "Forgatás"
+msgstr ""
+"árnyalat"
+"Forgatás"
 
 #: ../src/filter-enums.cpp:64
 #, fuzzy
@@ -4244,38 +4251,37 @@ msgid "Lightness"
 msgstr "Fényesség"
 
 #: ../src/flood-context.cpp:265
-#, fuzzy
 msgid "Small"
-msgstr "kicsi"
+msgstr "Kicsi"
 
 #: ../src/flood-context.cpp:266
-#, fuzzy
 msgid "Medium"
-msgstr "közepes"
+msgstr "Közepes"
 
 #: ../src/flood-context.cpp:267
-#, fuzzy
 msgid "Large"
-msgstr "nagy"
+msgstr "Nagy"
 
 #: ../src/flood-context.cpp:421
+#, fuzzy
 msgid "<b>Too much inset</b>, the result is empty."
-msgstr ""
+msgstr "zsugorítás"
 
 #: ../src/flood-context.cpp:461
-#, fuzzy, c-format
+#, c-format
 msgid "Area filled, path with <b>%d</b> nodes created and unioned with selection."
-msgstr "csomópontok"
+msgstr ""
+"A terület kitöltve, <b>%d</b> csomópontot tartalmazó lánc létrehozva "
+"és egyesítve a kijelöléssel."
 
 #: ../src/flood-context.cpp:465
-#, fuzzy, c-format
+#, c-format
 msgid "Area filled, path with <b>%d</b> nodes created."
-msgstr "csomópontok"
+msgstr "A terület kitöltve, <b>%d</b> csomópontot tartalmazó lánc létrehozva."
 
 #: ../src/flood-context.cpp:681 ../src/flood-context.cpp:976
-#, fuzzy
 msgid "<b>Area is not bounded</b>, cannot fill."
-msgstr "Körülhatárolt területek kitöltése"
+msgstr "<b>A terület nem körülhatárolt</b>, nem lehet kitölteni."
 
 #: ../src/flood-context.cpp:981
 #, fuzzy
@@ -4307,9 +4313,8 @@ msgid "Linear gradient <b>end</b>"
 msgstr "Lineáris színátmenet <b>vége</b>"
 
 #: ../src/gradient-context.cpp:134 ../src/gradient-drag.cpp:77
-#, fuzzy
 msgid "Linear gradient <b>mid stop</b>"
-msgstr "Lineáris színátmenet <b>kezdete</b>"
+msgstr "Lineáris színátmenetbeli <b>közbenső fázis</b>"
 
 #: ../src/gradient-context.cpp:135 ../src/gradient-drag.cpp:78
 msgid "Radial gradient <b>center</b>"
@@ -4327,33 +4332,32 @@ msgstr "Sugárirányú színátmenet <b>fókusza</b>"
 #. POINT_RG_FOCUS
 #: ../src/gradient-context.cpp:139 ../src/gradient-context.cpp:140
 #: ../src/gradient-drag.cpp:82 ../src/gradient-drag.cpp:83
-#, fuzzy
 msgid "Radial gradient <b>mid stop</b>"
-msgstr "Lineáris színátmenet <b>kezdete</b>"
+msgstr "Sugárirányú színátmenetbeli <b>közbenső fázis</b>"
 
 #: ../src/gradient-context.cpp:160
-#, fuzzy, c-format
+#, c-format
 msgid "%s selected out of %d gradient handles on %d selected object"
 msgid_plural "%s selected out of %d gradient handles on %d selected objects"
-msgstr[0] "kijelölt Színátmenet objektum"
-msgstr[1] "kijelölt Színátmenet objektum"
+msgstr[0] "%s kijelölve %d színátmenet-vezérlőelemből %d kijelölt objektumon"
+msgstr[1] "%s kijelölve %d színátmenet-vezérlőelemből %d kijelölt objektumon"
 
 #: ../src/gradient-context.cpp:163
 #, fuzzy, c-format
 msgid ""
 "One handle merging %d stops (drag with <b>Shift</b> to separate) selected "
 "out of %d gradient handles on %d selected object(s)"
-msgstr "kijelölt Színátmenet objektum"
+msgstr "kijelölt színátmenet-vezérlőelem Színátmenet objektum"
 
 #: ../src/gradient-context.cpp:167
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%d</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr "kijelölt Színátmenet objektum"
+msgstr "<b>%d</b> színátmenet-vezérlőelem kijelölve (összesen: %d) %d kijelölt objektumon"
 
 #: ../src/gradient-context.cpp:170
-#, fuzzy, c-format
+#, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr "kijelölt Színátmenet objektum"
+msgstr "<b>Nincs</b> kijelölve színátmenet-vezérlőelem (összesen: %d) %d kijelölt objektumon"
 
 #: ../src/gradient-context.cpp:368 ../src/gradient-context.cpp:461
 #: ../src/widgets/gradient-vector.cpp:735
@@ -4386,7 +4390,7 @@ msgid "Invert gradient"
 msgstr "Színátmenet invertálása"
 
 #: ../src/gradient-context.cpp:893
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] "<b>Színátmenet</b> %d objektumhoz. Szöghöz való illesztés: <b>Ctrl</b>."
@@ -4402,7 +4406,7 @@ msgstr ""
 #: ../src/gradient-drag.cpp:597
 #, fuzzy
 msgid "Merge gradient handles"
-msgstr "SzínátmenetCsomópont-vezérlőelemek összevonása"
+msgstr "Színátmenet-vezérlőelemek összevonása"
 
 # TODO: ellenőrizni
 #: ../src/gradient-drag.cpp:906
@@ -4414,13 +4418,13 @@ msgid "Delete gradient stop"
 msgstr "Színátmenet-fázis törlése"
 
 #: ../src/gradient-drag.cpp:1123
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl"
 "+Alt</b> to delete stop"
 msgstr ""
-"%s ehhez: %s%s. Szöghöz való illesztés: <b>Ctrl</b>+húzás. Szög megőrzése: "
-"<b>Ctrl+Alt</b>. Átméretezés a középpont körül: <b>Ctrl+Shift</b>."
+"%s %d ehhez: %s%s. Az eltolás illesztése: <b>Ctrl</b>+húzás. "
+"Fázis törlése: <b>Ctrl+Alt</b>+kattintás."
 
 #: ../src/gradient-drag.cpp:1127 ../src/gradient-drag.cpp:1134
 msgid " (stroke)"
@@ -4445,7 +4449,7 @@ msgstr ""
 "különválasztása: <b>Shift</b>+húzás."
 
 #: ../src/gradient-drag.cpp:1142
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
 "separate"
@@ -4461,19 +4465,16 @@ msgstr[1] ""
 
 # TODO: ellenőrizni
 #: ../src/gradient-drag.cpp:1817
-#, fuzzy
 msgid "Move gradient handle(s)"
-msgstr "Színátmenet-vezérlőelem áthelyezése"
+msgstr "Színátmenet-vezérlőelem(ek) áthelyezése"
 
 #: ../src/gradient-drag.cpp:1853
-#, fuzzy
 msgid "Move gradient mid stop(s)"
-msgstr "Színátmenet-fázis áthelyezése"
+msgstr "Színátmenet egy vagy több közbenső fázisának áthelyezése"
 
 #: ../src/gradient-drag.cpp:2141
-#, fuzzy
 msgid "Delete gradient stop(s)"
-msgstr "Színátmenet-fázis törlése"
+msgstr "Színátmenet egy vagy több fázisának törlése"
 
 #: ../src/helper/units.cpp:37
 msgid "Unit"
@@ -4892,9 +4893,8 @@ msgstr ""
 # node-ok és szakaszok száma nem változik
 #. {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
 #: ../src/live_effects/effect.cpp:50
-#, fuzzy
 msgid "Bend Path"
-msgstr "Lánc szétbontása"
+msgstr "Lánc hajlítása"
 
 #: ../src/live_effects/effect.cpp:51
 msgid "Pattern Along Path"
@@ -4910,14 +4910,12 @@ msgid "doEffect stack test"
 msgstr ""
 
 #: ../src/live_effects/effect.cpp:56
-#, fuzzy
 msgid "Gears"
-msgstr "_Törlés"
+msgstr "Fogaskerekek"
 
 #: ../src/live_effects/effect.cpp:57
-#, fuzzy
 msgid "Stitch Sub-Paths"
-msgstr "láncok"
+msgstr "Alláncok összevarrása"
 
 #: ../src/live_effects/effect.cpp:115
 #, fuzzy
@@ -4930,14 +4928,15 @@ msgid "An exception occurred during execution of the Path Effect."
 msgstr "lánceffektus"
 
 #: ../src/live_effects/effect.cpp:327
-#, fuzzy, c-format
+#, c-format
 msgid "Editing parameter <b>%s</b>."
-msgstr "<b>Téglalap</b>"
+msgstr "<b>%s</b> paraméter szerkesztése."
 
 #: ../src/live_effects/effect.cpp:332
-#, fuzzy
 msgid "None of the applied path effect's parameters can be edited on-canvas."
-msgstr "lánceffektus rajzvászon"
+msgstr ""
+"Az alkalmazott lánceffektus egyetlen paramétere sem szerkeszthető "
+"a rajzvásznon."
 
 #: ../src/live_effects/parameter/enum.h:50
 #, fuzzy
@@ -4945,119 +4944,103 @@ msgid "Change enumeration parameter"
 msgstr "Szakasztípus módosítása"
 
 #: ../src/live_effects/lpe-gears.cpp:212
-#, fuzzy
 msgid "Teeth"
-msgstr "Szöveg"
+msgstr "Fogak"
 
 #: ../src/live_effects/lpe-gears.cpp:212
-#, fuzzy
 msgid "The number of teeth"
-msgstr "Lépések száma"
+msgstr "Fogak száma"
 
 #: ../src/live_effects/lpe-gears.cpp:213
 msgid "Phi"
-msgstr ""
+msgstr "Fi"
 
 #: ../src/live_effects/lpe-gears.cpp:213
 msgid ""
 "Tooth pressure angle (typically 20-25 deg).  The ratio of teeth not in "
 "contact."
-msgstr ""
+msgstr "Fognyomás-szög (általában 20-25 fok). A nem kapcsolódó fogak aránya."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
-#, fuzzy
 msgid "Stroke path"
-msgstr "Körv_onalrajzolat"
+msgstr "Körvonal-lánc"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
+#, fuzzy
 msgid "The path that will be used as stitch."
-msgstr ""
+msgstr "Alláncok összevarrása"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
-#, fuzzy
 msgid "Number of paths"
-msgstr "láncok száma"
+msgstr "Láncok száma"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
-#, fuzzy
 msgid "The number of paths that will be generated."
-msgstr "láncok"
+msgstr "A létrehozandó láncok száma"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
-#, fuzzy
 msgid "Start edge variance"
-msgstr "Csillag-beállítások"
+msgstr "Kezdőszegély varianciája"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
-#, fuzzy
 msgid ""
 "The amount of random jitter to move the start points of the stitches inside "
 "& outside the guide path"
 msgstr ""
-"áthelyezés "
-"vezetőlánc"
+"Az öltések kezdőpontjainak a vezetőlánctól befelé, illetve kifelé való "
+"véletlenszerű elmozdításának mértéke"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
-#, fuzzy
 msgid "Start spacing variance"
-msgstr "Telítettség"
+msgstr "Kezdeti helykihagyás varianciája"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
-#, fuzzy
 msgid ""
 "The amount of random shifting to move the start points of the stitches back "
 "& forth along the guide path"
 msgstr ""
-"áthelyezés "
-"vezetőlánc"
+"Az öltések kezdőpontjainak a vezetőlánc mentén előre, illetve hátra való "
+"véletlenszerű elmozdításának mértéke"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid "End edge variance"
-msgstr ""
+msgstr "Végszegély varianciája"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
-#, fuzzy
 msgid ""
 "The amount of randomness that moves the end points of the stitches inside & "
 "outside the guide path"
-msgstr "vezetőlánc"
+msgstr ""
+"Az öltések végpontjainak a vezetőlánctól befelé, illetve kifelé való "
+"véletlenszerű elmozdításának mértéke"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
-#, fuzzy
 msgid "End spacing variance"
-msgstr "Telítettség"
+msgstr "Vég-helykihagyás varianciája"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
-#, fuzzy
 msgid ""
 "The amount of random shifting to move the end points of the stitches back & "
 "forth along the guide path"
 msgstr ""
-"áthelyezés "
-"vezetőlánc"
+"Az öltések végpontjainak a vezetőlánc mentén előre, illetve hátra való "
+"véletlenszerű elmozdításának mértéke"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
-#, fuzzy
 msgid "Scale width"
-msgstr "A forrás szélessége"
+msgstr "Szélesség méretezése"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
-#, fuzzy
 msgid "Scaling of the width of the stroke path"
-msgstr ""
-"körvonal "
-"szélessége"
+msgstr "Körvonal-lánc szélességének méretezése"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:50
 msgid "Scale width relative"
-msgstr ""
+msgstr "Szélesség méretezése relatívan"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:50
-#, fuzzy
 msgid "Scale the width of the stroke path relative to its length"
-msgstr ""
-"körvonal "
-"szélessége"
+msgstr "Körvonal-lánc szélességének méretezése a hosszához viszonyítva"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:53
 msgid "Single"
@@ -5084,31 +5067,24 @@ msgid "Path to put along the skeleton path"
 msgstr ""
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:63
-#, fuzzy
 msgid "Pattern copies"
-msgstr "Minta"
+msgstr "A minta példányszáma"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:63
-#, fuzzy
 msgid "How many pattern copies to place along the skeleton path"
-msgstr "minta"
+msgstr "Hány darab példány legyen elhelyezve a vázként szolgáló lánc mentén a mintából"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:64
-#, fuzzy
 msgid "Width of the pattern"
 msgstr "A minta szélessége"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:65
-#, fuzzy
 msgid "Width in units of length"
-msgstr "A fénykorona szélessége képpontban"
+msgstr "Szélesség a hossz arányában megadva"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:65
-#, fuzzy
 msgid "Scale the width of the pattern in units of its length"
-msgstr ""
-"minta szélessége"
-"(a körvonalszélesség arányában megadva)"
+msgstr "A minta szélessége a minta hosszának arányában legyen méretezve"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:66
 #, fuzzy
@@ -5186,7 +5162,9 @@ msgstr "Átlátszatlanság módosítása"
 #: ../src/live_effects/parameter/random.cpp:137
 #, fuzzy
 msgid "Change random parameter"
-msgstr "Csomópont-típus módosítása"
+msgstr ""
+"véletlenszerű"
+"Csomópont-típus módosítása"
 
 #: ../src/main.cpp:218
 msgid "Print the Inkscape version number"
@@ -5817,24 +5795,25 @@ msgstr ""
 
 #: ../src/object-edit.cpp:709 ../src/object-edit.cpp:711
 #: ../src/object-edit.cpp:713 ../src/object-edit.cpp:715
-#, fuzzy
 msgid ""
 "Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with "
 "<b>Ctrl</b> to constrain to the directions of edges or diagonals"
-msgstr "téglatest"
+msgstr ""
+"A téglatest átméretezése X/Y irányban. A Z-tengely mentén: <b>Shift</b>. "
+"Az élek vagy átlók irányára való korlátozás: <b>Ctrl</b>."
 
 #: ../src/object-edit.cpp:717 ../src/object-edit.cpp:719
 #: ../src/object-edit.cpp:721 ../src/object-edit.cpp:723
-#, fuzzy
 msgid ""
 "Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with "
 "<b>Ctrl</b> to constrain to the directions of edges or diagonals"
-msgstr "téglatest"
+msgstr ""
+"A téglatest átméretezése a Z-tengely mentén. X/Y irányban: <b>Shift</b>. "
+"Az élek vagy átlók irányára való korlátozás: <b>Ctrl</b>."
 
 #: ../src/object-edit.cpp:727
-#, fuzzy
 msgid "Move the box in perspective."
-msgstr "téglatestáthelyezése"
+msgstr "Téglatest perspektivikus áthelyezése"
 
 #: ../src/object-edit.cpp:905
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
@@ -5966,9 +5945,8 @@ msgid "Select <b>object(s)</b> to convert to path."
 msgstr "Jelölje ki a lánccá alakítandó <b>objektumo(ka)t</b>."
 
 #: ../src/path-chemistry.cpp:278
-#, fuzzy
 msgid "Converting objects to paths..."
-msgstr "objektumSzövegek átalakítása láncokká"
+msgstr "Objektumok átalakítása láncokká..."
 
 #: ../src/path-chemistry.cpp:350
 msgid "Object to path"
@@ -6149,7 +6127,9 @@ msgstr "Kijelölés megszakítva."
 msgid ""
 "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to "
 "rubberband selection"
-msgstr "objektum"
+msgstr ""
+"objektum "
+"váltás"
 
 #: ../src/select-context.cpp:547
 #, fuzzy
@@ -6158,6 +6138,7 @@ msgid ""
 "touch selection"
 msgstr ""
 "objektum "
+"váltás"
 "érintéses kijelölés"
 
 #: ../src/select-context.cpp:707
@@ -6397,9 +6378,8 @@ msgid "Move horizontally by pixels"
 msgstr "Vízszintes elmozdítás képpontokkal"
 
 #: ../src/selection-chemistry.cpp:2127
-#, fuzzy
 msgid "The selection has no applied path effect."
-msgstr "lánceffektus"
+msgstr "A kijelölésben nincs alkalmazott lánceffektus."
 
 #: ../src/selection-chemistry.cpp:2284
 msgid "action|Clone"
@@ -7142,24 +7122,22 @@ msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "A kijelölésben <b>nincs zsugorítható illetve nyújtható lánc</b>."
 
 #: ../src/splivarot.cpp:1573
-#, fuzzy
 msgid "Simplifying paths (separately):"
-msgstr "láncok"
+msgstr "Láncok egyszerűsítése (különállóan):"
 
 #: ../src/splivarot.cpp:1575
-#, fuzzy
 msgid "Simplifying paths:"
-msgstr "láncokEgyszerűsítési küszöb:"
+msgstr "Láncok egyszerűsítése:"
 
 #: ../src/splivarot.cpp:1612
-#, fuzzy, c-format
+#, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
-msgstr "Egyszerűsítés - %s - <b>%d</b> lánc egyszerűsítve (összesen: <b>%d</b>)..."
+msgstr "%s <b>%d</b> lánc egyszerűsítve (összesen: <b>%d</b>)..."
 
 #: ../src/splivarot.cpp:1623
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%d</b> paths simplified."
-msgstr "Kész - <b>%d</b> lánc egyszerűsítve."
+msgstr "<b>%d</b> lánc egyszerűsítve."
 
 #: ../src/splivarot.cpp:1639
 msgid "Select <b>path(s)</b> to simplify."
@@ -7456,13 +7434,13 @@ msgstr ""
 "átméretezés: <b>vezérlőelemekkel</b>. Kijelölés: <b>kattintással</b>."
 
 #: ../src/tools-switch.cpp:166
-#, fuzzy
 msgid ""
 "<b>Drag</b> to create a 3D box. <b>Drag controls</b> to resize in "
 "perspective. <b>Click</b> to select (with <b>Ctrl+Alt</b> for single faces)."
 msgstr ""
-"3D téglatest létrehozása: <b>húzással</b>. A csillag alakjának módosítása: "
-"<b>vezérlőelemekkel</b>. Kijelölés: <b>kattintással</b>."
+"3D téglatest létrehozása: <b>húzással</b>. Perspektivikus átméretezés: "
+"a <b>vezérlőelemek húzásával</b>. Kijelölés: <b>kattintással</b> (egyetlen "
+"oldal: <b>Ctrl+Alt</b> lenyomásával)."
 
 #: ../src/tools-switch.cpp:172
 msgid ""
@@ -7538,12 +7516,15 @@ msgid "<b>Click and drag</b> between shapes to create a connector."
 msgstr "Kapocs létrehozása: az alakzatok közt való <b>kattintással + húzással</b>."
 
 #: ../src/tools-switch.cpp:238
-#, fuzzy
 msgid ""
 "<b>Click</b> to paint a bounded area, <b>Shift+click</b> to union the new "
 "fill with the current selection, <b>Ctrl+click</b> to change the clicked "
 "object's fill and stroke to the current setting."
-msgstr "Körülhatárolt területkörvonal objektum"
+msgstr ""
+"Körülhatárolt terület befestése: <b>kattintással</b>. Az új kitöltés "
+"egyesítése az aktuális kijelöléssel: <b>Shift+kattintással</b>. Az egérmutató "
+"alatti objektum kitöltésének és körvonalának módosítása az aktuális beállításra: "
+"<b>Ctrl+kattintással</b>."
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:500
 #: ../src/trace/potrace/inkscape-potrace.cpp:574
@@ -7595,105 +7576,96 @@ msgid "Trace: Done. %ld nodes created"
 msgstr "Vektorizálás: kész. %ld csomópont létrehozva."
 
 #: ../src/tweak-context.cpp:959
-#, fuzzy
 msgid "<b>Nothing selected!</b> Select objects to tweak."
-msgstr "kijelölt objektum manipulálás"
+msgstr "<b>Semmi nincs kijelölve.</b> Jelölje ki a manipulálandó objektumokat."
 
 #: ../src/tweak-context.cpp:964
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Pushing %d</b> selected object"
 msgid_plural "<b>Pushing %d</b> selected objects"
-msgstr[0] "<b>Nem történt</b> törlés."
-msgstr[1] "<b>Nem történt</b> törlés."
+msgstr[0] "<b>%d</b> kijelölt objektum <b>eltolása</b>"
+msgstr[1] "<b>%d</b> kijelölt objektum <b>eltolása</b>"
 
 #: ../src/tweak-context.cpp:969
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Shrinking %d</b> selected object"
 msgid_plural "<b>Shrinking %d</b> selected objects"
-msgstr[0] "A kijelölt objektumok elrendezése"
-msgstr[1] "A kijelölt objektumok elrendezése"
+msgstr[0] "<b>%d</b> kijelölt objektum <b>zsugorítása</b>"
+msgstr[1] "<b>%d</b> kijelölt objektum <b>zsugorítása</b>"
 
 #: ../src/tweak-context.cpp:974
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Growing %d</b> selected object"
 msgid_plural "<b>Growing %d</b> selected objects"
-msgstr[0] "A kijelölt objektumok csoportba foglalása"
-msgstr[1] "A kijelölt objektumok csoportba foglalása"
+msgstr[0] "<b>%d</b> kijelölt objektum <b>nyújtása</b>"
+msgstr[1] "<b>%d</b> kijelölt objektum <b>nyújtása</b>"
 
 #: ../src/tweak-context.cpp:979
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Attracting %d</b> selected object"
 msgid_plural "<b>Attracting %d</b> selected objects"
-msgstr[0] "A kijelölt objektumok elrendezése"
-msgstr[1] "A kijelölt objektumok elrendezése"
+msgstr[0] "<b>%d</b> kijelölt objektum <b>vonzása</b>"
+msgstr[1] "<b>%d</b> kijelölt objektum <b>vonzása</b>"
 
 #: ../src/tweak-context.cpp:984
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Repelling %d</b> selected object"
 msgid_plural "<b>Repelling %d</b> selected objects"
-msgstr[0] "A kijelölt objektumok kettőzése"
-msgstr[1] "A kijelölt objektumok kettőzése"
+msgstr[0] "<b>%d</b> kijelölt objektum <b>taszítása</b>"
+msgstr[1] "<b>%d</b> kijelölt objektum <b>taszítása</b>"
 
 #: ../src/tweak-context.cpp:989
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Roughening %d</b> selected object"
 msgid_plural "<b>Roughening %d</b> selected objects"
-msgstr[0] "<b>Nem történt</b> törlés."
-msgstr[1] "<b>Nem történt</b> törlés."
+msgstr[0] "<b>%d</b> kijelölt objektum <b>durvábbá tevése</b>"
+msgstr[1] "<b>%d</b> kijelölt objektum <b>durvábbá tevése</b>"
 
 #: ../src/tweak-context.cpp:993
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Painting %d</b> selected object"
 msgid_plural "<b>Painting %d</b> selected objects"
-msgstr[0] "A kijelölt objektumok elrendezése"
-msgstr[1] "A kijelölt objektumok elrendezése"
+msgstr[0] "<b>%d</b> kijelölt objektum <b>festése</b>"
+msgstr[1] "<b>%d</b> kijelölt objektum <b>festése</b>"
 
 #: ../src/tweak-context.cpp:998
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Jittering colors in %d</b> selected object"
 msgid_plural "<b>Jittering colors in %d</b> selected objects"
-msgstr[0] "A kapcsok kerüljék ki a kijelölt objektumokat"
-msgstr[1] "A kapcsok kerüljék ki a kijelölt objektumokat"
+msgstr[0] "<b>%d</b> kijelölt objektum <b>színeinek véletlenszerű módosítása</b>"
+msgstr[1] "<b>%d</b> kijelölt objektum <b>színeinek véletlenszerű módosítása</b>"
 
 #: ../src/tweak-context.cpp:1038
-#, fuzzy
 msgid "Push tweak"
-msgstr "manipulálás"
+msgstr "Eltolásos manipulálás"
 
 #: ../src/tweak-context.cpp:1042
-#, fuzzy
 msgid "Shrink tweak"
-msgstr "manipulálás"
+msgstr "Zsugorításos manipulálás"
 
 #: ../src/tweak-context.cpp:1046
-#, fuzzy
 msgid "Grow tweak"
-msgstr "manipulálás"
+msgstr "Nyújtásos manipulálás"
 
 #: ../src/tweak-context.cpp:1050
-#, fuzzy
 msgid "Attract tweak"
-msgstr "manipulálás"
+msgstr "Vonzásos manipulálás"
 
 #: ../src/tweak-context.cpp:1054
-#, fuzzy
 msgid "Repel tweak"
-msgstr "Ismétlődő manipulálás"
+msgstr "Taszításos manipulálás"
 
 #: ../src/tweak-context.cpp:1058
-#, fuzzy
 msgid "Roughen tweak"
-msgstr "manipulálás"
+msgstr "Durvábbá tevéses manipulálás"
 
 #: ../src/tweak-context.cpp:1062
-#, fuzzy
 msgid "Color paint tweak"
-msgstr "manipulálás"
+msgstr "Színfestéses manipulálás"
 
 #: ../src/tweak-context.cpp:1065
-#, fuzzy
 msgid "Color jitter tweak"
-msgstr "manipulálás"
+msgstr "Színmódosításos manipulálás"
 
 #. Item dialog
 #: ../src/ui/context-menu.cpp:98
@@ -8810,8 +8782,9 @@ msgid "Exponent"
 msgstr "Kitevő"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2174
+#, fuzzy
 msgid "Stitch Tiles"
-msgstr ""
+msgstr "Alláncok összevarrása"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2176
 msgid "Base Frequency"
@@ -8849,7 +8822,10 @@ msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "colour of each rendered pixel. This allows for effects like turning object "
 "to grayscale, modifying colour saturation and changing colour hue."
-msgstr "szűrőképpontobjektum effektus"
+msgstr ""
+"szűrőképpontobjektum effektus "
+"telítettség"
+"árnyalat "
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2207
 #, fuzzy
@@ -8877,7 +8853,9 @@ msgid ""
 "sharpening, embossing and edge detection. Note that while gaussian blur can "
 "be created using this filter primitive, the special gaussian blur primitive "
 "is faster and resolution-independent."
-msgstr "szűrőeffektus"
+msgstr ""
+"alkalmaz"
+"szűrőeffektus"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2219
 #, fuzzy
@@ -10313,14 +10291,12 @@ msgid "Empty selection"
 msgstr "Üres kijelölés"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:253
-#, fuzzy
 msgid "Create and apply path effect"
-msgstr "lánceffektus létrehozása alkalmazás"
+msgstr "Lánceffektus létrehozása és alkalmazása"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:271
-#, fuzzy
 msgid "Remove path effect"
-msgstr "lánceffektus eltávolítása"
+msgstr "Lánceffektus eltávolítása"
 
 #: ../src/ui/dialog/memory.cpp:94
 msgid "Heap"
@@ -11319,14 +11295,18 @@ msgstr "100% (átlátszatlan)"
 #: ../src/ui/widget/selected-style.cpp:1261
 #, fuzzy
 msgid "Adjust saturation"
-msgstr "Kisebb telítettség"
+msgstr "telítettség"
 
 #: ../src/ui/widget/selected-style.cpp:1263
 #, c-format
+#, fuzzy
 msgid ""
 "Adjusting <b>saturation</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with "
 "<b>Ctrl</b> to adjust lightness, without modifiers to adjust hue"
 msgstr ""
+"telítettség "
+"fényesség"
+"árnyalat"
 
 #: ../src/ui/widget/selected-style.cpp:1267
 #, fuzzy
@@ -11335,22 +11315,30 @@ msgstr "Fényesség"
 
 #: ../src/ui/widget/selected-style.cpp:1269
 #, c-format
+#, fuzzy
 msgid ""
 "Adjusting <b>lightness</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with "
 "<b>Shift</b> to adjust saturation, without modifiers to adjust hue"
 msgstr ""
+"fényesség"
+"telítettség"
+"árnyalat"
 
 #: ../src/ui/widget/selected-style.cpp:1273
 #, fuzzy
 msgid "Adjust hue"
-msgstr "Ív húzása"
+msgstr "árnyalat"
 
 #: ../src/ui/widget/selected-style.cpp:1275
 #, c-format
+#, fuzzy
 msgid ""
 "Adjusting <b>hue</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</"
 "b> to adjust saturation, with <b>Ctrl</b> to adjust lightness"
 msgstr ""
+"árnyalat "
+"telítettség "
+"fényesség"
 
 #: ../src/ui/widget/page-sizer.cpp:195
 msgid "Name"
@@ -11448,16 +11436,18 @@ msgid "Opacity: %.3g"
 msgstr "Átlátszatlanság: %.3g"
 
 #: ../src/vanishing-point.cpp:135
+#, fuzzy
 msgid "Split vanishing points"
-msgstr ""
+msgstr "távlatpont"
 
 #: ../src/vanishing-point.cpp:181
+#, fuzzy
 msgid "Merge vanishing points"
-msgstr ""
+msgstr "távlatpont"
 
 #: ../src/vanishing-point.cpp:252
 msgid "3D box: Move vanishing point"
-msgstr ""
+msgstr "3D téglatest: távlatpont áthelyezése"
 
 #: ../src/vanishing-point.cpp:351
 #, c-format
@@ -11465,8 +11455,10 @@ msgid "<b>Finite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural ""
 "<b>Finite</b> vanishing point shared by <b>%d</b> boxes; drag with <b>Shift</"
 "b> to separate selected box(es)"
-msgstr[0] ""
+msgstr[0] "<b>%d</b> téglatest <b>véges</b> távlatpontja."
 msgstr[1] ""
+"<b>%d</b> téglatest <b>véges</b> távlatpontja. A kijelölt téglatest(ek) "
+"különválasztása: <b>Shift</b>+húzás."
 
 #. This won't make sense any more when infinite VPs are not shown on the canvas,
 #. but currently we update the status message anyway
@@ -11476,51 +11468,47 @@ msgid "<b>Infinite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural ""
 "<b>Infinite</b> vanishing point shared by <b>%d</b> boxes; drag with "
 "<b>Shift</b> to separate selected box(es)"
-msgstr[0] ""
+msgstr[0] "<b>%d</b> téglatest <b>végtelen</b> távlatpontja."
 msgstr[1] ""
+"<b>%d</b> téglatest <b>végtelen</b> távlatpontja. A kijelölt téglatest(ek) "
+"különválasztása: <b>Shift</b>+húzás."
 
 #: ../src/vanishing-point.cpp:366
-#, fuzzy, c-format
+#, c-format
 msgid "shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
 msgid_plural ""
 "shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box"
 "(es)"
 msgstr[0] ""
-"<b>%d</b> színátmenet közös színátmenet-pontja. Különválasztás: <b>Shift</b>"
-"+húzás."
+"<b>%d</b> téglatesthez. A kijelölt téglatest(ek) különválasztása: "
+"<b>Shift</b>+húzás."
 msgstr[1] ""
-"<b>%d</b> színátmenet közös színátmenet-pontja. Különválasztás: <b>Shift</b>"
-"+húzás."
+"<b>%d</b> téglatesthez. A kijelölt téglatest(ek) különválasztása: "
+"<b>Shift</b>+húzás."
 
 #: ../src/verbs.cpp:1116
-#, fuzzy
 msgid "Switch to next layer"
-msgstr "Egy réteggel feljebb helyezés"
+msgstr "Váltás a következő rétegre"
 
 #: ../src/verbs.cpp:1117
-#, fuzzy
 msgid "Switched to next layer."
-msgstr "A következő rétegre való ugrás megtörtént."
+msgstr "A következő rétegre való váltás megtörtént."
 
 #: ../src/verbs.cpp:1119
-#, fuzzy
 msgid "Cannot go past last layer."
 msgstr "Az utolsó rétegnél tovább nem lehet ugrani."
 
 #: ../src/verbs.cpp:1128
-#, fuzzy
 msgid "Switch to previous layer"
-msgstr "Egy réteggel lejjebb helyezés"
+msgstr "Váltás az előző rétegre"
 
 #: ../src/verbs.cpp:1129
-#, fuzzy
 msgid "Switched to previous layer."
-msgstr "Az előző rétegre való ugrás megtörtént."
+msgstr "Az előző rétegre való váltás megtörtént."
 
 #: ../src/verbs.cpp:1131
-#, fuzzy
 msgid "Cannot go before first layer."
-msgstr "Az első rétegnél tovább nem lehet ugrani."
+msgstr "Az első rétegnél előrébb nem lehet ugrani."
 
 #: ../src/verbs.cpp:1148 ../src/verbs.cpp:1232
 msgid "No current layer."
@@ -12029,7 +12017,6 @@ msgid "Next Path Effect Parameter"
 msgstr "lánceffektus"
 
 #: ../src/verbs.cpp:2223 ../src/widgets/toolbox.cpp:1100
-#, fuzzy
 msgid "Show next Path Effect parameter for editing"
 msgstr "A következő lánceffektus-paraméter megjelenítése szerkesztéshez"
 
@@ -13496,15 +13483,15 @@ msgid "Paint is undefined"
 msgstr "A rajzolat definiálatlan"
 
 #: ../src/widgets/paint-selector.cpp:981
-#, fuzzy
 msgid ""
 "Use the <b>Node tool</b> to adjust position, scale, and rotation of the "
 "pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to "
 "create a new pattern from selection."
 msgstr ""
-"csomópontokEgy új mintának a kijelölésből való létrehozásához használja az "
-"<b>Objektum &gt; Minta &gt; Objektumok átalakítása mintává</b> funkciót. "
-"rajzvászon"
+"A minta pozíciójának, méretezésének és elforgatásának a "
+"rajzvásznon való beállításához használja a <b>csomóponteszközt</b>. "
+"Egy új mintának a kijelölésből való létrehozásához használja az "
+"<b>Objektum &gt; Minta &gt; Objektumok átalakítása mintává</b> funkciót."
 
 #: ../src/widgets/select-toolbar.cpp:238
 msgid "Transform by toolbar"
@@ -14221,13 +14208,12 @@ msgstr "A csúcsok szögletessé tétele"
 
 #. TODO: use the correct axis here, too
 #: ../src/widgets/toolbox.cpp:2506
-#, fuzzy
 msgid "3D Box: Change perspective (angle of infinite axis)"
-msgstr "3D téglatest: csúcsok számának módosítása"
+msgstr "3D téglatest: perspektíva módosítása (a végtelen tengely szöge)"
 
 #: ../src/widgets/toolbox.cpp:2575
 msgid "Angle in X direction"
-msgstr ""
+msgstr "X iránybeli szög"
 
 #: ../src/widgets/toolbox.cpp:2575
 msgid "Angle X:"
@@ -14236,20 +14222,22 @@ msgstr "X-szög:"
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/toolbox.cpp:2577
 msgid "Angle of PLs in X direction"
-msgstr ""
+msgstr "Perspektívavonalak szöge X irányban"
 
 #. Translators: VP is short for 'vanishing point'
 #: ../src/widgets/toolbox.cpp:2599
 msgid "State of VP in X direction"
-msgstr ""
+msgstr "Az X irányú távlatpont állapota"
 
 #: ../src/widgets/toolbox.cpp:2600
 msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
 msgstr ""
+"Az X irányú távlatpont átkapcsolása \"véges\" és \"végtelen\" (azaz "
+"párhuzamos) közt"
 
 #: ../src/widgets/toolbox.cpp:2615
 msgid "Angle in Y direction"
-msgstr ""
+msgstr "Y iránybeli szög"
 
 #: ../src/widgets/toolbox.cpp:2615
 msgid "Angle Y:"
@@ -14258,20 +14246,22 @@ msgstr "Y-szög:"
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/toolbox.cpp:2617
 msgid "Angle of PLs in Y direction"
-msgstr ""
+msgstr "Perspektívavonalak szöge Y irányban"
 
 #. Translators: VP is short for 'vanishing point'
 #: ../src/widgets/toolbox.cpp:2638
 msgid "State of VP in Y direction"
-msgstr ""
+msgstr "Az Y irányú távlatpont állapota"
 
 #: ../src/widgets/toolbox.cpp:2639
 msgid "Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"
 msgstr ""
+"Az Y irányú távlatpont átkapcsolása \"véges\" és \"végtelen\" (azaz "
+"párhuzamos) közt"
 
 #: ../src/widgets/toolbox.cpp:2654
 msgid "Angle in Z direction"
-msgstr ""
+msgstr "Z iránybeli szög"
 
 #: ../src/widgets/toolbox.cpp:2654
 msgid "Angle Z:"
@@ -14280,16 +14270,18 @@ msgstr "Z-szög:"
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/toolbox.cpp:2656
 msgid "Angle of PLs in Z direction"
-msgstr ""
+msgstr "Perspektívavonalak szöge Z irányban"
 
 #. Translators: VP is short for 'vanishing point'
 #: ../src/widgets/toolbox.cpp:2677
 msgid "State of VP in Z direction"
-msgstr ""
+msgstr "A Z irányú távlatpont állapota"
 
 #: ../src/widgets/toolbox.cpp:2678
 msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
 msgstr ""
+"A Z irányú távlatpont átkapcsolása \"véges\" és \"végtelen\" (azaz "
+"párhuzamos) közt"
 
 #: ../src/widgets/toolbox.cpp:2735
 msgid "Change spiral"
@@ -14404,7 +14396,6 @@ msgid "(broad tweak)"
 msgstr "manipulálás"
 
 #: ../src/widgets/toolbox.cpp:3025
-#, fuzzy
 msgid "The width of the tweak area (relative to the visible canvas area)"
 msgstr "A manipulálási terület szélessége (a látható rajzvászon-területhez viszonyítva)"
 
@@ -14418,97 +14409,80 @@ msgid "(maximum force)"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3041
-#, fuzzy
 msgid "Force"
-msgstr "Forrás"
+msgstr "Erő"
 
 #: ../src/widgets/toolbox.cpp:3041
 msgid "Force:"
 msgstr "Erő:"
 
 #: ../src/widgets/toolbox.cpp:3041
-#, fuzzy
 msgid "The force of the tweak action"
-msgstr "manipulálás"
+msgstr "A manipulálás ereje"
 
 #: ../src/widgets/toolbox.cpp:3058
 msgid "Push mode"
-msgstr ""
+msgstr "Eltolási mód"
 
 #: ../src/widgets/toolbox.cpp:3059
-#, fuzzy
 msgid "Push parts of paths in any direction"
-msgstr "láncok"
+msgstr "Láncok részeinek eltolása bármely irányba"
 
 #: ../src/widgets/toolbox.cpp:3065
-#, fuzzy
 msgid "Shrink mode"
-msgstr "Csomópontok elmozdítása"
+msgstr "Zsugorítási mód"
 
 #: ../src/widgets/toolbox.cpp:3066
-#, fuzzy
 msgid "Shrink (inset) parts of paths"
-msgstr "A kijelölt láncok alláncokra való bontása"
+msgstr "Láncok részeinek zsugorítása (összehúzása)"
 
 #: ../src/widgets/toolbox.cpp:3072
-#, fuzzy
 msgid "Grow mode"
-msgstr "Csomópontot eggyel lejjebb"
+msgstr "Nyújtási mód"
 
 #: ../src/widgets/toolbox.cpp:3073
-#, fuzzy
 msgid "Grow (outset) parts of paths"
-msgstr "láncok"
+msgstr "Láncok részeinek nyújtása (széthúzása)"
 
 #: ../src/widgets/toolbox.cpp:3079
-#, fuzzy
 msgid "Attract mode"
-msgstr "Tulajdonságnév"
+msgstr "Vonzási mód"
 
 #: ../src/widgets/toolbox.cpp:3080
-#, fuzzy
 msgid "Attract parts of paths towards cursor"
-msgstr "láncok"
+msgstr "Láncok részeinek vonzása a kurzor felé"
 
 #: ../src/widgets/toolbox.cpp:3086
-#, fuzzy
 msgid "Repel mode"
-msgstr "Eltávolítás"
+msgstr "Taszítási mód"
 
 #: ../src/widgets/toolbox.cpp:3087
-#, fuzzy
 msgid "Repel parts of paths from cursor"
-msgstr "láncok"
+msgstr "Láncok részeinek taszítása a kurzortól"
 
 #: ../src/widgets/toolbox.cpp:3093
-#, fuzzy
 msgid "Roughen mode"
-msgstr "szélső csomópont"
+msgstr "Durvábbá tevési mód"
 
 #: ../src/widgets/toolbox.cpp:3094
-#, fuzzy
 msgid "Roughen parts of paths"
-msgstr "láncok"
+msgstr "Láncok részeinek durvábbá tevése"
 
 #: ../src/widgets/toolbox.cpp:3100
-#, fuzzy
 msgid "Color paint mode"
-msgstr "A lap keretének színe"
+msgstr "Színfestési mód"
 
 #: ../src/widgets/toolbox.cpp:3101
-#, fuzzy
 msgid "Paint the tool's color upon selected objects"
-msgstr "A kapcsok kerüljék ki a kijelölt objektumokat"
+msgstr "Az eszköz színének festése a kijelölt objektumokra"
 
 #: ../src/widgets/toolbox.cpp:3107
-#, fuzzy
 msgid "Color jitter mode"
-msgstr "Csomópontok szétszórása"
+msgstr "Színmódosítási mód"
 
 #: ../src/widgets/toolbox.cpp:3108
-#, fuzzy
 msgid "Jitter the colors of selected objects"
-msgstr "A kapcsok kerüljék ki a kijelölt objektumokat"
+msgstr "A kijelölt objektumok színeinek véletlenszerű módosítása"
 
 #: ../src/widgets/toolbox.cpp:3113
 msgid "Mode:"
@@ -14519,44 +14493,36 @@ msgid "Channels:"
 msgstr "Csatornák:"
 
 #: ../src/widgets/toolbox.cpp:3144
-#, fuzzy
 msgid "In color mode, act on objects' hue"
-msgstr "objektum"
+msgstr "Színezési mód esetén: az eszköznek legyen hatása az objektumok árnyalatára"
 
 #: ../src/widgets/toolbox.cpp:3147
-#, fuzzy
 msgid "H"
-msgstr "M:"
+msgstr "Á"
 
 #: ../src/widgets/toolbox.cpp:3158
-#, fuzzy
 msgid "In color mode, act on objects' saturation"
-msgstr "objektum"
+msgstr "Színezési mód esetén: az eszköznek legyen hatása az objektumok telítettségére"
 
 #: ../src/widgets/toolbox.cpp:3161
-#, fuzzy
 msgid "S"
-msgstr "_T"
+msgstr "T"
 
 #: ../src/widgets/toolbox.cpp:3172
-#, fuzzy
 msgid "In color mode, act on objects' lightness"
-msgstr "objektum"
+msgstr "Színezési mód esetén: az eszköznek legyen hatása az objektumok fényességére"
 
 #: ../src/widgets/toolbox.cpp:3175
-#, fuzzy
 msgid "L"
-msgstr "_F"
+msgstr "F"
 
 #: ../src/widgets/toolbox.cpp:3186
-#, fuzzy
 msgid "In color mode, act on objects' opacity"
-msgstr "objektumÁtlátszatlanság"
+msgstr "Színezési mód esetén: az eszköznek legyen hatása az objektumok átlátszatlanságára (alfa)"
 
 #: ../src/widgets/toolbox.cpp:3189
-#, fuzzy
 msgid "O"
-msgstr "Á:"
+msgstr "A"
 
 #. Fidelity
 #: ../src/widgets/toolbox.cpp:3199
@@ -14569,30 +14535,29 @@ msgid "(fine, but many nodes)"
 msgstr "csomópontok"
 
 #: ../src/widgets/toolbox.cpp:3202
-#, fuzzy
 msgid "Fidelity"
-msgstr "Azonosító"
+msgstr "Pontosság"
 
 #: ../src/widgets/toolbox.cpp:3202
 msgid "Fidelity:"
-msgstr ""
+msgstr "Pontosság:"
 
 #: ../src/widgets/toolbox.cpp:3203
-#, fuzzy
 msgid ""
 "Low fidelity simplifies paths; high fidelity preserves path features but may "
 "generate a lot of new nodes"
-msgstr "láncokcsomópontok"
+msgstr ""
+"Az alacsony pontosság egyszerűsíti a láncokat. A nagy pontosság megőrzi "
+"a lánc tulajdonságait, de sok új csomópontot hozhat létre."
 
 #: ../src/widgets/toolbox.cpp:3220 ../src/widgets/toolbox.cpp:3472
 msgid "Pressure"
 msgstr "Nyomás"
 
 #: ../src/widgets/toolbox.cpp:3221
-#, fuzzy
 msgid "Use the pressure of the input device to alter the force of tweak action"
 msgstr ""
-"manipulálásA beviteli eszköz nyomásának használata a tollszélesség "
+"A beviteli eszköz nyomásának használata a manipulálás erejének "
 "változtatásához"
 
 #. Width
@@ -14858,7 +14823,9 @@ msgstr "Háttér"
 msgid ""
 "Trace the lightness of the background by the width of the pen (white - "
 "minimum width, black - maximum width)"
-msgstr "szélessége"
+msgstr ""
+"fényesség"
+"szélessége"
 
 #: ../src/widgets/toolbox.cpp:3473
 msgid "Use the pressure of the input device to alter the width of the pen"
@@ -15080,11 +15047,12 @@ msgid "Fill Threshold"
 msgstr "Küszöb:"
 
 #: ../src/widgets/toolbox.cpp:5272
-#, fuzzy
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
-msgstr "képpont"
+msgstr ""
+"A kitöltésbe való bekerüléshez megengedett maximális eltérés az "
+"egérmutató alatti képpont és a szomszédos képpontok közt"
 
 #: ../src/widgets/toolbox.cpp:5296
 msgid "Grow/shrink by"
@@ -15092,11 +15060,13 @@ msgstr "Növelés/csökkentés:"
 
 #: ../src/widgets/toolbox.cpp:5296
 msgid "Grow/shrink by:"
-msgstr ""
+msgstr "Növelés/csökkentés:"
 
 #: ../src/widgets/toolbox.cpp:5297
 msgid "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
+"Azon mennyiség, amellyel növelni (pozitív), illetve csökkenteni "
+"(negatív) kell a létrehozott kitöltési láncot"
 
 #: ../src/widgets/toolbox.cpp:5322
 #, fuzzy
@@ -15104,17 +15074,15 @@ msgid "Close gaps"
 msgstr "_Törlés"
 
 #: ../src/widgets/toolbox.cpp:5323
-#, fuzzy
 msgid "Close gaps:"
-msgstr "_Törlés"
+msgstr "Lezárandó rések:"
 
 #: ../src/widgets/toolbox.cpp:5335
-#, fuzzy
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
 msgstr ""
-"Terület kitöltéseAz alakzat paramétereinek visszaállítása az alapértelmezett "
+"A területkitöltési paraméterek visszaállítása az alapértelmezett "
 "értékekre (az alapértelmezések módosítása az Inkscape-beállítások > Eszközök "
 "funkcióval lehetséges)"
 
@@ -15133,9 +15101,8 @@ msgid "Add Nodes"
 msgstr "Csomópontok felvétele"
 
 #: ../share/extensions/addnodes.inx.h:2
-#, fuzzy
 msgid "Maximum segment length (px)"
-msgstr "Maximális szakaszhossz"
+msgstr "Maximális szakaszhossz (px)"
 
 #: ../share/extensions/addnodes.inx.h:3 ../share/extensions/edge3d.inx.h:6
 #: ../share/extensions/flatten.inx.h:3 ../share/extensions/fractalize.inx.h:2
@@ -15607,9 +15574,8 @@ msgid "Gear"
 msgstr "_Törlés"
 
 #: ../share/extensions/gears.inx.h:3
-#, fuzzy
 msgid "Number of teeth"
-msgstr "Lépések száma"
+msgstr "Fogak száma"
 
 #: ../share/extensions/gears.inx.h:4
 #, fuzzy
@@ -16100,8 +16066,9 @@ msgid "UPPERCASE"
 msgstr ""
 
 #: ../share/extensions/text_randomcase.inx.h:2
+#, fuzzy
 msgid "rANdOm CasE"
-msgstr ""
+msgstr "véletlenszerű"
 
 #: ../share/extensions/text_replace.inx.h:1
 #, fuzzy
@@ -16322,7 +16289,7 @@ msgstr "Alapértelmezett licenc"
 
 #, fuzzy
 msgid "3D Box: Toggle VP"
-msgstr "3D téglatest"
+msgstr "3D téglatest: távlatpont"
 
 #, fuzzy
 msgid "Angle Y"
