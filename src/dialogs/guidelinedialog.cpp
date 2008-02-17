@@ -46,9 +46,9 @@ GuidelinePropertiesDialog::GuidelinePropertiesDialog(SPGuide *guide, SPDesktop *
   _label_Y(_("Y:")),
   _label_degrees(_("Angle (degrees):")),
   _relative_toggle(_("Rela_tive change"), _("Move and/or rotate the guide relative to current settings")),
-  _adjustment_x(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0),  
-  _adjustment_y(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0),  
-  _adj_angle(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0),  
+  _adjustment_x(0.0, -1e6, 1e6, 1.0, 10.0, 10.0),  
+  _adjustment_y(0.0, -1e6, 1e6, 1.0, 10.0, 10.0),  
+  _adj_angle(0.0, -360, 360, 1.0, 10.0, 10.0),  
   _unit_selector(NULL), _mode(true), _oldpos(0.,0.), _oldangle(0.0)
 {
 }
