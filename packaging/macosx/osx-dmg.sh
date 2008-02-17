@@ -45,7 +45,7 @@ auto_open_opt=
 #----------------------------------------------------------
 help()
 {
-echo -e "
+echo "
 Create a custom dmg file to distribute Inkscape
 
 \033[1mUSAGE\033[0m
@@ -87,13 +87,13 @@ if [ ! -e "$package" ]; then
 	exit 1
 fi
 
-echo -e "\n\033[1mCREATE INKSCAPE DISK IMAGE\033[0m\n"
+echo "\n\033[1mCREATE INKSCAPE DISK IMAGE\033[0m\n"
 
 # Create temp directory with desired contents of the release volume.
 rm -rf "$tmp_dir"
 mkdir "$tmp_dir"
 
-echo -e "\033[1mCopying files to temp directory\033[0m"
+echo "\033[1mCopying files to temp directory\033[0m"
 # Inkscape itself
 # copy Inkscape.app
 cp -rf "$package" "$tmp_dir"/
@@ -115,7 +115,7 @@ if [ ${set_ds_store} = "false" ]; then
 fi
 
 # Create a new RW image from the temp directory.
-echo -e "\033[1mCreating a temporary disk image\033[0m"
+echo "\033[1mCreating a temporary disk image\033[0m"
 rm -f "$rw_name"
 /usr/bin/hdiutil create -srcfolder "$tmp_dir" -volname "$volume_name" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDRW "$rw_name"
 
@@ -165,7 +165,7 @@ fi
 hdiutil detach "$DEV_NAME"
 
 # Create the offical release image by compressing the RW one.
-echo -e "\033[1mCompressing the final disk image\033[0m"
+echo "\033[1mCompressing the final disk image\033[0m"
 img_name="Inkscape.dmg"
 # TODO make this a command line option
 if [ -e "$img_name" ]; then
