@@ -277,6 +277,7 @@ void FileListViewText::on_cursor_changed()
     GnomeVFSFileSize  bytes_written;
     GnomeVFSResult    result;
     guint8 buffer[8192];
+    Glib::ustring fileUrl;
 
     // FIXME: this would be better as a per-user OCAL cache of files
     // instead of filling /tmp with downloads.
@@ -285,21 +286,24 @@ void FileListViewText::on_cursor_changed()
     const std::string tmptemplate = "ocal-";
     std::string tmpname;
     int fd = Glib::file_open_tmp(tmpname, tmptemplate);
-    if (fd<0) return;
+    if (fd<0) {
+        g_warning("Error creating temp file");
+        return;
+    }
     close(fd);
     // make sure we don't collide with other users on the same machine
-    Glib::ustring myFilename = tmpname;
+    myFilename = tmpname;
     myFilename.append("-");
     myFilename.append(get_text(posArray[0], 2));
     // rename based on original image's name, retaining extension
     if (rename(tmpname.c_str(),myFilename.c_str())<0) {
         unlink(tmpname.c_str());
         g_warning("Error creating destination file '%s': %s", myFilename.c_str(), strerror(errno));
-        return;
+        goto failquit;
     }
 
     //get file url
-    Glib::ustring fileUrl = get_text(posArray[0], 1); //http url
+    fileUrl = get_text(posArray[0], 1); //http url
 
     //Glib::ustring fileUrl = "dav://"; //dav url
     //fileUrl.append(prefs_get_string_attribute("options.ocalurl", "str"));
@@ -319,12 +323,12 @@ void FileListViewText::on_cursor_changed()
         }
         if (result != GNOME_VFS_OK) {
             g_warning("Error creating temp file '%s': %s", myFilename.c_str(), gnome_vfs_result_to_string(result));
-            return;
+            goto fail;
         }
         result = gnome_vfs_open (&from_handle, fileUrl.c_str(), GNOME_VFS_OPEN_READ);
         if (result != GNOME_VFS_OK) {
             g_warning("Could not find the file in Open Clip Art Library.");
-            return;
+            goto fail;
         }
         // copy the file
         while (1) {
@@ -336,22 +340,27 @@ void FileListViewText::on_cursor_changed()
             }
             if (result != GNOME_VFS_OK) {
                 g_warning("%s", gnome_vfs_result_to_string(result));
-                return;
+                goto fail;
             }
             result = gnome_vfs_write (to_handle, buffer, bytes_read, &bytes_written);
             if (result != GNOME_VFS_OK) {
                 g_warning("%s", gnome_vfs_result_to_string(result));
-                return;
+                goto fail;
             }
             if (bytes_read != bytes_written){
                 g_warning("Bytes read not equal to bytes written");
-                return;
+                goto fail;
             }
         }
     }
     myPreview->showImage(myFilename);
     myLabel->set_text(get_text(posArray[0], 4));
 #endif
+    return;
+fail:
+    unlink(myFilename.c_str());
+failquit:
+    myFilename = "";
 }
 
 
