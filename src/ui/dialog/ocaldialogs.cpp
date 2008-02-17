@@ -278,15 +278,20 @@ void FileListViewText::on_cursor_changed()
     GnomeVFSResult    result;
     guint8 buffer[8192];
 
+    // FIXME: this would be better as a per-user OCAL cache of files
+    // instead of filling /tmp with downloads.
+    //
     // create file path
-    const std::string tmptemplate = "ocal-XXXXXX";
+    const std::string tmptemplate = "ocal-";
     std::string tmpname;
     int fd = Glib::file_open_tmp(tmpname, tmptemplate);
     if (fd<0) return;
     close(fd);
-    Glib::ustring myFilename = Glib::path_get_dirname(tmpname);
-    myFilename.append(G_DIR_SEPARATOR_S);
+    // make sure we don't collide with other users on the same machine
+    Glib::ustring myFilename = tmpname;
+    myFilename.append("-");
     myFilename.append(get_text(posArray[0], 2));
+    // rename based on original image's name, retaining extension
     if (rename(tmpname.c_str(),myFilename.c_str())<0) {
         unlink(tmpname.c_str());
         g_warning("Error creating destination file '%s': %s", myFilename.c_str(), strerror(errno));
