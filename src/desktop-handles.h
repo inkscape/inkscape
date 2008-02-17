@@ -21,7 +21,6 @@ namespace Inkscape {
     class Selection; 
 }
 
-#define SP_DESKTOP_SCROLL_LIMIT 4000.0
 #define SP_DESKTOP_ZOOM_MAX 256.0
 #define SP_DESKTOP_ZOOM_MIN 0.01
 
