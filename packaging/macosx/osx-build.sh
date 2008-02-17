@@ -267,7 +267,8 @@ fi
 # Fetch some information
 REVISION=`head -n 4 ../../.svn/entries | tail -n 1`
 ARCH=`arch | tr [p,c] [P,C]`
-NEWNAME="Inkscape-$REVISION-$ARCH"
+MINORVERSION=`/usr/bin/sw_vers | grep ProductVersion | cut -f2 -d \.`
+NEWNAME="Inkscape-$REVISION-10.$MINORVERSION-$ARCH"
 DMGFILE="$NEWNAME.dmg"
 INFOFILE="$NEWNAME-info.txt"
 
@@ -285,7 +286,7 @@ then
 	
 	# Prepare information file
 	echo "Version information on $DATE for `whoami`:
-	OS X      `/usr/bin/sw_vers | grep ProductVersion | cut -f2 -d \:`
+	OS X       `/usr/bin/sw_vers | grep ProductVersion | cut -f2 -d \:`
 	Architecture $ARCH
 	DarwinPorts  `port version | cut -f2 -d \ `
 	GCC          `gcc --version | grep GCC`
@@ -321,7 +322,7 @@ then
 	fi
 fi
 
-if [[ "$PACKAGE" == "t" ]] | [[ "$DISTRIB" == "t" ]]; then
+if [[ "$PACKAGE" == "t" || "$DISTRIB" == "t" ]]; then
 	# open a Finder window here to admire what we just produced
 	open .
 fi
