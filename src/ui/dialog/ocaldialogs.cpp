@@ -536,11 +536,13 @@ FileImportFromOCALDialog::FileImportFromOCALDialog(Gtk::Window& parentWindow,
 
     dialogType = fileTypes;
     Gtk::VBox *vbox = get_vbox();
-    Gtk::Label *tagLabel = new Gtk::Label(_("Search Tag"));
+    Gtk::Label *tagLabel = new Gtk::Label(_("Search for:"));
     notFoundLabel = new Gtk::Label(_("No files matched your search"));
     descriptionLabel = new Gtk::Label();
-    descriptionLabel->set_max_width_chars(60);
+    descriptionLabel->set_max_width_chars(260);
+    descriptionLabel->set_size_request(500, -1);
     descriptionLabel->set_single_line_mode(false);
+    descriptionLabel->set_line_wrap(true);
     messageBox.pack_start(*notFoundLabel);
     descriptionBox.pack_start(*descriptionLabel);
     searchTagEntry = new Gtk::Entry();
@@ -563,7 +565,7 @@ FileImportFromOCALDialog::FileImportFromOCALDialog(Gtk::Window& parentWindow,
     listScrolledWindow.add(*filesList);
     // only show the scrollbars when they are necessary:
     listScrolledWindow.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
-    filesList->set_column_title(0, _("Files Found"));
+    filesList->set_column_title(0, _("Files found"));
     listScrolledWindow.set_size_request(400, 180);
     filesList->get_column(1)->set_visible(false); // file url
     filesList->get_column(2)->set_visible(false); // tmp file path
@@ -571,7 +573,7 @@ FileImportFromOCALDialog::FileImportFromOCALDialog(Gtk::Window& parentWindow,
     filesList->get_column(4)->set_visible(false); // file description
     filesBox.pack_start(listScrolledWindow);
     filesBox.pack_start(*filesPreview);
-    vbox->pack_start(tagBox);
+    vbox->pack_start(tagBox, false, false);
     vbox->pack_start(messageBox);
     vbox->pack_start(filesBox);
     vbox->pack_start(descriptionBox);
