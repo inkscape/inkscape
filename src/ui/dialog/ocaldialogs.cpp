@@ -14,6 +14,11 @@
 # include <config.h>
 #endif
 
+#include <stdio.h>  // rename()
+#include <unistd.h> // close()
+#include <errno.h>  // errno
+#include <string.h> // strerror()
+
 #include "ocaldialogs.h"
 #include "filedialogimpl-gtkmm.h"
 #include "interface.h"
@@ -259,14 +264,10 @@ FileExportToOCALPasswordDialog::change_title(const Glib::ustring& title)
  */
 void FileListViewText::on_cursor_changed()
 {
-    // create file path
-    myFilename = Glib::get_tmp_dir();
-    myFilename.append(G_DIR_SEPARATOR_S);
     std::vector<Gtk::TreeModel::Path> pathlist;
     pathlist = this->get_selection()->get_selected_rows();
     std::vector<int> posArray(1);
     posArray = pathlist[0].get_indices();
-    myFilename.append(get_text(posArray[0], 2));
 
 #ifdef WITH_GNOME_VFS
     gnome_vfs_init();
@@ -276,6 +277,21 @@ void FileListViewText::on_cursor_changed()
     GnomeVFSFileSize  bytes_written;
     GnomeVFSResult    result;
     guint8 buffer[8192];
+
+    // create file path
+    const std::string tmptemplate = "ocal-XXXXXX";
+    std::string tmpname;
+    int fd = Glib::file_open_tmp(tmpname, tmptemplate);
+    if (fd<0) return;
+    close(fd);
+    Glib::ustring myFilename = Glib::path_get_dirname(tmpname);
+    myFilename.append(G_DIR_SEPARATOR_S);
+    myFilename.append(get_text(posArray[0], 2));
+    if (rename(tmpname.c_str(),myFilename.c_str())<0) {
+        unlink(tmpname.c_str());
+        g_warning("Error creating destination file '%s': %s", myFilename.c_str(), strerror(errno));
+        return;
+    }
 
     //get file url
     Glib::ustring fileUrl = get_text(posArray[0], 1); //http url
@@ -290,8 +306,6 @@ void FileListViewText::on_cursor_changed()
     if (!Glib::get_charset()) //If we are not utf8
         fileUrl = Glib::filename_to_utf8(fileUrl);
 
-    // verifies if the file wasn't previously downloaded
-    if(gnome_vfs_open(&to_handle, myFilename.c_str(), GNOME_VFS_OPEN_READ) == GNOME_VFS_ERROR_NOT_FOUND)
     {
         // open the temp file to receive
         result = gnome_vfs_open (&to_handle, myFilename.c_str(), GNOME_VFS_OPEN_WRITE);
@@ -299,7 +313,7 @@ void FileListViewText::on_cursor_changed()
             result = gnome_vfs_create (&to_handle, myFilename.c_str(), GNOME_VFS_OPEN_WRITE, FALSE, GNOME_VFS_PERM_USER_ALL);
         }
         if (result != GNOME_VFS_OK) {
-            g_warning("Error creating temp file: %s", gnome_vfs_result_to_string(result));
+            g_warning("Error creating temp file '%s': %s", myFilename.c_str(), gnome_vfs_result_to_string(result));
             return;
         }
         result = gnome_vfs_open (&from_handle, fileUrl.c_str(), GNOME_VFS_OPEN_READ);
@@ -329,10 +343,6 @@ void FileListViewText::on_cursor_changed()
                 return;
             }
         }
-    }
-    else
-    {
-        gnome_vfs_close(to_handle);
     }
     myPreview->showImage(myFilename);
     myLabel->set_text(get_text(posArray[0], 4));
