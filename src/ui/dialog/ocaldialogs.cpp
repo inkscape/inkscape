@@ -359,6 +359,27 @@ Glib::ustring FileListViewText::getFilename()
 }
 
 /**
+ * Read callback for xmlReadIO(), used below
+ */
+static int vfs_read_callback (GnomeVFSHandle *handle, char* buf, int nb)
+{
+    GnomeVFSFileSize ndone;
+    GnomeVFSResult    result;
+
+    result = gnome_vfs_read (handle, buf, nb, &ndone);
+
+    if (result == GNOME_VFS_OK) {
+        return (int)ndone;
+    } else {
+        if (result != GNOME_VFS_ERROR_EOF) {
+            sp_ui_error_dialog(_("Error while reading the Open Clip Art RSS feed"));
+            g_warning("%s\n", gnome_vfs_result_to_string(result));
+        }
+        return -1;
+    }
+}
+
+/**
  * Callback for user input into searchTagEntry
  */
 void FileImportFromOCALDialog::searchTagEntryChangedCallback()
@@ -380,63 +401,15 @@ void FileImportFromOCALDialog::searchTagEntryChangedCallback()
 
 #ifdef WITH_GNOME_VFS
 
-    // get the rss feed
+    // open the rss feed
     gnome_vfs_init();
     GnomeVFSHandle    *from_handle = NULL;
-    GnomeVFSHandle    *to_handle = NULL;
-    GnomeVFSFileSize  bytes_read;
-    GnomeVFSFileSize  bytes_written;
     GnomeVFSResult    result;
-    guint8 buffer[8192];
 
-    // create the temp file name
-    Glib::ustring fileName = Glib::get_tmp_dir ();
-    fileName.append(G_DIR_SEPARATOR_S);
-    fileName.append("ocalfeed.xml");
-
-    // open the temp file to receive
-    result = gnome_vfs_open (&to_handle, fileName.c_str(), GNOME_VFS_OPEN_WRITE);
-    if (result == GNOME_VFS_ERROR_NOT_FOUND){
-        result = gnome_vfs_create (&to_handle, fileName.c_str(), GNOME_VFS_OPEN_WRITE, FALSE, GNOME_VFS_PERM_USER_ALL);
-    }
-    if (result != GNOME_VFS_OK) {
-        g_warning("Error creating temp file: %s", gnome_vfs_result_to_string(result));
-        return;
-    }
-
-    // open the rss feed
     result = gnome_vfs_open (&from_handle, uri.c_str(), GNOME_VFS_OPEN_READ);
     if (result != GNOME_VFS_OK) {
         sp_ui_error_dialog(_("Failed to receive the Open Clip Art Library RSS feed. Verify if the server name is correct in Configuration->Misc (e.g.: openclipart.org)"));
         return;
-    }
-
-    // copy the file
-    while (1) {
-
-        result = gnome_vfs_read (from_handle, buffer, 8192, &bytes_read);
-
-        if ((result == GNOME_VFS_ERROR_EOF) &&(!bytes_read)){
-            result = gnome_vfs_close (from_handle);
-            result = gnome_vfs_close (to_handle);
-            break;
-        }
-
-        if (result != GNOME_VFS_OK) {
-            g_warning("%s", gnome_vfs_result_to_string(result));
-            return;
-        }
-        result = gnome_vfs_write (to_handle, buffer, bytes_read, &bytes_written);
-        if (result != GNOME_VFS_OK) {
-            g_warning("%s", gnome_vfs_result_to_string(result));
-            return;
-        }
-
-        if (bytes_read != bytes_written){
-            g_warning("Bytes read not equal to bytes written");
-            return;
-        }
-
     }
 
     // create the resulting xml document tree
@@ -444,10 +417,14 @@ void FileImportFromOCALDialog::searchTagEntryChangedCallback()
     LIBXML_TEST_VERSION 
     xmlDoc *doc = NULL;
     xmlNode *root_element = NULL;
-    doc = xmlReadFile(fileName.c_str(), NULL, 0);
+
+    doc = xmlReadIO ((xmlInputReadCallback) vfs_read_callback,
+        (xmlInputCloseCallback) gnome_vfs_close, from_handle, uri.c_str(), NULL,
+        XML_PARSE_RECOVER);
     if (doc == NULL) {
-        g_warning("Failed to parse %s\n", fileName.c_str());
-    return;
+        sp_ui_error_dialog(_("Server supplied malformed Clip Art feed"));
+        g_warning("Failed to parse %s\n", uri.c_str());
+        return;
     }
     
     // get the root element node
