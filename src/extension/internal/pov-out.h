@@ -8,7 +8,7 @@
  * Authors:
  *   Bob Jamison <rjamison@titan.com>
  *
- * Copyright (C) 2004 Authors
+ * Copyright (C) 2004-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -38,13 +38,13 @@ class PovOutput : public Inkscape::Extension::Implementation::Implementation
 {
 
 
-/**
- * Our internal String definition
- */ 
-typedef Glib::ustring String;
-
-
 public:
+
+    /**
+     * Our internal String definition
+     */
+    typedef Glib::ustring String;
+
 
     /**
      * Check whether we can actually output using this module

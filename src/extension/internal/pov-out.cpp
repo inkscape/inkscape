@@ -11,7 +11,7 @@
  * Authors:
  *   Bob Jamison <ishmalius@gmail.com>
  *
- * Copyright (C) 2004-2007 Authors
+ * Copyright (C) 2004-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -94,25 +94,18 @@ effective_opacity(SPItem const *item)
 //# OUTPUT FORMATTING
 //########################################################################
 
-static const char *formatDouble(gchar *sbuffer, double d)
-{
-    return (const char *)g_ascii_formatd(sbuffer,
-	         G_ASCII_DTOSTR_BUF_SIZE, "%.8g", (gdouble)d);
-
-}
-
 
 /**
- * Not-threadsafe version
+ * We want to control floating output format
  */
-static char _dstr_buf[G_ASCII_DTOSTR_BUF_SIZE+1];
-
-static const char *dstr(double d)
+static PovOutput::String dstr(double d)
 {
-    return formatDouble(_dstr_buf, d);
+    char dbuf[G_ASCII_DTOSTR_BUF_SIZE+1];
+    g_ascii_formatd(dbuf, G_ASCII_DTOSTR_BUF_SIZE,
+                  "%.8f", (gdouble)d);
+    PovOutput::String s = dbuf;
+    return s;
 }
-
-
 
 
 
@@ -124,7 +117,7 @@ void PovOutput::out(char const *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
-    gchar * output = g_strdup_vprintf(fmt, args);
+    gchar *output = g_strdup_vprintf(fmt, args);
     va_end(args);
     outbuf.append(output);
     g_free(output);
@@ -134,18 +127,16 @@ void PovOutput::out(char const *fmt, ...)
 
 
 
-
-
 /**
- *  Output a 3d vector
+ *  Output a 2d vector
  */
 void PovOutput::vec2(double a, double b)
 {
-    outbuf.append("<");
-    outbuf.append(dstr(a));
-    outbuf.append(", ");
-    outbuf.append(dstr(b));
-    outbuf.append(">");
+    out("<");
+    out(dstr(a).c_str());
+    out(", ");
+    out(dstr(b).c_str());
+    out(">");
 }
 
 
@@ -155,13 +146,13 @@ void PovOutput::vec2(double a, double b)
  */
 void PovOutput::vec3(double a, double b, double c)
 {
-    outbuf.append("<");
-    outbuf.append(dstr(a));
-    outbuf.append(", ");
-    outbuf.append(dstr(b));
-    outbuf.append(", ");
-    outbuf.append(dstr(c));
-    outbuf.append(">");
+    out("<");
+    out(dstr(a).c_str());
+    out(", ");
+    out(dstr(b).c_str());
+    out(", ");
+    out(dstr(c).c_str());
+    out(">");
 }
 
 
@@ -171,16 +162,17 @@ void PovOutput::vec3(double a, double b, double c)
  */
 void PovOutput::vec4(double a, double b, double c, double d)
 {
-    outbuf.append("<");
-    outbuf.append(dstr(a));
-    outbuf.append(", ");
-    outbuf.append(dstr(b));
-    outbuf.append(", ");
-    outbuf.append(dstr(c));
-    outbuf.append(", ");
-    outbuf.append(dstr(d));
-    outbuf.append(">");
+    out("<");
+    out(dstr(a).c_str());
+    out(", ");
+    out(dstr(b).c_str());
+    out(", ");
+    out(dstr(c).c_str());
+    out(", ");
+    out(dstr(d).c_str());
+    out(">");
 }
+
 
 
 /**
@@ -189,7 +181,7 @@ void PovOutput::vec4(double a, double b, double c, double d)
 void PovOutput::rgbf(double r, double g, double b, double f)
 {
     //"rgbf < %1.3f, %1.3f, %1.3f %1.3f>"
-    outbuf.append("rgbf ");
+    out("rgbf ");
     vec4(r, g, b, f);
 }
 
@@ -198,22 +190,21 @@ void PovOutput::rgbf(double r, double g, double b, double f)
 /**
  *  Output one bezier's start, start-control, end-control, and end nodes
  */
-void PovOutput::segment(int segNr, double a0, double a1,
-                            double b0, double b1,
-                            double c0, double c1,
-                            double d0, double d1)
+void PovOutput::segment(int segNr,
+                        double startX,     double startY,
+                        double startCtrlX, double startCtrlY,
+                        double endCtrlX,   double endCtrlY,
+                        double endX,       double endY)
 {
     //"    /*%4d*/ <%f, %f>, <%f, %f>, <%f,%f>, <%f,%f>"
-    char buf[32];
-    snprintf(buf, 31, "    /*%4d*/ ", segNr);
-    outbuf.append(buf);
-    vec2(a0, a1);
-    outbuf.append(", ");
-    vec2(b0, b1);
-    outbuf.append(", ");
-    vec2(c0, c1);
-    outbuf.append(", ");
-    vec2(d0, d1);
+    out("    /*%4d*/ ", segNr);
+    vec2(startX,     startY);
+    out(", ");
+    vec2(startCtrlX, startCtrlY);
+    out(", ");
+    vec2(endCtrlX,   endCtrlY);
+    out(", ");
+    vec2(endX,       endY);
 }
 
 
@@ -244,6 +235,11 @@ void PovOutput::doHeader()
     out("###\n");
     out("### For an example of how to use this file, look at\n");
     out("### share/examples/istest.pov\n");
+    out("###\n");
+    out("### If you have any problems with this output, please see the\n");
+    out("### Inkscape project at http://www.inkscape.org, or visit\n");
+    out("### the #inkscape channel on irc.freenode.net . \n");
+    out("###\n");
     out("###################################################################*/\n");
     out("\n\n");
     out("/*###################################################################\n");
@@ -381,6 +377,7 @@ void PovOutput::doCurves(SPDocument *doc)
             {
             using NR::X;
             using NR::Y;
+            //transform points.  note overloaded '*'
             NR::Point const p1(bp->c(1) * tf);
             NR::Point const p2(bp->c(2) * tf);
             NR::Point const p3(bp->c(3) * tf);
@@ -401,7 +398,7 @@ void PovOutput::doCurves(SPDocument *doc)
                     //fprintf(f, "    /*%4d*/ <%f, %f>, <%f, %f>, <%f,%f>, <%f,%f>",
                     //        segmentNr++, lastx, lasty, x1, y1, x2, y2, x3, y3);
                     segment(segmentNr++,
-                          lastx, lasty, x1, y1, x2, y2, x3, y3);
+                            lastx, lasty, x1, y1, x2, y2, x3, y3);
                     nrNodes += 8;
 
                     if (segmentNr < segmentCount)
@@ -421,10 +418,12 @@ void PovOutput::doCurves(SPDocument *doc)
                     }
                 case NR_LINETO:
                     {
+                    //NOTE: we need to carefully handle line->curve and curve->line
+                    //    transitions.
                     //fprintf(f, "    /*%4d*/ <%f, %f>, <%f, %f>, <%f,%f>, <%f,%f>",
                     //        segmentNr++, lastx, lasty, lastx, lasty, x3, y3, x3, y3);
                     segment(segmentNr++,
-                         lastx, lasty, lastx, lasty, x3, y3, x3, y3);
+                            lastx, lasty, lastx, lasty, x3, y3, x3, y3);
                     nrNodes += 8;
 
                     if (segmentNr < segmentCount)
@@ -456,16 +455,17 @@ void PovOutput::doCurves(SPDocument *doc)
         out("}\n");
 
 
+        //# prefix for following declarations
 	    char *pfx = (char *)id.c_str();
 
-        out("#declare %s_MIN_X    = %s;\n", pfx, dstr(cminx));
-        out("#declare %s_CENTER_X = %s;\n", pfx, dstr((cmaxx+cminx)/2.0));
-        out("#declare %s_MAX_X    = %s;\n", pfx, dstr(cmaxx));
-        out("#declare %s_WIDTH    = %s;\n", pfx, dstr(cmaxx-cminx));
-        out("#declare %s_MIN_Y    = %s;\n", pfx, dstr(cminy));
-        out("#declare %s_CENTER_Y = %s;\n", pfx, dstr((cmaxy+cminy)/2.0));
-        out("#declare %s_MAX_Y    = %s;\n", pfx, dstr(cmaxy));
-        out("#declare %s_HEIGHT   = %s;\n", pfx, dstr(cmaxy-cminy));
+        out("#declare %s_MIN_X    = %s;\n", pfx, dstr(cminx).c_str());
+        out("#declare %s_CENTER_X = %s;\n", pfx, dstr((cmaxx+cminx)/2.0).c_str());
+        out("#declare %s_MAX_X    = %s;\n", pfx, dstr(cmaxx).c_str());
+        out("#declare %s_WIDTH    = %s;\n", pfx, dstr(cmaxx-cminx).c_str());
+        out("#declare %s_MIN_Y    = %s;\n", pfx, dstr(cminy).c_str());
+        out("#declare %s_CENTER_Y = %s;\n", pfx, dstr((cmaxy+cminy)/2.0).c_str());
+        out("#declare %s_MAX_Y    = %s;\n", pfx, dstr(cmaxy).c_str());
+        out("#declare %s_HEIGHT   = %s;\n", pfx, dstr(cmaxy-cminy).c_str());
         if (shapeInfo.color.length()>0)
             out("#declare %s_COLOR    = %s;\n",
                     pfx, shapeInfo.color.c_str());
@@ -529,7 +529,7 @@ void PovOutput::doCurves(SPDocument *doc)
         out(" * Allow the user to redefine the Z-Increment\n");
         out(" */\n");
         out("#ifndef (AllShapes_Z_Increment)\n");
-        out("#declare AllShapes_Z_Increment = %s;\n", dstr(zinc));
+        out("#declare AllShapes_Z_Increment = %s;\n", dstr(zinc).c_str());
         out("#end\n");
         out("\n");
         out("#declare AllShapes_Z_Scale = 1.0;\n");
@@ -554,14 +554,14 @@ void PovOutput::doCurves(SPDocument *doc)
 
         out("}\n");
 
-        out("#declare %s_MIN_X    = %s;\n", pfx, dstr(minx));
-        out("#declare %s_CENTER_X = %s;\n", pfx, dstr((maxx+minx)/2.0));
-        out("#declare %s_MAX_X    = %s;\n", pfx, dstr(maxx));
-        out("#declare %s_WIDTH    = %s;\n", pfx, dstr(maxx-minx));
-        out("#declare %s_MIN_Y    = %s;\n", pfx, dstr(miny));
-        out("#declare %s_CENTER_Y = %s;\n", pfx, dstr((maxy+miny)/2.0));
-        out("#declare %s_MAX_Y    = %s;\n", pfx, dstr(maxy));
-        out("#declare %s_HEIGHT   = %s;\n", pfx, dstr(maxy-miny));
+        out("#declare %s_MIN_X    = %s;\n", pfx, dstr(minx).c_str());
+        out("#declare %s_CENTER_X = %s;\n", pfx, dstr((maxx+minx)/2.0).c_str());
+        out("#declare %s_MAX_X    = %s;\n", pfx, dstr(maxx).c_str());
+        out("#declare %s_WIDTH    = %s;\n", pfx, dstr(maxx-minx).c_str());
+        out("#declare %s_MIN_Y    = %s;\n", pfx, dstr(miny).c_str());
+        out("#declare %s_CENTER_Y = %s;\n", pfx, dstr((maxy+miny)/2.0).c_str());
+        out("#declare %s_MAX_Y    = %s;\n", pfx, dstr(maxy).c_str());
+        out("#declare %s_HEIGHT   = %s;\n", pfx, dstr(maxy-miny).c_str());
         out("/*##############################################\n");
         out("### end %s\n", id.c_str());
         out("##############################################*/\n");
