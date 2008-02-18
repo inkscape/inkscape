@@ -90,6 +90,54 @@ GType eek_preview_get_type(void)
     return preview_type;
 }
 
+static guint trackCount = 0;
+static guint* trackSizes = 0;
+static GtkIconSize* trackKeys = 0;
+
+void eek_preview_set_size_mappings( guint count, GtkIconSize const* sizes )
+{
+    gint width = 0;
+    gint height = 0;
+    gint smallest = 512;
+    gint largest = 0;
+    guint i = 0;
+    guint delta = 0;
+
+    for ( i = 0; i < count; ++i ) {
+        gboolean worked = gtk_icon_size_lookup( sizes[i], &width, &height );
+        if ( worked ) {
+            if ( width < smallest ) {
+                smallest = width;
+            }
+            if ( width > largest ) {
+                largest = width;
+            }
+        }
+    }
+
+    smallest = (smallest * 3) / 4;
+
+    delta = largest - smallest;
+
+    if ( trackSizes ) {
+        g_free(trackSizes);
+        trackSizes = 0;
+    }
+    if ( trackKeys ) {
+        g_free(trackKeys);
+        trackKeys = 0;
+    }
+
+    trackCount = count;
+    trackSizes = g_new(guint, count);
+    trackKeys = g_new(GtkIconSize, count);
+    for ( i = 0; i < count; ++i ) {
+        guint val = smallest + ( (i * delta) / (count-1) );
+        trackKeys[i] = sizes[i];
+        trackSizes[i] = val;
+    }
+}
+
 GtkWidget* eek_preview_area_new(void)
 {
     return NULL;
@@ -100,10 +148,25 @@ static void eek_preview_size_request( GtkWidget* widget, GtkRequisition* req )
     gint width = 0;
     gint height = 0;
     EekPreview* preview = EEK_PREVIEW(widget);
-    gboolean worked = gtk_icon_size_lookup( preview->_size, &width, &height );
-    if ( !worked ) {
-        width = 16;
-        height = 16;
+    gboolean tracked = TRUE;
+    guint i = 0;
+
+    for ( i = 0; i < trackCount; ++i ) {
+        tracked = (trackKeys[i] == preview->_size);
+        if ( tracked ) {
+            width = trackSizes[i];
+            height = width;
+            break;
+        }
+    }
+
+    if ( !tracked ) {
+        gboolean worked = gtk_icon_size_lookup( preview->_size, &width, &height );
+        if ( !worked ) {
+            width = 16;
+            height = 16;
+            g_warning("Size not found [%d]", preview->_size);
+        }
     }
     if ( preview->_view == VIEW_TYPE_LIST ) {
         width *= 3;

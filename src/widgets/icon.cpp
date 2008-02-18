@@ -59,8 +59,6 @@ static guchar *sp_icon_image_load_svg(gchar const *name, unsigned lsize, unsigne
 
 static guchar *sp_icon_image_load(SPIcon *icon, gchar const *name);
 
-static int sp_icon_get_phys_size(int size);
-
 static void sp_icon_overlay_pixels( guchar *px, int width, int height, int stride,
                                     unsigned r, unsigned g, unsigned b );
 
@@ -397,7 +395,7 @@ static void injectCustomSize()
 
 }
 
-static int sp_icon_get_phys_size(int size)
+int sp_icon_get_phys_size(int size)
 {
     static bool init = false;
     static int lastSys[Inkscape::ICON_SIZE_DECORATION + 1];
@@ -542,7 +540,7 @@ static void sp_icon_paint(SPIcon *icon, GdkRectangle const *area)
 }
 
 static guchar *
-sp_icon_image_load_pixmap(gchar const *name, unsigned lsize, unsigned psize)
+sp_icon_image_load_pixmap(gchar const *name, unsigned /*lsize*/, unsigned psize)
 {
     gchar *path;
     guchar *px;
@@ -762,7 +760,7 @@ static guchar *get_cached_pixels(Glib::ustring const &key) {
 }
 
 static guchar *load_svg_pixels(gchar const *name,
-                               unsigned lsize, unsigned psize)
+                               unsigned /*lsize*/, unsigned psize)
 {
     SPDocument *doc = NULL;
     NRArenaItem *root = NULL;
@@ -949,7 +947,7 @@ static void addPreRender( Inkscape::IconSize lsize, gchar const *name )
     pendingRenders.push(preRenderItem(lsize, name));
 }
 
-gboolean icon_prerender_task(gpointer data) {
+gboolean icon_prerender_task(gpointer /*data*/) {
     if (!pendingRenders.empty()) {
         preRenderItem single=pendingRenders.front();
         pendingRenders.pop();

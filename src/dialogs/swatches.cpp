@@ -511,10 +511,10 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Inkscape::
         lbl->set_alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_CENTER);
         widget = lbl;
     } else {
-        Glib::ustring blank("          ");
-        if ( size == Inkscape::ICON_SIZE_MENU || size == Inkscape::ICON_SIZE_DECORATION ) {
-            blank = " ";
-        }
+//         Glib::ustring blank("          ");
+//         if ( size == Inkscape::ICON_SIZE_MENU || size == Inkscape::ICON_SIZE_DECORATION ) {
+//             blank = " ";
+//         }
 
         GtkWidget* eekWidget = eek_preview_new();
         EekPreview * preview = EEK_PREVIEW(eekWidget);

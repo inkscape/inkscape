@@ -27,6 +27,7 @@
 #include "prefs-utils.h"
 #include "desktop-handles.h"
 #include "inkscape.h"
+#include "dialogs/eek-preview.h"
 
 namespace Inkscape {
 namespace UI {
@@ -36,6 +37,19 @@ static const int PANEL_SETTING_SIZE = 0;
 static const int PANEL_SETTING_MODE = 1;
 static const int PANEL_SETTING_WRAP = 2;
 static const int PANEL_SETTING_NEXTFREE = 3;
+
+
+void Panel::prep() {
+    GtkIconSize sizes[] = {
+        static_cast<GtkIconSize>(Inkscape::ICON_SIZE_DECORATION),
+        GTK_ICON_SIZE_MENU,
+        GTK_ICON_SIZE_SMALL_TOOLBAR,
+        GTK_ICON_SIZE_BUTTON,
+        GTK_ICON_SIZE_DND, // Not used by options, but included to make the last size larger
+        GTK_ICON_SIZE_DIALOG
+    };
+    eek_preview_set_size_mappings( G_N_ELEMENTS(sizes), sizes );
+}
 
 /**
  *    Construct a Panel

@@ -48,5 +48,7 @@ GtkWidget *sp_icon_new( Inkscape::IconSize size, const gchar *name );
 Gtk::Widget *sp_icon_get_icon( const Glib::ustring &oid, Inkscape::IconSize size = Inkscape::ICON_SIZE_BUTTON );
 
 void sp_icon_fetch_pixbuf( SPIcon *icon );
+int sp_icon_get_phys_size(int size);
+
 
 #endif // SEEN_SP_ICON_H

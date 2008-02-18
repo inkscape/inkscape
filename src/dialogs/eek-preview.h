@@ -117,6 +117,8 @@ LinkType eek_preview_get_linked( EekPreview* splat );
 gboolean eek_preview_get_focus_on_click( EekPreview* preview );
 void eek_preview_set_focus_on_click( EekPreview* preview, gboolean focus_on_click );
 
+void eek_preview_set_size_mappings( guint count, GtkIconSize const* sizes );
+
 G_END_DECLS
 
 

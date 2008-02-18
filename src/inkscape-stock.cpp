@@ -23,6 +23,8 @@
 
 #include "gtk/gtkiconfactory.h"
 
+#include "widgets/icon.h"
+#include "ui/widget/panel.h"
 
 void
 inkscape_gtk_stock_init() {
@@ -30,6 +32,12 @@ inkscape_gtk_stock_init() {
 
     if (stock_initialized)
         return;
+
+    // Ensure icon internal sizes get set up:
+    sp_icon_get_phys_size(GTK_ICON_SIZE_MENU);
+
+    // And also prepare the swatches.
+    Inkscape::UI::Widget::Panel::prep();
 
     GtkIconFactory *icon_factory = gtk_icon_factory_new();
     /* todo: Should we simply remove this file now that we're no longer

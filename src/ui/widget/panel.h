@@ -38,8 +38,10 @@ namespace Widget {
 class Panel : public Gtk::VBox {
 
 public:
+    static void prep();
+
     virtual ~Panel();
-    Panel(Glib::ustring const &label = "", gchar const *prefs_path = 0, 
+    Panel(Glib::ustring const &label = "", gchar const *prefs_path = 0,
           int verb_num = 0, Glib::ustring const &apply_label = "",
           bool menu_desired = false);
 
@@ -57,7 +59,7 @@ public:
 
     virtual void setDesktop(SPDesktop *desktop);
     SPDesktop *getDesktop() { return _desktop; }
-    
+
     /** Signal accessors */
     virtual sigc::signal<void, int> &signalResponse();
     virtual sigc::signal<void> &signalPresent();
