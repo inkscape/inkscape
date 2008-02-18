@@ -847,9 +847,16 @@ static void sp_gradient_drag(SPGradientContext &rc, NR::Point const pt, guint /*
 
         SPGradient *vector;
         if (ec->item_to_select) {
+            // pick color from the object where drag started
             vector = sp_gradient_vector_for_object(document, desktop, ec->item_to_select, fill_or_stroke);
         } else {
-            vector = sp_gradient_vector_for_object(document, desktop, SP_ITEM(selection->itemList()->data), fill_or_stroke);
+            // Starting from empty space:
+            // Sort items so that the topmost comes last
+            GSList *items = g_slist_copy ((GSList *) selection->itemList());
+            items = g_slist_sort(items, (GCompareFunc) sp_item_repr_compare_position);
+            // take topmost
+            vector = sp_gradient_vector_for_object(document, desktop, SP_ITEM(g_slist_last(items)->data), fill_or_stroke);
+            g_slist_free (items);
         }
 
         // HACK: reset fill-opacity - that 0.75 is annoying; BUT remove this when we have an opacity slider for all tabs
