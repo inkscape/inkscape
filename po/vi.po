@@ -2,15 +2,14 @@
 # This file is distributed under the same license as the Inkscape package.
 # Copyright © 2008 Free Software Foundation, Inc.
 # Clytie Siddall <clytie@riverland.net.au>, 2006-2008.
-# Nguyen Dinh Trung <nguyendinhtrung141@gmail.com>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-02-08 23:00+0100\n"
-"PO-Revision-Date: 2008-02-04 17:40+1030nLast-Translator: Nguyen Dinh Trung "
-"<nguyendinhtrung141@gmail.com>\n"
+"PO-Revision-Date: 2008-02-16 12:54+0700\n"
+"Last-Translator: Nguyen Dinh Trung <nguyendinhtrung141@gmail.com>\n"
 "Language-Team: Vietnamese <vi-bugs@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -346,7 +345,7 @@ msgstr "Ngẫu nhiên hoá khoảng dời chỗ theo chiều dọc (theo phần 
 
 #: ../src/dialogs/clonetiler.cpp:2011 ../src/dialogs/clonetiler.cpp:2159
 msgid "<b>Exponent:</b>"
-msgstr "<b>Số mũ :</b>"
+msgstr "<b>Luỹ thừa:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2018
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
@@ -4078,7 +4077,7 @@ msgstr "Màu sắc hiện rõ"
 #: ../src/widgets/sp-color-scales.cpp:432 ../src/widgets/toolbox.cpp:3171
 #: ../share/extensions/color_randomize.inx.h:3
 msgid "Lightness"
-msgstr "Độ nhạt"
+msgstr "Độ sáng"
 
 #: ../src/flood-context.cpp:265
 msgid "Small"
@@ -5169,8 +5168,8 @@ msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr ""
-"Truy vấn chiều cao của bản vẽ hoặc, nếu được xác định, của đối tượng theo « --"
-"query-id »"
+"Truy vấn chiều cao của bản vẽ hoặc, nếu được xác định, của đối tượng theo « "
+"--query-id »"
 
 #: ../src/main.cpp:376
 msgid "List id,x,y,w,h for all objects"
@@ -7446,7 +7445,7 @@ msgstr "Giới thiệu Inkscape"
 
 #: ../src/ui/dialog/aboutbox.cpp:88
 msgid "_Splash"
-msgstr "_Giật gân"
+msgstr "_Chú ý"
 
 #: ../src/ui/dialog/aboutbox.cpp:92
 msgid "_Authors"
@@ -8266,7 +8265,7 @@ msgstr "Điểm ở"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:924
 msgid "Specular Exponent"
-msgstr "Mũ long lanh"
+msgstr "Luỹ thừa phản chiếu"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:925
 msgid "Cone Angle"
@@ -8461,7 +8460,7 @@ msgstr "Màu long lanh"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2166
 #: ../share/extensions/interp.inx.h:2
 msgid "Exponent"
-msgstr "Mũ"
+msgstr "Luỹ thừa"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2174
 msgid "Stitch Tiles"
@@ -9544,8 +9543,8 @@ msgid ""
 "The server name of the Open Clip Art Library webdav server. It's used by the "
 "Import and Export to OCAL function."
 msgstr ""
-"Tên máy phục vụ của máy WebDAV Open Clip Art Library. Nó dùng bởi chức năng « "
-"Nhập » và « Xuất dạng OCAL »."
+"Tên máy phục vụ của máy WebDAV Open Clip Art Library. Nó dùng bởi chức năng "
+"« Nhập » và « Xuất dạng OCAL »."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:649
 msgid "Open Clip Art Library Username:"
@@ -11195,12 +11194,12 @@ msgstr "tutorial-calligraphy.vi.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1811
 msgid "tutorial-elements.svg"
-msgstr "tutorial-elements.svg"
+msgstr "tutorial-elements.vi.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1815
 msgid "tutorial-tips.svg"
-msgstr "tutorial-tips.svg"
+msgstr "tutorial-tips.vi.svg"
 
 #: ../src/verbs.cpp:2092 ../src/verbs.cpp:2578
 msgid "Unlock all objects in the current layer"
@@ -11281,15 +11280,15 @@ msgstr "In tài liệu"
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
 #: ../src/verbs.cpp:2137
 msgid "Vac_uum Defs"
-msgstr "Làm _sạch Defs"
+msgstr "Xoá thông tin thừ_a"
 
 #: ../src/verbs.cpp:2137
 msgid ""
 "Remove unused definitions (such as gradients or clipping paths) from the &lt;"
 "defs&gt; of the document"
 msgstr ""
-"Gỡ bỏ các lời xác định không dùng (như chuyển sắc hay đường nét xén) khỏi "
-"phần &lt;defs&gt; (lời xác định) của tài liệu."
+"Gỡ bỏ các thông tin thừa (như chuyển sắc hay đường nét xén) khỏi phần &lt;"
+"defs&gt; (định nghĩa) của tài liệu."
 
 #: ../src/verbs.cpp:2139
 msgid "Print Previe_w"
@@ -11321,11 +11320,11 @@ msgstr "Nhập tài liệu từ Open Clip Art Library"
 
 #: ../src/verbs.cpp:2146
 msgid "Export To Open Clip Art Library"
-msgstr "Xuất ra Open Clip Art Library"
+msgstr "Xuất lên Open Clip Art Library"
 
 #: ../src/verbs.cpp:2146
 msgid "Export this document to Open Clip Art Library"
-msgstr "Xuất khẩu tài liệu này ra Open Clip Art Library"
+msgstr "Xuất tài liệu này lên Open Clip Art Library"
 
 #: ../src/verbs.cpp:2147
 msgid "N_ext Window"
@@ -11686,15 +11685,13 @@ msgstr "_Bỏ khỏi đường nét"
 
 #: ../src/verbs.cpp:2243
 msgid "Remove Manual _Kerns"
-msgstr "Bỏ các c_hỗ tự định"
+msgstr "Bỏ k_hoảng cách chữ đã đặt"
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
 #: ../src/verbs.cpp:2246
 msgid "Remove all manual kerns and glyph rotations from a text object"
-msgstr ""
-"Gỡ bỏ khỏi một đối tượng văn bản nào đó mọi chỗ tự định và góc xoay hình "
-"tượng"
+msgstr "Gỡ bỏ mọi khoảng cách chữ tự đặt và xoay ký tự khỏi văn bản"
 
 #: ../src/verbs.cpp:2248
 msgid "_Union"
@@ -11749,7 +11746,7 @@ msgstr "Cắt đường _nét"
 #: ../src/verbs.cpp:2261
 msgid "Cut the bottom path's stroke into pieces, removing fill"
 msgstr ""
-"Cắt nét của đường nét bên dưới ra nhiều phần riêng, cũng gỡ bỏ hiệu ứng tô"
+"Cắt nét của đường nét bên dưới ra nhiều phần riêng, xoá hiệu ứng màu tô"
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
@@ -12553,7 +12550,7 @@ msgstr "Xem và chọn nhóm phông, kích cỡ phông và các thuộc tính v�
 
 #: ../src/verbs.cpp:2507
 msgid "_XML Editor..."
-msgstr "Bộ Sửa _XML..."
+msgstr "Soạn thảo _XML..."
 
 #: ../src/verbs.cpp:2508
 msgid "View and edit the XML tree of the document"
@@ -12700,11 +12697,11 @@ msgstr "Bắt đầu dùng chương trình Inkscape"
 #. "tutorial_basic"
 #: ../src/verbs.cpp:2549
 msgid "Inkscape: _Shapes"
-msgstr "Inkscape: _Hình"
+msgstr "Inkscape: _Hình dạng"
 
 #: ../src/verbs.cpp:2550
 msgid "Using shape tools to create and edit shapes"
-msgstr "Sử dụng công cụ hình để tạo và sửa các hình khác nhau"
+msgstr "Sử dụng các công cụ hình dạng"
 
 #: ../src/verbs.cpp:2551
 msgid "Inkscape: _Advanced"
@@ -14328,7 +14325,7 @@ msgid ""
 "Trace the lightness of the background by the width of the pen (white - "
 "minimum width, black - maximum width)"
 msgstr ""
-"Độ nhạt của nền theo chiều rộng của bút: màu trắng - chiều rộng tối thiểu, "
+"Độ sáng của nền theo chiều rộng của bút: màu trắng - chiều rộng tối thiểu, "
 "màu đen - chiều rộng tối đa"
 
 #: ../src/widgets/toolbox.cpp:3473
@@ -14432,7 +14429,7 @@ msgstr "Văn bản: đổi nhóm phông"
 
 #: ../src/widgets/toolbox.cpp:4325
 msgid "Text: Change alignment"
-msgstr "Văn bản: đổi hàng sắp"
+msgstr "Văn bản: đổi căn chỉnh"
 
 #: ../src/widgets/toolbox.cpp:4408
 msgid "Text: Change font style"
@@ -14770,8 +14767,8 @@ msgid ""
 "If you do not have it, there is likely to be something wrong with your "
 "Inkscape installation."
 msgstr ""
-"Văn lệnh « dia2svg.sh » nên được cài đặt cùng với bản phát hành Inkscape. Nếu "
-"không, rất có thể là bản cài đặt Inkscape bị sai."
+"Văn lệnh « dia2svg.sh » nên được cài đặt cùng với bản phát hành Inkscape. "
+"Nếu không, rất có thể là bản cài đặt Inkscape bị sai."
 
 #: ../share/extensions/dots.inx.h:1
 msgid "Dot size"
@@ -15092,7 +15089,7 @@ msgstr "Hỏi Đáp"
 
 #: ../share/extensions/inkscape_help_keys.inx.h:1
 msgid "Keys and Mouse Reference"
-msgstr "Tham chiếu về Phím tắt và con Chuột."
+msgstr "Tham khảo Bàn phím và Chuột."
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1
 msgid "Inkscape Manual"
@@ -15100,7 +15097,7 @@ msgstr "Sổ tay Inkscape"
 
 #: ../share/extensions/inkscape_help_relnotes.inx.h:1
 msgid "New in This Version"
-msgstr "Tin tức về phiên bản này"
+msgstr "Các tính năng mới"
 
 #: ../share/extensions/inkscape_help_reportabug.inx.h:1
 msgid "Report a Bug"
@@ -15120,7 +15117,7 @@ msgstr "Nội suy"
 
 #: ../share/extensions/interp.inx.h:5
 msgid "Interpolate style (experimental)"
-msgstr "Kiểu nội suy (thực nghiệm)"
+msgstr "Nội suy kiểu dáng (thực nghiệm)"
 
 #: ../share/extensions/interp.inx.h:6
 msgid "Interpolation method"
@@ -15587,188 +15584,187 @@ msgstr "Nhập Windows Metafile"
 msgid "XAML Input"
 msgstr "Nhập XAML"
 
-#~ msgid "Measure unit:"
-#~ msgstr "Đơn vị đo :"
+msgid "Measure unit:"
+msgstr "Đơn vị đo :"
 
-#~ msgid "Degrees:"
-#~ msgstr "Độ :"
+msgid "Degrees:"
+msgstr "Độ :"
 
-#~ msgid "Convolve"
-#~ msgstr "Quấn lại"
+msgid "Convolve"
+msgstr "Quấn lại"
 
-#~ msgid "Kernel Array"
-#~ msgstr "Mảng hạt"
+msgid "Kernel Array"
+msgstr "Mảng hạt"
 
-#~ msgid "Apply Convolve Effect"
-#~ msgstr "Áp dụng hiệu ứng quấn lại"
+msgid "Apply Convolve Effect"
+msgstr "Áp dụng hiệu ứng quấn lại"
 
 # Name: don't translate / Tên: đừng dịch
-#~ msgid "PostScript 3"
-#~ msgstr "PostScript 3"
+msgid "PostScript 3"
+msgstr "PostScript 3"
 
-#~ msgid "Pin Dialog"
-#~ msgstr "Ghim hộp thoại"
+msgid "Pin Dialog"
+msgstr "Ghim hộp thoại"
 
-#~ msgid ""
-#~ "Toggles whether the dialog stays for multiple executions or disappears "
-#~ "after one"
-#~ msgstr ""
-#~ "Bật/tắt giữ lại hộp thoại để thực hiện nhiều lần, hay biến mật sau một lần"
+msgid ""
+"Toggles whether the dialog stays for multiple executions or disappears after "
+"one"
+msgstr ""
+"Bật/tắt giữ lại hộp thoại để thực hiện nhiều lần, hay biến mật sau một lần"
 
-#~ msgid "???"
-#~ msgstr "???"
+msgid "???"
+msgstr "???"
 
-#~ msgid "Start point jitter"
-#~ msgstr "Bù ngẫu nhiên điểm đầu"
+msgid "Start point jitter"
+msgstr "Bù ngẫu nhiên điểm đầu"
 
-#~ msgid "End point jitter"
-#~ msgstr "Bù ngẫu nhiên điểm cuối"
+msgid "End point jitter"
+msgstr "Bù ngẫu nhiên điểm cuối"
 
-#~ msgid ""
-#~ "Determines whether lines cluster together or have an equal spacing "
-#~ "between each other."
-#~ msgstr ""
-#~ "Xác định nếu các đường chùm với nhau, hoặc có cùng một khoảng cách ở giữa."
+msgid ""
+"Determines whether lines cluster together or have an equal spacing between "
+"each other."
+msgstr ""
+"Xác định nếu các đường chùm với nhau, hoặc có cùng một khoảng cách ở giữa."
 
-#~ msgid "Snap nodes to grid lines, to guides, to paths, and to other nodes"
-#~ msgstr "Đính các nút tới đường lưới, tới đường gióng, và tới các nút khác"
+msgid "Snap nodes to grid lines, to guides, to paths, and to other nodes"
+msgstr "Đính các nút tới đường lưới, tới đường gióng, và tới các nút khác"
 
-#~ msgid "Snap at specified d_istance"
-#~ msgstr "Đính ở khoảng đã gh_i rõ"
+msgid "Snap at specified d_istance"
+msgstr "Đính ở khoảng đã gh_i rõ"
 
-#~ msgid "Snap di_stance"
-#~ msgstr "_Khoảng đĩnh"
+msgid "Snap di_stance"
+msgstr "_Khoảng đĩnh"
 
-#~ msgid "Snap at specified dis_tance"
-#~ msgstr "Đính ở khoảng đã ghi _rõ"
+msgid "Snap at specified dis_tance"
+msgstr "Đính ở khoảng đã ghi _rõ"
 
-#~ msgid "Snap at specified distan_ce"
-#~ msgstr "Đí_nh ở khoảng đã ghi rõ"
+msgid "Snap at specified distan_ce"
+msgstr "Đí_nh ở khoảng đã ghi rõ"
 
-#~ msgid "_Include the object's rotation center"
-#~ msgstr "Gồm có tâm xoay của đố_i tượng"
+msgid "_Include the object's rotation center"
+msgstr "Gồm có tâm xoay của đố_i tượng"
 
-#~ msgid "<b>Miscellaneous</b>"
-#~ msgstr "<b>Linh tinh</b>"
+msgid "<b>Miscellaneous</b>"
+msgstr "<b>Linh tinh</b>"
 
-#~ msgid "Slope"
-#~ msgstr "Dốc"
+msgid "Slope"
+msgstr "Dốc"
 
-#~ msgid "Intercept"
-#~ msgstr "Điểm chắn"
+msgid "Intercept"
+msgstr "Điểm chắn"
 
-#~ msgid "Default metadata that will be used for new documents:"
-#~ msgstr "Siêu dữ liệu mặc định cần dùng cho các tài liệu mới:"
+msgid "Default metadata that will be used for new documents:"
+msgstr "Siêu dữ liệu mặc định cần dùng cho các tài liệu mới:"
 
-#~ msgid "These values will be used as default metadata for new documents"
-#~ msgstr ""
-#~ "Những giá trị này sẽ được dùng làm siêu dữ liệu mặc định cho các tài liệu "
-#~ "mới"
+msgid "These values will be used as default metadata for new documents"
+msgstr ""
+"Những giá trị này sẽ được dùng làm siêu dữ liệu mặc định cho các tài liệu mới"
 
-#~ msgid "Date:"
-#~ msgstr "Ngày:"
+msgid "Date:"
+msgstr "Ngày:"
 
-#~ msgid "Format:"
-#~ msgstr "Định dạng:"
+msgid "Format:"
+msgstr "Định dạng:"
 
-#~ msgid "Creator:"
-#~ msgstr "Người tạo :"
+msgid "Creator:"
+msgstr "Người tạo :"
 
-#~ msgid "Rights:"
-#~ msgstr "Quyền hạn:"
+msgid "Rights:"
+msgstr "Quyền hạn:"
 
-#~ msgid "Publisher:"
-#~ msgstr "Nhà xuất bản:"
+msgid "Publisher:"
+msgstr "Nhà xuất bản:"
 
-#~ msgid "Identifier:"
-#~ msgstr "Nhận diện:"
+msgid "Identifier:"
+msgstr "Nhận diện:"
 
-#~ msgid "Source:"
-#~ msgstr "Nguồn:"
+msgid "Source:"
+msgstr "Nguồn:"
 
-#~ msgid "Relation:"
-#~ msgstr "Quan hệ:"
+msgid "Relation:"
+msgstr "Quan hệ:"
 
-#~ msgid "Language:"
-#~ msgstr "Ngôn ngữ :"
+msgid "Language:"
+msgstr "Ngôn ngữ :"
 
-#~ msgid "Subject:"
-#~ msgstr "Chủ đề"
+msgid "Subject:"
+msgstr "Chủ đề"
 
-#~ msgid "Coverage:"
-#~ msgstr "Phạm vi:"
+msgid "Coverage:"
+msgstr "Phạm vi:"
 
-#~ msgid "Description:"
-#~ msgstr "Mô tả:"
+msgid "Description:"
+msgstr "Mô tả:"
 
-#~ msgid "Contributor:"
-#~ msgstr "Người đóng góp:"
+msgid "Contributor:"
+msgstr "Người đóng góp:"
 
-#~ msgid "Default Metadata"
-#~ msgstr "Siêu dữ liệu mặc định"
+msgid "Default Metadata"
+msgstr "Siêu dữ liệu mặc định"
 
-#~ msgid "Creative Commons By 3.0"
-#~ msgstr "Creative Commons By 3.0"
+msgid "Creative Commons By 3.0"
+msgstr "Creative Commons By 3.0"
 
-#~ msgid "Creative Commons By Sa 3.0"
-#~ msgstr "Creative Commons By Sa 3.0"
+msgid "Creative Commons By Sa 3.0"
+msgstr "Creative Commons By Sa 3.0"
 
-#~ msgid "Creative Commons By Nd 3.0"
-#~ msgstr "Creative Commons By Nd 3.0"
+msgid "Creative Commons By Nd 3.0"
+msgstr "Creative Commons By Nd 3.0"
 
-#~ msgid "Creative Commons By Nc 3.0"
-#~ msgstr "Creative Commons By Nc 3.0"
+msgid "Creative Commons By Nc 3.0"
+msgstr "Creative Commons By Nc 3.0"
 
-#~ msgid "Creative Commons By Nc Sa 3.0"
-#~ msgstr "Creative Commons By Nc Sa 3.0"
+msgid "Creative Commons By Nc Sa 3.0"
+msgstr "Creative Commons By Nc Sa 3.0"
 
-#~ msgid "Creative Commons By Nc Nd 3.0"
-#~ msgstr "Creative Commons By Nc Nd 3.0"
+msgid "Creative Commons By Nc Nd 3.0"
+msgstr "Creative Commons By Nc Nd 3.0"
 
-#~ msgid "Default Licensing for new documents:"
-#~ msgstr "Giấy phép mặc định cho các tài liệu mới:"
+msgid "Default Licensing for new documents:"
+msgstr "Giấy phép mặc định cho các tài liệu mới:"
 
-#~ msgid "All Rights Reserved"
-#~ msgstr "Bảo lưu mọi quyền"
+msgid "All Rights Reserved"
+msgstr "Bảo lưu mọi quyền"
 
-#~ msgid "Creative Commons: Attribution"
-#~ msgstr "Creative Commons: Quy ra"
+msgid "Creative Commons: Attribution"
+msgstr "Creative Commons: Quy ra"
 
-#~ msgid "Creative Commons: Attribution-ShareAlike"
-#~ msgstr "Creative Commons: Quy ra - Chia đều"
+msgid "Creative Commons: Attribution-ShareAlike"
+msgstr "Creative Commons: Quy ra - Chia đều"
 
-#~ msgid "Creative Commons: Attribution-NoDerivatives"
-#~ msgstr "Creative Commons: Quy ra - Không xuất phát"
+msgid "Creative Commons: Attribution-NoDerivatives"
+msgstr "Creative Commons: Quy ra - Không xuất phát"
 
-#~ msgid "Creative Commons: Attribution-NonCommercial"
-#~ msgstr "Creative Commons: Quy ra - Không thương mại"
+msgid "Creative Commons: Attribution-NonCommercial"
+msgstr "Creative Commons: Quy ra - Không thương mại"
 
-#~ msgid "Creative Commons: Attribution-NonCommercial-ShareAlike"
-#~ msgstr "Creative Commons: Quy ra - Không thương mại - Chia đều"
+msgid "Creative Commons: Attribution-NonCommercial-ShareAlike"
+msgstr "Creative Commons: Quy ra - Không thương mại - Chia đều"
 
-#~ msgid "Creative Commons: Attribution-NonCommercial-NoDerivatives"
-#~ msgstr "Creative Commons: Quy ra - Không thương mại - không xuất phát"
+msgid "Creative Commons: Attribution-NonCommercial-NoDerivatives"
+msgstr "Creative Commons: Quy ra - Không thương mại - không xuất phát"
 
-#~ msgid "Free Art License"
-#~ msgstr "Giấy phép Nghệ thuật Tự do"
+msgid "Free Art License"
+msgstr "Giấy phép Nghệ thuật Tự do"
 
-#~ msgid "Default License"
-#~ msgstr "Giấy phép mặc định"
+msgid "Default License"
+msgstr "Giấy phép mặc định"
 
-#~ msgid "Gri_d Arrange..."
-#~ msgstr "_Sắp đặt lưới..."
+msgid "Gri_d Arrange..."
+msgstr "_Sắp đặt lưới..."
 
-#~ msgid "3D Box: Toggle VP"
-#~ msgstr "Hộp 3D: bật/tắt VP"
+msgid "3D Box: Toggle VP"
+msgstr "Hộp 3D: bật/tắt VP"
 
-#~ msgid "Angle of infinite vanishing point in X direction"
-#~ msgstr "Góc của điểm biến mật về hướng X"
+msgid "Angle of infinite vanishing point in X direction"
+msgstr "Góc của điểm biến mật về hướng X"
 
-#~ msgid "Angle Y"
-#~ msgstr "Góc Y"
+msgid "Angle Y"
+msgstr "Góc Y"
 
-#~ msgid "Angle of infinite vanishing point in Y direction"
-#~ msgstr "Góc của điểm biến mật về hướng Y"
+msgid "Angle of infinite vanishing point in Y direction"
+msgstr "Góc của điểm biến mật về hướng Y"
 
-#~ msgid "Angle of infinite vanishing point in Z direction"
-#~ msgstr "Góc của điểm biến mật về hướng Z"
+msgid "Angle of infinite vanishing point in Z direction"
+msgstr "Góc của điểm biến mật về hướng Z"
