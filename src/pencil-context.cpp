@@ -238,8 +238,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Continuing selected path"));
                 } else {
 
-                    if (!(bevent.state & GDK_SHIFT_MASK) &&
-                        !(bevent.state & GDK_LOCK_MASK)) {
+                    if (!(bevent.state & GDK_SHIFT_MASK)) {
 
                         // This is the first click of a new curve; deselect item so that
                         // this curve is not combined with it (unless it is drawn from its
