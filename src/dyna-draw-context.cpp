@@ -888,7 +888,8 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             /* Create object */
             fit_and_split(dc, TRUE);
             accumulate_calligraphic(dc);
-            set_to_accumulated(dc, event->button.state & GDK_SHIFT_MASK); // performs document_done
+            set_to_accumulated(dc, (event->button.state & GDK_SHIFT_MASK) ||
+                                   (event->button.state & GDK_LOCK_MASK)); // performs document_done
 
             /* reset accumulated curve */
             sp_curve_reset(dc->accumulated);
