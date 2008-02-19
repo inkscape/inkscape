@@ -242,7 +242,7 @@ private:
     Gtk::VBox _settings_tab1;
     Gtk::Label _empty_settings;
     Gtk::Label _no_filter_selected;
-
+    bool _settings_initialized;
     class Settings;
     class MatrixAttr;
     class ColorMatrixValues;

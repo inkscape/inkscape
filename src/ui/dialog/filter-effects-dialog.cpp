@@ -2044,7 +2044,8 @@ FilterEffectsDialog::FilterEffectsDialog()
       _empty_settings(_("No effect selected"), Gtk::ALIGN_LEFT),
       _no_filter_selected(_("No filter selected"), Gtk::ALIGN_LEFT),
       _locked(false),
-      _attr_lock(false)
+      _attr_lock(false),
+      _settings_initialized(false)
 {
     _settings = new Settings(*this, _settings_tab1, sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_direct),
                              NR_FILTER_ENDPRIMITIVETYPE);
@@ -2130,6 +2131,7 @@ void FilterEffectsDialog::init_settings_widgets()
     
     _no_filter_selected.set_sensitive(false);
     _settings_tab2.pack_start(_no_filter_selected);
+    _settings_initialized = true;
 
     _filter_general_settings->type(0);
     _filter_general_settings->add_multispinbutton(/*default x:*/ (double) -0.1, /*default y:*/ (double) -0.1, SP_ATTR_X, SP_ATTR_Y, _("Coordinates"), -100, 100, 0.01, 0.1, 2);
@@ -2383,6 +2385,8 @@ void FilterEffectsDialog::set_attr(SPObject* o, const SPAttributeEnum attr, cons
 
 void FilterEffectsDialog::update_filter_general_settings_view()
 {
+    if(_settings_initialized != true) return;
+
     if(!_locked) {
         _attr_lock = true;
 
