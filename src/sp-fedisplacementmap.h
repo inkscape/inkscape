@@ -16,6 +16,14 @@
 #include "sp-filter.h"
 #include "sp-fedisplacementmap-fns.h"
 
+enum FilterDisplacementMapChannelSelector {
+    DISPLACEMENTMAP_CHANNEL_RED,
+    DISPLACEMENTMAP_CHANNEL_GREEN,
+    DISPLACEMENTMAP_CHANNEL_BLUE,
+    DISPLACEMENTMAP_CHANNEL_ALPHA,
+    DISPLACEMENTMAP_CHANNEL_ENDTYPE
+};
+
 /* FeDisplacementMap base class */
 class SPFeDisplacementMapClass;
 
@@ -23,8 +31,8 @@ struct SPFeDisplacementMap : public SPFilterPrimitive {
     /** DISPLACEMENTMAP ATTRIBUTES HERE */
     int in2; 
     double scale;
-    int xChannelSelector;
-    int yChannelSelector;
+    FilterDisplacementMapChannelSelector xChannelSelector;
+    FilterDisplacementMapChannelSelector yChannelSelector;
 };
 
 struct SPFeDisplacementMapClass {

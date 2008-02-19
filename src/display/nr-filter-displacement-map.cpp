@@ -115,8 +115,8 @@ void FilterDisplacementMap::set_input(int input, int slot) {
     if (input == 1) _input2 = slot;
 }
 
-void FilterDisplacementMap::set_channel_selector(int s, int channel) {
-    if (channel>3 || channel <0) {
+void FilterDisplacementMap::set_channel_selector(int s, FilterDisplacementMapChannelSelector channel) {
+    if (channel > DISPLACEMENTMAP_CHANNEL_ALPHA || channel < DISPLACEMENTMAP_CHANNEL_RED) {
         g_warning("Selected an invalid channel value. (%d)", channel);
         return;
     }

@@ -871,11 +871,11 @@ public:
     }
 
     // ComboBoxEnum
-    template<typename T> ComboBoxEnum<T>* add_combo(const SPAttributeEnum attr,
+    template<typename T> ComboBoxEnum<T>* add_combo(T default_value, const SPAttributeEnum attr,
                                   const Glib::ustring& label,
                                   const Util::EnumDataConverter<T>& conv)
     {
-        ComboBoxEnum<T>* combo = new ComboBoxEnum<T>(conv, attr);
+        ComboBoxEnum<T>* combo = new ComboBoxEnum<T>(default_value, conv, attr);
         add_widget(combo, label);
         add_attr_widget(combo);
         return combo;
@@ -2043,9 +2043,9 @@ FilterEffectsDialog::FilterEffectsDialog()
       _add_primitive(_("Add Effect:")),
       _empty_settings(_("No effect selected"), Gtk::ALIGN_LEFT),
       _no_filter_selected(_("No filter selected"), Gtk::ALIGN_LEFT),
+      _settings_initialized(false),
       _locked(false),
-      _attr_lock(false),
-      _settings_initialized(false)
+      _attr_lock(false)
 {
     _settings = new Settings(*this, _settings_tab1, sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_direct),
                              NR_FILTER_ENDPRIMITIVETYPE);
@@ -2138,16 +2138,16 @@ void FilterEffectsDialog::init_settings_widgets()
     _filter_general_settings->add_multispinbutton(/*default width:*/ (double) 1.2, /*default height:*/ (double) 1.2, SP_ATTR_WIDTH, SP_ATTR_HEIGHT, _("Dimensions"), 0, 1000, 0.01, 0.1, 2);
 
     _settings->type(NR_FILTER_BLEND);
-    _settings->add_combo(SP_ATTR_MODE, _("Mode"), BlendModeConverter);
+    _settings->add_combo(BLEND_NORMAL, SP_ATTR_MODE, _("Mode"), BlendModeConverter);
 
     _settings->type(NR_FILTER_COLORMATRIX);
-    ComboBoxEnum<FilterColorMatrixType>* colmat = _settings->add_combo(SP_ATTR_TYPE, _("Type"), ColorMatrixTypeConverter);
+    ComboBoxEnum<FilterColorMatrixType>* colmat = _settings->add_combo(COLORMATRIX_MATRIX, SP_ATTR_TYPE, _("Type"), ColorMatrixTypeConverter);
     _color_matrix_values = _settings->add_colormatrixvalues(_("Value(s)"));
     colmat->signal_attr_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::update_color_matrix));
 
     _settings->type(NR_FILTER_COMPONENTTRANSFER);
     _settings->add_notimplemented();
-    /*_settings->add_combo(SP_ATTR_TYPE, _("Type"), ComponentTransferTypeConverter);
+    /*_settings->add_combo(COMPONENTTRANSFER_TYPE_IDENTITY, SP_ATTR_TYPE, _("Type"), ComponentTransferTypeConverter);
     _ct_slope = _settings->add_spinslider(SP_ATTR_SLOPE, _("Slope"), -100, 100, 1, 0.01, 1);
     _ct_intercept = _settings->add_spinslider(SP_ATTR_INTERCEPT, _("Intercept"), -100, 100, 1, 0.01, 1);
     _ct_amplitude = _settings->add_spinslider(SP_ATTR_AMPLITUDE, _("Amplitude"), 0, 100, 1, 0.01, 1);
@@ -2155,7 +2155,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _ct_offset = _settings->add_spinslider(SP_ATTR_OFFSET, _("Offset"), -100, 100, 1, 0.01, 1);*/
 
     _settings->type(NR_FILTER_COMPOSITE);
-    _settings->add_combo(SP_ATTR_OPERATOR, _("Operator"), CompositeOperatorConverter);
+    _settings->add_combo(COMPOSITE_OVER, SP_ATTR_OPERATOR, _("Operator"), CompositeOperatorConverter);
     _k1 = _settings->add_spinslider(SP_ATTR_K1, _("K1"), -10, 10, 0.1, 0.01, 2);
     _k2 = _settings->add_spinslider(SP_ATTR_K2, _("K2"), -10, 10, 0.1, 0.01, 2);
     _k3 = _settings->add_spinslider(SP_ATTR_K3, _("K3"), -10, 10, 0.1, 0.01, 2);
@@ -2168,7 +2168,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _convolve_order->signal_attr_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::convolve_order_changed));
     _settings->add_spinslider(SP_ATTR_DIVISOR, _("Divisor"), 1, 20, 1, 0.1, 2);
     _settings->add_spinslider(SP_ATTR_BIAS, _("Bias"), -10, 10, 1, 0.01, 1);
-    _settings->add_combo(SP_ATTR_EDGEMODE, _("Edge Mode"), ConvolveMatrixEdgeModeConverter);
+    _settings->add_combo(CONVOLVEMATRIX_EDGEMODE_DUPLICATE, SP_ATTR_EDGEMODE, _("Edge Mode"), ConvolveMatrixEdgeModeConverter);
     _settings->add_checkbutton(SP_ATTR_PRESERVEALPHA, _("Preserve Alpha"), "true", "false");
 
     _settings->type(NR_FILTER_DIFFUSELIGHTING);
@@ -2180,8 +2180,8 @@ void FilterEffectsDialog::init_settings_widgets()
 
     _settings->type(NR_FILTER_DISPLACEMENTMAP);
     _settings->add_spinslider(SP_ATTR_SCALE, _("Scale"), 0, 100, 1, 0.01, 1);
-    _settings->add_combo(SP_ATTR_XCHANNELSELECTOR, _("X Channel"), DisplacementMapChannelConverter);
-    _settings->add_combo(SP_ATTR_YCHANNELSELECTOR, _("Y Channel"), DisplacementMapChannelConverter);
+    _settings->add_combo(DISPLACEMENTMAP_CHANNEL_ALPHA, SP_ATTR_XCHANNELSELECTOR, _("X Channel"), DisplacementMapChannelConverter);
+    _settings->add_combo(DISPLACEMENTMAP_CHANNEL_ALPHA, SP_ATTR_YCHANNELSELECTOR, _("Y Channel"), DisplacementMapChannelConverter);
 
     _settings->type(NR_FILTER_FLOOD);
     _settings->add_color(SP_PROP_FLOOD_COLOR, _("Flood Color"));
@@ -2191,7 +2191,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_dualspinslider(SP_ATTR_STDDEVIATION, _("Standard Deviation"), 0.01, 100, 1, 0.01, 1);
 
     _settings->type(NR_FILTER_MORPHOLOGY);
-    _settings->add_combo(SP_ATTR_OPERATOR, _("Operator"), MorphologyOperatorConverter);
+    _settings->add_combo(MORPHOLOGY_OPERATOR_ERODE, SP_ATTR_OPERATOR, _("Operator"), MorphologyOperatorConverter);
     _settings->add_dualspinslider(SP_ATTR_RADIUS, _("Radius"), 0, 100, 1, 0.01, 1);
 
     _settings->type(NR_FILTER_IMAGE);
@@ -2214,7 +2214,7 @@ void FilterEffectsDialog::init_settings_widgets()
 
     _settings->type(NR_FILTER_TURBULENCE);
     _settings->add_checkbutton(SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
-    _settings->add_combo(SP_ATTR_TYPE, _("Type"), TurbulenceTypeConverter);
+    _settings->add_combo(TURBULENCE_TURBULENCE, SP_ATTR_TYPE, _("Type"), TurbulenceTypeConverter);
     _settings->add_dualspinslider(SP_ATTR_BASEFREQUENCY, _("Base Frequency"), 0, 1, 0.001, 0.01, 3);
     _settings->add_spinslider(SP_ATTR_NUMOCTAVES, _("Octaves"), 1, 10, 1, 1, 0);
     _settings->add_spinslider(SP_ATTR_SEED, _("Seed"), 0, 1000, 1, 1, 0);

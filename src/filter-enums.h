@@ -20,6 +20,7 @@
 #include "display/nr-filter-morphology.h"
 #include "display/nr-filter-turbulence.h"
 #include "display/nr-filter-types.h"
+#include "sp-fedisplacementmap.h"
 #include "util/enums.h"
 
 // Filter primitives
@@ -55,8 +56,8 @@ extern const Inkscape::Util::EnumDataConverter<FeCompositeOperator> CompositeOpe
 extern const Inkscape::Util::EnumData<NR::FilterConvolveMatrixEdgeMode> ConvolveMatrixEdgeModeData[NR::CONVOLVEMATRIX_EDGEMODE_ENDTYPE];
 extern const Inkscape::Util::EnumDataConverter<NR::FilterConvolveMatrixEdgeMode> ConvolveMatrixEdgeModeConverter;
 // DisplacementMap channel
-extern const Inkscape::Util::EnumData<int> DisplacementMapChannelData[4];
-extern const Inkscape::Util::EnumDataConverter<int> DisplacementMapChannelConverter;
+extern const Inkscape::Util::EnumData<FilterDisplacementMapChannelSelector> DisplacementMapChannelData[4];
+extern const Inkscape::Util::EnumDataConverter<FilterDisplacementMapChannelSelector> DisplacementMapChannelConverter;
 // Morphology operator
 extern const Inkscape::Util::EnumData<NR::FilterMorphologyOperator> MorphologyOperatorData[NR::MORPHOLOGY_OPERATOR_END];
 extern const Inkscape::Util::EnumDataConverter<NR::FilterMorphologyOperator> MorphologyOperatorConverter;

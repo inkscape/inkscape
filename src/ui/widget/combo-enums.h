@@ -26,6 +26,26 @@ namespace Widget {
 template<typename E> class ComboBoxEnum : public Gtk::ComboBox, public AttrWidget
 {
 public:
+    ComboBoxEnum(E default_value, const Util::EnumDataConverter<E>& c, const SPAttributeEnum a = SP_ATTR_INVALID)
+        : AttrWidget(a, (unsigned int)default_value), setProgrammatically(false), _converter(c)
+    {
+        signal_changed().connect(signal_attr_changed().make_slot());
+
+        _model = Gtk::ListStore::create(_columns);
+        set_model(_model);
+
+        pack_start(_columns.label);
+
+        // Initialize list
+        for(int i = 0; i < _converter.end; ++i) {
+            Gtk::TreeModel::Row row = *_model->append();
+            const Util::EnumData<E>* data = &_converter.data(i);
+            row[_columns.data] = data;
+            row[_columns.label] = _( _converter.get_label(data->id).c_str() );
+        }
+        set_active_by_id(default_value);
+    }
+
     ComboBoxEnum(const Util::EnumDataConverter<E>& c, const SPAttributeEnum a = SP_ATTR_INVALID)
         : AttrWidget(a), setProgrammatically(false), _converter(c)
     {
@@ -43,7 +63,6 @@ public:
             row[_columns.data] = data;
             row[_columns.label] = _( _converter.get_label(data->id).c_str() );
         }
-
         set_active(0);
     }
 
@@ -59,7 +78,7 @@ public:
         if(val)
             set_active(_converter.get_id_from_key(val));
         else
-            set_active(0);
+            set_active(get_default()->as_uint());
     }
     
     const Util::EnumData<E>* get_active_data() const

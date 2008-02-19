@@ -12,6 +12,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "sp-fedisplacementmap.h"
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
@@ -29,7 +30,7 @@ public:
     virtual void set_input(int slot);
     virtual void set_input(int input, int slot);
     virtual void set_scale(double s);
-    virtual void set_channel_selector(int channel, int s);
+    virtual void set_channel_selector(int s, FilterDisplacementMapChannelSelector channel);
     virtual int render(FilterSlot &slot, FilterUnits const &units);
     virtual void area_enlarge(NRRectL &area, Matrix const &trans);
     virtual FilterTraits get_input_traits();
@@ -37,8 +38,8 @@ public:
 private:
     double scale;
     int _input2;
-    int Xchannel;
-    int Ychannel;
+    FilterDisplacementMapChannelSelector Xchannel;
+    FilterDisplacementMapChannelSelector Ychannel;
     int out_x0, out_y0, out_w, out_h;
 };
 

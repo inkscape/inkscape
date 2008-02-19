@@ -97,13 +97,13 @@ const EnumData<NR::FilterConvolveMatrixEdgeMode> ConvolveMatrixEdgeModeData[NR::
 const EnumDataConverter<NR::FilterConvolveMatrixEdgeMode> ConvolveMatrixEdgeModeConverter(ConvolveMatrixEdgeModeData, NR::CONVOLVEMATRIX_EDGEMODE_ENDTYPE);
 
 // feDisplacementMap
-const EnumData<int> DisplacementMapChannelData[4] = {
-    {0, _("Red"),   "R"},
-    {1, _("Green"), "G"},
-    {2, _("Blue"),  "B"},
-    {3, _("Alpha"), "A"}
+const EnumData<FilterDisplacementMapChannelSelector> DisplacementMapChannelData[DISPLACEMENTMAP_CHANNEL_ENDTYPE] = {
+    {DISPLACEMENTMAP_CHANNEL_RED, _("Red"),   "R"},
+    {DISPLACEMENTMAP_CHANNEL_GREEN, _("Green"), "G"},
+    {DISPLACEMENTMAP_CHANNEL_BLUE, _("Blue"),  "B"},
+    {DISPLACEMENTMAP_CHANNEL_ALPHA, _("Alpha"), "A"}
 };
-const EnumDataConverter<int> DisplacementMapChannelConverter(DisplacementMapChannelData, 4);
+const EnumDataConverter<FilterDisplacementMapChannelSelector> DisplacementMapChannelConverter(DisplacementMapChannelData, DISPLACEMENTMAP_CHANNEL_ENDTYPE);
 
 // feMorphology
 const EnumData<NR::FilterMorphologyOperator> MorphologyOperatorData[NR::MORPHOLOGY_OPERATOR_END] = {

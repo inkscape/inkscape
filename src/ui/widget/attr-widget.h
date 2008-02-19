@@ -26,7 +26,8 @@ enum DefaultValueType
     T_NONE,
     T_DOUBLE,
     T_VECT_DOUBLE,
-    T_BOOL
+    T_BOOL,
+    T_UINT
 };
 
 class DefaultValueHolder
@@ -36,6 +37,7 @@ class DefaultValueHolder
         double d_val;
         std::vector<double>* vt_val;
         bool b_val;
+        unsigned int uint_val;
     } value;
 
     //FIXME remove copy ctor and assignment operator as private to avoid double free of the vector
@@ -59,9 +61,19 @@ public:
         value.b_val = d;
     }
 
+    DefaultValueHolder (unsigned int ui) {
+        type = T_UINT;
+        value.uint_val = ui;
+    }
+
     ~DefaultValueHolder() {
         if (type == T_VECT_DOUBLE)
             delete value.vt_val;
+    }
+
+    unsigned int as_uint() {
+        g_assert (type == T_UINT);
+        return value.uint_val;
     }
 
     bool as_bool() {
@@ -83,6 +95,11 @@ public:
 class AttrWidget
 {
 public:
+    AttrWidget(const SPAttributeEnum a, unsigned int value)
+        : _attr(a),
+          _default(value)
+    {}
+
     AttrWidget(const SPAttributeEnum a, double value)
         : _attr(a),
           _default(value)

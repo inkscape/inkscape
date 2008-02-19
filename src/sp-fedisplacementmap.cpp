@@ -79,8 +79,8 @@ static void
 sp_feDisplacementMap_init(SPFeDisplacementMap *feDisplacementMap)
 {
     feDisplacementMap->scale=0;
-    feDisplacementMap->xChannelSelector=3;
-    feDisplacementMap->yChannelSelector=3;
+    feDisplacementMap->xChannelSelector = DISPLACEMENTMAP_CHANNEL_ALPHA;
+    feDisplacementMap->yChannelSelector = DISPLACEMENTMAP_CHANNEL_ALPHA;
     feDisplacementMap->in2 = NR::NR_FILTER_SLOT_NOT_SET;
 }
 
@@ -113,28 +113,28 @@ sp_feDisplacementMap_release(SPObject *object)
         ((SPObjectClass *) feDisplacementMap_parent_class)->release(object);
 }
 
-static int sp_feDisplacementMap_readChannelSelector(gchar const *value)
+static FilterDisplacementMapChannelSelector sp_feDisplacementMap_readChannelSelector(gchar const *value)
 {
-    if (!value) return 3;
+    if (!value) return DISPLACEMENTMAP_CHANNEL_ALPHA;
     switch (value[0]) {
         case 'R':
-            return 0;
+            return DISPLACEMENTMAP_CHANNEL_RED;
             break;
         case 'G':
-            return 1;
+            return DISPLACEMENTMAP_CHANNEL_GREEN;
             break;
         case 'B':
-            return 2;
+            return DISPLACEMENTMAP_CHANNEL_BLUE;
             break;
         case 'A':
-            return 3;
+            return DISPLACEMENTMAP_CHANNEL_ALPHA;
             break;
         default:
             // error
             g_warning("Invalid attribute for Channel Selector. Valid modes are 'R', 'G', 'B' or 'A'");
             break;
     }
-    return 3; //default is Alpha Channel
+    return DISPLACEMENTMAP_CHANNEL_ALPHA; //default is Alpha Channel
 }
 
 /**
@@ -147,7 +147,7 @@ sp_feDisplacementMap_set(SPObject *object, unsigned int key, gchar const *value)
     (void)feDisplacementMap;
     int input;
     double read_num;
-    int read_selector;
+    FilterDisplacementMapChannelSelector read_selector;
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
         case SP_ATTR_XCHANNELSELECTOR:
