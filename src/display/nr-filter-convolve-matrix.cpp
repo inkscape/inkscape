@@ -55,6 +55,9 @@ int FilterConvolveMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/)
     int width = in->area.x1 - in->area.x0;
     int height = in->area.y1 - in->area.y0;
 
+    unsigned int index;
+    unsigned int kernel_index;
+    
     for (x=targetX; x < width - (orderX - targetX); x++){
         for (y=targetY; y < height - (orderY - targetY); y++){
             result_R = 0;
@@ -64,20 +67,24 @@ int FilterConvolveMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/)
             for (i=0; i < orderY; i++){
                 for (j=0; j < orderX; j++){
                     if (inside_area(x - targetX + j, y - targetY + i, width, height)){
-                        result_R += ( (double) in_data[4*( x - targetX + j + width*(y - targetY + i) )] * kernelMatrix[orderX-j-1 + orderX*(orderY-i-1)] );
-                        result_G += ( (double) in_data[4*( x - targetX + j + width*(y - targetY + i) )+1] * kernelMatrix[orderX-j-1 + orderX*(orderY-i-1)] );
-                        result_B += ( (double) in_data[4*( x - targetX + j + width*(y - targetY + i) )+2] * kernelMatrix[orderX-j-1 + orderX*(orderY-i-1)] );
-                        result_A += ( (double) in_data[4*( x - targetX + j + width*(y - targetY + i) )+3] * kernelMatrix[orderX-j-1 + orderX*(orderY-i-1)] );
+                        index = 4*( x - targetX + j + width*(y - targetY + i) );
+                        kernel_index = orderX-j-1 + orderX*(orderY-i-1);
+                        result_R += ( (double) in_data[index++] * kernelMatrix[kernel_index] );
+                        result_G += ( (double) in_data[index++] * kernelMatrix[kernel_index] );
+                        result_B += ( (double) in_data[index++] * kernelMatrix[kernel_index] );
+                        result_A += ( (double) in_data[index] * kernelMatrix[kernel_index] );
                     }
                 }
             }
+            unsigned int out_index = 4*( x + width*y );
+            out_data[out_index++] = CLAMP_D_TO_U8(result_R / divisor + bias);
+            out_data[out_index++] = CLAMP_D_TO_U8(result_G / divisor + bias);
+            out_data[out_index++] = CLAMP_D_TO_U8(result_B / divisor + bias);
 
-            out_data[4*( x + width*y )] = CLAMP_D_TO_U8(result_R / divisor + bias);
-            out_data[4*( x + width*y )+1] = CLAMP_D_TO_U8(result_G / divisor + bias);
-            out_data[4*( x + width*y )+2] = CLAMP_D_TO_U8(result_B / divisor + bias);
-            out_data[4*( x + width*y )+3] = CLAMP_D_TO_U8(result_A / divisor + bias);
             if( preserveAlpha ) {
-                out_data[4*( x + width*y )+3] = in_data[4*( x + width*y )+3];
+                out_data[out_index] = in_data[out_index];
+            } else {
+                out_data[out_index] = CLAMP_D_TO_U8(result_A / divisor + bias);
             }
         }
     }

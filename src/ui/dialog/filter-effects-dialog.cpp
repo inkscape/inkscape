@@ -2409,7 +2409,7 @@ void FilterEffectsDialog::update_settings_view()
 //First Tab
 
     std::vector<Gtk::Widget*> vect1 = _settings_tab1.get_children();
-    for(int i=0; i<vect1.size(); i++) vect1[i]->hide_all();
+    for(unsigned int i=0; i<vect1.size(); i++) vect1[i]->hide_all();
     _empty_settings.show();
 
     if (prefs_get_int_attribute ("options.showfiltersinfobox", "value", 1)){
