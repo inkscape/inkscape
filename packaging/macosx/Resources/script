@@ -8,10 +8,15 @@ CWD="`dirname \"$0\"`"
 # System version: 3 for Panther, 4 for Tiger, 5 for Leopard
 VERSION=`/usr/bin/sw_vers | grep ProductVersion | cut -f2 -d'.'`
 
+# On Leopard, X11.app is installed by default, and will be started
+# automatically via launchd.  On older systems, we need to start 
+# X11 ourself.
 
 # For Panther and Tiger, start X11
 if [[ $VERSION -le 4 ]]; then
-	# FIXME apparently this removes the xterm that starts with X from xinitrc but when is it really used? Should we modify the .xinitrc of the user without warning?
+	# FIXME apparently this removes the xterm that starts with X 
+	# from xinitrc but when is it really used? Should we modify 
+	# the .xinitrc of the user without warning?
 	ps -wx -ocommand | grep -e '[X]11' > /dev/null
 	if [ "$?" != "0" -a ! -f ~/.xinitrc ]; then
 	    echo "rm -f ~/.xinitrc" > ~/.xinitrc
@@ -33,8 +38,6 @@ if [[ $VERSION -le 4 ]]; then
 	ps -wx -ocommand | grep -e '[X]11' > /dev/null || exit 11
 fi
 
-# In Leopard, X11 should start on itself
-
 
 # Warn the user about time-consuming generation of fontconfig caches.
 test -f ~/.inkscape/.fccache-new || exit 12
@@ -43,4 +46,8 @@ test -f ~/.inkscape/.fccache-new || exit 12
 BASE="`echo "$0" | sed -e 's/\/Contents\/Resources\/script/\//'`"
 cd "$BASE"
 exec "$CWD/bin/inkscape" "$@"
-# TODO examine wether it would be wisest to move the code from inkscape shell script and getdisplay.sh to here and only keep the real binary in bin. This may make things easier on Leopard and may also help using Inkscape on the command line
+# TODO examine wether it would be wisest to move the code from inkscape shell
+# script and getdisplay.sh to here and only keep the real binary in bin. This
+# may make things easier on Leopard and may also help using Inkscape on the
+# command line
+
