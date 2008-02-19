@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Inkscape package.
 # Copyright © 2008 Free Software Foundation, Inc.
 # Clytie Siddall <clytie@riverland.net.au>, 2006-2008.
-#
+# Nguyen Dinh Trung <nguyendinhtrung141@gmail.com>, 2007-2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
@@ -3911,7 +3911,7 @@ msgstr "Đồ họa nguồn"
 
 #: ../src/filter-enums.cpp:41
 msgid "Source Alpha"
-msgstr "Anfa nguồn"
+msgstr "Alpha nguồn"
 
 #: ../src/filter-enums.cpp:42
 msgid "Background Image"
@@ -3919,7 +3919,7 @@ msgstr "Ảnh nền"
 
 #: ../src/filter-enums.cpp:43
 msgid "Background Alpha"
-msgstr "Anfa nền"
+msgstr "Alpha nền"
 
 #: ../src/filter-enums.cpp:44
 msgid "Fill Paint"
@@ -3963,7 +3963,7 @@ msgstr "Xoay sắc màu"
 
 #: ../src/filter-enums.cpp:64
 msgid "Luminance to Alpha"
-msgstr "Độ sáng tới Anfa"
+msgstr "Độ sáng tới Alpha"
 
 #. File
 #: ../src/filter-enums.cpp:70 ../src/verbs.cpp:2122
@@ -4043,7 +4043,7 @@ msgstr "Xanh"
 
 #: ../src/filter-enums.cpp:103 ../src/flood-context.cpp:256
 msgid "Alpha"
-msgstr "Anfa"
+msgstr "Alpha"
 
 #: ../src/filter-enums.cpp:109
 msgid "Erode"
@@ -8393,7 +8393,7 @@ msgstr "Chế độ cạnh"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2128
 msgid "Preserve Alpha"
-msgstr "Bảo tồn Anfa"
+msgstr "Bảo tồn Alpha"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2131
 msgid "Diffuse Color"
