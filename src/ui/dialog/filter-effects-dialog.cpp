@@ -1570,7 +1570,7 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
         get_bin_window()->draw_line(darkgc, outline_x, y - 1, outline_x, y + h);
 
         std::vector<Gdk::Point> con_poly;
-        int con_drag_y;
+        int con_drag_y = 0;
         bool inside;
         const SPFilterPrimitive* row_prim = (*row)[_columns.primitive];
         const int inputs = input_count(row_prim);
@@ -1708,7 +1708,7 @@ const Gtk::TreeIter FilterEffectsDialog::PrimitiveList::find_result(const Gtk::T
 {
     SPFilterPrimitive* prim = (*start)[_columns.primitive];
     Gtk::TreeIter target = _model->children().end();
-    int image;
+    int image = 0;
 
     if(SP_IS_FEMERGE(prim)) {
         int c = 0;
@@ -2304,6 +2304,9 @@ void FilterEffectsDialog::update_primitive_infobox()
         case(NR::NR_FILTER_TURBULENCE):
             _infobox_icon.set(g_strdup_printf("%s/feTurbulence-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of noise is useful in simulating several nature phenomena like clouds, fire and smoke and in generating complex textures like marble or granite."));
+            break;
+        default:
+            g_assert(false);
             break;
     }
 }
