@@ -157,7 +157,7 @@ gradient_selection_changed (Inkscape::Selection *, gpointer data)
     if (n_sel == 1) {
         if (drag->singleSelectedDraggerNumDraggables() == 1) {
             rc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                    ngettext("%s selected out of %d gradient handles on %d selected object","%s selected out of %d gradient handles on %d selected objects",n_obj), gr_handle_descr[drag->singleSelectedDraggerSingleDraggableType()], n_tot, n_obj);
+                    ngettext("%s selected out of %d gradient handles on %d selected object","%s selected out of %d gradient handles on %d selected objects",n_obj), _(gr_handle_descr[drag->singleSelectedDraggerSingleDraggableType()]), n_tot, n_obj);
         } else {
             rc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
                     _("One handle merging %d stops (drag with <b>Shift</b> to separate) selected out of %d gradient handles on %d selected object(s)"), drag->singleSelectedDraggerNumDraggables(), n_tot, n_obj);
