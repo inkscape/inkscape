@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-02-08 23:00+0100\n"
-"PO-Revision-Date: 2008-02-15 13:50-0300\n"
-"Last-Translator: Francisco de Assis E R de Souza <franksouza183@gmail.com>\n"
+"PO-Revision-Date: 2008-02-19 07:05-0300\n"
+"Last-Translator: Valessio Brito <valessio@gmail.com>\n"
 "Language-Team: Português Brasil <inkscape-brasil@listas.softwarelivre.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -65,22 +65,19 @@ msgstr "Criar elipse"
 #: ../src/box3d-context.cpp:480 ../src/box3d-context.cpp:487
 #: ../src/box3d-context.cpp:494 ../src/box3d-context.cpp:501
 #: ../src/box3d-context.cpp:508 ../src/box3d-context.cpp:515
-#, fuzzy
 msgid "Change perspective (angle of PLs)"
-msgstr "Caixa 3D: Alterar perspectiva"
+msgstr "Alterar perspectiva (ângulo das linhas de planos)"
 
 #. status text
 #. GString *Ax = SP_PX_TO_METRIC_STRING(origin[NR::X], desktop->namedview->getDefaultMetric());
 #. GString *Ay = SP_PX_TO_METRIC_STRING(origin[NR::Y], desktop->namedview->getDefaultMetric());
 #: ../src/box3d-context.cpp:730
-#, fuzzy
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
-msgstr "<b>Caixa 3D </b>; com <b>Shift</b> para mover ao eixo Z"
+msgstr "<b>Caixa 3D </b>; com <b>Shift</b> para mover ao longo do eixo Z"
 
 #: ../src/box3d-context.cpp:757
-#, fuzzy
 msgid "Create 3D box"
-msgstr "Criar caixas 3D"
+msgstr "Criar caixa 3D"
 
 #: ../src/connector-context.cpp:522
 msgid "Creating new connector"
@@ -149,7 +146,7 @@ msgid "Move guide"
 msgstr "Mover guia"
 
 #: ../src/desktop-events.cpp:261
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>Linha guia</b>: %s"
 
@@ -1387,8 +1384,9 @@ msgstr "Definir propriedades da guia"
 msgid "Guideline"
 msgstr "Linha guia"
 
+#  
 #: ../src/dialogs/guidelinedialog.cpp:241
-#, fuzzy, c-format
+#, c-format
 msgid "Guideline ID: %s"
 msgstr "Linha guia ID: %s"
 
@@ -4795,21 +4793,18 @@ msgid "doEffect stack test"
 msgstr "teste de pilha de Efeito"
 
 #: ../src/live_effects/effect.cpp:56
-#, fuzzy
 msgid "Gears"
 msgstr "Engrenagens"
 
 #: ../src/live_effects/effect.cpp:57
-#, fuzzy
 msgid "Stitch Sub-Paths"
-msgstr "Pontilhar peças"
+msgstr "Pontilhar Sub-Caminhos"
 
 #: ../src/live_effects/effect.cpp:115
 msgid "No effect"
 msgstr "Sem efeito"
 
 #: ../src/live_effects/effect.cpp:149
-#, fuzzy
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "Uma exceção ocorreu durante a execução de um Efeito de Caminho."
 
@@ -4883,10 +4878,13 @@ msgid "Start spacing variance"
 msgstr "Variação do ponto de início"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
+#, fuzzy
 msgid ""
 "The amount of random shifting to move the start points of the stitches back "
 "& forth along the guide path"
 msgstr ""
+"Quantidade de deslocamento randômico para mover os pontos iniciais ao longo "
+"do caminho guia"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid "End edge variance"
@@ -5431,7 +5429,7 @@ msgstr "Adicionar nós"
 
 #: ../src/nodepath.cpp:1698 ../src/nodepath.cpp:1770
 msgid "Add node"
-msgstr "Acrescentar nó"
+msgstr "Adicionar nó"
 
 #: ../src/nodepath.cpp:1851
 msgid "Break path"
@@ -7312,13 +7310,13 @@ msgstr ""
 "a forma da espiral. <b>Clique</b> para selecionar."
 
 #: ../src/tools-switch.cpp:190
-#, fuzzy
 msgid ""
 "<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to "
 "append to selected path. <b>Ctrl+click</b> to create single dots."
 msgstr ""
 "<b>Arraste</b> para criar uma linha à mão-livre. Comece a desenhar mantendo "
-"a tecla <b>Shift</b> precionada para acrescentar ao caminho selecionado."
+"a tecla <b>Shift</b> pressionada para acrescentar ao caminho selecionado. "
+"<b>Ctrl+click</b> para criar pontos únicos."
 
 #: ../src/tools-switch.cpp:196
 #, fuzzy
@@ -7602,15 +7600,16 @@ msgstr "about.svg"
 #: ../src/ui/dialog/aboutbox.cpp:337
 msgid "translator-credits"
 msgstr ""
-"Aurélio A. Heckert\n"
+"Contribuíram com esta versão:\n"
 "Fábio Sousa\n"
+"Francisco de Assis E R de Souza\n"
 "Frederico G. Guimarães\n"
 "Krishnamurti L. L. V. Nunes\n"
 "Samy M. Nascimento\n"
 "Thiago Pimentel\n"
 "Vilson Vieira\n"
 "Victor Westmann\n"
-"Comunidade InkscapeBrasil.org, 2007."
+"Comunidade InkscapeBrasil.org, 2008."
 
 #: ../src/ui/dialog/align-and-distribute.cpp:234
 #: ../src/ui/dialog/align-and-distribute.cpp:780
@@ -9532,7 +9531,7 @@ msgstr "Ampliar largura do traço"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:560
 msgid "Scale rounded corners in rectangles"
-msgstr "Ampliar canto arredondados em retângulos"
+msgstr "Ampliar cantos arredondados de retângulos"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:561
 msgid "Transform gradients"
@@ -9767,7 +9766,7 @@ msgstr "Importar/Exportar"
 #. TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm
 #: ../src/ui/dialog/inkscape-preferences.cpp:701
 msgid "Perceptual"
-msgstr ""
+msgstr "Perceptivo"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:701
 msgid "Relative Colorimetric"
@@ -9775,52 +9774,48 @@ msgstr "Colorimetria Relativa"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:701
 msgid "Absolute Colorimetric"
-msgstr "Clorimetria Absoluta"
+msgstr "Colorimetria Absoluta"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:705
-#, fuzzy
 msgid "(Note: Color management has been disabled in this build)"
-msgstr "(Nota: o Gerenciamento de Cores foi desabilitado nessa construção)"
+msgstr "(Nota: o Gerenciamento de Cores foi desabilitado nesta construção)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:709
-#, fuzzy
 msgid "Display adjustment"
-msgstr "_Modo de visão"
+msgstr "Ajustes de exibição"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:711
 msgid "Display profile:"
-msgstr "Mostrar perfil:"
+msgstr "Perfil de exibição:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:712
 msgid "The ICC profile to use to calibrate display output."
-msgstr ""
+msgstr "O perfil ICC utilizado para calibrar a exibição de saída."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:714
 msgid "Retrieve profile from display"
-msgstr ""
+msgstr "Obter perfil de exibição"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:717
 msgid "Retrieve profiles from those attached to displays via XICC."
-msgstr ""
+msgstr "Obter perfis de exibição existentes via XICC."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:719
 msgid "Retrieve profiles from those attached to displays."
-msgstr ""
+msgstr "Obter perfis de exibição existentes."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:724
-#, fuzzy
 msgid "Display rendering intent:"
-msgstr "_Modo de visão"
+msgstr "Intenção de renderização na exibição:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:725
 #: ../src/ui/dialog/inkscape-preferences.cpp:748
 msgid "The rendering intent to use to calibrate display output."
-msgstr ""
+msgstr "Intenção de renderização à usar para calibrar a saída de exibição."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:727
-#, fuzzy
 msgid "Proofing"
-msgstr "Ponto"
+msgstr "Finalizando"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:729
 msgid "Simulate output on screen"
@@ -9832,19 +9827,19 @@ msgstr "Simula a saída do dispositivo alvo."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:733
 msgid "Mark out of gamut colors"
-msgstr ""
+msgstr "Marcar cores fora da gama"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:735
 msgid "Highlights colors that are out of gamut for the target device."
-msgstr ""
+msgstr "Destaca cores que estão fora da gama do dispositivo alvo."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:740
 msgid "Out of gamut warning color:"
-msgstr ""
+msgstr "Cor de alerta quando fora da gama"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:741
 msgid "Selects the color used for out of gamut warning."
-msgstr ""
+msgstr "Selecione uma cor à ser usada quando fora da gama."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:743
 msgid "Device profile:"
@@ -9852,20 +9847,19 @@ msgstr "Perfil de dispositivo:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:744
 msgid "The ICC profile to use to simulate device output."
-msgstr ""
+msgstr "Perfil ICC usado para simular o dispositivo de saída."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:747
 msgid "Device rendering intent:"
-msgstr ""
+msgstr "Intenção de renderização na exibição:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:750
-#, fuzzy
 msgid "Black point compensation"
 msgstr "Compensação de Ponto Preto"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:752
 msgid "Enables black point compensation."
-msgstr ""
+msgstr "Ativa a compensação de Ponto Preto."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:754
 msgid "Preserve black"
@@ -9886,7 +9880,6 @@ msgid "<none>"
 msgstr "nenhum"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:820
-#, fuzzy
 msgid "Color management"
 msgstr "Gerenciamento de cor"
 
@@ -10046,37 +10039,35 @@ msgstr "Sobrepor bitmaps:"
 
 #. consider moving this to an UI tab:
 #: ../src/ui/dialog/inkscape-preferences.cpp:899
-#, fuzzy
 msgid "Make the commands toolbar icons smaller"
-msgstr "Tornar a barra de ferramentas de comandos menor"
+msgstr "Tornar ícones da barra de ferramentas de comandos menores"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:901
 msgid ""
 "Make the commands toolbar use the 'secondary' toolbar size (requires restart)"
 msgstr ""
-"Fazer com que a barra de ferramentas de comandos utilize o tamanho "
+"Faz com que a barra de ferramentas de comandos utilize o tamanho "
 "'secundário' (é necessário reiniciar)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:903
-#, fuzzy
 msgid "Make the main toolbar icons smaller"
-msgstr "Fazer ferramentas principais menores"
+msgstr "Tornar ícones da barra de ferramentas principal menores"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:905
-#, fuzzy
 msgid "Make the main tools use the 'secondary' toolbar size (requires restart)"
 msgstr ""
-"Fazer com que a barra de ferramentas de comandos utilize o tamanho "
-"'secundário' (é necessário reiniciar)"
+"Faz com que a barra de ferramentas principal utilize o tamanho 'secundário' "
+"(é necessário reiniciar)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:908
-#, fuzzy
 msgid "Maximum number of recent documents:"
-msgstr "Máximo de desenhos recentes:"
+msgstr "Máximo de documentos recentes:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:909
 msgid "The maximum length of the Open Recent list in the File menu"
-msgstr "O tamanho máximo para a lista de Abrir Recentes no menu Arquivo"
+msgstr ""
+"O tamanho máximo para a lista do menu Abrir Recentes, localizado no menu "
+"Arquivo"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:912
 msgid "Misc"
@@ -12090,9 +12081,8 @@ msgid "Break selected paths into subpaths"
 msgstr "Separar caminhos selecionados em outros caminhos"
 
 #: ../src/verbs.cpp:2307
-#, fuzzy
 msgid "Rows and Columns..."
-msgstr "<b>Linhas, colunas:</b> "
+msgstr "Linhas e Colunas..."
 
 #: ../src/verbs.cpp:2308
 #, fuzzy
@@ -12201,7 +12191,7 @@ msgstr "Girar a seleção 90° graus sentido hórario"
 
 #: ../src/verbs.cpp:2338
 msgid "Rotate 9_0&#176; CCW"
-msgstr "Girar 9_0° graus"
+msgstr "Girar -9_0° graus"
 
 #. This is shared between tooltips and statusbar, so they
 #. must use UTF-8, not HTML entities for special characters.
@@ -13191,11 +13181,11 @@ msgstr "Alterar posição da parada do degradê"
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
 #: ../src/widgets/gradient-vector.cpp:803
 msgid "Add stop"
-msgstr "Acrescentar parada"
+msgstr "Adicionar parada"
 
 #: ../src/widgets/gradient-vector.cpp:806
 msgid "Add another control stop to gradient"
-msgstr "Acrescentar outra parada de controle no degradê"
+msgstr "Adicionar outra parada de controle no degradê"
 
 #: ../src/widgets/gradient-vector.cpp:808
 msgid "Delete stop"
@@ -13437,9 +13427,8 @@ msgid "Affect:"
 msgstr "Afetar:"
 
 #: ../src/widgets/select-toolbar.cpp:506
-#, fuzzy
 msgid "Scale rounded corners"
-msgstr "Ampliar canto arredondados em retângulos"
+msgstr "Ampliar cantos arredondados"
 
 #: ../src/widgets/select-toolbar.cpp:517
 #, fuzzy
@@ -15299,12 +15288,11 @@ msgstr "Valor de y do topo do retângulo"
 
 #: ../share/extensions/gears.inx.h:1
 msgid "Circular pitch, px"
-msgstr ""
+msgstr "Volume circular, px"
 
 #: ../share/extensions/gears.inx.h:2
-#, fuzzy
 msgid "Gear"
-msgstr "Li_mpar"
+msgstr "Engrenagem"
 
 #: ../share/extensions/gears.inx.h:3
 msgid "Number of teeth"
@@ -15695,9 +15683,8 @@ msgid "Sketch Input"
 msgstr "Entrada Sketch"
 
 #: ../share/extensions/spirograph.inx.h:1
-#, fuzzy
 msgid "Gear Placement"
-msgstr "Colocação da Engrenagem"
+msgstr "Localização da Engrenagem"
 
 #: ../share/extensions/spirograph.inx.h:2
 msgid "Inside (Hypotrochoid)"
@@ -15729,7 +15716,6 @@ msgid "d - Pen Radius (px)"
 msgstr "d - Raio da Caneta (px)"
 
 #: ../share/extensions/spirograph.inx.h:10
-#, fuzzy
 msgid "r - Gear Radius (px)"
 msgstr "r - Raio da Engrenagem (px)"
 
