@@ -47,7 +47,7 @@ public:
     }
 
     ComboBoxEnum(const Util::EnumDataConverter<E>& c, const SPAttributeEnum a = SP_ATTR_INVALID)
-        : AttrWidget(a), setProgrammatically(false), _converter(c)
+        : AttrWidget(a, (unsigned int) 0), setProgrammatically(false), _converter(c)
     {
         signal_changed().connect(signal_attr_changed().make_slot());
 
