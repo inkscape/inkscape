@@ -157,11 +157,35 @@ void Panel::_init()
         _non_vertical.push_back(check);
 
         check->signal_toggled().connect(sigc::bind<Gtk::CheckMenuItem*>(sigc::mem_fun(*this, &Panel::_wrapToggled), check));
-
-        sep = manage(new Gtk::SeparatorMenuItem());
-        _menu->append(*sep);
-        _non_vertical.push_back(sep);
     }
+
+    {
+        Glib::ustring type_label(_("Shape"));
+
+        Glib::ustring shape_1_label(_("Tall"));
+        Glib::ustring shape_2_label(_("Square"));
+        Glib::ustring shape_3_label(_("Wide"));
+
+        Gtk::MenuItem *item = manage( new Gtk::MenuItem(type_label));
+        Gtk::Menu *type_menu = manage(new Gtk::Menu());
+        item->set_submenu(*type_menu);
+        _menu->append(*item);
+
+        Gtk::RadioMenuItem::Group shapeGroup;
+
+        Gtk::RadioMenuItem *shape_1 = manage(new Gtk::RadioMenuItem(shapeGroup, shape_1_label));
+        Gtk::RadioMenuItem *shape_2 = manage(new Gtk::RadioMenuItem(shapeGroup, shape_2_label));
+        Gtk::RadioMenuItem *shape_3 = manage(new Gtk::RadioMenuItem(shapeGroup, shape_3_label));
+
+        type_menu->append(*shape_1);
+        type_menu->append(*shape_2);
+        type_menu->append(*shape_3);
+
+        shape_2->set_active(true);
+    }
+
+    sep = manage(new Gtk::SeparatorMenuItem());
+    _menu->append(*sep);
 
     _menu->show_all_children();
     for ( std::vector<Gtk::Widget*>::iterator iter = _non_vertical.begin(); iter != _non_vertical.end(); ++iter ) {
