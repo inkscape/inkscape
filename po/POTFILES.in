@@ -5,6 +5,7 @@ inkscape.desktop.in
 src/application/editor.cpp
 src/arc-context.cpp
 src/attributes.cpp
+src/box3d.cpp
 src/box3d-context.cpp
 src/color.cpp
 src/conditions.cpp
@@ -39,6 +40,7 @@ src/dialogs/xml-tree.cpp
 src/dir-util.cpp
 src/display/bezier-utils.cpp
 src/display/canvas-arena.cpp
+src/display/canvas-axonomgrid.cpp
 src/display/canvas-bpath.cpp
 src/display/canvas-grid.cpp
 src/display/curve.cpp
@@ -187,10 +189,22 @@ src/interface.cpp
 src/jabber_whiteboard/invitation-confirm-dialog.cpp
 src/jabber_whiteboard/message-queue.cpp
 src/jabber_whiteboard/message-utilities.cpp
+src/jabber_whiteboard/pedrogui.cpp
 src/jabber_whiteboard/session-file-selector.cpp
 src/jabber_whiteboard/session-manager.cpp
 src/knot.cpp
 src/knotholder.cpp
+src/libgdl/gdl-dock-bar.c
+src/libgdl/gdl-dock-item-grip.c
+src/libgdl/gdl-dock-item.c
+src/libgdl/gdl-dock-master.c
+src/libgdl/gdl-dock-notebook.c
+src/libgdl/gdl-dock-object.c
+src/libgdl/gdl-dock-paned.c
+src/libgdl/gdl-dock-placeholder.c
+src/libgdl/gdl-dock-tablabel.c
+src/libgdl/gdl-dock.c
+src/libgdl/gdl-switcher.c
 src/libnr/nr-blit.cpp
 src/libnr/nr-compose-transform.cpp
 src/libnr/nr-compose.cpp
@@ -237,7 +251,10 @@ src/live_effects/effect.cpp
 src/live_effects/parameter/enum.h
 src/live_effects/lpe-gears.cpp
 src/live_effects/lpe-curvestitch.cpp
+src/live_effects/lpe-pathalongpath.cpp
 src/live_effects/lpe-skeletalstrokes.cpp
+src/live_effects/lpe-slant.cpp
+src/live_effects/lpe-test-doEffect-stack.cpp
 src/live_effects/parameter/parameter.cpp
 src/live_effects/parameter/path.cpp
 src/live_effects/parameter/point.cpp
@@ -255,6 +272,7 @@ src/object-edit.cpp
 src/path-chemistry.cpp
 src/pen-context.cpp
 src/pencil-context.cpp
+src/persp3d.cpp
 src/preferences.cpp
 src/prefix.cpp
 src/prefs-utils.cpp
@@ -309,6 +327,7 @@ src/sp-star.cpp
 src/sp-symbol.cpp
 src/sp-switch.cpp
 src/sp-text.cpp
+src/sp-tref.cpp
 src/sp-tspan.cpp
 src/sp-use-reference.cpp
 src/sp-use.cpp
@@ -330,6 +349,7 @@ src/svg/svg-length.cpp
 src/svg/svg-path.cpp
 src/text-chemistry.cpp
 src/text-context.cpp
+src/text-editing.cpp
 src/tools-switch.cpp
 src/trace/potrace/inkscape-potrace.cpp
 src/trace/trace.cpp
@@ -351,6 +371,7 @@ src/ui/dialog/livepatheffect-editor.cpp
 src/ui/dialog/memory.cpp
 src/ui/dialog/messages.cpp
 src/ui/dialog/ocaldialogs.cpp
+src/ui/dialog/print.cpp
 src/ui/dialog/scriptdialog.cpp
 src/ui/dialog/text-properties.cpp
 src/ui/dialog/tracedialog.cpp
@@ -369,6 +390,10 @@ src/ui/widget/panel.cpp
 src/ui/widget/style-swatch.cpp
 src/ui/widget/toolbox.cpp
 src/ui/widget/zoom-status.cpp
+src/ui/widget/preferences-widget.cpp
+src/ui/widget/random.cpp
+src/ui/widget/rendering-options.cpp
+src/ui/widget/spin-slider.cpp
 src/uri-references.cpp
 src/uri.cpp
 src/vanishing-point.cpp
@@ -387,6 +412,7 @@ src/widgets/layer-selector.cpp
 src/widgets/paint-selector.cpp
 src/widgets/ruler.cpp
 src/widgets/select-toolbar.cpp
+src/widgets/sp-color-icc-selector.cpp
 src/widgets/sp-color-gtkselector.cpp
 src/widgets/sp-color-notebook.cpp
 src/widgets/sp-color-preview.cpp
