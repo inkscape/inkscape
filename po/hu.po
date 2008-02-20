@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-02-20 02:24+0100\n"
-"PO-Revision-Date: 2008-02-17 23:56+0100\n"
+"PO-Revision-Date: 2008-02-20 23:42+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -39,22 +39,22 @@ msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Shift</b>: rajzolás a kezdőpont köré"
 
 #: ../src/arc-context.cpp:486
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> "
 "to draw around the starting point"
 msgstr ""
-"<b>Ellipszis</b>: %s &#215; %s. Kör vagy egész-arányú ellipszis: <b>Ctrl</"
-"b>; rajzolás a kezdőpont köré: <b>Shift</b>."
+"<b>Ellipszis</b>: %s &#215; %s (%d:%d arányúra korlátozva). Rajzolás a "
+"kezdőpont köré: <b>Shift</b>."
 
 #: ../src/arc-context.cpp:488
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
 "ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr ""
-"<b>Ellipszis</b>: %s &#215; %s. Kör vagy egész-arányú ellipszis: <b>Ctrl</"
-"b>; rajzolás a kezdőpont köré: <b>Shift</b>."
+"<b>Ellipszis</b>: %s &#215; %s. Négyzetes vagy egész-arányú ellipszis: "
+"<b>Ctrl</b>; rajzolás a kezdőpont köré: <b>Shift</b>."
 
 #: ../src/arc-context.cpp:507
 msgid "Create ellipse"
@@ -152,9 +152,9 @@ msgid "Move guide"
 msgstr "Segédvonal áthelyezése"
 
 #: ../src/desktop-events.cpp:261
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Guideline</b>: %s"
-msgstr "Segédvonal"
+msgstr "<b>Segédvonal</b>: %s"
 
 #: ../src/desktop.cpp:734
 msgid "No previous zoom."
@@ -391,25 +391,21 @@ msgstr "Az eltolások előjelének módosítása oszloponként"
 #. TRANSLATORS: "Cumulate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:2051 ../src/dialogs/clonetiler.cpp:2221
 #: ../src/dialogs/clonetiler.cpp:2298
-#, fuzzy
 msgid "<small>Cumulate:</small>"
-msgstr "<small>Váltakozás:</small>"
+msgstr "<small>Összeadódás:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:2057
-#, fuzzy
 msgid "Cumulate the shifts for each row"
-msgstr "Az eltolások előjelének módosítása soronként"
+msgstr "Az eltolások halmozódjanak fel sorról sorra"
 
 #: ../src/dialogs/clonetiler.cpp:2062
-#, fuzzy
 msgid "Cumulate the shifts for each column"
-msgstr "Az eltolások előjelének módosítása oszloponként"
+msgstr "Az eltolások halmozódjanak fel oszlopról oszlopra"
 
 #. TRANSLATORS: "Cumulate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:2069
-#, fuzzy
 msgid "<small>Exclude tile:</small>"
-msgstr "<small>Váltakozás:</small>"
+msgstr "<small>Csempe ne számítson:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:2075
 msgid "Exclude tile height in shift"
@@ -460,29 +456,24 @@ msgid "Randomize the vertical scale by this percentage"
 msgstr "A függőleges átméretezés véletlenszerűsítése ennyi százalékkal"
 
 #: ../src/dialogs/clonetiler.cpp:2166
-#, fuzzy
 msgid "Whether row scaling is uniform (1), converge (<1) or diverge (>1)"
-msgstr ""
-"A sorok egyenletesen oszlanak el (1), konvergálnak (<1) vagy divergálnak (>1)"
+msgstr "A sorok méretezése egyenletes (1), konvergál (<1) vagy divergál (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2173
-#, fuzzy
 msgid "Whether column scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr ""
-"Az oszlopok egyenletesen oszlanak el (1), konvergálnak (<1) vagy divergálnak "
-"(>1)"
+"Az oszlopok méretezése egyenletes (1), konvergál (<1) vagy divergál (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2181
-#, fuzzy
 msgid "<b>Base:</b>"
-msgstr "<b>á</b>"
+msgstr "<b>Alap:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2188 ../src/dialogs/clonetiler.cpp:2195
-#, fuzzy
 msgid ""
 "Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
 msgstr ""
-"A sorok egyenletesen oszlanak el (1), konvergálnak (<1) vagy divergálnak (>1)"
+"Logaritmikus spirál alapja: nincs használva (0), konvergál (<1) vagy "
+"divergál (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2209
 msgid "Alternate the sign of scales for each row"
@@ -493,14 +484,12 @@ msgid "Alternate the sign of scales for each column"
 msgstr "Az átméretezések előjelének módosítása oszloponként"
 
 #: ../src/dialogs/clonetiler.cpp:2227
-#, fuzzy
 msgid "Cumulate the scales for each row"
-msgstr "Az átméretezések előjelének módosítása soronként"
+msgstr "Az átméretezések halmozódjanak fel sorról sorra"
 
 #: ../src/dialogs/clonetiler.cpp:2232
-#, fuzzy
 msgid "Cumulate the scales for each column"
-msgstr "Az átméretezések előjelének módosítása oszloponként"
+msgstr "Az átméretezések halmozódjanak fel oszlopról oszlopra"
 
 #: ../src/dialogs/clonetiler.cpp:2241
 msgid "_Rotation"
@@ -533,14 +522,12 @@ msgid "Alternate the rotation direction for each column"
 msgstr "Az elforgatási irány módosítása oszloponként"
 
 #: ../src/dialogs/clonetiler.cpp:2304
-#, fuzzy
 msgid "Cumulate the rotation for each row"
-msgstr "Az elforgatási irány módosítása soronként"
+msgstr "Az elforgatás halmozódjon fel sorról sorra"
 
 #: ../src/dialogs/clonetiler.cpp:2309
-#, fuzzy
 msgid "Cumulate the rotation for each column"
-msgstr "Az elforgatási irány módosítása oszloponként"
+msgstr "Az elforgatás halmozódjon fel oszlopról oszlopra"
 
 #: ../src/dialogs/clonetiler.cpp:2318
 msgid "_Blur & opacity"
@@ -1117,9 +1104,9 @@ msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "\"%s\" nevű könyvtár nem létezik, vagy az objektum nem könyvtár.\n"
 
 #: ../src/dialogs/export.cpp:1182
-#, fuzzy, c-format
+#, c-format
 msgid "Exporting %s (%lu x %lu)"
-msgstr "Exportálás (%s, %d x %d)"
+msgstr "Exportálás (%s, %lu x %lu)"
 
 #: ../src/dialogs/export.cpp:1303
 msgid "Select a filename for exporting"
@@ -1364,7 +1351,6 @@ msgid "Select objects matching all of the fields you filled in"
 msgstr "Az összes kitöltött mező értékére illeszkedő objektumok kijelölése"
 
 #: ../src/dialogs/guidelinedialog.cpp:44
-#, fuzzy
 msgid "Unit:"
 msgstr "Mértékegység:"
 
@@ -1379,19 +1365,18 @@ msgid "Y:"
 msgstr "Y:"
 
 #: ../src/dialogs/guidelinedialog.cpp:47
-#, fuzzy
 msgid "Angle (degrees):"
-msgstr "fok"
+msgstr "Szög (fokban):"
 
 #: ../src/dialogs/guidelinedialog.cpp:48
-#, fuzzy
 msgid "Rela_tive change"
-msgstr "Re_latív áthelyezés"
+msgstr "Re_latív módosítás"
 
 #: ../src/dialogs/guidelinedialog.cpp:48
-#, fuzzy
 msgid "Move and/or rotate the guide relative to current settings"
-msgstr "Segédvonal áthelyezése az aktuális pozícióhoz viszonyítva"
+msgstr ""
+"Segédvonal áthelyezése és/vagy elforgatása az aktuális beállításokhoz "
+"viszonyítva"
 
 #: ../src/dialogs/guidelinedialog.cpp:114
 msgid "Set guide properties"
@@ -1402,14 +1387,14 @@ msgid "Guideline"
 msgstr "Segédvonal"
 
 #: ../src/dialogs/guidelinedialog.cpp:241
-#, fuzzy, c-format
+#, c-format
 msgid "Guideline ID: %s"
-msgstr "Segédvonal"
+msgstr "Segédvonal-azonosító: %s"
 
 #: ../src/dialogs/guidelinedialog.cpp:247
-#, fuzzy, c-format
+#, c-format
 msgid "Current: %s"
-msgstr "Laptájolás:"
+msgstr "Jelenleg: %s"
 
 #: ../src/dialogs/iconpreview.cpp:139
 #, c-format
@@ -1681,7 +1666,7 @@ msgstr "URL:"
 #: ../src/dialogs/object-attributes.cpp:104
 #, fuzzy, c-format
 msgid "%s Properties"
-msgstr "Hivatk_ozás tulajdonságai"
+msgstr " tulajdonságai"
 
 #: ../src/dialogs/rdf.cpp:181
 msgid "CC Attribution"
@@ -2542,7 +2527,7 @@ msgstr "Művészi vonal rajzolása"
 #: ../src/event-context.cpp:595
 #, fuzzy
 msgid "<b>Space+mouse drag</b> to pan canvas"
-msgstr "rajzvászon"
+msgstr "A rajzvászon pásztázása: <b>Szóköz+egérrel végzett húzás</b>"
 
 #: ../src/event-log.cpp:37
 msgid "[Unchanged]"
@@ -2827,7 +2812,7 @@ msgstr "Elmosás"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 #, fuzzy
 msgid "Radius"
-msgstr "Feljebb helyezés"
+msgstr "Sugár"
 
 #: ../src/extension/internal/bitmap/blur.cpp:40
 #: ../src/extension/internal/bitmap/charcoal.cpp:40
@@ -2856,25 +2841,25 @@ msgstr "Réteg"
 #: ../src/extension/internal/bitmap/levelChannel.cpp:54
 #, fuzzy
 msgid "Red Channel"
-msgstr "csatorna"
+msgstr "Vörös-csatorna"
 
 #: ../src/extension/internal/bitmap/channel.cpp:51
 #: ../src/extension/internal/bitmap/levelChannel.cpp:55
 #, fuzzy
 msgid "Green Channel"
-msgstr "csatorna"
+msgstr "Zöld-csatorna"
 
 #: ../src/extension/internal/bitmap/channel.cpp:52
 #: ../src/extension/internal/bitmap/levelChannel.cpp:56
 #, fuzzy
 msgid "Blue Channel"
-msgstr "csatorna"
+msgstr "Kék-csatorna"
 
 #: ../src/extension/internal/bitmap/channel.cpp:53
 #: ../src/extension/internal/bitmap/levelChannel.cpp:57
 #, fuzzy
 msgid "Cyan Channel"
-msgstr "csatorna"
+msgstr "Ciánkék-csatorna"
 
 #: ../src/extension/internal/bitmap/channel.cpp:54
 #: ../src/extension/internal/bitmap/levelChannel.cpp:58
@@ -3067,7 +3052,7 @@ msgstr "Gamma-korrekció:"
 msgid ""
 "Level the specified channel of selected bitmap(s) by scaling values falling "
 "between the given ranges to the full color range."
-msgstr "A kijelölt bitkép(ek) csatorna"
+msgstr "méretezésA kijelölt bitkép(ek) csatorna"
 
 #: ../src/extension/internal/bitmap/level.cpp:40
 #, fuzzy
@@ -3079,7 +3064,7 @@ msgstr "Kerék"
 msgid ""
 "Level selected bitmap(s) by scaling values falling between the given ranges "
 "to the full color range."
-msgstr "A kijelölt bitkép(ek)"
+msgstr "méretezésA kijelölt bitkép(ek)"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
 #, fuzzy
@@ -3900,7 +3885,7 @@ msgstr "A Corel WordPerfect által használt vektorgrafikai formátum"
 #: ../src/extension/prefdialog.cpp:188
 #, fuzzy
 msgid "Live Preview"
-msgstr "élő Előnézet"
+msgstr "Élő előnézet"
 
 #: ../src/extension/prefdialog.cpp:188
 #, fuzzy
@@ -4030,9 +4015,9 @@ msgid "Select file to export to"
 msgstr "Adja meg a fájlt, amelybe exportálni kíván"
 
 #: ../src/file.cpp:1245
-#, c-format
+#, fuzzy, c-format
 msgid "Error saving a temporary copy"
-msgstr ""
+msgstr "Hiba történt egy átmeneti példány mentésekor"
 
 #: ../src/file.cpp:1264
 msgid "Open Clip Art Login"
@@ -4948,11 +4933,15 @@ msgid ""
 "\n"
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">Már létezik \"%s\" nevű fájl. Szeretné "
+"lecserélni azt?</span>\n"
+"\n"
+"A megadott nevű fájl már létezik itt: \"%s\". A lecserélés felül fogja írni "
+"annak tartalmát."
 
 #: ../src/interface.cpp:1425
-#, fuzzy
 msgid "Replace"
-msgstr "_Megszüntetés"
+msgstr "Lecserélés"
 
 #: ../src/jabber_whiteboard/invitation-confirm-dialog.cpp:26
 #: ../src/jabber_whiteboard/session-file-selector.cpp:24
@@ -5463,7 +5452,7 @@ msgstr "Nincs effektus"
 #: ../src/live_effects/effect.cpp:149
 #, fuzzy
 msgid "An exception occurred during execution of the Path Effect."
-msgstr "lánceffektus"
+msgstr "Kivétel történt a lánceffektus végrehajtása közben."
 
 #: ../src/live_effects/effect.cpp:327
 #, c-format
@@ -5660,7 +5649,7 @@ msgstr "A minta szélessége a minta hosszának arányában legyen méretezve"
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:66
 #, fuzzy
 msgid "Spacing"
-msgstr "Helykihagyás:"
+msgstr "Helykihagyás"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:66
 #, fuzzy
@@ -6688,31 +6677,31 @@ msgstr ""
 "csúcs körívessé tétele"
 
 #: ../src/rect-context.cpp:538
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</"
 "b> to draw around the starting point"
 msgstr ""
-"<b>Téglalap</b>: %s &#215; %s. Négyzet vagy egész-arányú téglalap: <b>Ctrl</"
-"b>; rajzolás a kezdőpont köré: <b>Shift</b>."
+"<b>Téglalap</b>: %s &#215; %s (%d:%d arányúra korlátozva). Rajzolás a "
+"kezdőpont köré: <b>Shift</b>."
 
 #: ../src/rect-context.cpp:541
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with "
 "<b>Shift</b> to draw around the starting point"
 msgstr ""
-"<b>Téglalap</b>: %s &#215; %s. Négyzet vagy egész-arányú téglalap: <b>Ctrl</"
-"b>; rajzolás a kezdőpont köré: <b>Shift</b>."
+"<b>Téglalap</b>: %s &#215; %s (aranymetszési 1,618 : 1 arányúra korlátozva). "
+"Rajzolás a kezdőpont köré: <b>Shift</b>."
 
 #: ../src/rect-context.cpp:543
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with "
 "<b>Shift</b> to draw around the starting point"
 msgstr ""
-"<b>Téglalap</b>: %s &#215; %s. Négyzet vagy egész-arányú téglalap: <b>Ctrl</"
-"b>; rajzolás a kezdőpont köré: <b>Shift</b>."
+"<b>Téglalap</b>: %s &#215; %s (aranymetszési 1 : 1,618 arányúra korlátozva). "
+"Rajzolás a kezdőpont köré: <b>Shift</b>."
 
 #: ../src/rect-context.cpp:547
 #, c-format
@@ -6736,18 +6725,20 @@ msgid "Selection canceled."
 msgstr "Kijelölés megszakítva."
 
 #: ../src/select-context.cpp:545
-#, fuzzy
 msgid ""
 "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to "
 "rubberband selection"
-msgstr "objektum váltás"
+msgstr ""
+"Objektumok kijelölése: <b>rájuk való rajzolással</b>. Váltás "
+"területkijelölésre: <b>Alt</b> felengedése."
 
 #: ../src/select-context.cpp:547
-#, fuzzy
 msgid ""
 "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to "
 "touch selection"
-msgstr "objektum váltásérintéses kijelölés"
+msgstr ""
+"Objektumok kijelölése: <b>húzással való körülrajzolással</b>. Váltás "
+"érintéses kijelölésre: <b>Alt</b>."
 
 #: ../src/select-context.cpp:707
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
@@ -6887,17 +6878,17 @@ msgstr "Stílus beillesztése"
 #: ../src/selection-chemistry.cpp:1319
 #, fuzzy
 msgid "Select <b>object(s)</b> to paste live path effect to."
-msgstr "Jelöljön ki <b>objektumo(ka)t</b> a élő lánceffektus beillesztéséhez."
+msgstr "Jelöljön ki <b>objektumo(ka)t</b> az élő lánceffektus beillesztéséhez."
 
 #: ../src/selection-chemistry.cpp:1329
 #, fuzzy
 msgid "Clipboard does not contain a live path effect."
-msgstr "élő lánceffektus"
+msgstr "A vágólapon nincs élő lánceffektus."
 
 #: ../src/selection-chemistry.cpp:1355
 #, fuzzy
 msgid "Paste live path effect"
-msgstr "élő lánceffektus beillesztése"
+msgstr "Élő lánceffektus beillesztése"
 
 #: ../src/selection-chemistry.cpp:1373 ../src/selection-chemistry.cpp:1409
 msgid "Select <b>object(s)</b> to paste size to."
@@ -7453,19 +7444,19 @@ msgstr[0] "<b>Kapcsolt tördelt szöveg</b> (%d karakter)"
 msgstr[1] "<b>Kapcsolt tördelt szöveg</b> (%d karakter)"
 
 #: ../src/sp-guide.cpp:398
-#, fuzzy, c-format
+#, c-format
 msgid "vertical, at %s"
-msgstr "függőleges segédvonal"
+msgstr "függőleges, pozíció: %s"
 
 #: ../src/sp-guide.cpp:400
-#, fuzzy, c-format
+#, c-format
 msgid "horizontal, at %s"
-msgstr "vízszintes segédvonal"
+msgstr "vízszintes, pozíció: %s"
 
 #: ../src/sp-guide.cpp:405
 #, c-format
 msgid "at %d degrees, through (%s,%s); <b>Ctrl</b>+click to delete"
-msgstr ""
+msgstr "%d fokos szög, áthalad itt: (%s,%s). Törlés: <b>Ctrl</b>+kattintás."
 
 #: ../src/sp-image.cpp:1041
 msgid "embedded"
@@ -8060,7 +8051,7 @@ msgstr ""
 #: ../src/tools-switch.cpp:154
 #, fuzzy
 msgid "To tweak a path by pushing, select it and drag over it."
-msgstr "Manipulálás"
+msgstr "Eltolásos manipulálás  húzás"
 
 #: ../src/tools-switch.cpp:160
 msgid ""
@@ -11992,8 +11983,9 @@ msgid "Change stroke width"
 msgstr "Körvonalszélesség módosítása"
 
 #: ../src/ui/widget/selected-style.cpp:980
+#, fuzzy
 msgid ", drag to adjust"
-msgstr ""
+msgstr "húzás"
 
 #: ../src/ui/widget/selected-style.cpp:1058
 #, c-format
@@ -16346,7 +16338,7 @@ msgid ""
 "range in radians. x scale is set so left and right edges of rectangle are at "
 "+/-1. Isotropic scaling is disabled. First derivative is always determined "
 "numerically."
-msgstr "effektus"
+msgstr "effektus méretezés"
 
 #: ../share/extensions/funcplot.inx.h:15
 #, fuzzy
@@ -16976,286 +16968,282 @@ msgid "XAML Input"
 msgstr "DXF-bemenet"
 
 #, fuzzy
-#~ msgid "Preferred resolution (dpi) of bitmaps"
-#~ msgstr "A kívánt bitkép-felbontás (pont/hüvelykben)"
+msgid "Preferred resolution (dpi) of bitmaps"
+msgstr "A kívánt bitkép-felbontás (pont/hüvelykben)"
 
-#~ msgid "%s selected out of %d gradient handles on %d selected object"
-#~ msgid_plural "%s selected out of %d gradient handles on %d selected objects"
-#~ msgstr[0] ""
-#~ "%s kijelölve %d színátmenet-vezérlőelemből %d kijelölt objektumon"
-#~ msgstr[1] ""
-#~ "%s kijelölve %d színátmenet-vezérlőelemből %d kijelölt objektumon"
+msgid "%s selected out of %d gradient handles on %d selected object"
+msgid_plural "%s selected out of %d gradient handles on %d selected objects"
+msgstr[0] "%s kijelölve %d színátmenet-vezérlőelemből %d kijelölt objektumon"
+msgstr[1] "%s kijelölve %d színátmenet-vezérlőelemből %d kijelölt objektumon"
 
-#~ msgid "Search Tag"
-#~ msgstr "Keresendő címke"
+msgid "Search Tag"
+msgstr "Keresendő címke"
 
-#~ msgid "PLACEHOLDER, DO NOT TRANSLATE"
-#~ msgstr "PLACEHOLDER, DO NOT TRANSLATE"
+msgid "PLACEHOLDER, DO NOT TRANSLATE"
+msgstr "PLACEHOLDER, DO NOT TRANSLATE"
 
 #, fuzzy
-#~ msgid "Measure unit:"
-#~ msgstr "Lánc megmérése"
+msgid "Measure unit:"
+msgstr "Lánc megmérése"
 
 #, fuzzy
-#~ msgid "Degrees:"
-#~ msgstr "fok"
+msgid "Degrees:"
+msgstr "fok"
 
 #, fuzzy
-#~ msgid "PostScript 3"
-#~ msgstr "PostScript"
+msgid "PostScript 3"
+msgstr "PostScript"
 
-#~ msgid "Gri_d Arrange..."
-#~ msgstr "Rácsra való i_gazítás..."
-
-#, fuzzy
-#~ msgid "Convolve"
-#~ msgstr "Klón"
+msgid "Gri_d Arrange..."
+msgstr "Rácsra való i_gazítás..."
 
 #, fuzzy
-#~ msgid "Start point jitter"
-#~ msgstr "Telítettség"
+msgid "Convolve"
+msgstr "Klón"
 
 #, fuzzy
-#~ msgid "Snap nodes to grid lines, to guides, to paths, and to other nodes"
-#~ msgstr "csomópontokillesztés rácsvonal segédvonalak láncok"
+msgid "Start point jitter"
+msgstr "Telítettség"
 
 #, fuzzy
-#~ msgid "Snap at specified d_istance"
-#~ msgstr "illesztés"
+msgid "Snap nodes to grid lines, to guides, to paths, and to other nodes"
+msgstr "csomópontokillesztés rácsvonal segédvonalak láncok"
 
 #, fuzzy
-#~ msgid "Snap di_stance"
-#~ msgstr "illesztés"
+msgid "Snap at specified d_istance"
+msgstr "illesztés"
 
 #, fuzzy
-#~ msgid "Snap at specified dis_tance"
-#~ msgstr "illesztés"
+msgid "Snap di_stance"
+msgstr "illesztés"
 
 #, fuzzy
-#~ msgid "Snap at specified distan_ce"
-#~ msgstr "illesztés"
+msgid "Snap at specified dis_tance"
+msgstr "illesztés"
 
 #, fuzzy
-#~ msgid "_Include the object's rotation center"
-#~ msgstr ""
-#~ "elforgatási középpontA keresés terjedjen ki a rejtett objektumokra is"
+msgid "Snap at specified distan_ce"
+msgstr "illesztés"
 
 #, fuzzy
-#~ msgid "<b>Miscellaneous</b>"
-#~ msgstr "Különböző tippek és trükkök"
+msgid "_Include the object's rotation center"
+msgstr "elforgatási középpontA keresés terjedjen ki a rejtett objektumokra is"
 
 #, fuzzy
-#~ msgid "Slope"
-#~ msgstr "Burkológörbe"
+msgid "<b>Miscellaneous</b>"
+msgstr "Különböző tippek és trükkök"
 
 #, fuzzy
-#~ msgid "Intercept"
-#~ msgstr "Interpolálás"
-
-#~ msgid "Default metadata that will be used for new documents:"
-#~ msgstr "Új dokumentumokhoz használt alapértelmezett metaadatok:"
-
-#~ msgid "These values will be used as default metadata for new documents"
-#~ msgstr ""
-#~ "Új dokumentumokhoz ezen értékek lesznek használva alapértelmezett "
-#~ "metaadatokként"
-
-#~ msgid "Date:"
-#~ msgstr "Dátum:"
-
-#~ msgid "Format:"
-#~ msgstr "Formátum:"
-
-#~ msgid "Creator:"
-#~ msgstr "Készítő:"
-
-#~ msgid "Rights:"
-#~ msgstr "Jogok:"
-
-#~ msgid "Publisher:"
-#~ msgstr "Kiadó:"
-
-#~ msgid "Identifier:"
-#~ msgstr "Azonosító:"
-
-#~ msgid "Source:"
-#~ msgstr "Forrás:"
-
-#~ msgid "Relation:"
-#~ msgstr "Kapcsolat:"
-
-#~ msgid "Language:"
-#~ msgstr "Nyelv:"
-
-#~ msgid "Subject:"
-#~ msgstr "Tárgy:"
-
-#~ msgid "Coverage:"
-#~ msgstr "Hely/idő:"
-
-#~ msgid "Description:"
-#~ msgstr "Leírás:"
-
-#~ msgid "Contributor:"
-#~ msgstr "Közreműködő:"
-
-#~ msgid "Default Metadata"
-#~ msgstr "Alapértelmezett metaadatok"
-
-#~ msgid "Creative Commons By 3.0"
-#~ msgstr "Creative Commons By 3.0"
-
-#~ msgid "Creative Commons By Sa 3.0"
-#~ msgstr "Creative Commons By Sa 3.0"
-
-#~ msgid "Creative Commons By Nd 3.0"
-#~ msgstr "Creative Commons By Nd 3.0"
-
-#~ msgid "Creative Commons By Nc 3.0"
-#~ msgstr "Creative Commons By Nc 3.0"
-
-#~ msgid "Creative Commons By Nc Sa 3.0"
-#~ msgstr "Creative Commons By Nc Sa 3.0"
-
-#~ msgid "Creative Commons By Nc Nd 3.0"
-#~ msgstr "Creative Commons By Nc Nd 3.0"
-
-#~ msgid "Default Licensing for new documents:"
-#~ msgstr "Alaplicenc az új dokumentumokhoz:"
-
-#~ msgid "All Rights Reserved"
-#~ msgstr "Minden jog fenntartva"
-
-#~ msgid "Creative Commons: Attribution"
-#~ msgstr "Creative Commons: Attribution"
-
-#~ msgid "Creative Commons: Attribution-ShareAlike"
-#~ msgstr "Creative Commons: Attribution-ShareAlike (így adja tovább)"
-
-#~ msgid "Creative Commons: Attribution-NoDerivatives"
-#~ msgstr "Creative Commons: Attribution-NoDerivatives (ne változtassa)"
-
-#~ msgid "Creative Commons: Attribution-NonCommercial"
-#~ msgstr "Creative Commons: Attribution-NonCommercial (ne adja el)"
-
-#~ msgid "Creative Commons: Attribution-NonCommercial-ShareAlike"
-#~ msgstr ""
-#~ "Creative Commons: Attribution-NonCommercial-ShareAlike (ne adja el - így "
-#~ "adja tovább)"
-
-#~ msgid "Creative Commons: Attribution-NonCommercial-NoDerivatives"
-#~ msgstr ""
-#~ "Creative Commons: Attribution-NonCommercial-NoDerivatives (ne adja el - "
-#~ "ne változtassa)"
-
-#~ msgid "Free Art License"
-#~ msgstr "Free Art licenc"
-
-#~ msgid "Default License"
-#~ msgstr "Alapértelmezett licenc"
+msgid "Slope"
+msgstr "Burkológörbe"
 
 #, fuzzy
-#~ msgid "3D Box: Toggle VP"
-#~ msgstr "3D téglatest: távlatpont"
+msgid "Intercept"
+msgstr "Interpolálás"
+
+msgid "Default metadata that will be used for new documents:"
+msgstr "Új dokumentumokhoz használt alapértelmezett metaadatok:"
+
+msgid "These values will be used as default metadata for new documents"
+msgstr ""
+"Új dokumentumokhoz ezen értékek lesznek használva alapértelmezett "
+"metaadatokként"
+
+msgid "Date:"
+msgstr "Dátum:"
+
+msgid "Format:"
+msgstr "Formátum:"
+
+msgid "Creator:"
+msgstr "Készítő:"
+
+msgid "Rights:"
+msgstr "Jogok:"
+
+msgid "Publisher:"
+msgstr "Kiadó:"
+
+msgid "Identifier:"
+msgstr "Azonosító:"
+
+msgid "Source:"
+msgstr "Forrás:"
+
+msgid "Relation:"
+msgstr "Kapcsolat:"
+
+msgid "Language:"
+msgstr "Nyelv:"
+
+msgid "Subject:"
+msgstr "Tárgy:"
+
+msgid "Coverage:"
+msgstr "Hely/idő:"
+
+msgid "Description:"
+msgstr "Leírás:"
+
+msgid "Contributor:"
+msgstr "Közreműködő:"
+
+msgid "Default Metadata"
+msgstr "Alapértelmezett metaadatok"
+
+msgid "Creative Commons By 3.0"
+msgstr "Creative Commons By 3.0"
+
+msgid "Creative Commons By Sa 3.0"
+msgstr "Creative Commons By Sa 3.0"
+
+msgid "Creative Commons By Nd 3.0"
+msgstr "Creative Commons By Nd 3.0"
+
+msgid "Creative Commons By Nc 3.0"
+msgstr "Creative Commons By Nc 3.0"
+
+msgid "Creative Commons By Nc Sa 3.0"
+msgstr "Creative Commons By Nc Sa 3.0"
+
+msgid "Creative Commons By Nc Nd 3.0"
+msgstr "Creative Commons By Nc Nd 3.0"
+
+msgid "Default Licensing for new documents:"
+msgstr "Alaplicenc az új dokumentumokhoz:"
+
+msgid "All Rights Reserved"
+msgstr "Minden jog fenntartva"
+
+msgid "Creative Commons: Attribution"
+msgstr "Creative Commons: Attribution"
+
+msgid "Creative Commons: Attribution-ShareAlike"
+msgstr "Creative Commons: Attribution-ShareAlike (így adja tovább)"
+
+msgid "Creative Commons: Attribution-NoDerivatives"
+msgstr "Creative Commons: Attribution-NoDerivatives (ne változtassa)"
+
+msgid "Creative Commons: Attribution-NonCommercial"
+msgstr "Creative Commons: Attribution-NonCommercial (ne adja el)"
+
+msgid "Creative Commons: Attribution-NonCommercial-ShareAlike"
+msgstr ""
+"Creative Commons: Attribution-NonCommercial-ShareAlike (ne adja el - így "
+"adja tovább)"
+
+msgid "Creative Commons: Attribution-NonCommercial-NoDerivatives"
+msgstr ""
+"Creative Commons: Attribution-NonCommercial-NoDerivatives (ne adja el - ne "
+"változtassa)"
+
+msgid "Free Art License"
+msgstr "Free Art licenc"
+
+msgid "Default License"
+msgstr "Alapértelmezett licenc"
 
 #, fuzzy
-#~ msgid "Angle Y"
-#~ msgstr "X-szög:"
-
-#~ msgid "%s at %s"
-#~ msgstr "%s, pozíció: %s"
+msgid "3D Box: Toggle VP"
+msgstr "3D téglatest: távlatpont"
 
 #, fuzzy
-#~ msgid "Move by:"
-#~ msgstr "Áthelyezés"
+msgid "Angle Y"
+msgstr "X-szög:"
+
+msgid "%s at %s"
+msgstr "%s, pozíció: %s"
 
 #, fuzzy
-#~ msgid "Move to:"
-#~ msgstr "Csomópontok áthelyezése"
+msgid "Move by:"
+msgstr "Áthelyezés"
 
 #, fuzzy
-#~ msgid "Moving %s %s"
-#~ msgstr " a(z) %s csoportban (%s)"
+msgid "Move to:"
+msgstr "Csomópontok áthelyezése"
 
 #, fuzzy
-#~ msgid "Change layer opacity"
-#~ msgstr "Átlátszatlanság módosítása"
+msgid "Moving %s %s"
+msgstr " a(z) %s csoportban (%s)"
 
 #, fuzzy
-#~ msgid "Opacity, %:"
-#~ msgstr "Átlátszatlanság, %"
+msgid "Change layer opacity"
+msgstr "Átlátszatlanság módosítása"
 
 #, fuzzy
-#~ msgid "Path along path"
-#~ msgstr "Minta a lánc mentén"
-
-#~ msgid "Pattern along path"
-#~ msgstr "Minta a lánc mentén"
+msgid "Opacity, %:"
+msgstr "Átlátszatlanság, %"
 
 #, fuzzy
-#~ msgid "unknown error"
-#~ msgstr "Ismeretlen"
+msgid "Path along path"
+msgstr "Minta a lánc mentén"
+
+msgid "Pattern along path"
+msgstr "Minta a lánc mentén"
 
 #, fuzzy
-#~ msgid "Print Preview not available"
-#~ msgstr "Nyomtatási kép "
+msgid "unknown error"
+msgstr "Ismeretlen"
 
 #, fuzzy
-#~ msgid "Snap details"
-#~ msgstr "Illesztés az objektum_láncokhoz"
+msgid "Print Preview not available"
+msgstr "Nyomtatási kép "
 
 #, fuzzy
-#~ msgid "If set, objects snap to the nearest object, regardless of distance"
-#~ msgstr ""
-#~ "Ha az opció be van jelölve, akkor az objektumok elmozdításkor illesztve "
-#~ "lesznek a legközelebbi objektumhoz - függetlenül a távolságtól"
+msgid "Snap details"
+msgstr "Illesztés az objektum_láncokhoz"
 
 #, fuzzy
-#~ msgid ""
-#~ "If set, objects snap to the nearest grid line, regardless of distance"
-#~ msgstr ""
-#~ "Ha az opció be van jelölve, akkor az objektumok elmozdításkor illesztve "
-#~ "lesznek a legközelebbi rácsvonalhoz - függetlenül a távolságtól"
+msgid "If set, objects snap to the nearest object, regardless of distance"
+msgstr ""
+"Ha az opció be van jelölve, akkor az objektumok elmozdításkor illesztve "
+"lesznek a legközelebbi objektumhoz - függetlenül a távolságtól"
 
 #, fuzzy
-#~ msgid "If set, objects snap to the nearest guide, regardless of distance"
-#~ msgstr ""
-#~ "Ha az opció be van jelölve, akkor az objektumok elmozdításkor illesztve "
-#~ "lesznek a legközelebbi segédvonalhoz - függetlenül a távolságtól"
+msgid "If set, objects snap to the nearest grid line, regardless of distance"
+msgstr ""
+"Ha az opció be van jelölve, akkor az objektumok elmozdításkor illesztve "
+"lesznek a legközelebbi rácsvonalhoz - függetlenül a távolságtól"
 
 #, fuzzy
-#~ msgid "Gridtype"
-#~ msgstr "Rács"
+msgid "If set, objects snap to the nearest guide, regardless of distance"
+msgstr ""
+"Ha az opció be van jelölve, akkor az objektumok elmozdításkor illesztve "
+"lesznek a legközelebbi segédvonalhoz - függetlenül a távolságtól"
 
 #, fuzzy
-#~ msgid "Print _Direct"
-#~ msgstr "Nyomtatási tulajdonságok"
-
-#~ msgid "Print directly without prompting to a file or pipe"
-#~ msgstr ""
-#~ "Nyomtatás közvetlenül (megerősítés-kérés nélkül) fájlba vagy egy program "
-#~ "felé (csővezetékbe)"
+msgid "Gridtype"
+msgstr "Rács"
 
 #, fuzzy
-#~ msgid "Gradients"
-#~ msgstr "Színátmenet"
+msgid "Print _Direct"
+msgstr "Nyomtatási tulajdonságok"
+
+msgid "Print directly without prompting to a file or pipe"
+msgstr ""
+"Nyomtatás közvetlenül (megerősítés-kérés nélkül) fájlba vagy egy program "
+"felé (csővezetékbe)"
 
 #, fuzzy
-#~ msgid "Spacing between letters"
-#~ msgstr "Helykihagyás a másolatok között:"
+msgid "Gradients"
+msgstr "Színátmenet"
 
 #, fuzzy
-#~ msgid "Spacing between lines"
-#~ msgstr "Helykihagyás a másolatok között:"
+msgid "Spacing between letters"
+msgstr "Helykihagyás a másolatok között:"
 
 #, fuzzy
-#~ msgid "Horizontal kerning"
-#~ msgstr "Vízszintes helykihagyás"
+msgid "Spacing between lines"
+msgstr "Helykihagyás a másolatok között:"
 
 #, fuzzy
-#~ msgid "Vertical kerning"
-#~ msgstr "Függőleges helykihagyás"
+msgid "Horizontal kerning"
+msgstr "Vízszintes helykihagyás"
 
 #, fuzzy
-#~ msgid "Letter rotation"
-#~ msgstr "_Forgatás"
+msgid "Vertical kerning"
+msgstr "Függőleges helykihagyás"
+
+#, fuzzy
+msgid "Letter rotation"
+msgstr "_Forgatás"
