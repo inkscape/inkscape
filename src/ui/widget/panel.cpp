@@ -111,7 +111,7 @@ void Panel::_init()
         const char *things[] = {
             N_("tiny"),
             N_("small"),
-            N_("medium"),
+            Q_("swatches|medium"),
             N_("large"),
             N_("huge")
         };

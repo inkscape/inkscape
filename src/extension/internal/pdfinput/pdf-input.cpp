@@ -376,7 +376,7 @@ void PdfImportDialog::_onPrecisionChanged() {
 
     static Glib::ustring precision_comments[] = {
         Glib::ustring(_("rough")),
-        Glib::ustring(_("medium")),
+        Glib::ustring(Q_("pdfinput|medium")),
         Glib::ustring(_("fine")),
         Glib::ustring(_("very fine"))
     };
