@@ -49,12 +49,13 @@ namespace Internal {
  * FIXME: Probably this should be placed into src/ui/dialog
  */
 
-static Glib::ustring crop_setting_choices[] = {
-    Glib::ustring(_("media box")),
-    Glib::ustring(_("crop box")),
-    Glib::ustring(_("trim box")),
-    Glib::ustring(_("bleed box")),
-    Glib::ustring(_("art box"))
+static const gchar * crop_setting_choices[] = {
+	//TRANSLATORS: The following are document crop settings for PDF import
+    N_("media box"),
+    N_("crop box"),
+    N_("trim box"),
+    N_("bleed box"),
+    N_("art box")
 };
 
 PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar *uri)
@@ -90,9 +91,9 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar *uri)
     _cropTypeCombo = Gtk::manage(new class Gtk::ComboBoxText());
     int num_crop_choices = sizeof(crop_setting_choices) / sizeof(crop_setting_choices[0]);
     for ( int i = 0 ; i < num_crop_choices ; i++ ) {
-        _cropTypeCombo->append_text(crop_setting_choices[i]);
+        _cropTypeCombo->append_text(_(crop_setting_choices[i]));
     }
-    _cropTypeCombo->set_active_text(crop_setting_choices[0]);
+    _cropTypeCombo->set_active_text(_(crop_setting_choices[0]));
     _cropTypeCombo->set_sensitive(false);
 
     hbox3 = Gtk::manage(new class Gtk::HBox(false, 4));
@@ -351,7 +352,7 @@ void PdfImportDialog::getImportSettings(Inkscape::XML::Node *prefs) {
         int num_crop_choices = sizeof(crop_setting_choices) / sizeof(crop_setting_choices[0]);
         int i = 0;
         for ( ; i < num_crop_choices ; i++ ) {
-            if ( current_choice == crop_setting_choices[i] ) {
+            if ( current_choice == _(crop_setting_choices[i]) ) {
                 break;
             }
         }
