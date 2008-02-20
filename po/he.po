@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-02-08 23:00+0100\n"
+"POT-Creation-Date: 2008-02-20 02:24+0100\n"
 "PO-Revision-Date: 2007-11-30 02:28+0200\n"
 "Last-Translator: Leon Mintz <leon.mintz@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -53,6 +53,11 @@ msgstr ""
 #: ../src/arc-context.cpp:507
 msgid "Create ellipse"
 msgstr "צור אליפסה"
+
+#: ../src/box3d.cpp:341
+#, fuzzy
+msgid "<b>3D Box</b>"
+msgstr "<b>אליפסה</b>"
 
 #: ../src/box3d-context.cpp:480 ../src/box3d-context.cpp:487
 #: ../src/box3d-context.cpp:494 ../src/box3d-context.cpp:501
@@ -106,11 +111,11 @@ msgstr ""
 msgid "Select <b>at least one non-connector object</b>."
 msgstr ""
 
-#: ../src/connector-context.cpp:1321 ../src/widgets/toolbox.cpp:5084
+#: ../src/connector-context.cpp:1321 ../src/widgets/toolbox.cpp:5110
 msgid "Make connectors avoid selected objects"
 msgstr ""
 
-#: ../src/connector-context.cpp:1322 ../src/widgets/toolbox.cpp:5094
+#: ../src/connector-context.cpp:1322 ../src/widgets/toolbox.cpp:5120
 msgid "Make connectors ignore selected objects"
 msgstr ""
 
@@ -678,8 +683,8 @@ msgstr ""
 #: ../src/dialogs/clonetiler.cpp:2599 ../src/dialogs/clonetiler.cpp:2748
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/extension/internal/bitmap/opacity.cpp:39
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2144
-#: ../src/widgets/toolbox.cpp:3185
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2188
+#: ../src/widgets/toolbox.cpp:3186
 msgid "Opacity"
 msgstr ""
 
@@ -784,7 +789,7 @@ msgid ""
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2728
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2121
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 msgid "Size"
 msgstr ""
 
@@ -948,8 +953,8 @@ msgstr ""
 
 #. Stroke width
 #: ../src/dialogs/export.cpp:319 ../src/dialogs/object-attributes.cpp:59
-#: ../src/dialogs/stroke-style.cpp:1090 ../src/widgets/toolbox.cpp:3025
-#: ../src/widgets/toolbox.cpp:3330
+#: ../src/dialogs/stroke-style.cpp:1090 ../src/widgets/toolbox.cpp:3026
+#: ../src/widgets/toolbox.cpp:3331
 msgid "Width:"
 msgstr ""
 
@@ -982,7 +987,7 @@ msgstr ""
 msgid "dp_i"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:508 ../src/ui/dialog/inkscape-preferences.cpp:643
+#: ../src/dialogs/export.cpp:508 ../src/ui/dialog/inkscape-preferences.cpp:647
 msgid "dpi"
 msgstr ""
 
@@ -1023,8 +1028,9 @@ msgstr ""
 
 #: ../src/dialogs/export.cpp:682
 #, c-format
-msgid "Batch export %d selected objects"
-msgstr ""
+msgid "Batch export %d selected object"
+msgid_plural "Batch export %d selected objects"
+msgstr[0] ""
 
 #: ../src/dialogs/export.cpp:1014
 msgid "Export in progress"
@@ -1299,12 +1305,12 @@ msgid "Unit:"
 msgstr "יחידה"
 
 #: ../src/dialogs/guidelinedialog.cpp:45
-#: ../src/dialogs/object-attributes.cpp:57 ../src/widgets/toolbox.cpp:1113
+#: ../src/dialogs/object-attributes.cpp:57 ../src/widgets/toolbox.cpp:1114
 msgid "X:"
 msgstr ""
 
 #: ../src/dialogs/guidelinedialog.cpp:46
-#: ../src/dialogs/object-attributes.cpp:58 ../src/widgets/toolbox.cpp:1131
+#: ../src/dialogs/object-attributes.cpp:58 ../src/widgets/toolbox.cpp:1132
 msgid "Y:"
 msgstr ""
 
@@ -1659,8 +1665,8 @@ msgid "The physical or digital manifestation of this document (MIME type)."
 msgstr ""
 
 #: ../src/dialogs/rdf.cpp:247 ../src/extension/internal/bitmap/addNoise.cpp:46
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2100
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2175
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2144
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
 msgid "Type"
 msgstr ""
 
@@ -1812,13 +1818,13 @@ msgstr ""
 msgid "Unset stroke"
 msgstr ""
 
-#: ../src/dialogs/stroke-style.cpp:793 ../src/filter-enums.cpp:94
+#: ../src/dialogs/stroke-style.cpp:793 ../src/filter-enums.cpp:95
 #: ../src/flood-context.cpp:264 ../src/interface.cpp:829
-#: ../src/ui/dialog/filter-effects-dialog.cpp:460
+#: ../src/ui/dialog/filter-effects-dialog.cpp:476
 #: ../src/ui/dialog/inkscape-preferences.cpp:207
 #: ../src/ui/dialog/inkscape-preferences.cpp:368
 #: ../src/ui/dialog/inkscape-preferences.cpp:469
-#: ../src/ui/dialog/inkscape-preferences.cpp:891 ../src/verbs.cpp:2119
+#: ../src/ui/dialog/inkscape-preferences.cpp:895 ../src/verbs.cpp:2119
 msgid "None"
 msgstr ""
 
@@ -1925,19 +1931,30 @@ msgstr ""
 msgid "Set stroke style"
 msgstr ""
 
-#: ../src/dialogs/swatches.cpp:494
+#. TRANSLATORS: An item in context menu on a colour in the swatches
+#: ../src/dialogs/swatches.cpp:269
+#, fuzzy
+msgid "Set fill"
+msgstr "בחר ה_כל"
+
+#. TRANSLATORS: An item in context menu on a colour in the swatches
+#: ../src/dialogs/swatches.cpp:277
+msgid "Set stroke"
+msgstr ""
+
+#: ../src/dialogs/swatches.cpp:496
 msgid "Change color definition"
 msgstr ""
 
-#: ../src/dialogs/swatches.cpp:635
+#: ../src/dialogs/swatches.cpp:637
 msgid "Set stroke color from swatch"
 msgstr ""
 
-#: ../src/dialogs/swatches.cpp:635
+#: ../src/dialogs/swatches.cpp:637
 msgid "Set fill color from swatch"
 msgstr ""
 
-#: ../src/dialogs/swatches.cpp:954
+#: ../src/dialogs/swatches.cpp:956
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr ""
@@ -1968,11 +1985,11 @@ msgstr ""
 msgid "Justify lines"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:302 ../src/widgets/toolbox.cpp:4887
+#: ../src/dialogs/text-edit.cpp:302 ../src/widgets/toolbox.cpp:4913
 msgid "Horizontal text"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:316 ../src/widgets/toolbox.cpp:4898
+#: ../src/dialogs/text-edit.cpp:316 ../src/widgets/toolbox.cpp:4924
 msgid "Vertical text"
 msgstr ""
 
@@ -2105,7 +2122,7 @@ msgid "Duplicate node"
 msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:368 ../src/dialogs/xml-tree.cpp:1431
-#: ../src/nodepath.cpp:3122 ../src/widgets/toolbox.cpp:986
+#: ../src/nodepath.cpp:3122 ../src/widgets/toolbox.cpp:987
 msgid "Delete node"
 msgstr ""
 
@@ -2178,6 +2195,97 @@ msgstr ""
 msgid "Change attribute"
 msgstr ""
 
+#: ../src/display/canvas-axonomgrid.cpp:394 ../src/widgets/toolbox.cpp:2576
+msgid "Angle X:"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:394
+#: ../src/ui/dialog/inkscape-preferences.cpp:870
+msgid "Angle of x-axis"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:396 ../src/widgets/toolbox.cpp:2655
+msgid "Angle Z:"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:396
+#: ../src/ui/dialog/inkscape-preferences.cpp:871
+msgid "Angle of z-axis"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:400 ../src/display/canvas-grid.cpp:663
+msgid "Grid line _color:"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:400 ../src/display/canvas-grid.cpp:663
+#: ../src/ui/dialog/inkscape-preferences.cpp:850
+#: ../src/ui/dialog/inkscape-preferences.cpp:851
+#: ../src/ui/dialog/inkscape-preferences.cpp:872
+#: ../src/ui/dialog/inkscape-preferences.cpp:873
+msgid "Grid line color"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:400 ../src/display/canvas-grid.cpp:663
+msgid "Color of grid lines"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:405 ../src/display/canvas-grid.cpp:668
+msgid "Ma_jor grid line color:"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:405 ../src/display/canvas-grid.cpp:668
+#: ../src/ui/dialog/inkscape-preferences.cpp:852
+#: ../src/ui/dialog/inkscape-preferences.cpp:853
+#: ../src/ui/dialog/inkscape-preferences.cpp:874
+#: ../src/ui/dialog/inkscape-preferences.cpp:875
+msgid "Major grid line color"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:406 ../src/display/canvas-grid.cpp:669
+msgid "Color of the major (highlighted) grid lines"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:412 ../src/display/canvas-grid.cpp:679
+msgid "Grid _units:"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:413 ../src/display/canvas-grid.cpp:680
+msgid "_Origin X:"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:413 ../src/display/canvas-grid.cpp:680
+#: ../src/ui/dialog/inkscape-preferences.cpp:843
+#: ../src/ui/dialog/inkscape-preferences.cpp:864
+msgid "X coordinate of grid origin"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:418 ../src/display/canvas-grid.cpp:685
+msgid "O_rigin Y:"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:418 ../src/display/canvas-grid.cpp:685
+#: ../src/ui/dialog/inkscape-preferences.cpp:844
+#: ../src/ui/dialog/inkscape-preferences.cpp:865
+msgid "Y coordinate of grid origin"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:423 ../src/display/canvas-grid.cpp:695
+msgid "Spacing _Y:"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:423
+#: ../src/ui/dialog/inkscape-preferences.cpp:867
+msgid "Base length of z-axis"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:428 ../src/display/canvas-grid.cpp:701
+msgid "_Major grid line every:"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:428 ../src/display/canvas-grid.cpp:701
+msgid "lines"
+msgstr ""
+
 #: ../src/display/canvas-grid.cpp:40
 msgid "Rectangular grid"
 msgstr ""
@@ -2210,94 +2318,26 @@ msgid ""
 "to invisible grids."
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:661
-msgid "Grid line _color:"
-msgstr ""
-
-#: ../src/display/canvas-grid.cpp:661
-#: ../src/ui/dialog/inkscape-preferences.cpp:846
-#: ../src/ui/dialog/inkscape-preferences.cpp:847
-#: ../src/ui/dialog/inkscape-preferences.cpp:868
-#: ../src/ui/dialog/inkscape-preferences.cpp:869
-msgid "Grid line color"
-msgstr ""
-
-#: ../src/display/canvas-grid.cpp:661
-msgid "Color of grid lines"
-msgstr ""
-
-#: ../src/display/canvas-grid.cpp:666
-msgid "Ma_jor grid line color:"
-msgstr ""
-
-#: ../src/display/canvas-grid.cpp:666
-#: ../src/ui/dialog/inkscape-preferences.cpp:848
-#: ../src/ui/dialog/inkscape-preferences.cpp:849
-#: ../src/ui/dialog/inkscape-preferences.cpp:870
-#: ../src/ui/dialog/inkscape-preferences.cpp:871
-msgid "Major grid line color"
-msgstr ""
-
-#: ../src/display/canvas-grid.cpp:667
-msgid "Color of the major (highlighted) grid lines"
-msgstr ""
-
-#: ../src/display/canvas-grid.cpp:677
-msgid "Grid _units:"
-msgstr ""
-
-#: ../src/display/canvas-grid.cpp:678
-msgid "_Origin X:"
-msgstr ""
-
-#: ../src/display/canvas-grid.cpp:678
-#: ../src/ui/dialog/inkscape-preferences.cpp:839
-#: ../src/ui/dialog/inkscape-preferences.cpp:860
-msgid "X coordinate of grid origin"
-msgstr ""
-
-#: ../src/display/canvas-grid.cpp:683
-msgid "O_rigin Y:"
-msgstr ""
-
-#: ../src/display/canvas-grid.cpp:683
-#: ../src/ui/dialog/inkscape-preferences.cpp:840
-#: ../src/ui/dialog/inkscape-preferences.cpp:861
-msgid "Y coordinate of grid origin"
-msgstr ""
-
-#: ../src/display/canvas-grid.cpp:688
+#: ../src/display/canvas-grid.cpp:690
 msgid "Spacing _X:"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:688
-#: ../src/ui/dialog/inkscape-preferences.cpp:843
+#: ../src/display/canvas-grid.cpp:690
+#: ../src/ui/dialog/inkscape-preferences.cpp:847
 msgid "Distance between vertical grid lines"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:693
-msgid "Spacing _Y:"
-msgstr ""
-
-#: ../src/display/canvas-grid.cpp:693
-#: ../src/ui/dialog/inkscape-preferences.cpp:844
+#: ../src/display/canvas-grid.cpp:695
+#: ../src/ui/dialog/inkscape-preferences.cpp:848
 msgid "Distance between horizontal grid lines"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:699
-msgid "_Major grid line every:"
-msgstr ""
-
-#: ../src/display/canvas-grid.cpp:699
-msgid "lines"
-msgstr ""
-
-#: ../src/display/canvas-grid.cpp:702
+#: ../src/display/canvas-grid.cpp:704
 msgid "_Show dots instead of lines"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:703
-#: ../src/ui/dialog/inkscape-preferences.cpp:853
+#: ../src/display/canvas-grid.cpp:705
+#: ../src/ui/dialog/inkscape-preferences.cpp:857
 msgid "If set, displays dots at gridpoints instead of gridlines"
 msgstr ""
 
@@ -2543,15 +2583,18 @@ msgstr ""
 #: ../src/extension/internal/bitmap/raise.cpp:41
 #: ../src/extension/internal/bitmap/sample.cpp:40
 #: ../src/extension/internal/bluredge.cpp:134
+#: ../src/libgdl/gdl-dock-placeholder.c:169 ../src/libgdl/gdl-dock.c:190
+#: ../src/live_effects/lpe-pathalongpath.cpp:58
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:64
-#: ../src/widgets/toolbox.cpp:2248 ../src/widgets/toolbox.cpp:3025
+#: ../src/widgets/toolbox.cpp:2249 ../src/widgets/toolbox.cpp:3026
 msgid "Width"
 msgstr "רוחב"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:41
 #: ../src/extension/internal/bitmap/raise.cpp:42
 #: ../src/extension/internal/bitmap/sample.cpp:41
-#: ../src/widgets/toolbox.cpp:2265
+#: ../src/libgdl/gdl-dock-placeholder.c:177 ../src/libgdl/gdl-dock.c:198
+#: ../src/widgets/toolbox.cpp:2266
 msgid "Height"
 msgstr "גובה"
 
@@ -2645,7 +2688,7 @@ msgstr ""
 #: ../src/extension/internal/bitmap/oilPaint.cpp:38
 #: ../src/extension/internal/bitmap/sharpen.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2151
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid "Radius"
 msgstr "רדיוס"
 
@@ -2880,16 +2923,20 @@ msgid "Brightness"
 msgstr "בהירות"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:42
-#: ../src/flood-context.cpp:254 ../src/ui/dialog/inkscape-preferences.cpp:701
-#: ../src/widgets/sp-color-scales.cpp:428
-#: ../src/widgets/sp-color-scales.cpp:429 ../src/widgets/toolbox.cpp:3157
+#: ../src/flood-context.cpp:254 ../src/ui/dialog/inkscape-preferences.cpp:705
+#: ../src/widgets/sp-color-icc-selector.cpp:235
+#: ../src/widgets/sp-color-icc-selector.cpp:236
+#: ../src/widgets/sp-color-scales.cpp:427
+#: ../src/widgets/sp-color-scales.cpp:428 ../src/widgets/toolbox.cpp:3158
 #: ../share/extensions/color_randomize.inx.h:5
 msgid "Saturation"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/modulate.cpp:43
-#: ../src/flood-context.cpp:253 ../src/widgets/sp-color-scales.cpp:425
-#: ../src/widgets/sp-color-scales.cpp:426 ../src/widgets/toolbox.cpp:3143
+#: ../src/flood-context.cpp:253 ../src/widgets/sp-color-icc-selector.cpp:235
+#: ../src/widgets/sp-color-icc-selector.cpp:236
+#: ../src/widgets/sp-color-scales.cpp:424
+#: ../src/widgets/sp-color-scales.cpp:425 ../src/widgets/toolbox.cpp:3144
 #: ../share/extensions/color_randomize.inx.h:2
 msgid "Hue"
 msgstr ""
@@ -2972,12 +3019,12 @@ msgid "Shade"
 msgstr "הצל"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/ui/dialog/filter-effects-dialog.cpp:914
+#: ../src/ui/dialog/filter-effects-dialog.cpp:944
 msgid "Azimuth"
 msgstr "אזימוט"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:915
+#: ../src/ui/dialog/filter-effects-dialog.cpp:945
 msgid "Elevation"
 msgstr ""
 
@@ -3074,7 +3121,8 @@ msgid "Number of inset/outset copies of the object to make"
 msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:139
-#: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
+#: ../share/extensions/dimension.inx.h:2 ../share/extensions/interp.inx.h:3
+#: ../share/extensions/motion.inx.h:3
 #: ../share/extensions/pathalongpath.inx.h:4
 msgid "Generate from Path"
 msgstr ""
@@ -3106,6 +3154,7 @@ msgid "Convert blur effects to bitmaps"
 msgstr ""
 
 #: ../src/extension/internal/cairo-pdf-out.cpp:178
+#: ../src/extension/internal/cairo-ps-out.cpp:232
 msgid "Preferred resolution (DPI) of bitmaps"
 msgstr ""
 
@@ -3118,6 +3167,11 @@ msgstr ""
 msgid "PDF File"
 msgstr "קובץ"
 
+#: ../src/extension/internal/cairo-ps-out.cpp:222
+#, fuzzy
+msgid "Cairo PS Output"
+msgstr "פלט EMF"
+
 #: ../src/extension/internal/cairo-ps-out.cpp:224
 msgid "Restrict to PS level"
 msgstr ""
@@ -3129,10 +3183,6 @@ msgstr "סקריפט"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:227
 msgid "PostScript level 2"
-msgstr ""
-
-#: ../src/extension/internal/cairo-ps-out.cpp:232
-msgid "Preferred resolution (dpi) of bitmaps"
 msgstr ""
 
 #: ../src/extension/internal/cairo-ps-out.cpp:236
@@ -3219,7 +3269,7 @@ msgstr ""
 msgid "Gradients used in GIMP"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:192 ../src/ui/widget/panel.cpp:118
+#: ../src/extension/internal/grid.cpp:192 ../src/ui/widget/panel.cpp:132
 msgid "Grid"
 msgstr ""
 
@@ -3423,7 +3473,7 @@ msgid "PDF Import Settings"
 msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:379
-#: ../src/ui/widget/panel.cpp:100
+#: ../src/ui/widget/panel.cpp:114
 msgid "medium"
 msgstr ""
 
@@ -3786,7 +3836,7 @@ msgstr ""
 msgid "Tile"
 msgstr ""
 
-#: ../src/filter-enums.cpp:35 ../src/filter-enums.cpp:117
+#: ../src/filter-enums.cpp:35 ../src/filter-enums.cpp:118
 msgid "Turbulence"
 msgstr ""
 
@@ -3814,143 +3864,147 @@ msgstr ""
 msgid "Stroke Paint"
 msgstr ""
 
-#: ../src/filter-enums.cpp:51 ../src/ui/dialog/inkscape-preferences.cpp:470
-msgid "Normal"
-msgstr ""
-
+#. TRANSLATORS: This is a context string, only put the word "Normal" in your translation
 #: ../src/filter-enums.cpp:52
-msgid "Multiply"
+msgid "filterBlendMode|Normal"
 msgstr ""
 
 #: ../src/filter-enums.cpp:53
-msgid "Screen"
+msgid "Multiply"
 msgstr ""
 
 #: ../src/filter-enums.cpp:54
-msgid "Darken"
+msgid "Screen"
 msgstr ""
 
 #: ../src/filter-enums.cpp:55
+msgid "Darken"
+msgstr ""
+
+#: ../src/filter-enums.cpp:56
 msgid "Lighten"
 msgstr ""
 
-#: ../src/filter-enums.cpp:61
+#: ../src/filter-enums.cpp:62
 msgid "Matrix"
 msgstr ""
 
-#: ../src/filter-enums.cpp:62
+#: ../src/filter-enums.cpp:63
 msgid "Saturate"
 msgstr ""
 
-#: ../src/filter-enums.cpp:63
+#: ../src/filter-enums.cpp:64
 msgid "Hue Rotate"
 msgstr ""
 
-#: ../src/filter-enums.cpp:64
+#: ../src/filter-enums.cpp:65
 msgid "Luminance to Alpha"
 msgstr ""
 
 #. File
-#: ../src/filter-enums.cpp:70 ../src/verbs.cpp:2122
+#: ../src/filter-enums.cpp:71 ../src/verbs.cpp:2122
 msgid "Default"
 msgstr ""
 
-#: ../src/filter-enums.cpp:71
+#: ../src/filter-enums.cpp:72
 msgid "Over"
 msgstr ""
 
-#: ../src/filter-enums.cpp:72
+#: ../src/filter-enums.cpp:73
 msgid "In"
 msgstr ""
 
-#: ../src/filter-enums.cpp:73
+#: ../src/filter-enums.cpp:74
 msgid "Out"
 msgstr ""
 
-#: ../src/filter-enums.cpp:74
+#: ../src/filter-enums.cpp:75
 msgid "Atop"
 msgstr ""
 
-#: ../src/filter-enums.cpp:75
+#: ../src/filter-enums.cpp:76
 msgid "XOR"
 msgstr ""
 
-#: ../src/filter-enums.cpp:76
+#: ../src/filter-enums.cpp:77
 msgid "Arithmetic"
 msgstr ""
 
-#: ../src/filter-enums.cpp:82
+#: ../src/filter-enums.cpp:83
 msgid "Identity"
 msgstr ""
 
-#: ../src/filter-enums.cpp:83
+#: ../src/filter-enums.cpp:84
 msgid "Table"
 msgstr ""
 
-#: ../src/filter-enums.cpp:84
+#: ../src/filter-enums.cpp:85
 msgid "Discrete"
 msgstr ""
 
-#: ../src/filter-enums.cpp:85
+#: ../src/filter-enums.cpp:86
 msgid "Linear"
 msgstr ""
 
-#: ../src/filter-enums.cpp:86
+#: ../src/filter-enums.cpp:87
 msgid "Gamma"
 msgstr "גאמא"
 
-#: ../src/filter-enums.cpp:92 ../src/selection-chemistry.cpp:301
+#: ../src/filter-enums.cpp:93 ../src/selection-chemistry.cpp:301
 #: ../src/widgets/gradient-selector.cpp:134
 msgid "Duplicate"
 msgstr "שכפל"
 
-#: ../src/filter-enums.cpp:93 ../src/ui/widget/panel.cpp:139
+#: ../src/filter-enums.cpp:94 ../src/ui/widget/panel.cpp:153
 msgid "Wrap"
 msgstr ""
 
-#: ../src/filter-enums.cpp:100 ../src/flood-context.cpp:250
+#: ../src/filter-enums.cpp:101 ../src/flood-context.cpp:250
+#: ../src/widgets/sp-color-icc-selector.cpp:233
+#: ../src/widgets/sp-color-scales.cpp:398
 #: ../src/widgets/sp-color-scales.cpp:399
-#: ../src/widgets/sp-color-scales.cpp:400
 msgid "Red"
 msgstr "אדום"
 
-#: ../src/filter-enums.cpp:101 ../src/flood-context.cpp:251
+#: ../src/filter-enums.cpp:102 ../src/flood-context.cpp:251
+#: ../src/widgets/sp-color-icc-selector.cpp:233
+#: ../src/widgets/sp-color-scales.cpp:401
 #: ../src/widgets/sp-color-scales.cpp:402
-#: ../src/widgets/sp-color-scales.cpp:403
 msgid "Green"
 msgstr "ירוק"
 
-#: ../src/filter-enums.cpp:102 ../src/flood-context.cpp:252
+#: ../src/filter-enums.cpp:103 ../src/flood-context.cpp:252
+#: ../src/widgets/sp-color-icc-selector.cpp:233
+#: ../src/widgets/sp-color-scales.cpp:404
 #: ../src/widgets/sp-color-scales.cpp:405
-#: ../src/widgets/sp-color-scales.cpp:406
 msgid "Blue"
 msgstr "כחול"
 
-#: ../src/filter-enums.cpp:103 ../src/flood-context.cpp:256
+#: ../src/filter-enums.cpp:104 ../src/flood-context.cpp:256
 msgid "Alpha"
 msgstr "אלפא"
 
-#: ../src/filter-enums.cpp:109
+#: ../src/filter-enums.cpp:110
 msgid "Erode"
 msgstr ""
 
-#: ../src/filter-enums.cpp:110
+#: ../src/filter-enums.cpp:111
 msgid "Dilate"
 msgstr ""
 
-#: ../src/filter-enums.cpp:116
+#: ../src/filter-enums.cpp:117
 msgid "Fractal Noise"
 msgstr "רעש פרקטלי"
 
-#: ../src/filter-enums.cpp:123
+#: ../src/filter-enums.cpp:124
 msgid "Distant Light"
 msgstr ""
 
-#: ../src/filter-enums.cpp:124
+#: ../src/filter-enums.cpp:125
 msgid "Point Light"
 msgstr ""
 
-#: ../src/filter-enums.cpp:125
+#: ../src/filter-enums.cpp:126
 msgid "Spot Light"
 msgstr ""
 
@@ -3958,8 +4012,9 @@ msgstr ""
 msgid "Visible Colors"
 msgstr ""
 
-#: ../src/flood-context.cpp:255 ../src/widgets/sp-color-scales.cpp:431
-#: ../src/widgets/sp-color-scales.cpp:432 ../src/widgets/toolbox.cpp:3171
+#: ../src/flood-context.cpp:255 ../src/widgets/sp-color-icc-selector.cpp:236
+#: ../src/widgets/sp-color-scales.cpp:430
+#: ../src/widgets/sp-color-scales.cpp:431 ../src/widgets/toolbox.cpp:3172
 #: ../share/extensions/color_randomize.inx.h:3
 msgid "Lightness"
 msgstr ""
@@ -3983,13 +4038,16 @@ msgstr ""
 #: ../src/flood-context.cpp:461
 #, c-format
 msgid ""
+"Area filled, path with <b>%d</b> node created and unioned with selection."
+msgid_plural ""
 "Area filled, path with <b>%d</b> nodes created and unioned with selection."
-msgstr ""
+msgstr[0] ""
 
 #: ../src/flood-context.cpp:465
 #, c-format
-msgid "Area filled, path with <b>%d</b> nodes created."
-msgstr ""
+msgid "Area filled, path with <b>%d</b> node created."
+msgid_plural "Area filled, path with <b>%d</b> nodes created."
+msgstr[0] ""
 
 #: ../src/flood-context.cpp:681 ../src/flood-context.cpp:976
 msgid "<b>Area is not bounded</b>, cannot fill."
@@ -4045,66 +4103,88 @@ msgstr ""
 msgid "Radial gradient <b>mid stop</b>"
 msgstr ""
 
-#: ../src/gradient-context.cpp:160
+#. TRANSLATORS: %s will be substituted with the point name (see previous messages); This is part of a compound message
+#: ../src/gradient-context.cpp:162
 #, c-format
-msgid "%s selected out of %d gradient handles on %d selected object"
-msgid_plural "%s selected out of %d gradient handles on %d selected objects"
+msgid "%s selected"
+msgstr ""
+
+#. TRANSLATORS: Mind the space in front. This is part of a compound message
+#: ../src/gradient-context.cpp:164 ../src/gradient-context.cpp:173
+#, c-format
+msgid " out of %d gradient handle"
+msgid_plural " out of %d gradient handles"
 msgstr[0] ""
 
-#: ../src/gradient-context.cpp:163
+#. TRANSLATORS: Mind the space in front. (Refers to gradient handles selected). This is part of a compound message
+#: ../src/gradient-context.cpp:165 ../src/gradient-context.cpp:174
+#: ../src/gradient-context.cpp:181
+#, c-format
+msgid " on %d selected object"
+msgid_plural " on %d selected objects"
+msgstr[0] ""
+
+#. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
+#: ../src/gradient-context.cpp:171
 #, c-format
 msgid ""
-"One handle merging %d stops (drag with <b>Shift</b> to separate) selected "
-"out of %d gradient handles on %d selected object(s)"
-msgstr ""
+"One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
+msgid_plural ""
+"One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
+msgstr[0] ""
 
-#: ../src/gradient-context.cpp:167
+#. TRANSLATORS: The plural refers to number of selected gradient handles. This is part of a compound message (part two indicates selected object count)
+#: ../src/gradient-context.cpp:179
 #, c-format
-msgid "<b>%d</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr ""
+msgid "<b>%d</b> gradient handle selected out of %d"
+msgid_plural "<b>%d</b> gradient handles selected out of %d"
+msgstr[0] ""
 
-#: ../src/gradient-context.cpp:170
+#. TRANSLATORS: The plural refers to number of selected objects
+#: ../src/gradient-context.cpp:186
 #, c-format
-msgid "<b>No</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr ""
+msgid "<b>No</b> gradient handles selected out of %d on %d selected object"
+msgid_plural ""
+"<b>No</b> gradient handles selected out of %d on %d selected objects"
+msgstr[0] ""
 
-#: ../src/gradient-context.cpp:368 ../src/gradient-context.cpp:461
+#: ../src/gradient-context.cpp:385 ../src/gradient-context.cpp:478
 #: ../src/widgets/gradient-vector.cpp:735
 msgid "Add gradient stop"
 msgstr ""
 
-#: ../src/gradient-context.cpp:436
+#: ../src/gradient-context.cpp:453
 msgid "Simplify gradient"
 msgstr "פשט גרדיאנט"
 
-#: ../src/gradient-context.cpp:512
+#: ../src/gradient-context.cpp:529
 msgid "Create default gradient"
 msgstr "צור גרדיאנט ברירת מחדל"
 
-#: ../src/gradient-context.cpp:565
+#: ../src/gradient-context.cpp:582
 msgid "<b>Draw around</b> handles to select them"
 msgstr ""
 
-#: ../src/gradient-context.cpp:663
+#: ../src/gradient-context.cpp:680
 msgid "<b>Ctrl</b>: snap gradient angle"
 msgstr ""
 
-#: ../src/gradient-context.cpp:664
+#: ../src/gradient-context.cpp:681
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr ""
 
-#: ../src/gradient-context.cpp:784
+#: ../src/gradient-context.cpp:801
 msgid "Invert gradient"
 msgstr "הפוך גרדיאנט"
 
-#: ../src/gradient-context.cpp:893
+#: ../src/gradient-context.cpp:917
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/gradient-context.cpp:897
+#: ../src/gradient-context.cpp:921
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr "בחר את <b>האוביקטים</b> שעליהם יווצר הגרדיאנט."
 
@@ -4174,8 +4254,8 @@ msgstr "יחידה"
 
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:469
-#: ../src/widgets/toolbox.cpp:1145 ../src/widgets/toolbox.cpp:2309
-#: ../src/widgets/toolbox.cpp:5288
+#: ../src/widgets/toolbox.cpp:1146 ../src/widgets/toolbox.cpp:2310
+#: ../src/widgets/toolbox.cpp:5314
 msgid "Units"
 msgstr "יחידות"
 
@@ -4187,7 +4267,7 @@ msgstr "נקודה"
 msgid "pt"
 msgstr "נק"
 
-#: ../src/helper/units.cpp:38
+#: ../src/helper/units.cpp:38 ../share/extensions/perfectboundcover.inx.h:16
 msgid "Points"
 msgstr "נקודות"
 
@@ -4520,6 +4600,14 @@ msgstr ""
 msgid "_Write session file:"
 msgstr ""
 
+#: ../src/jabber_whiteboard/pedrogui.cpp:2630
+msgid "Shared SVG whiteboard tool."
+msgstr ""
+
+#: ../src/jabber_whiteboard/pedrogui.cpp:2631
+msgid "Based on the Pedro XMPP client"
+msgstr ""
+
 #: ../src/jabber_whiteboard/session-file-selector.cpp:60
 msgid "Select a location and filename"
 msgstr "בחר מיקום ושם קובץ"
@@ -4558,6 +4646,399 @@ msgstr ""
 
 #: ../src/knotholder.cpp:312
 msgid "Move handle"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-bar.c:108
+#, fuzzy
+msgid "Master"
+msgstr "מטר"
+
+#: ../src/libgdl/gdl-dock-bar.c:109
+msgid "GdlDockMaster object which the dockbar widget is attached to"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-bar.c:116
+msgid "Dockbar style"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-bar.c:117
+msgid "Dockbar style to show items on it"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item-grip.c:395
+msgid "Iconify"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item-grip.c:395
+msgid "Iconify this dock"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item-grip.c:397
+#, fuzzy
+msgid "Close"
+msgstr "_סגור"
+
+#: ../src/libgdl/gdl-dock-item-grip.c:397
+msgid "Close this dock"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item-grip.c:706
+#: ../src/libgdl/gdl-dock-tablabel.c:128
+msgid "Controlling dock item"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item-grip.c:707
+msgid "Dockitem which 'owns' this grip"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:287
+#, fuzzy
+msgid "Orientation"
+msgstr "יעד הדפסה"
+
+#: ../src/libgdl/gdl-dock-item.c:288
+msgid "Orientation of the docking item"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:303
+msgid "Resizable"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:304
+msgid "If set, the dock item can be resized when docked in a paned"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:311
+msgid "Item behavior"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:312
+msgid ""
+"General behavior for the dock item (i.e. whether it can float, if it's "
+"locked, etc.)"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:320 ../src/libgdl/gdl-dock-master.c:148
+#, fuzzy
+msgid "Locked"
+msgstr "נעל"
+
+#: ../src/libgdl/gdl-dock-item.c:321
+msgid ""
+"If set, the dock item cannot be dragged around and it doesn't show a grip"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:329
+msgid "Preferred width"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:330
+msgid "Preferred width for the dock item"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:336
+msgid "Preferred height"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:337
+msgid "Preferred height for the dock item"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:616
+#, c-format
+msgid ""
+"You can't add a dock object (%p of type %s) inside a %s. Use a GdlDock or "
+"some other compound dock object."
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:623
+#, c-format
+msgid ""
+"Attempting to add a widget with type %s to a %s, but it can only contain one "
+"widget at a time; it already contains a widget of type %s"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:1345 ../src/libgdl/gdl-dock-item.c:1390
+#, c-format
+msgid "Unsupported docking strategy %s in dock object of type %s"
+msgstr ""
+
+#. UnLock menuitem
+#: ../src/libgdl/gdl-dock-item.c:1479
+#, fuzzy
+msgid "UnLock"
+msgstr "נעל"
+
+#. Hide menuitem.
+#: ../src/libgdl/gdl-dock-item.c:1486
+msgid "Hide"
+msgstr ""
+
+#. Lock menuitem
+#: ../src/libgdl/gdl-dock-item.c:1491
+msgid "Lock"
+msgstr "נעל"
+
+#: ../src/libgdl/gdl-dock-item.c:1717
+#, c-format
+msgid "Attempt to bind an unbound item %p"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:141 ../src/libgdl/gdl-dock.c:183
+#, fuzzy
+msgid "Default title"
+msgstr "רישיון"
+
+#: ../src/libgdl/gdl-dock-master.c:142
+msgid "Default title for newly created floating docks"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:149
+msgid ""
+"If is set to 1, all the dock items bound to the master are locked; if it's "
+"0, all are unlocked; -1 indicates inconsistency among the items"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:157 ../src/libgdl/gdl-switcher.c:707
+msgid "Switcher Style"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:158 ../src/libgdl/gdl-switcher.c:708
+msgid "Switcher buttons style"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:165
+msgid "Expand direction"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:166
+msgid ""
+"Allow the master's dock items to expand their container dock objects in the "
+"given direction"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:781
+#, c-format
+msgid ""
+"master %p: unable to add object %p[%s] to the hash.  There already is an "
+"item with that name (%p)."
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:954
+#, c-format
+msgid ""
+"The new dock controller %p is automatic.  Only manual dock objects should be "
+"named controller."
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-notebook.c:134
+#: ../src/ui/dialog/align-and-distribute.cpp:907
+#: ../src/ui/dialog/document-properties.cpp:129
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1427
+#: ../src/widgets/desktop-widget.cpp:1527
+msgid "Page"
+msgstr "עמוד"
+
+#: ../src/libgdl/gdl-dock-notebook.c:135
+msgid "The index of the current page"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:195
+msgid "Name"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:121
+msgid "Unique name for identifying the dock object"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:128
+msgid "Long name"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:129
+msgid "Human readable name for the dock object"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:135
+msgid "Stock Icon"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:136
+msgid "Stock icon for the dock object"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:142
+msgid "Pixbuf Icon"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:143
+msgid "Pixbuf icon for the dock object"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:148
+msgid "Dock master"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:149
+msgid "Dock master this dock object is bound to"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:434
+#, c-format
+msgid ""
+"Call to gdl_dock_object_dock in a dock object %p (object type is %s) which "
+"hasn't implemented this method"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:563
+#, c-format
+msgid ""
+"Dock operation requested in a non-bound object %p. The application might "
+"crash"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:570
+#, c-format
+msgid "Cannot dock %p to %p because they belong to different masters"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:612
+#, c-format
+msgid ""
+"Attempt to bind to %p an already bound dock object %p (current master: %p)"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-paned.c:132
+#, fuzzy
+msgid "Position"
+msgstr "יעד הדפסה"
+
+#: ../src/libgdl/gdl-dock-paned.c:133
+msgid "Position of the divider in pixels"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:143
+msgid "Sticky"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:144
+msgid ""
+"Whether the placeholder will stick to its host or move up the hierarchy when "
+"the host is redocked"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:151
+msgid "Host"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:152
+msgid "The dock object this placeholder is attached to"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:159
+msgid "Next placement"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:160
+msgid ""
+"The position an item will be docked to our host if a request is made to dock "
+"to us"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:170
+msgid "Width for the widget when it's attached to the placeholder"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:178
+msgid "Height for the widget when it's attached to the placeholder"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:184
+msgid "Floating Toplevel"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:185
+msgid "Whether the placeholder is standing in for a floating toplevel dock"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:191
+#, fuzzy
+msgid "X-Coordinate"
+msgstr "פינות"
+
+#: ../src/libgdl/gdl-dock-placeholder.c:192
+msgid "X-Coordinate fow dock when floating"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:198
+#, fuzzy
+msgid "Y-Coordinate"
+msgstr "פינות"
+
+#: ../src/libgdl/gdl-dock-placeholder.c:199
+msgid "Y-Coordinate fow dock when floating"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:494
+msgid "Attempt to dock a dock object to an unbound placeholder"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:618
+#, c-format
+msgid "Got a detach signal from an object (%p) who is not our host %p"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:643
+#, c-format
+msgid ""
+"Something weird happened while getting the child placement for %p from "
+"parent %p"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-tablabel.c:129
+msgid "Dockitem which 'owns' this tablabel"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:175 ../src/ui/dialog/inkscape-preferences.cpp:464
+#: ../src/ui/dialog/inkscape-preferences.cpp:490
+msgid "Floating"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:176
+msgid "Whether the dock is floating in its own window"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:184
+msgid "Default title for the newly created floating docks"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:191
+msgid "Width for the dock when it's of floating type"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:199
+msgid "Height for the dock when it's of floating type"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:206
+msgid "Float X"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:207
+msgid "X coordinate for a floating dock"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:214
+msgid "Float Y"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:215
+msgid "Y coordinate for a floating dock"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:499
+#, c-format
+msgid "Dock #%d"
 msgstr ""
 
 #: ../src/libnrtype/FontFactory.cpp:774
@@ -4703,6 +5184,35 @@ msgstr ""
 msgid "Scale the width of the stroke path relative to its length"
 msgstr ""
 
+#: ../src/live_effects/lpe-pathalongpath.cpp:57
+msgid "Bend path"
+msgstr ""
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:57
+msgid "Path along which to bend the original path"
+msgstr ""
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:58
+msgid "Width of the path"
+msgstr ""
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:59
+#: ../src/live_effects/lpe-skeletalstrokes.cpp:65
+msgid "Width in units of length"
+msgstr ""
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:59
+msgid "Scale the width of the path in units of its length"
+msgstr ""
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:60
+msgid "Original path is vertical"
+msgstr ""
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:60
+msgid "Rotates the original 90 degrees, before bending it along the bend path"
+msgstr ""
+
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:53
 msgid "Single"
 msgstr ""
@@ -4740,10 +5250,6 @@ msgid "Width of the pattern"
 msgstr ""
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:65
-msgid "Width in units of length"
-msgstr ""
-
-#: ../src/live_effects/lpe-skeletalstrokes.cpp:65
 msgid "Scale the width of the pattern in units of its length"
 msgstr ""
 
@@ -4768,6 +5274,26 @@ msgstr "היסט משיק"
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:69
 #: ../share/extensions/pathalongpath.inx.h:7
 msgid "Pattern is vertical"
+msgstr ""
+
+#: ../src/live_effects/lpe-slant.cpp:18
+msgid "Slant factor"
+msgstr ""
+
+#: ../src/live_effects/lpe-slant.cpp:18
+msgid "y = y + x*(slant factor)"
+msgstr ""
+
+#: ../src/live_effects/lpe-slant.cpp:19 ../src/widgets/toolbox.cpp:4842
+msgid "Center"
+msgstr "יישר למרכז"
+
+#: ../src/live_effects/lpe-slant.cpp:19
+msgid "The x-coord of this point is around which the slant will happen"
+msgstr ""
+
+#: ../src/live_effects/lpe-test-doEffect-stack.cpp:21
+msgid "Stack step"
 msgstr ""
 
 #: ../src/live_effects/parameter/parameter.cpp:138
@@ -4851,7 +5377,7 @@ msgstr ""
 msgid "The resolution used for exporting SVG into bitmap (default 90)"
 msgstr ""
 
-#: ../src/main.cpp:249
+#: ../src/main.cpp:249 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
 msgstr ""
 
@@ -5592,6 +6118,14 @@ msgstr ""
 msgid "Finishing freehand"
 msgstr ""
 
+#: ../src/persp3d.cpp:337
+msgid "Toggle vanishing point"
+msgstr ""
+
+#: ../src/persp3d.cpp:348
+msgid "Toggle multiple vanishing points"
+msgstr ""
+
 #: ../src/preferences.cpp:59
 #, c-format
 msgid ""
@@ -5693,7 +6227,7 @@ msgid "<b>Nothing</b> was deleted."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:261 ../src/text-context.cpp:995
-#: ../src/widgets/toolbox.cpp:990
+#: ../src/widgets/toolbox.cpp:991
 msgid "Delete"
 msgstr ""
 
@@ -5861,7 +6395,7 @@ msgid "Rotate by pixels"
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:1926 ../src/seltrans.cpp:431
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2138
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2182
 #: ../src/ui/dialog/transformation.cpp:666
 msgid "Scale"
 msgstr ""
@@ -5934,84 +6468,84 @@ msgstr ""
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2490
+#: ../src/selection-chemistry.cpp:2491
 msgid "Objects to marker"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2519
+#: ../src/selection-chemistry.cpp:2520
 #, fuzzy
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr "בחר את <b>האוביקטים</b> שעליהם יווצר הגרדיאנט."
 
-#: ../src/selection-chemistry.cpp:2529
+#: ../src/selection-chemistry.cpp:2530
 msgid "Objects to guides"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2546
+#: ../src/selection-chemistry.cpp:2547
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2631
+#: ../src/selection-chemistry.cpp:2632
 msgid "Objects to pattern"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2648
+#: ../src/selection-chemistry.cpp:2649
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2701
+#: ../src/selection-chemistry.cpp:2702
 msgid "<b>No pattern fills</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2704
+#: ../src/selection-chemistry.cpp:2705
 msgid "Pattern to objects"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2790
+#: ../src/selection-chemistry.cpp:2791
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2951
+#: ../src/selection-chemistry.cpp:2952
 msgid "Create bitmap"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2984
+#: ../src/selection-chemistry.cpp:2985
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2987
+#: ../src/selection-chemistry.cpp:2988
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3093
+#: ../src/selection-chemistry.cpp:3094
 msgid "Set clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3095
+#: ../src/selection-chemistry.cpp:3096
 msgid "Set mask"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3109
+#: ../src/selection-chemistry.cpp:3110
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3177
+#: ../src/selection-chemistry.cpp:3178
 msgid "Release clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3179
+#: ../src/selection-chemistry.cpp:3180
 msgid "Release mask"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3190
+#: ../src/selection-chemistry.cpp:3191
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3224
+#: ../src/selection-chemistry.cpp:3225
 msgid "Fit page to selection"
 msgstr ""
 
-#: ../src/selection-describer.cpp:42
+#: ../src/selection-describer.cpp:42 ../src/ui/widget/spin-slider.cpp:113
 msgid "Link"
 msgstr ""
 
@@ -6037,7 +6571,7 @@ msgstr "קו"
 msgid "Path"
 msgstr ""
 
-#: ../src/selection-describer.cpp:58 ../src/widgets/toolbox.cpp:1882
+#: ../src/selection-describer.cpp:58 ../src/widgets/toolbox.cpp:1883
 msgid "Polygon"
 msgstr "פוליגון"
 
@@ -6074,7 +6608,7 @@ msgstr ""
 #. star
 #: ../src/selection-describer.cpp:78
 #: ../src/ui/dialog/inkscape-preferences.cpp:407 ../src/verbs.cpp:2380
-#: ../src/widgets/toolbox.cpp:1889
+#: ../src/widgets/toolbox.cpp:1890
 msgid "Star"
 msgstr ""
 
@@ -6472,6 +7006,15 @@ msgstr ""
 msgid "<b>Text</b> (%s, %s)"
 msgstr ""
 
+#: ../src/sp-tref.cpp:359
+#, c-format
+msgid "<b>Cloned character data</b> from: %s"
+msgstr ""
+
+#: ../src/sp-tref.cpp:363
+msgid "<b>Orphaned cloned character data</b>"
+msgstr ""
+
 #: ../src/sp-tspan.cpp:285
 msgid "<b>Text span</b>"
 msgstr ""
@@ -6862,6 +7405,10 @@ msgstr ""
 msgid "Type text"
 msgstr ""
 
+#: ../src/text-editing.cpp:40
+msgid "You cannot edit <b>cloned character data</b>."
+msgstr ""
+
 #: ../src/tools-switch.cpp:148
 msgid ""
 "To edit a path, <b>click</b>, <b>Shift+click</b>, or <b>drag around</b> "
@@ -7195,7 +7742,7 @@ msgstr ""
 
 #. TRANSLATORS: Horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:467
-#: ../src/widgets/toolbox.cpp:2265
+#: ../src/widgets/toolbox.cpp:2266
 msgid "H:"
 msgstr ""
 
@@ -7210,12 +7757,12 @@ msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:505
 #: ../src/ui/dialog/align-and-distribute.cpp:782
-#: ../src/widgets/toolbox.cpp:5156
+#: ../src/widgets/toolbox.cpp:5182
 msgid "Remove overlaps"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:535
-#: ../src/widgets/toolbox.cpp:5016
+#: ../src/widgets/toolbox.cpp:5042
 msgid "Arrange connector network"
 msgstr ""
 
@@ -7350,7 +7897,7 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:884
-#: ../src/widgets/toolbox.cpp:5118
+#: ../src/widgets/toolbox.cpp:5144
 msgid "Nicely arrange selected connector network"
 msgstr ""
 
@@ -7386,13 +7933,6 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:906
 msgid "Smallest item"
 msgstr ""
-
-#: ../src/ui/dialog/align-and-distribute.cpp:907
-#: ../src/ui/dialog/document-properties.cpp:129
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1427
-#: ../src/widgets/desktop-widget.cpp:1527
-msgid "Page"
-msgstr "עמוד"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:908
 #: ../src/widgets/desktop-widget.cpp:1531
@@ -7624,7 +8164,7 @@ msgid "Guides"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:131
-#: ../src/ui/dialog/inkscape-preferences.cpp:875
+#: ../src/ui/dialog/inkscape-preferences.cpp:879
 msgid "Grids"
 msgstr ""
 
@@ -7893,264 +8433,286 @@ msgid "Stroke st_yle"
 msgstr ""
 
 #. pack_start(_fromSVGElement, false, false);
-#: ../src/ui/dialog/filter-effects-dialog.cpp:567
+#: ../src/ui/dialog/filter-effects-dialog.cpp:583
 msgid "Image File"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:570
+#: ../src/ui/dialog/filter-effects-dialog.cpp:586
 msgid "Selected SVG Element"
 msgstr ""
 
 #. TODO: any image, not justy svg
-#: ../src/ui/dialog/filter-effects-dialog.cpp:637
+#: ../src/ui/dialog/filter-effects-dialog.cpp:655
 msgid "Select an image to be used as feImage input"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:897
+#: ../src/ui/dialog/filter-effects-dialog.cpp:747
+msgid "This SVG filter effect is not yet implemented in Inkscape."
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:927
 msgid "Light Source:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:918
-#: ../src/ui/dialog/filter-effects-dialog.cpp:921
+#. default x:
+#. default y:
+#. default z:
+#: ../src/ui/dialog/filter-effects-dialog.cpp:948
+#: ../src/ui/dialog/filter-effects-dialog.cpp:951
 msgid "Location"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:923
+#: ../src/ui/dialog/filter-effects-dialog.cpp:954
 msgid "Points At"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:924
+#: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Specular Exponent"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:925
+#: ../src/ui/dialog/filter-effects-dialog.cpp:956
 msgid "Cone Angle"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:985
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1016
 msgid "New light source"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1026
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1057
 msgid "_Duplicate"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1052
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1083
 msgid "_Filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1066
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1097
 msgid "R_ename"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1191
 msgid "Rename filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1196
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1227
 msgid "Apply filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1271
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1303
 msgid "Add filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1282
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1314
 msgid "Remove filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1297
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1329
 msgid "Duplicate filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1364
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1396
 msgid "_Effect"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1372
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1404
 msgid "Connections"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1488
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1520
 msgid "Remove filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1859
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1891
 msgid "Remove merge node"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1975
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2007
 msgid "Reorder filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2011
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2043
 msgid "Add Effect:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2012
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2044
 msgid "No effect selected"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2029
-msgid "<b>Effect parameters</b>"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2045
+msgid "No filter selected"
 msgstr ""
 
-#. # end multiple scan
-#. ## end mode page
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2097
-#: ../src/ui/dialog/tracedialog.cpp:553 ../src/widgets/toolbox.cpp:3112
-msgid "Mode"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2080
+msgid "Effect parameters"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2101
-msgid "Value(s)"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2081
+msgid "Filter General Settings"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2114
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2150
-msgid "Operator"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2115
-msgid "K1"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2116
-msgid "K2"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2117
-msgid "K3"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2118
-msgid "K4"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2122
-msgid "Target"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2123
-msgid "Kernel"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2125
-msgid "Divisor"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2126
-msgid "Bias"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2127
-msgid "Edge Mode"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2128
-msgid "Preserve Alpha"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2131
-msgid "Diffuse Color"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2132
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2164
-msgid "Surface Scale"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2133
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
-msgid "Constant"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2134
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
-msgid "Kernel Unit Length"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2139
-msgid "X Channel"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2140
-msgid "Y Channel"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2143
-msgid "Flood Color"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2147
-msgid "Standard Deviation"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2154
-#, fuzzy
-msgid "Source of Image"
-msgstr "מספר צעדים"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2155
+#. default x:
+#. default y:
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2137
 #, fuzzy
 msgid "Coordinates"
 msgstr "פינות"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2156
+#. default width:
+#. default height:
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2138
+#: ../share/extensions/dimension.inx.h:1
 msgid "Dimensions"
 msgstr ""
 
+#. # end multiple scan
+#. ## end mode page
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2141
+#: ../src/ui/dialog/tracedialog.cpp:553 ../src/widgets/toolbox.cpp:3113
+msgid "Mode"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2145
+msgid "Value(s)"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2158
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
+msgid "Operator"
+msgstr ""
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2159
-msgid "Delta X"
+msgid "K1"
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+msgid "K2"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
+msgid "K3"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
+msgid "K4"
+msgstr ""
+
+#. default x:
+#. default y:
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
+msgid "Target"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
+msgid "Kernel"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2169
+msgid "Divisor"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2170
+msgid "Bias"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2171
+msgid "Edge Mode"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2172
+msgid "Preserve Alpha"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2175
+msgid "Diffuse Color"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2176
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2206
+msgid "Surface Scale"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2177
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+msgid "Constant"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2178
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
+msgid "Kernel Unit Length"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2183
+msgid "X Channel"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2184
+msgid "Y Channel"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2187
+msgid "Flood Color"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
+msgid "Standard Deviation"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
+#, fuzzy
+msgid "Source of Image"
+msgstr "מספר צעדים"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
+msgid "Delta X"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 msgid "Delta Y"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2163
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2205
 msgid "Specular Color"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
 #: ../share/extensions/interp.inx.h:2
 msgid "Exponent"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2174
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
 msgid "Stitch Tiles"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2176
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2218
 msgid "Base Frequency"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2177
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2219
 msgid "Octaves"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2178
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2220
 msgid "Seed"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2232
 msgid "Add filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2199
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2248
 msgid ""
 "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, "
 "multiply, darken and lighten."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2252
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "colour of each rendered pixel. This allows for effects like turning object "
 "to grayscale, modifying colour saturation and changing colour hue."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2256
 msgid ""
 "The <b>feComponentTransfer</b> filter primitive manipulates the input's "
 "color components (red, green, blue, and alpha) according to particular "
@@ -8158,7 +8720,7 @@ msgid ""
 "adjustment, color balance, and thresholding."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2211
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2260
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
 "the Porter-Duff blending modes or the aritmetic mode described in SVG "
@@ -8166,7 +8728,7 @@ msgid ""
 "between the corresponding pixel values of the images."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2264
 msgid ""
 "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on "
 "the image. Common effects created using convolution matrices are blur, "
@@ -8175,7 +8737,7 @@ msgid ""
 "is faster and resolution-independent."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2219
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2268
 msgid ""
 "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
@@ -8183,7 +8745,7 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2272
 msgid ""
 "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the "
 "first input using the second input as a displacement map, that shows from "
@@ -8191,26 +8753,26 @@ msgid ""
 "effects."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2227
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2276
 msgid ""
 "The <b>feFlood</b> filter primitive fills the region with a given color and "
 "opacity.  It is usually used as an input to other filters to apply color to "
 "a graphic."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2280
 msgid ""
 "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is "
 "commonly used together with feOffset to create a drop shadow effect."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2284
 msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2239
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2288
 msgid ""
 "The <b>feMerge</b> filter primitive composites several temporary images "
 "inside the filter primitive to a single image. It uses normal alpha "
@@ -8218,21 +8780,21 @@ msgid ""
 "in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2243
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2292
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
 "For single-colour objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2247
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2296
 msgid ""
 "The <b>feOffset</b> filter primitive offsets the image by an user-defined "
 "amount. For example, this is useful for drop shadows, where the shadow is in "
 "a slightly different position than the actual object."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2251
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2300
 msgid ""
 "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
@@ -8240,23 +8802,23 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2255
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2304
 msgid ""
 "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2259
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2308
 msgid ""
 "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of "
 "noise is useful in simulating several nature phenomena like clouds, fire and "
 "smoke and in generating complex textures like marble or granite."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2274
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2326
 msgid "Duplicate filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2313
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2379
 msgid "Set filter primitive attribute"
 msgstr ""
 
@@ -8354,7 +8916,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:178
 #: ../src/ui/dialog/tracedialog.cpp:410 ../src/ui/dialog/tracedialog.cpp:443
-#: ../src/ui/dialog/tracedialog.cpp:586 ../src/widgets/toolbox.cpp:5271
+#: ../src/ui/dialog/tracedialog.cpp:586 ../src/widgets/toolbox.cpp:5297
 msgid "Threshold:"
 msgstr ""
 
@@ -8739,11 +9301,6 @@ msgstr ""
 msgid "Dockable"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:464
-#: ../src/ui/dialog/inkscape-preferences.cpp:490
-msgid "Floating"
-msgstr ""
-
 #: ../src/ui/dialog/inkscape-preferences.cpp:466
 msgid "Dialogs are hidden in taskbar"
 msgstr ""
@@ -8754,6 +9311,10 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:468
 msgid "Show close button on dialogs"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:470
+msgid "Normal"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:471
@@ -9018,392 +9579,390 @@ msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:608
+msgid "Show filter primitives infobox"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:610
+msgid ""
+"Show icons and descriptions for the filter primitives available at the "
+"filter effects dialog."
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:612
 msgid "Filters"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:614
+#: ../src/ui/dialog/inkscape-preferences.cpp:618
 msgid "Select in all layers"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:615
+#: ../src/ui/dialog/inkscape-preferences.cpp:619
 msgid "Select only within current layer"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:616
+#: ../src/ui/dialog/inkscape-preferences.cpp:620
 msgid "Select in current layer and sublayers"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:617
+#: ../src/ui/dialog/inkscape-preferences.cpp:621
 msgid "Ignore hidden objects and layers"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:618
+#: ../src/ui/dialog/inkscape-preferences.cpp:622
 msgid "Ignore locked objects and layers"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:619
+#: ../src/ui/dialog/inkscape-preferences.cpp:623
 msgid "Deselect upon layer change"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:621
+#: ../src/ui/dialog/inkscape-preferences.cpp:625
 msgid "Ctrl+A, Tab, Shift+Tab:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:623
+#: ../src/ui/dialog/inkscape-preferences.cpp:627
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:625
+#: ../src/ui/dialog/inkscape-preferences.cpp:629
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:627
+#: ../src/ui/dialog/inkscape-preferences.cpp:631
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
 "its sublayers"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:629
+#: ../src/ui/dialog/inkscape-preferences.cpp:633
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden layer)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:631
+#: ../src/ui/dialog/inkscape-preferences.cpp:635
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
 "themselves or by being in a locked layer)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:634
+#: ../src/ui/dialog/inkscape-preferences.cpp:638
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:636
+#: ../src/ui/dialog/inkscape-preferences.cpp:640
 msgid "Selecting"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:643
+#: ../src/ui/dialog/inkscape-preferences.cpp:647
 msgid "Default export resolution:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:644
+#: ../src/ui/dialog/inkscape-preferences.cpp:648
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:646
+#: ../src/ui/dialog/inkscape-preferences.cpp:650
 msgid "Open Clip Art Library Server Name:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:647
+#: ../src/ui/dialog/inkscape-preferences.cpp:651
 msgid ""
 "The server name of the Open Clip Art Library webdav server. It's used by the "
 "Import and Export to OCAL function."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:649
+#: ../src/ui/dialog/inkscape-preferences.cpp:653
 msgid "Open Clip Art Library Username:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:650
+#: ../src/ui/dialog/inkscape-preferences.cpp:654
 msgid "The username used to log into Open Clip Art Library."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:652
+#: ../src/ui/dialog/inkscape-preferences.cpp:656
 msgid "Open Clip Art Library Password:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:653
+#: ../src/ui/dialog/inkscape-preferences.cpp:657
 msgid "The password used to log into Open Clip Art Library."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:655
+#: ../src/ui/dialog/inkscape-preferences.cpp:659
 msgid "Import/Export"
 msgstr ""
 
 #. TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm
-#: ../src/ui/dialog/inkscape-preferences.cpp:701
+#: ../src/ui/dialog/inkscape-preferences.cpp:705
 msgid "Perceptual"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:701
+#: ../src/ui/dialog/inkscape-preferences.cpp:705
 msgid "Relative Colorimetric"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:701
+#: ../src/ui/dialog/inkscape-preferences.cpp:705
 msgid "Absolute Colorimetric"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:705
+#: ../src/ui/dialog/inkscape-preferences.cpp:709
 msgid "(Note: Color management has been disabled in this build)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:709
+#: ../src/ui/dialog/inkscape-preferences.cpp:713
 msgid "Display adjustment"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:711
+#: ../src/ui/dialog/inkscape-preferences.cpp:715
 msgid "Display profile:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:712
+#: ../src/ui/dialog/inkscape-preferences.cpp:716
 msgid "The ICC profile to use to calibrate display output."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:714
+#: ../src/ui/dialog/inkscape-preferences.cpp:718
 msgid "Retrieve profile from display"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:717
+#: ../src/ui/dialog/inkscape-preferences.cpp:721
 msgid "Retrieve profiles from those attached to displays via XICC."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:719
+#: ../src/ui/dialog/inkscape-preferences.cpp:723
 msgid "Retrieve profiles from those attached to displays."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:724
+#: ../src/ui/dialog/inkscape-preferences.cpp:728
 msgid "Display rendering intent:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:725
-#: ../src/ui/dialog/inkscape-preferences.cpp:748
+#: ../src/ui/dialog/inkscape-preferences.cpp:729
+#: ../src/ui/dialog/inkscape-preferences.cpp:752
 msgid "The rendering intent to use to calibrate display output."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:727
+#: ../src/ui/dialog/inkscape-preferences.cpp:731
 msgid "Proofing"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:729
+#: ../src/ui/dialog/inkscape-preferences.cpp:733
 msgid "Simulate output on screen"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:731
+#: ../src/ui/dialog/inkscape-preferences.cpp:735
 msgid "Simulates output of target device."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:733
+#: ../src/ui/dialog/inkscape-preferences.cpp:737
 msgid "Mark out of gamut colors"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:735
+#: ../src/ui/dialog/inkscape-preferences.cpp:739
 msgid "Highlights colors that are out of gamut for the target device."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:740
+#: ../src/ui/dialog/inkscape-preferences.cpp:744
 msgid "Out of gamut warning color:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:741
+#: ../src/ui/dialog/inkscape-preferences.cpp:745
 msgid "Selects the color used for out of gamut warning."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:743
+#: ../src/ui/dialog/inkscape-preferences.cpp:747
 msgid "Device profile:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:744
+#: ../src/ui/dialog/inkscape-preferences.cpp:748
 msgid "The ICC profile to use to simulate device output."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:747
+#: ../src/ui/dialog/inkscape-preferences.cpp:751
 msgid "Device rendering intent:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:750
+#: ../src/ui/dialog/inkscape-preferences.cpp:754
 msgid "Black point compensation"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:752
+#: ../src/ui/dialog/inkscape-preferences.cpp:756
 msgid "Enables black point compensation."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:754
+#: ../src/ui/dialog/inkscape-preferences.cpp:758
 msgid "Preserve black"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:759
+#: ../src/ui/dialog/inkscape-preferences.cpp:763
 msgid "(LittleCMS 1.15 or later required)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:761
+#: ../src/ui/dialog/inkscape-preferences.cpp:765
 msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:774
+#: ../src/ui/dialog/inkscape-preferences.cpp:778
 msgid "<none>"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:820
+#: ../src/ui/dialog/inkscape-preferences.cpp:824
 msgid "Color management"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:825
+#: ../src/ui/dialog/inkscape-preferences.cpp:829
 msgid "Major grid line emphasizing"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:827
+#: ../src/ui/dialog/inkscape-preferences.cpp:831
 msgid "Don't emphasize gridlines when zoomed out"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:828
+#: ../src/ui/dialog/inkscape-preferences.cpp:832
 msgid ""
 "If set and zoomed out, the gridlines will be shown in normal color instead "
 "of major grid line color."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:830
+#: ../src/ui/dialog/inkscape-preferences.cpp:834
 msgid "Default grid settings"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:836
-#: ../src/ui/dialog/inkscape-preferences.cpp:857
-#, fuzzy
-msgid "Grid units"
-msgstr "גרדיאנטים"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:839
-#: ../src/ui/dialog/inkscape-preferences.cpp:860
-msgid "Origin X"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:840
 #: ../src/ui/dialog/inkscape-preferences.cpp:861
+#, fuzzy
+msgid "Grid units"
+msgstr "גרדיאנטים"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:843
+#: ../src/ui/dialog/inkscape-preferences.cpp:864
+msgid "Origin X"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:844
+#: ../src/ui/dialog/inkscape-preferences.cpp:865
 msgid "Origin Y"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:843
+#: ../src/ui/dialog/inkscape-preferences.cpp:847
 #, fuzzy
 msgid "Spacing X"
 msgstr "ריווח"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:844
-#: ../src/ui/dialog/inkscape-preferences.cpp:863
+#: ../src/ui/dialog/inkscape-preferences.cpp:848
+#: ../src/ui/dialog/inkscape-preferences.cpp:867
 #, fuzzy
 msgid "Spacing Y"
 msgstr "ריווח"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:847
-#: ../src/ui/dialog/inkscape-preferences.cpp:869
+#: ../src/ui/dialog/inkscape-preferences.cpp:851
+#: ../src/ui/dialog/inkscape-preferences.cpp:873
 msgid "Selects the color used for normal grid lines."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:849
-#: ../src/ui/dialog/inkscape-preferences.cpp:871
+#: ../src/ui/dialog/inkscape-preferences.cpp:853
+#: ../src/ui/dialog/inkscape-preferences.cpp:875
 msgid "Selects the color used for major (highlighted) grid lines."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:851
-#: ../src/ui/dialog/inkscape-preferences.cpp:873
+#: ../src/ui/dialog/inkscape-preferences.cpp:855
+#: ../src/ui/dialog/inkscape-preferences.cpp:877
 msgid "Major grid line every"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:852
+#: ../src/ui/dialog/inkscape-preferences.cpp:856
 msgid "Show dots instead of lines"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:863
-msgid "Base length of z-axis"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:866
+#: ../src/ui/dialog/inkscape-preferences.cpp:870
 msgid "Angle X"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:866
-msgid "Angle of x-axis"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:867
+#: ../src/ui/dialog/inkscape-preferences.cpp:871
 msgid "Angle Z"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:867
-msgid "Angle of z-axis"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:880
+#: ../src/ui/dialog/inkscape-preferences.cpp:884
 msgid "Add label comments to printing output"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:882
+#: ../src/ui/dialog/inkscape-preferences.cpp:886
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:884
+#: ../src/ui/dialog/inkscape-preferences.cpp:888
 msgid "Prevent sharing of gradient definitions"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:886
+#: ../src/ui/dialog/inkscape-preferences.cpp:890
 msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
 "may affect other objects using the same gradient"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:888
+#: ../src/ui/dialog/inkscape-preferences.cpp:892
 msgid "Simplification threshold:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:889
+#: ../src/ui/dialog/inkscape-preferences.cpp:893
 msgid ""
 "How strong is the Simplify command by default. If you invoke this command "
 "several times in quick succession, it will act more and more aggressively; "
 "invoking it again after a pause restores the default threshold."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:891
+#: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "2x2"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:891
+#: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "4x4"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:891
+#: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "8x8"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:891
+#: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "16x16"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:895
+#: ../src/ui/dialog/inkscape-preferences.cpp:899
 msgid "Oversample bitmaps:"
 msgstr ""
 
 #. consider moving this to an UI tab:
-#: ../src/ui/dialog/inkscape-preferences.cpp:899
+#: ../src/ui/dialog/inkscape-preferences.cpp:903
 msgid "Make the commands toolbar icons smaller"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:901
+#: ../src/ui/dialog/inkscape-preferences.cpp:905
 msgid ""
 "Make the commands toolbar use the 'secondary' toolbar size (requires restart)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:903
+#: ../src/ui/dialog/inkscape-preferences.cpp:907
 msgid "Make the main toolbar icons smaller"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:905
+#: ../src/ui/dialog/inkscape-preferences.cpp:909
 msgid "Make the main tools use the 'secondary' toolbar size (requires restart)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:908
+#: ../src/ui/dialog/inkscape-preferences.cpp:912
 msgid "Maximum number of recent documents:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:909
+#: ../src/ui/dialog/inkscape-preferences.cpp:913
 msgid "The maximum length of the Open Recent list in the File menu"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:912
+#: ../src/ui/dialog/inkscape-preferences.cpp:916
 msgid "Misc"
 msgstr ""
 
@@ -9497,39 +10056,76 @@ msgid ""
 "preferences.xml"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:71
+#: ../src/ui/dialog/ocaldialogs.cpp:76
 msgid "File"
 msgstr "קובץ"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:169
+#: ../src/ui/dialog/ocaldialogs.cpp:174
 msgid "Username:"
 msgstr "שם משתמש:"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:170
+#: ../src/ui/dialog/ocaldialogs.cpp:175
 msgid "Password:"
 msgstr "סיסמה:"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:410
+#: ../src/ui/dialog/ocaldialogs.cpp:401
+msgid "Error while reading the Open Clip Art RSS feed"
+msgstr ""
+
+#: ../src/ui/dialog/ocaldialogs.cpp:439
 msgid ""
 "Failed to receive the Open Clip Art Library RSS feed. Verify if the server "
 "name is correct in Configuration->Misc (e.g.: openclipart.org)"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:538
-msgid "Search Tag"
+#: ../src/ui/dialog/ocaldialogs.cpp:453
+msgid "Server supplied malformed Clip Art feed"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:539
+#: ../src/ui/dialog/ocaldialogs.cpp:544
+msgid "Search for:"
+msgstr ""
+
+#: ../src/ui/dialog/ocaldialogs.cpp:545
 msgid "No files matched your search"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:548
+#: ../src/ui/dialog/ocaldialogs.cpp:556
 msgid "Search"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:565
-msgid "Files Found"
+#: ../src/ui/dialog/ocaldialogs.cpp:573
+msgid "Files found"
 msgstr ""
+
+#: ../src/ui/dialog/print.cpp:86
+msgid "Could not open temporary PNG for bitmap printing"
+msgstr ""
+
+#: ../src/ui/dialog/print.cpp:101
+msgid "Could not set up Document"
+msgstr ""
+
+#: ../src/ui/dialog/print.cpp:105
+msgid "Failed to set CairoRenderContext"
+msgstr ""
+
+#. set up dialog title, based on document name
+#: ../src/ui/dialog/print.cpp:145
+#, fuzzy
+msgid "SVG Document"
+msgstr "המסמך נשמר."
+
+#: ../src/ui/dialog/print.cpp:146
+#, fuzzy
+msgid "Print"
+msgstr "נקודה"
+
+#. build custom preferences tab
+#: ../src/ui/dialog/print.cpp:169
+#, fuzzy
+msgid "Rendering"
+msgstr "רנדר"
 
 #: ../src/ui/dialog/scriptdialog.cpp:205
 msgid "_Execute Python"
@@ -10049,11 +10645,8 @@ msgstr ""
 #: ../src/ui/view/edit-widget.cpp:898 ../src/ui/view/edit-widget.cpp:902
 #: ../src/ui/view/edit-widget.cpp:906 ../src/ui/view/edit-widget.cpp:910
 #: ../src/ui/view/edit-widget.cpp:914 ../src/ui/view/edit-widget.cpp:918
-msgid "PLACEHOLDER, do not translate"
-msgstr ""
-
 #: ../src/ui/view/edit-widget.cpp:1003
-msgid "PLACEHOLDER, DO NOT TRANSLATE"
+msgid "PLACEHOLDER, do not translate"
 msgstr ""
 
 #: ../src/ui/view/edit-widget.cpp:1062 ../src/widgets/desktop-widget.cpp:376
@@ -10098,25 +10691,45 @@ msgstr ""
 msgid "_Save as SVG"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:98
+#: ../src/ui/widget/panel.cpp:112
 msgid "tiny"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:99
+#: ../src/ui/widget/panel.cpp:113
 msgid "small"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:101
+#: ../src/ui/widget/panel.cpp:115
 msgid "large"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:102
+#: ../src/ui/widget/panel.cpp:116
 msgid "huge"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:117
+#: ../src/ui/widget/panel.cpp:131
 msgid "List"
 msgstr ""
+
+#: ../src/ui/widget/panel.cpp:163
+#, fuzzy
+msgid "Shape"
+msgstr "צורות"
+
+#: ../src/ui/widget/panel.cpp:165
+#, fuzzy
+msgid "Tall"
+msgstr "קטן"
+
+#: ../src/ui/widget/panel.cpp:166
+#, fuzzy
+msgid "Square"
+msgstr "שפר חדות"
+
+#: ../src/ui/widget/panel.cpp:167
+#, fuzzy
+msgid "Wide"
+msgstr "רוחב"
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:25
 msgid "_Blend mode:"
@@ -10309,8 +10922,9 @@ msgid "White"
 msgstr "לבן"
 
 #: ../src/ui/widget/selected-style.cpp:226
+#: ../src/widgets/sp-color-icc-selector.cpp:237
+#: ../src/widgets/sp-color-scales.cpp:461
 #: ../src/widgets/sp-color-scales.cpp:462
-#: ../src/widgets/sp-color-scales.cpp:463
 msgid "Black"
 msgstr "שחור"
 
@@ -10448,10 +11062,6 @@ msgid ""
 "b> to adjust saturation, with <b>Ctrl</b> to adjust lightness"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:195
-msgid "Name"
-msgstr ""
-
 #: ../src/ui/widget/page-sizer.cpp:233
 msgid "P_age size:"
 msgstr ""
@@ -10539,6 +11149,52 @@ msgstr ""
 #: ../src/ui/widget/style-swatch.cpp:376
 #, c-format
 msgid "Opacity: %.3g"
+msgstr ""
+
+#: ../src/ui/widget/preferences-widget.cpp:278
+msgid "Reset"
+msgstr ""
+
+#: ../src/ui/widget/random.cpp:123
+msgid ""
+"Reseed the random number generator; this creates a different sequence of "
+"random numbers."
+msgstr ""
+
+#: ../src/ui/widget/rendering-options.cpp:39
+#, fuzzy
+msgid "Vector"
+msgstr "פקטור"
+
+#: ../src/ui/widget/rendering-options.cpp:40
+msgid "Bitmap"
+msgstr ""
+
+#: ../src/ui/widget/rendering-options.cpp:41
+#, fuzzy
+msgid "Backend"
+msgstr "שחור"
+
+#: ../src/ui/widget/rendering-options.cpp:42
+msgid "Bitmap options"
+msgstr ""
+
+#: ../src/ui/widget/rendering-options.cpp:44
+msgid "Preferred resolution of rendering, in dots per inch."
+msgstr ""
+
+#: ../src/ui/widget/rendering-options.cpp:52
+msgid ""
+"Render using Cairo vector operations.  The resulting image is usually "
+"smaller in file size and can be arbitrarily scaled, but some filter effects "
+"will not be correctly rendered."
+msgstr ""
+
+#: ../src/ui/widget/rendering-options.cpp:57
+msgid ""
+"Render everything as bitmap.  The resulting image is usually larger in file "
+"size and cannot be arbitrarily scaled without quality loss, but all objects "
+"will be rendered exactly as displayed."
 msgstr ""
 
 #: ../src/vanishing-point.cpp:135
@@ -11091,11 +11747,11 @@ msgstr ""
 msgid "Deselect any selected objects or nodes"
 msgstr ""
 
-#: ../src/verbs.cpp:2222 ../src/widgets/toolbox.cpp:1099
+#: ../src/verbs.cpp:2222 ../src/widgets/toolbox.cpp:1100
 msgid "Next Path Effect Parameter"
 msgstr ""
 
-#: ../src/verbs.cpp:2223 ../src/widgets/toolbox.cpp:1100
+#: ../src/verbs.cpp:2223 ../src/widgets/toolbox.cpp:1101
 msgid "Show next Path Effect parameter for editing"
 msgstr ""
 
@@ -12306,7 +12962,7 @@ msgstr "גודל גופן:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:628 ../src/widgets/toolbox.cpp:4659
+#: ../src/widgets/font-selector.cpp:628 ../src/widgets/toolbox.cpp:4684
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr ""
 
@@ -12360,11 +13016,11 @@ msgstr ""
 msgid "Edit the stops of the gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:522 ../src/widgets/toolbox.cpp:1792
-#: ../src/widgets/toolbox.cpp:1864 ../src/widgets/toolbox.cpp:2193
-#: ../src/widgets/toolbox.cpp:2230 ../src/widgets/toolbox.cpp:2844
-#: ../src/widgets/toolbox.cpp:2867 ../src/widgets/toolbox.cpp:3734
-#: ../src/widgets/toolbox.cpp:3760
+#: ../src/widgets/gradient-toolbar.cpp:522 ../src/widgets/toolbox.cpp:1793
+#: ../src/widgets/toolbox.cpp:1865 ../src/widgets/toolbox.cpp:2194
+#: ../src/widgets/toolbox.cpp:2231 ../src/widgets/toolbox.cpp:2845
+#: ../src/widgets/toolbox.cpp:2868 ../src/widgets/toolbox.cpp:3735
+#: ../src/widgets/toolbox.cpp:3761
 msgid "<b>New:</b>"
 msgstr ""
 
@@ -12390,10 +13046,10 @@ msgstr ""
 
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-#: ../src/widgets/gradient-toolbar.cpp:605 ../src/widgets/toolbox.cpp:1794
-#: ../src/widgets/toolbox.cpp:2201 ../src/widgets/toolbox.cpp:2219
-#: ../src/widgets/toolbox.cpp:2846 ../src/widgets/toolbox.cpp:2857
-#: ../src/widgets/toolbox.cpp:3737 ../src/widgets/toolbox.cpp:3748
+#: ../src/widgets/gradient-toolbar.cpp:605 ../src/widgets/toolbox.cpp:1795
+#: ../src/widgets/toolbox.cpp:2202 ../src/widgets/toolbox.cpp:2220
+#: ../src/widgets/toolbox.cpp:2847 ../src/widgets/toolbox.cpp:2858
+#: ../src/widgets/toolbox.cpp:3738 ../src/widgets/toolbox.cpp:3749
 msgid "<b>Change:</b>"
 msgstr ""
 
@@ -12647,6 +13303,121 @@ msgstr "הפוך גרדיאנט"
 msgid "Move patterns"
 msgstr "מטרים"
 
+#: ../src/widgets/sp-color-icc-selector.cpp:110
+msgid "CMS"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:219
+#: ../src/widgets/sp-color-scales.cpp:397
+msgid "_R"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:219
+#: ../src/widgets/sp-color-icc-selector.cpp:220
+#: ../src/widgets/sp-color-scales.cpp:400
+msgid "_G"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:219
+#: ../src/widgets/sp-color-scales.cpp:403
+msgid "_B"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:221
+#: ../src/widgets/sp-color-icc-selector.cpp:222
+#: ../src/widgets/sp-color-scales.cpp:423
+msgid "_H"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:221
+#: ../src/widgets/sp-color-icc-selector.cpp:222
+#: ../src/widgets/sp-color-scales.cpp:426
+msgid "_S"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:222
+#: ../src/widgets/sp-color-scales.cpp:429
+msgid "_L"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:223
+#: ../src/widgets/sp-color-icc-selector.cpp:224
+#: ../src/widgets/sp-color-scales.cpp:451
+msgid "_C"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:223
+#: ../src/widgets/sp-color-icc-selector.cpp:224
+#: ../src/widgets/sp-color-scales.cpp:454
+msgid "_M"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:223
+#: ../src/widgets/sp-color-icc-selector.cpp:224
+#: ../src/widgets/sp-color-scales.cpp:457
+msgid "_Y"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:223
+#: ../src/widgets/sp-color-scales.cpp:460
+msgid "_K"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:234
+msgid "Gray"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:237
+#: ../src/widgets/sp-color-icc-selector.cpp:238
+#: ../src/widgets/sp-color-scales.cpp:452
+#: ../src/widgets/sp-color-scales.cpp:453
+msgid "Cyan"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:237
+#: ../src/widgets/sp-color-icc-selector.cpp:238
+#: ../src/widgets/sp-color-scales.cpp:455
+#: ../src/widgets/sp-color-scales.cpp:456
+msgid "Magenta"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:237
+#: ../src/widgets/sp-color-icc-selector.cpp:238
+#: ../src/widgets/sp-color-scales.cpp:458
+#: ../src/widgets/sp-color-scales.cpp:459
+msgid "Yellow"
+msgstr "צהוב"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:295
+msgid "Fix"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:298
+msgid "Fix RGB fallback to match icc-color() value."
+msgstr ""
+
+#. Label
+#: ../src/widgets/sp-color-icc-selector.cpp:379
+#: ../src/widgets/sp-color-scales.cpp:406
+#: ../src/widgets/sp-color-scales.cpp:432
+#: ../src/widgets/sp-color-scales.cpp:463
+#: ../src/widgets/sp-color-wheel-selector.cpp:134
+msgid "_A"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:389
+#: ../src/widgets/sp-color-icc-selector.cpp:401
+#: ../src/widgets/sp-color-scales.cpp:407
+#: ../src/widgets/sp-color-scales.cpp:408
+#: ../src/widgets/sp-color-scales.cpp:433
+#: ../src/widgets/sp-color-scales.cpp:434
+#: ../src/widgets/sp-color-scales.cpp:464
+#: ../src/widgets/sp-color-scales.cpp:465
+#: ../src/widgets/sp-color-wheel-selector.cpp:144
+#: ../src/widgets/sp-color-wheel-selector.cpp:156
+msgid "Alpha (opacity)"
+msgstr ""
+
 #: ../src/widgets/sp-color-gtkselector.cpp:50
 msgid "System"
 msgstr "מערכת"
@@ -12671,80 +13442,6 @@ msgstr ""
 msgid "CMYK"
 msgstr ""
 
-#: ../src/widgets/sp-color-scales.cpp:398
-msgid "_R"
-msgstr ""
-
-#: ../src/widgets/sp-color-scales.cpp:401
-msgid "_G"
-msgstr ""
-
-#: ../src/widgets/sp-color-scales.cpp:404
-msgid "_B"
-msgstr ""
-
-#. Label
-#: ../src/widgets/sp-color-scales.cpp:407
-#: ../src/widgets/sp-color-scales.cpp:433
-#: ../src/widgets/sp-color-scales.cpp:464
-#: ../src/widgets/sp-color-wheel-selector.cpp:134
-msgid "_A"
-msgstr ""
-
-#: ../src/widgets/sp-color-scales.cpp:408
-#: ../src/widgets/sp-color-scales.cpp:409
-#: ../src/widgets/sp-color-scales.cpp:434
-#: ../src/widgets/sp-color-scales.cpp:435
-#: ../src/widgets/sp-color-scales.cpp:465
-#: ../src/widgets/sp-color-scales.cpp:466
-#: ../src/widgets/sp-color-wheel-selector.cpp:144
-#: ../src/widgets/sp-color-wheel-selector.cpp:156
-msgid "Alpha (opacity)"
-msgstr ""
-
-#: ../src/widgets/sp-color-scales.cpp:424
-msgid "_H"
-msgstr ""
-
-#: ../src/widgets/sp-color-scales.cpp:427
-msgid "_S"
-msgstr ""
-
-#: ../src/widgets/sp-color-scales.cpp:430
-msgid "_L"
-msgstr ""
-
-#: ../src/widgets/sp-color-scales.cpp:452
-msgid "_C"
-msgstr ""
-
-#: ../src/widgets/sp-color-scales.cpp:453
-#: ../src/widgets/sp-color-scales.cpp:454
-msgid "Cyan"
-msgstr ""
-
-#: ../src/widgets/sp-color-scales.cpp:455
-msgid "_M"
-msgstr ""
-
-#: ../src/widgets/sp-color-scales.cpp:456
-#: ../src/widgets/sp-color-scales.cpp:457
-msgid "Magenta"
-msgstr ""
-
-#: ../src/widgets/sp-color-scales.cpp:458
-msgid "_Y"
-msgstr ""
-
-#: ../src/widgets/sp-color-scales.cpp:459
-#: ../src/widgets/sp-color-scales.cpp:460
-msgid "Yellow"
-msgstr "צהוב"
-
-#: ../src/widgets/sp-color-scales.cpp:461
-msgid "_K"
-msgstr ""
-
 #: ../src/widgets/sp-color-selector.cpp:64
 msgid "Unnamed"
 msgstr ""
@@ -12758,7 +13455,7 @@ msgid "Attribute"
 msgstr ""
 
 #: ../src/widgets/sp-xmlview-attr-list.cpp:47
-#: ../share/extensions/perfectboundcover.inx.h:14
+#: ../share/extensions/perfectboundcover.inx.h:19
 msgid "Value"
 msgstr ""
 
@@ -12766,1204 +13463,1192 @@ msgstr ""
 msgid "Type text in a text node"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:168
+#: ../src/widgets/toolbox.cpp:169
 msgid "Color/opacity used for color tweaking"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:172
+#: ../src/widgets/toolbox.cpp:173
 msgid "Style of new stars"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:174
+#: ../src/widgets/toolbox.cpp:175
 msgid "Style of new rectangles"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:176
+#: ../src/widgets/toolbox.cpp:177
 msgid "Style of new 3D boxes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:178
+#: ../src/widgets/toolbox.cpp:179
 msgid "Style of new ellipses"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:180
+#: ../src/widgets/toolbox.cpp:181
 msgid "Style of new spirals"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:182
+#: ../src/widgets/toolbox.cpp:183
 msgid "Style of new paths created by Pencil"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:184
+#: ../src/widgets/toolbox.cpp:185
 msgid "Style of new paths created by Pen"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:186
+#: ../src/widgets/toolbox.cpp:187
 msgid "Style of new calligraphic strokes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:196
+#: ../src/widgets/toolbox.cpp:197
 msgid "Style of Paint Bucket fill objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:975
+#: ../src/widgets/toolbox.cpp:976
 #, fuzzy
 msgid "Insert node"
 msgstr "הוסף"
 
-#: ../src/widgets/toolbox.cpp:976
+#: ../src/widgets/toolbox.cpp:977
 msgid "Insert new nodes into selected segments"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:979
+#: ../src/widgets/toolbox.cpp:980
 msgid "Insert"
 msgstr "הוסף"
 
-#: ../src/widgets/toolbox.cpp:987
+#: ../src/widgets/toolbox.cpp:988
 msgid "Delete selected nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:997
+#: ../src/widgets/toolbox.cpp:998
 #, fuzzy
 msgid "Join endnodes"
 msgstr "אחד צמתים"
 
-#: ../src/widgets/toolbox.cpp:998
+#: ../src/widgets/toolbox.cpp:999
 msgid "Join selected endnodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1001
+#: ../src/widgets/toolbox.cpp:1002
 msgid "Join"
 msgstr "אחד"
 
-#: ../src/widgets/toolbox.cpp:1008
+#: ../src/widgets/toolbox.cpp:1009
 msgid "Join Segment"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1009
+#: ../src/widgets/toolbox.cpp:1010
 msgid "Join selected endnodes with a new segment"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1018
+#: ../src/widgets/toolbox.cpp:1019
 msgid "Delete Segment"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1019
+#: ../src/widgets/toolbox.cpp:1020
 msgid "Split path between two non-endpoint nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1028
+#: ../src/widgets/toolbox.cpp:1029
 msgid "Node Break"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1029
+#: ../src/widgets/toolbox.cpp:1030
 msgid "Break path at selected nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1038
+#: ../src/widgets/toolbox.cpp:1039
 msgid "Node Cusp"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1039
+#: ../src/widgets/toolbox.cpp:1040
 msgid "Make selected nodes corner"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1048
+#: ../src/widgets/toolbox.cpp:1049
 msgid "Node Smooth"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1049
+#: ../src/widgets/toolbox.cpp:1050
 msgid "Make selected nodes smooth"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1058
+#: ../src/widgets/toolbox.cpp:1059
 msgid "Node Symmetric"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1059
+#: ../src/widgets/toolbox.cpp:1060
 msgid "Make selected nodes symmetric"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1068
+#: ../src/widgets/toolbox.cpp:1069
 msgid "Node Line"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1069
+#: ../src/widgets/toolbox.cpp:1070
 msgid "Make selected segments lines"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1078
+#: ../src/widgets/toolbox.cpp:1079
 msgid "Node Curve"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1079
+#: ../src/widgets/toolbox.cpp:1080
 msgid "Make selected segments curves"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1088
+#: ../src/widgets/toolbox.cpp:1089
 msgid "Show Handles"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1089
+#: ../src/widgets/toolbox.cpp:1090
 msgid "Show the Bezier handles of selected nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1113
+#: ../src/widgets/toolbox.cpp:1114
 msgid "X coordinate:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1113
+#: ../src/widgets/toolbox.cpp:1114
 msgid "X coordinate of selected node(s)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1131
+#: ../src/widgets/toolbox.cpp:1132
 msgid "Y coordinate:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1131
+#: ../src/widgets/toolbox.cpp:1132
 msgid "Y coordinate of selected node(s)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1544
+#: ../src/widgets/toolbox.cpp:1545
 msgid "Star: Change number of corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1586
+#: ../src/widgets/toolbox.cpp:1587
 msgid "Star: Change spoke ratio"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1629
+#: ../src/widgets/toolbox.cpp:1630
 msgid "Make polygon"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1629
+#: ../src/widgets/toolbox.cpp:1630
 msgid "Make star"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1664
+#: ../src/widgets/toolbox.cpp:1665
 msgid "Star: Change rounding"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1698
+#: ../src/widgets/toolbox.cpp:1699
 msgid "Star: Change randomization"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1883
+#: ../src/widgets/toolbox.cpp:1884
 msgid "Regular polygon (with one handle) instead of a star"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1890
+#: ../src/widgets/toolbox.cpp:1891
 msgid "Star instead of a regular polygon (with one handle)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1910
+#: ../src/widgets/toolbox.cpp:1911
 msgid "triangle/tri-star"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1910
+#: ../src/widgets/toolbox.cpp:1911
 msgid "square/quad-star"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1910
+#: ../src/widgets/toolbox.cpp:1911
 msgid "pentagon/five-pointed star"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1910
+#: ../src/widgets/toolbox.cpp:1911
 msgid "hexagon/six-pointed star"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1913
+#: ../src/widgets/toolbox.cpp:1914
 msgid "Corners"
 msgstr "פינות"
 
-#: ../src/widgets/toolbox.cpp:1913
+#: ../src/widgets/toolbox.cpp:1914
 msgid "Corners:"
 msgstr "פינות:"
 
-#: ../src/widgets/toolbox.cpp:1913
+#: ../src/widgets/toolbox.cpp:1914
 msgid "Number of corners of a polygon or star"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "thin-ray star"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "pentagram"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "hexagram"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "heptagram"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "octagram"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "regular polygon"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1929
+#: ../src/widgets/toolbox.cpp:1930
 msgid "Spoke ratio"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1929
+#: ../src/widgets/toolbox.cpp:1930
 msgid "Spoke ratio:"
 msgstr ""
 
 #. TRANSLATORS: Tip radius of a star is the distance from the center to the farthest handle.
 #. Base radius is the same for the closest handle.
-#: ../src/widgets/toolbox.cpp:1932
+#: ../src/widgets/toolbox.cpp:1933
 msgid "Base radius to tip radius ratio"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "stretched"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "twisted"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "slightly pinched"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "NOT rounded"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "slightly rounded"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "visibly rounded"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "well rounded"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "amply rounded"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1950 ../src/widgets/toolbox.cpp:1965
+#: ../src/widgets/toolbox.cpp:1951 ../src/widgets/toolbox.cpp:1966
 msgid "blown up"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1953
+#: ../src/widgets/toolbox.cpp:1954
 #, fuzzy
 msgid "Rounded"
 msgstr "רנדר"
 
-#: ../src/widgets/toolbox.cpp:1953
+#: ../src/widgets/toolbox.cpp:1954
 msgid "Rounded:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1953
+#: ../src/widgets/toolbox.cpp:1954
 msgid "How much rounded are the corners (0 for sharp)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1965
+#: ../src/widgets/toolbox.cpp:1966
 msgid "NOT randomized"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1965
+#: ../src/widgets/toolbox.cpp:1966
 msgid "slightly irregular"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1965
+#: ../src/widgets/toolbox.cpp:1966
 msgid "visibly randomized"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1965
+#: ../src/widgets/toolbox.cpp:1966
 msgid "strongly randomized"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1968
+#: ../src/widgets/toolbox.cpp:1969
 msgid "Randomized"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1968
+#: ../src/widgets/toolbox.cpp:1969
 msgid "Randomized:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1968
+#: ../src/widgets/toolbox.cpp:1969
 msgid "Scatter randomly the corners and angles"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1983 ../src/widgets/toolbox.cpp:2918
-#: ../src/widgets/toolbox.cpp:3497 ../src/widgets/toolbox.cpp:5334
+#: ../src/widgets/toolbox.cpp:1984 ../src/widgets/toolbox.cpp:2919
+#: ../src/widgets/toolbox.cpp:3498 ../src/widgets/toolbox.cpp:5360
 msgid "Defaults"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1984 ../src/widgets/toolbox.cpp:2919
+#: ../src/widgets/toolbox.cpp:1985 ../src/widgets/toolbox.cpp:2920
 msgid ""
 "Reset shape parameters to defaults (use Inkscape Preferences > Tools to "
 "change defaults)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2056
+#: ../src/widgets/toolbox.cpp:2057
 msgid "Change rectangle"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2248
+#: ../src/widgets/toolbox.cpp:2249
 msgid "W:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2248
+#: ../src/widgets/toolbox.cpp:2249
 msgid "Width of rectangle"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2265
+#: ../src/widgets/toolbox.cpp:2266
 msgid "Height of rectangle"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2279 ../src/widgets/toolbox.cpp:2294
+#: ../src/widgets/toolbox.cpp:2280 ../src/widgets/toolbox.cpp:2295
 msgid "not rounded"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2282
+#: ../src/widgets/toolbox.cpp:2283
 msgid "Horizontal radius"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2282
+#: ../src/widgets/toolbox.cpp:2283
 msgid "Rx:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2282
+#: ../src/widgets/toolbox.cpp:2283
 msgid "Horizontal radius of rounded corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2297
+#: ../src/widgets/toolbox.cpp:2298
 msgid "Vertical radius"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2297
+#: ../src/widgets/toolbox.cpp:2298
 msgid "Ry:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2297
+#: ../src/widgets/toolbox.cpp:2298
 msgid "Vertical radius of rounded corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2316
+#: ../src/widgets/toolbox.cpp:2317
 msgid "Not rounded"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2317
+#: ../src/widgets/toolbox.cpp:2318
 msgid "Make corners sharp"
 msgstr ""
 
 #. TODO: use the correct axis here, too
-#: ../src/widgets/toolbox.cpp:2506
+#: ../src/widgets/toolbox.cpp:2507
 msgid "3D Box: Change perspective (angle of infinite axis)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2575
+#: ../src/widgets/toolbox.cpp:2576
 msgid "Angle in X direction"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2575
-msgid "Angle X:"
-msgstr ""
-
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:2577
+#: ../src/widgets/toolbox.cpp:2578
 msgid "Angle of PLs in X direction"
 msgstr ""
 
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:2599
+#: ../src/widgets/toolbox.cpp:2600
 msgid "State of VP in X direction"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2600
+#: ../src/widgets/toolbox.cpp:2601
 msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2615
+#: ../src/widgets/toolbox.cpp:2616
 msgid "Angle in Y direction"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2615
+#: ../src/widgets/toolbox.cpp:2616
 msgid "Angle Y:"
 msgstr ""
 
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:2617
+#: ../src/widgets/toolbox.cpp:2618
 msgid "Angle of PLs in Y direction"
 msgstr ""
 
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:2638
+#: ../src/widgets/toolbox.cpp:2639
 msgid "State of VP in Y direction"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2639
+#: ../src/widgets/toolbox.cpp:2640
 msgid "Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2654
+#: ../src/widgets/toolbox.cpp:2655
 msgid "Angle in Z direction"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2654
-msgid "Angle Z:"
-msgstr ""
-
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:2656
+#: ../src/widgets/toolbox.cpp:2657
 msgid "Angle of PLs in Z direction"
 msgstr ""
 
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:2677
+#: ../src/widgets/toolbox.cpp:2678
 msgid "State of VP in Z direction"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2678
+#: ../src/widgets/toolbox.cpp:2679
 msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2735
+#: ../src/widgets/toolbox.cpp:2736
 msgid "Change spiral"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2875
+#: ../src/widgets/toolbox.cpp:2876
 msgid "just a curve"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2875
+#: ../src/widgets/toolbox.cpp:2876
 msgid "one full revolution"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2878
+#: ../src/widgets/toolbox.cpp:2879
 #, fuzzy
 msgid "Number of turns"
 msgstr "מספר צעדים"
 
-#: ../src/widgets/toolbox.cpp:2878
+#: ../src/widgets/toolbox.cpp:2879
 msgid "Turns:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2878
+#: ../src/widgets/toolbox.cpp:2879
 msgid "Number of revolutions"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "circle"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "edge is much denser"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "edge is denser"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "even"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "center is denser"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "center is much denser"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2892
+#: ../src/widgets/toolbox.cpp:2893
 msgid "Divergence"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2892
+#: ../src/widgets/toolbox.cpp:2893
 msgid "Divergence:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2892
+#: ../src/widgets/toolbox.cpp:2893
 msgid "How much denser/sparser are outer revolutions; 1 = uniform"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2903
+#: ../src/widgets/toolbox.cpp:2904
 msgid "starts from center"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2903
+#: ../src/widgets/toolbox.cpp:2904
 msgid "starts mid-way"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2903
+#: ../src/widgets/toolbox.cpp:2904
 msgid "starts near edge"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2906
+#: ../src/widgets/toolbox.cpp:2907
 #, fuzzy
 msgid "Inner radius"
 msgstr "הפוך גרדיאנט"
 
-#: ../src/widgets/toolbox.cpp:2906
+#: ../src/widgets/toolbox.cpp:2907
 msgid "Inner radius:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2906
+#: ../src/widgets/toolbox.cpp:2907
 msgid "Radius of the innermost revolution (relative to the spiral size)"
 msgstr ""
 
 #. Width
-#: ../src/widgets/toolbox.cpp:3022
+#: ../src/widgets/toolbox.cpp:3023
 msgid "(pinch tweak)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3022 ../src/widgets/toolbox.cpp:3038
-#: ../src/widgets/toolbox.cpp:3199 ../src/widgets/toolbox.cpp:3327
-#: ../src/widgets/toolbox.cpp:3359
+#: ../src/widgets/toolbox.cpp:3023 ../src/widgets/toolbox.cpp:3039
+#: ../src/widgets/toolbox.cpp:3200 ../src/widgets/toolbox.cpp:3328
+#: ../src/widgets/toolbox.cpp:3360
 msgid "(default)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3022
+#: ../src/widgets/toolbox.cpp:3023
 msgid "(broad tweak)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3025
+#: ../src/widgets/toolbox.cpp:3026
 msgid "The width of the tweak area (relative to the visible canvas area)"
 msgstr ""
 
 #. Force
-#: ../src/widgets/toolbox.cpp:3038
+#: ../src/widgets/toolbox.cpp:3039
 msgid "(minimum force)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3038
+#: ../src/widgets/toolbox.cpp:3039
 msgid "(maximum force)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3041
+#: ../src/widgets/toolbox.cpp:3042
 msgid "Force"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3041
+#: ../src/widgets/toolbox.cpp:3042
 msgid "Force:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3041
+#: ../src/widgets/toolbox.cpp:3042
 msgid "The force of the tweak action"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3058
+#: ../src/widgets/toolbox.cpp:3059
 msgid "Push mode"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3059
+#: ../src/widgets/toolbox.cpp:3060
 msgid "Push parts of paths in any direction"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3065
+#: ../src/widgets/toolbox.cpp:3066
 msgid "Shrink mode"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3066
+#: ../src/widgets/toolbox.cpp:3067
 msgid "Shrink (inset) parts of paths"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3072
+#: ../src/widgets/toolbox.cpp:3073
 msgid "Grow mode"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3073
+#: ../src/widgets/toolbox.cpp:3074
 msgid "Grow (outset) parts of paths"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3079
+#: ../src/widgets/toolbox.cpp:3080
 msgid "Attract mode"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3080
+#: ../src/widgets/toolbox.cpp:3081
 msgid "Attract parts of paths towards cursor"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3086
+#: ../src/widgets/toolbox.cpp:3087
 msgid "Repel mode"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3087
+#: ../src/widgets/toolbox.cpp:3088
 msgid "Repel parts of paths from cursor"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3093
+#: ../src/widgets/toolbox.cpp:3094
 msgid "Roughen mode"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3094
+#: ../src/widgets/toolbox.cpp:3095
 msgid "Roughen parts of paths"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3100
+#: ../src/widgets/toolbox.cpp:3101
 msgid "Color paint mode"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3101
+#: ../src/widgets/toolbox.cpp:3102
 msgid "Paint the tool's color upon selected objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3107
+#: ../src/widgets/toolbox.cpp:3108
 msgid "Color jitter mode"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3108
+#: ../src/widgets/toolbox.cpp:3109
 msgid "Jitter the colors of selected objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3113
+#: ../src/widgets/toolbox.cpp:3114
 msgid "Mode:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3133
+#: ../src/widgets/toolbox.cpp:3134
 msgid "Channels:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3144
+#: ../src/widgets/toolbox.cpp:3145
 msgid "In color mode, act on objects' hue"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3147
+#: ../src/widgets/toolbox.cpp:3148
 msgid "H"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3158
+#: ../src/widgets/toolbox.cpp:3159
 msgid "In color mode, act on objects' saturation"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3161
+#: ../src/widgets/toolbox.cpp:3162
 msgid "S"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3172
+#: ../src/widgets/toolbox.cpp:3173
 msgid "In color mode, act on objects' lightness"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3175
+#: ../src/widgets/toolbox.cpp:3176
 msgid "L"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3186
+#: ../src/widgets/toolbox.cpp:3187
 msgid "In color mode, act on objects' opacity"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3189
+#: ../src/widgets/toolbox.cpp:3190
 msgid "O"
 msgstr ""
 
 #. Fidelity
-#: ../src/widgets/toolbox.cpp:3199
+#: ../src/widgets/toolbox.cpp:3200
 msgid "(rough, simplified)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3199
+#: ../src/widgets/toolbox.cpp:3200
 msgid "(fine, but many nodes)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3202
+#: ../src/widgets/toolbox.cpp:3203
 msgid "Fidelity"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3202
+#: ../src/widgets/toolbox.cpp:3203
 msgid "Fidelity:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3203
+#: ../src/widgets/toolbox.cpp:3204
 msgid ""
 "Low fidelity simplifies paths; high fidelity preserves path features but may "
 "generate a lot of new nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3220 ../src/widgets/toolbox.cpp:3472
+#: ../src/widgets/toolbox.cpp:3221 ../src/widgets/toolbox.cpp:3473
 msgid "Pressure"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3221
+#: ../src/widgets/toolbox.cpp:3222
 msgid "Use the pressure of the input device to alter the force of tweak action"
 msgstr ""
 
 #. Width
-#: ../src/widgets/toolbox.cpp:3327
+#: ../src/widgets/toolbox.cpp:3328
 msgid "(hairline)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3327
+#: ../src/widgets/toolbox.cpp:3328
 msgid "(broad stroke)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3330
+#: ../src/widgets/toolbox.cpp:3331
 #, fuzzy
 msgid "Pen Width"
 msgstr "עובי קו"
 
-#: ../src/widgets/toolbox.cpp:3331
+#: ../src/widgets/toolbox.cpp:3332
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
 msgstr ""
 
 #. Thinning
-#: ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3344
 msgid "(speed blows up stroke)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3344
 msgid "(slight widening)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3344
 msgid "(constant width)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3344
 msgid "(slight thinning, default)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3344
 msgid "(speed deflates stroke)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3346
+#: ../src/widgets/toolbox.cpp:3347
 msgid "Stroke Thinning"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3346
+#: ../src/widgets/toolbox.cpp:3347
 msgid "Thinning:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3347
+#: ../src/widgets/toolbox.cpp:3348
 msgid ""
 "How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 "
 "makes them broader, 0 makes width independent of velocity)"
 msgstr ""
 
 #. Angle
-#: ../src/widgets/toolbox.cpp:3359
+#: ../src/widgets/toolbox.cpp:3360
 msgid "(left edge up)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3359
+#: ../src/widgets/toolbox.cpp:3360
 msgid "(horizontal)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3359
+#: ../src/widgets/toolbox.cpp:3360
 msgid "(right edge up)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3362
+#: ../src/widgets/toolbox.cpp:3363
 msgid "Pen Angle"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3362
+#: ../src/widgets/toolbox.cpp:3363
 msgid "Angle:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3363
+#: ../src/widgets/toolbox.cpp:3364
 msgid ""
 "The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if "
 "fixation = 0)"
 msgstr ""
 
 #. Fixation
-#: ../src/widgets/toolbox.cpp:3376
+#: ../src/widgets/toolbox.cpp:3377
 msgid "(perpendicular to stroke, \"brush\")"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3376
+#: ../src/widgets/toolbox.cpp:3377
 msgid "(almost fixed, default)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3376
+#: ../src/widgets/toolbox.cpp:3377
 msgid "(fixed by Angle, \"pen\")"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3379
+#: ../src/widgets/toolbox.cpp:3380
 msgid "Fixation"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3379
+#: ../src/widgets/toolbox.cpp:3380
 msgid "Fixation:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3380
+#: ../src/widgets/toolbox.cpp:3381
 msgid ""
 "Angle behavior (0 = nib always perpendicular to stroke direction, 1 = fixed "
 "angle)"
 msgstr ""
 
 #. Cap Rounding
-#: ../src/widgets/toolbox.cpp:3392
+#: ../src/widgets/toolbox.cpp:3393
 msgid "(blunt caps, default)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3392
+#: ../src/widgets/toolbox.cpp:3393
 msgid "(slightly bulging)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3392
+#: ../src/widgets/toolbox.cpp:3393
 msgid "(approximately round)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3392
+#: ../src/widgets/toolbox.cpp:3393
 msgid "(long protruding caps)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3396
+#: ../src/widgets/toolbox.cpp:3397
 msgid "Cap rounding"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3396
+#: ../src/widgets/toolbox.cpp:3397
 msgid "Caps:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3397
+#: ../src/widgets/toolbox.cpp:3398
 msgid ""
 "Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = "
 "round caps)"
 msgstr ""
 
 #. Tremor
-#: ../src/widgets/toolbox.cpp:3409
+#: ../src/widgets/toolbox.cpp:3410
 msgid "(smooth line)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3409
+#: ../src/widgets/toolbox.cpp:3410
 msgid "(slight tremor)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3409
+#: ../src/widgets/toolbox.cpp:3410
 msgid "(noticeable tremor)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3409
+#: ../src/widgets/toolbox.cpp:3410
 msgid "(maximum tremor)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3412
+#: ../src/widgets/toolbox.cpp:3413
 msgid "Stroke Tremor"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3412
+#: ../src/widgets/toolbox.cpp:3413
 msgid "Tremor:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3413
+#: ../src/widgets/toolbox.cpp:3414
 msgid "Increase to make strokes rugged and trembling"
 msgstr ""
 
 #. Wiggle
-#: ../src/widgets/toolbox.cpp:3426
+#: ../src/widgets/toolbox.cpp:3427
 msgid "(no wiggle)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3426
+#: ../src/widgets/toolbox.cpp:3427
 msgid "(slight deviation)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3426
+#: ../src/widgets/toolbox.cpp:3427
 msgid "(wild waves and curls)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3429
+#: ../src/widgets/toolbox.cpp:3430
 #, fuzzy
 msgid "Pen Wiggle"
 msgstr "עפרון"
 
-#: ../src/widgets/toolbox.cpp:3429
+#: ../src/widgets/toolbox.cpp:3430
 msgid "Wiggle:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3430
+#: ../src/widgets/toolbox.cpp:3431
 msgid "Increase to make the pen waver and wiggle"
 msgstr ""
 
 #. Mass
-#: ../src/widgets/toolbox.cpp:3442
+#: ../src/widgets/toolbox.cpp:3443
 msgid "(no inertia)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3442
+#: ../src/widgets/toolbox.cpp:3443
 msgid "(slight smoothing, default)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3442
+#: ../src/widgets/toolbox.cpp:3443
 msgid "(noticeable lagging)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3442
+#: ../src/widgets/toolbox.cpp:3443
 msgid "(maximum inertia)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3445
+#: ../src/widgets/toolbox.cpp:3446
 msgid "Pen Mass"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3445
+#: ../src/widgets/toolbox.cpp:3446
 msgid "Mass:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3446
+#: ../src/widgets/toolbox.cpp:3447
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3460
+#: ../src/widgets/toolbox.cpp:3461
 msgid "Trace Background"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3461
+#: ../src/widgets/toolbox.cpp:3462
 msgid ""
 "Trace the lightness of the background by the width of the pen (white - "
 "minimum width, black - maximum width)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3473
+#: ../src/widgets/toolbox.cpp:3474
 msgid "Use the pressure of the input device to alter the width of the pen"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3484
+#: ../src/widgets/toolbox.cpp:3485
 msgid "Tilt"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3485
+#: ../src/widgets/toolbox.cpp:3486
 msgid "Use the tilt of the input device to alter the angle of the pen's nib"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3498
+#: ../src/widgets/toolbox.cpp:3499
 msgid "Reset all parameters to defaults"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3580
+#: ../src/widgets/toolbox.cpp:3581
 msgid "Arc: Change start/end"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3646
+#: ../src/widgets/toolbox.cpp:3647
 msgid "Arc: Change open/closed"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3769
+#: ../src/widgets/toolbox.cpp:3770
 #, fuzzy
 msgid "Start"
 msgstr "התחלה:"
 
-#: ../src/widgets/toolbox.cpp:3769
+#: ../src/widgets/toolbox.cpp:3770
 msgid "Start:"
 msgstr "התחלה:"
 
-#: ../src/widgets/toolbox.cpp:3770
+#: ../src/widgets/toolbox.cpp:3771
 msgid "The angle (in degrees) from the horizontal to the arc's start point"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3782
+#: ../src/widgets/toolbox.cpp:3783
 #, fuzzy
 msgid "End"
 msgstr "סוף:"
 
-#: ../src/widgets/toolbox.cpp:3782
+#: ../src/widgets/toolbox.cpp:3783
 msgid "End:"
 msgstr "סוף:"
 
-#: ../src/widgets/toolbox.cpp:3783
+#: ../src/widgets/toolbox.cpp:3784
 msgid "The angle (in degrees) from the horizontal to the arc's end point"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3799
+#: ../src/widgets/toolbox.cpp:3800
 msgid "Closed arc"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3800
+#: ../src/widgets/toolbox.cpp:3801
 msgid "Switch to segment (closed shape with two radii)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3806
+#: ../src/widgets/toolbox.cpp:3807
 msgid "Open Arc"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3807
+#: ../src/widgets/toolbox.cpp:3808
 msgid "Switch to arc (unclosed shape)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3830
+#: ../src/widgets/toolbox.cpp:3831
 msgid "Make whole"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3831
+#: ../src/widgets/toolbox.cpp:3832
 msgid "Make the shape a whole ellipse, not arc or segment"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3898
+#: ../src/widgets/toolbox.cpp:3899
 msgid "Pick alpha"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3899
+#: ../src/widgets/toolbox.cpp:3900
 msgid ""
 "Pick both the color and the alpha (transparency) under cursor; otherwise, "
 "pick only the visible color premultiplied by alpha"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3910
+#: ../src/widgets/toolbox.cpp:3911
 msgid "Set alpha"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3911
+#: ../src/widgets/toolbox.cpp:3912
 msgid ""
 "If alpha was picked, assign it to selection as fill or stroke transparency"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:4240
+#: ../src/widgets/toolbox.cpp:4239
 msgid "Text: Change font family"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:4325
+#: ../src/widgets/toolbox.cpp:4324
 msgid "Text: Change alignment"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:4408
+#: ../src/widgets/toolbox.cpp:4407
 msgid "Text: Change font style"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:4455
+#: ../src/widgets/toolbox.cpp:4454
 msgid "Text: Change orientation"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:4545
+#: ../src/widgets/toolbox.cpp:4553
 msgid "Text: Change font size"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:4766
+#: ../src/widgets/toolbox.cpp:4792
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:4805
+#: ../src/widgets/toolbox.cpp:4831
 msgid "Align left"
 msgstr "יישר לימין"
 
-#: ../src/widgets/toolbox.cpp:4816
-msgid "Center"
-msgstr "יישר למרכז"
-
-#: ../src/widgets/toolbox.cpp:4827
+#: ../src/widgets/toolbox.cpp:4853
 msgid "Align right"
 msgstr "יישר לשמאל"
 
-#: ../src/widgets/toolbox.cpp:4838
+#: ../src/widgets/toolbox.cpp:4864
 msgid "Justify"
 msgstr "יישור אחיד"
 
-#: ../src/widgets/toolbox.cpp:4854
+#: ../src/widgets/toolbox.cpp:4880
 msgid "Bold"
 msgstr "מודגש"
 
-#: ../src/widgets/toolbox.cpp:4865
+#: ../src/widgets/toolbox.cpp:4891
 msgid "Italic"
 msgstr "נטוי"
 
-#: ../src/widgets/toolbox.cpp:4997
+#: ../src/widgets/toolbox.cpp:5023
 msgid "Change connector spacing"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5083
+#: ../src/widgets/toolbox.cpp:5109
 msgid "Avoid"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5093
+#: ../src/widgets/toolbox.cpp:5119
 msgid "Ignore"
 msgstr "התעלם"
 
-#: ../src/widgets/toolbox.cpp:5105
+#: ../src/widgets/toolbox.cpp:5131
 #, fuzzy
 msgid "Connector Spacing"
 msgstr "מחבר"
 
-#: ../src/widgets/toolbox.cpp:5105
+#: ../src/widgets/toolbox.cpp:5131
 msgid "Spacing:"
 msgstr "ריווח:"
 
-#: ../src/widgets/toolbox.cpp:5106
+#: ../src/widgets/toolbox.cpp:5132
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5117
+#: ../src/widgets/toolbox.cpp:5143
 msgid "Graph"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5127
+#: ../src/widgets/toolbox.cpp:5153
 #, fuzzy
 msgid "Connector Length"
 msgstr "מחבר"
 
-#: ../src/widgets/toolbox.cpp:5127
+#: ../src/widgets/toolbox.cpp:5153
 msgid "Length:"
 msgstr "אורך:"
 
-#: ../src/widgets/toolbox.cpp:5128
+#: ../src/widgets/toolbox.cpp:5154
 msgid "Ideal length for connectors when layout is applied"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5140
+#: ../src/widgets/toolbox.cpp:5166
 msgid "Downwards"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5141
+#: ../src/widgets/toolbox.cpp:5167
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5157
+#: ../src/widgets/toolbox.cpp:5183
 msgid "Do not allow overlapping shapes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5258
+#: ../src/widgets/toolbox.cpp:5284
 msgid "Fill by"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5259
+#: ../src/widgets/toolbox.cpp:5285
 msgid "Fill by:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5271
+#: ../src/widgets/toolbox.cpp:5297
 msgid "Fill Threshold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5272
+#: ../src/widgets/toolbox.cpp:5298
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5296
+#: ../src/widgets/toolbox.cpp:5322
 msgid "Grow/shrink by"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5296
+#: ../src/widgets/toolbox.cpp:5322
 msgid "Grow/shrink by:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5297
+#: ../src/widgets/toolbox.cpp:5323
 msgid ""
 "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5322
+#: ../src/widgets/toolbox.cpp:5348
 #, fuzzy
 msgid "Close gaps"
 msgstr "_סגור"
 
-#: ../src/widgets/toolbox.cpp:5323
+#: ../src/widgets/toolbox.cpp:5349
 msgid "Close gaps:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:5335
+#: ../src/widgets/toolbox.cpp:5361
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
@@ -14151,6 +14836,16 @@ msgid ""
 "Inkscape installation."
 msgstr ""
 
+#: ../share/extensions/dimension.inx.h:3
+#, fuzzy
+msgid "X Offset"
+msgstr "היסט"
+
+#: ../share/extensions/dimension.inx.h:4
+#, fuzzy
+msgid "Y Offset"
+msgstr "היסט"
+
 #: ../share/extensions/dots.inx.h:1
 msgid "Dot size"
 msgstr ""
@@ -14164,7 +14859,7 @@ msgid "Number Nodes"
 msgstr ""
 
 #: ../share/extensions/dots.inx.h:4 ../share/extensions/handles.inx.h:2
-#: ../share/extensions/measure.inx.h:10
+#: ../share/extensions/measure.inx.h:11
 msgid "Visualize Path"
 msgstr ""
 
@@ -14581,6 +15276,16 @@ msgstr ""
 msgid "Scale Factor (Drawing:Real Length) = 1:"
 msgstr ""
 
+#: ../share/extensions/measure.inx.h:10
+msgid ""
+"This effect measures the length of the selected path and adds it as a text-"
+"on-path object with the selected unit. The number of significant digits can "
+"be controlled by the Precision field. The Offset field controls the distance "
+"from the text to the path. The Scale factor can be used to make measurements "
+"in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the "
+"real world, Scale must be set to 250."
+msgstr ""
+
 #: ../share/extensions/motion.inx.h:1
 msgid "Angle"
 msgstr ""
@@ -14630,55 +15335,72 @@ msgid "Bleed (in)"
 msgstr ""
 
 #: ../share/extensions/perfectboundcover.inx.h:2
-msgid "Book Height (inches)"
+msgid "Bond Weight #"
 msgstr ""
 
 #: ../share/extensions/perfectboundcover.inx.h:3
+msgid "Book Height (inches)"
+msgstr ""
+
+#: ../share/extensions/perfectboundcover.inx.h:4
 #, fuzzy
 msgid "Book Properties"
 msgstr "אפשרויות הדפסה"
 
-#: ../share/extensions/perfectboundcover.inx.h:4
+#: ../share/extensions/perfectboundcover.inx.h:5
 msgid "Book Width (inches)"
 msgstr ""
 
-#: ../share/extensions/perfectboundcover.inx.h:5
+#: ../share/extensions/perfectboundcover.inx.h:6
+msgid "Caliper (inches)"
+msgstr ""
+
+#: ../share/extensions/perfectboundcover.inx.h:7
 #, fuzzy
 msgid "Cover"
 msgstr "הזז"
 
-#: ../share/extensions/perfectboundcover.inx.h:6
+#: ../share/extensions/perfectboundcover.inx.h:8
 msgid "Cover Thickness Measurement"
 msgstr ""
 
-#: ../share/extensions/perfectboundcover.inx.h:7
+#: ../share/extensions/perfectboundcover.inx.h:9
 msgid "Generate Template"
 msgstr ""
 
-#: ../share/extensions/perfectboundcover.inx.h:8
+#: ../share/extensions/perfectboundcover.inx.h:10
 msgid "Interior Pages"
 msgstr ""
 
-#: ../share/extensions/perfectboundcover.inx.h:9
+#: ../share/extensions/perfectboundcover.inx.h:11
 msgid "Note: Bond Weight # calculations are a best-guess estimate."
 msgstr ""
 
-#: ../share/extensions/perfectboundcover.inx.h:10
+#: ../share/extensions/perfectboundcover.inx.h:12
 #, fuzzy
 msgid "Number of Pages"
 msgstr "מספר צעדים"
 
-#: ../share/extensions/perfectboundcover.inx.h:11
+#: ../share/extensions/perfectboundcover.inx.h:13
+msgid "Pages Per Inch (PPI)"
+msgstr ""
+
+#: ../share/extensions/perfectboundcover.inx.h:14
 msgid "Paper Thickness Measurement"
 msgstr ""
 
-#: ../share/extensions/perfectboundcover.inx.h:12
+#: ../share/extensions/perfectboundcover.inx.h:15
 msgid "Perfect-Bound Cover"
 msgstr ""
 
-#: ../share/extensions/perfectboundcover.inx.h:13
+#: ../share/extensions/perfectboundcover.inx.h:17
 msgid "Remove existing guides"
 msgstr ""
+
+#: ../share/extensions/perfectboundcover.inx.h:18
+#, fuzzy
+msgid "Specify Width"
+msgstr "עובי קו"
 
 #: ../share/extensions/perspective.inx.h:2
 msgid "Perspective"
@@ -14977,10 +15699,3 @@ msgstr ""
 #, fuzzy
 #~ msgid "Free Art License"
 #~ msgstr "רישיון"
-
-#, fuzzy
-#~ msgid "Default License"
-#~ msgstr "רישיון"
-
-#~ msgid "Lock"
-#~ msgstr "נעל"

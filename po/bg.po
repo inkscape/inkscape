@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bg\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-02-08 23:00+0100\n"
+"POT-Creation-Date: 2008-02-20 02:24+0100\n"
 "PO-Revision-Date: 2007-11-13 12:30+0200\n"
 "Last-Translator: GIMP <vdachev@gmail.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
@@ -61,6 +61,11 @@ msgstr ""
 #: ../src/arc-context.cpp:507
 msgid "Create ellipse"
 msgstr "Създаване на елипса"
+
+#: ../src/box3d.cpp:341
+#, fuzzy
+msgid "<b>3D Box</b>"
+msgstr "<b>Рамка</b>"
 
 #: ../src/box3d-context.cpp:480 ../src/box3d-context.cpp:487
 #: ../src/box3d-context.cpp:494 ../src/box3d-context.cpp:501
@@ -117,11 +122,11 @@ msgstr ""
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Избор на <b>поне един несвързочен обект</b>."
 
-#: ../src/connector-context.cpp:1321 ../src/widgets/toolbox.cpp:5084
+#: ../src/connector-context.cpp:1321 ../src/widgets/toolbox.cpp:5110
 msgid "Make connectors avoid selected objects"
 msgstr "Свръзките да пропускат избраните обекти"
 
-#: ../src/connector-context.cpp:1322 ../src/widgets/toolbox.cpp:5094
+#: ../src/connector-context.cpp:1322 ../src/widgets/toolbox.cpp:5120
 msgid "Make connectors ignore selected objects"
 msgstr "Свръзките да пренебрегват избраните обекти"
 
@@ -716,8 +721,8 @@ msgstr "Вземане на видимия цвят и плътност"
 #: ../src/dialogs/clonetiler.cpp:2599 ../src/dialogs/clonetiler.cpp:2748
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/extension/internal/bitmap/opacity.cpp:39
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2144
-#: ../src/widgets/toolbox.cpp:3185
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2188
+#: ../src/widgets/toolbox.cpp:3186
 msgid "Opacity"
 msgstr "Плътност"
 
@@ -824,7 +829,7 @@ msgstr ""
 "точка"
 
 #: ../src/dialogs/clonetiler.cpp:2728
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2121
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 msgid "Size"
 msgstr "Размер"
 
@@ -996,8 +1001,8 @@ msgstr "x_1:"
 
 #. Stroke width
 #: ../src/dialogs/export.cpp:319 ../src/dialogs/object-attributes.cpp:59
-#: ../src/dialogs/stroke-style.cpp:1090 ../src/widgets/toolbox.cpp:3025
-#: ../src/widgets/toolbox.cpp:3330
+#: ../src/dialogs/stroke-style.cpp:1090 ../src/widgets/toolbox.cpp:3026
+#: ../src/widgets/toolbox.cpp:3331
 msgid "Width:"
 msgstr "Ширина:"
 
@@ -1030,7 +1035,7 @@ msgstr "пиксела при"
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:508 ../src/ui/dialog/inkscape-preferences.cpp:643
+#: ../src/dialogs/export.cpp:508 ../src/ui/dialog/inkscape-preferences.cpp:647
 msgid "dpi"
 msgstr "dpi"
 
@@ -1073,9 +1078,11 @@ msgid "Export the bitmap file with these settings"
 msgstr "Извличане на растер с тези настройки"
 
 #: ../src/dialogs/export.cpp:682
-#, c-format
-msgid "Batch export %d selected objects"
-msgstr "Пакетно изнасяне %d на избраните обекти"
+#, fuzzy, c-format
+msgid "Batch export %d selected object"
+msgid_plural "Batch export %d selected objects"
+msgstr[0] "Пакетно изнасяне %d на избраните обекти"
+msgstr[1] "Пакетно изнасяне %d на избраните обекти"
 
 #: ../src/dialogs/export.cpp:1014
 msgid "Export in progress"
@@ -1355,12 +1362,12 @@ msgid "Unit:"
 msgstr "Единици:"
 
 #: ../src/dialogs/guidelinedialog.cpp:45
-#: ../src/dialogs/object-attributes.cpp:57 ../src/widgets/toolbox.cpp:1113
+#: ../src/dialogs/object-attributes.cpp:57 ../src/widgets/toolbox.cpp:1114
 msgid "X:"
 msgstr "X:"
 
 #: ../src/dialogs/guidelinedialog.cpp:46
-#: ../src/dialogs/object-attributes.cpp:58 ../src/widgets/toolbox.cpp:1131
+#: ../src/dialogs/object-attributes.cpp:58 ../src/widgets/toolbox.cpp:1132
 msgid "Y:"
 msgstr "Y:"
 
@@ -1718,8 +1725,8 @@ msgid "The physical or digital manifestation of this document (MIME type)."
 msgstr "Физическо или цифрово обявяване на този документ (MIME тип)"
 
 #: ../src/dialogs/rdf.cpp:247 ../src/extension/internal/bitmap/addNoise.cpp:46
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2100
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2175
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2144
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
 msgid "Type"
 msgstr "Тип"
 
@@ -1878,13 +1885,13 @@ msgstr "Задаване шарка на линията"
 msgid "Unset stroke"
 msgstr "Премахване очертаване"
 
-#: ../src/dialogs/stroke-style.cpp:793 ../src/filter-enums.cpp:94
+#: ../src/dialogs/stroke-style.cpp:793 ../src/filter-enums.cpp:95
 #: ../src/flood-context.cpp:264 ../src/interface.cpp:829
-#: ../src/ui/dialog/filter-effects-dialog.cpp:460
+#: ../src/ui/dialog/filter-effects-dialog.cpp:476
 #: ../src/ui/dialog/inkscape-preferences.cpp:207
 #: ../src/ui/dialog/inkscape-preferences.cpp:368
 #: ../src/ui/dialog/inkscape-preferences.cpp:469
-#: ../src/ui/dialog/inkscape-preferences.cpp:891 ../src/verbs.cpp:2119
+#: ../src/ui/dialog/inkscape-preferences.cpp:895 ../src/verbs.cpp:2119
 msgid "None"
 msgstr "Без"
 
@@ -1991,19 +1998,31 @@ msgstr "Маркери за край:"
 msgid "Set stroke style"
 msgstr "Задаване стил на очертаване"
 
-#: ../src/dialogs/swatches.cpp:494
+#. TRANSLATORS: An item in context menu on a colour in the swatches
+#: ../src/dialogs/swatches.cpp:269
+#, fuzzy
+msgid "Set fill"
+msgstr "Премахване на запълване"
+
+#. TRANSLATORS: An item in context menu on a colour in the swatches
+#: ../src/dialogs/swatches.cpp:277
+#, fuzzy
+msgid "Set stroke"
+msgstr "Премахване очертаване"
+
+#: ../src/dialogs/swatches.cpp:496
 msgid "Change color definition"
 msgstr "Промяна дефиницията на цвета"
 
-#: ../src/dialogs/swatches.cpp:635
+#: ../src/dialogs/swatches.cpp:637
 msgid "Set stroke color from swatch"
 msgstr "Задаване цвят на очертание от палитрата"
 
-#: ../src/dialogs/swatches.cpp:635
+#: ../src/dialogs/swatches.cpp:637
 msgid "Set fill color from swatch"
 msgstr "Задаване цвят на запълване от палитрата"
 
-#: ../src/dialogs/swatches.cpp:954
+#: ../src/dialogs/swatches.cpp:956
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr "Папката с палитри (%s) не е налична."
@@ -2034,11 +2053,11 @@ msgstr "Подравняване редовете надясно"
 msgid "Justify lines"
 msgstr "Изравняване на редовете"
 
-#: ../src/dialogs/text-edit.cpp:302 ../src/widgets/toolbox.cpp:4887
+#: ../src/dialogs/text-edit.cpp:302 ../src/widgets/toolbox.cpp:4913
 msgid "Horizontal text"
 msgstr "Хоризонтален текст"
 
-#: ../src/dialogs/text-edit.cpp:316 ../src/widgets/toolbox.cpp:4898
+#: ../src/dialogs/text-edit.cpp:316 ../src/widgets/toolbox.cpp:4924
 msgid "Vertical text"
 msgstr "Вертикален текст"
 
@@ -2176,7 +2195,7 @@ msgid "Duplicate node"
 msgstr "Дублиране на възела"
 
 #: ../src/dialogs/xml-tree.cpp:368 ../src/dialogs/xml-tree.cpp:1431
-#: ../src/nodepath.cpp:3122 ../src/widgets/toolbox.cpp:986
+#: ../src/nodepath.cpp:3122 ../src/widgets/toolbox.cpp:987
 msgid "Delete node"
 msgstr "Изтриване на възела"
 
@@ -2251,6 +2270,97 @@ msgstr ""
 msgid "Change attribute"
 msgstr "Промяна на атрибут"
 
+#: ../src/display/canvas-axonomgrid.cpp:394 ../src/widgets/toolbox.cpp:2576
+msgid "Angle X:"
+msgstr "Ъгъл Х:"
+
+#: ../src/display/canvas-axonomgrid.cpp:394
+#: ../src/ui/dialog/inkscape-preferences.cpp:870
+msgid "Angle of x-axis"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:396 ../src/widgets/toolbox.cpp:2655
+msgid "Angle Z:"
+msgstr "Ъгъл Д"
+
+#: ../src/display/canvas-axonomgrid.cpp:396
+#: ../src/ui/dialog/inkscape-preferences.cpp:871
+msgid "Angle of z-axis"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:400 ../src/display/canvas-grid.cpp:663
+msgid "Grid line _color:"
+msgstr "_Цвят на линиите:"
+
+#: ../src/display/canvas-axonomgrid.cpp:400 ../src/display/canvas-grid.cpp:663
+#: ../src/ui/dialog/inkscape-preferences.cpp:850
+#: ../src/ui/dialog/inkscape-preferences.cpp:851
+#: ../src/ui/dialog/inkscape-preferences.cpp:872
+#: ../src/ui/dialog/inkscape-preferences.cpp:873
+msgid "Grid line color"
+msgstr "Цвят на линиите"
+
+#: ../src/display/canvas-axonomgrid.cpp:400 ../src/display/canvas-grid.cpp:663
+msgid "Color of grid lines"
+msgstr "Цвят на линиите на мрежата"
+
+#: ../src/display/canvas-axonomgrid.cpp:405 ../src/display/canvas-grid.cpp:668
+msgid "Ma_jor grid line color:"
+msgstr "Цвят на _големите линии:"
+
+#: ../src/display/canvas-axonomgrid.cpp:405 ../src/display/canvas-grid.cpp:668
+#: ../src/ui/dialog/inkscape-preferences.cpp:852
+#: ../src/ui/dialog/inkscape-preferences.cpp:853
+#: ../src/ui/dialog/inkscape-preferences.cpp:874
+#: ../src/ui/dialog/inkscape-preferences.cpp:875
+msgid "Major grid line color"
+msgstr "Цвят на големите линии"
+
+#: ../src/display/canvas-axonomgrid.cpp:406 ../src/display/canvas-grid.cpp:669
+msgid "Color of the major (highlighted) grid lines"
+msgstr "Цвят на големите (подчертани) линии на мрежата"
+
+#: ../src/display/canvas-axonomgrid.cpp:412 ../src/display/canvas-grid.cpp:679
+msgid "Grid _units:"
+msgstr "_Единици мрежата:"
+
+#: ../src/display/canvas-axonomgrid.cpp:413 ../src/display/canvas-grid.cpp:680
+msgid "_Origin X:"
+msgstr "_Начало X:"
+
+#: ../src/display/canvas-axonomgrid.cpp:413 ../src/display/canvas-grid.cpp:680
+#: ../src/ui/dialog/inkscape-preferences.cpp:843
+#: ../src/ui/dialog/inkscape-preferences.cpp:864
+msgid "X coordinate of grid origin"
+msgstr "Координата по хоризонтал на началото на мрежата"
+
+#: ../src/display/canvas-axonomgrid.cpp:418 ../src/display/canvas-grid.cpp:685
+msgid "O_rigin Y:"
+msgstr "Н_ачало Y:"
+
+#: ../src/display/canvas-axonomgrid.cpp:418 ../src/display/canvas-grid.cpp:685
+#: ../src/ui/dialog/inkscape-preferences.cpp:844
+#: ../src/ui/dialog/inkscape-preferences.cpp:865
+msgid "Y coordinate of grid origin"
+msgstr "Координата по вертикал на началото на мрежата"
+
+#: ../src/display/canvas-axonomgrid.cpp:423 ../src/display/canvas-grid.cpp:695
+msgid "Spacing _Y:"
+msgstr "Разстояния _Y:"
+
+#: ../src/display/canvas-axonomgrid.cpp:423
+#: ../src/ui/dialog/inkscape-preferences.cpp:867
+msgid "Base length of z-axis"
+msgstr ""
+
+#: ../src/display/canvas-axonomgrid.cpp:428 ../src/display/canvas-grid.cpp:701
+msgid "_Major grid line every:"
+msgstr "_Голяма линия на всяка:"
+
+#: ../src/display/canvas-axonomgrid.cpp:428 ../src/display/canvas-grid.cpp:701
+msgid "lines"
+msgstr "линии"
+
 #: ../src/display/canvas-grid.cpp:40
 msgid "Rectangular grid"
 msgstr "Правоъгълна мрежа"
@@ -2285,94 +2395,26 @@ msgid ""
 "to invisible grids."
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:661
-msgid "Grid line _color:"
-msgstr "_Цвят на линиите:"
-
-#: ../src/display/canvas-grid.cpp:661
-#: ../src/ui/dialog/inkscape-preferences.cpp:846
-#: ../src/ui/dialog/inkscape-preferences.cpp:847
-#: ../src/ui/dialog/inkscape-preferences.cpp:868
-#: ../src/ui/dialog/inkscape-preferences.cpp:869
-msgid "Grid line color"
-msgstr "Цвят на линиите"
-
-#: ../src/display/canvas-grid.cpp:661
-msgid "Color of grid lines"
-msgstr "Цвят на линиите на мрежата"
-
-#: ../src/display/canvas-grid.cpp:666
-msgid "Ma_jor grid line color:"
-msgstr "Цвят на _големите линии:"
-
-#: ../src/display/canvas-grid.cpp:666
-#: ../src/ui/dialog/inkscape-preferences.cpp:848
-#: ../src/ui/dialog/inkscape-preferences.cpp:849
-#: ../src/ui/dialog/inkscape-preferences.cpp:870
-#: ../src/ui/dialog/inkscape-preferences.cpp:871
-msgid "Major grid line color"
-msgstr "Цвят на големите линии"
-
-#: ../src/display/canvas-grid.cpp:667
-msgid "Color of the major (highlighted) grid lines"
-msgstr "Цвят на големите (подчертани) линии на мрежата"
-
-#: ../src/display/canvas-grid.cpp:677
-msgid "Grid _units:"
-msgstr "_Единици мрежата:"
-
-#: ../src/display/canvas-grid.cpp:678
-msgid "_Origin X:"
-msgstr "_Начало X:"
-
-#: ../src/display/canvas-grid.cpp:678
-#: ../src/ui/dialog/inkscape-preferences.cpp:839
-#: ../src/ui/dialog/inkscape-preferences.cpp:860
-msgid "X coordinate of grid origin"
-msgstr "Координата по хоризонтал на началото на мрежата"
-
-#: ../src/display/canvas-grid.cpp:683
-msgid "O_rigin Y:"
-msgstr "Н_ачало Y:"
-
-#: ../src/display/canvas-grid.cpp:683
-#: ../src/ui/dialog/inkscape-preferences.cpp:840
-#: ../src/ui/dialog/inkscape-preferences.cpp:861
-msgid "Y coordinate of grid origin"
-msgstr "Координата по вертикал на началото на мрежата"
-
-#: ../src/display/canvas-grid.cpp:688
+#: ../src/display/canvas-grid.cpp:690
 msgid "Spacing _X:"
 msgstr "Разстояния _X:"
 
-#: ../src/display/canvas-grid.cpp:688
-#: ../src/ui/dialog/inkscape-preferences.cpp:843
+#: ../src/display/canvas-grid.cpp:690
+#: ../src/ui/dialog/inkscape-preferences.cpp:847
 msgid "Distance between vertical grid lines"
 msgstr "Разстояние между вертикалните линии на мрежата"
 
-#: ../src/display/canvas-grid.cpp:693
-msgid "Spacing _Y:"
-msgstr "Разстояния _Y:"
-
-#: ../src/display/canvas-grid.cpp:693
-#: ../src/ui/dialog/inkscape-preferences.cpp:844
+#: ../src/display/canvas-grid.cpp:695
+#: ../src/ui/dialog/inkscape-preferences.cpp:848
 msgid "Distance between horizontal grid lines"
 msgstr "Разстояние между хоризонталните линии на мрежата"
 
-#: ../src/display/canvas-grid.cpp:699
-msgid "_Major grid line every:"
-msgstr "_Голяма линия на всяка:"
-
-#: ../src/display/canvas-grid.cpp:699
-msgid "lines"
-msgstr "линии"
-
-#: ../src/display/canvas-grid.cpp:702
+#: ../src/display/canvas-grid.cpp:704
 msgid "_Show dots instead of lines"
 msgstr "_Показване на точки вместо линии"
 
-#: ../src/display/canvas-grid.cpp:703
-#: ../src/ui/dialog/inkscape-preferences.cpp:853
+#: ../src/display/canvas-grid.cpp:705
+#: ../src/ui/dialog/inkscape-preferences.cpp:857
 msgid "If set, displays dots at gridpoints instead of gridlines"
 msgstr "Ако е зададено, показва точки за мрежа вместо линии"
 
@@ -2635,15 +2677,18 @@ msgstr "Адаптивен праг"
 #: ../src/extension/internal/bitmap/raise.cpp:41
 #: ../src/extension/internal/bitmap/sample.cpp:40
 #: ../src/extension/internal/bluredge.cpp:134
+#: ../src/libgdl/gdl-dock-placeholder.c:169 ../src/libgdl/gdl-dock.c:190
+#: ../src/live_effects/lpe-pathalongpath.cpp:58
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:64
-#: ../src/widgets/toolbox.cpp:2248 ../src/widgets/toolbox.cpp:3025
+#: ../src/widgets/toolbox.cpp:2249 ../src/widgets/toolbox.cpp:3026
 msgid "Width"
 msgstr "Ширина"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:41
 #: ../src/extension/internal/bitmap/raise.cpp:42
 #: ../src/extension/internal/bitmap/sample.cpp:41
-#: ../src/widgets/toolbox.cpp:2265
+#: ../src/libgdl/gdl-dock-placeholder.c:177 ../src/libgdl/gdl-dock.c:198
+#: ../src/widgets/toolbox.cpp:2266
 msgid "Height"
 msgstr "Височина"
 
@@ -2737,7 +2782,7 @@ msgstr "Замъгляване"
 #: ../src/extension/internal/bitmap/oilPaint.cpp:38
 #: ../src/extension/internal/bitmap/sharpen.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2151
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid "Radius"
 msgstr "Радиус"
 
@@ -2980,16 +3025,20 @@ msgid "Brightness"
 msgstr "Светлост"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:42
-#: ../src/flood-context.cpp:254 ../src/ui/dialog/inkscape-preferences.cpp:701
-#: ../src/widgets/sp-color-scales.cpp:428
-#: ../src/widgets/sp-color-scales.cpp:429 ../src/widgets/toolbox.cpp:3157
+#: ../src/flood-context.cpp:254 ../src/ui/dialog/inkscape-preferences.cpp:705
+#: ../src/widgets/sp-color-icc-selector.cpp:235
+#: ../src/widgets/sp-color-icc-selector.cpp:236
+#: ../src/widgets/sp-color-scales.cpp:427
+#: ../src/widgets/sp-color-scales.cpp:428 ../src/widgets/toolbox.cpp:3158
 #: ../share/extensions/color_randomize.inx.h:5
 msgid "Saturation"
 msgstr "Насищане"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:43
-#: ../src/flood-context.cpp:253 ../src/widgets/sp-color-scales.cpp:425
-#: ../src/widgets/sp-color-scales.cpp:426 ../src/widgets/toolbox.cpp:3143
+#: ../src/flood-context.cpp:253 ../src/widgets/sp-color-icc-selector.cpp:235
+#: ../src/widgets/sp-color-icc-selector.cpp:236
+#: ../src/widgets/sp-color-scales.cpp:424
+#: ../src/widgets/sp-color-scales.cpp:425 ../src/widgets/toolbox.cpp:3144
 #: ../share/extensions/color_randomize.inx.h:2
 msgid "Hue"
 msgstr "Цвят"
@@ -3079,12 +3128,12 @@ msgid "Shade"
 msgstr "Сянка"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/ui/dialog/filter-effects-dialog.cpp:914
+#: ../src/ui/dialog/filter-effects-dialog.cpp:944
 msgid "Azimuth"
 msgstr "Азимут"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:915
+#: ../src/ui/dialog/filter-effects-dialog.cpp:945
 msgid "Elevation"
 msgstr "Повдигане"
 
@@ -3186,7 +3235,8 @@ msgid "Number of inset/outset copies of the object to make"
 msgstr "Брой копия за създаване извън/в обекта"
 
 #: ../src/extension/internal/bluredge.cpp:139
-#: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
+#: ../share/extensions/dimension.inx.h:2 ../share/extensions/interp.inx.h:3
+#: ../share/extensions/motion.inx.h:3
 #: ../share/extensions/pathalongpath.inx.h:4
 msgid "Generate from Path"
 msgstr "Генериране от линия"
@@ -3219,6 +3269,7 @@ msgid "Convert blur effects to bitmaps"
 msgstr "Превръщане на текста в криви"
 
 #: ../src/extension/internal/cairo-pdf-out.cpp:178
+#: ../src/extension/internal/cairo-ps-out.cpp:232
 #, fuzzy
 msgid "Preferred resolution (DPI) of bitmaps"
 msgstr "Предпочитане резолюция (точки на инч) на растера"
@@ -3233,6 +3284,11 @@ msgstr "Диаграма Dia (*.dia)"
 msgid "PDF File"
 msgstr "Файл"
 
+#: ../src/extension/internal/cairo-ps-out.cpp:222
+#, fuzzy
+msgid "Cairo PS Output"
+msgstr "DXF изход"
+
 #: ../src/extension/internal/cairo-ps-out.cpp:224
 msgid "Restrict to PS level"
 msgstr ""
@@ -3246,11 +3302,6 @@ msgstr "Postscript файл"
 #, fuzzy
 msgid "PostScript level 2"
 msgstr "Postscript файл"
-
-#: ../src/extension/internal/cairo-ps-out.cpp:232
-#, fuzzy
-msgid "Preferred resolution (dpi) of bitmaps"
-msgstr "Предпочитане резолюция (точки на инч) на растера"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:236
 #, fuzzy
@@ -3338,7 +3389,7 @@ msgstr "GIMP преливка (*.ggr)"
 msgid "Gradients used in GIMP"
 msgstr "Преливки използвани в GIMP"
 
-#: ../src/extension/internal/grid.cpp:192 ../src/ui/widget/panel.cpp:118
+#: ../src/extension/internal/grid.cpp:192 ../src/ui/widget/panel.cpp:132
 msgid "Grid"
 msgstr "Мрежа"
 
@@ -3554,7 +3605,7 @@ msgid "PDF Import Settings"
 msgstr "Настройки за внасяне на PDF"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:379
-#: ../src/ui/widget/panel.cpp:100
+#: ../src/ui/widget/panel.cpp:114
 msgid "medium"
 msgstr "средно"
 
@@ -3933,7 +3984,7 @@ msgstr "Отразена светлина"
 msgid "Tile"
 msgstr "Нареждане"
 
-#: ../src/filter-enums.cpp:35 ../src/filter-enums.cpp:117
+#: ../src/filter-enums.cpp:35 ../src/filter-enums.cpp:118
 msgid "Turbulence"
 msgstr "Турболентност"
 
@@ -3961,143 +4012,147 @@ msgstr "Боя за запълване"
 msgid "Stroke Paint"
 msgstr "Цвят на очертанието"
 
-#: ../src/filter-enums.cpp:51 ../src/ui/dialog/inkscape-preferences.cpp:470
-msgid "Normal"
-msgstr "Нормално"
-
+#. TRANSLATORS: This is a context string, only put the word "Normal" in your translation
 #: ../src/filter-enums.cpp:52
+msgid "filterBlendMode|Normal"
+msgstr ""
+
+#: ../src/filter-enums.cpp:53
 msgid "Multiply"
 msgstr "Умножаване"
 
-#: ../src/filter-enums.cpp:53
+#: ../src/filter-enums.cpp:54
 msgid "Screen"
 msgstr "Прожекция"
 
-#: ../src/filter-enums.cpp:54
+#: ../src/filter-enums.cpp:55
 msgid "Darken"
 msgstr "Само по-тъмните"
 
-#: ../src/filter-enums.cpp:55
+#: ../src/filter-enums.cpp:56
 msgid "Lighten"
 msgstr "Само по-светлите"
 
-#: ../src/filter-enums.cpp:61
+#: ../src/filter-enums.cpp:62
 msgid "Matrix"
 msgstr "Матрица"
 
-#: ../src/filter-enums.cpp:62
+#: ../src/filter-enums.cpp:63
 msgid "Saturate"
 msgstr "Насищане"
 
-#: ../src/filter-enums.cpp:63
+#: ../src/filter-enums.cpp:64
 msgid "Hue Rotate"
 msgstr "Въртене на цвета"
 
-#: ../src/filter-enums.cpp:64
+#: ../src/filter-enums.cpp:65
 msgid "Luminance to Alpha"
 msgstr "Светлост към прозрачност"
 
 #. File
-#: ../src/filter-enums.cpp:70 ../src/verbs.cpp:2122
+#: ../src/filter-enums.cpp:71 ../src/verbs.cpp:2122
 msgid "Default"
 msgstr "По подразбиране"
 
-#: ../src/filter-enums.cpp:71
+#: ../src/filter-enums.cpp:72
 msgid "Over"
 msgstr "Отгоре"
 
-#: ../src/filter-enums.cpp:72
+#: ../src/filter-enums.cpp:73
 msgid "In"
 msgstr "Вътре"
 
-#: ../src/filter-enums.cpp:73
+#: ../src/filter-enums.cpp:74
 msgid "Out"
 msgstr "Отвън"
 
-#: ../src/filter-enums.cpp:74
+#: ../src/filter-enums.cpp:75
 msgid "Atop"
 msgstr "Връх"
 
-#: ../src/filter-enums.cpp:75
+#: ../src/filter-enums.cpp:76
 msgid "XOR"
 msgstr "XOR"
 
-#: ../src/filter-enums.cpp:76
+#: ../src/filter-enums.cpp:77
 msgid "Arithmetic"
 msgstr "Аритметично"
 
-#: ../src/filter-enums.cpp:82
+#: ../src/filter-enums.cpp:83
 msgid "Identity"
 msgstr "Индентичност"
 
-#: ../src/filter-enums.cpp:83
+#: ../src/filter-enums.cpp:84
 msgid "Table"
 msgstr "Маса"
 
-#: ../src/filter-enums.cpp:84
+#: ../src/filter-enums.cpp:85
 msgid "Discrete"
 msgstr "Различност"
 
-#: ../src/filter-enums.cpp:85
+#: ../src/filter-enums.cpp:86
 msgid "Linear"
 msgstr "Линейно"
 
-#: ../src/filter-enums.cpp:86
+#: ../src/filter-enums.cpp:87
 msgid "Gamma"
 msgstr "Гама"
 
-#: ../src/filter-enums.cpp:92 ../src/selection-chemistry.cpp:301
+#: ../src/filter-enums.cpp:93 ../src/selection-chemistry.cpp:301
 #: ../src/widgets/gradient-selector.cpp:134
 msgid "Duplicate"
 msgstr "Размножаване"
 
-#: ../src/filter-enums.cpp:93 ../src/ui/widget/panel.cpp:139
+#: ../src/filter-enums.cpp:94 ../src/ui/widget/panel.cpp:153
 msgid "Wrap"
 msgstr "Обгръщане"
 
-#: ../src/filter-enums.cpp:100 ../src/flood-context.cpp:250
+#: ../src/filter-enums.cpp:101 ../src/flood-context.cpp:250
+#: ../src/widgets/sp-color-icc-selector.cpp:233
+#: ../src/widgets/sp-color-scales.cpp:398
 #: ../src/widgets/sp-color-scales.cpp:399
-#: ../src/widgets/sp-color-scales.cpp:400
 msgid "Red"
 msgstr "Червено"
 
-#: ../src/filter-enums.cpp:101 ../src/flood-context.cpp:251
+#: ../src/filter-enums.cpp:102 ../src/flood-context.cpp:251
+#: ../src/widgets/sp-color-icc-selector.cpp:233
+#: ../src/widgets/sp-color-scales.cpp:401
 #: ../src/widgets/sp-color-scales.cpp:402
-#: ../src/widgets/sp-color-scales.cpp:403
 msgid "Green"
 msgstr "_Зелено"
 
-#: ../src/filter-enums.cpp:102 ../src/flood-context.cpp:252
+#: ../src/filter-enums.cpp:103 ../src/flood-context.cpp:252
+#: ../src/widgets/sp-color-icc-selector.cpp:233
+#: ../src/widgets/sp-color-scales.cpp:404
 #: ../src/widgets/sp-color-scales.cpp:405
-#: ../src/widgets/sp-color-scales.cpp:406
 msgid "Blue"
 msgstr "Синьо"
 
-#: ../src/filter-enums.cpp:103 ../src/flood-context.cpp:256
+#: ../src/filter-enums.cpp:104 ../src/flood-context.cpp:256
 msgid "Alpha"
 msgstr "Плътност"
 
-#: ../src/filter-enums.cpp:109
+#: ../src/filter-enums.cpp:110
 msgid "Erode"
 msgstr "Ерозия"
 
-#: ../src/filter-enums.cpp:110
+#: ../src/filter-enums.cpp:111
 msgid "Dilate"
 msgstr "Разширяване"
 
-#: ../src/filter-enums.cpp:116
+#: ../src/filter-enums.cpp:117
 msgid "Fractal Noise"
 msgstr "Фрактален шум"
 
-#: ../src/filter-enums.cpp:123
+#: ../src/filter-enums.cpp:124
 msgid "Distant Light"
 msgstr "Отдалечена светлина"
 
-#: ../src/filter-enums.cpp:124
+#: ../src/filter-enums.cpp:125
 msgid "Point Light"
 msgstr "Точкова светлина"
 
-#: ../src/filter-enums.cpp:125
+#: ../src/filter-enums.cpp:126
 msgid "Spot Light"
 msgstr "Прожекторна светлина"
 
@@ -4105,8 +4160,9 @@ msgstr "Прожекторна светлина"
 msgid "Visible Colors"
 msgstr "Видими цветове"
 
-#: ../src/flood-context.cpp:255 ../src/widgets/sp-color-scales.cpp:431
-#: ../src/widgets/sp-color-scales.cpp:432 ../src/widgets/toolbox.cpp:3171
+#: ../src/flood-context.cpp:255 ../src/widgets/sp-color-icc-selector.cpp:236
+#: ../src/widgets/sp-color-scales.cpp:430
+#: ../src/widgets/sp-color-scales.cpp:431 ../src/widgets/toolbox.cpp:3172
 #: ../share/extensions/color_randomize.inx.h:3
 msgid "Lightness"
 msgstr "Светлина"
@@ -4128,16 +4184,22 @@ msgid "<b>Too much inset</b>, the result is empty."
 msgstr "<b>Твърде навътре</b>, разултата е празен."
 
 #: ../src/flood-context.cpp:461
-#, c-format
+#, fuzzy, c-format
 msgid ""
+"Area filled, path with <b>%d</b> node created and unioned with selection."
+msgid_plural ""
 "Area filled, path with <b>%d</b> nodes created and unioned with selection."
-msgstr ""
+msgstr[0] ""
+"Областта е запълнена с <b>%d</b> възли са създадени и обединени със селекция."
+msgstr[1] ""
 "Областта е запълнена с <b>%d</b> възли са създадени и обединени със селекция."
 
 #: ../src/flood-context.cpp:465
-#, c-format
-msgid "Area filled, path with <b>%d</b> nodes created."
-msgstr "Областта запълнена, пътека с <b>%d</b> възела е създадена."
+#, fuzzy, c-format
+msgid "Area filled, path with <b>%d</b> node created."
+msgid_plural "Area filled, path with <b>%d</b> nodes created."
+msgstr[0] "Областта запълнена, пътека с <b>%d</b> възела е създадена."
+msgstr[1] "Областта запълнена, пътека с <b>%d</b> възела е създадена."
 
 #: ../src/flood-context.cpp:681 ../src/flood-context.cpp:976
 msgid "<b>Area is not bounded</b>, cannot fill."
@@ -4197,69 +4259,97 @@ msgstr "Кръгова преливка <b>фокус</b>"
 msgid "Radial gradient <b>mid stop</b>"
 msgstr "Радиална преливка <b>междинна</b>"
 
-#: ../src/gradient-context.cpp:160
+#. TRANSLATORS: %s will be substituted with the point name (see previous messages); This is part of a compound message
+#: ../src/gradient-context.cpp:162
 #, fuzzy, c-format
-msgid "%s selected out of %d gradient handles on %d selected object"
-msgid_plural "%s selected out of %d gradient handles on %d selected objects"
-msgstr[0] "%s избрани от %d дръжки на преливки в %d избрани обекта"
-msgstr[1] "%s избрани от %d дръжки на преливки в %d избрани обекта"
+msgid "%s selected"
+msgstr "Последно избрани"
 
-#: ../src/gradient-context.cpp:163
-#, c-format
+#. TRANSLATORS: Mind the space in front. This is part of a compound message
+#: ../src/gradient-context.cpp:164 ../src/gradient-context.cpp:173
+#, fuzzy, c-format
+msgid " out of %d gradient handle"
+msgid_plural " out of %d gradient handles"
+msgstr[0] "Преместване дръжкана преливка"
+msgstr[1] "Преместване дръжкана преливка"
+
+#. TRANSLATORS: Mind the space in front. (Refers to gradient handles selected). This is part of a compound message
+#: ../src/gradient-context.cpp:165 ../src/gradient-context.cpp:174
+#: ../src/gradient-context.cpp:181
+#, fuzzy, c-format
+msgid " on %d selected object"
+msgid_plural " on %d selected objects"
+msgstr[0] "Пакетно изнасяне %d на избраните обекти"
+msgstr[1] "Пакетно изнасяне %d на избраните обекти"
+
+#. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
+#: ../src/gradient-context.cpp:171
+#, fuzzy, c-format
 msgid ""
-"One handle merging %d stops (drag with <b>Shift</b> to separate) selected "
-"out of %d gradient handles on %d selected object(s)"
-msgstr ""
+"One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
+msgid_plural ""
+"One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
+msgstr[0] ""
+"Една дръжка слива %d края (влачете със <b>Shift</b> за разделяне) избрани от "
+"%d дръжки на преливки в %d избрани обекта"
+msgstr[1] ""
 "Една дръжка слива %d края (влачете със <b>Shift</b> за разделяне) избрани от "
 "%d дръжки на преливки в %d избрани обекта"
 
-#: ../src/gradient-context.cpp:167
-#, c-format
-msgid "<b>%d</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr "<b>%d</b> дръжки на преливки са избрани от %d в %d избрани обекти"
+#. TRANSLATORS: The plural refers to number of selected gradient handles. This is part of a compound message (part two indicates selected object count)
+#: ../src/gradient-context.cpp:179
+#, fuzzy, c-format
+msgid "<b>%d</b> gradient handle selected out of %d"
+msgid_plural "<b>%d</b> gradient handles selected out of %d"
+msgstr[0] "<b>%d</b> дръжки на преливки са избрани от %d в %d избрани обекти"
+msgstr[1] "<b>%d</b> дръжки на преливки са избрани от %d в %d избрани обекти"
 
-#: ../src/gradient-context.cpp:170
-#, c-format
-msgid "<b>No</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr "<b>Няма</b> избрани дръжки на преливки от %d на %d избрани обекти"
+#. TRANSLATORS: The plural refers to number of selected objects
+#: ../src/gradient-context.cpp:186
+#, fuzzy, c-format
+msgid "<b>No</b> gradient handles selected out of %d on %d selected object"
+msgid_plural ""
+"<b>No</b> gradient handles selected out of %d on %d selected objects"
+msgstr[0] "<b>Няма</b> избрани дръжки на преливки от %d на %d избрани обекти"
+msgstr[1] "<b>Няма</b> избрани дръжки на преливки от %d на %d избрани обекти"
 
-#: ../src/gradient-context.cpp:368 ../src/gradient-context.cpp:461
+#: ../src/gradient-context.cpp:385 ../src/gradient-context.cpp:478
 #: ../src/widgets/gradient-vector.cpp:735
 msgid "Add gradient stop"
 msgstr "Добавяне край на преливката"
 
-#: ../src/gradient-context.cpp:436
+#: ../src/gradient-context.cpp:453
 msgid "Simplify gradient"
 msgstr "Опростяване на преливката"
 
-#: ../src/gradient-context.cpp:512
+#: ../src/gradient-context.cpp:529
 msgid "Create default gradient"
 msgstr "Създаване на преливка по подразбиране"
 
-#: ../src/gradient-context.cpp:565
+#: ../src/gradient-context.cpp:582
 msgid "<b>Draw around</b> handles to select them"
 msgstr "<b>Влачете около</b> дръжки за да ги изберете"
 
-#: ../src/gradient-context.cpp:663
+#: ../src/gradient-context.cpp:680
 msgid "<b>Ctrl</b>: snap gradient angle"
 msgstr "<b>Ctrl</b>: залепване ъгъла напреливката"
 
-#: ../src/gradient-context.cpp:664
+#: ../src/gradient-context.cpp:681
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Shift</b>: рисуване на преливка около началната точка"
 
-#: ../src/gradient-context.cpp:784
+#: ../src/gradient-context.cpp:801
 msgid "Invert gradient"
 msgstr "Обръщане на преливката"
 
-#: ../src/gradient-context.cpp:893
+#: ../src/gradient-context.cpp:917
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] "<b>Преливка</b>за %d обект; с <b>Ctrl</b> за лепкав ъгъл"
 msgstr[1] "<b>Преливка</b>за %d обекти; с <b>Ctrl</b> за лепкав ъгъл"
 
-#: ../src/gradient-context.cpp:897
+#: ../src/gradient-context.cpp:921
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr "Избор на <b>обекти</b> на които да бъде създадена преливка."
 
@@ -4339,8 +4429,8 @@ msgstr "Единица"
 
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:469
-#: ../src/widgets/toolbox.cpp:1145 ../src/widgets/toolbox.cpp:2309
-#: ../src/widgets/toolbox.cpp:5288
+#: ../src/widgets/toolbox.cpp:1146 ../src/widgets/toolbox.cpp:2310
+#: ../src/widgets/toolbox.cpp:5314
 msgid "Units"
 msgstr "Единици"
 
@@ -4352,7 +4442,7 @@ msgstr "Точка"
 msgid "pt"
 msgstr "pt"
 
-#: ../src/helper/units.cpp:38
+#: ../src/helper/units.cpp:38 ../share/extensions/perfectboundcover.inx.h:16
 msgid "Points"
 msgstr "Точки"
 
@@ -4703,6 +4793,14 @@ msgstr "Замяна"
 msgid "_Write session file:"
 msgstr "_Запис на сесиен файл:"
 
+#: ../src/jabber_whiteboard/pedrogui.cpp:2630
+msgid "Shared SVG whiteboard tool."
+msgstr ""
+
+#: ../src/jabber_whiteboard/pedrogui.cpp:2631
+msgid "Based on the Pedro XMPP client"
+msgstr ""
+
 #: ../src/jabber_whiteboard/session-file-selector.cpp:60
 msgid "Select a location and filename"
 msgstr "Избор на местоположение и файлово име"
@@ -4742,6 +4840,420 @@ msgstr "Смяна на дръжката"
 #: ../src/knotholder.cpp:312
 msgid "Move handle"
 msgstr "Преместване на дръжката"
+
+#: ../src/libgdl/gdl-dock-bar.c:108
+#, fuzzy
+msgid "Master"
+msgstr "Растер"
+
+#: ../src/libgdl/gdl-dock-bar.c:109
+msgid "GdlDockMaster object which the dockbar widget is attached to"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-bar.c:116
+#, fuzzy
+msgid "Dockbar style"
+msgstr "Паркируеми"
+
+#: ../src/libgdl/gdl-dock-bar.c:117
+msgid "Dockbar style to show items on it"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item-grip.c:395
+msgid "Iconify"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item-grip.c:395
+msgid "Iconify this dock"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item-grip.c:397
+#, fuzzy
+msgid "Close"
+msgstr "_Затваряне"
+
+#: ../src/libgdl/gdl-dock-item-grip.c:397
+#, fuzzy
+msgid "Close this dock"
+msgstr "Затваря на прозореца"
+
+#: ../src/libgdl/gdl-dock-item-grip.c:706
+#: ../src/libgdl/gdl-dock-tablabel.c:128
+msgid "Controlling dock item"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item-grip.c:707
+msgid "Dockitem which 'owns' this grip"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:287
+#, fuzzy
+msgid "Orientation"
+msgstr "Ориентация на страницата:"
+
+#: ../src/libgdl/gdl-dock-item.c:288
+msgid "Orientation of the docking item"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:303
+msgid "Resizable"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:304
+msgid "If set, the dock item can be resized when docked in a paned"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:311
+#, fuzzy
+msgid "Item behavior"
+msgstr "Поведение"
+
+#: ../src/libgdl/gdl-dock-item.c:312
+msgid ""
+"General behavior for the dock item (i.e. whether it can float, if it's "
+"locked, etc.)"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:320 ../src/libgdl/gdl-dock-master.c:148
+#, fuzzy
+msgid "Locked"
+msgstr "Заключване"
+
+#: ../src/libgdl/gdl-dock-item.c:321
+msgid ""
+"If set, the dock item cannot be dragged around and it doesn't show a grip"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:329
+msgid "Preferred width"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:330
+msgid "Preferred width for the dock item"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:336
+#, fuzzy
+msgid "Preferred height"
+msgstr "Височина:"
+
+#: ../src/libgdl/gdl-dock-item.c:337
+msgid "Preferred height for the dock item"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:616
+#, c-format
+msgid ""
+"You can't add a dock object (%p of type %s) inside a %s. Use a GdlDock or "
+"some other compound dock object."
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:623
+#, c-format
+msgid ""
+"Attempting to add a widget with type %s to a %s, but it can only contain one "
+"widget at a time; it already contains a widget of type %s"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:1345 ../src/libgdl/gdl-dock-item.c:1390
+#, c-format
+msgid "Unsupported docking strategy %s in dock object of type %s"
+msgstr ""
+
+#. UnLock menuitem
+#: ../src/libgdl/gdl-dock-item.c:1479
+#, fuzzy
+msgid "UnLock"
+msgstr "Заключване"
+
+#. Hide menuitem.
+#: ../src/libgdl/gdl-dock-item.c:1486
+#, fuzzy
+msgid "Hide"
+msgstr "_Скриване"
+
+#. Lock menuitem
+#: ../src/libgdl/gdl-dock-item.c:1491
+msgid "Lock"
+msgstr "Заключване"
+
+#: ../src/libgdl/gdl-dock-item.c:1717
+#, c-format
+msgid "Attempt to bind an unbound item %p"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:141 ../src/libgdl/gdl-dock.c:183
+#, fuzzy
+msgid "Default title"
+msgstr "_Единици по подразбиране:"
+
+#: ../src/libgdl/gdl-dock-master.c:142
+msgid "Default title for newly created floating docks"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:149
+msgid ""
+"If is set to 1, all the dock items bound to the master are locked; if it's "
+"0, all are unlocked; -1 indicates inconsistency among the items"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:157 ../src/libgdl/gdl-switcher.c:707
+#, fuzzy
+msgid "Switcher Style"
+msgstr "Плетка на плочките"
+
+#: ../src/libgdl/gdl-dock-master.c:158 ../src/libgdl/gdl-switcher.c:708
+#, fuzzy
+msgid "Switcher buttons style"
+msgstr "Преминато към следващия слой."
+
+#: ../src/libgdl/gdl-dock-master.c:165
+#, fuzzy
+msgid "Expand direction"
+msgstr "Увеличаване на междуредието"
+
+#: ../src/libgdl/gdl-dock-master.c:166
+msgid ""
+"Allow the master's dock items to expand their container dock objects in the "
+"given direction"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:781
+#, c-format
+msgid ""
+"master %p: unable to add object %p[%s] to the hash.  There already is an "
+"item with that name (%p)."
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:954
+#, c-format
+msgid ""
+"The new dock controller %p is automatic.  Only manual dock objects should be "
+"named controller."
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-notebook.c:134
+#: ../src/ui/dialog/align-and-distribute.cpp:907
+#: ../src/ui/dialog/document-properties.cpp:129
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1427
+#: ../src/widgets/desktop-widget.cpp:1527
+msgid "Page"
+msgstr "Страница"
+
+#: ../src/libgdl/gdl-dock-notebook.c:135
+#, fuzzy
+msgid "The index of the current page"
+msgstr "Преименува текущия слой"
+
+#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:195
+msgid "Name"
+msgstr "Име"
+
+#: ../src/libgdl/gdl-dock-object.c:121
+msgid "Unique name for identifying the dock object"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:128
+#, fuzzy
+msgid "Long name"
+msgstr "Неименуван"
+
+#: ../src/libgdl/gdl-dock-object.c:129
+#, fuzzy
+msgid "Human readable name for the dock object"
+msgstr "Етикет за обекта в свободна форма"
+
+#: ../src/libgdl/gdl-dock-object.c:135
+#, fuzzy
+msgid "Stock Icon"
+msgstr "Сканирания в пакета"
+
+#: ../src/libgdl/gdl-dock-object.c:136
+msgid "Stock icon for the dock object"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:142
+msgid "Pixbuf Icon"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:143
+msgid "Pixbuf icon for the dock object"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:148
+#, fuzzy
+msgid "Dock master"
+msgstr "Заключване на слоя"
+
+#: ../src/libgdl/gdl-dock-object.c:149
+msgid "Dock master this dock object is bound to"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:434
+#, c-format
+msgid ""
+"Call to gdl_dock_object_dock in a dock object %p (object type is %s) which "
+"hasn't implemented this method"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:563
+#, c-format
+msgid ""
+"Dock operation requested in a non-bound object %p. The application might "
+"crash"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:570
+#, c-format
+msgid "Cannot dock %p to %p because they belong to different masters"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:612
+#, c-format
+msgid ""
+"Attempt to bind to %p an already bound dock object %p (current master: %p)"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-paned.c:132
+#, fuzzy
+msgid "Position"
+msgstr "Положение:"
+
+#: ../src/libgdl/gdl-dock-paned.c:133
+msgid "Position of the divider in pixels"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:143
+#, fuzzy
+msgid "Sticky"
+msgstr "мъничко"
+
+#: ../src/libgdl/gdl-dock-placeholder.c:144
+msgid ""
+"Whether the placeholder will stick to its host or move up the hierarchy when "
+"the host is redocked"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:151
+#, fuzzy
+msgid "Host"
+msgstr "разширяване"
+
+#: ../src/libgdl/gdl-dock-placeholder.c:152
+msgid "The dock object this placeholder is attached to"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:159
+#, fuzzy
+msgid "Next placement"
+msgstr "Разполагане на зъбчатките"
+
+#: ../src/libgdl/gdl-dock-placeholder.c:160
+msgid ""
+"The position an item will be docked to our host if a request is made to dock "
+"to us"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:170
+msgid "Width for the widget when it's attached to the placeholder"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:178
+msgid "Height for the widget when it's attached to the placeholder"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:184
+#, fuzzy
+msgid "Floating Toplevel"
+msgstr "Плаващи"
+
+#: ../src/libgdl/gdl-dock-placeholder.c:185
+msgid "Whether the placeholder is standing in for a floating toplevel dock"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:191
+#, fuzzy
+msgid "X-Coordinate"
+msgstr "Координати на показалеца"
+
+#: ../src/libgdl/gdl-dock-placeholder.c:192
+msgid "X-Coordinate fow dock when floating"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:198
+#, fuzzy
+msgid "Y-Coordinate"
+msgstr "Координати на показалеца"
+
+#: ../src/libgdl/gdl-dock-placeholder.c:199
+msgid "Y-Coordinate fow dock when floating"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:494
+msgid "Attempt to dock a dock object to an unbound placeholder"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:618
+#, c-format
+msgid "Got a detach signal from an object (%p) who is not our host %p"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:643
+#, c-format
+msgid ""
+"Something weird happened while getting the child placement for %p from "
+"parent %p"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-tablabel.c:129
+msgid "Dockitem which 'owns' this tablabel"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:175 ../src/ui/dialog/inkscape-preferences.cpp:464
+#: ../src/ui/dialog/inkscape-preferences.cpp:490
+msgid "Floating"
+msgstr "Плаващи"
+
+#: ../src/libgdl/gdl-dock.c:176
+msgid "Whether the dock is floating in its own window"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:184
+msgid "Default title for the newly created floating docks"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:191
+msgid "Width for the dock when it's of floating type"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:199
+msgid "Height for the dock when it's of floating type"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:206
+#, fuzzy
+msgid "Float X"
+msgstr "Плаващи"
+
+#: ../src/libgdl/gdl-dock.c:207
+#, fuzzy
+msgid "X coordinate for a floating dock"
+msgstr "Координата по хоризонтал на началото на мрежата"
+
+#: ../src/libgdl/gdl-dock.c:214
+#, fuzzy
+msgid "Float Y"
+msgstr "Плаващи"
+
+#: ../src/libgdl/gdl-dock.c:215
+#, fuzzy
+msgid "Y coordinate for a floating dock"
+msgstr "Координата по вертикал на началото на мрежата"
+
+#: ../src/libgdl/gdl-dock.c:499
+#, c-format
+msgid "Dock #%d"
+msgstr ""
 
 #: ../src/libnrtype/FontFactory.cpp:774
 msgid "Ignoring font without family that will crash Pango"
@@ -4892,6 +5404,40 @@ msgstr "Относително мащабиране на ширината"
 msgid "Scale the width of the stroke path relative to its length"
 msgstr "Мащабиране ширината на линията, относително към дължината"
 
+#: ../src/live_effects/lpe-pathalongpath.cpp:57
+#, fuzzy
+msgid "Bend path"
+msgstr "Прекъсване на път"
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:57
+#, fuzzy
+msgid "Path along which to bend the original path"
+msgstr "Създава динамично отместен обект, свързана с оригинала"
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:58
+#, fuzzy
+msgid "Width of the path"
+msgstr "Ширина на шарката"
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:59
+#: ../src/live_effects/lpe-skeletalstrokes.cpp:65
+msgid "Width in units of length"
+msgstr "Ширина в единици от дължината"
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:59
+#, fuzzy
+msgid "Scale the width of the path in units of its length"
+msgstr "Мащабиране ширината на шарката в единици от дължината"
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:60
+#, fuzzy
+msgid "Original path is vertical"
+msgstr "Шарката е вертикална"
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:60
+msgid "Rotates the original 90 degrees, before bending it along the bend path"
+msgstr ""
+
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:53
 msgid "Single"
 msgstr "Единично"
@@ -4929,10 +5475,6 @@ msgid "Width of the pattern"
 msgstr "Ширина на шарката"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:65
-msgid "Width in units of length"
-msgstr "Ширина в единици от дължината"
-
-#: ../src/live_effects/lpe-skeletalstrokes.cpp:65
 msgid "Scale the width of the pattern in units of its length"
 msgstr "Мащабиране ширината на шарката в единици от дължината"
 
@@ -4958,6 +5500,28 @@ msgstr "Вертикално отместване"
 #: ../share/extensions/pathalongpath.inx.h:7
 msgid "Pattern is vertical"
 msgstr "Шарката е вертикална"
+
+#: ../src/live_effects/lpe-slant.cpp:18
+#, fuzzy
+msgid "Slant factor"
+msgstr "Плътен цвят"
+
+#: ../src/live_effects/lpe-slant.cpp:18
+msgid "y = y + x*(slant factor)"
+msgstr ""
+
+#: ../src/live_effects/lpe-slant.cpp:19 ../src/widgets/toolbox.cpp:4842
+msgid "Center"
+msgstr "Центриране"
+
+#: ../src/live_effects/lpe-slant.cpp:19
+msgid "The x-coord of this point is around which the slant will happen"
+msgstr ""
+
+#: ../src/live_effects/lpe-test-doEffect-stack.cpp:21
+#, fuzzy
+msgid "Stack step"
+msgstr "Сканирания в пакета"
 
 #: ../src/live_effects/parameter/parameter.cpp:138
 msgid "Change scalar parameter"
@@ -5044,7 +5608,7 @@ msgid "The resolution used for exporting SVG into bitmap (default 90)"
 msgstr ""
 "Резолюцията, използвана за извеждане на SVG в растер (по подразбиране 90)"
 
-#: ../src/main.cpp:249
+#: ../src/main.cpp:249 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
 msgstr "DPI"
 
@@ -5869,6 +6433,14 @@ msgstr "<b>Влачене</b> за продължаване на пътекат�
 msgid "Finishing freehand"
 msgstr "Завършване на свободната линия"
 
+#: ../src/persp3d.cpp:337
+msgid "Toggle vanishing point"
+msgstr ""
+
+#: ../src/persp3d.cpp:348
+msgid "Toggle multiple vanishing points"
+msgstr ""
+
 #: ../src/preferences.cpp:59
 #, c-format
 msgid ""
@@ -5989,7 +6561,7 @@ msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Нищо</b>не беше изтрито."
 
 #: ../src/selection-chemistry.cpp:261 ../src/text-context.cpp:995
-#: ../src/widgets/toolbox.cpp:990
+#: ../src/widgets/toolbox.cpp:991
 msgid "Delete"
 msgstr "Триене"
 
@@ -6161,7 +6733,7 @@ msgid "Rotate by pixels"
 msgstr "Въртене по пиксели"
 
 #: ../src/selection-chemistry.cpp:1926 ../src/seltrans.cpp:431
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2138
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2182
 #: ../src/ui/dialog/transformation.cpp:666
 msgid "Scale"
 msgstr "Мащабиране"
@@ -6242,88 +6814,88 @@ msgstr ""
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr "Изберете <b>обект(и)</b> за превръщане в маркер."
 
-#: ../src/selection-chemistry.cpp:2490
+#: ../src/selection-chemistry.cpp:2491
 msgid "Objects to marker"
 msgstr "Обекти в маркер"
 
-#: ../src/selection-chemistry.cpp:2519
+#: ../src/selection-chemistry.cpp:2520
 #, fuzzy
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr "Изберете <b>обект(и)</b> за превръщане в маркер."
 
-#: ../src/selection-chemistry.cpp:2529
+#: ../src/selection-chemistry.cpp:2530
 #, fuzzy
 msgid "Objects to guides"
 msgstr "Обекти в маркер"
 
-#: ../src/selection-chemistry.cpp:2546
+#: ../src/selection-chemistry.cpp:2547
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Изберете <b>обект(и)</b> за превръщане в шарка."
 
-#: ../src/selection-chemistry.cpp:2631
+#: ../src/selection-chemistry.cpp:2632
 msgid "Objects to pattern"
 msgstr "Обекти в шарка"
 
-#: ../src/selection-chemistry.cpp:2648
+#: ../src/selection-chemistry.cpp:2649
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr "Изберете <b>обект, запълнен с шарка</b> от който са извлечете обекти."
 
-#: ../src/selection-chemistry.cpp:2701
+#: ../src/selection-chemistry.cpp:2702
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "<b>Няма запълвания с шарка</b> в избраното."
 
-#: ../src/selection-chemistry.cpp:2704
+#: ../src/selection-chemistry.cpp:2705
 msgid "Pattern to objects"
 msgstr "Шарка в обекти"
 
-#: ../src/selection-chemistry.cpp:2790
+#: ../src/selection-chemistry.cpp:2791
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Изберете <b>обект(и)</b> на който да направите растерно копие."
 
-#: ../src/selection-chemistry.cpp:2951
+#: ../src/selection-chemistry.cpp:2952
 msgid "Create bitmap"
 msgstr "Създаване на растер"
 
-#: ../src/selection-chemistry.cpp:2984
+#: ../src/selection-chemistry.cpp:2985
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
 "Изберете <b>обект(и)</b> от които да създадете път на отрязване или маска."
 
-#: ../src/selection-chemistry.cpp:2987
+#: ../src/selection-chemistry.cpp:2988
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "Изберете обект маска и <b>обект(и)</b> върху който да го приложите."
 
-#: ../src/selection-chemistry.cpp:3093
+#: ../src/selection-chemistry.cpp:3094
 msgid "Set clipping path"
 msgstr "Задаване път на отрязване"
 
-#: ../src/selection-chemistry.cpp:3095
+#: ../src/selection-chemistry.cpp:3096
 msgid "Set mask"
 msgstr "Задаване на маска"
 
-#: ../src/selection-chemistry.cpp:3109
+#: ../src/selection-chemistry.cpp:3110
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
 "Изберете <b>обект(и)</b> от който да премахнете пътя на отрязване или "
 "маската."
 
-#: ../src/selection-chemistry.cpp:3177
+#: ../src/selection-chemistry.cpp:3178
 msgid "Release clipping path"
 msgstr "Освободете пътя на отрязване"
 
-#: ../src/selection-chemistry.cpp:3179
+#: ../src/selection-chemistry.cpp:3180
 msgid "Release mask"
 msgstr "Освободете маската"
 
-#: ../src/selection-chemistry.cpp:3190
+#: ../src/selection-chemistry.cpp:3191
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr "Изберете <b>обект(и)</b> по които да се напасне полето."
 
-#: ../src/selection-chemistry.cpp:3224
+#: ../src/selection-chemistry.cpp:3225
 msgid "Fit page to selection"
 msgstr "Напасване страницата към избраното"
 
-#: ../src/selection-describer.cpp:42
+#: ../src/selection-describer.cpp:42 ../src/ui/widget/spin-slider.cpp:113
 msgid "Link"
 msgstr "Връзка"
 
@@ -6349,7 +6921,7 @@ msgstr "Линия"
 msgid "Path"
 msgstr "Път"
 
-#: ../src/selection-describer.cpp:58 ../src/widgets/toolbox.cpp:1882
+#: ../src/selection-describer.cpp:58 ../src/widgets/toolbox.cpp:1883
 msgid "Polygon"
 msgstr "Полигон"
 
@@ -6386,7 +6958,7 @@ msgstr "Спирала"
 #. star
 #: ../src/selection-describer.cpp:78
 #: ../src/ui/dialog/inkscape-preferences.cpp:407 ../src/verbs.cpp:2380
-#: ../src/widgets/toolbox.cpp:1889
+#: ../src/widgets/toolbox.cpp:1890
 msgid "Star"
 msgstr "Звезда"
 
@@ -6801,6 +7373,16 @@ msgstr "<b>Текст по пътека</b> (%s, %s)"
 msgid "<b>Text</b> (%s, %s)"
 msgstr "<b>Текст</b> (%s, %s)"
 
+#: ../src/sp-tref.cpp:359
+#, fuzzy, c-format
+msgid "<b>Cloned character data</b> from: %s"
+msgstr "<b>Копие</b> на: %s"
+
+#: ../src/sp-tref.cpp:363
+#, fuzzy
+msgid "<b>Orphaned cloned character data</b>"
+msgstr "<b>Осиротяло копие</b>"
+
 #: ../src/sp-tspan.cpp:285
 msgid "<b>Text span</b>"
 msgstr "<b>Текстово запълване</b>"
@@ -7213,6 +7795,10 @@ msgstr ""
 msgid "Type text"
 msgstr "Напиши текст"
 
+#: ../src/text-editing.cpp:40
+msgid "You cannot edit <b>cloned character data</b>."
+msgstr ""
+
 #: ../src/tools-switch.cpp:148
 msgid ""
 "To edit a path, <b>click</b>, <b>Shift+click</b>, or <b>drag around</b> "
@@ -7579,7 +8165,7 @@ msgstr "Минимална хоризонтална празнина (в пик�
 
 #. TRANSLATORS: Horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:467
-#: ../src/widgets/toolbox.cpp:2265
+#: ../src/widgets/toolbox.cpp:2266
 msgid "H:"
 msgstr "Х:"
 
@@ -7594,12 +8180,12 @@ msgstr "В:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:505
 #: ../src/ui/dialog/align-and-distribute.cpp:782
-#: ../src/widgets/toolbox.cpp:5156
+#: ../src/widgets/toolbox.cpp:5182
 msgid "Remove overlaps"
 msgstr "Премахване на припокриването"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:535
-#: ../src/widgets/toolbox.cpp:5016
+#: ../src/widgets/toolbox.cpp:5042
 msgid "Arrange connector network"
 msgstr "Подреждане на мрежата от връзки"
 
@@ -7738,7 +8324,7 @@ msgstr ""
 "не се застъпват"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:884
-#: ../src/widgets/toolbox.cpp:5118
+#: ../src/widgets/toolbox.cpp:5144
 msgid "Nicely arrange selected connector network"
 msgstr "Красиво подреждане на избраната мрежа от връзки"
 
@@ -7774,13 +8360,6 @@ msgstr "Най-голямо"
 #: ../src/ui/dialog/align-and-distribute.cpp:906
 msgid "Smallest item"
 msgstr "Най-малко"
-
-#: ../src/ui/dialog/align-and-distribute.cpp:907
-#: ../src/ui/dialog/document-properties.cpp:129
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1427
-#: ../src/widgets/desktop-widget.cpp:1527
-msgid "Page"
-msgstr "Страница"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:908
 #: ../src/widgets/desktop-widget.cpp:1531
@@ -8039,7 +8618,7 @@ msgid "Guides"
 msgstr "Водачи"
 
 #: ../src/ui/dialog/document-properties.cpp:131
-#: ../src/ui/dialog/inkscape-preferences.cpp:875
+#: ../src/ui/dialog/inkscape-preferences.cpp:879
 msgid "Grids"
 msgstr "Мрежи"
 
@@ -8331,268 +8910,292 @@ msgid "Stroke st_yle"
 msgstr "_Стил на очертаване"
 
 #. pack_start(_fromSVGElement, false, false);
-#: ../src/ui/dialog/filter-effects-dialog.cpp:567
+#: ../src/ui/dialog/filter-effects-dialog.cpp:583
 #, fuzzy
 msgid "Image File"
 msgstr "Изображение"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:570
+#: ../src/ui/dialog/filter-effects-dialog.cpp:586
 #, fuzzy
 msgid "Selected SVG Element"
 msgstr "Изтриване на сегмента"
 
 #. TODO: any image, not justy svg
-#: ../src/ui/dialog/filter-effects-dialog.cpp:637
+#: ../src/ui/dialog/filter-effects-dialog.cpp:655
 #, fuzzy
 msgid "Select an image to be used as feImage input"
 msgstr "Изберете едно изображение и една или повече форми над него"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:897
+#: ../src/ui/dialog/filter-effects-dialog.cpp:747
+msgid "This SVG filter effect is not yet implemented in Inkscape."
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:927
 msgid "Light Source:"
 msgstr "Източник на светлина:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:918
-#: ../src/ui/dialog/filter-effects-dialog.cpp:921
+#. default x:
+#. default y:
+#. default z:
+#: ../src/ui/dialog/filter-effects-dialog.cpp:948
+#: ../src/ui/dialog/filter-effects-dialog.cpp:951
 msgid "Location"
 msgstr "Място"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:923
+#: ../src/ui/dialog/filter-effects-dialog.cpp:954
 msgid "Points At"
 msgstr "Точки на"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:924
+#: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Specular Exponent"
 msgstr "Отразителни крайни точки"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:925
+#: ../src/ui/dialog/filter-effects-dialog.cpp:956
 msgid "Cone Angle"
 msgstr "Ъгъл на конуса"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:985
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1016
 msgid "New light source"
 msgstr "Нов светлинен източник"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1026
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1057
 msgid "_Duplicate"
 msgstr "_Дублиране"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1052
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1083
 msgid "_Filter"
 msgstr "_Филтър"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1066
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1097
 msgid "R_ename"
 msgstr "_Преименуване"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1191
 msgid "Rename filter"
 msgstr "Преименуване на филтъра"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1196
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1227
 msgid "Apply filter"
 msgstr "Прилагане на филтъра"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1271
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1303
 msgid "Add filter"
 msgstr "Добавяне на филтър"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1282
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1314
 msgid "Remove filter"
 msgstr "Премахване на филтър"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1297
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1329
 msgid "Duplicate filter"
 msgstr "Дублиране на филтър"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1364
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1396
 msgid "_Effect"
 msgstr "_Ефект"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1372
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1404
 msgid "Connections"
 msgstr "Връзки"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1488
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1520
 msgid "Remove filter primitive"
 msgstr "Премахване на примитив"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1859
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1891
 msgid "Remove merge node"
 msgstr "Премахване на слят възел"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1975
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2007
 msgid "Reorder filter primitive"
 msgstr "Преподреждане примитивите на филтъра"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2011
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2043
 msgid "Add Effect:"
 msgstr "Добавяне на ефект:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2012
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2044
 msgid "No effect selected"
 msgstr "Не е избран ефект"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2029
-msgid "<b>Effect parameters</b>"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2045
+#, fuzzy
+msgid "No filter selected"
+msgstr "Не е избран ефект"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2080
+#, fuzzy
+msgid "Effect parameters"
 msgstr "<b>Параметри на ефекта</b>"
 
-#. # end multiple scan
-#. ## end mode page
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2097
-#: ../src/ui/dialog/tracedialog.cpp:553 ../src/widgets/toolbox.cpp:3112
-msgid "Mode"
-msgstr "Режим"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2081
+msgid "Filter General Settings"
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2101
-msgid "Value(s)"
-msgstr "Стойност(и)"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2114
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2150
-msgid "Operator"
-msgstr "Оператор"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2115
-msgid "K1"
-msgstr "К1"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2116
-msgid "K2"
-msgstr "К2"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2117
-msgid "K3"
-msgstr "К3"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2118
-msgid "K4"
-msgstr "К4"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2122
-msgid "Target"
-msgstr "Цел"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2123
-msgid "Kernel"
-msgstr "Ядро"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2125
-msgid "Divisor"
-msgstr "Разделител"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2126
-msgid "Bias"
-msgstr "Отклонение"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2127
-msgid "Edge Mode"
-msgstr "Режим на ръбове"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2128
-msgid "Preserve Alpha"
-msgstr "Запазване на прозрачността"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2131
-msgid "Diffuse Color"
-msgstr "Цвят на разсейване"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2132
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2164
-msgid "Surface Scale"
-msgstr "Мащабиране на повърхността"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2133
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
-msgid "Constant"
-msgstr "Постоянен"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2134
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
-msgid "Kernel Unit Length"
-msgstr "Дължина на основната единица"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2139
-msgid "X Channel"
-msgstr "Х канал"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2140
-msgid "Y Channel"
-msgstr "В канал"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2143
-msgid "Flood Color"
-msgstr "Запълващ свят"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2147
-msgid "Standard Deviation"
-msgstr "Стандартно отклонение"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2154
-#, fuzzy
-msgid "Source of Image"
-msgstr "Брой стъпки"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2155
+#. default x:
+#. default y:
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2137
 #, fuzzy
 msgid "Coordinates"
 msgstr "Координати на показалеца"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2156
+#. default width:
+#. default height:
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2138
+#: ../share/extensions/dimension.inx.h:1
 #, fuzzy
 msgid "Dimensions"
 msgstr "Разделяне"
 
+#. # end multiple scan
+#. ## end mode page
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2141
+#: ../src/ui/dialog/tracedialog.cpp:553 ../src/widgets/toolbox.cpp:3113
+msgid "Mode"
+msgstr "Режим"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2145
+msgid "Value(s)"
+msgstr "Стойност(и)"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2158
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
+msgid "Operator"
+msgstr "Оператор"
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2159
+msgid "K1"
+msgstr "К1"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+msgid "K2"
+msgstr "К2"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
+msgid "K3"
+msgstr "К3"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
+msgid "K4"
+msgstr "К4"
+
+#. default x:
+#. default y:
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
+msgid "Target"
+msgstr "Цел"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
+msgid "Kernel"
+msgstr "Ядро"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2169
+msgid "Divisor"
+msgstr "Разделител"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2170
+msgid "Bias"
+msgstr "Отклонение"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2171
+msgid "Edge Mode"
+msgstr "Режим на ръбове"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2172
+msgid "Preserve Alpha"
+msgstr "Запазване на прозрачността"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2175
+msgid "Diffuse Color"
+msgstr "Цвят на разсейване"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2176
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2206
+msgid "Surface Scale"
+msgstr "Мащабиране на повърхността"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2177
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+msgid "Constant"
+msgstr "Постоянен"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2178
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
+msgid "Kernel Unit Length"
+msgstr "Дължина на основната единица"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2183
+msgid "X Channel"
+msgstr "Х канал"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2184
+msgid "Y Channel"
+msgstr "В канал"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2187
+msgid "Flood Color"
+msgstr "Запълващ свят"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
+msgid "Standard Deviation"
+msgstr "Стандартно отклонение"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
+#, fuzzy
+msgid "Source of Image"
+msgstr "Брой стъпки"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
 msgid "Delta X"
 msgstr "Делта Х"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 msgid "Delta Y"
 msgstr "Делта В"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2163
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2205
 msgid "Specular Color"
 msgstr "Отразяващ цвят"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
 #: ../share/extensions/interp.inx.h:2
 msgid "Exponent"
 msgstr "Експонента"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2174
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
 msgid "Stitch Tiles"
 msgstr "Плетка на плочките"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2176
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2218
 msgid "Base Frequency"
 msgstr "Основна честота"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2177
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2219
 msgid "Octaves"
 msgstr "Октави"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2178
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2220
 msgid "Seed"
 msgstr "Разпръскване"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2232
 msgid "Add filter primitive"
 msgstr "Добавяне на примитив"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2199
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2248
 msgid ""
 "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, "
 "multiply, darken and lighten."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2252
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "colour of each rendered pixel. This allows for effects like turning object "
 "to grayscale, modifying colour saturation and changing colour hue."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2256
 msgid ""
 "The <b>feComponentTransfer</b> filter primitive manipulates the input's "
 "color components (red, green, blue, and alpha) according to particular "
@@ -8600,7 +9203,7 @@ msgid ""
 "adjustment, color balance, and thresholding."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2211
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2260
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
 "the Porter-Duff blending modes or the aritmetic mode described in SVG "
@@ -8608,7 +9211,7 @@ msgid ""
 "between the corresponding pixel values of the images."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2264
 msgid ""
 "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on "
 "the image. Common effects created using convolution matrices are blur, "
@@ -8617,7 +9220,7 @@ msgid ""
 "is faster and resolution-independent."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2219
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2268
 msgid ""
 "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
@@ -8625,7 +9228,7 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2272
 msgid ""
 "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the "
 "first input using the second input as a displacement map, that shows from "
@@ -8633,26 +9236,26 @@ msgid ""
 "effects."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2227
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2276
 msgid ""
 "The <b>feFlood</b> filter primitive fills the region with a given color and "
 "opacity.  It is usually used as an input to other filters to apply color to "
 "a graphic."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2280
 msgid ""
 "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is "
 "commonly used together with feOffset to create a drop shadow effect."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2284
 msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2239
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2288
 msgid ""
 "The <b>feMerge</b> filter primitive composites several temporary images "
 "inside the filter primitive to a single image. It uses normal alpha "
@@ -8660,21 +9263,21 @@ msgid ""
 "in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2243
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2292
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
 "For single-colour objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2247
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2296
 msgid ""
 "The <b>feOffset</b> filter primitive offsets the image by an user-defined "
 "amount. For example, this is useful for drop shadows, where the shadow is in "
 "a slightly different position than the actual object."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2251
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2300
 msgid ""
 "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
@@ -8682,23 +9285,23 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2255
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2304
 msgid ""
 "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2259
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2308
 msgid ""
 "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of "
 "noise is useful in simulating several nature phenomena like clouds, fire and "
 "smoke and in generating complex textures like marble or granite."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2274
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2326
 msgid "Duplicate filter primitive"
 msgstr "Дублиране на примитив"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2313
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2379
 msgid "Set filter primitive attribute"
 msgstr "Задаване атрибут на филтърния примитив"
 
@@ -8811,7 +9414,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:178
 #: ../src/ui/dialog/tracedialog.cpp:410 ../src/ui/dialog/tracedialog.cpp:443
-#: ../src/ui/dialog/tracedialog.cpp:586 ../src/widgets/toolbox.cpp:5271
+#: ../src/ui/dialog/tracedialog.cpp:586 ../src/widgets/toolbox.cpp:5297
 msgid "Threshold:"
 msgstr "Праг:"
 
@@ -9236,11 +9839,6 @@ msgstr "Да не се запазва геометрията на прозоре
 msgid "Dockable"
 msgstr "Паркируеми"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:464
-#: ../src/ui/dialog/inkscape-preferences.cpp:490
-msgid "Floating"
-msgstr "Плаващи"
-
 #: ../src/ui/dialog/inkscape-preferences.cpp:466
 msgid "Dialogs are hidden in taskbar"
 msgstr "Диалозите са скрити в лентата със задачите"
@@ -9252,6 +9850,10 @@ msgstr "Приближаване, когато прозореца се прео�
 #: ../src/ui/dialog/inkscape-preferences.cpp:468
 msgid "Show close button on dialogs"
 msgstr "Показване на прозорец за затваряне на диалозите"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:470
+msgid "Normal"
+msgstr "Нормално"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:471
 msgid "Aggressive"
@@ -9543,51 +10145,62 @@ msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr "Най-ниско качество (значителни дефекти), но се показва много бързо"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:608
+#, fuzzy
+msgid "Show filter primitives infobox"
+msgstr "Задаване атрибут на филтърния примитив"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:610
+msgid ""
+"Show icons and descriptions for the filter primitives available at the "
+"filter effects dialog."
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:612
 msgid "Filters"
 msgstr "Филтри"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:614
+#: ../src/ui/dialog/inkscape-preferences.cpp:618
 msgid "Select in all layers"
 msgstr "Избиране във всички слоеве"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:615
+#: ../src/ui/dialog/inkscape-preferences.cpp:619
 msgid "Select only within current layer"
 msgstr "Избиране само в текущия слой"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:616
+#: ../src/ui/dialog/inkscape-preferences.cpp:620
 msgid "Select in current layer and sublayers"
 msgstr "Избиране в текущия слой и подслоевете"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:617
+#: ../src/ui/dialog/inkscape-preferences.cpp:621
 #, fuzzy
 msgid "Ignore hidden objects and layers"
 msgstr "Пренебрегване на скрити обекти"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:618
+#: ../src/ui/dialog/inkscape-preferences.cpp:622
 #, fuzzy
 msgid "Ignore locked objects and layers"
 msgstr "Пренебрегване на заключени обекти"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:619
+#: ../src/ui/dialog/inkscape-preferences.cpp:623
 msgid "Deselect upon layer change"
 msgstr "Оставяне при смяна на слоя"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:621
+#: ../src/ui/dialog/inkscape-preferences.cpp:625
 msgid "Ctrl+A, Tab, Shift+Tab:"
 msgstr "Ctrl+A, Tab, Shift+Tab:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:623
+#: ../src/ui/dialog/inkscape-preferences.cpp:627
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr ""
 "Командите за избиране от клавиатурата да работят на обекти от всички слоеве"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:625
+#: ../src/ui/dialog/inkscape-preferences.cpp:629
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr ""
 "Командите за избиране от клавиатурата да работят на обекти само от текущия "
 "слой"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:627
+#: ../src/ui/dialog/inkscape-preferences.cpp:631
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
 "its sublayers"
@@ -9595,7 +10208,7 @@ msgstr ""
 "Командите за избиране от клавиатурата да работят на обекти от текущия слой и "
 "всичките му подслоеве"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:629
+#: ../src/ui/dialog/inkscape-preferences.cpp:633
 #, fuzzy
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
@@ -9604,7 +10217,7 @@ msgstr ""
 "Освободете това, за да сте в състояние да избирате обекти които са скрити "
 "(независимо дали сами или скрити заедно с група или слой)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:631
+#: ../src/ui/dialog/inkscape-preferences.cpp:635
 #, fuzzy
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
@@ -9613,7 +10226,7 @@ msgstr ""
 "Освободете това, за да сте в състояние да избирате обекти които са заключени "
 "(независимо дали сами или скрити заедно с група или слой)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:634
+#: ../src/ui/dialog/inkscape-preferences.cpp:638
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
@@ -9621,24 +10234,24 @@ msgstr ""
 "Освободете това, за да сте в състояние да запазвате текущите обекти избрани, "
 "когато се променя текущия слой"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:636
+#: ../src/ui/dialog/inkscape-preferences.cpp:640
 msgid "Selecting"
 msgstr "Избиране"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:643
+#: ../src/ui/dialog/inkscape-preferences.cpp:647
 msgid "Default export resolution:"
 msgstr "Резолюция за извличане по подразбиране:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:644
+#: ../src/ui/dialog/inkscape-preferences.cpp:648
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr ""
 "Резолюция на растера по подразбиране ( в точки на инч) в диалога за извличане"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:646
+#: ../src/ui/dialog/inkscape-preferences.cpp:650
 msgid "Open Clip Art Library Server Name:"
 msgstr "Име на сървъра на Open Clip Art Library:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:647
+#: ../src/ui/dialog/inkscape-preferences.cpp:651
 msgid ""
 "The server name of the Open Clip Art Library webdav server. It's used by the "
 "Import and Export to OCAL function."
@@ -9646,251 +10259,239 @@ msgstr ""
 "Име на Open Clip Art Library webdav сървъра. Използва се от OCAL функцията "
 "за внасяне и изнасяне."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:649
+#: ../src/ui/dialog/inkscape-preferences.cpp:653
 msgid "Open Clip Art Library Username:"
 msgstr "Потребителско име за Open Clip Art Library:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:650
+#: ../src/ui/dialog/inkscape-preferences.cpp:654
 msgid "The username used to log into Open Clip Art Library."
 msgstr "Потребителското име за вход в Open Clip Art Library."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:652
+#: ../src/ui/dialog/inkscape-preferences.cpp:656
 msgid "Open Clip Art Library Password:"
 msgstr "Парола за Open Clip Art Library:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:653
+#: ../src/ui/dialog/inkscape-preferences.cpp:657
 msgid "The password used to log into Open Clip Art Library."
 msgstr "Паролата за вход в Open Clip Art Library."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:655
+#: ../src/ui/dialog/inkscape-preferences.cpp:659
 msgid "Import/Export"
 msgstr "Внасяне/Изнасяне"
 
 #. TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm
-#: ../src/ui/dialog/inkscape-preferences.cpp:701
+#: ../src/ui/dialog/inkscape-preferences.cpp:705
 msgid "Perceptual"
 msgstr "Ресултатен"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:701
+#: ../src/ui/dialog/inkscape-preferences.cpp:705
 msgid "Relative Colorimetric"
 msgstr "Относително цветометрично"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:701
+#: ../src/ui/dialog/inkscape-preferences.cpp:705
 msgid "Absolute Colorimetric"
 msgstr "Абсолютно колоритмично"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:705
+#: ../src/ui/dialog/inkscape-preferences.cpp:709
 #, fuzzy
 msgid "(Note: Color management has been disabled in this build)"
 msgstr "(Бележка: Управлението на цветовете е изключено за тази версия)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:709
+#: ../src/ui/dialog/inkscape-preferences.cpp:713
 #, fuzzy
 msgid "Display adjustment"
 msgstr "Цел за показване:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:711
+#: ../src/ui/dialog/inkscape-preferences.cpp:715
 msgid "Display profile:"
 msgstr "Профил за показване:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:712
+#: ../src/ui/dialog/inkscape-preferences.cpp:716
 msgid "The ICC profile to use to calibrate display output."
 msgstr "ICC профилът, който да се използва за калибриране на цветовете."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:714
+#: ../src/ui/dialog/inkscape-preferences.cpp:718
 msgid "Retrieve profile from display"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:717
+#: ../src/ui/dialog/inkscape-preferences.cpp:721
 msgid "Retrieve profiles from those attached to displays via XICC."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:719
+#: ../src/ui/dialog/inkscape-preferences.cpp:723
 msgid "Retrieve profiles from those attached to displays."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:724
+#: ../src/ui/dialog/inkscape-preferences.cpp:728
 #, fuzzy
 msgid "Display rendering intent:"
 msgstr "Цел за показване:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:725
-#: ../src/ui/dialog/inkscape-preferences.cpp:748
+#: ../src/ui/dialog/inkscape-preferences.cpp:729
+#: ../src/ui/dialog/inkscape-preferences.cpp:752
 msgid "The rendering intent to use to calibrate display output."
 msgstr "Фокус на генериране, за калибриране на показването."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:727
+#: ../src/ui/dialog/inkscape-preferences.cpp:731
 msgid "Proofing"
 msgstr "Проверка"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:729
+#: ../src/ui/dialog/inkscape-preferences.cpp:733
 msgid "Simulate output on screen"
 msgstr "Симулиране резултата на екрана"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:731
+#: ../src/ui/dialog/inkscape-preferences.cpp:735
 msgid "Simulates output of target device."
 msgstr "Симулира резултата от крайното устройство."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:733
+#: ../src/ui/dialog/inkscape-preferences.cpp:737
 msgid "Mark out of gamut colors"
 msgstr "Маркиране на неподдържаните цветове"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:735
+#: ../src/ui/dialog/inkscape-preferences.cpp:739
 msgid "Highlights colors that are out of gamut for the target device."
 msgstr "Маркира цветовете, които са извън обхвата на целевото устройство."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:740
+#: ../src/ui/dialog/inkscape-preferences.cpp:744
 msgid "Out of gamut warning color:"
 msgstr "Цвят за предупреждение:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:741
+#: ../src/ui/dialog/inkscape-preferences.cpp:745
 msgid "Selects the color used for out of gamut warning."
 msgstr "Избира цвят за предупреждение ако нещо не попада в гамата."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:743
+#: ../src/ui/dialog/inkscape-preferences.cpp:747
 msgid "Device profile:"
 msgstr "Профил на устройството:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:744
+#: ../src/ui/dialog/inkscape-preferences.cpp:748
 msgid "The ICC profile to use to simulate device output."
 msgstr "ICC профил, с който да се симулира полученото от устройството."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:747
+#: ../src/ui/dialog/inkscape-preferences.cpp:751
 #, fuzzy
 msgid "Device rendering intent:"
 msgstr "Фокус на устройството:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:750
+#: ../src/ui/dialog/inkscape-preferences.cpp:754
 #, fuzzy
 msgid "Black point compensation"
 msgstr "Компенсиране на черната точка"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:752
+#: ../src/ui/dialog/inkscape-preferences.cpp:756
 msgid "Enables black point compensation."
 msgstr "Включва компенсиране на черната точка."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:754
+#: ../src/ui/dialog/inkscape-preferences.cpp:758
 msgid "Preserve black"
 msgstr "Запазване на черното"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:759
+#: ../src/ui/dialog/inkscape-preferences.cpp:763
 msgid "(LittleCMS 1.15 or later required)"
 msgstr "(Изисква се LittleCMS 1.15 или по-нов)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:761
+#: ../src/ui/dialog/inkscape-preferences.cpp:765
 #, fuzzy
 msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "Запазване на K канала при трансформации CMYK -> CMYK"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:774
+#: ../src/ui/dialog/inkscape-preferences.cpp:778
 #, fuzzy
 msgid "<none>"
 msgstr "няма"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:820
+#: ../src/ui/dialog/inkscape-preferences.cpp:824
 #, fuzzy
 msgid "Color management"
 msgstr "Управление на цветовете"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:825
+#: ../src/ui/dialog/inkscape-preferences.cpp:829
 #, fuzzy
 msgid "Major grid line emphasizing"
 msgstr "_Голяма линия на всяка:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:827
+#: ../src/ui/dialog/inkscape-preferences.cpp:831
 msgid "Don't emphasize gridlines when zoomed out"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:828
+#: ../src/ui/dialog/inkscape-preferences.cpp:832
 msgid ""
 "If set and zoomed out, the gridlines will be shown in normal color instead "
 "of major grid line color."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:830
+#: ../src/ui/dialog/inkscape-preferences.cpp:834
 #, fuzzy
 msgid "Default grid settings"
 msgstr "Настройки на страницата"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:836
-#: ../src/ui/dialog/inkscape-preferences.cpp:857
+#: ../src/ui/dialog/inkscape-preferences.cpp:840
+#: ../src/ui/dialog/inkscape-preferences.cpp:861
 #, fuzzy
 msgid "Grid units"
 msgstr "_Единици мрежата:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:839
-#: ../src/ui/dialog/inkscape-preferences.cpp:860
+#: ../src/ui/dialog/inkscape-preferences.cpp:843
+#: ../src/ui/dialog/inkscape-preferences.cpp:864
 #, fuzzy
 msgid "Origin X"
 msgstr "_Начало X:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:840
-#: ../src/ui/dialog/inkscape-preferences.cpp:861
+#: ../src/ui/dialog/inkscape-preferences.cpp:844
+#: ../src/ui/dialog/inkscape-preferences.cpp:865
 #, fuzzy
 msgid "Origin Y"
 msgstr "Н_ачало Y:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:843
+#: ../src/ui/dialog/inkscape-preferences.cpp:847
 #, fuzzy
 msgid "Spacing X"
 msgstr "Разстояния _X:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:844
-#: ../src/ui/dialog/inkscape-preferences.cpp:863
+#: ../src/ui/dialog/inkscape-preferences.cpp:848
+#: ../src/ui/dialog/inkscape-preferences.cpp:867
 #, fuzzy
 msgid "Spacing Y"
 msgstr "Разстояния _Y:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:847
-#: ../src/ui/dialog/inkscape-preferences.cpp:869
+#: ../src/ui/dialog/inkscape-preferences.cpp:851
+#: ../src/ui/dialog/inkscape-preferences.cpp:873
 #, fuzzy
 msgid "Selects the color used for normal grid lines."
 msgstr "Избира цвят за предупреждение ако нещо не попада в гамата."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:849
-#: ../src/ui/dialog/inkscape-preferences.cpp:871
+#: ../src/ui/dialog/inkscape-preferences.cpp:853
+#: ../src/ui/dialog/inkscape-preferences.cpp:875
 #, fuzzy
 msgid "Selects the color used for major (highlighted) grid lines."
 msgstr "Цвят на големите (подчертани) линии на мрежата"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:851
-#: ../src/ui/dialog/inkscape-preferences.cpp:873
+#: ../src/ui/dialog/inkscape-preferences.cpp:855
+#: ../src/ui/dialog/inkscape-preferences.cpp:877
 #, fuzzy
 msgid "Major grid line every"
 msgstr "_Голяма линия на всяка:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:852
+#: ../src/ui/dialog/inkscape-preferences.cpp:856
 #, fuzzy
 msgid "Show dots instead of lines"
 msgstr "_Показване на точки вместо линии"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:863
-msgid "Base length of z-axis"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:866
+#: ../src/ui/dialog/inkscape-preferences.cpp:870
 #, fuzzy
 msgid "Angle X"
 msgstr "Ъгъл Х:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:866
-msgid "Angle of x-axis"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:867
+#: ../src/ui/dialog/inkscape-preferences.cpp:871
 #, fuzzy
 msgid "Angle Z"
 msgstr "Ъгъл Д"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:867
-msgid "Angle of z-axis"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:880
+#: ../src/ui/dialog/inkscape-preferences.cpp:884
 msgid "Add label comments to printing output"
 msgstr "Добавяне на етикетни коментари към отпечатаното"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:882
+#: ../src/ui/dialog/inkscape-preferences.cpp:886
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -9898,11 +10499,11 @@ msgstr ""
 "Когато е включено се добавя коментар към суровия изход за печат, "
 "отбелязвайки изходящия обект с етикета му"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:884
+#: ../src/ui/dialog/inkscape-preferences.cpp:888
 msgid "Prevent sharing of gradient definitions"
 msgstr "Забрана за поделяне дефиниции на преливки"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:886
+#: ../src/ui/dialog/inkscape-preferences.cpp:890
 msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
@@ -9913,11 +10514,11 @@ msgstr ""
 "преливки, така че промяната на един обект да се отразява на другите, "
 "използващи същата преливка"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:888
+#: ../src/ui/dialog/inkscape-preferences.cpp:892
 msgid "Simplification threshold:"
 msgstr "Праг на опростяване:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:889
+#: ../src/ui/dialog/inkscape-preferences.cpp:893
 msgid ""
 "How strong is the Simplify command by default. If you invoke this command "
 "several times in quick succession, it will act more and more aggressively; "
@@ -9928,60 +10529,60 @@ msgstr ""
 "агресивно; стартирането и отново след пауза възстановява прага по "
 "подразбиране."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:891
+#: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:891
+#: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:891
+#: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:891
+#: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:895
+#: ../src/ui/dialog/inkscape-preferences.cpp:899
 msgid "Oversample bitmaps:"
 msgstr "Пресемплиране на растерите:"
 
 #. consider moving this to an UI tab:
-#: ../src/ui/dialog/inkscape-preferences.cpp:899
+#: ../src/ui/dialog/inkscape-preferences.cpp:903
 #, fuzzy
 msgid "Make the commands toolbar icons smaller"
 msgstr "По-малка кутия с инструменти за команди"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:901
+#: ../src/ui/dialog/inkscape-preferences.cpp:905
 msgid ""
 "Make the commands toolbar use the 'secondary' toolbar size (requires restart)"
 msgstr "Прави лентата за команди с 'вторичен' размер (изисква рестартиране)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:903
+#: ../src/ui/dialog/inkscape-preferences.cpp:907
 #, fuzzy
 msgid "Make the main toolbar icons smaller"
 msgstr "По-малки инструменти"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:905
+#: ../src/ui/dialog/inkscape-preferences.cpp:909
 msgid "Make the main tools use the 'secondary' toolbar size (requires restart)"
 msgstr ""
 "Иконките за инструментите са използват 'вторичен' размер (изисква "
 "рестартиране)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:908
+#: ../src/ui/dialog/inkscape-preferences.cpp:912
 #, fuzzy
 msgid "Maximum number of recent documents:"
 msgstr "Максимум последни документи:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:909
+#: ../src/ui/dialog/inkscape-preferences.cpp:913
 msgid "The maximum length of the Open Recent list in the File menu"
 msgstr ""
 "Максимална дължина на списъка с последно отваряните файлове във файловото "
 "меню"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:912
+#: ../src/ui/dialog/inkscape-preferences.cpp:916
 msgid "Misc"
 msgstr "Други"
 
@@ -10077,19 +10678,23 @@ msgstr ""
 "Показването на записите се включва, от диалога с настройките.поправяне, "
 "задаване 1 на атрибута 'пренасочване' във preferences.xml"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:71
+#: ../src/ui/dialog/ocaldialogs.cpp:76
 msgid "File"
 msgstr "Файл"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:169
+#: ../src/ui/dialog/ocaldialogs.cpp:174
 msgid "Username:"
 msgstr "Потребителско име:"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:170
+#: ../src/ui/dialog/ocaldialogs.cpp:175
 msgid "Password:"
 msgstr "Парола:"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:410
+#: ../src/ui/dialog/ocaldialogs.cpp:401
+msgid "Error while reading the Open Clip Art RSS feed"
+msgstr ""
+
+#: ../src/ui/dialog/ocaldialogs.cpp:439
 msgid ""
 "Failed to receive the Open Clip Art Library RSS feed. Verify if the server "
 "name is correct in Configuration->Misc (e.g.: openclipart.org)"
@@ -10097,21 +10702,56 @@ msgstr ""
 "Грешка при получаване на RSS поток от Open Clip Art Library. Проверете дали "
 "името на сървъра е правилно в Настройки->Други (напр. openclipart.org)"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:538
-msgid "Search Tag"
-msgstr "Таг за търсене"
+#: ../src/ui/dialog/ocaldialogs.cpp:453
+msgid "Server supplied malformed Clip Art feed"
+msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:539
+#: ../src/ui/dialog/ocaldialogs.cpp:544
+#, fuzzy
+msgid "Search for:"
+msgstr "Търсене"
+
+#: ../src/ui/dialog/ocaldialogs.cpp:545
 msgid "No files matched your search"
 msgstr "Няма файлове, съвпадащи с търсенето"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:548
+#: ../src/ui/dialog/ocaldialogs.cpp:556
 msgid "Search"
 msgstr "Търсене"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:565
-msgid "Files Found"
+#: ../src/ui/dialog/ocaldialogs.cpp:573
+#, fuzzy
+msgid "Files found"
 msgstr "Намерени са файлове"
+
+#: ../src/ui/dialog/print.cpp:86
+msgid "Could not open temporary PNG for bitmap printing"
+msgstr ""
+
+#: ../src/ui/dialog/print.cpp:101
+#, fuzzy
+msgid "Could not set up Document"
+msgstr "Не може да бъде зададен източник за отпечатване: %s"
+
+#: ../src/ui/dialog/print.cpp:105
+msgid "Failed to set CairoRenderContext"
+msgstr ""
+
+#. set up dialog title, based on document name
+#: ../src/ui/dialog/print.cpp:145
+#, fuzzy
+msgid "SVG Document"
+msgstr "SVG документ"
+
+#: ../src/ui/dialog/print.cpp:146
+msgid "Print"
+msgstr "Отпечатване"
+
+#. build custom preferences tab
+#: ../src/ui/dialog/print.cpp:169
+#, fuzzy
+msgid "Rendering"
+msgstr "Генериране"
 
 #: ../src/ui/dialog/scriptdialog.cpp:205
 msgid "_Execute Python"
@@ -10648,12 +11288,9 @@ msgstr "Редактиране на трансформационната мат�
 #: ../src/ui/view/edit-widget.cpp:898 ../src/ui/view/edit-widget.cpp:902
 #: ../src/ui/view/edit-widget.cpp:906 ../src/ui/view/edit-widget.cpp:910
 #: ../src/ui/view/edit-widget.cpp:914 ../src/ui/view/edit-widget.cpp:918
+#: ../src/ui/view/edit-widget.cpp:1003
 msgid "PLACEHOLDER, do not translate"
 msgstr "PLACEHOLDER, do·not·translate"
-
-#: ../src/ui/view/edit-widget.cpp:1003
-msgid "PLACEHOLDER, DO NOT TRANSLATE"
-msgstr "PLACEHOLDER, DO NOT TRANSLATE"
 
 #: ../src/ui/view/edit-widget.cpp:1062 ../src/widgets/desktop-widget.cpp:376
 msgid "Zoom drawing if window size changes"
@@ -10708,25 +11345,45 @@ msgstr ""
 msgid "_Save as SVG"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:98
+#: ../src/ui/widget/panel.cpp:112
 msgid "tiny"
 msgstr "мъничко"
 
-#: ../src/ui/widget/panel.cpp:99
+#: ../src/ui/widget/panel.cpp:113
 msgid "small"
 msgstr "малко"
 
-#: ../src/ui/widget/panel.cpp:101
+#: ../src/ui/widget/panel.cpp:115
 msgid "large"
 msgstr "голямо"
 
-#: ../src/ui/widget/panel.cpp:102
+#: ../src/ui/widget/panel.cpp:116
 msgid "huge"
 msgstr "огромно"
 
-#: ../src/ui/widget/panel.cpp:117
+#: ../src/ui/widget/panel.cpp:131
 msgid "List"
 msgstr "Списък"
+
+#: ../src/ui/widget/panel.cpp:163
+#, fuzzy
+msgid "Shape"
+msgstr "Форми"
+
+#: ../src/ui/widget/panel.cpp:165
+#, fuzzy
+msgid "Tall"
+msgstr "Маса"
+
+#: ../src/ui/widget/panel.cpp:166
+#, fuzzy
+msgid "Square"
+msgstr "Квадратен"
+
+#: ../src/ui/widget/panel.cpp:167
+#, fuzzy
+msgid "Wide"
+msgstr "_Скриване"
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:25
 msgid "_Blend mode:"
@@ -10919,8 +11576,9 @@ msgid "White"
 msgstr "Бяло"
 
 #: ../src/ui/widget/selected-style.cpp:226
+#: ../src/widgets/sp-color-icc-selector.cpp:237
+#: ../src/widgets/sp-color-scales.cpp:461
 #: ../src/widgets/sp-color-scales.cpp:462
-#: ../src/widgets/sp-color-scales.cpp:463
 msgid "Black"
 msgstr "Черно"
 
@@ -11060,10 +11718,6 @@ msgid ""
 "b> to adjust saturation, with <b>Ctrl</b> to adjust lightness"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:195
-msgid "Name"
-msgstr "Име"
-
 #: ../src/ui/widget/page-sizer.cpp:233
 msgid "P_age size:"
 msgstr "Размер на _страницата:"
@@ -11154,6 +11808,63 @@ msgstr "O:.%d"
 #, c-format
 msgid "Opacity: %.3g"
 msgstr "Плътност: %.3g"
+
+#: ../src/ui/widget/preferences-widget.cpp:278
+#, fuzzy
+msgid "Reset"
+msgstr " Из_чистване "
+
+#: ../src/ui/widget/random.cpp:123
+msgid ""
+"Reseed the random number generator; this creates a different sequence of "
+"random numbers."
+msgstr ""
+
+#: ../src/ui/widget/rendering-options.cpp:39
+#, fuzzy
+msgid "Vector"
+msgstr "Избиране"
+
+#: ../src/ui/widget/rendering-options.cpp:40
+#, fuzzy
+msgid "Bitmap"
+msgstr "Отклонение"
+
+#: ../src/ui/widget/rendering-options.cpp:41
+#, fuzzy
+msgid "Backend"
+msgstr "_Фон:"
+
+#: ../src/ui/widget/rendering-options.cpp:42
+msgid "Bitmap options"
+msgstr ""
+
+#: ../src/ui/widget/rendering-options.cpp:44
+#, fuzzy
+msgid "Preferred resolution of rendering, in dots per inch."
+msgstr "Предпочитане резолюция (точки на инч) на растера"
+
+#: ../src/ui/widget/rendering-options.cpp:52
+#, fuzzy
+msgid ""
+"Render using Cairo vector operations.  The resulting image is usually "
+"smaller in file size and can be arbitrarily scaled, but some filter effects "
+"will not be correctly rendered."
+msgstr ""
+"Използване на PDF векторни оператори, Полученото изображение обикновено е по-"
+"малко както размер на файла и може да се мащабира, но шарките ще бъдат "
+"изгубени. "
+
+#: ../src/ui/widget/rendering-options.cpp:57
+#, fuzzy
+msgid ""
+"Render everything as bitmap.  The resulting image is usually larger in file "
+"size and cannot be arbitrarily scaled without quality loss, but all objects "
+"will be rendered exactly as displayed."
+msgstr ""
+"Отпечатване на всичко като растер. Полученото изображение обикновено е с по-"
+"голям размер на файла и не може да се мащабира без загуби на качеството, но "
+"всички обекти ще бъдат генерирани, точно както се показват."
 
 #: ../src/vanishing-point.cpp:135
 msgid "Split vanishing points"
@@ -11720,12 +12431,12 @@ msgstr "_Деселектиране"
 msgid "Deselect any selected objects or nodes"
 msgstr "Деселектира всички избрани обекти или възли"
 
-#: ../src/verbs.cpp:2222 ../src/widgets/toolbox.cpp:1099
+#: ../src/verbs.cpp:2222 ../src/widgets/toolbox.cpp:1100
 #, fuzzy
 msgid "Next Path Effect Parameter"
 msgstr "Параметър за поставяне на пътека"
 
-#: ../src/verbs.cpp:2223 ../src/widgets/toolbox.cpp:1100
+#: ../src/verbs.cpp:2223 ../src/widgets/toolbox.cpp:1101
 msgid "Show next Path Effect parameter for editing"
 msgstr ""
 
@@ -12957,7 +13668,7 @@ msgstr "Размер на шрифта:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:628 ../src/widgets/toolbox.cpp:4659
+#: ../src/widgets/font-selector.cpp:628 ../src/widgets/toolbox.cpp:4684
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "АаAaБбBbВвCcДдDd12369$€¢?.;/()"
 
@@ -13015,11 +13726,11 @@ msgstr "<small>Множество преливки</small>"
 msgid "Edit the stops of the gradient"
 msgstr "Редакция краищата на преливката"
 
-#: ../src/widgets/gradient-toolbar.cpp:522 ../src/widgets/toolbox.cpp:1792
-#: ../src/widgets/toolbox.cpp:1864 ../src/widgets/toolbox.cpp:2193
-#: ../src/widgets/toolbox.cpp:2230 ../src/widgets/toolbox.cpp:2844
-#: ../src/widgets/toolbox.cpp:2867 ../src/widgets/toolbox.cpp:3734
-#: ../src/widgets/toolbox.cpp:3760
+#: ../src/widgets/gradient-toolbar.cpp:522 ../src/widgets/toolbox.cpp:1793
+#: ../src/widgets/toolbox.cpp:1865 ../src/widgets/toolbox.cpp:2194
+#: ../src/widgets/toolbox.cpp:2231 ../src/widgets/toolbox.cpp:2845
+#: ../src/widgets/toolbox.cpp:2868 ../src/widgets/toolbox.cpp:3735
+#: ../src/widgets/toolbox.cpp:3761
 msgid "<b>New:</b>"
 msgstr "<b>Нова:</b>"
 
@@ -13045,10 +13756,10 @@ msgstr "Създаване на преливка в очертанието"
 
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-#: ../src/widgets/gradient-toolbar.cpp:605 ../src/widgets/toolbox.cpp:1794
-#: ../src/widgets/toolbox.cpp:2201 ../src/widgets/toolbox.cpp:2219
-#: ../src/widgets/toolbox.cpp:2846 ../src/widgets/toolbox.cpp:2857
-#: ../src/widgets/toolbox.cpp:3737 ../src/widgets/toolbox.cpp:3748
+#: ../src/widgets/gradient-toolbar.cpp:605 ../src/widgets/toolbox.cpp:1795
+#: ../src/widgets/toolbox.cpp:2202 ../src/widgets/toolbox.cpp:2220
+#: ../src/widgets/toolbox.cpp:2847 ../src/widgets/toolbox.cpp:2858
+#: ../src/widgets/toolbox.cpp:3738 ../src/widgets/toolbox.cpp:3749
 msgid "<b>Change:</b>"
 msgstr "<b>Промяна:</b>"
 
@@ -13334,6 +14045,122 @@ msgstr "Преместване дръжкана преливка"
 msgid "Move patterns"
 msgstr "Шарки"
 
+#: ../src/widgets/sp-color-icc-selector.cpp:110
+msgid "CMS"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:219
+#: ../src/widgets/sp-color-scales.cpp:397
+msgid "_R"
+msgstr "_Ч"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:219
+#: ../src/widgets/sp-color-icc-selector.cpp:220
+#: ../src/widgets/sp-color-scales.cpp:400
+msgid "_G"
+msgstr "_З"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:219
+#: ../src/widgets/sp-color-scales.cpp:403
+msgid "_B"
+msgstr "_С"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:221
+#: ../src/widgets/sp-color-icc-selector.cpp:222
+#: ../src/widgets/sp-color-scales.cpp:423
+msgid "_H"
+msgstr "_Ц"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:221
+#: ../src/widgets/sp-color-icc-selector.cpp:222
+#: ../src/widgets/sp-color-scales.cpp:426
+msgid "_S"
+msgstr "_Н"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:222
+#: ../src/widgets/sp-color-scales.cpp:429
+msgid "_L"
+msgstr "_С"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:223
+#: ../src/widgets/sp-color-icc-selector.cpp:224
+#: ../src/widgets/sp-color-scales.cpp:451
+msgid "_C"
+msgstr "_Ц"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:223
+#: ../src/widgets/sp-color-icc-selector.cpp:224
+#: ../src/widgets/sp-color-scales.cpp:454
+msgid "_M"
+msgstr "_М"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:223
+#: ../src/widgets/sp-color-icc-selector.cpp:224
+#: ../src/widgets/sp-color-scales.cpp:457
+msgid "_Y"
+msgstr "_Ж"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:223
+#: ../src/widgets/sp-color-scales.cpp:460
+msgid "_K"
+msgstr "_К"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:234
+#, fuzzy
+msgid "Gray"
+msgstr "Сиви"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:237
+#: ../src/widgets/sp-color-icc-selector.cpp:238
+#: ../src/widgets/sp-color-scales.cpp:452
+#: ../src/widgets/sp-color-scales.cpp:453
+msgid "Cyan"
+msgstr "_Циан"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:237
+#: ../src/widgets/sp-color-icc-selector.cpp:238
+#: ../src/widgets/sp-color-scales.cpp:455
+#: ../src/widgets/sp-color-scales.cpp:456
+msgid "Magenta"
+msgstr "Магента"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:237
+#: ../src/widgets/sp-color-icc-selector.cpp:238
+#: ../src/widgets/sp-color-scales.cpp:458
+#: ../src/widgets/sp-color-scales.cpp:459
+msgid "Yellow"
+msgstr "Жълто"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:295
+msgid "Fix"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:298
+msgid "Fix RGB fallback to match icc-color() value."
+msgstr ""
+
+#. Label
+#: ../src/widgets/sp-color-icc-selector.cpp:379
+#: ../src/widgets/sp-color-scales.cpp:406
+#: ../src/widgets/sp-color-scales.cpp:432
+#: ../src/widgets/sp-color-scales.cpp:463
+#: ../src/widgets/sp-color-wheel-selector.cpp:134
+msgid "_A"
+msgstr "_П"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:389
+#: ../src/widgets/sp-color-icc-selector.cpp:401
+#: ../src/widgets/sp-color-scales.cpp:407
+#: ../src/widgets/sp-color-scales.cpp:408
+#: ../src/widgets/sp-color-scales.cpp:433
+#: ../src/widgets/sp-color-scales.cpp:434
+#: ../src/widgets/sp-color-scales.cpp:464
+#: ../src/widgets/sp-color-scales.cpp:465
+#: ../src/widgets/sp-color-wheel-selector.cpp:144
+#: ../src/widgets/sp-color-wheel-selector.cpp:156
+msgid "Alpha (opacity)"
+msgstr "Прозрачност(плътност)"
+
 #: ../src/widgets/sp-color-gtkselector.cpp:50
 msgid "System"
 msgstr "Система"
@@ -13358,80 +14185,6 @@ msgstr "ЦНС"
 msgid "CMYK"
 msgstr "ЦМЖК"
 
-#: ../src/widgets/sp-color-scales.cpp:398
-msgid "_R"
-msgstr "_Ч"
-
-#: ../src/widgets/sp-color-scales.cpp:401
-msgid "_G"
-msgstr "_З"
-
-#: ../src/widgets/sp-color-scales.cpp:404
-msgid "_B"
-msgstr "_С"
-
-#. Label
-#: ../src/widgets/sp-color-scales.cpp:407
-#: ../src/widgets/sp-color-scales.cpp:433
-#: ../src/widgets/sp-color-scales.cpp:464
-#: ../src/widgets/sp-color-wheel-selector.cpp:134
-msgid "_A"
-msgstr "_П"
-
-#: ../src/widgets/sp-color-scales.cpp:408
-#: ../src/widgets/sp-color-scales.cpp:409
-#: ../src/widgets/sp-color-scales.cpp:434
-#: ../src/widgets/sp-color-scales.cpp:435
-#: ../src/widgets/sp-color-scales.cpp:465
-#: ../src/widgets/sp-color-scales.cpp:466
-#: ../src/widgets/sp-color-wheel-selector.cpp:144
-#: ../src/widgets/sp-color-wheel-selector.cpp:156
-msgid "Alpha (opacity)"
-msgstr "Прозрачност(плътност)"
-
-#: ../src/widgets/sp-color-scales.cpp:424
-msgid "_H"
-msgstr "_Ц"
-
-#: ../src/widgets/sp-color-scales.cpp:427
-msgid "_S"
-msgstr "_Н"
-
-#: ../src/widgets/sp-color-scales.cpp:430
-msgid "_L"
-msgstr "_С"
-
-#: ../src/widgets/sp-color-scales.cpp:452
-msgid "_C"
-msgstr "_Ц"
-
-#: ../src/widgets/sp-color-scales.cpp:453
-#: ../src/widgets/sp-color-scales.cpp:454
-msgid "Cyan"
-msgstr "_Циан"
-
-#: ../src/widgets/sp-color-scales.cpp:455
-msgid "_M"
-msgstr "_М"
-
-#: ../src/widgets/sp-color-scales.cpp:456
-#: ../src/widgets/sp-color-scales.cpp:457
-msgid "Magenta"
-msgstr "Магента"
-
-#: ../src/widgets/sp-color-scales.cpp:458
-msgid "_Y"
-msgstr "_Ж"
-
-#: ../src/widgets/sp-color-scales.cpp:459
-#: ../src/widgets/sp-color-scales.cpp:460
-msgid "Yellow"
-msgstr "Жълто"
-
-#: ../src/widgets/sp-color-scales.cpp:461
-msgid "_K"
-msgstr "_К"
-
 #: ../src/widgets/sp-color-selector.cpp:64
 msgid "Unnamed"
 msgstr "Неименуван"
@@ -13445,7 +14198,7 @@ msgid "Attribute"
 msgstr "Атрибут"
 
 #: ../src/widgets/sp-xmlview-attr-list.cpp:47
-#: ../share/extensions/perfectboundcover.inx.h:14
+#: ../share/extensions/perfectboundcover.inx.h:19
 msgid "Value"
 msgstr "Стойност"
 
@@ -13453,351 +14206,351 @@ msgstr "Стойност"
 msgid "Type text in a text node"
 msgstr "Напишете текст в текстовия възел"
 
-#: ../src/widgets/toolbox.cpp:168
+#: ../src/widgets/toolbox.cpp:169
 msgid "Color/opacity used for color tweaking"
 msgstr "Цвят/плътност използвани при променянето на цветове"
 
-#: ../src/widgets/toolbox.cpp:172
+#: ../src/widgets/toolbox.cpp:173
 msgid "Style of new stars"
 msgstr "Стил на новите звезди"
 
-#: ../src/widgets/toolbox.cpp:174
+#: ../src/widgets/toolbox.cpp:175
 msgid "Style of new rectangles"
 msgstr "Стил на новите правоъгълници"
 
-#: ../src/widgets/toolbox.cpp:176
+#: ../src/widgets/toolbox.cpp:177
 msgid "Style of new 3D boxes"
 msgstr "Стил на новите 3D кутии"
 
-#: ../src/widgets/toolbox.cpp:178
+#: ../src/widgets/toolbox.cpp:179
 msgid "Style of new ellipses"
 msgstr "Стил на новите елипси"
 
-#: ../src/widgets/toolbox.cpp:180
+#: ../src/widgets/toolbox.cpp:181
 msgid "Style of new spirals"
 msgstr "Стил на новите спирали"
 
-#: ../src/widgets/toolbox.cpp:182
+#: ../src/widgets/toolbox.cpp:183
 msgid "Style of new paths created by Pencil"
 msgstr "Стил на новите пътеки, създадени с молив"
 
-#: ../src/widgets/toolbox.cpp:184
+#: ../src/widgets/toolbox.cpp:185
 msgid "Style of new paths created by Pen"
 msgstr "Стил за новите пътища, създадени с писалката"
 
-#: ../src/widgets/toolbox.cpp:186
+#: ../src/widgets/toolbox.cpp:187
 msgid "Style of new calligraphic strokes"
 msgstr "Стил на новите калиграфски линии"
 
-#: ../src/widgets/toolbox.cpp:196
+#: ../src/widgets/toolbox.cpp:197
 msgid "Style of Paint Bucket fill objects"
 msgstr "Стил на обектите, запълнени с кофата"
 
-#: ../src/widgets/toolbox.cpp:975
+#: ../src/widgets/toolbox.cpp:976
 #, fuzzy
 msgid "Insert node"
 msgstr "Отделяне на възела"
 
-#: ../src/widgets/toolbox.cpp:976
+#: ../src/widgets/toolbox.cpp:977
 msgid "Insert new nodes into selected segments"
 msgstr "Вмъкване на нови възли в избраните сегменти"
 
-#: ../src/widgets/toolbox.cpp:979
+#: ../src/widgets/toolbox.cpp:980
 msgid "Insert"
 msgstr "Вмъкване"
 
-#: ../src/widgets/toolbox.cpp:987
+#: ../src/widgets/toolbox.cpp:988
 msgid "Delete selected nodes"
 msgstr "Изтриване на избраните възли"
 
-#: ../src/widgets/toolbox.cpp:997
+#: ../src/widgets/toolbox.cpp:998
 #, fuzzy
 msgid "Join endnodes"
 msgstr "Съединяване на възли"
 
-#: ../src/widgets/toolbox.cpp:998
+#: ../src/widgets/toolbox.cpp:999
 msgid "Join selected endnodes"
 msgstr "Свързване на избраните възли"
 
-#: ../src/widgets/toolbox.cpp:1001
+#: ../src/widgets/toolbox.cpp:1002
 msgid "Join"
 msgstr "Съединяване"
 
-#: ../src/widgets/toolbox.cpp:1008
+#: ../src/widgets/toolbox.cpp:1009
 msgid "Join Segment"
 msgstr "Свързване на сегмента"
 
-#: ../src/widgets/toolbox.cpp:1009
+#: ../src/widgets/toolbox.cpp:1010
 msgid "Join selected endnodes with a new segment"
 msgstr "Свързване на избраните крайни възли с нов сегмент"
 
-#: ../src/widgets/toolbox.cpp:1018
+#: ../src/widgets/toolbox.cpp:1019
 msgid "Delete Segment"
 msgstr "Изтриване на сегмента"
 
-#: ../src/widgets/toolbox.cpp:1019
+#: ../src/widgets/toolbox.cpp:1020
 msgid "Split path between two non-endpoint nodes"
 msgstr "Разделяне на пътеката между два не-крайни възела"
 
-#: ../src/widgets/toolbox.cpp:1028
+#: ../src/widgets/toolbox.cpp:1029
 msgid "Node Break"
 msgstr "Прекъсване на възел"
 
-#: ../src/widgets/toolbox.cpp:1029
+#: ../src/widgets/toolbox.cpp:1030
 msgid "Break path at selected nodes"
 msgstr "Разделяне на пътеката при избраните възли"
 
-#: ../src/widgets/toolbox.cpp:1038
+#: ../src/widgets/toolbox.cpp:1039
 msgid "Node Cusp"
 msgstr "Остър възел"
 
-#: ../src/widgets/toolbox.cpp:1039
+#: ../src/widgets/toolbox.cpp:1040
 msgid "Make selected nodes corner"
 msgstr "Превръщане на избраните възли в ъглови"
 
-#: ../src/widgets/toolbox.cpp:1048
+#: ../src/widgets/toolbox.cpp:1049
 msgid "Node Smooth"
 msgstr "Объл възел"
 
-#: ../src/widgets/toolbox.cpp:1049
+#: ../src/widgets/toolbox.cpp:1050
 msgid "Make selected nodes smooth"
 msgstr "Превръщане на избраните възли в заоблени"
 
-#: ../src/widgets/toolbox.cpp:1058
+#: ../src/widgets/toolbox.cpp:1059
 msgid "Node Symmetric"
 msgstr "Симетричен възел"
 
-#: ../src/widgets/toolbox.cpp:1059
+#: ../src/widgets/toolbox.cpp:1060
 msgid "Make selected nodes symmetric"
 msgstr "Превръщане на избраните възли в симетрични"
 
-#: ../src/widgets/toolbox.cpp:1068
+#: ../src/widgets/toolbox.cpp:1069
 msgid "Node Line"
 msgstr "Възлова линия"
 
-#: ../src/widgets/toolbox.cpp:1069
+#: ../src/widgets/toolbox.cpp:1070
 msgid "Make selected segments lines"
 msgstr "Превръщане на избраните сегменти в линии"
 
-#: ../src/widgets/toolbox.cpp:1078
+#: ../src/widgets/toolbox.cpp:1079
 msgid "Node Curve"
 msgstr "Възлова крива"
 
-#: ../src/widgets/toolbox.cpp:1079
+#: ../src/widgets/toolbox.cpp:1080
 msgid "Make selected segments curves"
 msgstr "Превръщане на избраните сегменти в криви"
 
-#: ../src/widgets/toolbox.cpp:1088
+#: ../src/widgets/toolbox.cpp:1089
 msgid "Show Handles"
 msgstr "Показване на дръжките"
 
-#: ../src/widgets/toolbox.cpp:1089
+#: ../src/widgets/toolbox.cpp:1090
 msgid "Show the Bezier handles of selected nodes"
 msgstr "Показване дръжки на Беазие на избраните възли"
 
-#: ../src/widgets/toolbox.cpp:1113
+#: ../src/widgets/toolbox.cpp:1114
 #, fuzzy
 msgid "X coordinate:"
 msgstr "Координати на показалеца"
 
-#: ../src/widgets/toolbox.cpp:1113
+#: ../src/widgets/toolbox.cpp:1114
 #, fuzzy
 msgid "X coordinate of selected node(s)"
 msgstr "Вертикални координати на избраното"
 
-#: ../src/widgets/toolbox.cpp:1131
+#: ../src/widgets/toolbox.cpp:1132
 #, fuzzy
 msgid "Y coordinate:"
 msgstr "Координати на показалеца"
 
-#: ../src/widgets/toolbox.cpp:1131
+#: ../src/widgets/toolbox.cpp:1132
 #, fuzzy
 msgid "Y coordinate of selected node(s)"
 msgstr "Вертикални координати на избраното"
 
-#: ../src/widgets/toolbox.cpp:1544
+#: ../src/widgets/toolbox.cpp:1545
 msgid "Star: Change number of corners"
 msgstr "Звезда: промяна броя на ъглите"
 
-#: ../src/widgets/toolbox.cpp:1586
+#: ../src/widgets/toolbox.cpp:1587
 msgid "Star: Change spoke ratio"
 msgstr "Звезда: промяна съотношението на лъчите"
 
-#: ../src/widgets/toolbox.cpp:1629
+#: ../src/widgets/toolbox.cpp:1630
 msgid "Make polygon"
 msgstr "Създаване на полигон"
 
-#: ../src/widgets/toolbox.cpp:1629
+#: ../src/widgets/toolbox.cpp:1630
 msgid "Make star"
 msgstr "Създаване на звезда"
 
-#: ../src/widgets/toolbox.cpp:1664
+#: ../src/widgets/toolbox.cpp:1665
 msgid "Star: Change rounding"
 msgstr "Звезда: промяна на заоблянето"
 
-#: ../src/widgets/toolbox.cpp:1698
+#: ../src/widgets/toolbox.cpp:1699
 msgid "Star: Change randomization"
 msgstr "Звезда: промяна на случайността"
 
-#: ../src/widgets/toolbox.cpp:1883
+#: ../src/widgets/toolbox.cpp:1884
 msgid "Regular polygon (with one handle) instead of a star"
 msgstr "Обикновен полигон (с една дръжка), вместо звезда"
 
-#: ../src/widgets/toolbox.cpp:1890
+#: ../src/widgets/toolbox.cpp:1891
 msgid "Star instead of a regular polygon (with one handle)"
 msgstr "Звезда, вместо обикновен полигон (с една дръжка)"
 
-#: ../src/widgets/toolbox.cpp:1910
+#: ../src/widgets/toolbox.cpp:1911
 msgid "triangle/tri-star"
 msgstr "триъгълник/трилъча"
 
-#: ../src/widgets/toolbox.cpp:1910
+#: ../src/widgets/toolbox.cpp:1911
 msgid "square/quad-star"
 msgstr "квадрат/четирилъча"
 
-#: ../src/widgets/toolbox.cpp:1910
+#: ../src/widgets/toolbox.cpp:1911
 msgid "pentagon/five-pointed star"
 msgstr "пентагон/петлъча"
 
-#: ../src/widgets/toolbox.cpp:1910
+#: ../src/widgets/toolbox.cpp:1911
 msgid "hexagon/six-pointed star"
 msgstr "хексагон/шестлъча"
 
-#: ../src/widgets/toolbox.cpp:1913
+#: ../src/widgets/toolbox.cpp:1914
 msgid "Corners"
 msgstr "Ъгли"
 
-#: ../src/widgets/toolbox.cpp:1913
+#: ../src/widgets/toolbox.cpp:1914
 msgid "Corners:"
 msgstr "Ъгли:"
 
-#: ../src/widgets/toolbox.cpp:1913
+#: ../src/widgets/toolbox.cpp:1914
 msgid "Number of corners of a polygon or star"
 msgstr "Брой ъгли на полигона или звездата"
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "thin-ray star"
 msgstr "тънколъча звезда"
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "pentagram"
 msgstr "пантаграм"
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "hexagram"
 msgstr "хексаграм"
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "heptagram"
 msgstr "хептаграм"
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "octagram"
 msgstr "октаграм"
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "regular polygon"
 msgstr "обикновен полигон"
 
-#: ../src/widgets/toolbox.cpp:1929
+#: ../src/widgets/toolbox.cpp:1930
 #, fuzzy
 msgid "Spoke ratio"
 msgstr "Съотношение на лъчите:"
 
-#: ../src/widgets/toolbox.cpp:1929
+#: ../src/widgets/toolbox.cpp:1930
 msgid "Spoke ratio:"
 msgstr "Съотношение на лъчите:"
 
 #. TRANSLATORS: Tip radius of a star is the distance from the center to the farthest handle.
 #. Base radius is the same for the closest handle.
-#: ../src/widgets/toolbox.cpp:1932
+#: ../src/widgets/toolbox.cpp:1933
 msgid "Base radius to tip radius ratio"
 msgstr "Съотношение между основния радиус и този на лъчите"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "stretched"
 msgstr "разтеглено"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "twisted"
 msgstr "осукано"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "slightly pinched"
 msgstr "леко прищипано"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "NOT rounded"
 msgstr "НЕ заоблени"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "slightly rounded"
 msgstr "леко заоблени"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "visibly rounded"
 msgstr "видимо заоблени"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "well rounded"
 msgstr "добре заоблени"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "amply rounded"
 msgstr "силно заоблени"
 
-#: ../src/widgets/toolbox.cpp:1950 ../src/widgets/toolbox.cpp:1965
+#: ../src/widgets/toolbox.cpp:1951 ../src/widgets/toolbox.cpp:1966
 msgid "blown up"
 msgstr "взривено"
 
-#: ../src/widgets/toolbox.cpp:1953
+#: ../src/widgets/toolbox.cpp:1954
 #, fuzzy
 msgid "Rounded"
 msgstr "Заобленост:"
 
-#: ../src/widgets/toolbox.cpp:1953
+#: ../src/widgets/toolbox.cpp:1954
 msgid "Rounded:"
 msgstr "Заобленост:"
 
-#: ../src/widgets/toolbox.cpp:1953
+#: ../src/widgets/toolbox.cpp:1954
 msgid "How much rounded are the corners (0 for sharp)"
 msgstr "Колко да са заоблени ъглите (0 за остри)"
 
-#: ../src/widgets/toolbox.cpp:1965
+#: ../src/widgets/toolbox.cpp:1966
 msgid "NOT randomized"
 msgstr "НЕ произволни"
 
-#: ../src/widgets/toolbox.cpp:1965
+#: ../src/widgets/toolbox.cpp:1966
 msgid "slightly irregular"
 msgstr "леко неправилно"
 
-#: ../src/widgets/toolbox.cpp:1965
+#: ../src/widgets/toolbox.cpp:1966
 msgid "visibly randomized"
 msgstr "видимо произволни"
 
-#: ../src/widgets/toolbox.cpp:1965
+#: ../src/widgets/toolbox.cpp:1966
 msgid "strongly randomized"
 msgstr "силно произволни"
 
-#: ../src/widgets/toolbox.cpp:1968
+#: ../src/widgets/toolbox.cpp:1969
 #, fuzzy
 msgid "Randomized"
 msgstr "Произволност:"
 
-#: ../src/widgets/toolbox.cpp:1968
+#: ../src/widgets/toolbox.cpp:1969
 msgid "Randomized:"
 msgstr "Произволност:"
 
-#: ../src/widgets/toolbox.cpp:1968
+#: ../src/widgets/toolbox.cpp:1969
 msgid "Scatter randomly the corners and angles"
 msgstr "Произволни ъгли"
 
-#: ../src/widgets/toolbox.cpp:1983 ../src/widgets/toolbox.cpp:2918
-#: ../src/widgets/toolbox.cpp:3497 ../src/widgets/toolbox.cpp:5334
+#: ../src/widgets/toolbox.cpp:1984 ../src/widgets/toolbox.cpp:2919
+#: ../src/widgets/toolbox.cpp:3498 ../src/widgets/toolbox.cpp:5360
 msgid "Defaults"
 msgstr "По подразбиране"
 
-#: ../src/widgets/toolbox.cpp:1984 ../src/widgets/toolbox.cpp:2919
+#: ../src/widgets/toolbox.cpp:1985 ../src/widgets/toolbox.cpp:2920
 msgid ""
 "Reset shape parameters to defaults (use Inkscape Preferences > Tools to "
 "change defaults)"
@@ -13805,398 +14558,390 @@ msgstr ""
 "Връща параметрите на формата към тези по подразбиране (Използвайте Inkscape "
 "настройки > Инструменти за да ги промените)"
 
-#: ../src/widgets/toolbox.cpp:2056
+#: ../src/widgets/toolbox.cpp:2057
 msgid "Change rectangle"
 msgstr "Промяна на правоъгълник"
 
-#: ../src/widgets/toolbox.cpp:2248
+#: ../src/widgets/toolbox.cpp:2249
 msgid "W:"
 msgstr "Ш:"
 
-#: ../src/widgets/toolbox.cpp:2248
+#: ../src/widgets/toolbox.cpp:2249
 msgid "Width of rectangle"
 msgstr "Ширина на правоъгълника"
 
-#: ../src/widgets/toolbox.cpp:2265
+#: ../src/widgets/toolbox.cpp:2266
 msgid "Height of rectangle"
 msgstr "Височина на правоъгълника"
 
-#: ../src/widgets/toolbox.cpp:2279 ../src/widgets/toolbox.cpp:2294
+#: ../src/widgets/toolbox.cpp:2280 ../src/widgets/toolbox.cpp:2295
 msgid "not rounded"
 msgstr "незаоблени"
 
-#: ../src/widgets/toolbox.cpp:2282
+#: ../src/widgets/toolbox.cpp:2283
 #, fuzzy
 msgid "Horizontal radius"
 msgstr "Хоризонтално разстояние"
 
-#: ../src/widgets/toolbox.cpp:2282
+#: ../src/widgets/toolbox.cpp:2283
 msgid "Rx:"
 msgstr "Рх:"
 
-#: ../src/widgets/toolbox.cpp:2282
+#: ../src/widgets/toolbox.cpp:2283
 msgid "Horizontal radius of rounded corners"
 msgstr "Хоризонтален радиус на заоблените ъгли"
 
-#: ../src/widgets/toolbox.cpp:2297
+#: ../src/widgets/toolbox.cpp:2298
 #, fuzzy
 msgid "Vertical radius"
 msgstr "Вертикално разстояние"
 
-#: ../src/widgets/toolbox.cpp:2297
+#: ../src/widgets/toolbox.cpp:2298
 msgid "Ry:"
 msgstr "Рв:"
 
-#: ../src/widgets/toolbox.cpp:2297
+#: ../src/widgets/toolbox.cpp:2298
 msgid "Vertical radius of rounded corners"
 msgstr "Вертикален радиус на заоблените ъгли"
 
-#: ../src/widgets/toolbox.cpp:2316
+#: ../src/widgets/toolbox.cpp:2317
 msgid "Not rounded"
 msgstr "Незаоблени"
 
-#: ../src/widgets/toolbox.cpp:2317
+#: ../src/widgets/toolbox.cpp:2318
 msgid "Make corners sharp"
 msgstr "Изправя ъглите"
 
 #. TODO: use the correct axis here, too
-#: ../src/widgets/toolbox.cpp:2506
+#: ../src/widgets/toolbox.cpp:2507
 #, fuzzy
 msgid "3D Box: Change perspective (angle of infinite axis)"
 msgstr "3D кутия: промяна на перспективата"
 
-#: ../src/widgets/toolbox.cpp:2575
+#: ../src/widgets/toolbox.cpp:2576
 #, fuzzy
 msgid "Angle in X direction"
 msgstr "Превключване на ТИ по хоризонтал"
 
-#: ../src/widgets/toolbox.cpp:2575
-msgid "Angle X:"
-msgstr "Ъгъл Х:"
-
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:2577
+#: ../src/widgets/toolbox.cpp:2578
 #, fuzzy
 msgid "Angle of PLs in X direction"
 msgstr "Превключване на ТИ по хоризонтал"
 
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:2599
+#: ../src/widgets/toolbox.cpp:2600
 #, fuzzy
 msgid "State of VP in X direction"
 msgstr "Превключване на ТИ по хоризонтал"
 
-#: ../src/widgets/toolbox.cpp:2600
+#: ../src/widgets/toolbox.cpp:2601
 #, fuzzy
 msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
 msgstr ""
 "Превключване на ТИ по хоризонтал между 'крайна' и 'безкрайна' (=паралел)"
 
-#: ../src/widgets/toolbox.cpp:2615
+#: ../src/widgets/toolbox.cpp:2616
 #, fuzzy
 msgid "Angle in Y direction"
 msgstr "Превключване на ТИ по вертикал"
 
-#: ../src/widgets/toolbox.cpp:2615
+#: ../src/widgets/toolbox.cpp:2616
 msgid "Angle Y:"
 msgstr "Ъгъл В:"
 
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:2617
+#: ../src/widgets/toolbox.cpp:2618
 #, fuzzy
 msgid "Angle of PLs in Y direction"
 msgstr "Превключване на ТИ по вертикал"
 
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:2638
+#: ../src/widgets/toolbox.cpp:2639
 #, fuzzy
 msgid "State of VP in Y direction"
 msgstr "Превключване на ТИ по вертикал"
 
-#: ../src/widgets/toolbox.cpp:2639
+#: ../src/widgets/toolbox.cpp:2640
 #, fuzzy
 msgid "Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"
 msgstr "Превключване на ТИ по вертикал между 'крайна' и 'безкрайна' (=паралел)"
 
-#: ../src/widgets/toolbox.cpp:2654
+#: ../src/widgets/toolbox.cpp:2655
 #, fuzzy
 msgid "Angle in Z direction"
 msgstr "Превключване на ТИ в дълбочина"
 
-#: ../src/widgets/toolbox.cpp:2654
-msgid "Angle Z:"
-msgstr "Ъгъл Д"
-
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:2656
+#: ../src/widgets/toolbox.cpp:2657
 #, fuzzy
 msgid "Angle of PLs in Z direction"
 msgstr "Превключване на ТИ в дълбочина"
 
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:2677
+#: ../src/widgets/toolbox.cpp:2678
 #, fuzzy
 msgid "State of VP in Z direction"
 msgstr "Превключване на ТИ в дълбочина"
 
-#: ../src/widgets/toolbox.cpp:2678
+#: ../src/widgets/toolbox.cpp:2679
 #, fuzzy
 msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
 msgstr "Превключване на ТИ в дълбочина между 'крайна' и 'безкрайна' (=паралел)"
 
-#: ../src/widgets/toolbox.cpp:2735
+#: ../src/widgets/toolbox.cpp:2736
 msgid "Change spiral"
 msgstr "Промяна на спирала"
 
-#: ../src/widgets/toolbox.cpp:2875
+#: ../src/widgets/toolbox.cpp:2876
 msgid "just a curve"
 msgstr "просто крива"
 
-#: ../src/widgets/toolbox.cpp:2875
+#: ../src/widgets/toolbox.cpp:2876
 msgid "one full revolution"
 msgstr "едно пълно завъртане"
 
-#: ../src/widgets/toolbox.cpp:2878
+#: ../src/widgets/toolbox.cpp:2879
 #, fuzzy
 msgid "Number of turns"
 msgstr "Брой редове"
 
-#: ../src/widgets/toolbox.cpp:2878
+#: ../src/widgets/toolbox.cpp:2879
 msgid "Turns:"
 msgstr "Кръгове:"
 
-#: ../src/widgets/toolbox.cpp:2878
+#: ../src/widgets/toolbox.cpp:2879
 msgid "Number of revolutions"
 msgstr "Брой завъртания"
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "circle"
 msgstr "кръг"
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "edge is much denser"
 msgstr "ръба е много по-дълбок"
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "edge is denser"
 msgstr "ръба е по-дълбок"
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "even"
 msgstr "четни"
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "center is denser"
 msgstr "центъра е по-гъст"
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "center is much denser"
 msgstr "центъра е много по-дълбок"
 
-#: ../src/widgets/toolbox.cpp:2892
+#: ../src/widgets/toolbox.cpp:2893
 #, fuzzy
 msgid "Divergence"
 msgstr "Отклонение:"
 
-#: ../src/widgets/toolbox.cpp:2892
+#: ../src/widgets/toolbox.cpp:2893
 msgid "Divergence:"
 msgstr "Отклонение:"
 
-#: ../src/widgets/toolbox.cpp:2892
+#: ../src/widgets/toolbox.cpp:2893
 msgid "How much denser/sparser are outer revolutions; 1 = uniform"
 msgstr "Колко по-раздалечени/гъсти да са външните завъртания; 1 = равни"
 
-#: ../src/widgets/toolbox.cpp:2903
+#: ../src/widgets/toolbox.cpp:2904
 msgid "starts from center"
 msgstr "започва от центъра"
 
-#: ../src/widgets/toolbox.cpp:2903
+#: ../src/widgets/toolbox.cpp:2904
 msgid "starts mid-way"
 msgstr "започва по средата"
 
-#: ../src/widgets/toolbox.cpp:2903
+#: ../src/widgets/toolbox.cpp:2904
 msgid "starts near edge"
 msgstr "започва до ръба"
 
-#: ../src/widgets/toolbox.cpp:2906
+#: ../src/widgets/toolbox.cpp:2907
 #, fuzzy
 msgid "Inner radius"
 msgstr "Вътрешен радиус:"
 
-#: ../src/widgets/toolbox.cpp:2906
+#: ../src/widgets/toolbox.cpp:2907
 msgid "Inner radius:"
 msgstr "Вътрешен радиус:"
 
-#: ../src/widgets/toolbox.cpp:2906
+#: ../src/widgets/toolbox.cpp:2907
 msgid "Radius of the innermost revolution (relative to the spiral size)"
 msgstr ""
 "Радиус на най-вътрешното завъртане (относително към размера на спиралата)"
 
 #. Width
-#: ../src/widgets/toolbox.cpp:3022
+#: ../src/widgets/toolbox.cpp:3023
 msgid "(pinch tweak)"
 msgstr "(притискащо деформиране)"
 
-#: ../src/widgets/toolbox.cpp:3022 ../src/widgets/toolbox.cpp:3038
-#: ../src/widgets/toolbox.cpp:3199 ../src/widgets/toolbox.cpp:3327
-#: ../src/widgets/toolbox.cpp:3359
+#: ../src/widgets/toolbox.cpp:3023 ../src/widgets/toolbox.cpp:3039
+#: ../src/widgets/toolbox.cpp:3200 ../src/widgets/toolbox.cpp:3328
+#: ../src/widgets/toolbox.cpp:3360
 msgid "(default)"
 msgstr "(по подразбиране)"
 
-#: ../src/widgets/toolbox.cpp:3022
+#: ../src/widgets/toolbox.cpp:3023
 msgid "(broad tweak)"
 msgstr "(широко променяне)"
 
-#: ../src/widgets/toolbox.cpp:3025
+#: ../src/widgets/toolbox.cpp:3026
 msgid "The width of the tweak area (relative to the visible canvas area)"
 msgstr ""
 "Ширина на променяната област (относително спрямо видимата работна площ)"
 
 #. Force
-#: ../src/widgets/toolbox.cpp:3038
+#: ../src/widgets/toolbox.cpp:3039
 msgid "(minimum force)"
 msgstr "(минимална сила)"
 
-#: ../src/widgets/toolbox.cpp:3038
+#: ../src/widgets/toolbox.cpp:3039
 msgid "(maximum force)"
 msgstr "(максимална сила)"
 
-#: ../src/widgets/toolbox.cpp:3041
+#: ../src/widgets/toolbox.cpp:3042
 #, fuzzy
 msgid "Force"
 msgstr "Сила:"
 
-#: ../src/widgets/toolbox.cpp:3041
+#: ../src/widgets/toolbox.cpp:3042
 msgid "Force:"
 msgstr "Сила:"
 
-#: ../src/widgets/toolbox.cpp:3041
+#: ../src/widgets/toolbox.cpp:3042
 msgid "The force of the tweak action"
 msgstr "Силата на деформиране"
 
-#: ../src/widgets/toolbox.cpp:3058
+#: ../src/widgets/toolbox.cpp:3059
 msgid "Push mode"
 msgstr "Режим на бутане"
 
-#: ../src/widgets/toolbox.cpp:3059
+#: ../src/widgets/toolbox.cpp:3060
 msgid "Push parts of paths in any direction"
 msgstr "Бута части от пътеки в определена посока"
 
-#: ../src/widgets/toolbox.cpp:3065
+#: ../src/widgets/toolbox.cpp:3066
 msgid "Shrink mode"
 msgstr "Режим на свиване"
 
-#: ../src/widgets/toolbox.cpp:3066
+#: ../src/widgets/toolbox.cpp:3067
 msgid "Shrink (inset) parts of paths"
 msgstr "Свиване (навътре) на части от пътища"
 
-#: ../src/widgets/toolbox.cpp:3072
+#: ../src/widgets/toolbox.cpp:3073
 msgid "Grow mode"
 msgstr "Режим на нарастване"
 
-#: ../src/widgets/toolbox.cpp:3073
+#: ../src/widgets/toolbox.cpp:3074
 msgid "Grow (outset) parts of paths"
 msgstr "Увеличаване (разширяване) на части от пътища"
 
-#: ../src/widgets/toolbox.cpp:3079
+#: ../src/widgets/toolbox.cpp:3080
 msgid "Attract mode"
 msgstr "Режим на привличане"
 
-#: ../src/widgets/toolbox.cpp:3080
+#: ../src/widgets/toolbox.cpp:3081
 msgid "Attract parts of paths towards cursor"
 msgstr "Свиване на части от пътища към показалеца"
 
-#: ../src/widgets/toolbox.cpp:3086
+#: ../src/widgets/toolbox.cpp:3087
 msgid "Repel mode"
 msgstr "Режим на отменяне"
 
-#: ../src/widgets/toolbox.cpp:3087
+#: ../src/widgets/toolbox.cpp:3088
 msgid "Repel parts of paths from cursor"
 msgstr "Отблъскване на пътищата от показалеца"
 
-#: ../src/widgets/toolbox.cpp:3093
+#: ../src/widgets/toolbox.cpp:3094
 msgid "Roughen mode"
 msgstr "Режим на загрубяване"
 
-#: ../src/widgets/toolbox.cpp:3094
+#: ../src/widgets/toolbox.cpp:3095
 msgid "Roughen parts of paths"
 msgstr "Разрошване части от пътеките"
 
-#: ../src/widgets/toolbox.cpp:3100
+#: ../src/widgets/toolbox.cpp:3101
 msgid "Color paint mode"
 msgstr "Режим на боядисване"
 
-#: ../src/widgets/toolbox.cpp:3101
+#: ../src/widgets/toolbox.cpp:3102
 msgid "Paint the tool's color upon selected objects"
 msgstr "Оцветява избраните обекти с цвета на инструмента"
 
-#: ../src/widgets/toolbox.cpp:3107
+#: ../src/widgets/toolbox.cpp:3108
 msgid "Color jitter mode"
 msgstr "Режим на разбъркване на цветовете"
 
-#: ../src/widgets/toolbox.cpp:3108
+#: ../src/widgets/toolbox.cpp:3109
 msgid "Jitter the colors of selected objects"
 msgstr "Разбърква цветовете на избраните обекти"
 
-#: ../src/widgets/toolbox.cpp:3113
+#: ../src/widgets/toolbox.cpp:3114
 msgid "Mode:"
 msgstr "Режим:"
 
-#: ../src/widgets/toolbox.cpp:3133
+#: ../src/widgets/toolbox.cpp:3134
 msgid "Channels:"
 msgstr "Канали:"
 
-#: ../src/widgets/toolbox.cpp:3144
+#: ../src/widgets/toolbox.cpp:3145
 msgid "In color mode, act on objects' hue"
 msgstr "В цветови режим, действие върху цвета на обектите"
 
-#: ../src/widgets/toolbox.cpp:3147
+#: ../src/widgets/toolbox.cpp:3148
 msgid "H"
 msgstr "H"
 
-#: ../src/widgets/toolbox.cpp:3158
+#: ../src/widgets/toolbox.cpp:3159
 msgid "In color mode, act on objects' saturation"
 msgstr "В цветови режим, действие върху насищането на обектите"
 
-#: ../src/widgets/toolbox.cpp:3161
+#: ../src/widgets/toolbox.cpp:3162
 msgid "S"
 msgstr "S"
 
-#: ../src/widgets/toolbox.cpp:3172
+#: ../src/widgets/toolbox.cpp:3173
 msgid "In color mode, act on objects' lightness"
 msgstr "В цветови режим, действие върху светлостта на обектите"
 
-#: ../src/widgets/toolbox.cpp:3175
+#: ../src/widgets/toolbox.cpp:3176
 msgid "L"
 msgstr "L"
 
-#: ../src/widgets/toolbox.cpp:3186
+#: ../src/widgets/toolbox.cpp:3187
 msgid "In color mode, act on objects' opacity"
 msgstr "В цветови режим, действие върху плътността на обектите"
 
-#: ../src/widgets/toolbox.cpp:3189
+#: ../src/widgets/toolbox.cpp:3190
 msgid "O"
 msgstr "O"
 
 #. Fidelity
-#: ../src/widgets/toolbox.cpp:3199
+#: ../src/widgets/toolbox.cpp:3200
 msgid "(rough, simplified)"
 msgstr "(грубо, опростено)"
 
-#: ../src/widgets/toolbox.cpp:3199
+#: ../src/widgets/toolbox.cpp:3200
 msgid "(fine, but many nodes)"
 msgstr "(прецизно, но с много възли)"
 
-#: ../src/widgets/toolbox.cpp:3202
+#: ../src/widgets/toolbox.cpp:3203
 #, fuzzy
 msgid "Fidelity"
 msgstr "Прецизност:"
 
-#: ../src/widgets/toolbox.cpp:3202
+#: ../src/widgets/toolbox.cpp:3203
 msgid "Fidelity:"
 msgstr "Прецизност:"
 
-#: ../src/widgets/toolbox.cpp:3203
+#: ../src/widgets/toolbox.cpp:3204
 msgid ""
 "Low fidelity simplifies paths; high fidelity preserves path features but may "
 "generate a lot of new nodes"
@@ -14204,66 +14949,66 @@ msgstr ""
 "Ниска прецизност опростява пътеките; висока прецизност запазва пътеките, но "
 "може да генерира много нови възли"
 
-#: ../src/widgets/toolbox.cpp:3220 ../src/widgets/toolbox.cpp:3472
+#: ../src/widgets/toolbox.cpp:3221 ../src/widgets/toolbox.cpp:3473
 msgid "Pressure"
 msgstr "Натиск"
 
-#: ../src/widgets/toolbox.cpp:3221
+#: ../src/widgets/toolbox.cpp:3222
 msgid "Use the pressure of the input device to alter the force of tweak action"
 msgstr ""
 "Използване натиска на входящото устройство за определяне силата на "
 "променянето"
 
 #. Width
-#: ../src/widgets/toolbox.cpp:3327
+#: ../src/widgets/toolbox.cpp:3328
 msgid "(hairline)"
 msgstr "(косъм)"
 
-#: ../src/widgets/toolbox.cpp:3327
+#: ../src/widgets/toolbox.cpp:3328
 msgid "(broad stroke)"
 msgstr "(широка линия)"
 
-#: ../src/widgets/toolbox.cpp:3330
+#: ../src/widgets/toolbox.cpp:3331
 #, fuzzy
 msgid "Pen Width"
 msgstr "_Ширина на страницата"
 
-#: ../src/widgets/toolbox.cpp:3331
+#: ../src/widgets/toolbox.cpp:3332
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
 msgstr ""
 "Ширина на калиграфската писалка (относително спрямо видимата работна площ)"
 
 #. Thinning
-#: ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3344
 msgid "(speed blows up stroke)"
 msgstr "(скоростта издухва линията)"
 
-#: ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3344
 msgid "(slight widening)"
 msgstr "(леко разширяване)"
 
-#: ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3344
 msgid "(constant width)"
 msgstr "(равна ширина)"
 
-#: ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3344
 msgid "(slight thinning, default)"
 msgstr "(леко изтъняване, по подразбиране)"
 
-#: ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3344
 msgid "(speed deflates stroke)"
 msgstr "(скоростта намалява очертанието)"
 
-#: ../src/widgets/toolbox.cpp:3346
+#: ../src/widgets/toolbox.cpp:3347
 #, fuzzy
 msgid "Stroke Thinning"
 msgstr "Цвят на очертанието"
 
-#: ../src/widgets/toolbox.cpp:3346
+#: ../src/widgets/toolbox.cpp:3347
 msgid "Thinning:"
 msgstr "Изтъняване:"
 
-#: ../src/widgets/toolbox.cpp:3347
+#: ../src/widgets/toolbox.cpp:3348
 msgid ""
 "How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 "
 "makes them broader, 0 makes width independent of velocity)"
@@ -14272,28 +15017,28 @@ msgstr ""
 "прави по-широки, а 0 - независими от скоростта)"
 
 #. Angle
-#: ../src/widgets/toolbox.cpp:3359
+#: ../src/widgets/toolbox.cpp:3360
 msgid "(left edge up)"
 msgstr "(левият край нагоре)"
 
-#: ../src/widgets/toolbox.cpp:3359
+#: ../src/widgets/toolbox.cpp:3360
 msgid "(horizontal)"
 msgstr "(хоризонтално)"
 
-#: ../src/widgets/toolbox.cpp:3359
+#: ../src/widgets/toolbox.cpp:3360
 msgid "(right edge up)"
 msgstr "(десният край нагоре)"
 
-#: ../src/widgets/toolbox.cpp:3362
+#: ../src/widgets/toolbox.cpp:3363
 #, fuzzy
 msgid "Pen Angle"
 msgstr "Ъгъл на конуса"
 
-#: ../src/widgets/toolbox.cpp:3362
+#: ../src/widgets/toolbox.cpp:3363
 msgid "Angle:"
 msgstr "Ъгъл:"
 
-#: ../src/widgets/toolbox.cpp:3363
+#: ../src/widgets/toolbox.cpp:3364
 msgid ""
 "The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if "
 "fixation = 0)"
@@ -14302,28 +15047,28 @@ msgstr ""
 "0)"
 
 #. Fixation
-#: ../src/widgets/toolbox.cpp:3376
+#: ../src/widgets/toolbox.cpp:3377
 msgid "(perpendicular to stroke, \"brush\")"
 msgstr "(пенпердикулярна на линията, \"четка\")"
 
-#: ../src/widgets/toolbox.cpp:3376
+#: ../src/widgets/toolbox.cpp:3377
 msgid "(almost fixed, default)"
 msgstr "(почти фиксирана, по подразбиране)"
 
-#: ../src/widgets/toolbox.cpp:3376
+#: ../src/widgets/toolbox.cpp:3377
 msgid "(fixed by Angle, \"pen\")"
 msgstr "(фиксирана по ъгъл, \"четка\")"
 
-#: ../src/widgets/toolbox.cpp:3379
+#: ../src/widgets/toolbox.cpp:3380
 #, fuzzy
 msgid "Fixation"
 msgstr "Фиксация:"
 
-#: ../src/widgets/toolbox.cpp:3379
+#: ../src/widgets/toolbox.cpp:3380
 msgid "Fixation:"
 msgstr "Фиксация:"
 
-#: ../src/widgets/toolbox.cpp:3380
+#: ../src/widgets/toolbox.cpp:3381
 msgid ""
 "Angle behavior (0 = nib always perpendicular to stroke direction, 1 = fixed "
 "angle)"
@@ -14332,32 +15077,32 @@ msgstr ""
 "чертата, 1 = фиксиран ъгъл)"
 
 #. Cap Rounding
-#: ../src/widgets/toolbox.cpp:3392
+#: ../src/widgets/toolbox.cpp:3393
 msgid "(blunt caps, default)"
 msgstr "(затъпени краища, по подразбиране)"
 
-#: ../src/widgets/toolbox.cpp:3392
+#: ../src/widgets/toolbox.cpp:3393
 msgid "(slightly bulging)"
 msgstr "(леко изпъкваща)"
 
-#: ../src/widgets/toolbox.cpp:3392
+#: ../src/widgets/toolbox.cpp:3393
 msgid "(approximately round)"
 msgstr "(приблизително кръгла)"
 
-#: ../src/widgets/toolbox.cpp:3392
+#: ../src/widgets/toolbox.cpp:3393
 msgid "(long protruding caps)"
 msgstr "(дълги, изпъкнали върхове)"
 
-#: ../src/widgets/toolbox.cpp:3396
+#: ../src/widgets/toolbox.cpp:3397
 #, fuzzy
 msgid "Cap rounding"
 msgstr "Звезда: промяна на заоблянето"
 
-#: ../src/widgets/toolbox.cpp:3396
+#: ../src/widgets/toolbox.cpp:3397
 msgid "Caps:"
 msgstr "Краища:"
 
-#: ../src/widgets/toolbox.cpp:3397
+#: ../src/widgets/toolbox.cpp:3398
 msgid ""
 "Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = "
 "round caps)"
@@ -14366,96 +15111,96 @@ msgstr ""
 "главни, 1 = кръгли)"
 
 #. Tremor
-#: ../src/widgets/toolbox.cpp:3409
+#: ../src/widgets/toolbox.cpp:3410
 msgid "(smooth line)"
 msgstr "(гладка линия)"
 
-#: ../src/widgets/toolbox.cpp:3409
+#: ../src/widgets/toolbox.cpp:3410
 msgid "(slight tremor)"
 msgstr "(леко треперене)"
 
-#: ../src/widgets/toolbox.cpp:3409
+#: ../src/widgets/toolbox.cpp:3410
 msgid "(noticeable tremor)"
 msgstr "(забележим треперене)"
 
-#: ../src/widgets/toolbox.cpp:3409
+#: ../src/widgets/toolbox.cpp:3410
 msgid "(maximum tremor)"
 msgstr "(максимално треперене)"
 
-#: ../src/widgets/toolbox.cpp:3412
+#: ../src/widgets/toolbox.cpp:3413
 #, fuzzy
 msgid "Stroke Tremor"
 msgstr "Задаване цвят на линията"
 
-#: ../src/widgets/toolbox.cpp:3412
+#: ../src/widgets/toolbox.cpp:3413
 msgid "Tremor:"
 msgstr "Трептене:"
 
-#: ../src/widgets/toolbox.cpp:3413
+#: ../src/widgets/toolbox.cpp:3414
 msgid "Increase to make strokes rugged and trembling"
 msgstr "Увеличете, за да направите линиите нагънати"
 
 #. Wiggle
-#: ../src/widgets/toolbox.cpp:3426
+#: ../src/widgets/toolbox.cpp:3427
 msgid "(no wiggle)"
 msgstr "(леко мърдане)"
 
-#: ../src/widgets/toolbox.cpp:3426
+#: ../src/widgets/toolbox.cpp:3427
 msgid "(slight deviation)"
 msgstr "(леко отклонение)"
 
-#: ../src/widgets/toolbox.cpp:3426
+#: ../src/widgets/toolbox.cpp:3427
 msgid "(wild waves and curls)"
 msgstr "(диви вълни и къдрене)"
 
-#: ../src/widgets/toolbox.cpp:3429
+#: ../src/widgets/toolbox.cpp:3430
 #, fuzzy
 msgid "Pen Wiggle"
 msgstr "Въртене:"
 
-#: ../src/widgets/toolbox.cpp:3429
+#: ../src/widgets/toolbox.cpp:3430
 msgid "Wiggle:"
 msgstr "Въртене:"
 
-#: ../src/widgets/toolbox.cpp:3430
+#: ../src/widgets/toolbox.cpp:3431
 msgid "Increase to make the pen waver and wiggle"
 msgstr "Увеличете, за да направите писалката вълниста"
 
 #. Mass
-#: ../src/widgets/toolbox.cpp:3442
+#: ../src/widgets/toolbox.cpp:3443
 msgid "(no inertia)"
 msgstr "(без инерция)"
 
-#: ../src/widgets/toolbox.cpp:3442
+#: ../src/widgets/toolbox.cpp:3443
 msgid "(slight smoothing, default)"
 msgstr "(леко заглаждане, по подразбиране)"
 
-#: ../src/widgets/toolbox.cpp:3442
+#: ../src/widgets/toolbox.cpp:3443
 msgid "(noticeable lagging)"
 msgstr "(забележимо забавяне)"
 
-#: ../src/widgets/toolbox.cpp:3442
+#: ../src/widgets/toolbox.cpp:3443
 msgid "(maximum inertia)"
 msgstr "(максимална инерция)"
 
-#: ../src/widgets/toolbox.cpp:3445
+#: ../src/widgets/toolbox.cpp:3446
 #, fuzzy
 msgid "Pen Mass"
 msgstr "Маса:"
 
-#: ../src/widgets/toolbox.cpp:3445
+#: ../src/widgets/toolbox.cpp:3446
 msgid "Mass:"
 msgstr "Маса:"
 
-#: ../src/widgets/toolbox.cpp:3446
+#: ../src/widgets/toolbox.cpp:3447
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
 msgstr "Увеличете за да прибавите инерция на писалката"
 
-#: ../src/widgets/toolbox.cpp:3460
+#: ../src/widgets/toolbox.cpp:3461
 msgid "Trace Background"
 msgstr "Трасиране на фона"
 
-#: ../src/widgets/toolbox.cpp:3461
+#: ../src/widgets/toolbox.cpp:3462
 msgid ""
 "Trace the lightness of the background by the width of the pen (white - "
 "minimum width, black - maximum width)"
@@ -14463,88 +15208,88 @@ msgstr ""
 "Проследяване светлината на фона със ширината на писалката (бяло - минимална "
 "ширина, черно - максимална ширина)"
 
-#: ../src/widgets/toolbox.cpp:3473
+#: ../src/widgets/toolbox.cpp:3474
 msgid "Use the pressure of the input device to alter the width of the pen"
 msgstr ""
 "Използване натиска на входящото устройство за определяне дебелината на "
 "чертата"
 
-#: ../src/widgets/toolbox.cpp:3484
+#: ../src/widgets/toolbox.cpp:3485
 msgid "Tilt"
 msgstr "Наклон"
 
-#: ../src/widgets/toolbox.cpp:3485
+#: ../src/widgets/toolbox.cpp:3486
 msgid "Use the tilt of the input device to alter the angle of the pen's nib"
 msgstr ""
 "Използване наклона на входното устройство за определяне ъгъла на писалката"
 
-#: ../src/widgets/toolbox.cpp:3498
+#: ../src/widgets/toolbox.cpp:3499
 msgid "Reset all parameters to defaults"
 msgstr "Връщане на всички параметри към тези по подразбиране"
 
-#: ../src/widgets/toolbox.cpp:3580
+#: ../src/widgets/toolbox.cpp:3581
 msgid "Arc: Change start/end"
 msgstr "Арка: промяна на началото/края"
 
-#: ../src/widgets/toolbox.cpp:3646
+#: ../src/widgets/toolbox.cpp:3647
 msgid "Arc: Change open/closed"
 msgstr "Арка: промяна на отворена/затворена"
 
-#: ../src/widgets/toolbox.cpp:3769
+#: ../src/widgets/toolbox.cpp:3770
 #, fuzzy
 msgid "Start"
 msgstr "Начало:"
 
-#: ../src/widgets/toolbox.cpp:3769
+#: ../src/widgets/toolbox.cpp:3770
 msgid "Start:"
 msgstr "Начало:"
 
-#: ../src/widgets/toolbox.cpp:3770
+#: ../src/widgets/toolbox.cpp:3771
 msgid "The angle (in degrees) from the horizontal to the arc's start point"
 msgstr "Ъгъла (в градуси) от хоризонтала до началната точка на дъгата"
 
-#: ../src/widgets/toolbox.cpp:3782
+#: ../src/widgets/toolbox.cpp:3783
 #, fuzzy
 msgid "End"
 msgstr "Край:"
 
-#: ../src/widgets/toolbox.cpp:3782
+#: ../src/widgets/toolbox.cpp:3783
 msgid "End:"
 msgstr "Край:"
 
-#: ../src/widgets/toolbox.cpp:3783
+#: ../src/widgets/toolbox.cpp:3784
 msgid "The angle (in degrees) from the horizontal to the arc's end point"
 msgstr "Ъгъла (в градуси) от хоризонтала до крайната точка на дъгата"
 
-#: ../src/widgets/toolbox.cpp:3799
+#: ../src/widgets/toolbox.cpp:3800
 msgid "Closed arc"
 msgstr "Затворена арка"
 
-#: ../src/widgets/toolbox.cpp:3800
+#: ../src/widgets/toolbox.cpp:3801
 msgid "Switch to segment (closed shape with two radii)"
 msgstr "Превключване към сегмент (затворена форма с две радии)"
 
-#: ../src/widgets/toolbox.cpp:3806
+#: ../src/widgets/toolbox.cpp:3807
 msgid "Open Arc"
 msgstr "Отворена арка"
 
-#: ../src/widgets/toolbox.cpp:3807
+#: ../src/widgets/toolbox.cpp:3808
 msgid "Switch to arc (unclosed shape)"
 msgstr "Превключване към арка (отворена форма)"
 
-#: ../src/widgets/toolbox.cpp:3830
+#: ../src/widgets/toolbox.cpp:3831
 msgid "Make whole"
 msgstr "Създаване на дупка"
 
-#: ../src/widgets/toolbox.cpp:3831
+#: ../src/widgets/toolbox.cpp:3832
 msgid "Make the shape a whole ellipse, not arc or segment"
 msgstr "Създаване на формата като цяла елипса, не дъга или сегмент"
 
-#: ../src/widgets/toolbox.cpp:3898
+#: ../src/widgets/toolbox.cpp:3899
 msgid "Pick alpha"
 msgstr "Вземане на прозрачност"
 
-#: ../src/widgets/toolbox.cpp:3899
+#: ../src/widgets/toolbox.cpp:3900
 msgid ""
 "Pick both the color and the alpha (transparency) under cursor; otherwise, "
 "pick only the visible color premultiplied by alpha"
@@ -14552,38 +15297,38 @@ msgstr ""
 "Вземане едновременно на цвета и прозрачността под показалеца; в противен "
 "случай се взема само видимия цвят преумножен по прозрачността"
 
-#: ../src/widgets/toolbox.cpp:3910
+#: ../src/widgets/toolbox.cpp:3911
 msgid "Set alpha"
 msgstr "Задаване на прозрачност"
 
-#: ../src/widgets/toolbox.cpp:3911
+#: ../src/widgets/toolbox.cpp:3912
 msgid ""
 "If alpha was picked, assign it to selection as fill or stroke transparency"
 msgstr ""
 "Ако е взета прозрачност, задаване към избраното като прозрачност на "
 "запълването или очертанието"
 
-#: ../src/widgets/toolbox.cpp:4240
+#: ../src/widgets/toolbox.cpp:4239
 msgid "Text: Change font family"
 msgstr "Текст: промяна на шрифтовото семейство"
 
-#: ../src/widgets/toolbox.cpp:4325
+#: ../src/widgets/toolbox.cpp:4324
 msgid "Text: Change alignment"
 msgstr "Текст: промяна на равняването"
 
-#: ../src/widgets/toolbox.cpp:4408
+#: ../src/widgets/toolbox.cpp:4407
 msgid "Text: Change font style"
 msgstr "Текст: промяна стила на шрифта"
 
-#: ../src/widgets/toolbox.cpp:4455
+#: ../src/widgets/toolbox.cpp:4454
 msgid "Text: Change orientation"
 msgstr "Текст: промяна на ориентацията"
 
-#: ../src/widgets/toolbox.cpp:4545
+#: ../src/widgets/toolbox.cpp:4553
 msgid "Text: Change font size"
 msgstr "Текст: промяна размера на буквите"
 
-#: ../src/widgets/toolbox.cpp:4766
+#: ../src/widgets/toolbox.cpp:4792
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -14591,100 +15336,96 @@ msgstr ""
 "Този шрифт засега не е инсталиран в системата. Inkscape ще използва този по "
 "подразбиране."
 
-#: ../src/widgets/toolbox.cpp:4805
+#: ../src/widgets/toolbox.cpp:4831
 msgid "Align left"
 msgstr "Равняване на ляво"
 
-#: ../src/widgets/toolbox.cpp:4816
-msgid "Center"
-msgstr "Центриране"
-
-#: ../src/widgets/toolbox.cpp:4827
+#: ../src/widgets/toolbox.cpp:4853
 msgid "Align right"
 msgstr "Равняване на дясно"
 
-#: ../src/widgets/toolbox.cpp:4838
+#: ../src/widgets/toolbox.cpp:4864
 msgid "Justify"
 msgstr "Запълване"
 
-#: ../src/widgets/toolbox.cpp:4854
+#: ../src/widgets/toolbox.cpp:4880
 msgid "Bold"
 msgstr "Удебелен"
 
-#: ../src/widgets/toolbox.cpp:4865
+#: ../src/widgets/toolbox.cpp:4891
 msgid "Italic"
 msgstr "Наклонен"
 
-#: ../src/widgets/toolbox.cpp:4997
+#: ../src/widgets/toolbox.cpp:5023
 msgid "Change connector spacing"
 msgstr "Промяна разстоянието на свръзките"
 
-#: ../src/widgets/toolbox.cpp:5083
+#: ../src/widgets/toolbox.cpp:5109
 msgid "Avoid"
 msgstr "Избягване"
 
-#: ../src/widgets/toolbox.cpp:5093
+#: ../src/widgets/toolbox.cpp:5119
 msgid "Ignore"
 msgstr "Игнориране"
 
-#: ../src/widgets/toolbox.cpp:5105
+#: ../src/widgets/toolbox.cpp:5131
 #, fuzzy
 msgid "Connector Spacing"
 msgstr "Промяна разстоянието на свръзките"
 
-#: ../src/widgets/toolbox.cpp:5105
+#: ../src/widgets/toolbox.cpp:5131
 msgid "Spacing:"
 msgstr "Разстояние:"
 
-#: ../src/widgets/toolbox.cpp:5106
+#: ../src/widgets/toolbox.cpp:5132
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 "Разстоянието оставяно около обектите при автоматично насочване на връзките"
 
-#: ../src/widgets/toolbox.cpp:5117
+#: ../src/widgets/toolbox.cpp:5143
 msgid "Graph"
 msgstr "Графика"
 
-#: ../src/widgets/toolbox.cpp:5127
+#: ../src/widgets/toolbox.cpp:5153
 #, fuzzy
 msgid "Connector Length"
 msgstr "Свързване"
 
-#: ../src/widgets/toolbox.cpp:5127
+#: ../src/widgets/toolbox.cpp:5153
 msgid "Length:"
 msgstr "Дължина:"
 
-#: ../src/widgets/toolbox.cpp:5128
+#: ../src/widgets/toolbox.cpp:5154
 msgid "Ideal length for connectors when layout is applied"
 msgstr "Идеална дължина на връзките когато се приложи шаблон"
 
-#: ../src/widgets/toolbox.cpp:5140
+#: ../src/widgets/toolbox.cpp:5166
 msgid "Downwards"
 msgstr "Надолу"
 
-#: ../src/widgets/toolbox.cpp:5141
+#: ../src/widgets/toolbox.cpp:5167
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Правене на връзките с маркери за край (стрелки) да сочат надолу"
 
-#: ../src/widgets/toolbox.cpp:5157
+#: ../src/widgets/toolbox.cpp:5183
 msgid "Do not allow overlapping shapes"
 msgstr "Да не се позволява припокриване на форми"
 
-#: ../src/widgets/toolbox.cpp:5258
+#: ../src/widgets/toolbox.cpp:5284
 #, fuzzy
 msgid "Fill by"
 msgstr "Запълване по:"
 
-#: ../src/widgets/toolbox.cpp:5259
+#: ../src/widgets/toolbox.cpp:5285
 msgid "Fill by:"
 msgstr "Запълване по:"
 
-#: ../src/widgets/toolbox.cpp:5271
+#: ../src/widgets/toolbox.cpp:5297
 #, fuzzy
 msgid "Fill Threshold"
 msgstr "Праг"
 
-#: ../src/widgets/toolbox.cpp:5272
+#: ../src/widgets/toolbox.cpp:5298
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
@@ -14692,32 +15433,32 @@ msgstr ""
 "Максималната позволена разлика между натиснатия пиксел и съседните за "
 "изчисляване на запълването"
 
-#: ../src/widgets/toolbox.cpp:5296
+#: ../src/widgets/toolbox.cpp:5322
 #, fuzzy
 msgid "Grow/shrink by"
 msgstr "Растеж/свиване по:"
 
-#: ../src/widgets/toolbox.cpp:5296
+#: ../src/widgets/toolbox.cpp:5322
 msgid "Grow/shrink by:"
 msgstr "Растеж/свиване по:"
 
-#: ../src/widgets/toolbox.cpp:5297
+#: ../src/widgets/toolbox.cpp:5323
 msgid ""
 "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "С колко да расте (позитивно) или да се свива (негативно) създадения път за "
 "запълване"
 
-#: ../src/widgets/toolbox.cpp:5322
+#: ../src/widgets/toolbox.cpp:5348
 #, fuzzy
 msgid "Close gaps"
 msgstr "Затваряне на разстоянията:"
 
-#: ../src/widgets/toolbox.cpp:5323
+#: ../src/widgets/toolbox.cpp:5349
 msgid "Close gaps:"
 msgstr "Затваряне на разстоянията:"
 
-#: ../src/widgets/toolbox.cpp:5335
+#: ../src/widgets/toolbox.cpp:5361
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
@@ -14914,6 +15655,16 @@ msgstr ""
 "Скриптът dia2svg.sh трябва да е инсталиран с дистрибуцията Ви на Inkscape.  "
 "Ако го нямате, вероятно имате грешка в инсталацията на Inkscape."
 
+#: ../share/extensions/dimension.inx.h:3
+#, fuzzy
+msgid "X Offset"
+msgstr "Отместване"
+
+#: ../share/extensions/dimension.inx.h:4
+#, fuzzy
+msgid "Y Offset"
+msgstr "Отместване"
+
 #: ../share/extensions/dots.inx.h:1
 msgid "Dot size"
 msgstr "Размер на точката"
@@ -14927,7 +15678,7 @@ msgid "Number Nodes"
 msgstr "Брой възли"
 
 #: ../share/extensions/dots.inx.h:4 ../share/extensions/handles.inx.h:2
-#: ../share/extensions/measure.inx.h:10
+#: ../share/extensions/measure.inx.h:11
 msgid "Visualize Path"
 msgstr "Показване на пътеката"
 
@@ -15368,6 +16119,16 @@ msgstr "Прецизност"
 msgid "Scale Factor (Drawing:Real Length) = 1:"
 msgstr "Фактор на мащабиране (Рисуване: Реална дължина) = 1:"
 
+#: ../share/extensions/measure.inx.h:10
+msgid ""
+"This effect measures the length of the selected path and adds it as a text-"
+"on-path object with the selected unit. The number of significant digits can "
+"be controlled by the Precision field. The Offset field controls the distance "
+"from the text to the path. The Scale factor can be used to make measurements "
+"in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the "
+"real world, Scale must be set to 250."
+msgstr ""
+
 #: ../share/extensions/motion.inx.h:1
 msgid "Angle"
 msgstr "Ъгъл"
@@ -15418,58 +16179,75 @@ msgid "Bleed (in)"
 msgstr "Подравнени"
 
 #: ../share/extensions/perfectboundcover.inx.h:2
-msgid "Book Height (inches)"
+msgid "Bond Weight #"
 msgstr ""
 
 #: ../share/extensions/perfectboundcover.inx.h:3
+msgid "Book Height (inches)"
+msgstr ""
+
+#: ../share/extensions/perfectboundcover.inx.h:4
 #, fuzzy
 msgid "Book Properties"
 msgstr "%s Свойства"
 
-#: ../share/extensions/perfectboundcover.inx.h:4
+#: ../share/extensions/perfectboundcover.inx.h:5
 msgid "Book Width (inches)"
 msgstr ""
 
-#: ../share/extensions/perfectboundcover.inx.h:5
-#, fuzzy
-msgid "Cover"
-msgstr "Покритие"
-
 #: ../share/extensions/perfectboundcover.inx.h:6
-msgid "Cover Thickness Measurement"
+msgid "Caliper (inches)"
 msgstr ""
 
 #: ../share/extensions/perfectboundcover.inx.h:7
 #, fuzzy
+msgid "Cover"
+msgstr "Покритие"
+
+#: ../share/extensions/perfectboundcover.inx.h:8
+msgid "Cover Thickness Measurement"
+msgstr ""
+
+#: ../share/extensions/perfectboundcover.inx.h:9
+#, fuzzy
 msgid "Generate Template"
 msgstr "Генериране от линия"
 
-#: ../share/extensions/perfectboundcover.inx.h:8
+#: ../share/extensions/perfectboundcover.inx.h:10
 #, fuzzy
 msgid "Interior Pages"
 msgstr "Интерплориране"
 
-#: ../share/extensions/perfectboundcover.inx.h:9
+#: ../share/extensions/perfectboundcover.inx.h:11
 msgid "Note: Bond Weight # calculations are a best-guess estimate."
 msgstr ""
 
-#: ../share/extensions/perfectboundcover.inx.h:10
+#: ../share/extensions/perfectboundcover.inx.h:12
 #, fuzzy
 msgid "Number of Pages"
 msgstr "Брой стъпки"
 
-#: ../share/extensions/perfectboundcover.inx.h:11
+#: ../share/extensions/perfectboundcover.inx.h:13
+msgid "Pages Per Inch (PPI)"
+msgstr ""
+
+#: ../share/extensions/perfectboundcover.inx.h:14
 msgid "Paper Thickness Measurement"
 msgstr ""
 
-#: ../share/extensions/perfectboundcover.inx.h:12
+#: ../share/extensions/perfectboundcover.inx.h:15
 msgid "Perfect-Bound Cover"
 msgstr ""
 
-#: ../share/extensions/perfectboundcover.inx.h:13
+#: ../share/extensions/perfectboundcover.inx.h:17
 #, fuzzy
 msgid "Remove existing guides"
 msgstr "Създаване на правоъгълника"
+
+#: ../share/extensions/perfectboundcover.inx.h:18
+#, fuzzy
+msgid "Specify Width"
+msgstr "_Ширина на страницата"
 
 #: ../share/extensions/perspective.inx.h:2
 msgid "Perspective"
@@ -15739,6 +16517,22 @@ msgid "XAML Input"
 msgstr "Входящ XAML"
 
 #, fuzzy
+#~ msgid "Preferred resolution (dpi) of bitmaps"
+#~ msgstr "Предпочитане резолюция (точки на инч) на растера"
+
+#, fuzzy
+#~ msgid "%s selected out of %d gradient handles on %d selected object"
+#~ msgid_plural "%s selected out of %d gradient handles on %d selected objects"
+#~ msgstr[0] "%s избрани от %d дръжки на преливки в %d избрани обекта"
+#~ msgstr[1] "%s избрани от %d дръжки на преливки в %d избрани обекта"
+
+#~ msgid "Search Tag"
+#~ msgstr "Таг за търсене"
+
+#~ msgid "PLACEHOLDER, DO NOT TRANSLATE"
+#~ msgstr "PLACEHOLDER, DO NOT TRANSLATE"
+
+#, fuzzy
 #~ msgid "Measure unit:"
 #~ msgstr "Измерване на пътека"
 
@@ -15969,12 +16763,6 @@ msgstr "Входящ XAML"
 #~ "%s.<b>%i</b> от <b>%i</b> възли са избрани в <b>%i</b> от <b>%i</b> "
 #~ "подпътеки. %s."
 
-#~ msgid "Print"
-#~ msgstr "Отпечатване"
-
-#~ msgid "Could not set print source: %s"
-#~ msgstr "Не може да бъде зададен източник за отпечатване: %s"
-
 #~ msgid "unknown error"
 #~ msgstr "неизвестна грешка"
 
@@ -16035,9 +16823,6 @@ msgstr "Входящ XAML"
 
 #~ msgid "Print directly without prompting to a file or pipe"
 #~ msgstr "Директно отпечатване, без питане за файл или устройство"
-
-#~ msgid "Lock"
-#~ msgstr "Заключване"
 
 #~ msgid "Gradients"
 #~ msgstr "Преливки"

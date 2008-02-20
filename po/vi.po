@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-02-08 23:00+0100\n"
+"POT-Creation-Date: 2008-02-20 02:24+0100\n"
 "PO-Revision-Date: 2008-02-16 12:54+0700\n"
 "Last-Translator: Nguyen Dinh Trung <nguyendinhtrung141@gmail.com>\n"
 "Language-Team: Vietnamese <vi-bugs@googlegroups.com>\n"
@@ -57,6 +57,11 @@ msgstr ""
 #: ../src/arc-context.cpp:507
 msgid "Create ellipse"
 msgstr "Tạo hình elip"
+
+#: ../src/box3d.cpp:341
+#, fuzzy
+msgid "<b>3D Box</b>"
+msgstr "<b>Viền</b>"
 
 #: ../src/box3d-context.cpp:480 ../src/box3d-context.cpp:487
 #: ../src/box3d-context.cpp:494 ../src/box3d-context.cpp:501
@@ -110,11 +115,11 @@ msgstr "<b>Điểm cuối đường nối</b>: kéo để cập nhật hoặc k�
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Chọn <b>ít nhất một đối tượng khác đường nối</b>"
 
-#: ../src/connector-context.cpp:1321 ../src/widgets/toolbox.cpp:5084
+#: ../src/connector-context.cpp:1321 ../src/widgets/toolbox.cpp:5110
 msgid "Make connectors avoid selected objects"
 msgstr "Làm cho đường nối tránh các đối tượng đã chọn"
 
-#: ../src/connector-context.cpp:1322 ../src/widgets/toolbox.cpp:5094
+#: ../src/connector-context.cpp:1322 ../src/widgets/toolbox.cpp:5120
 msgid "Make connectors ignore selected objects"
 msgstr "Làm cho đường nối bỏ qua các đối tượng đã chọn"
 
@@ -687,8 +692,8 @@ msgstr "Lấy màu hiện rõ và độ đục"
 #: ../src/dialogs/clonetiler.cpp:2599 ../src/dialogs/clonetiler.cpp:2748
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/extension/internal/bitmap/opacity.cpp:39
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2144
-#: ../src/widgets/toolbox.cpp:3185
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2188
+#: ../src/widgets/toolbox.cpp:3186
 msgid "Opacity"
 msgstr "Độ đục"
 
@@ -794,7 +799,7 @@ msgstr ""
 "Mỗi bản sao được tạo với xác suất tương ứng với giá trị đã lấy trong điểm đó"
 
 #: ../src/dialogs/clonetiler.cpp:2728
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2121
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 msgid "Size"
 msgstr "Kích cỡ"
 
@@ -968,8 +973,8 @@ msgstr "x_1:"
 
 #. Stroke width
 #: ../src/dialogs/export.cpp:319 ../src/dialogs/object-attributes.cpp:59
-#: ../src/dialogs/stroke-style.cpp:1090 ../src/widgets/toolbox.cpp:3025
-#: ../src/widgets/toolbox.cpp:3330
+#: ../src/dialogs/stroke-style.cpp:1090 ../src/widgets/toolbox.cpp:3026
+#: ../src/widgets/toolbox.cpp:3331
 msgid "Width:"
 msgstr "Rộng:"
 
@@ -1002,7 +1007,7 @@ msgstr "điểm ảnh theo"
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:508 ../src/ui/dialog/inkscape-preferences.cpp:643
+#: ../src/dialogs/export.cpp:508 ../src/ui/dialog/inkscape-preferences.cpp:647
 msgid "dpi"
 msgstr "dpi"
 
@@ -1044,9 +1049,10 @@ msgid "Export the bitmap file with these settings"
 msgstr "Xuất khẩu tập tin bitmap tùy theo thiết lập này"
 
 #: ../src/dialogs/export.cpp:682
-#, c-format
-msgid "Batch export %d selected objects"
-msgstr "Xuất %d đối tượng đã chọn"
+#, fuzzy, c-format
+msgid "Batch export %d selected object"
+msgid_plural "Batch export %d selected objects"
+msgstr[0] "Xuất %d đối tượng đã chọn"
 
 #: ../src/dialogs/export.cpp:1014
 msgid "Export in progress"
@@ -1323,12 +1329,12 @@ msgid "Unit:"
 msgstr "Đơn vị:"
 
 #: ../src/dialogs/guidelinedialog.cpp:45
-#: ../src/dialogs/object-attributes.cpp:57 ../src/widgets/toolbox.cpp:1113
+#: ../src/dialogs/object-attributes.cpp:57 ../src/widgets/toolbox.cpp:1114
 msgid "X:"
 msgstr "X:"
 
 #: ../src/dialogs/guidelinedialog.cpp:46
-#: ../src/dialogs/object-attributes.cpp:58 ../src/widgets/toolbox.cpp:1131
+#: ../src/dialogs/object-attributes.cpp:58 ../src/widgets/toolbox.cpp:1132
 msgid "Y:"
 msgstr "Y:"
 
@@ -1687,8 +1693,8 @@ msgid "The physical or digital manifestation of this document (MIME type)."
 msgstr "Định dạng kiểu vật lý hay điện số của tài liệu này (kiểu MIME)."
 
 #: ../src/dialogs/rdf.cpp:247 ../src/extension/internal/bitmap/addNoise.cpp:46
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2100
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2175
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2144
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
 msgid "Type"
 msgstr "Kiểu"
 
@@ -1850,13 +1856,13 @@ msgstr "Đặt mẫu trên nét"
 msgid "Unset stroke"
 msgstr "Bỏ đặt nét"
 
-#: ../src/dialogs/stroke-style.cpp:793 ../src/filter-enums.cpp:94
+#: ../src/dialogs/stroke-style.cpp:793 ../src/filter-enums.cpp:95
 #: ../src/flood-context.cpp:264 ../src/interface.cpp:829
-#: ../src/ui/dialog/filter-effects-dialog.cpp:460
+#: ../src/ui/dialog/filter-effects-dialog.cpp:476
 #: ../src/ui/dialog/inkscape-preferences.cpp:207
 #: ../src/ui/dialog/inkscape-preferences.cpp:368
 #: ../src/ui/dialog/inkscape-preferences.cpp:469
-#: ../src/ui/dialog/inkscape-preferences.cpp:891 ../src/verbs.cpp:2119
+#: ../src/ui/dialog/inkscape-preferences.cpp:895 ../src/verbs.cpp:2119
 msgid "None"
 msgstr "Không có"
 
@@ -1963,19 +1969,31 @@ msgstr "Hình nút cuối:"
 msgid "Set stroke style"
 msgstr "Đặt kiểu nét"
 
-#: ../src/dialogs/swatches.cpp:494
+#. TRANSLATORS: An item in context menu on a colour in the swatches
+#: ../src/dialogs/swatches.cpp:269
+#, fuzzy
+msgid "Set fill"
+msgstr "Bỏ đặt màu tô"
+
+#. TRANSLATORS: An item in context menu on a colour in the swatches
+#: ../src/dialogs/swatches.cpp:277
+#, fuzzy
+msgid "Set stroke"
+msgstr "Bỏ đặt nét"
+
+#: ../src/dialogs/swatches.cpp:496
 msgid "Change color definition"
 msgstr "Đổi lời xác định màu"
 
-#: ../src/dialogs/swatches.cpp:635
+#: ../src/dialogs/swatches.cpp:637
 msgid "Set stroke color from swatch"
 msgstr "Đặt màu nét từ bảng màu"
 
-#: ../src/dialogs/swatches.cpp:635
+#: ../src/dialogs/swatches.cpp:637
 msgid "Set fill color from swatch"
 msgstr "Đặt màu tô từ bảng màu"
 
-#: ../src/dialogs/swatches.cpp:954
+#: ../src/dialogs/swatches.cpp:956
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr "Thư mục bảng màu (%s) không sẵn sàng."
@@ -2006,11 +2024,11 @@ msgstr "Căn lề phải"
 msgid "Justify lines"
 msgstr "Căn lề 2 bên"
 
-#: ../src/dialogs/text-edit.cpp:302 ../src/widgets/toolbox.cpp:4887
+#: ../src/dialogs/text-edit.cpp:302 ../src/widgets/toolbox.cpp:4913
 msgid "Horizontal text"
 msgstr "Chữ ngang"
 
-#: ../src/dialogs/text-edit.cpp:316 ../src/widgets/toolbox.cpp:4898
+#: ../src/dialogs/text-edit.cpp:316 ../src/widgets/toolbox.cpp:4924
 msgid "Vertical text"
 msgstr "Chữ dọc"
 
@@ -2148,7 +2166,7 @@ msgid "Duplicate node"
 msgstr "Nhân đôi nút"
 
 #: ../src/dialogs/xml-tree.cpp:368 ../src/dialogs/xml-tree.cpp:1431
-#: ../src/nodepath.cpp:3122 ../src/widgets/toolbox.cpp:986
+#: ../src/nodepath.cpp:3122 ../src/widgets/toolbox.cpp:987
 msgid "Delete node"
 msgstr "Xoá nút"
 
@@ -2222,6 +2240,97 @@ msgstr ""
 msgid "Change attribute"
 msgstr "Đổi thuộc tính"
 
+#: ../src/display/canvas-axonomgrid.cpp:394 ../src/widgets/toolbox.cpp:2576
+msgid "Angle X:"
+msgstr "Góc X:"
+
+#: ../src/display/canvas-axonomgrid.cpp:394
+#: ../src/ui/dialog/inkscape-preferences.cpp:870
+msgid "Angle of x-axis"
+msgstr "Góc của trục X"
+
+#: ../src/display/canvas-axonomgrid.cpp:396 ../src/widgets/toolbox.cpp:2655
+msgid "Angle Z:"
+msgstr "Góc Z:"
+
+#: ../src/display/canvas-axonomgrid.cpp:396
+#: ../src/ui/dialog/inkscape-preferences.cpp:871
+msgid "Angle of z-axis"
+msgstr "Góc của trục Z"
+
+#: ../src/display/canvas-axonomgrid.cpp:400 ../src/display/canvas-grid.cpp:663
+msgid "Grid line _color:"
+msgstr "_Màu đường lưới:"
+
+#: ../src/display/canvas-axonomgrid.cpp:400 ../src/display/canvas-grid.cpp:663
+#: ../src/ui/dialog/inkscape-preferences.cpp:850
+#: ../src/ui/dialog/inkscape-preferences.cpp:851
+#: ../src/ui/dialog/inkscape-preferences.cpp:872
+#: ../src/ui/dialog/inkscape-preferences.cpp:873
+msgid "Grid line color"
+msgstr "Màu đường lưới"
+
+#: ../src/display/canvas-axonomgrid.cpp:400 ../src/display/canvas-grid.cpp:663
+msgid "Color of grid lines"
+msgstr "Màu của các đường lưới"
+
+#: ../src/display/canvas-axonomgrid.cpp:405 ../src/display/canvas-grid.cpp:668
+msgid "Ma_jor grid line color:"
+msgstr "Màu đường lướ_i chính:"
+
+#: ../src/display/canvas-axonomgrid.cpp:405 ../src/display/canvas-grid.cpp:668
+#: ../src/ui/dialog/inkscape-preferences.cpp:852
+#: ../src/ui/dialog/inkscape-preferences.cpp:853
+#: ../src/ui/dialog/inkscape-preferences.cpp:874
+#: ../src/ui/dialog/inkscape-preferences.cpp:875
+msgid "Major grid line color"
+msgstr "Màu đường lưới chính"
+
+#: ../src/display/canvas-axonomgrid.cpp:406 ../src/display/canvas-grid.cpp:669
+msgid "Color of the major (highlighted) grid lines"
+msgstr "Màu của những đường lưới chính (đã tô sáng)"
+
+#: ../src/display/canvas-axonomgrid.cpp:412 ../src/display/canvas-grid.cpp:679
+msgid "Grid _units:"
+msgstr "Đơn _vị lưới:"
+
+#: ../src/display/canvas-axonomgrid.cpp:413 ../src/display/canvas-grid.cpp:680
+msgid "_Origin X:"
+msgstr "_Gốc X:"
+
+#: ../src/display/canvas-axonomgrid.cpp:413 ../src/display/canvas-grid.cpp:680
+#: ../src/ui/dialog/inkscape-preferences.cpp:843
+#: ../src/ui/dialog/inkscape-preferences.cpp:864
+msgid "X coordinate of grid origin"
+msgstr "Toạ độ X của gốc lưới"
+
+#: ../src/display/canvas-axonomgrid.cpp:418 ../src/display/canvas-grid.cpp:685
+msgid "O_rigin Y:"
+msgstr "Gố_c Y:"
+
+#: ../src/display/canvas-axonomgrid.cpp:418 ../src/display/canvas-grid.cpp:685
+#: ../src/ui/dialog/inkscape-preferences.cpp:844
+#: ../src/ui/dialog/inkscape-preferences.cpp:865
+msgid "Y coordinate of grid origin"
+msgstr "Toạ độ Y của gốc lưới"
+
+#: ../src/display/canvas-axonomgrid.cpp:423 ../src/display/canvas-grid.cpp:695
+msgid "Spacing _Y:"
+msgstr "Khoảng cách _Y:"
+
+#: ../src/display/canvas-axonomgrid.cpp:423
+#: ../src/ui/dialog/inkscape-preferences.cpp:867
+msgid "Base length of z-axis"
+msgstr "Chiều dài cơ bản của trục Z"
+
+#: ../src/display/canvas-axonomgrid.cpp:428 ../src/display/canvas-grid.cpp:701
+msgid "_Major grid line every:"
+msgstr "Đường lưới _chính mỗi:"
+
+#: ../src/display/canvas-axonomgrid.cpp:428 ../src/display/canvas-grid.cpp:701
+msgid "lines"
+msgstr "đường"
+
 #: ../src/display/canvas-grid.cpp:40
 msgid "Rectangular grid"
 msgstr "Lưới hình chữ nhật"
@@ -2258,94 +2367,26 @@ msgstr ""
 "Xác định có hiển thị lưới hay không. Các đối tượng vẫn sẽ đính vào lưới vô "
 "hình."
 
-#: ../src/display/canvas-grid.cpp:661
-msgid "Grid line _color:"
-msgstr "_Màu đường lưới:"
-
-#: ../src/display/canvas-grid.cpp:661
-#: ../src/ui/dialog/inkscape-preferences.cpp:846
-#: ../src/ui/dialog/inkscape-preferences.cpp:847
-#: ../src/ui/dialog/inkscape-preferences.cpp:868
-#: ../src/ui/dialog/inkscape-preferences.cpp:869
-msgid "Grid line color"
-msgstr "Màu đường lưới"
-
-#: ../src/display/canvas-grid.cpp:661
-msgid "Color of grid lines"
-msgstr "Màu của các đường lưới"
-
-#: ../src/display/canvas-grid.cpp:666
-msgid "Ma_jor grid line color:"
-msgstr "Màu đường lướ_i chính:"
-
-#: ../src/display/canvas-grid.cpp:666
-#: ../src/ui/dialog/inkscape-preferences.cpp:848
-#: ../src/ui/dialog/inkscape-preferences.cpp:849
-#: ../src/ui/dialog/inkscape-preferences.cpp:870
-#: ../src/ui/dialog/inkscape-preferences.cpp:871
-msgid "Major grid line color"
-msgstr "Màu đường lưới chính"
-
-#: ../src/display/canvas-grid.cpp:667
-msgid "Color of the major (highlighted) grid lines"
-msgstr "Màu của những đường lưới chính (đã tô sáng)"
-
-#: ../src/display/canvas-grid.cpp:677
-msgid "Grid _units:"
-msgstr "Đơn _vị lưới:"
-
-#: ../src/display/canvas-grid.cpp:678
-msgid "_Origin X:"
-msgstr "_Gốc X:"
-
-#: ../src/display/canvas-grid.cpp:678
-#: ../src/ui/dialog/inkscape-preferences.cpp:839
-#: ../src/ui/dialog/inkscape-preferences.cpp:860
-msgid "X coordinate of grid origin"
-msgstr "Toạ độ X của gốc lưới"
-
-#: ../src/display/canvas-grid.cpp:683
-msgid "O_rigin Y:"
-msgstr "Gố_c Y:"
-
-#: ../src/display/canvas-grid.cpp:683
-#: ../src/ui/dialog/inkscape-preferences.cpp:840
-#: ../src/ui/dialog/inkscape-preferences.cpp:861
-msgid "Y coordinate of grid origin"
-msgstr "Toạ độ Y của gốc lưới"
-
-#: ../src/display/canvas-grid.cpp:688
+#: ../src/display/canvas-grid.cpp:690
 msgid "Spacing _X:"
 msgstr "Khoảng cách _X:"
 
-#: ../src/display/canvas-grid.cpp:688
-#: ../src/ui/dialog/inkscape-preferences.cpp:843
+#: ../src/display/canvas-grid.cpp:690
+#: ../src/ui/dialog/inkscape-preferences.cpp:847
 msgid "Distance between vertical grid lines"
 msgstr "Khoảng cách giữa hai đường lưới theo chiều dọc"
 
-#: ../src/display/canvas-grid.cpp:693
-msgid "Spacing _Y:"
-msgstr "Khoảng cách _Y:"
-
-#: ../src/display/canvas-grid.cpp:693
-#: ../src/ui/dialog/inkscape-preferences.cpp:844
+#: ../src/display/canvas-grid.cpp:695
+#: ../src/ui/dialog/inkscape-preferences.cpp:848
 msgid "Distance between horizontal grid lines"
 msgstr "Khoảng cách giữa hai đường lưới theo chiều ngang"
 
-#: ../src/display/canvas-grid.cpp:699
-msgid "_Major grid line every:"
-msgstr "Đường lưới _chính mỗi:"
-
-#: ../src/display/canvas-grid.cpp:699
-msgid "lines"
-msgstr "đường"
-
-#: ../src/display/canvas-grid.cpp:702
+#: ../src/display/canvas-grid.cpp:704
 msgid "_Show dots instead of lines"
 msgstr "_HIện chấm thay cho đường"
 
-#: ../src/display/canvas-grid.cpp:703
-#: ../src/ui/dialog/inkscape-preferences.cpp:853
+#: ../src/display/canvas-grid.cpp:705
+#: ../src/ui/dialog/inkscape-preferences.cpp:857
 msgid "If set, displays dots at gridpoints instead of gridlines"
 msgstr "Bật tùy chọn này thì hiển thị chấm ở điểm lưới, thay cho đường lưới."
 
@@ -2608,15 +2649,18 @@ msgstr "Ngưỡng thích nghi"
 #: ../src/extension/internal/bitmap/raise.cpp:41
 #: ../src/extension/internal/bitmap/sample.cpp:40
 #: ../src/extension/internal/bluredge.cpp:134
+#: ../src/libgdl/gdl-dock-placeholder.c:169 ../src/libgdl/gdl-dock.c:190
+#: ../src/live_effects/lpe-pathalongpath.cpp:58
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:64
-#: ../src/widgets/toolbox.cpp:2248 ../src/widgets/toolbox.cpp:3025
+#: ../src/widgets/toolbox.cpp:2249 ../src/widgets/toolbox.cpp:3026
 msgid "Width"
 msgstr "Rộng"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:41
 #: ../src/extension/internal/bitmap/raise.cpp:42
 #: ../src/extension/internal/bitmap/sample.cpp:41
-#: ../src/widgets/toolbox.cpp:2265
+#: ../src/libgdl/gdl-dock-placeholder.c:177 ../src/libgdl/gdl-dock.c:198
+#: ../src/widgets/toolbox.cpp:2266
 msgid "Height"
 msgstr "Cao"
 
@@ -2712,7 +2756,7 @@ msgstr "Làm mờ"
 #: ../src/extension/internal/bitmap/oilPaint.cpp:38
 #: ../src/extension/internal/bitmap/sharpen.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2151
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid "Radius"
 msgstr "Bán kính"
 
@@ -2955,16 +2999,20 @@ msgid "Brightness"
 msgstr "Độ sáng"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:42
-#: ../src/flood-context.cpp:254 ../src/ui/dialog/inkscape-preferences.cpp:701
-#: ../src/widgets/sp-color-scales.cpp:428
-#: ../src/widgets/sp-color-scales.cpp:429 ../src/widgets/toolbox.cpp:3157
+#: ../src/flood-context.cpp:254 ../src/ui/dialog/inkscape-preferences.cpp:705
+#: ../src/widgets/sp-color-icc-selector.cpp:235
+#: ../src/widgets/sp-color-icc-selector.cpp:236
+#: ../src/widgets/sp-color-scales.cpp:427
+#: ../src/widgets/sp-color-scales.cpp:428 ../src/widgets/toolbox.cpp:3158
 #: ../share/extensions/color_randomize.inx.h:5
 msgid "Saturation"
 msgstr "Độ bão hòa"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:43
-#: ../src/flood-context.cpp:253 ../src/widgets/sp-color-scales.cpp:425
-#: ../src/widgets/sp-color-scales.cpp:426 ../src/widgets/toolbox.cpp:3143
+#: ../src/flood-context.cpp:253 ../src/widgets/sp-color-icc-selector.cpp:235
+#: ../src/widgets/sp-color-icc-selector.cpp:236
+#: ../src/widgets/sp-color-scales.cpp:424
+#: ../src/widgets/sp-color-scales.cpp:425 ../src/widgets/toolbox.cpp:3144
 #: ../share/extensions/color_randomize.inx.h:2
 msgid "Hue"
 msgstr "Sắc màu"
@@ -3055,12 +3103,12 @@ msgid "Shade"
 msgstr "Bóng"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/ui/dialog/filter-effects-dialog.cpp:914
+#: ../src/ui/dialog/filter-effects-dialog.cpp:944
 msgid "Azimuth"
 msgstr "Góc phương vị"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:915
+#: ../src/ui/dialog/filter-effects-dialog.cpp:945
 msgid "Elevation"
 msgstr "Độ nâng lên"
 
@@ -3161,7 +3209,8 @@ msgid "Number of inset/outset copies of the object to make"
 msgstr "Số bản sao bù vào/ra của đối tượng cần tạo"
 
 #: ../src/extension/internal/bluredge.cpp:139
-#: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
+#: ../share/extensions/dimension.inx.h:2 ../share/extensions/interp.inx.h:3
+#: ../share/extensions/motion.inx.h:3
 #: ../share/extensions/pathalongpath.inx.h:4
 msgid "Generate from Path"
 msgstr "Tạo ra từ Đường nét"
@@ -3194,6 +3243,7 @@ msgid "Convert blur effects to bitmaps"
 msgstr "Chuyển đổi hiệu ứng làm mờ sang mảng "
 
 #: ../src/extension/internal/cairo-pdf-out.cpp:178
+#: ../src/extension/internal/cairo-ps-out.cpp:232
 #, fuzzy
 msgid "Preferred resolution (DPI) of bitmaps"
 msgstr "Độ phân giải đã thích (điểm trên mỗi insơ) của ảnh bitmap"
@@ -3208,6 +3258,11 @@ msgstr "Sơ đồ Dia (*.dia)"
 msgid "PDF File"
 msgstr "Tập tin"
 
+#: ../src/extension/internal/cairo-ps-out.cpp:222
+#, fuzzy
+msgid "Cairo PS Output"
+msgstr "Kết xuất DXF"
+
 #: ../src/extension/internal/cairo-ps-out.cpp:224
 msgid "Restrict to PS level"
 msgstr "Hạn chế thành mức PS"
@@ -3220,11 +3275,6 @@ msgstr "Mức 2 PostScript"
 #: ../src/extension/internal/cairo-ps-out.cpp:227
 msgid "PostScript level 2"
 msgstr "Mức 2 PostScript"
-
-#: ../src/extension/internal/cairo-ps-out.cpp:232
-#, fuzzy
-msgid "Preferred resolution (dpi) of bitmaps"
-msgstr "Độ phân giải đã thích (điểm trên mỗi insơ) của ảnh bitmap"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:236
 #, fuzzy
@@ -3311,7 +3361,7 @@ msgstr "Chuyển sắc của GIMP (*.ggr)"
 msgid "Gradients used in GIMP"
 msgstr "Các chuyển sắc được dùng trong GIMP."
 
-#: ../src/extension/internal/grid.cpp:192 ../src/ui/widget/panel.cpp:118
+#: ../src/extension/internal/grid.cpp:192 ../src/ui/widget/panel.cpp:132
 msgid "Grid"
 msgstr "Lưới"
 
@@ -3526,7 +3576,7 @@ msgid "PDF Import Settings"
 msgstr "Thiết lập nhập PDF"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:379
-#: ../src/ui/widget/panel.cpp:100
+#: ../src/ui/widget/panel.cpp:114
 msgid "medium"
 msgstr "vừa"
 
@@ -3901,7 +3951,7 @@ msgstr "Ánh sáng long lanh"
 msgid "Tile"
 msgstr "Xếp lát"
 
-#: ../src/filter-enums.cpp:35 ../src/filter-enums.cpp:117
+#: ../src/filter-enums.cpp:35 ../src/filter-enums.cpp:118
 msgid "Turbulence"
 msgstr "Độ hỗn loạn"
 
@@ -3929,143 +3979,147 @@ msgstr "Sơn tô"
 msgid "Stroke Paint"
 msgstr "Sơn nét"
 
-#: ../src/filter-enums.cpp:51 ../src/ui/dialog/inkscape-preferences.cpp:470
-msgid "Normal"
-msgstr "Chuẩn"
-
+#. TRANSLATORS: This is a context string, only put the word "Normal" in your translation
 #: ../src/filter-enums.cpp:52
+msgid "filterBlendMode|Normal"
+msgstr ""
+
+#: ../src/filter-enums.cpp:53
 msgid "Multiply"
 msgstr "Nhân"
 
-#: ../src/filter-enums.cpp:53
+#: ../src/filter-enums.cpp:54
 msgid "Screen"
 msgstr "Màn hình"
 
-#: ../src/filter-enums.cpp:54
+#: ../src/filter-enums.cpp:55
 msgid "Darken"
 msgstr "Tối hơn"
 
-#: ../src/filter-enums.cpp:55
+#: ../src/filter-enums.cpp:56
 msgid "Lighten"
 msgstr "Nhạt hơn"
 
-#: ../src/filter-enums.cpp:61
+#: ../src/filter-enums.cpp:62
 msgid "Matrix"
 msgstr "Ma trận"
 
-#: ../src/filter-enums.cpp:62
+#: ../src/filter-enums.cpp:63
 msgid "Saturate"
 msgstr "Bão hòa"
 
-#: ../src/filter-enums.cpp:63
+#: ../src/filter-enums.cpp:64
 msgid "Hue Rotate"
 msgstr "Xoay sắc màu"
 
-#: ../src/filter-enums.cpp:64
+#: ../src/filter-enums.cpp:65
 msgid "Luminance to Alpha"
 msgstr "Độ sáng tới Alpha"
 
 #. File
-#: ../src/filter-enums.cpp:70 ../src/verbs.cpp:2122
+#: ../src/filter-enums.cpp:71 ../src/verbs.cpp:2122
 msgid "Default"
 msgstr "Mặc định"
 
-#: ../src/filter-enums.cpp:71
+#: ../src/filter-enums.cpp:72
 msgid "Over"
 msgstr "Trên"
 
-#: ../src/filter-enums.cpp:72
+#: ../src/filter-enums.cpp:73
 msgid "In"
 msgstr "Trong"
 
-#: ../src/filter-enums.cpp:73
+#: ../src/filter-enums.cpp:74
 msgid "Out"
 msgstr "Ra"
 
-#: ../src/filter-enums.cpp:74
+#: ../src/filter-enums.cpp:75
 msgid "Atop"
 msgstr "Ở trên"
 
-#: ../src/filter-enums.cpp:75
+#: ../src/filter-enums.cpp:76
 msgid "XOR"
 msgstr "XOR"
 
-#: ../src/filter-enums.cpp:76
+#: ../src/filter-enums.cpp:77
 msgid "Arithmetic"
 msgstr "Số học"
 
-#: ../src/filter-enums.cpp:82
+#: ../src/filter-enums.cpp:83
 msgid "Identity"
 msgstr "Nhân dạng"
 
-#: ../src/filter-enums.cpp:83
+#: ../src/filter-enums.cpp:84
 msgid "Table"
 msgstr "Bảng"
 
-#: ../src/filter-enums.cpp:84
+#: ../src/filter-enums.cpp:85
 msgid "Discrete"
 msgstr "Rời rác"
 
-#: ../src/filter-enums.cpp:85
+#: ../src/filter-enums.cpp:86
 msgid "Linear"
 msgstr "Tuyến"
 
-#: ../src/filter-enums.cpp:86
+#: ../src/filter-enums.cpp:87
 msgid "Gamma"
 msgstr "Gamma γ"
 
-#: ../src/filter-enums.cpp:92 ../src/selection-chemistry.cpp:301
+#: ../src/filter-enums.cpp:93 ../src/selection-chemistry.cpp:301
 #: ../src/widgets/gradient-selector.cpp:134
 msgid "Duplicate"
 msgstr "Nhân đôi"
 
-#: ../src/filter-enums.cpp:93 ../src/ui/widget/panel.cpp:139
+#: ../src/filter-enums.cpp:94 ../src/ui/widget/panel.cpp:153
 msgid "Wrap"
 msgstr "Cuộn"
 
-#: ../src/filter-enums.cpp:100 ../src/flood-context.cpp:250
+#: ../src/filter-enums.cpp:101 ../src/flood-context.cpp:250
+#: ../src/widgets/sp-color-icc-selector.cpp:233
+#: ../src/widgets/sp-color-scales.cpp:398
 #: ../src/widgets/sp-color-scales.cpp:399
-#: ../src/widgets/sp-color-scales.cpp:400
 msgid "Red"
 msgstr "Đỏ"
 
-#: ../src/filter-enums.cpp:101 ../src/flood-context.cpp:251
+#: ../src/filter-enums.cpp:102 ../src/flood-context.cpp:251
+#: ../src/widgets/sp-color-icc-selector.cpp:233
+#: ../src/widgets/sp-color-scales.cpp:401
 #: ../src/widgets/sp-color-scales.cpp:402
-#: ../src/widgets/sp-color-scales.cpp:403
 msgid "Green"
 msgstr "Lục"
 
-#: ../src/filter-enums.cpp:102 ../src/flood-context.cpp:252
+#: ../src/filter-enums.cpp:103 ../src/flood-context.cpp:252
+#: ../src/widgets/sp-color-icc-selector.cpp:233
+#: ../src/widgets/sp-color-scales.cpp:404
 #: ../src/widgets/sp-color-scales.cpp:405
-#: ../src/widgets/sp-color-scales.cpp:406
 msgid "Blue"
 msgstr "Xanh"
 
-#: ../src/filter-enums.cpp:103 ../src/flood-context.cpp:256
+#: ../src/filter-enums.cpp:104 ../src/flood-context.cpp:256
 msgid "Alpha"
 msgstr "Alpha"
 
-#: ../src/filter-enums.cpp:109
+#: ../src/filter-enums.cpp:110
 msgid "Erode"
 msgstr "Xói mòn"
 
-#: ../src/filter-enums.cpp:110
+#: ../src/filter-enums.cpp:111
 msgid "Dilate"
 msgstr "Làm nở"
 
-#: ../src/filter-enums.cpp:116
+#: ../src/filter-enums.cpp:117
 msgid "Fractal Noise"
 msgstr "Nhiễu phân dạng"
 
-#: ../src/filter-enums.cpp:123
+#: ../src/filter-enums.cpp:124
 msgid "Distant Light"
 msgstr "Ánh sáng ở xa"
 
-#: ../src/filter-enums.cpp:124
+#: ../src/filter-enums.cpp:125
 msgid "Point Light"
 msgstr "Ánh sáng điểm"
 
-#: ../src/filter-enums.cpp:125
+#: ../src/filter-enums.cpp:126
 msgid "Spot Light"
 msgstr "Ánh sáng chấm"
 
@@ -4073,8 +4127,9 @@ msgstr "Ánh sáng chấm"
 msgid "Visible Colors"
 msgstr "Màu sắc hiện rõ"
 
-#: ../src/flood-context.cpp:255 ../src/widgets/sp-color-scales.cpp:431
-#: ../src/widgets/sp-color-scales.cpp:432 ../src/widgets/toolbox.cpp:3171
+#: ../src/flood-context.cpp:255 ../src/widgets/sp-color-icc-selector.cpp:236
+#: ../src/widgets/sp-color-scales.cpp:430
+#: ../src/widgets/sp-color-scales.cpp:431 ../src/widgets/toolbox.cpp:3172
 #: ../share/extensions/color_randomize.inx.h:3
 msgid "Lightness"
 msgstr "Độ sáng"
@@ -4096,16 +4151,19 @@ msgid "<b>Too much inset</b>, the result is empty."
 msgstr "<b>Bù quá lớn</b> nên kết quả rỗng."
 
 #: ../src/flood-context.cpp:461
-#, c-format
+#, fuzzy, c-format
 msgid ""
+"Area filled, path with <b>%d</b> node created and unioned with selection."
+msgid_plural ""
 "Area filled, path with <b>%d</b> nodes created and unioned with selection."
-msgstr ""
+msgstr[0] ""
 "Vùng được tô, đường nét có <b>%d</b> nút được tạo và có hợp với vùng chọn."
 
 #: ../src/flood-context.cpp:465
-#, c-format
-msgid "Area filled, path with <b>%d</b> nodes created."
-msgstr "Vùng được tô, đường nét có <b>%d</b> nút được tạo."
+#, fuzzy, c-format
+msgid "Area filled, path with <b>%d</b> node created."
+msgid_plural "Area filled, path with <b>%d</b> nodes created."
+msgstr[0] "Vùng được tô, đường nét có <b>%d</b> nút được tạo."
 
 #: ../src/flood-context.cpp:681 ../src/flood-context.cpp:976
 msgid "<b>Area is not bounded</b>, cannot fill."
@@ -4165,71 +4223,92 @@ msgstr "<b>Tiêu điểm</b> của chuyển sắc tròn"
 msgid "Radial gradient <b>mid stop</b>"
 msgstr "<b>Chỗ dừng ở giữa</b> của chuyển sắc tròn"
 
-#: ../src/gradient-context.cpp:160
+#. TRANSLATORS: %s will be substituted with the point name (see previous messages); This is part of a compound message
+#: ../src/gradient-context.cpp:162
 #, fuzzy, c-format
-msgid "%s selected out of %d gradient handles on %d selected object"
-msgid_plural "%s selected out of %d gradient handles on %d selected objects"
-msgstr[0] ""
-"%s được chọn trên %d chốt kéo của chuyển sắc trên %d đối tượng đã chọn"
+msgid "%s selected"
+msgstr "Chọn cuối"
 
-#: ../src/gradient-context.cpp:163
-#, c-format
+#. TRANSLATORS: Mind the space in front. This is part of a compound message
+#: ../src/gradient-context.cpp:164 ../src/gradient-context.cpp:173
+#, fuzzy, c-format
+msgid " out of %d gradient handle"
+msgid_plural " out of %d gradient handles"
+msgstr[0] "Chuyển chốt chuyển sắc"
+
+#. TRANSLATORS: Mind the space in front. (Refers to gradient handles selected). This is part of a compound message
+#: ../src/gradient-context.cpp:165 ../src/gradient-context.cpp:174
+#: ../src/gradient-context.cpp:181
+#, fuzzy, c-format
+msgid " on %d selected object"
+msgid_plural " on %d selected objects"
+msgstr[0] "Xuất %d đối tượng đã chọn"
+
+#. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
+#: ../src/gradient-context.cpp:171
+#, fuzzy, c-format
 msgid ""
-"One handle merging %d stops (drag with <b>Shift</b> to separate) selected "
-"out of %d gradient handles on %d selected object(s)"
-msgstr ""
+"One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
+msgid_plural ""
+"One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
+msgstr[0] ""
 "Một chốt kéo đang trộn với nhau %d pha (kéo với <b>Shift</b> phân cách) được "
 "chọn trên %d chốt kéo chuyển sắc trên %d đối tượng đã chọn"
 
-#: ../src/gradient-context.cpp:167
-#, c-format
-msgid "<b>%d</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr ""
+#. TRANSLATORS: The plural refers to number of selected gradient handles. This is part of a compound message (part two indicates selected object count)
+#: ../src/gradient-context.cpp:179
+#, fuzzy, c-format
+msgid "<b>%d</b> gradient handle selected out of %d"
+msgid_plural "<b>%d</b> gradient handles selected out of %d"
+msgstr[0] ""
 "<b>%d</b> chốt kéo chuyển sắc được chọn trên %d trên %d đối tượng đã chọn"
 
-#: ../src/gradient-context.cpp:170
-#, c-format
-msgid "<b>No</b> gradient handles selected out of %d on %d selected object(s)"
-msgstr ""
+#. TRANSLATORS: The plural refers to number of selected objects
+#: ../src/gradient-context.cpp:186
+#, fuzzy, c-format
+msgid "<b>No</b> gradient handles selected out of %d on %d selected object"
+msgid_plural ""
+"<b>No</b> gradient handles selected out of %d on %d selected objects"
+msgstr[0] ""
 "<b>Không có</b> chốt kéo chuyển sắc được chọn trên %d trên %d đối tượng đã "
 "chọn"
 
-#: ../src/gradient-context.cpp:368 ../src/gradient-context.cpp:461
+#: ../src/gradient-context.cpp:385 ../src/gradient-context.cpp:478
 #: ../src/widgets/gradient-vector.cpp:735
 msgid "Add gradient stop"
 msgstr "Thêm pha chuyển sắc"
 
-#: ../src/gradient-context.cpp:436
+#: ../src/gradient-context.cpp:453
 msgid "Simplify gradient"
 msgstr "Đơn giản hoá chuyển sắc"
 
-#: ../src/gradient-context.cpp:512
+#: ../src/gradient-context.cpp:529
 msgid "Create default gradient"
 msgstr "Tạo chuyển sắc mặc định"
 
-#: ../src/gradient-context.cpp:565
+#: ../src/gradient-context.cpp:582
 msgid "<b>Draw around</b> handles to select them"
 msgstr "<b>Vẽ vòng quanh</b> chốt kéo để lựa chọn"
 
-#: ../src/gradient-context.cpp:663
+#: ../src/gradient-context.cpp:680
 msgid "<b>Ctrl</b>: snap gradient angle"
 msgstr "<b>Ctrl</b>: đính góc chuyển sắc"
 
-#: ../src/gradient-context.cpp:664
+#: ../src/gradient-context.cpp:681
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Shift</b>: vẽ chuyển sắc vòng quanh điểm bắt đầu"
 
-#: ../src/gradient-context.cpp:784
+#: ../src/gradient-context.cpp:801
 msgid "Invert gradient"
 msgstr "Đảo chuyển sắc"
 
-#: ../src/gradient-context.cpp:893
+#: ../src/gradient-context.cpp:917
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] "<b>Chuyển sắc</b> cho %d đối tượng; giữ <b>Ctrl</b> đính góc"
 
-#: ../src/gradient-context.cpp:897
+#: ../src/gradient-context.cpp:921
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr "Chọn <b>đối tượng</b> trên đó cần tạo chuyển sắc."
 
@@ -4305,8 +4384,8 @@ msgstr "Đơn vị"
 
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:469
-#: ../src/widgets/toolbox.cpp:1145 ../src/widgets/toolbox.cpp:2309
-#: ../src/widgets/toolbox.cpp:5288
+#: ../src/widgets/toolbox.cpp:1146 ../src/widgets/toolbox.cpp:2310
+#: ../src/widgets/toolbox.cpp:5314
 msgid "Units"
 msgstr "Đơn vị"
 
@@ -4318,7 +4397,7 @@ msgstr "Điểm"
 msgid "pt"
 msgstr "pt"
 
-#: ../src/helper/units.cpp:38
+#: ../src/helper/units.cpp:38 ../share/extensions/perfectboundcover.inx.h:16
 msgid "Points"
 msgstr "Điểm"
 
@@ -4670,6 +4749,14 @@ msgstr "Thay thế"
 msgid "_Write session file:"
 msgstr "_Ghi tập tin buổi hợp:"
 
+#: ../src/jabber_whiteboard/pedrogui.cpp:2630
+msgid "Shared SVG whiteboard tool."
+msgstr ""
+
+#: ../src/jabber_whiteboard/pedrogui.cpp:2631
+msgid "Based on the Pedro XMPP client"
+msgstr ""
+
 #: ../src/jabber_whiteboard/session-file-selector.cpp:60
 msgid "Select a location and filename"
 msgstr "Chọn vị trí và tên tập tin"
@@ -4709,6 +4796,421 @@ msgstr "Đổi chốt"
 #: ../src/knotholder.cpp:312
 msgid "Move handle"
 msgstr "Chuyển chốt"
+
+#: ../src/libgdl/gdl-dock-bar.c:108
+#, fuzzy
+msgid "Master"
+msgstr "Tạo ảnh bitmap"
+
+#: ../src/libgdl/gdl-dock-bar.c:109
+msgid "GdlDockMaster object which the dockbar widget is attached to"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-bar.c:116
+#, fuzzy
+msgid "Dockbar style"
+msgstr "Thả neo được"
+
+#: ../src/libgdl/gdl-dock-bar.c:117
+msgid "Dockbar style to show items on it"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item-grip.c:395
+msgid "Iconify"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item-grip.c:395
+msgid "Iconify this dock"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item-grip.c:397
+#, fuzzy
+msgid "Close"
+msgstr "Đón_g"
+
+#: ../src/libgdl/gdl-dock-item-grip.c:397
+#, fuzzy
+msgid "Close this dock"
+msgstr "Đóng cửa sổ tài liệu này"
+
+#: ../src/libgdl/gdl-dock-item-grip.c:706
+#: ../src/libgdl/gdl-dock-tablabel.c:128
+msgid "Controlling dock item"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item-grip.c:707
+msgid "Dockitem which 'owns' this grip"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:287
+#, fuzzy
+msgid "Orientation"
+msgstr "Hướng trang:"
+
+#: ../src/libgdl/gdl-dock-item.c:288
+msgid "Orientation of the docking item"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:303
+msgid "Resizable"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:304
+msgid "If set, the dock item can be resized when docked in a paned"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:311
+#, fuzzy
+msgid "Item behavior"
+msgstr "Phương thức"
+
+#: ../src/libgdl/gdl-dock-item.c:312
+msgid ""
+"General behavior for the dock item (i.e. whether it can float, if it's "
+"locked, etc.)"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:320 ../src/libgdl/gdl-dock-master.c:148
+#, fuzzy
+msgid "Locked"
+msgstr "Kh_oá"
+
+#: ../src/libgdl/gdl-dock-item.c:321
+msgid ""
+"If set, the dock item cannot be dragged around and it doesn't show a grip"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:329
+msgid "Preferred width"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:330
+msgid "Preferred width for the dock item"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:336
+#, fuzzy
+msgid "Preferred height"
+msgstr "Chiều cao làm mờ"
+
+#: ../src/libgdl/gdl-dock-item.c:337
+msgid "Preferred height for the dock item"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:616
+#, c-format
+msgid ""
+"You can't add a dock object (%p of type %s) inside a %s. Use a GdlDock or "
+"some other compound dock object."
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:623
+#, c-format
+msgid ""
+"Attempting to add a widget with type %s to a %s, but it can only contain one "
+"widget at a time; it already contains a widget of type %s"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-item.c:1345 ../src/libgdl/gdl-dock-item.c:1390
+#, c-format
+msgid "Unsupported docking strategy %s in dock object of type %s"
+msgstr ""
+
+#. UnLock menuitem
+#: ../src/libgdl/gdl-dock-item.c:1479
+#, fuzzy
+msgid "UnLock"
+msgstr "Kh_oá"
+
+#. Hide menuitem.
+#: ../src/libgdl/gdl-dock-item.c:1486
+#, fuzzy
+msgid "Hide"
+msgstr "Ẩ_n"
+
+#. Lock menuitem
+#: ../src/libgdl/gdl-dock-item.c:1491
+#, fuzzy
+msgid "Lock"
+msgstr "Kh_oá"
+
+#: ../src/libgdl/gdl-dock-item.c:1717
+#, c-format
+msgid "Attempt to bind an unbound item %p"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:141 ../src/libgdl/gdl-dock.c:183
+#, fuzzy
+msgid "Default title"
+msgstr "Đơn _vị mặc định:"
+
+#: ../src/libgdl/gdl-dock-master.c:142
+msgid "Default title for newly created floating docks"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:149
+msgid ""
+"If is set to 1, all the dock items bound to the master are locked; if it's "
+"0, all are unlocked; -1 indicates inconsistency among the items"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:157 ../src/libgdl/gdl-switcher.c:707
+#, fuzzy
+msgid "Switcher Style"
+msgstr "Khâu các đá lát"
+
+#: ../src/libgdl/gdl-dock-master.c:158 ../src/libgdl/gdl-switcher.c:708
+#, fuzzy
+msgid "Switcher buttons style"
+msgstr "Đã chuyển tới lớp kế."
+
+#: ../src/libgdl/gdl-dock-master.c:165
+#, fuzzy
+msgid "Expand direction"
+msgstr "Tăng khoảng cách dòng"
+
+#: ../src/libgdl/gdl-dock-master.c:166
+msgid ""
+"Allow the master's dock items to expand their container dock objects in the "
+"given direction"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:781
+#, c-format
+msgid ""
+"master %p: unable to add object %p[%s] to the hash.  There already is an "
+"item with that name (%p)."
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-master.c:954
+#, c-format
+msgid ""
+"The new dock controller %p is automatic.  Only manual dock objects should be "
+"named controller."
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-notebook.c:134
+#: ../src/ui/dialog/align-and-distribute.cpp:907
+#: ../src/ui/dialog/document-properties.cpp:129
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1427
+#: ../src/widgets/desktop-widget.cpp:1527
+msgid "Page"
+msgstr "Trang"
+
+#: ../src/libgdl/gdl-dock-notebook.c:135
+#, fuzzy
+msgid "The index of the current page"
+msgstr "Thay đổi tên của lớp hiện tại"
+
+#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:195
+msgid "Name"
+msgstr "Tên"
+
+#: ../src/libgdl/gdl-dock-object.c:121
+msgid "Unique name for identifying the dock object"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:128
+#, fuzzy
+msgid "Long name"
+msgstr "Đen"
+
+#: ../src/libgdl/gdl-dock-object.c:129
+#, fuzzy
+msgid "Human readable name for the dock object"
+msgstr "Nhãn hình tự do cho đối tượng"
+
+#: ../src/libgdl/gdl-dock-object.c:135
+#, fuzzy
+msgid "Stock Icon"
+msgstr "Xếp đống đồ quét"
+
+#: ../src/libgdl/gdl-dock-object.c:136
+msgid "Stock icon for the dock object"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:142
+msgid "Pixbuf Icon"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:143
+msgid "Pixbuf icon for the dock object"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:148
+#, fuzzy
+msgid "Dock master"
+msgstr "Khoá lớp"
+
+#: ../src/libgdl/gdl-dock-object.c:149
+msgid "Dock master this dock object is bound to"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:434
+#, c-format
+msgid ""
+"Call to gdl_dock_object_dock in a dock object %p (object type is %s) which "
+"hasn't implemented this method"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:563
+#, c-format
+msgid ""
+"Dock operation requested in a non-bound object %p. The application might "
+"crash"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:570
+#, c-format
+msgid "Cannot dock %p to %p because they belong to different masters"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:612
+#, c-format
+msgid ""
+"Attempt to bind to %p an already bound dock object %p (current master: %p)"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-paned.c:132
+#, fuzzy
+msgid "Position"
+msgstr "Vị trí:"
+
+#: ../src/libgdl/gdl-dock-paned.c:133
+msgid "Position of the divider in pixels"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:143
+#, fuzzy
+msgid "Sticky"
+msgstr "tí tị"
+
+#: ../src/libgdl/gdl-dock-placeholder.c:144
+msgid ""
+"Whether the placeholder will stick to its host or move up the hierarchy when "
+"the host is redocked"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:151
+#, fuzzy
+msgid "Host"
+msgstr "dời ra"
+
+#: ../src/libgdl/gdl-dock-placeholder.c:152
+msgid "The dock object this placeholder is attached to"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:159
+#, fuzzy
+msgid "Next placement"
+msgstr "Bố trí bánh răng"
+
+#: ../src/libgdl/gdl-dock-placeholder.c:160
+msgid ""
+"The position an item will be docked to our host if a request is made to dock "
+"to us"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:170
+msgid "Width for the widget when it's attached to the placeholder"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:178
+msgid "Height for the widget when it's attached to the placeholder"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:184
+#, fuzzy
+msgid "Floating Toplevel"
+msgstr "Nổi"
+
+#: ../src/libgdl/gdl-dock-placeholder.c:185
+msgid "Whether the placeholder is standing in for a floating toplevel dock"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:191
+#, fuzzy
+msgid "X-Coordinate"
+msgstr "Toạ độ con trỏ"
+
+#: ../src/libgdl/gdl-dock-placeholder.c:192
+msgid "X-Coordinate fow dock when floating"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:198
+#, fuzzy
+msgid "Y-Coordinate"
+msgstr "Toạ độ con trỏ"
+
+#: ../src/libgdl/gdl-dock-placeholder.c:199
+msgid "Y-Coordinate fow dock when floating"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:494
+msgid "Attempt to dock a dock object to an unbound placeholder"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:618
+#, c-format
+msgid "Got a detach signal from an object (%p) who is not our host %p"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-placeholder.c:643
+#, c-format
+msgid ""
+"Something weird happened while getting the child placement for %p from "
+"parent %p"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-tablabel.c:129
+msgid "Dockitem which 'owns' this tablabel"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:175 ../src/ui/dialog/inkscape-preferences.cpp:464
+#: ../src/ui/dialog/inkscape-preferences.cpp:490
+msgid "Floating"
+msgstr "Nổi"
+
+#: ../src/libgdl/gdl-dock.c:176
+msgid "Whether the dock is floating in its own window"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:184
+msgid "Default title for the newly created floating docks"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:191
+msgid "Width for the dock when it's of floating type"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:199
+msgid "Height for the dock when it's of floating type"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock.c:206
+#, fuzzy
+msgid "Float X"
+msgstr "Nổi"
+
+#: ../src/libgdl/gdl-dock.c:207
+#, fuzzy
+msgid "X coordinate for a floating dock"
+msgstr "Toạ độ X của gốc lưới"
+
+#: ../src/libgdl/gdl-dock.c:214
+#, fuzzy
+msgid "Float Y"
+msgstr "Nổi"
+
+#: ../src/libgdl/gdl-dock.c:215
+#, fuzzy
+msgid "Y coordinate for a floating dock"
+msgstr "Toạ độ Y của gốc lưới"
+
+#: ../src/libgdl/gdl-dock.c:499
+#, c-format
+msgid "Dock #%d"
+msgstr ""
 
 #: ../src/libnrtype/FontFactory.cpp:774
 msgid "Ignoring font without family that will crash Pango"
@@ -4858,6 +5360,40 @@ msgstr "Co giãn chiều rộng tương đối"
 msgid "Scale the width of the stroke path relative to its length"
 msgstr "Co giãn chiều rộng của đường nét nét tương đối so với chiều dài của nó"
 
+#: ../src/live_effects/lpe-pathalongpath.cpp:57
+#, fuzzy
+msgid "Bend path"
+msgstr "Uốn đường nét"
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:57
+#, fuzzy
+msgid "Path along which to bend the original path"
+msgstr "Tạo một đối tượng mở rộng/co rút được liên kết đến đường nét gốc"
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:58
+#, fuzzy
+msgid "Width of the path"
+msgstr "Chiều rộng của mẫu"
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:59
+#: ../src/live_effects/lpe-skeletalstrokes.cpp:65
+msgid "Width in units of length"
+msgstr "Chiều rộng theo đơn vị chiều dài"
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:59
+#, fuzzy
+msgid "Scale the width of the path in units of its length"
+msgstr "Co giãn chiều rộng của mẫu theo đơn vị chiều dài của nó"
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:60
+#, fuzzy
+msgid "Original path is vertical"
+msgstr "Mẫu theo chiều dọc"
+
+#: ../src/live_effects/lpe-pathalongpath.cpp:60
+msgid "Rotates the original 90 degrees, before bending it along the bend path"
+msgstr ""
+
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:53
 msgid "Single"
 msgstr "Đơn"
@@ -4895,10 +5431,6 @@ msgid "Width of the pattern"
 msgstr "Chiều rộng của mẫu"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:65
-msgid "Width in units of length"
-msgstr "Chiều rộng theo đơn vị chiều dài"
-
-#: ../src/live_effects/lpe-skeletalstrokes.cpp:65
 msgid "Scale the width of the pattern in units of its length"
 msgstr "Co giãn chiều rộng của mẫu theo đơn vị chiều dài của nó"
 
@@ -4924,6 +5456,28 @@ msgstr "Độ dịch tiếp tuyến"
 #: ../share/extensions/pathalongpath.inx.h:7
 msgid "Pattern is vertical"
 msgstr "Mẫu theo chiều dọc"
+
+#: ../src/live_effects/lpe-slant.cpp:18
+#, fuzzy
+msgid "Slant factor"
+msgstr "Màu phẳng"
+
+#: ../src/live_effects/lpe-slant.cpp:18
+msgid "y = y + x*(slant factor)"
+msgstr ""
+
+#: ../src/live_effects/lpe-slant.cpp:19 ../src/widgets/toolbox.cpp:4842
+msgid "Center"
+msgstr "Giữa lại"
+
+#: ../src/live_effects/lpe-slant.cpp:19
+msgid "The x-coord of this point is around which the slant will happen"
+msgstr ""
+
+#: ../src/live_effects/lpe-test-doEffect-stack.cpp:21
+#, fuzzy
+msgid "Stack step"
+msgstr "Xếp đống đồ quét"
 
 #: ../src/live_effects/parameter/parameter.cpp:138
 msgid "Change scalar parameter"
@@ -5009,7 +5563,7 @@ msgstr "Xuất khẩu tài liệu vào tập tin PNG"
 msgid "The resolution used for exporting SVG into bitmap (default 90)"
 msgstr "Độ phân giải được dùng để xuất SVG sang ảnh bitmap (mặc định 90)"
 
-#: ../src/main.cpp:249
+#: ../src/main.cpp:249 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
 msgstr "DPI"
 
@@ -5822,6 +6376,16 @@ msgstr "<b>Kéo</b> tiếp tục đường nét từ điểm này."
 msgid "Finishing freehand"
 msgstr "Đang vẽ xong bằng tay"
 
+#: ../src/persp3d.cpp:337
+#, fuzzy
+msgid "Toggle vanishing point"
+msgstr "Đang tạo điểm đơn"
+
+#: ../src/persp3d.cpp:348
+#, fuzzy
+msgid "Toggle multiple vanishing points"
+msgstr "Đang tạo điểm đơn"
+
 #: ../src/preferences.cpp:59
 #, c-format
 msgid ""
@@ -5941,7 +6505,7 @@ msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Chưa</b> xoá gì."
 
 #: ../src/selection-chemistry.cpp:261 ../src/text-context.cpp:995
-#: ../src/widgets/toolbox.cpp:990
+#: ../src/widgets/toolbox.cpp:991
 msgid "Delete"
 msgstr "Xóa"
 
@@ -6111,7 +6675,7 @@ msgid "Rotate by pixels"
 msgstr "Xoay theo điểm ảnh"
 
 #: ../src/selection-chemistry.cpp:1926 ../src/seltrans.cpp:431
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2138
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2182
 #: ../src/ui/dialog/transformation.cpp:666
 msgid "Scale"
 msgstr "Co giãn"
@@ -6191,87 +6755,87 @@ msgstr ""
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr "Chọn <b>đối tượng</b> chuyển thành hình nút."
 
-#: ../src/selection-chemistry.cpp:2490
+#: ../src/selection-chemistry.cpp:2491
 msgid "Objects to marker"
 msgstr "Đối tượng thành hình nút"
 
-#: ../src/selection-chemistry.cpp:2519
+#: ../src/selection-chemistry.cpp:2520
 #, fuzzy
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr "Chọn <b>đối tượng</b> chuyển thành hình nút."
 
-#: ../src/selection-chemistry.cpp:2529
+#: ../src/selection-chemistry.cpp:2530
 #, fuzzy
 msgid "Objects to guides"
 msgstr "Đối tượng thành hình nút"
 
-#: ../src/selection-chemistry.cpp:2546
+#: ../src/selection-chemistry.cpp:2547
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Chọn (các) <b>đối tượng</b> cần chuyển đổi sang mẫu."
 
-#: ../src/selection-chemistry.cpp:2631
+#: ../src/selection-chemistry.cpp:2632
 msgid "Objects to pattern"
 msgstr "Đối tượng sang mẫu"
 
-#: ../src/selection-chemistry.cpp:2648
+#: ../src/selection-chemistry.cpp:2649
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr "Chọn một <b>đối tượng có mẫu tô</b> ra đó cần trích đối tượng."
 
-#: ../src/selection-chemistry.cpp:2701
+#: ../src/selection-chemistry.cpp:2702
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "Trong vùng chọn, <b>không có mẫu tô</b>."
 
-#: ../src/selection-chemistry.cpp:2704
+#: ../src/selection-chemistry.cpp:2705
 msgid "Pattern to objects"
 msgstr "Mẫu sang đối tượng"
 
-#: ../src/selection-chemistry.cpp:2790
+#: ../src/selection-chemistry.cpp:2791
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Chọn (các) <b>đối tượng</b> tạo một bản sao ảnh bitmap."
 
-#: ../src/selection-chemistry.cpp:2951
+#: ../src/selection-chemistry.cpp:2952
 msgid "Create bitmap"
 msgstr "Tạo ảnh bitmap"
 
-#: ../src/selection-chemistry.cpp:2984
+#: ../src/selection-chemistry.cpp:2985
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Chọn (các) <b>đối tượng</b> từ đó cần tạo đường nét xén hay mặt nạ."
 
-#: ../src/selection-chemistry.cpp:2987
+#: ../src/selection-chemistry.cpp:2988
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 "Chọn đối tượng mặt nạ và (các) <b>đối tượng</b> cho đó cần áp dụng đường nét "
 "xén hay mặt nạ."
 
-#: ../src/selection-chemistry.cpp:3093
+#: ../src/selection-chemistry.cpp:3094
 msgid "Set clipping path"
 msgstr "Đặt đường nét xén"
 
-#: ../src/selection-chemistry.cpp:3095
+#: ../src/selection-chemistry.cpp:3096
 msgid "Set mask"
 msgstr "Đặt mặt nạ"
 
-#: ../src/selection-chemistry.cpp:3109
+#: ../src/selection-chemistry.cpp:3110
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Chọn (các) <b>đối tượng</b> từ đó cần gỡ bỏ đường nét xén hay mặt nạ."
 
-#: ../src/selection-chemistry.cpp:3177
+#: ../src/selection-chemistry.cpp:3178
 msgid "Release clipping path"
 msgstr "Buông đường nét xén"
 
-#: ../src/selection-chemistry.cpp:3179
+#: ../src/selection-chemistry.cpp:3180
 msgid "Release mask"
 msgstr "Buông mặt nạ"
 
-#: ../src/selection-chemistry.cpp:3190
+#: ../src/selection-chemistry.cpp:3191
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr "Chọn (các) <b>đối tượng</b> vào đó cần vừa vùng vẽ."
 
-#: ../src/selection-chemistry.cpp:3224
+#: ../src/selection-chemistry.cpp:3225
 msgid "Fit page to selection"
 msgstr "Vừa trang khít vùng chọn"
 
-#: ../src/selection-describer.cpp:42
+#: ../src/selection-describer.cpp:42 ../src/ui/widget/spin-slider.cpp:113
 msgid "Link"
 msgstr "Liên kết"
 
@@ -6297,7 +6861,7 @@ msgstr "Đường"
 msgid "Path"
 msgstr "Đường nét"
 
-#: ../src/selection-describer.cpp:58 ../src/widgets/toolbox.cpp:1882
+#: ../src/selection-describer.cpp:58 ../src/widgets/toolbox.cpp:1883
 msgid "Polygon"
 msgstr "Đa giác"
 
@@ -6334,7 +6898,7 @@ msgstr "Xoắn ốc"
 #. star
 #: ../src/selection-describer.cpp:78
 #: ../src/ui/dialog/inkscape-preferences.cpp:407 ../src/verbs.cpp:2380
-#: ../src/widgets/toolbox.cpp:1889
+#: ../src/widgets/toolbox.cpp:1890
 msgid "Star"
 msgstr "Sao"
 
@@ -6730,6 +7294,16 @@ msgstr "<b>Văn bản trên đường nét</b> (%s, %s)"
 #, c-format
 msgid "<b>Text</b> (%s, %s)"
 msgstr "<b>Văn bản</b> (%s, %s)"
+
+#: ../src/sp-tref.cpp:359
+#, fuzzy, c-format
+msgid "<b>Cloned character data</b> from: %s"
+msgstr "<b>Bản sao</b> của: %s"
+
+#: ../src/sp-tref.cpp:363
+#, fuzzy
+msgid "<b>Orphaned cloned character data</b>"
+msgstr "<b>Bản sao thừa</b>"
 
 #: ../src/sp-tspan.cpp:285
 msgid "<b>Text span</b>"
@@ -7141,6 +7715,10 @@ msgstr "<b>Nhấn</b> chọn hay tạo văn bản, <b>kéo</b> tạo khung văn 
 msgid "Type text"
 msgstr "Gõ văn bản"
 
+#: ../src/text-editing.cpp:40
+msgid "You cannot edit <b>cloned character data</b>."
+msgstr ""
+
 #: ../src/tools-switch.cpp:148
 msgid ""
 "To edit a path, <b>click</b>, <b>Shift+click</b>, or <b>drag around</b> "
@@ -7496,7 +8074,7 @@ msgstr "Khe tối thiểu theo chiều ngang (theo điểm ảnh) giữa hai h�
 
 #. TRANSLATORS: Horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:467
-#: ../src/widgets/toolbox.cpp:2265
+#: ../src/widgets/toolbox.cpp:2266
 msgid "H:"
 msgstr "N:"
 
@@ -7511,12 +8089,12 @@ msgstr "D:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:505
 #: ../src/ui/dialog/align-and-distribute.cpp:782
-#: ../src/widgets/toolbox.cpp:5156
+#: ../src/widgets/toolbox.cpp:5182
 msgid "Remove overlaps"
 msgstr "Gỡ bỏ chỗ chồng chéo"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:535
-#: ../src/widgets/toolbox.cpp:5016
+#: ../src/widgets/toolbox.cpp:5042
 msgid "Arrange connector network"
 msgstr "Sắp đặt mạng đường nối"
 
@@ -7653,7 +8231,7 @@ msgstr ""
 "nhau"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:884
-#: ../src/widgets/toolbox.cpp:5118
+#: ../src/widgets/toolbox.cpp:5144
 msgid "Nicely arrange selected connector network"
 msgstr "Sắp đặt hợp lý mạng đường nối đã chọn"
 
@@ -7689,13 +8267,6 @@ msgstr "Mục lớn nhất"
 #: ../src/ui/dialog/align-and-distribute.cpp:906
 msgid "Smallest item"
 msgstr "Mục nhỏ nhất"
-
-#: ../src/ui/dialog/align-and-distribute.cpp:907
-#: ../src/ui/dialog/document-properties.cpp:129
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1427
-#: ../src/widgets/desktop-widget.cpp:1527
-msgid "Page"
-msgstr "Trang"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:908
 #: ../src/widgets/desktop-widget.cpp:1531
@@ -7944,7 +8515,7 @@ msgid "Guides"
 msgstr "Đường gióng"
 
 #: ../src/ui/dialog/document-properties.cpp:131
-#: ../src/ui/dialog/inkscape-preferences.cpp:875
+#: ../src/ui/dialog/inkscape-preferences.cpp:879
 msgid "Grids"
 msgstr "Lưới"
 
@@ -8234,268 +8805,292 @@ msgid "Stroke st_yle"
 msgstr "_Kiểu nét"
 
 #. pack_start(_fromSVGElement, false, false);
-#: ../src/ui/dialog/filter-effects-dialog.cpp:567
+#: ../src/ui/dialog/filter-effects-dialog.cpp:583
 #, fuzzy
 msgid "Image File"
 msgstr "Ảnh"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:570
+#: ../src/ui/dialog/filter-effects-dialog.cpp:586
 #, fuzzy
 msgid "Selected SVG Element"
 msgstr "Xoá đoạn"
 
 #. TODO: any image, not justy svg
-#: ../src/ui/dialog/filter-effects-dialog.cpp:637
+#: ../src/ui/dialog/filter-effects-dialog.cpp:655
 #, fuzzy
 msgid "Select an image to be used as feImage input"
 msgstr "Chọn một ảnh và một hay nhiều hình bên trên nó"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:897
+#: ../src/ui/dialog/filter-effects-dialog.cpp:747
+msgid "This SVG filter effect is not yet implemented in Inkscape."
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:927
 msgid "Light Source:"
 msgstr "Nguồn ánh sáng:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:918
-#: ../src/ui/dialog/filter-effects-dialog.cpp:921
+#. default x:
+#. default y:
+#. default z:
+#: ../src/ui/dialog/filter-effects-dialog.cpp:948
+#: ../src/ui/dialog/filter-effects-dialog.cpp:951
 msgid "Location"
 msgstr "Vị trí"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:923
+#: ../src/ui/dialog/filter-effects-dialog.cpp:954
 msgid "Points At"
 msgstr "Điểm ở"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:924
+#: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Specular Exponent"
 msgstr "Luỹ thừa phản chiếu"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:925
+#: ../src/ui/dialog/filter-effects-dialog.cpp:956
 msgid "Cone Angle"
 msgstr "Góc nón"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:985
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1016
 msgid "New light source"
 msgstr "Nguồn ánh sáng mới"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1026
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1057
 msgid "_Duplicate"
 msgstr "_Nhân đôi"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1052
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1083
 msgid "_Filter"
 msgstr "_Lọc"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1066
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1097
 msgid "R_ename"
 msgstr "Tha_y tên"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1191
 msgid "Rename filter"
 msgstr "Thay tên bộ lọc"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1196
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1227
 msgid "Apply filter"
 msgstr "Áp dụng bộ lọc"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1271
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1303
 msgid "Add filter"
 msgstr "Thêm bộ lọc"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1282
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1314
 msgid "Remove filter"
 msgstr "Bỏ bộ lọc"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1297
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1329
 msgid "Duplicate filter"
 msgstr "Nhân đôi bộ lọc"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1364
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1396
 msgid "_Effect"
 msgstr "_Hiệu ứng"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1372
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1404
 msgid "Connections"
 msgstr "Đường nối"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1488
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1520
 msgid "Remove filter primitive"
 msgstr "Bỏ bộ lọc có sẵn"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1859
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1891
 msgid "Remove merge node"
 msgstr "Bỏ nút trộn"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1975
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2007
 msgid "Reorder filter primitive"
 msgstr "Sắp xếp lại bộ lọc có sẵn"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2011
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2043
 msgid "Add Effect:"
 msgstr "Thêm hiệu ứng:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2012
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2044
 msgid "No effect selected"
 msgstr "Chưa chọn hiệu ứng"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2029
-msgid "<b>Effect parameters</b>"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2045
+#, fuzzy
+msgid "No filter selected"
+msgstr "Chưa chọn hiệu ứng"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2080
+#, fuzzy
+msgid "Effect parameters"
 msgstr "<b>Tham số hiệu ứng</b>"
 
-#. # end multiple scan
-#. ## end mode page
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2097
-#: ../src/ui/dialog/tracedialog.cpp:553 ../src/widgets/toolbox.cpp:3112
-msgid "Mode"
-msgstr "Chế độ"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2081
+msgid "Filter General Settings"
+msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2101
-msgid "Value(s)"
-msgstr "Giá trị"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2114
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2150
-msgid "Operator"
-msgstr "Toán tử"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2115
-msgid "K1"
-msgstr "K1"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2116
-msgid "K2"
-msgstr "K2"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2117
-msgid "K3"
-msgstr "K3"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2118
-msgid "K4"
-msgstr "K4"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2122
-msgid "Target"
-msgstr "Đích"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2123
-msgid "Kernel"
-msgstr "Hạt"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2125
-msgid "Divisor"
-msgstr "Ước số"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2126
-msgid "Bias"
-msgstr "Khuynh hướng"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2127
-msgid "Edge Mode"
-msgstr "Chế độ cạnh"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2128
-msgid "Preserve Alpha"
-msgstr "Bảo tồn Alpha"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2131
-msgid "Diffuse Color"
-msgstr "Khuếch tán màu"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2132
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2164
-msgid "Surface Scale"
-msgstr "Tỷ lệ mặt"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2133
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
-msgid "Constant"
-msgstr "Hằng"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2134
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
-msgid "Kernel Unit Length"
-msgstr "Chiều dài đơn vị hạt"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2139
-msgid "X Channel"
-msgstr "Kênh X"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2140
-msgid "Y Channel"
-msgstr "Kênh Y"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2143
-msgid "Flood Color"
-msgstr "Màu tràn ngập"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2147
-msgid "Standard Deviation"
-msgstr "Độ lệch chuẩn"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2154
-#, fuzzy
-msgid "Source of Image"
-msgstr "Số trang"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2155
+#. default x:
+#. default y:
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2137
 #, fuzzy
 msgid "Coordinates"
 msgstr "Toạ độ con trỏ"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2156
+#. default width:
+#. default height:
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2138
+#: ../share/extensions/dimension.inx.h:1
 #, fuzzy
 msgid "Dimensions"
 msgstr "Chia"
 
+#. # end multiple scan
+#. ## end mode page
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2141
+#: ../src/ui/dialog/tracedialog.cpp:553 ../src/widgets/toolbox.cpp:3113
+msgid "Mode"
+msgstr "Chế độ"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2145
+msgid "Value(s)"
+msgstr "Giá trị"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2158
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
+msgid "Operator"
+msgstr "Toán tử"
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2159
+msgid "K1"
+msgstr "K1"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+msgid "K2"
+msgstr "K2"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
+msgid "K3"
+msgstr "K3"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
+msgid "K4"
+msgstr "K4"
+
+#. default x:
+#. default y:
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
+msgid "Target"
+msgstr "Đích"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
+msgid "Kernel"
+msgstr "Hạt"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2169
+msgid "Divisor"
+msgstr "Ước số"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2170
+msgid "Bias"
+msgstr "Khuynh hướng"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2171
+msgid "Edge Mode"
+msgstr "Chế độ cạnh"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2172
+msgid "Preserve Alpha"
+msgstr "Bảo tồn Alpha"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2175
+msgid "Diffuse Color"
+msgstr "Khuếch tán màu"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2176
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2206
+msgid "Surface Scale"
+msgstr "Tỷ lệ mặt"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2177
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+msgid "Constant"
+msgstr "Hằng"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2178
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
+msgid "Kernel Unit Length"
+msgstr "Chiều dài đơn vị hạt"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2183
+msgid "X Channel"
+msgstr "Kênh X"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2184
+msgid "Y Channel"
+msgstr "Kênh Y"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2187
+msgid "Flood Color"
+msgstr "Màu tràn ngập"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
+msgid "Standard Deviation"
+msgstr "Độ lệch chuẩn"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
+#, fuzzy
+msgid "Source of Image"
+msgstr "Số trang"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
 msgid "Delta X"
 msgstr "δx"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 msgid "Delta Y"
 msgstr "δy"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2163
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2205
 msgid "Specular Color"
 msgstr "Màu long lanh"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
 #: ../share/extensions/interp.inx.h:2
 msgid "Exponent"
 msgstr "Luỹ thừa"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2174
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
 msgid "Stitch Tiles"
 msgstr "Khâu các đá lát"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2176
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2218
 msgid "Base Frequency"
 msgstr "Tần số cơ bản"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2177
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2219
 msgid "Octaves"
 msgstr "Quãng tám"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2178
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2220
 msgid "Seed"
 msgstr "Hạt"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2232
 msgid "Add filter primitive"
 msgstr "Thêm bộ lọc có sẵn"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2199
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2248
 msgid ""
 "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, "
 "multiply, darken and lighten."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2252
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "colour of each rendered pixel. This allows for effects like turning object "
 "to grayscale, modifying colour saturation and changing colour hue."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2256
 msgid ""
 "The <b>feComponentTransfer</b> filter primitive manipulates the input's "
 "color components (red, green, blue, and alpha) according to particular "
@@ -8503,7 +9098,7 @@ msgid ""
 "adjustment, color balance, and thresholding."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2211
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2260
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
 "the Porter-Duff blending modes or the aritmetic mode described in SVG "
@@ -8511,7 +9106,7 @@ msgid ""
 "between the corresponding pixel values of the images."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2264
 msgid ""
 "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on "
 "the image. Common effects created using convolution matrices are blur, "
@@ -8520,7 +9115,7 @@ msgid ""
 "is faster and resolution-independent."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2219
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2268
 msgid ""
 "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
@@ -8528,7 +9123,7 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2272
 msgid ""
 "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the "
 "first input using the second input as a displacement map, that shows from "
@@ -8536,26 +9131,26 @@ msgid ""
 "effects."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2227
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2276
 msgid ""
 "The <b>feFlood</b> filter primitive fills the region with a given color and "
 "opacity.  It is usually used as an input to other filters to apply color to "
 "a graphic."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2280
 msgid ""
 "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is "
 "commonly used together with feOffset to create a drop shadow effect."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2284
 msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2239
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2288
 msgid ""
 "The <b>feMerge</b> filter primitive composites several temporary images "
 "inside the filter primitive to a single image. It uses normal alpha "
@@ -8563,21 +9158,21 @@ msgid ""
 "in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2243
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2292
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
 "For single-colour objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2247
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2296
 msgid ""
 "The <b>feOffset</b> filter primitive offsets the image by an user-defined "
 "amount. For example, this is useful for drop shadows, where the shadow is in "
 "a slightly different position than the actual object."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2251
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2300
 msgid ""
 "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
@@ -8585,23 +9180,23 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2255
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2304
 msgid ""
 "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2259
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2308
 msgid ""
 "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of "
 "noise is useful in simulating several nature phenomena like clouds, fire and "
 "smoke and in generating complex textures like marble or granite."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2274
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2326
 msgid "Duplicate filter primitive"
 msgstr "Nhân đôi bộ lọc có sẵn"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2313
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2379
 msgid "Set filter primitive attribute"
 msgstr "Đặt thuộc tính về bộ lọc có sẵn"
 
@@ -8714,7 +9309,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:178
 #: ../src/ui/dialog/tracedialog.cpp:410 ../src/ui/dialog/tracedialog.cpp:443
-#: ../src/ui/dialog/tracedialog.cpp:586 ../src/widgets/toolbox.cpp:5271
+#: ../src/ui/dialog/tracedialog.cpp:586 ../src/widgets/toolbox.cpp:5297
 msgid "Threshold:"
 msgstr "Ngưỡng:"
 
@@ -9135,11 +9730,6 @@ msgstr "Đừng lưu kích cỡ và vị trí của cửa sổ"
 msgid "Dockable"
 msgstr "Thả neo được"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:464
-#: ../src/ui/dialog/inkscape-preferences.cpp:490
-msgid "Floating"
-msgstr "Nổi"
-
 #: ../src/ui/dialog/inkscape-preferences.cpp:466
 msgid "Dialogs are hidden in taskbar"
 msgstr "Hộp thoại bị ẩn trên thanh tác vụ"
@@ -9151,6 +9741,10 @@ msgstr "Thu phóng khi cửa sổ thay đổi kích cỡ"
 #: ../src/ui/dialog/inkscape-preferences.cpp:468
 msgid "Show close button on dialogs"
 msgstr "Hiện nút đóng trên hộp thoại"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:470
+msgid "Normal"
+msgstr "Chuẩn"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:471
 msgid "Aggressive"
@@ -9441,52 +10035,63 @@ msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr "Chất lượng thấp nhất (nhiều đồ tạo tác), còn trình bày nhanh nhất"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:608
+#, fuzzy
+msgid "Show filter primitives infobox"
+msgstr "Đặt thuộc tính về bộ lọc có sẵn"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:610
+msgid ""
+"Show icons and descriptions for the filter primitives available at the "
+"filter effects dialog."
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:612
 msgid "Filters"
 msgstr "Bộ lọc"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:614
+#: ../src/ui/dialog/inkscape-preferences.cpp:618
 msgid "Select in all layers"
 msgstr "Chọn trong mỗi lớp"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:615
+#: ../src/ui/dialog/inkscape-preferences.cpp:619
 msgid "Select only within current layer"
 msgstr "Chọn chỉ trong lớp hiện tại"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:616
+#: ../src/ui/dialog/inkscape-preferences.cpp:620
 msgid "Select in current layer and sublayers"
 msgstr "Chọn trong lớp hiện tại và các lớp phụ"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:617
+#: ../src/ui/dialog/inkscape-preferences.cpp:621
 #, fuzzy
 msgid "Ignore hidden objects and layers"
 msgstr "Bỏ qua đối tượng bị ẩn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:618
+#: ../src/ui/dialog/inkscape-preferences.cpp:622
 #, fuzzy
 msgid "Ignore locked objects and layers"
 msgstr "Bỏ qua đối tượng bị khoá"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:619
+#: ../src/ui/dialog/inkscape-preferences.cpp:623
 msgid "Deselect upon layer change"
 msgstr "Bỏ chọn khi lớp thay đổi"
 
 # Literal: don't translate / Nghĩa chữ: đừng dịch
-#: ../src/ui/dialog/inkscape-preferences.cpp:621
+#: ../src/ui/dialog/inkscape-preferences.cpp:625
 msgid "Ctrl+A, Tab, Shift+Tab:"
 msgstr "Ctrl+A, Tab, Shift+Tab:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:623
+#: ../src/ui/dialog/inkscape-preferences.cpp:627
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr ""
 "Làm cho các lệnh chọn bàn phím hoạt có tác động đối tượng nằm trên mọi lớp"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:625
+#: ../src/ui/dialog/inkscape-preferences.cpp:629
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr ""
 "Làm cho các lệnh chọn bàn phím có tác động chỉ đối tượng nằm trên lớp hiện "
 "tại"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:627
+#: ../src/ui/dialog/inkscape-preferences.cpp:631
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
 "its sublayers"
@@ -9494,7 +10099,7 @@ msgstr ""
 "Làm cho các lệnh chọn bàn phím có tác động đối tượng nằm trên lớp hiện tại "
 "và các lớp phụ của nó"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:629
+#: ../src/ui/dialog/inkscape-preferences.cpp:633
 #, fuzzy
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
@@ -9503,7 +10108,7 @@ msgstr ""
 "Bỏ chọn để có khả năng chọn đối tượng bị ẩn (hoặc riêng hoặc vì nằm trong "
 "nhóm hay lớp bị ẩn)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:631
+#: ../src/ui/dialog/inkscape-preferences.cpp:635
 #, fuzzy
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
@@ -9512,7 +10117,7 @@ msgstr ""
 "Bỏ chọn để có khả năng chọn đối tượng bị khoá (hoặc riêng hoặc vì nằm trong "
 "nhóm hay lớp bị khoá)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:634
+#: ../src/ui/dialog/inkscape-preferences.cpp:638
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
@@ -9520,25 +10125,25 @@ msgstr ""
 "Bỏ chọn để có khả năng cứ chọn các đối tượng hiện thời khi lớp hiện tại thay "
 "đổi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:636
+#: ../src/ui/dialog/inkscape-preferences.cpp:640
 msgid "Selecting"
 msgstr "Lựa chọn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:643
+#: ../src/ui/dialog/inkscape-preferences.cpp:647
 msgid "Default export resolution:"
 msgstr "Độ phân giải xuất mặc định:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:644
+#: ../src/ui/dialog/inkscape-preferences.cpp:648
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr ""
 "Độ phân giải ảnh bitmap mặc định (theo điểm trên mỗi insơ) trong hộp thoại "
 "Xuất"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:646
+#: ../src/ui/dialog/inkscape-preferences.cpp:650
 msgid "Open Clip Art Library Server Name:"
 msgstr "Tên máy phục vụ thư viện Open Clip Art Library:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:647
+#: ../src/ui/dialog/inkscape-preferences.cpp:651
 msgid ""
 "The server name of the Open Clip Art Library webdav server. It's used by the "
 "Import and Export to OCAL function."
@@ -9546,236 +10151,224 @@ msgstr ""
 "Tên máy phục vụ của máy WebDAV Open Clip Art Library. Nó dùng bởi chức năng "
 "« Nhập » và « Xuất dạng OCAL »."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:649
+#: ../src/ui/dialog/inkscape-preferences.cpp:653
 msgid "Open Clip Art Library Username:"
 msgstr "Tên người dùng Open Clip Art Library:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:650
+#: ../src/ui/dialog/inkscape-preferences.cpp:654
 msgid "The username used to log into Open Clip Art Library."
 msgstr "Tên người dùng dùng để đăng nhập vào Open Clip Art Library."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:652
+#: ../src/ui/dialog/inkscape-preferences.cpp:656
 msgid "Open Clip Art Library Password:"
 msgstr "Mật khẩu Open Clip Art Library:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:653
+#: ../src/ui/dialog/inkscape-preferences.cpp:657
 msgid "The password used to log into Open Clip Art Library."
 msgstr "Mật khẩu dùng để đăng nhập vào Open Clip Art Library."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:655
+#: ../src/ui/dialog/inkscape-preferences.cpp:659
 msgid "Import/Export"
 msgstr "Nhập/Xuất"
 
 #. TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm
-#: ../src/ui/dialog/inkscape-preferences.cpp:701
+#: ../src/ui/dialog/inkscape-preferences.cpp:705
 msgid "Perceptual"
 msgstr "Dựa vào nhận thức"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:701
+#: ../src/ui/dialog/inkscape-preferences.cpp:705
 msgid "Relative Colorimetric"
 msgstr "Sắc kế tương đối"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:701
+#: ../src/ui/dialog/inkscape-preferences.cpp:705
 msgid "Absolute Colorimetric"
 msgstr "Sắc kế tuyệt đối"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:705
+#: ../src/ui/dialog/inkscape-preferences.cpp:709
 #, fuzzy
 msgid "(Note: Color management has been disabled in this build)"
 msgstr "(Ghi chú : chức năng « Quản lý màu » bị tắt trong bản xây dựng này)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:709
+#: ../src/ui/dialog/inkscape-preferences.cpp:713
 #, fuzzy
 msgid "Display adjustment"
 msgstr "Điều chỉnh màn hình"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:711
+#: ../src/ui/dialog/inkscape-preferences.cpp:715
 msgid "Display profile:"
 msgstr "Hồ sơ màn hình:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:712
+#: ../src/ui/dialog/inkscape-preferences.cpp:716
 msgid "The ICC profile to use to calibrate display output."
 msgstr "Hồ sơ ICC cần dùng để định chuẩn kết xuất màn hình."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:714
+#: ../src/ui/dialog/inkscape-preferences.cpp:718
 msgid "Retrieve profile from display"
 msgstr "Lấy hồ sơ từ màn hình"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:717
+#: ../src/ui/dialog/inkscape-preferences.cpp:721
 msgid "Retrieve profiles from those attached to displays via XICC."
 msgstr "Lấy các hồ sơ từ các đồ đính màn hình thông qua XICC."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:719
+#: ../src/ui/dialog/inkscape-preferences.cpp:723
 msgid "Retrieve profiles from those attached to displays."
 msgstr "Lấy các hồ sơ từ các đồ đính màn hình."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:724
+#: ../src/ui/dialog/inkscape-preferences.cpp:728
 msgid "Display rendering intent:"
 msgstr "Ý định vẽ màn hình:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:725
-#: ../src/ui/dialog/inkscape-preferences.cpp:748
+#: ../src/ui/dialog/inkscape-preferences.cpp:729
+#: ../src/ui/dialog/inkscape-preferences.cpp:752
 msgid "The rendering intent to use to calibrate display output."
 msgstr "Ý định vẽ cần dùng để định chuẩn kết xuất màn hình."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:727
+#: ../src/ui/dialog/inkscape-preferences.cpp:731
 msgid "Proofing"
 msgstr "Kiểm lỗi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:729
+#: ../src/ui/dialog/inkscape-preferences.cpp:733
 msgid "Simulate output on screen"
 msgstr "Mô phỏng kết xuất trên màn hình"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:731
+#: ../src/ui/dialog/inkscape-preferences.cpp:735
 msgid "Simulates output of target device."
 msgstr "Mô phỏng kết xuất của thiết bị đích."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:733
+#: ../src/ui/dialog/inkscape-preferences.cpp:737
 msgid "Mark out of gamut colors"
 msgstr "Đánh dấu màu sắc ở ngoài phạm vi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:735
+#: ../src/ui/dialog/inkscape-preferences.cpp:739
 msgid "Highlights colors that are out of gamut for the target device."
 msgstr "Tô sáng màu sắc nằm ở ngoại phạm vi cho thiết bị đích."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:740
+#: ../src/ui/dialog/inkscape-preferences.cpp:744
 msgid "Out of gamut warning color:"
 msgstr "Màu cảnh báo ở ngoại phạm vi:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:741
+#: ../src/ui/dialog/inkscape-preferences.cpp:745
 msgid "Selects the color used for out of gamut warning."
 msgstr "Chọn màu dùng cho cảnh báo ở ngoại phạm vi."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:743
+#: ../src/ui/dialog/inkscape-preferences.cpp:747
 msgid "Device profile:"
 msgstr "Hồ sơ thiết bị:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:744
+#: ../src/ui/dialog/inkscape-preferences.cpp:748
 msgid "The ICC profile to use to simulate device output."
 msgstr "Hồ sơ ICC cần dùng để mô phỏng kết xuất thiết bị."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:747
+#: ../src/ui/dialog/inkscape-preferences.cpp:751
 msgid "Device rendering intent:"
 msgstr "Ý định vẽ thiết bị:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:750
+#: ../src/ui/dialog/inkscape-preferences.cpp:754
 #, fuzzy
 msgid "Black point compensation"
 msgstr "Bù điểm màu đen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:752
+#: ../src/ui/dialog/inkscape-preferences.cpp:756
 msgid "Enables black point compensation."
 msgstr "Hiệu lực chức năng bù điểm màu đen."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:754
+#: ../src/ui/dialog/inkscape-preferences.cpp:758
 msgid "Preserve black"
 msgstr "Bảo tồn màu đen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:759
+#: ../src/ui/dialog/inkscape-preferences.cpp:763
 msgid "(LittleCMS 1.15 or later required)"
 msgstr "(Cần LittleCMS 1.15 hay sau)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:761
+#: ../src/ui/dialog/inkscape-preferences.cpp:765
 #, fuzzy
 msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "Bảo tồn kênh K khi chuyển dạng CMYK -> CMYK"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:774
+#: ../src/ui/dialog/inkscape-preferences.cpp:778
 msgid "<none>"
 msgstr "<không có>"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:820
+#: ../src/ui/dialog/inkscape-preferences.cpp:824
 #, fuzzy
 msgid "Color management"
 msgstr "Quản lý màu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:825
+#: ../src/ui/dialog/inkscape-preferences.cpp:829
 #, fuzzy
 msgid "Major grid line emphasizing"
 msgstr "Đường lưới chính mỗi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:827
+#: ../src/ui/dialog/inkscape-preferences.cpp:831
 msgid "Don't emphasize gridlines when zoomed out"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:828
+#: ../src/ui/dialog/inkscape-preferences.cpp:832
 msgid ""
 "If set and zoomed out, the gridlines will be shown in normal color instead "
 "of major grid line color."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:830
+#: ../src/ui/dialog/inkscape-preferences.cpp:834
 msgid "Default grid settings"
 msgstr "Thiết lập lưới mặc định"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:836
-#: ../src/ui/dialog/inkscape-preferences.cpp:857
+#: ../src/ui/dialog/inkscape-preferences.cpp:840
+#: ../src/ui/dialog/inkscape-preferences.cpp:861
 msgid "Grid units"
 msgstr "Đơn vị lưới"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:839
-#: ../src/ui/dialog/inkscape-preferences.cpp:860
+#: ../src/ui/dialog/inkscape-preferences.cpp:843
+#: ../src/ui/dialog/inkscape-preferences.cpp:864
 msgid "Origin X"
 msgstr "Gốc X"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:840
-#: ../src/ui/dialog/inkscape-preferences.cpp:861
+#: ../src/ui/dialog/inkscape-preferences.cpp:844
+#: ../src/ui/dialog/inkscape-preferences.cpp:865
 msgid "Origin Y"
 msgstr "Gốc Y"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:843
+#: ../src/ui/dialog/inkscape-preferences.cpp:847
 msgid "Spacing X"
 msgstr "Khoảng cách X"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:844
-#: ../src/ui/dialog/inkscape-preferences.cpp:863
+#: ../src/ui/dialog/inkscape-preferences.cpp:848
+#: ../src/ui/dialog/inkscape-preferences.cpp:867
 msgid "Spacing Y"
 msgstr "Khoảng cách Y"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:847
-#: ../src/ui/dialog/inkscape-preferences.cpp:869
+#: ../src/ui/dialog/inkscape-preferences.cpp:851
+#: ../src/ui/dialog/inkscape-preferences.cpp:873
 msgid "Selects the color used for normal grid lines."
 msgstr "Chọn màu dùng cho các đường lưới chuẩn."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:849
-#: ../src/ui/dialog/inkscape-preferences.cpp:871
+#: ../src/ui/dialog/inkscape-preferences.cpp:853
+#: ../src/ui/dialog/inkscape-preferences.cpp:875
 msgid "Selects the color used for major (highlighted) grid lines."
 msgstr "Chọn màu dùng cho các đường lưới chính (đã tô sáng)."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:851
-#: ../src/ui/dialog/inkscape-preferences.cpp:873
+#: ../src/ui/dialog/inkscape-preferences.cpp:855
+#: ../src/ui/dialog/inkscape-preferences.cpp:877
 msgid "Major grid line every"
 msgstr "Đường lưới chính mỗi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:852
+#: ../src/ui/dialog/inkscape-preferences.cpp:856
 msgid "Show dots instead of lines"
 msgstr "Hiện chấm thay cho đường"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:863
-msgid "Base length of z-axis"
-msgstr "Chiều dài cơ bản của trục Z"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:866
+#: ../src/ui/dialog/inkscape-preferences.cpp:870
 msgid "Angle X"
 msgstr "Góc X"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:866
-msgid "Angle of x-axis"
-msgstr "Góc của trục X"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:867
+#: ../src/ui/dialog/inkscape-preferences.cpp:871
 msgid "Angle Z"
 msgstr "Góc Z"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:867
-msgid "Angle of z-axis"
-msgstr "Góc của trục Z"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:880
+#: ../src/ui/dialog/inkscape-preferences.cpp:884
 msgid "Add label comments to printing output"
 msgstr "Thêm vào kết xuất in ấn các chú thích nhãn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:882
+#: ../src/ui/dialog/inkscape-preferences.cpp:886
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -9783,11 +10376,11 @@ msgstr ""
 "Bật tùy chọn này thì một chú thích sẽ được thêm vào kết xuất in thô, đánh "
 "dấu kết xuất đã vẽ của đối tượng đó bằng nhãn riêng của nó."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:884
+#: ../src/ui/dialog/inkscape-preferences.cpp:888
 msgid "Prevent sharing of gradient definitions"
 msgstr "Không chia sẻ các chuyển sắc đã thiết lập"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:886
+#: ../src/ui/dialog/inkscape-preferences.cpp:890
 msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
@@ -9798,11 +10391,11 @@ msgstr ""
 "cho phép chia sẻ thiết lập chuyển sắc giữa nhiều đối tượng, sửa chuyển sắc "
 "sẽ tác động lên tất cả các đối tượng chuyển sắc đó."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:888
+#: ../src/ui/dialog/inkscape-preferences.cpp:892
 msgid "Simplification threshold:"
 msgstr "Ngưỡng đơn giản hoá:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:889
+#: ../src/ui/dialog/inkscape-preferences.cpp:893
 msgid ""
 "How strong is the Simplify command by default. If you invoke this command "
 "several times in quick succession, it will act more and more aggressively; "
@@ -9813,60 +10406,60 @@ msgstr ""
 "việc gọi lại sau khi tạm dừng sẽ phục hồi ngưỡng mặc định."
 
 # Literal: don't translate / Nghĩa chữ: đừng dịch
-#: ../src/ui/dialog/inkscape-preferences.cpp:891
+#: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "2x2"
 msgstr "2×2"
 
 # Literal: don't translate / Nghĩa chữ: đừng dịch
-#: ../src/ui/dialog/inkscape-preferences.cpp:891
+#: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "4x4"
 msgstr "4×4"
 
 # Literal: don't translate / Nghĩa chữ: đừng dịch
-#: ../src/ui/dialog/inkscape-preferences.cpp:891
+#: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "8x8"
 msgstr "8×8"
 
 # Literal: don't translate / Nghĩa chữ: đừng dịch
-#: ../src/ui/dialog/inkscape-preferences.cpp:891
+#: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "16x16"
 msgstr "16×16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:895
+#: ../src/ui/dialog/inkscape-preferences.cpp:899
 msgid "Oversample bitmaps:"
 msgstr "Quá lấy mẫu ảnh bitmap:"
 
 #. consider moving this to an UI tab:
-#: ../src/ui/dialog/inkscape-preferences.cpp:899
+#: ../src/ui/dialog/inkscape-preferences.cpp:903
 msgid "Make the commands toolbar icons smaller"
 msgstr "Giảm kích cỡ biểu tượng trên thanh công cụ lệnh"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:901
+#: ../src/ui/dialog/inkscape-preferences.cpp:905
 msgid ""
 "Make the commands toolbar use the 'secondary' toolbar size (requires restart)"
 msgstr ""
 "Khiến thanh công cụ lệnh dùng kích cỡ thanh công cụ « phụ » (cần khởi chạy "
 "lại)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:903
+#: ../src/ui/dialog/inkscape-preferences.cpp:907
 msgid "Make the main toolbar icons smaller"
 msgstr "Giảm kích cỡ biểu tượng trên thanh công cụ chính"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:905
+#: ../src/ui/dialog/inkscape-preferences.cpp:909
 msgid "Make the main tools use the 'secondary' toolbar size (requires restart)"
 msgstr ""
 "Khiến thanh công cụ chính dùng kích cỡ thanh công cụ « phụ » (cần khởi chạy "
 "lại)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:908
+#: ../src/ui/dialog/inkscape-preferences.cpp:912
 msgid "Maximum number of recent documents:"
 msgstr "Số tối đa các tài liệu vừa mở :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:909
+#: ../src/ui/dialog/inkscape-preferences.cpp:913
 msgid "The maximum length of the Open Recent list in the File menu"
 msgstr "Chiều dài tối đa của danh sách Mở Gần Đây trong trình đơn Tập Tin."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:912
+#: ../src/ui/dialog/inkscape-preferences.cpp:916
 msgid "Misc"
 msgstr "Linh tinh"
 
@@ -9963,19 +10556,23 @@ msgstr ""
 "» (chuyển hướng) của « dialogs.debug » thành 1 trong tập tin tùy thích « "
 "preferences.xml »"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:71
+#: ../src/ui/dialog/ocaldialogs.cpp:76
 msgid "File"
 msgstr "Tập tin"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:169
+#: ../src/ui/dialog/ocaldialogs.cpp:174
 msgid "Username:"
 msgstr "Tên người dùng:"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:170
+#: ../src/ui/dialog/ocaldialogs.cpp:175
 msgid "Password:"
 msgstr "Mật khẩu :"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:410
+#: ../src/ui/dialog/ocaldialogs.cpp:401
+msgid "Error while reading the Open Clip Art RSS feed"
+msgstr ""
+
+#: ../src/ui/dialog/ocaldialogs.cpp:439
 msgid ""
 "Failed to receive the Open Clip Art Library RSS feed. Verify if the server "
 "name is correct in Configuration->Misc (e.g.: openclipart.org)"
@@ -9984,21 +10581,57 @@ msgstr ""
 "xem bạn đã nhập đúng tên máy phục vụ trong « Cấu hình > Linh tinh » (v.d. "
 "openclipart.org)"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:538
-msgid "Search Tag"
-msgstr "Thẻ tìm kiếm"
+#: ../src/ui/dialog/ocaldialogs.cpp:453
+msgid "Server supplied malformed Clip Art feed"
+msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:539
+#: ../src/ui/dialog/ocaldialogs.cpp:544
+#, fuzzy
+msgid "Search for:"
+msgstr "Tìm kiếm"
+
+#: ../src/ui/dialog/ocaldialogs.cpp:545
 msgid "No files matched your search"
 msgstr "Không tìm thấy"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:548
+#: ../src/ui/dialog/ocaldialogs.cpp:556
 msgid "Search"
 msgstr "Tìm kiếm"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:565
-msgid "Files Found"
+#: ../src/ui/dialog/ocaldialogs.cpp:573
+#, fuzzy
+msgid "Files found"
 msgstr "Kết quả"
+
+#: ../src/ui/dialog/print.cpp:86
+msgid "Could not open temporary PNG for bitmap printing"
+msgstr ""
+
+#: ../src/ui/dialog/print.cpp:101
+#, fuzzy
+msgid "Could not set up Document"
+msgstr "Không thể phân tích dữ liệu SVG."
+
+#: ../src/ui/dialog/print.cpp:105
+msgid "Failed to set CairoRenderContext"
+msgstr ""
+
+#. set up dialog title, based on document name
+#: ../src/ui/dialog/print.cpp:145
+#, fuzzy
+msgid "SVG Document"
+msgstr "Tài liệu đã được lưu."
+
+#: ../src/ui/dialog/print.cpp:146
+#, fuzzy
+msgid "Print"
+msgstr "Điểm"
+
+#. build custom preferences tab
+#: ../src/ui/dialog/print.cpp:169
+#, fuzzy
+msgid "Rendering"
+msgstr "Tạo hình"
 
 #: ../src/ui/dialog/scriptdialog.cpp:205
 msgid "_Execute Python"
@@ -10532,12 +11165,9 @@ msgstr "Sửa ma trận chuyển dạng"
 #: ../src/ui/view/edit-widget.cpp:898 ../src/ui/view/edit-widget.cpp:902
 #: ../src/ui/view/edit-widget.cpp:906 ../src/ui/view/edit-widget.cpp:910
 #: ../src/ui/view/edit-widget.cpp:914 ../src/ui/view/edit-widget.cpp:918
+#: ../src/ui/view/edit-widget.cpp:1003
 msgid "PLACEHOLDER, do not translate"
 msgstr "PLACEHOLDER, do not translate"
-
-#: ../src/ui/view/edit-widget.cpp:1003
-msgid "PLACEHOLDER, DO NOT TRANSLATE"
-msgstr "PLACEHOLDER, DO NOT TRANSLATE"
 
 #: ../src/ui/view/edit-widget.cpp:1062 ../src/widgets/desktop-widget.cpp:376
 msgid "Zoom drawing if window size changes"
@@ -10592,25 +11222,45 @@ msgstr ""
 msgid "_Save as SVG"
 msgstr "Lưu dạng _SVG"
 
-#: ../src/ui/widget/panel.cpp:98
+#: ../src/ui/widget/panel.cpp:112
 msgid "tiny"
 msgstr "tí tị"
 
-#: ../src/ui/widget/panel.cpp:99
+#: ../src/ui/widget/panel.cpp:113
 msgid "small"
 msgstr "nhỏ"
 
-#: ../src/ui/widget/panel.cpp:101
+#: ../src/ui/widget/panel.cpp:115
 msgid "large"
 msgstr "lớn"
 
-#: ../src/ui/widget/panel.cpp:102
+#: ../src/ui/widget/panel.cpp:116
 msgid "huge"
 msgstr "to lớn"
 
-#: ../src/ui/widget/panel.cpp:117
+#: ../src/ui/widget/panel.cpp:131
 msgid "List"
 msgstr "Danh sách"
+
+#: ../src/ui/widget/panel.cpp:163
+#, fuzzy
+msgid "Shape"
+msgstr "Hình"
+
+#: ../src/ui/widget/panel.cpp:165
+#, fuzzy
+msgid "Tall"
+msgstr "Bảng"
+
+#: ../src/ui/widget/panel.cpp:166
+#, fuzzy
+msgid "Square"
+msgstr "Đầu vuông"
+
+#: ../src/ui/widget/panel.cpp:167
+#, fuzzy
+msgid "Wide"
+msgstr "Ẩ_n"
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:25
 msgid "_Blend mode:"
@@ -10806,8 +11456,9 @@ msgid "White"
 msgstr "Trắng"
 
 #: ../src/ui/widget/selected-style.cpp:226
+#: ../src/widgets/sp-color-icc-selector.cpp:237
+#: ../src/widgets/sp-color-scales.cpp:461
 #: ../src/widgets/sp-color-scales.cpp:462
-#: ../src/widgets/sp-color-scales.cpp:463
 msgid "Black"
 msgstr "Đen"
 
@@ -10953,10 +11604,6 @@ msgstr ""
 "giữ <b>Ctrl</b> điều chỉnh độ bão hoà, không có phím bổ trợ để điều chỉnh độ "
 "sáng"
 
-#: ../src/ui/widget/page-sizer.cpp:195
-msgid "Name"
-msgstr "Tên"
-
 #: ../src/ui/widget/page-sizer.cpp:233
 msgid "P_age size:"
 msgstr "Kích cỡ tr_ang:"
@@ -11047,6 +11694,62 @@ msgstr "O:.%d"
 #, c-format
 msgid "Opacity: %.3g"
 msgstr "Độ mờ đục: %.3g"
+
+#: ../src/ui/widget/preferences-widget.cpp:278
+#, fuzzy
+msgid "Reset"
+msgstr " Đặt _lại "
+
+#: ../src/ui/widget/random.cpp:123
+msgid ""
+"Reseed the random number generator; this creates a different sequence of "
+"random numbers."
+msgstr ""
+
+#: ../src/ui/widget/rendering-options.cpp:39
+#, fuzzy
+msgid "Vector"
+msgstr "Bộ chọn"
+
+#: ../src/ui/widget/rendering-options.cpp:40
+#, fuzzy
+msgid "Bitmap"
+msgstr "Khuynh hướng"
+
+#: ../src/ui/widget/rendering-options.cpp:41
+#, fuzzy
+msgid "Backend"
+msgstr "_Nền:"
+
+#: ../src/ui/widget/rendering-options.cpp:42
+msgid "Bitmap options"
+msgstr ""
+
+#: ../src/ui/widget/rendering-options.cpp:44
+#, fuzzy
+msgid "Preferred resolution of rendering, in dots per inch."
+msgstr "Độ phân giải đã thích (điểm trên mỗi insơ) của ảnh bitmap"
+
+#: ../src/ui/widget/rendering-options.cpp:52
+#, fuzzy
+msgid ""
+"Render using Cairo vector operations.  The resulting image is usually "
+"smaller in file size and can be arbitrarily scaled, but some filter effects "
+"will not be correctly rendered."
+msgstr ""
+"Dùng các toán tử véc-tơ kiểu PDF. Ảnh kết quả thường có kích cỡ tập tin nhỏ "
+"hơn, và có khả năng được co giãn tùy ý, nhưng các mẫu sẽ bị mất."
+
+#: ../src/ui/widget/rendering-options.cpp:57
+#, fuzzy
+msgid ""
+"Render everything as bitmap.  The resulting image is usually larger in file "
+"size and cannot be arbitrarily scaled without quality loss, but all objects "
+"will be rendered exactly as displayed."
+msgstr ""
+"In mọi thứ dưới dạng ảnh bitmap. Ảnh kết quả thường có kích cỡ tập tin lớn "
+"hơn, và không thể được co giãn tùy ý và bảo tồn chất lượng, nhưng mọi đối "
+"tượng sẽ được vẽ chính xác như được hiển thị."
 
 #: ../src/vanishing-point.cpp:135
 msgid "Split vanishing points"
@@ -11621,11 +12324,11 @@ msgstr "_Bỏ chọn"
 msgid "Deselect any selected objects or nodes"
 msgstr "Bỏ chọn bất cứ đối tượng hay nút nào được chọn"
 
-#: ../src/verbs.cpp:2222 ../src/widgets/toolbox.cpp:1099
+#: ../src/verbs.cpp:2222 ../src/widgets/toolbox.cpp:1100
 msgid "Next Path Effect Parameter"
 msgstr "Tham số hiệu ứng đường nét kế"
 
-#: ../src/verbs.cpp:2223 ../src/widgets/toolbox.cpp:1100
+#: ../src/verbs.cpp:2223 ../src/widgets/toolbox.cpp:1101
 msgid "Show next Path Effect parameter for editing"
 msgstr "Hiển thị tham số Hiệu ứng Đường nét kế tiếp để sửa"
 
@@ -12860,7 +13563,7 @@ msgstr "Kích cỡ phông:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:628 ../src/widgets/toolbox.cpp:4659
+#: ../src/widgets/font-selector.cpp:628 ../src/widgets/toolbox.cpp:4684
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "ĂăÂâÊêÔôƯưƠơĐđ₫«»ằẩễốựỡẳữẵỵẴỔỬỴỜ"
 
@@ -12919,11 +13622,11 @@ msgstr "<small>Đa chuyển sắc</small>"
 msgid "Edit the stops of the gradient"
 msgstr "Chỉnh sửa các pha của chuyển sắc"
 
-#: ../src/widgets/gradient-toolbar.cpp:522 ../src/widgets/toolbox.cpp:1792
-#: ../src/widgets/toolbox.cpp:1864 ../src/widgets/toolbox.cpp:2193
-#: ../src/widgets/toolbox.cpp:2230 ../src/widgets/toolbox.cpp:2844
-#: ../src/widgets/toolbox.cpp:2867 ../src/widgets/toolbox.cpp:3734
-#: ../src/widgets/toolbox.cpp:3760
+#: ../src/widgets/gradient-toolbar.cpp:522 ../src/widgets/toolbox.cpp:1793
+#: ../src/widgets/toolbox.cpp:1865 ../src/widgets/toolbox.cpp:2194
+#: ../src/widgets/toolbox.cpp:2231 ../src/widgets/toolbox.cpp:2845
+#: ../src/widgets/toolbox.cpp:2868 ../src/widgets/toolbox.cpp:3735
+#: ../src/widgets/toolbox.cpp:3761
 msgid "<b>New:</b>"
 msgstr "<b>Mới:</b>"
 
@@ -12949,10 +13652,10 @@ msgstr "Tạo chuyển sắc trong nét"
 
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-#: ../src/widgets/gradient-toolbar.cpp:605 ../src/widgets/toolbox.cpp:1794
-#: ../src/widgets/toolbox.cpp:2201 ../src/widgets/toolbox.cpp:2219
-#: ../src/widgets/toolbox.cpp:2846 ../src/widgets/toolbox.cpp:2857
-#: ../src/widgets/toolbox.cpp:3737 ../src/widgets/toolbox.cpp:3748
+#: ../src/widgets/gradient-toolbar.cpp:605 ../src/widgets/toolbox.cpp:1795
+#: ../src/widgets/toolbox.cpp:2202 ../src/widgets/toolbox.cpp:2220
+#: ../src/widgets/toolbox.cpp:2847 ../src/widgets/toolbox.cpp:2858
+#: ../src/widgets/toolbox.cpp:3738 ../src/widgets/toolbox.cpp:3749
 msgid "<b>Change:</b>"
 msgstr "<b>Đổi:</b>"
 
@@ -13228,6 +13931,122 @@ msgstr "Di chuyển chuyển sắc"
 msgid "Move patterns"
 msgstr "Di chuyển mẫu"
 
+#: ../src/widgets/sp-color-icc-selector.cpp:110
+msgid "CMS"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:219
+#: ../src/widgets/sp-color-scales.cpp:397
+msgid "_R"
+msgstr "_R"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:219
+#: ../src/widgets/sp-color-icc-selector.cpp:220
+#: ../src/widgets/sp-color-scales.cpp:400
+msgid "_G"
+msgstr "_G"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:219
+#: ../src/widgets/sp-color-scales.cpp:403
+msgid "_B"
+msgstr "_B"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:221
+#: ../src/widgets/sp-color-icc-selector.cpp:222
+#: ../src/widgets/sp-color-scales.cpp:423
+msgid "_H"
+msgstr "_H"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:221
+#: ../src/widgets/sp-color-icc-selector.cpp:222
+#: ../src/widgets/sp-color-scales.cpp:426
+msgid "_S"
+msgstr "_S"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:222
+#: ../src/widgets/sp-color-scales.cpp:429
+msgid "_L"
+msgstr "_L"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:223
+#: ../src/widgets/sp-color-icc-selector.cpp:224
+#: ../src/widgets/sp-color-scales.cpp:451
+msgid "_C"
+msgstr "_C"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:223
+#: ../src/widgets/sp-color-icc-selector.cpp:224
+#: ../src/widgets/sp-color-scales.cpp:454
+msgid "_M"
+msgstr "_M"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:223
+#: ../src/widgets/sp-color-icc-selector.cpp:224
+#: ../src/widgets/sp-color-scales.cpp:457
+msgid "_Y"
+msgstr "_Y"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:223
+#: ../src/widgets/sp-color-scales.cpp:460
+msgid "_K"
+msgstr "_K"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:234
+#, fuzzy
+msgid "Gray"
+msgstr "Màu xám"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:237
+#: ../src/widgets/sp-color-icc-selector.cpp:238
+#: ../src/widgets/sp-color-scales.cpp:452
+#: ../src/widgets/sp-color-scales.cpp:453
+msgid "Cyan"
+msgstr "Xanh lá mạ"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:237
+#: ../src/widgets/sp-color-icc-selector.cpp:238
+#: ../src/widgets/sp-color-scales.cpp:455
+#: ../src/widgets/sp-color-scales.cpp:456
+msgid "Magenta"
+msgstr "Đỏ tươi"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:237
+#: ../src/widgets/sp-color-icc-selector.cpp:238
+#: ../src/widgets/sp-color-scales.cpp:458
+#: ../src/widgets/sp-color-scales.cpp:459
+msgid "Yellow"
+msgstr "Vàng"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:295
+msgid "Fix"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:298
+msgid "Fix RGB fallback to match icc-color() value."
+msgstr ""
+
+#. Label
+#: ../src/widgets/sp-color-icc-selector.cpp:379
+#: ../src/widgets/sp-color-scales.cpp:406
+#: ../src/widgets/sp-color-scales.cpp:432
+#: ../src/widgets/sp-color-scales.cpp:463
+#: ../src/widgets/sp-color-wheel-selector.cpp:134
+msgid "_A"
+msgstr "_A"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:389
+#: ../src/widgets/sp-color-icc-selector.cpp:401
+#: ../src/widgets/sp-color-scales.cpp:407
+#: ../src/widgets/sp-color-scales.cpp:408
+#: ../src/widgets/sp-color-scales.cpp:433
+#: ../src/widgets/sp-color-scales.cpp:434
+#: ../src/widgets/sp-color-scales.cpp:464
+#: ../src/widgets/sp-color-scales.cpp:465
+#: ../src/widgets/sp-color-wheel-selector.cpp:144
+#: ../src/widgets/sp-color-wheel-selector.cpp:156
+msgid "Alpha (opacity)"
+msgstr "Alpha (độ đục)"
+
 #: ../src/widgets/sp-color-gtkselector.cpp:50
 msgid "System"
 msgstr "Hệ thống"
@@ -13253,80 +14072,6 @@ msgstr "HSL"
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../src/widgets/sp-color-scales.cpp:398
-msgid "_R"
-msgstr "_R"
-
-#: ../src/widgets/sp-color-scales.cpp:401
-msgid "_G"
-msgstr "_G"
-
-#: ../src/widgets/sp-color-scales.cpp:404
-msgid "_B"
-msgstr "_B"
-
-#. Label
-#: ../src/widgets/sp-color-scales.cpp:407
-#: ../src/widgets/sp-color-scales.cpp:433
-#: ../src/widgets/sp-color-scales.cpp:464
-#: ../src/widgets/sp-color-wheel-selector.cpp:134
-msgid "_A"
-msgstr "_A"
-
-#: ../src/widgets/sp-color-scales.cpp:408
-#: ../src/widgets/sp-color-scales.cpp:409
-#: ../src/widgets/sp-color-scales.cpp:434
-#: ../src/widgets/sp-color-scales.cpp:435
-#: ../src/widgets/sp-color-scales.cpp:465
-#: ../src/widgets/sp-color-scales.cpp:466
-#: ../src/widgets/sp-color-wheel-selector.cpp:144
-#: ../src/widgets/sp-color-wheel-selector.cpp:156
-msgid "Alpha (opacity)"
-msgstr "Alpha (độ đục)"
-
-#: ../src/widgets/sp-color-scales.cpp:424
-msgid "_H"
-msgstr "_H"
-
-#: ../src/widgets/sp-color-scales.cpp:427
-msgid "_S"
-msgstr "_S"
-
-#: ../src/widgets/sp-color-scales.cpp:430
-msgid "_L"
-msgstr "_L"
-
-#: ../src/widgets/sp-color-scales.cpp:452
-msgid "_C"
-msgstr "_C"
-
-#: ../src/widgets/sp-color-scales.cpp:453
-#: ../src/widgets/sp-color-scales.cpp:454
-msgid "Cyan"
-msgstr "Xanh lá mạ"
-
-#: ../src/widgets/sp-color-scales.cpp:455
-msgid "_M"
-msgstr "_M"
-
-#: ../src/widgets/sp-color-scales.cpp:456
-#: ../src/widgets/sp-color-scales.cpp:457
-msgid "Magenta"
-msgstr "Đỏ tươi"
-
-#: ../src/widgets/sp-color-scales.cpp:458
-msgid "_Y"
-msgstr "_Y"
-
-#: ../src/widgets/sp-color-scales.cpp:459
-#: ../src/widgets/sp-color-scales.cpp:460
-msgid "Yellow"
-msgstr "Vàng"
-
-#: ../src/widgets/sp-color-scales.cpp:461
-msgid "_K"
-msgstr "_K"
-
 #: ../src/widgets/sp-color-selector.cpp:64
 msgid "Unnamed"
 msgstr "Đen"
@@ -13340,7 +14085,7 @@ msgid "Attribute"
 msgstr "Thuộc tính"
 
 #: ../src/widgets/sp-xmlview-attr-list.cpp:47
-#: ../share/extensions/perfectboundcover.inx.h:14
+#: ../share/extensions/perfectboundcover.inx.h:19
 msgid "Value"
 msgstr "Giá trị"
 
@@ -13348,342 +14093,342 @@ msgstr "Giá trị"
 msgid "Type text in a text node"
 msgstr "Gõ văn bản vào nút văn bản"
 
-#: ../src/widgets/toolbox.cpp:168
+#: ../src/widgets/toolbox.cpp:169
 msgid "Color/opacity used for color tweaking"
 msgstr "Màu/độ đục dùng để điều chỉnh màu"
 
-#: ../src/widgets/toolbox.cpp:172
+#: ../src/widgets/toolbox.cpp:173
 msgid "Style of new stars"
 msgstr "Kiểu dáng của hình sao mới"
 
-#: ../src/widgets/toolbox.cpp:174
+#: ../src/widgets/toolbox.cpp:175
 msgid "Style of new rectangles"
 msgstr "Kiểu dáng của hình chữ nhật mới"
 
-#: ../src/widgets/toolbox.cpp:176
+#: ../src/widgets/toolbox.cpp:177
 msgid "Style of new 3D boxes"
 msgstr "Kiểu dáng của hộp 3D mới"
 
-#: ../src/widgets/toolbox.cpp:178
+#: ../src/widgets/toolbox.cpp:179
 msgid "Style of new ellipses"
 msgstr "Kiểu dáng của hình elip mới"
 
-#: ../src/widgets/toolbox.cpp:180
+#: ../src/widgets/toolbox.cpp:181
 msgid "Style of new spirals"
 msgstr "Kiểu dáng của xoắn ốc mới"
 
-#: ../src/widgets/toolbox.cpp:182
+#: ../src/widgets/toolbox.cpp:183
 msgid "Style of new paths created by Pencil"
 msgstr "Kiểu dáng của đường nét mới tạo bằng Bút chì"
 
-#: ../src/widgets/toolbox.cpp:184
+#: ../src/widgets/toolbox.cpp:185
 msgid "Style of new paths created by Pen"
 msgstr "Kiểu dáng của đường nét tạo bằng Bút"
 
-#: ../src/widgets/toolbox.cpp:186
+#: ../src/widgets/toolbox.cpp:187
 msgid "Style of new calligraphic strokes"
 msgstr "Kiểu dáng của nét thư pháp mới"
 
-#: ../src/widgets/toolbox.cpp:196
+#: ../src/widgets/toolbox.cpp:197
 msgid "Style of Paint Bucket fill objects"
 msgstr "Kiểu dáng của đối tượng tô Xô sơn"
 
-#: ../src/widgets/toolbox.cpp:975
+#: ../src/widgets/toolbox.cpp:976
 msgid "Insert node"
 msgstr "Chèn nút"
 
-#: ../src/widgets/toolbox.cpp:976
+#: ../src/widgets/toolbox.cpp:977
 msgid "Insert new nodes into selected segments"
 msgstr "Chèn nút mới vào đoạn đã chọn"
 
-#: ../src/widgets/toolbox.cpp:979
+#: ../src/widgets/toolbox.cpp:980
 msgid "Insert"
 msgstr "Chèn"
 
-#: ../src/widgets/toolbox.cpp:987
+#: ../src/widgets/toolbox.cpp:988
 msgid "Delete selected nodes"
 msgstr "Xoá các nút đã chọn"
 
-#: ../src/widgets/toolbox.cpp:997
+#: ../src/widgets/toolbox.cpp:998
 msgid "Join endnodes"
 msgstr "Nối lại các nút cuối"
 
-#: ../src/widgets/toolbox.cpp:998
+#: ../src/widgets/toolbox.cpp:999
 msgid "Join selected endnodes"
 msgstr "Nối lại các nút cuối đã chọn"
 
-#: ../src/widgets/toolbox.cpp:1001
+#: ../src/widgets/toolbox.cpp:1002
 msgid "Join"
 msgstr "Nối"
 
-#: ../src/widgets/toolbox.cpp:1008
+#: ../src/widgets/toolbox.cpp:1009
 msgid "Join Segment"
 msgstr "Nối lại đoạn"
 
-#: ../src/widgets/toolbox.cpp:1009
+#: ../src/widgets/toolbox.cpp:1010
 msgid "Join selected endnodes with a new segment"
 msgstr "Nối lại các nút cuối đã chọn với một đoạn mới"
 
-#: ../src/widgets/toolbox.cpp:1018
+#: ../src/widgets/toolbox.cpp:1019
 msgid "Delete Segment"
 msgstr "Xoá đoạn"
 
-#: ../src/widgets/toolbox.cpp:1019
+#: ../src/widgets/toolbox.cpp:1020
 msgid "Split path between two non-endpoint nodes"
 msgstr "Chia tách đường nét giữa hai nút khác điểm cuối"
 
-#: ../src/widgets/toolbox.cpp:1028
+#: ../src/widgets/toolbox.cpp:1029
 msgid "Node Break"
 msgstr "Nút ngắt"
 
-#: ../src/widgets/toolbox.cpp:1029
+#: ../src/widgets/toolbox.cpp:1030
 msgid "Break path at selected nodes"
 msgstr "Ngắt đường nét tại mỗi nút đã chọn"
 
-#: ../src/widgets/toolbox.cpp:1038
+#: ../src/widgets/toolbox.cpp:1039
 msgid "Node Cusp"
 msgstr "Nút đỉnh"
 
-#: ../src/widgets/toolbox.cpp:1039
+#: ../src/widgets/toolbox.cpp:1040
 msgid "Make selected nodes corner"
 msgstr "Làm cho mỗi nút đã chọn là góc"
 
-#: ../src/widgets/toolbox.cpp:1048
+#: ../src/widgets/toolbox.cpp:1049
 msgid "Node Smooth"
 msgstr "Nút mịn"
 
-#: ../src/widgets/toolbox.cpp:1049
+#: ../src/widgets/toolbox.cpp:1050
 msgid "Make selected nodes smooth"
 msgstr "Làm cho mỗi nút đã chọn là mịn"
 
-#: ../src/widgets/toolbox.cpp:1058
+#: ../src/widgets/toolbox.cpp:1059
 msgid "Node Symmetric"
 msgstr "Nút đối xứng"
 
-#: ../src/widgets/toolbox.cpp:1059
+#: ../src/widgets/toolbox.cpp:1060
 msgid "Make selected nodes symmetric"
 msgstr "Làm cho mỗi nút đã chọn là đối xứng"
 
-#: ../src/widgets/toolbox.cpp:1068
+#: ../src/widgets/toolbox.cpp:1069
 msgid "Node Line"
 msgstr "Nút đường"
 
-#: ../src/widgets/toolbox.cpp:1069
+#: ../src/widgets/toolbox.cpp:1070
 msgid "Make selected segments lines"
 msgstr "Làm cho mỗi đoạn đã chọn là đường"
 
-#: ../src/widgets/toolbox.cpp:1078
+#: ../src/widgets/toolbox.cpp:1079
 msgid "Node Curve"
 msgstr "Nút cong"
 
-#: ../src/widgets/toolbox.cpp:1079
+#: ../src/widgets/toolbox.cpp:1080
 msgid "Make selected segments curves"
 msgstr "Làm cho mỗi đoạn đã chọn là đường cong"
 
-#: ../src/widgets/toolbox.cpp:1088
+#: ../src/widgets/toolbox.cpp:1089
 msgid "Show Handles"
 msgstr "Hiện chốt"
 
-#: ../src/widgets/toolbox.cpp:1089
+#: ../src/widgets/toolbox.cpp:1090
 msgid "Show the Bezier handles of selected nodes"
 msgstr "Hiện các chốt Bezier của các nút đã chọn"
 
-#: ../src/widgets/toolbox.cpp:1113
+#: ../src/widgets/toolbox.cpp:1114
 msgid "X coordinate:"
 msgstr "Toạ độ X:"
 
-#: ../src/widgets/toolbox.cpp:1113
+#: ../src/widgets/toolbox.cpp:1114
 msgid "X coordinate of selected node(s)"
 msgstr "Toạ độ X của (các) nút đã chọn"
 
-#: ../src/widgets/toolbox.cpp:1131
+#: ../src/widgets/toolbox.cpp:1132
 msgid "Y coordinate:"
 msgstr "Toạ độ Y:"
 
-#: ../src/widgets/toolbox.cpp:1131
+#: ../src/widgets/toolbox.cpp:1132
 msgid "Y coordinate of selected node(s)"
 msgstr "Toạ độ Y của (các) nút đã chọn"
 
-#: ../src/widgets/toolbox.cpp:1544
+#: ../src/widgets/toolbox.cpp:1545
 msgid "Star: Change number of corners"
 msgstr "Sao: đổi số góc"
 
-#: ../src/widgets/toolbox.cpp:1586
+#: ../src/widgets/toolbox.cpp:1587
 msgid "Star: Change spoke ratio"
 msgstr "Sao : đổi tỷ lệ gai"
 
-#: ../src/widgets/toolbox.cpp:1629
+#: ../src/widgets/toolbox.cpp:1630
 msgid "Make polygon"
 msgstr "Làm hình đa giác"
 
-#: ../src/widgets/toolbox.cpp:1629
+#: ../src/widgets/toolbox.cpp:1630
 msgid "Make star"
 msgstr "Làm hình sao"
 
-#: ../src/widgets/toolbox.cpp:1664
+#: ../src/widgets/toolbox.cpp:1665
 msgid "Star: Change rounding"
 msgstr "Sao: đổi sự làm tròn"
 
-#: ../src/widgets/toolbox.cpp:1698
+#: ../src/widgets/toolbox.cpp:1699
 msgid "Star: Change randomization"
 msgstr "Sao: đổi sự ngẫu nhiên"
 
-#: ../src/widgets/toolbox.cpp:1883
+#: ../src/widgets/toolbox.cpp:1884
 msgid "Regular polygon (with one handle) instead of a star"
 msgstr "Hình đa giác chính quy (có một chốt) thay cho hình sao"
 
-#: ../src/widgets/toolbox.cpp:1890
+#: ../src/widgets/toolbox.cpp:1891
 msgid "Star instead of a regular polygon (with one handle)"
 msgstr "Hình sao thay cho hình đa giác chính quy (có một chốt)"
 
-#: ../src/widgets/toolbox.cpp:1910
+#: ../src/widgets/toolbox.cpp:1911
 msgid "triangle/tri-star"
 msgstr "tam giác/sao ba"
 
-#: ../src/widgets/toolbox.cpp:1910
+#: ../src/widgets/toolbox.cpp:1911
 msgid "square/quad-star"
 msgstr "vuông/sao tư"
 
-#: ../src/widgets/toolbox.cpp:1910
+#: ../src/widgets/toolbox.cpp:1911
 msgid "pentagon/five-pointed star"
 msgstr "ngữ giác/sao năm đỉnh"
 
-#: ../src/widgets/toolbox.cpp:1910
+#: ../src/widgets/toolbox.cpp:1911
 msgid "hexagon/six-pointed star"
 msgstr "lục giác/sao sáu đỉnh"
 
-#: ../src/widgets/toolbox.cpp:1913
+#: ../src/widgets/toolbox.cpp:1914
 msgid "Corners"
 msgstr "Góc"
 
-#: ../src/widgets/toolbox.cpp:1913
+#: ../src/widgets/toolbox.cpp:1914
 msgid "Corners:"
 msgstr "Góc:"
 
-#: ../src/widgets/toolbox.cpp:1913
+#: ../src/widgets/toolbox.cpp:1914
 msgid "Number of corners of a polygon or star"
 msgstr "Số góc của hình đa giác hay hình sao"
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "thin-ray star"
 msgstr "sao tỉa hẹp"
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "pentagram"
 msgstr "sao năm cánh"
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "hexagram"
 msgstr "sao sáu cánh"
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "heptagram"
 msgstr "sao bảy cánh"
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "octagram"
 msgstr "sao tám cánh"
 
-#: ../src/widgets/toolbox.cpp:1926
+#: ../src/widgets/toolbox.cpp:1927
 msgid "regular polygon"
 msgstr "đa giác chính quy"
 
-#: ../src/widgets/toolbox.cpp:1929
+#: ../src/widgets/toolbox.cpp:1930
 msgid "Spoke ratio"
 msgstr "Tỷ lệ nan hoa"
 
-#: ../src/widgets/toolbox.cpp:1929
+#: ../src/widgets/toolbox.cpp:1930
 msgid "Spoke ratio:"
 msgstr "Tỷ lệ nan hoa:"
 
 #. TRANSLATORS: Tip radius of a star is the distance from the center to the farthest handle.
 #. Base radius is the same for the closest handle.
-#: ../src/widgets/toolbox.cpp:1932
+#: ../src/widgets/toolbox.cpp:1933
 msgid "Base radius to tip radius ratio"
 msgstr "Tỷ lệ giữa bán kính cơ bản và bán kính đỉnh"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "stretched"
 msgstr "đã căng ra"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "twisted"
 msgstr "đã xoắn"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "slightly pinched"
 msgstr "đã véo một ít"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "NOT rounded"
 msgstr "KHÔNG tròn"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "slightly rounded"
 msgstr "tròn một ít"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "visibly rounded"
 msgstr "tròn hiện rõ"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "well rounded"
 msgstr "tròn được"
 
-#: ../src/widgets/toolbox.cpp:1950
+#: ../src/widgets/toolbox.cpp:1951
 msgid "amply rounded"
 msgstr "tròn rộng"
 
-#: ../src/widgets/toolbox.cpp:1950 ../src/widgets/toolbox.cpp:1965
+#: ../src/widgets/toolbox.cpp:1951 ../src/widgets/toolbox.cpp:1966
 msgid "blown up"
 msgstr "đã phóng to"
 
-#: ../src/widgets/toolbox.cpp:1953
+#: ../src/widgets/toolbox.cpp:1954
 msgid "Rounded"
 msgstr "Tròn"
 
-#: ../src/widgets/toolbox.cpp:1953
+#: ../src/widgets/toolbox.cpp:1954
 msgid "Rounded:"
 msgstr "Tròn:"
 
-#: ../src/widgets/toolbox.cpp:1953
+#: ../src/widgets/toolbox.cpp:1954
 msgid "How much rounded are the corners (0 for sharp)"
 msgstr "Các góc bị làm tròn bao nhiêu (0 là sắc)"
 
-#: ../src/widgets/toolbox.cpp:1965
+#: ../src/widgets/toolbox.cpp:1966
 msgid "NOT randomized"
 msgstr "KHÔNG ngẫu nhiên"
 
-#: ../src/widgets/toolbox.cpp:1965
+#: ../src/widgets/toolbox.cpp:1966
 msgid "slightly irregular"
 msgstr "không đều một ít"
 
-#: ../src/widgets/toolbox.cpp:1965
+#: ../src/widgets/toolbox.cpp:1966
 msgid "visibly randomized"
 msgstr "ngẫu nhiên hiện rõ"
 
-#: ../src/widgets/toolbox.cpp:1965
+#: ../src/widgets/toolbox.cpp:1966
 msgid "strongly randomized"
 msgstr "rất ngẫu nhiên"
 
-#: ../src/widgets/toolbox.cpp:1968
+#: ../src/widgets/toolbox.cpp:1969
 msgid "Randomized"
 msgstr "Ngẫu nhiên"
 
-#: ../src/widgets/toolbox.cpp:1968
+#: ../src/widgets/toolbox.cpp:1969
 msgid "Randomized:"
 msgstr "Ngẫu nhiên::"
 
-#: ../src/widgets/toolbox.cpp:1968
+#: ../src/widgets/toolbox.cpp:1969
 msgid "Scatter randomly the corners and angles"
 msgstr "Rải ngẫu nhiên các góc"
 
-#: ../src/widgets/toolbox.cpp:1983 ../src/widgets/toolbox.cpp:2918
-#: ../src/widgets/toolbox.cpp:3497 ../src/widgets/toolbox.cpp:5334
+#: ../src/widgets/toolbox.cpp:1984 ../src/widgets/toolbox.cpp:2919
+#: ../src/widgets/toolbox.cpp:3498 ../src/widgets/toolbox.cpp:5360
 msgid "Defaults"
 msgstr "Mặc định"
 
-#: ../src/widgets/toolbox.cpp:1984 ../src/widgets/toolbox.cpp:2919
+#: ../src/widgets/toolbox.cpp:1985 ../src/widgets/toolbox.cpp:2920
 msgid ""
 "Reset shape parameters to defaults (use Inkscape Preferences > Tools to "
 "change defaults)"
@@ -13691,389 +14436,381 @@ msgstr ""
 "Đặt lại về giá trị mặc định các tham số về hình (dùng « Tùy thích Inkscape > "
 "Công cụ » để thay đổi giá trị mặc định)"
 
-#: ../src/widgets/toolbox.cpp:2056
+#: ../src/widgets/toolbox.cpp:2057
 msgid "Change rectangle"
 msgstr "Đổi chữ nhật"
 
-#: ../src/widgets/toolbox.cpp:2248
+#: ../src/widgets/toolbox.cpp:2249
 msgid "W:"
 msgstr "W:"
 
-#: ../src/widgets/toolbox.cpp:2248
+#: ../src/widgets/toolbox.cpp:2249
 msgid "Width of rectangle"
 msgstr "Chiều rộng của hình chữ nhật"
 
-#: ../src/widgets/toolbox.cpp:2265
+#: ../src/widgets/toolbox.cpp:2266
 msgid "Height of rectangle"
 msgstr "Chiều cao của hình chữ nhật"
 
-#: ../src/widgets/toolbox.cpp:2279 ../src/widgets/toolbox.cpp:2294
+#: ../src/widgets/toolbox.cpp:2280 ../src/widgets/toolbox.cpp:2295
 msgid "not rounded"
 msgstr "không tròn"
 
-#: ../src/widgets/toolbox.cpp:2282
+#: ../src/widgets/toolbox.cpp:2283
 msgid "Horizontal radius"
 msgstr "Bán kính nằm ngang"
 
-#: ../src/widgets/toolbox.cpp:2282
+#: ../src/widgets/toolbox.cpp:2283
 msgid "Rx:"
 msgstr "Rx:"
 
-#: ../src/widgets/toolbox.cpp:2282
+#: ../src/widgets/toolbox.cpp:2283
 msgid "Horizontal radius of rounded corners"
 msgstr "Bán kính theo chiều ngang của các góc tròn"
 
-#: ../src/widgets/toolbox.cpp:2297
+#: ../src/widgets/toolbox.cpp:2298
 msgid "Vertical radius"
 msgstr "Bán kính thẳng đứng"
 
-#: ../src/widgets/toolbox.cpp:2297
+#: ../src/widgets/toolbox.cpp:2298
 msgid "Ry:"
 msgstr "Ry:"
 
-#: ../src/widgets/toolbox.cpp:2297
+#: ../src/widgets/toolbox.cpp:2298
 msgid "Vertical radius of rounded corners"
 msgstr "Bán kính theo chiều dọc của các góc tròn"
 
-#: ../src/widgets/toolbox.cpp:2316
+#: ../src/widgets/toolbox.cpp:2317
 msgid "Not rounded"
 msgstr "Không tròn"
 
-#: ../src/widgets/toolbox.cpp:2317
+#: ../src/widgets/toolbox.cpp:2318
 msgid "Make corners sharp"
 msgstr "Làm cho góc sắc"
 
 #. TODO: use the correct axis here, too
-#: ../src/widgets/toolbox.cpp:2506
+#: ../src/widgets/toolbox.cpp:2507
 #, fuzzy
 msgid "3D Box: Change perspective (angle of infinite axis)"
 msgstr "Hộp 3D: đổi phối cảnh"
 
-#: ../src/widgets/toolbox.cpp:2575
+#: ../src/widgets/toolbox.cpp:2576
 #, fuzzy
 msgid "Angle in X direction"
 msgstr "Bật/tắt VP về hướng X"
 
-#: ../src/widgets/toolbox.cpp:2575
-msgid "Angle X:"
-msgstr "Góc X:"
-
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:2577
+#: ../src/widgets/toolbox.cpp:2578
 #, fuzzy
 msgid "Angle of PLs in X direction"
 msgstr "Bật/tắt VP về hướng X"
 
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:2599
+#: ../src/widgets/toolbox.cpp:2600
 #, fuzzy
 msgid "State of VP in X direction"
 msgstr "Bật/tắt VP về hướng X"
 
-#: ../src/widgets/toolbox.cpp:2600
+#: ../src/widgets/toolbox.cpp:2601
 #, fuzzy
 msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
 msgstr "Bật/tắt VP về hướng X giữa « hữu hạn » và « vô hạn » (=song song)"
 
-#: ../src/widgets/toolbox.cpp:2615
+#: ../src/widgets/toolbox.cpp:2616
 #, fuzzy
 msgid "Angle in Y direction"
 msgstr "Bật/tắt VP về hướng Y"
 
-#: ../src/widgets/toolbox.cpp:2615
+#: ../src/widgets/toolbox.cpp:2616
 msgid "Angle Y:"
 msgstr "Góc Y:"
 
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:2617
+#: ../src/widgets/toolbox.cpp:2618
 #, fuzzy
 msgid "Angle of PLs in Y direction"
 msgstr "Bật/tắt VP về hướng Y"
 
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:2638
+#: ../src/widgets/toolbox.cpp:2639
 #, fuzzy
 msgid "State of VP in Y direction"
 msgstr "Bật/tắt VP về hướng Y"
 
-#: ../src/widgets/toolbox.cpp:2639
+#: ../src/widgets/toolbox.cpp:2640
 #, fuzzy
 msgid "Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"
 msgstr "Bật/tắt VP về hướng Y giữa « hữu hạn » và « vô hạn » (=song song)"
 
-#: ../src/widgets/toolbox.cpp:2654
+#: ../src/widgets/toolbox.cpp:2655
 #, fuzzy
 msgid "Angle in Z direction"
 msgstr "Bật/tắt VP về hướng Z"
 
-#: ../src/widgets/toolbox.cpp:2654
-msgid "Angle Z:"
-msgstr "Góc Z:"
-
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:2656
+#: ../src/widgets/toolbox.cpp:2657
 #, fuzzy
 msgid "Angle of PLs in Z direction"
 msgstr "Bật/tắt VP về hướng Z"
 
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:2677
+#: ../src/widgets/toolbox.cpp:2678
 #, fuzzy
 msgid "State of VP in Z direction"
 msgstr "Bật/tắt VP về hướng Z"
 
-#: ../src/widgets/toolbox.cpp:2678
+#: ../src/widgets/toolbox.cpp:2679
 #, fuzzy
 msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
 msgstr "Bật/tắt VP về hướng Z giữa « hữu hạn » và « vô hạn » (=song song)"
 
-#: ../src/widgets/toolbox.cpp:2735
+#: ../src/widgets/toolbox.cpp:2736
 msgid "Change spiral"
 msgstr "Đổi xoắn ốc"
 
-#: ../src/widgets/toolbox.cpp:2875
+#: ../src/widgets/toolbox.cpp:2876
 msgid "just a curve"
 msgstr "chỉ một đường cong"
 
-#: ../src/widgets/toolbox.cpp:2875
+#: ../src/widgets/toolbox.cpp:2876
 msgid "one full revolution"
 msgstr "một lần quay đầy đủ"
 
-#: ../src/widgets/toolbox.cpp:2878
+#: ../src/widgets/toolbox.cpp:2879
 msgid "Number of turns"
 msgstr "Số lần quay"
 
-#: ../src/widgets/toolbox.cpp:2878
+#: ../src/widgets/toolbox.cpp:2879
 msgid "Turns:"
 msgstr "Quay:"
 
-#: ../src/widgets/toolbox.cpp:2878
+#: ../src/widgets/toolbox.cpp:2879
 msgid "Number of revolutions"
 msgstr "Số lần quay lại"
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "circle"
 msgstr "tròn"
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "edge is much denser"
 msgstr "cạnh rất đặc hơn"
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "edge is denser"
 msgstr "cạnh đặc hơn"
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "even"
 msgstr "đều"
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "center is denser"
 msgstr "tâm đặc hơn"
 
-#: ../src/widgets/toolbox.cpp:2889
+#: ../src/widgets/toolbox.cpp:2890
 msgid "center is much denser"
 msgstr "tâm rất đặc hơn"
 
-#: ../src/widgets/toolbox.cpp:2892
+#: ../src/widgets/toolbox.cpp:2893
 msgid "Divergence"
 msgstr "Phân kỳ"
 
-#: ../src/widgets/toolbox.cpp:2892
+#: ../src/widgets/toolbox.cpp:2893
 msgid "Divergence:"
 msgstr "Phân kỳ:"
 
-#: ../src/widgets/toolbox.cpp:2892
+#: ../src/widgets/toolbox.cpp:2893
 msgid "How much denser/sparser are outer revolutions; 1 = uniform"
 msgstr "Bao nhiêu đặc/thưa thớt hơn là các lần quay bên ngoài (1 = đều)"
 
-#: ../src/widgets/toolbox.cpp:2903
+#: ../src/widgets/toolbox.cpp:2904
 msgid "starts from center"
 msgstr "bắt đầu từ tâm"
 
-#: ../src/widgets/toolbox.cpp:2903
+#: ../src/widgets/toolbox.cpp:2904
 msgid "starts mid-way"
 msgstr "bắt đầu ở giữa"
 
-#: ../src/widgets/toolbox.cpp:2903
+#: ../src/widgets/toolbox.cpp:2904
 msgid "starts near edge"
 msgstr "bắt đầu gần cạnh"
 
-#: ../src/widgets/toolbox.cpp:2906
+#: ../src/widgets/toolbox.cpp:2907
 msgid "Inner radius"
 msgstr "Bán kính nội bộ"
 
-#: ../src/widgets/toolbox.cpp:2906
+#: ../src/widgets/toolbox.cpp:2907
 msgid "Inner radius:"
 msgstr "Bán kính nội bộ :"
 
-#: ../src/widgets/toolbox.cpp:2906
+#: ../src/widgets/toolbox.cpp:2907
 msgid "Radius of the innermost revolution (relative to the spiral size)"
 msgstr "Bán kính của lần quay ở tận trong cùng (so với kích cỡ xoắn ốc)"
 
 #. Width
-#: ../src/widgets/toolbox.cpp:3022
+#: ../src/widgets/toolbox.cpp:3023
 msgid "(pinch tweak)"
 msgstr "(chỉnh véo)"
 
-#: ../src/widgets/toolbox.cpp:3022 ../src/widgets/toolbox.cpp:3038
-#: ../src/widgets/toolbox.cpp:3199 ../src/widgets/toolbox.cpp:3327
-#: ../src/widgets/toolbox.cpp:3359
+#: ../src/widgets/toolbox.cpp:3023 ../src/widgets/toolbox.cpp:3039
+#: ../src/widgets/toolbox.cpp:3200 ../src/widgets/toolbox.cpp:3328
+#: ../src/widgets/toolbox.cpp:3360
 msgid "(default)"
 msgstr "(mặc định)"
 
-#: ../src/widgets/toolbox.cpp:3022
+#: ../src/widgets/toolbox.cpp:3023
 msgid "(broad tweak)"
 msgstr "(chỉnh rộng)"
 
-#: ../src/widgets/toolbox.cpp:3025
+#: ../src/widgets/toolbox.cpp:3026
 msgid "The width of the tweak area (relative to the visible canvas area)"
 msgstr "Chiều rộng của vùng điều chỉnh (so với vùng vẽ hiển thị)"
 
 #. Force
-#: ../src/widgets/toolbox.cpp:3038
+#: ../src/widgets/toolbox.cpp:3039
 msgid "(minimum force)"
 msgstr "(sức mạnh tối đa)"
 
-#: ../src/widgets/toolbox.cpp:3038
+#: ../src/widgets/toolbox.cpp:3039
 msgid "(maximum force)"
 msgstr "(sức mạnh tối đa)"
 
-#: ../src/widgets/toolbox.cpp:3041
+#: ../src/widgets/toolbox.cpp:3042
 msgid "Force"
 msgstr "Sức mạnh"
 
-#: ../src/widgets/toolbox.cpp:3041
+#: ../src/widgets/toolbox.cpp:3042
 msgid "Force:"
 msgstr "Sức mạnh"
 
-#: ../src/widgets/toolbox.cpp:3041
+#: ../src/widgets/toolbox.cpp:3042
 msgid "The force of the tweak action"
 msgstr "Sức mạnh của hành động điều chỉnh"
 
-#: ../src/widgets/toolbox.cpp:3058
+#: ../src/widgets/toolbox.cpp:3059
 msgid "Push mode"
 msgstr "Chế độ đẩy"
 
-#: ../src/widgets/toolbox.cpp:3059
+#: ../src/widgets/toolbox.cpp:3060
 msgid "Push parts of paths in any direction"
 msgstr "Đẩy phần của đường nét về bất cứ hướng nào"
 
-#: ../src/widgets/toolbox.cpp:3065
+#: ../src/widgets/toolbox.cpp:3066
 msgid "Shrink mode"
 msgstr "Chế độ thu nhỏ"
 
-#: ../src/widgets/toolbox.cpp:3066
+#: ../src/widgets/toolbox.cpp:3067
 msgid "Shrink (inset) parts of paths"
 msgstr "Thu nhỏ (bu vào) phần của đường nét"
 
-#: ../src/widgets/toolbox.cpp:3072
+#: ../src/widgets/toolbox.cpp:3073
 msgid "Grow mode"
 msgstr "Chế độ phóng to"
 
-#: ../src/widgets/toolbox.cpp:3073
+#: ../src/widgets/toolbox.cpp:3074
 msgid "Grow (outset) parts of paths"
 msgstr "Phóng to (bu ra) phần của đường nét"
 
-#: ../src/widgets/toolbox.cpp:3079
+#: ../src/widgets/toolbox.cpp:3080
 msgid "Attract mode"
 msgstr "Chế độ hấp dẫn"
 
-#: ../src/widgets/toolbox.cpp:3080
+#: ../src/widgets/toolbox.cpp:3081
 msgid "Attract parts of paths towards cursor"
 msgstr "Hấp dẫn phần của đường nét đến con trỏ"
 
-#: ../src/widgets/toolbox.cpp:3086
+#: ../src/widgets/toolbox.cpp:3087
 msgid "Repel mode"
 msgstr "Chế độ đẩy lùi"
 
-#: ../src/widgets/toolbox.cpp:3087
+#: ../src/widgets/toolbox.cpp:3088
 msgid "Repel parts of paths from cursor"
 msgstr "Đẩy lùi phần của đường nét ra con trỏ"
 
-#: ../src/widgets/toolbox.cpp:3093
+#: ../src/widgets/toolbox.cpp:3094
 msgid "Roughen mode"
 msgstr "Chế độ làm cho gồ ghề"
 
-#: ../src/widgets/toolbox.cpp:3094
+#: ../src/widgets/toolbox.cpp:3095
 msgid "Roughen parts of paths"
 msgstr "Làm cho gồ ghề phần của đường nét"
 
-#: ../src/widgets/toolbox.cpp:3100
+#: ../src/widgets/toolbox.cpp:3101
 msgid "Color paint mode"
 msgstr "Chế độ sơn màu"
 
-#: ../src/widgets/toolbox.cpp:3101
+#: ../src/widgets/toolbox.cpp:3102
 msgid "Paint the tool's color upon selected objects"
 msgstr "Sơn màu của công cụ trên các đối tượng đã chọn"
 
-#: ../src/widgets/toolbox.cpp:3107
+#: ../src/widgets/toolbox.cpp:3108
 msgid "Color jitter mode"
 msgstr "Chế độ bù ngẫu nhiên màu"
 
-#: ../src/widgets/toolbox.cpp:3108
+#: ../src/widgets/toolbox.cpp:3109
 msgid "Jitter the colors of selected objects"
 msgstr "Bù ngẫu nhiên màu sắc của các đối tượng đã chọn"
 
-#: ../src/widgets/toolbox.cpp:3113
+#: ../src/widgets/toolbox.cpp:3114
 msgid "Mode:"
 msgstr "Chế độ :"
 
-#: ../src/widgets/toolbox.cpp:3133
+#: ../src/widgets/toolbox.cpp:3134
 msgid "Channels:"
 msgstr "Kênh:"
 
-#: ../src/widgets/toolbox.cpp:3144
+#: ../src/widgets/toolbox.cpp:3145
 msgid "In color mode, act on objects' hue"
 msgstr "Ở chế độ màu, thao tác sắc màu của đối tượng"
 
-#: ../src/widgets/toolbox.cpp:3147
+#: ../src/widgets/toolbox.cpp:3148
 msgid "H"
 msgstr "H"
 
-#: ../src/widgets/toolbox.cpp:3158
+#: ../src/widgets/toolbox.cpp:3159
 msgid "In color mode, act on objects' saturation"
 msgstr "Ở chế độ màu, thao tác độ bão hoà của đối tượng"
 
-#: ../src/widgets/toolbox.cpp:3161
+#: ../src/widgets/toolbox.cpp:3162
 msgid "S"
 msgstr "S"
 
-#: ../src/widgets/toolbox.cpp:3172
+#: ../src/widgets/toolbox.cpp:3173
 msgid "In color mode, act on objects' lightness"
 msgstr "Ở chế độ màu, thao tác độ sáng của đối tượng"
 
-#: ../src/widgets/toolbox.cpp:3175
+#: ../src/widgets/toolbox.cpp:3176
 msgid "L"
 msgstr "L"
 
-#: ../src/widgets/toolbox.cpp:3186
+#: ../src/widgets/toolbox.cpp:3187
 msgid "In color mode, act on objects' opacity"
 msgstr "Ở chế độ màu, thao tác độ đục của đối tượng"
 
 # Opacity — Độ đục
-#: ../src/widgets/toolbox.cpp:3189
+#: ../src/widgets/toolbox.cpp:3190
 msgid "O"
 msgstr "O"
 
 #. Fidelity
-#: ../src/widgets/toolbox.cpp:3199
+#: ../src/widgets/toolbox.cpp:3200
 msgid "(rough, simplified)"
 msgstr "(gồ ghề, đơn giản)"
 
-#: ../src/widgets/toolbox.cpp:3199
+#: ../src/widgets/toolbox.cpp:3200
 msgid "(fine, but many nodes)"
 msgstr "(chính xác, còn rất nhiều nút)"
 
-#: ../src/widgets/toolbox.cpp:3202
+#: ../src/widgets/toolbox.cpp:3203
 msgid "Fidelity"
 msgstr "Độ trung thực"
 
-#: ../src/widgets/toolbox.cpp:3202
+#: ../src/widgets/toolbox.cpp:3203
 msgid "Fidelity:"
 msgstr "Độ trung thực:"
 
-#: ../src/widgets/toolbox.cpp:3203
+#: ../src/widgets/toolbox.cpp:3204
 msgid ""
 "Low fidelity simplifies paths; high fidelity preserves path features but may "
 "generate a lot of new nodes"
@@ -14081,62 +14818,62 @@ msgstr ""
 "Độ trung thực thấp thì đơn giản hoá các đối tượng; độ trung thực bảo tồn các "
 "tính năng của đường nét còn có thể tạo ra rất nhiều nút mới"
 
-#: ../src/widgets/toolbox.cpp:3220 ../src/widgets/toolbox.cpp:3472
+#: ../src/widgets/toolbox.cpp:3221 ../src/widgets/toolbox.cpp:3473
 msgid "Pressure"
 msgstr "Ứng suất"
 
-#: ../src/widgets/toolbox.cpp:3221
+#: ../src/widgets/toolbox.cpp:3222
 msgid "Use the pressure of the input device to alter the force of tweak action"
 msgstr ""
 "Dùng ứng suất của thiết bị nhập để thay đổi sức mạnh của hành động điều chỉnh"
 
 #. Width
-#: ../src/widgets/toolbox.cpp:3327
+#: ../src/widgets/toolbox.cpp:3328
 msgid "(hairline)"
 msgstr "(nét hất lên)"
 
-#: ../src/widgets/toolbox.cpp:3327
+#: ../src/widgets/toolbox.cpp:3328
 msgid "(broad stroke)"
 msgstr "(nét rộng)"
 
-#: ../src/widgets/toolbox.cpp:3330
+#: ../src/widgets/toolbox.cpp:3331
 msgid "Pen Width"
 msgstr "Rộng bút"
 
-#: ../src/widgets/toolbox.cpp:3331
+#: ../src/widgets/toolbox.cpp:3332
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
 msgstr "Chiều rộng của bút thư pháp (so với vùng vẽ hiển thị)"
 
 #. Thinning
-#: ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3344
 msgid "(speed blows up stroke)"
 msgstr "(tăng tốc độ thì phóng to nét)"
 
-#: ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3344
 msgid "(slight widening)"
 msgstr "(rộng hơn một ít)"
 
-#: ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3344
 msgid "(constant width)"
 msgstr "(chiều rộng đều)"
 
-#: ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3344
 msgid "(slight thinning, default)"
 msgstr "(ít rộng hơn một ít, mặc định)"
 
-#: ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3344
 msgid "(speed deflates stroke)"
 msgstr "(tăng tốc độ thì thu nhỏ nét)"
 
-#: ../src/widgets/toolbox.cpp:3346
+#: ../src/widgets/toolbox.cpp:3347
 msgid "Stroke Thinning"
 msgstr "Thu hẹp nét"
 
-#: ../src/widgets/toolbox.cpp:3346
+#: ../src/widgets/toolbox.cpp:3347
 msgid "Thinning:"
 msgstr "Thu hẹp:"
 
-#: ../src/widgets/toolbox.cpp:3347
+#: ../src/widgets/toolbox.cpp:3348
 msgid ""
 "How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 "
 "makes them broader, 0 makes width independent of velocity)"
@@ -14145,27 +14882,27 @@ msgstr ""
 "không phụ thuộc vào tốc độ)"
 
 #. Angle
-#: ../src/widgets/toolbox.cpp:3359
+#: ../src/widgets/toolbox.cpp:3360
 msgid "(left edge up)"
 msgstr "(cạnh bên trái ở trên)"
 
-#: ../src/widgets/toolbox.cpp:3359
+#: ../src/widgets/toolbox.cpp:3360
 msgid "(horizontal)"
 msgstr "(nằm  ngang)"
 
-#: ../src/widgets/toolbox.cpp:3359
+#: ../src/widgets/toolbox.cpp:3360
 msgid "(right edge up)"
 msgstr "(cạnh bên phải ở trên)"
 
-#: ../src/widgets/toolbox.cpp:3362
+#: ../src/widgets/toolbox.cpp:3363
 msgid "Pen Angle"
 msgstr "Góc bút"
 
-#: ../src/widgets/toolbox.cpp:3362
+#: ../src/widgets/toolbox.cpp:3363
 msgid "Angle:"
 msgstr "Góc:"
 
-#: ../src/widgets/toolbox.cpp:3363
+#: ../src/widgets/toolbox.cpp:3364
 msgid ""
 "The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if "
 "fixation = 0)"
@@ -14173,27 +14910,27 @@ msgstr ""
 "Góc của ngòi bút (theo độ ; 0=nằm ngang; không có tác động nếu độ cố định=0)"
 
 #. Fixation
-#: ../src/widgets/toolbox.cpp:3376
+#: ../src/widgets/toolbox.cpp:3377
 msgid "(perpendicular to stroke, \"brush\")"
 msgstr "(vuông góc với nét, « chổi »)"
 
-#: ../src/widgets/toolbox.cpp:3376
+#: ../src/widgets/toolbox.cpp:3377
 msgid "(almost fixed, default)"
 msgstr "(gần cố định, mặc định)"
 
-#: ../src/widgets/toolbox.cpp:3376
+#: ../src/widgets/toolbox.cpp:3377
 msgid "(fixed by Angle, \"pen\")"
 msgstr "(cố định theo góc, « bút »)"
 
-#: ../src/widgets/toolbox.cpp:3379
+#: ../src/widgets/toolbox.cpp:3380
 msgid "Fixation"
 msgstr "Độ cố định"
 
-#: ../src/widgets/toolbox.cpp:3379
+#: ../src/widgets/toolbox.cpp:3380
 msgid "Fixation:"
 msgstr "Độ cố định:"
 
-#: ../src/widgets/toolbox.cpp:3380
+#: ../src/widgets/toolbox.cpp:3381
 msgid ""
 "Angle behavior (0 = nib always perpendicular to stroke direction, 1 = fixed "
 "angle)"
@@ -14201,31 +14938,31 @@ msgstr ""
 "Ứng xử góc (0 = ngòi bút luôn luôn vuông góc hướng của nét, 1 = góc cố định)"
 
 #. Cap Rounding
-#: ../src/widgets/toolbox.cpp:3392
+#: ../src/widgets/toolbox.cpp:3393
 msgid "(blunt caps, default)"
 msgstr "(nắp cùn, mặc định)"
 
-#: ../src/widgets/toolbox.cpp:3392
+#: ../src/widgets/toolbox.cpp:3393
 msgid "(slightly bulging)"
 msgstr "(lồi ra một ít)"
 
-#: ../src/widgets/toolbox.cpp:3392
+#: ../src/widgets/toolbox.cpp:3393
 msgid "(approximately round)"
 msgstr "(khoảng hình tròn)"
 
-#: ../src/widgets/toolbox.cpp:3392
+#: ../src/widgets/toolbox.cpp:3393
 msgid "(long protruding caps)"
 msgstr "(nắp lồi ra nhiều)"
 
-#: ../src/widgets/toolbox.cpp:3396
+#: ../src/widgets/toolbox.cpp:3397
 msgid "Cap rounding"
 msgstr "Làm tròn nắp"
 
-#: ../src/widgets/toolbox.cpp:3396
+#: ../src/widgets/toolbox.cpp:3397
 msgid "Caps:"
 msgstr "Nắp:"
 
-#: ../src/widgets/toolbox.cpp:3397
+#: ../src/widgets/toolbox.cpp:3398
 msgid ""
 "Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = "
 "round caps)"
@@ -14234,93 +14971,93 @@ msgstr ""
 "1 = nắp tròn)"
 
 #. Tremor
-#: ../src/widgets/toolbox.cpp:3409
+#: ../src/widgets/toolbox.cpp:3410
 msgid "(smooth line)"
 msgstr "(đường mịn)"
 
-#: ../src/widgets/toolbox.cpp:3409
+#: ../src/widgets/toolbox.cpp:3410
 msgid "(slight tremor)"
 msgstr "(run một ít)"
 
-#: ../src/widgets/toolbox.cpp:3409
+#: ../src/widgets/toolbox.cpp:3410
 msgid "(noticeable tremor)"
 msgstr "(run hiện rõ)"
 
-#: ../src/widgets/toolbox.cpp:3409
+#: ../src/widgets/toolbox.cpp:3410
 msgid "(maximum tremor)"
 msgstr "(run tối đa)"
 
-#: ../src/widgets/toolbox.cpp:3412
+#: ../src/widgets/toolbox.cpp:3413
 msgid "Stroke Tremor"
 msgstr "Nét run"
 
-#: ../src/widgets/toolbox.cpp:3412
+#: ../src/widgets/toolbox.cpp:3413
 msgid "Tremor:"
 msgstr "Run:"
 
-#: ../src/widgets/toolbox.cpp:3413
+#: ../src/widgets/toolbox.cpp:3414
 msgid "Increase to make strokes rugged and trembling"
 msgstr "Tăng lên để làm cho nét gồ ghề và run"
 
 #. Wiggle
-#: ../src/widgets/toolbox.cpp:3426
+#: ../src/widgets/toolbox.cpp:3427
 msgid "(no wiggle)"
 msgstr "(không ngọ nguậy)"
 
-#: ../src/widgets/toolbox.cpp:3426
+#: ../src/widgets/toolbox.cpp:3427
 msgid "(slight deviation)"
 msgstr "(lệch một ít)"
 
-#: ../src/widgets/toolbox.cpp:3426
+#: ../src/widgets/toolbox.cpp:3427
 msgid "(wild waves and curls)"
 msgstr "(rất nhiều sóng và uốn)"
 
-#: ../src/widgets/toolbox.cpp:3429
+#: ../src/widgets/toolbox.cpp:3430
 msgid "Pen Wiggle"
 msgstr "Bút ngọ nguậy"
 
-#: ../src/widgets/toolbox.cpp:3429
+#: ../src/widgets/toolbox.cpp:3430
 msgid "Wiggle:"
 msgstr "Ngọ nguậy:"
 
-#: ../src/widgets/toolbox.cpp:3430
+#: ../src/widgets/toolbox.cpp:3431
 msgid "Increase to make the pen waver and wiggle"
 msgstr "Tăng lên để làm cho cái bút rung rinh và ngọ nguậy"
 
 #. Mass
-#: ../src/widgets/toolbox.cpp:3442
+#: ../src/widgets/toolbox.cpp:3443
 msgid "(no inertia)"
 msgstr "(không quán tính)"
 
-#: ../src/widgets/toolbox.cpp:3442
+#: ../src/widgets/toolbox.cpp:3443
 msgid "(slight smoothing, default)"
 msgstr "(làm mịn một ít, mặc định)"
 
-#: ../src/widgets/toolbox.cpp:3442
+#: ../src/widgets/toolbox.cpp:3443
 msgid "(noticeable lagging)"
 msgstr "(trễ hiện rõ)"
 
-#: ../src/widgets/toolbox.cpp:3442
+#: ../src/widgets/toolbox.cpp:3443
 msgid "(maximum inertia)"
 msgstr "(quán tính tối đa)"
 
-#: ../src/widgets/toolbox.cpp:3445
+#: ../src/widgets/toolbox.cpp:3446
 msgid "Pen Mass"
 msgstr "Khối lượng bút"
 
-#: ../src/widgets/toolbox.cpp:3445
+#: ../src/widgets/toolbox.cpp:3446
 msgid "Mass:"
 msgstr "Khối lượng:"
 
-#: ../src/widgets/toolbox.cpp:3446
+#: ../src/widgets/toolbox.cpp:3447
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
 msgstr "Tăng lên để làm cho cái bút kéo theo, giống như nó bị quán tính hoãn"
 
-#: ../src/widgets/toolbox.cpp:3460
+#: ../src/widgets/toolbox.cpp:3461
 msgid "Trace Background"
 msgstr "Nền theo"
 
-#: ../src/widgets/toolbox.cpp:3461
+#: ../src/widgets/toolbox.cpp:3462
 msgid ""
 "Trace the lightness of the background by the width of the pen (white - "
 "minimum width, black - maximum width)"
@@ -14328,83 +15065,83 @@ msgstr ""
 "Độ sáng của nền theo chiều rộng của bút: màu trắng - chiều rộng tối thiểu, "
 "màu đen - chiều rộng tối đa"
 
-#: ../src/widgets/toolbox.cpp:3473
+#: ../src/widgets/toolbox.cpp:3474
 msgid "Use the pressure of the input device to alter the width of the pen"
 msgstr "Dùng cảm ứng lực ấn trên bàn vẽ điện tử, thay đổi độ rộng nét"
 
-#: ../src/widgets/toolbox.cpp:3484
+#: ../src/widgets/toolbox.cpp:3485
 msgid "Tilt"
 msgstr "Nghiêng"
 
-#: ../src/widgets/toolbox.cpp:3485
+#: ../src/widgets/toolbox.cpp:3486
 msgid "Use the tilt of the input device to alter the angle of the pen's nib"
 msgstr "Dùng cảm ứng nghiêng trên bàn vẽ, thay đổi góc của ngòi bút"
 
-#: ../src/widgets/toolbox.cpp:3498
+#: ../src/widgets/toolbox.cpp:3499
 msgid "Reset all parameters to defaults"
 msgstr "Đặt mọi tham số về mặc định"
 
-#: ../src/widgets/toolbox.cpp:3580
+#: ../src/widgets/toolbox.cpp:3581
 msgid "Arc: Change start/end"
 msgstr "Cung: đổi đầu/cuối"
 
-#: ../src/widgets/toolbox.cpp:3646
+#: ../src/widgets/toolbox.cpp:3647
 msgid "Arc: Change open/closed"
 msgstr "Cung: đổi mở/đóng"
 
-#: ../src/widgets/toolbox.cpp:3769
+#: ../src/widgets/toolbox.cpp:3770
 msgid "Start"
 msgstr "Đầu"
 
-#: ../src/widgets/toolbox.cpp:3769
+#: ../src/widgets/toolbox.cpp:3770
 msgid "Start:"
 msgstr "Đầu :"
 
-#: ../src/widgets/toolbox.cpp:3770
+#: ../src/widgets/toolbox.cpp:3771
 msgid "The angle (in degrees) from the horizontal to the arc's start point"
 msgstr "Góc (theo độ) từ đường nằm ngang đến điểm bắt đầu của hình cung"
 
-#: ../src/widgets/toolbox.cpp:3782
+#: ../src/widgets/toolbox.cpp:3783
 msgid "End"
 msgstr "Cuối"
 
-#: ../src/widgets/toolbox.cpp:3782
+#: ../src/widgets/toolbox.cpp:3783
 msgid "End:"
 msgstr "Cuối:"
 
-#: ../src/widgets/toolbox.cpp:3783
+#: ../src/widgets/toolbox.cpp:3784
 msgid "The angle (in degrees) from the horizontal to the arc's end point"
 msgstr "Góc (theo độ) từ đường nằm ngang đến điểm kết thúc của hình cung"
 
-#: ../src/widgets/toolbox.cpp:3799
+#: ../src/widgets/toolbox.cpp:3800
 msgid "Closed arc"
 msgstr "Cung khép kín"
 
-#: ../src/widgets/toolbox.cpp:3800
+#: ../src/widgets/toolbox.cpp:3801
 msgid "Switch to segment (closed shape with two radii)"
 msgstr "Chuyển đổi sang quạt (hình cung và hai bán kính)"
 
-#: ../src/widgets/toolbox.cpp:3806
+#: ../src/widgets/toolbox.cpp:3807
 msgid "Open Arc"
 msgstr "Cung hở"
 
-#: ../src/widgets/toolbox.cpp:3807
+#: ../src/widgets/toolbox.cpp:3808
 msgid "Switch to arc (unclosed shape)"
 msgstr "Chuyển đổi sang hình cung (hình hở)"
 
-#: ../src/widgets/toolbox.cpp:3830
+#: ../src/widgets/toolbox.cpp:3831
 msgid "Make whole"
 msgstr "Khép kín"
 
-#: ../src/widgets/toolbox.cpp:3831
+#: ../src/widgets/toolbox.cpp:3832
 msgid "Make the shape a whole ellipse, not arc or segment"
 msgstr "Làm cho hình là thành elip kín, không phải hình cung hay quạt"
 
-#: ../src/widgets/toolbox.cpp:3898
+#: ../src/widgets/toolbox.cpp:3899
 msgid "Pick alpha"
 msgstr "Lấy alpha"
 
-#: ../src/widgets/toolbox.cpp:3899
+#: ../src/widgets/toolbox.cpp:3900
 msgid ""
 "Pick both the color and the alpha (transparency) under cursor; otherwise, "
 "pick only the visible color premultiplied by alpha"
@@ -14412,38 +15149,38 @@ msgstr ""
 "Lấy cả hai màu và alpha (tính trong suốt) dưới con trỏ; nếu không thì lấy "
 "chỉ màu hiện rõ được nhân sẵn với alpha"
 
-#: ../src/widgets/toolbox.cpp:3910
+#: ../src/widgets/toolbox.cpp:3911
 msgid "Set alpha"
 msgstr "Đặt alpha"
 
-#: ../src/widgets/toolbox.cpp:3911
+#: ../src/widgets/toolbox.cpp:3912
 msgid ""
 "If alpha was picked, assign it to selection as fill or stroke transparency"
 msgstr ""
 "Nếu lấy alpha, giá trị alpha sẽ là độ trong suốt của màu tô hay nét vẽ trong "
 "vùng chọn "
 
-#: ../src/widgets/toolbox.cpp:4240
+#: ../src/widgets/toolbox.cpp:4239
 msgid "Text: Change font family"
 msgstr "Văn bản: đổi nhóm phông"
 
-#: ../src/widgets/toolbox.cpp:4325
+#: ../src/widgets/toolbox.cpp:4324
 msgid "Text: Change alignment"
 msgstr "Văn bản: đổi căn chỉnh"
 
-#: ../src/widgets/toolbox.cpp:4408
+#: ../src/widgets/toolbox.cpp:4407
 msgid "Text: Change font style"
 msgstr "Văn bản: đổi kiểu phông"
 
-#: ../src/widgets/toolbox.cpp:4455
+#: ../src/widgets/toolbox.cpp:4454
 msgid "Text: Change orientation"
 msgstr "Văn bản: đổi hướng"
 
-#: ../src/widgets/toolbox.cpp:4545
+#: ../src/widgets/toolbox.cpp:4553
 msgid "Text: Change font size"
 msgstr "Văn bản: đổi kích cỡ phông"
 
-#: ../src/widgets/toolbox.cpp:4766
+#: ../src/widgets/toolbox.cpp:4792
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -14451,96 +15188,92 @@ msgstr ""
 "Phông này chưa được cài đặt vào hệ thống của bạn nên trình Inkscape sẽ dùng "
 "phông mặc định thay vào đó."
 
-#: ../src/widgets/toolbox.cpp:4805
+#: ../src/widgets/toolbox.cpp:4831
 msgid "Align left"
 msgstr "Sắp hàng bên trái"
 
-#: ../src/widgets/toolbox.cpp:4816
-msgid "Center"
-msgstr "Giữa lại"
-
-#: ../src/widgets/toolbox.cpp:4827
+#: ../src/widgets/toolbox.cpp:4853
 msgid "Align right"
 msgstr "Sắp hàng bên phải"
 
-#: ../src/widgets/toolbox.cpp:4838
+#: ../src/widgets/toolbox.cpp:4864
 msgid "Justify"
 msgstr "Sắp thẳng"
 
-#: ../src/widgets/toolbox.cpp:4854
+#: ../src/widgets/toolbox.cpp:4880
 msgid "Bold"
 msgstr "Đậm"
 
-#: ../src/widgets/toolbox.cpp:4865
+#: ../src/widgets/toolbox.cpp:4891
 msgid "Italic"
 msgstr "Nghiêng"
 
-#: ../src/widgets/toolbox.cpp:4997
+#: ../src/widgets/toolbox.cpp:5023
 msgid "Change connector spacing"
 msgstr "Đổi khoảng cách đường nối"
 
-#: ../src/widgets/toolbox.cpp:5083
+#: ../src/widgets/toolbox.cpp:5109
 msgid "Avoid"
 msgstr "Tránh"
 
-#: ../src/widgets/toolbox.cpp:5093
+#: ../src/widgets/toolbox.cpp:5119
 msgid "Ignore"
 msgstr "Bỏ qua"
 
-#: ../src/widgets/toolbox.cpp:5105
+#: ../src/widgets/toolbox.cpp:5131
 msgid "Connector Spacing"
 msgstr "Khoảng cách đường nối"
 
-#: ../src/widgets/toolbox.cpp:5105
+#: ../src/widgets/toolbox.cpp:5131
 msgid "Spacing:"
 msgstr "Khoảng cách:"
 
-#: ../src/widgets/toolbox.cpp:5106
+#: ../src/widgets/toolbox.cpp:5132
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 "Khoảng cách còn lại chung quanh đối tượng do đường nối tự động cập nhật"
 
-#: ../src/widgets/toolbox.cpp:5117
+#: ../src/widgets/toolbox.cpp:5143
 msgid "Graph"
 msgstr "Đồ thị"
 
-#: ../src/widgets/toolbox.cpp:5127
+#: ../src/widgets/toolbox.cpp:5153
 msgid "Connector Length"
 msgstr "Chiều dài đường nối"
 
-#: ../src/widgets/toolbox.cpp:5127
+#: ../src/widgets/toolbox.cpp:5153
 msgid "Length:"
 msgstr "Dài:"
 
-#: ../src/widgets/toolbox.cpp:5128
+#: ../src/widgets/toolbox.cpp:5154
 msgid "Ideal length for connectors when layout is applied"
 msgstr "Chiều dài lý tưởng cho đường nối khi bố trí được áp dụng"
 
-#: ../src/widgets/toolbox.cpp:5140
+#: ../src/widgets/toolbox.cpp:5166
 msgid "Downwards"
 msgstr "Xuống"
 
-#: ../src/widgets/toolbox.cpp:5141
+#: ../src/widgets/toolbox.cpp:5167
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Làm cho đường nối có hình nút cuối (mũi tên) chỉ xuống"
 
-#: ../src/widgets/toolbox.cpp:5157
+#: ../src/widgets/toolbox.cpp:5183
 msgid "Do not allow overlapping shapes"
 msgstr "Không đặt các hình chồng chéo lên nhau"
 
-#: ../src/widgets/toolbox.cpp:5258
+#: ../src/widgets/toolbox.cpp:5284
 msgid "Fill by"
 msgstr "Tô theo"
 
-#: ../src/widgets/toolbox.cpp:5259
+#: ../src/widgets/toolbox.cpp:5285
 msgid "Fill by:"
 msgstr "Tô theo :"
 
-#: ../src/widgets/toolbox.cpp:5271
+#: ../src/widgets/toolbox.cpp:5297
 msgid "Fill Threshold"
 msgstr "Ngưỡng tô"
 
-#: ../src/widgets/toolbox.cpp:5272
+#: ../src/widgets/toolbox.cpp:5298
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
@@ -14548,29 +15281,29 @@ msgstr ""
 "Hiệu số tối đa được phép giữa điểm ảnh đã nhấn vào và các điểm ảnh chung "
 "quanh cần tính khi tô"
 
-#: ../src/widgets/toolbox.cpp:5296
+#: ../src/widgets/toolbox.cpp:5322
 msgid "Grow/shrink by"
 msgstr "Phóng to/thu nhỏ theo"
 
-#: ../src/widgets/toolbox.cpp:5296
+#: ../src/widgets/toolbox.cpp:5322
 msgid "Grow/shrink by:"
 msgstr "Phóng to/thu nhỏ theo :"
 
-#: ../src/widgets/toolbox.cpp:5297
+#: ../src/widgets/toolbox.cpp:5323
 msgid ""
 "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "Số lượng cần phóng to (số dương) hay thu nhỏ (số âm) đường nét tô đã tạo"
 
-#: ../src/widgets/toolbox.cpp:5322
+#: ../src/widgets/toolbox.cpp:5348
 msgid "Close gaps"
 msgstr "Đóng khe"
 
-#: ../src/widgets/toolbox.cpp:5323
+#: ../src/widgets/toolbox.cpp:5349
 msgid "Close gaps:"
 msgstr "Đóng khe:"
 
-#: ../src/widgets/toolbox.cpp:5335
+#: ../src/widgets/toolbox.cpp:5361
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
@@ -14770,6 +15503,16 @@ msgstr ""
 "Văn lệnh « dia2svg.sh » nên được cài đặt cùng với bản phát hành Inkscape. "
 "Nếu không, rất có thể là bản cài đặt Inkscape bị sai."
 
+#: ../share/extensions/dimension.inx.h:3
+#, fuzzy
+msgid "X Offset"
+msgstr "Dịch hình"
+
+#: ../share/extensions/dimension.inx.h:4
+#, fuzzy
+msgid "Y Offset"
+msgstr "Dịch hình"
+
 #: ../share/extensions/dots.inx.h:1
 msgid "Dot size"
 msgstr "Kích cỡ chấm"
@@ -14783,7 +15526,7 @@ msgid "Number Nodes"
 msgstr "Nút số"
 
 #: ../share/extensions/dots.inx.h:4 ../share/extensions/handles.inx.h:2
-#: ../share/extensions/measure.inx.h:10
+#: ../share/extensions/measure.inx.h:11
 msgid "Visualize Path"
 msgstr "Hình dung đường nét"
 
@@ -15220,6 +15963,16 @@ msgstr "Độ chính xác"
 msgid "Scale Factor (Drawing:Real Length) = 1:"
 msgstr "Hệ số co giãn (Bản vẽ:Chiều dài thật) = 1:"
 
+#: ../share/extensions/measure.inx.h:10
+msgid ""
+"This effect measures the length of the selected path and adds it as a text-"
+"on-path object with the selected unit. The number of significant digits can "
+"be controlled by the Precision field. The Offset field controls the distance "
+"from the text to the path. The Scale factor can be used to make measurements "
+"in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the "
+"real world, Scale must be set to 250."
+msgstr ""
+
 #: ../share/extensions/motion.inx.h:1
 msgid "Angle"
 msgstr "Góc"
@@ -15269,52 +16022,69 @@ msgid "Bleed (in)"
 msgstr "Chảy màu (vào)"
 
 #: ../share/extensions/perfectboundcover.inx.h:2
+msgid "Bond Weight #"
+msgstr ""
+
+#: ../share/extensions/perfectboundcover.inx.h:3
 msgid "Book Height (inches)"
 msgstr "Chiều cao sách (insơ)"
 
-#: ../share/extensions/perfectboundcover.inx.h:3
+#: ../share/extensions/perfectboundcover.inx.h:4
 msgid "Book Properties"
 msgstr "Thuộc tính sách"
 
-#: ../share/extensions/perfectboundcover.inx.h:4
+#: ../share/extensions/perfectboundcover.inx.h:5
 msgid "Book Width (inches)"
 msgstr "Chiều rộng sách (insơ)"
 
-#: ../share/extensions/perfectboundcover.inx.h:5
+#: ../share/extensions/perfectboundcover.inx.h:6
+msgid "Caliper (inches)"
+msgstr ""
+
+#: ../share/extensions/perfectboundcover.inx.h:7
 msgid "Cover"
 msgstr "Bìa"
 
-#: ../share/extensions/perfectboundcover.inx.h:6
+#: ../share/extensions/perfectboundcover.inx.h:8
 msgid "Cover Thickness Measurement"
 msgstr "Đo độ dày bìa"
 
-#: ../share/extensions/perfectboundcover.inx.h:7
+#: ../share/extensions/perfectboundcover.inx.h:9
 msgid "Generate Template"
 msgstr "Tạo ra mẫu tài liệu"
 
-#: ../share/extensions/perfectboundcover.inx.h:8
+#: ../share/extensions/perfectboundcover.inx.h:10
 msgid "Interior Pages"
 msgstr "Trang bên trong"
 
-#: ../share/extensions/perfectboundcover.inx.h:9
+#: ../share/extensions/perfectboundcover.inx.h:11
 msgid "Note: Bond Weight # calculations are a best-guess estimate."
 msgstr "Ghi chú : sự tính Bond Weight # chỉ ước lượng."
 
-#: ../share/extensions/perfectboundcover.inx.h:10
+#: ../share/extensions/perfectboundcover.inx.h:12
 msgid "Number of Pages"
 msgstr "Số trang"
 
-#: ../share/extensions/perfectboundcover.inx.h:11
+#: ../share/extensions/perfectboundcover.inx.h:13
+msgid "Pages Per Inch (PPI)"
+msgstr ""
+
+#: ../share/extensions/perfectboundcover.inx.h:14
 msgid "Paper Thickness Measurement"
 msgstr "Đo độ dày tờ giấy"
 
-#: ../share/extensions/perfectboundcover.inx.h:12
+#: ../share/extensions/perfectboundcover.inx.h:15
 msgid "Perfect-Bound Cover"
 msgstr "Bìa sách hoàn toàn"
 
-#: ../share/extensions/perfectboundcover.inx.h:13
+#: ../share/extensions/perfectboundcover.inx.h:17
 msgid "Remove existing guides"
 msgstr "Bỏ các đường gióng đã có"
+
+#: ../share/extensions/perfectboundcover.inx.h:18
+#, fuzzy
+msgid "Specify Width"
+msgstr "Rộng bút"
 
 #: ../share/extensions/perspective.inx.h:2
 msgid "Perspective"
@@ -15584,187 +16354,204 @@ msgstr "Nhập Windows Metafile"
 msgid "XAML Input"
 msgstr "Nhập XAML"
 
-msgid "Measure unit:"
-msgstr "Đơn vị đo :"
+#, fuzzy
+#~ msgid "Preferred resolution (dpi) of bitmaps"
+#~ msgstr "Độ phân giải đã thích (điểm trên mỗi insơ) của ảnh bitmap"
 
-msgid "Degrees:"
-msgstr "Độ :"
+#, fuzzy
+#~ msgid "%s selected out of %d gradient handles on %d selected object"
+#~ msgid_plural "%s selected out of %d gradient handles on %d selected objects"
+#~ msgstr[0] ""
+#~ "%s được chọn trên %d chốt kéo của chuyển sắc trên %d đối tượng đã chọn"
 
-msgid "Convolve"
-msgstr "Quấn lại"
+#~ msgid "Search Tag"
+#~ msgstr "Thẻ tìm kiếm"
 
-msgid "Kernel Array"
-msgstr "Mảng hạt"
+#~ msgid "PLACEHOLDER, DO NOT TRANSLATE"
+#~ msgstr "PLACEHOLDER, DO NOT TRANSLATE"
 
-msgid "Apply Convolve Effect"
-msgstr "Áp dụng hiệu ứng quấn lại"
+#~ msgid "Measure unit:"
+#~ msgstr "Đơn vị đo :"
+
+#~ msgid "Degrees:"
+#~ msgstr "Độ :"
+
+#~ msgid "Convolve"
+#~ msgstr "Quấn lại"
+
+#~ msgid "Kernel Array"
+#~ msgstr "Mảng hạt"
+
+#~ msgid "Apply Convolve Effect"
+#~ msgstr "Áp dụng hiệu ứng quấn lại"
 
 # Name: don't translate / Tên: đừng dịch
-msgid "PostScript 3"
-msgstr "PostScript 3"
+#~ msgid "PostScript 3"
+#~ msgstr "PostScript 3"
 
-msgid "Pin Dialog"
-msgstr "Ghim hộp thoại"
+#~ msgid "Pin Dialog"
+#~ msgstr "Ghim hộp thoại"
 
-msgid ""
-"Toggles whether the dialog stays for multiple executions or disappears after "
-"one"
-msgstr ""
-"Bật/tắt giữ lại hộp thoại để thực hiện nhiều lần, hay biến mật sau một lần"
+#~ msgid ""
+#~ "Toggles whether the dialog stays for multiple executions or disappears "
+#~ "after one"
+#~ msgstr ""
+#~ "Bật/tắt giữ lại hộp thoại để thực hiện nhiều lần, hay biến mật sau một lần"
 
-msgid "???"
-msgstr "???"
+#~ msgid "???"
+#~ msgstr "???"
 
-msgid "Start point jitter"
-msgstr "Bù ngẫu nhiên điểm đầu"
+#~ msgid "Start point jitter"
+#~ msgstr "Bù ngẫu nhiên điểm đầu"
 
-msgid "End point jitter"
-msgstr "Bù ngẫu nhiên điểm cuối"
+#~ msgid "End point jitter"
+#~ msgstr "Bù ngẫu nhiên điểm cuối"
 
-msgid ""
-"Determines whether lines cluster together or have an equal spacing between "
-"each other."
-msgstr ""
-"Xác định nếu các đường chùm với nhau, hoặc có cùng một khoảng cách ở giữa."
+#~ msgid ""
+#~ "Determines whether lines cluster together or have an equal spacing "
+#~ "between each other."
+#~ msgstr ""
+#~ "Xác định nếu các đường chùm với nhau, hoặc có cùng một khoảng cách ở giữa."
 
-msgid "Snap nodes to grid lines, to guides, to paths, and to other nodes"
-msgstr "Đính các nút tới đường lưới, tới đường gióng, và tới các nút khác"
+#~ msgid "Snap nodes to grid lines, to guides, to paths, and to other nodes"
+#~ msgstr "Đính các nút tới đường lưới, tới đường gióng, và tới các nút khác"
 
-msgid "Snap at specified d_istance"
-msgstr "Đính ở khoảng đã gh_i rõ"
+#~ msgid "Snap at specified d_istance"
+#~ msgstr "Đính ở khoảng đã gh_i rõ"
 
-msgid "Snap di_stance"
-msgstr "_Khoảng đĩnh"
+#~ msgid "Snap di_stance"
+#~ msgstr "_Khoảng đĩnh"
 
-msgid "Snap at specified dis_tance"
-msgstr "Đính ở khoảng đã ghi _rõ"
+#~ msgid "Snap at specified dis_tance"
+#~ msgstr "Đính ở khoảng đã ghi _rõ"
 
-msgid "Snap at specified distan_ce"
-msgstr "Đí_nh ở khoảng đã ghi rõ"
+#~ msgid "Snap at specified distan_ce"
+#~ msgstr "Đí_nh ở khoảng đã ghi rõ"
 
-msgid "_Include the object's rotation center"
-msgstr "Gồm có tâm xoay của đố_i tượng"
+#~ msgid "_Include the object's rotation center"
+#~ msgstr "Gồm có tâm xoay của đố_i tượng"
 
-msgid "<b>Miscellaneous</b>"
-msgstr "<b>Linh tinh</b>"
+#~ msgid "<b>Miscellaneous</b>"
+#~ msgstr "<b>Linh tinh</b>"
 
-msgid "Slope"
-msgstr "Dốc"
+#~ msgid "Slope"
+#~ msgstr "Dốc"
 
-msgid "Intercept"
-msgstr "Điểm chắn"
+#~ msgid "Intercept"
+#~ msgstr "Điểm chắn"
 
-msgid "Default metadata that will be used for new documents:"
-msgstr "Siêu dữ liệu mặc định cần dùng cho các tài liệu mới:"
+#~ msgid "Default metadata that will be used for new documents:"
+#~ msgstr "Siêu dữ liệu mặc định cần dùng cho các tài liệu mới:"
 
-msgid "These values will be used as default metadata for new documents"
-msgstr ""
-"Những giá trị này sẽ được dùng làm siêu dữ liệu mặc định cho các tài liệu mới"
+#~ msgid "These values will be used as default metadata for new documents"
+#~ msgstr ""
+#~ "Những giá trị này sẽ được dùng làm siêu dữ liệu mặc định cho các tài liệu "
+#~ "mới"
 
-msgid "Date:"
-msgstr "Ngày:"
+#~ msgid "Date:"
+#~ msgstr "Ngày:"
 
-msgid "Format:"
-msgstr "Định dạng:"
+#~ msgid "Format:"
+#~ msgstr "Định dạng:"
 
-msgid "Creator:"
-msgstr "Người tạo :"
+#~ msgid "Creator:"
+#~ msgstr "Người tạo :"
 
-msgid "Rights:"
-msgstr "Quyền hạn:"
+#~ msgid "Rights:"
+#~ msgstr "Quyền hạn:"
 
-msgid "Publisher:"
-msgstr "Nhà xuất bản:"
+#~ msgid "Publisher:"
+#~ msgstr "Nhà xuất bản:"
 
-msgid "Identifier:"
-msgstr "Nhận diện:"
+#~ msgid "Identifier:"
+#~ msgstr "Nhận diện:"
 
-msgid "Source:"
-msgstr "Nguồn:"
+#~ msgid "Source:"
+#~ msgstr "Nguồn:"
 
-msgid "Relation:"
-msgstr "Quan hệ:"
+#~ msgid "Relation:"
+#~ msgstr "Quan hệ:"
 
-msgid "Language:"
-msgstr "Ngôn ngữ :"
+#~ msgid "Language:"
+#~ msgstr "Ngôn ngữ :"
 
-msgid "Subject:"
-msgstr "Chủ đề"
+#~ msgid "Subject:"
+#~ msgstr "Chủ đề"
 
-msgid "Coverage:"
-msgstr "Phạm vi:"
+#~ msgid "Coverage:"
+#~ msgstr "Phạm vi:"
 
-msgid "Description:"
-msgstr "Mô tả:"
+#~ msgid "Description:"
+#~ msgstr "Mô tả:"
 
-msgid "Contributor:"
-msgstr "Người đóng góp:"
+#~ msgid "Contributor:"
+#~ msgstr "Người đóng góp:"
 
-msgid "Default Metadata"
-msgstr "Siêu dữ liệu mặc định"
+#~ msgid "Default Metadata"
+#~ msgstr "Siêu dữ liệu mặc định"
 
-msgid "Creative Commons By 3.0"
-msgstr "Creative Commons By 3.0"
+#~ msgid "Creative Commons By 3.0"
+#~ msgstr "Creative Commons By 3.0"
 
-msgid "Creative Commons By Sa 3.0"
-msgstr "Creative Commons By Sa 3.0"
+#~ msgid "Creative Commons By Sa 3.0"
+#~ msgstr "Creative Commons By Sa 3.0"
 
-msgid "Creative Commons By Nd 3.0"
-msgstr "Creative Commons By Nd 3.0"
+#~ msgid "Creative Commons By Nd 3.0"
+#~ msgstr "Creative Commons By Nd 3.0"
 
-msgid "Creative Commons By Nc 3.0"
-msgstr "Creative Commons By Nc 3.0"
+#~ msgid "Creative Commons By Nc 3.0"
+#~ msgstr "Creative Commons By Nc 3.0"
 
-msgid "Creative Commons By Nc Sa 3.0"
-msgstr "Creative Commons By Nc Sa 3.0"
+#~ msgid "Creative Commons By Nc Sa 3.0"
+#~ msgstr "Creative Commons By Nc Sa 3.0"
 
-msgid "Creative Commons By Nc Nd 3.0"
-msgstr "Creative Commons By Nc Nd 3.0"
+#~ msgid "Creative Commons By Nc Nd 3.0"
+#~ msgstr "Creative Commons By Nc Nd 3.0"
 
-msgid "Default Licensing for new documents:"
-msgstr "Giấy phép mặc định cho các tài liệu mới:"
+#~ msgid "Default Licensing for new documents:"
+#~ msgstr "Giấy phép mặc định cho các tài liệu mới:"
 
-msgid "All Rights Reserved"
-msgstr "Bảo lưu mọi quyền"
+#~ msgid "All Rights Reserved"
+#~ msgstr "Bảo lưu mọi quyền"
 
-msgid "Creative Commons: Attribution"
-msgstr "Creative Commons: Quy ra"
+#~ msgid "Creative Commons: Attribution"
+#~ msgstr "Creative Commons: Quy ra"
 
-msgid "Creative Commons: Attribution-ShareAlike"
-msgstr "Creative Commons: Quy ra - Chia đều"
+#~ msgid "Creative Commons: Attribution-ShareAlike"
+#~ msgstr "Creative Commons: Quy ra - Chia đều"
 
-msgid "Creative Commons: Attribution-NoDerivatives"
-msgstr "Creative Commons: Quy ra - Không xuất phát"
+#~ msgid "Creative Commons: Attribution-NoDerivatives"
+#~ msgstr "Creative Commons: Quy ra - Không xuất phát"
 
-msgid "Creative Commons: Attribution-NonCommercial"
-msgstr "Creative Commons: Quy ra - Không thương mại"
+#~ msgid "Creative Commons: Attribution-NonCommercial"
+#~ msgstr "Creative Commons: Quy ra - Không thương mại"
 
-msgid "Creative Commons: Attribution-NonCommercial-ShareAlike"
-msgstr "Creative Commons: Quy ra - Không thương mại - Chia đều"
+#~ msgid "Creative Commons: Attribution-NonCommercial-ShareAlike"
+#~ msgstr "Creative Commons: Quy ra - Không thương mại - Chia đều"
 
-msgid "Creative Commons: Attribution-NonCommercial-NoDerivatives"
-msgstr "Creative Commons: Quy ra - Không thương mại - không xuất phát"
+#~ msgid "Creative Commons: Attribution-NonCommercial-NoDerivatives"
+#~ msgstr "Creative Commons: Quy ra - Không thương mại - không xuất phát"
 
-msgid "Free Art License"
-msgstr "Giấy phép Nghệ thuật Tự do"
+#~ msgid "Free Art License"
+#~ msgstr "Giấy phép Nghệ thuật Tự do"
 
-msgid "Default License"
-msgstr "Giấy phép mặc định"
+#~ msgid "Default License"
+#~ msgstr "Giấy phép mặc định"
 
-msgid "Gri_d Arrange..."
-msgstr "_Sắp đặt lưới..."
+#~ msgid "Gri_d Arrange..."
+#~ msgstr "_Sắp đặt lưới..."
 
-msgid "3D Box: Toggle VP"
-msgstr "Hộp 3D: bật/tắt VP"
+#~ msgid "3D Box: Toggle VP"
+#~ msgstr "Hộp 3D: bật/tắt VP"
 
-msgid "Angle of infinite vanishing point in X direction"
-msgstr "Góc của điểm biến mật về hướng X"
+#~ msgid "Angle of infinite vanishing point in X direction"
+#~ msgstr "Góc của điểm biến mật về hướng X"
 
-msgid "Angle Y"
-msgstr "Góc Y"
+#~ msgid "Angle Y"
+#~ msgstr "Góc Y"
 
-msgid "Angle of infinite vanishing point in Y direction"
-msgstr "Góc của điểm biến mật về hướng Y"
+#~ msgid "Angle of infinite vanishing point in Y direction"
+#~ msgstr "Góc của điểm biến mật về hướng Y"
 
-msgid "Angle of infinite vanishing point in Z direction"
-msgstr "Góc của điểm biến mật về hướng Z"
+#~ msgid "Angle of infinite vanishing point in Z direction"
+#~ msgstr "Góc của điểm biến mật về hướng Z"
