@@ -130,6 +130,9 @@ LPEPathAlongPath::resetDefaults(SPItem * item)
     Point start(bndsX.min(), (bndsY.max()+bndsY.min())/2);
     Point end(bndsX.max(), (bndsY.max()+bndsY.min())/2);
 
+    if ( Geom::are_near(start,end) ) {
+        end += Point(1.,0.);
+    }
     Geom::Path path;
     path.start( start );
     path.appendNew<Geom::LineSegment>( end );

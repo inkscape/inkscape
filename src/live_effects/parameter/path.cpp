@@ -58,6 +58,12 @@ PathParam::param_set_default()
     param_readSVGValue(defvalue);
 }
 
+void
+PathParam::param_set_and_write_default()
+{
+    param_write_to_repr(defvalue);
+}
+
 bool
 PathParam::param_readSVGValue(const gchar * strvalue)
 {

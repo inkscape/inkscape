@@ -39,7 +39,7 @@ public:
     gchar * param_writeSVGValue() const;
 
     void param_set_default();
-
+    void param_set_and_write_default();
     void param_set_and_write_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > newpath);
 
     void param_editOncanvas(SPItem * item, SPDesktop * dt);

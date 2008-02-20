@@ -85,52 +85,61 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
         Interval bndsStrokeY = bounds_exact(stroke[1]);
         Point stroke_origin(bndsStroke.min(), (bndsStrokeY.max()+bndsStrokeY.min())/2);
 
-        std::vector<Geom::Path> path_out (nrofpaths);
+        std::vector<Geom::Path> path_out;
 
-        // do this for all permutations if there are more than 2 paths? realllly cool!
-        Piecewise<D2<SBasis> > A = arc_length_parametrization(Piecewise<D2<SBasis> >(path_in[0].toPwSb()),2,.1);
-        Piecewise<D2<SBasis> > B = arc_length_parametrization(Piecewise<D2<SBasis> >(path_in[1].toPwSb()),2,.1);
-        Interval bndsA = A.domain();
-        Interval bndsB = B.domain();
-        gdouble incrementA = (bndsA.max()-bndsA.min()) / (nrofpaths-1);
-        gdouble incrementB = (bndsB.max()-bndsB.min()) / (nrofpaths-1);
-        gdouble tA = bndsA.min();
-        gdouble tB = bndsB.min();
-        gdouble tAclean = tA; // the tA without spacing_variation
-        gdouble tBclean = tB; // the tB without spacing_variation
-        for (int i = 0; i < nrofpaths; i++) {
-            Point start = A(tA);
-            Point end = B(tB);
-            if (startpoint_edge_variation.get_value() != 0)
-                start = start + (startpoint_edge_variation - startpoint_edge_variation.get_value()/2) * (end - start);
-            if (endpoint_edge_variation.get_value() != 0)
-                end = end + (endpoint_edge_variation - endpoint_edge_variation.get_value()/2)* (end - start);
-    
-            gdouble scaling_y = 1.0;
-            if (scale_y_rel.get_value()) {
-                scaling_y = (L2(end-start)/scaling)*prop_scale;
-            } else {
-                scaling_y = prop_scale;
+        // do this for all permutations (ii,jj) if there are more than 2 paths? realllly cool!
+        for (int ii = 0   ; ii < path_in.size() - 1; ii++)
+        for (int jj = ii+1; jj < path_in.size(); jj++)
+        {
+            Piecewise<D2<SBasis> > A = arc_length_parametrization(Piecewise<D2<SBasis> >(path_in[ii].toPwSb()),2,.1);
+            Piecewise<D2<SBasis> > B = arc_length_parametrization(Piecewise<D2<SBasis> >(path_in[jj].toPwSb()),2,.1);
+            Interval bndsA = A.domain();
+            Interval bndsB = B.domain();
+            gdouble incrementA = (bndsA.max()-bndsA.min()) / (nrofpaths-1);
+            gdouble incrementB = (bndsB.max()-bndsB.min()) / (nrofpaths-1);
+            gdouble tA = bndsA.min();
+            gdouble tB = bndsB.min();
+            gdouble tAclean = tA; // the tA without spacing_variation
+            gdouble tBclean = tB; // the tB without spacing_variation
+
+            for (int i = 0; i < nrofpaths; i++) {
+                Point start = A(tA);
+                Point end = B(tB);
+                if (startpoint_edge_variation.get_value() != 0)
+                    start = start + (startpoint_edge_variation - startpoint_edge_variation.get_value()/2) * (end - start);
+                if (endpoint_edge_variation.get_value() != 0)
+                    end = end + (endpoint_edge_variation - endpoint_edge_variation.get_value()/2)* (end - start);
+        
+                if (!Geom::are_near(start,end)) {
+                    gdouble scaling_y = 1.0;
+                    if (scale_y_rel.get_value()) {
+                        scaling_y = (L2(end-start)/scaling)*prop_scale;
+                    } else {
+                        scaling_y = prop_scale;
+                    }
+
+                    Matrix transform;
+                    transform.setXAxis( (end-start) / scaling );
+                    transform.setYAxis( rot90(unit_vector(end-start)) * scaling_y);
+                    transform.setTranslation( start );
+                    Piecewise<D2<SBasis> > pwd2_out = (strokepath-stroke_origin) * transform;
+
+                    // add stuff to one big pw<d2<sbasis> > and then outside the loop convert to path?
+                    // No: this way, the separate result paths are kept separate which might come in handy some time!
+                    std::vector<Geom::Path> result = Geom::path_from_piecewise(pwd2_out, LPE_CONVERSION_TOLERANCE);
+                    path_out.push_back(result[0]);
+                }
+                gdouble svA = startpoint_spacing_variation - startpoint_spacing_variation.get_value()/2;
+                gdouble svB = endpoint_spacing_variation - endpoint_spacing_variation.get_value()/2;
+                tAclean += incrementA;
+                tBclean += incrementB;
+                tA = tAclean + incrementA * svA;
+                tB = tBclean + incrementB * svB;
+                if (tA > bndsA.max())
+                    tA = bndsA.max();
+                if (tB > bndsB.max())
+                    tB = bndsB.max();
             }
-
-            Matrix transform;
-            transform.setXAxis( (end-start) / scaling );
-            transform.setYAxis( rot90(unit_vector(end-start)) * scaling_y);
-            transform.setTranslation( start );
-            Piecewise<D2<SBasis> > pwd2_out = (strokepath-stroke_origin) * transform;
-            // add stuff to one big pw<d2<sbasis> > and then outside the loop convert to path?
-            std::vector<Geom::Path> result = Geom::path_from_piecewise(pwd2_out, LPE_CONVERSION_TOLERANCE);
-            path_out[i] = result[0];
-            gdouble svA = startpoint_spacing_variation - startpoint_spacing_variation.get_value()/2;
-            gdouble svB = endpoint_spacing_variation - endpoint_spacing_variation.get_value()/2;
-            tAclean += incrementA;
-            tBclean += incrementB;
-            tA = tAclean + incrementA * svA;
-            tB = tBclean + incrementB * svB;
-            if (tA > bndsA.max())
-                tA = bndsA.max();
-            if (tB > bndsB.max())
-                tB = bndsB.max();
         }
 
         return path_out;
@@ -159,10 +168,15 @@ LPECurveStitch::resetDefaults(SPItem * item)
     Point start(bndsX.min(), (bndsY.max()+bndsY.min())/2);
     Point end(bndsX.max(), (bndsY.max()+bndsY.min())/2);
 
-    Geom::Path path;
-    path.start( start );
-    path.appendNew<Geom::LineSegment>( end );
-    strokepath.param_set_and_write_new_value( path.toPwSb() );
+    if ( !Geom::are_near(start,end) ) {
+        Geom::Path path;
+        path.start( start );
+        path.appendNew<Geom::LineSegment>( end );
+        strokepath.param_set_and_write_new_value( path.toPwSb() );
+    } else {
+        // bounding box is too small to make decent path. set to default default. :-)
+        strokepath.param_set_and_write_default();
+    }
 }
 
 void
