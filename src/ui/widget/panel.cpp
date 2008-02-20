@@ -111,13 +111,13 @@ void Panel::_init()
         const char *things[] = {
             N_("tiny"),
             N_("small"),
-            Q_("swatches|medium"),
+            N_("swatches|medium"),
             N_("large"),
             N_("huge")
         };
         Gtk::RadioMenuItem::Group groupOne;
         for (unsigned int i = 0; i < G_N_ELEMENTS(things); i++) {
-            Glib::ustring foo(gettext(things[i]));
+            Glib::ustring foo(Q_(things[i]));
             Gtk::RadioMenuItem* single = manage(new Gtk::RadioMenuItem(groupOne, foo));
             _menu->append(*single);
             if (i == panel_size) {
