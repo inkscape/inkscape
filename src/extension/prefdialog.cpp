@@ -33,7 +33,7 @@ namespace Extension {
     \param  name  Name of the Extension who's dialog this is
     \param  help  The help string for the extension (NULL if none)
     \param  controls  The extension specific widgets in the dialog
-    
+
     This function initializes the dialog with the name of the extension
     in the title.  It adds a few buttons and sets up handlers for
     them.  It also places the passed in widgets into the dialog.
@@ -68,8 +68,8 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     _button_ok->set_use_stock(true);
     set_default_response(Gtk::RESPONSE_OK);
     _button_ok->grab_focus();
-    
-    // If we're working with an effect that can be live and 
+
+    // If we're working with an effect that can be live and
     // the dialog can be pinned, put those options in too
     if (_exEnv != NULL) {
         if (_param_preview == NULL) {
@@ -173,7 +173,10 @@ PrefDialog::on_response (int signal) {
     }
 
     if (signal == Gtk::RESPONSE_OK) {
-		_effect->effect(SP_ACTIVE_DESKTOP);
+        if(_effect != NULL)
+        {
+            _effect->effect(SP_ACTIVE_DESKTOP);
+        }
     }
 	if (signal == Gtk::RESPONSE_CANCEL) {
 		// close the dialog
