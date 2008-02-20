@@ -44,6 +44,9 @@
 
 #define FOCUS_PROP_ID 1
 
+/* Keep in sycn with last value in eek-preview.h */
+#define PREVIEW_SIZE_LAST PREVIEW_SIZE_HUGE
+#define PREVIEW_SIZE_NEXTFREE (PREVIEW_SIZE_HUGE + 1)
 
 
 static void eek_preview_class_init( EekPreviewClass *klass );
@@ -90,9 +93,8 @@ GType eek_preview_get_type(void)
     return preview_type;
 }
 
-static guint trackCount = 0;
-static guint* trackSizes = 0;
-static GtkIconSize* trackKeys = 0;
+static gboolean setupDone = FALSE;
+static GtkRequisition sizeThings[PREVIEW_SIZE_NEXTFREE];
 
 void eek_preview_set_size_mappings( guint count, GtkIconSize const* sizes )
 {
@@ -119,28 +121,13 @@ void eek_preview_set_size_mappings( guint count, GtkIconSize const* sizes )
 
     delta = largest - smallest;
 
-    if ( trackSizes ) {
-        g_free(trackSizes);
-        trackSizes = 0;
-    }
-    if ( trackKeys ) {
-        g_free(trackKeys);
-        trackKeys = 0;
+    for ( i = 0; i < G_N_ELEMENTS(sizeThings); ++i ) {
+        guint val = smallest + ( (i * delta) / (G_N_ELEMENTS(sizeThings) - 1) );
+        sizeThings[i].width = val;
+        sizeThings[i].height = val;
     }
 
-    trackCount = count;
-    trackSizes = g_new(guint, count);
-    trackKeys = g_new(GtkIconSize, count);
-    for ( i = 0; i < count; ++i ) {
-        guint val = smallest + ( (i * delta) / (count-1) );
-        trackKeys[i] = sizes[i];
-        trackSizes[i] = val;
-    }
-}
-
-GtkWidget* eek_preview_area_new(void)
-{
-    return NULL;
+    setupDone = TRUE;
 }
 
 static void eek_preview_size_request( GtkWidget* widget, GtkRequisition* req )
@@ -148,29 +135,25 @@ static void eek_preview_size_request( GtkWidget* widget, GtkRequisition* req )
     gint width = 0;
     gint height = 0;
     EekPreview* preview = EEK_PREVIEW(widget);
-    gboolean tracked = TRUE;
-    guint i = 0;
 
-    for ( i = 0; i < trackCount; ++i ) {
-        tracked = (trackKeys[i] == preview->_size);
-        if ( tracked ) {
-            width = trackSizes[i];
-            height = width;
-            break;
-        }
+    if ( !setupDone ) {
+        GtkIconSize sizes[] = {
+            GTK_ICON_SIZE_MENU,
+            GTK_ICON_SIZE_SMALL_TOOLBAR,
+            GTK_ICON_SIZE_LARGE_TOOLBAR,
+            GTK_ICON_SIZE_BUTTON,
+            GTK_ICON_SIZE_DIALOG
+        };
+        eek_preview_set_size_mappings( G_N_ELEMENTS(sizes), sizes );
     }
 
-    if ( !tracked ) {
-        gboolean worked = gtk_icon_size_lookup( preview->_size, &width, &height );
-        if ( !worked ) {
-            width = 16;
-            height = 16;
-            g_warning("Size not found [%d]", preview->_size);
-        }
-    }
+    width = sizeThings[preview->_size].width;
+    height = sizeThings[preview->_size].height;
+
     if ( preview->_view == VIEW_TYPE_LIST ) {
         width *= 3;
     }
+
     req->width = width;
     req->height = height;
 }
@@ -599,10 +582,14 @@ void eek_preview_set_focus_on_click( EekPreview* preview, gboolean focus_on_clic
     }
 }
 
-void eek_preview_set_details( EekPreview* preview, PreviewStyle prevstyle, ViewType view, GtkIconSize size )
+void eek_preview_set_details( EekPreview* preview, PreviewStyle prevstyle, ViewType view, PreviewSize size )
 {
     preview->_prevstyle = prevstyle;
     preview->_view = view;
+
+    if ( size > PREVIEW_SIZE_LAST ) {
+        size = PREVIEW_SIZE_LAST;
+    }
     preview->_size = size;
 
     gtk_widget_queue_draw(GTK_WIDGET(preview));
@@ -636,7 +623,7 @@ static void eek_preview_init( EekPreview *preview )
 
     preview->_prevstyle = PREVIEW_STYLE_ICON;
     preview->_view = VIEW_TYPE_LIST;
-    preview->_size = GTK_ICON_SIZE_BUTTON;
+    preview->_size = PREVIEW_SIZE_SMALL;
 
 /*
     GdkColor color = {0};

@@ -93,7 +93,7 @@ void Panel::_init()
 
     guint panel_size = 0;
     if (_prefs_path) {
-        panel_size = prefs_get_int_attribute_limited( _prefs_path, "panel_size", 1, 0, 10 );
+        panel_size = prefs_get_int_attribute_limited( _prefs_path, "panel_size", 1, 0, static_cast<long long>(PREVIEW_SIZE_HUGE) );
     }
 
     guint panel_mode = 0;
@@ -295,7 +295,7 @@ void Panel::restorePanelPrefs()
 {
     guint panel_size = 0;
     if (_prefs_path) {
-        panel_size = prefs_get_int_attribute_limited(_prefs_path, "panel_size", 1, 0, 10);
+        panel_size = prefs_get_int_attribute_limited(_prefs_path, "panel_size", 1, 0, static_cast<long long>(PREVIEW_SIZE_HUGE));
     }
     guint panel_mode = 0;
     if (_prefs_path) {
@@ -335,27 +335,27 @@ void Panel::_bounceCall(int i, int j)
             switch (j) {
             case 0:
             {
-                _fillable->setStyle(Inkscape::ICON_SIZE_DECORATION, curr_type);
+                _fillable->setStyle(::PREVIEW_SIZE_TINY, curr_type);
             }
             break;
             case 1:
             {
-                _fillable->setStyle(Inkscape::ICON_SIZE_MENU, curr_type);
+                _fillable->setStyle(::PREVIEW_SIZE_SMALL, curr_type);
             }
             break;
             case 2:
             {
-                _fillable->setStyle(Inkscape::ICON_SIZE_SMALL_TOOLBAR, curr_type);
+                _fillable->setStyle(::PREVIEW_SIZE_MEDIUM, curr_type);
             }
             break;
             case 3:
             {
-                _fillable->setStyle(Inkscape::ICON_SIZE_BUTTON, curr_type);
+                _fillable->setStyle(::PREVIEW_SIZE_BIG, curr_type);
             }
             break;
             case 4:
             {
-                _fillable->setStyle(Inkscape::ICON_SIZE_DIALOG, curr_type);
+                _fillable->setStyle(::PREVIEW_SIZE_HUGE, curr_type);
             }
             break;
             default:
@@ -368,7 +368,7 @@ void Panel::_bounceCall(int i, int j)
             prefs_set_int_attribute (_prefs_path, "panel_mode", j);
         }
         if (_fillable) {
-            Inkscape::IconSize curr_size = _fillable->getPreviewSize();
+            ::PreviewSize curr_size = _fillable->getPreviewSize();
             switch (j) {
             case 0:
             {

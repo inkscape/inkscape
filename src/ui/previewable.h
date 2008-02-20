@@ -14,7 +14,7 @@
 
 
 #include <gtkmm/widget.h>
-#include "icon-size.h"
+#include "../dialogs/eek-preview.h"
 
 namespace Inkscape {
 namespace UI {
@@ -40,7 +40,7 @@ class Previewable
 public:
 // TODO need to add some nice parameters
     virtual ~Previewable() {}
-    virtual Gtk::Widget* getPreview( PreviewStyle style, ViewType view, Inkscape::IconSize size ) = 0;
+    virtual Gtk::Widget* getPreview( PreviewStyle style, ViewType view, ::PreviewSize size ) = 0;
 };
 
 

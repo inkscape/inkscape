@@ -20,7 +20,7 @@
  *
  * The Initial Developer of the Original Code is
  * Jon A. Cruz.
- * Portions created by the Initial Developer are Copyright (C) 2005
+ * Portions created by the Initial Developer are Copyright (C) 2005-2008
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
@@ -68,6 +68,15 @@ typedef enum {
 } ViewType;
 
 typedef enum {
+    PREVIEW_SIZE_TINY = 0,
+    PREVIEW_SIZE_SMALL,
+    PREVIEW_SIZE_MEDIUM,
+    PREVIEW_SIZE_BIG,
+    PREVIEW_SIZE_BIGGER,
+    PREVIEW_SIZE_HUGE
+} PreviewSize;
+
+typedef enum {
   PREVIEW_LINK_NONE = 0,
   PREVIEW_LINK_IN = 1,
   PREVIEW_LINK_OUT = 2,
@@ -93,7 +102,7 @@ struct _EekPreview
 
     PreviewStyle _prevstyle;
     ViewType _view;
-    GtkIconSize _size;
+    PreviewSize _size;
     guint _linked;
 };
 
@@ -108,7 +117,7 @@ struct _EekPreviewClass
 GType      eek_preview_get_type(void) G_GNUC_CONST;
 GtkWidget* eek_preview_new(void);
 
-void eek_preview_set_details( EekPreview* splat, PreviewStyle prevstyle, ViewType view, GtkIconSize size );
+void eek_preview_set_details( EekPreview* splat, PreviewStyle prevstyle, ViewType view, PreviewSize size );
 void eek_preview_set_color( EekPreview* splat, int r, int g, int b );
 
 void eek_preview_set_linked( EekPreview* splat, LinkType link );

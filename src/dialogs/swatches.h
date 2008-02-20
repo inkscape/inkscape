@@ -43,7 +43,7 @@ public:
     virtual ColorItem &operator=(ColorItem const &other);
     virtual Gtk::Widget* getPreview(PreviewStyle style,
                                     ViewType view,
-                                    Inkscape::IconSize size);
+                                    ::PreviewSize size);
     void buttonClicked(bool secondary = false);
 
     ColorDef def;

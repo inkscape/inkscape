@@ -17,7 +17,7 @@
 #include <gtkmm/bin.h>
 #include <gtkmm/table.h>
 #include "previewfillable.h"
-#include "../icon-size.h"
+#include "../dialogs/eek-preview.h"
 
 namespace Inkscape {
 namespace UI {
@@ -32,11 +32,11 @@ public:
     virtual void addPreview( Previewable* preview );
     virtual void freezeUpdates();
     virtual void thawUpdates();
-    virtual void setStyle( Inkscape::IconSize size, ViewType view );
+    virtual void setStyle( ::PreviewSize size, ViewType view );
     virtual void setOrientation( Gtk::AnchorType how );
     virtual int getColumnPref() const { return _prefCols; }
     virtual void setColumnPref( int cols );
-    virtual Inkscape::IconSize getPreviewSize() const { return _baseSize; }
+    virtual ::PreviewSize getPreviewSize() const { return _baseSize; }
     virtual ViewType getPreviewType() const { return _view; }
     virtual void setWrap( bool b );
     virtual bool getWrap() const { return _wrap; }
@@ -56,7 +56,7 @@ private:
     int _prefCols;
     bool _updatesFrozen;
     Gtk::AnchorType _anchor;
-    Inkscape::IconSize _baseSize;
+    ::PreviewSize _baseSize;
     ViewType _view;
     bool _wrap;
 };
