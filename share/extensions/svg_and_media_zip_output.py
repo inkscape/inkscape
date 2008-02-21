@@ -66,7 +66,7 @@ class MyEffect(inkex.Effect):
         docstripped = docname.replace('.zip', '')
     
         #read tmpdoc and copy all images to temp dir
-        for node in self.document.xpath('//svg:image',inkex.NSS):
+        for node in self.document.xpath('//svg:image', namespaces=inkex.NSS):
             self.collectAndZipImages(node, tmp_dir, docname, z)
 
         ##copy tmpdoc to tempdir

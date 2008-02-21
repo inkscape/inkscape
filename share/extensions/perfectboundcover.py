@@ -126,10 +126,10 @@ class PerfectBoundCover(inkex.Effect):
         guides.append(["vertical", (document_width / 2) - (spine_width / 2)])
         guides.append(["vertical", (document_width / 2) + (spine_width / 2)])
 
-        namedview = self.document.xpath('/svg:svg/sodipodi:namedview', inkex.NSS)
+        namedview = self.document.xpath('/svg:svg/sodipodi:namedview', namespaces=inkex.NSS)
         if namedview:
             if self.options.removeguides == True:
-                for node in self.document.xpath('/svg:svg/sodipodi:namedview/sodipodi:guide', inkex.NSS):
+                for node in self.document.xpath('/svg:svg/sodipodi:namedview/sodipodi:guide', namespaces=inkex.NSS):
                     parent = node.getparent()
                     parent.remove(node)
             for guide in guides:

@@ -67,7 +67,7 @@ class ColorEffect(inkex.Effect):
       newid = '%s-%d' % (id, int(random.random() * 1000))
       #inkex.debug('ID:' + id )
       path = '//*[@id="%s"]' % id
-      for node in self.document.xpath(path, inkex.NSS):
+      for node in self.document.xpath(path, namespaces=inkex.NSS):
         self.process_gradient(node, newid)
       col = 'url(#%s)' % newid
     return col
@@ -96,7 +96,7 @@ class ColorEffect(inkex.Effect):
         newhref = '%s-%d' % (id, int(random.random() * 1000))
         newnode.set(xlink, '#%s' % newhref)
         path = '//*[@id="%s"]' % id
-        for node in self.document.xpath(path,inkex.NSS):
+        for node in self.document.xpath(path, namespaces=inkex.NSS):
           self.process_gradient(node, newhref)
  
   def colmod(self,r,g,b):

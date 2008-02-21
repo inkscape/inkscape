@@ -45,10 +45,10 @@ class MyEffect(inkex.Effect):
         self.dxf_add("999\nDXF created by Inkscape\n0\nSECTION\n2\nENTITIES")
         
         scale = 25.4/90.0
-        h = inkex.unittouu(self.document.getroot().xpath('@height',inkex.NSS)[0])
+        h = inkex.unittouu(self.document.getroot().xpath('@height', namespaces=inkex.NSS)[0])
         
         path = '//svg:path'
-        for node in self.document.getroot().xpath(path,inkex.NSS):
+        for node in self.document.getroot().xpath(path, namespaces=inkex.NSS):
             d = node.get('d')
             sim = simplepath.parsePath(d)
             simplepath.scalePath(sim,scale,-scale)

@@ -46,7 +46,7 @@ class Embedder(inkex.Effect):
     def embedAll(self, document):
         self.document=document #not that nice... oh well
         path = '//svg:image'
-        for node in self.document.getroot().xpath(path, inkex.NSS):
+        for node in self.document.getroot().xpath(path, namespaces=inkex.NSS):
             self.embedImage(node)
 
     def embedImage(self, node):
@@ -54,7 +54,7 @@ class Embedder(inkex.Effect):
         if (xlink[:4]!='data'):
             absref=node.get(inkex.addNS('absref','sodipodi'))
             href=xlink
-            svg=self.document.getroot().xpath('/svg:svg',inkex.NSS)[0]
+            svg=self.document.getroot().xpath('/svg:svg', namespaces=inkex.NSS)[0]
             docbase=svg.get(inkex.addNS('docbase','sodipodi'))
 
             path=''

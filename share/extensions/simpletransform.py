@@ -155,7 +155,7 @@ def computeBBox(aList,mat=[[1,0,0],[0,1,0]]):
         if  node.tag == inkex.addNS('use','svg') or node.tag=='use':
             refid=node.get(inkex.addNS('href','xlink'))
             path = '//*[@id="%s"]' % refid[1:]
-            refnode = node.getroottree().xpath(path,inkex.NSS)
+            refnode = node.getroottree().xpath(path, namespaces=inkex.NSS)
             bbox=boxunion(computeBBox(refnode,m),bbox)
             
         bbox=boxunion(computeBBox(node,m),bbox)

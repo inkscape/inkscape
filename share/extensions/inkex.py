@@ -116,15 +116,15 @@ class Effect:
         self.current_layer = self.document.getroot()
         self.view_center = (0.0,0.0)
 
-        layerattr = self.document.xpath('//sodipodi:namedview/@inkscape:current-layer', NSS)
+        layerattr = self.document.xpath('//sodipodi:namedview/@inkscape:current-layer', namespaces=NSS)
         if layerattr:
             layername = layerattr[0]
-            layer = self.document.xpath('//g[@id="%s"]' % layername, NSS)
+            layer = self.document.xpath('//g[@id="%s"]' % layername, namespaces=NSS)
             if layer:
                 self.current_layer = layer[0]
 
-        xattr = self.document.xpath('//sodipodi:namedview/@inkscape:cx', NSS)
-        yattr = self.document.xpath('//sodipodi:namedview/@inkscape:cy', NSS)
+        xattr = self.document.xpath('//sodipodi:namedview/@inkscape:cx', namespaces=NSS)
+        yattr = self.document.xpath('//sodipodi:namedview/@inkscape:cy', namespaces=NSS)
         doc_height = unittouu(self.document.getroot().get('height'))
         if xattr and yattr:
             x = xattr[0]
@@ -135,10 +135,10 @@ class Effect:
         """Collect selected nodes"""
         for id in self.options.ids:
             path = '//*[@id="%s"]' % id
-            for node in self.document.xpath(path, NSS):
+            for node in self.document.xpath(path, namespaces=NSS):
                 self.selected[id] = node
     def getdocids(self):
-        docIdNodes = self.document.xpath('//@id', NSS)
+        docIdNodes = self.document.xpath('//@id', namespaces=NSS)
         for m in docIdNodes:
             self.doc_ids[m] = 1
     def output(self):
@@ -163,7 +163,7 @@ class Effect:
         return new_id
     def xpathSingle(self, path):
         try:
-            retval = self.document.xpath(path, NSS)[0]
+            retval = self.document.xpath(path, namespaces=NSS)[0]
         except:
             debug("No matching node for expression: %s" % path)
             retval = None

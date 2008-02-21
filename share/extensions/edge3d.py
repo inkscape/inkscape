@@ -112,7 +112,7 @@ class Edge3d(inkex.Effect):
                         g.append(nn)
         
     def getGroup(self, node):
-        defs = self.document.getroot().xpath('//svg:defs',inkex.NSS)
+        defs = self.document.getroot().xpath('//svg:defs', namespaces=inkex.NSS)
         if defs:
             defs = defs[0]
             # make a clipped group, clip with clone of original, clipped group

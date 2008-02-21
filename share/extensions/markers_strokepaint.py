@@ -61,7 +61,7 @@ class MyEffect(inkex.Effect):
                     mnode.set(inkex.addNS('stockid','inkscape'), new_id)
                     defs.append(mnode)
                     
-                    children = mnode.xpath('.//*[@style]',inkex.NSS)
+                    children = mnode.xpath('.//*[@style]', namespaces=inkex.NSS)
                     for child in children:
                         cstyle = simplestyle.parseStyle(child.get('style'))
                         if ('stroke' in cstyle and cstyle['stroke'] != 'none') or 'stroke' not in cstyle:

@@ -69,7 +69,7 @@ class PathModifier(inkex.Effect):
 
     def uniqueId(self, prefix):
         id="%s%04i"%(prefix,random.randint(0,9999))
-        while len(self.document.getroot().xpath('//*[@id="%s"]' % id,inkex.NSS)):
+        while len(self.document.getroot().xpath('//*[@id="%s"]' % id,namespaces=inkex.NSS)):
             id="%s%04i"%(prefix,random.randint(0,9999))
         return(id)
 
@@ -118,7 +118,7 @@ class PathModifier(inkex.Effect):
         if node.get(inkex.addNS('href','xlink')):
             refid=node.get(inkex.addNS('href','xlink'))
             path = '//*[@id="%s"]' % refid[1:]
-            newNode = self.document.getroot().xpath(path,inkex.NSS)[0]
+            newNode = self.document.getroot().xpath(path, namespaces=inkex.NSS)[0]
             return newNode
         else:
             raise AssertionError, "Trying to follow empty xlink.href attribute."

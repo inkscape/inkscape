@@ -35,7 +35,7 @@ class MyEffect(inkex.Effect):
         pngs = []
         names = []
         path = "/svg:svg/*[name()='g' or @style][@id]"
-        for node in self.document.xpath(path,inkex.NSS):
+        for node in self.document.xpath(path, namespaces=inkex.NSS):
             id = node.get('id')
             name = "%s.png" % id
             filename = os.path.join(tmp_dir, name)
