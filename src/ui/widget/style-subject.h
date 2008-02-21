@@ -52,7 +52,7 @@ public:
     }
 
 protected:
-    virtual void _afterDesktopSwitch(SPDesktop *desktop) {}
+    virtual void _afterDesktopSwitch(SPDesktop */*desktop*/) {}
     void _emitChanged() { _changed_signal.emit(); }
 
 private:
