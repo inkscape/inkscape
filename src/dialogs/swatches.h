@@ -43,7 +43,8 @@ public:
     virtual ColorItem &operator=(ColorItem const &other);
     virtual Gtk::Widget* getPreview(PreviewStyle style,
                                     ViewType view,
-                                    ::PreviewSize size);
+                                    ::PreviewSize size,
+                                    guint ratio);
     void buttonClicked(bool secondary = false);
 
     ColorDef def;

@@ -35,8 +35,9 @@ namespace Widget {
 
 static const int PANEL_SETTING_SIZE = 0;
 static const int PANEL_SETTING_MODE = 1;
-static const int PANEL_SETTING_WRAP = 2;
-static const int PANEL_SETTING_NEXTFREE = 3;
+static const int PANEL_SETTING_SHAPE = 2;
+static const int PANEL_SETTING_WRAP = 3;
+static const int PANEL_SETTING_NEXTFREE = 4;
 
 
 void Panel::prep() {
@@ -106,6 +107,11 @@ void Panel::_init()
         panel_wrap = prefs_get_int_attribute_limited( _prefs_path, "panel_wrap", 0, 0, 1 );
     }
 
+    guint panel_ratio = 100;
+    if (_prefs_path) {
+        panel_ratio = prefs_get_int_attribute_limited( _prefs_path, "panel_ratio", 100, 0, 500 );
+    }
+
     _menu = new Gtk::Menu();
     {
         const char *things[] = {
@@ -162,6 +168,7 @@ void Panel::_init()
     {
         Glib::ustring type_label(_("Shape"));
 
+        Glib::ustring ellipsis(_("..."));
         Glib::ustring shape_1_label(_("Tall"));
         Glib::ustring shape_2_label(_("Square"));
         Glib::ustring shape_3_label(_("Wide"));
@@ -173,15 +180,24 @@ void Panel::_init()
 
         Gtk::RadioMenuItem::Group shapeGroup;
 
-        Gtk::RadioMenuItem *shape_1 = manage(new Gtk::RadioMenuItem(shapeGroup, shape_1_label));
-        Gtk::RadioMenuItem *shape_2 = manage(new Gtk::RadioMenuItem(shapeGroup, shape_2_label));
-        Gtk::RadioMenuItem *shape_3 = manage(new Gtk::RadioMenuItem(shapeGroup, shape_3_label));
 
-        type_menu->append(*shape_1);
-        type_menu->append(*shape_2);
-        type_menu->append(*shape_3);
-
-        shape_2->set_active(true);
+        Glib::ustring* labels[] = {&ellipsis, &shape_1_label, &ellipsis, &shape_2_label, &ellipsis, &shape_3_label};
+        guint values[] = {0, 25, 50, 100, 200, 400};
+        guint hot_index = 3;
+        for ( guint i = 0; i < G_N_ELEMENTS(labels); ++i ) {
+            // Assume all values are in increasing order
+            if ( values[i] <= panel_ratio ) {
+                hot_index = i;
+            }
+        }
+        for ( guint i = 0; i < G_N_ELEMENTS(labels); ++i ) {
+            Gtk::RadioMenuItem *single = manage(new Gtk::RadioMenuItem(shapeGroup, *(labels[i])));
+            type_menu->append(*single);
+            if ( i <= hot_index ) {
+                single->set_active(true);
+            }
+            single->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_SHAPE, values[i]));
+        }
     }
 
     sep = manage(new Gtk::SeparatorMenuItem());
@@ -228,6 +244,7 @@ void Panel::_init()
 
     _bounceCall(PANEL_SETTING_SIZE, panel_size);
     _bounceCall(PANEL_SETTING_MODE, panel_mode);
+    _bounceCall(PANEL_SETTING_SHAPE, panel_ratio);
     _bounceCall(PANEL_SETTING_WRAP, panel_wrap);
 }
 
@@ -305,8 +322,13 @@ void Panel::restorePanelPrefs()
     if (_prefs_path) {
         panel_wrap = prefs_get_int_attribute_limited(_prefs_path, "panel_wrap", 0, 0, 1 );
     }
+    guint panel_ratio = 100;
+    if (_prefs_path) {
+        panel_ratio = prefs_get_int_attribute_limited(_prefs_path, "panel_ratio", 000, 0, 500 );
+    }
     _bounceCall(PANEL_SETTING_SIZE, panel_size);
     _bounceCall(PANEL_SETTING_MODE, panel_mode);
+    _bounceCall(PANEL_SETTING_SHAPE, panel_ratio);
     _bounceCall(PANEL_SETTING_WRAP, panel_wrap);
 }
 
@@ -332,30 +354,31 @@ void Panel::_bounceCall(int i, int j)
         }
         if (_fillable) {
             ViewType curr_type = _fillable->getPreviewType();
+            guint curr_ratio = _fillable->getPreviewRatio();
             switch (j) {
             case 0:
             {
-                _fillable->setStyle(::PREVIEW_SIZE_TINY, curr_type);
+                _fillable->setStyle(::PREVIEW_SIZE_TINY, curr_type, curr_ratio);
             }
             break;
             case 1:
             {
-                _fillable->setStyle(::PREVIEW_SIZE_SMALL, curr_type);
+                _fillable->setStyle(::PREVIEW_SIZE_SMALL, curr_type, curr_ratio);
             }
             break;
             case 2:
             {
-                _fillable->setStyle(::PREVIEW_SIZE_MEDIUM, curr_type);
+                _fillable->setStyle(::PREVIEW_SIZE_MEDIUM, curr_type, curr_ratio);
             }
             break;
             case 3:
             {
-                _fillable->setStyle(::PREVIEW_SIZE_BIG, curr_type);
+                _fillable->setStyle(::PREVIEW_SIZE_BIG, curr_type, curr_ratio);
             }
             break;
             case 4:
             {
-                _fillable->setStyle(::PREVIEW_SIZE_HUGE, curr_type);
+                _fillable->setStyle(::PREVIEW_SIZE_HUGE, curr_type, curr_ratio);
             }
             break;
             default:
@@ -369,20 +392,31 @@ void Panel::_bounceCall(int i, int j)
         }
         if (_fillable) {
             ::PreviewSize curr_size = _fillable->getPreviewSize();
+            guint curr_ratio = _fillable->getPreviewRatio();
             switch (j) {
             case 0:
             {
-                _fillable->setStyle(curr_size, VIEW_TYPE_LIST);
+                _fillable->setStyle(curr_size, VIEW_TYPE_LIST, curr_ratio);
             }
             break;
             case 1:
             {
-                _fillable->setStyle(curr_size, VIEW_TYPE_GRID);
+                _fillable->setStyle(curr_size, VIEW_TYPE_GRID, curr_ratio);
             }
             break;
             default:
                 break;
             }
+        }
+        break;
+    case PANEL_SETTING_SHAPE:
+        if (_prefs_path) {
+            prefs_set_int_attribute (_prefs_path, "panel_ratio", j);
+        }
+        if ( _fillable ) {
+            ViewType curr_type = _fillable->getPreviewType();
+            ::PreviewSize curr_size = _fillable->getPreviewSize();
+            _fillable->setStyle(curr_size, curr_type, j);
         }
         break;
     case PANEL_SETTING_WRAP:

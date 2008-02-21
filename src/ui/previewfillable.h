@@ -27,10 +27,11 @@ public:
     virtual void addPreview( Previewable* preview ) = 0;
     virtual void freezeUpdates() = 0;
     virtual void thawUpdates() = 0;
-    virtual void setStyle( ::PreviewSize size, ViewType type) = 0;
+    virtual void setStyle( ::PreviewSize size, ViewType type, guint ratio) = 0;
     virtual void setOrientation( Gtk::AnchorType how ) = 0;
     virtual ::PreviewSize getPreviewSize() const = 0;
     virtual ViewType getPreviewType() const = 0;
+    virtual guint getPreviewRatio() const = 0;
     virtual void setWrap( bool b ) = 0;
     virtual bool getWrap() const = 0;
 };

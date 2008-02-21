@@ -103,6 +103,7 @@ struct _EekPreview
     PreviewStyle _prevstyle;
     ViewType _view;
     PreviewSize _size;
+    guint _ratio;
     guint _linked;
 };
 
@@ -117,7 +118,7 @@ struct _EekPreviewClass
 GType      eek_preview_get_type(void) G_GNUC_CONST;
 GtkWidget* eek_preview_new(void);
 
-void eek_preview_set_details( EekPreview* splat, PreviewStyle prevstyle, ViewType view, PreviewSize size );
+void eek_preview_set_details( EekPreview* splat, PreviewStyle prevstyle, ViewType view, PreviewSize size, guint ratio );
 void eek_preview_set_color( EekPreview* splat, int r, int g, int b );
 
 void eek_preview_set_linked( EekPreview* splat, LinkType link );

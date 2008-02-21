@@ -40,7 +40,7 @@ class Previewable
 public:
 // TODO need to add some nice parameters
     virtual ~Previewable() {}
-    virtual Gtk::Widget* getPreview( PreviewStyle style, ViewType view, ::PreviewSize size ) = 0;
+    virtual Gtk::Widget* getPreview( PreviewStyle style, ViewType view, ::PreviewSize size, guint ratio ) = 0;
 };
 
 

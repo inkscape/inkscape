@@ -503,7 +503,7 @@ void ColorItem::_colorDefChanged(void* data)
 }
 
 
-Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewSize size)
+Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewSize size, guint ratio)
 {
     Gtk::Widget* widget = 0;
     if ( style == PREVIEW_STYLE_BLURB ) {
@@ -522,7 +522,7 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
 
         eek_preview_set_color( preview, (def.getR() << 8) | def.getR(), (def.getG() << 8) | def.getG(), (def.getB() << 8) | def.getB());
 
-        eek_preview_set_details( preview, (::PreviewStyle)style, (::ViewType)view, (::PreviewSize)size );
+        eek_preview_set_details( preview, (::PreviewStyle)style, (::ViewType)view, (::PreviewSize)size, ratio );
         eek_preview_set_linked( preview, (LinkType)((_linkSrc ? PREVIEW_LINK_IN:0)
                                                     | (_listeners.empty() ? 0:PREVIEW_LINK_OUT)
                                                     | (_isLive ? PREVIEW_LINK_OTHER:0)) );

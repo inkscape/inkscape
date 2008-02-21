@@ -32,12 +32,13 @@ public:
     virtual void addPreview( Previewable* preview );
     virtual void freezeUpdates();
     virtual void thawUpdates();
-    virtual void setStyle( ::PreviewSize size, ViewType view );
+    virtual void setStyle( ::PreviewSize size, ViewType view, guint ratio );
     virtual void setOrientation( Gtk::AnchorType how );
     virtual int getColumnPref() const { return _prefCols; }
     virtual void setColumnPref( int cols );
     virtual ::PreviewSize getPreviewSize() const { return _baseSize; }
     virtual ViewType getPreviewType() const { return _view; }
+    virtual guint getPreviewRatio() const { return _ratio; }
     virtual void setWrap( bool b );
     virtual bool getWrap() const { return _wrap; }
 
@@ -57,6 +58,7 @@ private:
     bool _updatesFrozen;
     Gtk::AnchorType _anchor;
     ::PreviewSize _baseSize;
+    guint _ratio;
     ViewType _view;
     bool _wrap;
 };

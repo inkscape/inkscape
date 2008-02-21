@@ -48,6 +48,7 @@
 #define PREVIEW_SIZE_LAST PREVIEW_SIZE_HUGE
 #define PREVIEW_SIZE_NEXTFREE (PREVIEW_SIZE_HUGE + 1)
 
+#define PREVIEW_MAX_RATIO 500
 
 static void eek_preview_class_init( EekPreviewClass *klass );
 static void eek_preview_init( EekPreview *preview );
@@ -152,6 +153,13 @@ static void eek_preview_size_request( GtkWidget* widget, GtkRequisition* req )
 
     if ( preview->_view == VIEW_TYPE_LIST ) {
         width *= 3;
+    }
+
+    if ( preview->_ratio != 100 ) {
+        width = (width * preview->_ratio) / 100;
+        if ( width < 0 ) {
+            width = 1;
+        }
     }
 
     req->width = width;
@@ -582,7 +590,7 @@ void eek_preview_set_focus_on_click( EekPreview* preview, gboolean focus_on_clic
     }
 }
 
-void eek_preview_set_details( EekPreview* preview, PreviewStyle prevstyle, ViewType view, PreviewSize size )
+void eek_preview_set_details( EekPreview* preview, PreviewStyle prevstyle, ViewType view, PreviewSize size, guint ratio )
 {
     preview->_prevstyle = prevstyle;
     preview->_view = view;
@@ -591,6 +599,11 @@ void eek_preview_set_details( EekPreview* preview, PreviewStyle prevstyle, ViewT
         size = PREVIEW_SIZE_LAST;
     }
     preview->_size = size;
+
+    if ( ratio > PREVIEW_MAX_RATIO ) {
+        ratio = PREVIEW_MAX_RATIO;
+    }
+    preview->_ratio = ratio;
 
     gtk_widget_queue_draw(GTK_WIDGET(preview));
 }
@@ -624,6 +637,7 @@ static void eek_preview_init( EekPreview *preview )
     preview->_prevstyle = PREVIEW_STYLE_ICON;
     preview->_view = VIEW_TYPE_LIST;
     preview->_size = PREVIEW_SIZE_SMALL;
+    preview->_ratio = 100;
 
 /*
     GdkColor color = {0};

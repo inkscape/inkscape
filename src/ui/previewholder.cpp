@@ -36,6 +36,7 @@ PreviewHolder::PreviewHolder() :
     _updatesFrozen(false),
     _anchor(Gtk::ANCHOR_CENTER),
     _baseSize(PREVIEW_SIZE_SMALL),
+    _ratio(100),
     _view(VIEW_TYPE_LIST),
     _wrap(false)
 {
@@ -72,13 +73,13 @@ void PreviewHolder::addPreview( Previewable* preview )
         int i = items.size() - 1;
 
         if ( _view == VIEW_TYPE_LIST ) {
-            Gtk::Widget* label = manage(preview->getPreview(PREVIEW_STYLE_BLURB, VIEW_TYPE_LIST, _baseSize));
-            Gtk::Widget* thing = manage(preview->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_LIST, _baseSize));
+            Gtk::Widget* label = manage(preview->getPreview(PREVIEW_STYLE_BLURB, VIEW_TYPE_LIST, _baseSize, _ratio));
+            Gtk::Widget* thing = manage(preview->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_LIST, _baseSize, _ratio));
 
             _insides->attach( *thing, 0, 1, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
             _insides->attach( *label, 1, 2, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK );
         } else {
-            Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_GRID, _baseSize));
+            Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_GRID, _baseSize, _ratio));
 
             int width = 1;
             int height = 1;
@@ -124,11 +125,12 @@ void PreviewHolder::thawUpdates()
     rebuildUI();
 }
 
-void PreviewHolder::setStyle( ::PreviewSize size, ViewType view )
+void PreviewHolder::setStyle( ::PreviewSize size, ViewType view, guint ratio )
 {
-    if ( size != _baseSize || view != _view ) {
+    if ( size != _baseSize || view != _view || ratio != _ratio ) {
         _baseSize = size;
         _view = view;
+        _ratio = ratio;
         rebuildUI();
     }
 }
@@ -259,10 +261,10 @@ void PreviewHolder::rebuildUI()
         _insides->set_col_spacings( 8 );
 
         for ( unsigned int i = 0; i < items.size(); i++ ) {
-            Gtk::Widget* label = manage(items[i]->getPreview(PREVIEW_STYLE_BLURB, _view, _baseSize));
+            Gtk::Widget* label = manage(items[i]->getPreview(PREVIEW_STYLE_BLURB, _view, _baseSize, _ratio));
             //label->set_alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_CENTER);
 
-            Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, _view, _baseSize));
+            Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, _view, _baseSize, _ratio));
 
             _insides->attach( *thing, 0, 1, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
             _insides->attach( *label, 1, 2, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK );
@@ -275,7 +277,7 @@ void PreviewHolder::rebuildUI()
         int height = 1;
 
         for ( unsigned int i = 0; i < items.size(); i++ ) {
-            Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, _view, _baseSize));
+            Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, _view, _baseSize, _ratio));
 
             if ( !_insides ) {
                 calcGridSize( thing, items.size(), width, height );
