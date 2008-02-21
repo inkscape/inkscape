@@ -5,6 +5,7 @@ An extention which collects all images to the documents directory and
 creates a zip archive containing all images and the document
 
 Copyright (C) 2005 Pim Snel, pim@lingewoud.com
+Copyright (C) 2008 Aaron Spike, aaron@ekips.org
 this is  the first Python script  ever created
 its based on embedimage.py
 
@@ -53,21 +54,19 @@ class MyEffect(inkex.Effect):
         docbase = ttmp_orig.get(inkex.addNS('docbase',u'sodipodi'),'')
         docname = ttmp_orig.get(inkex.addNS('docname',u'sodipodi'))
 
-        inkex.debug((docbase,docname))
-
         orig_tmpfile = sys.argv[1]
 
         #create os temp dir
         tmp_dir = tempfile.mkdtemp()
         
         # create destination zip in same directory as the document
-        z = zipfile.ZipFile(tmp_dir + '/'+ docname + '.zip', 'w')    
+        z = zipfile.ZipFile(tmp_dir + os.path.sep + docname + '.zip', 'w')    
 
         #fixme replace whatever extention
         docstripped = docname.replace('.zip', '')
     
         #read tmpdoc and copy all images to temp dir
-        for node in self.document.xpath('//image',inkex.NSS):
+        for node in self.document.xpath('//svg:image',inkex.NSS):
             self.collectAndZipImages(node, tmp_dir, docname, z)
 
         ##copy tmpdoc to tempdir
@@ -81,7 +80,7 @@ class MyEffect(inkex.Effect):
         z.write(dst_file.encode("latin-1"),docstripped.encode("latin-1")+'.svg') 
         z.close()
 
-        out = open(tmp_dir + '/'+ docname + '.zip','r')
+        out = open(tmp_dir + os.path.sep + docname + '.zip','r')
         sys.stdout.write(out.read())
         out.close() 
         
@@ -89,16 +88,17 @@ class MyEffect(inkex.Effect):
 
     def collectAndZipImages(self, node, tmp_dir, docname, z):
         xlink = node.get(inkex.addNS('href',u'xlink'))
-        if (xlink.value[:4]!='data'):
+        if (xlink[:4]!='data'):
             absref=node.get(inkex.addNS('absref',u'sodipodi'))
-
             if (os.path.isfile(absref)):
                 shutil.copy(absref,tmp_dir)
                 z.write(absref.encode("latin-1"),os.path.basename(absref).encode("latin-1"))
-
-            elif (os.path.isfile(tmp_dir + '/' + absref)):
-                shutil.copy(tmp_dir + '/' + absref,tmp_dir)
-                z.write(tmp_dir + '/' + absref.encode("latin-1"),os.path.basename(absref).encode("latin-1"))
+            elif (os.path.isfile(tmp_dir + os.path.sep + absref)):
+                #TODO: please explain why this clause is necessary
+                shutil.copy(tmp_dir + os.path.sep + absref,tmp_dir)
+                z.write(tmp_dir + os.path.sep + absref.encode("latin-1"),os.path.basename(absref).encode("latin-1"))
+            else:
+                inkex.debug('Could not locate file: %s' % absref)
 
             node.set(inkex.addNS('href',u'xlink'),os.path.basename(absref))
             node.set(inkex.addNS('absref',u'sodipodi'),os.path.basename(absref))
