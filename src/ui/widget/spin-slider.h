@@ -26,7 +26,7 @@ class SpinSlider : public Gtk::HBox, public AttrWidget
 {
 public:
     SpinSlider(double value, double lower, double upper, double step_inc,
-	       double climb_rate, int digits, const SPAttributeEnum a = SP_ATTR_INVALID);
+	       double climb_rate, int digits, const SPAttributeEnum a = SP_ATTR_INVALID, char* tip_text = NULL);
 
     virtual Glib::ustring get_as_attribute() const;
     virtual void set_from_attribute(SPObject*);
@@ -60,7 +60,7 @@ class DualSpinSlider : public Gtk::HBox, public AttrWidget
 {
 public:
     DualSpinSlider(double value, double lower, double upper, double step_inc,
-                   double climb_rate, int digits, const SPAttributeEnum);
+                   double climb_rate, int digits, const SPAttributeEnum, char* tip_text1, char* tip_text2);
 
     virtual Glib::ustring get_as_attribute() const;
     virtual void set_from_attribute(SPObject*);

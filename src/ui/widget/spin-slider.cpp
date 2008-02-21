@@ -20,7 +20,7 @@ namespace UI {
 namespace Widget {
 
 SpinSlider::SpinSlider(double value, double lower, double upper, double step_inc,
-                       double climb_rate, int digits, const SPAttributeEnum a)
+                       double climb_rate, int digits, const SPAttributeEnum a, char* tip_text)
     : AttrWidget(a, value), _adjustment(value, lower, upper, step_inc),
       _scale(_adjustment), _spin(_adjustment, climb_rate, digits)
 {
@@ -28,6 +28,10 @@ SpinSlider::SpinSlider(double value, double lower, double upper, double step_inc
 
     pack_start(_scale);
     pack_start(_spin, false, false);
+    if (tip_text){
+        _tt.set_tip(_scale, tip_text);
+        _tt.set_tip(_spin, tip_text);
+    }
 
     _scale.set_draw_value(false);
 
@@ -106,10 +110,10 @@ void SpinSlider::remove_scale()
 }
 
 DualSpinSlider::DualSpinSlider(double value, double lower, double upper, double step_inc,
-                               double climb_rate, int digits, const SPAttributeEnum a)
+                               double climb_rate, int digits, const SPAttributeEnum a, char* tip_text1, char* tip_text2)
     : AttrWidget(a),
-      _s1(value, lower, upper, step_inc, climb_rate, digits),
-      _s2(value, lower, upper, step_inc, climb_rate, digits),
+      _s1(value, lower, upper, step_inc, climb_rate, digits, SP_ATTR_INVALID, tip_text1),
+      _s2(value, lower, upper, step_inc, climb_rate, digits, SP_ATTR_INVALID, tip_text2),
       _link(_("Link"))
 {
     signal_value_changed().connect(signal_attr_changed().make_slot());

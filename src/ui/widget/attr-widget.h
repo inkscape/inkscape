@@ -16,6 +16,7 @@
 #include "attributes.h"
 #include "sp-object.h"
 #include "xml/node.h"
+#include <gtkmm/tooltips.h>
 
 namespace Inkscape {
 namespace UI {
@@ -141,6 +142,9 @@ protected:
         }
         return 0;
     }
+
+protected:
+    Gtk::Tooltips _tt;
 
 private:
     const SPAttributeEnum _attr;
