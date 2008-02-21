@@ -28,7 +28,8 @@ enum DefaultValueType
     T_DOUBLE,
     T_VECT_DOUBLE,
     T_BOOL,
-    T_UINT
+    T_UINT,
+    T_CHARPTR
 };
 
 class DefaultValueHolder
@@ -39,6 +40,7 @@ class DefaultValueHolder
         std::vector<double>* vt_val;
         bool b_val;
         unsigned int uint_val;
+        char* cptr_val;
     } value;
 
     //FIXME remove copy ctor and assignment operator as private to avoid double free of the vector
@@ -55,6 +57,11 @@ public:
     DefaultValueHolder (std::vector<double>* d) {
         type = T_VECT_DOUBLE;
         value.vt_val = d;
+    }
+
+    DefaultValueHolder (char* c) {
+        type = T_CHARPTR;
+        value.cptr_val = c;
     }
 
     DefaultValueHolder (bool d) {
@@ -90,6 +97,11 @@ public:
     std::vector<double>* as_vector() {
         g_assert (type == T_VECT_DOUBLE);
         return value.vt_val;
+    }
+
+    char* as_charptr() {
+        g_assert (type == T_CHARPTR);
+        return value.cptr_val;
     }
 };
 
