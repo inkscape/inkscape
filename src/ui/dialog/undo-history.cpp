@@ -133,7 +133,7 @@ UndoHistory::UndoHistory()
 {
     if ( !_document || !_event_log || !_columns ) return;
 
-    set_size_request(300, 200);
+    set_size_request(300, 95);
 
     _getContents()->pack_start(_scrolled_window);
     _scrolled_window.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
