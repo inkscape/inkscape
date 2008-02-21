@@ -196,6 +196,7 @@ private:
 
         void toFile (const Glib::ustring &name) {
             Glib::RefPtr<Glib::IOChannel> stdout_file = Glib::IOChannel::create_from_file(name, "w");
+            stdout_file->set_encoding();
             stdout_file->write(_string);
             return;
         };
