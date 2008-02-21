@@ -12,6 +12,7 @@
 #include "display/nr-filter-displacement-map.h"
 #include "display/nr-filter-types.h"
 #include "display/nr-filter-units.h"
+#include "libnr/nr-blit.h"
 #include "libnr/nr-pixops.h"
 
 namespace NR {
@@ -58,7 +59,19 @@ int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
     out->area.x1 = out_x0 + out_w;
     out->area.y1 = out_y0 + out_h;
 
-    nr_pixblock_setup_fast(out, map->mode, out->area.x0, out->area.y0, out->area.x1, out->area.y1, true);
+    nr_pixblock_setup_fast(out, texture->mode, out->area.x0, out->area.y0, out->area.x1, out->area.y1, true);
+
+    // this primitive is defined for non-premultiplied RGBA values,
+    // thus convert them to that format
+    if (map->mode != NR_PIXBLOCK_MODE_R8G8B8A8N) {
+        NRPixBlock *original_map = map;
+        map = new NRPixBlock;
+        nr_pixblock_setup_fast(map, NR_PIXBLOCK_MODE_R8G8B8A8N,
+                               original_map->area.x0, original_map->area.y0,
+                               original_map->area.x1, original_map->area.y1,
+                               false);
+        nr_blit_pixblock_pixblock(map, original_map);
+    }
 
     unsigned char *map_data = NR_PIXBLOCK_PX(map);
     unsigned char *texture_data = NR_PIXBLOCK_PX(texture);

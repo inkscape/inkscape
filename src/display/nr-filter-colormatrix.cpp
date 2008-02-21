@@ -42,7 +42,7 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/) {
                            true);
 
     // this primitive is defined for non-premultiplied RGBA values,
-    // thus convert them to that format before blending
+    // thus convert them to that format
     if (in->mode != NR_PIXBLOCK_MODE_R8G8B8A8N) {
         NRPixBlock *original_in = in;
         in = new NRPixBlock;
