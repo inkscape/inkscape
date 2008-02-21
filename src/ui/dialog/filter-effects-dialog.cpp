@@ -138,12 +138,13 @@ class CheckButtonAttr : public Gtk::CheckButton, public AttrWidget
 public:
     CheckButtonAttr(const Glib::ustring& label,
                     const Glib::ustring& tv, const Glib::ustring& fv,
-                    const SPAttributeEnum a)
+                    const SPAttributeEnum a, char* tip_text)
         : Gtk::CheckButton(label),
           AttrWidget(a, true),//TO-DO: receive a defaultvalue parameter in the constructor
           _true_val(tv), _false_val(fv)
     {
         signal_toggled().connect(signal_attr_changed().make_slot());
+        if (tip_text) _tt.set_tip(*this, tip_text);
     }
 
     Glib::ustring get_as_attribute() const
@@ -324,10 +325,11 @@ private:
 class ColorButton : public Gtk::ColorButton, public AttrWidget
 {
 public:
-    ColorButton(const SPAttributeEnum a)
+    ColorButton(const SPAttributeEnum a, char* tip_text)
         : AttrWidget(a)
     {
         signal_color_set().connect(signal_attr_changed().make_slot());
+        if (tip_text) _tt.set_tip(*this, tip_text);
 
         Gdk::Color col;
         col.set_rgb(65535, 65535, 65535);
@@ -366,7 +368,7 @@ public:
 class FilterEffectsDialog::MatrixAttr : public Gtk::Frame, public AttrWidget
 {
 public:
-    MatrixAttr(const SPAttributeEnum a)
+    MatrixAttr(const SPAttributeEnum a, char* tip_text = NULL)
         : AttrWidget(a), _locked(false)
     {
         _model = Gtk::ListStore::create(_columns);
@@ -375,6 +377,7 @@ public:
         _tree.show();
         add(_tree);
         set_shadow_type(Gtk::SHADOW_IN);
+        if (tip_text) _tt.set_tip(_tree, tip_text);
     }
 
     std::vector<double> get_values() const
@@ -500,7 +503,7 @@ class FilterEffectsDialog::ColorMatrixValues : public Gtk::Frame, public AttrWid
 public:
     ColorMatrixValues()
         : AttrWidget(SP_ATTR_VALUES),
-          _matrix(SP_ATTR_VALUES),
+          _matrix(SP_ATTR_VALUES, _("This matrix determines a linear transform on colour space. Each line affects one of the color components. Each column determines how much of each color component from the input is passed to the output. The last column does not depend on input colors, so can be used to adjust a constant component value.")),
           _saturation(0, 0, 1, 0.1, 0.01, 2, SP_ATTR_VALUES),
           _angle(0, 0, 360, 0.1, 0.01, 1, SP_ATTR_VALUES),
           _label(_("None"), Gtk::ALIGN_LEFT),
@@ -789,27 +792,27 @@ public:
 
     // CheckBox
     CheckButtonAttr* add_checkbutton(const SPAttributeEnum attr, const Glib::ustring& label,
-                                     const Glib::ustring& tv, const Glib::ustring& fv)
+                                     const Glib::ustring& tv, const Glib::ustring& fv, char* tip_text = NULL)
     {
-        CheckButtonAttr* cb = new CheckButtonAttr(label, tv, fv, attr);
+        CheckButtonAttr* cb = new CheckButtonAttr(label, tv, fv, attr, tip_text);
         add_widget(cb, "");
         add_attr_widget(cb);
         return cb;
     }
 
     // ColorButton
-    ColorButton* add_color(const SPAttributeEnum attr, const Glib::ustring& label)
+    ColorButton* add_color(const SPAttributeEnum attr, const Glib::ustring& label, char* tip_text = NULL)
     {
-        ColorButton* col = new ColorButton(attr);
+        ColorButton* col = new ColorButton(attr, tip_text);
         add_widget(col, label);
         add_attr_widget(col);
         return col;
     }
 
     // Matrix
-    MatrixAttr* add_matrix(const SPAttributeEnum attr, const Glib::ustring& label)
+    MatrixAttr* add_matrix(const SPAttributeEnum attr, const Glib::ustring& label, char* tip_text)
     {
-        MatrixAttr* conv = new MatrixAttr(attr);
+        MatrixAttr* conv = new MatrixAttr(attr, tip_text);
         add_widget(conv, label);
         add_attr_widget(conv);
         return conv;
@@ -2211,15 +2214,15 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->type(NR_FILTER_CONVOLVEMATRIX);
     _convolve_order = _settings->add_dualspinbutton(SP_ATTR_ORDER, _("Size"), 1, 5, 1, 1, 0, _("width of the convolve matrix"), _("height of the convolve matrix"));
     _convolve_target = _settings->add_multispinbutton(/*default x:*/ (double) 0, /*default y:*/ (double) 0, SP_ATTR_TARGETX, SP_ATTR_TARGETY, _("Target"), 0, 4, 1, 1, 0, _("X coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."), _("Y coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."));
-    _convolve_matrix = _settings->add_matrix(SP_ATTR_KERNELMATRIX, _("Kernel"));
+    _convolve_matrix = _settings->add_matrix(SP_ATTR_KERNELMATRIX, _("Kernel"), _("This matrix describes the convolve operation that is applied to the input image in order to calculate the pixel colors at the output. Different arrangements of values in this matrix result in various possible visual effects. An identity matrix would lead to a motion blur effect (parallel to the matrix diagonal) while a matrix filled with a constant non-zero value would lead to a common blur effect."));
     _convolve_order->signal_attr_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::convolve_order_changed));
     _settings->add_spinslider(SP_ATTR_DIVISOR, _("Divisor"), 1, 20, 1, 0.1, 2, _("After applying the kernelMatrix to the input image to yield a number, that number is divided by divisor to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result."));
     _settings->add_spinslider(SP_ATTR_BIAS, _("Bias"), -10, 10, 1, 0.01, 1, _("This value is added to each component. This is useful to define a constant value as the zero response of the filter."));
     _settings->add_combo(CONVOLVEMATRIX_EDGEMODE_DUPLICATE, SP_ATTR_EDGEMODE, _("Edge Mode"), ConvolveMatrixEdgeModeConverter, _("Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image."));
-    _settings->add_checkbutton(SP_ATTR_PRESERVEALPHA, _("Preserve Alpha"), "true", "false");
+    _settings->add_checkbutton(SP_ATTR_PRESERVEALPHA, _("Preserve Alpha"), "true", "false", _("If set, the alpha channel won't be altered by this filter primitive."));
 
     _settings->type(NR_FILTER_DIFFUSELIGHTING);
-    _settings->add_color(SP_PROP_LIGHTING_COLOR, _("Diffuse Color"));
+    _settings->add_color(SP_PROP_LIGHTING_COLOR, _("Diffuse Color"), _("Defines the color of the light source"));
     _settings->add_spinslider(SP_ATTR_SURFACESCALE, _("Surface Scale"), -1000, 1000, 1, 0.01, 1, _("This value amplifies the heights of the bump map defined by the input alpha channel"));
     _settings->add_spinslider(SP_ATTR_DIFFUSECONSTANT, _("Constant"), 0, 100, 0.1, 0.01, 2, _("This constant affects the Phong lighting model."));
     _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length"), 0.01, 10, 1, 0.01, 1);
@@ -2231,7 +2234,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_combo(DISPLACEMENTMAP_CHANNEL_ALPHA, SP_ATTR_YCHANNELSELECTOR, _("Y displacement"), DisplacementMapChannelConverter, _("Color component that controls the displacement in the Y direction"));
 
     _settings->type(NR_FILTER_FLOOD);
-    _settings->add_color(SP_PROP_FLOOD_COLOR, _("Flood Color"));
+    _settings->add_color(SP_PROP_FLOOD_COLOR, _("Flood Color"), _("The whole filter region will be filled with this color."));
     _settings->add_spinslider(SP_PROP_FLOOD_OPACITY, _("Opacity"), 0, 1, 0.1, 0.01, 2);
 
     _settings->type(NR_FILTER_GAUSSIANBLUR);
@@ -2252,7 +2255,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_spinslider(SP_ATTR_DY, _("Delta Y"), -100, 100, 1, 0.01, 1, _("This is how far the input image gets shifted downwards"));
 
     _settings->type(NR_FILTER_SPECULARLIGHTING);
-    _settings->add_color(SP_PROP_LIGHTING_COLOR, _("Specular Color"));
+    _settings->add_color(SP_PROP_LIGHTING_COLOR, _("Specular Color"), _("Defines the color of the light source"));
     _settings->add_spinslider(SP_ATTR_SURFACESCALE, _("Surface Scale"), -1000, 1000, 1, 0.01, 1, _("This value amplifies the heights of the bump map defined by the input alpha channel"));
     _settings->add_spinslider(SP_ATTR_SPECULARCONSTANT, _("Constant"), 0, 100, 0.1, 0.01, 2, _("This constant affects the Phong lighting model."));
     _settings->add_spinslider(SP_ATTR_SPECULAREXPONENT, _("Exponent"), 1, 128, 1, 0.01, 1, _("Exponent for specular term, larger is more \"shiny\"."));
@@ -2263,7 +2266,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_notimplemented();
 
     _settings->type(NR_FILTER_TURBULENCE);
-    _settings->add_checkbutton(SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
+//    _settings->add_checkbutton(SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
     _settings->add_combo(TURBULENCE_TURBULENCE, SP_ATTR_TYPE, _("Type"), TurbulenceTypeConverter, _("Indicates whether the filter primitive should perform a noise or turbulence function."));
     _settings->add_dualspinslider(SP_ATTR_BASEFREQUENCY, _("Base Frequency"), 0, 1, 0.001, 0.01, 3);
     _settings->add_spinslider(SP_ATTR_NUMOCTAVES, _("Octaves"), 1, 10, 1, 1, 0);
