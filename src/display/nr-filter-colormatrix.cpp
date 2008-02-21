@@ -12,6 +12,7 @@
 #include "display/nr-filter-colormatrix.h"
 #include "display/nr-filter-units.h"
 #include "display/nr-filter-utils.h"
+#include "libnr/nr-blit.h"
 #include <math.h>
 
 namespace NR {
@@ -36,9 +37,21 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/) {
 
     NRPixBlock *out = new NRPixBlock;
 
-    nr_pixblock_setup_fast(out, in->mode,
+    nr_pixblock_setup_fast(out, NR_PIXBLOCK_MODE_R8G8B8A8N,
                            in->area.x0, in->area.y0, in->area.x1, in->area.y1,
                            true);
+
+    // this primitive is defined for non-premultiplied RGBA values,
+    // thus convert them to that format before blending
+    if (in->mode != NR_PIXBLOCK_MODE_R8G8B8A8N) {
+        NRPixBlock *original_in = in;
+        in = new NRPixBlock;
+        nr_pixblock_setup_fast(in, NR_PIXBLOCK_MODE_R8G8B8A8N,
+                               original_in->area.x0, original_in->area.y0,
+                               original_in->area.x1, original_in->area.y1,
+                               false);
+        nr_blit_pixblock_pixblock(in, original_in);
+    }
 
     unsigned char *in_data = NR_PIXBLOCK_PX(in);
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
