@@ -134,50 +134,7 @@ inline Box3D::Axis toAffine(Proj::Axis axis) {
 
 namespace Box3D {
 
-// Given a bit sequence that unambiguously specifies the face of a 3D box,
-// return a number between 0 and 5 corresponding to that particular face
-// (which is normally used to index an array). Return -1 if the bit sequence
-// does not specify a face. A face can either be given by its plane (e.g, XY)
-// or by the axis that is orthogonal to it (e.g., Z).
-/***
-inline gint face_to_int (guint face_id) {
-    switch (face_id) {
-      case 1:  return 0;
-      case 2:  return 2;
-      case 4:  return 4;
-      case 3:  return 4;
-      case 5:  return 2;
-      case 6:  return 0;
-
-      case 9:  return 1;
-      case 10: return 3;
-      case 12: return 5;
-      case 11: return 5;
-      case 13: return 3;
-      case 14: return 1;
-
-    default: return -1;
-    }
-}
-***/
-
-/***
-inline gint int_to_face (guint id) {
-    switch (id) {
-      case 0: return  6;
-      case 1: return 14;
-      case 2: return  5;
-      case 3: return 13;
-      case 4: return  3;
-      case 5: return 11;
-
-    default: return -1;
-    }
-}
-***/
-
 /* 
- * New version:
  * Identify the axes X, Y, Z with the numbers 0, 1, 2.
  * A box's face is identified by the axis perpendicular to it.
  * For a rear face, add 3.
@@ -246,17 +203,6 @@ inline bool is_single_axis_direction (Box3D::Axis dir) {
     // tests whether dir is nonzero and a power of 2
     return (!(dir & (dir - 1)) && dir);
 }
-
-/***
-// Warning: We don't check that axis really unambiguously specifies a plane.
-//          Make sure this is the case when calling this function.
-inline gint face_containing_corner (Box3D::Axis axis, guint corner) {
-    if (!is_single_axis_direction (axis)) {
-        axis = (Box3D::Axis) (axis ^ Box3D::XYZ);
-    }
-    return face_to_int (axis ^ ((corner & axis) ? Box3D::REAR : Box3D::FRONT));
-}
-***/
 
 /**
  * Given two axis directions out of {X, Y, Z} or the corresponding plane, return the remaining one

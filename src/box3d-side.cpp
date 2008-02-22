@@ -33,15 +33,10 @@ static Inkscape::XML::Node *box3d_side_write (SPObject *object, Inkscape::XML::N
 static void box3d_side_set (SPObject *object, unsigned int key, const gchar *value);
 static void box3d_side_update (SPObject *object, SPCtx *ctx, guint flags);
 
-//static gchar * box3d_side_description (SPItem * item);
-//static void box3d_side_snappoints(SPItem const *item, SnapPointsIter p);
-
-//static void box3d_side_set_shape (SPShape *shape);
-//static void box3d_side_update_patheffect (SPShape *shape, bool write);
+static void box3d_side_set_shape (SPShape *shape);
 
 static Proj::Pt3 box3d_side_corner (Box3DSide *side, guint index);
 static std::vector<Proj::Pt3> box3d_side_corners (Box3DSide *side);
-// static gint box3d_side_descr_to_id (gchar const *descr);
 
 static SPShapeClass *parent_class;
 
@@ -88,11 +83,7 @@ box3d_side_class_init (Box3DSideClass *klass)
     sp_object_class->set = box3d_side_set;
     sp_object_class->update = box3d_side_update;
 
-    //item_class->description = box3d_side_description;
-    //item_class->snappoints = box3d_side_snappoints;
-
     shape_class->set_shape = box3d_side_set_shape;
-    //shape_class->update_patheffect = box3d_side_update_patheffect;
 }
 
 static void
@@ -191,7 +182,6 @@ box3d_side_update (SPObject *object, SPCtx *ctx, guint flags)
         flags &= ~SP_OBJECT_USER_MODIFIED_FLAG_B; // since we change the description, it's not a "just translation" anymore
     }
 
-    //g_print ("box3d_side_update\n");
     if (flags & (SP_OBJECT_MODIFIED_FLAG |
                  SP_OBJECT_STYLE_MODIFIED_FLAG |
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
@@ -201,52 +191,6 @@ box3d_side_update (SPObject *object, SPCtx *ctx, guint flags)
     if (((SPObjectClass *) parent_class)->update)
         ((SPObjectClass *) parent_class)->update (object, ctx, flags);
 }
-
-/***
-static void
-box3d_side_update_patheffect(SPShape *shape, bool write)
-{
-    box3d_side_set_shape(shape);
-
-    if (write) {
-        Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
-        if ( shape->curve != NULL ) {
-            NArtBpath *abp = sp_curve_first_bpath(shape->curve);
-            if (abp) {
-                gchar *str = sp_svg_write_path(abp);
-                repr->setAttribute("d", str);
-                g_free(str);
-            } else {
-                repr->setAttribute("d", "");
-            }
-        } else {
-            repr->setAttribute("d", NULL);
-        }
-    }
-
-    ((SPObject *)shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-}
-***/
-
-/***
-static gchar *
-box3d_side_description (SPItem *item)
-{
-    Box3DSide *side = SP_BOX3D_SIDE (item);
-
-    // while there will never be less than 3 vertices, we still need to
-    // make calls to ngettext because the pluralization may be different
-    // for various numbers >=3.  The singular form is used as the index.
-    if (side->flatsided == false )
-	return g_strdup_printf (ngettext("<b>Star</b> with %d vertex",
-				         "<b>Star</b> with %d vertices",
-					 star->sides), star->sides);
-    else
-        return g_strdup_printf (ngettext("<b>Polygon</b> with %d vertex",
-				         "<b>Polygon</b> with %d vertices",
-					 star->sides), star->sides);
-}
-***/
 
 void
 box3d_side_position_set (Box3DSide *side) {
@@ -259,7 +203,6 @@ box3d_side_position_set (Box3DSide *side) {
 void
 box3d_side_set_shape (SPShape *shape)
 {
-    //g_print ("box3d_side_set_shape\n");
     Box3DSide *side = SP_BOX3D_SIDE (shape);
     if (!SP_OBJECT_DOCUMENT(side)->root) {
         // avoid a warning caused by sp_document_height() (which is called from sp_item_i2d_affine() below)
@@ -269,19 +212,11 @@ box3d_side_set_shape (SPShape *shape)
 
     if (!SP_IS_BOX3D(SP_OBJECT(side)->parent)) {
         g_warning ("Parent of 3D box side is not a 3D box.\n");
-        /**
-        g_print ("Removing the inkscape:box3dside attribute and returning from box3d_side_set_shape().\n");
-        SP_OBJECT_REPR (shape)->setAttribute("sodipodi:type", NULL);
-        SP_OBJECT_REPR (shape)->setAttribute("inkscape:box3dside", NULL);
-        **/
         return;
     }
 
     Persp3D *persp = box3d_side_perspective(side);
-    //g_return_if_fail (persp != NULL);
     if (!persp) {
-        //g_warning ("persp != NULL in box3d_side_set_shape failed!\n");
-        //persp = SP_OBJECT_DOCUMENT(side)->current_persp3d;
         return;
     }
 
@@ -302,7 +237,6 @@ box3d_side_set_shape (SPShape *shape)
     sp_curve_lineto (c, persp->tmat.image(corners[3]).affine() * i2d);
 
     sp_curve_closepath (c);
-    //sp_shape_perform_path_effect(c, SP_SHAPE (side));
     sp_shape_set_curve_insync (SP_SHAPE (side), c, TRUE);
     sp_curve_unref (c);
 }
@@ -373,23 +307,6 @@ box3d_side_corners (Box3DSide *side) {
     corners.push_back (box3d_side_corner (side, i3));
     return corners;
 }
-
-/*
-static gint
-box3d_side_descr_to_id (gchar const *descr)
-{
-    if (!strcmp (descr, "XYrear")) { return 5; }
-    if (!strcmp (descr, "XYfront")) { return 2; }
-    if (!strcmp (descr, "XZbottom")) { return 1; }
-    if (!strcmp (descr, "XZtop")) { return 4; }
-    if (!strcmp (descr, "YZleft")) { return 3; }
-    if (!strcmp (descr, "YZright")) { return 0; }
-
-    g_warning ("Invalid description of 3D box face.\n");
-    g_print ("         (description is: %s)\n", descr);
-    return -1;
-}
-*/
 
 Persp3D *
 box3d_side_perspective(Box3DSide *side) {

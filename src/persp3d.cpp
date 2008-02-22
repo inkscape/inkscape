@@ -93,7 +93,6 @@ persp3d_init(Persp3D *persp)
 {
     persp->tmat = Proj::TransfMat3x4 ();
 
-    //persp->boxes = NULL;
     persp->boxes_transformed.clear();
     persp->document = NULL;
 
@@ -118,27 +117,13 @@ static void persp3d_build(SPObject *object, SPDocument *document, Inkscape::XML:
     if (repr) {
         repr->addListener (&persp3d_repr_events, object);
     }
-
-    // FIXME: What precisely does this do and is it necessary for perspectives?
-    /* Register ourselves */
-    //sp_document_add_resource(document, "persp3d", object);
 }
 
 /**
  * Virtual release of Persp3D members before destruction.
  */
 static void persp3d_release(SPObject *object) {
-    //Persp3D *persp = (Persp3D *) object;
-
     SP_OBJECT_REPR(object)->removeListenerByData(object);
-
-    // FIXME: What precisely does this do and is it necessary for perspectives?
-    /**
-    if (SP_OBJECT_DOCUMENT(object)) {
-        // Unregister ourselves
-        sp_document_remove_resource(SP_OBJECT_DOCUMENT(object), "persp3d", SP_OBJECT(object));
-    }
-    **/
 }
 
 
@@ -330,7 +315,6 @@ persp3d_toggle_VP (Persp3D *persp, Proj::Axis axis, bool set_undo) {
     //        On the other hand, vp_drag_sel_modified() would update all boxes;
     //        here we can confine ourselves to the boxes of this particular perspective.
     persp3d_update_box_reprs (persp);
-    //persp3d_update_z_orders (persp);
     SP_OBJECT(persp)->updateRepr(SP_OBJECT_WRITE_EXT);
     if (set_undo) {
         sp_document_done(sp_desktop_document(inkscape_active_desktop()), SP_VERB_CONTEXT_3DBOX,
@@ -369,7 +353,6 @@ persp3d_rotate_VP (Persp3D *persp, Proj::Axis axis, double angle, bool alt_press
     persp->tmat.set_infinite_direction (axis, a);
 
     persp3d_update_box_reprs (persp);
-    //persp3d_update_z_orders (persp);
     SP_OBJECT(persp)->updateRepr(SP_OBJECT_WRITE_EXT);
 }
 
@@ -394,15 +377,12 @@ persp3d_pt_to_str (Persp3D *persp, Proj::Axis const axis)
 void
 persp3d_add_box (Persp3D *persp, SPBox3D *box) {
     if (!box) {
-        //g_warning ("Trying to add NULL box to perspective.\n");
         return;
     }
     if (std::find (persp->boxes.begin(), persp->boxes.end(), box) != persp->boxes.end()) {
-        //g_warning ("Attempting to add already existent box to perspective.\n");
         return;
     }
     persp->boxes.push_back(box);
-    //SP_OBJECT_REPR(box)->setAttribute("inkscape:perspectiveID", SP_OBJECT_REPR(persp)->attribute("id"));
 }
 
 void
@@ -496,7 +476,6 @@ void
 persp3d_update_box_displays (Persp3D *persp) {
     if (persp->boxes.empty())
         return;
-    //g_print ("Requesting display update for %d boxes in the perspective.\n", persp->boxes.size());
     for (std::vector<SPBox3D *>::iterator i = persp->boxes.begin(); i != persp->boxes.end(); ++i) {
         box3d_position_set(*i);
     }
@@ -506,7 +485,6 @@ void
 persp3d_update_box_reprs (Persp3D *persp) {
     if (persp->boxes.empty())
         return;
-    //g_print ("Requesting repr update for %d boxes in the perspective.\n", persp->boxes.size());
     for (std::vector<SPBox3D *>::iterator i = persp->boxes.begin(); i != persp->boxes.end(); ++i) {
         SP_OBJECT(*i)->updateRepr(SP_OBJECT_WRITE_EXT);
         box3d_set_z_orders(*i);
@@ -565,15 +543,11 @@ persp3d_on_repr_attr_changed ( Inkscape::XML::Node * /*repr*/,
                                bool /*is_interactive*/,
                                void * data )
 {
-    //g_print("persp3d_on_repr_attr_changed!!!! TODO: Do we need to trigger any further updates than the box reprs?");
-
     if (!data)
         return;
 
     Persp3D *persp = (Persp3D*) data;
     persp3d_update_box_displays (persp);
-
-    //lpeobj->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /* returns a std::set() of all perspectives of the currently selected boxes */
@@ -617,6 +591,8 @@ persp3d_selected_boxes (Persp3D *persp) {
     return sel;
 }
 
+/* some debugging stuff follows */
+
 void
 persp3d_print_debugging_info (Persp3D *persp) {
     g_print ("=== Info for Persp3D %d ===\n", persp->my_counter);
@@ -653,12 +629,6 @@ persp3d_print_debugging_info_all(SPDocument *document) {
 
 void
 persp3d_print_all_selected() {
-    /**
-    if (persp3d->boxes_transformed.empty()) {
-        g_print ("No selected perspectives in document\n");
-        return;
-    }
-    **/
     g_print ("\n======================================\n");
     g_print ("Selected perspectives and their boxes:\n");
 

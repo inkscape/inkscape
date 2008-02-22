@@ -94,17 +94,8 @@ vp_knot_moved_handler (SPKnot */*knot*/, NR::Point const *ppointer, guint state,
     if (!dragger->dragging_started && (state & GDK_SHIFT_MASK)) {
         /* with Shift; if there is more than one box linked to this VP
            we need to split it and create a new perspective */
-        //g_print ("Number of boxes in dragger: %d\n", dragger->numberOfBoxes());
         if (dragger->numberOfBoxes() > 1) { // FIXME: Don't do anything if *all* boxes of a VP are selected
-            //g_print ("We need to split the VPDragger\n");
             std::set<VanishingPoint*, less_ptr> sel_vps = dragger->VPsOfSelectedBoxes();
-            /**
-            g_print ("===== VPs of selected boxes: ===========================\n");
-            for (std::set<VanishingPoint*, less_ptr>::iterator i = sel_vps.begin(); i != sel_vps.end(); ++i) {
-                (*i)->printPt();
-            }
-            g_print ("========================================================\n");
-            **/
 
             std::list<SPBox3D *> sel_boxes;
             for (std::set<VanishingPoint*, less_ptr>::iterator vp = sel_vps.begin(); vp != sel_vps.end(); ++vp) {
@@ -120,11 +111,9 @@ vp_knot_moved_handler (SPKnot */*knot*/, NR::Point const *ppointer, guint state,
                           the correct boxes are kept with the VP being moved */
                 std::list<SPBox3D *> bx_lst = persp3d_list_of_boxes(old_persp);
                 for (std::list<SPBox3D *>::iterator i = bx_lst.begin(); i != bx_lst.end(); ++i) {
-                    //g_print ("Iterating over box #%d\n", (*i)->my_counter);
                     if (std::find(sel_boxes.begin(), sel_boxes.end(), *i) == sel_boxes.end()) {
                         /* if a box in the VP is unselected, move it to the
                            newly created perspective so that it doesn't get dragged **/
-                        //g_print ("   switching box #%d to new perspective.\n", (*i)->my_counter);
                         box3d_switch_perspectives(*i, old_persp, new_persp);
                     }
                 }
@@ -165,7 +154,6 @@ vp_knot_moved_handler (SPKnot */*knot*/, NR::Point const *ppointer, guint state,
                 d_new->mergePerspectives();
 
                 // TODO: Update the new merged dragger
-                //d_new->updateKnotShape ();
                 d_new->updateTip();
 
                 d_new->parent->updateBoxDisplays (); // FIXME: Only update boxes in current dragger!
@@ -198,18 +186,6 @@ vp_knot_moved_handler (SPKnot */*knot*/, NR::Point const *ppointer, guint state,
     dragger->dragging_started = true;
 }
 
-/* helpful for debugging */
-static void
-vp_knot_clicked_handler(SPKnot */*knot*/, guint /*state*/, gpointer data)
-{
-    VPDragger *dragger = (VPDragger *) data;
-    g_print ("\nVPDragger contains the following VPs: ");
-    for (std::list<VanishingPoint>::iterator i = dragger->vps.begin(); i != dragger->vps.end(); ++i) {
-        g_print("%d (%d)  ", (*i).my_counter, (*i).get_perspective()->my_counter);
-    }
-    g_print("\n");
-}
-
 void
 vp_knot_grabbed_handler (SPKnot */*knot*/, unsigned int /*state*/, gpointer data)
 {
@@ -224,8 +200,6 @@ vp_knot_ungrabbed_handler (SPKnot *knot, guint /*state*/, gpointer data)
 {
     VPDragger *dragger = (VPDragger *) data;
 
-    //sp_canvas_end_forced_full_redraws(dragger->parent->desktop->canvas);
-
     dragger->point_original = dragger->point = knot->pos;
 
     dragger->dragging_started = false;
@@ -237,7 +211,6 @@ vp_knot_ungrabbed_handler (SPKnot *knot, guint /*state*/, gpointer data)
     }
 
     dragger->parent->updateDraggers ();
-    //dragger->updateBoxReprs ();
     dragger->parent->updateLines ();
     dragger->parent->updateBoxHandles ();
 
@@ -277,8 +250,6 @@ VanishingPoint::selectedBoxes(Inkscape::Selection *sel) {
 
 VPDragger::VPDragger(VPDrag *parent, NR::Point p, VanishingPoint &vp)
 {
-    //this->vps = NULL;
-
     this->parent = parent;
 
     this->point = p;
@@ -300,38 +271,22 @@ VPDragger::VPDragger(VPDrag *parent, NR::Point p, VanishingPoint &vp)
 
         // connect knot's signals
         g_signal_connect (G_OBJECT (this->knot), "moved", G_CALLBACK (vp_knot_moved_handler), this);
-        g_signal_connect (G_OBJECT (this->knot), "clicked", G_CALLBACK (vp_knot_clicked_handler), this);
         g_signal_connect (G_OBJECT (this->knot), "grabbed", G_CALLBACK (vp_knot_grabbed_handler), this);
         g_signal_connect (G_OBJECT (this->knot), "ungrabbed", G_CALLBACK (vp_knot_ungrabbed_handler), this);
-        /***
-        g_signal_connect (G_OBJECT (this->knot), "doubleclicked", G_CALLBACK (vp_knot_doubleclicked_handler), this);
-        ***/
 
         // add the initial VP (which may be NULL!)
         this->addVP (vp);
-        //updateKnotShape();
     }
 }
 
 VPDragger::~VPDragger()
 {
-    // unselect if it was selected
-    //this->parent->setDeselected(this);
-
     // disconnect signals
     g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (vp_knot_moved_handler), this);
-    g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (vp_knot_clicked_handler), this);
     g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (vp_knot_grabbed_handler), this);
     g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (vp_knot_ungrabbed_handler), this);
-    /***
-    g_signal_handlers_disconnect_by_func(G_OBJECT(this->knot), (gpointer) G_CALLBACK (vp_knot_doubleclicked_handler), this);
-    ***/
-
     /* unref should call destroy */
     g_object_unref (G_OBJECT (this->knot));
-
-    //g_slist_free (this->vps);
-    //this->vps = NULL;
 }
 
 /**
@@ -380,7 +335,6 @@ VPDragger::updateTip ()
 void
 VPDragger::addVP (VanishingPoint &vp, bool update_pos)
 {
-    //if (!vp.is_finite() || g_slist_find (this->vps, vp)) {
     if (!vp.is_finite() || std::find (vps.begin(), vps.end(), vp) != vps.end()) {
         // don't add infinite VPs; don't add the same VP twice
         return;
@@ -389,9 +343,7 @@ VPDragger::addVP (VanishingPoint &vp, bool update_pos)
     if (update_pos) {
         vp.set_pos (this->point);
     }
-    //this->vps = g_slist_prepend (this->vps, vp);
     this->vps.push_front (vp);
-    //this->persps.include (vp.get_perspective());
 
     this->updateTip();
 }
@@ -521,7 +473,6 @@ VPDrag::VPDrag (SPDocument *document)
     this->show_lines = true;
     this->front_or_rear_lines = 0x1;
 
-    //this->selected = NULL;
     this->dragging = false;
 
     this->sel_changed_connection = this->selection->connectChanged(
@@ -777,7 +728,6 @@ VPDrag::addDragger (VanishingPoint &vp)
         if (NR::L2 (dragger->point - p) < MERGE_DIST) {
             // distance is small, merge this draggable into dragger, no need to create new dragger
             dragger->addVP (vp);
-            //dragger->updateKnotShape();
             return;
         }
     }

@@ -53,7 +53,6 @@ static NR::Matrix box3d_set_transform(SPItem *item, NR::Matrix const &xform);
 static void box3d_convert_to_guides(SPItem *item);
 
 static void box3d_ref_changed(SPObject *old_ref, SPObject *ref, SPBox3D *box);
-static void box3d_ref_modified(SPObject *href, guint flags, SPBox3D *box);
 
 static SPGroupClass *parent_class;
 
@@ -107,7 +106,6 @@ box3d_init(SPBox3D *box)
 {
     box->persp_href = NULL;
     box->persp_ref = new Persp3DReference(SP_OBJECT(box));
-    new (&box->modified_connection) sigc::connection();
 }
 
 static void
@@ -132,12 +130,6 @@ box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
         g_print ("No document for the box!!!!\n");
         return;
     }
-    /**
-    if (!box->persp3d) {
-        g_print ("Box seems to be newly created since no perspective is referenced yet. We reference the current perspective.\n");
-        box->persp3d = doc->current_persp3d;
-    }
-    **/
 
     box->persp_ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(box3d_ref_changed), box));
 
@@ -162,9 +154,6 @@ box3d_release(SPObject *object)
         delete box->persp_ref;
         box->persp_ref = NULL;
     }
-
-    box->modified_connection.disconnect();
-    box->modified_connection.~connection();
 
     //persp3d_remove_box (box3d_get_perspective(box), box);
 
@@ -199,14 +188,6 @@ box3d_set(SPObject *object, unsigned int key, const gchar *value)
                 } else {
                     // Detach, which emits the changed signal.
                     box->persp_ref->detach();
-                        // TODO: Clean this up (also w.r.t the surrounding if construct)
-                        /***
-                        g_print ("No perspective given. Attaching to current perspective instead.\n");
-                        g_free(box->persp_href);
-                        Inkscape::XML::Node *repr = SP_OBJECT_REPR(inkscape_active_document()->current_persp3d);
-                        box->persp_href = g_strdup(repr->attribute("id"));
-                        box->persp_ref->attach(Inkscape::URI(box->persp_href));
-                        ***/
                 }
             }
 
@@ -233,7 +214,6 @@ box3d_set(SPObject *object, unsigned int key, const gchar *value)
             }
             break;
     }
-    //object->updateRepr(); // This ensures correct update of the box after undo/redo. FIXME: Why is this not present in sp-rect.cpp and similar files?
 }
 
 /**
@@ -251,9 +231,6 @@ box3d_ref_changed(SPObject *old_ref, SPObject *ref, SPBox3D *box)
     }
     if ( SP_IS_PERSP3D(ref) && ref != box ) // FIXME: Comparisons sane?
     {
-        box->modified_connection.disconnect();
-        box->modified_connection = ref->connectModified(sigc::bind(sigc::ptr_fun(&box3d_ref_modified), box));
-        box3d_ref_modified(ref, 0, box);
         persp3d_add_box (SP_PERSP3D(ref), box);
         /* Note: This sometimes leads to attempts to add boxes twice to the list of selected/transformed
            boxes in a perspectives, but this should be uncritical. */
@@ -301,7 +278,6 @@ static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Node *r
                 repr->setAttribute("inkscape:perspectiveID", uri_string);
                 g_free(uri_string);
             } else if (doc) {
-                //persp3d_add_box (doc->current_persp3d, box);
                 Inkscape::XML::Node *persp_repr = SP_OBJECT_REPR(doc->current_persp3d);
                 const gchar *persp_id = persp_repr->attribute("id");
                 gchar *href = g_strdup_printf("#%s", persp_id);
@@ -411,21 +387,6 @@ box3d_set_transform(SPItem *item, NR::Matrix const &xform)
     return NR::identity();
 }
 
-
-/**
- * Gets called when persp(?) repr contents change: i.e. parameter change.
- */
-static void
-box3d_ref_modified(SPObject */*href*/, guint /*flags*/, SPBox3D */*box*/)
-{
-    /***
-    g_print ("FIXME: box3d_ref_modified was called. What should we do?\n");
-    g_print ("Here is at least the the href's id: %s\n", SP_OBJECT_REPR(href)->attribute("id"));
-    g_print ("             ... and the box's, too: %s\n", SP_OBJECT_REPR(box)->attribute("id"));
-    ***/
-
-}
-
 Proj::Pt3
 box3d_get_proj_corner (guint id, Proj::Pt3 const &c0, Proj::Pt3 const &c7) {
     return Proj::Pt3 ((id & Box3D::X) ? c7[Proj::X] : c0[Proj::X],
@@ -446,7 +407,6 @@ NR::Point
 box3d_get_corner_screen (SPBox3D const *box, guint id) {
     Proj::Pt3 proj_corner (box3d_get_proj_corner (box, id));
     if (!box3d_get_perspective(box)) {
-        //g_print ("No perspective present in box!! Should we simply use the currently active perspective?\n");
         return NR::Point (NR_HUGE, NR_HUGE);
     }
     return box3d_get_perspective(box)->tmat.image(proj_corner).affine();
@@ -466,7 +426,6 @@ NR::Point
 box3d_get_center_screen (SPBox3D *box) {
     Proj::Pt3 proj_center (box3d_get_proj_center (box));
     if (!box3d_get_perspective(box)) {
-        //g_print ("No perspective present in box!! Should we simply use the currently active perspective?\n");
         return NR::Point (NR_HUGE, NR_HUGE);
     }
     return box3d_get_perspective(box)->tmat.image(proj_center).affine();
@@ -480,8 +439,7 @@ box3d_get_center_screen (SPBox3D *box) {
 
 // Should we make the threshold settable in the preferences?
 static double remember_snap_threshold = 30;
-//static guint remember_snap_index = 0;
-static guint remember_snap_index_center = 0;
+static guint remember_snap_index = 0;
 
 static Proj::Pt3
 box3d_snap (SPBox3D *box, int id, Proj::Pt3 const &pt_proj, Proj::Pt3 const &start_pt) {
@@ -553,9 +511,9 @@ box3d_snap (SPBox3D *box, int id, Proj::Pt3 const &pt_proj, Proj::Pt3 const &sta
     // if we are within tolerance of the starting point)
     NR::Point result;
     if (within_tolerance) {
-        result = snap_pts[remember_snap_index_center];
+        result = snap_pts[remember_snap_index];
     } else {
-        remember_snap_index_center = snap_index;
+        remember_snap_index = snap_index;
         result = snap_pts[snap_index];
     }
     return box3d_get_perspective(box)->tmat.preimage (result, z_coord, Proj::Z);
@@ -792,41 +750,32 @@ box3d_set_new_z_orders_case0 (SPBox3D *box, int z_orders[6], Box3D::Axis central
 
     bool swapped = box3d_XY_axes_are_swapped(box);
 
-    //g_print ("3 infinite VPs; ");
     switch(central_axis) {
         case Box3D::X:
             if (!swapped) {
-                //g_print ("central axis X (case a)");
                 box3d_aux_set_z_orders (z_orders, 2, 0, 4, 1, 3, 5);
             } else {
-                //g_print ("central axis X (case b)");
                 box3d_aux_set_z_orders (z_orders, 3, 1, 5, 2, 4, 0);
             }
             break;
         case Box3D::Y:
             if (!swapped) {
-                //g_print ("central axis Y (case a)");
                 box3d_aux_set_z_orders (z_orders, 2, 3, 1, 4, 0, 5);
             } else {
-                //g_print ("central axis Y (case b)");
                 box3d_aux_set_z_orders (z_orders, 5, 0, 4, 1, 3, 2);
             }
             break;
         case Box3D::Z:
             if (!swapped) {
-                //g_print ("central axis Z (case a)");
                 box3d_aux_set_z_orders (z_orders, 2, 0, 1, 4, 3, 5);
             } else {
-                //g_print ("central axis Z (case b)");
                 box3d_aux_set_z_orders (z_orders, 5, 3, 4, 1, 0, 2);
             }
             break;
         case Box3D::NONE:
             if (!swapped) {
-                //g_print ("central axis NONE (case a)");
                 box3d_aux_set_z_orders (z_orders, 2, 3, 4, 1, 0, 5);
             } else {
-                //g_print ("central axis NONE (case b)");
                 box3d_aux_set_z_orders (z_orders, 5, 0, 1, 4, 3, 2);
             }
             break;
@@ -834,12 +783,6 @@ box3d_set_new_z_orders_case0 (SPBox3D *box, int z_orders[6], Box3D::Axis central
             g_assert_not_reached();
             break;
     }
-    /**
-    if (swapped) {
-        g_print ("; swapped");
-    }
-    g_print ("\n");
-    **/
 }
 
 /* Precisely one finite VP */
@@ -851,45 +794,30 @@ box3d_set_new_z_orders_case1 (SPBox3D *box, int z_orders[6], Box3D::Axis central
     // note: in some of the case distinctions below we rely upon the fact that oaxis1 and oaxis2 are ordered
     Box3D::Axis oaxis1 = Box3D::get_remaining_axes(fin_axis).first;
     Box3D::Axis oaxis2 = Box3D::get_remaining_axes(fin_axis).second;
-    //g_print ("oaxis1  = %s, oaxis2  = %s\n", Box3D::string_from_axes(oaxis1), Box3D::string_from_axes(oaxis2));
     int inside1 = 0;
     int inside2 = 0;
     inside1 = box3d_pt_lies_in_PL_sector (box, vp, 3, 3 ^ oaxis2, oaxis1);
     inside2 = box3d_pt_lies_in_PL_sector (box, vp, 3, 3 ^ oaxis1, oaxis2);
-    //g_print ("inside1 = %d, inside2 = %d\n", inside1, inside2);
 
     bool swapped = box3d_XY_axes_are_swapped(box);
 
-    //g_print ("2 infinite VPs; ");
-    //g_print ("finite axis: %s; ", Box3D::string_from_axes(fin_axis));
     switch(central_axis) {
         case Box3D::X:
             if (!swapped) {
-                //g_print ("central axis X (case a)");
                 box3d_aux_set_z_orders (z_orders, 2, 4, 0, 1, 3, 5);
             } else {
-                //if (inside2) {
-                    //g_print ("central axis X (case b)");
-                    box3d_aux_set_z_orders (z_orders, 5, 3, 1, 0, 2, 4);
-                //} else {
-                    //g_print ("central axis X (case c)");
-                    //box3d_aux_set_z_orders (z_orders, 5, 3, 1, 2, 0, 4);
-                //}
+                box3d_aux_set_z_orders (z_orders, 5, 3, 1, 0, 2, 4);
             }
             break;
         case Box3D::Y:
             if (inside2 > 0) {
-                //g_print ("central axis Y (case a)");
                 box3d_aux_set_z_orders (z_orders, 1, 2, 3, 0, 5, 4);
             } else if (inside2 < 0) {
-                //g_print ("central axis Y (case b)");
                 box3d_aux_set_z_orders (z_orders, 2, 3, 1, 4, 0, 5);
             } else {
                 if (!swapped) {
-                    //g_print ("central axis Y (case c1)");
                     box3d_aux_set_z_orders (z_orders, 2, 3, 1, 5, 0, 4);
                 } else {
-                    //g_print ("central axis Y (case c2)");
                     box3d_aux_set_z_orders (z_orders, 5, 0, 4, 1, 3, 2);
                 }
             }
@@ -897,52 +825,35 @@ box3d_set_new_z_orders_case1 (SPBox3D *box, int z_orders[6], Box3D::Axis central
         case Box3D::Z:
             if (inside2) {
                 if (!swapped) {
-                    //g_print ("central axis Z (case a1)");
                     box3d_aux_set_z_orders (z_orders, 2, 1, 3, 0, 4, 5);
                 } else {
-                    //g_print ("central axis Z (case a2)");
                     box3d_aux_set_z_orders (z_orders, 5, 3, 4, 0, 1, 2);
                 }
             } else if (inside1) {
                 if (!swapped) {
-                    //g_print ("central axis Z (case b1)");
                     box3d_aux_set_z_orders (z_orders, 2, 0, 1, 4, 3, 5);
                 } else {
-                    //g_print ("central axis Z (case b2)");
                     box3d_aux_set_z_orders (z_orders, 5, 3, 4, 1, 0, 2);
-                    //box3d_aux_set_z_orders (z_orders, 5, 3, 0, 1, 2, 4);
                 }
             } else {
                 // "regular" case
                 if (!swapped) {
-                    //g_print ("central axis Z (case c1)");
                     box3d_aux_set_z_orders (z_orders, 0, 1, 2, 5, 4, 3);
                 } else {
-                    //g_print ("central axis Z (case c2)");
                     box3d_aux_set_z_orders (z_orders, 5, 3, 4, 0, 2, 1);
-                    //box3d_aux_set_z_orders (z_orders, 5, 3, 4, 0, 2, 1);
                 }
             }
             break;
         case Box3D::NONE:
             if (!swapped) {
-                //g_print ("central axis NONE (case a)");
                 box3d_aux_set_z_orders (z_orders, 2, 3, 4, 5, 0, 1);
             } else {
-                //g_print ("central axis NONE (case b)");
                 box3d_aux_set_z_orders (z_orders, 5, 0, 1, 3, 2, 4);
-                //box3d_aux_set_z_orders (z_orders, 2, 3, 4, 1, 0, 5);
             }
             break;
         default:
             g_assert_not_reached();
     }
-    /**
-    if (swapped) {
-        g_print ("; swapped");
-    }
-    g_print ("\n");
-    **/
 }
 
 /* Precisely 2 finite VPs */
@@ -966,36 +877,23 @@ box3d_set_new_z_orders_case2 (SPBox3D *box, int z_orders[6], Box3D::Axis central
     int insidezx = box3d_VP_lies_in_PL_sector (box, Proj::Z, 3, 3 ^ Box3D::Y, Box3D::X);
     int insidezy = box3d_VP_lies_in_PL_sector (box, Proj::Z, 3, 3 ^ Box3D::X, Box3D::Y);
 
-    //g_print ("Insides: xy = %d, xz = %d, yx = %d, yz = %d, zx = %d, zy = %d\n",
-    //         insidexy, insidexz, insideyx, insideyz, insidezx, insidezy);
-    (void)insidexz;
-    (void)insideyx;
-    (void)insidezx;
-
-    //g_print ("1 infinite VP; ");
     switch(central_axis) {
         case Box3D::X:
             if (!swapped) {
                 if (insidezy == -1) {
-                    //g_print ("central axis X (case a1)");
                     box3d_aux_set_z_orders (z_orders, 2, 4, 0, 1, 3, 5);
                 } else if (insidexy == 1) {
-                    //g_print ("central axis X (case a2)");
                     box3d_aux_set_z_orders (z_orders, 2, 4, 0, 5, 1, 3);
                 } else {
-                    //g_print ("central axis X (case a3)");
                     box3d_aux_set_z_orders (z_orders, 2, 4, 0, 1, 3, 5);
                 }
             } else {
                 if (insideyz == -1) {
-                    //g_print ("central axis X (case b1)");
                     box3d_aux_set_z_orders (z_orders, 3, 1, 5, 0, 2, 4);
                 } else {
                     if (!swapped) {
-                        //g_print ("central axis X (case b2)");
                         box3d_aux_set_z_orders (z_orders, 3, 1, 5, 2, 4, 0);
                     } else {
-                        //g_print ("central axis X (case b3)");
                         if (insidexy == 0) {
                             box3d_aux_set_z_orders (z_orders, 3, 5, 1, 0, 2, 4);
                         } else {
@@ -1008,14 +906,11 @@ box3d_set_new_z_orders_case2 (SPBox3D *box, int z_orders[6], Box3D::Axis central
         case Box3D::Y:
             if (!swapped) {
                 if (insideyz == 1) {
-                    //g_print ("central axis Y (case a1)");
                     box3d_aux_set_z_orders (z_orders, 2, 3, 1, 0, 5, 4);
                 } else {
-                    //g_print ("central axis Y (case a2)");
                     box3d_aux_set_z_orders (z_orders, 2, 3, 1, 5, 0, 4);
                 }
             } else {
-                //g_print ("central axis Y (case b)");
                 if (insideyx == 1) {
                     box3d_aux_set_z_orders (z_orders, 4, 0, 5, 1, 3, 2);
                 } else {
@@ -1026,26 +921,20 @@ box3d_set_new_z_orders_case2 (SPBox3D *box, int z_orders[6], Box3D::Axis central
         case Box3D::Z:
             if (!swapped) {
                 if (insidezy == 1) {
-                    //g_print ("central axis Z (case a1)");
                     box3d_aux_set_z_orders (z_orders, 2, 1, 0, 4, 3, 5);
                 } else if (insidexy == -1) {
-                    //g_print ("central axis Z (case a2)");
                     box3d_aux_set_z_orders (z_orders, 2, 1, 0, 5, 4, 3);
                 } else {
-                    //g_print ("central axis Z (case a3)");
                     box3d_aux_set_z_orders (z_orders, 2, 0, 1, 5, 3, 4);
                 }
             } else {
-                //g_print ("central axis Z (case b)");
                 box3d_aux_set_z_orders (z_orders, 3, 4, 5, 1, 0, 2);
             }
             break;
         case Box3D::NONE:
             if (!swapped) {
-                //g_print ("central axis NONE (case a)");
                 box3d_aux_set_z_orders (z_orders, 2, 3, 4, 1, 0, 5);
             } else {
-                //g_print ("central axis NONE (case b)");
                 box3d_aux_set_z_orders (z_orders, 5, 0, 1, 4, 3, 2);
             }
             break;
@@ -1053,12 +942,6 @@ box3d_set_new_z_orders_case2 (SPBox3D *box, int z_orders[6], Box3D::Axis central
             g_assert_not_reached();
             break;
     }
-    /**
-    if (swapped) {
-        g_print ("; swapped");
-    }
-    g_print ("\n");
-    **/
 }
 
 /*
@@ -1108,7 +991,6 @@ bool
 box3d_recompute_z_orders (SPBox3D *box) {
     Persp3D *persp = box3d_get_perspective(box);
 
-    //g_return_val_if_fail(persp, false);
     if (!persp)
         return false;
 
@@ -1179,14 +1061,12 @@ box3d_recompute_z_orders (SPBox3D *box) {
         } else if (box3d_half_line_crosses_joining_line (corner3, vpz, vpx, vpy)) {
             central_axis = Box3D::Z;
         }
-        //g_print ("Crossing: %s\n", Box3D::string_from_axes(central_axis));
 
         unsigned int central_corner = 3 ^ central_axis;
         if (central_axis == Box3D::Z) {
             central_corner = central_corner ^ Box3D::XYZ;
         }
         if (box3d_XY_axes_are_swapped(box)) {
-            //g_print ("Axes X and Y are swapped\n");
             central_corner = central_corner ^ Box3D::XYZ;
         }
 
@@ -1204,7 +1084,6 @@ box3d_recompute_z_orders (SPBox3D *box) {
                     box3d_aux_set_z_orders (z_orders, 2, 3, 1, 5, 0, 4);
                 } else {
                     // degenerate case
-                    //g_print ("Degenerate case #1\n");
                     box3d_aux_set_z_orders (z_orders, 2, 1, 3, 0, 5, 4);
                 }
                 break;
@@ -1212,11 +1091,9 @@ box3d_recompute_z_orders (SPBox3D *box) {
             case Box3D::Z:
                 if (box3d_half_line_crosses_joining_line(vpx, vpz, corner3, corner1)) {
                     // degenerate case
-                    //g_print ("Degenerate case #2\n");
                     box3d_aux_set_z_orders (z_orders, 2, 0, 1, 4, 3, 5);
                 } else if (box3d_half_line_crosses_joining_line(vpx, vpy, corner3, corner7)) {
                     // degenerate case
-                    //g_print ("Degenerate case #3\n");
                     box3d_aux_set_z_orders (z_orders, 2, 1, 0, 5, 3, 4);
                 } else {
                     box3d_aux_set_z_orders (z_orders, 2, 1, 0, 3, 4, 5);
@@ -1226,7 +1103,6 @@ box3d_recompute_z_orders (SPBox3D *box) {
             case Box3D::X:
                 if (box3d_half_line_crosses_joining_line(vpz, vpx, corner3, corner1)) {
                     // degenerate case
-                    //g_print ("Degenerate case #4\n");
                     box3d_aux_set_z_orders (z_orders, 2, 1, 0, 4, 5, 3);
                 } else {
                     box3d_aux_set_z_orders (z_orders, 2, 4, 0, 5, 1, 3);
@@ -1289,13 +1165,6 @@ box3d_set_z_orders (SPBox3D *box) {
                 SP_ITEM((*side).second)->lowerToBottom();
             }
         }
-        /**
-        g_print ("Resetting z-orders: ");
-        for (int i = 0; i < 6; ++i) {
-            g_print ("%d ", box->z_orders[i]);
-        }
-        g_print ("\n");
-        **/
     }
 }
 
@@ -1326,7 +1195,6 @@ box3d_pt_lies_in_PL_sector (SPBox3D const *box, NR::Point const &pt, int id1, in
         NR::Point v2(c2 - vp);
         NR::Point w(pt - vp);
         ret = static_cast<int>(Box3D::lies_in_sector(v1, v2, w));
-        //g_print ("Case 0 - returning %d\n", ret);
     } else {
         Box3D::PerspectiveLine pl1(c1, Box3D::toProj(axis), persp);
         Box3D::PerspectiveLine pl2(c2, Box3D::toProj(axis), persp);
@@ -1340,7 +1208,6 @@ box3d_pt_lies_in_PL_sector (SPBox3D const *box, NR::Point const &pt, int id1, in
                 ret = -1;
             }
         }
-        //g_print ("Case 1 - returning %d\n", ret);
     }
     return ret;
 }
@@ -1366,7 +1233,7 @@ box3d_swap_coords(SPBox3D *box, Proj::Axis axis, bool smaller = true) {
         box->orig_corner0[axis] = box->orig_corner7[axis];
         box->orig_corner7[axis] = tmp;
     }
-    // FIXME: Should we also swap the coordinates of save_corner0 and save_corner7?
+    // Should we also swap the coordinates of save_corner0 and save_corner7?
 }
 
 /* ensure that the coordinates of corner0 and corner7 are in the correct order (to prevent everted boxes) */
@@ -1487,7 +1354,7 @@ box3d_convert_to_group(SPBox3D *box) {
             repr = box3d_side_convert_to_path(SP_BOX3D_SIDE(child));
             grepr->appendChild(repr);
         } else {
-            g_warning("Non-side object encountered as child of a 3D box.\n");
+            g_warning("Non-side item encountered as child of a 3D box.\n");
         }
     }
 

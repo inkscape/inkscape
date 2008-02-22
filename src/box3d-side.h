@@ -39,8 +39,6 @@ struct Box3DSideClass {
 
 GType box3d_side_get_type (void);
 
-//void sp_box3d_side_position_set (Box3DSide *side, NR::Point corner1, NR::Point corner2);
-void box3d_side_set_shape (SPShape *shape);
 void box3d_side_position_set (Box3DSide *side); // FIXME: Replace this by box3d_side_set_shape??
 void box3d_side_apply_style (Box3DSide *side);
 gchar *box3d_side_axes_string(Box3DSide *side);

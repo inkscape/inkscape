@@ -35,8 +35,6 @@ struct SPBox3D : public SPGroup {
     gchar *persp_href;
     Persp3DReference *persp_ref;
 
-    sigc::connection modified_connection;
-
     Proj::Pt3 orig_corner0;
     Proj::Pt3 orig_corner7;
 
@@ -69,9 +67,7 @@ void box3d_set_z_orders (SPBox3D *box);
 int box3d_pt_lies_in_PL_sector (SPBox3D const *box, NR::Point const &pt, int id1, int id2, Box3D::Axis axis);
 int box3d_VP_lies_in_PL_sector (SPBox3D const *box, Proj::Axis vpdir, int id1, int id2, Box3D::Axis axis);
 
-/* ensures that the coordinates of corner0 and corner7 are in the correct order (to prevent everted boxes) */
 void box3d_relabel_corners(SPBox3D *box);
-
 void box3d_check_for_swapped_coords(SPBox3D *box);
 
 void box3d_add_to_selection(SPBox3D *box);

@@ -46,7 +46,7 @@
 #include "perspective-line.h"
 #include "persp3d.h"
 #include "box3d-side.h"
-#include "document-private.h" // for debugging (see case GDK_P)
+#include "document-private.h"
 #include "line-geometry.h"
 
 static void sp_box3d_context_class_init(Box3DContextClass *klass);
@@ -400,19 +400,6 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
                     bc->drag_ptC_proj = cur_persp->tmat.preimage (motion_dt, bc->drag_ptB_proj[Proj::X], Proj::X);
                 }
                 bc->drag_ptC = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, bc->drag_ptC, bc->item).getPoint();
-                if (bc->ctrl_dragged) {
-                    g_print ("TODO: What should happen here?\n");
-                    // Update bc->drag_ptB in case we are ctrl-dragging
-                    /***
-                    Box3D::PerspectiveLine pl1 (NR::Point (event_context->xp, event_context->yp), Box3D::Y, bc->_vpdrag->document->current_perspective);
-                    Box3D::PerspectiveLine pl2 (bc->drag_ptB, Box3D::X, bc->_vpdrag->document->current_perspective);
-                    NR::Point corner1 = pl1.meet(pl2);
-                	
-                    Box3D::PerspectiveLine pl3 (corner1, Box3D::X, bc->_vpdrag->document->current_perspective);
-                    Box3D::PerspectiveLine pl4 (bc->drag_ptC, Box3D::Z, bc->_vpdrag->document->current_perspective);
-                    bc->drag_ptB = pl3.meet(pl4);
-                    ***/
-                }
             }
 
             sp_box3d_drag(*bc, event->motion.state);
@@ -448,23 +435,6 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
         break;
     case GDK_KEY_PRESS:
         switch (get_group0_keyval (&event->key)) {
-        case GDK_Alt_L:
-        case GDK_Alt_R:
-        case GDK_Control_L:
-        case GDK_Control_R:
-        case GDK_Shift_L:
-        case GDK_Shift_R:
-        case GDK_Meta_L:  // Meta is when you press Shift+Alt (at least on my machine)
-        case GDK_Meta_R:
-            /***
-            if (!dragging){
-                sp_event_show_modifier_tip (event_context->defaultMessageContext(), event,
-                                            _("<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner circular"),
-                                            _("<b>Shift</b>: draw around the starting point"),
-                                            NULL);
-            }
-            ***/
-            break;
         case GDK_Up:
         case GDK_Down:
         case GDK_KP_Up:
@@ -524,52 +494,11 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             ret = true;
             break;
 
-        case GDK_I:
-            if (MOD__ALT) {
-                persp3d_print_debugging_info_all (inkscape_active_document());
-            } else {
-                persp3d_print_debugging_info (inkscape_active_document()->current_persp3d);
-            }
-            ret = true;
-            break;
-
         case GDK_g:
         case GDK_G:
             if (MOD__SHIFT_ONLY) {
                 sp_selection_to_guides();
                 ret = true;
-            }
-            break;
-
-        case GDK_P:
-        {
-            if (MOD__SHIFT && MOD__CTRL) break; // Don't catch Shift+Ctrl+P (Preferences dialog)
-            SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(SP_ACTIVE_DOCUMENT);
-            g_print ("=== Persp3D Objects: ==============================\n");
-            for (SPObject *i = sp_object_first_child(SP_OBJECT(defs)); i != NULL; i = SP_OBJECT_NEXT(i) ) {
-                g_print ("Object encountered\n");
-                if (SP_IS_PERSP3D(i)) {
-                    //g_print ("Encountered a Persp3D in defs\n");
-                    SP_PERSP3D(i)->tmat.print();
-                    g_print ("\n");
-                    g_print ("Computing preimage of point (300, 400)\n");
-                    SP_PERSP3D(i)->tmat.preimage (NR::Point (300, 400), 0, Proj::Z);
-                    g_print ("Computing preimage of point (200, 500)\n");
-                    SP_PERSP3D(i)->tmat.preimage (NR::Point (200, 500), 0, Proj::Z);
-                }
-            }
-            g_print ("===================================================\n");
-
-            ret = true;
-            break;
-        }
-
-        case GDK_V:
-            if (bc->_vpdrag) {
-                bc->_vpdrag->printDraggers();
-                ret = true;
-            } else {
-                g_print ("No VPDrag in Box3DContext.\n");
             }
             break;
 
@@ -626,22 +555,6 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             break;
         }
         break;
-    case GDK_KEY_RELEASE:
-        switch (get_group0_keyval (&event->key)) {
-        case GDK_Alt_L:
-        case GDK_Alt_R:
-        case GDK_Control_L:
-        case GDK_Control_R:
-        case GDK_Shift_L:
-        case GDK_Shift_R:
-        case GDK_Meta_L:  // Meta is when you press Shift+Alt
-        case GDK_Meta_R:
-            event_context->defaultMessageContext()->clear();
-            break;
-        default:
-            break;
-        }
-        break;
     default:
         break;
     }
@@ -675,7 +588,6 @@ static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
 
         bc.item = (SPItem *) desktop->currentLayer()->appendChildRepr(repr);
         Inkscape::GC::release(repr);
-        /**** bc.item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer()); ****/
         Inkscape::XML::Node *repr_side;
         // TODO: Incorporate this in box3d-side.cpp!
         for (int i = 0; i < 6; ++i) {
@@ -725,18 +637,13 @@ static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
     box3d_position_set(box);
 
     // status text
-    //GString *Ax = SP_PX_TO_METRIC_STRING(origin[NR::X], desktop->namedview->getDefaultMetric());
-    //GString *Ay = SP_PX_TO_METRIC_STRING(origin[NR::Y], desktop->namedview->getDefaultMetric());
     bc._message_context->setF(Inkscape::NORMAL_MESSAGE, _("<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"));
-    //g_string_free(Ax, FALSE);
-    //g_string_free(Ay, FALSE);
 }
 
 static void sp_box3d_finish(Box3DContext *bc)
 {
     bc->_message_context->clear();
     g_assert (SP_ACTIVE_DOCUMENT->current_persp3d);
-    //Persp3D *cur_persp = SP_ACTIVE_DOCUMENT->current_persp3d;
 
     if ( bc->item != NULL ) {
         SPDesktop * desktop = SP_EVENT_CONTEXT_DESKTOP(bc);

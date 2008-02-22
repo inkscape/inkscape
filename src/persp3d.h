@@ -32,10 +32,10 @@ class Box3DContext;
 struct Persp3D : public SPObject {
     Proj::TransfMat3x4 tmat;
 
-    // TODO: Also write the list of boxes into the xml repr and vice versa link boxes to their persp3d?
+    // Also write the list of boxes into the xml repr and vice versa link boxes to their persp3d?
     std::vector<SPBox3D *> boxes;
     std::map<SPBox3D *, bool> boxes_transformed; // TODO: eventually we should merge this with 'boxes'
-    SPDocument *document; // FIXME: should this rather be the SPDesktop?
+    SPDocument *document; // should this rather be the SPDesktop?
 
     // for debugging only
     int my_counter;
