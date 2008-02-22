@@ -28,6 +28,13 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_z="700 : 600 : 1"
        inkscape:persp3d-origin="300 : 400 : 1"
+       id="perspective3690" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-50 : 600 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="700 : 600 : 1"
+       inkscape:persp3d-origin="300 : 400 : 1"
        id="perspective2537" />
     <linearGradient
        id="linearGradient13616">
@@ -101,9 +108,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.9296875"
-     inkscape:cx="82.09956"
-     inkscape:cy="-27.35698"
+     inkscape:zoom="5.2708333"
+     inkscape:cx="48"
+     inkscape:cy="48"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -136,20 +143,20 @@
             <dc:title>Felipe Corrêa da Silva Sanches</dc:title>
           </cc:Agent>
         </dc:publisher>
-        <dc:identifier></dc:identifier>
-        <dc:source></dc:source>
-        <dc:relation></dc:relation>
-        <dc:language></dc:language>
+        <dc:identifier />
+        <dc:source />
+        <dc:relation />
+        <dc:language />
         <dc:subject>
           <rdf:Bag>
             <rdf:li>feComposite Example</rdf:li>
           </rdf:Bag>
         </dc:subject>
-        <dc:coverage></dc:coverage>
+        <dc:coverage />
         <dc:description>this is an image originaly intended to be used in Inkscape</dc:description>
         <dc:contributor>
           <cc:Agent>
-            <dc:title></dc:title>
+            <dc:title />
           </cc:Agent>
         </dc:contributor>
         <cc:license
@@ -178,16 +185,15 @@
      id="layer1"
      transform="translate(-155.36416,-264.88732)">
     <rect
-       style="opacity:0.43324938000000002;fill:#000000;fill-opacity:0.23049645;fill-rule:evenodd;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:3, 6;stroke-dashoffset:0;stroke-opacity:1"
+       style="opacity:0.43324938;fill:#000000;fill-opacity:0.23049646;fill-rule:evenodd;stroke:#000000;stroke-width:2.90019464;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:2.90019444, 5.80038887;stroke-dashoffset:0;stroke-opacity:1"
        id="rect3279"
-       width="88.739502"
-       height="88.201691"
-       x="3.7647059"
-       y="4.0336137"
+       width="85.408623"
+       height="85.64537"
+       x="160.6046"
+       y="270.00937"
        inkscape:export-filename="/home/felipe/devel/inkscape/inkscape/share/icons/feFlood-icon.png"
        inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90"
-       transform="translate(155.36416,264.88732)" />
+       inkscape:export-ydpi="90" />
     <g
        id="g8891"
        transform="matrix(1.3344192,0,0,1.3344192,-74.252035,-91.584765)">

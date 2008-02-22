@@ -29,14 +29,28 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_z="700 : 600 : 1"
        inkscape:persp3d-origin="300 : 400 : 1"
-       id="perspective2403" />
+       id="perspective2550" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="-50 : 600 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_z="700 : 600 : 1"
        inkscape:persp3d-origin="300 : 400 : 1"
-       id="perspective2402" />
+       id="perspective3813" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-50 : 600 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="700 : 600 : 1"
+       inkscape:persp3d-origin="300 : 400 : 1"
+       id="perspective2405" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-50 : 600 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="700 : 600 : 1"
+       inkscape:persp3d-origin="300 : 400 : 1"
+       id="perspective2495" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="-50 : 600 : 1"
@@ -86,6 +100,17 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="-50 : 600 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask2591">
+      <rect
+         style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect2593"
+         width="100.53606"
+         height="101.09464"
+         x="-0.79143554"
+         y="-2.7778296" />
+    </mask>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -94,14 +119,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.0729167"
-     inkscape:cx="148.55593"
+     inkscape:zoom="5.1458333"
+     inkscape:cx="48"
      inkscape:cy="48"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      gridtolerance="10000"
      inkscape:window-width="1014"
-     inkscape:window-height="717"
+     inkscape:window-height="721"
      inkscape:window-x="5"
      inkscape:window-y="24"
      width="768px"
@@ -118,7 +143,7 @@
         <cc:license
            rdf:resource="http://creativecommons.org/licenses/by-sa/3.0/" />
         <dc:title>feImage filter primitive example</dc:title>
-        <dc:date>23 Jan 2008</dc:date>
+        <dc:date>18 Jan 2008</dc:date>
         <dc:creator>
           <cc:Agent>
             <dc:title>Felipe Corrêa da Silva Sanches</dc:title>
@@ -182,13 +207,9 @@
        height="124.7063"
        width="168.06779"
        sodipodi:absref="ticotico.jpg"
-       xlink:href="./ticotico.jpg" />
-    <rect
-       style="opacity:0.43324938;fill:none;fill-opacity:0.3678161;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.97574574;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.97574573, 1.95149145;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect2686"
-       width="93.740524"
-       height="95.985802"
-       x="1.7403355"
-       y="1.1223228" />
+       xlink:href="./ticotico.jpg"
+       style="filter:url(#filter2688)"
+       transform="matrix(0.8782911,0,0,0.8782911,4.6793008,6.2342096)"
+       mask="url(#mask2591)" />
   </g>
 </svg>

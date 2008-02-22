@@ -25,6 +25,13 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_z="700 : 600 : 1"
        inkscape:persp3d-origin="300 : 400 : 1"
+       id="perspective3427" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-50 : 600 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="700 : 600 : 1"
+       inkscape:persp3d-origin="300 : 400 : 1"
        id="perspective2495" />
     <linearGradient
        inkscape:collect="always"
@@ -113,9 +120,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.2291667"
-     inkscape:cx="88.991638"
-     inkscape:cy="-65.205352"
+     inkscape:zoom="5.2708333"
+     inkscape:cx="48"
+     inkscape:cy="48"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -131,7 +138,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:date>2007-07-03</dc:date>
         <dc:creator>
           <cc:Agent>
@@ -149,19 +156,19 @@
           </cc:Agent>
         </dc:publisher>
         <dc:identifier>c</dc:identifier>
-        <dc:source></dc:source>
-        <dc:relation></dc:relation>
-        <dc:language></dc:language>
+        <dc:source />
+        <dc:relation />
+        <dc:language />
         <dc:subject>
           <rdf:Bag>
             <rdf:li>hexamines icon</rdf:li>
           </rdf:Bag>
         </dc:subject>
-        <dc:coverage></dc:coverage>
+        <dc:coverage />
         <dc:description>this is an image originaly intended to be used in inkscape</dc:description>
         <dc:contributor>
           <cc:Agent>
-            <dc:title></dc:title>
+            <dc:title />
           </cc:Agent>
         </dc:contributor>
         <cc:license
@@ -189,9 +196,10 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       id="g2497">
+       id="g2497"
+       transform="matrix(1.0417683,0,0,1.0174356,-3.0901289,-1.2234494)">
       <rect
-         style="opacity:1;fill:url(#linearGradient2420);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.25999999000000007;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter2388)"
+         style="opacity:1;fill:url(#linearGradient2420);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.25999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter2388)"
          id="rect2418"
          width="39.050846"
          height="87.05085"
@@ -208,7 +216,7 @@
          sodipodi:nodetypes="cccccccc"
          id="path2428"
          d="M 24.835721,42.76764 L 24.835721,58.753411 L 50.752046,57.300159 L 50.025421,70.379425 L 67.706651,50.033898 L 50.26763,29.688372 L 50.509837,44.140155 L 24.835721,42.76764 z"
-         style="fill:#ffe61e;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:2,2;stroke-dashoffset:0;stroke-opacity:0.66120217000000003" />
+         style="fill:#ffe61e;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:2, 2;stroke-dashoffset:0;stroke-opacity:0.66120217" />
     </g>
   </g>
 </svg>

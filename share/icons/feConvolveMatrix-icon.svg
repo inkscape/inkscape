@@ -29,6 +29,13 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_z="700 : 600 : 1"
        inkscape:persp3d-origin="300 : 400 : 1"
+       id="perspective3813" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-50 : 600 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="700 : 600 : 1"
+       inkscape:persp3d-origin="300 : 400 : 1"
        id="perspective2405" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
@@ -99,6 +106,17 @@
          targetX="1"
          targetY="1" />
     </filter>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask4382">
+      <rect
+         y="-2.7778296"
+         x="-0.79143554"
+         height="101.09464"
+         width="100.53606"
+         id="rect4384"
+         style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    </mask>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -107,9 +125,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.4766083"
-     inkscape:cx="33.938552"
-     inkscape:cy="28.549012"
+     inkscape:zoom="1.863521"
+     inkscape:cx="-29.480924"
+     inkscape:cy="78.993518"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      gridtolerance="10000"
@@ -196,13 +214,8 @@
        width="168.06779"
        sodipodi:absref="ticotico.jpg"
        xlink:href="./ticotico.jpg"
-       style="filter:url(#filter2688)" />
-    <rect
-       style="opacity:0.43324938;fill:none;fill-opacity:0.3678161;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.97574574;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.97574573, 1.95149145;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect2686"
-       width="93.740524"
-       height="95.985802"
-       x="1.7403355"
-       y="1.1223228" />
+       style="filter:url(#filter2688)"
+       transform="matrix(0.8782911,0,0,0.8782911,4.6793008,6.2342096)"
+       mask="url(#mask4382)" />
   </g>
 </svg>

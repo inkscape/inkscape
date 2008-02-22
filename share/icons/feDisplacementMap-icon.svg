@@ -28,6 +28,13 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_z="700 : 600 : 1"
        inkscape:persp3d-origin="300 : 400 : 1"
+       id="perspective4780" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-50 : 600 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="700 : 600 : 1"
+       inkscape:persp3d-origin="300 : 400 : 1"
        id="perspective2549" />
     <filter
        id="filter3342"
@@ -53,7 +60,7 @@
          id="feDisplacementMap2391"
          yChannelSelector="G"
          xChannelSelector="R"
-         scale="8.8300220750551883"
+         scale="72.072072072072075"
          in="SourceGraphic" />
     </filter>
     <linearGradient
@@ -140,9 +147,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.90966341"
-     inkscape:cx="112.97928"
-     inkscape:cy="-81.164364"
+     inkscape:zoom="2.75"
+     inkscape:cx="138.01185"
+     inkscape:cy="80.145651"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -175,20 +182,20 @@
             <dc:title>Felipe Corrêa da Silva Sanches</dc:title>
           </cc:Agent>
         </dc:publisher>
-        <dc:identifier></dc:identifier>
-        <dc:source></dc:source>
-        <dc:relation></dc:relation>
-        <dc:language></dc:language>
+        <dc:identifier />
+        <dc:source />
+        <dc:relation />
+        <dc:language />
         <dc:subject>
           <rdf:Bag>
             <rdf:li>feDisplacementMap example</rdf:li>
           </rdf:Bag>
         </dc:subject>
-        <dc:coverage></dc:coverage>
+        <dc:coverage />
         <dc:description>this is an image originaly intended to be used in inkscape</dc:description>
         <dc:contributor>
           <cc:Agent>
-            <dc:title></dc:title>
+            <dc:title />
           </cc:Agent>
         </dc:contributor>
         <cc:license
@@ -230,14 +237,14 @@
        inkscape:rounded="0"
        inkscape:randomized="0"
        d="M 318,639.36218 L 232.21544,576.10163 L 135.97077,621.90393 L 169.62625,520.76937 L 96.324433,443.38894 L 202.90922,444.14491 L 253.85088,350.51887 L 286.06842,452.12063 L 390.85391,471.63699 L 304.18066,533.67437 L 318,639.36218 z"
-       transform="matrix(0.1505356,0,0,0.1505356,35.342126,-29.680704)" />
+       transform="matrix(0.1436647,0,0,0.1436647,35.561255,-26.01207)" />
     <path
-       style="fill:#ffe61e;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.75,0.75;stroke-dashoffset:0;stroke-opacity:0.66120217000000003"
-       d="M 36.771402,47.634911 L 36.771402,51.483386 L 46.326755,51.133525 L 46.058849,54.282277 L 52.577921,49.384218 L 46.148151,44.486159 L 46.237452,47.965336 L 36.771402,47.634911 z"
+       style="fill:#ffb31e;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.35788377999999998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.71576755000000003, 0.71576755000000003;stroke-dashoffset:0;stroke-opacity:0.66120217000000003"
+       d="M 36.925294,47.774608 L 36.925294,51.447426 L 46.04451,51.113534 L 45.788832,54.118566 L 52.010352,49.444071 L 45.874058,44.769575 L 45.959283,48.089951 L 36.925294,47.774608 z"
        id="path2428"
        sodipodi:nodetypes="cccccccc" />
     <path
-       transform="matrix(0.1505356,0,0,0.1505356,-11.767116,-50.836657)"
+       transform="matrix(0.1436647,0,0,0.1436647,-9.397767,-46.202396)"
        d="M 318,639.36218 L 232.21544,576.10163 L 135.97077,621.90393 L 169.62625,520.76937 L 96.324433,443.38894 L 202.90922,444.14491 L 253.85088,350.51887 L 286.06842,452.12063 L 390.85391,471.63699 L 304.18066,533.67437 L 318,639.36218 z"
        inkscape:randomized="0"
        inkscape:rounded="0"
@@ -254,7 +261,7 @@
        sodipodi:type="star" />
     <g
        id="g3346"
-       transform="matrix(0.3585875,0,0,0.3585875,-49.628619,-36.840824)">
+       transform="matrix(0.3422204,0,0,0.3422204,-45.531148,-32.845379)">
       <rect
          transform="translate(155.36416,264.88732)"
          y="4.2753038"
@@ -275,7 +282,7 @@
     <path
        sodipodi:nodetypes="ccccccccccccc"
        id="path2790"
-       d="M 17.365927,48.03087 L 17.365927,51.712468 L 21.339163,51.728016 L 21.329494,55.236266 L 25.70943,55.449534 L 25.646379,51.668022 L 29.777236,51.570835 L 29.706853,48.076108 L 25.456212,47.933613 L 25.48354,43.742704 L 21.538496,43.916464 L 21.608256,48.088429 L 17.365927,48.03087 z"
-       style="fill:#ffe61e;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.375;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.75,0.75;stroke-dashoffset:0;stroke-opacity:0.66120217000000003" />
+       d="M 18.405548,48.152494 L 18.405548,51.666052 L 22.197433,51.68089 L 22.188205,55.029012 L 26.368227,55.232546 L 26.308053,51.623634 L 30.250365,51.530883 L 30.183194,48.195667 L 26.126566,48.059676 L 26.152647,44.060054 L 22.387668,44.225883 L 22.454244,48.207426 L 18.405548,48.152494 z"
+       style="fill:#ffb31e;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.35788377999999998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.71576755000000003, 0.71576755000000003;stroke-dashoffset:0;stroke-opacity:0.66120217000000003" />
   </g>
 </svg>

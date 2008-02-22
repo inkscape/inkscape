@@ -16,11 +16,18 @@
    version="1.0"
    sodipodi:docname="feTurbulence-icon.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   inkscape:export-filename="/home/felipe/Desktop/feTurb-icon.png"
+   inkscape:export-filename="/home/felipe/devel/inkscape/inkscape/share/icons/feTurbulence-icon.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
      id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-50 : 600 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="700 : 600 : 1"
+       inkscape:persp3d-origin="300 : 400 : 1"
+       id="perspective4708" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="-50 : 600 : 1"
@@ -52,14 +59,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.5729167"
-     inkscape:cx="29.404524"
-     inkscape:cy="48.757628"
+     inkscape:zoom="5.1458333"
+     inkscape:cx="48"
+     inkscape:cy="48"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="964"
-     inkscape:window-height="717"
+     inkscape:window-height="721"
      inkscape:window-x="50"
      inkscape:window-y="24" />
   <metadata
@@ -87,20 +94,20 @@
             <dc:title>Felipe Corrêa da Silva Sanches</dc:title>
           </cc:Agent>
         </dc:publisher>
-        <dc:identifier></dc:identifier>
-        <dc:source></dc:source>
-        <dc:relation></dc:relation>
-        <dc:language></dc:language>
+        <dc:identifier />
+        <dc:source />
+        <dc:relation />
+        <dc:language />
         <dc:subject>
           <rdf:Bag>
             <rdf:li>feTurbulence example</rdf:li>
           </rdf:Bag>
         </dc:subject>
-        <dc:coverage></dc:coverage>
+        <dc:coverage />
         <dc:description>this is an image originaly intended to be used in Inkscape</dc:description>
         <dc:contributor>
           <cc:Agent>
-            <dc:title></dc:title>
+            <dc:title />
           </cc:Agent>
         </dc:contributor>
         <cc:license
@@ -130,17 +137,16 @@
      transform="translate(-155.36416,-264.88732)">
     <g
        id="g3346"
-       transform="translate(0,0.388664)">
+       transform="matrix(1.011524,0,0,1.0016426,-1.9767386,0.2882103)">
       <rect
-         transform="translate(155.36416,264.88732)"
-         y="4.2753038"
-         x="5.0526314"
-         height="87.060715"
-         width="86.283394"
+         y="269.15067"
+         x="160.40488"
+         height="86.311569"
+         width="85.633781"
          id="rect3338"
-         style="opacity:0.37700536;fill:#000000;fill-opacity:0.12765958;fill-rule:evenodd;stroke:#000000;stroke-width:1.40799999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:4.224, 4.224;stroke-dashoffset:0;stroke-opacity:1" />
+         style="opacity:0.37700536000000001;fill:#000000;fill-opacity:0.12765957999999999;fill-rule:evenodd;stroke:#000000;stroke-width:2.93769589;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:5.87539178,5.87539178;stroke-dashoffset:0;stroke-opacity:1" />
       <rect
-         transform="matrix(0.8615096,0,0,0.8615096,28.190903,43.278072)"
+         transform="matrix(0.8363366,0,0,0.835057,32.895129,51.491446)"
          y="271.07193"
          x="162.50165"
          height="82.853432"

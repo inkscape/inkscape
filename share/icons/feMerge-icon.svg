@@ -17,11 +17,18 @@
    version="1.0"
    sodipodi:docname="feMerge-icon.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   inkscape:export-filename="/home/felipe/devel/inkscape/inkscape/share/icons/feMorphology-icon.png"
+   inkscape:export-filename="/home/felipe/devel/inkscape/inkscape/share/icons/feMerge-icon.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
      id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-50 : 600 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="700 : 600 : 1"
+       inkscape:persp3d-origin="300 : 400 : 1"
+       id="perspective2795" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="-50 : 600 : 1"
@@ -101,14 +108,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.9296875"
-     inkscape:cx="82.09956"
-     inkscape:cy="-27.35698"
+     inkscape:zoom="3.6386536"
+     inkscape:cx="27.291796"
+     inkscape:cy="51.181628"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="964"
-     inkscape:window-height="717"
+     inkscape:window-height="721"
      inkscape:window-x="50"
      inkscape:window-y="24" />
   <metadata
@@ -136,20 +143,20 @@
             <dc:title>Felipe Corrêa da Silva Sanches</dc:title>
           </cc:Agent>
         </dc:publisher>
-        <dc:identifier></dc:identifier>
-        <dc:source></dc:source>
-        <dc:relation></dc:relation>
-        <dc:language></dc:language>
+        <dc:identifier />
+        <dc:source />
+        <dc:relation />
+        <dc:language />
         <dc:subject>
           <rdf:Bag>
             <rdf:li>feMerge Example</rdf:li>
           </rdf:Bag>
         </dc:subject>
-        <dc:coverage></dc:coverage>
+        <dc:coverage />
         <dc:description>this is an image originaly intended to be used in Inkscape</dc:description>
         <dc:contributor>
           <cc:Agent>
-            <dc:title></dc:title>
+            <dc:title />
           </cc:Agent>
         </dc:contributor>
         <cc:license
@@ -178,16 +185,15 @@
      id="layer1"
      transform="translate(-155.36416,-264.88732)">
     <rect
-       style="opacity:0.43324938000000002;fill:#000000;fill-opacity:0.23049645;fill-rule:evenodd;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:3, 6;stroke-dashoffset:0;stroke-opacity:1"
+       style="opacity:0.43324938;fill:#000000;fill-opacity:0.23049646;fill-rule:evenodd;stroke:#000000;stroke-width:2.94170618;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:2.94170605, 5.88341212;stroke-dashoffset:0;stroke-opacity:1"
        id="rect3279"
-       width="88.739502"
-       height="88.201691"
-       x="3.7647059"
-       y="4.0336137"
+       width="86.788124"
+       height="86.714088"
+       x="159.95854"
+       y="269.57886"
        inkscape:export-filename="/home/felipe/devel/inkscape/inkscape/share/icons/feFlood-icon.png"
        inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90"
-       transform="translate(155.36416,264.88732)" />
+       inkscape:export-ydpi="90" />
     <g
        id="g8891"
        transform="matrix(1.3344192,0,0,1.3344192,-74.252035,-91.584765)">

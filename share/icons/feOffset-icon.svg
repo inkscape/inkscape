@@ -16,11 +16,18 @@
    version="1.0"
    sodipodi:docname="feOffset-icon.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   inkscape:export-filename="/home/felipe/Desktop/feOffset-icon.png"
+   inkscape:export-filename="/home/felipe/devel/inkscape/inkscape/share/icons/feOffset-icon.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
      id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-50 : 600 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="700 : 600 : 1"
+       inkscape:persp3d-origin="300 : 400 : 1"
+       id="perspective4622" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="-50 : 600 : 1"
@@ -50,7 +57,7 @@
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="964"
-     inkscape:window-height="717"
+     inkscape:window-height="721"
      inkscape:window-x="50"
      inkscape:window-y="24" />
   <metadata
@@ -61,7 +68,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:date>2007-07-03</dc:date>
         <dc:creator>
           <cc:Agent>
@@ -79,19 +86,19 @@
           </cc:Agent>
         </dc:publisher>
         <dc:identifier>c</dc:identifier>
-        <dc:source></dc:source>
-        <dc:relation></dc:relation>
-        <dc:language></dc:language>
+        <dc:source />
+        <dc:relation />
+        <dc:language />
         <dc:subject>
           <rdf:Bag>
             <rdf:li>hexamines icon</rdf:li>
           </rdf:Bag>
         </dc:subject>
-        <dc:coverage></dc:coverage>
+        <dc:coverage />
         <dc:description>this is an image originaly intended to be used in the hexamines game</dc:description>
         <dc:contributor>
           <cc:Agent>
-            <dc:title></dc:title>
+            <dc:title />
           </cc:Agent>
         </dc:contributor>
         <cc:license

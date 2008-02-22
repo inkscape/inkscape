@@ -2109,7 +2109,7 @@ FilterEffectsDialog::FilterEffectsDialog()
     // Initialize widget hierarchy
     Gtk::HPaned* hpaned = Gtk::manage(new Gtk::HPaned);
     Gtk::ScrolledWindow* sw_prims = Gtk::manage(new Gtk::ScrolledWindow);
-    Gtk::HBox* infobox = Gtk::manage(new Gtk::HBox);
+    Gtk::HBox* infobox = Gtk::manage(new Gtk::HBox(/*homogeneous:*/false, /*spacing:*/4));
     Gtk::HBox* hb_prims = Gtk::manage(new Gtk::HBox);
 
     _getContents()->add(*hpaned);

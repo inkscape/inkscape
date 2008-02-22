@@ -28,6 +28,20 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_z="700 : 600 : 1"
        inkscape:persp3d-origin="300 : 400 : 1"
+       id="perspective4436" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-50 : 600 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="700 : 600 : 1"
+       inkscape:persp3d-origin="300 : 400 : 1"
+       id="perspective3763" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-50 : 600 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="700 : 600 : 1"
+       inkscape:persp3d-origin="300 : 400 : 1"
        id="perspective2530" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
@@ -77,7 +91,7 @@
       <feMorphology
          id="feMorphology3216"
          operator="dilate"
-         radius="3.2999999999999998" />
+         radius="3.0888030888030888" />
     </filter>
   </defs>
   <sodipodi:namedview
@@ -87,14 +101,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.0938058"
-     inkscape:cx="-5.5219781"
-     inkscape:cy="-5.4523877"
+     inkscape:zoom="0.88756633"
+     inkscape:cx="13.336035"
+     inkscape:cy="-36.493341"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="964"
-     inkscape:window-height="717"
+     inkscape:window-height="721"
      inkscape:window-x="50"
      inkscape:window-y="24" />
   <metadata
@@ -123,19 +137,19 @@
           </cc:Agent>
         </dc:publisher>
         <dc:identifier>c</dc:identifier>
-        <dc:source></dc:source>
-        <dc:relation></dc:relation>
-        <dc:language></dc:language>
+        <dc:source />
+        <dc:relation />
+        <dc:language />
         <dc:subject>
           <rdf:Bag>
             <rdf:li>feMorphology Example</rdf:li>
           </rdf:Bag>
         </dc:subject>
-        <dc:coverage></dc:coverage>
+        <dc:coverage />
         <dc:description>this is an image originaly intended to be used in Inkscape</dc:description>
         <dc:contributor>
           <cc:Agent>
-            <dc:title></dc:title>
+            <dc:title />
           </cc:Agent>
         </dc:contributor>
         <cc:license
@@ -165,7 +179,7 @@
      transform="translate(-155.36416,-264.88732)">
     <g
        id="g3205"
-       transform="matrix(0.9459277,-0.1423138,0.1423138,0.9459277,-31.38871,71.706607)">
+       transform="matrix(0.9521111,-0.143244,0.143244,0.9521111,-32.233426,70.803148)">
       <path
          transform="translate(159.66949,266.98056)"
          d="M 42.666668,40.946236 A 17.204302,17.204302 0 1 1 8.2580643,40.946236 A 17.204302,17.204302 0 1 1 42.666668,40.946236 z"
@@ -202,7 +216,7 @@
        y="0"
        xlink:href="#g3205"
        id="use3212"
-       transform="translate(37.423591,-25.773072)"
+       transform="translate(36.743942,-30.88376)"
        width="96"
        height="96"
        style="filter:url(#filter3214)" />
