@@ -6,8 +6,8 @@
     <input>
         <extension>.cdr</extension>
         <mimetype>image/x-xcdr</mimetype>
-        <_filetypename>Corel DRAW 7-13 files (*.cdr)</_filetypename>
-        <_filetypetooltip>Open files saved in Corel DRAW 7-14</_filetypetooltip>
+        <_filetypename>Corel DRAW 7-X4 files (*.cdr)</_filetypename>
+        <_filetypetooltip>Open files saved in Corel DRAW 7-X4</_filetypetooltip>
         <output_extension>org.inkscape.output.cdr</output_extension>
     </input>
     <script>
