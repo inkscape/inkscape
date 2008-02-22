@@ -32,9 +32,9 @@ namespace UI {
 namespace Widget {
 
 void ObjectCompositeSettings::_on_desktop_switch(
-  Inkscape::Application *application,
-  SPDesktop *desktop,
-  ObjectCompositeSettings *w
+    Inkscape::Application */*application*/,
+    SPDesktop *desktop,
+    ObjectCompositeSettings *w
 ) {
     if (w->_subject) {
         w->_subject->setDesktop(desktop);
