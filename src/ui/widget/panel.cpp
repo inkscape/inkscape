@@ -22,6 +22,8 @@
 #include <gtkmm/dialog.h> // for Gtk::RESPONSE_*
 #include <gtkmm/stock.h>
 
+#include <gtk/gtkiconfactory.h>
+
 #include "panel.h"
 #include "icon-size.h"
 #include "prefs-utils.h"
@@ -220,10 +222,14 @@ void Panel::_init()
 
     if ( _menu_desired ) {
         _top_bar.pack_end(_menu_popper, false, false);
-        Gtk::Frame* outliner = manage(new Gtk::Frame());
-        outliner->set_shadow_type(Gtk::SHADOW_ETCHED_IN);
-        outliner->add(_temp_arrow);
-        _menu_popper.add(*outliner);
+        gint width = 0;
+        gint height = 0;
+
+        if ( gtk_icon_size_lookup( static_cast<GtkIconSize>(Inkscape::ICON_SIZE_DECORATION), &width, &height ) ) {
+            _temp_arrow.set_size_request(width, height);
+        }
+
+        _menu_popper.add(_temp_arrow);
         _menu_popper.signal_button_press_event().connect_notify(sigc::mem_fun(*this, &Panel::_popper));
     }
 
