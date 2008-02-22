@@ -372,7 +372,8 @@ sp_use_hide(SPItem *item, unsigned key)
 
 /**
  * Returns the ultimate original of a SPUse (i.e. the first object in the chain of its originals
- * which is not an SPUse).
+ * which is not an SPUse). If no original is found, NULL is returned (it is the responsibility
+ * of the caller to make sure that this is handled correctly).
  *
  * Note that the returned is the clone object, i.e. the child of an SPUse (of the argument one for
  * the trivial case) and not the "true original".
@@ -384,7 +385,7 @@ sp_use_root(SPUse *use)
     while (SP_IS_USE(orig)) {
         orig = SP_USE(orig)->child;
     }
-    g_assert(SP_IS_ITEM(orig));
+    g_return_val_if_fail(SP_IS_ITEM(orig), NULL);
     return SP_ITEM(orig);
 }
 
@@ -663,6 +664,7 @@ sp_use_unlink(SPUse *use)
 
     // Track the ultimate source of a chain of uses.
     SPItem *orig = sp_use_root(use);
+    g_return_val_if_fail(orig, NULL);
 
     // Calculate the accumulated transform, starting from the original.
     NR::Matrix t = sp_use_get_root_transform(use);
@@ -742,6 +744,7 @@ sp_use_snappoints(SPItem const *item, SnapPointsIter p)
     
     SPUse *use = SP_USE(item);
     SPItem *root = sp_use_root(use);
+    g_return_if_fail(root);
     
     SPItemClass const &item_class = *(SPItemClass const *) G_OBJECT_GET_CLASS(root);
     if (item_class.snappoints) {

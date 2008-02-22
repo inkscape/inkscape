@@ -166,6 +166,7 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::Snapper::PointType const &
             if (SP_IS_USE(*i)) {
                 root_item = sp_use_root(SP_USE(*i));
             }
+            g_return_if_fail(root_item);
 
             //Collect all nodes so we can snap to them
             if (_snap_to_itemnode) {
@@ -271,6 +272,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
             if (SP_IS_USE(*i)) {
                 i2doc = sp_use_get_root_transform(SP_USE(*i));
                 root_item = sp_use_root(SP_USE(*i));
+                g_return_if_fail(root_item);
             } else {
                 i2doc = sp_item_i2doc_affine(*i);
                 root_item = *i;
