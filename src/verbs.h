@@ -341,7 +341,7 @@ public:
     /** \brief Accessor to get the internal variable. */
     gchar const * get_name (void) { return _name; }
     /** \brief Accessor to get the internal variable. */
-    gchar const * get_tip (void) { return _tip; }
+    gchar const * get_tip (void) ;
     /** \brief Accessor to get the internal variable. */
     gchar const * get_image (void) { return _image; }
 

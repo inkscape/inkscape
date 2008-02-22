@@ -625,6 +625,12 @@ Verb::sensitive(SPDocument *in_doc, bool in_sensitive)
     return;
 }
 
+/** \brief Accessor to get the tooltip for verb as localised string */ 
+gchar const *
+Verb::get_tip (void) 
+{
+	return _(_tip); 
+}
 
 void
 Verb::name(SPDocument *in_doc, Glib::ustring in_name)

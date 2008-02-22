@@ -116,6 +116,7 @@ static void ink_action_finalize( GObject* obj )
 
 }
 
+//Any strings passed in should already be localised
 InkAction* ink_action_new( const gchar *name,
                            const gchar *label,
                            const gchar *tooltip,
