@@ -923,8 +923,8 @@ Section $(lng_sr) SecSerbian
   !insertmacro Language sr sr
 SectionEnd
 
-Section $(lng_sr@Latn) SecSerbianLatin
-  !insertmacro Language 'sr@Latn' 'sr@Latn'
+Section $(lng_sr@latin) SecSerbianLatin
+  !insertmacro Language 'sr@latin' 'sr@latin'
 SectionEnd
 
 Section $(lng_sv) SecSwedish
@@ -1199,7 +1199,7 @@ Function .onInit
   !insertmacro Parameter "sl" ${SecSlovenian}
   !insertmacro Parameter "sq" ${SecAlbanian}
   !insertmacro Parameter "sr" ${SecSerbian}
-  !insertmacro Parameter "sr@Latn" ${SecSerbianLatin}
+  !insertmacro Parameter "sr@latin" ${SecSerbianLatin}
   !insertmacro Parameter "sv" ${SecSwedish}
   !insertmacro Parameter "th" ${SecThai}
   !insertmacro Parameter "tr" ${SecTurkish}

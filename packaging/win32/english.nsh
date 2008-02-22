@@ -1,3 +1,4 @@
+
 ; #######################################
 ; english.nsh
 ; english language strings for inkscape installer
@@ -188,7 +189,7 @@ LangString lng_sk $(LANG_ENGLISH) "sk  Slovak"
 LangString lng_sl $(LANG_ENGLISH) "sl  Slovenian"
 LangString lng_sq $(LANG_ENGLISH) "sq  Albanian"
 LangString lng_sr $(LANG_ENGLISH) "sr  Serbian"
-LangString lng_sr@Latn $(LANG_ENGLISH) "sr@Latn  Serbian in Latin script"
+LangString lng_sr@latin $(LANG_ENGLISH) "sr@latin  Serbian in Latin script"
 LangString lng_sv $(LANG_ENGLISH) "sv  Swedish"
 LangString lng_th $(LANG_ENGLISH) "th  Thai"
 LangString lng_tr $(LANG_ENGLISH) "tr  Turkish"

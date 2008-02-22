@@ -275,8 +275,8 @@
   LangString lng_sq $(LANG_CATALAN) "sq  Albanès"
 ; LangString lng_sr $(LANG_CATALAN) "sr  Serbian"
   LangString lng_sr $(LANG_CATALAN) "sr  Serbi"
-; LangString lng_sr@Latn $(LANG_CATALAN) "sr@Latn  Serbian in Latin script"
-  LangString lng_sr@Latn $(LANG_CATALAN) "sr@Latn  Serbi en alfabet llatí"
+; LangString lng_sr@latin $(LANG_CATALAN) "sr@latin  Serbian in Latin script"
+  LangString lng_sr@latin $(LANG_CATALAN) "sr@latin  Serbi en alfabet llatí"
 ; LangString lng_sv $(LANG_CATALAN) "sv  Swedish"
   LangString lng_sv $(LANG_CATALAN) "sv  Suec"
 ; LangString lng_th $(LANG_CATALAN) "th  Thai"
@@ -308,7 +308,7 @@
   LangString lng_RETRY_CANCEL_DESC ${LANG_CATALAN} "$\n$\nPremeu Reintenta per a continuar o Cancel·la per a interrompre."
 
 ; LangString lng_ClearDirectoryBefore ${LANG_CATALAN} "${PRODUCT_NAME} must be installed in an empty directory. $INSTDIR is not empty. Please clear this directory first!$(lng_RETRY_CANCEL_DESC)"
-  LangString lng_ClearDirectoryBefore ${LANG_CATALAN} "$Heu d'instal·lar l'{PRODUCT_NAME} en una carpeta buida. La carpeta $INSTDIR no és buida; haureu de buidar-la primer.$(lng_RETRY_CANCEL_DESC)"
+  LangString lng_ClearDirectoryBefore ${LANG_CATALAN} "Heu d'instal·lar l'${PRODUCT_NAME} en una carpeta buida. La carpeta $INSTDIR no és buida; haureu de buidar-la primer.$(lng_RETRY_CANCEL_DESC)"
 
 ; LangString lng_UninstallLogNotFound ${LANG_CATALAN} "$INSTDIR\uninstall.log not found!$\r$\nPlease uninstall by clearing directory $INSTDIR yourself!"
   LangString lng_UninstallLogNotFound ${LANG_CATALAN} "No s'ha trobat $INSTDIR\uninstall.log.$\r$\nPer a desinstal·lar, haureu de netejar la carpeta $INSTDIR vosaltres mateixos!"

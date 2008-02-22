@@ -16,7 +16,7 @@
 ; January 2008 new uninstaller messages
 
 ; !insertmacro MUI_LANGUAGE "Slovenšèina"
-!insertmacro MUI_LANGUAGE "Slovenski jezik"
+!insertmacro MUI_LANGUAGE "Slovenian"
 
 ; Product name
 LangString lng_Caption   ${LANG_SLOVENIAN} "${PRODUCT_NAME} -- Odprtokodni urejevalnik vektorskih slik"
@@ -189,7 +189,7 @@ LangString lng_sk $(LANG_SLOVENIAN) "slovaški (sk)"
 LangString lng_sl $(LANG_SLOVENIAN) "slovenski (sl)"
 LangString lng_sq $(LANG_SLOVENIAN) "albanski (sq)"
 LangString lng_sr $(LANG_SLOVENIAN) "srbski (sr)"
-LangString lng_sr@Latn $(LANG_SLOVENIAN) "srbski - latinica (sr@Latn)"
+LangString lng_sr@latin $(LANG_SLOVENIAN) "srbski - latinica (sr@latin)"
 LangString lng_sv $(LANG_SLOVENIAN) "švedski (sv)"
 LangString lng_th $(LANG_SLOVENIAN) "tajski (th)"
 LangString lng_tr $(LANG_SLOVENIAN) "turški (tr)"
