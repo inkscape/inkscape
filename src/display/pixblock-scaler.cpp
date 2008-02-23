@@ -17,6 +17,7 @@ using std::floor;
 
 #include "display/nr-filter-utils.h"
 #include "libnr/nr-pixblock.h"
+#include "libnr/nr-blit.h"
 
 namespace NR {
 
@@ -93,6 +94,13 @@ static void scale_bicubic_rgba(NRPixBlock *to, NRPixBlock *from)
     if (NR_PIXBLOCK_BPP(from) != 4 || NR_PIXBLOCK_BPP(to) != 4) {
         g_warning("A non-32-bpp image passed to scale_bicubic_rgba: scaling aborted.");
         return;
+    }
+
+    if (from->mode != to->mode){
+        NRPixBlock *o_from = from;
+        from = new NRPixBlock;
+        nr_pixblock_setup_fast(from, to->mode, o_from->area.x0, o_from->area.y0, o_from->area.x1, o_from->area.y1, false);
+        nr_blit_pixblock_pixblock(from, o_from);
     }
 
     // Precalculate sizes of source and destination pixblocks
