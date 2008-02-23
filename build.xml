@@ -201,7 +201,6 @@
             <exclude name="bonobo/.*"/>
             <exclude name="deptool.cpp"/>
             <exclude name="test-all.cpp"/>
-            <exclude name="dialogs/filedialog-win32.cpp"/>
             <exclude name="display/testnr.cpp"/>
             <exclude name="display/bezier-utils-test.cpp"/>
             <exclude name="dom/jsdombind.cpp"/>
