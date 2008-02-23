@@ -152,10 +152,23 @@ def computeBBox(aList,mat=[[1,0,0],[0,1,0]]):
             applyTransformToPath(m,p)
             bbox=boxunion(roughBBox(p),bbox)
 
-        if  node.tag == inkex.addNS('use','svg') or node.tag=='use':
+        elif node.tag == inkex.addNS('rect','svg') or node.tag=='rect':
+            w = float(node.get('width'))/2.
+            h = float(node.get('height'))/2.
+            x = float(node.get('x'))
+            y = float(node.get('y'))
+            C = [x + w , y + h ]
+            applyTransformToPoint(mat,C)
+            xmin = C[0] - abs(m[0][0]) * w - abs(m[0][1]) * h
+            xmax = C[0] + abs(m[0][0]) * w + abs(m[0][1]) * h
+            ymin = C[1] - abs(m[1][0]) * w - abs(m[1][1]) * h
+            ymax = C[1] + abs(m[1][0]) * w + abs(m[1][1]) * h
+            bbox = xmin,xmax,ymin,ymax
+            
+        elif node.tag == inkex.addNS('use','svg') or node.tag=='use':
             refid=node.get(inkex.addNS('href','xlink'))
             path = '//*[@id="%s"]' % refid[1:]
-            refnode = node.getroottree().xpath(path, namespaces=inkex.NSS)
+            refnode = node.xpath(path)
             bbox=boxunion(computeBBox(refnode,m),bbox)
             
         bbox=boxunion(computeBBox(node,m),bbox)

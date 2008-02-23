@@ -67,6 +67,7 @@ extensions = \
 	motion.py \
 	outline2svg.pl	\
 	pathalongpath.py\
+	pathscatter.py\
 	pathmodifier.py\
 	perfectboundcover.py \
 	perspective.py \
@@ -174,6 +175,7 @@ modules = \
 	motion.inx \
 	outline2svg.inx \
 	pathalongpath.inx\
+	pathscatter.inx\
 	pdf_output.inx.txt \
 	pdf_output_via_gs_on_win32.inx.txt \
 	perfectboundcover.inx \
