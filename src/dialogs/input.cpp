@@ -35,7 +35,7 @@ static win_data wd;
 
 // impossible original values to make sure they are read from prefs
 static gint x = -1000, y = -1000, w = 0, h = 0;
-static gchar *prefs_path = "dialogs.input";
+static const gchar *prefs_path = "dialogs.input";
 
 static void
 sp_input_dialog_destroy (GtkObject */*object*/, gpointer /*data*/)
@@ -63,7 +63,7 @@ sp_input_dialog_delete (GtkObject */*object*/, GdkEvent */*event*/, gpointer /*d
 
 }
 
-static gchar *axis_use_strings[GDK_AXIS_LAST] = {
+static const gchar *axis_use_strings[GDK_AXIS_LAST] = {
     "ignore", "x", "y", "pressure", "xtilt", "ytilt", "wheel"
 };
 
