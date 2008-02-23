@@ -3,11 +3,13 @@
  *
  * Authors:
  *   Bob Jamison
+ *   Joel Holdsworth
  *   Other dudes from The Inkscape Organization
  *
  * Copyright (C) 2004-2007 Bob Jamison
  * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
- * Copyright (C) 2004-2007 The Inkscape Organization
+ * Copyright (C) 2007-2008 Joel Holdsworth
+ * Copyright (C) 2004-2008 The Inkscape Organization
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */

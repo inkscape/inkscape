@@ -5,7 +5,7 @@
  *   Joel Holdsworth
  *   The Inkscape Organization
  *
- * Copyright (C) 2004-2007 The Inkscape Organization
+ * Copyright (C) 2004-2008 The Inkscape Organization
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */

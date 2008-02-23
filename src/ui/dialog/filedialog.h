@@ -6,10 +6,12 @@
  *
  * Authors:
  *   Bob Jamison <rwjj@earthlink.net>
+ *   Joel Holdsworth
  *   Inkscape Guys
  *
  * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
- * Copyright (C) 2004-2006, Inkscape Authors
+ * Copyright (C) 2007-2008 Joel Holdsworth
+ * Copyright (C) 2004-2008, Inkscape Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
