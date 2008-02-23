@@ -367,8 +367,6 @@ void dump_ustr(Glib::ustring const &ustr)
     g_message("---------------");
 }
 
-static Inkscape::UI::Dialog::FileOpenDialog *openDialogInstance = NULL;
-
 /**
  *  Display an file Open selector.  Open a document if OK is pressed.
  *  Can select single or multiple files for opening.
@@ -376,76 +374,85 @@ static Inkscape::UI::Dialog::FileOpenDialog *openDialogInstance = NULL;
 void
 sp_file_open_dialog(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*data*/)
 {
-
     //# Get the current directory for finding files
-    Glib::ustring open_path;
-    char *attr = (char *)prefs_get_string_attribute("dialogs.open", "path");
-    if (attr)
-        open_path = attr;
-
-
+    static Glib::ustring open_path;
+	
+	if(open_path.empty())
+	{
+	    gchar const *attr = prefs_get_string_attribute("dialogs.open", "path");
+	    if (attr)
+	        open_path = attr;
+	}
+	
     //# Test if the open_path directory exists
     if (!Inkscape::IO::file_test(open_path.c_str(),
               (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
         open_path = "";
-
+		
     //# If no open path, default to our home directory
-    if (open_path.size() < 1)
-        {
+    if (open_path.empty())
+    {
         open_path = g_get_home_dir();
         open_path.append(G_DIR_SEPARATOR_S);
-        }
-
-    //# Create a dialog if we don't already have one
-    if (!openDialogInstance) {
-        openDialogInstance =
-              Inkscape::UI::Dialog::FileOpenDialog::create(
-                 parentWindow,
-                 open_path,
-                 Inkscape::UI::Dialog::SVG_TYPES,
-                 (char const *)_("Select file to open"));
     }
-
-
+	
+    //# Create a dialog if we don't already have one
+    Inkscape::UI::Dialog::FileOpenDialog *openDialogInstance =
+              Inkscape::UI::Dialog::FileOpenDialog::create(
+                 parentWindow, open_path,
+                 Inkscape::UI::Dialog::SVG_TYPES,
+                 _("Select file to open"));
+                 
     //# Show the dialog
     bool const success = openDialogInstance->show();
-    if (!success)
-        return;
 
+    //# Save the folder the user selected for later
+    open_path = openDialogInstance->getCurrentDirectory();
+
+    if (!success)
+    {
+        delete openDialogInstance;
+        return;
+    }
+    
     //# User selected something.  Get name and type
     Glib::ustring fileName = openDialogInstance->getFilename();
+
     Inkscape::Extension::Extension *selection =
             openDialogInstance->getSelectionType();
-
-    //# Code to check & open iff multiple files.
-    std::vector<Glib::ustring> flist=openDialogInstance->getFilenames();
-
+			
+    //# Code to check & open if multiple files.
+    std::vector<Glib::ustring> flist = openDialogInstance->getFilenames();
+		
+    //# We no longer need the file dialog object - delete it
+    delete openDialogInstance;
+    openDialogInstance = NULL;
+    
     //# Iterate through filenames if more than 1
     if (flist.size() > 1)
+    {
+        for (unsigned int i = 0; i < flist.size(); i++)
         {
-        for (unsigned int i=1 ; i<flist.size() ; i++)
-            {
-            Glib::ustring fName = flist[i];
-
-            if (Glib::file_test(fileName, Glib::FILE_TEST_IS_DIR)) {
-            Glib::ustring newFileName = Glib::filename_to_utf8(fName);
+            fileName = flist[i];
+            
+            Glib::ustring newFileName = Glib::filename_to_utf8(fileName);
             if ( newFileName.size() > 0 )
-                fName = newFileName;
+                fileName = newFileName;
             else
                 g_warning( "ERROR CONVERTING OPEN FILENAME TO UTF-8" );
 
 #ifdef INK_DUMP_FILENAME_CONV
-            g_message("Opening File %s\n",fileName);
+            g_message("Opening File %s\n", fileName.c_str());
 #endif
             sp_file_open(fileName, selection);
-            }
         }
+        
         return;
     }
 
 
-    if (fileName.size() > 0) {
-
+    if (!fileName.empty())
+    {
         Glib::ustring newFileName = Glib::filename_to_utf8(fileName);
 
         if ( newFileName.size() > 0)
@@ -699,7 +706,7 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
 
     if ( save_loc_local.size() > 0)
         save_loc = save_loc_local;
-
+		
     //# Show the SaveAs dialog
     char const * dialog_title;
     if (is_copy) {
@@ -712,20 +719,12 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
         	parentWindow,
             save_loc,
             Inkscape::UI::Dialog::SVG_TYPES,
-            (char const *) _("Select file to save to"),
+            dialog_title,
             default_extension
             );
-
-    saveDialog->change_title(dialog_title);
+			
     saveDialog->setSelectionType(extension);
-
-    // allow easy access to the user's own templates folder
-    gchar *templates = profile_path ("templates");
-    if (Inkscape::IO::file_test(templates, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR))) {
-        dynamic_cast<Gtk::FileChooser *>(saveDialog)->add_shortcut_folder(templates);
-    }
-    g_free (templates);
-
+	
     bool success = saveDialog->show();
     if (!success) {
         delete saveDialog;

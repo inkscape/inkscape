@@ -495,55 +495,6 @@ void SVGPreview::showTooLarge(long fileLength)
 
 }
 
-
-/**
- * Return true if the string ends with the given suffix
- */
-static bool
-hasSuffix(Glib::ustring &str, Glib::ustring &ext)
-{
-    int strLen = str.length();
-    int extLen = ext.length();
-    if (extLen > strLen)
-        return false;
-    int strpos = strLen-1;
-    for (int extpos = extLen-1 ; extpos>=0 ; extpos--, strpos--)
-        {
-        Glib::ustring::value_type ch = str[strpos];
-        if (ch != ext[extpos])
-            {
-            if ( ((ch & 0xff80) != 0) ||
-                 static_cast<Glib::ustring::value_type>( g_ascii_tolower( static_cast<gchar>(0x07f & ch) ) ) != ext[extpos] )
-                {
-                return false;
-                }
-            }
-        }
-    return true;
-}
-
-
-/**
- * Return true if the image is loadable by Gdk, else false
- */
-static bool
-isValidImageFile(Glib::ustring &fileName)
-{
-    std::vector<Gdk::PixbufFormat>formats = Gdk::Pixbuf::get_formats();
-    for (unsigned int i=0; i<formats.size(); i++)
-        {
-        Gdk::PixbufFormat format = formats[i];
-        std::vector<Glib::ustring>extensions = format.get_extensions();
-        for (unsigned int j=0; j<extensions.size(); j++)
-            {
-            Glib::ustring ext = extensions[j];
-            if (hasSuffix(fileName, ext))
-                return true;
-            }
-        }
-    return false;
-}
-
 bool SVGPreview::set(Glib::ustring &fileName, int dialogType)
 {
 
@@ -677,7 +628,7 @@ void FileDialogBaseGtk::_updatePreviewCallback()
         return;
     }
 
-    svgPreview.set(fileName, dialogType);
+    svgPreview.set(fileName, _dialogType);
 }
 
 
@@ -692,7 +643,7 @@ FileOpenDialogImplGtk::FileOpenDialogImplGtk(Gtk::Window& parentWindow,
                                        const Glib::ustring &dir,
                                        FileDialogType fileTypes,
                                        const Glib::ustring &title) :
-    FileDialogBaseGtk(parentWindow, title, fileTypes, "dialogs.open")
+    FileDialogBaseGtk(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_OPEN, fileTypes, "dialogs.open")
 {
 
 
@@ -712,7 +663,7 @@ FileOpenDialogImplGtk::FileOpenDialogImplGtk(Gtk::Window& parentWindow,
     myFilename = "";
 
     /* Set our dialog type (open, import, etc...)*/
-    dialogType = fileTypes;
+    _dialogType = fileTypes;
 
 
     /* Set the pwd and/or the filename */
@@ -864,7 +815,7 @@ FileOpenDialogImplGtk::getSelectionType()
 Glib::ustring
 FileOpenDialogImplGtk::getFilename (void)
 {
-    return g_strdup(myFilename.c_str());
+    return myFilename;
 }
 
 
@@ -881,7 +832,10 @@ std::vector<Glib::ustring>FileOpenDialogImplGtk::getFilenames()
     return result;
 }
 
-
+Glib::ustring FileOpenDialogImplGtk::getCurrentDirectory()
+{
+    return get_current_folder();
+}
 
 
 
@@ -915,7 +869,7 @@ FileSaveDialogImplGtk::FileSaveDialogImplGtk( Gtk::Window &parentWindow,
     myFilename = "";
 
     /* Set our dialog type (save, export, etc...)*/
-    dialogType = fileTypes;
+    _dialogType = fileTypes;
 
     /* Set the pwd and/or the filename */
     if (dir.size() > 0)
@@ -974,7 +928,13 @@ FileSaveDialogImplGtk::FileSaveDialogImplGtk( Gtk::Window &parentWindow,
         expander->set_expanded(true);
         }
 
-
+	// allow easy access to the user's own templates folder		 
+    gchar *templates = profile_path ("templates");
+    if (Inkscape::IO::file_test(templates, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
+        add_shortcut_folder(templates);
+    g_free (templates);
+	
+	
     //if (extension == NULL)
     //    checkbox.set_sensitive(FALSE);
 
@@ -1179,22 +1139,17 @@ void FileSaveDialogImplGtk::setSelectionType( Inkscape::Extension::Extension * k
     }
 }
 
-
-/**
- * Get the file name chosen by the user.   Valid after an [OK]
- */
-Glib::ustring
-FileSaveDialogImplGtk::getFilename()
+Glib::ustring FileSaveDialogImplGtk::getCurrentDirectory()
 {
-    return myFilename;
+	return get_current_folder();
 }
 
 
-void
+/*void
 FileSaveDialogImplGtk::change_title(const Glib::ustring& title)
 {
-    this->set_title(title);
-}
+    set_title(title);
+}*/
 
 /**
   * Change the default save path location.
@@ -1202,7 +1157,8 @@ FileSaveDialogImplGtk::change_title(const Glib::ustring& title)
 void
 FileSaveDialogImplGtk::change_path(const Glib::ustring& path)
 {
-    myFilename = path;
+	myFilename = path;
+	
     if (Glib::file_test(myFilename, Glib::FILE_TEST_IS_DIR)) {
         //fprintf(stderr,"set_current_folder(%s)\n",myFilename.c_str());
         set_current_folder(myFilename);
@@ -1243,30 +1199,8 @@ void FileSaveDialogImplGtk::updateNameAndExtension()
 
     Inkscape::Extension::Output* newOut = extension ? dynamic_cast<Inkscape::Extension::Output*>(extension) : 0;
     if ( fileTypeCheckbox.get_active() && newOut ) {
-        try {
-            bool appendExtension = true;
-            Glib::ustring utf8Name = Glib::filename_to_utf8( myFilename );
-            Glib::ustring::size_type pos = utf8Name.rfind('.');
-            if ( pos != Glib::ustring::npos ) {
-                Glib::ustring trail = utf8Name.substr( pos );
-                Glib::ustring foldedTrail = trail.casefold();
-                if ( (trail == ".")
-                     | (foldedTrail != Glib::ustring( newOut->get_extension() ).casefold()
-                        && ( knownExtensions.find(foldedTrail) != knownExtensions.end() ) ) ) {
-                    utf8Name = utf8Name.erase( pos );
-                } else {
-                    appendExtension = false;
-                }
-            }
-
-            if (appendExtension) {
-                utf8Name = utf8Name + newOut->get_extension();
-                myFilename = Glib::filename_from_utf8( utf8Name );
-                change_path(myFilename);
-            }
-        } catch ( Glib::ConvertError& e ) {
-            // ignore
-        }
+		// Append the file extension if it's not already present
+		appendExtension(myFilename, newOut);
     }
 }
 
@@ -1402,7 +1336,7 @@ FileExportDialogImpl::FileExportDialogImpl( Gtk::Window& parentWindow,
     myFilename = "";
 
     /* Set our dialog type (save, export, etc...)*/
-    dialogType = fileTypes;
+    _dialogType = fileTypes;
 
     /* Set the pwd and/or the filename */
     if (dir.size()>0)

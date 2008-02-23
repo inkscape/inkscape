@@ -16,16 +16,15 @@
 
 #include <glibmm.h>
 #include <vector>
+#include <set>
 #include <gtkmm.h>
 
 namespace Inkscape {
 namespace Extension {
 class Extension;
+class Output;
 }
 }
-
-
-
 
 namespace Inkscape
 {
@@ -33,8 +32,6 @@ namespace UI
 {
 namespace Dialog
 {
-
-
 
 /**
  * Used for setting filters and options, and
@@ -54,11 +51,17 @@ typedef enum {
     SVG_NAMESPACE_WITH_EXTENSIONS
     } FileDialogSelectionType;
 
-/**
- * Architecture-specific data
- */
-typedef struct FileOpenNativeData_def FileOpenNativeData;
 
+/**
+ * Return true if the string ends with the given suffix
+ */
+bool hasSuffix(const Glib::ustring &str, const Glib::ustring &ext);
+
+/**
+ * Return true if the image is loadable by Gdk, else false
+ */
+bool isValidImageFile(const Glib::ustring &fileName);    
+    
 /**
  * This class provides an implementation-independent API for
  * file "Open" dialogs.  Using a standard interface obviates the need
@@ -87,7 +90,7 @@ public:
     static FileOpenDialog *create(Gtk::Window& parentWindow, 
                                   const Glib::ustring &path,
                                   FileDialogType fileTypes,
-                                  const Glib::ustring &title);
+                                  const char *title);
 
 
     /**
@@ -100,7 +103,7 @@ public:
      * Show an OpenFile file selector.
      * @return the selected path if user selected one, else NULL
      */
-    virtual bool show() =0;
+    virtual bool show() = 0;
 
     /**
      * Return the 'key' (filetype) of the selection, if any
@@ -109,10 +112,18 @@ public:
      */
     virtual Inkscape::Extension::Extension * getSelectionType() = 0;
 
-    virtual Glib::ustring getFilename () =0;
+    Glib::ustring getFilename();
 
-    virtual std::vector<Glib::ustring> getFilenames () = 0;
-
+    virtual std::vector<Glib::ustring> getFilenames() = 0;
+    
+    virtual Glib::ustring getCurrentDirectory() = 0;
+    
+protected:
+    /**
+     * Filename that was given
+     */
+    Glib::ustring myFilename;
+    
 }; //FileOpenDialog
 
 
@@ -146,9 +157,9 @@ public:
      * @param key a list of file types from which the user can select
      */
     static FileSaveDialog *create(Gtk::Window& parentWindow, 
-    							  const Glib::ustring &path,
+                                  const Glib::ustring &path,
                                   FileDialogType fileTypes,
-                                  const Glib::ustring &title,
+                                  const char *title,
                                   const Glib::ustring &default_key);
 
 
@@ -174,17 +185,27 @@ public:
 
     virtual void setSelectionType( Inkscape::Extension::Extension * key ) = 0;
 
-    virtual Glib::ustring getFilename () =0;
+    /**
+     * Get the file name chosen by the user.   Valid after an [OK]
+     */
+    Glib::ustring getFilename ();
+    
+    virtual Glib::ustring getCurrentDirectory() = 0;
+
+protected:
 
     /**
-     * Change the window title.
+     * Filename that was given
      */
-    virtual void change_title(const Glib::ustring& title) =0;
-
+    Glib::ustring myFilename;
+    
     /**
-     * Change the default save path location.
+     * List of known file extensions.
      */
-    virtual void change_path(const Glib::ustring& path) =0;
+    std::set<Glib::ustring> knownExtensions;
+    
+
+    void appendExtension(Glib::ustring& path, Inkscape::Extension::Output* outputExtension);
 
 }; //FileSaveDialog
 
@@ -226,9 +247,9 @@ public:
      * @param key a list of file types from which the user can select
      */
     static FileExportDialog *create(Gtk::Window& parentWindow, 
-    		                        const Glib::ustring &path,
+                                    const Glib::ustring &path,
                                     FileDialogType fileTypes,
-                                    const Glib::ustring &title,
+                                    const char *title,
                                     const Glib::ustring &default_key);
 
 

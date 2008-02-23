@@ -23,7 +23,6 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include <set>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 
@@ -164,10 +163,10 @@ public:
      *
      */
     FileDialogBaseGtk(Gtk::Window& parentWindow, const Glib::ustring &title,
-    		FileDialogType type, gchar const* preferenceBase) :
-        Gtk::FileChooserDialog(parentWindow, title),
+    		Gtk::FileChooserAction dialogType, FileDialogType type, gchar const* preferenceBase) :
+        Gtk::FileChooserDialog(parentWindow, title, dialogType),
         preferenceBase(preferenceBase ? preferenceBase : "unknown"),
-        dialogType(type)
+        _dialogType(type)
     {
         internalSetup();
     }
@@ -175,11 +174,11 @@ public:
     /**
      *
      */
-    FileDialogBaseGtk(Gtk::Window& parentWindow, const Glib::ustring &title,
+    FileDialogBaseGtk(Gtk::Window& parentWindow, const char *title,
                    Gtk::FileChooserAction dialogType, FileDialogType type, gchar const* preferenceBase) :
         Gtk::FileChooserDialog(parentWindow, title, dialogType),
         preferenceBase(preferenceBase ? preferenceBase : "unknown"),
-        dialogType(type)
+        _dialogType(type)
     {
         internalSetup();
     }
@@ -197,14 +196,16 @@ protected:
     /**
      * What type of 'open' are we? (open, import, place, etc)
      */
-    FileDialogType dialogType;
+    FileDialogType _dialogType;
 
     /**
      * Our svg preview widget
      */
     SVGPreview svgPreview;
 
-    //# Child widgets
+    /**
+	 * Child widgets
+	 */
     Gtk::CheckButton previewCheckbox;
 
 private:
@@ -248,7 +249,9 @@ public:
 
     Glib::ustring getFilename();
 
-    std::vector<Glib::ustring> getFilenames ();
+    std::vector<Glib::ustring> getFilenames();
+	
+	Glib::ustring getCurrentDirectory();
 
 private:
 
@@ -266,11 +269,6 @@ private:
      * The extension to use to write this file
      */
     Inkscape::Extension::Extension *extension;
-
-    /**
-     * Filename that was given
-     */
-    Glib::ustring myFilename;
 
 };
 
@@ -300,13 +298,12 @@ public:
     Inkscape::Extension::Extension *getSelectionType();
     virtual void setSelectionType( Inkscape::Extension::Extension * key );
 
-    Glib::ustring getFilename();
-
-    void change_title(const Glib::ustring& title);
-    void change_path(const Glib::ustring& path);
-    void updateNameAndExtension();
+	Glib::ustring getCurrentDirectory();
 
 private:
+    //void change_title(const Glib::ustring& title);
+    void change_path(const Glib::ustring& path);
+    void updateNameAndExtension();
 
     /**
      * Fix to allow the user to type the file name
@@ -351,16 +348,6 @@ private:
      * Callback for user input into fileNameEntry
      */
     void fileNameEntryChangedCallback();
-
-    /**
-     * Filename that was given
-     */
-    Glib::ustring myFilename;
-
-    /**
-     * List of known file extensions.
-     */
-    std::set<Glib::ustring> knownExtensions;
 };
 
 

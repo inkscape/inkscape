@@ -25,3 +25,6 @@ BEGIN
         VALUE "Translation", 1033, 437
     END
 END
+
+1000		BITMAP	"./show-preview.bmp"
+

@@ -14,6 +14,7 @@
 
 #include "filedialog.h"
 #include "filedialogimpl-gtkmm.h"
+#include "filedialogimpl-win32.h"
 
 #include "gc-core.h"
 #include <dialogs/dialog-events.h>
@@ -26,6 +27,49 @@ namespace Dialog
 {
 
 /*#########################################################################
+### U T I L I T Y
+#########################################################################*/
+
+bool hasSuffix(const Glib::ustring &str, const Glib::ustring &ext)
+{
+    int strLen = str.length();
+    int extLen = ext.length();
+    if (extLen > strLen)
+        return false;
+    int strpos = strLen-1;
+    for (int extpos = extLen-1 ; extpos>=0 ; extpos--, strpos--)
+        {
+        Glib::ustring::value_type ch = str[strpos];
+        if (ch != ext[extpos])
+            {
+            if ( ((ch & 0xff80) != 0) ||
+                 static_cast<Glib::ustring::value_type>( g_ascii_tolower( static_cast<gchar>(0x07f & ch) ) ) != ext[extpos] )
+                {
+                return false;
+                }
+            }
+        }
+    return true;
+}
+
+bool isValidImageFile(const Glib::ustring &fileName)
+{
+    std::vector<Gdk::PixbufFormat>formats = Gdk::Pixbuf::get_formats();
+    for (unsigned int i=0; i<formats.size(); i++)
+        {
+        Gdk::PixbufFormat format = formats[i];
+        std::vector<Glib::ustring>extensions = format.get_extensions();
+        for (unsigned int j=0; j<extensions.size(); j++)
+            {
+            Glib::ustring ext = extensions[j];
+            if (hasSuffix(fileName, ext))
+                return true;
+            }
+        }
+    return false;
+}
+
+/*#########################################################################
 ### F I L E    O P E N
 #########################################################################*/
 
@@ -35,10 +79,20 @@ namespace Dialog
 FileOpenDialog *FileOpenDialog::create(Gtk::Window &parentWindow,
 		                               const Glib::ustring &path,
                                        FileDialogType fileTypes,
-                                       const Glib::ustring &title)
+                                       const char *title)
 {
+#ifdef WIN32
+    FileOpenDialog *dialog = new FileOpenDialogImplWin32(parentWindow, path, fileTypes, title);
+#else
     FileOpenDialog *dialog = new FileOpenDialogImplGtk(parentWindow, path, fileTypes, title);
-    return dialog;
+#endif
+	
+	return dialog;
+}
+
+Glib::ustring FileOpenDialog::getFilename()
+{
+    return myFilename;
 }
 
 //########################################################################
@@ -51,11 +105,52 @@ FileOpenDialog *FileOpenDialog::create(Gtk::Window &parentWindow,
 FileSaveDialog *FileSaveDialog::create(Gtk::Window& parentWindow, 
 									   const Glib::ustring &path,
                                        FileDialogType fileTypes,
-                                       const Glib::ustring &title,
+                                       const char *title,
                                        const Glib::ustring &default_key)
 {
+#ifdef WIN32
+    FileSaveDialog *dialog = new FileSaveDialogImplWin32(parentWindow, path, fileTypes, title, default_key);
+#else
     FileSaveDialog *dialog = new FileSaveDialogImplGtk(parentWindow, path, fileTypes, title, default_key);
+#endif
     return dialog;
+}
+
+Glib::ustring FileSaveDialog::getFilename()
+{
+    return myFilename;
+}
+
+//void FileSaveDialog::change_path(const Glib::ustring& path)
+//{
+//	myFilename = path;
+//}
+
+void FileSaveDialog::appendExtension(Glib::ustring& path, Inkscape::Extension::Output* outputExtension)
+{
+	try {
+		bool appendExtension = true;
+		Glib::ustring utf8Name = Glib::filename_to_utf8( path );
+		Glib::ustring::size_type pos = utf8Name.rfind('.');
+		if ( pos != Glib::ustring::npos ) {
+			Glib::ustring trail = utf8Name.substr( pos );
+			Glib::ustring foldedTrail = trail.casefold();
+			if ( (trail == ".")
+				 | (foldedTrail != Glib::ustring( outputExtension->get_extension() ).casefold()
+					&& ( knownExtensions.find(foldedTrail) != knownExtensions.end() ) ) ) {
+				utf8Name = utf8Name.erase( pos );
+			} else {
+				appendExtension = false;
+			}
+		}
+
+		if (appendExtension) {
+			utf8Name = utf8Name + outputExtension->get_extension();
+			myFilename = Glib::filename_from_utf8( utf8Name );
+		}
+	} catch ( Glib::ConvertError& e ) {
+		// ignore
+	}
 }
 
 //########################################################################
@@ -68,7 +163,7 @@ FileSaveDialog *FileSaveDialog::create(Gtk::Window& parentWindow,
  FileExportDialog *FileExportDialog::create(Gtk::Window& parentWindow, 
 										   const Glib::ustring &path,
                                            FileDialogType fileTypes,
-                                           const Glib::ustring &title,
+                                           const char *title,
                                            const Glib::ustring &default_key)
 {
     FileExportDialog *dialog = new FileExportDialogImpl(parentWindow, path, fileTypes, title, default_key);
