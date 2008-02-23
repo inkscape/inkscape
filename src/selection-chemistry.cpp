@@ -86,6 +86,12 @@
 #include "live_effects/parameter/path.h"
 #include "libnr/nr-convert2geom.h"
 
+// For clippath editing
+#include "tools-switch.h"
+#include "shape-editor.h"
+#include "node-context.h"
+#include "nodepath.h"
+
 using NR::X;
 using NR::Y;
 
@@ -2129,6 +2135,50 @@ void sp_selection_next_patheffect_param(SPDesktop * dt)
         }
     }
 }
+
+void sp_selection_edit_clip_or_mask(SPDesktop * dt, bool clip)
+{
+    if (!dt) return;
+
+    Inkscape::Selection *selection = sp_desktop_selection(dt);
+    if ( selection && !selection->isEmpty() ) {
+        SPItem *item = selection->singleItem();
+        if ( item ) {
+            SPObject *obj = NULL;
+            if (clip)
+                obj = item->clip_ref ? SP_OBJECT(item->clip_ref->getObject()) : NULL;
+            else
+                obj = item->mask_ref ? SP_OBJECT(item->mask_ref->getObject()) : NULL;
+
+            if (obj) {
+                // obj is a group object, the children are the actual clippers
+                for ( SPObject *child = obj->children ; child ; child = child->next ) {
+                    if ( SP_IS_ITEM(child) ) {
+                        // If not already in nodecontext, goto it!
+                        if (!tools_isactive(dt, TOOLS_NODES)) {
+                            tools_switch_current(TOOLS_NODES);
+                        }
+
+                        ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;
+                        shape_editor->set_item(SP_ITEM(child));
+                        Inkscape::NodePath::Path *np = shape_editor->get_nodepath();
+                        if (np) {
+                            np->helperpath_rgba = clip ? 0x0000ffff : 0x800080ff;
+                            np->helperpath_width = 1.0;
+                            sp_nodepath_show_helperpath(np, true);
+                        }
+                        break; // break out of for loop after 1st encountered item
+                    }
+                }
+            } else if (clip) {
+                dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("The selection has no applied clip path."));
+            } else {
+                dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("The selection has no applied mask."));
+            }
+        }
+    }
+}
+
 
 namespace {
 

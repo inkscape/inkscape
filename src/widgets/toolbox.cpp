@@ -250,6 +250,7 @@ static gchar const * ui_descr =
         "    <toolitem action='StrokeToPath' />"
         "    <separator />"
         "    <toolitem action='NodesShowHandlesAction' />"
+        "    <toolitem action='NodesShowHelperpath' />"
         "    <separator />"
         "    <toolitem action='EditNextLPEParameterAction' />"
         "    <separator />"
@@ -845,6 +846,13 @@ static void toggle_show_handles (GtkToggleAction *act, gpointer /*data*/) {
     if (shape_editor) shape_editor->show_handles(show);
 }
 
+static void toggle_show_helperpath (GtkToggleAction *act, gpointer /*data*/) {
+    bool show = gtk_toggle_action_get_active( act );
+    prefs_set_int_attribute ("tools.nodes", "show_helperpath",  show ? 1 : 0);
+    ShapeEditor *shape_editor = get_current_shape_editor();
+    if (shape_editor) shape_editor->show_helperpath(show);
+}
+
 void sp_node_path_edit_nextLPEparam (GtkAction */*act*/, gpointer data) {
     sp_selection_next_patheffect_param( reinterpret_cast<SPDesktop*>(data) );
 }
@@ -1093,6 +1101,17 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_show_handles), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.nodes", "show_handles", 1 ) );
+    }
+
+    {
+        InkToggleAction* act = ink_toggle_action_new( "NodesShowHelperpath",
+                                                      _("Show Outline"),
+                                                      _("Show the outline of the path"),
+                                                      "nodes_show_helperpath",
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_show_helperpath), desktop );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.nodes", "show_helperpath", 0 ) );
     }
 
     {

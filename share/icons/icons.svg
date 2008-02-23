@@ -16252,4 +16252,36 @@ http://www.inkscape.org/</dc:description>
        x="905"
        y="240" />
   </g>
+  <g
+     id="nodes_show_helperpath"
+     transform="translate(835.01871,-120.9465)">
+    <path
+       style="fill:#ffffff;fill-opacity:0.75;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.00000024;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+       d="M -42.51871,188.4465 C -42.51871,182.9474 -42.01871,177.9465 -31.51871,177.4465 C -30.253328,177.38624 -33.51871,187.4465 -42.51871,188.4465"
+       id="path4756"
+       sodipodi:nodetypes="csc" />
+    <rect
+       y="175"
+       x="-45"
+       height="16"
+       width="16"
+       id="rect4758"
+       style="opacity:1;fill:none;fill-opacity:0.16788318;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;display:inline" />
+    <use
+       transform="translate(-4.9762,-5.349982e-2)"
+       x="0"
+       y="0"
+       xlink:href="#rect4374"
+       id="use4760"
+       width="1250"
+       height="1250" />
+    <use
+       transform="translate(5.981293,-11.02417)"
+       x="0"
+       y="0"
+       xlink:href="#rect4374"
+       id="use4762"
+       width="1250"
+       height="1250" />
+  </g>
 </svg>

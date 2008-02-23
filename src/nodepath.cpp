@@ -201,6 +201,8 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     np->local_change = 0;
     np->show_handles = show_handles;
     np->helper_path = NULL;
+    np->helperpath_rgba = 0xff0000ff;
+    np->helperpath_width = 1.0;
     np->curve = sp_curve_copy(curve);
     np->show_helperpath = false;
     np->straight_path = false;
@@ -4541,6 +4543,26 @@ void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve) {
 
 void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *np, bool show) {
     np->show_helperpath = show;
+
+    if (show) {
+        SPCurve *helper_curve = sp_curve_copy(np->curve);
+        sp_curve_transform(helper_curve, np->i2d );
+        if (!np->helper_path) {
+            np->helper_path = sp_canvas_bpath_new(sp_desktop_controls(np->desktop), helper_curve);
+            sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(np->helper_path), np->helperpath_rgba, np->helperpath_width, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+            sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(np->helper_path), 0, SP_WIND_RULE_NONZERO);
+            sp_canvas_item_show(np->helper_path);
+        } else {
+            sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(np->helper_path), helper_curve);
+        }
+        sp_curve_unref(helper_curve);
+    } else {
+        if (np->helper_path) {
+            GtkObject *temp = np->helper_path;
+            np->helper_path = NULL;
+            gtk_object_destroy(temp);
+        }
+    }
 }
 
 /* this function does not work yet */

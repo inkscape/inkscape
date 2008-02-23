@@ -1335,11 +1335,17 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
         case SP_VERB_OBJECT_SET_MASK:
             sp_selection_set_mask(false, false);
             break;
+        case SP_VERB_OBJECT_EDIT_MASK:
+            sp_selection_edit_clip_or_mask(dt, false);
+            break;
         case SP_VERB_OBJECT_UNSET_MASK:
             sp_selection_unset_mask(false);
             break;
         case SP_VERB_OBJECT_SET_CLIPPATH:
             sp_selection_set_mask(true, false);
+            break;
+        case SP_VERB_OBJECT_EDIT_CLIPPATH:
+            sp_selection_edit_clip_or_mask(dt, true);
             break;
         case SP_VERB_OBJECT_UNSET_CLIPPATH:
             sp_selection_unset_mask(true);
@@ -2363,10 +2369,14 @@ Verb *Verb::_base_verbs[] = {
                    "object_flip_ver"),
     new ObjectVerb(SP_VERB_OBJECT_SET_MASK, "ObjectSetMask", N_("_Set"),
                  N_("Apply mask to selection (using the topmost object as mask)"), NULL),
+    new ObjectVerb(SP_VERB_OBJECT_EDIT_MASK, "ObjectEditMask", N_("_Edit"),
+                 N_("Edit mask"), NULL),
     new ObjectVerb(SP_VERB_OBJECT_UNSET_MASK, "ObjectUnSetMask", N_("_Release"),
                  N_("Remove mask from selection"), NULL),
     new ObjectVerb(SP_VERB_OBJECT_SET_CLIPPATH, "ObjectSetClipPath", N_("_Set"),
                  N_("Apply clipping path to selection (using the topmost object as clipping path)"), NULL),
+    new ObjectVerb(SP_VERB_OBJECT_EDIT_CLIPPATH, "ObjectEditClipPath", N_("_Edit"),
+                 N_("Edit clipping path"), NULL),
     new ObjectVerb(SP_VERB_OBJECT_UNSET_CLIPPATH, "ObjectUnSetClipPath", N_("_Release"),
                  N_("Remove clipping path from selection"), NULL),
 

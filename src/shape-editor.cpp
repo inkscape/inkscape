@@ -480,6 +480,10 @@ void ShapeEditor::show_handles (bool show) {
         sp_nodepath_show_handles (this->nodepath, show);
 }
 
+void ShapeEditor::show_helperpath (bool show) {
+    if (this->nodepath)
+        sp_nodepath_show_helperpath (this->nodepath, show);
+}
 
 void ShapeEditor::flip (NR::Dim2 axis, NR::Maybe<NR::Point> center) {
     if (this->nodepath)

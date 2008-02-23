@@ -107,6 +107,7 @@ public:
     void select_prev ();
 
     void show_handles (bool show);
+    void show_helperpath (bool show);
 
     void flip (NR::Dim2 axis, NR::Maybe<NR::Point> center = NR::Nothing());
 

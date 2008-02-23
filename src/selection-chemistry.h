@@ -98,6 +98,8 @@ void sp_selection_item_prev (void);
 
 void sp_selection_next_patheffect_param(SPDesktop * dt);
 
+void sp_selection_edit_clip_or_mask(SPDesktop * dt, bool clip);
+
 void scroll_to_show_item(SPDesktop *desktop, SPItem *item);
 
 void sp_undo (SPDesktop *desktop, SPDocument *doc);
