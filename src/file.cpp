@@ -1184,6 +1184,7 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     static bool gotSuccess = false;
 
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);
+    (void)repr;
 
     if (!doc->uri && !doc->isModifiedSinceSave())
         return false;

@@ -72,7 +72,7 @@ FileExportToOCALDialog::FileExportToOCALDialog(Gtk::Window &parentWindow,
     /* Set our dialog type (save, export, etc...)*/
     dialogType = fileTypes;
     Gtk::VBox *vbox = get_vbox();
-    
+
     Gtk::Label *fileLabel = new Gtk::Label(_("File"));
 
     fileNameEntry = new Gtk::Entry();
@@ -192,7 +192,7 @@ FileExportToOCALPasswordDialog::FileExportToOCALPasswordDialog(Gtk::Window &pare
     passBox.pack_start(*passLabel);
     passBox.pack_start(*passwordEntry, Gtk::PACK_EXPAND_WIDGET, 3);
     vbox->pack_start(passBox);
-    
+
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
     set_default(*add_button(Gtk::Stock::OK,   Gtk::RESPONSE_OK));
 
@@ -367,7 +367,7 @@ failquit:
 /*
  * Callback for row activated
  */
-void FileListViewText::on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column)
+void FileListViewText::on_row_activated(const Gtk::TreeModel::Path& /*path*/, Gtk::TreeViewColumn* /*column*/)
 {
     this->on_cursor_changed();
     myButton->activate();
@@ -442,7 +442,7 @@ void FileImportFromOCALDialog::searchTagEntryChangedCallback()
 
     // create the resulting xml document tree
     // this initialize the library and test mistakes between compiled and shared library used
-    LIBXML_TEST_VERSION 
+    LIBXML_TEST_VERSION
     xmlDoc *doc = NULL;
     xmlNode *root_element = NULL;
 
@@ -454,7 +454,7 @@ void FileImportFromOCALDialog::searchTagEntryChangedCallback()
         g_warning("Failed to parse %s\n", uri.c_str());
         return;
     }
-    
+
     // get the root element node
     root_element = xmlDocGetRootElement(doc);
 
@@ -478,12 +478,12 @@ void FileImportFromOCALDialog::searchTagEntryChangedCallback()
     // free the global variables that may have been allocated by the parser
     xmlCleanupParser();
     return;
-#endif    
+#endif
 }
 
 
 /**
- * Prints the names of the all the xml elements 
+ * Prints the names of the all the xml elements
  * that are siblings or children of a given xml node
  */
 void FileImportFromOCALDialog::print_xml_element_names(xmlNode * a_node)
@@ -528,11 +528,11 @@ void FileImportFromOCALDialog::print_xml_element_names(xmlNode * a_node)
 /**
  * Constructor.  Not called directly.  Use the factory.
  */
-FileImportFromOCALDialog::FileImportFromOCALDialog(Gtk::Window& parentWindow, 
-		                       const Glib::ustring &dir,
-                                       FileDialogType fileTypes,
-                                       const Glib::ustring &title) :
-     FileDialogOCALBase(title, parentWindow)
+FileImportFromOCALDialog::FileImportFromOCALDialog(Gtk::Window& parentWindow,
+                                                   const Glib::ustring &/*dir*/,
+                                                   FileDialogType fileTypes,
+                                                   const Glib::ustring &title) :
+    FileDialogOCALBase(title, parentWindow)
 {
     // Initalize to Autodetect
     extension = NULL;
