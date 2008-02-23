@@ -188,7 +188,7 @@ static void sp_box3d_context_selection_changed(Inkscape::Selection *selection, g
 
     SPDocument *doc = sp_desktop_document(bc->desktop);
     doc->persps_sel.clear();
-    doc->persps_sel = persp3d_currently_selected_persps(ec);
+    doc->persps_sel = persp3d_currently_selected_persps();
 
     SPItem *item = selection->singleItem();
     if (item) {
@@ -509,7 +509,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
                 ret = TRUE;
             }
             if (MOD__SHIFT_ONLY) {
-                persp3d_toggle_VPs(persp3d_currently_selected_persps(event_context), Proj::X);
+                persp3d_toggle_VPs(persp3d_currently_selected_persps(), Proj::X);
                 bc->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
                 ret = true;
             }
@@ -518,7 +518,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
         case GDK_y:
         case GDK_Y:
             if (MOD__SHIFT_ONLY) {
-                persp3d_toggle_VPs(persp3d_currently_selected_persps(event_context), Proj::Y);
+                persp3d_toggle_VPs(persp3d_currently_selected_persps(), Proj::Y);
                 bc->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
                 ret = true;
             }
@@ -527,7 +527,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
         case GDK_z:
         case GDK_Z:
             if (MOD__SHIFT_ONLY) {
-                persp3d_toggle_VPs(persp3d_currently_selected_persps(event_context), Proj::Z);
+                persp3d_toggle_VPs(persp3d_currently_selected_persps(), Proj::Z);
                 bc->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
                 ret = true;
             }

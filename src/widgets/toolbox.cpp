@@ -2512,7 +2512,7 @@ box3d_angle_value_changed(GtkAdjustment *adj, GObject *dataKludge, Proj::Axis ax
     g_object_set_data(dataKludge, "freeze_angle", GINT_TO_POINTER(TRUE));
 
     //Persp3D *persp = document->current_persp3d;
-    std::set<Persp3D *> sel_persps = persp3d_currently_selected_persps (inkscape_active_event_context());
+    std::set<Persp3D *> sel_persps = persp3d_currently_selected_persps();
     if (sel_persps.empty()) {
         // this can happen when the document is created; we silently ignore it
         return;
@@ -2551,7 +2551,7 @@ box3d_angle_z_value_changed(GtkAdjustment *adj, GObject *dataKludge)
 static void box3d_vp_state_changed( GtkToggleAction *act, GtkAction *box3d_angle, Proj::Axis axis )
 {
     // TODO: Take all selected perspectives into account
-    std::set<Persp3D *> sel_persps = persp3d_currently_selected_persps (inkscape_active_event_context());
+    std::set<Persp3D *> sel_persps = persp3d_currently_selected_persps();
     if (sel_persps.empty()) {
         // this can happen when the document is created; we silently ignore it
         return;

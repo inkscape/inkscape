@@ -552,8 +552,8 @@ persp3d_on_repr_attr_changed ( Inkscape::XML::Node * /*repr*/,
 
 /* returns a std::set() of all perspectives of the currently selected boxes */
 std::set<Persp3D *>
-persp3d_currently_selected_persps (SPEventContext *ec) {
-    Inkscape::Selection *selection = sp_desktop_selection (ec->desktop);
+persp3d_currently_selected_persps () {
+    Inkscape::Selection *selection = sp_desktop_selection(inkscape_active_desktop());
 
     std::set<Persp3D *> p;
     for (GSList *i = (GSList *) selection->itemList(); i != NULL; i = i->next) {
@@ -632,7 +632,7 @@ persp3d_print_all_selected() {
     g_print ("\n======================================\n");
     g_print ("Selected perspectives and their boxes:\n");
 
-    std::set<Persp3D *> sel_persps = persp3d_currently_selected_persps (inkscape_active_event_context());
+    std::set<Persp3D *> sel_persps = persp3d_currently_selected_persps();
 
     for (std::set<Persp3D *>::iterator j = sel_persps.begin(); j != sel_persps.end(); ++j) {
         Persp3D *persp = SP_PERSP3D(*j);

@@ -91,7 +91,7 @@ void persp3d_absorb(Persp3D *persp1, Persp3D *persp2);
 
 Persp3D * persp3d_create_xml_element (SPDocument *document, Persp3D *dup = NULL);
 
-std::set<Persp3D *> persp3d_currently_selected_persps (SPEventContext *ec);
+std::set<Persp3D *> persp3d_currently_selected_persps();
 bool persp3d_has_all_boxes_in_selection (Persp3D *persp);
 std::list<SPBox3D *> persp3d_selected_boxes (Persp3D *persp);
 
