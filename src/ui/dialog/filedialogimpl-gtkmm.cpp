@@ -686,11 +686,13 @@ FileOpenDialogImplGtk::FileOpenDialogImplGtk(Gtk::Window& parentWindow,
 
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
     set_default(*add_button(Gtk::Stock::OPEN,   Gtk::RESPONSE_OK));
-	
-	//###### Allow easy access to our examples folder		 
-    if(Inkscape::IO::file_test(INKSCAPE_EXAMPLESDIR,
-		(GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
-	{
+
+    //###### Allow easy access to our examples folder
+    if ( Inkscape::IO::file_test(INKSCAPE_EXAMPLESDIR, G_FILE_TEST_EXISTS)
+         && Inkscape::IO::file_test(INKSCAPE_EXAMPLESDIR, G_FILE_TEST_IS_DIR)
+         && g_path_is_absolute(INKSCAPE_EXAMPLESDIR)
+        )
+    {
         add_shortcut_folder(INKSCAPE_EXAMPLESDIR);
     }
 }
@@ -928,13 +930,18 @@ FileSaveDialogImplGtk::FileSaveDialogImplGtk( Gtk::Window &parentWindow,
         expander->set_expanded(true);
         }
 
-	// allow easy access to the user's own templates folder		 
+    // allow easy access to the user's own templates folder
     gchar *templates = profile_path ("templates");
-    if (Inkscape::IO::file_test(templates, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
+    if ( Inkscape::IO::file_test(templates, G_FILE_TEST_EXISTS)
+         && Inkscape::IO::file_test(templates, G_FILE_TEST_IS_DIR)
+         && g_path_is_absolute(templates)
+        )
+    {
         add_shortcut_folder(templates);
+    }
     g_free (templates);
-	
-	
+
+
     //if (extension == NULL)
     //    checkbox.set_sensitive(FALSE);
 
@@ -1141,7 +1148,7 @@ void FileSaveDialogImplGtk::setSelectionType( Inkscape::Extension::Extension * k
 
 Glib::ustring FileSaveDialogImplGtk::getCurrentDirectory()
 {
-	return get_current_folder();
+    return get_current_folder();
 }
 
 
@@ -1157,8 +1164,8 @@ FileSaveDialogImplGtk::change_title(const Glib::ustring& title)
 void
 FileSaveDialogImplGtk::change_path(const Glib::ustring& path)
 {
-	myFilename = path;
-	
+    myFilename = path;
+
     if (Glib::file_test(myFilename, Glib::FILE_TEST_IS_DIR)) {
         //fprintf(stderr,"set_current_folder(%s)\n",myFilename.c_str());
         set_current_folder(myFilename);
@@ -1199,8 +1206,8 @@ void FileSaveDialogImplGtk::updateNameAndExtension()
 
     Inkscape::Extension::Output* newOut = extension ? dynamic_cast<Inkscape::Extension::Output*>(extension) : 0;
     if ( fileTypeCheckbox.get_active() && newOut ) {
-		// Append the file extension if it's not already present
-		appendExtension(myFilename, newOut);
+        // Append the file extension if it's not already present
+        appendExtension(myFilename, newOut);
     }
 }
 
