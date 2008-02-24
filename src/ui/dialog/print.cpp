@@ -29,9 +29,9 @@
 
 
 static void
-draw_page (GtkPrintOperation *operation,
+draw_page (GtkPrintOperation */*operation*/,
            GtkPrintContext   *context,
-           gint               page_nr,
+           gint               /*page_nr*/,
            gpointer           user_data)
 {
     struct workaround_gtkmm *junk = (struct workaround_gtkmm*)user_data;
@@ -112,8 +112,8 @@ draw_page (GtkPrintOperation *operation,
 }
 
 static GObject*
-create_custom_widget (GtkPrintOperation *operation,
-                      gpointer           user_data) 
+create_custom_widget (GtkPrintOperation */*operation*/,
+                      gpointer           user_data)
 {
     //printf("%s\n",__FUNCTION__);
     return G_OBJECT(user_data);
@@ -121,8 +121,8 @@ create_custom_widget (GtkPrintOperation *operation,
 
 static void
 begin_print (GtkPrintOperation *operation,
-             GtkPrintContext   *context,
-             gpointer           user_data) 
+             GtkPrintContext   */*context*/,
+             gpointer           /*user_data*/)
 {
     //printf("%s\n",__FUNCTION__);
     gtk_print_operation_set_n_pages (operation, 1);

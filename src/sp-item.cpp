@@ -411,8 +411,8 @@ sp_item_release(SPObject *object)
     item->_clip_ref_connection.disconnect();
     item->_mask_ref_connection.disconnect();
 
-    // Note: do this here before the clip_ref is deleted, since calling 
-    // sp_document_ensure_up_to_date for triggered routing may reference 
+    // Note: do this here before the clip_ref is deleted, since calling
+    // sp_document_ensure_up_to_date for triggered routing may reference
     // the deleted clip_ref.
     if (item->avoidRef) {
         delete item->avoidRef;
@@ -744,27 +744,27 @@ sp_item_invoke_bbox_full(SPItem const *item, NR::Maybe<NR::Rect> *bbox, NR::Matr
         sp_clippath_get_bbox(SP_CLIPPATH(item->clip_ref->getObject()), &b, transform, flags);
         nr_rect_d_intersect (&temp_bbox, &temp_bbox, &b);
     }
-    
+
     if (temp_bbox.x0 > temp_bbox.x1 || temp_bbox.y0 > temp_bbox.y1) {
         // We'll assume here that when x0 > x1 or y0 > y1, the bbox is "nothing"
         // However it has never been explicitely defined this way for NRRects
         // (as opposed to NR::Maybe<NR::Rect>)
         *bbox = NR::Nothing();
         return;
-    } 
-    
+    }
+
     if (temp_bbox.x0 == temp_bbox.y0 == NR_HUGE && temp_bbox.x1 == temp_bbox.y1 == -NR_HUGE) {
         // The bbox hasn't been touched by the SPItemClass' bbox method
         // or it has explicitely been set to be like this (e.g. in sp_shape_bbox)
         *bbox = NR::Nothing();
         return;
     }
-    
+
     // Do not use temp_bbox.upgrade() here, because it uses a test that returns NR::Nothing
     // for any rectangle with zero area. The geometrical bbox of for example a vertical line
-    // would therefore be translated into NR::Nothing (see bug https://bugs.launchpad.net/inkscape/+bug/168684) 
+    // would therefore be translated into NR::Nothing (see bug https://bugs.launchpad.net/inkscape/+bug/168684)
     NR::Maybe<NR::Rect> temp_bbox_new = NR::Rect(NR::Point(temp_bbox.x0, temp_bbox.y0), NR::Point(temp_bbox.x1, temp_bbox.y1));
-    
+
     *bbox = NR::union_bounds(*bbox, temp_bbox_new);
 }
 
@@ -1599,6 +1599,7 @@ void
 sp_item_convert_to_guides(SPItem *item) {
     SPDesktop *dt = inkscape_active_desktop();
     SPNamedView *nv = sp_desktop_namedview(dt);
+    (void)nv;
 
     gchar const *prefs_bbox = prefs_get_string_attribute("tools", "bounding_box");
     SPItem::BBoxType bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::RENDERING_BBOX;

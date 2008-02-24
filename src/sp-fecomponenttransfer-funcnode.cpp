@@ -8,7 +8,7 @@
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *   Niko Kiirala <niko@kiirala.com>
  *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
- * 
+ *
  * Copyright (C) 2006, 2007, 2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -175,7 +175,7 @@ sp_fefuncnode_build(SPObject *object, SPDocument *document, Inkscape::XML::Node 
     sp_object_read_attr(object, "amplitude");
     sp_object_read_attr(object, "exponent");
     sp_object_read_attr(object, "offset");
-    
+
 
 //is this necessary?
     sp_document_add_resource(document, "fefuncnode", object); //maybe feFuncR, fefuncG, feFuncB and fefuncA ?
@@ -317,6 +317,7 @@ sp_fefuncnode_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
     }
 
+    (void)fefuncnode;
     /*
 TODO: I'm not sure what to do here...
 

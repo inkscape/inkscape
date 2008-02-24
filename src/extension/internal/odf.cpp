@@ -186,8 +186,8 @@ public:
          for (unsigned int i=0 ; i<rows ; i++)
              {
              for (unsigned int j=0 ; j<other.cols ; j++)
-	         {
-	         double sum = 0.0;
+             {
+                 double sum = 0.0;
                  for (unsigned int k=0 ; k<cols ; k++)
                      {
                      //sum += a[i][k] * b[k][j];
@@ -205,7 +205,7 @@ public:
          SVDMatrix result(cols, rows);
          for (unsigned int i=0 ; i<rows ; i++)
              for (unsigned int j=0 ; j<cols ; j++)
-	         result(j, i) = d[i*cols + j];
+                 result(j, i) = d[i*cols + j];
          return result;
          }
 
@@ -991,8 +991,8 @@ static NR::Matrix getODFItemTransform(const SPItem *item)
  * Get some fun facts from the transform
  */
 static void analyzeTransform(NR::Matrix &tf,
-           double &rotate, double &xskew, double &yskew,
-           double &xscale, double &yscale)
+                             double &rotate, double &/*xskew*/, double &/*yskew*/,
+                             double &xscale, double &yscale)
 {
     SVDMatrix mat(2, 2);
     mat(0, 0) = tf[0];
@@ -1028,7 +1028,7 @@ static void gatherText(Inkscape::XML::Node *node, Glib::ustring &buf)
         if (s)
             buf.append(s);
         }
-    
+
     for (Inkscape::XML::Node *child = node->firstChild() ;
                 child != NULL; child = child->next())
         {
@@ -1245,7 +1245,7 @@ bool OdfOutput::writeMeta(ZipFile &zf)
         Glib::ustring value = iter->second;
         if (name.size() > 0 && value.size()>0)
             {
-            outs.printf("    <%#s>%#s</%#s>\n", 
+            outs.printf("    <%#s>%#s</%#s>\n",
                       name.c_str(), value.c_str(), name.c_str());
             }
         }
@@ -1495,19 +1495,19 @@ writePath(Writer &outs, NArtBpath const *bpath,
         code = bp->code;
 
         NR::Point const p1(bp->c(1) * tf);
-	NR::Point const p2(bp->c(2) * tf);
-	NR::Point const p3(bp->c(3) * tf);
-	double x1 = (p1[NR::X] - xoff) * 1000.0;
+        NR::Point const p2(bp->c(2) * tf);
+        NR::Point const p3(bp->c(3) * tf);
+        double x1 = (p1[NR::X] - xoff) * 1000.0;
         if (fabs(x1)<1.0) x1=0.0;
-	double y1 = (p1[NR::Y] - yoff) * 1000.0;
+        double y1 = (p1[NR::Y] - yoff) * 1000.0;
         if (fabs(y1)<1.0) y1=0.0;
-	double x2 = (p2[NR::X] - xoff) * 1000.0;
+        double x2 = (p2[NR::X] - xoff) * 1000.0;
         if (fabs(x2)<1.0) x2=0.0;
-	double y2 = (p2[NR::Y] - yoff) * 1000.0;
+        double y2 = (p2[NR::Y] - yoff) * 1000.0;
         if (fabs(y2)<1.0) y2=0.0;
-	double x3 = (p3[NR::X] - xoff) * 1000.0;
+        double x3 = (p3[NR::X] - xoff) * 1000.0;
         if (fabs(x3)<1.0) x3=0.0;
-	double y3 = (p3[NR::Y] - yoff) * 1000.0;
+        double y3 = (p3[NR::Y] - yoff) * 1000.0;
         if (fabs(y3)<1.0) y3=0.0;
         destx = x3;
         desty = y3;
@@ -1646,7 +1646,7 @@ bool OdfOutput::processStyle(Writer &outs, SPItem *item,
 
 
 bool OdfOutput::processGradient(Writer &outs, SPItem *item,
-                                const Glib::ustring &id, NR::Matrix &tf)
+                                const Glib::ustring &id, NR::Matrix &/*tf*/)
 {
     if (!item)
         return false;
@@ -1841,7 +1841,7 @@ bool OdfOutput::processGradient(Writer &outs, SPItem *item,
     outs.printf("        draw:textarea-horizontal-align=\"center\" ");
     outs.printf("draw:textarea-vertical-align=\"middle\"/>\n");
     outs.printf("</style:style>\n\n");
- 
+
     return true;
 }
 
@@ -2045,17 +2045,17 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
 
         couts.printf("draw:layer=\"layout\" svg:x=\"%.3fcm\" svg:y=\"%.3fcm\" ",
                        bbox_x, bbox_y);
-	couts.printf("svg:width=\"%.3fcm\" svg:height=\"%.3fcm\" ",
-	               bbox_width, bbox_height);
-	couts.printf("svg:viewBox=\"0.0 0.0 %.3f %.3f\"\n",
-	               bbox_width * 1000.0, bbox_height * 1000.0);
+        couts.printf("svg:width=\"%.3fcm\" svg:height=\"%.3fcm\" ",
+                       bbox_width, bbox_height);
+        couts.printf("svg:viewBox=\"0.0 0.0 %.3f %.3f\"\n",
+                       bbox_width * 1000.0, bbox_height * 1000.0);
 
-	couts.printf("    svg:d=\"");
-	int nrPoints = writePath(couts, SP_CURVE_BPATH(curve),
+        couts.printf("    svg:d=\"");
+        int nrPoints = writePath(couts, SP_CURVE_BPATH(curve),
                              tf, bbox_x, bbox_y);
-	couts.printf("\"");
+        couts.printf("\"");
 
-	couts.printf(">\n");
+        couts.printf(">\n");
         couts.printf("    <!-- %d nodes -->\n", nrPoints);
         couts.printf("</draw:path>\n\n");
 
@@ -2376,7 +2376,7 @@ OdfOutput::reset()
  * Descends into the SVG tree, mapping things to ODF when appropriate
  */
 void
-OdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *uri)
+OdfOutput::save(Inkscape::Extension::Output */*mod*/, SPDocument *doc, gchar const *uri)
 {
     reset();
 
@@ -2437,7 +2437,7 @@ OdfOutput::init()
  * Make sure that we are in the database
  */
 bool
-OdfOutput::check (Inkscape::Extension::Extension *module)
+OdfOutput::check (Inkscape::Extension::Extension */*module*/)
 {
     /* We don't need a Key
     if (NULL == Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_POV))

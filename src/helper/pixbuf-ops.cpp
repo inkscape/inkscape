@@ -88,11 +88,11 @@ sp_export_jpg_file(SPDocument *doc, gchar const *filename,
 }
 
 GdkPixbuf*
-sp_generate_internal_bitmap(SPDocument *doc, gchar const *filename,
-                   double x0, double y0, double x1, double y1,
-                   unsigned width, unsigned height, double xdpi, double ydpi,
-                   unsigned long bgcolor,
-                   GSList *items_only)
+sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
+                            double x0, double y0, double x1, double y1,
+                            unsigned width, unsigned height, double /*xdpi*/, double /*ydpi*/,
+                            unsigned long bgcolor,
+                            GSList *items_only)
 
 {
 

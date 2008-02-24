@@ -70,15 +70,15 @@ sp_namedview_get_type()
     if (!namedview_type) {
         GTypeInfo namedview_info = {
             sizeof(SPNamedViewClass),
-            NULL,	/* base_init */
-            NULL,	/* base_finalize */
+            NULL,       /* base_init */
+            NULL,       /* base_finalize */
             (GClassInitFunc) sp_namedview_class_init,
-            NULL,	/* class_finalize */
-            NULL,	/* class_data */
+            NULL,       /* class_finalize */
+            NULL,       /* class_data */
             sizeof(SPNamedView),
-            16,	/* n_preallocs */
+            16, /* n_preallocs */
             (GInstanceInitFunc) sp_namedview_init,
-            NULL,	/* value_table */
+            NULL,       /* value_table */
         };
         namedview_type = g_type_register_static(SP_TYPE_OBJECTGROUP, "SPNamedView", &namedview_info, (GTypeFlags)0);
     }
@@ -122,7 +122,7 @@ static void sp_namedview_init(SPNamedView *nv)
     new (&nv->snap_manager) SnapManager(nv);
 }
 
-static void sp_namedview_generate_old_grid(SPNamedView * nv, SPDocument *document, Inkscape::XML::Node *repr) {
+static void sp_namedview_generate_old_grid(SPNamedView * /*nv*/, SPDocument *document, Inkscape::XML::Node *repr) {
     bool old_grid_settings_present = false;
 
     // set old settings
@@ -246,7 +246,7 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:window-x");
     sp_object_read_attr(object, "inkscape:window-y");
     sp_object_read_attr(object, "inkscape:snap-global");
-    sp_object_read_attr(object, "inkscape:snap-bbox");    
+    sp_object_read_attr(object, "inkscape:snap-bbox");
     sp_object_read_attr(object, "inkscape:snap-nodes");
     sp_object_read_attr(object, "inkscape:snap-guide");
     sp_object_read_attr(object, "inkscape:snap-center");
@@ -255,7 +255,7 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:object-paths");
     sp_object_read_attr(object, "inkscape:object-nodes");
     sp_object_read_attr(object, "inkscape:bbox-paths");
-    sp_object_read_attr(object, "inkscape:bbox-nodes");    
+    sp_object_read_attr(object, "inkscape:bbox-nodes");
     sp_object_read_attr(object, "inkscape:current-layer");
     sp_object_read_attr(object, "inkscape:connector-spacing");
 
@@ -398,12 +398,12 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             }
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-	case SP_ATTR_BORDEROPACITY:
+    case SP_ATTR_BORDEROPACITY:
             nv->bordercolor = (nv->bordercolor & 0xffffff00) | (DEFAULTBORDERCOLOR & 0xff);
             sp_nv_read_opacity(value, &nv->bordercolor);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-	case SP_ATTR_PAGECOLOR:
+    case SP_ATTR_PAGECOLOR:
             nv->pagecolor = (nv->pagecolor & 0xff) | (DEFAULTPAGECOLOR & 0xffffff00);
             if (value) {
                 nv->pagecolor = (nv->pagecolor & 0xff) | sp_svg_read_color(value, nv->pagecolor);
@@ -456,7 +456,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_BBOX:
-    		nv->snap_manager.setSnapModeBBox(value ? sp_str_to_bool(value) : FALSE);
+            nv->snap_manager.setSnapModeBBox(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_NODES:
@@ -492,7 +492,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_BBOX_NODES:
-            nv->snap_manager.object.setSnapToBBoxNode(value ? sp_str_to_bool(value) : FALSE);            
+            nv->snap_manager.object.setSnapToBBoxNode(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_CURRENT_LAYER:

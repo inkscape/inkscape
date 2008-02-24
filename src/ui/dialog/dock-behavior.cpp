@@ -41,10 +41,10 @@ DockBehavior::DockBehavior(Dialog &dialog) :
     Behavior(dialog),
     _dock_item(*SP_ACTIVE_DESKTOP->getDock(),
                Inkscape::Verb::get(dialog._verb_num)->get_id(), dialog._title.c_str(),
-               (Inkscape::Verb::get(dialog._verb_num)->get_image() ? 
+               (Inkscape::Verb::get(dialog._verb_num)->get_image() ?
                 Inkscape::Verb::get(dialog._verb_num)->get_image() : ""),
                static_cast<Widget::DockItem::State>(
-                   prefs_get_int_attribute (_dialog._prefs_path, "state", 
+                   prefs_get_int_attribute (_dialog._prefs_path, "state",
                                             UI::Widget::DockItem::DOCKED_STATE)))
 {
     // Connect signals
@@ -87,7 +87,7 @@ DockBehavior::get_vbox()
 }
 
 void
-DockBehavior::present() 
+DockBehavior::present()
 {
     bool was_attached = _dock_item.isAttached();
 
@@ -106,31 +106,31 @@ DockBehavior::hide()
 }
 
 void
-DockBehavior::show() 
-{ 
+DockBehavior::show()
+{
     _dock_item.show();
 }
 
-void 
+void
 DockBehavior::show_all_children()
 {
     get_vbox()->show_all_children();
 }
 
-void 
+void
 DockBehavior::get_position(int &x, int &y)
-{ 
+{
     _dock_item.get_position(x, y);
 }
 
-void 
+void
 DockBehavior::get_size(int &width, int &height)
-{ 
+{
     _dock_item.get_size(width, height);
 }
 
 void
-DockBehavior::resize(int width, int height) 
+DockBehavior::resize(int width, int height)
 {
     _dock_item.resize(width, height);
 }
@@ -153,9 +153,9 @@ DockBehavior::set_size_request(int width, int height)
     _dock_item.set_size_request(width, height);
 }
 
-void 
+void
 DockBehavior::size_request(Gtk::Requisition &requisition)
-{ 
+{
     _dock_item.size_request(requisition);
 }
 
@@ -168,6 +168,7 @@ DockBehavior::set_title(Glib::ustring title)
 void
 DockBehavior::set_sensitive(bool sensitive)
 {
+    // TODO check this. Seems to be bad that we ignore the parameter
     get_vbox()->set_sensitive();
 }
 
@@ -181,9 +182,10 @@ DockBehavior::_onHide()
 }
 
 void
-DockBehavior::_onStateChanged(Widget::DockItem::State prev_state, 
+DockBehavior::_onStateChanged(Widget::DockItem::State /*prev_state*/,
                               Widget::DockItem::State new_state)
 {
+// TODO probably need to avoid window calls unless the state is different. Check.
     prefs_set_int_attribute (_dialog._prefs_path, "state", new_state);
 
     if (new_state == Widget::DockItem::FLOATING_STATE) {
@@ -219,11 +221,11 @@ DockBehavior::onDesktopActivated(SPDesktop *desktop)
 #ifdef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
     if (prefs_get_int_attribute ( "options.dialogsontopwin32", "value", 0))
         transient_policy = 2;
-    else    
+    else
         return;
-#endif        
+#endif
 
-    if (!transient_policy) 
+    if (!transient_policy)
         return;
 
     Gtk::Window *floating_win = _dock_item.getWindow();
@@ -243,7 +245,7 @@ DockBehavior::onDesktopActivated(SPDesktop *desktop)
         if (GtkWindow *dialog_win = floating_win->gobj()) {
 
             _dialog.retransientize_suppress = true; // disallow other attempts to retranzientize this dialog
-            
+
             desktop->setWindowTransient (dialog_win);
 
             /*
@@ -267,13 +269,13 @@ DockBehavior::onDesktopActivated(SPDesktop *desktop)
 
 /* Signal wrappers */
 
-Glib::SignalProxy0<void> 
+Glib::SignalProxy0<void>
 DockBehavior::signal_show() { return _dock_item.signal_show(); }
 
-Glib::SignalProxy0<void> 
+Glib::SignalProxy0<void>
 DockBehavior::signal_hide() { return _dock_item.signal_hide(); }
 
-Glib::SignalProxy1<bool, GdkEventAny *> 
+Glib::SignalProxy1<bool, GdkEventAny *>
 DockBehavior::signal_delete_event() { return _dock_item.signal_delete_event(); }
 
 Glib::SignalProxy0<void>

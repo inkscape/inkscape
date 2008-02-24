@@ -267,8 +267,8 @@ public:
      * If the coordinates are out of range, do nothing.
      */
     virtual void setPixel(unsigned int x, unsigned int y,
-                          unsigned int a, 
-                          unsigned int r, 
+                          unsigned int a,
+                          unsigned int r,
                           unsigned int g,
                           unsigned int b);
 
@@ -368,7 +368,7 @@ private:
      * Confidence matrix data
      */
     float *cmdata;
-    
+
 private:
 
     /**
@@ -411,7 +411,7 @@ public:
      *  Informs the observer how much has been completed.
      *  Return false if the processing should be aborted.
      */
-    virtual bool progress(float percentCompleted)
+    virtual bool progress(float /*percentCompleted*/)
         {
         return true;
         }
@@ -420,7 +420,7 @@ public:
      *  Send an error string to the Observer.  Processing will
      *  be halted.
      */
-    virtual void error(const std::string &msg)
+    virtual void error(const std::string &/*msg*/)
         {
         }
 
@@ -453,7 +453,7 @@ public:
      */
     static const float FOREGROUND_CONFIDENCE; //=0.8f;
 
-    /** 
+    /**
      * Confidence for foreground or background type being equally likely.
      */
     static const float UNKNOWN_REGION_CONFIDENCE; //=0.5f;

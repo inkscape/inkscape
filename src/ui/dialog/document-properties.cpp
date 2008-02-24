@@ -283,7 +283,7 @@ DocumentProperties::build_snap()
                   _("If set, objects only snap to a grid line when it's within the range specified below"),
                   "gridtolerance", _wr);
 
-	//Options for snapping to guides
+    //Options for snapping to guides
     _rsu_gusn.init (_("Snap dist_ance"), _("Snap only when close_r than:"),
                 _("Snapping distance, in screen pixels, for snapping to guides"),
                 _("If set, objects only snap to a guide when it's within the range specified below"),
@@ -300,24 +300,24 @@ DocumentProperties::build_snap()
     slaves.push_back(&_rcbsnbbp);
     slaves.push_back(&_rcbsnbbn);
     _rcbsnbb.setSlaveWidgets(slaves);
-    
+
     slaves.clear();
     slaves.push_back(&_rcbsnn);
     slaves.push_back(&_rcbsnbb);
-    
+
     _rcbsg.setSlaveWidgets(slaves);
 
     Gtk::Label *label_g = manage (new Gtk::Label);
     label_g->set_markup (_("<b>Snapping</b>"));
     Gtk::Label *label_w = manage (new Gtk::Label);
-    label_w->set_markup (_("<b>What snaps</b>"));    
+    label_w->set_markup (_("<b>What snaps</b>"));
     Gtk::Label *label_o = manage (new Gtk::Label);
     label_o->set_markup (_("<b>Snap to objects</b>"));
     Gtk::Label *label_gr = manage (new Gtk::Label);
     label_gr->set_markup (_("<b>Snap to grids</b>"));
     Gtk::Label *label_gu = manage (new Gtk::Label);
     label_gu->set_markup (_("<b>Snap to guides</b>"));
-    
+
     Gtk::Widget *const array[] =
     {
         label_g,            0,
@@ -326,19 +326,19 @@ DocumentProperties::build_snap()
         label_w,            0,
         0,                  &_rcbsnn,
         0,                  &_rcbsnbb,
-        0, 					0,
+        0,                  0,
         label_o,            0,
         0,                  &_rcbsnop,
         0,                  &_rcbsnon,
         0,                  &_rcbsnbbp,
         0,                  &_rcbsnbbn,
         0,                  _rsu_sno._vbox,
-        0, 					0,
+        0,                  0,
         label_gr,           0,
         0,                  _rsu_sn._vbox,
-        0, 					0,
-        label_gu,         	0,
-        0,                	_rsu_gusn._vbox
+        0,                  0,
+        label_gu,           0,
+        0,                  _rsu_gusn._vbox
     };
 
     attach_all(_page_snap.table(), array, G_N_ELEMENTS(array));
@@ -422,6 +422,7 @@ DocumentProperties::build_gridspage()
 
     SPDesktop *dt = getDesktop();
     SPNamedView *nv = sp_desktop_namedview(dt);
+    (void)nv;
 
     _grids_label_crea.set_markup(_("<b>Creation</b>"));
     _grids_label_def.set_markup(_("<b>Defined grids</b>"));
@@ -488,7 +489,7 @@ DocumentProperties::update()
     _rcbsng.setActive (nv->snap_manager.getSnapModeGuide());
     _rcbic.setActive (nv->snap_manager.getIncludeItemCenter());
     _rcbsigg.setActive (nv->snap_manager.getSnapIntersectionGG());
-    _rcbsils.setActive (nv->snap_manager.getSnapIntersectionLS());    
+    _rcbsils.setActive (nv->snap_manager.getSnapIntersectionLS());
     _rcbsnop.setActive(nv->snap_manager.object.getSnapToItemPath());
     _rcbsnon.setActive(nv->snap_manager.object.getSnapToItemNode());
     _rcbsnbbp.setActive(nv->snap_manager.object.getSnapToBBoxPath());
@@ -498,8 +499,8 @@ DocumentProperties::update()
     _rsu_sn.setValue (nv->gridtolerance);
 
     _rsu_gusn.setValue (nv->guidetolerance);
-    
-    _rcbsg.setActive (nv->snap_manager.getSnapEnabledGlobally());    
+
+    _rcbsg.setActive (nv->snap_manager.getSnapEnabledGlobally());
 
     //-----------------------------------------------------------grids page
 
@@ -541,7 +542,7 @@ DocumentProperties::on_response (int id)
         hide();
 }
 
-void 
+void
 DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *document)
 {
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
@@ -551,7 +552,7 @@ DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *docu
     update();
 }
 
-void 
+void
 DocumentProperties::_handleActivateDesktop(Inkscape::Application *, SPDesktop *desktop)
 {
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
@@ -574,14 +575,14 @@ static void
 on_child_added(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node */*child*/, Inkscape::XML::Node */*ref*/, void *data)
 {
     if (DocumentProperties *dialog = static_cast<DocumentProperties *>(data))
-	dialog->update_gridspage();
+        dialog->update_gridspage();
 }
 
 static void
 on_child_removed(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node */*child*/, Inkscape::XML::Node */*ref*/, void *data)
 {
     if (DocumentProperties *dialog = static_cast<DocumentProperties *>(data))
-	dialog->update_gridspage();
+        dialog->update_gridspage();
 }
 
 
@@ -593,7 +594,7 @@ static void
 on_repr_attr_changed (Inkscape::XML::Node *, gchar const *, gchar const *, gchar const *, bool, gpointer data)
 {
     if (DocumentProperties *dialog = static_cast<DocumentProperties *>(data))
-	dialog->update();
+        dialog->update();
 }
 
 
@@ -652,7 +653,7 @@ DocumentProperties::onRemoveGrid()
   mode:c++
   c-file-style:"stroustrup"
   c-file-offsets:((innamespace . 0)(inline-open . 0))
-  indent-tabs-mode:nilu
+  indent-tabs-mode:nil
   fill-column:99
   End:
 */

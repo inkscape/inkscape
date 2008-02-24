@@ -55,9 +55,9 @@ BoolParam::param_writeSVGValue() const
 }
 
 Gtk::Widget *
-BoolParam::param_newWidget(Gtk::Tooltips * tooltips)
+BoolParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
 {
-    Inkscape::UI::Widget::RegisteredCheckButton * checkwdg = Gtk::manage( 
+    Inkscape::UI::Widget::RegisteredCheckButton * checkwdg = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredCheckButton( param_label,
                                                          param_tooltip,
                                                          param_key,

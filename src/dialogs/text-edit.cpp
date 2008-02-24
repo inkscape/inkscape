@@ -526,34 +526,34 @@ sp_get_text_dialog_style ()
         /* font */
         font_instance *font = sp_font_selector_get_font (SP_FONT_SELECTOR (fontsel));
 
-				if ( font ) {
-				    Glib::ustring fontName = font_factory::Default()->ConstructFontSpecification(font);
-					sp_repr_css_set_property (css, "-inkscape-font-specification", fontName.c_str());
-					
-					gchar c[256];
-					
-					font->Family(c, 256);
-					sp_repr_css_set_property (css, "font-family", c);
+        if ( font ) {
+            Glib::ustring fontName = font_factory::Default()->ConstructFontSpecification(font);
+            sp_repr_css_set_property (css, "-inkscape-font-specification", fontName.c_str());
 
-					font->Attribute( "weight", c, 256);
-					sp_repr_css_set_property (css, "font-weight", c);
+            gchar c[256];
 
-					font->Attribute("style", c, 256);
-					sp_repr_css_set_property (css, "font-style", c);
+            font->Family(c, 256);
+            sp_repr_css_set_property (css, "font-family", c);
 
-					font->Attribute("stretch", c, 256);
-					sp_repr_css_set_property (css, "font-stretch", c);
+            font->Attribute( "weight", c, 256);
+            sp_repr_css_set_property (css, "font-weight", c);
 
-					font->Attribute("variant", c, 256);
-					sp_repr_css_set_property (css, "font-variant", c);
+            font->Attribute("style", c, 256);
+            sp_repr_css_set_property (css, "font-style", c);
 
-					Inkscape::CSSOStringStream os;
-					os << sp_font_selector_get_size (SP_FONT_SELECTOR (fontsel)) << "px"; // must specify px, see inkscape bug 1221626 and 1610103
-					sp_repr_css_set_property (css, "font-size", os.str().c_str());
+            font->Attribute("stretch", c, 256);
+            sp_repr_css_set_property (css, "font-stretch", c);
 
-					font->Unref();
-					font=NULL;
-				}
+            font->Attribute("variant", c, 256);
+            sp_repr_css_set_property (css, "font-variant", c);
+
+            Inkscape::CSSOStringStream os;
+            os << sp_font_selector_get_size (SP_FONT_SELECTOR (fontsel)) << "px"; // must specify px, see inkscape bug 1221626 and 1610103
+            sp_repr_css_set_property (css, "font-size", os.str().c_str());
+
+            font->Unref();
+            font=NULL;
+        }
 
         /* Layout */
         GtkWidget *b = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "text_anchor_start");
@@ -571,7 +571,7 @@ sp_get_text_dialog_style ()
                 sp_repr_css_set_property (css, "text-align", "center");
             } else {
                 // Align Right
-            	b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg),
+                b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg),
                                                     "text_anchor_end");
                 if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (b))) {
                     sp_repr_css_set_property (css, "text-anchor", "end");
@@ -741,8 +741,8 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
         SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
         // query style from desktop into it. This returns a result flag and fills query with the style of subselection, if any, or selection
         int result_fontspec = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
-        int result_family = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY); 
-        int result_style = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE); 
+        int result_family = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
+        int result_style = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
         int result_numbers = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
 
         // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
@@ -759,17 +759,17 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
         }
 
         // FIXME: process result_family/style == QUERY_STYLE_MULTIPLE_DIFFERENT by showing "Many" in the lists
-        
+
         // Get a font_instance using the font-specification attribute stored in SPStyle if available
         font_instance *font = font_factory::Default()->FaceFromStyle(query);
 
-        
+
         if (font) {
             // the font is oversized, so we need to pass the true size separately
             sp_font_selector_set_font (SP_FONT_SELECTOR (fontsel), font, query->font_size.computed);
             sp_font_preview_set_font (SP_FONT_PREVIEW (preview), font, SP_FONT_SELECTOR(fontsel));
-						font->Unref();
-						font=NULL;
+            font->Unref();
+            font=NULL;
         }
 
         GtkWidget *b;

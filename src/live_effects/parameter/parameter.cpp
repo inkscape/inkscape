@@ -124,7 +124,7 @@ ScalarParam::param_make_integer(bool yes)
 }
 
 Gtk::Widget *
-ScalarParam::param_newWidget(Gtk::Tooltips * tooltips)
+ScalarParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
 {
     Inkscape::UI::Widget::RegisteredScalar *rsu = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalar(
         param_label, param_tooltip, param_key, *param_wr, param_effect->getRepr(), param_effect->getSPDoc() ) );

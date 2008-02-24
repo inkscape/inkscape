@@ -124,7 +124,7 @@ sp_widget_destroy (GtkObject *object)
 
 	if (spw->inkscape) {
 		/* Disconnect signals */
-		// the checks are necessary because when destroy is caused by the the program shutting down, 
+		// the checks are necessary because when destroy is caused by the the program shutting down,
 		// the inkscape object may already be (partly?) invalid --bb
 		if (G_IS_OBJECT(spw->inkscape) && G_OBJECT_GET_CLASS(G_OBJECT(spw->inkscape)))
   			sp_signal_disconnect_by_data (spw->inkscape, spw);
@@ -241,22 +241,32 @@ sp_widget_construct_global (SPWidget *spw, Inkscape::Application *inkscape)
 }
 
 static void
-sp_widget_modify_selection (Inkscape::Application *inkscape, Inkscape::Selection *selection, guint flags, SPWidget *spw)
+sp_widget_modify_selection (Inkscape::Application */*inkscape*/, Inkscape::Selection *selection, guint flags, SPWidget *spw)
 {
 	g_signal_emit (G_OBJECT (spw), signals[MODIFY_SELECTION], 0, selection, flags);
 }
 
 static void
-sp_widget_change_selection (Inkscape::Application *inkscape, Inkscape::Selection *selection, SPWidget *spw)
+sp_widget_change_selection (Inkscape::Application */*inkscape*/, Inkscape::Selection *selection, SPWidget *spw)
 {
 	g_signal_emit (G_OBJECT (spw), signals[CHANGE_SELECTION], 0, selection);
 }
 
 static void
-sp_widget_set_selection (Inkscape::Application *inkscape, Inkscape::Selection *selection, SPWidget *spw)
+sp_widget_set_selection (Inkscape::Application */*inkscape*/, Inkscape::Selection *selection, SPWidget *spw)
 {
 	/* Emit "set_selection" signal */
 	g_signal_emit (G_OBJECT (spw), signals[SET_SELECTION], 0, selection);
 	/* Inkscape will force "change_selection" anyways */
 }
 
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

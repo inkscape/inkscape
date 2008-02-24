@@ -82,7 +82,7 @@ sp_feComponentTransfer_class_init(SPFeComponentTransferClass *klass)
 }
 
 static void
-sp_feComponentTransfer_init(SPFeComponentTransfer *feComponentTransfer)
+sp_feComponentTransfer_init(SPFeComponentTransfer */*feComponentTransfer*/)
 {}
 
 /**
@@ -140,18 +140,18 @@ sp_feComponentTransfer_child_added(SPObject *object, Inkscape::XML::Node *child,
     sp_feComponentTransfer_children_modified(f);
     object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
-            
+
 
 /**
  * Callback for remove_child event.
  */
 static void
 sp_feComponentTransfer_remove_child(SPObject *object, Inkscape::XML::Node *child)
-{   
+{
     SPFeComponentTransfer *f = SP_FECOMPONENTTRANSFER(object);
 
     if (((SPObjectClass *) feComponentTransfer_parent_class)->remove_child)
-        (* ((SPObjectClass *) feComponentTransfer_parent_class)->remove_child)(object, child);   
+        (* ((SPObjectClass *) feComponentTransfer_parent_class)->remove_child)(object, child);
 
     sp_feComponentTransfer_children_modified(f);
     object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -177,7 +177,7 @@ sp_feComponentTransfer_set(SPObject *object, unsigned int key, gchar const *valu
     (void)feComponentTransfer;
 
     switch(key) {
-	/*DEAL WITH SETTING ATTRIBUTES HERE*/
+        /*DEAL WITH SETTING ATTRIBUTES HERE*/
         default:
             if (((SPObjectClass *) feComponentTransfer_parent_class)->set)
                 ((SPObjectClass *) feComponentTransfer_parent_class)->set(object, key, value);

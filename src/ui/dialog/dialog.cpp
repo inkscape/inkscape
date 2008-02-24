@@ -4,7 +4,7 @@
  *
  * Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
- *   buliabyak@gmail.com 
+ *   buliabyak@gmail.com
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *   Gustav Broberg <broberg@kth.se>
  *
@@ -42,7 +42,7 @@ namespace UI {
 namespace Dialog {
 
 void
-sp_retransientize(Inkscape::Application *inkscape, SPDesktop *desktop, gpointer dlgPtr)
+sp_retransientize(Inkscape::Application */*inkscape*/, SPDesktop *desktop, gpointer dlgPtr)
 {
     Dialog *dlg = (Dialog *)dlgPtr;
     dlg->onDesktopActivated (desktop);
@@ -57,14 +57,14 @@ sp_retransientize_again(gpointer dlgPtr)
 }
 
 void
-sp_dialog_shutdown(GtkObject *object, gpointer dlgPtr)
+sp_dialog_shutdown(GtkObject */*object*/, gpointer dlgPtr)
 {
     Dialog *dlg = (Dialog *)dlgPtr;
     dlg->onShutdown();
 }
 
 
-void hideCallback(GtkObject *object, gpointer dlgPtr)
+void hideCallback(GtkObject */*object*/, gpointer dlgPtr)
 {
     g_return_if_fail( dlgPtr != NULL );
 
@@ -72,7 +72,7 @@ void hideCallback(GtkObject *object, gpointer dlgPtr)
     dlg->onHideF12();
 }
 
-void unhideCallback(GtkObject *object, gpointer dlgPtr)
+void unhideCallback(GtkObject */*object*/, gpointer dlgPtr)
 {
     g_return_if_fail( dlgPtr != NULL );
 
@@ -95,7 +95,7 @@ void unhideCallback(GtkObject *object, gpointer dlgPtr)
  */
 
 Dialog::Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_path, int verb_num,
-               Glib::ustring const &apply_label) 
+               Glib::ustring const &apply_label)
     : _hiddenF12 (false),
       _prefs_path (prefs_path),
       _verb_num(verb_num),
@@ -109,7 +109,7 @@ Dialog::Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_pat
     _title = title;
 
     _behavior = behavior_factory(*this);
-    
+
     if (Inkscape::NSApplication::Application::getNewGui()) {
         _desktop_activated_connection = Inkscape::NSApplication::Editor::connectDesktopActivated (sigc::mem_fun (*this, &Dialog::onDesktopActivated));
         _dialogs_hidden_connection = Inkscape::NSApplication::Editor::connectDialogsHidden (sigc::mem_fun (*this, &Dialog::onHideF12));
@@ -137,7 +137,7 @@ Dialog::~Dialog()
         _dialogs_unhidden_connection.disconnect();
         _shutdown_connection.disconnect();
     }
-    
+
     save_geometry();
     delete _behavior;
 }
@@ -152,7 +152,7 @@ Dialog::onDesktopActivated(SPDesktop *desktop)
     _behavior->onDesktopActivated(desktop);
 }
 
-void 
+void
 Dialog::onShutdown()
 {
     save_geometry();
@@ -218,7 +218,7 @@ Dialog::read_geometry()
     if (w != 0 && h != 0) {
         resize(w, h);
     }
-    
+
     // If there are stored values for where the dialog should be
     // located, then restore the dialog to that position.
     // also check if (x,y) is actually onscreen with the current screen dimensions
@@ -264,7 +264,7 @@ Dialog::_handleResponse(int response_id)
 }
 
 bool
-Dialog::_onDeleteEvent(GdkEventAny *event)
+Dialog::_onDeleteEvent(GdkEventAny */*event*/)
 {
     save_geometry();
     _user_hidden = true;
@@ -342,12 +342,12 @@ Dialog::_close()
     event.window = dlg->window;
     event.send_event = TRUE;
 
-    if (event.window) 
+    if (event.window)
         g_object_ref(G_OBJECT(event.window));
 
     gtk_main_do_event ((GdkEvent*)&event);
 
-    if (event.window) 
+    if (event.window)
         g_object_unref(G_OBJECT(event.window));
 }
 

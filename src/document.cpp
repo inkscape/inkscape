@@ -204,7 +204,7 @@ SPDocument::~SPDocument() {
 
 }
 
-void SPDocument::add_persp3d (Persp3D * const persp)
+void SPDocument::add_persp3d (Persp3D * const /*persp*/)
 {
     SPDefs *defs = SP_ROOT(this->root)->defs;
     for (SPObject *i = sp_object_first_child(SP_OBJECT(defs)); i != NULL; i = SP_OBJECT_NEXT(i) ) {
@@ -217,7 +217,7 @@ void SPDocument::add_persp3d (Persp3D * const persp)
     persp3d_create_xml_element (this);
 }
 
-void SPDocument::remove_persp3d (Persp3D * const persp)
+void SPDocument::remove_persp3d (Persp3D * const /*persp*/)
 {
     // TODO: Delete the repr, maybe perform a check if any boxes are still linked to the perspective.
     //       Anything else?
@@ -689,13 +689,13 @@ void SPDocument::bindObjectToId(gchar const *id, SPObject *object) {
 void
 SPDocument::addUndoObserver(Inkscape::UndoStackObserver& observer)
 {
-	this->priv->undoStackObservers.add(observer);
+    this->priv->undoStackObservers.add(observer);
 }
 
 void
 SPDocument::removeUndoObserver(Inkscape::UndoStackObserver& observer)
 {
-	this->priv->undoStackObservers.remove(observer);
+    this->priv->undoStackObservers.remove(observer);
 }
 
 SPObject *SPDocument::getObjectById(gchar const *id) {
@@ -741,7 +741,7 @@ Glib::ustring SPDocument::getLanguage() {
         if ( NULL == document_language || *document_language == 0 ) {
             document_language = getenv ("LANG");
         }
-        
+
         if ( NULL != document_language ) {
             gchar *pos = strchr(document_language, '_');
             if ( NULL != pos ) {
@@ -786,7 +786,7 @@ sp_document_setup_viewport (SPDocument *doc, SPItemCtx *ctx)
 }
 
 /**
- * Tries to update the document state based on the modified and 
+ * Tries to update the document state based on the modified and
  * "update required" flags, and return true if the document has
  * been brought fully up to date.
  */
@@ -959,7 +959,7 @@ find_item_at_point(unsigned int dkey, SPGroup *group, NR::Point const p, gboolea
         if (upto && SP_ITEM(o) == upto)
             break;
 
-        if (SP_IS_GROUP(o) && (SP_GROUP(o)->effectiveLayerMode(dkey) == SPGroup::LAYER || into_groups))	{
+        if (SP_IS_GROUP(o) && (SP_GROUP(o)->effectiveLayerMode(dkey) == SPGroup::LAYER || into_groups)) {
             // if nothing found yet, recurse into the group
             newseen = find_item_at_point(dkey, SP_GROUP(o), p, into_groups, take_insensitive, upto);
             if (newseen) {
@@ -1051,8 +1051,8 @@ sp_document_items_at_points(SPDocument *document, unsigned const key, std::vecto
 {
     GSList *items = NULL;
 
-    // When picking along the path, we don't want small objects close together 
-    // (such as hatching strokes) to obscure each other by their deltas, 
+    // When picking along the path, we don't want small objects close together
+    // (such as hatching strokes) to obscure each other by their deltas,
     // so we temporarily set delta to a small value
     gdouble saved_delta = prefs_get_double_attribute ("options.cursortolerance", "value", 1.0);
     prefs_set_double_attribute ("options.cursortolerance", "value", 0.25);

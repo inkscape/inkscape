@@ -180,7 +180,7 @@ public:
      *  Informs the observer how much has been completed.
      *  Return false if the processing should be aborted.
      */
-    virtual bool progress(float percentCompleted)
+    virtual bool progress(float /*percentCompleted*/)
         {
         //Tracer *tracer = (Tracer *)context;
         //## Allow the GUI to update
@@ -194,7 +194,7 @@ public:
      *  Send an error string to the Observer.  Processing will
      *  be halted.
      */
-    virtual void error(const std::string &msg)
+    virtual void error(const std::string &/*msg*/)
         {
         //Tracer *tracer = (Tracer *)context;
         }
@@ -303,7 +303,7 @@ Tracer::sioxProcessImage(SPImage *img,
                 {
                 //g_message("hit!\n");
                 //dumpMap->setPixelLong(dumpMap, col, row, 0L);
-                simage.setConfidence(col, row, 
+                simage.setConfidence(col, row,
                         Siox::UNKNOWN_REGION_CONFIDENCE);
                 }
             else
@@ -465,7 +465,7 @@ void Tracer::traceThread()
 
     msgStack->flash(Inkscape::NORMAL_MESSAGE, _("Trace: Starting trace..."));
     desktop->updateCanvasNow();
-    
+
     std::vector<TracingEngineResult> results =
                 engine->trace(pixbuf);
     //printf("nrPaths:%d\n", results.size());

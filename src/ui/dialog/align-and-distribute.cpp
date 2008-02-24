@@ -99,7 +99,7 @@ class ActionAlign : public Action {
 public :
     struct Coeffs {
        double mx0, mx1, my0, my1;
-	double sx0, sx1, sy0, sy1;
+       double sx0, sx1, sy0, sy1;
     };
     ActionAlign(const Glib::ustring &id,
                 const Glib::ustring &tiptext,
@@ -392,7 +392,7 @@ private :
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
         if (changed) {
-            sp_document_done ( sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+            sp_document_done ( sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                                _("Distribute"));
         }
     }
@@ -427,8 +427,8 @@ private :
     {
 
         if (!_dialog.getDesktop()) return;
-	SPEventContext *event_context = sp_desktop_event_context(_dialog.getDesktop());
-	if (!SP_IS_NODE_CONTEXT (event_context)) return ;
+        SPEventContext *event_context = sp_desktop_event_context(_dialog.getDesktop());
+        if (!SP_IS_NODE_CONTEXT (event_context)) return ;
 
         if (_distribute)
             SP_NODE_CONTEXT (event_context)->shape_editor->distribute(_orientation);
@@ -455,7 +455,7 @@ public:
                dialog.removeOverlap_table(), dialog.tooltips(), dialog)
     {
         dialog.removeOverlap_table().set_col_spacings(3);
-    
+
         removeOverlapXGap.set_digits(1);
         removeOverlapXGap.set_size_request(60, -1);
         removeOverlapXGap.set_increments(1.0, 5.0);
@@ -501,7 +501,7 @@ private :
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+        sp_document_done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                          _("Remove overlaps"));
     }
 };
@@ -531,7 +531,7 @@ private :
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+        sp_document_done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                          _("Arrange connector network"));
     }
 };
@@ -561,7 +561,7 @@ private :
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done (sp_desktop_document (_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+        sp_document_done (sp_desktop_document (_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                           _("Unclump"));
     }
 };
@@ -617,7 +617,7 @@ private :
             sp_document_ensure_up_to_date(sp_desktop_document (desktop));
             NR::Maybe<NR::Rect> item_box = sp_item_bbox_desktop (*it);
             if (item_box) {
-                // find new center, staying within bbox 
+                // find new center, staying within bbox
                 double x = _dialog.randomize_bbox->min()[NR::X] + item_box->extent(NR::X)/2 +
                     g_random_double_range (0, _dialog.randomize_bbox->extent(NR::X) - item_box->extent(NR::X));
                 double y = _dialog.randomize_bbox->min()[NR::Y] + item_box->extent(NR::Y)/2 +
@@ -631,7 +631,7 @@ private :
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+        sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                           _("Randomize positions"));
     }
 };
@@ -728,7 +728,7 @@ private :
             }
 
             if (changed) {
-                sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+                sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                                   _("Distribute text baselines"));
             }
 
@@ -748,7 +748,7 @@ private :
             }
 
             if (changed) {
-                sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+                sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                                   _("Align text baselines"));
             }
         }
@@ -757,14 +757,14 @@ private :
 
 
 
-void on_tool_changed(Inkscape::Application *inkscape, SPEventContext *context, AlignAndDistribute *daad)
+void on_tool_changed(Inkscape::Application */*inkscape*/, SPEventContext */*context*/, AlignAndDistribute *daad)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop && sp_desktop_event_context(desktop))
         daad->setMode(tools_active(desktop) == TOOLS_NODES);
 }
 
-void on_selection_changed(Inkscape::Application *inkscape, Inkscape::Selection *selection, AlignAndDistribute *daad)
+void on_selection_changed(Inkscape::Application */*inkscape*/, Inkscape::Selection */*selection*/, AlignAndDistribute *daad)
 {
     daad->randomize_bbox = NR::Nothing();
 }
@@ -774,7 +774,7 @@ void on_selection_changed(Inkscape::Application *inkscape, Inkscape::Selection *
 
 
 
-AlignAndDistribute::AlignAndDistribute() 
+AlignAndDistribute::AlignAndDistribute()
     : UI::Widget::Panel ("", "dialogs.align", SP_VERB_DIALOG_ALIGN_DISTRIBUTE),
       randomize_bbox(NR::Nothing()),
       _alignFrame(_("Align")),
@@ -946,7 +946,7 @@ AlignAndDistribute::AlignAndDistribute()
     on_tool_changed (NULL, NULL, this); // set current mode
 }
 
-AlignAndDistribute::~AlignAndDistribute() 
+AlignAndDistribute::~AlignAndDistribute()
 {
     sp_signal_disconnect_by_data (G_OBJECT (INKSCAPE), this);
 
@@ -1055,7 +1055,7 @@ void AlignAndDistribute::addBaselineButton(const Glib::ustring &id, const Glib::
 {
     _actionList.push_back(
         new ActionBaseline(
-            id, tiptext, row, col, 
+            id, tiptext, row, col,
             *this, table, orientation, distribute));
 }
 

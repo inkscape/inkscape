@@ -75,13 +75,13 @@ RandomParam::param_writeSVGValue() const
 }
 
 void
-RandomParam::param_set_default() 
+RandomParam::param_set_default()
 {
     param_set_value(defvalue, defseed);
 }
 
 void
-RandomParam::param_set_value(gdouble val, long newseed) 
+RandomParam::param_set_value(gdouble val, long newseed)
 {
     value = val;
     if (integer)
@@ -96,7 +96,7 @@ RandomParam::param_set_value(gdouble val, long newseed)
 }
 
 void
-RandomParam::param_set_range(gdouble min, gdouble max) 
+RandomParam::param_set_range(gdouble min, gdouble max)
 {
     this->min = min;
     this->max = max;
@@ -116,9 +116,9 @@ RandomParam::resetRandomizer()
 
 
 Gtk::Widget *
-RandomParam::param_newWidget(Gtk::Tooltips * tooltips)
+RandomParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
 {
-    Inkscape::UI::Widget::RegisteredRandom* regrandom = Gtk::manage( 
+    Inkscape::UI::Widget::RegisteredRandom* regrandom = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredRandom( param_label,
                                                     param_tooltip,
                                                     param_key,
