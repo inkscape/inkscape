@@ -653,73 +653,27 @@ static NR::Point box3d_knot7_get(SPItem *item)
     return box3d_knot_get(item, 7);
 }
 
-static void box3d_knot_click(SPItem */*item*/, guint /*state*/, guint id)
-{
-    g_print ("Corner %d was clicked\n", id);
-}
-
-static void box3d_knot0_click(SPItem *item, guint state)
-{
-    box3d_knot_click(item, state, 0);
-}
-
-static void box3d_knot1_click(SPItem *item, guint state)
-{
-    box3d_knot_click(item, state, 1);
-}
-
-static void box3d_knot2_click(SPItem *item, guint state)
-{
-    box3d_knot_click(item, state, 2);
-}
-
-static void box3d_knot3_click(SPItem *item, guint state)
-{
-    box3d_knot_click(item, state, 3);
-}
-
-static void box3d_knot4_click(SPItem *item, guint state)
-{
-    box3d_knot_click(item, state, 4);
-}
-
-static void box3d_knot5_click(SPItem *item, guint state)
-{
-    box3d_knot_click(item, state, 5);
-}
-
-static void box3d_knot6_click(SPItem *item, guint state)
-{
-    box3d_knot_click(item, state, 6);
-}
-
-static void box3d_knot7_click(SPItem *item, guint state)
-{
-    box3d_knot_click(item, state, 7);
-}
-
-
 SPKnotHolder *
 box3d_knot_holder(SPItem *item, SPDesktop *desktop)
 {
     g_assert(item != NULL);
     SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
 
-    sp_knot_holder_add(knot_holder, box3d_knot0_set, box3d_knot0_get, box3d_knot0_click,
+    sp_knot_holder_add(knot_holder, box3d_knot0_set, box3d_knot0_get, NULL,
                        _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, box3d_knot1_set, box3d_knot1_get, box3d_knot1_click,
+    sp_knot_holder_add(knot_holder, box3d_knot1_set, box3d_knot1_get, NULL,
                        _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, box3d_knot2_set, box3d_knot2_get, box3d_knot2_click,
+    sp_knot_holder_add(knot_holder, box3d_knot2_set, box3d_knot2_get, NULL,
                        _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, box3d_knot3_set, box3d_knot3_get, box3d_knot3_click,
+    sp_knot_holder_add(knot_holder, box3d_knot3_set, box3d_knot3_get, NULL,
                        _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, box3d_knot4_set, box3d_knot4_get, box3d_knot4_click,
+    sp_knot_holder_add(knot_holder, box3d_knot4_set, box3d_knot4_get, NULL,
                        _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, box3d_knot5_set, box3d_knot5_get, box3d_knot5_click,
+    sp_knot_holder_add(knot_holder, box3d_knot5_set, box3d_knot5_get, NULL,
                        _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, box3d_knot6_set, box3d_knot6_get, box3d_knot6_click,
+    sp_knot_holder_add(knot_holder, box3d_knot6_set, box3d_knot6_get, NULL,
                        _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, box3d_knot7_set, box3d_knot7_get, box3d_knot7_click,
+    sp_knot_holder_add(knot_holder, box3d_knot7_set, box3d_knot7_get, NULL,
                        _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
 
     // center dragging
