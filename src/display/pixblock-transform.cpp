@@ -52,6 +52,15 @@ void transform_nearest(NRPixBlock *to, NRPixBlock *from, Matrix &trans)
         return;
     }
 
+    bool free_from_on_exit = false;
+    if (from->mode != to->mode){
+        NRPixBlock *o_from = from;
+        from = new NRPixBlock;
+        nr_pixblock_setup_fast(from, to->mode, o_from->area.x0, o_from->area.y0, o_from->area.x1, o_from->area.y1, false);
+        nr_blit_pixblock_pixblock(from, o_from);
+        free_from_on_exit = true;
+    }
+
     // Precalculate sizes of source and destination pixblocks
     int from_width = from->area.x1 - from->area.x0;
     int from_height = from->area.y1 - from->area.y0;
@@ -89,6 +98,10 @@ void transform_nearest(NRPixBlock *to, NRPixBlock *from, Matrix &trans)
             NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x * 4 + 2] = result.b;
             NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x * 4 + 3] = result.a;
         }
+    }
+    if (free_from_on_exit) {
+        nr_pixblock_release(from);
+        delete from;
     }
 }
 
@@ -149,11 +162,13 @@ void transform_bicubic(NRPixBlock *to, NRPixBlock *from, Matrix &trans)
         return;
     }
 
+    bool free_from_on_exit = false;
     if (from->mode != to->mode){
         NRPixBlock *o_from = from;
         from = new NRPixBlock;
         nr_pixblock_setup_fast(from, to->mode, o_from->area.x0, o_from->area.y0, o_from->area.x1, o_from->area.y1, false);
         nr_blit_pixblock_pixblock(from, o_from);
+        free_from_on_exit = true;
     }
     
     // Precalculate sizes of source and destination pixblocks
@@ -254,6 +269,10 @@ void transform_bicubic(NRPixBlock *to, NRPixBlock *from, Matrix &trans)
                 NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x * 4 + 3] = clamp(result.a);
             }
         }
+    }
+    if (free_from_on_exit) {
+        nr_pixblock_release(from);
+        delete from;
     }
 }
 

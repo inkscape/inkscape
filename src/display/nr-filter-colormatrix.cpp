@@ -43,6 +43,7 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/) {
 
     // this primitive is defined for non-premultiplied RGBA values,
     // thus convert them to that format
+    bool free_in_on_exit = false;
     if (in->mode != NR_PIXBLOCK_MODE_R8G8B8A8N) {
         NRPixBlock *original_in = in;
         in = new NRPixBlock;
@@ -51,6 +52,7 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/) {
                                original_in->area.x1, original_in->area.y1,
                                false);
         nr_blit_pixblock_pixblock(in, original_in);
+        free_in_on_exit = true;
     }
 
     unsigned char *in_data = NR_PIXBLOCK_PX(in);
@@ -143,6 +145,12 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/) {
         case COLORMATRIX_ENDTYPE:
             break;
     }
+
+    if (free_in_on_exit) {
+        nr_pixblock_release(in);
+        delete in;
+    }
+
     out->empty = FALSE;
     slot.set(_output, out);
     return 0;

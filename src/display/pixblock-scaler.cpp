@@ -96,11 +96,13 @@ static void scale_bicubic_rgba(NRPixBlock *to, NRPixBlock *from)
         return;
     }
 
+    bool free_from_on_exit = false;
     if (from->mode != to->mode){
         NRPixBlock *o_from = from;
         from = new NRPixBlock;
         nr_pixblock_setup_fast(from, to->mode, o_from->area.x0, o_from->area.y0, o_from->area.x1, o_from->area.y1, false);
         nr_blit_pixblock_pixblock(from, o_from);
+        free_from_on_exit = true;
     }
 
     // Precalculate sizes of source and destination pixblocks
@@ -198,6 +200,11 @@ static void scale_bicubic_rgba(NRPixBlock *to, NRPixBlock *from)
             }
         }
     }
+    if (free_from_on_exit) {
+        nr_pixblock_release(from);
+        delete from;
+    }
+
 }
 
 void scale_bicubic_alpha(NRPixBlock *to, NRPixBlock *from)
