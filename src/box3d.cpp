@@ -1336,14 +1336,20 @@ box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp, 
 
 /* Converts the 3D box to an ordinary SPGroup, adds it to the XML tree at the same position as
    the original box and deletes the latter */
-// TODO: Copy over all important attributes (see sp_selected_item_to_curved_repr() for an example)
-SPGroup *
+Inkscape::XML::Node *
 box3d_convert_to_group(SPBox3D *box) {
     SPDocument *doc = SP_OBJECT_DOCUMENT(box);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     // remember position of the box
     int pos = SP_OBJECT_REPR(box)->position();
+
+    // remember important attributes
+    Inkscape::XML::Node *repr_source = SP_OBJECT_REPR(box);
+    gchar const *id = repr_source->attribute("id");
+    gchar const *style = repr_source->attribute("style");
+    gchar const *mask = repr_source->attribute("mask");
+    gchar const *clip_path = repr_source->attribute("clip-path");
 
     // create a new group and add the sides (converted to ordinary paths) as its children
     Inkscape::XML::Node *grepr = xml_doc->createElement("svg:g");
@@ -1354,7 +1360,7 @@ box3d_convert_to_group(SPBox3D *box) {
             repr = box3d_side_convert_to_path(SP_BOX3D_SIDE(child));
             grepr->appendChild(repr);
         } else {
-            g_warning("Non-side item encountered as child of a 3D box.\n");
+            g_warning("Non-side item encountered as child of a 3D box.");
         }
     }
 
@@ -1362,10 +1368,17 @@ box3d_convert_to_group(SPBox3D *box) {
     SPObject *parent = SP_OBJECT_PARENT(box);
     SP_OBJECT_REPR(parent)->appendChild(grepr);
     grepr->setPosition(pos);
+    grepr->setAttribute("style", style);
+    if (mask)
+       grepr->setAttribute("mask", mask);
+    if (clip_path)
+       grepr->setAttribute("clip-path", clip_path);
 
     SP_OBJECT(box)->deleteObject(true);
 
-    return SP_GROUP(doc->getObjectByRepr(grepr));
+    grepr->setAttribute("id", id);
+
+    return grepr;
 }
 
 static inline void

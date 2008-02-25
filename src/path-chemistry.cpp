@@ -297,12 +297,13 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 /*text_grouping_policy
 
         if (SP_IS_BOX3D(item)) {
             // convert 3D box to ordinary group of paths; replace the old element in 'selected' with the new group
-            GSList *sel_it = g_slist_find(selected, item);
-            sel_it->data = box3d_convert_to_group(SP_BOX3D(item));
-            item = SP_ITEM(sel_it->data);
-
-            did = true;
-            selected = g_slist_remove (selected, item);
+            Inkscape::XML::Node *repr = box3d_convert_to_group(SP_BOX3D(item));
+            
+            if (repr) {
+                to_select = g_slist_prepend (to_select, repr);
+                did = true;
+                selected = g_slist_remove (selected, item);
+            }
 
             continue;
         }
