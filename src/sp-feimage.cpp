@@ -18,7 +18,8 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-
+#include "uri.h"
+#include "uri-references.h"
 #include "attributes.h"
 #include "svg/svg.h"
 #include "sp-feimage.h"
@@ -130,14 +131,36 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeImage *feImage = SP_FEIMAGE(object);
     (void)feImage;
-
+    Inkscape::URI* SVGElem_uri;
+    Inkscape::URIReference* SVGElemRef;
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
 	case SP_ATTR_XLINK_HREF:
 	    if (feImage->href) g_free(feImage->href);
 	    feImage->href = (value) ? g_strdup (value) : NULL;
-	    object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
+            if (!feImage->href) return;
+            try{
+                SVGElem_uri = new Inkscape::URI(feImage->href);
+                SVGElemRef = new Inkscape::URIReference(feImage->document);
+                feImage->from_element = true;
+                SVGElemRef->attach(*SVGElem_uri);
+                feImage->SVGElem = SP_ITEM(SVGElemRef->getObject());
+                
+                g_free(SVGElem_uri);
+                g_free(SVGElemRef);
+                //TODO: maybe keeping SVGElemRef we can observe changes to the
+                // referenced object and trigger updates of the filtered object
+                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                break;
+            }
+            catch(const Inkscape::UnsupportedURIException & e)
+            {
+                feImage->from_element = false;
+                g_warning("caught Inkscape::UnsupportedURIException in sp_feImage_set");
+                break;
+            }
+
+
         case SP_ATTR_X:
             feImage->x.readOrUnset(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -215,6 +238,9 @@ static void sp_feImage_build_renderer(SPFilterPrimitive *primitive, NR::Filter *
     g_assert(nr_image != NULL);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);
+
+    nr_image->from_element = sp_image->from_element;
+    nr_image->SVGElem = sp_image->SVGElem;
     nr_image->set_region(sp_image->x, sp_image->y, sp_image->width, sp_image->height);
     nr_image->set_href(sp_image->href);
     nr_image->set_document(sp_image->document);

@@ -17,6 +17,7 @@
 #include "sp-filter.h"
 #include "sp-feimage-fns.h"
 #include "svg/svg-length.h"
+#include "sp-item.h"
 
 /* FeImage base class */
 class SPFeImageClass;
@@ -26,6 +27,8 @@ struct SPFeImage : public SPFilterPrimitive {
     gchar *href;
     SVGLength x, y, height, width;
     SPDocument *document;
+    bool from_element;
+    SPItem* SVGElem;
 };
 
 struct SPFeImageClass {

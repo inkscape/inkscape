@@ -16,6 +16,7 @@
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
 #include <gtkmm.h>
+#include "sp-item.h"
 
 namespace NR {
 
@@ -30,6 +31,9 @@ public:
     void set_document( SPDocument *document );
     void set_href(const gchar *href);
     void set_region(SVGLength x, SVGLength y, SVGLength width, SVGLength height);
+    bool from_element;
+    SPItem* SVGElem;
+
 private:
     SPDocument *document;
     gchar *feImageHref;

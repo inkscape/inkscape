@@ -10,10 +10,14 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 #include "document.h"
+#include "sp-item.h"
+#include "display/nr-arena.h"
 #include "display/nr-arena-item.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-image.h"
 #include "display/nr-filter-units.h"
+#include "libnr/nr-matrix.h"
+#include "libnr/nr-rect-l.h"
 
 namespace NR {
 
@@ -35,6 +39,64 @@ FilterImage::~FilterImage()
 
 int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
     if (!feImageHref) return 0;
+
+    NRPixBlock* pb;
+    bool free_pb_on_exit = false;
+
+    if(from_element){
+        if (!SVGElem) return 0;
+        
+        // prep the document
+        sp_document_ensure_up_to_date(document);
+        NRArena* arena = NRArena::create();
+        unsigned const key = sp_item_display_key_new(1);
+        NRArenaItem* ai = sp_item_invoke_show(SVGElem, arena, key, SP_ITEM_SHOW_DISPLAY);
+        if (!ai) {
+            g_warning("feImage renderer: error creating NRArenaItem for SVG Element");
+            g_free(arena);
+            return 0;
+        }
+        pb = new NRPixBlock;
+        free_pb_on_exit = true;
+        
+        Matrix identity(1.0, 0.0,
+                   0.0, 1.0,
+                   0.0, 0.0);
+        NR::Maybe<NR::Rect> area = SVGElem->getBounds(identity);
+        
+        NRRectL rect;
+        rect.x0=area->min()[NR::X];
+        rect.x1=area->max()[NR::X];
+        rect.y0=area->min()[NR::Y];
+        rect.y1=area->max()[NR::Y];
+
+        width = (int)(rect.x1-rect.x0);
+        height = (int)(rect.y1-rect.y0);
+
+        if (image_pixbuf) g_free(image_pixbuf);
+        image_pixbuf = g_new(unsigned char, 4 * width * height);
+        memset(image_pixbuf, 0x00, 4 * width * height);
+
+        NRGC gc(NULL);
+        /* Update to renderable state */
+        double sf = 1.0;
+        NRMatrix t;
+        nr_matrix_set_scale(&t, sf, sf);
+        nr_arena_item_set_transform(ai, &t);
+        nr_matrix_set_identity(&gc.transform);
+        nr_arena_item_invoke_update( ai, NULL, &gc,
+                                             NR_ARENA_ITEM_STATE_ALL,
+                                             NR_ARENA_ITEM_STATE_NONE );
+        nr_pixblock_setup_extern(pb, NR_PIXBLOCK_MODE_R8G8B8A8N,
+                              (int)rect.x0, (int)rect.y0, (int)rect.x1, (int)rect.y1,
+                              image_pixbuf, 4 * width, FALSE, FALSE );
+
+        nr_arena_item_invoke_render(NULL, ai, &rect, pb, NR_ARENA_ITEM_RENDER_NO_CACHE);
+
+        nr_arena_item_unref(ai);
+        nr_object_unref((NRObject *) arena);
+    }
+
 
     if (!image_pixbuf){
         try {
@@ -116,13 +178,21 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
             coordx = ( indexX >= 0 ? int( indexX ) : -1 );
             coordy = ( indexY >= 0 ? int( indexY ) : -1 );
             if (coordx >= 0 && coordx < width && coordy >= 0 && coordy < height){
-                out_data[4*((x - x0)+w*(y - y0))] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy]; //Red
-                out_data[4*((x - x0)+w*(y - y0)) + 1] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy + 1]; //Green
-                out_data[4*((x - x0)+w*(y - y0)) + 2] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy + 2]; //Blue
-                out_data[4*((x - x0)+w*(y - y0)) + 3] = 255; //Alpha
+                if (from_element){
+                    out_data[4*((x - x0)+w*(y - y0))] = (unsigned char) image_pixbuf[4*(coordx + width*coordy)]; //Red
+                    out_data[4*((x - x0)+w*(y - y0)) + 1] = (unsigned char) image_pixbuf[4*(coordx + width*coordy) + 1]; //Green
+                    out_data[4*((x - x0)+w*(y - y0)) + 2] = (unsigned char) image_pixbuf[4*(coordx + width*coordy) + 2]; //Blue
+                    out_data[4*((x - x0)+w*(y - y0)) + 3] = (unsigned char) image_pixbuf[4*(coordx + width*coordy) + 3]; //Alpha
+                } else {
+                    out_data[4*((x - x0)+w*(y - y0))] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy]; //Red
+                    out_data[4*((x - x0)+w*(y - y0)) + 1] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy + 1]; //Green
+                    out_data[4*((x - x0)+w*(y - y0)) + 2] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy + 2]; //Blue
+                    out_data[4*((x - x0)+w*(y - y0)) + 3] = 255; //Alpha
+                }
             }
         }
     }
+    if (free_pb_on_exit) nr_pixblock_release(pb);
 
     out->empty = FALSE;
     slot.set(_output, out);

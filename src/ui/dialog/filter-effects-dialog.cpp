@@ -609,7 +609,7 @@ public:
     {
         pack_start(_entry, false, false);
         pack_start(_fromFile, false, false);
-        //pack_start(_fromSVGElement, false, false);
+        pack_start(_fromSVGElement, false, false);
 
         _fromFile.set_label(_("Image File"));
         _fromFile.signal_clicked().connect(sigc::mem_fun(*this, &FileOrElementChooser::select_file));
