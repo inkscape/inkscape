@@ -249,7 +249,10 @@ sp_rect_set_shape(SPShape *shape)
 {
     SPRect *rect = (SPRect *) shape;
 
-    if ((rect->height.computed < 1e-18) || (rect->width.computed < 1e-18)) return;
+    if ((rect->height.computed < 1e-18) || (rect->width.computed < 1e-18)) {
+        sp_shape_set_curve_insync(SP_SHAPE(rect), NULL, TRUE);
+        return;
+    }
 
     SPCurve *c = sp_curve_new();
 
