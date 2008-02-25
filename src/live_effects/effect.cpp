@@ -34,6 +34,10 @@
 // include effects:
 #include "live_effects/lpe-skeletalstrokes.h"
 #include "live_effects/lpe-pathalongpath.h"
+//here!!
+#include "live_effects/lpe-sketch.h"
+#include "live_effects/lpe-vonkoch.h"
+#include "live_effects/lpe-knot.h"
 #include "live_effects/lpe-slant.h"
 #include "live_effects/lpe-test-doEffect-stack.h"
 #include "live_effects/lpe-gears.h"
@@ -49,6 +53,9 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     // {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
     {PATH_ALONG_PATH,       N_("Bend Path"),             "bend_path"},
     {SKELETAL_STROKES,      N_("Pattern Along Path"),    "skeletal"},
+    {SKETCH,                N_("Sketch"),                "sketch"},
+    {VONKOCH,               N_("VonKoch"),               "vonkoch"},
+    {KNOT,                  N_("Knot"),                  "knot"},
 #ifdef LPE_ENABLE_TEST_EFFECTS
     {SLANT,                 N_("Slant"),                 "slant"},
     {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),   "doeffectstacktest"},
@@ -68,6 +75,16 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case PATH_ALONG_PATH:
             neweffect = (Effect*) new LPEPathAlongPath(lpeobj);
+            break;
+//here!!
+        case SKETCH:
+            neweffect = (Effect*) new LPESketch(lpeobj);
+            break;
+        case VONKOCH:
+            neweffect = (Effect*) new LPEVonKoch(lpeobj);
+            break;
+        case KNOT:
+            neweffect = (Effect*) new LPEKnot(lpeobj);
             break;
 #ifdef LPE_ENABLE_TEST_EFFECTS
             case SLANT:

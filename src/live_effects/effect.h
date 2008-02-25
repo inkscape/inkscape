@@ -52,6 +52,9 @@ namespace LivePathEffect {
 enum EffectType {
     PATH_ALONG_PATH = 0,
     SKELETAL_STROKES,
+    SKETCH,
+    VONKOCH,
+    KNOT,
 #ifdef LPE_ENABLE_TEST_EFFECTS
     SLANT,
     DOEFFECTSTACK_TEST,
