@@ -539,6 +539,8 @@ static NR::Point box3d_knot_get(SPItem *item, guint knot_id)
 
 static void box3d_knot_set(SPItem *item, guint knot_id, NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
 {
+    NR::Point const s = snap_knot_position(item, new_pos);
+
     g_assert(item != NULL);
     SPBox3D *box = SP_BOX3D(item);
     NR::Matrix const i2d (sp_item_i2d_affine (item));
@@ -550,7 +552,7 @@ static void box3d_knot_set(SPItem *item, guint knot_id, NR::Point const &new_pos
         movement = Box3D::Z;
     }
 
-    box3d_set_corner (box, knot_id, new_pos * i2d, movement, (state & GDK_CONTROL_MASK));
+    box3d_set_corner (box, knot_id, s * i2d, movement, (state & GDK_CONTROL_MASK));
     box3d_set_z_orders(box);
     box3d_position_set(box);
 }
@@ -563,10 +565,12 @@ static NR::Point box3d_knot_center_get (SPItem *item)
 
 static void box3d_knot_center_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
+    NR::Point const s = snap_knot_position(item, new_pos);
+
     SPBox3D *box = SP_BOX3D(item);
     NR::Matrix const i2d (sp_item_i2d_affine (item));
 
-    box3d_set_center (SP_BOX3D(item), new_pos * i2d, origin * i2d, !(state & GDK_SHIFT_MASK) ? Box3D::XY : Box3D::Z,
+    box3d_set_center (SP_BOX3D(item), s * i2d, origin * i2d, !(state & GDK_SHIFT_MASK) ? Box3D::XY : Box3D::Z,
                       state & GDK_CONTROL_MASK);
 
     box3d_set_z_orders(box);
@@ -678,7 +682,7 @@ box3d_knot_holder(SPItem *item, SPDesktop *desktop)
 
     // center dragging
     sp_knot_holder_add_full(knot_holder, box3d_knot_center_set, box3d_knot_center_get, NULL,
-                            SP_KNOT_SHAPE_CROSS, SP_KNOT_MODE_XOR,_("Move the box in perspective."));
+                            SP_KNOT_SHAPE_CROSS, SP_KNOT_MODE_XOR,_("Move the box in perspective"));
 
     sp_pat_knot_holder(item, knot_holder);
 
