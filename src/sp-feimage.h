@@ -18,6 +18,7 @@
 #include "sp-feimage-fns.h"
 #include "svg/svg-length.h"
 #include "sp-item.h"
+#include "uri-references.h"
 
 /* FeImage base class */
 class SPFeImageClass;
@@ -29,6 +30,8 @@ struct SPFeImage : public SPFilterPrimitive {
     SPDocument *document;
     bool from_element;
     SPItem* SVGElem;
+    Inkscape::URIReference* SVGElemRef;
+    sigc::connection _modified_connection;
 };
 
 struct SPFeImageClass {

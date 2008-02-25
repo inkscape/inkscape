@@ -118,9 +118,18 @@ sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
 static void
 sp_feImage_release(SPObject *object)
 {
+    SPFeImage *feImage = SP_FEIMAGE(object);
+    feImage->_modified_connection.disconnect();
+    if (feImage->SVGElemRef) delete feImage->SVGElemRef;
 
     if (((SPObjectClass *) feImage_parent_class)->release)
         ((SPObjectClass *) feImage_parent_class)->release(object);
+}
+
+static void
+sp_feImage_elem_modified(SPObject* /*href*/, guint /*flags*/, SPObject* obj)
+{
+    obj->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /**
@@ -132,7 +141,6 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
     SPFeImage *feImage = SP_FEIMAGE(object);
     (void)feImage;
     Inkscape::URI* SVGElem_uri;
-    Inkscape::URIReference* SVGElemRef;
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
 	case SP_ATTR_XLINK_HREF:
@@ -141,15 +149,13 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
             if (!feImage->href) return;
             try{
                 SVGElem_uri = new Inkscape::URI(feImage->href);
-                SVGElemRef = new Inkscape::URIReference(feImage->document);
+                feImage->SVGElemRef = new Inkscape::URIReference(feImage->document);
                 feImage->from_element = true;
-                SVGElemRef->attach(*SVGElem_uri);
-                feImage->SVGElem = SP_ITEM(SVGElemRef->getObject());
+                feImage->SVGElemRef->attach(*SVGElem_uri);
+                feImage->SVGElem = SP_ITEM(feImage->SVGElemRef->getObject());
                 
                 g_free(SVGElem_uri);
-                g_free(SVGElemRef);
-                //TODO: maybe keeping SVGElemRef we can observe changes to the
-                // referenced object and trigger updates of the filtered object
+                feImage->_modified_connection = ((SPObject*) feImage->SVGElem)->connectModified(sigc::bind(sigc::ptr_fun(&sp_feImage_elem_modified), object));
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
                 break;
             }
