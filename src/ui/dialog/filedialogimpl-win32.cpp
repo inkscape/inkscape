@@ -9,13 +9,13 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
- 
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
 
 #ifdef WIN32
- 
+
 //General includes
 #include <list>
 #include <unistd.h>
@@ -68,7 +68,7 @@ const unsigned long MaxPreviewFileSize = 1344; // kB
 #define IDC_SHOW_PREVIEW    1000
 
 // Windows 2000 version of OPENFILENAMEW
-struct OPENFILENAMEEXW : public OPENFILENAMEW { 
+struct OPENFILENAMEEXW : public OPENFILENAMEW {
   void *        pvReserved;
   DWORD         dwReserved;
   DWORD         FlagsEx;
@@ -89,7 +89,7 @@ ustring utf16_to_ustring(const wchar_t *utf16string, int utf16length = -1)
         utf16length, NULL, NULL, NULL);
     ustring result(utf8string);
     g_free(utf8string);
-    
+
     return result;
 }
 
@@ -97,7 +97,7 @@ ustring utf16_to_ustring(const wchar_t *utf16string, int utf16length = -1)
 ### F I L E     D I A L O G    B A S E    C L A S S
 #########################################################################*/
 
-FileDialogBaseWin32::FileDialogBaseWin32(Gtk::Window &parent, 
+FileDialogBaseWin32::FileDialogBaseWin32(Gtk::Window &parent,
         const Glib::ustring &dir, const gchar *title,
         FileDialogType type, gchar const* /*preferenceBase*/) :
         dialogType(type),
@@ -106,9 +106,9 @@ FileDialogBaseWin32::FileDialogBaseWin32(Gtk::Window &parent,
 {
     //_mutex = NULL;
     _main_loop = NULL;
-    
+
     _title = (wchar_t*)g_utf8_to_utf16(title, -1, NULL, NULL, NULL);
-    
+
     Glib::RefPtr<const Gdk::Window> parentWindow = parent.get_window();
     g_assert(parentWindow->gobj() != NULL);
     _ownerHwnd = (HWND)gdk_win32_drawable_get_handle((GdkDrawable*)parentWindow->gobj());
@@ -138,7 +138,7 @@ bool FileOpenDialogImplWin32::_show_preview = true;
 /**
  * Constructor.  Not called directly.  Use the factory.
  */
-FileOpenDialogImplWin32::FileOpenDialogImplWin32(Gtk::Window &parent,  
+FileOpenDialogImplWin32::FileOpenDialogImplWin32(Gtk::Window &parent,
                                        const Glib::ustring &dir,
                                        FileDialogType fileTypes,
                                        const gchar *title) :
@@ -149,12 +149,12 @@ FileOpenDialogImplWin32::FileOpenDialogImplWin32(Gtk::Window &parent,
 
     // Set our dialog type (open, import, etc...)
     dialogType = fileTypes;
-    
+
     _show_preview_button_bitmap = NULL;
     _preview_wnd = NULL;
     _file_dialog_wnd = NULL;
     _base_window_proc = NULL;
-    
+
     _preview_file_size = 0;
     _preview_bitmap = NULL;
     _preview_file_icon = NULL;
@@ -162,7 +162,7 @@ FileOpenDialogImplWin32::FileOpenDialogImplWin32(Gtk::Window &parent,
     _preview_document_height = 0;
     _preview_image_width = 0;
     _preview_image_height = 0;
-    
+
     createFilterMenu();
 }
 
@@ -185,41 +185,41 @@ void FileOpenDialogImplWin32::createFilterMenu()
     // Compose the filter string
     Inkscape::Extension::DB::InputList extension_list;
     Inkscape::Extension::db.get_input_list(extension_list);
-    
+
     ustring all_inkscape_files_filter, all_image_files_filter;
     Filter all_files, all_inkscape_files, all_image_files;
 
     const gchar *all_files_filter_name = _("All Files");
     const gchar *all_inkscape_files_filter_name = ("All Inkscape Files");
     const gchar *all_image_files_filter_name = _("All Image Files");
-        
+
     // Calculate the amount of memory required
     int filter_count = 3;       // 3 - one for All Files, All Images and All Inkscape Files
     int filter_length = 1;
-        
+
     for (Inkscape::Extension::DB::InputList::iterator current_item = extension_list.begin();
          current_item != extension_list.end(); current_item++)
     {
         Filter filter;
-    
+
         Inkscape::Extension::Input *imod = *current_item;
         if (imod->deactivated()) continue;
-                
+
         // Type
         filter.name = g_utf8_to_utf16(imod->get_filetypename(),
             -1, NULL, &filter.name_length, NULL);
-        
+
         // Extension
         const gchar *file_extension_name = imod->get_extension();
         filter.filter = g_utf8_to_utf16(file_extension_name,
             -1, NULL, &filter.filter_length, NULL);
-        
+
         filter.mod = imod;
         filter_list.push_back(filter);
-        
+
         filter_length += filter.name_length +
             filter.filter_length + 3;   // Add 3 for two \0s and a *
-            
+
         // Add to the "All Inkscape Files" Entry
         if(all_inkscape_files_filter.length() > 0)
             all_inkscape_files_filter += ";*";
@@ -231,13 +231,13 @@ void FileOpenDialogImplWin32::createFilterMenu()
                 all_image_files_filter += ";*";
             all_image_files_filter += file_extension_name;
         }
-        
+
         filter_count++;
     }
-    
+
     int extension_index = 0;
     _extension_map = new Inkscape::Extension::Extension*[filter_count];
-    
+
     // Filter Image Files
     all_image_files.name = g_utf8_to_utf16(all_image_files_filter_name,
         -1, NULL, &all_image_files.name_length, NULL);
@@ -245,7 +245,7 @@ void FileOpenDialogImplWin32::createFilterMenu()
             -1, NULL, &all_image_files.filter_length, NULL);
     filter_list.push_front(all_image_files);
     _extension_map[extension_index++] = NULL;
-    
+
     // Filter Inkscape Files
     all_inkscape_files.name = g_utf8_to_utf16(all_inkscape_files_filter_name,
         -1, NULL, &all_inkscape_files.name_length, NULL);
@@ -253,7 +253,7 @@ void FileOpenDialogImplWin32::createFilterMenu()
             -1, NULL, &all_inkscape_files.filter_length, NULL);
     filter_list.push_front(all_inkscape_files);
     _extension_map[extension_index++] = NULL;
-    
+
     // Filter All Files
     all_files.name = g_utf8_to_utf16(all_files_filter_name,
         -1, NULL, &all_files.name_length, NULL);
@@ -261,44 +261,44 @@ void FileOpenDialogImplWin32::createFilterMenu()
     all_files.filter_length = 0;
     filter_list.push_front(all_files);
     _extension_map[extension_index++] = NULL;
-    
+
     filter_length += all_files.name_length + 3 +
-                    all_inkscape_files.filter_length + 
+                    all_inkscape_files.filter_length +
                     all_inkscape_files.name_length + 3 +
                     all_image_files.filter_length +
                     all_image_files.name_length + 3 + 1;
      // Add 3 for 2*2 \0s and a *, and 1 for a trailing \0
-      
-    
+
+
     _filter = new wchar_t[filter_length];
     wchar_t *filterptr = _filter;
-    
+
     for(list<Filter>::iterator filter_iterator = filter_list.begin();
         filter_iterator != filter_list.end(); filter_iterator++)
     {
         const Filter &filter = *filter_iterator;
-        
+
         memcpy(filterptr, filter.name, filter.name_length * 2);
         filterptr += filter.name_length;
         g_free(filter.name);
-        
+
         *(filterptr++) = L'\0';
         *(filterptr++) = L'*';
-        
+
         if(filter.filter != NULL)
         {
             memcpy(filterptr, filter.filter, filter.filter_length * 2);
-            filterptr += filter.filter_length;  
+            filterptr += filter.filter_length;
             g_free(filter.filter);
         }
-    
+
         *(filterptr++) = L'\0';
-        
+
         // Associate this input extension with the file type name
         _extension_map[extension_index++] = filter.mod;
     }
     *(filterptr++) = L'\0';
-    
+
     _filterIndex = 2;
 }
 
@@ -308,20 +308,20 @@ void FileOpenDialogImplWin32::GetOpenFileName_thread()
 
     g_assert(this != NULL);
     //g_assert(_mutex != NULL);
-    g_assert(_main_loop != NULL);    
-        
+    g_assert(_main_loop != NULL);
+
     WCHAR* current_directory_string = (WCHAR*)g_utf8_to_utf16(
         _current_directory.data(), -1, NULL, NULL, NULL);
-        
+
     memset(&ofn, 0, sizeof(ofn));
-    
+
     // Copy the selected file name, converting from UTF-8 to UTF-16
     memset(_path_string, 0, sizeof(_path_string));
     gunichar2* utf16_path_string = g_utf8_to_utf16(
         myFilename.data(), -1, NULL, NULL, NULL);
     wcsncpy(_path_string, (wchar_t*)utf16_path_string, _MAX_PATH);
     g_free(utf16_path_string);
-    
+
     ofn.lStructSize = sizeof(ofn);
     ofn.hwndOwner = _ownerHwnd;
     ofn.lpstrFile = _path_string;
@@ -335,32 +335,32 @@ void FileOpenDialogImplWin32::GetOpenFileName_thread()
     ofn.nFilterIndex = _filterIndex;
     ofn.lpfnHook = GetOpenFileName_hookproc;
     ofn.lCustData = (LPARAM)this;
-    
+
     _result = GetOpenFileNameW(&ofn) != 0;
-    
+
     _filterIndex = ofn.nFilterIndex;
     _extension = _extension_map[ofn.nFilterIndex];
 
     myFilename = utf16_to_ustring(_path_string, _MAX_PATH);
-    
+
     // Copy the selected file name, converting from UTF-16 to UTF-8
     myFilename = utf16_to_ustring(_path_string, _MAX_PATH);
-    
+
     // Tidy up
     g_free(current_directory_string);
-    
+
     _mutex->lock();
     _finished = true;
     _mutex->unlock();
     //g_main_loop_quit(_main_loop);
-    
+
 
 }
 
 void FileOpenDialogImplWin32::register_preview_wnd_class()
 {
     HINSTANCE hInstance = GetModuleHandle(NULL);
-    const WNDCLASSA PreviewWndClass = 
+    const WNDCLASSA PreviewWndClass =
     {
         CS_HREDRAW | CS_VREDRAW,
         preview_wnd_proc,
@@ -382,14 +382,14 @@ UINT_PTR CALLBACK FileOpenDialogImplWin32::GetOpenFileName_hookproc(
 {
     FileOpenDialogImplWin32 *pImpl = (FileOpenDialogImplWin32*)
         GetWindowLongPtr(hdlg, GWLP_USERDATA);
-        
+
     switch(uiMsg)
     {
     case WM_INITDIALOG:
         {
             HWND hParentWnd = GetParent(hdlg);
             HINSTANCE hInstance = GetModuleHandle(NULL);
-            
+
             // Make the window a bit wider
             RECT rcRect;
             GetWindowRect(hParentWnd, &rcRect);
@@ -397,26 +397,26 @@ UINT_PTR CALLBACK FileOpenDialogImplWin32::GetOpenFileName_hookproc(
                 rcRect.right - rcRect.left + PreviewWidening,
                 rcRect.bottom - rcRect.top,
                 FALSE);
-            
+
             // Set the pointer to the object
             OPENFILENAMEW *ofn = (OPENFILENAMEW*)lParam;
             SetWindowLongPtr(hdlg, GWLP_USERDATA, ofn->lCustData);
             SetWindowLongPtr(hParentWnd, GWLP_USERDATA, ofn->lCustData);
             pImpl = (FileOpenDialogImplWin32*)ofn->lCustData;
-            
+
             // Subclass the parent
             pImpl->_base_window_proc = (WNDPROC)GetWindowLongPtr(hParentWnd, GWL_WNDPROC);
             SetWindowLongPtr(hParentWnd, GWL_WNDPROC, (LONG_PTR)file_dialog_subclass_proc);
-        
+
             // Add a button to the toolbar
             pImpl->_toolbar_wnd = FindWindowEx(hParentWnd, NULL, "ToolbarWindow32", NULL);
 
             pImpl->_show_preview_button_bitmap = LoadBitmap(
                 hInstance, MAKEINTRESOURCE(IDC_SHOW_PREVIEW));
-            TBADDBITMAP tbAddBitmap = {NULL, (UINT)pImpl->_show_preview_button_bitmap};            
+            TBADDBITMAP tbAddBitmap = {NULL, (UINT)pImpl->_show_preview_button_bitmap};
             const int iBitmapIndex = SendMessage(pImpl->_toolbar_wnd,
                 TB_ADDBITMAP, 1, (LPARAM)&tbAddBitmap);
-    
+
             TBBUTTON tbButton;
             memset(&tbButton, 0, sizeof(TBBUTTON));
             tbButton.iBitmap = iBitmapIndex;
@@ -425,30 +425,30 @@ UINT_PTR CALLBACK FileOpenDialogImplWin32::GetOpenFileName_hookproc(
                 | TBSTATE_ENABLED;
             tbButton.fsStyle = TBSTYLE_CHECK;
             tbButton.iString = (INT_PTR)_("Show Preview");
-            SendMessage(pImpl->_toolbar_wnd, TB_ADDBUTTONS, 1, (LPARAM)&tbButton); 
-            
+            SendMessage(pImpl->_toolbar_wnd, TB_ADDBUTTONS, 1, (LPARAM)&tbButton);
+
             // Create preview pane
             register_preview_wnd_class();
 
             pImpl->_mutex->lock();
-            
+
                 pImpl->_file_dialog_wnd = hParentWnd;
-                
-                pImpl->_preview_wnd = 
+
+                pImpl->_preview_wnd =
                     CreateWindow(PreviewWindowClassName, "",
                         WS_CHILD | WS_VISIBLE,
                         0, 0, 100, 100, hParentWnd, NULL, hInstance, NULL);
                 SetWindowLongPtr(pImpl->_preview_wnd, GWLP_USERDATA, ofn->lCustData);
-                    
+
             pImpl->_mutex->unlock();
-                
+
             pImpl->layout_dialog();
         }
         break;
-    
+
     case WM_NOTIFY:
         {
-        
+
         OFNOTIFY *pOFNotify = reinterpret_cast<OFNOTIFY*>(lParam);
         switch(pOFNotify->hdr.code)
         {
@@ -458,15 +458,15 @@ UINT_PTR CALLBACK FileOpenDialogImplWin32::GetOpenFileName_hookproc(
                 {
                     // Get the file name
                     pImpl->_mutex->lock();
-                    
+
                     SendMessage(pOFNotify->hdr.hwndFrom, CDM_GETFILEPATH,
                         sizeof(pImpl->_path_string) / sizeof(wchar_t),
                         (LPARAM)pImpl->_path_string);
-                    
+
                     pImpl->_file_selected = true;
-                    
+
                     pImpl->_mutex->unlock();
-                        
+
                     //pImpl->file_selected();
                 }
             }
@@ -474,11 +474,11 @@ UINT_PTR CALLBACK FileOpenDialogImplWin32::GetOpenFileName_hookproc(
         }
         }
         break;
-        
+
     case WM_CLOSE:
         pImpl->_mutex->lock();
         pImpl->_preview_file_size = 0;
-    
+
         pImpl->_file_dialog_wnd = NULL;
         DestroyWindow(pImpl->_preview_wnd);
         pImpl->_preview_wnd = NULL;
@@ -488,7 +488,7 @@ UINT_PTR CALLBACK FileOpenDialogImplWin32::GetOpenFileName_hookproc(
 
         break;
     }
-        
+
     // Use default dialog behaviour
     return 0;
 }
@@ -499,18 +499,18 @@ LRESULT CALLBACK FileOpenDialogImplWin32::file_dialog_subclass_proc(HWND hwnd, U
         GetWindowLongPtr(hwnd, GWLP_USERDATA);
 
     LRESULT lResult = CallWindowProc(pImpl->_base_window_proc, hwnd, uMsg, wParam, lParam);
-        
+
     switch(uMsg)
     {
     case WM_SHOWWINDOW:
         if(wParam != 0)
             pImpl->layout_dialog();
         break;
-        
+
     case WM_SIZE:
         pImpl->layout_dialog();
         break;
-        
+
     case WM_COMMAND:
         if(wParam == IDC_SHOW_PREVIEW)
         {
@@ -520,7 +520,7 @@ LRESULT CALLBACK FileOpenDialogImplWin32::file_dialog_subclass_proc(HWND hwnd, U
         }
         break;
     }
-    
+
     return lResult;
 }
 
@@ -528,12 +528,12 @@ LRESULT CALLBACK FileOpenDialogImplWin32::preview_wnd_proc(HWND hwnd, UINT uMsg,
 {
     const int CaptionPadding = 4;
     const int IconSize = 32;
-    
+
     FileOpenDialogImplWin32 *pImpl = (FileOpenDialogImplWin32*)
         GetWindowLongPtr(hwnd, GWLP_USERDATA);
 
     LRESULT lResult = 0;
-    
+
     switch(uMsg)
     {
     case WM_ERASEBKGND:
@@ -541,24 +541,24 @@ LRESULT CALLBACK FileOpenDialogImplWin32::preview_wnd_proc(HWND hwnd, UINT uMsg,
         //  - otherwise there'll be flicker
         lResult = 1;
         break;
-    
+
     case WM_PAINT:
         {
             // Get the client rect
             RECT rcClient;
             GetClientRect(hwnd, &rcClient);
-            
+
             // Prepare to paint
             PAINTSTRUCT paint_struct;
             HDC dc = BeginPaint(hwnd, &paint_struct);
-            
+
             HFONT hCaptionFont = (HFONT)SendMessage(GetParent(hwnd),
                     WM_GETFONT, 0, 0);
             HFONT hOldFont = (HFONT)SelectObject(dc, hCaptionFont);
             SetBkMode(dc, TRANSPARENT);
-            
+
             pImpl->_mutex->lock();
-            
+
             //FillRect(dc, &client_rect, (HBRUSH)(COLOR_HOTLIGHT+1));
             if(pImpl->_path_string[0] == 0)
             {
@@ -571,63 +571,63 @@ LRESULT CALLBACK FileOpenDialogImplWin32::preview_wnd_proc(HWND hwnd, UINT uMsg,
                 BITMAP bitmap;
                 GetObject(pImpl->_preview_bitmap, sizeof(bitmap), &bitmap);
                 const int destX = (rcClient.right - bitmap.bmWidth) / 2;
-                            
+
                 // Render the image
                 HDC hSrcDC = CreateCompatibleDC(dc);
                 HBITMAP hOldBitmap = (HBITMAP)SelectObject(hSrcDC, pImpl->_preview_bitmap);
-            
+
                 BitBlt(dc, destX, 0, bitmap.bmWidth, bitmap.bmHeight,
                     hSrcDC, 0, 0, SRCCOPY);
-                    
+
                 SelectObject(hSrcDC, hOldBitmap);
                 DeleteDC(hSrcDC);
-                
+
                 // Fill in the background area
                 HRGN hEraseRgn = CreateRectRgn(rcClient.left, rcClient.top,
                     rcClient.right, rcClient.bottom);
                 HRGN hImageRgn = CreateRectRgn(destX, 0,
                     destX + bitmap.bmWidth, bitmap.bmHeight);
                 CombineRgn(hEraseRgn, hEraseRgn, hImageRgn, RGN_DIFF);
-                
+
                 FillRgn(dc, hEraseRgn, GetSysColorBrush(COLOR_3DFACE));
-                                
+
                 DeleteObject(hImageRgn);
                 DeleteObject(hEraseRgn);
-                
+
                 // Draw the caption on
                 RECT rcCaptionRect = {rcClient.left,
                     rcClient.top + bitmap.bmHeight + CaptionPadding,
                     rcClient.right, rcClient.bottom};
-                    
-                WCHAR szCaption[_MAX_FNAME + 32];                
+
+                WCHAR szCaption[_MAX_FNAME + 32];
                 const int iLength = pImpl->format_caption(
                     szCaption, sizeof(szCaption) / sizeof(WCHAR));
-        
+
                 DrawTextW(dc, szCaption, iLength, &rcCaptionRect,
                     DT_CENTER | DT_TOP | DT_NOPREFIX | DT_PATH_ELLIPSIS);
             }
             else if(pImpl->_preview_file_icon != NULL)
             {
                 FillRect(dc, &rcClient, (HBRUSH)(COLOR_3DFACE + 1));
-                
+
                 // Draw the files icon
                 const int destX = (rcClient.right - IconSize) / 2;
                 DrawIconEx(dc, destX, 0, pImpl->_preview_file_icon,
                     IconSize, IconSize, 0, NULL,
                     DI_NORMAL | DI_COMPAT);
-                    
+
                 // Draw the caption on
                 RECT rcCaptionRect = {rcClient.left,
                     rcClient.top + IconSize + CaptionPadding,
                     rcClient.right, rcClient.bottom};
-                    
+
                 WCHAR szFileName[_MAX_FNAME], szCaption[_MAX_FNAME + 32];
                 _wsplitpath(pImpl->_path_string, NULL, NULL, szFileName, NULL);
-                
+
                 const int iLength = snwprintf(szCaption,
                     sizeof(szCaption), L"%s\n%d kB",
                     szFileName, pImpl->_preview_file_size);
-                
+
                 DrawTextW(dc, szCaption, iLength, &rcCaptionRect,
                     DT_CENTER | DT_TOP | DT_NOPREFIX | DT_PATH_ELLIPSIS);
             }
@@ -636,20 +636,20 @@ LRESULT CALLBACK FileOpenDialogImplWin32::preview_wnd_proc(HWND hwnd, UINT uMsg,
                 // Can't show anything!
                 FillRect(dc, &rcClient, (HBRUSH)(COLOR_3DFACE + 1));
             }
-            
+
             pImpl->_mutex->unlock();
-            
+
             // Finish painting
             SelectObject(dc, hOldFont);
             EndPaint(hwnd, &paint_struct);
         }
-        
+
         break;
-        
+
     case WM_DESTROY:
         pImpl->free_preview();
         break;
-        
+
     default:
         lResult = DefWindowProc(hwnd, uMsg, wParam, lParam);
         break;
@@ -665,7 +665,7 @@ void FileOpenDialogImplWin32::enable_preview(bool enable)
     // Relayout the dialog
     ShowWindow(_preview_wnd, enable ? SW_SHOW : SW_HIDE);
     layout_dialog();
-    
+
     // Load or unload the preview
     if(enable)
     {
@@ -682,30 +682,30 @@ void FileOpenDialogImplWin32::layout_dialog()
     {
         RECT r;
         POINT p[2];
-    };    
-    
+    };
+
     const float MaxExtentScale = 2.0f / 3.0f;
-    
+
     RECT rcClient;
     GetClientRect(_file_dialog_wnd, &rcClient);
 
     // Re-layout the dialog
     HWND hFileListWnd = GetDlgItem(_file_dialog_wnd, lst2);
     HWND hFolderComboWnd = GetDlgItem(_file_dialog_wnd, cmb2);
-    
-    
+
+
     RECT rcFolderComboRect;
     RECTPOINTS rcFileList;
     GetWindowRect(hFileListWnd, &rcFileList.r);
     GetWindowRect(hFolderComboWnd, &rcFolderComboRect);
     const int iPadding = rcFileList.r.top - rcFolderComboRect.bottom;
     MapWindowPoints(NULL, _file_dialog_wnd, rcFileList.p, 2);
-        
+
     RECT rcPreview;
     RECT rcBody = {rcFileList.r.left, rcFileList.r.top,
         rcClient.right - iPadding, rcFileList.r.bottom};
     rcFileList.r.right = rcBody.right;
-    
+
     if(_show_preview)
     {
         rcPreview.top = rcBody.top;
@@ -714,7 +714,7 @@ void FileOpenDialogImplWin32::layout_dialog()
         if(rcPreview.left < iMaxExtent) rcPreview.left = iMaxExtent;
         rcPreview.bottom = rcBody.bottom;
         rcPreview.right = rcBody.right;
-        
+
         // Re-layout the preview box
         _mutex->lock();
 
@@ -722,33 +722,33 @@ void FileOpenDialogImplWin32::layout_dialog()
             _preview_height = rcPreview.bottom - rcPreview.top;
 
         _mutex->unlock();
-        
+
         render_preview();
-        
+
         MoveWindow(_preview_wnd, rcPreview.left, rcPreview.top,
             _preview_width, _preview_height, TRUE);
-            
+
         rcFileList.r.right = rcPreview.left - iPadding;
     }
-    
+
     // Re-layout the file list box
     MoveWindow(hFileListWnd, rcFileList.r.left, rcFileList.r.top,
         rcFileList.r.right - rcFileList.r.left,
         rcFileList.r.bottom - rcFileList.r.top, TRUE);
-        
+
     // Re-layout the toolbar
     RECTPOINTS rcToolBar;
     GetWindowRect(_toolbar_wnd, &rcToolBar.r);
     MapWindowPoints(NULL, _file_dialog_wnd, rcToolBar.p, 2);
-    MoveWindow(_toolbar_wnd, rcToolBar.r.left, rcToolBar.r.top, 
-        rcToolBar.r.right - rcToolBar.r.left, rcToolBar.r.bottom - rcToolBar.r.top, TRUE); 
+    MoveWindow(_toolbar_wnd, rcToolBar.r.left, rcToolBar.r.top,
+        rcToolBar.r.right - rcToolBar.r.left, rcToolBar.r.bottom - rcToolBar.r.top, TRUE);
 }
 
 void FileOpenDialogImplWin32::file_selected()
 {
     // Destroy any previous previews
     free_preview();
-    
+
 
     // Determine if the file exists
     DWORD attributes = GetFileAttributesW(_path_string);
@@ -762,26 +762,26 @@ void FileOpenDialogImplWin32::file_selected()
     // Check the file exists and get the file size
     HANDLE file_handle = CreateFileW(_path_string, GENERIC_READ,
         FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-    if(file_handle == INVALID_HANDLE_VALUE) return;    
+    if(file_handle == INVALID_HANDLE_VALUE) return;
     const DWORD file_size = GetFileSize(file_handle, NULL);
     if (file_size == INVALID_FILE_SIZE) return;
     _preview_file_size = file_size / 1024;
     CloseHandle(file_handle);
-        
-    if(_show_preview) load_preview();    
+
+    if(_show_preview) load_preview();
 }
-    
+
 void FileOpenDialogImplWin32::load_preview()
 {
     // Destroy any previous previews
     free_preview();
-    
+
     // Try to get the file icon
     SHFILEINFOW fileInfo;
     if(SUCCEEDED(SHGetFileInfoW(_path_string, 0, &fileInfo,
         sizeof(fileInfo), SHGFI_ICON | SHGFI_LARGEICON)))
         _preview_file_icon = fileInfo.hIcon;
-        
+
     // Will this file be too big?
     if(_preview_file_size > MaxPreviewFileSize)
     {
@@ -793,11 +793,11 @@ void FileOpenDialogImplWin32::load_preview()
     const Glib::ustring svg = ".svg";
     const Glib::ustring svgz = ".svgz";
     const Glib::ustring path = utf16_to_ustring(_path_string);
-    
+
     bool success = false;
-    
+
     _preview_document_width = _preview_document_height = 0;
-    
+
     if ((dialogType == SVG_TYPES || dialogType == IMPORT_TYPES) &&
             (hasSuffix(path, svg) || hasSuffix(path, svgz)))
         success = set_svg_preview();
@@ -806,9 +806,9 @@ void FileOpenDialogImplWin32::load_preview()
     else {
         // Show no preview
     }
-    
+
     if(success) render_preview();
-    
+
     InvalidateRect(_preview_wnd, NULL, FALSE);
 }
 
@@ -818,11 +818,11 @@ void FileOpenDialogImplWin32::free_preview()
     if(_preview_bitmap != NULL)
         DeleteObject(_preview_bitmap);
     _preview_bitmap = NULL;
-    
+
     if(_preview_file_icon != NULL)
         DestroyIcon(_preview_file_icon);
     _preview_file_icon = NULL;
-    
+
     _preview_bitmap_image.clear();
     _mutex->unlock();
 }
@@ -835,51 +835,51 @@ bool FileOpenDialogImplWin32::set_svg_preview()
         _MAX_PATH, NULL, NULL, NULL);
     SPDocument *svgDoc = sp_document_new (utf8string, true);
     g_free(utf8string);
-        
-    // Check the document loaded properly        
+
+    // Check the document loaded properly
     if(svgDoc == NULL) return false;
     if(svgDoc->root == NULL)
     {
         sp_document_unref(svgDoc);
         return false;
     }
-    
+
     // Get the size of the document
     const double svgWidth = sp_document_width(svgDoc);
     const double svgHeight = sp_document_height(svgDoc);
-    
+
     // Find the minimum scale to fit the image inside the preview area
     const double scaleFactorX =    PreviewSize / svgWidth;
     const double scaleFactorY =    PreviewSize / svgHeight;
     const double scaleFactor = (scaleFactorX > scaleFactorY) ? scaleFactorY : scaleFactorX;
-    
+
     // Now get the resized values
     const double scaledSvgWidth  = scaleFactor * svgWidth;
     const double scaledSvgHeight = scaleFactor * svgHeight;
-    
+
     NR::Rect area(NR::Point(0, 0), NR::Point(scaledSvgWidth, scaledSvgHeight));
     NRRectL areaL = {0, 0, scaledSvgWidth, scaledSvgHeight};
     NRRectL bbox = {0, 0, scaledSvgWidth, scaledSvgHeight};
-        
+
     // write object bbox to area
     NR::Maybe<NR::Rect> maybeArea(area);
     sp_document_ensure_up_to_date (svgDoc);
     sp_item_invoke_bbox((SPItem *) svgDoc->root, &maybeArea,
         sp_item_i2r_affine((SPItem *)(svgDoc->root)), TRUE);
-    
+
     NRArena *const arena = NRArena::create();
-        
+
     unsigned const key = sp_item_display_key_new(1);
-    
+
     NRArenaItem *root = sp_item_invoke_show((SPItem*)(svgDoc->root),
         arena, key, SP_ITEM_SHOW_DISPLAY);
-    
+
     NRGC gc(NULL);
     nr_matrix_set_scale(&gc.transform, scaleFactor, scaleFactor);
-    
+
     nr_arena_item_invoke_update (root, NULL, &gc,
         NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);
-    
+
     // Prepare a GDI compatible NRPixBlock
     NRPixBlock pixBlock;
     pixBlock.size = NR_PIXBLOCK_SIZE_BIG;
@@ -891,30 +891,30 @@ bool FileOpenDialogImplWin32::set_svg_preview()
     pixBlock.visible_area.y1 = pixBlock.area.y1 = scaledSvgHeight;
     pixBlock.rs = 4 * ((3 * (int)scaledSvgWidth + 3) / 4);
     pixBlock.data.px = g_try_new (unsigned char, pixBlock.rs * scaledSvgHeight);
-    
+
     // Fail if the pixblock failed to allocate
     if(pixBlock.data.px == NULL)
     {
         sp_document_unref(svgDoc);
         return false;
     }
-    
+
     memset(pixBlock.data.px, 0xFF, pixBlock.rs * scaledSvgHeight);
-    
+
     memcpy(&root->bbox, &areaL, sizeof(areaL));
-            
+
     // Render the image
     nr_arena_item_invoke_render(NULL, root, &bbox, &pixBlock, /*0*/NR_ARENA_ITEM_RENDER_NO_CACHE);
-    
+
     // Tidy up
     sp_document_unref(svgDoc);
     sp_item_invoke_hide((SPItem*)(svgDoc->root), key);
     nr_arena_item_unref(root);
     nr_object_unref((NRObject *) arena);
-    
+
     // Create the GDK pixbuf
     _mutex->lock();
-    
+
     _preview_bitmap_image = Gdk::Pixbuf::create_from_data(
         pixBlock.data.px, Gdk::COLORSPACE_RGB, false, 8,
         (int)scaledSvgWidth, (int)scaledSvgHeight, pixBlock.rs,
@@ -924,9 +924,9 @@ bool FileOpenDialogImplWin32::set_svg_preview()
     _preview_document_height = scaledSvgHeight;
     _preview_image_width = svgWidth;
     _preview_image_height = svgHeight;
-        
+
     _mutex->unlock();
-        
+
     return true;
 }
 
@@ -935,20 +935,20 @@ void FileOpenDialogImplWin32::destroy_svg_rendering(const guint8 *buffer)
     g_assert(buffer != NULL);
     g_free((void*)buffer);
 }
-    
+
 bool FileOpenDialogImplWin32::set_image_preview()
 {
     const Glib::ustring path = utf16_to_ustring(_path_string, _MAX_PATH);
-    
+
     _mutex->lock();
     _preview_bitmap_image = Gdk::Pixbuf::create_from_file(path);
     if(!_preview_bitmap_image) return false;
-    
+
     _preview_image_width = _preview_bitmap_image->get_width();
     _preview_document_width = _preview_image_width;
     _preview_image_height = _preview_bitmap_image->get_height();
     _preview_document_height = _preview_image_height;
-    
+
     _mutex->unlock();
 
     return true;
@@ -963,43 +963,43 @@ void FileOpenDialogImplWin32::render_preview()
     const int shaddowOffsetY = 2;
     const int pagePadding = 5;
     const double shaddowAlpha = 0.75;
-    
+
     // Is the preview showing?
     if(!_show_preview)
         return;
-    
+
     // Do we have anything to render?
     _mutex->lock();
-    
+
     if(!_preview_bitmap_image)
     {
         _mutex->unlock();
         return;
     }
-        
+
     // Tidy up any previous bitmap renderings
     if(_preview_bitmap != NULL)
         DeleteObject(_preview_bitmap);
     _preview_bitmap = NULL;
-    
+
     // Calculate the size of the caption
     int captionHeight = 0;
 
     if(_preview_wnd != NULL)
     {
         RECT rcCaptionRect;
-        WCHAR szCaption[_MAX_FNAME + 32];                
+        WCHAR szCaption[_MAX_FNAME + 32];
         const int iLength = format_caption(szCaption,
             sizeof(szCaption) / sizeof(WCHAR));
-    
+
         HDC dc = GetDC(_preview_wnd);
         DrawTextW(dc, szCaption, iLength, &rcCaptionRect,
             DT_CENTER | DT_TOP | DT_NOPREFIX | DT_PATH_ELLIPSIS | DT_CALCRECT);
         ReleaseDC(_preview_wnd, dc);
-    
+
         captionHeight = rcCaptionRect.bottom - rcCaptionRect.top;
     }
-    
+
     // Find the minimum scale to fit the image inside the preview area
     const double scaleFactorX =
         ((double)_preview_width - pagePadding * 2 - blurRadius)  / _preview_document_width;
@@ -1007,23 +1007,23 @@ void FileOpenDialogImplWin32::render_preview()
         ((double)_preview_height - pagePadding * 2
         - shaddowOffsetY - halfBlurRadius - captionHeight) / _preview_document_height;
     double scaleFactor = (scaleFactorX > scaleFactorY) ? scaleFactorY : scaleFactorX;
-    scaleFactor = (scaleFactor > 1.0) ? 1.0 : scaleFactor;    
-    
+    scaleFactor = (scaleFactor > 1.0) ? 1.0 : scaleFactor;
+
     // Now get the resized values
     const double scaledSvgWidth  = scaleFactor * _preview_document_width;
     const double scaledSvgHeight = scaleFactor * _preview_document_height;
-    
+
     const int svgX = pagePadding + halfBlurRadius;
     const int svgY = pagePadding;
-    
+
     const int frameX = svgX - pagePadding;
     const int frameY = svgY - pagePadding;
     const int frameWidth = scaledSvgWidth + pagePadding * 2;
     const int frameHeight = scaledSvgHeight + pagePadding * 2;
-    
+
     const int totalWidth = (int)ceil(frameWidth + blurRadius);
     const int totalHeight = (int)ceil(frameHeight + blurRadius);
-    
+
     // Prepare the drawing surface
     HDC hDC = GetDC(_preview_wnd);
     HDC hMemDC = CreateCompatibleDC(hDC);
@@ -1033,15 +1033,15 @@ void FileOpenDialogImplWin32::render_preview()
     Cairo::RefPtr<Context> context = Context::create(surface);
 
     // Paint the background to match the dialog colour
-    const COLORREF background = GetSysColor(COLOR_3DFACE);  
+    const COLORREF background = GetSysColor(COLOR_3DFACE);
     context->set_source_rgb(
         GetRValue(background) / 255.0,
         GetGValue(background) / 255.0,
         GetBValue(background) / 255.0);
     context->paint();
-     
+
     //----- Draw the drop shaddow -----//
-    
+
     // Left Edge
     x = frameX + shaddowOffsetX - halfBlurRadius;
     Cairo::RefPtr<LinearGradient> leftEdgeFade = LinearGradient::create(
@@ -1052,7 +1052,7 @@ void FileOpenDialogImplWin32::render_preview()
     context->rectangle (x, frameY + shaddowOffsetY + halfBlurRadius,
         blurRadius, frameHeight - blurRadius);
     context->fill();
-    
+
     // Right Edge
     x = frameX + frameWidth + shaddowOffsetX - halfBlurRadius;
     Cairo::RefPtr<LinearGradient> rightEdgeFade = LinearGradient::create(
@@ -1064,7 +1064,7 @@ void FileOpenDialogImplWin32::render_preview()
         frameY + shaddowOffsetY + halfBlurRadius,
         blurRadius, frameHeight - blurRadius);
     context->fill();
-        
+
     // Top Edge
     y = frameY + shaddowOffsetY - halfBlurRadius;
     Cairo::RefPtr<LinearGradient> topEdgeFade = LinearGradient::create(
@@ -1075,7 +1075,7 @@ void FileOpenDialogImplWin32::render_preview()
     context->rectangle (frameX + shaddowOffsetX + halfBlurRadius, y,
         frameWidth - blurRadius, blurRadius);
     context->fill();
-    
+
     // Bottom Edge
     y = frameY + frameHeight + shaddowOffsetY - halfBlurRadius;
     Cairo::RefPtr<LinearGradient> bottomEdgeFade = LinearGradient::create(
@@ -1086,7 +1086,7 @@ void FileOpenDialogImplWin32::render_preview()
     context->rectangle (frameX + shaddowOffsetX + halfBlurRadius, y,
         frameWidth - blurRadius, blurRadius);
     context->fill();
-    
+
     // Top Left Corner
     x = frameX + shaddowOffsetX - halfBlurRadius;
     y = frameY + shaddowOffsetY - halfBlurRadius;
@@ -1097,7 +1097,7 @@ void FileOpenDialogImplWin32::render_preview()
     context->set_source(topLeftCornerFade);
     context->rectangle (x, y, blurRadius, blurRadius);
     context->fill();
-    
+
     // Top Right Corner
     x = frameX + frameWidth + shaddowOffsetX - halfBlurRadius;
     y = frameY + shaddowOffsetY - halfBlurRadius;
@@ -1108,7 +1108,7 @@ void FileOpenDialogImplWin32::render_preview()
     context->set_source(topRightCornerFade);
     context->rectangle (x, y, blurRadius, blurRadius);
     context->fill();
-    
+
     // Bottom Left Corner
     x = frameX + shaddowOffsetX - halfBlurRadius;
     y = frameY + frameHeight + shaddowOffsetY - halfBlurRadius;
@@ -1119,7 +1119,7 @@ void FileOpenDialogImplWin32::render_preview()
     context->set_source(bottomLeftCornerFade);
     context->rectangle (x, y, blurRadius, blurRadius);
     context->fill();
-    
+
     // Bottom Right Corner
     x = frameX + frameWidth + shaddowOffsetX - halfBlurRadius;
     y = frameY + frameHeight + shaddowOffsetY - halfBlurRadius;
@@ -1132,18 +1132,18 @@ void FileOpenDialogImplWin32::render_preview()
         frameY + frameHeight + shaddowOffsetY - halfBlurRadius,
         blurRadius, blurRadius);
     context->fill();
-    
+
     // Draw the frame
     context->set_line_width(1);
     context->rectangle (frameX, frameY,    frameWidth, frameHeight);
-    
+
     context->set_source_rgb(1.0, 1.0, 1.0);
     context->fill_preserve();
     context->set_source_rgb(0.25, 0.25, 0.25);
     context->stroke_preserve();
-    
+
     // Draw the image
-    
+
     if(_preview_bitmap_image)    // Is the image a pixbuf?
     {
         // Set the transformation
@@ -1152,27 +1152,27 @@ void FileOpenDialogImplWin32::render_preview()
             0, scaleFactor,
             svgX, svgY };
         context->set_matrix (matrix);
-    
+
         // Render the image
         set_source_pixbuf (context, _preview_bitmap_image, 0, 0);
         context->paint();
-        
+
         // Reset the transformation
         context->set_identity_matrix();
     }
-    
+
     // Draw the inner frame
     context->set_source_rgb(0.75, 0.75, 0.75);
     context->rectangle (svgX, svgY,    scaledSvgWidth, scaledSvgHeight);
     context->stroke();
-    
+
     _mutex->unlock();
 
     // Finish drawing
     surface->finish();
     SelectObject(hMemDC, hOldBitmap) ;
     DeleteDC(hMemDC);
-    
+
     // Refresh the preview pane
     InvalidateRect(_preview_wnd, NULL, FALSE);
 }
@@ -1181,7 +1181,7 @@ int FileOpenDialogImplWin32::format_caption(wchar_t *caption, int caption_size)
 {
     wchar_t szFileName[_MAX_FNAME];
     _wsplitpath(_path_string, NULL, NULL, szFileName, NULL);
-                
+
     return snwprintf(caption, caption_size,
         L"%s\n%d kB\n%d \xD7 %d", szFileName, _preview_file_size,
         (int)_preview_document_width, (int)_preview_document_height);
@@ -1195,22 +1195,22 @@ FileOpenDialogImplWin32::show()
 {
     // We can only run one worker thread at a time
     //if(_mutex != NULL) return false;
-    
+
     if(!Glib::thread_supported())
         Glib::thread_init();
-    
+
     _result = false;
     _finished = false;
     _file_selected = false;
     _mutex = new Glib::Mutex();
     _main_loop = g_main_loop_new(g_main_context_default(), FALSE);
-    
+
     if(Glib::Thread::create(sigc::mem_fun(*this, &FileOpenDialogImplWin32::GetOpenFileName_thread), true))
     {
         while(1)
         {
             g_main_context_iteration(g_main_context_default(), FALSE);
-            
+
             if(_mutex->trylock())
             {
                 // Read mutexed data
@@ -1218,20 +1218,20 @@ FileOpenDialogImplWin32::show()
                 const bool is_file_selected = _file_selected;
                 _file_selected = false;
                 _mutex->unlock();
-                
+
                 if(finished) break;
                 if(is_file_selected) file_selected();
             }
-            
+
             Sleep(10);
         }
         //g_main_loop_run(_main_loop);
     }
-    
-    // Tidy up    
+
+    // Tidy up
     delete _mutex;
     _mutex = NULL;
-        
+
     return _result;
 }
 
@@ -1253,7 +1253,7 @@ std::vector<Glib::ustring>FileOpenDialogImplWin32::getFilenames()
 /**
  * Constructor
  */
-FileSaveDialogImplWin32::FileSaveDialogImplWin32(Gtk::Window &parent, 
+FileSaveDialogImplWin32::FileSaveDialogImplWin32(Gtk::Window &parent,
             const Glib::ustring &dir,
             FileDialogType fileTypes,
             const char *title,
@@ -1282,85 +1282,85 @@ void FileSaveDialogImplWin32::createFilterMenu()
 
     int filter_count = 0;
     int filter_length = 0;
-            
+
     for (Inkscape::Extension::DB::OutputList::iterator current_item = extension_list.begin();
          current_item != extension_list.end(); current_item++)
     {
         Inkscape::Extension::Output *omod = *current_item;
         if (omod->deactivated()) continue;
-        
+
         filter_count++;
-        
+
         Filter filter;
-        
+
         // Extension
-        const gchar *filter_extension = omod->get_extension();      
+        const gchar *filter_extension = omod->get_extension();
         filter.filter = g_utf8_to_utf16(
-            filter_extension, -1, NULL, &filter.filter_length, NULL);    
+            filter_extension, -1, NULL, &filter.filter_length, NULL);
         knownExtensions.insert( Glib::ustring(filter_extension).casefold() );
-        
+
         // Type
         filter.name = g_utf8_to_utf16(
             omod->get_filetypename(), -1, NULL, &filter.name_length, NULL);
-            
+
         filter.mod = omod;
-                        
+
         filter_length += filter.name_length +
             filter.filter_length + 3;   // Add 3 for two \0s and a *
-            
+
         filter_list.push_back(filter);
     }
-     
+
     int extension_index = 0;
     _extension_map = new Inkscape::Extension::Extension*[filter_count];
-    
+
     _filter = new wchar_t[filter_length];
     wchar_t *filterptr = _filter;
-    
+
     for(list<Filter>::iterator filter_iterator = filter_list.begin();
         filter_iterator != filter_list.end(); filter_iterator++)
     {
         const Filter &filter = *filter_iterator;
-    
+
         memcpy(filterptr, filter.name, filter.name_length * 2);
         filterptr += filter.name_length;
         g_free(filter.name);
-    
+
         *(filterptr++) = L'\0';
         *(filterptr++) = L'*';
 
         memcpy(filterptr, filter.filter, filter.filter_length * 2);
         filterptr += filter.filter_length;
         g_free(filter.filter);
-    
+
         *(filterptr++) = L'\0';
-        
+
         // Associate this input extension with the file type name
         _extension_map[extension_index++] = filter.mod;
     }
     *(filterptr++) = 0;
-    
+
     _filterIndex = 0;
 }
 
 void FileSaveDialogImplWin32::GetSaveFileName_thread()
 {
     OPENFILENAMEEXW ofn;
-    
+
     g_assert(this != NULL);
     //g_assert(_mutex != NULL);
-    g_assert(_main_loop != NULL);    
+    g_assert(_main_loop != NULL);
 
     gunichar2* current_directory_string = g_utf8_to_utf16(
         _current_directory.data(), -1, NULL, NULL, NULL);
-    
+
     // Copy the selected file name, converting from UTF-8 to UTF-16
     memset(_path_string, 0, sizeof(_path_string));
     gunichar2* utf16_path_string = g_utf8_to_utf16(
         myFilename.data(), -1, NULL, NULL, NULL);
     wcsncpy(_path_string, (wchar_t*)utf16_path_string, _MAX_PATH);
     g_free(utf16_path_string);
-    
+
     ZeroMemory(&ofn, sizeof(ofn));
     ofn.lStructSize = sizeof(ofn);
     ofn.hwndOwner = _ownerHwnd;
@@ -1374,23 +1374,23 @@ void FileSaveDialogImplWin32::GetSaveFileName_thread()
     ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
     ofn.lpstrFilter = _filter;
     ofn.nFilterIndex = _filterIndex;
-    
+
     _result = GetSaveFileNameW(&ofn) != 0;
-    
+
     _filterIndex = ofn.nFilterIndex;
     _extension = _extension_map[ofn.nFilterIndex];
-    
+
     // Copy the selected file name, converting from UTF-16 to UTF-8
     myFilename = utf16_to_ustring(_path_string, _MAX_PATH);
-        
+
     //_mutex->lock();
     //_finished = true;
     //_mutex->unlock();
-    
-    
+
+
     // Tidy up
     g_free(current_directory_string);
-    
+
     g_main_loop_quit(_main_loop);
 }
 
@@ -1405,42 +1405,42 @@ FileSaveDialogImplWin32::show()
 
     if(!Glib::thread_supported())
         Glib::thread_init();
-        
+
     _result = false;
     //_finished = false;
     //_mutex = new Glib::Mutex();
     _main_loop = g_main_loop_new(g_main_context_default(), FALSE);
-    
+
     if(Glib::Thread::create(sigc::mem_fun(*this, &FileSaveDialogImplWin32::GetSaveFileName_thread), true))
     {
         /*while(1)
         {
             // While the dialog runs - keep the main UI alive
             g_main_context_iteration(g_main_context_default(), FALSE);
-            
+
             if(_mutex->trylock())
             {
                 if(_finished) break;
                 _mutex->unlock();
             }
-            
+
             Sleep(10);
         }*/
         g_main_loop_run(_main_loop);
     }
     //delete _mutex;
     //_mutex = NULL;
-        
+
     if(_result)
         appendExtension(myFilename, (Inkscape::Extension::Output*)_extension);
-        
-    return _result;   
+
+    return _result;
 }
 
 void FileSaveDialogImplWin32::setSelectionType( Inkscape::Extension::Extension * /*key*/ )
 {
     // If no pointer to extension is passed in, look up based on filename extension.
-    
+
 }
 
 }
