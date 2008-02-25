@@ -1082,7 +1082,9 @@ sp_shape_get_curve (SPShape *shape)
 	return NULL;
 }
 
-/* NOT FOR GENERAL PUBLIC UNTIL SORTED OUT (Lauris) */
+/**
+ * Same as sp_shape_set_curve but without updating the display
+ */
 void
 sp_shape_set_curve_insync (SPShape *shape, SPCurve *curve, unsigned int owner)
 {
