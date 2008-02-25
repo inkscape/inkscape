@@ -20,7 +20,6 @@ src/dialogs/debugdialog.cpp
 src/dialogs/dialog-events.cpp
 src/dialogs/eek-color-def.cpp
 src/dialogs/export.cpp
-src/dialogs/filedialog-win32.cpp
 src/dialogs/fill-style.cpp
 src/dialogs/find.cpp
 src/dialogs/guidelinedialog.cpp
