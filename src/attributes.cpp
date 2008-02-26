@@ -307,6 +307,14 @@ static SPStyleProp const props[] = {
     {SP_ATTR_ADDITIVE, "additive"},
     {SP_ATTR_ACCUMULATE, "accumulate"},
 
+    /* SVGFonts */
+    {SP_ATTR_HORIZ_ORIGIN_X, "horiz-origin-x"},
+    {SP_ATTR_HORIZ_ORIGIN_Y, "horiz-origin-y"},
+    {SP_ATTR_HORIZ_ADV_X, "horiz-adv-x"},
+    {SP_ATTR_VERT_ORIGIN_X, "vert-origin-x"},
+    {SP_ATTR_VERT_ORIGIN_Y, "vert-origin-y"},
+    {SP_ATTR_VERT_ADV_Y, "vert-adv-y"},
+
     /* XML */
     {SP_ATTR_XML_SPACE, "xml:space"},
 

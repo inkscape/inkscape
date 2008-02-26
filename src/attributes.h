@@ -307,6 +307,15 @@ enum SPAttributeEnum {
     SP_ATTR_ADDITIVE,
     SP_ATTR_ACCUMULATE,
 
+    /* SVGFonts */
+    /* SPFont */
+    SP_ATTR_HORIZ_ORIGIN_X,
+    SP_ATTR_HORIZ_ORIGIN_Y,
+    SP_ATTR_HORIZ_ADV_X,
+    SP_ATTR_VERT_ORIGIN_X,
+    SP_ATTR_VERT_ORIGIN_Y,
+    SP_ATTR_VERT_ADV_Y,
+
     /* XML */
     SP_ATTR_XML_SPACE,
 

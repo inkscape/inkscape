@@ -43,6 +43,7 @@
 #include "sp-flowdiv.h"
 #include "sp-flowregion.h"
 #include "sp-flowtext.h"
+#include "sp-font.h"
 #include "sp-style-elem.h"
 #include "sp-switch.h"
 #include "color-profile-fns.h"
@@ -139,6 +140,7 @@ populate_dtables()
         { "svg:flowRegionExclude", SP_TYPE_FLOWREGIONEXCLUDE },
         { "svg:flowRoot", SP_TYPE_FLOWTEXT },
         { "svg:flowSpan", SP_TYPE_FLOWTSPAN },
+        { "svg:font", SP_TYPE_FONT },
         { "svg:g", SP_TYPE_GROUP },
         { "svg:feBlend", SP_TYPE_FEBLEND },
         { "svg:feColorMatrix", SP_TYPE_FECOLORMATRIX },

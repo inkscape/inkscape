@@ -21,6 +21,12 @@
 #define SP_IS_FONT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_FONT))
 
 struct SPFont : public SPObject {
+    double horiz_origin_x;
+    double horiz_origin_y;
+    double horiz_adv_x;
+    double vert_origin_x;
+    double vert_origin_y;
+    double vert_adv_y;
 };
 
 struct SPFontClass {
