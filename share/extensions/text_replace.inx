@@ -3,8 +3,8 @@
 	<id>org.inkscape.text.replacetext</id>
 	<dependency type="executable" location="extensions">chardataeffect.py</dependency>
 	<dependency type="executable" location="extensions">text_replace.py</dependency>
-	<param name="from_text" type="string" gui-text="Replace:"></param>
-	<param name="to_text" type="string" gui-text="By:"></param>
+	<param name="from_text" type="string" _gui-text="Replace:"></param>
+	<param name="to_text" type="string" _gui-text="By:"></param>
 	<effect>
 		<object-type>all</object-type>
 		<effects-menu>

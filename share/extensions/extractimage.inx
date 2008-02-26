@@ -4,7 +4,7 @@
 	<dependency type="executable" location="extensions">extractimage.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
 	<param name="filepath" type="string" _gui-text="Path to save image">none</param>
-	<param name="desc" type="description">Note: The file extension is appended automatically.</param>
+	<_param name="desc" type="description">Note: The file extension is appended automatically.</_param>
     <effect>
 		<object-type>all</object-type>
                 <effects-menu>
