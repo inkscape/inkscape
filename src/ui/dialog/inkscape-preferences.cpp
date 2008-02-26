@@ -543,6 +543,7 @@ void InkscapePreferences::initPageClones()
     _page_clones.add_line( true, "", _clone_option_delete, "",
                            _("Orphaned clones are deleted along with their original."));
 
+    //TRANSLATORS: Heading for the Inkscape Preferences "Clones" Page
     this->AddPage(_page_clones, _("Clones"), PREFS_PAGE_CLONES);
 }
 

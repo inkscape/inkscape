@@ -76,7 +76,9 @@ Find::Find()
       _check_paths(_("Paths"), _("Search paths, lines, polylines")),
       _check_texts(_("Texts"), _("Search text objects")),
       _check_groups(_("Groups"), _("Search groups")),
-      _check_clones(_("Clones"), _("Search clones")),
+      _check_clones(
+    		  //TRANSLATORS: Translate the word "Clones" only. A noun indicating type of object to find
+    		  Q_("find|Clones"), _("Search clones")),
       _check_images(_("Images"), _("Search images")),
       _check_offsets(_("Offsets"), _("Search offset objects")),
     

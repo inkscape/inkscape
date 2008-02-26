@@ -615,7 +615,9 @@ sp_find_types ()
         }
 
         {
-            GtkWidget *c = sp_find_types_checkbox_indented (vb, "clones", TRUE, tt, _("Search clones"), _("Clones"), NULL, 10);
+            GtkWidget *c = sp_find_types_checkbox_indented (vb, "clones", TRUE, tt, _("Search clones"),
+            		//TRANSLATORS: Translate the word "Clones" only. A noun indicating type of object to find
+            		Q_("find|Clones"), NULL, 10);
             gtk_box_pack_start (GTK_BOX (vb_all), c, FALSE, FALSE, 0);
         }
 
