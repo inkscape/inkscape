@@ -888,14 +888,12 @@ inkscape_add_desktop (SPDesktop * desktop)
 
     g_assert (!g_slist_find (inkscape->desktops, desktop));
 
-    inkscape->desktops = g_slist_append (inkscape->desktops, desktop);
+    inkscape->desktops = g_slist_prepend (inkscape->desktops, desktop);
 
-    if (DESKTOP_IS_ACTIVE (desktop)) {
-        g_signal_emit (G_OBJECT (inkscape), inkscape_signals[ACTIVATE_DESKTOP], 0, desktop);
-        g_signal_emit (G_OBJECT (inkscape), inkscape_signals[SET_EVENTCONTEXT], 0, sp_desktop_event_context (desktop));
-        g_signal_emit (G_OBJECT (inkscape), inkscape_signals[SET_SELECTION], 0, sp_desktop_selection (desktop));
-        g_signal_emit (G_OBJECT (inkscape), inkscape_signals[CHANGE_SELECTION], 0, sp_desktop_selection (desktop));
-    }
+    g_signal_emit (G_OBJECT (inkscape), inkscape_signals[ACTIVATE_DESKTOP], 0, desktop);
+    g_signal_emit (G_OBJECT (inkscape), inkscape_signals[SET_EVENTCONTEXT], 0, sp_desktop_event_context (desktop));
+    g_signal_emit (G_OBJECT (inkscape), inkscape_signals[SET_SELECTION], 0, sp_desktop_selection (desktop));
+    g_signal_emit (G_OBJECT (inkscape), inkscape_signals[CHANGE_SELECTION], 0, sp_desktop_selection (desktop));
 }
 
 
