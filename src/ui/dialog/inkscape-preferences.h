@@ -85,7 +85,7 @@ public:
 protected:
     Gtk::Frame _page_frame;
     Gtk::Label _page_title;
-    Gtk::TreeView _page_list;  
+    Gtk::TreeView _page_list;
     Glib::RefPtr<Gtk::TreeStore> _page_list_model;
 
     //Pagelist model columns:
@@ -104,7 +104,7 @@ protected:
     Gtk::TreeModel::Path _path_shapes;
 
     DialogPage _page_mouse, _page_scrolling, _page_steps, _page_tools, _page_windows,
-        _page_clones, _page_mask, _page_transforms, _page_filters, _page_select, 
+        _page_clones, _page_mask, _page_transforms, _page_filters, _page_select,
         _page_importexport, _page_cms, _page_grids, _page_misc;
     DialogPage _page_selector, _page_node, _page_tweak, _page_zoom, _page_shapes, _page_pencil, _page_pen,
                _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper;
@@ -112,6 +112,7 @@ protected:
 
     PrefSpinButton _mouse_sens, _mouse_thres;
     PrefCheckButton _mouse_use_ext_input;
+    PrefCheckButton _mouse_switch_on_ext_input;
 
     PrefSpinButton _scroll_wheel, _scroll_arrow_px, _scroll_arrow_acc, _scroll_auto_speed, _scroll_auto_thres;
     PrefCheckButton _scroll_space;
@@ -133,15 +134,15 @@ protected:
     PrefCheckButton _win_hide_task, _win_zoom_resize , _win_show_close;
 
 // FIXME: Temporary Win32 special code to enable transient dialogs
-#ifdef WIN32 
-    PrefCheckButton _win_ontop_win32;   
-#endif    
+#ifdef WIN32
+    PrefCheckButton _win_ontop_win32;
+#endif
 
     PrefCheckButton _calligrapy_use_abs_size;
     PrefCheckButton _calligrapy_keep_selected;
 
     PrefCheckButton _connector_ignore_text;
-    
+
     PrefRadioButton _clone_option_parallel, _clone_option_stay, _clone_option_transform,
                     _clone_option_unlink, _clone_option_delete;
 
@@ -252,7 +253,7 @@ private:
 
 #endif //INKSCAPE_UI_DIALOG_INKSCAPE_PREFERENCES_H
 
-/* 
+/*
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"

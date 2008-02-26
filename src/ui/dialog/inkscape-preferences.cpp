@@ -79,9 +79,9 @@ InkscapePreferences::InkscapePreferences()
     _page_list_model = Gtk::TreeStore::create(_page_list_columns);
     _page_list.set_model(_page_list_model);
     _page_list.append_column("name",_page_list_columns._col_name);
-	Glib::RefPtr<Gtk::TreeSelection> page_list_selection = _page_list.get_selection();
-	page_list_selection->signal_changed().connect(sigc::mem_fun(*this, &InkscapePreferences::on_pagelist_selection_changed));
-	page_list_selection->set_mode(Gtk::SELECTION_BROWSE);
+    Glib::RefPtr<Gtk::TreeSelection> page_list_selection = _page_list.get_selection();
+    page_list_selection->signal_changed().connect(sigc::mem_fun(*this, &InkscapePreferences::on_pagelist_selection_changed));
+    page_list_selection->set_mode(Gtk::SELECTION_BROWSE);
 
     //Pages
     Gtk::VBox* vbox_page = Gtk::manage(new Gtk::VBox());
@@ -155,6 +155,9 @@ void InkscapePreferences::initPageMouse()
     _page_mouse.add_line(true, "",_mouse_use_ext_input, "",
                         _("Use the capabilities of a tablet or other pressure-sensitive device. Disable this only if you have problems with the tablet (you can still use it as a mouse)"));
 
+    _mouse_switch_on_ext_input.init( _("Switch tool based on tablet device (requires restart)"), "options.switchonextinput", "value", false);
+    _page_mouse.add_line(true, "",_mouse_switch_on_ext_input, "",
+                        _("Change tool as different devices are used on the tablet (pen, eraser, mouse)"));
 }
 
 void InkscapePreferences::initPageScrolling()

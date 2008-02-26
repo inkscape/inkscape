@@ -49,8 +49,10 @@ int sp_desktop_root_handler(SPCanvasItem */*item*/, GdkEvent *event, SPDesktop *
 {
     static bool watch = false;
     static bool first = true;
+
     if ( first ) {
-        if ( prefs_get_int_attribute("options.useextinput", "value", 1) ) {
+        if ( prefs_get_int_attribute("options.useextinput", "value", 1)
+            && prefs_get_int_attribute("options.switchonextinput", "value", 0) ) {
             watch = true;
             init_extended();
         }
@@ -408,8 +410,8 @@ void snoop_extended(GdkEvent* event, SPDesktop *desktop)
                     } else {
                         g_warning("     NO VERB FOUND");
                     }
-                } else {
-                    g_warning("     NO ID FOUND");
+//                 } else {
+//                     g_warning("     NO ID FOUND");
                 }
             }
         }
