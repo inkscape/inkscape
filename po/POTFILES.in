@@ -362,6 +362,7 @@ src/ui/dialog/export.cpp
 src/ui/dialog/extension-editor.cpp
 src/ui/dialog/filedialog.cpp
 src/ui/dialog/filedialogimpl-gtkmm.cpp
+src/ui/dialog/filedialogimpl-win32.cpp
 src/ui/dialog/fill-and-stroke.cpp
 src/ui/dialog/filter-effects-dialog.cpp
 src/ui/dialog/find.cpp

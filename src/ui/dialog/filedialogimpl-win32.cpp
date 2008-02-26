@@ -189,9 +189,9 @@ void FileOpenDialogImplWin32::createFilterMenu()
     ustring all_inkscape_files_filter, all_image_files_filter;
     Filter all_files, all_inkscape_files, all_image_files;
 
-    const gchar *all_files_filter_name = _("All Files");
-    const gchar *all_inkscape_files_filter_name = ("All Inkscape Files");
-    const gchar *all_image_files_filter_name = _("All Image Files");
+    const gchar *all_files_filter_name = N_("All Files");
+    const gchar *all_inkscape_files_filter_name = N_("All Inkscape Files");
+    const gchar *all_image_files_filter_name = N_("All Image Files");
 
     // Calculate the amount of memory required
     int filter_count = 3;       // 3 - one for All Files, All Images and All Inkscape Files
