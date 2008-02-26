@@ -14,6 +14,8 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
+#include <map>
+#include <string>
 #include "display/guideline.h"
 #include "helper/unit-menu.h"
 #include "helper/units.h"
@@ -33,12 +35,31 @@
 #include "snap.h"
 #include "display/canvas-grid.h"
 #include "display/canvas-axonomgrid.h"
+#include "prefs-utils.h"
+#include "helper/action.h"
+#include "verbs.h"
 #include <2geom/point.h>
+
+static void snoop_extended(GdkEvent* event, SPDesktop *desktop);
+static void init_extended();
 
 /* Root item handler */
 
 int sp_desktop_root_handler(SPCanvasItem */*item*/, GdkEvent *event, SPDesktop *desktop)
 {
+    static bool watch = false;
+    static bool first = true;
+    if ( first ) {
+        if ( prefs_get_int_attribute("options.useextinput", "value", 1) ) {
+            watch = true;
+            init_extended();
+        }
+        first = false;
+    }
+    if ( watch ) {
+        snoop_extended(event, desktop);
+    }
+
     return sp_event_context_root_handler(desktop->event_context, event);
 }
 
@@ -272,6 +293,129 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
 
     return ret;
 }
+
+static std::map<GdkInputSource, std::string> switchMap;
+static std::map<GdkInputSource, int> toolToUse;
+static std::string lastName;
+static GdkInputSource lastType = GDK_SOURCE_MOUSE;
+
+static void init_extended()
+{
+    std::string avoidName = "pad";
+    GList* devices = gdk_devices_list();
+    if ( devices ) {
+        for ( GList* curr = devices; curr; curr = g_list_next(curr) ) {
+            GdkDevice* dev = reinterpret_cast<GdkDevice*>(curr->data);
+            if ( dev->name
+                 && (avoidName != dev->name)
+                 && switchMap.find(dev->source) == switchMap.end() ) {
+                switchMap[dev->source] = dev->name;
+//                 g_message("Adding '%s' as [%s]", dev->name, namefor(dev->source));
+
+                // Set the initial tool for the device
+                switch ( dev->source ) {
+                    case GDK_SOURCE_MOUSE:
+                        // Don't do anything for the main mouse.
+                        break;
+                    case GDK_SOURCE_PEN:
+                        toolToUse[GDK_SOURCE_PEN] = SP_VERB_CONTEXT_CALLIGRAPHIC;
+                        break;
+                    case GDK_SOURCE_ERASER:
+                        toolToUse[GDK_SOURCE_ERASER] = SP_VERB_CONTEXT_TWEAK;
+                        break;
+                    case GDK_SOURCE_CURSOR:
+                        toolToUse[GDK_SOURCE_CURSOR] = SP_VERB_CONTEXT_SELECT;
+                        break;
+                }
+//             } else {
+//                 g_message("Skippn '%s' as [%s]", dev->name, namefor(dev->source));
+            }
+        }
+    }
+}
+
+
+void snoop_extended(GdkEvent* event, SPDesktop *desktop)
+{
+    GdkInputSource source = GDK_SOURCE_MOUSE;
+    std::string name;
+
+    switch ( event->type ) {
+        case GDK_MOTION_NOTIFY:
+        {
+            GdkEventMotion* event2 = reinterpret_cast<GdkEventMotion*>(event);
+            if ( event2->device ) {
+                source = event2->device->source;
+                name = event2->device->name;
+            }
+        }
+        break;
+
+        case GDK_BUTTON_PRESS:
+        case GDK_2BUTTON_PRESS:
+        case GDK_3BUTTON_PRESS:
+        case GDK_BUTTON_RELEASE:
+        {
+            GdkEventButton* event2 = reinterpret_cast<GdkEventButton*>(event);
+            if ( event2->device ) {
+                source = event2->device->source;
+                name = event2->device->name;
+            }
+        }
+        break;
+
+        case GDK_SCROLL:
+        {
+            GdkEventScroll* event2 = reinterpret_cast<GdkEventScroll*>(event);
+            if ( event2->device ) {
+                source = event2->device->source;
+                name = event2->device->name;
+            }
+        }
+        break;
+
+        case GDK_PROXIMITY_IN:
+        case GDK_PROXIMITY_OUT:
+        {
+            GdkEventProximity* event2 = reinterpret_cast<GdkEventProximity*>(event);
+            if ( event2->device ) {
+                source = event2->device->source;
+                name = event2->device->name;
+            }
+        }
+        break;
+
+        default:
+            ;
+    }
+
+    if (!name.empty()) {
+        if ( lastName != name || lastType != source ) {
+            // The device switched. See if it is one we 'count'
+            std::map<GdkInputSource, std::string>::iterator it = switchMap.find(source);
+            if ( it != switchMap.end() && (name == it->second) ) {
+                lastName = name;
+                lastType = source;
+
+                std::map<GdkInputSource, int>::iterator it2 = toolToUse.find(source);
+                if (it2 != toolToUse.end() ) {
+                    Inkscape::Verb* verb = Inkscape::Verb::get(it2->second);
+                    if ( verb ) {
+                        SPAction* action = verb->get_action(desktop);
+                        if ( action ) {
+                            sp_action_perform(action, 0);
+                        }
+                    } else {
+                        g_warning("     NO VERB FOUND");
+                    }
+                } else {
+                    g_warning("     NO ID FOUND");
+                }
+            }
+        }
+    }
+}
+
 
 
 /*
