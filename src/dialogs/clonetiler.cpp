@@ -1139,8 +1139,8 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
     double scaley_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "scaley_per_i", 0, -100, 1000);
     double scalex_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "scalex_per_j", 0, -100, 1000);
     double scaley_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "scaley_per_j", 0, -100, 1000);
-    double scalex_rand  = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_scalex",  0, 0, 1000);
-    double scaley_rand  = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_scaley",  0, 0, 1000);
+    double scalex_rand  = 0.01 * prefs_get_double_attribute_limited (prefs_path, "scalex_rand",  0, 0, 1000);
+    double scaley_rand  = 0.01 * prefs_get_double_attribute_limited (prefs_path, "scaley_rand",  0, 0, 1000);
     double scalex_exp   =        prefs_get_double_attribute_limited (prefs_path, "scalex_exp",   1, 0, 10);
     double scaley_exp   =        prefs_get_double_attribute_limited (prefs_path, "scaley_exp",   1, 0, 10);
     double scalex_log       =    prefs_get_double_attribute_limited (prefs_path, "scalex_log",   0, 0, 10);
