@@ -55,6 +55,8 @@ static void sp_font_class_init(SPFontClass *fc)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) fc;
 
+    parent_class = (SPObjectClass *) g_type_class_ref(SP_TYPE_OBJECT);
+
     sp_object_class->build = sp_font_build;
     sp_object_class->release = sp_font_release;
     sp_object_class->set = sp_font_set;
@@ -119,6 +121,7 @@ static void sp_font_set(SPObject *object, unsigned int key, const gchar *value)
             number = helperfns_read_number(value);
             if (number != font->horiz_origin_x){
                 font->horiz_origin_x = number;
+g_warning("SP_ATTR_HORIZ_ORIGIN_X: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -126,6 +129,7 @@ static void sp_font_set(SPObject *object, unsigned int key, const gchar *value)
             number = helperfns_read_number(value);
             if (number != font->horiz_origin_y){
                 font->horiz_origin_y = number;
+g_warning("SP_ATTR_HORIZ_ORIGIN_Y: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -133,6 +137,7 @@ static void sp_font_set(SPObject *object, unsigned int key, const gchar *value)
             number = helperfns_read_number(value);
             if (number != font->horiz_adv_x){
                 font->horiz_adv_x = number;
+g_warning("SP_ATTR_HORIZ_ADV_X: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -140,6 +145,7 @@ static void sp_font_set(SPObject *object, unsigned int key, const gchar *value)
             number = helperfns_read_number(value);
             if (number != font->vert_origin_x){
                 font->vert_origin_x = number;
+g_warning("SP_ATTR_VERT_ORIGIN_X: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -147,6 +153,7 @@ static void sp_font_set(SPObject *object, unsigned int key, const gchar *value)
             number = helperfns_read_number(value);
             if (number != font->vert_origin_y){
                 font->vert_origin_y = number;
+g_warning("SP_ATTR_VERT_ORIGIN_Y: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -154,6 +161,7 @@ static void sp_font_set(SPObject *object, unsigned int key, const gchar *value)
             number = helperfns_read_number(value);
             if (number != font->vert_adv_y){
                 font->vert_adv_y = number;
+g_warning("SP_ATTR_VERT_ADV_Y: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
