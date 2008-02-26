@@ -120,7 +120,11 @@ modules = \
 	ai_input.inx \
 	ai_output.inx \
 	aisvg.inx \
+	ccx_input.inx \
 	cdr_input.inx\
+	cdt_input.inx \
+	cgm_input.inx \
+	cmx_input.inx \
 	color_brighter.inx\
 	color_custom.inx \
 	color_darker.inx\
@@ -188,6 +192,7 @@ modules = \
 	rubberstretch.inx \
 	rtree.inx \
 	sk_input.inx \
+	sk1_input.inx \
 	straightseg.inx \
 	summersnight.inx \
 	svg2xaml.inx \

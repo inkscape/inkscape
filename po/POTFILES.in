@@ -438,7 +438,11 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/ai_input.inx
 [type: gettext/xml] share/extensions/ai_output.inx
 [type: gettext/xml] share/extensions/aisvg.inx
+[type: gettext/xml] share/extensions/ccx_input.inx
 [type: gettext/xml] share/extensions/cdr_input.inx
+[type: gettext/xml] share/extensions/cdt_input.inx
+[type: gettext/xml] share/extensions/cgm_input.inx
+[type: gettext/xml] share/extensions/cmx_input.inx
 [type: gettext/xml] share/extensions/color_brighter.inx
 [type: gettext/xml] share/extensions/color_custom.inx
 [type: gettext/xml] share/extensions/color_darker.inx
@@ -505,6 +509,7 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/rtree.inx
 [type: gettext/xml] share/extensions/rubberstretch.inx
 [type: gettext/xml] share/extensions/sk_input.inx
+[type: gettext/xml] share/extensions/sk1_input.inx
 [type: gettext/xml] share/extensions/spirograph.inx
 [type: gettext/xml] share/extensions/straightseg.inx
 [type: gettext/xml] share/extensions/summersnight.inx
