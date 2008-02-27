@@ -113,7 +113,7 @@ Random::setStartSeed(long newseed)
 void
 Random::addReseedButton()
 {
-    Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( "draw_spiral", Inkscape::ICON_SIZE_BUTTON) );
+    Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( "randomize", Inkscape::ICON_SIZE_BUTTON) );
     Gtk::Button * pButton = Gtk::manage(new Gtk::Button());
     pButton->set_relief(Gtk::RELIEF_NONE);
     pIcon->show();
