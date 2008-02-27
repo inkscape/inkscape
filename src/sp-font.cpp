@@ -25,7 +25,7 @@ static void sp_font_release(SPObject *object);
 static void sp_font_set(SPObject *object, unsigned int key, const gchar *value);
 static Inkscape::XML::Node *sp_font_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
 
-static gchar *sp_font_description(SPItem *item);
+// static gchar *sp_font_description(SPItem *item);
 
 static SPObjectClass *parent_class;
 
