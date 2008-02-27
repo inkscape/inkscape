@@ -18,7 +18,7 @@
 #include "libnr/nr-path-code.h"
 #include "livarot/Path.h"
 #include <glibmm/ustring.h>
-
+#include <gdk/gdkevents.h>
 #include <list>
 
 class SPObject;
