@@ -308,12 +308,62 @@ static SPStyleProp const props[] = {
     {SP_ATTR_ACCUMULATE, "accumulate"},
 
     /* SVGFonts */
+    /*<font>*/
     {SP_ATTR_HORIZ_ORIGIN_X, "horiz-origin-x"},
     {SP_ATTR_HORIZ_ORIGIN_Y, "horiz-origin-y"},
     {SP_ATTR_HORIZ_ADV_X, "horiz-adv-x"},
     {SP_ATTR_VERT_ORIGIN_X, "vert-origin-x"},
     {SP_ATTR_VERT_ORIGIN_Y, "vert-origin-y"},
     {SP_ATTR_VERT_ADV_Y, "vert-adv-y"},
+
+    /*<glyph>*/
+    {SP_ATTR_UNICODE, "unicode"},
+    {SP_ATTR_GLYPH_NAME, "glyph-name"},
+    {SP_ATTR_ORIENTATION, "orientation"},
+    {SP_ATTR_ARABIC_FORM, "arabic-form"},
+    {SP_ATTR_LANG, "lang"},
+
+    /*<hkern> and <vkern>*/
+    {SP_ATTR_U1, "u1"},
+    {SP_ATTR_G1, "g1"},
+    {SP_ATTR_U2, "u2"},
+    {SP_ATTR_G2, "g2"},
+    {SP_ATTR_K, "k"},
+
+    /*<font-face>*/
+    {SP_ATTR_FONT_FAMILY, "font-family"},
+    {SP_ATTR_FONT_STYLE, "font-style"},
+    {SP_ATTR_FONT_VARIANT, "font-variant"},
+    {SP_ATTR_FONT_WEIGHT, "font-weight"},
+    {SP_ATTR_FONT_STRETCH, "font-stretch"},
+    {SP_ATTR_FONT_SIZE, "font-size"},
+    {SP_ATTR_UNICODE_RANGE, "unicode-range"},
+    {SP_ATTR_UNITS_PER_EM, "units-per-em"},
+    {SP_ATTR_PANOSE_1, "panose-1"},
+    {SP_ATTR_STEMV, "stemv"},
+    {SP_ATTR_STEMH, "stemh"},
+    //{SP_ATTR_SLOPE, "slope"},
+    {SP_ATTR_CAP_HEIGHT, "cap-height"},
+    {SP_ATTR_X_HEIGHT, "x-height"},
+    {SP_ATTR_ACCENT_HEIGHT, "accent-height"},
+    {SP_ATTR_ASCENT, "ascent"},
+    {SP_ATTR_DESCENT, "descent"},
+    {SP_ATTR_WIDTHS, "widths"},
+    {SP_ATTR_BBOX, "bbox"},
+    {SP_ATTR_IDEOGRAPHIC, "ideographic"},
+    {SP_ATTR_ALPHABETIC, "alphabetic"},
+    {SP_ATTR_MATHEMATICAL, "mathematical"},
+    {SP_ATTR_HANGING, "hanging"},
+    {SP_ATTR_V_IDEOGRAPHIC, "ideographic"},
+    {SP_ATTR_V_ALPHABETIC, "v-alphabetic"},
+    {SP_ATTR_V_MATHEMATICAL, "v-mathematical"},
+    {SP_ATTR_V_HANGING, "v-hanging"},
+    {SP_ATTR_UNDERLINE_POSITION, "underline-position"},
+    {SP_ATTR_UNDERLINE_THICKNESS, "underline-thickness"},
+    {SP_ATTR_STRIKETHROUGH_POSITION, "strikethrough-position"},
+    {SP_ATTR_STRIKETHROUGH_THICKNESS, "strikethrough-thickness"},
+    {SP_ATTR_OVERLINE_POSITION, "overline-position"},
+    {SP_ATTR_OVERLINE_THICKNESS, "overline-thickness"},
 
     /* XML */
     {SP_ATTR_XML_SPACE, "xml:space"},
