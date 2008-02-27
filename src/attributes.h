@@ -95,7 +95,7 @@ enum SPAttributeEnum {
     SP_ATTR_INKSCAPE_OBJECT_PATHS,
     SP_ATTR_INKSCAPE_OBJECT_NODES,
     SP_ATTR_INKSCAPE_BBOX_PATHS,
-    SP_ATTR_INKSCAPE_BBOX_NODES,    
+    SP_ATTR_INKSCAPE_BBOX_NODES,
     SP_ATTR_INKSCAPE_CURRENT_LAYER,
     SP_ATTR_INKSCAPE_DOCUMENT_UNITS,
     SP_ATTR_INKSCAPE_CONNECTOR_SPACING,
@@ -239,7 +239,7 @@ enum SPAttributeEnum {
     /*feFlood*/
     SP_ATTR_FLOODCOLOR,
     SP_ATTR_FLOODOPACITY,
-	/* SPGaussianBlur */
+    /* SPGaussianBlur */
     SP_ATTR_STDDEVIATION,
     /*feImage*/
     /*feMerge*/
@@ -249,14 +249,14 @@ enum SPAttributeEnum {
     /*feOffset*/
     //SP_ATTR_DX,
     //SP_ATTR_DY,
-	/*feSpecularLighting*/
+    /*feSpecularLighting*/
     //SP_ATTR_SURFACESCALE,
     SP_ATTR_SPECULARCONSTANT,
     SP_ATTR_SPECULAREXPONENT,
     /*feTile*/
     /*feTurbulence*/
     SP_ATTR_BASEFREQUENCY,
-	SP_ATTR_NUMOCTAVES,
+    SP_ATTR_NUMOCTAVES,
     SP_ATTR_SEED,
     SP_ATTR_STITCHTILES,
     //SP_ATTR_TYPE,

@@ -111,7 +111,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_Y, "y"},
     /* SPPath */
     {SP_ATTR_D, "d"},
-    {SP_ATTR_INKSCAPE_ORIGINAL_D, "inkscape:original-d"},    
+    {SP_ATTR_INKSCAPE_ORIGINAL_D, "inkscape:original-d"},
     /* (Note: XML representation of connectors may change in future.) */
     {SP_ATTR_CONNECTOR_TYPE, "inkscape:connector-type"},
     {SP_ATTR_CONNECTION_START, "inkscape:connection-start"},
@@ -240,7 +240,7 @@ static SPStyleProp const props[] = {
     /*feFlood*/
     {SP_ATTR_FLOODCOLOR, "flood-color"},
     {SP_ATTR_FLOODOPACITY, "flood-opacity"},
-	/* SPGaussianBlur */
+    /* SPGaussianBlur */
     {SP_ATTR_STDDEVIATION, "stdDeviation"},
     /*feImage*/
     /*feMerge*/
@@ -250,7 +250,7 @@ static SPStyleProp const props[] = {
     /*feOffset*/
     //{SP_ATTR_DX, "dx"},
     //{SP_ATTR_DY, "dy"},
-	/*feSpecularLighting*/
+    /*feSpecularLighting*/
     {SP_ATTR_SPECULARCONSTANT, "specularConstant"},
     {SP_ATTR_SPECULAREXPONENT, "specularExponent"},
     /*feTile*/
@@ -319,7 +319,7 @@ static SPStyleProp const props[] = {
     /*<glyph>*/
     {SP_ATTR_UNICODE, "unicode"},
     {SP_ATTR_GLYPH_NAME, "glyph-name"},
-    {SP_ATTR_ORIENTATION, "orientation"},
+    //{SP_ATTR_ORIENTATION, "orientation"},
     {SP_ATTR_ARABIC_FORM, "arabic-form"},
     {SP_ATTR_LANG, "lang"},
 
