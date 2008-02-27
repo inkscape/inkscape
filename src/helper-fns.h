@@ -14,7 +14,7 @@
  */
 
 #include <string.h>
-
+#include <vector>
 #include <sstream>
 
 // calling helperfns_read_number(string, false), it's not obvious, what

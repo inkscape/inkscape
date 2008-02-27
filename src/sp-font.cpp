@@ -15,6 +15,7 @@
 #include "attributes.h"
 #include "sp-font.h"
 #include "document.h"
+#include "helper-fns.h"
 
 static void sp_font_class_init(SPFontClass *fc);
 static void sp_font_init(SPFont *font);
@@ -95,20 +96,6 @@ static void sp_font_release(SPObject *object)
     if (((SPObjectClass *) parent_class)->release) {
         ((SPObjectClass *) parent_class)->release(object);
     }
-}
-
-//ToDo: use helper-fns.h
-inline double helperfns_read_number(gchar const *value) {
-    if (!value) return 0;
-    char *end;
-    double ret = g_ascii_strtod(value, &end);
-    if (*end) {
-        g_warning("Unable to convert \"%s\" to number", value);
-        // We could leave this out, too. If strtod can't convert
-        // anything, it will return zero.
-        ret = 0;
-    }
-    return ret;
 }
 
 static void sp_font_set(SPObject *object, unsigned int key, const gchar *value)
