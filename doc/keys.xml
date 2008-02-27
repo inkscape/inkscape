@@ -900,7 +900,8 @@ groups) with the same effect as Alt+click.)</note>
 *<section title="3D box tool" color="cff4e2">
 <group>
 <title>Draw</title>
-<mouse><key><left-drag/></key> <action>draw a 3D box (use shift to extrude in Z direction)</action></mouse>
+<mouse><key><left-drag/></key> <action>draw a 3D box (X/Y plane)</action></mouse>
+<mouse><key><shift/><left-drag/></key> <action>draw a 3D box (extrude in Z)</action></mouse>
 </group>
 
 <group>
