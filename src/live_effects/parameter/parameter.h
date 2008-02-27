@@ -13,9 +13,6 @@
 #include <2geom/point.h>
 #include <2geom/path.h>
 
-#include "ui/widget/registry.h"
-#include "ui/widget/registered-widget.h"
-
 struct SPDesktop;
 struct SPItem;
 
@@ -28,6 +25,12 @@ namespace Inkscape {
 
 namespace NodePath {
     class Path ;
+}
+
+namespace UI {
+namespace Widget {
+    class Registry;
+}
 }
 
 namespace LivePathEffect {

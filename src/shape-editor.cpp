@@ -212,15 +212,15 @@ void ShapeEditor::set_item(SPItem *item) {
 
 /** Please note that this function only works for path parameters.
 *  All other parameters probably will crash Inkscape!
-*  Fortunately, there are no other on-canvas edittable objects at this moment :)
 */
-void ShapeEditor::set_item_livepatheffect_parameter(SPItem *item, SPObject *lpeobject, const char * key) {
+void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject, const char * key) {
 
     unset_item();
 
     this->grab_node = -1;
 
     if (lpeobject) {
+        // FIXME ? just setting knotholder to NULL... not necessary to delete it ?
         this->knotholder = NULL; // it's a path, no special knotholder needed.
         this->nodepath = sp_nodepath_new( desktop, lpeobject,
                                           (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0),
@@ -238,6 +238,14 @@ void ShapeEditor::set_item_livepatheffect_parameter(SPItem *item, SPObject *lpeo
     }
 }
 
+/** Please note that this function only works for point parameters.
+*  All other parameters probably will crash Inkscape!
+*/
+void ShapeEditor::set_item_lpe_point_parameter(SPItem */*item*/, SPObject */*lpeobject*/, const char * /*key*/) {
+    g_message("ShapeEditor::set_item_lpe_point_parameter has not been implemented yet!");
+}
+
+
 /** FIXME: think about this. Is this thing only called when the item needs to be updated?
    Why not make a reload function in NodePath and in KnotHolder? */
 void ShapeEditor::reset_item ()
@@ -246,7 +254,7 @@ void ShapeEditor::reset_item ()
         SPItem * item = this->nodepath->item;
         SPObject *obj = this->nodepath->object;
         char * key = g_strdup(this->nodepath->repr_key);
-        set_item_livepatheffect_parameter(item, obj, key);
+        set_item_lpe_path_parameter(item, obj, key); // the above checks for nodepath, so it is indeed a path that we are editing
         g_free(key);
     } else {
         SPItem * item = get_item();

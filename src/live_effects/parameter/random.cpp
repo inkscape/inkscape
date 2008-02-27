@@ -10,7 +10,7 @@
 #include "live_effects/effect.h"
 #include "svg/svg.h"
 #include "libnr/nr-values.h"
-
+#include "ui/widget/registered-widget.h"
 #include <gtkmm.h>
 #include "ui/widget/random.h"
 

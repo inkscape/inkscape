@@ -45,6 +45,8 @@ public:
 
     void param_set_and_write_new_value(Geom::Point newpoint);
 
+    virtual void param_editOncanvas(SPItem * item, SPDesktop * dt);
+
     virtual void param_transform_multiply(Geom::Matrix const& /*postmul*/, bool /*set*/);
 
 private:

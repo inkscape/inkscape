@@ -18,7 +18,7 @@
 #include "widgets/icon.h"
 #include <gtk/gtkstock.h>
 #include "selection-chemistry.h"
-
+#include "xml/repr.h"
 #include "desktop.h"
 #include "inkscape.h"
 #include "message-stack.h"
@@ -143,7 +143,7 @@ PathParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
     }
 
     ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;
-    shape_editor->set_item_livepatheffect_parameter(item, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str());
+    shape_editor->set_item_lpe_path_parameter(item, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str());
 }
 
 void

@@ -18,7 +18,15 @@
 #include "inkscape.h"
 #include "verbs.h"
 
-#define noLPEPOINTPARAM_DEBUG
+// needed for on-canvas editting:
+#include "tools-switch.h"
+#include "shape-editor.h"
+#include "node-context.h"
+#include "desktop-handles.h"
+#include "selection.h"
+#include "desktop.h"
+
+#define LPEPOINTPARAM_DEBUG // undefine to disable all on-canvas editing code for PointParam
 
 #define PRM_KNOT_COLOR_NORMAL 0xffffff00
 #define PRM_KNOT_COLOR_SELECTED 0x0000ff00
@@ -33,6 +41,9 @@ PointParam::PointParam( const Glib::ustring& label, const Glib::ustring& tip,
     : Geom::Point(default_value), Parameter(label, tip, key, wr, effect), defvalue(default_value)
 {
     knot = NULL;
+#ifdef LPEPOINTPARAM_DEBUG
+    oncanvas_editable = true;
+#endif
 }
 
 PointParam::~PointParam()
@@ -74,8 +85,6 @@ PointParam::param_writeSVGValue() const
 Gtk::Widget *
 PointParam::param_newWidget(Gtk::Tooltips * tooltips)
 {
-    // WIDGET TODO: This implementation is incorrect, it should create a *new* widget for the caller, not just return an already created widget
-    g_warning("PointParam::param_newWidget still needs recoding to work with multiple document views");
     Inkscape::UI::Widget::RegisteredPoint * pointwdg = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredPoint( param_label,
                                                    param_tooltip,
@@ -124,6 +133,20 @@ PointParam::param_set_and_write_new_value (Geom::Point newpoint)
 }
 
 void
+PointParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
+{
+    // If not already in nodecontext, goto it!
+    if (!tools_isactive(dt, TOOLS_NODES)) {
+        tools_switch_current(TOOLS_NODES);
+    }
+
+    ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;
+    shape_editor->set_item_lpe_point_parameter(item, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str());
+}
+
+
+
+void
 PointParam::param_transform_multiply(Geom::Matrix const& postmul, bool /*set*/)
 {
     param_set_and_write_new_value( (*this) * postmul );
@@ -135,36 +158,9 @@ PointParam::param_transform_multiply(Geom::Matrix const& postmul, bool /*set*/)
 void
 PointParam::on_button_click()
 {
-    g_message("add knot to canvas on correct location :S");
-
-    if (!knot) {
-        // create the knot
-        knot = sp_knot_new (SP_ACTIVE_DESKTOP, NULL);
-        knot->setMode(SP_KNOT_MODE_XOR);
-        knot->setFill(PRM_KNOT_COLOR_NORMAL, PRM_KNOT_COLOR_NORMAL, PRM_KNOT_COLOR_NORMAL);
-        knot->setStroke(0x000000ff, 0x000000ff, 0x000000ff);
-        sp_knot_update_ctrl(knot);
-
-        // move knot to the given point
-        sp_knot_set_position (knot, &NR::Point(*static_cast<Geom::Point*>(this)), SP_KNOT_STATE_NORMAL);
-        sp_knot_show (knot);
-/*
-        // connect knot's signals
-        if ( (draggable)  // it can be NULL if a node in unsnapped (eg. focus point unsnapped from center)
-                           // luckily, midstops never snap to other nodes so are never unsnapped...
-             && ( (draggable->point_type == POINT_LG_MID)
-                  || (draggable->point_type == POINT_RG_MID1)
-                  || (draggable->point_type == POINT_RG_MID2) ) )
-        {
-            this->handler_id = g_signal_connect (G_OBJECT (this->knot), "moved", G_CALLBACK (gr_knot_moved_midpoint_handler), this);
-        } else {
-            this->handler_id = g_signal_connect (G_OBJECT (this->knot), "moved", G_CALLBACK (gr_knot_moved_handler), this);
-        }
-        g_signal_connect (G_OBJECT (this->knot), "clicked", G_CALLBACK (gr_knot_clicked_handler), this);
-        g_signal_connect (G_OBJECT (this->knot), "doubleclicked", G_CALLBACK (gr_knot_doubleclicked_handler), this);
-        g_signal_connect (G_OBJECT (this->knot), "grabbed", G_CALLBACK (gr_knot_grabbed_handler), this);
-        g_signal_connect (G_OBJECT (this->knot), "ungrabbed", G_CALLBACK (gr_knot_ungrabbed_handler), this);
-*/
+    SPItem * item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
+    if (item != NULL) {
+        param_editOncanvas(item, SP_ACTIVE_DESKTOP);
     }
 }
 

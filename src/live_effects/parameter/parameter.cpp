@@ -10,9 +10,9 @@
 #include "live_effects/effect.h"
 #include "svg/svg.h"
 #include "libnr/nr-values.h"
-
+#include "xml/repr.h"
 #include <gtkmm.h>
-#include "ui/widget/scalar.h"
+#include "ui/widget/registered-widget.h"
 
 #include "svg/stringstream.h"
 
