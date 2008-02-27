@@ -37,7 +37,7 @@
 #include "display/canvas-axonomgrid.h"
 #include "prefs-utils.h"
 #include "helper/action.h"
-#include "verbs.h"
+#include "tools-switch.h"
 #include <2geom/point.h>
 
 static void snoop_extended(GdkEvent* event, SPDesktop *desktop);
@@ -310,24 +310,24 @@ static void init_extended()
             GdkDevice* dev = reinterpret_cast<GdkDevice*>(curr->data);
             if ( dev->name
                  && (avoidName != dev->name)
-                 && switchMap.find(dev->source) == switchMap.end() ) {
+                 && (switchMap.find(dev->source) == switchMap.end())
+                 && (dev->source != GDK_SOURCE_MOUSE) ) {
                 switchMap[dev->source] = dev->name;
-//                 g_message("Adding '%s' as [%s]", dev->name, namefor(dev->source));
+//                 g_message("Adding '%s' as [%d]", dev->name, dev->source);
 
                 // Set the initial tool for the device
                 switch ( dev->source ) {
-                    case GDK_SOURCE_MOUSE:
-                        // Don't do anything for the main mouse.
-                        break;
                     case GDK_SOURCE_PEN:
-                        toolToUse[GDK_SOURCE_PEN] = SP_VERB_CONTEXT_CALLIGRAPHIC;
+                        toolToUse[GDK_SOURCE_PEN] = TOOLS_CALLIGRAPHIC;
                         break;
                     case GDK_SOURCE_ERASER:
-                        toolToUse[GDK_SOURCE_ERASER] = SP_VERB_CONTEXT_TWEAK;
+                        toolToUse[GDK_SOURCE_ERASER] = TOOLS_TWEAK;
                         break;
                     case GDK_SOURCE_CURSOR:
-                        toolToUse[GDK_SOURCE_CURSOR] = SP_VERB_CONTEXT_SELECT;
+                        toolToUse[GDK_SOURCE_CURSOR] = TOOLS_SELECT;
                         break;
+                    default:
+                        ; // do not add
                 }
 //             } else {
 //                 g_message("Skippn '%s' as [%s]", dev->name, namefor(dev->source));
@@ -395,24 +395,18 @@ void snoop_extended(GdkEvent* event, SPDesktop *desktop)
         if ( lastName != name || lastType != source ) {
             // The device switched. See if it is one we 'count'
             std::map<GdkInputSource, std::string>::iterator it = switchMap.find(source);
-            if ( it != switchMap.end() && (name == it->second) ) {
-                lastName = name;
-                lastType = source;
-
+            if ( (it != switchMap.end()) && (name == it->second) ) {
                 std::map<GdkInputSource, int>::iterator it2 = toolToUse.find(source);
                 if (it2 != toolToUse.end() ) {
-                    Inkscape::Verb* verb = Inkscape::Verb::get(it2->second);
-                    if ( verb ) {
-                        SPAction* action = verb->get_action(desktop);
-                        if ( action ) {
-                            sp_action_perform(action, 0);
-                        }
-                    } else {
-                        g_warning("     NO VERB FOUND");
+                    // Save the tool currently selected for next time the input device shows up.
+                    if ( (switchMap.find(lastType) != switchMap.end())
+                         && (lastName == switchMap.find(lastType)->second)) {
+                        toolToUse[lastType] = tools_active(desktop);
                     }
-//                 } else {
-//                     g_warning("     NO ID FOUND");
+                    tools_switch(desktop, it2->second);
                 }
+                lastName = name;
+                lastType = source;
             }
         }
     }
