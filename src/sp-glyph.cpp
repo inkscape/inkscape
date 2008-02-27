@@ -16,7 +16,7 @@
 #include "sp-glyph.h"
 #include "document.h"
 
-static void sp_glyph_class_init(SPGlyphClass *fc);
+static void sp_glyph_class_init(SPGlyphClass *gc);
 static void sp_glyph_init(SPGlyph *glyph);
 
 static void sp_glyph_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
@@ -64,16 +64,16 @@ static void sp_glyph_class_init(SPGlyphClass *gc)
 static void sp_glyph_init(SPGlyph *glyph)
 {
 //TODO: correct these values:
-    glyph->unicode = "";
-    glyph->glyph-name = "";
-    glyph->d = "";
-    glyph->orientation = "";
-    glyph->arabic-form = "";
-    glyph->lang = "";
-    glyph->horiz-adv-x = 0;
-    glyph->vert-origin-x = 0;
-    glyph->vert-origin-y = 0;
-    glyph->vert-adv-y = 0;
+    glyph->unicode = NULL;
+    glyph->glyph_name = NULL;
+    glyph->d = NULL;
+    glyph->orientation = NULL;
+    glyph->arabic_form = NULL;
+    glyph->lang = NULL;
+    glyph->horiz_adv_x = 0;
+    glyph->vert_origin_x = 0;
+    glyph->vert_origin_y = 0;
+    glyph->vert_adv_y = 0;
 }
 
 static void sp_glyph_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
@@ -123,21 +123,41 @@ static void sp_glyph_set(SPObject *object, unsigned int key, const gchar *value)
     double number;
 
     switch (key) {
-	case SP_ATTR_HORIZ_ORIGIN_X:
-            number = helperfns_read_number(value);
-            if (number != glyph->horiz_origin_x){
-                glyph->horiz_origin_x = number;
-g_warning("SP_ATTR_HORIZ_ORIGIN_X: %f", number);
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            }
+        case SP_ATTR_UNICODE:
+            if (glyph->unicode) g_free(glyph->unicode);
+            glyph->unicode = g_strdup(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+g_warning("SP_ATTR_UNICODE: %s", value);
+             break;
+        case SP_ATTR_GLYPH_NAME:
+            if (glyph->glyph_name) g_free(glyph->glyph_name);
+            glyph->glyph_name = g_strdup(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+g_warning("SP_ATTR_GLYPH_NAME: %s", value);
+             break;
+        case SP_ATTR_D:
+            if (glyph->d) g_free(glyph->d);
+            glyph->d = g_strdup(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+g_warning("SP_ATTR_D: %s", value);
             break;
-	case SP_ATTR_HORIZ_ORIGIN_Y:
-            number = helperfns_read_number(value);
-            if (number != glyph->horiz_origin_y){
-                glyph->horiz_origin_y = number;
-g_warning("SP_ATTR_HORIZ_ORIGIN_Y: %f", number);
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            }
+        case SP_ATTR_ORIENTATION:
+            if (glyph->orientation) g_free(glyph->orientation);
+            glyph->orientation = g_strdup(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+g_warning("SP_ATTR_ORIENTATION: %s", value);
+            break;
+        case SP_ATTR_ARABIC_FORM:
+            if (glyph->arabic_form) g_free(glyph->arabic_form);
+            glyph->arabic_form = g_strdup(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+g_warning("SP_ATTR_ARABIC_FORM: %s", value);
+            break;
+        case SP_ATTR_LANG:
+            if (glyph->lang) g_free(glyph->lang);
+            glyph->lang = g_strdup(value);
+g_warning("SP_ATTR_LANG: %s", value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	case SP_ATTR_HORIZ_ADV_X:
             number = helperfns_read_number(value);
@@ -190,16 +210,24 @@ static Inkscape::XML::Node *sp_glyph_write(SPObject *object, Inkscape::XML::Node
         repr = xml_doc->createElement("svg:glyph");
     }
 
-    sp_repr_set_svg_double(repr, "horiz-origin-x", glyph->horiz_origin_x);
-    sp_repr_set_svg_double(repr, "horiz-origin-y", glyph->horiz_origin_y);
+    repr->setAttribute("unicode", glyph->unicode);
+    repr->setAttribute("glyph-name", glyph->glyph_name);
+    repr->setAttribute("d", glyph->d);
+    repr->setAttribute("orientation", glyph->orientation);
+    repr->setAttribute("arabic-form", glyph->arabic_form);
+    repr->setAttribute("lang", glyph->lang);
     sp_repr_set_svg_double(repr, "horiz-adv-x", glyph->horiz_adv_x);
     sp_repr_set_svg_double(repr, "vert-origin-x", glyph->vert_origin_x);
     sp_repr_set_svg_double(repr, "vert-origin-y", glyph->vert_origin_y);
     sp_repr_set_svg_double(repr, "vert-adv-y", glyph->vert_adv_y);
 
     if (repr != SP_OBJECT_REPR(object)) {
-        COPY_ATTR(repr, object->repr, "horiz-origin-x");
-        COPY_ATTR(repr, object->repr, "horiz-origin-y");
+        COPY_ATTR(repr, object->repr, "unicode");
+        COPY_ATTR(repr, object->repr, "glyph-name");
+        COPY_ATTR(repr, object->repr, "d");
+        COPY_ATTR(repr, object->repr, "orientation");
+        COPY_ATTR(repr, object->repr, "arabic-form");
+        COPY_ATTR(repr, object->repr, "lang");
         COPY_ATTR(repr, object->repr, "horiz-adv-x");
         COPY_ATTR(repr, object->repr, "vert-origin-x");
         COPY_ATTR(repr, object->repr, "vert-origin-y");
