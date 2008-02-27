@@ -209,10 +209,10 @@ persp3d_create_xml_element (SPDocument *document, Persp3D *dup) {// if dup is gi
         repr = xml_doc->createElement("inkscape:perspective");
         repr->setAttribute("sodipodi:type", "inkscape:persp3d");
 
-        Proj::Pt2 proj_vp_x = Proj::Pt2 (-50.0, 600.0, 1.0);
+        Proj::Pt2 proj_vp_x = Proj::Pt2 (0.0, sp_document_height(document)/2, 1.0);
         Proj::Pt2 proj_vp_y = Proj::Pt2 (  0.0,1000.0, 0.0);
-        Proj::Pt2 proj_vp_z = Proj::Pt2 (700.0, 600.0, 1.0);
-        Proj::Pt2 proj_origin = Proj::Pt2 (300.0, 400.0, 1.0);
+        Proj::Pt2 proj_vp_z = Proj::Pt2 (sp_document_width(document), sp_document_height(document)/2, 1.0);
+        Proj::Pt2 proj_origin = Proj::Pt2 (sp_document_width(document)/2, sp_document_height(document)/2, 1.0);
 
         gchar *str = NULL;
         str = proj_vp_x.coord_string();
