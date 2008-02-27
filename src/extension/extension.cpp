@@ -706,8 +706,10 @@ Extension::paramListString (std::list <std::string> &retlist)
         delete out;
 
         retlist.insert(retlist.end(), param_string);
+
+        // insert parameters subparameters if any (for example notebook parameter has subparams)
+        param->insert_subparam_strings(retlist);
     }
-    //g_message("paramstring=%s", param_string->c_str());
 
     return;
 }

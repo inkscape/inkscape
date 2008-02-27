@@ -55,7 +55,7 @@ public:
     ParamNotebookPage(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     ~ParamNotebookPage(void);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
-    Glib::ustring * paramString (void);
+    void insert_subparam_strings (std::list <std::string> &retlist);
     gchar * get_guitext (void) {return _text;};
     
 }; /* class ParamNotebookPage */
@@ -96,26 +96,31 @@ ParamNotebookPage::~ParamNotebookPage (void)
     g_slist_free(parameters);
 }
 
-/** \brief  Return the value as a string */
-Glib::ustring *
-ParamNotebookPage::paramString (void)
+/**
+    \brief  A function to get the subparameters in a string form
+    \return An array with all the subparameters in it.
+    
+    Look how this closely resembles Extension::paramListString
+*/
+void
+ParamNotebookPage::insert_subparam_strings (std::list <std::string> &retlist)
 {
-    Glib::ustring * param_string = new Glib::ustring("");
-
     for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
         Parameter * param = reinterpret_cast<Parameter *>(list->data);
 
-        *param_string += " --";
-        *param_string += param->name();
-        *param_string += "=";
-        Glib::ustring * paramstr = param->string();
-        *param_string += *paramstr;
-        delete paramstr;
+        std::string param_string;
+        param_string += "--";
+        param_string += param->name();
+        param_string += "=";
+        Glib::ustring * out = param->string();
+        param_string += *out;
+        delete out;
+
+        retlist.insert(retlist.end(), param_string);
     }
 
-    return param_string;
+    return;
 }
-
 
 /**
     \return None
@@ -310,16 +315,8 @@ ParamNotebook::set (const int in, SPDocument * doc, Inkscape::XML::Node * node)
 
 
 /**
-    \brief  A function to get the currentpage and the parameters in a string form
-    \return A string with the 'value' and all the parameters on all pages as command line arguments
-
-    This is really a hack. The function is called by Extension::paramString() to build
-    the commandline string like: '--param1name=\"param1value\" --param2name=\"param2value\" ...'
-    Extension::paramString expects this function to return '\"param1value\"'; but instead, 
-    this function returns: '\"param1value\" --page1param1name=\"page1param1value\" ...'
-
-    \TODO  Do this better. For example, make Parameter::paramString() that returns '--name=\"value\"'
-    instead of just returning '\"value\"'.
+    \brief  A function to get the currentpage in a string form
+    \return A string with the 'value'
 */
 Glib::ustring *
 ParamNotebook::string (void)
@@ -330,15 +327,23 @@ ParamNotebook::string (void)
     *param_string += _value;  // the name of the current page
     *param_string += "\"";
 
+    return param_string;
+}
+
+/**
+    \brief  A function to get the subparameters in a string form
+    \return An array with all the subparameters in it.
+*/
+void
+ParamNotebook::insert_subparam_strings (std::list <std::string> &retlist)
+{
     for (GSList * list = pages; list != NULL; list = g_slist_next(list)) {
         ParamNotebookPage * page = reinterpret_cast<ParamNotebookPage *>(list->data);
 
-        Glib::ustring * pageparamstr = page->paramString();
-        *param_string += *pageparamstr;
-        delete pageparamstr;
+        page->insert_subparam_strings(retlist);
     }
 
-    return param_string;
+    return;
 }
 
 /** \brief  A special category of Gtk::Notebook to handle notebook parameters */

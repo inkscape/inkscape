@@ -103,6 +103,7 @@ public:
     static Parameter * make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension * in_ext);
     virtual Gtk::Widget * get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     virtual Glib::ustring * string (void);
+    virtual void insert_subparam_strings(std::list <std::string> &retlist) {};
     gchar const * get_tooltip (void) { return _desc; }
 };
 

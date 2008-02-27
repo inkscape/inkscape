@@ -42,6 +42,7 @@ public:
     virtual ~ParamNotebook(void);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     Glib::ustring * string (void);
+    virtual void insert_subparam_strings(std::list <std::string> &retlist);
         
     const gchar * get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _value; }
     const gchar * set (const int in, SPDocument * doc, Inkscape::XML::Node * node);
