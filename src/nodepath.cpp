@@ -204,7 +204,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     np->helperpath_rgba = 0xff0000ff;
     np->helperpath_width = 1.0;
     np->curve = sp_curve_copy(curve);
-    np->show_helperpath = false;
+    np->show_helperpath = prefs_get_int_attribute ("tools.nodes", "show_helperpath",  0) == 1;
     np->straight_path = false;
     if (IS_LIVEPATHEFFECT(object) && item) {
         np->item = item;
