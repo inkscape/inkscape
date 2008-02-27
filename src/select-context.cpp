@@ -872,8 +872,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     if (MOD__CTRL_ONLY) {
                         if (selection->singleItem()) {
                             SPItem *clicked_item = selection->singleItem();
-                            if ( SP_IS_GROUP(clicked_item) &&
-                                !SP_IS_BOX3D(clicked_item)) { // enter group if it's not a 3D box
+                            if ( SP_IS_GROUP(clicked_item) ||
+                                 SP_IS_BOX3D(clicked_item)) { // enter group or a 3D box
                                 desktop->setCurrentLayer(reinterpret_cast<SPObject *>(clicked_item));
                                 sp_desktop_selection(desktop)->clear();
                             } else {
