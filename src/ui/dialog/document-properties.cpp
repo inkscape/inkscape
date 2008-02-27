@@ -89,6 +89,8 @@ DocumentProperties::DocumentProperties()
       _rcb_shad(_("_Show border shadow"), _("If set, page border shows a shadow on its right and lower side"), "inkscape:showpageshadow", _wr, false),
       _rcp_bg(_("Back_ground:"), _("Background color"), _("Color and transparency of the page background (also used for bitmap export)"), "pagecolor", "inkscape:pageopacity", _wr),
       _rcp_bord(_("Border _color:"), _("Page border color"), _("Color of the page border"), "bordercolor", "borderopacity", _wr),
+      _rum_deflt(_("Default _units:"), "inkscape:document-units", _wr),
+      _page_sizer(_wr),
     //---------------------------------------------------------------
       //General snap options
       _rcb_sgui(_("Show _guides"), _("Show or hide guides"), "showguides", _wr),
@@ -218,20 +220,17 @@ DocumentProperties::build_page()
 {
     _page_page.show();
 
-    _rum_deflt.init (_("Default _units:"), "inkscape:document-units", _wr);
-
     Gtk::Label* label_gen = manage (new Gtk::Label);
     label_gen->set_markup (_("<b>General</b>"));
     Gtk::Label* label_bor = manage (new Gtk::Label);
     label_bor->set_markup (_("<b>Border</b>"));
     Gtk::Label *label_for = manage (new Gtk::Label);
     label_for->set_markup (_("<b>Format</b>"));
-    _page_sizer.init (_wr);
 
     Gtk::Widget *const widget_array[] =
     {
         label_gen,         0,
-        _rum_deflt._label, _rum_deflt._sel,
+        0,                 &_rum_deflt,
         _rcp_bg._label,    &_rcp_bg,
         0,                 0,
         label_for,         0,

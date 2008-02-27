@@ -124,7 +124,7 @@ public:
     /**
      * Constructor
      */
-    PageSizer();
+    PageSizer(Registry & _wr);
 
     /**
      * Destructor
@@ -134,7 +134,7 @@ public:
     /**
      * Set up or reset this widget
      */	     
-    void init (Registry& reg);
+    void init ();
     
     /**
      * Set the page size to the given dimensions.  If 'changeList' is

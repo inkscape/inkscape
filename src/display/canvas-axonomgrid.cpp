@@ -386,10 +386,14 @@ CanvasAxonomGrid::newSpecificWidget()
 
 _wr.setUpdating (true);
 
-    Inkscape::UI::Widget::RegisteredUnitMenu *_rumg = new Inkscape::UI::Widget::RegisteredUnitMenu();
-    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_ox = new Inkscape::UI::Widget::RegisteredScalarUnit();
-    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_oy = new Inkscape::UI::Widget::RegisteredScalarUnit();
-    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_sy = new Inkscape::UI::Widget::RegisteredScalarUnit();
+    Inkscape::UI::Widget::RegisteredUnitMenu *_rumg = Gtk::manage( new Inkscape::UI::Widget::RegisteredUnitMenu(
+            _("Grid _units:"), "units", _wr, repr, doc) );
+    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_ox = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalarUnit(
+            _("_Origin X:"), _("X coordinate of grid origin"), "originx", *_rumg, _wr, repr, doc) );
+    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_oy = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalarUnit(
+            _("O_rigin Y:"), _("Y coordinate of grid origin"), "originy", *_rumg, _wr, repr, doc) );
+    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_sy = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalarUnit(
+            _("Spacing _Y:"), _("Base length of z-axis"), "spacingy", *_rumg, _wr, repr, doc) );
     Inkscape::UI::Widget::RegisteredScalar *_rsu_ax = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalar(
             _("Angle X:"), _("Angle of x-axis"), "gridanglex", _wr, repr, doc ) );
     Inkscape::UI::Widget::RegisteredScalar *_rsu_az = Gtk::manage(  new Inkscape::UI::Widget::RegisteredScalar(
@@ -406,39 +410,31 @@ _wr.setUpdating (true);
             _("Color of the major (highlighted) grid lines"),
             "empcolor", "empopacity", _wr, repr, doc));
 
-    Inkscape::UI::Widget::RegisteredSuffixedInteger *_rsi = new Inkscape::UI::Widget::RegisteredSuffixedInteger();
+    Inkscape::UI::Widget::RegisteredSuffixedInteger *_rsi = Gtk::manage( new Inkscape::UI::Widget::RegisteredSuffixedInteger(
+            _("_Major grid line every:"), _(""), _("lines"), "empspacing", _wr, repr, doc ) );
 
-    Inkscape::UI::Widget::ScalarUnit * sutemp = NULL;
-    _rumg->init (_("Grid _units:"), "units", _wr, repr, doc);
-    _rsu_ox->init (_("_Origin X:"), _("X coordinate of grid origin"),
-                  "originx", *_rumg, _wr, repr, doc);
-        sutemp = _rsu_ox->getSU();
-        sutemp->setDigits(4);
-        sutemp->setIncrements(0.1, 1.0);
-    _rsu_oy->init (_("O_rigin Y:"), _("Y coordinate of grid origin"),
-                  "originy", *_rumg, _wr, repr, doc);
-        sutemp = _rsu_oy->getSU();
-        sutemp->setDigits(4);
-        sutemp->setIncrements(0.1, 1.0);
-    _rsu_sy->init (_("Spacing _Y:"), _("Base length of z-axis"),
-                  "spacingy", *_rumg, _wr, repr, doc);
-        sutemp = _rsu_sy->getSU();
-        sutemp->setDigits(4);
-        sutemp->setIncrements(0.1, 1.0);
-    _rsi->init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr, doc);
+    _rsu_ox->setDigits(4);
+    _rsu_ox->setIncrements(0.1, 1.0);
+
+    _rsu_oy->setDigits(4);
+    _rsu_oy->setIncrements(0.1, 1.0);
+
+    _rsu_sy->setDigits(4);
+    _rsu_sy->setIncrements(0.1, 1.0);
+
 _wr.setUpdating (false);
 
     Gtk::Widget const *const widget_array[] = {
-        _rumg->_label,       _rumg->_sel,
-        0,                  _rsu_ox->getSU(),
-        0,                  _rsu_oy->getSU(),
-        0,                  _rsu_sy->getSU(),
+        0,       _rumg,
+        0,                  _rsu_ox,
+        0,                  _rsu_oy,
+        0,                  _rsu_sy,
         0,                  _rsu_ax,
         0,                  _rsu_az,
         _rcp_gcol->_label,   _rcp_gcol,
         0,                  0,
         _rcp_gmcol->_label,  _rcp_gmcol,
-        _rsi->_label,        &_rsi->_hbox,
+        0,                   _rsi,
     };
 
     attach_all (*table, widget_array, sizeof(widget_array));

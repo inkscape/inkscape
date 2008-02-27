@@ -185,10 +185,13 @@ static const SPUnit _px_unit = sp_unit_get_by_id (SP_UNIT_PX);
 /**
  * Constructor
  */ 
-PageSizer::PageSizer() : Gtk::VBox(false,4)
+PageSizer::PageSizer(Registry & _wr)
+    : Gtk::VBox(false,4),
+      _dimensionUnits( _("U_nits:"), "units", _wr ),
+      _dimensionWidth( _("_Width:"), _("Width of paper"), "width", _dimensionUnits, _wr ),
+      _dimensionHeight( _("_Height:"), _("Height of paper"), "height", _dimensionUnits, _wr ),
+      _widgetRegistry(&_wr)
 {
-
-
     //# Set up the Paper Size combo box    
     _paperSizeListStore = Gtk::ListStore::create(_paperSizeListColumns);
     _paperSizeList.set_model(_paperSizeListStore);
@@ -259,15 +262,15 @@ PageSizer::PageSizer() : Gtk::VBox(false,4)
     _customTable.set_border_width (4);
     _customTable.set_row_spacings (4);
     _customTable.set_col_spacings (4);
+    _customTable.attach(_dimensionWidth, 0,1,0,1);
+    _customTable.attach(_dimensionUnits, 1,2,0,1);
+    _customTable.attach(_dimensionHeight, 0,1,1,2);
+    _customTable.attach(_fitPageButton,              1,2,1,2);
     _customFrame.add(_customTable);
     
     _fitPageButton.set_use_underline();
     _fitPageButton.set_label(_("_Fit page to selection"));
-    _tips.set_tip(_fitPageButton, 
-	_("Resize the page to fit the current selection, or the entire drawing if there is no selection"));
-
-
-
+    _tips.set_tip(_fitPageButton, _("Resize the page to fit the current selection, or the entire drawing if there is no selection"));
 }
 
 
@@ -284,43 +287,15 @@ PageSizer::~PageSizer()
  * Initialize or reset this widget
  */ 
 void
-PageSizer::init (Registry& reg)
+PageSizer::init ()
 {
-
-    /*
-    Note that the registered widgets can only be placed onto a
-    container after they have been init()-ed.  That is why some
-    of the widget creation is in the constructor, and the rest is
-    here.
-    */
-    
-    _widgetRegistry = &reg;
-
-    _dimensionUnits.init (_("U_nits:"), "units",
-	                 *_widgetRegistry);
-    _dimensionWidth.init (_("_Width:"), _("Width of paper"), "width",
-	                 _dimensionUnits, *_widgetRegistry);
-    _dimensionHeight.init (_("_Height:"), _("Height of paper"), "height",
-	                 _dimensionUnits, *_widgetRegistry);
-
-    _customTable.attach(*(_dimensionWidth.getSU()),  0,1,0,1);
-    _customTable.attach(*(_dimensionUnits._sel),     1,2,0,1);
-    _customTable.attach(*(_dimensionHeight.getSU()), 0,1,1,2);
-    _customTable.attach(_fitPageButton,              1,2,1,2);
-
-    _landscape_connection = _landscapeButton.signal_toggled().connect (
-	        sigc::mem_fun (*this, &PageSizer::on_landscape));
-    _portrait_connection = _portraitButton.signal_toggled().connect (
-	        sigc::mem_fun (*this, &PageSizer::on_portrait));
-    _changedw_connection = _dimensionWidth.getSU()->signal_value_changed().connect (
-	        sigc::mem_fun (*this, &PageSizer::on_value_changed));
-    _changedh_connection = _dimensionHeight.getSU()->signal_value_changed().connect (
-	        sigc::mem_fun (*this, &PageSizer::on_value_changed));
-    _fitPageButton.signal_clicked().connect(
-	     sigc::mem_fun(*this, &PageSizer::fire_fit_canvas_to_selection_or_drawing));
+    _landscape_connection = _landscapeButton.signal_toggled().connect (sigc::mem_fun (*this, &PageSizer::on_landscape));
+    _portrait_connection = _portraitButton.signal_toggled().connect (sigc::mem_fun (*this, &PageSizer::on_portrait));
+    _changedw_connection = _dimensionWidth.signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_value_changed));
+    _changedh_connection = _dimensionHeight.signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_value_changed));
+    _fitPageButton.signal_clicked().connect(sigc::mem_fun(*this, &PageSizer::fire_fit_canvas_to_selection_or_drawing));
     
     show_all_children();
-
 }
 
 
@@ -366,7 +341,7 @@ PageSizer::setDim (double w, double h, bool changeList)
             _paperSizeListSelection->select(row);
         }
     
-    Unit const& unit = _dimensionUnits._sel->getUnit();
+    Unit const& unit = _dimensionUnits.getUnit();
     _dimensionWidth.setValue (w / unit.factor);
     _dimensionHeight.setValue (h / unit.factor);
 
@@ -487,8 +462,8 @@ PageSizer::on_portrait()
 {
     if (!_portraitButton.get_active())
         return;
-    double w = _dimensionWidth.getSU()->getValue ("px");
-    double h = _dimensionHeight.getSU()->getValue ("px");
+    double w = _dimensionWidth.getValue ("px");
+    double h = _dimensionHeight.getValue ("px");
     if (h < w)
 	    setDim (h, w);
 }
@@ -502,8 +477,8 @@ PageSizer::on_landscape()
 {
     if (!_landscapeButton.get_active())
         return;
-    double w = _dimensionWidth.getSU()->getValue ("px");
-    double h = _dimensionHeight.getSU()->getValue ("px");
+    double w = _dimensionWidth.getValue ("px");
+    double h = _dimensionHeight.getValue ("px");
     if (w < h)
 	    setDim (h, w);
 }
@@ -516,8 +491,8 @@ PageSizer::on_value_changed()
 {
     if (_widgetRegistry->isUpdating()) return;
 
-    setDim (_dimensionWidth.getSU()->getValue("px"),
-	        _dimensionHeight.getSU()->getValue("px"));
+    setDim (_dimensionWidth.getValue("px"),
+	        _dimensionHeight.getValue("px"));
 }
 
 

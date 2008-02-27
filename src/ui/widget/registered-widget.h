@@ -21,8 +21,11 @@
 #include "xml/node.h"
 #include "registry.h"
 
+#include "ui/widget/scalar.h"
+#include "ui/widget/scalar-unit.h"
 #include "ui/widget/point.h"
 #include "ui/widget/random.h"
+#include "ui/widget/unit-menu.h"
 #include "ui/widget/color-picker.h"
 #include "inkscape.h"
 
@@ -44,9 +47,6 @@ namespace UI {
 namespace Widget {
 
 class Registry;
-class Scalar;
-class ScalarUnit;
-class UnitMenu;
 
 template <class W>
 class RegisteredWidget : public W {
@@ -70,9 +70,13 @@ protected:
     template< typename A, typename B >
     RegisteredWidget( A& a, B& b ): W( a, b ) { construct(); }
     template< typename A, typename B, typename C >
+    RegisteredWidget( A& a, B& b, C* c ): W( a, b, c ) { construct(); }
+    template< typename A, typename B, typename C >
     RegisteredWidget( A& a, B& b, C& c ): W( a, b, c ) { construct(); }
     template< typename A, typename B, typename C, typename D >
     RegisteredWidget( A& a, B& b, C c, D d ): W( a, b, c, d ) { construct(); }
+    template< typename A, typename B, typename C, typename D, typename E , typename F>
+    RegisteredWidget( A& a, B& b, C c, D& d, E& e, F* f): W( a, b, c, d, e, f) { construct(); }
 
     virtual ~RegisteredWidget() {};
 
@@ -129,47 +133,6 @@ private:
     }
 };
 
-class RegisteredWdg {
-public:
-    void set_undo_parameters(const unsigned int _event_type, Glib::ustring _event_description)
-    {
-        event_type = _event_type;
-        event_description = _event_description;
-        write_undo = true;
-    }
-
-    bool is_updating() {if (_wr) return _wr->isUpdating(); else return false;}
-
-protected:
-    RegisteredWdg()
-    {
-        _wr = NULL;
-        repr = NULL;
-        doc = NULL;
-        write_undo = false;
-    }
-
-    void init_parent(const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
-    {
-        _wr = &wr;
-        _key = key;
-        repr = repr_in;
-        doc = doc_in;
-        if (repr && !doc)  // doc cannot be NULL when repr is not NULL
-            g_warning("Initialization of registered widget using defined repr but with doc==NULL");
-    }
-
-    void write_to_xml(const char * svgstr);
-
-    Registry * _wr;
-    Glib::ustring _key;
-    Inkscape::XML::Node * repr;
-    SPDocument * doc;
-    unsigned int event_type;
-    Glib::ustring event_description;
-    bool write_undo;
-};
-
 //#######################################################
 
 class RegisteredCheckButton : public RegisteredWidget<Gtk::CheckButton> {
@@ -191,59 +154,42 @@ public:
     bool setProgrammatically; // true if the value was set by setActive, not changed by the user;
                                 // if a callback checks it, it must reset it back to false
 
-
 protected:
     Gtk::Tooltips     _tt;
     sigc::connection  _toggled_connection;
     void on_toggled();
 };
 
-class RegisteredUnitMenu : public RegisteredWdg {
+class RegisteredUnitMenu : public RegisteredWidget<Labelled> {
 public:
-    RegisteredUnitMenu();
     ~RegisteredUnitMenu();
-    void init ( const Glib::ustring& label,
-                const Glib::ustring& key,
-                Registry& wr,
-                Inkscape::XML::Node* repr_in,
-                SPDocument *doc_in);
-    inline void init ( const Glib::ustring& label,
-                       const Glib::ustring& key,
-                       Registry& wr)
-        { init(label, key, wr, NULL, NULL); };
+    RegisteredUnitMenu ( const Glib::ustring& label,
+                         const Glib::ustring& key,
+                         Registry& wr,
+                         Inkscape::XML::Node* repr_in = NULL,
+                         SPDocument *doc_in = NULL );
 
     void setUnit (const SPUnit*);
-    Gtk::Label   *_label;
-    UnitMenu     *_sel;
+    Unit getUnit() const { return static_cast<UnitMenu*>(_widget)->getUnit(); };
+    UnitMenu* getUnitMenu() const { return static_cast<UnitMenu*>(_widget); };
     sigc::connection _changed_connection;
 
 protected:
     void on_changed();
 };
 
-class RegisteredScalarUnit : public RegisteredWdg {
+class RegisteredScalarUnit : public RegisteredWidget<ScalarUnit> {
 public:
-    RegisteredScalarUnit();
     ~RegisteredScalarUnit();
-    void init (const Glib::ustring& label,
-            const Glib::ustring& tip,
-            const Glib::ustring& key,
-            const RegisteredUnitMenu &rum,
-            Registry& wr,
-            Inkscape::XML::Node* repr_in,
-            SPDocument *doc_in);
-    inline void init ( const Glib::ustring& label,
-                       const Glib::ustring& tip,
-                       const Glib::ustring& key,
-                       const RegisteredUnitMenu &rum,
-                       Registry& wr)
-        { init(label, tip, key, rum, wr, NULL, NULL); };
-
-    ScalarUnit* getSU();
-    void setValue (double);
+    RegisteredScalarUnit ( const Glib::ustring& label,
+                           const Glib::ustring& tip,
+                           const Glib::ustring& key,
+                           const RegisteredUnitMenu &rum,
+                           Registry& wr,
+                           Inkscape::XML::Node* repr_in = NULL,
+                           SPDocument *doc_in = NULL );
 
 protected:
-    ScalarUnit   *_widget;
     sigc::connection  _value_changed_connection;
     UnitMenu         *_um;
     void on_value_changed();
@@ -288,60 +234,39 @@ protected:
     sigc::connection _changed_connection;
 };
 
-class RegisteredSuffixedInteger : public RegisteredWdg {
+class RegisteredSuffixedInteger : public RegisteredWidget<Scalar> {
 public:
-    RegisteredSuffixedInteger();
-    ~RegisteredSuffixedInteger();
-    void init (const Glib::ustring& label1,
-               const Glib::ustring& label2,
-               const Glib::ustring& key,
-               Registry& wr,
-               Inkscape::XML::Node* repr_in,
-               SPDocument *doc_in);
-    inline void init ( const Glib::ustring& label1,
-                       const Glib::ustring& label2,
-                       const Glib::ustring& key,
-                       Registry& wr)
-        { init(label1, label2, key, wr, NULL, NULL); };
+    virtual ~RegisteredSuffixedInteger();
+    RegisteredSuffixedInteger ( const Glib::ustring& label,
+                                const Glib::ustring& tip, 
+                                const Glib::ustring& suffix,
+                                const Glib::ustring& key,
+                                Registry& wr,
+                                Inkscape::XML::Node* repr_in = NULL,
+                                SPDocument *doc_in = NULL );
 
-    void setValue (int);
-    Gtk::Label *_label;
-    Gtk::HBox _hbox;
     bool setProgrammatically; // true if the value was set by setValue, not changed by the user;
                                 // if a callback checks it, it must reset it back to false
 
 protected:
-    Gtk::SpinButton *_sb;
-    Gtk::Adjustment _adj;
-    Gtk::Label      *_suffix;
     sigc::connection _changed_connection;
     void on_value_changed();
 };
 
-class RegisteredRadioButtonPair : public RegisteredWdg {
+class RegisteredRadioButtonPair : public RegisteredWidget<Gtk::HBox> {
 public:
-    RegisteredRadioButtonPair();
-    ~RegisteredRadioButtonPair();
-    void init (const Glib::ustring& label,
-               const Glib::ustring& label1,
-               const Glib::ustring& label2,
-               const Glib::ustring& tip1,
-               const Glib::ustring& tip2,
-               const Glib::ustring& key,
-               Registry& wr,
-               Inkscape::XML::Node* repr_in,
-               SPDocument *doc_in);
-    inline void init ( const Glib::ustring& label,
-                       const Glib::ustring& label1,
-                       const Glib::ustring& label2,
-                       const Glib::ustring& tip1,
-                       const Glib::ustring& tip2,
-                       const Glib::ustring& key,
-                       Registry& wr)
-        { init(label, label1, label2, tip1, tip2, key, wr, NULL, NULL); };
+    virtual ~RegisteredRadioButtonPair();
+    RegisteredRadioButtonPair ( const Glib::ustring& label,
+                                const Glib::ustring& label1,
+                                const Glib::ustring& label2,
+                                const Glib::ustring& tip1,
+                                const Glib::ustring& tip2,
+                                const Glib::ustring& key,
+                                Registry& wr,
+                                Inkscape::XML::Node* repr_in = NULL,
+                                SPDocument *doc_in = NULL );
 
     void setValue (bool second);
-    Gtk::HBox *_hbox;
 
     bool setProgrammatically; // true if the value was set by setValue, not changed by the user;
                                     // if a callback checks it, it must reset it back to false

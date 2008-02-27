@@ -72,14 +72,11 @@ protected:
     PageSizer             _page_sizer;
     //---------------------------------------------------------------
     RegisteredCheckButton _rcb_sgui, _rcbsng;
-    RegisteredUnitMenu    _rum_gusn;
     RegisteredColorPicker _rcp_gui, _rcp_hgui;
     //---------------------------------------------------------------
     RegisteredCheckButton _rcbsg, _rcbsnbb, _rcbsnn, _rcbsnop;
     RegisteredCheckButton _rcbsnon, _rcbsnbbp, _rcbsnbbn;
-    RegisteredUnitMenu    _rumso;
     ToleranceSlider       _rsu_sno, _rsu_sn, _rsu_gusn;
-    RegisteredRadioButtonPair _rrb_pix;
     //---------------------------------------------------------------
     RegisteredCheckButton _rcbic;
     RegisteredCheckButton _rcbsigg, _rcbsils;

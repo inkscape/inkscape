@@ -652,11 +652,16 @@ CanvasXYGrid::newSpecificWidget()
 {
     Gtk::Table * table = Gtk::manage( new Gtk::Table(1,1) );
 
-    Inkscape::UI::Widget::RegisteredUnitMenu *_rumg = new Inkscape::UI::Widget::RegisteredUnitMenu();
-    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_ox = new Inkscape::UI::Widget::RegisteredScalarUnit();
-    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_oy = new Inkscape::UI::Widget::RegisteredScalarUnit();
-    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_sx = new Inkscape::UI::Widget::RegisteredScalarUnit();
-    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_sy = new Inkscape::UI::Widget::RegisteredScalarUnit();
+    Inkscape::UI::Widget::RegisteredUnitMenu *_rumg = Gtk::manage( new Inkscape::UI::Widget::RegisteredUnitMenu(
+            _("Grid _units:"), "units", _wr, repr, doc) );
+    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_ox = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalarUnit(
+            _("_Origin X:"), _("X coordinate of grid origin"), "originx", *_rumg, _wr, repr, doc) );
+    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_oy = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalarUnit(
+            _("O_rigin Y:"), _("Y coordinate of grid origin"), "originy", *_rumg, _wr, repr, doc) );
+    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_sx = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalarUnit(
+            _("Spacing _X:"), _("Distance between vertical grid lines"), "spacingx", *_rumg, _wr, repr, doc) );
+    Inkscape::UI::Widget::RegisteredScalarUnit *_rsu_sy = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalarUnit(
+            _("Spacing _Y:"), _("Distance between horizontal grid lines"), "spacingy", *_rumg, _wr, repr, doc) );
 
     Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gcol = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredColorPicker(
@@ -669,54 +674,41 @@ CanvasXYGrid::newSpecificWidget()
             _("Color of the major (highlighted) grid lines"), "empcolor", "empopacity", 
             _wr, repr, doc));
     
-    Inkscape::UI::Widget::RegisteredSuffixedInteger *_rsi = new Inkscape::UI::Widget::RegisteredSuffixedInteger();
+    Inkscape::UI::Widget::RegisteredSuffixedInteger *_rsi = Gtk::manage( new Inkscape::UI::Widget::RegisteredSuffixedInteger(
+            _("_Major grid line every:"), _(""), _("lines"), "empspacing", _wr, repr, doc) );
 
-    // initialize widgets:
     table->set_spacings(2);
 
 _wr.setUpdating (true);
-    Inkscape::UI::Widget::ScalarUnit * sutemp;
-    _rumg->init (_("Grid _units:"), "units", _wr, repr, doc);
-    _rsu_ox->init (_("_Origin X:"), _("X coordinate of grid origin"),
-                  "originx", *_rumg, _wr, repr, doc);
-        sutemp = _rsu_ox->getSU();
-        sutemp->setDigits(4);
-        sutemp->setIncrements(0.1, 1.0);
-    _rsu_oy->init (_("O_rigin Y:"), _("Y coordinate of grid origin"),
-                  "originy", *_rumg, _wr, repr, doc);
-        sutemp = _rsu_oy->getSU();
-        sutemp->setDigits(4);
-        sutemp->setIncrements(0.1, 1.0);
-    _rsu_sx->init (_("Spacing _X:"), _("Distance between vertical grid lines"),
-                  "spacingx", *_rumg, _wr, repr, doc);
-        sutemp = _rsu_sx->getSU();
-        sutemp->setDigits(4);
-        sutemp->setIncrements(0.1, 1.0);
-    _rsu_sy->init (_("Spacing _Y:"), _("Distance between horizontal grid lines"),
-                  "spacingy", *_rumg, _wr, repr, doc);
-        sutemp = _rsu_sy->getSU();
-        sutemp->setDigits(4);
-        sutemp->setIncrements(0.1, 1.0);
 
-    _rsi->init (_("_Major grid line every:"), _("lines"), "empspacing", _wr, repr, doc);
+    _rsu_ox->setDigits(4);
+    _rsu_ox->setIncrements(0.1, 1.0);
+
+    _rsu_oy->setDigits(4);
+    _rsu_oy->setIncrements(0.1, 1.0);
+
+    _rsu_sx->setDigits(4);
+    _rsu_sx->setIncrements(0.1, 1.0);
+
+    _rsu_sy->setDigits(4);
+    _rsu_sy->setIncrements(0.1, 1.0);
 
     Inkscape::UI::Widget::RegisteredCheckButton * _rcb_dotted = Gtk::manage(
                 new Inkscape::UI::Widget::RegisteredCheckButton( _("_Show dots instead of lines"),
                        _("If set, displays dots at gridpoints instead of gridlines"),
-                        "dotted", _wr, false, repr, doc) 
-                );
+                        "dotted", _wr, false, repr, doc) );
 _wr.setUpdating (false);
 
     Gtk::Widget const *const widget_array[] = {
-        _rumg->_label,       _rumg->_sel,
-        0,                  _rsu_ox->getSU(),
-        0,                  _rsu_oy->getSU(),
-        0,                  _rsu_sx->getSU(),
-        0,                  _rsu_sy->getSU(),
+        0,                  _rumg,
+        0,                  _rsu_ox,
+        0,                  _rsu_oy,
+        0,                  _rsu_sx,
+        0,                  _rsu_sy,
         _rcp_gcol->_label,   _rcp_gcol,
         0,                  0,
         _rcp_gmcol->_label,  _rcp_gmcol,
-        _rsi->_label,        &_rsi->_hbox,
+        0,                  _rsi,
         0,                  _rcb_dotted,
     };
 

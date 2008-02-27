@@ -41,33 +41,6 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-void
-RegisteredWdg::write_to_xml(const char * svgstr)
-{
-    // Use local repr here. When repr is specified, use that one, but
-    // if repr==NULL, get the repr of namedview of active desktop.
-    Inkscape::XML::Node *local_repr = repr;
-    SPDocument *local_doc = doc;
-    if (!local_repr) {
-        // no repr specified, use active desktop's namedview's repr
-        SPDesktop* dt = SP_ACTIVE_DESKTOP;
-        local_repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
-        local_doc = sp_desktop_document(dt);
-    }
-
-    bool saved = sp_document_get_undo_sensitive (local_doc);
-    sp_document_set_undo_sensitive (local_doc, false);
-    if (!write_undo) local_repr->setAttribute(_key.c_str(), svgstr);
-    sp_document_set_undo_sensitive (local_doc, saved);
-
-    local_doc->setModifiedSinceSave();
-    if (write_undo) {
-        local_repr->setAttribute(_key.c_str(), svgstr);
-        sp_document_done (local_doc, event_type, event_description);
-    }
-}
-
-
 /*#########################################
  * Registered CHECKBUTTON
  */
@@ -130,35 +103,24 @@ RegisteredCheckButton::on_toggled()
  * Registered UNITMENU
  */
 
-RegisteredUnitMenu::RegisteredUnitMenu()
-: _label(0), _sel(0)
-{
-}
-
 RegisteredUnitMenu::~RegisteredUnitMenu()
 {
     _changed_connection.disconnect();
-    if (_label) delete _label;
-    if (_sel) delete _sel;
 }
 
-void
-RegisteredUnitMenu::init (const Glib::ustring& label, const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+RegisteredUnitMenu::RegisteredUnitMenu (const Glib::ustring& label, const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+    :  RegisteredWidget<Labelled> (label, "" /*tooltip*/, new UnitMenu())
 {
     init_parent(key, wr, repr_in, doc_in);
 
-    _label = new Gtk::Label (label, 1.0, 0.5);
-    _label->set_use_underline (true);
-    _sel = new UnitMenu ();
-    _label->set_mnemonic_widget (*_sel);
-    _sel->setUnitType (UNIT_TYPE_LINEAR);
-    _changed_connection = _sel->signal_changed().connect (sigc::mem_fun (*this, &RegisteredUnitMenu::on_changed));
+    getUnitMenu()->setUnitType (UNIT_TYPE_LINEAR);
+    _changed_connection = getUnitMenu()->signal_changed().connect (sigc::mem_fun (*this, &RegisteredUnitMenu::on_changed));
 }
 
 void
 RegisteredUnitMenu::setUnit (const SPUnit* unit)
 {
-    _sel->setUnit (sp_unit_get_abbreviation (unit));
+    getUnitMenu()->setUnit (sp_unit_get_abbreviation (unit));
 }
 
 void
@@ -168,7 +130,7 @@ RegisteredUnitMenu::on_changed()
         return;
 
     Inkscape::SVGOStringStream os;
-    os << _sel->getUnitAbbr();
+    os << getUnitMenu()->getUnitAbbr();
 
     _wr->setUpdating (true);
 
@@ -182,48 +144,30 @@ RegisteredUnitMenu::on_changed()
  * Registered SCALARUNIT
  */
 
-RegisteredScalarUnit::RegisteredScalarUnit()
-: _widget(0), _um(0)
-{
-}
-
 RegisteredScalarUnit::~RegisteredScalarUnit()
 {
-    if (_widget) delete _widget;
     _value_changed_connection.disconnect();
 }
 
-void
-RegisteredScalarUnit::init (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, const RegisteredUnitMenu &rum, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+RegisteredScalarUnit::RegisteredScalarUnit (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, const RegisteredUnitMenu &rum, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+    : RegisteredWidget<ScalarUnit>(label, tip, UNIT_TYPE_LINEAR, "", "", rum.getUnitMenu()),
+      _um(0)
 {
     init_parent(key, wr, repr_in, doc_in);
 
-    _widget = new ScalarUnit (label, tip, UNIT_TYPE_LINEAR, "", "", rum._sel);
-    _widget->initScalar (-1e6, 1e6);
-    _widget->setUnit (rum._sel->getUnitAbbr());
-    _widget->setDigits (2);
-    _um = rum._sel;
-    _value_changed_connection = _widget->signal_value_changed().connect (sigc::mem_fun (*this, &RegisteredScalarUnit::on_value_changed));
+    initScalar (-1e6, 1e6);
+    setUnit (rum.getUnitMenu()->getUnitAbbr());
+    setDigits (2);
+    _um = rum.getUnitMenu();
+    _value_changed_connection = signal_value_changed().connect (sigc::mem_fun (*this, &RegisteredScalarUnit::on_value_changed));
 }
 
-ScalarUnit*
-RegisteredScalarUnit::getSU()
-{
-    return _widget;
-}
-
-void
-RegisteredScalarUnit::setValue (double val)
-{
-    if (_widget)
-        _widget->setValue (val);
-}
 
 void
 RegisteredScalarUnit::on_value_changed()
 {
-    if (_widget->setProgrammatically) {
-        _widget->setProgrammatically = false;
+    if (setProgrammatically) {
+        setProgrammatically = false;
         return;
     }
 
@@ -233,7 +177,7 @@ RegisteredScalarUnit::on_value_changed()
     _wr->setUpdating (true);
 
     Inkscape::SVGOStringStream os;
-    os << _widget->getValue("");
+    os << getValue("");
     if (_um)
         os << _um->getUnitAbbr();
 
@@ -371,46 +315,22 @@ RegisteredColorPicker::on_changed (guint32 rgba)
  * Registered SUFFIXEDINTEGER
  */
 
-RegisteredSuffixedInteger::RegisteredSuffixedInteger()
-: _label(0),
-  setProgrammatically(false),
-  _sb(0),
-  _adj(0.0,0.0,100.0,1.0,1.0,1.0),
-  _suffix(0)
-{
-}
-
 RegisteredSuffixedInteger::~RegisteredSuffixedInteger()
 {
     _changed_connection.disconnect();
-    if (_label) delete _label;
-    if (_suffix) delete _suffix;
-    if (_sb) delete _sb;
 }
 
-void
-RegisteredSuffixedInteger::init (const Glib::ustring& label, const Glib::ustring& suffix, const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+RegisteredSuffixedInteger::RegisteredSuffixedInteger (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& suffix, const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+    : RegisteredWidget<Scalar>(label, tip, 0, suffix),
+      setProgrammatically(false)
 {
     init_parent(key, wr, repr_in, doc_in);
 
-    _label = new Gtk::Label (label);
-    _label->set_alignment (1.0, 0.5);
-    _label->set_use_underline();
-    _sb = new Gtk::SpinButton (_adj, 1.0, 0);
-    _sb->set_numeric();
-    _label->set_mnemonic_widget (*_sb);
-    _suffix = new Gtk::Label (suffix);
-    _hbox.pack_start (*_sb, true, true, 0);
-    _hbox.pack_start (*_suffix, false, false, 0);
+    setRange (0, 1e6);
+    setDigits (0);
+    setIncrements(1, 10);
 
-    _changed_connection = _adj.signal_value_changed().connect (sigc::mem_fun(*this, &RegisteredSuffixedInteger::on_value_changed));
-}
-
-void
-RegisteredSuffixedInteger::setValue (int i)
-{
-    setProgrammatically = true;
-    _adj.set_value (i);
+    _changed_connection = signal_value_changed().connect (sigc::mem_fun(*this, &RegisteredSuffixedInteger::on_value_changed));
 }
 
 void
@@ -427,8 +347,7 @@ RegisteredSuffixedInteger::on_value_changed()
     _wr->setUpdating (true);
 
     Inkscape::SVGOStringStream os;
-    int value = int(_adj.get_value());
-    os << value;
+    os << getValue();
 
     write_to_xml(os.str().c_str());
 
@@ -440,32 +359,29 @@ RegisteredSuffixedInteger::on_value_changed()
  * Registered RADIOBUTTONPAIR
  */
 
-RegisteredRadioButtonPair::RegisteredRadioButtonPair()
-: _hbox(0),
-   setProgrammatically(false)
-{
-}
-
 RegisteredRadioButtonPair::~RegisteredRadioButtonPair()
 {
     _changed_connection.disconnect();
 }
 
-void
-RegisteredRadioButtonPair::init (const Glib::ustring& label,
-const Glib::ustring& label1, const Glib::ustring& label2,
-const Glib::ustring& tip1, const Glib::ustring& tip2,
-const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+RegisteredRadioButtonPair::RegisteredRadioButtonPair (const Glib::ustring& label,
+        const Glib::ustring& label1, const Glib::ustring& label2,
+        const Glib::ustring& tip1, const Glib::ustring& tip2,
+        const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+    : RegisteredWidget<Gtk::HBox>(),
+      _rb1(NULL),
+      _rb2(NULL)
 {
     init_parent(key, wr, repr_in, doc_in);
 
-    _hbox = new Gtk::HBox;
-    _hbox->add (*manage (new Gtk::Label (label)));
+    setProgrammatically = false;
+
+    add (*manage (new Gtk::Label (label)));
     _rb1 = manage (new Gtk::RadioButton (label1, true));
-    _hbox->add (*_rb1);
+    add (*_rb1);
     Gtk::RadioButtonGroup group = _rb1->get_group();
     _rb2 = manage (new Gtk::RadioButton (group, label2, true));
-    _hbox->add (*_rb2);
+    add (*_rb2);
     _rb2->set_active();
     _tt.set_tip (*_rb1, tip1);
     _tt.set_tip (*_rb2, tip2);
