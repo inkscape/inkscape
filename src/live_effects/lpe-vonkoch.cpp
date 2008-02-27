@@ -33,8 +33,8 @@ namespace LivePathEffect {
 
 LPEVonKoch::LPEVonKoch(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    generator(_("Generating path"), _("Path whos segments define the fractal"), "generator", &wr, this, "M0,0 L3,0 M0,1 L1,1 M 2,1 L3,1"),
     nbgenerations(_("Nb of generations"), _("Depth of the recursion --- keep low!!"), "nbgenerations", &wr, this, 1),
+    generator(_("Generating path"), _("Path whos segments define the fractal"), "generator", &wr, this, "M0,0 L3,0 M0,1 L1,1 M 2,1 L3,1"),
     drawall(_("Draw all generations"), _("If unchecked, draw only the last generation"), "drawall", &wr, this, false),
     vertical_pattern(_("Original path is vertical"), _("Rotates the original 90 degrees, before generating the fractal"), "vertical", &wr, this, false)
 {
