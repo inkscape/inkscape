@@ -15,6 +15,7 @@
 #include "attributes.h"
 #include "sp-glyph.h"
 #include "document.h"
+#include "helper-fns.h"
 
 static void sp_glyph_class_init(SPGlyphClass *gc);
 static void sp_glyph_init(SPGlyph *glyph);
@@ -67,8 +68,8 @@ static void sp_glyph_init(SPGlyph *glyph)
     glyph->unicode = NULL;
     glyph->glyph_name = NULL;
     glyph->d = NULL;
-    glyph->orientation = NULL;
-    glyph->arabic_form = NULL;
+    glyph->orientation = GLYPH_ORIENTATION_BOTH;
+    glyph->arabic_form = GLYPH_ARABIC_FORM_INITIAL;
     glyph->lang = NULL;
     glyph->horiz_adv_x = 0;
     glyph->vert_origin_x = 0;
@@ -103,24 +104,43 @@ static void sp_glyph_release(SPObject *object)
     }
 }
 
-//ToDo: use helper-fns.h
-inline double helperfns_read_number(gchar const *value) {
-    if (!value) return 0;
-    char *end;
-    double ret = g_ascii_strtod(value, &end);
-    if (*end) {
-        g_warning("Unable to convert \"%s\" to number", value);
-        // We could leave this out, too. If strtod can't convert
-        // anything, it will return zero.
-        ret = 0;
+static glyphArabicForm sp_glyph_read_arabic_form(gchar const *value){
+    if (!value) return GLYPH_ARABIC_FORM_INITIAL; //TODO: verify which is the default default (for me, the spec is not clear)
+    switch(value[0]){
+        case 'i':
+            if (strncmp(value, "initial", 7) == 0) return GLYPH_ARABIC_FORM_INITIAL;
+            if (strncmp(value, "isolated", 8) == 0) return GLYPH_ARABIC_FORM_ISOLATED;
+            break;
+        case 'm':
+            if (strncmp(value, "medial", 6) == 0) return GLYPH_ARABIC_FORM_MEDIAL;
+            break;
+        case 't':
+            if (strncmp(value, "terminal", 8) == 0) return GLYPH_ARABIC_FORM_TERMINAL;
+            break;
     }
-    return ret;
+    return GLYPH_ARABIC_FORM_INITIAL; //TODO: VERIFY DEFAULT!
+}
+
+static glyphOrientation sp_glyph_read_orientation(gchar const *value){
+    if (!value) return GLYPH_ORIENTATION_BOTH;
+    switch(value[0]){
+        case 'h':
+            return GLYPH_ORIENTATION_HORIZONTAL;
+            break;
+        case 'v':
+            return GLYPH_ORIENTATION_VERTICAL;
+            break;
+    }
+//ERROR? TODO: VERIFY PROPER ERROR HANDLING
+    return GLYPH_ORIENTATION_BOTH;
 }
 
 static void sp_glyph_set(SPObject *object, unsigned int key, const gchar *value)
 {
     SPGlyph *glyph = SP_GLYPH(object);
     double number;
+    glyphOrientation orient;
+    glyphArabicForm form;
 
     switch (key) {
         case SP_ATTR_UNICODE:
@@ -142,16 +162,20 @@ g_warning("SP_ATTR_GLYPH_NAME: %s", value);
 g_warning("SP_ATTR_D: %s", value);
             break;
         case SP_ATTR_ORIENTATION:
-            if (glyph->orientation) g_free(glyph->orientation);
-            glyph->orientation = g_strdup(value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-g_warning("SP_ATTR_ORIENTATION: %s", value);
+            orient = sp_glyph_read_orientation(value);
+            if (glyph->orientation != orient){
+                glyph->orientation = orient;
+                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+g_warning("SP_ATTR_ORIENTATION: %d", orient);
             break;
         case SP_ATTR_ARABIC_FORM:
-            if (glyph->arabic_form) g_free(glyph->arabic_form);
-            glyph->arabic_form = g_strdup(value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-g_warning("SP_ATTR_ARABIC_FORM: %s", value);
+            form = sp_glyph_read_arabic_form(value);
+            if (glyph->arabic_form != form){
+                glyph->arabic_form = form;
+                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+g_warning("SP_ATTR_ARABIC_FORM: %d", glyph->arabic_form);
             break;
         case SP_ATTR_LANG:
             if (glyph->lang) g_free(glyph->lang);
@@ -203,24 +227,25 @@ g_warning("SP_ATTR_VERT_ADV_Y: %f", number);
 
 static Inkscape::XML::Node *sp_glyph_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
-    SPGlyph *glyph = SP_GLYPH(object);
+//    SPGlyph *glyph = SP_GLYPH(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:glyph");
     }
 
+/* I am commenting out this part because I am not certain how does it work. I will have to study it later. Juca
     repr->setAttribute("unicode", glyph->unicode);
     repr->setAttribute("glyph-name", glyph->glyph_name);
     repr->setAttribute("d", glyph->d);
-    repr->setAttribute("orientation", glyph->orientation);
-    repr->setAttribute("arabic-form", glyph->arabic_form);
+    sp_repr_set_svg_double(repr, "orientation", (double) glyph->orientation);
+    sp_repr_set_svg_double(repr, "arabic-form", (double) glyph->arabic_form);
     repr->setAttribute("lang", glyph->lang);
     sp_repr_set_svg_double(repr, "horiz-adv-x", glyph->horiz_adv_x);
     sp_repr_set_svg_double(repr, "vert-origin-x", glyph->vert_origin_x);
     sp_repr_set_svg_double(repr, "vert-origin-y", glyph->vert_origin_y);
     sp_repr_set_svg_double(repr, "vert-adv-y", glyph->vert_adv_y);
-
+*/
     if (repr != SP_OBJECT_REPR(object)) {
         COPY_ATTR(repr, object->repr, "unicode");
         COPY_ATTR(repr, object->repr, "glyph-name");

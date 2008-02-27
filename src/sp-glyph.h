@@ -20,12 +20,25 @@
 #define SP_IS_GLYPH(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_GLYPH))
 #define SP_IS_GLYPH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_GLYPH))
 
+enum glyphArabicForm {
+    GLYPH_ARABIC_FORM_INITIAL,
+    GLYPH_ARABIC_FORM_MEDIAL,
+    GLYPH_ARABIC_FORM_TERMINAL,
+    GLYPH_ARABIC_FORM_ISOLATED,
+};
+
+enum glyphOrientation {
+    GLYPH_ORIENTATION_HORIZONTAL,
+    GLYPH_ORIENTATION_VERTICAL,
+    GLYPH_ORIENTATION_BOTH
+};
+
 struct SPGlyph : public SPObject {
     char* unicode;
     char* glyph_name;
     char* d;
-    char* orientation;
-    char* arabic_form;
+    glyphOrientation orientation;
+    glyphArabicForm arabic_form;
     char* lang;
     double horiz_adv_x;
     double vert_origin_x;
