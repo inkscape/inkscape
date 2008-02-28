@@ -208,7 +208,7 @@ void FileOpenDialogImplWin32::createFilterMenu()
         if (imod->deactivated()) continue;
 
         // Type
-        filter.name = g_utf8_to_utf16(imod->get_filetypename(),
+        filter.name = g_utf8_to_utf16(_(imod->get_filetypename()),
             -1, NULL, &filter.name_length, NULL);
 
         // Extension
@@ -1296,7 +1296,7 @@ void FileSaveDialogImplWin32::createFilterMenu()
 
         // Type
         filter.name = g_utf8_to_utf16(
-            omod->get_filetypename(), -1, NULL, &filter.name_length, NULL);
+            _(omod->get_filetypename()), -1, NULL, &filter.name_length, NULL);
 
         filter.mod = omod;
 
