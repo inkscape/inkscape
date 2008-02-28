@@ -24,6 +24,7 @@ static void sp_glyph_build(SPObject *object, SPDocument *document, Inkscape::XML
 static void sp_glyph_release(SPObject *object);
 static void sp_glyph_set(SPObject *object, unsigned int key, const gchar *value);
 static Inkscape::XML::Node *sp_glyph_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static void sp_glyph_update(SPObject *object, SPCtx *ctx, guint flags);
 
 static SPObjectClass *parent_class;
 
@@ -54,12 +55,13 @@ static void sp_glyph_class_init(SPGlyphClass *gc)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) gc;
 
-    parent_class = (SPObjectClass *) g_type_class_ref(SP_TYPE_OBJECT);
+    parent_class = (SPObjectClass*)g_type_class_peek_parent(gc);
 
     sp_object_class->build = sp_glyph_build;
     sp_object_class->release = sp_glyph_release;
     sp_object_class->set = sp_glyph_set;
     sp_object_class->write = sp_glyph_write;
+    sp_object_class->update = sp_glyph_update;
 }
 
 static void sp_glyph_init(SPGlyph *glyph)
@@ -220,6 +222,34 @@ g_warning("<glyph>: SP_ATTR_VERT_ADV_Y: %f", number);
                 ((SPObjectClass *) (parent_class))->set(object, key, value);
             }
             break;
+    }
+}
+
+/**
+ *  * Receives update notifications.
+ *   */
+static void
+sp_glyph_update(SPObject *object, SPCtx *ctx, guint flags)
+{
+    SPGlyph *glyph = SP_GLYPH(object);
+    (void)glyph;
+
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+        /* do something to trigger redisplay, updates? */
+            sp_object_read_attr(object, "unicode");
+            sp_object_read_attr(object, "glyph-name");
+            sp_object_read_attr(object, "d");
+            sp_object_read_attr(object, "orientation");
+            sp_object_read_attr(object, "arabic-form");
+            sp_object_read_attr(object, "lang");
+            sp_object_read_attr(object, "horiz-adv-x");
+            sp_object_read_attr(object, "vert-origin-x");
+            sp_object_read_attr(object, "vert-origin-y");
+            sp_object_read_attr(object, "vert-adv-y");
+    }
+
+    if (((SPObjectClass *) parent_class)->update) {
+        ((SPObjectClass *) parent_class)->update(object, ctx, flags);
     }
 }
 

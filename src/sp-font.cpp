@@ -14,6 +14,8 @@
 #include "xml/repr.h"
 #include "attributes.h"
 #include "sp-font.h"
+#include "sp-glyph.h"
+#include "sp-missing-glyph.h"
 #include "document.h"
 #include "helper-fns.h"
 
@@ -24,6 +26,10 @@ static void sp_font_build(SPObject *object, SPDocument *document, Inkscape::XML:
 static void sp_font_release(SPObject *object);
 static void sp_font_set(SPObject *object, unsigned int key, const gchar *value);
 static Inkscape::XML::Node *sp_font_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+
+static void sp_font_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
+static void sp_font_remove_child(SPObject *object, Inkscape::XML::Node *child);
+static void sp_font_update(SPObject *object, SPCtx *ctx, guint flags);
 
 // static gchar *sp_font_description(SPItem *item);
 
@@ -62,6 +68,9 @@ static void sp_font_class_init(SPFontClass *fc)
     sp_object_class->release = sp_font_release;
     sp_object_class->set = sp_font_set;
     sp_object_class->write = sp_font_write;
+    sp_object_class->child_added = sp_font_child_added;
+    sp_object_class->remove_child = sp_font_remove_child;
+    sp_object_class->update = sp_font_update;
 }
 
 static void sp_font_init(SPFont *font)
@@ -87,6 +96,54 @@ static void sp_font_build(SPObject *object, SPDocument *document, Inkscape::XML:
     sp_object_read_attr(object, "vert-origin-x");
     sp_object_read_attr(object, "vert-origin-y");
     sp_object_read_attr(object, "vert-adv-y");
+}
+
+
+static void sp_font_children_modified(SPFont *sp_font)
+{
+    SPObject* node = sp_font->children;
+    for(;node;node=node->next){
+        if (SP_IS_GLYPH(node)){
+            g_warning("We have a <glyph> childnode:\n\td=%s\n\tvert-origin-x=%f\n\tvert-origin-y=%f\n\tvert-adv-y=%f", ((SPGlyph*)node)->d, ((SPGlyph*)node)->vert_origin_x, ((SPGlyph*)node)->vert_origin_y, ((SPGlyph*)node)->vert_adv_y );
+            
+        }
+        if (SP_IS_MISSING_GLYPH(node)){
+g_warning("We have a <missing-glyph> childnode:\n\td=%s\n\thoriz-origin-x=%f\n\thoriz-origin-y=%f\n\thoriz-adv-x=%f", ((SPMissingGlyph*)node)->d, ((SPMissingGlyph*)node)->vert_origin_x, ((SPMissingGlyph*)node)->vert_origin_y, ((SPMissingGlyph*)node)->vert_adv_y );
+        }
+//        if (SP_IS_FONT_FACE_SRC(node)){
+//        }
+    }
+}
+
+/**
+ * Callback for child_added event.
+ */
+static void
+sp_font_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
+{
+    SPFont *f = SP_FONT(object);
+
+    if (((SPObjectClass *) parent_class)->child_added)
+        (* ((SPObjectClass *) parent_class)->child_added)(object, child, ref);
+
+    sp_font_children_modified(f);
+    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+}
+
+
+/**
+ * Callback for remove_child event.
+ */
+static void
+sp_font_remove_child(SPObject *object, Inkscape::XML::Node *child)
+{
+    SPFont *f = SP_FONT(object);
+
+    if (((SPObjectClass *) parent_class)->remove_child)
+        (* ((SPObjectClass *) parent_class)->remove_child)(object, child);
+
+    sp_font_children_modified(f);
+    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
 static void sp_font_release(SPObject *object)
@@ -157,6 +214,26 @@ g_warning("<font>: SP_ATTR_VERT_ADV_Y: %f", number);
                 ((SPObjectClass *) (parent_class))->set(object, key, value);
             }
             break;
+    }
+}
+
+/**
+ * Receives update notifications.
+ */
+static void
+sp_font_update(SPObject *object, SPCtx *ctx, guint flags)
+{
+    if (flags & (SP_OBJECT_MODIFIED_FLAG)) {
+        sp_object_read_attr(object, "horiz-origin-x");
+        sp_object_read_attr(object, "horiz-origin-y");
+        sp_object_read_attr(object, "horiz-adv-x");
+        sp_object_read_attr(object, "vert-origin-x");
+        sp_object_read_attr(object, "vert-origin-y");
+        sp_object_read_attr(object, "vert-adv-y");
+    }
+
+    if (((SPObjectClass *) parent_class)->update) {
+        ((SPObjectClass *) parent_class)->update(object, ctx, flags);
     }
 }
 

@@ -54,7 +54,7 @@ static void sp_missing_glyph_class_init(SPMissingGlyphClass *gc)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) gc;
 
-    parent_class = (SPObjectClass *) g_type_class_ref(SP_TYPE_OBJECT);
+    parent_class = (SPObjectClass*)g_type_class_peek_parent(gc);
 
     sp_object_class->build = sp_missing_glyph_build;
     sp_object_class->release = sp_missing_glyph_release;
