@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Inkscape 0.46\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-02-27 15:54+0100\n"
-"PO-Revision-Date: 2008-02-28 09:59-0000\n"
+"PO-Revision-Date: 2008-02-28 22:54+0100\n"
 "Last-Translator: Marcin Floryan <marcin.floryan@gmail.com>\n"
 "Language-Team: Polish <inkscapeplteam@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -7775,9 +7775,9 @@ msgstr "about.svg"
 msgid "translator-credits"
 msgstr ""
 "Polska lokalizacja wykonana przez:\n"
-"2005-2006 - Przemysław Loesch <p_loesch@poczta.onet.pl>\n"
-"2008 - Polski Zespół lokalizacyjny Inkscape <inkscapeplteam@gmail.com>\n"
-"W składzie:  Leszek(teo)Życzkowski, Marcin Floryan, Piotr Parafiniuk i inni"
+"2005-2006 - Przemysław Loesch (p_loesch@poczta.onet.pl)\n"
+"2008 - Polski Zespół lokalizacyjny Inkscape (inkscapeplteam@gmail.com)\n"
+"W składzie: Leszek(teo)Życzkowski, Marcin Floryan, Piotr Parafiniuk i inni"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:234
 #: ../src/ui/dialog/align-and-distribute.cpp:780
@@ -14891,7 +14891,7 @@ msgstr ""
 
 #: ../share/extensions/cdr_input.inx.h:2
 msgid "Corel DRAW Input"
-msgstr ""
+msgstr "Źródło Corel DRAW"
 
 #: ../share/extensions/cdr_input.inx.h:3
 msgid "Open files saved in Corel DRAW 7-X4"
