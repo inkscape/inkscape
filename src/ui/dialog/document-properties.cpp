@@ -134,6 +134,7 @@ DocumentProperties::DocumentProperties()
     _notebook.append_page(_page_snap,      _("Snap"));
     _notebook.append_page(_page_snap_dtls, _("Snap points"));
 
+    _page_sizer.init();
     build_page();
     build_guides();
     build_gridspage();
