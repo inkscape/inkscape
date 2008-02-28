@@ -207,6 +207,7 @@ libinkpre_a_SOURCES =	\
 	sp-flowtext.h sp-flowtext.cpp \
         sp-font.cpp sp-font.h \
         sp-glyph.cpp sp-glyph.h \
+        sp-missing-glyph.cpp sp-missing-glyph.h \
 	sp-gaussian-blur.cpp sp-gaussian-blur.h	\
 	sp-gaussian-blur-fns.h	\
 	sp-gradient-fns.h	\
