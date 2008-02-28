@@ -104,9 +104,11 @@ FileDialogBaseWin32::FileDialogBaseWin32(Gtk::Window &parent,
         parent(parent),
         _current_directory(dir)
 {
-    //_mutex = NULL;
     _main_loop = NULL;
 
+	_filter_index = 1;
+	_filter_count = 0;
+	
     _title = (wchar_t*)g_utf8_to_utf16(title, -1, NULL, NULL, NULL);
 
     Glib::RefPtr<const Gdk::Window> parentWindow = parent.get_window();
@@ -299,7 +301,8 @@ void FileOpenDialogImplWin32::createFilterMenu()
     }
     *(filterptr++) = L'\0';
 
-    _filterIndex = 2;
+	_filter_count = extension_index;
+    _filter_index = 2;	// Select the 2nd filter in the list - NOT the 3rd
 }
 
 void FileOpenDialogImplWin32::GetOpenFileName_thread()
@@ -307,9 +310,7 @@ void FileOpenDialogImplWin32::GetOpenFileName_thread()
     OPENFILENAMEEXW ofn;
 
     g_assert(this != NULL);
-    //g_assert(_mutex != NULL);
-    g_assert(_main_loop != NULL);
-
+    
     WCHAR* current_directory_string = (WCHAR*)g_utf8_to_utf16(
         _current_directory.data(), -1, NULL, NULL, NULL);
 
@@ -332,14 +333,15 @@ void FileOpenDialogImplWin32::GetOpenFileName_thread()
     ofn.lpstrTitle = _title;
     ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_EXPLORER | OFN_ENABLEHOOK | OFN_HIDEREADONLY | OFN_ENABLESIZING;
     ofn.lpstrFilter = _filter;
-    ofn.nFilterIndex = _filterIndex;
+    ofn.nFilterIndex = _filter_index;
     ofn.lpfnHook = GetOpenFileName_hookproc;
     ofn.lCustData = (LPARAM)this;
 
     _result = GetOpenFileNameW(&ofn) != 0;
 
-    _filterIndex = ofn.nFilterIndex;
-    _extension = _extension_map[ofn.nFilterIndex];
+	g_assert(ofn.nFilterIndex >= 1 && ofn.nFilterIndex <= _filter_count);
+    _filter_index = ofn.nFilterIndex;
+    _extension = _extension_map[ofn.nFilterIndex - 1];
 
     myFilename = utf16_to_ustring(_path_string, _MAX_PATH);
 
@@ -352,9 +354,6 @@ void FileOpenDialogImplWin32::GetOpenFileName_thread()
     _mutex->lock();
     _finished = true;
     _mutex->unlock();
-    //g_main_loop_quit(_main_loop);
-
-
 }
 
 void FileOpenDialogImplWin32::register_preview_wnd_class()
@@ -1143,7 +1142,6 @@ void FileOpenDialogImplWin32::render_preview()
     context->stroke_preserve();
 
     // Draw the image
-
     if(_preview_bitmap_image)    // Is the image a pixbuf?
     {
         // Set the transformation
@@ -1194,7 +1192,7 @@ bool
 FileOpenDialogImplWin32::show()
 {
     // We can only run one worker thread at a time
-    //if(_mutex != NULL) return false;
+    if(_mutex != NULL) return false;
 
     if(!Glib::thread_supported())
         Glib::thread_init();
@@ -1225,7 +1223,6 @@ FileOpenDialogImplWin32::show()
 
             Sleep(10);
         }
-        //g_main_loop_run(_main_loop);
     }
 
     // Tidy up
@@ -1260,8 +1257,6 @@ FileSaveDialogImplWin32::FileSaveDialogImplWin32(Gtk::Window &parent,
             const Glib::ustring &/*default_key*/) :
     FileDialogBaseWin32(parent, dir, title, fileTypes, "dialogs.save_as")
 {
-    _main_loop = NULL;
-
     createFilterMenu();
 }
 
@@ -1340,7 +1335,8 @@ void FileSaveDialogImplWin32::createFilterMenu()
     }
     *(filterptr++) = 0;
 
-    _filterIndex = 0;
+	_filter_count = extension_index;
+    _filter_index = 1;	// A value of 1 selects the 1st filter - NOT the 2nd
 }
 
 void FileSaveDialogImplWin32::GetSaveFileName_thread()
@@ -1348,7 +1344,6 @@ void FileSaveDialogImplWin32::GetSaveFileName_thread()
     OPENFILENAMEEXW ofn;
 
     g_assert(this != NULL);
-    //g_assert(_mutex != NULL);
     g_assert(_main_loop != NULL);
 
     gunichar2* current_directory_string = g_utf8_to_utf16(
@@ -1366,27 +1361,23 @@ void FileSaveDialogImplWin32::GetSaveFileName_thread()
     ofn.hwndOwner = _ownerHwnd;
     ofn.lpstrFile = _path_string;
     ofn.nMaxFile = _MAX_PATH;
-    ofn.nFilterIndex = _filterIndex;
+    ofn.nFilterIndex = _filter_index;
     ofn.lpstrFileTitle = NULL;
     ofn.nMaxFileTitle = 0;
     ofn.lpstrInitialDir = (wchar_t*)current_directory_string;
     ofn.lpstrTitle = _title;
     ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
     ofn.lpstrFilter = _filter;
-    ofn.nFilterIndex = _filterIndex;
+    ofn.nFilterIndex = _filter_index;
 
     _result = GetSaveFileNameW(&ofn) != 0;
 
-    _filterIndex = ofn.nFilterIndex;
-    _extension = _extension_map[ofn.nFilterIndex];
+	g_assert(ofn.nFilterIndex >= 1 && ofn.nFilterIndex <= _filter_count);
+    _filter_index = ofn.nFilterIndex;
+    _extension = _extension_map[ofn.nFilterIndex - 1];
 
     // Copy the selected file name, converting from UTF-16 to UTF-8
     myFilename = utf16_to_ustring(_path_string, _MAX_PATH);
-
-    //_mutex->lock();
-    //_finished = true;
-    //_mutex->unlock();
-
 
     // Tidy up
     g_free(current_directory_string);
@@ -1400,36 +1391,14 @@ void FileSaveDialogImplWin32::GetSaveFileName_thread()
 bool
 FileSaveDialogImplWin32::show()
 {
-    // We can only run one worker thread at a time
-    //if(_mutex != NULL) return false;
-
     if(!Glib::thread_supported())
         Glib::thread_init();
 
     _result = false;
-    //_finished = false;
-    //_mutex = new Glib::Mutex();
     _main_loop = g_main_loop_new(g_main_context_default(), FALSE);
 
     if(Glib::Thread::create(sigc::mem_fun(*this, &FileSaveDialogImplWin32::GetSaveFileName_thread), true))
-    {
-        /*while(1)
-        {
-            // While the dialog runs - keep the main UI alive
-            g_main_context_iteration(g_main_context_default(), FALSE);
-
-            if(_mutex->trylock())
-            {
-                if(_finished) break;
-                _mutex->unlock();
-            }
-
-            Sleep(10);
-        }*/
         g_main_loop_run(_main_loop);
-    }
-    //delete _mutex;
-    //_mutex = NULL;
 
     if(_result)
         appendExtension(myFilename, (Inkscape::Extension::Output*)_extension);

@@ -57,17 +57,8 @@ public:
 protected:
     /// The dialog type
     FileDialogType dialogType;
-
-    /// This mutex is used to ensure that the worker thread
-    /// that calls GetOpenFileName cannot collide with the
-    /// main Inkscape thread
-    Glib::Mutex *_mutex;
-
-    /// This flag is set true when the GetOpenFileName call
-    /// has returned
-    bool _finished;
-
-    /// A pointer to the GTK main-loop context object. This
+	
+	/// A pointer to the GTK main-loop context object. This
     /// is used to keep the rest of the inkscape UI running
     /// while the file dialog is displayed
     GMainLoop *_main_loop;
@@ -95,8 +86,13 @@ protected:
     /// The filter string for GetOpenFileName in UTF-16
     wchar_t *_filter;
 
-    /// The index of the currently selected filter
-    int _filterIndex;
+    /// The index of the currently selected filter.
+	/// This value must be greater than or equal to 1,
+	/// and less than or equal to _filter_count.
+    int _filter_index;
+	
+	/// The number of filters registered
+	int _filter_count;
 
     /// An array of the extensions associated with the
     /// file types of each filter. So the Nth entry of
@@ -104,8 +100,8 @@ protected:
     /// filter in the list. NULL if no specific extension is
     /// specified/
     Inkscape::Extension::Extension **_extension_map;
-
-    /// The currently selected extension. Valid after an [OK]
+	
+	/// The currently selected extension. Valid after an [OK]
     Inkscape::Extension::Extension *_extension;
 };
 
@@ -213,6 +209,15 @@ private:
 
     /// This flag is set true if a file has been selected
     bool _file_selected;
+	
+	/// This flag is set true when the GetOpenFileName call
+    /// has returned
+    bool _finished;
+	
+    /// This mutex is used to ensure that the worker thread
+    /// that calls GetOpenFileName cannot collide with the
+    /// main Inkscape thread
+    Glib::Mutex *_mutex;
 
 
     /// The controller function for the thread which calls
@@ -321,12 +326,13 @@ public:
 
 private:
 
-    /**
-     *  Create a filter menu for this type of dialog
-     */
+    /// Create a filter menu for this type of dialog
     void createFilterMenu();
 
+    /// The controller function for the thread which calls
+    /// GetSaveFileName
     void GetSaveFileName_thread();
+
 };
 
 
