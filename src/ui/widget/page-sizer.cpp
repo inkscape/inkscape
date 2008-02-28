@@ -7,7 +7,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Jon Phillips <jon@rejon.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de> (Gtkmm)
- *   Bob Jamison <ishmal@users.sf.net> 
+ *   Bob Jamison <ishmal@users.sf.net>
  *
  * Copyright (C) 2000 - 2006 Authors
  *
@@ -54,7 +54,7 @@ namespace Widget {
      * this table and in ghostscript.
      *
      * The versions here, in mm, are the official sizes according to
-     * <a href="http://en.wikipedia.org/wiki/Paper_sizes">http://en.wikipedia.org/wiki/Paper_sizes</a> 
+     * <a href="http://en.wikipedia.org/wiki/Paper_sizes">http://en.wikipedia.org/wiki/Paper_sizes</a>
      * at 2005-01-25.  (The ISO entries in the below table
      * were produced mechanically from the table on that page.)
      *
@@ -74,7 +74,7 @@ namespace Widget {
      * inconsistent rounding rules when converting from mm to pt.
      */
     /** \todo
-     * Should we include the JIS B series (used in Japan)  
+     * Should we include the JIS B series (used in Japan)
      * (JIS B0 is sometimes called JB0, and similarly for JB1 etc)?
      * Should we exclude B7--B10 and A7--10 to make the list smaller ?
      * Should we include any of the ISO C, D and E series (see below) ?
@@ -117,12 +117,12 @@ static PaperSizeRec const inkscape_papers[] = {
 
 
 //#if 0
-         /* 
+         /*
          Whether to include or exclude these depends on how
          big we mind our page size menu
          becoming.  C series is used for envelopes;
-		 don't know what D and E series are used for.
-		 */
+         don't know what D and E series are used for.
+         */
 
     { "C0",                917, 1297, SP_UNIT_MM },
     { "C1",                648,  917, SP_UNIT_MM },
@@ -152,11 +152,11 @@ static PaperSizeRec const inkscape_papers[] = {
 
     { "CSE",               462,  649, SP_UNIT_PT },
     { "US #10 Envelope", 4.125,  9.5, SP_UNIT_IN },
-	 // TODO: Select landscape by default.
+    // TODO: Select landscape by default.
     /* See http://www.hbp.com/content/PCR_envelopes.cfm for a much larger list of US envelope
        sizes. */
     { "DL Envelope",       110,  220, SP_UNIT_MM },
-	 // TODO: Select landscape by default.
+    // TODO: Select landscape by default.
     { "Ledger/Tabloid",     11,   17, SP_UNIT_IN },
     /* Note that `Folio' (used in QPrinter/KPrinter) is deliberately absent from this list, as it
        means different sizes to different people: different people may expect the width to be
@@ -165,7 +165,7 @@ static PaperSizeRec const inkscape_papers[] = {
        page size to the list, then please consider using a name more specific than just `Folio' or
        `Foolscap Folio'. */
     { "Banner 468x60",      60,  468, SP_UNIT_PX },
-	  // TODO: Select landscape by default.
+    // TODO: Select landscape by default.
     { "Icon 16x16",         16,   16, SP_UNIT_PX },
     { "Icon 32x32",         32,   32, SP_UNIT_PX },
     { "Icon 48x48",         48,   48, SP_UNIT_PX },
@@ -184,7 +184,7 @@ static const SPUnit _px_unit = sp_unit_get_by_id (SP_UNIT_PX);
 
 /**
  * Constructor
- */ 
+ */
 PageSizer::PageSizer(Registry & _wr)
     : Gtk::VBox(false,4),
       _dimensionUnits( _("U_nits:"), "units", _wr ),
@@ -192,25 +192,25 @@ PageSizer::PageSizer(Registry & _wr)
       _dimensionHeight( _("_Height:"), _("Height of paper"), "height", _dimensionUnits, _wr ),
       _widgetRegistry(&_wr)
 {
-    //# Set up the Paper Size combo box    
+    //# Set up the Paper Size combo box
     _paperSizeListStore = Gtk::ListStore::create(_paperSizeListColumns);
     _paperSizeList.set_model(_paperSizeListStore);
     _paperSizeList.append_column(_("Name"),
-	         _paperSizeListColumns.nameColumn);
+                                 _paperSizeListColumns.nameColumn);
     _paperSizeList.append_column(_("Description"),
-	         _paperSizeListColumns.descColumn);
-	_paperSizeList.set_headers_visible(false);
+                                 _paperSizeListColumns.descColumn);
+    _paperSizeList.set_headers_visible(false);
     _paperSizeListSelection = _paperSizeList.get_selection();
-    _paper_size_list_connection = 
-	        _paperSizeListSelection->signal_changed().connect (
-	        sigc::mem_fun (*this, &PageSizer::on_paper_size_list_changed));
-	_paperSizeListScroller.add(_paperSizeList);
-	_paperSizeListScroller.set_shadow_type(Gtk::SHADOW_IN);
-	_paperSizeListScroller.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_ALWAYS);
-	_paperSizeListScroller.set_size_request(-1, 90);
-	        
+    _paper_size_list_connection =
+        _paperSizeListSelection->signal_changed().connect (
+            sigc::mem_fun (*this, &PageSizer::on_paper_size_list_changed));
+    _paperSizeListScroller.add(_paperSizeList);
+    _paperSizeListScroller.set_shadow_type(Gtk::SHADOW_IN);
+    _paperSizeListScroller.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_ALWAYS);
+    _paperSizeListScroller.set_size_request(-1, 90);
+
     for (PaperSizeRec const *p = inkscape_papers; p->name; p++)
-	    {
+    {
         Glib::ustring name = p->name;
         char formatBuf[80];
         snprintf(formatBuf, 79, "%0.1f x %0.1f", p->smaller, p->larger);
@@ -241,20 +241,20 @@ PageSizer::PageSizer(Registry & _wr)
 
     //## Set up orientation radio buttons
     pack_start (_orientationBox, false, false, 0);
-    _orientationLabel.set_label(_("Page orientation:")); 
+    _orientationLabel.set_label(_("Page orientation:"));
     _orientationBox.pack_start(_orientationLabel, false, false, 0);
     _landscapeButton.set_use_underline();
     _landscapeButton.set_label(_("_Landscape"));
-	_landscapeButton.set_active(true);
+    _landscapeButton.set_active(true);
     Gtk::RadioButton::Group group = _landscapeButton.get_group();
     _orientationBox.pack_end (_landscapeButton, false, false, 5);
     _portraitButton.set_use_underline();
     _portraitButton.set_label(_("_Portrait"));
-	_portraitButton.set_active(true);
+    _portraitButton.set_active(true);
     _orientationBox.pack_end (_portraitButton, false, false, 5);
     _portraitButton.set_group (group);
     _portraitButton.set_active (true);
-    
+
     //## Set up custom size frame
     _customFrame.set_label(_("Custom size"));
     pack_start (_customFrame, false, false, 0);
@@ -267,7 +267,7 @@ PageSizer::PageSizer(Registry & _wr)
     _customTable.attach(_dimensionHeight, 0,1,1,2);
     _customTable.attach(_fitPageButton,              1,2,1,2);
     _customFrame.add(_customTable);
-    
+
     _fitPageButton.set_use_underline();
     _fitPageButton.set_label(_("_Fit page to selection"));
     _tips.set_tip(_fitPageButton, _("Resize the page to fit the current selection, or the entire drawing if there is no selection"));
@@ -276,7 +276,7 @@ PageSizer::PageSizer(Registry & _wr)
 
 /**
  * Destructor
- */ 
+ */
 PageSizer::~PageSizer()
 {
 }
@@ -285,7 +285,7 @@ PageSizer::~PageSizer()
 
 /**
  * Initialize or reset this widget
- */ 
+ */
 void
 PageSizer::init ()
 {
@@ -294,7 +294,7 @@ PageSizer::init ()
     _changedw_connection = _dimensionWidth.signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_value_changed));
     _changedh_connection = _dimensionHeight.signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_value_changed));
     _fitPageButton.signal_clicked().connect(sigc::mem_fun(*this, &PageSizer::fire_fit_canvas_to_selection_or_drawing));
-    
+
     show_all_children();
 }
 
@@ -303,23 +303,24 @@ PageSizer::init ()
  * Set document dimensions (if not called by Doc prop's update()) and
  * set the PageSizer's widgets and text entries accordingly. If
  * 'chageList' is true, then adjust the paperSizeList to show the closest
- * standard page size.  
+ * standard page size.
  *
  * \param w, h given in px
- * \param changeList whether to modify the paper size list 
+ * \param changeList whether to modify the paper size list
  */
 void
 PageSizer::setDim (double w, double h, bool changeList)
 {
     static bool _called = false;
-    if (_called)
-	    return;
+    if (_called) {
+        return;
+    }
 
     _called = true;
-    
+
     _paper_size_list_connection.block();
-	_landscape_connection.block();
-    _portrait_connection.block(); 
+    _landscape_connection.block();
+    _portrait_connection.block();
     _changedw_connection.block();
     _changedh_connection.block();
 
@@ -328,36 +329,36 @@ PageSizer::setDim (double w, double h, bool changeList)
         sp_document_set_width (doc, w, &_px_unit);
         sp_document_set_height (doc, h, &_px_unit);
         sp_document_done (doc, SP_VERB_NONE, _("Set page size"));
-    } 
-    
+    }
+
     _landscape = ( w > h );
     _landscapeButton.set_active(_landscape ? true : false);
     _portraitButton.set_active (_landscape ? false : true);
-    
+
     if (changeList)
         {
         Gtk::TreeModel::Row row = (*find_paper_size(w, h));
         if (row)
             _paperSizeListSelection->select(row);
         }
-    
+
     Unit const& unit = _dimensionUnits.getUnit();
     _dimensionWidth.setValue (w / unit.factor);
     _dimensionHeight.setValue (h / unit.factor);
 
     _paper_size_list_connection.unblock();
-	_landscape_connection.unblock();
+    _landscape_connection.unblock();
     _portrait_connection.unblock();
     _changedw_connection.unblock();
     _changedh_connection.unblock();
-    
+
     _called = false;
 }
 
 
-/** 
+/**
  * Returns an iterator pointing to a row in paperSizeListStore which
- * contains a paper of the specified size (specified in px), or 
+ * contains a paper of the specified size (specified in px), or
  * paperSizeListStore->children().end() if no such paper exists.
  */
 Gtk::ListStore::iterator
@@ -370,17 +371,17 @@ PageSizer::find_paper_size (double w, double h) const
     }
 
     g_return_val_if_fail(smaller <= larger, _paperSizeListStore->children().end());
-    
+
     std::map<Glib::ustring, PaperSize>::const_iterator iter;
     for (iter = _paperSizeTable.begin() ;
-	     iter != _paperSizeTable.end() ; iter++) {
+         iter != _paperSizeTable.end() ; iter++) {
         PaperSize paper = iter->second;
         SPUnit const &i_unit = sp_unit_get_by_id(paper.unit);
         double smallX = sp_units_get_pixels(paper.smaller, i_unit);
         double largeX = sp_units_get_pixels(paper.larger,  i_unit);
-        
+
         g_return_val_if_fail(smallX <= largeX, _paperSizeListStore->children().end());
-        
+
         if ((std::abs(smaller - smallX) <= 0.1) &&
             (std::abs(larger  - largeX) <= 0.1)   ) {
             Gtk::ListStore::iterator p;
@@ -401,18 +402,19 @@ PageSizer::find_paper_size (double w, double h) const
 
 /**
  * Tell the desktop to change the page size
- */ 
+ */
 void
 PageSizer::fire_fit_canvas_to_selection_or_drawing()
 {
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
-    if (!dt)
-	    return;
+    if (!dt) {
+        return;
+    }
     Verb *verb = Verb::get( SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING );
     if (verb) {
         SPAction *action = verb->get_action(dt);
         if (action)
-            sp_action_perform(action, NULL);        
+            sp_action_perform(action, NULL);
     }
 }
 
@@ -420,7 +422,7 @@ PageSizer::fire_fit_canvas_to_selection_or_drawing()
 
 /**
  * Paper Size list callback for when a user changes the selection
- */ 
+ */
 void
 PageSizer::on_paper_size_list_changed()
 {
@@ -464,14 +466,15 @@ PageSizer::on_portrait()
         return;
     double w = _dimensionWidth.getValue ("px");
     double h = _dimensionHeight.getValue ("px");
-    if (h < w)
-	    setDim (h, w);
+    if (h < w) {
+        setDim (h, w);
+    }
 }
 
 
 /**
  * Landscape button callback
- */ 
+ */
 void
 PageSizer::on_landscape()
 {
@@ -479,20 +482,21 @@ PageSizer::on_landscape()
         return;
     double w = _dimensionWidth.getValue ("px");
     double h = _dimensionHeight.getValue ("px");
-    if (w < h)
-	    setDim (h, w);
+    if (w < h) {
+        setDim (h, w);
+    }
 }
 
 /**
  * Callback for the dimension widgets
- */ 
+ */
 void
 PageSizer::on_value_changed()
 {
     if (_widgetRegistry->isUpdating()) return;
 
     setDim (_dimensionWidth.getValue("px"),
-	        _dimensionHeight.getValue("px"));
+            _dimensionHeight.getValue("px"));
 }
 
 
