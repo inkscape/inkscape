@@ -12,12 +12,10 @@
 #include "svg/stringstream.h"
 #include <gtkmm.h>
 #include "widgets/icon.h"
-
+#include "widget/registered-widget.h"
 #include "inkscape.h"
 #include "verbs.h"
 #include "helper-fns.h"
-
-#define noLPEBOOLPARAM_DEBUG
 
 namespace Inkscape {
 

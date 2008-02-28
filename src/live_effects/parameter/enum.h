@@ -11,7 +11,6 @@
 
 #include <glib/gtypes.h>
 
-#include "ui/widget/registry.h"
 #include "ui/widget/registered-enums.h"
 #include <gtkmm/tooltips.h>
 

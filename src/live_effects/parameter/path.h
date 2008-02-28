@@ -12,7 +12,6 @@
 #include <glib/gtypes.h>
 #include <2geom/path.h>
 
-#include "ui/widget/registry.h"
 #include <gtkmm/tooltips.h>
 
 #include "live_effects/parameter/parameter.h"

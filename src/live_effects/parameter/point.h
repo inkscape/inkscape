@@ -12,8 +12,6 @@
 #include <glib/gtypes.h>
 #include <2geom/point.h>
 
-#include "ui/widget/registry.h"
-#include "ui/widget/registered-widget.h"
 #include <gtkmm/tooltips.h>
 
 #include "live_effects/parameter/parameter.h"

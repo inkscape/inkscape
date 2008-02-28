@@ -19,6 +19,7 @@
 #include "sp-item.h"
 #include "sp-path.h"
 #include "live_effects/n-art-bpath-2geom.h"
+#include "xml/repr.h"
 
 #include <2geom/path.h>
 #include <2geom/piecewise.h>

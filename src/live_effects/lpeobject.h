@@ -16,7 +16,8 @@
 #define LIVEPATHEFFECT(o)    (G_TYPE_CHECK_INSTANCE_CAST((o), TYPE_LIVEPATHEFFECT, LivePathEffectObject))
 #define IS_LIVEPATHEFFECT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), TYPE_LIVEPATHEFFECT))
 
-struct LivePathEffectObject : public SPObject {
+class LivePathEffectObject : public SPObject {
+public:
     Inkscape::LivePathEffect::EffectType effecttype;
     Inkscape::LivePathEffect::Effect *lpe;
 

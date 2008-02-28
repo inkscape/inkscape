@@ -11,9 +11,6 @@
 
 #include <glib/gtypes.h>
 
-#include "ui/widget/registry.h"
-#include "ui/widget/registered-widget.h"
-
 #include "live_effects/parameter/parameter.h"
 
 namespace Inkscape {

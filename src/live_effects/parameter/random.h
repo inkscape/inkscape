@@ -14,8 +14,6 @@
 #include <2geom/point.h>
 #include <2geom/path.h>
 
-#include "ui/widget/registry.h"
-
 namespace Inkscape {
 
 namespace LivePathEffect {
