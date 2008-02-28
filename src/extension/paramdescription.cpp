@@ -50,7 +50,7 @@ ParamDescription::ParamDescription (const gchar * name, const gchar * guitext, c
 
 /** \brief  Create a label for the description */
 Gtk::Widget *
-ParamDescription::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ParamDescription::get_widget (SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * /*changeSignal*/)
 {
     Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_value)));
     label->set_line_wrap();

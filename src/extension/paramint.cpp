@@ -69,7 +69,7 @@ ParamInt::ParamInt (const gchar * name, const gchar * guitext, const gchar * des
     and \c pref_name() are used.
 */
 int
-ParamInt::set (int in, SPDocument * doc, Inkscape::XML::Node * node)
+ParamInt::set (int in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     _value = in;
     if (_value > _max) _value = _max;

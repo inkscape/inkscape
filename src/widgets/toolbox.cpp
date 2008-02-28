@@ -2423,7 +2423,7 @@ box3d_resync_toolbar(Inkscape::XML::Node *persp_repr, GObject *data) {
     }
 }
 
-static void box3d_persp_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
+static void box3d_persp_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const */*name*/,
                                                   gchar const */*old_value*/, gchar const */*new_value*/,
                                                   bool /*is_interactive*/, gpointer data)
 {
@@ -2490,7 +2490,7 @@ box3d_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl)
 
         inkscape_active_document()->current_persp3d = persp3d_get_from_repr(persp_repr);
         prefs_set_string_attribute("tools.shapes.3dbox", "persp", persp_repr->attribute("id"));
-    
+
         box3d_resync_toolbar(persp_repr, tbl);
     }
 }
@@ -2548,7 +2548,7 @@ box3d_angle_z_value_changed(GtkAdjustment *adj, GObject *dataKludge)
 }
 
 
-static void box3d_vp_state_changed( GtkToggleAction *act, GtkAction *box3d_angle, Proj::Axis axis )
+static void box3d_vp_state_changed( GtkToggleAction *act, GtkAction */*box3d_angle*/, Proj::Axis axis )
 {
     // TODO: Take all selected perspectives into account
     std::set<Persp3D *> sel_persps = persp3d_currently_selected_persps();
@@ -3985,7 +3985,7 @@ sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *
 {
     SPStyle *query =
         sp_style_new (SP_ACTIVE_DOCUMENT);
-    
+
     int result_fontspec =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
@@ -4024,17 +4024,17 @@ sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *
         } else if (query->text->font_specification.value || query->text->font_family.value) {
 
             GtkWidget *entry = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "family-entry"));
-            
-            // Get the font that corresponds 
+
+            // Get the font that corresponds
             Glib::ustring familyName;
-            
+
             font_instance * font = font_factory::Default()->FaceFromStyle(query);
             if (font) {
                 familyName = font_factory::Default()->GetUIFamilyString(font->descr);
                 font->Unref();
                 font = NULL;
             }
-            
+
             gtk_entry_set_text (GTK_ENTRY (entry), familyName.c_str());
 
             Gtk::TreePath path;
@@ -4195,10 +4195,10 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
     font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
-    
+
     SPCSSAttr *css = sp_repr_css_attr_new ();
-    
-    
+
+
     // First try to get the font spec from the stored value
     Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
 
@@ -4208,34 +4208,34 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
         fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
         fontFromStyle->Unref();
     }
-    
+
     if (!fontSpec.empty()) {
         Glib::ustring newFontSpec = font_factory::Default()->ReplaceFontSpecificationFamily(fontSpec, family);
         if (!newFontSpec.empty() && fontSpec != newFontSpec) {
             font_instance *font = font_factory::Default()->FaceFromFontSpecification(newFontSpec.c_str());
             if (font) {
                 sp_repr_css_set_property (css, "-inkscape-font-specification", newFontSpec.c_str());
-                
+
                 // Set all the these just in case they were altered when finding the best
                 // match for the new family and old style...
-                
+
                 gchar c[256];
-                
+
                 font->Family(c, 256);
                 sp_repr_css_set_property (css, "font-family", c);
-                
+
                 font->Attribute( "weight", c, 256);
                 sp_repr_css_set_property (css, "font-weight", c);
-                
+
                 font->Attribute("style", c, 256);
                 sp_repr_css_set_property (css, "font-style", c);
-                
+
                 font->Attribute("stretch", c, 256);
                 sp_repr_css_set_property (css, "font-stretch", c);
-                
+
                 font->Attribute("variant", c, 256);
                 sp_repr_css_set_property (css, "font-variant", c);
-                
+
                 font->Unref();
             }
         }
@@ -4359,7 +4359,7 @@ sp_text_toolbox_style_toggled (GtkToggleButton  *button,
 
     SPStyle *query =
         sp_style_new (SP_ACTIVE_DOCUMENT);
-    
+
     int result_fontspec =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
@@ -4371,17 +4371,17 @@ sp_text_toolbox_style_toggled (GtkToggleButton  *button,
 
     int result_numbers =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
-    
+
     Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
     Glib::ustring newFontSpec = "";
-    
+
     if (fontSpec.empty()) {
         // Construct a new font specification if it does not yet exist
         font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
         fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
         fontFromStyle->Unref();
     }
-    
+
     switch (prop)
     {
         case 0:
@@ -4410,7 +4410,7 @@ sp_text_toolbox_style_toggled (GtkToggleButton  *button,
     }
 
     if (!newFontSpec.empty()) {
-        sp_repr_css_set_property (css, "-inkscape-font-specification", newFontSpec.c_str()); 
+        sp_repr_css_set_property (css, "-inkscape-font-specification", newFontSpec.c_str());
     }
 
     // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
@@ -4507,8 +4507,8 @@ sp_text_toolbox_family_list_keypress (GtkWidget *w, GdkEventKey *event, GObject 
             gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
             return TRUE; // I consumed the event
             break;
-        case GDK_w: 
-        case GDK_W: 
+        case GDK_w:
+        case GDK_W:
             if (event->state & GDK_CONTROL_MASK) {
                 gtk_widget_hide (w);
                 popdown_visible = false;
@@ -4546,7 +4546,7 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
         free (text);
     }
     if (value <= 0) {
-        return; // could not parse value 
+        return; // could not parse value
     }
 
     SPCSSAttr *css = sp_repr_css_attr_new ();
@@ -4576,7 +4576,7 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
 }
 
 gboolean
-sp_text_toolbox_size_focusout (GtkWidget */*w*/, GdkEventFocus *event, GObject *tbl)
+sp_text_toolbox_size_focusout (GtkWidget */*w*/, GdkEventFocus */*event*/, GObject *tbl)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop) return FALSE;
@@ -4680,7 +4680,7 @@ sp_text_toolbox_popdown_focus_out (GtkWidget        *popdown,
 }
 
 gboolean
-sp_text_toolbox_popdown_focus_in (GtkWidget        *popdown,
+sp_text_toolbox_popdown_focus_in (GtkWidget        */*popdown*/,
                                    GdkEventFocus    */*event*/,
                                    GObject          */*tbl*/)
 {

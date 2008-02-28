@@ -1,5 +1,5 @@
-#ifndef __INK_EXTENSION_PARAMRADIOBUTTON_H__
-#define __INK_EXTENSION_PARAMRADIOBUTTON_H__
+#ifndef INK_EXTENSION_PARAMRADIOBUTTON_H_SEEN
+#define INK_EXTENSION_PARAMRADIOBUTTON_H_SEEN
 
 /** \file
  * Radiobutton parameter for extensions.
@@ -30,19 +30,19 @@ namespace Extension {
 class ParamRadioButton : public Parameter {
 private:
     /** \brief  Internal value.  This should point to a string that has
-                been allocated in memory.  And should be free'd. 
+                been allocated in memory.  And should be free'd.
                 It is the value of the current selected string */
     gchar * _value;
-    
+
     GSList * choices; /**< A table to store the choice strings  */
-    
+
 public:
     ParamRadioButton(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     virtual ~ParamRadioButton(void);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     Glib::ustring * string (void);
-        
-    const gchar * get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _value; }
+
+    const gchar * get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
     const gchar * set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
 }; /* class ParamRadioButton */
 
@@ -53,5 +53,5 @@ public:
 }  /* namespace Extension */
 }  /* namespace Inkscape */
 
-#endif /* __INK_EXTENSION_PARAMRADIOBUTTON_H__ */
+#endif /* INK_EXTENSION_PARAMRADIOBUTTON_H_SEEN */
 

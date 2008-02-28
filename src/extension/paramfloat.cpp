@@ -74,7 +74,7 @@ ParamFloat::ParamFloat (const gchar * name, const gchar * guitext, const gchar *
     and \c pref_name() are used.
 */
 float
-ParamFloat::set (float in, SPDocument * doc, Inkscape::XML::Node * node)
+ParamFloat::set (float in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     _value = in;
     if (_value > _max) _value = _max;

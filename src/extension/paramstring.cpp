@@ -42,7 +42,7 @@ ParamString::~ParamString(void)
     the passed in value is duplicated using \c g_strdup().
 */
 const gchar *
-ParamString::set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node)
+ParamString::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     if (in == NULL) return NULL; /* Can't have NULL string */
 

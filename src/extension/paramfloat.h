@@ -1,5 +1,5 @@
-#ifndef __INK_EXTENSION_PARAMFLOAT_H
-#define __INK_EXTENSION_PARAMFLOAT_H
+#ifndef INK_EXTENSION_PARAMFLOAT_H_SEEN
+#define INK_EXTENSION_PARAMFLOAT_H_SEEN
 
 /*
  * Copyright (C) 2005-2007 Authors:
@@ -26,7 +26,7 @@ private:
 public:
     ParamFloat (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
-    float get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _value; }
+    float get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
     float set (float in, SPDocument * doc, Inkscape::XML::Node * node);
     float max (void) { return _max; }
     float min (void) { return _min; }
@@ -38,7 +38,7 @@ public:
 }  /* namespace Extension */
 }  /* namespace Inkscape */
 
-#endif /* __INK_EXTENSION_PARAMFLOAT_H */
+#endif /* INK_EXTENSION_PARAMFLOAT_H_SEEN */
 
 /*
   Local Variables:

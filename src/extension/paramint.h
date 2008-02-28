@@ -1,5 +1,5 @@
-#ifndef __INK_EXTENSION_PARAMINT_H
-#define __INK_EXTENSION_PARAMINT_H
+#ifndef INK_EXTENSION_PARAMINT_H_SEEN
+#define INK_EXTENSION_PARAMINT_H_SEEN
 
 /*
  * Copyright (C) 2005-2007 Authors:
@@ -25,7 +25,7 @@ private:
 public:
     ParamInt (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
-    int get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _value; }
+    int get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
     int set (int in, SPDocument * doc, Inkscape::XML::Node * node);
     int max (void) { return _max; }
     int min (void) { return _min; }
@@ -36,7 +36,7 @@ public:
 }  /* namespace Extension */
 }  /* namespace Inkscape */
 
-#endif /* __INK_EXTENSION_PARAMINT_H */
+#endif /* INK_EXTENSION_PARAMINT_H_SEEN */
 
 /*
   Local Variables:

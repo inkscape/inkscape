@@ -139,7 +139,7 @@ ParamComboBox::~ParamComboBox (void)
     the passed in value is duplicated using \c g_strdup().
 */
 const gchar *
-ParamComboBox::set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node)
+ParamComboBox::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     if (in == NULL) return NULL; /* Can't have NULL string */
 

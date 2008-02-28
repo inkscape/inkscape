@@ -139,7 +139,7 @@ ParamRadioButton::~ParamRadioButton (void)
     the passed in value is duplicated using \c g_strdup().
 */
 const gchar *
-ParamRadioButton::set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node)
+ParamRadioButton::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     if (in == NULL) return NULL; /* Can't have NULL string */
 
@@ -221,7 +221,7 @@ ParamRadioButtonWdg::changed (void)
     \brief  Creates a combobox widget for an enumeration parameter
 */
 Gtk::Widget *
-ParamRadioButton::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ParamRadioButton::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * /*changeSignal*/)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
     Gtk::VBox * vbox = Gtk::manage(new Gtk::VBox(false, 0));

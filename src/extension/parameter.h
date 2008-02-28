@@ -1,5 +1,5 @@
-#ifndef __INK_EXTENSION_PARAM_H__
-#define __INK_EXTENSION_PARAM_H__
+#ifndef INK_EXTENSION_PARAM_H_SEEN
+#define INK_EXTENSION_PARAM_H_SEEN
 
 /** \file
  * Parameters for extensions.
@@ -89,28 +89,28 @@ public:
                               const Inkscape::XML::Node * node);
     guint32       get_color  (const SPDocument * doc,
                               const Inkscape::XML::Node * node);
-	const gchar * get_enum   (const SPDocument * doc,
+    const gchar * get_enum   (const SPDocument * doc,
                               const Inkscape::XML::Node * node);
 
     bool          set_bool   (bool in,          SPDocument * doc, Inkscape::XML::Node * node);
     int           set_int    (int  in,          SPDocument * doc, Inkscape::XML::Node * node);
     float         set_float  (float in,         SPDocument * doc, Inkscape::XML::Node * node);
     const gchar * set_string (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
-    guint32 	  set_color  (guint32 in, SPDocument * doc, Inkscape::XML::Node * node);
+    guint32       set_color  (guint32 in, SPDocument * doc, Inkscape::XML::Node * node);
 
     const gchar * name       (void) {return _name;}
 
     static Parameter * make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension * in_ext);
     virtual Gtk::Widget * get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     virtual Glib::ustring * string (void);
-    virtual void insert_subparam_strings(std::list <std::string> &retlist) {};
+    virtual void insert_subparam_strings(std::list <std::string> &/*retlist*/) {};
     gchar const * get_tooltip (void) { return _desc; }
 };
 
 }  /* namespace Extension */
 }  /* namespace Inkscape */
 
-#endif /* __INK_EXTENSION_PARAM_H__ */
+#endif /* INK_EXTENSION_PARAM_H_SEEN */
 
 /*
   Local Variables:
