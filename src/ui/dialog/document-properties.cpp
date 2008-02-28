@@ -134,7 +134,6 @@ DocumentProperties::DocumentProperties()
     _notebook.append_page(_page_snap,      _("Snap"));
     _notebook.append_page(_page_snap_dtls, _("Snap points"));
 
-    _page_sizer.init();
     build_page();
     build_guides();
     build_gridspage();
@@ -227,6 +226,7 @@ DocumentProperties::build_page()
     label_bor->set_markup (_("<b>Border</b>"));
     Gtk::Label *label_for = manage (new Gtk::Label);
     label_for->set_markup (_("<b>Format</b>"));
+    _page_sizer.init();
 
     Gtk::Widget *const widget_array[] =
     {
