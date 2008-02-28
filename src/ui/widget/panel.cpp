@@ -115,50 +115,104 @@ void Panel::_init()
     }
 
     _menu = new Gtk::Menu();
+
     {
-        const char *things[] = {
+	    Gtk::RadioMenuItem::Group group;
+	    Glib::ustring one_label(_("List"));
+	    Glib::ustring two_label(_("Grid"));
+	    Gtk::RadioMenuItem *one = manage(new Gtk::RadioMenuItem(group, one_label));
+	    Gtk::RadioMenuItem *two = manage(new Gtk::RadioMenuItem(group, two_label));
+	
+	    if (panel_mode == 0) {
+	        one->set_active(true);
+	    } else if (panel_mode == 1) {
+	        two->set_active(true);
+	    }
+	
+	    _menu->append(*one);
+	    _non_horizontal.push_back(one);
+	    _menu->append(*two);
+	    _non_horizontal.push_back(two);
+	    Gtk::MenuItem* sep = manage(new Gtk::SeparatorMenuItem());
+	    _menu->append(*sep);
+	    _non_horizontal.push_back(sep);
+	    one->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_MODE, 0));
+	    two->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_MODE, 1));
+    }
+    
+    {
+    	Glib::ustring heightItemLabel(Q_("swatches|Size"));
+    	
+    	//TRANSLATORS: Indicates size of colour swatches
+        const gchar *heightLabels[] = {
             N_("tiny"),
             N_("small"),
-            N_("swatches|medium"),
+            //TRANSLATORS: Translate only the word "medium". Indicates size of colour swatches
+            N_("swatchesHeight|medium"),
             N_("large"),
             N_("huge")
         };
-        Gtk::RadioMenuItem::Group groupOne;
-        for (unsigned int i = 0; i < G_N_ELEMENTS(things); i++) {
-            Glib::ustring foo(Q_(things[i]));
-            Gtk::RadioMenuItem* single = manage(new Gtk::RadioMenuItem(groupOne, foo));
-            _menu->append(*single);
+        
+        Gtk::MenuItem *sizeItem = manage(new Gtk::MenuItem(heightItemLabel));
+        Gtk::Menu *sizeMenu = manage(new Gtk::Menu());
+        sizeItem->set_submenu(*sizeMenu);
+                        
+        Gtk::RadioMenuItem::Group heightGroup;
+        for (unsigned int i = 0; i < G_N_ELEMENTS(heightLabels); i++) {
+            Glib::ustring _label(Q_(heightLabels[i]));
+            Gtk::RadioMenuItem* _item = manage(new Gtk::RadioMenuItem(heightGroup, _label));
+            sizeMenu->append(*_item);
             if (i == panel_size) {
-                single->set_active(true);
+            	_item->set_active(true);
             }
-            single->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_SIZE, i));
+            _item->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_SIZE, i));
        }
+        
+       _menu->append(*sizeItem);        
     }
-    _menu->append(*manage(new Gtk::SeparatorMenuItem()));
-    Gtk::RadioMenuItem::Group group;
-    Glib::ustring one_label(_("List"));
-    Glib::ustring two_label(_("Grid"));
-    Gtk::RadioMenuItem *one = manage(new Gtk::RadioMenuItem(group, one_label));
-    Gtk::RadioMenuItem *two = manage(new Gtk::RadioMenuItem(group, two_label));
+    
+    {
+        Glib::ustring widthItemLabel(Q_("swatches|Width"));
+        
+        //TRANSLATORS: Indicates width of colour swatches
+        const gchar *widthLabels[] = {
+            N_("narrower"),
+            N_("narrow"),
+            //TRANSLATORS: Translate only the word "medium". Indicates width of colour swatches
+            N_("swatchesWidth|medium"),
+            N_("wide"),
+            N_("wider")
+        };
 
-    if (panel_mode == 0) {
-        one->set_active(true);
-    } else if (panel_mode == 1) {
-        two->set_active(true);
+        Gtk::MenuItem *item = manage( new Gtk::MenuItem(widthItemLabel));
+        Gtk::Menu *type_menu = manage(new Gtk::Menu());
+        item->set_submenu(*type_menu);
+        _menu->append(*item);
+
+        Gtk::RadioMenuItem::Group widthGroup;
+
+        guint values[] = {0, 25, 50, 100, 200, 400};
+        guint hot_index = 3;
+        for ( guint i = 0; i < G_N_ELEMENTS(widthLabels); ++i ) {
+            // Assume all values are in increasing order
+            if ( values[i] <= panel_ratio ) {
+                hot_index = i;
+            }
+        }
+        for ( guint i = 0; i < G_N_ELEMENTS(widthLabels); ++i ) {
+        	Glib::ustring _label(Q_(widthLabels[i]));
+            Gtk::RadioMenuItem *_item = manage(new Gtk::RadioMenuItem(widthGroup, _label));
+            type_menu->append(*_item);
+            if ( i <= hot_index ) {
+            	_item->set_active(true);
+            }
+            _item->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_SHAPE, values[i]));
+        }
     }
-
-    _menu->append(*one);
-    _non_horizontal.push_back(one);
-    _menu->append(*two);
-    _non_horizontal.push_back(two);
-    Gtk::MenuItem* sep = manage(new Gtk::SeparatorMenuItem());
-    _menu->append(*sep);
-    _non_horizontal.push_back(sep);
-    one->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_MODE, 0));
-    two->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_MODE, 1));
 
     {
-        Glib::ustring wrap_label(_("Wrap"));
+        //TRANSLATORS: Translate only the word "Wrap". Indicates how colour swatches are displayed
+    	Glib::ustring wrap_label(Q_("swatches|Wrap"));
         Gtk::CheckMenuItem *check = manage(new Gtk::CheckMenuItem(wrap_label));
         check->set_active(panel_wrap);
         _menu->append(*check);
@@ -166,42 +220,8 @@ void Panel::_init()
 
         check->signal_toggled().connect(sigc::bind<Gtk::CheckMenuItem*>(sigc::mem_fun(*this, &Panel::_wrapToggled), check));
     }
-
-    {
-        Glib::ustring type_label(_("Shape"));
-
-        Glib::ustring ellipsis(_("..."));
-        Glib::ustring shape_1_label(_("Tall"));
-        Glib::ustring shape_2_label(_("Square"));
-        Glib::ustring shape_3_label(_("Wide"));
-
-        Gtk::MenuItem *item = manage( new Gtk::MenuItem(type_label));
-        Gtk::Menu *type_menu = manage(new Gtk::Menu());
-        item->set_submenu(*type_menu);
-        _menu->append(*item);
-
-        Gtk::RadioMenuItem::Group shapeGroup;
-
-
-        Glib::ustring* labels[] = {&ellipsis, &shape_1_label, &ellipsis, &shape_2_label, &ellipsis, &shape_3_label};
-        guint values[] = {0, 25, 50, 100, 200, 400};
-        guint hot_index = 3;
-        for ( guint i = 0; i < G_N_ELEMENTS(labels); ++i ) {
-            // Assume all values are in increasing order
-            if ( values[i] <= panel_ratio ) {
-                hot_index = i;
-            }
-        }
-        for ( guint i = 0; i < G_N_ELEMENTS(labels); ++i ) {
-            Gtk::RadioMenuItem *single = manage(new Gtk::RadioMenuItem(shapeGroup, *(labels[i])));
-            type_menu->append(*single);
-            if ( i <= hot_index ) {
-                single->set_active(true);
-            }
-            single->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_SHAPE, values[i]));
-        }
-    }
-
+    
+    Gtk::SeparatorMenuItem *sep;
     sep = manage(new Gtk::SeparatorMenuItem());
     _menu->append(*sep);
 
