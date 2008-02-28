@@ -13,7 +13,7 @@
 #include <gtkmm.h>
 #include "ui/widget/point.h"
 #include "widgets/icon.h"
-#include "widget/registered-widget.h"
+#include "ui/widget/registered-widget.h"
 #include "knot.h"
 #include "inkscape.h"
 #include "verbs.h"
