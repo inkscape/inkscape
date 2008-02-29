@@ -1017,31 +1017,14 @@ Script::execute (const std::list<std::string> &in_command,
         } while(param_str.size() > 0);
     }
 
-    if (!(filein.empty())) {
-//        if(argv.size() == 1) {
-            argv.push_back(filein);
-/*        }
-        else {
-            std::string parameter_str = argv.back();
-            argv.pop_back();
-            //TODO: quote
-            parameter_str += " " + filein;
-            argv.push_back(parameter_str);
-        }
-*/
-    }
-
     for (std::list<std::string>::const_iterator i = in_params.begin();
             i != in_params.end(); i++) {
         argv.push_back(*i);
     }
 
-/*
-    for (std::vector<std::string>::const_iterator i = argv.begin();
-            i != argv.end(); i++) {
-        std::cout << "_" << *i << "_" << std::endl;
+    if (!(filein.empty())) {
+		argv.push_back(filein);
     }
-*/
 
     int stdout_pipe, stderr_pipe;
 
