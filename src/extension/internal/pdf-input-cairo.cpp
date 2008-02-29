@@ -33,7 +33,7 @@ namespace Internal {
 static cairo_status_t _write_ustring_cb(void *closure, const unsigned char *data, unsigned int length);
 
 SPDocument *
-PdfInputCairo::open(Inkscape::Extension::Input * mod, const gchar * uri) {
+PdfInputCairo::open(Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
 
     printf("Attempting to open using PdfInputCairo\n");
 
