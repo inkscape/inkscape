@@ -58,12 +58,14 @@ ParamString::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node * 
 }
 
 /** \brief  Return the value as a string */
-Glib::ustring *
-ParamString::string (void)
+void
+ParamString::string (std::string &string)
 {
     if (_value == NULL)
-        return new Glib::ustring("");
-	return new Glib::ustring(_value);
+        return;
+
+    string += _value;
+    return;
 }
 
 /** \brief  Initialize the object, to do that, copy the data. */

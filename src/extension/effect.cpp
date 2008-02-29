@@ -212,21 +212,17 @@ Effect::prefs (Inkscape::UI::View::View * doc)
         return true;
     }
 
+    if (param_visible_count() == 0) {
+        effect(doc);
+        return true;
+    }
+
     if (!loaded())
         set_state(Extension::STATE_LOADED);
     if (!loaded()) return false;
 
-    sigc::signal<void> * changeSignal = new sigc::signal<void>;
-
-    Gtk::Widget * controls;
-	Implementation::ImplementationDocumentCache * docCache = imp->newDocCache(this, doc);
-    controls = imp->prefs_effect(this, doc, changeSignal, docCache);
-
-    ExecutionEnv executionEnv(this, doc, controls, changeSignal, NULL, docCache);
-
-    timer->lock();
-    executionEnv.run();
-    timer->unlock();
+    _prefDialog = new PrefDialog(this->get_name(), this->get_help(), NULL, this);
+    _prefDialog->show();
 
     return true;
 }
@@ -250,9 +246,14 @@ Effect::effect (Inkscape::UI::View::View * doc)
     if (!loaded()) return;
 
 
-    ExecutionEnv executionEnv(this, doc, NULL);
+    ExecutionEnv executionEnv(this, doc);
     timer->lock();
     executionEnv.run();
+    if (executionEnv.wait()) {
+        executionEnv.commit();
+    } else {
+        executionEnv.cancel();
+    }
     timer->unlock();
 
     return;
@@ -313,11 +314,6 @@ void
 Effect::set_pref_dialog (PrefDialog * prefdialog)
 {
     _prefDialog = prefdialog;
-    if (_prefDialog == NULL) {
-        timer->unlock();
-    } else {
-        timer->lock();
-    }
     return;
 }
 

@@ -45,7 +45,9 @@ ParamColor::set( guint32 in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*
     _value = in;
 
     gchar * prefname = this->pref_name();
-    prefs_set_string_attribute(PREF_DIR, prefname, this->string()->c_str());
+    std::string value;
+    string(value);
+    prefs_set_string_attribute(PREF_DIR, prefname, value.c_str());
     g_free(prefname);
 
     return _value;
@@ -66,41 +68,40 @@ ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar *
     if (paramval != NULL)
         defaulthex = paramval;
 
-	_value = atoi(defaulthex);
+    _value = atoi(defaulthex);
 
     return;
 }
 
-/** \brief  Return the value as a string */
-Glib::ustring *
-ParamColor::string (void)
+void
+ParamColor::string (std::string &string)
 {
     char str[16];
-	sprintf(str, "%i", _value);
-
-	return new Glib::ustring(str);
+    sprintf(str, "%i", _value);
+    string += str;
+    return;
 }
 
 Gtk::Widget *
 ParamColor::get_widget( SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * changeSignal )
 {
-	_changeSignal = new sigc::signal<void>(*changeSignal);
-	Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
-	SPColorSelector* spColorSelector = (SPColorSelector*)sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK);
+    _changeSignal = new sigc::signal<void>(*changeSignal);
+    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
+    SPColorSelector* spColorSelector = (SPColorSelector*)sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK);
 
-	ColorSelector* colorSelector = spColorSelector->base;
-	if (_value < 1) {
-		_value = 0xFF000000;
-	}
-	SPColor *color = new SPColor( _value );
-	float alpha = (_value & 0xff) / 255.0F;
+    ColorSelector* colorSelector = spColorSelector->base;
+    if (_value < 1) {
+        _value = 0xFF000000;
+    }
+    SPColor *color = new SPColor( _value );
+    float alpha = (_value & 0xff) / 255.0F;
     colorSelector->setColorAlpha(*color, alpha);
 
-	hbox->pack_start (*Glib::wrap(&spColorSelector->vbox), true, true, 0);
-	g_signal_connect(G_OBJECT(spColorSelector), "changed",  G_CALLBACK(sp_color_param_changed), (void*)this);
+    hbox->pack_start (*Glib::wrap(&spColorSelector->vbox), true, true, 0);
+    g_signal_connect(G_OBJECT(spColorSelector), "changed",  G_CALLBACK(sp_color_param_changed), (void*)this);
 
-	gtk_widget_show(GTK_WIDGET(spColorSelector));
-	hbox->show();
+    gtk_widget_show(GTK_WIDGET(spColorSelector));
+    hbox->show();
 
     return dynamic_cast<Gtk::Widget *>(hbox);
 }
@@ -108,13 +109,13 @@ ParamColor::get_widget( SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, si
 void
 sp_color_param_changed(SPColorSelector *csel, GObject *obj)
 {
-	const SPColor color = csel->base->getColor();
-	float alpha = csel->base->getAlpha();
+    const SPColor color = csel->base->getColor();
+    float alpha = csel->base->getAlpha();
 
     ParamColor* ptr = (ParamColor*)obj;
-	ptr->set(color.toRGBA32( alpha ), NULL, NULL);
+    ptr->set(color.toRGBA32( alpha ), NULL, NULL);
 
-	ptr->_changeSignal->emit();
+    ptr->_changeSignal->emit();
 }
 
 };  /* namespace Extension */

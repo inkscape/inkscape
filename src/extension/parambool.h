@@ -26,7 +26,7 @@ public:
     bool get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
     bool set (bool in, SPDocument * doc, Inkscape::XML::Node * node);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
-    Glib::ustring * string (void);
+    void string (std::string &string);
 };
 
 }  /* namespace Extension */

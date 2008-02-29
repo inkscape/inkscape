@@ -48,16 +48,16 @@ private:
                               This only gets created if there are parameters on this
                               page */
     Gtk::Tooltips * _tooltips;
-
+    
 public:
     static ParamNotebookPage * makepage (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension * in_ext);
 
     ParamNotebookPage(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     ~ParamNotebookPage(void);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
-    void insert_subparam_strings (std::list <std::string> &retlist);
+    void paramString (std::list <std::string> &list);
     gchar * get_guitext (void) {return _text;};
-
+    
 }; /* class ParamNotebookPage */
 
 
@@ -65,7 +65,7 @@ ParamNotebookPage::ParamNotebookPage (const gchar * name, const gchar * guitext,
     Parameter(name, guitext, desc, scope, ext)
 {
     parameters = NULL;
-
+        
     // Read XML to build page
     if (xml != NULL) {
         Inkscape::XML::Node *child_repr = sp_repr_children(xml);
@@ -81,7 +81,7 @@ ParamNotebookPage::ParamNotebookPage (const gchar * name, const gchar * guitext,
             child_repr = sp_repr_next(child_repr);
         }
     }
-
+    
     return;
 }
 
@@ -96,31 +96,18 @@ ParamNotebookPage::~ParamNotebookPage (void)
     g_slist_free(parameters);
 }
 
-/**
-    \brief  A function to get the subparameters in a string form
-    \return An array with all the subparameters in it.
-
-    Look how this closely resembles Extension::paramListString
-*/
+/** \brief  Return the value as a string */
 void
-ParamNotebookPage::insert_subparam_strings (std::list <std::string> &retlist)
+ParamNotebookPage::paramString (std::list <std::string> &list)
 {
-    for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
-        Parameter * param = reinterpret_cast<Parameter *>(list->data);
-
-        std::string param_string;
-        param_string += "--";
-        param_string += param->name();
-        param_string += "=";
-        Glib::ustring * out = param->string();
-        param_string += *out;
-        delete out;
-
-        retlist.insert(retlist.end(), param_string);
+    for (GSList * plist = parameters; plist != NULL; plist = g_slist_next(plist)) {
+        Parameter * param = reinterpret_cast<Parameter *>(plist->data);
+        param->string(list);
     }
 
     return;
 }
+
 
 /**
     \return None
@@ -179,7 +166,7 @@ ParamNotebookPage::makepage (Inkscape::XML::Node * in_repr, Inkscape::Extension:
     }
 
     ParamNotebookPage * page = new ParamNotebookPage(name, guitext, desc, scope, in_ext, in_repr);
-
+    
     /* Note: page could equal NULL */
     return page;
 }
@@ -193,26 +180,26 @@ ParamNotebookPage::makepage (Inkscape::XML::Node * in_repr, Inkscape::Extension:
 */
 Gtk::Widget *
 ParamNotebookPage::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
-{
+{                      
     if (!_tooltips) _tooltips = new Gtk::Tooltips();
-
+    
     Gtk::VBox * vbox = Gtk::manage(new Gtk::VBox);
-    vbox->set_border_width(5);
-
-    // add parameters onto page (if any)
+    vbox->set_border_width(5);  
+    
+    // add parameters onto page (if any)    
     for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
         Parameter * param = reinterpret_cast<Parameter *>(list->data);
         Gtk::Widget * widg = param->get_widget(doc, node, changeSignal);
         gchar const * tip = param->get_tooltip();
-
+        
         vbox->pack_start(*widg, true, true, 2);
         if (tip != NULL) {
             _tooltips->set_tip(*widg, Glib::ustring(tip));
         }
     }
-
+        
     vbox->show();
-
+    
     return dynamic_cast<Gtk::Widget *>(vbox);
 }
 
@@ -228,7 +215,7 @@ ParamNotebook::ParamNotebook (const gchar * name, const gchar * guitext, const g
     Parameter(name, guitext, desc, scope, ext)
 {
     pages = NULL;
-
+    
     // Read XML tree to add pages:
     if (xml != NULL) {
         Inkscape::XML::Node *child_repr = sp_repr_children(xml);
@@ -244,7 +231,7 @@ ParamNotebook::ParamNotebook (const gchar * name, const gchar * guitext, const g
             child_repr = sp_repr_next(child_repr);
         }
     }
-
+    
     // Initialize _value with the current page
     const char * defaultval = NULL;
     // set first page as default
@@ -261,7 +248,7 @@ ParamNotebook::ParamNotebook (const gchar * name, const gchar * guitext, const g
         defaultval = paramval;
     if (defaultval != NULL)
         _value = g_strdup(defaultval);  // allocate space for _value
-
+        
     return;
 }
 
@@ -292,7 +279,7 @@ ParamNotebook::~ParamNotebook (void)
     the passed in value is duplicated using \c g_strdup().
 */
 const gchar *
-ParamNotebook::set (const int in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
+ParamNotebook::set (const int in, SPDocument * doc, Inkscape::XML::Node * node)
 {
     ParamNotebookPage * page = NULL;
     int i = 0;
@@ -300,9 +287,9 @@ ParamNotebook::set (const int in, SPDocument * /*doc*/, Inkscape::XML::Node * /*
         page = reinterpret_cast<ParamNotebookPage *>(list->data);
         i++;
     }
-
+    
     if (page == NULL) return _value;
-
+   
     if (_value != NULL) g_free(_value);
     _value = g_strdup(page->name());
 
@@ -315,32 +302,33 @@ ParamNotebook::set (const int in, SPDocument * /*doc*/, Inkscape::XML::Node * /*
 
 
 /**
-    \brief  A function to get the currentpage in a string form
-    \return A string with the 'value'
-*/
-Glib::ustring *
-ParamNotebook::string (void)
-{
-    Glib::ustring * param_string = new Glib::ustring("");
+    \brief  A function to get the currentpage and the parameters in a string form
+    \return A string with the 'value' and all the parameters on all pages as command line arguments
 
-    *param_string += "\"";
-    *param_string += _value;  // the name of the current page
-    *param_string += "\"";
+    This is really a hack. The function is called by Extension::paramString() to build
+    the commandline string like: '--param1name=\"param1value\" --param2name=\"param2value\" ...'
+    Extension::paramString expects this function to return '\"param1value\"'; but instead, 
+    this function returns: '\"param1value\" --page1param1name=\"page1param1value\" ...'
 
-    return param_string;
-}
-
-/**
-    \brief  A function to get the subparameters in a string form
-    \return An array with all the subparameters in it.
+    \TODO  Do this better. For example, make Parameter::paramString() that returns '--name=\"value\"'
+    instead of just returning '\"value\"'.
 */
 void
-ParamNotebook::insert_subparam_strings (std::list <std::string> &retlist)
+ParamNotebook::string (std::list <std::string> &list)
 {
-    for (GSList * list = pages; list != NULL; list = g_slist_next(list)) {
-        ParamNotebookPage * page = reinterpret_cast<ParamNotebookPage *>(list->data);
+    std::string param_string;
+    param_string += "--";
+    param_string += name();
+    param_string += "=";
 
-        page->insert_subparam_strings(retlist);
+    param_string += "\"";
+    param_string += _value;  // the name of the current page
+    param_string += "\"";
+    list.insert(list.end(), param_string);
+
+    for (GSList * pglist = pages; pglist != NULL; pglist = g_slist_next(pglist)) {
+        ParamNotebookPage * page = reinterpret_cast<ParamNotebookPage *>(pglist->data);
+        page->paramString(list);
     }
 
     return;
@@ -375,8 +363,8 @@ public:
     notebookpages are added or removed.
 */
 void
-ParamNotebookWdg::changed_page(GtkNotebookPage */*page*/,
-                               guint pagenum)
+ParamNotebookWdg::changed_page(GtkNotebookPage *page,
+                                   guint pagenum)
 {
     if (is_visible()) {
         _pref->set((int)pagenum, _doc, _node);
@@ -396,11 +384,11 @@ ParamNotebook::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::s
 {
     ParamNotebookWdg * nb = Gtk::manage(new ParamNotebookWdg(this, doc, node));
 
-    // add pages (if any)
+    // add pages (if any)    
     int i = -1;
     int pagenr = i;
     for (GSList * list = pages; list != NULL; list = g_slist_next(list)) {
-        i++;
+        i++;  
         ParamNotebookPage * page = reinterpret_cast<ParamNotebookPage *>(list->data);
         Gtk::Widget * widg = page->get_widget(doc, node, changeSignal);
         nb->append_page(*widg, _(page->get_guitext()));
@@ -410,7 +398,7 @@ ParamNotebook::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::s
     }
 
     nb->show();
-
+    
     if (pagenr >= 0) nb->set_current_page(pagenr);
 
     return dynamic_cast<Gtk::Widget *>(nb);

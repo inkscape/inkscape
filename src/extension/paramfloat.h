@@ -32,7 +32,7 @@ public:
     float min (void) { return _min; }
     float precision (void) { return _precision; }
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
-    Glib::ustring * string (void);
+    void string (std::string &string);
 };
 
 }  /* namespace Extension */

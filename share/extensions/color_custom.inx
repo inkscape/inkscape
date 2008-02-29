@@ -1,5 +1,5 @@
 <inkscape-extension>
-	<_name>Custom...</_name>
+	<_name>Custom</_name>
 	<id>org.inkscape.color.custom</id>
 	<dependency type="executable" location="extensions">coloreffect.py</dependency>
 	<dependency type="executable" location="extensions">color_custom.py</dependency>

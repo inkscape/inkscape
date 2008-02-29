@@ -2,7 +2,7 @@
  * Authors:
  *   Ted Gould <ted@gould.cx>
  *
- * Copyright (C) 2007 Authors
+ * Copyright (C) 2007-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -28,21 +28,26 @@
 namespace Inkscape {
 namespace Extension {
 
+/** \brief  Create an execution environment that will allow the effect
+            to execute independently.
+    \param effect  The effect that we should execute
+    \param doc     The Document to execute on
+    \param docCache  The cache created for that document
+    \param show_working  Show the working dialog
+    \param show_error    Show the error dialog (not working)
 
-ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk::Widget * controls, sigc::signal<void> * changeSignal, Gtk::Dialog * prefDialog, Implementation::ImplementationDocumentCache * docCache) :
+    Grabs the selection of the current document so that it can get
+    restored.  Will generate a document cache if one isn't provided.
+*/
+ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Implementation::ImplementationDocumentCache * docCache, bool show_working, bool show_errors) :
+    _state(ExecutionEnv::INIT),
     _visibleDialog(NULL),
-    _prefsVisible(false),
-    _finished(false),
-    _humanWait(false),
-    _canceled(false),
-    _prefsChanged(false),
-    _livePreview(true),
-    _shutdown(false),
-    _selfdelete(false),
-    _changeSignal(changeSignal),
+    _mainloop(NULL),
     _doc(doc),
     _docCache(docCache),
-    _effect(effect)
+    _effect(effect),
+    _show_working(show_working),
+    _show_errors(show_errors)
 {
     SPDesktop *desktop = (SPDesktop *)_doc;
     sp_namedview_document_from_window(desktop);
@@ -59,107 +64,64 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Gtk
         }
     }
 
-    _mainloop = Glib::MainLoop::create(false);
+    genDocCache();
 
-    if (prefDialog == NULL) {
-        if (controls != NULL) {
-            createPrefsDialog(controls);
-        } else {
-            createWorkingDialog();
-        }
-    } else {
-        _visibleDialog = prefDialog;
-        _prefsVisible = true;
-        _dialogsig = _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::preferencesResponse));
+    return;
+}
 
-        // We came from a dialog, we'll need to die by ourselves.
-        _selfdelete = true;
-    }
+/** \brief  Destroy an execution environment
     
-    if (_changeSignal != NULL) {
-        _changesig = _changeSignal->connect(sigc::mem_fun(this, &ExecutionEnv::preferencesChange));
-    }
-
-    return;
-}
-
+    Destroys the dialog if created and the document cache.
+*/
 ExecutionEnv::~ExecutionEnv (void) {
-    _dialogsig.disconnect();
-    _timersig.disconnect();
-    if (_prefsVisible) {
-        _changesig.disconnect();
-    }
-    if (_visibleDialog != NULL && !_shutdown && !_prefsVisible) {
+    if (_visibleDialog != NULL) {
+        _visibleDialog->hide();
         delete _visibleDialog;
+        _visibleDialog = NULL;
     }
-    if (_changeSignal != NULL && !_shutdown) {
-        delete _changeSignal;
-    }
-	killDocCache();
+    killDocCache();
     return;
 }
 
+/** \brief  Generate a document cache if needed
+
+    If there isn't one we create a new one from the implementation
+    from the effect's implementation.
+*/
 void
 ExecutionEnv::genDocCache (void) {
-if (_docCache == NULL) {
-		// printf("Gen Doc Cache\n");
-		_docCache = _effect->get_imp()->newDocCache(_effect, _doc);
-	}
-	return;
+    if (_docCache == NULL) {
+        // printf("Gen Doc Cache\n");
+        _docCache = _effect->get_imp()->newDocCache(_effect, _doc);
+    }
+    return;
 }
 
+/** \brief  Destory a document cache
+
+    Just delete it.
+*/
 void
 ExecutionEnv::killDocCache (void) {
-	if (_docCache != NULL) {
-		// printf("Killed Doc Cache\n");
-		delete _docCache;
-		_docCache = NULL;
-	}
-	return;
-}
-
-void
-ExecutionEnv::preferencesChange (void) {
-    _timersig.disconnect();
-	if (_livePreview) {
-		_timersig = Glib::signal_timeout().connect(sigc::mem_fun(this, &ExecutionEnv::preferencesTimer), 100, Glib::PRIORITY_DEFAULT_IDLE);
-	}
-    return;
-}
-
-bool
-ExecutionEnv::preferencesTimer (void) {
-    //std::cout << "Preferences are a changin'" << std::endl;
-    _prefsChanged = true;
-    if (_humanWait) {
-        _mainloop->quit();
-        documentCancel();
-        _humanWait = false;
-    } else {
-        processingCancel();
-        documentCancel();
+    if (_docCache != NULL) {
+        // printf("Killed Doc Cache\n");
+        delete _docCache;
+        _docCache = NULL;
     }
-    return false;
-}
-
-void
-ExecutionEnv::createPrefsDialog (Gtk::Widget * controls) {
-    _visibleDialog = new PrefDialog(_effect->get_name(), _effect->get_help(), controls, this, _effect, _changeSignal);
-    _visibleDialog->show();
-    _dialogsig = _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::preferencesResponse));
-
-    _prefsVisible = true;
     return;
 }
 
+/** \brief  Create the working dialog
+
+    Builds the dialog with a message saying that the effect is working.
+    And make sure to connect to the cancel.
+*/
 void
 ExecutionEnv::createWorkingDialog (void) {
     if (_visibleDialog != NULL) {
+        _visibleDialog->hide();
         delete _visibleDialog;
-    }
-    if (_changeSignal != NULL) {
-        delete _changeSignal;
-        _changeSignal = NULL;
+        _visibleDialog = NULL;
     }
 
     gchar * dlgmessage = g_strdup_printf(_("'%s' working, please wait..."), _effect->get_name());
@@ -168,79 +130,39 @@ ExecutionEnv::createWorkingDialog (void) {
                                Gtk::MESSAGE_INFO,
                                Gtk::BUTTONS_CANCEL,
                                true); // modal
-    _dialogsig = _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::workingCanceled));
+    _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::workingCanceled));
     g_free(dlgmessage);
     _visibleDialog->show();
 
-    _prefsVisible = false;
     return;
 }
 
 void
-ExecutionEnv::workingCanceled( const int /*resp*/ ) {
-	printf("Working Canceled\n");
-    processingCancel();
-    documentCancel();
-    _finished = true;
+ExecutionEnv::workingCanceled( const int resp) {
+    cancel();
+    undo();
     return;
 }
 
 void
-ExecutionEnv::preferencesResponse (const int resp) {
-    if (resp == Gtk::RESPONSE_OK) {
-        if (_humanWait && _livePreview) {
-            documentCommit();
-            _mainloop->quit();
-            _finished = true;
-        } else {
-            createWorkingDialog();
-            if (!_livePreview) {
-                _mainloop->quit();
-                _humanWait = false;
-            }
-        }
-    } else {
-        if (_humanWait) {
-            _mainloop->quit();
-        } else {
-            processingCancel();
-        }
-        documentCancel();
-        _finished = true;
-    }
-    return;
-}
-
-void
-ExecutionEnv::processingComplete(void) {
-    //std::cout << "Processing Complete" << std::endl;
-    if (_prefsChanged) { return; } // do it all again
-    if (_prefsVisible) {
-        _humanWait = true;
-    } else {
-        documentCommit();
-        _finished = true;
-    }
-    return;
-}
-
-void
-ExecutionEnv::processingCancel (void) {
+ExecutionEnv::cancel (void) {
     _effect->get_imp()->cancelProcessing();
     return;
 }
 
 void
-ExecutionEnv::documentCancel (void) {
-    _canceled = true;
+ExecutionEnv::undo (void) {
+    sp_document_cancel(_doc->doc());
+    reselect();
     return;
 }
 
 void
-ExecutionEnv::documentCommit (void) {
+ExecutionEnv::commit (void) {
     sp_document_done(_doc->doc(), SP_VERB_NONE, _(_effect->get_name()));
     Effect::set_last_effect(_effect);
     _effect->get_imp()->commitDocument();
+    killDocCache();
     return;
 }
 
@@ -269,66 +191,38 @@ ExecutionEnv::reselect (void) {
 
 void
 ExecutionEnv::run (void) {
-    while (!_finished) {
-        _canceled = false;
-        if (_humanWait) {
-            _mainloop->run();
-        } else {
-            _prefsChanged = false;
-			genDocCache();
-            _effect->get_imp()->effect(_effect, _doc, _docCache);
-            processingComplete();
-        }
-        if (_canceled) {
-            sp_document_cancel(_doc->doc());
-            reselect();
-        }
+    _state = ExecutionEnv::RUNNING;
+    if (_show_working) {
+        createWorkingDialog();
     }
-    if (_selfdelete) {
-        delete this;
-    }
+    _effect->get_imp()->effect(_effect, _doc, _docCache);
+    _state = ExecutionEnv::COMPLETE;
+    // _runComplete.signal();
     return;
 }
 
-/** \brief  Set the state of live preview
-    \param state  The current state
-	
-	This will cancel the document preview and and configure
-	whether we should be waiting on the human.  It will also
-	clear the document cache.
-*/
 void
-ExecutionEnv::livePreview (bool state) { 
+ExecutionEnv::runComplete (void) {
     _mainloop->quit();
-    if (_livePreview && !state) {
-        documentCancel();
-        _humanWait = true;
-    }
-    if (!_livePreview && state) {
-        _humanWait = false;
-    }
-    _livePreview = state;
-	if (!_livePreview) {
-		killDocCache();
-	}
-    return;
 }
 
-void
-ExecutionEnv::shutdown (bool del) { 
-    if (_humanWait) {
-        _mainloop->quit();
-    } else {
-        processingCancel();
+bool
+ExecutionEnv::wait (void) {
+    if (_state != ExecutionEnv::COMPLETE) {
+        if (_mainloop) {
+            _mainloop = Glib::MainLoop::create(false);
+        }
+
+        sigc::connection conn = _runComplete.connect(sigc::mem_fun(this, &ExecutionEnv::runComplete));
+        _mainloop->run();
+
+        conn.disconnect();
     }
-    documentCancel();
 
-    _finished = true;
-    _shutdown = true;
-    _selfdelete = del;
-
-    return;
+    return true;
 }
+
+
 
 } }  /* namespace Inkscape, Extension */
 

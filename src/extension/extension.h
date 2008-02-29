@@ -94,7 +94,7 @@ private:
     static std::ofstream error_file;      /**< This is the place where errors get reported */
 
 protected:
-    Inkscape::XML::Node *repr;                         /**< The XML description of the Extension */
+    Inkscape::XML::Node *repr;            /**< The XML description of the Extension */
     Implementation::Implementation * imp; /**< An object that holds all the functions for making this work */
     ExpirationTimer * timer;              /**< Timeout to unload after a given time */
 
@@ -122,6 +122,23 @@ private:
     GSList * parameters; /**< A table to store the parameters for this extension.
                               This only gets created if there are parameters in this
                               extension */
+
+public:
+    /** \brief  A function to get the the number of parameters that
+                the extension has.
+        \return The number of parameters. */
+    unsigned int param_count ( ) { return parameters == NULL ? 0 :
+                                              g_slist_length(parameters); };
+    /** \brief  A function to get the the number of parameters that
+                are visible to the user that the extension has.
+        \return The number of visible parameters. 
+        
+        \note Currently this just calls param_count as visible isn't implemented
+              but in the future it'll do something different.  Please call
+              the appropriate function in code so that it'll work in the
+              future.
+    */
+    unsigned int param_visible_count ( ) { return param_count(); };
 
 public:
     /** An error class for when a parameter is called on a type it is not */

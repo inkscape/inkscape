@@ -60,6 +60,8 @@ class Effect : public Extension {
             Effect * _effect;
             /** \brief  Whether or not to show preferences on display */
             bool _showPrefs;
+            /** \brief  Name with elipses if that makes sense */
+            gchar * _elip_name;
         protected:
             virtual SPAction * make_action (Inkscape::UI::View::View * view);
         public:
@@ -70,9 +72,23 @@ class Effect : public Extension {
                        gchar const * image,
                        Effect *      effect,
                        bool          showPrefs) :
-                    Verb(id, _(name), _(tip), image), _effect(effect), _showPrefs(showPrefs) {
+                    Verb(id, _(name), _(tip), image), 
+                    _effect(effect), 
+                    _showPrefs(showPrefs),
+                    _elip_name(NULL) {
                 /* No clue why, but this is required */
                 this->set_default_sensitive(true);
+                if (_showPrefs && effect != NULL && effect->param_visible_count() != 0) {
+                    _elip_name = g_strdup_printf("%s...", _(name));
+                    set_name(_elip_name);
+                }
+            }
+            
+            /** \brief  Destructor */
+            ~EffectVerb() {
+                if (_elip_name != NULL) {
+                    g_free(_elip_name);
+                }
             }
     };
 

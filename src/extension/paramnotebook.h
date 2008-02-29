@@ -1,5 +1,5 @@
-#ifndef INK_EXTENSION_PARAMNOTEBOOK_H_SEEN
-#define INK_EXTENSION_PARAMNOTEBOOK_H_SEEN
+#ifndef __INK_EXTENSION_PARAMNOTEBOOK_H__
+#define __INK_EXTENSION_PARAMNOTEBOOK_H__
 
 /** \file
  * Notebook parameter for extensions.
@@ -30,10 +30,10 @@ namespace Extension {
 class ParamNotebook : public Parameter {
 private:
     /** \brief  Internal value.  This should point to a string that has
-                been allocated in memory.  And should be free'd.
+                been allocated in memory.  And should be free'd. 
                 It is the name of the current page. */
     gchar * _value;
-
+    
     GSList * pages; /**< A table to store the pages with parameters for this notebook.
                               This only gets created if there are pages in this
                               notebook */
@@ -41,10 +41,9 @@ public:
     ParamNotebook(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     virtual ~ParamNotebook(void);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
-    Glib::ustring * string (void);
-    virtual void insert_subparam_strings(std::list <std::string> &retlist);
-
-    const gchar * get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
+    void string (std::list <std::string> &list);
+        
+    const gchar * get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _value; }
     const gchar * set (const int in, SPDocument * doc, Inkscape::XML::Node * node);
 }; /* class ParamNotebook */
 
@@ -55,7 +54,7 @@ public:
 }  /* namespace Extension */
 }  /* namespace Inkscape */
 
-#endif /* INK_EXTENSION_PARAMNOTEBOOK_H_SEEN */
+#endif /* __INK_EXTENSION_PARAMNOTEBOOK_H__ */
 
 /*
   Local Variables:

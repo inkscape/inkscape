@@ -288,10 +288,10 @@ Extension::check (void)
 void
 Extension::printFailure (Glib::ustring reason)
 {
-	error_file << _("Extension \"") << name << _("\" failed to load because ");
-	error_file << reason.raw();
-	error_file << std::endl;
-	return;
+    error_file << _("Extension \"") << name << _("\" failed to load because ");
+    error_file << reason.raw();
+    error_file << std::endl;
+    return;
 }
 
 /**
@@ -692,23 +692,9 @@ Extension::autogui (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<v
 void
 Extension::paramListString (std::list <std::string> &retlist)
 {
-    //std::list <std::string> retarray;
-
     for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
         Parameter * param = reinterpret_cast<Parameter *>(list->data);
-
-        std::string param_string;
-        param_string += "--";
-        param_string += param->name();
-        param_string += "=";
-        Glib::ustring * out = param->string();
-        param_string += *out;
-        delete out;
-
-        retlist.insert(retlist.end(), param_string);
-
-        // insert parameters subparameters if any (for example notebook parameter has subparams)
-        param->insert_subparam_strings(retlist);
+        param->string(retlist);
     }
 
     return;

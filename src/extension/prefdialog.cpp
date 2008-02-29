@@ -2,7 +2,7 @@
  * Authors:
  *   Ted Gould <ted@gould.cx>
  *
- * Copyright (C) 2005-2007 Authors
+ * Copyright (C) 2005-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -21,6 +21,7 @@
 
 #include "preferences.h"
 #include "effect.h"
+#include "implementation/implementation.h"
 
 #include "prefdialog.h"
 
@@ -38,20 +39,27 @@ namespace Extension {
     in the title.  It adds a few buttons and sets up handlers for
     them.  It also places the passed in widgets into the dialog.
 */
-PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls, ExecutionEnv * exEnv, Effect * effect, sigc::signal<void> * changeSignal) :
+PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls, Effect * effect) :
     Gtk::Dialog::Dialog(_(name.c_str()), true, true),
     _help(help),
     _name(name),
-    _exEnv(exEnv),
-    _createdExEnv(false),
     _button_ok(NULL),
     _button_cancel(NULL),
     _button_preview(NULL),
     _param_preview(NULL),
-    _signal_param_change(changeSignal),
-    _effect(effect)
+    _effect(effect),
+    _exEnv(NULL)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
+    if (controls == NULL) {
+        if (_effect == NULL) {
+            std::cout << "AH!!!  No controls and no effect!!!" << std::endl;
+            return;
+        }
+        controls = _effect->get_imp()->prefs_effect(_effect, SP_ACTIVE_DESKTOP, &_signal_param_change, NULL);
+        _signal_param_change.connect(sigc::mem_fun(this, &PrefDialog::param_change));
+    }
+
     hbox->pack_start(*controls, true, true, 6);
     hbox->show();
     this->get_vbox()->pack_start(*hbox, true, true, 6);
@@ -64,17 +72,15 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     _button_cancel = add_button(Gtk::Stock::CLOSE, Gtk::RESPONSE_CANCEL);
     _button_cancel->set_use_stock(true);
 
-    _button_ok = add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
+    _button_ok = add_button(Gtk::Stock::APPLY, Gtk::RESPONSE_OK);
     _button_ok->set_use_stock(true);
     set_default_response(Gtk::RESPONSE_OK);
     _button_ok->grab_focus();
 
-    // If we're working with an effect that can be live and
-    // the dialog can be pinned, put those options in too
-    if (_exEnv != NULL) {
+    if (_effect != NULL) {
         if (_param_preview == NULL) {
             XML::Document * doc = sp_repr_read_mem(live_param_xml, strlen(live_param_xml), NULL);
-            _param_preview = Parameter::make(doc->root(), _exEnv->_effect);
+            _param_preview = Parameter::make(doc->root(), _effect);
         }
 
         Gtk::HSeparator * sep = Gtk::manage(new Gtk::HSeparator());
@@ -88,33 +94,44 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
         hbox->show();
         this->get_vbox()->pack_start(*hbox, true, true, 6);
 
+        Gtk::HBox * hbox = dynamic_cast<Gtk::HBox *>(_button_preview);
+        if (hbox != NULL) {
+            Gtk::Widget * back = hbox->children().back().get_widget();
+            Gtk::CheckButton * cb = dynamic_cast<Gtk::CheckButton *>(back);
+            _checkbox_preview = cb;
+        }
+
         preview_toggle();
         _signal_preview.connect(sigc::mem_fun(this, &PrefDialog::preview_toggle));
-
     }
 
     GtkWidget *dlg = GTK_WIDGET(gobj());
     sp_transientize(dlg);
-
-    if (_effect != NULL) {
-        _effect->set_pref_dialog(this);
-    }
 
     return;
 }
 
 PrefDialog::~PrefDialog ( )
 {
-    if (_effect != NULL) {
-        _effect->set_pref_dialog(NULL);
-    }
     if (_param_preview != NULL) {
         delete _param_preview;
+        _param_preview = NULL;
+    }
+
+    if (_exEnv != NULL) {
+        _exEnv->cancel();
+        delete _exEnv;
+        _exEnv = NULL;
+    }
+
+    if (_effect != NULL) {
+        _effect->set_pref_dialog(NULL);
     }
 
     return;
 }
 
+#if 0
 /** \brief  Runs the dialog
     \return The response to the dialog
 
@@ -139,49 +156,76 @@ PrefDialog::run (void) {
     }
     return resp;
 }
-
-void
-PrefDialog::setPreviewState (Glib::ustring state) {
-    (void)state;
-}
+#endif
 
 void
 PrefDialog::preview_toggle (void) {
     if(_param_preview->get_bool(NULL, NULL)) {
         set_modal(true);
         if (_exEnv == NULL) {
-            _exEnv = new ExecutionEnv(_effect, SP_ACTIVE_DESKTOP, NULL, _signal_param_change, this);
-            _createdExEnv = true;
-			_exEnv->livePreview(true);
+            _exEnv = new ExecutionEnv(_effect, SP_ACTIVE_DESKTOP, NULL, false, false);
             _exEnv->run();
         }
     } else {
-		set_modal(false);
-		if (_exEnv != NULL) {
-			_exEnv->livePreview(false);
-            _exEnv->shutdown(_createdExEnv);
+        set_modal(false);
+        if (_exEnv != NULL) {
+            _exEnv->cancel();
+            _exEnv->undo();
+            delete _exEnv;
             _exEnv = NULL;
-		}
+        }
     }
 }
 
 void
-PrefDialog::on_response (int signal) {
+PrefDialog::param_change (void) {
     if (_exEnv != NULL) {
-		_param_preview->set_bool(false, NULL, NULL);
-        return;
+        _timersig.disconnect();
+        _timersig = Glib::signal_timeout().connect(sigc::mem_fun(this, &PrefDialog::param_timer_expire),
+                                                   250, /* ms */
+                                                   Glib::PRIORITY_DEFAULT_IDLE);
     }
 
+    return;
+}
+
+bool
+PrefDialog::param_timer_expire (void) {
+    if (_exEnv != NULL) {
+        _exEnv->cancel();
+        _exEnv->undo();
+        _exEnv->run();
+    }
+
+    return false;
+}
+
+void
+PrefDialog::on_response (int signal) {
     if (signal == Gtk::RESPONSE_OK) {
-        if(_effect != NULL)
-        {
+        if (_exEnv == NULL) {
             _effect->effect(SP_ACTIVE_DESKTOP);
+        } else {
+            if (_exEnv->wait()) {
+                _exEnv->commit();
+            } else {
+                _exEnv->undo();
+            }
+            delete _exEnv;
+            _exEnv = NULL;
         }
     }
-	if (signal == Gtk::RESPONSE_CANCEL) {
-		// close the dialog
-		delete this;
-	}
+
+    if (_param_preview != NULL) {
+        //_param_preview->set_bool(false, NULL, NULL);
+        _checkbox_preview->set_active(false);
+        //preview_toggle();
+    }
+
+    if (signal == Gtk::RESPONSE_CANCEL) {
+        // close the dialog
+        delete this;
+    }
 
     return;
 }

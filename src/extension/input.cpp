@@ -94,8 +94,8 @@ Input::Input (Inkscape::XML::Node * in_repr, Implementation::Implementation * in
 }
 
 /**
-	\return  None
-	\brief   Destroys an Input extension
+    \return  None
+    \brief   Destroys an Input extension
 */
 Input::~Input (void)
 {
@@ -103,44 +103,44 @@ Input::~Input (void)
     g_free(extension);
     g_free(filetypename);
     g_free(filetypetooltip);
-	g_free(output_extension);
+    g_free(output_extension);
     return;
 }
 
 /**
     \return  Whether this extension checks out
-	\brief   Validate this extension
+    \brief   Validate this extension
 
-	This function checks to make sure that the input extension has
-	a filename extension and a MIME type.  Then it calls the parent
-	class' check function which also checks out the implmentation.
+    This function checks to make sure that the input extension has
+    a filename extension and a MIME type.  Then it calls the parent
+    class' check function which also checks out the implmentation.
 */
 bool
 Input::check (void)
 {
-	if (extension == NULL)
-		return FALSE;
-	if (mimetype == NULL)
-		return FALSE;
+    if (extension == NULL)
+        return FALSE;
+    if (mimetype == NULL)
+        return FALSE;
 
-	return Extension::check();
+    return Extension::check();
 }
 
 /**
     \return  A new document
-	\brief   This function creates a document from a file
-	\param   uri  The filename to create the document from
+    \brief   This function creates a document from a file
+    \param   uri  The filename to create the document from
 
-	This function acts as the first step in creating a new document
-	from a file.  The first thing that this does is make sure that the
-	file actually exists.  If it doesn't, a NULL is returned.  If the
-	file exits, then it is opened using the implmentation of this extension.
+    This function acts as the first step in creating a new document
+    from a file.  The first thing that this does is make sure that the
+    file actually exists.  If it doesn't, a NULL is returned.  If the
+    file exits, then it is opened using the implmentation of this extension.
 
-	After opening the document the output_extension is set.  What this
-	accomplishes is that save can try to use an extension that supports
-	the same fileformat.  So something like opening and saveing an 
-	Adobe Illustrator file can be transparent (not recommended, but
-	transparent).  This is all done with undo being turned off.
+    After opening the document the output_extension is set.  What this
+    accomplishes is that save can try to use an extension that supports
+    the same fileformat.  So something like opening and saveing an 
+    Adobe Illustrator file can be transparent (not recommended, but
+    transparent).  This is all done with undo being turned off.
 */
 SPDocument *
 Input::open (const gchar *uri)
@@ -167,7 +167,7 @@ Input::open (const gchar *uri)
 
 /**
     \return  IETF mime-type for the extension
-	\brief   Get the mime-type that describes this extension
+    \brief   Get the mime-type that describes this extension
 */
 gchar *
 Input::get_mimetype(void)
@@ -177,7 +177,7 @@ Input::get_mimetype(void)
 
 /**
     \return  Filename extension for the extension
-	\brief   Get the filename extension for this extension
+    \brief   Get the filename extension for this extension
 */
 gchar *
 Input::get_extension(void)
@@ -187,7 +187,7 @@ Input::get_extension(void)
 
 /**
     \return  The name of the filetype supported
-	\brief   Get the name of the filetype supported
+    \brief   Get the name of the filetype supported
 */
 gchar *
 Input::get_filetypename(void)
@@ -200,7 +200,7 @@ Input::get_filetypename(void)
 
 /**
     \return  Tooltip giving more information on the filetype
-	\brief   Get the tooltip for more information on the filetype
+    \brief   Get the tooltip for more information on the filetype
 */
 gchar *
 Input::get_filetypetooltip(void)
@@ -210,16 +210,19 @@ Input::get_filetypetooltip(void)
 
 /**
     \return  A dialog to get settings for this extension
-	\brief   Create a dialog for preference for this extension
+    \brief   Create a dialog for preference for this extension
 
-	Calls the implementation to get the preferences.
+    Calls the implementation to get the preferences.
 */
 bool
 Input::prefs (const gchar *uri)
 {
-    if (!loaded())
+    if (!loaded()) {
         set_state(Extension::STATE_LOADED);
-    if (!loaded()) return false;
+    }
+    if (!loaded()) {
+        return false;
+    }
 
     Gtk::Widget * controls;
     controls = imp->prefs_input(this, uri);

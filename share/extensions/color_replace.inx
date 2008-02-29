@@ -1,5 +1,5 @@
 <inkscape-extension>
-	<_name>Replace color...</_name>
+	<_name>Replace color</_name>
 	<id>org.inkscape.color.replacecolor</id>
 	<dependency type="executable" location="extensions">coloreffect.py</dependency>
 	<dependency type="executable" location="extensions">color_replace.py</dependency>

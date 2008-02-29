@@ -1,5 +1,5 @@
-#ifndef INK_EXTENSION_PARAM_H_SEEN
-#define INK_EXTENSION_PARAM_H_SEEN
+#ifndef __INK_EXTENSION_PARAM_H__
+#define __INK_EXTENSION_PARAM_H__
 
 /** \file
  * Parameters for extensions.
@@ -102,15 +102,16 @@ public:
 
     static Parameter * make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension * in_ext);
     virtual Gtk::Widget * get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
-    virtual Glib::ustring * string (void);
-    virtual void insert_subparam_strings(std::list <std::string> &/*retlist*/) {};
     gchar const * get_tooltip (void) { return _desc; }
+
+    void string (std::list <std::string> &list);
+    void string (std::string &string);
 };
 
 }  /* namespace Extension */
 }  /* namespace Inkscape */
 
-#endif /* INK_EXTENSION_PARAM_H_SEEN */
+#endif /* __INK_EXTENSION_PARAM_H__ */
 
 /*
   Local Variables:

@@ -144,13 +144,13 @@ ParamInt::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal
 }
 
 /** \brief  Return the value as a string */
-Glib::ustring *
-ParamInt::string (void)
+void
+ParamInt::string (std::string &string)
 {
     char startstring[32];
     sprintf(startstring, "%d", _value);
-    Glib::ustring * mystring = new Glib::ustring(startstring);
-    return mystring;
+    string += startstring;
+    return;
 }
 
 }  /* namespace Extension */

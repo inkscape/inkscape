@@ -167,12 +167,11 @@ ParamRadioButton::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::No
     \brief  A function to get the current value of the parameter in a string form
     \return A string with the 'value' as command line argument
 */
-Glib::ustring *
-ParamRadioButton::string (void)
+void
+ParamRadioButton::string (std::string &string)
 {
-    Glib::ustring * param_string = new Glib::ustring("");
-    *param_string += _value;
-    return param_string;
+    string += _value;
+    return;
 }
 
 /** \brief  A special radiobutton class to use in ParamRadioButton */

@@ -105,17 +105,16 @@ ParamBoolCheckButton::on_toggle (void)
 }
 
 /** \brief  Return 'true' or 'false' */
-Glib::ustring *
-ParamBool::string (void)
+void
+ParamBool::string (std::string &string)
 {
-    Glib::ustring * mystring;
+    if (_value) {
+        string += "true";
+    } else {
+        string += "false";
+    }
 
-    if (_value)
-        mystring = new Glib::ustring("true");
-    else
-        mystring = new Glib::ustring("false");
-
-    return mystring;
+    return;
 }
 
 /**

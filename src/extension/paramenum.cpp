@@ -172,12 +172,11 @@ ParamComboBox::changed (void) {
     \brief  A function to get the value of the parameter in string form
     \return A string with the 'value' as command line argument
 */
-Glib::ustring *
-ParamComboBox::string (void)
+void
+ParamComboBox::string (std::string &string)
 {
-    Glib::ustring * param_string = new Glib::ustring("");
-    *param_string += _value;
-    return param_string;
+    string += _value;
+    return;
 }
 
 

@@ -2,7 +2,7 @@
  * Authors:
  *   Ted Gould <ted@gould.cx>
  *
- * Copyright (C) 2005 Authors
+ * Copyright (C) 2005,2007-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -30,10 +30,6 @@ class PrefDialog : public Gtk::Dialog {
     gchar const * _help;
     /** \brief  Name of the extension */
     Glib::ustring _name;
-    /** \brief  An execution environment if there is one */
-    ExecutionEnv * _exEnv;
-    /** \brief  Whether we created the \a _exEnv variable */
-    bool _createdExEnv;
 
     /** \brief  A pointer to the OK button */
     Gtk::Button * _button_ok;
@@ -42,44 +38,42 @@ class PrefDialog : public Gtk::Dialog {
 
     /** \brief  Button to control live preview */
     Gtk::Widget * _button_preview;
-    /** \brief  Button to control whether the dialog is pinned */
-    Gtk::Widget * _button_pinned;
+    /** \brief  Checkbox for the preview */
+    Gtk::CheckButton * _checkbox_preview;
 
     /** \brief  Parameter to control live preview */
     Parameter * _param_preview;
-    /** \brief  Parameter to control pinning the dialog */
-    Parameter * _param_pinned;
 
-    /** \brief  XML to define the pinned parameter on the dialog */
-    static const char * pinned_param_xml;
     /** \brief  XML to define the live effects parameter on the dialog */
     static const char * live_param_xml;
 
     /** \brief Signal that the user is changing the live effect state */
     sigc::signal<void> _signal_preview;
-    /** \brief Signal that the user is changing the pinned state */
-    sigc::signal<void> _signal_pinned;
     /** \brief Signal that one of the parameters change */
-    sigc::signal<void> * _signal_param_change;
+    sigc::signal<void> _signal_param_change;
 
+    /** \brief  If this is the preferences for an effect, the effect
+                that we're working with. */
     Effect * _effect;
+    /** \brief  If we're executing in preview mode here is the execution
+                environment for the effect. */
+    ExecutionEnv * _exEnv;
+
+    /** \brief  The timer used to make it so that parameters don't respond
+                directly and allows for changes. */
+    sigc::connection _timersig;
 
     void preview_toggle(void);
-    void pinned_toggle(void);
-
+    void param_change(void);
+    bool param_timer_expire(void);
     void on_response (int signal);
 
 public:
     PrefDialog (Glib::ustring name,
                 gchar const * help,
-                Gtk::Widget * controls,
-                ExecutionEnv * exEnv = NULL,
-                Effect * effect = NULL,
-                sigc::signal<void> * changeSignal = NULL);
+                Gtk::Widget * controls = NULL,
+                Effect * effect = NULL);
     virtual ~PrefDialog ();
-    int run (void);
-
-    void setPreviewState (Glib::ustring state);
 };
 
 
