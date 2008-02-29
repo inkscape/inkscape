@@ -1,4 +1,4 @@
-#define __SP_ANCHOR_C__
+#define __SP_GLYPH_C__
 
 /*
  * SVG <glyph> element implementation

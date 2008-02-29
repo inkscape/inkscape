@@ -1,4 +1,4 @@
-#define __SP_ANCHOR_C__
+#define __SP_FONT_C__
 
 /*
  * SVG <font> element implementation

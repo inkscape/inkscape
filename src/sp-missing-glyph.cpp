@@ -1,4 +1,4 @@
-#define __SP_ANCHOR_C__
+#define __SP_MISSING_GLYPH_C__
 
 /*
  * SVG <missing-glyph> element implementation
