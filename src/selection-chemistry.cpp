@@ -954,6 +954,11 @@ void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, GSList const 
         }
     }
 
+    // For 3D boxes copy perspectives
+    if (SP_IS_BOX3D(item)) {
+        sp_copy_single (defs_clip, SP_OBJECT(box3d_get_perspective(SP_BOX3D(item))), xml_doc);
+    }
+
     if (SP_IS_TEXT_TEXTPATH (item)) {
         sp_copy_textpath_path (defs_clip, SP_TEXTPATH(sp_object_first_child(SP_OBJECT(item))), items, xml_doc);
     }
