@@ -204,7 +204,12 @@ void
 PrefDialog::on_response (int signal) {
     if (signal == Gtk::RESPONSE_OK) {
         if (_exEnv == NULL) {
-            _effect->effect(SP_ACTIVE_DESKTOP);
+			if (_effect != NULL) {
+				_effect->effect(SP_ACTIVE_DESKTOP);
+			} else {
+				// Shutdown run()
+				return;
+			}
         } else {
             if (_exEnv->wait()) {
                 _exEnv->commit();
@@ -222,7 +227,7 @@ PrefDialog::on_response (int signal) {
         //preview_toggle();
     }
 
-    if (signal == Gtk::RESPONSE_CANCEL) {
+    if (signal == Gtk::RESPONSE_CANCEL && _effect != NULL) {
         // close the dialog
         delete this;
     }
