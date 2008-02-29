@@ -180,18 +180,19 @@ private:
     ParamRadioButton * _pref;
     SPDocument * _doc;
     Inkscape::XML::Node * _node;
+    sigc::signal<void> * _changeSignal;
 public:
     /** \brief  Build a string preference for the given parameter
         \param  pref  Where to put the radiobutton's string when it is selected.
     */
     ParamRadioButtonWdg ( Gtk::RadioButtonGroup& group, const Glib::ustring& label,
-                          ParamRadioButton * pref, SPDocument * doc, Inkscape::XML::Node * node ) :
-        Gtk::RadioButton(group, label), _pref(pref), _doc(doc), _node(node) {
+                          ParamRadioButton * pref, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal ) :
+        Gtk::RadioButton(group, label), _pref(pref), _doc(doc), _node(node), _changeSignal(changeSignal) {
         add_changesignal();
     };
     ParamRadioButtonWdg ( const Glib::ustring& label,
-                          ParamRadioButton * pref, SPDocument * doc, Inkscape::XML::Node * node ) :
-        Gtk::RadioButton(label), _pref(pref), _doc(doc), _node(node) {
+                          ParamRadioButton * pref, SPDocument * doc, Inkscape::XML::Node * node , sigc::signal<void> * changeSignal) :
+        Gtk::RadioButton(label), _pref(pref), _doc(doc), _node(node), _changeSignal(changeSignal) {
         add_changesignal();
     };
     void add_changesignal() {
@@ -212,6 +213,9 @@ ParamRadioButtonWdg::changed (void)
         Glib::ustring data = this->get_label();
         _pref->set(data.c_str(), _doc, _node);
     }
+    if (_changeSignal != NULL) {
+        _changeSignal->emit();
+    }
 }
 
 
@@ -220,7 +224,7 @@ ParamRadioButtonWdg::changed (void)
     \brief  Creates a combobox widget for an enumeration parameter
 */
 Gtk::Widget *
-ParamRadioButton::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * /*changeSignal*/)
+ParamRadioButton::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
     Gtk::VBox * vbox = Gtk::manage(new Gtk::VBox(false, 0));
@@ -238,11 +242,11 @@ ParamRadioButton::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc
         optionentry * entr = reinterpret_cast<optionentry *>(list->data);
         Glib::ustring * text = entr->guitext;
         if (first) {
-            radio = Gtk::manage(new ParamRadioButtonWdg(*text, this, doc, node));
+            radio = Gtk::manage(new ParamRadioButtonWdg(*text, this, doc, node, changeSignal));
             group = radio->get_group();
             first = false;
         } else {
-            radio = Gtk::manage(new ParamRadioButtonWdg(group, *text, this, doc, node));
+            radio = Gtk::manage(new ParamRadioButtonWdg(group, *text, this, doc, node, changeSignal));
         }
         radio->show();
         vbox->pack_start(*radio, true, true);
