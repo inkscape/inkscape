@@ -1,7 +1,8 @@
 <inkscape-extension>
     <_name>Windows Metafile Input</_name>
     <id>org.inkscape.input.wmf</id>
-    <dependency type="executable">wmf2svg</dependency>
+    <dependency type="executable" location="path">uniconv</dependency>
+    <dependency type="executable" location="extensions">cdr2svg.sh</dependency>
     <input>
         <extension>.wmf</extension>
         <mimetype>application/x-wmf</mimetype>
@@ -9,6 +10,6 @@
         <_filetypetooltip>A popular graphics file format for clipart</_filetypetooltip>
     </input>
     <script>
-        <command reldir="path">wmf2svg</command>
+        <command reldir="extensions">cdr2svg.sh</command>
     </script>
 </inkscape-extension>
