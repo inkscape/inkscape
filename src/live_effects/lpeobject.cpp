@@ -256,7 +256,7 @@ livepatheffect_on_repr_attr_changed ( Inkscape::XML::Node * /*repr*/,
  * returns 'this' when no forking was necessary (and therefore no duplicate was made)
  */
 LivePathEffectObject *
-LivePathEffectObject::fork_private_if_necessary(int nr_of_allowed_users)
+LivePathEffectObject::fork_private_if_necessary(unsigned int nr_of_allowed_users)
 {
     if (SP_OBJECT_HREFCOUNT(this) > nr_of_allowed_users) {
         SPDocument *doc = SP_OBJECT_DOCUMENT(this);

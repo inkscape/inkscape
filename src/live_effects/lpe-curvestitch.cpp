@@ -89,8 +89,8 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
         std::vector<Geom::Path> path_out;
 
         // do this for all permutations (ii,jj) if there are more than 2 paths? realllly cool!
-        for (int ii = 0   ; ii < path_in.size() - 1; ii++)
-        for (int jj = ii+1; jj < path_in.size(); jj++)
+        for (unsigned ii = 0   ; ii < path_in.size() - 1; ii++)
+        for (unsigned jj = ii+1; jj < path_in.size(); jj++)
         {
             Piecewise<D2<SBasis> > A = arc_length_parametrization(Piecewise<D2<SBasis> >(path_in[ii].toPwSb()),2,.1);
             Piecewise<D2<SBasis> > B = arc_length_parametrization(Piecewise<D2<SBasis> >(path_in[jj].toPwSb()),2,.1);

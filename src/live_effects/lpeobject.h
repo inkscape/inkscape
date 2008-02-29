@@ -23,7 +23,7 @@ public:
 
     bool effecttype_set;
 
-    LivePathEffectObject * fork_private_if_necessary(int nr_of_allowed_users = 1);
+    LivePathEffectObject * fork_private_if_necessary(unsigned int nr_of_allowed_users = 1);
 };
 
 /// The LivePathEffect vtable.
