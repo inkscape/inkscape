@@ -130,14 +130,14 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
     } else {
         // render angled line, once intersection has been detected, draw from there.
         Geom::Point parallel_to_line( gl->normal_to_line[Geom::Y],
-                                      /*should be minus, but inverted y axis*/ gl->normal_to_line[Geom::X]); 
+                                      /*should be minus, but inverted y axis*/ gl->normal_to_line[Geom::X]);
 
         //try to intersect with left vertical of rect
         double y_intersect_left = (buf->rect.x0 - gl->point_on_line[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + gl->point_on_line[Geom::Y];
         if ( (y_intersect_left >= buf->rect.y0) && (y_intersect_left <= buf->rect.y1) ) {
             // intersects with left vertical!
             double y_intersect_right = (buf->rect.x1 - gl->point_on_line[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + gl->point_on_line[Geom::Y];
-            sp_guideline_drawline (buf, buf->rect.x0, round(y_intersect_left), buf->rect.x1, round(y_intersect_right), gl->rgba);
+            sp_guideline_drawline (buf, buf->rect.x0, static_cast<gint>(round(y_intersect_left)), buf->rect.x1, static_cast<gint>(round(y_intersect_right)), gl->rgba);
             return;
         }
 
@@ -145,7 +145,7 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
         double y_intersect_right = (buf->rect.x1 - gl->point_on_line[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + gl->point_on_line[Geom::Y];
         if ( (y_intersect_right >= buf->rect.y0) && (y_intersect_right <= buf->rect.y1) ) {
             // intersects with right vertical!
-            sp_guideline_drawline (buf, buf->rect.x1, round(y_intersect_right), buf->rect.x0, round(y_intersect_left), gl->rgba);
+            sp_guideline_drawline (buf, buf->rect.x1, static_cast<gint>(round(y_intersect_right)), buf->rect.x0, static_cast<gint>(round(y_intersect_left)), gl->rgba);
             return;
         }
 
@@ -154,7 +154,7 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
         if ( (x_intersect_top >= buf->rect.x0) && (x_intersect_top <= buf->rect.x1) ) {
             // intersects with top horizontal!
             double x_intersect_bottom = (buf->rect.y1 - gl->point_on_line[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + gl->point_on_line[Geom::X];
-            sp_guideline_drawline (buf, round(x_intersect_top), buf->rect.y0, round(x_intersect_bottom), buf->rect.y1, gl->rgba);
+            sp_guideline_drawline (buf, static_cast<gint>(round(x_intersect_top)), buf->rect.y0, static_cast<gint>(round(x_intersect_bottom)), buf->rect.y1, gl->rgba);
             return;
         }
 
@@ -162,7 +162,7 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
         double x_intersect_bottom = (buf->rect.y1 - gl->point_on_line[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + gl->point_on_line[Geom::X];
         if ( (x_intersect_top >= buf->rect.x0) && (x_intersect_top <= buf->rect.x1) ) {
             // intersects with bottom horizontal!
-            sp_guideline_drawline (buf, round(x_intersect_bottom), buf->rect.y1, round(x_intersect_top), buf->rect.y0, gl->rgba);
+            sp_guideline_drawline (buf, static_cast<gint>(round(x_intersect_bottom)), buf->rect.y1, static_cast<gint>(round(x_intersect_top)), buf->rect.y0, gl->rgba);
             return;
         }
     }

@@ -54,7 +54,7 @@ RandomParam::param_readSVGValue(const gchar * strvalue)
     if (success == 1) {
         success += sp_svg_number_read_d(stringarray[1], &newstartseed);
         if (success == 2) {
-            param_set_value(newval, newstartseed);
+            param_set_value(newval, static_cast<long>(newstartseed));
         } else {
             param_set_value(newval, defseed);
         }

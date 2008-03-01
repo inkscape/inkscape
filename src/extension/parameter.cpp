@@ -74,12 +74,12 @@ public:
     ParamEnum(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     ~ParamEnum(void);
     /** \brief  Returns \c _value, with a \i const to protect it. */
-    const gchar * get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _current_choice != NULL ? _current_choice->_value : NULL; }
+    const gchar * get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _current_choice != NULL ? _current_choice->_value : NULL; }
     const gchar * set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     Glib::ustring * string (void);
 }; /* class ParamEnum */
-     
+
 /**
     \return None
     \brief  This function creates a parameter that can be used later.  This
@@ -169,7 +169,7 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
 bool
 Parameter::get_bool (const SPDocument * doc, const Inkscape::XML::Node * node)
 {
-    ParamBool * boolpntr = dynamic_cast<ParamBool *>(this);    
+    ParamBool * boolpntr = dynamic_cast<ParamBool *>(this);
     if (boolpntr == NULL)
         throw Extension::param_not_bool_param();
     return boolpntr->get(doc, node);
@@ -179,7 +179,7 @@ Parameter::get_bool (const SPDocument * doc, const Inkscape::XML::Node * node)
 int
 Parameter::get_int (const SPDocument * doc, const Inkscape::XML::Node * node)
 {
-    ParamInt * intpntr = dynamic_cast<ParamInt *>(this);    
+    ParamInt * intpntr = dynamic_cast<ParamInt *>(this);
     if (intpntr == NULL)
         throw Extension::param_not_int_param();
     return intpntr->get(doc, node);
@@ -189,7 +189,7 @@ Parameter::get_int (const SPDocument * doc, const Inkscape::XML::Node * node)
 float
 Parameter::get_float (const SPDocument * doc, const Inkscape::XML::Node * node)
 {
-    ParamFloat * floatpntr = dynamic_cast<ParamFloat *>(this);    
+    ParamFloat * floatpntr = dynamic_cast<ParamFloat *>(this);
     if (floatpntr == NULL)
         throw Extension::param_not_float_param();
     return floatpntr->get(doc, node);
@@ -238,7 +238,7 @@ Parameter::set_bool (bool in, SPDocument * doc, Inkscape::XML::Node * node)
 int
 Parameter::set_int (int in, SPDocument * doc, Inkscape::XML::Node * node)
 {
-    ParamInt * intpntr = dynamic_cast<ParamInt *>(this);    
+    ParamInt * intpntr = dynamic_cast<ParamInt *>(this);
     if (intpntr == NULL)
         throw Extension::param_not_int_param();
     return intpntr->set(in, doc, node);
@@ -259,7 +259,7 @@ Parameter::set_float (float in, SPDocument * doc, Inkscape::XML::Node * node)
 const gchar *
 Parameter::set_string (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node)
 {
-    ParamString * stringpntr = dynamic_cast<ParamString *>(this);    
+    ParamString * stringpntr = dynamic_cast<ParamString *>(this);
     if (stringpntr == NULL)
         throw Extension::param_not_string_param();
     return stringpntr->set(in, doc, node);
@@ -357,14 +357,14 @@ Parameter::document_param_node (SPDocument * doc)
 
 /** \brief  Basically, if there is no widget pass a NULL. */
 Gtk::Widget *
-Parameter::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+Parameter::get_widget (SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * /*changeSignal*/)
 {
     return NULL;
 }
 
 /** \brief  If I'm not sure which it is, just don't return a value. */
-void 
-Parameter::string (std::string &string)
+void
+Parameter::string (std::string &/*string*/)
 {
     return;
 }
@@ -392,7 +392,7 @@ Parameter::string (std::list <std::string> &list)
 
 
 
-ParamEnum::ParamEnum (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+ParamEnum::ParamEnum (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * /*xml*/) :
     Parameter(name, guitext, desc, scope, ext), _current_choice(NULL)
 {
     return;
@@ -413,13 +413,13 @@ ParamEnum::string (void)
 }
 
 Gtk::Widget *
-ParamEnum::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ParamEnum::get_widget (SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * /*changeSignal*/)
 {
     return NULL;
 }
 
 const gchar *
-ParamEnum::set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node)
+ParamEnum::set (const gchar * /*in*/, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     return NULL;
 }

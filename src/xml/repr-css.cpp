@@ -26,7 +26,7 @@ public:
     NodeType type() const { return Inkscape::XML::ELEMENT_NODE; }
 
 protected:
-    SimpleNode *_duplicate(Document* doc) const { return new SPCSSAttrImpl(*this); }
+    SimpleNode *_duplicate(Document* /*doc*/) const { return new SPCSSAttrImpl(*this); }
 };
 
 static void sp_repr_css_add_components(SPCSSAttr *css, Node *repr, gchar const *attr);
@@ -156,7 +156,7 @@ sp_repr_css_write_string(SPCSSAttr *css)
         buffer.append(g_quark_to_string(iter->key));
         buffer.push_back(':');
         if (!strcmp(g_quark_to_string(iter->key), "font-family")
-                || !strcmp(g_quark_to_string(iter->key), "-inkscape-font-specification")) { 
+                || !strcmp(g_quark_to_string(iter->key), "-inkscape-font-specification")) {
             // we only quote font-family/font-specification, as SPStyle does
             gchar *t = g_strdup (iter->value);
             g_free (t);

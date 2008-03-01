@@ -28,7 +28,7 @@ PathEffect::~PathEffect (void)
 }
 
 void
-PathEffect::processPath (SPDocument * doc, Inkscape::XML::Node * path, Inkscape::XML::Node * def)
+PathEffect::processPath (SPDocument * /*doc*/, Inkscape::XML::Node * /*path*/, Inkscape::XML::Node * /*def*/)
 {
 
 
