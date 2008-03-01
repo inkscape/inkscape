@@ -308,7 +308,7 @@ int FilterSlot::_get_index(int slot_nr)
         int seek = _slot_count;
         do {
             seek--;
-        } while (_slot_number[seek] == NR_FILTER_SLOT_NOT_SET && seek >= 0);
+        } while ((seek >= 0) && (_slot_number[seek] == NR_FILTER_SLOT_NOT_SET));
         /* If there is no space for more slots, create more space */
         if (seek == _slot_count - 1) {
             NRPixBlock **new_slot = new NRPixBlock*[_slot_count * 2];
