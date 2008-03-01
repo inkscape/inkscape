@@ -252,7 +252,9 @@ struct NRMatrix;
 /* NULL rect is infinite */
 
 struct NRRect {
-    NRRect() {}
+    NRRect()
+    : x0(0), y0(0), x1(0), y1(0)
+    {}
     NRRect(NR::Coord xmin, NR::Coord ymin, NR::Coord xmax, NR::Coord ymax)
     : x0(xmin), y0(ymin), x1(xmax), y1(ymax)
     {}
