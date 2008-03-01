@@ -420,8 +420,6 @@ inline std::ostream &operator<< (std::ostream &out_file, const NR::Matrix &m) {
     return out_file;
 }
 
-extern void assert_close(Matrix const &a, Matrix const &b);
-
 } /* namespace NR */
 
 

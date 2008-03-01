@@ -8,7 +8,6 @@ operator/(NR::Matrix const &m, NR::scale const &s)
     ret[0] /= s[X]; ret[1] /= s[Y];
     ret[2] /= s[X]; ret[3] /= s[Y];
     ret[4] /= s[X]; ret[5] /= s[Y];
-    assert_close( ret, m * NR::Matrix(s.inverse()) );
     return ret;
 }
 
@@ -20,7 +19,6 @@ operator*(NR::Matrix const &m, NR::scale const &s)
     ret[0] *= s[X]; ret[1] *= s[Y];
     ret[2] *= s[X]; ret[3] *= s[Y];
     ret[4] *= s[X]; ret[5] *= s[Y];
-    assert_close( ret, m * NR::Matrix(s) );
     return ret;
 }
 

@@ -8,7 +8,6 @@ operator*(translate const &t, Matrix const &m)
     Matrix ret(m);
     ret[4] += m[0] * t[X] + m[2] * t[Y];
     ret[5] += m[1] * t[X] + m[3] * t[Y];
-    assert_close( ret, Matrix(t) * m );
     return ret;
 }
 

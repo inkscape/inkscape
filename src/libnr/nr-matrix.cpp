@@ -590,28 +590,6 @@ bool matrix_equalp(Matrix const &m0, Matrix const &m1, NR::Coord const epsilon)
 
 
 
-
-
-/**
- *  A home-made assertion.  Stop if the two matrixes are not 'close' to
- *  each other.
- */
-void assert_close(Matrix const &a, Matrix const &b)
-{
-    if (!matrix_equalp(a, b, 1e-3)) {
-        fprintf(stderr,
-                "a = | %g %g |,\tb = | %g %g |\n"
-                "    | %g %g | \t    | %g %g |\n"
-                "    | %g %g | \t    | %g %g |\n",
-                a[0], a[1], b[0], b[1],
-                a[2], a[3], b[2], b[3],
-                a[4], a[5], b[4], b[5]);
-        std::abort();
-    }
-}
-
-
-
 }  //namespace NR
 
 

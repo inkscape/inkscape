@@ -8,7 +8,6 @@ operator*(NR::translate const &t, NR::scale const &s)
     NR::Matrix ret(s);
     ret[4] = t[X] * s[X];
     ret[5] = t[Y] * s[Y];
-    assert_close( ret, NR::Matrix(t) * NR::Matrix(s) );
     return ret;
 }
 

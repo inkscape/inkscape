@@ -9,7 +9,6 @@ operator*(NR::scale const &s, NR::Matrix const &m)
     ret[1] *= s[X];
     ret[2] *= s[Y];
     ret[3] *= s[Y];
-    assert_close( ret, NR::Matrix(s) * m );
     return ret;
 }
 
