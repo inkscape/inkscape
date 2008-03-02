@@ -19,7 +19,7 @@
 
 #define  LPE_CONVERSION_TOLERANCE 0.01    // FIXME: find good solution for this.
 
-//#define LPE_ENABLE_TEST_EFFECTS
+#define LPE_ENABLE_TEST_EFFECTS
 
 struct SPDocument;
 struct SPDesktop;
@@ -116,7 +116,6 @@ protected:
 
     std::vector<Parameter *> param_vector;
     int oncanvasedit_it;
-
 
     Inkscape::UI::Widget::Registry wr;
 

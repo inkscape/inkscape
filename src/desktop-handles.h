@@ -39,6 +39,7 @@ SPCanvasGroup * sp_desktop_guides (SPDesktop const * desktop);
 SPCanvasItem *sp_desktop_drawing (SPDesktop const *desktop);
 SPCanvasGroup * sp_desktop_sketch (SPDesktop const * desktop);
 SPCanvasGroup * sp_desktop_controls (SPDesktop const * desktop);
+SPCanvasGroup * sp_desktop_tempgroup (SPDesktop const * desktop);
 Inkscape::MessageStack * sp_desktop_message_stack (SPDesktop const * desktop);
 SPNamedView * sp_desktop_namedview (SPDesktop const * desktop);
 

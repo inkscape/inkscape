@@ -12,7 +12,7 @@
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
  * Copyright (C) 2007 Jon A. Cruz
- * Copyright (C) 2006-2007 Johan Engelen
+ * Copyright (C) 2006-2008 Johan Engelen
  * Copyright (C) 2006 John Bintz
  * Copyright (C) 2004 MenTaLguY
  * Copyright (C) 1999-2002 Lauris Kaplinski
@@ -77,6 +77,7 @@
 #include "display/gnome-canvas-acetate.h"
 #include "display/sodipodi-ctrlrect.h"
 #include "display/sp-canvas-util.h"
+#include "display/canvas-temporary-item-list.h"
 #include "libnr/nr-matrix-div.h"
 #include "libnr/nr-rect-ops.h"
 #include "ui/dialog/dialog-manager.h"
@@ -115,6 +116,7 @@ SPDesktop::SPDesktop() :
     event_context( 0 ),
     layer_manager( 0 ),
     event_log( 0 ),
+    temporary_item_list( 0 ),
     acetate( 0 ),
     main( 0 ),
     gridgroup( 0 ),
@@ -122,6 +124,7 @@ SPDesktop::SPDesktop() :
     drawing( 0 ),
     sketch( 0 ),
     controls( 0 ),
+    tempgroup ( 0 ),
     table( 0 ),
     page( 0 ),
     page_border( 0 ),
@@ -217,6 +220,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     guides = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
     sketch = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
     controls = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
+    tempgroup = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
 
     /* Push select tool to the bottom of stack */
     /** \todo
@@ -310,11 +314,16 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     layer_manager = new Inkscape::LayerManager( this );
 
     showGrids(namedview->grids_visible, false);
+
+    temporary_item_list = new Inkscape::Display::TemporaryItemList( this );
 }
 
 
 void SPDesktop::destroy()
 {
+    delete temporary_item_list;
+    temporary_item_list = NULL;
+
     namedview->hide(this);
 
     _activate_connection.disconnect();
@@ -367,6 +376,25 @@ SPDesktop::~SPDesktop() {}
 
 //--------------------------------------------------------------------
 /* Public methods */
+
+
+/** Note that lifetime is measured in milliseconds
+* it is perfectly safe to ignore the returned pointer: the object is deleted by itself, so don't delete it elsewhere!
+* The return value should only be used as argument for SPDesktop::remove_temporary_canvasitem, because the object might be deleted already.
+*/
+Inkscape::Display::TemporaryItem *
+SPDesktop::add_temporary_canvasitem (SPCanvasItem *item, guint lifetime)
+{
+    return temporary_item_list->add_item(item, lifetime);
+}
+
+/** It is perfectly safe to call this function while the object has already been deleted due to a timeout.
+*/
+void
+SPDesktop::remove_temporary_canvasitem (Inkscape::Display::TemporaryItem * tempitem)
+{
+    temporary_item_list->delete_item(tempitem);
+}
 
 void SPDesktop::setDisplayModeNormal()
 {

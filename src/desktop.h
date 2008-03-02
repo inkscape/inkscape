@@ -72,6 +72,10 @@ namespace Inkscape {
   namespace Whiteboard {
       class SessionManager;
   }
+  namespace Display {
+      class TemporaryItemList;
+      class TemporaryItem;
+  }
 }
 
 /**
@@ -90,6 +94,8 @@ struct SPDesktop : public Inkscape::UI::View::View
     Inkscape::LayerManager    *layer_manager;
     Inkscape::EventLog        *event_log;
 
+    Inkscape::Display::TemporaryItemList *temporary_item_list;
+
     SPCanvasItem  *acetate;
     SPCanvasGroup *main;
     SPCanvasGroup *gridgroup;
@@ -97,6 +103,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     SPCanvasItem  *drawing;
     SPCanvasGroup *sketch;
     SPCanvasGroup *controls;
+    SPCanvasGroup *tempgroup;   ///< contains temporary canvas items
     SPCanvasItem  *table;       ///< outside-of-page background
     SPCanvasItem  *page;        ///< page background
     SPCanvasItem  *page_border; ///< page border
@@ -172,6 +179,9 @@ struct SPDesktop : public Inkscape::UI::View::View
     Inkscape::MessageContext *guidesMessageContext() const {
         return _guides_message_context;
     }
+
+    Inkscape::Display::TemporaryItem * add_temporary_canvasitem (SPCanvasItem *item, guint lifetime);
+    void remove_temporary_canvasitem (Inkscape::Display::TemporaryItem * tempitem);
 
     void setDisplayModeNormal();
     void setDisplayModeOutline();

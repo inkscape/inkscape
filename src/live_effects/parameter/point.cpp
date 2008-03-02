@@ -14,22 +14,23 @@
 #include "ui/widget/point.h"
 #include "widgets/icon.h"
 #include "ui/widget/registered-widget.h"
-#include "knot.h"
 #include "inkscape.h"
 #include "verbs.h"
 
 // needed for on-canvas editting:
 #include "tools-switch.h"
-#include "shape-editor.h"
 #include "node-context.h"
-#include "desktop-handles.h"
-#include "selection.h"
+#include "shape-editor.h"
 #include "desktop.h"
+#include "selection.h"
+
+// temporarily needed for tempitem tryout
+#include "desktop-handles.h"
+#include "display/sodipodi-ctrl.h"
+#include "knot.h"
+#include "display/canvas-temporary-item-list.h"
 
 #define LPEPOINTPARAM_DEBUG // undefine to disable all on-canvas editing code for PointParam
-
-#define PRM_KNOT_COLOR_NORMAL 0xffffff00
-#define PRM_KNOT_COLOR_SELECTED 0x0000ff00
 
 namespace Inkscape {
 
@@ -93,6 +94,7 @@ PointParam::param_newWidget(Gtk::Tooltips * tooltips)
                                                    param_effect->getRepr(),
                                                    param_effect->getSPDoc() ) );
     pointwdg->setValue( (*this)[0], (*this)[1] );
+    pointwdg->clearProgrammatically();
     pointwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change point parameter"));
 
     Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( "draw_node", Inkscape::ICON_SIZE_BUTTON) );
@@ -142,6 +144,22 @@ PointParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
 
     ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;
     shape_editor->set_item_lpe_point_parameter(item, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str());
+
+
+    /* TEMPORARY CODE TO TEST TEMPORARY CANVAS ITEMS */
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPCanvasItem * canvasitem = sp_canvas_item_new( sp_desktop_tempgroup (desktop),
+                                                    SP_TYPE_CTRL,
+                                                    "anchor", GTK_ANCHOR_CENTER,
+                                                    "size", 8.0,
+                                                    "stroked", TRUE,
+                                                    "stroke_color", 0xf000f0ff,
+                                                    "mode", SP_KNOT_MODE_XOR,
+                                                    "shape", SP_KNOT_SHAPE_CROSS,
+                                                    NULL );
+    SP_CTRL(canvasitem)->moveto ( static_cast<Geom::Point> (*this) );
+    desktop->add_temporary_canvasitem(canvasitem, 2000);
+    /* END ----   TEMPORARY CODE TO TEST TEMPORARY CANVAS ITEMS */
 }
 
 
@@ -158,9 +176,10 @@ PointParam::param_transform_multiply(Geom::Matrix const& postmul, bool /*set*/)
 void
 PointParam::on_button_click()
 {
-    SPItem * item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPItem * item = sp_desktop_selection(desktop)->singleItem();
     if (item != NULL) {
-        param_editOncanvas(item, SP_ACTIVE_DESKTOP);
+        param_editOncanvas(item, desktop);
     }
 }
 
