@@ -75,6 +75,7 @@ namespace Inkscape {
   namespace Display {
       class TemporaryItemList;
       class TemporaryItem;
+      class SnapIndicator;
   }
 }
 
@@ -95,6 +96,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     Inkscape::EventLog        *event_log;
 
     Inkscape::Display::TemporaryItemList *temporary_item_list;
+    Inkscape::Display::SnapIndicator *snapindicator;
 
     SPCanvasItem  *acetate;
     SPCanvasGroup *main;

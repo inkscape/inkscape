@@ -17,6 +17,7 @@
 #include <map>
 #include <string>
 #include "display/guideline.h"
+#include "display/snap-indicator.h"
 #include "helper/unit-menu.h"
 #include "helper/units.h"
 #include "desktop.h"
@@ -142,11 +143,16 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 NR::Point event_dt(desktop->w2d(event_w));
                 
                 SnapManager const &m = desktop->namedview->snap_manager;
-                event_dt = m.guideSnap(event_dt, normal).getPoint();
-                
+                Inkscape::SnappedPoint snappoint = m.guideSnap(event_dt, normal);
+                event_dt = snappoint.getPoint();
+
                 sp_guideline_set_position(SP_GUIDELINE(guide), event_dt.to_2geom());
                 desktop->set_coordinate_status(event_dt);
                 desktop->setPosition (event_dt);
+
+                if (snappoint.getDistance() < NR_HUGE) {
+                    desktop->snapindicator->set_new_snappoint(snappoint.getPoint().to_2geom());
+                }
             }
             break;
     case GDK_BUTTON_RELEASE:
@@ -238,12 +244,18 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 // This is for snapping while dragging existing guidelines. New guidelines, 
                 // which are dragged off the ruler, are being snapped in sp_dt_ruler_event
                 SnapManager const &m = desktop->namedview->snap_manager;
-                motion_dt = m.guideSnap(motion_dt, guide->normal_to_line).getPoint();
-                
+                Inkscape::SnappedPoint snappoint = m.guideSnap(motion_dt, guide->normal_to_line);
+                motion_dt = snappoint.getPoint();
+
                 sp_guide_moveto(*guide, motion_dt.to_2geom(), false);
                 moved = true;
                 desktop->set_coordinate_status(motion_dt);
                 desktop->setPosition (motion_dt);
+
+                if (snappoint.getDistance() < NR_HUGE) {
+                    desktop->snapindicator->set_new_snappoint(snappoint.getPoint().to_2geom());
+                }
+
                 ret = TRUE;
             }
             break;

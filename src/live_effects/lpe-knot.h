@@ -16,7 +16,6 @@
 
 #include "live_effects/effect.h"
 #include "live_effects/parameter/parameter.h"
-#include "live_effects/parameter/point.h"
 
 namespace Inkscape {
 namespace LivePathEffect {

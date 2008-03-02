@@ -16,8 +16,6 @@
 
 #include "live_effects/parameter/parameter.h"
 
-struct SPKnot;
-
 namespace Inkscape {
 
 namespace LivePathEffect {
@@ -52,8 +50,6 @@ private:
     PointParam& operator=(const PointParam&);
 
     void on_button_click();
-
-    SPKnot *knot;
 
     Geom::Point defvalue;
 };

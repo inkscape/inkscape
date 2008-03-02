@@ -37,11 +37,11 @@ TemporaryItemList::~TemporaryItemList()
 TemporaryItem *
 TemporaryItemList::add_item(SPCanvasItem *item, guint lifetime)
 {
-    if (lifetime > 100) { // beware of strange things happening due to very short timeouts
-        TemporaryItem * tempitem = new TemporaryItem(item, lifetime);
-        itemlist.push_back(tempitem);
-        tempitem->signal_timeout.connect( sigc::mem_fun(*this, &TemporaryItemList::_item_timeout) );
-    }
+    // beware of strange things happening due to very short timeouts
+    TemporaryItem * tempitem = new TemporaryItem(item, lifetime);
+    itemlist.push_back(tempitem);
+    tempitem->signal_timeout.connect( sigc::mem_fun(*this, &TemporaryItemList::_item_timeout) );
+    return tempitem;
 }
 
 void

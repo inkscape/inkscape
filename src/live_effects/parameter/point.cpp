@@ -24,12 +24,6 @@
 #include "desktop.h"
 #include "selection.h"
 
-// temporarily needed for tempitem tryout
-#include "desktop-handles.h"
-#include "display/sodipodi-ctrl.h"
-#include "knot.h"
-#include "display/canvas-temporary-item-list.h"
-
 #define LPEPOINTPARAM_DEBUG // undefine to disable all on-canvas editing code for PointParam
 
 namespace Inkscape {
@@ -41,7 +35,6 @@ PointParam::PointParam( const Glib::ustring& label, const Glib::ustring& tip,
                         Effect* effect, Geom::Point default_value )
     : Geom::Point(default_value), Parameter(label, tip, key, wr, effect), defvalue(default_value)
 {
-    knot = NULL;
 #ifdef LPEPOINTPARAM_DEBUG
     oncanvas_editable = true;
 #endif
@@ -49,8 +42,6 @@ PointParam::PointParam( const Glib::ustring& label, const Glib::ustring& tip,
 
 PointParam::~PointParam()
 {
-    if (knot)
-        g_object_unref (G_OBJECT (knot));
 }
 
 void
@@ -144,22 +135,6 @@ PointParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
 
     ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;
     shape_editor->set_item_lpe_point_parameter(item, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str());
-
-
-    /* TEMPORARY CODE TO TEST TEMPORARY CANVAS ITEMS */
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    SPCanvasItem * canvasitem = sp_canvas_item_new( sp_desktop_tempgroup (desktop),
-                                                    SP_TYPE_CTRL,
-                                                    "anchor", GTK_ANCHOR_CENTER,
-                                                    "size", 8.0,
-                                                    "stroked", TRUE,
-                                                    "stroke_color", 0xf000f0ff,
-                                                    "mode", SP_KNOT_MODE_XOR,
-                                                    "shape", SP_KNOT_SHAPE_CROSS,
-                                                    NULL );
-    SP_CTRL(canvasitem)->moveto ( static_cast<Geom::Point> (*this) );
-    desktop->add_temporary_canvasitem(canvasitem, 2000);
-    /* END ----   TEMPORARY CODE TO TEST TEMPORARY CANVAS ITEMS */
 }
 
 

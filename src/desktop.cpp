@@ -78,6 +78,7 @@
 #include "display/sodipodi-ctrlrect.h"
 #include "display/sp-canvas-util.h"
 #include "display/canvas-temporary-item-list.h"
+#include "display/snap-indicator.h"
 #include "libnr/nr-matrix-div.h"
 #include "libnr/nr-rect-ops.h"
 #include "ui/dialog/dialog-manager.h"
@@ -117,6 +118,7 @@ SPDesktop::SPDesktop() :
     layer_manager( 0 ),
     event_log( 0 ),
     temporary_item_list( 0 ),
+    snapindicator( 0 ),
     acetate( 0 ),
     main( 0 ),
     gridgroup( 0 ),
@@ -316,13 +318,20 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     showGrids(namedview->grids_visible, false);
 
     temporary_item_list = new Inkscape::Display::TemporaryItemList( this );
+    snapindicator = new Inkscape::Display::SnapIndicator ( this );
 }
 
 
 void SPDesktop::destroy()
 {
-    delete temporary_item_list;
-    temporary_item_list = NULL;
+    if (snapindicator) {
+        delete snapindicator;
+        snapindicator = NULL;
+    }
+    if (temporary_item_list) {
+        delete temporary_item_list;
+        temporary_item_list = NULL;
+    }
 
     namedview->hide(this);
 
@@ -393,7 +402,10 @@ SPDesktop::add_temporary_canvasitem (SPCanvasItem *item, guint lifetime)
 void
 SPDesktop::remove_temporary_canvasitem (Inkscape::Display::TemporaryItem * tempitem)
 {
-    temporary_item_list->delete_item(tempitem);
+    // check for non-null temporary_item_list, because during destruction of desktop, some destructor might try to access this list!
+    if (tempitem && temporary_item_list) {
+        temporary_item_list->delete_item(tempitem);
+    }
 }
 
 void SPDesktop::setDisplayModeNormal()
