@@ -6,7 +6,7 @@
 /*
  * Authors:
  *   Miklós Erdélyi <erdelyim@gmail.com>
- * 
+ *
  * Based on pdf.cpp
  *
  * Licensed under GNU GPL
@@ -95,7 +95,7 @@ PrintCairoPDF::~PrintCairoPDF(void)
     if (cr) cairo_destroy(cr);
     if (pdf_surface) cairo_surface_destroy(pdf_surface);
     if (_layout) g_object_unref(_layout);
-    
+
     /* restore default signal handling for SIGPIPE */
 #if !defined(_WIN32) && !defined(__WIN32__)
     (void) signal(SIGPIPE, SIG_DFL);
@@ -313,7 +313,7 @@ PrintCairoPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
         (void) signal(SIGPIPE, SIG_IGN);
 #endif
     }
-    
+
     // test output stream?
 
     // width and height in pt
@@ -337,18 +337,17 @@ PrintCairoPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
         d.y0 *= PT_PER_PX;
         d.y1 *= PT_PER_PX;
     }
-    printf("%f %f\n", _width, _height);
-
+    // printf("\n _width:%f _height:%f scale:%f\n", _width, _height, PT_PER_PX);
     pdf_surface = cairo_pdf_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, d.x1-d.x0, d.y1-d.y0);
     cr = cairo_create(pdf_surface);
-    
+
     if (!_bitmap) {
     	cairo_scale(cr, PT_PER_PX, PT_PER_PX);
-    	
+
         // from now on we can output px, but they will be treated as pt
         // note that the we do not have to flip the y axis
         // because Cairo's coordinate system is identical to Inkscape's
-    }   
+    }
 
     return 1;
 }
@@ -359,7 +358,7 @@ PrintCairoPDF::finish(Inkscape::Extension::Print *mod)
     if (!_stream) return 0;
     if (_bitmap) return 0;
 
-    cairo_show_page(cr);	
+    cairo_show_page(cr);
 
     cairo_destroy(cr);
     cairo_surface_destroy(pdf_surface);
@@ -381,20 +380,20 @@ PrintCairoPDF::bind(Inkscape::Extension::Print *mod, NRMatrix const *transform, 
 {
     if (!_stream) return 0;  // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
-    
+
     if (opacity < 1.0) {
         cairo_push_group(cr);
     } else {
         cairo_save(cr);
     }
     _concat_transform(cr, transform->c[0], transform->c[1], transform->c[2], transform->c[3], transform->c[4], transform->c[5]);
-//    g_printf("bind: (%f) %f %f %f %f %f %f\n", opacity, transform->c[0], transform->c[1], transform->c[2], transform->c[3], transform->c[4], transform->c[5]);
+    // printf("bind: (%f) %f %f %f %f %f %f\n", opacity, transform->c[0], transform->c[1], transform->c[2], transform->c[3], transform->c[4], transform->c[5]);
     // remember these to be able to undo them when outputting text
     _last_tx = transform->c[4];
     _last_ty = transform->c[5];
-    
+
     _alpha_stack.push_back(opacity);
-    
+
     return 1;
 }
 
@@ -405,7 +404,7 @@ PrintCairoPDF::release(Inkscape::Extension::Print *mod)
     if (_bitmap) return 0;
 
     float opacity = _alpha_stack.back();
-    
+
     if (opacity < 1.0) {
         cairo_pop_group_to_source(cr);
         cairo_paint_with_alpha(cr, opacity);
@@ -433,11 +432,11 @@ PrintCairoPDF::create_pattern_for_paint(SPPaintServer const *const paintserver, 
 {
     cairo_pattern_t *pattern = NULL;
     bool apply_bbox2user = false;
-    
+
     if (SP_IS_LINEARGRADIENT (paintserver)) {
 
             SPLinearGradient *lg=SP_LINEARGRADIENT(paintserver);
-            
+
             sp_gradient_ensure_vector(SP_GRADIENT(lg)); // when exporting from commandline, vector is not built
 
             NR::Point p1 (lg->x1.computed, lg->y1.computed);
@@ -448,10 +447,10 @@ PrintCairoPDF::create_pattern_for_paint(SPPaintServer const *const paintserver, 
                 p1 *= bbox2user;
                 p2 *= bbox2user;
             }
-            
+
             // create linear gradient pattern
             pattern = cairo_pattern_create_linear(p1[NR::X], p1[NR::Y], p2[NR::X], p2[NR::Y]);
-            
+
             // add stops
             for (gint i = 0; unsigned(i) < lg->vector.stops.size(); i++) {
                 float rgb[3];
@@ -467,16 +466,16 @@ PrintCairoPDF::create_pattern_for_paint(SPPaintServer const *const paintserver, 
         NR::Point c (rg->cx.computed, rg->cy.computed);
         NR::Point f (rg->fx.computed, rg->fy.computed);
         double r = rg->r.computed;
-        
+
         NR::Coord const df = hypot(f[NR::X] - c[NR::X], f[NR::Y] - c[NR::Y]);
         if (df >= r) {
             f[NR::X] = c[NR::X] + (f[NR::X] - c[NR::X] ) * r / (float) df;
             f[NR::Y] = c[NR::Y] + (f[NR::Y] - c[NR::Y] ) * r / (float) df;
         }
-        
+
         if (pbox && SP_GRADIENT(rg)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX)
             apply_bbox2user = true;
-        
+
         // create radial gradient pattern
         pattern = cairo_pattern_create_radial(f[NR::X], f[NR::Y], 0, c[NR::X], c[NR::Y], r);
 
@@ -487,7 +486,7 @@ PrintCairoPDF::create_pattern_for_paint(SPPaintServer const *const paintserver, 
             cairo_pattern_add_color_stop_rgba(pattern, rg->vector.stops[i].offset, rgb[0], rgb[1], rgb[2], rg->vector.stops[i].opacity * alpha);
         }
     }
-        
+
     if (pattern) {
         SPGradient *g = SP_GRADIENT(paintserver);
 
@@ -506,7 +505,7 @@ PrintCairoPDF::create_pattern_for_paint(SPPaintServer const *const paintserver, 
        			break;
        	}
 
-        cairo_matrix_t pattern_matrix;       	
+        cairo_matrix_t pattern_matrix;
         if (g->gradientTransform_set) {
 	        // apply gradient transformation
 	        cairo_matrix_init(&pattern_matrix,
@@ -526,7 +525,7 @@ PrintCairoPDF::create_pattern_for_paint(SPPaintServer const *const paintserver, 
         cairo_matrix_invert(&pattern_matrix);   // because Cairo expects a userspace->patternspace matrix
         cairo_pattern_set_matrix(pattern, &pattern_matrix);
     }
-        
+
     return pattern;
 }
 
@@ -536,7 +535,7 @@ PrintCairoPDF::print_fill_style(cairo_t *cr, SPStyle const *const style, NRRect 
     g_return_if_fail( style->fill.isColor()
                       || ( style->fill.isPaintserver()
                            && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) ) );
-    
+
     if (style->fill.isColor()) {
         float rgb[3];
         sp_color_get_rgb_floatv(&style->fill.value.color, rgb);
@@ -549,7 +548,7 @@ PrintCairoPDF::print_fill_style(cairo_t *cr, SPStyle const *const style, NRRect 
                   && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) );
 
         cairo_pattern_t *pattern = create_pattern_for_paint(SP_STYLE_FILL_SERVER(style), pbox, 1.0);
-        
+
         if (pattern) {
 	        cairo_set_source(cr, pattern);
             cairo_pattern_destroy(pattern);
@@ -587,7 +586,7 @@ PrintCairoPDF::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMat
         } else {
             cairo_fill(cr);
         }
-        
+
         cairo_restore(cr);
     }
 
@@ -602,13 +601,13 @@ PrintCairoPDF::print_stroke_style(cairo_t *cr, SPStyle const *style, NRRect cons
     if ( style->stroke.isColor() ) {
         float rgb[3];
         sp_color_get_rgb_floatv(&style->stroke.value.color, rgb);
-      
+
         cairo_set_source_rgba(cr, rgb[0], rgb[1], rgb[2], alpha);
     } else if ( style->stroke.isPaintserver()
                   && SP_IS_GRADIENT(SP_STYLE_STROKE_SERVER(style)) ) {
 
         cairo_pattern_t *pattern = create_pattern_for_paint(SP_STYLE_STROKE_SERVER(style), pbox, alpha);
-        
+
         if (pattern) {
         	cairo_set_source(cr, pattern);
             cairo_pattern_destroy(pattern);
@@ -622,9 +621,9 @@ PrintCairoPDF::print_stroke_style(cairo_t *cr, SPStyle const *style, NRRect cons
     } else {
     	cairo_set_dash(cr, NULL, 0, 0.0);	// disable dashing
     }
-    
+
     cairo_set_line_width(cr, style->stroke_width.computed);
-    
+
     // set line join type
     cairo_line_join_t join = CAIRO_LINE_JOIN_MITER;
     switch (style->stroke_linejoin.computed) {
@@ -637,9 +636,9 @@ PrintCairoPDF::print_stroke_style(cairo_t *cr, SPStyle const *style, NRRect cons
     	case SP_STROKE_LINEJOIN_BEVEL:
     	    join = CAIRO_LINE_JOIN_BEVEL;
     	    break;
-    }    	
+    }
     cairo_set_line_join(cr, join);
-    
+
     // set line cap type
     cairo_line_cap_t cap = CAIRO_LINE_CAP_BUTT;
     switch (style->stroke_linecap.computed) {
@@ -652,7 +651,7 @@ PrintCairoPDF::print_stroke_style(cairo_t *cr, SPStyle const *style, NRRect cons
     	case SP_STROKE_LINECAP_SQUARE:
     	    cap = CAIRO_LINE_CAP_SQUARE;
     	    break;
-    }    	
+    }
     cairo_set_line_cap(cr, cap);
     cairo_set_miter_limit(cr, MAX(1, style->stroke_miterlimit.value));
 }
@@ -686,10 +685,10 @@ PrintCairoPDF::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
-    
+
     guchar* px_rgba = (guchar*)g_malloc(4 * w * h);
     if (!px_rgba) return 0;
-    
+
     float alpha = _alpha_stack.back();
 
     // make a copy of the original pixbuf with premultiplied alpha
@@ -699,7 +698,7 @@ PrintCairoPDF::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w
             guchar const *src = px + i * rs + j * 4;
             guint32 *dst = (guint32 *)(px_rgba + i * rs + j * 4);
             guchar r, g, b, alpha_dst;
-            
+
             // calculate opacity-modified alpha
             alpha_dst = src[3];
             if (alpha != 1.0)
@@ -709,19 +708,19 @@ PrintCairoPDF::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w
             r = src[0]*alpha_dst/255;
             g = src[1]*alpha_dst/255;
             b = src[2]*alpha_dst/255;
-            
+
             *dst = (((alpha_dst) << 24) | (((r)) << 16) | (((g)) << 8) | (b));
     	}
     }
-    
+
     cairo_surface_t *image_surface = cairo_image_surface_create_for_data(px_rgba, CAIRO_FORMAT_ARGB32, w, h, w * 4);
     if (cairo_surface_status(image_surface)) {
         g_printf("Error: %s\n", cairo_status_to_string(cairo_surface_status(image_surface)));
     	return 0;
     }
-    
+
     cairo_save(cr);
-    
+
 	// scaling by width & height is not needed because it will be done by cairo-pdf
 	// we have to translate down by height also in order to eliminate the last translation done by sp_image_print
     cairo_matrix_t matrix;
@@ -736,19 +735,19 @@ PrintCairoPDF::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w
 
     cairo_set_source(cr, pattern);
     cairo_pattern_destroy(pattern);
-    
+
     // set clip region so that the pattern will not be repeated (bug in Cairo prior 1.2.1)
     cairo_new_path(cr);
     cairo_rectangle(cr, 0, 0, w, h);
     cairo_clip(cr);
 
     cairo_paint(cr);
-    
+
     cairo_restore(cr);
-    
+
     cairo_surface_destroy(image_surface);
     g_free(px_rgba);
-    
+
     return 0;
 }
 
@@ -770,7 +769,7 @@ PrintCairoPDF::draw_glyphs(cairo_t *cr, NR::Point p, PangoFont *font, PangoGlyph
     int num_invalid_glyphs = 0;
     for (gint i = 0; i < glyph_string->num_glyphs; i++) {
         info = &glyph_string->glyphs[i];
-        // skip glyphs which are PANGO_GLYPH_EMPTY (0x0FFFFFFF) or have 
+        // skip glyphs which are PANGO_GLYPH_EMPTY (0x0FFFFFFF) or have
         // the PANGO_GLYPH_UNKNOWN_FLAG (0x10000000) set
         if (info->glyph == 0x0FFFFFFF || info->glyph & 0x10000000) {
             num_invalid_glyphs++;
@@ -817,6 +816,7 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
 
     // this needs to be there to encounter Cairo's userspace locking semantics for set_source
     // otherwise gradients won't be shown correctly
+    // printf("\n _last_tx:%f _last_ty:%f", _last_tx, _last_ty);
     cairo_translate(cr, -_last_tx, -_last_ty);
 
     // create pango layout and context if needed
@@ -834,9 +834,9 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
     if (tf == NULL) {   // do something
         g_printf("Warning: trouble getting font_instance\n");
         tf = (font_factory::Default())->Face("sans", font_style_to_pos(*style));
-    }        
+    }
     PangoFontDescription *adjusted = pango_font_description_copy(tf->descr);
-    
+
     pango_font_description_set_absolute_size(adjusted, (gint)(style->font_size.computed * PANGO_SCALE));
     pango_layout_set_font_description(_layout, adjusted);
     pango_layout_set_text(_layout, text, -1);
@@ -883,7 +883,7 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
     matrix.yy = -matrix.xx;
     cairo_set_font_matrix(cr, &matrix);
 #endif
-    
+
     if ( style->fill.isColor()
          || ( style->fill.isPaintserver()
               && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) ) )
@@ -899,8 +899,15 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
         }
 #else
         cairo_new_path(cr);
-        cairo_move_to(cr, _last_tx, _last_ty);
+        // as pango has inverted origin we simulate the moveto and apply the vertical flip
+        //cairo_move_to(cr, _last_tx, _last_ty);
+        cairo_translate(cr, _last_tx, _last_ty);
+        cairo_scale(cr, 1, -1);
+        cairo_move_to(cr, 0, 0);
         pango_cairo_show_layout_line(cr, line);
+        cairo_scale(cr, 1, -1);
+        cairo_translate(cr, -_last_tx, -_last_ty);
+
 #endif
     }
 
@@ -920,8 +927,14 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
         }
 #else
         cairo_new_path(cr);
-        cairo_move_to(cr, _last_tx, _last_ty);
+        // as pango has inverted origin we simulate the moveto and apply the vertical flip
+        //cairo_move_to(cr, _last_tx, _last_ty);
+        cairo_translate(cr, _last_tx, _last_ty);
+        cairo_scale(cr, 1, -1);
+        cairo_move_to(cr, 0, 0);
         pango_cairo_layout_line_path(cr, line);
+        cairo_scale(cr, 1, -1);
+        cairo_translate(cr, -_last_tx, -_last_ty);
 #endif
         cairo_stroke(cr);
     }
@@ -986,7 +999,7 @@ _concat_transform(cairo_t *cr, double xx, double yx, double xy, double yy, doubl
 {
     cairo_matrix_t matrix;
 
-    cairo_matrix_init(&matrix, xx, yx, xy, yy, x0, y0); 
+    cairo_matrix_init(&matrix, xx, yx, xy, yy, x0, y0);
     cairo_transform(cr, &matrix);
 }
 
