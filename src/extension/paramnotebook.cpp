@@ -304,14 +304,6 @@ ParamNotebook::set (const int in, SPDocument * /*doc*/, Inkscape::XML::Node * /*
 /**
     \brief  A function to get the currentpage and the parameters in a string form
     \return A string with the 'value' and all the parameters on all pages as command line arguments
-
-    This is really a hack. The function is called by Extension::paramString() to build
-    the commandline string like: '--param1name=\"param1value\" --param2name=\"param2value\" ...'
-    Extension::paramString expects this function to return '\"param1value\"'; but instead,
-    this function returns: '\"param1value\" --page1param1name=\"page1param1value\" ...'
-
-    \TODO  Do this better. For example, make Parameter::paramString() that returns '--name=\"value\"'
-    instead of just returning '\"value\"'.
 */
 void
 ParamNotebook::string (std::list <std::string> &list)
