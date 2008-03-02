@@ -35,18 +35,28 @@ LPESketch::LPESketch(LivePathEffectObject *lpeobject) :
     // initialise your parameters here:
     //testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
     nbiter_approxstrokes(_("Nb of iterations"), _("Draw that many approximating strokes sequences."), "nbiter_approxstrokes", &wr, this, 5),
-    strokelength(_("Max stroke length"), _("Maximal length of approximated strokes."), "strokelength", &wr, this, 100.),
-    strokelength_rdm(_("Randomness"), _("Random variation of stroke length (relative to max. length)."), "strokelength_rdm", &wr, this, .3),
-    strokeoverlap(_("Max. overlap"), _("How much successive strokes should overlap (relative to max. length)."), "strokeoverlap", &wr, this, .3),
-    strokeoverlap_rdm(_("Randomness"), _("Random variation of overlap (relative to max. overlap)"), "strokeoverlap_rdm", &wr, this, .3),
-    ends_tolerance(_("Max. ends tolerance"), _("Max. distance between original and approximated paths ends (relative to max. length)."), "ends_tolerance", &wr, this, .1),
-    parallel_offset(_("Average offset"), _("Average distance to original stroke(try 0.)."), "parallel_offset", &wr, this, 5.),
-    tremble_size(_("Max. tremble"), _("Maximal tremble magnitude."), "tremble_size", &wr, this, 5.),
-    tremble_frequency(_("Tremble frequency"), _("Typical nb of tremble 'period' in a stroke."), "tremble_frequency", &wr, this, 1.),
-    nbtangents(_("Nb of construction Lines"), _("How many construction lines (tangents) to draw?"), "nbtangents", &wr, this, 5),
-    tgtscale(_("Scale"), _("Scale factor relating curvature and length of construction lines(try 5*avarage offset) )"), "tgtscale", &wr, this, 10.0),
+    strokelength(_("Max stroke length"), 
+                 _("Maximal length of approximated strokes."), "strokelength", &wr, this, 100.),
+    strokelength_rdm(_("Stroke length variation"), 
+                     _("Random variation of stroke length (relative to max. length)."), "strokelength_rdm", &wr, this, .3),
+    strokeoverlap(_("Max. overlap"), 
+                  _("How much successive strokes should overlap (relative to max. length)."), "strokeoverlap", &wr, this, .3),
+    strokeoverlap_rdm(_("Overlap variation"), 
+                      _("Random variation of overlap (relative to max. overlap)"), "strokeoverlap_rdm", &wr, this, .3),
+    ends_tolerance(_("Max. ends tolerance"), 
+                   _("Max. distance between original and approximated paths ends (relative to max. length)."), "ends_tolerance", &wr, this, .1),
+    parallel_offset(_("Parallel offset"), 
+                    _("Average distance to original stroke(try 0.)."), "parallel_offset", &wr, this, 5.),
+    tremble_size(_("Max. tremble"), 
+                 _("Maximal tremble magnitude."), "tremble_size", &wr, this, 5.),
+    tremble_frequency(_("Tremble frequency"), 
+                      _("Typical nb of tremble 'period' in a stroke."), "tremble_frequency", &wr, this, 1.),
+    nbtangents(_("Nb of construction Lines"), 
+               _("How many construction lines (tangents) to draw?"), "nbtangents", &wr, this, 5),
+    tgtscale(_("Scale"), 
+             _("Scale factor relating curvature and length of construction lines(try 5*avarage offset) )"), "tgtscale", &wr, this, 10.0),
     tgtlength(_("Max. length"), _("Max. length of construction lines."), "tgtlength", &wr, this, 100.0),
-    tgtlength_rdm(_("Randomness"), _("Random variation of construction lines length."), "tgtlength_rdm", &wr, this, .3)
+    tgtlength_rdm(_("Length variation"), _("Random variation of construction lines length."), "tgtlength_rdm", &wr, this, .3)
 {
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     //Add some comment in the UI:  *warning* the precise output of this effect might change in future releases!
@@ -270,7 +280,7 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
                 
                 //step points: s0 = s1 - overlap.
                 //TODO: make sure this has to end?
-                s0 = s1 - strokeoverlap*(1-strokeoverlap_rdm)*strokelength;
+                s0 = s1 - strokeoverlap*(1-strokeoverlap_rdm)*(s1-s0);
             }
         }
     }
