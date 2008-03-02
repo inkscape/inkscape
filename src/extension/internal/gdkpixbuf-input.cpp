@@ -66,11 +66,12 @@ GdkpixbufInput::open(Inkscape::Extension::Input */*mod*/, char const *uri)
         gdk_pixbuf_unref(pb);
         //alter the canvas size to fit the image size
         fit_canvas_to_drawing(doc);
-        // restore undo, as now this document may be shown to the user if a bitmap was opened
-        sp_document_set_undo_sensitive(doc, saved);
     } else {
         printf("GdkPixbuf loader failed\n");
     }
+
+    // restore undo, as now this document may be shown to the user if a bitmap was opened
+    sp_document_set_undo_sensitive(doc, saved);
 
     return doc;
 }
