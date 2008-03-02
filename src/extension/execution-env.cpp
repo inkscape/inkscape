@@ -70,7 +70,7 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Imp
 }
 
 /** \brief  Destroy an execution environment
-    
+
     Destroys the dialog if created and the document cache.
 */
 ExecutionEnv::~ExecutionEnv (void) {
@@ -138,7 +138,7 @@ ExecutionEnv::createWorkingDialog (void) {
 }
 
 void
-ExecutionEnv::workingCanceled( const int resp) {
+ExecutionEnv::workingCanceled( const int /*resp*/) {
     cancel();
     undo();
     return;

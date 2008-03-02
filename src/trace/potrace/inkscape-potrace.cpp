@@ -43,7 +43,7 @@ static void updateGui()
 }
 
 
-static void potraceStatusCallback(double progress, void *userData) /* callback fn */
+static void potraceStatusCallback(double /*progress*/, void *userData) /* callback fn */
 {
     updateGui();
 
@@ -284,14 +284,14 @@ filterIndexed(PotraceTracingEngine &engine, GdkPixbuf * pixbuf)
     RgbMap *gm = gdkPixbufToRgbMap(pixbuf);
     if (engine.getMultiScanSmooth())
         {
-	RgbMap *gaussMap = rgbMapGaussian(gm);
-	newGm = rgbMapQuantize(gaussMap, engine.getMultiScanNrColors());
-	gaussMap->destroy(gaussMap);
-	}
+        RgbMap *gaussMap = rgbMapGaussian(gm);
+        newGm = rgbMapQuantize(gaussMap, engine.getMultiScanNrColors());
+        gaussMap->destroy(gaussMap);
+        }
     else
         {
-	newGm = rgbMapQuantize(gm, engine.getMultiScanNrColors());
-	}
+        newGm = rgbMapQuantize(gm, engine.getMultiScanNrColors());
+        }
     gm->destroy(gm);
 
     if (engine.getTraceType() == TRACE_QUANT_MONO)
@@ -379,7 +379,7 @@ PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
 
     /* trace a bitmap*/
     potrace_state_t *potraceState = potrace_trace(potraceParams,
-			                          potraceBitmap);
+                                                  potraceBitmap);
 
     //## Free the Potrace bitmap
     bm_free(potraceBitmap);
