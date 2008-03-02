@@ -14,6 +14,7 @@
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
 ; January 2008 new uninstaller messages
+; February 2008 new languages ar, br
 
 !insertmacro MUI_LANGUAGE "Italian"
 
@@ -137,10 +138,12 @@ LangString lng_Languages $(LANG_ITALIAN) "Traduzioni"
 LangString lng_LanguagesDesc $(LANG_ITALIAN) "Installa altre traduzioni per ${PRODUCT_NAME}"
 
 LangString lng_am $(LANG_ITALIAN) "am  Aramaico"
+LangString lng_ar $(LANG_ITALIAN) "ar  Arabo"
 LangString lng_az $(LANG_ITALIAN) "az  Azerbaigiano"
 LangString lng_be $(LANG_ITALIAN) "be  Bielorusso"
 LangString lng_bg $(LANG_ITALIAN) "bg  Bulgaro"
 LangString lng_bn $(LANG_ITALIAN) "bn  Bengali"
+LangString lng_br $(LANG_ITALIAN) "br  Bretone"
 LangString lng_ca $(LANG_ITALIAN) "ca  Catalano"
 LangString lng_ca@valencia $(LANG_ITALIAN) "ca@valencia  Catalano Valenciano"
 LangString lng_cs $(LANG_ITALIAN) "cs  Ceco"

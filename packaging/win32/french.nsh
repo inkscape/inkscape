@@ -3,7 +3,7 @@
 ; french language strings for inkscape installer
 ; windows code page: 1252
 ; Authors:
-; Adib Taraben theAdib@yahoo.com
+; Adib Taraben theAdib@googlemail.com
 ; matiphas matiphas@free.fr
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
@@ -15,6 +15,7 @@
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
 ; January 2008 new uninstaller messages
+; February 2008 new languages ar, br
 
 !insertmacro MUI_LANGUAGE "French"
 
@@ -138,10 +139,12 @@ LangString lng_Languages $(LANG_FRENCH) "Traductions"
 LangString lng_LanguagesDesc $(LANG_FRENCH) "Installer des traductions pour ${PRODUCT_NAME}"
 
 LangString lng_am $(LANG_FRENCH) "am  Amharique"
+LangString lng_ar $(LANG_FRENCH) "ar  Arabic"
 LangString lng_az $(LANG_FRENCH) "az  Azerbaïdjanais"
 LangString lng_be $(LANG_FRENCH) "be  Biélorusse"
 LangString lng_bg $(LANG_FRENCH) "bg  Bulgare"
 LangString lng_bn $(LANG_FRENCH) "bn  Bengali"
+LangString lng_br $(LANG_FRENCH) "br  Breton"
 LangString lng_ca $(LANG_FRENCH) "ca  Catalan"
 LangString lng_ca@valencia $(LANG_FRENCH) "ca@valencia  Valencian Catalan"
 LangString lng_cs $(LANG_FRENCH) "cs  Tchèque"

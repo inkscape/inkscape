@@ -9,6 +9,7 @@
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
 ; January 2008 new uninstaller messages
+; February 2008 new languages ar, br
 
 !insertmacro MUI_LANGUAGE "Japanese"
 
@@ -132,10 +133,12 @@ LangString lng_Languages $(LANG_JAPANESE) "翻訳"
 LangString lng_LanguagesDesc $(LANG_JAPANESE) "${PRODUCT_NAME} のさまざまの翻訳ファイルをインストール"
 
 LangString lng_am $(LANG_JAPANESE) "am  アムハラ語"
+LangString lng_ar $(LANG_JAPANESE) "ar  Arabic"
 LangString lng_az $(LANG_JAPANESE) "az  アゼルバイジャン語"
 LangString lng_be $(LANG_JAPANESE) "be  ベラルーシ語"
 LangString lng_bg $(LANG_JAPANESE) "bg  ブルガリア語"
 LangString lng_bn $(LANG_JAPANESE) "bn  Bengali"
+LangString lng_br $(LANG_JAPANESE) "br  Breton"
 LangString lng_ca $(LANG_JAPANESE) "ca  カタロニア語"
 LangString lng_ca@valencia $(LANG_JAPANESE) "ca@valencia  Valencian Catalan"
 LangString lng_cs $(LANG_JAPANESE) "cs  チェコ語"

@@ -3,7 +3,7 @@
 ; german language strings for inkscape installer
 ; windows code page: 1252
 ; Authors:
-; Adib Taraben theAdib@yahoo.com
+; Adib Taraben theAdib@googlemail.com
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
@@ -14,6 +14,7 @@
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
 ; January 2008 new uninstaller messages
+; February 2008 new languages ar, br
 
 !insertmacro MUI_LANGUAGE "German"
 
@@ -140,10 +141,12 @@ LangString lng_Languages $(LANG_GERMAN) "Übersetzungen"
 LangString lng_LanguagesDesc $(LANG_GERMAN) "Installiert verschiedene Übersetzungen für ${PRODUCT_NAME}"
 
 LangString lng_am $(LANG_GERMAN) "am  Amharisch"
+LangString lng_ar $(LANG_GERMAN) "ar  Arabisch"
 LangString lng_az $(LANG_GERMAN) "az  Aserbaidschanisch"
 LangString lng_be $(LANG_GERMAN) "be  Weißrussisch"
 LangString lng_bg $(LANG_GERMAN) "bg  Bulgarisch"
 LangString lng_bn $(LANG_GERMAN) "bn  Bengalisch"
+LangString lng_br $(LANG_GERMAN) "br  Bretonisch"
 LangString lng_ca $(LANG_GERMAN) "ca  Katalanisch"
 LangString lng_ca@valencia $(LANG_GERMAN) "ca@valencia  Valencianisch Katalanisch"
 LangString lng_cs $(LANG_GERMAN) "cs  Tschechisch"

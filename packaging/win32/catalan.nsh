@@ -13,6 +13,7 @@
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
 ; January 2008 new uninstaller messages
+; February 2008 new languages ar, br
 
 !insertmacro MUI_LANGUAGE "Catalan"
 
@@ -174,6 +175,8 @@
 
 ; LangString lng_am $(LANG_CATALAN) "am  Amharic"
   LangString lng_am $(LANG_CATALAN) "am  Amharic"
+; LangString lng_ar $(LANG_ENGLISH) "ar  Arabic"
+  LangString lng_ar $(LANG_CATALAN) "ar  Arabic"
 ; LangString lng_az $(LANG_CATALAN) "az  Azerbaijani"
   LangString lng_az $(LANG_CATALAN) "az  Azerbaijani"
 ; LangString lng_be $(LANG_CATALAN) "be  Byelorussian"
@@ -182,6 +185,8 @@
   LangString lng_bg $(LANG_CATALAN) "bg  Búlgar"
 ; LangString lng_bn $(LANG_CATALAN) "bn  Bengali"
   LangString lng_bn $(LANG_CATALAN) "bn  Bengalí"
+; LangString lng_br $(LANG_ENGLISH) "br  Breton"
+  LangString lng_br $(LANG_CATALAN) "br  Breton"
 ; LangString lng_ca $(LANG_CATALAN) "ca  Catalan"
   LangString lng_ca $(LANG_CATALAN) "ca  Català"
 ; LangString lng_ca@valencia $(LANG_CATALAN) "ca@valencia  Valencian Catalan"

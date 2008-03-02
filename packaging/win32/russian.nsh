@@ -14,6 +14,7 @@
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
 ; January 2008 new uninstaller messages
+; February 2008 new languages ar, br
 
 !insertmacro MUI_LANGUAGE "Russian"
 
@@ -137,10 +138,12 @@ LangString lng_Languages $(LANG_RUSSIAN) "Переводы"
 LangString lng_LanguagesDesc $(LANG_RUSSIAN) "Установка переводов ${PRODUCT_NAME} на разные языки"
 
 LangString lng_am $(LANG_RUSSIAN) "am  Амхарский (Амаринья)"
+LangString lng_ar $(LANG_RUSSIAN) "ar  Arabic"
 LangString lng_az $(LANG_RUSSIAN) "az  Азербайджанский"
 LangString lng_be $(LANG_RUSSIAN) "be  Белорусский"
 LangString lng_bg $(LANG_RUSSIAN) "bg  Болгарский"
 LangString lng_bn $(LANG_RUSSIAN) "bn  Bengali"
+LangString lng_br $(LANG_RUSSIAN) "br  Breton"
 LangString lng_ca $(LANG_RUSSIAN) "ca  Каталанский"
 LangString lng_ca@valencia $(LANG_RUSSIAN) "ca@valencia  Valencian Catalan"
 LangString lng_cs $(LANG_RUSSIAN) "cs  Чешский"

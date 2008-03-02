@@ -3,7 +3,7 @@
 ; spanish language strings for inkscape installer
 ; windows code page: 1252
 ; Authors:
-; Adib Taraben theAdib@yahoo.com
+; Adib Taraben theAdib@googlemail.com
 ; Lucas Vieites aka basurero
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
@@ -14,6 +14,7 @@
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
 ; January 2008 new uninstaller messages
+; February 2008 new languages ar, br
 
 !insertmacro MUI_LANGUAGE "Spanish"
 
@@ -136,10 +137,12 @@ LangString lng_Languages $(LANG_SPANISH) "Traducciones"
 LangString lng_LanguagesDesc $(LANG_SPANISH) "Instalar varias traducciones para ${PRODUCT_NAME}"
 
 LangString lng_am $(LANG_SPANISH) "am  Amharic"
+LangString lng_ar $(LANG_SPANISH) "ar  Arabic"
 LangString lng_az $(LANG_SPANISH) "az  Azerbaijani"
 LangString lng_be $(LANG_SPANISH) "be  Byelorussian"
 LangString lng_bg $(LANG_SPANISH) "bg  Bulgarian"
 LangString lng_bn $(LANG_SPANISH) "bn  Bengali"
+LangString lng_br $(LANG_SPANISH) "br  Breton"
 LangString lng_ca $(LANG_SPANISH) "ca  Catalan"
 LangString lng_ca@valencia $(LANG_SPANISH) "ca@valencia  Valencian Catalan"
 LangString lng_cs $(LANG_SPANISH) "cs  Czech"

@@ -15,6 +15,7 @@
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
 ; January 2008 new uninstaller messages
+; February 2008 new languages ar, br
 
 !insertmacro MUI_LANGUAGE "Czech"
 
@@ -139,10 +140,12 @@ LangString lng_Languages $(LANG_CZECH) "Jazykové sady"
 LangString lng_LanguagesDesc $(LANG_CZECH) "Nainstalovat další jazykové sady ${PRODUCT_NAME}"
 
 LangString lng_am $(LANG_CZECH) "am  Amharic"
+LangString lng_ar $(LANG_CZECH) "ar  Arabic"
 LangString lng_az $(LANG_CZECH) "az  Azerbajdžánština"
 LangString lng_be $(LANG_CZECH) "be  Bìloruština"
 LangString lng_bg $(LANG_CZECH) "bg  Bulgarian"
 LangString lng_bn $(LANG_CZECH) "bn  Bengali"
+LangString lng_br $(LANG_CZECH) "br  Breton"
 LangString lng_ca $(LANG_CZECH) "ca  Katalánština"
 LangString lng_ca@valencia $(LANG_CZECH) "ca@valencia  Valencian Catalan"
 LangString lng_cs $(LANG_CZECH) "cs  Èeština"

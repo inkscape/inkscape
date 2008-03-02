@@ -14,6 +14,7 @@
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
 ; January 2008 new uninstaller messages
+; February 2008 new languages ar, br
 
 !insertmacro MUI_LANGUAGE "Finnish"
 
@@ -137,10 +138,12 @@ LangString lng_Languages $(LANG_FINNISH) "Käännökset"
 LangString lng_LanguagesDesc $(LANG_FINNISH) "Asenna Inkscapen käännökset"
 
 LangString lng_am $(LANG_FINNISH) "am  amhari"
+LangString lng_ar $(LANG_FINNISH) "ar  Arabic"
 LangString lng_az $(LANG_FINNISH) "az  azerbaidžani"
 LangString lng_be $(LANG_FINNISH) "be  valkovenäjä"
 LangString lng_bg $(LANG_FINNISH) "bg  bulgaria"
 LangString lng_bn $(LANG_FINNISH) "bn  Bengali"
+LangString lng_br $(LANG_FINNISH) "br  Breton"
 LangString lng_ca $(LANG_FINNISH) "ca  katalaani"
 LangString lng_ca@valencia $(LANG_FINNISH) "ca@valencia  Valencian Catalan"
 LangString lng_cs $(LANG_FINNISH) "cs  tšekki"

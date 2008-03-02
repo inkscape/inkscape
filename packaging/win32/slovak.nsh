@@ -14,6 +14,7 @@
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
 ; January 2008 new uninstaller messages
+; February 2008 new languages ar, br
 
 !insertmacro MUI_LANGUAGE "Slovak"
 
@@ -137,10 +138,12 @@ LangString lng_Languages $(LANG_SLOVAK) "JazykovÈ sady"
 LangString lng_LanguagesDesc $(LANG_SLOVAK) "Nainötalovaù Ôalöie jazykovÈ sady ${PRODUCT_NAME}"
 
 LangString lng_am $(LANG_SLOVAK) "am  amharËina"
+LangString lng_ar $(LANG_SLOVAK) "ar  Arabic"
 LangString lng_az $(LANG_SLOVAK) "az  azerbajdûanËina"
 LangString lng_be $(LANG_SLOVAK) "be  bieloruötina"
 LangString lng_bg $(LANG_SLOVAK) "bg  bulharËina"
 LangString lng_bn $(LANG_SLOVAK) "bn  beng·lËina"
+LangString lng_br $(LANG_SLOVAK) "br  Breton"
 LangString lng_ca $(LANG_SLOVAK) "ca  katal·nËina"
 LangString lng_ca@valencia $(LANG_SLOVAK) "ca@valencia  valencijËina"
 LangString lng_cs $(LANG_SLOVAK) "cs  Ëeötina"

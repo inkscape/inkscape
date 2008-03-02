@@ -4,7 +4,7 @@
 ; english language strings for inkscape installer
 ; windows code page: 1252
 ; Authors:
-; Adib Taraben theAdib@yahoo.com
+; Adib Taraben theAdib@googlemail.com
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
@@ -15,6 +15,7 @@
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
 ; January 2008 new uninstaller messages
+; February 2008 new languages ar, br
 
 !insertmacro MUI_LANGUAGE "English"
 
@@ -138,10 +139,12 @@ LangString lng_Languages $(LANG_ENGLISH) "Translations"
 LangString lng_LanguagesDesc $(LANG_ENGLISH) "Install various translations for ${PRODUCT_NAME}"
 
 LangString lng_am $(LANG_ENGLISH) "am  Amharic"
+LangString lng_ar $(LANG_ENGLISH) "ar  Arabic"
 LangString lng_az $(LANG_ENGLISH) "az  Azerbaijani"
 LangString lng_be $(LANG_ENGLISH) "be  Byelorussian"
 LangString lng_bg $(LANG_ENGLISH) "bg  Bulgarian"
 LangString lng_bn $(LANG_ENGLISH) "bn  Bengali"
+LangString lng_br $(LANG_ENGLISH) "br  Breton"
 LangString lng_ca $(LANG_ENGLISH) "ca  Catalan"
 LangString lng_ca@valencia $(LANG_ENGLISH) "ca@valencia  Valencian Catalan"
 LangString lng_cs $(LANG_ENGLISH) "cs  Czech"

@@ -14,6 +14,7 @@
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
 ; January 2008 new uninstaller messages
+; February 2008 new languages ar, br
 
 !insertmacro MUI_LANGUAGE "Galician"
 
@@ -137,10 +138,12 @@ LangString lng_Languages $(LANG_GALICIAN) "Traducións"
 LangString lng_LanguagesDesc $(LANG_GALICIAN) "Instala varias traducións de ${PRODUCT_NAME}"
 
 LangString lng_am $(LANG_GALICIAN) "am  Amhárico"
+LangString lng_ar $(LANG_GALICIAN) "ar  Arabic"
 LangString lng_az $(LANG_GALICIAN) "az  Azerí"
 LangString lng_be $(LANG_GALICIAN) "be  Bielorruso"
 LangString lng_bg $(LANG_GALICIAN) "bg  Búlgaro"
 LangString lng_bn $(LANG_GALICIAN) "bn  Bengalí"
+LangString lng_br $(LANG_GALICIAN) "br  Breton"
 LangString lng_ca $(LANG_GALICIAN) "ca  Catalán"
 LangString lng_ca@valencia $(LANG_GALICIAN) "ca@valencia  Catalán Valenciano"
 LangString lng_cs $(LANG_GALICIAN) "cs  Checo"

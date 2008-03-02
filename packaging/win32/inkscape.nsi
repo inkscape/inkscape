@@ -713,6 +713,10 @@ Section $(lng_am) SecAmharic
   !insertmacro Language am am
 SectionEnd
 
+Section $(lng_ar) SecArabic
+  !insertmacro Language ar ar
+SectionEnd
+
 Section $(lng_az) SecAzerbaijani
   !insertmacro Language az az
 SectionEnd
@@ -727,6 +731,10 @@ SectionEnd
 
 Section $(lng_bn) SecBengali
   !insertmacro Language bn bn
+SectionEnd
+
+Section $(lng_br) SecBreton
+  !insertmacro Language br br
 SectionEnd
 
 Section $(lng_ca) SecCatalan
@@ -1149,10 +1157,12 @@ Function .onInit
   !insertmacro Parameter "TUTORIALS" ${SecTutorials}
   !insertmacro Parameter "LANGUAGES" ${SecLanguages}
   !insertmacro Parameter "am" ${SecAmharic}
+  !insertmacro Parameter "ar" ${SecArabic}
   !insertmacro Parameter "az" ${SecAzerbaijani}
   !insertmacro Parameter "be" ${SecByelorussian}
   !insertmacro Parameter "bg" ${SecBulgarian}
   !insertmacro Parameter "bn" ${SecBengali}
+  !insertmacro Parameter "br" ${SecBreton}
   !insertmacro Parameter "ca" ${SecCatalan}
   !insertmacro Parameter "ca@valencia" ${SecCatalanValencia}
   !insertmacro Parameter "cs" ${SecCzech}

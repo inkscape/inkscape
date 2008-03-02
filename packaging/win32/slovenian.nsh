@@ -14,6 +14,7 @@
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
 ; January 2008 new uninstaller messages
+; February 2008 new languages ar, br
 
 ; !insertmacro MUI_LANGUAGE "Slovenšèina"
 !insertmacro MUI_LANGUAGE "Slovenian"
@@ -138,10 +139,12 @@ LangString lng_Languages $(LANG_SLOVENIAN) "Prevodi"
 LangString lng_LanguagesDesc $(LANG_SLOVENIAN) "Namesti razliène prevode za ${PRODUCT_NAME}"
 
 LangString lng_am $(LANG_SLOVENIAN) "amharski (am)"
+LangString lng_ar $(LANG_SLOVENIAN) "Arabic (ar)"
 LangString lng_az $(LANG_SLOVENIAN) "azerbajdžanski (az)"
 LangString lng_be $(LANG_SLOVENIAN) "beloruski (be)"
 LangString lng_bg $(LANG_SLOVENIAN) "bolgarski (bg)"
 LangString lng_bn $(LANG_SLOVENIAN) "bengalski (bn)"
+LangString lng_br $(LANG_SLOVENIAN) "Breton (br)"
 LangString lng_ca $(LANG_SLOVENIAN) "katalonski (ca)"
 LangString lng_ca@valencia $(LANG_SLOVENIAN) "valencijski katalonski (ca@valencia)"
 LangString lng_cs $(LANG_SLOVENIAN) "èeški (cs)"
