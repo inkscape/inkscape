@@ -950,9 +950,8 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
         FcPatternAddBool(fc_pattern, FC_VERTICAL_LAYOUT, FcFalse);
     }
 #endif
-    tf->Unref();
 
-return 0;
+    return 0;
 }
 
 /* Helper functions */
