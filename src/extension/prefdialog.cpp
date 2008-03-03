@@ -222,13 +222,10 @@ PrefDialog::on_response (int signal) {
     }
 
     if (_param_preview != NULL) {
-        //_param_preview->set_bool(false, NULL, NULL);
         _checkbox_preview->set_active(false);
-        //preview_toggle();
     }
 
-    if (signal == Gtk::RESPONSE_CANCEL && _effect != NULL) {
-        // close the dialog
+    if ((signal == Gtk::RESPONSE_CANCEL || signal == Gtk::RESPONSE_DELETE_EVENT) && _effect != NULL) {
         delete this;
     }
 
