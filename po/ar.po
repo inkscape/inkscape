@@ -7643,7 +7643,7 @@ msgstr "about.svg"
 #. one per line in the form of: name surname (email). Use \n for newline.
 #: ../src/ui/dialog/aboutbox.cpp:337
 msgid "translator-credits"
-msgstr "تعريب: <b>&lt;a href=\"http://mbnoimi.net/\"&gt;محمد بشير النعيمي&lt;/a&gt;</b> (mhdbnoimi@gmail.com)"
+msgstr "محمد بشير النعيمي (mhdbnoimi@gmail.com)"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:234
 #: ../src/ui/dialog/align-and-distribute.cpp:780
