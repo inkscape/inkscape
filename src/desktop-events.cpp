@@ -152,6 +152,8 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
 
                 if (snappoint.getDistance() < NR_HUGE) {
                     desktop->snapindicator->set_new_snappoint(snappoint.getPoint().to_2geom());
+                } else {
+                    desktop->snapindicator->remove_snappoint();
                 }
             }
             break;
@@ -254,6 +256,8 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
 
                 if (snappoint.getDistance() < NR_HUGE) {
                     desktop->snapindicator->set_new_snappoint(snappoint.getPoint().to_2geom());
+                } else {
+                    desktop->snapindicator->remove_snappoint();
                 }
 
                 ret = TRUE;

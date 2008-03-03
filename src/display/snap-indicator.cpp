@@ -48,7 +48,7 @@ SnapIndicator::set_new_snappoint(Geom::Point p)
                                                     "shape", SP_KNOT_SHAPE_CROSS,
                                                     NULL );
     SP_CTRL(canvasitem)->moveto ( p );
-    tempitem = desktop->add_temporary_canvasitem(canvasitem, 2000);
+    tempitem = desktop->add_temporary_canvasitem(canvasitem, 1000);
 }
 
 void
