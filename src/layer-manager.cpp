@@ -20,8 +20,11 @@
 #include "ui/view/view.h"
 #include "selection.h"
 #include "sp-object.h"
+#include "sp-item-group.h"
 #include "xml/node.h"
 #include "xml/node-observer.h"
+// #include "debug/event-tracker.h"
+// #include "debug/simple-event.h"
 
 namespace Inkscape {
 
@@ -57,6 +60,58 @@ public:
     GQuark _labelAttr;
 };
 
+/*
+namespace {
+
+Util::ptr_shared<char> stringify_node(Node const &node);
+
+Util::ptr_shared<char> stringify_obj(SPObject const &obj) {
+    gchar *string;
+
+    if (obj.id) {
+        string = g_strdup_printf("SPObject(%p)=%s  repr(%p)", &obj, obj.id, obj.repr);
+    } else {
+        string = g_strdup_printf("SPObject(%p) repr(%p)", &obj, obj.repr);
+    }
+
+    Util::ptr_shared<char> result=Util::share_string(string);
+    g_free(string);
+    return result;
+
+}
+
+typedef Debug::SimpleEvent<Debug::Event::OTHER> DebugLayer;
+
+
+class DebugLayerRebuild : public DebugLayer {
+public:
+    DebugLayerRebuild()
+        : DebugLayer(Util::share_static_string("rebuild-layers"))
+    {
+        _addProperty("simple", Util::share_static_string("foo"));
+    }
+};
+
+class DebugLayerObj : public DebugLayer {
+public:
+    DebugLayerObj(SPObject const& obj, Util::ptr_shared<char> name)
+        : DebugLayer(name)
+    {
+        _addProperty("layer", stringify_obj(obj));
+    }
+};
+
+class DebugAddLayer : public DebugLayerObj {
+public:
+    DebugAddLayer(SPObject const &obj)
+        : DebugLayerObj(obj, Util::share_static_string("add-layer"))
+    {
+    }
+};
+
+
+}
+*/
 
 LayerManager::LayerManager(SPDesktop *desktop)
 : _desktop(desktop), _document(NULL)
@@ -160,6 +215,8 @@ void LayerManager::_objectModified( SPObject* obj, guint /*flags*/ )
 }
 
 void LayerManager::_rebuild() {
+//     Debug::EventTracker<DebugLayerRebuild> tracker1();
+
     while ( !_watchers.empty() ) {
         LayerWatcher* one = _watchers.back();
         _watchers.pop_back();
@@ -177,36 +234,66 @@ void LayerManager::_rebuild() {
     if (!_document) // http://sourceforge.net/mailarchive/forum.php?thread_name=5747bce9a7ed077c1b4fc9f0f4f8a5e0%40localhost&forum_name=inkscape-devel
         return;
 
-    GSList const *layers=sp_document_get_resource_list(_document, "layer");
+    GSList const *layers = sp_document_get_resource_list(_document, "layer");
     SPObject *root=_desktop->currentRoot();
     if ( root ) {
         _addOne(root);
 
-        for ( GSList const *iter=layers ; iter ; iter = iter->next ) {
-            SPObject *layer=static_cast<SPObject *>(iter->data);
+        std::set<SPGroup*> layersToAdd;
 
-            for ( SPObject* curr = layer; curr && (curr != root) ; curr = SP_OBJECT_PARENT(curr) ) {
-                if ( (curr != root) && root->isAncestorOf(curr) && !includes(curr) ) {
-                    // Filter out objects in the middle of being deleted
+        for ( GSList const *iter = layers; iter; iter = iter->next ) {
+            SPObject *layer = static_cast<SPObject *>(iter->data);
+            bool needsAdd = false;
+            std::set<SPGroup*> additional;
 
-                    // Such may have been the cause of bug 1339397.
-                    // See http://sourceforge.net/tracker/index.php?func=detail&aid=1339397&group_id=93438&atid=604306
-
-                    SPObject const *higher = curr;
-                    while ( higher && (SP_OBJECT_PARENT(higher) != root) ) {
-                        higher = SP_OBJECT_PARENT(higher);
-                    }
-                    Node* node = higher ? SP_OBJECT_REPR(higher) : 0;
-                    if ( node && node->parent() ) {
-                        sigc::connection connection = curr->connectModified(sigc::mem_fun(*this, &LayerManager::_objectModified));
-
-                        LayerWatcher *eye = new LayerWatcher(this, curr, connection);
-                        _watchers.push_back( eye );
-                        SP_OBJECT_REPR(curr)->addObserver(*eye);
-
-                        _addOne(curr);
+            if ( root->isAncestorOf(layer) ) {
+                needsAdd = true;
+                for ( SPObject* curr = layer; curr && (curr != root) && needsAdd; curr = SP_OBJECT_PARENT(curr) ) {
+                    if ( SP_IS_GROUP(curr) ) {
+                        SPGroup* group = SP_GROUP(curr);
+                        if ( group->layerMode() == SPGroup::LAYER ) {
+                            // If we have a layer-group as the one or a parent, ensure it is listed as a valid layer.
+                            needsAdd &= ( g_slist_find(const_cast<GSList *>(layers), curr) != NULL );
+                        } else {
+                            // If a non-layer group is a parent of layer groups, then show it also as a layer.
+                            // TODO add the magic Inkscape group mode?
+                            additional.insert(group);
+                        }
                     }
                 }
+            }
+            if ( needsAdd ) {
+                if ( !includes(layer) ) {
+                    layersToAdd.insert(SP_GROUP(layer));
+                }
+                for ( std::set<SPGroup*>::iterator it = additional.begin(); it != additional.end(); ++it ) {
+                    layersToAdd.insert(*it);
+                }
+            }
+        }
+
+        for ( std::set<SPGroup*>::iterator it = layersToAdd.begin(); it != layersToAdd.end(); ++it ) {
+            SPGroup* layer = *it;
+            // Filter out objects in the middle of being deleted
+
+            // Such may have been the cause of bug 1339397.
+            // See http://sourceforge.net/tracker/index.php?func=detail&aid=1339397&group_id=93438&atid=604306
+
+            SPObject const *higher = layer;
+            while ( higher && (SP_OBJECT_PARENT(higher) != root) ) {
+                higher = SP_OBJECT_PARENT(higher);
+            }
+            Node* node = higher ? SP_OBJECT_REPR(higher) : 0;
+            if ( node && node->parent() ) {
+//                 Debug::EventTracker<DebugAddLayer> tracker(*layer);
+
+                sigc::connection connection = layer->connectModified(sigc::mem_fun(*this, &LayerManager::_objectModified));
+
+                LayerWatcher *eye = new LayerWatcher(this, layer, connection);
+                _watchers.push_back( eye );
+                SP_OBJECT_REPR(layer)->addObserver(*eye);
+                
+                _addOne(layer);
             }
         }
     }
