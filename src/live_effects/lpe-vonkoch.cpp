@@ -6,6 +6,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <cstdio>
+
 #include "live_effects/lpe-vonkoch.h"
 #include "sp-shape.h"
 #include "sp-item.h"
@@ -58,16 +60,18 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> & path_in)
 {
     using namespace Geom;
     std::vector<Geom::Path> generating_path = path_from_piecewise(generator,.01);//TODO what should that tolerance be?
-    Point p = generating_path[0].pointAt(0.001);
-    Point u = generating_path[0].pointAt(0.999)-generating_path[0].pointAt(0.001);
-    Matrix m0 = Matrix(u[X], u[Y],-u[Y], u[X], p[X], p[Y]);
+    Rect bbox = path_in[0].boundsExact();
+    for(unsigned i=1; i < path_in.size(); i++){
+        bbox.unionWith(path_in[i].boundsExact());
+    }
+    Matrix m0 = Matrix(bbox[X].extent(),0,0,bbox[X].extent(), bbox.min()[X], bbox.min()[Y]);
     m0 = m0.inverse();
 
     std::vector<Matrix> transforms;
     for (unsigned i=0; i<generating_path.size(); i++){
-        for (unsigned j = (i==0)?1:0; j<generating_path[i].size(); j++){   
-            p = generating_path[i].pointAt(j);
-            u = generating_path[i].pointAt(j+0.999)-generating_path[i].pointAt(j+0.001);
+        for (unsigned j = 0; j<generating_path[i].size(); j++){   
+            Point p = generating_path[i].pointAt(j);
+            Point u = generating_path[i].pointAt(j+0.999)-generating_path[i].pointAt(j+0.001);
             Matrix m = Matrix(u[X], u[Y],-u[Y], u[X], p[X], p[Y]);
             m = m0*m;
             transforms.push_back(m);
@@ -127,6 +131,8 @@ LPEVonKoch::resetDefaults(SPItem * item)
 
     //generator.param_set_and_write_new_value( path.toPwSb() );
     generator.param_set_and_write_new_value( paths_to_pw(paths) );
+
+    
 
 
 //     Piecewise<D2<SBasis> > default_gen;
