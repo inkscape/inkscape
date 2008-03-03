@@ -23,6 +23,7 @@
 #include "sp-item-group.h"
 #include "xml/node.h"
 #include "xml/node-observer.h"
+#include "util/format.h"
 // #include "debug/event-tracker.h"
 // #include "debug/simple-event.h"
 
@@ -82,13 +83,20 @@ Util::ptr_shared<char> stringify_obj(SPObject const &obj) {
 
 typedef Debug::SimpleEvent<Debug::Event::OTHER> DebugLayer;
 
+class DebugLayerNote : public DebugLayer {
+public:
+    DebugLayerNote(Util::ptr_shared<char> descr)
+        : DebugLayer(Util::share_static_string("layer-note"))
+    {
+        _addProperty("descr", descr);
+    }
+};
 
 class DebugLayerRebuild : public DebugLayer {
 public:
     DebugLayerRebuild()
         : DebugLayer(Util::share_static_string("rebuild-layers"))
     {
-        _addProperty("simple", Util::share_static_string("foo"));
     }
 };
 
@@ -110,7 +118,7 @@ public:
 };
 
 
-}
+} // end of namespace
 */
 
 LayerManager::LayerManager(SPDesktop *desktop)
@@ -243,6 +251,7 @@ void LayerManager::_rebuild() {
 
         for ( GSList const *iter = layers; iter; iter = iter->next ) {
             SPObject *layer = static_cast<SPObject *>(iter->data);
+//             Debug::EventTracker<DebugLayerNote> tracker(Util::format("Examining %s", layer->label()));
             bool needsAdd = false;
             std::set<SPGroup*> additional;
 
@@ -254,10 +263,17 @@ void LayerManager::_rebuild() {
                         if ( group->layerMode() == SPGroup::LAYER ) {
                             // If we have a layer-group as the one or a parent, ensure it is listed as a valid layer.
                             needsAdd &= ( g_slist_find(const_cast<GSList *>(layers), curr) != NULL );
+                            if ( (!(group->repr)) || (!(group->repr->parent())) ) {
+                                needsAdd = false;
+                            }
                         } else {
                             // If a non-layer group is a parent of layer groups, then show it also as a layer.
                             // TODO add the magic Inkscape group mode?
-                            additional.insert(group);
+                            if ( group->repr && group->repr->parent() ) {
+                                additional.insert(group);
+                            } else {
+                                needsAdd = false;
+                            }
                         }
                     }
                 }
