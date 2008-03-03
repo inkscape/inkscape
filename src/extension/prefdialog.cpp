@@ -69,10 +69,10 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     if (_help == NULL)
         help_button->set_sensitive(false);
     */
-    _button_cancel = add_button(Gtk::Stock::CLOSE, Gtk::RESPONSE_CANCEL);
+    _button_cancel = add_button(_effect == NULL ? Gtk::Stock::CANCEL : Gtk::Stock::CLOSE, Gtk::RESPONSE_CANCEL);
     _button_cancel->set_use_stock(true);
 
-    _button_ok = add_button(Gtk::Stock::APPLY, Gtk::RESPONSE_OK);
+    _button_ok = add_button(_effect == NULL ? Gtk::Stock::OK : Gtk::Stock::APPLY, Gtk::RESPONSE_OK);
     _button_ok->set_use_stock(true);
     set_default_response(Gtk::RESPONSE_OK);
     _button_ok->grab_focus();
