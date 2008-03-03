@@ -212,7 +212,7 @@ persp3d_create_xml_element (SPDocument *document, Persp3D *dup) {// if dup is gi
         Proj::Pt2 proj_vp_x = Proj::Pt2 (0.0, sp_document_height(document)/2, 1.0);
         Proj::Pt2 proj_vp_y = Proj::Pt2 (  0.0,1000.0, 0.0);
         Proj::Pt2 proj_vp_z = Proj::Pt2 (sp_document_width(document), sp_document_height(document)/2, 1.0);
-        Proj::Pt2 proj_origin = Proj::Pt2 (sp_document_width(document)/2, sp_document_height(document)/2, 1.0);
+        Proj::Pt2 proj_origin = Proj::Pt2 (sp_document_width(document)/2, sp_document_height(document)/3, 1.0);
 
         gchar *str = NULL;
         str = proj_vp_x.coord_string();
