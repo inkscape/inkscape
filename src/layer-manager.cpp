@@ -283,7 +283,9 @@ void LayerManager::_rebuild() {
                     layersToAdd.insert(SP_GROUP(layer));
                 }
                 for ( std::set<SPGroup*>::iterator it = additional.begin(); it != additional.end(); ++it ) {
-                    layersToAdd.insert(*it);
+                    if ( !includes(*it) ) {
+                        layersToAdd.insert(*it);
+                    }
                 }
             }
         }
