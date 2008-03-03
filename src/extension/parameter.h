@@ -104,8 +104,8 @@ public:
     virtual Gtk::Widget * get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     gchar const * get_tooltip (void) { return _desc; }
 
-    void string (std::list <std::string> &list);
-    void string (std::string &string);
+    virtual void string (std::list <std::string> &list);
+    virtual void string (std::string &string);
 };
 
 }  /* namespace Extension */
