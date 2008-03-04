@@ -207,7 +207,7 @@ modules = \
 	text_flipcase.inx \
 	text_randomcase.inx \
 	text_replace.inx \
-	text_braille.inx \   
+	text_braille.inx \
 	txt2svg.inx \
 	whirl.inx \
 	wmf_input.inx \
