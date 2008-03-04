@@ -32,6 +32,7 @@
 #include "pixmaps/cursor-pencil.xpm"
 #include "display/bezier-utils.h"
 #include "display/canvas-bpath.h"
+#include "display/snap-indicator.h"
 #include <glibmm/i18n.h>
 #include "libnr/in-svg-plane.h"
 #include "libnr/n-art-bpath.h"
@@ -274,6 +275,8 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
     gint ret = FALSE;
     SPDesktop *const dt = pc->desktop;
 
+    dt->snapindicator->remove_snappoint();
+
     SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
     if (event_context->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
         // allow scrolling
@@ -322,7 +325,11 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                     p = anchor->dp;
                 } else if ((mevent.state & GDK_SHIFT_MASK) == 0) {
                     SnapManager const &m = dt->namedview->snap_manager;
-                    p = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p, NULL).getPoint();
+                    Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p, NULL);
+                    p = s.getPoint();
+                    if (s.getDistance() < NR_HUGE) {
+                        dt->snapindicator->set_new_snappoint(p.to_2geom());
+                    }
                 }
                 if ( pc->npoints != 0 ) { // buttonpress may have happened before we entered draw context!
                     spdc_add_freehand_point(pc, p, mevent.state);
