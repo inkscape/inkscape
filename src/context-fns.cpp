@@ -12,6 +12,7 @@
 #include "desktop-affine.h"
 #include "event-context.h"
 #include "sp-namedview.h"
+#include "display/snap-indicator.h"
 
 static const double midpt_1_goldenratio = (1 + goldenratio) / 2;
 static const double midpt_goldenratio_2 = (goldenratio + 2) / 2;
@@ -85,6 +86,7 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
     bool const control = state & GDK_CONTROL_MASK;
 
     SnapManager const &m = desktop->namedview->snap_manager;
+    Inkscape::SnappedPoint snappoint;
 
     if (control) {
 
@@ -140,17 +142,20 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
             if (s[0].getDistance() < s[1].getDistance()) {
                 p[0] = s[0].getPoint();
                 p[1] = 2 * center - s[0].getPoint();
+                snappoint = s[0];
             } else {
                 p[0] = 2 * center - s[1].getPoint();
                 p[1] = s[1].getPoint();
+                snappoint = s[1];
             }
 
         } else {
 
             /* Our origin is the opposite corner.  Snap the drag point along the constraint vector */
             p[0] = center;
-            p[1] = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, p[1],
-                                     Inkscape::Snapper::ConstraintLine(p[1] - p[0]), item).getPoint();
+            snappoint = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, p[1],
+                                          Inkscape::Snapper::ConstraintLine(p[1] - p[0]), item);
+            p[1] = snappoint.getPoint();
         }
 
     } else if (shift) {
@@ -170,16 +175,24 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
         if (s[0].getDistance() < s[1].getDistance()) {
             p[0] = s[0].getPoint();
             p[1] = 2 * center - s[0].getPoint();
+            snappoint = s[0];
         } else {
             p[0] = 2 * center - s[1].getPoint();
             p[1] = s[1].getPoint();
+            snappoint = s[1];
         }
 
     } else {
 
         /* There's no constraint on the corner point, so just snap it to anything */
         p[0] = center;
-        p[1] = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, pt, item).getPoint();
+        snappoint = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, pt, item);
+        p[1] = snappoint.getPoint();
+    }
+
+    if (snappoint.getDistance() < NR_HUGE) {
+    // this does not work well enough yet.
+//        desktop->snapindicator->set_new_snappoint(snappoint.getPoint().to_2geom());
     }
 
     p[0] = sp_desktop_dt2root_xy_point(desktop, p[0]);

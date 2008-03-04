@@ -23,6 +23,7 @@
 
 #include "macros.h"
 #include "display/sp-canvas.h"
+#include "display/snap-indicator.h"
 #include "sp-rect.h"
 #include "document.h"
 #include "sp-namedview.h"
@@ -283,6 +284,8 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
 
     event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
 
+    desktop->snapindicator->remove_snappoint();
+
     gint ret = FALSE;
     switch (event->type) {
     case GDK_BUTTON_PRESS:
@@ -305,8 +308,11 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
 
             /* Snap center */
             SnapManager const &m = desktop->namedview->snap_manager;
-            rc->center = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE,
-                                    button_dt, rc->item).getPoint();
+            Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, button_dt, rc->item);
+            rc->center = s.getPoint();
+            if (s.getDistance() < NR_HUGE) {
+                desktop->snapindicator->set_new_snappoint(s.getPoint().to_2geom());
+            }
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                 ( GDK_KEY_PRESS_MASK |
@@ -336,8 +342,12 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             NR::Point motion_dt(desktop->w2d(motion_w));
             
             SnapManager const &m = desktop->namedview->snap_manager;
-            motion_dt = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt, rc->item).getPoint();
-            
+            Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt, rc->item);
+            motion_dt = s.getPoint();
+            if (s.getDistance() < NR_HUGE) {
+                desktop->snapindicator->set_new_snappoint(s.getPoint().to_2geom());
+            }
+
             sp_rect_drag(*rc, motion_dt, event->motion.state);
             gobble_motion_events(GDK_BUTTON1_MASK);
             ret = TRUE;
