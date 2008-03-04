@@ -394,9 +394,11 @@ char *sp_guide_description(SPGuide const *guide)
     GString *position_string_x = SP_PX_TO_METRIC_STRING(guide->point_on_line[X], SP_ACTIVE_DESKTOP->namedview->getDefaultMetric());
     GString *position_string_y = SP_PX_TO_METRIC_STRING(guide->point_on_line[Y], SP_ACTIVE_DESKTOP->namedview->getDefaultMetric());
 
-    if ( guide->normal_to_line == component_vectors[X] ) {
+    if ( guide->normal_to_line ==  component_vectors[X] ||
+         guide->normal_to_line == -component_vectors[X]) {
         return g_strdup_printf(_("vertical, at %s"), position_string_x->str);
-    } else if ( guide->normal_to_line == component_vectors[Y] ) {
+    } else if ( guide->normal_to_line == component_vectors[Y] ||
+                guide->normal_to_line == -component_vectors[Y]) {
         return g_strdup_printf(_("horizontal, at %s"), position_string_y->str);
     } else {
         double const radians = guide->angle();
