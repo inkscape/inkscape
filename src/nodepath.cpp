@@ -52,6 +52,7 @@
 #include "live_effects/lpeobject.h"
 #include "live_effects/parameter/parameter.h"
 #include "util/mathfns.h"
+#include "display/snap-indicator.h"
 
 class NR::Matrix;
 
@@ -1099,6 +1100,7 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
     NR::Coord best = NR_HUGE;
     NR::Point delta(dx, dy);
     NR::Point best_pt = delta;
+    NR::Point best_abs(NR_HUGE, NR_HUGE);
 
     if (snap) {
         SnapManager const &m = nodepath->desktop->namedview->snap_manager;
@@ -1108,8 +1110,12 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
             Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta, SP_PATH(n->subpath->nodepath->item));
             if (s.getDistance() < best) {
                 best = s.getDistance();
-                best_pt = s.getPoint() - n->pos;
+                best_abs = s.getPoint();
+                best_pt = best_abs - n->pos;
             }
+        }
+        if (best_abs[NR::X] < NR_HUGE) {
+            nodepath->desktop->snapindicator->set_new_snappoint(best_abs.to_2geom());
         }
     }
 
@@ -3254,6 +3260,8 @@ node_request(SPKnot */*knot*/, NR::Point *p, guint state, gpointer data)
     NR::Point pr;
 
    Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
+
+    n->subpath->nodepath->desktop->snapindicator->remove_snappoint();
 
    // If either (Shift and some handle retracted), or (we're already dragging out a handle)
     if ( (!n->subpath->nodepath->straight_path) &&
