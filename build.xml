@@ -90,7 +90,7 @@
     <copy file="${src}/helper/sp-marshal.cpp.mingw"
           tofile="${src}/helper/sp-marshal.cpp"/>
     <makefile file="inkscape_version.h">
-        #define INKSCAPE_VERSION "${version}+devel"
+        #define INKSCAPE_VERSION "${version}"
     </makefile>
     <makefile file="config.h">
         #ifndef _CONFIG_H_
