@@ -449,15 +449,11 @@ else
 		fi
 	else
 		dnl Working lcms
-		LCMS_LIBS="-llcms "
+		LIBS="$LIBS $LCMS_LIBS"
+		AC_DEFINE(ENABLE_LCMS, 1, [Use LittleCms color management])
 	fi
 fi
 
-if test "x$lcms" = "xyes"; then
-	LIBS="$LIBS $LCMS_LIBS"
-	AC_DEFINE(ENABLE_LCMS, 1, [Use LittleCms color management])
-fi
-AM_CONDITIONAL(USE_LCMS, test "x$lcms" = "xyes")
 AC_SUBST(LCMS_CFLAGS)
 AC_SUBST(LCMS_LIBS)
 
