@@ -3528,7 +3528,7 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint /*state*/,
     NRPathcode const othercode = sp_node_path_code_from_side(n, opposite);
 
     SnapManager const &m = n->subpath->nodepath->desktop->namedview->snap_manager;
-
+    Inkscape::SnappedPoint s ;
     if (opposite->other && (n->type != Inkscape::NodePath::NODE_CUSP) && (othercode == NR_LINETO)) {
         /* We are smooth node adjacent with line */
         NR::Point const delta = *p - n->pos;
@@ -3540,9 +3540,13 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint /*state*/,
             NR::Coord const scal = dot(delta, ndelta) / linelen;
             (*p) = n->pos + (scal / linelen) * ndelta;
         }
-        *p = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, Inkscape::Snapper::ConstraintLine(*p, ndelta), n->subpath->nodepath->item).getPoint();
+        s = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, Inkscape::Snapper::ConstraintLine(*p, ndelta), n->subpath->nodepath->item);
     } else {
-        *p = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, n->subpath->nodepath->item).getPoint();
+        s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, n->subpath->nodepath->item);
+    }
+    *p = s.getPoint();
+    if (s.getDistance() < NR_HUGE) {
+        n->subpath->nodepath->desktop->snapindicator->set_new_snappoint((*p).to_2geom());
     }
 
     sp_node_adjust_handle(n, -which);
