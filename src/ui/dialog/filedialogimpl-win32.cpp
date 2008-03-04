@@ -110,6 +110,7 @@ FileDialogBaseWin32::FileDialogBaseWin32(Gtk::Window &parent,
 	_filter_count = 0;
 	
     _title = (wchar_t*)g_utf8_to_utf16(title, -1, NULL, NULL, NULL);
+	g_assert(_title != NULL);
 
     Glib::RefPtr<const Gdk::Window> parentWindow = parent.get_window();
     g_assert(parentWindow->gobj() != NULL);
@@ -118,7 +119,8 @@ FileDialogBaseWin32::FileDialogBaseWin32(Gtk::Window &parent,
 
 FileDialogBaseWin32::~FileDialogBaseWin32()
 {
-    g_free(_title);
+	if(_title != NULL)
+		g_free(_title);
 }
 
 Inkscape::Extension::Extension *FileDialogBaseWin32::getSelectionType()
@@ -164,6 +166,8 @@ FileOpenDialogImplWin32::FileOpenDialogImplWin32(Gtk::Window &parent,
     _preview_document_height = 0;
     _preview_image_width = 0;
     _preview_image_height = 0;
+	
+	_mutex = NULL;
 
     createFilterMenu();
 }
@@ -238,10 +242,10 @@ void FileOpenDialogImplWin32::createFilterMenu()
     }
 
     int extension_index = 0;
-    _extension_map = new Inkscape::Extension::Extension*[filter_count];
+    _extension_map = new Inkscape::Extension::Extension*[filter_count + 3];
 
     // Filter Image Files
-    all_image_files.name = g_utf8_to_utf16(_(all_image_files_filter_name),
+    all_image_files.name = g_utf8_to_utf16(all_image_files_filter_name,
         -1, NULL, &all_image_files.name_length, NULL);
     all_image_files.filter = g_utf8_to_utf16(all_image_files_filter.data(),
             -1, NULL, &all_image_files.filter_length, NULL);
@@ -249,7 +253,7 @@ void FileOpenDialogImplWin32::createFilterMenu()
     _extension_map[extension_index++] = NULL;
 
     // Filter Inkscape Files
-    all_inkscape_files.name = g_utf8_to_utf16(_(all_inkscape_files_filter_name),
+    all_inkscape_files.name = g_utf8_to_utf16(all_inkscape_files_filter_name,
         -1, NULL, &all_inkscape_files.name_length, NULL);
     all_inkscape_files.filter = g_utf8_to_utf16(all_inkscape_files_filter.data(),
             -1, NULL, &all_inkscape_files.filter_length, NULL);
@@ -257,7 +261,7 @@ void FileOpenDialogImplWin32::createFilterMenu()
     _extension_map[extension_index++] = NULL;
 
     // Filter All Files
-    all_files.name = g_utf8_to_utf16(_(all_files_filter_name),
+    all_files.name = g_utf8_to_utf16(all_files_filter_name,
         -1, NULL, &all_files.name_length, NULL);
     all_files.filter = NULL;
     all_files.filter_length = 0;
@@ -270,17 +274,16 @@ void FileOpenDialogImplWin32::createFilterMenu()
                     all_image_files.filter_length +
                     all_image_files.name_length + 3 + 1;
      // Add 3 for 2*2 \0s and a *, and 1 for a trailing \0
-
-
-    _filter = new wchar_t[filter_length];
+	 
+	_filter = new wchar_t[filter_length];
     wchar_t *filterptr = _filter;
-
+	
     for(list<Filter>::iterator filter_iterator = filter_list.begin();
         filter_iterator != filter_list.end(); filter_iterator++)
     {
         const Filter &filter = *filter_iterator;
 
-        memcpy(filterptr, filter.name, filter.name_length * 2);
+        wcsncpy(filterptr, (wchar_t*)filter.name, filter.name_length);
         filterptr += filter.name_length;
         g_free(filter.name);
 
@@ -289,7 +292,7 @@ void FileOpenDialogImplWin32::createFilterMenu()
 
         if(filter.filter != NULL)
         {
-            memcpy(filterptr, filter.filter, filter.filter_length * 2);
+            wcsncpy(filterptr, (wchar_t*)filter.filter, filter.filter_length);
             filterptr += filter.filter_length;
             g_free(filter.filter);
         }
@@ -300,9 +303,9 @@ void FileOpenDialogImplWin32::createFilterMenu()
         _extension_map[extension_index++] = filter.mod;
     }
     *(filterptr++) = L'\0';
-
+	
 	_filter_count = extension_index;
-    _filter_index = 2;	// Select the 2nd filter in the list - NOT the 3rd
+    _filter_index = 2;	// Select the 2nd filter in the list - 2 is NOT the 3rd
 }
 
 void FileOpenDialogImplWin32::GetOpenFileName_thread()
@@ -310,9 +313,11 @@ void FileOpenDialogImplWin32::GetOpenFileName_thread()
     OPENFILENAMEEXW ofn;
 
     g_assert(this != NULL);
+	g_assert(_mutex != NULL);
     
     WCHAR* current_directory_string = (WCHAR*)g_utf8_to_utf16(
-        _current_directory.data(), -1, NULL, NULL, NULL);
+        _current_directory.data(), _current_directory.length(),
+		NULL, NULL, NULL);
 
     memset(&ofn, 0, sizeof(ofn));
 
@@ -342,8 +347,6 @@ void FileOpenDialogImplWin32::GetOpenFileName_thread()
 	g_assert(ofn.nFilterIndex >= 1 && ofn.nFilterIndex <= _filter_count);
     _filter_index = ofn.nFilterIndex;
     _extension = _extension_map[ofn.nFilterIndex - 1];
-
-    myFilename = utf16_to_ustring(_path_string, _MAX_PATH);
 
     // Copy the selected file name, converting from UTF-16 to UTF-8
     myFilename = utf16_to_ustring(_path_string, _MAX_PATH);
@@ -434,7 +437,7 @@ UINT_PTR CALLBACK FileOpenDialogImplWin32::GetOpenFileName_hookproc(
                 pImpl->_file_dialog_wnd = hParentWnd;
 
                 pImpl->_preview_wnd =
-                    CreateWindow(PreviewWindowClassName, "",
+                    CreateWindowA(PreviewWindowClassName, "",
                         WS_CHILD | WS_VISIBLE,
                         0, 0, 100, 100, hParentWnd, NULL, hInstance, NULL);
                 SetWindowLongPtr(pImpl->_preview_wnd, GWLP_USERDATA, ofn->lCustData);
@@ -465,8 +468,6 @@ UINT_PTR CALLBACK FileOpenDialogImplWin32::GetOpenFileName_hookproc(
                     pImpl->_file_selected = true;
 
                     pImpl->_mutex->unlock();
-
-                    //pImpl->file_selected();
                 }
             }
             break;
@@ -558,7 +559,6 @@ LRESULT CALLBACK FileOpenDialogImplWin32::preview_wnd_proc(HWND hwnd, UINT uMsg,
 
             pImpl->_mutex->lock();
 
-            //FillRect(dc, &client_rect, (HBRUSH)(COLOR_HOTLIGHT+1));
             if(pImpl->_path_string[0] == 0)
             {
                 FillRect(dc, &rcClient, (HBRUSH)(COLOR_3DFACE + 1));
@@ -1317,14 +1317,14 @@ void FileSaveDialogImplWin32::createFilterMenu()
     {
         const Filter &filter = *filter_iterator;
 
-        memcpy(filterptr, filter.name, filter.name_length * 2);
+        wcsncpy(filterptr, (wchar_t*)filter.name, filter.name_length);
         filterptr += filter.name_length;
         g_free(filter.name);
 
         *(filterptr++) = L'\0';
         *(filterptr++) = L'*';
 
-        memcpy(filterptr, filter.filter, filter.filter_length * 2);
+        wcsncpy(filterptr, (wchar_t*)filter.filter, filter.filter_length);
         filterptr += filter.filter_length;
         g_free(filter.filter);
 
@@ -1346,8 +1346,9 @@ void FileSaveDialogImplWin32::GetSaveFileName_thread()
     g_assert(this != NULL);
     g_assert(_main_loop != NULL);
 
-    gunichar2* current_directory_string = g_utf8_to_utf16(
-        _current_directory.data(), -1, NULL, NULL, NULL);
+    WCHAR* current_directory_string = (WCHAR*)g_utf8_to_utf16(
+        _current_directory.data(), _current_directory.length(),
+		NULL, NULL, NULL);
 
     // Copy the selected file name, converting from UTF-8 to UTF-16
     memset(_path_string, 0, sizeof(_path_string));
@@ -1364,7 +1365,7 @@ void FileSaveDialogImplWin32::GetSaveFileName_thread()
     ofn.nFilterIndex = _filter_index;
     ofn.lpstrFileTitle = NULL;
     ofn.nMaxFileTitle = 0;
-    ofn.lpstrInitialDir = (wchar_t*)current_directory_string;
+    ofn.lpstrInitialDir = current_directory_string;
     ofn.lpstrTitle = _title;
     ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
     ofn.lpstrFilter = _filter;
@@ -1396,13 +1397,16 @@ FileSaveDialogImplWin32::show()
 
     _result = false;
     _main_loop = g_main_loop_new(g_main_context_default(), FALSE);
+	
+	if(_main_loop != NULL)
+	{
+	    if(Glib::Thread::create(sigc::mem_fun(*this, &FileSaveDialogImplWin32::GetSaveFileName_thread), true))
+	        g_main_loop_run(_main_loop);
 
-    if(Glib::Thread::create(sigc::mem_fun(*this, &FileSaveDialogImplWin32::GetSaveFileName_thread), true))
-        g_main_loop_run(_main_loop);
-
-    if(_result)
-        appendExtension(myFilename, (Inkscape::Extension::Output*)_extension);
-
+	    if(_result)
+	        appendExtension(myFilename, (Inkscape::Extension::Output*)_extension);
+	}
+	
     return _result;
 }
 
