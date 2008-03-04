@@ -119,8 +119,7 @@ FileDialogBaseWin32::FileDialogBaseWin32(Gtk::Window &parent,
 
 FileDialogBaseWin32::~FileDialogBaseWin32()
 {
-	if(_title != NULL)
-		g_free(_title);
+    g_free(_title);
 }
 
 Inkscape::Extension::Extension *FileDialogBaseWin32::getSelectionType()
