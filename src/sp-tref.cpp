@@ -353,10 +353,22 @@ static gchar *
 sp_tref_description(SPItem *item)
 {
     SPTRef *tref = SP_TREF(item);
-
+    
+    SPObject *referred = tref->getObjectReferredTo();
+    
     if (tref && tref->getObjectReferredTo()) {
-        char *child_desc = sp_item_description(SP_ITEM(tref->getObjectReferredTo()));
-        char *ret = g_strdup_printf(_("<b>Cloned character data</b> from: %s"), child_desc);
+        char *child_desc;
+        
+        if (SP_IS_ITEM(referred)) {
+            child_desc = sp_item_description(SP_ITEM(referred));
+        } else {
+            child_desc = "";
+        }
+
+        char *ret = g_strdup_printf(
+                _("<b>Cloned character data</b>%s%s"),
+                (SP_IS_ITEM(referred) ? _(" from ") : ""),
+                child_desc);
         g_free(child_desc);
         return ret;
     } else {
