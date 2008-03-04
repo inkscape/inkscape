@@ -43,6 +43,7 @@
 #include "snap.h"
 #include "sp-namedview.h"
 #include "selection-chemistry.h"
+#include "display/snap-indicator.h"
 
 
 #define GR_KNOT_COLOR_NORMAL 0xffffff00
@@ -551,6 +552,8 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
     // FIXME: take from prefs
     double snap_dist = SNAP_DIST / dragger->parent->desktop->current_zoom();
 
+    dragger->parent->desktop->snapindicator->remove_snappoint();
+
     if (state & GDK_SHIFT_MASK) {
         // with Shift; unsnap if we carry more than one draggable
         if (dragger->draggables && dragger->draggables->next) {
@@ -607,19 +610,29 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
         if (s.getDistance() < 1e6) {
             p = s.getPoint();
             sp_knot_moveto (knot, &p);
+            dragger->parent->desktop->snapindicator->set_new_snappoint(p.to_2geom());
         } else {
+            bool was_snapped = false;
+            Geom::Point snapped_to;
             // No snapping so far, let's see if we need to snap to any of the levels
             for (guint i = 0; i < dragger->parent->hor_levels.size(); i++) {
                 if (fabs(p[NR::Y] - dragger->parent->hor_levels[i]) < snap_dist) {
                     p[NR::Y] = dragger->parent->hor_levels[i];
+                    snapped_to = p.to_2geom();
+                    was_snapped = true;
                     sp_knot_moveto (knot, &p);
                 }
             }
             for (guint i = 0; i < dragger->parent->vert_levels.size(); i++) {
                 if (fabs(p[NR::X] - dragger->parent->vert_levels[i]) < snap_dist) {
                     p[NR::X] = dragger->parent->vert_levels[i];
+                    snapped_to = p.to_2geom();
+                    was_snapped = true;
                     sp_knot_moveto (knot, &p);
                 }
+            }
+            if (was_snapped) {
+                dragger->parent->desktop->snapindicator->set_new_snappoint(snapped_to);
             }
         }
     }
