@@ -372,6 +372,14 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
     if (!curve)
         return NULL;
 
+    // Prevent empty paths from being added to the document
+    // otherwise we end up with zomby markup in the SVG file
+    if(curve->end <= 0)
+    {
+        sp_curve_unref(curve);
+        return NULL;
+    }
+
     Inkscape::XML::Document *xml_doc = SP_OBJECT_REPR(item)->document();
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
     /* Transformation */
