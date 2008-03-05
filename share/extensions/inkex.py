@@ -119,7 +119,7 @@ class Effect:
         layerattr = self.document.xpath('//sodipodi:namedview/@inkscape:current-layer', namespaces=NSS)
         if layerattr:
             layername = layerattr[0]
-            layer = self.document.xpath('//g[@id="%s"]' % layername, namespaces=NSS)
+            layer = self.document.xpath('//svg:g[@id="%s"]' % layername, namespaces=NSS)
             if layer:
                 self.current_layer = layer[0]
 
