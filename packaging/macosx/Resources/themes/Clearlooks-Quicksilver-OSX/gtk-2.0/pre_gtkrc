@@ -56,6 +56,7 @@ style "clearlooks-default"
 	progressbarstyle	= 0		# 0 = candy bar, 1 = flat
 	}
 }
+	
 
 style "clearlooks-wide" = "clearlooks-default"
 {
@@ -96,6 +97,9 @@ style "clearlooks-menu-item" = "clearlooks-default"
 	ythickness = 3
 	fg[PRELIGHT] = "#ffffff"
 	text[PRELIGHT] = "#ffffff"
+	# We want PRELIGHT to be white for widgets, but coloured for the menu.
+	bg[PRELIGHT]		= OSX_MENU_COLOR_PLACEHOLDER
+
 }
 
 style "clearlooks-menu-itembar" = "clearlooks-default"

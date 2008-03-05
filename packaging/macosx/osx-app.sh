@@ -259,9 +259,7 @@ cp $LIBPREFIX/lib/pango/$pango_version/modules/*.so $pkglib/pango/$pango_version
 
 gtk_version=`pkg-config --variable=gtk_binary_version gtk+-2.0`
 mkdir -p $pkglib/gtk-2.0/$gtk_version/{engines,immodules,loaders}
-cp -r $LIBPREFIX/lib/gtk-2.0/$gtk_version/engines/* $pkglib/gtk-2.0/$gtk_version/engines/
-cp $LIBPREFIX/lib/gtk-2.0/$gtk_version/immodules/*.so $pkglib/gtk-2.0/$gtk_version/immodules/
-cp $LIBPREFIX/lib/gtk-2.0/$gtk_version/loaders/*.so $pkglib/gtk-2.0/$gtk_version/loaders/
+cp -r $LIBPREFIX/lib/gtk-2.0/$gtk_version/* $pkglib/gtk-2.0/$gtk_version/
 
 mkdir -p $pkglib/gnome-vfs-2.0/modules
 cp $LIBPREFIX/lib/gnome-vfs-2.0/modules/*.so $pkglib/gnome-vfs-2.0/modules/
