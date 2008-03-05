@@ -1747,7 +1747,8 @@ faster.
 The default for now is the strips mode.
 */
     if (bw < bh || bh < 2 * TILE_SIZE) {
-        int mid = (this_rect.x0 + this_rect.x1) / 2;
+        // to correctly calculate the mean of two ints, we need to sum them into a larger int type
+        int mid = ((long long) this_rect.x0 + (long long) this_rect.x1) / 2;
         // Make sure that mid lies on a tile boundary
         mid = (mid / TILE_SIZE) * TILE_SIZE;
 
@@ -1763,7 +1764,8 @@ The default for now is the strips mode.
                 && sp_canvas_paint_rect_internal(setup, lo);
         }
     } else {
-        int mid = (this_rect.y0 + this_rect.y1) / 2;
+        // to correctly calculate the mean of two ints, we need to sum them into a larger int type
+        int mid = ((long long) this_rect.y0 + (long long) this_rect.y1) / 2;
         // Make sure that mid lies on a tile boundary
         mid = (mid / TILE_SIZE) * TILE_SIZE;
 
