@@ -59,6 +59,7 @@ struct SPNodeContext {
  
     SPItem * flashed_item;
     Inkscape::Display::TemporaryItem * flash_tempitem;
+    int remove_flash_counter;
 };
 
 struct SPNodeContextClass {

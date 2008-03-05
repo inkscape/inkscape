@@ -104,6 +104,7 @@ sp_node_context_init(SPNodeContext *node_context)
 
     node_context->flash_tempitem = NULL;
     node_context->flashed_item = NULL;
+    node_context->remove_flash_counter = 0;
 }
 
 static void
@@ -203,12 +204,14 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
     gint ret = FALSE;
     SPNodeContext *nc = SP_NODE_CONTEXT(event_context);
 
+    nc->remove_flash_counter = 3; // for some reason root_handler is called twice after each item_handler...
     if (nc->flashed_item != item) {
         // we entered a new item
         nc->flashed_item = item;
         SPDesktop *desktop = event_context->desktop;
         if (nc->flash_tempitem) {
             desktop->remove_temporary_canvasitem(nc->flash_tempitem);
+            nc->flash_tempitem = NULL;
         }
 
         if (SP_IS_PATH(item)) {
@@ -217,11 +220,13 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
             SPCurve *flash_curve = sp_curve_copy(curve_new);
             sp_curve_transform(flash_curve, sp_item_i2d_affine(item) );
             SPCanvasItem * canvasitem = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), flash_curve);
+        // would be nice if its color could be XORed or something, now it is invisible for red stroked objects...
+        // unless we also flash the nodes...
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvasitem), 0xff0000ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
             sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(canvasitem), 0, SP_WIND_RULE_NONZERO);
             sp_canvas_item_show(canvasitem);
             sp_curve_unref(flash_curve);
-            nc->flash_tempitem = desktop->add_temporary_canvasitem (canvasitem, 1000);
+            nc->flash_tempitem = desktop->add_temporary_canvasitem (canvasitem, 600);
         }
     }
 
@@ -242,6 +247,14 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100); // read every time, to make prefs changes really live
     int const snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
     double const offset = prefs_get_double_attribute_limited("options.defaultscale", "value", 2, 0, 1000);
+
+    if ( (nc->flash_tempitem) && (nc->remove_flash_counter <= 0) ) {
+        desktop->remove_temporary_canvasitem(nc->flash_tempitem);
+        nc->flash_tempitem = NULL;
+        nc->flashed_item = NULL; // also reset this one, so the next time the same object is hovered over it shows again the highlight
+    } else {
+        nc->remove_flash_counter--;
+    }
 
     gint ret = FALSE;
     switch (event->type) {
