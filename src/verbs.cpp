@@ -81,6 +81,7 @@
 #include "shape-editor.h"
 #include "draw-context.h"
 #include "gradient-drag.h"
+#include "sp-guide.h"
 
 
 /**
@@ -962,6 +963,10 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
             } else {
                 sp_desktop_selection(dt)->clear();
             }
+            break;
+
+        case SP_VERB_EDIT_GUIDES_AROUND_PAGE:
+            sp_guide_create_guides_around_page(sp_desktop_document(dt));
             break;
 
         case SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER:
@@ -2231,6 +2236,8 @@ Verb *Verb::_base_verbs[] = {
                  N_("Select previous object or node"), NULL),
     new EditVerb(SP_VERB_EDIT_DESELECT, "EditDeselect", N_("D_eselect"),
                  N_("Deselect any selected objects or nodes"), "selection_deselect"),
+    new EditVerb(SP_VERB_EDIT_GUIDES_AROUND_PAGE, "EditGuidesAroundPage", N_("_Guides around page"),
+                 N_("Create four guides aligned with the page borders"), NULL),
     new EditVerb(SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER, "EditNextPathEffectParameter", N_("Next Path Effect Parameter"),
                  N_("Show next Path Effect parameter for editing"), "edit_next_parameter"),
 

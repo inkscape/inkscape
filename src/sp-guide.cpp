@@ -266,6 +266,25 @@ sp_guide_pt_pairs_to_guides(SPDocument *doc, std::list<std::pair<Geom::Point, Ge
     }
 }
 
+void
+sp_guide_create_guides_around_page(SPDocument *doc) {
+    std::list<std::pair<Geom::Point, Geom::Point> > pts;
+
+    Geom::Point A(0, 0);
+    Geom::Point C(sp_document_width(doc), sp_document_height(doc));
+    Geom::Point B(C[Geom::X], 0);
+    Geom::Point D(0, C[Geom::Y]);
+
+    pts.push_back(std::make_pair<Geom::Point, Geom::Point>(A, B));
+    pts.push_back(std::make_pair<Geom::Point, Geom::Point>(B, C));
+    pts.push_back(std::make_pair<Geom::Point, Geom::Point>(C, D));
+    pts.push_back(std::make_pair<Geom::Point, Geom::Point>(D, A));
+
+    sp_guide_pt_pairs_to_guides(doc, pts);
+
+    sp_document_done (doc, SP_VERB_NONE, _("Guides around page"));
+}
+
 void sp_guide_show(SPGuide *guide, SPCanvasGroup *group, GCallback handler)
 {
     SPCanvasItem *item = sp_guideline_new(group, guide->point_on_line, guide->normal_to_line.to_2geom());
