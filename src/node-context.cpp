@@ -36,6 +36,10 @@
 #include "splivarot.h"
 #include "shape-editor.h"
 
+// needed for flash nodepath upon mouseover:
+#include "display/canvas-bpath.h"
+#include "display/curve.h"
+
 static void sp_node_context_class_init(SPNodeContextClass *klass);
 static void sp_node_context_init(SPNodeContext *node_context);
 static void sp_node_context_dispose(GObject *object);
@@ -97,6 +101,9 @@ sp_node_context_init(SPNodeContext *node_context)
     node_context->rightctrl = FALSE;
     
     new (&node_context->sel_changed_connection) sigc::connection();
+
+    node_context->flash_tempitem = NULL;
+    node_context->flashed_item = NULL;
 }
 
 static void
@@ -194,6 +201,29 @@ static gint
 sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
 {
     gint ret = FALSE;
+    SPNodeContext *nc = SP_NODE_CONTEXT(event_context);
+
+    if (nc->flashed_item != item) {
+        // we entered a new item
+        nc->flashed_item = item;
+        SPDesktop *desktop = event_context->desktop;
+        if (nc->flash_tempitem) {
+            desktop->remove_temporary_canvasitem(nc->flash_tempitem);
+        }
+
+        if (SP_IS_PATH(item)) {
+        // This should be put somewhere else under the name of "generate helperpath" or something. Because basically this is copied of code from nodepath...
+            SPCurve *curve_new = sp_path_get_curve_for_edit(SP_PATH(item));
+            SPCurve *flash_curve = sp_curve_copy(curve_new);
+            sp_curve_transform(flash_curve, sp_item_i2d_affine(item) );
+            SPCanvasItem * canvasitem = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), flash_curve);
+            sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvasitem), 0xff0000ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+            sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(canvasitem), 0, SP_WIND_RULE_NONZERO);
+            sp_canvas_item_show(canvasitem);
+            sp_curve_unref(flash_curve);
+            nc->flash_tempitem = desktop->add_temporary_canvasitem (canvasitem, 1000);
+        }
+    }
 
     if (((SPEventContextClass *) parent_class)->item_handler)
         ret = ((SPEventContextClass *) parent_class)->item_handler(event_context, item, event);

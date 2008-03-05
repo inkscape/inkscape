@@ -14,6 +14,7 @@
 #include <sigc++/sigc++.h>
 #include "event-context.h"
 #include "forward.h"
+#include "display/display-forward.h"
 #include "nodepath.h"
 struct SPKnotHolder;
 namespace Inkscape { class Selection; }
@@ -52,9 +53,12 @@ struct SPNodeContext {
 
 	bool cursor_drag;
 
-      bool added_node;
+    bool added_node;
   
-      unsigned int current_state;
+    unsigned int current_state;
+ 
+    SPItem * flashed_item;
+    Inkscape::Display::TemporaryItem * flash_tempitem;
 };
 
 struct SPNodeContextClass {
