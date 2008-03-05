@@ -330,4 +330,5 @@
 ; LangString lng_No ${LANG_CATALAN} "No"
   LangString lng_No ${LANG_CATALAN} "No"
 
-; LangString lng_AlwaysNo ${LANG_CATALAN} "always answer No"  LangString lng_AlwaysNo ${LANG_CATALAN} "No a tot"
+; LangString lng_AlwaysNo ${LANG_CATALAN} "always answer No"
+  LangString lng_AlwaysNo ${LANG_CATALAN} "No a tot"
