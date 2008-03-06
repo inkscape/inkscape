@@ -57,7 +57,7 @@ class Dimension(pathmodifier.PathModifier):
 	marker.set('refX', '0.0')
 	marker.set('refY', '0.0')
 	marker.set('style', 'overflow:visible')
-	marker.set('inkscape:stockid', name)
+	marker.set(inkex.addNS('stockid','inkscape'), name)
 
 	arrow = inkex.etree.Element("path")
         arrow.set('d', 'M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z ')
