@@ -74,6 +74,9 @@
 #include "jabber_whiteboard/session-manager.h"
 #endif
 
+#ifdef WIN32
+#include <windows.h>
+#endif
 
 //#define INK_DUMP_FILENAME_CONV 1
 #undef INK_DUMP_FILENAME_CONV
@@ -388,7 +391,38 @@ sp_file_open_dialog(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
     if (!Inkscape::IO::file_test(open_path.c_str(),
               (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
         open_path = "";
-		
+
+#ifdef WIN32
+	//# If no open path, default to our win32 documents folder
+    if (open_path.empty())
+	{
+        // The path to the My Documents folder is read from the
+        // value "HKEY_CURRENT_USER\Software\Windows\CurrentVersion\
+        // Explorer\Shell Folders\Personal" 
+        HKEY key = NULL;
+        if(RegOpenKeyExA(HKEY_CURRENT_USER,
+            "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders",
+            0, KEY_QUERY_VALUE, &key) == ERROR_SUCCESS)
+        {
+            WCHAR utf16path[_MAX_PATH];
+            DWORD value_type;
+            DWORD data_size = sizeof(utf16path);
+            if(RegQueryValueExW(key, L"Personal", NULL, &value_type,
+                (BYTE*)utf16path, &data_size) == ERROR_SUCCESS)
+            {
+                g_assert(value_type == REG_SZ);
+                gchar *utf8path = g_utf16_to_utf8(
+                    (const gunichar2*)utf16path, -1, NULL, NULL, NULL);
+                if(utf8path)
+                {
+                    open_path = Glib::ustring(utf8path);
+                    g_free(utf8path);
+                }
+            }
+        }
+	}
+#endif
+    
     //# If no open path, default to our home directory
     if (open_path.empty())
     {
