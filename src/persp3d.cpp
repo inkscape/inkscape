@@ -237,6 +237,19 @@ persp3d_create_xml_element (SPDocument *document, Persp3D *dup) {// if dup is gi
     return (Persp3D *) sp_object_get_child_by_repr (SP_OBJECT(defs), repr);
 }
 
+Persp3D *
+persp3d_document_first_persp (SPDocument *document) {
+    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
+    Inkscape::XML::Node *repr;
+    for (SPObject *child = sp_object_first_child(defs); child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        repr = SP_OBJECT_REPR(child);
+        if (SP_IS_PERSP3D(child)) {
+            return SP_PERSP3D(child);
+        }
+    }
+    return NULL;
+}
+
 /**
  * Virtual write: write object attributes to repr.
  */

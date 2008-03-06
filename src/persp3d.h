@@ -90,6 +90,7 @@ bool persp3d_perspectives_coincide(const Persp3D *lhs, const Persp3D *rhs);
 void persp3d_absorb(Persp3D *persp1, Persp3D *persp2);
 
 Persp3D * persp3d_create_xml_element (SPDocument *document, Persp3D *dup = NULL);
+Persp3D * persp3d_document_first_persp (SPDocument *document);
 
 std::set<Persp3D *> persp3d_currently_selected_persps();
 bool persp3d_has_all_boxes_in_selection (Persp3D *persp);
