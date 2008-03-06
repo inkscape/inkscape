@@ -382,6 +382,14 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_node, _("Node"), iter_tools, PREFS_PAGE_TOOLS_NODE);
     AddSelcueCheckbox(_page_node, "tools.nodes", true);
     AddGradientCheckbox(_page_node, "tools.nodes", true);
+    _page_node.add_group_header( _("Path outline:"));
+    _t_node_pathoutline_color.init(_("Path outline color"), "tools.nodes", "highlight_color", 0xff0000ff);
+    _page_node.add_line( false, _("Path outline color"), _t_node_pathoutline_color, "", _("Selects the color used for showing the path outline."), false);
+    _t_node_pathflash_enabled.init ( _("Path outline flash on mouse-over"), "tools.nodes", "pathflash_enabled", false);
+    _page_node.add_line( true, "", _t_node_pathflash_enabled, "", _("When hovering over a path, briefly flash its outline."));
+    _t_node_pathflash_timeout.init("tools.nodes", "pathflash_timeout", 0, 10000.0, 100.0, 100.0, 1000.0, true, false);
+    _page_node.add_line( false, _("Flash time"), _t_node_pathflash_timeout, "ms", _("Specifies how long the path outline will be visible after a mouse-over (in milliseconds). Specify 0 to have the outline shown until mouse leaves the path."), false);
+
     //Tweak
     this->AddPage(_page_tweak, _("Tweak"), iter_tools, PREFS_PAGE_TOOLS_NODE);
     AddSelcueCheckbox(_page_tweak, "tools.tweak", true);

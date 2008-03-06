@@ -27,6 +27,7 @@ TemporaryItem::TemporaryItem(SPCanvasItem *item, guint lifetime)
     : canvasitem(item),
       timeout_id(0)
 {
+    // zero lifetime means stay forever, so do not add timeout event.
     if (lifetime > 0) {
         timeout_id = g_timeout_add(lifetime, &TemporaryItem::_timeout, this);
     }

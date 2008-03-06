@@ -204,29 +204,33 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
     gint ret = FALSE;
     SPNodeContext *nc = SP_NODE_CONTEXT(event_context);
 
-    nc->remove_flash_counter = 3; // for some reason root_handler is called twice after each item_handler...
-    if (nc->flashed_item != item) {
-        // we entered a new item
-        nc->flashed_item = item;
-        SPDesktop *desktop = event_context->desktop;
-        if (nc->flash_tempitem) {
-            desktop->remove_temporary_canvasitem(nc->flash_tempitem);
-            nc->flash_tempitem = NULL;
-        }
+    if (  prefs_get_int_attribute ("tools.nodes", "pathflash_enabled", 0) == 1  ) {
+        nc->remove_flash_counter = 3; // for some reason root_handler is called twice after each item_handler...
+        if (nc->flashed_item != item) {
+            // we entered a new item
+            nc->flashed_item = item;
+            SPDesktop *desktop = event_context->desktop;
+            if (nc->flash_tempitem) {
+                desktop->remove_temporary_canvasitem(nc->flash_tempitem);
+                nc->flash_tempitem = NULL;
+            }
 
-        if (SP_IS_PATH(item)) {
-        // This should be put somewhere else under the name of "generate helperpath" or something. Because basically this is copied of code from nodepath...
-            SPCurve *curve_new = sp_path_get_curve_for_edit(SP_PATH(item));
-            SPCurve *flash_curve = sp_curve_copy(curve_new);
-            sp_curve_transform(flash_curve, sp_item_i2d_affine(item) );
-            SPCanvasItem * canvasitem = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), flash_curve);
-        // would be nice if its color could be XORed or something, now it is invisible for red stroked objects...
-        // unless we also flash the nodes...
-            sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvasitem), 0xff0000ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-            sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(canvasitem), 0, SP_WIND_RULE_NONZERO);
-            sp_canvas_item_show(canvasitem);
-            sp_curve_unref(flash_curve);
-            nc->flash_tempitem = desktop->add_temporary_canvasitem (canvasitem, 600);
+            if (SP_IS_PATH(item)) {
+            // This should be put somewhere else under the name of "generate helperpath" or something. Because basically this is copied of code from nodepath...
+                SPCurve *curve_new = sp_path_get_curve_for_edit(SP_PATH(item));
+                SPCurve *flash_curve = sp_curve_copy(curve_new);
+                sp_curve_transform(flash_curve, sp_item_i2d_affine(item) );
+                SPCanvasItem * canvasitem = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), flash_curve);
+            // would be nice if its color could be XORed or something, now it is invisible for red stroked objects...
+            // unless we also flash the nodes...
+                guint32 color = prefs_get_int_attribute("tools.nodes", "highlight_color", 0xff0000ff);
+                sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvasitem), color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+                sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(canvasitem), 0, SP_WIND_RULE_NONZERO);
+                sp_canvas_item_show(canvasitem);
+                sp_curve_unref(flash_curve);
+                guint timeout = prefs_get_int_attribute("tools.nodes", "pathflash_timeout", 500);
+                nc->flash_tempitem = desktop->add_temporary_canvasitem (canvasitem, timeout);
+            }
         }
     }
 

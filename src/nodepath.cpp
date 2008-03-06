@@ -202,7 +202,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     np->local_change = 0;
     np->show_handles = show_handles;
     np->helper_path = NULL;
-    np->helperpath_rgba = 0xff0000ff;
+    np->helperpath_rgba = prefs_get_int_attribute("tools.nodes", "highlight_color", 0xff0000ff);
     np->helperpath_width = 1.0;
     np->curve = sp_curve_copy(curve);
     np->show_helperpath = prefs_get_int_attribute ("tools.nodes", "show_helperpath",  0) == 1;
