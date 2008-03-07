@@ -2008,7 +2008,7 @@ static unsigned int prop[] =
 /**
  * Look for comments in ucd.h
  */
-#include "ucd.h"
+#include "charclass.h"
 
 
 
