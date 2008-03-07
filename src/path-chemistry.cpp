@@ -53,29 +53,11 @@ void
 sp_selected_path_combine(void)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    GSList *items = (GSList *) selection->itemList();
-
-    if (g_slist_length(items) < 2) {
+    
+    if (g_slist_length((GSList *) selection->itemList()) < 2) {
         sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>at least two objects</b> to combine."));
         return;
-    }
-
-    for (GSList *i = items; i != NULL; i = i->next) {
-        SPItem *item = (SPItem *) i->data;
-        if (!SP_IS_SHAPE(item) && !SP_IS_TEXT(item)) {
-            sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("At least one of the objects is <b>not a path</b>, cannot combine."));
-            return;
-        }
-    }
-
-    Inkscape::XML::Node *parent = SP_OBJECT_REPR((SPItem *) items->data)->parent();
-    for (GSList *i = items; i != NULL; i = i->next) {
-        if ( SP_OBJECT_REPR((SPItem *) i->data)->parent() != parent ) {
-            sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("You cannot combine objects from <b>different groups</b> or <b>layers</b>."));
-            return;
-        }
     }
 
     desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Combining paths..."));
@@ -84,26 +66,41 @@ sp_selected_path_combine(void)
 
     sp_selected_path_to_curves0(FALSE, 0);
 
-    items = g_slist_copy((GSList *) selection->itemList());
+    GSList *items = g_slist_copy((GSList *) selection->itemList());
     items = g_slist_sort(items, (GCompareFunc) sp_item_repr_compare_position);
-    selection->clear();
+    items = g_slist_reverse(items);
 
-    // remember the position of the topmost object
-    gint topmost = (SP_OBJECT_REPR((SPItem *) g_slist_last(items)->data))->position();
-
-    // remember the id of the bottomost object
-    char const *id = SP_OBJECT_REPR((SPItem *) items->data)->attribute("id");
-
-    // FIXME: merge styles of combined objects instead of using the first one's style
-    gchar *style = g_strdup(SP_OBJECT_REPR((SPItem *) items->data)->attribute("style"));
+    // remember the position, id and style of the topmost path, they will be assigned to the combined one
+    gint position = 0;
+    char const *id = NULL;
+    gchar *style = NULL;
 
     GString *dstring = g_string_new("");
-    for (GSList *i = items; i != NULL; i = i->next) {
+    bool did = false;
+    SPItem *first = NULL;
+    Inkscape::XML::Node *parent = NULL; 
 
-        SPPath *path = (SPPath *) i->data;
-        SPCurve *c = sp_shape_get_curve(SP_SHAPE(path));
+    for (GSList *i = items; i != NULL; i = i->next) {  // going from top to bottom
 
-        NArtBpath *abp = nr_artpath_affine(SP_CURVE_BPATH(c), SP_ITEM(path)->transform);
+        SPItem *item = (SPItem *) i->data;
+        if (!SP_IS_PATH(item))
+            continue;
+        did = true;
+
+        NArtBpath *abp = NULL;
+        SPCurve *c = sp_shape_get_curve(SP_SHAPE(item));
+        if (first == NULL) {  // this is the topmost path
+            first = item;
+            parent = SP_OBJECT_REPR(first)->parent();
+            position = SP_OBJECT_REPR(first)->position();
+            id = SP_OBJECT_REPR(first)->attribute("id");
+            // FIXME: merge styles of combined objects instead of using the first one's style
+            style = g_strdup(SP_OBJECT_REPR(first)->attribute("style"));
+            abp = nr_artpath_affine(SP_CURVE_BPATH(c), item->transform);
+        } else {
+            abp = nr_artpath_affine(SP_CURVE_BPATH(c), 
+                                               item->getRelativeTransform(SP_OBJECT(first)));
+        }
         sp_curve_unref(c);
         gchar *str = sp_svg_write_path(abp);
         g_free(abp);
@@ -111,46 +108,55 @@ sp_selected_path_combine(void)
         dstring = g_string_append(dstring, str);
         g_free(str);
 
-        // if this is the bottommost object,
-        if (!strcmp(SP_OBJECT_REPR(path)->attribute("id"), id)) {
-            // delete it so that its clones don't get alerted; this object will be restored shortly, with the same id
-            SP_OBJECT(path)->deleteObject(false);
-        } else {
+        // unless this is the topmost object,
+        if (item != first) {
+            // reduce position only if the same parent
+            if (SP_OBJECT_REPR(item)->parent() == parent)
+                position--;
             // delete the object for real, so that its clones can take appropriate action
-            SP_OBJECT(path)->deleteObject();
+            SP_OBJECT(item)->deleteObject();
         }
-
-        topmost--;
     }
 
     g_slist_free(items);
 
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
-    Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
+    if (did) {
+        selection->clear();
 
-    // restore id
-    repr->setAttribute("id", id);
+        // delete the topmost one so that its clones don't get alerted; this object will be
+        // restored shortly, with the same id
+        SP_OBJECT(first)->deleteObject(false);
 
-    repr->setAttribute("style", style);
-    g_free(style);
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+        Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
-    repr->setAttribute("d", dstring->str);
-    g_string_free(dstring, TRUE);
+        // restore id
+        repr->setAttribute("id", id);
 
-    // add the new group to the group members' common parent
-    parent->appendChild(repr);
+        repr->setAttribute("style", style);
+        g_free(style);
 
-    // move to the position of the topmost, reduced by the number of deleted items
-    repr->setPosition(topmost > 0 ? topmost + 1 : 0);
+        repr->setAttribute("d", dstring->str);
+        g_string_free(dstring, TRUE);
 
-    desktop->clearWaitingCursor();
+        // add the new group to the parent of the topmost
+        parent->appendChild(repr);
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_COMBINE, 
+        // move to the position of the topmost, reduced by the number of deleted items
+        repr->setPosition(position > 0 ? position : 0);
+
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_COMBINE, 
                          _("Combine"));
 
-    selection->set(repr);
+        selection->set(repr);
 
-    Inkscape::GC::release(repr);
+        Inkscape::GC::release(repr);
+
+    } else {
+        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to combine in the selection."));
+    }
+
+    desktop->clearWaitingCursor();
 }
 
 void
@@ -249,7 +255,6 @@ sp_selected_path_break_apart(void)
                          _("Break apart"));
     } else {
         sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to break apart in the selection."));
-        return;
     }
 }
 
