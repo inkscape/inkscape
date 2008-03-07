@@ -652,7 +652,7 @@ clonetiler_get_transform (
         NR::Matrix dia3;
         NR::Matrix dia4;
         if (w > h) {
-            ori = NR::Matrix(NR::translate (w * pow((i/6) + 1/2 * (j%2), shiftx_exp) + dx,  (w * cos30) * pow(j, shifty_exp) + dy));
+            ori = NR::Matrix(NR::translate (w * pow((i/6) + 0.5*(j%2), shiftx_exp) + dx,  (w * cos30) * pow(j, shifty_exp) + dy));
             dia1 = NR::Matrix (NR::translate (0, h/2) * NR::translate (w/2, 0) * NR::translate (w/2 * cos60, -w/2 * sin60) * NR::translate (-h/2 * cos30, -h/2 * sin30) );
             dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, h * sin30));
             dia3 = dia2 * NR::Matrix (NR::translate (0, 2 * (w/2 * sin60 - h/2 * sin30)));
@@ -664,17 +664,17 @@ clonetiler_get_transform (
             dia3 = dia2 * NR::Matrix (NR::translate (0, h/2));
             dia4 = dia3 * NR::Matrix (NR::translate (-h * cos30, h * sin30));
         }
-        if (x % 6 == 0) {
+        if (i % 6 == 0) {
             return d_s_r * ori;
-        } else if (x % 6 == 1) {
+        } else if (i % 6 == 1) {
             return d_s_r * flip_y * rotate_m120_c * dia1 * ori;
-        } else if (x % 6 == 2) {
+        } else if (i % 6 == 2) {
             return d_s_r * rotate_m120_c * dia2 * ori;
-        } else if (x % 6 == 3) {
+        } else if (i % 6 == 3) {
             return d_s_r * flip_y * rotate_120_c * dia3 * ori;
-        } else if (x % 6 == 4) {
+        } else if (i % 6 == 4) {
             return d_s_r * rotate_120_c * dia4 * ori;
-        } else if (x % 6 == 5) {
+        } else if (i % 6 == 5) {
             return d_s_r * flip_y * NR::translate(0, h) * ori;
         }
     }
@@ -703,18 +703,18 @@ clonetiler_get_transform (
             dia3 = dia2 * NR::Matrix (NR::translate (0, h/2));
             dia4 = dia3 * NR::Matrix (NR::translate (-h * cos30, h * sin30));
         }
-        NR::Matrix ori (NR::translate (width * pow((2*(i/6) + j%2), shiftx_exp) + dx,  (height/2) * pow(i, shifty_exp) + dy));
-        if (x % 6 == 0) {
+        NR::Matrix ori (NR::translate (width * pow((2*(i/6) + j%2), shiftx_exp) + dx,  (height/2) * pow(j, shifty_exp) + dy));
+        if (i % 6 == 0) {
             return d_s_r * ori;
-        } else if (x % 6 == 1) {
+        } else if (i % 6 == 1) {
             return d_s_r * flip_y * rotate_m120_c * dia1 * ori;
-        } else if (x % 6 == 2) {
+        } else if (i % 6 == 2) {
             return d_s_r * rotate_m120_c * dia2 * ori;
-        } else if (x % 6 == 3) {
+        } else if (i % 6 == 3) {
             return d_s_r * flip_y * rotate_120_c * dia3 * ori;
-        } else if (x % 6 == 4) {
+        } else if (i % 6 == 4) {
             return d_s_r * rotate_120_c * dia4 * ori;
-        } else if (x % 6 == 5) {
+        } else if (i % 6 == 5) {
             return d_s_r * flip_y * NR::translate(0, h) * ori;
         }
     }
@@ -743,17 +743,17 @@ clonetiler_get_transform (
             dia4 = dia3 * dia1.inverse();
             dia5 = dia3 * dia2.inverse();
         }
-        if (x % 6 == 0) {
+        if (i % 6 == 0) {
             return d_s_r * ori;
-        } else if (x % 6 == 1) {
+        } else if (i % 6 == 1) {
             return d_s_r * rotate_m60_c * dia1 * ori;
-        } else if (x % 6 == 2) {
+        } else if (i % 6 == 2) {
             return d_s_r * rotate_m120_c * dia2 * ori;
-        } else if (x % 6 == 3) {
+        } else if (i % 6 == 3) {
             return d_s_r * rotate_180_c * dia3 * ori;
-        } else if (x % 6 == 4) {
+        } else if (i % 6 == 4) {
             return d_s_r * rotate_120_c * dia4 * ori;
-        } else if (x % 6 == 5) {
+        } else if (i % 6 == 5) {
             return d_s_r * rotate_60_c * dia5 * ori;
         }
     }
@@ -789,29 +789,29 @@ clonetiler_get_transform (
             dia9 = dia6 * dia3.inverse();
             dia10 = dia6 * dia4.inverse();
         }
-        if (x % 12 == 0) {
+        if (i % 12 == 0) {
             return d_s_r * ori;
-        } else if (x % 12 == 1) {
+        } else if (i % 12 == 1) {
             return d_s_r * flip_y * rotate_m60_c * dia1 * ori;
-        } else if (x % 12 == 2) {
+        } else if (i % 12 == 2) {
             return d_s_r * rotate_m60_c * dia2 * ori;
-        } else if (x % 12 == 3) {
+        } else if (i % 12 == 3) {
             return d_s_r * flip_y * rotate_m120_c * dia3 * ori;
-        } else if (x % 12 == 4) {
+        } else if (i % 12 == 4) {
             return d_s_r * rotate_m120_c * dia4 * ori;
-        } else if (x % 12 == 5) {
+        } else if (i % 12 == 5) {
             return d_s_r * flip_x * dia5 * ori;
-        } else if (x % 12 == 6) {
+        } else if (i % 12 == 6) {
             return d_s_r * flip_x * flip_y * dia6 * ori;
-        } else if (x % 12 == 7) {
+        } else if (i % 12 == 7) {
             return d_s_r * flip_y * rotate_120_c * dia7 * ori;
-        } else if (x % 12 == 8) {
+        } else if (i % 12 == 8) {
             return d_s_r * rotate_120_c * dia8 * ori;
-        } else if (x % 12 == 9) {
+        } else if (i % 12 == 9) {
             return d_s_r * flip_y * rotate_60_c * dia9 * ori;
-        } else if (x % 12 == 10) {
+        } else if (i % 12 == 10) {
             return d_s_r * rotate_60_c * dia10 * ori;
-        } else if (x % 12 == 11) {
+        } else if (i % 12 == 11) {
             return d_s_r * flip_y * NR::translate (0, h) * ori;
         }
     }
