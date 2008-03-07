@@ -777,7 +777,7 @@ clonetiler_get_transform (
             dia9 = dia6 * dia3.inverse();
             dia10 = dia6 * dia4.inverse();
         } else {
-            ori = NR::Matrix(NR::translate (4*h * cos30 * pow((i/12 + 0.5*(j%2)), shiftx_exp) + dx,  (2*h  + 2*h * sin30) * pow(y, shifty_exp) + dy));
+            ori = NR::Matrix(NR::translate (4*h * cos30 * pow((i/12 + 0.5*(j%2)), shiftx_exp) + dx,  (2*h  + 2*h * sin30) * pow(j, shifty_exp) + dy));
             dia1 = NR::Matrix (NR::translate (-w/2, -h/2) * NR::translate (h/2 * cos30, -h/2 * sin30) * NR::translate (w/2 * cos60, w/2 * sin60));
             dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, -h * sin30));
             dia3 = dia2 * NR::Matrix (NR::translate (-w/2 * cos60, -w/2 * sin60) * NR::translate (h * cos30, 0) * NR::translate (-w/2 * cos60, w/2 * sin60));
