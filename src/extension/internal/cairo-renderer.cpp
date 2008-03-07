@@ -485,6 +485,11 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
 
 static void sp_item_invoke_render(SPItem *item, CairoRenderContext *ctx)
 {
+    // Check item's visibility
+    if (item->isHidden()) {
+        return;
+    }
+
     SPStyle* style = SP_OBJECT_STYLE (item);
     if((ctx->getFilterToBitmap() == TRUE) && (style->filter.set != 0)) {
         return sp_asbitmap_render(item, ctx);
