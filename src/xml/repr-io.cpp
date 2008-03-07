@@ -395,10 +395,10 @@ sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns)
                 root = NULL;
                 break;
             }
-        } else if ( node->type == XML_COMMENT_NODE ) {
-            Node *comment=sp_repr_svg_read_node(rdoc, node, default_ns, prefix_map);
-            rdoc->appendChild(comment);
-            Inkscape::GC::release(comment);
+        } else if ( node->type == XML_COMMENT_NODE || node->type == XML_PI_NODE ) {
+            Node *repr=sp_repr_svg_read_node(rdoc, node, default_ns, prefix_map);
+            rdoc->appendChild(repr);
+            Inkscape::GC::release(repr);
         }
     }
 
@@ -462,6 +462,9 @@ sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_
 
     if (node->type == XML_COMMENT_NODE)
         return xml_doc->createComment((const gchar *)node->content);
+
+    if (node->type == XML_PI_NODE)
+        return xml_doc->createPI((const gchar *)node->name, (const gchar *)node->content);
 
     if (node->type == XML_ENTITY_DECL) return NULL;
 
@@ -717,6 +720,8 @@ sp_repr_write_stream (Node *repr, Writer &out, gint indent_level,
         repr_quote_write (out, repr->content());
     } else if (repr->type() == Inkscape::XML::COMMENT_NODE) {
         out.printf( "<!--%s-->", repr->content() );
+    } else if (repr->type() == Inkscape::XML::PI_NODE) {
+        out.printf( "<?%s %s?>", repr->name(), repr->content() );
     } else if (repr->type() == Inkscape::XML::ELEMENT_NODE) {
         sp_repr_write_stream_element(repr, out, indent_level, add_whitespace, elide_prefix, repr->attributeList(), inlineattrs, indent);
     } else {

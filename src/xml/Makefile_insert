@@ -26,6 +26,7 @@ xml_libspxml_a_SOURCES =	\
 	xml/log-builder.h	\
 	xml/node-fns.cpp	\
 	xml/node-fns.h	\
+	xml/pi-node.h	\
 	xml/repr-io.cpp	\
 	xml/repr-sorting.cpp    \
 	xml/repr-sorting.h      \

@@ -772,7 +772,7 @@ void propagate_tree_select(Inkscape::XML::Node *repr)
         sp_xmlview_attr_list_set_repr(attributes, NULL);
     }
 
-    if (repr && ( repr->type() == Inkscape::XML::TEXT_NODE || repr->type() == Inkscape::XML::COMMENT_NODE ) ) {
+    if (repr && ( repr->type() == Inkscape::XML::TEXT_NODE || repr->type() == Inkscape::XML::COMMENT_NODE || repr->type() == Inkscape::XML::PI_NODE ) ) {
         sp_xmlview_content_set_repr(content, repr);
     } else {
         sp_xmlview_content_set_repr(content, NULL);
@@ -986,7 +986,7 @@ void on_tree_select_row_show_if_text(GtkCTree *tree, GtkCTreeNode *node,
 {
     Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(SP_XMLVIEW_TREE(tree), node);
 
-    if ( repr->type() == Inkscape::XML::TEXT_NODE || repr->type() == Inkscape::XML::COMMENT_NODE ) {
+    if ( repr->type() == Inkscape::XML::TEXT_NODE || repr->type() == Inkscape::XML::COMMENT_NODE || repr->type() == Inkscape::XML::PI_NODE ) {
         gtk_widget_show(GTK_WIDGET(data));
     } else {
         gtk_widget_hide(GTK_WIDGET(data));

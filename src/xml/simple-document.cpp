@@ -19,6 +19,7 @@
 #include "xml/element-node.h"
 #include "xml/text-node.h"
 #include "xml/comment-node.h"
+#include "xml/pi-node.h"
 
 namespace Inkscape {
 
@@ -63,6 +64,10 @@ Node *SimpleDocument::createTextNode(char const *content) {
 
 Node *SimpleDocument::createComment(char const *content) {
     return new CommentNode(Util::share_string(content));
+}
+
+Node *SimpleDocument::createPI(char const *target, char const *content) {
+    return new PINode(g_quark_from_string(target), Util::share_string(content));
 }
 
 void SimpleDocument::notifyChildAdded(Node &parent,

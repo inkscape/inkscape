@@ -31,7 +31,8 @@ enum NodeType {
     DOCUMENT_NODE,
     ELEMENT_NODE,
     TEXT_NODE,
-    COMMENT_NODE
+    COMMENT_NODE,
+    PI_NODE
 };
 
 // careful; GC::Anchored should only appear once in the inheritance

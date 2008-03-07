@@ -37,6 +37,7 @@ public:
     virtual Node *createElement(char const *name)=0;
     virtual Node *createTextNode(char const *content)=0;
     virtual Node *createComment(char const *content)=0;
+    virtual Node *createPI(char const *target, char const *content)=0;
 };
 
 }

@@ -41,6 +41,7 @@ static void element_order_changed (Inkscape::XML::Node * repr, Inkscape::XML::No
 
 static void text_content_changed (Inkscape::XML::Node * repr, const gchar * old_content, const gchar * new_content, gpointer data);
 static void comment_content_changed (Inkscape::XML::Node * repr, const gchar * old_content, const gchar * new_content, gpointer data);
+static void pi_content_changed (Inkscape::XML::Node * repr, const gchar * old_content, const gchar * new_content, gpointer data);
 
 static void tree_move (GtkCTree * tree, GtkCTreeNode * node, GtkCTreeNode * new_parent, GtkCTreeNode * new_sibling);
 
@@ -73,6 +74,14 @@ static const Inkscape::XML::NodeEventVector comment_repr_events = {
         NULL, /* child_removed */
         NULL, /* attr_changed */
         comment_content_changed,
+        NULL  /* order_changed */
+};
+
+static const Inkscape::XML::NodeEventVector pi_repr_events = {
+        NULL, /* child_added */
+        NULL, /* child_removed */
+        NULL, /* attr_changed */
+        pi_content_changed,
         NULL  /* order_changed */
 };
 
@@ -191,6 +200,8 @@ add_node (SPXMLViewTree * tree, GtkCTreeNode * parent, GtkCTreeNode * before, In
 		vec = &text_repr_events;
 	} else if ( repr->type() == Inkscape::XML::COMMENT_NODE ) {
 		vec = &comment_repr_events;
+	} else if ( repr->type() == Inkscape::XML::PI_NODE ) {
+		vec = &pi_repr_events;
 	} else if ( repr->type() == Inkscape::XML::ELEMENT_NODE ) {
 		vec = &element_repr_events;
 	} else {
@@ -329,6 +340,20 @@ comment_content_changed (Inkscape::XML::Node *repr, const gchar * old_content, c
 	g_free (label);
 }
 
+void
+pi_content_changed(Inkscape::XML::Node *repr, const gchar * old_content, const gchar *new_content, gpointer ptr)
+{
+	NodeData *data;
+	gchar *label;
+
+	data = (NodeData *) ptr;
+
+	if (data->tree->blocked) return;
+
+	label = g_strdup_printf ("<?%s %s?>", repr->name(), new_content);
+	gtk_ctree_node_set_text (GTK_CTREE (data->tree), data->node, 0, label);
+	g_free (label);
+}
 void
 tree_move (GtkCTree * tree, GtkCTreeNode * node, GtkCTreeNode * new_parent, GtkCTreeNode * new_sibling)
 {

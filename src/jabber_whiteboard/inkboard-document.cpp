@@ -33,6 +33,7 @@
 #include "xml/element-node.h"
 #include "xml/text-node.h"
 #include "xml/comment-node.h"
+#include "xml/pi-node.h"
 
 #include "util/share.h"
 #include "util/ucompose.hpp"
@@ -361,6 +362,13 @@ InkboardDocument::createComment(char const* content)
 {
     return new XML::CommentNode(Util::share_string(content));
 }
+
+XML::Node*
+InkboardDocument::createPI(char const *target, char const* content)
+{
+    return new XML::PINode(g_quark_from_string(target), Util::share_string(content));
+}
+
 
 
 void InkboardDocument::notifyChildAdded(XML::Node &parent,

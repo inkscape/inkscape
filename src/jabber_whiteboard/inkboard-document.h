@@ -84,6 +84,7 @@ public:
     XML::Node* createElement(char const* name);
     XML::Node* createTextNode(char const* content);
     XML::Node* createComment(char const* content);
+    XML::Node* createPI(char const *target, char const* content);
 
     //
     // XML::NodeObserver methods

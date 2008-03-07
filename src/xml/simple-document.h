@@ -49,6 +49,7 @@ public:
     Node *createElement(char const *name);
     Node *createTextNode(char const *content);
     Node *createComment(char const *content);
+    Node *createPI(char const *target, char const *content);
 
     void notifyChildAdded(Node &parent, Node &child, Node *prev);
 
