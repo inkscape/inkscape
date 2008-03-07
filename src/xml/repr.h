@@ -20,6 +20,7 @@
 #include "xml/node.h"
 #include "xml/document.h"
 #include "xml/sp-css-attr.h"
+#include "io/inkscapestream.h"
 
 #include <2geom/point.h>
 
@@ -177,6 +178,9 @@ inline Inkscape::XML::Node *sp_repr_next(Inkscape::XML::Node *repr) {
 
 Inkscape::XML::Document *sp_repr_read_file(gchar const *filename, gchar const *default_ns);
 Inkscape::XML::Document *sp_repr_read_mem(gchar const *buffer, int length, gchar const *default_ns);
+void sp_repr_write_stream (Inkscape::XML::Node *repr, Inkscape::IO::Writer &out,
+                 gint indent_level,  bool add_whitespace, Glib::QueryQuark elide_prefix,
+				 int inlineattrs, int indent);
 void sp_repr_save_stream(Inkscape::XML::Document *doc, FILE *to_file, gchar const *default_ns=NULL, bool compress = false);
 bool sp_repr_save_file(Inkscape::XML::Document *doc, gchar const *filename, gchar const *default_ns=NULL);
 

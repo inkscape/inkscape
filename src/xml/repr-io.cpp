@@ -42,7 +42,6 @@ Document *sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns);
 static Node *sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_ns, GHashTable *prefix_map);
 static gint sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, const gchar *default_ns, GHashTable *prefix_map);
 static void sp_repr_write_stream_root_element (Node *repr, Writer &out, bool add_whitespace, gchar const *default_ns, int inlineattrs, int indent);
-static void sp_repr_write_stream (Node *repr, Writer &out, gint indent_level, bool add_whitespace, Glib::QueryQuark elide_prefix, int inlineattrs, int indent);
 static void sp_repr_write_stream_element (Node *repr, Writer &out, gint indent_level, bool add_whitespace, Glib::QueryQuark elide_prefix, List<AttributeRecord const> attributes, int inlineattrs, int indent);
 
 #ifdef HAVE_LIBWMF
