@@ -270,7 +270,7 @@ DOMString URI::getNativePath() const
     if (pathStr.size() >= 3)
         {
         if (pathStr[0] == '/' &&
-            isLetter(pathStr[1]) &&
+            uni_is_letter(pathStr[1]) &&
             pathStr[2] == ':')
             firstChar++;
          }
@@ -766,7 +766,7 @@ int URI::parseHierarchicalPart(int p0)
 
     //# Are we absolute?
     ch = peek(p);
-    if (isLetter(ch) && peek(p+1)==':')
+    if (uni_is_letter(ch) && peek(p+1)==':')
         {
         absolute = true;
         path.push_back((XMLCh)'/');

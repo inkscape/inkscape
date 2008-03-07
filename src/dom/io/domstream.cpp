@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2006 Bob Jamison
+ * Copyright (C) 2006-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -598,7 +598,7 @@ DOMString BasicReader::readWord()
     while (available() > 0)
         {
         XMLCh ch = get();
-        if (isWhitespace(ch))
+        if (uni_is_space(ch))
             break;
         str.push_back(ch);
         }

@@ -187,7 +187,7 @@ int XPathParser::skipwhite(int p0)
     while (p < parselen)
         {
         int ch = peek(p);
-        if (!isWhitespace(ch))
+        if (!uni_is_space(ch))
             break;
         ch = get(p++);
         }
@@ -200,7 +200,7 @@ int XPathParser::getword(int p0, DOMString &str)
     while (p < parselen)
         {
         int ch = peek(p);
-        if (!isLetterOrDigit(ch))
+        if (!uni_is_letter_or_digit(ch))
             break;
         ch = get(p++);
         str.push_back((XMLCh)ch);
@@ -270,7 +270,7 @@ int XPathParser::getNumber(int p0, double &dresult)
                 return p0;
             seen_eminus = true;
             }
-        else if (!isDigit(ch))
+        else if (!uni_is_digit(ch))
             break;
         num.push_back((XMLCh)ch);
         i++;
@@ -344,7 +344,7 @@ int XPathParser::getNCName(int p0, DOMString &result)
 {
     int p = p0;
     int ch = peek(p);
-    if (ch != '_' && !isLetter(ch))
+    if (ch != '_' && !uni_is_letter(ch))
         return p0;
 
     result.push_back((XMLCh)ch);
@@ -352,9 +352,9 @@ int XPathParser::getNCName(int p0, DOMString &result)
     while (p < parselen)
         {
         ch = peek(p);
-        if (   isLetterOrDigit(ch) ||
-               isCombiningChar(ch) ||
-               isExtender(ch)      ||
+        if (   uni_is_letter_or_digit(ch) ||
+               // isCombiningChar(ch) ||
+               // isExtender(ch)      ||
                ch == '.' || ch == '-' || ch == '_' )
            {
            result.push_back((XMLCh)ch);

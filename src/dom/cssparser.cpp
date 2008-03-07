@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005-2007 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -192,7 +192,7 @@ int CssParser::skipwhite(int p)
             return -1;
             }
         }
-    else if (!isWhitespace(get(p)))
+    else if (!uni_is_space(get(p)))
         break;
     else
         p++;
@@ -207,7 +207,7 @@ int CssParser::skipwhite(int p)
 int CssParser::getWord(int p, DOMString &result)
 {
     XMLCh ch = get(p);
-    if (!isLetter(ch))
+    if (!uni_is_letter(ch))
         return p;
     DOMString str;
     str.push_back(ch);
@@ -216,7 +216,7 @@ int CssParser::getWord(int p, DOMString &result)
     while (p < parselen)
         {
         ch = get(p);
-        if (isLetterOrDigit(ch) || ch=='-' || ch=='_')
+        if (uni_is_letter_or_digit(ch) || ch=='-' || ch=='_')
             {
             str.push_back(ch);
             p++;
@@ -901,7 +901,7 @@ int CssParser::getSimpleSelector(int p0)
     //######################
 
     //#Element name 0 or 1
-    if (isLetter(ch))
+    if (uni_is_letter(ch))
         {
         p2 = getWord(p, str);
         if (p2<0)
@@ -994,7 +994,7 @@ int CssParser::getSimpleSelector(int p0)
                 {
                 p = skipwhite(p);
                 ch = get(p);
-                if (isLetter(ch))
+                if (uni_is_letter(ch))
                     {
                     p2 = getWord(p, str);
                     if (p2<0)
@@ -1052,7 +1052,7 @@ int CssParser::getSimpleSelector(int p0)
                 p++;
                 p = skipwhite(p);
                 ch = get(p);
-                if (isLetter(ch))
+                if (uni_is_letter(ch))
                     {
                     p2 = getWord(p, str);
                     if (p2<0)
@@ -1101,7 +1101,7 @@ int CssParser::getDeclaration(int p0, CSSStyleDeclaration &declarationList)
     //## PROPERTY
     p = skipwhite(p);
     XMLCh ch = get(p);
-    if (!isLetter(ch))
+    if (!uni_is_letter(ch))
         return p0; //not me
     DOMString propName;
     int p2 = getWord(p, propName);
@@ -1351,7 +1351,7 @@ int CssParser::getTerm(int p0)
             unitType = CSSPrimitiveValue::CSS_KHZ;
             p+=2;
             }
-        else if (isLetter(get(p)))//some other string
+        else if (uni_is_letter(get(p)))//some other string
             {
             DOMString suffix;
             p2 = getWord(p, suffix);
@@ -1417,7 +1417,7 @@ int CssParser::getTerm(int p0)
 
     //## IDENT
     ch = get(p);
-    if (isLetter(ch))
+    if (uni_is_letter(ch))
         {
         p2 = getWord(p, str);
         if (p2<0)

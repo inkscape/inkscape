@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -150,7 +150,7 @@ int SvgParser::skipwhite(int p)
             return -1;
             }
         }
-    else if (!isWhitespace(get(p)))
+    else if (!uni_is_space(get(p)))
         break;
     else
         p++;
@@ -165,7 +165,7 @@ int SvgParser::skipwhite(int p)
 int SvgParser::getWord(int p, DOMString &result)
 {
     XMLCh ch = get(p);
-    if (!isLetter(ch))
+    if (!uni_is_letter(ch))
         return p;
     DOMString str;
     str.push_back(ch);
@@ -174,7 +174,7 @@ int SvgParser::getWord(int p, DOMString &result)
     while (p < parselen)
         {
         ch = get(p);
-        if (isLetterOrDigit(ch) || ch=='-' || ch=='_')
+        if (uni_is_letter_or_digit(ch) || ch=='-' || ch=='_')
             {
             str.push_back(ch);
             p++;
