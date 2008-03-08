@@ -139,7 +139,6 @@ CFLAGS = -Wall -g -DXP_WIN
 LIBS = -lws2_32
 
 DOMOBJ = \
-charclass.o       \
 cssparser.o       \
 domimpl.o         \
 domptr.o          \
@@ -164,6 +163,7 @@ io/socket.o       \
 odf/odfdocument.o \
 svg/svgimpl.o     \
 svg/svgparser.o   \
+ucd.o             \
 util/thread.o     \
 util/ziptool.o
 

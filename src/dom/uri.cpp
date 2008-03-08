@@ -31,7 +31,7 @@
 
 
 #include "uri.h"
-#include "charclass.h"
+#include "ucd.h"
 
 #include <stdio.h>
 #include <stdarg.h>

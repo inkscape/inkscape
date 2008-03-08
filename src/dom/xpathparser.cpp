@@ -28,7 +28,7 @@
  */
 
 
-#include "charclass.h"
+#include "ucd.h"
 #include "xpathparser.h"
 
 

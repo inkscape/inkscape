@@ -30,7 +30,7 @@
 
 
 #include "xmlreader.h"
-#include "charclass.h"
+#include "ucd.h"
 #include "domimpl.h"
 
 #include <stdio.h>

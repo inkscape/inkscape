@@ -1,12 +1,7 @@
-#ifndef __CHARCLASS_H__
-#define __CHARCLASS_H__
 /**
  *
- * Phoebe DOM Implementation.
+ * NGP Packrat Parser Generator
  *
- * This is a C++ approximation of the W3C DOM model, which follows
- * fairly closely the specifications in the various .idl files, copies of
- * which are provided for reference.  Most important is this one:
  *
  * Authors:
  *   Bob Jamison
@@ -28,6 +23,9 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
+#ifndef __UCD_H__
+#define __UCD_H__
+
 
 
 /**
@@ -146,8 +144,32 @@ int uni_is_letter_or_digit(int ch);
  */
 int uni_is_space(int ch);
 
+/**
+ * Convert the given codepoint to its lower case mapping.
+ * If there is none, return the codepoint.
+ * @param ch the Unicode codepoint to convert
+ * @return the converted codepoint
+ */
+int uni_to_lower(int ch);
+
+/**
+ * Convert the given codepoint to its upper case mapping.
+ * If there is none, return the codepoint.
+ * @param ch the Unicode codepoint to convert
+ * @return the converted codepoint
+ */
+int uni_to_upper(int ch);
+
+/**
+ * Convert the given codepoint to its title case mapping.
+ * If there is none, return the codepoint.
+ * @param ch the Unicode codepoint to convert
+ * @return the converted codepoint
+ */
+int uni_to_title(int ch);
 
 
-#endif /* __CHARCLASS_H__ */
+
+#endif /* __UCD_H__ */
 
            
