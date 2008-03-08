@@ -151,6 +151,7 @@ EXTRA_DIST = \
 	packaging/macosx/ScriptExec/ScriptExec.xcodeproj/project.pbxproj \
 	packaging/win32/inkscape.nsi	\
 	packaging/win32/inkscape.nsi.uninstall	\
+	packaging/win32/breton.nsh	\
 	packaging/win32/catalan.nsh	\
 	packaging/win32/czech.nsh	\
 	packaging/win32/english.nsh	\
