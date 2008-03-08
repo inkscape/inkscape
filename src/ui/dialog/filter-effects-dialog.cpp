@@ -2116,15 +2116,16 @@ FilterEffectsDialog::FilterEffectsDialog()
     hpaned->pack1(_filter_modifier);
     hpaned->pack2(_primitive_box);
     _primitive_box.pack_start(*sw_prims);
-    _primitive_box.pack_start(*infobox,false, false);
     _primitive_box.pack_start(*hb_prims, false, false);
+    _primitive_box.pack_start(*infobox,false, false);
     sw_prims->add(_primitive_list);
     infobox->pack_start(_infobox_icon, false, false);
     infobox->pack_start(_infobox_desc, false, false);
     _infobox_desc.set_line_wrap(true);
+    _infobox_desc.set_size_request(200, -1);
 
-    hb_prims->pack_end(_add_primitive_type, false, false);
-    hb_prims->pack_end(_add_primitive, false, false);
+    hb_prims->pack_start(_add_primitive, false, false);
+    hb_prims->pack_start(_add_primitive_type, false, false);
     _getContents()->pack_start(_settings_tabs, false, false);
     _settings_tabs.append_page(_settings_tab1, _("Effect parameters"));
     _settings_tabs.append_page(_settings_tab2, _("Filter General Settings"));
