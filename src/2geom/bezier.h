@@ -173,7 +173,8 @@ public:
         Coord d_[order()+1];
         unsigned nn = n_derivs;
         if(nn > order())
-            nn = order();
+            //nn = order();
+            nn = order()+1;
         for(unsigned i = 0; i < size(); i++)
             d_[i] = c_[i];
         for(unsigned di = 0; di < nn; di++) {
@@ -262,7 +263,8 @@ inline std::vector<Point> bezier_points(const D2<Bezier > & a) {
 }
 
 inline Bezier derivative(const Bezier & a) {
-    if(a.order() == 1) return Bezier(0.0);
+    //if(a.order() == 1) return Bezier(0.0);
+    if(a.order() == 1) return Bezier(a.c_[1]-a.c_[0]);
     Bezier der(Bezier::Order(a.order()-1));
     
     for(unsigned i = 0; i < a.order(); i++) {

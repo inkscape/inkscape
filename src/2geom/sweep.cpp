@@ -82,6 +82,7 @@ std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> a, std::vecto
             open[n].push_back(ix);
         }
         i[n]++;
+	if(i[n]>=events[n].size()) {break;}
         n = (events[!n][i[!n]] < events[n][i[n]]) ? !n : n;
     }
     return pairs;

@@ -236,11 +236,7 @@ public:
         return new BezierCurve<order-1>(Geom::derivative(inner[X]), Geom::derivative(inner[Y]));
      else if (order == 1) {
         double dx = inner[X][1] - inner[X][0], dy = inner[Y][1] - inner[Y][0];
-        if(dx == 0) return new BezierCurve<1>(Point(0,0), Point(0,0));
-        double slope = dy / dx;
-        Geom::Point pnt;
-        if(slope == 0) pnt = Geom::Point(0, 0); else pnt = Geom::Point(slope, 1./slope);
-        return new BezierCurve<1>(pnt, pnt);
+        return new BezierCurve<1>(Point(dx,dy),Point(dx,dy));
      }
   }
 
