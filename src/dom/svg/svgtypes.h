@@ -1799,7 +1799,7 @@ public:
     /**
      *
      */
-    virtual void setValueInSpecifiedUnits( double val )
+    virtual void setValueInSpecifiedUnits( double /*val*/ )
                                            throw (DOMException)
         {
         //fill this in
@@ -1820,7 +1820,7 @@ public:
     /**
      *
      */
-    virtual void setValueAsString( const DOMString& val )
+    virtual void setValueAsString( const DOMString& /*val*/ )
                                    throw (DOMException)
         {
         }
@@ -1829,14 +1829,14 @@ public:
     /**
      *
      */
-    virtual void newValueSpecifiedUnits ( unsigned short unitType, double val )
+    virtual void newValueSpecifiedUnits ( unsigned short /*unitType*/, double /*val*/ )
         {
         }
 
     /**
      *
      */
-    virtual void convertToSpecifiedUnits ( unsigned short unitType )
+    virtual void convertToSpecifiedUnits ( unsigned short /*unitType*/ )
         {
         }
 
@@ -2221,7 +2221,7 @@ public:
     /**
      *
      */
-    virtual void setValueInSpecifiedUnits(double val)
+    virtual void setValueInSpecifiedUnits(double /*val*/)
                                      throw (DOMException)
         {
         //do conversion
@@ -2242,7 +2242,7 @@ public:
     /**
      *
      */
-    virtual void setValueAsString(const DOMString &val)
+    virtual void setValueAsString(const DOMString &/*val*/)
                                   throw (DOMException)
         {
         //convert here
@@ -2252,8 +2252,8 @@ public:
     /**
      *
      */
-    virtual void newValueSpecifiedUnits (unsigned short unitType,
-                                 double valueInSpecifiedUnits )
+    virtual void newValueSpecifiedUnits (unsigned short /*unitType*/,
+                                         double /*valueInSpecifiedUnits*/ )
         {
         //convert here
         }
@@ -2261,7 +2261,7 @@ public:
     /**
      *
      */
-    virtual void convertToSpecifiedUnits (unsigned short unitType )
+    virtual void convertToSpecifiedUnits (unsigned short /*unitType*/ )
         {
         //convert here
         }
@@ -2498,7 +2498,7 @@ public:
     /**
      *
      */
-    virtual void setRGBColor (const DOMString& rgbColor )
+    virtual void setRGBColor (const DOMString& /*rgbColor*/ )
                               throw( SVGException )
         {
         }
@@ -2506,8 +2506,8 @@ public:
     /**
      *
      */
-    virtual void setRGBColorICCColor (const DOMString& rgbColor,
-                                      const DOMString& iccColor )
+    virtual void setRGBColorICCColor (const DOMString& /*rgbColor*/,
+                                      const DOMString& /*iccColor*/ )
                                       throw( SVGException )
         {
         }
@@ -2515,9 +2515,9 @@ public:
     /**
      *
      */
-    virtual void setColor (unsigned short colorType,
-                           const DOMString& rgbColor,
-                           const DOMString& iccColor )
+    virtual void setColor (unsigned short /*colorType*/,
+                           const DOMString& /*rgbColor*/,
+                           const DOMString& /*iccColor*/ )
                            throw( SVGException )
         {
         }
@@ -2781,7 +2781,7 @@ public:
     /**
      *
      */
-    virtual SVGPoint matrixTransform(const SVGMatrix &matrix)
+    virtual SVGPoint matrixTransform(const SVGMatrix &/*matrix*/)
         {
         SVGPoint point;
         return point;
@@ -3041,7 +3041,7 @@ public:
     /**
      *
      */
-    virtual css::CSSValue getPresentationAttribute (const DOMString& name )
+    virtual css::CSSValue getPresentationAttribute (const DOMString& /*name*/ )
         {
         css::CSSValue val;
         //perform a lookup
@@ -3136,7 +3136,7 @@ public:
     /**
      *
      */
-    virtual SVGMatrix getTransformToElement (const SVGElement &element)
+    virtual SVGMatrix getTransformToElement (const SVGElement &/*element*/)
                     throw( SVGException )
         {
         SVGMatrix result;
@@ -3158,7 +3158,7 @@ public:
     /**
      *
      */
-    SVGLocatable(const SVGLocatable &other)
+    SVGLocatable(const SVGLocatable &/*other*/)
         {
         }
 
@@ -3274,7 +3274,7 @@ public:
     /**
      *
      */
-    virtual bool hasExtension (const DOMString& extension )
+    virtual bool hasExtension (const DOMString& /*extension*/ )
         {
         return false;
         }
@@ -6209,7 +6209,7 @@ public:
     /**
      *
      */
-    SVGAnimatedPathData(const SVGAnimatedPathData &other)
+   SVGAnimatedPathData(const SVGAnimatedPathData &/*other*/)
         {
         }
 
@@ -6337,8 +6337,8 @@ public:
      */
     virtual void setPaint (unsigned short paintTypeArg,
                            const DOMString& uriArg,
-                           const DOMString& rgbColor,
-                           const DOMString& iccColor )
+                           const DOMString& /*rgbColor*/,
+                           const DOMString& /*iccColor*/ )
                            throw( SVGException )
         {
         paintType = paintTypeArg;
@@ -6829,7 +6829,7 @@ public:
      *        SVGElementInstanceList SVGElementInstance::getChildNodes()
      *
      */
-    static SVGElementInstanceList getChildNodes(const SVGElementInstance &instance)
+    static SVGElementInstanceList getChildNodes(const SVGElementInstance &/*instance*/)
         {
         SVGElementInstanceList list;
         return list;

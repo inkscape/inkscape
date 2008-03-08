@@ -286,7 +286,7 @@ public:
     /**
      *
      */
-    virtual unsigned long insertRule(const DOMString &ruleStr,
+    virtual unsigned long insertRule(const DOMString &/*ruleStr*/,
                                      unsigned long index)
                                      throw (dom::DOMException)
         {
@@ -427,8 +427,8 @@ protected:
 class CSSStyleDeclarationEntry
 {
 public:
-    CSSStyleDeclarationEntry(const DOMString &nameArg, 
-                             const DOMString &valueArg, 
+    CSSStyleDeclarationEntry(const DOMString &nameArg,
+                             const DOMString &valueArg,
                              const DOMString &prioArg)
     {
         name  = nameArg;
@@ -484,7 +484,7 @@ public:
     /**
      *
      */
-    virtual CSSValue getPropertyCSSValue(const DOMString &propertyName)
+    virtual CSSValue getPropertyCSSValue(const DOMString &/*propertyName*/)
         {
         CSSValue value;
         return value;
@@ -586,7 +586,7 @@ public:
     /**
      *
      */
-    CSSStyleDeclaration(const CSSStyleDeclaration &other)
+    CSSStyleDeclaration(const CSSStyleDeclaration &/*other*/)
         {
         }
 
@@ -710,7 +710,7 @@ public:
     /**
      *
      */
-    virtual unsigned long insertRule(const DOMString &ruleStr,
+    virtual unsigned long insertRule(const DOMString &/*ruleStr*/,
                                      unsigned long index)
                                      throw (dom::DOMException)
         {
@@ -1204,7 +1204,7 @@ public:
     /**
      *
      */
-    virtual double getFloatValue(unsigned short unitType)
+    virtual double getFloatValue(unsigned short /*unitType*/)
                                 throw (dom::DOMException)
         {
         return doubleValue;
@@ -1213,7 +1213,7 @@ public:
     /**
      *
      */
-    virtual void setStringValue(unsigned short stringType,
+    virtual void setStringValue(unsigned short /*stringType*/,
                                 const DOMString &stringValueArg)
                                 throw (dom::DOMException)
         {
@@ -1326,12 +1326,12 @@ public:
     /**
      * REPLACES: RGBColor CSSPrimitiveValue::getRGBColorValue() throw (dom::DOMException)
      */
-    static RGBColor getRGBColorValue(const CSSPrimitiveValue &val)
+    static RGBColor getRGBColorValue(const CSSPrimitiveValue &/*val*/)
         {
         RGBColor col;
         return col;
         }
-        
+
     //##################
     //# Non-API methods
     //##################
@@ -1412,7 +1412,7 @@ public:
     /**
      * REPLACES: Rect CSSPrimitiveValue::getRectValue() throw (dom::DOMException)
      */
-    static Rect getRectValue(const CSSPrimitiveValue &val)
+    static Rect getRectValue(const CSSPrimitiveValue &/*val*/)
         {
         Rect rect;
         return rect;
@@ -1494,7 +1494,7 @@ public:
     /**
      * REPLACES: Counter CSSPrimitiveValue::getCounterValue() throw (dom::DOMException)
      */
-    static Counter getCounterValue(const CSSPrimitiveValue &val)
+    static Counter getCounterValue(const CSSPrimitiveValue &/*val*/)
         {
         Counter counter;
         return counter;
@@ -3971,8 +3971,8 @@ public:
     /**
      *
      */
-    virtual CSSStyleDeclaration getComputedStyle(const Element &elt,
-                                                 const DOMString &pseudoElt)
+    virtual CSSStyleDeclaration getComputedStyle(const Element &/*elt*/,
+                                                 const DOMString &/*pseudoElt*/)
         {
         CSSStyleDeclaration style;
         return style;
@@ -4020,8 +4020,8 @@ public:
     /**
      *
      */
-    virtual CSSStyleDeclaration getOverrideStyle(const Element *elt,
-                                                  const DOMString &pseudoElt)
+    virtual CSSStyleDeclaration getOverrideStyle(const Element */*elt*/,
+                                                 const DOMString &/*pseudoElt*/)
         {
         CSSStyleDeclaration style;
         return style;
@@ -4070,8 +4070,8 @@ public:
     /**
      *
      */
-    virtual CSSStyleSheet createCSSStyleSheet(const DOMString &title,
-                                               const DOMString &media)
+    virtual CSSStyleSheet createCSSStyleSheet(const DOMString &/*title*/,
+                                              const DOMString &/*media*/)
                                                throw (dom::DOMException)
         {
         CSSStyleSheet sheet;
@@ -4090,7 +4090,7 @@ public:
     /**
      *
      */
-    DOMImplementationCSS(const DOMImplementationCSS &other) 
+    DOMImplementationCSS(const DOMImplementationCSS &other)
                          : DOMImplementation(other)
        {
        }

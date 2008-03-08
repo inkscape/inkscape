@@ -324,7 +324,7 @@ public:
     /**
      *
      */
-    virtual void handleEvent(const Event &evt)
+    virtual void handleEvent(const Event &/*evt*/)
         {}
 
     //##################
@@ -545,7 +545,7 @@ public:
     /**
      *
      */
-    virtual Event createEvent(const DOMString &eventType)
+    virtual Event createEvent(const DOMString &/*eventType*/)
                                throw (dom::DOMException)
         {
         Event event;
@@ -555,8 +555,8 @@ public:
     /**
      *
      */
-    virtual bool canDispatch(const DOMString &namespaceURI,
-                             const DOMString &type)
+    virtual bool canDispatch(const DOMString &/*namespaceURI*/,
+                             const DOMString &/*type*/)
         {
         return dispatchable;
         }
@@ -605,8 +605,8 @@ public:
     /**
      *
      */
-    virtual void setDispatchState(const EventTarget *target,
-                                  unsigned short phase)
+    virtual void setDispatchState(const EventTarget */*target*/,
+                                  unsigned short /*phase*/)
         {
         }
 
@@ -688,23 +688,23 @@ public:
     /**
      *  Note that views.idl and events.idl disagree on the name of Views
      */
-    virtual void initUIEvent(const DOMString &typeArg,
-                             bool canBubbleArg,
-                             bool cancelableArg,
-                             const views::View *viewArg,
-                             long detailArg)
+    virtual void initUIEvent(const DOMString &/*typeArg*/,
+                             bool /*canBubbleArg*/,
+                             bool /*cancelableArg*/,
+                             const views::View */*viewArg*/,
+                             long /*detailArg*/)
         {
         }
 
     /**
      *  Note that views.idl and events.idl disagree on the name of Views
      */
-    virtual void initUIEventNS(const DOMString &namespaceURI,
-                             const DOMString &typeArg,
-                             bool canBubbleArg,
-                             bool cancelableArg,
-                             const views::View *viewArg,
-                             long detailArg)
+    virtual void initUIEventNS(const DOMString &/*namespaceURI*/,
+                               const DOMString &/*typeArg*/,
+                               bool /*canBubbleArg*/,
+                               bool /*cancelableArg*/,
+                               const views::View */*viewArg*/,
+                               long /*detailArg*/)
         {
         }
 
@@ -760,23 +760,23 @@ public:
     /**
      *  Note that views.idl and events.idl disagree on the name of Views
      */
-    virtual void initTextEvent(const DOMString &typeArg,
-                             bool canBubbleArg,
-                             bool cancelableArg,
-                             const views::View *viewArg,
-                             long detailArg)
+    virtual void initTextEvent(const DOMString &/*typeArg*/,
+                               bool /*canBubbleArg*/,
+                               bool /*cancelableArg*/,
+                               const views::View */*viewArg*/,
+                               long /*detailArg*/)
         {
         }
 
     /**
      *
      */
-    virtual void initTextEventNS(const DOMString &namespaceURI,
-                             const DOMString &typeArg,
-                             bool canBubbleArg,
-                             bool cancelableArg,
-                             const views::View *viewArg,
-                             long detailArg)
+    virtual void initTextEventNS(const DOMString &/*namespaceURI*/,
+                                 const DOMString &/*typeArg*/,
+                                 bool /*canBubbleArg*/,
+                                 bool /*cancelableArg*/,
+                                 const views::View */*viewArg*/,
+                                 long /*detailArg*/)
         {
         }
 
@@ -896,21 +896,21 @@ public:
     /**
      *
      */
-    virtual void initMouseEvent(const DOMString &typeArg,
-                                bool canBubbleArg,
-                                bool cancelableArg,
-                                const views::View *viewArg,
-                                long detailArg,
-                                long screenXArg,
-                                long screenYArg,
-                                long clientXArg,
-                                long clientYArg,
-                                bool ctrlKeyArg,
-                                bool altKeyArg,
-                                bool shiftKeyArg,
-                                bool metaKeyArg,
-                                unsigned short buttonArg,
-                                const EventTarget *relatedTargetArg)
+    virtual void initMouseEvent(const DOMString &/*typeArg*/,
+                                bool /*canBubbleArg*/,
+                                bool /*cancelableArg*/,
+                                const views::View */*viewArg*/,
+                                long /*detailArg*/,
+                                long /*screenXArg*/,
+                                long /*screenYArg*/,
+                                long /*clientXArg*/,
+                                long /*clientYArg*/,
+                                bool /*ctrlKeyArg*/,
+                                bool /*altKeyArg*/,
+                                bool /*shiftKeyArg*/,
+                                bool /*metaKeyArg*/,
+                                unsigned short /*buttonArg*/,
+                                const EventTarget */*relatedTargetArg*/)
         {
         }
 
@@ -918,19 +918,19 @@ public:
     /**
      *
      */
-    virtual void initMouseEventNS(const DOMString &namespaceURI,
-                                const DOMString &typeArg,
-                                bool canBubbleArg,
-                                bool cancelableArg,
-                                const views::View *viewArg,
-                                long detailArg,
-                                long screenXArg,
-                                long screenYArg,
-                                long clientXArg,
-                                long clientYArg,
-                                unsigned short buttonArg,
-                                const EventTarget *relatedTargetArg,
-                                const DOMString &modifiersList)
+    virtual void initMouseEventNS(const DOMString &/*namespaceURI*/,
+                                  const DOMString &/*typeArg*/,
+                                  bool /*canBubbleArg*/,
+                                  bool /*cancelableArg*/,
+                                  const views::View */*viewArg*/,
+                                  long /*detailArg*/,
+                                  long /*screenXArg*/,
+                                  long /*screenYArg*/,
+                                  long /*clientXArg*/,
+                                  long /*clientYArg*/,
+                                  unsigned short /*buttonArg*/,
+                                  const EventTarget */*relatedTargetArg*/,
+                                  const DOMString &/*modifiersList*/)
         {
         }
 
@@ -1050,13 +1050,13 @@ public:
     /**
      *
      */
-    virtual void initKeyboardEvent(const DOMString &typeArg,
-                                bool canBubbleArg,
-                                bool cancelableArg,
-                                const views::View *viewArg,
-                                const DOMString &keyIdentifier,
-                                unsigned long keyLocation,
-                                const DOMString modifiersList)
+    virtual void initKeyboardEvent(const DOMString &/*typeArg*/,
+                                   bool /*canBubbleArg*/,
+                                   bool /*cancelableArg*/,
+                                   const views::View */*viewArg*/,
+                                   const DOMString &/*keyIdentifier*/,
+                                   unsigned long /*keyLocation*/,
+                                   const DOMString /*modifiersList*/)
         {
         }
 
@@ -1065,14 +1065,14 @@ public:
     /**
      *
      */
-    virtual void initKeyboardEventNS(const DOMString &namespaceURI,
-                                const DOMString &typeArg,
-                                bool canBubbleArg,
-                                bool cancelableArg,
-                                const views::View *viewArg,
-                                const DOMString &keyIdentifier,
-                                unsigned long keyLocation,
-                                const DOMString modifiersList)
+    virtual void initKeyboardEventNS(const DOMString &/*namespaceURI*/,
+                                     const DOMString &/*typeArg*/,
+                                     bool /*canBubbleArg*/,
+                                     bool /*cancelableArg*/,
+                                     const views::View */*viewArg*/,
+                                     const DOMString &/*keyIdentifier*/,
+                                     unsigned long /*keyLocation*/,
+                                     const DOMString /*modifiersList*/)
         {
         }
 
@@ -1179,29 +1179,29 @@ public:
     /**
      *
      */
-    virtual void initMutationEvent(const DOMString &typeArg,
-                           bool canBubbleArg,
-                           bool cancelableArg,
-                           const NodePtr   relatedNodeArg,
-                           const DOMString &prevValueArg,
-                           const DOMString &newValueArg,
-                           const DOMString &attrNameArg,
-                           unsigned short attrChangeArg)
+    virtual void initMutationEvent(const DOMString &/*typeArg*/,
+                                   bool /*canBubbleArg*/,
+                                   bool /*cancelableArg*/,
+                                   const NodePtr   /*relatedNodeArg*/,
+                                   const DOMString &/*prevValueArg*/,
+                                   const DOMString &/*newValueArg*/,
+                                   const DOMString &/*attrNameArg*/,
+                                   unsigned short /*attrChangeArg*/)
         {
         }
 
     /**
      *
      */
-    virtual void initMutationEventNS(const DOMString &namespaceURI,
-                           const DOMString &typeArg,
-                           bool canBubbleArg,
-                           bool cancelableArg,
-                           const NodePtr   relatedNodeArg,
-                           const DOMString &prevValueArg,
-                           const DOMString &newValueArg,
-                           const DOMString &attrNameArg,
-                           unsigned short attrChangeArg)
+    virtual void initMutationEventNS(const DOMString &/*namespaceURI*/,
+                                     const DOMString &/*typeArg*/,
+                                     bool /*canBubbleArg*/,
+                                     bool /*cancelableArg*/,
+                                     const NodePtr   /*relatedNodeArg*/,
+                                     const DOMString &/*prevValueArg*/,
+                                     const DOMString &/*newValueArg*/,
+                                     const DOMString &/*attrNameArg*/,
+                                     unsigned short /*attrChangeArg*/)
         {
         }
 
@@ -1274,12 +1274,12 @@ public:
     /**
      *
      */
-    virtual void initMutationNameEvent(const DOMString &typeArg,
-                           bool canBubbleArg,
-                           bool cancelableArg,
-                           const NodePtr   relatedNodeArg,
-                           const DOMString &prevNamespaceURIArg,
-                           const DOMString &prevNodeNameArg)
+    virtual void initMutationNameEvent(const DOMString &/*typeArg*/,
+                                       bool /*canBubbleArg*/,
+                                       bool /*cancelableArg*/,
+                                       const NodePtr   /*relatedNodeArg*/,
+                                       const DOMString &/*prevNamespaceURIArg*/,
+                                       const DOMString &/*prevNodeNameArg*/)
         {
         }
 
@@ -1287,13 +1287,13 @@ public:
     /**
      *
      */
-    virtual void initMutationNameEventNS(const DOMString &namespaceURI,
-                           const DOMString &typeArg,
-                           bool canBubbleArg,
-                           bool cancelableArg,
-                           const NodePtr   relatedNodeArg,
-                           const DOMString &prevNamespaceURIArg,
-                           const DOMString &prevNodeNameArg)
+    virtual void initMutationNameEventNS(const DOMString &/*namespaceURI*/,
+                                         const DOMString &/*typeArg*/,
+                                         bool /*canBubbleArg*/,
+                                         bool /*cancelableArg*/,
+                                         const NodePtr   /*relatedNodeArg*/,
+                                         const DOMString &/*prevNamespaceURIArg*/,
+                                         const DOMString &/*prevNodeNameArg*/)
         {
         }
 

@@ -379,26 +379,25 @@ sp_file_open_dialog(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
 {
     //# Get the current directory for finding files
     static Glib::ustring open_path;
-	
-	if(open_path.empty())
-	{
-	    gchar const *attr = prefs_get_string_attribute("dialogs.open", "path");
-	    if (attr)
-	        open_path = attr;
-	}
-	
+
+    if(open_path.empty())
+    {
+        gchar const *attr = prefs_get_string_attribute("dialogs.open", "path");
+        if (attr)
+            open_path = attr;
+    }
+
     //# Test if the open_path directory exists
     if (!Inkscape::IO::file_test(open_path.c_str(),
               (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
         open_path = "";
 
 #ifdef WIN32
-	//# If no open path, default to our win32 documents folder
+    //# If no open path, default to our win32 documents folder
     if (open_path.empty())
-	{
+    {
         // The path to the My Documents folder is read from the
-        // value "HKEY_CURRENT_USER\Software\Windows\CurrentVersion\
-        // Explorer\Shell Folders\Personal" 
+        // value "HKEY_CURRENT_USER\Software\Windows\CurrentVersion\Explorer\Shell Folders\Personal"
         HKEY key = NULL;
         if(RegOpenKeyExA(HKEY_CURRENT_USER,
             "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders",
@@ -420,23 +419,23 @@ sp_file_open_dialog(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
                 }
             }
         }
-	}
+    }
 #endif
-    
+
     //# If no open path, default to our home directory
     if (open_path.empty())
     {
         open_path = g_get_home_dir();
         open_path.append(G_DIR_SEPARATOR_S);
     }
-	
+
     //# Create a dialog if we don't already have one
     Inkscape::UI::Dialog::FileOpenDialog *openDialogInstance =
               Inkscape::UI::Dialog::FileOpenDialog::create(
                  parentWindow, open_path,
                  Inkscape::UI::Dialog::SVG_TYPES,
                  _("Select file to open"));
-                 
+
     //# Show the dialog
     bool const success = openDialogInstance->show();
 
@@ -448,27 +447,27 @@ sp_file_open_dialog(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
         delete openDialogInstance;
         return;
     }
-    
+
     //# User selected something.  Get name and type
     Glib::ustring fileName = openDialogInstance->getFilename();
 
     Inkscape::Extension::Extension *selection =
             openDialogInstance->getSelectionType();
-			
+
     //# Code to check & open if multiple files.
     std::vector<Glib::ustring> flist = openDialogInstance->getFilenames();
-		
+
     //# We no longer need the file dialog object - delete it
     delete openDialogInstance;
     openDialogInstance = NULL;
-    
+
     //# Iterate through filenames if more than 1
     if (flist.size() > 1)
     {
         for (unsigned int i = 0; i < flist.size(); i++)
         {
             fileName = flist[i];
-            
+
             Glib::ustring newFileName = Glib::filename_to_utf8(fileName);
             if ( newFileName.size() > 0 )
                 fileName = newFileName;
@@ -480,7 +479,7 @@ sp_file_open_dialog(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
 #endif
             sp_file_open(fileName, selection);
         }
-        
+
         return;
     }
 
@@ -663,8 +662,8 @@ file_save_remote(SPDocument */*doc*/,
     }
     return true;
 #else
-	// in case we do not have GNOME_VFS
-	return false;
+    // in case we do not have GNOME_VFS
+    return false;
 #endif
 
 }
@@ -740,7 +739,7 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
 
     if ( save_loc_local.size() > 0)
         save_loc = save_loc_local;
-		
+
     //# Show the SaveAs dialog
     char const * dialog_title;
     if (is_copy) {
@@ -750,15 +749,15 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
     }
     Inkscape::UI::Dialog::FileSaveDialog *saveDialog =
         Inkscape::UI::Dialog::FileSaveDialog::create(
-        	parentWindow,
+            parentWindow,
             save_loc,
             Inkscape::UI::Dialog::SVG_TYPES,
             dialog_title,
             default_extension
             );
-			
+
     saveDialog->setSelectionType(extension);
-	
+
     bool success = saveDialog->show();
     if (!success) {
         delete saveDialog;
@@ -1019,7 +1018,7 @@ sp_file_import(Gtk::Window &parentWindow)
         importDialogInstance =
              Inkscape::UI::Dialog::FileOpenDialog::create(
                  parentWindow,
-            	 import_path,
+                 import_path,
                  Inkscape::UI::Dialog::IMPORT_TYPES,
                  (char const *)_("Select file to import"));
     }

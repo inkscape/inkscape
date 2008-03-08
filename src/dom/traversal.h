@@ -92,7 +92,7 @@ public:
     /**
      *
      */
-    virtual short acceptNode(const Node *n)
+    virtual short acceptNode(const Node */*n*/)
         {
         return 0;
         }
@@ -112,7 +112,7 @@ public:
     /**
      *
      */
-    NodeFilter(const NodeFilter &other)
+    NodeFilter(const NodeFilter &/*other*/)
         {
         }
 
@@ -379,10 +379,10 @@ public:
     /**
      *
      */
-    virtual NodeIterator createNodeIterator(const Node *root,
-                                          unsigned long whatToShow,
-                                          const NodeFilter *filter,
-                                          bool entityReferenceExpansion)
+    virtual NodeIterator createNodeIterator(const Node */*root*/,
+                                            unsigned long /*whatToShow*/,
+                                            const NodeFilter */*filter*/,
+                                            bool /*entityReferenceExpansion*/)
                                           throw (dom::DOMException)
         {
         NodeIterator ret;
@@ -392,10 +392,10 @@ public:
     /**
      *
      */
-    virtual TreeWalker createTreeWalker(const Node *root,
-                                        unsigned long whatToShow,
-                                        const NodeFilter *filter,
-                                        bool entityReferenceExpansion)
+    virtual TreeWalker createTreeWalker(const Node */*root*/,
+                                        unsigned long /*whatToShow*/,
+                                        const NodeFilter */*filter*/,
+                                        bool /*entityReferenceExpansion*/)
                                         throw (dom::DOMException)
         {
         TreeWalker ret;
@@ -415,7 +415,7 @@ public:
     /**
      *
      */
-    DocumentTraversal(const DocumentTraversal &other)
+    DocumentTraversal(const DocumentTraversal &/*other*/)
         {}
 
     /**

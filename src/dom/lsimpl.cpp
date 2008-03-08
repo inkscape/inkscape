@@ -128,7 +128,7 @@ DocumentPtr LSParserImpl::parse(const LSInput &input)
 /**
  *
  */
-DocumentPtr LSParserImpl::parseURI(const DOMString &uri)
+DocumentPtr LSParserImpl::parseURI(const DOMString &/*uri*/)
                                    throw(dom::DOMException, LSException)
 {
     return NULL;
@@ -137,9 +137,9 @@ DocumentPtr LSParserImpl::parseURI(const DOMString &uri)
    /**
  *
  */
-NodePtr LSParserImpl::parseWithContext(const LSInput &input,
-                                       const NodePtr contextArg,
-                                       unsigned short action)
+NodePtr LSParserImpl::parseWithContext(const LSInput &/*input*/,
+                                       const NodePtr /*contextArg*/,
+                                       unsigned short /*action*/)
                                        throw(dom::DOMException, LSException)
 {
     return NULL;

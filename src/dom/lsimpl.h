@@ -144,13 +144,13 @@ public:
     /**
      *
      */
-    virtual unsigned short startElement(const ElementPtr elementArg)
+    virtual unsigned short startElement(const ElementPtr /*elementArg*/)
         { return 0; }
 
     /**
      *
      */
-    virtual unsigned short acceptNode(const NodePtr nodeArg)
+    virtual unsigned short acceptNode(const NodePtr /*nodeArg*/)
         { return 0; }
 
     /**
@@ -305,8 +305,8 @@ public:
     /**
      *
      */
-    virtual LSParser &createLSParser(unsigned short mode,
-                                     const DOMString &schemaType)
+    virtual LSParser &createLSParser(unsigned short /*mode*/,
+                                     const DOMString &/*schemaType*/)
                                      throw (dom::DOMException)
         {
         LSParserImpl newParser;

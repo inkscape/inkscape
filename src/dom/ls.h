@@ -393,7 +393,7 @@ public:
     /**
      *
      */
-    virtual DocumentPtr parse(const LSInput &input)
+    virtual DocumentPtr parse(const LSInput &/*input*/)
                               throw(dom::DOMException, LSException)
         { return NULL; }
 
@@ -401,7 +401,7 @@ public:
     /**
      *
      */
-    virtual DocumentPtr parseURI(const DOMString &uri)
+    virtual DocumentPtr parseURI(const DOMString &/*uri*/)
                                  throw(dom::DOMException, LSException)
         { return NULL; }
 
@@ -418,9 +418,9 @@ public:
     /**
      *
      */
-    virtual NodePtr parseWithContext(const LSInput &input,
-                                     const NodePtr contextArg,
-                                     unsigned short action)
+    virtual NodePtr parseWithContext(const LSInput &/*input*/,
+                                     const NodePtr /*contextArg*/,
+                                     unsigned short /*action*/)
                                      throw(dom::DOMException, LSException)
         { return NULL; }
 
@@ -478,11 +478,11 @@ public:
     /**
      *
      */
-    virtual LSInput resolveResource(const DOMString &type,
-                                    const DOMString &namespaceURI,
-                                    const DOMString &publicId,
-                                    const DOMString &systemId,
-                                    const DOMString &baseURI)
+    virtual LSInput resolveResource(const DOMString &/*type*/,
+                                    const DOMString &/*namespaceURI*/,
+                                    const DOMString &/*publicId*/,
+                                    const DOMString &/*systemId*/,
+                                    const DOMString &/*baseURI*/)
         {
         LSInput input;
         //do something
@@ -501,7 +501,7 @@ public:
     /**
      *
      */
-    LSResourceResolver(const LSResourceResolver &other)
+    LSResourceResolver(const LSResourceResolver &/*other*/)
         {
         }
 
@@ -660,23 +660,23 @@ public:
     /**
      *
      */
-    virtual bool write(const NodePtr nodeArg,
-                       const LSOutput &destination)
+    virtual bool write(const NodePtr /*nodeArg*/,
+                       const LSOutput &/*destination*/)
                        throw (LSException)
         { return false; }
 
     /**
      *
      */
-    virtual bool writeToURI(const NodePtr nodeArg,
-                            const DOMString &uri)
+    virtual bool writeToURI(const NodePtr /*nodeArg*/,
+                            const DOMString &/*uri*/)
                             throw(LSException)
         { return false; }
 
     /**
      *
      */
-    virtual DOMString writeToString(const NodePtr nodeArg)
+    virtual DOMString writeToString(const NodePtr /*nodeArg*/)
                                     throw(dom::DOMException, LSException)
         {
         DOMString str;

@@ -38,7 +38,7 @@
 #include <stdarg.h>
 
 #include "domstream.h"
-#include "dom/charclass.h"
+#include "dom/ucd.h"
 
 namespace org
 {

@@ -607,7 +607,7 @@ public:
     /**
      *
      */
-    virtual void seekElement(double &seekTo)
+    virtual void seekElement(double &/*seekTo*/)
         {
         }
 
@@ -786,7 +786,7 @@ public:
     /**
      *
      */
-    virtual NodeList getActiveChildrenAt(double instant)
+    virtual NodeList getActiveChildrenAt(double /*instant*/)
         {
         NodeList list;
         return list;
@@ -1091,7 +1091,7 @@ public:
     /**
      *
      */
-    virtual bool beginElementAt(double offset) throw(dom::DOMException)
+    virtual bool beginElementAt(double /*offset*/) throw(dom::DOMException)
         {
         return true;
         }
@@ -1107,7 +1107,7 @@ public:
     /**
      *
      */
-    virtual bool endElementAt(double offset) throw(dom::DOMException)
+    virtual bool endElementAt(double /*offset*/) throw(dom::DOMException)
         {
         return true;
         }
@@ -1124,7 +1124,7 @@ public:
     /**
      *
      */
-    ElementTimeControl(const ElementTimeControl &other)
+    ElementTimeControl(const ElementTimeControl &/*other*/)
         {
         }
 
@@ -1386,9 +1386,9 @@ public:
     /**
      *
      */
-    virtual void initTimeEvent(const DOMString &typeArg,
-                               const views::View *viewArg,
-                               long detailArg)
+    virtual void initTimeEvent(const DOMString &/*typeArg*/,
+                               const views::View */*viewArg*/,
+                               long /*detailArg*/)
         {
         }
 

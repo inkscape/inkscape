@@ -57,7 +57,7 @@ public:
     /**
      *
      */
-    SvgParser(const SvgParser &other)
+    SvgParser(const SvgParser &/*other*/)
         {
         }
 
@@ -116,7 +116,7 @@ private:
      *
      */
     bool parseElement(SVGElementImplPtr destElem,
-	                  ElementImplPtr sourceElem);
+                      ElementImplPtr sourceElem);
 
 
     /**
