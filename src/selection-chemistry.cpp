@@ -2632,6 +2632,8 @@ sp_selection_tile(bool apply)
         Inkscape::XML::Node *dup = (SP_OBJECT_REPR (i->data))->duplicate(xml_doc);
         repr_copies = g_slist_prepend (repr_copies, dup);
     }
+    // restore the z-order after prepends
+    repr_copies = g_slist_reverse (repr_copies);
 
     NR::Rect bounds(desktop->dt2doc(r->min()), desktop->dt2doc(r->max()));
 
