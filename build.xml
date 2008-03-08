@@ -41,6 +41,7 @@
     </description>
 
   <!-- set global properties for this build -->
+  <property environment="env"/>
   <property name="version"     value="0.46+devel"/>
   <property name="src"         location="src"/>
   <property name="lib"         location="lib"/>
@@ -82,6 +83,10 @@
     <pkg-config name="gtkmm-2.4" path="${gtk}/lib/pkgconfig"
                 query="both" property="gtkmm" prefix="${gtk}"/>
     -->
+
+    <mkdir dir="${build}"/>
+    <mkdir dir="${build}/java"/>
+    <mkdir dir="${build}/java/classes"/>
 
     <mkdir dir="${build}"/>
     <mkdir dir="${dist}"/>
@@ -198,6 +203,7 @@
             <!-- THINGS TO EXCLUDE -->
             <exclude name="2geom/chebyshev.cpp"/>
             <exclude name="ast/.*"/>
+            <exclude name="bind/.*"/><!-- comment this for binding-->
             <exclude name="bonobo/.*"/>
             <exclude name="deptool.cpp"/>
             <exclude name="test-all.cpp"/>
@@ -307,9 +313,11 @@
             -I${gtk}/include/libwpg-0.1
             -I${gtk}/include/libwpd-0.8
             <!-- PERL -->
-            -Wno-comment -I${gtk}/perl/lib/CORE
+            <!-- -Wno-comment -I${gtk}/perl/lib/CORE -->
             <!-- PYTHON -->
             -I${gtk}/python/include
+            <!-- JAVA -->
+            <!-- -I${env.JAVA_HOME}/include -I${env.JAVA_HOME}/include/win32 -->
         </includes>
     </cc>
   </target>
@@ -317,9 +325,21 @@
 
   <!--
   ########################################################################
+  ## T A R G E T    :    JAVA
+  ########################################################################
+  -->
+  <target name="java" depends="init"
+      description="compile java binding classes">
+    <javac srcdir="${src}/bind/java" destdir="${build}/java/classes"/>
+  </target>
+
+
+  <!--
+  ########################################################################
   ## T A R G E T    :    L I B
   ########################################################################
   -->
+  <!-- set depends to "compile,java" if you want to test that -->
   <target name="lib" depends="compile"
       description="create a static library">
     <staticlib command="${archutil}ar crsv"
@@ -480,7 +500,7 @@
   ## T A R G E T    :    D I S T
   ########################################################################
   -->
-  <target name="dist" depends="link,linkinkview,i18n"
+  <target name="dist" depends="link,i18n"
       description="generate the distribution directory with all needed files">
 
     <!-- Create the distribution directory -->
@@ -631,7 +651,7 @@
   ## T A R G E T    :    D I S T - A L L
   ########################################################################
   -->
-  <target name="dist-all" depends="dist,linkinkview"
+  <target name="dist-all" depends="dist"
         description="generate the distribution, along with inkview" >
 
     <copy file="${build}/inkview.exe" todir="${dist}"/>
