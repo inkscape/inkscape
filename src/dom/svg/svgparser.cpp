@@ -30,7 +30,7 @@
 
 #include "svgparser.h"
 #include "dom/cssparser.h"
-#include "dom/charclass.h"
+#include "dom/ucd.h"
 
 #include <stdarg.h>
 
