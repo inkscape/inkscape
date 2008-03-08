@@ -68,13 +68,14 @@ public:
                           bool const &first_point,                                             
                           std::vector<NR::Point> &points_to_snap,                         
                           SPItem const *it) const;
-
+                          
     void freeSnap(SnappedConstraints &sc,
                           PointType const &t,
                           NR::Point const &p,
                           bool const &first_point,                                             
                           std::vector<NR::Point> &points_to_snap,                         
-                          std::list<SPItem const *> const &it) const;
+                          std::list<SPItem const *> const &it,
+                          std::vector<NR::Point> *unselected_nodes) const;
 
     class ConstraintLine
     {
@@ -142,7 +143,8 @@ private:
                                      NR::Point const &p,
                                      bool const &first_point,                                             
                                      std::vector<NR::Point> &points_to_snap,
-                                     std::list<SPItem const *> const &it) const = 0;
+                                     std::list<SPItem const *> const &it,
+                                     std::vector<NR::Point> *unselected_nodes) const = 0;
 
     /**
      *  Try to snap a point to whatever this snapper is interested in, where

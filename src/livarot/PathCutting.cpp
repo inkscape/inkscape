@@ -951,14 +951,17 @@ hence the Path-esque coding style"
 
 */
 template<typename T> inline static T square(T x) {return x*x;}
-Path::cut_position Path::PointToCurvilignPosition(NR::Point const &pos) const
+Path::cut_position Path::PointToCurvilignPosition(NR::Point const &pos, unsigned seg) const
 {
+    // if the parameter "seg" == 0, then all segments will be considered
+    // In however e.g. "seg" == 6 , then only the 6th segment will be considered 
+ 
     unsigned bestSeg = 0;
     double bestRangeSquared = DBL_MAX;
     double bestT = 0.0; // you need a sentinel, or make sure that you prime with correct values.
 
     for (unsigned i = 1 ; i < pts.size() ; i++) {
-        if (pts[i].isMoveTo == polyline_moveto) continue;
+        if (pts[i].isMoveTo == polyline_moveto || (seg > 0 && i != seg)) continue;
         NR::Point p1, p2, localPos;
         double thisRangeSquared;
         double t;

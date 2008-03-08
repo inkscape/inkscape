@@ -9,7 +9,7 @@
  *   Carl Hetherington <inkscape@carlh.net>
  *   Diederik van Lierop <mail@diedenrezi.nl>
  *
- * Copyright (C) 2005 - 2007 Authors 
+ * Copyright (C) 2005 - 2008 Authors 
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -101,7 +101,8 @@ private:
                       NR::Point const &p,
                       bool const &first_point,
                       std::vector<NR::Point> &points_to_snap,
-                      std::list<SPItem const *> const &it) const;
+                      std::list<SPItem const *> const &it,
+                      std::vector<NR::Point> *unselected_nodes) const;
 
   void _doConstrainedSnap(SnappedConstraints &sc,
                       Inkscape::Snapper::PointType const &t,
@@ -120,7 +121,8 @@ private:
   void _snapNodes(SnappedConstraints &sc,
                       Inkscape::Snapper::PointType const &t,
                       NR::Point const &p, 
-                      bool const &first_point) const;
+                      bool const &first_point,
+                      std::vector<NR::Point> *unselected_nodes) const;
                       
   void _snapTranslatingGuideToNodes(SnappedConstraints &sc,
                      Inkscape::Snapper::PointType const &t,
@@ -133,16 +135,20 @@ private:
   void _snapPaths(SnappedConstraints &sc,
                       Inkscape::Snapper::PointType const &t, 
                       NR::Point const &p,
-                      bool const &first_point) const;
+                      bool const &first_point,
+                      std::vector<NR::Point> *unselected_nodes,
+                      SPPath const *selected_path) const;
                       
   void _snapPathsConstrained(SnappedConstraints &sc,
                  Inkscape::Snapper::PointType const &t,
                  NR::Point const &p,
                  bool const &first_point,
                  ConstraintLine const &c) const;
+  bool isUnselectedNode(NR::Point const &point, std::vector<NR::Point> const *unselected_nodes) const;
   
   void _collectPaths(Inkscape::Snapper::PointType const &t, 
-                  bool const &first_point) const;
+                  bool const &first_point,
+                  SPPath const *selected_path = NULL) const;
   void _clear_paths() const;
   
   bool _snap_to_itemnode;

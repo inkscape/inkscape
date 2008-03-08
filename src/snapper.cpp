@@ -97,19 +97,20 @@ void Inkscape::Snapper::setEnabled(bool s)
  *  \return Snapped point.
  */
 
-void Inkscape::Snapper::freeSnap(SnappedConstraints &sc,
-                                                   
+void Inkscape::Snapper::freeSnap(SnappedConstraints &sc,                                                   
                                                    PointType const &t,
                                                    NR::Point const &p,
                                                    bool const &first_point,
-                                                    std::vector<NR::Point> &points_to_snap,                         
+                                                   std::vector<NR::Point> &points_to_snap,                         
                                                    SPItem const *it) const
 {
     std::list<SPItem const *> lit;
-    lit.push_back(it);
-    freeSnap(sc, t, p, first_point, points_to_snap, lit);
+    if (it) {
+        lit.push_back(it);
+    }
+    
+    freeSnap(sc, t, p, first_point, points_to_snap, lit, NULL);
 }
-
 
 /**
  *  Try to snap a point to whatever this snapper is interested in.  Any
@@ -127,14 +128,15 @@ void Inkscape::Snapper::freeSnap(SnappedConstraints &sc,
                                                    PointType const &t,
                                                    NR::Point const &p,
                                                    bool const &first_point,
-                                                    std::vector<NR::Point> &points_to_snap,                     
-                                                   std::list<SPItem const *> const &it) const
+                                                   std::vector<NR::Point> &points_to_snap,                     
+                                                   std::list<SPItem const *> const &it,
+                                                   std::vector<NR::Point> *unselected_nodes) const
 {
     if (_snap_enabled == false || getSnapFrom(t) == false) {
         return;
     }
 
-    _doFreeSnap(sc, t, p, first_point, points_to_snap, it);
+    _doFreeSnap(sc, t, p, first_point, points_to_snap, it, unselected_nodes);
 }
 
 

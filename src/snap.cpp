@@ -187,8 +187,33 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
     std::vector<NR::Point> points_to_snap;
     points_to_snap.push_back(p);
     
-    return freeSnap(t, p, true, points_to_snap, lit);
+    return freeSnap(t, p, true, points_to_snap, lit, NULL);
 }
+
+/**
+ *  Try to snap a point to any interested snappers.
+ *
+ *  \param t Type of point.
+ *  \param p Point.
+ *  \param it Item to ignore when snapping.
+ *  \return Snapped point.
+ */
+
+Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
+                                             NR::Point const &p,
+                                             SPItem const *it,
+                                             std::vector<NR::Point> *unselected_nodes) const
+
+{
+    std::list<SPItem const *> lit;
+    lit.push_back(it);
+    
+    std::vector<NR::Point> points_to_snap;
+    points_to_snap.push_back(p);
+    
+    return freeSnap(t, p, true, points_to_snap, lit, unselected_nodes);
+}
+
 
 /**
  *  Try to snap a point to any of the specified snappers.
@@ -206,7 +231,8 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
                                              NR::Point const &p,
                                              bool const &first_point,
                                              std::vector<NR::Point> &points_to_snap,
-                                             std::list<SPItem const *> const &it) const
+                                             std::list<SPItem const *> const &it,
+                                             std::vector<NR::Point> *unselected_nodes) const
 {
     if (!SomeSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, NR_HUGE, 0, false);
@@ -217,7 +243,7 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
     SnapperList const snappers = getSnappers();
 
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        (*i)->freeSnap(sc, t, p, first_point, points_to_snap, it);
+        (*i)->freeSnap(sc, t, p, first_point, points_to_snap, it, unselected_nodes);
     }
 
     return findBestSnap(p, sc, false);
@@ -414,7 +440,7 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
             }
             snapped = constrainedSnap(type, *j, i == points.begin(), transformed_points, dedicated_constraint, ignore);
         } else {
-            snapped = freeSnap(type, *j, i == points.begin(), transformed_points, ignore);
+            snapped = freeSnap(type, *j, i == points.begin(), transformed_points, ignore, NULL);
         }
 
         NR::Point result;
@@ -704,6 +730,14 @@ std::pair<NR::Coord, bool> SnapManager::freeSnapSkew(Inkscape::Snapper::PointTyp
 
 Inkscape::SnappedPoint SnapManager::findBestSnap(NR::Point const &p, SnappedConstraints &sc, bool constrained) const
 {
+    /*
+    std::cout << "Type and number of snapped constraints: " << std::endl;
+    std::cout << "  Points      : " << sc.points.size() << std::endl;
+    std::cout << "  Lines       : " << sc.lines.size() << std::endl;
+    std::cout << "  Grid lines  : " << sc.grid_lines.size()<< std::endl;
+    std::cout << "  Guide lines : " << sc.guide_lines.size()<< std::endl;
+    */
+        
     // Store all snappoints
     std::list<Inkscape::SnappedPoint> sp_list;
     

@@ -6,7 +6,7 @@
  *   Carl Hetherington <inkscape@carlh.net>
  *   Diederik van Lierop <mail@diedenrezi.nl>
  *
- * Copyright (C) 2005 - 2007 Authors
+ * Copyright (C) 2005 - 2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -193,11 +193,16 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::Snapper::PointType const &
 void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
                                          Inkscape::Snapper::PointType const &t,
                                          NR::Point const &p,
-                                         bool const &first_point) const
+                                         bool const &first_point,
+                                         std::vector<NR::Point> *unselected_nodes) const
 {
     // Iterate through all nodes, find out which one is the closest to p, and snap to it!
     
     _collectNodes(t, first_point);
+    
+    if (unselected_nodes != NULL) {
+        _points_to_snap_to->insert(_points_to_snap_to->end(), unselected_nodes->begin(), unselected_nodes->end());
+    }   
     
     SnappedPoint s;
     bool success = false;
@@ -245,7 +250,8 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &s
 }
 
 void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &t,
-                                         bool const &first_point) const
+                                         bool const &first_point,
+                                         SPPath const *selected_path) const
 {
     // Now, let's first collect all paths to snap to. If we have a whole bunch of points to snap,
     // e.g. when translating an item using the selector tool, then we will only do this for the
@@ -261,6 +267,17 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
         if (_snap_to_bboxpath) {
             gchar const *prefs_bbox = prefs_get_string_attribute("tools", "bounding_box");
             bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;
+        }
+        
+        /* While editing a path in the node tool, findCandidates must ignore that path because 
+         * of the node snapping requirements (i.e. only unselected nodes must be snapable).
+         * This path must not be ignored however when snapping to the paths, so we add it here
+         * manually when applicable. 
+         * 
+         * It must be the last one in the list, as this is assumption is being used in _snapPaths() 
+         */ 
+        if (_snap_to_itempath && selected_path != NULL) {
+            _candidates->push_back(SP_ITEM(selected_path));            
         }
             
         for (std::vector<SPItem*>::const_iterator i = _candidates->begin(); i != _candidates->end(); i++) {
@@ -307,7 +324,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
                         if (curve) {
                             NArtBpath *bpath = bpath_for_curve(root_item, curve, true, true);
                             _bpaths_to_snap_to->push_back(bpath);
-                            // Because in bpath_for_curve we set doTransformation to true, we
+                            // Because we set doTransformation to true in bpath_for_curve, we
                             // will get a dupe of the path, which must be freed at some point
                             sp_curve_unref(curve);
                         }
@@ -331,9 +348,11 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
 void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                                      Inkscape::Snapper::PointType const &t,
                                      NR::Point const &p,
-                                     bool const &first_point) const
+                                     bool const &first_point,
+                                     std::vector<NR::Point> *unselected_nodes,
+                                     SPPath const *selected_path) const
 {
-    _collectPaths(t, first_point);
+    _collectPaths(t, first_point, selected_path);
     
     // Now we can finally do the real snapping, using the paths collected above
     SnappedPoint s;
@@ -359,33 +378,71 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
     
     for (std::vector<Path*>::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
         if (*k) {
-            /* Look for the nearest position on this SPItem to our snap point */
-            NR::Maybe<Path::cut_position> const o = get_nearest_position_on_Path(*k, p_doc);
-            if (o && o->t >= 0 && o->t <= 1) {
-
-                /* Convert the nearest point back to desktop coordinates */
-                NR::Point const o_it = get_point_on_Path(*k, o->piece, o->t);
-                NR::Point const o_dt = desktop->doc2dt(o_it);                
-                NR::Coord const dist = NR::L2(o_dt - p);
-
-                if (dist < getSnapperTolerance()) {
-	                // if we snap to a straight line segment (within a path), then return this line segment
-	                if ((*k)->IsLineSegment(o->piece)) {
-	                    NR::Point start_point;
-	                    NR::Point end_point;
-	                    (*k)->PointAt(o->piece, 0, start_point);
-	                    (*k)->PointAt(o->piece, 1, end_point);
-	                    start_point = desktop->doc2dt(start_point);
-	                    end_point = desktop->doc2dt(end_point);
-	                    sc.lines.push_back(Inkscape::SnappedLineSegment(o_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), start_point, end_point));    
-	                } else {                
-	                    // for segments other than straight lines of a path, we'll return just the closest snapped point
-	                    if (dist < s.getDistance()) {
-	                        s = SnappedPoint(o_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
-	                        success = true;
-	                    }
-	                }
+            bool being_edited = false; // True if the current path is being edited in the node tool            
+            if (unselected_nodes != NULL) {
+                if (unselected_nodes->size() > 0 && selected_path != NULL) { // If the node tool is active ...
+                    if (*k == _paths_to_snap_to->back()) { // and we arrived at the last path in the vector ...
+                        being_edited = true;  // then this path is currently being edited
+                    }        
                 }
+            }
+            
+            for (unsigned i = 1 ; i < (*k)->pts.size() ; i++) {
+                NR::Point start_point;
+                NR::Point end_point;   
+                NR::Maybe<Path::cut_position> o = NR::Nothing();                 
+                if (being_edited) { 
+                    /* If the path is being edited, then we will try to snap to each piece of the 
+                     * path individually. We should only snap though to stationary pieces of the paths
+                     * and not to the pieces that are being dragged around. This way we avoid 
+                     * self-snapping. For this we check whether the nodes at both ends of the current
+                     * piece are unselected; if they are then this piece must be stationary 
+                     */
+                    (*k)->PointAt(i, 0, start_point);
+                    (*k)->PointAt(i, 1, end_point);
+                    start_point = desktop->doc2dt(start_point);
+                    end_point = desktop->doc2dt(end_point);
+                    g_assert(unselected_nodes != NULL);
+                    bool c1 = isUnselectedNode(start_point, unselected_nodes);
+                    bool c2 = isUnselectedNode(end_point, unselected_nodes);     
+                    if (c1 && c2) {
+                        o = get_nearest_position_on_Path(*k, p_doc, i);
+                    }
+                } else {
+                    /* If the path is NOT being edited, then we will try to snap to the path as a
+                     * whole, so we need to do this only once and we will break out at the end of
+                     * this for-loop iteration */                    
+                    /* Look for the nearest position on this SPItem to our snap point */
+                    o = get_nearest_position_on_Path(*k, p_doc);
+                    (*k)->PointAt(o->piece, 0, start_point);
+                    (*k)->PointAt(o->piece, 1, end_point);
+                    start_point = desktop->doc2dt(start_point);
+                    end_point = desktop->doc2dt(end_point);                        
+                }
+                
+                if (o && o->t >= 0 && o->t <= 1) {    
+                    /* Convert the nearest point back to desktop coordinates */
+                    NR::Point const o_it = get_point_on_Path(*k, o->piece, o->t);
+                    NR::Point const o_dt = desktop->doc2dt(o_it);                
+                    NR::Coord const dist = NR::L2(o_dt - p);
+    
+                    if (dist < getSnapperTolerance()) {
+                        // if we snap to a straight line segment (within a path), then return this line segment
+                        if ((*k)->IsLineSegment(o->piece)) {
+                            sc.lines.push_back(Inkscape::SnappedLineSegment(o_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), start_point, end_point));    
+                        } else {                
+                            // for segments other than straight lines of a path, we'll return just the closest snapped point
+                            if (dist < s.getDistance()) {
+                                s = SnappedPoint(o_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
+                                success = true;
+                            }
+                        }
+                    }
+                }        
+                
+                // If the path is NOT being edited, then we will try to snap to the path as a whole
+                // so we need to do this only once
+                if (!being_edited) break;
             }
         }
     }
@@ -393,6 +450,26 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
     if (success) {
     	sc.points.push_back(s);	
     }
+}
+
+/* Returns true if point is coincident with one of the unselected nodes */ 
+bool Inkscape::ObjectSnapper::isUnselectedNode(NR::Point const &point, std::vector<NR::Point> const *unselected_nodes) const
+{
+    if (unselected_nodes == NULL) {
+        return false;
+    }
+    
+    if (unselected_nodes->size() == 0) {
+        return false;
+    }
+    
+    for (std::vector<NR::Point>::const_iterator i = unselected_nodes->begin(); i != unselected_nodes->end(); i++) {
+        if (NR::L2(point - *i) < 1e-4) {
+            return true;
+        }   
+    }  
+    
+    return false;    
 }
 
 void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
@@ -461,7 +538,8 @@ void Inkscape::ObjectSnapper::_doFreeSnap(SnappedConstraints &sc,
                                             NR::Point const &p,
                                             bool const &first_point,
                                             std::vector<NR::Point> &points_to_snap,
-                                            std::list<SPItem const *> const &it) const
+                                            std::list<SPItem const *> const &it,
+                                            std::vector<NR::Point> *unselected_nodes) const
 {
     if ( NULL == _named_view ) {
         return;
@@ -471,12 +549,25 @@ void Inkscape::ObjectSnapper::_doFreeSnap(SnappedConstraints &sc,
     if (first_point) {
         _findCandidates(sp_document_root(_named_view->document), it, first_point, points_to_snap, TRANSL_SNAP_XY);
     }
-
+    
     if (_snap_to_itemnode || _snap_to_bboxnode) {
-        _snapNodes(sc, t, p, first_point);
+        _snapNodes(sc, t, p, first_point, unselected_nodes);
     }
+    
     if (_snap_to_itempath || _snap_to_bboxpath) {
-        _snapPaths(sc, t, p, first_point);
+        unsigned n = (unselected_nodes == NULL) ? 0 : unselected_nodes->size();
+        if (n > 0) {
+            /* While editing a path in the node tool, findCandidates must ignore that path because 
+             * of the node snapping requirements (i.e. only unselected nodes must be snapable).
+             * That path must not be ignored however when snapping to the paths, so we add it here
+             * manually when applicable
+             */
+            g_assert(it.size() == 1);
+            g_assert(SP_IS_PATH(*it.begin()));
+            _snapPaths(sc, t, p, first_point, unselected_nodes, SP_PATH(*it.begin()));    
+        } else {
+            _snapPaths(sc, t, p, first_point, NULL, NULL);   
+        }        
     }
 }
 

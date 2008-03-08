@@ -24,7 +24,7 @@ void sp_item_notify_moveto(SPItem &item, SPGuide const &mv_g, int const snappoin
     double const dir_lensq(dot(dir, dir));
     g_return_if_fail( dir_lensq != 0 );
 
-    vector<NR::Point> snappoints;
+    std::vector<NR::Point> snappoints;
     sp_item_snappoints(&item, true, SnapPointsIter(snappoints));
     g_return_if_fail( snappoint_ix < int(snappoints.size()) );
 

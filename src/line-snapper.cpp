@@ -28,7 +28,8 @@ void Inkscape::LineSnapper::_doFreeSnap(SnappedConstraints &sc,
                                                     NR::Point const &p,
                                                     bool const &f,
                                                     std::vector<NR::Point> &points_to_snap,
-                                                    std::list<SPItem const *> const &it) const
+                                                    std::list<SPItem const *> const &it,
+                                                    std::vector<NR::Point> *unselected_nodes) const
 {
     /* Get the lines that we will try to snap to */
     const LineList lines = _getSnapLines(p);

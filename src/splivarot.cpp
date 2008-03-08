@@ -1839,10 +1839,10 @@ Path *bpath_to_Path(NArtBpath const *bpath) {
     return dest;
 }
 
-NR::Maybe<Path::cut_position> get_nearest_position_on_Path(Path *path, NR::Point p)
+NR::Maybe<Path::cut_position> get_nearest_position_on_Path(Path *path, NR::Point p, unsigned seg)
 {
     //get nearest position on path
-    Path::cut_position pos = path->PointToCurvilignPosition(p);
+    Path::cut_position pos = path->PointToCurvilignPosition(p, seg);
     return pos;
 }
 

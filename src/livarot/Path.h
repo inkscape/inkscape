@@ -203,7 +203,7 @@ public:
     double        t;
   };
   cut_position*    CurvilignToPosition(int nbCv,double* cvAbs,int &nbCut);
-  cut_position    PointToCurvilignPosition(NR::Point const &pos) const;
+  cut_position    PointToCurvilignPosition(NR::Point const &pos, unsigned seg = 0) const;
   //Should this take a cut_position as a param?
   double           PositionToLength(int piece, double t);
   

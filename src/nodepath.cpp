@@ -1102,18 +1102,36 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
     NR::Point best_pt = delta;
     NR::Point best_abs(NR_HUGE, NR_HUGE);
 
-    if (snap) {
-        SnapManager const &m = nodepath->desktop->namedview->snap_manager;
-
+    
+    if (snap) {    
+        /* When dragging a (selected) node, it should only snap to other nodes (i.e. unselected nodes), and
+         * not to itself. The snapper however can not tell which nodes are selected and which are not, so we 
+         * must provide that information. */
+          
+        // Build a list of the unselected nodes to which the snapper should snap 
+        std::vector<NR::Point> unselected_nodes;
+        for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
+            Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
+            for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
+                Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
+                if (!node->selected) {
+                    unselected_nodes.push_back(node->pos);
+                }    
+            }
+        }        
+        
+        SnapManager &m = nodepath->desktop->namedview->snap_manager;
+        
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
-            Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta, SP_PATH(n->subpath->nodepath->item));
+            Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta, SP_PATH(n->subpath->nodepath->item), &unselected_nodes);            
             if (s.getDistance() < best) {
                 best = s.getDistance();
                 best_abs = s.getPoint();
                 best_pt = best_abs - n->pos;
             }
         }
+                        
         if (best_abs[NR::X] < NR_HUGE) {
             nodepath->desktop->snapindicator->set_new_snappoint(best_abs.to_2geom());
         }

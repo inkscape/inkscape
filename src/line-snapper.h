@@ -32,7 +32,8 @@ private:
                    NR::Point const &p,
                    bool const &first_point,
                    std::vector<NR::Point> &points_to_snap,
-                   std::list<SPItem const *> const &it) const;
+                   std::list<SPItem const *> const &it,
+                   std::vector<NR::Point> *unselected_nodes) const;
   
   void _doConstrainedSnap(SnappedConstraints &sc,
                           Inkscape::Snapper::PointType const &t,

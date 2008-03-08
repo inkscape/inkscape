@@ -14,7 +14,7 @@ void sp_item_rm_unsatisfied_cns(SPItem &item)
     if (item.constraints.empty()) {
         return;
     }
-    vector<NR::Point> snappoints;
+    std::vector<NR::Point> snappoints;
     sp_item_snappoints(&item, true, SnapPointsIter(snappoints));
     for (unsigned i = item.constraints.size(); i--;) {
         g_assert( i < item.constraints.size() );
