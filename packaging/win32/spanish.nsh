@@ -4,7 +4,7 @@
 ; windows code page: 1252
 ; Authors:
 ; Adib Taraben theAdib@googlemail.com
-; Lucas Vieites aka basurero
+; Lucas Vieites lucas@codexion.com
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
 ; 24 october 2006 new languages en_US@piglatin, th
@@ -28,19 +28,19 @@ LangString lng_LICENSE_BUTTON   ${LANG_SPANISH} "Siguiente >"
 LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_SPANISH} "$(^Name) se publica bajo la Licencia Pública General GNU (GPL). Esta licencia se muestra aquí solamente como información. $_CLICK"
 
 ;has been installed by different user
-LangString lng_DIFFERENT_USER ${LANG_SPANISH} "Inkscape has been installed by user $0.$\r$\nIf you continue you might not complete successfully!$\r$\nPlease log in as $0 and try again."
+LangString lng_DIFFERENT_USER ${LANG_SPANISH} "Inkscape ha sido instalado por el usuario $0.$\r$\nSi continúa, la operación podría finalizar sin éxito.$\r$\nInicie sesión como $0 y vuelva a intentarlo."
 
 ; want to uninstall before install
-LangString lng_WANT_UNINSTALL_BEFORE ${LANG_SPANISH} "$R1 has already been installed. $\nDo you want to remove the previous version before installing $(^Name) ?"
+LangString lng_WANT_UNINSTALL_BEFORE ${LANG_SPANISH} "$R1 ya ha sido instalado. $\n¿Desea eliminar la versión anterior antes de instalar $(^Name) ?"
 
 ; press OK to continue press Cancel to abort
-LangString lng_OK_CANCEL_DESC ${LANG_SPANISH} "$\n$\nPress OK to continue or press CANCEL to abort."
+LangString lng_OK_CANCEL_DESC ${LANG_SPANISH} "$\n$\nPulse Aceptar para continuar o Cancelar para terminar."
 
 ;you have no admin rigths
-LangString lng_NO_ADMIN ${LANG_SPANISH} "You do not have administrator privileges.$\r$\nInstalling Inkscape for all users might not complete successfully.$\r$\nUncheck the 'for all users' option."
+LangString lng_NO_ADMIN ${LANG_SPANISH} "No dispone de privilegios de administrador.$\r$\nLa instalación de Inkscape para todos los usuarios podría terminar sin éxito.$\r$\ndesmarque la casilla «para todos los usuarios»."
 
 ;win9x is not supported
-LangString lng_NOT_SUPPORTED ${LANG_SPANISH} "Inkscape is known not to run under Windows 95/98/ME!$\r$\nPlease check the official website for detailed information."
+LangString lng_NOT_SUPPORTED ${LANG_SPANISH} "Inkscape no se ejecuta correctamente en Windows 95/98/ME$\r$\nAcceda a la página web oficial si desea obtener más información."
 
 ; Full install type
 LangString lng_Full $(LANG_SPANISH) "Completa"
@@ -106,10 +106,10 @@ LangString lng_ContextMenu ${LANG_SPANISH} "Menú contextual"
 LangString lng_ContextMenuDesc ${LANG_SPANISH} "Añadir ${PRODUCT_NAME} al menú contextual para archivos SVG"
 
 ; remove personal preferences
-LangString lng_DeletePrefs ${LANG_SPANISH} "Delete personal preferences"
+LangString lng_DeletePrefs ${LANG_SPANISH} "Eliminar preferencias personales"
 
 ; remove personal preferences description
-LangString lng_DeletePrefsDesc ${LANG_SPANISH} "Delete personal preferences leftover from previous installations"
+LangString lng_DeletePrefsDesc ${LANG_SPANISH} "Eliminar las preferencias personales restantes de instalaciones anteriores."
 
 ; Additional files section
 LangString lng_Addfiles $(LANG_SPANISH) "Archivos adicionales"
@@ -144,7 +144,7 @@ LangString lng_bg $(LANG_SPANISH) "bg  Bulgarian"
 LangString lng_bn $(LANG_SPANISH) "bn  Bengali"
 LangString lng_br $(LANG_SPANISH) "br  Breton"
 LangString lng_ca $(LANG_SPANISH) "ca  Catalan"
-LangString lng_ca@valencia $(LANG_SPANISH) "ca@valencia  Valencian Catalan"
+LangString lng_ca@valencia $(LANG_SPANISH) "ca@valencia  Valenciano"
 LangString lng_cs $(LANG_SPANISH) "cs  Czech"
 LangString lng_da $(LANG_SPANISH) "da  Danish"
 LangString lng_de $(LANG_SPANISH) "de  German"
@@ -163,7 +163,7 @@ LangString lng_eu $(LANG_SPANISH) "eu  Basque"
 LangString lng_fi $(LANG_SPANISH) "fi  Finnish"
 LangString lng_fr $(LANG_SPANISH) "fr  French"
 LangString lng_ga $(LANG_SPANISH) "ga  Irish"
-LangString lng_gl $(LANG_SPANISH) "gl  Gallegan"
+LangString lng_gl $(LANG_SPANISH) "gl  Galego"
 LangString lng_he $(LANG_SPANISH) "he  Hebrew"
 LangString lng_hr $(LANG_SPANISH) "hr  Croatian"
 LangString lng_hu $(LANG_SPANISH) "hu  Hungarian"
@@ -211,18 +211,18 @@ LangString lng_UInstOpt1  ${LANG_SPANISH} "Elija sus opciones adicionales"
 ; Ask to purge the personal preferences
 LangString lng_PurgePrefs ${LANG_SPANISH} "Guardar las preferencias personales"
 
-LangString lng_RETRY_CANCEL_DESC ${LANG_SPANISH} "$\n$\nPress RETRY to continue or press CANCEL to abort."
+LangString lng_RETRY_CANCEL_DESC ${LANG_SPANISH} "$\n$\nPulse Reintentar para continuar o Cancelar para terminar."
 
-LangString lng_ClearDirectoryBefore ${LANG_SPANISH} "${PRODUCT_NAME} must be installed in an empty directory. $INSTDIR is not empty. Please clear this directory first!$(lng_RETRY_CANCEL_DESC)"
+LangString lng_ClearDirectoryBefore ${LANG_SPANISH} "${PRODUCT_NAME} debe ser instalado en un directorio vacío. $INSTDIR no está vacío. Limpe este directorio antes de continuar.$(lng_RETRY_CANCEL_DESC)"
 
-LangString lng_UninstallLogNotFound ${LANG_SPANISH} "$INSTDIR\uninstall.log not found!$\r$\nPlease uninstall by clearing directory $INSTDIR yourself!"
+LangString lng_UninstallLogNotFound ${LANG_SPANISH} "No de ha encontrado $INSTDIR\uninstall.log.$\r$\nDesintale limpiando el directorio $INSTDIR."
 
-LangString lng_FileChanged ${LANG_SPANISH} "The file $filename has been changed after installation.$\r$\nDo you still want to delete that file?"
+LangString lng_FileChanged ${LANG_SPANISH} "El archivo $filename ha sido cambiado después de la instalación.$\r$\n¿Está seguro de que desea eliminar este archivo?"
 
-LangString lng_Yes ${LANG_SPANISH} "Yes"
+LangString lng_Yes ${LANG_SPANISH} "Sí"
 
-LangString lng_AlwaysYes ${LANG_SPANISH} "always answer Yes"
+LangString lng_AlwaysYes ${LANG_SPANISH} "siempre responder Sí"
 
 LangString lng_No ${LANG_SPANISH} "No"
 
-LangString lng_AlwaysNo ${LANG_SPANISH} "always answer No"
+LangString lng_AlwaysNo ${LANG_SPANISH} "siempre responder No"

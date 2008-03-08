@@ -3,7 +3,7 @@
 ; slovak language strings for inkscape installer
 ; windows code page: 1250
 ; Authors:
-; helix84 helix84@gmail.com (translation for Inkscape 0.44, 0.46)
+; Ivan Mas·r <helix84@centrum.sk> (translation for Inkscape 0.44, 0.45, 0.46)
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
@@ -122,7 +122,7 @@ LangString lng_AddfilesDesc $(LANG_SLOVAK) "œalöie s˙bory"
 LangString lng_Examples $(LANG_SLOVAK) "PrÌklady"
 
 ; Examples section description
-LangString lng_ExamplesDesc $(LANG_SLOVAK) "PrÌlady pouûÌvania ${PRODUCT_NAME}"
+LangString lng_ExamplesDesc $(LANG_SLOVAK) "PrÌklady pouûÌvania ${PRODUCT_NAME}"
 
 ; Tutorials section
 LangString lng_Tutorials $(LANG_SLOVAK) "Sprievodcovia"
@@ -138,12 +138,12 @@ LangString lng_Languages $(LANG_SLOVAK) "JazykovÈ sady"
 LangString lng_LanguagesDesc $(LANG_SLOVAK) "Nainötalovaù Ôalöie jazykovÈ sady ${PRODUCT_NAME}"
 
 LangString lng_am $(LANG_SLOVAK) "am  amharËina"
-LangString lng_ar $(LANG_SLOVAK) "ar  Arabic"
+LangString lng_ar $(LANG_SLOVAK) "ar  arabËina"
 LangString lng_az $(LANG_SLOVAK) "az  azerbajdûanËina"
 LangString lng_be $(LANG_SLOVAK) "be  bieloruötina"
 LangString lng_bg $(LANG_SLOVAK) "bg  bulharËina"
 LangString lng_bn $(LANG_SLOVAK) "bn  beng·lËina"
-LangString lng_br $(LANG_SLOVAK) "br  Breton"
+LangString lng_br $(LANG_SLOVAK) "br  bretÛnËina"
 LangString lng_ca $(LANG_SLOVAK) "ca  katal·nËina"
 LangString lng_ca@valencia $(LANG_SLOVAK) "ca@valencia  valencijËina"
 LangString lng_cs $(LANG_SLOVAK) "cs  Ëeötina"
