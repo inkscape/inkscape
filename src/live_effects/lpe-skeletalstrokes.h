@@ -42,6 +42,7 @@ private:
     ScalarParam  spacing;
     ScalarParam  normal_offset;
     ScalarParam  tang_offset;
+    BoolParam    prop_units;
     BoolParam    vertical_pattern;
 
     void on_pattern_pasted();

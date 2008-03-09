@@ -63,18 +63,20 @@ LPESkeletalStrokes::LPESkeletalStrokes(LivePathEffectObject *lpeobject) :
     copytype(_("Pattern copies"), _("How many pattern copies to place along the skeleton path"), "copytype", SkelCopyTypeConverter, &wr, this, SSCT_SINGLE_STRETCHED),
     prop_scale(_("Width"), _("Width of the pattern"), "prop_scale", &wr, this, 1),
     scale_y_rel(_("Width in units of length"), _("Scale the width of the pattern in units of its length"), "scale_y_rel", &wr, this, false),
-    spacing(_("Spacing"), _("Space between copies of the pattern"), "spacing", &wr, this, 0),
+    spacing(_("Spacing"), _("Space between copies of the pattern. Negative values allowed, but are limited to -90% of pattern width."), "spacing", &wr, this, 0),
     normal_offset(_("Normal offset"), "", "normal_offset", &wr, this, 0),
     tang_offset(_("Tangential offset"), "", "tang_offset", &wr, this, 0),
+    prop_units(_("Offsets in % of pattern size"), "Spacing, tangential and normal offset are expressed in % of width/height", "prop_units", &wr, this, false),
     vertical_pattern(_("Pattern is vertical"), "Rotate pattern 90 deg before applying", "vertical_pattern", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&pattern) );
     registerParameter( dynamic_cast<Parameter *>(&copytype) );
     registerParameter( dynamic_cast<Parameter *>(&prop_scale) );
     registerParameter( dynamic_cast<Parameter *>(&scale_y_rel) );
-//    registerParameter( dynamic_cast<Parameter *>(&spacing) );
-//    registerParameter( dynamic_cast<Parameter *>(&normal_offset) );
-//    registerParameter( dynamic_cast<Parameter *>(&tang_offset) );
+    registerParameter( dynamic_cast<Parameter *>(&spacing) );
+    registerParameter( dynamic_cast<Parameter *>(&normal_offset) );
+    registerParameter( dynamic_cast<Parameter *>(&tang_offset) );
+    registerParameter( dynamic_cast<Parameter *>(&prop_units) );
     registerParameter( dynamic_cast<Parameter *>(&vertical_pattern) );
 
     prop_scale.param_set_digits(3);
@@ -104,36 +106,73 @@ LPESkeletalStrokes::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pw
     D2<Piecewise<SBasis> > patternd2 = make_cuts_independant(pattern);
     Piecewise<SBasis> x = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[1]) : Piecewise<SBasis>(patternd2[0]);
     Piecewise<SBasis> y = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[0]) : Piecewise<SBasis>(patternd2[1]);
-    Interval pattBnds = bounds_exact(x);
-    x -= pattBnds.min();
+    Interval pattBndsX = bounds_exact(x);
+    x -= pattBndsX.min();
     Interval pattBndsY = bounds_exact(y);
     y -= pattBndsY.middle();
 
-    int nbCopies = int(uskeleton.cuts.back()/pattBnds.extent());
-    double scaling = 1;
+    double xspace  = spacing;
+    double noffset = normal_offset;
+    double toffset = tang_offset;
+    if (prop_units.get_value()){
+        xspace  *= pattBndsX.extent();
+        noffset *= pattBndsY.extent();
+        toffset *= pattBndsX.extent();
+    }
 
+    //Prevent more than 90% overlap...
+    if (xspace < -pattBndsX.extent()*.9) {
+        xspace = -pattBndsX.extent()*.9;
+    }
+    //TODO: dynamical update of parameter ranges?
+    //if (prop_units.get_value()){
+    //        spacing.param_set_range(-.9, NR_HUGE);
+    //    }else{
+    //        spacing.param_set_range(-pattBndsX.extent()*.9, NR_HUGE);
+    //    }
+
+
+
+
+
+    y+=noffset;
+
+    int nbCopies = 0;
+    double scaling = 1;
     switch(type) {
         case SSCT_REPEATED:
+            nbCopies = floor((uskeleton.domain().extent() - tang_offset + xspace)/(pattBndsX.extent()+xspace));
+            pattBndsX = Interval(pattBndsX.min(),pattBndsX.max()+xspace);
             break;
 
         case SSCT_SINGLE:
-            nbCopies = (nbCopies > 0) ? 1 : 0;
+            nbCopies = (tang_offset + pattBndsX.extent() < uskeleton.domain().extent()) ? 1 : 0;
             break;
 
         case SSCT_SINGLE_STRETCHED:
             nbCopies = 1;
-            scaling = uskeleton.cuts.back()/pattBnds.extent();
+            scaling = (uskeleton.domain().extent() - tang_offset)/pattBndsX.extent();
             break;
 
         case SSCT_REPEATED_STRETCHED:
-             scaling = uskeleton.cuts.back()/(((double)nbCopies)*pattBnds.extent());
+            // if uskeleton is closed:
+            if(pwd2_in.segs.front().at0() == pwd2_in.segs.back().at1()){
+                nbCopies = std::floor((uskeleton.domain().extent() - tang_offset)/(pattBndsX.extent()+xspace));
+                pattBndsX = Interval(pattBndsX.min(),pattBndsX.max()+xspace);
+                scaling = (uskeleton.domain().extent() - tang_offset)/(((double)nbCopies)*pattBndsX.extent());
+            // if not closed: no space at the end
+            }else{
+                nbCopies = std::floor((uskeleton.domain().extent() - tang_offset + xspace)/(pattBndsX.extent()+xspace));
+                pattBndsX = Interval(pattBndsX.min(),pattBndsX.max()+xspace);
+                scaling = (uskeleton.domain().extent() - tang_offset)/(((double)nbCopies)*pattBndsX.extent() - xspace);
+            }
             break;
 
         default:
             return pwd2_in;
     };
 
-    double pattWidth = pattBnds.extent() * scaling;
+    double pattWidth = pattBndsX.extent() * scaling;
 
     if (scaling != 1.0) {
         x*=scaling;
@@ -143,6 +182,8 @@ LPESkeletalStrokes::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pw
     } else {
         if (prop_scale != 1.0) y *= prop_scale;
     }
+    x += tang_offset;
+
 
     double offs = 0;
     Piecewise<D2<SBasis> > output;
