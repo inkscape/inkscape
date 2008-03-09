@@ -59,6 +59,7 @@
 #include "ege-color-prof-tracker.h"
 #include "color-profile-fns.h"
 #include "xml/node-observer.h"
+#include "box3d-context.h"
 
 #if defined (SOLARIS_2_8)
 #include "round.h"
@@ -1424,6 +1425,9 @@ sp_desktop_widget_adjustment_value_changed (GtkAdjustment */*adj*/, SPDesktopWid
 
     sp_canvas_scroll_to (dtw->canvas, dtw->hadj->value, dtw->vadj->value, FALSE);
     sp_desktop_widget_update_rulers (dtw);
+
+    /*  update perspective lines if we are in the 3D box tool (so that infinite ones are shown correctly) */
+    sp_box3d_context_update_lines(dtw->desktop->event_context);    
 
     dtw->update = 0;
 }

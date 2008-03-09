@@ -88,6 +88,7 @@
 #include "event-log.h"
 #include "display/canvas-grid.h"
 #include "widgets/desktop-widget.h"
+#include "box3d-context.h"
 
 #include "display/sp-canvas.h"
 
@@ -741,6 +742,9 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
     /* Scroll */
     sp_canvas_scroll_to (canvas, x0 * newscale - border, y1 * -newscale - border, clear);
 
+    /*  update perspective lines if we are in the 3D box tool (so that infinite ones are shown correctly) */
+    sp_box3d_context_update_lines(event_context);
+
     _widget->updateRulers();
     _widget->updateScrollbars(expansion(_d2w));
     _widget->updateZoom();
@@ -978,6 +982,9 @@ SPDesktop::scroll_world (double dx, double dy, bool is_scrolling)
     NR::Rect const viewbox = canvas->getViewbox();
 
     sp_canvas_scroll_to(canvas, viewbox.min()[NR::X] - dx, viewbox.min()[NR::Y] - dy, FALSE, is_scrolling);
+
+    /*  update perspective lines if we are in the 3D box tool (so that infinite ones are shown correctly) */
+    sp_box3d_context_update_lines(event_context);
 
     _widget->updateRulers();
     _widget->updateScrollbars(expansion(_d2w));

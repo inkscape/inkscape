@@ -34,7 +34,6 @@
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-convex-hull.h>
 #include "prefs-utils.h"
-#include "box3d-context.h"
 #include "inkscape.h"
 #include "sodipodi-ctrlrect.h"
 #if ENABLE_LCMS
@@ -2116,15 +2115,6 @@ sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear,
         }
     } else {
         // scrolling as part of zoom; do nothing here - the next do_update will perform full redraw
-    }
-
-    /*  update perspective lines if we are in the 3D box tool (so that infinite ones are shown correctly) */
-    SPEventContext *ec = inkscape_active_event_context();
-    if (SP_IS_BOX3D_CONTEXT (ec)) {
-        // We could avoid redraw during panning by checking the status of is_scrolling, but this is
-        // neither faster nor does it get rid of artefacts, so we update PLs unconditionally
-        Box3DContext *bc = SP_BOX3D_CONTEXT (ec);
-        bc->_vpdrag->updateLines();
     }
 }
 

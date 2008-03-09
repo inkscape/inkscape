@@ -670,6 +670,14 @@ static void sp_box3d_finish(Box3DContext *bc)
     bc->extruded = false;
 }
 
+void sp_box3d_context_update_lines(SPEventContext *ec) {
+    /*  update perspective lines if we are in the 3D box tool (so that infinite ones are shown correctly) */
+    if (SP_IS_BOX3D_CONTEXT (ec)) {
+        Box3DContext *bc = SP_BOX3D_CONTEXT (ec);
+        bc->_vpdrag->updateLines();
+    }
+}
+
 /*
   Local Variables:
   mode:c++
