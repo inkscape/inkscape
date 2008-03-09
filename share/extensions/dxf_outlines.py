@@ -24,12 +24,12 @@ import inkex, simplepath, cubicsuperpath, dxf_templates
 class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
-        self.dxf = ''
+        self.dxf = []
         self.handle = 255                       # initiallize handle for DXF ENTITY
     def output(self):
-        print self.dxf
+        print ''.join(self.dxf)
     def dxf_add(self, str):
-        self.dxf += str
+        self.dxf.append(str)
     def dxf_line(self,csp):
         self.dxf_add("  0\nLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n100\nAcDbLine\n" % self.handle)
         self.dxf_add(" 10\n%f\n 20\n%f\n 30\n0.0\n 11\n%f\n 21\n%f\n 31\n0.0\n" % (csp[0][0],csp[0][1],csp[1][0],csp[1][1]))
