@@ -41,7 +41,7 @@ LangString lng_OK_CANCEL_DESC ${LANG_SLOVENIAN} "$\n$\nPritisnite V redu za nada
 LangString lng_NO_ADMIN ${LANG_SLOVENIAN} "Nimate skrbniških pravic.$\r$\nNamešèanje programa Inkscape za vse uporabnike se morda ne bo konèala uspešno.$\r$\nIzklopite možnost 'za vse uporabnike'."
 
 ;win9x is not supported
-LangString lng_NOT_SUPPORTED ${LANG_SLOVENIAN} "Za Inkscape velja, da ne teèe v okoljih Windows 95/98/ME!$\r$\nProsimo, oglejte si uradno spletno stran za podrobnejše informacije."
+LangString lng_NOT_SUPPORTED ${LANG_SLOVENIAN} "Za Inkscape velja, da ne teèe v okoljih Windows 95/98/ME!$\r$\nProsim, oglejte si uradno spletno stran za podrobnejše informacije."
 
 ; Full install type
 LangString lng_Full $(LANG_SLOVENIAN) "Polna"
@@ -126,10 +126,10 @@ LangString lng_Examples $(LANG_SLOVENIAN) "Primeri"
 LangString lng_ExamplesDesc $(LANG_SLOVENIAN) "Primeri uporabe ${PRODUCT_NAME}"
 
 ; Tutorials section
-LangString lng_Tutorials $(LANG_SLOVENIAN) "Vodniki s primeri"
+LangString lng_Tutorials $(LANG_SLOVENIAN) "Vodièi s primeri"
 
 ; Tutorials section description
-LangString lng_TutorialsDesc $(LANG_SLOVENIAN) "Vodniki s primeri uporabe ${PRODUCT_NAME}-a"
+LangString lng_TutorialsDesc $(LANG_SLOVENIAN) "Vodièi s primeri uporabe ${PRODUCT_NAME}-a"
 
 
 ; Languages section
@@ -139,12 +139,12 @@ LangString lng_Languages $(LANG_SLOVENIAN) "Prevodi"
 LangString lng_LanguagesDesc $(LANG_SLOVENIAN) "Namesti razliène prevode za ${PRODUCT_NAME}"
 
 LangString lng_am $(LANG_SLOVENIAN) "amharski (am)"
-LangString lng_ar $(LANG_SLOVENIAN) "Arabic (ar)"
+LangString lng_ar $(LANG_SLOVENIAN) "arabski (ar)"
 LangString lng_az $(LANG_SLOVENIAN) "azerbajdžanski (az)"
 LangString lng_be $(LANG_SLOVENIAN) "beloruski (be)"
 LangString lng_bg $(LANG_SLOVENIAN) "bolgarski (bg)"
 LangString lng_bn $(LANG_SLOVENIAN) "bengalski (bn)"
-LangString lng_br $(LANG_SLOVENIAN) "Breton (br)"
+LangString lng_br $(LANG_SLOVENIAN) "bretonski (br)"
 LangString lng_ca $(LANG_SLOVENIAN) "katalonski (ca)"
 LangString lng_ca@valencia $(LANG_SLOVENIAN) "valencijski katalonski (ca@valencia)"
 LangString lng_cs $(LANG_SLOVENIAN) "èeški (cs)"
