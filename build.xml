@@ -203,7 +203,6 @@
             <!-- THINGS TO EXCLUDE -->
             <exclude name="2geom/chebyshev.cpp"/>
             <exclude name="ast/.*"/>
-            <exclude name="bind/.*"/><!-- comment this for binding-->
             <exclude name="bonobo/.*"/>
             <exclude name="deptool.cpp"/>
             <exclude name="test-all.cpp"/>
@@ -317,7 +316,7 @@
             <!-- PYTHON -->
             -I${gtk}/python/include
             <!-- JAVA -->
-            <!-- -I${env.JAVA_HOME}/include -I${env.JAVA_HOME}/include/win32 -->
+            -I${src}/bind/javainc -I${src}/bind/javainc/win32
         </includes>
     </cc>
   </target>
