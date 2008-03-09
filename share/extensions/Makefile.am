@@ -41,6 +41,7 @@ extensions = \
 	dimension.py \
 	dots.py \
 	dxf_outlines.py \
+	dxf_templates.py \
 	edge3d.py \
 	embedimage.py \
 	embed_raster_in_svg.pl \
