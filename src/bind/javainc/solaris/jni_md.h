@@ -1,5 +1,5 @@
 /*
- * Copyright 1996-1998 Sun Microsystems, Inc.  All Rights Reserved.
+ * Copyright 1996-2000 Sun Microsystems, Inc.  All Rights Reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -26,12 +26,17 @@
 #ifndef _JAVASOFT_JNI_MD_H_
 #define _JAVASOFT_JNI_MD_H_
 
-#define JNIEXPORT __declspec(dllexport)
-#define JNIIMPORT __declspec(dllimport)
-#define JNICALL __stdcall
+#define JNIEXPORT
+#define JNIIMPORT
+#define JNICALL
 
-typedef long jint;
-typedef __int64 jlong;
+typedef int jint;
+#ifdef _LP64 /* 64-bit Solaris */
+typedef long jlong;
+#else
+typedef long long jlong;
+#endif
+
 typedef signed char jbyte;
 
 #endif /* !_JAVASOFT_JNI_MD_H_ */
