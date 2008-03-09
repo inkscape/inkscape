@@ -1483,6 +1483,9 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
                 SPObject *clone_object = sp_desktop_document(desktop)->getObjectByRepr(clone);
                 double perimeter = perimeter_original * t.expansion();
                 double radius = blur * perimeter;
+                // this is necessary for all newly added clones to have correct bboxes,
+                // otherwise filters won't work:
+                sp_document_ensure_up_to_date(sp_desktop_document(desktop));
                 // it's hard to figure out exact width/height of the tile without having an object
                 // that we can take bbox of; however here we only need a lower bound so that blur
                 // margins are not too small, and the perimeter should work
