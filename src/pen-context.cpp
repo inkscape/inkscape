@@ -999,8 +999,12 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
         case GDK_Delete:
         case GDK_KP_Delete:
             if (sp_curve_is_empty(pc->green_curve)) {
-                pen_cancel (pc);
-                ret = TRUE;
+                if (!sp_curve_is_empty(pc->red_curve)) {
+                    pen_cancel (pc);
+                    ret = TRUE;
+                } else {
+                    // do nothing; this event should be handled upstream
+                }
             } else {
                 /* Reset red curve */
                 sp_curve_reset(pc->red_curve);
