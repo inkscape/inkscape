@@ -1081,6 +1081,29 @@ spdc_pen_set_initial_point(SPPenContext *const pc, NR::Point const p)
     sp_canvas_force_full_redraw_after_interruptions(pc->desktop->canvas, 5);
 }
 
+/**
+ * Show the status message for the current line/curve segment.
+ * This type of message always shows angle/distance as the last
+ * two parameters ("angle %3.2f&#176;, distance %s").
+ */ 
+static void
+spdc_pen_set_angle_distance_status_message(SPPenContext *const pc, NR::Point const p, int pc_point_to_compare, gchar const *message)
+{
+    g_assert(pc != NULL);
+    g_assert((pc_point_to_compare == 0) || (pc_point_to_compare == 3)); // exclude control handles
+    g_assert(message != NULL);
+
+    SPDesktop *desktop = SP_EVENT_CONTEXT(pc)->desktop;
+    NR::Point rel = p - pc->p[pc_point_to_compare];
+    GString *dist = SP_PX_TO_METRIC_STRING(NR::L2(rel), desktop->namedview->getDefaultMetric());
+    double angle = atan2(rel[NR::Y], rel[NR::X]) * 180 / M_PI;
+    if (prefs_get_int_attribute("options.compassangledisplay", "value", 0) != 0)
+        angle = angle_to_compass (angle);
+
+    pc->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, message, angle, dist->str);
+    g_string_free(dist, FALSE);
+}
+
 static void
 spdc_pen_set_subsequent_point(SPPenContext *const pc, NR::Point const p, bool statusbar)
 {
@@ -1107,15 +1130,16 @@ spdc_pen_set_subsequent_point(SPPenContext *const pc, NR::Point const p, bool st
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->red_curve);
 
     if (statusbar) {
-        // status text
-        SPDesktop *desktop = SP_EVENT_CONTEXT(pc)->desktop;
-        NR::Point rel = p - pc->p[0];
-        GString *dist = SP_PX_TO_METRIC_STRING(NR::L2(rel), desktop->namedview->getDefaultMetric());
-        double angle = atan2(rel[NR::Y], rel[NR::X]) * 180 / M_PI;
-        if (prefs_get_int_attribute("options.compassangledisplay", "value", 0) != 0)
-            angle = angle_to_compass (angle);
-        pc->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>%s</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"), is_curve? "Curve segment" : "Line segment", angle, dist->str);
-        g_string_free(dist, FALSE);
+        gchar *message = g_strconcat(
+                             "<b>",
+                             is_curve ? _("Curve segment") : _("Line segment"),
+                             "</b>: ",
+                             _("angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"),
+                             NULL
+                         );
+
+        spdc_pen_set_angle_distance_status_message(pc, p, 0, message);
+        g_free(message);
     }
 }
 
@@ -1132,16 +1156,7 @@ spdc_pen_set_ctrl(SPPenContext *const pc, NR::Point const p, guint const state)
         SP_CTRL(pc->c1)->moveto(pc->p[1]);
         sp_ctrlline_set_coords(SP_CTRLLINE(pc->cl1), pc->p[0], pc->p[1]);
 
-        // status text
-        SPDesktop *desktop = SP_EVENT_CONTEXT(pc)->desktop;
-        NR::Point rel = p - pc->p[0];
-        GString *dist = SP_PX_TO_METRIC_STRING(NR::L2(rel), desktop->namedview->getDefaultMetric());
-        double angle = atan2(rel[NR::Y], rel[NR::X]) * 180 / M_PI;
-        if (prefs_get_int_attribute("options.compassangledisplay", "value", 0) != 0)
-            angle = angle_to_compass (angle);
-        pc->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle"), angle, dist->str);
-        g_string_free(dist, FALSE);
-
+        spdc_pen_set_angle_distance_status_message(pc, p, 0, _("<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle"));
     } else if ( pc->npoints == 5 ) {
         pc->p[4] = p;
         sp_canvas_item_show(pc->c0);
@@ -1162,16 +1177,16 @@ spdc_pen_set_ctrl(SPPenContext *const pc, NR::Point const p, guint const state)
         SP_CTRL(pc->c1)->moveto(pc->p[4]);
         sp_ctrlline_set_coords(SP_CTRLLINE(pc->cl1), pc->p[3], pc->p[4]);
 
-        // status text
-        SPDesktop *desktop = SP_EVENT_CONTEXT(pc)->desktop;
-        NR::Point rel = p - pc->p[3];
-        GString *dist = SP_PX_TO_METRIC_STRING(NR::L2(rel), desktop->namedview->getDefaultMetric());
-        double angle = atan2(rel[NR::Y], rel[NR::X]) * 180 / M_PI;
-        if (prefs_get_int_attribute("options.compassangledisplay", "value", 0) != 0)
-            angle = angle_to_compass (angle);
-        pc->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>%s</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"), is_symm? "Curve handle, symmetric" : "Curve handle", angle, dist->str);
-        g_string_free(dist, FALSE);
+        gchar *message = g_strconcat(
+                             "<b>",
+                             is_symm ? _("Curve handle, symmetric") : _("Curve handle"),
+                             "</b>: ",
+                             _("angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"),
+                             NULL
+                         );
 
+        spdc_pen_set_angle_distance_status_message(pc, p, 3, message);
+        g_free(message);
     } else {
         g_warning("Something bad happened - npoints is %d", pc->npoints);
     }
