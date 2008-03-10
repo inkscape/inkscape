@@ -54,7 +54,10 @@
 #include <glib/gmessages.h>
 
 
-
+/**
+ * Note: We must limit Java or JVM-specific code to this file
+ * and to dobinding.cpp.  It should be hidden from javabind.h
+ */  
 
 
 namespace Inkscape
@@ -174,6 +177,11 @@ JavaBinderyImpl::~JavaBinderyImpl()
 {
 }
 
+
+//########################################################################
+//# MESSAGES
+//########################################################################
+
 void err(const char *fmt, ...)
 {
 #if 0
@@ -212,19 +220,12 @@ void msg(const char *fmt, ...)
 #endif
 }
 
-bool JavaBinderyImpl::isLoaded()
-{
-    return (jvm != (void *)0);
-}
-
-
-
-#ifdef __WIN32__
 
 
 //########################################################################
 //# W I N 3 2      S T Y L E
 //########################################################################
+#ifdef __WIN32__
 
 
 #define DIR_SEPARATOR "\\"
@@ -302,12 +303,12 @@ static void getJavaRoot(String &javaroot)
 }
 
 
-#else
 
 
 //########################################################################
 //# U N I X    S T Y L E
 //########################################################################
+#else /* !__WIN32__ */
 
 
 #define DIR_SEPARATOR "/"
@@ -437,12 +438,33 @@ static void getJavaRoot(String &javaroot)
     javaroot = INKSCAPE_JAVADIR;
 }
 
-#endif
+#endif /* !__WIN32__ */
+
+
+//########################################################################
+//# COMMON
+//########################################################################
+
+
+bool JavaBinderyImpl::isLoaded()
+{
+    return (jvm != (void *)0);
+}
 
 
 
-
-
+/**
+ * This will set up the classpath for the launched VM.
+ * We will add two things:
+ *   1.  INKSCAPE_JAVADIR/classes -- path to loose classes
+ *   2.  A concatenation of all jar files in INKSCAPE_JAVADIR/lib
+ *
+ * This will allow people to add classes and jars to the JVM without
+ * needing to state them explicitly.
+ * 
+ * @param javaroot.  Should be INKSCAPE_JAVADIR
+ * @param result a string buffer to hold the result of this method   
+ */        
 static void populateClassPath(const String &javaroot,
                               String &result)
 {
@@ -491,6 +513,17 @@ static void populateClassPath(const String &javaroot,
 }
 
 
+
+//========================================================================
+// Native methods
+//========================================================================
+/**
+ * These methods are used to allow the ScriptRunner class to
+ * redirect its stderr and stdout streams to here, to be caught
+ * by two string buffers.  We can then use those buffers how we
+ * want.  These native methods are only those needed for running
+ * a script.  For the main C++/Java bindings, see dobinding.cpp 
+ */    
 static void stdOutWrite(jlong ptr, jint ch)
 {
     JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
@@ -510,7 +543,20 @@ static JNINativeMethod scriptRunnerMethods[] =
 { (char *)"stdErrWrite", (char *)"(JI)V", (void *)stdErrWrite },
 { NULL,  NULL, NULL }
 };
+//========================================================================
+// End native methods
+//========================================================================
 
+
+
+
+/**
+ * This is the most important part of this class.  Here we
+ * attempt to find, load, and initialize a java (or mlvm?) virtual
+ * machine.
+ * 
+ * @return true if successful, else false    
+ */ 
 bool JavaBinderyImpl::loadJVM()
 {
     if (jvm)
@@ -562,7 +608,21 @@ bool JavaBinderyImpl::loadJVM()
 
 
 
-
+/**
+ *  This is a difficult method.  What we are doing is trying to
+ *  call a static method with a list of arguments.  Similar to 
+ *  a varargs call, we need to marshal the Values into their
+ *  Java equivalents and make the proper call.
+ *  
+ * @param type the return type of the method
+ * @param className the full (package / name) name of the java class
+ * @param methodName the name of the method being invoked
+ * @param signature the method signature (ex: "(Ljava/lang/String;I)V" )
+ *    that describes the param and return types of the method.
+ * @param retval the return value of the java method
+ * @return true if the call was successful, else false.  This is not
+ *    the return value of the method.    
+ */    
 bool JavaBinderyImpl::callStatic(int type,
                         const String &className,
                         const String &methodName,
@@ -659,7 +719,13 @@ bool JavaBinderyImpl::callStatic(int type,
 
 
 
-
+/**
+ * Convenience method to call the static void main(String argv[])
+ * method of a given class
+ * 
+ * @param className full name of the java class
+ * @return true if successful, else false   
+ */ 
 bool JavaBinderyImpl::callMain(const String &className)
 {
     std::vector<Value> parms;
@@ -669,7 +735,13 @@ bool JavaBinderyImpl::callMain(const String &className)
 }
 
 
-
+/**
+ * Used to register an array of native methods for a named class
+ * 
+ * @param className the full name of the java class
+ * @param the method array
+ * @return true if successful, else false     
+ */ 
 bool JavaBinderyImpl::registerNatives(const String &className,
                            const JNINativeMethod *methods)
 {
