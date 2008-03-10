@@ -4,7 +4,7 @@
  * Author:  
  *   Bob Jamison
  *
- * Copyright (C) 2004-2007 Authors
+ * Copyright (C) 2004-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -22,9 +22,14 @@
 #include <extension/script/InkscapeScript.h>
 
 
-namespace Inkscape {
-namespace UI {
-namespace Dialog {
+
+namespace Inkscape
+{
+namespace UI
+{
+namespace Dialog
+{
+
 
 
 //#########################################################################
@@ -63,14 +68,19 @@ class ScriptDialogImpl : public ScriptDialog
     void execute(Inkscape::Extension::Script::InkscapeScript::ScriptLanguage lang);
 
     /**
+     * Execute a Javascript script
+     */
+    void executeJavascript();
+
+    /**
      * Execute a Python script
      */
     void executePython();
 
     /**
-     * Execute a Perl script
+     * Execute a Ruby script
      */
-    void executePerl();
+    void executeRuby();
 
 
 
@@ -100,7 +110,7 @@ class ScriptDialogImpl : public ScriptDialog
 
 };
 
-static char *defaultPythonCodeStr =
+static const char *defaultPythonCodeStr =
 #if defined(WITH_PYTHON)
     "# This is a sample Python script.\n"
     "# To run it, select 'Execute Python' from the File menu above.\n"
@@ -172,6 +182,14 @@ lang)
 /**
  * Execute the script in the dialog
  */
+void ScriptDialogImpl::executeJavascript()
+{
+    execute(Inkscape::Extension::Script::InkscapeScript::JAVASCRIPT);
+}
+
+/**
+ * Execute the script in the dialog
+ */
 void ScriptDialogImpl::executePython()
 {
     execute(Inkscape::Extension::Script::InkscapeScript::PYTHON);
@@ -180,9 +198,9 @@ void ScriptDialogImpl::executePython()
 /**
  * Execute the script in the dialog
  */
-void ScriptDialogImpl::executePerl()
+void ScriptDialogImpl::executeRuby()
 {
-    execute(Inkscape::Extension::Script::InkscapeScript::PERL);
+    execute(Inkscape::Extension::Script::InkscapeScript::RUBY);
 }
 
 
@@ -201,14 +219,12 @@ ScriptDialogImpl::ScriptDialogImpl() :
     menuBar.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_File"), fileMenu) );
     fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Clear"),
            sigc::mem_fun(*this, &ScriptDialogImpl::clear) ) );
-#ifdef WITH_PYTHON
+    fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Execute Javascript"),
+           sigc::mem_fun(*this, &ScriptDialogImpl::executeJavascript) ) );
     fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Execute Python"),
            sigc::mem_fun(*this, &ScriptDialogImpl::executePython) ) );
-#endif
-#ifdef WITH_PERL
-    fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Execute Perl"),
-           sigc::mem_fun(*this, &ScriptDialogImpl::executePerl) ) );
-#endif
+    fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Execute Ruby"),
+           sigc::mem_fun(*this, &ScriptDialogImpl::executeRuby) ) );
     contents->pack_start(menuBar, Gtk::PACK_SHRINK);
 
     //### Set up the script field
