@@ -22,6 +22,9 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -42,6 +45,7 @@
 
 #include "javabind.h"
 #include "javabind-private.h"
+#include <path-prefix.h>
 #include <prefix.h>
 #include <glib/gmessages.h>
 
@@ -289,7 +293,8 @@ static void getJavaRoot(String &javaroot)
     if (slashPos)
         *slashPos = '\0';
     javaroot = exeName;
-    javaroot.append("\\share\\java");
+    javaroot.append("\\");
+    javaroot.append(INKSCAPE_JAVADIR);
 }
 
 
@@ -425,7 +430,7 @@ static CreateVMFunc getCreateVMFunc()
 
 static void getJavaRoot(String &javaroot)
 {
-    javaroot = BR_DATADIR("/java");
+    javaroot = INKSCAPE_JAVADIR;
 }
 
 #endif
