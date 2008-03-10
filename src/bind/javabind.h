@@ -260,12 +260,48 @@ public:
         {
         return false;
         }
+        
+    virtual String stdOutGet()
+        {
+        return stdOutBuf;
+        }
+
+    virtual void stdOutClear()
+        {
+        stdOutBuf.clear();
+        }
+
+    virtual String stdErrGet()
+        {
+        return stdErrBuf;
+        }
+
+    virtual void stdErrClear()
+        {
+        stdErrBuf.clear();
+        }
+
+    virtual void stdOut(int ch)
+        {
+        stdOutBuf.push_back((char)ch);
+        }
+
+    virtual void stdErr(int ch)
+        {
+        stdErrBuf.push_back((char)ch);
+        }
 
 
     /**
      *  Return a singleton instance of this bindery
      */
     static JavaBindery *getInstance();
+    
+protected:
+
+
+    String stdOutBuf;
+    String stdErrBuf;
 
 };
 

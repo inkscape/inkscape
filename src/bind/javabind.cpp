@@ -5,12 +5,12 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2007 Bob Jamison
+ * Copyright (C) 2007-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
- *  version 2.1 of the License, or (at your option) any later version.
+ *  version 3 of the License, or (at your option) any later version.
  *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -482,6 +482,25 @@ static void populateClassPath(const String &javaroot,
 }
 
 
+static void stdOutWrite(jlong ptr, jint ch)
+{
+    JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
+    bind->stdOut(ch);
+}
+
+static void stdErrWrite(jlong ptr, jint ch)
+{
+    JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
+    bind->stdErr(ch);
+}
+
+
+static JNINativeMethod scriptRunnerMethods[] =
+{
+{ (char *)"stdOutWrite", (char *)"(JI)V", (void *)stdOutWrite },
+{ (char *)"stdErrWrite", (char *)"(JI)V", (void *)stdErrWrite },
+{ NULL,  NULL, NULL }
+};
 
 bool JavaBinderyImpl::loadJVM()
 {
@@ -510,7 +529,7 @@ bool JavaBinderyImpl::loadJVM()
     msg("Lib path is: '%s'", libpath.c_str());
 
     JavaVMInitArgs vm_args;
-    JavaVMOption options[4];
+    JavaVMOption options[2];
     options[0].optionString    = (char *)classpath.c_str();
     options[1].optionString    = (char *)libpath.c_str();
     vm_args.version            = JNI_VERSION_1_2;
@@ -524,6 +543,11 @@ bool JavaBinderyImpl::loadJVM()
         return false;
         }
 
+    if (!registerNatives("org/inkscape/cmn/ScriptRunner",
+             scriptRunnerMethods))
+        {
+        return false;
+        }
     return true;
 }
 
@@ -551,6 +575,9 @@ bool JavaBinderyImpl::callStatic(int type,
                 methodName.c_str(), signature.c_str());
         return false;
         }
+    /**
+     * Assemble your parameters into a form usable by JNI
+     */
     jvalue *jvals = new jvalue[params.size()];
     for (unsigned int i=0 ; i<params.size() ; i++)
         {
