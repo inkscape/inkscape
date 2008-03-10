@@ -6,6 +6,7 @@ bind/clean:
 	rm -f bind/libbind.a
 	rm -f $(bind_libbind_a_OBJECTS)
 
+bind_libbind_a_CPPFLAGS = -Ibind/javainc -Ibind/javainc/linux $(AM_CPPFLAGS)
 
 bind_libbind_a_SOURCES =	     \
 	bind/javabind.h              \
@@ -14,8 +15,3 @@ bind_libbind_a_SOURCES =	     \
 	bind/dobinding.cpp           \
 	bind/javainc/jni.h           \
 	bind/javainc/linux/jni_md.h
-
-bind_libbind_a_INCLUDES =	     \
-	bind/javainc/jni.h           \
-	bind/javainc/linux/jni_md.h
-
