@@ -1,6 +1,6 @@
 /**
  * This is a simple mechanism to bind Inkscape to Java, and thence
- * to all of the nice things that can be layered upon that. 
+ * to all of the nice things that can be layered upon that.
  *
  * Authors:
  *   Bob Jamison
@@ -41,6 +41,10 @@
 #else
 #include <dlfcn.h>
 #include <errno.h>
+#endif
+
+#if HAVE_SYS_STAT_H
+#include <sys/stat.h>
 #endif
 
 #include "javabind.h"
@@ -251,7 +255,7 @@ static CreateVMFunc getCreateVMFunc()
     char verbuf[16];
     char regpath[80];
     strcpy(regpath, "SOFTWARE\\JavaSoft\\Java Runtime Environment");
-    bool ret = getRegistryString(HKEY_LOCAL_MACHINE, 
+    bool ret = getRegistryString(HKEY_LOCAL_MACHINE,
                      regpath, "CurrentVersion", verbuf, 15);
     if (!ret)
         {
@@ -262,7 +266,7 @@ static CreateVMFunc getCreateVMFunc()
     strcat(regpath, verbuf);
     //msg("reg path: %s\n", regpath);
     char libname[80];
-    ret = getRegistryString(HKEY_LOCAL_MACHINE, 
+    ret = getRegistryString(HKEY_LOCAL_MACHINE,
                      regpath, "RuntimeLib", libname, 79);
     if (!ret)
         {
@@ -312,7 +316,7 @@ static void getJavaRoot(String &javaroot)
 
 /**
  * Recursively descend into a directory looking for libjvm.so
- */ 
+ */
 static bool findJVMRecursive(const String &dirpath,
                              std::vector<String> &results)
 {
@@ -345,7 +349,7 @@ static bool findJVMRecursive(const String &dirpath,
         if (finfo.st_mode & S_IFDIR)
             {
             ret |= findJVMRecursive(path, results);
-            }   
+            }
         }
     closedir(dir);
     return ret;
@@ -363,7 +367,7 @@ static const char *commonJavaPaths[] =
 
 /**
  * Look for a Java VM (libjvm.so) in several Unix places
- */ 
+ */
 static bool findJVM(String &result)
 {
     std::vector<String> results;
@@ -480,7 +484,7 @@ static void populateClassPath(const String &javaroot,
         cp.append(path);
         }
     closedir(dir);
-    
+
     result = cp;
 
     return;
