@@ -365,6 +365,7 @@ inkscape_private_libs =	\
 	extension/implementation/libimplementation.a	\
 	extension/internal/libinternal.a	\
 	extension/script/libscript.a	\
+	bind/libbind.a	\
 	dom/libdom.a            \
 	xml/libspxml.a		\
 	2geom/lib2geom.a	\

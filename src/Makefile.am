@@ -76,7 +76,6 @@ bin_PROGRAMS = inkscape inkview
 noinst_LIBRARIES =	\
 	libinkpre.a	\
 	application/libinkapp.a	\
-	bind/libbind.a	\
 	dialogs/libspdialogs.a	\
 	pedro/libpedro.a \
 	jabber_whiteboard/libjabber_whiteboard.a \
@@ -86,6 +85,7 @@ noinst_LIBRARIES =	\
 	extension/internal/libinternal.a	\
 	extension/libextension.a	\
 	extension/script/libscript.a	\
+	bind/libbind.a	\
 	helper/libspchelp.a	\
 	io/libio.a	\
 	libcroco/libcroco.a	\
