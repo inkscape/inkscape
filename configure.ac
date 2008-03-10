@@ -867,6 +867,7 @@ src/Makefile
 src/check-header-compile
 src/algorithms/makefile
 src/application/makefile
+src/bind/makefile
 src/debug/makefile
 src/dialogs/makefile
 src/display/makefile
