@@ -1970,9 +1970,8 @@ EffectLastVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
     switch ((long) data) {
         case SP_VERB_EFFECT_LAST_PREF:
-            if (!effect->prefs(current_view))
-                return;
-            /* Note: fall through */
+            effect->prefs(current_view);
+            break;
         case SP_VERB_EFFECT_LAST:
             effect->effect(current_view);
             break;
