@@ -13,6 +13,7 @@ dom_libdom_a_SOURCES =       \
     dom/domconfig.h          \
 	dom/domimpl.cpp          \
 	dom/domimpl.h            \
+    dom/domptr.cpp           \
     dom/domstring.cpp        \
     dom/domstring.h          \
     dom/domstringimpl.h      \
