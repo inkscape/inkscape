@@ -25,6 +25,7 @@ extern "C" {
 #  define INKSCAPE_EXAMPLESDIR    BR_DATADIR( "/inkscape/examples" )
 #  define INKSCAPE_EXTENSIONDIR   BR_DATADIR( "/inkscape/extensions" )
 #  define INKSCAPE_GRADIENTSDIR   BR_DATADIR( "/inkscape/gradients" )
+#  define INKSCAPE_JAVADIR        BR_DATADIR( "/inkscape/java" )
 #  define INKSCAPE_KEYSDIR        BR_DATADIR( "/inkscape/keys" )
 #  define INKSCAPE_PIXMAPDIR      BR_DATADIR( "/inkscape/icons" )
 #  define INKSCAPE_MARKERSDIR     BR_DATADIR( "/inkscape/markers" )
@@ -45,6 +46,7 @@ extern "C" {
 #    define INKSCAPE_EXAMPLESDIR  "share\\examples"
 #    define INKSCAPE_EXTENSIONDIR "share\\extensions"
 #    define INKSCAPE_GRADIENTSDIR "share\\gradients"
+#    define INKSCAPE_JAVADIR      "share\\java"
 #    define INKSCAPE_KEYSDIR      "share\\keys"
 #    define INKSCAPE_PIXMAPDIR    "share\\icons"
 #    define INKSCAPE_MARKERSDIR   "share\\markers"
@@ -83,6 +85,7 @@ extern "C" {
 #    define INKSCAPE_EXAMPLESDIR  INKSCAPE_DATADIR "/inkscape/examples"
 #    define INKSCAPE_EXTENSIONDIR INKSCAPE_DATADIR "/inkscape/extensions"
 #    define INKSCAPE_GRADIENTSDIR INKSCAPE_DATADIR "/inkscape/gradients"
+#    define INKSCAPE_JAVADIR      INKSCAPE_DATADIR "/inkscape/java"
 #    define INKSCAPE_KEYSDIR      INKSCAPE_DATADIR "/inkscape/keys"
 #    define INKSCAPE_PIXMAPDIR    INKSCAPE_DATADIR "/inkscape/icons"
 #    define INKSCAPE_MARKERSDIR   INKSCAPE_DATADIR "/inkscape/markers"
