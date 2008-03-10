@@ -1,12 +1,25 @@
 /**
- * Inkscape Scripting container
+ * This is a simple mechanism to bind Inkscape to Java, and thence
+ * to all of the nice things that can be layered upon that.
  *
  * Authors:
- *   Bob Jamison <rjamison@titan.com>
+ *   Bob Jamison
  *
- * Copyright (C) 2004-2008 Authors
+ * Copyright (C) 2007-2008 Bob Jamison
  *
- * Released under GNU GPL, read the file 'COPYING' for more information
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 3 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 
@@ -95,12 +108,18 @@ bool InkscapeScript::interpretScript(const Glib::ustring &script,
     parms.push_back(parm);
     parm.setString(script);
     parms.push_back(parm);
+
+    binder->stdOutClear();
+    binder->stdErrClear();
     bool ret = binder->callStatic(Value::BIND_BOOLEAN,
-                                 "org/inkscape/cmn/ScriptRunner", 
+                             "org/inkscape/cmn/ScriptRunner",
                              "run",
                              "(Ljava/lang/String;Ljava/lang/String;)Z",
                              parms,
                              retval);
+    output = binder->stdOutGet();
+    error  = binder->stdErrGet();
+
     if (!ret)
         {
         g_warning("interpretScript: failed\n");
@@ -161,12 +180,18 @@ bool InkscapeScript::interpretFile(const Glib::ustring &fname,
     parms.push_back(parm);
     parm.setString(fname);
     parms.push_back(parm);
+
+    binder->stdOutClear();
+    binder->stdErrClear();
     bool ret = binder->callStatic(Value::BIND_BOOLEAN,
                              "org/inkscape/cmn/ScriptRunner",
                              "runFile",
                              "(Ljava/lang/String;Ljava/lang/String;)Z",
                              parms,
                              retval);
+    output = binder->stdOutGet();
+    error  = binder->stdErrGet();
+
     if (!ret)
         {
         g_warning("interpretFile: failed\n");
