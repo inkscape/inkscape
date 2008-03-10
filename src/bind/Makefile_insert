@@ -1,0 +1,15 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+bind/all: bind/libbind.a
+
+bind/clean:
+	rm -f bind/libbind.a
+	rm -f $(bind_libbind_a_OBJECTS)
+
+
+bind_libbind_a_SOURCES =	\
+	bind/javabind.h         \
+	bind/javabind-private.h \
+	bind/javabind.cpp       \
+	bind/dobinding.cpp
+
