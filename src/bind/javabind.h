@@ -58,7 +58,8 @@ public:
         BIND_INT,
         BIND_BOOLEAN,
         BIND_DOUBLE,
-        BIND_STRING
+        BIND_STRING,
+        BIND_OBJECT
         } ValueType;
 
     /**

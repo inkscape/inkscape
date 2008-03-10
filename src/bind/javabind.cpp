@@ -79,6 +79,35 @@ typedef jint (*CreateVMFunc)(JavaVM **, JNIEnv **, void *);
 //# UTILITY
 //########################################################################
 
+/**
+ * Normalize path.  Java wants '/', even on Windows
+ */ 
+String normalizePath(const String &str)
+{
+    String buf;
+    for (unsigned int i=0 ; i<str.size() ; i++)
+        {
+        char ch = str[i];
+        if (ch == '\\')
+            buf.push_back('/');
+        else
+            buf.push_back(ch);
+		}
+	return buf;
+}
+
+
+String getException(JNIEnv *env)
+{
+    String buf;
+    jthrowable exc = env->ExceptionOccurred();
+    if (exc)
+        {
+        env->ExceptionClear();
+		}
+	return buf;
+}
+
 jint getInt(JNIEnv *env, jobject obj, const char *name)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "I");
@@ -506,10 +535,8 @@ static void populateClassPath(const String &javaroot,
         cp.append(path);
         }
     closedir(dir);
-
+    
     result = cp;
-
-    return;
 }
 
 
@@ -524,13 +551,13 @@ static void populateClassPath(const String &javaroot,
  * want.  These native methods are only those needed for running
  * a script.  For the main C++/Java bindings, see dobinding.cpp 
  */    
-static void stdOutWrite(jlong ptr, jint ch)
+void JNICALL stdOutWrite(JNIEnv */*env*/, jobject /*obj*/, jlong ptr, jint ch)
 {
     JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
     bind->stdOut(ch);
 }
 
-static void stdErrWrite(jlong ptr, jint ch)
+void JNICALL stdErrWrite(JNIEnv */*env*/, jobject /*obj*/, jlong ptr, jint ch)
 {
     JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
     bind->stdErr(ch);
@@ -548,6 +575,13 @@ static JNINativeMethod scriptRunnerMethods[] =
 //========================================================================
 
 
+/**
+ * This is used to grab output from the VM itself. See 'options' below.
+ */ 
+static int JNICALL vfprintfHook(FILE* f, const char *fmt, va_list args)
+{
+    g_logv(G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, args);
+}
 
 
 /**
@@ -574,22 +608,26 @@ bool JavaBinderyImpl::loadJVM()
     String cp;
     populateClassPath(javaroot, cp);
     String classpath = "-Djava.class.path=";
-    classpath.append(cp);
+    classpath.append(normalizePath(cp));
     msg("Class path is: '%s'", classpath.c_str());
 
     String libpath = "-Djava.library.path=";
     libpath.append(javaroot);
     libpath.append(DIR_SEPARATOR);
     libpath.append("libm");
+    libpath = normalizePath(libpath);
     msg("Lib path is: '%s'", libpath.c_str());
 
     JavaVMInitArgs vm_args;
-    JavaVMOption options[2];
+    JavaVMOption options[4];
     options[0].optionString    = (char *)classpath.c_str();
     options[1].optionString    = (char *)libpath.c_str();
-    vm_args.version            = JNI_VERSION_1_2;
+    options[2].optionString    = "-verbose:jni";
+    options[3].optionString    = "vfprintf";
+    options[3].extraInfo       = (void *)vfprintfHook;
+    vm_args.version            = JNI_VERSION_1_4;
     vm_args.options            = options;
-    vm_args.nOptions           = 2;
+    vm_args.nOptions           = 4;
     vm_args.ignoreUnrecognized = true;
 
     if (createVM(&jvm, &env, &vm_args) < 0)
@@ -751,12 +789,33 @@ bool JavaBinderyImpl::registerNatives(const String &className,
         err("Could not find class '%s'", className.c_str());
         return false;
         }
-    int nrMethods = 0;
+    /**
+     * hack for JDK bug http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6493522
+     */
+	jmethodID mid = env->GetMethodID(env->GetObjectClass(cls), "getConstructors",
+	          "()[Ljava/lang/reflect/Constructor;");
+	if (!mid)
+	    {
+	    err("Could not get reflect mid for 'getConstructors'");
+		return false;
+		}   
+	env->CallObjectMethod(cls, mid);
+	/**
+	 * end hack
+	 */	 	
+    jint nrMethods = 0;
     for (const JNINativeMethod *m = methods ; m->name ; m++)
         nrMethods++;
-    if (env->RegisterNatives(cls, (const JNINativeMethod *)methods, nrMethods) < 0)
+    jint ret = env->RegisterNatives(cls, (const JNINativeMethod *)methods, nrMethods);
+    if (ret < 0)
         {
-        err("Could not register natives");
+        err("Could not register %d native methods for '%s'",
+		                    nrMethods, className.c_str());
+		if (env->ExceptionCheck())
+		    {
+			env->ExceptionDescribe();
+			env->ExceptionClear();
+			}
         return false;
         }
     return true;

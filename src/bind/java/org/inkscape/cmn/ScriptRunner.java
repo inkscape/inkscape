@@ -43,7 +43,7 @@ long backPtr;
 /**
  * Redirect stdout
  */
-private native void stdOutWrite(long ptr, int b);
+public native void stdOutWrite(long ptr, int b);
 class StdOutStream extends OutputStream
 {
 
@@ -59,7 +59,7 @@ public void write(int b)
 /**
  * Redirect stderr
  */
-private native void stdErrWrite(long ptr, int b);
+public native void stdErrWrite(long ptr, int b);
 class StdErrStream extends OutputStream
 {
 
