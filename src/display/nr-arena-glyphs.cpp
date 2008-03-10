@@ -182,6 +182,7 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL */*area*/, NRGC *gc, guint /*s
             if ( glyphs->style->stroke_linejoin.computed == SP_STROKE_LINEJOIN_BEVEL ) nstyl.stroke_join=join_straight;
             nstyl.stroke_miter_limit = glyphs->style->stroke_miterlimit.value;
             nstyl.nbDash=0;
+            nstyl.dash_offset = 0;
             nstyl.dashes=NULL;
             if ( glyphs->style->stroke_dash.n_dash > 0 ) {
                 nstyl.nbDash=glyphs->style->stroke_dash.n_dash;
