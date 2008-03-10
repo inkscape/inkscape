@@ -7,7 +7,7 @@
  * Authors:
  *   Bob Jamison <rjamison@titan.com>
  *
- * Copyright (C) 2004-2006 Bob Jamison
+ * Copyright (C) 2004-2008 Bob Jamison
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -16,11 +16,18 @@
 
 #include <glibmm.h>
 
-namespace Inkscape {
-namespace Extension {
-namespace Script {
+namespace Inkscape
+{
+namespace Extension
+{
+namespace Script
+{
 
 
+
+/**
+ * This class is used to run scripts, either from a file or buffer
+ */
 class InkscapeScript
 {
 public:

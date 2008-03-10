@@ -4,21 +4,28 @@
  * Authors:
  *   Bob Jamison <rjamison@titan.com>
  *
- * Copyright (C) 2004 Authors
+ * Copyright (C) 2004-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
 
 #include "InkscapeScript.h"
 
 #include <bind/javabind.h>
 
-namespace Inkscape {
-namespace Extension {
-namespace Script {
+
+
+namespace Inkscape
+{
+namespace Extension
+{
+namespace Script
+{
 
 
 typedef Inkscape::Bind::Value Value;
+
 
 /**
  *
@@ -78,16 +85,16 @@ bool InkscapeScript::interpretScript(const Glib::ustring &script,
         {
         g_warning("interpretScript: unable to start JVM\n");
         return false;
-				}
-		std::vector<Value> parms;
-		Value retval;
-		Value parm;
-		parm.setString(langname);
-		parms.push_back(parm);
-		parm.setString(script);
-		parms.push_back(parm);
+        }
+    std::vector<Value> parms;
+    Value retval;
+    Value parm;
+    parm.setString(langname);
+    parms.push_back(parm);
+    parm.setString(script);
+    parms.push_back(parm);
     bool ret = binder->callStatic(Value::BIND_BOOLEAN,
-		                         "org/inkscape/cmn/ScriptRunner", 
+                                 "org/inkscape/cmn/ScriptRunner", 
                              "run",
                              "(Ljava/lang/String;Ljava/lang/String;)Z",
                              parms,
@@ -95,8 +102,8 @@ bool InkscapeScript::interpretScript(const Glib::ustring &script,
     if (!ret)
         {
         g_warning("interpretScript: failed\n");
-				return false;
-				}
+        return false;
+        }
    
     return true;
 }
@@ -140,16 +147,16 @@ bool InkscapeScript::interpretFile(const Glib::ustring &fname,
         {
         g_warning("interpretFile: unable to start JVM\n");
         return false;
-				}
-		std::vector<Value> parms;
-		Value retval;
-		Value parm;
-		parm.setString(langname);
-		parms.push_back(parm);
-		parm.setString(fname);
-		parms.push_back(parm);
+        }
+    std::vector<Value> parms;
+    Value retval;
+    Value parm;
+    parm.setString(langname);
+    parms.push_back(parm);
+    parm.setString(fname);
+    parms.push_back(parm);
     bool ret = binder->callStatic(Value::BIND_BOOLEAN,
-		                         "org/inkscape/cmn/ScriptRunner", 
+                             "org/inkscape/cmn/ScriptRunner",
                              "runFile",
                              "(Ljava/lang/String;Ljava/lang/String;)Z",
                              parms,
@@ -157,8 +164,8 @@ bool InkscapeScript::interpretFile(const Glib::ustring &fname,
     if (!ret)
         {
         g_warning("interpretFile: failed\n");
-				return false;
-				}
+        return false;
+        }
    
     return true;
 }
