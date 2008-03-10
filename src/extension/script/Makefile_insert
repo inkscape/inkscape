@@ -6,39 +6,8 @@ extension/script/clean:
 	rm -f extension/script/libscript.a
 	rm -f $(extension_script_libscript_a_OBJECTS)
 
-if WITH_PERL
-perl_sources = \
-	extension/script/InkscapePerl.h \
-	extension/script/InkscapePerl.cpp \
-	extension/script/inkscape_perl_wrap.cpp \
-	extension/script/inkscape_perl.pm \
-	extension/script/inkscape_perl.pm.h
-endif
-
-if WITH_PYTHON
-python_sources = \
-	extension/script/InkscapePython.h \
-	extension/script/InkscapePython.cpp \
-	extension/script/CXX/Config.hxx \
-	extension/script/CXX/cxxextensions.c \
-	extension/script/CXX/cxxsupport.cxx \
-	extension/script/CXX/cxx_extensions.cxx \
-	extension/script/CXX/Exception.hxx \
-	extension/script/CXX/Extensions.hxx \
-	extension/script/CXX/IndirectPythonInterface.cxx \
-	extension/script/CXX/IndirectPythonInterface.hxx \
-	extension/script/CXX/Objects.hxx \
-	extension/script/CXX/Version.hxx \
-	extension/script/CXX/WrapPython.h
-endif
 
 extension_script_libscript_a_SOURCES =	\
-	extension/script/InkscapeBinding.h \
-	extension/script/InkscapeBinding.cpp \
-	extension/script/InkscapeInterpreter.h \
-	extension/script/InkscapeInterpreter.cpp \
 	extension/script/InkscapeScript.h \
-	extension/script/InkscapeScript.cpp \
-	$(perl_sources)	\
-	$(python_sources)
+	extension/script/InkscapeScript.cpp
 

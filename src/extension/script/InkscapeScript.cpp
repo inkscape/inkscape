@@ -11,21 +11,14 @@
 
 #include "InkscapeScript.h"
 
-#include "InkscapeInterpreter.h"
-
-#ifdef WITH_PERL
-# include "InkscapePerl.h"
-#endif
-
-#ifdef WITH_PYTHON
-# include "InkscapePython.h"
-#endif
-
+#include <bind/javabind.h>
 
 namespace Inkscape {
 namespace Extension {
 namespace Script {
 
+
+typedef Inkscape::Bind::Value Value;
 
 /**
  *
@@ -58,28 +51,19 @@ bool InkscapeScript::interpretScript(const Glib::ustring &script,
                                  Glib::ustring &error,
                                  ScriptLanguage language)
 {
-    char * langname=NULL;
-    InkscapeInterpreter *interp = NULL;
+    const char *langname=NULL;
     //if() instead of switch() lets us scope vars
-    if (language == InkscapeScript::PERL)
+    if (language == InkscapeScript::JAVASCRIPT)
         {
-#ifdef WITH_PERL
-        langname="Perl";
-        interp = new InkscapePerl();
-#else
-        g_print ("Internal Perl script functionality requested, but it was not compiled in!\n");
-        return false;
-#endif
+        langname="Javascript";
         }
     else if (language == InkscapeScript::PYTHON)
         {
-#ifdef WITH_PYTHON
         langname="Python";
-        interp = new InkscapePython();
-#else
-        g_print ("Internal Python script functionality requested, but it was not compiled in!\n");
-        return false;
-#endif
+        }
+    else if (language == InkscapeScript::RUBY)
+        {
+        langname="Ruby";
         }
     else
         {
@@ -88,70 +72,94 @@ bool InkscapeScript::interpretScript(const Glib::ustring &script,
         return false;
         }
 
-    if (!interp)
+    Inkscape::Bind::JavaBindery *binder =
+            Inkscape::Bind::JavaBindery::getInstance();
+    if (!binder->loadJVM())  //idempotent
         {
-        g_warning("interpretScript: error starting Language '%s'\n",
-                        langname);
+        g_warning("interpretScript: unable to start JVM\n");
         return false;
-        }
-
-    if (!interp->interpretScript(script, output, error))
+				}
+		std::vector<Value> parms;
+		Value retval;
+		Value parm;
+		parm.setString(langname);
+		parms.push_back(parm);
+		parm.setString(script);
+		parms.push_back(parm);
+    bool ret = binder->callStatic(Value::BIND_BOOLEAN,
+		                         "org/inkscape/cmn/ScriptRunner", 
+                             "run",
+                             "(Ljava/lang/String;Ljava/lang/String;)Z",
+                             parms,
+                             retval);
+    if (!ret)
         {
-        g_warning("interpretScript: error in executing %s script\n",
-                        langname);
-        return false;
-        }
-
-    delete interp;
-
+        g_warning("interpretScript: failed\n");
+				return false;
+				}
+   
     return true;
 }
 
+
 /**
- * Interprets the script in the 'script' buffer,
+ * Interprets the script in the named file,
  * storing the stdout output in 'output', and any
  * error messages in 'error.'  Language is one of the
  * enumerated types in ScriptLanguage above.
  */
-bool InkscapeScript::interpretUri(const Glib::ustring &uri,
+bool InkscapeScript::interpretFile(const Glib::ustring &fname,
                                  Glib::ustring &output,
                                  Glib::ustring &error,
                                  ScriptLanguage language)
 {
-
-    InkscapeInterpreter *interp = NULL;
+    const char *langname=NULL;
     //if() instead of switch() lets us scope vars
-    if (language == InkscapeScript::PERL)
+    if (language == InkscapeScript::JAVASCRIPT)
         {
-#ifdef WITH_PERL
-        interp = new InkscapePerl();
-#endif
+        langname="Javascript";
         }
     else if (language == InkscapeScript::PYTHON)
         {
-#ifdef WITH_PYTHON
-        interp = new InkscapePython();
-#endif
+        langname="Python";
+        }
+    else if (language == InkscapeScript::RUBY)
+        {
+        langname="Ruby";
         }
     else
         {
-        g_warning("interpretUri: Unknown Script Language type:%d\n",
-                           language);
+        g_warning("interpretFile: Unknown Script Language type: %d\n",
+                        language);
         return false;
         }
 
-    if (!interp)
-        return false;
-
-    if (!interp->interpretUri(uri, output, error))
+    Inkscape::Bind::JavaBindery *binder =
+            Inkscape::Bind::JavaBindery::getInstance();
+    if (!binder->loadJVM())  //idempotent
         {
-        g_warning("interpretUri: error in executing script '%s'\n",
-                           uri.raw().c_str());
+        g_warning("interpretFile: unable to start JVM\n");
         return false;
-        }
-
-    delete interp;
-
+				}
+		std::vector<Value> parms;
+		Value retval;
+		Value parm;
+		parm.setString(langname);
+		parms.push_back(parm);
+		parm.setString(fname);
+		parms.push_back(parm);
+    bool ret = binder->callStatic(Value::BIND_BOOLEAN,
+		                         "org/inkscape/cmn/ScriptRunner", 
+                             "runFile",
+                             "(Ljava/lang/String;Ljava/lang/String;)Z",
+                             parms,
+                             retval);
+    if (!ret)
+        {
+        g_warning("interpretFile: failed\n");
+				return false;
+				}
+   
     return true;
 }
 

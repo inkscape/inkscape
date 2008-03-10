@@ -30,8 +30,9 @@ public:
      */
     typedef enum
         {
+        JAVASCRIPT,
         PYTHON,
-        PERL
+        RUBY
         } ScriptLanguage;
 
     /**
@@ -56,12 +57,12 @@ public:
                          ScriptLanguage language);
 
     /**
-     * Interprets the script at the uri (file) named by 'uri',
+     * Interprets the script in the named file,
      * storing the stdout output in 'output', and any
      * error messages in 'error.'  Language is one of the
      * enumerated types in ScriptLanguage above.
      */
-    bool interpretUri(const Glib::ustring &uri,
+    bool interpretFile(const Glib::ustring &fname,
                       Glib::ustring &output,
                       Glib::ustring &error,
                       ScriptLanguage language);
