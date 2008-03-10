@@ -281,9 +281,9 @@ sp_stroke_style_paint_mode_changed( SPPaintSelector *psel,
     sp_stroke_style_paint_changed(psel, spw);
 }
 
-static gchar *undo_label_1 = "stroke:flatcolor:1";
-static gchar *undo_label_2 = "stroke:flatcolor:2";
-static gchar *undo_label = undo_label_1;
+static gchar const *const undo_label_1 = "stroke:flatcolor:1";
+static gchar const *const undo_label_2 = "stroke:flatcolor:2";
+static gchar const *undo_label = undo_label_1;
 
 /**
  * When a drag callback occurs on a paint selector object, if it is a RGB or CMYK
@@ -580,7 +580,7 @@ sp_stroke_style_widget_transientize_callback(Inkscape::Application */*inkscape*/
 static GtkWidget *
 sp_marker_prev_new(unsigned psize, gchar const *mname,
                    SPDocument *source, SPDocument *sandbox,
-                   gchar *menu_id, NRArena const */*arena*/, unsigned /*visionkey*/, NRArenaItem *root)
+                   gchar const *menu_id, NRArena const */*arena*/, unsigned /*visionkey*/, NRArenaItem *root)
 {
     // Retrieve the marker named 'mname' from the source SVG document
     SPObject const *marker = source->getObjectById(mname);
@@ -671,7 +671,7 @@ ink_marker_list_get (SPDocument *source)
  * Adds previews of markers in marker_list to the given menu widget
  */
 static void
-sp_marker_menu_build (GtkWidget *m, GSList *marker_list, SPDocument *source, SPDocument *sandbox, gchar *menu_id)
+sp_marker_menu_build (GtkWidget *m, GSList *marker_list, SPDocument *source, SPDocument *sandbox, gchar const *menu_id)
 {
     // Do this here, outside of loop, to speed up preview generation:
     NRArena const *arena = NRArena::create();
@@ -722,7 +722,7 @@ sp_marker_menu_build (GtkWidget *m, GSList *marker_list, SPDocument *source, SPD
  *
  */
 static void
-sp_marker_list_from_doc (GtkWidget *m, SPDocument */*current_doc*/, SPDocument *source, SPDocument */*markers_doc*/, SPDocument *sandbox, gchar *menu_id)
+sp_marker_list_from_doc (GtkWidget *m, SPDocument */*current_doc*/, SPDocument *source, SPDocument */*markers_doc*/, SPDocument *sandbox, gchar const *menu_id)
 {
     GSList *ml = ink_marker_list_get(source);
     GSList *clean_ml = NULL;
@@ -777,7 +777,7 @@ gchar const *buffer = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:sodipodi=
 }
 
 static void
-ink_marker_menu_create_menu(GtkWidget *m, gchar *menu_id, SPDocument *doc, SPDocument *sandbox)
+ink_marker_menu_create_menu(GtkWidget *m, gchar const *menu_id, SPDocument *doc, SPDocument *sandbox)
 {
     static SPDocument *markers_doc = NULL;
 
@@ -832,7 +832,7 @@ ink_marker_menu_create_menu(GtkWidget *m, gchar *menu_id, SPDocument *doc, SPDoc
  * Creates a menu widget to display markers from markers.svg
  */
 static GtkWidget *
-ink_marker_menu( GtkWidget */*tbl*/, gchar *menu_id, SPDocument *sandbox)
+ink_marker_menu( GtkWidget */*tbl*/, gchar const *menu_id, SPDocument *sandbox)
 {
     SPDesktop *desktop = inkscape_active_desktop();
     SPDocument *doc = sp_desktop_document(desktop);
@@ -856,7 +856,7 @@ ink_marker_menu( GtkWidget */*tbl*/, gchar *menu_id, SPDocument *sandbox)
         gtk_widget_set_sensitive(mnu, TRUE);
     }
 
-    gtk_object_set_data(GTK_OBJECT(mnu), "menu_id", menu_id);
+    gtk_object_set_data(GTK_OBJECT(mnu), "menu_id", const_cast<gchar *>(menu_id));
     gtk_option_menu_set_menu(GTK_OPTION_MENU(mnu), m);
 
     /* Set history */
@@ -892,7 +892,7 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
     }
     gchar *markid = (gchar *) g_object_get_data(G_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(mnu)))),
                                                 "marker");
-    gchar *marker = "";
+    gchar const *marker = "";
     if (strcmp(markid, "none")){
        gchar *stockid = (gchar *) g_object_get_data(G_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(mnu)))),
                                                 "stockid");
@@ -909,7 +909,7 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
     }
 
     SPCSSAttr *css = sp_repr_css_attr_new();
-    gchar *menu_id = (gchar *) g_object_get_data(G_OBJECT(mnu), "menu_id");
+    gchar const *menu_id = (gchar const *) g_object_get_data(G_OBJECT(mnu), "menu_id");
     sp_repr_css_set_property(css, menu_id, marker);
 
     // Also update the marker dropdown menus, so the document's markers
@@ -939,18 +939,18 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
 };
 
 static int
-ink_marker_menu_get_pos(GtkMenu* mnu, gchar* markname) {
-
+ink_marker_menu_get_pos(GtkMenu *mnu, gchar const *markname)
+{
     if (markname == NULL)
-        markname = (gchar *) g_object_get_data(G_OBJECT(gtk_menu_get_active(mnu)), "marker");
+        markname = (gchar const *) g_object_get_data(G_OBJECT(gtk_menu_get_active(mnu)), "marker");
 
     if (markname == NULL)
         return 0;
 
-    GList *kids = GTK_MENU_SHELL(mnu)->children;
+    GList const *kids = GTK_MENU_SHELL(mnu)->children;
     int i = 0;
     for (; kids != NULL; kids = kids->next) {
-        gchar *mark = (gchar *) g_object_get_data(G_OBJECT(kids->data), "marker");
+        gchar const *mark = (gchar const *) g_object_get_data(G_OBJECT(kids->data), "marker");
         if ( mark && strcmp(mark, markname) == 0 ) {
             break;
         }
