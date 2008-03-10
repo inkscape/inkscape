@@ -25,7 +25,6 @@
 
 #include "InkscapeScript.h"
 
-#undef USE_JAVA
 
 #include <bind/javabind.h>
 
