@@ -30,6 +30,7 @@ INCLUDES =	\
 
 include Makefile_insert
 include application/Makefile_insert
+include bind/Makefile_insert
 include dialogs/Makefile_insert
 include display/Makefile_insert
 include dom/Makefile_insert
@@ -75,6 +76,7 @@ bin_PROGRAMS = inkscape inkview
 noinst_LIBRARIES =	\
 	libinkpre.a	\
 	application/libinkapp.a	\
+	bind/libbind.a	\
 	dialogs/libspdialogs.a	\
 	pedro/libpedro.a \
 	jabber_whiteboard/libjabber_whiteboard.a \
