@@ -37,7 +37,7 @@ extern "C" {
 #  define INKSCAPE_TEMPLATESDIR   BR_DATADIR( "/inkscape/templates" )
 #  define INKSCAPE_UIDIR          BR_DATADIR( "/inkscape/ui" )
 //CREATE V0.1 support
-#    define CREATE_GRADIENTSDIR   BR_DATADIR( "/create/gradients/gimp" )  
+#    define CREATE_GRADIENTSDIR   BR_DATADIR( "/create/gradients/gimp" )
 #    define CREATE_PALETTESDIR    BR_DATADIR( "/create/swatches" )
 #    define CREATE_PATTERNSDIR    BR_DATADIR( "/create/patterns/vector" )
 #else
@@ -66,6 +66,7 @@ extern "C" {
 #    define INKSCAPE_EXAMPLESDIR  "Contents/Resources/examples"
 #    define INKSCAPE_EXTENSIONDIR "Contents/Resources/extensions"
 #    define INKSCAPE_GRADIENTSDIR "Contents/Resources/gradients"
+#    define INKSCAPE_JAVADIR      "Contents/Resources/java"
 #    define INKSCAPE_KEYSDIR      "Contents/Resources/keys"
 #    define INKSCAPE_PIXMAPDIR    "Contents/Resources/icons"
 #    define INKSCAPE_MARKERSDIR   "Contents/Resources/markers"
