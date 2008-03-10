@@ -12,8 +12,9 @@
 
 #include "InkscapeScript.h"
 
-#include <bind/javabind.h>
+#undef USE_JAVA
 
+#include <bind/javabind.h>
 
 
 namespace Inkscape
@@ -58,6 +59,7 @@ bool InkscapeScript::interpretScript(const Glib::ustring &script,
                                  Glib::ustring &error,
                                  ScriptLanguage language)
 {
+#if USE_JAVA
     const char *langname=NULL;
     //if() instead of switch() lets us scope vars
     if (language == InkscapeScript::JAVASCRIPT)
@@ -106,6 +108,9 @@ bool InkscapeScript::interpretScript(const Glib::ustring &script,
         }
    
     return true;
+#else // USE_JAVA
+    return false;
+#endif // USE_JAVA
 }
 
 
@@ -120,6 +125,7 @@ bool InkscapeScript::interpretFile(const Glib::ustring &fname,
                                  Glib::ustring &error,
                                  ScriptLanguage language)
 {
+#if USE_JAVA
     const char *langname=NULL;
     //if() instead of switch() lets us scope vars
     if (language == InkscapeScript::JAVASCRIPT)
@@ -166,8 +172,11 @@ bool InkscapeScript::interpretFile(const Glib::ustring &fname,
         g_warning("interpretFile: failed\n");
         return false;
         }
-   
+
     return true;
+#else // USE_JAVA
+    return false;
+#endif // USE_JAVA
 }
 
 
