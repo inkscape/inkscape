@@ -78,7 +78,7 @@ static sigc::connection document_replaced_connection;
 static win_data wd;
 // impossible original values to make sure they are read from prefs
 static gint x = -1000, y = -1000, w = 0, h = 0;
-static gchar *prefs_path = "dialogs.xml";
+static gchar const *const prefs_path = "dialogs.xml";
 static GtkWidget *status = NULL;
 static Inkscape::MessageStack *_message_stack = NULL;
 static Inkscape::MessageContext *_message_context = NULL;
