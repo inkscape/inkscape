@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-02-21 21:42-0300\n"
-"PO-Revision-Date: 2008-03-03 01:53-0300\n"
+"PO-Revision-Date: 2008-03-10 01:58-0300\n"
 "Last-Translator: Felipe C. da S. Sanches <felipe.sanches@gmail.com>\n"
 "Language-Team: Português Brasil <inkscape-brasil@listas.softwarelivre.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,13 +21,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 1.0.2\n"
 
+# "imagens gráficas" estava feio e redundante!
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
-msgstr "Crie e edite imagens Gráficas Vetoriais Escalaveis"
+msgstr "Cria e edita desenhos vetoriais escaláveis (SVG)"
 
 #: ../inkscape.desktop.in.h:2
 msgid "Inkscape Vector Graphics Editor"
-msgstr "Inkscape Editor de Imagem Vetorial"
+msgstr "Editor de Imagens Vetoriais Inkscape"
 
 #: ../src/arc-context.cpp:339
 msgid ""
@@ -399,7 +400,7 @@ msgstr "Acumular os deslocamentos para cada coluna"
 #. TRANSLATORS: "Cumulate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:2069
 msgid "<small>Exclude tile:</small>"
-msgstr "<small>Excluir ladrilho:</small>"
+msgstr "<small>Excluir Ladrilho:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:2075
 msgid "Exclude tile height in shift"
@@ -452,14 +453,14 @@ msgstr "Randomizar o deslocamento vertical por esta porcentagem"
 #: ../src/dialogs/clonetiler.cpp:2166
 msgid "Whether row scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr ""
-"Se as linhas estiverem escaladas uniformemente (1), convergir (<1) ou "
-"divergir (>1)"
+"Se o espaçamento de linhas é uniforme (1), convergente (<1) ou divergente "
+"(>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2173
 msgid "Whether column scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr ""
-"Se as colunas estiverem escaladas uniformemente (1), convergir (<1) ou "
-"divergir (>1)"
+"Se o espaçamento de colunas é uniforme (1), convergente (<1) ou divergente "
+"(>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2181
 msgid "<b>Base:</b>"
@@ -469,8 +470,8 @@ msgstr "<b>Base:</b>"
 msgid ""
 "Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
 msgstr ""
-"Base para uma espiral logarítmica: sem uso (0), convergir (<1) ou divergir "
-"(>1)"
+"Base para uma espiral logarítmica: não usada (0), convergente (<1) ou "
+"divergente (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2209
 msgid "Alternate the sign of scales for each row"
@@ -2891,11 +2892,10 @@ msgstr "Quantidade"
 msgid "Cycle colormap(s) of selected bitmap(s)."
 msgstr "Trocar mapa de cores do(s) bitmap(s) selecionado(s)."
 
-# Tradução forçada... ao pé da letra...
-# - samymn
+# Traduzi como no GIMP. Preferi essa tradução às outras sugestões anteriores, ao pé da letra.
 #: ../src/extension/internal/bitmap/despeckle.cpp:35
 msgid "Despeckle"
-msgstr "Dessalpicar"
+msgstr "Supressão de manchas"
 
 #: ../src/extension/internal/bitmap/despeckle.cpp:42
 msgid "Reduce speckle noise of selected bitmap(s)."
@@ -2981,7 +2981,7 @@ msgid ""
 "Level the specified channel of selected bitmap(s) by scaling values falling "
 "between the given ranges to the full color range."
 msgstr ""
-"Nivela o canal especificado do(s) bitmap(s) selecionado(s) ao escalar os "
+"Nivela o canal especificado do(s) bitmap(s) selecionado(s), escalando os "
 "valores que caem entre os intervalos dados para o intervalo de cor completo."
 
 #: ../src/extension/internal/bitmap/level.cpp:40
@@ -2996,8 +2996,8 @@ msgid ""
 "Level selected bitmap(s) by scaling values falling between the given ranges "
 "to the full color range."
 msgstr ""
-"Nivela o(s) bitmap(s) selecionado(s) ao escalar os valores que caem entre os "
-"intervalos dados para todo o espectro de cores."
+"Nivela o(s) bitmap(s) selecionado(s) escalando os valores que caem entre os "
+"intervalos dados para o espectro completo de cores."
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
 msgid "Median Filter"
@@ -3190,7 +3190,7 @@ msgstr "Limiar"
 
 #: ../src/extension/internal/bitmap/threshold.cpp:45
 msgid "Threshold selected bitmap(s)."
-msgstr "Aplica limiar ao(s) bitmap(s) selecionado(s)."
+msgstr "Limiar de bitmap(s) selecionado(s)."
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:40
 msgid "Unsharp Mask"
@@ -3935,6 +3935,7 @@ msgstr "Transferência de Componentes"
 msgid "Composite"
 msgstr "Composição"
 
+# O nome correto é Matriz de Convolução. "Matriz de Foco/Desfoque" é um nome ruim por que não representa tudo o que este filtro pode fazer. Operações de desfoque são um caso particular de todas as operações gráficas que podem ser feitas por meio da aplicação de uma matriz de convolução.
 #: ../src/filter-enums.cpp:24
 msgid "Convolve Matrix"
 msgstr "Matriz de Convolução"
@@ -3965,7 +3966,7 @@ msgstr "Morfologia"
 
 #: ../src/filter-enums.cpp:33
 msgid "Specular Lighting"
-msgstr "Iluminação Especular"
+msgstr "Iluminação Espelhada"
 
 #: ../src/filter-enums.cpp:34
 msgid "Tile"
@@ -3975,10 +3976,12 @@ msgstr "Ladrilhado"
 msgid "Turbulence"
 msgstr "Turbulência"
 
+# Perceba que não utilizamos verbos aqui. Este elemento corresponde ao gráfico disponível na entrada do filtro.
 #: ../src/filter-enums.cpp:40
 msgid "Source Graphic"
 msgstr "Gráfico da Entrada"
 
+# Perceba que não utilizamos verbos aqui. Este elemento corresponde ao canal alfa do gráfico disponível na entrada do filtro.
 #: ../src/filter-enums.cpp:41
 msgid "Source Alpha"
 msgstr "Alfa da Entrada"
@@ -4780,7 +4783,7 @@ msgstr "_Gravar arquivo da sessão:"
 
 #: ../src/jabber_whiteboard/pedrogui.cpp:2630
 msgid "Shared SVG whiteboard tool."
-msgstr ""
+msgstr "Lousa de SVG compartilhado."
 
 #: ../src/jabber_whiteboard/pedrogui.cpp:2631
 msgid "Based on the Pedro XMPP client"
@@ -4796,11 +4799,11 @@ msgstr "Renomear arquivo"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:308
 msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr "<b>%1</b> te convidou para iniciar uma sessão whiteboard."
+msgstr "<b>%1</b> te convidou para iniciar uma sessão de desenho compartilhada."
 
 #: ../src/jabber_whiteboard/session-manager.cpp:310
 msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr "Você deseja aceitar o convite de <b>%1</b> para uma sessão whiteboard?"
+msgstr "Você deseja aceitar o convite de <b>%1</b> para uma sessão de desenho?"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:314
 msgid "Accept invitation"
@@ -4832,15 +4835,15 @@ msgstr "Principal"
 
 #: ../src/libgdl/gdl-dock-bar.c:109
 msgid "GdlDockMaster object which the dockbar widget is attached to"
-msgstr "Objeto GdlDockMaster no qual a barra docável está acoplado"
+msgstr "Objeto GdlDockMaster ao qual a barra acoplável está acoplada"
 
 #: ../src/libgdl/gdl-dock-bar.c:116
 msgid "Dockbar style"
-msgstr "Estilo da barra docável"
+msgstr "Estilo da barra acoplável"
 
 #: ../src/libgdl/gdl-dock-bar.c:117
 msgid "Dockbar style to show items on it"
-msgstr "Estilo da barra docável para mostrar itens"
+msgstr "Estilo da barra acoplável para mostrar itens"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:395
 msgid "Iconify"
@@ -4861,12 +4864,11 @@ msgstr "Fecha esta janela"
 #: ../src/libgdl/gdl-dock-item-grip.c:706
 #: ../src/libgdl/gdl-dock-tablabel.c:128
 msgid "Controlling dock item"
-msgstr "Controlar item docável"
+msgstr "Controlar item acoplável"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:707
-#, fuzzy
 msgid "Dockitem which 'owns' this grip"
-msgstr "Item docável no qual pertence este agarrador"
+msgstr "Item acoplável que é \"dono\" deste segurador"
 
 #: ../src/libgdl/gdl-dock-item.c:287
 msgid "Orientation"
@@ -4874,7 +4876,7 @@ msgstr "Orientação"
 
 #: ../src/libgdl/gdl-dock-item.c:288
 msgid "Orientation of the docking item"
-msgstr "Orientação do item docável"
+msgstr "Orientação do item acoplável"
 
 #: ../src/libgdl/gdl-dock-item.c:303
 msgid "Resizable"
@@ -4883,7 +4885,7 @@ msgstr "Redimensionável"
 #: ../src/libgdl/gdl-dock-item.c:304
 msgid "If set, the dock item can be resized when docked in a paned"
 msgstr ""
-"Se definido. o item docável pode ser redimensionado quando acoplado num "
+"Se definido, o item acoplável pode ser redimensionado quando acoplado a um "
 "local de encaixe"
 
 #: ../src/libgdl/gdl-dock-item.c:311
@@ -4895,27 +4897,27 @@ msgid ""
 "General behavior for the dock item (i.e. whether it can float, if it's "
 "locked, etc.)"
 msgstr ""
-"Comportamento geral para o item docável (ex.: se flutuará, se estará "
+"Comportamento geral para o item acoplável (ex.: se flutuará, se estará "
 "bloqueado, etc.)"
 
 #: ../src/libgdl/gdl-dock-item.c:320 ../src/libgdl/gdl-dock-master.c:148
 msgid "Locked"
-msgstr "Bloqueado"
+msgstr "Travado"
 
 #: ../src/libgdl/gdl-dock-item.c:321
 msgid ""
 "If set, the dock item cannot be dragged around and it doesn't show a grip"
 msgstr ""
-"Se definido, o item docável não poderá ser arrastado e este não exibirá um "
+"Se definido, o item acoplável não poderá ser arrastado e este não exibirá um "
 "suporte"
 
 #: ../src/libgdl/gdl-dock-item.c:329
 msgid "Preferred width"
-msgstr "Largura preferida"
+msgstr "Preferência de Largura"
 
 #: ../src/libgdl/gdl-dock-item.c:330
 msgid "Preferred width for the dock item"
-msgstr "Largura preferida para o item docável"
+msgstr "Largura preferida para o item acoplável"
 
 #: ../src/libgdl/gdl-dock-item.c:336
 msgid "Preferred height"
@@ -4923,7 +4925,7 @@ msgstr "Altura preferida"
 
 #: ../src/libgdl/gdl-dock-item.c:337
 msgid "Preferred height for the dock item"
-msgstr "Altura preferida para o item docável"
+msgstr "Altura preferida para o item acoplável"
 
 #: ../src/libgdl/gdl-dock-item.c:616
 #, c-format
@@ -4931,8 +4933,8 @@ msgid ""
 "You can't add a dock object (%p of type %s) inside a %s. Use a GdlDock or "
 "some other compound dock object."
 msgstr ""
-"Você não pode adicionar um objeto docável (%p do tipo %s) dentro de um(a) "
-"%s. Use um GdlDock ou alguma outra área de objetos docáveis."
+"Você não pode adicionar um objeto acoplável (%p do tipo %s) dentro de um(a) "
+"%s. Use um GdlDock ou alguma outra área de objetos acopláveis."
 
 #: ../src/libgdl/gdl-dock-item.c:623
 #, c-format
@@ -4946,12 +4948,12 @@ msgstr ""
 #: ../src/libgdl/gdl-dock-item.c:1345 ../src/libgdl/gdl-dock-item.c:1390
 #, c-format
 msgid "Unsupported docking strategy %s in dock object of type %s"
-msgstr "Estratégia de docagem não suportada %s no objeto docável do tipo %s"
+msgstr "Estratégia %s de acoplagem não suportada no objeto acoplável do tipo %s"
 
 #. UnLock menuitem
 #: ../src/libgdl/gdl-dock-item.c:1479
 msgid "UnLock"
-msgstr "Desbloquear"
+msgstr "Destravar"
 
 #. Hide menuitem.
 #: ../src/libgdl/gdl-dock-item.c:1486
@@ -4961,7 +4963,7 @@ msgstr "Ocultar"
 #. Lock menuitem
 #: ../src/libgdl/gdl-dock-item.c:1491
 msgid "Lock"
-msgstr "Bloquear"
+msgstr "Travar"
 
 #: ../src/libgdl/gdl-dock-item.c:1717
 #, c-format
@@ -4998,10 +5000,13 @@ msgid "Expand direction"
 msgstr "Expandir direção"
 
 #: ../src/libgdl/gdl-dock-master.c:166
+#, fuzzy
 msgid ""
 "Allow the master's dock items to expand their container dock objects in the "
 "given direction"
 msgstr ""
+"Permite ao item acoplável principal expandir seus objetos acoplados em uma "
+"determinada direção"
 
 #: ../src/libgdl/gdl-dock-master.c:781
 #, c-format
@@ -5009,6 +5014,8 @@ msgid ""
 "master %p: unable to add object %p[%s] to the hash.  There already is an "
 "item with that name (%p)."
 msgstr ""
+"mestre %p: incapaz de adicionar objeto %p[%s] ao hash. Já existe um item com "
+"o nome (%p)."
 
 #: ../src/libgdl/gdl-dock-master.c:954
 #, c-format
@@ -5026,9 +5033,8 @@ msgid "Page"
 msgstr "Página"
 
 #: ../src/libgdl/gdl-dock-notebook.c:135
-#, fuzzy
 msgid "The index of the current page"
-msgstr "Renomear a camada atual"
+msgstr "Índice da página atual"
 
 #: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:195
 msgid "Name"
@@ -5036,22 +5042,19 @@ msgstr "Nome"
 
 #: ../src/libgdl/gdl-dock-object.c:121
 msgid "Unique name for identifying the dock object"
-msgstr ""
+msgstr "Nome único para identificar um objeto acoplado"
 
 #: ../src/libgdl/gdl-dock-object.c:128
-#, fuzzy
 msgid "Long name"
-msgstr "Não nomeado"
+msgstr "Nome extenso"
 
 #: ../src/libgdl/gdl-dock-object.c:129
-#, fuzzy
 msgid "Human readable name for the dock object"
-msgstr "Um rótulo com forma livre para o objeto"
+msgstr "Nome legível para o objeto acoplável"
 
 #: ../src/libgdl/gdl-dock-object.c:135
-#, fuzzy
 msgid "Stock Icon"
-msgstr "Fechar brechas"
+msgstr ""
 
 #: ../src/libgdl/gdl-dock-object.c:136
 msgid "Stock icon for the dock object"
@@ -5066,13 +5069,12 @@ msgid "Pixbuf icon for the dock object"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-object.c:148
-#, fuzzy
 msgid "Dock master"
-msgstr "Travar Camada"
+msgstr "Acoplamento principal"
 
 #: ../src/libgdl/gdl-dock-object.c:149
 msgid "Dock master this dock object is bound to"
-msgstr ""
+msgstr "Acoplamento principal ao qual este objeto é vinculado"
 
 #: ../src/libgdl/gdl-dock-object.c:434
 #, c-format
@@ -5080,6 +5082,8 @@ msgid ""
 "Call to gdl_dock_object_dock in a dock object %p (object type is %s) which "
 "hasn't implemented this method"
 msgstr ""
+"Chamada a gdl_dock_object_dock em  um objeto de acoplamento %p (o tipo do "
+"objeto é %s), que não implementa este método"
 
 #: ../src/libgdl/gdl-dock-object.c:563
 #, c-format
@@ -5087,31 +5091,32 @@ msgid ""
 "Dock operation requested in a non-bound object %p. The application might "
 "crash"
 msgstr ""
+"A operação de acoplamento solicitou um objeto %p não-vinculado. O programa "
+"pode falhar"
 
 #: ../src/libgdl/gdl-dock-object.c:570
 #, c-format
 msgid "Cannot dock %p to %p because they belong to different masters"
 msgstr ""
+"Não é possível acoplar %p a %p porque eles pertencem a diferentes mestres"
 
 #: ../src/libgdl/gdl-dock-object.c:612
 #, c-format
 msgid ""
 "Attempt to bind to %p an already bound dock object %p (current master: %p)"
-msgstr ""
+msgstr "Tentando vincular a %p um objeto %p já vinculado (mestre atual: %p)"
 
 #: ../src/libgdl/gdl-dock-paned.c:132
-#, fuzzy
 msgid "Position"
-msgstr "Posição:"
+msgstr "Posição"
 
 #: ../src/libgdl/gdl-dock-paned.c:133
 msgid "Position of the divider in pixels"
-msgstr ""
+msgstr "Posição do divisor em pixels"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:143
-#, fuzzy
 msgid "Sticky"
-msgstr "minúsculo"
+msgstr "Adesivo"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:144
 msgid ""
@@ -5120,24 +5125,24 @@ msgid ""
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-placeholder.c:151
-#, fuzzy
 msgid "Host"
-msgstr "recuar"
+msgstr "Hospedeiro"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:152
 msgid "The dock object this placeholder is attached to"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-placeholder.c:159
-#, fuzzy
 msgid "Next placement"
-msgstr "Localização da Engrenagem"
+msgstr "Próximo posicionamento"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:160
 msgid ""
 "The position an item will be docked to our host if a request is made to dock "
 "to us"
 msgstr ""
+"A posição à qual um item será acoplado no nosso host caso isso seja "
+"solicitado"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:170
 msgid "Width for the widget when it's attached to the placeholder"
@@ -5148,27 +5153,24 @@ msgid "Height for the widget when it's attached to the placeholder"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-placeholder.c:184
-#, fuzzy
 msgid "Floating Toplevel"
-msgstr "Flutuando"
+msgstr ""
 
 #: ../src/libgdl/gdl-dock-placeholder.c:185
 msgid "Whether the placeholder is standing in for a floating toplevel dock"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-placeholder.c:191
-#, fuzzy
 msgid "X-Coordinate"
-msgstr "Coordenadas"
+msgstr "Coordenada X"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:192
 msgid "X-Coordinate fow dock when floating"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-placeholder.c:198
-#, fuzzy
 msgid "Y-Coordinate"
-msgstr "Coordenadas"
+msgstr "Coordenada Y"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:199
 msgid "Y-Coordinate fow dock when floating"
@@ -5182,6 +5184,8 @@ msgstr ""
 #, c-format
 msgid "Got a detach signal from an object (%p) who is not our host %p"
 msgstr ""
+"Foi recebido um sinal de desanexar de um objeto (%p) que não é nosso "
+"hospedeiro %p"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:643
 #, c-format
@@ -5189,6 +5193,7 @@ msgid ""
 "Something weird happened while getting the child placement for %p from "
 "parent %p"
 msgstr ""
+"Algo de errado aconteceu ao tentar posicionar o filho %p a partir do pai %p"
 
 #: ../src/libgdl/gdl-dock-tablabel.c:129
 msgid "Dockitem which 'owns' this tablabel"
@@ -5216,24 +5221,22 @@ msgid "Height for the dock when it's of floating type"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock.c:206
-#, fuzzy
 msgid "Float X"
-msgstr "Flutuando"
+msgstr "X (ponto flutuante)"
 
 #: ../src/libgdl/gdl-dock.c:207
 #, fuzzy
 msgid "X coordinate for a floating dock"
-msgstr "Coordenada X da origem da grade"
+msgstr "Coordenada X para um dock flutuante"
 
 #: ../src/libgdl/gdl-dock.c:214
-#, fuzzy
 msgid "Float Y"
-msgstr "Flutuando"
+msgstr "Y (ponto flutuante)"
 
 #: ../src/libgdl/gdl-dock.c:215
 #, fuzzy
 msgid "Y coordinate for a floating dock"
-msgstr "Coordenada Y da origem da grade"
+msgstr "Coordenada Y para um dock flutuante"
 
 #: ../src/libgdl/gdl-dock.c:499
 #, c-format
@@ -5247,7 +5250,7 @@ msgstr "Ignorando fonte sem família que irá travar o Pango"
 #. {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
 #: ../src/live_effects/effect.cpp:50
 msgid "Bend Path"
-msgstr "Quebrar caminho"
+msgstr "Curvar Caminho"
 
 #: ../src/live_effects/effect.cpp:51
 msgid "Pattern Along Path"
@@ -5314,7 +5317,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "Stroke path"
-msgstr "Caminho do traço"
+msgstr "Caminho em traço"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "The path that will be used as stitch."
@@ -5394,17 +5397,15 @@ msgstr "Escala da largura do caminho de traço em relação ao seu comprimento"
 
 #: ../src/live_effects/lpe-pathalongpath.cpp:57
 msgid "Bend path"
-msgstr "Deformar caminho"
+msgstr "Curvar caminho"
 
 #: ../src/live_effects/lpe-pathalongpath.cpp:57
-#, fuzzy
 msgid "Path along which to bend the original path"
-msgstr "Cria um objeto tipográfico dinâmico ligado ao caminho original"
+msgstr "Caminho ao longo do qual se curvará o caminho original"
 
 #: ../src/live_effects/lpe-pathalongpath.cpp:58
-#, fuzzy
 msgid "Width of the path"
-msgstr "Largura do padrão"
+msgstr "Largura do caminho"
 
 #: ../src/live_effects/lpe-pathalongpath.cpp:59
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:65
@@ -5412,18 +5413,16 @@ msgid "Width in units of length"
 msgstr "Largura em unidades de comprimento"
 
 #: ../src/live_effects/lpe-pathalongpath.cpp:59
-#, fuzzy
 msgid "Scale the width of the path in units of its length"
-msgstr "Escala da largura do padrão em unidades de seu comprimento"
+msgstr "Escalona a largura do caminho em unidades de seu comprimento"
 
 #: ../src/live_effects/lpe-pathalongpath.cpp:60
-#, fuzzy
 msgid "Original path is vertical"
-msgstr "Padrão é vertical"
+msgstr "O caminho original é vertical"
 
 #: ../src/live_effects/lpe-pathalongpath.cpp:60
 msgid "Rotates the original 90 degrees, before bending it along the bend path"
-msgstr ""
+msgstr "Rotaciona o original em 90 graus antes de curvá-lo ao longo do caminho"
 
 #: ../src/live_effects/lpe-skeletalstrokes.cpp:53
 msgid "Single"
@@ -5489,13 +5488,12 @@ msgid "Pattern is vertical"
 msgstr "Padrão é vertical"
 
 #: ../src/live_effects/lpe-slant.cpp:18
-#, fuzzy
 msgid "Slant factor"
-msgstr "Cor uniforme"
+msgstr "Fator de inclinação"
 
 #: ../src/live_effects/lpe-slant.cpp:18
 msgid "y = y + x*(slant factor)"
-msgstr ""
+msgstr "y = y + x*(fator de inclinação)"
 
 #: ../src/live_effects/lpe-slant.cpp:19 ../src/widgets/toolbox.cpp:4842
 msgid "Center"
@@ -5503,12 +5501,12 @@ msgstr "Centralizar"
 
 #: ../src/live_effects/lpe-slant.cpp:19
 msgid "The x-coord of this point is around which the slant will happen"
-msgstr ""
+msgstr "A inclinação irá acontecer ao redor da coordenada x deste ponto."
 
 #: ../src/live_effects/lpe-test-doEffect-stack.cpp:21
 #, fuzzy
 msgid "Stack step"
-msgstr "Fechar brechas"
+msgstr "Passo de empilhamento"
 
 #: ../src/live_effects/parameter/parameter.cpp:138
 msgid "Change scalar parameter"
@@ -8961,7 +8959,7 @@ msgstr "Pontos Em"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1003
 msgid "Specular Exponent"
-msgstr "Exponente Especular"
+msgstr "Expoente de Espelhamento"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1003
 msgid "Exponent value controlling the focus for the light source"
@@ -9353,7 +9351,7 @@ msgstr "Quantidade de pixels que a imagem será deslocada para baixo"
 #. default: white
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2258
 msgid "Specular Color"
-msgstr "Cor especular"
+msgstr "Cor espelhada"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2261
 #: ../share/extensions/interp.inx.h:2
@@ -9362,7 +9360,8 @@ msgstr "Expoente"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2261
 msgid "Exponent for specular term, larger is more \"shiny\"."
-msgstr "Expoente para o termo especular. Quanto maior, mais \"brilhante\"."
+msgstr ""
+"Expoente para a intensidade da reflexão. Quanto maior, mais \"brilhante\"."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2270
 msgid ""
@@ -10109,7 +10108,7 @@ msgstr "Não salvar geometria da janela"
 #: ../src/ui/dialog/inkscape-preferences.cpp:463
 #: ../src/ui/dialog/inkscape-preferences.cpp:488
 msgid "Dockable"
-msgstr "Docável"
+msgstr "Acoplável"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:466
 msgid "Dialogs are hidden in taskbar"
