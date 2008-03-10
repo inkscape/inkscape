@@ -15,4 +15,7 @@ bind_libbind_a_SOURCES =	     \
 	bind/javainc/jni.h           \
 	bind/javainc/linux/jni_md.h
 
+bind_libbind_a_INCLUDES =	     \
+	bind/javainc/jni.h           \
+	bind/javainc/linux/jni_md.h
 
