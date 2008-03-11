@@ -13,19 +13,21 @@ my $rel = shift @ARGV;
 
 $rel =~ s/\.//;
 
-my @page = `lynx -dump $wiki?title=ReleaseNotes$rel`;
+my @page = `lynx -dump $wiki/ReleaseNotes$rel`;
+
+print "$#page lines\n";
 
 my $seen_overview = 0;
 foreach my $line (@page) {
-    last if $line =~ /^Previous releases/;
-    next if $line =~ /\[\[\d+\]edit\]/;
 
-    if ($line =~ /^Inkscape .*0.45/ || $line =~ /^Inkscape .* changes with respect to/) {
+    $line =~ s/\[\[\d+\]edit\]//g;
+
+    last if $line =~ /^ Previous releases/;
+
+    if ($line =~ /^\s+Inkscape 0\.46/) {
         $seen_overview = 1;
     }
     next unless $seen_overview;
-
-    $line =~ s/\[\d+\](\w)/$1/g;
 
     print $line;
 }
