@@ -3,6 +3,10 @@
         This is the executable that goes into Platypus apps
     Copyright (C) 2003 Sveinbjorn Thordarson <sveinbt@hi.is>
 
+    With modifications by Aaron Voisine for gimp.app
+    With modifications by Marianne gagnon for Wilber-loves-apple
+    With modifications by Michael Wybrow for Inkscape.app
+ 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
@@ -20,6 +24,14 @@
     main.c - main program file
 
 */
+
+/*
+ * This app laucher basically takes care of:
+ * - launching Inkscape and X11 when double-clicked 
+ * - bringing X11 to the top when its icon is clicked in the dock (via a small applescript)
+ * - catch file dropped on icon events (and double-clicked gimp documents) and notify gimp.
+ * - catch quit events performed outside gimp, e.g. on the dock icon.
+ */
 
 ///////////////////////////////////////
 // Includes
@@ -89,6 +101,14 @@ static OSStatus X11FailedHandler(EventHandlerCallRef theHandlerCall,
                                  EventRef theEvent, void *userData);
 static OSStatus FCCacheFailedHandler(EventHandlerCallRef theHandlerCall,
                                  EventRef theEvent, void *userData);
+static OSErr AppReopenAppAEHandler(const AppleEvent *theAppleEvent,
+                                   AppleEvent *reply, long refCon);
+
+static OSStatus CompileAppleScript(const void* text, long textLength,
+                                  AEDesc *resultData);
+static OSStatus SimpleCompileAppleScript(const char* theScript);
+static void runScript();
+
 ///////////////////////////////////////
 // Globals
 ///////////////////////////////////////    
@@ -137,6 +157,11 @@ int main(int argc, char* argv[])
     err += AEInstallEventHandler(kCoreEventClass, kAEOpenApplication,
                                  NewAEEventHandlerUPP(AppOpenAppAEHandler),
                                  0, false);
+    
+    err += AEInstallEventHandler(kCoreEventClass, kAEReopenApplication,
+                                 NewAEEventHandlerUPP(AppReopenAppAEHandler),
+                                 0, false);
+    
     err += InstallEventHandler(GetApplicationEventTarget(),
                                NewEventHandlerUPP(X11FailedHandler), 1,
                                &X11events, NULL, NULL);
@@ -153,6 +178,9 @@ int main(int argc, char* argv[])
     
     GetParameters(); //load data from files containing exec settings
 
+    // compile "icon clicked" script so it's ready to execute
+    SimpleCompileAppleScript("tell application \"X11\" to activate");
+    
     RunApplicationEventLoop(); //Run the event loop
     return 0;
 }
@@ -625,6 +653,14 @@ static OSErr AppOpenDocAEHandler(const AppleEvent *theAppleEvent,
 ///////////////////////////////
 // Handler for clicking on app icon
 ///////////////////////////////
+// if app is already open
+static OSErr AppReopenAppAEHandler(const AppleEvent *theAppleEvent,
+                                 AppleEvent *reply, long refCon)
+{
+    runScript();
+}
+
+// if app is being opened
 static OSErr AppOpenAppAEHandler(const AppleEvent *theAppleEvent,
                                  AppleEvent *reply, long refCon)
 {
@@ -688,14 +724,64 @@ static OSStatus X11FailedHandler(EventHandlerCallRef theHandlerCall,
 	StandardAlert(kAlertStopAlert, "\pFailed to start X11",
 			"\pInkscape.app requires Apple's X11, which is freely downloadable from Apple's website for Panther (10.3.x) users and available as an optional install from the installation DVD for Tiger (10.4.x) users.\n\nPlease install X11 and restart Inkscape.",
 			&params, &itemHit);
-    
+
 	if (itemHit == kAlertStdAlertCancelButton)
 	{
-		OpenURL("http://www.apple.com/downloads/macosx/apple/x11formacosx.html");
+		OpenURL("http://www.apple.com/downloads/macosx/apple/macosx_updates/x11formacosx.html");
 	}
 
     ExitToShell();
 
 
     return noErr;
+}
+
+
+// Compile and run a small AppleScript. The code below does no cleanup and no proper error checks
+// but since it's there until the app is shut down, and since we know the script is okay,
+// there should not be any problems.
+ComponentInstance theComponent;
+AEDesc scriptTextDesc;
+OSStatus err;
+OSAID scriptID, resultID;
+
+static OSStatus CompileAppleScript(const void* text, long textLength,
+                                  AEDesc *resultData) {
+    
+    resultData = NULL;
+    /* set up locals to a known state */
+    theComponent = NULL;
+    AECreateDesc(typeNull, NULL, 0, &scriptTextDesc);
+    scriptID = kOSANullScript;
+    resultID = kOSANullScript;
+    
+    /* open the scripting component */
+    theComponent = OpenDefaultComponent(kOSAComponentType,
+                                        typeAppleScript);
+    if (theComponent == NULL) { err = paramErr; return err; }
+    
+    /* put the script text into an aedesc */
+    err = AECreateDesc(typeChar, text, textLength, &scriptTextDesc);
+    if (err != noErr) return err;
+    
+    /* compile the script */
+    err = OSACompile(theComponent, &scriptTextDesc,
+                     kOSAModeNull, &scriptID);
+
+    return err;
+}
+
+/* runs the compiled applescript */
+static void runScript()
+{
+    /* run the script */
+    err = OSAExecute(theComponent, scriptID, kOSANullScript,
+                     kOSAModeNull, &resultID);
+    return err;
+}
+
+
+/* Simple shortcut to the function that actually compiles the applescript. */
+static OSStatus SimpleCompileAppleScript(const char* theScript) {
+    return CompileAppleScript(theScript, strlen(theScript), NULL);
 }
