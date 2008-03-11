@@ -101,10 +101,15 @@ String getException(JNIEnv *env)
 {
     String buf;
     jthrowable exc = env->ExceptionOccurred();
-    if (exc)
-        {
-        env->ExceptionClear();
-		}
+    if (!exc)
+        return buf;
+    jclass cls = env->GetObjectClass(exc);
+    jmethodID mid = env->GetMethodID(cls, "toString", "()Ljava/lang/String;");
+    jstring jstr = (jstring) env->CallObjectMethod(exc, mid);
+    const char *str = env->GetStringUTFChars(jstr, JNI_FALSE);
+    buf.append(str);
+    env->ReleaseStringUTFChars(jstr, str);
+    env->ExceptionClear();
 	return buf;
 }
 
@@ -578,7 +583,7 @@ static JNINativeMethod scriptRunnerMethods[] =
 /**
  * This is used to grab output from the VM itself. See 'options' below.
  */ 
-static int JNICALL vfprintfHook(FILE* f, const char *fmt, va_list args)
+static int JNICALL vfprintfHook(FILE* /*f*/, const char *fmt, va_list args)
 {
     g_logv(G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, args);
 }
@@ -622,8 +627,8 @@ bool JavaBinderyImpl::loadJVM()
     JavaVMOption options[4];
     options[0].optionString    = (char *)classpath.c_str();
     options[1].optionString    = (char *)libpath.c_str();
-    options[2].optionString    = "-verbose:jni";
-    options[3].optionString    = "vfprintf";
+    options[2].optionString    = (char *)"-verbose:jni";
+    options[3].optionString    = (char *)"vfprintf";
     options[3].extraInfo       = (void *)vfprintfHook;
     vm_args.version            = JNI_VERSION_1_4;
     vm_args.options            = options;
@@ -632,7 +637,7 @@ bool JavaBinderyImpl::loadJVM()
 
     if (createVM(&jvm, &env, &vm_args) < 0)
         {
-        err("JNI_GetDefaultJavaVMInitArgs() failed");
+        err("JNI_CreateJavaVM() failed");
         return false;
         }
 
@@ -789,6 +794,8 @@ bool JavaBinderyImpl::registerNatives(const String &className,
         err("Could not find class '%s'", className.c_str());
         return false;
         }
+    msg("registerNatives: class '%s' found", className.c_str());
+    
     /**
      * hack for JDK bug http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6493522
      */
@@ -796,26 +803,27 @@ bool JavaBinderyImpl::registerNatives(const String &className,
 	          "()[Ljava/lang/reflect/Constructor;");
 	if (!mid)
 	    {
-	    err("Could not get reflect mid for 'getConstructors'");
+	    err("Could not get reflect mid for 'getConstructors' : %s",
+             getException(env).c_str());
 		return false;
-		}   
-	env->CallObjectMethod(cls, mid);
+		}
+	jobject res = env->CallObjectMethod(cls, mid);
+	if (!res)
+	    {
+	    err("Could not get constructors");
+		return false;
+		}
 	/**
 	 * end hack
 	 */	 	
     jint nrMethods = 0;
     for (const JNINativeMethod *m = methods ; m->name ; m++)
         nrMethods++;
-    jint ret = env->RegisterNatives(cls, (const JNINativeMethod *)methods, nrMethods);
+    jint ret = env->RegisterNatives(cls, methods, nrMethods);
     if (ret < 0)
         {
-        err("Could not register %d native methods for '%s'",
-		                    nrMethods, className.c_str());
-		if (env->ExceptionCheck())
-		    {
-			env->ExceptionDescribe();
-			env->ExceptionClear();
-			}
+        err("Could not register %d native methods for '%s' : %s",
+		    nrMethods, className.c_str(), getException(env).c_str());
         return false;
         }
     return true;
