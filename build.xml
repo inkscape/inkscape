@@ -329,7 +329,7 @@
   -->
   <target name="java" depends="init"
       description="compile java binding classes">
-    <javac srcdir="${src}/bind/java" destdir="${build}/java/classes" target="1.5"/>
+    <javac srcdir="${src}/bind/java" destdir="${build}/java/classes"/>
   </target>
 
 
