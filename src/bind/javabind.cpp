@@ -641,6 +641,12 @@ bool JavaBinderyImpl::loadJVM()
         return false;
         }
 
+    //get jvm version
+    jint vers = env->GetVersion();
+    int versionMajor = (vers>>16) & 0xffff;
+    int versionMinor = (vers    ) & 0xffff;
+    msg("Loaded JVM version %d.%d", versionMajor, versionMinor);
+
     if (!registerNatives("org/inkscape/cmn/ScriptRunner",
              scriptRunnerMethods))
         {
