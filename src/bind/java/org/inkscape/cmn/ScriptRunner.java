@@ -25,6 +25,7 @@
 package org.inkscape.cmn;
 
 import javax.script.*;
+import java.util.List;
 import java.io.FileReader;
 import java.io.PrintStream;
 import java.io.OutputStream;
@@ -37,9 +38,40 @@ import javax.swing.JOptionPane;
  */
 public class ScriptRunner
 {
+/**
+ * Pointer back to the BinderyImpl C++ object that launched me
+ */ 
 long backPtr;
 
+/**
+ * The script engine manager that we want to use
+ */ 
+ScriptEngineManager scriptEngineManager;
 
+
+//########################################################################
+//# MESSSAGES
+//########################################################################
+static void err(String message)
+{
+    System.err.println("ScriptRunner err:" + message);
+}
+
+static void msg(String message)
+{
+    System.out.println("ScriptRunner:" + message);
+}
+
+static void trace(String message)
+{
+    log.println("ScriptRunner:" + message);
+}
+
+
+
+//########################################################################
+//# REDIRECT STDERR / STDOUT
+//########################################################################
 /**
  * Redirect stdout
  */
@@ -53,7 +85,6 @@ public void write(int b)
 }
 
 }
-
 
 
 /**
@@ -71,13 +102,26 @@ public void write(int b)
 
 }
 
-
-static void err(String message)
+/**
+ * A logging stream
+ */
+static PrintStream log;
+public native void logWrite(long ptr, int b);
+class LogStream extends OutputStream
 {
-    JOptionPane.showMessageDialog(null, message,
-               "Script Error", JOptionPane.ERROR_MESSAGE);
+
+public void write(int b)
+{
+    logWrite(backPtr, b);
 }
 
+
+}
+
+
+//########################################################################
+//# RUN
+//########################################################################
 
 
 /**
@@ -87,12 +131,16 @@ static void err(String message)
  * @param str the script buffer to execute
  * @return true if successful, else false
  */
-public boolean run(String lang, String str)
+public boolean doRun(String lang, String str)
 {
-    ScriptEngineManager factory = new ScriptEngineManager();
     // create JavaScript engine
-    ScriptEngine engine = factory.getEngineByName(lang);
-    // evaluate JavaScript code from given file - specified by first argument
+    ScriptEngine engine = scriptEngineManager.getEngineByName(lang);
+    if (engine == null)
+        {
+        err("doRun: cannot find script engine '" + lang + "'");
+        return false;
+		}
+    //execute script from buffer
     try
         {
         engine.eval(str);
@@ -100,8 +148,39 @@ public boolean run(String lang, String str)
     catch (javax.script.ScriptException e)
         {
         err("Executing script: " + e);
+        e.printStackTrace();
         }
     return true;
+}
+
+/**
+ * Run a script buffer
+ *
+ * @param backPtr pointer back to the C context that called this
+ * @param lang the scripting language to run
+ * @param str the script buffer to execute
+ * @return true if successful, else false
+ */
+public static boolean run(String lang, String str)
+{
+    //wrap whole thing in try/catch, since this will
+    //likely be called from C
+    try
+        {
+        ScriptRunner runner = getInstance();
+        if (runner == null)
+            {
+            err("ScriptRunner not initialized");
+            return false;
+		    }
+        return runner.doRun(lang, str);
+        }
+    catch (Exception e)
+        {
+        err("run :" + e);
+        e.printStackTrace();
+        return false;
+		}
 }
 
 
@@ -112,12 +191,16 @@ public boolean run(String lang, String str)
  * @param fname the script file to execute
  * @return true if successful, else false
  */
-public boolean runFile(String lang, String fname)
+public boolean doRunFile(String lang, String fname)
 {
-    ScriptEngineManager factory = new ScriptEngineManager();
     // create JavaScript engine
-    ScriptEngine engine = factory.getEngineByName(lang);
-    // evaluate JavaScript code from given file - specified by first argument
+    ScriptEngine engine = scriptEngineManager.getEngineByName(lang);
+    if (engine == null)
+        {
+        err("doRunFile: cannot find script engine '" + lang + "'");
+        return false;
+		}
+    //try opening file and feeding into engine
     FileReader in = null;
     boolean ret = true;
     try
@@ -152,45 +235,6 @@ public boolean runFile(String lang, String fname)
 
 
 /**
- * Constructor
- * @param backPtr pointer back to the C context that called this
- */
-public ScriptRunner(long backPtr)
-{
-    this.backPtr = backPtr;
-    System.setOut(new PrintStream(new StdOutStream()));
-    System.setErr(new PrintStream(new StdErrStream()));
-}
-
-
-
-private static ScriptRunner _instance = null;
-
-
-public static ScriptRunner getInstance(long backPtr)
-{
-    if (_instance == null)
-        _instance = new ScriptRunner(backPtr);
-    return _instance;
-}
-
-
-/**
- * Run a script buffer
- *
- * @param backPtr pointer back to the C context that called this
- * @param lang the scripting language to run
- * @param str the script buffer to execute
- * @return true if successful, else false
- */
-public static boolean run(long ptr, String lang, String str)
-{
-    ScriptRunner runner = getInstance(ptr);
-    return runner.run(lang, str);
-}
-
-
-/**
  * Run a script file
  *
  * @param backPtr pointer back to the C context that called this
@@ -198,12 +242,97 @@ public static boolean run(long ptr, String lang, String str)
  * @param fname the script file to execute
  * @return true if successful, else false
  */
-public static boolean runFile(long ptr, String lang, String fname)
+public static boolean runFile(String lang, String fname)
 {
-    ScriptRunner runner = getInstance(ptr);
-    return runner.runFile(lang, fname);
+    //wrap whole thing in try/catch, since this will
+    //likely be called from C
+    try
+        {
+        ScriptRunner runner = getInstance();
+        if (runner == null)
+            {
+            err("ScriptRunner not initialized");
+            return false;
+		    }
+        return runner.doRunFile(lang, fname);
+        }
+    catch (Exception e)
+        {
+        err("run :" + e);
+        return false;
+		}
 }
 
 
 
+//########################################################################
+//# CONSTRUCTOR
+//########################################################################
+
+
+
+private static ScriptRunner _instance = null;
+public static ScriptRunner getInstance()
+{
+    return _instance;
 }
+
+private void listFactories()
+{
+    List<ScriptEngineFactory> factories = 
+          scriptEngineManager.getEngineFactories();
+    for (ScriptEngineFactory factory: factories)
+	    {
+        log.println("ScriptEngineFactory Info");
+        String engName     = factory.getEngineName();
+        String engVersion  = factory.getEngineVersion();
+        String langName    = factory.getLanguageName();
+        String langVersion = factory.getLanguageVersion();
+        log.printf("\tScript Engine: %s (%s)\n", 
+               engName, engVersion);
+        List<String> engNames = factory.getNames();
+        for(String name: engNames)
+		    {
+            log.printf("\tEngine Alias: %s\n", name);
+            }
+        log.printf("\tLanguage: %s (%s)\n", 
+               langName, langVersion);
+        }
+}
+
+
+   
+/**
+ * Constructor
+ * @param backPtr pointer back to the C context that called this
+ */
+public ScriptRunner(long backPtr)
+{
+    /**
+     * Set up the output, error, and logging stream
+     */	     
+    System.setOut(new PrintStream(new StdOutStream()));
+    System.setErr(new PrintStream(new StdErrStream()));
+    log = new PrintStream(new LogStream());
+
+    //Point back to C++ object
+    this.backPtr = backPtr;
+    
+    //Start up the factory
+    scriptEngineManager  = new ScriptEngineManager();
+    listFactories();
+    _instance = this;
+}
+
+
+static
+{
+
+}
+
+}
+//########################################################################
+//# E N D    O F    F I L E
+//########################################################################
+
+

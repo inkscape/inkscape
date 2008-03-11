@@ -63,6 +63,8 @@ public:
  
     virtual bool doBinding();
 
+    virtual bool setupScriptRunner();
+
     static JavaBinderyImpl *getInstance();
 
 

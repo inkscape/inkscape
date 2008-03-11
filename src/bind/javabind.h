@@ -272,6 +272,11 @@ public:
         stdOutBuf.clear();
         }
 
+    virtual void stdOut(int ch)
+        {
+        stdOutBuf.push_back((char)ch);
+        }
+
     virtual String stdErrGet()
         {
         return stdErrBuf;
@@ -282,14 +287,29 @@ public:
         stdErrBuf.clear();
         }
 
-    virtual void stdOut(int ch)
-        {
-        stdOutBuf.push_back((char)ch);
-        }
-
     virtual void stdErr(int ch)
         {
         stdErrBuf.push_back((char)ch);
+        }
+
+    virtual String logGet()
+        {
+        return logBuf;
+        }
+
+    virtual void logClear()
+        {
+        logBuf.clear();
+        }
+
+    virtual void log(int ch)
+        {
+        logBuf.push_back((char)ch);
+        if (ch == '\n' || ch == '\r')
+            {
+            g_message(logBuf.c_str());
+            logBuf.clear();
+			}
         }
 
 
@@ -303,6 +323,7 @@ protected:
 
     String stdOutBuf;
     String stdErrBuf;
+    String logBuf;
 
 };
 

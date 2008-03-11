@@ -110,31 +110,18 @@ class ScriptDialogImpl : public ScriptDialog
 
 };
 
-static const char *defaultPythonCodeStr =
-#if defined(WITH_PYTHON)
-    "# This is a sample Python script.\n"
-    "# To run it, select 'Execute Python' from the File menu above.\n"
-    "desktop = inkscape.activeDesktop\n"
-    "dialogmanager = desktop.dialogManager\n"
-    "document = inkscape.activeDocument\n"
-    "inkscape.hello()\n"
-    "dialogmanager.showAbout()\n"
-#elif defined(WITH_PERL)
-    "# This is a sample Perl script.\n"
-    "# To run it, select 'Execute Perl' from the File menu above.\n"
-    "my $desktop = $inkscape->getDesktop();\n"
-    "my $dialogmanager = $inkscape->getDialogManager();\n"
-    "my $document = $desktop->getDocument();\n"
-    "$document->hello();\n"
-    "$dialogmanager->showAbout();\n"
-#else
-    "# This is where you could type a script.\n"
-    "# However, no scripting languages have been compiled\n"
-    "# into Inkscape, so this window has no functionality.\n"
-    "# When compiling Inkscape, run \"configure\" with\n"
-    "# \"--with-python\" and/or \"--with-perl\".\n"
-#endif
-    "";
+static const char *defaultCodeStr =
+    "/**\n"
+    " * This is some example Javascript.\n"
+    " * Try 'Execute Javascript'\n"
+    " */\n"
+    "function sayHello() {\n"
+    "  println('Hello, world!');\n"
+    "}\n"
+    "\n"
+    "sayHello();\n"
+    "\n";
+
 
 
 
@@ -229,7 +216,7 @@ ScriptDialogImpl::ScriptDialogImpl() :
 
     //### Set up the script field
     scriptText.set_editable(true);
-    scriptText.get_buffer()->set_text(defaultPythonCodeStr);
+    scriptText.get_buffer()->set_text(defaultCodeStr);
     scriptTextScroll.add(scriptText);
     scriptTextScroll.set_policy(Gtk::POLICY_ALWAYS, Gtk::POLICY_ALWAYS);
     scriptTextFrame.set_label(_("Script"));

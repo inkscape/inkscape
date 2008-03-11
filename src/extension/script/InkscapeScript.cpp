@@ -75,15 +75,15 @@ bool InkscapeScript::interpretScript(const Glib::ustring &script,
     //if() instead of switch() lets us scope vars
     if (language == InkscapeScript::JAVASCRIPT)
         {
-        langname="Javascript";
+        langname="javascript";
         }
     else if (language == InkscapeScript::PYTHON)
         {
-        langname="Python";
+        langname="python";
         }
     else if (language == InkscapeScript::RUBY)
         {
-        langname="Ruby";
+        langname="ruby";
         }
     else
         {

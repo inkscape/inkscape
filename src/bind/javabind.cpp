@@ -285,40 +285,115 @@ static bool getRegistryString(HKEY root, const char *keyName,
 }
 
 
+static String cleanPath(const String &s)
+{
+    String buf;
+    for (unsigned int i=0 ; i<s.size() ; i++)
+        {
+        char ch = s[i];
+        if (ch != '"')
+            buf.push_back(ch);
+		}
+	return buf;
+}
+
+
+/**
+ * Common places to find jvm.dll under JAVA_HOME
+ */ 
+static const char *commonJavaPaths[] =
+{
+    "\\jre\\bin\\client\\jvm.dll",
+    "\\bin\\client\\jvm.dll",
+    "\\jvm.dll",
+    NULL
+};
+
 static CreateVMFunc getCreateVMFunc()
 {
-    char verbuf[16];
-    char regpath[80];
-    strcpy(regpath, "SOFTWARE\\JavaSoft\\Java Runtime Environment");
-    bool ret = getRegistryString(HKEY_LOCAL_MACHINE,
+    bool found = false;
+    String libname;
+
+    /**
+     * First, look for JAVA_HOME.  This will allow the user
+     * to override what's in the registry
+     */	 	     
+    const char *envStr = getenv("JAVA_HOME");
+    if (envStr)
+        {
+        String javaHome = cleanPath(envStr);
+        msg("JAVA_HOME='%s'", javaHome.c_str());
+        for (const char **path = commonJavaPaths ; *path ; path++)
+            {
+            String jpath = javaHome;
+            jpath.append(*path);
+            //msg("trying '%s'", jpath.c_str());
+            struct stat finfo;
+            if (stat(jpath.c_str(), &finfo)>=0)
+                {
+                //msg("found");
+                libname = jpath;
+                found = true;
+                break;
+                }
+            }
+        }
+
+    //not at JAVA_HOME.  check the registry
+    if (!found)
+        {
+        char verbuf[16];
+        char regpath[80];
+        strcpy(regpath, "SOFTWARE\\JavaSoft\\Java Runtime Environment");
+        bool ret = getRegistryString(HKEY_LOCAL_MACHINE,
                      regpath, "CurrentVersion", verbuf, 15);
-    if (!ret)
+        if (!ret)
+            {
+            msg("JVM CurrentVersion not found in registry at '%s'", regpath);
+            }
+        else
+            {
+            strcat(regpath, "\\");
+            strcat(regpath, verbuf);
+            //msg("reg path: %s\n", regpath);
+            char valbuf[80];
+            ret = getRegistryString(HKEY_LOCAL_MACHINE,
+                     regpath, "RuntimeLib", valbuf, 79);
+            if (ret)
+                {
+                found = true;
+                libname = valbuf;
+                }
+            else
+                {
+                msg("JVM RuntimeLib not found in registry at '%s'",
+				          regpath);
+				}
+			}
+        }
+
+    if (!found)
         {
-        err("JVM CurrentVersion not found in registry\n");
+        err("JVM not found at JAVA_HOME or in registry");
         return NULL;
         }
-    strcat(regpath, "\\");
-    strcat(regpath, verbuf);
-    //msg("reg path: %s\n", regpath);
-    char libname[80];
-    ret = getRegistryString(HKEY_LOCAL_MACHINE,
-                     regpath, "RuntimeLib", libname, 79);
-    if (!ret)
-        {
-        err("Current JVM RuntimeLib not found in registry\n");
-        return NULL;
-        }
-    //msg("jvm path: %s\n", libname);
-    HMODULE lib = LoadLibrary(libname);
+
+    /**
+     * If we are here, then we seem to have a valid path for jvm.dll
+     * Give it a try
+     */	 	     
+    msg("getCreateVMFunc: Loading JVM: %s", libname.c_str());
+    HMODULE lib = LoadLibrary(libname.c_str());
     if (!lib)
         {
-        err("Java VM not found at '%s'", libname);
+        err("Java VM not found at '%s'", libname.c_str());
         return NULL;
         }
     CreateVMFunc createVM = (CreateVMFunc)GetProcAddress(lib, "JNI_CreateJavaVM");
     if (!createVM)
         {
-        err("Could not find 'JNI_CreateJavaVM' in shared library");
+        err("Could not find 'JNI_CreateJavaVM' in shared library '%s'",
+		                   libname.c_str());
         return NULL;
         }
     return createVM;
@@ -451,6 +526,7 @@ static CreateVMFunc getCreateVMFunc()
         err("No Java VM found. Is JAVA_HOME defined?  Need to find 'libjvm.so'");
         return NULL;
         }
+    msg("getCreateVMFunc: Loading JVM: %s", libname.c_str());
     void *lib = dlopen(libname.c_str(), RTLD_NOW);
     if (!lib)
         {
@@ -547,7 +623,7 @@ static void populateClassPath(const String &javaroot,
 
 
 //========================================================================
-// Native methods
+// SCRIPT RUNNER
 //========================================================================
 /**
  * These methods are used to allow the ScriptRunner class to
@@ -569,14 +645,57 @@ void JNICALL stdErrWrite(JNIEnv */*env*/, jobject /*obj*/, jlong ptr, jint ch)
 }
 
 
+void JNICALL logWrite(JNIEnv */*env*/, jobject /*obj*/, jlong ptr, jint ch)
+{
+    JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
+    bind->log(ch);
+}
+
+
 static JNINativeMethod scriptRunnerMethods[] =
 {
 { (char *)"stdOutWrite", (char *)"(JI)V", (void *)stdOutWrite },
 { (char *)"stdErrWrite", (char *)"(JI)V", (void *)stdErrWrite },
+{ (char *)"logWrite",    (char *)"(JI)V", (void *)logWrite    },
 { NULL,  NULL, NULL }
 };
+
+/**
+ * This sets up the 'ScriptRunner' java class for execution of
+ * scripts
+ */  
+bool JavaBinderyImpl::setupScriptRunner()
+{
+    String className = "org/inkscape/cmn/ScriptRunner";
+    if (!registerNatives(className, scriptRunnerMethods))
+        {
+        return false;
+        }
+    jclass cls = env->FindClass(className.c_str());
+    if (!cls)
+        {
+        err("setupScriptRunner: cannot find class '%s'", className.c_str());
+        return false;
+		}
+	jmethodID mid = env->GetMethodID(cls, "<init>", "(J)V");
+	if (!mid)
+        {
+        err("setupScriptRunner: cannot find constructor for '%s'", className.c_str());
+        return false;
+		}
+    jobject obj = env->NewObject(cls, mid, ((jlong)this));
+    if (!obj)
+        {
+        err("setupScriptRunner: cannot construct '%s'", className.c_str());
+        return false;
+		}
+	msg("ScriptRunner ready");
+    return true;
+}
+
+
 //========================================================================
-// End native methods
+// End SCRIPT RUNNER
 //========================================================================
 
 
@@ -647,14 +766,12 @@ bool JavaBinderyImpl::loadJVM()
     int versionMinor = (vers    ) & 0xffff;
     msg("Loaded JVM version %d.%d", versionMajor, versionMinor);
 
-    if (!registerNatives("org/inkscape/cmn/ScriptRunner",
-             scriptRunnerMethods))
-        {
+    if (!setupScriptRunner())
         return false;
-        }
+
+
     return true;
 }
-
 
 
 /**
@@ -763,6 +880,12 @@ bool JavaBinderyImpl::callStatic(int type,
             }
         }
     delete jvals;
+    String errStr = getException(env);
+    if (errStr.size()>0)
+        {
+        err("callStatic: %s", errStr.c_str());
+        return false;
+		}
     return true;
 }
 
@@ -800,7 +923,7 @@ bool JavaBinderyImpl::registerNatives(const String &className,
         err("Could not find class '%s'", className.c_str());
         return false;
         }
-    msg("registerNatives: class '%s' found", className.c_str());
+    //msg("registerNatives: class '%s' found", className.c_str());
     
     /**
      * hack for JDK bug http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6493522
