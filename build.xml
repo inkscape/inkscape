@@ -329,7 +329,7 @@
   -->
   <target name="java" depends="init"
       description="compile java binding classes">
-    <javac srcdir="${src}/bind/java" destdir="${build}/java/classes"/>
+    <javac srcdir="${src}/bind/java" destdir="${build}/java/classes" target="1.5"/>
   </target>
 
 
@@ -582,6 +582,9 @@
     <!-- Necessary to run extensions on windows if it is not in the path -->
     <copy file="${gtk}/bin/gspawn-win32-helper.exe" todir="${dist}"/>
     <copy file="${gtk}/bin/gspawn-win32-helper-console.exe" todir="${dist}"/>
+
+    <!-- Java -->
+    <!--<copy todir="${dist}/share"> <fileset dir="${build}/java"/> </copy>-->
 
     <!-- PERL -->
     <copy file="${gtk}/perl/bin/perl58.dll" todir="${dist}"/>

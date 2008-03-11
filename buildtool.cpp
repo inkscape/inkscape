@@ -4,7 +4,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2006-2007 Bob Jamison
+ * Copyright (C) 2006-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -38,7 +38,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.7.4, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.7.5, 2007 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -6696,6 +6696,12 @@ public:
         cmd.append(" -sourcepath ");
         cmd.append(srcdir);
         cmd.append(" ");
+        if (target.size()>0)
+            {
+            cmd.append(" -target ");
+            cmd.append(target);
+            cmd.append(" ");
+			}
         for (unsigned int i=0 ; i<fileList.size() ; i++)
             {
             String fname = fileList[i];
@@ -6749,6 +6755,8 @@ public:
             error("<javac> required both srcdir and destdir attributes to be set");
             return false;
             }
+        if (!parent.getAttribute(elem, "target", target))
+            return false;
         return true;
         }
 
@@ -6757,6 +6765,7 @@ private:
     String command;
     String srcdir;
     String destdir;
+    String target;
 
 };
 
