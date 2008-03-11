@@ -185,6 +185,7 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL */*area*/, NRGC *gc, guint /*s
             nstyl.dash_offset = 0;
             nstyl.dashes=NULL;
             if ( glyphs->style->stroke_dash.n_dash > 0 ) {
+                nstyl.dash_offset = glyphs->style->stroke_dash.offset * scale;
                 nstyl.nbDash=glyphs->style->stroke_dash.n_dash;
                 nstyl.dashes=(double*)malloc(nstyl.nbDash*sizeof(double));
                 for (int i = 0; i < nstyl.nbDash; i++) nstyl.dashes[i]= glyphs->style->stroke_dash.dash[i] * scale;
