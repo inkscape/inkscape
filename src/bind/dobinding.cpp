@@ -54,6 +54,18 @@ using namespace org::w3c::dom;
  * This file can get quite large!
  */  
 
+/**
+ * This struct associates a class name with its native
+ * bindings.  Since C++ does not allow "flexible" arrays,
+ * we will separate each of the tables into a JNINativeMethod
+ * array, and a class with a name and a pointer to that array.  
+ */  
+typedef struct
+{
+    const char *className;
+    JNINativeMethod *methods;
+} NativeClass;
+
 
 //########################################################################
 //# BASE OBJECT
@@ -90,13 +102,18 @@ static void JNICALL DOMBase_destruct
 }
 
 
-static JNINativeMethod DOMBaseMethods[] =
+static JNINativeMethod nm_DOMBase[] =
 {
 { (char *)"construct", (char *)"()V", (void *)DOMBase_construct },
 { (char *)"destruct",  (char *)"()V", (void *)DOMBase_destruct  },
 { NULL,  NULL, NULL }
 };
 
+static NativeClass nc_DOMBase =
+{
+    "org/inkscape/dom/DOMBase",
+    nm_DOMBase
+};
 //########################################################################
 //# DOMImplementation
 //########################################################################
@@ -114,10 +131,16 @@ void JNICALL DOMImplementation_nCreateDocument
 
 
 
-static JNINativeMethod DOMImplementationMethods[] =
+static JNINativeMethod nm_DOMImplementation[] =
 {
 { (char *)"construct", (char *)"()V", (void *)DOMImplementation_nCreateDocument },
 { NULL,  NULL, NULL }
+};
+
+static NativeClass nc_DOMImplementation =
+{
+    "org/inkscape/dom/DOMImplementation",
+    nm_DOMImplementation
 };
 
 
@@ -125,27 +148,27 @@ static JNINativeMethod DOMImplementationMethods[] =
 //########################################################################
 //# MAIN
 //########################################################################
-typedef struct
-{
-    const char *className;
-    JNINativeMethod *methods;
-} NativeEntry;
 
 
-static NativeEntry nativeEntries[] =
+/**
+ * This is a table-of-tables, matching a class name to its
+ * table of native methods.  We can probably think of a cleaner way
+ * of doing this
+ */   
+static NativeClass *allClasses[] =
 {
-    { "org/inkscape/dom/DOMBase",           DOMBaseMethods            },
-    { "org/inkscape/dom/DOMImplementation", DOMImplementationMethods  },
-    { NULL,                                 NULL                      }
+    &nc_DOMBase,
+    &nc_DOMImplementation,
+    NULL
 };
 
 
 
 bool JavaBinderyImpl::doBinding()
 {
-    for (NativeEntry *ne = nativeEntries ; ne->className ; ne++)
+    for (NativeClass **nc = allClasses ; *nc ; nc++)
         {
-        bool ret = registerNatives(ne->className, ne->methods);
+        bool ret = registerNatives((*nc)->className, (*nc)->methods);
         if (!ret)
             {
             err("Could not bind native methods");
