@@ -12,6 +12,6 @@ if [[ $VERSION -le 4 ]]; then
 	export "DISPLAY=`cat /tmp/display.$UID`"
 fi
 
-BASE="`echo "$0" | sed -e 's/\/[A-Za-z]*.app\/Contents\/Resources\/openDoc/\//'`"
+BASE="`echo "$0" | sed -e 's/\/Contents\/Resources\/openDoc/\//'`"
 cd "$BASE"
 exec "$CWD/bin/inkscape" "$@"
