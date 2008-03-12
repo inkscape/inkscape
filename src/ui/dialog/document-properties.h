@@ -75,7 +75,7 @@ protected:
     RegisteredColorPicker _rcp_gui, _rcp_hgui;
     //---------------------------------------------------------------
     RegisteredCheckButton _rcbsg, _rcbsnbb, _rcbsnn, _rcbsnop;
-    RegisteredCheckButton _rcbsnon, _rcbsnbbp, _rcbsnbbn;
+    RegisteredCheckButton _rcbsnon, _rcbsnbbp, _rcbsnbbn, _rcbsnpb;
     ToleranceSlider       _rsu_sno, _rsu_sn, _rsu_gusn;
     //---------------------------------------------------------------
     RegisteredCheckButton _rcbic;

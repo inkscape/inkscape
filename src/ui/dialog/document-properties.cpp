@@ -8,9 +8,10 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Jon Phillips <jon@rejon.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de> (Gtkmm)
+ *   Diederik van Lierop <mail@diedenrezi.nl>
  *
  * Copyright (C) 2006-2008 Johan Engelen  <johan@shouraizou.nl>
- * Copyright (C) 2000 - 2005 Authors
+ * Copyright (C) 2000 - 2008 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information
  */
@@ -109,6 +110,7 @@ DocumentProperties::DocumentProperties()
       _rcbsnon(_("Snap to n_odes"), _("Snap nodes and guides to object nodes"), "inkscape:object-nodes", _wr),
       _rcbsnbbp(_("Snap to bounding bo_x edges"), _("Snap bounding box corners and guides to bounding box edges"), "inkscape:bbox-paths", _wr),
       _rcbsnbbn(_("Snap to bounding box co_rners"), _("Snap bounding box corners to other bounding box corners"), "inkscape:bbox-nodes", _wr),
+      _rcbsnpb(_("Snap to page border"), _("Snap bounding box corners and nodes to the page border"), "inkscape:snap-page", _wr),
     //---------------------------------------------------------------
        //Applies to both nodes and guides, but not to bboxes, that's why its located here
       _rcbic( _("Rotation _center"), _("Consider the rotation center of an object when snapping"), "inkscape:snap-center", _wr),
@@ -332,6 +334,7 @@ DocumentProperties::build_snap()
         0,                  &_rcbsnon,
         0,                  &_rcbsnbbp,
         0,                  &_rcbsnbbn,
+        0,                  &_rcbsnpb,
         0,                  _rsu_sno._vbox,
         0,                  0,
         label_gr,           0,
@@ -494,6 +497,7 @@ DocumentProperties::update()
     _rcbsnon.setActive(nv->snap_manager.object.getSnapToItemNode());
     _rcbsnbbp.setActive(nv->snap_manager.object.getSnapToBBoxPath());
     _rcbsnbbn.setActive(nv->snap_manager.object.getSnapToBBoxNode());
+    _rcbsnpb.setActive(nv->snap_manager.object.getSnapToPageBorder());
     _rsu_sno.setValue (nv->objecttolerance);
 
     _rsu_sn.setValue (nv->gridtolerance);

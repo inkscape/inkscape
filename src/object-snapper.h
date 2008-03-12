@@ -71,6 +71,14 @@ public:
     return _snap_to_bboxpath;
   }
   
+  void setSnapToPageBorder(bool s) {
+    _snap_to_page_border = s;
+  }
+
+  bool getSnapToPageBorder() const {
+    return _snap_to_page_border;
+  }
+    
   void setIncludeItemCenter(bool s) {
     _include_item_center = s;
   }
@@ -137,7 +145,8 @@ private:
                       NR::Point const &p,
                       bool const &first_point,
                       std::vector<NR::Point> *unselected_nodes,
-                      SPPath const *selected_path) const;
+                      SPPath const *selected_path,
+                      NArtBpath *border_bpath) const;
                       
   void _snapPathsConstrained(SnappedConstraints &sc,
                  Inkscape::Snapper::PointType const &t,
@@ -148,13 +157,16 @@ private:
   
   void _collectPaths(Inkscape::Snapper::PointType const &t, 
                   bool const &first_point,
-                  SPPath const *selected_path = NULL) const;
+                  SPPath const *selected_path = NULL,
+                  NArtBpath *border_bpath = NULL) const;
   void _clear_paths() const;
+  NArtBpath* _getBorderBPath() const;
   
   bool _snap_to_itemnode;
   bool _snap_to_itempath;
   bool _snap_to_bboxnode;
   bool _snap_to_bboxpath;
+  bool _snap_to_page_border;
   
   //If enabled, then bbox corners will only snap to bboxes, 
   //and nodes will only snap to nodes and paths. We will not
