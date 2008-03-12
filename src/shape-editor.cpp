@@ -220,8 +220,6 @@ void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject,
     this->grab_node = -1;
 
     if (lpeobject) {
-        // FIXME ? just setting knotholder to NULL... not necessary to delete it ?
-        this->knotholder = NULL; // it's a path, no special knotholder needed.
         this->nodepath = sp_nodepath_new( desktop, lpeobject,
                                           (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0),
                                           key, item);
