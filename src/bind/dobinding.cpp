@@ -66,6 +66,10 @@ typedef struct
     JNINativeMethod *methods;
 } NativeClass;
 
+/**
+ * Although I dislike macros, this one seems reasonable
+ */ 
+#define EXCEPTION (getExceptionString(env).c_str())
 
 //########################################################################
 //# BASE OBJECT
@@ -76,7 +80,7 @@ static jlong getPointer(JNIEnv *env, jobject obj)
     jfieldID id = env->GetFieldID(env->GetObjectClass(obj), "_pointer", "J");
     if (!id)
         {
-        err("getPointer: %s", getException(env).c_str());
+        err("getPointer: %s", EXCEPTION);
         return 0;
 		}
     jlong val = env->GetLongField(obj, id);
@@ -88,7 +92,7 @@ static void setPointer(JNIEnv *env, jobject obj, jlong val)
     jfieldID id = env->GetFieldID(env->GetObjectClass(obj), "_pointer", "J");
     if (!id)
         {
-        err("setPointer: %s", getException(env).c_str());
+        err("setPointer: %s", EXCEPTION);
         return;
 		}
     env->SetLongField(obj, id, val);
