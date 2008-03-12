@@ -30,10 +30,7 @@ export PYTHONPATH="$TOP/python/site-packages/$ARCH/$PYTHON_VERS"
 
 export DYLD_LIBRARY_PATH="$TOP/lib"
 
-# For Panther and Tiger, override the default fontconfig configuration
-if [[ $VERSION -le 4 ]]; then
-	export FONTCONFIG_PATH="$TOP/etc/fonts"
-fi
+export FONTCONFIG_PATH="$TOP/etc/fonts"
 export PANGO_RC_FILE="$HOME/.inkscape-etc/pangorc"
 export GTK_IM_MODULE_FILE="$HOME/.inkscape-etc/gtk.immodules"
 export GDK_PIXBUF_MODULE_FILE="$HOME/.inkscape-etc/gdk-pixbuf.loaders"
