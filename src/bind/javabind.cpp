@@ -102,6 +102,21 @@ String normalizePath(const String &str)
 	return buf;
 }
 
+String getExceptionString(JNIEnv *env)
+{
+    String buf;
+    jthrowable exc = env->ExceptionOccurred();
+    if (!exc)
+        return buf;
+    jclass cls = env->GetObjectClass(exc);
+    jmethodID mid = env->GetMethodID(cls, "toString", "()Ljava/lang/String;");
+    jstring jstr = (jstring) env->CallObjectMethod(exc, mid);
+    const char *str = env->GetStringUTFChars(jstr, JNI_FALSE);
+    buf.append(str);
+    env->ReleaseStringUTFChars(jstr, str);
+    env->ExceptionClear();
+	return buf;
+}
 
 jint getInt(JNIEnv *env, jobject obj, const char *name)
 {
@@ -901,6 +916,7 @@ bool JavaBinderyImpl::callStatic(int type,
 
 
 
+
 /**
  * Fetch the last exception from the JVM, if any.  Clear it to
  * continue processing
@@ -909,18 +925,7 @@ bool JavaBinderyImpl::callStatic(int type,
  */  
 String JavaBinderyImpl::getException()
 {
-    String buf;
-    jthrowable exc = env->ExceptionOccurred();
-    if (!exc)
-        return buf;
-    jclass cls = env->GetObjectClass(exc);
-    jmethodID mid = env->GetMethodID(cls, "toString", "()Ljava/lang/String;");
-    jstring jstr = (jstring) env->CallObjectMethod(exc, mid);
-    const char *str = env->GetStringUTFChars(jstr, JNI_FALSE);
-    buf.append(str);
-    env->ReleaseStringUTFChars(jstr, str);
-    env->ExceptionClear();
-	return buf;
+    return getExceptionString(env);
 }
 
 

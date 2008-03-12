@@ -74,6 +74,11 @@ typedef struct
 static jlong getPointer(JNIEnv *env, jobject obj)
 {
     jfieldID id = env->GetFieldID(env->GetObjectClass(obj), "_pointer", "J");
+    if (!id)
+        {
+        err("getPointer: %s", getException(env).c_str());
+        return 0;
+		}
     jlong val = env->GetLongField(obj, id);
     return val;
 }
@@ -81,8 +86,48 @@ static jlong getPointer(JNIEnv *env, jobject obj)
 static void setPointer(JNIEnv *env, jobject obj, jlong val)
 {
     jfieldID id = env->GetFieldID(env->GetObjectClass(obj), "_pointer", "J");
+    if (!id)
+        {
+        err("setPointer: %s", getException(env).c_str());
+        return;
+		}
     env->SetLongField(obj, id, val);
 }
+
+static void JNICALL BaseObject_construct
+  (JNIEnv *env, jobject obj)
+{
+    setPointer(env, obj, 0L);
+}
+
+static void JNICALL BaseObject_destruct
+  (JNIEnv *env, jobject obj)
+{
+    NodePtr *ptr = (NodePtr *)getPointer(env, obj);
+    if (ptr)
+        {
+        delete ptr;
+        }
+    setPointer(env, obj, 0L);
+}
+
+
+static JNINativeMethod nm_BaseObject[] =
+{
+{ (char *)"construct", (char *)"()V", (void *)BaseObject_construct },
+{ (char *)"destruct",  (char *)"()V", (void *)BaseObject_destruct  },
+{ NULL,  NULL, NULL }
+};
+
+static NativeClass nc_BaseObject =
+{
+    "org/inkscape/cmn/BaseObject",
+    nm_BaseObject
+};
+
+//########################################################################
+//# BASE OBJECT
+//########################################################################
 
 static void JNICALL DOMBase_construct
   (JNIEnv *env, jobject obj)
@@ -114,6 +159,8 @@ static NativeClass nc_DOMBase =
     "org/inkscape/dom/DOMBase",
     nm_DOMBase
 };
+
+
 //########################################################################
 //# DOMImplementation
 //########################################################################
@@ -157,6 +204,7 @@ static NativeClass nc_DOMImplementation =
  */   
 static NativeClass *allClasses[] =
 {
+    &nc_BaseObject,
     &nc_DOMBase,
     &nc_DOMImplementation,
     NULL

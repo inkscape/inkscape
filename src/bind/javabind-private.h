@@ -91,6 +91,13 @@ void msg(const char *fmt, ...);
 //# UTILITY
 //########################################################################
 
+String normalizePath(const String &str);
+
+String getExceptionString(JNIEnv *env);
+
+String getException(JNIEnv *env)
+    { return getExceptionString(env); }
+
 jint getInt(JNIEnv *env, jobject obj, const char *name);
 
 void setInt(JNIEnv *env, jobject obj, const char *name, jint val);
