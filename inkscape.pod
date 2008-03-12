@@ -106,19 +106,19 @@ is the lower-left corner.
 
 =item B<-C>, B<--export-area-canvas>
 
-In PNG export, exported area is the entire canvas (page). Usually this is the default, so you
+In PNG and PDF export, exported area is the entire canvas (page). Usually this is the default, so you
 don't need to specify this unless you are using --export-id to export a specific object.
 
 =item B<-D>, B<--export-area-drawing>
 
-In PNG export, exported area is the entire drawing (not canvas), i.e. the bounding box
+In PNG and PDF export, exported area is the entire drawing (not canvas), i.e. the bounding box
 of all objects of the document. With this option, the exported image will
-display just the visible objects of the document without margins or cropping. Can be
+display just the visible objects of the document without margins or cropping. For PNG, can be
 used in combination wtih --export-use-hints.
 
 =item B<--export-area-snap>
 
-Snap the export area outwards to the nearest integer SVG user unit (px) values. If you are using the 
+For PNG export, snap the export area outwards to the nearest integer SVG user unit (px) values. If you are using the 
 default export resolution of 90dpi and your graphics are pixel-snapped to minimize antialiasing, this switch 
 allows you to preserve this alignment even if you are exporting some object's bounding 
 box (with --export-id or --export-area-drawing) which is itself not pixel-aligned.
@@ -132,7 +132,7 @@ then the page color set in Inkscape in the Document Options dialog will be used 
 
 =item B<-d> I<DPI>, B<--export-dpi>=I<DPI>
 
-The resolution used for bitmap export.
+The resolution used for PNG export.
 The default is 90, which corresponds to 1 SVG user unit 
 (px, also called "user unit") exporting to 1 bitmap pixel.
 This value overrides the DPI hint if used with --export-use-hints.
@@ -158,14 +158,16 @@ This value overrides the --export-dpi setting (or the DPI hint if used with --ex
 
 =item B<-i> I<ID>, B<--export-id>=I<ID>
 
-The id attribute value of the object that you want to export from the document.  By
+For PNG and PDF export, the id attribute value of the object that you want 
+to export from the document.  By
 default the exported area is the bounding box of the object; you can override this using
 --export-area, --export-area-canvas, or --export-area-drawing.
 
 =item B<-j>, B<--export-id-only>
 
-Only export the object whose id is given in --export-id. All other objects are hidden and won't 
-show in export even if they overlay the exported object. Without --export-id, this option is ignored.
+Only export to PNG the object whose id is given in --export-id. All other objects are hidden and won't 
+show in export even if they overlay the exported object. 
+Without --export-id, this option is ignored. For PDF export, this is the default, so this option has no effect.
 
 =item B<-l>, B<--export-plain-svg>=I<FILENAME>
 
@@ -248,7 +250,17 @@ Export document(s) to Encapsulated PostScript format. Note that PostScript does 
 
 =item B<-A> I<FILENAME>, B<--export-pdf>=I<FILENAME>
 
-Export document(s) to PDF 1.4 format. This format preserves the transparency in the original SVG (though not all PDF viewers can display it yet). This option can be used together with --export-text-to-path (currently this is required, because exporting text as text is not yet supported).
+Export document(s) to PDF 1.4 format. This format preserves the 
+transparency in the original SVG (though not all PDF viewers 
+can display it yet). This option can be used together with 
+--export-text-to-path (currently this is required, because 
+exporting text as text is not yet supported). 
+
+By default, the entire document
+is exported and the page size of the PDF is that of the SVG document. You can 
+specify --export-id to export a single object (with PDF page the size 
+of that object's bounding box) and --export-area-drawing to make the 
+exported PDF page show the entire drawing (by default the SVG page).
 
 =item B<-T>, B<--export-text-to-path>
 
