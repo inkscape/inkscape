@@ -57,6 +57,12 @@
 /**
  * Note: We must limit Java or JVM-specific code to this file
  * and to dobinding.cpp.  It should be hidden from javabind.h
+ * 
+ * This file is mostly about getting things up and running, and
+ * providing the basic C-to-Java hooks.
+ *   
+ * dobinding.cpp will have the rote and repetitious
+ * class-by-class binding   
  */  
 
 
@@ -96,22 +102,6 @@ String normalizePath(const String &str)
 	return buf;
 }
 
-
-String getException(JNIEnv *env)
-{
-    String buf;
-    jthrowable exc = env->ExceptionOccurred();
-    if (!exc)
-        return buf;
-    jclass cls = env->GetObjectClass(exc);
-    jmethodID mid = env->GetMethodID(cls, "toString", "()Ljava/lang/String;");
-    jstring jstr = (jstring) env->CallObjectMethod(exc, mid);
-    const char *str = env->GetStringUTFChars(jstr, JNI_FALSE);
-    buf.append(str);
-    env->ReleaseStringUTFChars(jstr, str);
-    env->ExceptionClear();
-	return buf;
-}
 
 jint getInt(JNIEnv *env, jobject obj, const char *name)
 {
@@ -660,9 +650,13 @@ static JNINativeMethod scriptRunnerMethods[] =
 { NULL,  NULL, NULL }
 };
 
+
 /**
  * This sets up the 'ScriptRunner' java class for execution of
- * scripts
+ * scripts.   The class's constructor takes a jlong.  This java long
+ * is used to store the pointer to 'this'.  When ScriptRunner makes
+ * native calls, it passes that jlong back, so that it can call the
+ * methods of this C++ class.  
  */  
 bool JavaBinderyImpl::setupScriptRunner()
 {
@@ -674,21 +668,25 @@ bool JavaBinderyImpl::setupScriptRunner()
     jclass cls = env->FindClass(className.c_str());
     if (!cls)
         {
-        err("setupScriptRunner: cannot find class '%s'", className.c_str());
+        err("setupScriptRunner: cannot find class '%s' : %s",
+		         className.c_str(), getException().c_str());
         return false;
 		}
 	jmethodID mid = env->GetMethodID(cls, "<init>", "(J)V");
 	if (!mid)
         {
-        err("setupScriptRunner: cannot find constructor for '%s'", className.c_str());
+        err("setupScriptRunner: cannot find constructor for '%s' : %s",
+		          className.c_str(), getException().c_str());
         return false;
 		}
     jobject obj = env->NewObject(cls, mid, ((jlong)this));
     if (!obj)
         {
-        err("setupScriptRunner: cannot construct '%s'", className.c_str());
+        err("setupScriptRunner: cannot construct '%s' : %s",
+		         className.c_str(), getException().c_str());
         return false;
 		}
+
 	msg("ScriptRunner ready");
     return true;
 }
@@ -743,16 +741,17 @@ bool JavaBinderyImpl::loadJVM()
     msg("Lib path is: '%s'", libpath.c_str());
 
     JavaVMInitArgs vm_args;
-    JavaVMOption options[4];
-    options[0].optionString    = (char *)classpath.c_str();
-    options[1].optionString    = (char *)libpath.c_str();
-    options[2].optionString    = (char *)"-verbose:jni";
-    options[3].optionString    = (char *)"vfprintf";
-    options[3].extraInfo       = (void *)vfprintfHook;
-    vm_args.version            = JNI_VERSION_1_4;
-    vm_args.options            = options;
-    vm_args.nOptions           = 4;
-    vm_args.ignoreUnrecognized = true;
+    JavaVMOption options[10];//should be enough
+    int nOptions = 0;
+    options[nOptions++].optionString = (char *)classpath.c_str();
+    options[nOptions++].optionString = (char *)libpath.c_str();
+    //options[nOptions++].optionString = (char *)"-verbose:jni";
+    options[nOptions  ].optionString = (char *)"vfprintf";
+    options[nOptions++].extraInfo    = (void *)vfprintfHook;
+    vm_args.version                  = JNI_VERSION_1_4;
+    vm_args.options                  = options;
+    vm_args.nOptions                 = nOptions;
+    vm_args.ignoreUnrecognized       = true;
 
     if (createVM(&jvm, &env, &vm_args) < 0)
         {
@@ -768,7 +767,6 @@ bool JavaBinderyImpl::loadJVM()
 
     if (!setupScriptRunner())
         return false;
-
 
     return true;
 }
@@ -799,15 +797,17 @@ bool JavaBinderyImpl::callStatic(int type,
     jclass cls = env->FindClass(className.c_str());
     if (!cls)
         {
-        err("Could not find class '%s'", className.c_str());
+        err("Could not find class '%s' : %s",
+		       className.c_str(), getException().c_str());
         return false;
         }
     jmethodID mid = env->GetStaticMethodID(cls,
                 methodName.c_str(), signature.c_str());
     if (!mid)
         {
-        err("Could not find method '%s:%s/%s'", className.c_str(),
-                methodName.c_str(), signature.c_str());
+        err("Could not find method '%s:%s/%s' : %s",
+		        className.c_str(), methodName.c_str(),
+			    signature.c_str(), getException().c_str());
         return false;
         }
     /**
@@ -855,22 +855,32 @@ bool JavaBinderyImpl::callStatic(int type,
             }
         case Value::BIND_BOOLEAN:
             {
-            env->CallStaticBooleanMethodA(cls, mid, jvals);
+            jboolean ret = env->CallStaticBooleanMethodA(cls, mid, jvals);
+            if (ret == JNI_TRUE) //remember, don't truncate
+                retval.setBoolean(true);
+            else
+                retval.setBoolean(false);
             break;
             }
         case Value::BIND_INT:
             {
-            env->CallStaticIntMethodA(cls, mid, jvals);
+            jint ret = env->CallStaticIntMethodA(cls, mid, jvals);
+            retval.setInt(ret);
             break;
             }
         case Value::BIND_DOUBLE:
             {
-            env->CallStaticDoubleMethodA(cls, mid, jvals);
+            jdouble ret = env->CallStaticDoubleMethodA(cls, mid, jvals);
+            retval.setDouble(ret);
             break;
             }
         case Value::BIND_STRING:
             {
-            env->CallStaticObjectMethodA(cls, mid, jvals);
+            jobject ret = env->CallStaticObjectMethodA(cls, mid, jvals);
+            jstring jstr = (jstring) ret;
+            const char *str = env->GetStringUTFChars(jstr, JNI_FALSE);
+            retval.setString(str);
+            env->ReleaseStringUTFChars(jstr, str);
             break;
             }
         default:
@@ -880,13 +890,37 @@ bool JavaBinderyImpl::callStatic(int type,
             }
         }
     delete jvals;
-    String errStr = getException(env);
+    String errStr = getException();
     if (errStr.size()>0)
         {
         err("callStatic: %s", errStr.c_str());
         return false;
 		}
     return true;
+}
+
+
+
+/**
+ * Fetch the last exception from the JVM, if any.  Clear it to
+ * continue processing
+ * 
+ * @return the exception's descriptio,if any.  Else ""  
+ */  
+String JavaBinderyImpl::getException()
+{
+    String buf;
+    jthrowable exc = env->ExceptionOccurred();
+    if (!exc)
+        return buf;
+    jclass cls = env->GetObjectClass(exc);
+    jmethodID mid = env->GetMethodID(cls, "toString", "()Ljava/lang/String;");
+    jstring jstr = (jstring) env->CallObjectMethod(exc, mid);
+    const char *str = env->GetStringUTFChars(jstr, JNI_FALSE);
+    buf.append(str);
+    env->ReleaseStringUTFChars(jstr, str);
+    env->ExceptionClear();
+	return buf;
 }
 
 
@@ -933,13 +967,13 @@ bool JavaBinderyImpl::registerNatives(const String &className,
 	if (!mid)
 	    {
 	    err("Could not get reflect mid for 'getConstructors' : %s",
-             getException(env).c_str());
+             getException().c_str());
 		return false;
 		}
 	jobject res = env->CallObjectMethod(cls, mid);
 	if (!res)
 	    {
-	    err("Could not get constructors");
+	    err("Could not get constructors : %s", getException().c_str());
 		return false;
 		}
 	/**
@@ -952,7 +986,7 @@ bool JavaBinderyImpl::registerNatives(const String &className,
     if (ret < 0)
         {
         err("Could not register %d native methods for '%s' : %s",
-		    nrMethods, className.c_str(), getException(env).c_str());
+		    nrMethods, className.c_str(), getException().c_str());
         return false;
         }
     return true;

@@ -262,6 +262,14 @@ public:
         return false;
         }
         
+    /**
+     *
+     */
+    virtual String getException()
+        {
+		return "";
+		}
+        
     virtual String stdOutGet()
         {
         return stdOutBuf;
@@ -307,7 +315,7 @@ public:
         logBuf.push_back((char)ch);
         if (ch == '\n' || ch == '\r')
             {
-            g_message(logBuf.c_str());
+            g_message("%s", logBuf.c_str());
             logBuf.clear();
 			}
         }
