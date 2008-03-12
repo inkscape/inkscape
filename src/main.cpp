@@ -777,7 +777,7 @@ sp_main_console(int argc, char const **argv)
             if (sp_global_printer) {
                 sp_print_document_to_file(doc, sp_global_printer);
             }
-            if (sp_export_png || sp_export_id || sp_export_area_drawing) {
+            if (sp_export_png) {
                 sp_do_export_png(doc);
             }
             if (sp_export_svg) {
@@ -1118,7 +1118,7 @@ static void do_export_ps(SPDocument* doc, gchar const* uri, char const* mime)
 
     if (i == o.end())
     {
-        g_warning ("Could not find an extension to export this file.");
+        g_warning ("Could not find an extension to export to MIME type %s.", mime);
         return;
     }
 
@@ -1181,8 +1181,25 @@ static void do_export_pdf(SPDocument* doc, gchar const* uri, char const* mime)
 
     if (i == o.end())
     {
-        g_warning ("Could not find an extension to export this file.");
+        g_warning ("Could not find an extension to export to MIME type %s.", mime);
         return;
+    }
+
+    if (sp_export_id) {
+        SPObject *o = doc->getObjectById(sp_export_id);
+        if (o == NULL) {
+            g_warning("Object with id=\"%s\" was not found in the document. Nothing exported.", sp_export_id);
+            return;
+        }
+        (*i)->set_param_string ("exportId", sp_export_id);
+    } else {
+        (*i)->set_param_string ("exportId", "");
+    }
+
+    if (sp_export_area_drawing) {
+        (*i)->set_param_bool ("exportDrawing", TRUE);
+    } else {
+        (*i)->set_param_bool ("exportDrawing", FALSE);
     }
 
     (*i)->save(doc, uri);
@@ -1208,7 +1225,7 @@ static void do_export_emf(SPDocument* doc, gchar const* uri, char const* mime)
 
     if (i == o.end())
     {
-        g_warning ("Could not find an extension to export this file.");
+        g_warning ("Could not find an extension to export to MIME type %s.", mime);
         return;
     }
 

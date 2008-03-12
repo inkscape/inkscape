@@ -329,8 +329,9 @@ PrintCairoPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
         d.x1 = _width;
         d.y1 = _height;
     } else {
-        SPItem* doc_item = SP_ITEM(sp_document_root(doc));
-        sp_item_invoke_bbox(doc_item, &d, sp_item_i2r_affine(doc_item), TRUE);
+        // if not page, use our base, which is either root or the item we want to export
+        SPItem* doc_item = SP_ITEM(mod->base);
+        sp_item_invoke_bbox(doc_item, &d, sp_item_i2root_affine(doc_item), TRUE);
         // convert from px to pt
         d.x0 *= PT_PER_PX;
         d.x1 *= PT_PER_PX;
@@ -340,6 +341,8 @@ PrintCairoPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     // printf("\n _width:%f _height:%f scale:%f\n", _width, _height, PT_PER_PX);
     pdf_surface = cairo_pdf_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, d.x1-d.x0, d.y1-d.y0);
     cr = cairo_create(pdf_surface);
+    // move to the origin
+    cairo_translate (cr, -d.x0, -d.y0);
 
     if (!_bitmap) {
     	cairo_scale(cr, PT_PER_PX, PT_PER_PX);
@@ -1037,6 +1040,8 @@ PrintCairoPDF::init(void)
         "<param name=\"destination\" type=\"string\">| lp</param>\n"
         "<param name=\"pageBoundingBox\" type=\"boolean\">TRUE</param>\n"
         "<param name=\"textToPath\" type=\"boolean\">TRUE</param>\n"
+        "<param name=\"exportDrawing\" type=\"boolean\">FALSE</param>\n"
+        "<param name=\"exportId\" type=\"string\"></param>\n"
         "<print/>\n"
         "</inkscape-extension>", new PrintCairoPDF());
 }
