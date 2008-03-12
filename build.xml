@@ -593,6 +593,7 @@
     <!-- PYTHON -->
     <copy file="${gtk}/python/python25.dll" todir="${dist}"/>
     <copy file="${gtk}/python/python.exe" todir="${dist}/python"/>
+    <copy file="${gtk}/python/pythonw.exe" todir="${dist}/python"/>
     <copy todir="${dist}/python"> <fileset dir="${gtk}/python/Lib"/> </copy>
     <copy todir="${dist}/python"> <fileset dir="${gtk}/python/DLLs"/> </copy>
     <copy todir="${dist}/python"> <fileset dir="${gtk}/python/Scripts"/> </copy>

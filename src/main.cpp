@@ -413,6 +413,43 @@ struct poptOption options[] = {
 static bool needToRecodeParams = true;
 gchar* blankParam = "";
 
+#ifdef WIN32
+static int _win32_set_inkscape_env(char *argv0)
+{
+    CHAR szFullPath[_MAX_PATH];
+
+    CHAR szDrive[_MAX_DRIVE];
+    CHAR szDir[_MAX_DIR];
+    CHAR szFile[_MAX_FNAME];
+    CHAR szExt[_MAX_EXT];
+
+    CHAR tmp[_MAX_EXT];
+
+    if (GetModuleFileName(NULL, szFullPath, sizeof(szFullPath)) == 0) {
+        strcpy(szFullPath, argv0);
+    }
+
+    _splitpath(szFullPath, szDrive, szDir, szFile, szExt);
+    strcpy(szFullPath, szDrive);
+    strcat(szFullPath, szDir);
+
+    strcpy(tmp, "PATH=");
+    strcat(tmp, szFullPath);
+    strcat(tmp, ";");
+    strcat(tmp, szFullPath);
+    strcat(tmp, "python\\");
+    strcat(tmp, ";%PATH%");
+    _putenv(tmp);
+
+    strcpy(tmp, "PYTHONPATH=");
+    strcat(tmp, szFullPath);
+    strcat(tmp, "python\\");
+    _putenv(tmp);
+
+    return 0;
+}
+#endif
+
 int
 main(int argc, char **argv)
 {
@@ -425,6 +462,7 @@ main(int argc, char **argv)
 
 #ifdef ENABLE_NLS
 #ifdef WIN32
+	_win32_set_inkscape_env(argv[0])
     RegistryTool rt;
     rt.setPathInfo();
     gchar *pathBuf = g_strconcat(g_path_get_dirname(argv[0]), "\\", PACKAGE_LOCALE_DIR, NULL);

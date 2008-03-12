@@ -152,7 +152,7 @@ resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
     if (rt.getExeInfo(fullPath, path, exeName)) {
         Glib::ustring interpPath = path;
         interpPath.append("\\");
-        interpPath.append(interpName);
+        interpPath.append(interpNameArg);
         interpPath.append("\\");
         interpPath.append(interpName);
         interpPath.append(".exe");
