@@ -33,8 +33,8 @@
 
 Inkscape::ObjectSnapper::ObjectSnapper(SPNamedView const *nv, NR::Coord const d)
     : Snapper(nv, d), _snap_to_itemnode(true), _snap_to_itempath(true),
-    _snap_to_bboxnode(true), _snap_to_bboxpath(true), _strict_snapping(true),
-    _snap_to_page_border(false), _include_item_center(false)
+      _snap_to_bboxnode(true), _snap_to_bboxpath(true), _snap_to_page_border(false),
+      _strict_snapping(true), _include_item_center(false)
 {
     _candidates = new std::vector<SPItem*>;
     _points_to_snap_to = new std::vector<NR::Point>;
