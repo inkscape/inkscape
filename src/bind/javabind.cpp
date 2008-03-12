@@ -930,11 +930,19 @@ String JavaBinderyImpl::getException()
  * method of a given class
  * 
  * @param className full name of the java class
+ * @args the argument strings to the method 
  * @return true if successful, else false   
  */ 
-bool JavaBinderyImpl::callMain(const String &className)
+bool JavaBinderyImpl::callMain(const String &className,
+                               const std::vector<String> &args)
 {
     std::vector<Value> parms;
+    for (unsigned int i=0 ; i<args.size() ; i++)
+        {
+        Value v;
+        v.setString(args[i]);
+        parms.push_back(v);
+		}
     Value retval;
     return callStatic(Value::BIND_VOID, className, "main",
              "([Ljava/lang/String;)V", parms, retval);

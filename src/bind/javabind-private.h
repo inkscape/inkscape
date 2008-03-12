@@ -54,7 +54,8 @@ public:
                             const std::vector<Value> &params,
                             Value &retval);
 
-    virtual bool callMain(const String &className);
+    virtual bool callMain(const String &className,
+	                      const std::vector<String> &args);
 
     virtual bool isLoaded();
 
