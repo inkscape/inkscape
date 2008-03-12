@@ -87,6 +87,7 @@
     <mkdir dir="${build}"/>
     <mkdir dir="${build}/java"/>
     <mkdir dir="${build}/java/classes"/>
+    <mkdir dir="${build}/java/lib"/>
 
     <mkdir dir="${build}"/>
     <mkdir dir="${dist}"/>
@@ -583,8 +584,8 @@
     <copy file="${gtk}/bin/gspawn-win32-helper.exe" todir="${dist}"/>
     <copy file="${gtk}/bin/gspawn-win32-helper-console.exe" todir="${dist}"/>
 
-    <!-- Java -->
-    <!--<copy todir="${dist}/share"> <fileset dir="${build}/java"/> </copy>-->
+    <!-- Java - copying this dir is ok even if you dont use it -->
+    <copy todir="${dist}/share"> <fileset dir="${build}/java"/> </copy>
 
     <!-- PERL -->
     <copy file="${gtk}/perl/bin/perl58.dll" todir="${dist}"/>
