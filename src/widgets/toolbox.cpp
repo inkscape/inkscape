@@ -390,6 +390,7 @@ static gchar const * ui_descr =
         "  </toolbar>"
 
         "  <toolbar name='DropperToolbar'>"
+        "    <toolitem action='DropperOpacityAction' />"
         "    <toolitem action='DropperPickAlphaAction' />"
         "    <toolitem action='DropperSetAlphaAction' />"
         "  </toolbar>"
@@ -3914,11 +3915,18 @@ static void sp_dropper_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* main
     gint pickAlpha = prefs_get_int_attribute( "tools.dropper", "pick", 1 );
 
     {
+        EgeOutputAction* act = ege_output_action_new( "DropperOpacityAction", _("Opacity:"), "", 0 );
+        ege_output_action_set_use_markup( act, TRUE );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+    }
+
+    {
         InkToggleAction* act = ink_toggle_action_new( "DropperPickAlphaAction",
-                                                      _("Pick alpha"),
+                                                      _("Pick opacity"),
                                                       _("Pick both the color and the alpha (transparency) under cursor; otherwise, pick only the visible color premultiplied by alpha"),
-                                                      "color_alpha_get",
+                                                      NULL,
                                                       Inkscape::ICON_SIZE_DECORATION );
+        g_object_set( act, "short_label", _("Pick"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_object_set_data( holder, "pick_action", act );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), pickAlpha );
@@ -3927,10 +3935,11 @@ static void sp_dropper_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* main
 
     {
         InkToggleAction* act = ink_toggle_action_new( "DropperSetAlphaAction",
-                                                      _("Set alpha"),
+                                                      _("Assign opacity"),
                                                       _("If alpha was picked, assign it to selection as fill or stroke transparency"),
-                                                      "color_alpha_set",
+                                                      NULL,
                                                       Inkscape::ICON_SIZE_DECORATION );
+        g_object_set( act, "short_label", _("Assign"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_object_set_data( holder, "set_action", act );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.dropper", "setalpha", 1 ) );
