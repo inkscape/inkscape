@@ -237,6 +237,7 @@ box3d_side_set_shape (SPShape *shape)
     sp_curve_lineto (c, persp->tmat.image(corners[3]).affine() * i2d);
 
     sp_curve_closepath (c);
+    sp_shape_perform_path_effect(c, SP_SHAPE (side));
     sp_shape_set_curve_insync (SP_SHAPE (side), c, TRUE);
     sp_curve_unref (c);
 }
