@@ -26,6 +26,7 @@
 
 #include "io/sys.h"
 #include "io/uristream.h"
+#include "io/stringstream.h"
 #include "io/gzipstream.h"
 
 #include "prefs-utils.h"
@@ -314,6 +315,16 @@ sp_repr_read_mem (const gchar * buffer, gint length, const gchar *default_ns)
         xmlFreeDoc (doc);
     return rdoc;
 }
+
+/**
+ * Reads and parses XML from a buffer, returning it as an Document
+ */
+Document *
+sp_repr_read_buf (const Glib::ustring &buf, const gchar *default_ns)
+{
+    return sp_repr_read_mem(buf.c_str(), buf.size(), default_ns);
+}
+
 
 namespace Inkscape {
 
@@ -728,6 +739,23 @@ sp_repr_write_stream (Node *repr, Writer &out, gint indent_level,
         g_assert_not_reached();
     }
 }
+
+
+Glib::ustring
+sp_repr_write_buf(Node *repr, gint indent_level,
+                      bool add_whitespace, Glib::QueryQuark elide_prefix,
+					  int inlineattrs, int indent)
+{
+    Glib::ustring buf;
+    Inkscape::IO::StringOutputStream souts;
+    Inkscape::IO::OutputStreamWriter outs(souts);
+    sp_repr_write_stream(repr, outs, indent_level, add_whitespace,
+	      elide_prefix, inlineattrs, indent);
+	outs.close();
+	buf = souts.getString();
+	return buf;
+}
+
 
 void
 sp_repr_write_stream_element (Node * repr, Writer & out, gint indent_level,
