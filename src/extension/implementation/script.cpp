@@ -472,7 +472,7 @@ ScriptDocCache::ScriptDocCache (Inkscape::UI::View::View * view) :
     _tempfd(0)
 {
     try {
-        _tempfd = Glib::file_open_tmp(_filename, "ink_ext_XXXXXX.svg");
+        _tempfd = Inkscape::IO::file_open_tmp(_filename, "ink_ext_XXXXXX.svg");
     } catch (...) {
         /// \todo Popup dialog here
         return;
@@ -593,7 +593,7 @@ Script::open(Inkscape::Extension::Input *module,
     std::string tempfilename_out;
     int tempfd_out = 0;
     try {
-        tempfd_out = Glib::file_open_tmp(tempfilename_out, "ink_ext_XXXXXX");
+        tempfd_out = Inkscape::IO::file_open_tmp(tempfilename_out, "ink_ext_XXXXXX");
     } catch (...) {
         /// \todo Popup dialog here
         return NULL;
@@ -667,7 +667,7 @@ Script::save(Inkscape::Extension::Output *module,
     std::string tempfilename_in;
     int tempfd_in = 0;
     try {
-        tempfd_in = Glib::file_open_tmp(tempfilename_in, "ink_ext_XXXXXX");
+        tempfd_in = Inkscape::IO::file_open_tmp(tempfilename_in, "ink_ext_XXXXXX");
     } catch (...) {
         /// \todo Popup dialog here
         return;
@@ -764,7 +764,7 @@ Script::effect(Inkscape::Extension::Effect *module,
     std::string tempfilename_out;
     int tempfd_out = 0;
     try {
-        tempfd_out = Glib::file_open_tmp(tempfilename_out, "ink_ext_XXXXXX.svg");
+        tempfd_out = Inkscape::IO::file_open_tmp(tempfilename_out, "ink_ext_XXXXXX.svg");
     } catch (...) {
         /// \todo Popup dialog here
         return;

@@ -24,6 +24,7 @@
 #include "interface.h"
 #include "gc-core.h"
 #include <dialogs/dialog-events.h>
+#include "io/sys.h"
 
 namespace Inkscape
 {
@@ -285,7 +286,7 @@ void FileListViewText::on_cursor_changed()
     // create file path
     const std::string tmptemplate = "ocal-";
     std::string tmpname;
-    int fd = Glib::file_open_tmp(tmpname, tmptemplate);
+    int fd = Inkscape::IO::file_open_tmp(tmpname, tmptemplate);
     if (fd<0) {
         g_warning("Error creating temp file");
         return;

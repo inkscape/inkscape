@@ -18,6 +18,7 @@
 #include <glib/gtypes.h>
 #include <glib/gdir.h>
 #include <glib/gfileutils.h>
+#include <string>
 
 /*#####################
 ## U T I L I T Y
@@ -31,6 +32,8 @@ void dump_fopen_call( char const *utf8name, char const *id );
 FILE *fopen_utf8name( char const *utf8name, char const *mode );
 
 int mkdir_utf8name( char const *utf8name );
+
+int file_open_tmp( std::string& name_used, const std::string& prefix );
 
 bool file_test( char const *utf8name, GFileTest test );
 

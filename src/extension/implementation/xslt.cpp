@@ -195,7 +195,7 @@ XSLT::save(Inkscape::Extension::Output */*module*/, SPDocument *doc, gchar const
     std::string tempfilename_out;
     int tempfd_out = 0;
     try {
-        tempfd_out = Glib::file_open_tmp(tempfilename_out, "ink_ext_XXXXXX");
+        tempfd_out = Inkscape::IO::file_open_tmp(tempfilename_out, "ink_ext_XXXXXX");
     } catch (...) {
         /// \todo Popup dialog here
         return;

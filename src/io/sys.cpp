@@ -166,6 +166,51 @@ int Inkscape::IO::mkdir_utf8name( char const *utf8name )
     return retval;
 }
 
+/* 
+ * Wrapper around Glib::file_open_tmp()
+ * Returns a handle to the temp file
+ * name_used contains the actual name used
+ * 
+ * Returns:
+ * A file handle (as from open()) to the file opened for reading and writing. 
+ * The file is opened in binary mode on platforms where there is a difference. 
+ * The file handle should be closed with close().
+ * 
+ * Note:
+ * On Windows Vista Glib::file_open_tmp fails with the current version of glibmm
+ * A special case is implemented for WIN32. This can be removed if the issue is fixed
+ * in future versions of glibmm 
+ * */
+int Inkscape::IO::file_open_tmp(std::string& name_used, const std::string& prefix)
+{
+#ifndef WIN32
+    return Glib::file_open_tmp(name_used, prefix);
+#else
+    /* Special case for WIN32 due to a bug in glibmm
+     * (only needed for Windows Vista, but since there is only one windows build all builds get the workaround)
+     * The workaround can be removed if the bug is fixed in glibmm
+     * 
+     * The code is mostly identical to the implementation in glibmm
+     * http://svn.gnome.org/svn/glibmm/branches/glibmm-2-12/glib/src/fileutils.ccg
+     * */
+    
+    std::string basename_template (prefix);
+    basename_template += "XXXXXX"; // this sillyness shouldn't be in the interface
+    
+    GError* error = 0;
+    gchar *buf_name_used;
+    
+    gint fileno = g_file_open_tmp(basename_template.c_str(), &buf_name_used, &error);
+    
+    if(error)
+        Glib::Error::throw_exception(error);
+    
+    name_used = g_strdup(buf_name_used);
+    g_free(buf_name_used);
+    return fileno;
+#endif
+}
+
 bool Inkscape::IO::file_test( char const *utf8name, GFileTest test )
 {
     bool exists = false;
