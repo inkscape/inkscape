@@ -462,7 +462,7 @@ main(int argc, char **argv)
 
 #ifdef ENABLE_NLS
 #ifdef WIN32
-	_win32_set_inkscape_env(argv[0])
+	_win32_set_inkscape_env(argv[0]);
     RegistryTool rt;
     rt.setPathInfo();
     gchar *pathBuf = g_strconcat(g_path_get_dirname(argv[0]), "\\", PACKAGE_LOCALE_DIR, NULL);
