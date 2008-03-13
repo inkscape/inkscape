@@ -234,7 +234,29 @@ init()
     if (Inkscape::Extension::Extension::search_path.size() == 0)
     {
 	Inkscape::Extension::Extension::search_path.push_back(profile_path("extensions"));
+	
+#ifdef WIN32
+/* 
+ * The native Windows Save dialogs change the current directory of Inkscape to the path selected in the dialog
+ * Putting relative paths in the search_path breaks things after the Save dialog ha been shown
+ * Especially the XAML-save: https://bugs.launchpad.net/inkscape/+bug/168896
+ * This code inserts an absolute path based on the current working dir when Inkscape starts.
+ * Only included in WIN32 to avoid messing around with other platforms for the moment
+ * After testing on other platforms this code can be enabled on other platforms (it "should" not break anything).
+ */
+	gchar * cwd = g_get_current_dir();
+	gchar * fname = g_build_filename(
+       cwd,
+       g_strdup(INKSCAPE_EXTENSIONDIR),
+       NULL);
+    Glib::ustring filename = fname;
+    Inkscape::Extension::Extension::search_path.push_back(g_strdup(filename.c_str()));
+    g_free(cwd);
+    g_free(fname);
+#else
 	Inkscape::Extension::Extension::search_path.push_back(g_strdup(INKSCAPE_EXTENSIONDIR));
+#endif
+
     }
 
     for (unsigned int i=0; i<Inkscape::Extension::Extension::search_path.size(); i++) {
