@@ -473,10 +473,12 @@ static bool findJVMRecursive(const String &dirpath,
 
 static const char *commonJavaPaths[] =
 {
+    "/usr/lib/jvm/jre",
+    "/usr/lib/jvm",
+    "/usr/local/lib/jvm/jre",
+    "/usr/local/lib/jvm",
     "/usr/java",
     "/usr/local/java",
-    "/usr/lib/jvm",
-    "/usr/local/lib/jvm",
     NULL
 };
 
