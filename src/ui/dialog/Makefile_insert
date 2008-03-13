@@ -38,6 +38,8 @@ ui_dialog_libuidialog_a_SOURCES =		\
 	ui/dialog/find.h			\
 	ui/dialog/inkscape-preferences.cpp	\
 	ui/dialog/inkscape-preferences.h	\
+	ui/dialog/input.cpp	\
+	ui/dialog/input.h	\
 	ui/dialog/layer-editor.cpp		\
 	ui/dialog/layer-editor.h		\
 	ui/dialog/livepatheffect-editor.cpp		\

@@ -27,6 +27,7 @@
 #include "ui/dialog/filter-effects-dialog.h"
 #include "ui/dialog/find.h"
 #include "ui/dialog/inkscape-preferences.h"
+#include "ui/dialog/input.h"
 #include "ui/dialog/layer-editor.h"
 #include "ui/dialog/livepatheffect-editor.h"
 #include "ui/dialog/memory.h"
@@ -112,6 +113,8 @@ DialogManager::DialogManager() {
         registerFactory("UndoHistory",         &create<UndoHistory,          FloatingBehavior>);
         registerFactory("XmlEditor",           &create<XmlEditor,            FloatingBehavior>);
 
+        registerFactory("InputDevices",        &create<InputDialog,           FloatingBehavior>);
+
     } else {
 
         registerFactory("AlignAndDistribute",  &create<AlignAndDistribute,   DockBehavior>);
@@ -137,6 +140,8 @@ DialogManager::DialogManager() {
         registerFactory("Transformation",      &create<Transformation,       DockBehavior>);
         registerFactory("UndoHistory",         &create<UndoHistory,          DockBehavior>);
         registerFactory("XmlEditor",           &create<XmlEditor,            DockBehavior>);
+
+        registerFactory("InputDevices",        &create<InputDialog,          DockBehavior>);
 
     }
 }
