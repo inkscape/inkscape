@@ -435,7 +435,7 @@ InputDialogImpl::InputDialogImpl() :
     if ( !fakeList ) {
         createFakeList();
     }
-    devList = fakeList;
+//     devList = fakeList;
     if ( devList ) {
         g_message("Found some");
 
