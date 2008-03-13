@@ -19,8 +19,6 @@
 namespace Inkscape {
 namespace Display {
 
-/** lifetime is measured in milliseconds
- */
 SnapIndicator::SnapIndicator(SPDesktop * desktop)
     :   tempitem(NULL),
         desktop(desktop)
@@ -38,17 +36,21 @@ SnapIndicator::set_new_snappoint(Geom::Point p)
 {
     remove_snappoint();
 
-    SPCanvasItem * canvasitem = sp_canvas_item_new( sp_desktop_tempgroup (desktop),
-                                                    SP_TYPE_CTRL,
-                                                    "anchor", GTK_ANCHOR_CENTER,
-                                                    "size", 6.0,
-                                                    "stroked", TRUE,
-                                                    "stroke_color", 0xf000f0ff,
-                                                    "mode", SP_KNOT_MODE_XOR,
-                                                    "shape", SP_KNOT_SHAPE_CROSS,
-                                                    NULL );
-    SP_CTRL(canvasitem)->moveto ( p );
-    tempitem = desktop->add_temporary_canvasitem(canvasitem, 1000);
+    bool enabled = false;  // TODO add preference for snap indicator.
+    if (enabled) {
+        // TODO add many different kinds of snap indicator :-)
+        SPCanvasItem * canvasitem = sp_canvas_item_new( sp_desktop_tempgroup (desktop),
+                                                        SP_TYPE_CTRL,
+                                                        "anchor", GTK_ANCHOR_CENTER,
+                                                        "size", 10.0,
+                                                        "stroked", TRUE,
+                                                        "stroke_color", 0xf000f0ff,
+                                                        "mode", SP_KNOT_MODE_XOR,
+                                                        "shape", SP_KNOT_SHAPE_CROSS,
+                                                        NULL );
+        SP_CTRL(canvasitem)->moveto ( p );
+        tempitem = desktop->add_temporary_canvasitem(canvasitem, 1000); // TODO add preference for snap indicator timeout
+    }
 }
 
 void
