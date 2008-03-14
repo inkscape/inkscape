@@ -2221,13 +2221,58 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
     /// \todo fixme: Per type methods need default flag too (lauris)
     p += sp_style_write_iscale24(p, c + BMAX - p, "opacity", &style->opacity, NULL, flags);
     p += sp_style_write_ipaint(p, c + BMAX - p, "color", &style->color, NULL, flags);
+
     p += sp_style_write_ipaint(p, c + BMAX - p, "fill", &style->fill, NULL, flags);
-    p += sp_style_write_iscale24(p, c + BMAX - p, "fill-opacity", &style->fill_opacity, NULL, flags);
-    p += sp_style_write_ienum(p, c + BMAX - p, "fill-rule", enum_fill_rule, &style->fill_rule, NULL, flags);
+    // if fill:none, skip writing fill properties
+    if (!style->fill.noneSet) {
+        p += sp_style_write_iscale24(p, c + BMAX - p, "fill-opacity", &style->fill_opacity, NULL, flags);
+        p += sp_style_write_ienum(p, c + BMAX - p, "fill-rule", enum_fill_rule, &style->fill_rule, NULL, flags);
+    }
+
     p += sp_style_write_ipaint(p, c + BMAX - p, "stroke", &style->stroke, NULL, flags);
-    p += sp_style_write_ilength(p, c + BMAX - p, "stroke-width", &style->stroke_width, NULL, flags);
-    p += sp_style_write_ienum(p, c + BMAX - p, "stroke-linecap", enum_stroke_linecap, &style->stroke_linecap, NULL, flags);
-    p += sp_style_write_ienum(p, c + BMAX - p, "stroke-linejoin", enum_stroke_linejoin, &style->stroke_linejoin, NULL, flags);
+
+    // if stroke:none, skip writing stroke properties
+    if (!style->stroke.noneSet) {
+        p += sp_style_write_ilength(p, c + BMAX - p, "stroke-width", &style->stroke_width, NULL, flags);
+        p += sp_style_write_ienum(p, c + BMAX - p, "stroke-linecap", enum_stroke_linecap, &style->stroke_linecap, NULL, flags);
+        p += sp_style_write_ienum(p, c + BMAX - p, "stroke-linejoin", enum_stroke_linejoin, &style->stroke_linejoin, NULL, flags);
+        p += sp_style_write_ifloat(p, c + BMAX - p, "stroke-miterlimit", &style->stroke_miterlimit, NULL, flags);
+        p += sp_style_write_iscale24(p, c + BMAX - p, "stroke-opacity", &style->stroke_opacity, NULL, flags);
+
+        /** \todo fixme: */
+        if ((flags == SP_STYLE_FLAG_ALWAYS)
+            || style->stroke_dasharray_set)
+        {
+            if (style->stroke_dasharray_inherit) {
+                p += g_snprintf(p, c + BMAX - p, "stroke-dasharray:inherit;");
+            } else if (style->stroke_dash.n_dash && style->stroke_dash.dash) {
+                p += g_snprintf(p, c + BMAX - p, "stroke-dasharray:");
+                gint i;
+                for (i = 0; i < style->stroke_dash.n_dash; i++) {
+                    Inkscape::CSSOStringStream os;
+                    if (i) {
+                        os << ", ";
+                    }
+                    os << style->stroke_dash.dash[i];
+                    p += g_strlcpy(p, os.str().c_str(), c + BMAX - p);
+                }
+                if (p < c + BMAX) {
+                    *p++ = ';';
+                }
+            } else {
+                p += g_snprintf(p, c + BMAX - p, "stroke-dasharray:none;");
+            }
+        }
+
+        /** \todo fixme: */
+        if (style->stroke_dashoffset_set) {
+            Inkscape::CSSOStringStream os;
+            os << "stroke-dashoffset:" << style->stroke_dash.offset << ";";
+            p += g_strlcpy(p, os.str().c_str(), c + BMAX - p);
+        } else if (flags == SP_STYLE_FLAG_ALWAYS) {
+            p += g_snprintf(p, c + BMAX - p, "stroke-dashoffset:0;");
+        }
+    }
 
     if (style->marker[SP_MARKER_LOC].set) {
         p += g_snprintf(p, c + BMAX - p, "marker:%s;", style->marker[SP_MARKER_LOC].value);
@@ -2249,44 +2294,6 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
     } else if (flags == SP_STYLE_FLAG_ALWAYS) {
         p += g_snprintf(p, c + BMAX - p, "marker-end:none;");
     }
-
-    p += sp_style_write_ifloat(p, c + BMAX - p, "stroke-miterlimit", &style->stroke_miterlimit, NULL, flags);
-
-    /** \todo fixme: */
-    if ((flags == SP_STYLE_FLAG_ALWAYS)
-        || style->stroke_dasharray_set)
-    {
-        if (style->stroke_dasharray_inherit) {
-            p += g_snprintf(p, c + BMAX - p, "stroke-dasharray:inherit;");
-        } else if (style->stroke_dash.n_dash && style->stroke_dash.dash) {
-            p += g_snprintf(p, c + BMAX - p, "stroke-dasharray:");
-            gint i;
-            for (i = 0; i < style->stroke_dash.n_dash; i++) {
-                Inkscape::CSSOStringStream os;
-                if (i) {
-                    os << ", ";
-                }
-                os << style->stroke_dash.dash[i];
-                p += g_strlcpy(p, os.str().c_str(), c + BMAX - p);
-            }
-            if (p < c + BMAX) {
-                *p++ = ';';
-            }
-        } else {
-            p += g_snprintf(p, c + BMAX - p, "stroke-dasharray:none;");
-        }
-    }
-
-    /** \todo fixme: */
-    if (style->stroke_dashoffset_set) {
-        Inkscape::CSSOStringStream os;
-        os << "stroke-dashoffset:" << style->stroke_dash.offset << ";";
-        p += g_strlcpy(p, os.str().c_str(), c + BMAX - p);
-    } else if (flags == SP_STYLE_FLAG_ALWAYS) {
-        p += g_snprintf(p, c + BMAX - p, "stroke-dashoffset:0;");
-    }
-
-    p += sp_style_write_iscale24(p, c + BMAX - p, "stroke-opacity", &style->stroke_opacity, NULL, flags);
 
     p += sp_style_write_ienum(p, c + BMAX - p, "visibility", enum_visibility, &style->visibility, NULL, flags);
     p += sp_style_write_ienum(p, c + BMAX - p, "display", enum_display, &style->display, NULL, flags);
@@ -2356,41 +2363,49 @@ sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
         p += sp_style_write_iscale24(p, c + BMAX - p, "opacity", &from->opacity, &to->opacity, SP_STYLE_FLAG_IFSET);
     }
     p += sp_style_write_ipaint(p, c + BMAX - p, "color", &from->color, &to->color, SP_STYLE_FLAG_IFSET);
+
     p += sp_style_write_ipaint(p, c + BMAX - p, "fill", &from->fill, &to->fill, SP_STYLE_FLAG_IFDIFF);
-    p += sp_style_write_iscale24(p, c + BMAX - p, "fill-opacity", &from->fill_opacity, &to->fill_opacity, SP_STYLE_FLAG_IFDIFF);
-    p += sp_style_write_ienum(p, c + BMAX - p, "fill-rule", enum_fill_rule, &from->fill_rule, &to->fill_rule, SP_STYLE_FLAG_IFDIFF);
+    // if fill:none, skip writing fill properties
+    if (!from->fill.noneSet) {
+        p += sp_style_write_iscale24(p, c + BMAX - p, "fill-opacity", &from->fill_opacity, &to->fill_opacity, SP_STYLE_FLAG_IFDIFF);
+        p += sp_style_write_ienum(p, c + BMAX - p, "fill-rule", enum_fill_rule, &from->fill_rule, &to->fill_rule, SP_STYLE_FLAG_IFDIFF);
+    }
+
     p += sp_style_write_ipaint(p, c + BMAX - p, "stroke", &from->stroke, &to->stroke, SP_STYLE_FLAG_IFDIFF);
-    p += sp_style_write_ilength(p, c + BMAX - p, "stroke-width", &from->stroke_width, &to->stroke_width, SP_STYLE_FLAG_IFDIFF);
-    p += sp_style_write_ienum(p, c + BMAX - p, "stroke-linecap", enum_stroke_linecap,
-                              &from->stroke_linecap, &to->stroke_linecap, SP_STYLE_FLAG_IFDIFF);
-    p += sp_style_write_ienum(p, c + BMAX - p, "stroke-linejoin", enum_stroke_linejoin,
-                              &from->stroke_linejoin, &to->stroke_linejoin, SP_STYLE_FLAG_IFDIFF);
-    p += sp_style_write_ifloat(p, c + BMAX - p, "stroke-miterlimit",
-                               &from->stroke_miterlimit, &to->stroke_miterlimit, SP_STYLE_FLAG_IFDIFF);
-    /** \todo fixme: */
-    if (from->stroke_dasharray_set) {
-        if (from->stroke_dasharray_inherit) {
-            p += g_snprintf(p, c + BMAX - p, "stroke-dasharray:inherit;");
-        } else if (from->stroke_dash.n_dash && from->stroke_dash.dash) {
-            p += g_snprintf(p, c + BMAX - p, "stroke-dasharray:");
-            for (gint i = 0; i < from->stroke_dash.n_dash; i++) {
-                Inkscape::CSSOStringStream os;
-                if (i) {
-                    os << ", ";
+    // if stroke:none, skip writing stroke properties
+    if (!from->stroke.noneSet) {
+        p += sp_style_write_ilength(p, c + BMAX - p, "stroke-width", &from->stroke_width, &to->stroke_width, SP_STYLE_FLAG_IFDIFF);
+        p += sp_style_write_ienum(p, c + BMAX - p, "stroke-linecap", enum_stroke_linecap,
+                                  &from->stroke_linecap, &to->stroke_linecap, SP_STYLE_FLAG_IFDIFF);
+        p += sp_style_write_ienum(p, c + BMAX - p, "stroke-linejoin", enum_stroke_linejoin,
+                                  &from->stroke_linejoin, &to->stroke_linejoin, SP_STYLE_FLAG_IFDIFF);
+        p += sp_style_write_ifloat(p, c + BMAX - p, "stroke-miterlimit",
+                                   &from->stroke_miterlimit, &to->stroke_miterlimit, SP_STYLE_FLAG_IFDIFF);
+        /** \todo fixme: */
+        if (from->stroke_dasharray_set) {
+            if (from->stroke_dasharray_inherit) {
+                p += g_snprintf(p, c + BMAX - p, "stroke-dasharray:inherit;");
+            } else if (from->stroke_dash.n_dash && from->stroke_dash.dash) {
+                p += g_snprintf(p, c + BMAX - p, "stroke-dasharray:");
+                for (gint i = 0; i < from->stroke_dash.n_dash; i++) {
+                    Inkscape::CSSOStringStream os;
+                    if (i) {
+                        os << ", ";
+                    }
+                    os << from->stroke_dash.dash[i];
+                    p += g_strlcpy(p, os.str().c_str(), c + BMAX - p);
                 }
-                os << from->stroke_dash.dash[i];
-                p += g_strlcpy(p, os.str().c_str(), c + BMAX - p);
+                p += g_snprintf(p, c + BMAX - p, ";");
             }
-            p += g_snprintf(p, c + BMAX - p, ";");
         }
+        /* fixme: */
+        if (from->stroke_dashoffset_set) {
+            Inkscape::CSSOStringStream os;
+            os << "stroke-dashoffset:" << from->stroke_dash.offset << ";";
+            p += g_strlcpy(p, os.str().c_str(), c + BMAX - p);
+        }
+        p += sp_style_write_iscale24(p, c + BMAX - p, "stroke-opacity", &from->stroke_opacity, &to->stroke_opacity, SP_STYLE_FLAG_IFDIFF);
     }
-    /* fixme: */
-    if (from->stroke_dashoffset_set) {
-        Inkscape::CSSOStringStream os;
-        os << "stroke-dashoffset:" << from->stroke_dash.offset << ";";
-        p += g_strlcpy(p, os.str().c_str(), c + BMAX - p);
-    }
-    p += sp_style_write_iscale24(p, c + BMAX - p, "stroke-opacity", &from->stroke_opacity, &to->stroke_opacity, SP_STYLE_FLAG_IFDIFF);
 
     /* markers */
     if (from->marker[SP_MARKER_LOC].value != NULL) {
