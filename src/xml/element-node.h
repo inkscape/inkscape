@@ -29,7 +29,7 @@ public:
     Inkscape::XML::NodeType type() const { return Inkscape::XML::ELEMENT_NODE; }
 
 protected:
-    SimpleNode *_duplicate(Document* doc) const { return new ElementNode(*this); }
+    SimpleNode *_duplicate(Document* /*doc*/) const { return new ElementNode(*this); }
 };
 
 }

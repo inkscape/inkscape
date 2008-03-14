@@ -32,7 +32,7 @@ struct PINode : public SimpleNode {
     Inkscape::XML::NodeType type() const { return Inkscape::XML::PI_NODE; }
 
 protected:
-    SimpleNode *_duplicate(Document* doc) const { return new PINode(*this); }
+    SimpleNode *_duplicate(Document* /*doc*/) const { return new PINode(*this); }
 };
 
 }
