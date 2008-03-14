@@ -17,7 +17,13 @@
 #include "inkscape.h"
 #include "xml/repr.h"
 
-
+/**
+\brief Checks if the path exists in the preference file
+*/
+bool pref_path_exists(gchar const *path){
+    Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE, path);
+    return (repr != NULL);
+}
 void
 prefs_set_int_attribute(gchar const *path, gchar const *attr, long long int value)
 {

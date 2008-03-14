@@ -346,10 +346,7 @@ static gchar const * ui_descr =
 
         "  <toolbar name='CalligraphyToolbar'>"
         "    <separator />"
-        "    <toolitem action='SetDipAction' />"
-        "    <toolitem action='SetMarkerAction' />"
-        "    <toolitem action='SetBrushAction' />"
-        "    <toolitem action='SetReedAction' />"
+        "    <toolitem action='SetProfileAction'/>"
         "    <separator />"
         "    <toolitem action='CalligraphyWidthAction' />"
         "    <toolitem action='PressureAction' />"
@@ -3322,78 +3319,37 @@ struct KeyValue {
 
 
 
-static void sp_ddc_adjust(GObject *dataKludge, KeyValue const kvs[], unsigned nb_keys ){
-    for (unsigned i = 0; i < nb_keys; ++i) {
-        KeyValue const &kv = kvs[i];
-        GtkAdjustment* adj = static_cast<GtkAdjustment *>(g_object_get_data(dataKludge, kv.key));
+static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject *dataKludge) {
+    struct ProfileElement {
+        char const *name;
+        double def;
+        double min;
+        double max;
+    };
+    ProfileElement profile[] = {
+        {"mass",0.02, 0.0, 1.0},
+        {"wiggle",0.0, 0.0, 1.0},
+        {"angle",30.0, -90.0, 90.0},
+        {"width",15.0, 1.0, 100.0},
+        {"thinning",0.1, -1.0, 1.0},
+        {"tremor",0.0, 0.0, 1.0},
+        {"flatness",0.9, 0.0, 1.0},
+        {"cap_rounding",0.0, 0.0, 5.0}
+    };
+    
+    gint preset_index = ege_select_one_action_get_active( act );   
+    gchar *pref_path = g_strdup_printf("tools.calligraphic.preset.cp%d", preset_index); 
+    for (unsigned i = 0; i < 8; ++i) {
+        ProfileElement const &pe = profile[i];
+        double value = prefs_get_double_attribute_limited(pref_path,pe.name, pe.def, pe.min, pe.max);
+        GtkAdjustment* adj = static_cast<GtkAdjustment *>(g_object_get_data(dataKludge, pe.name));
         if ( adj ) {
-            gtk_adjustment_set_value(adj, kv.value);
+            gtk_adjustment_set_value(adj, value);
         }
-    }
-  
-}
+    } 
+    free(pref_path);
 
-static void sp_ddc_dip(GtkWidget *, GObject *dataKludge)
-{
-    // FIXME: make defaults settable via Inkscape Options
-    KeyValue const key_values[] = {
-        {"mass", 0.02},
-        {"wiggle", 0.0},
-        {"angle", 30.0},
-        {"width", 15},
-        {"thinning", 0.1},
-        {"tremor", 0.0},
-        {"flatness", 0.9},
-        {"cap_rounding", 0.0}
-    };
-    sp_ddc_adjust(dataKludge, key_values,  G_N_ELEMENTS(key_values));
 }
-
-static void sp_ddc_marker(GtkWidget *, GObject *dataKludge)
-{
-    KeyValue const key_values[] = {
-        {"mass", 0.02},
-        {"wiggle", 0.0},
-        {"angle", 90.0},
-        {"width", 15},
-        {"thinning", 0.0},
-        {"tremor", 0.0},
-        {"flatness", 0.0},
-        {"cap_rounding", 1.0}
-    };
-    sp_ddc_adjust(dataKludge, key_values,  G_N_ELEMENTS(key_values));
-}
-
-static void sp_ddc_brush(GtkWidget *, GObject *dataKludge)
-{
-    KeyValue const key_values[] = {
-        {"mass", 0.02},
-        {"wiggle", 0.25},
-        {"angle", 45.0},
-        {"width", 10},
-        {"thinning", -0.40},
-        {"tremor", 0.0},
-        {"flatness", 0.16},
-        {"cap_rounding", .1}
-    };
-    sp_ddc_adjust(dataKludge, key_values,  G_N_ELEMENTS(key_values));
-}
-
-static void sp_ddc_reed(GtkWidget *, GObject *dataKludge)
-{
-    KeyValue const key_values[] = {
-        {"mass", 0.02},
-        {"wiggle", 0.0},
-        {"angle", 20.0},
-        {"width", 15},
-        {"thinning", 0},
-        {"tremor", 0.0},
-        {"flatness", 1},
-        {"cap_rounding", 0.0}
-    };
-    sp_ddc_adjust(dataKludge, key_values,  G_N_ELEMENTS(key_values));
-}
-
 
 
 static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
@@ -3570,51 +3526,34 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.calligraphic", "usetilt", 1 ) );
         }
 
-        /* Dip */
-            {
-            InkAction* act = ink_action_new( "SetDipAction",
-                                             _("Dip pen"),
-                                             _("Set paramaters to look dip pen"),
-                                             "draw_calligraphic_dip",
-                                             Inkscape::ICON_SIZE_DECORATION);
-            g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(sp_ddc_dip), holder );
-            gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
-            gtk_action_set_sensitive( GTK_ACTION(act), TRUE );
+        /*calligraphic profile */
+        {
+            GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_INT );            
+            gchar *pref_path;
+
+            int max = prefs_get_int_attribute("tools.calligraphic.preset","max_presets",99);
+            for ( int ii = 0; ii < max; ++ii){
+                pref_path = g_strdup_printf("tools.calligraphic.preset.cp%d", ii);
+
+                if ( ! pref_path_exists(pref_path)){
+                    free(pref_path );
+                    break;
+                }
+
+                gchar const *preset_name = prefs_get_string_attribute(pref_path,"name");
+                GtkTreeIter iter;
+                gtk_list_store_append( model, &iter );
+                gtk_list_store_set( model, &iter, 0, preset_name, 1, ii, -1 );
+                free(pref_path );
+            }
+            pref_path = NULL;
+            EgeSelectOneAction* act1 = ege_select_one_action_new( "SetProfileAction", _("Profile"), ("Change calligraphic profile"), NULL, GTK_TREE_MODEL(model) );
+            g_object_set( act1, "short_label", _("Profile:"), NULL );
+            ege_select_one_action_set_appearance( act1, "compact" );
+            g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK(sp_ddc_change_profile), holder );
+            gtk_action_group_add_action( mainActions, GTK_ACTION(act1) );
+            g_object_set_data( holder, "channels_action", act1 );
         }
-        
-        /* Marker */
-        {
-            InkAction* act = ink_action_new( "SetMarkerAction",
-                                             _("Marker"),
-                                             _("Set paramaters to look like a marker"),
-                                             "draw_calligraphic_marker",
-                                             Inkscape::ICON_SIZE_DECORATION);
-            g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(sp_ddc_marker), holder );
-            gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
-            gtk_action_set_sensitive( GTK_ACTION(act), TRUE );
-        }
-        /* Brush */
-        {
-            InkAction* act = ink_action_new( "SetBrushAction",
-                                             _("Brush"),
-                                             _("Set paramaters to look like a brush"),
-                                             "draw_calligraphic_brush",
-                                             Inkscape::ICON_SIZE_DECORATION);
-            g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(sp_ddc_brush), holder );
-            gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
-            gtk_action_set_sensitive( GTK_ACTION(act), TRUE );
-        }     
-        /* ReedPen */
-        {
-            InkAction* act = ink_action_new( "SetReedAction",
-                                             _("Brush"),
-                                             _("Set paramaters to look like a reed pen"),
-                                             "draw_calligraphic_reed",
-                                             Inkscape::ICON_SIZE_DECORATION);
-            g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(sp_ddc_reed), holder );
-            gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
-            gtk_action_set_sensitive( GTK_ACTION(act), TRUE );
-        }     
     }
 }
 

@@ -14,6 +14,7 @@
 
 #include <glib/gtypes.h>
 
+bool pref_path_exists(gchar const *path);
 void prefs_set_int_attribute(gchar const *path, gchar const *attr, long long int value);
 long long int prefs_get_int_attribute(gchar const *path, gchar const *attr, long long int def);
 long long int prefs_get_int_attribute_limited(gchar const *path, gchar const *attr, long long int def, long long int min, long long int max);
