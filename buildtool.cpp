@@ -38,7 +38,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.7.5, 2007 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.7.6, 2007-2008 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -6693,6 +6693,8 @@ public:
         String cmd = command;
         cmd.append(" -d ");
         cmd.append(destdir);
+        cmd.append(" -classpath ");
+        cmd.append(destdir);
         cmd.append(" -sourcepath ");
         cmd.append(srcdir);
         cmd.append(" ");
@@ -6702,6 +6704,9 @@ public:
             cmd.append(target);
             cmd.append(" ");
 			}
+		String fname = "javalist.btool";
+		FILE *f = fopen(fname.c_str(), "w");
+		int count = 0;
         for (unsigned int i=0 ; i<fileList.size() ; i++)
             {
             String fname = fileList[i];
@@ -6724,17 +6729,29 @@ public:
             if (!isNewerThan(fullSrc, fullDest))
                 continue;
 
-            String execCmd = cmd;
-            execCmd.append(fullSrc);
+            count++;
+            fprintf(f, "%s\n", fullSrc.c_str());
+            }
+        fclose(f);
+        if (!count)
+            {
+            status("          : nothing to do");
+            return true;
+			}
 
-            String outString, errString;
-            bool ret = executeCommand(execCmd.c_str(), "", outString, errString);
-            if (!ret)
-                {
-                error("<javac> command '%s' failed :\n %s",
-                                          execCmd.c_str(), errString.c_str());
-                return false;
-                }
+        status("          : compiling %d files", count);
+
+        String execCmd = cmd;
+        execCmd.append("@");
+        execCmd.append(fname);
+
+        String outString, errString;
+        bool ret = executeCommand(execCmd.c_str(), "", outString, errString);
+        if (!ret)
+            {
+            error("<javac> command '%s' failed :\n %s",
+                                      execCmd.c_str(), errString.c_str());
+            return false;
             }
         return true;
         }
