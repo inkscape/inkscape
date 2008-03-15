@@ -172,8 +172,8 @@ static char *button_none[] = {
 "XXXXXXXX",
 "XX .. XX",
 "X .XX. X",
-"X.XXXX.X",
-"X.XXXX.X",
+"X.XX X.X",
+"X.X XX.X",
 "X .XX. X",
 "XX .. XX",
 "XXXXXXXX"
@@ -310,6 +310,8 @@ private:
     Gtk::EventBox testDetector;
 
     void setupValueAndCombo( gint reported, gint actual, Gtk::Label& label, Gtk::ComboBoxText& combo );
+    void updateTestButtons( Glib::ustring const& key, gint hotButton );
+    Glib::ustring getKeyFor( GdkDevice* device );
     bool eventSnoop(GdkEvent* event);
     void foo();
 };
@@ -628,12 +630,53 @@ void InputDialogImpl::setupValueAndCombo( gint reported, gint actual, Gtk::Label
     }
 }
 
+void InputDialogImpl::updateTestButtons( Glib::ustring const& key, gint hotButton )
+{
+    for ( gint i = 0; i < 24; i++ ) {
+        if ( buttonMap[key].find(i) != buttonMap[key].end() ) {
+            if ( i == hotButton ) {
+                testButtons[i].set(buttonsOnPix);
+            } else {
+                testButtons[i].set(buttonsOffPix);
+            }
+        } else {
+            testButtons[i].set(buttonsNonePix);
+        }
+    }
+}
+
+Glib::ustring InputDialogImpl::getKeyFor( GdkDevice* device )
+{
+    Glib::ustring key;
+    switch ( device->source ) {
+        case GDK_SOURCE_MOUSE:
+            key = "M:";
+            break;
+        case GDK_SOURCE_CURSOR:
+            key = "C:";
+            break;
+        case GDK_SOURCE_PEN:
+            key = "P:";
+            break;
+        case GDK_SOURCE_ERASER:
+            key = "E:";
+            break;
+        default:
+            key = "?:";
+    }
+    key += device->name;
+
+    return key;
+}
+
 bool InputDialogImpl::eventSnoop(GdkEvent* event)
 {
     int modmod = 0;
 
     GdkInputSource source = lastSourceSeen;
     Glib::ustring devName = lastDevnameSeen;
+    Glib::ustring key;
+    gint hotButton = -1;
 
     switch ( event->type ) {
         case GDK_KEY_PRESS:
@@ -652,43 +695,17 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
         case GDK_BUTTON_RELEASE:
         {
             GdkEventButton* btnEvt = reinterpret_cast<GdkEventButton*>(event);
-            Glib::ustring key;
             if ( btnEvt->device ) {
+                key = getKeyFor(btnEvt->device);
                 source = btnEvt->device->source;
                 devName = btnEvt->device->name;
-                switch ( btnEvt->device->source ) {
-                    case GDK_SOURCE_MOUSE:
-                        key = "M:";
-                        break;
-                    case GDK_SOURCE_CURSOR:
-                        key = "C:";
-                        break;
-                    case GDK_SOURCE_PEN:
-                        key = "P:";
-                        break;
-                    case GDK_SOURCE_ERASER:
-                        key = "E:";
-                        break;
-                    default:
-                        key = "?:";
-                }
-                key += devName;
 
                 if ( buttonMap[key].find(btnEvt->button) == buttonMap[key].end() ) {
                     g_message("New button found for %s = %d", key.c_str(), btnEvt->button);
                     buttonMap[key].insert(btnEvt->button);
                 }
-                for ( guint i = 0; i < 24; i++ ) {
-                    if ( buttonMap[key].find(i) != buttonMap[key].end() ) {
-                        if (modmod && (i == btnEvt->button) ) {
-                            testButtons[i].set(buttonsOnPix);
-                        } else {
-                            testButtons[i].set(buttonsOffPix);
-                        }
-                    } else {
-                        testButtons[i].set(buttonsNonePix);
-                    }
-                }
+                hotButton = modmod ? btnEvt->button : -1;
+                updateTestButtons(key, hotButton);
             }
             gchar* name = gtk_accelerator_name(0, static_cast<GdkModifierType>(btnEvt->state));
             keyVal.set_label(name);
@@ -706,6 +723,7 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
         {
             GdkEventMotion* btnMtn = reinterpret_cast<GdkEventMotion*>(event);
             if ( btnMtn->device ) {
+                key = getKeyFor(btnMtn->device);
                 source = btnMtn->device->source;
                 devName = btnMtn->device->name;
             }
@@ -763,6 +781,7 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
             default:
                 g_message("gurgle");
         }
+        updateTestButtons(key, hotButton);
         lastSourceSeen = source;
         lastDevnameSeen = devName;
     }
