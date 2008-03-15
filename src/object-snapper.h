@@ -104,6 +104,7 @@ private:
   std::vector<NR::Point> *_points_to_snap_to;
   std::vector<NArtBpath*> *_bpaths_to_snap_to;
   std::vector<Path*> *_paths_to_snap_to;
+  
   void _doFreeSnap(SnappedConstraints &sc,
                       Inkscape::Snapper::PointType const &t,
                       NR::Point const &p,
@@ -157,8 +158,8 @@ private:
   
   void _collectPaths(Inkscape::Snapper::PointType const &t, 
                   bool const &first_point,
-                  SPPath const *selected_path = NULL,
                   NArtBpath *border_bpath = NULL) const;
+                  
   void _clear_paths() const;
   NArtBpath* _getBorderBPath() const;
   

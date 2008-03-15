@@ -251,7 +251,6 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &s
 
 void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &t,
                                          bool const &first_point,
-                                         SPPath const *selected_path,
                                          NArtBpath *border_bpath) const
 {
     // Now, let's first collect all paths to snap to. If we have a whole bunch of points to snap,
@@ -275,17 +274,6 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
             _bpaths_to_snap_to->push_back(border_bpath);    
         }
         
-        /* While editing a path in the node tool, findCandidates must ignore that path because 
-         * of the node snapping requirements (i.e. only unselected nodes must be snapable).
-         * This path must not be ignored however when snapping to the paths, so we add it here
-         * manually when applicable. 
-         * 
-         * It must be the last one in the list, as this is assumption is being used in _snapPaths() 
-         */ 
-        if (_snap_to_itempath && selected_path != NULL) {
-            _candidates->push_back(SP_ITEM(selected_path));            
-        }
-            
         for (std::vector<SPItem*>::const_iterator i = _candidates->begin(); i != _candidates->end(); i++) {
 
             /* Transform the requested snap point to this item's coordinates */
@@ -359,8 +347,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                                      SPPath const *selected_path,
                                      NArtBpath *border_bpath) const
 {
-    _collectPaths(t, first_point, selected_path, border_bpath);
-    
+    _collectPaths(t, first_point, border_bpath);
     // Now we can finally do the real snapping, using the paths collected above
     SnappedPoint s;
     bool success = false;
@@ -371,9 +358,28 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
     SPDesktop const *desktop = SP_ACTIVE_DESKTOP;    
     NR::Point const p_doc = desktop->dt2doc(p);    
     
-    // Convert all bpaths to Paths, because here we really must have Paths
-    // (whereas in _snapPathsConstrained we will use the original bpaths)
+    bool const node_tool_active = _snap_to_itempath && selected_path != NULL;
+    
     if (first_point) {
+        /* While editing a path in the node tool, findCandidates must ignore that path because 
+         * of the node snapping requirements (i.e. only unselected nodes must be snapable).
+         * This path must not be ignored however when snapping to the paths, so we add it here
+         * manually when applicable. 
+         * 
+         * Note that this path must be the last in line!
+         * */        
+        if (node_tool_active) {        
+            SPCurve *curve = curve_for_item(SP_ITEM(selected_path)); 
+            if (curve) {
+                NArtBpath *bpath = bpath_for_curve(SP_ITEM(selected_path), curve, true, true);
+                _bpaths_to_snap_to->push_back(bpath);
+                // Because we set doTransformation to true in bpath_for_curve, we
+                // will get a dupe of the path, which must be freed at some point
+                sp_curve_unref(curve);
+            }
+        }   
+        // Convert all bpaths to Paths, because here we really must have Paths
+        // (whereas in _snapPathsConstrained we will use the original bpaths)
         for (std::vector<NArtBpath*>::const_iterator k = _bpaths_to_snap_to->begin(); k != _bpaths_to_snap_to->end(); k++) {
             Path *path = bpath_to_Path(*k);
             if (path) {
@@ -385,14 +391,8 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
     
     for (std::vector<Path*>::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
         if (*k) {
-            bool being_edited = false; // True if the current path is being edited in the node tool            
-            if (unselected_nodes != NULL) {
-                if (unselected_nodes->size() > 0 && selected_path != NULL) { // If the node tool is active ...
-                    if (*k == _paths_to_snap_to->back()) { // and we arrived at the last path in the vector ...
-                        being_edited = true;  // then this path is currently being edited
-                    }        
-                }
-            }
+            bool const being_edited = (node_tool_active && (*k) == _paths_to_snap_to->back());            
+            //if true then this path k is currently being edited in the node tool
             
             for (unsigned i = 1 ; i < (*k)->pts.size() ; i++) {
                 NR::Point start_point;
@@ -404,9 +404,12 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                      * and not to the pieces that are being dragged around. This way we avoid 
                      * self-snapping. For this we check whether the nodes at both ends of the current
                      * piece are unselected; if they are then this piece must be stationary 
-                     */
-                    (*k)->PointAt(i, 0, start_point);
-                    (*k)->PointAt(i, 1, end_point);
+                     */                    
+                    unsigned piece = (*k)->pts[i].piece; 
+                    // Example: a cubic spline is a single piece within a path; it will be drawn using
+                    // a polyline, which is described by the collection of lines between the points pts[i] 
+                    (*k)->PointAt(piece, 0, start_point);
+                    (*k)->PointAt(piece, 1, end_point);
                     start_point = desktop->doc2dt(start_point);
                     end_point = desktop->doc2dt(end_point);
                     g_assert(unselected_nodes != NULL);
@@ -424,7 +427,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                     (*k)->PointAt(o->piece, 0, start_point);
                     (*k)->PointAt(o->piece, 1, end_point);
                     start_point = desktop->doc2dt(start_point);
-                    end_point = desktop->doc2dt(end_point);        
+                    end_point = desktop->doc2dt(end_point);
                 }
                 
                 if (o && o->t >= 0 && o->t <= 1) {    
@@ -489,7 +492,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
     // Consider the page's border for snapping to
     NArtBpath *border_bpath = _snap_to_page_border ? _getBorderBPath() : NULL;
     
-    _collectPaths(t, first_point, NULL, border_bpath);
+    _collectPaths(t, first_point, border_bpath);
     
     // Now we can finally do the real snapping, using the paths collected above
     
@@ -578,8 +581,7 @@ void Inkscape::ObjectSnapper::_doFreeSnap(SnappedConstraints &sc,
              */
             g_assert(it.size() == 1);
             g_assert(SP_IS_PATH(*it.begin()));
-            _snapPaths(sc, t, p, first_point, unselected_nodes, SP_PATH(*it.begin()), border_bpath);
-                
+            _snapPaths(sc, t, p, first_point, unselected_nodes, SP_PATH(*it.begin()), border_bpath);                
         } else {
             _snapPaths(sc, t, p, first_point, NULL, NULL, border_bpath);   
         }        
