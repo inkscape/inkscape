@@ -429,7 +429,7 @@ sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns)
 }
 
 gint
-sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, const gchar *default_ns, GHashTable *prefix_map)
+sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, const gchar */*default_ns*/, GHashTable *prefix_map)
 {
     const xmlChar *prefix;
     if ( ns && ns->href ) {

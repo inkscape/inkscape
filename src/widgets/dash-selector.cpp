@@ -382,7 +382,7 @@ sp_dash_selector_dash_activate (GtkObject *object, SPDashSelector *dsel)
 }
 
 static void
-sp_dash_selector_offset_value_changed (GtkAdjustment *adj, SPDashSelector *dsel)
+sp_dash_selector_offset_value_changed (GtkAdjustment */*adj*/, SPDashSelector *dsel)
 {
 	gtk_signal_emit (GTK_OBJECT (dsel), signals[CHANGED]);
 }
