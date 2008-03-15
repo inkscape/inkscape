@@ -1,7 +1,7 @@
 #define __SP_FLOOD_CONTEXT_C__
 
-/*
-* Flood fill drawing context
+/** \file
+* Bucket fill drawing context, works by bitmap filling an area on a rendered version of the current display and then tracing the result using potrace.
 *
 * Author:
 *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -227,6 +227,12 @@ static void sp_flood_context_setup(SPEventContext *ec)
     }
 }
 
+/**
+ * \brief Merge a pixel with the background color.
+ * \param orig The pixel to merge with the background.
+ * \param bg The background color.
+ * \param base The pixel to merge the original and background into.
+ */
 inline static void
 merge_pixel_with_background (unsigned char *orig, unsigned char *bg,
            unsigned char *base)
@@ -239,10 +245,20 @@ merge_pixel_with_background (unsigned char *orig, unsigned char *bg,
     }
 }
 
+/**
+ * \brief Get the pointer to a pixel in a pixel buffer.
+ * \param px The pixel buffer.
+ * \param x The X coordinate.
+ * \param y The Y coordinate.
+ * \param width The width of the pixel buffer.
+ */
 inline unsigned char * get_pixel(guchar *px, int x, int y, int width) {
     return px + (x + y * width) * 4;
 }
 
+/**
+ * \brief Generate the list of trace channel selection entries.
+ */
 GList * flood_channels_dropdown_items_list() {
     GList *glist = NULL;
 
@@ -258,6 +274,9 @@ GList * flood_channels_dropdown_items_list() {
     return glist;
 }
 
+/**
+ * \brief Generate the list of autogap selection entries.
+ */
 GList * flood_autogap_dropdown_items_list() {
     GList *glist = NULL;
 
@@ -269,6 +288,15 @@ GList * flood_autogap_dropdown_items_list() {
     return glist;
 }
 
+/**
+ * \brief Compare a pixel in a pixel buffer with another pixel to determine if a point should be included in the fill operation.
+ * \param check The pixel in the pixel buffer to check.
+ * \param orig The original selected pixel to use as the fill target color.
+ * \param merged_orig_pixel The original pixel merged with the background.
+ * \param dtc The desktop background color.
+ * \param threshold The fill threshold.
+ * \param method The fill method to use as defined in PaintBucketChannels.
+ */
 static bool compare_pixels(unsigned char *check, unsigned char *orig, unsigned char *merged_orig_pixel, unsigned char *dtc, int threshold, PaintBucketChannels method) {
     int diff = 0;
     float hsl_check[3], hsl_orig[3];
@@ -343,6 +371,15 @@ struct bitmap_coords_info {
     unsigned int current_step;
 };
 
+/**
+ * \brief Check if a pixel can be included in the fill.
+ * \param px The rendered pixel buffer to check.
+ * \param trace_t The pixel in the trace pixel buffer to check or mark.
+ * \param x The X coordinate.
+ * \param y The y coordinate.
+ * \param orig_color The original selected pixel to use as the fill target color.
+ * \param bci The bitmap_coords_info structure.
+ */
 inline static bool check_if_pixel_is_paintable(guchar *px, unsigned char *trace_t, int x, int y, unsigned char *orig_color, bitmap_coords_info bci) {
     if (is_pixel_paintability_checked(trace_t)) {
         return is_pixel_paintable(trace_t);
@@ -358,6 +395,13 @@ inline static bool check_if_pixel_is_paintable(guchar *px, unsigned char *trace_
     }
 }
 
+/**
+ * \brief Perform the bitmap-to-vector tracing and place the traced path onto the document.
+ * \param px The trace pixel buffer to trace to SVG.
+ * \param desktop The desktop on which to place the final SVG path.
+ * \param transform The transform to apply to the final SVG path.
+ * \param union_with_selection If true, merge the final SVG path with the current selection.
+ */
 static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform, bool union_with_selection) {
     SPDocument *document = sp_desktop_document(desktop);
     
@@ -473,12 +517,21 @@ static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform, bo
     }
 }
 
+/**
+ * \brief The possible return states of perform_bitmap_scanline_check()
+ */
 enum ScanlineCheckResult {
     SCANLINE_CHECK_OK,
     SCANLINE_CHECK_ABORTED,
     SCANLINE_CHECK_BOUNDARY
 };
 
+/**
+ * \brief Determine if the provided coordinates are within the pixel buffer limits.
+ * \param x The X coordinate.
+ * \param y The Y coordinate.
+ * \param bci The bitmap_coords_info structure.
+ */
 inline static bool coords_in_range(unsigned int x, unsigned int y, bitmap_coords_info bci) {
     return (x < bci.width) &&
            (y < bci.height);
@@ -490,6 +543,14 @@ inline static bool coords_in_range(unsigned int x, unsigned int y, bitmap_coords
 #define PAINT_DIRECTION_DOWN 8
 #define PAINT_DIRECTION_ALL 15
 
+/**
+ * \brief Paint a pixel or a square (if autogap is enabled) on the trace pixel buffer
+ * \param px The rendered pixel buffer to check.
+ * \param trace_px The trace pixel buffer.
+ * \param orig_color The original selected pixel to use as the fill target color.
+ * \param bci The bitmap_coords_info structure.
+ * \param original_point_trace_t The original pixel in the trace pixel buffer to check.
+ */
 inline static unsigned int paint_pixel(guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci, unsigned char *original_point_trace_t) {
     if (bci.radius == 0) {
         mark_pixel_colored(original_point_trace_t); 
@@ -530,6 +591,14 @@ inline static unsigned int paint_pixel(guchar *px, guchar *trace_px, unsigned ch
     }
 }
 
+/**
+ * \brief Push a point to be checked onto the bottom of the rendered pixel buffer check queue.
+ * \param fill_queue The fill queue to add the point to.
+ * \param max_queue_size The maximum size of the fill queue.
+ * \param trace_t The trace pixel buffer pixel.
+ * \param x The X coordinate.
+ * \param y The Y coordinate.
+ */
 static void push_point_onto_queue(std::deque<NR::Point> *fill_queue, unsigned int max_queue_size, unsigned char *trace_t, unsigned int x, unsigned int y) {
     if (!is_pixel_queued(trace_t)) {
         if ((fill_queue->size() < max_queue_size)) {
@@ -539,6 +608,14 @@ static void push_point_onto_queue(std::deque<NR::Point> *fill_queue, unsigned in
     }
 }
 
+/**
+ * \brief Shift a point to be checked onto the top of the rendered pixel buffer check queue.
+ * \param fill_queue The fill queue to add the point to.
+ * \param max_queue_size The maximum size of the fill queue.
+ * \param trace_t The trace pixel buffer pixel.
+ * \param x The X coordinate.
+ * \param y The Y coordinate.
+ */
 static void shift_point_onto_queue(std::deque<NR::Point> *fill_queue, unsigned int max_queue_size, unsigned char *trace_t, unsigned int x, unsigned int y) {
     if (!is_pixel_queued(trace_t)) {
         if ((fill_queue->size() < max_queue_size)) {
@@ -548,6 +625,14 @@ static void shift_point_onto_queue(std::deque<NR::Point> *fill_queue, unsigned i
     }
 }
 
+/**
+ * \brief Scan a row in the rendered pixel buffer and add points to the fill queue as necessary.
+ * \param fill_queue The fill queue to add the point to.
+ * \param px The rendered pixel buffer.
+ * \param trace_px The trace pixel buffer.
+ * \param orig_color The original selected pixel to use as the fill target color.
+ * \param bci The bitmap_coords_info structure.
+ */
 static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci) {
     bool aborted = false;
     bool reached_screen_boundary = false;
@@ -656,14 +741,28 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
     return SCANLINE_CHECK_OK;
 }
 
+/**
+ * \brief Sort the rendered pixel buffer check queue vertically.
+ */
 static bool sort_fill_queue_vertical(NR::Point a, NR::Point b) {
     return a[NR::Y] > b[NR::Y];
 }
 
+/**
+ * \brief Sort the rendered pixel buffer check queue horizontally.
+ */
 static bool sort_fill_queue_horizontal(NR::Point a, NR::Point b) {
     return a[NR::X] > b[NR::X];
 }
 
+/**
+ * \brief Perform a flood fill operation.
+ * \param event_context The event context for this tool.
+ * \param event The details of this event.
+ * \param union_with_selection If true, union the new fill with the current selection.
+ * \param is_point_fill If false, use the Rubberband "touch selection" to get the initial points for the fill.
+ * \param is_touch_fill If true, use only the initial contact point in the Rubberband "touch selection" as the fill target color.
+ */
 static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *event, bool union_with_selection, bool is_point_fill, bool is_touch_fill) {
     SPDesktop *desktop = event_context->desktop;
     SPDocument *document = sp_desktop_document(desktop);
@@ -683,6 +782,9 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     }
     
     double zoom_scale = desktop->current_zoom();
+    
+    // Render 160% of the physical display to the render pixel buffer, so that available
+    // fill areas off the screen can be included in the fill.
     double padding = 1.6;
 
     NR::Rect screen = desktop->get_display_area();
@@ -708,9 +810,9 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     
     NRRectL final_bbox;
     final_bbox.x0 = 0;
-    final_bbox.y0 = 0;//row;
+    final_bbox.y0 = 0; //row;
     final_bbox.x1 = width;
-    final_bbox.y1 = height;//row + num_rows;
+    final_bbox.y1 = height; //row + num_rows;
     
     nr_arena_item_invoke_update(root, &final_bbox, &gc, NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);
 
@@ -864,6 +966,14 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
             if (bci.radius == 0) {
                 unsigned long new_fill_queue_size = fill_queue.size();
 
+                /*
+                 * To reduce the number of points in the fill queue, periodically
+                 * resort all of the points in the queue so that scanline checks
+                 * can complete more quickly.  A point cannot be checked twice
+                 * in a normal scanline checks, so forcing scanline checks to start
+                 * from one corner of the rendered area as often as possible
+                 * will reduce the number of points that need to be checked and queued.
+                 */
                 if (new_fill_queue_size > sort_size_threshold) {
                     if (new_fill_queue_size > old_fill_queue_size) {
                         std::sort(fill_queue.begin(), fill_queue.end(), sort_fill_queue_vertical);
