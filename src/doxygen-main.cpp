@@ -134,6 +134,8 @@
  * - SPSelectContext [\ref select-context.cpp, \ref select-context.h]
  * - SPSpiralContext [\ref spiral-context.cpp, \ref spiral-context.h]
  * - SPStarContext [\ref star-context.cpp, \ref star-context.h]
+ * - FloodContext [\ref flood-context.cpp, \ref flood-context.h]
+ * - Box3DContext [\ref box3d-context.cpp, \ref box3d-context.h]
  *
  * SPNodeContext [\ref node-context.cpp, \ref node-context.h]
  *
