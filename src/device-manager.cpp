@@ -72,7 +72,7 @@ DeviceManagerImpl::DeviceManagerImpl() :
     if ( !fakeList ) {
         createFakeList();
     }
-    devList = fakeList;
+//     devList = fakeList;
 
     for ( GList* curr = devList; curr; curr = g_list_next(curr) ) {
         GdkDevice* dev = reinterpret_cast<GdkDevice*>(curr->data);
