@@ -60,6 +60,8 @@ libinkpre_a_SOURCES =	\
 	desktop-handles.cpp desktop-handles.h	\
 	desktop-style.cpp desktop-style.h	\
 	desktop.cpp desktop.h	\
+	device-manager.cpp	\
+	device-manager.h	\
 	document-undo.cpp	\
 	document.cpp document.h document-private.h	\
 	document-subset.cpp document-subset.h	\

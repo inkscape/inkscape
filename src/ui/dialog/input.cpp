@@ -157,8 +157,61 @@ static char *tip[] = {
 "OOO . OOOOOOOOOO",
 "OO . OOOOOOOOOOO",
 "OO  OOOOOOOOOOOO",
-"OOOOOOOOOOOOOOOO",
-"OOOOOOOOOOOOOOOO"
+"OOOOXXXXXOOOOOOO",
+"OOOOOOOOOXXXXXOO"
+};
+
+/* XPM */
+static char *button_none[] = {
+/* columns rows colors chars-per-pixel */
+"8 8 3 1",
+"  c black",
+". c #808080",
+"X c None",
+/* pixels */
+"XXXXXXXX",
+"XX .. XX",
+"X .XX. X",
+"X.XXXX.X",
+"X.XXXX.X",
+"X .XX. X",
+"XX .. XX",
+"XXXXXXXX"
+};
+/* XPM */
+static char *button_off[] = {
+/* columns rows colors chars-per-pixel */
+"8 8 4 1",
+"  c black",
+". c #808080",
+"X c gray100",
+"o c None",
+/* pixels */
+"oooooooo",
+"oo.  .oo",
+"o. XX .o",
+"o XXXX o",
+"o XXXX o",
+"o. XX .o",
+"oo.  .oo",
+"oooooooo"
+};
+/* XPM */
+static char *button_on[] = {
+/* columns rows colors chars-per-pixel */
+"8 8 3 1",
+"  c black",
+". c green",
+"X c None",
+/* pixels */
+"XXXXXXXX",
+"XX    XX",
+"X  ..  X",
+"X .... X",
+"X .... X",
+"X  ..  X",
+"XX    XX",
+"XXXXXXXX"
 };
 
 
@@ -186,16 +239,15 @@ static char *tip[] = {
 #include <gtkmm/treeview.h>
 
 #include "ui/widget/panel.h"
+#include "device-manager.h"
 
 #include "input.h"
+
+using Inkscape::InputDevice;
 
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
-
-static void createFakeList();
-GdkDevice fakeout[5];
-static GList* fakeList = 0;
 
 
 
@@ -205,7 +257,7 @@ public:
     Gtk::TreeModelColumn<Glib::ustring>                filename;
     Gtk::TreeModelColumn<Glib::ustring>                description;
     Gtk::TreeModelColumn< Glib::RefPtr<Gdk::Pixbuf> >  thumbnail;
-    Gtk::TreeModelColumn<GdkDevice*>                   device;
+    Gtk::TreeModelColumn<InputDevice const *>          device;
 
     MyModelColumns() { add(filename); add(description); add(thumbnail); add(device); }
 };
@@ -222,6 +274,10 @@ private:
     Glib::RefPtr<Gdk::Pixbuf> tabletPix;
     Glib::RefPtr<Gdk::Pixbuf> eraserPix;
     Glib::RefPtr<Gdk::Pixbuf> sidebuttonsPix;
+
+    Glib::RefPtr<Gdk::Pixbuf> buttonsNonePix;
+    Glib::RefPtr<Gdk::Pixbuf> buttonsOnPix;
+    Glib::RefPtr<Gdk::Pixbuf> buttonsOffPix;
 
     std::map<Glib::ustring, std::set<guint> > buttonMap;
 
@@ -249,6 +305,8 @@ private:
     Gtk::HPaned confSplitter;
     Gtk::Notebook topHolder;
     Gtk::Image testThumb;
+    Gtk::Image testButtons[24];
+    Gtk::Table imageTable;
     Gtk::EventBox testDetector;
 
     void setupValueAndCombo( gint reported, gint actual, Gtk::Label& label, Gtk::ComboBoxText& combo );
@@ -275,6 +333,10 @@ InputDialogImpl::InputDialogImpl() :
     eraserPix(Gdk::Pixbuf::create_from_xpm_data(eraser)),
     sidebuttonsPix(Gdk::Pixbuf::create_from_xpm_data(sidebuttons)),
 
+    buttonsNonePix(Gdk::Pixbuf::create_from_xpm_data(button_none)),
+    buttonsOnPix(Gdk::Pixbuf::create_from_xpm_data(button_on)),
+    buttonsOffPix(Gdk::Pixbuf::create_from_xpm_data(button_off)),
+
     lastSourceSeen((GdkInputSource)-1),
     lastDevnameSeen(""),
     cols(),
@@ -289,7 +351,8 @@ InputDialogImpl::InputDialogImpl() :
     modeCombo(),
     devDetails(6, 2),
     confSplitter(),
-    topHolder()
+    topHolder(),
+    imageTable(8, 4)
 {
     Gtk::Box *contents = _getContents();
 
@@ -301,10 +364,25 @@ InputDialogImpl::InputDialogImpl() :
     splitter.pack1(treeScroller);
     splitter.pack2(split2);
 
-    testDetector.add(testThumb);
+    testDetector.add(imageTable);
     testFrame.add(testDetector);
     testThumb.set(tabletPix);
     testThumb.set_padding(24, 24);
+    imageTable.attach(testThumb, 0, 8, 0, 1, ::Gtk::EXPAND, ::Gtk::EXPAND);
+    {
+        guint col = 0;
+        guint row = 1;
+        for ( guint num = 0; num < 24; num++ ) {
+            testButtons[num].set(buttonsNonePix);
+            imageTable.attach(testButtons[num], col, col + 1, row, row + 1, ::Gtk::FILL, ::Gtk::FILL);
+            col++;
+            if (col > 7) {
+                col = 0;
+                row++;
+            }
+        }
+    }
+
 
     topHolder.append_page(confSplitter, "Configuration");
     topHolder.append_page(splitter, "Hardware");
@@ -431,12 +509,9 @@ InputDialogImpl::InputDialogImpl() :
     tree.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &InputDialogImpl::foo));
 
 
-    GList* devList = gdk_devices_list();
-    if ( !fakeList ) {
-        createFakeList();
-    }
-//     devList = fakeList;
-    if ( devList ) {
+
+    std::list<InputDevice const *> devList = Inkscape::DeviceManager::getManager().getDevices();
+    if ( !devList.empty() ) {
         g_message("Found some");
 
         {
@@ -455,17 +530,17 @@ InputDialogImpl::InputDialogImpl() :
         childrow[cols.description] = "Tablet";
         childrow[cols.thumbnail] = tabletPix;
 
-        for ( GList* curr = devList; curr; curr = g_list_next(curr) ) {
-            GdkDevice* dev = reinterpret_cast<GdkDevice*>(curr->data);
+        for ( std::list<InputDevice const *>::iterator it = devList.begin(); it != devList.end(); ++it ) {
+            InputDevice const* dev = *it;
             if ( dev ) {
-                g_message("device: name[%s] source[0x%x] mode[0x%x] cursor[%s] axis count[%d] key count[%d]", dev->name, dev->source, dev->mode,
-                          dev->has_cursor?"Yes":"no", dev->num_axes, dev->num_keys);
+                g_message("device: name[%s] source[0x%x] mode[0x%x] cursor[%s] axis count[%d] key count[%d]", dev->getName().c_str(), dev->getSource(), dev->getMode(),
+                          dev->hasCursor() ? "Yes":"no", dev->getNumAxes(), dev->getNumKeys());
 
-                if ( dev->source != GDK_SOURCE_MOUSE ) {
+                if ( dev->getSource() != Gdk::SOURCE_MOUSE ) {
                     deviceRow = *(store->append(childrow.children()));
-                    deviceRow[cols.description] = dev->name;
+                    deviceRow[cols.description] = dev->getName();
                     deviceRow[cols.device] = dev;
-                    switch ( dev->source ) {
+                    switch ( dev->getSource() ) {
                         case GDK_SOURCE_PEN:
                             if (deviceRow[cols.description] == "pad") {
                                 deviceRow[cols.thumbnail] = sidebuttonsPix;
@@ -503,11 +578,11 @@ void InputDialogImpl::foo() {
     if (iter) {
         Gtk::TreeModel::Row row = *iter;
         Glib::ustring val = row[cols.description];
-        GdkDevice* dev = row[cols.device];
+        InputDevice const * dev = row[cols.device];
         if ( dev ) {
             devDetails.set_sensitive(true);
             modeCombo.set_sensitive(true);
-            switch( dev->mode ) {
+            switch( dev->getMode() ) {
                 case GDK_MODE_DISABLED:
                     modeCombo.set_active(0);
                     break;
@@ -522,8 +597,8 @@ void InputDialogImpl::foo() {
             }
             clear = false;
             devName.set_label(row[cols.description]);
-            setupValueAndCombo( dev->num_axes, dev->num_axes, devAxesCount, axesCombo);
-            setupValueAndCombo( dev->num_keys, dev->num_keys, devKeyCount, buttonCombo);
+            setupValueAndCombo( dev->getNumAxes(), dev->getNumAxes(), devAxesCount, axesCombo);
+            setupValueAndCombo( dev->getNumKeys(), dev->getNumKeys(), devKeyCount, buttonCombo);
         }
     }
 
@@ -602,6 +677,17 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
                 if ( buttonMap[key].find(btnEvt->button) == buttonMap[key].end() ) {
                     g_message("New button found for %s = %d", key.c_str(), btnEvt->button);
                     buttonMap[key].insert(btnEvt->button);
+                }
+                for ( guint i = 0; i < 24; i++ ) {
+                    if ( buttonMap[key].find(i) != buttonMap[key].end() ) {
+                        if (modmod && (i == btnEvt->button) ) {
+                            testButtons[i].set(buttonsOnPix);
+                        } else {
+                            testButtons[i].set(buttonsOffPix);
+                        }
+                    } else {
+                        testButtons[i].set(buttonsNonePix);
+                    }
                 }
             }
             gchar* name = gtk_accelerator_name(0, static_cast<GdkModifierType>(btnEvt->state));
@@ -683,105 +769,6 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
 
     return false;
 }
-
-
-
-
-
-GdkDeviceAxis padAxes[] = {{GDK_AXIS_X, 0.0, 0.0},
-                           {GDK_AXIS_Y, 0.0, 0.0},
-                           {GDK_AXIS_PRESSURE, 0.0, 1.0},
-                           {GDK_AXIS_XTILT, -1.0, 1.0},
-                           {GDK_AXIS_YTILT, -1.0, 1.0},
-                           {GDK_AXIS_WHEEL, 0.0, 1.0}};
-GdkDeviceKey padKeys[] = {{0, (GdkModifierType)0}, {0, (GdkModifierType)0}, {0, (GdkModifierType)0}, {0, (GdkModifierType)0},
-                          {0, (GdkModifierType)0}, {0, (GdkModifierType)0}, {0, (GdkModifierType)0}, {0, (GdkModifierType)0}};
-
-GdkDeviceAxis eraserAxes[] = {{GDK_AXIS_X, 0.0, 0.0},
-                              {GDK_AXIS_Y, 0.0, 0.0},
-                              {GDK_AXIS_PRESSURE, 0.0, 1.0},
-                              {GDK_AXIS_XTILT, -1.0, 1.0},
-                              {GDK_AXIS_YTILT, -1.0, 1.0},
-                              {GDK_AXIS_WHEEL, 0.0, 1.0}};
-GdkDeviceKey eraserKeys[] = {{0, (GdkModifierType)0}, {0, (GdkModifierType)0}, {0, (GdkModifierType)0}, {0, (GdkModifierType)0},
-                             {0, (GdkModifierType)0}, {0, (GdkModifierType)0}, {0, (GdkModifierType)0}};
-
-GdkDeviceAxis cursorAxes[] = {{GDK_AXIS_X, 0.0, 0.0},
-                              {GDK_AXIS_Y, 0.0, 0.0},
-                              {GDK_AXIS_PRESSURE, 0.0, 1.0},
-                              {GDK_AXIS_XTILT, -1.0, 1.0},
-                              {GDK_AXIS_YTILT, -1.0, 1.0},
-                              {GDK_AXIS_WHEEL, 0.0, 1.0}};
-GdkDeviceKey cursorKeys[] = {{0, (GdkModifierType)0}, {0, (GdkModifierType)0}, {0, (GdkModifierType)0}, {0, (GdkModifierType)0},
-                             {0, (GdkModifierType)0}, {0, (GdkModifierType)0}, {0, (GdkModifierType)0}};
-
-GdkDeviceAxis stylusAxes[] = {{GDK_AXIS_X, 0.0, 0.0},
-                              {GDK_AXIS_Y, 0.0, 0.0},
-                              {GDK_AXIS_PRESSURE, 0.0, 1.0},
-                              {GDK_AXIS_XTILT, -1.0, 1.0},
-                              {GDK_AXIS_YTILT, -1.0, 1.0},
-                              {GDK_AXIS_WHEEL, 0.0, 1.0}};
-GdkDeviceKey stylusKeys[] = {{0, (GdkModifierType)0}, {0, (GdkModifierType)0}, {0, (GdkModifierType)0}, {0, (GdkModifierType)0},
-                             {0, (GdkModifierType)0}, {0, (GdkModifierType)0}, {0, (GdkModifierType)0}};
-
-
-GdkDeviceAxis coreAxes[] = {{GDK_AXIS_X, 0.0, 0.0},
-                            {GDK_AXIS_Y, 0.0, 0.0}};
-
-
-static void createFakeList() {
-    if ( !fakeList ) {
-        fakeout[0].name = "pad";
-        fakeout[0].source = GDK_SOURCE_PEN;
-        fakeout[0].mode = GDK_MODE_SCREEN;
-        fakeout[0].has_cursor = TRUE;
-        fakeout[0].num_axes = 6;
-        fakeout[0].axes = padAxes;
-        fakeout[0].num_keys = 8;
-        fakeout[0].keys = padKeys;
-
-        fakeout[1].name = "eraser";
-        fakeout[1].source = GDK_SOURCE_ERASER;
-        fakeout[1].mode = GDK_MODE_SCREEN;
-        fakeout[1].has_cursor = TRUE;
-        fakeout[1].num_axes = 6;
-        fakeout[1].axes = eraserAxes;
-        fakeout[1].num_keys = 7;
-        fakeout[1].keys = eraserKeys;
-
-        fakeout[2].name = "cursor";
-        fakeout[2].source = GDK_SOURCE_CURSOR;
-        fakeout[2].mode = GDK_MODE_SCREEN;
-        fakeout[2].has_cursor = TRUE;
-        fakeout[2].num_axes = 6;
-        fakeout[2].axes = cursorAxes;
-        fakeout[2].num_keys = 7;
-        fakeout[2].keys = cursorKeys;
-
-        fakeout[3].name = "stylus";
-        fakeout[3].source = GDK_SOURCE_PEN;
-        fakeout[3].mode = GDK_MODE_SCREEN;
-        fakeout[3].has_cursor = TRUE;
-        fakeout[3].num_axes = 6;
-        fakeout[3].axes = stylusAxes;
-        fakeout[3].num_keys = 7;
-        fakeout[3].keys = stylusKeys;
-
-        fakeout[4].name = "Core Pointer";
-        fakeout[4].source = GDK_SOURCE_MOUSE;
-        fakeout[4].mode = GDK_MODE_SCREEN;
-        fakeout[4].has_cursor = TRUE;
-        fakeout[4].num_axes = 2;
-        fakeout[4].axes = coreAxes;
-        fakeout[4].num_keys = 0;
-        fakeout[4].keys = NULL;
-
-        for ( guint pos = 0; pos < G_N_ELEMENTS(fakeout); pos++) {
-            fakeList = g_list_append(fakeList, &(fakeout[pos]));
-        }
-    }
-}
-
 
 
 } // end namespace Inkscape

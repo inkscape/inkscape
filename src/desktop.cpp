@@ -84,6 +84,7 @@
 #include "ui/dialog/dialog-manager.h"
 #include "xml/repr.h"
 #include "message-context.h"
+#include "device-manager.h"
 #include "layer-manager.h"
 #include "event-log.h"
 #include "display/canvas-grid.h"
@@ -164,6 +165,9 @@ SPDesktop::SPDesktop() :
 void
 SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
 {
+    // Temporary workaround for link order issues:
+    Inkscape::DeviceManager::getManager().getDevices();
+
     _guides_message_context = new Inkscape::MessageContext(const_cast<Inkscape::MessageStack*>(messageStack()));
 
     current = sp_repr_css_attr_inherited (inkscape_get_repr (INKSCAPE, "desktop"), "style");
