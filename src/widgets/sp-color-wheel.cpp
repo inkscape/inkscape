@@ -6,6 +6,7 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   John Bintz <jcoswell@coswellproductions.org>
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2003-2004 Authors
@@ -599,6 +600,9 @@ typedef struct {
     gfloat y;
 } PointF;
 
+/**
+ * Render the provided color wheel information as a triangle.
+ */
 static void sp_color_wheel_render_triangle (SPColorWheel *wheel)
 {
     if ( wheel->_image )
@@ -705,126 +709,54 @@ static void sp_color_wheel_render_triangle (SPColorWheel *wheel)
             VERT_COPY(S, A);
             VERT_COPY(E, A);
 
+            int runs = 1; int fill_mode = 0;
+
             if ( dx1 == 0 )
             {
-                VERT_COPY(E,B);
-                for(;pointS.y <= pointC.y; pointS.y++,pointE.y++)
-                {
-                    if (pointE.x-pointS.x > 0)
-                    {
-                        dr=(rgbE[0]-rgbS[0])/(pointE.x-pointS.x);
-                        dg=(rgbE[1]-rgbS[1])/(pointE.x-pointS.x);
-                        db=(rgbE[2]-rgbS[2])/(pointE.x-pointS.x);
-                    }
-                    else
-                    {
-                        dr=dg=db=0;
-                    }
-                    VERT_COPY(P,S);
-                    dst = wheel->_triImage + (static_cast<gint>(pointP.y) * rowStride);
-                    dst += static_cast<gint>(pointP.x) * 3;
-                    for(;pointP.x < pointE.x;pointP.x++)
-                    {
-                        //putpixel(P);
-                        dst[0] = SP_COLOR_F_TO_U(rgbP[0]);
-                        dst[1] = SP_COLOR_F_TO_U(rgbP[1]);
-                        dst[2] = SP_COLOR_F_TO_U(rgbP[2]);
-                        dst += 3;
-                        rgbP[0]+=dr; rgbP[1]+=dg; rgbP[2]+=db;
-                    }
-                    pointS.x+=dx2; rgbS[0]+=dr2; rgbS[1]+=dg2; rgbS[2]+=db2;
-                    pointE.x+=dx3; rgbE[0]+=dr3; rgbE[1]+=dg3; rgbE[2]+=db3;
-                }
+                fill_mode = 0;
             }
-            else if (dx1 > dx2)
+            else if ( dx1 > dx2 )
             {
-                for(;pointS.y <= pointB.y; pointS.y++,pointE.y++)
-                {
-                    if (pointE.x-pointS.x > 0)
-                    {
-                        dr=(rgbE[0]-rgbS[0])/(pointE.x-pointS.x);
-                        dg=(rgbE[1]-rgbS[1])/(pointE.x-pointS.x);
-                        db=(rgbE[2]-rgbS[2])/(pointE.x-pointS.x);
-                    }
-                    else
-                    {
-                        dr=dg=db=0;
-                    }
-                    VERT_COPY(P,S);
-                    dst = wheel->_triImage + (static_cast<gint>(pointP.y) * rowStride);
-                    dst += static_cast<gint>(pointP.x) * 3;
-                    for(;pointP.x < pointE.x;pointP.x++)
-                    {
-                        //putpixel(P);
-                        dst[0] = SP_COLOR_F_TO_U(rgbP[0]);
-                        dst[1] = SP_COLOR_F_TO_U(rgbP[1]);
-                        dst[2] = SP_COLOR_F_TO_U(rgbP[2]);
-                        dst += 3;
-                        rgbP[0]+=dr; rgbP[1]+=dg; rgbP[2]+=db;
-                    }
-                    pointS.x+=dx2; rgbS[0]+=dr2; rgbS[1]+=dg2; rgbS[2]+=db2;
-                    pointE.x+=dx1; rgbE[0]+=dr1; rgbE[1]+=dg1; rgbE[2]+=db1;
-                }
-                VERT_COPY(E,B);
-                for(;pointS.y <= pointC.y; pointS.y++,pointE.y++)
-                {
-                    if (pointE.x-pointS.x > 0)
-                    {
-                        dr=(rgbE[0]-rgbS[0])/(pointE.x-pointS.x);
-                        dg=(rgbE[1]-rgbS[1])/(pointE.x-pointS.x);
-                        db=(rgbE[2]-rgbS[2])/(pointE.x-pointS.x);
-                    }
-                    else
-                    {
-                        dr=dg=db=0;
-                    }
-                    VERT_COPY(P,S);
-                    dst = wheel->_triImage + (static_cast<gint>(pointP.y) * rowStride);
-                    dst += static_cast<gint>(pointP.x) * 3;
-                    for(;pointP.x < pointE.x;pointP.x++)
-                    {
-                        //putpixel(P);
-                        dst[0] = SP_COLOR_F_TO_U(rgbP[0]);
-                        dst[1] = SP_COLOR_F_TO_U(rgbP[1]);
-                        dst[2] = SP_COLOR_F_TO_U(rgbP[2]);
-                        dst += 3;
-                        rgbP[0]+=dr; rgbP[1]+=dg; rgbP[2]+=db;
-                    }
-                    pointS.x+=dx2; rgbS[0]+=dr2; rgbS[1]+=dg2; rgbS[2]+=db2;
-                    pointE.x+=dx3; rgbE[0]+=dr3; rgbE[1]+=dg3; rgbE[2]+=db3;
-                }
+                fill_mode = 1; runs = 2;
             }
             else if ( dx1 )
             {
-                for(;pointS.y <= pointB.y; pointS.y++,pointE.y++)
+                fill_mode = 2; runs = 2;
+            }
+
+            gfloat targetY = 0;
+            int fill_direction_mode = 0;
+
+            for (int current_run = 0; current_run < runs; current_run++)
+            {
+                targetY = pointC.y;
+                switch (fill_mode)
                 {
-                    if (pointE.x-pointS.x > 0)
-                    {
-                        dr=(rgbE[0]-rgbS[0])/(pointE.x-pointS.x);
-                        dg=(rgbE[1]-rgbS[1])/(pointE.x-pointS.x);
-                        db=(rgbE[2]-rgbS[2])/(pointE.x-pointS.x);
-                    }
-                    else
-                    {
-                        dr=dg=db=0;
-                    }
-                    VERT_COPY(P,S);
-                    dst = wheel->_triImage + (static_cast<gint>(pointP.y) * rowStride);
-                    dst += static_cast<gint>(pointP.x) * 3;
-                    for(;pointP.x < pointE.x;pointP.x++)
-                    {
-                        //putpixel(P);
-                        dst[0] = SP_COLOR_F_TO_U(rgbP[0]);
-                        dst[1] = SP_COLOR_F_TO_U(rgbP[1]);
-                        dst[2] = SP_COLOR_F_TO_U(rgbP[2]);
-                        dst += 3;
-                        rgbP[0]+=dr; rgbP[1]+=dg; rgbP[2]+=db;
-                    }
-                    pointS.x+=dx1; rgbS[0]+=dr1; rgbS[1]+=dg1; rgbS[2]+=db1;
-                    pointE.x+=dx2; rgbE[0]+=dr2; rgbE[1]+=dg2; rgbE[2]+=db2;
+                    case 0:
+                        VERT_COPY(E,B);
+                        fill_direction_mode = 0;
+                        break;
+                    case 1:
+                        if (current_run == 0) {
+                            targetY = pointB.y;
+                            fill_direction_mode = 1;
+                        } else {
+                            VERT_COPY(E,B);
+                            fill_direction_mode = 0;
+                        }
+                        break;
+                    case 2:
+                        if (current_run == 0) {
+                            targetY = pointB.y;
+                            fill_direction_mode = 2;
+                        } else {
+                            VERT_COPY(S,B);
+                            fill_direction_mode = 3;
+                        }
+                        break;
                 }
-                VERT_COPY(S,B);
-                for(;pointS.y <= pointC.y; pointS.y++,pointE.y++)
+
+                for(;pointS.y <= targetY; pointS.y++,pointE.y++)
                 {
                     if (pointE.x-pointS.x > 0)
                     {
@@ -848,10 +780,28 @@ static void sp_color_wheel_render_triangle (SPColorWheel *wheel)
                         dst += 3;
                         rgbP[0]+=dr; rgbP[1]+=dg; rgbP[2]+=db;
                     }
-                    pointS.x+=dx3; rgbS[0]+=dr3; rgbS[1]+=dg3; rgbS[2]+=db3;
-                    pointE.x+=dx2; rgbE[0]+=dr2; rgbE[1]+=dg2; rgbE[2]+=db2;
+
+                    switch (fill_direction_mode) {
+                        case 0:
+                            pointS.x+=dx2; rgbS[0]+=dr2; rgbS[1]+=dg2; rgbS[2]+=db2;
+                            pointE.x+=dx3; rgbE[0]+=dr3; rgbE[1]+=dg3; rgbE[2]+=db3;
+                            break;
+                        case 1:
+                            pointS.x+=dx2; rgbS[0]+=dr2; rgbS[1]+=dg2; rgbS[2]+=db2;
+                            pointE.x+=dx1; rgbE[0]+=dr1; rgbE[1]+=dg1; rgbE[2]+=db1;
+                            break;
+                        case 2:
+                            pointS.x+=dx1; rgbS[0]+=dr1; rgbS[1]+=dg1; rgbS[2]+=db1;
+                            pointE.x+=dx2; rgbE[0]+=dr2; rgbE[1]+=dg2; rgbE[2]+=db2;
+                            break;
+                        case 3:
+                            pointS.x+=dx3; rgbS[0]+=dr3; rgbS[1]+=dg3; rgbS[2]+=db3;
+                            pointE.x+=dx2; rgbE[0]+=dr2; rgbE[1]+=dg2; rgbE[2]+=db2;
+                            break;
+                    }
                 }
             }
+
 
 // End of Gouraud fill  ============================================================
 
