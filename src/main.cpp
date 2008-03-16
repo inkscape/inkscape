@@ -433,18 +433,33 @@ static int _win32_set_inkscape_env(char *argv0)
     strcpy(szFullPath, szDrive);
     strcat(szFullPath, szDir);
 
-    strcpy(tmp, "PATH=");
+    char *oldenv = getenv("PATH");
+	strcpy(tmp, "PATH=");
     strcat(tmp, szFullPath);
     strcat(tmp, ";");
     strcat(tmp, szFullPath);
-    strcat(tmp, "python\\");
-    strcat(tmp, ";%PATH%");
-    _putenv(tmp);
+    strcat(tmp, "python;");
+    strcat(tmp, szFullPath);
+    strcat(tmp, "perl;");
+    if(oldenv != NULL) {
+		strcat(tmp, ";");
+		strcat(tmp, oldenv);
+	}
+	_putenv(tmp);
 
+    oldenv = getenv("PYTHONPATH");
     strcpy(tmp, "PYTHONPATH=");
     strcat(tmp, szFullPath);
-    strcat(tmp, "python\\");
-    _putenv(tmp);
+    strcat(tmp, "python;");
+    strcat(tmp, szFullPath);
+    strcat(tmp, "python\\Lib;");
+    strcat(tmp, szFullPath);
+    strcat(tmp, "python\\DLLs");
+    if(oldenv != NULL) {
+		strcat(tmp, ";");
+		strcat(tmp, oldenv);
+	}
+	_putenv(tmp);
 
     return 0;
 }
