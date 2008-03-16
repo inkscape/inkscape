@@ -1,7 +1,7 @@
 #define INKSCAPE_LPE_VONKOCH_CPP
 
 /*
- * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+ * Copyright (C) JF Barraud 2007 <jf.barraud@gmail.com>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -33,20 +33,41 @@ using std::vector;
 namespace Inkscape {
 namespace LivePathEffect {
 
+VonKochPathParam::~VonKochPathParam()
+{  
+}
+
+void
+VonKochPathParam::param_setup_nodepath(Inkscape::NodePath::Path *np)
+{  
+    PathParam::param_setup_nodepath(np);
+    np->straight_path = true;
+}
+
+static const Util::EnumData<VonKochRefType> VonKochRefTypeData[VKREF_END] = {
+    {VKREF_BBOX,     N_("Bounding box"),               "bbox"},
+    {VKREF_SEG, N_("Last gen. segment"), "lastseg"},
+};
+static const Util::EnumDataConverter<VonKochRefType> VonKochRefTypeConverter(VonKochRefTypeData, VKREF_END);
+
 LPEVonKoch::LPEVonKoch(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     nbgenerations(_("Nb of generations"), _("Depth of the recursion --- keep low!!"), "nbgenerations", &wr, this, 1),
     generator(_("Generating path"), _("Path whos segments define the fractal"), "generator", &wr, this, "M0,0 L3,0 M0,1 L1,1 M 2,1 L3,1"),
-    drawall(_("Draw all generations"), _("If unchecked, draw only the last generation"), "drawall", &wr, this, false),
-    vertical_pattern(_("Original path is vertical"), _("Rotates the original 90 degrees, before generating the fractal"), "vertical", &wr, this, false)
+    drawall(_("Draw all generations"), _("If unchecked, draw only the last generation"), "drawall", &wr, this, true),
+    reftype(_("Reference"), _("Generating path segments define transforms in reference to bbox or last segment"), "reftype", VonKochRefTypeConverter, &wr, this, VKREF_BBOX),
+    maxComplexity(_("Max complexity"), _("Disable effect if the output is too complex"), "maxComplexity", &wr, this, 1000)
 {
     registerParameter( dynamic_cast<Parameter *>(&generator) );
     registerParameter( dynamic_cast<Parameter *>(&nbgenerations) );
     registerParameter( dynamic_cast<Parameter *>(&drawall) );
-    registerParameter( dynamic_cast<Parameter *>(&vertical_pattern) );
+    registerParameter( dynamic_cast<Parameter *>(&reftype) );
+    registerParameter( dynamic_cast<Parameter *>(&maxComplexity) );
 
     nbgenerations.param_make_integer();
     nbgenerations.param_set_range(0, NR_HUGE);
+    maxComplexity.param_make_integer();
+    maxComplexity.param_set_range(0, NR_HUGE);
 }
 
 LPEVonKoch::~LPEVonKoch()
@@ -54,22 +75,35 @@ LPEVonKoch::~LPEVonKoch()
 
 }
 
-
 std::vector<Geom::Path>
 LPEVonKoch::doEffect_path (std::vector<Geom::Path> & path_in)
 {
     using namespace Geom;
     std::vector<Geom::Path> generating_path = path_from_piecewise(generator,.01);//TODO what should that tolerance be?
-    Rect bbox = path_in[0].boundsExact();
-    for(unsigned i=1; i < path_in.size(); i++){
-        bbox.unionWith(path_in[i].boundsExact());
+
+    //Collect transform matrices.
+    //FIXME: fusing/cutting nodes mix up component order in the path. This is why the last segment is used.
+    Matrix m0;
+    VonKochRefType type = reftype.get_value();
+    if (type==VKREF_BBOX){
+        Rect bbox = path_in[0].boundsExact();
+        for(unsigned i=1; i < path_in.size(); i++){
+            bbox.unionWith(path_in[i].boundsExact());
+        }
+        m0 = Matrix(bbox[X].extent(),0,0,bbox[X].extent(), bbox.min()[X], (bbox.min()[Y]+bbox.max()[Y])/2);
+    }else{
+        if (generating_path.size()==0) return path_in;
+        Point p = generating_path.back().back().pointAt(0);
+        Point u = generating_path.back().back().pointAt(0.999)-p;
+        m0 = Matrix(u[X], u[Y],-u[Y], u[X], p[X], p[Y]);
     }
-    Matrix m0 = Matrix(bbox[X].extent(),0,0,bbox[X].extent(), bbox.min()[X], bbox.min()[Y]);
     m0 = m0.inverse();
 
     std::vector<Matrix> transforms;
     for (unsigned i=0; i<generating_path.size(); i++){
-        for (unsigned j = 0; j<generating_path[i].size(); j++){   
+        unsigned end = generating_path[i].size(); 
+        if(type==VKREF_SEG && i==generating_path.size()-1) end-=1;
+        for (unsigned j=0; j<end; j++){   
             Point p = generating_path[i].pointAt(j);
             Point u = generating_path[i].pointAt(j+0.999)-generating_path[i].pointAt(j+0.001);
             Matrix m = Matrix(u[X], u[Y],-u[Y], u[X], p[X], p[Y]);
@@ -77,22 +111,44 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> & path_in)
             transforms.push_back(m);
         }
     }
-/*
-    assert(generating_path.size()>0);
+    if (transforms.size()==0) return path_in;
 
-    std::vector<Matrix> transforms;
-    transforms.push_back(Matrix(.5, 0., 0., .5,   0.,50.));
-    transforms.push_back(Matrix(.5, 0., 0., .5, 100., 0.));
-*/
-    
+    //Do nothing if the output is too complex... 
+    int path_in_complexity = 0;
+    for (unsigned k = 0; k < path_in.size(); k++){
+            path_in_complexity+=path_in[k].size();
+    }    
+    double complexity = pow(transforms.size(),nbgenerations)*path_in_complexity;
+    if (drawall.get_value()){
+        int k = transforms.size();
+        if(k>1){
+            complexity = (pow(k,nbgenerations+1)-1)/(k-1)*path_in_complexity;
+        }else{
+            complexity = nbgenerations*k*path_in_complexity;
+        }
+    }else{
+        complexity = pow(transforms.size(),nbgenerations)*path_in_complexity;
+    }
+    if (complexity > double(maxComplexity)){
+        return path_in;
+    }
+
+    //Generate path:
     std::vector<Geom::Path> pathi = path_in;
     std::vector<Geom::Path> path_out = path_in;
-   
+    
     for (unsigned i = 0; i<nbgenerations; i++){
-        path_out = (drawall.get_value())? path_in : std::vector<Geom::Path>();
+        if (drawall.get_value()){
+            path_out =  path_in;
+            complexity = path_in_complexity;
+        }else{
+            path_out = std::vector<Geom::Path>();
+            complexity = 0;
+        }
         for (unsigned j = 0; j<transforms.size(); j++){
-            for (unsigned k = 0; k<pathi.size(); k++){
+            for (unsigned k = 0; k<pathi.size() && complexity < maxComplexity; k++){
                 path_out.push_back(pathi[k]*transforms[j]); 
+                complexity+=pathi[k].size();
             }
         }
         pathi = path_out;
@@ -125,9 +181,9 @@ LPEVonKoch::resetDefaults(SPItem * item)
     path = Geom::Path();
     path.start( start );
     path.appendNew<Geom::LineSegment>( end );
-    paths.push_back(path);
     paths.push_back(path * Matrix(1./3,0,0,1./3,start[X]*2./3,start[Y]*2./3 + bndsY.extent()/2));
     paths.push_back(path * Matrix(1./3,0,0,1./3,  end[X]*2./3,  end[Y]*2./3 + bndsY.extent()/2));
+    paths.push_back(path);
 
     //generator.param_set_and_write_new_value( path.toPwSb() );
     generator.param_set_and_write_new_value( paths_to_pw(paths) );

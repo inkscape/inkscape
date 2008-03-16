@@ -4,9 +4,9 @@
  */
 /*
  * Authors:
- *   Johan Engelen
+ *   JF Barraud
 *
-* Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+* Copyright (C) JF Barraud 2007 <jf.barraud@gmail.com>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -15,15 +15,14 @@
 #include "display/curve.h"
 #include <libnr/n-art-bpath.h>
 
-// You might need to include other 2geom files. You can add them here:
 #include <2geom/path.h>
-#include <2geom/sbasis.h>
-#include <2geom/sbasis-geometric.h>
-#include <2geom/bezier-to-sbasis.h>
-#include <2geom/sbasis-to-bezier.h>
+//#include <2geom/sbasis.h>
+//#include <2geom/sbasis-geometric.h>
+//#include <2geom/bezier-to-sbasis.h>
+//#include <2geom/sbasis-to-bezier.h>
 #include <2geom/d2.h>
-#include <2geom/sbasis-math.h>
-#include <2geom/piecewise.h>
+//#include <2geom/sbasis-math.h>
+//#include <2geom/piecewise.h>
 #include <2geom/crossing.h>
 #include <2geom/path-intersection.h>
 
@@ -44,35 +43,7 @@ LPEKnot::~LPEKnot()
 
 }
 
-
-/* ########################
- *  Choose to implement one of the doEffect functions. You can delete or comment out the others.
-*/
-
-/*
-void
-LPEKnot::doEffect (SPCurve * curve)
-{
-    // spice this up to make the effect actually *do* something!
-}
-
-NArtBpath *
-LPEKnot::doEffect_nartbpath (NArtBpath * path_in)
-{
-        NArtBpath *path_out;
-        unsigned ret = 0;
-        while ( path_in[ret].code != NR_END ) {
-            ++ret;
-        }
-        unsigned len = ++ret;
-        path_out = g_new(NArtBpath, len);
-
-        memcpy(path_out, path_in, len * sizeof(NArtBpath));   // spice this up to make the effect actually *do* something!
-
-        return path_out;
-}
-*/
-
+//remove an interval from an union of intervals.
 std::vector<Geom::Interval> complementOf(Geom::Interval I, std::vector<Geom::Interval> domain){
     std::vector<Geom::Interval> ret;
     double min = domain.front().min();
@@ -128,6 +99,54 @@ findShadowedTime(Geom::Path &patha,
     return Interval(tmin,tmax);
 }                
 
+//Just a try; this should be moved to 2geom if ever it works.
+std::vector<Geom::Path>
+split_loopy_bezier (std::vector<Geom::Path> & path_in){
+
+    std::vector<Geom::Path> ret; 
+    std::vector<Geom::Path>::iterator pi=path_in.begin();
+    for(; pi != path_in.end(); pi++) {
+        ret.push_back(Geom::Path());
+        for (Geom::Path::iterator curve(pi->begin()),end(pi->end()); curve != end; ++curve){
+
+            //is the current curve a cubic bezier?
+            if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const *>(&(*curve))){
+                Geom::CubicBezier theCurve = *cubic_bezier;
+                std::vector<Geom::Point> A = theCurve.points();
+
+                //is there a crossing in the polygon?
+                if( cross(A[2]-A[0],A[1]-A[0])*cross(A[3]-A[0],A[1]-A[0])<0 &&
+                    cross(A[0]-A[3],A[2]-A[3])*cross(A[1]-A[3],A[2]-A[3])<0){
+
+                    //split the curve where the tangent is parallel to the chord through end points.
+                    double a = cross(A[3]-A[0],A[1]-A[2]);
+                    double c = cross(A[3]-A[0],A[1]-A[0]);
+                    double t; //where to split; solution of 3*at^2-(a+c)t +c = 0. 
+                    //TODO: don't we have a clean deg 2 equation solver?...
+                    if (fabs(a)<.0001){
+                        t = .5;
+                    }else{
+                        double delta = a*a-a*c+c*c;
+                        t = ((a+c)-sqrt(delta))/2/a;
+                        if ( t<0 || t>1 ) {t = ((a+c)+sqrt(delta))/2/a;}
+                    }
+                    //TODO: shouldn't Path have subdivide method?
+                    std::pair<Geom::BezierCurve<3>, Geom::BezierCurve<3> > splitCurve;
+                    splitCurve = theCurve.subdivide(t);
+                    ret.back().append(splitCurve.first);
+                    ret.back().append(splitCurve.second);
+
+                }else{//cubic bezier but no crossing.
+                    ret.back().append(*curve);
+                }
+            }else{//not cubic bezier.
+                ret.back().append(*curve);
+            }
+        }
+    }
+    return ret;
+}
+
 
 std::vector<Geom::Path>
 LPEKnot::doEffect_path (std::vector<Geom::Path> & path_in)
@@ -136,6 +155,8 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> & path_in)
     std::vector<Geom::Path> path_out;
     double width = interruption_width;
     
+    path_in = split_loopy_bezier(path_in);
+
     CrossingSet crossingTable = crossings_among(path_in);
     for (unsigned i = 0; i < crossingTable.size(); i++){
         std::vector<Interval> dom;
@@ -160,20 +181,6 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> & path_in)
             assert(dom.at(comp).min() >=0 and dom.at(comp).max() < path_in.at(i).size());
             path_out.push_back(path_in.at(i).portion(dom.at(comp)));
         }
-        
-//         std::vector<Point> MV = path_in[0][0].pointAndDerivatives(crossingTable[0][0].getTime(0),2);
-//         Point U = unit_vector(MV[1]);
-//         Point N = U.cw();
-//         Point A = MV[0]-10.*width*U, B = MV[0]+10*width*U;
-        
-//         Geom::Path cutter;
-//         cutter = Geom::Path();
-//         cutter.append( LineSegment(A+width*N,B+width*N));
-//         path_out.push_back(cutter);
-//         cutter = Geom::Path();
-//         cutter.append( LineSegment(A-width*N,B-width*N));
-//         path_out.push_back(cutter);
-
     }   
     return path_out;
 }
