@@ -205,18 +205,14 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
     strokeoverlap_rdm.resetRandomizer();
     tgtlength_rdm.resetRandomizer();
 
-    // some variables for futur use.
+    // some variables for futur use (for construction lines; compute arclength only once...)
     // notations will be : t = path time, s = distance from start along the path.
     Piecewise<SBasis> pathlength;
-    std::vector<double> times;  
-    double total_length;
+    double total_length = 0;
 
     //TODO: split Construction Lines/Approximated Strokes into two separate effects?
 
     //----- Approximated Strokes.
-    //TODO: choose length & offset according to curvature?
-    
-    //TODO: retrieve components from path, dont merge to separate afterward! + know if closed!
     std::vector<Piecewise<D2<SBasis> > > pieces_in = split_at_discontinuities (pwd2_in);
 
     //work separately on each component.
@@ -224,15 +220,16 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
 
         Piecewise<D2<SBasis> > piece = pieces_in[pieceidx];
         Piecewise<SBasis> piecelength = arcLengthSb(piece,.1);
-        pathlength.concat(piecelength);
+        double piece_total_length = piecelength.segs.back().at1()-piecelength.segs.front().at0();
+        pathlength.concat(piecelength + total_length);
+        total_length += piece_total_length;
         
-        total_length = piecelength.segs.back().at1()-piecelength.segs.front().at0();
 
         //TODO: better check this on the Geom::Path.
         bool closed = piece.segs.front().at0() == piece.segs.back().at1(); 
         if (closed){ 
             piece.concat(piece);
-            piecelength.concat(piecelength+total_length);
+            piecelength.concat(piecelength+piece_total_length);
         }
 
         for (unsigned i = 0; i<nbiter_approxstrokes; i++){
@@ -249,9 +246,10 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
             while (!done){
                 // if the start point is already too far... do nothing. (this should not happen!)
                 assert (s0>=0);//this should not happen!!
-                if (!closed && s1>total_length - ends_tolerance.get_value()*strokelength) break;
-                if ( closed && s0>total_length + s0_initial) break;
+                if (!closed && s1>piece_total_length - ends_tolerance.get_value()*strokelength) break;
+                if ( closed && s0>piece_total_length + s0_initial) break;
 
+                std::vector<double> times;  
                 times = roots(piecelength-s0);  
                 if (times.size()==0) break;//we should not be there.
                 t0 = times[0];
@@ -260,14 +258,16 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
                 s1 = s0 + strokelength*(1-strokelength_rdm);
                 // don't let it go beyond the end of the orgiginal path.
                 // TODO/FIXME: this might result in short strokes near the end...
-                if (!closed && s1>total_length-ends_tolerance.get_value()*strokelength){
+                if (!closed && s1>piece_total_length-ends_tolerance.get_value()*strokelength){
                     done = true;
-                    //!!the root solver might miss s1==total_length...
-                    if (s1>total_length){s1 = total_length - ends_tolerance*strokelength-0.0001;}
+                    //!!the root solver might miss s1==piece_total_length...
+                    if (s1>piece_total_length){s1 = piece_total_length - ends_tolerance*strokelength-0.0001;}
                 }
-                if (closed && s1>total_length + s0_initial){
+                if (closed && s1>piece_total_length + s0_initial){
                     done = true;
-                    if (closed && s1>2*total_length){s1 = 2*total_length - strokeoverlap*(1-strokeoverlap_rdm)*strokelength-0.0001;}
+                    if (closed && s1>2*piece_total_length){
+                        s1 = 2*piece_total_length - strokeoverlap*(1-strokeoverlap_rdm)*strokelength-0.0001;
+                    }
                 }
                 times = roots(piecelength-s1);  
                 if (times.size()==0) break;//we should not be there.
@@ -289,15 +289,16 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
     //----- Construction lines.
     //TODO: choose places according to curvature?.
 
-    //at this point we have:
+    //at this point we should have:
     //pathlength = arcLengthSb(pwd2_in,.1);
-    total_length = pathlength.segs.back().at1();
+    //total_length = pathlength.segs.back().at1()-pathlength.segs.front().at0();
     Piecewise<D2<SBasis> > m = pwd2_in;
     Piecewise<D2<SBasis> > v = derivative(pwd2_in);
     Piecewise<D2<SBasis> > a = derivative(v);
     for (unsigned i=0; i<nbtangents; i++){
         // pick a point where to draw a tangent (s = dist from start along path).
         double s = total_length * ( i + tgtlength_rdm ) / (nbtangents+1.);
+        std::vector<double> times;  
         times = roots(pathlength-s);
         assert(times.size()>0);//there should be one and only one solution!
         double t = times[0];
@@ -317,26 +318,6 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
         }
         output.concat(Piecewise<D2<SBasis> >(tgt));
     }
-
-// // -------- Pleins et delies vs courbure ou direction...
-//     Piecewise<D2<SBasis> > a = derivative(v);
-//     Piecewise<SBasis> a_cross_n = cross(a,n);
-//     Piecewise<SBasis> v_dot_n = dot(v,n);
-//     //Piecewise<D2<SBasis> > rfrac = sectionize(D2<Piecewise<SBasis> >(a_cross_n,v_dot_n));
-//     //Piecewise<SBasis> h = atan2(rfrac)*para1;
-//     Piecewise<SBasis> h = reciprocal(curvature(piece))*para1;
-//
-// //    Piecewise<D2<SBasis> > dir = Piecewise<D2<SBasis> >(D2<SBasis>(Linear(0),Linear(-1)));
-// //    Piecewise<SBasis> h = dot(n,dir)+1.;
-// //    h *= h*(para1/4.);
-//
-//     n = rot90(n);
-//     output = piece+h*n;
-//     output.concat(piece-h*n);
-//
-// //-----------
-
-    //output.concat(m);
     return output;
 }
 
