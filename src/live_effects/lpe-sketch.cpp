@@ -196,6 +196,10 @@ Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
 {
     using namespace Geom;
+    //If the input path is empty, do nothing.
+    //Note: this happens when duplicating a 3d box... dunno why.
+    if (pwd2_in.size()==0) return pwd2_in;
+
     Piecewise<D2<SBasis> > output;
 
 
@@ -245,14 +249,12 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
 
             while (!done){
                 // if the start point is already too far... do nothing. (this should not happen!)
-                assert (s0>=0);//this should not happen!!
                 if (!closed && s1>piece_total_length - ends_tolerance.get_value()*strokelength) break;
                 if ( closed && s0>piece_total_length + s0_initial) break;
 
                 std::vector<double> times;  
                 times = roots(piecelength-s0);  
-                if (times.size()==0) break;//we should not be there.
-                t0 = times[0];
+                t0 = times.at(0);//there should be one and only one solution!!
                 
                 // pick a new end point (s1 = s0 + strokelength).
                 s1 = s0 + strokelength*(1-strokelength_rdm);
@@ -300,8 +302,7 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
         double s = total_length * ( i + tgtlength_rdm ) / (nbtangents+1.);
         std::vector<double> times;  
         times = roots(pathlength-s);
-        assert(times.size()>0);//there should be one and only one solution!
-        double t = times[0];
+        double t = times.at(0);//there should be one and only one solution!
         Point m_t = m(t), v_t = v(t), a_t = a(t);
         //Compute tgt length according to curvature (not exceeding tgtlength) so that  
         //  dist to origninal curve ~ 4 * (parallel_offset+tremble_size).
