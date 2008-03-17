@@ -241,31 +241,31 @@ void FileOpenDialogImplWin32::createFilterMenu()
     }
 
     int extension_index = 0;
-    _extension_map = new Inkscape::Extension::Extension*[filter_count + 3];
+    _extension_map = new Inkscape::Extension::Extension*[filter_count];
 
     // Filter Image Files
     all_image_files.name = g_utf8_to_utf16(all_image_files_filter_name,
         -1, NULL, &all_image_files.name_length, NULL);
     all_image_files.filter = g_utf8_to_utf16(all_image_files_filter.data(),
             -1, NULL, &all_image_files.filter_length, NULL);
+	all_image_files.mod = NULL;
     filter_list.push_front(all_image_files);
-    _extension_map[extension_index++] = NULL;
 
     // Filter Inkscape Files
     all_inkscape_files.name = g_utf8_to_utf16(all_inkscape_files_filter_name,
         -1, NULL, &all_inkscape_files.name_length, NULL);
     all_inkscape_files.filter = g_utf8_to_utf16(all_inkscape_files_filter.data(),
             -1, NULL, &all_inkscape_files.filter_length, NULL);
+	all_inkscape_files.mod = NULL;
     filter_list.push_front(all_inkscape_files);
-    _extension_map[extension_index++] = NULL;
 
     // Filter All Files
     all_files.name = g_utf8_to_utf16(all_files_filter_name,
         -1, NULL, &all_files.name_length, NULL);
     all_files.filter = NULL;
     all_files.filter_length = 0;
+	all_files.mod = NULL;
     filter_list.push_front(all_files);
-    _extension_map[extension_index++] = NULL;
 
     filter_length += all_files.name_length + 3 +
                     all_inkscape_files.filter_length +
@@ -1275,7 +1275,7 @@ void FileSaveDialogImplWin32::createFilterMenu()
     Inkscape::Extension::db.get_output_list(extension_list);
 
     int filter_count = 0;
-    int filter_length = 0;
+    int filter_length = 1;
 
     for (Inkscape::Extension::DB::OutputList::iterator current_item = extension_list.begin();
          current_item != extension_list.end(); current_item++)
