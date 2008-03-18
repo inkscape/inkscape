@@ -1312,6 +1312,36 @@ void sp_selection_paste_style()
                      _("Paste style"));
 }
 
+void sp_selection_paste_livepatheffect_impl(SPDocument *doc, SPItem *item, char const *effecturi)
+{
+    if ( item && SP_IS_SHAPE(item) ) {
+        SPShape * shape = SP_SHAPE(item);
+
+        // create a private LPE object!
+        SPObject * obj = sp_uri_reference_resolve(doc, effecturi);
+        if (!obj)
+            return;
+        LivePathEffectObject * lpeobj = LIVEPATHEFFECT(obj)->fork_private_if_necessary(0);
+            
+        sp_shape_set_path_effect(shape, lpeobj);
+
+        // set inkscape:original-d for paths. the other shapes don't need this.
+        if ( SP_IS_PATH(item) ) {
+            Inkscape::XML::Node *pathrepr = SP_OBJECT_REPR(item);
+            if ( ! pathrepr->attribute("inkscape:original-d") ) {
+                pathrepr->setAttribute("inkscape:original-d", pathrepr->attribute("d"));
+            }
+        }
+    } else if (item && SP_IS_GROUP (item)) {
+        for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            if (!SP_IS_ITEM (child))
+                continue;
+            sp_selection_paste_livepatheffect_impl (doc, SP_ITEM(child), effecturi);
+        }
+    }
+}
+
+
 void sp_selection_paste_livepatheffect()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -1343,23 +1373,9 @@ void sp_selection_paste_livepatheffect()
 
     for ( GSList const *itemlist = selection->itemList(); itemlist != NULL; itemlist = g_slist_next(itemlist) ) {
         SPItem *item = reinterpret_cast<SPItem*>(itemlist->data);
-        if ( item && SP_IS_SHAPE(item) ) {
-            SPShape * shape = SP_SHAPE(item);
 
-            // create a private LPE object!
-            SPObject * obj = sp_uri_reference_resolve(doc, effecturi);
-            LivePathEffectObject * lpeobj = LIVEPATHEFFECT(obj)->fork_private_if_necessary(0);
-            
-            sp_shape_set_path_effect(shape, lpeobj);
+        sp_selection_paste_livepatheffect_impl(doc, item, effecturi);
 
-            // set inkscape:original-d for paths. the other shapes don't need this.
-            if ( SP_IS_PATH(item) ) {
-                Inkscape::XML::Node *pathrepr = SP_OBJECT_REPR(item);
-                if ( ! pathrepr->attribute("inkscape:original-d") ) {
-                    pathrepr->setAttribute("inkscape:original-d", pathrepr->attribute("d"));
-                }
-            }
-        }
     }
 
     sp_document_done(sp_desktop_document (desktop), SP_VERB_EDIT_PASTE_LIVEPATHEFFECT,
