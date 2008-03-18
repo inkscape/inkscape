@@ -2168,7 +2168,10 @@ void sp_selection_edit_clip_or_mask(SPDesktop * dt, bool clip)
                         shape_editor->set_item(SP_ITEM(child));
                         Inkscape::NodePath::Path *np = shape_editor->get_nodepath();
                         if (np) {
-                            np->helperpath_rgba = clip ? 0x0000ffff : 0x800080ff;
+                            // take colors from prefs (same as used in outline mode)
+                            np->helperpath_rgba = clip ? 
+                                prefs_get_int_attribute("options.wireframecolors", "clips", 0x00ff00ff) : 
+                                prefs_get_int_attribute("options.wireframecolors", "masks", 0x0000ffff);
                             np->helperpath_width = 1.0;
                             sp_nodepath_show_helperpath(np, true);
                         }
