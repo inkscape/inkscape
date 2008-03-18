@@ -664,7 +664,9 @@ gchar *sp_svg_write_path(NArtBpath const *bpath)
     for (int i = 0; bpath[i].code != NR_END; i++){
         switch (bpath [i].code){
         case NR_LINETO:
-            str.lineTo(bpath[i].x3, bpath[i].y3);
+            if (!closed || bpath[i+1].code == NR_LINETO || bpath[i+1].code == NR_CURVETO) {
+                str.lineTo(bpath[i].x3, bpath[i].y3);
+            }
             break;
 
         case NR_CURVETO:

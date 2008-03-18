@@ -2,6 +2,7 @@
  * Inkscape::SVG::PathString - builder for SVG path strings
  *
  * Copyright 2007 MenTaLguY <mental@rydia.net>
+ * Copyright 2008 Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,6 +18,7 @@
 
 #include <glibmm/ustring.h>
 #include "libnr/nr-point.h"
+#include "libnr/nr-point-ops.h"
 #include "svg/stringstream.h"
 
 namespace Inkscape {
@@ -25,13 +27,13 @@ namespace SVG {
 
 class PathString {
 public:
-    PathString() {}
+    PathString();
 
     // default copy
     // default assign
 
     Glib::ustring const &ustring() const {
-        return _str;
+        return (_abs_state <= _rel_state || !allow_relative_coordinates) ? _abs_state.str : _rel_state.str;
     }
 
     operator Glib::ustring const &() const {
@@ -39,7 +41,7 @@ public:
     }
 
     char const *c_str() const {
-        return _str.c_str();
+        return ustring().c_str();
     }
 
     PathString &moveTo(NR::Coord x, NR::Coord y) {
@@ -47,8 +49,10 @@ public:
     }
 
     PathString &moveTo(NR::Point p) {
-        _appendOp('M');
-        _append(p);
+        _appendOp('M','m');
+        _appendPoint(p);
+
+        _current_point = _initial_point = p;
         return *this;
     }
 
@@ -57,8 +61,10 @@ public:
     }
 
     PathString &lineTo(NR::Point p) {
-        _appendOp('L');
-        _append(p);
+        _appendOp('L','l');
+        _appendPoint(p);
+
+        _current_point = p;
         return *this;
     }
 
@@ -67,9 +73,11 @@ public:
     }
 
     PathString &quadTo(NR::Point c, NR::Point p) {
-        _appendOp('Q');
-        _append(c);
-        _append(p);
+        _appendOp('Q','q');
+        _appendPoint(c);
+        _appendPoint(p);
+
+        _current_point = p;
         return *this;
     }
 
@@ -79,13 +87,14 @@ public:
     {
         return curveTo(NR::Point(x0, y0), NR::Point(x1, y1), NR::Point(x, y));
     }
-    
 
     PathString &curveTo(NR::Point c0, NR::Point c1, NR::Point p) {
-        _appendOp('C');
-        _append(c0);
-        _append(c1);
-        _append(p);
+        _appendOp('C','c');
+        _appendPoint(c0);
+        _appendPoint(c1);
+        _appendPoint(p);
+
+        _current_point = p;
         return *this;
     }
 
@@ -93,46 +102,103 @@ public:
                       bool large_arc, bool sweep,
                       NR::Point p)
     {
-        _appendOp('A');
-        _append(NR::Point(rx, ry));
-        _append(rot);
-        _append(large_arc);
-        _append(sweep);
-        _append(p);
+        _appendOp('A','a');
+        _appendValue(NR::Point(rx,ry));
+        _appendValue(rot);
+        _appendFlag(large_arc);
+        _appendFlag(sweep);
+        _appendPoint(p);
+
+        _current_point = p;
         return *this;
     }
 
     PathString &closePath() {
-      _appendOp('z');
-      return *this;
+        _abs_state.appendOp('z');
+        _rel_state.appendOp('z');
+        _current_point = _initial_point;
+        return *this;
     }
 
 private:
-    void _appendOp(char op) {
-        if (!_str.empty()) {
-          _str.append(1, ' ');
+
+    void _appendOp(char abs_op, char rel_op);
+
+    void _appendFlag(bool flag) {
+        _abs_state.append(flag);
+        _rel_state.append(flag);
+    }
+
+    void _appendValue(NR::Coord v) {
+        _abs_state.append(v);
+        _rel_state.append(v);
+    }
+
+    void _appendValue(NR::Point p) {
+        _abs_state.append(p);
+        _rel_state.append(p);
+    }
+
+    void _appendX(NR::Coord x) {
+        _abs_state.append(x);
+        _rel_state.append(x-_current_point[NR::X]);
+    }
+
+    void _appendY(NR::Coord y) {
+        _abs_state.append(y);
+        _rel_state.append(y-_current_point[NR::Y]);
+    }
+
+    void _appendPoint(NR::Point p) {
+        _abs_state.append(p);
+        _rel_state.append(p-_current_point);
+    }
+
+    struct State {
+        State() { prevop = 0; switches = 0; }
+
+        void appendOp(char op) {
+            if (!str.empty()) str.append(1, ' ');
+            str.append(1, op);
+            prevop = op == 'M' ? 'L' : op == 'm' ? 'l' : op;
         }
-        _str.append(1, op);
-    }
 
-    void _append(bool flag) {
-        _str.append(1, ' ');
-        _str.append(1, ( flag ? '1' : '0' ));
-    }
+        void append(bool flag) {
+            str.append(1, ' ');
+            str.append(1, ( flag ? '1' : '0' ));
+        }
 
-    void _append(NR::Coord v) {
-        SVGOStringStream os;
-        os << ' ' << v;
-        _str.append(os.str());
-    }
+        void append(NR::Coord v) {
+            SVGOStringStream os;
+            os << ' ' << v;
+            str.append(os.str());
+        }
 
-    void _append(NR::Point p) {
-        SVGOStringStream os;
-        os << ' ' << p[NR::X] << ',' << p[NR::Y];
-        _str.append(os.str());
-    }
+        void append(NR::Point p) {
+            SVGOStringStream os;
+            os << ' ' << p[NR::X] << ',' << p[NR::Y];
+            str.append(os.str());
+        }
 
-    Glib::ustring _str;
+        bool operator<=(const State& s) const {
+            if ( str.size() < s.str.size() ) return true;
+            if ( str.size() > s.str.size() ) return false;
+            if ( switches < s.switches ) return true;
+            if ( switches > s.switches ) return false;
+            return true;
+        }
+
+        Glib::ustring str;
+        unsigned int switches;
+        char prevop;
+    } _abs_state, _rel_state; // State with the last operator being an absolute/relative operator
+
+    NR::Point _initial_point;
+    NR::Point _current_point;
+
+    bool const allow_relative_coordinates;
+    bool const allow_shorthands;
+    bool const force_repeat_commands;
 };
 
 }

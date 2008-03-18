@@ -20,6 +20,7 @@ svg_libspsvg_a_SOURCES =	\
 	svg/gnome-canvas-bpath-util.h	\
 	svg/itos.cpp	\
 	svg/path-string.h	\
+	svg/path-string.cpp \
 	svg/round.cpp	\
 	svg/stringstream.h	\
 	svg/stringstream.cpp	\
