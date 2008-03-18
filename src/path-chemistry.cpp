@@ -6,8 +6,9 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
  *
- * Copyright (C) 1999-2004 Authors
+ * Copyright (C) 1999-2008 Authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -75,7 +76,7 @@ sp_selected_path_combine(void)
     char const *id = NULL;
     gchar *style = NULL;
 
-    GString *dstring = g_string_new("");
+    SPCurve* curve = 0;
     bool did = false;
     SPItem *first = NULL;
     Inkscape::XML::Node *parent = NULL; 
@@ -96,17 +97,13 @@ sp_selected_path_combine(void)
             id = SP_OBJECT_REPR(first)->attribute("id");
             // FIXME: merge styles of combined objects instead of using the first one's style
             style = g_strdup(SP_OBJECT_REPR(first)->attribute("style"));
-            abp = nr_artpath_affine(SP_CURVE_BPATH(c), item->transform);
+            sp_curve_transform(c, item->transform);
+            curve = c;
         } else {
-            abp = nr_artpath_affine(SP_CURVE_BPATH(c), 
-                                               item->getRelativeTransform(SP_OBJECT(first)));
+            sp_curve_transform(c, item->getRelativeTransform(SP_OBJECT(first)));
+            sp_curve_append(curve, c, false);
+            sp_curve_unref(c);
         }
-        sp_curve_unref(c);
-        gchar *str = sp_svg_write_path(abp);
-        g_free(abp);
-
-        dstring = g_string_append(dstring, str);
-        g_free(str);
 
         // unless this is the topmost object,
         if (item != first) {
@@ -130,14 +127,17 @@ sp_selected_path_combine(void)
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
-        // restore id
+        // restore id and style
         repr->setAttribute("id", id);
 
         repr->setAttribute("style", style);
         g_free(style);
 
-        repr->setAttribute("d", dstring->str);
-        g_string_free(dstring, TRUE);
+        // set path data corresponding to new curve
+        gchar *dstring = sp_svg_write_path(SP_CURVE_BPATH(curve));
+        sp_curve_unref(curve);
+        repr->setAttribute("d", dstring);
+        g_free(dstring);
 
         // add the new group to the parent of the topmost
         parent->appendChild(repr);
