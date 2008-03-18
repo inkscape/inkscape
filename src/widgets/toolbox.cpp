@@ -74,6 +74,8 @@
 #include "sp-ellipse.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
+#include "sp-clippath.h"
+#include "sp-mask.h"
 #include "style.h"
 #include "selection.h"
 #include "selection-chemistry.h"
@@ -249,14 +251,16 @@ static gchar const * ui_descr =
         "    <toolitem action='ObjectToPath' />"
         "    <toolitem action='StrokeToPath' />"
         "    <separator />"
-        "    <toolitem action='NodesShowHandlesAction' />"
-        "    <toolitem action='NodesShowHelperpath' />"
-        "    <separator />"
-        "    <toolitem action='EditNextLPEParameterAction' />"
-        "    <separator />"
         "    <toolitem action='NodeXAction' />"
         "    <toolitem action='NodeYAction' />"
         "    <toolitem action='NodeUnitsAction' />"
+        "    <separator />"
+        "    <toolitem action='ObjectEditClipPathAction' />"
+        "    <toolitem action='ObjectEditMaskPathAction' />"
+        "    <toolitem action='EditNextLPEParameterAction' />"
+        "    <separator />"
+        "    <toolitem action='NodesShowHandlesAction' />"
+        "    <toolitem action='NodesShowHelperpath' />"
         "  </toolbar>"
 
         "  <toolbar name='TweakToolbar'>"
@@ -859,6 +863,14 @@ void sp_node_path_edit_nextLPEparam (GtkAction */*act*/, gpointer data) {
     sp_selection_next_patheffect_param( reinterpret_cast<SPDesktop*>(data) );
 }
 
+void sp_node_path_edit_clippath (GtkAction */*act*/, gpointer data) {
+    sp_selection_edit_clip_or_mask( reinterpret_cast<SPDesktop*>(data), true);
+}
+
+void sp_node_path_edit_maskpath (GtkAction */*act*/, gpointer data) {
+    sp_selection_edit_clip_or_mask( reinterpret_cast<SPDesktop*>(data), false);
+}
+
 /* is called when the node selection is modified */
 static void
 sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tbl)
@@ -970,6 +982,53 @@ sp_node_path_y_value_changed(GtkAdjustment *adj, GObject *tbl)
 {
     sp_node_path_value_changed(adj, tbl, "y");
 }
+
+void
+sp_node_toolbox_sel_changed (Inkscape::Selection *selection, GObject *tbl)
+{
+    {
+    GtkAction* w = GTK_ACTION( g_object_get_data( tbl, "nodes_lpeedit" ) );
+    SPItem *item = selection->singleItem();
+    if (item && SP_IS_SHAPE(item)) {
+       LivePathEffectObject *lpeobj = sp_shape_get_livepatheffectobject(SP_SHAPE(item));
+       if (lpeobj) {
+           gtk_action_set_sensitive(w, TRUE);
+       } else {
+           gtk_action_set_sensitive(w, FALSE);
+       }
+    } else {
+       gtk_action_set_sensitive(w, FALSE);
+    }
+    }
+
+    {
+    GtkAction* w = GTK_ACTION( g_object_get_data( tbl, "nodes_clippathedit" ) );
+    SPItem *item = selection->singleItem();
+    if (item && item->clip_ref && item->clip_ref->getObject()) {
+       gtk_action_set_sensitive(w, TRUE);
+    } else {
+       gtk_action_set_sensitive(w, FALSE);
+    }
+    }
+
+    {
+    GtkAction* w = GTK_ACTION( g_object_get_data( tbl, "nodes_maskedit" ) );
+    SPItem *item = selection->singleItem();
+    if (item && item->mask_ref && item->mask_ref->getObject()) {
+       gtk_action_set_sensitive(w, TRUE);
+    } else {
+       gtk_action_set_sensitive(w, FALSE);
+    }
+    }
+}
+
+void
+sp_node_toolbox_sel_modified (Inkscape::Selection *selection, guint /*flags*/, GObject *tbl)
+{
+    sp_node_toolbox_sel_changed (selection, tbl);
+}
+
+
 
 //################################
 //##    Node Editing Toolbox    ##
@@ -1118,12 +1177,35 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
     {
         InkAction* inky = ink_action_new( "EditNextLPEParameterAction",
-                                          _("Next Path Effect Parameter"),
-                                          _("Show next Path Effect parameter for editing"),
+                                          _("Next path effect parameter"),
+                                          _("Show next path effect parameter for editing"),
                                           "edit_next_parameter",
                                           Inkscape::ICON_SIZE_DECORATION );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_nextLPEparam), desktop );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+        g_object_set_data( holder, "nodes_lpeedit", inky);
+    }
+
+    {
+        InkAction* inky = ink_action_new( "ObjectEditClipPathAction",
+                                          _("Edit clipping path"),
+                                          _("Edit the clipping path of the object"),
+                                          "nodeedit-clippath",
+                                          Inkscape::ICON_SIZE_DECORATION );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_clippath), desktop );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+        g_object_set_data( holder, "nodes_clippathedit", inky);
+    }
+
+    {
+        InkAction* inky = ink_action_new( "ObjectEditMaskPathAction",
+                                          _("Edit mask path"),
+                                          _("Edit the mask of the object"),
+                                          "nodeedit-mask",
+                                          Inkscape::ICON_SIZE_DECORATION );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_maskpath), desktop );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+        g_object_set_data( holder, "nodes_maskedit", inky);
     }
 
     /* X coord of selected node(s) */
@@ -1168,11 +1250,29 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gtk_action_group_add_action( mainActions, act );
     }
 
-    sigc::connection *connection = new sigc::connection (
-        desktop->connectToolSubselectionChanged(sigc::bind (sigc::ptr_fun(sp_node_toolbox_coord_changed), (GObject *)holder))
-        );
 
-    g_signal_connect( holder, "destroy", G_CALLBACK(delete_connection), connection );
+    sp_node_toolbox_sel_changed(sp_desktop_selection(desktop), holder);
+
+    //watch selection
+    Inkscape::ConnectionPool* pool = Inkscape::ConnectionPool::new_connection_pool ("ISNodeToolbox");
+
+    sigc::connection *c_selection_changed =
+        new sigc::connection (sp_desktop_selection (desktop)->connectChanged
+                              (sigc::bind (sigc::ptr_fun (sp_node_toolbox_sel_changed), (GObject*)holder)));
+    pool->add_connection ("selection-changed", c_selection_changed);
+
+    sigc::connection *c_selection_modified =
+        new sigc::connection (sp_desktop_selection (desktop)->connectModified
+                              (sigc::bind (sigc::ptr_fun (sp_node_toolbox_sel_modified), (GObject*)holder)));
+    pool->add_connection ("selection-modified", c_selection_modified);
+
+    sigc::connection *c_subselection_changed =
+        new sigc::connection (desktop->connectToolSubselectionChanged
+                              (sigc::bind (sigc::ptr_fun (sp_node_toolbox_coord_changed), (GObject*)holder)));
+    pool->add_connection ("tool-subselection-changed", c_subselection_changed);
+
+    Inkscape::ConnectionPool::connect_destroy (G_OBJECT (holder), pool);
+
     g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
 } // end of sp_node_toolbox_prep()
 
