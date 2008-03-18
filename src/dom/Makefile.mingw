@@ -161,130 +161,11 @@ io/stringstream.o \
 io/uristream.o    \
 io/socket.o       \
 odf/odfdocument.o \
-svg/svgimpl.o     \
-svg/svgparser.o   \
+svgimpl.o         \
+svgparser.o       \
 ucd.o             \
 util/thread.o     \
 util/ziptool.o
-
-JSOBJ = \
-js/js.o \
-js/jsapi.o \
-js/jsarena.o \
-js/jsarray.o \
-js/jsatom.o \
-js/jsbool.o \
-js/jscntxt.o \
-js/jscpucfg.o \
-js/jsdate.o \
-js/jsdbgapi.o \
-js/jsdhash.o \
-js/jsdtoa.o \
-js/jsemit.o \
-js/jsexn.o \
-js/jsfile.o \
-js/jsfun.o \
-js/jsgc.o \
-js/jshash.o \
-js/jsinterp.o \
-js/jslock.o \
-js/jslog2.o \
-js/jslong.o \
-js/jsmath.o \
-js/jsnum.o \
-js/jsobj.o \
-js/jsopcode.o \
-js/jsparse.o \
-js/jsprf.o \
-js/jsregexp.o \
-js/jsscan.o \
-js/jsscope.o \
-js/jsscript.o \
-js/jsstr.o \
-js/jsutil.o \
-js/jsxdrapi.o \
-js/jsxml.o \
-js/prmjtime.o \
-js/fdlibm/e_acos.o \
-js/fdlibm/e_acosh.o \
-js/fdlibm/e_asin.o \
-js/fdlibm/e_atan2.o \
-js/fdlibm/e_atanh.o \
-js/fdlibm/e_cosh.o \
-js/fdlibm/e_exp.o \
-js/fdlibm/e_fmod.o \
-js/fdlibm/e_gamma.o \
-js/fdlibm/e_gamma_r.o \
-js/fdlibm/e_hypot.o \
-js/fdlibm/e_j0.o \
-js/fdlibm/e_j1.o \
-js/fdlibm/e_jn.o \
-js/fdlibm/e_lgamma.o \
-js/fdlibm/e_lgamma_r.o \
-js/fdlibm/e_log.o \
-js/fdlibm/e_log10.o \
-js/fdlibm/e_pow.o \
-js/fdlibm/e_remainder.o \
-js/fdlibm/e_rem_pio2.o \
-js/fdlibm/e_scalb.o \
-js/fdlibm/e_sinh.o \
-js/fdlibm/e_sqrt.o \
-js/fdlibm/k_cos.o \
-js/fdlibm/k_rem_pio2.o \
-js/fdlibm/k_sin.o \
-js/fdlibm/k_standard.o \
-js/fdlibm/k_tan.o \
-js/fdlibm/s_asinh.o \
-js/fdlibm/s_atan.o \
-js/fdlibm/s_cbrt.o \
-js/fdlibm/s_ceil.o \
-js/fdlibm/s_copysign.o \
-js/fdlibm/s_cos.o \
-js/fdlibm/s_erf.o \
-js/fdlibm/s_expm1.o \
-js/fdlibm/s_fabs.o \
-js/fdlibm/s_finite.o \
-js/fdlibm/s_floor.o \
-js/fdlibm/s_frexp.o \
-js/fdlibm/s_ilogb.o \
-js/fdlibm/s_isnan.o \
-js/fdlibm/s_ldexp.o \
-js/fdlibm/s_lib_version.o \
-js/fdlibm/s_log1p.o \
-js/fdlibm/s_logb.o \
-js/fdlibm/s_matherr.o \
-js/fdlibm/s_modf.o \
-js/fdlibm/s_nextafter.o \
-js/fdlibm/s_rint.o \
-js/fdlibm/s_scalbn.o \
-js/fdlibm/s_signgam.o \
-js/fdlibm/s_significand.o \
-js/fdlibm/s_sin.o \
-js/fdlibm/s_tan.o \
-js/fdlibm/s_tanh.o \
-js/fdlibm/w_acos.o \
-js/fdlibm/w_acosh.o \
-js/fdlibm/w_asin.o \
-js/fdlibm/w_atan2.o \
-js/fdlibm/w_atanh.o \
-js/fdlibm/w_cosh.o \
-js/fdlibm/w_exp.o \
-js/fdlibm/w_fmod.o \
-js/fdlibm/w_gamma.o \
-js/fdlibm/w_gamma_r.o \
-js/fdlibm/w_hypot.o \
-js/fdlibm/w_j0.o \
-js/fdlibm/w_j1.o \
-js/fdlibm/w_jn.o \
-js/fdlibm/w_lgamma.o \
-js/fdlibm/w_lgamma_r.o \
-js/fdlibm/w_log.o \
-js/fdlibm/w_log10.o \
-js/fdlibm/w_pow.o \
-js/fdlibm/w_remainder.o \
-js/fdlibm/w_scalb.o \
-js/fdlibm/w_sinh.o \
-js/fdlibm/w_sqrt.o
 
 
 
@@ -296,7 +177,7 @@ work/testuri.o   \
 work/testxpath.o \
 work/testzip.o
 
-OBJ = $(DOMOBJ) $(JSOBJ)
+OBJ = $(DOMOBJ)
 
 all: testdom.exe testhttp.exe testjs.exe \
 testsvg.exe testuri.exe testxpath.exe testzip.exe

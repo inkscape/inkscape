@@ -29,6 +29,12 @@ dom_libdom_a_SOURCES =       \
     dom/smilimpl.cpp         \
     dom/smilimpl.h           \
 	dom/stylesheets.h        \
+	dom/svg.h                \
+	dom/svgimpl.cpp          \
+	dom/svgimpl.h            \
+	dom/svgparser.cpp        \
+	dom/svgparser.h          \
+	dom/svgtypes.h           \
 	dom/traversal.h          \
 	dom/ucd.cpp              \
 	dom/ucd.h                \
@@ -63,12 +69,6 @@ dom_libdom_a_SOURCES =       \
 	dom/io/uristream.h       \
     dom/odf/odfdocument.cpp  \
     dom/odf/odfdocument.h    \
-	dom/svg/svg.h            \
-	dom/svg/svgimpl.cpp      \
-	dom/svg/svgimpl.h        \
-	dom/svg/svgparser.cpp    \
-	dom/svg/svgparser.h      \
-	dom/svg/svgtypes.h       \
     dom/util/digest.h        \
     dom/util/digest.cpp      \
     dom/util/thread.h        \
