@@ -1,5 +1,6 @@
 
 SUBDIRS = \
+	alphabet_soup \
 	Barcode \
 	xaml2svg
 
@@ -79,6 +80,8 @@ extensions = \
 	pturtle.py \
 	radiusrand.py \
 	render_barcode.py \
+	render_alphabetsoup.py \
+    render_alphabetsoup_config.py \
 	rtree.py \
 	rubberstretch.py\
 	simplepath.py \
@@ -191,6 +194,7 @@ modules = \
 	randompnt.inx \
 	randompos.inx \
 	render_barcode.inx \
+	render_alphabetsoup.inx \
 	rubberstretch.inx \
 	rtree.inx \
 	sk_input.inx \

@@ -909,6 +909,7 @@ share/Makefile
 share/clipart/Makefile
 share/examples/Makefile
 share/extensions/Makefile
+share/extensions/alphabet_soup/Makefile
 share/extensions/Barcode/Makefile
 share/extensions/xaml2svg/Makefile
 share/fonts/Makefile
