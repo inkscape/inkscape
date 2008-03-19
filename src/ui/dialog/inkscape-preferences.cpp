@@ -351,6 +351,9 @@ void InkscapePreferences::initPageTools()
     _t_cvg_keep_objects.init ( _("Keep objects after conversion to guides"), "tools", "cvg_keep_objects", false);
     _page_tools.add_line( true, "", _t_cvg_keep_objects, "",
                             _("When converting an object to guides, don't delete the object after the conversion."));
+    _t_cvg_convert_whole_groups.init ( _("Treat groups as a single object"), "tools", "cvg_convert_whole_groups", false);
+    _page_tools.add_line( true, "", _t_cvg_convert_whole_groups, "",
+                            _("Treat groups as a single object during conversion to guides rather than converting each child separately."));
 
     _calligrapy_use_abs_size.init ( _("Width is in absolute units"), "tools.calligraphic", "abs_width", false);
     _calligrapy_keep_selected.init ( _("Select new path"), "tools.calligraphic", "keep_selected", true);

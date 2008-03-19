@@ -2603,10 +2603,10 @@ void sp_selection_to_marker(bool apply)
                       _("Objects to marker"));
 }
 
-static void sp_selection_to_guides_recursive(SPItem *item, bool deleteitem) {
-    if (SP_IS_GROUP(item) && !SP_IS_BOX3D(item)) {
+static void sp_selection_to_guides_recursive(SPItem *item, bool deleteitem, bool wholegroups) {
+    if (SP_IS_GROUP(item) && !SP_IS_BOX3D(item) && !wholegroups) {
         for (GSList *i = sp_item_group_item_list (SP_GROUP(item)); i != NULL; i = i->next) {
-            sp_selection_to_guides_recursive(SP_ITEM(i->data), deleteitem);
+            sp_selection_to_guides_recursive(SP_ITEM(i->data), deleteitem, wholegroups);
         }
     } else {
         sp_item_convert_item_to_guides(item);
@@ -2634,9 +2634,10 @@ void sp_selection_to_guides()
     }
  
     bool deleteitem = (prefs_get_int_attribute("tools", "cvg_keep_objects", 0) == 0);
+    bool wholegroups = (prefs_get_int_attribute("tools", "cvg_convert_whole_groups", 0) != 0);
 
     for (GSList const *i = items; i != NULL; i = i->next) {
-        sp_selection_to_guides_recursive(SP_ITEM(i->data), deleteitem);
+        sp_selection_to_guides_recursive(SP_ITEM(i->data), deleteitem, wholegroups);
     }
 
     sp_document_done (doc, SP_VERB_EDIT_SELECTION_2_GUIDES, _("Objects to guides"));

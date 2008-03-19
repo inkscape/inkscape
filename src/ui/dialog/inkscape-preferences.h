@@ -124,7 +124,7 @@ protected:
 
     PrefRadioButton _t_sel_trans_obj, _t_sel_trans_outl, _t_sel_cue_none, _t_sel_cue_mark,
                     _t_sel_cue_box, _t_bbox_visual, _t_bbox_geometric;
-    PrefCheckButton _t_cvg_keep_objects;
+    PrefCheckButton _t_cvg_keep_objects, _t_cvg_convert_whole_groups;
     PrefCheckButton _t_node_pathflash_enabled;
     PrefSpinButton  _t_node_pathflash_timeout;
     PrefColorPicker _t_node_pathoutline_color;
