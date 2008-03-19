@@ -22,8 +22,6 @@
 #include "box3d.h"
 #include "persp3d-reference.h"
 
-#include "line-geometry.h" // TODO: Remove this include as soon as we don't need create_canvas_(point|line) any more.
-
 class SPBox3D;
 
 namespace Box3D {
