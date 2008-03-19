@@ -879,6 +879,9 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_EDIT_PASTE_LIVEPATHEFFECT:
             sp_selection_paste_livepatheffect();
             break;
+        case SP_VERB_EDIT_REMOVE_LIVEPATHEFFECT:
+            sp_selection_remove_livepatheffect();
+            break;
         case SP_VERB_EDIT_DELETE:
             sp_selection_delete();
             break;
@@ -2201,8 +2204,10 @@ Verb *Verb::_base_verbs[] = {
                  N_("Scale each selected object vertically to match the height of the copied object"), NULL),
     new EditVerb(SP_VERB_EDIT_PASTE_IN_PLACE, "EditPasteInPlace", N_("Paste _In Place"),
                  N_("Paste objects from clipboard to the original location"), "selection_paste_in_place"),
-    new EditVerb(SP_VERB_EDIT_PASTE_LIVEPATHEFFECT, "EditPasteLivePathEffect", N_("Paste Path _Effect"),
+    new EditVerb(SP_VERB_EDIT_PASTE_LIVEPATHEFFECT, "PasteLivePathEffect", N_("Paste Path _Effect"),
                  N_("Apply the path effect of the copied object to selection"), NULL),
+    new EditVerb(SP_VERB_EDIT_REMOVE_LIVEPATHEFFECT, "RemoveLivePathEffect", N_("Remove Path _Effect"),
+                 N_("Remove any path effects from selected objects"), NULL),
     new EditVerb(SP_VERB_EDIT_DELETE, "EditDelete", N_("_Delete"),
                  N_("Delete selection"), GTK_STOCK_DELETE),
     new EditVerb(SP_VERB_EDIT_DUPLICATE, "EditDuplicate", N_("Duplic_ate"),

@@ -1382,6 +1382,44 @@ void sp_selection_paste_livepatheffect()
                      _("Paste live path effect"));
 }
 
+
+void sp_selection_remove_livepatheffect_impl(SPItem *item)
+{
+    if ( item && SP_IS_SHAPE(item) ) {
+        sp_shape_remove_path_effect(SP_SHAPE(item));
+   } else if (item && SP_IS_GROUP (item)) {
+        for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            if (!SP_IS_ITEM (child))
+                continue;
+            sp_selection_remove_livepatheffect_impl (SP_ITEM(child));
+        }
+    }
+}
+
+void sp_selection_remove_livepatheffect()
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop == NULL) return;
+
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+
+    // check if something is selected
+    if (selection->isEmpty()) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to remove live path effects from."));
+        return;
+    }
+
+    for ( GSList const *itemlist = selection->itemList(); itemlist != NULL; itemlist = g_slist_next(itemlist) ) {
+        SPItem *item = reinterpret_cast<SPItem*>(itemlist->data);
+
+        sp_selection_remove_livepatheffect_impl(item);
+
+    }
+
+    sp_document_done(sp_desktop_document (desktop), SP_VERB_EDIT_PASTE_LIVEPATHEFFECT,
+                     _("Remove live path effect"));
+}
+
 void sp_selection_paste_size (bool apply_x, bool apply_y)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;

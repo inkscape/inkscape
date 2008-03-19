@@ -63,6 +63,7 @@ void sp_selection_copy_lpe_pathparam(Inkscape::LivePathEffect::PathParam * pathp
 void sp_selection_paste(bool in_place);
 void sp_selection_paste_style();
 void sp_selection_paste_livepatheffect();
+void sp_selection_remove_livepatheffect();
 
 void sp_set_style_clipboard (SPCSSAttr *css);
 
