@@ -230,7 +230,7 @@ override) the bindings in the main default.xml.
 
   <bind key="numbersign" modifiers="Shift" action="ToggleGrid" /> <!-- # -->
   <bind key="numbersign" action="ToggleGrid" display="true"/>
-
+  
   <bind key="percent" action="ToggleSnapping" display="true"/> <!-- # -->
   <bind key="percent" modifiers="Shift" action="ToggleSnapping" />
 
@@ -281,9 +281,6 @@ override) the bindings in the main default.xml.
   <bind action="EditPasteWidthSeparately" />
   <bind action="EditPasteHeightSeparately" />
 
-  <bind key="ampersand" modifiers="Ctrl" action="EditPasteLivePathEffect"/>
-  <bind key="7" modifiers="Ctrl" action="EditPasteLivePathEffect" display="true"/>
-
   <bind key="Delete" action="EditDelete" display="true"/>
   <bind key="KP_Delete" action="EditDelete" />
   <bind key="BackSpace" action="EditDelete" />
@@ -323,7 +320,7 @@ override) the bindings in the main default.xml.
 
   <bind key="7" action="EditNextPathEffectParameter" display="true"/>
 
-<!-- Objects/selection -->
+  <!-- Objects/selection -->
 
   <bind key="h" action="ObjectFlipHorizontally" display="true"/>
   <bind key="H" action="ObjectFlipHorizontally" />
@@ -361,10 +358,10 @@ override) the bindings in the main default.xml.
 
   <bind key="i" modifiers="Alt" action="ObjectsToPattern" display="true"/>
   <bind key="I" modifiers="Alt" action="ObjectsToPattern" />
-  
+
   <bind key="i" modifiers="Alt,Shift" action="ObjectsFromPattern" display="true"/>
   <bind key="I" modifiers="Alt,Shift" action="ObjectsFromPattern" />
-
+  
   <bind key="g" modifiers="Shift" action="ObjectsToGuides" display="true"/>
   <bind key="G" modifiers="Shift" action="ObjectsToGuides" />
 
@@ -525,6 +522,11 @@ override) the bindings in the main default.xml.
 
   <bind key="ampersand" modifiers="Ctrl,Shift" action="DialogLivePathEffect" />
   <bind key="7" modifiers="Ctrl,Shift" action="DialogLivePathEffect" display="true" />
+
+  <bind key="ampersand" modifiers="Ctrl" action="PasteLivePathEffect"/>
+  <bind key="7" modifiers="Ctrl" action="PasteLivePathEffect" display="true"/>
+
+  <bind action="RemoveLivePathEffect" />
 
   <bind action="DialogMetadata" />
   <bind action="DialogClonetiler" />

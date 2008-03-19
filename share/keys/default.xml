@@ -281,9 +281,6 @@ override) the bindings in the main default.xml.
   <bind action="EditPasteWidthSeparately" />
   <bind action="EditPasteHeightSeparately" />
 
-  <bind key="ampersand" modifiers="Ctrl" action="EditPasteLivePathEffect"/>
-  <bind key="7" modifiers="Ctrl" action="EditPasteLivePathEffect" display="true"/>
-
   <bind key="Delete" action="EditDelete" display="true"/>
   <bind key="KP_Delete" action="EditDelete" />
   <bind key="BackSpace" action="EditDelete" />
@@ -525,6 +522,11 @@ override) the bindings in the main default.xml.
 
   <bind key="ampersand" modifiers="Ctrl,Shift" action="DialogLivePathEffect" />
   <bind key="7" modifiers="Ctrl,Shift" action="DialogLivePathEffect" display="true" />
+
+  <bind key="ampersand" modifiers="Ctrl" action="PasteLivePathEffect"/>
+  <bind key="7" modifiers="Ctrl" action="PasteLivePathEffect" display="true"/>
+
+  <bind action="RemoveLivePathEffect" />
 
   <bind action="DialogMetadata" />
   <bind action="DialogClonetiler" />
