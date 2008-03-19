@@ -112,6 +112,8 @@ EgeSelectOneAction* ege_select_one_action_new( const gchar *name,
                                                const gchar *stock_id,
                                                GtkTreeModel* model );
 
+GtkTreeModel *ege_select_one_action_get_model(EgeSelectOneAction* action );
+
 /**
  * Returns the index of the currently selected item.
  *

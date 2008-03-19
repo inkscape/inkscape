@@ -24,6 +24,61 @@ bool pref_path_exists(gchar const *path){
     Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE, path);
     return (repr != NULL);
 }
+
+/**
+\brief returns the number of sub-prefs
+*/
+unsigned int pref_path_number_of_children(gchar const *path){
+    Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE, path);
+    Inkscape::XML::Node *child_repr = sp_repr_children(repr);
+    int nb_child = 0;
+    while (child_repr) {
+        nb_child ++;
+        child_repr = sp_repr_next(child_repr);
+    }
+    return nb_child;
+}
+
+/**
+\brief creates a new preference and returns its key on success.
+*/
+gchar * create_pref(gchar const *father_path, gchar const *child){
+    Inkscape::XML::Node *father = inkscape_get_repr(INKSCAPE, father_path);
+    if (! father ) return NULL;
+    Inkscape::XML::Node *repr = father->document()->createElement("group");
+    sp_repr_set_attr(repr, "id", child);
+    father->appendChild(repr);
+    return g_strdup_printf("%s.%s", father_path,child);
+}
+/**
+\brief gets the list of children from a pref. Please free all that stuff after use.
+*/
+bool get_pref_children(gchar const *father_path, GSList ** children){
+    Inkscape::XML::Node *father = inkscape_get_repr(INKSCAPE, father_path);
+    if (! father ) return false;
+    Inkscape::XML::Node *child_repr = sp_repr_children(father);  
+    while (child_repr) {
+        *children = g_slist_prepend(*children, g_strdup_printf("%s.%s",father_path,child_repr->attribute("id")));
+        child_repr = sp_repr_next(child_repr);
+    }
+
+}
+/**
+\brief gets the nth children of a pref, starting from one (first child <=> n=1). returns NULL if out of bounds or father does not exist. Please free all that stuff after use.
+*/
+gchar  *get_pref_nth_child(gchar const *father_path, unsigned int n){
+    if (n <= 0) return NULL;
+    Inkscape::XML::Node *father = inkscape_get_repr(INKSCAPE, father_path);
+    if (! father ) return NULL;
+    Inkscape::XML::Node *child_repr = sp_repr_children(father);  
+    unsigned int index = 0;
+    while (child_repr && (++index < n)) {
+        child_repr = sp_repr_next(child_repr);
+    }
+    if (child_repr) return g_strdup_printf("%s.%s",father_path,child_repr->attribute("id"));
+    return NULL;
+}
+
 void
 prefs_set_int_attribute(gchar const *path, gchar const *attr, long long int value)
 {

@@ -351,6 +351,7 @@ static gchar const * ui_descr =
         "  <toolbar name='CalligraphyToolbar'>"
         "    <separator />"
         "    <toolitem action='SetProfileAction'/>"
+        "    <toolitem action='SaveDeleteProfileAction'/>"
         "    <separator />"
         "    <toolitem action='CalligraphyWidthAction' />"
         "    <toolitem action='PressureAction' />"
@@ -3354,100 +3355,170 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 //########################
 //##     Calligraphy    ##
 //########################
+static void update_presets_list(GObject *dataKludge ){
+    EgeSelectOneAction *sel = static_cast<EgeSelectOneAction *>(g_object_get_data(dataKludge, "profile_selector"));
+    if (sel) {
+        ege_select_one_action_set_active(sel, 0 );
+    }
+}
 
-static void sp_ddc_mass_value_changed( GtkAdjustment *adj, GObject* /*tbl*/ )
+static void sp_ddc_mass_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     prefs_set_double_attribute( "tools.calligraphic", "mass", adj->value );
+    update_presets_list(tbl);
 }
 
-static void sp_ddc_wiggle_value_changed( GtkAdjustment *adj, GObject* /*tbl*/ )
+static void sp_ddc_wiggle_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     prefs_set_double_attribute( "tools.calligraphic", "wiggle", adj->value );
+    update_presets_list(tbl);
 }
 
-static void sp_ddc_angle_value_changed( GtkAdjustment *adj, GObject* /*tbl*/ )
+static void sp_ddc_angle_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     prefs_set_double_attribute( "tools.calligraphic", "angle", adj->value );
+    update_presets_list(tbl);
 }
 
-static void sp_ddc_width_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
+static void sp_ddc_width_value_changed( GtkAdjustment *adj, GObject *tbl )
 {
     prefs_set_double_attribute( "tools.calligraphic", "width", adj->value * 0.01 );
+    update_presets_list(tbl);
 }
 
-static void sp_ddc_velthin_value_changed( GtkAdjustment *adj, GObject* /*tbl*/ )
+static void sp_ddc_velthin_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     prefs_set_double_attribute("tools.calligraphic", "thinning", adj->value);
+    update_presets_list(tbl);
 }
 
-static void sp_ddc_flatness_value_changed( GtkAdjustment *adj, GObject* /*tbl*/ )
+static void sp_ddc_flatness_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     prefs_set_double_attribute( "tools.calligraphic", "flatness", adj->value );
+    update_presets_list(tbl);
 }
 
-static void sp_ddc_tremor_value_changed( GtkAdjustment *adj, GObject* /*tbl*/ )
+static void sp_ddc_tremor_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     prefs_set_double_attribute( "tools.calligraphic", "tremor", adj->value );
+    update_presets_list(tbl);
 }
 
-static void sp_ddc_cap_rounding_value_changed( GtkAdjustment *adj, GObject* /*tbl*/ )
+static void sp_ddc_cap_rounding_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     prefs_set_double_attribute( "tools.calligraphic", "cap_rounding", adj->value );
+    update_presets_list(tbl);
 }
 
-static void sp_ddc_pressure_state_changed( GtkToggleAction *act, gpointer /*data*/ )
+static void sp_ddc_pressure_state_changed( GtkToggleAction *act, GObject*  tbl )
 {
     prefs_set_int_attribute( "tools.calligraphic", "usepressure", gtk_toggle_action_get_active( act ) ? 1 : 0);
+    update_presets_list(tbl);
 }
 
-static void sp_ddc_trace_background_changed( GtkToggleAction *act, gpointer /*data*/ )
+static void sp_ddc_trace_background_changed( GtkToggleAction *act, GObject*  tbl )
 {
     prefs_set_int_attribute( "tools.calligraphic", "tracebackground", gtk_toggle_action_get_active( act ) ? 1 : 0);
+    update_presets_list(tbl);
 }
 
-static void sp_ddc_tilt_state_changed( GtkToggleAction *act, GtkAction *calligraphy_angle )
+static void sp_ddc_tilt_state_changed( GtkToggleAction *act, GObject*  tbl )
 {
+    GtkAction * calligraphy_angle = static_cast<GtkAction *> (g_object_get_data(tbl,"angle"));
     prefs_set_int_attribute( "tools.calligraphic", "usetilt", gtk_toggle_action_get_active( act ) ? 1 : 0 );
-
-    gtk_action_set_sensitive( calligraphy_angle, !gtk_toggle_action_get_active( act ) );
+    update_presets_list(tbl);
+    if (calligraphy_angle )
+        gtk_action_set_sensitive( calligraphy_angle, !gtk_toggle_action_get_active( act ) );
 }
 
-struct KeyValue {
-    char const *key;
-    double value;
+
+#define PROFILE_FLOAT_SIZE 8
+#define PROFILE_BOOL_SIZE 3
+struct ProfileFloatElement {
+    char const *name;
+    double def;
+    double min;
+    double max;
+};
+struct ProfileBoolElement {
+    char const *name;
+    bool def;
+};
+
+static ProfileFloatElement f_profile[PROFILE_FLOAT_SIZE] = {
+    {"mass",0.02, 0.0, 1.0},
+    {"wiggle",0.0, 0.0, 1.0},
+    {"angle",30.0, -90.0, 90.0},
+    {"width",15.0, 1.0, 100.0},
+    {"thinning",0.1, -1.0, 1.0},
+    {"tremor",0.0, 0.0, 1.0},
+    {"flatness",0.9, 0.0, 1.0},
+    {"cap_rounding",0.0, 0.0, 5.0}
+};
+static ProfileBoolElement b_profile[PROFILE_BOOL_SIZE] = {
+    {"usepressure",true},
+    {"tracebackground",false},
+    {"usetilt",true},
 };
 
 
 
-static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject *dataKludge) {
-    struct ProfileElement {
-        char const *name;
-        double def;
-        double min;
-        double max;
-    };
-    ProfileElement profile[] = {
-        {"mass",0.02, 0.0, 1.0},
-        {"wiggle",0.0, 0.0, 1.0},
-        {"angle",30.0, -90.0, 90.0},
-        {"width",15.0, 1.0, 100.0},
-        {"thinning",0.1, -1.0, 1.0},
-        {"tremor",0.0, 0.0, 1.0},
-        {"flatness",0.9, 0.0, 1.0},
-        {"cap_rounding",0.0, 0.0, 5.0}
-    };
-    
-    gint preset_index = ege_select_one_action_get_active( act );   
-    gchar *pref_path = g_strdup_printf("tools.calligraphic.preset.cp%d", preset_index); 
-    for (unsigned i = 0; i < 8; ++i) {
-        ProfileElement const &pe = profile[i];
-        double value = prefs_get_double_attribute_limited(pref_path,pe.name, pe.def, pe.min, pe.max);
-        GtkAdjustment* adj = static_cast<GtkAdjustment *>(g_object_get_data(dataKludge, pe.name));
-        if ( adj ) {
-            gtk_adjustment_set_value(adj, value);
+static void sp_dcc_save_profile( GtkWidget */*widget*/, GObject *dataKludge ){
+
+    unsigned int new_index = pref_path_number_of_children("tools.calligraphic.preset");
+    gchar *profile_id = g_strdup_printf("dcc%d", new_index);
+    gchar *profile_name = g_strdup_printf("Profile %d", new_index);
+    gchar *pref_path = create_pref("tools.calligraphic.preset",profile_id);    
+
+    for (unsigned i = 0; i < PROFILE_FLOAT_SIZE; ++i) {
+        ProfileFloatElement const &pe = f_profile[i];
+        double v = prefs_get_double_attribute_limited("tools.calligraphic",pe.name, pe.def, pe.min, pe.max);
+        prefs_set_double_attribute(pref_path,pe.name,v);
+        }    
+    for (unsigned i = 0; i < PROFILE_BOOL_SIZE; ++i) {
+        ProfileBoolElement const &pe = b_profile[i];
+        int v = prefs_get_int_attribute_limited("tools.calligraphic",pe.name, pe.def?1:0 ,0,1);
+        prefs_set_int_attribute(pref_path,pe.name,v);
         }
-    } 
+    prefs_set_string_attribute(pref_path,"name",profile_name);
+
+    EgeSelectOneAction* selector = static_cast<EgeSelectOneAction *>(g_object_get_data(dataKludge, "profile_selector"));
+    GtkListStore* model = GTK_LIST_STORE(ege_select_one_action_get_model(selector));
+    GtkTreeIter iter;
+    gtk_list_store_append( model, &iter );
+    gtk_list_store_set( model, &iter, 0, profile_name, 1, new_index, -1 );
+
+    free(profile_id);
+    free(profile_name);
     free(pref_path);
+}
+
+static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject *dataKludge) {
+    
+    gint preset_index = ege_select_one_action_get_active( act ); 
+    gchar *profile_name = get_pref_nth_child("tools.calligraphic.preset", preset_index);
+       
+    if ( profile_name) {        
+        g_object_set_data(dataKludge, "profile_selector",NULL); //temporary hides the selector so no one will updadte it
+        for (unsigned i = 0; i < PROFILE_FLOAT_SIZE; ++i) {
+            ProfileFloatElement const &pe = f_profile[i];
+            double v = prefs_get_double_attribute_limited(profile_name, pe.name, pe.def, pe.min, pe.max);
+            GtkAdjustment* adj = static_cast<GtkAdjustment *>(g_object_get_data(dataKludge, pe.name));
+            if ( adj ) {
+                gtk_adjustment_set_value(adj, v);
+            }
+        } 
+        for (unsigned i = 0; i < PROFILE_BOOL_SIZE; ++i) {
+            ProfileBoolElement const &pe = b_profile[i];
+            int v = prefs_get_int_attribute_limited(profile_name, pe.name, pe.def, 0, 1);
+            GtkToggleAction* toggle = static_cast<GtkToggleAction *>(g_object_get_data(dataKludge, pe.name));
+            if ( toggle ) {
+                gtk_toggle_action_set_active(toggle, v);
+            } else printf("No toggle");
+        }
+        free(profile_name);
+        g_object_set_data(dataKludge, "profile_selector",act); //restor selector visibility
+    }
 
 }
 
@@ -3503,6 +3574,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               sp_ddc_angle_value_changed, 1, 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        g_object_set_data( holder, "angle", eact );
         calligraphy_angle = eact;
         }
 
@@ -3597,8 +3669,9 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                           "trace_background",
                                                           Inkscape::ICON_SIZE_DECORATION );
             gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-            g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_ddc_trace_background_changed), NULL);
+            g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_ddc_trace_background_changed), holder);
             gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.calligraphic", "tracebackground", 0 ) );
+            g_object_set_data( holder, "tracebackground", act );
         }
 
         /* Use Pressure button */
@@ -3609,8 +3682,9 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                           "use_pressure",
                                                           Inkscape::ICON_SIZE_DECORATION );
             gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-            g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_ddc_pressure_state_changed), NULL);
+            g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_ddc_pressure_state_changed), holder);
             gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.calligraphic", "usepressure", 1 ) );
+            g_object_set_data( holder, "usepressure", act );
         }
 
         /* Use Tilt button */
@@ -3621,9 +3695,10 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                           "use_tilt",
                                                           Inkscape::ICON_SIZE_DECORATION );
             gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-            g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_ddc_tilt_state_changed), calligraphy_angle );
+            g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_ddc_tilt_state_changed), holder );
             gtk_action_set_sensitive( GTK_ACTION(calligraphy_angle), !prefs_get_int_attribute( "tools.calligraphic", "usetilt", 1 ) );
             gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.calligraphic", "usetilt", 1 ) );
+            g_object_set_data( holder, "usetilt", act );
         }
 
         /*calligraphic profile */
@@ -3631,30 +3706,43 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_INT );            
             gchar *pref_path;
 
-            int max = prefs_get_int_attribute("tools.calligraphic.preset","max_presets",99);
-            for ( int ii = 0; ii < max; ++ii){
-                pref_path = g_strdup_printf("tools.calligraphic.preset.cp%d", ii);
 
-                if ( ! pref_path_exists(pref_path)){
-                    free(pref_path );
-                    break;
-                }
+            GtkTreeIter iter;
+            gtk_list_store_append( model, &iter );
+            gtk_list_store_set( model, &iter, 0, _("No preset"), 1, 0, -1 );
 
-                gchar const *preset_name = prefs_get_string_attribute(pref_path,"name");
+            //TODO: switch back to prefs API
+            Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE, "tools.calligraphic.preset" );
+            Inkscape::XML::Node *child_repr = sp_repr_children(repr);
+            int ii=1;
+            while (child_repr) {
                 GtkTreeIter iter;
-                gtk_list_store_append( model, &iter );
-                gtk_list_store_set( model, &iter, 0, preset_name, 1, ii, -1 );
-                free(pref_path );
+                char *preset_name = (char *) child_repr->attribute("name");
+                gtk_list_store_append( model, &iter );                
+                gtk_list_store_set( model, &iter, 0, preset_name, 1, ++ii, -1 );                
+                child_repr = sp_repr_next(child_repr); 
             }
+
             pref_path = NULL;
-            EgeSelectOneAction* act1 = ege_select_one_action_new( "SetProfileAction", _("Profile"), ("Change calligraphic profile"), NULL, GTK_TREE_MODEL(model) );
-            g_object_set( act1, "short_label", _("Profile:"), NULL );
+            EgeSelectOneAction* act1 = ege_select_one_action_new( "SetProfileAction", "" , ("Change calligraphic profile"), NULL, GTK_TREE_MODEL(model) );
             ege_select_one_action_set_appearance( act1, "compact" );
             g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK(sp_ddc_change_profile), holder );
             gtk_action_group_add_action( mainActions, GTK_ACTION(act1) );
-            g_object_set_data( holder, "channels_action", act1 );
+            g_object_set_data( holder, "profile_selector", act1 );
         }
-    }
+
+        /*Save or delete calligraphic profile */
+        {
+            GtkAction* act = gtk_action_new( "SaveDeleteProfileAction",
+                                             _("Defaults"),
+                                             _("Save current settings as new profile"),
+                                             GTK_STOCK_SAVE );
+            g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(sp_dcc_save_profile), holder );
+            gtk_action_group_add_action( mainActions, act );
+            gtk_action_set_sensitive( act, TRUE );
+            g_object_set_data( holder, "profile_save_delete", act );
+        }
+    }    
 }
 
 

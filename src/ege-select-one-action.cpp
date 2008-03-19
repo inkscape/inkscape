@@ -135,6 +135,9 @@ GType ege_select_one_action_get_type( void )
     return myType;
 }
 
+GtkTreeModel *ege_select_one_action_get_model(EgeSelectOneAction* action ){
+    return GTK_TREE_MODEL(action->private_data->model);
+}
 void ege_select_one_action_class_init( EgeSelectOneActionClass* klass )
 {
     if ( klass ) {

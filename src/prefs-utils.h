@@ -13,8 +13,14 @@
 #define SEEN_PREFS_UTILS_H
 
 #include <glib/gtypes.h>
+#include <glib/gslist.h>
 
 bool pref_path_exists(gchar const *path);
+unsigned int pref_path_number_of_children(gchar const *path);
+gchar * create_pref(gchar const *father_path, gchar const *child);
+bool get_pref_children(gchar const *father_path, GSList ** children);
+gchar * get_pref_nth_child(gchar const *father_path, unsigned int n);
+
 void prefs_set_int_attribute(gchar const *path, gchar const *attr, long long int value);
 long long int prefs_get_int_attribute(gchar const *path, gchar const *attr, long long int def);
 long long int prefs_get_int_attribute_limited(gchar const *path, gchar const *attr, long long int def, long long int min, long long int max);
