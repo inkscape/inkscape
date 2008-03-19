@@ -18,6 +18,7 @@
 
 #include <vector>
 #include <map>
+#include <list>
 #include <sigc++/sigc++.h>
 
 #include "libnr/nr-rect.h"
@@ -31,6 +32,8 @@
 #include "sp-item.h"
 
 class SPItem;
+class SPBox3D;
+class Persp3D;
 
 namespace Inkscape {
 namespace XML {
@@ -225,6 +228,12 @@ public:
     ///      method for that
     GSList const *reprList();
 
+    /* list of all perspectives which have a 3D box in the current selection
+       (these may also be nested in groups) */
+    std::list<Persp3D *> const perspList();
+
+    std::list<SPBox3D *> const box3DList();
+
     /** @brief Returns the number of layers in which there are selected objects */
     guint numberOfLayers();
 
@@ -335,6 +344,14 @@ private:
     mutable GSList *_objs;
     mutable GSList *_reprs;
     mutable GSList *_items;
+
+    void add_box_perspective(SPBox3D *box);
+    void add_3D_boxes_recursively(SPObject *obj);
+    void remove_box_perspective(SPBox3D *box);
+    void remove_3D_boxes_recursively(SPObject *obj);
+
+    std::map<Persp3D *, unsigned int> _persps;
+    std::list<SPBox3D *> _3dboxes;
 
     GC::soft_ptr<SPDesktop> _desktop;
     SPObject* _selection_context;

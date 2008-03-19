@@ -37,6 +37,7 @@
 #include "prefs-utils.h"
 
 #include "desktop.h"
+#include "desktop-handles.h"
 #include "macros.h"
 
 static void box3d_class_init(SPBox3DClass *klass);
@@ -337,12 +338,12 @@ box3d_set_transform(SPItem *item, NR::Matrix const &xform)
     Persp3D *transf_persp;
 
     if (!persp3d_has_all_boxes_in_selection (persp)) {
-        std::list<SPBox3D *> sel = persp3d_selected_boxes (persp);
+        std::list<SPBox3D *> selboxes = sp_desktop_selection(inkscape_active_desktop())->box3DList();
 
         /* create a new perspective as a copy of the current one and link the selected boxes to it */
         transf_persp = persp3d_create_xml_element (SP_OBJECT_DOCUMENT(persp), persp);
 
-        for (std::list<SPBox3D *>::iterator b = sel.begin(); b != sel.end(); ++b) {
+        for (std::list<SPBox3D *>::iterator b = selboxes.begin(); b != selboxes.end(); ++b) {
             box3d_switch_perspectives(*b, persp, transf_persp);
         }
     } else {
@@ -404,12 +405,17 @@ box3d_get_proj_corner (SPBox3D const *box, guint id) {
 }
 
 NR::Point
-box3d_get_corner_screen (SPBox3D const *box, guint id) {
+box3d_get_corner_screen (SPBox3D const *box, guint id, bool item_coords) {
     Proj::Pt3 proj_corner (box3d_get_proj_corner (box, id));
     if (!box3d_get_perspective(box)) {
         return NR::Point (NR_HUGE, NR_HUGE);
     }
-    return box3d_get_perspective(box)->tmat.image(proj_corner).affine();
+    NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM(box)));
+    if (item_coords) {
+        return box3d_get_perspective(box)->tmat.image(proj_corner).affine() * i2d.inverse();
+    } else {
+        return box3d_get_perspective(box)->tmat.image(proj_corner).affine();
+    }
 }
 
 Proj::Pt3
@@ -428,7 +434,8 @@ box3d_get_center_screen (SPBox3D *box) {
     if (!box3d_get_perspective(box)) {
         return NR::Point (NR_HUGE, NR_HUGE);
     }
-    return box3d_get_perspective(box)->tmat.image(proj_center).affine();
+    NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM(box)));
+    return box3d_get_perspective(box)->tmat.image(proj_center).affine() * i2d.inverse();
 }
 
 /*
@@ -700,8 +707,8 @@ static bool
 box3d_XY_axes_are_swapped (SPBox3D *box) {
     Persp3D *persp = box3d_get_perspective(box);
     g_return_val_if_fail(persp, false);
-    Box3D::PerspectiveLine l1(box3d_get_corner_screen(box, 3), Proj::X, persp);
-    Box3D::PerspectiveLine l2(box3d_get_corner_screen(box, 3), Proj::Y, persp);
+    Box3D::PerspectiveLine l1(box3d_get_corner_screen(box, 3, false), Proj::X, persp);
+    Box3D::PerspectiveLine l2(box3d_get_corner_screen(box, 3, false), Proj::Y, persp);
     NR::Point v1(l1.direction());
     NR::Point v2(l2.direction());
     v1.normalize();
@@ -861,7 +868,7 @@ static void
 box3d_set_new_z_orders_case2 (SPBox3D *box, int z_orders[6], Box3D::Axis central_axis, Box3D::Axis /*infinite_axis*/) {
     Persp3D *persp = box3d_get_perspective(box);
 
-    NR::Point c3(box3d_get_corner_screen(box, 3));
+    NR::Point c3(box3d_get_corner_screen(box, 3, false));
     NR::Point xdir(persp3d_get_PL_dir_from_pt(persp, c3, Proj::X));
     NR::Point ydir(persp3d_get_PL_dir_from_pt(persp, c3, Proj::Y));
     NR::Point zdir(persp3d_get_PL_dir_from_pt(persp, c3, Proj::Z));
@@ -996,7 +1003,7 @@ box3d_recompute_z_orders (SPBox3D *box) {
 
     int z_orders[6];
 
-    NR::Point c3(box3d_get_corner_screen(box, 3));
+    NR::Point c3(box3d_get_corner_screen(box, 3, false));
 
     // determine directions from corner3 to the VPs
     int num_finite = 0;
@@ -1051,7 +1058,7 @@ box3d_recompute_z_orders (SPBox3D *box) {
         Geom::Point vpy(vp_y[NR::X], vp_y[NR::Y]);
         Geom::Point vpz(vp_z[NR::X], vp_z[NR::Y]);
 
-        NR::Point c3 = box3d_get_corner_screen(box, 3);
+        NR::Point c3 = box3d_get_corner_screen(box, 3, false);
         Geom::Point corner3(c3[NR::X], c3[NR::Y]);
 
         if (box3d_half_line_crosses_joining_line (corner3, vpx, vpy, vpz)) {
@@ -1070,9 +1077,9 @@ box3d_recompute_z_orders (SPBox3D *box) {
             central_corner = central_corner ^ Box3D::XYZ;
         }
 
-        NR::Point c1(box3d_get_corner_screen(box, 1));
-        NR::Point c2(box3d_get_corner_screen(box, 2));
-        NR::Point c7(box3d_get_corner_screen(box, 7));
+        NR::Point c1(box3d_get_corner_screen(box, 1, false));
+        NR::Point c2(box3d_get_corner_screen(box, 2, false));
+        NR::Point c7(box3d_get_corner_screen(box, 7, false));
 
         Geom::Point corner1(c1[NR::X], c1[NR::Y]);
         Geom::Point corner2(c2[NR::X], c2[NR::Y]);
@@ -1185,8 +1192,8 @@ box3d_pt_lies_in_PL_sector (SPBox3D const *box, NR::Point const &pt, int id1, in
     Persp3D *persp = box3d_get_perspective(box);
 
     // the two corners
-    NR::Point c1(box3d_get_corner_screen(box, id1));
-    NR::Point c2(box3d_get_corner_screen(box, id2));
+    NR::Point c1(box3d_get_corner_screen(box, id1, false));
+    NR::Point c2(box3d_get_corner_screen(box, id2, false));
 
     int ret = 0;
     if (persp3d_VP_is_finite(persp, Box3D::toProj(axis))) {
@@ -1201,7 +1208,7 @@ box3d_pt_lies_in_PL_sector (SPBox3D const *box, NR::Point const &pt, int id1, in
         if (pl1.lie_on_same_side(pt, c2) && pl2.lie_on_same_side(pt, c1)) {
             // test whether pt lies "towards" or "away from" the VP
             Box3D::Line edge(c1,c2);
-            NR::Point c3(box3d_get_corner_screen(box, id1 ^ axis));
+            NR::Point c3(box3d_get_corner_screen(box, id1 ^ axis, false));
             if (edge.lie_on_same_side(pt, c3)) {
                 ret = 1;
             } else {
@@ -1304,6 +1311,24 @@ box3d_mark_transformed(SPBox3D *box) {
     persp3d_set_box_transformed(persp, box, true);
 }
 
+static void
+box3d_extract_boxes_rec(SPObject *obj, std::list<SPBox3D *> &boxes) {
+    if (SP_IS_BOX3D(obj)) {
+        boxes.push_back(SP_BOX3D(obj));
+    } else if (SP_IS_GROUP(obj)) {
+        for (SPObject *child = sp_object_first_child(obj); child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            box3d_extract_boxes_rec(child, boxes);
+        }
+    }
+}
+
+std::list<SPBox3D *>
+box3d_extract_boxes(SPObject *obj) {
+    std::list<SPBox3D *> boxes;
+    box3d_extract_boxes_rec(obj, boxes);
+    return boxes;
+}
+
 Persp3D *
 box3d_get_perspective(SPBox3D const *box) {
     return box->persp_ref->getObject();
@@ -1316,8 +1341,8 @@ box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp, 
         box->orig_corner7.normalize();
         double z0 = box->orig_corner0[Proj::Z];
         double z7 = box->orig_corner7[Proj::Z];
-        NR::Point corner0_screen = box3d_get_corner_screen(box, 0);
-        NR::Point corner7_screen = box3d_get_corner_screen(box, 7);
+        NR::Point corner0_screen = box3d_get_corner_screen(box, 0, false);
+        NR::Point corner7_screen = box3d_get_corner_screen(box, 7, false);
 
         box->orig_corner0 = new_persp->tmat.preimage(corner0_screen, z0, Proj::Z);
         box->orig_corner7 = new_persp->tmat.preimage(corner7_screen, z7, Proj::Z);
@@ -1383,8 +1408,8 @@ box3d_convert_to_group(SPBox3D *box) {
 
 static inline void
 box3d_push_back_corner_pair(SPBox3D *box, std::list<std::pair<Geom::Point, Geom::Point> > &pts, int c1, int c2) {
-    pts.push_back(std::make_pair(box3d_get_corner_screen(box, c1).to_2geom(),
-                                 box3d_get_corner_screen(box, c2).to_2geom()));
+    pts.push_back(std::make_pair(box3d_get_corner_screen(box, c1, false).to_2geom(),
+                                 box3d_get_corner_screen(box, c2, false).to_2geom()));
 }
 
 void

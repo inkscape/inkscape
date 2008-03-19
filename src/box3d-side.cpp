@@ -35,8 +35,7 @@ static void box3d_side_update (SPObject *object, SPCtx *ctx, guint flags);
 
 static void box3d_side_set_shape (SPShape *shape);
 
-static Proj::Pt3 box3d_side_corner (Box3DSide *side, guint index);
-static std::vector<Proj::Pt3> box3d_side_corners (Box3DSide *side);
+static void box3d_side_compute_corner_ids(Box3DSide *side, unsigned int corners[4]);
 
 static SPShapeClass *parent_class;
 
@@ -210,10 +209,12 @@ box3d_side_set_shape (SPShape *shape)
         return;
     }
 
-    if (!SP_IS_BOX3D(SP_OBJECT(side)->parent)) {
+    SPObject *parent = SP_OBJECT(side)->parent;
+    if (!SP_IS_BOX3D(parent)) {
         g_warning ("Parent of 3D box side is not a 3D box.\n");
         return;
     }
+    SPBox3D *box = SP_BOX3D(parent);
 
     Persp3D *persp = box3d_side_perspective(side);
     if (!persp) {
@@ -226,15 +227,13 @@ box3d_side_set_shape (SPShape *shape)
     //       compute the coordinates of the corners in P^3, project them onto the canvas, and draw the
     //       resulting path.
 
-    std::vector<Proj::Pt3> corners = box3d_side_corners (side);
+    unsigned int corners[4];
+    box3d_side_compute_corner_ids(side, corners);
 
-    NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM(shape)));
-
-    // FIXME: This can better be implemented by using box3d_get_corner
-    sp_curve_moveto (c, persp->tmat.image(corners[0]).affine() * i2d);
-    sp_curve_lineto (c, persp->tmat.image(corners[1]).affine() * i2d);
-    sp_curve_lineto (c, persp->tmat.image(corners[2]).affine() * i2d);
-    sp_curve_lineto (c, persp->tmat.image(corners[3]).affine() * i2d);
+    sp_curve_moveto (c, box3d_get_corner_screen(box, corners[0]));
+    sp_curve_lineto (c, box3d_get_corner_screen(box, corners[1]));
+    sp_curve_lineto (c, box3d_get_corner_screen(box, corners[2]));
+    sp_curve_lineto (c, box3d_get_corner_screen(box, corners[3]));
 
     sp_curve_closepath (c);
     sp_shape_perform_path_effect(c, SP_SHAPE (side));
@@ -284,29 +283,14 @@ box3d_side_axes_string(Box3DSide *side)
     return pstring->str;
 }
 
-static Proj::Pt3
-box3d_side_corner (Box3DSide *side, guint index) {
-    SPBox3D *box = SP_BOX3D(SP_OBJECT_PARENT(side));
-    return Proj::Pt3 ((index & 0x1) ? box->orig_corner7[Proj::X] : box->orig_corner0[Proj::X],
-                      (index & 0x2) ? box->orig_corner7[Proj::Y] : box->orig_corner0[Proj::Y],
-                      (index & 0x4) ? box->orig_corner7[Proj::Z] : box->orig_corner0[Proj::Z],
-                      1.0);
-}
-
-static std::vector<Proj::Pt3>
-box3d_side_corners (Box3DSide *side) {
-    std::vector<Proj::Pt3> corners;
+static void
+box3d_side_compute_corner_ids(Box3DSide *side, unsigned int corners[4]) {
     Box3D::Axis orth = Box3D::third_axis_direction (side->dir1, side->dir2);
-    unsigned int i0 = (side->front_or_rear ? orth : 0);
-    unsigned int i1 = i0 ^ side->dir1;
-    unsigned int i2 = i0 ^ side->dir1 ^ side->dir2;
-    unsigned int i3 = i0 ^ side->dir2;
 
-    corners.push_back (box3d_side_corner (side, i0));
-    corners.push_back (box3d_side_corner (side, i1));
-    corners.push_back (box3d_side_corner (side, i2));
-    corners.push_back (box3d_side_corner (side, i3));
-    return corners;
+    corners[0] = (side->front_or_rear ? orth : 0);
+    corners[1] = corners[0] ^ side->dir1;
+    corners[2] = corners[0] ^ side->dir1 ^ side->dir2;
+    corners[3] = corners[0] ^ side->dir2;
 }
 
 Persp3D *

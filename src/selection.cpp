@@ -30,6 +30,8 @@
 #include "sp-path.h"
 #include "sp-item-group.h"
 #include "box3d.h"
+#include "box3d.h"
+#include "persp3d.h"
 
 #include <sigc++/functors/mem_fun.h>
 
@@ -159,6 +161,27 @@ void Selection::add(SPObject *obj, bool persist_selection_context/* = false */) 
     _emitChanged(persist_selection_context);
 }
 
+void Selection::add_box_perspective(SPBox3D *box) {
+    Persp3D *persp = box3d_get_perspective(box);
+    std::map<Persp3D *, unsigned int>::iterator p = _persps.find(persp);
+    if (p != _persps.end()) {
+        (*p).second++;
+    } else {
+        _persps[persp] = 1;
+    }
+}
+
+void Selection::add_3D_boxes_recursively(SPObject *obj) {
+    std::list<SPBox3D *> boxes = box3d_extract_boxes(obj);
+
+    for (std::list<SPBox3D *>::iterator i = boxes.begin(); i != boxes.end(); ++i) {
+        SPBox3D *box = *i;
+        box3d_add_to_selection(box);
+        _3dboxes.push_back(box);
+        add_box_perspective(box);
+    }
+}
+
 void Selection::_add(SPObject *obj) {
     // unselect any of the item's ancestors and descendants which may be selected
     // (to prevent double-selection)
@@ -167,10 +190,7 @@ void Selection::_add(SPObject *obj) {
 
     _objs = g_slist_prepend(_objs, obj);
 
-    if (SP_IS_BOX3D(obj)) {
-        // keep track of selected boxes for transformations
-        box3d_add_to_selection(SP_BOX3D(obj));
-    }
+    add_3D_boxes_recursively(obj);
 
     _release_connections[obj] = obj->connectRelease(sigc::mem_fun(*this, (void (Selection::*)(SPObject *))&Selection::remove));
     _modified_connections[obj] = obj->connectModified(sigc::mem_fun(*this, &Selection::_schedule_modified));
@@ -199,6 +219,36 @@ void Selection::remove(SPObject *obj) {
     _emitChanged();
 }
 
+void Selection::remove_box_perspective(SPBox3D *box) {
+    Persp3D *persp = box3d_get_perspective(box);
+    std::map<Persp3D *, unsigned int>::iterator p = _persps.find(persp);
+    if (p == _persps.end()) {
+        g_print ("Warning! Trying to remove unselected perspective from selection!\n");
+        return;
+    }
+    if ((*p).second > 1) {
+        _persps[persp]--;
+    } else {
+        _persps.erase(p);
+    }
+}
+
+void Selection::remove_3D_boxes_recursively(SPObject *obj) {
+    std::list<SPBox3D *> boxes = box3d_extract_boxes(obj);
+
+    for (std::list<SPBox3D *>::iterator i = boxes.begin(); i != boxes.end(); ++i) {
+        SPBox3D *box = *i;
+        box3d_remove_from_selection(box);
+        std::list<SPBox3D *>::iterator b = std::find(_3dboxes.begin(), _3dboxes.end(), box);
+        if (b == _3dboxes.end()) {
+            g_print ("Warning! Trying to remove unselected box from selection.\n");
+            return;
+        }
+        _3dboxes.erase(b);
+        remove_box_perspective(box);
+    }
+}
+
 void Selection::_remove(SPObject *obj) {
     _modified_connections[obj].disconnect();
     _modified_connections.erase(obj);
@@ -206,10 +256,7 @@ void Selection::_remove(SPObject *obj) {
     _release_connections[obj].disconnect();
     _release_connections.erase(obj);
 
-    if (SP_IS_BOX3D(obj)) {
-        // keep track of selected boxes for transformations
-        box3d_remove_from_selection(SP_BOX3D(obj));
-    }
+    remove_3D_boxes_recursively(obj);
 
     _objs = g_slist_remove(_objs, obj);
 }
@@ -292,6 +339,18 @@ GSList const *Selection::reprList() {
     _reprs = g_slist_reverse(_reprs);
 
     return _reprs;
+}
+
+std::list<Persp3D *> const Selection::perspList() {
+    std::list<Persp3D *> pl;
+    for (std::map<Persp3D *, unsigned int>::iterator p = _persps.begin(); p != _persps.end(); ++p) {
+        pl.push_back((*p).first);
+    }
+    return pl;
+}
+
+std::list<SPBox3D *> const Selection::box3DList() {
+    return _3dboxes;
 }
 
 SPObject *Selection::single() {

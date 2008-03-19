@@ -54,7 +54,7 @@ GType box3d_get_type (void);
 
 void box3d_position_set (SPBox3D *box);
 Proj::Pt3 box3d_get_proj_corner (SPBox3D const *box, guint id);
-NR::Point box3d_get_corner_screen (SPBox3D const *box, guint id);
+NR::Point box3d_get_corner_screen (SPBox3D const *box, guint id, bool item_coords = true);
 Proj::Pt3 box3d_get_proj_center (SPBox3D *box);
 NR::Point box3d_get_center_screen (SPBox3D *box);
 
@@ -73,6 +73,8 @@ void box3d_check_for_swapped_coords(SPBox3D *box);
 void box3d_add_to_selection(SPBox3D *box);
 void box3d_remove_from_selection(SPBox3D *box);
 void box3d_mark_transformed(SPBox3D *box);
+
+std::list<SPBox3D *> box3d_extract_boxes(SPObject *obj);
 
 Persp3D *box3d_get_perspective(SPBox3D const *box);
 void box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp, bool recompute_corners = false);

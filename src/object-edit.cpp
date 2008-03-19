@@ -530,11 +530,7 @@ static SPKnotHolder *sp_rect_knot_holder(SPItem *item, SPDesktop *desktop)
 
 static NR::Point box3d_knot_get(SPItem *item, guint knot_id)
 {
-    g_assert(item != NULL);
-    SPBox3D *box = SP_BOX3D(item);
-
-    NR::Matrix const i2d (sp_item_i2d_affine (item));
-    return box3d_get_corner_screen(box, knot_id) * i2d;
+    return box3d_get_corner_screen(SP_BOX3D(item), knot_id);
 }
 
 static void box3d_knot_set(SPItem *item, guint knot_id, NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
@@ -559,8 +555,7 @@ static void box3d_knot_set(SPItem *item, guint knot_id, NR::Point const &new_pos
 
 static NR::Point box3d_knot_center_get (SPItem *item)
 {
-    NR::Matrix const i2d (sp_item_i2d_affine (item));
-    return box3d_get_center_screen (SP_BOX3D(item)) * i2d;
+    return box3d_get_center_screen (SP_BOX3D(item));
 }
 
 static void box3d_knot_center_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)

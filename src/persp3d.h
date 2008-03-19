@@ -18,7 +18,7 @@
 #define SP_IS_PERSP3D(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_PERSP3D))
 #define SP_IS_PERSP3D_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_PERSP3D))
 
-#include <set>
+#include <list>
 #include <vector>
 #include <map>
 #include "sp-item.h"
@@ -62,7 +62,7 @@ NR::Point persp3d_get_infinite_dir (Persp3D *persp, Proj::Axis axis);
 double persp3d_get_infinite_angle (Persp3D *persp, Proj::Axis axis);
 bool persp3d_VP_is_finite (Persp3D *persp, Proj::Axis axis);
 void persp3d_toggle_VP (Persp3D *persp, Proj::Axis axis, bool set_undo = true);
-void persp3d_toggle_VPs (std::set<Persp3D *>, Proj::Axis axis);
+void persp3d_toggle_VPs (std::list<Persp3D *>, Proj::Axis axis);
 void persp3d_set_VP_state (Persp3D *persp, Proj::Axis axis, Proj::VPState state);
 void persp3d_rotate_VP (Persp3D *persp, Proj::Axis axis, double angle, bool alt_pressed); // angle is in degrees
 void persp3d_update_with_point (Persp3D *persp, Proj::Axis const axis, Proj::Pt2 const &new_image);
@@ -92,9 +92,9 @@ void persp3d_absorb(Persp3D *persp1, Persp3D *persp2);
 Persp3D * persp3d_create_xml_element (SPDocument *document, Persp3D *dup = NULL);
 Persp3D * persp3d_document_first_persp (SPDocument *document);
 
-std::set<Persp3D *> persp3d_currently_selected_persps();
 bool persp3d_has_all_boxes_in_selection (Persp3D *persp);
-std::list<SPBox3D *> persp3d_selected_boxes (Persp3D *persp);
+std::map<Persp3D *, std::list<SPBox3D *> > persp3d_unselected_boxes(Inkscape::Selection *selection);
+void persp3d_split_perspectives_according_to_selection(Inkscape::Selection *selection);
 
 void persp3d_print_debugging_info (Persp3D *persp);
 void persp3d_print_debugging_info_all(SPDocument *doc);

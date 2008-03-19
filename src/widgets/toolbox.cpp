@@ -2614,12 +2614,12 @@ box3d_angle_value_changed(GtkAdjustment *adj, GObject *dataKludge, Proj::Axis ax
     g_object_set_data(dataKludge, "freeze_angle", GINT_TO_POINTER(TRUE));
 
     //Persp3D *persp = document->current_persp3d;
-    std::set<Persp3D *> sel_persps = persp3d_currently_selected_persps();
+    std::list<Persp3D *> sel_persps = sp_desktop_selection(desktop)->perspList();
     if (sel_persps.empty()) {
         // this can happen when the document is created; we silently ignore it
         return;
     }
-    Persp3D *persp = *(sel_persps.begin());
+    Persp3D *persp = sel_persps.front();
 
     persp->tmat.set_infinite_direction (axis, adj->value);
     SP_OBJECT(persp)->updateRepr();
@@ -2653,12 +2653,12 @@ box3d_angle_z_value_changed(GtkAdjustment *adj, GObject *dataKludge)
 static void box3d_vp_state_changed( GtkToggleAction *act, GtkAction */*box3d_angle*/, Proj::Axis axis )
 {
     // TODO: Take all selected perspectives into account
-    std::set<Persp3D *> sel_persps = persp3d_currently_selected_persps();
+    std::list<Persp3D *> sel_persps = sp_desktop_selection(inkscape_active_desktop())->perspList();
     if (sel_persps.empty()) {
         // this can happen when the document is created; we silently ignore it
         return;
     }
-    Persp3D *persp = *(sel_persps.begin());
+    Persp3D *persp = sel_persps.front();
 
     bool set_infinite = gtk_toggle_action_get_active(act);
     persp3d_set_VP_state (persp, axis, set_infinite ? Proj::VP_INFINITE : Proj::VP_FINITE);

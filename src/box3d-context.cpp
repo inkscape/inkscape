@@ -186,10 +186,6 @@ static void sp_box3d_context_selection_changed(Inkscape::Selection *selection, g
         ec->shape_repr = 0;
     }
 
-    SPDocument *doc = sp_desktop_document(bc->desktop);
-    doc->persps_sel.clear();
-    doc->persps_sel = persp3d_currently_selected_persps();
-
     SPItem *item = selection->singleItem();
     if (item) {
         ec->shape_knot_holder = sp_item_knot_holder(item, ec->desktop);
@@ -201,9 +197,9 @@ static void sp_box3d_context_selection_changed(Inkscape::Selection *selection, g
         }
     }
 
-    if (doc->persps_sel.size() == 1) {
+    if (selection->perspList().size() == 1) {
         // selecting a single box changes the current perspective
-        doc->current_persp3d = *(doc->persps_sel.begin());
+        ec->desktop->doc()->current_persp3d = selection->perspList().front();
     }
 }
 
@@ -509,7 +505,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
                 ret = TRUE;
             }
             if (MOD__SHIFT_ONLY) {
-                persp3d_toggle_VPs(persp3d_currently_selected_persps(), Proj::X);
+                persp3d_toggle_VPs(selection->perspList(), Proj::X);
                 bc->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
                 ret = true;
             }
@@ -518,7 +514,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
         case GDK_y:
         case GDK_Y:
             if (MOD__SHIFT_ONLY) {
-                persp3d_toggle_VPs(persp3d_currently_selected_persps(), Proj::Y);
+                persp3d_toggle_VPs(selection->perspList(), Proj::Y);
                 bc->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
                 ret = true;
             }
@@ -527,7 +523,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
         case GDK_z:
         case GDK_Z:
             if (MOD__SHIFT_ONLY) {
-                persp3d_toggle_VPs(persp3d_currently_selected_persps(), Proj::Z);
+                persp3d_toggle_VPs(selection->perspList(), Proj::Z);
                 bc->_vpdrag->updateLines(); // FIXME: Shouldn't this be done automatically?
                 ret = true;
             }

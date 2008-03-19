@@ -107,7 +107,6 @@ struct SPDocument : public Inkscape::GC::Managed<>,
     GSList *perspectives;
 
     Persp3D *current_persp3d; // "currently active" perspective (e.g., newly created boxes are attached to this one)
-    std::set<Persp3D *> persps_sel; // perspectives associated to currently selected boxes
 
     void add_persp3d (Persp3D * const persp);
     void remove_persp3d (Persp3D * const persp);
