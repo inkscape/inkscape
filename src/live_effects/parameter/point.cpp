@@ -25,8 +25,6 @@
 #include "desktop.h"
 #include "selection.h"
 
-#define LPEPOINTPARAM_DEBUG // undefine to disable all on-canvas editing code for PointParam
-
 namespace Inkscape {
 
 namespace LivePathEffect {
@@ -36,9 +34,11 @@ PointParam::PointParam( const Glib::ustring& label, const Glib::ustring& tip,
                         Effect* effect, Geom::Point default_value )
     : Geom::Point(default_value), Parameter(label, tip, key, wr, effect), defvalue(default_value)
 {
-#ifdef LPEPOINTPARAM_DEBUG
     oncanvas_editable = true;
-#endif
+
+    knot_shape = SP_KNOT_SHAPE_SQUARE;
+    knot_mode  = SP_KNOT_MODE_XOR;
+    knot_color = 0x00ff0000;
 }
 
 PointParam::~PointParam()
@@ -96,9 +96,6 @@ PointParam::param_newWidget(Gtk::Tooltips * tooltips)
     pButton->add(*pIcon);
     pButton->show();
     pButton->signal_clicked().connect(sigc::mem_fun(*this, &PointParam::on_button_click));
-#ifndef LPEPOINTPARAM_DEBUG
-    pButton->set_sensitive(false);
-#endif
 
     Gtk::HBox * hbox = Gtk::manage( new Gtk::HBox() );
     static_cast<Gtk::HBox*>(hbox)->pack_start(*pButton, true, true);
