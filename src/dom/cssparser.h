@@ -12,7 +12,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005-2007 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -98,7 +98,7 @@ private:
      *  Test if the given substring exists at the given position
      *  in parsebuf.  Use get() in case of out-of-bounds
      */
-    bool match(int pos, char *str);
+    bool match(int pos, const char *str);
 
     /**
      * Skip over whitespace

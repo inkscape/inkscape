@@ -131,7 +131,7 @@ XMLCh CssParser::get(int p)
  *  Test if the given substring exists at the given position
  *  in parsebuf.  Use get() in case of out-of-bounds
  */
-bool CssParser::match(int pos, char *str)
+bool CssParser::match(int pos, const char *str)
 {
     while (*str)
        {

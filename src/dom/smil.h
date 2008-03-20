@@ -12,7 +12,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -1374,7 +1374,7 @@ public:
     /**
      *
      */
-    virtual views::View getView()
+    virtual views::AbstractView getView()
         { return view; }
 
     /**
@@ -1387,7 +1387,7 @@ public:
      *
      */
     virtual void initTimeEvent(const DOMString &/*typeArg*/,
-                               const views::View */*viewArg*/,
+                               const views::AbstractView */*viewArg*/,
                                long /*detailArg*/)
         {
         }
@@ -1421,7 +1421,7 @@ public:
 
 protected:
 
-    views::View view;
+    views::AbstractView view;
     long detail;
 
 

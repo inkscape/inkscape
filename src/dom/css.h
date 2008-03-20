@@ -1,16 +1,31 @@
-/*
- * Copyright (c) 2000 World Wide Web Consortium,
- * (Massachusetts Institute of Technology, Institut National de
- * Recherche en Informatique et en Automatique, Keio University). All
- * Rights Reserved. This program is distributed under the W3C's Software
- * Intellectual Property License. This program is distributed the
- * hope that it will be useful, but WITHOUT ANY WARRANTY; without even
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- * PURPOSE.
- * See W3C License http://www.w3.org/Consortium/Legal/ for more details.
+/**
+ * Phoebe DOM Implementation.
+ *
+ * This is a C++ approximation of the W3C DOM model, which follows
+ * fairly closely the specifications in the various .idl files, copies of
+ * which are provided for reference.  Most important is this one:
+ *
+ * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
+ *
+ * Authors:
+ *   Bob Jamison
+ *
+ * Copyright (C) 2005 Bob Jamison
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-
-// File: http://www.w3.org/TR/2000/REC-DOM-Level-2-Style-20001113/css.idl
 
 #ifndef __CSS_H__
 #define __CSS_H__
@@ -3962,9 +3977,9 @@ protected:
 #########################################################################*/
 
 /**
- * again, a mismatch with views::View and views::AbstractView
+ *
  */
-class ViewCSS : virtual public views::View
+class ViewCSS : virtual public views::AbstractView
 {
 public:
 
@@ -3985,14 +4000,14 @@ public:
     /**
      *
      */
-    ViewCSS() : views::View()
+    ViewCSS() : views::AbstractView()
        {
        }
 
     /**
      *
      */
-    ViewCSS(const ViewCSS &other) : views::View(other)
+    ViewCSS(const ViewCSS &other) : views::AbstractView(other)
        {
        }
 

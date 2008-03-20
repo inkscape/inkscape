@@ -13,7 +13,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -673,10 +673,9 @@ class UIEvent : virtual public Event
 public:
 
     /**
-     *  Note that the return type as listed in level3 events.idl is
-     *  AbstractView, while in level3 views.idl it is called View
+     *  Note that the return type is level -2- views
      */
-    virtual views::View getView()
+    virtual views::AbstractView getView()
         { return view; }
 
     /**
@@ -691,7 +690,7 @@ public:
     virtual void initUIEvent(const DOMString &/*typeArg*/,
                              bool /*canBubbleArg*/,
                              bool /*cancelableArg*/,
-                             const views::View */*viewArg*/,
+                             const views::AbstractView */*viewArg*/,
                              long /*detailArg*/)
         {
         }
@@ -703,7 +702,7 @@ public:
                                const DOMString &/*typeArg*/,
                                bool /*canBubbleArg*/,
                                bool /*cancelableArg*/,
-                               const views::View */*viewArg*/,
+                               const views::AbstractView */*viewArg*/,
                                long /*detailArg*/)
         {
         }
@@ -733,7 +732,7 @@ public:
 
 protected:
 
-    views::View view;
+    views::AbstractView view;
     long detail;
 };
 
@@ -763,7 +762,7 @@ public:
     virtual void initTextEvent(const DOMString &/*typeArg*/,
                                bool /*canBubbleArg*/,
                                bool /*cancelableArg*/,
-                               const views::View */*viewArg*/,
+                               const views::AbstractView */*viewArg*/,
                                long /*detailArg*/)
         {
         }
@@ -775,7 +774,7 @@ public:
                                  const DOMString &/*typeArg*/,
                                  bool /*canBubbleArg*/,
                                  bool /*cancelableArg*/,
-                                 const views::View */*viewArg*/,
+                                 const views::AbstractView */*viewArg*/,
                                  long /*detailArg*/)
         {
         }
@@ -899,7 +898,7 @@ public:
     virtual void initMouseEvent(const DOMString &/*typeArg*/,
                                 bool /*canBubbleArg*/,
                                 bool /*cancelableArg*/,
-                                const views::View */*viewArg*/,
+                                const views::AbstractView */*viewArg*/,
                                 long /*detailArg*/,
                                 long /*screenXArg*/,
                                 long /*screenYArg*/,
@@ -922,7 +921,7 @@ public:
                                   const DOMString &/*typeArg*/,
                                   bool /*canBubbleArg*/,
                                   bool /*cancelableArg*/,
-                                  const views::View */*viewArg*/,
+                                  const views::AbstractView */*viewArg*/,
                                   long /*detailArg*/,
                                   long /*screenXArg*/,
                                   long /*screenYArg*/,
@@ -1053,7 +1052,7 @@ public:
     virtual void initKeyboardEvent(const DOMString &/*typeArg*/,
                                    bool /*canBubbleArg*/,
                                    bool /*cancelableArg*/,
-                                   const views::View */*viewArg*/,
+                                   const views::AbstractView */*viewArg*/,
                                    const DOMString &/*keyIdentifier*/,
                                    unsigned long /*keyLocation*/,
                                    const DOMString /*modifiersList*/)
@@ -1069,7 +1068,7 @@ public:
                                      const DOMString &/*typeArg*/,
                                      bool /*canBubbleArg*/,
                                      bool /*cancelableArg*/,
-                                     const views::View */*viewArg*/,
+                                     const views::AbstractView */*viewArg*/,
                                      const DOMString &/*keyIdentifier*/,
                                      unsigned long /*keyLocation*/,
                                      const DOMString /*modifiersList*/)

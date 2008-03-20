@@ -1,16 +1,16 @@
 /*
- * Copyright (c) 2004 World Wide Web Consortium,
- *
- * (Massachusetts Institute of Technology, European Research Consortium for
- * Informatics and Mathematics, Keio University). All Rights Reserved. This
- * work is distributed under the W3C(r) Software License [1] in the hope that
- * it will be useful, but WITHOUT ANY WARRANTY; without even the implied
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * [1] http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+ * Copyright (c) 2000 World Wide Web Consortium,
+ * (Massachusetts Institute of Technology, Institut National de
+ * Recherche en Informatique et en Automatique, Keio University). All
+ * Rights Reserved. This program is distributed under the W3C's Software
+ * Intellectual Property License. This program is distributed in the
+ * hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ * See W3C License http://www.w3.org/Consortium/Legal/ for more details.
  */
 
-// File: http://www.w3.org/TR/2004/NOTE-DOM-Level-3-Views-20040226/views.idl
+// File: http://www.w3.org/TR/2000/REC-DOM-Level-2-Views-20001113/views.idl
 
 #ifndef _VIEWS_IDL_
 #define _VIEWS_IDL_
@@ -21,232 +21,16 @@
 module views
 {
 
-  typedef dom::Node Node;
-  typedef dom::DOMString DOMString;
+  interface DocumentView;
 
-  interface Segment;
-  interface VisualResource;
-  interface VisualCharacter;
-  interface VisualCharacterRun;
-  interface VisualFrame;
-  interface VisualImage;
-  interface VisualFormButton;
-  interface VisualFormField;
-
-  // Introduced in DOM Level 3:
-  interface View {
-    void               select(in Node boundary, 
-                              in unsigned long offset, 
-                              in boolean extend, 
-                              in boolean add);
-    Segment            createSegment();
-    boolean            matchFirstSegment(inout Segment todo)
-                                        raises(dom::DOMException);
-    long               getIntegerProperty(in DOMString name)
-                                        raises(dom::DOMException);
-    DOMString          getStringProperty(in DOMString name)
-                                        raises(dom::DOMException);
-    boolean            getBooleanProperty(in boolean name)
-                                        raises(dom::DOMException);
-    Node               getContentPropertyNode(in DOMString name)
-                                        raises(dom::DOMException);
-    unsigned long      getContentPropertyOffset(in DOMString name)
-                                        raises(dom::DOMException);
+  // Introduced in DOM Level 2:
+  interface AbstractView {
+    readonly attribute DocumentView     document;
   };
 
-  // Introduced in DOM Level 3:
-  interface Match {
-
-    // MatchTestGroup
-    const unsigned short      IS_EQUAL                       = 0;
-    const unsigned short      IS_NOT_EQUAL                   = 1;
-    const unsigned short      INT_PRECEDES                   = 2;
-    const unsigned short      INT_PRECEDES_OR_EQUALS         = 3;
-    const unsigned short      INT_FOLLOWS                    = 4;
-    const unsigned short      INT_FOLLOWS_OR_EQUALS          = 5;
-    const unsigned short      STR_STARTS_WITH                = 6;
-    const unsigned short      STR_ENDS_WITH                  = 7;
-    const unsigned short      STR_CONTAINS                   = 8;
-    const unsigned short      SET_ANY                        = 9;
-    const unsigned short      SET_ALL                        = 10;
-    const unsigned short      SET_NOT_ANY                    = 11;
-    const unsigned short      SET_NOT_ALL                    = 12;
-
-    readonly attribute unsigned short  test;
-  };
-
-  // Introduced in DOM level 3:
-  interface MatchString : Match {
-    readonly attribute DOMString       name;
-    readonly attribute DOMString       value;
-  };
-
-  // Introduced in DOM level 3:
-  interface MatchInteger : Match {
-    readonly attribute DOMString       name;
-    readonly attribute long            value;
-  };
-
-  // Introduced in DOM level 3:
-  interface MatchBoolean : Match {
-    readonly attribute DOMString       name;
-    readonly attribute boolean         value;
-  };
-
-  // Introduced in DOM level 3:
-  interface MatchContent : Match {
-    readonly attribute DOMString       name;
-    readonly attribute Node            nodeArg;
-    readonly attribute unsigned long   offset;
-  };
-
-  // Introduced in DOM level 3:
-  interface MatchSet : Match {
-    readonly attribute Node            nodeArg;
-    void               addMatch(in Match add);
-    Match              getMatch(in unsigned long index);
-  };
-
-  // Introduced in DOM Level 3:
-  interface Item {
-    readonly attribute boolean         exists;
-    readonly attribute DOMString       name;
-  };
-
-  // Introduced in DOM Level 3:
-  interface StringItem : Item {
-    readonly attribute DOMString       value;
-  };
-
-  // Introduced in DOM Level 3:
-  interface IntegerItem : Item {
-    readonly attribute long            value;
-  };
-
-  // Introduced in DOM Level 3:
-  interface BooleanItem : Item {
-             attribute boolean         value;
-  };
-
-  // Introduced in DOM Level 3:
-  interface ContentItem : Item {
-             attribute Node            nodeArg;
-             attribute unsigned long   offset;
-  };
-
-  interface VisualView {
-    readonly attribute DOMString       fontScheme;
-    readonly attribute unsigned long   width;
-    readonly attribute unsigned long   height;
-    readonly attribute unsigned long   horizontalDPI;
-    readonly attribute unsigned long   verticalDPI;
-    VisualCharacter    createVisualCharacter();
-    VisualCharacterRun createVisualCharacterRun();
-    VisualFrame        createVisualFrame();
-    VisualImage        createVisualImage();
-    VisualFormButton   createVisualFormButton();
-    VisualFormField    createVisualFormField();
-    void               select(in Node boundary, 
-                              in unsigned long offset, 
-                              in boolean extend, 
-                              in boolean add);
-    void               matchSegment(in VisualResource segment);
-  };
-
-  interface VisualResource {
-  };
-
-  interface VisualFont : VisualResource {
-             attribute DOMString       matchFontName;
-    readonly attribute boolean         exists;
-    readonly attribute DOMString       fontName;
-    boolean            getNext();
-  };
-
-  interface VisualSegment : VisualResource {
-             attribute boolean         matchPosition;
-             attribute boolean         matchInside;
-             attribute boolean         matchContaining;
-             attribute long            matchX;
-             attribute long            matchY;
-             attribute long            matchXR;
-             attribute long            matchYR;
-             attribute boolean         matchContent;
-             attribute boolean         matchRange;
-             attribute Node            matchNode;
-             attribute unsigned long   matchOffset;
-             attribute Node            matchNodeR;
-             attribute unsigned long   matchOffsetR;
-             attribute boolean         matchContainsSelected;
-             attribute boolean         matchContainsVisible;
-    readonly attribute boolean         exists;
-    readonly attribute Node            startNode;
-    readonly attribute unsigned long   startOffset;
-    readonly attribute Node            endNode;
-    readonly attribute unsigned long   endOffset;
-    readonly attribute long            topOffset;
-    readonly attribute long            bottomOffset;
-    readonly attribute long            leftOffset;
-    readonly attribute long            rightOffset;
-    readonly attribute unsigned long   width;
-    readonly attribute unsigned long   height;
-    readonly attribute boolean         selected;
-    readonly attribute boolean         visible;
-    readonly attribute unsigned long   foregroundColor;
-    readonly attribute unsigned long   backgroundColor;
-    readonly attribute DOMString       fontName;
-    readonly attribute DOMString       fontHeight;
-    boolean            getNext();
-  };
-
-  interface VisualCharacter : VisualSegment {
-  };
-
-  interface VisualCharacterRun : VisualSegment {
-  };
-
-  interface VisualFrame : VisualSegment {
-    readonly attribute VisualSegment   embedded;
-  };
-
-  interface VisualImage : VisualSegment {
-    readonly attribute DOMString       imageURL;
-    readonly attribute boolean         isLoaded;
-  };
-
-  interface VisualFormButton : VisualSegment {
-    readonly attribute boolean         isPressed;
-  };
-
-  interface VisualFormField : VisualSegment {
-    readonly attribute DOMString       formValue;
-  };
-
-  // Introduced in DOM Level 3:
-  interface Segment : Match {
-             attribute Match           criteria;
-             attribute DOMString       order;
-    void               addItem(in Item add);
-    MatchString        createMatchString(in unsigned short test, 
-                                         in DOMString name, 
-                                         in DOMString value);
-    MatchInteger       createMatchInteger(in unsigned short test, 
-                                          in DOMString name, 
-                                          in long value);
-    MatchBoolean       createMatchBoolean(in unsigned short test, 
-                                          in DOMString name, 
-                                          in boolean value);
-    MatchContent       createMatchContent(in unsigned short test, 
-                                          in DOMString name, 
-                                          in unsigned long offset, 
-                                          in Node nodeArg);
-    MatchSet           createMatchSet(in unsigned short test);
-    StringItem         createStringItem(in DOMString name);
-    IntegerItem        createIntegerItem(in DOMString name);
-    BooleanItem        createBooleanItem(in DOMString name);
-    ContentItem        createContentItem(in DOMString name);
-    void               getItem(in unsigned long index);
-    boolean            getNext();
+  // Introduced in DOM Level 2:
+  interface DocumentView {
+    readonly attribute AbstractView     defaultView;
   };
 };
 
