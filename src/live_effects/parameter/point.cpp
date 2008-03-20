@@ -7,6 +7,7 @@
  */
 
 #include "live_effects/parameter/point.h"
+#include "live_effects/parameter/pointparam-knotholder.h"
 #include "live_effects/effect.h"
 #include "svg/svg.h"
 #include "svg/stringstream.h"
@@ -133,8 +134,13 @@ PointParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
         tools_switch_current(TOOLS_NODES);
     }
 
-    ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;
-    shape_editor->set_item_lpe_point_parameter(item, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str());
+    PointParamKnotHolder * kh =  pointparam_knot_holder_new( dt, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str(), item);
+    if (kh) {
+        pointparam_knot_holder_add_full(kh, * dynamic_cast<Geom::Point *>( this ), NULL, knot_shape, knot_mode, knot_color, param_getTooltip()->c_str() );
+
+        ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;
+        shape_editor->set_knotholder(kh);
+    }
 }
 
 
@@ -143,6 +149,15 @@ void
 PointParam::param_transform_multiply(Geom::Matrix const& postmul, bool /*set*/)
 {
     param_set_and_write_new_value( (*this) * postmul );
+}
+
+
+void
+PointParam::set_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint32 color)
+{
+    knot_shape = shape;
+    knot_mode  = mode;
+    knot_color = color;
 }
 
 

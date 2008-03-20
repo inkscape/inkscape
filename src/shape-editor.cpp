@@ -22,6 +22,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "knotholder.h"
+#include "live_effects/parameter/pointparam-knotholder.h"
 #include "node-context.h"
 #include "xml/node-event-vector.h"
 #include "prefs-utils.h"
@@ -213,8 +214,8 @@ void ShapeEditor::set_item(SPItem *item) {
 /** Please note that this function only works for path parameters.
 *  All other parameters probably will crash Inkscape!
 */
-void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject, const char * key) {
-
+void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject, const char * key)
+{
     unset_item();
 
     this->grab_node = -1;
@@ -236,11 +237,19 @@ void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject,
     }
 }
 
-/** Please note that this function only works for point parameters.
-*  All other parameters probably will crash Inkscape!
+/** 
+*  pass a new knotholder to ShapeEditor to manage (and delete)
 */
-void ShapeEditor::set_item_lpe_point_parameter(SPItem */*item*/, SPObject */*lpeobject*/, const char * /*key*/) {
-    g_message("ShapeEditor::set_item_lpe_point_parameter has not been implemented yet!");
+void
+ShapeEditor::set_knotholder(SPKnotHolder * knot_holder)
+{
+    unset_item();
+
+    this->grab_node = -1;
+
+    if (knot_holder) {
+        this->knotholder = knot_holder;
+    }
 }
 
 

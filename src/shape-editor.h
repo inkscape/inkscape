@@ -37,7 +37,7 @@ public:
 
     void set_item (SPItem *item);
     void set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject, const char * key);
-    void set_item_lpe_point_parameter(SPItem *item, SPObject *lpeobject, const char * key);
+    void set_knotholder(SPKnotHolder * knot_holder);
     void reset_item ();
     void unset_item ();
 

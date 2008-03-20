@@ -16,6 +16,8 @@
 
 #include "live_effects/parameter/parameter.h"
 
+#include "knot-enums.h"
+
 namespace Inkscape {
 
 namespace LivePathEffect {
@@ -45,6 +47,8 @@ public:
 
     virtual void param_transform_multiply(Geom::Matrix const& /*postmul*/, bool /*set*/);
 
+    void set_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint32 color);
+
 private:
     PointParam(const PointParam&);
     PointParam& operator=(const PointParam&);
@@ -52,6 +56,10 @@ private:
     void on_button_click();
 
     Geom::Point defvalue;
+
+    SPKnotShapeType knot_shape;
+    SPKnotModeType knot_mode;
+    guint32 knot_color;
 };
 
 
