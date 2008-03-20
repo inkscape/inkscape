@@ -577,10 +577,16 @@ ENDSEC
   0
 SECTION
   2
+ENTITIES
 '''
 
 
-r14_footer = '''OBJECTS
+r14_footer = '''  0
+ENDSEC
+  0
+SECTION
+  2
+OBJECTS
   0
 DICTIONARY
   5
