@@ -18,11 +18,13 @@ namespace LivePathEffect {
 
 LPEdoEffectStackTest::LPEdoEffectStackTest(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    step(_("Stack step"), (""), "step", &wr, this),
-    point(_("point param"), "", "point_param", &wr, this)
+    step(_("Stack step"), ("How deep we should go into the stack"), "step", &wr, this),
+    point(_("point param"), "tooltip of point parameter", "point_param", &wr, this)
 {
     registerParameter( dynamic_cast<Parameter *>(&step) );
     registerParameter( dynamic_cast<Parameter *>(&point) );
+
+    point.set_oncanvas_looks(SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR, 0x00ff0000);
 }
 
 LPEdoEffectStackTest::~LPEdoEffectStackTest()
