@@ -280,7 +280,7 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
         dc->white_item = item;
         /* Curve list */
         /* We keep it in desktop coordinates to eliminate calculation errors */
-        SPCurve *norm = sp_shape_get_curve(SP_SHAPE(item));
+        SPCurve *norm = sp_path_get_curve_for_edit (SP_PATH(item));
         sp_curve_transform(norm, sp_item_i2d_affine(dc->white_item));
         g_return_if_fail( norm != NULL );
         dc->white_curves = g_slist_reverse(sp_curve_split(norm));
@@ -524,9 +524,13 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
     if ( c && !sp_curve_empty(c) ) {
         /* We actually have something to write */
 
+        bool has_lpe = false;
         Inkscape::XML::Node *repr;
         if (dc->white_item) {
             repr = SP_OBJECT_REPR(dc->white_item);
+            LivePathEffectObject *lpeobj = sp_shape_get_livepatheffectobject(SP_SHAPE(dc->white_item));
+            if (lpeobj) 
+                has_lpe = true;
         } else {
             repr = xml_doc->createElement("svg:path");
             /* Set style */
@@ -535,7 +539,10 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
 
         gchar *str = sp_svg_write_path(SP_CURVE_BPATH(c));
         g_assert( str != NULL );
-        repr->setAttribute("d", str);
+        if (has_lpe)
+            repr->setAttribute("inkscape:original-d", str);
+        else
+            repr->setAttribute("d", str);
         g_free(str);
 
         if (!dc->white_item) {
@@ -549,6 +556,13 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
 
         sp_document_done(doc, SP_IS_PEN_CONTEXT(dc)? SP_VERB_CONTEXT_PEN : SP_VERB_CONTEXT_PENCIL, 
                          _("Draw path"));
+
+        // When quickly drawing several subpaths with Shift, the next subpath may be finished and
+        // flushed before the selection_modified signal is fired by the previous change, which
+        // results in the tool losing all of the selected path's curve except that last subpath. To
+        // fix this, we force the selection_modified callback now, to make sure the tool's curve is
+        // in sync immediately.
+        spdc_selection_modified(sp_desktop_selection(desktop), 0, dc);
     }
 
     sp_curve_unref(c);
