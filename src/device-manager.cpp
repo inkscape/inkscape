@@ -8,6 +8,7 @@
  */
 
 #include <glib.h>
+#include <map>
 
 #include "device-manager.h"
 
@@ -19,17 +20,39 @@ static GList* fakeList = 0;
 
 namespace Inkscape {
 
-InputDevice::InputDevice() {}
+using std::pair;
+
+static pair<gint, gint> vals[] = {
+    pair<gint, gint>(0, 1), pair<gint, gint>(1, 1 << 1), pair<gint, gint>(2, 1 << 2), pair<gint, gint>(3, 1 << 3),
+    pair<gint, gint>(4, 1 << 4), pair<gint, gint>(5, 1 << 5), pair<gint, gint>(6, 1 << 6), pair<gint, gint>(7, 1 << 7),
+    pair<gint, gint>(8, 1 << 8), pair<gint, gint>(9, 1 << 9), pair<gint, gint>(10, 1 << 10), pair<gint, gint>(11, 1 << 11),
+    pair<gint, gint>(12, 1 << 12), pair<gint, gint>(13, 1 << 13), pair<gint, gint>(14, 1 << 14), pair<gint, gint>(15, 1 << 15),
+    pair<gint, gint>(16, 1 << 16), pair<gint, gint>(17, 1 << 17), pair<gint, gint>(18, 1 << 18), pair<gint, gint>(19, 1 << 19),
+    pair<gint, gint>(20, 1 << 20), pair<gint, gint>(21, 1 << 21), pair<gint, gint>(22, 1 << 22), pair<gint, gint>(23, 1 << 23)
+};
+static std::map<gint, gint> bitVals(vals, &vals[G_N_ELEMENTS(vals)]);
+
+
+InputDevice::InputDevice()
+    : Glib::Object()
+{}
+
 InputDevice::~InputDevice() {}
 
 class InputDeviceImpl : public InputDevice {
 public:
-    virtual Glib::ustring getName() const {return Glib::ustring(device->name);}
-    virtual Gdk::InputSource getSource() const {return static_cast<Gdk::InputSource>(device->source);}
+    virtual Glib::ustring getId() const {return id;}
+    virtual Glib::ustring getName() const {return name;}
+    virtual Gdk::InputSource getSource() const {return source;}
     virtual Gdk::InputMode getMode() const {return static_cast<Gdk::InputMode>(device->mode);}
     virtual bool hasCursor() const {return device->has_cursor;}
     virtual gint getNumAxes() const {return device->num_axes;}
     virtual gint getNumKeys() const {return device->num_keys;}
+    virtual Glib::ustring getLink() const {return link;}
+    virtual void setLink( Glib::ustring const& link ) {this->link = link;}
+    virtual gint getLiveButtons() const {return liveButtons;}
+    virtual void setLiveButtons(gint buttons) {liveButtons = buttons;}
+
 
     InputDeviceImpl(GdkDevice* device);
     virtual ~InputDeviceImpl() {}
@@ -39,12 +62,57 @@ private:
     void operator=(InputDeviceImpl const &); // no assign
 
     GdkDevice* device;
+    Glib::ustring id;
+    Glib::ustring name;
+    Gdk::InputSource source;
+    Glib::ustring link;
+    guint liveButtons;
+};
+
+class IdMatcher : public std::unary_function<InputDeviceImpl*, bool> {
+public:
+    IdMatcher(Glib::ustring const& target):target(target) {}
+    bool operator ()(InputDeviceImpl* dev) {return dev && (target == dev->getId());}
+
+private:
+    Glib::ustring const& target;
+};
+
+class LinkMatcher : public std::unary_function<InputDeviceImpl*, bool> {
+public:
+    LinkMatcher(Glib::ustring const& target):target(target) {}
+    bool operator ()(InputDeviceImpl* dev) {return dev && (target == dev->getLink());}
+
+private:
+    Glib::ustring const& target;
 };
 
 InputDeviceImpl::InputDeviceImpl(GdkDevice* device)
     : InputDevice(),
-      device(device)
+      device(device),
+      id(),
+      name(device->name ? device->name : ""),
+      source(static_cast<Gdk::InputSource>(device->source)),
+      link(),
+      liveButtons(0)
 {
+    switch ( source ) {
+        case Gdk::SOURCE_MOUSE:
+            id = "M:";
+            break;
+        case Gdk::SOURCE_CURSOR:
+            id = "C:";
+            break;
+        case Gdk::SOURCE_PEN:
+            id = "P:";
+            break;
+        case Gdk::SOURCE_ERASER:
+            id = "E:";
+            break;
+        default:
+            id = "?:";
+    }
+    id += name;
 }
 
 
@@ -58,10 +126,20 @@ class DeviceManagerImpl : public DeviceManager {
 public:
     DeviceManagerImpl();
     virtual std::list<InputDevice const *> getDevices();
+    virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalDeviceChanged();
+    virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalButtonsChanged();
+    virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalLinkChanged();
+
+    virtual void addButton(Glib::ustring const & id, gint button);
+    virtual void setLinkedTo(Glib::ustring const & id, Glib::ustring const& link);
 
 protected:
     std::list<InputDeviceImpl*> devices;
+    sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalDeviceChangedPriv;
+    sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalButtonsChangedPriv;
+    sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalLinkChangedPriv;
 };
+
 
 DeviceManagerImpl::DeviceManagerImpl() :
     DeviceManager(),
@@ -96,9 +174,87 @@ std::list<InputDevice const *> DeviceManagerImpl::getDevices()
 }
 
 
+sigc::signal<void, const Glib::RefPtr<InputDevice>& > DeviceManagerImpl::signalDeviceChanged()
+{
+    return signalDeviceChangedPriv;
+}
+
+sigc::signal<void, const Glib::RefPtr<InputDevice>& > DeviceManagerImpl::signalButtonsChanged()
+{
+    return signalButtonsChangedPriv;
+}
+
+sigc::signal<void, const Glib::RefPtr<InputDevice>& > DeviceManagerImpl::signalLinkChanged()
+{
+    return signalLinkChangedPriv;
+}
+
+void DeviceManagerImpl::addButton(Glib::ustring const & id, gint button)
+{
+    if ( button >= 0 && button < static_cast<gint>(bitVals.size()) ) {
+        std::list<InputDeviceImpl*>::iterator it = std::find_if(devices.begin(), devices.end(), IdMatcher(id));
+        if ( it != devices.end() ) {
+            gint mask = bitVals[button];
+            if ( (mask & (*it)->getLiveButtons()) == 0 ) {
+                (*it)->setLiveButtons((*it)->getLiveButtons() | mask);
+
+                // Only signal if a new button was added
+                (*it)->reference();
+                signalButtonsChangedPriv.emit(Glib::RefPtr<InputDevice>(*it));
+            }
+        }
+    }
+}
+
+
+void DeviceManagerImpl::setLinkedTo(Glib::ustring const & id, Glib::ustring const& link)
+{
+    std::list<InputDeviceImpl*>::iterator it = std::find_if(devices.begin(), devices.end(), IdMatcher(id));
+    if ( it != devices.end() ) {
+        InputDeviceImpl* dev = *it;
+        // Need to be sure the target of the link exists
+        it = std::find_if(devices.begin(), devices.end(), IdMatcher(link));
+        if ( it != devices.end() ) {
+            InputDeviceImpl* targetDev = *it;
+            if ( (dev->getLink() != link) || (targetDev->getLink() != id) ) {
+                // only muck about if they aren't already linked
+                std::list<InputDeviceImpl*> changedItems;
+
+                // Is something else already using that link?
+                it = std::find_if(devices.begin(), devices.end(), LinkMatcher(link));
+                if ( it != devices.end() ) {
+                    (*it)->setLink("");
+                    changedItems.push_back(*it);
+                }
+                it = std::find_if(devices.begin(), devices.end(), LinkMatcher(id));
+                if ( it != devices.end() ) {
+                    (*it)->setLink("");
+                    changedItems.push_back(*it);
+                }
+                dev->setLink(link);
+                targetDev->setLink(id);
+                changedItems.push_back(targetDev);
+                changedItems.push_back(dev);
+
+                for ( std::list<InputDeviceImpl*>::const_iterator iter = changedItems.begin(); iter != changedItems.end(); ++iter ) {
+                    (*iter)->reference();
+                    signalLinkChangedPriv.emit(Glib::RefPtr<InputDevice>(*iter));
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
 static DeviceManagerImpl* theInstance = 0;
 
-DeviceManager::DeviceManager() {
+DeviceManager::DeviceManager()
+    : Glib::Object()
+{
 }
 
 DeviceManager::~DeviceManager() {
@@ -197,14 +353,23 @@ static void createFakeList() {
         fakeout[3].num_keys = 7;
         fakeout[3].keys = stylusKeys;
 
-        fakeout[4].name = "Core Pointer";
-        fakeout[4].source = GDK_SOURCE_MOUSE;
-        fakeout[4].mode = GDK_MODE_SCREEN;
-        fakeout[4].has_cursor = TRUE;
-        fakeout[4].num_axes = 2;
-        fakeout[4].axes = coreAxes;
-        fakeout[4].num_keys = 0;
-        fakeout[4].keys = NULL;
+// try to find the first *real* core pointer
+        GList* devList = gdk_devices_list();
+        while ( devList && devList->data && (((GdkDevice*)devList->data)->source != GDK_SOURCE_MOUSE) ) {
+            devList = g_list_next(devList);
+        }
+        if ( devList && devList->data ) {
+            fakeout[4] = *((GdkDevice*)devList->data);
+        } else {
+            fakeout[4].name = "Core Pointer";
+            fakeout[4].source = GDK_SOURCE_MOUSE;
+            fakeout[4].mode = GDK_MODE_SCREEN;
+            fakeout[4].has_cursor = TRUE;
+            fakeout[4].num_axes = 2;
+            fakeout[4].axes = coreAxes;
+            fakeout[4].num_keys = 0;
+            fakeout[4].keys = NULL;
+        }
 
         for ( guint pos = 0; pos < G_N_ELEMENTS(fakeout); pos++) {
             fakeList = g_list_append(fakeList, &(fakeout[pos]));

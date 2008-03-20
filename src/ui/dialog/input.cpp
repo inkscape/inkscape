@@ -1,6 +1,30 @@
 
 
 /* XPM */
+static char * core_xpm[] = {
+"16 16 4 1",
+" 	c None",
+".	c #808080",
+"+	c #000000",
+"@	c #FFFFFF",
+"                ",
+"                ",
+"                ",
+"    .++++++.    ",
+"    +@+@@+@+    ",
+"    +@+@@+@+    ",
+"    +.+..+.+    ",
+"    +@@@@@@+    ",
+"    +@@@@@@+    ",
+"    +@@@@@@+    ",
+"    +@@@@@@+    ",
+"    +@@@@@@+    ",
+"    .++++++.    ",
+"                ",
+"                ",
+"                "};
+
+/* XPM */
 static char *eraser[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 5 1",
@@ -268,6 +292,7 @@ public:
     virtual ~InputDialogImpl() {}
 
 private:
+    Glib::RefPtr<Gdk::Pixbuf> corePix;
     Glib::RefPtr<Gdk::Pixbuf> penPix;
     Glib::RefPtr<Gdk::Pixbuf> mousePix;
     Glib::RefPtr<Gdk::Pixbuf> tipPix;
@@ -298,7 +323,8 @@ private:
     Gtk::Label devAxesCount;
     Gtk::ComboBoxText axesCombo;
     Gtk::ComboBoxText buttonCombo;
-    Gtk::ComboBoxText modeCombo;
+    Gtk::ComboBoxText linkCombo;
+    sigc::connection linkConnection;
     Gtk::Label keyVal;
     Gtk::Entry keyEntry;
     Gtk::Table devDetails;
@@ -313,7 +339,11 @@ private:
     void updateTestButtons( Glib::ustring const& key, gint hotButton );
     Glib::ustring getKeyFor( GdkDevice* device );
     bool eventSnoop(GdkEvent* event);
-    void foo();
+    void linkComboChanged();
+    void resyncToSelection();
+    void handleDeviceChange(const Glib::RefPtr<InputDevice>& device);
+    void updateDeviceButtons(const Glib::RefPtr<InputDevice>& device);
+    void updateDeviceLinks(const Glib::RefPtr<InputDevice>& device);
 };
 
 
@@ -328,6 +358,7 @@ InputDialog &InputDialog::getInstance()
 InputDialogImpl::InputDialogImpl() :
     InputDialog(),
 
+    corePix(Gdk::Pixbuf::create_from_xpm_data(core_xpm)),
     penPix(Gdk::Pixbuf::create_from_xpm_data(pen)),
     mousePix(Gdk::Pixbuf::create_from_xpm_data(mouse)),
     tipPix(Gdk::Pixbuf::create_from_xpm_data(tip)),
@@ -350,7 +381,7 @@ InputDialogImpl::InputDialogImpl() :
     detailScroller(),
     splitter(),
     split2(),
-    modeCombo(),
+    linkCombo(),
     devDetails(6, 2),
     confSplitter(),
     topHolder(),
@@ -407,18 +438,17 @@ InputDialogImpl::InputDialogImpl() :
 
     rowNum++;
 
-    lbl = Gtk::manage(new Gtk::Label("Mode:"));
+    lbl = Gtk::manage(new Gtk::Label("Link:"));
     devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
 
-    modeCombo.append_text("Disabled");
-    modeCombo.append_text("Screen");
-    modeCombo.append_text("Window");
-    modeCombo.set_active_text("Disabled");
-    modeCombo.set_sensitive(false);
+    linkCombo.append_text("None");
+    linkCombo.set_active_text("None");
+    linkCombo.set_sensitive(false);
+    linkConnection = linkCombo.signal_changed().connect(sigc::mem_fun(*this, &InputDialogImpl::linkComboChanged));
 
-    devDetails.attach(modeCombo, 1, 2, rowNum, rowNum + 1,
+    devDetails.attach(linkCombo, 1, 2, rowNum, rowNum + 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
     rowNum++;
@@ -453,6 +483,7 @@ InputDialogImpl::InputDialogImpl() :
 
     rowNum++;
 
+/*
     lbl = Gtk::manage(new Gtk::Label("Actual button count:"));
     devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
@@ -462,6 +493,7 @@ InputDialogImpl::InputDialogImpl() :
                       ::Gtk::SHRINK);
 
     rowNum++;
+*/
 
     devDetails.attach(keyVal, 0, 2, rowNum, rowNum + 1,
                       ::Gtk::FILL,
@@ -508,14 +540,12 @@ InputDialogImpl::InputDialogImpl() :
 
     tree.set_enable_tree_lines();
     tree.set_headers_visible(false);
-    tree.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &InputDialogImpl::foo));
+    tree.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &InputDialogImpl::resyncToSelection));
 
 
 
     std::list<InputDevice const *> devList = Inkscape::DeviceManager::getManager().getDevices();
     if ( !devList.empty() ) {
-        g_message("Found some");
-
         {
             GdkModifierType  defaultModMask = static_cast<GdkModifierType>(gtk_accelerator_get_default_mod_mask());
             gchar* name = gtk_accelerator_name(GDK_a, defaultModMask);
@@ -538,11 +568,15 @@ InputDialogImpl::InputDialogImpl() :
                 g_message("device: name[%s] source[0x%x] mode[0x%x] cursor[%s] axis count[%d] key count[%d]", dev->getName().c_str(), dev->getSource(), dev->getMode(),
                           dev->hasCursor() ? "Yes":"no", dev->getNumAxes(), dev->getNumKeys());
 
-                if ( dev->getSource() != Gdk::SOURCE_MOUSE ) {
+//                 if ( dev->getSource() != Gdk::SOURCE_MOUSE ) {
+                if ( dev ) {
                     deviceRow = *(store->append(childrow.children()));
                     deviceRow[cols.description] = dev->getName();
                     deviceRow[cols.device] = dev;
                     switch ( dev->getSource() ) {
+                        case GDK_SOURCE_MOUSE:
+                            deviceRow[cols.thumbnail] = corePix;
+                            break;
                         case GDK_SOURCE_PEN:
                             if (deviceRow[cols.description] == "pad") {
                                 deviceRow[cols.thumbnail] = sidebuttonsPix;
@@ -567,13 +601,60 @@ InputDialogImpl::InputDialogImpl() :
     } else {
         g_message("NO DEVICES FOUND");
     }
-
+    Inkscape::DeviceManager::getManager().signalDeviceChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::handleDeviceChange));
+    Inkscape::DeviceManager::getManager().signalButtonsChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::updateDeviceButtons));
+    Inkscape::DeviceManager::getManager().signalLinkChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::updateDeviceLinks));
 
     tree.expand_all();
     show_all_children();
 }
 
-void InputDialogImpl::foo() {
+void InputDialogImpl::handleDeviceChange(const Glib::RefPtr<InputDevice>& /*device*/)
+{
+//     g_message("OUCH!!!! for %p  hits %s", &device, device->getId().c_str());
+}
+
+void InputDialogImpl::updateDeviceButtons(const Glib::RefPtr<InputDevice>& device)
+{
+    gint live = device->getLiveButtons();
+    std::set<guint> existing = buttonMap[device->getId()];
+    gint mask = 0x1;
+    for ( gint num = 0; num < 32; num++, mask <<= 1) {
+        if ( (mask & live) != 0 ) {
+            if ( existing.find(num) == existing.end() ) {
+                buttonMap[device->getId()].insert(num);
+            }
+        }
+    }
+    updateTestButtons(device->getId(), -1);
+}
+
+void InputDialogImpl::updateDeviceLinks(const Glib::RefPtr<InputDevice>& /*device*/)
+{
+//     g_message("Links!!!! for %p  hits %s  with link of %s", &device, device->getId().c_str(), device->getLink().c_str());
+}
+
+void InputDialogImpl::linkComboChanged() {
+    Glib::RefPtr<Gtk::TreeSelection> treeSel = tree.get_selection();
+    Gtk::TreeModel::iterator iter = treeSel->get_selected();
+    if (iter) {
+        Gtk::TreeModel::Row row = *iter;
+        Glib::ustring val = row[cols.description];
+        InputDevice const * dev = row[cols.device];
+        if ( dev ) {
+            Glib::ustring linkName = linkCombo.get_active_text();
+            std::list<InputDevice const *> devList = Inkscape::DeviceManager::getManager().getDevices();
+            for ( std::list<InputDevice const *>::const_iterator it = devList.begin(); it != devList.end(); ++it ) {
+                if ( linkName == (*it)->getName() ) {
+                    DeviceManager::getManager().setLinkedTo(dev->getId(), (*it)->getId());
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void InputDialogImpl::resyncToSelection() {
     bool clear = true;
     Glib::RefPtr<Gtk::TreeSelection> treeSel = tree.get_selection();
     Gtk::TreeModel::iterator iter = treeSel->get_selected();
@@ -583,20 +664,28 @@ void InputDialogImpl::foo() {
         InputDevice const * dev = row[cols.device];
         if ( dev ) {
             devDetails.set_sensitive(true);
-            modeCombo.set_sensitive(true);
-            switch( dev->getMode() ) {
-                case GDK_MODE_DISABLED:
-                    modeCombo.set_active(0);
-                    break;
-                case GDK_MODE_SCREEN:
-                    modeCombo.set_active(1);
-                    break;
-                case GDK_MODE_WINDOW:
-                    modeCombo.set_active(2);
-                    break;
-                default:
-                    ;
+
+            linkConnection.block();
+            linkCombo.clear_items();
+            linkCombo.append_text("None");
+            linkCombo.set_active(0);
+            if ( dev->getSource() != Gdk::SOURCE_MOUSE ) {
+                Glib::ustring linked = dev->getLink();
+                std::list<InputDevice const *> devList = Inkscape::DeviceManager::getManager().getDevices();
+                for ( std::list<InputDevice const *>::const_iterator it = devList.begin(); it != devList.end(); ++it ) {
+                    if ( ((*it)->getSource() != Gdk::SOURCE_MOUSE) && ((*it) != dev) ) {
+                        linkCombo.append_text((*it)->getName().c_str());
+                        if ( (linked.length() > 0) && (linked == (*it)->getId()) ) {
+                            linkCombo.set_active_text((*it)->getName().c_str());
+                        }
+                    }
+                }
+                linkCombo.set_sensitive(true);
+            } else {
+                linkCombo.set_sensitive(false);
             }
+            linkConnection.unblock();
+
             clear = false;
             devName.set_label(row[cols.description]);
             setupValueAndCombo( dev->getNumAxes(), dev->getNumAxes(), devAxesCount, axesCombo);
@@ -703,6 +792,7 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
                 if ( buttonMap[key].find(btnEvt->button) == buttonMap[key].end() ) {
                     g_message("New button found for %s = %d", key.c_str(), btnEvt->button);
                     buttonMap[key].insert(btnEvt->button);
+                    DeviceManager::getManager().addButton(key, btnEvt->button);
                 }
                 hotButton = modmod ? btnEvt->button : -1;
                 updateTestButtons(key, hotButton);
@@ -748,11 +838,10 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
 
 
     if ( (lastSourceSeen != source) || (lastDevnameSeen != devName) ) {
-        g_message("FLIPPIES  %d => %d", lastSourceSeen, source);
         switch (source) {
             case GDK_SOURCE_MOUSE:
             {
-                testThumb.set(mousePix);
+                testThumb.set(corePix);
             }
             break;
             case GDK_SOURCE_CURSOR:

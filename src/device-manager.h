@@ -16,14 +16,17 @@
 
 namespace Inkscape {
 
-class InputDevice {
+class InputDevice : public Glib::Object {
 public:
+    virtual Glib::ustring getId() const = 0;
     virtual Glib::ustring getName() const = 0;
     virtual Gdk::InputSource getSource() const = 0;
     virtual Gdk::InputMode getMode() const = 0;
     virtual bool hasCursor() const = 0;
     virtual gint getNumAxes() const = 0;
     virtual gint getNumKeys() const = 0;
+    virtual Glib::ustring getLink() const = 0;
+    virtual gint getLiveButtons() const = 0;
 
 protected:
     InputDevice();
@@ -34,11 +37,17 @@ private:
     void operator=(InputDevice const &); // no assign
 };
 
-class DeviceManager {
+class DeviceManager : public Glib::Object {
 public:
     static DeviceManager& getManager();
 
     virtual std::list<InputDevice const *> getDevices() = 0;
+    virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalDeviceChanged() = 0;
+    virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalButtonsChanged() = 0;
+    virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalLinkChanged() = 0;
+
+    virtual void addButton(Glib::ustring const & id, gint button) = 0;
+    virtual void setLinkedTo(Glib::ustring const & id, Glib::ustring const& link) = 0;
 
 protected:
     DeviceManager();
