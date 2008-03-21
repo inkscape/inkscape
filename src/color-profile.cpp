@@ -612,7 +612,7 @@ static void findThings() {
                                 ssize_t got = read(fd, scratch, len);
                                 if ( got != -1 ) {
                                     size_t calcSize = (scratch[0] << 24) | (scratch[1] << 16) | (scratch[2] << 8) | scratch[3];
-                                    if ( calcSize > 128 && calcSize <= st.st_size ) {
+                                    if ( calcSize > 128 && calcSize <= static_cast<size_t>(st.st_size) ) {
                                         isIccFile = (scratch[36] == 'a') && (scratch[37] == 'c') && (scratch[38] == 's') && (scratch[39] == 'p');
                                     }
                                 }
