@@ -47,9 +47,7 @@
 #include "dialogs/extensions.h"
 #include "dialogs/swatches.h"
 #include "dialogs/layers-panel.h"
-#ifndef USE_NEW_INPUT_DEVICES
 #include "dialogs/input.h"
-#endif
 
 #ifdef WITH_INKBOARD
 #include "jabber_whiteboard/session-manager.h"
@@ -1748,11 +1746,10 @@ DialogVerb::perform(SPAction *action, void *data, void */*pdata*/)
         }
 #endif
         case SP_VERB_DIALOG_INPUT:
-#ifdef USE_NEW_INPUT_DEVICES
-            dt->_dlg_mgr->showDialog("InputDevices");
-#else
             sp_input_dialog();
-#endif
+            break;
+        case SP_VERB_DIALOG_INPUT2:
+            dt->_dlg_mgr->showDialog("InputDevices");
             break;
         case SP_VERB_DIALOG_EXTENSIONEDITOR:
             dt->_dlg_mgr->showDialog("ExtensionEditor");
@@ -2556,6 +2553,8 @@ Verb *Verb::_base_verbs[] = {
                    N_("_Instant Messaging..."), N_("Jabber Instant Messaging Client"), NULL),
 #endif
     new DialogVerb(SP_VERB_DIALOG_INPUT, "DialogInput", N_("_Input Devices..."),
+                   N_("Configure extended input devices, such as a graphics tablet"), "input_devices"),
+    new DialogVerb(SP_VERB_DIALOG_INPUT2, "DialogInput2", N_("_Input Devices (new)..."),
                    N_("Configure extended input devices, such as a graphics tablet"), "input_devices"),
     new DialogVerb(SP_VERB_DIALOG_EXTENSIONEDITOR, "org.inkscape.dialogs.extensioneditor", N_("_Extensions..."),
                    N_("Query information about extensions"), NULL),

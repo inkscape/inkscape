@@ -238,6 +238,49 @@ static char *button_on[] = {
 "XXXXXXXX"
 };
 
+/* XPM */
+static char * axis_none_xpm[] = {
+"24 8 3 1",
+" 	c None",
+".	c #000000",
+"+	c #808080",
+"                        ",
+"  .++++++++++++++++++.  ",
+" .+               . .+. ",
+" +          . . .     + ",
+" +     . . .          + ",
+" .+. .               +. ",
+"  .++++++++++++++++++.  ",
+"                        "};
+/* XPM */
+static char * axis_off_xpm[] = {
+"24 8 4 1",
+" 	c None",
+".	c #808080",
+"+	c #000000",
+"@	c #FFFFFF",
+"                        ",
+"  .++++++++++++++++++.  ",
+" .+@@@@@@@@@@@@@@@@@@+. ",
+" +@@@@@@@@@@@@@@@@@@@@+ ",
+" +@@@@@@@@@@@@@@@@@@@@+ ",
+" .+@@@@@@@@@@@@@@@@@@+. ",
+"  .++++++++++++++++++.  ",
+"                        "};
+/* XPM */
+static char * axis_on_xpm[] = {
+"24 8 3 1",
+" 	c None",
+".	c #000000",
+"+	c #00FF00",
+"                        ",
+"  ....................  ",
+" ..++++++++++++++++++.. ",
+" .++++++++++++++++++++. ",
+" .++++++++++++++++++++. ",
+" ..++++++++++++++++++.. ",
+"  ....................  ",
+"                        "};
 
 
 
@@ -249,14 +292,15 @@ static char *button_on[] = {
 #include <glibmm/i18n.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/enums.h>
+#include <gtkmm/eventbox.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/image.h>
 #include <gtkmm/menubar.h>
 #include <gtkmm/notebook.h>
 #include <gtkmm/paned.h>
+#include <gtkmm/progressbar.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/table.h>
-#include <gtkmm/eventbox.h>
 #include <gtkmm/treemodel.h>
 #include <gtkmm/treemodelcolumn.h>
 #include <gtkmm/treestore.h>
@@ -304,7 +348,12 @@ private:
     Glib::RefPtr<Gdk::Pixbuf> buttonsOnPix;
     Glib::RefPtr<Gdk::Pixbuf> buttonsOffPix;
 
+    Glib::RefPtr<Gdk::Pixbuf> axisNonePix;
+    Glib::RefPtr<Gdk::Pixbuf> axisOnPix;
+    Glib::RefPtr<Gdk::Pixbuf> axisOffPix;
+
     std::map<Glib::ustring, std::set<guint> > buttonMap;
+    std::map<Glib::ustring, std::map<guint, std::pair<guint, gdouble> > > axesMap;
 
     GdkInputSource lastSourceSeen;
     Glib::ustring lastDevnameSeen;
@@ -322,6 +371,7 @@ private:
     Gtk::Label devKeyCount;
     Gtk::Label devAxesCount;
     Gtk::ComboBoxText axesCombo;
+    Gtk::ProgressBar axesValues[6];
     Gtk::ComboBoxText buttonCombo;
     Gtk::ComboBoxText linkCombo;
     sigc::connection linkConnection;
@@ -332,11 +382,14 @@ private:
     Gtk::Notebook topHolder;
     Gtk::Image testThumb;
     Gtk::Image testButtons[24];
+    Gtk::Image testAxes[8];
     Gtk::Table imageTable;
     Gtk::EventBox testDetector;
 
     void setupValueAndCombo( gint reported, gint actual, Gtk::Label& label, Gtk::ComboBoxText& combo );
     void updateTestButtons( Glib::ustring const& key, gint hotButton );
+    void updateTestAxes( Glib::ustring const& key, GdkDevice* dev );
+    void mapAxesValues( Glib::ustring const& key, guint numAxes, gdouble const * axes, GdkDevice* dev);
     Glib::ustring getKeyFor( GdkDevice* device );
     bool eventSnoop(GdkEvent* event);
     void linkComboChanged();
@@ -370,6 +423,10 @@ InputDialogImpl::InputDialogImpl() :
     buttonsOnPix(Gdk::Pixbuf::create_from_xpm_data(button_on)),
     buttonsOffPix(Gdk::Pixbuf::create_from_xpm_data(button_off)),
 
+    axisNonePix(Gdk::Pixbuf::create_from_xpm_data(axis_none_xpm)),
+    axisOnPix(Gdk::Pixbuf::create_from_xpm_data(axis_on_xpm)),
+    axisOffPix(Gdk::Pixbuf::create_from_xpm_data(axis_off_xpm)),
+
     lastSourceSeen((GdkInputSource)-1),
     lastDevnameSeen(""),
     cols(),
@@ -382,10 +439,10 @@ InputDialogImpl::InputDialogImpl() :
     splitter(),
     split2(),
     linkCombo(),
-    devDetails(6, 2),
+    devDetails(12, 2),
     confSplitter(),
     topHolder(),
-    imageTable(8, 4)
+    imageTable(8, 7)
 {
     Gtk::Box *contents = _getContents();
 
@@ -405,11 +462,22 @@ InputDialogImpl::InputDialogImpl() :
     {
         guint col = 0;
         guint row = 1;
-        for ( guint num = 0; num < 24; num++ ) {
+        for ( guint num = 0; num < G_N_ELEMENTS(testButtons); num++ ) {
             testButtons[num].set(buttonsNonePix);
             imageTable.attach(testButtons[num], col, col + 1, row, row + 1, ::Gtk::FILL, ::Gtk::FILL);
             col++;
             if (col > 7) {
+                col = 0;
+                row++;
+            }
+        }
+
+        col = 0;
+        for ( guint num = 0; num < G_N_ELEMENTS(testAxes); num++ ) {
+            testAxes[num].set(axisNonePix);
+            imageTable.attach(testAxes[num], col * 2, (col + 1) * 2, row, row + 1, ::Gtk::FILL, ::Gtk::FILL);
+            col++;
+            if (col > 3) {
                 col = 0;
                 row++;
             }
@@ -472,6 +540,19 @@ InputDialogImpl::InputDialogImpl() :
                       ::Gtk::SHRINK);
 
     rowNum++;
+
+    for ( guint barNum = 0; barNum < static_cast<guint>(G_N_ELEMENTS(axesValues)); barNum++ ) {
+        lbl = Gtk::manage(new Gtk::Label("axis:"));
+        devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
+                          ::Gtk::FILL,
+                          ::Gtk::SHRINK);
+        devDetails.attach(axesValues[barNum], 1, 2, rowNum, rowNum + 1,
+                          ::Gtk::EXPAND,
+                          ::Gtk::SHRINK);
+        axesValues[barNum].set_sensitive(false);
+
+        rowNum++;
+    }
 
     lbl = Gtk::manage(new Gtk::Label("Reported button count:"));
     devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
@@ -546,15 +627,6 @@ InputDialogImpl::InputDialogImpl() :
 
     std::list<InputDevice const *> devList = Inkscape::DeviceManager::getManager().getDevices();
     if ( !devList.empty() ) {
-        {
-            GdkModifierType  defaultModMask = static_cast<GdkModifierType>(gtk_accelerator_get_default_mod_mask());
-            gchar* name = gtk_accelerator_name(GDK_a, defaultModMask);
-            gchar* label = gtk_accelerator_get_label(GDK_a, defaultModMask);
-            g_message("Name: [%s]  label:[%s]", name, label);
-            g_free(name);
-            g_free(label);
-        }
-
         row = *(store->append());
         row[cols.description] = "Hardware";
 
@@ -565,8 +637,8 @@ InputDialogImpl::InputDialogImpl() :
         for ( std::list<InputDevice const *>::iterator it = devList.begin(); it != devList.end(); ++it ) {
             InputDevice const* dev = *it;
             if ( dev ) {
-                g_message("device: name[%s] source[0x%x] mode[0x%x] cursor[%s] axis count[%d] key count[%d]", dev->getName().c_str(), dev->getSource(), dev->getMode(),
-                          dev->hasCursor() ? "Yes":"no", dev->getNumAxes(), dev->getNumKeys());
+//                 g_message("device: name[%s] source[0x%x] mode[0x%x] cursor[%s] axis count[%d] key count[%d]", dev->getName().c_str(), dev->getSource(), dev->getMode(),
+//                           dev->hasCursor() ? "Yes":"no", dev->getNumAxes(), dev->getNumKeys());
 
 //                 if ( dev->getSource() != Gdk::SOURCE_MOUSE ) {
                 if ( dev ) {
@@ -599,7 +671,7 @@ InputDialogImpl::InputDialogImpl() :
             }
         }
     } else {
-        g_message("NO DEVICES FOUND");
+        g_warning("No devices found");
     }
     Inkscape::DeviceManager::getManager().signalDeviceChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::handleDeviceChange));
     Inkscape::DeviceManager::getManager().signalButtonsChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::updateDeviceButtons));
@@ -721,7 +793,7 @@ void InputDialogImpl::setupValueAndCombo( gint reported, gint actual, Gtk::Label
 
 void InputDialogImpl::updateTestButtons( Glib::ustring const& key, gint hotButton )
 {
-    for ( gint i = 0; i < 24; i++ ) {
+    for ( gint i = 0; i < static_cast<gint>(G_N_ELEMENTS(testButtons)); i++ ) {
         if ( buttonMap[key].find(i) != buttonMap[key].end() ) {
             if ( i == hotButton ) {
                 testButtons[i].set(buttonsOnPix);
@@ -732,6 +804,114 @@ void InputDialogImpl::updateTestButtons( Glib::ustring const& key, gint hotButto
             testButtons[i].set(buttonsNonePix);
         }
     }
+}
+
+void InputDialogImpl::updateTestAxes( Glib::ustring const& key, GdkDevice* dev )
+{
+    static gdouble epsilon = 0.0001;
+    {
+        Glib::RefPtr<Gtk::TreeSelection> treeSel = tree.get_selection();
+        Gtk::TreeModel::iterator iter = treeSel->get_selected();
+        if (iter) {
+            Gtk::TreeModel::Row row = *iter;
+            Glib::ustring val = row[cols.description];
+            InputDevice const * idev = row[cols.device];
+            if ( !idev || (idev->getId() != key) ) {
+                dev = 0;
+            }
+        }
+    }
+
+
+    for ( gint i = 0; i < static_cast<gint>(G_N_ELEMENTS(testAxes)); i++ ) {
+        if ( axesMap[key].find(i) != axesMap[key].end() ) {
+            switch ( axesMap[key][i].first ) {
+                case 0:
+                case 1:
+                    testAxes[i].set(axisNonePix);
+                    if ( dev && (i < static_cast<gint>(G_N_ELEMENTS(axesValues)) ) ) {
+                        axesValues[i].set_sensitive(false);
+                    }
+                    break;
+                case 2:
+                    testAxes[i].set(axisOffPix);
+                    axesValues[i].set_sensitive(true);
+                    if ( dev && (i < static_cast<gint>(G_N_ELEMENTS(axesValues)) ) ) {
+                        if ( (dev->axes[i].max - dev->axes[i].min) > epsilon ) {
+                            axesValues[i].set_sensitive(true);
+                            axesValues[i].set_fraction( (axesMap[key][i].second- dev->axes[i].min) / (dev->axes[i].max - dev->axes[i].min) );
+                        }
+                    }
+                    break;
+                case 3:
+                    testAxes[i].set(axisOnPix);
+                    axesValues[i].set_sensitive(true);
+                    if ( dev && (i < static_cast<gint>(G_N_ELEMENTS(axesValues)) ) ) {
+                        if ( (dev->axes[i].max - dev->axes[i].min) > epsilon ) {
+                            axesValues[i].set_sensitive(true);
+                            axesValues[i].set_fraction( (axesMap[key][i].second- dev->axes[i].min) / (dev->axes[i].max - dev->axes[i].min) );
+                        }
+                    }
+            }
+
+        } else {
+            testAxes[i].set(axisNonePix);
+        }
+    }
+    if ( !dev ) {
+        for ( gint i = 0; i < static_cast<gint>(G_N_ELEMENTS(axesValues)); i++ ) {
+            axesValues[i].set_fraction(0.0);
+            axesValues[i].set_sensitive(false);
+        }
+    }
+}
+
+void InputDialogImpl::mapAxesValues( Glib::ustring const& key, guint numAxes, gdouble const * axes, GdkDevice* dev )
+{
+    static gdouble epsilon = 0.0001;
+    if ( (numAxes > 0) && axes) {
+        for ( guint axesNum = 0; axesNum < numAxes; axesNum++ ) {
+            // 0 == new, 1 == set value, 2 == changed value, 3 == active
+            gdouble diff = axesMap[key][axesNum].second - axes[axesNum];
+            switch(axesMap[key][axesNum].first) {
+                case 0:
+                {
+                    axesMap[key][axesNum].first = 1;
+                    axesMap[key][axesNum].second = axes[axesNum];
+                }
+                break;
+                case 1:
+                {
+                    if ( (diff > epsilon) || (diff < -epsilon) ) {
+//                         g_message("Axis %d changed on %s]", axesNum, key.c_str());
+                        axesMap[key][axesNum].first = 3;
+                        axesMap[key][axesNum].second = axes[axesNum];
+                        updateTestAxes(key, dev);
+                    }
+                }
+                break;
+                case 2:
+                {
+                    if ( (diff > epsilon) || (diff < -epsilon) ) {
+                        axesMap[key][axesNum].first = 3;
+                        axesMap[key][axesNum].second = axes[axesNum];
+                        updateTestAxes(key, dev);
+                    }
+                }
+                break;
+                case 3:
+                {
+                    if ( (diff > epsilon) || (diff < -epsilon) ) {
+                        axesMap[key][axesNum].second = axes[axesNum];
+                    } else {
+                        axesMap[key][axesNum].first = 2;
+                        updateTestAxes(key, dev);
+                    }
+                }
+            }
+        }
+    }
+    // std::map<Glib::ustring, std::map<guint, std::pair<guint, gdouble> > > axesMap;
 }
 
 Glib::ustring InputDialogImpl::getKeyFor( GdkDevice* device )
@@ -774,7 +954,7 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
             GdkEventKey* keyEvt = reinterpret_cast<GdkEventKey*>(event);
             gchar* name = gtk_accelerator_name(keyEvt->keyval, static_cast<GdkModifierType>(keyEvt->state));
             keyVal.set_label(name);
-            g_message("%d KEY    state:0x%08x  0x%04x [%s]", keyEvt->type, keyEvt->state, keyEvt->keyval, name);
+//             g_message("%d KEY    state:0x%08x  0x%04x [%s]", keyEvt->type, keyEvt->state, keyEvt->keyval, name);
             g_free(name);
         }
         break;
@@ -789,8 +969,9 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
                 source = btnEvt->device->source;
                 devName = btnEvt->device->name;
 
+                mapAxesValues(key, btnEvt->device->num_axes, btnEvt->axes, btnEvt->device);
                 if ( buttonMap[key].find(btnEvt->button) == buttonMap[key].end() ) {
-                    g_message("New button found for %s = %d", key.c_str(), btnEvt->button);
+//                     g_message("New button found for %s = %d", key.c_str(), btnEvt->button);
                     buttonMap[key].insert(btnEvt->button);
                     DeviceManager::getManager().addButton(key, btnEvt->button);
                 }
@@ -799,13 +980,13 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
             }
             gchar* name = gtk_accelerator_name(0, static_cast<GdkModifierType>(btnEvt->state));
             keyVal.set_label(name);
-            g_message("%d BTN    state:0x%08x %c  %4d [%s] dev:%p [%s]  ",
-                      btnEvt->type, btnEvt->state,
-                      (modmod ? '+':'-'),
-                      btnEvt->button, name, btnEvt->device,
-                      (btnEvt->device ? btnEvt->device->name : "null")
+//             g_message("%d BTN    state:0x%08x %c  %4d [%s] dev:%p [%s]  ",
+//                       btnEvt->type, btnEvt->state,
+//                       (modmod ? '+':'-'),
+//                       btnEvt->button, name, btnEvt->device,
+//                       (btnEvt->device ? btnEvt->device->name : "null")
 
-                );
+//                 );
             g_free(name);
         }
         break;
@@ -816,19 +997,20 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
                 key = getKeyFor(btnMtn->device);
                 source = btnMtn->device->source;
                 devName = btnMtn->device->name;
+                mapAxesValues(key, btnMtn->device->num_axes, btnMtn->axes, btnMtn->device);
             }
             gchar* name = gtk_accelerator_name(0, static_cast<GdkModifierType>(btnMtn->state));
             keyVal.set_label(name);
-            g_message("%d MOV    state:0x%08x         [%s] dev:%p [%s] %3.2f %3.2f %3.2f %3.2f %3.2f %3.2f", btnMtn->type, btnMtn->state,
-                      name, btnMtn->device,
-                      (btnMtn->device ? btnMtn->device->name : "null"),
-                      ((btnMtn->device && btnMtn->axes && (btnMtn->device->num_axes > 0)) ? btnMtn->axes[0]:0),
-                      ((btnMtn->device && btnMtn->axes && (btnMtn->device->num_axes > 1)) ? btnMtn->axes[1]:0),
-                      ((btnMtn->device && btnMtn->axes && (btnMtn->device->num_axes > 2)) ? btnMtn->axes[2]:0),
-                      ((btnMtn->device && btnMtn->axes && (btnMtn->device->num_axes > 3)) ? btnMtn->axes[3]:0),
-                      ((btnMtn->device && btnMtn->axes && (btnMtn->device->num_axes > 4)) ? btnMtn->axes[4]:0),
-                      ((btnMtn->device && btnMtn->axes && (btnMtn->device->num_axes > 5)) ? btnMtn->axes[5]:0)
-                );
+//             g_message("%d MOV    state:0x%08x         [%s] dev:%p [%s] %3.2f %3.2f %3.2f %3.2f %3.2f %3.2f", btnMtn->type, btnMtn->state,
+//                       name, btnMtn->device,
+//                       (btnMtn->device ? btnMtn->device->name : "null"),
+//                       ((btnMtn->device && btnMtn->axes && (btnMtn->device->num_axes > 0)) ? btnMtn->axes[0]:0),
+//                       ((btnMtn->device && btnMtn->axes && (btnMtn->device->num_axes > 1)) ? btnMtn->axes[1]:0),
+//                       ((btnMtn->device && btnMtn->axes && (btnMtn->device->num_axes > 2)) ? btnMtn->axes[2]:0),
+//                       ((btnMtn->device && btnMtn->axes && (btnMtn->device->num_axes > 3)) ? btnMtn->axes[3]:0),
+//                       ((btnMtn->device && btnMtn->axes && (btnMtn->device->num_axes > 4)) ? btnMtn->axes[4]:0),
+//                       ((btnMtn->device && btnMtn->axes && (btnMtn->device->num_axes > 5)) ? btnMtn->axes[5]:0)
+//                 );
             g_free(name);
         }
         break;
@@ -846,29 +1028,29 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
             break;
             case GDK_SOURCE_CURSOR:
             {
-                g_message("flip to cursor");
+//                 g_message("flip to cursor");
                 testThumb.set(mousePix);
             }
             break;
             case GDK_SOURCE_PEN:
             {
                 if (devName == "pad") {
-                    g_message("flip to pad");
+//                     g_message("flip to pad");
                     testThumb.set(sidebuttonsPix);
                 } else {
-                    g_message("flip to pen");
+//                     g_message("flip to pen");
                     testThumb.set(tipPix);
                 }
             }
             break;
             case GDK_SOURCE_ERASER:
             {
-                g_message("flip to eraser");
+//                 g_message("flip to eraser");
                 testThumb.set(eraserPix);
             }
             break;
-            default:
-                g_message("gurgle");
+//             default:
+//                 g_message("gurgle");
         }
         updateTestButtons(key, hotButton);
         lastSourceSeen = source;
