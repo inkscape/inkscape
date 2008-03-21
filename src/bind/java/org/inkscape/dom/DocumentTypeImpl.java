@@ -5,12 +5,12 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2007 Bob Jamison
+ * Copyright (c) 2007-2008 Inkscape.org
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
- *  version 2.1 of the License, or (at your option) any later version.
+ *  version 3 of the License, or (at your option) any later version.
  *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -20,74 +20,33 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ *  Note that these DOM files are implementations of the Java
+ *  interface package found here:
+ *      http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/java-binding.html
  */
 
 package org.inkscape.dom;
 
-import org.w3c.dom.*;
+import org.w3c.dom.NamedNodeMap;
 
 
 
-public class DocumentTypeImpl extends NodeImpl
+public class DocumentTypeImpl
+       extends NodeImpl
        implements org.w3c.dom.DocumentType
 {
 
+public native String getName();
 
-/**
- * A NamedNodeMap containing the general entities, both
- *  external and internal, declared in the DTD.
- */
-public NamedNodeMap getEntities()
-{
-    return null;
-}
+public native NamedNodeMap getEntities();
 
-/**
- * The internal subset as a string, or null if there is none.
- */
-public String getInternalSubset()
-{
-    return "";
-}
+public native NamedNodeMap getNotations();
 
-/**
- * The name of DTD; i.e., the name immediately following the
- *  DOCTYPE keyword.
- */
-public String getName()
-{
-    return "";
-}
+public native String getPublicId();
 
-/**
- * A NamedNodeMap containing the notations declared in the DTD.
- */
-public NamedNodeMap getNotations()
-{
-    return null;
-}
+public native String getSystemId();
 
-/**
- * The public identifier of the external subset.
- */
-public String getPublicId()
-{
-    return null;
-}
-
-/**
- * The system identifier of the external subset.
- */
-public String getSystemId()
-{
-    return "";
-}
-
-
-
-public DocumentTypeImpl()
-{
-    super();
-}
+public native String getInternalSubset();
 
 }

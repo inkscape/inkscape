@@ -5,12 +5,12 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2007 Bob Jamison
+ * Copyright (c) 2007-2008 Inkscape.org
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
- *  version 2.1 of the License, or (at your option) any later version.
+ *  version 3 of the License, or (at your option) any later version.
  *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -20,190 +20,92 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ *  Note that these DOM files are implementations of the Java
+ *  interface package found here:
+ *      http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/java-binding.html
  */
 
 package org.inkscape.dom;
 
-import org.w3c.dom.*;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Attr;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.TypeInfo;
 
 
 
-public class ElementImpl extends NodeImpl
-                implements org.w3c.dom.Element
+
+public class ElementImpl
+       extends NodeImpl
+       implements org.w3c.dom.Element
+
 {
 
+public native String getTagName();
 
-/**
- * Retrieves an attribute value by name.
- */
-public String getAttribute(String name)
-{
-    return "";
-}
+public native String getAttribute(String name);
 
-/**
- * Retrieves an attribute node by name.
- */
-public Attr getAttributeNode(String name)
-{
-    return null;
-}
+public native void setAttribute(String name,
+                         String value)
+                         throws DOMException;
 
-/**
- * Retrieves an Attr node by local name and namespace URI.
- */
-public Attr getAttributeNodeNS(String namespaceURI, String localName)
-{
-    return null;
-}
+public native void removeAttribute(String name)
+                            throws DOMException;
 
-/**
- * Retrieves an attribute value by local name and namespace URI.
- */
-public String getAttributeNS(String namespaceURI, String localName)
-{
-    return "";
-}
+public native Attr getAttributeNode(String name);
 
-/**
- * Returns a NodeList of all descendant Elements with a given
- * tag name, in document order.
- */
-public NodeList getElementsByTagName(String name)
-{
-    return null;
-}
+public native Attr setAttributeNode(Attr newAttr)
+                             throws DOMException;
 
-/**
- * Returns a NodeList of all the descendant Elements with a given
- *  local name and namespace URI in document order.
- */
-public NodeList getElementsByTagNameNS(String namespaceURI,
+public native Attr removeAttributeNode(Attr oldAttr)
+                                throws DOMException;
+
+public native NodeList getElementsByTagName(String name);
+
+public native String getAttributeNS(String namespaceURI,
+                             String localName)
+                             throws DOMException;
+
+public native void setAttributeNS(String namespaceURI,
+                           String qualifiedName,
+                           String value)
+                           throws DOMException;
+
+public native void removeAttributeNS(String namespaceURI,
+                              String localName)
+                              throws DOMException;
+
+public native Attr getAttributeNodeNS(String namespaceURI,
+                               String localName)
+                               throws DOMException;
+
+public native Attr setAttributeNodeNS(Attr newAttr)
+                               throws DOMException;
+
+public native NodeList getElementsByTagNameNS(String namespaceURI,
                                        String localName)
-{
-    return null;
-}
+                                       throws DOMException;
 
-/**
- * The type information associated with this element.
- */
-public TypeInfo getSchemaTypeInfo()
-{
-    return null;
-}
+public native boolean hasAttribute(String name);
 
-/**
- * The name of the element.
- */
-public String getTagName()
-{
-    return "";
-}
+public native boolean hasAttributeNS(String namespaceURI,
+                              String localName)
+                              throws DOMException;
 
-/**
- * Returns true when an attribute with a given name is
- * specified on this element or has a default value, false otherwise.
- */
-public boolean hasAttribute(String name)
-{
-    return false;
-}
+public native TypeInfo getSchemaTypeInfo();
 
-/**
- * Returns true when an attribute with a given local name and
- * namespace URI is specified on this element or has a default value,
- * false otherwise.
- */
-public boolean hasAttributeNS(String namespaceURI, String localName)
-{
-    return false;
-}
+public native void setIdAttribute(String name,
+                           boolean isId)
+                           throws DOMException;
 
-/**
- * Removes an attribute by name.
- */
-public void removeAttribute(String name)
-{
-}
+public native void setIdAttributeNS(String namespaceURI,
+                             String localName,
+                             boolean isId)
+                             throws DOMException;
 
-/**
- * Removes the specified attribute node.
- */
-public Attr removeAttributeNode(Attr oldAttr)
-{
-    return null;
-}
-
-/**
- * Removes an attribute by local name and namespace URI.
- */
-public void removeAttributeNS(String namespaceURI, String localName)
-{
-}
-
-/**
- * Adds a new attribute.
- */
-public void setAttribute(String name, String value)
-{
-}
-
-/**
- * Adds a new attribute node.
- */
-public Attr setAttributeNode(Attr newAttr)
-{
-    return null;
-}
-
-/**
- * Adds a new attribute.
- */
-public Attr setAttributeNodeNS(Attr newAttr)
-{
-    return null;
-}
-
-/**
- * Adds a new attribute.
- */
-public void setAttributeNS(String namespaceURI,
-                           String qualifiedName, String value)
-{
-}
-
-/**
- * If the parameter isId is true, this method declares the
- * specified attribute to be a user-determined ID attribute .
- */
-public void setIdAttribute(String name, boolean isId)
-{
-}
-
-/**
- * If the parameter isId is true, this method declares the
- * specified attribute to be a user-determined ID attribute .
- */
-public void setIdAttributeNode(Attr idAttr, boolean isId)
-{
-}
-
-/**
- * If the parameter isId is true, this method declares the specified
- * attribute to be a user-determined ID attribute .
- */
-public void setIdAttributeNS(String namespaceURI,
-                             String localName, boolean isId)
-{
-}
-
-
-
-public ElementImpl()
-{
-    super();
-}
-
-
+public native void setIdAttributeNode(Attr idAttr,
+                               boolean isId)
+                               throws DOMException;
 
 }
