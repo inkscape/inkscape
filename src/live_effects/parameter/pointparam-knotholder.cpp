@@ -160,86 +160,17 @@ void pointparam_knot_holder_add_full(
     sp_knot_show(e->knot);
 }
 
+static void pointparam_knot_clicked_handler(SPKnot */*knot*/, guint /*state*/, gpointer data)
+{
+    SPKnotHolder *knot_holder = (SPKnotHolder *) data;
+}
+
 /**
  * \param p In desktop coordinates.
  */
-
- // don't write to XML yet...
-//static
-void pointparam_knotholder_update_knots(PointParamKnotHolder *knot_holder, SPItem *item)
+static void pointparam_knot_moved_handler(SPKnot */*knot*/, NR::Point const */*p*/, guint /*state*/, gpointer data)
 {
-
-    NR::Matrix const i2d(sp_item_i2d_affine(item));
-/*
-    for (GSList *el = knot_holder->entity; el; el = el->next) {
-        SPKnotHolderEntity *e = (SPKnotHolderEntity *) el->data;
-        GObject *kob = e->knot;
-
-        NR::Point dp( e->knot_get(item) * i2d );
-        g_signal_handler_block(kob, e->handler_id);
-        sp_knot_set_position(e->knot, &dp, SP_KNOT_STATE_NORMAL);
-        g_signal_handler_unblock(kob, e->handler_id);
-    }
-    
-    knot_holder->lpeobject->lpe->setParameter(np->repr_key, svgpath);
-
-    knot_holder->lpeobject->requestModified(SP_OBJECT_MODIFIED_FLAG);
-*/
-}
-
-static void pointparam_knot_clicked_handler(SPKnot *knot, guint state, gpointer data)
-{
-
     SPKnotHolder *knot_holder = (SPKnotHolder *) data;
-    SPItem *item  = SP_ITEM (knot_holder->item);
-/*
-    g_object_ref(knot_holder);
-    for (GSList *el = knot_holder->entity; el; el = el->next) {
-        SPKnotHolderEntity *e = (SPKnotHolderEntity *) el->data;
-        if (e->knot == knot) {
-            if (e->knot_click) {
-                e->knot_click(item, state);
-            }
-            break;
-        }
-    }
-
-    if (SP_IS_SHAPE(item)) {
-        sp_shape_set_shape(SP_SHAPE(item));
-    }
-
-    knotholder_update_knots(knot_holder, item);
-    g_object_unref(knot_holder);
-
-    // for drag, this is done by ungrabbed_handler, but for click we must do it here
-    sp_document_done(SP_OBJECT_DOCUMENT(knot_holder->item), SP_VERB_CONTEXT_LPE, 
-                     _("Change LPE point parameter"));
-*/
-}
-
-static void pointparam_knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state, gpointer data)
-{
-
-    SPKnotHolder *knot_holder = (SPKnotHolder *) data;
-    SPItem *item  = SP_ITEM (knot_holder->item);
-/*    // this was a local change and the knotholder does not need to be recreated:
-    knot_holder->local_change = TRUE;
-
-    for (GSList *el = knot_holder->entity; el; el = el->next) {
-        SPKnotHolderEntity *e = (SPKnotHolderEntity *) el->data;
-        if (e->knot == knot) {
-            NR::Point const q = *p / sp_item_i2d_affine(item);
-            e->knot_set(item, q, e->knot->drag_origin / sp_item_i2d_affine(item), state);
-            break;
-        }
-    }
-
-    if (SP_IS_SHAPE (item)) {
-        sp_shape_set_shape(SP_SHAPE (item));
-    }
-
-    knotholder_update_knots(knot_holder, item);
-*/
 }
 
 static void pointparam_knot_ungrabbed_handler(SPKnot *knot, unsigned int /*state*/, PointParamKnotHolder *kh)
