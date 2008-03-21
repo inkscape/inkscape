@@ -197,7 +197,6 @@ private:
     NR::Point _current_point;
 
     bool const allow_relative_coordinates;
-    bool const allow_shorthands;
     bool const force_repeat_commands;
 };
 

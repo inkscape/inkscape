@@ -17,7 +17,6 @@
 
 Inkscape::SVG::PathString::PathString() :
     allow_relative_coordinates(0 != prefs_get_int_attribute("options.svgoutput", "allowrelativecoordinates", 1)),
-    allow_shorthands(0 != prefs_get_int_attribute("options.svgoutput", "allowshorthands", 1)),
     force_repeat_commands(0 != prefs_get_int_attribute("options.svgoutput", "forcerepeatcommands", 0))
 {}
 
