@@ -85,7 +85,7 @@ static void
 nr_arena_glyphs_init(NRArenaGlyphs *glyphs)
 {
     glyphs->style = NULL;
-    nr_matrix_set_identity(&glyphs->g_transform);
+    glyphs->g_transform.set_identity();
     glyphs->font = NULL;
     glyphs->glyph = 0;
 
@@ -138,15 +138,15 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL */*area*/, NRGC *gc, guint /*s
     bbox.x0 = bbox.y0 = NR_HUGE;
     bbox.x1 = bbox.y1 = -NR_HUGE;
 
-    float const scale = NR_MATRIX_DF_EXPANSION(&gc->transform);
+    float const scale = NR::expansion(gc->transform);
 
     if (!glyphs->style->fill.isNone()) {
-        NRMatrix t;
-        nr_matrix_multiply(&t, &glyphs->g_transform, &gc->transform);
-        glyphs->x = t.c[4];
-        glyphs->y = t.c[5];
-        t.c[4]=0;
-        t.c[5]=0;
+        NR::Matrix t;
+        t = glyphs->g_transform * gc->transform;
+        glyphs->x = t[4];
+        glyphs->y = t[5];
+        t[4]=0;
+        t[5]=0;
         rfont = glyphs->font->RasterFont(t, 0);
         if (glyphs->rfont) glyphs->rfont->Unref();
         glyphs->rfont = rfont;
@@ -163,12 +163,12 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL */*area*/, NRGC *gc, guint /*s
 
     if (!glyphs->style->stroke.isNone()) {
         /* Build state data */
-        NRMatrix t;
-        nr_matrix_multiply(&t, &glyphs->g_transform, &gc->transform);
-        glyphs->x = t.c[4];
-        glyphs->y = t.c[5];
-        t.c[4]=0;
-        t.c[5]=0;
+        NR::Matrix t;
+        t = glyphs->g_transform * gc->transform;
+        glyphs->x = t[4];
+        glyphs->y = t[5];
+        t[4]=0;
+        t[5]=0;
 
         if ( fabs(glyphs->style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
             font_style nstyl;
@@ -251,7 +251,7 @@ nr_arena_glyphs_pick(NRArenaItem *item, NR::Point p, gdouble /*delta*/, unsigned
 }
 
 void
-nr_arena_glyphs_set_path(NRArenaGlyphs *glyphs, SPCurve */*curve*/, unsigned int /*lieutenant*/, font_instance *font, gint glyph, NRMatrix const *transform)
+nr_arena_glyphs_set_path(NRArenaGlyphs *glyphs, SPCurve */*curve*/, unsigned int /*lieutenant*/, font_instance *font, gint glyph, NR::Matrix const *transform)
 {
     nr_return_if_fail(glyphs != NULL);
     nr_return_if_fail(NR_IS_ARENA_GLYPHS(glyphs));
@@ -261,7 +261,7 @@ nr_arena_glyphs_set_path(NRArenaGlyphs *glyphs, SPCurve */*curve*/, unsigned int
     if (transform) {
         glyphs->g_transform = *transform;
     } else {
-        nr_matrix_set_identity(&glyphs->g_transform);
+        glyphs->g_transform.set_identity();
     }
 
     if (font) font->Ref();
@@ -410,14 +410,14 @@ nr_arena_glyphs_group_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint s
     item->render_opacity = TRUE;
     if (group->style->fill.isPaintserver()) {
         group->fill_painter = sp_paint_server_painter_new(SP_STYLE_FILL_SERVER(group->style),
-                                                          NR::Matrix(&gc->transform), NR::Matrix(&gc->parent->transform),
+                                                          gc->transform, gc->parent->transform,
                                                           &group->paintbox);
         item->render_opacity = FALSE;
     }
 
     if (group->style->stroke.isPaintserver()) {
         group->stroke_painter = sp_paint_server_painter_new(SP_STYLE_STROKE_SERVER(group->style),
-                                                            NR::Matrix(&gc->transform), NR::Matrix(&gc->parent->transform),
+                                                            gc->transform, gc->parent->transform,
                                                             &group->paintbox);
         item->render_opacity = FALSE;
     }
@@ -603,7 +603,7 @@ nr_arena_glyphs_group_clear(NRArenaGlyphsGroup *sg)
 }
 
 void
-nr_arena_glyphs_group_add_component(NRArenaGlyphsGroup *sg, font_instance *font, int glyph, NRMatrix const *transform)
+nr_arena_glyphs_group_add_component(NRArenaGlyphsGroup *sg, font_instance *font, int glyph, NR::Matrix const *transform)
 {
     NRArenaGroup *group;
     NRBPath bpath;

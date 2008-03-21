@@ -615,7 +615,7 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
 
             font_instance *tface = fprev->rfont->daddy;
 
-            double theSize = NR_MATRIX_DF_EXPANSION (&fprev->rfont->style.transform);
+            double theSize = NR::expansion(fprev->rfont->style.transform);
 
             gchar const *p;
             if (fprev->phrase) {
@@ -794,8 +794,7 @@ void sp_font_preview_set_font(SPFontPreview *fprev, font_instance *font, SPFontS
 
         if (fprev->font)
         {
-            NRMatrix flip;
-            nr_matrix_set_scale (&flip, fsel->fontsize, -fsel->fontsize);
+            NR::Matrix flip(NR::scale(fsel->fontsize, -fsel->fontsize));
             fprev->rfont = fprev->font->RasterFont(flip, 0);
         }
 

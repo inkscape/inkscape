@@ -106,7 +106,7 @@ nr_arena_shape_init(NRArenaShape *shape)
     shape->paintbox.x0 = shape->paintbox.y0 = 0.0F;
     shape->paintbox.x1 = shape->paintbox.y1 = 256.0F;
 
-    nr_matrix_set_identity(&shape->ctm);
+    shape->ctm.set_identity();
     shape->fill_painter = NULL;
     shape->stroke_painter = NULL;
     shape->cached_fill = NULL;
@@ -120,8 +120,8 @@ nr_arena_shape_init(NRArenaShape *shape)
 
     shape->approx_bbox.x0 = shape->approx_bbox.y0 = 0;
     shape->approx_bbox.x1 = shape->approx_bbox.y1 = 0;
-    nr_matrix_set_identity(&shape->cached_fctm);
-    nr_matrix_set_identity(&shape->cached_sctm);
+    shape->cached_fctm.set_identity();
+    shape->cached_sctm.set_identity();
 
     shape->markers = NULL;
 
@@ -284,7 +284,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
         nr_path_matrix_bbox_union(&bp, gc->transform, &bbox);
         if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline) {
             float width, scale;
-            scale = NR_MATRIX_DF_EXPANSION(&gc->transform);
+            scale = NR::expansion(gc->transform);
             width = MAX(0.125, shape->_stroke.width * scale);
             if ( fabs(shape->_stroke.width * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
                 bbox.x0-=width;
@@ -311,7 +311,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
     if ( area && nr_rect_l_test_intersect(area, &shape->approx_bbox) ) shape->delayed_shp=false;
 
     /* Release state data */
-    if (TRUE || !nr_matrix_test_transform_equal(&gc->transform, &shape->ctm, NR_EPSILON)) {
+    if (TRUE || !NR::transform_equalp(gc->transform, shape->ctm, NR_EPSILON)) {
         /* Concept test */
         if (shape->fill_shp) {
             delete shape->fill_shp;
@@ -369,7 +369,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
     if ( shape->_fill.paint.type() == NRArenaShape::Paint::SERVER ) {
         if (gc && gc->parent) {
             shape->fill_painter = sp_paint_server_painter_new(shape->_fill.paint.server(),
-                                                              NR::Matrix(&gc->transform), NR::Matrix(&gc->parent->transform),
+                                                              gc->transform, gc->parent->transform,
                                                               &shape->paintbox);
         }
         item->render_opacity = FALSE;
@@ -377,7 +377,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
     if ( shape->_stroke.paint.type() == NRArenaShape::Paint::SERVER ) {
         if (gc && gc->parent) {
             shape->stroke_painter = sp_paint_server_painter_new(shape->_stroke.paint.server(),
-                                                                NR::Matrix(&gc->transform), NR::Matrix(&gc->parent->transform),
+                                                                gc->transform, gc->parent->transform,
                                                                 &shape->paintbox);
         }
         item->render_opacity = FALSE;
@@ -519,7 +519,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
 {
     SPStyle* style = shape->style;
 
-    float const scale = NR_MATRIX_DF_EXPANSION(&gc->transform);
+    float const scale = NR::expansion(gc->transform);
 
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
 
@@ -763,7 +763,7 @@ cairo_arena_shape_render_stroke(NRArenaItem *item, NRRectL *area, NRPixBlock *pb
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
     SPStyle const *style = shape->style;
 
-    float const scale = NR_MATRIX_DF_EXPANSION(shape->ctm);
+    float const scale = NR::expansion(shape->ctm);
 
     if (fabs(shape->_stroke.width * scale) < 0.01)
         return;
@@ -1095,7 +1095,7 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
     if (outline) {
         width = 0.5;
     } else if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE && shape->_stroke.opacity > 1e-3) {
-        float const scale = NR_MATRIX_DF_EXPANSION(&shape->ctm);
+        float const scale = NR::expansion(shape->ctm);
         width = MAX(0.125, shape->_stroke.width * scale) / 2;
     } else {
         width = 0;

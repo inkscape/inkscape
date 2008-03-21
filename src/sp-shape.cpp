@@ -799,13 +799,13 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 	if (!style->fill.isNone()) {
 		NRBPath bp;
 		bp.path = SP_CURVE_BPATH(shape->curve);
-		sp_print_fill (ctx, &bp, i2d, style, &pbox, &dbox, &bbox);
+		sp_print_fill (ctx, &bp, &i2d, style, &pbox, &dbox, &bbox);
 	}
 
 	if (!style->stroke.isNone()) {
 		NRBPath bp;
 		bp.path = SP_CURVE_BPATH(shape->curve);
-		sp_print_stroke (ctx, &bp, i2d, style, &pbox, &dbox, &bbox);
+		sp_print_stroke (ctx, &bp, &i2d, style, &pbox, &dbox, &bbox);
 	}
 
         for (NArtBpath* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {

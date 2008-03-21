@@ -16,6 +16,7 @@
 
 #include "display/nr-arena.h"
 #include "display/nr-arena-group.h"
+#include "libnr/nr-matrix-ops.h"
 #include <xml/repr.h>
 
 #include "enums.h"
@@ -219,10 +220,9 @@ sp_mask_update (SPObject *object, SPCtx *ctx, guint flags)
 	SPMask *mask = SP_MASK (object);
 	for (SPMaskView *v = mask->display; v != NULL; v = v->next) {
 		if (mask->maskContentUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX) {
-			NRMatrix t;
-			nr_matrix_set_scale (&t, v->bbox.x1 - v->bbox.x0, v->bbox.y1 - v->bbox.y0);
-			t.c[4] = v->bbox.x0;
-			t.c[5] = v->bbox.y0;
+            NR::Matrix t(NR::scale(v->bbox.x1 - v->bbox.x0, v->bbox.y1 - v->bbox.y0));
+			t[4] = v->bbox.x0;
+			t[5] = v->bbox.y0;
 			nr_arena_group_set_child_transform (NR_ARENA_GROUP (v->arenaitem), &t);
 		} else {
 			nr_arena_group_set_child_transform (NR_ARENA_GROUP (v->arenaitem), NULL);
@@ -325,10 +325,9 @@ sp_mask_show (SPMask *mask, NRArena *arena, unsigned int key)
 	}
 
 	if (mask->maskContentUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX) {
-		NRMatrix t;
-		nr_matrix_set_scale (&t, mask->display->bbox.x1 - mask->display->bbox.x0, mask->display->bbox.y1 - mask->display->bbox.y0);
-		t.c[4] = mask->display->bbox.x0;
-		t.c[5] = mask->display->bbox.y0;
+        NR::Matrix t(NR::scale(mask->display->bbox.x1 - mask->display->bbox.x0, mask->display->bbox.y1 - mask->display->bbox.y0));
+		t[4] = mask->display->bbox.x0;
+		t[5] = mask->display->bbox.y0;
 		nr_arena_group_set_child_transform (NR_ARENA_GROUP (ai), &t);
 	}
 

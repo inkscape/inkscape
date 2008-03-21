@@ -893,11 +893,10 @@ clonetiler_trace_pick (NR::Rect box)
     if (!trace_arena)
         return 0;
 
-    NRMatrix t;
-    nr_matrix_set_scale(&t, trace_zoom, trace_zoom);
+    NR::Matrix t(NR::scale(trace_zoom, trace_zoom));
     nr_arena_item_set_transform(trace_root, &t);
     NRGC gc(NULL);
-    nr_matrix_set_identity(&gc.transform);
+    gc.transform.set_identity();
     nr_arena_item_invoke_update( trace_root, NULL, &gc,
                                  NR_ARENA_ITEM_STATE_ALL,
                                  NR_ARENA_ITEM_STATE_NONE );
@@ -1481,7 +1480,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
 
             if (blur > 0.0) {
                 SPObject *clone_object = sp_desktop_document(desktop)->getObjectByRepr(clone);
-                double perimeter = perimeter_original * t.expansion();
+                double perimeter = perimeter_original * NR::expansion(t);
                 double radius = blur * perimeter;
                 // this is necessary for all newly added clones to have correct bboxes,
                 // otherwise filters won't work:
@@ -1489,7 +1488,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
                 // it's hard to figure out exact width/height of the tile without having an object
                 // that we can take bbox of; however here we only need a lower bound so that blur
                 // margins are not too small, and the perimeter should work
-                SPFilter *constructed = new_filter_gaussian_blur(sp_desktop_document(desktop), radius, t.expansion(), t.expansionX(), t.expansionY(), perimeter, perimeter);
+                SPFilter *constructed = new_filter_gaussian_blur(sp_desktop_document(desktop), radius, NR::expansion(t), NR::expansionX(t), NR::expansionY(t), perimeter, perimeter);
                 sp_style_set_property_url (clone_object, "filter", SP_OBJECT(constructed), false);
             }
 

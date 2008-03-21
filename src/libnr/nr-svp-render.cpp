@@ -9,8 +9,8 @@
  * This code is in public domain
  */
 
-#define NR_SVPSEG_Y0(s,i) ((s)->points[(s)->segments[i].start].y)
-#define NR_SVPSEG_Y1(s,i) ((s)->points[(s)->segments[i].start + (s)->segments[i].length - 1].y)
+#define NR_SVPSEG_Y0(s,i) ((s)->points[(s)->segments[i].start][NR::Y])
+#define NR_SVPSEG_Y1(s,i) ((s)->points[(s)->segments[i].start + (s)->segments[i].length - 1][NR::Y])
 
 #define noNR_VERBOSE
 
@@ -75,7 +75,7 @@ static NRRun *nr_run_insort (NRRun *start, NRRun *run);
 struct NRSlice {
     NRSlice *next;
     int wind;
-    NRPoint *points;
+    NR::Point *points;
     unsigned int current;
     unsigned int last;
     NR::Coord x;
@@ -83,7 +83,7 @@ struct NRSlice {
     NR::Coord stepx;
 };
 
-static NRSlice *nr_slice_new (int wind, NRPoint *points, unsigned int length, NR::Coord y);
+static NRSlice *nr_slice_new (int wind, NR::Point *points, unsigned int length, NR::Coord y);
 static NRSlice *nr_slice_free_one (NRSlice *s);
 static void nr_slice_free_list (NRSlice *s);
 static NRSlice *nr_slice_insort (NRSlice *start, NRSlice *slice);
@@ -189,7 +189,7 @@ nr_svp_render (NRSVP *svp, unsigned char *px, unsigned int bpp, unsigned int rs,
                 NRRun * newrun;
                 rx0 = cs->x;
                 ry0 = cs->y;
-                if (cs->points[cs->current + 1].y > dy1) {
+                if (cs->points[cs->current + 1][NR::Y] > dy1) {
                     /* The same slice continues */
                     rx1 = rx0 + (dy1 - ry0) * cs->stepx;
                     ry1 = dy1;
@@ -198,12 +198,12 @@ nr_svp_render (NRSVP *svp, unsigned char *px, unsigned int bpp, unsigned int rs,
                 } else {
                     /* Subpixel height run */
                     cs->current += 1;
-                    rx1 = cs->points[cs->current].x;
-                    ry1 = cs->points[cs->current].y;
+                    rx1 = cs->points[cs->current][NR::X];
+                    ry1 = cs->points[cs->current][NR::Y];
                     cs->x = rx1;
                     cs->y = ry1;
                     if (cs->current < cs->last) {
-                        cs->stepx = (cs->points[cs->current + 1].x - rx1) / (cs->points[cs->current + 1].y - ry1);
+                        cs->stepx = (cs->points[cs->current + 1][NR::X] - rx1) / (cs->points[cs->current + 1][NR::Y] - ry1);
                     }
                 }
                 newrun = nr_run_new (rx0, ry0, rx1, ry1, cs->wind);
@@ -355,10 +355,10 @@ nr_svp_render (NRSVP *svp, unsigned char *px, unsigned int bpp, unsigned int rs,
 static NRSlice *ffslice = NULL;
 
 static NRSlice *
-nr_slice_new (int wind, NRPoint *points, unsigned int length, NR::Coord y)
+nr_slice_new (int wind, NR::Point *points, unsigned int length, NR::Coord y)
 {
     NRSlice *s;
-    NRPoint *p;
+    NR::Point *p;
 
     /* g_assert (svl); */
     /* g_assert (svl->vertex); */
@@ -386,16 +386,16 @@ nr_slice_new (int wind, NRPoint *points, unsigned int length, NR::Coord y)
     s->current = 0;
     s->last = length - 1;
 
-    while ((s->current < s->last) && (s->points[s->current + 1].y <= y)) s->current += 1;
+    while ((s->current < s->last) && (s->points[s->current + 1][NR::Y] <= y)) s->current += 1;
     p = s->points + s->current;
 
-    if (s->points[s->current].y == y) {
-        s->x = p[0].x;
+    if (s->points[s->current][NR::Y] == y) {
+        s->x = p[0][NR::X];
     } else {
-        s->x = p[0].x + (p[1].x - p[0].x) * (y - p[0].y) / (p[1].y - p[0].y);
+        s->x = p[0][NR::X] + (p[1][NR::X] - p[0][NR::X]) * (y - p[0][NR::Y]) / (p[1][NR::Y] - p[0][NR::Y]);
     }
     s->y = y;
-    s->stepx = (p[1].x - p[0].x) / (p[1].y - p[0].y);
+    s->stepx = (p[1][NR::X] - p[0][NR::X]) / (p[1][NR::Y] - p[0][NR::Y]);
 
     return s;
 }
@@ -462,44 +462,44 @@ nr_slice_compare (NRSlice *l, NRSlice *r)
         if (l->stepx > r->stepx) return 1;
     } else if (l->y > r->y) {
         unsigned int pidx;
-        NRPoint *p;
+        NR::Point *p;
         NR::Coord x, ldx, rdx;
         /* This is bitch - we have to determine r values at l->y */
         pidx = 0;
-        while ((pidx < r->last) && (r->points[pidx + 1].y <= l->y)) pidx += 1;
+        while ((pidx < r->last) && (r->points[pidx + 1][NR::Y] <= l->y)) pidx += 1;
         /* If v is last vertex, r ends before l starts */
         if (pidx >= r->last) return 1;
         p = r->points + pidx;
-        if (p[0].y == l->y) {
-            x = p[0].x;
+        if (p[0][NR::Y] == l->y) {
+            x = p[0][NR::X];
         } else {
-            x = p[0].x + (p[1].x - p[0].x) * (l->y - p[0].y) / (p[1].y - p[0].y);
+            x = p[0][NR::X] + (p[1][NR::X] - p[0][NR::X]) * (l->y - p[0][NR::Y]) / (p[1][NR::Y] - p[0][NR::Y]);
         }
         if (l->x < x) return -1;
         if (l->x > x) return 1;
-        ldx = l->stepx * (p[1].y - p[0].y);
-        rdx = p[1].x - p[0].x;
+        ldx = l->stepx * (p[1][NR::Y] - p[0][NR::Y]);
+        rdx = p[1][NR::X] - p[0][NR::X];
         if (ldx < rdx) return -1;
         if (ldx > rdx) return 1;
     } else {
         unsigned int pidx;
-        NRPoint *p;
+        NR::Point *p;
         NR::Coord x, ldx, rdx;
         /* This is bitch - we have to determine l value at r->y */
         pidx = 0;
-        while ((pidx < l->last) && (l->points[pidx + 1].y <= r->y)) pidx += 1;
+        while ((pidx < l->last) && (l->points[pidx + 1][NR::Y] <= r->y)) pidx += 1;
         /* If v is last vertex, l ends before r starts */
         if (pidx >= l->last) return 1;
         p = l->points + pidx;
-        if (p[0].y == r->y) {
-            x = p[0].x;
+        if (p[0][NR::Y] == r->y) {
+            x = p[0][NR::X];
         } else {
-            x = p[0].x + (p[1].x - p[0].x) * (r->y - p[0].y) / (p[1].y - p[0].y);
+            x = p[0][NR::X] + (p[1][NR::X] - p[0][NR::X]) * (r->y - p[0][NR::Y]) / (p[1][NR::Y] - p[0][NR::Y]);
         }
         if (x < r->x) return -1;
         if (x > r->x) return 1;
-        ldx = l->stepx * (p[1].y - p[0].y);
-        rdx = p[1].x - p[0].x;
+        ldx = l->stepx * (p[1][NR::Y] - p[0][NR::Y]);
+        rdx = p[1][NR::X] - p[0][NR::X];
         if (ldx < rdx) return -1;
         if (ldx > rdx) return 1;
     }

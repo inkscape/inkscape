@@ -22,6 +22,8 @@
 #include "sp-gaussian-blur.h"
 #include "sp-feblend.h"
 #include "display/nr-filter-blend.h"
+#include "libnr/nr-matrix-fns.h"
+#include "libnr/nr-matrix-ops.h"
 
 static void nr_arena_group_class_init (NRArenaGroupClass *klass);
 static void nr_arena_group_init (NRArenaGroup *group);
@@ -85,7 +87,7 @@ nr_arena_group_init (NRArenaGroup *group)
     group->children = NULL;
     group->last = NULL;
     group->style = NULL;
-    nr_matrix_set_identity (&group->child_transform);
+    group->child_transform.set_identity();
 }
 
 static NRArenaItem *
@@ -171,7 +173,7 @@ nr_arena_group_update (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int 
 
     for (NRArenaItem *child = group->children; child != NULL; child = child->next) {
         NRGC cgc(gc);
-        nr_matrix_multiply (&cgc.transform, &group->child_transform, &gc->transform);
+        cgc.transform = group->child_transform * gc->transform;
         newstate = nr_arena_item_invoke_update (child, area, &cgc, state, reset);
         beststate = beststate & newstate;
     }
@@ -271,15 +273,15 @@ nr_arena_group_set_transparent (NRArenaGroup *group, unsigned int transparent)
 
 void nr_arena_group_set_child_transform(NRArenaGroup *group, NR::Matrix const &t)
 {
-    NRMatrix nt(t);
+    NR::Matrix nt(t);
     nr_arena_group_set_child_transform(group, &nt);
 }
 
-void nr_arena_group_set_child_transform(NRArenaGroup *group, NRMatrix const *t)
+void nr_arena_group_set_child_transform(NRArenaGroup *group, NR::Matrix const *t)
 {
     if (!t) t = &NR_MATRIX_IDENTITY;
 
-    if (!NR_MATRIX_DF_TEST_CLOSE (t, &group->child_transform, NR_EPSILON)) {
+    if (!NR::matrix_equalp(*t, group->child_transform, NR_EPSILON)) {
         nr_arena_item_request_render (NR_ARENA_ITEM (group));
         group->child_transform = *t;
         nr_arena_item_request_update (NR_ARENA_ITEM (group), NR_ARENA_ITEM_STATE_ALL, TRUE);

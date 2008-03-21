@@ -36,7 +36,7 @@ struct NRBPath {
 	NArtBpath *path;
 };
 
-NRBPath *nr_path_duplicate_transform(NRBPath *d, NRBPath *s, NRMatrix const *transform);
+NRBPath *nr_path_duplicate_transform(NRBPath *d, NRBPath *s, NR::Matrix const *transform);
 
 NRBPath *nr_path_duplicate_transform(NRBPath *d, NRBPath *s, NR::Matrix const transform);
 

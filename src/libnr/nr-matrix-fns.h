@@ -2,6 +2,7 @@
 #define SEEN_NR_MATRIX_FNS_H
 
 #include "nr-matrix.h"
+#include <math.h>
 
 namespace NR {
 
@@ -24,6 +25,8 @@ Matrix from_basis(const Point x_basis, const Point y_basis, const Point offset=P
 Matrix identity();
 
 double expansion(Matrix const &m);
+inline double expansionX(Matrix const &m) { return hypot(m[0], m[1]); }
+inline double expansionY(Matrix const &m) { return hypot(m[2], m[3]); }
 
 bool transform_equalp(Matrix const &m0, Matrix const &m1, NR::Coord const epsilon);
 bool translate_equalp(Matrix const &m0, Matrix const &m1, NR::Coord const epsilon);

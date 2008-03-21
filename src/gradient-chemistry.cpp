@@ -367,7 +367,7 @@ sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar const *prop
          *   transformation from bounding box space to user space.
          */
         NR::Matrix skew = bbox2user;
-        double exp = skew.expansion();
+        double exp = NR::expansion(skew);
         skew[0] /= exp;
         skew[1] /= exp;
         skew[2] /= exp;
@@ -398,7 +398,7 @@ sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar const *prop
             // converted points in userspace coords
             NR::Point c_u = c_b * point_convert;
             NR::Point f_u = f_b * point_convert;
-            double r_u = r_b * point_convert.expansion();
+            double r_u = r_b * NR::expansion(point_convert);
 
             sp_repr_set_svg_double(repr, "cx", c_u[NR::X]);
             sp_repr_set_svg_double(repr, "cy", c_u[NR::Y]);

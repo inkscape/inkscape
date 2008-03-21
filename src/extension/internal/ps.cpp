@@ -32,6 +32,7 @@
 #include <errno.h>
 
 #include <libnr/n-art-bpath.h>
+#include <libnr/nr-matrix-fns.h>
 
 #include <glib/gmem.h>
 #include <glib/gstrfuncs.h>
@@ -548,13 +549,13 @@ PrintPS::finish(Inkscape::Extension::Print *mod)
         int const width = (int) (_width * dots_per_pt + 0.5);
         int const height = (int) (_height * dots_per_pt + 0.5);
 
-        NRMatrix affine;
-        affine.c[0] = width / ((x1 - x0) * PX_PER_PT);
-        affine.c[1] = 0.0;
-        affine.c[2] = 0.0;
-        affine.c[3] = height / ((y1 - y0) * PX_PER_PT);
-        affine.c[4] = -affine.c[0] * x0;
-        affine.c[5] = -affine.c[3] * y0;
+        NR::Matrix affine;
+        affine[0] = width / ((x1 - x0) * PX_PER_PT);
+        affine[1] = 0.0;
+        affine[2] = 0.0;
+        affine[3] = height / ((y1 - y0) * PX_PER_PT);
+        affine[4] = -affine[0] * x0;
+        affine[5] = -affine[3] * y0;
 
         nr_arena_item_set_transform(mod->root, &affine);
 
@@ -570,7 +571,7 @@ PrintPS::finish(Inkscape::Extension::Print *mod)
 
             /* Update to renderable state. */
             NRGC gc(NULL);
-            nr_matrix_set_identity(&gc.transform);
+            gc.transform.set_identity();
             nr_arena_item_invoke_update(mod->root, &bbox, &gc, NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);
             /* Render */
             /* This should take guchar* instead of unsigned char*) */
@@ -581,13 +582,13 @@ PrintPS::finish(Inkscape::Extension::Print *mod)
             memset(px, 0xff, 4 * width * 64);
             nr_arena_item_invoke_render(NULL, mod->root, &bbox, &pb, 0);
             /* Blitter goes here */
-            NRMatrix imgt;
-            imgt.c[0] = (bbox.x1 - bbox.x0) / dots_per_pt;
-            imgt.c[1] = 0.0;
-            imgt.c[2] = 0.0;
-            imgt.c[3] = (bbox.y1 - bbox.y0) / dots_per_pt;
-            imgt.c[4] = 0.0;
-            imgt.c[5] = _height - y / dots_per_pt - (bbox.y1 - bbox.y0) / dots_per_pt;
+            NR::Matrix imgt;
+            imgt[0] = (bbox.x1 - bbox.x0) / dots_per_pt;
+            imgt[1] = 0.0;
+            imgt[2] = 0.0;
+            imgt[3] = (bbox.y1 - bbox.y0) / dots_per_pt;
+            imgt[4] = 0.0;
+            imgt[5] = _height - y / dots_per_pt - (bbox.y1 - bbox.y0) / dots_per_pt;
 
             print_image(_stream, px, bbox.x1 - bbox.x0, bbox.y1 - bbox.y0, 4 * width, &imgt);
         }
@@ -628,18 +629,18 @@ PrintPS::finish(Inkscape::Extension::Print *mod)
 }
 
 unsigned int
-PrintPS::bind(Inkscape::Extension::Print */*mod*/, NRMatrix const *transform, float /*opacity*/)
+PrintPS::bind(Inkscape::Extension::Print */*mod*/, NR::Matrix const *transform, float /*opacity*/)
 {
     if (!_stream) return 0;  // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
 
     Inkscape::SVGOStringStream os;
-    os << "gsave [" << transform->c[0] << " "
-       << transform->c[1] << " "
-       << transform->c[2] << " "
-       << transform->c[3] << " "
-       << transform->c[4] << " "
-       << transform->c[5] << "] concat\n";
+    os << "gsave [" << (*transform)[0] << " "
+       << (*transform)[1] << " "
+       << (*transform)[2] << " "
+       << (*transform)[3] << " "
+       << (*transform)[4] << " "
+       << (*transform)[5] << "] concat\n";
 
     return fprintf(_stream, "%s", os.str().c_str());
 }
@@ -733,7 +734,7 @@ PrintPS::print_fill_style(SVGOStringStream &os, SPStyle const *const style, NRRe
                                            pbox->x0, pbox->y0);
                 c *= bbox2user;
                 f *= bbox2user;
-                r *= bbox2user.expansion();
+                r *= NR::expansion(bbox2user);
             }
 
             os << "<<\n/ShadingType 3\n/ColorSpace /DeviceRGB\n";
@@ -812,7 +813,7 @@ PrintPS::print_stroke_style(SVGOStringStream &os, SPStyle const *style)
 
 
 unsigned int
-PrintPS::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMatrix const *ctm, SPStyle const *const style,
+PrintPS::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *const style,
               NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -878,7 +879,7 @@ PrintPS::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMatrix co
 
 
 unsigned int
-PrintPS::stroke(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMatrix const *ctm, SPStyle const *style,
+PrintPS::stroke(Inkscape::Extension::Print *mod, NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *style,
                 NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -901,7 +902,7 @@ PrintPS::stroke(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMatrix 
 
 unsigned int
 PrintPS::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w, unsigned int h, unsigned int rs,
-               NRMatrix const *transform, SPStyle const *style)
+               NR::Matrix const *transform, SPStyle const *style)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
@@ -1634,18 +1635,18 @@ PrintPS::ascii85_done(SVGOStringStream &os)
 
 unsigned int
 PrintPS::print_image(FILE *ofp, guchar *px, unsigned int width, unsigned int height, unsigned int rs,
-                     NRMatrix const *transform)
+                     NR::Matrix const *transform)
 {
     Inkscape::SVGOStringStream os;
 
     os << "gsave\n";
 
-    os << "[" << transform->c[0] << " "
-       << transform->c[1] << " "
-       << transform->c[2] << " "
-       << transform->c[3] << " "
-       << transform->c[4] << " "
-       << transform->c[5] << "] concat\n";
+    os << "[" << (*transform)[0] << " "
+       << (*transform)[1] << " "
+       << (*transform)[2] << " "
+       << (*transform)[3] << " "
+       << (*transform)[4] << " "
+       << (*transform)[5] << "] concat\n";
 
     /* Write read image procedure */
     os << "<<\n";

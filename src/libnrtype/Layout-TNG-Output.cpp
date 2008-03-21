@@ -15,6 +15,7 @@
 #include "print.h"
 #include "extension/print.h"
 #include "livarot/Path.h"
+#include "libnr/nr-matrix-fns.h"
 #include "libnr/nr-scale-matrix-ops.h"
 #include "font-instance.h"
 #include "svg/svg-length.h"
@@ -55,7 +56,7 @@ void Layout::LineHeight::max(LineHeight const &other)
     if (other.leading > leading) leading = other.leading;
 }
 
-void Layout::_getGlyphTransformMatrix(int glyph_index, NRMatrix *matrix) const
+void Layout::_getGlyphTransformMatrix(int glyph_index, NR::Matrix *matrix) const
 {
     Span const &span = _glyphs[glyph_index].span(this);
     double sin_rotation = sin(_glyphs[glyph_index].rotation);
@@ -86,7 +87,7 @@ void Layout::show(NRArenaGroup *in_arena, NRRect const *paintbox) const
         nr_arena_glyphs_group_set_style(nr_group, text_source->style);
         while (glyph_index < (int)_glyphs.size() && _characters[_glyphs[glyph_index].in_character].in_span == span_index) {
             if (_characters[_glyphs[glyph_index].in_character].in_glyph != -1) {
-                NRMatrix glyph_matrix;
+                NR::Matrix glyph_matrix;
                 _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
                 nr_arena_glyphs_group_add_component(nr_group, _spans[span_index].font, _glyphs[glyph_index].glyph, &glyph_matrix);
             }
@@ -108,7 +109,7 @@ void Layout::getBoundingBox(NRRect *bounding_box, NR::Matrix const &transform, i
             if ((int) _glyphs[glyph_index].in_character > start + length) continue;
         }
         // this could be faster
-        NRMatrix glyph_matrix;
+        NR::Matrix glyph_matrix;
         _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
         NR::Matrix total_transform = glyph_matrix;
         total_transform *= transform;
@@ -133,7 +134,7 @@ void Layout::getBoundingBox(NRRect *bounding_box, NR::Matrix const &transform, i
 
 void Layout::print(SPPrintContext *ctx,
                    NRRect const *pbox, NRRect const *dbox, NRRect const *bbox,
-                   NRMatrix const &ctm) const
+                   NR::Matrix const &ctm) const
 {
     if (_input_stream.empty()) return;
 
@@ -147,7 +148,7 @@ void Layout::print(SPPrintContext *ctx,
                 glyph_index++;
             continue;
         }
-        NRMatrix glyph_matrix;
+        NR::Matrix glyph_matrix;
         Span const &span = _spans[_characters[_glyphs[glyph_index].in_character].in_span];
         InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_input_stream[span.in_input_stream_item]);
         if (text_to_path || _path_fitted) {
@@ -168,12 +169,12 @@ void Layout::print(SPPrintContext *ctx,
             NR::Point g_pos(0,0);    // all strings are output at (0,0) because we do the translation using the matrix
             glyph_matrix = NR::Matrix(NR::scale(1.0, -1.0) * NR::Matrix(NR::rotate(_glyphs[glyph_index].rotation)));
             if (block_progression == LEFT_TO_RIGHT || block_progression == RIGHT_TO_LEFT) {
-                glyph_matrix.c[4] = span.line(this).baseline_y + span.baseline_shift;
+                glyph_matrix[4] = span.line(this).baseline_y + span.baseline_shift;
                 // since we're outputting character codes, not glyphs, we want the character x
-                glyph_matrix.c[5] = span.chunk(this).left_x + span.x_start + _characters[_glyphs[glyph_index].in_character].x;
+                glyph_matrix[5] = span.chunk(this).left_x + span.x_start + _characters[_glyphs[glyph_index].in_character].x;
             } else {
-                glyph_matrix.c[4] = span.chunk(this).left_x + span.x_start + _characters[_glyphs[glyph_index].in_character].x;
-                glyph_matrix.c[5] = span.line(this).baseline_y + span.baseline_shift;
+                glyph_matrix[4] = span.chunk(this).left_x + span.x_start + _characters[_glyphs[glyph_index].in_character].x;
+                glyph_matrix[5] = span.line(this).baseline_y + span.baseline_shift;
             }
             Glib::ustring::const_iterator span_iter = span.input_stream_first_character;
             unsigned char_index = _glyphs[glyph_index].in_character;
@@ -226,7 +227,7 @@ void Layout::showGlyphs(CairoRenderContext *ctx) const
         Span const &span = _spans[_characters[_glyphs[glyph_index].in_character].in_span];
         InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_input_stream[span.in_input_stream_item]);
 
-        NRMatrix glyph_matrix;
+        NR::Matrix glyph_matrix;
         _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
         if (clip_mode) {
             NArtBpath *bpath = (NArtBpath*)span.font->ArtBPath(_glyphs[glyph_index].glyph);
@@ -242,13 +243,13 @@ void Layout::showGlyphs(CairoRenderContext *ctx) const
             continue;
         }
 
-        NRMatrix font_matrix;
+        NR::Matrix font_matrix;
         if (_path_fitted == NULL) {
             font_matrix = glyph_matrix;
             font_matrix[4] = 0;
             font_matrix[5] = 0;
         } else {
-            nr_matrix_set_identity(&font_matrix);
+            font_matrix.set_identity();
         }
 
         Glib::ustring::const_iterator span_iter = span.input_stream_first_character;
@@ -276,8 +277,8 @@ void Layout::showGlyphs(CairoRenderContext *ctx) const
                 CairoGlyphInfo info;
                 info.index = _glyphs[glyph_index].glyph;
                 if (_path_fitted == NULL) {
-	            info.x = glyph_matrix.c[4];
-                    info.y = glyph_matrix.c[5];
+	            info.x = glyph_matrix[4];
+                    info.y = glyph_matrix[5];
                 } else {
                     info.x = 0;
                     info.y = 0;                    
@@ -288,7 +289,7 @@ void Layout::showGlyphs(CairoRenderContext *ctx) const
             }
         } while (glyph_index < _glyphs.size()
                  && _path_fitted == NULL
-                 && nr_matrix_test_transform_equal(&font_matrix, &glyph_matrix, NR_EPSILON)
+                 && NR::transform_equalp(font_matrix, glyph_matrix, NR_EPSILON)
                  && _characters[_glyphs[glyph_index].in_character].in_span == this_span_index);
          
         // remove vertical flip
@@ -543,7 +544,7 @@ SPCurve *Layout::convertToCurves(iterator const &from_glyph, iterator const &to_
     GSList *cc = NULL;
 
     for (int glyph_index = from_glyph._glyph_index ; glyph_index < to_glyph._glyph_index ; glyph_index++) {
-        NRMatrix glyph_matrix;
+        NR::Matrix glyph_matrix;
         Span const &span = _glyphs[glyph_index].span(this);
         _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
 

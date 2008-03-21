@@ -337,7 +337,7 @@ public:
      \param bbox  parameters
      \param ctm   do yet
     */
-    void print(SPPrintContext *ctx, NRRect const *pbox, NRRect const *dbox, NRRect const *bbox, NRMatrix const &ctm) const;
+    void print(SPPrintContext *ctx, NRRect const *pbox, NRRect const *dbox, NRRect const *bbox, NR::Matrix const &ctm) const;
 
 #ifdef HAVE_CAIRO_PDF    
     /** Renders all the glyphs to the given Cairo rendering context.
@@ -733,7 +733,7 @@ private:
 
     /** gets the overall matrix that transforms the given glyph from local
     space to world space. */
-    void _getGlyphTransformMatrix(int glyph_index, NRMatrix *matrix) const;
+    void _getGlyphTransformMatrix(int glyph_index, NR::Matrix *matrix) const;
 
     // loads of functions to drill down the object tree, all of them
     // annoyingly similar and all of them requiring predicate functors.

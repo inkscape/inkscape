@@ -20,6 +20,8 @@
 
 #include <libnr/nr-blit.h>
 #include <libnr/nr-pixops.h>
+#include <libnr/nr-matrix-ops.h>
+#include <libnr/nr-matrix-fns.h>
 #include "nr-arena.h"
 #include "nr-arena-item.h"
 #include "gc-core.h"
@@ -245,8 +247,7 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
     /* Set up local gc */
     childgc = *gc;
     if (item->transform) {
-        nr_matrix_multiply (&childgc.transform, item->transform,
-                            &childgc.transform);
+        childgc.transform = (*item->transform) * childgc.transform;
     }
     /* Remember the transformation matrix */
     item->ctm = childgc.transform;
@@ -710,12 +711,12 @@ nr_arena_item_append_child (NRArenaItem *parent, NRArenaItem *child)
 void
 nr_arena_item_set_transform (NRArenaItem *item, NR::Matrix const &transform)
 {
-    NRMatrix const t (transform);
+    NR::Matrix const t (transform);
     nr_arena_item_set_transform (item, &t);
 }
 
 void
-nr_arena_item_set_transform (NRArenaItem *item, NRMatrix const *transform)
+nr_arena_item_set_transform (NRArenaItem *item, NR::Matrix const *transform)
 {
     nr_return_if_fail (item != NULL);
     nr_return_if_fail (NR_IS_ARENA_ITEM (item));
@@ -723,17 +724,17 @@ nr_arena_item_set_transform (NRArenaItem *item, NRMatrix const *transform)
     if (!transform && !item->transform)
         return;
 
-    const NRMatrix *md = (item->transform) ? item->transform : &NR_MATRIX_IDENTITY;
-    const NRMatrix *ms = (transform) ? transform : &NR_MATRIX_IDENTITY;
+    const NR::Matrix *md = (item->transform) ? item->transform : &NR_MATRIX_IDENTITY;
+    const NR::Matrix *ms = (transform) ? transform : &NR_MATRIX_IDENTITY;
 
-    if (!NR_MATRIX_DF_TEST_CLOSE (md, ms, NR_EPSILON)) {
+    if (!NR::matrix_equalp(*md, *ms, NR_EPSILON)) {
         nr_arena_item_request_render (item);
-        if (!transform || nr_matrix_test_identity (transform, NR_EPSILON)) {
+        if (!transform || transform->test_identity()) {
             /* Set to identity affine */
             item->transform = NULL;
         } else {
             if (!item->transform)
-                item->transform = new (GC::ATOMIC) NRMatrix ();
+                item->transform = new (GC::ATOMIC) NR::Matrix ();
             *item->transform = *transform;
         }
         nr_arena_item_request_update (item, NR_ARENA_ITEM_STATE_ALL, TRUE);

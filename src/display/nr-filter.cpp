@@ -111,7 +111,7 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
        return 1; 
     }
 
-    Matrix trans = *item->ctm;
+    Matrix trans = item->ctm;
     FilterSlot slot(_slot_count, item);
 
     Rect item_bbox;

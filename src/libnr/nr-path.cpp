@@ -20,7 +20,7 @@ static void nr_curve_bbox(NR::Point const p000, NR::Point const p001,
 			  NR::Point const p011, NR::Point const p111,
 			  NRRect *bbox);
 
-NRBPath *nr_path_duplicate_transform(NRBPath *d, NRBPath *s, NRMatrix const *transform)
+NRBPath *nr_path_duplicate_transform(NRBPath *d, NRBPath *s, NR::Matrix const *transform)
 {
 	int i;
 
@@ -38,13 +38,10 @@ NRBPath *nr_path_duplicate_transform(NRBPath *d, NRBPath *s, NRMatrix const *tra
 	while (s->path[i].code != NR_END) {
 		d->path[i].code = s->path[i].code;
 		if (s->path[i].code == NR_CURVETO) {
-			d->path[i].x1 = NR_MATRIX_DF_TRANSFORM_X (transform, s->path[i].x1, s->path[i].y1);
-			d->path[i].y1 = NR_MATRIX_DF_TRANSFORM_Y (transform, s->path[i].x1, s->path[i].y1);
-			d->path[i].x2 = NR_MATRIX_DF_TRANSFORM_X (transform, s->path[i].x2, s->path[i].y2);
-			d->path[i].y2 = NR_MATRIX_DF_TRANSFORM_Y (transform, s->path[i].x2, s->path[i].y2);
+            d->path[i].setC(1, s->path[i].c(1) * (*transform));
+            d->path[i].setC(2, s->path[i].c(2) * (*transform));
 		}
-		d->path[i].x3 = NR_MATRIX_DF_TRANSFORM_X (transform, s->path[i].x3, s->path[i].y3);
-		d->path[i].y3 = NR_MATRIX_DF_TRANSFORM_Y (transform, s->path[i].x3, s->path[i].y3);
+        d->path[i].setC(3, s->path[i].c(3) * (*transform));
 		i += 1;
 	}
 	d->path[i].code = NR_END;
@@ -53,7 +50,7 @@ NRBPath *nr_path_duplicate_transform(NRBPath *d, NRBPath *s, NRMatrix const *tra
 }
 
 NRBPath *nr_path_duplicate_transform(NRBPath *d, NRBPath *s, NR::Matrix const transform) {
-	NRMatrix tr = transform;
+	NR::Matrix tr = transform;
 	return nr_path_duplicate_transform(d, s, &tr);
 }
 

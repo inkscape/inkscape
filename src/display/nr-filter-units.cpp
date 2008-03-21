@@ -13,6 +13,9 @@
 
 #include "display/nr-filter-units.h"
 #include "libnr/nr-matrix.h"
+#include "libnr/nr-matrix-fns.h"
+#include "libnr/nr-matrix-ops.h"
+#include "libnr/nr-matrix-scale-ops.h"
 #include "libnr/nr-rect.h"
 #include "libnr/nr-rect-l.h"
 #include "libnr/nr-scale.h"
@@ -139,7 +142,7 @@ Matrix FilterUnits::get_matrix_user2units(SPFilterUnits units) const {
                       0, scale_y,
                       min[X] * scale_x, min[Y] * scale_y);
     } else if (units == SP_FILTER_UNITS_USERSPACEONUSE) {
-        return Matrix(NULL);
+        return identity();
     } else {
         g_warning("Error in NR::FilterUnits::get_matrix_user2units: unrecognized unit type (%d)", units);
         return Matrix();

@@ -127,14 +127,14 @@ public:
 
     void testNrMatrixInvert(void)
     {
-        NRMatrix const nr_m_id(m_id);
+        NR::Matrix const nr_m_id(m_id);
         Matrix const m_s2(NR::scale(-4.0, 2.0));
-        NRMatrix const nr_s2(m_s2);
+        NR::Matrix const nr_s2(m_s2);
         Matrix const m_sp5(NR::scale(-.25, .5));
-        NRMatrix const nr_sp5(m_sp5);
+        NR::Matrix const nr_sp5(m_sp5);
         Matrix const m_t23(t23);
-        NRMatrix const nr_t23(m_t23);
-        NRMatrix inv;
+        NR::Matrix const nr_t23(m_t23);
+        NR::Matrix inv;
         nr_matrix_invert(&inv, &nr_m_id);
         TS_ASSERT_EQUALS( Matrix(inv), m_id );
         nr_matrix_invert(&inv, &nr_t23);

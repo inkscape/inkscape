@@ -20,6 +20,9 @@
 #include <cstring>
 #include <string>
 #include <libnr/nr-matrix-fns.h>
+#include <libnr/nr-matrix-ops.h>
+#include <libnr/nr-translate-matrix-ops.h>
+#include <libnr/nr-scale-translate-ops.h>
 //#define GDK_PIXBUF_ENABLE_BACKEND 1
 //#include <gdk-pixbuf/gdk-pixbuf-io.h>
 #include "display/nr-arena-image.h"
@@ -996,7 +999,6 @@ static void
 sp_image_print (SPItem *item, SPPrintContext *ctx)
 {
 	SPImage *image;
-	NRMatrix tp, ti, s, t;
 	guchar *px;
 	int w, h, rs, pixskip;
 
@@ -1011,19 +1013,21 @@ sp_image_print (SPItem *item, SPPrintContext *ctx)
 	rs = gdk_pixbuf_get_rowstride (image->pixbuf);
 	pixskip = gdk_pixbuf_get_n_channels (image->pixbuf) * gdk_pixbuf_get_bits_per_sample (image->pixbuf) / 8;
 
+    NR::Matrix t;
 	if (image->aspect_align == SP_ASPECT_NONE) {
 		/* fixme: (Lauris) */
-		nr_matrix_set_translate (&tp, image->x.computed, image->y.computed);
-		nr_matrix_set_scale (&s, image->width.computed, -image->height.computed);
-		nr_matrix_set_translate (&ti, 0.0, -1.0);
+        NR::translate tp = NR::translate(image->x.computed, image->y.computed);
+        NR::scale s = NR::scale(image->width.computed, -image->height.computed);
+        NR::translate ti = NR::translate(0.0, -1.0);
+	    t = s * tp;
+	    t = ti * t;
 	} else { // preserveAspectRatio
-		nr_matrix_set_translate (&tp, image->viewx, image->viewy);
-		nr_matrix_set_scale (&s, image->viewwidth, -image->viewheight);
-		nr_matrix_set_translate (&ti, 0.0, -1.0);
+        NR::translate tp = NR::translate(image->viewx, image->viewy);
+        NR::scale s = NR::scale(image->viewwidth, -image->viewheight);
+        NR::translate ti = NR::translate(0.0, -1.0);
+	    t = s * tp;
+	    t = ti * t;
 	}
-
-	nr_matrix_multiply (&t, &s, &tp);
-	nr_matrix_multiply (&t, &ti, &t);
 
 	if (image->aspect_align == SP_ASPECT_NONE)
 		sp_print_image_R8G8B8A8_N (ctx, px, w, h, rs, &t, SP_OBJECT_STYLE (item));

@@ -279,7 +279,7 @@ PrintEmfWin32::destroy_brush()
 
 
 void
-PrintEmfWin32::create_pen(SPStyle const *style, const NRMatrix *transform)
+PrintEmfWin32::create_pen(SPStyle const *style, const NR::Matrix *transform)
 {
     if (style) {
         float rgb[3];
@@ -471,7 +471,7 @@ PrintEmfWin32::cmp_bpath(const NArtBpath *bp1, const NArtBpath *bp2)
 }
 
 unsigned int
-PrintEmfWin32::bind(Inkscape::Extension::Print *mod, NRMatrix const *transform, float opacity)
+PrintEmfWin32::bind(Inkscape::Extension::Print *mod, NR::Matrix const *transform, float opacity)
 {
     text_transform = *transform;
     return 0;
@@ -485,7 +485,7 @@ PrintEmfWin32::release(Inkscape::Extension::Print *mod)
 
 unsigned int
 PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
-               NRBPath const *bpath, NRMatrix const *transform, SPStyle const *style,
+               NRBPath const *bpath, NR::Matrix const *transform, SPStyle const *style,
                NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!hdc) return 0;
@@ -512,7 +512,7 @@ PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
 
 unsigned int
 PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
-                  const NRBPath *bpath, const NRMatrix *transform, const SPStyle *style,
+                  const NRBPath *bpath, const NR::Matrix *transform, const SPStyle *style,
                   const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
 {
     if (!hdc) return 0;
@@ -548,7 +548,7 @@ PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
 
 
 unsigned int
-PrintEmfWin32::print_bpath(const NArtBpath *bp, const NRMatrix *transform, NRRect const *pbox)
+PrintEmfWin32::print_bpath(const NArtBpath *bp, const NR::Matrix *transform, NRRect const *pbox)
 {
     unsigned int closed;
     NR::Matrix tf = *transform;

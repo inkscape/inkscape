@@ -13,156 +13,7 @@
 
 #include <cstdlib>
 #include "nr-matrix.h"
-
-
-
-/**
- *  Multiply two NRMatrices together, storing the result in d.
- */
-NRMatrix *
-nr_matrix_multiply(NRMatrix *d, NRMatrix const *m0, NRMatrix const *m1)
-{
-    if (m0) {
-        if (m1) {
-            NR::Coord d0 = m0->c[0] * m1->c[0]  +  m0->c[1] * m1->c[2];
-            NR::Coord d1 = m0->c[0] * m1->c[1]  +  m0->c[1] * m1->c[3];
-            NR::Coord d2 = m0->c[2] * m1->c[0]  +  m0->c[3] * m1->c[2];
-            NR::Coord d3 = m0->c[2] * m1->c[1]  +  m0->c[3] * m1->c[3];
-            NR::Coord d4 = m0->c[4] * m1->c[0]  +  m0->c[5] * m1->c[2]  +  m1->c[4];
-            NR::Coord d5 = m0->c[4] * m1->c[1]  +  m0->c[5] * m1->c[3]  +  m1->c[5];
-
-            NR::Coord *dest = d->c;
-            *dest++ = d0;
-            *dest++ = d1;
-            *dest++ = d2;
-            *dest++ = d3;
-            *dest++ = d4;
-            *dest   = d5;
-        } else {
-            *d = *m0;
-        }
-    } else {
-        if (m1) {
-            *d = *m1;
-        } else {
-            nr_matrix_set_identity(d);
-        }
-    }
-
-    return d;
-}
-
-
-
-
-/**
- *  Store the inverted value of Matrix m in d
- */
-NRMatrix *
-nr_matrix_invert(NRMatrix *d, NRMatrix const *m)
-{
-    if (m) {
-        NR::Coord const det = m->c[0] * m->c[3] - m->c[1] * m->c[2];
-        if (!NR_DF_TEST_CLOSE(det, 0.0, NR_EPSILON)) {
-
-            NR::Coord const idet = 1.0 / det;
-            NR::Coord *dest = d->c;
-
-            /* Cache m->c[0] and m->c[4] in case d == m. */
-            NR::Coord const m_c0(m->c[0]);
-            NR::Coord const m_c4(m->c[4]);
-
-            /*0*/ *dest++ =  m->c[3] * idet;
-            /*1*/ *dest++ = -m->c[1] * idet;
-            /*2*/ *dest++ = -m->c[2] * idet;
-            /*3*/ *dest++ =   m_c0   * idet;
-            /*4*/ *dest++ = -m_c4 * d->c[0] - m->c[5] * d->c[2];
-            /*5*/ *dest   = -m_c4 * d->c[1] - m->c[5] * d->c[3];
-
-        } else {
-            nr_matrix_set_identity(d);
-        }
-    } else {
-        nr_matrix_set_identity(d);
-    }
-
-    return d;
-}
-
-
-
-
-
-/**
- *  Set this matrix to a translation of x and y
- */
-NRMatrix *
-nr_matrix_set_translate(NRMatrix *m, NR::Coord const x, NR::Coord const y)
-{
-    NR::Coord *dest = m->c;
-
-    *dest++ = 1.0;   //0
-    *dest++ = 0.0;   //1
-    *dest++ = 0.0;   //2
-    *dest++ = 1.0;   //3
-    *dest++ =   x;   //4
-    *dest   =   y;   //5
-
-    return m;
-}
-
-
-
-
-
-/**
- *  Set this matrix to a scaling transform in sx and sy
- */
-NRMatrix *
-nr_matrix_set_scale(NRMatrix *m, NR::Coord const sx, NR::Coord const sy)
-{
-    NR::Coord *dest = m->c;
-
-    *dest++ =  sx;   //0
-    *dest++ = 0.0;   //1
-    *dest++ = 0.0;   //2
-    *dest++ =  sy;   //3
-    *dest++ = 0.0;   //4
-    *dest   = 0.0;   //5
-
-    return m;
-}
-
-
-
-
-
-/**
- *  Set this matrix to a rotating transform of angle 'theta' radians
- */
-NRMatrix *
-nr_matrix_set_rotate(NRMatrix *m, NR::Coord const theta)
-{
-    NR::Coord const s = sin(theta);
-    NR::Coord const c = cos(theta);
-
-    NR::Coord *dest = m->c;
-
-    *dest++ =   c;   //0
-    *dest++ =   s;   //1
-    *dest++ =  -s;   //2
-    *dest++ =   c;   //3
-    *dest++ = 0.0;   //4
-    *dest   = 0.0;   //5
-
-    return m;
-}
-
-
-
-
-
-
+#include "nr-matrix-fns.h"
 
 
 
@@ -170,22 +21,6 @@ nr_matrix_set_rotate(NRMatrix *m, NR::Coord const theta)
  *  Implement NR functions and methods
  */
 namespace NR {
-
-
-
-
-
-/**
- *  Constructor.  Assign to nr if not null, else identity
- */
-Matrix::Matrix(NRMatrix const *nr)
-{
-    if (nr) {
-        assign(nr->c);
-    } else {
-        set_identity();
-    }
-}
 
 
 
@@ -206,54 +41,6 @@ Matrix operator*(Matrix const &m0, Matrix const &m1)
     Matrix ret( d0, d1, d2, d3, d4, d5 );
 
     return ret;
-}
-
-
-
-
-
-/**
- *  Multiply a matrix by another
- */
-Matrix &Matrix::operator*=(Matrix const &o)
-{
-    *this = *this * o;
-    return *this;
-}
-
-
-
-
-
-/**
- *  Multiply by a scaling matrix
- */
-Matrix &Matrix::operator*=(scale const &other)
-{
-    /* This loop is massive overkill.  Let's unroll.
-     *   o    _c[] goes from 0..5
-     *   o    other[] alternates between 0 and 1
-     */
-    /*
-     * for (unsigned i = 0; i < 3; ++i) {
-     *     for (unsigned j = 0; j < 2; ++j) {
-     *         this->_c[i * 2 + j] *= other[j];
-     *     }
-     * }
-     */
-
-    NR::Coord const xscale = other[0];
-    NR::Coord const yscale = other[1];
-    NR::Coord *dest = _c;
-
-    /*i=0 j=0*/  *dest++ *= xscale;
-    /*i=0 j=1*/  *dest++ *= yscale;
-    /*i=1 j=0*/  *dest++ *= xscale;
-    /*i=1 j=1*/  *dest++ *= yscale;
-    /*i=2 j=0*/  *dest++ *= xscale;
-    /*i=2 j=1*/  *dest   *= yscale;
-
-    return *this;
 }
 
 
@@ -398,121 +185,6 @@ NR::Coord Matrix::descrim() const
 
 
 /**
- *  Assign a matrix to a given coordinate array
- */
-Matrix &Matrix::assign(Coord const *array)
-{
-    assert(array != NULL);
-
-    Coord const *src = array;
-    Coord *dest = _c;
-
-    *dest++ = *src++;  //0
-    *dest++ = *src++;  //1
-    *dest++ = *src++;  //2
-    *dest++ = *src++;  //3
-    *dest++ = *src++;  //4
-    *dest   = *src  ;  //5
-
-    return *this;
-}
-
-
-
-
-
-/**
- *  Copy this matrix's value to a NRMatrix
- */
-NRMatrix *Matrix::copyto(NRMatrix *nrm) const {
-
-    assert(nrm != NULL);
-
-    Coord const *src = _c;
-    Coord *dest = nrm->c;
-
-    *dest++ = *src++;  //0
-    *dest++ = *src++;  //1
-    *dest++ = *src++;  //2
-    *dest++ = *src++;  //3
-    *dest++ = *src++;  //4
-    *dest   = *src  ;  //5
-
-    return nrm;
-}
-
-
-
-
-/**
- *  Copy this matrix's values to an array
- */
-NR::Coord *Matrix::copyto(NR::Coord *array) const {
-
-    assert(array != NULL);
-
-    Coord const *src = _c;
-    Coord *dest = array;
-
-    *dest++ = *src++;  //0
-    *dest++ = *src++;  //1
-    *dest++ = *src++;  //2
-    *dest++ = *src++;  //3
-    *dest++ = *src++;  //4
-    *dest   = *src  ;  //5
-
-    return array;
-}
-
-
-
-
-
-/**
- *
- */
-double expansion(Matrix const &m) {
-    return sqrt(fabs(m.det()));
-}
-
-
-
-
-
-/**
- *
- */
-double Matrix::expansion() const {
-    return sqrt(fabs(det()));
-}
-
-
-
-
-
-/**
- *
- */
-double Matrix::expansionX() const {
-    return sqrt(_c[0] * _c[0] + _c[1] * _c[1]);
-}
-
-
-
-
-
-/**
- *
- */
-double Matrix::expansionY() const {
-    return sqrt(_c[2] * _c[2] + _c[3] * _c[3]);
-}
-
-
-
-
-
-/**
  *
  */
 bool Matrix::is_translation(Coord const eps) const {
@@ -550,7 +222,18 @@ bool Matrix::is_rotation(Coord const eps) const {
  *
  */
 bool Matrix::test_identity() const {
-    return NR_MATRIX_DF_TEST_CLOSE(this, &NR_MATRIX_IDENTITY, NR_EPSILON);
+    return matrix_equalp(*this, NR_MATRIX_IDENTITY, NR_EPSILON);
+}
+
+
+
+
+
+/**
+ *
+ */
+double expansion(Matrix const &m) {
+    return sqrt(fabs(m.det()));
 }
 
 
@@ -561,7 +244,11 @@ bool Matrix::test_identity() const {
  *
  */
 bool transform_equalp(Matrix const &m0, Matrix const &m1, NR::Coord const epsilon) {
-    return NR_MATRIX_DF_TEST_TRANSFORM_CLOSE(&m0, &m1, epsilon);
+    return
+        NR_DF_TEST_CLOSE(m0[0], m1[0], epsilon) &&
+        NR_DF_TEST_CLOSE(m0[1], m1[1], epsilon) &&
+        NR_DF_TEST_CLOSE(m0[2], m1[2], epsilon) &&
+        NR_DF_TEST_CLOSE(m0[3], m1[3], epsilon);
 }
 
 
@@ -572,7 +259,7 @@ bool transform_equalp(Matrix const &m0, Matrix const &m1, NR::Coord const epsilo
  *
  */
 bool translate_equalp(Matrix const &m0, Matrix const &m1, NR::Coord const epsilon) {
-    return NR_MATRIX_DF_TEST_TRANSLATE_CLOSE(&m0, &m1, epsilon);
+    return NR_DF_TEST_CLOSE(m0[4], m1[4], epsilon) && NR_DF_TEST_CLOSE(m0[5], m1[5], epsilon);
 }
 
 
@@ -582,10 +269,8 @@ bool translate_equalp(Matrix const &m0, Matrix const &m1, NR::Coord const epsilo
 /**
  *
  */
-bool matrix_equalp(Matrix const &m0, Matrix const &m1, NR::Coord const epsilon)
-{
-    return ( NR_MATRIX_DF_TEST_TRANSFORM_CLOSE(&m0, &m1, epsilon) &&
-             NR_MATRIX_DF_TEST_TRANSLATE_CLOSE(&m0, &m1, epsilon)   );
+bool matrix_equalp(Matrix const &m0, Matrix const &m1, NR::Coord const epsilon) {
+    return transform_equalp(m0, m1, epsilon) && translate_equalp(m0, m1, epsilon);
 }
 
 

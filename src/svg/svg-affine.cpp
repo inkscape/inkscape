@@ -108,7 +108,7 @@ sp_svg_transform_read(gchar const *str, NR::Matrix *transform)
 		/* ok, have parsed keyword and args, now modify the transform */
 		if (!strcmp (keyword, "matrix")) {
 			if (n_args != 6) return false;
-			a = NR_MATRIX_D_FROM_DOUBLE(args) * a;
+			a = (*NR_MATRIX_D_FROM_DOUBLE(args)) * a;
 		} else if (!strcmp (keyword, "translate")) {
 			if (n_args == 1) {
 				args[1] = 0;
@@ -164,12 +164,12 @@ sp_svg_transform_read(gchar const *str, NR::Matrix *transform)
 gchar *
 sp_svg_transform_write(NR::Matrix const &transform)
 {
-	NRMatrix const t(transform);
+	NR::Matrix const t(transform);
 	return sp_svg_transform_write(&t);
 }
 
 gchar *
-sp_svg_transform_write(NRMatrix const *transform)
+sp_svg_transform_write(NR::Matrix const *transform)
 {
 	double e;
 
@@ -177,14 +177,14 @@ sp_svg_transform_write(NRMatrix const *transform)
 		return NULL;
 	}
 
-	e = 0.000001 * NR_MATRIX_DF_EXPANSION (transform);
+	e = 0.000001 * NR::expansion(*transform);
 	int prec = prefs_get_int_attribute("options.svgoutput", "numericprecision", 8);
 	int min_exp = prefs_get_int_attribute("options.svgoutput", "minimumexponent", -8);
 
 	/* fixme: We could use t1 * t1 + t2 * t2 here instead */
-	if (NR_DF_TEST_CLOSE (transform->c[1], 0.0, e) && NR_DF_TEST_CLOSE (transform->c[2], 0.0, e)) {
-		if (NR_DF_TEST_CLOSE (transform->c[4], 0.0, e) && NR_DF_TEST_CLOSE (transform->c[5], 0.0, e)) {
-			if (NR_DF_TEST_CLOSE (transform->c[0], 1.0, e) && NR_DF_TEST_CLOSE (transform->c[3], 1.0, e)) {
+	if (NR_DF_TEST_CLOSE ((*transform)[1], 0.0, e) && NR_DF_TEST_CLOSE ((*transform)[2], 0.0, e)) {
+		if (NR_DF_TEST_CLOSE ((*transform)[4], 0.0, e) && NR_DF_TEST_CLOSE ((*transform)[5], 0.0, e)) {
+			if (NR_DF_TEST_CLOSE ((*transform)[0], 1.0, e) && NR_DF_TEST_CLOSE ((*transform)[3], 1.0, e)) {
 				/* We are more or less identity */
 				return NULL;
 			} else {
@@ -193,24 +193,24 @@ sp_svg_transform_write(NRMatrix const *transform)
 				unsigned p = 0;
 				strcpy (c + p, "scale(");
 				p += 6;
-				p += sp_svg_number_write_de (c + p, transform->c[0], prec, min_exp, FALSE);
+				p += sp_svg_number_write_de (c + p, (*transform)[0], prec, min_exp, FALSE);
 				c[p++] = ',';
-				p += sp_svg_number_write_de (c + p, transform->c[3], prec, min_exp, FALSE);
+				p += sp_svg_number_write_de (c + p, (*transform)[3], prec, min_exp, FALSE);
 				c[p++] = ')';
 				c[p] = '\000';
 				g_assert( p <= sizeof(c) );
 				return g_strdup(c);
 			}
 		} else {
-			if (NR_DF_TEST_CLOSE (transform->c[0], 1.0, e) && NR_DF_TEST_CLOSE (transform->c[3], 1.0, e)) {
+			if (NR_DF_TEST_CLOSE ((*transform)[0], 1.0, e) && NR_DF_TEST_CLOSE ((*transform)[3], 1.0, e)) {
 				/* We are more or less translate */
 				gchar c[256];
 				unsigned p = 0;
 				strcpy (c + p, "translate(");
 				p += 10;
-				p += sp_svg_number_write_de (c + p, transform->c[4], prec, min_exp, FALSE);
+				p += sp_svg_number_write_de (c + p, (*transform)[4], prec, min_exp, FALSE);
 				c[p++] = ',';
-				p += sp_svg_number_write_de (c + p, transform->c[5], prec, min_exp, FALSE);
+				p += sp_svg_number_write_de (c + p, (*transform)[5], prec, min_exp, FALSE);
 				c[p++] = ')';
 				c[p] = '\000';
 				g_assert( p <= sizeof(c) );
@@ -220,17 +220,17 @@ sp_svg_transform_write(NRMatrix const *transform)
 				unsigned p = 0;
 				strcpy (c + p, "matrix(");
 				p += 7;
-				p += sp_svg_number_write_de (c + p, transform->c[0], prec, min_exp, FALSE);
+				p += sp_svg_number_write_de (c + p, (*transform)[0], prec, min_exp, FALSE);
 				c[p++] = ',';
-				p += sp_svg_number_write_de (c + p, transform->c[1], prec, min_exp, FALSE);
+				p += sp_svg_number_write_de (c + p, (*transform)[1], prec, min_exp, FALSE);
 				c[p++] = ',';
-				p += sp_svg_number_write_de (c + p, transform->c[2], prec, min_exp, FALSE);
+				p += sp_svg_number_write_de (c + p, (*transform)[2], prec, min_exp, FALSE);
 				c[p++] = ',';
-				p += sp_svg_number_write_de (c + p, transform->c[3], prec, min_exp, FALSE);
+				p += sp_svg_number_write_de (c + p, (*transform)[3], prec, min_exp, FALSE);
 				c[p++] = ',';
-				p += sp_svg_number_write_de (c + p, transform->c[4], prec, min_exp, FALSE);
+				p += sp_svg_number_write_de (c + p, (*transform)[4], prec, min_exp, FALSE);
 				c[p++] = ',';
-				p += sp_svg_number_write_de (c + p, transform->c[5], prec, min_exp, FALSE);
+				p += sp_svg_number_write_de (c + p, (*transform)[5], prec, min_exp, FALSE);
 				c[p++] = ')';
 				c[p] = '\000';
 				g_assert( p <= sizeof(c) );
@@ -242,17 +242,17 @@ sp_svg_transform_write(NRMatrix const *transform)
 		unsigned p = 0;
 		strcpy (c + p, "matrix(");
 		p += 7;
-		p += sp_svg_number_write_de (c + p, transform->c[0], prec, min_exp, FALSE);
+		p += sp_svg_number_write_de (c + p, (*transform)[0], prec, min_exp, FALSE);
 		c[p++] = ',';
-		p += sp_svg_number_write_de (c + p, transform->c[1], prec, min_exp, FALSE);
+		p += sp_svg_number_write_de (c + p, (*transform)[1], prec, min_exp, FALSE);
 		c[p++] = ',';
-		p += sp_svg_number_write_de (c + p, transform->c[2], prec, min_exp, FALSE);
+		p += sp_svg_number_write_de (c + p, (*transform)[2], prec, min_exp, FALSE);
 		c[p++] = ',';
-		p += sp_svg_number_write_de (c + p, transform->c[3], prec, min_exp, FALSE);
+		p += sp_svg_number_write_de (c + p, (*transform)[3], prec, min_exp, FALSE);
 		c[p++] = ',';
-		p += sp_svg_number_write_de (c + p, transform->c[4], prec, min_exp, FALSE);
+		p += sp_svg_number_write_de (c + p, (*transform)[4], prec, min_exp, FALSE);
 		c[p++] = ',';
-		p += sp_svg_number_write_de (c + p, transform->c[5], prec, min_exp, FALSE);
+		p += sp_svg_number_write_de (c + p, (*transform)[5], prec, min_exp, FALSE);
 		c[p++] = ')';
 		c[p] = '\000';
 		g_assert( p <= sizeof(c) );

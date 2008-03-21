@@ -288,12 +288,11 @@ static void
 sp_use_print(SPItem *item, SPPrintContext *ctx)
 {
     bool translated = false;
-    NRMatrix tp;
     SPUse *use = SP_USE(item);
 
     if ((use->x._set && use->x.computed != 0) || (use->y._set && use->y.computed != 0)) {
-        nr_matrix_set_translate(&tp, use->x.computed, use->y.computed);
-        sp_print_bind(ctx, &tp, 1.0);
+        NR::Matrix tp(NR::translate(use->x.computed, use->y.computed));
+        sp_print_bind(ctx, tp, 1.0);
         translated = true;
     }
 
@@ -618,9 +617,8 @@ sp_use_update(SPObject *object, SPCtx *ctx, unsigned flags)
 
     /* As last step set additional transform of arena group */
     for (SPItemView *v = item->display; v != NULL; v = v->next) {
-        NRMatrix t;
-        nr_matrix_set_translate(&t, use->x.computed, use->y.computed);
-        nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->arenaitem), &t);
+        NR::Matrix t(NR::translate(use->x.computed, use->y.computed));
+        nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->arenaitem), t);
     }
 }
 
@@ -721,9 +719,8 @@ sp_use_unlink(SPUse *use)
     // Set the accummulated transform.
     {
         NR::Matrix nomove(NR::identity());
-        NRMatrix ctrans = t.operator const NRMatrix&();
         // Advertise ourselves as not moving.
-        sp_item_write_transform(item, SP_OBJECT_REPR(item), &ctrans, &nomove);
+        sp_item_write_transform(item, SP_OBJECT_REPR(item), t, &nomove);
     }
     return item;
 }

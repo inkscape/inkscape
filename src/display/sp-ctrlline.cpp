@@ -76,7 +76,7 @@ static void
 sp_ctrlline_init (SPCtrlLine *ctrlline)
 {
     ctrlline->rgba = 0x0000ff7f;
-    ctrlline->s.x = ctrlline->s.y = ctrlline->e.x = ctrlline->e.y = 0.0;
+    ctrlline->s[NR::X] = ctrlline->s[NR::Y] = ctrlline->e[NR::X] = ctrlline->e[NR::Y] = 0.0;
     ctrlline->shp=NULL;
     ctrlline->item=NULL;
 }
@@ -180,8 +180,8 @@ sp_ctrlline_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int f
         cl->shp = NULL;
     }
     Path* thePath = new Path;
-    thePath->MoveTo(NR::Point(cl->s.x, cl->s.y) * affine);
-    thePath->LineTo(NR::Point(cl->e.x, cl->e.y) * affine);
+    thePath->MoveTo(NR::Point(cl->s[NR::X], cl->s[NR::Y]) * affine);
+    thePath->LineTo(NR::Point(cl->e[NR::X], cl->e[NR::Y]) * affine);
 
     NRRectL  area;
     area.x0=(NR::ICoord)(double)item->x1;
@@ -236,11 +236,11 @@ sp_ctrlline_set_coords (SPCtrlLine *cl, gdouble x0, gdouble y0, gdouble x1, gdou
     g_return_if_fail (cl != NULL);
     g_return_if_fail (SP_IS_CTRLLINE (cl));
 
-    if (DIFFER (x0, cl->s.x) || DIFFER (y0, cl->s.y) || DIFFER (x1, cl->e.x) || DIFFER (y1, cl->e.y)) {
-        cl->s.x = x0;
-        cl->s.y = y0;
-        cl->e.x = x1;
-        cl->e.y = y1;
+    if (DIFFER (x0, cl->s[NR::X]) || DIFFER (y0, cl->s[NR::Y]) || DIFFER (x1, cl->e[NR::X]) || DIFFER (y1, cl->e[NR::Y])) {
+        cl->s[NR::X] = x0;
+        cl->s[NR::Y] = y0;
+        cl->e[NR::X] = x1;
+        cl->e[NR::Y] = y1;
         sp_canvas_item_request_update (SP_CANVAS_ITEM (cl));
     }
 }

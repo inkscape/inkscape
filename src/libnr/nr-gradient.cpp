@@ -23,6 +23,7 @@
 #include <libnr/nr-pixblock-pixel.h>
 #include <libnr/nr-blit.h>
 #include <libnr/nr-gradient.h>
+#include <libnr/nr-matrix-ops.h>
 #include <glib/gtypes.h>
 #include <stdio.h>
 
@@ -299,31 +300,31 @@ NRRenderer *
 nr_lgradient_renderer_setup (NRLGradientRenderer *lgr,
 			     const unsigned char *cv, 
 			     unsigned int spread, 
-			     const NRMatrix *gs2px,
+			     const NR::Matrix *gs2px,
 			     float x0, float y0,
 			     float x1, float y1)
 {
-	NRMatrix n2gs, n2px, px2n;
+	NR::Matrix n2gs, n2px, px2n;
 
 	lgr->render = &render<Linear>;
 
 	lgr->vector = cv;
 	lgr->spread = spread;
 
-	n2gs.c[0] = x1 - x0;
-	n2gs.c[1] = y1 - y0;
-	n2gs.c[2] = y1 - y0;
-	n2gs.c[3] = x0 - x1;
-	n2gs.c[4] = x0;
-	n2gs.c[5] = y0;
+	n2gs[0] = x1 - x0;
+	n2gs[1] = y1 - y0;
+	n2gs[2] = y1 - y0;
+	n2gs[3] = x0 - x1;
+	n2gs[4] = x0;
+	n2gs[5] = y0;
 
-	nr_matrix_multiply (&n2px, &n2gs, gs2px);
-	nr_matrix_invert (&px2n, &n2px);
+	n2px = n2gs * (*gs2px);
+	px2n = n2px.inverse();
 
-	lgr->x0 = n2px.c[4] - 0.5;
-	lgr->y0 = n2px.c[5] - 0.5;
-	lgr->dx = px2n.c[0] * NR_GRADIENT_VECTOR_LENGTH;
-	lgr->dy = px2n.c[2] * NR_GRADIENT_VECTOR_LENGTH;
+	lgr->x0 = n2px[4] - 0.5;
+	lgr->y0 = n2px[5] - 0.5;
+	lgr->dx = px2n[0] * NR_GRADIENT_VECTOR_LENGTH;
+	lgr->dy = px2n[2] * NR_GRADIENT_VECTOR_LENGTH;
 
 	return (NRRenderer *) lgr;
 }
@@ -362,8 +363,8 @@ static void render(NRGradientRenderer *gr, NRPixBlock *pb)
 {
     NRRGradientRenderer *rgr = static_cast<NRRGradientRenderer *>(gr);
 
-    NR::Coord const dx = rgr->px2gs.c[0];
-    NR::Coord const dy = rgr->px2gs.c[1];
+    NR::Coord const dx = rgr->px2gs[0];
+    NR::Coord const dy = rgr->px2gs[1];
 
     NRPixBlock spb;
     nr_pixblock_setup_extern(&spb, NR_PIXBLOCK_MODE_R8G8B8A8N,
@@ -374,8 +375,8 @@ static void render(NRGradientRenderer *gr, NRPixBlock *pb)
 
     for (int y = pb->area.y0; y < pb->area.y1; y++) {
         unsigned char *d = NR_PIXBLOCK_PX(pb) + (y - pb->area.y0) * pb->rs;
-        NR::Coord gx = rgr->px2gs.c[0] * pb->area.x0 + rgr->px2gs.c[2] * y + rgr->px2gs.c[4];
-        NR::Coord gy = rgr->px2gs.c[1] * pb->area.x0 + rgr->px2gs.c[3] * y + rgr->px2gs.c[5];
+        NR::Coord gx = rgr->px2gs[0] * pb->area.x0 + rgr->px2gs[2] * y + rgr->px2gs[4];
+        NR::Coord gy = rgr->px2gs[1] * pb->area.x0 + rgr->px2gs[3] * y + rgr->px2gs[5];
         for (int x = pb->area.x0; x < pb->area.x1; x++) {
             NR::Coord const pos = sqrt(((gx*gx) + (gy*gy)));
             unsigned char const *s=spread::color_at(pos, rgr->vector);
@@ -410,10 +411,10 @@ static void render(NRGradientRenderer *gr, NRPixBlock *pb)
 
     for (int y = y0; y < y1; y++) {
         unsigned char *d = NR_PIXBLOCK_PX(pb) + (y - y0) * rs;
-        NR::Coord gx = rgr->px2gs.c[0] * x0 + rgr->px2gs.c[2] * y + rgr->px2gs.c[4];
-        NR::Coord gy = rgr->px2gs.c[1] * x0 + rgr->px2gs.c[3] * y + rgr->px2gs.c[5];
-        NR::Coord const dx = rgr->px2gs.c[0];
-        NR::Coord const dy = rgr->px2gs.c[1];
+        NR::Coord gx = rgr->px2gs[0] * x0 + rgr->px2gs[2] * y + rgr->px2gs[4];
+        NR::Coord gy = rgr->px2gs[1] * x0 + rgr->px2gs[3] * y + rgr->px2gs[5];
+        NR::Coord const dx = rgr->px2gs[0];
+        NR::Coord const dy = rgr->px2gs[1];
         for (int x = x0; x < x1; x++) {
             NR::Coord const gx2 = gx * gx;
             NR::Coord const gxy2 = gx2 + gy * gy;
@@ -452,7 +453,7 @@ NRRenderer *
 nr_rgradient_renderer_setup(NRRGradientRenderer *rgr,
                             unsigned char const *cv,
                             unsigned spread,
-                            NRMatrix const *gs2px,
+                            NR::Matrix const *gs2px,
                             float cx, float cy,
                             float fx, float fy,
                             float r)
@@ -466,15 +467,15 @@ nr_rgradient_renderer_setup(NRRGradientRenderer *rgr,
                NR_DF_TEST_CLOSE(cy, fy, NR_EPSILON)) {
         rgr->render = render<SymmetricRadial>;
 
-        nr_matrix_invert(&rgr->px2gs, gs2px);
-        rgr->px2gs.c[0] *= (NR_GRADIENT_VECTOR_LENGTH / r);
-        rgr->px2gs.c[1] *= (NR_GRADIENT_VECTOR_LENGTH / r);
-        rgr->px2gs.c[2] *= (NR_GRADIENT_VECTOR_LENGTH / r);
-        rgr->px2gs.c[3] *= (NR_GRADIENT_VECTOR_LENGTH / r);
-        rgr->px2gs.c[4] -= cx;
-        rgr->px2gs.c[5] -= cy;
-        rgr->px2gs.c[4] *= (NR_GRADIENT_VECTOR_LENGTH / r);
-        rgr->px2gs.c[5] *= (NR_GRADIENT_VECTOR_LENGTH / r);
+        rgr->px2gs = gs2px->inverse();
+        rgr->px2gs[0] *= (NR_GRADIENT_VECTOR_LENGTH / r);
+        rgr->px2gs[1] *= (NR_GRADIENT_VECTOR_LENGTH / r);
+        rgr->px2gs[2] *= (NR_GRADIENT_VECTOR_LENGTH / r);
+        rgr->px2gs[3] *= (NR_GRADIENT_VECTOR_LENGTH / r);
+        rgr->px2gs[4] -= cx;
+        rgr->px2gs[5] -= cy;
+        rgr->px2gs[4] *= (NR_GRADIENT_VECTOR_LENGTH / r);
+        rgr->px2gs[5] *= (NR_GRADIENT_VECTOR_LENGTH / r);
 
         rgr->cx = 0.0;
         rgr->cy = 0.0;
@@ -490,17 +491,17 @@ nr_rgradient_renderer_setup(NRRGradientRenderer *rgr,
             fy = cy + (fy - cy ) * r / (float) df;
         }
 
-        NRMatrix n2gs;
-        n2gs.c[0] = cx - fx;
-        n2gs.c[1] = cy - fy;
-        n2gs.c[2] = cy - fy;
-        n2gs.c[3] = fx - cx;
-        n2gs.c[4] = fx;
-        n2gs.c[5] = fy;
+        NR::Matrix n2gs;
+        n2gs[0] = cx - fx;
+        n2gs[1] = cy - fy;
+        n2gs[2] = cy - fy;
+        n2gs[3] = fx - cx;
+        n2gs[4] = fx;
+        n2gs[5] = fy;
 
-        NRMatrix n2px;
-        nr_matrix_multiply(&n2px, &n2gs, gs2px);
-        nr_matrix_invert(&rgr->px2gs, &n2px);
+        NR::Matrix n2px;
+        n2px = n2gs * (*gs2px);
+        rgr->px2gs = n2px.inverse();
 
         rgr->cx = 1.0;
         rgr->cy = 0.0;

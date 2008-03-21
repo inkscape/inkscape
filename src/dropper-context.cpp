@@ -257,7 +257,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
 
                     NR::Point const cd = desktop->w2d(dc->centre);
                     NR::Matrix const w2dt = desktop->w2d();
-                    const double scale = rw * NR_MATRIX_DF_EXPANSION(&w2dt);
+                    const double scale = rw * NR::expansion(w2dt);
                     NR::Matrix const sm( NR::scale(scale, scale) * NR::translate(cd) );
                     sp_canvas_item_affine_absolute(dc->area, sm);
                     sp_canvas_item_show(dc->area);

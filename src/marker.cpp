@@ -20,7 +20,9 @@
 
 #include "libnr/nr-matrix-fns.h"
 #include "libnr/nr-matrix-ops.h"
+#include "libnr/nr-matrix-translate-ops.h"
 #include "libnr/nr-scale-matrix-ops.h"
+#include "libnr/nr-translate-matrix-ops.h"
 #include "libnr/nr-rotate-fns.h"
 #include "svg/svg.h"
 #include "display/nr-arena-group.h"
@@ -116,7 +118,7 @@ sp_marker_init (SPMarker *marker)
 {
 	marker->viewBox_set = FALSE;
 
-	nr_matrix_set_identity (&marker->c2p);
+	marker->c2p.set_identity();
 }
 
 /**
@@ -353,7 +355,6 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 	SPItemCtx rctx;
 	NRRect *vb;
 	double x, y, width, height;
-	NRMatrix q;
 	SPMarkerView *v;
 
 	item = SP_ITEM (object);
@@ -373,7 +374,7 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 	rctx.vp.y1 = marker->markerHeight.computed;
 
 	/* Start with identity transform */
-	nr_matrix_set_identity (&marker->c2p);
+	marker->c2p.set_identity();
 
 	/* Viewbox is always present, either implicitly or explicitly */
 	if (marker->viewBox_set) {
@@ -440,21 +441,23 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 			break;
 		}
 	}
-	/* Compose additional transformation from scale and position */
-	q.c[0] = width / (vb->x1 - vb->x0);
-	q.c[1] = 0.0;
-	q.c[2] = 0.0;
-	q.c[3] = height / (vb->y1 - vb->y0);
-	q.c[4] = -vb->x0 * q.c[0] + x;
-	q.c[5] = -vb->y0 * q.c[3] + y;
-	/* Append viewbox transformation */
-	nr_matrix_multiply (&marker->c2p, &q, &marker->c2p);
 
+    {
+        NR::Matrix q;
+	    /* Compose additional transformation from scale and position */
+	    q[0] = width / (vb->x1 - vb->x0);
+	    q[1] = 0.0;
+	    q[2] = 0.0;
+	    q[3] = height / (vb->y1 - vb->y0);
+	    q[4] = -vb->x0 * q[0] + x;
+	    q[5] = -vb->y0 * q[3] + y;
+	    /* Append viewbox transformation */
+	    marker->c2p = q * marker->c2p;
+    }
 
 	/* Append reference translation */
 	/* fixme: lala (Lauris) */
-	nr_matrix_set_translate (&q, -marker->refX.computed, -marker->refY.computed);
-	nr_matrix_multiply (&marker->c2p, &q, &marker->c2p);
+    marker->c2p = NR::translate(-marker->refX.computed, -marker->refY.computed) * marker->c2p;
 
 	rctx.i2doc = marker->c2p * rctx.i2doc;
 

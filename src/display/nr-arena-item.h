@@ -64,7 +64,7 @@
 struct NRGC {
     NRGC(NRGC const *p) : parent(p) {}
     NRGC const *parent;
-    NRMatrix transform;
+    NR::Matrix transform;
 };
 
 struct NRArenaItem : public NRObject {
@@ -93,7 +93,7 @@ struct NRArenaItem : public NRObject {
      * specified in SVG standard. Required by filters. */
     NR::Maybe<NR::Rect> item_bbox;
     /* Our affine */
-    NRMatrix *transform;
+    NR::Matrix *transform;
     /* Clip item */
     NRArenaItem *clip;
     /* Mask item */
@@ -170,7 +170,7 @@ NRArenaItem *nr_arena_item_unparent (NRArenaItem *item);
 void nr_arena_item_append_child (NRArenaItem *parent, NRArenaItem *child);
 
 void nr_arena_item_set_transform(NRArenaItem *item, NR::Matrix const &transform);
-void nr_arena_item_set_transform(NRArenaItem *item, NRMatrix const *transform);
+void nr_arena_item_set_transform(NRArenaItem *item, NR::Matrix const *transform);
 void nr_arena_item_set_opacity (NRArenaItem *item, double opacity);
 void nr_arena_item_set_sensitive (NRArenaItem *item, unsigned int sensitive);
 void nr_arena_item_set_visible (NRArenaItem *item, unsigned int visible);

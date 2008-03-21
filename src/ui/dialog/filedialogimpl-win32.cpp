@@ -873,7 +873,7 @@ bool FileOpenDialogImplWin32::set_svg_preview()
         arena, key, SP_ITEM_SHOW_DISPLAY);
 
     NRGC gc(NULL);
-    nr_matrix_set_scale(&gc.transform, scaleFactor, scaleFactor);
+    gc.transform = NR::Matrix(NR::scale(scaleFactor, scaleFactor));
 
     nr_arena_item_invoke_update (root, NULL, &gc,
         NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);

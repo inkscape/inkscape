@@ -377,24 +377,18 @@ sp_path_set_transform(SPItem *item, NR::Matrix const &xform)
         return NR::identity();
     }
 
-    if (path->original_curve) { /* Transform the original-d path */
-        NRBPath dorigpath, sorigpath;
-        sorigpath.path = SP_CURVE_BPATH(path->original_curve);
-        nr_path_duplicate_transform(&dorigpath, &sorigpath, xform);
-        SPCurve *origcurve = sp_curve_new_from_bpath(dorigpath.path);
-        if (origcurve) {
-            sp_path_set_original_curve(path, origcurve, TRUE, true);
-            sp_curve_unref(origcurve);
+    // Transform the original-d path or the (ordinary) path
+    bool original_path = (bool)path->original_curve;
+    SPCurve *srccurve = original_path ? path->original_curve : shape->curve;
+    SPCurve *dstcurve = sp_curve_copy(srccurve);
+    if (dstcurve) {
+        sp_curve_transform(dstcurve, xform);
+        if (original_path) {
+            sp_path_set_original_curve(path, dstcurve, TRUE, true);
+        } else {
+            sp_shape_set_curve(shape, dstcurve, TRUE);
         }
-    } else {    /* Transform the path */
-        NRBPath dpath, spath;
-        spath.path = SP_CURVE_BPATH(shape->curve);
-        nr_path_duplicate_transform(&dpath, &spath, xform);
-        SPCurve *curve = sp_curve_new_from_bpath(dpath.path);
-        if (curve) {
-            sp_shape_set_curve(shape, curve, TRUE);
-            sp_curve_unref(curve);
-        }
+        sp_curve_unref(dstcurve);
     }
 
     // Adjust stroke

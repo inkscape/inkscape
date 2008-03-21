@@ -18,13 +18,6 @@
 
 #include <2geom/point.h>
 
-/// A NRPoint consists of x and y coodinates.
-/// \todo
-/// This class appears to be obsoleted out in favour of NR::Point.
-struct NRPoint {
-    NR::Coord x, y;
-};
-
 namespace NR {
 
 class Matrix;
@@ -38,11 +31,6 @@ public:
     inline Point(Coord x, Coord y) {
         _pt[X] = x;
         _pt[Y] = y;
-    }
-
-    inline Point(NRPoint const &p) {
-        _pt[X] = p.x;
-        _pt[Y] = p.y;
     }
 
     inline Point(Point const &p) {

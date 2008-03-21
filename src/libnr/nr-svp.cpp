@@ -48,9 +48,9 @@ nr_svp_bbox (NRSVP *svp, NRRect *bbox, unsigned int clear)
         seg = svp->segments + sidx;
         if (seg->length) {
             x0 = MIN (x0, seg->x0);
-            y0 = MIN (y0, svp->points[seg->start].y);
+            y0 = MIN (y0, svp->points[seg->start][NR::Y]);
             x1 = MAX (x1, seg->x1);
-            y1 = MAX (y1, svp->points[seg->start + seg->length - 1].y);
+            y1 = MAX (y1, svp->points[seg->start + seg->length - 1][NR::Y]);
         }
     }
 

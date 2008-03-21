@@ -1518,10 +1518,7 @@ sp_lineargradient_painter_new(SPPaintServer *ps,
 
     }
 
-    NRMatrix v2px;
-    color2px.copyto(&v2px);
-
-    nr_lgradient_renderer_setup(&lgp->lgr, gr->color, sp_gradient_get_spread(gr), &v2px,
+    nr_lgradient_renderer_setup(&lgp->lgr, gr->color, sp_gradient_get_spread(gr), &color2px,
                                 lg->x1.computed, lg->y1.computed,
                                 lg->x2.computed, lg->y2.computed);
 
@@ -1797,11 +1794,8 @@ sp_radialgradient_painter_new(SPPaintServer *ps,
         gs2px = gr->gradientTransform * full_transform;
     }
 
-    NRMatrix gs2px_nr;
-    gs2px.copyto(&gs2px_nr);
-
     nr_rgradient_renderer_setup(&rgp->rgr, gr->color, sp_gradient_get_spread(gr),
-                                &gs2px_nr,
+                                &gs2px,
                                 rg->cx.computed, rg->cy.computed,
                                 rg->fx.computed, rg->fy.computed,
                                 rg->r.computed);

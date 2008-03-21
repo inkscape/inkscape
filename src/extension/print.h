@@ -41,18 +41,18 @@ public:
     unsigned int  finish      (void);
 
     /* Rendering methods */
-    unsigned int  bind        (NRMatrix const *transform,
+    unsigned int  bind        (NR::Matrix const *transform,
                                float opacity);
     unsigned int  release     (void);
     unsigned int  comment     (const char * comment);
     unsigned int  fill        (NRBPath const *bpath,
-                               NRMatrix const *ctm,
+                               NR::Matrix const *ctm,
                                SPStyle const *style,
                                NRRect const *pbox,
                                NRRect const *dbox,
                                NRRect const *bbox);
     unsigned int  stroke      (NRBPath const *bpath,
-                               NRMatrix const *transform,
+                               NR::Matrix const *transform,
                                SPStyle const *style,
                                NRRect const *pbox,
                                NRRect const *dbox,
@@ -61,7 +61,7 @@ public:
                                unsigned int w,
                                unsigned int h,
                                unsigned int rs,
-                               NRMatrix const *transform,
+                               NR::Matrix const *transform,
                                SPStyle const *style);
     unsigned int  text        (char const *text,
                                NR::Point p,

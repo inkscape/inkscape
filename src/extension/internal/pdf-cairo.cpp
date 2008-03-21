@@ -379,7 +379,7 @@ PrintCairoPDF::finish(Inkscape::Extension::Print *mod)
 }
 
 unsigned int
-PrintCairoPDF::bind(Inkscape::Extension::Print *mod, NRMatrix const *transform, float opacity)
+PrintCairoPDF::bind(Inkscape::Extension::Print *mod, NR::Matrix const *transform, float opacity)
 {
     if (!_stream) return 0;  // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
@@ -389,11 +389,11 @@ PrintCairoPDF::bind(Inkscape::Extension::Print *mod, NRMatrix const *transform, 
     } else {
         cairo_save(cr);
     }
-    _concat_transform(cr, transform->c[0], transform->c[1], transform->c[2], transform->c[3], transform->c[4], transform->c[5]);
+    _concat_transform(cr, (*transform)[0], (*transform)[1], (*transform)[2], (*transform)[3], (*transform)[4], (*transform)[5]);
     // printf("bind: (%f) %f %f %f %f %f %f\n", opacity, transform->c[0], transform->c[1], transform->c[2], transform->c[3], transform->c[4], transform->c[5]);
     // remember these to be able to undo them when outputting text
-    _last_tx = transform->c[4];
-    _last_ty = transform->c[5];
+    _last_tx = (*transform)[4];
+    _last_ty = (*transform)[5];
 
     _alpha_stack.push_back(opacity);
 
@@ -560,7 +560,7 @@ PrintCairoPDF::print_fill_style(cairo_t *cr, SPStyle const *const style, NRRect 
 }
 
 unsigned int
-PrintCairoPDF::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMatrix const *ctm, SPStyle const *const style,
+PrintCairoPDF::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *const style,
               NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -660,7 +660,7 @@ PrintCairoPDF::print_stroke_style(cairo_t *cr, SPStyle const *style, NRRect cons
 }
 
 unsigned int
-PrintCairoPDF::stroke(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMatrix const *ctm, SPStyle const *style,
+PrintCairoPDF::stroke(Inkscape::Extension::Print *mod, NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *style,
                 NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -684,7 +684,7 @@ PrintCairoPDF::stroke(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRM
 
 unsigned int
 PrintCairoPDF::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w, unsigned int h, unsigned int rs,
-               NRMatrix const *transform, SPStyle const *style)
+               NR::Matrix const *transform, SPStyle const *style)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
@@ -728,9 +728,9 @@ PrintCairoPDF::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w
 	// we have to translate down by height also in order to eliminate the last translation done by sp_image_print
     cairo_matrix_t matrix;
     cairo_matrix_init(&matrix,
-	            transform->c[0]/w, transform->c[1],
-	            transform->c[2], -transform->c[3]/h,
-	            transform->c[4], transform->c[5] + transform->c[3]);
+	            (*transform)[0]/w, (*transform)[1],
+	            (*transform)[2], -(*transform)[3]/h,
+	            (*transform)[4], (*transform)[5] + (*transform)[3]);
     cairo_transform(cr, &matrix);
 
     cairo_pattern_t *pattern = cairo_pattern_create_for_surface(image_surface);

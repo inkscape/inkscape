@@ -454,7 +454,7 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
     // to get a correct style attribute for the new path
     SPItem* item_source = SP_ITEM(source);
     NR::Matrix i2root = sp_item_i2root_affine(item_source);
-    sp_item_adjust_stroke(item_source, i2root.expansion());
+    sp_item_adjust_stroke(item_source, NR::expansion(i2root));
     sp_item_adjust_pattern(item_source, i2root);
     sp_item_adjust_gradient(item_source, i2root);
     sp_item_adjust_livepatheffect(item_source, i2root);
@@ -661,7 +661,7 @@ sp_selected_path_outline()
         }
 
         NR::Matrix const transform(item->transform);
-        float const scale = transform.expansion();
+        float const scale = NR::expansion(transform);
         gchar *style = g_strdup(SP_OBJECT_REPR(item)->attribute("style"));
         SPStyle *i_style = SP_OBJECT(item)->style;
         gchar const *mask = SP_OBJECT_REPR(item)->attribute("mask");

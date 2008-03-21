@@ -80,10 +80,9 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         NRGC gc(NULL);
         /* Update to renderable state */
         double sf = 1.0;
-        NRMatrix t;
-        nr_matrix_set_scale(&t, sf, sf);
+        NR::Matrix t(NR::scale(sf, sf));
         nr_arena_item_set_transform(ai, &t);
-        nr_matrix_set_identity(&gc.transform);
+        gc.transform.set_identity();
         nr_arena_item_invoke_update( ai, NULL, &gc,
                                              NR_ARENA_ITEM_STATE_ALL,
                                              NR_ARENA_ITEM_STATE_NONE );

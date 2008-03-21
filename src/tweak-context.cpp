@@ -392,7 +392,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
         Shape *theRes = new Shape;
         NR::Matrix i2doc(sp_item_i2doc_affine(item));
 
-        orig->ConvertWithBackData((0.08 - (0.07 * fidelity)) / i2doc.expansion()); // default 0.059
+        orig->ConvertWithBackData((0.08 - (0.07 * fidelity)) / NR::expansion(i2doc)); // default 0.059
         orig->Fill(theShape, 0);
 
         SPCSSAttr *css = sp_repr_css_attr(SP_OBJECT_REPR(item), "style");
@@ -447,7 +447,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
             res->Reset();
             theRes->ConvertToForme(res);
 
-            double th_max = (0.6 - 0.59*sqrt(fidelity)) / i2doc.expansion();
+            double th_max = (0.6 - 0.59*sqrt(fidelity)) / NR::expansion(i2doc);
             double threshold = MAX(th_max, th_max*force);
             res->ConvertEvenLines(threshold);
             res->Simplify(threshold / (SP_ACTIVE_DESKTOP->current_zoom()));

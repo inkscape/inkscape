@@ -44,11 +44,11 @@ class PrintEmfWin32 : public Inkscape::Extension::Implementation::Implementation
 
     NArtBpath *fill_path;
     NArtBpath *fill_path_copy;
-    NRMatrix fill_transform;
+    NR::Matrix fill_transform;
     NRRect fill_pbox;
-    NRMatrix text_transform;
+    NR::Matrix text_transform;
 
-    unsigned int print_bpath (const NArtBpath *bp, const NRMatrix *transform, NRRect const *pbox);
+    unsigned int print_bpath (const NArtBpath *bp, const NR::Matrix *transform, NRRect const *pbox);
 
 public:
     PrintEmfWin32 (void);
@@ -61,13 +61,13 @@ public:
     virtual unsigned int finish (Inkscape::Extension::Print * module);
 
     /* Rendering methods */
-    virtual unsigned int bind(Inkscape::Extension::Print *module, NRMatrix const *transform, float opacity);
+    virtual unsigned int bind(Inkscape::Extension::Print *module, NR::Matrix const *transform, float opacity);
     virtual unsigned int release(Inkscape::Extension::Print *module);
     virtual unsigned int fill (Inkscape::Extension::Print * module,
-                               const NRBPath *bpath, const NRMatrix *ctm, const SPStyle *style,
+                               const NRBPath *bpath, const NR::Matrix *ctm, const SPStyle *style,
                                const NRRect *pbox, const NRRect *dbox, const NRRect *bbox);
     virtual unsigned int stroke (Inkscape::Extension::Print * module,
-                                 const NRBPath *bpath, const NRMatrix *transform, const SPStyle *style,
+                                 const NRBPath *bpath, const NR::Matrix *transform, const SPStyle *style,
                                  const NRRect *pbox, const NRRect *dbox, const NRRect *bbox);
     virtual unsigned int comment(Inkscape::Extension::Print *module, const char * comment);
     virtual unsigned int text(Inkscape::Extension::Print *module, char const *text,
@@ -81,7 +81,7 @@ protected:
 
     void destroy_brush();
 
-    void create_pen(SPStyle const *style, const NRMatrix *transform);
+    void create_pen(SPStyle const *style, const NR::Matrix *transform);
 
     void destroy_pen();
 

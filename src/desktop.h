@@ -233,7 +233,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     void zoom_drawing();
     void zoom_selection();
     void zoom_grab_focus();
-    double current_zoom() const  { return _d2w.expansion(); }
+    double current_zoom() const  { return NR::expansion(_d2w); }
     void prev_zoom();
     void next_zoom();
 

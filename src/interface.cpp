@@ -1192,7 +1192,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                                 ( !SP_OBJECT_STYLE(item)->stroke.isNone() ?
                                   desktop->current_zoom() *
                                   SP_OBJECT_STYLE (item)->stroke_width.computed *
-                                  sp_item_i2d_affine (item).expansion() * 0.5
+                                  NR::expansion(sp_item_i2d_affine(item)) * 0.5
                                   : 0.0)
                                 + prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100); 
 

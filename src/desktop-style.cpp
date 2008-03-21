@@ -405,7 +405,7 @@ stroke_average_width (GSList const *objects)
             notstroked = false;
         }
 
-        avgwidth += SP_OBJECT_STYLE (object)->stroke_width.computed * i2d.expansion();
+        avgwidth += SP_OBJECT_STYLE (object)->stroke_width.computed * NR::expansion(i2d);
     }
 
     if (notstroked)
@@ -661,7 +661,7 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
         n_stroked ++;
 
         NR::Matrix i2d = sp_item_i2d_affine (SP_ITEM(obj));
-        double sw = style->stroke_width.computed * i2d.expansion();
+        double sw = style->stroke_width.computed * NR::expansion(i2d);
 
         if (prev_sw != -1 && fabs(sw - prev_sw) > 1e-3)
             same_sw = false;

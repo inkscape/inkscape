@@ -26,7 +26,7 @@ void          font_style::Apply(Path* src,Shape* dest) {
 	if ( stroke_width > 0 ) {
 		if ( nbDash > 0 ) {
 			double dlen = 0.0;
-			const float scale = 1/*NR_MATRIX_DF_EXPANSION (&transform)*/;
+			const float scale = 1/*NR::expansion(transform)*/;
 			for (int i = 0; i < nbDash; i++)  dlen += dashes[i] * scale;
 			if (dlen >= 0.01) {
 				float   sc_offset = dash_offset * scale;

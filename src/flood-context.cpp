@@ -806,7 +806,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     nr_arena_item_set_transform(NR_ARENA_ITEM(root), affine);
 
     NRGC gc(NULL);
-    nr_matrix_set_identity(&gc.transform);
+    gc.transform.set_identity();
     
     NRRectL final_bbox;
     final_bbox.x0 = 0;

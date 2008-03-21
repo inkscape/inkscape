@@ -128,7 +128,7 @@ sp_root_init(SPRoot *root)
     root->width.unset(SVGLength::PERCENT, 1.0, 1.0);
     root->height.unset(SVGLength::PERCENT, 1.0, 1.0);
 
-    /* nr_matrix_set_identity(&root->viewbox); */
+    /* root->viewbox.set_identity(); */
     root->viewBox_set = FALSE;
 
     root->c2p.set_identity();

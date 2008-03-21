@@ -34,12 +34,11 @@
 
 GdkPixbuf* render_pixbuf(NRArenaItem* root, double scale_factor, const NR::Rect& dbox, unsigned psize) {
     NRGC gc(NULL);
-    NRMatrix t;
 
-    nr_matrix_set_scale(&t, scale_factor, scale_factor);
-    nr_arena_item_set_transform(root, &t);
+    NR::Matrix t(NR::scale(scale_factor, scale_factor));
+    nr_arena_item_set_transform(root, t);
 
-    nr_matrix_set_identity(&gc.transform);
+    gc.transform.set_identity();
     nr_arena_item_invoke_update( root, NULL, &gc,
                                  NR_ARENA_ITEM_STATE_ALL,
                                  NR_ARENA_ITEM_STATE_NONE );

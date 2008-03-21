@@ -21,17 +21,17 @@ struct SPPrintContext {
 };
 
 unsigned int sp_print_bind(SPPrintContext *ctx, NR::Matrix const &transform, float opacity);
-unsigned int sp_print_bind(SPPrintContext *ctx, NRMatrix const *transform, float opacity);
+unsigned int sp_print_bind(SPPrintContext *ctx, NR::Matrix const *transform, float opacity);
 unsigned int sp_print_release(SPPrintContext *ctx);
 unsigned int sp_print_comment(SPPrintContext *ctx, char const *comment);
-unsigned int sp_print_fill(SPPrintContext *ctx, NRBPath const *bpath, NRMatrix const *ctm, SPStyle const *style,
+unsigned int sp_print_fill(SPPrintContext *ctx, NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *style,
                            NRRect const *pbox, NRRect const *dbox, NRRect const *bbox);
-unsigned int sp_print_stroke(SPPrintContext *ctx, NRBPath const *bpath, NRMatrix const *transform, SPStyle const *style,
+unsigned int sp_print_stroke(SPPrintContext *ctx, NRBPath const *bpath, NR::Matrix const *transform, SPStyle const *style,
                              NRRect const *pbox, NRRect const *dbox, NRRect const *bbox);
 
 unsigned int sp_print_image_R8G8B8A8_N(SPPrintContext *ctx,
                                        guchar *px, unsigned int w, unsigned int h, unsigned int rs,
-                                       NRMatrix const *transform, SPStyle const *style);
+                                       NR::Matrix const *transform, SPStyle const *style);
 
 unsigned int sp_print_text(SPPrintContext *ctx, char const *text, NR::Point p,
                            SPStyle const *style);

@@ -44,14 +44,14 @@ struct NRLGradientRenderer : public NRGradientRenderer {
 NRRenderer *nr_lgradient_renderer_setup (NRLGradientRenderer *lgr,
 					 const unsigned char *cv, 
 					 unsigned int spread, 
-					 const NRMatrix *gs2px,
+					 const NR::Matrix *gs2px,
 					 float x0, float y0,
 					 float x1, float y1);
 
 /* Radial */
 
 struct NRRGradientRenderer : public NRGradientRenderer {
-    NRMatrix px2gs;
+    NR::Matrix px2gs;
     float cx, cy;
     float fx, fy;
     float r;
@@ -61,7 +61,7 @@ struct NRRGradientRenderer : public NRGradientRenderer {
 NRRenderer *nr_rgradient_renderer_setup (NRRGradientRenderer *rgr,
 					 const unsigned char *cv,
 					 unsigned int spread,
-					 const NRMatrix *gs2px,
+					 const NR::Matrix *gs2px,
 					 float cx, float cy,
 					 float fx, float fy,
 					 float r);

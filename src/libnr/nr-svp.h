@@ -14,8 +14,7 @@
 
 #include <glib/gtypes.h>
 #include <libnr/nr-coord.h>
-
-struct NRPoint;
+#include <libnr/nr-forward.h>
 
 struct NRSVPSegment {
     gint16 wind;
@@ -33,7 +32,7 @@ struct NRSVPFlat {
 
 struct NRSVP {
     unsigned int length;
-    NRPoint *points;
+    NR::Point *points;
     NRSVPSegment segments[1];
 };
 

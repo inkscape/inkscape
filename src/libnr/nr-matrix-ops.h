@@ -23,13 +23,9 @@ inline bool operator!=(Matrix const &a, Matrix const &b)
 
 Matrix operator*(Matrix const &a, Matrix const &b);
 
-inline Matrix operator*(Matrix const &a, NRMatrix const &b)
-{
-    return a * NR::Matrix(b);
-}
+inline Matrix &operator*=(Matrix &a, Matrix const &b) { a = a * b; return a; }
 
 } /* namespace NR */
-
 
 #endif /* !SEEN_NR_MATRIX_OPS_H */
 

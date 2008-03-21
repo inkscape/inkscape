@@ -129,7 +129,7 @@ Implementation::finish(Inkscape::Extension::Print */*module*/)
 
 /* Rendering methods */
 unsigned int
-Implementation::bind(Inkscape::Extension::Print */*module*/, NRMatrix const */*transform*/, float /*opacity*/)
+Implementation::bind(Inkscape::Extension::Print */*module*/, NR::Matrix const */*transform*/, float /*opacity*/)
 {
     return 0;
 }
@@ -147,14 +147,14 @@ Implementation::comment(Inkscape::Extension::Print */*module*/, char const */*co
 }
 
 unsigned int
-Implementation::fill(Inkscape::Extension::Print */*module*/, NRBPath const */*bpath*/, NRMatrix const */*ctm*/, SPStyle const */*style*/,
+Implementation::fill(Inkscape::Extension::Print */*module*/, NRBPath const */*bpath*/, NR::Matrix const */*ctm*/, SPStyle const */*style*/,
                      NRRect const */*pbox*/, NRRect const */*dbox*/, NRRect const */*bbox*/)
 {
     return 0;
 }
 
 unsigned int
-Implementation::stroke(Inkscape::Extension::Print */*module*/, NRBPath const */*bpath*/, NRMatrix const */*transform*/, SPStyle const */*style*/,
+Implementation::stroke(Inkscape::Extension::Print */*module*/, NRBPath const */*bpath*/, NR::Matrix const */*transform*/, SPStyle const */*style*/,
                        NRRect const */*pbox*/, NRRect const */*dbox*/, NRRect const */*bbox*/)
 {
     return 0;
@@ -162,7 +162,7 @@ Implementation::stroke(Inkscape::Extension::Print */*module*/, NRBPath const */*
 
 unsigned int
 Implementation::image(Inkscape::Extension::Print */*module*/, unsigned char */*px*/, unsigned int /*w*/, unsigned int /*h*/, unsigned int /*rs*/,
-                      NRMatrix const */*transform*/, SPStyle const */*style*/)
+                      NR::Matrix const */*transform*/, SPStyle const */*style*/)
 {
     return 0;
 }

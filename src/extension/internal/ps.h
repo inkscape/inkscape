@@ -59,7 +59,7 @@ class PrintPS : public Inkscape::Extension::Implementation::Implementation {
     void print_glyphlist(SVGOStringStream &os, font_instance* font, Glib::ustring unistring);
 
     unsigned int print_image(FILE *ofp, guchar *px, unsigned int width, unsigned int height, unsigned int rs,
-                             NRMatrix const *transform);
+                             NR::Matrix const *transform);
     void compress_packbits(int nin, guchar *src, int *nout, guchar *dst);
 
     /* ASCII 85 variables */
@@ -88,15 +88,15 @@ public:
     virtual unsigned int finish(Inkscape::Extension::Print *module);
 
     /* Rendering methods */
-    virtual unsigned int bind(Inkscape::Extension::Print *module, NRMatrix const *transform, float opacity);
+    virtual unsigned int bind(Inkscape::Extension::Print *module, NR::Matrix const *transform, float opacity);
     virtual unsigned int release(Inkscape::Extension::Print *module);
     virtual unsigned int comment(Inkscape::Extension::Print *module, char const *comment);
-    virtual unsigned int fill(Inkscape::Extension::Print *module, NRBPath const *bpath, NRMatrix const *ctm, SPStyle const *style,
+    virtual unsigned int fill(Inkscape::Extension::Print *module, NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *style,
                               NRRect const *pbox, NRRect const *dbox, NRRect const *bbox);
-    virtual unsigned int stroke(Inkscape::Extension::Print *module, NRBPath const *bpath, NRMatrix const *transform, SPStyle const *style,
+    virtual unsigned int stroke(Inkscape::Extension::Print *module, NRBPath const *bpath, NR::Matrix const *transform, SPStyle const *style,
                                 NRRect const *pbox, NRRect const *dbox, NRRect const *bbox);
     virtual unsigned int image(Inkscape::Extension::Print *module, unsigned char *px, unsigned int w, unsigned int h, unsigned int rs,
-                               NRMatrix const *transform, SPStyle const *style);
+                               NR::Matrix const *transform, SPStyle const *style);
     virtual unsigned int text(Inkscape::Extension::Print *module, char const *text,
                               NR::Point p, SPStyle const *style);
 

@@ -61,7 +61,7 @@ Print::finish (void)
 }
 
 unsigned int
-Print::bind (const NRMatrix *transform, float opacity)
+Print::bind (const NR::Matrix *transform, float opacity)
 {
     return imp->bind (this, transform, opacity);
 }
@@ -79,14 +79,14 @@ Print::comment (const char * comment)
 }
 
 unsigned int
-Print::fill (const NRBPath *bpath, const NRMatrix *ctm, const SPStyle *style,
+Print::fill (const NRBPath *bpath, const NR::Matrix *ctm, const SPStyle *style,
                    const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
 {
     return imp->fill (this, bpath, ctm, style, pbox, dbox, bbox);
 }
 
 unsigned int
-Print::stroke (const NRBPath *bpath, const NRMatrix *transform, const SPStyle *style,
+Print::stroke (const NRBPath *bpath, const NR::Matrix *transform, const SPStyle *style,
                  const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
 {
     return imp->stroke (this, bpath, transform, style, pbox, dbox, bbox);
@@ -94,7 +94,7 @@ Print::stroke (const NRBPath *bpath, const NRMatrix *transform, const SPStyle *s
 
 unsigned int
 Print::image (unsigned char *px, unsigned int w, unsigned int h, unsigned int rs,
-                const NRMatrix *transform, const SPStyle *style)
+                const NR::Matrix *transform, const SPStyle *style)
 {
     return imp->image (this, px, w, h, rs, transform, style);
 }

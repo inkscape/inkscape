@@ -171,7 +171,7 @@ PrintLatex::finish (Inkscape::Extension::Print *mod)
 }
 
 unsigned int
-PrintLatex::bind(Inkscape::Extension::Print *mod, NRMatrix const *transform, float opacity)
+PrintLatex::bind(Inkscape::Extension::Print *mod, NR::Matrix const *transform, float opacity)
 {
     NR::Matrix tr = *transform;
     
@@ -201,7 +201,7 @@ unsigned int PrintLatex::comment (Inkscape::Extension::Print * module,
 
 unsigned int
 PrintLatex::fill(Inkscape::Extension::Print *mod,
-		 NRBPath const *bpath, NRMatrix const *transform, SPStyle const *style,
+		 NRBPath const *bpath, NR::Matrix const *transform, SPStyle const *style,
 		 NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -228,7 +228,7 @@ PrintLatex::fill(Inkscape::Extension::Print *mod,
 }
 
 unsigned int
-PrintLatex::stroke (Inkscape::Extension::Print *mod, const NRBPath *bpath, const NRMatrix *transform, const SPStyle *style,
+PrintLatex::stroke (Inkscape::Extension::Print *mod, const NRBPath *bpath, const NR::Matrix *transform, const SPStyle *style,
 			      const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -271,7 +271,7 @@ PrintLatex::stroke (Inkscape::Extension::Print *mod, const NRBPath *bpath, const
 }
 
 void
-PrintLatex::print_bpath(SVGOStringStream &os, const NArtBpath *bp, const NRMatrix *transform)
+PrintLatex::print_bpath(SVGOStringStream &os, const NArtBpath *bp, const NR::Matrix *transform)
 {
     unsigned int closed;
     NR::Matrix tf=*transform;

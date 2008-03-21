@@ -27,7 +27,7 @@ struct SPItem;
 struct SPCtrlLine : public SPCanvasItem{
     SPItem *item;  // the item to which this line belongs in some sense; may be NULL for some users
     guint32 rgba;
-    NRPoint s, e;
+    NR::Point s, e;
     Shape* shp;
 };
 struct SPCtrlLineClass : public SPCanvasItemClass{};

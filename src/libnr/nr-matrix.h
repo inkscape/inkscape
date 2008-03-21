@@ -2,7 +2,7 @@
 #define __NR_MATRIX_H__
 
 /** \file
- * Definition of NRMatrix and NR::Matrix types.
+ * Definition of NR::Matrix type.
  *
  * \note Operator functions (e.g. Matrix * Matrix etc.) are mostly in
  * libnr/nr-matrix-ops.h.  See end of file for discussion.
@@ -25,41 +25,6 @@
 #include <libnr/nr-rotate.h>
 #include <libnr/nr-scale.h>
 #include <libnr/nr-translate.h>
-
-/// NRMatrix is the obsolete form of NR::Matrix.
-/// It consists of six NR::Coord values.
-struct NRMatrix {
-    NR::Coord c[6];
-
-    NR::Coord &operator[](int i) { return c[i]; }
-    NR::Coord operator[](int i) const { return c[i]; }
-};
-
-#define nr_matrix_set_identity(m) (*(m) = NR_MATRIX_IDENTITY)
-
-#define nr_matrix_test_identity(m,e) (!(m) || NR_MATRIX_DF_TEST_CLOSE(m, &NR_MATRIX_IDENTITY, e))
-
-#define nr_matrix_test_equal(m0,m1,e) ((!(m0) && !(m1)) || ((m0) && (m1) && NR_MATRIX_DF_TEST_CLOSE(m0, m1, e)))
-#define nr_matrix_test_transform_equal(m0,m1,e) ((!(m0) && !(m1)) || ((m0) && (m1) && NR_MATRIX_DF_TEST_TRANSFORM_CLOSE(m0, m1, e)))
-#define nr_matrix_test_translate_equal(m0,m1,e) ((!(m0) && !(m1)) || ((m0) && (m1) && NR_MATRIX_DF_TEST_TRANSLATE_CLOSE(m0, m1, e)))
-
-NRMatrix *nr_matrix_invert(NRMatrix *d, NRMatrix const *m);
-
-/* d,m0,m1 needn't be distinct in any of these multiply routines. */
-
-NRMatrix *nr_matrix_multiply(NRMatrix *d, NRMatrix const *m0, NRMatrix const *m1);
-
-NRMatrix *nr_matrix_set_translate(NRMatrix *m, NR::Coord const x, NR::Coord const y);
-
-NRMatrix *nr_matrix_set_scale(NRMatrix *m, NR::Coord const sx, NR::Coord const sy);
-
-NRMatrix *nr_matrix_set_rotate(NRMatrix *m, NR::Coord const theta);
-
-#define NR_MATRIX_DF_TRANSFORM_X(m,x,y) ((*(m))[0] * (x) + (*(m))[2] * (y) + (*(m))[4])
-#define NR_MATRIX_DF_TRANSFORM_Y(m,x,y) ((*(m))[1] * (x) + (*(m))[3] * (y) + (*(m))[5])
-
-#define NR_MATRIX_DF_EXPANSION2(m) (fabs((*(m))[0] * (*(m))[3] - (*(m))[1] * (*(m))[2]))
-#define NR_MATRIX_DF_EXPANSION(m) (sqrt(NR_MATRIX_DF_EXPANSION2(m)))
 
 namespace NR {
 
@@ -110,27 +75,6 @@ class Matrix {
         *dest   = *src  ;  //5
 
     }
-
-
-
-
-    /**
-     *
-     */
-    Matrix(NRMatrix const &m) {
-
-        NR::Coord const *src = m.c;
-        NR::Coord *dest      = _c;
-
-        *dest++ = *src++;  //0
-        *dest++ = *src++;  //1
-        *dest++ = *src++;  //2
-        *dest++ = *src++;  //3
-        *dest++ = *src++;  //4
-        *dest   = *src  ;  //5
-
-    }
-
 
 
 
@@ -231,13 +175,6 @@ class Matrix {
     }
 
 
-
-    /**
-     *
-     */
-    Matrix(NRMatrix const *nr);
-
-
     /**
      *
      */
@@ -264,29 +201,6 @@ class Matrix {
      *
      */
     Matrix inverse() const;
-
-
-    /**
-     *
-     */
-    Matrix &operator*=(Matrix const &other);
-
-
-    /**
-     *
-     */
-    Matrix &operator*=(scale const &other);
-
-
-
-    /**
-     *
-     */
-    Matrix &operator*=(translate const &other) {
-        _c[4] += other[X];
-        _c[5] += other[Y];
-        return *this;
-    }
 
 
 
@@ -328,83 +242,6 @@ class Matrix {
      *
      */
     Coord descrim() const;
-
-
-    /**
-     *
-     */
-    double expansion() const;
-
-
-    /**
-     *
-     */
-    double expansionX() const;
-
-
-    /**
-     *
-     */
-    double expansionY() const;
-	
-    // legacy
-
-
-    /**
-     *
-     */
-    Matrix &assign(Coord const *array);
-
-
-    /**
-     *
-     */
-    NRMatrix *copyto(NRMatrix* nrm) const;
-
-
-    /**
-     *
-     */
-    Coord *copyto(Coord *array) const;
-
-
-
-    /**
-     *
-     */
-    operator NRMatrix&() {
-        g_assert(sizeof(_c) == sizeof(NRMatrix));
-        return *reinterpret_cast<NRMatrix *>(_c);
-    }
-
-
-
-    /**
-     *
-     */
-    operator NRMatrix const&() const {
-        g_assert(sizeof(_c) == sizeof(NRMatrix));
-        return *reinterpret_cast<const NRMatrix *>(_c);
-    }
-
-
-
-    /**
-     *
-     */
-    operator NRMatrix*() {
-        g_assert(sizeof(_c) == sizeof(NRMatrix));
-        return reinterpret_cast<NRMatrix *>(_c);
-    }
-
-
-    /**
-     *
-     */
-    operator NRMatrix const*() const {
-        g_assert(sizeof(_c) == sizeof(NRMatrix));
-        return reinterpret_cast<NRMatrix const *>(_c);
-    }
 
 
     private:

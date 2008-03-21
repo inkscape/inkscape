@@ -38,6 +38,7 @@
 #include "display/sodipodi-ctrl.h"
 #include <glibmm/i18n.h>
 #include "libnr/n-art-bpath.h"
+#include "libnr/nr-point-ops.h"
 #include "helper/units.h"
 #include "macros.h"
 #include "context-fns.h"
@@ -864,7 +865,7 @@ pen_lastpoint_tocurve (SPPenContext *const pc)
     if (bpath && bpath->code == NR_CURVETO) {
         pc->p[1] = pc->p[0] + (NR::Point(bpath->x3, bpath->y3) - NR::Point(bpath->x2, bpath->y2));
     } else {
-        pc->p[1] = pc->p[0] + (pc->p[3] - pc->p[0])*(1/3);
+        pc->p[1] = pc->p[0] + (1./3)*(pc->p[3] - pc->p[0]);
     }
 
     pen_redraw_all(pc);

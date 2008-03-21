@@ -623,10 +623,8 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                 NRGC gc(NULL);
                 /* Update to renderable state */
                 double sf = 1.0;
-                NRMatrix t;
-                nr_matrix_set_scale(&t, sf, sf);
-                nr_arena_item_set_transform(root, &t);
-                nr_matrix_set_identity(&gc.transform);
+                nr_arena_item_set_transform(root, NR::Matrix(NR::scale(sf, sf)));
+                gc.transform.set_identity();
                 nr_arena_item_invoke_update( root, NULL, &gc,
                                              NR_ARENA_ITEM_STATE_ALL,
                                              NR_ARENA_ITEM_STATE_NONE );
@@ -657,9 +655,8 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                         }
                         sf = (double)psize / (double)block;
 
-                        nr_matrix_set_scale(&t, sf, sf);
-                        nr_arena_item_set_transform(root, &t);
-                        nr_matrix_set_identity(&gc.transform);
+                        nr_arena_item_set_transform(root, NR::Matrix(NR::scale(sf, sf)));
+                        gc.transform.set_identity();
                         nr_arena_item_invoke_update( root, NULL, &gc,
                                                      NR_ARENA_ITEM_STATE_ALL,
                                                      NR_ARENA_ITEM_STATE_NONE );

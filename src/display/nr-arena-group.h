@@ -26,7 +26,7 @@ struct NRArenaGroup : public NRArenaItem{
     unsigned int transparent : 1;
     NRArenaItem *children;
     NRArenaItem *last;
-    NRMatrix child_transform;
+    NR::Matrix child_transform;
     SPStyle *style;
 
     static NRArenaGroup *create(NRArena *arena) {
@@ -43,7 +43,7 @@ struct NRArenaGroupClass {
 void nr_arena_group_set_transparent(NRArenaGroup *group, unsigned int transparent);
 
 void nr_arena_group_set_child_transform(NRArenaGroup *group, NR::Matrix const &t);
-void nr_arena_group_set_child_transform(NRArenaGroup *group, NRMatrix const *t);
+void nr_arena_group_set_child_transform(NRArenaGroup *group, NR::Matrix const *t);
 void nr_arena_group_set_style(NRArenaGroup *group, SPStyle *style);
 
 #endif

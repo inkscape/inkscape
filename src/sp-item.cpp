@@ -1248,16 +1248,16 @@ sp_item_adjust_livepatheffect (SPItem *item, NR::Matrix const &postmul, bool set
 }
 
 /**
- * A temporary wrapper for the next function accepting the NRMatrix
+ * A temporary wrapper for the next function accepting the NR::Matrix
  * instead of NR::Matrix
  */
 void
-sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NRMatrix const *transform, NR::Matrix const *adv)
+sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix const *transform, NR::Matrix const *adv)
 {
     if (transform == NULL)
         sp_item_write_transform(item, repr, NR::identity(), adv);
     else
-        sp_item_write_transform(item, repr, NR::Matrix (transform), adv);
+        sp_item_write_transform(item, repr, *transform, adv);
 }
 
 /**

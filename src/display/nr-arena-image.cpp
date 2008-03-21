@@ -93,7 +93,7 @@ nr_arena_image_init (NRArenaImage *image)
     image->width = 256.0;
     image->height = 256.0;
 
-    nr_matrix_set_identity (&image->grid2px);
+    image->grid2px.set_identity();
 
     image->style = 0;
 }
@@ -111,7 +111,7 @@ nr_arena_image_finalize (NRObject *object)
 static unsigned int
 nr_arena_image_update( NRArenaItem *item, NRRectL */*area*/, NRGC *gc, unsigned int /*state*/, unsigned int /*reset*/ )
 {
-    NRMatrix grid2px;
+    NR::Matrix grid2px;
 
     NRArenaImage *image = NR_ARENA_IMAGE (item);
 
@@ -119,7 +119,7 @@ nr_arena_image_update( NRArenaItem *item, NRRectL */*area*/, NRGC *gc, unsigned 
     nr_arena_item_request_render (item);
 
     /* Copy affine */
-    nr_matrix_invert (&grid2px, &gc->transform);
+    grid2px = gc->transform.inverse();
     double hscale, vscale; // todo: replace with NR::scale
     if (image->px) {
         hscale = image->pxw / image->width;
@@ -129,12 +129,12 @@ nr_arena_image_update( NRArenaItem *item, NRRectL */*area*/, NRGC *gc, unsigned 
         vscale = 1.0;
     }
 
-    image->grid2px[0] = grid2px.c[0] * hscale;
-    image->grid2px[2] = grid2px.c[2] * hscale;
-    image->grid2px[4] = grid2px.c[4] * hscale;
-    image->grid2px[1] = grid2px.c[1] * vscale;
-    image->grid2px[3] = grid2px.c[3] * vscale;
-    image->grid2px[5] = grid2px.c[5] * vscale;
+    image->grid2px[0] = grid2px[0] * hscale;
+    image->grid2px[2] = grid2px[2] * hscale;
+    image->grid2px[4] = grid2px[4] * hscale;
+    image->grid2px[1] = grid2px[1] * vscale;
+    image->grid2px[3] = grid2px[3] * vscale;
+    image->grid2px[5] = grid2px[5] * vscale;
 
     image->grid2px[4] -= image->x * hscale;
     image->grid2px[5] -= image->y * vscale;

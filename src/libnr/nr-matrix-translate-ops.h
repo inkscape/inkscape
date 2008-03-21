@@ -9,18 +9,19 @@
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-translate.h"
 
-//NR::Matrix operator*(NR::Matrix const &m, NR::translate const &t);
-
 namespace NR {
-Matrix operator*(Matrix const &m, translate const &t);
+
+inline Matrix &operator*=(Matrix &m, translate const &t) {
+    m[4] += t[X];
+    m[5] += t[Y];
+    return m;
 }
 
-inline NR::Matrix
-operator/(NR::Matrix const &numer, NR::translate const &denom)
-{
-    return numer * NR::translate(-denom.offset);
-}
+inline Matrix operator*(Matrix const &m, translate const &t) { Matrix ret(m); ret *= t; return ret; }
 
+inline Matrix operator/(Matrix const &numer, translate const &denom) { return numer * translate(-denom.offset); }
+
+}
 
 #endif /* !SEEN_LIBNR_NR_MATRIX_TRANSLATE_OPS_H */
 

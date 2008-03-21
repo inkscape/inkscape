@@ -61,7 +61,7 @@ struct SPMarker : public SPGroup {
 	unsigned int aspect_clip : 1;
 
 	/* Child to parent additional transform */
-	NRMatrix c2p;
+	NR::Matrix c2p;
 
 	/* Private views */
 	SPMarkerView *views;

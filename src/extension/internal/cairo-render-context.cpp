@@ -31,6 +31,7 @@
 #include <libnr/n-art-bpath.h>
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-fns.h>
+#include <libnr/nr-matrix-scale-ops.h>
 #include <libnr/nr-matrix-translate-ops.h>
 #include <libnr/nr-scale-matrix-ops.h>
 
@@ -801,7 +802,7 @@ CairoRenderContext::finish(void)
 }
 
 void
-CairoRenderContext::transform(NRMatrix const *transform)
+CairoRenderContext::transform(NR::Matrix const *transform)
 {
     g_assert( _is_valid );
 
@@ -814,7 +815,7 @@ CairoRenderContext::transform(NRMatrix const *transform)
 }
 
 void
-CairoRenderContext::setTransform(NRMatrix const *transform)
+CairoRenderContext::setTransform(NR::Matrix const *transform)
 {
     g_assert( _is_valid );
 
@@ -825,7 +826,7 @@ CairoRenderContext::setTransform(NRMatrix const *transform)
 }
 
 void
-CairoRenderContext::getTransform(NRMatrix *copy) const
+CairoRenderContext::getTransform(NR::Matrix *copy) const
 {
     g_assert( _is_valid );
 
@@ -840,12 +841,12 @@ CairoRenderContext::getTransform(NRMatrix *copy) const
 }
 
 void
-CairoRenderContext::getParentTransform(NRMatrix *copy) const
+CairoRenderContext::getParentTransform(NR::Matrix *copy) const
 {
     g_assert( _is_valid );
 
     CairoRenderState *parent_state = getParentState();
-    memcpy(copy, &parent_state->transform, sizeof(NRMatrix));
+    memcpy(copy, &parent_state->transform, sizeof(NR::Matrix));
 }
 
 void
@@ -893,9 +894,9 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 
     SPPattern *pat = SP_PATTERN (paintserver);
 
-    NRMatrix ps2user, pcs2dev;
-    nr_matrix_set_identity(&ps2user);
-    nr_matrix_set_identity(&pcs2dev);
+    NR::Matrix ps2user, pcs2dev;
+    ps2user.set_identity();
+    pcs2dev.set_identity();
 
     double x = pattern_x(pat);
     double y = pattern_y(pat);
@@ -920,8 +921,8 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     }
 
     // apply pattern transformation
-    NRMatrix pattern_transform(pattern_patternTransform(pat));
-    nr_matrix_multiply(&ps2user, &ps2user, &pattern_transform);
+    NR::Matrix pattern_transform(pattern_patternTransform(pat));
+    ps2user *= pattern_transform;
 
     // create pattern contents coordinate system
     if (pat->viewBox_set) {
@@ -949,8 +950,8 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 
     // calculate the size of the surface which has to be created
     // the scaling needs to be taken into account in the ctm after the pattern transformation
-    NRMatrix temp;
-    nr_matrix_multiply(&temp, &pattern_transform, &_state->transform);
+    NR::Matrix temp;
+    temp = pattern_transform * _state->transform;
     double width_scaler = sqrt(temp[0] * temp[0] + temp[2] * temp[2]);
     double height_scaler = sqrt(temp[1] * temp[1] + temp[3] * temp[3]);
 
@@ -971,12 +972,8 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     double scale_height = surface_height / (bbox_height_scaler * height);
     if (scale_width != 1.0 || scale_height != 1.0 || _vector_based_target) {
         TRACE(("needed to scale with %f %f\n", scale_width, scale_height));
-        NRMatrix scale;
-        nr_matrix_set_scale(&scale, 1.0 / scale_width, 1.0 / scale_height);
-        nr_matrix_multiply(&pcs2dev, &pcs2dev, &scale);
-
-        nr_matrix_set_scale(&scale, scale_width, scale_height);
-        nr_matrix_multiply(&ps2user, &ps2user, &scale);
+        pcs2dev *= NR::scale(1.0 / scale_width, 1.0 / scale_height);
+        ps2user *= NR::scale(scale_width, scale_height);
     }
 
     pattern_ctx->setTransform(&pcs2dev);
@@ -1301,7 +1298,7 @@ CairoRenderContext::renderPath(NRBPath const *bpath, SPStyle const *style, NRRec
 
 bool
 CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h, unsigned int rs,
-                                NRMatrix const *image_transform, SPStyle const *style)
+                                NR::Matrix const *image_transform, SPStyle const *style)
 {
     g_assert( _is_valid );
 
@@ -1416,7 +1413,7 @@ CairoRenderContext::_showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoG
 }
 
 bool
-CairoRenderContext::renderGlyphtext(PangoFont *font, NRMatrix const *font_matrix,
+CairoRenderContext::renderGlyphtext(PangoFont *font, NR::Matrix const *font_matrix,
                                     std::vector<CairoGlyphInfo> const &glyphtext, SPStyle const *style)
 {
     // create a cairo_font_face from PangoFont
@@ -1538,7 +1535,7 @@ CairoRenderContext::_concatTransform(cairo_t *cr, double xx, double yx, double x
 }
 
 void
-CairoRenderContext::_initCairoMatrix(cairo_matrix_t *matrix, NRMatrix const *transform)
+CairoRenderContext::_initCairoMatrix(cairo_matrix_t *matrix, NR::Matrix const *transform)
 {
     matrix->xx = (*transform)[0];
     matrix->yx = (*transform)[1];
@@ -1549,7 +1546,7 @@ CairoRenderContext::_initCairoMatrix(cairo_matrix_t *matrix, NRMatrix const *tra
 }
 
 void
-CairoRenderContext::_concatTransform(cairo_t *cr, NRMatrix const *transform)
+CairoRenderContext::_concatTransform(cairo_t *cr, NR::Matrix const *transform)
 {
     _concatTransform(cr, (*transform)[0], (*transform)[1],
                      (*transform)[2], (*transform)[3],

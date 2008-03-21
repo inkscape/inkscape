@@ -224,7 +224,7 @@ nr_rect_d_matrix_transform(NRRect *d, NRRect const *const s, NR::Matrix const &m
 }
 
 NRRect *
-nr_rect_d_matrix_transform(NRRect *d, NRRect const *s, NRMatrix const *m)
+nr_rect_d_matrix_transform(NRRect *d, NRRect const *s, NR::Matrix const *m)
 {
     return nr_rect_d_matrix_transform(d, s, *m);
 }

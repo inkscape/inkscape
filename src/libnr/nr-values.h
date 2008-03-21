@@ -22,7 +22,7 @@
 The following predefined objects are for reference
 and comparison.  They are defined in nr-values.cpp
 */
-extern NRMatrix NR_MATRIX_IDENTITY;
+extern NR::Matrix NR_MATRIX_IDENTITY;
 extern NRRect   NR_RECT_EMPTY;
 extern NRRectL  NR_RECT_L_EMPTY;
 extern NRRectL  NR_RECT_S_EMPTY;

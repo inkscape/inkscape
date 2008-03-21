@@ -28,6 +28,7 @@
 #include "display/nr-filter-units.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-matrix.h"
+#include "libnr/nr-matrix-fns.h"
 #include "util/fixed_point.h"
 #include "prefs-utils.h"
 
@@ -539,8 +540,8 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
 
     // Some common constants
     int const width_org = in->area.x1-in->area.x0, height_org = in->area.y1-in->area.y0;
-    double const deviation_x_org = _deviation_x * trans.expansionX();
-    double const deviation_y_org = _deviation_y * trans.expansionY();
+    double const deviation_x_org = _deviation_x * NR::expansionX(trans);
+    double const deviation_y_org = _deviation_y * NR::expansionY(trans);
     int const PC = NR_PIXBLOCK_BPP(in);
 
     // Subsampling constants
@@ -774,8 +775,8 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
 
 void FilterGaussian::area_enlarge(NRRectL &area, Matrix const &trans)
 {
-    int area_x = _effect_area_scr(_deviation_x * trans.expansionX());
-    int area_y = _effect_area_scr(_deviation_y * trans.expansionY());
+    int area_x = _effect_area_scr(_deviation_x * NR::expansionX(trans));
+    int area_y = _effect_area_scr(_deviation_y * NR::expansionY(trans));
     // maximum is used because rotations can mix up these directions
     // TODO: calculate a more tight-fitting rendering area
     int area_max = std::max(area_x, area_y);

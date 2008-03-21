@@ -13,6 +13,7 @@
 #include "display/nr-filter-types.h"
 #include "display/nr-filter-units.h"
 #include "libnr/nr-blit.h"
+#include "libnr/nr-matrix-fns.h"
 #include "libnr/nr-pixops.h"
 
 namespace NR {
@@ -77,8 +78,8 @@ int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
     double coordx, coordy;
     
     Matrix trans = units.get_matrix_primitiveunits2pb();
-    double scalex = scale*trans.expansionX();
-    double scaley = scale*trans.expansionY();
+    double scalex = scale*NR::expansionX(trans);
+    double scaley = scale*NR::expansionY(trans);
     
     for (x=0; x < out_w; x++){
         for (y=0; y < out_h; y++){

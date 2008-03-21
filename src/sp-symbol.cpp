@@ -97,7 +97,7 @@ sp_symbol_init (SPSymbol *symbol)
 {
 	symbol->viewBox_set = FALSE;
 
-	nr_matrix_set_identity (&symbol->c2p);
+	symbol->c2p.set_identity();
 }
 
 static void
@@ -269,11 +269,11 @@ sp_symbol_update (SPObject *object, SPCtx *ctx, guint flags)
 
 		/* Calculate child to parent transformation */
 		/* Apply parent <use> translation (set up as vewport) */
-		nr_matrix_set_translate (&symbol->c2p, rctx.vp.x0, rctx.vp.y0);
+        symbol->c2p = NR::Matrix(NR::translate(rctx.vp.x0, rctx.vp.y0));
 
 		if (symbol->viewBox_set) {
 			double x, y, width, height;
-			NRMatrix q;
+			NR::Matrix q;
 			/* Determine actual viewbox in viewport coordinates */
 			if (symbol->aspect_align == SP_ASPECT_NONE) {
 				x = 0.0;
@@ -333,14 +333,14 @@ sp_symbol_update (SPObject *object, SPCtx *ctx, guint flags)
 				}
 			}
 			/* Compose additional transformation from scale and position */
-			q.c[0] = width / (symbol->viewBox.x1 - symbol->viewBox.x0);
-			q.c[1] = 0.0;
-			q.c[2] = 0.0;
-			q.c[3] = height / (symbol->viewBox.y1 - symbol->viewBox.y0);
-			q.c[4] = -symbol->viewBox.x0 * q.c[0] + x;
-			q.c[5] = -symbol->viewBox.y0 * q.c[3] + y;
+			q[0] = width / (symbol->viewBox.x1 - symbol->viewBox.x0);
+			q[1] = 0.0;
+			q[2] = 0.0;
+			q[3] = height / (symbol->viewBox.y1 - symbol->viewBox.y0);
+			q[4] = -symbol->viewBox.x0 * q[0] + x;
+			q[5] = -symbol->viewBox.y0 * q[3] + y;
 			/* Append viewbox transformation */
-			nr_matrix_multiply (&symbol->c2p, &q, &symbol->c2p);
+			symbol->c2p = q * symbol->c2p;
 		}
 
 		rctx.i2doc = symbol->c2p * rctx.i2doc;

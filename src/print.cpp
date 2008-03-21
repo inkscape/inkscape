@@ -29,12 +29,12 @@
 
 unsigned int sp_print_bind(SPPrintContext *ctx, NR::Matrix const &transform, float opacity)
 {
-    NRMatrix const ntransform(transform);
+    NR::Matrix const ntransform(transform);
     return sp_print_bind(ctx, &ntransform, opacity);
 }
 
 unsigned int
-sp_print_bind(SPPrintContext *ctx, NRMatrix const *transform, float opacity)
+sp_print_bind(SPPrintContext *ctx, NR::Matrix const *transform, float opacity)
 {
     return ctx->module->bind(transform, opacity);
 }
@@ -52,14 +52,14 @@ sp_print_comment(SPPrintContext *ctx, char const *comment)
 }
 
 unsigned int
-sp_print_fill(SPPrintContext *ctx, NRBPath const *bpath, NRMatrix const *ctm, SPStyle const *style,
+sp_print_fill(SPPrintContext *ctx, NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *style,
               NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     return ctx->module->fill(bpath, ctm, style, pbox, dbox, bbox);
 }
 
 unsigned int
-sp_print_stroke(SPPrintContext *ctx, NRBPath const *bpath, NRMatrix const *ctm, SPStyle const *style,
+sp_print_stroke(SPPrintContext *ctx, NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *style,
                 NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     return ctx->module->stroke(bpath, ctm, style, pbox, dbox, bbox);
@@ -68,7 +68,7 @@ sp_print_stroke(SPPrintContext *ctx, NRBPath const *bpath, NRMatrix const *ctm, 
 unsigned int
 sp_print_image_R8G8B8A8_N(SPPrintContext *ctx,
                           guchar *px, unsigned int w, unsigned int h, unsigned int rs,
-                          NRMatrix const *transform, SPStyle const *style)
+                          NR::Matrix const *transform, SPStyle const *style)
 {
     return ctx->module->image(px, w, h, rs, transform, style);
 }

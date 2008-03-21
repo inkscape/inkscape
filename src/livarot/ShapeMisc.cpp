@@ -7,6 +7,7 @@
  */
 
 #include "livarot/Shape.h"
+#include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-point-fns.h>
 #include "livarot/Path.h"
 #include "livarot/path-description.h"
@@ -634,7 +635,7 @@ Shape::MakeTweak (int mode, Shape *a, double power, JoinType join, double miter,
 		if (this_power != 0)
 			done_something = true;
 
-		double scaler = 1 / (*i2doc).expansion();
+		double scaler = 1 / NR::expansion(*i2doc);
 
 		NR::Point this_vec(0,0);
     if (mode == tweak_mode_push) {

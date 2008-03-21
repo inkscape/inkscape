@@ -24,9 +24,9 @@
 #include <libnr/nr-point.h>
 #include <libnr/nr-maybe.h>
 #include <libnr/nr-point-matrix-ops.h>
+#include <libnr/nr-forward.h>
 
 namespace NR {
-    struct Matrix;
 
 /** A rectangle is always aligned to the X and Y axis.  This means it
  * can be defined using only 4 coordinates, and determining
@@ -247,8 +247,6 @@ inline std::ostream
 
 /* legacy rect stuff */
 
-struct NRMatrix;
-
 /* NULL rect is infinite */
 
 struct NRRect {
@@ -302,7 +300,7 @@ NRRect *nr_rect_d_union_xy(NRRect *d, NR::Coord x, NR::Coord y);
 NRRectL *nr_rect_l_union_xy(NRRectL *d, NR::ICoord x, NR::ICoord y);
 
 NRRect *nr_rect_d_matrix_transform(NRRect *d, NRRect const *s, NR::Matrix const &m);
-NRRect *nr_rect_d_matrix_transform(NRRect *d, NRRect const *s, NRMatrix const *m);
+NRRect *nr_rect_d_matrix_transform(NRRect *d, NRRect const *s, NR::Matrix const *m);
 NRRectL *nr_rect_l_enlarge(NRRectL *d, int amount);
 
 

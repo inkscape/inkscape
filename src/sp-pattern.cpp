@@ -44,17 +44,17 @@ struct SPPatPainter {
 	SPPainter painter;
 	SPPattern *pat;
 
-	NRMatrix ps2px;
-	NRMatrix px2ps;
-	NRMatrix pcs2px;
+	NR::Matrix ps2px;
+	NR::Matrix px2ps;
+	NR::Matrix pcs2px;
 
 	NRArena *arena;
 	unsigned int dkey;
 	NRArenaItem *root;
 	
 	bool         use_cached_tile;
-	NRMatrix     ca2pa;
-	NRMatrix     pa2ca;
+	NR::Matrix     ca2pa;
+	NR::Matrix     pa2ca;
 	NRRectL      cached_bbox;
 	NRPixBlock   cached_tile;
 };
@@ -655,10 +655,7 @@ sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR:
 		NR::Matrix const ps2user(pattern_patternTransform(pat) * bbox2user);
 
 		// see (*) comment below
-		NR::Matrix ps2px = ps2user * full_transform;
-
-		ps2px.copyto (&pp->ps2px);
-
+		pp->ps2px = ps2user * full_transform;
 	} else {
 		/* Problem: What to do, if we have mixed lengths and percentages? */
 		/* Currently we do ignore percentages at all, but that is not good (lauris) */
@@ -675,13 +672,11 @@ sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR:
 		// So here I comply with the majority opinion, but leave my interpretation commented out below.
 		// (To get item_transform, I subtract parent from full.)
 
-		//NR::Matrix ps2px = (full_transform / parent_transform) * pattern_patternTransform(pat) * parent_transform;
-		NR::Matrix ps2px = pattern_patternTransform(pat) * full_transform;
-
-		ps2px.copyto (&pp->ps2px);
+		//pp->ps2px = (full_transform / parent_transform) * pattern_patternTransform(pat) * parent_transform;
+		pp->ps2px = pattern_patternTransform(pat) * full_transform;
 	}
 
-	nr_matrix_invert (&pp->px2ps, &pp->ps2px);
+	pp->px2ps = pp->ps2px.inverse();
 
 	if (pat->viewBox_set) {
 		gdouble tmp_x = (pattern_viewBox(pat)->x1 - pattern_viewBox(pat)->x0) / pattern_width (pat);
@@ -693,12 +688,8 @@ sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR:
 		NR::Matrix vb2us = vb2ps * pattern_patternTransform(pat);
 
 		// see (*)
-		NR::Matrix pcs2px = vb2us * full_transform;
-
-		pcs2px.copyto (&pp->pcs2px);
+		pp->pcs2px = vb2us * full_transform;
 	} else {
-		NR::Matrix pcs2px;
-
 		/* No viewbox, have to parse units */
 		if (pattern_patternContentUnits (pat) == SP_PATTERN_UNITS_OBJECTBOUNDINGBOX) {
 			/* BBox to user coordinate system */
@@ -707,16 +698,14 @@ sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR:
 			NR::Matrix pcs2user = pattern_patternTransform(pat) * bbox2user;
 
 			// see (*)
-			pcs2px = pcs2user * full_transform;
+			pp->pcs2px = pcs2user * full_transform;
 		} else {
 			// see (*)
 			//pcs2px = (full_transform / parent_transform) * pattern_patternTransform(pat) * parent_transform;
-			pcs2px = pattern_patternTransform(pat) * full_transform;
+			pp->pcs2px = pattern_patternTransform(pat) * full_transform;
 		}
 
-		pcs2px = NR::translate (pattern_x (pat), pattern_y (pat)) * pcs2px;
-
-		pcs2px.copyto (&pp->pcs2px);
+		pp->pcs2px = NR::translate (pattern_x (pat), pattern_y (pat)) * pp->pcs2px;
 	}
 
 	/* Create arena */
@@ -764,18 +753,18 @@ sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR:
 				nr_pixblock_setup (&pp->cached_tile,NR_PIXBLOCK_MODE_R8G8B8A8N, pp->cached_bbox.x0, pp->cached_bbox.y0, pp->cached_bbox.x1, pp->cached_bbox.y1,TRUE);
 			}
 
-			pp->pa2ca.c[0]=((double)tr_width)/(one_tile.x1-one_tile.x0);
-			pp->pa2ca.c[1]=0;
-			pp->pa2ca.c[2]=0;
-			pp->pa2ca.c[3]=((double)tr_height)/(one_tile.y1-one_tile.y0);
-			pp->pa2ca.c[4]=-one_tile.x0*pp->pa2ca.c[0];
-			pp->pa2ca.c[5]=-one_tile.y0*pp->pa2ca.c[1];
-			pp->ca2pa.c[0]=(one_tile.x1-one_tile.x0)/((double)tr_width);
-			pp->ca2pa.c[1]=0;
-			pp->ca2pa.c[2]=0;
-			pp->ca2pa.c[3]=(one_tile.y1-one_tile.y0)/((double)tr_height);
-			pp->ca2pa.c[4]=one_tile.x0;
-			pp->ca2pa.c[5]=one_tile.y0;
+			pp->pa2ca[0]=((double)tr_width)/(one_tile.x1-one_tile.x0);
+			pp->pa2ca[1]=0;
+			pp->pa2ca[2]=0;
+			pp->pa2ca[3]=((double)tr_height)/(one_tile.y1-one_tile.y0);
+			pp->pa2ca[4]=-one_tile.x0*pp->pa2ca[0];
+			pp->pa2ca[5]=-one_tile.y0*pp->pa2ca[1];
+			pp->ca2pa[0]=(one_tile.x1-one_tile.x0)/((double)tr_width);
+			pp->ca2pa[1]=0;
+			pp->ca2pa[2]=0;
+			pp->ca2pa[3]=(one_tile.y1-one_tile.y0)/((double)tr_height);
+			pp->ca2pa[4]=one_tile.x0;
+			pp->ca2pa[5]=one_tile.y0;
 //		} else {
 //			pp->use_cached_tile=false;
 //		}
@@ -890,15 +879,15 @@ sp_pat_fill (SPPainter *painter, NRPixBlock *pb)
 				unsigned char* cpx=lpx;
 				double         px_x = pb->area.x0;
 				
-				double ps_x=pp->px2ps.c[0]*px_x+pp->px2ps.c[2]*px_y+pp->px2ps.c[4];
-				double ps_y=pp->px2ps.c[1]*px_x+pp->px2ps.c[3]*px_y+pp->px2ps.c[5];
+				double ps_x=pp->px2ps[0]*px_x+pp->px2ps[2]*px_y+pp->px2ps[4];
+				double ps_y=pp->px2ps[1]*px_x+pp->px2ps[3]*px_y+pp->px2ps[5];
 				for (int i=pb->area.x0;i<pb->area.x1;i++) {
 					while ( ps_x > pat_w ) ps_x-=pat_w;
 					while ( ps_x < 0 ) ps_x+=pat_w;
 					while ( ps_y > pat_h ) ps_y-=pat_h;
 					while ( ps_y < 0 ) ps_y+=pat_h;
-					double ca_x=pp->pa2ca.c[0]*ps_x+pp->pa2ca.c[2]*ps_y+pp->pa2ca.c[4];
-					double ca_y=pp->pa2ca.c[1]*ps_x+pp->pa2ca.c[3]*ps_y+pp->pa2ca.c[5];
+					double ca_x=pp->pa2ca[0]*ps_x+pp->pa2ca[2]*ps_y+pp->pa2ca[4];
+					double ca_y=pp->pa2ca[1]*ps_x+pp->pa2ca[3]*ps_y+pp->pa2ca[5];
 					unsigned char n_a,n_r,n_g,n_b;
 					get_cached_tile_pixel(pp,ca_x,ca_y,n_r,n_g,n_b,n_a);
 					cpx[0]=n_r;
@@ -907,8 +896,8 @@ sp_pat_fill (SPPainter *painter, NRPixBlock *pb)
 					cpx[3]=n_a;
 					
 					px_x+=1.0;
-					ps_x+=pp->px2ps.c[0];
-					ps_y+=pp->px2ps.c[1];
+					ps_x+=pp->px2ps[0];
+					ps_y+=pp->px2ps[1];
 					cpx+=4;
 				}
 				px_y+=1.0;
@@ -921,15 +910,15 @@ sp_pat_fill (SPPainter *painter, NRPixBlock *pb)
 				unsigned char* cpx=lpx;
 				double         px_x = pb->area.x0;
 				
-				double ps_x=pp->px2ps.c[0]*px_x+pp->px2ps.c[2]*px_y+pp->px2ps.c[4];
-				double ps_y=pp->px2ps.c[1]*px_x+pp->px2ps.c[3]*px_y+pp->px2ps.c[5];
+				double ps_x=pp->px2ps[0]*px_x+pp->px2ps[2]*px_y+pp->px2ps[4];
+				double ps_y=pp->px2ps[1]*px_x+pp->px2ps[3]*px_y+pp->px2ps[5];
 				for (int i=pb->area.x0;i<pb->area.x1;i++) {
 					while ( ps_x > pat_w ) ps_x-=pat_w;
 					while ( ps_x < 0 ) ps_x+=pat_w;
 					while ( ps_y > pat_h ) ps_y-=pat_h;
 					while ( ps_y < 0 ) ps_y+=pat_h;
-					double ca_x=pp->pa2ca.c[0]*ps_x+pp->pa2ca.c[2]*ps_y+pp->pa2ca.c[4];
-					double ca_y=pp->pa2ca.c[1]*ps_x+pp->pa2ca.c[3]*ps_y+pp->pa2ca.c[5];
+					double ca_x=pp->pa2ca[0]*ps_x+pp->pa2ca[2]*ps_y+pp->pa2ca[4];
+					double ca_y=pp->pa2ca[1]*ps_x+pp->pa2ca[3]*ps_y+pp->pa2ca[5];
 					unsigned char n_a,n_r,n_g,n_b;
 					get_cached_tile_pixel(pp,ca_x,ca_y,n_r,n_g,n_b,n_a);
 					cpx[0]=n_r;
@@ -937,8 +926,8 @@ sp_pat_fill (SPPainter *painter, NRPixBlock *pb)
 					cpx[2]=n_b;
 					
 					px_x+=1.0;
-					ps_x+=pp->px2ps.c[0];
-					ps_y+=pp->px2ps.c[1];
+					ps_x+=pp->px2ps[0];
+					ps_y+=pp->px2ps[1];
 					cpx+=4;
 				}
 				px_y+=1.0;
@@ -955,10 +944,10 @@ sp_pat_fill (SPPainter *painter, NRPixBlock *pb)
         // Bail out if the transformation matrix has extreme values. If we bail out
         // however, then something (which was meaningless anyway) won't be rendered, 
         // which is better than getting stuck in a virtually infinite loop
-        if (fabs(pp->px2ps.c[0]) < 1e6 && 
-            fabs(pp->px2ps.c[3]) < 1e6 &&
-            fabs(pp->px2ps.c[4]) < 1e6 &&
-            fabs(pp->px2ps.c[5]) < 1e6) 
+        if (fabs(pp->px2ps[0]) < 1e6 && 
+            fabs(pp->px2ps[3]) < 1e6 &&
+            fabs(pp->px2ps[4]) < 1e6 &&
+            fabs(pp->px2ps[5]) < 1e6) 
         {
             nr_rect_d_matrix_transform (&psa, &ba, &pp->px2ps);
     		
@@ -980,8 +969,8 @@ sp_pat_fill (SPPainter *painter, NRPixBlock *pb)
     				psx = x * pattern_width (pp->pat);
     				psy = y * pattern_height (pp->pat);
     				
-    				area.x0 = (gint32)(pb->area.x0 - (pp->ps2px.c[0] * psx + pp->ps2px.c[2] * psy));
-    				area.y0 = (gint32)(pb->area.y0 - (pp->ps2px.c[1] * psx + pp->ps2px.c[3] * psy));
+    				area.x0 = (gint32)(pb->area.x0 - (pp->ps2px[0] * psx + pp->ps2px[2] * psy));
+    				area.y0 = (gint32)(pb->area.y0 - (pp->ps2px[1] * psx + pp->ps2px[3] * psy));
     				area.x1 = area.x0 + pb->area.x1 - pb->area.x0;
     				area.y1 = area.y0 + pb->area.y1 - pb->area.y0;
     				

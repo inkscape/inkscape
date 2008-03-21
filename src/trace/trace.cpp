@@ -27,6 +27,8 @@
 #include <sp-item.h>
 #include <sp-shape.h>
 #include <sp-image.h>
+#include <libnr/nr-matrix-ops.h>
+#include <libnr/nr-scale-translate-ops.h>
 
 #include <display/nr-arena.h>
 #include <display/nr-arena-shape.h>
@@ -281,7 +283,7 @@ Tracer::sioxProcessImage(SPImage *img,
             //Get absolute X,Y position
             double xpos = ((double)aImg->bbox.x0) + iwscale * (double)col;
             NR::Point point(xpos, ypos);
-            point *= aImg->transform;
+            point *= *aImg->transform;
             //point *= imgMat;
             //point = desktop->doc2dt(point);
             //g_message("x:%f    y:%f\n", point[0], point[1]);
@@ -499,19 +501,17 @@ void Tracer::traceThread()
     if (sp_repr_get_double(imgRepr, "height", &dval))
         height = dval;
 
-    NR::Matrix trans(NR::translate(x, y));
-
     double iwidth  = (double)pixbuf->get_width();
     double iheight = (double)pixbuf->get_height();
 
     double iwscale = width  / iwidth;
     double ihscale = height / iheight;
 
-    NR::Matrix scal(NR::scale(iwscale, ihscale));
+    NR::translate trans(x, y);
+    NR::scale scal(iwscale, ihscale);
 
     //# Convolve scale, translation, and the original transform
-    NR::Matrix tf(scal);
-    tf *= trans;
+    NR::Matrix tf(scal * trans);
     tf *= img->transform;
 
 

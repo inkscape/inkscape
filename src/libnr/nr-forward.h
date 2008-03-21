@@ -22,8 +22,6 @@ class translate;
 class NArtBpath;
 struct NRBPath;
 struct NRPixBlock;
-struct NRMatrix;
-struct NRPoint;
 struct NRRect;
 struct NRRectL;
 

@@ -33,7 +33,7 @@ NRType nr_arena_glyphs_get_type (void);
 struct NRArenaGlyphs : public NRArenaItem {
 	/* Glyphs data */
 	SPStyle *style;
-	NRMatrix g_transform;
+	NR::Matrix g_transform;
 	font_instance *font;
 	gint glyph;
 
@@ -41,7 +41,7 @@ struct NRArenaGlyphs : public NRArenaItem {
 	raster_font *sfont;
 	float x, y;
 
-//	NRMatrix cached_tr;
+//	NR::Matrix cached_tr;
 //	Shape  *cached_shp;
 //	bool   cached_shp_dirty;
 //	bool   cached_style_dirty;
@@ -62,7 +62,7 @@ struct NRArenaGlyphsClass {
 void nr_arena_glyphs_set_path (NRArenaGlyphs *glyphs,
 			       SPCurve *curve, unsigned int lieutenant,
 			       font_instance *font, int glyph,
-			       const NRMatrix *transform);
+			       const NR::Matrix *transform);
 void nr_arena_glyphs_set_style (NRArenaGlyphs *glyphs, SPStyle *style);
 
 /* Integrated group of component glyphss */
@@ -100,7 +100,7 @@ struct NRArenaGlyphsGroupClass {
 
 void nr_arena_glyphs_group_clear (NRArenaGlyphsGroup *group);
 
-void nr_arena_glyphs_group_add_component (NRArenaGlyphsGroup *group, font_instance *font, int glyph, const NRMatrix *transform);
+void nr_arena_glyphs_group_add_component (NRArenaGlyphsGroup *group, font_instance *font, int glyph, const NR::Matrix *transform);
 
 void nr_arena_glyphs_group_set_style (NRArenaGlyphsGroup *group, SPStyle *style);
 

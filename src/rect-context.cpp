@@ -419,7 +419,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
                 SPItem *item = selection->singleItem();
                 if (item && SP_IS_RECT (item)) {
                     g_print ("Scaling transformation matrix\n");
-                    SP_RECT (item)->transform = nr_matrix_set_scale(SP_RECT (item)->transform, 1.25, 1.5);
+                    SP_RECT (item)->transform = NR::Matrix(NR::scale(1.25, 1.5));
                     SP_OBJECT (item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
                 }
                 ret = TRUE;

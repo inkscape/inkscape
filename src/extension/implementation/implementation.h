@@ -99,20 +99,20 @@ public:
 
     /* ----- Rendering methods ----- */
     virtual unsigned bind(Inkscape::Extension::Print *module,
-                          NRMatrix const *transform,
+                          NR::Matrix const *transform,
                           float opacity);
     virtual unsigned release(Inkscape::Extension::Print *module);
     virtual unsigned comment(Inkscape::Extension::Print *module, const char * comment);
     virtual unsigned fill(Inkscape::Extension::Print *module,
                           NRBPath const *bpath,
-                          NRMatrix const *ctm,
+                          NR::Matrix const *ctm,
                           SPStyle const *style,
                           NRRect const *pbox,
                           NRRect const *dbox,
                           NRRect const *bbox);
     virtual unsigned stroke(Inkscape::Extension::Print *module,
                             NRBPath const *bpath,
-                            NRMatrix const *transform,
+                            NR::Matrix const *transform,
                             SPStyle const *style,
                             NRRect const *pbox,
                             NRRect const *dbox,
@@ -122,7 +122,7 @@ public:
                            unsigned int w,
                            unsigned int h,
                            unsigned int rs,
-                           NRMatrix const *transform,
+                           NR::Matrix const *transform,
                            SPStyle const *style);
     virtual unsigned text(Inkscape::Extension::Print *module,
                           char const *text,
