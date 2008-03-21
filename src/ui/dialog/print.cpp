@@ -170,9 +170,10 @@ Print::Print(SPDocument *doc, SPItem *base) :
     gtk_print_operation_set_custom_tab_label (_printop, _("Rendering"));
 }
 
-Gtk::PrintOperationResult Print::run(Gtk::PrintOperationAction, Gtk::Window&)
+Gtk::PrintOperationResult Print::run(Gtk::PrintOperationAction, Gtk::Window &parent_window)
 {
-    gtk_print_operation_run (_printop, GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG, NULL, NULL);
+    gtk_print_operation_run (_printop, GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
+	    parent_window.gobj(), NULL);
     return Gtk::PRINT_OPERATION_RESULT_APPLY;
 }
 
