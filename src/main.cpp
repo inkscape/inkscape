@@ -423,7 +423,7 @@ static int _win32_set_inkscape_env(char *argv0)
     CHAR szFile[_MAX_FNAME];
     CHAR szExt[_MAX_EXT];
 
-    CHAR tmp[_MAX_EXT];
+    std::string tmp;
 
     if (GetModuleFileName(NULL, szFullPath, sizeof(szFullPath)) == 0) {
         strcpy(szFullPath, argv0);
@@ -434,32 +434,32 @@ static int _win32_set_inkscape_env(char *argv0)
     strcat(szFullPath, szDir);
 
     char *oldenv = getenv("PATH");
-	strcpy(tmp, "PATH=");
-    strcat(tmp, szFullPath);
-    strcat(tmp, ";");
-    strcat(tmp, szFullPath);
-    strcat(tmp, "python;");
-    strcat(tmp, szFullPath);
-    strcat(tmp, "perl;");
+    tmp = "PATH=";
+    tmp += szFullPath;
+    tmp += ";";
+    tmp += szFullPath;
+    tmp += "python;";
+    tmp += szFullPath;
+    tmp += "perl";
     if(oldenv != NULL) {
-		strcat(tmp, ";");
-		strcat(tmp, oldenv);
-	}
-	_putenv(tmp);
+        tmp += ";";
+        tmp += oldenv;
+    }
+    _putenv(tmp.c_str());
 
     oldenv = getenv("PYTHONPATH");
-    strcpy(tmp, "PYTHONPATH=");
-    strcat(tmp, szFullPath);
-    strcat(tmp, "python;");
-    strcat(tmp, szFullPath);
-    strcat(tmp, "python\\Lib;");
-    strcat(tmp, szFullPath);
-    strcat(tmp, "python\\DLLs");
+    tmp = "PYTHONPATH=";
+    tmp += szFullPath;
+    tmp += "python;";
+    tmp += szFullPath;
+    tmp += "python\\Lib;";
+    tmp += szFullPath;
+    tmp += "python\\DLLs";
     if(oldenv != NULL) {
-		strcat(tmp, ";");
-		strcat(tmp, oldenv);
-	}
-	_putenv(tmp);
+        tmp += ";";
+        tmp += oldenv;
+    }
+    _putenv(tmp.c_str());
 
     return 0;
 }
