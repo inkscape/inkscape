@@ -40,6 +40,7 @@ import org.w3c.dom.UserDataHandler;
 
 
 public class NodeImpl
+       extends DOMBase
        implements org.w3c.dom.Node
 {
 

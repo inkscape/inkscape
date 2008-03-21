@@ -34,6 +34,8 @@ import org.w3c.dom.svg.SVGStringList;
 
 
 public class SVGTestsImpl
+       extends
+             org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.svg.SVGTests
 {
 public native SVGStringList getRequiredFeatures( );

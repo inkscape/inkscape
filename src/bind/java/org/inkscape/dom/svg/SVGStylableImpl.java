@@ -35,6 +35,8 @@ import org.w3c.dom.css.CSSValue;
 import org.w3c.dom.svg.SVGAnimatedString;
 
 public class SVGStylableImpl
+       extends
+             org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.svg.SVGStylable
 {
 

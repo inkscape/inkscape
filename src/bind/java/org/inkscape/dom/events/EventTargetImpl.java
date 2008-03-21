@@ -35,6 +35,8 @@ import org.w3c.dom.events.EventListener;
 
 
 public class EventTargetImpl
+       extends
+             org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.events.EventTarget
 {
 

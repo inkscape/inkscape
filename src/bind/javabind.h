@@ -41,6 +41,28 @@ namespace Bind
 typedef Glib::ustring String;
 
 
+/**
+ * This is the base class of all things which will be C++ object
+ * instances
+ */  
+class BaseObject
+{
+public:
+
+    /**
+     * Simple constructor
+     */	     
+    BaseObject()
+        {}
+
+    /**
+     * Destructor
+     */	     
+    virtual ~BaseObject()
+        {}
+
+};
+
 
 /**
  *

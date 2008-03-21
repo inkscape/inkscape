@@ -25,22 +25,24 @@
 package org.inkscape.cmn;
 
 /**
- * This is the base of all classes which map to a corresponding
- * C++ object.  The _pointer value is storage for the C++ object's
- * pointer.  Construct() and destruct() are called for when things
- * need to be setup or cleaned up on the C++ side during creation or
- * destruction of this object.
- * 
- * @see BaseInterface for how we add multiple inheritance to classes
- * which are rooted on this class.   
- */     
-public class BaseObject
+ * A BaseInterface is not an object of its down, but is owned
+ * by a parent BaseObject.  It has no mapping to a C++ object of
+ * its own, but is merely the delegate that a BaseObject calls.
+ * This is how we provide some semblance of multiple inheritance,
+ * and keep the native method count down.
+ */      
+public class BaseInterface extends BaseObject
 {
+BaseObject parent;
 
-private long _pointer;
+
+public void setParent(BaseObject par)
+{
+    parent = par;
+}
 
 /**
- * getPointer() means that -any- java instance rooted on
+ * Overloaded.  getPointer() means that -any- java instance rooted on
  * either BaseObject or BaseInterface can call getPointer() to get the
  * handle to the associated C++ object pointer.  The difference is that
  * BaseObject holds the actual pointer, while BaseInterface refers to 
@@ -48,34 +50,36 @@ private long _pointer;
  */
 protected long getPointer()
 {
-    return _pointer;
+    if (parent == null)
+        return 0L;
+    else
+        return parent.getPointer();
 }
 
 /**
- * sets the pointer to the associated C++ object to a new value
+ * Since this is an interface, construct() 
+ * means nothing.  Nothing must happen
  */
-protected void setPointer(long val)
+protected void construct()
 {
-    _pointer = val;
 }
 
-protected native void construct();
-
-protected native void destruct();
-
-protected BaseInterface imbue(BaseInterface intf)
+/**
+ * Since this is an interface, destruct() 
+ * means nothing.  Nothing must happen
+ */
+protected void destruct()
 {
-    intf.setParent(this);
-    return intf;
 }
 
 
 /**
- * Simple constructor
- */ 
-public BaseObject()
+ * Instances of this "interface"  can only exist parasitically attached
+ * to a BaseObject
+ */  
+public BaseInterface()
 {
-    construct();
+     setParent(null);
 }
 
 }

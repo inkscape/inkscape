@@ -31,17 +31,20 @@ package org.inkscape.dom;
  * all of the DOM classes are rooted
  */
 public class DOMBase
+       extends org.inkscape.cmn.BaseObject
 {
 
-protected long _pointer;
-
 /**
- * @see dobinding.cpp: DOMBase_construct()
+ * @see dobinding.cpp: DOMBase_construct().
+ * 
+ * Overloaded from BaseObject so that we can do 'special' construction  
  */
 protected native void construct();
 
 /**
  * @see dobinding.cpp: DOMBase_destruct()
+ *
+ * Overloaded from BaseObject so that we can do 'special' destruction  
  */
 protected native void destruct();
 
@@ -60,7 +63,6 @@ protected void finalize()
 public DOMBase()
 {
     construct();
-    _pointer = 0;
 }
 
 }

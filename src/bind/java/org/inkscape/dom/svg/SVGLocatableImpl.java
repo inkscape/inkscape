@@ -36,6 +36,8 @@ import org.w3c.dom.svg.SVGMatrix;
 
 
 public class SVGLocatableImpl
+       extends
+             org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.svg.SVGLocatable
 {
 public native SVGElement getNearestViewportElement( );

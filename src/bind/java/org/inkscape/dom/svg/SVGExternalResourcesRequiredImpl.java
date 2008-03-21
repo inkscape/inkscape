@@ -34,6 +34,8 @@ import org.w3c.dom.svg.SVGAnimatedBoolean;
 
 
 public class SVGExternalResourcesRequiredImpl
+       extends
+             org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.svg.SVGExternalResourcesRequired
 {
 

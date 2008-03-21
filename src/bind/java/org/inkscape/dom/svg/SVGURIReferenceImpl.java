@@ -34,6 +34,8 @@ import org.w3c.dom.svg.SVGAnimatedString;
 
 
 public class SVGURIReferenceImpl
+       extends
+             org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.svg.SVGURIReference
 {
 public native SVGAnimatedString getHref( );

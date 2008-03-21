@@ -34,6 +34,8 @@ import org.w3c.dom.DOMException;
 
 
 public class SVGLangSpaceImpl
+       extends
+             org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.svg.SVGLangSpace
 {
 public native String getXMLlang( );

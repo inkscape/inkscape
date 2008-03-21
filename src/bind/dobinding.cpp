@@ -75,28 +75,40 @@ typedef struct
 //# BASE OBJECT
 //########################################################################
 
+static jmethodID _getPointer_id = NULL;
+
 static jlong getPointer(JNIEnv *env, jobject obj)
 {
-    jfieldID id = env->GetFieldID(env->GetObjectClass(obj), "_pointer", "J");
-    if (!id)
+    if (!_getPointer_id)
         {
-        err("getPointer: %s", EXCEPTION);
-        return 0;
-		}
-    jlong val = env->GetLongField(obj, id);
+        _getPointer_id = env->GetMethodID(env->GetObjectClass(obj), "getPointer", "()J");
+        if (!_getPointer_id)
+            {
+            err("getPointer(): %s", EXCEPTION);
+            return 0;
+	    	}
+	    }
+    jlong val = env->CallLongMethod(obj, _getPointer_id);
     return val;
 }
 
+
+static jmethodID _setPointer_id = NULL;
+
 static void setPointer(JNIEnv *env, jobject obj, jlong val)
 {
-    jfieldID id = env->GetFieldID(env->GetObjectClass(obj), "_pointer", "J");
-    if (!id)
+    if (!_setPointer_id)
         {
-        err("setPointer: %s", EXCEPTION);
-        return;
+        _setPointer_id = env->GetMethodID(env->GetObjectClass(obj), "setPointer", "(J)V");
+        if (!_setPointer_id)
+            {
+            err("setPointer(): %s", EXCEPTION);
+            return;
+		    }
 		}
-    env->SetLongField(obj, id, val);
+    env->CallVoidMethod(obj, _setPointer_id, val);
 }
+
 
 static void JNICALL BaseObject_construct
   (JNIEnv *env, jobject obj)
@@ -107,7 +119,7 @@ static void JNICALL BaseObject_construct
 static void JNICALL BaseObject_destruct
   (JNIEnv *env, jobject obj)
 {
-    NodePtr *ptr = (NodePtr *)getPointer(env, obj);
+    BaseObject *ptr = (BaseObject *)getPointer(env, obj);
     if (ptr)
         {
         delete ptr;
