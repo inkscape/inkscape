@@ -76,6 +76,7 @@ static char const preferences_skeleton[] =
 "    <group id=\"cp1\" name=\"Marker\" mass=\"0.02\" wiggle=\"0.0\" angle=\"90.0\" width=\"15.0\" thinning=\"0.0\" tremor=\"0.0\" flatness=\"0.0\" cap_rounding=\"1.0\" tracebackground=\"0\" usepressure=\"0\" usetilt=\"0\" />\n"
 "    <group id=\"cp2\" name=\"Brush\" mass=\"0.02\" wiggle=\"0.25\" angle=\"45.0\" width=\"10.0\" thinning=\"-0.4\" tremor=\"0.0\" flatness=\"0.16\" cap_rounding=\".1\" tracebackground=\"0\" usepressure=\"1\" usetilt=\"1\" />\n"
 "    <group id=\"cp3\" name=\"Reed pen\" mass=\"0.02\" wiggle=\"0.0\" angle=\"20.0\" width=\"15.0\" thinning=\"0.0\" tremor=\"0.0\" flatness=\"1.0\" cap_rounding=\"0.0\" tracebackground=\"0\" usepressure=\"1\" usetilt=\"1\"/>\n"
+"    <group id=\"cp4\" name=\"Mad brush\" usetilt=\"1\" tracebackground=\"0\" usepressure=\"1\" width=\"15\" cap_rounding=\"0.1\" flatness=\"0.16\" tremor=\"0.18\" thinning=\"-0.3\" angle=\"30\" wiggle=\"0.48\" mass=\"0.02\" />\n"
 "    </group>\n"
 "    </eventcontext>\n"
 "    <eventcontext id=\"text\"  usecurrent=\"0\" gradientdrag=\"1\"\n" 

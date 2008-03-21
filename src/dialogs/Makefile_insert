@@ -63,8 +63,9 @@ dialogs_libspdialogs_a_SOURCES = \
 	dialogs/unclump.cpp \
 	dialogs/unclump.h \
 	dialogs/iconpreview.cpp     \
-	dialogs/iconpreview.h	
-
+	dialogs/iconpreview.h	\
+	dialogs/calligraphic-profile-rename.cpp     \
+	dialogs/calligraphic-profile-rename.cpp     
 
 #	dialogs/sp-widget.c	\
 #	dialogs/sp-widget.h	\

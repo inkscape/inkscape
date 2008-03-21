@@ -103,6 +103,8 @@
 
 #include "svg/css-ostringstream.h"
 
+#include "calligraphic-profile-rename.h"
+
 using Inkscape::UnitTracker;
 
 typedef void (*SetupFunction)(GtkWidget *toolbox, SPDesktop *desktop);
@@ -3432,66 +3434,77 @@ static void sp_ddc_tilt_state_changed( GtkToggleAction *act, GObject*  tbl )
 }
 
 
-#define PROFILE_FLOAT_SIZE 8
-#define PROFILE_BOOL_SIZE 3
+#define PROFILE_FLOAT_SIZE 7
+#define PROFILE_INT_SIZE 4
 struct ProfileFloatElement {
     char const *name;
     double def;
     double min;
     double max;
 };
-struct ProfileBoolElement {
+struct ProfileIntElement {
     char const *name;
-    bool def;
+    int def;
+    int min;
+    int max;
 };
+
+
 
 static ProfileFloatElement f_profile[PROFILE_FLOAT_SIZE] = {
     {"mass",0.02, 0.0, 1.0},
     {"wiggle",0.0, 0.0, 1.0},
     {"angle",30.0, -90.0, 90.0},
-    {"width",15.0, 1.0, 100.0},
     {"thinning",0.1, -1.0, 1.0},
     {"tremor",0.0, 0.0, 1.0},
     {"flatness",0.9, 0.0, 1.0},
     {"cap_rounding",0.0, 0.0, 5.0}
 };
-static ProfileBoolElement b_profile[PROFILE_BOOL_SIZE] = {
-    {"usepressure",true},
-    {"tracebackground",false},
-    {"usetilt",true},
+static ProfileIntElement i_profile[PROFILE_INT_SIZE] = {
+    {"width",15, 1, 100},
+    {"usepressure",1,0,1},
+    {"tracebackground",0,0,1},
+    {"usetilt",1,0,1},
 };
 
 
 
 static void sp_dcc_save_profile( GtkWidget */*widget*/, GObject *dataKludge ){
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
+    if (! desktop) return;
 
-    unsigned int new_index = pref_path_number_of_children("tools.calligraphic.preset");
+    Inkscape::UI::Dialogs::CalligraphicProfileDialog::show(desktop);
+    if ( ! Inkscape::UI::Dialogs::CalligraphicProfileDialog::applied()) return;
+    Glib::ustring profile_name = Inkscape::UI::Dialogs::CalligraphicProfileDialog::getProfileName();
+
+    unsigned int new_index = pref_path_number_of_children("tools.calligraphic.preset") +1;
     gchar *profile_id = g_strdup_printf("dcc%d", new_index);
-    gchar *profile_name = g_strdup_printf("Profile %d", new_index);
     gchar *pref_path = create_pref("tools.calligraphic.preset",profile_id);    
-
+    
     for (unsigned i = 0; i < PROFILE_FLOAT_SIZE; ++i) {
         ProfileFloatElement const &pe = f_profile[i];
         double v = prefs_get_double_attribute_limited("tools.calligraphic",pe.name, pe.def, pe.min, pe.max);
         prefs_set_double_attribute(pref_path,pe.name,v);
-        }    
-    for (unsigned i = 0; i < PROFILE_BOOL_SIZE; ++i) {
-        ProfileBoolElement const &pe = b_profile[i];
-        int v = prefs_get_int_attribute_limited("tools.calligraphic",pe.name, pe.def?1:0 ,0,1);
+    }    
+    for (unsigned i = 0; i < PROFILE_INT_SIZE; ++i) {
+        ProfileIntElement const &pe = i_profile[i];
+        int v = prefs_get_int_attribute_limited("tools.calligraphic",pe.name, pe.def,pe.min, pe.max);
         prefs_set_int_attribute(pref_path,pe.name,v);
-        }
-    prefs_set_string_attribute(pref_path,"name",profile_name);
+    }
+    prefs_set_string_attribute(pref_path,"name",profile_name.c_str());
 
     EgeSelectOneAction* selector = static_cast<EgeSelectOneAction *>(g_object_get_data(dataKludge, "profile_selector"));
     GtkListStore* model = GTK_LIST_STORE(ege_select_one_action_get_model(selector));
     GtkTreeIter iter;
     gtk_list_store_append( model, &iter );
-    gtk_list_store_set( model, &iter, 0, profile_name, 1, new_index, -1 );
+    gtk_list_store_set( model, &iter, 0, profile_name.c_str(), 1, new_index, -1 );
 
     free(profile_id);
-    free(profile_name);
     free(pref_path);
+
+    ege_select_one_action_set_active(selector, new_index);
 }
+
 
 static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject *dataKludge) {
     
@@ -3508,16 +3521,16 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject *dataKludge) 
                 gtk_adjustment_set_value(adj, v);
             }
         } 
-        for (unsigned i = 0; i < PROFILE_BOOL_SIZE; ++i) {
-            ProfileBoolElement const &pe = b_profile[i];
-            int v = prefs_get_int_attribute_limited(profile_name, pe.name, pe.def, 0, 1);
+        for (unsigned i = 0; i < PROFILE_INT_SIZE; ++i) {
+            ProfileIntElement const &pe = i_profile[i];
+            int v = prefs_get_int_attribute_limited(profile_name, pe.name, pe.def, pe.min, pe.max);
             GtkToggleAction* toggle = static_cast<GtkToggleAction *>(g_object_get_data(dataKludge, pe.name));
             if ( toggle ) {
                 gtk_toggle_action_set_active(toggle, v);
             } else printf("No toggle");
         }
         free(profile_name);
-        g_object_set_data(dataKludge, "profile_selector",act); //restor selector visibility
+        g_object_set_data(dataKludge, "profile_selector",act); //restore selector visibility
     }
 
 }
@@ -3729,6 +3742,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK(sp_ddc_change_profile), holder );
             gtk_action_group_add_action( mainActions, GTK_ACTION(act1) );
             g_object_set_data( holder, "profile_selector", act1 );
+        
         }
 
         /*Save or delete calligraphic profile */
@@ -3738,6 +3752,8 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                              _("Save current settings as new profile"),
                                              GTK_STOCK_SAVE );
             g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(sp_dcc_save_profile), holder );
+
+
             gtk_action_group_add_action( mainActions, act );
             gtk_action_set_sensitive( act, TRUE );
             g_object_set_data( holder, "profile_save_delete", act );
