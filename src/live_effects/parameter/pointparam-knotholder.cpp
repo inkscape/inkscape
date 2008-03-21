@@ -28,8 +28,10 @@
 
 class SPDesktop;
 
-static void pointparam_knot_clicked_handler (SPKnot *knot, guint state, gpointer data);
-static void pointparam_knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state, gpointer data);
+namespace Inkscape {
+
+static void pointparam_knot_clicked_handler (SPKnot *knot, guint state, PointParamKnotHolder *kh);
+static void pointparam_knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state, PointParamKnotHolder *kh);
 static void pointparam_knot_ungrabbed_handler (SPKnot *knot, unsigned int state, PointParamKnotHolder *kh);
 static void pointparam_knot_holder_class_init(PointParamKnotHolderClass *klass);
 
@@ -38,7 +40,7 @@ void pointparam_knot_holder_dispose(GObject *object);
 static SPKnotHolderClass *parent_class;
 
 /**
- * Registers SPKnotHolder class and returns its type number.
+ * Registers PointParamKnotHolder class and returns its type number.
  */
 GType pointparam_knot_holder_get_type()
 {
@@ -113,26 +115,18 @@ void pointparam_knot_holder_dispose(GObject *object) {
     }
 }
 
-void pointparam_knot_holder_destroy(PointParamKnotHolder *kh) {
-    g_object_unref(kh);
-}
-
-void pointparam_knot_holder_add_full(
-    PointParamKnotHolder *knot_holder,
+void
+PointParamKnotHolder::add_knot (
     Geom::Point         & p,
-    void (* knot_click) (SPItem *item, guint state),
+    PointParamKnotHolderClickedFunc knot_click,
     SPKnotShapeType     shape,
     SPKnotModeType      mode,
     guint32             color,
     const gchar *tip )
 {
-    g_return_if_fail(knot_holder != NULL);
-
-    SPItem *item = SP_ITEM(knot_holder->item);
-
     /* create new SPKnotHolderEntry */
     SPKnotHolderEntity *e = g_new(SPKnotHolderEntity, 1);
-    e->knot = sp_knot_new(knot_holder->desktop, tip);
+    e->knot = sp_knot_new(desktop, tip);
     e->knot_set = NULL;
     e->knot_get = NULL;
     if (knot_click) {
@@ -147,30 +141,37 @@ void pointparam_knot_holder_add_full(
     e->knot->fill [SP_KNOT_STATE_NORMAL] = color;
     g_object_set (G_OBJECT (e->knot->item), "fill_color", color, NULL);
 
-    knot_holder->entity = g_slist_append(knot_holder->entity, e);
+    entity = g_slist_append(entity, e);
 
     /* Move to current point. */
     NR::Point dp = p * sp_item_i2d_affine(item);
     sp_knot_set_position(e->knot, &dp, SP_KNOT_STATE_NORMAL);
 
-    e->handler_id = g_signal_connect(e->knot, "moved", G_CALLBACK(pointparam_knot_moved_handler), knot_holder);
-    e->_click_handler_id = g_signal_connect(e->knot, "clicked", G_CALLBACK(pointparam_knot_clicked_handler), knot_holder);
-    e->_ungrab_handler_id = g_signal_connect(e->knot, "ungrabbed", G_CALLBACK(pointparam_knot_ungrabbed_handler), knot_holder);
+    e->handler_id = g_signal_connect(e->knot, "moved", G_CALLBACK(pointparam_knot_moved_handler), this);
+    e->_click_handler_id = g_signal_connect(e->knot, "clicked", G_CALLBACK(pointparam_knot_clicked_handler), this);
+    e->_ungrab_handler_id = g_signal_connect(e->knot, "ungrabbed", G_CALLBACK(pointparam_knot_ungrabbed_handler), this);
 
     sp_knot_show(e->knot);
 }
 
-static void pointparam_knot_clicked_handler(SPKnot */*knot*/, guint /*state*/, gpointer data)
+static void pointparam_knot_clicked_handler(SPKnot */*knot*/, guint /*state*/, PointParamKnotHolder */*kh*/)
 {
-    SPKnotHolder *knot_holder = (SPKnotHolder *) data;
+
 }
 
 /**
  * \param p In desktop coordinates.
+ *  This function does not write to XML, but tries to write directly to the PointParam to quickly live update the effect
  */
-static void pointparam_knot_moved_handler(SPKnot */*knot*/, NR::Point const */*p*/, guint /*state*/, gpointer data)
+static void pointparam_knot_moved_handler(SPKnot */*knot*/, NR::Point const *p, guint /*state*/, PointParamKnotHolder *kh)
 {
-    SPKnotHolder *knot_holder = (SPKnotHolder *) data;
+    NR::Matrix const i2d(sp_item_i2d_affine(kh->item));
+    NR::Point pos = (*p) / i2d;
+
+    Inkscape::SVGOStringStream os;
+    os << pos[0] << "," << pos[1];
+
+    kh->lpeobject->lpe->setParameter(kh->repr_key, os.str().c_str());
 }
 
 static void pointparam_knot_ungrabbed_handler(SPKnot *knot, unsigned int /*state*/, PointParamKnotHolder *kh)
@@ -185,6 +186,8 @@ static void pointparam_knot_ungrabbed_handler(SPKnot *knot, unsigned int /*state
 
     sp_document_done(SP_OBJECT_DOCUMENT (kh->lpeobject), SP_VERB_CONTEXT_LPE, _("Change LPE point parameter"));
 }
+
+} // namespace Inkscape
 
 /*
   Local Variables:

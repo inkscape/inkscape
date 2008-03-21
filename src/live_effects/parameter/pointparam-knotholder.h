@@ -25,42 +25,40 @@ namespace Inkscape {
 namespace XML {
 class Node;
 }
-}
 
 
-typedef void (* SPKnotHolderSetFunc) (SPItem *item, NR::Point const &p, NR::Point const &origin, guint state);
-typedef NR::Point (* SPKnotHolderGetFunc) (SPItem *item);
-/* fixme: Think how to make callbacks most sensitive (Lauris) */
-typedef void (* SPKnotHolderReleasedFunc) (SPItem *item);
 
-struct PointParamKnotHolder : public SPKnotHolder {
+typedef void (* PointParamKnotHolderSetFunc) (SPItem *item, NR::Point const &p, NR::Point const &origin, guint state);
+typedef NR::Point (* PointParamKnotHolderGetFunc) (SPItem *item);
+typedef void (* PointParamKnotHolderClickedFunc) (SPItem *item, guint state);
+
+class PointParamKnotHolder : public SPKnotHolder {
+public:
     LivePathEffectObject * lpeobject;
     Inkscape::XML::Node  * repr;
     const gchar          * repr_key;
+
+    void add_knot ( Geom::Point         & p,
+                    PointParamKnotHolderClickedFunc knot_click,
+                    SPKnotShapeType     shape,
+                    SPKnotModeType      mode,
+                    guint32             color,
+                    const gchar *tip );
 };
 
 struct PointParamKnotHolderClass : SPKnotHolderClass {
 };
 
-/* fixme: As a temporary solution, if released is NULL knotholder flushes undo itself (Lauris) */
 PointParamKnotHolder *pointparam_knot_holder_new(SPDesktop *desktop, SPObject *lpeobject, const gchar * key, SPItem *item);
-
-void pointparam_knot_holder_destroy(PointParamKnotHolder *knots);
-
-void pointparam_knot_holder_add_full(PointParamKnotHolder *knot_holder,
-                             Geom::Point &p,
-                             void (* knot_click) (SPItem *item, guint state),
-                             SPKnotShapeType shape,
-                             SPKnotModeType mode,
-                             guint32 color,
-                             gchar const *tip);
 
 GType pointparam_knot_holder_get_type();
 
-// FIXME: see knotholder.h
-void pointparam_knotholder_update_knots(SPKnotHolder *knot_holder, SPItem *item);
 
-#define INKSCAPE_TYPE_POINTPARAM_KNOT_HOLDER      (pointparam_knot_holder_get_type())
+#define INKSCAPE_TYPE_POINTPARAM_KNOT_HOLDER      (Inkscape::pointparam_knot_holder_get_type())
+
+
+} // namespace Inkscape
+
 
 #endif /* INKSCAPE_LPE_POINTPARAM_KNOTHOLDER_H */
 
