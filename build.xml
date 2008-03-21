@@ -663,6 +663,16 @@
   </target>
 
 
+  <!--
+  ########################################################################
+  ## T A R G E T    :    JAVACLEAN
+  ########################################################################
+  -->
+  <target name="javaclean" depends=""
+      description="clean up java binding classes">
+        <delete dir="${build}/java"/>
+  </target>
+
 
 
   <!--
@@ -670,7 +680,7 @@
   ## T A R G E T    :    C L E A N
   ########################################################################
   -->
-  <target name="clean"
+  <target name="clean" depends="javaclean"
         description="clean up.  deleting build and distro dirs" >
 
     <delete dir="${build}"/>
