@@ -39,9 +39,7 @@ libnr_libnr_a_SOURCES =	\
 	libnr/nr-matrix-ops.h	\
 	libnr/nr-matrix-rotate-ops.cpp	\
 	libnr/nr-matrix-rotate-ops.h	\
-	libnr/nr-matrix-scale-ops.cpp	\
 	libnr/nr-matrix-scale-ops.h	\
-	libnr/nr-matrix-translate-ops.cpp	\
 	libnr/nr-matrix-translate-ops.h	\
 	libnr/nr-matrix.cpp	\
 	libnr/nr-matrix.h	\
