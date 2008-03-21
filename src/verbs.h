@@ -162,7 +162,7 @@ enum {
     SP_VERB_CONTEXT_DROPPER,
     SP_VERB_CONTEXT_CONNECTOR,
     SP_VERB_CONTEXT_PAINTBUCKET,
-    SP_VERB_CONTEXT_LPE, //not really a tool but for editing LPE parameters on-canvas for example
+//    SP_VERB_CONTEXT_LPE, /*not really a tool but for editing LPE parameters on-canvas for example */
     /* Tool preferences */
     SP_VERB_CONTEXT_SELECT_PREFS,
     SP_VERB_CONTEXT_NODE_PREFS,

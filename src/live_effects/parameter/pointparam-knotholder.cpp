@@ -184,7 +184,7 @@ static void pointparam_knot_ungrabbed_handler(SPKnot *knot, unsigned int /*state
 
     kh->repr->setAttribute(kh->repr_key , os.str().c_str());
 
-    sp_document_done(SP_OBJECT_DOCUMENT (kh->lpeobject), SP_VERB_CONTEXT_LPE, _("Change LPE point parameter"));
+    sp_document_done(SP_OBJECT_DOCUMENT (kh->lpeobject), SP_VERB_CONTEXT_NODE, _("Change LPE point parameter"));
 }
 
 } // namespace Inkscape
