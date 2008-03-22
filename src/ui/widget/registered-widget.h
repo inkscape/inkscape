@@ -17,7 +17,7 @@
 #include <gtkmm/adjustment.h>
 #include <gtkmm/tooltips.h>
 #include <gtkmm/togglebutton.h>
-
+#include <2geom/matrix.h>
 #include "xml/node.h"
 #include "registry.h"
 
@@ -291,6 +291,25 @@ protected:
     sigc::connection  _value_x_changed_connection;
     sigc::connection  _value_y_changed_connection;
     void on_value_changed();
+};
+
+
+class RegisteredTransformedPoint : public RegisteredWidget<Point> {
+public:
+    virtual ~RegisteredTransformedPoint();
+    RegisteredTransformedPoint (  const Glib::ustring& label,
+                                  const Glib::ustring& tip,
+                                  const Glib::ustring& key,
+                                  Registry& wr,
+                                  Inkscape::XML::Node* repr_in = NULL,
+                                  SPDocument *doc_in = NULL );
+
+protected:
+    sigc::connection  _value_x_changed_connection;
+    sigc::connection  _value_y_changed_connection;
+    void on_value_changed();
+
+    Geom::Matrix transform;
 };
 
 

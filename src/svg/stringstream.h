@@ -5,6 +5,9 @@
 #include <sstream>
 #include <string>
 
+namespace Geom {
+    class Point;
+}
 namespace Inkscape {
 
 typedef std::ios_base &(*std_oct_type)(std::ios_base &);
@@ -78,6 +81,7 @@ Inkscape::SVGOStringStream &operator<<(Inkscape::SVGOStringStream &os, float d);
 
 Inkscape::SVGOStringStream &operator<<(Inkscape::SVGOStringStream &os, double d);
 
+Inkscape::SVGOStringStream &operator<<(Inkscape::SVGOStringStream &os, Geom::Point const & p);
 
 #endif
 

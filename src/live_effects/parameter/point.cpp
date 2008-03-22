@@ -70,7 +70,7 @@ gchar *
 PointParam::param_writeSVGValue() const
 {
     Inkscape::SVGOStringStream os;
-    os << (*this)[0] << "," << (*this)[1];
+    os << *dynamic_cast<Geom::Point const *>( this );
     gchar * str = g_strdup(os.str().c_str());
     return str;
 }
@@ -117,7 +117,7 @@ void
 PointParam::param_set_and_write_new_value (Geom::Point newpoint)
 {
     Inkscape::SVGOStringStream os;
-    os << newpoint[0] << "," << newpoint[1];
+    os << newpoint;
     gchar * str = g_strdup(os.str().c_str());
     param_write_to_repr(str);
     g_free(str);

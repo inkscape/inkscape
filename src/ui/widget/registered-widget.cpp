@@ -467,6 +467,53 @@ RegisteredPoint::on_value_changed()
     _wr->setUpdating (false);
 }
 
+/*#########################################
+ * Registered TRANSFORMEDPOINT
+ */
+
+RegisteredTransformedPoint::~RegisteredTransformedPoint()
+{
+    _value_x_changed_connection.disconnect();
+    _value_y_changed_connection.disconnect();
+}
+
+RegisteredTransformedPoint::RegisteredTransformedPoint ( const Glib::ustring& label, const Glib::ustring& tip,
+                        const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
+                        SPDocument* doc_in )
+    : RegisteredWidget<Point> (label, tip),
+      transform(Geom::identity())
+{
+    init_parent(key, wr, repr_in, doc_in);
+
+    setRange (-1e6, 1e6);
+    setDigits (2);
+    setIncrements(0.1, 1.0);
+    _value_x_changed_connection = signal_x_value_changed().connect (sigc::mem_fun (*this, &RegisteredTransformedPoint::on_value_changed));
+    _value_y_changed_connection = signal_y_value_changed().connect (sigc::mem_fun (*this, &RegisteredTransformedPoint::on_value_changed));
+}
+
+void
+RegisteredTransformedPoint::on_value_changed()
+{
+    if (setProgrammatically()) {
+        clearProgrammatically();
+        return;
+    }
+
+    if (_wr->isUpdating())
+        return;
+
+    _wr->setUpdating (true);
+
+    Geom::Point pos = getValue() * transform;
+
+    Inkscape::SVGOStringStream os;
+    os << pos;
+
+    write_to_xml(os.str().c_str());
+
+    _wr->setUpdating (false);
+}
 
 /*#########################################
  * Registered RANDOM

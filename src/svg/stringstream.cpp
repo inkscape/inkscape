@@ -1,6 +1,7 @@
 #include "svg/stringstream.h"
 #include "svg/strip-trailing-zeros.h"
 #include "prefs-utils.h"
+#include <2geom/point.h>
 
 Inkscape::SVGOStringStream::SVGOStringStream()
 {
@@ -57,6 +58,12 @@ operator<<(Inkscape::SVGOStringStream &os, double d)
     return os;
 }
 
+Inkscape::SVGOStringStream &
+operator<<(Inkscape::SVGOStringStream &os, Geom::Point const & p)
+{
+    os << p[0] << ',' << p[1];
+    return os;
+}
 
 /*
   Local Variables:

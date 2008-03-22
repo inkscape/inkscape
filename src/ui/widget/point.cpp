@@ -149,6 +149,11 @@ Point::getYValue() const
 {
     return ywidget.getValue();
 }
+Geom::Point
+Point::getValue() const
+{
+    return Geom::Point( getXValue() , getYValue() );
+}
 
 /** Get the value spin_button represented as an integer. */
 int

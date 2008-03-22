@@ -1,5 +1,6 @@
 #include <cxxtest/TestSuite.h>
 #include "svg/stringstream.h"
+#include <2geom/point.h>
 
 template<typename T>
 static void
@@ -45,6 +46,7 @@ public:
         svg_test_datum("  my string  ", "  my string  ");
         svg_test_datum((signed char const *) "023", "023");
         svg_test_datum((unsigned char const *) "023", "023");
+        svg_test_datum(Geom::Point(1.23, 3.45), "1.23,3.45");
     }
 
     void testConcat()

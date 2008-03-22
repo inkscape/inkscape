@@ -2429,7 +2429,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Create diagram connectors"), "draw_connector"),
     new ContextVerb(SP_VERB_CONTEXT_PAINTBUCKET, "ToolPaintBucket", N_("Paint Bucket"),
                     N_("Fill bounded areas"), "draw_paintbucket"),
-
+    new ContextVerb(SP_VERB_CONTEXT_LPE, "ToolLPE", N_("LPE Edit"),
+                    N_("Edit Live Path Effect parameters"), "draw_lpe"),
     /* Tool prefs */
     new ContextVerb(SP_VERB_CONTEXT_SELECT_PREFS, "SelectPrefs", N_("Selector Preferences"),
                     N_("Open Preferences for the Selector tool"), NULL),

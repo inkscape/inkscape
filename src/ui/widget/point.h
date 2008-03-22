@@ -19,7 +19,7 @@
 
 #include <gtkmm/adjustment.h>
 #include <gtkmm/spinbutton.h>
-
+#include <2geom/point.h>
 #include "ui/widget/labelled.h"
 #include "ui/widget/scalar.h"
 
@@ -57,6 +57,7 @@ public:
     bool    getSnapToTicks() const;
     double  getXValue() const;
     double  getYValue() const;
+    Geom::Point getValue() const;
     int     getXValueAsInt() const;
     int     getYValueAsInt() const;
 
