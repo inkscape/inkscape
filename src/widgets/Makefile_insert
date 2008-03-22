@@ -13,6 +13,8 @@ widgets/clean:
 widgets_libspwidgets_a_SOURCES =	\
 	widgets/button.cpp	\
 	widgets/button.h	\
+	widgets/calligraphic-profile-rename.cpp	\
+	widgets/calligraphic-profile-rename.h	\
 	widgets/dash-selector.cpp	\
 	widgets/dash-selector.h	\
 	widgets/desktop-widget.cpp	\

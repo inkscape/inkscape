@@ -103,7 +103,7 @@
 
 #include "svg/css-ostringstream.h"
 
-#include "../dialogs/calligraphic-profile-rename.h"
+#include "widgets/calligraphic-profile-rename.h"
 
 using Inkscape::UnitTracker;
 
