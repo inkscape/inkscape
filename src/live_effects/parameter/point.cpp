@@ -78,14 +78,14 @@ PointParam::param_writeSVGValue() const
 Gtk::Widget *
 PointParam::param_newWidget(Gtk::Tooltips * tooltips)
 {
-    Inkscape::UI::Widget::RegisteredPoint * pointwdg = Gtk::manage(
-        new Inkscape::UI::Widget::RegisteredPoint( param_label,
-                                                   param_tooltip,
-                                                   param_key,
-                                                   *param_wr,
-                                                   param_effect->getRepr(),
-                                                   param_effect->getSPDoc() ) );
-    pointwdg->setValue( (*this)[0], (*this)[1] );
+    Inkscape::UI::Widget::RegisteredTransformedPoint * pointwdg = Gtk::manage(
+        new Inkscape::UI::Widget::RegisteredTransformedPoint( param_label,
+                                                              param_tooltip,
+                                                              param_key,
+                                                              *param_wr,
+                                                              param_effect->getRepr(),
+                                                              param_effect->getSPDoc() ) );
+    pointwdg->setValue( *this );
     pointwdg->clearProgrammatically();
     pointwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change point parameter"));
 

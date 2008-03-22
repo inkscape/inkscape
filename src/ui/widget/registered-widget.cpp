@@ -481,7 +481,7 @@ RegisteredTransformedPoint::RegisteredTransformedPoint ( const Glib::ustring& la
                         const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
                         SPDocument* doc_in )
     : RegisteredWidget<Point> (label, tip),
-      transform(Geom::identity())
+      to_svg(Geom::identity())
 {
     init_parent(key, wr, repr_in, doc_in);
 
@@ -490,6 +490,25 @@ RegisteredTransformedPoint::RegisteredTransformedPoint ( const Glib::ustring& la
     setIncrements(0.1, 1.0);
     _value_x_changed_connection = signal_x_value_changed().connect (sigc::mem_fun (*this, &RegisteredTransformedPoint::on_value_changed));
     _value_y_changed_connection = signal_y_value_changed().connect (sigc::mem_fun (*this, &RegisteredTransformedPoint::on_value_changed));
+}
+
+void
+RegisteredTransformedPoint::setValue(Geom::Point & p)
+{
+    Geom::Point new_p = p * to_svg.inverse();
+    Point::setValue(new_p);  // the Point widget should display things in canvas coordinates
+}
+
+void
+RegisteredTransformedPoint::setTransform(Geom::Matrix & canvas_to_svg)
+{
+    // check if matrix is singular / has inverse
+    if ( ! canvas_to_svg.isSingular() ) {
+        to_svg = canvas_to_svg;
+    } else {
+        // set back to default
+        to_svg = Geom::identity();
+    }
 }
 
 void
@@ -505,7 +524,7 @@ RegisteredTransformedPoint::on_value_changed()
 
     _wr->setUpdating (true);
 
-    Geom::Point pos = getValue() * transform;
+    Geom::Point pos = getValue() * to_svg;
 
     Inkscape::SVGOStringStream os;
     os << pos;

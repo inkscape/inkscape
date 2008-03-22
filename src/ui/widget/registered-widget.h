@@ -304,12 +304,17 @@ public:
                                   Inkscape::XML::Node* repr_in = NULL,
                                   SPDocument *doc_in = NULL );
 
+    // redefine setValue, because transform must be applied
+    void setValue(Geom::Point & p);
+
+    void setTransform(Geom::Matrix & canvas_to_svg);
+
 protected:
     sigc::connection  _value_x_changed_connection;
     sigc::connection  _value_y_changed_connection;
     void on_value_changed();
 
-    Geom::Matrix transform;
+    Geom::Matrix to_svg;
 };
 
 
