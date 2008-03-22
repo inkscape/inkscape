@@ -41,79 +41,78 @@ public class SMILSetElementImpl
                //ElementTargetAttributes
        implements org.w3c.dom.smil.SMILSetElement
 {
+
+public SMILSetElementImpl()
+{
+    imbue(_ElementTimeControl = new ElementTimeControlImpl());
+    imbue(_ElementTime = new ElementTimeImpl());
+    imbue(_ElementTargetAttributes = new ElementTargetAttributesImpl());
+}
+
+
 //from ElementTimeControl
-public native boolean beginElement()
-                                throws DOMException;
-
-public native boolean beginElementAt(float offset)
-                                  throws DOMException;
-
-public native boolean endElement()
-                              throws DOMException;
-
-
-public native boolean endElementAt(float offset)
-                                throws DOMException;
-
+ElementTimeControlImpl _ElementTimeControl;
+public boolean beginElementAt(float offset) throws DOMException
+    { return _ElementTimeControl.beginElementAt(offset); }
+public boolean endElementAt(float offset) throws DOMException
+    { return _ElementTimeControl.endElementAt(offset); }
 //end ElementTimeControl
 
-
 //from ElementTime
-public native TimeList getBegin();
-public native void setBegin(TimeList begin)
-                 throws DOMException;
-
-
-public native TimeList getEnd();
-public native void setEnd(TimeList end)
-                 throws DOMException;
-
-
-public native float getDur();
-public native void setDur(float dur)
-                 throws DOMException;
-
-
-
-public native short getRestart();
-public native void setRestart(short restart)
-                 throws DOMException;
-
-
-
-public native short getFill();
-public native void setFill(short fill)
-                 throws DOMException;
-
-
-public native float getRepeatCount();
-public native void setRepeatCount(float repeatCount)
-                 throws DOMException;
-
-
-public native float getRepeatDur();
-public native void setRepeatDur(float repeatDur)
-                 throws DOMException;
-
-
-public native void pauseElement();
-
-
-public native void resumeElement();
-
-
-public native void seekElement(float seekTo);
+ElementTimeImpl _ElementTime;
+public TimeList getBegin()
+    { return _ElementTime.getBegin(); }
+public void setBegin(TimeList begin) throws DOMException
+    { _ElementTime.setBegin(begin); }
+public TimeList getEnd()
+    { return _ElementTime.getEnd(); }
+public void setEnd(TimeList end) throws DOMException
+    { _ElementTime.setEnd(end); }
+public float getDur()
+    { return _ElementTime.getDur(); }
+public void setDur(float dur) throws DOMException
+    { _ElementTime.setDur(dur); }
+public short getRestart()
+    { return _ElementTime.getRestart(); }
+public void setRestart(short restart) throws DOMException
+    { _ElementTime.setRestart(restart); }
+public short getFill()
+    { return _ElementTime.getFill(); }
+public void setFill(short fill) throws DOMException
+    { _ElementTime.setFill(fill); }
+public float getRepeatCount()
+    { return _ElementTime.getRepeatCount(); }
+public void setRepeatCount(float repeatCount) throws DOMException
+    { _ElementTime.setRepeatCount(repeatCount); }
+public float getRepeatDur()
+    { return _ElementTime.getRepeatDur(); }
+public void setRepeatDur(float repeatDur) throws DOMException
+    { _ElementTime.setRepeatDur(repeatDur); }
+public boolean beginElement()
+    { return _ElementTime.beginElement(); }
+public boolean endElement()
+    { return _ElementTime.endElement(); }
+public void pauseElement()
+    { _ElementTime.pauseElement(); }
+public void resumeElement()
+    { _ElementTime.resumeElement(); }
+public void seekElement(float seekTo)
+    { _ElementTime.seekElement(seekTo); }
 //end ElementTime
 
-
 //from ElementTargetAttributes
-public native String getAttributeName();
-public native void setAttributeName(String attributeName);
-
-
-public native short getAttributeType();
-public native void setAttributeType(short attributeType);
+ElementTargetAttributesImpl _ElementTargetAttributes;
+public String getAttributeName()
+    { return _ElementTargetAttributes.getAttributeName(); }
+public void setAttributeName(String attributeName)
+    { _ElementTargetAttributes.setAttributeName(attributeName); }
+public short getAttributeType()
+    { return _ElementTargetAttributes.getAttributeType(); }
+public void setAttributeType(short attributeType)
+    { _ElementTargetAttributes.setAttributeType(attributeType); }
 //end ElementTargetAttributes
+
+
 
 
 public native String getTo();

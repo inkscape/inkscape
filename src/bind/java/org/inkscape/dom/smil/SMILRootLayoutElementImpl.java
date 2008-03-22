@@ -33,25 +33,34 @@ import org.w3c.dom.DOMException;
 
 
 public class SMILRootLayoutElementImpl
-       extends SMILElementImpl  //, ElementLayout
+       extends SMILElementImpl
+             //, ElementLayout
        implements org.w3c.dom.smil.SMILRootLayoutElement
 {
+
+public SMILRootLayoutElementImpl()
+{
+    imbue(_ElementLayout = new ElementLayoutImpl());
+}
+
 //from ElementLayout
-public native String getTitle();
-public native void setTitle(String title)
-                                  throws DOMException;
-
-public native String getBackgroundColor();
-public native void setBackgroundColor(String backgroundColor)
-                                  throws DOMException;
-
-public native int getHeight();
-public native void setHeight(int height)
-                                  throws DOMException;
-
-public native int getWidth();
-public native void setWidth(int width)
-                                  throws DOMException;
+ElementLayoutImpl _ElementLayout;
+public String getTitle()
+    { return _ElementLayout.getTitle(); }
+public void setTitle(String title) throws DOMException
+    { _ElementLayout.setTitle(title); }
+public String getBackgroundColor()
+    { return _ElementLayout.getBackgroundColor(); }
+public void setBackgroundColor(String backgroundColor) throws DOMException
+    { _ElementLayout.setBackgroundColor(backgroundColor); }
+public int getHeight()
+    { return _ElementLayout.getHeight(); }
+public void setHeight(int height) throws DOMException
+    { _ElementLayout.setHeight(height); }
+public int getWidth()
+    { return _ElementLayout.getWidth(); }
+public void setWidth(int width) throws DOMException
+    { _ElementLayout.setWidth(width); }
 //end ElementLayout
 
 }

@@ -35,6 +35,8 @@ import org.w3c.dom.smil.TimeList;
 
 
 public class ElementTimeImpl
+       extends
+             org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.smil.ElementTime
 {
 

@@ -35,60 +35,55 @@ import org.w3c.dom.smil.TimeList;
 
 
 public class SMILMediaElementImpl
-       extends SMILElementImpl //ElementTime
+       extends SMILElementImpl
+             //ElementTime
        implements org.w3c.dom.smil.SMILMediaElement
 {
+public SMILMediaElementImpl()
+{
+    imbue(_ElementTime = new ElementTimeImpl());
+}
+
 //from ElementTime
-public native TimeList getBegin();
-public native void setBegin(TimeList begin)
-                 throws DOMException;
-
-
-public native TimeList getEnd();
-public native void setEnd(TimeList end)
-                 throws DOMException;
-
-
-public native float getDur();
-public native void setDur(float dur)
-                 throws DOMException;
-
-
-
-public native short getRestart();
-public native void setRestart(short restart)
-                 throws DOMException;
-
-
-
-public native short getFill();
-public native void setFill(short fill)
-                 throws DOMException;
-
-
-public native float getRepeatCount();
-public native void setRepeatCount(float repeatCount)
-                 throws DOMException;
-
-
-public native float getRepeatDur();
-public native void setRepeatDur(float repeatDur)
-                 throws DOMException;
-
-
-public native boolean beginElement();
-
-
-public native boolean endElement();
-
-
-public native void pauseElement();
-
-
-public native void resumeElement();
-
-
-public native void seekElement(float seekTo);
+ElementTimeImpl _ElementTime;
+public TimeList getBegin()
+    { return _ElementTime.getBegin(); }
+public void setBegin(TimeList begin) throws DOMException
+    { _ElementTime.setBegin(begin); }
+public TimeList getEnd()
+    { return _ElementTime.getEnd(); }
+public void setEnd(TimeList end) throws DOMException
+    { _ElementTime.setEnd(end); }
+public float getDur()
+    { return _ElementTime.getDur(); }
+public void setDur(float dur) throws DOMException
+    { _ElementTime.setDur(dur); }
+public short getRestart()
+    { return _ElementTime.getRestart(); }
+public void setRestart(short restart) throws DOMException
+    { _ElementTime.setRestart(restart); }
+public short getFill()
+    { return _ElementTime.getFill(); }
+public void setFill(short fill) throws DOMException
+    { _ElementTime.setFill(fill); }
+public float getRepeatCount()
+    { return _ElementTime.getRepeatCount(); }
+public void setRepeatCount(float repeatCount) throws DOMException
+    { _ElementTime.setRepeatCount(repeatCount); }
+public float getRepeatDur()
+    { return _ElementTime.getRepeatDur(); }
+public void setRepeatDur(float repeatDur) throws DOMException
+    { _ElementTime.setRepeatDur(repeatDur); }
+public boolean beginElement()
+    { return _ElementTime.beginElement(); }
+public boolean endElement()
+    { return _ElementTime.endElement(); }
+public void pauseElement()
+    { _ElementTime.pauseElement(); }
+public void resumeElement()
+    { _ElementTime.resumeElement(); }
+public void seekElement(float seekTo)
+    { _ElementTime.seekElement(seekTo); }
 //end ElementTime
 
 

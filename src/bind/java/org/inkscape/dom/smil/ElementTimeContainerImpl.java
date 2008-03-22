@@ -37,8 +37,6 @@ public class ElementTimeContainerImpl
 {
 
 public native NodeList getTimeChildren();
-
-
 public native NodeList getActiveChildrenAt(float instant);
 
 }

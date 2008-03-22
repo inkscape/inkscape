@@ -32,24 +32,19 @@ import org.w3c.dom.DOMException;
 
 
 public class ElementLayoutImpl
+       extends
+             org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.smil.ElementLayout
 {
 
 public native String getTitle();
-public native void setTitle(String title)
-                                  throws DOMException;
-
+public native void setTitle(String title) throws DOMException;
 public native String getBackgroundColor();
-public native void setBackgroundColor(String backgroundColor)
-                                  throws DOMException;
-
+public native void setBackgroundColor(String backgroundColor) throws DOMException;
 public native int getHeight();
-public native void setHeight(int height)
-                                  throws DOMException;
-
+public native void setHeight(int height) throws DOMException;
 public native int getWidth();
-public native void setWidth(int width)
-                                  throws DOMException;
+public native void setWidth(int width) throws DOMException;
 
 }
 
