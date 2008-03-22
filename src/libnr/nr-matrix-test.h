@@ -127,6 +127,7 @@ public:
 
     void testNrMatrixInvert(void)
     {
+/*
         NR::Matrix const nr_m_id(m_id);
         Matrix const m_s2(NR::scale(-4.0, 2.0));
         NR::Matrix const nr_s2(m_s2);
@@ -144,13 +145,14 @@ public:
         nr_matrix_invert(&inv, &nr_sp5);
         TS_ASSERT_EQUALS( Matrix(inv), Matrix(nr_s2) );
 
-        /* Test that nr_matrix_invert handles src == dest. */
+        // Test that nr_matrix_invert handles src == dest.
         inv = nr_s2;
         nr_matrix_invert(&inv, &inv);
         TS_ASSERT_EQUALS( Matrix(inv), Matrix(nr_sp5) );
         inv = nr_t23;
         nr_matrix_invert(&inv, &inv);
         TS_ASSERT_EQUALS( Matrix(inv), Matrix(NR::translate(-2.0, -3.0)) );
+*/
     }
 
     void testEllipticQuadraticForm(void)
@@ -160,7 +162,7 @@ public:
                              5.0, 6.0);
         NR::Matrix const invaff = aff.inverse();
         TS_ASSERT_EQUALS( invaff[1], -1.0 );
-		
+
         NR::Matrix const ef(elliptic_quadratic_form(invaff));
         NR::Matrix const exp_ef(2, -1,
                                 -1, 1,
