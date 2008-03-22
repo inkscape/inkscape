@@ -218,11 +218,8 @@ DockBehavior::onDesktopActivated(SPDesktop *desktop)
 {
     gint transient_policy = prefs_get_int_attribute_limited ( "options.transientpolicy", "value", 1, 0, 2);
 
-#ifdef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
-    if (prefs_get_int_attribute ( "options.dialogsontopwin32", "value", 0))
-        transient_policy = 2;
-    else
-        return;
+#ifdef WIN32 // Win32 special code to enable transient dialogs
+    transient_policy = 2;
 #endif
 
     if (!transient_policy)
