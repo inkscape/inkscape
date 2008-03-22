@@ -841,6 +841,9 @@ void InputDialogImpl::updateTestAxes( Glib::ustring const& key, GdkDevice* dev )
                             axesValues[i].set_sensitive(true);
                             axesValues[i].set_fraction( (axesMap[key][i].second- dev->axes[i].min) / (dev->axes[i].max - dev->axes[i].min) );
                         }
+                        gchar* str = g_strdup_printf("%f", axesMap[key][i].second);
+                        axesValues[i].set_text(str);
+                        g_free(str);
                     }
                     break;
                 case 3:
@@ -851,6 +854,9 @@ void InputDialogImpl::updateTestAxes( Glib::ustring const& key, GdkDevice* dev )
                             axesValues[i].set_sensitive(true);
                             axesValues[i].set_fraction( (axesMap[key][i].second- dev->axes[i].min) / (dev->axes[i].max - dev->axes[i].min) );
                         }
+                        gchar* str = g_strdup_printf("%f", axesMap[key][i].second);
+                        axesValues[i].set_text(str);
+                        g_free(str);
                     }
             }
 
@@ -861,6 +867,7 @@ void InputDialogImpl::updateTestAxes( Glib::ustring const& key, GdkDevice* dev )
     if ( !dev ) {
         for ( gint i = 0; i < static_cast<gint>(G_N_ELEMENTS(axesValues)); i++ ) {
             axesValues[i].set_fraction(0.0);
+            axesValues[i].set_text("");
             axesValues[i].set_sensitive(false);
         }
     }
