@@ -26,6 +26,7 @@ public:
     virtual gint getNumAxes() const = 0;
     virtual gint getNumKeys() const = 0;
     virtual Glib::ustring getLink() const = 0;
+    virtual gint getLiveAxes() const = 0;
     virtual gint getLiveButtons() const = 0;
 
 protected:
@@ -43,9 +44,11 @@ public:
 
     virtual std::list<InputDevice const *> getDevices() = 0;
     virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalDeviceChanged() = 0;
+    virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalAxesChanged() = 0;
     virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalButtonsChanged() = 0;
     virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalLinkChanged() = 0;
 
+    virtual void addAxis(Glib::ustring const & id, gint axis) = 0;
     virtual void addButton(Glib::ustring const & id, gint button) = 0;
     virtual void setLinkedTo(Glib::ustring const & id, Glib::ustring const& link) = 0;
 

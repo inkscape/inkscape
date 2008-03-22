@@ -50,6 +50,8 @@ public:
     virtual gint getNumKeys() const {return device->num_keys;}
     virtual Glib::ustring getLink() const {return link;}
     virtual void setLink( Glib::ustring const& link ) {this->link = link;}
+    virtual gint getLiveAxes() const {return liveAxes;}
+    virtual void setLiveAxes(gint axes) {liveAxes = axes;}
     virtual gint getLiveButtons() const {return liveButtons;}
     virtual void setLiveButtons(gint buttons) {liveButtons = buttons;}
 
@@ -66,6 +68,7 @@ private:
     Glib::ustring name;
     Gdk::InputSource source;
     Glib::ustring link;
+    guint liveAxes;
     guint liveButtons;
 };
 
@@ -94,6 +97,7 @@ InputDeviceImpl::InputDeviceImpl(GdkDevice* device)
       name(device->name ? device->name : ""),
       source(static_cast<Gdk::InputSource>(device->source)),
       link(),
+      liveAxes(0),
       liveButtons(0)
 {
     switch ( source ) {
@@ -127,15 +131,18 @@ public:
     DeviceManagerImpl();
     virtual std::list<InputDevice const *> getDevices();
     virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalDeviceChanged();
+    virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalAxesChanged();
     virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalButtonsChanged();
     virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalLinkChanged();
 
+    virtual void addAxis(Glib::ustring const & id, gint axis);
     virtual void addButton(Glib::ustring const & id, gint button);
     virtual void setLinkedTo(Glib::ustring const & id, Glib::ustring const& link);
 
 protected:
     std::list<InputDeviceImpl*> devices;
     sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalDeviceChangedPriv;
+    sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalAxesChangedPriv;
     sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalButtonsChangedPriv;
     sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalLinkChangedPriv;
 };
@@ -179,6 +186,11 @@ sigc::signal<void, const Glib::RefPtr<InputDevice>& > DeviceManagerImpl::signalD
     return signalDeviceChangedPriv;
 }
 
+sigc::signal<void, const Glib::RefPtr<InputDevice>& > DeviceManagerImpl::signalAxesChanged()
+{
+    return signalAxesChangedPriv;
+}
+
 sigc::signal<void, const Glib::RefPtr<InputDevice>& > DeviceManagerImpl::signalButtonsChanged()
 {
     return signalButtonsChangedPriv;
@@ -187,6 +199,23 @@ sigc::signal<void, const Glib::RefPtr<InputDevice>& > DeviceManagerImpl::signalB
 sigc::signal<void, const Glib::RefPtr<InputDevice>& > DeviceManagerImpl::signalLinkChanged()
 {
     return signalLinkChangedPriv;
+}
+
+void DeviceManagerImpl::addAxis(Glib::ustring const & id, gint axis)
+{
+    if ( axis >= 0 && axis < static_cast<gint>(bitVals.size()) ) {
+        std::list<InputDeviceImpl*>::iterator it = std::find_if(devices.begin(), devices.end(), IdMatcher(id));
+        if ( it != devices.end() ) {
+            gint mask = bitVals[axis];
+            if ( (mask & (*it)->getLiveAxes()) == 0 ) {
+                (*it)->setLiveAxes((*it)->getLiveAxes() | mask);
+
+                // Only signal if a new axis was added
+                (*it)->reference();
+                signalAxesChangedPriv.emit(Glib::RefPtr<InputDevice>(*it));
+            }
+        }
+    }
 }
 
 void DeviceManagerImpl::addButton(Glib::ustring const & id, gint button)
@@ -205,7 +234,6 @@ void DeviceManagerImpl::addButton(Glib::ustring const & id, gint button)
         }
     }
 }
-
 
 void DeviceManagerImpl::setLinkedTo(Glib::ustring const & id, Glib::ustring const& link)
 {

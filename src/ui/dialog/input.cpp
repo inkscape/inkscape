@@ -395,6 +395,7 @@ private:
     void linkComboChanged();
     void resyncToSelection();
     void handleDeviceChange(const Glib::RefPtr<InputDevice>& device);
+    void updateDeviceAxes(const Glib::RefPtr<InputDevice>& device);
     void updateDeviceButtons(const Glib::RefPtr<InputDevice>& device);
     void updateDeviceLinks(const Glib::RefPtr<InputDevice>& device);
 };
@@ -674,6 +675,7 @@ InputDialogImpl::InputDialogImpl() :
         g_warning("No devices found");
     }
     Inkscape::DeviceManager::getManager().signalDeviceChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::handleDeviceChange));
+    Inkscape::DeviceManager::getManager().signalAxesChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::updateDeviceAxes));
     Inkscape::DeviceManager::getManager().signalButtonsChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::updateDeviceButtons));
     Inkscape::DeviceManager::getManager().signalLinkChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::updateDeviceLinks));
 
@@ -684,6 +686,23 @@ InputDialogImpl::InputDialogImpl() :
 void InputDialogImpl::handleDeviceChange(const Glib::RefPtr<InputDevice>& /*device*/)
 {
 //     g_message("OUCH!!!! for %p  hits %s", &device, device->getId().c_str());
+}
+
+void InputDialogImpl::updateDeviceAxes(const Glib::RefPtr<InputDevice>& device)
+{
+    gint live = device->getLiveAxes();
+
+    std::map<guint, std::pair<guint, gdouble> > existing = axesMap[device->getId()];
+    gint mask = 0x1;
+    for ( gint num = 0; num < 32; num++, mask <<= 1) {
+        if ( (mask & live) != 0 ) {
+            if ( (existing.find(num) == existing.end()) || (existing[num].first < 2) ) {
+                axesMap[device->getId()][num].first = 2;
+                axesMap[device->getId()][num].second = 0.0;
+            }
+        }
+    }
+    updateTestAxes( device->getId(), 0 );
 }
 
 void InputDialogImpl::updateDeviceButtons(const Glib::RefPtr<InputDevice>& device)
@@ -877,31 +896,32 @@ void InputDialogImpl::mapAxesValues( Glib::ustring const& key, guint numAxes, gd
 {
     static gdouble epsilon = 0.0001;
     if ( (numAxes > 0) && axes) {
-        for ( guint axesNum = 0; axesNum < numAxes; axesNum++ ) {
+        for ( guint axisNum = 0; axisNum < numAxes; axisNum++ ) {
             // 0 == new, 1 == set value, 2 == changed value, 3 == active
-            gdouble diff = axesMap[key][axesNum].second - axes[axesNum];
-            switch(axesMap[key][axesNum].first) {
+            gdouble diff = axesMap[key][axisNum].second - axes[axisNum];
+            switch(axesMap[key][axisNum].first) {
                 case 0:
                 {
-                    axesMap[key][axesNum].first = 1;
-                    axesMap[key][axesNum].second = axes[axesNum];
+                    axesMap[key][axisNum].first = 1;
+                    axesMap[key][axisNum].second = axes[axisNum];
                 }
                 break;
                 case 1:
                 {
                     if ( (diff > epsilon) || (diff < -epsilon) ) {
-//                         g_message("Axis %d changed on %s]", axesNum, key.c_str());
-                        axesMap[key][axesNum].first = 3;
-                        axesMap[key][axesNum].second = axes[axesNum];
+//                         g_message("Axis %d changed on %s]", axisNum, key.c_str());
+                        axesMap[key][axisNum].first = 3;
+                        axesMap[key][axisNum].second = axes[axisNum];
                         updateTestAxes(key, dev);
+                        DeviceManager::getManager().addAxis(key, axisNum);
                     }
                 }
                 break;
                 case 2:
                 {
                     if ( (diff > epsilon) || (diff < -epsilon) ) {
-                        axesMap[key][axesNum].first = 3;
-                        axesMap[key][axesNum].second = axes[axesNum];
+                        axesMap[key][axisNum].first = 3;
+                        axesMap[key][axisNum].second = axes[axisNum];
                         updateTestAxes(key, dev);
                     }
                 }
@@ -909,9 +929,9 @@ void InputDialogImpl::mapAxesValues( Glib::ustring const& key, guint numAxes, gd
                 case 3:
                 {
                     if ( (diff > epsilon) || (diff < -epsilon) ) {
-                        axesMap[key][axesNum].second = axes[axesNum];
+                        axesMap[key][axisNum].second = axes[axisNum];
                     } else {
-                        axesMap[key][axesNum].first = 2;
+                        axesMap[key][axisNum].first = 2;
                         updateTestAxes(key, dev);
                     }
                 }
