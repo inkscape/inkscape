@@ -31,7 +31,7 @@
  * the specific language governing rights and limitations.
  *
  */
-
+ 
 #ifndef LIB2GEOM_SEEN_ANGLE_H
 #define LIB2GEOM_SEEN_ANGLE_H
 
