@@ -31,6 +31,8 @@ package org.inkscape.dom.smil;
 import org.w3c.dom.DOMException;
 
 public class ElementTestImpl
+       extends
+             org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.smil.ElementTest
 {
 

@@ -30,6 +30,8 @@ package org.inkscape.dom.smil;
 
 
 public class ElementSyncBehaviorImpl
+       extends
+             org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.smil.ElementSyncBehavior
 {
 

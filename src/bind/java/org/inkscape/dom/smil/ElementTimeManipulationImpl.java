@@ -32,6 +32,8 @@ import org.w3c.dom.DOMException;
 
 
 public class ElementTimeManipulationImpl
+       extends
+             org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.smil.ElementTimeManipulation
 {
 

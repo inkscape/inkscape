@@ -54,6 +54,19 @@ public class SVGAElementImpl
                //EventTarget
        implements org.w3c.dom.svg.SVGAElement
 {
+public SVGAElementImpl()
+{
+     imbue(_SVGURIReference = new SVGURIReferenceImpl());
+     imbue(_SVGTests = new SVGTestsImpl());
+     imbue(_SVGLangSpace = new SVGLangSpaceImpl());
+     imbue(_SVGExternalResourcesRequired = new SVGExternalResourcesRequiredImpl());
+     imbue(_SVGStylable = new SVGStylableImpl());
+     imbue(_SVGTransformable = new SVGTransformableImpl());
+     imbue(_EventTarget = new org.inkscape.dom.events.EventTargetImpl());
+}
+
+
+
 //from SVGURIReference
 private SVGURIReferenceImpl _SVGURIReference;
 public SVGAnimatedString getHref( )
@@ -161,16 +174,5 @@ public boolean hasEventListenerNS(String namespaceURI,
 
 public native SVGAnimatedString getTarget( );
 
-
-public SVGAElementImpl()
-{
-     imbue(_SVGURIReference = new SVGURIReferenceImpl());
-     imbue(_SVGTests = new SVGTestsImpl());
-     imbue(_SVGLangSpace = new SVGLangSpaceImpl());
-     imbue(_SVGExternalResourcesRequired = new SVGExternalResourcesRequiredImpl());
-     imbue(_SVGStylable = new SVGStylableImpl());
-     imbue(_SVGTransformable = new SVGTransformableImpl());
-     imbue(_EventTarget = new org.inkscape.dom.events.EventTargetImpl());
-}
 
 }
