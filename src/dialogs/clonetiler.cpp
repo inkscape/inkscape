@@ -1112,6 +1112,15 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
         return;
     }
 
+    // set "busy" cursor
+    desktop->setWaitingCursor();
+
+    // set statusbar text
+    GtkWidget *status = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "status");
+    gtk_label_set_markup (GTK_LABEL(status), _("<small>Creating tiled clones...</small>"));
+    gtk_widget_queue_draw(GTK_WIDGET(status));
+    gdk_window_process_all_updates();
+
     SPObject *obj = SP_OBJECT(selection->singleItem());
     Inkscape::XML::Node *obj_repr = SP_OBJECT_REPR(obj);
     const char *id_href = g_strdup_printf("#%s", obj_repr->attribute("id"));
@@ -1511,6 +1520,8 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
     }
 
     clonetiler_change_selection (NULL, selection, dlg);
+
+    desktop->clearWaitingCursor();
 
     sp_document_done(sp_desktop_document(desktop), SP_VERB_DIALOG_CLONETILER,
                      _("Create tiled clones"));
