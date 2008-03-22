@@ -30,7 +30,7 @@ public:
     {}
     virtual ~PylogFormatter() { delete outputStream(); }
 
-    virtual void enterWorld( const WorldDescription & desc )
+    virtual void enterWorld( const WorldDescription & /*desc*/ )
     {
         (*_o) << "**************************************************" << endl;
         _o->flush();
@@ -296,7 +296,7 @@ protected:
         return _o;
     }
 
-    void _traceCurrent( const char* file, unsigned line, const CXXTEST_STD(string)& errMsg ) {
+    void _traceCurrent( const char* /*file*/, unsigned /*line*/, const CXXTEST_STD(string)& errMsg ) {
         _runPassed = false;
         if ( _suiteIndex < (int)_status.size() ) {
             if ( _testIndex < (int)_status[_suiteIndex].size() ) {
@@ -305,7 +305,7 @@ protected:
         }
     }
 
-    void _warnCurrent( const char* file, unsigned line, const CXXTEST_STD(string)& errMsg ) {
+    void _warnCurrent( const char* /*file*/, unsigned /*line*/, const CXXTEST_STD(string)& errMsg ) {
         _runPassed = false;
         if ( _suiteIndex < (int)_status.size() ) {
             if ( _testIndex < (int)_status[_suiteIndex].size() ) {
@@ -318,7 +318,7 @@ protected:
         }
     }
 
-    void _failCurrent( const char* file, unsigned line, const CXXTEST_STD(string)& errMsg ) {
+    void _failCurrent( const char* /*file*/, unsigned /*line*/, const CXXTEST_STD(string)& errMsg ) {
         _runPassed = false;
         if ( _suiteIndex < (int)_status.size() ) {
             if ( _testIndex < (int)_status[_suiteIndex].size() ) {

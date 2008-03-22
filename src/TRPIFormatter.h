@@ -16,7 +16,7 @@
 #   include <iostream>
 #endif // _CXXTEST_OLD_STD
 
-namespace CxxTest 
+namespace CxxTest
 {
 class TRPIFormatter : public TestListener
 {
@@ -29,7 +29,7 @@ public:
     {}
     virtual ~TRPIFormatter() { delete outputStream(); }
 
-    virtual void enterWorld( const WorldDescription & desc )
+    virtual void enterWorld( const WorldDescription & /*desc*/ )
     {
         _status.clear();
 
