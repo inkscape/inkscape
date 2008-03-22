@@ -842,7 +842,7 @@ void _loadPaletteFile( gchar const *filename )
                             while ( *ptr == ' ' || *ptr == '\t' ) {
                                 ptr++;
                             }
-                            if ( *ptr == 0 ) {
+                            if ( (*ptr == 0) || (*ptr == '\r') || (*ptr == '\n') ) {
                                 // blank line. skip it.
                             } else if ( '0' <= *ptr && *ptr <= '9' ) {
                                 // should be an entry link
@@ -948,7 +948,8 @@ static void loadEmUp()
         while (!sources.empty()) {
             gchar *dirname = sources.front();
 
-            if ( Inkscape::IO::file_test( dirname, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR) ) ) {
+            if ( Inkscape::IO::file_test( dirname, G_FILE_TEST_EXISTS )
+                && Inkscape::IO::file_test( dirname, G_FILE_TEST_IS_DIR )) {
                 GError *err = 0;
                 GDir *directory = g_dir_open(dirname, 0, &err);
                 if (!directory) {
@@ -961,7 +962,7 @@ static void loadEmUp()
                         gchar* lower = g_ascii_strdown( filename, -1 );
 //                        if ( g_str_has_suffix(lower, ".gpl") ) {
                             gchar* full = g_build_filename(dirname, filename, NULL);
-                            if ( !Inkscape::IO::file_test( full, (GFileTest)(G_FILE_TEST_IS_DIR ) ) ) {
+                            if ( !Inkscape::IO::file_test( full, G_FILE_TEST_IS_DIR ) ) {
                                 _loadPaletteFile(full);
                             }
                             g_free(full);
