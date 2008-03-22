@@ -36,14 +36,10 @@ public class ElementTimeControlImpl
              org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.smil.ElementTimeControl
 {
-public native boolean beginElement()
-                                throws DOMException;
-public native boolean beginElementAt(float offset)
-                                  throws DOMException;
-public native boolean endElement()
-                              throws DOMException;
-public native boolean endElementAt(float offset)
-                                throws DOMException;
+public native boolean beginElement() throws DOMException;
+public native boolean endElement() throws DOMException;
+public native boolean beginElementAt(float offset) throws DOMException;
+public native boolean endElementAt(float offset) throws DOMException;
 
 }
 

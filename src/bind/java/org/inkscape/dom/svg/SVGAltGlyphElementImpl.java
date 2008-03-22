@@ -39,15 +39,22 @@ public class SVGAltGlyphElementImpl
                //SVGURIReference
        implements org.w3c.dom.svg.SVGAltGlyphElement
 {
+
+public SVGAltGlyphElementImpl()
+{
+    imbue(_SVGURIReference = new SVGURIReferenceImpl());
+}
+
 //from SVGURIReference
-public native SVGAnimatedString getHref( );
+private SVGURIReferenceImpl _SVGURIReference;
+public SVGAnimatedString getHref()
+    { return _SVGURIReference.getHref(); }
 //end SVGURIReference
 
 
-public native String getGlyphRef( );
-public native void setGlyphRef( String glyphRef )
-                       throws DOMException;
-public native String getFormat( );
-public native void setFormat( String format )
-                       throws DOMException;
+public native String getGlyphRef();
+public native void setGlyphRef(String glyphRef) throws DOMException;
+public native String getFormat();
+public native void setFormat(String format) throws DOMException;
+
 }
