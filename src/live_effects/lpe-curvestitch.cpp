@@ -80,7 +80,7 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
         startpoint_spacing_variation.resetRandomizer();
         endpoint_spacing_variation.resetRandomizer();
 
-        D2<Piecewise<SBasis> > stroke = make_cuts_independant(strokepath);
+        D2<Piecewise<SBasis> > stroke = make_cuts_independant(strokepath.get_pwd2());
         Interval bndsStroke = bounds_exact(stroke[0]);
         gdouble scaling = bndsStroke.max() - bndsStroke.min();
         Interval bndsStrokeY = bounds_exact(stroke[1]);
@@ -123,7 +123,7 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> & path_in)
                     transform.setXAxis( (end-start) / scaling );
                     transform.setYAxis( rot90(unit_vector(end-start)) * scaling_y);
                     transform.setTranslation( start );
-                    Piecewise<D2<SBasis> > pwd2_out = (strokepath-stroke_origin) * transform;
+                    Piecewise<D2<SBasis> > pwd2_out = (strokepath.get_pwd2()-stroke_origin) * transform;
 
                     // add stuff to one big pw<d2<sbasis> > and then outside the loop convert to path?
                     // No: this way, the separate result paths are kept separate which might come in handy some time!
@@ -157,12 +157,13 @@ LPECurveStitch::resetDefaults(SPItem * item)
     using namespace Geom;
 
     // set the stroke path to run horizontally in the middle of the bounding box of the original path
+    
+    // calculate bounding box:  (isn't there a simpler way?)
     Piecewise<D2<SBasis> > pwd2;
     std::vector<Geom::Path> temppath = SVGD_to_2GeomPath( SP_OBJECT_REPR(item)->attribute("inkscape:original-d"));
     for (unsigned int i=0; i < temppath.size(); i++) {
         pwd2.concat( temppath[i].toPwSb() );
     }
-
     D2<Piecewise<SBasis> > d2pw = make_cuts_independant(pwd2);
     Interval bndsX = bounds_exact(d2pw[0]);
     Interval bndsY = bounds_exact(d2pw[1]);

@@ -103,7 +103,7 @@ LPESkeletalStrokes::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pw
     Piecewise<D2<SBasis> > n = rot90(derivative(uskeleton));
     n = force_continuity(remove_short_cuts(n,.1));
 
-    D2<Piecewise<SBasis> > patternd2 = make_cuts_independant(pattern);
+    D2<Piecewise<SBasis> > patternd2 = make_cuts_independant(pattern.get_pwd2());
     Piecewise<SBasis> x = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[1]) : Piecewise<SBasis>(patternd2[0]);
     Piecewise<SBasis> y = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[0]) : Piecewise<SBasis>(patternd2[1]);
     Interval pattBndsX = bounds_exact(x);

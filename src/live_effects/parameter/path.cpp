@@ -40,7 +40,9 @@ namespace LivePathEffect {
 PathParam::PathParam( const Glib::ustring& label, const Glib::ustring& tip,
                       const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
                       Effect* effect, const gchar * default_value)
-    : Parameter(label, tip, key, wr, effect)
+    : Parameter(label, tip, key, wr, effect),
+      _pwd2(),
+      referring(false)
 {
     defvalue = g_strdup(default_value);
     param_readSVGValue(defvalue);
@@ -50,6 +52,19 @@ PathParam::PathParam( const Glib::ustring& label, const Glib::ustring& tip,
 PathParam::~PathParam()
 {
     g_free(defvalue);
+}
+
+Geom::Piecewise<Geom::D2<Geom::SBasis> > &
+PathParam::get_pwd2()
+{
+    if (!referring) {
+        return _pwd2;
+    } else {
+        /* update own pwd2 with data from path referred to
+         when this works, optimize to only update own pwd2 when referred path changed. */
+        //_pwd2 = ...;
+        return _pwd2;
+    }
 }
 
 void
@@ -73,7 +88,7 @@ PathParam::param_readSVGValue(const gchar * strvalue)
         for (unsigned int i=0; i < temppath.size(); i++) {
             newpath.concat( temppath[i].toPwSb() );
         }
-        *( dynamic_cast<Geom::Piecewise<Geom::D2<Geom::SBasis> > *> (this) ) = newpath;
+        _pwd2 = newpath;
         signal_path_changed.emit();
         return true;
     }
@@ -85,7 +100,7 @@ gchar *
 PathParam::param_writeSVGValue() const
 {
     const std::vector<Geom::Path> temppath =
-        Geom::path_from_piecewise(* dynamic_cast<const Geom::Piecewise<Geom::D2<Geom::SBasis> > *> (this), LPE_CONVERSION_TOLERANCE);
+        Geom::path_from_piecewise(_pwd2, LPE_CONVERSION_TOLERANCE);
     gchar * svgd = SVGD_from_2GeomPath( temppath );
     return svgd;
 }
@@ -157,11 +172,13 @@ PathParam::param_setup_nodepath(Inkscape::NodePath::Path *np)
 void
 PathParam::param_transform_multiply(Geom::Matrix const& postmul, bool /*set*/)
 {
-    param_set_and_write_new_value( (*this) * postmul );
+    // only apply transform when not referring to other path
+    if (!referring)
+        param_set_and_write_new_value( _pwd2 * postmul );
 }
 
 void
-PathParam::param_set_and_write_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > newpath)
+PathParam::param_set_and_write_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & newpath)
 {
     const std::vector<Geom::Path> temppath = Geom::path_from_piecewise(newpath, LPE_CONVERSION_TOLERANCE);
     gchar * svgd = SVGD_from_2GeomPath( temppath );

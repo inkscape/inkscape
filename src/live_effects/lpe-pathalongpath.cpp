@@ -81,7 +81,7 @@ LPEPathAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2
 
 /* Much credit should go to jfb and mgsloan of lib2geom development for the code below! */
 
-    Piecewise<D2<SBasis> > uskeleton = arc_length_parametrization(Piecewise<D2<SBasis> >(bend_path),2,.1);
+    Piecewise<D2<SBasis> > uskeleton = arc_length_parametrization(Piecewise<D2<SBasis> >(bend_path.get_pwd2()),2,.1);
     uskeleton = remove_short_cuts(uskeleton,.01);
     Piecewise<D2<SBasis> > n = rot90(derivative(uskeleton));
     n = force_continuity(remove_short_cuts(n,.1));
@@ -123,7 +123,6 @@ LPEPathAlongPath::resetDefaults(SPItem * item)
     for (unsigned int i=0; i < temppath.size(); i++) {
         pwd2.concat( temppath[i].toPwSb() );
     }
-
     D2<Piecewise<SBasis> > d2pw = make_cuts_independant(pwd2);
     Interval bndsX = bounds_exact(d2pw[0]);
     Interval bndsY = bounds_exact(d2pw[1]);

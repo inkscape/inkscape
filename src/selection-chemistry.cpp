@@ -1178,7 +1178,7 @@ void sp_selection_copy_lpe_pathparam(Inkscape::LivePathEffect::PathParam * pathp
 
     clipboard = g_slist_prepend(clipboard, newnode);
 
-    Geom::Rect bnds = Geom::bounds_exact(*pathparam);
+    Geom::Rect bnds = Geom::bounds_exact(pathparam->get_pwd2());
     size_clipboard = from_2geom(bnds);
 }
 

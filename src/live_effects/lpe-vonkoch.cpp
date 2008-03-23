@@ -79,7 +79,7 @@ std::vector<Geom::Path>
 LPEVonKoch::doEffect_path (std::vector<Geom::Path> & path_in)
 {
     using namespace Geom;
-    std::vector<Geom::Path> generating_path = path_from_piecewise(generator,.01);//TODO what should that tolerance be?
+    std::vector<Geom::Path> generating_path = path_from_piecewise(generator.get_pwd2(),.01);//TODO what should that tolerance be?
 
     //Collect transform matrices.
     //FIXME: fusing/cutting nodes mix up component order in the path. This is why the last segment is used.
