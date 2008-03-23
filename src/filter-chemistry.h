@@ -24,6 +24,8 @@ SPFilter *new_filter_simple_from_item (SPDocument *document, SPItem *item, const
 SPFilter *modify_filter_gaussian_blur_from_item (SPDocument *document, SPItem *item, gdouble stdDeviation);
 void remove_filter (SPObject *item, bool recursive);
 void remove_filter_gaussian_blur (SPObject *item);
+bool filter_is_single_gaussian_blur(SPFilter *filter);
+double get_single_gaussian_blur_radius(SPFilter *filter);
 
 #endif
 

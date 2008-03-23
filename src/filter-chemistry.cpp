@@ -319,7 +319,7 @@ new_filter_blend_gaussian_blur (SPDocument *document, const char *blendmode, gdo
 SPFilter *
 new_filter_simple_from_item (SPDocument *document, SPItem *item, const char *mode, gdouble radius)
 {
-    NR::Maybe<NR::Rect> const r = sp_item_bbox_desktop(item);
+    NR::Maybe<NR::Rect> const r = sp_item_bbox_desktop(item, SPItem::GEOMETRIC_BBOX);
 
     double width;
     double height;
@@ -374,7 +374,7 @@ modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *item,
         stdDeviation /= expansion;
 
     // Get the object size
-    NR::Maybe<NR::Rect> const r = sp_item_bbox_desktop(item);
+    NR::Maybe<NR::Rect> const r = sp_item_bbox_desktop(item, SPItem::GEOMETRIC_BBOX);
     double width;
     double height;
     if (r) {
@@ -456,6 +456,31 @@ void remove_filter_gaussian_blur (SPObject *item)
         }
     }
 }
+
+bool filter_is_single_gaussian_blur(SPFilter *filter)
+{
+    return (SP_OBJECT(filter)->firstChild() && 
+            SP_OBJECT(filter)->firstChild() == SP_OBJECT(filter)->lastChild() &&
+            SP_IS_GAUSSIANBLUR(SP_OBJECT(filter)->firstChild()));
+}
+
+double get_single_gaussian_blur_radius(SPFilter *filter)
+{
+    if (SP_OBJECT(filter)->firstChild() && 
+        SP_OBJECT(filter)->firstChild() == SP_OBJECT(filter)->lastChild() &&
+        SP_IS_GAUSSIANBLUR(SP_OBJECT(filter)->firstChild())) {
+
+        SPGaussianBlur *gb = SP_GAUSSIANBLUR(SP_OBJECT(filter)->firstChild());
+        double x = gb->stdDeviation.getNumber();
+        double y = gb->stdDeviation.getOptNumber();
+        if (x > 0 && y > 0) {
+            return MAX(x, y);
+        }
+        return x;
+    }
+}
+
+
 
 /*
   Local Variables:
