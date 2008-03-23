@@ -17,9 +17,6 @@ livarot_libvarot_a_SOURCES =	\
 	livarot/int-line.cpp	\
 	livarot/int-line.h	\
 	livarot/LivarotDefs.h	\
-	livarot/MyMath.h	\
-	livarot/MySeg.cpp	\
-	livarot/MySeg.h	\
 	livarot/Path.cpp	\
 	livarot/Path.h	\
 	livarot/PathConversion.cpp	\
