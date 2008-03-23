@@ -41,6 +41,8 @@ PathParam::PathParam( const Glib::ustring& label, const Glib::ustring& tip,
                       const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
                       Effect* effect, const gchar * default_value)
     : Parameter(label, tip, key, wr, effect),
+      _pathvector(),
+      must_recalculate_pwd2(false),
       _pwd2(),
       referring(false)
 {
@@ -54,15 +56,27 @@ PathParam::~PathParam()
     g_free(defvalue);
 }
 
+std::vector<Geom::Path> const &
+PathParam::get_pathvector()
+{
+    if (!referring) {
+        return _pathvector;
+    } else {
+        update_from_referred();
+        must_recalculate_pwd2 = true;
+        return _pathvector;
+    }
+}
+
 Geom::Piecewise<Geom::D2<Geom::SBasis> > const &
 PathParam::get_pwd2()
 {
     if (!referring) {
+        ensure_pwd2();
         return _pwd2;
     } else {
-        /* update own pwd2 with data from path referred to
-         when this works, optimize to only update own pwd2 when referred path changed. */
-        //_pwd2 = ...;
+        update_from_referred();
+        ensure_pwd2();
         return _pwd2;
     }
 }
@@ -83,12 +97,10 @@ bool
 PathParam::param_readSVGValue(const gchar * strvalue)
 {
     if (strvalue) {
-        Geom::Piecewise<Geom::D2<Geom::SBasis> > newpath;
-        std::vector<Geom::Path> temppath = SVGD_to_2GeomPath(strvalue);
-        for (unsigned int i=0; i < temppath.size(); i++) {
-            newpath.concat( temppath[i].toPwSb() );
-        }
-        _pwd2 = newpath;
+        _pathvector.clear();
+        _pathvector = SVGD_to_2GeomPath(strvalue);
+        must_recalculate_pwd2 = true;
+
         signal_path_changed.emit();
         return true;
     }
@@ -99,9 +111,7 @@ PathParam::param_readSVGValue(const gchar * strvalue)
 gchar *
 PathParam::param_writeSVGValue() const
 {
-    const std::vector<Geom::Path> temppath =
-        Geom::path_from_piecewise(_pwd2, LPE_CONVERSION_TOLERANCE);
-    gchar * svgd = SVGD_from_2GeomPath( temppath );
+    gchar * svgd = SVGD_from_2GeomPath( _pathvector );
     return svgd;
 }
 
@@ -172,18 +182,45 @@ PathParam::param_setup_nodepath(Inkscape::NodePath::Path *np)
 void
 PathParam::param_transform_multiply(Geom::Matrix const& postmul, bool /*set*/)
 {
-    // only apply transform when not referring to other path
-    if (!referring)
+    // TODO: recode this to apply transform to _pathvector instead?
+    if (!referring) {
+        // only apply transform when not referring to other path
+        ensure_pwd2();
         param_set_and_write_new_value( _pwd2 * postmul );
+    }
 }
 
 void
 PathParam::param_set_and_write_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & newpath)
 {
-    const std::vector<Geom::Path> temppath = Geom::path_from_piecewise(newpath, LPE_CONVERSION_TOLERANCE);
-    gchar * svgd = SVGD_from_2GeomPath( temppath );
+    _pathvector = Geom::path_from_piecewise(newpath, LPE_CONVERSION_TOLERANCE);
+    gchar * svgd = SVGD_from_2GeomPath( _pathvector );
     param_write_to_repr(svgd);
     g_free(svgd);
+    // force value upon pwd2 and don't recalculate.
+    _pwd2 = newpath;
+    must_recalculate_pwd2 = false;
+}
+
+void
+PathParam::ensure_pwd2()
+{
+    if (must_recalculate_pwd2) {
+        _pwd2.clear();
+        for (unsigned int i=0; i < _pathvector.size(); i++) {
+            _pwd2.concat( _pathvector[i].toPwSb() );
+        }
+
+        must_recalculate_pwd2 = false;
+    }
+}
+
+void
+PathParam::update_from_referred()
+{
+    // TODO
+    
+    // optimize, only update from referred when referred changed.
 }
 
 /* CALLBACK FUNCTIONS FOR THE BUTTONS */

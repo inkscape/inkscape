@@ -32,6 +32,7 @@ public:
                 const gchar * default_value = "M0,0 L1,1");
     virtual ~PathParam();
 
+    std::vector<Geom::Path> const & get_pathvector();
     Geom::Piecewise<Geom::D2<Geom::SBasis> > const & get_pwd2();
 
     virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
@@ -52,8 +53,14 @@ public:
     sigc::signal <void> signal_path_changed;
 
 protected:
-    Geom::Piecewise<Geom::D2<Geom::SBasis> > _pwd2;
+    std::vector<Geom::Path> _pathvector;   // this is primary data storage, since it is closest to SVG.
+
+    Geom::Piecewise<Geom::D2<Geom::SBasis> > _pwd2; // secondary, hence the bool must_recalculate_pwd2
+    bool must_recalculate_pwd2; // set when _pathvector was updated, but _pwd2 not
+    void ensure_pwd2();  // ensures _pwd2 is up to date
+
     bool referring;   // set when referring to another path, i.e. does not have its own pwd2, but should get it from another path
+    void update_from_referred();  // updates path data by looking up refered path
 
     void on_edit_button_click();
     void on_paste_button_click();
