@@ -82,11 +82,6 @@ libnr_libnr_a_SOURCES =	\
 	libnr/nr-scale-translate-ops.h	\
 	libnr/nr-scale-ops.h	\
 	libnr/nr-scale.h	\
-	libnr/nr-svp-private.h	\
-	libnr/nr-svp-render.cpp	\
-	libnr/nr-svp-render.h	\
-	libnr/nr-svp.cpp	\
-	libnr/nr-svp.h	\
 	libnr/nr-translate-matrix-ops.cpp	\
 	libnr/nr-translate-matrix-ops.h	\
 	libnr/nr-translate-scale-ops.cpp	\
