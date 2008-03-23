@@ -54,7 +54,7 @@ PathParam::~PathParam()
     g_free(defvalue);
 }
 
-Geom::Piecewise<Geom::D2<Geom::SBasis> > &
+Geom::Piecewise<Geom::D2<Geom::SBasis> > const &
 PathParam::get_pwd2()
 {
     if (!referring) {
