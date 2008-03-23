@@ -59,7 +59,7 @@ protected:
     bool must_recalculate_pwd2; // set when _pathvector was updated, but _pwd2 not
     void ensure_pwd2();  // ensures _pwd2 is up to date
 
-    bool referring;   // set when referring to another path, i.e. does not have its own pwd2, but should get it from another path
+    gchar * href;     // contains link to other object, e.g. "#path2428", NULL if PathParam contains pathdata itself
     void update_from_referred();  // updates path data by looking up refered path
 
     void on_edit_button_click();

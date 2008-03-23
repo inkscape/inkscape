@@ -44,7 +44,7 @@ PathParam::PathParam( const Glib::ustring& label, const Glib::ustring& tip,
       _pathvector(),
       must_recalculate_pwd2(false),
       _pwd2(),
-      referring(false)
+      href(NULL)
 {
     defvalue = g_strdup(default_value);
     param_readSVGValue(defvalue);
@@ -59,26 +59,14 @@ PathParam::~PathParam()
 std::vector<Geom::Path> const &
 PathParam::get_pathvector()
 {
-    if (!referring) {
-        return _pathvector;
-    } else {
-        update_from_referred();
-        must_recalculate_pwd2 = true;
-        return _pathvector;
-    }
+    return _pathvector;
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> > const &
 PathParam::get_pwd2()
 {
-    if (!referring) {
-        ensure_pwd2();
-        return _pwd2;
-    } else {
-        update_from_referred();
-        ensure_pwd2();
-        return _pwd2;
-    }
+    ensure_pwd2();
+    return _pwd2;
 }
 
 void
@@ -98,8 +86,19 @@ PathParam::param_readSVGValue(const gchar * strvalue)
 {
     if (strvalue) {
         _pathvector.clear();
-        _pathvector = SVGD_to_2GeomPath(strvalue);
+        if (href) {
+            g_free(href);
+            href = NULL;
+        }
         must_recalculate_pwd2 = true;
+
+        if (false /*if strvalue is xlink*/) {
+            href = g_strdup(strvalue);
+            update_from_referred();
+            // TODO: add listener, because we must update when referred updates. we must always be up-to-date with referred path data
+        } else {
+            _pathvector = SVGD_to_2GeomPath(strvalue);
+        }
 
         signal_path_changed.emit();
         return true;
@@ -168,7 +167,11 @@ PathParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
     }
 
     ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;
-    shape_editor->set_item_lpe_path_parameter(item, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str());
+    if (!href) {
+        shape_editor->set_item_lpe_path_parameter(item, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str());
+    } else {
+        // set referred item for editing
+    }
 }
 
 void
@@ -183,7 +186,7 @@ void
 PathParam::param_transform_multiply(Geom::Matrix const& postmul, bool /*set*/)
 {
     // TODO: recode this to apply transform to _pathvector instead?
-    if (!referring) {
+    if (!href) {
         // only apply transform when not referring to other path
         ensure_pwd2();
         param_set_and_write_new_value( _pwd2 * postmul );
@@ -218,7 +221,12 @@ PathParam::ensure_pwd2()
 void
 PathParam::update_from_referred()
 {
-    // TODO
+    if (!href) {
+        g_warning("PathParam::update_from_referred - logical error, this should not possible");
+        return;
+    }
+
+    // TODO: implement!
     
     // optimize, only update from referred when referred changed.
 }
