@@ -53,6 +53,7 @@
 #include "conn-avoid-ref.h"
 #include "conditions.h"
 #include "sp-filter-reference.h"
+#include "filter-chemistry.h"
 #include "sp-guide.h"
 
 #include "libnr/nr-matrix-div.h"
@@ -738,11 +739,67 @@ sp_item_invoke_bbox_full(SPItem const *item, NR::Maybe<NR::Rect> *bbox, NR::Matr
         ((SPItemClass *) G_OBJECT_GET_CLASS(item))->bbox(item, &temp_bbox, transform, flags);
     }
 
-    // unless this is geometric bbox, crop the bbox by clip path, if any
-    if ((SPItem::BBoxType) flags != SPItem::GEOMETRIC_BBOX && item->clip_ref->getObject()) {
-        NRRect b;
-        sp_clippath_get_bbox(SP_CLIPPATH(item->clip_ref->getObject()), &b, transform, flags);
-        nr_rect_d_intersect (&temp_bbox, &temp_bbox, &b);
+    // unless this is geometric bbox, extend by filter area and crop the bbox by clip path, if any
+    if ((SPItem::BBoxType) flags != SPItem::GEOMETRIC_BBOX) {
+        if (SP_OBJECT_STYLE(item) && SP_OBJECT_STYLE(item)->filter.href) {
+            SPObject *filter = SP_OBJECT_STYLE(item)->getFilter();
+            if (filter && SP_IS_FILTER(filter)) {
+                // default filer area per the SVG spec:
+                double x = -0.1;
+                double y = -0.1;
+                double w = 1.2;
+                double h = 1.2;
+
+                // if area is explicitly set, override:
+                if (SP_FILTER(filter)->x._set)
+                    x = SP_FILTER(filter)->x.computed;
+                if (SP_FILTER(filter)->y._set)
+                    y = SP_FILTER(filter)->y.computed;
+                if (SP_FILTER(filter)->width._set)
+                    w = SP_FILTER(filter)->width.computed;
+                if (SP_FILTER(filter)->height._set) 
+                    h = SP_FILTER(filter)->height.computed;
+
+                double dx0 = 0;
+                double dx1 = 0;
+                double dy0 = 0;
+                double dy1 = 0;
+                if (filter_is_single_gaussian_blur(SP_FILTER(filter))) {
+                    // if this is a single blur, use 2.4*radius 
+                    // which may be smaller than the default area;
+                    // see set_filter_area for why it's 2.4
+                    double r = get_single_gaussian_blur_radius (SP_FILTER(filter));
+                    dx0 = -2.4 * r;
+                    dx1 = 2.4 * r;
+                    dy0 = -2.4 * r;
+                    dy1 = 2.4 * r;
+                } else {
+                    // otherwise, calculate expansion from relative to absolute units:
+                    dx0 = x * (temp_bbox.x1 - temp_bbox.x0);
+                    dx1 = (w + x - 1) * (temp_bbox.x1 - temp_bbox.x0);
+                    dy0 = y * (temp_bbox.y1 - temp_bbox.y0);
+                    dy1 = (h + y - 1) * (temp_bbox.y1 - temp_bbox.y0);
+                }
+
+                // transform the expansions by the item's transform:
+                NR::Matrix i2d = sp_item_i2d_affine (item);
+                dx0 *= NR::expansionX(i2d);
+                dx1 *= NR::expansionX(i2d);
+                dy0 *= NR::expansionY(i2d);
+                dy1 *= NR::expansionY(i2d);
+
+                // expand the bbox
+                temp_bbox.x0 += dx0;
+                temp_bbox.x1 += dx1;
+                temp_bbox.y0 += dy0;
+                temp_bbox.y1 += dy1;
+            }
+        }
+        if (item->clip_ref->getObject()) {
+            NRRect b;
+            sp_clippath_get_bbox(SP_CLIPPATH(item->clip_ref->getObject()), &b, transform, flags);
+            nr_rect_d_intersect (&temp_bbox, &temp_bbox, &b);
+        }
     }
 
     if (temp_bbox.x0 > temp_bbox.x1 || temp_bbox.y0 > temp_bbox.y1) {
