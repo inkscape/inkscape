@@ -73,12 +73,26 @@ class Piecewise {
         unsigned n = segN(t);
         return segs[n](segT(t, n));
     }
+    std::vector<output_type> valueAndDerivatives(double t, unsigned cnt) const {
+        unsigned n = segN(t);
+        std::vector<output_type> ret, val = segs[n].valueAndDerivatives(segT(t, n), cnt);
+        double mult = 1;
+        for(unsigned i = 0; i < val.size(); i++) {
+            ret.push_back(val[i] * mult);
+            mult /= cuts[n+1] - cuts[n];
+        }
+        return ret;
+    }
     //TODO: maybe it is not a good idea to have this?
     Piecewise<T> operator()(SBasis f);
     Piecewise<T> operator()(Piecewise<SBasis>f);
 
     inline unsigned size() const { return segs.size(); }
     inline bool empty() const { return segs.empty(); }
+    inline void clear() {
+        segs.clear();
+        cuts.clear();
+    }
 
     /**Convenience/implementation hiding function to add segment/cut pairs.
      * Asserts that basic size and order invariants are correct
