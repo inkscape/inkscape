@@ -45,19 +45,37 @@ public class SVGDescElementImpl
        //        SVGStylable
        implements org.w3c.dom.svg.SVGDescElement
 {
+
+public SVGDescElementImpl()
+{
+    imbue(_SVGLangSpace = new SVGLangSpaceImpl());
+    imbue(_SVGStylable = new SVGStylableImpl());
+}
+
+
 //from SVGLangSpace
-public native String getXMLlang( );
-public native void setXMLlang( String xmllang )
-                       throws DOMException;
-public native String getXMLspace( );
-public native void setXMLspace( String xmlspace )
-                       throws DOMException;
+private SVGLangSpaceImpl _SVGLangSpace;
+public String getXMLlang()
+    { return _SVGLangSpace.getXMLlang(); }
+public void setXMLlang(String xmllang)
+                       throws DOMException
+    { _SVGLangSpace.setXMLlang(xmllang); }
+public String getXMLspace()
+    { return _SVGLangSpace.getXMLspace(); }
+public void setXMLspace(String xmlspace)
+                       throws DOMException
+    { _SVGLangSpace.setXMLspace(xmlspace); }
 //end SVGLangSpace
 
+
 //from SVGStylable
-public native SVGAnimatedString getClassName( );
-public native CSSStyleDeclaration getStyle( );
-public native CSSValue getPresentationAttribute ( String name );
+private SVGStylableImpl _SVGStylable;
+public SVGAnimatedString getClassName()
+    { return _SVGStylable.getClassName(); }
+public CSSStyleDeclaration getStyle()
+    { return _SVGStylable.getStyle(); }
+public CSSValue getPresentationAttribute(String name)
+    { return _SVGStylable.getPresentationAttribute(name); }
 //end SVGStylable
 
 

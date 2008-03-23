@@ -44,19 +44,35 @@ public class SVGFEColorMatrixElementImpl
                //SVGFilterPrimitiveStandardAttributes
        implements org.w3c.dom.svg.SVGFEColorMatrixElement
 {
+public SVGFEColorMatrixElementImpl()
+{
+    imbue(_SVGFilterPrimitiveStandardAttributes =
+             new SVGFilterPrimitiveStandardAttributesImpl());
+}
+
 //from SVGFilterPrimitiveStandardAttributes
-public native SVGAnimatedLength getX( );
-public native SVGAnimatedLength getY( );
-public native SVGAnimatedLength getWidth( );
-public native SVGAnimatedLength getHeight( );
-public native SVGAnimatedString getResult( );
+SVGFilterPrimitiveStandardAttributesImpl _SVGFilterPrimitiveStandardAttributes;
+public SVGAnimatedLength getX()
+    { return _SVGFilterPrimitiveStandardAttributes.getX(); }
+public SVGAnimatedLength getY()
+    { return _SVGFilterPrimitiveStandardAttributes.getY(); }
+public SVGAnimatedLength getWidth()
+    { return _SVGFilterPrimitiveStandardAttributes.getWidth(); }
+public SVGAnimatedLength getHeight()
+    { return _SVGFilterPrimitiveStandardAttributes.getHeight(); }
+public SVGAnimatedString getResult()
+    { return _SVGFilterPrimitiveStandardAttributes.getResult(); }
 //end SVGFilterPrimitiveStandardAttributes
 
 //from SVGStylable (from SVGFilterPrimitiveStandardAttributes)
-public native SVGAnimatedString getClassName( );
-public native CSSStyleDeclaration getStyle( );
-public native CSSValue getPresentationAttribute ( String name );
+public SVGAnimatedString getClassName()
+    { return _SVGFilterPrimitiveStandardAttributes.getClassName(); }
+public CSSStyleDeclaration getStyle()
+    { return _SVGFilterPrimitiveStandardAttributes.getStyle(); }
+public CSSValue getPresentationAttribute(String name)
+    { return _SVGFilterPrimitiveStandardAttributes.getPresentationAttribute(name); }
 //end SVGStylable
+
 
 
 public native SVGAnimatedString getIn1( );

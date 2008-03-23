@@ -35,6 +35,8 @@ import org.w3c.dom.events.Event;
 
 
 public class DocumentEventImpl
+       extends
+             org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.events.DocumentEvent
 {
 

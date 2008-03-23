@@ -41,9 +41,18 @@ public class SVGColorProfileElementImpl
                //SVGRenderingIntent
        implements org.w3c.dom.svg.SVGColorProfileElement
 {
+
+public SVGColorProfileElementImpl()
+{
+    imbue(_SVGURIReference = new SVGURIReferenceImpl());
+}
+
 //from SVGURIReference
-public native SVGAnimatedString getHref( );
+private SVGURIReferenceImpl _SVGURIReference;
+public SVGAnimatedString getHref()
+    { return _SVGURIReference.getHref(); }
 //end SVGURIReference
+
 
 public native String getLocal( );
 public native void setLocal( String local )

@@ -43,14 +43,26 @@ public class SVGFontElementImpl
                //SVGStylable
        implements org.w3c.dom.svg.SVGFontElement
 {
+public SVGFontElementImpl()
+{
+    imbue(_SVGExternalResourcesRequired = new SVGExternalResourcesRequiredImpl());
+    imbue(_SVGStylable = new SVGStylableImpl());
+}
+
 //from SVGExternalResourcesRequired
-public native SVGAnimatedBoolean getExternalResourcesRequired( );
+private SVGExternalResourcesRequiredImpl _SVGExternalResourcesRequired;
+public SVGAnimatedBoolean getExternalResourcesRequired()
+    { return _SVGExternalResourcesRequired.getExternalResourcesRequired(); }
 //end SVGExternalResourcesRequired
 
 //from SVGStylable
-public native SVGAnimatedString getClassName( );
-public native CSSStyleDeclaration getStyle( );
-public native CSSValue getPresentationAttribute ( String name );
+private SVGStylableImpl _SVGStylable;
+public SVGAnimatedString getClassName()
+    { return _SVGStylable.getClassName(); }
+public CSSStyleDeclaration getStyle()
+    { return _SVGStylable.getStyle(); }
+public CSSValue getPresentationAttribute(String name)
+    { return _SVGStylable.getPresentationAttribute(name); }
 //end SVGStylable
 
 

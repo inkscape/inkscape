@@ -40,20 +40,40 @@ public class SVGCursorElementImpl
                //SVGExternalResourcesRequired
        implements org.w3c.dom.svg.SVGCursorElement
 {
+
+public SVGCursorElementImpl()
+{
+    imbue(_SVGURIReference = new SVGURIReferenceImpl());
+    imbue(_SVGTests = new SVGTestsImpl());
+    imbue(_SVGExternalResourcesRequired = new SVGExternalResourcesRequiredImpl());
+}
+
+
 //from SVGURIReference
-public native SVGAnimatedString getHref( );
+private SVGURIReferenceImpl _SVGURIReference;
+public SVGAnimatedString getHref()
+    { return _SVGURIReference.getHref(); }
 //end SVGURIReference
 
 //from SVGTests
-public native SVGStringList getRequiredFeatures( );
-public native SVGStringList getRequiredExtensions( );
-public native SVGStringList getSystemLanguage( );
-public native boolean hasExtension ( String extension );
+private SVGTestsImpl _SVGTests;
+public SVGStringList getRequiredFeatures()
+   { return _SVGTests.getRequiredFeatures(); }
+public SVGStringList getRequiredExtensions()
+   { return _SVGTests.getRequiredExtensions(); }
+public SVGStringList getSystemLanguage()
+   { return _SVGTests.getSystemLanguage(); }
+public boolean hasExtension (String extension)
+   { return _SVGTests.hasExtension(extension); }
 //end SVGTests
 
+
 //from SVGExternalResourcesRequired
-public native SVGAnimatedBoolean getExternalResourcesRequired( );
+private SVGExternalResourcesRequiredImpl _SVGExternalResourcesRequired;
+public SVGAnimatedBoolean getExternalResourcesRequired()
+    { return _SVGExternalResourcesRequired.getExternalResourcesRequired(); }
 //end SVGExternalResourcesRequired
+
 
 
 

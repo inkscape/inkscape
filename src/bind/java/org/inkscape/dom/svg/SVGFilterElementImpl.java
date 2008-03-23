@@ -48,28 +48,51 @@ public class SVGFilterElementImpl
                //SVGUnitTypes
        implements org.w3c.dom.svg.SVGFilterElement
 {
+public SVGFilterElementImpl()
+{
+    imbue(_SVGURIReference = new SVGURIReferenceImpl());
+    imbue(_SVGLangSpace = new SVGLangSpaceImpl());
+    imbue(_SVGExternalResourcesRequired = new SVGExternalResourcesRequiredImpl());
+    imbue(_SVGStylable = new SVGStylableImpl());
+}
+
+
 //from SVGURIReference
-public native SVGAnimatedString getHref( );
+private SVGURIReferenceImpl _SVGURIReference;
+public SVGAnimatedString getHref()
+    { return _SVGURIReference.getHref(); }
 //end SVGURIReference
 
 //from SVGLangSpace
-public native String getXMLlang( );
-public native void setXMLlang( String xmllang )
-                       throws DOMException;
-public native String getXMLspace( );
-public native void setXMLspace( String xmlspace )
-                       throws DOMException;
+private SVGLangSpaceImpl _SVGLangSpace;
+public String getXMLlang()
+    { return _SVGLangSpace.getXMLlang(); }
+public void setXMLlang(String xmllang)
+                       throws DOMException
+    { _SVGLangSpace.setXMLlang(xmllang); }
+public String getXMLspace()
+    { return _SVGLangSpace.getXMLspace(); }
+public void setXMLspace(String xmlspace)
+                       throws DOMException
+    { _SVGLangSpace.setXMLspace(xmlspace); }
 //end SVGLangSpace
 
 //from SVGExternalResourcesRequired
-public native SVGAnimatedBoolean getExternalResourcesRequired( );
+private SVGExternalResourcesRequiredImpl _SVGExternalResourcesRequired;
+public SVGAnimatedBoolean getExternalResourcesRequired()
+    { return _SVGExternalResourcesRequired.getExternalResourcesRequired(); }
 //end SVGExternalResourcesRequired
 
 //from SVGStylable
-public native SVGAnimatedString getClassName( );
-public native CSSStyleDeclaration getStyle( );
-public native CSSValue getPresentationAttribute ( String name );
+private SVGStylableImpl _SVGStylable;
+public SVGAnimatedString getClassName()
+    { return _SVGStylable.getClassName(); }
+public CSSStyleDeclaration getStyle()
+    { return _SVGStylable.getStyle(); }
+public CSSValue getPresentationAttribute(String name)
+    { return _SVGStylable.getPresentationAttribute(name); }
 //end SVGStylable
+
 
 public native SVGAnimatedEnumeration getFilterUnits( );
 public native SVGAnimatedEnumeration getPrimitiveUnits( );

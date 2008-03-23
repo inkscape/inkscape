@@ -51,35 +51,63 @@ public class SVGFEImageElementImpl
                //SVGFilterPrimitiveStandardAttributes
        implements org.w3c.dom.svg.SVGFEImageElement
 {
+public SVGFEImageElementImpl()
+{
+    imbue(_SVGURIReference = new SVGURIReferenceImpl());
+    imbue(_SVGLangSpace = new SVGLangSpaceImpl());
+    imbue(_SVGExternalResourcesRequired = new SVGExternalResourcesRequiredImpl());
+    imbue(_SVGFilterPrimitiveStandardAttributes =
+             new SVGFilterPrimitiveStandardAttributesImpl());
+}
+
+
 //from SVGURIReference
-public native SVGAnimatedString getHref( );
+private SVGURIReferenceImpl _SVGURIReference;
+public SVGAnimatedString getHref()
+    { return _SVGURIReference.getHref(); }
 //end SVGURIReference
 
 //from SVGLangSpace
-public native String getXMLlang( );
-public native void setXMLlang( String xmllang )
-                       throws DOMException;
-public native String getXMLspace( );
-public native void setXMLspace( String xmlspace )
-                       throws DOMException;
+private SVGLangSpaceImpl _SVGLangSpace;
+public String getXMLlang()
+    { return _SVGLangSpace.getXMLlang(); }
+public void setXMLlang(String xmllang)
+                       throws DOMException
+    { _SVGLangSpace.setXMLlang(xmllang); }
+public String getXMLspace()
+    { return _SVGLangSpace.getXMLspace(); }
+public void setXMLspace(String xmlspace)
+                       throws DOMException
+    { _SVGLangSpace.setXMLspace(xmlspace); }
 //end SVGLangSpace
 
 //from SVGExternalResourcesRequired
-public native SVGAnimatedBoolean getExternalResourcesRequired( );
+private SVGExternalResourcesRequiredImpl _SVGExternalResourcesRequired;
+public SVGAnimatedBoolean getExternalResourcesRequired()
+    { return _SVGExternalResourcesRequired.getExternalResourcesRequired(); }
 //end SVGExternalResourcesRequired
 
 //from SVGFilterPrimitiveStandardAttributes
-public native SVGAnimatedLength getX( );
-public native SVGAnimatedLength getY( );
-public native SVGAnimatedLength getWidth( );
-public native SVGAnimatedLength getHeight( );
-public native SVGAnimatedString getResult( );
+SVGFilterPrimitiveStandardAttributesImpl _SVGFilterPrimitiveStandardAttributes;
+public SVGAnimatedLength getX()
+    { return _SVGFilterPrimitiveStandardAttributes.getX(); }
+public SVGAnimatedLength getY()
+    { return _SVGFilterPrimitiveStandardAttributes.getY(); }
+public SVGAnimatedLength getWidth()
+    { return _SVGFilterPrimitiveStandardAttributes.getWidth(); }
+public SVGAnimatedLength getHeight()
+    { return _SVGFilterPrimitiveStandardAttributes.getHeight(); }
+public SVGAnimatedString getResult()
+    { return _SVGFilterPrimitiveStandardAttributes.getResult(); }
 //end SVGFilterPrimitiveStandardAttributes
 
 //from SVGStylable (from SVGFilterPrimitiveStandardAttributes)
-public native SVGAnimatedString getClassName( );
-public native CSSStyleDeclaration getStyle( );
-public native CSSValue getPresentationAttribute ( String name );
+public SVGAnimatedString getClassName()
+    { return _SVGFilterPrimitiveStandardAttributes.getClassName(); }
+public CSSStyleDeclaration getStyle()
+    { return _SVGFilterPrimitiveStandardAttributes.getStyle(); }
+public CSSValue getPresentationAttribute(String name)
+    { return _SVGFilterPrimitiveStandardAttributes.getPresentationAttribute(name); }
 //end SVGStylable
 
 

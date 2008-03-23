@@ -40,25 +40,26 @@ import org.w3c.dom.svg.SVGSVGElement;
 public class SVGDocumentImpl
        extends
                org.inkscape.dom.DocumentImpl
-       //        DocumentEvent
+               //DocumentEvent
        implements org.w3c.dom.svg.SVGDocument
 {
-//from DocumentEvent
-public native Event createEvent(String eventType)
-                             throws DOMException;
+public SVGDocumentImpl()
+{
+    imbue(_DocumentEvent = new org.inkscape.dom.events.DocumentEventImpl());
+}
 
-public native boolean canDispatch(String namespaceURI,
-                               String type);
+//from DocumentEvent
+org.inkscape.dom.events.DocumentEventImpl _DocumentEvent;
+public Event createEvent(String eventType) throws DOMException
+    { return _DocumentEvent.createEvent(eventType); }
+public boolean canDispatch(String namespaceURI, String type)
+    { return _DocumentEvent.canDispatch(namespaceURI, type); }
 //end DocumentEvent
 
 public native String getTitle( );
-
 public native String getReferrer( );
-
 public native String getDomain( );
-
 public native String getURL( );
-
 public native SVGSVGElement getRootElement( );
 
 }
