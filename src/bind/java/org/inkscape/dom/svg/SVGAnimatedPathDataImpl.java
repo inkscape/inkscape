@@ -33,6 +33,8 @@ import org.w3c.dom.svg.SVGPathSegList;
 
 
 public class SVGAnimatedPathDataImpl
+       extends
+              org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.svg.SVGAnimatedPathData
 {
 

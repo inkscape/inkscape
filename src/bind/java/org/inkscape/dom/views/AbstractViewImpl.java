@@ -32,6 +32,8 @@ import org.w3c.dom.views.DocumentView;
 
 
 public class AbstractViewImpl
+       extends
+              org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.views.AbstractView
 {
 

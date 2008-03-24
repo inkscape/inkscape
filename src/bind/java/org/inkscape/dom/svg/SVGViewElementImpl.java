@@ -40,19 +40,35 @@ public class SVGViewElementImpl
                //SVGZoomAndPan
        implements org.w3c.dom.svg.SVGViewElement
 {
+public SVGViewElementImpl()
+{
+    imbue(_SVGExternalResourcesRequired = new SVGExternalResourcesRequiredImpl());
+    imbue(_SVGFitToViewBox = new SVGFitToViewBoxImpl());
+    imbue(_SVGZoomAndPan = new SVGZoomAndPanImpl());
+}
+
+
 //from SVGExternalResourcesRequired
-public native SVGAnimatedBoolean getExternalResourcesRequired( );
+private SVGExternalResourcesRequiredImpl _SVGExternalResourcesRequired;
+public SVGAnimatedBoolean getExternalResourcesRequired()
+    { return _SVGExternalResourcesRequired.getExternalResourcesRequired(); }
 //end SVGExternalResourcesRequired
 
+
 //from SVGFitToViewBox
-public native SVGAnimatedRect getViewBox( );
-public native SVGAnimatedPreserveAspectRatio getPreserveAspectRatio( );
+SVGFitToViewBoxImpl _SVGFitToViewBox;
+public SVGAnimatedRect getViewBox()
+    { return _SVGFitToViewBox.getViewBox(); }
+public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio()
+    { return _SVGFitToViewBox.getPreserveAspectRatio(); }
 //end SVGFitToViewBox
 
 //from SVGZoomAndPan
-public native short getZoomAndPan( );
-public native void setZoomAndPan( short zoomAndPan )
-                       throws DOMException;
+SVGZoomAndPanImpl _SVGZoomAndPan;
+public short getZoomAndPan()
+    { return _SVGZoomAndPan.getZoomAndPan(); }
+public void setZoomAndPan(short zoomAndPan) throws DOMException
+    { _SVGZoomAndPan.setZoomAndPan(zoomAndPan); }
 //end SVGZoomAndPan
 
 

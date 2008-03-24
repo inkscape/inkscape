@@ -38,12 +38,25 @@ public class SVGMPathElementImpl
                //SVGExternalResourcesRequired
        implements org.w3c.dom.svg.SVGMPathElement
 {
+
+public SVGMPathElementImpl()
+{
+    imbue(_SVGURIReference = new SVGURIReferenceImpl());
+    imbue(_SVGExternalResourcesRequired = new SVGExternalResourcesRequiredImpl());
+}
+
+
 //from SVGURIReference
-public native SVGAnimatedString getHref( );
+private SVGURIReferenceImpl _SVGURIReference;
+public SVGAnimatedString getHref()
+    { return _SVGURIReference.getHref(); }
 //end SVGURIReference
 
+
 //from SVGExternalResourcesRequired
-public native SVGAnimatedBoolean getExternalResourcesRequired( );
+private SVGExternalResourcesRequiredImpl _SVGExternalResourcesRequired;
+public SVGAnimatedBoolean getExternalResourcesRequired()
+    { return _SVGExternalResourcesRequired.getExternalResourcesRequired(); }
 //end SVGExternalResourcesRequired
 
 

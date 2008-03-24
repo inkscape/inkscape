@@ -38,8 +38,17 @@ public class SVGTRefElementImpl
                //SVGURIReference
        implements org.w3c.dom.svg.SVGTRefElement
 {
+
+public SVGTRefElementImpl()
+{
+    imbue(_SVGURIReference = new SVGURIReferenceImpl());
+}
+
+
 //from SVGURIReference
-public native SVGAnimatedString getHref( );
+private SVGURIReferenceImpl _SVGURIReference;
+public SVGAnimatedString getHref()
+    { return _SVGURIReference.getHref(); }
 //end SVGURIReference
 
 }

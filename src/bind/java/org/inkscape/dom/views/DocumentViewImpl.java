@@ -33,6 +33,8 @@ import org.w3c.dom.views.AbstractView;
 
 
 public class DocumentViewImpl
+       extends
+              org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.views.DocumentView
 {
 

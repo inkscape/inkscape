@@ -47,19 +47,36 @@ public class SVGGradientElementImpl
                //SVGUnitTypes
        implements org.w3c.dom.svg.SVGGradientElement
 {
+
+public SVGGradientElementImpl()
+{
+    imbue(_SVGURIReference = new SVGURIReferenceImpl());
+    imbue(_SVGExternalResourcesRequired = new SVGExternalResourcesRequiredImpl());
+    imbue(_SVGStylable = new SVGStylableImpl());
+}
+
 //from SVGURIReference
-public native SVGAnimatedString getHref( );
+private SVGURIReferenceImpl _SVGURIReference;
+public SVGAnimatedString getHref()
+    { return _SVGURIReference.getHref(); }
 //end SVGURIReference
 
 //from SVGExternalResourcesRequired
-public native SVGAnimatedBoolean getExternalResourcesRequired( );
+private SVGExternalResourcesRequiredImpl _SVGExternalResourcesRequired;
+public SVGAnimatedBoolean getExternalResourcesRequired()
+    { return _SVGExternalResourcesRequired.getExternalResourcesRequired(); }
 //end SVGExternalResourcesRequired
 
 //from SVGStylable
-public native SVGAnimatedString getClassName( );
-public native CSSStyleDeclaration getStyle( );
-public native CSSValue getPresentationAttribute ( String name );
+private SVGStylableImpl _SVGStylable;
+public SVGAnimatedString getClassName()
+    { return _SVGStylable.getClassName(); }
+public CSSStyleDeclaration getStyle()
+    { return _SVGStylable.getStyle(); }
+public CSSValue getPresentationAttribute(String name)
+    { return _SVGStylable.getPresentationAttribute(name); }
 //end SVGStylable
+
 
 
 public native SVGAnimatedEnumeration   getGradientUnits( );

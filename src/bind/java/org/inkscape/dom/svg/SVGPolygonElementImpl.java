@@ -55,74 +55,122 @@ public class SVGPolygonElementImpl
                //SVGAnimatedPoints
        implements org.w3c.dom.svg.SVGPolygonElement
 {
+
+public SVGPolygonElementImpl()
+{
+    imbue(_SVGTests = new SVGTestsImpl());
+    imbue(_SVGLangSpace = new SVGLangSpaceImpl());
+    imbue(_SVGExternalResourcesRequired = new SVGExternalResourcesRequiredImpl());
+    imbue(_SVGStylable = new SVGStylableImpl());
+    imbue(_SVGTransformable = new SVGTransformableImpl());
+    imbue(_EventTarget = new org.inkscape.dom.events.EventTargetImpl());
+    imbue(_SVGAnimatedPoints = new SVGAnimatedPointsImpl());
+}
+
+
 //from SVGTests
-public native SVGStringList getRequiredFeatures( );
-public native SVGStringList getRequiredExtensions( );
-public native SVGStringList getSystemLanguage( );
-public native boolean hasExtension ( String extension );
+private SVGTestsImpl _SVGTests;
+public SVGStringList getRequiredFeatures()
+   { return _SVGTests.getRequiredFeatures(); }
+public SVGStringList getRequiredExtensions()
+   { return _SVGTests.getRequiredExtensions(); }
+public SVGStringList getSystemLanguage()
+   { return _SVGTests.getSystemLanguage(); }
+public boolean hasExtension (String extension)
+   { return _SVGTests.hasExtension(extension); }
 //end SVGTests
 
 //from SVGLangSpace
-public native String getXMLlang( );
-public native void setXMLlang( String xmllang )
-                       throws DOMException;
-public native String getXMLspace( );
-public native void setXMLspace( String xmlspace )
-                       throws DOMException;
+private SVGLangSpaceImpl _SVGLangSpace;
+public String getXMLlang()
+    { return _SVGLangSpace.getXMLlang(); }
+public void setXMLlang(String xmllang)
+                       throws DOMException
+    { _SVGLangSpace.setXMLlang(xmllang); }
+public String getXMLspace()
+    { return _SVGLangSpace.getXMLspace(); }
+public void setXMLspace(String xmlspace)
+                       throws DOMException
+    { _SVGLangSpace.setXMLspace(xmlspace); }
 //end SVGLangSpace
 
 //from SVGExternalResourcesRequired
-public native SVGAnimatedBoolean getExternalResourcesRequired( );
+private SVGExternalResourcesRequiredImpl _SVGExternalResourcesRequired;
+public SVGAnimatedBoolean getExternalResourcesRequired()
+    { return _SVGExternalResourcesRequired.getExternalResourcesRequired(); }
 //end SVGExternalResourcesRequired
 
 //from SVGStylable
-public native SVGAnimatedString getClassName( );
-public native CSSStyleDeclaration getStyle( );
-public native CSSValue getPresentationAttribute ( String name );
+private SVGStylableImpl _SVGStylable;
+public SVGAnimatedString getClassName()
+    { return _SVGStylable.getClassName(); }
+public CSSStyleDeclaration getStyle()
+    { return _SVGStylable.getStyle(); }
+public CSSValue getPresentationAttribute(String name)
+    { return _SVGStylable.getPresentationAttribute(name); }
 //end SVGStylable
 
 //from SVGTransformable
-public native SVGAnimatedTransformList getTransform( );
+private SVGTransformableImpl _SVGTransformable;
+public SVGAnimatedTransformList getTransform()
+    { return _SVGTransformable.getTransform(); }
 //end SVGTransformable
 
 //from SVGLocatable (from SVGTransformable)
-public native SVGElement getNearestViewportElement( );
-public native SVGElement getFarthestViewportElement( );
-
-public native SVGRect   getBBox (  );
-public native SVGMatrix getCTM (  );
-public native SVGMatrix getScreenCTM (  );
-public native SVGMatrix getTransformToElement ( SVGElement element )
-                  throws SVGException;
+public SVGElement getNearestViewportElement()
+    { return _SVGTransformable.getNearestViewportElement(); }
+public SVGElement getFarthestViewportElement()
+    { return _SVGTransformable.getFarthestViewportElement(); }
+public SVGRect getBBox()
+    { return _SVGTransformable.getBBox(); }
+public SVGMatrix getCTM()
+    { return _SVGTransformable.getCTM(); }
+public SVGMatrix getScreenCTM()
+    { return _SVGTransformable.getScreenCTM(); }
+public SVGMatrix getTransformToElement (SVGElement element)
+                  throws SVGException
+    { return _SVGTransformable.getTransformToElement(element); }
 //end SVGLocatable
 
 //from EventTarget
-public native void addEventListener(String type,
+private org.inkscape.dom.events.EventTargetImpl _EventTarget;
+public void addEventListener(String type,
                              EventListener listener,
-                             boolean useCapture);
-public native void removeEventListener(String type,
+                             boolean useCapture)
+    { _EventTarget.addEventListener(type, listener, useCapture); }
+public void removeEventListener(String type,
                                 EventListener listener,
-                                boolean useCapture);
-public native boolean dispatchEvent(Event evt)
-                             throws EventException;
-public native void addEventListenerNS(String namespaceURI,
+                                boolean useCapture)
+    { _EventTarget.removeEventListener(type, listener, useCapture); }
+public boolean dispatchEvent(Event evt)
+                             throws EventException
+    { return _EventTarget.dispatchEvent(evt); }
+public void addEventListenerNS(String namespaceURI,
                                String type,
                                EventListener listener,
                                boolean useCapture,
-                               Object evtGroup);
-public native void removeEventListenerNS(String namespaceURI,
+                               Object evtGroup)
+    { _EventTarget.addEventListenerNS(namespaceURI, type, listener, useCapture, evtGroup); }
+public void removeEventListenerNS(String namespaceURI,
                                   String type,
                                   EventListener listener,
-                                  boolean useCapture);
-public native boolean willTriggerNS(String namespaceURI,
-                             String type);
-public native boolean hasEventListenerNS(String namespaceURI,
-                                  String type);
+                                  boolean useCapture)
+    { _EventTarget.removeEventListenerNS(namespaceURI, type, listener, useCapture); }
+public boolean willTriggerNS(String namespaceURI,
+                             String type)
+    { return _EventTarget.willTriggerNS(namespaceURI, type); }
+public boolean hasEventListenerNS(String namespaceURI,
+                                  String type)
+    { return _EventTarget.hasEventListenerNS(namespaceURI, type); }
 //end EventTarget
 
+
 //from SVGAnimatedPoints
-public native SVGPointList getPoints( );
-public native SVGPointList getAnimatedPoints( );
+SVGAnimatedPointsImpl _SVGAnimatedPoints;
+public SVGPointList getPoints()
+    { return _SVGAnimatedPoints.getPoints(); }
+public SVGPointList getAnimatedPoints()
+    { return _SVGAnimatedPoints.getAnimatedPoints(); }
 //end SVGAnimatedPoints
 
 

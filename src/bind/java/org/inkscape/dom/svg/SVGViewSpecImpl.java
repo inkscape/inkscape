@@ -38,10 +38,21 @@ public class SVGViewSpecImpl
                //SVGFitToViewBox
        implements org.w3c.dom.svg.SVGViewSpec
 {
+
+public SVGViewSpecImpl()
+{
+    imbue(_SVGFitToViewBox = new SVGFitToViewBoxImpl());
+}
+
+
 //from SVGFitToViewBox
-public native SVGAnimatedRect getViewBox( );
-public native SVGAnimatedPreserveAspectRatio getPreserveAspectRatio( );
+SVGFitToViewBoxImpl _SVGFitToViewBox;
+public SVGAnimatedRect getViewBox()
+    { return _SVGFitToViewBox.getViewBox(); }
+public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio()
+    { return _SVGFitToViewBox.getPreserveAspectRatio(); }
 //end SVGFitToViewBox
+
 
 public native SVGTransformList getTransform( );
 public native SVGElement getViewTarget( );

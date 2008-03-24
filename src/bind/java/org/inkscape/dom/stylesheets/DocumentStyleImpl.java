@@ -33,6 +33,8 @@ import org.w3c.dom.stylesheets.StyleSheetList;
 
 
 public class DocumentStyleImpl
+       extends
+              org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.stylesheets.DocumentStyle
 {
 

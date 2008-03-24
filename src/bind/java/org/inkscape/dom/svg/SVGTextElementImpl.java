@@ -37,19 +37,33 @@ public class SVGTextElementImpl
                //SVGTransformable
        implements org.w3c.dom.svg.SVGTextElement
 {
+
+public SVGTextElementImpl()
+{
+    imbue(_SVGTransformable = new SVGTransformableImpl());
+}
+
+
 //from SVGTransformable
-public native SVGAnimatedTransformList getTransform( );
+private SVGTransformableImpl _SVGTransformable;
+public SVGAnimatedTransformList getTransform()
+    { return _SVGTransformable.getTransform(); }
 //end SVGTransformable
 
 //from SVGLocatable (from SVGTransformable)
-public native SVGElement getNearestViewportElement( );
-public native SVGElement getFarthestViewportElement( );
-
-public native SVGRect   getBBox (  );
-public native SVGMatrix getCTM (  );
-public native SVGMatrix getScreenCTM (  );
-public native SVGMatrix getTransformToElement ( SVGElement element )
-                  throws SVGException;
+public SVGElement getNearestViewportElement()
+    { return _SVGTransformable.getNearestViewportElement(); }
+public SVGElement getFarthestViewportElement()
+    { return _SVGTransformable.getFarthestViewportElement(); }
+public SVGRect getBBox()
+    { return _SVGTransformable.getBBox(); }
+public SVGMatrix getCTM()
+    { return _SVGTransformable.getCTM(); }
+public SVGMatrix getScreenCTM()
+    { return _SVGTransformable.getScreenCTM(); }
+public SVGMatrix getTransformToElement (SVGElement element)
+                  throws SVGException
+    { return _SVGTransformable.getTransformToElement(element); }
 //end SVGLocatable
 
 }

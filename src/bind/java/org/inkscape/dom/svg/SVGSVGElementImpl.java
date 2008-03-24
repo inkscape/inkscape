@@ -68,101 +68,164 @@ public class SVGSVGElementImpl
                //DocumentCSS
        implements org.w3c.dom.svg.SVGSVGElement
 {
+public SVGSVGElementImpl()
+{
+    imbue(_SVGTests = new SVGTestsImpl());
+    imbue(_SVGLangSpace = new SVGLangSpaceImpl());
+    imbue(_SVGExternalResourcesRequired = new SVGExternalResourcesRequiredImpl());
+    imbue(_SVGStylable = new SVGStylableImpl());
+    imbue(_SVGLocatable = new SVGLocatableImpl());
+    imbue(_SVGFitToViewBox = new SVGFitToViewBoxImpl());
+    imbue(_SVGZoomAndPan = new SVGZoomAndPanImpl());
+    imbue(_EventTarget = new org.inkscape.dom.events.EventTargetImpl());
+    imbue(_DocumentEvent = new org.inkscape.dom.events.DocumentEventImpl());
+    imbue(_ViewCSS = new org.inkscape.dom.css.ViewCSSImpl());
+    imbue(_DocumentCSS = new org.inkscape.dom.css.DocumentCSSImpl());
+}
+
+
+//from SVGURIReference
+private SVGURIReferenceImpl _SVGURIReference;
+public SVGAnimatedString getHref()
+    { return _SVGURIReference.getHref(); }
+//end SVGURIReference
+
 //from SVGTests
-public native SVGStringList getRequiredFeatures( );
-public native SVGStringList getRequiredExtensions( );
-public native SVGStringList getSystemLanguage( );
-public native boolean hasExtension ( String extension );
+private SVGTestsImpl _SVGTests;
+public SVGStringList getRequiredFeatures()
+   { return _SVGTests.getRequiredFeatures(); }
+public SVGStringList getRequiredExtensions()
+   { return _SVGTests.getRequiredExtensions(); }
+public SVGStringList getSystemLanguage()
+   { return _SVGTests.getSystemLanguage(); }
+public boolean hasExtension (String extension)
+   { return _SVGTests.hasExtension(extension); }
 //end SVGTests
 
 //from SVGLangSpace
-public native String getXMLlang( );
-public native void setXMLlang( String xmllang )
-                       throws DOMException;
-public native String getXMLspace( );
-public native void setXMLspace( String xmlspace )
-                       throws DOMException;
+private SVGLangSpaceImpl _SVGLangSpace;
+public String getXMLlang()
+    { return _SVGLangSpace.getXMLlang(); }
+public void setXMLlang(String xmllang)
+                       throws DOMException
+    { _SVGLangSpace.setXMLlang(xmllang); }
+public String getXMLspace()
+    { return _SVGLangSpace.getXMLspace(); }
+public void setXMLspace(String xmlspace)
+                       throws DOMException
+    { _SVGLangSpace.setXMLspace(xmlspace); }
 //end SVGLangSpace
 
 //from SVGExternalResourcesRequired
-public native SVGAnimatedBoolean getExternalResourcesRequired( );
+private SVGExternalResourcesRequiredImpl _SVGExternalResourcesRequired;
+public SVGAnimatedBoolean getExternalResourcesRequired()
+    { return _SVGExternalResourcesRequired.getExternalResourcesRequired(); }
 //end SVGExternalResourcesRequired
 
 //from SVGStylable
-public native SVGAnimatedString getClassName( );
-public native CSSStyleDeclaration getStyle( );
-public native CSSValue getPresentationAttribute ( String name );
+private SVGStylableImpl _SVGStylable;
+public SVGAnimatedString getClassName()
+    { return _SVGStylable.getClassName(); }
+public CSSStyleDeclaration getStyle()
+    { return _SVGStylable.getStyle(); }
+public CSSValue getPresentationAttribute(String name)
+    { return _SVGStylable.getPresentationAttribute(name); }
 //end SVGStylable
 
 //from SVGLocatable
-public native SVGElement getNearestViewportElement( );
-public native SVGElement getFarthestViewportElement( );
-
-public native SVGRect   getBBox (  );
-public native SVGMatrix getCTM (  );
-public native SVGMatrix getScreenCTM (  );
-public native SVGMatrix getTransformToElement ( SVGElement element )
-                  throws SVGException;
+private SVGLocatableImpl _SVGLocatable;
+public SVGElement getNearestViewportElement()
+    { return _SVGLocatable.getNearestViewportElement(); }
+public SVGElement getFarthestViewportElement()
+    { return _SVGLocatable.getFarthestViewportElement(); }
+public SVGRect getBBox()
+    { return _SVGLocatable.getBBox(); }
+public SVGMatrix getCTM()
+    { return _SVGLocatable.getCTM(); }
+public SVGMatrix getScreenCTM()
+    { return _SVGLocatable.getScreenCTM(); }
+public SVGMatrix getTransformToElement (SVGElement element)
+                  throws SVGException
+    { return _SVGLocatable.getTransformToElement(element); }
 //end SVGLocatable
 
-//from SVGFitToViewBox
-public native SVGAnimatedRect getViewBox( );
-public native SVGAnimatedPreserveAspectRatio getPreserveAspectRatio( );
-//end SVGFitToViewBox
-
-//from SVGZoomAndPan
-public native short getZoomAndPan( );
-public native void setZoomAndPan( short zoomAndPan )
-                       throws DOMException;
-//end SVGZoomAndPan
-
 //from EventTarget
-public native void addEventListener(String type,
+private org.inkscape.dom.events.EventTargetImpl _EventTarget;
+public void addEventListener(String type,
                              EventListener listener,
-                             boolean useCapture);
-public native void removeEventListener(String type,
+                             boolean useCapture)
+    { _EventTarget.addEventListener(type, listener, useCapture); }
+public void removeEventListener(String type,
                                 EventListener listener,
-                                boolean useCapture);
-public native boolean dispatchEvent(Event evt)
-                             throws EventException;
-public native void addEventListenerNS(String namespaceURI,
+                                boolean useCapture)
+    { _EventTarget.removeEventListener(type, listener, useCapture); }
+public boolean dispatchEvent(Event evt)
+                             throws EventException
+    { return _EventTarget.dispatchEvent(evt); }
+public void addEventListenerNS(String namespaceURI,
                                String type,
                                EventListener listener,
                                boolean useCapture,
-                               Object evtGroup);
-public native void removeEventListenerNS(String namespaceURI,
+                               Object evtGroup)
+    { _EventTarget.addEventListenerNS(namespaceURI, type, listener, useCapture, evtGroup); }
+public void removeEventListenerNS(String namespaceURI,
                                   String type,
                                   EventListener listener,
-                                  boolean useCapture);
-public native boolean willTriggerNS(String namespaceURI,
-                             String type);
-public native boolean hasEventListenerNS(String namespaceURI,
-                                  String type);
+                                  boolean useCapture)
+    { _EventTarget.removeEventListenerNS(namespaceURI, type, listener, useCapture); }
+public boolean willTriggerNS(String namespaceURI,
+                             String type)
+    { return _EventTarget.willTriggerNS(namespaceURI, type); }
+public boolean hasEventListenerNS(String namespaceURI,
+                                  String type)
+    { return _EventTarget.hasEventListenerNS(namespaceURI, type); }
 //end EventTarget
 
+//from SVGFitToViewBox
+SVGFitToViewBoxImpl _SVGFitToViewBox;
+public SVGAnimatedRect getViewBox()
+    { return _SVGFitToViewBox.getViewBox(); }
+public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio()
+    { return _SVGFitToViewBox.getPreserveAspectRatio(); }
+//end SVGFitToViewBox
+
+//from SVGZoomAndPan
+SVGZoomAndPanImpl _SVGZoomAndPan;
+public short getZoomAndPan()
+    { return _SVGZoomAndPan.getZoomAndPan(); }
+public void setZoomAndPan(short zoomAndPan) throws DOMException
+    { _SVGZoomAndPan.setZoomAndPan(zoomAndPan); }
+//end SVGZoomAndPan
+
+
 //from DocumentEvent
-public native Event createEvent(String eventType)
-                             throws DOMException;
-public native boolean canDispatch(String namespaceURI,
-                               String type);
+org.inkscape.dom.events.DocumentEventImpl _DocumentEvent;
+public Event createEvent(String eventType) throws DOMException
+    { return _DocumentEvent.createEvent(eventType); }
+public boolean canDispatch(String namespaceURI, String type)
+    { return _DocumentEvent.canDispatch(namespaceURI, type); }
 //end DocumentEvent
 
 //from ViewCSS
-public native CSSStyleDeclaration getComputedStyle(Element elt,
-                                                String pseudoElt);
+org.inkscape.dom.css.ViewCSSImpl _ViewCSS;
+public CSSStyleDeclaration getComputedStyle(Element elt, String pseudoElt)
+    { return _ViewCSS.getComputedStyle(elt, pseudoElt); }
 //end ViewCSS
 
 //from AbstractView (from ViewCSS)
-public native DocumentView getDocument();
+public DocumentView getDocument()
+    { return _ViewCSS.getDocument(); }
 //end AbstractView
 
 //from DocumentCSS
-public native CSSStyleDeclaration getOverrideStyle(Element elt,
-                                                String pseudoElt);
+org.inkscape.dom.css.DocumentCSSImpl _DocumentCSS;
+public CSSStyleDeclaration getOverrideStyle(Element elt, String pseudoElt)
+    { return _DocumentCSS.getOverrideStyle(elt, pseudoElt); }
 //end DocumentCSS
 
 //from DocumentStyle (from DocumentCSS)
-public native StyleSheetList getStyleSheets();
+public StyleSheetList getStyleSheets()
+    { return _DocumentCSS.getStyleSheets(); }
 //end DocumentStyle
 
 

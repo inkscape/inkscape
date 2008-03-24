@@ -35,6 +35,8 @@ import org.w3c.dom.svg.SVGAnimatedPreserveAspectRatio;
 
 
 public class SVGFitToViewBoxImpl
+       extends
+              org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.svg.SVGFitToViewBox
 {
 

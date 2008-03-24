@@ -38,8 +38,17 @@ public class SVGTextPathElementImpl
                //SVGURIReference
        implements org.w3c.dom.svg.SVGTextPathElement
 {
+
+public SVGTextPathElementImpl()
+{
+    imbue(_SVGURIReference = new SVGURIReferenceImpl());
+}
+
+
 //from SVGURIReference
-public native SVGAnimatedString getHref( );
+private SVGURIReferenceImpl _SVGURIReference;
+public SVGAnimatedString getHref()
+    { return _SVGURIReference.getHref(); }
 //end SVGURIReference
 
 public native SVGAnimatedLength getStartOffset( );

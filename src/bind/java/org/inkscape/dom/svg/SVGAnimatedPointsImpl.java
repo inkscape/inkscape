@@ -32,6 +32,8 @@ import org.w3c.dom.svg.SVGPointList;
 
 
 public class SVGAnimatedPointsImpl
+       extends
+              org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.svg.SVGAnimatedPoints
 {
 

@@ -33,6 +33,8 @@ package org.inkscape.dom.svg;
 import org.w3c.dom.DOMException;
 
 public class SVGZoomAndPanImpl
+       extends
+              org.inkscape.cmn.BaseInterface
        implements org.w3c.dom.svg.SVGZoomAndPan
 {
 public native short getZoomAndPan( );

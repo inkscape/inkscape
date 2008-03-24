@@ -55,79 +55,74 @@ public class SVGPatternElementImpl
                //SVGUnitTypes
        implements org.w3c.dom.svg.SVGPatternElement
 {
+
+public SVGPatternElementImpl()
+{
+    imbue(_SVGURIReference = new SVGURIReferenceImpl());
+    imbue(_SVGTests = new SVGTestsImpl());
+    imbue(_SVGLangSpace = new SVGLangSpaceImpl());
+    imbue(_SVGExternalResourcesRequired = new SVGExternalResourcesRequiredImpl());
+    imbue(_SVGStylable = new SVGStylableImpl());
+    imbue(_SVGFitToViewBox = new SVGFitToViewBoxImpl());
+}
+
+
 //from SVGURIReference
-public native SVGAnimatedString getHref( );
+private SVGURIReferenceImpl _SVGURIReference;
+public SVGAnimatedString getHref()
+    { return _SVGURIReference.getHref(); }
 //end SVGURIReference
 
 //from SVGTests
-public native SVGStringList getRequiredFeatures( );
-public native SVGStringList getRequiredExtensions( );
-public native SVGStringList getSystemLanguage( );
-public native boolean hasExtension ( String extension );
+private SVGTestsImpl _SVGTests;
+public SVGStringList getRequiredFeatures()
+   { return _SVGTests.getRequiredFeatures(); }
+public SVGStringList getRequiredExtensions()
+   { return _SVGTests.getRequiredExtensions(); }
+public SVGStringList getSystemLanguage()
+   { return _SVGTests.getSystemLanguage(); }
+public boolean hasExtension (String extension)
+   { return _SVGTests.hasExtension(extension); }
 //end SVGTests
 
 //from SVGLangSpace
-public native String getXMLlang( );
-public native void setXMLlang( String xmllang )
-                       throws DOMException;
-public native String getXMLspace( );
-public native void setXMLspace( String xmlspace )
-                       throws DOMException;
+private SVGLangSpaceImpl _SVGLangSpace;
+public String getXMLlang()
+    { return _SVGLangSpace.getXMLlang(); }
+public void setXMLlang(String xmllang)
+                       throws DOMException
+    { _SVGLangSpace.setXMLlang(xmllang); }
+public String getXMLspace()
+    { return _SVGLangSpace.getXMLspace(); }
+public void setXMLspace(String xmlspace)
+                       throws DOMException
+    { _SVGLangSpace.setXMLspace(xmlspace); }
 //end SVGLangSpace
 
 //from SVGExternalResourcesRequired
-public native SVGAnimatedBoolean getExternalResourcesRequired( );
+private SVGExternalResourcesRequiredImpl _SVGExternalResourcesRequired;
+public SVGAnimatedBoolean getExternalResourcesRequired()
+    { return _SVGExternalResourcesRequired.getExternalResourcesRequired(); }
 //end SVGExternalResourcesRequired
 
 //from SVGStylable
-public native SVGAnimatedString getClassName( );
-public native CSSStyleDeclaration getStyle( );
-public native CSSValue getPresentationAttribute ( String name );
+private SVGStylableImpl _SVGStylable;
+public SVGAnimatedString getClassName()
+    { return _SVGStylable.getClassName(); }
+public CSSStyleDeclaration getStyle()
+    { return _SVGStylable.getStyle(); }
+public CSSValue getPresentationAttribute(String name)
+    { return _SVGStylable.getPresentationAttribute(name); }
 //end SVGStylable
 
-//from SVGTransformable
-public native SVGAnimatedTransformList getTransform( );
-//end SVGTransformable
-
-//from SVGLocatable (from SVGTransformable)
-public native SVGElement getNearestViewportElement( );
-public native SVGElement getFarthestViewportElement( );
-
-public native SVGRect   getBBox (  );
-public native SVGMatrix getCTM (  );
-public native SVGMatrix getScreenCTM (  );
-public native SVGMatrix getTransformToElement ( SVGElement element )
-                  throws SVGException;
-//end SVGLocatable
-
-//from EventTarget
-public native void addEventListener(String type,
-                             EventListener listener,
-                             boolean useCapture);
-public native void removeEventListener(String type,
-                                EventListener listener,
-                                boolean useCapture);
-public native boolean dispatchEvent(Event evt)
-                             throws EventException;
-public native void addEventListenerNS(String namespaceURI,
-                               String type,
-                               EventListener listener,
-                               boolean useCapture,
-                               Object evtGroup);
-public native void removeEventListenerNS(String namespaceURI,
-                                  String type,
-                                  EventListener listener,
-                                  boolean useCapture);
-public native boolean willTriggerNS(String namespaceURI,
-                             String type);
-public native boolean hasEventListenerNS(String namespaceURI,
-                                  String type);
-//end EventTarget
-
 //from SVGFitToViewBox
-public native SVGAnimatedRect getViewBox( );
-public native SVGAnimatedPreserveAspectRatio getPreserveAspectRatio( );
+SVGFitToViewBoxImpl _SVGFitToViewBox;
+public SVGAnimatedRect getViewBox()
+    { return _SVGFitToViewBox.getViewBox(); }
+public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio()
+    { return _SVGFitToViewBox.getPreserveAspectRatio(); }
 //end SVGFitToViewBox
+
 
 
 public native SVGAnimatedEnumeration   getPatternUnits( );
