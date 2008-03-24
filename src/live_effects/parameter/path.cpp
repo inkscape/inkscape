@@ -42,8 +42,8 @@ PathParam::PathParam( const Glib::ustring& label, const Glib::ustring& tip,
                       Effect* effect, const gchar * default_value)
     : Parameter(label, tip, key, wr, effect),
       _pathvector(),
-      must_recalculate_pwd2(false),
       _pwd2(),
+      must_recalculate_pwd2(false),
       href(NULL)
 {
     defvalue = g_strdup(default_value);
