@@ -240,34 +240,46 @@ void DeviceManagerImpl::setLinkedTo(Glib::ustring const & id, Glib::ustring cons
     std::list<InputDeviceImpl*>::iterator it = std::find_if(devices.begin(), devices.end(), IdMatcher(id));
     if ( it != devices.end() ) {
         InputDeviceImpl* dev = *it;
-        // Need to be sure the target of the link exists
-        it = std::find_if(devices.begin(), devices.end(), IdMatcher(link));
-        if ( it != devices.end() ) {
-            InputDeviceImpl* targetDev = *it;
-            if ( (dev->getLink() != link) || (targetDev->getLink() != id) ) {
-                // only muck about if they aren't already linked
-                std::list<InputDeviceImpl*> changedItems;
 
-                // Is something else already using that link?
+
+        InputDeviceImpl* targetDev = 0;
+        if ( !link.empty() ) {
+            // Need to be sure the target of the link exists
+            it = std::find_if(devices.begin(), devices.end(), IdMatcher(link));
+            if ( it != devices.end() ) {
+                targetDev = *it;
+            }
+        }
+
+
+        if ( (link.empty() && !dev->getLink().empty())
+             || (targetDev && (targetDev->getLink() != id)) ) {
+            // only muck about if they aren't already linked
+            std::list<InputDeviceImpl*> changedItems;
+
+            if ( targetDev ) {
+            // Is something else already using that link?
                 it = std::find_if(devices.begin(), devices.end(), LinkMatcher(link));
                 if ( it != devices.end() ) {
                     (*it)->setLink("");
                     changedItems.push_back(*it);
                 }
-                it = std::find_if(devices.begin(), devices.end(), LinkMatcher(id));
-                if ( it != devices.end() ) {
-                    (*it)->setLink("");
-                    changedItems.push_back(*it);
-                }
-                dev->setLink(link);
+            }
+            it = std::find_if(devices.begin(), devices.end(), LinkMatcher(id));
+            if ( it != devices.end() ) {
+                (*it)->setLink("");
+                changedItems.push_back(*it);
+            }
+            if ( targetDev ) {
                 targetDev->setLink(id);
                 changedItems.push_back(targetDev);
-                changedItems.push_back(dev);
+            }
+            dev->setLink(link);
+            changedItems.push_back(dev);
 
-                for ( std::list<InputDeviceImpl*>::const_iterator iter = changedItems.begin(); iter != changedItems.end(); ++iter ) {
-                    (*iter)->reference();
-                    signalLinkChangedPriv.emit(Glib::RefPtr<InputDevice>(*iter));
-                }
+            for ( std::list<InputDeviceImpl*>::const_iterator iter = changedItems.begin(); iter != changedItems.end(); ++iter ) {
+                (*iter)->reference();
+                signalLinkChangedPriv.emit(Glib::RefPtr<InputDevice>(*iter));
             }
         }
     }
