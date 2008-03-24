@@ -29,30 +29,30 @@ class SPUseClass;
 class SPUseReference;
 
 struct SPUse : public SPItem {
-	// item built from the original's repr (the visible clone)
-	// relative to the SPUse itself, it is treated as a child, similar to a grouped item relative to its group
-	SPObject *child;
+    // item built from the original's repr (the visible clone)
+    // relative to the SPUse itself, it is treated as a child, similar to a grouped item relative to its group
+    SPObject *child;
 
-	// SVG attrs
-	SVGLength x;
-	SVGLength y;
-	SVGLength width;
-	SVGLength height;
-	gchar *href;
+    // SVG attrs
+    SVGLength x;
+    SVGLength y;
+    SVGLength width;
+    SVGLength height;
+    gchar *href;
 
-	// the reference to the original object
-	SPUseReference *ref;
+    // the reference to the original object
+    SPUseReference *ref;
 
-	// a sigc connection for delete notifications
-	sigc::connection _delete_connection;
-	sigc::connection _changed_connection;
+    // a sigc connection for delete notifications
+    sigc::connection _delete_connection;
+    sigc::connection _changed_connection;
 
-	// a sigc connection for transformed signal, used to do move compensation
-	sigc::connection _transformed_connection;
+    // a sigc connection for transformed signal, used to do move compensation
+    sigc::connection _transformed_connection;
 };
 
 struct SPUseClass {
-	SPItemClass parent_class;
+    SPItemClass parent_class;
 };
 
 GType sp_use_get_type (void);
