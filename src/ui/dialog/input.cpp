@@ -360,6 +360,7 @@ private:
 
     MyModelColumns cols;
     Glib::RefPtr<Gtk::TreeStore> store;
+    Gtk::TreeIter tabletIter;
     Gtk::TreeView tree;
     Gtk::Frame frame2;
     Gtk::Frame testFrame;
@@ -398,6 +399,13 @@ private:
     void updateDeviceAxes(const Glib::RefPtr<InputDevice>& device);
     void updateDeviceButtons(const Glib::RefPtr<InputDevice>& device);
     void updateDeviceLinks(const Glib::RefPtr<InputDevice>& device);
+
+    bool findDevice(const Gtk::TreeModel::iterator& iter,
+                    Glib::ustring id,
+                    Gtk::TreeModel::iterator* result);
+    bool findDeviceByLink(const Gtk::TreeModel::iterator& iter,
+                          Glib::ustring link,
+                          Gtk::TreeModel::iterator* result);
 };
 
 
@@ -522,7 +530,7 @@ InputDialogImpl::InputDialogImpl() :
                       ::Gtk::SHRINK);
     rowNum++;
 
-    lbl = Gtk::manage(new Gtk::Label("Reported axes count:"));
+    lbl = Gtk::manage(new Gtk::Label("Axes count:"));
     devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
@@ -532,6 +540,7 @@ InputDialogImpl::InputDialogImpl() :
 
     rowNum++;
 
+/*
     lbl = Gtk::manage(new Gtk::Label("Actual axes count:"));
     devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
@@ -541,6 +550,7 @@ InputDialogImpl::InputDialogImpl() :
                       ::Gtk::SHRINK);
 
     rowNum++;
+*/
 
     for ( guint barNum = 0; barNum < static_cast<guint>(G_N_ELEMENTS(axesValues)); barNum++ ) {
         lbl = Gtk::manage(new Gtk::Label("axis:"));
@@ -555,7 +565,7 @@ InputDialogImpl::InputDialogImpl() :
         rowNum++;
     }
 
-    lbl = Gtk::manage(new Gtk::Label("Reported button count:"));
+    lbl = Gtk::manage(new Gtk::Label("Button count:"));
     devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
@@ -631,7 +641,8 @@ InputDialogImpl::InputDialogImpl() :
         row = *(store->append());
         row[cols.description] = "Hardware";
 
-        childrow = *(store->append(row.children()));
+        tabletIter = store->append(row.children());
+        childrow = *tabletIter;
         childrow[cols.description] = "Tablet";
         childrow[cols.thumbnail] = tabletPix;
 
@@ -720,9 +731,119 @@ void InputDialogImpl::updateDeviceButtons(const Glib::RefPtr<InputDevice>& devic
     updateTestButtons(device->getId(), -1);
 }
 
-void InputDialogImpl::updateDeviceLinks(const Glib::RefPtr<InputDevice>& /*device*/)
+
+bool InputDialogImpl::findDevice(const Gtk::TreeModel::iterator& iter,
+                                 Glib::ustring id,
+                                 Gtk::TreeModel::iterator* result)
 {
-//     g_message("Links!!!! for %p  hits %s  with link of %s", &device, device->getId().c_str(), device->getLink().c_str());
+    bool stop = false;
+    const InputDevice* dev = (*iter)[cols.device];
+    if ( dev && (dev->getId() == id) ) {
+        if ( result ) {
+            *result = iter;
+        }
+        stop = true;
+    }
+    return stop;
+}
+
+bool InputDialogImpl::findDeviceByLink(const Gtk::TreeModel::iterator& iter,
+                                       Glib::ustring link,
+                                       Gtk::TreeModel::iterator* result)
+{
+    bool stop = false;
+    const InputDevice* dev = (*iter)[cols.device];
+    if ( dev && (dev->getLink() == link) ) {
+        if ( result ) {
+            *result = iter;
+        }
+        stop = true;
+    }
+    return stop;
+}
+
+void InputDialogImpl::updateDeviceLinks(const Glib::RefPtr<InputDevice>& device)
+{
+//     g_message("Links!!!! for %p  hits [%s]  with link of [%s]", &device, device->getId().c_str(), device->getLink().c_str());
+    Gtk::TreeModel::iterator deviceIter;
+    store->foreach_iter( sigc::bind<Glib::ustring, Gtk::TreeModel::iterator*>(
+                             sigc::mem_fun(*this, &InputDialogImpl::findDevice),
+                             device->getId(),
+                             &deviceIter) );
+
+    if ( deviceIter ) {
+        // Found the device concerned. Can proceed.
+
+        if ( device->getLink().empty() ) {
+            // is now unlinked
+//             g_message("Item %s is unlinked", device->getId().c_str());
+            if ( deviceIter->parent() != tabletIter ) {
+                // Not the child of the tablet. move on up
+                
+                InputDevice const *dev = (*deviceIter)[cols.device];
+                Glib::ustring descr = (*deviceIter)[cols.description];
+                Glib::RefPtr<Gdk::Pixbuf> thumb = (*deviceIter)[cols.thumbnail];
+
+                Gtk::TreeModel::Row deviceRow = *store->append(tabletIter->children());
+                deviceRow[cols.description] = descr;
+                deviceRow[cols.thumbnail] = thumb;
+                deviceRow[cols.device] = dev;
+
+                Gtk::TreeModel::iterator oldParent = deviceIter->parent();
+                store->erase(deviceIter);
+                if ( oldParent->children().empty() ) {
+                    store->erase(oldParent);
+                }
+            }
+        } else {
+            // is linking
+            if ( deviceIter->parent() == tabletIter ) {
+                // Simple case. Not already linked
+
+                Gtk::TreeIter newGroup = store->append(tabletIter->children());
+                (*newGroup)[cols.description] = "Pen";
+                (*newGroup)[cols.thumbnail] = penPix;
+
+                InputDevice const *dev = (*deviceIter)[cols.device];
+                Glib::ustring descr = (*deviceIter)[cols.description];
+                Glib::RefPtr<Gdk::Pixbuf> thumb = (*deviceIter)[cols.thumbnail];
+
+                Gtk::TreeModel::Row deviceRow = *store->append(newGroup->children());
+                deviceRow[cols.description] = descr;
+                deviceRow[cols.thumbnail] = thumb;
+                deviceRow[cols.device] = dev;
+
+                
+                Gtk::TreeModel::iterator linkIter;
+                store->foreach_iter( sigc::bind<Glib::ustring, Gtk::TreeModel::iterator*>(
+                                         sigc::mem_fun(*this, &InputDialogImpl::findDeviceByLink),
+                                         device->getId(),
+                                         &linkIter) );
+                if ( linkIter ) {
+                    dev = (*linkIter)[cols.device];
+                    descr = (*linkIter)[cols.description];
+                    thumb = (*linkIter)[cols.thumbnail];
+
+                    deviceRow = *store->append(newGroup->children());
+                    deviceRow[cols.description] = descr;
+                    deviceRow[cols.thumbnail] = thumb;
+                    deviceRow[cols.device] = dev;
+                    Gtk::TreeModel::iterator oldParent = linkIter->parent();
+                    store->erase(linkIter);
+                    if ( oldParent->children().empty() ) {
+                        store->erase(oldParent);
+                    }
+                }
+
+                Gtk::TreeModel::iterator oldParent = deviceIter->parent();
+                store->erase(deviceIter);
+                if ( oldParent->children().empty() ) {
+                    store->erase(oldParent);
+                }
+                tree.expand_row(Gtk::TreePath(newGroup), true);
+            }
+        }
+    }
 }
 
 void InputDialogImpl::linkComboChanged() {
@@ -733,12 +854,17 @@ void InputDialogImpl::linkComboChanged() {
         Glib::ustring val = row[cols.description];
         InputDevice const * dev = row[cols.device];
         if ( dev ) {
-            Glib::ustring linkName = linkCombo.get_active_text();
-            std::list<InputDevice const *> devList = Inkscape::DeviceManager::getManager().getDevices();
-            for ( std::list<InputDevice const *>::const_iterator it = devList.begin(); it != devList.end(); ++it ) {
-                if ( linkName == (*it)->getName() ) {
-                    DeviceManager::getManager().setLinkedTo(dev->getId(), (*it)->getId());
-                    break;
+            if ( linkCombo.get_active_row_number() == 0 ) {
+                // It is the "None" entry
+                DeviceManager::getManager().setLinkedTo(dev->getId(), "");
+            } else {
+                Glib::ustring linkName = linkCombo.get_active_text();
+                std::list<InputDevice const *> devList = Inkscape::DeviceManager::getManager().getDevices();
+                for ( std::list<InputDevice const *>::const_iterator it = devList.begin(); it != devList.end(); ++it ) {
+                    if ( linkName == (*it)->getName() ) {
+                        DeviceManager::getManager().setLinkedTo(dev->getId(), (*it)->getId());
+                        break;
+                    }
                 }
             }
         }
