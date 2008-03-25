@@ -123,8 +123,7 @@ void Inkscape::Snapper::freeSnap(SnappedConstraints &sc,
  *  \return Snapped point.
  */
 
-void Inkscape::Snapper::freeSnap(SnappedConstraints &sc, 
-                                                   
+void Inkscape::Snapper::freeSnap(SnappedConstraints &sc,
                                                    PointType const &t,
                                                    NR::Point const &p,
                                                    bool const &first_point,
@@ -153,12 +152,11 @@ void Inkscape::Snapper::freeSnap(SnappedConstraints &sc,
  *  \return Snapped point.
  */
 
-void Inkscape::Snapper::constrainedSnap(SnappedConstraints &sc, 
-                                                          
+void Inkscape::Snapper::constrainedSnap(SnappedConstraints &sc,                                                          
                                                           PointType const &t,
                                                           NR::Point const &p,
                                                           bool const &first_point,
-                                                           std::vector<NR::Point> &points_to_snap,
+                                                          std::vector<NR::Point> &points_to_snap,
                                                           ConstraintLine const &c,
                                                           SPItem const *it) const
 {

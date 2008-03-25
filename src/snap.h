@@ -48,7 +48,8 @@ public:
 
     Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType t,
                                     NR::Point const &p,
-                                    SPItem const *it) const;
+                                    SPItem const *it,
+                                    NR::Maybe<NR::Point> point_not_to_snap_to = NR::Nothing()) const;
                                     
     Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType t,
                                     NR::Point const &p,

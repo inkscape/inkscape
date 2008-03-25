@@ -18,6 +18,7 @@
 #include "sp-path.h"
 #include "splivarot.h"
 
+
 struct SPNamedView;
 struct SPItem;
 struct SPObject;
@@ -125,7 +126,7 @@ private:
                        std::list<SPItem const *> const &it,
                        bool const &first_point,
                        std::vector<NR::Point> &points_to_snap,
-                       DimensionToSnap const snap_dim) const;
+                       DimensionToSnap snap_dim) const;
   
   void _snapNodes(SnappedConstraints &sc,
                       Inkscape::Snapper::PointType const &t,

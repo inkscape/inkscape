@@ -28,8 +28,13 @@ public:
     bool operator!=(scale const &o) const {
         return _p != o._p;
     }
+    
     scale inverse() const {
         return scale(1/_p[0], 1/_p[1]);
+    }
+    
+    NR::Point point() const {
+        return _p;    
     }
 };
 

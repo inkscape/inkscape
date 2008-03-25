@@ -2,6 +2,7 @@
 #define SEEN_MOD360_H
 
 double mod360(double const x);
+double mod360symm (double const x);
 
 #endif /* !SEEN_MOD360_H */
 

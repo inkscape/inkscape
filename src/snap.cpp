@@ -13,7 +13,7 @@
  *
  * Copyright (C) 2006-2007 Johan Engelen <johan@shouraizou.nl>
  * Copyrigth (C) 2004      Nathan Hurst
- * Copyright (C) 1999-2002 Authors
+ * Copyright (C) 1999-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -178,7 +178,8 @@ bool SnapManager::getSnapModeGuide() const
 
 Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
                                              NR::Point const &p,
-                                             SPItem const *it) const
+                                             SPItem const *it,
+                                             NR::Maybe<NR::Point> point_not_to_snap_to) const
 
 {
     std::list<SPItem const *> lit;

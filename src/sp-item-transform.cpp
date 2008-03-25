@@ -80,8 +80,8 @@ void sp_item_move_rel(SPItem *item, NR::translate const &tr)
 }
 
 /*
-** Returns the matrix you need to apply to an object with given bbox and strokewidth to
-scale/move it to the new box x0/y0/x1/y1. Takes into account the "scale stroke"
+** Returns the matrix you need to apply to an object with given visual bbox and strokewidth to
+scale/move it to the new visual bbox x0/y0/x1/y1. Takes into account the "scale stroke"
 preference value passed to it. Has to solve a quadratic equation to make sure
 the goal is met exactly and the stroke scaling is obeyed.
 */
@@ -133,7 +133,7 @@ get_scale_transform_with_stroke (NR::Rect &bbox_param, gdouble strokewidth, bool
         // These coefficients are obtained from the assumption that scaling applies to the
         // non-stroked "shape proper" and that stroke scale is scaled by the expansion of that
         // matrix. We're trying to solve this equation:
-        // r1 = r0 * sqrt (((w1-r0)/(w0-r0))*((h1-r1)/(h0-r0)))
+        // r1 = r0 * sqrt (((w1-r0)/(w0-r0))*((h1-r0)/(h0-r0)))
         // The operant of the sqrt() must be positive, which is ensured by the fabs() a few lines above
         gdouble A = -w0*h0 + r0*(w0 + h0);
         gdouble B = -(w1 + h1) * r0*r0;
@@ -163,6 +163,38 @@ get_scale_transform_with_stroke (NR::Rect &bbox_param, gdouble strokewidth, bool
     }
 
     return (p2o * scale * unbudge * o2n);
+}
+
+NR::Rect
+get_visual_bbox (NR::Maybe<NR::Rect> const &initial_geom_bbox, NR::Matrix const &abs_affine, gdouble const initial_strokewidth, bool const transform_stroke)
+{
+    
+    g_assert(initial_geom_bbox);
+    
+    // Find the new geometric bounding box; Do this by transforming each corner of
+    // the initial geometric bounding box individually and fitting a new boundingbox
+    // around the transformerd corners  
+    NR::Point const p0 = initial_geom_bbox->corner(0) * abs_affine;    
+    NR::Rect new_geom_bbox = NR::Rect(p0, p0);
+    for (unsigned i = 1 ; i < 4 ; i++) {
+        new_geom_bbox.expandTo(initial_geom_bbox->corner(i) * abs_affine);
+    }
+
+    NR::Rect new_visual_bbox = new_geom_bbox; 
+    if (initial_strokewidth > 0 && initial_strokewidth < NR_HUGE) {
+        if (transform_stroke) {
+            // scale stroke by: sqrt (((w1-r0)/(w0-r0))*((h1-r0)/(h0-r0))) (for visual bboxes, see get_scale_transform_with_stroke)
+            // equals scaling by: sqrt ((w1/w0)*(h1/h0)) for geometrical bboxes            
+            // equals scaling by: sqrt (area1/area0) for geometrical bboxes
+            gdouble const new_strokewidth = initial_strokewidth * sqrt (new_geom_bbox.area() / initial_geom_bbox->area());
+            new_visual_bbox.growBy(0.5 * new_strokewidth);        
+        } else {
+            // Do not transform the stroke
+            new_visual_bbox.growBy(0.5 * initial_strokewidth);   
+        }
+    }
+    
+    return new_visual_bbox;
 }
 
 /*

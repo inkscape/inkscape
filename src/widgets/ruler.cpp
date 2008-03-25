@@ -7,8 +7,9 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Diederik van Lierop <mail@diedenrezi.nl>
  *
- * Copyright (C) 1999-2005 authors
+ * Copyright (C) 1999-2008 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */

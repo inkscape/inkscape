@@ -357,7 +357,7 @@ DocumentProperties::build_snap_dtls()
     Gtk::Label *label_i= manage (new Gtk::Label);
     label_i->set_markup (_("<b>Snapping to intersections of</b>"));
     Gtk::Label *label_m = manage (new Gtk::Label);
-    label_m->set_markup (_("<b>Snapping to special nodes</b>"));
+    label_m->set_markup (_("<b>Special points to consider</b>"));
 
     Gtk::Widget *const array[] =
     {

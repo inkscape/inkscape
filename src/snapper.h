@@ -16,6 +16,7 @@
 #include <list>
 #include "libnr/nr-coord.h"
 #include "libnr/nr-point.h"
+#include "libnr/nr-maybe.h"
 
 #include "snapped-point.h"
 #include "snapped-line.h"
@@ -76,7 +77,7 @@ public:
                           std::vector<NR::Point> &points_to_snap,                         
                           std::list<SPItem const *> const &it,
                           std::vector<NR::Point> *unselected_nodes) const;
-
+    
     class ConstraintLine
     {
     public:

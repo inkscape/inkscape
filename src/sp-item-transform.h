@@ -14,6 +14,8 @@ void sp_item_skew_rel (SPItem *item, double skewX, double skewY);
 void sp_item_move_rel(SPItem *item, NR::translate const &tr);
 
 NR::Matrix get_scale_transform_with_stroke (NR::Rect &bbox, gdouble strokewidth, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1);
+NR::Rect get_visual_bbox (NR::Maybe<NR::Rect> const &initial_geom_bbox, NR::Matrix const &abs_affine, gdouble const initial_strokewidth, bool const transform_stroke);
+
 
 #endif /* !SP_ITEM_TRANSFORM_H */
 

@@ -3,12 +3,14 @@
 /*
  * Helper object for transforming selected items
  *
- * Author:
+ * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Carl Hetherington <inkscape@carlh.net>
+ *   Diederik van Lierop <mail@diedenrezi.nl>
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
+ * Copyright (C) 1999-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -46,6 +48,8 @@
 #include "display/sp-ctrlline.h"
 #include "prefs-utils.h"
 #include "xml/repr.h"
+#include "mod360.h"
+#include "2geom/angle.h"
 
 #include "isnan.h" //temp fix.  make sure included last
 
@@ -92,9 +96,15 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _show_handles(true),
     _bbox(NR::Nothing()),
     _approximate_bbox(NR::Nothing()),
+    _absolute_affine(NR::scale(1,1)),
+    _opposite(NR::Point(0,0)),                
+    _opposite_for_specpoints(NR::Point(0,0)),
+    _opposite_for_bboxpoints(NR::Point(0,0)),
+    _origin_for_specpoints(NR::Point(0,0)),
+    _origin_for_bboxpoints(NR::Point(0,0)),
     _chandle(NULL),
     _stamp_cache(NULL),
-    _message_context(desktop->messageStack())
+    _message_context(desktop->messageStack())            
 {
     gchar const *prefs_bbox = prefs_get_string_attribute("tools", "bounding_box");
     _snap_bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;
@@ -107,7 +117,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     }
 
     _updateVolatileState();
-    _current.set_identity();
+    _current_relative_affine.set_identity();
 
     _center_is_set = false; // reread _center from items, or set to bbox midpoint
 
@@ -243,7 +253,7 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
     _grabbed = true;
     _show_handles = show_handles;
     _updateVolatileState();
-    _current.set_identity();
+    _current_relative_affine.set_identity();
 
     _changed = false;
 
@@ -257,16 +267,18 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
         _items_centers.push_back(std::pair<SPItem *, NR::Point>(it, it->getCenter())); // for content-dragging, we need to remember original centers
     }
 
-    _current.set_identity();
-
-    _point = p;
-
+    _handle_x = x;
+    _handle_y = y;
+   
     // The selector tool should snap the bbox, special snappoints, and path nodes
     // (The special points are the handles, center, rotation axis, font baseline, ends of spiral, etc.)
 
     // First, determine the bounding box for snapping ...
     _bbox = selection->bounds(_snap_bbox_type);
     _approximate_bbox = selection->bounds(SPItem::APPROXIMATE_BBOX); // Used for correctly scaling the strokewidth
+    _geometric_bbox = selection->bounds(SPItem::GEOMETRIC_BBOX);
+    _point = p;
+    _point_geom = _geometric_bbox->min() + _geometric_bbox->dimensions() * NR::scale(x, y);    
 
     // Next, get all points to consider for snapping
     SnapManager const &m = _desktop->namedview->snap_manager;
@@ -304,11 +316,10 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
         //  - one for snapping the boundingbox, which can be either visual or geometric
         //  - one for snapping the special points
         // The "opposite" in case of a geometric boundingbox always coincides with the "opposite" for the special points
-        // These distinct "opposites" are needed in the snapmanager to avoid bugs such as #1540195 (in which
-        // a box is caught between to guides)
+        // These distinct "opposites" are needed in the snapmanager to avoid bugs such as #sf1540195 (in which
+        // a box is caught between two guides)
         _opposite_for_bboxpoints = _bbox->min() + _bbox->dimensions() * NR::scale(1-x, 1-y);
-        _opposite_for_specpoints = (snap_points_bbox.min() + (snap_points_bbox.dimensions() * NR::scale(1-x, 1-y) ) );
-        // Only a single "opposite" can be used in calculating transformations.
+        _opposite_for_specpoints = snap_points_bbox.min() + snap_points_bbox.dimensions() * NR::scale(1-x, 1-y);
         _opposite = _opposite_for_bboxpoints;
     }
 
@@ -367,7 +378,7 @@ void Inkscape::SelTrans::transform(NR::Matrix const &rel_affine, NR::Point const
         }
     }
 
-    _current = affine;
+    _current_relative_affine = affine;
     _changed = true;
     _updateHandles();
 }
@@ -401,20 +412,20 @@ void Inkscape::SelTrans::ungrab()
     _message_context.clear();
 
     if (!_empty && _changed) {
-        sp_selection_apply_affine(selection, _current, (_show == SHOW_OUTLINE)? true : false);
+        sp_selection_apply_affine(selection, _current_relative_affine, (_show == SHOW_OUTLINE)? true : false);
         if (_center) {
-            *_center *= _current;
+            *_center *= _current_relative_affine;
             _center_is_set = true;
         }
 
 // If dragging showed content live, sp_selection_apply_affine cannot change the centers
 // appropriately - it does not know the original positions of the centers (all objects already have
 // the new bboxes). So we need to reset the centers from our saved array.
-        if (_show != SHOW_OUTLINE && !_current.is_translation()) {
+        if (_show != SHOW_OUTLINE && !_current_relative_affine.is_translation()) {
             for (unsigned i = 0; i < _items_centers.size(); i++) {
                 SPItem *currentItem = _items_centers[i].first;
                 if (currentItem->isCenterSet()) { // only if it's already set
-                    currentItem->setCenter (_items_centers[i].second * _current);
+                    currentItem->setCenter (_items_centers[i].second * _current_relative_affine);
                     SP_OBJECT(currentItem)->updateRepr();
                 }
             }
@@ -423,13 +434,13 @@ void Inkscape::SelTrans::ungrab()
         _items.clear();
         _items_centers.clear();
 
-        if (_current.is_translation()) {
+        if (_current_relative_affine.is_translation()) {
             sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
                              _("Move"));
-        } else if (_current.is_scale()) {
+        } else if (_current_relative_affine.is_scale()) {
             sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
                              _("Scale"));
-        } else if (_current.is_rotation()) {
+        } else if (_current_relative_affine.is_rotation()) {
             sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
                              _("Rotate"));
         } else {
@@ -502,7 +513,7 @@ void Inkscape::SelTrans::stamp()
             NR::Matrix const *new_affine;
             if (_show == SHOW_OUTLINE) {
                 NR::Matrix const i2d(sp_item_i2d_affine(original_item));
-                NR::Matrix const i2dnew( i2d * _current );
+                NR::Matrix const i2dnew( i2d * _current_relative_affine );
                 sp_item_set_i2d_affine(copy_item, i2dnew);
                 new_affine = &copy_item->transform;
             } else {
@@ -512,7 +523,7 @@ void Inkscape::SelTrans::stamp()
             sp_item_write_transform(copy_item, copy_repr, *new_affine);
 
             if ( copy_item->isCenterSet() && _center ) {
-                copy_item->setCenter(*_center * _current);
+                copy_item->setCenter(*_center * _current_relative_affine);
             }
 
             Inkscape::GC::release(copy_repr);
@@ -767,6 +778,9 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, NR::Point *position, gu
 
     knot->desktop->setPosition(*position);
 
+    // When holding shift while rotating or skewing, the transformation will be 
+    // relative to the point opposite of the handle; otherwise it will be relative
+    // to the center as set for the selection
     if ((!(state & GDK_SHIFT_MASK) == !(_state == STATE_ROTATE)) && (&handle != &handle_center)) {
         _origin = _opposite;
         _origin_for_bboxpoints = _opposite_for_bboxpoints;
@@ -798,7 +812,7 @@ void Inkscape::SelTrans::_selChanged(Inkscape::Selection */*selection*/)
         //SPItem::APPROXIMATE_BBOX will be replaced by SPItem::VISUAL_BBOX, as soon as the latter is implemented properly
 
         _updateVolatileState();
-        _current.set_identity();
+        _current_relative_affine.set_identity();
         _center_is_set = false; // center(s) may have changed
         _updateHandles();
     }
@@ -808,7 +822,7 @@ void Inkscape::SelTrans::_selModified(Inkscape::Selection */*selection*/, guint 
 {
     if (!_grabbed) {
         _updateVolatileState();
-        _current.set_identity();
+        _current_relative_affine.set_identity();
 
         // reset internal flag
         _changed = false;
@@ -863,291 +877,270 @@ gboolean sp_sel_trans_center_request(Inkscape::SelTrans *seltrans,
 
 gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
 {
-    using NR::X;
-    using NR::Y;
-
-    NR::Point d = _point - _origin;
-    NR::scale s(0, 0);
-
-    /* Work out the new scale factors `s' */
-    for ( unsigned int i = 0 ; i < 2 ; i++ ) {
-        if ( fabs(d[i]) > 0.001 ) {
-            s[i] = ( pt[i] - _origin[i] ) / d[i];
-            if ( fabs(s[i]) < 1e-9 ) {
-                s[i] = 1e-9;
-            }
-        }
-    }
-
+    
+    // Calculate the scale factors, which can be either visual or geometric 
+    // depending on which type of bbox is currently being used (see preferences -> selector tool)
+    NR::scale default_scale = calcScaleFactors(_point, pt, _origin);
+    
+    // Find the scale factors for the geometric bbox
+    NR::Point pt_geom = _getGeomHandlePos(pt);
+    NR::scale geom_scale = calcScaleFactors(_point_geom, pt_geom, _origin_for_specpoints);
+    
+    _absolute_affine = NR::identity(); //Initialize the scaler
+    
     if (state & GDK_MOD1_MASK) { // scale by an integer multiplier/divider
+        // We're scaling either the visual or the geometric bbox here (see the comment above)
         for ( unsigned int i = 0 ; i < 2 ; i++ ) {
-            if (fabs(s[i]) > 1)
-                s[i] = round(s[i]);
-            else
-                s[i] = 1/round(1/(MIN(s[i], 10)));
+            if (fabs(default_scale[i]) > 1) {
+                default_scale[i] = round(default_scale[i]);
+            } else if (default_scale[i] != 0) {
+                default_scale[i] = 1/round(1/(MIN(default_scale[i], 10)));    
+            }
         }
-    }
-
-    SnapManager const &m = _desktop->namedview->snap_manager;
-
-    /* Get a STL list of the selected items.
-    ** FIXME: this should probably be done by Inkscape::Selection.
-    */
-    std::list<SPItem const*> it;
-    for (GSList const *i = _selection->itemList(); i != NULL; i = i->next) {
-        it.push_back(reinterpret_cast<SPItem*>(i->data));
-    }
-
-    if ((state & GDK_CONTROL_MASK) || _desktop->isToolboxButtonActive ("lock")) {
-        // Scale is locked to a 1:1 aspect ratio, so that s[X] must be made to equal s[Y].
-        //
-        // The aspect-ratio must be locked before snapping
-        if (fabs(s[NR::X]) > fabs(s[NR::Y])) {
-                s[NR::X] = fabs(s[NR::Y]) * sign(s[NR::X]);
+        // Update the knot position
+        pt = _calcAbsAffineDefault(default_scale);        
+        // When scaling by an integer, snapping is not needed
+    } else {
+        // In all other cases we should try to snap now
+        SnapManager const &m = _desktop->namedview->snap_manager;
+        
+        /* Get a STL list of the selected items.
+        ** FIXME: this should probably be done by Inkscape::Selection.
+        */
+        std::list<SPItem const*> it;
+        for (GSList const *i = _selection->itemList(); i != NULL; i = i->next) {
+            it.push_back(reinterpret_cast<SPItem*>(i->data));
+        }
+        
+        std::pair<NR::scale, bool> bb = std::make_pair(NR::scale(1,1), false); 
+        std::pair<NR::scale, bool> sn = std::make_pair(NR::scale(1,1), false);
+        NR::Coord bd(NR_HUGE);
+        NR::Coord sd(NR_HUGE);
+        
+        if ((state & GDK_CONTROL_MASK) || _desktop->isToolboxButtonActive ("lock")) {
+            // Scale is locked to a 1:1 aspect ratio, so that s[X] must be made to equal s[Y].
+            //
+            // The aspect-ratio must be locked before snapping
+            if (fabs(default_scale[NR::X]) > fabs(default_scale[NR::Y])) {
+                default_scale[NR::X] = fabs(default_scale[NR::Y]) * sign(default_scale[NR::X]);
+                geom_scale[NR::X] = fabs(geom_scale[NR::Y]) * sign(geom_scale[NR::X]);
             } else {
-                s[NR::Y] = fabs(s[NR::X]) * sign(s[NR::Y]);
+                default_scale[NR::Y] = fabs(default_scale[NR::X]) * sign(default_scale[NR::Y]);
+                geom_scale[NR::Y] = fabs(geom_scale[NR::X]) * sign(geom_scale[NR::Y]);
             }
 
-        // Snap along a suitable constraint vector from the origin.
-        std::pair<NR::scale, bool> bb = m.constrainedSnapScale(Snapper::SNAPPOINT_BBOX,
-                                                               _bbox_points,
-                                                               it,
-                                                               s,
-                                                               _origin_for_bboxpoints);
-
-        std::pair<NR::scale, bool> sn = m.constrainedSnapScale(Snapper::SNAPPOINT_NODE,
-                                                               _snap_points,
-                                                               it,
-                                                               s,
-                                                               _origin_for_specpoints);
-
-        if (bb.second || sn.second) { // If we snapped to something
+            // Snap along a suitable constraint vector from the origin.
+            bb = m.constrainedSnapScale(Snapper::SNAPPOINT_BBOX, _bbox_points, it, default_scale, _origin_for_bboxpoints);
+            sn = m.constrainedSnapScale(Snapper::SNAPPOINT_NODE, _snap_points, it, geom_scale, _origin_for_specpoints);
+    
             /* Choose the smaller difference in scale.  Since s[X] == s[Y] we can
             ** just compare difference in s[X].
             */
-            double const bd = bb.second ? fabs(bb.first[NR::X] - s[NR::X]) : NR_HUGE;
-            double const sd = sn.second ? fabs(sn.first[NR::X] - s[NR::X]) : NR_HUGE;
-            s = (bd < sd) ? bb.first : sn.first;
-        }
-
-    } else {
-        /* Scale aspect ratio is unlocked */
-
-        std::pair<NR::scale, bool> bb = m.freeSnapScale(Snapper::SNAPPOINT_BBOX,
-                                                        _bbox_points,
-                                                        it,
-                                                        s,
-                                                        _origin_for_bboxpoints);
-        std::pair<NR::scale, bool> sn = m.freeSnapScale(Snapper::SNAPPOINT_NODE,
-                                                        _snap_points,
-                                                        it,
-                                                        s,
-                                                        _origin_for_specpoints);
-
-        if (bb.second || sn.second) { // If we snapped to something
+            bd = bb.second ? fabs(bb.first[NR::X] - default_scale[NR::X]) : NR_HUGE;
+            sd = sn.second ? fabs(sn.first[NR::X] - geom_scale[NR::X]) : NR_HUGE;                
+        } else {
+            /* Scale aspect ratio is unlocked */    
+            bb = m.freeSnapScale(Snapper::SNAPPOINT_BBOX, _bbox_points, it, default_scale, _origin_for_bboxpoints);
+            sn = m.freeSnapScale(Snapper::SNAPPOINT_NODE, _snap_points, it, geom_scale, _origin_for_specpoints);
+    
             /* Pick the snap that puts us closest to the original scale */
-            NR::Coord bd = bb.second ?
-                fabs(NR::L2(NR::Point(bb.first[NR::X], bb.first[NR::Y])) -
-                     NR::L2(NR::Point(s[NR::X], s[NR::Y])))
-                : NR_HUGE;
-            NR::Coord sd = sn.second ?
-                fabs(NR::L2(NR::Point(sn.first[NR::X], sn.first[NR::Y])) -
-                     NR::L2(NR::Point(s[NR::X], s[NR::Y])))
-                : NR_HUGE;
-            s = (bd < sd) ? bb.first : sn.first;
+            bd = bb.second ? fabs(NR::L2(bb.first.point()) - NR::L2(default_scale.point())) : NR_HUGE;
+            sd = sn.second ? fabs(NR::L2(sn.first.point()) - NR::L2(geom_scale.point())) : NR_HUGE;
         }
+        
+        if (!(bb.second || sn.second)) {
+            // We didn't snap at all! Don't update the handle position, just calculate the new transformation   
+            _calcAbsAffineDefault(default_scale);
+        } else if (bd < sd) {
+            // We snapped the bbox (which is either visual or geometric) 
+            default_scale = bb.first;
+            // Calculate the new transformation and update the handle position
+            pt = _calcAbsAffineDefault(default_scale);    
+        } else {
+            // We snapped the special points (e.g. nodes), which are not at the visual bbox
+            // The handle location however (pt) might however be at the visual bbox, so we
+            // will have to calculate pt taking the stroke width into account  
+            geom_scale = sn.first;
+            pt = _calcAbsAffineGeom(geom_scale);
+        }        
     }
-
-    /* Update the knot position */
-    pt = ( _point - _origin ) * s + _origin;
-
+    
     /* Status text */
     _message_context.setF(Inkscape::NORMAL_MESSAGE,
                           _("<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"),
-                          100 * s[NR::X], 100 * s[NR::Y]);
+                          100 * _absolute_affine[0], 100 * _absolute_affine[3]);
 
     return TRUE;
 }
 
 gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::Point &pt, guint state)
 {
-    using NR::X;
-    using NR::Y;
-
     NR::Dim2 axis, perp;
-
     switch (handle.cursor) {
         case GDK_TOP_SIDE:
         case GDK_BOTTOM_SIDE:
-           axis = NR::Y;
-           perp = NR::X;
-           break;
+            axis = NR::Y;
+            perp = NR::X;
+            break;
         case GDK_LEFT_SIDE:
         case GDK_RIGHT_SIDE:
-           axis = NR::X;
-           perp = NR::Y;
-           break;
+            axis = NR::X;
+            perp = NR::Y;
+            break;
         default:
             g_assert_not_reached();
             return TRUE;
     };
 
-    if ( fabs( _point[axis] - _origin[axis] ) < 1e-15 ) {
-        return FALSE;
-    }
-
-    NR::scale s(1, 1);
-    s[axis] = ( ( pt[axis] - _origin[axis] )
-                / ( _point[axis] - _origin[axis] ) );
-    if ( fabs(s[axis]) < 1e-15 ) {
-        s[axis] = 1e-15;
-    }
-
-    if (state & GDK_MOD1_MASK) { // scale by an integer multiplier/divider
-        if (fabs(s[axis]) > 1)
-            s[axis] = round(s[axis]);
-        else
-            s[axis] = 1/round(1/(MIN(s[axis], 10)));
-    }
-
-    /* Get a STL list of the selected items.
-    ** FIXME: this should probably be done by Inkscape::Selection.
-    */
-    std::list<SPItem const*> it;
-    for (GSList const *i = _selection->itemList(); i != NULL; i = i->next) {
-        it.push_back(reinterpret_cast<SPItem*>(i->data));
-    }
-
-    SnapManager const &m = _desktop->namedview->snap_manager;
-
-    if ( state & GDK_CONTROL_MASK ) {
-        // on ctrl, apply symmetrical scaling instead of stretching
-        s[perp] = fabs(s[axis]);
-
-        std::pair<NR::Coord, bool> const bb = m.constrainedSnapStretch(
-            Snapper::SNAPPOINT_BBOX,
-            _bbox_points,
-            it,
-            s[axis],
-            _origin_for_bboxpoints,
-            axis,
-            true);
-
-        std::pair<NR::Coord, bool> const sn = m.constrainedSnapStretch(
-            Snapper::SNAPPOINT_NODE,
-            _snap_points,
-            it,
-            s[axis],
-            _origin_for_specpoints,
-            axis,
-            true);
-
-        if (bb.second || sn.second) { // If we snapped to something
-            /* Choose the smaller difference in scale */
-            NR::Coord const bd = bb.second ? fabs(bb.first - s[axis]) : NR_HUGE;
-            NR::Coord const sd = sn.second ? fabs(sn.first - s[axis]) : NR_HUGE;
-            NR::Coord const ratio = (bd < sd) ? bb.first : sn.first;
-            
-            if (fabs(ratio) < NR_HUGE) {
-                s[axis] = fabs(ratio) * sign(s[axis]);
-            }
-            s[perp] = fabs(s[axis]);
+    // Calculate the scale factors, which can be either visual or geometric 
+    // depending on which type of bbox is currently being used (see preferences -> selector tool)
+    NR::scale default_scale = calcScaleFactors(_point, pt, _origin);
+    default_scale[perp] = 1;
+    
+    // Find the scale factors for the geometric bbox
+    NR::Point pt_geom = _getGeomHandlePos(pt);
+    NR::scale geom_scale = calcScaleFactors(_point_geom, pt_geom, _origin_for_specpoints);
+    geom_scale[perp] = 1;
+    
+    _absolute_affine = NR::identity(); //Initialize the scaler
+    
+    if (state & GDK_MOD1_MASK) { // stretch by an integer multiplier/divider
+        if (fabs(default_scale[axis]) > 1) {
+            default_scale[axis] = round(default_scale[axis]);
+        } else if (default_scale[axis] != 0) {
+            default_scale[axis] = 1/round(1/(MIN(default_scale[axis], 10)));
         }
+        // Calculate the new transformation and update the handle position
+        pt = _calcAbsAffineDefault(default_scale);        
+        // When stretching by an integer, snapping is not needed
     } else {
-
-        std::pair<NR::Coord, bool> const bb = m.constrainedSnapStretch(
-            Snapper::SNAPPOINT_BBOX,
-            _bbox_points,
-            it,
-            s[axis],
-            _origin_for_bboxpoints,
-            axis,
-            false);
-
-        std::pair<NR::Coord, bool> const sn = m.constrainedSnapStretch(
-            Snapper::SNAPPOINT_NODE,
-            _snap_points,
-            it,
-            s[axis],
-            _origin_for_specpoints,
-            axis,
-            false);
-
-        if (bb.second || sn.second) { // If we snapped to something
-            /* Choose the smaller difference in scale */
-            NR::Coord const bd = bb.second ? fabs(bb.first - s[axis]) : NR_HUGE;
-            NR::Coord const sd = sn.second ? fabs(sn.first - s[axis]) : NR_HUGE;
-            NR::Coord const nw = (bd < sd) ? bb.first : sn.first; // new stretch scale
-            if (fabs(nw) < NR_HUGE) {
-                s[axis] = nw;
-            }
-            s[perp] = 1;
+        // In all other cases we should try to snap now
+        
+        /* Get a STL list of the selected items.
+        ** FIXME: this should probably be done by Inkscape::Selection.
+        */
+        std::list<SPItem const*> it;
+        for (GSList const *i = _selection->itemList(); i != NULL; i = i->next) {
+            it.push_back(reinterpret_cast<SPItem*>(i->data));
+        }
+    
+        SnapManager const &m = _desktop->namedview->snap_manager;
+        
+        std::pair<NR::Coord, bool> bb = std::make_pair(NR_HUGE, false); 
+        std::pair<NR::Coord, bool> sn = std::make_pair(NR_HUGE, false);
+        NR::Coord bd(NR_HUGE);
+        NR::Coord sd(NR_HUGE);
+    
+        bool symmetrical = state & GDK_CONTROL_MASK;        
+        
+        bb = m.constrainedSnapStretch(Snapper::SNAPPOINT_BBOX, _bbox_points, it, default_scale[axis], _origin_for_bboxpoints, axis, symmetrical);
+        sn = m.constrainedSnapStretch(Snapper::SNAPPOINT_NODE, _snap_points, it, geom_scale[axis], _origin_for_specpoints, axis, symmetrical);
+        
+        if (bb.second) {
+            // We snapped the bbox (which is either visual or geometric)
+            bd = fabs(bb.first - default_scale[axis]);
+            default_scale[axis] = bb.first;            
+        }
+        
+        if (sn.second) {
+            sd = fabs(sn.first - geom_scale[axis]);
+            geom_scale[axis] = sn.first;            
+        }    
+        
+        if (symmetrical) {
+            // on ctrl, apply symmetrical scaling instead of stretching
+            // Preserve aspect ratio, but never flip in the dimension not being edited (by using fabs())
+            default_scale[perp] = fabs(default_scale[axis]);
+            geom_scale[perp] = fabs(geom_scale[axis]);
+        }            
+        
+        if (!(bb.second || sn.second)) {
+            // We didn't snap at all! Don't update the handle position, just calculate the new transformation
+            _calcAbsAffineDefault(default_scale);
+        } else if (bd < sd) {
+            // Calculate the new transformation and update the handle position
+            pt = _calcAbsAffineDefault(default_scale);
+        } else {
+            // We snapped the special points (e.g. nodes), which are not at the visual bbox
+            // The handle location however (pt) might however be at the visual bbox, so we
+            // will have to calculate pt taking the stroke width into account  
+            pt = _calcAbsAffineGeom(geom_scale);
         }
     }
-
-    pt = ( _point - _origin ) * NR::scale(s) + _origin;
-    if (isNaN(pt[X] + pt[Y])) {
-        g_warning("point=(%g, %g), norm=(%g, %g), s=(%g, %g)\n",
-                  _point[X], _point[Y], _origin[X], _origin[Y], s[X], s[Y]);
-    }
-
+    
     // status text
     _message_context.setF(Inkscape::NORMAL_MESSAGE,
                           _("<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"),
-                          100 * s[NR::X], 100 * s[NR::Y]);
+                          100 * _absolute_affine[0], 100 * _absolute_affine[3]);
 
     return TRUE;
 }
 
 gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Point &pt, guint state)
 {
-    using NR::X;
-    using NR::Y;
-
-    if (handle.cursor != GDK_SB_V_DOUBLE_ARROW && handle.cursor != GDK_SB_H_DOUBLE_ARROW) {
-        return FALSE;
-    }
-
+    /* When skewing (or rotating):
+     * 1) the stroke width will not change. This makes life much easier because we don't have to
+     *    account for that (like for scaling or stretching). As a consequence, all points will
+     *    have the same origin for the transformation and for the snapping.
+     * 2) When holding shift, the transformation will be relative to the point opposite of
+     *    the handle; otherwise it will be relative to the center as set for the selection
+     */    
+    
     NR::Dim2 dim_a;
     NR::Dim2 dim_b;
-    if (handle.cursor == GDK_SB_V_DOUBLE_ARROW) {
-        dim_a = X;
-        dim_b = Y;
+    
+    switch (handle.cursor) {
+        case GDK_SB_H_DOUBLE_ARROW:
+            dim_a = NR::Y;
+            dim_b = NR::X;
+            break;
+        case GDK_SB_V_DOUBLE_ARROW:
+            dim_a = NR::X;
+            dim_b = NR::Y;
+            break;
+        default:
+            g_assert_not_reached();
+            abort();
+            break;
+    }
+    
+    NR::Point const initial_delta = _point - _origin;
+    
+    if (fabs(initial_delta[dim_a]) < 1e-15) {
+        return false;
+    }
+
+    // Calculate the scale factors, which can be either visual or geometric 
+    // depending on which type of bbox is currently being used (see preferences -> selector tool)
+    NR::scale scale = calcScaleFactors(_point, pt, _origin, false);
+    NR::scale skew = calcScaleFactors(_point, pt, _origin, true);
+    scale[dim_b] = 1;
+    skew[dim_b] = 1;
+
+    if (fabs(scale[dim_a]) < 1) {
+        // Prevent shrinking of the selected object, while allowing mirroring
+        scale[dim_a] = sign(scale[dim_a]); 
     } else {
-        dim_a = Y;
-        dim_b = X;
+        // Allow expanding of the selected object by integer multiples
+        scale[dim_a] = floor(scale[dim_a] + 0.5);
     }
 
-    double skew[2];
-    double s[2] = { 1.0, 1.0 };
-
-    if (fabs(_point[dim_a] - _origin[dim_a]) < NR_EPSILON) {
-        return FALSE;
-    }
-
-    skew[dim_a] = ( pt[dim_b] - _point[dim_b] ) / ( _point[dim_a] - _origin[dim_a] );
-
-    s[dim_a] = ( pt[dim_a] - _origin[dim_a] ) / ( _point[dim_a] - _origin[dim_a] );
-
-    if ( fabs(s[dim_a]) < 1 ) {
-        s[dim_a] = sign(s[dim_a]);
-    } else {
-        s[dim_a] = floor( s[dim_a] + 0.5 );
-    }
-
-    double radians = atan(skew[dim_a] / s[dim_a]);
-
+    double radians = atan(skew[dim_a] / scale[dim_a]);
+    
     if (state & GDK_CONTROL_MASK) {
-
+        // Snap to defined angle increments
         int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
-
         if (snaps) {
-            double sections = floor( radians * snaps / M_PI + .5 );
-            if (fabs(sections) >= snaps / 2) sections = sign(sections) * (snaps / 2 - 1);
-            radians = ( M_PI / snaps ) * sections;
+            double sections = floor(radians * snaps / M_PI + .5);
+            if (fabs(sections) >= snaps / 2) {
+                sections = sign(sections) * (snaps / 2 - 1);
+            }
+            radians = (M_PI / snaps) * sections;
         }
-        skew[dim_a] = tan(radians) * s[dim_a];
+        skew[dim_a] = tan(radians) * scale[dim_a];        
     } else {
+        // Snap to objects, grids, guides
+        
         /* Get a STL list of the selected items.
 	    ** FIXME: this should probably be done by Inkscape::Selection.
 	    */
@@ -1158,36 +1151,36 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
         
         SnapManager const &m = _desktop->namedview->snap_manager;
 
-        std::pair<NR::Coord, bool> bb = m.freeSnapSkew(Inkscape::Snapper::SNAPPOINT_BBOX,
-                                                       _bbox_points,
-                                                       it,
-                                                       skew[dim_a],
-                                                       _origin_for_bboxpoints,
-                                                       dim_b);
-
-        std::pair<NR::Coord, bool> sn = m.freeSnapSkew(Inkscape::Snapper::SNAPPOINT_NODE,
-                                                       _snap_points,
-                                                       it,
-                                                       skew[dim_a],
-                                                       _origin_for_specpoints,
-                                                       dim_b);
+        std::pair<NR::Coord, bool> bb = m.freeSnapSkew(Inkscape::Snapper::SNAPPOINT_BBOX, _bbox_points, it, skew[dim_a], _origin, dim_b);
+        std::pair<NR::Coord, bool> sn = m.freeSnapSkew(Inkscape::Snapper::SNAPPOINT_NODE, _snap_points, it, skew[dim_a], _origin, dim_b);
 
         if (bb.second || sn.second) {
-            /* We snapped something, so change the skew to reflect it */
+            // We snapped something, so change the skew to reflect it
             NR::Coord const bd = bb.second ? bb.first : NR_HUGE;
             NR::Coord const sd = sn.second ? sn.first : NR_HUGE;
             skew[dim_a] = std::min(bd, sd);
-        }
+        }        
     }
 
-    pt[dim_b] = ( _point[dim_a] - _origin[dim_a] ) * skew[dim_a] + _point[dim_b];
-    pt[dim_a] = ( _point[dim_a] - _origin[dim_a] ) * s[dim_a] + _origin[dim_a];
+    // Update the handle position
+    pt[dim_b] = initial_delta[dim_a] * skew[dim_a] + _point[dim_b];
+    pt[dim_a] = initial_delta[dim_a] * scale[dim_a] + _origin[dim_a];
+    
+    // Calculate the relative affine
+    _relative_affine = NR::identity();
+    _relative_affine[2*dim_a + dim_a] = (pt[dim_a] - _origin[dim_a]) / initial_delta[dim_a];
+    _relative_affine[2*dim_a + (dim_b)] = (pt[dim_b] - _point[dim_b]) / initial_delta[dim_a];
+    _relative_affine[2*(dim_b) + (dim_a)] = 0;
+    _relative_affine[2*(dim_b) + (dim_b)] = 1;
 
-    /* status text */
-    double degrees = 180 / M_PI * radians;
-    if (degrees > 180) degrees -= 360;
-    if (degrees < -180) degrees += 360;
-
+    for (int i = 0; i < 2; i++) {
+        if (fabs(_relative_affine[3*i]) < 1e-15) {
+            _relative_affine[3*i] = 1e-15;
+        }
+    }
+    
+    // Update the status text
+    double degrees = mod360symm(Geom::rad_to_deg(radians));    
     _message_context.setF(Inkscape::NORMAL_MESSAGE,
                           // TRANSLATORS: don't modify the first ";"
                           // (it will NOT be displayed as ";" - only the second one will be)
@@ -1199,22 +1192,30 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
 
 gboolean Inkscape::SelTrans::rotateRequest(NR::Point &pt, guint state)
 {
+    /* When rotating (or skewing):
+     * 1) the stroke width will not change. This makes life much easier because we don't have to
+     *    account for that (like for scaling or stretching). As a consequence, all points will
+     *    have the same origin for the transformation and for the snapping.
+     * 2) When holding shift, the transformation will be relative to the point opposite of
+     *    the handle; otherwise it will be relative to the center as set for the selection
+     */   
+    
     int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
     // rotate affine in rotate
     NR::Point const d1 = _point - _origin;
     NR::Point const d2 = pt     - _origin;
 
-    NR::Coord const h1 = NR::L2(d1);
+    NR::Coord const h1 = NR::L2(d1); // initial radius
     if (h1 < 1e-15) return FALSE;
-    NR::Point q1 = d1 / h1;
-    NR::Coord const h2 = NR::L2(d2);
+    NR::Point q1 = d1 / h1; // normalized initial vector to handle
+    NR::Coord const h2 = NR::L2(d2); // new radius
     if (fabs(h2) < 1e-15) return FALSE;
-    NR::Point q2 = d2 / h2;
+    NR::Point q2 = d2 / h2; // normalized new vector to handle
 
     double radians;
     if (state & GDK_CONTROL_MASK) {
-        /* Have to restrict movement. */
+        // Snap to defined angle increments
         double cos_t = NR::dot(q1, q2);
         double sin_t = NR::dot(NR::rot90(q1), q2);
         radians = atan2(sin_t, cos_t);
@@ -1230,13 +1231,15 @@ gboolean Inkscape::SelTrans::rotateRequest(NR::Point &pt, guint state)
 
     NR::rotate const r1(q1);
     NR::rotate const r2(q2);
-    pt = _point * NR::translate(-_origin) * ( r2 / r1 ) * NR::translate(_origin);
-
-    /* status text */
-    double degrees = 180 / M_PI * radians;
-    if (degrees > 180) degrees -= 360;
-    if (degrees < -180) degrees += 360;
-
+    
+    // Calculate the relative affine
+    _relative_affine = NR::Matrix(r2/r1);
+    
+    // Update the handle position
+    pt = _point * NR::translate(-_origin) * _relative_affine * NR::translate(_origin);
+    
+    // Update the status text
+    double degrees = mod360symm(Geom::rad_to_deg(radians));    
     _message_context.setF(Inkscape::NORMAL_MESSAGE,
                           // TRANSLATORS: don't modify the first ";"
                           // (it will NOT be displayed as ";" - only the second one will be)
@@ -1247,17 +1250,14 @@ gboolean Inkscape::SelTrans::rotateRequest(NR::Point &pt, guint state)
 
 gboolean Inkscape::SelTrans::centerRequest(NR::Point &pt, guint state)
 {
-    using NR::X;
-    using NR::Y;
-
     SnapManager const &m = _desktop->namedview->snap_manager;
     pt = m.freeSnap(Snapper::SNAPPOINT_NODE, pt, NULL).getPoint();
 
     if (state & GDK_CONTROL_MASK) {
-        if ( fabs(_point[X] - pt[X]) > fabs(_point[Y] - pt[Y]) ) {
-            pt[Y] = _point[Y];
+        if ( fabs(_point[NR::X] - pt[NR::X]) > fabs(_point[NR::Y] - pt[NR::Y]) ) {
+            pt[NR::Y] = _point[NR::Y];
         } else {
-            pt[X] = _point[X];
+            pt[NR::X] = _point[NR::X];
         }
     }
 
@@ -1281,8 +1281,8 @@ gboolean Inkscape::SelTrans::centerRequest(NR::Point &pt, guint state)
     }
 
     // status text
-    GString *xs = SP_PX_TO_METRIC_STRING(pt[X], _desktop->namedview->getDefaultMetric());
-    GString *ys = SP_PX_TO_METRIC_STRING(pt[Y], _desktop->namedview->getDefaultMetric());
+    GString *xs = SP_PX_TO_METRIC_STRING(pt[NR::X], _desktop->namedview->getDefaultMetric());
+    GString *ys = SP_PX_TO_METRIC_STRING(pt[NR::Y], _desktop->namedview->getDefaultMetric());
     _message_context.setF(Inkscape::NORMAL_MESSAGE, _("Move <b>center</b> to %s, %s"), xs->str, ys->str);
     g_string_free(xs, FALSE);
     g_string_free(ys, FALSE);
@@ -1317,151 +1317,22 @@ void sp_sel_trans_rotate(Inkscape::SelTrans *seltrans, SPSelTransHandle const &,
 
 void Inkscape::SelTrans::stretch(SPSelTransHandle const &handle, NR::Point &pt, guint state)
 {
-    using NR::X;
-    using NR::Y;
-
-    NR::Dim2 dim;
-    switch (handle.cursor) {
-        case GDK_LEFT_SIDE:
-        case GDK_RIGHT_SIDE:
-            dim = X;
-            break;
-        case GDK_TOP_SIDE:
-        case GDK_BOTTOM_SIDE:
-            dim = Y;
-            break;
-        default:
-            g_assert_not_reached();
-            abort();
-            break;
-    }
-
-    NR::Point const scale_origin(_origin);
-    double const offset = _point[dim] - scale_origin[dim];
-    if (!( fabs(offset) >= 1e-15 )) {
-        return;
-    }
-    NR::scale s(1, 1);
-    s[dim] = ( pt[dim] - scale_origin[dim] ) / offset;
-    if (isNaN(s[dim])) {
-        g_warning("s[dim]=%g, pt[dim]=%g, scale_origin[dim]=%g, point[dim]=%g\n",
-                  s[dim], pt[dim], scale_origin[dim], _point[dim]);
-    }
-    if (!( fabs(s[dim]) >= 1e-15 )) {
-        s[dim] = 1e-15;
-    }
-    if (state & GDK_CONTROL_MASK) {
-        /* Preserve aspect ratio, but never flip in the dimension not being edited. */
-        s[!dim] = fabs(s[dim]);
-    }
-
-    if (!_bbox) {
-        return;
-    }
-
-    NR::Point new_bbox_min = _approximate_bbox->min() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
-    NR::Point new_bbox_max = _approximate_bbox->max() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
-
-    int transform_stroke = false;
-    gdouble strokewidth = 0;
-
-    if ( _snap_bbox_type != SPItem::GEOMETRIC_BBOX) {
-        transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
-        strokewidth = _strokewidth;
-    }
-
-    NR::Matrix scaler = get_scale_transform_with_stroke (*_approximate_bbox, strokewidth, transform_stroke,
-                    new_bbox_min[NR::X], new_bbox_min[NR::Y], new_bbox_max[NR::X], new_bbox_max[NR::Y]);
-
-    transform(scaler, NR::Point(0, 0)); // we have already accounted for origin, so pass 0,0
+    transform(_absolute_affine, NR::Point(0, 0)); // we have already accounted for origin, so pass 0,0
 }
 
 void Inkscape::SelTrans::scale(NR::Point &pt, guint /*state*/)
 {
-    if (!_bbox) {
-        return;
-    }
-
-    NR::Point const offset = _point - _origin;
-
-    NR::scale s (1, 1);
-    for (int i = NR::X; i <= NR::Y; i++) {
-        if (fabs(offset[i]) > 1e-9)
-            s[i] = (pt[i] - _origin[i]) / offset[i];
-        if (fabs(s[i]) < 1e-9)
-            s[i] = 1e-9;
-    }
-
-    NR::Point new_bbox_min = _approximate_bbox->min() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
-    NR::Point new_bbox_max = _approximate_bbox->max() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
-
-    int transform_stroke = false;
-    gdouble strokewidth = 0;
-
-    if ( _snap_bbox_type != SPItem::GEOMETRIC_BBOX) {
-        transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
-        strokewidth = _strokewidth;
-    }
-
-    NR::Matrix scaler = get_scale_transform_with_stroke (*_approximate_bbox, strokewidth, transform_stroke,
-                    new_bbox_min[NR::X], new_bbox_min[NR::Y], new_bbox_max[NR::X], new_bbox_max[NR::Y]);
-
-    transform(scaler, NR::Point(0, 0)); // we have already accounted for origin, so pass 0,0
+    transform(_absolute_affine, NR::Point(0, 0)); // we have already accounted for origin, so pass 0,0
 }
 
 void Inkscape::SelTrans::skew(SPSelTransHandle const &handle, NR::Point &pt, guint /*state*/)
 {
-    NR::Point const offset = _point - _origin;
-
-    unsigned dim;
-    switch (handle.cursor) {
-        case GDK_SB_H_DOUBLE_ARROW:
-            dim = NR::Y;
-            break;
-        case GDK_SB_V_DOUBLE_ARROW:
-            dim = NR::X;
-            break;
-        default:
-            g_assert_not_reached();
-            abort();
-            break;
-    }
-    if (fabs(offset[dim]) < 1e-15) {
-        return;
-    }
-    NR::Matrix skew = NR::identity();
-    skew[2*dim + dim] = (pt[dim] - _origin[dim]) / offset[dim];
-    skew[2*dim + (1-dim)] = (pt[1-dim] - _point[1-dim]) / offset[dim];
-    skew[2*(1-dim) + (dim)] = 0;
-    skew[2*(1-dim) + (1-dim)] = 1;
-
-    for (int i = 0; i < 2; i++) {
-        if (fabs(skew[3*i]) < 1e-15) {
-            skew[3*i] = 1e-15;
-        }
-    }
-    transform(skew, _origin);
+    transform(_relative_affine, _origin);
 }
 
 void Inkscape::SelTrans::rotate(NR::Point &pt, guint /*state*/)
 {
-    NR::Point const offset = _point - _origin;
-
-    NR::Coord const h1 = NR::L2(offset);
-    if (h1 < 1e-15) {
-        return;
-    }
-    NR::Point const q1 = offset / h1;
-    NR::Coord const h2 = NR::L2( pt - _origin );
-    if (h2 < 1e-15) {
-        return;
-    }
-    NR::Point const q2 = (pt - _origin) / h2;
-    NR::rotate const r1(q1);
-    NR::rotate const r2(q2);
-
-    NR::Matrix rotate( r2 / r1 );
-    transform(rotate, _origin);
+    transform(_relative_affine, _origin);
 }
 
 void sp_sel_trans_center(Inkscape::SelTrans *seltrans, SPSelTransHandle const &, NR::Point &pt, guint /*state*/)
@@ -1575,6 +1446,96 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
     _message_context.setF(Inkscape::NORMAL_MESSAGE, _("<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"), xs->str, ys->str);
     g_string_free(xs, TRUE);
     g_string_free(ys, TRUE);
+}
+
+// Given a location of a handle at the visual bounding box, find the corresponding location at the 
+// geometrical bounding box 
+NR::Point Inkscape::SelTrans::_getGeomHandlePos(NR::Point const &visual_handle_pos)
+{
+    if ( _snap_bbox_type == SPItem::GEOMETRIC_BBOX) {
+        // When the selector tool is using geometric bboxes, then the handle is already 
+        // located at one of the geometric bbox corners
+        return visual_handle_pos;    
+    }
+    
+    if (!_geometric_bbox) {
+        //_getGeomHandlePos() can only be used after _geometric_bbox has been defined!
+        return visual_handle_pos;
+    }
+    
+    // Using the NR::Rect constructor below ensures that "min() < max()", which is important
+    // because this will also hold for _bbox, and which is required for get_scale_transform_with_stroke()
+    NR::Rect new_bbox = NR::Rect(_origin_for_bboxpoints, visual_handle_pos); // new visual bounding box
+    // Please note that the new_bbox might in fact be just a single line, for example when stretching (in
+    // which case the handle and origin will be aligned vertically or horizontally) 
+    NR::Point normalized_handle_pos = (visual_handle_pos - new_bbox.min()) * NR::scale(new_bbox.dimensions()).inverse();  
+
+    // Calculate the absolute affine while taking into account the scaling of the stroke width
+    int transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
+    NR::Matrix abs_affine = get_scale_transform_with_stroke (*_bbox, _strokewidth, transform_stroke,
+                    new_bbox.min()[NR::X], new_bbox.min()[NR::Y], new_bbox.max()[NR::X], new_bbox.max()[NR::Y]);
+    
+    // Calculate the scaled geometrical bbox
+    NR::Rect new_geom_bbox = NR::Rect(_geometric_bbox->min() * abs_affine, _geometric_bbox->max() * abs_affine);
+    // Find the location of the handle on this new geometrical bbox
+    return normalized_handle_pos * NR::scale(new_geom_bbox.dimensions()) + new_geom_bbox.min(); //new position of the geometric handle    
+}
+    
+NR::scale Inkscape::calcScaleFactors(NR::Point const &initial_point, NR::Point const &new_point, NR::Point const &origin, bool const skew)
+{
+    // Work out the new scale factors for the bbox
+    
+    NR::Point const initial_delta = initial_point - origin;
+    NR::Point const new_delta = new_point - origin;
+    NR::Point const offset = new_point - initial_point;
+    NR::scale scale(1, 1);   
+    
+    for ( unsigned int i = 0 ; i < 2 ; i++ ) {
+        if ( fabs(initial_delta[i]) > 1e-6 ) {
+            if (skew) {
+                scale[i] = offset[1-i] / initial_delta[i];
+            } else {
+                scale[i] = new_delta[i] / initial_delta[i];
+            }
+        }
+    }
+    
+    return scale;
+}
+
+// Only for scaling/stretching
+NR::Point Inkscape::SelTrans::_calcAbsAffineDefault(NR::scale const default_scale) 
+{
+    NR::Matrix abs_affine = NR::translate(-_origin) * NR::Matrix(default_scale) * NR::translate(_origin);
+    NR::Point new_bbox_min = _approximate_bbox->min() * abs_affine;
+    NR::Point new_bbox_max = _approximate_bbox->max() * abs_affine;
+
+    int transform_stroke = false;
+    gdouble strokewidth = 0;
+
+    if ( _snap_bbox_type != SPItem::GEOMETRIC_BBOX) {
+        transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
+        strokewidth = _strokewidth;
+    }
+
+    _absolute_affine = get_scale_transform_with_stroke (*_approximate_bbox, strokewidth, transform_stroke,
+                    new_bbox_min[NR::X], new_bbox_min[NR::Y], new_bbox_max[NR::X], new_bbox_max[NR::Y]);
+                    
+    // return the new handle position
+    return ( _point - _origin ) * default_scale + _origin;    
+}
+
+// Only for scaling/stretching
+NR::Point Inkscape::SelTrans::_calcAbsAffineGeom(NR::scale const geom_scale) 
+{
+    _relative_affine = NR::Matrix(geom_scale);
+    _absolute_affine = NR::translate(-_origin_for_specpoints) * _relative_affine * NR::translate(_origin_for_specpoints);
+    
+    bool const transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
+    NR::Rect visual_bbox = get_visual_bbox(_geometric_bbox, _absolute_affine, _strokewidth, transform_stroke);
+    
+    // return the new handle position
+    return visual_bbox.min() + visual_bbox.dimensions() * NR::scale(_handle_x, _handle_y);     
 }
 
 

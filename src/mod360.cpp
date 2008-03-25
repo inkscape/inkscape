@@ -17,6 +17,16 @@ double mod360(double const x)
     return ret;
 }
 
+/** Returns \a x wrapped around to between -180 and less than 180,
+    or 0 if \a x isn't finite.
+**/
+double mod360symm(double const x)
+{
+    double m = mod360(x);
+    
+    return m < 180.0 ? m : m - 360.0;   
+}
+
 /*
   Local Variables:
   mode:c++
