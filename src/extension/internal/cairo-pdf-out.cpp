@@ -61,20 +61,20 @@ pdf_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int 
     context.module = mod;
     /* fixme: This has to go into module constructor somehow */
     /* Create new arena */
-		const gchar* exportId = mod->get_param_string("exportId");
-		bool exportDrawing = mod->get_param_bool("exportDrawing");
-		if (exportId && strcmp(exportId, "")) {
-      // we want to export the given item only, not page
-			mod->base = SP_ITEM(doc->getObjectById(exportId));
-			mod->set_param_bool("pageBoundingBox", FALSE);
-		} else {
-      // we want to export the entire document from root
-			mod->base = SP_ITEM(sp_document_root(doc));
-			if (exportDrawing)
-				mod->set_param_bool("pageBoundingBox", FALSE);
-			else
-				mod->set_param_bool("pageBoundingBox", TRUE);
-		}
+    const gchar* exportId = mod->get_param_string("exportId");
+    bool exportDrawing = mod->get_param_bool("exportDrawing");
+    if (exportId && strcmp(exportId, "")) {
+        // we want to export the given item only, not page
+        mod->base = SP_ITEM(doc->getObjectById(exportId));
+        mod->set_param_bool("pageBoundingBox", FALSE);
+    } else {
+        // we want to export the entire document from root
+        mod->base = SP_ITEM(sp_document_root(doc));
+        if (exportDrawing)
+            mod->set_param_bool("pageBoundingBox", FALSE);
+        else
+            mod->set_param_bool("pageBoundingBox", TRUE);
+    }
     mod->arena = NRArena::create();
     mod->dkey = sp_item_display_key_new(1);
     mod->root = sp_item_invoke_show(mod->base, mod->arena, mod->dkey, SP_ITEM_SHOW_DISPLAY);
@@ -144,8 +144,8 @@ CairoPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const g
         g_warning("Parameter <blurToBitmap> might not exist");
     }
 
-		const gchar* old_exportId = NULL;
-		const gchar* new_exportId = NULL;
+    const gchar* old_exportId = NULL;
+    const gchar* new_exportId = NULL;
     try {
         old_exportId  = ext->get_param_string("exportId");
         new_exportId  = mod->get_param_string("exportId");
@@ -155,8 +155,8 @@ CairoPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const g
         g_warning("Parameter <exportId> might not exist");
     }
 
-		bool old_exportDrawing = NULL;
-		bool new_exportDrawing = NULL;
+    bool old_exportDrawing = false;
+    bool new_exportDrawing = false;
     try {
         old_exportDrawing  = ext->get_param_bool("exportDrawing");
         new_exportDrawing  = mod->get_param_bool("exportDrawing");
@@ -166,10 +166,10 @@ CairoPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const g
         g_warning("Parameter <exportDrawing> might not exist");
     }
 
-	gchar * final_name;
-	final_name = g_strdup_printf("> %s", uri);
-	ret = pdf_print_document_to_file(doc, final_name, 0, new_textToPath, new_blurToBitmap);
-	g_free(final_name);
+    gchar * final_name;
+    final_name = g_strdup_printf("> %s", uri);
+    ret = pdf_print_document_to_file(doc, final_name, 0, new_textToPath, new_blurToBitmap);
+    g_free(final_name);
 
     try {
         ext->set_param_bool("blurToBitmap", old_blurToBitmap);
@@ -196,10 +196,10 @@ CairoPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const g
         g_warning("Parameter <exportDrawing> might not exist");
     }
 
-	if (!ret)
-	    throw Inkscape::Extension::Output::save_failed();
+    if (!ret)
+        throw Inkscape::Extension::Output::save_failed();
 
-	return;
+    return;
 }
 
 #include "clear-n_.h"
@@ -239,3 +239,14 @@ CairoPdfOutput::init (void)
 } } }  /* namespace Inkscape, Extension, Implementation */
 
 #endif /* HAVE_CAIRO_PDF */
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
