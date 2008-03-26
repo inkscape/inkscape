@@ -1,11 +1,8 @@
-EXTRA_DIST = API \
-	README.document \
-	WISHLIST \
+EXTRA_DIST = README.document \
 	architecture.svg \
 	architecture.txt \
 	class-hierarchy.dia \
 	coordinates.txt \
-	inkscape-shadow.README \
 	keys.README \
 	keys.xml \
 	keys.de.xml \
@@ -14,5 +11,5 @@ EXTRA_DIST = API \
 	keys-html.xsl \
 	keys.html \
 	keys.de.html \
-        keys.fr.html \
+	keys.fr.html \
 	refcounting.txt
