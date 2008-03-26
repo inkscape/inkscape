@@ -218,7 +218,7 @@ CairoPdfOutput::init (void)
 			"<name>" N_("Cairo PDF Output") "</name>\n"
 			"<id>org.inkscape.output.pdf.cairo</id>\n"
 			"<param name=\"PDFversion\" gui-text=\"" N_("Restrict to PDF version") "\" type=\"enum\" >\n"
-				"<item value='PDF14'>" N_("PDF 1.4") "</item>\n"
+				"<_item value='PDF14'>" N_("PDF 1.4") "</_item>\n"
       "</param>\n"
 			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"blurToBitmap\" gui-text=\"" N_("Convert blur effects to bitmaps") "\" type=\"boolean\">false</param>\n"

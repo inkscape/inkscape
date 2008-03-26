@@ -222,9 +222,9 @@ CairoPsOutput::init (void)
 			"<name>" N_("Cairo PS Output") "</name>\n"
 			"<id>" SP_MODULE_KEY_PRINT_CAIRO_PS "</id>\n"
 			"<param name=\"PSlevel\" gui-text=\"" N_("Restrict to PS level") "\" type=\"enum\" >\n"
-				"<item value='PS3'>" N_("PostScript level 3") "</item>\n"
+				"<_item value='PS3'>" N_("PostScript level 3") "</_item>\n"
 #if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 5, 2))
-                "<item value='PS2'>" N_("PostScript level 2") "</item>\n"
+                "<_item value='PS2'>" N_("PostScript level 2") "</_item>\n"
 #endif
             "</param>\n"
 			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"

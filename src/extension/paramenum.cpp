@@ -77,6 +77,8 @@ ParamComboBox::ParamComboBox (const gchar * name, const gchar * guitext, const g
                 const char * contents = sp_repr_children(child_repr)->content();
                 if (contents != NULL)
                     // don't translate when 'item' but do translate when '_item'
+                	// NOTE: internal extensions use build_from_mem and don't need _item but 
+                	//       still need to include if are to be localized                	
                      newguitext = new Glib::ustring( !strcmp(chname, "_item") ? _(contents) : contents );
                 else
                     continue;
