@@ -59,8 +59,6 @@ extensions = \
 	handles.py \
 	ill2svg.pl \
 	inkex.py \
-	inkscape-shadow.sh \
-	inkscape-shadow-white.sh \
 	interp.py \
 	lindenmayer.py \
 	lorem_ipsum.py \
@@ -81,7 +79,7 @@ extensions = \
 	radiusrand.py \
 	render_barcode.py \
 	render_alphabetsoup.py \
-    render_alphabetsoup_config.py \
+	render_alphabetsoup_config.py \
 	rtree.py \
 	rubberstretch.py\
 	simplepath.py \
@@ -115,7 +113,7 @@ extensions = \
 	whirl.py
 
 otherstuff = \
-    aisvg.xslt \
+	aisvg.xslt \
 	colors.xml \
 	svg2xaml.xsl \
 	xaml2svg.xsl

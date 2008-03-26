@@ -1,12 +1,10 @@
 This folder contains Inkscape extensions, i.e. the scripts
-that Inkscape uses to perform some specialized functions.
+that implement some commands that you can use from within 
+Inkscape. Most of these commands are in the Effects menu.
 
-Each *.inx file contains a description of an extension,
-listing its name, description, prerequisites, etc. These
+Each *.inx file describes an extension,
+listing its name, purpose, prerequisites, etc. These
 files are read by Inkscape on launch. Other files are
 the scripts themselves (Perl, Python, and Ruby are 
 supported, as well as shell scripts).
 
-Some of the scripts here are not (yet) hooked up to Inkscape
-in any way but can be used from the command line (e.g. 
-inkscape-shadow*).
