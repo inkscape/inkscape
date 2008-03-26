@@ -985,6 +985,11 @@ sp_item_description(SPItem *item)
             g_free (s);
             s = snew;
         }
+        if (SP_OBJECT_STYLE(item) && SP_OBJECT_STYLE(item)->filter.href) {
+            gchar *snew = g_strdup_printf (_("%s; <i>filtered</i>"), s);
+            g_free (s);
+            s = snew;
+        }
         return s;
     }
 
