@@ -239,9 +239,10 @@ static gchar const * ui_descr =
         "    <toolitem action='NodeDeleteAction' />"
         "    <separator />"
         "    <toolitem action='NodeJoinAction' />"
+        "    <toolitem action='NodeBreakAction' />"
+        "    <separator />"
         "    <toolitem action='NodeJoinSegmentAction' />"
         "    <toolitem action='NodeDeleteSegmentAction' />"
-        "    <toolitem action='NodeBreakAction' />"
         "    <separator />"
         "    <toolitem action='NodeCuspAction' />"
         "    <toolitem action='NodeSmoothAction' />"
@@ -1077,8 +1078,19 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     }
 
     {
+        InkAction* inky = ink_action_new( "NodeBreakAction",
+                                          _("Break nodes"),
+                                          _("Break path at selected nodes"),
+                                          "node_break",
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_break), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+
+
+    {
         InkAction* inky = ink_action_new( "NodeJoinSegmentAction",
-                                          _("Join Segment"),
+                                          _("Join with segment"),
                                           _("Join selected endnodes with a new segment"),
                                           "node_join_segment",
                                           Inkscape::ICON_SIZE_SMALL_TOOLBAR );
@@ -1088,21 +1100,11 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
     {
         InkAction* inky = ink_action_new( "NodeDeleteSegmentAction",
-                                          _("Delete Segment"),
-                                          _("Split path between two non-endpoint nodes"),
+                                          _("Delete segment"),
+                                          _("Delete segment between two non-endpoint nodes"),
                                           "node_delete_segment",
                                           Inkscape::ICON_SIZE_SMALL_TOOLBAR );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_delete_segment), 0 );
-        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
-    }
-
-    {
-        InkAction* inky = ink_action_new( "NodeBreakAction",
-                                          _("Node Break"),
-                                          _("Break path at selected nodes"),
-                                          "node_break",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
-        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_break), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
 
