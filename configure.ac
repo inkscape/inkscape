@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.50)
-AC_INIT(inkscape, 0.45+devel)
+AC_INIT(inkscape, 0.46+devel)
 dnl N.B. After 0.40, please change to `0.40+cvs' instead of `0.41cvs'.
 dnl Rationale: (i) placate simple version comparison software such as
 dnl `dpkg --compare-versions'.  (ii) We don't always know what the next
