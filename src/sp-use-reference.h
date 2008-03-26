@@ -13,6 +13,14 @@
 #include <uri-references.h>
 #include <sigc++/sigc++.h>
 
+class Path;
+
+namespace Inkscape {
+namespace XML {
+    struct Node;
+}
+}
+
 
 class SPUseReference : public Inkscape::URIReference {
 public:
@@ -27,37 +35,30 @@ protected:
 
 };
 
-class Path;
-namespace Inkscape {
-namespace XML {
-struct Node;
-}
-}
-
 
 class SPUsePath : public SPUseReference {
-public:	
-	Path           *originalPath;	
-	bool           sourceDirty;
-	
-	SPObject       *owner;
-	gchar					 *sourceHref;
-  Inkscape::XML::Node         *sourceRepr;
-	SPObject			 *sourceObject;
-	
-        sigc::connection _modified_connection;
-	sigc::connection _delete_connection;
-	sigc::connection _changed_connection;
-	sigc::connection _transformed_connection;
+public:
+    Path *originalPath;
+    bool sourceDirty;
 
-	SPUsePath(SPObject* i_owner);
-	~SPUsePath(void);
-	
-	void            link(char* to);
-	void            unlink(void);
-	void            start_listening(SPObject* to);
-	void            quit_listening(void);
-	void            refresh_source(void);
+    SPObject            *owner;
+    gchar               *sourceHref;
+    Inkscape::XML::Node *sourceRepr;
+    SPObject            *sourceObject;
+
+    sigc::connection _modified_connection;
+    sigc::connection _delete_connection;
+    sigc::connection _changed_connection;
+    sigc::connection _transformed_connection;
+
+    SPUsePath(SPObject* i_owner);
+    ~SPUsePath(void);
+
+    void link(char* to);
+    void unlink(void);
+    void start_listening(SPObject* to);
+    void quit_listening(void);
+    void refresh_source(void);
 
     void (*user_unlink) (SPObject *user);
 };
