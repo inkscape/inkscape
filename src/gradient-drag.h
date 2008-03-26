@@ -131,7 +131,7 @@ public: // FIXME: make more of this private!
     
     void deleteSelected (bool just_one = false);
 
-    bool copy ();
+    guint32 getColor();
     
     bool keep_selection;    
     

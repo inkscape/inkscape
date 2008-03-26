@@ -6,6 +6,8 @@ ui/clean: ui/widget/clean ui/dialog/clean ui/cache/clean
 	rm -f ui/libui.a $(ui_libui_a_OBJECTS)
 
 ui_libui_a_SOURCES =		\
+	ui/clipboard.cpp \
+	ui/clipboard.h \
 	ui/icons.cpp		\
 	ui/icons.h		\
 	ui/previewable.h	\

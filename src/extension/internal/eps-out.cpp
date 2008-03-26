@@ -93,7 +93,7 @@ EpsOutput::init (void)
             "<param name=\"fontEmbedded\" type=\"boolean\" gui-text=\"" N_("Embed fonts (Type 1 only)") "\">FALSE</param>\n"
             "<output>\n"
                 "<extension>.eps</extension>\n"
-                "<mimetype>image/x-e-postscript</mimetype>\n"
+                "<mimetype>image/x-eps</mimetype>\n"
                 "<filetypename>" N_("Encapsulated Postscript (*.eps)") "</filetypename>\n"
                 "<filetypetooltip>" N_("Encapsulated Postscript File") "</filetypetooltip>\n"
             "</output>\n"

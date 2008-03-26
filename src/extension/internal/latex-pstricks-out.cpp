@@ -107,7 +107,7 @@ LatexOutput::init (void)
             "<id>org.inkscape.output.latex</id>\n"
             "<output>\n"
                 "<extension>.tex</extension>\n"
-                "<mimetype>text/plain</mimetype>\n"
+                "<mimetype>text/x-tex</mimetype>\n"
                 "<filetypename>" N_("LaTeX With PSTricks macros (*.tex)") "</filetypename>\n"
                 "<filetypetooltip>" N_("LaTeX PSTricks File") "</filetypetooltip>\n"
             "</output>\n"

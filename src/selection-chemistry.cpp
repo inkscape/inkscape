@@ -1,9 +1,9 @@
 #define __SP_SELECTION_CHEMISTRY_C__
 
-/*
- * Miscellanous operations on selected items
- *
- * Authors:
+/** @file
+ * @brief Miscellanous operations on selected items
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
  *   MenTaLguY <mental@rydia.net>
@@ -27,7 +27,7 @@
 #include "svg/svg.h"
 #include "inkscape.h"
 #include "desktop.h"
-#include "desktop-style.h"
+//#include "desktop-style.h"
 #include "selection.h"
 #include "tools-switch.h"
 #include "desktop-handles.h"
@@ -82,8 +82,6 @@
 #include "sp-filter-reference.h"
 #include "gradient-drag.h"
 #include "uri-references.h"
-#include "live_effects/lpeobject.h"
-#include "live_effects/parameter/path.h"
 #include "libnr/nr-convert2geom.h"
 
 // For clippath editing
@@ -92,17 +90,14 @@
 #include "node-context.h"
 #include "nodepath.h"
 
+#include "ui/clipboard.h"
+
 using NR::X;
 using NR::Y;
 
-/* fixme: find a better place */
-Inkscape::XML::Document *clipboard_document = NULL;
-GSList *clipboard = NULL;
-GSList *defs_clipboard = NULL;
-SPCSSAttr *style_clipboard = NULL;
-NR::Maybe<NR::Rect> size_clipboard;
-
-static void sp_copy_stuff_used_by_item(GSList **defs_clip, SPItem *item, GSList const *items, Inkscape::XML::Document* xml_doc);
+/* The clipboard handling is in ui/clipboard.cpp now. There are some legacy functions left here,
+because the layer manipulation code uses them. It should be rewritten specifically
+for that purpose. */
 
 /**
  * Copies repr and its inherited css style elements, along with the accumulated transform 'full_t',
@@ -127,66 +122,24 @@ void sp_selection_copy_one (Inkscape::XML::Node *repr, NR::Matrix full_t, GSList
     *clip = g_slist_prepend(*clip, copy);
 }
 
-void sp_selection_copy_impl (GSList const *items, GSList **clip, GSList **defs_clip, SPCSSAttr **style_clip, Inkscape::XML::Document* xml_doc)
+void sp_selection_copy_impl (GSList const *items, GSList **clip, Inkscape::XML::Document* xml_doc)
 {
+    // Sort items:
+    GSList *sorted_items = g_slist_copy ((GSList *) items);
+    sorted_items = g_slist_sort((GSList *) sorted_items, (GCompareFunc) sp_object_compare_position);
 
-    // Copy stuff referenced by all items to defs_clip:
-    if (defs_clip) {
-        for (GSList *i = (GSList *) items; i != NULL; i = i->next) {
-            sp_copy_stuff_used_by_item (defs_clip, SP_ITEM (i->data), items, xml_doc);
-        }
-        *defs_clip = g_slist_reverse(*defs_clip);
+    // Copy item reprs:
+    for (GSList *i = (GSList *) sorted_items; i != NULL; i = i->next) {
+        sp_selection_copy_one (SP_OBJECT_REPR (i->data), sp_item_i2doc_affine(SP_ITEM (i->data)), clip, xml_doc);
     }
 
-    // Store style:
-    if (style_clip) {
-        SPItem *item = SP_ITEM (items->data); // take from the first selected item
-        *style_clip = take_style_from_item (item);
-    }
-
-    if (clip) {
-        // Sort items:
-        GSList *sorted_items = g_slist_copy ((GSList *) items);
-        sorted_items = g_slist_sort((GSList *) sorted_items, (GCompareFunc) sp_object_compare_position);
-
-        // Copy item reprs:
-        for (GSList *i = (GSList *) sorted_items; i != NULL; i = i->next) {
-            sp_selection_copy_one (SP_OBJECT_REPR (i->data), sp_item_i2doc_affine(SP_ITEM (i->data)), clip, xml_doc);
-        }
-
-        *clip = g_slist_reverse(*clip);
-        g_slist_free ((GSList *) sorted_items);
-    }
+    *clip = g_slist_reverse(*clip);
+    g_slist_free ((GSList *) sorted_items);
 }
 
-/**
- * Add gradients/patterns/markers referenced by copied objects to defs.
- * Iterates through 'defs_clip', and for each item it adds the data
- * repr into the global defs.
- */
-void
-paste_defs (GSList **defs_clip, SPDocument *doc)
-{
-    if (!defs_clip)
-        return;
-
-    for (GSList *gl = *defs_clip; gl != NULL; gl = gl->next) {
-        SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(doc);
-        Inkscape::XML::Node *repr = (Inkscape::XML::Node *) gl->data;
-        gchar const *id = repr->attribute("id");
-        if (!id || !doc->getObjectById(id)) {
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
-            Inkscape::XML::Node *copy = repr->duplicate(xml_doc);
-            SP_OBJECT_REPR(defs)->addChild(copy, NULL);
-            Inkscape::GC::release(copy);
-        }
-    }
-}
-
-GSList *sp_selection_paste_impl (SPDocument *doc, SPObject *parent, GSList **clip, GSList **defs_clip)
+GSList *sp_selection_paste_impl (SPDocument *doc, SPObject *parent, GSList **clip)
 {
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
-    paste_defs (defs_clip, doc);
 
     GSList *copied = NULL;
     // add objects to document
@@ -501,7 +454,7 @@ void sp_selection_group()
                 sp_repr_unparent(current);
 
                 // paste into topmost_parent (temporarily)
-                GSList *copied = sp_selection_paste_impl (doc, doc->getObjectByRepr(topmost_parent), &temp_clip, NULL);
+                GSList *copied = sp_selection_paste_impl (doc, doc->getObjectByRepr(topmost_parent), &temp_clip);
                 if (temp_clip) g_slist_free (temp_clip);
                 if (copied) { // if success,
                     // take pasted object (now in topmost_parent)
@@ -865,146 +818,6 @@ void sp_selection_cut()
     sp_selection_delete();
 }
 
-void sp_copy_gradient (GSList **defs_clip, SPGradient *gradient, Inkscape::XML::Document* xml_doc)
-{
-    SPGradient *ref = gradient;
-
-    while (ref) {
-        // climb up the refs, copying each one in the chain
-        Inkscape::XML::Node *grad_repr = SP_OBJECT_REPR(ref)->duplicate(xml_doc);
-        *defs_clip = g_slist_prepend (*defs_clip, grad_repr);
-
-        ref = ref->ref->getObject();
-    }
-}
-
-void sp_copy_pattern (GSList **defs_clip, SPPattern *pattern, Inkscape::XML::Document* xml_doc)
-{
-    SPPattern *ref = pattern;
-
-    while (ref) {
-        // climb up the refs, copying each one in the chain
-        Inkscape::XML::Node *pattern_repr = SP_OBJECT_REPR(ref)->duplicate(xml_doc);
-        *defs_clip = g_slist_prepend (*defs_clip, pattern_repr);
-
-        // items in the pattern may also use gradients and other patterns, so we need to recurse here as well
-        for (SPObject *child = sp_object_first_child(SP_OBJECT(ref)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-            if (!SP_IS_ITEM (child))
-                continue;
-            sp_copy_stuff_used_by_item (defs_clip, (SPItem *) child, NULL, xml_doc);
-        }
-
-        ref = ref->ref->getObject();
-    }
-}
-
-void sp_copy_single (GSList **defs_clip, SPObject *thing, Inkscape::XML::Document* xml_doc)
-{
-    Inkscape::XML::Node *duplicate_repr = SP_OBJECT_REPR(thing)->duplicate(xml_doc);
-    *defs_clip = g_slist_prepend (*defs_clip, duplicate_repr);
-}
-
-
-void sp_copy_textpath_path (GSList **defs_clip, SPTextPath *tp, GSList const *items, Inkscape::XML::Document* xml_doc)
-{
-    SPItem *path = sp_textpath_get_path_item (tp);
-    if (!path)
-        return;
-    if (items && g_slist_find ((GSList *) items, path)) // do not copy it to defs if it is already in the list of items copied
-        return;
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(path)->duplicate(xml_doc);
-    *defs_clip = g_slist_prepend (*defs_clip, repr);
-}
-
-/**
- * Copies things like patterns, markers, gradients, etc.
- */
-void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, GSList const *items, Inkscape::XML::Document* xml_doc)
-{
-    SPStyle *style = SP_OBJECT_STYLE (item);
-
-    if (style && (style->fill.isPaintserver())) {
-        SPObject *server = SP_OBJECT_STYLE_FILL_SERVER(item);
-        if (SP_IS_LINEARGRADIENT (server) || SP_IS_RADIALGRADIENT (server))
-            sp_copy_gradient (defs_clip, SP_GRADIENT(server), xml_doc);
-        if (SP_IS_PATTERN (server))
-            sp_copy_pattern (defs_clip, SP_PATTERN(server), xml_doc);
-    }
-
-    if (style && (style->stroke.isPaintserver())) {
-        SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER(item);
-        if (SP_IS_LINEARGRADIENT (server) || SP_IS_RADIALGRADIENT (server))
-            sp_copy_gradient (defs_clip, SP_GRADIENT(server), xml_doc);
-        if (SP_IS_PATTERN (server))
-            sp_copy_pattern (defs_clip, SP_PATTERN(server), xml_doc);
-    }
-
-    // For shapes, copy all of the shape's markers into defs_clip
-    if (SP_IS_SHAPE (item)) {
-        SPShape *shape = SP_SHAPE (item);
-        for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
-            if (shape->marker[i]) {
-                sp_copy_single (defs_clip, SP_OBJECT (shape->marker[i]), xml_doc);
-            }
-        }
-
-        // For shapes, also copy liveeffect if applicable
-        if (sp_shape_has_path_effect(shape)) {
-            sp_copy_single (defs_clip, SP_OBJECT(sp_shape_get_livepatheffectobject(shape)), xml_doc);
-        }
-    }
-
-    // For 3D boxes copy perspectives
-    if (SP_IS_BOX3D(item)) {
-        sp_copy_single (defs_clip, SP_OBJECT(box3d_get_perspective(SP_BOX3D(item))), xml_doc);
-    }
-
-    if (SP_IS_TEXT_TEXTPATH (item)) {
-        sp_copy_textpath_path (defs_clip, SP_TEXTPATH(sp_object_first_child(SP_OBJECT(item))), items, xml_doc);
-    }
-
-    if (item->clip_ref->getObject()) {
-        sp_copy_single (defs_clip, item->clip_ref->getObject(), xml_doc);
-    }
-
-    if (item->mask_ref->getObject()) {
-        SPObject *mask = item->mask_ref->getObject();
-        sp_copy_single (defs_clip, mask, xml_doc);
-        // recurse into the mask for its gradients etc.
-        for (SPObject *o = SP_OBJECT(mask)->children; o != NULL; o = o->next) {
-            if (SP_IS_ITEM(o))
-                sp_copy_stuff_used_by_item (defs_clip, SP_ITEM (o), items, xml_doc);
-        }
-    }
-
-    if (style->getFilter()) {
-        SPObject *filter = style->getFilter();
-        if (SP_IS_FILTER(filter)) {
-            sp_copy_single (defs_clip, filter, xml_doc);
-        }
-    }
-
-    // recurse
-    for (SPObject *o = SP_OBJECT(item)->children; o != NULL; o = o->next) {
-        if (SP_IS_ITEM(o))
-            sp_copy_stuff_used_by_item (defs_clip, SP_ITEM (o), items, xml_doc);
-    }
-}
-
-void
-sp_set_style_clipboard (SPCSSAttr *css)
-{
-    if (css != NULL) {
-        // clear style clipboard
-        if (style_clipboard) {
-            sp_repr_css_attr_unref (style_clipboard);
-            style_clipboard = NULL;
-        }
-        //sp_repr_css_print (css);
-        style_clipboard = css;
-    }
-}
-
 /**
  * \pre item != NULL
  */
@@ -1048,337 +861,30 @@ take_style_from_item (SPItem *item)
 
 void sp_selection_copy()
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (desktop == NULL)
-        return;
-
-    if (!clipboard_document) {
-        clipboard_document = new Inkscape::XML::SimpleDocument();
-    }
-
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-
-    if (tools_isactive (desktop, TOOLS_DROPPER)) {
-        sp_dropper_context_copy(desktop->event_context);
-        return; // copied color under cursor, nothing else to do
-    }
-
-    if (desktop->event_context->get_drag() && desktop->event_context->get_drag()->copy()) {
-        return; // copied selected stop(s), nothing else to do
-    }
-
-    // check if something is selected
-    if (selection->isEmpty()) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing was copied."));
-        return;
-    }
-
-    GSList const *items = g_slist_copy ((GSList *) selection->itemList());
-
-    // 0. Copy text to system clipboard
-    // FIXME: for non-texts, put serialized Inkscape::XML as text to the clipboard;
-    //for this sp_repr_write_stream needs to be rewritten with iostream instead of FILE
-    Glib::ustring text;
-    if (tools_isactive (desktop, TOOLS_TEXT)) {
-        text = sp_text_get_selected_text(desktop->event_context);
-    }
-
-    if (text.empty()) {
-        guint texts = 0;
-        for (GSList *i = (GSList *) items; i; i = i->next) {
-            SPItem *item = SP_ITEM (i->data);
-            if (SP_IS_TEXT (item) || SP_IS_FLOWTEXT(item)) {
-                if (texts > 0) // if more than one text object is copied, separate them by spaces
-                    text += " ";
-                gchar *this_text = sp_te_get_string_multiline (item);
-                if (this_text) {
-                    text += this_text;
-                    g_free(this_text);
-                }
-                texts++;
-            }
-        }
-    }
-    if (!text.empty()) {
-        Glib::RefPtr<Gtk::Clipboard> refClipboard = Gtk::Clipboard::get();
-        refClipboard->set_text(text);
-    }
-
-    // clear old defs clipboard
-    while (defs_clipboard) {
-        Inkscape::GC::release((Inkscape::XML::Node *) defs_clipboard->data);
-        defs_clipboard = g_slist_remove (defs_clipboard, defs_clipboard->data);
-    }
-
-    // clear style clipboard
-    if (style_clipboard) {
-        sp_repr_css_attr_unref (style_clipboard);
-        style_clipboard = NULL;
-    }
-
-    //clear main clipboard
-    while (clipboard) {
-        Inkscape::GC::release((Inkscape::XML::Node *) clipboard->data);
-        clipboard = g_slist_remove(clipboard, clipboard->data);
-    }
-
-    sp_selection_copy_impl (items, &clipboard, &defs_clipboard, &style_clipboard, clipboard_document);
-
-    if (tools_isactive (desktop, TOOLS_TEXT)) { // take style from cursor/text selection, overwriting the style just set by copy_impl
-        SPStyle *const query = sp_style_new(SP_ACTIVE_DOCUMENT);
-        if (sp_desktop_query_style_all (desktop, query)) {
-            SPCSSAttr *css = sp_css_attr_from_style (query, SP_STYLE_FLAG_ALWAYS);
-            sp_set_style_clipboard (css);
-        }
-        sp_style_unref(query);
-    }
-
-    size_clipboard = selection->bounds();
-
-    g_slist_free ((GSList *) items);
+    Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
+    cm->copy();
 }
-
-
-void sp_selection_copy_lpe_pathparam(Inkscape::LivePathEffect::PathParam * pathparam)
-{
-    if (pathparam == NULL)
-        return;
-
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (desktop == NULL)
-        return;
-
-    if (!clipboard_document) {
-        clipboard_document = new Inkscape::XML::SimpleDocument();
-    }
-
-    // clear old defs clipboard
-    while (defs_clipboard) {
-        Inkscape::GC::release((Inkscape::XML::Node *) defs_clipboard->data);
-        defs_clipboard = g_slist_remove (defs_clipboard, defs_clipboard->data);
-    }
-
-    // clear style clipboard
-    if (style_clipboard) {
-        sp_repr_css_attr_unref (style_clipboard);
-        style_clipboard = NULL;
-    }
-
-    //clear main clipboard
-    while (clipboard) {
-        Inkscape::GC::release((Inkscape::XML::Node *) clipboard->data);
-        clipboard = g_slist_remove(clipboard, clipboard->data);
-    }
-
-    // make new path node and put svgd as 'd' attribute
-    Inkscape::XML::Node *newnode = clipboard_document->createElement("svg:path");
-    gchar * svgd = pathparam->param_writeSVGValue();
-    newnode->setAttribute("d", svgd);
-    g_free(svgd);
-
-    clipboard = g_slist_prepend(clipboard, newnode);
-
-    Geom::Rect bnds = Geom::bounds_exact(pathparam->get_pwd2());
-    size_clipboard = from_2geom(bnds);
-}
-
-
-//____________________________________________________________________________
-
-/** Paste the bitmap in the clipboard if one is in there.
-	The bitmap is saved to a PNG file then imported into the document
-
-	@return true if a bitmap was detected and pasted; false if no bitmap
-*/
-static bool pastedPicFromClipboard()
-{
-	SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-	SPDocument *doc = SP_ACTIVE_DOCUMENT;
-	if ( desktop == NULL || doc == NULL)
-		return false;
-
-	Glib::RefPtr<Gtk::Clipboard> refClipboard = Gtk::Clipboard::get();
-	Glib::RefPtr<Gdk::Pixbuf> pic = refClipboard->wait_for_image();
-
-	// Stop if the system clipboard doesn't have a bitmap.
-	if ( pic == 0 )
-	{
-		return false;
-	} //if
-	else
-	{
-		// Write into a file, then import the file into the document.
-		// Make a file name based on current time; use the current working dir.
-		time_t rawtime;
-		char filename[50];
-		const char* path;
-
-		time ( &rawtime );
-		strftime (filename,50,"pastedpic_%m%d%Y_%H%M%S.png",localtime( &rawtime ));
-		path = (char *)prefs_get_string_attribute("dialogs.save_as", "path");
-		Glib::ustring finalPath = path;
-		finalPath.append(G_DIR_SEPARATOR_S).append(filename);
-		pic->save( finalPath, "png" );
-		file_import(doc, finalPath, NULL);
-
-		// Clear the clipboard so that the bitmap in there won't always over
-		// ride the normal inkscape clipboard.This isn't the ideal solution.
-		refClipboard->set_text("");
-		return true;
-	} //else
-
-	return false;
-} //pastedPicFromClipboard
-
-//____________________________________________________________________________
 
 void sp_selection_paste(bool in_place)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
-    if (desktop == NULL) {
-        return;
-    }
-
-    SPDocument *document = sp_desktop_document(desktop);
-
-    if (Inkscape::have_viable_layer(desktop, desktop->messageStack()) == false) {
-        return;
-    }
-
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-
-    if (tools_isactive (desktop, TOOLS_TEXT)) {
-        if (sp_text_paste_inline(desktop->event_context))
-            return; // pasted from system clipboard into text, nothing else to do
-    }
-
-    // check if something is in the clipboard
-
-    // Stop if successfully pasted a clipboard bitmap.
-    if ( pastedPicFromClipboard() )
-    	return;
-
-
-    if (clipboard == NULL) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing in the clipboard."));
-        return;
-    }
-
-    GSList *copied = sp_selection_paste_impl(document, desktop->currentLayer(), &clipboard, &defs_clipboard);
-    // add pasted objects to selection
-    selection->setReprList((GSList const *) copied);
-    g_slist_free (copied);
-
-    if (!in_place) {
-        sp_document_ensure_up_to_date(document);
-
-        NR::Maybe<NR::Rect> sel_bbox = selection->bounds();
-        NR::Point m( desktop->point() );
-        if (sel_bbox) {
-            m -= sel_bbox->midpoint();
-        }
-
-        sp_selection_move_relative(selection, m);
-    }
-
-    sp_document_done(document, SP_VERB_EDIT_PASTE, _("Paste"));
+    Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
+    if(cm->paste(in_place))
+        sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_PASTE, _("Paste"));
 }
 
 void sp_selection_paste_style()
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (desktop == NULL) return;
-
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-
-    // check if something is in the clipboard
-    if (style_clipboard == NULL) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing on the style clipboard."));
-        return;
-    }
-
-    // check if something is selected
-    if (selection->isEmpty()) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to paste style to."));
-        return;
-    }
-
-    paste_defs (&defs_clipboard, sp_desktop_document(desktop));
-
-    sp_desktop_set_style (desktop, style_clipboard);
-
-    sp_document_done(sp_desktop_document (desktop), SP_VERB_EDIT_PASTE_STYLE,
-                     _("Paste style"));
-}
-
-void sp_selection_paste_livepatheffect_impl(SPDocument *doc, SPItem *item, char const *effecturi)
-{
-    if ( item && SP_IS_SHAPE(item) ) {
-        SPShape * shape = SP_SHAPE(item);
-
-        // create a private LPE object!
-        SPObject * obj = sp_uri_reference_resolve(doc, effecturi);
-        if (!obj)
-            return;
-        LivePathEffectObject * lpeobj = LIVEPATHEFFECT(obj)->fork_private_if_necessary(0);
-            
-        sp_shape_set_path_effect(shape, lpeobj);
-
-        // set inkscape:original-d for paths. the other shapes don't need this.
-        if ( SP_IS_PATH(item) ) {
-            Inkscape::XML::Node *pathrepr = SP_OBJECT_REPR(item);
-            if ( ! pathrepr->attribute("inkscape:original-d") ) {
-                pathrepr->setAttribute("inkscape:original-d", pathrepr->attribute("d"));
-            }
-        }
-    } else if (item && SP_IS_GROUP (item)) {
-        for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-            if (!SP_IS_ITEM (child))
-                continue;
-            sp_selection_paste_livepatheffect_impl (doc, SP_ITEM(child), effecturi);
-        }
-    }
+    Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
+    if(cm->pasteStyle())
+        sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_PASTE_STYLE, _("Paste style"));
 }
 
 
 void sp_selection_paste_livepatheffect()
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (desktop == NULL) return;
-
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-
-    // check if something is in the clipboard
-    if (clipboard == NULL) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing on the clipboard."));
-        return;
-    }
-
-    // check if something is selected
-    if (selection->isEmpty()) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to paste live path effect to."));
-        return;
-    }
-
-    SPDocument *doc = sp_desktop_document(desktop);
-    paste_defs (&defs_clipboard, doc);
-
-    Inkscape::XML::Node *repr = (Inkscape::XML::Node *) clipboard->data;
-    char const *effecturi = repr->attribute("inkscape:path-effect");
-    if (!effecturi) {
-        SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Clipboard does not contain a live path effect."));
-        return;
-    }
-
-    for ( GSList const *itemlist = selection->itemList(); itemlist != NULL; itemlist = g_slist_next(itemlist) ) {
-        SPItem *item = reinterpret_cast<SPItem*>(itemlist->data);
-
-        sp_selection_paste_livepatheffect_impl(doc, item, effecturi);
-
-    }
-
-    sp_document_done(sp_desktop_document (desktop), SP_VERB_EDIT_PASTE_LIVEPATHEFFECT,
+    Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
+    if(cm->pastePathEffect())
+        sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_PASTE_LIVEPATHEFFECT,
                      _("Paste live path effect"));
 }
 
@@ -1422,78 +928,17 @@ void sp_selection_remove_livepatheffect()
 
 void sp_selection_paste_size (bool apply_x, bool apply_y)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (desktop == NULL) return;
-
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-
-    // check if something is in the clipboard
-    if (!size_clipboard) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing on the clipboard."));
-        return;
-    }
-
-    // check if something is selected
-    if (selection->isEmpty()) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to paste size to."));
-        return;
-    }
-
-    NR::Maybe<NR::Rect> current = selection->bounds();
-    if ( !current || current->isEmpty() ) {
-        return;
-    }
-
-    double scale_x = size_clipboard->extent(NR::X) / current->extent(NR::X);
-    double scale_y = size_clipboard->extent(NR::Y) / current->extent(NR::Y);
-
-    sp_selection_scale_relative (selection, current->midpoint(),
-                                 NR::scale(
-                                     apply_x? scale_x : (desktop->isToolboxButtonActive ("lock")? scale_y : 1.0),
-                                     apply_y? scale_y : (desktop->isToolboxButtonActive ("lock")? scale_x : 1.0)));
-
-    sp_document_done(sp_desktop_document (desktop), SP_VERB_EDIT_PASTE_SIZE,
+    Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
+    if(cm->pasteSize(false, apply_x, apply_y))
+        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_EDIT_PASTE_SIZE,
                      _("Paste size"));
 }
 
 void sp_selection_paste_size_separately (bool apply_x, bool apply_y)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (desktop == NULL) return;
-
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-
-    // check if something is in the clipboard
-    if ( !size_clipboard ) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing on the clipboard."));
-        return;
-    }
-
-    // check if something is selected
-    if (selection->isEmpty()) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to paste size to."));
-        return;
-    }
-
-    for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
-        SPItem *item = SP_ITEM(l->data);
-
-        NR::Maybe<NR::Rect> current = sp_item_bbox_desktop(item);
-        if ( !current || current->isEmpty() ) {
-            continue;
-        }
-
-        double scale_x = size_clipboard->extent(NR::X) / current->extent(NR::X);
-        double scale_y = size_clipboard->extent(NR::Y) / current->extent(NR::Y);
-
-        sp_item_scale_rel (item,
-                                 NR::scale(
-                                     apply_x? scale_x : (desktop->isToolboxButtonActive ("lock")? scale_y : 1.0),
-                                     apply_y? scale_y : (desktop->isToolboxButtonActive ("lock")? scale_x : 1.0)));
-
-    }
-
-    sp_document_done(sp_desktop_document (desktop), SP_VERB_EDIT_PASTE_SIZE_SEPARATELY,
+    Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
+    if(cm->pasteSize(true, apply_x, apply_y))
+        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_EDIT_PASTE_SIZE_SEPARATELY,
                      _("Paste size separately"));
 }
 
@@ -1515,14 +960,14 @@ void sp_selection_to_next_layer ()
     SPObject *next=Inkscape::next_layer(dt->currentRoot(), dt->currentLayer());
     if (next) {
         GSList *temp_clip = NULL;
-        sp_selection_copy_impl (items, &temp_clip, NULL, NULL, sp_document_repr_doc(dt->doc())); // we're in the same doc, so no need to copy defs
+        sp_selection_copy_impl (items, &temp_clip, sp_document_repr_doc(dt->doc()));
         sp_selection_delete_impl (items, false, false);
         next=Inkscape::next_layer(dt->currentRoot(), dt->currentLayer()); // Fixes bug 1482973: crash while moving layers
         GSList *copied;
         if(next) {
-            copied = sp_selection_paste_impl (sp_desktop_document (dt), next, &temp_clip, NULL);
+            copied = sp_selection_paste_impl (sp_desktop_document (dt), next, &temp_clip);
         } else {
-            copied = sp_selection_paste_impl (sp_desktop_document (dt), dt->currentLayer(), &temp_clip, NULL);
+            copied = sp_selection_paste_impl (sp_desktop_document (dt), dt->currentLayer(), &temp_clip);
             no_more = true;
         }
         selection->setReprList((GSList const *) copied);
@@ -1560,14 +1005,14 @@ void sp_selection_to_prev_layer ()
     SPObject *next=Inkscape::previous_layer(dt->currentRoot(), dt->currentLayer());
     if (next) {
         GSList *temp_clip = NULL;
-        sp_selection_copy_impl (items, &temp_clip, NULL, NULL, sp_document_repr_doc(dt->doc())); // we're in the same doc, so no need to copy defs
+        sp_selection_copy_impl (items, &temp_clip, sp_document_repr_doc(dt->doc())); // we're in the same doc, so no need to copy defs
         sp_selection_delete_impl (items, false, false);
         next=Inkscape::previous_layer(dt->currentRoot(), dt->currentLayer()); // Fixes bug 1482973: crash while moving layers
         GSList *copied;
         if(next) {
-            copied = sp_selection_paste_impl (sp_desktop_document (dt), next, &temp_clip, NULL);
+            copied = sp_selection_paste_impl (sp_desktop_document (dt), next, &temp_clip);
         } else {
-            copied = sp_selection_paste_impl (sp_desktop_document (dt), dt->currentLayer(), &temp_clip, NULL);
+            copied = sp_selection_paste_impl (sp_desktop_document (dt), dt->currentLayer(), &temp_clip);
             no_more = true;
         }
         selection->setReprList((GSList const *) copied);
@@ -1882,12 +1327,8 @@ void sp_selection_rotate_90_cw()
 
 
 /**
- * \brief sp_selection_rotate_90_ccw
- *
- * This function rotates selected objects 90 degrees counter-clockwise.
- *
+ * @brief Rotates selected objects 90 degrees counter-clockwise.
  */
-
 void sp_selection_rotate_90_ccw()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -3072,9 +2513,7 @@ sp_selection_create_bitmap_copy ()
 }
 
 /**
- * \brief sp_selection_set_mask
- *
- * This function creates a mask or clipPath from selection
+ * \brief Creates a mask or clipPath from selection
  * Two different modes:
  *  if applyToLayer, all selection is moved to DEFS as mask/clippath
  *       and is applied to current layer
@@ -3392,11 +2831,6 @@ void unhide_all(SPDesktop *dt) {
 
 void unhide_all_in_all_layers(SPDesktop *dt) {
     process_all(&unhide, dt, false);
-}
-
-
-GSList * sp_selection_get_clipboard() {
-    return clipboard;
 }
 
 

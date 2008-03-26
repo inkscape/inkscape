@@ -141,79 +141,18 @@ static void sp_dropper_context_finish(SPEventContext *ec)
 
 
 /**
- * Copies the current context color to the clipboard.
+ * Returns the current dropper context color.
  */
-void sp_dropper_context_copy(SPEventContext *ec)
+guint32 sp_dropper_context_get_color(SPEventContext *ec)
 {
     SPDropperContext *dc = SP_DROPPER_CONTEXT(ec);
-
-    guint32 const c32 = SP_RGBA32_F_COMPOSE(dc->R, dc->G, dc->B, dc->alpha);
-
+    
     int pick = prefs_get_int_attribute("tools.dropper", "pick",
                                        SP_DROPPER_PICK_VISIBLE);
-
     int setalpha = prefs_get_int_attribute("tools.dropper", "setalpha", 1);
-
-    gchar c[64];
-    g_snprintf(c, 64, "%06x%02x", c32 >> 8,
-               (pick == SP_DROPPER_PICK_ACTUAL && setalpha)? SP_COLOR_F_TO_U(dc->alpha) : 255);
-
-    Glib::ustring text;
-    text += c;
-    if (!text.empty())
-    {
-        Glib::RefPtr<Gtk::Clipboard> refClipboard =
-            Gtk::Clipboard::get();
-        refClipboard->set_text(text);
-    }
-}
-
-/**
- * Makes a copy of the current desktop color to the clipboard.
- */
-void sp_dropper_c32_color_copy(guint32 c32)
-{
-    int const pick = prefs_get_int_attribute("tools.dropper", "pick",
-                                             SP_DROPPER_PICK_VISIBLE);
-
-    gchar c[64];
-    g_snprintf(c, 64, "%06x%02x", c32 >> 8,
-        pick == SP_DROPPER_PICK_ACTUAL? SP_RGBA32_A_U(c32) : 255);
-
-    Glib::ustring text;
-    text += c;
-    if (!text.empty()) {
-            Glib::RefPtr<Gtk::Clipboard> refClipboard = Gtk::Clipboard::get();
-            refClipboard->set_text(text);
-    }
-}
-
-
-/**
- * Makes a copy of the current color as a hex value. This should always compute
- * the current color without alpha, but the on-screen representation.
- */
-void sp_dropper_c32_color_copy_hex(guint32 c32)
-{
-    /*
-    int pick = prefs_get_int_attribute ("tools.dropper", "pick",
-                                    SP_DROPPER_PICK_VISIBLE);
-
-    if ( pick == SP_DROPPER_PICK_ACTUAL )
-        ; // process c32 so that it computes against page
-    // else just can cut off that last 2 hex digits....
-
-    */
-
-    gchar c[48];
-    g_snprintf(c, 48, "%06x", c32 >> 8);
-
-    Glib::ustring text;
-    text += c;
-    if (!text.empty()) {
-            Glib::RefPtr<Gtk::Clipboard> refClipboard = Gtk::Clipboard::get();
-            refClipboard->set_text(text);
-    }
+    
+    return SP_RGBA32_F_COMPOSE(dc->R, dc->G, dc->B,
+        (pick == SP_DROPPER_PICK_ACTUAL && setalpha) ? dc->alpha : 1.0);
 }
 
 

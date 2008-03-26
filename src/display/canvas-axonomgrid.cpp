@@ -411,7 +411,7 @@ _wr.setUpdating (true);
             "empcolor", "empopacity", _wr, repr, doc));
 
     Inkscape::UI::Widget::RegisteredSuffixedInteger *_rsi = Gtk::manage( new Inkscape::UI::Widget::RegisteredSuffixedInteger(
-            _("_Major grid line every:"), _(""), _("lines"), "empspacing", _wr, repr, doc ) );
+            _("_Major grid line every:"), "", _("lines"), "empspacing", _wr, repr, doc ) );
 
     _rsu_ox->setDigits(4);
     _rsu_ox->setIncrements(0.1, 1.0);

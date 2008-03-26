@@ -59,7 +59,6 @@ SPCSSAttr *take_style_from_item (SPItem *item);
 
 void sp_selection_cut();
 void sp_selection_copy();
-void sp_selection_copy_lpe_pathparam(Inkscape::LivePathEffect::PathParam * pathparam);
 void sp_selection_paste(bool in_place);
 void sp_selection_paste_style();
 void sp_selection_paste_livepatheffect();
@@ -122,8 +121,6 @@ void unlock_all(SPDesktop *dt);
 void unlock_all_in_all_layers(SPDesktop *dt);
 void unhide_all(SPDesktop *dt);
 void unhide_all_in_all_layers(SPDesktop *dt);
-
-GSList * sp_selection_get_clipboard();
 
 /* selection cycling */
 

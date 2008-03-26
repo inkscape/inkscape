@@ -249,11 +249,9 @@ gr_drag_style_set (const SPCSSAttr *css, gpointer data)
     return true;
 }
 
-bool
-GrDrag::copy()
+guint32 GrDrag::getColor()
 {
-    if (!selected)
-        return false;
+    if (!selected) return 0;
 
     float cf[4];
     cf[0] = cf[1] = cf[2] = cf[3] = 0;
@@ -282,28 +280,7 @@ GrDrag::copy()
         cf[3] /= count;
     }
 
-    guint32 const c32 = SP_RGBA32_F_COMPOSE(cf[0], cf[1], cf[2], cf[3]);
-    gchar c[64];
-
-    SPCSSAttr *css = sp_repr_css_attr_new ();
-    g_snprintf(c, 64, "#%06x", c32 >> 8);
-    sp_repr_css_set_property (css, "fill", c);
-    Inkscape::CSSOStringStream os;
-    os << cf[3];
-    sp_repr_css_set_property (css, "opacity", os.str().c_str());
-    sp_set_style_clipboard (css);
-
-    g_snprintf(c, 64, "%06x%02x", c32 >> 8, c32 & 0x000000ff);
-    Glib::ustring text;
-    text += c;
-    if (!text.empty())
-    {
-        Glib::RefPtr<Gtk::Clipboard> refClipboard =
-            Gtk::Clipboard::get();
-        refClipboard->set_text(text);
-    }
-
-    return true;
+    return SP_RGBA32_F_COMPOSE(cf[0], cf[1], cf[2], cf[3]);
 }
 
 SPStop *

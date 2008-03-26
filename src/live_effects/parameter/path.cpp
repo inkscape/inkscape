@@ -32,6 +32,8 @@
 #include "desktop-handles.h"
 #include "selection.h"
 #include "nodepath.h"
+// clipboard support
+#include "ui/clipboard.h"
 
 namespace Inkscape {
 
@@ -244,38 +246,29 @@ PathParam::on_edit_button_click()
 void
 PathParam::on_paste_button_click()
 {
-    // check if something is in the clipboard
-    GSList * clipboard = sp_selection_get_clipboard();
-    if (clipboard == NULL || clipboard->data == NULL) {
-        SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing on the clipboard."));
-        return;
-    }
+    Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
+    Glib::ustring svgd = cm->getPathParameter();
+    
+    if (svgd == "") return;
 
-    Inkscape::XML::Node *repr = (Inkscape::XML::Node *) clipboard->data;
-    if (!strcmp (repr->name(), "svg:path")) {
-        const char * svgd = repr->attribute("d");
-        if (svgd) {
-            if (strchr(svgd,'A')) { // FIXME: temporary hack until 2Geom supports arcs in SVGD
-                SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
-                            _("This effect does not support arcs yet, try to convert to path.") );
-                return;
-            } else {
-                param_write_to_repr(svgd);
-                signal_path_pasted.emit();
-                sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
-                                 _("Paste path parameter"));
-            }
-        }
-    } else {
-        SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Clipboard does not contain a path."));
+    // Temporary hack until 2Geom supports arcs in SVGD
+    if (svgd.find('A') != Glib::ustring::npos) {
+        SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
+                    _("This effect does not support arcs yet, try to convert to path.") );
         return;
+    } else {
+        param_write_to_repr(svgd.data());
+        signal_path_pasted.emit();
+        sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
+                         _("Paste path parameter"));
     }
 }
 
 void
 PathParam::on_copy_button_click()
 {
-    sp_selection_copy_lpe_pathparam(this);
+    Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
+    cm->copyPathParameter(this);
 }
 
 } /* namespace LivePathEffect */
