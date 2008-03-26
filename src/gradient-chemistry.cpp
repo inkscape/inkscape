@@ -555,6 +555,12 @@ SPStop*
 sp_get_stop_i(SPGradient *gradient, guint stop_i)
 {            
     SPStop *stop = sp_first_stop (gradient);
+
+    // if this is valid but weird gradient without an offset-zero stop element,  
+    // inkscape has created a handle for the start of gradient anyway,
+    // so when it asks for stop N that corresponds to stop element N-1
+    if (stop->offset != 0)
+        stop_i --;
   
     for (guint i=0; i < stop_i; i++) {
         if (!stop) return NULL;  
