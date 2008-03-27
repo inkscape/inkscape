@@ -1128,10 +1128,10 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
 
     clonetiler_remove (NULL, NULL, false);
 
-    double shiftx_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shiftx_per_i", 0, -100, 1000);
-    double shifty_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shifty_per_i", 0, -100, 1000);
-    double shiftx_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shiftx_per_j", 0, -100, 1000);
-    double shifty_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shifty_per_j", 0, -100, 1000);
+    double shiftx_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shiftx_per_i", 0, -10000, 10000);
+    double shifty_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shifty_per_i", 0, -10000, 10000);
+    double shiftx_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shiftx_per_j", 0, -10000, 10000);
+    double shifty_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shifty_per_j", 0, -10000, 10000);
     double shiftx_rand  = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shiftx_rand", 0, 0, 1000);
     double shifty_rand  = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shifty_rand", 0, 0, 1000);
     double shiftx_exp   =        prefs_get_double_attribute_limited (prefs_path, "shiftx_exp",   1, 0, 10);
@@ -1966,7 +1966,7 @@ clonetiler_dialog (void)
                 GtkWidget *l = clonetiler_spinbox (tt,
                     // xgettext:no-c-format
                                                    _("Horizontal shift per row (in % of tile width)"), "shiftx_per_j",
-                                                   -100, 1000, "%");
+                                                   -10000, 10000, "%");
                 clonetiler_table_attach (table, l, 0, 2, 2);
             }
 
@@ -1974,7 +1974,7 @@ clonetiler_dialog (void)
                 GtkWidget *l = clonetiler_spinbox (tt,
                     // xgettext:no-c-format
                                                    _("Horizontal shift per column (in % of tile width)"), "shiftx_per_i",
-                                                   -100, 1000, "%");
+                                                   -10000, 10000, "%");
                 clonetiler_table_attach (table, l, 0, 2, 3);
             }
 
@@ -1999,7 +1999,7 @@ clonetiler_dialog (void)
                 GtkWidget *l = clonetiler_spinbox (tt,
                     // xgettext:no-c-format
                                                    _("Vertical shift per row (in % of tile height)"), "shifty_per_j",
-                                                   -100, 1000, "%");
+                                                   -10000, 10000, "%");
                 clonetiler_table_attach (table, l, 0, 3, 2);
             }
 
@@ -2007,7 +2007,7 @@ clonetiler_dialog (void)
                 GtkWidget *l = clonetiler_spinbox (tt,
                     // xgettext:no-c-format
                                                    _("Vertical shift per column (in % of tile height)"), "shifty_per_i",
-                                                   -100, 1000, "%");
+                                                   -10000, 10000, "%");
                 clonetiler_table_attach (table, l, 0, 3, 3);
             }
 
