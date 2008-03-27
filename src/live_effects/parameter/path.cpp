@@ -34,6 +34,12 @@
 #include "nodepath.h"
 // clipboard support
 #include "ui/clipboard.h"
+// required for linking to other paths
+#include "uri.h"
+#include "sp-shape.h"
+#include "sp-text.h"
+#include "display/curve.h"
+
 
 namespace Inkscape {
 
@@ -46,15 +52,21 @@ PathParam::PathParam( const Glib::ustring& label, const Glib::ustring& tip,
       _pathvector(),
       _pwd2(),
       must_recalculate_pwd2(false),
-      href(NULL)
+      href(NULL),
+      ref( (SPObject*)effect->getLPEObj() )
 {
     defvalue = g_strdup(default_value);
     param_readSVGValue(defvalue);
     oncanvas_editable = true;
+
+    ref_changed_connection = ref.changedSignal().connect(sigc::mem_fun(*this, &PathParam::ref_changed));
+
 }
 
 PathParam::~PathParam()
 {
+    remove_link();
+
     g_free(defvalue);
 }
 
@@ -88,16 +100,22 @@ PathParam::param_readSVGValue(const gchar * strvalue)
 {
     if (strvalue) {
         _pathvector.clear();
-        if (href) {
-            g_free(href);
-            href = NULL;
-        }
+        remove_link();
         must_recalculate_pwd2 = true;
 
-        if (false /*if strvalue is xlink*/) {
+        if (strvalue[0] == '#') {
+            if (href)
+                g_free(href);
             href = g_strdup(strvalue);
-            update_from_referred();
-            // TODO: add listener, because we must update when referred updates. we must always be up-to-date with referred path data
+
+            // Now do the attaching, which emits the changed signal.
+            try {
+                ref.attach(Inkscape::URI(href));
+            } catch (Inkscape::BadURIException &e) {
+                g_warning("%s", e.what());
+                ref.detach();
+                _pathvector = SVGD_to_2GeomPath(defvalue);
+            }
         } else {
             _pathvector = SVGD_to_2GeomPath(strvalue);
         }
@@ -112,8 +130,12 @@ PathParam::param_readSVGValue(const gchar * strvalue)
 gchar *
 PathParam::param_writeSVGValue() const
 {
-    gchar * svgd = SVGD_from_2GeomPath( _pathvector );
-    return svgd;
+    if (href) {
+        return href;
+    } else {
+        gchar * svgd = SVGD_from_2GeomPath( _pathvector );
+        return svgd;
+    }
 }
 
 Gtk::Widget *
@@ -155,6 +177,16 @@ PathParam::param_newWidget(Gtk::Tooltips * tooltips)
     static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
     tooltips->set_tip(*pButton, _("Paste path"));
 
+    pIcon = Gtk::manage( sp_icon_get_icon( "edit_clone", Inkscape::ICON_SIZE_BUTTON) );
+    pButton = Gtk::manage(new Gtk::Button());
+    pButton->set_relief(Gtk::RELIEF_NONE);
+    pIcon->show();
+    pButton->add(*pIcon);
+    pButton->show();
+    pButton->signal_clicked().connect(sigc::mem_fun(*this, &PathParam::on_link_button_click));
+    static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
+    tooltips->set_tip(*pButton, _("Link to path"));
+
     static_cast<Gtk::HBox*>(_widget)->show_all_children();
 
     return dynamic_cast<Gtk::Widget *> (_widget);
@@ -187,8 +219,9 @@ PathParam::param_setup_nodepath(Inkscape::NodePath::Path *np)
 void
 PathParam::param_transform_multiply(Geom::Matrix const& postmul, bool /*set*/)
 {
-    // TODO: recode this to apply transform to _pathvector instead?
     if (!href) {
+        // TODO: recode this to apply transform to _pathvector instead?
+
         // only apply transform when not referring to other path
         ensure_pwd2();
         param_set_and_write_new_value( _pwd2 * postmul );
@@ -198,6 +231,7 @@ PathParam::param_transform_multiply(Geom::Matrix const& postmul, bool /*set*/)
 void
 PathParam::param_set_and_write_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & newpath)
 {
+    remove_link();
     _pathvector = Geom::path_from_piecewise(newpath, LPE_CONVERSION_TOLERANCE);
     gchar * svgd = SVGD_from_2GeomPath( _pathvector );
     param_write_to_repr(svgd);
@@ -221,16 +255,71 @@ PathParam::ensure_pwd2()
 }
 
 void
-PathParam::update_from_referred()
+PathParam::start_listening(SPObject * to)
 {
-    if (!href) {
-        g_warning("PathParam::update_from_referred - logical error, this should not possible");
+    if ( to == NULL ) {
         return;
     }
+    linked_delete_connection = to->connectDelete(sigc::mem_fun(*this, &PathParam::linked_delete));
+    linked_modified_connection = to->connectModified(sigc::mem_fun(*this, &PathParam::linked_modified));
+    linked_modified(to, SP_OBJECT_MODIFIED_FLAG); // simulate linked_modified signal, so that path data is updated
+}
 
-    // TODO: implement!
-    
-    // optimize, only update from referred when referred changed.
+void
+PathParam::quit_listening(void)
+{
+    linked_modified_connection.disconnect();
+    linked_delete_connection.disconnect();
+}
+
+void
+PathParam::ref_changed(SPObject */*old_ref*/, SPObject *new_ref)
+{
+    quit_listening();
+    if ( new_ref ) {
+        start_listening(new_ref);
+    }
+}
+
+void
+PathParam::remove_link()
+{
+    if (href) {
+        ref.detach();
+        g_free(href);
+        href = NULL;
+    }
+}
+
+void
+PathParam::linked_delete(SPObject */*deleted*/)
+{
+// don't know what to do yet. not acting probably crashes inkscape.
+    g_message("PathParam::linked_delete");
+}
+
+void
+PathParam::linked_modified(SPObject *linked_obj, guint /*flags*/)
+{
+    SPCurve *curve = NULL;
+    if (SP_IS_SHAPE(linked_obj)) {
+        curve = sp_shape_get_curve(SP_SHAPE(linked_obj));
+    }
+    if (SP_IS_TEXT(linked_obj)) {
+        curve = SP_TEXT(linked_obj)->getNormalizedBpath();
+    }
+
+    if (curve == NULL) {
+        // curve invalid, set default value
+        _pathvector = SVGD_to_2GeomPath(defvalue);
+    } else {
+        _pathvector = BPath_to_2GeomPath(SP_CURVE_BPATH(curve));
+        sp_curve_unref(curve);
+    }
+
+    must_recalculate_pwd2 = true;
+    signal_path_changed.emit();
+    SP_OBJECT(param_effect->getLPEObj())->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /* CALLBACK FUNCTIONS FOR THE BUTTONS */
@@ -249,7 +338,8 @@ PathParam::on_paste_button_click()
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
     Glib::ustring svgd = cm->getPathParameter();
     
-    if (svgd == "") return;
+    if (svgd == "")
+        return;
 
     // Temporary hack until 2Geom supports arcs in SVGD
     if (svgd.find('A') != Glib::ustring::npos) {
@@ -257,6 +347,9 @@ PathParam::on_paste_button_click()
                     _("This effect does not support arcs yet, try to convert to path.") );
         return;
     } else {
+        // remove possible link to path
+        remove_link();
+
         param_write_to_repr(svgd.data());
         signal_path_pasted.emit();
         sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
@@ -269,6 +362,32 @@ PathParam::on_copy_button_click()
 {
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
     cm->copyPathParameter(this);
+}
+
+void
+PathParam::on_link_button_click()
+{
+    Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
+    Glib::ustring pathid = cm->getShapeOrTextObjectId();
+
+    if (pathid == "") {
+        return;
+    }
+
+    // add '#' at start to make it an uri.
+    pathid.insert(pathid.begin(), '#');
+    if ( href && strcmp(pathid.c_str(), href) == 0 ) {
+        // no change, do nothing
+        return;
+    } else {
+        // TODO:
+        // check if id really exists in document, or only in clipboard document: if only in clipboard then invalid
+        // check if linking to object to which LPE is applied (maybe delegated to PathReference
+
+        param_write_to_repr(pathid.c_str());
+        sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
+                         _("Link path parameter to path"));
+    }
 }
 
 } /* namespace LivePathEffect */

@@ -15,7 +15,7 @@
 #include <gtkmm/tooltips.h>
 
 #include "live_effects/parameter/parameter.h"
-
+#include "live_effects/parameter/path-reference.h"
 #include <sigc++/sigc++.h>
 
 namespace Inkscape {
@@ -60,11 +60,21 @@ protected:
     void ensure_pwd2();  // ensures _pwd2 is up to date
 
     gchar * href;     // contains link to other object, e.g. "#path2428", NULL if PathParam contains pathdata itself
-    void update_from_referred();  // updates path data by looking up refered path
+    PathReference ref;
+    sigc::connection ref_changed_connection;
+    sigc::connection linked_delete_connection;
+    sigc::connection linked_modified_connection;
+    void ref_changed(SPObject *old_ref, SPObject *new_ref);
+    void remove_link();
+    void start_listening(SPObject * to);
+    void quit_listening(void);
+    void linked_delete(SPObject *deleted);
+    void linked_modified(SPObject *linked_obj, guint flags);
 
     void on_edit_button_click();
     void on_paste_button_click();
     void on_copy_button_click();
+    void on_link_button_click();
 
     gchar * defvalue;
 

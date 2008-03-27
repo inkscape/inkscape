@@ -95,7 +95,7 @@ public:
     virtual bool pasteSize(bool, bool, bool);
     virtual bool pastePathEffect();
     virtual Glib::ustring getPathParameter();
-    virtual Glib::ustring getPathObjectId();
+    virtual Glib::ustring getShapeOrTextObjectId();
     
     ClipboardManagerImpl();
     ~ClipboardManagerImpl();
@@ -439,25 +439,28 @@ Glib::ustring ClipboardManagerImpl::getPathParameter()
 
 
 /**
- * @brief Get path object id from the clipboard
- * @return The retrieved path id string (contents of the id attribute), or "" if no path was found
+ * @brief Get object id of a shape or text item from the clipboard
+ * @return The retrieved id string (contents of the id attribute), or "" if no shape or text item was found
  */
-Glib::ustring ClipboardManagerImpl::getPathObjectId()
+Glib::ustring ClipboardManagerImpl::getShapeOrTextObjectId()
 {
     SPDocument *tempdoc = _retrieveClipboard(); // any target will do here
     if ( tempdoc == NULL ) {
         _userWarn(SP_ACTIVE_DESKTOP, _("Nothing on the clipboard."));
         return "";
     }
-    Inkscape::XML::Node
-        *root = sp_document_repr_root(tempdoc),
-        *path = sp_repr_lookup_name(root, "svg:path", -1); // unlimited search depth
-    if ( path == NULL ) {
+    Inkscape::XML::Node *root = sp_document_repr_root(tempdoc);
+
+    Inkscape::XML::Node *repr = sp_repr_lookup_name(root, "svg:path", -1); // unlimited search depth
+    if ( repr == NULL )
+        repr = sp_repr_lookup_name(root, "svg:text", -1);
+
+    if ( repr == NULL ) {
         _userWarn(SP_ACTIVE_DESKTOP, _("Clipboard does not contain a path."));
         sp_document_unref(tempdoc);
         return "";
     }
-    gchar const *svgd = path->attribute("id");
+    gchar const *svgd = repr->attribute("id");
     return svgd;
 }
 

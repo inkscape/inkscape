@@ -17,6 +17,8 @@ live_effects_parameter_liblpeparam_a_SOURCES = \
 	live_effects/parameter/pointparam-knotholder.cpp	\
 	live_effects/parameter/pointparam-knotholder.h	\
 	live_effects/parameter/enum.h	\
+	live_effects/parameter/path-reference.cpp	\
+	live_effects/parameter/path-reference.h	\
 	live_effects/parameter/path.cpp	\
 	live_effects/parameter/path.h	
 
