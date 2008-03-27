@@ -273,8 +273,6 @@ static gchar * sp_group_description (SPItem * item)
 static NR::Matrix
 sp_group_set_transform(SPItem *item, NR::Matrix const &xform)
 {
-    SPGroup *group = SP_GROUP(item);
-
     Inkscape::Selection *selection = sp_desktop_selection(inkscape_active_desktop());
     persp3d_split_perspectives_according_to_selection(selection);
 
@@ -684,16 +682,21 @@ void CGroup::onModified(guint flags) {
 }
 
 void CGroup::calculateBBox(NRRect *bbox, NR::Matrix const &transform, unsigned const flags) {
+    
+    NR::Maybe<NR::Rect> dummy_bbox = NR::Nothing();
+    
     GSList *l = _group->childList(false, SPObject::ActionBBox);
     while (l) {
         SPObject *o = SP_OBJECT (l->data);
         if (SP_IS_ITEM(o)) {
             SPItem *child = SP_ITEM(o);
             NR::Matrix const ct(child->transform * transform);
-            sp_item_invoke_bbox_full(child, bbox, ct, flags, FALSE);
+            sp_item_invoke_bbox_full(child, &dummy_bbox, ct, flags, FALSE);
         }        
         l = g_slist_remove (l, o);
     }
+    
+    *bbox = NRRect(dummy_bbox);
 }
 
 void CGroup::onPrint(SPPrintContext *ctx) {

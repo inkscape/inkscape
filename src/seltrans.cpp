@@ -278,7 +278,11 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
     _approximate_bbox = selection->bounds(SPItem::APPROXIMATE_BBOX); // Used for correctly scaling the strokewidth
     _geometric_bbox = selection->bounds(SPItem::GEOMETRIC_BBOX);
     _point = p;
-    _point_geom = _geometric_bbox->min() + _geometric_bbox->dimensions() * NR::scale(x, y);    
+    if (_geometric_bbox) {
+        _point_geom = _geometric_bbox->min() + _geometric_bbox->dimensions() * NR::scale(x, y);
+    } else {
+        _point_geom = p;
+    }    
 
     // Next, get all points to consider for snapping
     SnapManager const &m = _desktop->namedview->snap_manager;
