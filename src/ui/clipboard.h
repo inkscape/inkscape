@@ -46,6 +46,7 @@ public:
     virtual bool pasteSize(bool separately, bool apply_x, bool apply_y) = 0;
     virtual bool pastePathEffect() = 0;
     virtual Glib::ustring getPathParameter() = 0;
+    virtual Glib::ustring getPathObjectId() = 0;
     
     static ClipboardManager *get();
 protected:

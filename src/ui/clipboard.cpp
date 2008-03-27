@@ -95,6 +95,7 @@ public:
     virtual bool pasteSize(bool, bool, bool);
     virtual bool pastePathEffect();
     virtual Glib::ustring getPathParameter();
+    virtual Glib::ustring getPathObjectId();
     
     ClipboardManagerImpl();
     ~ClipboardManagerImpl();
@@ -433,6 +434,30 @@ Glib::ustring ClipboardManagerImpl::getPathParameter()
         return "";
     }
     gchar const *svgd = path->attribute("d");
+    return svgd;
+}
+
+
+/**
+ * @brief Get path object id from the clipboard
+ * @return The retrieved path id string (contents of the id attribute), or "" if no path was found
+ */
+Glib::ustring ClipboardManagerImpl::getPathObjectId()
+{
+    SPDocument *tempdoc = _retrieveClipboard(); // any target will do here
+    if ( tempdoc == NULL ) {
+        _userWarn(SP_ACTIVE_DESKTOP, _("Nothing on the clipboard."));
+        return "";
+    }
+    Inkscape::XML::Node
+        *root = sp_document_repr_root(tempdoc),
+        *path = sp_repr_lookup_name(root, "svg:path", -1); // unlimited search depth
+    if ( path == NULL ) {
+        _userWarn(SP_ACTIVE_DESKTOP, _("Clipboard does not contain a path."));
+        sp_document_unref(tempdoc);
+        return "";
+    }
+    gchar const *svgd = path->attribute("id");
     return svgd;
 }
 
