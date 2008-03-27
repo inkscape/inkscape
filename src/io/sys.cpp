@@ -28,7 +28,7 @@
 
 #ifdef WIN32
 
-#define BYPASS_GLIB_SPAWN 1
+//#define BYPASS_GLIB_SPAWN 1
 
 #ifdef BYPASS_GLIB_SPAWN
 
