@@ -101,7 +101,7 @@ class Edge3d(inkex.Effect):
                                 result.append((cmd, params))
                         last = params[-2:]
                     if result:
-                        if not g:
+                        if g is None:
                             g = self.getGroup(node)
                         nn = copy.deepcopy(node)
                         nn.set('d',simplepath.formatPath(result))
