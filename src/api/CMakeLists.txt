@@ -1,0 +1,3 @@
+SET(api
+inkscape.idl
+)
