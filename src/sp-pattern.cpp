@@ -679,11 +679,11 @@ sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR:
 	pp->px2ps = pp->ps2px.inverse();
 
 	if (pat->viewBox_set) {
-		gdouble tmp_x = (pattern_viewBox(pat)->x1 - pattern_viewBox(pat)->x0) / pattern_width (pat);
-		gdouble tmp_y = (pattern_viewBox(pat)->y1 - pattern_viewBox(pat)->y0) / pattern_height (pat);
+		gdouble tmp_x = pattern_width (pat) / (pattern_viewBox(pat)->x1 - pattern_viewBox(pat)->x0);
+		gdouble tmp_y = pattern_height (pat) / (pattern_viewBox(pat)->y1 - pattern_viewBox(pat)->y0);
 
 		// FIXME: preserveAspectRatio must be taken into account here too!
-		NR::Matrix vb2ps (tmp_x, 0.0, 0.0, tmp_y, pattern_x(pat) - pattern_viewBox(pat)->x0, pattern_y(pat) - pattern_viewBox(pat)->y0);
+		NR::Matrix vb2ps (tmp_x, 0.0, 0.0, tmp_y, pattern_x(pat) - pattern_viewBox(pat)->x0 * tmp_x, pattern_y(pat) - pattern_viewBox(pat)->y0 * tmp_y);
 
 		NR::Matrix vb2us = vb2ps * pattern_patternTransform(pat);
 
