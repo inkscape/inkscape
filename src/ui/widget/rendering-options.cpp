@@ -33,12 +33,12 @@ RenderingOptions::_toggled()
  *    Construct a Rendering Options widget
  *
  */
-  
+
 RenderingOptions::RenderingOptions () :
       Gtk::VBox (),
+      _frame_backends ( Glib::ustring(_("Backend")) ),
       _radio_vector ( Glib::ustring(_("Vector")) ),
       _radio_bitmap ( Glib::ustring(_("Bitmap")) ),
-      _frame_backends ( Glib::ustring(_("Backend")) ),
       _frame_bitmap ( Glib::ustring(_("Bitmap options")) ),
       _dpi( _("DPI"),
             Glib::ustring(_("Preferred resolution of rendering, "
@@ -112,7 +112,7 @@ RenderingOptions::bitmap_dpi ()
 } // namespace UI
 } // namespace Inkscape
 
-/* 
+/*
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
