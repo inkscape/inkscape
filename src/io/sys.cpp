@@ -28,12 +28,26 @@
 
 #ifdef WIN32
 
-//#define BYPASS_GLIB_SPAWN 1
+#define BYPASS_GLIB_SPAWN 1
 
 #ifdef BYPASS_GLIB_SPAWN
 
 #include <process.h>	// declares spawn functions
 #include <wchar.h>	// declares _wspawn functions
+#ifdef __cplusplus
+extern "C" {
+#endif
+_CRTIMP int __cdecl __MINGW_NOTHROW _wspawnl	(int, const wchar_t*, const wchar_t*, ...);
+_CRTIMP int __cdecl __MINGW_NOTHROW _wspawnle	(int, const wchar_t*, const wchar_t*, ...);
+_CRTIMP int __cdecl __MINGW_NOTHROW _wspawnlp	(int, const wchar_t*, const wchar_t*, ...);
+_CRTIMP int __cdecl __MINGW_NOTHROW _wspawnlpe	(int, const wchar_t*, const wchar_t*, ...);
+_CRTIMP int __cdecl __MINGW_NOTHROW _wspawnv	(int, const wchar_t*, const wchar_t* const*);
+_CRTIMP int __cdecl __MINGW_NOTHROW _wspawnve	(int, const wchar_t*, const wchar_t* const*, const wchar_t* const*);
+_CRTIMP int __cdecl __MINGW_NOTHROW _wspawnvp	(int, const wchar_t*, const wchar_t* const*);
+_CRTIMP int __cdecl __MINGW_NOTHROW _wspawnvpe	(int, const wchar_t*, const wchar_t* const*, const wchar_t* const*);
+#ifdef __cplusplus
+}
+#endif
 #include <unistd.h>
 #include <glibmm/i18n.h>
 #include <fcntl.h>
