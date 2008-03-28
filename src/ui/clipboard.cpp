@@ -73,6 +73,7 @@
 #include "text-context.h"
 #include "text-editing.h"
 #include "tools-switch.h"
+#include "live_effects/n-art-bpath-2geom.h"
 
 /// @brief Made up mimetype to represent Gdk::Pixbuf clipboard contents
 #define CLIPBOARD_GDK_PIXBUF_TARGET "image/x-gdk-pixbuf"
@@ -223,7 +224,7 @@ void ClipboardManagerImpl::copy()
 void ClipboardManagerImpl::copyPathParameter(Inkscape::LivePathEffect::PathParam *pp)
 {
     if ( pp == NULL ) return;
-    gchar *svgd = pp->param_writeSVGValue();
+    gchar *svgd = SVGD_from_2GeomPath( pp->get_pathvector() );
     if ( svgd == NULL || *svgd == '\0' ) return;
     
     _discardInternalClipboard();

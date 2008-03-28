@@ -205,6 +205,7 @@ PathParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
         shape_editor->set_item_lpe_path_parameter(item, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str());
     } else {
         // set referred item for editing
+        shape_editor->set_item(ref.getObject());
     }
 }
 
@@ -239,6 +240,18 @@ PathParam::param_set_and_write_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis>
     // force value upon pwd2 and don't recalculate.
     _pwd2 = newpath;
     must_recalculate_pwd2 = false;
+}
+
+void
+PathParam::param_set_and_write_new_value (std::vector<Geom::Path> const & newpath)
+{
+    remove_link();
+    _pathvector = newpath;
+    must_recalculate_pwd2 = true;
+
+    gchar * svgd = SVGD_from_2GeomPath( _pathvector );
+    param_write_to_repr(svgd);
+    g_free(svgd);
 }
 
 void
@@ -294,8 +307,9 @@ PathParam::remove_link()
 void
 PathParam::linked_delete(SPObject */*deleted*/)
 {
-// don't know what to do yet. not acting probably crashes inkscape.
-    g_message("PathParam::linked_delete");
+    quit_listening();
+    remove_link();
+    param_set_and_write_new_value (_pathvector);
 }
 
 void
