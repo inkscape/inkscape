@@ -51,6 +51,9 @@
 #include "sp-pattern.h"
 #include "sp-mask.h"
 #include "sp-clippath.h"
+#ifdef WIN32
+#include "FontFactory.h" // USE_PANGO_WIN32
+##endif
 
 #include <unit-constants.h>
 
@@ -73,6 +76,10 @@
 
 #ifdef CAIRO_HAS_FT_FONT
 #include <cairo-ft.h>
+#endif
+#ifdef CAIRO_HAS_WIN32_FONT
+#include <cairo-win32.h>
+#include <pango/pangowin32.h>
 #endif
 
 #include <pango/pangofc-fontmap.h>
@@ -1418,16 +1425,33 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, NR::Matrix const *font_matr
 {
     // create a cairo_font_face from PangoFont
     double size = style->font_size.computed;
+    cairo_font_face_t *font_face = NULL;
+
+    FcPattern *fc_pattern = NULL;
+    
+#ifdef USE_PANGO_WIN32
+# ifdef CAIRO_HAS_WIN32_FONT
+    LOGFONTA *lfa = pango_win32_font_logfont(font);
+    LOGFONTW lfw;
+
+    ZeroMemory(&lfw, sizeof(LOGFONTW));
+    memcpy(&lfw, lfa, sizeof(LOGFONTA));
+    MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, lfa->lfFaceName, LF_FACESIZE, lfw.lfFaceName, LF_FACESIZE);
+    
+    font_face = cairo_win32_font_face_create_for_logfontw(&lfw);
+# endif
+#else
+# ifdef CAIRO_HAS_FT_FONT
     PangoFcFont *fc_font = PANGO_FC_FONT(font);
-    FcPattern *fc_pattern = fc_font->font_pattern;
-
+    fc_pattern = fc_font->font_pattern;
+    font_face = cairo_ft_font_face_create_for_pattern(fc_pattern);
+# endif
+#endif
+    
     cairo_save(_cr);
-
-#ifdef CAIRO_HAS_FT_FONT
-    cairo_font_face_t *font_face = cairo_ft_font_face_create_for_pattern(fc_pattern);
     cairo_set_font_face(_cr, font_face);
 
-    if (FcPatternGetDouble(fc_pattern, FC_PIXEL_SIZE, 0, &size) != FcResultMatch)
+    if (fc_pattern && FcPatternGetDouble(fc_pattern, FC_PIXEL_SIZE, 0, &size) != FcResultMatch)
         size = 12.0;
 
     // set the given font matrix
@@ -1468,13 +1492,8 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, NR::Matrix const *font_matr
 
     cairo_restore(_cr);
 
-    cairo_font_face_destroy(font_face);
-#else
-    (void)size;
-    (void)fc_pattern;
-
-    cairo_restore(_cr);
-#endif
+    if (font_face)
+        cairo_font_face_destroy(font_face);
 
     return true;
 }
