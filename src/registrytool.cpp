@@ -74,7 +74,7 @@ bool RegistryTool::setStringValue(const Glib::ustring &keyNameArg,
                        0, NULL, REG_OPTION_NON_VOLATILE,
                        KEY_WRITE, NULL, &key, NULL))
        {
-       printf("RegistryTool: Could not create the registry key '%s'\n", keyName.c_str());
+       fprintf(stderr, "RegistryTool: Could not create the registry key '%s'\n", keyName.c_str());
        return false;
        }
 
@@ -82,7 +82,7 @@ bool RegistryTool::setStringValue(const Glib::ustring &keyNameArg,
     if (RegSetValueEx(key, valueName.c_str(),
           0,  REG_SZ, (LPBYTE) value.c_str(), (DWORD) value.size()))
        {
-       printf("RegistryTool: Could not set the value '%s'\n", value.c_str());
+       fprintf(stderr, "RegistryTool: Could not set the value '%s'\n", value.c_str());
        RegCloseKey(key);
        return false;
        }
@@ -101,7 +101,7 @@ bool RegistryTool::getExeInfo(Glib::ustring &fullPath,
     char buf[MAX_PATH+1];
     if (!GetModuleFileName(NULL, buf, MAX_PATH))
         {
-        printf("Could not fetch executable file name\n");
+        fprintf(stderr, "Could not fetch executable file name\n");
         return false;
         }
     else
