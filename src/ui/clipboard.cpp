@@ -64,6 +64,7 @@
 #include "sp-clippath.h"
 #include "sp-mask.h"
 #include "sp-textpath.h"
+#include "sp-rect.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/parameter/path.h"
 #include "svg/svg.h" // for sp_svg_transform_write, used in _copySelection
@@ -74,6 +75,7 @@
 #include "text-editing.h"
 #include "tools-switch.h"
 #include "live_effects/n-art-bpath-2geom.h"
+#include "path-chemistry.h"
 
 /// @brief Made up mimetype to represent Gdk::Pixbuf clipboard contents
 #define CLIPBOARD_GDK_PIXBUF_TARGET "image/x-gdk-pixbuf"
@@ -385,31 +387,34 @@ bool ClipboardManagerImpl::pastePathEffect()
         segfaulting in fork_private_if_necessary(). */
     
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if ( desktop == NULL ) return false;
+    if ( desktop == NULL )
+        return false;
+    
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     if (selection->isEmpty()) {
         _userWarn(desktop, _("Select <b>object(s)</b> to paste live path effect to."));
         return false;
     }
     
-    Inkscape::XML::Node *root, *clipnode;
-    gchar const *effect;
     SPDocument *tempdoc = _retrieveClipboard("image/x-inkscape-svg");
-    if ( tempdoc == NULL ) goto no_effect;
-    
-    root = sp_document_repr_root(tempdoc),
-    clipnode = sp_repr_lookup_name(root, "inkscape:clipboard", 1);
-    if ( clipnode == NULL ) goto no_effect;
-    effect = clipnode->attribute("inkscape:path-effect");
-    if ( effect == NULL ) goto no_effect;
-    
-    _pasteDefs(tempdoc);
-    for (GSList *item = const_cast<GSList *>(selection->itemList()) ; item ; item = item->next) {
-        _applyPathEffect(reinterpret_cast<SPItem*>(item->data), effect);
+    if ( tempdoc ) {
+        Inkscape::XML::Node *root = sp_document_repr_root(tempdoc);
+        Inkscape::XML::Node *clipnode = sp_repr_lookup_name(root, "inkscape:clipboard", 1);
+        if ( clipnode ) {
+            gchar const *effect = clipnode->attribute("inkscape:path-effect");
+            if ( effect ) {
+                _pasteDefs(tempdoc);
+                // make sure all selected items are converted to paths first (i.e. rectangles)
+                sp_selected_path_to_curves(false);
+                for (GSList *item = const_cast<GSList *>(selection->itemList()) ; item ; item = item->next) {
+                    _applyPathEffect(reinterpret_cast<SPItem*>(item->data), effect);
+                }
+                return true;
+            }
+        }
     }
-    return true;
-    
-    no_effect:
+
+    // no_effect:
     _userWarn(desktop, _("No effect on the clipboard."));
     return false;
 }
@@ -890,6 +895,7 @@ SPCSSAttr *ClipboardManagerImpl::_parseColor(const Glib::ustring &text)
 void ClipboardManagerImpl::_applyPathEffect(SPItem *item, gchar const *effect)
 {
     if ( item == NULL ) return;
+    if ( SP_IS_RECT(item) ) return;
     
     if (SP_IS_LPE_ITEM(item))
     {
