@@ -53,7 +53,7 @@
 #include "sp-clippath.h"
 #ifdef WIN32
 #include "FontFactory.h" // USE_PANGO_WIN32
-##endif
+#endif
 
 #include <unit-constants.h>
 
