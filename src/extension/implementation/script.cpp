@@ -376,8 +376,11 @@ Script::load(Inkscape::Extension::Extension *module)
                             resolveInterpreterExecutable(interpretstr);
                         command.insert(command.end(), interpretstr);
                     }
+                    Glib::ustring tmp = "\"";
+                    tmp += solve_reldir(child_repr);
+                    tmp += "\"";
 
-                    command.insert(command.end(), solve_reldir(child_repr));
+                    command.insert(command.end(), tmp);
                 }
                 if (!strcmp(child_repr->name(), "helper_extension")) {
                     helper_extension = sp_repr_children(child_repr)->content();
@@ -986,19 +989,25 @@ Script::execute (const std::list<std::string> &in_command,
             //std::cout << "first quote " << first_quote << std::endl;
 
             if((first_quote != std::string::npos) && (first_quote == 0)) {
-                size_t next_quote = param_str.find_first_of('"', first_quote);
+                size_t next_quote = param_str.find_first_of('"', first_quote + 1);
                 //std::cout << "next quote " << next_quote << std::endl;
 
                 if(next_quote != std::string::npos) {
                     //std::cout << "now split " << next_quote << std::endl;
-                    //std::cout << "now split " << param_str.substr(1, next_quote) << std::endl;
+                    //std::cout << "now split " << param_str.substr(1, next_quote - 1) << std::endl;
                     //std::cout << "now split " << param_str.substr(next_quote + 1) << std::endl;
-                    std::string part_str = param_str.substr(1, next_quote);
+                    std::string part_str = param_str.substr(1, next_quote - 1);
                     if(part_str.size() > 0)
                         argv.push_back(part_str);
                     param_str = param_str.substr(next_quote + 1);
 
                 }
+                else {
+                    if(param_str.size() > 0)
+                        argv.push_back(param_str);
+                    param_str = "";
+                }
+
             }
             else if(first_space != std::string::npos) {
                 //std::cout << "now split " << first_space << std::endl;
