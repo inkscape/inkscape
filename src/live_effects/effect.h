@@ -16,6 +16,7 @@
 #include <2geom/path.h>
 #include "ui/widget/registry.h"
 #include "util/enums.h"
+#include "sp-lpe-item.h"
 
 #define  LPE_CONVERSION_TOLERANCE 0.01    // FIXME: find good solution for this.
 
@@ -74,6 +75,8 @@ public:
     static Effect* New(EffectType lpenr, LivePathEffectObject *lpeobj);
 
     virtual ~Effect();
+
+    virtual void doBeforeEffect (SPLPEItem *lpeitem);
 
     virtual void doEffect (SPCurve * curve);
 

@@ -39,7 +39,7 @@ static gchar * sp_spiral_description (SPItem * item);
 static void sp_spiral_snappoints(SPItem const *item, SnapPointsIter p);
 
 static void sp_spiral_set_shape (SPShape *shape);
-static void sp_spiral_update_patheffect (SPShape *shape, bool write);
+static void sp_spiral_update_patheffect (SPLPEItem *lpeitem, bool write);
 
 static NR::Point sp_spiral_get_tangent (SPSpiral const *spiral, gdouble t);
 
@@ -80,11 +80,13 @@ sp_spiral_class_init (SPSpiralClass *klass)
 	GObjectClass * gobject_class;
 	SPObjectClass * sp_object_class;
 	SPItemClass * item_class;
+	SPLPEItemClass * lpe_item_class;
 	SPShapeClass *shape_class;
 
 	gobject_class = (GObjectClass *) klass;
 	sp_object_class = (SPObjectClass *) klass;
 	item_class = (SPItemClass *) klass;
+	lpe_item_class = (SPLPEItemClass *) klass;
 	shape_class = (SPShapeClass *) klass;
 
 	parent_class = (SPShapeClass *)g_type_class_ref (SP_TYPE_SHAPE);
@@ -97,8 +99,9 @@ sp_spiral_class_init (SPSpiralClass *klass)
 	item_class->description = sp_spiral_description;
 	item_class->snappoints = sp_spiral_snappoints;
 
+    lpe_item_class->update_patheffect = sp_spiral_update_patheffect;
+
     shape_class->set_shape = sp_spiral_set_shape;
-    shape_class->update_patheffect = sp_spiral_update_patheffect;
 }
 
 /**
@@ -297,8 +300,9 @@ sp_spiral_update (SPObject *object, SPCtx *ctx, guint flags)
 }
 
 static void
-sp_spiral_update_patheffect(SPShape *shape, bool write)
+sp_spiral_update_patheffect(SPLPEItem *lpeitem, bool write)
 {
+    SPShape *shape = (SPShape *) lpeitem;
     sp_spiral_set_shape(shape);
 
     if (write) {
@@ -463,7 +467,7 @@ sp_spiral_set_shape (SPShape *shape)
 		sp_spiral_fit_and_draw (spiral, c, (1.0 - t)/(SAMPLE_SIZE - 1.0),
 					darray, hat1, hat2, &t);
 
-    sp_shape_perform_path_effect(c, SP_SHAPE (spiral));
+    sp_lpe_item_perform_path_effect(SP_LPE_ITEM (spiral), c);
     sp_shape_set_curve_insync ((SPShape *) spiral, c, TRUE);
     sp_curve_unref (c);
 }

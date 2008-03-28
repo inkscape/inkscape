@@ -59,7 +59,7 @@ static gchar * sp_path_description(SPItem *item);
 static void sp_path_convert_to_guides(SPItem *item);
 
 static void sp_path_update(SPObject *object, SPCtx *ctx, guint flags);
-static void sp_path_update_patheffect(SPShape *shape, bool write);
+static void sp_path_update_patheffect(SPLPEItem *lpeitem, bool write);
 
 static SPShapeClass *parent_class;
 
@@ -98,7 +98,7 @@ sp_path_class_init(SPPathClass * klass)
     GObjectClass *gobject_class = (GObjectClass *) klass;
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
     SPItemClass *item_class = (SPItemClass *) klass;
-    SPShapeClass *shape_class = (SPShapeClass *) klass;
+    SPLPEItemClass *lpe_item_class = (SPLPEItemClass *) klass;
 
     parent_class = (SPShapeClass *)g_type_class_peek_parent(klass);
 
@@ -114,7 +114,7 @@ sp_path_class_init(SPPathClass * klass)
     item_class->set_transform = sp_path_set_transform;
     item_class->convert_to_guides = sp_path_convert_to_guides;
 
-    shape_class->update_patheffect = sp_path_update_patheffect;
+    lpe_item_class->update_patheffect = sp_path_update_patheffect;
 }
 
 
@@ -136,7 +136,7 @@ static gchar *
 sp_path_description(SPItem * item)
 {
     int count = sp_nodes_in_path(SP_PATH(item));
-    if (SP_SHAPE(item)->path_effect_href) {
+    if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(item))) {
         return g_strdup_printf(ngettext("<b>Path</b> (%i node, path effect)",
                                         "<b>Path</b> (%i nodes, path effect)",count), count);
     } else {
@@ -264,7 +264,7 @@ sp_path_set(SPObject *object, unsigned int key, gchar const *value)
                 object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
        case SP_ATTR_D:
-            if (!((SPShape *) path)->path_effect_href) {
+            if (!sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path))) {
                 if (value) {
                     NArtBpath *bpath = sp_svg_read_path(value);
                     SPCurve *curve = sp_curve_new_from_bpath(bpath);
@@ -410,12 +410,13 @@ sp_path_set_transform(SPItem *item, NR::Matrix const &xform)
 }
 
 static void
-sp_path_update_patheffect(SPShape *shape, bool write)
+sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
 {
-    SPPath *path = (SPPath *) shape;
+    SPShape *shape = (SPShape *) lpeitem;
+    SPPath *path = (SPPath *) lpeitem;
     if (path->original_curve) {
         SPCurve *curve = sp_curve_copy (path->original_curve);
-        sp_shape_perform_path_effect(curve, shape);
+        sp_lpe_item_perform_path_effect(SP_LPE_ITEM(shape), curve);
         sp_shape_set_curve(shape, curve, TRUE);
         sp_curve_unref(curve);
 

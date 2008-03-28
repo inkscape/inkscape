@@ -231,10 +231,10 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
         }
     } else {
         np->repr_nodetypes_key = g_strdup("sodipodi:nodetypes");
-        if ( SP_SHAPE(np->object)->path_effect_href ) {
+        if ( sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(np->object)) ) {
             np->repr_key = g_strdup("inkscape:original-d");
 
-            LivePathEffectObject *lpeobj = sp_shape_get_livepatheffectobject(SP_SHAPE(np->object));
+            LivePathEffectObject *lpeobj = sp_lpe_item_get_livepatheffectobject(SP_LPE_ITEM(np->object));
             if (lpeobj && lpeobj->lpe) {
                 lpeobj->lpe->setup_nodepath(np);
             }
@@ -4555,7 +4555,7 @@ void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve) {
         return;
 
     if (SP_IS_PATH(np->object)) {
-        if (SP_SHAPE(np->object)->path_effect_href) {
+        if (sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(np->object))) {
             sp_path_set_original_curve(SP_PATH(np->object), curve, true, false);
         } else {
             sp_shape_set_curve(SP_SHAPE(np->object), curve, true);

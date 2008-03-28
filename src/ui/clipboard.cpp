@@ -556,9 +556,12 @@ void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
                 _copyNode(SP_OBJECT_REPR(SP_OBJECT(shape->marker[i])), _doc, _defs);
             }
         }
-        // Also copy live effects if applicable
-        if (sp_shape_has_path_effect(shape)) {
-            _copyNode(SP_OBJECT_REPR(SP_OBJECT(sp_shape_get_livepatheffectobject(shape))), _doc, _defs);
+    }
+    // For lpe items, copy liveeffect if applicable
+    if (SP_IS_LPE_ITEM(item)) {
+        SPLPEItem *lpeitem = SP_LPE_ITEM (item);
+        if (sp_lpe_item_has_path_effect(lpeitem)) {
+            _copyNode(SP_OBJECT_REPR(SP_OBJECT(sp_lpe_item_get_livepatheffectobject(lpeitem))), _doc, _defs);
         }
     }
     // For 3D boxes, copy perspectives
@@ -887,31 +890,14 @@ void ClipboardManagerImpl::_applyPathEffect(SPItem *item, gchar const *effect)
 {
     if ( item == NULL ) return;
     
-    if (SP_IS_SHAPE(item))
+    if (SP_IS_LPE_ITEM(item))
     {
-        SPShape *shape = SP_SHAPE(item);
+        SPLPEItem *lpeitem = SP_LPE_ITEM(item);
         SPObject *obj = sp_uri_reference_resolve(_clipboardSPDoc, effect);
         if (!obj) return;
         // if the effect is not used by anyone, we might as well take it
         LivePathEffectObject *lpeobj = LIVEPATHEFFECT(obj)->fork_private_if_necessary(1);
-        sp_shape_set_path_effect(shape, lpeobj);
-
-        // set inkscape:original-d for paths. the other shapes don't need this
-        if (SP_IS_PATH(item)) {
-            Inkscape::XML::Node *pathrepr = SP_OBJECT_REPR(item);
-            if (!pathrepr->attribute("inkscape:original-d")) {
-                pathrepr->setAttribute("inkscape:original-d", pathrepr->attribute("d"));
-            }
-        }
-    }
-    else if (SP_IS_GROUP(item))
-    {
-        for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ;
-            child != NULL ; child = SP_OBJECT_NEXT(child))
-        {
-            if (!SP_IS_ITEM(child)) continue;
-            _applyPathEffect(SP_ITEM(child), effect);
-        }
+        sp_lpe_item_set_path_effect(lpeitem, lpeobj);
     }
 }
 

@@ -1291,18 +1291,18 @@ sp_item_adjust_paint_recursive (SPItem *item, NR::Matrix advertized_transform, N
 void
 sp_item_adjust_livepatheffect (SPItem *item, NR::Matrix const &postmul, bool set)
 {
-    if ( !SP_IS_SHAPE(item) )
+    if ( !SP_IS_LPE_ITEM(item) )
         return;
 
-    SPShape *shape = SP_SHAPE (item);
-    if ( sp_shape_has_path_effect(shape) ) {
-        LivePathEffectObject *lpeobj = sp_shape_get_livepatheffectobject(shape);
+    SPLPEItem *lpeitem = SP_LPE_ITEM (item);
+    if ( sp_lpe_item_has_path_effect(lpeitem) ) {
+        LivePathEffectObject *lpeobj = sp_lpe_item_get_livepatheffectobject(lpeitem);
         LivePathEffectObject *new_lpeobj = lpeobj->fork_private_if_necessary();
         if (new_lpeobj != lpeobj) {
-            sp_shape_set_path_effect(shape, new_lpeobj);
+            sp_lpe_item_set_path_effect(lpeitem, new_lpeobj);
         }
 
-        Inkscape::LivePathEffect::Effect * effect = sp_shape_get_livepatheffect(shape);
+        Inkscape::LivePathEffect::Effect * effect = sp_lpe_item_get_livepatheffect(lpeitem);
         if (effect) {
             effect->transform_multiply (to_2geom(postmul), set);
         }

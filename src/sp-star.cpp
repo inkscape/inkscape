@@ -42,7 +42,7 @@ static gchar * sp_star_description (SPItem * item);
 static void sp_star_snappoints(SPItem const *item, SnapPointsIter p);
 
 static void sp_star_set_shape (SPShape *shape);
-static void sp_star_update_patheffect (SPShape *shape, bool write);
+static void sp_star_update_patheffect (SPLPEItem *lpeitem, bool write);
 
 static SPShapeClass *parent_class;
 
@@ -73,13 +73,13 @@ sp_star_class_init (SPStarClass *klass)
 	GObjectClass * gobject_class;
 	SPObjectClass * sp_object_class;
 	SPItemClass * item_class;
-	SPPathClass * path_class;
+	SPLPEItemClass * lpe_item_class;
 	SPShapeClass * shape_class;
 
 	gobject_class = (GObjectClass *) klass;
 	sp_object_class = (SPObjectClass *) klass;
 	item_class = (SPItemClass *) klass;
-	path_class = (SPPathClass *) klass;
+	lpe_item_class = (SPLPEItemClass *) klass;
 	shape_class = (SPShapeClass *) klass;
 
 	parent_class = (SPShapeClass *)g_type_class_ref (SP_TYPE_SHAPE);
@@ -92,8 +92,9 @@ sp_star_class_init (SPStarClass *klass)
 	item_class->description = sp_star_description;
 	item_class->snappoints = sp_star_snappoints;
 
+    lpe_item_class->update_patheffect = sp_star_update_patheffect;
+
 	shape_class->set_shape = sp_star_set_shape;
-    shape_class->update_patheffect = sp_star_update_patheffect;
 }
 
 static void
@@ -276,8 +277,9 @@ sp_star_update (SPObject *object, SPCtx *ctx, guint flags)
 }
 
 static void
-sp_star_update_patheffect(SPShape *shape, bool write)
+sp_star_update_patheffect(SPLPEItem *lpeitem, bool write)
 {
+    SPShape *shape = (SPShape *) lpeitem;
     sp_star_set_shape(shape);
 
     if (write) {
@@ -501,7 +503,7 @@ sp_star_set_shape (SPShape *shape)
 		}
 
     sp_curve_closepath (c);
-    sp_shape_perform_path_effect(c, SP_SHAPE (star));
+    sp_lpe_item_perform_path_effect(SP_LPE_ITEM (star), c);
     sp_shape_set_curve_insync (SP_SHAPE (star), c, TRUE);
     sp_curve_unref (c);
 }

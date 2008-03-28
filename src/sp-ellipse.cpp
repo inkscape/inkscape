@@ -76,7 +76,7 @@ static void sp_genericellipse_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p);
 
 static void sp_genericellipse_set_shape(SPShape *shape);
-static void sp_genericellipse_update_patheffect (SPShape *shape, bool write);
+static void sp_genericellipse_update_patheffect (SPLPEItem *lpeitem, bool write);
 
 static Inkscape::XML::Node *sp_genericellipse_write(SPObject *object, Inkscape::XML::Node *repr,
                                                     guint flags);
@@ -111,6 +111,7 @@ static void sp_genericellipse_class_init(SPGenericEllipseClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
     SPItemClass *item_class = (SPItemClass *) klass;
+    SPLPEItemClass *lpe_item_class = (SPLPEItemClass *) klass;
     SPShapeClass *shape_class = (SPShapeClass *) klass;
 
     ge_parent_class = (SPShapeClass*) g_type_class_ref(SP_TYPE_SHAPE);
@@ -121,7 +122,7 @@ static void sp_genericellipse_class_init(SPGenericEllipseClass *klass)
     item_class->snappoints = sp_genericellipse_snappoints;
 
     shape_class->set_shape = sp_genericellipse_set_shape;
-    shape_class->update_patheffect = sp_genericellipse_update_patheffect;
+    lpe_item_class->update_patheffect = sp_genericellipse_update_patheffect;
 }
 
 static void
@@ -158,8 +159,9 @@ sp_genericellipse_update(SPObject *object, SPCtx *ctx, guint flags)
 }
 
 static void
-sp_genericellipse_update_patheffect(SPShape *shape, bool write)
+sp_genericellipse_update_patheffect(SPLPEItem *lpeitem, bool write)
 {
+    SPShape *shape = (SPShape *) lpeitem;
     sp_genericellipse_set_shape(shape);
 
     if (write) {
@@ -274,7 +276,7 @@ static void sp_genericellipse_set_shape(SPShape *shape)
     SPCurve *c = sp_curve_new_from_bpath(nr_artpath_affine(bpath, aff));
     g_assert(c != NULL);
 
-    sp_shape_perform_path_effect(c, SP_SHAPE (ellipse));
+    sp_lpe_item_perform_path_effect(SP_LPE_ITEM (ellipse), c);
     sp_shape_set_curve_insync((SPShape *) ellipse, c, TRUE);
     sp_curve_unref(c);
 }

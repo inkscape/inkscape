@@ -132,6 +132,13 @@ Effect::getName()
         return Glib::ustring( _("No effect") );
 }
 
+void
+Effect::doBeforeEffect (SPLPEItem *lpeitem)
+{
+    //Do nothing for simple effects
+}
+
+
 /*
  *  Here be the doEffect function chain:
  */

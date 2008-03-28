@@ -14,7 +14,7 @@
  */
 
 #include <map>
-#include "sp-item.h"
+#include "sp-lpe-item.h"
 
 #define SP_TYPE_GROUP            (sp_group_get_type ())
 #define SP_GROUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_GROUP, SPGroup))
@@ -26,7 +26,7 @@ class CGroup;
 
 namespace NR{ struct translate; }
 
-struct SPGroup : public SPItem {
+struct SPGroup : public SPLPEItem {
 	enum LayerMode { GROUP, LAYER };
 
 	LayerMode _layer_mode;
@@ -48,13 +48,13 @@ struct SPGroup : public SPItem {
 	void translateChildItems(NR::translate const &tr);
 
     CGroup *group;
-
+    
 private:
 	void _updateLayerMode(unsigned int display_key=0);
 };
 
 struct SPGroupClass {
-	SPItemClass parent_class;
+	SPLPEItemClass parent_class;
 };
 
 /*

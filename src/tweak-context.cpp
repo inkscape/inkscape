@@ -476,7 +476,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
                 if (newrepr) {
                     newrepr->setAttribute("d", str);
                 } else {
-                    if (SP_IS_SHAPE(item) && SP_SHAPE(item)->path_effect_href) {
+                    if (SP_IS_LPE_ITEM(item) && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(item))) {
                         SP_OBJECT_REPR(item)->setAttribute("inkscape:original-d", str);
                     } else {
                         SP_OBJECT_REPR(item)->setAttribute("d", str);

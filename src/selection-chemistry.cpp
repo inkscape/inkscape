@@ -891,14 +891,8 @@ void sp_selection_paste_livepatheffect()
 
 void sp_selection_remove_livepatheffect_impl(SPItem *item)
 {
-    if ( item && SP_IS_SHAPE(item) ) {
-        sp_shape_remove_path_effect(SP_SHAPE(item));
-   } else if (item && SP_IS_GROUP (item)) {
-        for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-            if (!SP_IS_ITEM (child))
-                continue;
-            sp_selection_remove_livepatheffect_impl (SP_ITEM(child));
-        }
+    if ( item && SP_IS_LPE_ITEM(item) ) {
+        sp_lpe_item_remove_path_effect(SP_LPE_ITEM(item), false);
     }
 }
 
@@ -1626,9 +1620,8 @@ void sp_selection_next_patheffect_param(SPDesktop * dt)
     if ( selection && !selection->isEmpty() ) {
         SPItem *item = selection->singleItem();
         if ( item && SP_IS_SHAPE(item)) {
-            SPShape *shape = SP_SHAPE(item);
-            if (sp_shape_has_path_effect(shape)) {
-                sp_shape_edit_next_param_oncanvas(shape, dt);
+            if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(item))) {
+                sp_lpe_item_edit_next_param_oncanvas(SP_LPE_ITEM(item), dt);
             } else {
                 dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("The selection has no applied path effect."));
             }

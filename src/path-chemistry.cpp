@@ -42,6 +42,8 @@
 
 /* Helper functions for sp_selected_path_to_curves */
 static void sp_selected_path_to_curves0(gboolean do_document_done, guint32 text_grouping_policy);
+static bool sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_select);
+
 enum {
     /* Not used yet. This is the placeholder of Lauris's idea. */
     SP_TOCURVE_INTERACTIVE       = 1 << 0,
@@ -88,7 +90,6 @@ sp_selected_path_combine(void)
             continue;
         did = true;
 
-        NArtBpath *abp = NULL;
         SPCurve *c = sp_shape_get_curve(SP_SHAPE(item));
         if (first == NULL) {  // this is the topmost path
             first = item;
@@ -290,6 +291,31 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 /*text_grouping_policy
     selection->clear();
     GSList *items = g_slist_copy(selected);
 
+    did = sp_item_list_to_curves(items, &selected, &to_select);
+
+    g_slist_free (items);
+    selection->setReprList(to_select);
+    selection->addList(selected);
+    g_slist_free (to_select);
+    g_slist_free (selected);
+
+    if (interactive) {
+        desktop->clearWaitingCursor();
+        if (did) {
+            sp_document_done(sp_desktop_document(desktop), SP_VERB_OBJECT_TO_CURVE, 
+                             _("Object to path"));
+        } else {
+            sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No objects</b> to convert to path in the selection."));
+            return;
+        }
+    }
+}
+
+static bool
+sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_select)
+{
+    bool did = false;
+    
     for (;
          items != NULL;
          items = items->next) {
@@ -305,10 +331,27 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 /*text_grouping_policy
             Inkscape::XML::Node *repr = box3d_convert_to_group(SP_BOX3D(item));
             
             if (repr) {
-                to_select = g_slist_prepend (to_select, repr);
+                *to_select = g_slist_prepend (*to_select, repr);
                 did = true;
-                selected = g_slist_remove (selected, item);
+                *selected = g_slist_remove (*selected, item);
             }
+
+            continue;
+        }
+        
+        if (SP_IS_GROUP(item)) {
+            sp_lpe_item_remove_path_effect(SP_LPE_ITEM(item), true);
+            GSList *item_list = sp_item_group_item_list(SP_GROUP(item));
+            
+            GSList *item_to_select = NULL;
+            GSList *item_selected = NULL;
+            
+            if (sp_item_list_to_curves(item_list, &item_selected, &item_to_select))
+                did = true;
+
+            g_slist_free(item_list);
+            g_slist_free(item_to_select);
+            g_slist_free(item_selected);
 
             continue;
         }
@@ -318,7 +361,7 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 /*text_grouping_policy
             continue;
 
         did = true;
-        selected = g_slist_remove (selected, item);
+        *selected = g_slist_remove (*selected, item);
 
         // remember the position of the item
         gint pos = SP_OBJECT_REPR(item)->position();
@@ -339,26 +382,11 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 /*text_grouping_policy
 
         /* Buglet: We don't re-add the (new version of the) object to the selection of any other
          * desktops where it was previously selected. */
-        to_select = g_slist_prepend (to_select, repr);
+        *to_select = g_slist_prepend (*to_select, repr);
         Inkscape::GC::release(repr);
     }
-
-    g_slist_free (items);
-    selection->setReprList(to_select);
-    selection->addList(selected);
-    g_slist_free (to_select);
-    g_slist_free (selected);
-
-    if (interactive) {
-        desktop->clearWaitingCursor();
-        if (did) {
-            sp_document_done(sp_desktop_document(desktop), SP_VERB_OBJECT_TO_CURVE, 
-                             _("Object to path"));
-        } else {
-            sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No objects</b> to convert to path in the selection."));
-            return;
-        }
-    }
+    
+    return did;
 }
 
 Inkscape::XML::Node *
@@ -450,7 +478,7 @@ sp_selected_path_reverse()
         SPCurve *rcurve = sp_curve_reverse(sp_path_get_curve_reference(path));
 
         gchar *str = sp_svg_write_path(SP_CURVE_BPATH(rcurve));
-        if ( sp_shape_has_path_effect(SP_SHAPE(path)) ) {
+        if ( sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path)) ) {
             SP_OBJECT_REPR(path)->setAttribute("inkscape:original-d", str);
         } else {
             SP_OBJECT_REPR(path)->setAttribute("d", str);

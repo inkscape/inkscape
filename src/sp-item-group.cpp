@@ -65,7 +65,9 @@ static NRArenaItem *sp_group_show (SPItem *item, NRArena *arena, unsigned int ke
 static void sp_group_hide (SPItem * item, unsigned int key);
 static void sp_group_snappoints (SPItem const *item, SnapPointsIter p);
 
-static SPItemClass * parent_class;
+static void sp_group_update_patheffect(SPLPEItem *lpeitem, bool write);
+
+static SPLPEItemClass * parent_class;
 
 GType
 sp_group_get_type (void)
@@ -84,7 +86,7 @@ sp_group_get_type (void)
 			(GInstanceInitFunc) sp_group_init,
 			NULL,	/* value_table */
 		};
-		group_type = g_type_register_static (SP_TYPE_ITEM, "SPGroup", &group_info, (GTypeFlags)0);
+		group_type = g_type_register_static (SP_TYPE_LPE_ITEM, "SPGroup", &group_info, (GTypeFlags)0);
 	}
 	return group_type;
 }
@@ -95,12 +97,14 @@ sp_group_class_init (SPGroupClass *klass)
 	GObjectClass * object_class;
 	SPObjectClass * sp_object_class;
 	SPItemClass * item_class;
+	SPLPEItemClass * lpe_item_class;
 
 	object_class = (GObjectClass *) klass;
 	sp_object_class = (SPObjectClass *) klass;
 	item_class = (SPItemClass *) klass;
+	lpe_item_class = (SPLPEItemClass *) klass;
 
-	parent_class = (SPItemClass *)g_type_class_ref (SP_TYPE_ITEM);
+	parent_class = (SPLPEItemClass *)g_type_class_ref (SP_TYPE_LPE_ITEM);
 
 	object_class->dispose = sp_group_dispose;
 
@@ -121,6 +125,8 @@ sp_group_class_init (SPGroupClass *klass)
 	item_class->show = sp_group_show;
 	item_class->hide = sp_group_hide;
 	item_class->snappoints = sp_group_snappoints;
+	
+	lpe_item_class->update_patheffect = sp_group_update_patheffect;
 }
 
 static void
@@ -289,16 +295,16 @@ sp_group_set_transform(SPItem *item, NR::Matrix const &xform)
 }
 
 static void sp_group_set(SPObject *object, unsigned key, char const *value) {
-	SPGroup *group=SP_GROUP(object);
+	SPGroup *group = SP_GROUP(object);
 
 	switch (key) {
-		case SP_ATTR_INKSCAPE_GROUPMODE: {
+		case SP_ATTR_INKSCAPE_GROUPMODE:
 			if ( value && !strcmp(value, "layer") ) {
 				group->setLayerMode(SPGroup::LAYER);
 			} else {
 				group->setLayerMode(SPGroup::GROUP);
 			}
-		} break;
+		    break;
 		default: {
 			if (((SPObjectClass *) (parent_class))->set) {
 				(* ((SPObjectClass *) (parent_class))->set)(object, key, value);
@@ -360,6 +366,8 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
           group = SP_GROUP(gitem);
       }
   }
+
+    sp_lpe_item_remove_path_effect(SP_LPE_ITEM(group), false);
 
 	/* Step 1 - generate lists of children objects */
 	GSList *items = NULL;
@@ -795,6 +803,25 @@ void CGroup::onOrderChanged (Inkscape::XML::Node *child, Inkscape::XML::Node *, 
 
     _group->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
+
+static void
+sp_group_update_patheffect (SPLPEItem *lpeitem, bool write)
+{
+#ifdef GROUP_VERBOSE
+    g_message("sp_group_update_patheffect: %p\n", lpeitem);
+#endif
+    g_return_if_fail (lpeitem != NULL);
+    g_return_if_fail (SP_IS_GROUP (lpeitem));
+
+    GSList const *item_list = sp_item_group_item_list(SP_GROUP(lpeitem));
+    for ( GSList const *iter = item_list; iter; iter = iter->next ) {
+        SPObject *subitem = static_cast<SPObject *>(iter->data);
+        if (SP_IS_LPE_ITEM(subitem)) {
+            sp_lpe_item_update_patheffect(SP_LPE_ITEM(subitem), true);
+        }
+    }
+}
+
 
 /*
   Local Variables:

@@ -236,7 +236,7 @@ box3d_side_set_shape (SPShape *shape)
     sp_curve_lineto (c, box3d_get_corner_screen(box, corners[3]));
 
     sp_curve_closepath (c);
-    sp_shape_perform_path_effect(c, SP_SHAPE (side));
+    sp_lpe_item_perform_path_effect(SP_LPE_ITEM (side), c);
     sp_shape_set_curve_insync (SP_SHAPE (side), c, TRUE);
     sp_curve_unref (c);
 }

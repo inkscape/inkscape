@@ -528,9 +528,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
         Inkscape::XML::Node *repr;
         if (dc->white_item) {
             repr = SP_OBJECT_REPR(dc->white_item);
-            LivePathEffectObject *lpeobj = sp_shape_get_livepatheffectobject(SP_SHAPE(dc->white_item));
-            if (lpeobj) 
-                has_lpe = true;
+            has_lpe = sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(dc->white_item));
         } else {
             repr = xml_doc->createElement("svg:path");
             /* Set style */

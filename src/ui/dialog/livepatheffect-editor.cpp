@@ -3,6 +3,8 @@
  *
  * Authors:
  *   Johan Engelen <j.b.c.engelen@utwente.nl>
+ *   Steren Giannini <steren.giannini@gmail.com>
+ *   Bastien Bouclet <bgkweb@gmail.com>
  *
  * Copyright (C) 2007 Author
  *
@@ -18,6 +20,7 @@
 #include "verbs.h"
 #include "selection.h"
 #include "sp-shape.h"
+#include "sp-item-group.h"
 #include "sp-path.h"
 #include "live_effects/effect.h"
 #include "live_effects/lpeobject.h"
@@ -150,9 +153,9 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
     if ( sel && !sel->isEmpty() ) {
         SPItem *item = sel->singleItem();
         if ( item ) {
-            if ( SP_IS_SHAPE(item) ) {
-                SPShape *shape = SP_SHAPE(item);
-                LivePathEffectObject *lpeobj = sp_shape_get_livepatheffectobject(shape);
+            if ( SP_IS_LPE_ITEM(item) ) {
+                SPLPEItem *lpeitem = SP_LPE_ITEM(item);
+                LivePathEffectObject *lpeobj = sp_lpe_item_get_livepatheffectobject(lpeitem);
                 set_sensitize_all(true);
                 if (lpeobj) {
                     if (lpeobj->lpe) {
@@ -164,8 +167,10 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
                     showText(_("No effect applied"));
                     button_remove.set_sensitive(false);
                 }
-            } else {
-                showText(_("Item is not a shape or path"));
+            }
+              else
+            {
+                showText(_("Item is not compound by paths"));
                 set_sensitize_all(false);
             }
         } else {
@@ -218,12 +223,13 @@ LivePathEffectEditor::onApply()
     Inkscape::Selection *sel = _getSelection();
     if ( sel && !sel->isEmpty() ) {
         SPItem *item = sel->singleItem();
-        if ( item && SP_IS_SHAPE(item) ) {
+        if ( item && SP_IS_LPE_ITEM(item) ) {
             SPDocument *doc = current_desktop->doc();
 
             const Util::EnumData<LivePathEffect::EffectType>* data = combo_effecttype.get_active_data();
             if (!data) return;
 
+            // Path effect definition
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
             Inkscape::XML::Node *repr = xml_doc->createElement("inkscape:path-effect");
             repr->setAttribute("effect", data->key.c_str() );
@@ -233,18 +239,10 @@ LivePathEffectEditor::onApply()
             Inkscape::GC::release(repr);
 
             gchar *href = g_strdup_printf("#%s", repr_id);
-            sp_shape_set_path_effect(SP_SHAPE(item), href);
+            sp_lpe_item_set_path_effect(SP_LPE_ITEM(item), href);
             g_free(href);
 
-            // make sure there is an original-d for paths!!!
-            if ( SP_IS_PATH(item) ) {
-                Inkscape::XML::Node *pathrepr = SP_OBJECT_REPR(item);
-                if ( ! pathrepr->attribute("inkscape:original-d") ) {
-                    pathrepr->setAttribute("inkscape:original-d", pathrepr->attribute("d"));
-                }
-            }
-
-            LivePathEffectObject *lpeobj = sp_shape_get_livepatheffectobject(SP_SHAPE(item));
+            LivePathEffectObject *lpeobj = sp_lpe_item_get_livepatheffectobject(SP_LPE_ITEM(item));
             if (lpeobj && lpeobj->lpe) {
                 lpeobj->lpe->resetDefaults(item);
             }
@@ -263,8 +261,8 @@ LivePathEffectEditor::onRemove()
     Inkscape::Selection *sel = _getSelection();
     if ( sel && !sel->isEmpty() ) {
         SPItem *item = sel->singleItem();
-        if ( item && SP_IS_SHAPE(item) ) {
-            sp_shape_remove_path_effect(SP_SHAPE(item));
+        if ( item && SP_IS_LPE_ITEM(item) ) {
+            sp_lpe_item_remove_path_effect(SP_LPE_ITEM(item), false);
             showText(_("No effect applied"));
             button_remove.set_sensitive(false);
             sp_document_done ( sp_desktop_document (current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
@@ -272,8 +270,6 @@ LivePathEffectEditor::onRemove()
         }
     }
 }
-
-
 
 } // namespace Dialog
 } // namespace UI

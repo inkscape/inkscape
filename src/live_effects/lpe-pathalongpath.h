@@ -4,7 +4,8 @@
 /*
  * Inkscape::LPEPathAlongPath
  *
-* Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+ * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+ * Copyright (C) Steren Giannini 2008 <steren.giannini@gmail.com>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -14,13 +15,25 @@
 #include "live_effects/parameter/enum.h"
 #include "live_effects/parameter/bool.h"
 
+#include <2geom/sbasis.h>
+#include <2geom/sbasis-geometric.h>
+#include <2geom/bezier-to-sbasis.h>
+#include <2geom/sbasis-to-bezier.h>
+#include <2geom/d2.h>
+#include <2geom/piecewise.h>
+
+#include "live_effects/lpegroupbbox.h"
+
 namespace Inkscape {
 namespace LivePathEffect {
 
-class LPEPathAlongPath : public Effect {
+//for Bend path on group : we need information concerning the group Bounding box
+class LPEPathAlongPath : public Effect, LivePathEffect_group_bbox {
 public:
     LPEPathAlongPath(LivePathEffectObject *lpeobject);
     virtual ~LPEPathAlongPath();
+
+    virtual void doBeforeEffect (SPLPEItem *lpeitem);
 
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
 
@@ -33,6 +46,8 @@ private:
     ScalarParam  prop_scale;
     BoolParam scale_y_rel;
     BoolParam    vertical_pattern;
+
+    bool groupSpecialBehavior;    
 
     void on_pattern_pasted();
 
