@@ -33,6 +33,9 @@
 #include "gdl-dock-item.h"
 #include "libgdlmarshal.h"
 #include "libgdltypebuiltins.h"
+#ifdef WIN32
+#include "gdl-win32.h"
+#endif
 
 /* ----- Private prototypes ----- */
 
@@ -645,8 +648,20 @@ gdl_dock_master_xor_rect (GdlDockMaster *master)
             window, &values, GDK_GC_FUNCTION | GDK_GC_SUBWINDOW);
     };
 
+#ifdef WIN32    
+    GdkLineStyle lineStyle = GDK_LINE_ON_OFF_DASH;
+    if (is_os_vista())
+    {
+        // On Vista the dash-line is increadibly slow to draw, it takes several minutes to draw the tracking lines
+        // With GDK_LINE_SOLID it is parts of a second
+        // No performance issue on WinXP
+        lineStyle = GDK_LINE_SOLID;
+    }
+#else
+    GdkLineStyle lineStyle = GDK_LINE_ON_OFF_DASH;
+#endif
     gdk_gc_set_line_attributes (master->_priv->root_xor_gc, 1,
-                                GDK_LINE_ON_OFF_DASH,
+                                lineStyle,
                                 GDK_CAP_NOT_LAST,
                                 GDK_JOIN_BEVEL);
     
