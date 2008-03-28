@@ -22,6 +22,8 @@
 #include "sp-shape.h"
 #include "sp-item-group.h"
 #include "sp-path.h"
+#include "sp-rect.h"
+#include "path-chemistry.h"
 #include "live_effects/effect.h"
 #include "live_effects/lpeobject.h"
 #include "gtkmm/widget.h"
@@ -228,6 +230,12 @@ LivePathEffectEditor::onApply()
 
             const Util::EnumData<LivePathEffect::EffectType>* data = combo_effecttype.get_active_data();
             if (!data) return;
+
+            // If item is a SPRect, convert it to path first:
+            if ( SP_IS_RECT(item) ) {
+                sp_selected_path_to_curves(false);
+                item = sel->singleItem(); // get new item
+            }
 
             // Path effect definition
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);

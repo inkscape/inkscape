@@ -261,9 +261,13 @@ sp_selected_path_break_apart(void)
 
 /* This function is an entry point from GUI */
 void
-sp_selected_path_to_curves(void)
+sp_selected_path_to_curves(bool interactive)
 {
-    sp_selected_path_to_curves0(TRUE, SP_TOCURVE_INTERACTIVE);
+    if (interactive) {
+        sp_selected_path_to_curves0(TRUE, SP_TOCURVE_INTERACTIVE);
+    } else {
+        sp_selected_path_to_curves0(false, 0);
+    }
 }
 
 static void

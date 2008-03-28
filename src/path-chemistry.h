@@ -17,7 +17,7 @@
 
 void sp_selected_path_combine (void);
 void sp_selected_path_break_apart (void);
-void sp_selected_path_to_curves (void);
+void sp_selected_path_to_curves (bool interactive = true);
 Inkscape::XML::Node *sp_selected_item_to_curved_repr(SPItem *item, guint32 text_grouping_policy);
 void sp_selected_path_reverse ();
 
