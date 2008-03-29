@@ -365,8 +365,7 @@ bool Path::ExtendFit(int off, int N, fitting_tables &data, double treshhold, Pat
     }
     
     if ( N < data.nbPt ) {
-        // on est allŽ trop loin
-        // faut recalculer les tk
+        // We've gone too far; we'll have to recalulate the .tk.
         data.totLen = 0;
         data.tk[0] = 0;
         data.lk[0] = 0;
@@ -1153,9 +1152,9 @@ double Path::RaffineTk (NR::Point pt, NR::Point p0, NR::Point p1, NR::Point p2, 
     return it;
 }
 
-// variation on the fitting theme: try to merge path commands into cubic bezier patches
-// the goal was to reduce the number of path commands, especially when ooperations on path produce
-// lots of small path elements; ideally you could get rid of very small segments at reduced visual cost
+// Variation on the fitting theme: try to merge path commands into cubic bezier patches.
+// The goal is to reduce the number of path commands, especially when operations on path produce
+// lots of small path elements; ideally you could get rid of very small segments at reduced visual cost.
 void Path::Coalesce(double tresh)
 {
     if ( descr_flags & descr_adding_bezier ) {
@@ -1178,10 +1177,10 @@ void Path::Coalesce(double tresh)
   
     int lastP = 0;
     int lastAP = -1;
-    // As the elements are stored in a separate tableau, it's no longer worth optimizing
-    // the rewriting in the same tableau.
+    // As the elements are stored in a separate array, it's no longer worth optimizing
+    // the rewriting in the same array.
     // [[comme les elements sont stockes dans un tableau a part, plus la peine d'optimiser
-    // la rŽŽcriture dans la meme tableau]]
+    // la rÃ©Ã©criture dans la meme tableau]]
     
     int lastA = descr_cmd[0]->associated;
     int prevA = lastA;
@@ -1254,9 +1253,10 @@ void Path::Coalesce(double tresh)
                 if (AttemptSimplify(lastA, nextA - lastA + 1, 0.05 * tresh, res, worstP)) {
                     // plus sensible parce que point force
                     // ca passe
+                    /* (Possible translation: More sensitive because contains a forced point.) */
                     containsForced = true;
                 } else  {
-                    // on force l'addition
+                    // Force the addition.
                     FlushPendingAddition(tempDest, lastAddition, pending_cubic, lastAP);
                     lastAddition = new PathDescrMoveTo(NR::Point(0, 0));
                     prevA = lastA = nextA;
@@ -1283,6 +1283,7 @@ void Path::Coalesce(double tresh)
                     lastAP = -1;
                 }  else {
                     lastA = descr_cmd[lastP]->associated;	// pourrait etre surecrit par la ligne suivante
+                        /* (possible translation: Could be overwritten by the next line.) */
                     FlushPendingAddition(tempDest, lastAddition, pending_cubic, lastAP);
                     lastAddition = descr_cmd[curP];
                     if ( typ == descr_cubicto ) {
