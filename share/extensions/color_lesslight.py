@@ -6,7 +6,7 @@ class C(coloreffect.ColorEffect):
     #inkex.debug("hsl: " + str(hsl[0]) + ", " + str(hsl[1]) + ", " + str(hsl[2]))
     hsl[2] = hsl[2] - 0.05
     if hsl[2] < 0.0:
-        hsl[2] = 0.0			
+        hsl[2] = 0.0
     rgb = self.hsl_to_rgb(hsl[0], hsl[1], hsl[2])
     return '%02x%02x%02x' % (rgb[0]*255, rgb[1]*255, rgb[2]*255)
 

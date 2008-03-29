@@ -13,10 +13,10 @@ class C(chardataeffect.CharDataEffect):
       if a > 0:
         a = random.choice([-2,-1,1])
       else:
-        a = random.choice([-1,1,2])      
+        a = random.choice([-1,1,2])
       if a > 0 and c.isalpha():
         r = r + c.upper()
-      elif a < 0 and c.isalpha():
+      elif a < 0 and c.isalpha():
         r = r + c.lower()
       else:
         r = r + c
