@@ -359,15 +359,12 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 	SPItem *pitem = SP_ITEM (SP_OBJECT_PARENT (gitem));
 	Inkscape::XML::Node *prepr = SP_OBJECT_REPR (pitem);
 
-  if (SP_IS_BOX3D(gitem)) {
-      grepr = box3d_convert_to_group(SP_BOX3D(gitem));
-      if (grepr) {
-          gitem = SP_ITEM(doc->getObjectByRepr(grepr));
-          group = SP_GROUP(gitem);
-      }
-  }
+        if (SP_IS_BOX3D(gitem)) {
+            group = box3d_convert_to_group(SP_BOX3D(gitem));
+            gitem = SP_ITEM(group);
+        }
 
-    sp_lpe_item_remove_path_effect(SP_LPE_ITEM(group), false);
+        sp_lpe_item_remove_path_effect(SP_LPE_ITEM(group), false);
 
 	/* Step 1 - generate lists of children objects */
 	GSList *items = NULL;

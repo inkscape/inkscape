@@ -332,7 +332,7 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
 
         if (SP_IS_BOX3D(item)) {
             // convert 3D box to ordinary group of paths; replace the old element in 'selected' with the new group
-            Inkscape::XML::Node *repr = box3d_convert_to_group(SP_BOX3D(item));
+            Inkscape::XML::Node *repr = SP_OBJECT_REPR(box3d_convert_to_group(SP_BOX3D(item)));
             
             if (repr) {
                 *to_select = g_slist_prepend (*to_select, repr);

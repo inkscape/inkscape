@@ -1361,7 +1361,7 @@ box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp, 
 
 /* Converts the 3D box to an ordinary SPGroup, adds it to the XML tree at the same position as
    the original box and deletes the latter */
-Inkscape::XML::Node *
+SPGroup *
 box3d_convert_to_group(SPBox3D *box) {
     SPDocument *doc = SP_OBJECT_DOCUMENT(box);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
@@ -1403,7 +1403,7 @@ box3d_convert_to_group(SPBox3D *box) {
 
     grepr->setAttribute("id", id);
 
-    return grepr;
+    return SP_GROUP(doc->getObjectByRepr(grepr));
 }
 
 static inline void
