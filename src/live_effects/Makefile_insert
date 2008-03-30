@@ -33,5 +33,7 @@ live_effects_liblive_effects_a_SOURCES = \
 	live_effects/lpe-test-doEffect-stack.cpp	\
 	live_effects/lpe-test-doEffect-stack.h	\
 	live_effects/lpe-slant.cpp	\
-	live_effects/lpe-slant.h
+	live_effects/lpe-slant.h	\
+	live_effects/lpe-circle_with_radius.cpp	\
+	live_effects/lpe-circle_with_radius.h
 

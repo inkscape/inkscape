@@ -42,6 +42,7 @@
 #include "live_effects/lpe-test-doEffect-stack.h"
 #include "live_effects/lpe-gears.h"
 #include "live_effects/lpe-curvestitch.h"
+#include "live_effects/lpe-circle_with_radius.h"
 
 #include "nodepath.h"
 
@@ -61,7 +62,8 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),   "doeffectstacktest"},
 #endif
     {GEARS,                 N_("Gears"),                 "gears"},
-    {CURVE_STITCH,          N_("Stitch Sub-Paths"),       "curvestitching"},
+    {CURVE_STITCH,          N_("Stitch Sub-Paths"),      "curvestitching"},
+    {CIRCLE_WITH_RADIUS,    N_("Circle (center+radius)"), "circle_with_radius"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
@@ -99,6 +101,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case CURVE_STITCH:
             neweffect = (Effect*) new LPECurveStitch(lpeobj);
+            break;
+        case CIRCLE_WITH_RADIUS:
+            neweffect = (Effect*) new LPECircleWithRadius(lpeobj);
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);
