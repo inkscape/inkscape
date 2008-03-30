@@ -21,7 +21,6 @@ FOREACH(dep ${INKSCAPE_DEPENDS})
         message(STATUS "${dep}: FOUND")
         # Set Compiler Flags
         SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${${dep_name}_CFLAGS}")
-        message(STATUS "${CMAKE_CXX_FLAGS}")
     ELSE("${dep}_FOUND")
         message(STATUS "${dep}: NOT FOUND")
     ENDIF("${dep}_FOUND")
