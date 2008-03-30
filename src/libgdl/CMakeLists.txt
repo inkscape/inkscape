@@ -1,0 +1,22 @@
+SET(libgdl_SRC
+gdl-dock.h
+gdl-dock-bar.h
+gdl-dock-item.h
+gdl-dock-item-grip.h
+gdl-dock-master.h
+gdl-dock-notebook.h
+gdl-dock-object.h
+gdl-dock-paned.h
+gdl-dock-placeholder.h
+gdl-dock-tablabel.h
+gdl-i18n.h
+gdl-stock.h
+gdl-stock-icons.h
+gdl-switcher.h
+gdl-tools.h
+gdl-win32.h
+libgdl.h
+libgdlmarshal.h
+libgdltypebuiltins.h
+)
+ADD_LIBRARY(inklibgdl STATIC ${libgdl_SRC})
