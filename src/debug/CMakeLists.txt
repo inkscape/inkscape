@@ -17,4 +17,3 @@ timestamp.cpp
 #timestamp.h
 )
 
-ADD_LIBRARY(inkdebug STATIC ${debug})

@@ -199,11 +199,26 @@ verbs.cpp
 version.cpp
 winmain.cpp
 zoom-context.cpp
+${algorithms}
+${api}
+${application}
+${BIND_SRC}
+${debug}
+${dialogs}
+${display}
+${dom_SRC}
+${extension_SRC}
+${graphlayout_SRC}
+${extension_SRC}
+${helper_SRC}
+#${
+#${
+#${
 )
 
 # make executable for INKSCAPE
 ADD_EXECUTABLE(inkscape ${INKSCAPE_SRC})
-#TARGET_LINK_LIBRARIES(INKSCAPE blas gsl)
+
 #INSTALL(TARGETS INKSCAPE
 #  RUNTIME DESTINATION bin
 #  LIBRARY DESTINATION lib

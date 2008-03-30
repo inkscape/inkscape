@@ -55,5 +55,3 @@ sp-ctrlline.cpp
 sp-ctrlquadr.cpp
 testnr.cpp
 )
-
-ADD_LIBRARY(inkdisplay STATIC ${display})
