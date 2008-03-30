@@ -3,7 +3,7 @@
 # Author: Aaron Voisine <aaron@voisine.org>
 # Inkscape Modifications: Michael Wybrow <mjwybrow@users.sourceforge.net>
 
-CWD="`dirname \"$0\"`"
+CWD=`dirname "$0"`
 
 # System version: 3 for Panther, 4 for Tiger, 5 for Leopard
 export VERSION=`/usr/bin/sw_vers | grep ProductVersion | cut -f2 -d'.'`
@@ -18,12 +18,13 @@ if [[ $VERSION -le 4 ]]; then
 	# from xinitrc but when is it really used? Should we modify 
 	# the .xinitrc of the user without warning?
 	ps -wx -ocommand | grep -e '[X]11' > /dev/null
-	if [ "$?" != "0" -a ! -f ${HOME}/.xinitrc ]; then
-	    echo "rm -f ${HOME}/.xinitrc" > ${HOME}/.xinitrc
-	    sed 's/xterm/# xterm/' /usr/X11R6/lib/X11/xinit/xinitrc >> ${HOME}/.xinitrc
+	if [ "$?" != "0" -a ! -f "${HOME}/.xinitrc" ]; then
+	    echo "rm -f \"\${HOME}/.xinitrc\"" > "${HOME}/.xinitrc"
+	    sed 's/xterm/# xterm/' /usr/X11R6/lib/X11/xinit/xinitrc >> "${HOME}/.xinitrc"
 	fi
 
 	# Start X11 and get DISPLAY
+	# FIXME: Insecure tmp file usage.  Why do we have to copy this to /tmp anyway?
 	cp -f "$CWD/bin/getdisplay.sh" /tmp/
 	rm -f /tmp/display.$UID
 	open-x11 /tmp/getdisplay.sh || \
@@ -33,7 +34,7 @@ if [[ $VERSION -le 4 ]]; then
 	while [ "$?" == "0" -a ! -f /tmp/display.$UID ]; do
 	    sleep 1
 	done
-	export DISPLAY="`cat /tmp/display.$UID`"
+	export DISPLAY=`cat /tmp/display.$UID`
 
 	ps -wx -ocommand | grep -e '[X]11' > /dev/null || exit 11
 	
@@ -48,11 +49,11 @@ fi
 
 
 
-BASE="`echo "$0" | sed -e 's/\/Contents\/Resources\/script/\//'`"
+BASE=`echo "$0" | sed -e 's/\/Contents\/Resources\/script/\//'`
 cd "$BASE"
 exec "$CWD/bin/inkscape" "$@"
-# TODO examine wether it would be wisest to move the code from inkscape shell
+# TODO examine whether it would be wisest to move the code from inkscape shell
 # script and getdisplay.sh to here and only keep the real binary in bin. This
 # may make things easier on Leopard and may also help using Inkscape on the
-# command line
+# command line.
 
