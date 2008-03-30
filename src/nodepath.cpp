@@ -1907,32 +1907,10 @@ void sp_node_selected_duplicate(Inkscape::NodePath::Path *nodepath)
 }
 
 /**
- *  Join two nodes by merging them into one.
+ *  Internal function to join two nodes by merging them into one.
  */
-void sp_node_selected_join(Inkscape::NodePath::Path *nodepath)
+static void do_node_selected_join(Inkscape::NodePath::Path *nodepath, Inkscape::NodePath::Node *a, Inkscape::NodePath::Node *b)
 {
-    if (!nodepath) return; // there's no nodepath when editing rects, stars, spirals or ellipses
-
-    if (g_list_length(nodepath->selected) != 2) {
-        nodepath->desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("To join, you must have <b>two endnodes</b> selected."));
-        return;
-    }
-
-   Inkscape::NodePath::Node *a = (Inkscape::NodePath::Node *) nodepath->selected->data;
-   Inkscape::NodePath::Node *b = (Inkscape::NodePath::Node *) nodepath->selected->next->data;
-
-    g_assert(a != b);
-    if (!(a->p.other || a->n.other) || !(b->p.other || b->n.other)) {
-        // someone tried to join an orphan node (i.e. a single-node subpath).
-        // this is not worth an error message, just fail silently.
-        return;
-    }
-
-    if (((a->subpath->closed) || (b->subpath->closed)) || (a->p.other && a->n.other) || (b->p.other && b->n.other)) {
-        nodepath->desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("To join, you must have <b>two endnodes</b> selected."));
-        return;
-    }
-
     /* a and b are endpoints */
 
     NR::Point c;
@@ -1955,10 +1933,10 @@ void sp_node_selected_join(Inkscape::NodePath::Path *nodepath)
     }
 
     /* a and b are separate subpaths */
-   Inkscape::NodePath::SubPath *sa = a->subpath;
-   Inkscape::NodePath::SubPath *sb = b->subpath;
+    Inkscape::NodePath::SubPath *sa = a->subpath;
+    Inkscape::NodePath::SubPath *sb = b->subpath;
     NR::Point p;
-   Inkscape::NodePath::Node *n;
+    Inkscape::NodePath::Node *n;
     NRPathcode code;
     if (a == sa->first) {
         p = sa->first->n.pos;
@@ -2008,32 +1986,10 @@ void sp_node_selected_join(Inkscape::NodePath::Path *nodepath)
 }
 
 /**
- *  Join two nodes by adding a segment between them.
+ *  Internal function to join two nodes by adding a segment between them.
  */
-void sp_node_selected_join_segment(Inkscape::NodePath::Path *nodepath)
+static void do_node_selected_join_segment(Inkscape::NodePath::Path *nodepath, Inkscape::NodePath::Node *a, Inkscape::NodePath::Node *b)
 {
-    if (!nodepath) return; // there's no nodepath when editing rects, stars, spirals or ellipses
-
-    if (g_list_length(nodepath->selected) != 2) {
-        nodepath->desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("To join, you must have <b>two endnodes</b> selected."));
-        return;
-    }
-
-   Inkscape::NodePath::Node *a = (Inkscape::NodePath::Node *) nodepath->selected->data;
-   Inkscape::NodePath::Node *b = (Inkscape::NodePath::Node *) nodepath->selected->next->data;
-
-    g_assert(a != b);
-    if (!(a->p.other || a->n.other) || !(b->p.other || b->n.other)) {
-        // someone tried to join an orphan node (i.e. a single-node subpath).
-        // this is not worth an error message, just fail silently.
-        return;
-    }
-
-    if (((a->subpath->closed) || (b->subpath->closed)) || (a->p.other && a->n.other) || (b->p.other && b->n.other)) {
-        nodepath->desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("To join, you must have <b>two endnodes</b> selected."));
-        return;
-    }
-
     if (a->subpath == b->subpath) {
        Inkscape::NodePath::SubPath *sp = a->subpath;
 
@@ -2057,10 +2013,10 @@ void sp_node_selected_join_segment(Inkscape::NodePath::Path *nodepath)
     }
 
     /* a and b are separate subpaths */
-   Inkscape::NodePath::SubPath *sa = a->subpath;
-   Inkscape::NodePath::SubPath *sb = b->subpath;
+    Inkscape::NodePath::SubPath *sa = a->subpath;
+    Inkscape::NodePath::SubPath *sb = b->subpath;
 
-   Inkscape::NodePath::Node *n;
+    Inkscape::NodePath::Node *n;
     NR::Point p;
     NRPathcode code;
     if (a == sa->first) {
@@ -2106,6 +2062,61 @@ void sp_node_selected_join_segment(Inkscape::NodePath::Path *nodepath)
     sp_nodepath_update_handles(sa->nodepath);
 
     sp_nodepath_update_repr(nodepath, _("Join nodes by segment"));
+}
+
+enum NodeJoinType { NODE_JOIN_ENDPOINTS, NODE_JOIN_SEGMENT };
+
+/**
+ * Internal function to handle joining two nodes.
+ */
+static void node_do_selected_join(Inkscape::NodePath::Path *nodepath, NodeJoinType mode)
+{
+    if (!nodepath) return; // there's no nodepath when editing rects, stars, spirals or ellipses
+
+    if (g_list_length(nodepath->selected) != 2) {
+        nodepath->desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("To join, you must have <b>two endnodes</b> selected."));
+        return;
+    }
+
+    Inkscape::NodePath::Node *a = (Inkscape::NodePath::Node *) nodepath->selected->data;
+    Inkscape::NodePath::Node *b = (Inkscape::NodePath::Node *) nodepath->selected->next->data;
+
+    g_assert(a != b);
+    if (!(a->p.other || a->n.other) || !(b->p.other || b->n.other)) {
+        // someone tried to join an orphan node (i.e. a single-node subpath).
+        // this is not worth an error message, just fail silently.
+        return;
+    }
+
+    if (((a->subpath->closed) || (b->subpath->closed)) || (a->p.other && a->n.other) || (b->p.other && b->n.other)) {
+        nodepath->desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("To join, you must have <b>two endnodes</b> selected."));
+        return;
+    }
+
+    switch(mode) {
+        case NODE_JOIN_ENDPOINTS:
+            do_node_selected_join(nodepath, a, b);
+            break;
+        case NODE_JOIN_SEGMENT:
+            do_node_selected_join_segment(nodepath, a, b);
+            break;
+    }
+}
+
+/**
+ *  Join two nodes by merging them into one.
+ */
+void sp_node_selected_join(Inkscape::NodePath::Path *nodepath)
+{
+    node_do_selected_join(nodepath, NODE_JOIN_ENDPOINTS);
+}
+
+/**
+ *  Join two nodes by adding a segment between them.
+ */
+void sp_node_selected_join_segment(Inkscape::NodePath::Path *nodepath)
+{
+    node_do_selected_join(nodepath, NODE_JOIN_SEGMENT);
 }
 
 /**
