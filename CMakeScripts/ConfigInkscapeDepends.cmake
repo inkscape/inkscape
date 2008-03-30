@@ -25,7 +25,9 @@ FOREACH(dep ${INKSCAPE_DEPENDS})
         message(STATUS "${dep}: NOT FOUND")
     ENDIF("${dep}_FOUND")
 ENDFOREACH(dep)
-    INCLUDE(FindBoost)
+# Include non pkg-config dependencies:
+INCLUDE(FindBoost)
+INCLUDE(FindGC)
 # end Dependencies
 
 # Optional Dependencies Packages
