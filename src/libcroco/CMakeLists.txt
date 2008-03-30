@@ -56,4 +56,4 @@ cr-utils.c
 cr-utils.h
 libcroco.h
 )
-ADD_LIBRARY(inklibcroco STATIC ${libcroco_SRC})
+ADD_LIBRARY(croco STATIC ${libcroco_SRC})

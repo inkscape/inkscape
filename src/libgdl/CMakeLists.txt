@@ -35,4 +35,4 @@ libgdlmarshal.h
 libgdltypebuiltins.c
 libgdltypebuiltins.h
 )
-ADD_LIBRARY(inklibgdl STATIC ${libgdl_SRC})
+ADD_LIBRARY(gdl STATIC ${libgdl_SRC})

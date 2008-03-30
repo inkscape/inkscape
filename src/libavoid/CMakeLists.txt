@@ -27,4 +27,4 @@ vertices.h
 visibility.cpp
 visibility.h
 )
-ADD_LIBRARY(inklibavoid STATIC ${libavoid_SRC})
+ADD_LIBRARY(avoid STATIC ${libavoid_SRC})

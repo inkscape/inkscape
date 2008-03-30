@@ -24,4 +24,17 @@ svg.cpp
 svgz.cpp
 win32.cpp
 wpg-input.cpp
+${extension_internal_bitmap_SRC}
+${extension_internal_pdfinput_SRC}
 )
+
+# Add New folders in src folder here
+SET(extensioninternalfolders
+bitmap
+pdfinput
+)
+
+FOREACH(extensionINTdirlist ${extensioninternalfolders})
+ADD_SUBDIRECTORY(${extensionINTdirlist})
+ENDFOREACH(extensionINTdirlist)
+

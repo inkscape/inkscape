@@ -97,4 +97,4 @@ nr-values.cpp
 nr-values.h
 testnr.cpp
 )
-ADD_LIBRARY(inklibnr STATIC ${libnr_SRC})
+ADD_LIBRARY(nr STATIC ${libnr_SRC})
