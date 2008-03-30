@@ -3,15 +3,18 @@
 # Defines:
 #  BOOST_INCLUDE
 
+
+# To find boost on Windows, use BOOST_PATH variable set by mingwenv.bat:
+SET(env_boost_path "$ENV{BOOST_PATH}")
+
 FIND_PATH(BOOST_INCLUDE_DIR boost/weak_ptr.hpp 
                             /usr/include 
                             /usr/local/include
-                            C:\\Boost\\Include
-                            C:\\Boost\\include\\boost-1_33_1 )
+                            env_boost_path )
 
 
 IF(MINGW)
-  SET (BOOST_ROOT C:\\Boost)
+  SET (BOOST_ROOT env_boost_path)
   FIND_LIBRARY( BOOST_PYTHON_LIBRARY 
                 libboost_python-mgw
                 PATHS ${BOOST_ROOT}\\lib )
@@ -20,9 +23,9 @@ IF(MINGW)
                 PATHS ${BOOST_ROOT}\\lib )
 ELSE(MINGW)
   FIND_LIBRARY( BOOST_PYTHON_LIBRARY NAMES boost_python
-                PATHS /usr/lib /usr/local/lib C:\\Boost\\lib )
+                PATHS /usr/lib /usr/local/lib ${BOOST_ROOT}\\lib )
   FIND_LIBRARY( BOOST_PYTHON_LIBRARY_DEBUG NAMES boost_python-d
-                PATHS /usr/lib /usr/local/lib C:\\Boost\\lib )
+                PATHS /usr/lib /usr/local/lib ${BOOST_ROOT}\\lib )
 ENDIF(MINGW)
 
 IF (BOOST_INCLUDE_DIR)
