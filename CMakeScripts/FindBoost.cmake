@@ -4,13 +4,12 @@
 #  BOOST_INCLUDE_DIR
 
 
-# To find boost on Windows, use BOOST_PATH variable set by mingwenv.bat:
-SET(env_boost_path "$ENV{BOOST_PATH}")
+# To find boost on Windows, use DEVLIBS_PATH variable set by mingwenv.bat
 
 FIND_PATH(BOOST_INCLUDE_DIR boost/weak_ptr.hpp 
                             /usr/include 
                             /usr/local/include
-                            env_boost_path )
+                            $ENV{DEVLIBS_PATH}//include )
 
 
 IF (BOOST_INCLUDE_DIR)
@@ -18,9 +17,9 @@ IF (BOOST_INCLUDE_DIR)
 ENDIF (BOOST_INCLUDE_DIR)
 
 IF (BOOST_FOUND)
-     MESSAGE(STATUS "Found Boost: ${BOOST_INCLUDE_DIR}")
+     MESSAGE(STATUS "boost: FOUND  ( ${BOOST_INCLUDE_DIR} )")
 ELSE(BOOST_FOUND)
-     MESSAGE(FATAL_ERROR "Could not find Boost")
+     MESSAGE(FATAL_ERROR "boost: NOT FOUND")
 ENDIF (BOOST_FOUND)
 
 
