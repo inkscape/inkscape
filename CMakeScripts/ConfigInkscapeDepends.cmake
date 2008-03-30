@@ -19,6 +19,8 @@ FOREACH(dep ${INKSCAPE_DEPENDS})
 #    PKGCONFIG_VERSION(${dep} "${dep}_VERSION")
     IF("${dep}_FOUND")
         message(STATUS "${dep}: FOUND")
+        # Set Compiler Flags
+        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${dep_name_CFLAGS}")
     ELSE("${dep}_FOUND")
         message(STATUS "${dep}: NOT FOUND")
     ENDIF("${dep}_FOUND")
@@ -45,6 +47,9 @@ ENDFOREACH(opt)
 # end Optional Dependencies
 message(STATUS "")
 message(STATUS "")
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+SET(CMAKE_MAKE_PROGRAM "${CMAKE_MAKE_PROGRAM} -j2")
 INCLUDE (CheckIncludeFiles)
 # usage: CHECK_INCLUDE_FILES (<header> <RESULT_VARIABLE> )
 
