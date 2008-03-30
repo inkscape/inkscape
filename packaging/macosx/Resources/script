@@ -36,11 +36,16 @@ if [[ $VERSION -le 4 ]]; then
 	export DISPLAY="`cat /tmp/display.$UID`"
 
 	ps -wx -ocommand | grep -e '[X]11' > /dev/null || exit 11
+	
+	# Warn the user about time-consuming generation of fontconfig caches.
+	test -f ${HOME}/.inkscape/.fccache-new || exit 12
+else
+	# Leopard onwards...
+
+	# Warn the user about time-consuming generation of fontconfig caches.
+	test -d ${HOME}/.fontconfig || exit 12
 fi
 
-
-# Warn the user about time-consuming generation of fontconfig caches.
-test -d ${HOME}/.fontconfig || exit 12
 
 
 BASE="`echo "$0" | sed -e 's/\/Contents\/Resources\/script/\//'`"
