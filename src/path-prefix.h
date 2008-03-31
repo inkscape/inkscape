@@ -22,10 +22,10 @@ extern "C" {
 
 #ifdef ENABLE_BINRELOC
 #  define INKSCAPE_APPICONDIR     BR_DATADIR( "/pixmaps" )
+#  define INKSCAPE_BINDDIR        BR_DATADIR( "/inkscape/bind" )
 #  define INKSCAPE_EXAMPLESDIR    BR_DATADIR( "/inkscape/examples" )
 #  define INKSCAPE_EXTENSIONDIR   BR_DATADIR( "/inkscape/extensions" )
 #  define INKSCAPE_GRADIENTSDIR   BR_DATADIR( "/inkscape/gradients" )
-#  define INKSCAPE_JAVADIR        BR_DATADIR( "/inkscape/java" )
 #  define INKSCAPE_KEYSDIR        BR_DATADIR( "/inkscape/keys" )
 #  define INKSCAPE_PIXMAPDIR      BR_DATADIR( "/inkscape/icons" )
 #  define INKSCAPE_MARKERSDIR     BR_DATADIR( "/inkscape/markers" )
@@ -43,10 +43,10 @@ extern "C" {
 #else
 #  ifdef WIN32
 #    define INKSCAPE_APPICONDIR   "pixmaps"
+#    define INKSCAPE_BINDDIR      "share\\bind"
 #    define INKSCAPE_EXAMPLESDIR  "share\\examples"
 #    define INKSCAPE_EXTENSIONDIR "share\\extensions"
 #    define INKSCAPE_GRADIENTSDIR "share\\gradients"
-#    define INKSCAPE_JAVADIR      "share\\java"
 #    define INKSCAPE_KEYSDIR      "share\\keys"
 #    define INKSCAPE_PIXMAPDIR    "share\\icons"
 #    define INKSCAPE_MARKERSDIR   "share\\markers"
@@ -63,10 +63,10 @@ extern "C" {
 #    define CREATE_PATTERNSDIR  INKSCAPE_DATADIR "create\\patterns\\vector"
 #  elif defined ENABLE_OSX_APP_LOCATIONS
 #    define INKSCAPE_APPICONDIR   "Contents/Resources/pixmaps"
+#    define INKSCAPE_BINDDIR      "Contents/Resources/bind"
 #    define INKSCAPE_EXAMPLESDIR  "Contents/Resources/examples"
 #    define INKSCAPE_EXTENSIONDIR "Contents/Resources/extensions"
 #    define INKSCAPE_GRADIENTSDIR "Contents/Resources/gradients"
-#    define INKSCAPE_JAVADIR      "Contents/Resources/java"
 #    define INKSCAPE_KEYSDIR      "Contents/Resources/keys"
 #    define INKSCAPE_PIXMAPDIR    "Contents/Resources/icons"
 #    define INKSCAPE_MARKERSDIR   "Contents/Resources/markers"
@@ -83,10 +83,10 @@ extern "C" {
 #    define CREATE_PATTERNSDIR   "/Library/Application Support/create/patterns/vector"
 #  else
 #    define INKSCAPE_APPICONDIR   INKSCAPE_DATADIR "/pixmaps"
+#    define INKSCAPE_BINDDIR      INKSCAPE_DATADIR "/inkscape/bind"
 #    define INKSCAPE_EXAMPLESDIR  INKSCAPE_DATADIR "/inkscape/examples"
 #    define INKSCAPE_EXTENSIONDIR INKSCAPE_DATADIR "/inkscape/extensions"
 #    define INKSCAPE_GRADIENTSDIR INKSCAPE_DATADIR "/inkscape/gradients"
-#    define INKSCAPE_JAVADIR      INKSCAPE_DATADIR "/inkscape/java"
 #    define INKSCAPE_KEYSDIR      INKSCAPE_DATADIR "/inkscape/keys"
 #    define INKSCAPE_PIXMAPDIR    INKSCAPE_DATADIR "/inkscape/icons"
 #    define INKSCAPE_MARKERSDIR   INKSCAPE_DATADIR "/inkscape/markers"

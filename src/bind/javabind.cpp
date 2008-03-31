@@ -413,7 +413,8 @@ static void getJavaRoot(String &javaroot)
         *slashPos = '\0';
     javaroot = exeName;
     javaroot.append("\\");
-    javaroot.append(INKSCAPE_JAVADIR);
+    javaroot.append(INKSCAPE_BINDDIR);
+    javaroot.append("\\java");
 }
 
 
@@ -552,7 +553,8 @@ static CreateVMFunc getCreateVMFunc()
 
 static void getJavaRoot(String &javaroot)
 {
-    javaroot = INKSCAPE_JAVADIR;
+    javaroot = INKSCAPE_BINDDIR;
+    javaroot.append("/java");
 }
 
 #endif /* !__WIN32__ */
