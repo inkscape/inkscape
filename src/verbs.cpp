@@ -1651,6 +1651,9 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_VIEW_MODE_NORMAL:
             dt->setDisplayModeNormal();
             break;
+        case SP_VERB_VIEW_MODE_NO_FILTERS:
+            dt->setDisplayModeNoFilters();
+            break;
         case SP_VERB_VIEW_MODE_OUTLINE:
             dt->setDisplayModeOutline();
             break;
@@ -2496,6 +2499,8 @@ Verb *Verb::_base_verbs[] = {
 
     new ZoomVerb(SP_VERB_VIEW_MODE_NORMAL, "ViewModeNormal", N_("_Normal"),
                  N_("Switch to normal display mode"), NULL),
+    new ZoomVerb(SP_VERB_VIEW_MODE_NO_FILTERS, "ViewModeNoFilters", N_("No _Filters"),
+                 N_("Switch to normal display without filters"), NULL),
     new ZoomVerb(SP_VERB_VIEW_MODE_OUTLINE, "ViewModeOutline", N_("_Outline"),
                  N_("Switch to outline (wireframe) display mode"), NULL),
     new ZoomVerb(SP_VERB_VIEW_MODE_TOGGLE, "ViewModeToggle", N_("_Toggle"),

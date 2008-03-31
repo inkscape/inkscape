@@ -187,11 +187,20 @@ struct SPDesktop : public Inkscape::UI::View::View
     Inkscape::Display::TemporaryItem * add_temporary_canvasitem (SPCanvasItem *item, guint lifetime);
     void remove_temporary_canvasitem (Inkscape::Display::TemporaryItem * tempitem);
 
-    void setDisplayModeNormal();
-    void setDisplayModeOutline();
+    void _setDisplayMode(Inkscape::RenderMode mode);
+    void setDisplayModeNormal() {
+        _setDisplayMode(Inkscape::RENDERMODE_NORMAL);
+    }
+    void setDisplayModeNoFilters() {
+        _setDisplayMode(Inkscape::RENDERMODE_NO_FILTERS);
+    }
+    void setDisplayModeOutline() {
+        _setDisplayMode(Inkscape::RENDERMODE_OUTLINE);
+    }
     void displayModeToggle();
-    Inkscape::RenderMode displayMode;
-    Inkscape::RenderMode getMode() const { return displayMode; }
+    Inkscape::RenderMode _display_mode;
+    Inkscape::RenderMode _saved_display_mode;
+    Inkscape::RenderMode getMode() const { return _display_mode; }
 
     Inkscape::UI::Widget::Dock* getDock() { return _widget->getDock(); }
 

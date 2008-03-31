@@ -108,6 +108,7 @@ static char const menus_skeleton[] =
 "       <submenu name=\"" N_("_Display mode") "\">\n"
 "         <verb verb-id=\"ViewModeToggle\"/>\n"
 "         <verb verb-id=\"ViewModeNormal\" radio=\"yes\" default=\"yes\"/>\n"
+"         <verb verb-id=\"ViewModeNoFilters\" radio=\"yes\"/>\n"
 "         <verb verb-id=\"ViewModeOutline\" radio=\"yes\"/>\n"
 "       </submenu>\n"
 "       <separator/>\n"

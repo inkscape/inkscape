@@ -11,6 +11,7 @@ namespace Inkscape {
 
 enum RenderMode {
     RENDERMODE_NORMAL,
+    RENDERMODE_NO_FILTERS,
     RENDERMODE_OUTLINE
 };
 
