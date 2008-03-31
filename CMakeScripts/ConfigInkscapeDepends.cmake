@@ -50,7 +50,6 @@ ENDFOREACH(opt)
 message(STATUS "")
 message(STATUS "")
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 SET(CMAKE_MAKE_PROGRAM "${CMAKE_MAKE_PROGRAM} -j2")
 
 INCLUDE (CheckIncludeFiles)
