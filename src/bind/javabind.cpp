@@ -208,8 +208,9 @@ JavaBinderyImpl *JavaBinderyImpl::getInstance()
 
 JavaBinderyImpl::JavaBinderyImpl()
 {
-    jvm  = NULL;
-    env  = NULL;
+    jvm        = NULL;
+    env        = NULL;
+    gatewayObj = NULL;
 }
 
 JavaBinderyImpl::~JavaBinderyImpl()
@@ -272,7 +273,7 @@ void msg(const char *fmt, ...)
 
 
 
-static bool getRegistryString(HKEY root, const char *keyName,
+static bool getRegistryString(HKEY /*root*/, const char *keyName,
                const char *valName, char *buf, int buflen)
 {
     HKEY key;
@@ -632,28 +633,13 @@ static void populateClassPath(const String &javaroot,
 
 
 //========================================================================
-// SCRIPT RUNNER
+// Gateway
 //========================================================================
 /**
- * These methods are used to allow the ScriptRunner class to
- * redirect its stderr and stdout streams to here, to be caught
- * by two string buffers.  We can then use those buffers how we
- * want.  These native methods are only those needed for running
- * a script.  For the main C++/Java bindings, see dobinding.cpp 
+ * This method is used to allow the gateway class to
+ * redirect its logging stream here.
+ * For the main C++/Java bindings, see dobinding.cpp 
  */    
-void JNICALL stdOutWrite(JNIEnv */*env*/, jobject /*obj*/, jlong ptr, jint ch)
-{
-    JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
-    bind->stdOut(ch);
-}
-
-void JNICALL stdErrWrite(JNIEnv */*env*/, jobject /*obj*/, jlong ptr, jint ch)
-{
-    JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
-    bind->stdErr(ch);
-}
-
-
 void JNICALL logWrite(JNIEnv */*env*/, jobject /*obj*/, jlong ptr, jint ch)
 {
     JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
@@ -661,58 +647,100 @@ void JNICALL logWrite(JNIEnv */*env*/, jobject /*obj*/, jlong ptr, jint ch)
 }
 
 
-static JNINativeMethod scriptRunnerMethods[] =
+static JNINativeMethod gatewayMethods[] =
 {
-{ (char *)"stdOutWrite", (char *)"(JI)V", (void *)stdOutWrite },
-{ (char *)"stdErrWrite", (char *)"(JI)V", (void *)stdErrWrite },
 { (char *)"logWrite",    (char *)"(JI)V", (void *)logWrite    },
 { NULL,  NULL, NULL }
 };
 
 
 /**
- * This sets up the 'ScriptRunner' java class for execution of
+ * This sets up the 'Gateway' java class for execution of
  * scripts.   The class's constructor takes a jlong.  This java long
  * is used to store the pointer to 'this'.  When ScriptRunner makes
  * native calls, it passes that jlong back, so that it can call the
  * methods of this C++ class.  
  */  
-bool JavaBinderyImpl::setupScriptRunner()
+bool JavaBinderyImpl::setupGateway()
 {
-    String className = "org/inkscape/cmn/ScriptRunner";
-    if (!registerNatives(className, scriptRunnerMethods))
+    String className = "org/inkscape/cmn/Gateway";
+    if (!registerNatives(className, gatewayMethods))
         {
         return false;
         }
     jclass cls = env->FindClass(className.c_str());
     if (!cls)
         {
-        err("setupScriptRunner: cannot find class '%s' : %s",
+        err("setupGateway: cannot find class '%s' : %s",
 		         className.c_str(), getException().c_str());
         return false;
 		}
 	jmethodID mid = env->GetMethodID(cls, "<init>", "(J)V");
 	if (!mid)
         {
-        err("setupScriptRunner: cannot find constructor for '%s' : %s",
+        err("setupGateway: cannot find constructor for '%s' : %s",
 		          className.c_str(), getException().c_str());
         return false;
 		}
-    jobject obj = env->NewObject(cls, mid, ((jlong)this));
-    if (!obj)
+    gatewayObj = env->NewObject(cls, mid, ((jlong)this));
+    if (!gatewayObj)
         {
-        err("setupScriptRunner: cannot construct '%s' : %s",
+        err("setupGateway: cannot construct '%s' : %s",
 		         className.c_str(), getException().c_str());
         return false;
 		}
 
-	msg("ScriptRunner ready");
+	msg("Gateway ready");
     return true;
+}
+
+bool JavaBinderyImpl::scriptRun(const String &lang, const String &script)
+{
+    if (!loadJVM())
+        return false;
+
+    std::vector<Value> params;
+    Value langParm(lang);
+    params.push_back(langParm);
+    Value scriptParm(script);
+    params.push_back(scriptParm);
+    Value retval;
+    callInstance(Value::BIND_VOID, gatewayObj, "scriptRun",
+             "(Ljava/lang/String;Ljava/lang/String;)Z", params, retval);
+    return retval.getBoolean();
+}
+
+bool JavaBinderyImpl::scriptRunFile(const String &lang, const String &fname)
+{
+    if (!loadJVM())
+        return false;
+
+    std::vector<Value> params;
+    Value langParm(lang);
+    params.push_back(langParm);
+    Value fnameParm(fname);
+    params.push_back(fnameParm);
+    Value retval;
+    callInstance(Value::BIND_VOID, gatewayObj, "scriptRunFile",
+             "(Ljava/lang/String;Ljava/lang/String;)Z", params, retval);
+    return retval.getBoolean();
+}
+
+bool JavaBinderyImpl::showConsole()
+{
+    if (!loadJVM())
+        return false;
+        
+    std::vector<Value> params;
+    Value retval;
+    callInstance(Value::BIND_VOID, gatewayObj, "showConsole",
+             "()Z", params, retval);
+    return retval.getBoolean();
 }
 
 
 //========================================================================
-// End SCRIPT RUNNER
+// End Gateway
 //========================================================================
 
 
@@ -784,7 +812,7 @@ bool JavaBinderyImpl::loadJVM()
     int versionMinor = (vers    ) & 0xffff;
     msg("Loaded JVM version %d.%d", versionMajor, versionMinor);
 
-    if (!setupScriptRunner())
+    if (!setupGateway())
         return false;
 
     return true;
@@ -896,6 +924,127 @@ bool JavaBinderyImpl::callStatic(int type,
         case Value::BIND_STRING:
             {
             jobject ret = env->CallStaticObjectMethodA(cls, mid, jvals);
+            jstring jstr = (jstring) ret;
+            const char *str = env->GetStringUTFChars(jstr, JNI_FALSE);
+            retval.setString(str);
+            env->ReleaseStringUTFChars(jstr, str);
+            break;
+            }
+        default:
+            {
+            err("Unknown return type: %d", type);
+            return false;
+            }
+        }
+    delete jvals;
+    String errStr = getException();
+    if (errStr.size()>0)
+        {
+        err("callStatic: %s", errStr.c_str());
+        return false;
+		}
+    return true;
+}
+
+
+
+/**
+ *  Another difficult method.  However, this time we are operating
+ *  on an existing instance jobject. 
+ *  
+ * @param type the return type of the method
+ * @param obj the instance upon which to make the call
+ * @param methodName the name of the method being invoked
+ * @param signature the method signature (ex: "(Ljava/lang/String;I)V" )
+ *    that describes the param and return types of the method.
+ * @param retval the return value of the java method
+ * @return true if the call was successful, else false.  This is not
+ *    the return value of the method.    
+ */    
+bool JavaBinderyImpl::callInstance(
+                        int type,
+                        const jobject obj,
+                        const String &methodName,
+                        const String &signature,
+                        const std::vector<Value> &params,
+                        Value &retval)
+{
+    jmethodID mid = env->GetMethodID(env->GetObjectClass(obj),
+                methodName.c_str(), signature.c_str());
+    if (!mid)
+        {
+        err("Could not find method '%s/%s' : %s",
+		        methodName.c_str(),
+			    signature.c_str(), getException().c_str());
+        return false;
+        }
+    /**
+     * Assemble your parameters into a form usable by JNI
+     */
+    jvalue *jvals = new jvalue[params.size()];
+    for (unsigned int i=0 ; i<params.size() ; i++)
+        {
+        Value v = params[i];
+        switch (v.getType())
+            {
+            case Value::BIND_BOOLEAN:
+                {
+                jvals[i].z = (jboolean)v.getBoolean();
+                break;
+                }
+            case Value::BIND_INT:
+                {
+                jvals[i].i = (jint)v.getInt();
+                break;
+                }
+            case Value::BIND_DOUBLE:
+                {
+                jvals[i].d = (jdouble)v.getDouble();
+                break;
+                }
+            case Value::BIND_STRING:
+                {
+                jvals[i].l = (jobject) env->NewStringUTF(v.getString().c_str());
+                break;
+                }
+            default:
+                {
+                err("Unknown value type: %d", v.getType());
+                return false;
+                }
+            }
+        }
+    switch (type)
+        {
+        case Value::BIND_VOID:
+            {
+            env->CallVoidMethodA(obj, mid, jvals);
+            break;
+            }
+        case Value::BIND_BOOLEAN:
+            {
+            jboolean ret = env->CallBooleanMethodA(obj, mid, jvals);
+            if (ret == JNI_TRUE) //remember, don't truncate
+                retval.setBoolean(true);
+            else
+                retval.setBoolean(false);
+            break;
+            }
+        case Value::BIND_INT:
+            {
+            jint ret = env->CallIntMethodA(obj, mid, jvals);
+            retval.setInt(ret);
+            break;
+            }
+        case Value::BIND_DOUBLE:
+            {
+            jdouble ret = env->CallDoubleMethodA(obj, mid, jvals);
+            retval.setDouble(ret);
+            break;
+            }
+        case Value::BIND_STRING:
+            {
+            jobject ret = env->CallObjectMethodA(obj, mid, jvals);
             jstring jstr = (jstring) ret;
             const char *str = env->GetStringUTFChars(jstr, JNI_FALSE);
             retval.setString(str);

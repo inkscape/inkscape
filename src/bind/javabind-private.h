@@ -54,10 +54,30 @@ public:
                             const std::vector<Value> &params,
                             Value &retval);
 
+    virtual bool callInstance(
+							int type,
+	                        const jobject obj,
+                            const String &methodName,
+                            const String &signature,
+                            const std::vector<Value> &params,
+                            Value &retval);
+
     virtual bool callMain(const String &className,
 	                      const std::vector<String> &args);
 
     virtual bool isLoaded();
+
+    /**
+     *
+     */
+    virtual bool scriptRun(const String &lang, const String &script);
+
+    /**
+     *
+     */
+    virtual bool scriptRunFile(const String &lang, const String &fileName);
+
+    virtual bool showConsole();
 
     virtual bool registerNatives(const String &className,
                                  const JNINativeMethod *methods);
@@ -66,7 +86,7 @@ public:
 
     virtual String getException();
 
-    virtual bool setupScriptRunner();
+    virtual bool setupGateway();
 
     static JavaBinderyImpl *getInstance();
 
@@ -75,7 +95,7 @@ private:
 
     JavaVM *jvm;
     JNIEnv  *env;
-
+    jobject gatewayObj;
 };
 
 

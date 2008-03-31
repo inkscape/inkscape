@@ -54,6 +54,7 @@
 #endif
 
 #include "extension/effect.h"
+#include "bind/javabind.h"
 
 #include "tools-switch.h"
 #include "inkscape-private.h"
@@ -1727,7 +1728,8 @@ DialogVerb::perform(SPAction *action, void *data, void */*pdata*/)
             dt->_dlg_mgr->showDialog("Messages");
             break;
         case SP_VERB_DIALOG_SCRIPT:
-            dt->_dlg_mgr->showDialog("Script");
+            //dt->_dlg_mgr->showDialog("Script");
+            Inkscape::Bind::JavaBindery::getInstance()->showConsole();
             break;
         case SP_VERB_DIALOG_UNDO_HISTORY:
             dt->_dlg_mgr->showDialog("UndoHistory");

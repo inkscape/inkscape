@@ -95,6 +95,42 @@ public:
     /**
      *
      */
+    Value(int ival)
+        {
+        init();
+        setInt(ival);
+        }
+
+    /**
+     *
+     */
+    Value(bool bval)
+        {
+        init();
+        setBoolean(bval);
+        }
+
+    /**
+     *
+     */
+    Value(double dval)
+        {
+        init();
+        setDouble(dval);
+        }
+
+    /**
+     *
+     */
+    Value(const String &sval)
+        {
+        init();
+        setString(sval);
+        }
+
+    /**
+     *
+     */
     Value(const Value &other)
         {
         assign(other);
@@ -280,6 +316,30 @@ public:
     /**
      *
      */
+    virtual bool scriptRun(const String &/*lang*/, const String &/*script*/)
+        {
+        return false;
+        }
+
+    /**
+     *
+     */
+    virtual bool scriptRunFile(const String &/*lang*/, const String &/*fileName*/)
+        {
+        return false;
+        }
+
+    /**
+     *
+     */
+    virtual bool showConsole()
+        {
+        return false;
+        }
+
+    /**
+     *
+     */
     virtual bool doBinding()
         {
         return false;
@@ -293,36 +353,6 @@ public:
 		return "";
 		}
         
-    virtual String stdOutGet()
-        {
-        return stdOutBuf;
-        }
-
-    virtual void stdOutClear()
-        {
-        stdOutBuf.clear();
-        }
-
-    virtual void stdOut(int ch)
-        {
-        stdOutBuf.push_back((char)ch);
-        }
-
-    virtual String stdErrGet()
-        {
-        return stdErrBuf;
-        }
-
-    virtual void stdErrClear()
-        {
-        stdErrBuf.clear();
-        }
-
-    virtual void stdErr(int ch)
-        {
-        stdErrBuf.push_back((char)ch);
-        }
-
     virtual String logGet()
         {
         return logBuf;

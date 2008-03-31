@@ -107,16 +107,16 @@ bool InkscapeScript::interpretScript(const Glib::ustring &script,
     parm.setString(script);
     parms.push_back(parm);
 
-    binder->stdOutClear();
-    binder->stdErrClear();
+    //binder->stdOutClear();
+    //binder->stdErrClear();
     bool ret = binder->callStatic(Value::BIND_BOOLEAN,
                              "org/inkscape/cmn/ScriptRunner",
                              "run",
                              "(Ljava/lang/String;Ljava/lang/String;)Z",
                              parms,
                              retval);
-    output = binder->stdOutGet();
-    error  = binder->stdErrGet();
+    //output = binder->stdOutGet();
+    //error  = binder->stdErrGet();
 
     if (!ret)
         {
@@ -175,16 +175,16 @@ bool InkscapeScript::interpretFile(const Glib::ustring &fname,
     parm.setString(fname);
     parms.push_back(parm);
 
-    binder->stdOutClear();
-    binder->stdErrClear();
+    //binder->stdOutClear();
+    //binder->stdErrClear();
     bool ret = binder->callStatic(Value::BIND_BOOLEAN,
                              "org/inkscape/cmn/ScriptRunner",
                              "runFile",
                              "(Ljava/lang/String;Ljava/lang/String;)Z",
                              parms,
                              retval);
-    output = binder->stdOutGet();
-    error  = binder->stdErrGet();
+    //output = binder->stdOutGet();
+    //error  = binder->stdErrGet();
 
     if (!ret)
         {
