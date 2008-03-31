@@ -325,17 +325,6 @@
 
   <!--
   ########################################################################
-  ## T A R G E T    :    JAVA
-  ########################################################################
-  -->
-  <target name="java" depends="init"
-      description="compile java binding classes">
-    <javac srcdir="${src}/bind/java" destdir="${build}/java/classes"/>
-  </target>
-
-
-  <!--
-  ########################################################################
   ## T A R G E T    :    L I B
   ########################################################################
   -->
@@ -584,9 +573,6 @@
     <copy file="${gtk}/bin/gspawn-win32-helper.exe" todir="${dist}"/>
     <copy file="${gtk}/bin/gspawn-win32-helper-console.exe" todir="${dist}"/>
 
-    <!-- Java - copying this dir is ok even if you dont use it -->
-    <copy todir="${dist}/share"> <fileset dir="${build}/java"/> </copy>
-
     <!-- PERL -->
     <copy file="${gtk}/perl/bin/perl58.dll" todir="${dist}"/>
 
@@ -648,6 +634,51 @@
   </target>
 
 
+  <!--
+  ########################################################################
+  ## T A R G E T    :    JAVAC
+  ########################################################################
+  -->
+  <target name="javac" depends="init"
+      description="compile java binding classes">
+    <javac srcdir="${src}/bind/java" destdir="${build}/java/classes"/>
+  </target>
+
+
+  <!--
+  ########################################################################
+  ## T A R G E T    :    JAR
+  ########################################################################
+  -->
+  <target name="jar" depends="javac"
+      description="pack java classes and resources into a jar file">
+    <copy todir="${build}/java/classes"> <fileset dir="${src}/bind/data"/> </copy>
+    <jar basedir="${build}/java/classes" destfile="${build}/java/lib/inkscape.jar"/>
+  </target>
+
+  <!--
+  ########################################################################
+  ## T A R G E T    :    BINDDIST
+  ########################################################################
+  -->
+  <target name="binddist" depends="jar"
+      description="pack java classes and resources into a jar file">
+    <copy todir="${dist}/share"> <fileset dir="share/bind"/> </copy>
+    <copy todir="${dist}/share/bind/java"> <fileset dir="${build}/java/lib"/> </copy>
+
+  </target>
+
+  <!--
+  ########################################################################
+  ## T A R G E T    :    BINDCLEAN
+  ########################################################################
+  -->
+  <target name="bindclean" depends=""
+      description="clean up java binding classes">
+        <delete dir="${build}/java"/>
+  </target>
+
+
 
 
   <!--
@@ -663,15 +694,6 @@
   </target>
 
 
-  <!--
-  ########################################################################
-  ## T A R G E T    :    JAVACLEAN
-  ########################################################################
-  -->
-  <target name="javaclean" depends=""
-      description="clean up java binding classes">
-        <delete dir="${build}/java"/>
-  </target>
 
 
 
@@ -680,7 +702,7 @@
   ## T A R G E T    :    C L E A N
   ########################################################################
   -->
-  <target name="clean" depends="javaclean"
+  <target name="clean" depends="bindclean"
         description="clean up.  deleting build and distro dirs" >
 
     <delete dir="${build}"/>

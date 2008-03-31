@@ -38,7 +38,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.7.6, 2007-2008 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.7.7, 2007-2008 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -6650,20 +6650,56 @@ class TaskJar : public Task
 public:
 
     TaskJar(MakeBase &par) : Task(par)
-        { type = TASK_JAR; name = "jar"; }
+        { type = TASK_JAR; name = "jar"; command = "jar";}
 
     virtual ~TaskJar()
         {}
 
     virtual bool execute()
         {
+        String cmd = command;
+        cmd.append(" -cf ");
+        cmd.append(destfile);
+        cmd.append(" -C ");
+        cmd.append(basedir);
+        cmd.append(" .");
+
+        String execCmd = cmd;
+
+        String outString, errString;
+        bool ret = executeCommand(execCmd.c_str(), "", outString, errString);
+        if (!ret)
+            {
+            error("<jar> command '%s' failed :\n %s",
+                                      execCmd.c_str(), errString.c_str());
+            return false;
+            }
         return true;
         }
 
     virtual bool parse(Element *elem)
         {
+        String s;
+        if (!parent.getAttribute(elem, "command", s))
+            return false;
+        if (s.size() > 0)
+            command = s;
+        if (!parent.getAttribute(elem, "basedir", basedir))
+            return false;
+        if (!parent.getAttribute(elem, "destfile", destfile))
+            return false;
+        if (basedir.size() == 0 || destfile.size() == 0)
+            {
+            error("<jar> required both basedir and destfile attributes to be set");
+            return false;
+            }
         return true;
         }
+
+private:
+    String command;
+    String basedir;
+    String destfile;
 };
 
 
