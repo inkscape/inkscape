@@ -223,7 +223,7 @@
 #cmakedefine PACKAGE_NAME
 
 /* Define to the full name and version of this package. */
-#cmakedefine PACKAGE_STRING
+#cmakedefine PACKAGE_STRING VERSION
 
 /* Define to the one symbol short name of this package. */
 #cmakedefine PACKAGE_TARNAME
@@ -245,9 +245,6 @@
 
 /* Define to 1 if your <sys/time.h> declares `struct tm'. */
 #cmakedefine TM_IN_SYS_TIME
-
-/* Version number of package */
-#cmakedefine VERSION
 
 /* Use gnome vfs file load functionality */
 #cmakedefine WITH_GNOME_VFS
