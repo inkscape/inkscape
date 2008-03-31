@@ -7,7 +7,7 @@
 #endif
 
 /* This is for require-config.h */
-#define PACKAGE_TARNAME
+#define PACKAGE_TARNAME "$PROJECT_NAME} ${INKSCAPE_VERSION}"
 
 /* Use binreloc thread support? */
 #cmakedefine BR_PTHREADS
@@ -25,7 +25,7 @@
 #cmakedefine ENABLE_OSX_APP_LOCATIONS
 
 /* Translation domain used */
-#cmakedefine GETTEXT_PACKAGE
+#define GETTEXT_PACKAGE "$PROJECT_NAME}"
 
 /* Define to 1 if you have the `bind_textdomain_codeset' function. */
 #cmakedefine HAVE_BIND_TEXTDOMAIN_CODESET
@@ -211,7 +211,7 @@
 #cmakedefine NO_MINUS_C_MINUS_O
 
 /* Name of package */
-#cmakedefine PACKAGE
+#define PACKAGE "$PROJECT_NAME}"
 
 /* Define to the address where bug reports for this package should be sent. */
 #cmakedefine PACKAGE_BUGREPORT
@@ -220,16 +220,13 @@
 #cmakedefine PACKAGE_LOCALE_DIR
 
 /* Define to the full name of this package. */
-#cmakedefine PACKAGE_NAME
+#cmakedefine PACKAGE_NAME "$PROJECT_NAME}"
 
 /* Define to the full name and version of this package. */
-#cmakedefine PACKAGE_STRING VERSION
-
-/* Define to the one symbol short name of this package. */
-#cmakedefine PACKAGE_TARNAME
+#cmakedefine PACKAGE_STRING "$PROJECT_NAME} ${INKSCAPE_VERSION}"
 
 /* Define to the version of this package. */
-#cmakedefine PACKAGE_VERSION
+#cmakedefine PACKAGE_VERSION "${INKSCAPE_VERSION}"
 
 /* Define as the return type of signal handlers (`int' or `void'). */
 #cmakedefine RETSIGTYPE
