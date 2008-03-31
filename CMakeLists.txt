@@ -9,7 +9,7 @@ SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeScripts)
 INCLUDE(ConfigInkscapeDepends)
 
 SET(CONFIG_H
-../config.h)
+"${CMAKE_CURRENT_BINARY_DIR}/config.h")
 INCLUDE_DIRECTORIES (src/)
 LINK_DIRECTORIES (src/)
 

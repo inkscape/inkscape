@@ -1,5 +1,5 @@
 SET(INKSCAPE_SRC
-#${CONFIG_H}
+${CONFIG_H}
 arc-context.cpp
 attributes.cpp
 axis-manip.cpp
