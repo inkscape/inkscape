@@ -1,3 +1,13 @@
+#ifndef _CONFIG_H_
+#define _CONFIG_H_
+
+/* Define WIN32 when on windows */
+#ifndef WIN32
+#cmakedefine WIN32
+#endif
+
+/* This is for require-config.h */
+#define PACKAGE_TARNAME
 
 /* Use binreloc thread support? */
 #cmakedefine BR_PTHREADS
@@ -283,6 +293,6 @@
 #cmakedefine mode_t
 
 
-
+#endif /* _CONFIG_H_ */
 
 
