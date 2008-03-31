@@ -211,6 +211,10 @@ ${extension_SRC}
 ${graphlayout_SRC}
 ${extension_SRC}
 ${helper_SRC}
+${inkjar_SRC}
+${io_SRC}
+${jabber_whiteboard_SRC}
+#${
 #${
 #${
 #${
