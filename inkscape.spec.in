@@ -25,7 +25,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 BuildRequires:  atk-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  freetype-devel
-BuildRequires:  gc-devel
+BuildRequires:  gc-devel >= 6.4
 BuildRequires:  gettext
 BuildRequires:  gtkmm24-devel
 BuildRequires:  libart_lgpl-devel >= 2.3.10
