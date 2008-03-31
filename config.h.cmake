@@ -220,13 +220,13 @@
 #cmakedefine PACKAGE_LOCALE_DIR
 
 /* Define to the full name of this package. */
-#cmakedefine PACKAGE_NAME "$PROJECT_NAME}"
+#define PACKAGE_NAME "$PROJECT_NAME}"
 
 /* Define to the full name and version of this package. */
-#cmakedefine PACKAGE_STRING "$PROJECT_NAME} ${INKSCAPE_VERSION}"
+#define PACKAGE_STRING "$PROJECT_NAME} ${INKSCAPE_VERSION}"
 
 /* Define to the version of this package. */
-#cmakedefine PACKAGE_VERSION "${INKSCAPE_VERSION}"
+#define PACKAGE_VERSION "${INKSCAPE_VERSION}"
 
 /* Define as the return type of signal handlers (`int' or `void'). */
 #cmakedefine RETSIGTYPE
