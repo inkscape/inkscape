@@ -15,6 +15,8 @@
 
 #include <glib/gmacros.h>
 
+#include "display/rendermode.h"
+
 G_BEGIN_DECLS
 
 typedef struct _SPCanvasArena      SPCanvasArena;
@@ -38,19 +40,13 @@ struct NRArenaEventVector {
 	void (* request_render) (NRArena *arena, NRRectL *area, void *data);
 };
 
-enum {
-	RENDERMODE_NORMAL,
-	RENDERMODE_NOAA,
-	RENDERMODE_OUTLINE
-};
-
 struct NRArena : public NRActiveObject {
 	static NRArena *create() {
 		return reinterpret_cast<NRArena *>(nr_object_new(NR_TYPE_ARENA));
 	}
 
 	double delta;
-	int rendermode;
+	Inkscape::RenderMode rendermode;
 	guint32 outlinecolor;
 	SPCanvasArena *canvasarena; // may be NULL is this arena is not the screen but used for export etc.
 };

@@ -35,6 +35,8 @@
 #include "ui/view/view.h"
 #include "ui/view/edit-widget-interface.h"
 
+#include "display/rendermode.h"
+
 class NRRect;
 class SPCSSAttr;
 struct _GtkWidget;
@@ -188,8 +190,8 @@ struct SPDesktop : public Inkscape::UI::View::View
     void setDisplayModeNormal();
     void setDisplayModeOutline();
     void displayModeToggle();
-    int displayMode;
-    int getMode() const { return displayMode; }
+    Inkscape::RenderMode displayMode;
+    Inkscape::RenderMode getMode() const { return displayMode; }
 
     Inkscape::UI::Widget::Dock* getDock() { return _widget->getDock(); }
 

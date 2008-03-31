@@ -444,7 +444,7 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
 
     guint ret = item->state;
 
-    if (item->arena->rendermode == RENDERMODE_OUTLINE) {
+    if (item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE) {
 
         if (!ct)
             return item->state;
@@ -473,7 +473,7 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
 
 
     /* Fill */
-    if (!style->fill.isNone() || item->arena->rendermode == RENDERMODE_OUTLINE) {
+    if (!style->fill.isNone() || item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE) {
         NRPixBlock m;
         nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
 
@@ -499,9 +499,9 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
             if (ggroup->fill_painter) {
                 nr_arena_render_paintserver_fill(pb, area, ggroup->fill_painter, SP_SCALE24_TO_FLOAT(style->fill_opacity.value), &m);
             }
-        } else if (style->fill.isColor() || item->arena->rendermode == RENDERMODE_OUTLINE) {
+        } else if (style->fill.isColor() || item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE) {
             guint32 rgba;
-            if (item->arena->rendermode == RENDERMODE_OUTLINE) {
+            if (item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE) {
                 // In outline mode, render fill only, using outlinecolor
                 rgba = item->arena->outlinecolor;
             } else if ( item->render_opacity ) {
@@ -518,7 +518,7 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
     }
 
     /* Stroke */
-    if (!style->stroke.isNone() && !(item->arena->rendermode == RENDERMODE_OUTLINE)) {
+    if (!style->stroke.isNone() && !(item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE)) {
         NRPixBlock m;
         guint32 rgba;
         nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);

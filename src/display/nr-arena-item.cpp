@@ -207,6 +207,7 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
                              unsigned int state, unsigned int reset)
 {
     NRGC childgc (gc);
+    bool filter = (item->arena->rendermode == Inkscape::RENDERMODE_NORMAL);
 
     nr_return_val_if_fail (item != NULL, NR_ARENA_ITEM_STATE_INVALID);
     nr_return_val_if_fail (NR_IS_ARENA_ITEM (item),
@@ -259,7 +260,7 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
     if (item->state & NR_ARENA_ITEM_STATE_INVALID)
         return item->state;
     /* Enlarge the bounding box to contain filter effects */
-    if (item->filter) {
+    if (item->filter && filter) {
         item->filter->bbox_enlarge (item->bbox);
     }
     // fixme: to fix the display glitches, in outline mode bbox must be a combination of 
@@ -300,7 +301,8 @@ unsigned int
 nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area,
                              NRPixBlock *pb, unsigned int flags)
 {
-   bool outline = (item->arena->rendermode == RENDERMODE_OUTLINE);
+   bool outline = (item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
+    bool filter = (item->arena->rendermode == Inkscape::RENDERMODE_NORMAL);
 
     nr_return_val_if_fail (item != NULL, NR_ARENA_ITEM_STATE_INVALID);
     nr_return_val_if_fail (NR_IS_ARENA_ITEM (item),
@@ -321,7 +323,7 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
     nr_rect_l_intersect (&carea, area, &item->bbox);
     if (nr_rect_l_test_empty (&carea))
         return item->state | NR_ARENA_ITEM_STATE_RENDER;
-    if (item->filter && !outline) {
+    if (item->filter && filter) {
         item->filter->area_enlarge (carea, item->ctm);
         nr_rect_l_intersect (&carea, &carea, &item->bbox);
     }
@@ -400,7 +402,7 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
     /* Determine, whether we need temporary buffer */
     if (item->clip || item->mask
         || ((item->opacity != 255) && !item->render_opacity)
-        || (item->filter) || item->background_new
+        || (item->filter && filter) || item->background_new
         || (item->parent && item->parent->background_pb)) {
 
         /* Setup and render item buffer */
@@ -423,7 +425,7 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
         }
 
         ipb.visible_area = pb->visible_area;
-        if (item->filter) {
+        if (item->filter && filter) {
               item->filter->area_enlarge (ipb.visible_area, item->ctm);
         }
 
@@ -439,7 +441,7 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
         ipb.empty = FALSE;
 
         /* Run filtering, if a filter is set for this object */
-        if (item->filter) {
+        if (item->filter && filter) {
             item->filter->render (item, &ipb);
         }
 

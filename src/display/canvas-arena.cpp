@@ -212,7 +212,7 @@ sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
     // from here the sw/sh calculation, the loop, and creating the intermediate buffer, allowing arena
     // just render into buf in one go.
 
-    if (arena->arena->rendermode != RENDERMODE_OUTLINE) { // use 256K as a compromise to not slow down gradients
+    if (arena->arena->rendermode != Inkscape::RENDERMODE_OUTLINE) { // use 256K as a compromise to not slow down gradients
         /* 256K is the cached buffer and we need 4 channels */
         if (bw * bh < 65536) { // 256K/4
             /* We can go with single buffer */
@@ -294,7 +294,7 @@ streamline rendering.
 
                 if (pb.empty == FALSE) {
 
-                    if (arena->arena->rendermode == RENDERMODE_OUTLINE) {
+                    if (arena->arena->rendermode == Inkscape::RENDERMODE_OUTLINE) {
                         // currently we only use cairo in outline mode
 
                         // ENDIANNESS FIX

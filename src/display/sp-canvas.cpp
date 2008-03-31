@@ -39,6 +39,7 @@
 #if ENABLE_LCMS
 #include "color-profile-fns.h"
 #endif // ENABLE_LCMS
+#include "display/rendermode.h"
 
 // Define this to visualize the regions to be redrawn
 //#define DEBUG_REDRAW 1;
@@ -47,12 +48,6 @@
 // The canvas stores a 2D array of ints, each representing a TILE_SIZExTILE_SIZE pixels tile.
 // If any part of it is dirtied, the entire tile is dirtied (its int is nonzero) and repainted.
 #define TILE_SIZE 16
-
-enum {
-    RENDERMODE_NORMAL,
-    RENDERMODE_NOAA,
-    RENDERMODE_OUTLINE
-};
 
 static gint const sp_canvas_update_priority = G_PRIORITY_HIGH_IDLE;
 
@@ -1563,7 +1558,7 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
     GtkWidget *widget = GTK_WIDGET (canvas);
 
     SPCanvasBuf buf;
-    if (canvas->rendermode != RENDERMODE_OUTLINE) {
+    if (canvas->rendermode != Inkscape::RENDERMODE_OUTLINE) {
         buf.buf = nr_pixelstore_256K_new (FALSE, 0);
     } else {
         buf.buf = nr_pixelstore_1M_new (FALSE, 0);
@@ -1655,7 +1650,7 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
                                       x0 - canvas->x0, y0 - canvas->y0);
     }
 
-    if (canvas->rendermode != RENDERMODE_OUTLINE) {
+    if (canvas->rendermode != Inkscape::RENDERMODE_OUTLINE) {
         nr_pixelstore_256K_free (buf.buf);
     } else {
         nr_pixelstore_1M_free (buf.buf);
@@ -1826,7 +1821,7 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
     setup.mouse_loc = sp_canvas_window_to_world (canvas, NR::Point(x,y));
 
     // CAIRO FIXME: the sw/sh calculations below all assume 24bpp, need fixing for 32bpp
-    if (canvas->rendermode != RENDERMODE_OUTLINE) {
+    if (canvas->rendermode != Inkscape::RENDERMODE_OUTLINE) {
         // use 256K as a compromise to not slow down gradients
         // 256K is the cached buffer and we need 3 channels
         setup.max_pixels = 87381; // 256K/3

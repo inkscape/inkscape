@@ -180,7 +180,7 @@ nr_arena_image_render( cairo_t *ct, NRArenaItem *item, NRRectL */*area*/, NRPixB
     nr_arena_image_x_sample = prefs_get_int_attribute ("options.bitmapoversample", "value", 1);
     nr_arena_image_y_sample = nr_arena_image_x_sample;
 
-    bool outline = (item->arena->rendermode == RENDERMODE_OUTLINE);
+    bool outline = (item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
 
     NRArenaImage *image = NR_ARENA_IMAGE (item);
 
@@ -294,7 +294,7 @@ nr_arena_image_pick( NRArenaItem *item, NR::Point p, double delta, unsigned int 
 
     if (!image->px) return NULL;
 
-    bool outline = (item->arena->rendermode == RENDERMODE_OUTLINE);
+    bool outline = (item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
 
     if (outline) {
 

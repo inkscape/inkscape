@@ -612,13 +612,13 @@ SPDesktopWidget::updateTitle(gchar const* uri)
                                : g_basename(uri) );
         GString *name = g_string_new ("");
         if (this->desktop->number > 1) {
-            if (this->desktop->getMode() == RENDERMODE_OUTLINE) {
+            if (this->desktop->getMode() == Inkscape::RENDERMODE_OUTLINE) {
                 g_string_printf (name, _("%s: %d (outline) - Inkscape"), fname, this->desktop->number);
             } else {
                 g_string_printf (name, _("%s: %d - Inkscape"), fname, this->desktop->number);
             }
         } else {
-            if (this->desktop->getMode() == RENDERMODE_OUTLINE) {
+            if (this->desktop->getMode() == Inkscape::RENDERMODE_OUTLINE) {
                 g_string_printf (name, _("%s (outline) - Inkscape"), fname);
             } else {
                 g_string_printf (name, _("%s - Inkscape"), fname);

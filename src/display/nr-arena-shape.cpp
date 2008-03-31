@@ -273,7 +273,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
     bbox.x0 = bbox.y0 = NR_HUGE;
     bbox.x1 = bbox.y1 = -NR_HUGE;
 
-    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
+    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
 
     if (shape->curve) {
         NRBPath bp;
@@ -521,7 +521,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
 
     float const scale = NR::expansion(gc->transform);
 
-    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
+    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
 
     if (outline) {
         // cairo does not need the livarot path for rendering
@@ -852,7 +852,7 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
     if (!shape->curve) return item->state;
     if (!shape->style) return item->state;
 
-    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
+    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
 
     if (outline) { // cairo outline rendering
 
@@ -1089,7 +1089,7 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
     GTimeVal tstart, tfinish;
     g_get_current_time (&tstart);
 
-    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
+    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
 
     double width;
     if (outline) {

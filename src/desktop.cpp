@@ -145,6 +145,7 @@ SPDesktop::SPDesktop() :
     gr_point_type( 0 ),
     gr_point_i( 0 ),
     gr_fill_or_stroke( true ),
+    displayMode(Inkscape::RENDERMODE_NORMAL),
     _layer_hierarchy( 0 ),
     _reconstruction_old_layer_id( 0 ),
     _widget( 0 ),
@@ -415,25 +416,25 @@ SPDesktop::remove_temporary_canvasitem (Inkscape::Display::TemporaryItem * tempi
 
 void SPDesktop::setDisplayModeNormal()
 {
-    SP_CANVAS_ARENA (drawing)->arena->rendermode = RENDERMODE_NORMAL;
-    canvas->rendermode = RENDERMODE_NORMAL; // canvas needs that for choosing the best buffer size
-    displayMode = RENDERMODE_NORMAL;
+    SP_CANVAS_ARENA (drawing)->arena->rendermode = Inkscape::RENDERMODE_NORMAL;
+    canvas->rendermode = Inkscape::RENDERMODE_NORMAL; // canvas needs that for choosing the best buffer size
+    displayMode = Inkscape::RENDERMODE_NORMAL;
     sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (main), _d2w); // redraw
     _widget->setTitle(SP_DOCUMENT_NAME(sp_desktop_document(this)));
 }
 
 void SPDesktop::setDisplayModeOutline()
 {
-    SP_CANVAS_ARENA (drawing)->arena->rendermode = RENDERMODE_OUTLINE;
-    canvas->rendermode = RENDERMODE_OUTLINE; // canvas needs that for choosing the best buffer size
-    displayMode = RENDERMODE_OUTLINE;
+    SP_CANVAS_ARENA (drawing)->arena->rendermode = Inkscape::RENDERMODE_OUTLINE;
+    canvas->rendermode = Inkscape::RENDERMODE_OUTLINE; // canvas needs that for choosing the best buffer size
+    displayMode = Inkscape::RENDERMODE_OUTLINE;
     sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (main), _d2w); // redraw
     _widget->setTitle(SP_DOCUMENT_NAME(sp_desktop_document(this)));
 }
 
 void SPDesktop::displayModeToggle()
 {
-    if (displayMode == RENDERMODE_OUTLINE)
+    if (displayMode == Inkscape::RENDERMODE_OUTLINE)
         setDisplayModeNormal();
     else
         setDisplayModeOutline();
