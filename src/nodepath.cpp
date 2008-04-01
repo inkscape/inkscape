@@ -19,6 +19,7 @@
 #include "display/curve.h"
 #include "display/sp-ctrlline.h"
 #include "display/sodipodi-ctrl.h"
+#include "display/sp-canvas-util.h"
 #include <glibmm/i18n.h>
 #include "libnr/n-art-bpath.h"
 #include "libnr/nr-path.h"
@@ -268,6 +269,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
         np->helper_path = sp_canvas_bpath_new(sp_desktop_controls(desktop), helper_curve);
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(np->helper_path), np->helperpath_rgba, np->helperpath_width, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
         sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(np->helper_path), 0, SP_WIND_RULE_NONZERO);
+        sp_canvas_item_move_to_z(np->helper_path, 0);
         sp_canvas_item_show(np->helper_path);
         sp_curve_unref(helper_curve);
     }
@@ -4592,6 +4594,7 @@ void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *np, bool show) {
             np->helper_path = sp_canvas_bpath_new(sp_desktop_controls(np->desktop), helper_curve);
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(np->helper_path), np->helperpath_rgba, np->helperpath_width, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
             sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(np->helper_path), 0, SP_WIND_RULE_NONZERO);
+            sp_canvas_item_move_to_z(np->helper_path, 0);
             sp_canvas_item_show(np->helper_path);
         } else {
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(np->helper_path), helper_curve);
