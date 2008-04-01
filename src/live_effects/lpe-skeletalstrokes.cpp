@@ -66,7 +66,7 @@ LPESkeletalStrokes::LPESkeletalStrokes(LivePathEffectObject *lpeobject) :
     spacing(_("Spacing"), _("Space between copies of the pattern. Negative values allowed, but are limited to -90% of pattern width."), "spacing", &wr, this, 0),
     normal_offset(_("Normal offset"), "", "normal_offset", &wr, this, 0),
     tang_offset(_("Tangential offset"), "", "tang_offset", &wr, this, 0),
-    prop_units(_("Offsets in % of pattern size"), "Spacing, tangential and normal offset are expressed in % of width/height", "prop_units", &wr, this, false),
+    prop_units(_("Offsets in unit of pattern size"), "Spacing, tangential and normal offset are expressed as a ratio of width/height", "prop_units", &wr, this, false),
     vertical_pattern(_("Pattern is vertical"), "Rotate pattern 90 deg before applying", "vertical_pattern", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&pattern) );
@@ -89,27 +89,47 @@ LPESkeletalStrokes::~LPESkeletalStrokes()
 }
 
 
+//TODO: does this already exist in 2Geom? if not, move this there...
+static
+std::vector<Geom::Piecewise<Geom::D2<Geom::SBasis> > > 
+split_at_discontinuities (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwsbin, double tol = .0001)
+{
+    using namespace Geom;
+    std::vector<Piecewise<D2<SBasis> > > ret;
+    unsigned piece_start = 0;
+    for (unsigned i=0; i<pwsbin.segs.size(); i++){
+        if (i==(pwsbin.segs.size()-1) || L2(pwsbin.segs[i].at1()- pwsbin.segs[i+1].at0()) > tol){
+            Piecewise<D2<SBasis> > piece;
+            piece.cuts.push_back(pwsbin.cuts[piece_start]);
+            for (unsigned j = piece_start; j<i+1; j++){
+                piece.segs.push_back(pwsbin.segs[j]);
+                piece.cuts.push_back(pwsbin.cuts[j+1]);                
+            }
+            ret.push_back(piece);
+            piece_start = i+1;
+        }
+    }
+    return ret;
+}
+
+
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPESkeletalStrokes::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
 {
     using namespace Geom;
 
 /* Much credit should go to jfb and mgsloan of lib2geom development for the code below! */
+    Piecewise<D2<SBasis> > output;
 
     SkelCopyType type = copytype.get_value();
 
-    Piecewise<D2<SBasis> > uskeleton = arc_length_parametrization(Piecewise<D2<SBasis> >(pwd2_in),2,.1);
-    uskeleton = remove_short_cuts(uskeleton,.01);
-    Piecewise<D2<SBasis> > n = rot90(derivative(uskeleton));
-    n = force_continuity(remove_short_cuts(n,.1));
-
     D2<Piecewise<SBasis> > patternd2 = make_cuts_independant(pattern.get_pwd2());
-    Piecewise<SBasis> x = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[1]) : Piecewise<SBasis>(patternd2[0]);
-    Piecewise<SBasis> y = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[0]) : Piecewise<SBasis>(patternd2[1]);
-    Interval pattBndsX = bounds_exact(x);
-    x -= pattBndsX.min();
-    Interval pattBndsY = bounds_exact(y);
-    y -= pattBndsY.middle();
+    Piecewise<SBasis> x0 = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[1]) : Piecewise<SBasis>(patternd2[0]);
+    Piecewise<SBasis> y0 = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[0]) : Piecewise<SBasis>(patternd2[1]);
+    Interval pattBndsX = bounds_exact(x0);
+    x0 -= pattBndsX.min();
+    Interval pattBndsY = bounds_exact(y0);
+    y0 -= pattBndsY.middle();
 
     double xspace  = spacing;
     double noffset = normal_offset;
@@ -131,65 +151,72 @@ LPESkeletalStrokes::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pw
     //        spacing.param_set_range(-pattBndsX.extent()*.9, NR_HUGE);
     //    }
 
+    y0+=noffset;
 
+    std::vector<Geom::Piecewise<Geom::D2<Geom::SBasis> > > paths_in;
+    paths_in = split_at_discontinuities(pwd2_in);
 
-
-
-    y+=noffset;
-
-    int nbCopies = 0;
-    double scaling = 1;
-    switch(type) {
-        case SSCT_REPEATED:
-            nbCopies = floor((uskeleton.domain().extent() - tang_offset + xspace)/(pattBndsX.extent()+xspace));
-            pattBndsX = Interval(pattBndsX.min(),pattBndsX.max()+xspace);
-            break;
-
-        case SSCT_SINGLE:
-            nbCopies = (tang_offset + pattBndsX.extent() < uskeleton.domain().extent()) ? 1 : 0;
-            break;
-
-        case SSCT_SINGLE_STRETCHED:
-            nbCopies = 1;
-            scaling = (uskeleton.domain().extent() - tang_offset)/pattBndsX.extent();
-            break;
-
-        case SSCT_REPEATED_STRETCHED:
-            // if uskeleton is closed:
-            if(pwd2_in.segs.front().at0() == pwd2_in.segs.back().at1()){
-                nbCopies = std::floor((uskeleton.domain().extent() - tang_offset)/(pattBndsX.extent()+xspace));
+    for (unsigned idx = 0; idx < paths_in.size(); idx++){
+        Geom::Piecewise<Geom::D2<Geom::SBasis> > path_i = paths_in[idx];
+        Piecewise<SBasis> x = x0;
+        Piecewise<SBasis> y = y0;
+        Piecewise<D2<SBasis> > uskeleton = arc_length_parametrization(path_i,2,.1);
+        uskeleton = remove_short_cuts(uskeleton,.01);
+        Piecewise<D2<SBasis> > n = rot90(derivative(uskeleton));
+        n = force_continuity(remove_short_cuts(n,.1));
+        
+        int nbCopies = 0;
+        double scaling = 1;
+        switch(type) {
+            case SSCT_REPEATED:
+                nbCopies = floor((uskeleton.domain().extent() - toffset + xspace)/(pattBndsX.extent()+xspace));
                 pattBndsX = Interval(pattBndsX.min(),pattBndsX.max()+xspace);
-                scaling = (uskeleton.domain().extent() - tang_offset)/(((double)nbCopies)*pattBndsX.extent());
-            // if not closed: no space at the end
-            }else{
-                nbCopies = std::floor((uskeleton.domain().extent() - tang_offset + xspace)/(pattBndsX.extent()+xspace));
-                pattBndsX = Interval(pattBndsX.min(),pattBndsX.max()+xspace);
-                scaling = (uskeleton.domain().extent() - tang_offset)/(((double)nbCopies)*pattBndsX.extent() - xspace);
-            }
-            break;
-
-        default:
-            return pwd2_in;
-    };
-
-    double pattWidth = pattBndsX.extent() * scaling;
-
-    if (scaling != 1.0) {
-        x*=scaling;
-    }
-    if ( scale_y_rel.get_value() ) {
-        y*=(scaling*prop_scale);
-    } else {
-        if (prop_scale != 1.0) y *= prop_scale;
-    }
-    x += tang_offset;
-
-
-    double offs = 0;
-    Piecewise<D2<SBasis> > output;
-    for (int i=0; i<nbCopies; i++){
-        output.concat(compose(uskeleton,x+offs)+y*compose(n,x+offs));
-        offs+=pattWidth;
+                break;
+                
+            case SSCT_SINGLE:
+                nbCopies = (toffset + pattBndsX.extent() < uskeleton.domain().extent()) ? 1 : 0;
+                break;
+                
+            case SSCT_SINGLE_STRETCHED:
+                nbCopies = 1;
+                scaling = (uskeleton.domain().extent() - toffset)/pattBndsX.extent();
+                break;
+                
+            case SSCT_REPEATED_STRETCHED:
+                // if uskeleton is closed:
+                if(path_i.segs.front().at0() == path_i.segs.back().at1()){
+                    nbCopies = std::floor((uskeleton.domain().extent() - toffset)/(pattBndsX.extent()+xspace));
+                    pattBndsX = Interval(pattBndsX.min(),pattBndsX.max()+xspace);
+                    scaling = (uskeleton.domain().extent() - toffset)/(((double)nbCopies)*pattBndsX.extent());
+                    // if not closed: no space at the end
+                }else{
+                    nbCopies = std::floor((uskeleton.domain().extent() - toffset + xspace)/(pattBndsX.extent()+xspace));
+                    pattBndsX = Interval(pattBndsX.min(),pattBndsX.max()+xspace);
+                    scaling = (uskeleton.domain().extent() - toffset)/(((double)nbCopies)*pattBndsX.extent() - xspace);
+                }
+                break;
+                
+            default:
+                return pwd2_in;
+        };
+        
+        double pattWidth = pattBndsX.extent() * scaling;
+        
+        if (scaling != 1.0) {
+            x*=scaling;
+        }
+        if ( scale_y_rel.get_value() ) {
+            y*=(scaling*prop_scale);
+        } else {
+            if (prop_scale != 1.0) y *= prop_scale;
+        }
+        x += toffset;
+        
+        double offs = 0;
+        for (int i=0; i<nbCopies; i++){
+            output.concat(compose(uskeleton,x+offs)+y*compose(n,x+offs));
+            offs+=pattWidth;
+        }
     }
     return output;
 }
