@@ -37,10 +37,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
-import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.Action;
 import javax.swing.AbstractAction;
 
@@ -53,6 +51,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
 
 import java.util.List;
 import java.util.HashMap;
@@ -100,26 +99,6 @@ void alert(String msg)
     JOptionPane.showMessageDialog(this, msg);
 }
 
-
-//########################################################################
-//# U T I L I T Y
-//########################################################################
-
-private JFileChooser _chooser;
-
-JFileChooser getChooser()
-{
-    if (_chooser == null)
-        {
-        _chooser = new JFileChooser();
-        _chooser.setAcceptAllFileFilterUsed(false);
-        _chooser.setCurrentDirectory(new File("."));
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-              "Script Files", "js", "py", "r");
-        _chooser.setFileFilter(filter);
-        }
-    return _chooser;
-}
 
 
 
@@ -407,30 +386,7 @@ class OpenAction extends AbstractAction
 
 public void actionPerformed(ActionEvent evt)
 {
-    JFileChooser chooser = getChooser();
-    int ret = chooser.showOpenDialog(ScriptConsole.this);
-    if (ret != JFileChooser.APPROVE_OPTION)
-        return;
-    File f = chooser.getSelectedFile();
-    String fname = f.getName();
-    try
-	    {
-		FileReader in = new FileReader(fname);
-        StringBuffer buf = new StringBuffer();
-        while (true)
-            {
-            int ch = in.read();
-            if (ch < 0)
-                break;
-            buf.append((char)ch);
-            }
-        in.close();
-        editor.setText(buf.toString());
-        }
-    catch (IOException e)
-        {
-        err("save file:" + e);
-		}
+    editor.openFile();
 }
 
 public OpenAction()
@@ -485,22 +441,7 @@ class SaveAction extends AbstractAction
 
 public void actionPerformed(ActionEvent evt)
 {
-    JFileChooser chooser = getChooser();
-    int ret = chooser.showSaveDialog(ScriptConsole.this);
-    if (ret != JFileChooser.APPROVE_OPTION)
-        return;
-    File f = chooser.getSelectedFile();
-    String fname = f.getName();
-    try
-	    {
-		FileWriter out = new FileWriter(fname);
-        out.write(editor.getText());
-        out.close();
-        }
-    catch (IOException e)
-        {
-        err("save file:" + e);
-		}
+    editor.saveFile();
 }
 
 public SaveAction()
@@ -518,29 +459,7 @@ class SaveAsAction extends AbstractAction
 
 public void actionPerformed(ActionEvent evt)
 {
-    JFileChooser chooser = getChooser();
-    int ret = chooser.showSaveDialog(ScriptConsole.this);
-    if (ret != JFileChooser.APPROVE_OPTION)
-        return;
-    File f = chooser.getSelectedFile();
-    String fname = f.getName();
-    if (f.exists())
-        {
-        ret = JOptionPane.showConfirmDialog(ScriptConsole.this,
-		              "File '" + fname + "' already exists.  Overwrite?");
-		if (ret != JOptionPane.YES_OPTION)
-		    return;
-		}
-    try
-	    {
-		FileWriter out = new FileWriter(fname);
-        out.write(editor.getText());
-        out.close();
-        }
-    catch (IOException e)
-        {
-        err("saveAs file:" + e);
-		}
+    editor.saveAsFile();
 }
 
 public SaveAsAction()

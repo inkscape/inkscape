@@ -25,12 +25,20 @@
 package org.inkscape.script;
 
 
-
-import javax.swing.JPanel;
-import javax.swing.JTextPane;
 import java.awt.BorderLayout;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextPane;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 
 /**
@@ -58,6 +66,28 @@ void trace(String fmt, Object... arguments)
 {
     parent.trace("Editor:" + fmt, arguments);
 }
+
+
+//########################################################################
+//# U T I L I T Y
+//########################################################################
+
+private JFileChooser _chooser;
+
+JFileChooser getChooser()
+{
+    if (_chooser == null)
+        {
+        _chooser = new JFileChooser();
+        _chooser.setAcceptAllFileFilterUsed(false);
+        _chooser.setCurrentDirectory(new File("."));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+              "Script Files", "js", "py", "r");
+        _chooser.setFileFilter(filter);
+        }
+    return _chooser;
+}
+
 
 /**
  * Returns the current text contained in this editor
@@ -113,18 +143,158 @@ String getHash(String text)
     return toHex(hash);
 }
 
+
+//########################################################################
+//# L O A D    /     S A V E
+//########################################################################
+String fileName = "";
+
+/**
+ *  Gets the name of the current file in the editor
+ */
+public String getFileName()
+{
+    return fileName;
+}
+
+/**
+ *  Sets the name of the current file in the editor
+ */
+public void setFileName(String val)
+{
+    fileName = val;
+}
+
+/**
+ *  Selects and opens a file, loading into the editor
+ */
+public boolean openFile()
+{
+    JFileChooser chooser = getChooser();
+    int ret = chooser.showOpenDialog(this);
+    if (ret != JFileChooser.APPROVE_OPTION)
+        return false;
+    File f = chooser.getSelectedFile();
+    String fname = f.getName();
+    try
+	    {
+		FileReader in = new FileReader(fname);
+        StringBuffer buf = new StringBuffer();
+        while (true)
+            {
+            int ch = in.read();
+            if (ch < 0)
+                break;
+            buf.append((char)ch);
+            }
+        in.close();
+        setText(buf.toString());
+        }
+    catch (IOException e)
+        {
+        err("save file:" + e);
+        return false;
+		}
+    return true;
+}
+
+
+/**
+ *  Saves the file currently in the editor.  Uses the Save
+ *  selector if there is not current file name. 
+ */ 
+public boolean saveFile()
+{
+    if (!isDirty())
+        return true;
+
+    String fname = getFileName();
+    if (fname == null || fname.length()==0)
+        {
+        JFileChooser chooser = getChooser();
+        int ret = chooser.showSaveDialog(this);
+        if (ret != JFileChooser.APPROVE_OPTION)
+            return false;
+        File f = chooser.getSelectedFile();
+        fname = f.getName();
+        }
+    try
+	    {
+		FileWriter out = new FileWriter(fname);
+        out.write(getText());
+        out.close();
+        setFileName(fname);
+        resetDirty();
+        }
+    catch (IOException e)
+        {
+        err("save file:" + e);
+        return false;
+		}
+    return true;
+}
+
+
+/**
+ *  Saves the file currently in the editor under a new name.
+ *  Get the new name from the chooser, and see if it already exists. 
+ */ 
+public boolean saveAsFile()
+{
+    JFileChooser chooser = getChooser();
+    int ret = chooser.showSaveDialog(this);
+    if (ret != JFileChooser.APPROVE_OPTION)
+        return false;
+    File f = chooser.getSelectedFile();
+    String fname = f.getName();
+    if (f.exists())
+        {
+        ret = JOptionPane.showConfirmDialog(this,
+		              "File '" + fname + "' already exists.  Overwrite?");
+		if (ret != JOptionPane.YES_OPTION)
+		    return false;
+		}
+    try
+	    {
+		FileWriter out = new FileWriter(fname);
+        out.write(getText());
+        out.close();
+        setFileName(fname);
+        resetDirty();
+        }
+    catch (IOException e)
+        {
+        err("saveAs file:" + e);
+        return false;
+		}
+    return true;
+}
+
+
+/**
+ * State that the editor is now 'unedited'
+ */
+public void resetDirty()
+{
+    lastHash = getHash(getText());
+}
+
+/**
+ * Determines if the editor has been edited since the last open/save
+ */
 public boolean isDirty()
 {
     String txt = getText();
     String hash = getHash(txt);
-    if (lastHash != null && !lastHash.equals(hash))
+    if ( (lastHash == null && txt.length()>0) ||
+	     (lastHash != null && !lastHash.equals(hash)) )
         return true;
     return false;
 }
 
 
 /**
- *
+ * Creates the editor for the ScriptConsole
  */
 public Editor(ScriptConsole par)
 {
