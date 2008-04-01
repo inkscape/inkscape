@@ -200,7 +200,7 @@
 #cmakedefine HAVE_ZLIB_H 1
 
 /* Base data directory -- only path-prefix.h should use it! */
-#cmakedefine INKSCAPE_DATADIR 
+#define INKSCAPE_DATADIR "${CMAKE_INSTALL_PREFIX}/share"
 
 /* Base library directory -- only path-prefix.h should use it! */
 #cmakedefine INKSCAPE_LIBDIR
