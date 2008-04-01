@@ -1146,6 +1146,10 @@ sp_canvas_unrealize (GtkWidget *widget)
 {
     SPCanvas *canvas = SP_CANVAS (widget);
 
+    canvas->current_item = NULL;
+    canvas->grabbed_item = NULL;
+    canvas->focused_item = NULL;
+
     shutdown_transients (canvas);
 
     gdk_gc_destroy (canvas->pixmap_gc);
@@ -1537,6 +1541,9 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
     SPCanvas *canvas = SP_CANVAS (widget);
 
     if (event->window != SP_CANVAS_WINDOW (canvas))
+        return FALSE;
+
+    if (canvas->pixmap_gc == NULL) // canvas being deleted
         return FALSE;
 
     if (canvas->grabbed_event_mask & GDK_POINTER_MOTION_HINT_MASK) {
@@ -2010,7 +2017,7 @@ paint (SPCanvas *canvas)
 static int
 do_update (SPCanvas *canvas)
 {
-    if (!canvas->root) // canvas may have already be destroyed by closing desktop durring interrupted display!
+    if (!canvas->root || !canvas->pixmap_gc) // canvas may have already be destroyed by closing desktop durring interrupted display!
         return TRUE;
 
     /* Cause the update if necessary */
