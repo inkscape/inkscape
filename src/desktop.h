@@ -184,7 +184,7 @@ struct SPDesktop : public Inkscape::UI::View::View
         return _guides_message_context;
     }
 
-    Inkscape::Display::TemporaryItem * add_temporary_canvasitem (SPCanvasItem *item, guint lifetime);
+    Inkscape::Display::TemporaryItem * add_temporary_canvasitem (SPCanvasItem *item, guint lifetime, bool move_to_bottom = true);
     void remove_temporary_canvasitem (Inkscape::Display::TemporaryItem * tempitem);
 
     void _setDisplayMode(Inkscape::RenderMode mode);

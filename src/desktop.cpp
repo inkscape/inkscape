@@ -397,10 +397,15 @@ SPDesktop::~SPDesktop() {}
 /** Note that lifetime is measured in milliseconds
 * it is perfectly safe to ignore the returned pointer: the object is deleted by itself, so don't delete it elsewhere!
 * The return value should only be used as argument for SPDesktop::remove_temporary_canvasitem, because the object might be deleted already.
+* move_to_bottom = true by default so the item does not interfere with handling of other items on the canvas like nodes.
 */
 Inkscape::Display::TemporaryItem *
-SPDesktop::add_temporary_canvasitem (SPCanvasItem *item, guint lifetime)
+SPDesktop::add_temporary_canvasitem (SPCanvasItem *item, guint lifetime, bool move_to_bottom)
 {
+    if (move_to_bottom) {
+        sp_canvas_item_move_to_z(item, 0);
+    }
+
     return temporary_item_list->add_item(item, lifetime);
 }
 
