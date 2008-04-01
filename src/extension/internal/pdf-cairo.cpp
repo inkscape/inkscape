@@ -55,6 +55,10 @@
 #include "libnrtype/font-instance.h"
 #include "libnrtype/font-style-to-pos.h"
 
+#include "libnr/nr-matrix.h"
+#include "libnr/nr-matrix-fns.h"
+#include "libnr/nr-matrix-ops.h"
+
 #include <unit-constants.h>
 
 #include "pdf-cairo.h"
@@ -324,6 +328,7 @@ PrintCairoPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     bool   pageBoundingBox;
     pageBoundingBox = mod->get_param_bool("pageBoundingBox");
     // printf("Page Bounding Box: %s\n", pageBoundingBox ? "TRUE" : "FALSE");
+    NR::Matrix t (NR::identity());
     if (pageBoundingBox) {
         d.x0 = d.y0 = 0;
         d.x1 = _width;
@@ -331,21 +336,36 @@ PrintCairoPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     } else {
         // if not page, use our base, which is either root or the item we want to export
         SPItem* doc_item = SP_ITEM(mod->base);
-        sp_item_invoke_bbox(doc_item, &d, sp_item_i2root_affine(doc_item), TRUE);
+        sp_item_invoke_bbox(doc_item, &d, sp_item_i2doc_affine (doc_item), TRUE);
         // convert from px to pt
         d.x0 *= PT_PER_PX;
         d.x1 *= PT_PER_PX;
         d.y0 *= PT_PER_PX;
         d.y1 *= PT_PER_PX;
+
+        // When rendering a standalone object, we must set cairo's transform to the accumulated
+        // ancestor transform of that item - e.g. it may be rotated or skewed by its parent group, and
+        // we must reproduce that in the export even though we start traversing the tree from the
+        // object itself, ignoring its ancestors
+
+        // complete transform, including doc_item's own transform
+        t = sp_item_i2doc_affine (doc_item);
+        // subreact doc_item's transform (comes first) from it
+        t = NR::Matrix(doc_item->transform).inverse() * t;
     }
-    // printf("\n _width:%f _height:%f scale:%f\n", _width, _height, PT_PER_PX);
+
+    // create cairo context
     pdf_surface = cairo_pdf_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, d.x1-d.x0, d.y1-d.y0);
     cr = cairo_create(pdf_surface);
+
     // move to the origin
     cairo_translate (cr, -d.x0, -d.y0);
 
+    // set cairo transform;  we must scale the translation values to pt
+    _concat_transform (cr, t[0], t[1], t[2], t[3], t[4]*PT_PER_PX, t[5]*PT_PER_PX);
+
     if (!_bitmap) {
-    	cairo_scale(cr, PT_PER_PX, PT_PER_PX);
+        cairo_scale(cr, PT_PER_PX, PT_PER_PX);
 
         // from now on we can output px, but they will be treated as pt
         // note that the we do not have to flip the y axis
