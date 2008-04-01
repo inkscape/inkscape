@@ -32,9 +32,10 @@ import javax.swing.WindowConstants;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JMenu;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JComboBox;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -55,11 +56,14 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
 /**
- *
+ *  This is the main Script Console window.   It contains
+ *  a terminal-like console, and a simple script editor. 
  */
 public class ScriptConsole extends JFrame
 {
@@ -69,7 +73,7 @@ Editor      editor;
 JTabbedPane tabPane;
 JToolBar    toolbar;
 JMenuBar    menubar;
-
+JComboBox   engineBox;
 
 //########################################################################
 //# MESSSAGES
@@ -107,13 +111,15 @@ void alert(String msg)
 //########################################################################
 ScriptEngine engine;
 
-HashMap<String, ScriptEngineAction> scriptEngineActions;
+ArrayList<ScriptEngine> engines;
+
 
 public void setEngine(ScriptEngine engine)
 {
     this.engine = engine;
     this.engine.getContext().setWriter(terminal.getOutWriter());
     this.engine.getContext().setErrorWriter(terminal.getErrWriter());
+    //do something to make the combobox show the current engine
 }
 
 
@@ -123,14 +129,17 @@ public ScriptEngine getEngine()
 }
 
 
-public boolean setEngine(String name)
+public boolean setEngine(String langName)
 {
-    ScriptEngineAction action = scriptEngineActions.get(name);
-    if (action == null)
-        return false;
-    action.setEnabled(true);
-    setEngine(action.factory.getScriptEngine());
-    return true;
+    for (ScriptEngine engine : engines)
+        {
+        if (langName.equalsIgnoreCase(engine.getFactory().getLanguageName()))
+            {
+            setEngine(engine);
+            return true;
+			}
+		}
+    return false;
 }
 
 
@@ -276,21 +285,24 @@ public boolean doRunFile(String lang, String fname)
 }
 
 
+
 class ScriptEngineAction extends AbstractAction
 {
-ScriptEngineFactory factory;
 
 
 public void actionPerformed(ActionEvent evt)
 {
-    setEngine(factory.getScriptEngine());
+    int index = engineBox.getSelectedIndex();
+    if (index<0)
+        return;
+    ScriptEngine engine = engines.get(index);
+    setEngine(engine);
 }
 
-public ScriptEngineAction(ScriptEngineFactory factory)
+public ScriptEngineAction()
 {
-    super(factory.getEngineName(), null);
-    putValue(SHORT_DESCRIPTION, factory.getLanguageName());
-    this.factory = factory;
+    super("SelectEngine", null);
+    putValue(SHORT_DESCRIPTION, "Select a scripting engine");
 }
 
 }
@@ -298,14 +310,17 @@ public ScriptEngineAction(ScriptEngineFactory factory)
 
 private void initScripts()
 {
-    JMenu menu = new JMenu("Language");
-    ButtonGroup group = new ButtonGroup();
-    menubar.add(menu);
+    engines = new ArrayList<ScriptEngine>();
+    Action action = new ScriptEngineAction();
+    engineBox = new JComboBox();
+    engineBox.setAction(action);
+    engineBox.setEditable(false);
+    toolbar.add(engineBox);
 
     ScriptEngineManager scriptEngineManager =
              new ScriptEngineManager();
     List<ScriptEngineFactory> factories =
-          scriptEngineManager.getEngineFactories();
+	        scriptEngineManager.getEngineFactories();
     for (ScriptEngineFactory factory: factories)
 	    {
         trace("ScriptEngineFactory Info");
@@ -320,17 +335,14 @@ private void initScripts()
             trace("\tEngine Alias: %s", name);
             }
         trace("\tLanguage: %s (%s)", langName, langVersion);
-        ScriptEngineAction action = new ScriptEngineAction(factory);
-        JRadioButtonMenuItem item = new JRadioButtonMenuItem(action);
-        group.add(item);
-        menu.add(item);
+        engines.add(factory.getScriptEngine());
+        //JLabel item = new JLabel(langName);
+        engineBox.addItem(langName);
         }
-    if (menu.getItemCount()>0)
+    if (engineBox.getItemCount()>0)
         {
-        JMenuItem item = menu.getItem(0);
-        group.setSelected(item.getModel(), true);
-        ScriptEngineAction action = (ScriptEngineAction)item.getAction();
-        setEngine(action.factory.getScriptEngine());
+        engineBox.setSelectedIndex(0);
+        setEngine(engines.get(0));
         }
 }
 
