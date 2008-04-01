@@ -79,6 +79,27 @@ public:
     virtual void do_release (double by, guint state);
 };
 
+class RotateableStrokeWidth: public Rotateable 
+{
+public:
+    RotateableStrokeWidth();
+    ~RotateableStrokeWidth();
+
+    SelectedStyle *parent;
+
+    double startvalue;
+    bool startvalue_set;
+
+    gchar *undokey;
+
+    GdkCursor *cr;
+    bool cr_set;
+
+    double value_adjust(double current, double by, guint modifier, bool final);
+    virtual void do_motion (double by, guint state);
+    virtual void do_release (double by, guint state);
+};
+
 class SelectedStyle : public Gtk::HBox
 {
 public:
@@ -94,6 +115,8 @@ public:
     guint32 _thisselected[2];
 
     guint _mode[2];
+
+    double current_stroke_width;
 
 protected:
     SPDesktop *_desktop;
@@ -150,7 +173,7 @@ protected:
     Glib::ustring __multiple[2];
 
     Gtk::HBox _stroke;
-    Gtk::EventBox _stroke_width_place;
+    RotateableStrokeWidth _stroke_width_place;
     Gtk::Label _stroke_width;
 
     Glib::ustring _paintserver_id[2];

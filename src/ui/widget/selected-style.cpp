@@ -97,7 +97,10 @@ static guint nui_drop_target_entries = ENTRIES_SIZE(ui_drop_target_entries);
 static Dialog::FillAndStroke *get_fill_and_stroke_panel(SPDesktop *desktop);
 
 SelectedStyle::SelectedStyle(bool /*layout*/)
-    : _desktop (NULL),
+    : 
+      current_stroke_width(0),
+
+      _desktop (NULL),
 
       _table(2, 6),
       _fill_label (_("Fill:")),
@@ -115,6 +118,7 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
       _opacity_sb (0.02, 0),
 
       _stroke (),
+      _stroke_width_place(),
       _stroke_width (""),
 
       _opacity_blocked (false),
@@ -378,6 +382,7 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
 
     _fill_place.parent = this;
     _stroke_place.parent = this;
+    _stroke_width_place.parent = this;
 }
 
 SelectedStyle::~SelectedStyle()
@@ -1038,6 +1043,7 @@ SelectedStyle::update()
     switch (result_sw) {
     case QUERY_STYLE_NOTHING:
         _stroke_width.set_markup("");
+        current_stroke_width = 0;
         break;
     case QUERY_STYLE_SINGLE:
     case QUERY_STYLE_MULTIPLE_AVERAGED:
@@ -1049,6 +1055,8 @@ SelectedStyle::update()
         } else {
             w = query->stroke_width.computed;
         }
+        current_stroke_width = w;
+
         {
             gchar *str = g_strdup_printf(" %.3g", w);
             _stroke_width.set_markup(str);
@@ -1144,6 +1152,8 @@ void SelectedStyle::on_opacity_changed () {
     spinbutton_defocus(GTK_OBJECT(_opacity_sb.gobj()));
     _opacity_blocked = false;
 }
+
+/* =============================================  RotateableSwatch  */
 
 RotateableSwatch::RotateableSwatch(guint mode) {
     fillstroke = mode;
@@ -1254,7 +1264,7 @@ RotateableSwatch::do_motion(double by, guint modifier) {
         diff = color_adjust(hsl, by, cc, modifier);
     }
 
-    if (modifier == 3) { // do nothing
+    if (modifier == 3) { // Alt, do nothing
 
     } else if (modifier == 2) { // saturation
         sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey,
@@ -1296,7 +1306,7 @@ RotateableSwatch::do_release(double by, guint modifier) {
         cr_set = false;
     }
 
-    if (modifier == 3) { // nothing
+    if (modifier == 3) { // Alt, do nothing
     } else if (modifier == 2) { // saturation
         sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey,
                                 SP_VERB_DIALOG_FILL_STROKE, ("Adjust saturation"));
@@ -1319,6 +1329,90 @@ RotateableSwatch::do_release(double by, guint modifier) {
     parent->getDesktop()->event_context->_message_context->clear();
     startcolor_set = false;
 }
+
+/* =============================================  RotateableStrokeWidth  */
+
+RotateableStrokeWidth::RotateableStrokeWidth() {
+    undokey = "swrot1";
+    startvalue_set = false;
+    cr = NULL;
+    cr_set = false;
+}
+
+RotateableStrokeWidth::~RotateableStrokeWidth() {
+}
+
+double
+RotateableStrokeWidth::value_adjust(double current, double by, guint modifier, bool final)
+{
+    double newval;
+    // by is -1..1
+    if (by < 0) {
+        // map negative 0..-1 to current..0
+        newval = current * (1  +  by);
+    } else {
+        // map positive 0..1 to current..4*current
+        newval = current * (1  +  by) * (1  +  by);
+    }
+
+    SPCSSAttr *css = sp_repr_css_attr_new ();
+    if (final && newval < 1e-6) {
+        // if dragged into zero and this is the final adjust on mouse release, delete stroke;
+        // if it's not final, leave it a chance to increase again (which is not possible with "none")
+        sp_repr_css_set_property (css, "stroke", "none");
+    } else {
+        Inkscape::CSSOStringStream os;
+        os << newval;
+        sp_repr_css_set_property (css, "stroke-width", os.str().c_str());
+    }
+
+    sp_desktop_set_style (parent->getDesktop(), css);
+    sp_repr_css_attr_unref (css);
+    return newval - current;
+}
+
+void
+RotateableStrokeWidth::do_motion(double by, guint modifier) {
+
+    // if this is the first motion after a mouse grab, remember the current width
+    if (!startvalue_set) {
+        startvalue = parent->current_stroke_width;
+        // if it's 0, adjusting (which uses multiplication) will not be able to change it, so we
+        // cheat and provide a non-zero value
+        if (startvalue == 0)
+            startvalue = 1;
+        startvalue_set = true;
+    }
+
+    if (modifier == 3) { // Alt, do nothing
+    } else {
+        double diff = value_adjust(startvalue, by, modifier, false);
+        sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey,
+                                SP_VERB_DIALOG_FILL_STROKE, (_("Adjust stroke width")));
+        parent->getDesktop()->event_context->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"), startvalue, startvalue + diff, diff);
+    }
+}
+
+void
+RotateableStrokeWidth::do_release(double by, guint modifier) {
+
+    if (modifier == 3) { // do nothing
+
+    } else {
+        value_adjust(startvalue, by, modifier, true);
+        startvalue_set = false;
+        sp_document_maybe_done (sp_desktop_document(parent->getDesktop()), undokey,
+                                SP_VERB_DIALOG_FILL_STROKE, (_("Adjust stroke width")));
+    }
+
+    if (!strcmp(undokey, "swrot1")) {
+        undokey = "swrot2";
+    } else {
+        undokey = "swrot1";
+    }
+    parent->getDesktop()->event_context->_message_context->clear();
+}
+
 
 Dialog::FillAndStroke *get_fill_and_stroke_panel(SPDesktop *desktop)
 {
