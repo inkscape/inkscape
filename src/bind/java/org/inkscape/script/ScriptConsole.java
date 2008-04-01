@@ -133,10 +133,13 @@ public boolean setEngine(String langName)
 {
     for (ScriptEngine engine : engines)
         {
-        if (langName.equalsIgnoreCase(engine.getFactory().getLanguageName()))
-            {
-            setEngine(engine);
-            return true;
+        for(String name: engine.getFactory().getNames())
+		    {
+            if (langName.equalsIgnoreCase(name))
+                {
+                setEngine(engine);
+                return true;
+			    }
 			}
 		}
     return false;
@@ -326,18 +329,19 @@ private void initScripts()
         trace("ScriptEngineFactory Info");
         String engName     = factory.getEngineName();
         String engVersion  = factory.getEngineVersion();
+        String fullEngName = engName + " (" + engVersion + ")";
         String langName    = factory.getLanguageName();
         String langVersion = factory.getLanguageVersion();
-        trace("\tScript Engine: %s (%s)", engName, engVersion);
+        String fullLangName = langName + " (" + langVersion + ")";
+        trace("\t" + fullEngName);
         List<String> engNames = factory.getNames();
         for(String name: engNames)
 		    {
-            trace("\tEngine Alias: %s", name);
+            trace("\tEngine Alias: " + name);
             }
-        trace("\tLanguage: %s (%s)", langName, langVersion);
+        trace("\t" + fullLangName);
         engines.add(factory.getScriptEngine());
-        //JLabel item = new JLabel(langName);
-        engineBox.addItem(langName);
+        engineBox.addItem(fullLangName + " / " + fullEngName);
         }
     if (engineBox.getItemCount()>0)
         {
