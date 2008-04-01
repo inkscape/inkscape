@@ -1,4 +1,26 @@
-
+/**
+ * This is a simple mechanism to bind Inkscape to Java, and thence
+ * to all of the nice things that can be layered upon that.
+ *
+ * Authors:
+ *   Bob Jamison
+ *
+ * Copyright (C) 2007-2008 Bob Jamison
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 3 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 package org.inkscape.script;
 
@@ -29,6 +51,8 @@ import java.awt.BorderLayout;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import java.util.List;
 import java.util.HashMap;
@@ -53,7 +77,7 @@ JMenuBar    menubar;
 //########################################################################
 void err(String fmt, Object... arguments)
 {
-    terminal.errorf("ScriptConsole err:" + fmt, arguments);
+    terminal.errorf("ScriptConsole err:" + fmt + "\n", arguments);
 }
 
 void msg(String fmt, Object... arguments)
@@ -63,7 +87,7 @@ void msg(String fmt, Object... arguments)
 
 void trace(String fmt, Object... arguments)
 {
-    terminal.outputf("ScriptConsole:" + fmt, arguments);
+    terminal.outputf("ScriptConsole:" + fmt + "\n", arguments);
 }
 
 
@@ -89,6 +113,7 @@ JFileChooser getChooser()
         {
         _chooser = new JFileChooser();
         _chooser.setAcceptAllFileFilterUsed(false);
+        _chooser.setCurrentDirectory(new File("."));
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
               "Script Files", "js", "py", "r");
         _chooser.setFileFilter(filter);
@@ -309,13 +334,13 @@ private void initScripts()
         String engVersion  = factory.getEngineVersion();
         String langName    = factory.getLanguageName();
         String langVersion = factory.getLanguageVersion();
-        trace("\tScript Engine: %s (%s)\n", engName, engVersion);
+        trace("\tScript Engine: %s (%s)", engName, engVersion);
         List<String> engNames = factory.getNames();
         for(String name: engNames)
 		    {
-            trace("\tEngine Alias: %s\n", name);
+            trace("\tEngine Alias: %s", name);
             }
-        trace("\tLanguage: %s (%s)\n", langName, langVersion);
+        trace("\tLanguage: %s (%s)", langName, langVersion);
         ScriptEngineAction action = new ScriptEngineAction(factory);
         JRadioButtonMenuItem item = new JRadioButtonMenuItem(action);
         group.add(item);
@@ -388,7 +413,24 @@ public void actionPerformed(ActionEvent evt)
         return;
     File f = chooser.getSelectedFile();
     String fname = f.getName();
-    alert("You selected : " + fname);
+    try
+	    {
+		FileReader in = new FileReader(fname);
+        StringBuffer buf = new StringBuffer();
+        while (true)
+            {
+            int ch = in.read();
+            if (ch < 0)
+                break;
+            buf.append((char)ch);
+            }
+        in.close();
+        editor.setText(buf.toString());
+        }
+    catch (IOException e)
+        {
+        err("save file:" + e);
+		}
 }
 
 public OpenAction()
@@ -449,7 +491,16 @@ public void actionPerformed(ActionEvent evt)
         return;
     File f = chooser.getSelectedFile();
     String fname = f.getName();
-    alert("You selected : " + fname);
+    try
+	    {
+		FileWriter out = new FileWriter(fname);
+        out.write(editor.getText());
+        out.close();
+        }
+    catch (IOException e)
+        {
+        err("save file:" + e);
+		}
 }
 
 public SaveAction()
@@ -473,7 +524,23 @@ public void actionPerformed(ActionEvent evt)
         return;
     File f = chooser.getSelectedFile();
     String fname = f.getName();
-    alert("You selected : " + fname);
+    if (f.exists())
+        {
+        ret = JOptionPane.showConfirmDialog(ScriptConsole.this,
+		              "File '" + fname + "' already exists.  Overwrite?");
+		if (ret != JOptionPane.YES_OPTION)
+		    return;
+		}
+    try
+	    {
+		FileWriter out = new FileWriter(fname);
+        out.write(editor.getText());
+        out.close();
+        }
+    catch (IOException e)
+        {
+        err("saveAs file:" + e);
+		}
 }
 
 public SaveAsAction()
@@ -601,7 +668,7 @@ private boolean setup()
                    terminal);
     terminal.output("\nscript> ");
 
-    editor = new Editor();
+    editor = new Editor(this);
     tabPane.addTab("Script",
                    Resource.getIcon("accessories-text-editor.png"),
                    editor);
