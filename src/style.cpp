@@ -2125,7 +2125,9 @@ static void
 sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent)
 {
     if ((paint->set && paint->currentcolor) || parent->currentcolor) {
+        bool isset = paint->set;
         paint->clear();
+        paint->set = isset;
         paint->currentcolor = TRUE;
         paint->setColor(style->color.value.color);
         return;
@@ -3016,6 +3018,7 @@ sp_style_read_icolor(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
         guint32 const rgb0 = sp_svg_read_color(str, 0xff);
         if (rgb0 != 0xff) {
             paint->setColor(rgb0);
+            paint->set = TRUE;
             paint->inherit = FALSE;
         }
     }
