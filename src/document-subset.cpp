@@ -140,7 +140,8 @@ struct DocumentSubset::Relations : public GC::Managed<GC::ATOMIC>,
         for ( Map::iterator iter=records.begin()
             ; iter != records.end() ; ++iter )
         {
-            sp_object_unref((*iter).first);
+            if ((*iter).first)
+                sp_object_unref((*iter).first);
         }
     }
 
