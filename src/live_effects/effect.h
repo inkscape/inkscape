@@ -63,6 +63,7 @@ enum EffectType {
     GEARS,
     CURVE_STITCH,
     CIRCLE_WITH_RADIUS,
+    PERSPECTIVE_PATH,
     INVALID_LPE // This must be last
 };
 
