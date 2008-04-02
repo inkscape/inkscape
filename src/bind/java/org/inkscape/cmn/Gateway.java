@@ -31,11 +31,18 @@ import java.io.OutputStream;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
-//for xml
+//####for xml
+//read
 import org.w3c.dom.Document;
 import java.io.ByteArrayInputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+//write
+import java.io.ByteArrayOutputStream;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.inkscape.script.ScriptConsole;
 
@@ -56,17 +63,106 @@ long backPtr;
 //########################################################################
 //# MESSSAGES
 //########################################################################
-static void err(String message)
+void err(String message)
 {
-    System.err.println("Gateway err:" + message);
+    ScriptConsole console = ScriptConsole.getInstance();
+    if (console != null)
+        console.err("Gateway err:" + message);
+    else
+        log("Gateway err:" + message);
 }
 
-static void msg(String message)
+void msg(String message)
 {
-    System.out.println("Gateway:" + message);
+    ScriptConsole console = ScriptConsole.getInstance();
+    if (console != null)
+        console.msg("Gateway err:" + message);
+    else
+        log("Gateway:" + message);
+}
+
+void trace(String message)
+{
+    ScriptConsole console = ScriptConsole.getInstance();
+    if (console != null)
+        console.trace("Gateway:" + message);
+    else
+        log("Gateway:" + message);
 }
 
 
+//########################################################################
+//# U T I L I T Y
+//########################################################################
+
+/**
+ * Parse a String to an XML Document
+ */ 
+public Document stringToDoc(String xmlStr)
+{
+    if (xmlStr == null || xmlStr.length()==0)
+        return null;
+    Document doc = null;
+    try
+        {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder parser = factory.newDocumentBuilder();
+        doc = parser.parse(new ByteArrayInputStream(xmlStr.getBytes()));
+        }
+    catch (java.io.IOException e)
+        {
+        err("stringToDoc:" + e);
+        return null;
+		}
+    catch (javax.xml.parsers.ParserConfigurationException e)
+        {
+        err("stringToDoc:" + e);
+        return null;
+		}
+    catch (org.xml.sax.SAXException e)
+        {
+        err("stringToDoc:" + e);        
+        return null;
+		}
+    return doc;
+}
+
+
+
+/**
+ * Serialize an XML Document to a string
+ */ 
+String docToString(Document doc)
+{
+    if (doc == null)
+        return "";
+    String buf = "";
+    try
+        {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        TransformerFactory factory = TransformerFactory.newInstance();
+        Transformer tf = factory.newTransformer();
+        tf.transform(new DOMSource(doc), new StreamResult(baos));
+        baos.close();
+        buf = baos.toString();
+        }
+    catch (java.io.IOException e)
+        {
+        err("docToString:" + e);
+        return null;
+		}
+    catch (javax.xml.transform.TransformerConfigurationException e)
+        {
+        err("docToString:" + e);
+        return null;
+		}
+    catch (javax.xml.transform.TransformerException e)
+        {
+        err("docToString:" + e);        
+        return null;
+		}
+    return buf;
+}
 
 
 //########################################################################
@@ -80,31 +176,11 @@ public String documentGet()
     return documentGet(backPtr);
 }
 
+
 public Document documentGetXml()
 {
     String xmlStr = documentGet();
-    if (xmlStr == null || xmlStr.length()==0)
-        return null;
-    Document doc = null;
-    try
-        {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder parser = factory.newDocumentBuilder();
-        doc = parser.parse(new ByteArrayInputStream(xmlStr.getBytes()));
-        }
-    catch (java.io.IOException e)
-        {
-        err("getReprXml:" + e);
-		}
-    catch (javax.xml.parsers.ParserConfigurationException e)
-        {
-        err("getReprXml:" + e);
-		}
-    catch (org.xml.sax.SAXException e)
-        {
-        err("getReprXml:" + e);        
-		}
-    return doc;
+    return stringToDoc(xmlStr);
 }
 
 private native boolean documentSet(long backPtr, String xmlStr);
@@ -113,6 +189,13 @@ public boolean documentSet(String xmlStr)
 {
     return documentSet(backPtr, xmlStr);
 }
+
+public boolean documentSetXml(Document doc)
+{
+    String xmlStr = docToString(doc);
+    return documentSet(xmlStr);
+}
+
 
 //########################################################################
 //# LOGGING STREAM

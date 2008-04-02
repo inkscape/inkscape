@@ -78,17 +78,17 @@ JComboBox   engineBox;
 //########################################################################
 //# MESSSAGES
 //########################################################################
-void err(String fmt, Object... arguments)
+public void err(String fmt, Object... arguments)
 {
     terminal.errorf("ScriptConsole err:" + fmt + "\n", arguments);
 }
 
-void msg(String fmt, Object... arguments)
+public void msg(String fmt, Object... arguments)
 {
     terminal.outputf("ScriptConsole:" + fmt, arguments);
 }
 
-void trace(String fmt, Object... arguments)
+public void trace(String fmt, Object... arguments)
 {
     terminal.outputf("ScriptConsole:" + fmt + "\n", arguments);
 }
