@@ -31,6 +31,12 @@ import java.io.OutputStream;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
+//for xml
+import org.w3c.dom.Document;
+import java.io.ByteArrayInputStream;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.inkscape.script.ScriptConsole;
 
 
@@ -62,6 +68,51 @@ static void msg(String message)
 
 
 
+
+//########################################################################
+//# R E P R  (inkscape's xml tree)
+//########################################################################
+
+private native String documentGet(long backPtr);
+
+public String documentGet()
+{
+    return documentGet(backPtr);
+}
+
+public Document documentGetXml()
+{
+    String xmlStr = documentGet();
+    if (xmlStr == null || xmlStr.length()==0)
+        return null;
+    Document doc = null;
+    try
+        {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder parser = factory.newDocumentBuilder();
+        doc = parser.parse(new ByteArrayInputStream(xmlStr.getBytes()));
+        }
+    catch (java.io.IOException e)
+        {
+        err("getReprXml:" + e);
+		}
+    catch (javax.xml.parsers.ParserConfigurationException e)
+        {
+        err("getReprXml:" + e);
+		}
+    catch (org.xml.sax.SAXException e)
+        {
+        err("getReprXml:" + e);        
+		}
+    return doc;
+}
+
+private native boolean documentSet(long backPtr, String xmlStr);
+
+public boolean documentSet(String xmlStr)
+{
+    return documentSet(backPtr, xmlStr);
+}
 
 //########################################################################
 //# LOGGING STREAM
@@ -199,12 +250,8 @@ public Gateway(long backPtr)
 
 private static Gateway _instance = null;
 
-public static Gateway getInstance(long backPtr)
+public static Gateway getInstance()
 {
-    if (_instance == null)
-        {
-        _instance = new Gateway(backPtr);
-		}
 	return _instance;
 }
 

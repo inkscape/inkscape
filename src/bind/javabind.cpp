@@ -53,6 +53,10 @@
 #include <prefix.h>
 #include <glib/gmessages.h>
 
+//For repr and document
+#include <document.h>
+#include <inkscape.h>
+#include <xml/repr.h>
 
 /**
  * Note: We must limit Java or JVM-specific code to this file
@@ -118,65 +122,70 @@ String getExceptionString(JNIEnv *env)
 	return buf;
 }
 
-jint getInt(JNIEnv *env, jobject obj, const char *name)
+jint getObjInt(JNIEnv *env, jobject obj, const char *name)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "I");
     return env->GetIntField(obj, fid);
 }
 
-void setInt(JNIEnv *env, jobject obj, const char *name, jint val)
+void setObjInt(JNIEnv *env, jobject obj, const char *name, jint val)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "I");
     env->SetIntField(obj, fid, val);
 }
 
-jlong getLong(JNIEnv *env, jobject obj, const char *name)
+jlong getObjLong(JNIEnv *env, jobject obj, const char *name)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "J");
     return env->GetLongField(obj, fid);
 }
 
-void setLong(JNIEnv *env, jobject obj, const char *name, jlong val)
+void setObjLong(JNIEnv *env, jobject obj, const char *name, jlong val)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "J");
     env->SetLongField(obj, fid, val);
 }
 
-jfloat getFloat(JNIEnv *env, jobject obj, const char *name)
+jfloat getObjFloat(JNIEnv *env, jobject obj, const char *name)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "F");
     return env->GetFloatField(obj, fid);
 }
 
-void setFloat(JNIEnv *env, jobject obj, const char *name, jfloat val)
+void setObjFloat(JNIEnv *env, jobject obj, const char *name, jfloat val)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "F");
     env->SetFloatField(obj, fid, val);
 }
 
-jdouble getDouble(JNIEnv *env, jobject obj, const char *name)
+jdouble getObjDouble(JNIEnv *env, jobject obj, const char *name)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "D");
     return env->GetDoubleField(obj, fid);
 }
 
-void setDouble(JNIEnv *env, jobject obj, const char *name, jdouble val)
+void setObjDouble(JNIEnv *env, jobject obj, const char *name, jdouble val)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "D");
     env->SetDoubleField(obj, fid, val);
 }
 
-String getString(JNIEnv *env, jobject obj, const char *name)
+String getString(JNIEnv *env, jstring jstr)
 {
-    jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "Ljava/lang/String;");
-    jstring jstr = (jstring)env->GetObjectField(obj, fid);
     const char *chars = env->GetStringUTFChars(jstr, JNI_FALSE);
     String str = chars;
     env->ReleaseStringUTFChars(jstr, chars);
     return str;
 }
 
-void setString(JNIEnv *env, jobject obj, const char *name, const String &val)
+String getObjString(JNIEnv *env, jobject obj, const char *name)
+{
+    jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "Ljava/lang/String;");
+    jstring jstr = (jstring)env->GetObjectField(obj, fid);
+    return getString(env, jstr);
+}
+
+void setObjString(JNIEnv *env, jobject obj, const char *name, const String &val)
 {
     jstring jstr = env->NewStringUTF(val.c_str());
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "Ljava/lang/String;");
@@ -636,6 +645,29 @@ static void populateClassPath(const String &javaroot,
 // Gateway
 //========================================================================
 /**
+ * This is provided to scripts can grab the current copy or the
+ * repr tree.  If anyone has a smarter way of doing this, please implement. 
+ */    
+jstring JNICALL documentGet(JNIEnv *env, jobject /*obj*/, jlong ptr)
+{
+    JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
+    String buf =  sp_repr_save_buf((SP_ACTIVE_DOCUMENT)->rdoc);
+    jstring jstr = env->NewStringUTF(buf.c_str());
+    return jstr;
+}
+
+/**
+ * This is provided to scripts can load an XML tree into Inkscape.
+ * If anyone has a smarter way of doing this, please implement. 
+ */    
+jboolean JNICALL documentSet(JNIEnv *env, jobject /*obj*/, jlong ptr, jstring jstr)
+{
+    JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
+    String s = getString(env, jstr);
+    SPDocument *doc = sp_document_new_from_mem(s.c_str(), s.size(), true);
+}
+
+/**
  * This method is used to allow the gateway class to
  * redirect its logging stream here.
  * For the main C++/Java bindings, see dobinding.cpp 
@@ -649,7 +681,9 @@ void JNICALL logWrite(JNIEnv */*env*/, jobject /*obj*/, jlong ptr, jint ch)
 
 static JNINativeMethod gatewayMethods[] =
 {
-{ (char *)"logWrite",    (char *)"(JI)V", (void *)logWrite    },
+{ (char *)"documentGet", (char *)"(J)Ljava/lang/String;",  (void *)documentGet },
+{ (char *)"documentSet", (char *)"(JLjava/lang/String;)Z", (void *)documentSet },
+{ (char *)"logWrite",    (char *)"(JI)V",                  (void *)logWrite    },
 { NULL,  NULL, NULL }
 };
 
