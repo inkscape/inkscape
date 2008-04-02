@@ -182,9 +182,7 @@ void sp_repr_write_stream (Inkscape::XML::Node *repr, Inkscape::IO::Writer &out,
                  gint indent_level,  bool add_whitespace, Glib::QueryQuark elide_prefix,
 				 int inlineattrs, int indent);
 Inkscape::XML::Document *sp_repr_read_buf (const Glib::ustring &buf, const gchar *default_ns);
-Glib::ustring sp_repr_write_buf(Inkscape::XML::Node *repr, gint indent_level,
-                      bool add_whitespace, Glib::QueryQuark elide_prefix,
-					  int inlineattrs, int indent);
+Glib::ustring sp_repr_save_buf(Inkscape::XML::Document *doc);
 void sp_repr_save_stream(Inkscape::XML::Document *doc, FILE *to_file, gchar const *default_ns=NULL, bool compress = false);
 bool sp_repr_save_file(Inkscape::XML::Document *doc, gchar const *filename, gchar const *default_ns=NULL);
 

@@ -506,29 +506,22 @@ sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_
     return repr;
 }
 
+
 void
-sp_repr_save_stream (Document *doc, FILE *fp, gchar const *default_ns, bool compress)
+sp_repr_save_writer(Document *doc, Inkscape::IO::Writer *out,
+              gchar const *default_ns)
 {
-    Node *repr;
-    const gchar *str;
-
-    Inkscape::URI dummy("x");
-    Inkscape::IO::UriOutputStream bout(fp, dummy);
-    Inkscape::IO::GzipOutputStream *gout = compress ? new Inkscape::IO::GzipOutputStream(bout) : NULL;
-    Inkscape::IO::OutputStreamWriter *out  = compress ? new Inkscape::IO::OutputStreamWriter( *gout ) : new Inkscape::IO::OutputStreamWriter( bout );
-
     int inlineattrs = prefs_get_int_attribute("options.svgoutput", "inlineattrs", 0);
     int indent = prefs_get_int_attribute("options.svgoutput", "indent", 2);
 
     /* fixme: do this The Right Way */
     out->writeString( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" );
 
-    str = ((Node *)doc)->attribute("doctype");
-    if (str) {
+    const gchar *str = ((Node *)doc)->attribute("doctype");
+    if (str)
         out->writeString( str );
-    }
 
-    repr = sp_repr_document_first_child(doc);
+    Node *repr = sp_repr_document_first_child(doc);
     for ( repr = sp_repr_document_first_child(doc) ;
           repr ; repr = sp_repr_next(repr) )
     {
@@ -541,15 +534,44 @@ sp_repr_save_stream (Document *doc, FILE *fp, gchar const *default_ns, bool comp
             sp_repr_write_stream(repr, *out, 0, TRUE, GQuark(0), inlineattrs, indent);
         }
     }
-    if ( out ) {
-        delete out;
-        out = NULL;
-    }
-    if ( gout ) {
-        delete gout;
-        gout = NULL;
-    }
 }
+
+
+
+
+Glib::ustring
+sp_repr_save_buf(Document *doc)
+{   
+    Inkscape::IO::StringOutputStream souts;
+    Inkscape::IO::OutputStreamWriter outs(souts);
+
+    sp_repr_save_writer(doc, &outs, SP_INKSCAPE_NS_URI);
+
+	outs.close();
+	Glib::ustring buf = souts.getString();
+
+	return buf;
+}
+
+
+
+
+
+void
+sp_repr_save_stream (Document *doc, FILE *fp, gchar const *default_ns, bool compress)
+{
+    Inkscape::URI dummy("x");
+    Inkscape::IO::UriOutputStream bout(fp, dummy);
+    Inkscape::IO::GzipOutputStream *gout = compress ? new Inkscape::IO::GzipOutputStream(bout) : NULL;
+    Inkscape::IO::OutputStreamWriter *out  = compress ? new Inkscape::IO::OutputStreamWriter( *gout ) : new Inkscape::IO::OutputStreamWriter( bout );
+
+    sp_repr_save_writer(doc, out, default_ns);
+    
+    delete out;
+    delete gout;
+}
+
+
 
 /* Returns TRUE if file successfully saved; FALSE if not
  */
@@ -738,22 +760,6 @@ sp_repr_write_stream (Node *repr, Writer &out, gint indent_level,
     } else {
         g_assert_not_reached();
     }
-}
-
-
-Glib::ustring
-sp_repr_write_buf(Node *repr, gint indent_level,
-                      bool add_whitespace, Glib::QueryQuark elide_prefix,
-					  int inlineattrs, int indent)
-{
-    Glib::ustring buf;
-    Inkscape::IO::StringOutputStream souts;
-    Inkscape::IO::OutputStreamWriter outs(souts);
-    sp_repr_write_stream(repr, outs, indent_level, add_whitespace,
-	      elide_prefix, inlineattrs, indent);
-	outs.close();
-	buf = souts.getString();
-	return buf;
 }
 
 
