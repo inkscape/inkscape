@@ -48,36 +48,33 @@ LPECircleWithRadius::~LPECircleWithRadius()
 
 }
 
+void _circle(Geom::Point center, double radius, std::vector<Geom::Path> &path_out) {
+    Geom::Path pb;
 
-/* ########################
- *  Choose to implement one of the doEffect functions. You can delete or comment out the others.
-*/
-
-D2<SBasis> _circle(Geom::Point center, double radius) {
     D2<SBasis> B;
     Linear bo = Linear(0, 2 * M_PI);
 
-    B[0] = cos(bo,2);
-    B[1] = sin(bo,2);
+    B[0] = cos(bo,4);
+    B[1] = sin(bo,4);
 
-    B = B*radius + center;
-    return B;
+    B = B * radius + center;
+
+    pb.append(SBasisCurve(B));
+
+    path_out.push_back(pb);
 }
 
 std::vector<Geom::Path>
-LPECircleWithRadius::doEffect_path (std::vector<Geom::Path> & path_in)
+LPECircleWithRadius::doEffect_path (std::vector<Geom::Path> &path_in)
 {
     std::vector<Geom::Path> path_out = std::vector<Geom::Path>();
-    Geom::Path pb;
 
     Geom::Point center = path_in[0].initialPoint();
     Geom::Point pt = path_in[0].finalPoint();
 
     double radius = Geom::L2(pt - center);
 
-    pb.append(SBasisCurve(_circle(center, radius)));
-
-    path_out.push_back(pb);
+    _circle(center, radius, path_out);
 
     return path_out;
 }
