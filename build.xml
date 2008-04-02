@@ -652,7 +652,7 @@
   -->
   <target name="jar" depends="javac"
       description="pack java classes and resources into a jar file">
-    <copy todir="${build}/java/classes"> <fileset dir="${src}/bind/data"/> </copy>
+    <copy todir="${build}/java/classes"> <fileset dir="${gtk}/bind/data"/> </copy>
     <jar basedir="${build}/java/classes" destfile="${build}/java/lib/inkscape.jar"/>
   </target>
 
@@ -663,7 +663,7 @@
   -->
   <target name="binddist" depends="jar"
       description="pack java classes and resources into a jar file">
-    <copy todir="${dist}/share"> <fileset dir="share/bind"/> </copy>
+    <copy todir="${dist}/share/bind"> <fileset dir="${gtk}/bind/java"/> </copy>
     <copy todir="${dist}/share/bind/java"> <fileset dir="${build}/java/lib"/> </copy>
 
   </target>
