@@ -4,6 +4,7 @@
 ; windows code page: 1250
 ; translator:
 ; Przemys³aw Loesch p_loesch@poczta.onet.pl
+; Marcin Floryan marcin.floryan@gmail.com
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
@@ -19,7 +20,7 @@
 !insertmacro MUI_LANGUAGE "Polish"
 
 ; Product name
-LangString lng_Caption   ${LANG_POLISH} "${PRODUCT_NAME} -- Edytor grafiki wektorowej na licencji Open Source"
+LangString lng_Caption   ${LANG_POLISH} "${PRODUCT_NAME} -- edytor grafiki wektorowej open source"
 
 ; Button text "Next >" for the license page
 LangString lng_LICENSE_BUTTON   ${LANG_POLISH} "Dalej >"
@@ -31,10 +32,10 @@ LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_POLISH} "$(^Name) jest udostêpniony 
 LangString lng_DIFFERENT_USER ${LANG_POLISH} "Program Inkscape zosta³ zainstalowany przez u¿ytkownika $0.$\r$\nJeœli bêdziesz teraz kontynuowaæ instalacja mo¿e nie zostaæ zakoñczona pomyœlnie!$\r$\nZaloguj siê proszê jako u¿ytkownik $0 i spróbuj ponownie."
 
 ; want to uninstall before install
-LangString lng_WANT_UNINSTALL_BEFORE ${LANG_POLISH} "$R1 has already been installed. $\nDo you want to remove the previous version before installing $(^Name) ?"
+LangString lng_WANT_UNINSTALL_BEFORE ${LANG_POLISH} "$R1 jest ju¿ zainstalowany. $\nCzy chcesz usun¹æ poprzedni¹ wersjê przed zainstalowaniem $(^Name) ?"
 
 ; press OK to continue press Cancel to abort
-LangString lng_OK_CANCEL_DESC ${LANG_POLISH} "$\n$\nPress OK to continue or press CANCEL to abort."
+LangString lng_OK_CANCEL_DESC ${LANG_POLISH} "$\n$\nNaciœnij OK aby kontynuowaæ lub ANULUJ aby przerwaæ."
 
 ;you have no admin rigths
 LangString lng_NO_ADMIN ${LANG_POLISH} "Nie masz uprawnieñ administratora.$\r$\nInstalacja programu Inkscape dla wszystkich u¿ytkowników mo¿e nie zostaæ zakoñczon pomyœlnie.$\r$\nWy³¹cz opcjê 'dla wszystkich u¿ytkowników'."
@@ -106,10 +107,10 @@ LangString lng_ContextMenu ${LANG_POLISH} "Menu kontekstowe"
 LangString lng_ContextMenuDesc ${LANG_POLISH} "Dodaj ${PRODUCT_NAME} do menu kontekstowego dla plików SVG"
 
 ; remove personal preferences
-LangString lng_DeletePrefs ${LANG_POLISH} "Delete personal preferences"
+LangString lng_DeletePrefs ${LANG_POLISH} "Usuñ preferencje u¿ytkowników"
 
 ; remove personal preferences description
-LangString lng_DeletePrefsDesc ${LANG_POLISH} "Delete personal preferences leftover from previous installations"
+LangString lng_DeletePrefsDesc ${LANG_POLISH} "Usuñ preferencje u¿ytkowników które pozosta³y z poprzedniej instalacji"
 
 
 ; Additional files section
@@ -128,77 +129,77 @@ LangString lng_ExamplesDesc $(LANG_POLISH) "Przyk³adowe pliki dla ${PRODUCT_NAME
 LangString lng_Tutorials $(LANG_POLISH) "Poradniki"
 
 ; Tutorials section description
-LangString lng_TutorialsDesc $(LANG_POLISH) "Pliki z poradami do korzystania z ${PRODUCT_NAME}"
+LangString lng_TutorialsDesc $(LANG_POLISH) "Pliki z poradami jak korzystaæ z ${PRODUCT_NAME}"
 
 
 ; Languages section
-LangString lng_Languages $(LANG_POLISH) "T³umaczenia"
+LangString lng_Languages $(LANG_POLISH) "Wersje jêzykowe"
 
 ; Languages section dscription
-LangString lng_LanguagesDesc $(LANG_POLISH) "Zainstaluj wybrane t³umaczenia interfejsu dla ${PRODUCT_NAME}"
+LangString lng_LanguagesDesc $(LANG_POLISH) "T³umaczenia interfejsu ${PRODUCT_NAME} w wybranych jêzykach"
 
-LangString lng_am $(LANG_POLISH) "am  Amharic"
-LangString lng_ar $(LANG_POLISH) "ar  Arabic"
-LangString lng_az $(LANG_POLISH) "az  Azerbaijani"
-LangString lng_be $(LANG_POLISH) "be  Byelorussian"
-LangString lng_bg $(LANG_POLISH) "bg  Bulgarian"
-LangString lng_bn $(LANG_POLISH) "bn  Bengali"
-LangString lng_br $(LANG_POLISH) "br  Breton"
-LangString lng_ca $(LANG_POLISH) "ca  Catalan"
-LangString lng_ca@valencia $(LANG_POLISH) "ca@valencia  Valencian Catalan"
-LangString lng_cs $(LANG_POLISH) "cs  Czech"
-LangString lng_da $(LANG_POLISH) "da  Danish"
-LangString lng_de $(LANG_POLISH) "de  German"
-LangString lng_dz $(LANG_POLISH) "dz  Dzongkha"
-LangString lng_el $(LANG_POLISH) "el  Greek"
-LangString lng_en $(LANG_POLISH) "en  English"
-LangString lng_en_AU $(LANG_POLISH) "en_AU Australian English"
-LangString lng_en_CA $(LANG_POLISH) "en_CA Canadian English"
-LangString lng_en_GB $(LANG_POLISH) "en_GB British English"
-LangString lng_en_US@piglatin $(LANG_POLISH) "en_US@piglatin Pig Latin"
-LangString lng_eo $(LANG_POLISH) "eo  Esperanto"
-LangString lng_es $(LANG_POLISH) "es  Spanish"
-LangString lng_es_MX $(LANG_POLISH) "es_MX  Mexican Spanish"
-LangString lng_et $(LANG_POLISH) "et  Estonian"
-LangString lng_eu $(LANG_POLISH) "eu  Basque"
-LangString lng_fi $(LANG_POLISH) "fi  Finnish"
-LangString lng_fr $(LANG_POLISH) "fr  French"
-LangString lng_ga $(LANG_POLISH) "ga  Irish"
-LangString lng_gl $(LANG_POLISH) "gl  Gallegan"
-LangString lng_he $(LANG_POLISH) "he  Hebrew"
-LangString lng_hr $(LANG_POLISH) "hr  Croatian"
-LangString lng_hu $(LANG_POLISH) "hu  Hungarian"
-LangString lng_id $(LANG_POLISH) "id  Indonesian"
-LangString lng_it $(LANG_POLISH) "it  Italian"
-LangString lng_ja $(LANG_POLISH) "ja  Japanese"
-LangString lng_km $(LANG_POLISH) "km  Khmer"
-LangString lng_ko $(LANG_POLISH) "ko  Korean"
-LangString lng_lt $(LANG_POLISH) "lt  Lithuanian"
-LangString lng_mk $(LANG_POLISH) "mk  Macedonian"
-LangString lng_mn $(LANG_POLISH) "mn  Mongolian"
-LangString lng_ne $(LANG_POLISH) "ne  Nepali"
-LangString lng_nb $(LANG_POLISH) "nb  Norwegian Bokmål"
-LangString lng_nl $(LANG_POLISH) "nl  Dutch"
-LangString lng_nn $(LANG_POLISH) "nn  Norwegian Nynorsk"
-LangString lng_pa $(LANG_POLISH) "pa  Panjabi"
-LangString lng_pl $(LANG_POLISH) "pl  Polski"
-LangString lng_pt $(LANG_POLISH) "pt  Portuguese"
-LangString lng_pt_BR $(LANG_POLISH) "pt_BR Brazilian Portuguese"
-LangString lng_ro $(LANG_POLISH) "ro  Romanian"
-LangString lng_ru $(LANG_POLISH) "ru  Russian"
-LangString lng_rw $(LANG_POLISH) "rw  Kinyarwanda"
-LangString lng_sk $(LANG_POLISH) "sk  Slovak"
-LangString lng_sl $(LANG_POLISH) "sl  Slovenian"
-LangString lng_sq $(LANG_POLISH) "sq  Albanian"
-LangString lng_sr $(LANG_POLISH) "sr  Serbian"
-LangString lng_sr@latin $(LANG_POLISH) "sr@latin  Serbian in Latin script"
-LangString lng_sv $(LANG_POLISH) "sv  Swedish"
-LangString lng_th $(LANG_POLISH) "th  Thai"
-LangString lng_tr $(LANG_POLISH) "tr  Turkish"
-LangString lng_uk $(LANG_POLISH) "uk  Ukrainian"
-LangString lng_vi $(LANG_POLISH) "vi  Vietnamese"
-LangString lng_zh_CN $(LANG_POLISH) "zh_CH  Simplifed Chinese"
-LangString lng_zh_TW $(LANG_POLISH) "zh_TW  Traditional Chinese"
+LangString lng_am $(LANG_POLISH) "am  amharski"
+LangString lng_ar $(LANG_POLISH) "ar  arabski"
+LangString lng_az $(LANG_POLISH) "az  azerski"
+LangString lng_be $(LANG_POLISH) "be  bia³oruski"
+LangString lng_bg $(LANG_POLISH) "bg  bu³garski"
+LangString lng_bn $(LANG_POLISH) "bn  bengalski"
+LangString lng_br $(LANG_POLISH) "br  bretoñski"
+LangString lng_ca $(LANG_POLISH) "ca  kataloñski"
+LangString lng_ca@valencia $(LANG_POLISH) "ca@valencia  kataloñski - dialekt walencki"
+LangString lng_cs $(LANG_POLISH) "cs  czeski"
+LangString lng_da $(LANG_POLISH) "da  duñski"
+LangString lng_de $(LANG_POLISH) "de  niemiecki"
+LangString lng_dz $(LANG_POLISH) "dz  dzongka"
+LangString lng_el $(LANG_POLISH) "el  grecki"
+LangString lng_en $(LANG_POLISH) "en  angielski"
+LangString lng_en_AU $(LANG_POLISH) "en_AU angielski (Australia)"
+LangString lng_en_CA $(LANG_POLISH) "en_CA angielski (Kanada)"
+LangString lng_en_GB $(LANG_POLISH) "en_GB angielski (Wielka Brytania)"
+LangString lng_en_US@piglatin $(LANG_POLISH) "en_US@piglatin angielski (Pig Latin)"
+LangString lng_eo $(LANG_POLISH) "eo  esperanto"
+LangString lng_es $(LANG_POLISH) "es  hiszpañski"
+LangString lng_es_MX $(LANG_POLISH) "es_MX  hiszpañski (Meksyk)"
+LangString lng_et $(LANG_POLISH) "et  estoñski"
+LangString lng_eu $(LANG_POLISH) "eu  baskijski"
+LangString lng_fi $(LANG_POLISH) "fi  fiñski"
+LangString lng_fr $(LANG_POLISH) "fr  francuski"
+LangString lng_ga $(LANG_POLISH) "ga  irlandzki"
+LangString lng_gl $(LANG_POLISH) "gl  galicyjski"
+LangString lng_he $(LANG_POLISH) "he  hebrajski"
+LangString lng_hr $(LANG_POLISH) "hr  chorwacki"
+LangString lng_hu $(LANG_POLISH) "hu  wêgierski"
+LangString lng_id $(LANG_POLISH) "id  indonezyjski"
+LangString lng_it $(LANG_POLISH) "it  w³oski"
+LangString lng_ja $(LANG_POLISH) "ja  japoñski"
+LangString lng_km $(LANG_POLISH) "km  khmerski"
+LangString lng_ko $(LANG_POLISH) "ko  koreañski"
+LangString lng_lt $(LANG_POLISH) "lt  litewski"
+LangString lng_mk $(LANG_POLISH) "mk  macedoñski"
+LangString lng_mn $(LANG_POLISH) "mn  mongolski"
+LangString lng_ne $(LANG_POLISH) "ne  nepalski"
+LangString lng_nb $(LANG_POLISH) "nb  norweski Bokmål"
+LangString lng_nl $(LANG_POLISH) "nl  duñski"
+LangString lng_nn $(LANG_POLISH) "nn  norweski Nynorsk"
+LangString lng_pa $(LANG_POLISH) "pa  pend¿abski"
+LangString lng_pl $(LANG_POLISH) "pl  polski"
+LangString lng_pt $(LANG_POLISH) "pt  portugalski"
+LangString lng_pt_BR $(LANG_POLISH) "pt_BR portugalski (Brazylia)"
+LangString lng_ro $(LANG_POLISH) "ro  rumuñski"
+LangString lng_ru $(LANG_POLISH) "ru  rosyjski"
+LangString lng_rw $(LANG_POLISH) "rw  ruanda-rundi"
+LangString lng_sk $(LANG_POLISH) "sk  s³owacki"
+LangString lng_sl $(LANG_POLISH) "sl  s³oweñski"
+LangString lng_sq $(LANG_POLISH) "sq  albañski"
+LangString lng_sr $(LANG_POLISH) "sr  serbski"
+LangString lng_sr@latin $(LANG_POLISH) "sr@latin  serbski (alfabet ³aciñski)"
+LangString lng_sv $(LANG_POLISH) "sv  szwedzki"
+LangString lng_th $(LANG_POLISH) "th  tajski"
+LangString lng_tr $(LANG_POLISH) "tr  turecki"
+LangString lng_uk $(LANG_POLISH) "uk  ukraiñski"
+LangString lng_vi $(LANG_POLISH) "vi  wietnamski"
+LangString lng_zh_CN $(LANG_POLISH) "zh_CH  chiñski uproszczony"
+LangString lng_zh_TW $(LANG_POLISH) "zh_TW  chiñski tradycyjny"
 
 
 
@@ -212,18 +213,18 @@ LangString lng_UInstOpt1  ${LANG_POLISH} "Dokonaj wyboru spoœród dodatkowych opc
 ; Ask to purge the personal preferences
 LangString lng_PurgePrefs ${LANG_POLISH} "Zachowaj w systemie preferencje u¿ytkownika "
 
-LangString lng_RETRY_CANCEL_DESC ${LANG_POLISH} "$\n$\nPress RETRY to continue or press CANCEL to abort."
+LangString lng_RETRY_CANCEL_DESC ${LANG_POLISH} "$\n$\nNaciœnij PONÓW by kontynuowaæ lub ANULUJ aby przerwaæ."
 
-LangString lng_ClearDirectoryBefore ${LANG_POLISH} "${PRODUCT_NAME} must be installed in an empty directory. $INSTDIR is not empty. Please clear this directory first!$(lng_RETRY_CANCEL_DESC)"
+LangString lng_ClearDirectoryBefore ${LANG_POLISH} "${PRODUCT_NAME} musi byæ zainstalowany w pustym folderze. $INSTDIR nie jest pusty. Proszê usuñ jego zawartoœæ!$(lng_RETRY_CANCEL_DESC)"
 
-LangString lng_UninstallLogNotFound ${LANG_POLISH} "$INSTDIR\uninstall.log not found!$\r$\nPlease uninstall by clearing directory $INSTDIR yourself!"
+LangString lng_UninstallLogNotFound ${LANG_POLISH} "Plik $INSTDIR\uninstall.log nie zosta³ znaleziony!$\r$\nOdinstaluj program rêcznie usuwaj¹c zawartoœæ folderu $INSTDIR!"
 
-LangString lng_FileChanged ${LANG_POLISH} "The file $filename has been changed after installation.$\r$\nDo you still want to delete that file?"
+LangString lng_FileChanged ${LANG_POLISH} "Plik $filename zosta³ zmieniony po zainstalowaniu.$\r$\nCzy na pewno chcesz usun¹æ ten plik?"
 
-LangString lng_Yes ${LANG_POLISH} "Yes"
+LangString lng_Yes ${LANG_POLISH} "Tak"
 
-LangString lng_AlwaysYes ${LANG_POLISH} "always answer Yes"
+LangString lng_AlwaysYes ${LANG_POLISH} "Tak na wszystkie"
 
-LangString lng_No ${LANG_POLISH} "No"
+LangString lng_No ${LANG_POLISH} "Nie"
 
-LangString lng_AlwaysNo ${LANG_POLISH} "always answer No"
+LangString lng_AlwaysNo ${LANG_POLISH} "Nie na wszystkie"
