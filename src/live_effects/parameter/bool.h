@@ -38,6 +38,9 @@ public:
 
     bool get_value() { return value; };
 
+    inline operator bool()
+        { return value; };
+
 private:
     BoolParam(const BoolParam&);
     BoolParam& operator=(const BoolParam&);
