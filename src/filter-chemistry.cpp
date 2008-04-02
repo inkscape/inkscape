@@ -478,6 +478,7 @@ double get_single_gaussian_blur_radius(SPFilter *filter)
         }
         return x;
     }
+    return 0.0;
 }
 
 
