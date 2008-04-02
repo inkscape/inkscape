@@ -214,10 +214,16 @@ ${helper_SRC}
 ${inkjar_SRC}
 ${io_SRC}
 ${jabber_whiteboard_SRC}
-#${
-#${
-#${
-#${
+${live_effects_SRC}
+${removeoverlap_SRC}
+${svg_SRC}
+${trace_SRC}
+${traits_SRC}
+${ui_SRC}
+#${utest_SRC}
+#${util_SRC}
+#${widgets_SRC}
+#${xml_SRC}
 )
 
 # make executable for INKSCAPE
