@@ -16,4 +16,4 @@ TryExec=inkscape
 Terminal=false
 StartupNotify=true
 
-Icon=inkscape.png
+Icon=inkscape
