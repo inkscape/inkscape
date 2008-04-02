@@ -12,9 +12,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "libnr/nr-point-fns.h"
 #include "proj_pt.h"
 #include "axis-manip.h"
-#include "libnr/nr-point-fns.h"
 
 namespace Proj {
 
@@ -52,6 +52,8 @@ public:
     TransfMat3x4 &operator*=(NR::Matrix const &A);
 
     void print() const;
+
+    void copy_tmat(double rhs[3][4]);
 
 private:
     // FIXME: Is changing a single column allowed when a projective coordinate system is specified!?!?!

@@ -165,6 +165,14 @@ TransfMat3x4::operator*=(NR::Matrix const &A) {
     return *this;
 }
 
+void
+TransfMat3x4::copy_tmat(double rhs[3][4]) {
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            rhs[i][j] = tmat[i][j];
+        }
+    }
+}
 
 void
 TransfMat3x4::print () const {
