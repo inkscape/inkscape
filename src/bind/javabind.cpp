@@ -324,32 +324,73 @@ static const char *commonJavaPaths[] =
     NULL
 };
 
+
+static String getExePath()
+{
+    char exeName[80];
+    GetModuleFileName(NULL, exeName, 80);
+    char *slashPos = strrchr(exeName, '\\');
+    if (slashPos)
+        *slashPos = '\0';
+    String s = exeName;
+    return s;
+}
+
+
+static String checkPathUnderRoot(const String &root)
+{
+    for (const char **path = commonJavaPaths ; *path ; path++)
+        {
+        String jpath = root;
+        jpath.append(*path);
+        //msg("trying '%s'", jpath.c_str());
+        struct stat finfo;
+        if (stat(jpath.c_str(), &finfo)>=0)
+            {
+            //msg("found");
+            return jpath;
+            }
+        }
+    return "";
+}
+
+
+
 static CreateVMFunc getCreateVMFunc()
 {
     bool found = false;
     String libname;
 
     /**
-     * First, look for JAVA_HOME.  This will allow the user
-     * to override what's in the registry
-     */	 	     
-    const char *envStr = getenv("JAVA_HOME");
-    if (envStr)
+     * First, look for an embedded jre in the $INKSCAPE dir.
+     * This allows us to package our own JRE if we want to.
+     */
+    String inkscapeHome = getExePath();
+    inkscapeHome.append("\\jre");
+    msg("INKSCAPE_HOME='%s'", inkscapeHome.c_str());
+    String path = checkPathUnderRoot(inkscapeHome);
+    if (path.size() > 0)
         {
-        String javaHome = cleanPath(envStr);
-        msg("JAVA_HOME='%s'", javaHome.c_str());
-        for (const char **path = commonJavaPaths ; *path ; path++)
+        libname = path;
+        found = true;
+        }
+
+    /**
+     * Next, look for JAVA_HOME.  This will allow the user
+     * to override what's in the registry
+     */
+    if (!found)
+        {
+        const char *envStr = getenv("JAVA_HOME");
+        if (envStr)
             {
-            String jpath = javaHome;
-            jpath.append(*path);
-            //msg("trying '%s'", jpath.c_str());
-            struct stat finfo;
-            if (stat(jpath.c_str(), &finfo)>=0)
+            String javaHome = cleanPath(envStr);
+            msg("JAVA_HOME='%s'", javaHome.c_str());
+            path = checkPathUnderRoot(javaHome);
+            if (path.size() > 0)
                 {
-                //msg("found");
-                libname = jpath;
+                libname = path;
                 found = true;
-                break;
                 }
             }
         }
@@ -416,12 +457,7 @@ static CreateVMFunc getCreateVMFunc()
 
 static void getJavaRoot(String &javaroot)
 {
-    char exeName[80];
-    GetModuleFileName(NULL, exeName, 80);
-    char *slashPos = strrchr(exeName, '\\');
-    if (slashPos)
-        *slashPos = '\0';
-    javaroot = exeName;
+    javaroot = getExePath();
     javaroot.append("\\");
     javaroot.append(INKSCAPE_BINDDIR);
     javaroot.append("\\java");

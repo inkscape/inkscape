@@ -132,7 +132,7 @@ public Document stringToDoc(String xmlStr)
 /**
  * Serialize an XML Document to a string
  */ 
-String docToString(Document doc)
+public String docToString(Document doc)
 {
     if (doc == null)
         return "";
