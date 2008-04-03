@@ -64,9 +64,6 @@
 
 #include "transf_mat_3x4.h"
 
-#define A4_WIDTH_STR "210mm"
-#define A4_HEIGHT_STR "297mm"
-
 #define SP_DOCUMENT_UPDATE_PRIORITY (G_PRIORITY_HIGH_IDLE - 1)
 
 
@@ -300,8 +297,8 @@ sp_document_create(Inkscape::XML::Document *rdoc,
     /* fixme: Again, I moved these here to allow version determining in ::build (Lauris) */
 
     /* Quick hack 2 - get default image size into document */
-    if (!rroot->attribute("width")) rroot->setAttribute("width", A4_WIDTH_STR);
-    if (!rroot->attribute("height")) rroot->setAttribute("height", A4_HEIGHT_STR);
+    if (!rroot->attribute("width")) rroot->setAttribute("width", "100%");
+    if (!rroot->attribute("height")) rroot->setAttribute("height", "100%");
     /* End of quick hack 2 */
 
     /* Quick hack 3 - Set uri attributes */
