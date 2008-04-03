@@ -1,5 +1,5 @@
-#ifndef __SP_OBJECT_H__
-#define __SP_OBJECT_H__
+#ifndef SP_OBJECT_H_SEEN
+#define SP_OBJECT_H_SEEN
 
 /** \file
  * Abstract base class for all nodes
@@ -221,15 +221,15 @@ struct SPObject : public GObject {
     SPObject *lastChild() { return _last_child; }
     SPObject const *lastChild() const { return _last_child; }
 
-    enum Action { ActionGeneral, ActionBBox, ActionUpdate, ActionShow };    
+    enum Action { ActionGeneral, ActionBBox, ActionUpdate, ActionShow };
     /** @brief Retrieves children as a GSList */
     GSList *childList(bool add_ref, Action action = ActionGeneral);
 
     SPObject *appendChildRepr(Inkscape::XML::Node *repr);
 
-    /** @brief Gets the author-visible label for this object. */ 
+    /** @brief Gets the author-visible label for this object. */
     gchar const *label() const;
-    /** @brief Returns a default label for this object. */ 
+    /** @brief Returns a default label for this object. */
     gchar const *defaultLabel() const;
     /** @brief Sets the author-visible label for this object.
      *
@@ -556,7 +556,7 @@ void sp_object_removeAttribute(SPObject *object, gchar const *key, SPException *
 /* Style */
 
 gchar const *sp_object_get_style_property(SPObject const *object,
-					  gchar const *key, gchar const *def);
+                                          gchar const *key, gchar const *def);
 
 Inkscape::Version sp_object_get_sodipodi_version(SPObject *object);
 
@@ -565,7 +565,7 @@ int sp_object_compare_position(SPObject const *first, SPObject const *second);
 SPObject *sp_object_prev(SPObject *child);
 
 
-#endif
+#endif // SP_OBJECT_H_SEEN
 
 
 /*

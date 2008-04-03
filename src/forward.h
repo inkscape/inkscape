@@ -1,5 +1,5 @@
-#ifndef __FORWARD_H__
-#define __FORWARD_H__
+#ifndef FORWARD_H_SEEN
+#define FORWARD_H_SEEN
 
 /*
  * Forward declarations of most used objects
@@ -59,6 +59,7 @@ class SPObjectClass;
 
 #define SP_TYPE_OBJECT (sp_object_get_type ())
 #define SP_OBJECT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_OBJECT, SPObject))
+#define SP_OBJECT_CLASS(clazz) (G_TYPE_CHECK_CLASS_CAST((clazz), SP_TYPE_OBJECT, SPObjectClass))
 #define SP_IS_OBJECT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_OBJECT))
 
 GType sp_object_get_type ();
@@ -68,6 +69,7 @@ class SPItemClass;
 
 #define SP_TYPE_ITEM (sp_item_get_type ())
 #define SP_ITEM(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_ITEM, SPItem))
+#define SP_ITEM_CLASS(clazz) (G_TYPE_CHECK_CLASS_CAST((clazz), SP_TYPE_ITEM, SPItemClass))
 #define SP_IS_ITEM(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_ITEM))
 
 GType sp_item_get_type ();
@@ -193,7 +195,7 @@ namespace Inkscape {
     class Verb;
 }
 
-#endif /* !__FORWARD_H__ */
+#endif // FORWARD_H_SEEN
 
 /*
   Local Variables:

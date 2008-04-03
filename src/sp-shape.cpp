@@ -1,5 +1,3 @@
-#define __SP_SHAPE_C__
-
 /*
  * Base class for shapes, including <path> element
  *
@@ -100,16 +98,12 @@ sp_shape_get_type (void)
 static void
 sp_shape_class_init (SPShapeClass *klass)
 {
-    GObjectClass *gobject_class;
-	SPObjectClass *sp_object_class;
-	SPItemClass * item_class;
-    SPLPEItemClass * lpe_item_class;
+    GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
+    SPObjectClass *sp_object_class = SP_OBJECT_CLASS(klass);
+    SPItemClass * item_class = SP_ITEM_CLASS(klass);
+    SPLPEItemClass * lpe_item_class = SP_LPE_ITEM_CLASS(klass);
 
-    gobject_class = (GObjectClass *) klass;
-	sp_object_class = (SPObjectClass *) klass;
-	item_class = (SPItemClass *) klass;
-
-	parent_class = (SPLPEItemClass *)g_type_class_peek_parent (klass);
+    parent_class = (SPLPEItemClass *)g_type_class_peek_parent (klass);
 
     gobject_class->finalize = sp_shape_finalize;
 
