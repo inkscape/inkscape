@@ -106,6 +106,23 @@ String normalizePath(const String &str)
 	return buf;
 }
 
+
+/**
+ * Convert a java string to a C++ string
+ */
+String getString(JNIEnv *env, jstring jstr)
+{
+    const char *chars = env->GetStringUTFChars(jstr, JNI_FALSE);
+    String str = chars;
+    env->ReleaseStringUTFChars(jstr, chars);
+    return str;
+}
+
+
+/**
+ * Check if the VM has encountered an Exception.  If so, get the String for it
+ * and clear the exception
+ */
 String getExceptionString(JNIEnv *env)
 {
     String buf;
@@ -115,9 +132,7 @@ String getExceptionString(JNIEnv *env)
     jclass cls = env->GetObjectClass(exc);
     jmethodID mid = env->GetMethodID(cls, "toString", "()Ljava/lang/String;");
     jstring jstr = (jstring) env->CallObjectMethod(exc, mid);
-    const char *str = env->GetStringUTFChars(jstr, JNI_FALSE);
-    buf.append(str);
-    env->ReleaseStringUTFChars(jstr, str);
+    buf.append(getString(env, jstr));
     env->ExceptionClear();
 	return buf;
 }
@@ -168,14 +183,6 @@ void setObjDouble(JNIEnv *env, jobject obj, const char *name, jdouble val)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "D");
     env->SetDoubleField(obj, fid, val);
-}
-
-String getString(JNIEnv *env, jstring jstr)
-{
-    const char *chars = env->GetStringUTFChars(jstr, JNI_FALSE);
-    String str = chars;
-    env->ReleaseStringUTFChars(jstr, chars);
-    return str;
 }
 
 String getObjString(JNIEnv *env, jobject obj, const char *name)
@@ -325,10 +332,13 @@ static const char *commonJavaPaths[] =
 };
 
 
+/**
+ * Return the directory of the .exe that is currently running
+ */
 static String getExePath()
 {
-    char exeName[80];
-    GetModuleFileName(NULL, exeName, 80);
+    char exeName[MAX_PATH+1];
+    GetModuleFileName(NULL, exeName, MAX_PATH);
     char *slashPos = strrchr(exeName, '\\');
     if (slashPos)
         *slashPos = '\0';
@@ -337,6 +347,10 @@ static String getExePath()
 }
 
 
+/**
+ * Check a directory for several possibilities of sub-locations
+ * under it, where a jvm might exist.
+ */
 static String checkPathUnderRoot(const String &root)
 {
     for (const char **path = commonJavaPaths ; *path ; path++)
@@ -356,13 +370,17 @@ static String checkPathUnderRoot(const String &root)
 
 
 
+/**
+ * Attempt to find and load a jvm.dll file.  Find the createVM()
+ * function's address and return it
+ */
 static CreateVMFunc getCreateVMFunc()
 {
     bool found = false;
     String libname;
 
     /**
-     * First, look for an embedded jre in the $INKSCAPE dir.
+     * First, look for an embedded jre in the .exe's dir.
      * This allows us to package our own JRE if we want to.
      */
     String inkscapeHome = getExePath();
@@ -455,6 +473,10 @@ static CreateVMFunc getCreateVMFunc()
     return createVM;
 }
 
+/**
+ * Return the directory where the Java classes/libs/resources are
+ * located
+ */
 static void getJavaRoot(String &javaroot)
 {
     javaroot = getExePath();
@@ -518,6 +540,10 @@ static bool findJVMRecursive(const String &dirpath,
 }
 
 
+/**
+ * Some common places on a Unix filesystem where JVMs are
+ * often found.
+ */
 static const char *commonJavaPaths[] =
 {
     "/usr/lib/jvm/jre",
@@ -528,6 +554,8 @@ static const char *commonJavaPaths[] =
     "/usr/local/java",
     NULL
 };
+
+
 
 /**
  * Look for a Java VM (libjvm.so) in several Unix places
@@ -572,6 +600,10 @@ static bool findJVM(String &result)
 
 
 
+/**
+ * Attempt to find and load a jvm.dll file.  Find the createVM()
+ * function's address and return it
+ */
 static CreateVMFunc getCreateVMFunc()
 {
     String libname;
@@ -597,6 +629,10 @@ static CreateVMFunc getCreateVMFunc()
 }
 
 
+/**
+ * Return the directory where the Java classes/libs/resources are
+ * located
+ */
 static void getJavaRoot(String &javaroot)
 {
     javaroot = INKSCAPE_BINDDIR;
@@ -684,9 +720,9 @@ static void populateClassPath(const String &javaroot,
  * This is provided to scripts can grab the current copy or the
  * repr tree.  If anyone has a smarter way of doing this, please implement. 
  */    
-jstring JNICALL documentGet(JNIEnv *env, jobject /*obj*/, jlong ptr)
+jstring JNICALL documentGet(JNIEnv *env, jobject /*obj*/, jlong /*ptr*/)
 {
-    JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
+    //JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
     String buf =  sp_repr_save_buf((SP_ACTIVE_DOCUMENT)->rdoc);
     jstring jstr = env->NewStringUTF(buf.c_str());
     return jstr;
@@ -696,9 +732,9 @@ jstring JNICALL documentGet(JNIEnv *env, jobject /*obj*/, jlong ptr)
  * This is provided to scripts can load an XML tree into Inkscape.
  * If anyone has a smarter way of doing this, please implement. 
  */    
-jboolean JNICALL documentSet(JNIEnv *env, jobject /*obj*/, jlong ptr, jstring jstr)
+jboolean JNICALL documentSet(JNIEnv *env, jobject /*obj*/, jlong /*ptr*/, jstring jstr)
 {
-    JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
+    //JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
     String s = getString(env, jstr);
     SPDocument *doc = sp_document_new_from_mem(s.c_str(), s.size(), true);
 }
