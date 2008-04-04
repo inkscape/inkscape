@@ -2,13 +2,12 @@
 _Name=Inkscape Vector Graphics Editor
 _Comment=Create and edit Scalable Vector Graphics images
 
-Encoding=UTF-8
 Version=1.0
 
 Type=Application
-Categories=Application;Graphics;VectorGraphics;GTK;
+Categories=Graphics;VectorGraphics;GTK;
 
-MimeType=image/svg+xml
+MimeType=image/svg+xml;image/svg+xml-compressed;
 
 FilePattern=inkscape
 Exec=inkscape %F

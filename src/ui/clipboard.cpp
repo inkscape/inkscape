@@ -15,11 +15,6 @@
  * See the file COPYING for details.
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-#include "path-prefix.h"
-
 #include "ui/clipboard.h"
 
 // TODO: reduce header bloat if possible
