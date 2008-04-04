@@ -38,7 +38,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.7.7, 2007-2008 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.8, 2007-2008 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -2862,6 +2862,99 @@ private:
 };
 
 
+//########################################################################
+//# F I L E L I S T
+//########################################################################
+/**
+ * This is a simpler, explicitly-named list of files
+ */
+class FileList
+{
+public:
+
+    /**
+     *
+     */
+    FileList()
+        {}
+
+    /**
+     *
+     */
+    FileList(const FileList &other)
+        { assign(other); }
+
+    /**
+     *
+     */
+    FileList &operator=(const FileList &other)
+        { assign(other); return *this; }
+
+    /**
+     *
+     */
+    virtual ~FileList()
+        {}
+
+    /**
+     *
+     */
+    String getDirectory()
+        { return directory; }
+        
+    /**
+     *
+     */
+    void setDirectory(const String &val)
+        { directory = val; }
+
+    /**
+     *
+     */
+    void setFiles(const std::vector<String> &val)
+        { files = val; }
+
+    /**
+     *
+     */
+    std::vector<String> getFiles()
+        { return files; }
+        
+    /**
+     *
+     */
+    unsigned int size()
+        { return files.size(); }
+        
+    /**
+     *
+     */
+    String operator[](int index)
+        { return files[index]; }
+        
+    /**
+     *
+     */
+    void clear()
+        {
+        directory = "";
+        files.clear();
+        }
+        
+
+private:
+
+    void assign(const FileList &other)
+        {
+        directory = other.directory;
+        files     = other.files;
+        }
+
+    String directory;
+    std::vector<String> files;
+};
+
+
 
 
 //########################################################################
@@ -3071,6 +3164,12 @@ protected:
     bool parseFileSet(Element *elem,
                     MakeBase &propRef,
                     FileSet &fileSet);
+    /**
+     * Parse a <filelist> entry
+     */  
+    bool parseFileList(Element *elem,
+                    MakeBase &propRef,
+                    FileList &fileList);
 
     /**
      * Return this object's property list
@@ -4072,6 +4171,49 @@ bool MakeBase::parseFileSet(Element *elem,
     */
 
     
+    return true;
+}
+
+/**
+ * Parse a <filelist> entry.  This is far simpler than FileSet,
+ * since no directory scanning is needed.  The file names are listed
+ * explicitly.
+ */  
+bool MakeBase::parseFileList(Element *elem,
+                          MakeBase &propRef,
+                          FileList &fileList)
+{
+    std::vector<String> fnames;
+    //Look for child tags, namely "file"
+    std::vector<Element *> children  = elem->getChildren();
+    for (unsigned int i=0 ; i<children.size() ; i++)
+        {
+        Element *child = children[i];
+        String tagName = child->getName();
+        if (tagName == "file")
+            {
+            String fname = child->getAttribute("name");
+            if (fname.size()==0)
+                {
+                error("<file> element requires name="" attribute");
+                return false;
+                }
+            fnames.push_back(fname);
+            }
+        else
+            {
+            error("tag <%s> not allowed in <fileset>", tagName.c_str());
+            return false;
+			}
+        }
+
+    String dir;
+    //Get the base directory for reading file names
+    if (!propRef.getAttribute(elem, "dir", dir))
+        return false;
+    fileList.setDirectory(dir);
+    fileList.setFiles(fnames);
+
     return true;
 }
 
@@ -6011,16 +6153,22 @@ public:
         defines     = "";
         includes    = "";
         fileSet.clear();
+        excludeInc.clear();
         }
 
     virtual ~TaskCC()
         {}
 
-    virtual bool needsCompiling(const FileRec &depRec,
-              const String &src, const String &dest)
+    virtual bool isExcludedInc(const String &dirname)
         {
+        for (unsigned int i=0 ; i<excludeInc.size() ; i++)
+            {
+            String fname = excludeInc[i];
+            if (fname == dirname)
+                return true;
+			}
         return false;
-        }
+		}
 
     virtual bool execute()
         {
@@ -6070,6 +6218,10 @@ public:
         std::set<String>::iterator setIter;
         for (setIter=paths.begin() ; setIter!=paths.end() ; setIter++)
             {
+            String dirName = *setIter;
+            //check excludeInc to see if we dont want to include this dir
+            if (isExcludedInc(dirName))
+                continue;
             incs.append(" -I");
             String dname;
             if (source.size()>0)
@@ -6077,7 +6229,7 @@ public:
                 dname.append(source);
                 dname.append("/");
                 }
-            dname.append(*setIter);
+            dname.append(dirName);
             incs.append(parent.resolve(dname));
             }
         std::vector<String> cfiles;
@@ -6273,6 +6425,11 @@ public:
                     return false;
                 source = fileSet.getDirectory();
                 }
+            else if (tagName == "excludeinc")
+                {
+                if (!parseFileList(child, parent, excludeInc))
+                    return false;
+                }
             }
 
         return true;
@@ -6280,14 +6437,16 @@ public:
         
 protected:
 
-    String ccCommand;
-    String cxxCommand;
-    String source;
-    String dest;
-    String flags;
-    String defines;
-    String includes;
-    FileSet fileSet;
+    String   ccCommand;
+    String   cxxCommand;
+    String   source;
+    String   dest;
+    String   flags;
+    String   lastflags;
+    String   defines;
+    String   includes;
+    FileSet  fileSet;
+    FileList excludeInc;
     
 };
 

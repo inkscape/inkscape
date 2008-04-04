@@ -271,6 +271,9 @@
             <exclude name="removeoverlap/remove_rectangle_overlap-test.cpp"/>
             <exclude name="removeoverlap/remove_rectangle_overlap-test.h"/>
         </fileset>
+        <excludeinc dir="${src}">
+            <file name="extension/param"/>
+        </excludeinc>
         <flags>
             -Wall -Wformat-security -W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch
             -O2
