@@ -1,5 +1,24 @@
-SET(INKSCAPE_DEPENDS gtk+-2.0 gtkmm-2.4 cairo cairomm-1.0 sigc++-2.0 lcms libgc1c2 libpng glib-2.0 glibmm-2.4 libxslt ImageMagick++ libpopt freetype2)
-SET(INKSCAPE_OPTIONAL gnome-vfs-2.0 libwpg-0.1 libssl)
+SET(INKSCAPE_DEPENDS
+    gtk+-2.0
+    gtkmm-2.4
+    cairo
+    cairomm-1.0
+    sigc++-2.0
+    lcms
+    libgc1c2
+    libpng
+    glib-2.0
+    glibmm-2.4
+    libxml-2.0
+    libxslt
+    ImageMagick++
+    libpopt
+    freetype2)
+SET(INKSCAPE_OPTIONAL
+    gnome-vfs-2.0
+    libwpg-0.1
+    libssl)
+
 include(UsePkgConfig)
 
 # Dependencies Packages
