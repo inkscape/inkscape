@@ -6299,7 +6299,7 @@ public:
             //# First we check if the source is newer than the .o
             if (isNewerThan(srcFullName, destFullName))
                 {
-                taskstatus("compile of %s required by %s",
+                taskstatus("compile of %s required by source: %s",
                         destFullName.c_str(), srcFullName.c_str());
                 compileMe = true;
                 }
@@ -6322,7 +6322,7 @@ public:
                     //        destFullName.c_str(), depFullName.c_str());
                     if (depRequires)
                         {
-                        taskstatus("compile of %s required by %s",
+                        taskstatus("compile of %s required by included: %s",
                                 destFullName.c_str(), depFullName.c_str());
                         compileMe = true;
                         break;
