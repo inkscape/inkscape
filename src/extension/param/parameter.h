@@ -22,12 +22,12 @@
 #include "xml/document.h"
 #include "xml/node.h"
 #include "document.h"
-#include "extension-forward.h"
+#include <extension/extension-forward.h>
 #include "prefs-utils.h"
 
 #include <glibmm/i18n.h>
 
-#include "color.h"
+#include <color.h>
 
 namespace Inkscape {
 namespace Extension {
@@ -58,7 +58,11 @@ protected:
     /** \brief  Scope of the parameter. */
     _scope_t _scope;
     /** \brief  Text for the GUI selection of this. */
-    gchar *       _text;
+    gchar *  _text;
+    /** \brief  Whether the GUI is visible */
+    bool _gui_hidden;
+	/** \brief  A tip for the GUI if there is one */
+	gchar *  _gui_tip;
 
 
     /* **** funcs **** */
@@ -72,11 +76,13 @@ public:
                               const gchar * guitext,
                               const gchar * desc,
                               const Parameter::_scope_t scope,
+                              bool gui_hidden,
+							  const gchar * gui_tip,
                               Inkscape::Extension::Extension * ext);
                   Parameter  (const gchar * name,
                               const gchar * guitext,
                               Inkscape::Extension::Extension * ext) {
-                      Parameter(name, guitext, NULL, Parameter::SCOPE_USER, ext);
+                      Parameter(name, guitext, NULL, Parameter::SCOPE_USER, false, NULL, ext);
                   };
     virtual      ~Parameter  (void);
     bool          get_bool   (const SPDocument * doc,

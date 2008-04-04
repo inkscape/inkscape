@@ -14,7 +14,7 @@
 #endif
 
 
-#include "paramdescription.h"
+#include "description.h"
 
 #include <gtkmm/adjustment.h>
 #include <gtkmm/box.h>
@@ -26,16 +26,16 @@
 
 #include <xml/node.h>
 
-#include "extension.h"
-#include "prefs-utils.h"
+#include <extension/extension.h>
+#include <prefs-utils.h>
 
 namespace Inkscape {
 namespace Extension {
 
 
 /** \brief  Initialize the object, to do that, copy the data. */
-ParamDescription::ParamDescription (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-    Parameter(name, guitext, desc, scope, ext), _value(NULL)
+ParamDescription::ParamDescription (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext), _value(NULL)
 {
     // printf("Building Description\n");
     const char * defaultval = NULL;
@@ -52,6 +52,8 @@ ParamDescription::ParamDescription (const gchar * name, const gchar * guitext, c
 Gtk::Widget *
 ParamDescription::get_widget (SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * /*changeSignal*/)
 {
+	if (_gui_hidden) return NULL;
+
     Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_value)));
     label->set_line_wrap();
     label->show();

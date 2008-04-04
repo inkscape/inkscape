@@ -15,8 +15,8 @@
 
 #include <xml/node.h>
 
-#include "extension.h"
-#include "paramstring.h"
+#include <extension/extension.h>
+#include "string.h"
 
 namespace Inkscape {
 namespace Extension {
@@ -69,8 +69,8 @@ ParamString::string (std::string &string)
 }
 
 /** \brief  Initialize the object, to do that, copy the data. */
-ParamString::ParamString (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-    Parameter(name, guitext, desc, scope, ext), _value(NULL)
+ParamString::ParamString (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext), _value(NULL)
 {
     const char * defaultval = NULL;
     if (sp_repr_children(xml) != NULL)
@@ -134,6 +134,8 @@ ParamStringEntry::changed_text (void)
 Gtk::Widget *
 ParamString::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
+	if (_gui_hidden) return NULL;
+
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
     Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));

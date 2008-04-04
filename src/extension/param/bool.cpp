@@ -15,15 +15,15 @@
 
 #include <xml/node.h>
 
-#include "extension.h"
-#include "parambool.h"
+#include "../extension.h"
+#include "bool.h"
 
 namespace Inkscape {
 namespace Extension {
 
 /** \brief  Use the superclass' allocator and set the \c _value */
-ParamBool::ParamBool (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-        Parameter(name, guitext, desc, scope, ext), _value(false)
+ParamBool::ParamBool (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+        Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext), _value(false)
 {
     const char * defaultval = NULL;
     if (sp_repr_children(xml) != NULL)
@@ -61,6 +61,13 @@ ParamBool::set( bool in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/ )
     g_free(prefname);
 
     return _value;
+}
+
+/** \brief  Returns \c _value */
+bool 
+ParamBool::get (const SPDocument * doc, const Inkscape::XML::Node * node)
+{
+	return _value; 
 }
 
 /** \brief  A check button which is Param aware.  It works with the
@@ -125,6 +132,7 @@ ParamBool::string (std::string &string)
 Gtk::Widget *
 ParamBool::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
+	if (_gui_hidden) return NULL;
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
     Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));

@@ -17,7 +17,7 @@
 #include <gtkmm/widget.h>
 
 #include "xml/document.h"
-#include "extension-forward.h"
+#include <extension/extension-forward.h>
 
 #include "parameter.h"
 
@@ -37,7 +37,7 @@ private:
     GSList * choices; /**< A table to store the choice strings  */
 
 public:
-    ParamRadioButton(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
+    ParamRadioButton(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     virtual ~ParamRadioButton(void);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     void string (std::string &string);

@@ -19,26 +19,26 @@ extension_libextension_a_SOURCES =	\
 	extension/execution-env.h \
 	extension/init.cpp	\
 	extension/init.h	\
-	extension/parameter.h \
-	extension/parameter.cpp \
-	extension/paramnotebook.h \
-	extension/paramnotebook.cpp \
-	extension/parambool.h \
-	extension/parambool.cpp \
-	extension/paramcolor.h \
-	extension/paramcolor.cpp \
-	extension/paramdescription.h \
-	extension/paramdescription.cpp \
-	extension/paramenum.h \
-	extension/paramenum.cpp \
-	extension/paramfloat.h \
-	extension/paramfloat.cpp \
-	extension/paramint.h \
-	extension/paramint.cpp \
-	extension/paramradiobutton.h \
-	extension/paramradiobutton.cpp \
-	extension/paramstring.h \
-	extension/paramstring.cpp \
+	extension/param/parameter.h \
+	extension/param/parameter.cpp \
+	extension/param/notebook.h \
+	extension/param/notebook.cpp \
+	extension/param/bool.h \
+	extension/param/bool.cpp \
+	extension/param/color.h \
+	extension/param/color.cpp \
+	extension/param/description.h \
+	extension/param/description.cpp \
+	extension/param/enum.h \
+	extension/param/enum.cpp \
+	extension/param/float.h \
+	extension/param/float.cpp \
+	extension/param/int.h \
+	extension/param/int.cpp \
+	extension/param/radiobutton.h \
+	extension/param/radiobutton.cpp \
+	extension/param/string.h \
+	extension/param/string.cpp \
 	extension/prefdialog.cpp \
 	extension/prefdialog.h \
 	extension/system.cpp	\

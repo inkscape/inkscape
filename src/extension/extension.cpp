@@ -34,7 +34,7 @@
 #include "db.h"
 #include "dependency.h"
 #include "timer.h"
-#include "parameter.h"
+#include "param/parameter.h"
 
 namespace Inkscape {
 namespace Extension {

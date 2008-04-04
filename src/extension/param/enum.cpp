@@ -1,5 +1,5 @@
 /** \file
- * extension parameter for radiobuttons.
+ * extension parameter for enumerations.
  *
  * It uses a Gtk:ComboBoxText widget in the extension UI.
  */
@@ -19,8 +19,7 @@
 
 
 #include <gtkmm/box.h>
-#include <gtkmm/radiobutton.h>
-#include <gtkmm/radiobuttongroup.h>
+#include <gtkmm/comboboxtext.h>
 #include <gtkmm/tooltips.h>
 #include <gtkmm/label.h>
 
@@ -28,12 +27,12 @@
 
 #include <xml/node.h>
 
-#include "extension.h"
-#include "prefs-utils.h"
-#include "document-private.h"
-#include "sp-object.h"
+#include <extension/extension.h>
+#include <prefs-utils.h>
+#include <document-private.h>
+#include <sp-object.h>
 
-#include "paramradiobutton.h"
+#include "enum.h"
 
 /** \brief  The root directory in the preferences database for extension
             related parameters. */
@@ -44,13 +43,13 @@ namespace Extension {
 
 /* For internal use only.
      Note that value and guitext MUST be non-NULL. This is ensured by newing only at one location in the code where non-NULL checks are made. */
-class optionentry {
+class enumentry {
 public:
-    optionentry (Glib::ustring * val, Glib::ustring * text) {
+    enumentry (Glib::ustring * val, Glib::ustring * text) {
         value = val;
         guitext = text;
     }
-    ~optionentry() {
+    ~enumentry() {
         delete value;
         delete guitext;
     }
@@ -59,8 +58,9 @@ public:
     Glib::ustring * guitext;
 };
 
-ParamRadioButton::ParamRadioButton (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-    Parameter(name, guitext, desc, scope, ext)
+
+ParamComboBox::ParamComboBox (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext)
 {
     choices = NULL;
     _value = NULL;
@@ -71,24 +71,26 @@ ParamRadioButton::ParamRadioButton (const gchar * name, const gchar * guitext, c
         Inkscape::XML::Node *child_repr = sp_repr_children(xml);
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
-            if (!strcmp(chname, "option") || !strcmp(chname, "_option")) {
+            if (!strcmp(chname, "item") || !strcmp(chname, "_item")) {
                 Glib::ustring * newguitext = NULL;
                 Glib::ustring * newvalue = NULL;
                 const char * contents = sp_repr_children(child_repr)->content();
                 if (contents != NULL)
-                    // don't translate when 'option' but do translate when '_option'
-                     newguitext = new Glib::ustring( !strcmp(chname, "_option") ? _(contents) : contents );
+                    // don't translate when 'item' but do translate when '_item'
+                	// NOTE: internal extensions use build_from_mem and don't need _item but 
+                	//       still need to include if are to be localized                	
+                     newguitext = new Glib::ustring( !strcmp(chname, "_item") ? _(contents) : contents );
                 else
-                    continue;  
-                    
+                    continue;
+
                 const char * val = child_repr->attribute("value");
                 if (val != NULL)
                     newvalue = new Glib::ustring(val);
                 else
                     newvalue = new Glib::ustring(contents);
-                            
+
                 if ( (newguitext) && (newvalue) ) {   // logical error if this is not true here
-                    choices = g_slist_append( choices, new optionentry(newvalue, newguitext) );
+                    choices = g_slist_append( choices, new enumentry(newvalue, newguitext) );
                 }
             }
             child_repr = sp_repr_next(child_repr);
@@ -98,8 +100,8 @@ ParamRadioButton::ParamRadioButton (const gchar * name, const gchar * guitext, c
     // Initialize _value with the default value from xml
     // for simplicity : default to the contents of the first xml-child
     const char * defaultval = NULL;
-    if (choices)
-        defaultval = ((optionentry*) choices->data)->value->c_str();
+    if (sp_repr_children(sp_repr_children(xml)) != NULL)
+        defaultval = sp_repr_children(xml)->attribute("value");
 
     gchar * pref_name = this->pref_name();
     const gchar * paramval = prefs_get_string_attribute(PREF_DIR, pref_name);
@@ -113,11 +115,11 @@ ParamRadioButton::ParamRadioButton (const gchar * name, const gchar * guitext, c
     return;
 }
 
-ParamRadioButton::~ParamRadioButton (void)
+ParamComboBox::~ParamComboBox (void)
 {
     //destroy choice strings
     for (GSList * list = choices; list != NULL; list = g_slist_next(list)) {
-        delete (reinterpret_cast<optionentry *>(list->data));
+        delete (reinterpret_cast<enumentry *>(list->data));
     }
     g_slist_free(choices);
 
@@ -139,13 +141,13 @@ ParamRadioButton::~ParamRadioButton (void)
     the passed in value is duplicated using \c g_strdup().
 */
 const gchar *
-ParamRadioButton::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
+ParamComboBox::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     if (in == NULL) return NULL; /* Can't have NULL string */
 
     Glib::ustring * settext = NULL;
     for (GSList * list = choices; list != NULL; list = g_slist_next(list)) {
-        optionentry * entr = reinterpret_cast<optionentry *>(list->data);
+        enumentry * entr = reinterpret_cast<enumentry *>(list->data);
         if ( !entr->guitext->compare(in) ) {
             settext = entr->value;
             break;  // break out of for loop
@@ -162,103 +164,91 @@ ParamRadioButton::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::No
     return _value;
 }
 
+void
+ParamComboBox::changed (void) {
+    
+}
+
 
 /**
-    \brief  A function to get the current value of the parameter in a string form
+    \brief  A function to get the value of the parameter in string form
     \return A string with the 'value' as command line argument
 */
 void
-ParamRadioButton::string (std::string &string)
+ParamComboBox::string (std::string &string)
 {
     string += _value;
     return;
 }
 
-/** \brief  A special radiobutton class to use in ParamRadioButton */
-class ParamRadioButtonWdg : public Gtk::RadioButton {
+
+
+
+/** \brief  A special category of Gtk::Entry to handle string parameteres */
+class ParamComboBoxEntry : public Gtk::ComboBoxText {
 private:
-    ParamRadioButton * _pref;
+    ParamComboBox * _pref;
     SPDocument * _doc;
     Inkscape::XML::Node * _node;
     sigc::signal<void> * _changeSignal;
 public:
     /** \brief  Build a string preference for the given parameter
-        \param  pref  Where to put the radiobutton's string when it is selected.
+        \param  pref  Where to get the string from, and where to put it
+                      when it changes.
     */
-    ParamRadioButtonWdg ( Gtk::RadioButtonGroup& group, const Glib::ustring& label,
-                          ParamRadioButton * pref, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal ) :
-        Gtk::RadioButton(group, label), _pref(pref), _doc(doc), _node(node), _changeSignal(changeSignal) {
-        add_changesignal();
-    };
-    ParamRadioButtonWdg ( const Glib::ustring& label,
-                          ParamRadioButton * pref, SPDocument * doc, Inkscape::XML::Node * node , sigc::signal<void> * changeSignal) :
-        Gtk::RadioButton(label), _pref(pref), _doc(doc), _node(node), _changeSignal(changeSignal) {
-        add_changesignal();
-    };
-    void add_changesignal() {
-        this->signal_toggled().connect(sigc::mem_fun(this, &ParamRadioButtonWdg::changed));
+    ParamComboBoxEntry (ParamComboBox * pref, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
+        Gtk::ComboBoxText(), _pref(pref), _doc(doc), _node(node), _changeSignal(changeSignal) {
+        this->signal_changed().connect(sigc::mem_fun(this, &ParamComboBoxEntry::changed));
     };
     void changed (void);
 };
 
-/** \brief  Respond to the selected radiobutton changing
+/** \brief  Respond to the text box changing
 
-    This function responds to the radiobutton selection changing by grabbing the value
+    This function responds to the box changing by grabbing the value
     from the text box and putting it in the parameter.
 */
 void
-ParamRadioButtonWdg::changed (void)
+ParamComboBoxEntry::changed (void)
 {
-    if (this->get_active()) {
-        Glib::ustring data = this->get_label();
-        _pref->set(data.c_str(), _doc, _node);
-    }
+    Glib::ustring data = this->get_active_text();
+    _pref->set(data.c_str(), _doc, _node);
     if (_changeSignal != NULL) {
         _changeSignal->emit();
     }
 }
 
-
-
 /**
     \brief  Creates a combobox widget for an enumeration parameter
 */
 Gtk::Widget *
-ParamRadioButton::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ParamComboBox::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
-    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
-    Gtk::VBox * vbox = Gtk::manage(new Gtk::VBox(false, 0));
+	if (_gui_hidden) return NULL;
 
-    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT, Gtk::ALIGN_TOP));
+    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
+
+    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));
     label->show();
     hbox->pack_start(*label, false, false);
 
-    // add choice strings as radiobuttons
-    // and select last selected option (_value)
-    bool first = true;
-    ParamRadioButtonWdg * radio;
-    Gtk::RadioButtonGroup group;
+    ParamComboBoxEntry * combo = Gtk::manage(new ParamComboBoxEntry(this, doc, node, changeSignal));
+    // add choice strings:
+    Glib::ustring * settext = 0;
     for (GSList * list = choices; list != NULL; list = g_slist_next(list)) {
-        optionentry * entr = reinterpret_cast<optionentry *>(list->data);
+        enumentry * entr = reinterpret_cast<enumentry *>(list->data);
         Glib::ustring * text = entr->guitext;
-        if (first) {
-            radio = Gtk::manage(new ParamRadioButtonWdg(*text, this, doc, node, changeSignal));
-            group = radio->get_group();
-            first = false;
-        } else {
-            radio = Gtk::manage(new ParamRadioButtonWdg(group, *text, this, doc, node, changeSignal));
-        }
-        radio->show();
-        vbox->pack_start(*radio, true, true);
-        if (!entr->value->compare(_value)) {
-            radio->set_active();
+        combo->append_text(*text);
+        if ( !entr->value->compare(_value) ) {
+            settext = entr->guitext;
         }
     }
+    if (settext) combo->set_active_text(*settext);
 
-    vbox->show();
-    hbox->pack_end(*vbox, false, false);
+    combo->show();
+    hbox->pack_start(*combo, true, true);
+
     hbox->show();
-
 
     return dynamic_cast<Gtk::Widget *>(hbox);
 }
@@ -266,4 +256,3 @@ ParamRadioButton::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc
 
 }  /* namespace Extension */
 }  /* namespace Inkscape */
-

@@ -26,59 +26,26 @@
 
 #include <xml/node.h>
 
-#include "extension.h"
+#include <extension/extension.h>
 #include "document-private.h"
 #include "sp-object.h"
-#include "color.h"
+#include <color.h>
 #include "widgets/sp-color-selector.h"
 #include "widgets/sp-color-notebook.h"
 
 #include "parameter.h"
-#include "parambool.h"
-#include "paramcolor.h"
-#include "paramdescription.h"
-#include "paramenum.h"
-#include "paramfloat.h"
-#include "paramint.h"
-#include "paramnotebook.h"
-#include "paramradiobutton.h"
-#include "paramstring.h"
+#include "bool.h"
+#include "color.h"
+#include "description.h"
+#include "enum.h"
+#include "float.h"
+#include "int.h"
+#include "notebook.h"
+#include "radiobutton.h"
+#include "string.h"
 
 namespace Inkscape {
 namespace Extension {
-
-class ParamEnum : public Parameter {
-private:
-    class Choice {
-    public:
-        gchar * _gui_name;
-        gchar * _value;
-        Choice(gchar * gui_name, gchar * value) : _gui_name(NULL), _value(NULL) {
-            if (gui_name != NULL)
-                _gui_name = g_strdup(_(gui_name));
-            if (value != NULL)
-                _value = g_strdup(value);
-            return;
-        };
-        ~Choice (void) {
-            g_free(_gui_name);
-            g_free(_value);
-        };
-    }; /* class Choice */
-    /** \brief  Internal value.  This should point to a string that has
-                been allocated in memory.  And should be free'd. */
-    Choice * _current_choice;
-    typedef std::list<Choice *> choice_list_t;
-    choice_list_t _choice_list;
-public:
-    ParamEnum(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
-    ~ParamEnum(void);
-    /** \brief  Returns \c _value, with a \i const to protect it. */
-    const gchar * get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _current_choice != NULL ? _current_choice->_value : NULL; }
-    const gchar * set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
-    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
-    Glib::ustring * string (void);
-}; /* class ParamEnum */
 
 /**
     \return None
@@ -112,16 +79,30 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
     const char * desc;
     const char * scope_str;
     Parameter::_scope_t scope = Parameter::SCOPE_USER;
+	bool gui_hidden = false;
+	const char * gui_hide;
+	const char * gui_tip;
 
     name = in_repr->attribute("name");
     type = in_repr->attribute("type");
     guitext = in_repr->attribute("gui-text");
     if (guitext == NULL)
         guitext = in_repr->attribute("_gui-text");
+    gui_tip = in_repr->attribute("gui-tip");
+    if (gui_tip == NULL)
+        gui_tip = in_repr->attribute("_gui-tip");
     desc = in_repr->attribute("gui-description");
     if (desc == NULL)
         desc = in_repr->attribute("_gui-description");
     scope_str = in_repr->attribute("scope");
+	gui_hide = in_repr->attribute("gui-hidden");
+	if (gui_hide != NULL) {
+		if (strcmp(gui_hide, "1") == 0 ||
+			strcmp(gui_hide, "true") == 0) {
+			gui_hidden = true;
+		}
+		/* else stays false */
+	}
 
     /* In this case we just don't have enough information */
     if (name == NULL || type == NULL) {
@@ -140,23 +121,23 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
 
     Parameter * param = NULL;
     if (!strcmp(type, "boolean")) {
-        param = new ParamBool(name, guitext, desc, scope, in_ext, in_repr);
+        param = new ParamBool(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     } else if (!strcmp(type, "int")) {
-        param = new ParamInt(name, guitext, desc, scope, in_ext, in_repr);
+        param = new ParamInt(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     } else if (!strcmp(type, "float")) {
-        param = new ParamFloat(name, guitext, desc, scope, in_ext, in_repr);
+        param = new ParamFloat(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     } else if (!strcmp(type, "string")) {
-        param = new ParamString(name, guitext, desc, scope, in_ext, in_repr);
+        param = new ParamString(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     } else if (!strcmp(type, "description")) {
-        param = new ParamDescription(name, guitext, desc, scope, in_ext, in_repr);
+        param = new ParamDescription(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     } else if (!strcmp(type, "enum")) {
-        param = new ParamComboBox(name, guitext, desc, scope, in_ext, in_repr);
+        param = new ParamComboBox(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     } else if (!strcmp(type, "notebook")) {
-        param = new ParamNotebook(name, guitext, desc, scope, in_ext, in_repr);
+        param = new ParamNotebook(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     } else if (!strcmp(type, "optiongroup")) {
-        param = new ParamRadioButton(name, guitext, desc, scope, in_ext, in_repr);
+        param = new ParamRadioButton(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     } else if (!strcmp(type, "color")) {
-        param = new ParamColor(name, guitext, desc, scope, in_ext, in_repr);
+        param = new ParamColor(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     }
 
     /* Note: param could equal NULL */
@@ -276,14 +257,18 @@ Parameter::set_color (guint32 in, SPDocument * doc, Inkscape::XML::Node * node)
 
 
 /** \brief  Oop, now that we need a parameter, we need it's name.  */
-Parameter::Parameter (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext) :
-    extension(ext), _name(NULL), _desc(NULL), _scope(scope), _text(NULL)
+Parameter::Parameter (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext) :
+    extension(ext), _name(NULL), _desc(NULL), _scope(scope), _text(NULL), _gui_hidden(gui_hidden), _gui_tip(NULL)
 {
-    if (name != NULL)
+    if (name != NULL) {
         _name = g_strdup(name);
+    }
     if (desc != NULL) {
         _desc = g_strdup(desc);
         // printf("Adding description: '%s' on '%s'\n", _desc, _name);
+    }
+    if (gui_tip != NULL) {
+        _gui_tip = g_strdup(gui_tip);
     }
 
 
@@ -300,6 +285,7 @@ Parameter::~Parameter (void)
 {
     g_free(_name);
     g_free(_text);
+	g_free(_gui_tip);
 }
 
 /** \brief  Build the name to write the parameter from the extension's
@@ -387,43 +373,6 @@ Parameter::string (std::list <std::string> &list)
     list.insert(list.end(), final);
     return;
 }
-
-
-
-
-
-ParamEnum::ParamEnum (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * /*xml*/) :
-    Parameter(name, guitext, desc, scope, ext), _current_choice(NULL)
-{
-    return;
-}
-
-ParamEnum::~ParamEnum (void)
-{
-
-}
-
-/** \brief  Return the value as a string */
-Glib::ustring *
-ParamEnum::string (void)
-{
-    Glib::ustring * mystring = new Glib::ustring("");
-    *mystring += this->get(NULL, NULL);
-    return mystring;
-}
-
-Gtk::Widget *
-ParamEnum::get_widget (SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * /*changeSignal*/)
-{
-    return NULL;
-}
-
-const gchar *
-ParamEnum::set (const gchar * /*in*/, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
-{
-    return NULL;
-}
-
 
 }  /* namespace Extension */
 }  /* namespace Inkscape */

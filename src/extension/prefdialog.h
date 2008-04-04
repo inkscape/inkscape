@@ -19,7 +19,7 @@
 #include <gtkmm/socket.h>
 
 #include "execution-env.h"
-#include "parameter.h"
+#include "param/parameter.h"
 
 namespace Inkscape {
 namespace Extension {

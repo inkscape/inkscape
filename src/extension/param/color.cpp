@@ -19,10 +19,10 @@
 
 #include <xml/node.h>
 
-#include "extension.h"
-#include "paramcolor.h"
-
+#include "../extension.h"
 #include "color.h"
+
+#include <color.h>
 #include "widgets/sp-color-selector.h"
 #include "widgets/sp-color-notebook.h"
 
@@ -54,8 +54,8 @@ ParamColor::set( guint32 in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*
 }
 
 /** \brief  Initialize the object, to do that, copy the data. */
-ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-    Parameter(name, guitext, desc, scope, ext)
+ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext)
 {
     const char * defaulthex = NULL;
     if (sp_repr_children(xml) != NULL)
@@ -85,6 +85,8 @@ ParamColor::string (std::string &string)
 Gtk::Widget *
 ParamColor::get_widget( SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * changeSignal )
 {
+	if (_gui_hidden) return NULL;
+
     _changeSignal = new sigc::signal<void>(*changeSignal);
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
     SPColorSelector* spColorSelector = (SPColorSelector*)sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK);

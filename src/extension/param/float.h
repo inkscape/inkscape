@@ -1,5 +1,5 @@
-#ifndef INK_EXTENSION_PARAMINT_H_SEEN
-#define INK_EXTENSION_PARAMINT_H_SEEN
+#ifndef INK_EXTENSION_PARAMFLOAT_H_SEEN
+#define INK_EXTENSION_PARAMFLOAT_H_SEEN
 
 /*
  * Copyright (C) 2005-2007 Authors:
@@ -16,19 +16,21 @@
 namespace Inkscape {
 namespace Extension {
 
-class ParamInt : public Parameter {
+class ParamFloat : public Parameter {
 private:
     /** \brief  Internal value. */
-    int _value;
-    int _min;
-    int _max;
+    float _value;
+    float _min;
+    float _max;
+    int _precision;
 public:
-    ParamInt (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
+    ParamFloat (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
-    int get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
-    int set (int in, SPDocument * doc, Inkscape::XML::Node * node);
-    int max (void) { return _max; }
-    int min (void) { return _min; }
+    float get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
+    float set (float in, SPDocument * doc, Inkscape::XML::Node * node);
+    float max (void) { return _max; }
+    float min (void) { return _min; }
+    float precision (void) { return _precision; }
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     void string (std::string &string);
 };
@@ -36,7 +38,7 @@ public:
 }  /* namespace Extension */
 }  /* namespace Inkscape */
 
-#endif /* INK_EXTENSION_PARAMINT_H_SEEN */
+#endif /* INK_EXTENSION_PARAMFLOAT_H_SEEN */
 
 /*
   Local Variables:
