@@ -10,6 +10,15 @@ SET(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 # Set to true if compiler/linker should enable profiling:
 #SET(ENABLE_PROFILING TRUE)
 
+# Probably best to move all these path things to a single file
+IF(WIN32)
+    SET(PACKAGE_LOCALE_DIR "locale")
+ELSEIF(WIN32)
+    # TODO: check and change this to correct value:
+    SET(PACKAGE_LOCALE_DIR "locale")
+ENDIF(WIN32)
+
+
 SET(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
 SET(CMAKE_SKIP_RPATH:BOOL OFF)
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeScripts)

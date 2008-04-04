@@ -219,7 +219,7 @@
 #cmakedefine PACKAGE_BUGREPORT ""
 
 /* Localization directory */
-#cmakedefine PACKAGE_LOCALE_DIR
+#define PACKAGE_LOCALE_DIR "${PACKAGE_LOCALE_DIR}"
 
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "${PROJECT_NAME}"
