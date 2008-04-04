@@ -6129,7 +6129,7 @@ protected:
         {
         va_list args;
         va_start(args,fmt);
-        fprintf(stdout, "    --- <%s> : ", name.c_str());
+        fprintf(stdout, "    %s : ", name.c_str());
         vfprintf(stdout, fmt, args);
         fprintf(stdout, "\n");
         va_end(args) ;
@@ -8561,7 +8561,7 @@ bool Make::executeTarget(Target &target,
             }
         }
 
-    status("## Target : %s : %s", name.c_str(),
+    status("##### Target : %s\n##### %s", name.c_str(),
             target.getDescription().c_str());
 
     //Now let's do the tasks
@@ -8569,7 +8569,7 @@ bool Make::executeTarget(Target &target,
     for (unsigned int i=0 ; i<tasks.size() ; i++)
         {
         Task *task = tasks[i];
-        status("task : %s", task->getName().c_str());
+        status("--- %s / %s", name.c_str(), task->getName().c_str());
         if (!task->execute())
             {
             return false;
