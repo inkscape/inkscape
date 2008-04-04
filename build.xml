@@ -518,7 +518,7 @@
     <copy file="${gtk}/bin/libgtk-win32-2.0-0.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libgthread-2.0-0.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libcairo-2.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libpoppler-2.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libpoppler-3.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libpangocairo-1.0-0.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libpango-1.0-0.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libpangoft2-1.0-0.dll" todir="${dist}"/>
