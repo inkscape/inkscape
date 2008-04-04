@@ -63,8 +63,10 @@
 #define	kScriptFileName "script"
 #define kOpenDocFileName "openDoc"
 
-// custom carbon events
+// custom carbon event class
 #define kEventClassRedFatalAlert 911
+
+// custom carbon event types
 #define kEventKindX11Failed 911
 #define kEventKindFCCacheFailed 912
 
