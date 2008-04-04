@@ -62,6 +62,8 @@
 /* Define to 1 if you have the <gc.h> header file. */
 #cmakedefine HAVE_GC_H 1
 
+#cmakedefine HAVE_GETOPT_H 1
+
 /* Define if the GNU gettext() function is already present or preinstalled. */
 #cmakedefine HAVE_GETTEXT 1
 
