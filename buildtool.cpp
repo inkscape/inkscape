@@ -38,7 +38,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.8, 2007-2008 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.8.1, 2007-2008 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -3073,6 +3073,11 @@ protected:
     void status(const char *fmt, ...);
 
     /**
+     *  Show target status
+     */
+    void targetstatus(const char *fmt, ...);
+
+    /**
      *  Print a printf()-like formatted trace message
      */
     void trace(const char *fmt, ...);
@@ -3258,7 +3263,6 @@ void MakeBase::status(const char *fmt, ...)
     fprintf(stdout, "\n");
     va_end(args) ;
 }
-
 
 
 /**
@@ -6118,6 +6122,19 @@ protected:
         name = other.name;
         }
         
+    /**
+     *  Show task status
+     */
+    void taskstatus(const char *fmt, ...)
+        {
+        va_list args;
+        va_start(args,fmt);
+        fprintf(stdout, "    --- <%s> : ", name.c_str());
+        vfprintf(stdout, fmt, args);
+        fprintf(stdout, "\n");
+        va_end(args) ;
+        }
+
     String getAttribute(Element *elem, const String &attrName)
         {
         String str;
@@ -6182,7 +6199,7 @@ public:
         String fullName = parent.resolve("build.dep");
         if (isNewerThan(parent.getURI().getPath(), fullName))
             {
-            status("          : regenerating C/C++ dependency cache");
+            taskstatus("regenerating C/C++ dependency cache");
             refreshCache = true;
             }
 
@@ -6282,7 +6299,7 @@ public:
             //# First we check if the source is newer than the .o
             if (isNewerThan(srcFullName, destFullName))
                 {
-                status("          : compile of %s required by %s",
+                taskstatus("compile of %s required by %s",
                         destFullName.c_str(), srcFullName.c_str());
                 compileMe = true;
                 }
@@ -6305,7 +6322,7 @@ public:
                     //        destFullName.c_str(), depFullName.c_str());
                     if (depRequires)
                         {
-                        status("          : compile of %s required by %s",
+                        taskstatus("compile of %s required by %s",
                                 destFullName.c_str(), depFullName.c_str());
                         compileMe = true;
                         break;
@@ -6485,7 +6502,7 @@ public:
                {
                if (fileName.size()>0)
                    {
-                   status("          : %s to %s",
+                   taskstatus("%s to %s",
                         fileName.c_str(), toFileName.c_str());
                    String fullSource = parent.resolve(fileName);
                    String fullDest = parent.resolve(toFileName);
@@ -6498,12 +6515,12 @@ public:
                        }
                    if (!isNewerThan(fullSource, fullDest))
                        {
-                       status("          : skipped");
+                       taskstatus("skipped");
                        return true;
                        }
                    if (!copyFile(fullSource, fullDest))
                        return false;
-                   status("          : 1 file copied");
+                   taskstatus("1 file copied");
                    }
                return true;
                }
@@ -6515,7 +6532,7 @@ public:
                        return false;
                    String fileSetDir = fileSet.getDirectory();
 
-                   status("          : %s to %s",
+                   taskstatus("%s to %s",
                        fileSetDir.c_str(), toDirName.c_str());
 
                    int nrFiles = 0;
@@ -6566,13 +6583,13 @@ public:
                            return false;
                        nrFiles++;
                        }
-                   status("          : %d file(s) copied", nrFiles);
+                   taskstatus("%d file(s) copied", nrFiles);
                    }
                else //file source
                    {
                    //For file->dir we want only the basename of
                    //the source appended to the dest dir
-                   status("          : %s to %s", 
+                   taskstatus("%s to %s", 
                        fileName.c_str(), toDirName.c_str());
                    String baseName = fileName;
                    unsigned int pos = baseName.find_last_of('/');
@@ -6596,12 +6613,12 @@ public:
                        }
                    if (!isNewerThan(fullSource, fullDest))
                        {
-                       status("          : skipped");
+                       taskstatus("skipped");
                        return true;
                        }
                    if (!copyFile(fullSource, fullDest))
                        return false;
-                   status("          : 1 file copied");
+                   taskstatus("1 file copied");
                    }
                return true;
                }
@@ -6744,7 +6761,7 @@ public:
                 }
             case DEL_DIR:
                 {
-                status("          : %s", dirName.c_str());
+                taskstatus("%s", dirName.c_str());
                 String fullDir = parent.resolve(dirName);
                 if (!removeDirectory(fullDir))
                     return false;
@@ -6930,11 +6947,11 @@ public:
         fclose(f);
         if (!count)
             {
-            status("          : nothing to do");
+            taskstatus("nothing to do");
             return true;
 			}
 
-        status("          : compiling %d files", count);
+        taskstatus("compiling %d files", count);
 
         String execCmd = cmd;
         execCmd.append("@");
@@ -7160,7 +7177,7 @@ public:
 
     virtual bool execute()
         {
-        status("          : %s", fileName.c_str());
+        taskstatus("%s", fileName.c_str());
         String fullName = parent.resolve(fileName);
         if (!isNewerThan(parent.getURI().getPath(), fullName))
             {
@@ -7222,7 +7239,7 @@ public:
 
     virtual bool execute()
         {
-        status("          : %s", dirName.c_str());
+        taskstatus("%s", dirName.c_str());
         String fullDir = parent.resolve(dirName);
         //trace("fullDir:%s", fullDir.c_str());
         if (!createDirectory(fullDir))
@@ -7451,7 +7468,7 @@ public:
                 }
             
             }
-        status("          : %s", ret.c_str());
+        taskstatus("%s", ret.c_str());
         parent.setProperty(propName, ret);
         return true;
         }
@@ -8552,7 +8569,7 @@ bool Make::executeTarget(Target &target,
     for (unsigned int i=0 ; i<tasks.size() ; i++)
         {
         Task *task = tasks[i];
-        status("---- task : %s", task->getName().c_str());
+        status("task : %s", task->getName().c_str());
         if (!task->execute())
             {
             return false;
