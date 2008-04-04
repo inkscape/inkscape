@@ -8,16 +8,6 @@ extension.cpp
 init.cpp
 input.cpp
 output.cpp
-parambool.cpp
-paramcolor.cpp
-paramdescription.cpp
-paramenum.cpp
-parameter.cpp
-paramfloat.cpp
-paramint.cpp
-paramnotebook.cpp
-paramradiobutton.cpp
-paramstring.cpp
 patheffect.cpp
 prefdialog.cpp
 print.cpp
@@ -34,6 +24,7 @@ SET(extensionfolders
 dxf2svg
 implementation
 internal
+param
 script
 )
 
