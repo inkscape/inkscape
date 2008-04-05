@@ -41,7 +41,7 @@
 
 
 #include "uristream.h"
-
+#include <string.h>
 
 
 namespace org
