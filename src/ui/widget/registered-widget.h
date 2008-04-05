@@ -305,9 +305,9 @@ public:
                                   SPDocument *doc_in = NULL );
 
     // redefine setValue, because transform must be applied
-    void setValue(Geom::Point & p);
+    void setValue(Geom::Point const & p);
 
-    void setTransform(Geom::Matrix & canvas_to_svg);
+    void setTransform(Geom::Matrix const & canvas_to_svg);
 
 protected:
     sigc::connection  _value_x_changed_connection;

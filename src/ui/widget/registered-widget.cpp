@@ -493,14 +493,14 @@ RegisteredTransformedPoint::RegisteredTransformedPoint ( const Glib::ustring& la
 }
 
 void
-RegisteredTransformedPoint::setValue(Geom::Point & p)
+RegisteredTransformedPoint::setValue(Geom::Point const & p)
 {
     Geom::Point new_p = p * to_svg.inverse();
     Point::setValue(new_p);  // the Point widget should display things in canvas coordinates
 }
 
 void
-RegisteredTransformedPoint::setTransform(Geom::Matrix & canvas_to_svg)
+RegisteredTransformedPoint::setTransform(Geom::Matrix const & canvas_to_svg)
 {
     // check if matrix is singular / has inverse
     if ( ! canvas_to_svg.isSingular() ) {
