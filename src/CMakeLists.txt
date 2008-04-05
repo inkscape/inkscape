@@ -1,3 +1,10 @@
+IF(WIN32)
+SET(ONLY_WIN
+registrytool.cpp)
+ELSEIF(WIN32)
+SET(ONLY_WIN)
+ENDIF(WIN32)
+
 SET(INKSCAPE_SRC
 arc-context.cpp
 attributes.cpp
@@ -85,7 +92,6 @@ print.cpp
 profile-manager.cpp
 proj_pt.cpp
 rect-context.cpp
-registrytool.cpp
 rubberband.cpp
 satisfied-guide-cns.cpp
 selcue.cpp
@@ -199,6 +205,7 @@ verbs.cpp
 version.cpp
 winmain.cpp
 zoom-context.cpp
+${ONLY_WIN}
 ${algorithms}
 ${api}
 ${application}
