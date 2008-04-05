@@ -1,7 +1,7 @@
 include(UseGlibMarshal)
 
 SET(Marshal
-sp-marshal.list
+sp-marshal
 )
 
 GLIB_MARSHAL(sp_marshal ${Marshal} ${CMAKE_CURRENT_BINARY_DIR})
