@@ -10,6 +10,11 @@ SET(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 # Set to true if compiler/linker should enable profiling:
 #SET(ENABLE_PROFILING TRUE)
 
+#Pretty colors
+SET(CMAKE_COLOR_MAKEFILE ON)
+#Choose verbosity level
+SET(CMAKE_VERBOSE_MAKEFILE ON)
+
 # Probably best to move all these path things to a single file
 IF(WIN32)
     SET(PACKAGE_LOCALE_DIR "locale")
