@@ -357,7 +357,7 @@ GdkDeviceAxis coreAxes[] = {{GDK_AXIS_X, 0.0, 0.0},
 
 static void createFakeList() {
     if ( !fakeList ) {
-        fakeout[0].name = "pad";
+        fakeout[0].name = g_strdup("pad");
         fakeout[0].source = GDK_SOURCE_PEN;
         fakeout[0].mode = GDK_MODE_SCREEN;
         fakeout[0].has_cursor = TRUE;
@@ -366,7 +366,7 @@ static void createFakeList() {
         fakeout[0].num_keys = 8;
         fakeout[0].keys = padKeys;
 
-        fakeout[1].name = "eraser";
+        fakeout[1].name = g_strdup("eraser");
         fakeout[1].source = GDK_SOURCE_ERASER;
         fakeout[1].mode = GDK_MODE_SCREEN;
         fakeout[1].has_cursor = TRUE;
@@ -375,7 +375,7 @@ static void createFakeList() {
         fakeout[1].num_keys = 7;
         fakeout[1].keys = eraserKeys;
 
-        fakeout[2].name = "cursor";
+        fakeout[2].name = g_strdup("cursor");
         fakeout[2].source = GDK_SOURCE_CURSOR;
         fakeout[2].mode = GDK_MODE_SCREEN;
         fakeout[2].has_cursor = TRUE;
@@ -384,7 +384,7 @@ static void createFakeList() {
         fakeout[2].num_keys = 7;
         fakeout[2].keys = cursorKeys;
 
-        fakeout[3].name = "stylus";
+        fakeout[3].name = g_strdup("stylus");
         fakeout[3].source = GDK_SOURCE_PEN;
         fakeout[3].mode = GDK_MODE_SCREEN;
         fakeout[3].has_cursor = TRUE;
@@ -401,7 +401,7 @@ static void createFakeList() {
         if ( devList && devList->data ) {
             fakeout[4] = *((GdkDevice*)devList->data);
         } else {
-            fakeout[4].name = "Core Pointer";
+            fakeout[4].name = g_strdup("Core Pointer");
             fakeout[4].source = GDK_SOURCE_MOUSE;
             fakeout[4].mode = GDK_MODE_SCREEN;
             fakeout[4].has_cursor = TRUE;
