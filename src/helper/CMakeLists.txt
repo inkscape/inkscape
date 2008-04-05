@@ -4,7 +4,7 @@ SET(Marshal
 sp-marshal.list
 )
 
-GLIB_MARSHAL(sp-marshal ${Marshal} ${CMAKE_CURRENT_BINARY_DIR})
+GLIB_MARSHAL(sp_marshal ${Marshal} ${CMAKE_CURRENT_BINARY_DIR})
 
 SET(helper_SRC
 action.cpp
