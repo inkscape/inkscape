@@ -1,0 +1,27 @@
+# - This is a module to Generate files using Glib-Marshal
+# Both the header and source files (.h and .cpp)
+# Copyright 2008 - Joshua L. Blocher
+# 
+# And it defines the following variables:
+#  GLIB_MARSHAL_PREFIX - The name of the files
+#  GLIB_MARSHAL_LIST - File to Generate from
+#  GLIB_MARSHAL_OUTPUT_HEADER - Result of Generation
+#  GLIB_MARSHAL_OUTPUT_CPP - Result of Generation
+#  GLIB_MARSHAL_OUTPUT_LOCATION - Where we are putting the Output
+
+FIND_PROGRAM(GLIB_MARSHAL_EXECUTABLE NAMES glib-genmarshal PATHS /usr/local/bin )
+
+MACRO(GLIB_MARSHAL GLIB_MARSHAL_PREFIX GLIB_MARSHAL_LIST GLIB_MARSHAL_OUTPUT_LOCATION)
+    IF(GLIB_MARSHAL_EXECUTABLE)
+    SET(GLIB_MARSHAL_OUTPUT_TEMP)
+    SET(GLIB_MARSHAL_OUTPUT_EXTRA_LINE '#include "${GLIB_MARSHAL_PREFIX}.h"' )
+    
+        EXECUTE_PROCESS(COMMAND ${GLIB_MARSHAL_EXECUTABLE} --prefix=${GLIB_MARSHAL_PREFIX} --header ${CMAKE_CURRENT_SOURCE_DIR}/${GLIB_MARSHAL_LIST}  
+                                OUTPUT_VARIABLE ${GLIB_MARSHAL_OUTPUT_HEADER} 
+                        COMMAND ${GLIB_MARSHAL_EXECUTABLE} --prefix=${GLIB_MARSHAL_PREFIX} --body ${CMAKE_CURRENT_SOURCE_DIR}/${GLIB_MARSHAL_LIST} 
+                                OUTPUT_VARIABLE ${GLIB_MARSHAL_OUTPUT_TEMP})
+                        SET(GLIB_MARSHAL_OUTPUT_CPP "${GLIB_MARSHAL_OUTPUT_EXTRA_LINE}${GLIB_MARSHAL_OUTPUT_TEMP}")
+                        FILE(WRITE ${CMAKE_CURRENT_BINARY_DIR}/${GLIB_MARSHAL_PREFIX}.h "${GLIB_MARSHAL_OUTPUT_HEADER}")
+                        FILE(WRITE ${CMAKE_CURRENT_BINARY_DIR}/${GLIB_MARSHAL_PREFIX}.cpp "${GLIB_MARSHAL_OUTPUT_CPP}")
+    ENDIF(GLIB_MARSHAL_EXECUTABLE)
+ENDMACRO(GLIB_MARSHAL)
