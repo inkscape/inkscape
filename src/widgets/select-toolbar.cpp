@@ -60,7 +60,6 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
     }
 
     g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(TRUE));
-    bool setActive = false;
 
     using NR::X;
     using NR::Y;
@@ -90,18 +89,7 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
                     gtk_adjustment_set_value(a, sp_pixels_get_units(keyval[i].val, unit));
                 }
             }
-
-            setActive = true;
-        } else {
-            setActive = false;
         }
-    } else {
-        setActive = false;
-    }
-
-    GtkActionGroup *selectionActions = GTK_ACTION_GROUP( g_object_get_data(G_OBJECT(spw), "selectionActions") );
-    if ( selectionActions ) {
-//         gtk_action_group_set_sensitive( selectionActions, setActive );
     }
 
     g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
@@ -125,8 +113,20 @@ static void
 sp_selection_layout_widget_change_selection(SPWidget *spw, Inkscape::Selection *selection, gpointer data)
 {
     SPDesktop *desktop = (SPDesktop *) data;
-    if (sp_desktop_selection(desktop) == selection) // only respond to changes in our desktop
+    if (sp_desktop_selection(desktop) == selection) { // only respond to changes in our desktop
+        gboolean setActive = (selection && !selection->isEmpty());
+        std::vector<GtkAction*> *contextActions = reinterpret_cast<std::vector<GtkAction*> *>(g_object_get_data(G_OBJECT(spw), "contextActions"));
+        if ( contextActions ) {
+            for ( std::vector<GtkAction*>::iterator iter = contextActions->begin();
+                  iter != contextActions->end(); ++iter) {
+                if ( setActive != gtk_action_is_sensitive(*iter) ) {
+                    gtk_action_set_sensitive( *iter, setActive );
+                }
+            }
+        }
+
         sp_selection_layout_widget_update(spw, selection);
+    }
 }
 
 static void
@@ -375,6 +375,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     GtkAction* act = 0;
 
     GtkActionGroup* selectionActions = mainActions; // temporary
+    std::vector<GtkAction*>* contextActions = new std::vector<GtkAction*>();
 
     act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_EDIT_SELECT_ALL), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
     gtk_action_group_add_action( selectionActions, act );
@@ -382,24 +383,33 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     gtk_action_group_add_action( selectionActions, act );
     act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_EDIT_DESELECT), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
     gtk_action_group_add_action( selectionActions, act );
+    contextActions->push_back( act );
 
     act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_ROTATE_90_CCW), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
     gtk_action_group_add_action( selectionActions, act );
+    contextActions->push_back( act );
     act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_ROTATE_90_CW), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
     gtk_action_group_add_action( selectionActions, act );
+    contextActions->push_back( act );
     act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_FLIP_HORIZONTAL), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
     gtk_action_group_add_action( selectionActions, act );
+    contextActions->push_back( act );
     act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_FLIP_VERTICAL), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
     gtk_action_group_add_action( selectionActions, act );
+    contextActions->push_back( act );
 
     act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_TO_BACK), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
     gtk_action_group_add_action( selectionActions, act );
+    contextActions->push_back( act );
     act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_LOWER), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
     gtk_action_group_add_action( selectionActions, act );
+    contextActions->push_back( act );
     act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_RAISE), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
     gtk_action_group_add_action( selectionActions, act );
+    contextActions->push_back( act );
     act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_TO_FRONT), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
     gtk_action_group_add_action( selectionActions, act );
+    contextActions->push_back( act );
 
     // Create the parent widget for x y w h tracker.
     GtkWidget *spw = sp_widget_new_global(INKSCAPE);
@@ -430,6 +440,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
                                      -1e6, GTK_WIDGET(desktop->canvas), tracker, spw,
                                      _("Horizontal coordinate of selection"), TRUE );
     gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
+    contextActions->push_back( GTK_ACTION(eact) );
 
     //TRANSLATORS: only translate "string" in "context|string".
     // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -437,6 +448,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
                                      -1e6, GTK_WIDGET(desktop->canvas), tracker, spw,
                                      _("Vertical coordinate of selection"), FALSE );
     gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
+    contextActions->push_back( GTK_ACTION(eact) );
 
     //TRANSLATORS: only translate "string" in "context|string".
     // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -444,6 +456,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
                                      1e-3, GTK_WIDGET(desktop->canvas), tracker, spw,
                                      _("Width of selection"), FALSE );
     gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
+    contextActions->push_back( GTK_ACTION(eact) );
 
     // lock toggle
     {
@@ -464,12 +477,14 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
                                      1e-3, GTK_WIDGET(desktop->canvas), tracker, spw,
                                      _("Height of selection"), FALSE );
     gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
+    contextActions->push_back( GTK_ACTION(eact) );
 
     // Add the units menu.
     act = tracker->createAction( "UnitsAction", _("Units"), ("") );
     gtk_action_group_add_action( selectionActions, act );
 
     g_object_set_data( G_OBJECT(spw), "selectionActions", selectionActions );
+    g_object_set_data( G_OBJECT(spw), "contextActions", contextActions );
 
     // Force update when selection changes.
     gtk_signal_connect(GTK_OBJECT(spw), "modify_selection", GTK_SIGNAL_FUNC(sp_selection_layout_widget_modify_selection), desktop);
@@ -477,6 +492,13 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
 
     // Update now.
     sp_selection_layout_widget_update(SP_WIDGET(spw), SP_ACTIVE_DESKTOP ? sp_desktop_selection(SP_ACTIVE_DESKTOP) : NULL);
+
+    for ( std::vector<GtkAction*>::iterator iter = contextActions->begin();
+          iter != contextActions->end(); ++iter) {
+        if ( gtk_action_is_sensitive(*iter) ) {
+            gtk_action_set_sensitive( *iter, FALSE );
+        }
+    }
 
     // Insert spw into the toolbar.
     gtk_box_pack_start(GTK_BOX(holder), spw, FALSE, FALSE, 0);
