@@ -238,7 +238,7 @@ ${ui_SRC}
 # make executable for INKSCAPE
 ADD_EXECUTABLE(inkscape ${INKSCAPE_SRC})
 TARGET_LINK_LIBRARIES(inkscape
-	"${INKSCAPE_LINK_FLAGS}"
+	"${INKSCAPE_LINK_FLAGS}" avoid cola croco gdl nr nrtype vpsc
 )
 #INSTALL(TARGETS INKSCAPE
 #  RUNTIME DESTINATION bin

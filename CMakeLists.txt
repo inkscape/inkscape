@@ -13,7 +13,7 @@ SET(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 #Pretty colors
 SET(CMAKE_COLOR_MAKEFILE ON)
 #Choose verbosity level
-SET(CMAKE_VERBOSE_MAKEFILE ON)
+#SET(CMAKE_VERBOSE_MAKEFILE ON)
 
 # Probably best to move all these path things to a single file
 IF(WIN32)
