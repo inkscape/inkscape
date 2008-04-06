@@ -235,7 +235,22 @@ ${ui_SRC}
 
 # make executable for INKSCAPE
 ADD_EXECUTABLE(inkscape ${INKSCAPE_SRC})
-
+TARGET_LINK_LIBRARIES(inkscape 
+    gtk+-2.0
+    gtkmm-2.4
+    cairo
+    cairomm-1.0
+    sigc++-2.0
+    lcms
+    libgc1c2
+    libpng
+    glib-2.0
+    glibmm-2.4
+    libxml-2.0
+    libxslt
+    ImageMagick++
+    libpopt
+    freetype2)
 #INSTALL(TARGETS INKSCAPE
 #  RUNTIME DESTINATION bin
 #  LIBRARY DESTINATION lib
