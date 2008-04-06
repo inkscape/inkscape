@@ -1,6 +1,7 @@
 IF(WIN32)
 SET(ONLY_WIN
-registrytool.cpp)
+registrytool.cpp
+deptool.cpp)
 ELSEIF(WIN32)
 SET(ONLY_WIN)
 ENDIF(WIN32)
@@ -20,7 +21,6 @@ conn-avoid-ref.cpp
 connector-context.cpp
 console-output-undo-observer.cpp
 context-fns.cpp
-deptool.cpp
 desktop-affine.cpp
 desktop.cpp
 desktop-events.cpp
@@ -59,7 +59,9 @@ help.cpp
 ink-action.cpp
 inkscape.cpp
 inkscape-stock.cpp
-inkview.cpp
+##inkview is another executable file
+##needs to be separated as a second target
+#inkview.cpp
 interface.cpp
 knot.cpp
 knotholder.cpp
@@ -189,7 +191,7 @@ streams-handles.cpp
 streams-jar.cpp
 streams-zlib.cpp
 style.cpp
-style-test.cpp
+#style-test.cpp
 svg-view.cpp
 svg-view-widget.cpp
 text-chemistry.cpp
@@ -235,22 +237,9 @@ ${ui_SRC}
 
 # make executable for INKSCAPE
 ADD_EXECUTABLE(inkscape ${INKSCAPE_SRC})
-TARGET_LINK_LIBRARIES(inkscape 
-    gtk+-2.0
-    gtkmm-2.4
-    cairo
-    cairomm-1.0
-    sigc++-2.0
-    lcms
-    libgc1c2
-    libpng
-    glib-2.0
-    glibmm-2.4
-    libxml-2.0
-    libxslt
-    ImageMagick++
-    libpopt
-    freetype2)
+TARGET_LINK_LIBRARIES(inkscape
+	"${INKSCAPE_LINK_FLAGS}"
+)
 #INSTALL(TARGETS INKSCAPE
 #  RUNTIME DESTINATION bin
 #  LIBRARY DESTINATION lib
