@@ -1,8 +1,6 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
-//#define INKSCAPE_VERSION "${INKSCAPE_VERSION}"
-
 /* Define WIN32 when on windows */
 #ifndef WIN32
 #cmakedefine WIN32
