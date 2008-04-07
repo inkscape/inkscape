@@ -56,17 +56,27 @@ feed_curve_to_cairo (cairo_t *ct, NArtBpath *bpath, NR::Matrix trans, NR::Maybe<
     view.growBy (stroke_width);
     NR::Rect swept;
     bool  closed = false;
+    NR::Point startpath(0,0);
     for (int i = 0; bpath[i].code != NR_END; i++) {
         switch (bpath[i].code) {
             case NR_MOVETO_OPEN:
             case NR_MOVETO:
-                if (closed) cairo_close_path(ct);
-                closed = (bpath[i].code == NR_MOVETO);
+                if (closed) {
+                    // we cannot use close_path because some of the curves/lines may have been optimized out
+                    cairo_line_to(ct, startpath[NR::X], startpath[NR::Y]);
+                }
                 next[NR::X] = bpath[i].x3;
                 next[NR::Y] = bpath[i].y3;
                 next *= trans;
                 last = next;
                 next -= shift;
+                if (bpath[i].code == NR_MOVETO) {
+                    // remember the start point of the subpath, for closing it later
+                    closed = true;
+                    startpath = next;
+                } else {
+                    closed = false;
+                }
                 cairo_move_to(ct, next[NR::X], next[NR::Y]);
                 break;
 
