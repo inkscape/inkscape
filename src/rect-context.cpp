@@ -310,8 +310,8 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             SnapManager const &m = desktop->namedview->snap_manager;
             Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, button_dt, rc->item);
             rc->center = s.getPoint();
-            if (s.getDistance() < NR_HUGE) {
-                desktop->snapindicator->set_new_snappoint(s.getPoint().to_2geom());
+            if (s.getSnapped()) {
+                desktop->snapindicator->set_new_snappoint(s);
             }
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -344,8 +344,8 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             SnapManager const &m = desktop->namedview->snap_manager;
             Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt, rc->item);
             motion_dt = s.getPoint();
-            if (s.getDistance() < NR_HUGE) {
-                desktop->snapindicator->set_new_snappoint(s.getPoint().to_2geom());
+            if (s.getSnapped()) {
+                desktop->snapindicator->set_new_snappoint(s);
             }
 
             sp_rect_drag(*rc, motion_dt, event->motion.state);

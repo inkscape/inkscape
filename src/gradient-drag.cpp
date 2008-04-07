@@ -584,32 +584,34 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
         // Try snapping to the grid or guides
         SnapManager const &m = dragger->parent->desktop->namedview->snap_manager;
         Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p, NULL);
-        if (s.getDistance() < 1e6) {
+        if (s.getSnapped()) {
             p = s.getPoint();
             sp_knot_moveto (knot, &p);
-            dragger->parent->desktop->snapindicator->set_new_snappoint(p.to_2geom());
+            dragger->parent->desktop->snapindicator->set_new_snappoint(s);
         } else {
             bool was_snapped = false;
-            Geom::Point snapped_to;
+            double dist = NR_HUGE;
             // No snapping so far, let's see if we need to snap to any of the levels
             for (guint i = 0; i < dragger->parent->hor_levels.size(); i++) {
-                if (fabs(p[NR::Y] - dragger->parent->hor_levels[i]) < snap_dist) {
+                dist = fabs(p[NR::Y] - dragger->parent->hor_levels[i]);
+                if (dist < snap_dist) {
                     p[NR::Y] = dragger->parent->hor_levels[i];
-                    snapped_to = p.to_2geom();
+                    s = Inkscape::SnappedPoint(p, dist, snap_dist, false);
                     was_snapped = true;
                     sp_knot_moveto (knot, &p);
                 }
             }
             for (guint i = 0; i < dragger->parent->vert_levels.size(); i++) {
-                if (fabs(p[NR::X] - dragger->parent->vert_levels[i]) < snap_dist) {
+                dist = fabs(p[NR::X] - dragger->parent->vert_levels[i]);
+                if (dist < snap_dist) {
                     p[NR::X] = dragger->parent->vert_levels[i];
-                    snapped_to = p.to_2geom();
+                    s = Inkscape::SnappedPoint(p, dist, snap_dist, false);
                     was_snapped = true;
                     sp_knot_moveto (knot, &p);
                 }
             }
             if (was_snapped) {
-                dragger->parent->desktop->snapindicator->set_new_snappoint(snapped_to);
+                dragger->parent->desktop->snapindicator->set_new_snappoint(s);
             }
         }
     }

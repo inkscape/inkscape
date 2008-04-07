@@ -54,6 +54,7 @@
 #include "live_effects/parameter/parameter.h"
 #include "util/mathfns.h"
 #include "display/snap-indicator.h"
+#include "snapped-point.h"
 
 class NR::Matrix;
 
@@ -1102,7 +1103,7 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
     NR::Coord best = NR_HUGE;
     NR::Point delta(dx, dy);
     NR::Point best_pt = delta;
-    NR::Point best_abs(NR_HUGE, NR_HUGE);
+    Inkscape::SnappedPoint best_abs;
 
     
     if (snap) {    
@@ -1129,13 +1130,13 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
             Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta, SP_PATH(n->subpath->nodepath->item), &unselected_nodes);            
             if (s.getDistance() < best) {
                 best = s.getDistance();
-                best_abs = s.getPoint();
-                best_pt = best_abs - n->pos;
+                best_abs = s;
+                best_pt = s.getPoint() - n->pos;
             }
         }
                         
-        if (best_abs[NR::X] < NR_HUGE) {
-            nodepath->desktop->snapindicator->set_new_snappoint(best_abs.to_2geom());
+        if (best_abs.getSnapped()) {
+            nodepath->desktop->snapindicator->set_new_snappoint(best_abs);
         }
     }
 
@@ -3576,8 +3577,8 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint /*state*/,
         s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, n->subpath->nodepath->item);
     }
     *p = s.getPoint();
-    if (s.getDistance() < NR_HUGE) {
-        n->subpath->nodepath->desktop->snapindicator->set_new_snappoint((*p).to_2geom());
+    if (s.getSnapped()) {
+        n->subpath->nodepath->desktop->snapindicator->set_new_snappoint(s);
     }
 
     sp_node_adjust_handle(n, -which);

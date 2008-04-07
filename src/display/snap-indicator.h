@@ -14,7 +14,7 @@
 
 #include "forward.h"
 #include "display/display-forward.h"
-#include <2geom/point.h>
+#include "snapped-point.h"
 
 namespace Inkscape {
 namespace Display {
@@ -24,7 +24,7 @@ public:
     SnapIndicator(SPDesktop *desktop);
     virtual ~SnapIndicator();
 
-    void set_new_snappoint(Geom::Point p);
+    void set_new_snappoint(Inkscape::SnappedPoint const p);
     void remove_snappoint();
 
 protected:

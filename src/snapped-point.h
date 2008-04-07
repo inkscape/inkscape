@@ -31,6 +31,7 @@ public:
     ~SnappedPoint();
 
     NR::Coord getDistance() const;
+    void setDistance(NR::Coord d) {_distance = d;}
     NR::Coord getTolerance() const;
     bool getAlwaysSnap() const;
     NR::Coord getSecondDistance() const;
@@ -38,6 +39,9 @@ public:
     bool getSecondAlwaysSnap() const;
     NR::Point getPoint() const;
     bool getAtIntersection() const {return _at_intersection;}
+    bool getSnapped() const {return _distance < NR_HUGE;}
+    NR::Point getTransformation() const {return _transformation;}
+    void setTransformation(NR::Point t) {_transformation = t;}
     
 protected:
     NR::Point _point; // Location of the snapped point
@@ -59,6 +63,8 @@ protected:
     NR::Coord _second_tolerance;
     /* If true then "Always snap" is on */
     bool _second_always_snap;
+    /* The transformation (translation, scale, skew, or stretch) from the original point to the snapped point */
+    NR::Point _transformation;
 };    
 
 }

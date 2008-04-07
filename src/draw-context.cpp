@@ -358,8 +358,8 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, NR::Point &p, N
         Inkscape::SnappedPoint const s = m.constrainedSnap( Inkscape::Snapper::SNAPPOINT_NODE,
                                                             p, Inkscape::Snapper::ConstraintLine(best), NULL );
         p = s.getPoint();
-        if (s.getDistance() < NR_HUGE) {
-            SP_EVENT_CONTEXT_DESKTOP(ec)->snapindicator->set_new_snappoint(p.to_2geom());
+        if (s.getSnapped()) {
+            SP_EVENT_CONTEXT_DESKTOP(ec)->snapindicator->set_new_snappoint(s);
         }
     }
 }
@@ -375,8 +375,8 @@ void spdc_endpoint_snap_free(SPEventContext const * const ec, NR::Point& p, guin
     SnapManager const &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
     Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p, NULL);
     p = s.getPoint();
-    if (s.getDistance() < NR_HUGE) {
-        SP_EVENT_CONTEXT_DESKTOP(ec)->snapindicator->set_new_snappoint(p.to_2geom());
+    if (s.getSnapped()) {
+        SP_EVENT_CONTEXT_DESKTOP(ec)->snapindicator->set_new_snappoint(s);
     }
 }
 

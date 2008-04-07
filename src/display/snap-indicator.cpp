@@ -32,11 +32,11 @@ SnapIndicator::~SnapIndicator()
 }
 
 void
-SnapIndicator::set_new_snappoint(Geom::Point p)
+SnapIndicator::set_new_snappoint(Inkscape::SnappedPoint const p)
 {
     remove_snappoint();
 
-    bool enabled = false;  // TODO add preference for snap indicator.
+    bool enabled = true;  // TODO add preference for snap indicator.
     if (enabled) {
         // TODO add many different kinds of snap indicator :-)
         SPCanvasItem * canvasitem = sp_canvas_item_new( sp_desktop_tempgroup (desktop),
@@ -48,7 +48,9 @@ SnapIndicator::set_new_snappoint(Geom::Point p)
                                                         "mode", SP_KNOT_MODE_XOR,
                                                         "shape", SP_KNOT_SHAPE_CROSS,
                                                         NULL );
-        SP_CTRL(canvasitem)->moveto ( p );
+        
+        
+        SP_CTRL(canvasitem)->moveto(p.getPoint());
         tempitem = desktop->add_temporary_canvasitem(canvasitem, 1000); // TODO add preference for snap indicator timeout
     }
 }

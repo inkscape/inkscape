@@ -150,8 +150,8 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 desktop->set_coordinate_status(event_dt);
                 desktop->setPosition (event_dt);
 
-                if (snappoint.getDistance() < NR_HUGE) {
-                    desktop->snapindicator->set_new_snappoint(snappoint.getPoint().to_2geom());
+                if (snappoint.getSnapped()) {
+                    desktop->snapindicator->set_new_snappoint(snappoint);
                 } else {
                     desktop->snapindicator->remove_snappoint();
                 }
@@ -254,8 +254,8 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 desktop->set_coordinate_status(motion_dt);
                 desktop->setPosition (motion_dt);
 
-                if (snappoint.getDistance() < NR_HUGE) {
-                    desktop->snapindicator->set_new_snappoint(snappoint.getPoint().to_2geom());
+                if (snappoint.getSnapped()) {
+                    desktop->snapindicator->set_new_snappoint(snappoint);
                 } else {
                     desktop->snapindicator->remove_snappoint();
                 }

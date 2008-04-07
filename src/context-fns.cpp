@@ -190,9 +190,9 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
         p[1] = snappoint.getPoint();
     }
 
-    if (snappoint.getDistance() < NR_HUGE) {
+    if (snappoint.getSnapped()) {
     // this does not work well enough yet.
-//        desktop->snapindicator->set_new_snappoint(snappoint.getPoint().to_2geom());
+//        desktop->snapindicator->set_new_snappoint(snappoint);
     }
 
     p[0] = sp_desktop_dt2root_xy_point(desktop, p[0]);

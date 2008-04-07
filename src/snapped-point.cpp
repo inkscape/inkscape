@@ -19,12 +19,14 @@ Inkscape::SnappedPoint::SnappedPoint(NR::Point p, NR::Coord d, NR::Coord t, bool
     _second_distance = NR_HUGE;
     _second_tolerance = 0;
     _second_always_snap = false;
+    _transformation = NR::Point(1,1);
 }
 
 Inkscape::SnappedPoint::SnappedPoint(NR::Point p, NR::Coord d, NR::Coord t, bool a, bool at_intersection, NR::Coord d2, NR::Coord t2, bool a2)
     : _point(p), _at_intersection(at_intersection), _distance(d), _tolerance(t), _always_snap(a),
     _second_distance(d2), _second_tolerance(t2), _second_always_snap(a2)
 {
+    _transformation = NR::Point(1,1);
 }
 
 Inkscape::SnappedPoint::SnappedPoint()
@@ -37,6 +39,7 @@ Inkscape::SnappedPoint::SnappedPoint()
     _second_distance = NR_HUGE;
     _second_tolerance = 0;
     _second_always_snap = false;
+    _transformation = NR::Point(1,1);
 }
 
 

@@ -344,7 +344,7 @@ Inkscape::SnappedPoint SnapManager::guideSnap(NR::Point const &p,
  *  \param uniform true if the transformation should be uniform; only applicable for stretching and scaling.
  */
 
-std::pair<NR::Point, bool> SnapManager::_snapTransformed(
+Inkscape::SnappedPoint SnapManager::_snapTransformed(
     Inkscape::Snapper::PointType type,
     std::vector<NR::Point> const &points,
     std::list<SPItem const *> const &ignore,
@@ -365,7 +365,7 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
     ** Also used to globally disable all snapping 
     */
     if (SomeSnapperMightSnap() == false) {
-        return std::make_pair(transformation, false);
+        return Inkscape::SnappedPoint();
     }
     
     std::vector<NR::Point> transformed_points;
@@ -414,17 +414,17 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
     NR::Coord best_metric = NR_HUGE;
     NR::Coord best_second_metric = NR_HUGE;
     NR::Point best_scale_metric(NR_HUGE, NR_HUGE);
-    bool best_at_intersection = false;
-    bool best_always_snap = false;
+    Inkscape::SnappedPoint best_snapped_point;
+    g_assert(best_snapped_point.getAlwaysSnap() == false); // Check initialization of snapped point
+    g_assert(best_snapped_point.getAtIntersection() == false);
 
     std::vector<NR::Point>::const_iterator j = transformed_points.begin();
 
-    //std::cout << std::endl;
-    
+    // std::cout << std::endl;
     for (std::vector<NR::Point>::const_iterator i = points.begin(); i != points.end(); i++) {
         
         /* Snap it */        
-        Inkscape::SnappedPoint snapped;
+        Inkscape::SnappedPoint snapped_point;
                 
         if (constrained) {    
             Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
@@ -439,9 +439,9 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
             if (transformation_type == SCALE && !uniform) {
                 g_warning("Non-uniform constrained scaling is not supported!");   
             }
-            snapped = constrainedSnap(type, *j, i == points.begin(), transformed_points, dedicated_constraint, ignore);
+            snapped_point = constrainedSnap(type, *j, i == points.begin(), transformed_points, dedicated_constraint, ignore);
         } else {
-            snapped = freeSnap(type, *j, i == points.begin(), transformed_points, ignore, NULL);
+            snapped_point = freeSnap(type, *j, i == points.begin(), transformed_points, ignore, NULL);
         }
 
         NR::Point result;
@@ -449,16 +449,16 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
         NR::Coord second_metric = NR_HUGE;
         NR::Point scale_metric(NR_HUGE, NR_HUGE);
         
-        if (snapped.getDistance() < NR_HUGE) {
+        if (snapped_point.getSnapped()) {
             /* We snapped.  Find the transformation that describes where the snapped point has
             ** ended up, and also the metric for this transformation.
             */
-            NR::Point const a = (snapped.getPoint() - origin); // vector to snapped point
+            NR::Point const a = (snapped_point.getPoint() - origin); // vector to snapped point
             NR::Point const b = (*i - origin); // vector to original point
             
             switch (transformation_type) {
                 case TRANSLATION:
-                    result = snapped.getPoint() - *i;
+                    result = snapped_point.getPoint() - *i;
                     /* Consider the case in which a box is almost aligned with a grid in both 
                      * horizontal and vertical directions. The distance to the intersection of
                      * the grid lines will always be larger then the distance to a single grid
@@ -468,8 +468,8 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
                      * distance is defined as the distance to the nearest line of the intersection,
                      * and not to the intersection itself! 
                      */
-                    metric = snapped.getDistance(); //used to be: metric = NR::L2(result);
-                    second_metric = snapped.getSecondDistance();
+                    metric = snapped_point.getDistance(); //used to be: metric = NR::L2(result);
+                    second_metric = snapped_point.getSecondDistance();
                     break;
                 case SCALE:
                 {
@@ -506,7 +506,7 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
                     metric = std::abs(result[dim] - transformation[dim]);
                     break;
                 case SKEW:
-                    result[dim] = (snapped.getPoint()[dim] - (*i)[dim]) / ((*i)[1 - dim] - origin[1 - dim]);
+                    result[dim] = (snapped_point.getPoint()[dim] - (*i)[dim]) / ((*i)[1 - dim] - origin[1 - dim]);
                     metric = std::abs(result[dim] - transformation[dim]);
                     break;
                 default:
@@ -519,8 +519,12 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
                     if (fabs(scale_metric[index]) < fabs(best_scale_metric[index])) {
                         best_transformation[index] = result[index];
                         best_scale_metric[index] = fabs(scale_metric[index]);
-                        //std::cout << "SEL ";
-                    } //else { std::cout << "    ";}   
+                        // When scaling, we're considering the best transformation in each direction separately
+                        // Therefore two different snapped points might together make a single best transformation
+                        // We will however return only a single snapped point (e.g. to display the snapping indicator)   
+                        best_snapped_point = snapped_point;
+                        // std::cout << "SEL ";
+                    } // else { std::cout << "    ";}
                 }
                 if (uniform) {
                     if (best_scale_metric[0] < best_scale_metric[1]) {
@@ -532,24 +536,23 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
                     }
                 }
                 best_metric = std::min(best_scale_metric[0], best_scale_metric[1]);
-                //std::cout << "P_orig = " << (*i) << " | scale_metric = " << scale_metric << " | distance = " << snapped.getDistance() << " | P_snap = " << snapped.getPoint() << std::endl;
+                // std::cout << "P_orig = " << (*i) << " | scale_metric = " << scale_metric << " | distance = " << snapped_point.getDistance() << " | P_snap = " << snapped_point.getPoint() << std::endl;
             } else {
                 bool const c1 = metric < best_metric;
-                bool const c2 = metric == best_metric && snapped.getAtIntersection() == true && best_at_intersection == false;
-    			bool const c3a = metric == best_metric && snapped.getAtIntersection() == true && best_at_intersection == true;
+                bool const c2 = metric == best_metric && snapped_point.getAtIntersection() == true && best_snapped_point.getAtIntersection() == false;
+    			bool const c3a = metric == best_metric && snapped_point.getAtIntersection() == true && best_snapped_point.getAtIntersection() == true;
                 bool const c3b = second_metric < best_second_metric;
-                bool const c4 = snapped.getAlwaysSnap() == true && best_always_snap == false;
-                bool const c4n = snapped.getAlwaysSnap() == false && best_always_snap == true;
+                bool const c4 = snapped_point.getAlwaysSnap() == true && best_snapped_point.getAlwaysSnap() == false;
+                bool const c4n = snapped_point.getAlwaysSnap() == false && best_snapped_point.getAlwaysSnap() == true;
                 
                 if ((c1 || c2 || (c3a && c3b) || c4) && !c4n) {
                     best_transformation = result;
                     best_metric = metric;
                     best_second_metric = second_metric;
-                    best_at_intersection = snapped.getAtIntersection();
-                    best_always_snap = snapped.getAlwaysSnap(); 
-                    //std::cout << "SEL ";
-                } //else { std::cout << "    ";}
-                //std::cout << "P_orig = " << (*i) << " | metric = " << metric << " | distance = " << snapped.getDistance() << " | second metric = " << second_metric << " | P_snap = " << snapped.getPoint() << std::endl;
+                    best_snapped_point = snapped_point; 
+                    // std::cout << "SEL ";
+                } // else { std::cout << "    ";}
+                // std::cout << "P_orig = " << (*i) << " | metric = " << metric << " | distance = " << snapped_point.getDistance() << " | second metric = " << second_metric << " | P_snap = " << snapped_point.getPoint() << std::endl;
             }
         }
         
@@ -569,9 +572,11 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
         }
     }
     
+    best_snapped_point.setTransformation(best_transformation);
     // Using " < 1e6" instead of " < NR_HUGE" for catching some rounding errors
-    // These rounding errors might be caused by NRRects, see bug #1584301
-    return std::make_pair(best_transformation, best_metric < 1e6);
+    // These rounding errors might be caused by NRRects, see bug #1584301    
+    best_snapped_point.setDistance(best_metric < 1e6 ? best_metric : NR_HUGE);
+    return best_snapped_point;
 }
 
 
@@ -586,14 +591,12 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
  *  \return Snapped translation, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-std::pair<NR::Point, bool> SnapManager::freeSnapTranslation(Inkscape::Snapper::PointType t,
-                                                            std::vector<NR::Point> const &p,
-                                                            std::list<SPItem const *> const &it,
-                                                            NR::Point const &tr) const
+Inkscape::SnappedPoint SnapManager::freeSnapTranslation(Inkscape::Snapper::PointType t,
+                                                        std::vector<NR::Point> const &p,
+                                                        std::list<SPItem const *> const &it,
+                                                        NR::Point const &tr) const
 {
-    return _snapTransformed(
-        t, p, it, false, NR::Point(), TRANSLATION, tr, NR::Point(), NR::X, false
-        );
+    return _snapTransformed(t, p, it, false, NR::Point(), TRANSLATION, tr, NR::Point(), NR::X, false);
 }
 
 
@@ -610,15 +613,13 @@ std::pair<NR::Point, bool> SnapManager::freeSnapTranslation(Inkscape::Snapper::P
  *  \return Snapped translation, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-std::pair<NR::Point, bool> SnapManager::constrainedSnapTranslation(Inkscape::Snapper::PointType t,
-                                                                   std::vector<NR::Point> const &p,
-                                                                   std::list<SPItem const *> const &it,
-                                                                   Inkscape::Snapper::ConstraintLine const &c,
-                                                                   NR::Point const &tr) const
+Inkscape::SnappedPoint SnapManager::constrainedSnapTranslation(Inkscape::Snapper::PointType t,
+                                                               std::vector<NR::Point> const &p,
+                                                               std::list<SPItem const *> const &it,
+                                                               Inkscape::Snapper::ConstraintLine const &c,
+                                                               NR::Point const &tr) const
 {
-    return _snapTransformed(
-        t, p, it, true, c, TRANSLATION, tr, NR::Point(), NR::X, false
-        );
+    return _snapTransformed(t, p, it, true, c, TRANSLATION, tr, NR::Point(), NR::X, false);
 }
 
 
@@ -634,15 +635,13 @@ std::pair<NR::Point, bool> SnapManager::constrainedSnapTranslation(Inkscape::Sna
  *  \return Snapped scale, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-std::pair<NR::scale, bool> SnapManager::freeSnapScale(Inkscape::Snapper::PointType t,
-                                                      std::vector<NR::Point> const &p,
-                                                      std::list<SPItem const *> const &it,
-                                                      NR::scale const &s,
-                                                      NR::Point const &o) const
+Inkscape::SnappedPoint SnapManager::freeSnapScale(Inkscape::Snapper::PointType t,
+                                                  std::vector<NR::Point> const &p,
+                                                  std::list<SPItem const *> const &it,
+                                                  NR::scale const &s,
+                                                  NR::Point const &o) const
 {
-    return _snapTransformed(
-        t, p, it, false, NR::Point(), SCALE, NR::Point(s[NR::X], s[NR::Y]), o, NR::X, false
-        );
+    return _snapTransformed(t, p, it, false, NR::Point(), SCALE, NR::Point(s[NR::X], s[NR::Y]), o, NR::X, false);
 }
 
 
@@ -659,16 +658,14 @@ std::pair<NR::scale, bool> SnapManager::freeSnapScale(Inkscape::Snapper::PointTy
  *  \return Snapped scale, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-std::pair<NR::scale, bool> SnapManager::constrainedSnapScale(Inkscape::Snapper::PointType t,
-                                                             std::vector<NR::Point> const &p,
-                                                             std::list<SPItem const *> const &it,
-                                                             NR::scale const &s,
-                                                             NR::Point const &o) const
+Inkscape::SnappedPoint SnapManager::constrainedSnapScale(Inkscape::Snapper::PointType t,
+                                                         std::vector<NR::Point> const &p,
+                                                         std::list<SPItem const *> const &it,
+                                                         NR::scale const &s,
+                                                         NR::Point const &o) const
 {
     // When constrained scaling, only uniform scaling is supported.
-    return _snapTransformed(
-        t, p, it, true, NR::Point(), SCALE, NR::Point(s[NR::X], s[NR::Y]), o, NR::X, true
-        );
+    return _snapTransformed(t, p, it, true, NR::Point(), SCALE, NR::Point(s[NR::X], s[NR::Y]), o, NR::X, true);
 }
 
 
@@ -686,19 +683,15 @@ std::pair<NR::scale, bool> SnapManager::constrainedSnapScale(Inkscape::Snapper::
  *  \return Snapped stretch, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-std::pair<NR::Coord, bool> SnapManager::constrainedSnapStretch(Inkscape::Snapper::PointType t,
-                                                        std::vector<NR::Point> const &p,
-                                                        std::list<SPItem const *> const &it,
-                                                        NR::Coord const &s,
-                                                        NR::Point const &o,
-                                                        NR::Dim2 d,
-                                                        bool u) const
+Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(Inkscape::Snapper::PointType t,
+                                                            std::vector<NR::Point> const &p,
+                                                            std::list<SPItem const *> const &it,
+                                                            NR::Coord const &s,
+                                                            NR::Point const &o,
+                                                            NR::Dim2 d,
+                                                            bool u) const
 {
-   std::pair<NR::Point, bool> const r = _snapTransformed(
-        t, p, it, true, NR::Point(), STRETCH, NR::Point(s, s), o, d, u
-        );
-
-   return std::make_pair(r.first[d], r.second);
+   return _snapTransformed(t, p, it, true, NR::Point(), STRETCH, NR::Point(s, s), o, d, u);
 }
 
 
@@ -715,18 +708,14 @@ std::pair<NR::Coord, bool> SnapManager::constrainedSnapStretch(Inkscape::Snapper
  *  \return Snapped skew, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-std::pair<NR::Coord, bool> SnapManager::freeSnapSkew(Inkscape::Snapper::PointType t,
-                                                     std::vector<NR::Point> const &p,
-                                                     std::list<SPItem const *> const &it,
-                                                     NR::Coord const &s,
-                                                     NR::Point const &o,
-                                                     NR::Dim2 d) const
+Inkscape::SnappedPoint SnapManager::freeSnapSkew(Inkscape::Snapper::PointType t,
+                                                 std::vector<NR::Point> const &p,
+                                                 std::list<SPItem const *> const &it,
+                                                 NR::Coord const &s,
+                                                 NR::Point const &o,
+                                                 NR::Dim2 d) const
 {
-   std::pair<NR::Point, bool> const r = _snapTransformed(
-        t, p, it, false, NR::Point(), SKEW, NR::Point(s, s), o, d, false
-        );
-
-   return std::make_pair(r.first[d], r.second);
+   return _snapTransformed(t, p, it, false, NR::Point(), SKEW, NR::Point(s, s), o, d, false);
 }
 
 Inkscape::SnappedPoint SnapManager::findBestSnap(NR::Point const &p, SnappedConstraints &sc, bool constrained) const
