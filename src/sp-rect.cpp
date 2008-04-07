@@ -121,21 +121,6 @@ sp_rect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
     sp_object_read_attr(object, "height");
     sp_object_read_attr(object, "rx");
     sp_object_read_attr(object, "ry");
-
-    Inkscape::Version const version = sp_object_get_sodipodi_version(object);
-
-    if ( version.major == 0 && version.minor == 29 ) {
-        if (rect->rx._set && rect->ry._set) {
-            /* 0.29 treated 0.0 radius as missing value */
-            if ((rect->rx.value != 0.0) && (rect->ry.value == 0.0)) {
-                repr->setAttribute("ry", NULL);
-                sp_object_read_attr(object, "ry");
-            } else if ((rect->ry.value != 0.0) && (rect->rx.value == 0.0)) {
-                repr->setAttribute("rx", NULL);
-                sp_object_read_attr(object, "rx");
-            }
-        }
-    }
 }
 
 static void
