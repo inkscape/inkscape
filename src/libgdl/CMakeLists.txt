@@ -1,3 +1,9 @@
+IF(WIN32)
+SET(GDL_WIN
+gdl-win32.c
+gdl-win32.h)
+ENDIF(WIN32)
+
 SET(libgdl_SRC
 gdl-dock.c
 gdl-dock.h
@@ -26,13 +32,11 @@ gdl-stock.h
 gdl-stock-icons.h
 gdl-switcher.c
 gdl-switcher.h
-gdl-tools.h
-gdl-win32.c
-gdl-win32.h
-libgdl.h
+gdl-tools.hlibgdl.h
 libgdlmarshal.c
 libgdlmarshal.h
 libgdltypebuiltins.c
 libgdltypebuiltins.h
+${GDL_WIN}
 )
 ADD_LIBRARY(gdl STATIC ${libgdl_SRC})

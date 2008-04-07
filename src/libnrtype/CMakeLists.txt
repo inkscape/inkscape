@@ -34,4 +34,4 @@ text-boundary.h
 TextWrapper.cpp
 TextWrapper.h
 )
-ADD_LIBRARY(inklibnrtype STATIC ${libnrtype_SRC})
+ADD_LIBRARY(nrtype STATIC ${libnrtype_SRC})

@@ -14,4 +14,4 @@ shortest_paths.h
 straightener.cpp
 straightener.h
 )
-ADD_LIBRARY(inklibcola STATIC ${libcola_SRC})
+ADD_LIBRARY(cola STATIC ${libcola_SRC})
