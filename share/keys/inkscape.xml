@@ -417,7 +417,8 @@ override) the bindings in the main default.xml.
   <bind key="parenright" modifiers="Ctrl" action="SelectionOffset" display="true"/>
   <bind key="parenright" modifiers="Ctrl,Shift" action="SelectionOffset" />
   <bind key="0" modifiers="Ctrl,Shift" action="SelectionOffset" />
-
+  <bind key="0" modifiers="Ctrl" action="SelectionOffset" />
+  
   <bind key="parenright" modifiers="Alt" action="SelectionOffsetScreen" display="true"/>
   <bind key="0" modifiers="Alt" action="SelectionOffsetScreen" />
 
@@ -427,6 +428,7 @@ override) the bindings in the main default.xml.
   <bind key="parenleft" modifiers="Ctrl" action="SelectionInset" display="true"/>
   <bind key="parenleft" modifiers="Ctrl,Shift" action="SelectionInset" />
   <bind key="9" modifiers="Ctrl,Shift" action="SelectionInset" />
+  <bind key="9" modifiers="Ctrl" action="SelectionInset" />
 
   <bind key="parenleft" modifiers="Alt" action="SelectionInsetScreen" display="true"/>
   <bind key="9" modifiers="Alt" action="SelectionInsetScreen" />
