@@ -111,5 +111,5 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake ${CMAKE_CURRENT_BINARY
 
 # Create File inkscape_version.h
 FILE(WRITE ${CMAKE_CURRENT_BINARY_DIR}/inkscape_version.h "#define INKSCAPE_VERSION \"${INKSCAPE_VERSION}\"\n")
-
-INCLUDE_DIRECTORIES ("${CMAKE_CURRENT_BINARY_DIR}")
+INCLUDE_DIRECTORIES ("${CMAKE_CURRENT_BINARY_DIR}")  # Include base dir, so other files can refer to the generated files.
+# CMAKE_INCLUDE_CURRENT_DIR is not enough as it only includes the current dir and not the basedir with config.h in it
