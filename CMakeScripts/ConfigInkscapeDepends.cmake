@@ -103,6 +103,10 @@ CHECK_INCLUDE_FILES (sys/types.h HAVE_SYS_TYPES_H)
 CHECK_INCLUDE_FILES (unistd.h HAVE_UNISTD_H)
 CHECK_INCLUDE_FILES (zlib.h HAVE_ZLIB_H)
 
+# Enable pango defines, necessary for compilation on Win32, how about Linux?
+SET(PANGO_ENABLE_ENGINE TRUE)
+SET(RENDER_WITH_PANGO_CAIRO TRUE)
+
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
 # Create File inkscape_version.h
