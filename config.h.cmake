@@ -35,6 +35,8 @@
 
 /* Whether the Cairo PDF backend is available */
 #cmakedefine HAVE_CAIRO_PDF 1
+#cmakedefine PANGO_ENABLE_ENGINE 1
+#cmakedefine RENDER_WITH_PANGO_CAIRO 1
 
 /* define to 1 if Carbon is available */
 #cmakedefine HAVE_CARBON 1
