@@ -41,6 +41,7 @@ FOREACH(dep ${INKSCAPE_DEPENDS})
         message(STATUS "${dep}: FOUND")
         # Set Compiler Flags
         SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${${dep_name}_CFLAGS}")
+        SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${${dep_name}_CFLAGS}")
         SET(INKSCAPE_LINK_FLAGS "${INKSCAPE_LINK_FLAGS} ${${dep_name}_LINK_FLAGS}")
     ELSE("${dep}_FOUND")
         message(STATUS "${dep}: NOT FOUND")
