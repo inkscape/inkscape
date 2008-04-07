@@ -108,9 +108,9 @@ CHECK_INCLUDE_FILES (zlib.h HAVE_ZLIB_H)
 SET(PANGO_ENABLE_ENGINE TRUE)
 SET(RENDER_WITH_PANGO_CAIRO TRUE)
 
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
-
-# Create File inkscape_version.h
-FILE(WRITE ${CMAKE_CURRENT_BINARY_DIR}/inkscape_version.h "#define INKSCAPE_VERSION \"${INKSCAPE_VERSION}\"\n")
-INCLUDE_DIRECTORIES ("${CMAKE_CURRENT_BINARY_DIR}")  # Include base dir, so other files can refer to the generated files.
+# Create the two configuration files: config.h and inkscape_version.h
+# Create them in the binary root dir
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_BINARY_DIR}/config.h)
+FILE(WRITE ${CMAKE_BINARY_DIR}/inkscape_version.h "#define INKSCAPE_VERSION \"${INKSCAPE_VERSION}\"\n")
+INCLUDE_DIRECTORIES ("${CMAKE_BINARY_DIR}")  # Include base dir, so other files can refer to the generated files.
 # CMAKE_INCLUDE_CURRENT_DIR is not enough as it only includes the current dir and not the basedir with config.h in it
