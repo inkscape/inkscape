@@ -32,7 +32,7 @@
 
 
 // include effects:
-#include "live_effects/lpe-skeletalstrokes.h"
+#include "live_effects/lpe-patternalongpath.h"
 #include "live_effects/lpe-bendpath.h"
 #include "live_effects/lpe-sketch.h"
 #include "live_effects/lpe-vonkoch.h"
@@ -53,7 +53,7 @@ namespace LivePathEffect {
 const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     // {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
     {BEND_PATH,             N_("Bend"),                  "bend_path"},
-    {SKELETAL_STROKES,      N_("Pattern Along Path"),    "skeletal"},
+    {PATTERN_ALONG_PATH,    N_("Pattern Along Path"),    "skeletal"},   // for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
     {SKETCH,                N_("Sketch"),                "sketch"},
     {VONKOCH,               N_("VonKoch"),               "vonkoch"},
     {KNOT,                  N_("Knot"),                  "knot"},
@@ -73,8 +73,8 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
 {
     Effect* neweffect = NULL;
     switch (lpenr) {
-        case SKELETAL_STROKES:
-            neweffect = (Effect*) new LPESkeletalStrokes(lpeobj);
+        case PATTERN_ALONG_PATH:
+            neweffect = (Effect*) new LPEPatternAlongPath(lpeobj);
             break;
         case BEND_PATH:
             neweffect = (Effect*) new LPEBendPath(lpeobj);

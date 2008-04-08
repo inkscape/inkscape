@@ -16,8 +16,8 @@ live_effects_liblive_effects_a_SOURCES = \
 	live_effects/lpeobject-reference.h	\
 	live_effects/n-art-bpath-2geom.cpp	\
 	live_effects/n-art-bpath-2geom.h	\
-	live_effects/lpe-skeletalstrokes.cpp	\
-	live_effects/lpe-skeletalstrokes.h	\
+	live_effects/lpe-patternalongpath.cpp	\
+	live_effects/lpe-patternalongpath.h	\
 	live_effects/lpe-bendpath.cpp	\
 	live_effects/lpe-bendpath.h	\
 	live_effects/lpe-sketch.cpp	\

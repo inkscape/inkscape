@@ -15,8 +15,8 @@ lpeobject-reference.cpp
 lpeobject-reference.h
 lpe-bendpath.cpp
 lpe-bendpath.h
-lpe-skeletalstrokes.cpp
-lpe-skeletalstrokes.h
+lpe-patternalongpath.cpp
+lpe-patternalongpath.h
 lpe-skeleton.cpp
 lpe-skeleton.h
 lpe-sketch.cpp

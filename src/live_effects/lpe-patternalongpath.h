@@ -1,8 +1,8 @@
-#ifndef INKSCAPE_LPE_SKELETAL_STROKES_H
-#define INKSCAPE_LPE_SKELETAL_STROKES_H
+#ifndef INKSCAPE_LPE_PATTERN_ALONG_PATH_H
+#define INKSCAPE_LPE_PATTERN_ALONG_PATH_H
 
 /*
- * Inkscape::LPESkeletalStrokes
+ * Inkscape::LPEPatternAlongPath
  *
 * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
  *
@@ -17,18 +17,18 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
-enum SkelCopyType {
-    SSCT_SINGLE = 0,
-    SSCT_SINGLE_STRETCHED,
-    SSCT_REPEATED,
-    SSCT_REPEATED_STRETCHED,
-    SSCT_END // This must be last
+enum PAPCopyType {
+    PAPCT_SINGLE = 0,
+    PAPCT_SINGLE_STRETCHED,
+    PAPCT_REPEATED,
+    PAPCT_REPEATED_STRETCHED,
+    PAPCT_END // This must be last
 };
 
-class LPESkeletalStrokes : public Effect {
+class LPEPatternAlongPath : public Effect {
 public:
-    LPESkeletalStrokes(LivePathEffectObject *lpeobject);
-    virtual ~LPESkeletalStrokes();
+    LPEPatternAlongPath(LivePathEffectObject *lpeobject);
+    virtual ~LPEPatternAlongPath();
 
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
 
@@ -36,7 +36,7 @@ public:
 
 private:
     PathParam  pattern;
-    EnumParam<SkelCopyType> copytype;
+    EnumParam<PAPCopyType> copytype;
     ScalarParam  prop_scale;
     BoolParam scale_y_rel;
     ScalarParam  spacing;
@@ -47,8 +47,8 @@ private:
 
     void on_pattern_pasted();
 
-    LPESkeletalStrokes(const LPESkeletalStrokes&);
-    LPESkeletalStrokes& operator=(const LPESkeletalStrokes&);
+    LPEPatternAlongPath(const LPEPatternAlongPath&);
+    LPEPatternAlongPath& operator=(const LPEPatternAlongPath&);
 };
 
 }; //namespace LivePathEffect

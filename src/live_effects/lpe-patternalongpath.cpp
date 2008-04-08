@@ -1,4 +1,4 @@
-#define INKSCAPE_LPE_SKELETAL_STROKES_CPP
+#define INKSCAPE_LPE_PATTERN_ALONG_PATH_CPP
 
 /*
  * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
@@ -6,7 +6,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "live_effects/lpe-skeletalstrokes.h"
+#include "live_effects/lpe-patternalongpath.h"
 #include "sp-shape.h"
 #include "display/curve.h"
 #include <libnr/n-art-bpath.h>
@@ -49,18 +49,18 @@ first) but I think we can first forget about them.
 namespace Inkscape {
 namespace LivePathEffect {
 
-static const Util::EnumData<SkelCopyType> SkelCopyTypeData[SSCT_END] = {
-    {SSCT_SINGLE,               N_("Single"),               "single"},
-    {SSCT_SINGLE_STRETCHED,     N_("Single, stretched"),    "single_stretched"},
-    {SSCT_REPEATED,             N_("Repeated"),             "repeated"},
-    {SSCT_REPEATED_STRETCHED,   N_("Repeated, stretched"),  "repeated_stretched"}
+static const Util::EnumData<PAPCopyType> PAPCopyTypeData[PAPCT_END] = {
+    {PAPCT_SINGLE,               N_("Single"),               "single"},
+    {PAPCT_SINGLE_STRETCHED,     N_("Single, stretched"),    "single_stretched"},
+    {PAPCT_REPEATED,             N_("Repeated"),             "repeated"},
+    {PAPCT_REPEATED_STRETCHED,   N_("Repeated, stretched"),  "repeated_stretched"}
 };
-static const Util::EnumDataConverter<SkelCopyType> SkelCopyTypeConverter(SkelCopyTypeData, SSCT_END);
+static const Util::EnumDataConverter<PAPCopyType> PAPCopyTypeConverter(PAPCopyTypeData, PAPCT_END);
 
-LPESkeletalStrokes::LPESkeletalStrokes(LivePathEffectObject *lpeobject) :
+LPEPatternAlongPath::LPEPatternAlongPath(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     pattern(_("Pattern source"), _("Path to put along the skeleton path"), "pattern", &wr, this, "M0,0 L1,0"),
-    copytype(_("Pattern copies"), _("How many pattern copies to place along the skeleton path"), "copytype", SkelCopyTypeConverter, &wr, this, SSCT_SINGLE_STRETCHED),
+    copytype(_("Pattern copies"), _("How many pattern copies to place along the skeleton path"), "copytype", PAPCopyTypeConverter, &wr, this, PAPCT_SINGLE_STRETCHED),
     prop_scale(_("Width"), _("Width of the pattern"), "prop_scale", &wr, this, 1),
     scale_y_rel(_("Width in units of length"), _("Scale the width of the pattern in units of its length"), "scale_y_rel", &wr, this, false),
     spacing(_("Spacing"), _("Space between copies of the pattern. Negative values allowed, but are limited to -90% of pattern width."), "spacing", &wr, this, 0),
@@ -83,7 +83,7 @@ LPESkeletalStrokes::LPESkeletalStrokes(LivePathEffectObject *lpeobject) :
     prop_scale.param_set_increments(0.01, 0.10);
 }
 
-LPESkeletalStrokes::~LPESkeletalStrokes()
+LPEPatternAlongPath::~LPEPatternAlongPath()
 {
 
 }
@@ -114,14 +114,14 @@ split_at_discontinuities (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwsbin, dou
 
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
-LPESkeletalStrokes::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
+LPEPatternAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
 {
     using namespace Geom;
 
 /* Much credit should go to jfb and mgsloan of lib2geom development for the code below! */
     Piecewise<D2<SBasis> > output;
 
-    SkelCopyType type = copytype.get_value();
+    PAPCopyType type = copytype.get_value();
 
     D2<Piecewise<SBasis> > patternd2 = make_cuts_independant(pattern.get_pwd2());
     Piecewise<SBasis> x0 = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[1]) : Piecewise<SBasis>(patternd2[0]);
@@ -168,21 +168,21 @@ LPESkeletalStrokes::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pw
         int nbCopies = 0;
         double scaling = 1;
         switch(type) {
-            case SSCT_REPEATED:
+            case PAPCT_REPEATED:
                 nbCopies = floor((uskeleton.domain().extent() - toffset + xspace)/(pattBndsX.extent()+xspace));
                 pattBndsX = Interval(pattBndsX.min(),pattBndsX.max()+xspace);
                 break;
                 
-            case SSCT_SINGLE:
+            case PAPCT_SINGLE:
                 nbCopies = (toffset + pattBndsX.extent() < uskeleton.domain().extent()) ? 1 : 0;
                 break;
                 
-            case SSCT_SINGLE_STRETCHED:
+            case PAPCT_SINGLE_STRETCHED:
                 nbCopies = 1;
                 scaling = (uskeleton.domain().extent() - toffset)/pattBndsX.extent();
                 break;
                 
-            case SSCT_REPEATED_STRETCHED:
+            case PAPCT_REPEATED_STRETCHED:
                 // if uskeleton is closed:
                 if(path_i.segs.front().at0() == path_i.segs.back().at1()){
                     nbCopies = std::floor((uskeleton.domain().extent() - toffset)/(pattBndsX.extent()+xspace));
@@ -222,7 +222,7 @@ LPESkeletalStrokes::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pw
 }
 
 void
-LPESkeletalStrokes::transform_multiply(Geom::Matrix const& postmul, bool set)
+LPEPatternAlongPath::transform_multiply(Geom::Matrix const& postmul, bool set)
 {
     // TODO: implement correct transformation instead of this default behavior
     Effect::transform_multiply(postmul, set);
