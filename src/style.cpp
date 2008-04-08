@@ -3646,7 +3646,7 @@ sp_style_write_ipaint(gchar *b, gint const len, gchar const *const key,
                 css << "currentColor";
             }
 
-            if ( paint->colorSet ) {
+            if ( paint->colorSet && !paint->currentcolor ) {
                 if ( !css.str().empty() ) {
                     css << " ";
                 }
@@ -3655,7 +3655,7 @@ sp_style_write_ipaint(gchar *b, gint const len, gchar const *const key,
                 css << color_buf;
             }
 
-            if (paint->value.color.icc) {
+            if (paint->value.color.icc && !paint->currentcolor) {
                 if ( !css.str().empty() ) {
                     css << " ";
                 }
