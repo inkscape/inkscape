@@ -2233,9 +2233,17 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
 
     p += sp_style_write_ipaint(p, c + BMAX - p, "stroke", &style->stroke, NULL, flags);
 
+    // stroke width affects markers, so write it if there's stroke OR any markers
+    if (!style->stroke.noneSet || 
+        style->marker[SP_MARKER_LOC].set ||
+        style->marker[SP_MARKER_LOC_START].set ||
+        style->marker[SP_MARKER_LOC_MID].set || 
+        style->marker[SP_MARKER_LOC_END].set) {
+        p += sp_style_write_ilength(p, c + BMAX - p, "stroke-width", &style->stroke_width, NULL, flags);
+    }
+
     // if stroke:none, skip writing stroke properties
     if (!style->stroke.noneSet) {
-        p += sp_style_write_ilength(p, c + BMAX - p, "stroke-width", &style->stroke_width, NULL, flags);
         p += sp_style_write_ienum(p, c + BMAX - p, "stroke-linecap", enum_stroke_linecap, &style->stroke_linecap, NULL, flags);
         p += sp_style_write_ienum(p, c + BMAX - p, "stroke-linejoin", enum_stroke_linejoin, &style->stroke_linejoin, NULL, flags);
         p += sp_style_write_ifloat(p, c + BMAX - p, "stroke-miterlimit", &style->stroke_miterlimit, NULL, flags);
@@ -2374,9 +2382,18 @@ sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
     }
 
     p += sp_style_write_ipaint(p, c + BMAX - p, "stroke", &from->stroke, &to->stroke, SP_STYLE_FLAG_IFDIFF);
+
+    // stroke width affects markers, so write it if there's stroke OR any markers
+    if (!from->stroke.noneSet || 
+        from->marker[SP_MARKER_LOC].set ||
+        from->marker[SP_MARKER_LOC_START].set ||
+        from->marker[SP_MARKER_LOC_MID].set || 
+        from->marker[SP_MARKER_LOC_END].set) {
+        p += sp_style_write_ilength(p, c + BMAX - p, "stroke-width", &from->stroke_width, &to->stroke_width, SP_STYLE_FLAG_IFDIFF);
+    }
+
     // if stroke:none, skip writing stroke properties
     if (!from->stroke.noneSet) {
-        p += sp_style_write_ilength(p, c + BMAX - p, "stroke-width", &from->stroke_width, &to->stroke_width, SP_STYLE_FLAG_IFDIFF);
         p += sp_style_write_ienum(p, c + BMAX - p, "stroke-linecap", enum_stroke_linecap,
                                   &from->stroke_linecap, &to->stroke_linecap, SP_STYLE_FLAG_IFDIFF);
         p += sp_style_write_ienum(p, c + BMAX - p, "stroke-linejoin", enum_stroke_linejoin,
