@@ -49,16 +49,18 @@ def svg_open(self,filename):
     doc_sizeW = max(doc_width,doc_height)
 
     def clone_and_rewrite(self, node_in):
-        if node_in.tag != 'svg':
-            node_out = inkex.etree.Element(inkex.addNS(node_in.tag,'svg'))
+        in_tag = node_in.tag.rsplit('}',1)[-1]
+        if in_tag != 'svg':
+            node_out = inkex.etree.Element(inkex.addNS(in_tag,'svg'))
             for name in node_in.attrib:
                 node_out.set(name, node_in.attrib[name])
         else:
             node_out = inkex.etree.Element(inkex.addNS('g','svg'))
         for c in node_in.iterchildren():
-            if c.tag in ('g', 'path', 'polyline', 'polygon'):
+            c_tag = c.tag.rsplit('}',1)[-1]
+            if c_tag in ('g', 'path', 'polyline', 'polygon'):
                 child = clone_and_rewrite(self, c)
-                if c.tag == 'g':
+                if c_tag == 'g':
                     child.set('transform','matrix('+str(doc_sizeH/700.)+',0,0,'+str(-doc_sizeH/700.)+','+str(-doc_sizeH*0.25)+','+str(doc_sizeW*0.75)+')')
                 node_out.append(child)
 
