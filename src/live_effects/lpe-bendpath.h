@@ -1,5 +1,5 @@
-#ifndef INKSCAPE_LPE_PATHALONGPATH_H
-#define INKSCAPE_LPE_PATHALONGPATH_H
+#ifndef INKSCAPE_LPE_BENDPATH_H
+#define INKSCAPE_LPE_BENDPATH_H
 
 /*
  * Inkscape::LPEPathAlongPath
@@ -28,10 +28,10 @@ namespace Inkscape {
 namespace LivePathEffect {
 
 //for Bend path on group : we need information concerning the group Bounding box
-class LPEPathAlongPath : public Effect, LivePathEffect_group_bbox {
+class LPEBendPath : public Effect, LivePathEffect_group_bbox {
 public:
-    LPEPathAlongPath(LivePathEffectObject *lpeobject);
-    virtual ~LPEPathAlongPath();
+    LPEBendPath(LivePathEffectObject *lpeobject);
+    virtual ~LPEBendPath();
 
     virtual void doBeforeEffect (SPLPEItem *lpeitem);
 
@@ -51,8 +51,8 @@ private:
 
     void on_pattern_pasted();
 
-    LPEPathAlongPath(const LPEPathAlongPath&);
-    LPEPathAlongPath& operator=(const LPEPathAlongPath&);
+    LPEBendPath(const LPEBendPath&);
+    LPEBendPath& operator=(const LPEBendPath&);
 };
 
 }; //namespace LivePathEffect

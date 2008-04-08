@@ -51,7 +51,7 @@ namespace NodePath {
 namespace LivePathEffect {
 
 enum EffectType {
-    PATH_ALONG_PATH = 0,
+    BEND_PATH = 0,
     SKELETAL_STROKES,
     SKETCH,
     VONKOCH,

@@ -13,8 +13,8 @@ lpeobject.cpp
 lpeobject.h
 lpeobject-reference.cpp
 lpeobject-reference.h
-lpe-pathalongpath.cpp
-lpe-pathalongpath.h
+lpe-bendpath.cpp
+lpe-bendpath.h
 lpe-skeletalstrokes.cpp
 lpe-skeletalstrokes.h
 lpe-skeleton.cpp

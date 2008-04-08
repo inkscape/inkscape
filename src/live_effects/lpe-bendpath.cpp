@@ -1,4 +1,4 @@
-#define INKSCAPE_LPE_PATHALONGPATH_CPP
+#define INKSCAPE_LPE_BENDPATH_CPP
 
 /*
  * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
@@ -7,7 +7,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "live_effects/lpe-pathalongpath.h"
+#include "live_effects/lpe-bendpath.h"
 #include "sp-shape.h"
 #include "sp-item.h"
 #include "sp-path.h"
@@ -54,7 +54,7 @@ first) but I think we can first forget about them.
 namespace Inkscape {
 namespace LivePathEffect {
 
-LPEPathAlongPath::LPEPathAlongPath(LivePathEffectObject *lpeobject) :
+LPEBendPath::LPEBendPath(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     bend_path(_("Bend path"), _("Path along which to bend the original path"), "bendpath", &wr, this, "M0,0 L1,0"),
     prop_scale(_("Width"), _("Width of the path"), "prop_scale", &wr, this, 1),
@@ -72,13 +72,13 @@ LPEPathAlongPath::LPEPathAlongPath(LivePathEffectObject *lpeobject) :
     groupSpecialBehavior = false;
 }
 
-LPEPathAlongPath::~LPEPathAlongPath()
+LPEBendPath::~LPEBendPath()
 {
 
 }
 
 void
-LPEPathAlongPath::doBeforeEffect (SPLPEItem *lpeitem)
+LPEBendPath::doBeforeEffect (SPLPEItem *lpeitem)
 {
     if(SP_IS_GROUP(lpeitem))
     {
@@ -103,7 +103,7 @@ LPEPathAlongPath::doBeforeEffect (SPLPEItem *lpeitem)
 
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
-LPEPathAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
+LPEBendPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
 {
     using namespace Geom;
 
@@ -145,7 +145,7 @@ LPEPathAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2
 }
 
 void
-LPEPathAlongPath::resetDefaults(SPItem * item)
+LPEBendPath::resetDefaults(SPItem * item)
 {
     if (SP_IS_PATH(item) || SP_IS_GROUP(item))
     {
@@ -189,7 +189,7 @@ LPEPathAlongPath::resetDefaults(SPItem * item)
 }
 
 void
-LPEPathAlongPath::transform_multiply(Geom::Matrix const& postmul, bool set)
+LPEBendPath::transform_multiply(Geom::Matrix const& postmul, bool set)
 {
     // TODO: implement correct transformation instead of this default behavior
     Effect::transform_multiply(postmul, set);
