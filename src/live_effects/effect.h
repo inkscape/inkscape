@@ -112,9 +112,9 @@ protected:
     virtual NArtBpath *
             doEffect_nartbpath (NArtBpath * path_in);
     virtual std::vector<Geom::Path>
-            doEffect_path (std::vector<Geom::Path> & path_in);
+            doEffect_path (std::vector<Geom::Path> const & path_in);
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> >
-            doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
+            doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
     void registerParameter(Parameter * param);
     Parameter * getNextOncanvasEditableParam();

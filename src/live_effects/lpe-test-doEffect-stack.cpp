@@ -65,7 +65,7 @@ LPEdoEffectStackTest::doEffect_nartbpath (NArtBpath * path_in)
 }
 
 std::vector<Geom::Path>
-LPEdoEffectStackTest::doEffect_path (std::vector<Geom::Path> & path_in)
+LPEdoEffectStackTest::doEffect_path (std::vector<Geom::Path> const & path_in)
 {
     if (step >= 3) {
         return Effect::doEffect_path(path_in);
@@ -77,7 +77,7 @@ LPEdoEffectStackTest::doEffect_path (std::vector<Geom::Path> & path_in)
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> > 
-LPEdoEffectStackTest::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
+LPEdoEffectStackTest::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 {
     Geom::Piecewise<Geom::D2<Geom::SBasis> > output = pwd2_in;
 

@@ -66,7 +66,7 @@ LPEPerspectivePath::~LPEPerspectivePath()
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
-LPEPerspectivePath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
+LPEPerspectivePath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 {
     using namespace Geom;
 

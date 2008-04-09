@@ -231,7 +231,7 @@ LPEGears::~LPEGears()
 }
 
 std::vector<Geom::Path>
-LPEGears::doEffect_path (std::vector<Geom::Path> & path_in)
+LPEGears::doEffect_path (std::vector<Geom::Path> const & path_in)
 {
     std::vector<Geom::Path> path_out;
     Geom::Path gearpath = path_in[0];

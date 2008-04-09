@@ -83,7 +83,7 @@ LPESkeleton::doEffect_path (std::vector<Geom::Path> & path_in)
 */
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
-LPESkeleton::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
+LPESkeleton::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 {
     Geom::Piecewise<Geom::D2<Geom::SBasis> > output;
 

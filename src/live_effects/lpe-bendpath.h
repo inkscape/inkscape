@@ -35,7 +35,7 @@ public:
 
     virtual void doBeforeEffect (SPLPEItem *lpeitem);
 
-    virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
+    virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
     virtual void resetDefaults(SPItem * item);
 

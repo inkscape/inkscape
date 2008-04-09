@@ -28,7 +28,7 @@ public:
     LPECurveStitch(LivePathEffectObject *lpeobject);
     virtual ~LPECurveStitch();
 
-    virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> & path_in);
+    virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
 
     virtual void resetDefaults(SPItem * item);
 

@@ -76,7 +76,7 @@ LPEVonKoch::~LPEVonKoch()
 }
 
 std::vector<Geom::Path>
-LPEVonKoch::doEffect_path (std::vector<Geom::Path> & path_in)
+LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
 {
     using namespace Geom;
     std::vector<Geom::Path> generating_path = path_from_piecewise(generator.get_pwd2(),.01);//TODO what should that tolerance be?

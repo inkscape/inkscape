@@ -136,7 +136,7 @@ addLinearEnds (Geom::Piecewise<Geom::D2<Geom::SBasis> > & m){
 
 //TODO: does this already exist in 2Geom? if not, move this there...
 std::vector<Geom::Piecewise<Geom::D2<Geom::SBasis> > > 
-split_at_discontinuities (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwsbin, double tol = .0001)
+split_at_discontinuities (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwsbin, double tol = .0001)
 {
     using namespace Geom;
     std::vector<Piecewise<D2<SBasis> > > ret;
@@ -193,7 +193,7 @@ LPESketch::computePerturbation (double s0, double s1){
 
 // Main effect body...
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
-LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
+LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 {
     using namespace Geom;
     //If the input path is empty, do nothing.

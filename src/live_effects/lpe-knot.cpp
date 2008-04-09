@@ -101,13 +101,13 @@ findShadowedTime(Geom::Path &patha,
 
 //Just a try; this should be moved to 2geom if ever it works.
 std::vector<Geom::Path>
-split_loopy_bezier (std::vector<Geom::Path> & path_in){
+split_loopy_bezier (std::vector<Geom::Path> const & path_in){
 
     std::vector<Geom::Path> ret; 
-    std::vector<Geom::Path>::iterator pi=path_in.begin();
+    std::vector<Geom::Path>::const_iterator pi=path_in.begin();
     for(; pi != path_in.end(); pi++) {
         ret.push_back(Geom::Path());
-        for (Geom::Path::iterator curve(pi->begin()),end(pi->end()); curve != end; ++curve){
+        for (Geom::Path::const_iterator curve(pi->begin()),end(pi->end()); curve != end; ++curve){
 
             //is the current curve a cubic bezier?
             if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const *>(&(*curve))){
@@ -149,13 +149,13 @@ split_loopy_bezier (std::vector<Geom::Path> & path_in){
 
 
 std::vector<Geom::Path>
-LPEKnot::doEffect_path (std::vector<Geom::Path> & path_in)
+LPEKnot::doEffect_path (std::vector<Geom::Path> const & input_path)
 {
     using namespace Geom;
     std::vector<Geom::Path> path_out;
     double width = interruption_width;
-    
-    path_in = split_loopy_bezier(path_in);
+
+    std::vector<Geom::Path> path_in = split_loopy_bezier(input_path);
 
     CrossingSet crossingTable = crossings_among(path_in);
     for (unsigned i = 0; i < crossingTable.size(); i++){

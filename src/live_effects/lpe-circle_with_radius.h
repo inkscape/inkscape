@@ -28,7 +28,7 @@ public:
     virtual ~LPECircleWithRadius();
 
 //  Choose to implement one of the doEffect functions. You can delete or comment out the others.
-    virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> & path_in);
+    virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
 
 private:
     // add the parameters for your effect here:

@@ -65,7 +65,7 @@ void _circle(Geom::Point center, double radius, std::vector<Geom::Path> &path_ou
 }
 
 std::vector<Geom::Path>
-LPECircleWithRadius::doEffect_path (std::vector<Geom::Path> &path_in)
+LPECircleWithRadius::doEffect_path (std::vector<Geom::Path> const & path_in)
 {
     std::vector<Geom::Path> path_out = std::vector<Geom::Path>();
 

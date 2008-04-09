@@ -30,7 +30,7 @@ public:
     LPEPatternAlongPath(LivePathEffectObject *lpeobject);
     virtual ~LPEPatternAlongPath();
 
-    virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in);
+    virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
     virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
 

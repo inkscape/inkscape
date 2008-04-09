@@ -104,7 +104,7 @@ LPEBendPath::doBeforeEffect (SPLPEItem *lpeitem)
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
-LPEBendPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
+LPEBendPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 {
     using namespace Geom;
 

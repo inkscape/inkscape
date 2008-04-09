@@ -196,7 +196,7 @@ Effect::doEffect_nartbpath (NArtBpath * path_in)
 }
 
 std::vector<Geom::Path>
-Effect::doEffect_path (std::vector<Geom::Path> & path_in)
+Effect::doEffect_path (std::vector<Geom::Path> const & path_in)
 {
     std::vector<Geom::Path> path_out;
 
@@ -225,7 +225,7 @@ Effect::doEffect_path (std::vector<Geom::Path> & path_in)
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
-Effect::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)
+Effect::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 {
     g_warning("Effect has no doEffect implementation");
     return pwd2_in;

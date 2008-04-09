@@ -22,7 +22,7 @@ public:
     LPEGears(LivePathEffectObject *lpeobject);
     virtual ~LPEGears();
 
-    virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> & path_in);
+    virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
 
     virtual void setup_nodepath(Inkscape::NodePath::Path *np);
 
