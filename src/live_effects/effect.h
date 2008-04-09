@@ -121,10 +121,13 @@ protected:
 
     std::vector<Parameter *> param_vector;
     int oncanvasedit_it;
-
     Inkscape::UI::Widget::Registry wr;
 
     LivePathEffectObject *lpeobj;
+
+    // this boolean defaults to false, it concatenates the input path to one pwd2,
+    // instead of normally 'splitting' the path into continuous pwd2 paths.
+    bool concatenate_before_pwd2;
 
 private:
     Effect(const Effect&);

@@ -69,6 +69,8 @@ LPEBendPath::LPEBendPath(LivePathEffectObject *lpeobject) :
     prop_scale.param_set_digits(3);
     prop_scale.param_set_increments(0.01, 0.10);
 
+    concatenate_before_pwd2 = true;
+
     groupSpecialBehavior = false;
 }
 
@@ -82,25 +84,24 @@ LPEBendPath::doBeforeEffect (SPLPEItem *lpeitem)
 {
     if(SP_IS_GROUP(lpeitem))
     {
-    groupSpecialBehavior = true;
+        groupSpecialBehavior = true;
 
-            using namespace Geom;
-            Piecewise<D2<SBasis> > pwd2;
-            std::vector<Geom::Path> temppath;  
+        using namespace Geom;
+        Piecewise<D2<SBasis> > pwd2;
+        std::vector<Geom::Path> temppath;  
 
-            recursive_original_bbox(SP_GROUP(lpeitem), pwd2, temppath);
+        recursive_original_bbox(SP_GROUP(lpeitem), pwd2, temppath);
 
-    for (unsigned int i=0; i < temppath.size(); i++) {
-        pwd2.concat( temppath[i].toPwSb() );
+        for (unsigned int i=0; i < temppath.size(); i++) {
+            pwd2.concat( temppath[i].toPwSb() );
         }
 
-    D2<Piecewise<SBasis> > d2pw = make_cuts_independant(pwd2);
-    boundingbox_X = bounds_exact(d2pw[0]);
-    boundingbox_Y = bounds_exact(d2pw[1]);
+        D2<Piecewise<SBasis> > d2pw = make_cuts_independant(pwd2);
+        boundingbox_X = bounds_exact(d2pw[0]);
+        boundingbox_Y = bounds_exact(d2pw[1]);
     }    
 
 }
-
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPEBendPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2_in)

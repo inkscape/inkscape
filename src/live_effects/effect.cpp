@@ -123,6 +123,7 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
 }
 
 Effect::Effect(LivePathEffectObject *lpeobject)
+    : concatenate_before_pwd2(false)
 {
     lpeobj = lpeobject;
     oncanvasedit_it = 0;
@@ -198,15 +199,28 @@ Effect::doEffect_nartbpath (NArtBpath * path_in)
 std::vector<Geom::Path>
 Effect::doEffect_path (std::vector<Geom::Path> & path_in)
 {
-    Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_in;
+    std::vector<Geom::Path> path_out;
 
-    for (unsigned int i=0; i < path_in.size(); i++) {
-        pwd2_in.concat( path_in[i].toPwSb() );
+    if ( !concatenate_before_pwd2 ) {
+        // default behavior
+        for (unsigned int i=0; i < path_in.size(); i++) {
+            Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_in = path_in[i].toPwSb();
+            Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_out = doEffect_pwd2(pwd2_in);
+            std::vector<Geom::Path> path = Geom::path_from_piecewise( pwd2_out, LPE_CONVERSION_TOLERANCE);
+            // add the output path vector to the already accumulated vector:
+            for (unsigned int j=0; j < path.size(); j++) {
+                path_out.push_back(path[j]);
+            }
+        }
+    } else {
+      // concatenate the path into possibly discontinuous pwd2
+        Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_in;
+        for (unsigned int i=0; i < path_in.size(); i++) {
+            pwd2_in.concat( path_in[i].toPwSb() );
+        }
+        Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_out = doEffect_pwd2(pwd2_in);
+        path_out = Geom::path_from_piecewise( pwd2_out, LPE_CONVERSION_TOLERANCE);
     }
-
-    Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_out = doEffect_pwd2(pwd2_in);
-
-    std::vector<Geom::Path> path_out = Geom::path_from_piecewise( pwd2_out, LPE_CONVERSION_TOLERANCE);
 
     return path_out;
 }
