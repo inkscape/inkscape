@@ -60,6 +60,7 @@ extensions = \
 	ill2svg.pl \
 	inkex.py \
 	interp.py \
+	launch_webbrowser.py \
 	lindenmayer.py \
 	lorem_ipsum.py \
 	markers_strokepaint.py \
@@ -102,14 +103,6 @@ extensions = \
 	text_replace.py \
 	text_braille.py \
 	txt2svg.pl \
-	webbrowser_askaquestion.py \
-	webbrowser_commandline.py \
-	webbrowser_faq.py\
-	webbrowser_manual.py \
-	webbrowser_relnotes.py \
-	webbrowser_reportabug.py \
-	webbrowser_svgspec.py \
-	webbrowser_keys.py \
 	whirl.py
 
 otherstuff = \
