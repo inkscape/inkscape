@@ -74,40 +74,39 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
     Effect* neweffect = NULL;
     switch (lpenr) {
         case PATTERN_ALONG_PATH:
-            neweffect = (Effect*) new LPEPatternAlongPath(lpeobj);
+            neweffect = static_cast<Effect*> ( new LPEPatternAlongPath(lpeobj) );
             break;
         case BEND_PATH:
-            neweffect = (Effect*) new LPEBendPath(lpeobj);
+            neweffect = static_cast<Effect*> ( new LPEBendPath(lpeobj) );
             break;
-//here!!
         case SKETCH:
-            neweffect = (Effect*) new LPESketch(lpeobj);
+            neweffect = static_cast<Effect*> ( new LPESketch(lpeobj) );
             break;
         case VONKOCH:
-            neweffect = (Effect*) new LPEVonKoch(lpeobj);
+            neweffect = static_cast<Effect*> ( new LPEVonKoch(lpeobj) );
             break;
         case KNOT:
-            neweffect = (Effect*) new LPEKnot(lpeobj);
+            neweffect = static_cast<Effect*> ( new LPEKnot(lpeobj) );
             break;
 #ifdef LPE_ENABLE_TEST_EFFECTS
             case SLANT:
-            neweffect = (Effect*) new LPESlant(lpeobj);
+            neweffect = static_cast<Effect*> ( new LPESlant(lpeobj) );
             break;
         case DOEFFECTSTACK_TEST:
-            neweffect = (Effect*) new LPEdoEffectStackTest(lpeobj);
+            neweffect = static_cast<Effect*> ( new LPEdoEffectStackTest(lpeobj) );
             break;
 #endif
         case GEARS:
-            neweffect = (Effect*) new LPEGears(lpeobj);
+            neweffect = static_cast<Effect*> ( new LPEGears(lpeobj) );
             break;
         case CURVE_STITCH:
-            neweffect = (Effect*) new LPECurveStitch(lpeobj);
+            neweffect = static_cast<Effect*> ( new LPECurveStitch(lpeobj) );
             break;
         case CIRCLE_WITH_RADIUS:
-            neweffect = (Effect*) new LPECircleWithRadius(lpeobj);
+            neweffect = static_cast<Effect*> ( new LPECircleWithRadius(lpeobj) );
             break;
         case PERSPECTIVE_PATH:
-            neweffect = (Effect*) new LPEPerspectivePath(lpeobj);
+            neweffect = static_cast<Effect*> ( new LPEPerspectivePath(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);
