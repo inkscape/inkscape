@@ -61,8 +61,8 @@ protected:
     gchar *  _text;
     /** \brief  Whether the GUI is visible */
     bool _gui_hidden;
-	/** \brief  A tip for the GUI if there is one */
-	gchar *  _gui_tip;
+    /** \brief  A tip for the GUI if there is one */
+    gchar *  _gui_tip;
 
 
     /* **** funcs **** */
@@ -77,7 +77,7 @@ public:
                               const gchar * desc,
                               const Parameter::_scope_t scope,
                               bool gui_hidden,
-							  const gchar * gui_tip,
+                              const gchar * gui_tip,
                               Inkscape::Extension::Extension * ext);
                   Parameter  (const gchar * name,
                               const gchar * guitext,
@@ -108,7 +108,11 @@ public:
 
     static Parameter * make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension * in_ext);
     virtual Gtk::Widget * get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
+
     gchar const * get_tooltip (void) { return _desc; }
+
+    /** \brief  Indicates if the GUI for this parameter is hidden or not */
+    bool         get_gui_hidden ()   { return _gui_hidden; }
 
     virtual void string (std::list <std::string> &list);
     virtual void string (std::string &string);

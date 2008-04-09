@@ -664,22 +664,25 @@ public:
     function to get each widget.  Then, each of those is placed into
     a Gtk::VBox, which is then returned to the calling function.
 
-    If there are no parameters, this function just returns NULL.
+    If there are no visible parameters, this function just returns NULL.
+    If all parameters are gui_visible = false NULL is returned as well.    
 */
 Gtk::Widget *
 Extension::autogui (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
-    if (g_slist_length(parameters) == 0) return NULL;
+    if (param_visible_count() == 0) return NULL;
 
     AutoGUI * agui = Gtk::manage(new AutoGUI());
 
+    //go through the list of parameters to see if there are any non-hidden ones
     for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
         Parameter * param = reinterpret_cast<Parameter *>(list->data);
+        if (param->get_gui_hidden()) continue; //Ignore hidden parameters
         Gtk::Widget * widg = param->get_widget(doc, node, changeSignal);
         gchar const * tip = param->get_tooltip();
         agui->addWidget(widg, tip);
-    }
-
+    }    
+    
     agui->show();
     return agui;
 };
@@ -747,7 +750,7 @@ Extension::get_help_widget(void)
     Gtk::VBox * retval = Gtk::manage(new Gtk::VBox());
 
     if (_help == NULL) {
-        Gtk::Label * content = Gtk::manage(new Gtk::Label("Currently there is no help available for this Extension.  Please look on the Inkscape website or ask on the mailing lists if you have questions regarding this extension."));
+        Gtk::Label * content = Gtk::manage(new Gtk::Label(_("Currently there is no help available for this Extension.  Please look on the Inkscape website or ask on the mailing lists if you have questions regarding this extension.")));
         retval->pack_start(*content, true, true, 5);
         content->set_line_wrap(true);
         content->show();
@@ -770,6 +773,16 @@ Extension::get_params_widget(void)
     content->show();
     retval->show();
     return retval;
+}
+
+unsigned int Extension::param_visible_count ( ) 
+{
+    unsigned int _visible_count = 0;
+    for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
+        Parameter * param = reinterpret_cast<Parameter *>(list->data);
+        if (!param->get_gui_hidden()) _visible_count++;
+    }    
+    return _visible_count;
 }
 
 }  /* namespace Extension */

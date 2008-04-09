@@ -1,12 +1,13 @@
 <inkscape-extension>
     <_name>New in This Version</_name>
     <id>org.inkscape.help.relnotes</id>
-	<dependency type="executable" location="extensions">webbrowser_relnotes.py</dependency>
+	<dependency type="executable" location="extensions">launch_webbrowser.py</dependency>
+	<param name="url" gui-hidden="1" type="string">http://wiki.inkscape.org/wiki/index.php/ReleaseNotes046</param>
     <effect needs-document="no">
 		<object-type>all</object-type>
 		<effects-menu hidden="yes"/>
     </effect>
     <script>
-        <command reldir="extensions" interpreter="python">webbrowser_relnotes.py</command>
+        <command reldir="extensions" interpreter="python">launch_webbrowser.py</command>
     </script>
 </inkscape-extension>

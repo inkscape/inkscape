@@ -138,7 +138,7 @@ public:
               the appropriate function in code so that it'll work in the
               future.
     */
-    unsigned int param_visible_count ( ) { return param_count(); };
+    unsigned int param_visible_count ( );
 
 public:
     /** An error class for when a parameter is called on a type it is not */

@@ -1,12 +1,13 @@
 <inkscape-extension>
     <_name>Keys and Mouse Reference</_name>
     <id>org.inkscape.help.keys</id>
-	<dependency type="executable" location="extensions">webbrowser_keys.py</dependency>
+	<dependency type="executable" location="extensions">launch_webbrowser.py</dependency>
+	<param name="url" gui-hidden="1" type="string">http://inkscape.org/doc/keys046.html</param>
     <effect needs-document="no">
 		<object-type>all</object-type>
 		<effects-menu hidden="yes"/>
     </effect>
     <script>
-        <command reldir="extensions" interpreter="python">webbrowser_keys.py</command>
+        <command reldir="extensions" interpreter="python">launch_webbrowser.py</command>
     </script>
 </inkscape-extension>

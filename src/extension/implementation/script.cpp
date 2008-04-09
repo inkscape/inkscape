@@ -98,7 +98,7 @@ struct interpreter_t {
 */
 static interpreter_t const interpreterTab[] = {
         {"perl",   "perl-interpreter",   "perl"   },
-#ifdef _WIN32
+#ifdef WIN32
         {"python", "python-interpreter", "pythonw" },
 #else
         {"python", "python-interpreter", "python" },
@@ -142,7 +142,7 @@ resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
         return interpName;
     }
 
-#ifdef _WIN32
+#ifdef WIN32
 
     // 2.  Windows.  Try looking relative to inkscape.exe
     RegistryTool rt;
@@ -359,7 +359,7 @@ bool
 Script::load(Inkscape::Extension::Extension *module)
 {
     if (module->loaded())
-        return TRUE;
+        return true;
 
     helper_extension = "";
 
@@ -374,6 +374,7 @@ Script::load(Inkscape::Extension::Extension *module)
                     if (interpretstr != NULL) {
                         Glib::ustring interpString =
                             resolveInterpreterExecutable(interpretstr);
+                        //g_message("Found: %s and %s",interpString.c_str(),interpretstr);
                         command.insert(command.end(), interpretstr);
                     }
                     Glib::ustring tmp = "\"";
@@ -393,7 +394,7 @@ Script::load(Inkscape::Extension::Extension *module)
         child_repr = sp_repr_next(child_repr);
     }
 
-    //g_return_val_if_fail(command.length() > 0, FALSE);
+    //g_return_val_if_fail(command.length() > 0, false);
 
     return true;
 }
@@ -437,14 +438,14 @@ Script::check(Inkscape::Extension::Extension *module)
                         /* I've got the command */
                         bool existance = check_existance(command_text);
                         if (!existance)
-                            return FALSE;
+                            return false;
                     }
                 }
 
                 if (!strcmp(child_repr->name(), "helper_extension")) {
                     gchar const *helper = sp_repr_children(child_repr)->content();
                     if (Inkscape::Extension::db.get(helper) == NULL) {
-                        return FALSE;
+                        return false;
                     }
                 }
 
@@ -486,7 +487,7 @@ ScriptDocCache::ScriptDocCache (Inkscape::UI::View::View * view) :
 
     Inkscape::Extension::save(
               Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE),
-              view->doc(), _filename.c_str(), FALSE, FALSE, FALSE);
+              view->doc(), _filename.c_str(), false, false, false);
 
     return;
 }
@@ -679,11 +680,11 @@ Script::save(Inkscape::Extension::Output *module,
     if (helper_extension.size() == 0) {
         Inkscape::Extension::save(
                    Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE),
-                   doc, tempfilename_in.c_str(), FALSE, FALSE, FALSE);
+                   doc, tempfilename_in.c_str(), false, false, false);
     } else {
         Inkscape::Extension::save(
                    Inkscape::Extension::db.get(helper_extension.c_str()),
-                   doc, tempfilename_in.c_str(), FALSE, FALSE, FALSE);
+                   doc, tempfilename_in.c_str(), false, false, false);
     }
 
 
@@ -980,9 +981,8 @@ Script::execute (const std::list<std::string> &in_command,
     for (std::list<std::string>::const_iterator i = in_command.begin();
             i != in_command.end(); i++) {
         std::string param_str = *i;
-        //std::cout << "params " << param_str << std::endl;
         do {
-            //std::cout << "param " << param_str << std::endl;
+            //g_message("param: %s", param_str.c_str());
             size_t first_space = param_str.find_first_of(' ');
             size_t first_quote = param_str.find_first_of('"');
             //std::cout << "first space " << first_space << std::endl;
@@ -1028,7 +1028,8 @@ Script::execute (const std::list<std::string> &in_command,
 
     for (std::list<std::string>::const_iterator i = in_params.begin();
             i != in_params.end(); i++) {
-        argv.push_back(*i);
+    	//g_message("Script parameter: %s",(*i)g.c_str());
+        argv.push_back(*i);        
     }
 
     if (!(filein.empty())) {
