@@ -3685,7 +3685,7 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
 
     GString *length = SP_PX_TO_METRIC_STRING(rnew.r, desktop->namedview->getDefaultMetric());
 
-    mc->setF(Inkscape::NORMAL_MESSAGE,
+    mc->setF(Inkscape::IMMEDIATE_MESSAGE,
          _("<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"), degrees, length->str);
 
     g_string_free(length, TRUE);
