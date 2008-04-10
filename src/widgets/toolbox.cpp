@@ -783,7 +783,7 @@ void
 sp_node_path_edit_delete(void)
 {
     ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor) shape_editor->delete_nodes();
+    if (shape_editor) shape_editor->delete_nodes_preserving_shape();
 }
 
 void
