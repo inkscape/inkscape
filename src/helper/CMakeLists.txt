@@ -1,10 +1,6 @@
 include(UseGlibMarshal)
 
-SET(Marshal
-sp-marshal
-)
-
-GLIB_MARSHAL(sp_marshal ${Marshal} ${CMAKE_CURRENT_BINARY_DIR})
+GLIB_MARSHAL(sp_marshal helper/sp-marshal "${CMAKE_CURRENT_BINARY_DIR}/helper")
 
 SET(helper_SRC
 action.cpp
