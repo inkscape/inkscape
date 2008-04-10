@@ -12,13 +12,4 @@ siox.cpp
 siox.h
 trace.cpp
 trace.h
-${trace_potrace_SRC}
 )
-# Add New folders in src folder here
-SET(tracefolders
-potrace
-)
-
-FOREACH(tracedirlist ${tracefolders})
-ADD_SUBDIRECTORY(${tracedirlist})
-ENDFOREACH(tracedirlist)

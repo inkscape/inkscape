@@ -1,4 +1,4 @@
-SET(debug
+SET(debug_SRC
 demangle.cpp
 #demangle.h
 #event.h

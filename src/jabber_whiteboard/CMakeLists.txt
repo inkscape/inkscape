@@ -30,14 +30,4 @@ session-file-selector.h
 session-manager.cpp
 session-manager.h
 tracker-node.h
-${jabber_whiteboard_dialog_SRC}
 )
-
-# Add New folders in src folder here
-SET(jabber_whiteboardfolders
-dialog
-)
-
-FOREACH(jabber_whiteboarddirlist ${jabber_whiteboardfolders})
-ADD_SUBDIRECTORY(${jabber_whiteboarddirlist})
-ENDFOREACH(jabber_whiteboarddirlist)

@@ -18,20 +18,4 @@ xmlwriter.cpp
 xpathimpl.cpp
 xpathparser.cpp
 xpathtoken.cpp
-${dom_io_SRC}
-${dom_odf_SRC}
-${dom_util_SRC}
-${dom_work_SRC}
 )
-# Add New folders in src folder here
-SET(domfolders
-io
-odf
-util
-work
-)
-
-FOREACH(domdirlist ${domfolders})
-ADD_SUBDIRECTORY(${domdirlist})
-ENDFOREACH(domdirlist)
-

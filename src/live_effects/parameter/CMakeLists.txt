@@ -4,7 +4,6 @@ bool.h
 enum.h
 makefile.in
 Makefile_insert
-out.txt
 parameter.cpp
 parameter.h
 path.cpp
@@ -17,5 +16,4 @@ pointparam-knotholder.cpp
 pointparam-knotholder.h
 random.cpp
 random.h
-todo.txt
 )

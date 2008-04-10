@@ -3,7 +3,7 @@ bool.cpp
 color.cpp
 description.cpp
 enum.cpp
-eter.cpp
+parameter.cpp
 float.cpp
 int.cpp
 notebook.cpp

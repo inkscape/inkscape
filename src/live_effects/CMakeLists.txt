@@ -29,7 +29,5 @@ lpe-vonkoch.cpp
 lpe-vonkoch.h
 n-art-bpath-2geom.cpp
 n-art-bpath-2geom.h
-${live_effects_parameter_SRC}
 )
 
-ADD_SUBDIRECTORY(parameter)

@@ -1,3 +1,92 @@
+SET(INKSCAPE_SRC)
+
+# A macro to replace slashes and spaces in a string with underscores
+MACRO(SANITIZE_PATH _string_var)
+  STRING(REGEX REPLACE "[\\/ ]+" "_" ${_string_var} ${${_string_var}})
+ENDMACRO(SANITIZE_PATH _string_var)
+
+# A macro to prepend a given string onto the beginning of each string in a list
+MACRO(PREPEND _list _str)
+  SET(_temp_list ${${_list}})
+  SET(${_list})
+  FOREACH(x ${_temp_list})
+    SET(${_list} ${${_list}} ${_str}${x})
+  ENDFOREACH(x)
+ENDMACRO(PREPEND _list _str)
+
+# All folder with CMakeLists.txt files (excluding internal libraries)
+SET(srcfolders
+algorithms
+api
+bind
+debug
+display
+dom
+dom/io
+dom/odf
+dom/util
+dom/work
+extension
+extension/dxf2svg
+extension/implementation
+extension/internal
+extension/param
+graphlayout
+helper
+inkjar
+io
+jabber_whiteboard
+jabber_whiteboard/dialog
+live_effects
+live_effects/parameter
+pedro
+removeoverlap
+svg
+trace
+trace/potrace
+traits
+ui/cache
+ui
+ui/dialog
+ui/view
+ui/widget
+utest
+util
+widgets
+xml
+)
+
+# 1) include each list file
+# 2) grab the variable inside 
+# 3) prepend the full relative path to each file in list
+# 4) append the list to INKSCAPE_SRC
+FOREACH(dirlist ${srcfolders})
+  SET(_temp_dirlist "${dirlist}")
+  MESSAGE(STATUS "Processing ${CMAKE_CURRENT_SOURCE_DIR}/${dirlist}/CMakeLists.txt")
+  INCLUDE(${CMAKE_CURRENT_SOURCE_DIR}/${dirlist}/CMakeLists.txt)
+  SANITIZE_PATH(dirlist)
+  PREPEND(${dirlist}_SRC "${_temp_dirlist}/")
+  SET(INKSCAPE_SRC ${INKSCAPE_SRC} ${${dirlist}_SRC})
+ENDFOREACH(dirlist)
+
+
+# All directories containing lists files that describe building internal libraries
+SET(libfolders
+application
+dialogs
+libavoid
+libcola
+libcroco
+libgdl
+libnr
+libnrtype
+libvpsc
+)
+
+FOREACH(dirlist ${libfolders})
+  ADD_SUBDIRECTORY(${dirlist})
+ENDFOREACH(dirlist)
+
 IF(WIN32)
 SET(ONLY_WIN
 registrytool.cpp
@@ -7,6 +96,7 @@ SET(ONLY_WIN)
 ENDIF(WIN32)
 
 SET(INKSCAPE_SRC
+${INKSCAPE_SRC}
 arc-context.cpp
 attributes.cpp
 axis-manip.cpp
@@ -208,31 +298,6 @@ version.cpp
 winmain.cpp
 zoom-context.cpp
 ${ONLY_WIN}
-${algorithms}
-${api}
-${application}
-${BIND_SRC}
-${debug}
-${dialogs}
-${display}
-${dom_SRC}
-${extension_SRC}
-${graphlayout_SRC}
-${extension_SRC}
-${helper_SRC}
-${inkjar_SRC}
-${io_SRC}
-${jabber_whiteboard_SRC}
-${live_effects_SRC}
-${removeoverlap_SRC}
-${svg_SRC}
-${trace_SRC}
-${traits_SRC}
-${ui_SRC}
-#${utest_SRC}
-#${util_SRC}
-#${widgets_SRC}
-#${xml_SRC}
 )
 
 # make executable for INKSCAPE
@@ -252,47 +317,3 @@ TARGET_LINK_LIBRARIES(inkscape
 #CONFIGURE_FILE( ${CMAKE_SOURCE_DIR}/INKSCAPE.pc.in
 #                ${CMAKE_BINARY_DIR}/INKSCAPE.pc @ONLY IMMEDIATE )
 #INSTALL(FILES "${CMAKE_BINARY_DIR}/INKSCAPE.pc" DESTINATION lib/pkgconfig)
-
-
-# Add New folders in src folder here
-SET(srcfolders
-2geom
-algorithms
-api
-application
-bind
-debug
-dialogs
-display
-dom
-extension
-graphlayout
-helper
-inkjar
-io
-jabber_whiteboard
-libavoid
-libcola
-libcroco
-libgdl
-libnr
-libnrtype
-libvpsc
-livarot
-live_effects
-pedro
-svg
-pixmaps
-trace
-traits
-ui
-removeoverlap
-utest
-util
-widgets
-xml
-)
-
-FOREACH(dirlist ${srcfolders})
-ADD_SUBDIRECTORY(${dirlist})
-ENDFOREACH(dirlist)

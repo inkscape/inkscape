@@ -1,4 +1,4 @@
-SET(display
+SET(display_SRC
 bezier-utils.cpp
 bezier-utils-test.cpp
 canvas-arena.cpp

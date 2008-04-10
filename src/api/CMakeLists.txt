@@ -1,3 +1,3 @@
 SET(api
-inkscape.idl
+api/inkscape.idl
 )
