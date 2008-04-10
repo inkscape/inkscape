@@ -1916,12 +1916,14 @@ static void do_node_selected_join(Inkscape::NodePath::Path *nodepath, Inkscape::
 {
     /* a and b are endpoints */
 
+    // if one of the two nodes is mouseovered, fix its position
     NR::Point c;
     if (a->knot && SP_KNOT_IS_MOUSEOVER(a->knot)) {
         c = a->pos;
     } else if (b->knot && SP_KNOT_IS_MOUSEOVER(b->knot)) {
         c = b->pos;
     } else {
+        // otherwise, move joined node to the midpoint
         c = (a->pos + b->pos) / 2;
     }
 
@@ -1942,20 +1944,27 @@ static void do_node_selected_join(Inkscape::NodePath::Path *nodepath, Inkscape::
     Inkscape::NodePath::Node *n;
     NRPathcode code;
     if (a == sa->first) {
+        // we will now reverse sa, so that a is its last node, not first, and drop that node
         p = sa->first->n.pos;
         code = (NRPathcode)sa->first->n.other->code;
+        // create new subpath
        Inkscape::NodePath::SubPath *t = sp_nodepath_subpath_new(sa->nodepath);
+       // create a first moveto node on it
         n = sa->last;
         sp_nodepath_node_new(t, NULL,Inkscape::NodePath::NODE_CUSP, NR_MOVETO, &n->n.pos, &n->pos, &n->p.pos);
         n = n->p.other;
+        if (n == sa->first) n = NULL;
         while (n) {
+            // copy the rest of the nodes from sa to t, going backwards
             sp_nodepath_node_new(t, NULL, (Inkscape::NodePath::NodeType)n->type, (NRPathcode)n->n.other->code, &n->n.pos, &n->pos, &n->p.pos);
             n = n->p.other;
             if (n == sa->first) n = NULL;
         }
+        // replace sa with t
         sp_nodepath_subpath_destroy(sa);
         sa = t;
     } else if (a == sa->last) {
+        // a is already last, just drop it
         p = sa->last->p.pos;
         code = (NRPathcode)sa->last->code;
         sp_nodepath_node_destroy(sa->last);
@@ -1965,11 +1974,13 @@ static void do_node_selected_join(Inkscape::NodePath::Path *nodepath, Inkscape::
     }
 
     if (b == sb->first) {
+        // copy all nodes from b to a, forward 
         sp_nodepath_node_new(sa, NULL,Inkscape::NodePath::NODE_CUSP, code, &p, &c, &sb->first->n.pos);
         for (n = sb->first->n.other; n != NULL; n = n->n.other) {
             sp_nodepath_node_new(sa, NULL, (Inkscape::NodePath::NodeType)n->type, (NRPathcode)n->code, &n->p.pos, &n->pos, &n->n.pos);
         }
     } else if (b == sb->last) {
+        // copy all nodes from b to a, backward 
         sp_nodepath_node_new(sa, NULL,Inkscape::NodePath::NODE_CUSP, code, &p, &c, &sb->last->p.pos);
         for (n = sb->last->p.other; n != NULL; n = n->p.other) {
             sp_nodepath_node_new(sa, NULL, (Inkscape::NodePath::NodeType)n->type, (NRPathcode)n->n.other->code, &n->n.pos, &n->pos, &n->p.pos);
