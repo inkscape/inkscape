@@ -90,7 +90,8 @@ ENDFOREACH(dirlist)
 IF(WIN32)
 SET(ONLY_WIN
 registrytool.cpp
-deptool.cpp)
+#deptool.cpp
+)
 ELSEIF(WIN32)
 SET(ONLY_WIN)
 ENDIF(WIN32)
