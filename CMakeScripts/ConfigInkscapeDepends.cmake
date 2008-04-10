@@ -50,6 +50,7 @@ ENDFOREACH(dep)
 # Include non pkg-config dependencies:
 INCLUDE(FindBoost)
 INCLUDE(FindGC)
+INCLUDE(IncludeJava)
 # end Dependencies
 
 # Optional Dependencies Packages
