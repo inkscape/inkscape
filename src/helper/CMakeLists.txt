@@ -15,5 +15,5 @@ unit-tracker.cpp
 window.cpp
 sp-marshal.list
 # we generate this file and it's .h counter-part
-sp-marshal.cpp
+#sp-marshal.cpp
 )

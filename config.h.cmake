@@ -205,7 +205,7 @@
 #define INKSCAPE_DATADIR "${CMAKE_INSTALL_PREFIX}/share"
 
 /* Base library directory -- only path-prefix.h should use it! */
-#cmakedefine INKSCAPE_LIBDIR
+#define INKSCAPE_LIBDIR "${CMAKE_INSTALL_PREFIX}/lib"
 
 /* Define to 1 if `lstat' dereferences a symlink specified with a trailing
    slash. */
