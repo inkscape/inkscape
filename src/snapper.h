@@ -75,7 +75,7 @@ public:
                           NR::Point const &p,
                           bool const &first_point,                                             
                           std::vector<NR::Point> &points_to_snap,                         
-                          std::list<SPItem const *> const &it,
+                          std::vector<SPItem const *> const &it,
                           std::vector<NR::Point> *unselected_nodes) const;
     
     class ConstraintLine
@@ -117,7 +117,7 @@ public:
                                  bool const &first_point,
                                  std::vector<NR::Point> &points_to_snap,                         
                                  ConstraintLine const &c,
-                                 std::list<SPItem const *> const &it) const;
+                                 std::vector<SPItem const *> const &it) const;
                                  
 protected:
     SPNamedView const *_named_view;
@@ -144,7 +144,7 @@ private:
                                      NR::Point const &p,
                                      bool const &first_point,                                             
                                      std::vector<NR::Point> &points_to_snap,
-                                     std::list<SPItem const *> const &it,
+                                     std::vector<SPItem const *> const &it,
                                      std::vector<NR::Point> *unselected_nodes) const = 0;
 
     /**
@@ -163,7 +163,7 @@ private:
                                             bool const &first_point,
                                             std::vector<NR::Point> &points_to_snap,
                                             ConstraintLine const &c,
-                                            std::list<SPItem const *> const &it) const = 0;
+                                            std::vector<SPItem const *> const &it) const = 0;
 };
 
 }

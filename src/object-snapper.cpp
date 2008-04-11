@@ -65,7 +65,7 @@ Inkscape::ObjectSnapper::~ObjectSnapper()
  */
 
 void Inkscape::ObjectSnapper::_findCandidates(SPObject* r,
-                                              std::list<SPItem const *> const &it,
+                                              std::vector<SPItem const *> const &it,
                                               bool const &first_point,
                                               std::vector<NR::Point> &points_to_snap,
                                               DimensionToSnap const snap_dim) const
@@ -100,7 +100,7 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* r,
         if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !desktop->itemIsHidden(SP_ITEM(o))) {
 
             /* See if this item is on the ignore list */
-            std::list<SPItem const *>::const_iterator i = it.begin();
+            std::vector<SPItem const *>::const_iterator i = it.begin();
             while (i != it.end() && *i != o) {
                 i++;
             }
@@ -552,7 +552,7 @@ void Inkscape::ObjectSnapper::_doFreeSnap(SnappedConstraints &sc,
                                             NR::Point const &p,
                                             bool const &first_point,
                                             std::vector<NR::Point> &points_to_snap,
-                                            std::list<SPItem const *> const &it,
+                                            std::vector<SPItem const *> const &it,
                                             std::vector<NR::Point> *unselected_nodes) const
 {
     if ( NULL == _named_view ) {
@@ -594,7 +594,7 @@ void Inkscape::ObjectSnapper::_doConstrainedSnap( SnappedConstraints &sc,
                                                   bool const &first_point,
                                                   std::vector<NR::Point> &points_to_snap,
                                                   ConstraintLine const &c,
-                                                  std::list<SPItem const *> const &it) const
+                                                  std::vector<SPItem const *> const &it) const
 {
     if ( NULL == _named_view ) {
         return;
@@ -631,7 +631,7 @@ void Inkscape::ObjectSnapper::guideSnap(SnappedConstraints &sc,
     
     /* Get a list of all the SPItems that we will try to snap to */
     std::vector<SPItem*> cand;
-    std::list<SPItem const *> const it; //just an empty list
+    std::vector<SPItem const *> const it; //just an empty list
 
     std::vector<NR::Point> points_to_snap;
     points_to_snap.push_back(p);

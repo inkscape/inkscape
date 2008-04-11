@@ -32,7 +32,7 @@ private:
                    NR::Point const &p,
                    bool const &first_point,
                    std::vector<NR::Point> &points_to_snap,
-                   std::list<SPItem const *> const &it,
+                   std::vector<SPItem const *> const &it,
                    std::vector<NR::Point> *unselected_nodes) const;
   
   void _doConstrainedSnap(SnappedConstraints &sc,
@@ -41,7 +41,7 @@ private:
                           bool const &first_point,
                           std::vector<NR::Point> &points_to_snap,
                           ConstraintLine const &c,
-                          std::list<SPItem const *> const &it) const;
+                          std::vector<SPItem const *> const &it) const;
   
   /**
    *  \param p Point that we are trying to snap.

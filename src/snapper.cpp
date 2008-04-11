@@ -104,7 +104,7 @@ void Inkscape::Snapper::freeSnap(SnappedConstraints &sc,
                                                    std::vector<NR::Point> &points_to_snap,                         
                                                    SPItem const *it) const
 {
-    std::list<SPItem const *> lit;
+    std::vector<SPItem const *> lit;
     if (it) {
         lit.push_back(it);
     }
@@ -128,7 +128,7 @@ void Inkscape::Snapper::freeSnap(SnappedConstraints &sc,
                                                    NR::Point const &p,
                                                    bool const &first_point,
                                                    std::vector<NR::Point> &points_to_snap,                     
-                                                   std::list<SPItem const *> const &it,
+                                                   std::vector<SPItem const *> const &it,
                                                    std::vector<NR::Point> *unselected_nodes) const
 {
     if (_snap_enabled == false || getSnapFrom(t) == false) {
@@ -160,8 +160,10 @@ void Inkscape::Snapper::constrainedSnap(SnappedConstraints &sc,
                                                           ConstraintLine const &c,
                                                           SPItem const *it) const
 {
-    std::list<SPItem const *> lit;
-    lit.push_back(it);
+    std::vector<SPItem const *> lit;
+    if (it) {
+        lit.push_back(it);
+    }
     constrainedSnap(sc, t, p, first_point, points_to_snap, c, lit);
 }
 
@@ -183,7 +185,7 @@ void Inkscape::Snapper::constrainedSnap(SnappedConstraints &sc,
                                                           bool const &first_point,
                                                           std::vector<NR::Point> &points_to_snap,                         
                                                           ConstraintLine const &c,
-                                                          std::list<SPItem const *> const &it) const
+                                                          std::vector<SPItem const *> const &it) const
 {
     if (_snap_enabled == false || getSnapFrom(t) == false) {
         return;

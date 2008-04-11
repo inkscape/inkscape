@@ -110,8 +110,10 @@ private:
     
     SPDesktop *_desktop;
 
-    std::vector<std::pair<SPItem *, NR::Matrix> > _items;
-    std::vector<std::pair<SPItem *, NR::Point> > _items_centers;
+    std::vector<SPItem *> _items;
+    std::vector<SPItem const *> _items_const;
+    std::vector<NR::Matrix> _items_affines;
+    std::vector<NR::Point> _items_centers;
     
     std::vector<NR::Point> _snap_points;
     std::vector<NR::Point> _bbox_points;

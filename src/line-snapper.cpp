@@ -28,7 +28,7 @@ void Inkscape::LineSnapper::_doFreeSnap(SnappedConstraints &sc,
                                                     NR::Point const &p,
                                                     bool const &f,
                                                     std::vector<NR::Point> &points_to_snap,
-                                                    std::list<SPItem const *> const &it,
+                                                    std::vector<SPItem const *> const &it,
                                                     std::vector<NR::Point> *unselected_nodes) const
 {
     /* Get the lines that we will try to snap to */
@@ -59,7 +59,7 @@ void Inkscape::LineSnapper::_doConstrainedSnap(SnappedConstraints &sc,
                                                bool const &/*f*/,
                                                std::vector<NR::Point> &/*points_to_snap*/,
                                                ConstraintLine const &c,
-                                               std::list<SPItem const *> const &/*it*/) const
+                                               std::vector<SPItem const *> const &/*it*/) const
 
 {
     /* Get the lines that we will try to snap to */
