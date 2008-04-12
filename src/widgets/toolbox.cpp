@@ -170,25 +170,25 @@ static struct {
     { "SPNodeContext",   "node_toolbox",   0, sp_node_toolbox_prep,              "NodeToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPTweakContext",   "tweak_toolbox",   0, sp_tweak_toolbox_prep,              "TweakToolbar",
-      SP_VERB_CONTEXT_TWEAK_PREFS, "tools.tweak", _("Color/opacity used for color tweaking")},
+      SP_VERB_CONTEXT_TWEAK_PREFS, "tools.tweak", N_("Color/opacity used for color tweaking")},
     { "SPZoomContext",   "zoom_toolbox",   0, sp_zoom_toolbox_prep,              "ZoomToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPStarContext",   "star_toolbox",   0, sp_star_toolbox_prep,              "StarToolbar",
-      SP_VERB_CONTEXT_STAR_PREFS,   "tools.shapes.star",     _("Style of new stars")},
+      SP_VERB_CONTEXT_STAR_PREFS,   "tools.shapes.star",     N_("Style of new stars")},
     { "SPRectContext",   "rect_toolbox",   0, sp_rect_toolbox_prep,              "RectToolbar",
-      SP_VERB_CONTEXT_RECT_PREFS,   "tools.shapes.rect",     _("Style of new rectangles")},
+      SP_VERB_CONTEXT_RECT_PREFS,   "tools.shapes.rect",     N_("Style of new rectangles")},
     { "Box3DContext",  "3dbox_toolbox",  0, box3d_toolbox_prep,             "3DBoxToolbar",
-      SP_VERB_CONTEXT_3DBOX_PREFS,  "tools.shapes.3dbox",    _("Style of new 3D boxes")},
+      SP_VERB_CONTEXT_3DBOX_PREFS,  "tools.shapes.3dbox",    N_("Style of new 3D boxes")},
     { "SPArcContext",    "arc_toolbox",    0, sp_arc_toolbox_prep,               "ArcToolbar",
-      SP_VERB_CONTEXT_ARC_PREFS,    "tools.shapes.arc",      _("Style of new ellipses")},
+      SP_VERB_CONTEXT_ARC_PREFS,    "tools.shapes.arc",      N_("Style of new ellipses")},
     { "SPSpiralContext", "spiral_toolbox", 0, sp_spiral_toolbox_prep,            "SpiralToolbar",
-      SP_VERB_CONTEXT_SPIRAL_PREFS, "tools.shapes.spiral",   _("Style of new spirals")},
+      SP_VERB_CONTEXT_SPIRAL_PREFS, "tools.shapes.spiral",   N_("Style of new spirals")},
     { "SPPencilContext", "pencil_toolbox", 0, sp_pencil_toolbox_prep,            "PencilToolbar",
-      SP_VERB_CONTEXT_PENCIL_PREFS, "tools.freehand.pencil", _("Style of new paths created by Pencil")},
+      SP_VERB_CONTEXT_PENCIL_PREFS, "tools.freehand.pencil", N_("Style of new paths created by Pencil")},
     { "SPPenContext", "pen_toolbox", 0, sp_pen_toolbox_prep,                     "PenToolbar",
-      SP_VERB_CONTEXT_PEN_PREFS,    "tools.freehand.pen",    _("Style of new paths created by Pen")},
+      SP_VERB_CONTEXT_PEN_PREFS,    "tools.freehand.pen",    N_("Style of new paths created by Pen")},
     { "SPDynaDrawContext", "calligraphy_toolbox", 0, sp_calligraphy_toolbox_prep,"CalligraphyToolbar",
-      SP_VERB_CONTEXT_CALLIGRAPHIC_PREFS, "tools.calligraphic", _("Style of new calligraphic strokes")},
+      SP_VERB_CONTEXT_CALLIGRAPHIC_PREFS, "tools.calligraphic", N_("Style of new calligraphic strokes")},
     { "SPTextContext",   "text_toolbox",   sp_text_toolbox_new, 0,               0,
       SP_VERB_INVALID, 0, 0},
     { "SPDropperContext", "dropper_toolbox", 0, sp_dropper_toolbox_prep,         "DropperToolbar",
@@ -198,7 +198,7 @@ static struct {
     { "SPConnectorContext", "connector_toolbox", 0, sp_connector_toolbox_prep,   "ConnectorToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPFloodContext",  "paintbucket_toolbox",  0, sp_paintbucket_toolbox_prep, "PaintbucketToolbar",
-      SP_VERB_CONTEXT_PAINTBUCKET_PREFS, "tools.paintbucket", _("Style of Paint Bucket fill objects")},
+      SP_VERB_CONTEXT_PAINTBUCKET_PREFS, "tools.paintbucket", N_("Style of Paint Bucket fill objects")},
     { NULL, NULL, NULL, NULL, NULL, SP_VERB_INVALID, NULL, NULL }
 };
 
@@ -1445,7 +1445,7 @@ setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
             gtk_table_attach( GTK_TABLE(holder), toolBar, 0, 1, 0, 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0 );
 
             if ( aux_toolboxes[i].swatch_verb_id != SP_VERB_INVALID ) {
-                Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch( NULL, aux_toolboxes[i].swatch_tip );
+                Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch( NULL, _(aux_toolboxes[i].swatch_tip) );
                 swatch->setDesktop( desktop );
                 swatch->setClickVerb( aux_toolboxes[i].swatch_verb_id );
                 swatch->setWatchedTool( aux_toolboxes[i].swatch_tool, true );

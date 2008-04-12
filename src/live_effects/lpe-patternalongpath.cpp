@@ -66,8 +66,8 @@ LPEPatternAlongPath::LPEPatternAlongPath(LivePathEffectObject *lpeobject) :
     spacing(_("Spacing"), _("Space between copies of the pattern. Negative values allowed, but are limited to -90% of pattern width."), "spacing", &wr, this, 0),
     normal_offset(_("Normal offset"), "", "normal_offset", &wr, this, 0),
     tang_offset(_("Tangential offset"), "", "tang_offset", &wr, this, 0),
-    prop_units(_("Offsets in unit of pattern size"), "Spacing, tangential and normal offset are expressed as a ratio of width/height", "prop_units", &wr, this, false),
-    vertical_pattern(_("Pattern is vertical"), "Rotate pattern 90 deg before applying", "vertical_pattern", &wr, this, false)
+    prop_units(_("Offsets in unit of pattern size"), _("Spacing, tangential and normal offset are expressed as a ratio of width/height"), "prop_units", &wr, this, false),
+    vertical_pattern(_("Pattern is vertical"), _("Rotate pattern 90 deg before applying"), "vertical_pattern", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&pattern) );
     registerParameter( dynamic_cast<Parameter *>(&copytype) );

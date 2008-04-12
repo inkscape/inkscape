@@ -46,7 +46,7 @@ LPESketch::LPESketch(LivePathEffectObject *lpeobject) :
     ends_tolerance(_("Max. ends tolerance"), 
                    _("Max. distance between original and approximated paths ends (relative to max. length)."), "ends_tolerance", &wr, this, .1),
     parallel_offset(_("Parallel offset"), 
-                    _("Average distance to original stroke(try 0.)."), "parallel_offset", &wr, this, 5.),
+                    _("Average distance to original stroke (try 0)."), "parallel_offset", &wr, this, 5.),
     tremble_size(_("Max. tremble"), 
                  _("Maximal tremble magnitude."), "tremble_size", &wr, this, 5.),
     tremble_frequency(_("Tremble frequency"), 

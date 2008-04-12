@@ -647,7 +647,8 @@ sp_selection_raise()
     }
 
     sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_RAISE,
-                     _("Raise"));
+		     //TRANSLATORS: Only put the word "Raise" in the translation. Means "to raise an object" in the undo history
+                     Q_("undo_action|Raise"));
 }
 
 void sp_selection_raise_to_top()

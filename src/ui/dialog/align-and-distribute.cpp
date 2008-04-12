@@ -463,8 +463,8 @@ public:
         removeOverlapXGap.set_value(0);
         dialog.tooltips().set_tip(removeOverlapXGap,
                                   _("Minimum horizontal gap (in px units) between bounding boxes"));
-        /* TRANSLATORS: Horizontal gap */
-        removeOverlapXGapLabel.set_label(_("H:"));
+        /* TRANSLATORS: Horizontal gap. Only put "H:" equivalent in the translation */
+        removeOverlapXGapLabel.set_label(Q_("gap|H:"));
 
         removeOverlapYGap.set_digits(1);
         removeOverlapYGap.set_size_request(60, -1);

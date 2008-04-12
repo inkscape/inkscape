@@ -1315,7 +1315,7 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     remove(fileName.c_str());
     if (!success)
     {
-        gchar *text = g_strdup_printf(_("Error exporting the document. Verify if the server name, username and password are correct. If the server have support for webdav and verify if you didn't forget to choose a license too."));
+        gchar *text = g_strdup_printf(_("Error exporting the document. Verify if the server name, username and password are correct, if the server has support for webdav and verify if you didn't forget to choose a license."));
         sp_ui_error_dialog(text);
     }
     else

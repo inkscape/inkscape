@@ -988,6 +988,7 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
                                                       ngettext("<b>Roughening %d</b> selected object",
                                                       "<b>Roughening %d</b> selected objects", num), num);
+                           break;
                         case TWEAK_MODE_COLORPAINT:
                            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
                                                       ngettext("<b>Painting %d</b> selected object",
@@ -1060,6 +1061,7 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                 case TWEAK_MODE_COLORPAINT:
                     sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
                                      SP_VERB_CONTEXT_TWEAK, _("Color paint tweak"));
+		    break;
                 case TWEAK_MODE_COLORJITTER:
                     sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
                                      SP_VERB_CONTEXT_TWEAK, _("Color jitter tweak"));

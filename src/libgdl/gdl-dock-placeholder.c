@@ -189,14 +189,14 @@ gdl_dock_placeholder_class_init (GdlDockPlaceholderClass *klass)
 	g_object_class_install_property (
         g_object_class, PROP_FLOAT_X,
         g_param_spec_int ("floatx", _("X-Coordinate"),
-                          	_("X-Coordinate fow dock when floating"),
+                          	_("X coordinate for dock when floating"),
                           	-1, G_MAXINT, -1,
                           	G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY |
                           	GDL_DOCK_PARAM_EXPORT));
 	g_object_class_install_property (
         g_object_class, PROP_FLOAT_Y,
         g_param_spec_int ("floaty", _("Y-Coordinate"),
-                          	_("Y-Coordinate fow dock when floating"),
+                          	_("Y coordinate for dock when floating"),
                           	-1, G_MAXINT, -1,
                           	G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY |
                           	GDL_DOCK_PARAM_EXPORT));

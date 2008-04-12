@@ -302,7 +302,7 @@ gdl_dock_item_class_init (GdlDockItemClass *klass)
         g_object_class, PROP_RESIZE,
         g_param_spec_boolean ("resize", _("Resizable"),
                               _("If set, the dock item can be resized when "
-                                "docked in a paned"),
+                                "docked in a panel"),
                               TRUE,
                               G_PARAM_READWRITE));
                                      

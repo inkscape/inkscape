@@ -39,7 +39,8 @@ const gchar *
 type2term(GType type)
 {
     if (type == SP_TYPE_ANCHOR)
-        { return _("Link"); }
+	// TRANSLATORS: only translate and put "Link" in the translation. It means internet link (anchor)
+        { return Q_("web|Link"); }
     if (type == SP_TYPE_CIRCLE)
         { return _("Circle"); }
     if (type == SP_TYPE_ELLIPSE)

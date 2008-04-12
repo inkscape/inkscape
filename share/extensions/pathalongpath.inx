@@ -7,15 +7,15 @@
 <_param name="title" type="description">This effect bends a pattern object along arbitrary "skeleton" paths. The pattern is the top most object in the selection. (groups of paths/shapes/clones... allowed)</_param>
 
 <param name="copymode" type="enum" _gui-text="Copies of the pattern:">
-       <item value="Single">Single</item>
-       <item value="Single, stretched">Single, stretched</item>
-       <item value="Repeated">Repeated</item>
-       <item value="Repeated, stretched">Repeated, stretched</item>
+       <_item value="Single">Single</_item>
+       <_item value="Single, stretched">Single, stretched</_item>
+       <_item value="Repeated">Repeated</_item>
+       <_item value="Repeated, stretched">Repeated, stretched</_item>
 </param>
 
 <param name="kind" type="enum" _gui-text="Deformation type:">
-       <item value="Snake">Snake</item>
-       <item value="Ribbon">Ribbon</item>
+       <_item value="Snake">Snake</_item>
+       <_item value="Ribbon">Ribbon</_item>
 </param>
 
 <param name="space"     type="float"   _gui-text="Space between copies:" min="-10000.0" max="10000.0" >0.0</param>
@@ -34,5 +34,3 @@
         <command reldir="extensions" interpreter="python">pathalongpath.py</command>
     </script>
 </inkscape-extension>
-
-    

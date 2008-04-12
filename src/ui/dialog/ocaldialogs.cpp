@@ -437,7 +437,7 @@ void FileImportFromOCALDialog::searchTagEntryChangedCallback()
 
     result = gnome_vfs_open (&from_handle, uri.c_str(), GNOME_VFS_OPEN_READ);
     if (result != GNOME_VFS_OK) {
-        sp_ui_error_dialog(_("Failed to receive the Open Clip Art Library RSS feed. Verify if the server name is correct in Configuration->Misc (e.g.: openclipart.org)"));
+        sp_ui_error_dialog(_("Failed to receive the Open Clip Art Library RSS feed. Verify if the server name is correct in Configuration->Import/Export (e.g.: openclipart.org)"));
         return;
     }
 
