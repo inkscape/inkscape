@@ -43,6 +43,7 @@
 #include "live_effects/lpe-curvestitch.h"
 #include "live_effects/lpe-circle_with_radius.h"
 #include "live_effects/lpe-perspective_path.h"
+#include "live_effects/lpe-spiro.h"
 
 #include "nodepath.h"
 
@@ -65,6 +66,7 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {CURVE_STITCH,          N_("Stitch Sub-Paths"),      "curvestitching"},
     {CIRCLE_WITH_RADIUS,    N_("Circle (center+radius)"), "circle_with_radius"},
     {PERSPECTIVE_PATH,      N_("Perspective path"),      "perspective_path"},
+    {SPIRO,      N_("Spiro spline"),      "spiro"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
@@ -107,6 +109,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case PERSPECTIVE_PATH:
             neweffect = static_cast<Effect*> ( new LPEPerspectivePath(lpeobj) );
+            break;
+        case SPIRO:
+            neweffect = static_cast<Effect*> ( new LPESpiro(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);
