@@ -3627,21 +3627,55 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
         int const snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
         /* 0 interpreted as "no snapping". */
 
-        // The closest PI/snaps angle, starting from zero.
-        double const a_snapped = floor(rnew.a/(M_PI/snaps) + 0.5) * (M_PI/snaps);
-        if (me->origin_radial.a == HUGE_VAL) {
-            // ortho doesn't exist: original handle was zero length.
-            rnew.a = a_snapped;
-        } else {
-            /* The closest PI/2 angle, starting from original angle (i.e. snapping to original,
-             * its opposite and perpendiculars). */
+        // 1. Snap to the closest PI/snaps angle, starting from zero.
+        double a_snapped = floor(rnew.a/(M_PI/snaps) + 0.5) * (M_PI/snaps);
+
+        // 2. Snap to the original angle, its opposite and perpendiculars
+        if (me->origin_radial.a != HUGE_VAL) { // otherwise ortho doesn't exist: original handle was zero length
+            /* The closest PI/2 angle, starting from original angle */
             double const a_ortho = me->origin_radial.a + floor((rnew.a - me->origin_radial.a)/(M_PI/2) + 0.5) * (M_PI/2);
 
             // Snap to the closest.
-            rnew.a = ( fabs(a_snapped - rnew.a) < fabs(a_ortho - rnew.a)
+            a_snapped = ( fabs(a_snapped - rnew.a) < fabs(a_ortho - rnew.a)
                        ? a_snapped
                        : a_ortho );
         }
+
+        // 3. Snap to the angle of the opposite line, if any
+        Inkscape::NodePath::Node *othernode = other->other;
+        if (othernode) {
+            NRPathcode const othercode = sp_node_path_code_from_side(n, other);
+            Inkscape::NodePath::NodeSide *other_to_me;
+            if (n->p.knot == knot) {
+                other_to_me = &othernode->p;
+            } else if (n->n.knot == knot) {
+                other_to_me = &othernode->n;
+            } else {
+                g_assert_not_reached();
+            }
+            bool other_is_line = (othercode == NR_LINETO) || 
+                (NR::L2(othernode->pos - other_to_me->pos) < 1e-3 &&
+                 NR::L2(n->pos - other->pos) < 1e-3);
+
+            NR::Point other_to_snap(0,0);
+            if (other_is_line) {
+                other_to_snap = othernode->pos - n->pos;
+            } else {
+                other_to_snap = other->pos - n->pos;
+            }
+            if (NR::L2(other_to_snap) > 1e-3) {
+                Radial rother_to_snap(other_to_snap);
+                /* The closest PI/2 angle, starting from the angle of the opposite line segment */
+                double const a_oppo = rother_to_snap.a + floor((rnew.a - rother_to_snap.a)/(M_PI/2) + 0.5) * (M_PI/2);
+
+                // Snap to the closest.
+                a_snapped = ( fabs(a_snapped - rnew.a) < fabs(a_oppo - rnew.a)
+                       ? a_snapped
+                       : a_oppo );
+            }
+        }
+
+        rnew.a = a_snapped;
     }
 
     if (state & GDK_MOD1_MASK) {
