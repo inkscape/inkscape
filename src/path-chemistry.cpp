@@ -73,9 +73,10 @@ sp_selected_path_combine(void)
     items = g_slist_sort(items, (GCompareFunc) sp_item_repr_compare_position);
     items = g_slist_reverse(items);
 
-    // remember the position, id and style of the topmost path, they will be assigned to the combined one
+    // remember the position, id, transform and style of the topmost path, they will be assigned to the combined one
     gint position = 0;
     char const *id = NULL;
+    char const *transform = NULL;
     gchar *style = NULL;
 
     SPCurve* curve = 0;
@@ -96,9 +97,10 @@ sp_selected_path_combine(void)
             parent = SP_OBJECT_REPR(first)->parent();
             position = SP_OBJECT_REPR(first)->position();
             id = SP_OBJECT_REPR(first)->attribute("id");
+            transform = SP_OBJECT_REPR(first)->attribute("transform");
             // FIXME: merge styles of combined objects instead of using the first one's style
             style = g_strdup(SP_OBJECT_REPR(first)->attribute("style"));
-            sp_curve_transform(c, item->transform);
+            //sp_curve_transform(c, item->transform);
             curve = c;
         } else {
             sp_curve_transform(c, item->getRelativeTransform(SP_OBJECT(first)));
@@ -128,9 +130,9 @@ sp_selected_path_combine(void)
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
-        // restore id and style
+        // restore id, transform and style
         repr->setAttribute("id", id);
-
+        if (transform) repr->setAttribute("transform", transform);
         repr->setAttribute("style", style);
         g_free(style);
 
