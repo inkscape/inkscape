@@ -8,6 +8,7 @@
  * Authors: Federico Mena <federico@nuclecu.unam.mx>
  *          Lauris Kaplinski <lauris@ariman.ee>
  *          Raph Levien <raph@acm.org>
+ *          Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
  */
 
 #include <cstring>
@@ -16,9 +17,31 @@
 #include <cstdio>
 #include <glib/gmem.h>
 #include <glib/gmessages.h>
+#include <algorithm>
 
 #include "libnr/n-art-bpath.h"
+#include "libnr/nr-point-ops.h"
 #include "gnome-canvas-bpath-util.h"
+#include "prefs-utils.h"
+
+static inline NR::Point distTo(GnomeCanvasBpathDef *bpd, size_t idx1, size_t idx2, unsigned int coord1=3, unsigned int coord2=3) {
+    NR::Point diff(bpd->bpath[idx1].c(coord1) - bpd->bpath[idx2].c(coord2));
+    return NR::Point(std::abs(diff[NR::X]), std::abs(diff[NR::Y]));
+}
+
+static bool isApproximatelyClosed(GnomeCanvasBpathDef *bpd) {
+    int const np = prefs_get_int_attribute("options.svgoutput", "numericprecision", 8);
+    double const precision = pow(10.0, -np); // This roughly corresponds to a difference below the last significant digit
+	int const initial = bpd->moveto_idx;
+	int const current = bpd->n_bpath - 1;
+	int const previous = bpd->n_bpath - 2;
+    NR::Point distToPrev(distTo(bpd, current, previous));
+    NR::Point distToInit(distTo(bpd, current, initial));
+    // NOTE: It would be better to determine the uncertainty while parsing, in rsvg_parse_path_data, but this seems to perform reasonably well
+    return
+        distToInit[NR::X] <= distToPrev[NR::X]*precision &&
+        distToInit[NR::Y] <= distToPrev[NR::Y]*precision;
+}
 
 GnomeCanvasBpathDef *
 gnome_canvas_bpath_def_new (void)
@@ -156,12 +179,19 @@ gnome_canvas_bpath_def_closepath (GnomeCanvasBpathDef *bpd)
 	n_bpath = bpd->n_bpath;
 
 	/* Add closing vector if we need it. */
-	if (bpath[n_bpath - 1].x3 != bpath[bpd->moveto_idx].x3 ||
-	    bpath[n_bpath - 1].y3 != bpath[bpd->moveto_idx].y3) {
+    if (!isApproximatelyClosed(bpd)) {
 		gnome_canvas_bpath_def_lineto (bpd, bpath[bpd->moveto_idx].x3,
 					       bpath[bpd->moveto_idx].y3);
 		bpath = bpd->bpath;
-	}
+    } else {
+        // If it is approximately closed we close it here to prevent internal logic to fail.
+        // In addition it is probably better to continue working with this end point, as it
+        // is probably more precise than the original.
+        // NOTE: At the very least sp_bpath_check_subpath will fail, but it is not unreasonable
+        // to assume that there might be more places where similar problems would occur.
+        bpath[n_bpath-1].x3 = bpath[bpd->moveto_idx].x3;
+        bpath[n_bpath-1].y3 = bpath[bpd->moveto_idx].y3;
+    }
 	bpath[bpd->moveto_idx].code = NR_MOVETO;
 	bpd->moveto_idx = -1;
 }
