@@ -2197,6 +2197,7 @@ void FilterEffectsDialog::init_settings_widgets()
 
     _settings->type(NR_FILTER_COMPONENTTRANSFER);
     _settings->add_notimplemented();
+    //TRANSLATORS: for info on "Slope" and "Intercept", see http://id.mind.net/~zona/mmts/functionInstitute/linearFunctions/lsif.html
     /*_settings->add_combo(COMPONENTTRANSFER_TYPE_IDENTITY, SP_ATTR_TYPE, _("Type"), ComponentTransferTypeConverter);
     _ct_slope = _settings->add_spinslider(SP_ATTR_SLOPE, _("Slope"), -100, 100, 1, 0.01, 1);
     _ct_intercept = _settings->add_spinslider(SP_ATTR_INTERCEPT, _("Intercept"), -100, 100, 1, 0.01, 1);
