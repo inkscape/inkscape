@@ -4,7 +4,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005-2007 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -1737,6 +1737,20 @@ bool XmppClient::saslMd5Authenticate()
         {
         delete elem;
         return true;
+        }
+    else
+        {
+        std::vector<Element *> list = elem->findElements("failure");
+        if (list.size() > 0)
+            {
+            DOMString errmsg = "";
+            Element *errmsgElem = list[0]->getFirstChild();
+            if (errmsgElem)
+                errmsg = errmsgElem->getName();
+            error("login: initial md5 authentication failed: %s", errmsg.c_str());
+            delete elem;
+            return false;
+            }
         }
     //# Continue for one more SASL cycle
     b64challenge = elem->getTagValue("challenge");
