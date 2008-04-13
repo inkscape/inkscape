@@ -331,6 +331,12 @@ DOMString Sha1::hashHex(unsigned char *dataIn, int len)
 }
 
 
+DOMString Sha1::hashHex(const DOMString &str)
+{
+    return hashHex((unsigned char *)str.c_str(), str.size());
+}
+
+
 void Sha1::init()
 {
 
@@ -350,21 +356,32 @@ void Sha1::init()
 }
 
 
+void Sha1::append(unsigned char ch)
+{
+    // Read the data into W and process blocks as they get full
+    W[lenW / 4] <<= 8;
+    W[lenW / 4] |= (unsigned long)ch;
+    if ((++lenW) % 64 == 0)
+        {
+        hashblock();
+        lenW = 0;
+        }
+    sizeLo += 8;
+    sizeHi += (sizeLo < 8);
+}
+
+
 void Sha1::append(unsigned char *dataIn, int len)
 {
     // Read the data into W and process blocks as they get full
     for (int i = 0; i < len; i++)
-        {
-        W[lenW / 4] <<= 8;
-        W[lenW / 4] |= (unsigned long)dataIn[i];
-        if ((++lenW) % 64 == 0)
-            {
-            hashblock();
-            lenW = 0;
-            }
-        sizeLo += 8;
-        sizeHi += (sizeLo < 8);
-        }
+        append(dataIn[i]);
+}
+
+
+void Sha1::append(const DOMString &str)
+{
+    append((unsigned char *)str.c_str(), str.size());
 }
 
 

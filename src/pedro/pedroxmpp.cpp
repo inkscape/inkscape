@@ -1505,7 +1505,7 @@ bool XmppClient::iqAuthenticate(const DOMString &streamId)
         //## Digest authentication
         DOMString digest = streamId;
         digest.append(password);
-        digest = Sha1::hashHex((unsigned char *)digest.c_str(), digest.size());
+        digest = Sha1::hashHex(digest);
         //printf("digest:%s\n", digest.c_str());
         fmt =
         "<iq type='set' id='auth%d'>"
@@ -1660,9 +1660,10 @@ bool XmppClient::saslMd5Authenticate()
 
     status("SASL recv nonce: '%s' realm:'%s'\n", nonce.c_str(), realm.c_str());
 
-    char idBuf[10];
-    snprintf(idBuf, 9, "%dsasl", msgId++);
-    DOMString cnonce = Sha1::hashHex((unsigned char *)idBuf, 7);
+    char idBuf[14];
+    snprintf(idBuf, 13, "%dsasl", msgId++);
+    DOMString cnonceStr = idBuf;
+    DOMString cnonce = Sha1::hashHex(cnonceStr);
     DOMString authzid = username; authzid.append("@"); authzid.append(host);
     DOMString digest_uri = "xmpp/"; digest_uri.append(host);
 
@@ -1729,7 +1730,7 @@ bool XmppClient::saslMd5Authenticate()
         return false;
 
     recbuf = readStanza();
-    status("server says:: '%s'", recbuf.c_str());
+    status("server says: '%s'", recbuf.c_str());
     elem = parser.parse(recbuf);
     //elem->print();
     //# Success or failure already?
@@ -1835,8 +1836,9 @@ bool XmppClient::saslPlainAuthenticate()
 /**
  * Handshake with SASL, and use one of its offered mechanisms to
  * authenticate.
+ * @param streamId used for iq auth fallback is SASL not supported
  */
-bool XmppClient::saslAuthenticate()
+bool XmppClient::saslAuthenticate(const DOMString &streamId)
 {
     Parser parser;
 
@@ -1921,7 +1923,10 @@ bool XmppClient::saslAuthenticate()
     ElementList elems = elem->findElements("mechanism");
     if (elems.size() < 1)
         {
-        error("login: no SASL mechanism offered by server");
+        status("login: no SASL mechanism offered by server");
+        //fall back to iq
+        if (iqAuthenticate(streamId))
+            return true;
         return false;
         }
     bool md5Found = false;
@@ -2023,7 +2028,7 @@ bool XmppClient::createSession()
         return false;
 
     DOMString recbuf = readStanza();
-    //printf("received: '%s'\n", recbuf.c_str());
+    status("RECV:  '%s'\n", recbuf.c_str());
     recbuf.append("</stream:stream>");
     Element *elem = parser.parse(recbuf);
     //elem->print();
@@ -2036,8 +2041,9 @@ bool XmppClient::createSession()
 
     if (useSasl)
         {
-        if (!saslAuthenticate())
+        if (!saslAuthenticate(streamId))
             return false;
+
         fmt =
           "<stream:stream "
           "to='%s' "

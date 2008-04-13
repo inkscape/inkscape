@@ -185,9 +185,14 @@ public:
 
     /**
      * Static convenience method.  This will fill a string with the hex
-     * codex string.
+     * coded string.
      */
     static DOMString hashHex(unsigned char *dataIn, int len);
+
+    /**
+     * Static convenience method.
+     */
+    static DOMString hashHex(const DOMString &str);
 
     /**
      *  Initialize the context (also zeroizes contents)
@@ -197,7 +202,17 @@ public:
     /**
      *
      */
+    virtual void append(unsigned char ch);
+
+    /**
+     *
+     */
     virtual void append(unsigned char *dataIn, int len);
+
+    /**
+     *
+     */
+    virtual void append(const DOMString &str);
 
     /**
      *

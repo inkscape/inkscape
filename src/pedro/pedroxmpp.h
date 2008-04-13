@@ -1130,7 +1130,7 @@ private:
 
     bool saslPlainAuthenticate();
 
-    bool saslAuthenticate();
+    bool saslAuthenticate(const DOMString &streamId);
 
     bool iqAuthenticate(const DOMString &streamId);
 
