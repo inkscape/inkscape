@@ -6,7 +6,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005-2007 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -127,6 +127,12 @@ protected:
 };
 
 
+//#Define a list of elements. (Children, search results, etc)
+class Element;
+typedef std::vector<Element *> ElementList;
+
+
+
 class Element
 {
 friend class Parser;
@@ -181,10 +187,10 @@ public:
     Element *getFirstChild()
         { return (children.size() == 0) ? NULL : children[0]; }
 
-    std::vector<Element *> getChildren()
+    ElementList getChildren()
         { return children; }
 
-    std::vector<Element *> findElements(const DOMString &name);
+    ElementList findElements(const DOMString &name);
 
     DOMString getAttribute(const DOMString &name);
 
@@ -237,7 +243,7 @@ protected:
 
     Element *parent;
 
-    std::vector<Element *>children;
+    ElementList children;
 
     std::vector<Attribute> attributes;
     std::vector<Namespace> namespaces;

@@ -4,7 +4,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005-2007 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -48,7 +48,7 @@ Element *Element::clone()
     elem->attributes = attributes;
     elem->namespaces = namespaces;
 
-    std::vector<Element *>::iterator iter;
+    ElementList::iterator iter;
     for (iter = children.begin(); iter != children.end() ; iter++)
         {
         elem->addChild((*iter)->clone());
@@ -84,7 +84,7 @@ DOMString Element::getAttribute(const DOMString &name)
 
 DOMString Element::getTagAttribute(const DOMString &tagName, const DOMString &attrName)
 {
-    std::vector<Element *>elems = findElements(tagName);
+    ElementList elems = findElements(tagName);
     if (elems.size() <1)
         return "";
     DOMString res = elems[0]->getAttribute(attrName);
@@ -93,7 +93,7 @@ DOMString Element::getTagAttribute(const DOMString &tagName, const DOMString &at
 
 DOMString Element::getTagValue(const DOMString &tagName)
 {
-    std::vector<Element *>elems = findElements(tagName);
+    ElementList elems = findElements(tagName);
     if (elems.size() <1)
         return "";
     DOMString res = elems[0]->getValue();

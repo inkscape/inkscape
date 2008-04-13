@@ -875,7 +875,7 @@ static bool isGroupChat(Element *root)
 {
     if (!root)
         return false;
-    std::vector<Element *>elems = root->findElements("x");
+    ElementList elems = root->findElements("x");
     for (unsigned int i=0 ; i<elems.size() ; i++)
         {
         DOMString xmlns = elems[i]->getAttribute("xmlns");
@@ -1107,7 +1107,7 @@ bool XmppClient::processIq(Element *root)
     if (root->getTagAttribute("query", "xmlns") == "jabber:iq:roster")
         {
         roster.clear();
-        std::vector<Element *>elems = root->findElements("item");
+        ElementList elems = root->findElements("item");
         for (unsigned int i=0 ; i<elems.size() ; i++)
             {
             Element *item = elems[i];
@@ -1131,7 +1131,7 @@ bool XmppClient::processIq(Element *root)
 
     else if (id.find("regpass") != id.npos)
         {
-        std::vector<Element *> list = root->findElements("error");
+        ElementList list = root->findElements("error");
         if (list.size()==0)
             {
             XmppEvent evt(XmppEvent::EVENT_REGISTRATION_CHANGE_PASS);
@@ -1167,7 +1167,7 @@ bool XmppClient::processIq(Element *root)
 
     else if (id.find("regcancel") != id.npos)
         {
-        std::vector<Element *> list = root->findElements("error");
+        ElementList list = root->findElements("error");
         if (list.size()==0)
             {
             XmppEvent evt(XmppEvent::EVENT_REGISTRATION_CANCEL);
@@ -1236,7 +1236,7 @@ bool XmppClient::receiveAndProcess()
         }
 
     //#### MESSAGE
-    std::vector<Element *>elems = root->findElements("message");
+    ElementList elems = root->findElements("message");
     if (elems.size()>0)
         {
         if (!processMessage(root))
@@ -1336,7 +1336,7 @@ bool XmppClient::inBandRegistrationNew()
     //elem->print();
 
     //# does the entity send the newer "instructions" tag?
-    std::vector<Element *> fields = elem->findElements("field");
+    ElementList fields = elem->findElements("field");
     std::vector<DOMString> fnames;
     for (unsigned int i=0; i<fields.size() ; i++)
         {
@@ -1380,7 +1380,7 @@ bool XmppClient::inBandRegistrationNew()
     elem = parser.parse(recbuf);
     //elem->print();
 
-    std::vector<Element *> list = elem->findElements("error");
+    ElementList list = elem->findElements("error");
     if (list.size()>0)
         {
         Element *errElem = list[0];
@@ -1732,7 +1732,7 @@ bool XmppClient::saslMd5Authenticate()
     status("server says:: '%s'", recbuf.c_str());
     elem = parser.parse(recbuf);
     //elem->print();
-    //# Early success?
+    //# Success or failure already?
     if (elem->findElements("success").size() > 0)
         {
         delete elem;
@@ -1740,7 +1740,7 @@ bool XmppClient::saslMd5Authenticate()
         }
     else
         {
-        std::vector<Element *> list = elem->findElements("failure");
+        ElementList list = elem->findElements("failure");
         if (list.size() > 0)
             {
             DOMString errmsg = "";
@@ -1918,8 +1918,7 @@ bool XmppClient::saslAuthenticate()
         }
 
     //check for sasl authentication mechanisms
-    std::vector<Element *> elems =
-               elem->findElements("mechanism");
+    ElementList elems = elem->findElements("mechanism");
     if (elems.size() < 1)
         {
         error("login: no SASL mechanism offered by server");
