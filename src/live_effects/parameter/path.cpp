@@ -361,7 +361,6 @@ PathParam::on_paste_button_click()
     signal_path_pasted.emit();
     sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
                      _("Paste path parameter"));
-    }
 }
 
 void
