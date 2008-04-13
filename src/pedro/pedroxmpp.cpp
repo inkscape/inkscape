@@ -1474,6 +1474,8 @@ bool XmppClient::inBandRegistrationCancel()
 //# A U T H E N T I C A T E
 //########################################################################
 
+
+
 bool XmppClient::iqAuthenticate(const DOMString &streamId)
 {
     Parser parser;
@@ -1486,7 +1488,7 @@ bool XmppClient::iqAuthenticate(const DOMString &streamId)
         return false;
 
     DOMString recbuf = readStanza();
-    //printf("iq received: '%s'\n", recbuf.c_str());
+    status("iq auth recv: '%s'\n", recbuf.c_str());
     Element *elem = parser.parse(recbuf);
     //elem->print();
     DOMString iqType = elem->getTagAttribute("iq", "type");
@@ -1537,7 +1539,7 @@ bool XmppClient::iqAuthenticate(const DOMString &streamId)
         }
 
     recbuf = readStanza();
-    //printf("iq received: '%s'\n", recbuf.c_str());
+    status("iq auth recv:  '%s'\n", recbuf.c_str());
     elem = parser.parse(recbuf);
     //elem->print();
     iqType = elem->getTagAttribute("iq", "type");
