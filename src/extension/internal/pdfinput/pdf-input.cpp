@@ -51,6 +51,7 @@ namespace Internal {
 
 static const gchar * crop_setting_choices[] = {
 	//TRANSLATORS: The following are document crop settings for PDF import
+	// more info: http://www.acrobatusers.com/tech_corners/javascript_corner/tips/2006/page_bounds/
     N_("media box"),
     N_("crop box"),
     N_("trim box"),
