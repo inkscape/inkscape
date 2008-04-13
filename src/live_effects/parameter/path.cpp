@@ -60,7 +60,6 @@ PathParam::PathParam( const Glib::ustring& label, const Glib::ustring& tip,
     oncanvas_editable = true;
 
     ref_changed_connection = ref.changedSignal().connect(sigc::mem_fun(*this, &PathParam::ref_changed));
-
 }
 
 PathParam::~PathParam()
@@ -355,19 +354,13 @@ PathParam::on_paste_button_click()
     if (svgd == "")
         return;
 
-    // Temporary hack until 2Geom supports arcs in SVGD
-    if (svgd.find('A') != Glib::ustring::npos) {
-        SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
-                    _("This effect does not support arcs yet, try to convert to path.") );
-        return;
-    } else {
-        // remove possible link to path
-        remove_link();
+    // remove possible link to path
+    remove_link();
 
-        param_write_to_repr(svgd.data());
-        signal_path_pasted.emit();
-        sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
-                         _("Paste path parameter"));
+    param_write_to_repr(svgd.data());
+    signal_path_pasted.emit();
+    sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
+                     _("Paste path parameter"));
     }
 }
 
