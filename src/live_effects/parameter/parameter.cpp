@@ -28,13 +28,13 @@ namespace LivePathEffect {
 Parameter::Parameter( const Glib::ustring& label, const Glib::ustring& tip,
                       const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
                       Effect* effect )
-    : oncanvas_editable(false)
+    : param_key(key),
+      param_wr(wr),
+      param_label(label),
+      oncanvas_editable(false),
+      param_tooltip(tip),
+      param_effect(effect)
 {
-    param_label = label;
-    param_tooltip = tip;
-    param_key = key;
-    param_wr = wr;
-    param_effect = effect;
 }
 
 
@@ -50,16 +50,16 @@ Parameter::param_write_to_repr(const char * svgd)
 ScalarParam::ScalarParam( const Glib::ustring& label, const Glib::ustring& tip,
                       const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
                       Effect* effect, gdouble default_value)
-    : Parameter(label, tip, key, wr, effect)
+    : Parameter(label, tip, key, wr, effect),
+      value(default_value),
+      min(-NR_HUGE),
+      max(NR_HUGE),
+      integer(false),
+      defvalue(default_value),
+      digits(2),
+      inc_step(0.1),
+      inc_page(1)
 {
-    defvalue = default_value;
-    value = defvalue;
-    min = -NR_HUGE;
-    max = NR_HUGE;
-    integer = false;
-    inc_step = 0.1;
-    inc_page = 1;
-    digits = 2;
 }
 
 ScalarParam::~ScalarParam()
