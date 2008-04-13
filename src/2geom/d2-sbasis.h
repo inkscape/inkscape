@@ -39,9 +39,9 @@ Piecewise<SBasis> cross(Piecewise<D2<SBasis> > const &a, Piecewise<D2<SBasis> > 
 
 Piecewise<D2<SBasis> > operator*(Piecewise<D2<SBasis> > const &a, Matrix const &m);
 
-Piecewise<D2<SBasis> > force_continuity(Piecewise<D2<SBasis> > const &f, 
-                                        double tol=0,
-                                        bool closed=false);
+Piecewise<D2<SBasis> > force_continuity(Piecewise<D2<SBasis> > const &f, double tol=0, bool closed=false);
+
+std::vector<Geom::Piecewise<Geom::D2<Geom::SBasis> > > split_at_discontinuities (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwsbin, double tol = .0001);
 
 class CoordIterator
 : public std::iterator<std::input_iterator_tag, SBasis const>
