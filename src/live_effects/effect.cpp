@@ -127,10 +127,10 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
 }
 
 Effect::Effect(LivePathEffectObject *lpeobject)
-    : concatenate_before_pwd2(false)
+    : oncanvasedit_it(0),
+      lpeobj(lpeobject),
+      concatenate_before_pwd2(false)
 {
-    lpeobj = lpeobject;
-    oncanvasedit_it = 0;
 }
 
 Effect::~Effect()
