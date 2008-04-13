@@ -799,7 +799,7 @@ DOMString XmppClient::readStanza()
                     }
                 else
                     {
-                    error("socket read error");
+                    error("socket read error: %s", sock->getLastError().c_str());
                     disconnect();
                     return "";
                     }
@@ -1299,7 +1299,7 @@ bool XmppClient::write(char *fmt, ...)
     status("SEND: %s", buffer);
     if (!sock->write(buffer))
         {
-        error("Cannot write to socket");
+        error("Cannot write to socket: %s", sock->getLastError().c_str());
         rc = false;
         }
     g_free(buffer);
@@ -1881,7 +1881,8 @@ bool XmppClient::saslAuthenticate(const DOMString &streamId)
         delete elem;
         if (!sock->startTls())
             {
-            error("Could not start TLS");
+            DOMString tcperr = sock->getLastError();
+            error("Could not start TLS: %s", tcperr.c_str());
             disconnect();
             return false;
             }
@@ -2011,6 +2012,7 @@ bool XmppClient::createSession()
         sock->enableSSL(true);
     if (!sock->connect(host, port))
         {
+        error("Cannot connect:%s", sock->getLastError().c_str());
         return false;
         }
 

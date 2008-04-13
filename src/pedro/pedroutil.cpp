@@ -890,6 +890,8 @@ TcpSocket::TcpSocket(const std::string &hostnameArg, int port)
 }
 
 
+
+
 #ifdef HAVE_SSL
 
 static void cryptoLockCallback(int mode, int type, const char *file, int line)
@@ -950,9 +952,9 @@ static void cryptoLockCallback(int mode, int type, const char *file, int line)
     err:
     if (errstr)
         {
-        /* we cannot use bio_err here */
-        fprintf(stderr, "openssl (lock_dbg_cb): %s (mode=%d, type=%d) at %s:%d\n",
-                errstr, mode, type, file, line);
+        //how do we pass a context pointer here?
+        //error("openssl (lock_dbg_cb): %s (mode=%d, type=%d) at %s:%d",
+        //        errstr, mode, type, file, line);
         }
 }
 
@@ -976,6 +978,27 @@ TcpSocket::TcpSocket(const TcpSocket &other)
     hostname  = other.hostname;
     portno    = other.portno;
 }
+
+
+void TcpSocket::error(char *fmt, ...)
+{
+    static char buf[256];
+    lastError = "TcpSocket err: ";
+    va_list args;
+    va_start(args, fmt);
+    vsnprintf(buf, 255, fmt, args);
+    va_end(args);
+    lastError.append(buf);
+    fprintf(stderr, "%s\n", lastError.c_str());
+}
+
+
+DOMString &TcpSocket::getLastError()
+{
+    return lastError;
+}
+
+
 
 static bool tcp_socket_inited = false;
 
@@ -1092,17 +1115,15 @@ static void infoCallback(const SSL *ssl, int where, int ret)
 bool TcpSocket::startTls()
 {
 #ifndef HAVE_SSL
-    fprintf(stderr,
-	    "SSL starttls() error:  client not compiled with SSL enabled\n");
+    error("SSL starttls() error:  client not compiled with SSL enabled");
     return false;
 #else /*HAVE_SSL*/
     if (!libssl_is_present)
-    {
-    fprintf(stderr,
-	    "SSL starttls() error:  the correct version of libssl was not found \n");
-    return false;
-    } else {
-	    
+        {
+        error("SSL starttls() error:  the correct version of libssl was not found");
+        return false;
+        }
+
     sslStream  = NULL;
     sslContext = NULL;
 
@@ -1151,21 +1172,20 @@ bool TcpSocket::startTls()
     int ret = SSL_connect(sslStream);
     if (ret == 0)
         {
-        fprintf(stderr, "SSL connection not successful\n");
+        error("SSL connection not successful");
         disconnect();
         return false;
         }
     else if (ret < 0)
         {
         int err = SSL_get_error(sslStream, ret);
-        fprintf(stderr, "SSL connect error %d\n", err);
+        error("SSL connect error %d", err);
         disconnect();
         return false;
         }
 
     sslEnabled = true;
     return true;
-    }
 #endif /* HAVE_SSL */
 }
 
@@ -1174,20 +1194,20 @@ bool TcpSocket::connect()
 {
     if (hostname.size()<1)
         {
-        fprintf(stderr, "open: null hostname\n");
+        error("open: null hostname");
         return false;
         }
 
     if (portno<1)
         {
-        fprintf(stderr, "open: bad port number\n");
+        error("open: bad port number");
         return false;
         }
 
     sock = socket(PF_INET, SOCK_STREAM, 0);
     if (sock < 0)
         {
-        fprintf(stderr, "open: error creating socket\n");
+        error("open: error creating socket");
         return false;
         }
 
@@ -1195,7 +1215,7 @@ bool TcpSocket::connect()
     struct hostent *server = gethostbyname(c_hostname);
     if (!server)
         {
-        fprintf(stderr, "open: could not locate host '%s'\n", c_hostname);
+        error("open: could not locate host '%s'", c_hostname);
         return false;
         }
 
@@ -1209,7 +1229,7 @@ bool TcpSocket::connect()
     int ret = ::connect(sock, (const sockaddr *)&serv_addr, sizeof(serv_addr));
     if (ret < 0)
         {
-        fprintf(stderr, "open: could not connect to host '%s'\n", c_hostname);
+        error("open: could not connect to host '%s'", c_hostname);
         return false;
         }
 
@@ -1241,7 +1261,7 @@ bool TcpSocket::disconnect()
                 case 0:
                 case -1:
                 default:
-                    //printf("Shutdown failed");
+                    error("Shutdown failed");
                     ret = false;
                 }
             SSL_free(sslStream);
@@ -1293,10 +1313,10 @@ long TcpSocket::available()
     if (count<=0 && sslEnabled)
         {
 #ifdef HAVE_SSL
-	if (libssl_is_present)
-	{
+	    if (libssl_is_present)
+	        {
             return SSL_pending(sslStream);
-	}
+	        }
 #endif
         }
     return count;
@@ -1308,7 +1328,7 @@ bool TcpSocket::write(int ch)
 {
     if (!isConnected())
         {
-        fprintf(stderr, "write: socket closed\n");
+        error("write: socket closed");
         return false;
         }
     unsigned char c = (unsigned char)ch;
@@ -1324,7 +1344,7 @@ bool TcpSocket::write(int ch)
             switch(SSL_get_error(sslStream, r))
                 {
                 default:
-                    fprintf(stderr, "SSL write problem");
+                    error("SSL write problem");
                     return -1;
                 }
             }
@@ -1336,7 +1356,7 @@ bool TcpSocket::write(int ch)
         if (send(sock, (const char *)&c, 1, 0) < 0)
         //if (send(sock, &c, 1, 0) < 0)
             {
-            fprintf(stderr, "write: could not send data\n");
+            error("write: could not send data");
             return false;
             }
         }
@@ -1347,7 +1367,7 @@ bool TcpSocket::write(char *str)
 {
    if (!isConnected())
         {
-        fprintf(stderr, "write(str): socket closed\n");
+        error("write(str): socket closed");
         return false;
         }
     int len = strlen(str);
@@ -1363,7 +1383,7 @@ bool TcpSocket::write(char *str)
             switch(SSL_get_error(sslStream, r))
                 {
                 default:
-                    fprintf(stderr, "SSL write problem");
+                    error("SSL write problem");
                     return -1;
                 }
             }
@@ -1375,7 +1395,7 @@ bool TcpSocket::write(char *str)
         if (send(sock, str, len, 0) < 0)
         //if (send(sock, &c, 1, 0) < 0)
             {
-            fprintf(stderr, "write: could not send data\n");
+            error("write: could not send data");
             return false;
             }
         }
@@ -1430,11 +1450,11 @@ int TcpSocket::read()
             case SSL_ERROR_ZERO_RETURN:
                 return -1;
             case SSL_ERROR_SYSCALL:
-                fprintf(stderr, "SSL read problem(syscall) %s\n",
+                error("SSL read problem(syscall) %s",
                      ERR_error_string(ERR_get_error(), NULL));
                 return -1;
             default:
-                fprintf(stderr, "SSL read problem %s\n",
+                error("SSL read problem %s",
                      ERR_error_string(ERR_get_error(), NULL));
                 return -1;
             }
@@ -1445,7 +1465,7 @@ int TcpSocket::read()
         {
         if (recv(sock, (char *)&ch, 1, 0) <= 0)
             {
-            fprintf(stderr, "read: could not receive data\n");
+            error("read: could not receive data");
             disconnect();
             return -1;
             }

@@ -24,6 +24,7 @@
  */
 
 #include <stdio.h>
+#include <stdarg.h>
 #include <vector>
 
 #include <string>
@@ -467,6 +468,10 @@ public:
     TcpSocket(const TcpSocket &other);
 
     virtual ~TcpSocket();
+    
+    void error(char *fmt, ...);
+    
+    DOMString &getLastError();
 
     bool isConnected();
 
@@ -503,6 +508,8 @@ public:
 private:
     void init();
 
+    DOMString lastError;
+
     std::string hostname;
     int  portno;
     int  sock;
@@ -511,6 +518,7 @@ private:
     bool sslEnabled;
 
     unsigned long receiveTimeout;
+    
 
 #ifdef HAVE_SSL
     SSL_CTX *sslContext;
