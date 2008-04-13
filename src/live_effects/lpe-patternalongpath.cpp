@@ -88,31 +88,6 @@ LPEPatternAlongPath::~LPEPatternAlongPath()
 
 }
 
-
-//TODO: does this already exist in 2Geom? if not, move this there...
-static
-std::vector<Geom::Piecewise<Geom::D2<Geom::SBasis> > > 
-split_at_discontinuities (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwsbin, double tol = .0001)
-{
-    using namespace Geom;
-    std::vector<Piecewise<D2<SBasis> > > ret;
-    unsigned piece_start = 0;
-    for (unsigned i=0; i<pwsbin.segs.size(); i++){
-        if (i==(pwsbin.segs.size()-1) || L2(pwsbin.segs[i].at1()- pwsbin.segs[i+1].at0()) > tol){
-            Piecewise<D2<SBasis> > piece;
-            piece.cuts.push_back(pwsbin.cuts[piece_start]);
-            for (unsigned j = piece_start; j<i+1; j++){
-                piece.segs.push_back(pwsbin.segs[j]);
-                piece.cuts.push_back(pwsbin.cuts[j+1]);                
-            }
-            ret.push_back(piece);
-            piece_start = i+1;
-        }
-    }
-    return ret;
-}
-
-
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPEPatternAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 {
