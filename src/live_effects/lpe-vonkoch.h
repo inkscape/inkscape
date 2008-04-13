@@ -15,7 +15,7 @@
 #include "live_effects/parameter/enum.h"
 #include "live_effects/parameter/bool.h"
 
-#include "live_effects/n-art-bpath-2geom.h"
+#include "libnr/n-art-bpath-2geom.h"
 
 // needed for on-canvas editting:
 #include "tools-switch.h"

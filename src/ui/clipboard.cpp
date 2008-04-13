@@ -69,7 +69,7 @@
 #include "text-context.h"
 #include "text-editing.h"
 #include "tools-switch.h"
-#include "live_effects/n-art-bpath-2geom.h"
+#include "libnr/n-art-bpath-2geom.h"
 #include "path-chemistry.h"
 
 /// @brief Made up mimetype to represent Gdk::Pixbuf clipboard contents

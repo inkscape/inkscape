@@ -18,7 +18,7 @@
 #include <libnr/n-art-bpath.h>
 #include "sp-item.h"
 #include "sp-path.h"
-#include "live_effects/n-art-bpath-2geom.h"
+#include "libnr/n-art-bpath-2geom.h"
 #include "xml/repr.h"
 
 #include <2geom/path.h>

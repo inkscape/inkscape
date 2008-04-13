@@ -15,7 +15,7 @@
 #include "libnr/nr-path.h"
 #include "libnr/nr-rect-ops.h"
 #include "libnr/nr-point-fns.h"
-#include "live_effects/n-art-bpath-2geom.h"
+#include "libnr/n-art-bpath-2geom.h"
 #include "2geom/path-intersection.h"
 #include "document.h"
 #include "sp-namedview.h"

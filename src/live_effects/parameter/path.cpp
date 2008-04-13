@@ -8,7 +8,7 @@
 
 #include "live_effects/parameter/path.h"
 #include "live_effects/effect.h"
-#include "live_effects/n-art-bpath-2geom.h"
+#include "libnr/n-art-bpath-2geom.h"
 #include "svg/svg.h"
 #include <2geom/svg-path-parser.h>
 #include <2geom/sbasis-to-bezier.h>

@@ -10,7 +10,7 @@
 #include "sp-shape.h"
 #include "display/curve.h"
 #include <libnr/n-art-bpath.h>
-#include "live_effects/n-art-bpath-2geom.h"
+#include "libnr/n-art-bpath-2geom.h"
 #include "svg/svg.h"
 #include "ui/widget/scalar.h"
 

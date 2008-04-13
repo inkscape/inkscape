@@ -21,7 +21,7 @@
 #include "live_effects/lpeobject.h"
 #include "live_effects/parameter/parameter.h"
 #include <glibmm/ustring.h>
-#include "live_effects/n-art-bpath-2geom.h"
+#include "libnr/n-art-bpath-2geom.h"
 #include "display/curve.h"
 #include <gtkmm.h>
 
