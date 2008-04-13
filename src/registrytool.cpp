@@ -167,8 +167,8 @@ void testReg()
     RegistryTool rt;
     char *key =
     "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\inkscape.exe";
-    char *name  = "";
-    char *value = "c:\\inkscape\\inkscape.exe";
+    char const *name  = "";
+    char const *value = "c:\\inkscape\\inkscape.exe";
     if (!rt.setStringValue(key, name, value))
         {
         printf("Test failed\n");

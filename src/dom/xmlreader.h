@@ -87,7 +87,7 @@ private:
 
     int  get(int ch);
     int  peek(int ch);
-    bool match(int pos, char *str);
+    bool match(int pos, char const *str);
 
     int  skipwhite(int ch);
     int  getWord(int pos, DOMString &result);

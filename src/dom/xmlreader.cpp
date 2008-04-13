@@ -156,7 +156,7 @@ int XmlReader::peek(int p)
  *  Test if the given substring exists at the given position
  *  in parsebuf.  Use peek() in case of out-of-bounds
  */
-bool XmlReader::match(int pos, char *str)
+bool XmlReader::match(int pos, char const *str)
 {
     while (*str)
        {
