@@ -221,29 +221,7 @@ void Path::check_continuity(Sequence::iterator first_replaced,
   }
 }
 
-Rect SVGEllipticalArc::boundsFast() const {
-    throwNotImplemented();
-}
-Rect SVGEllipticalArc::boundsExact() const {
-    throwNotImplemented();
-}
-Rect SVGEllipticalArc::boundsLocal(Interval i, unsigned deg) const {
-    throwNotImplemented();
-}
-
-std::vector<Point> SVGEllipticalArc::pointAndDerivatives(Coord t, unsigned n) const {
-    throwNotImplemented();
-}
-
-std::vector<double> SVGEllipticalArc::roots(double v, Dim2 d) const {
-    throwNotImplemented();
-}
-
-D2<SBasis> SVGEllipticalArc::toSBasis() const {
-    return D2<SBasis>(Linear(initial_[X], final_[X]), Linear(initial_[Y], final_[Y]));
-}
-
-}
+} // end namespace Geom
 
 /*
   Local Variables:

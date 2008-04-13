@@ -1,7 +1,11 @@
 /*
  * Path - Series of continuous curves
  *
- * Copyright 2007  MenTaLguY <mental@rydia.net>
+ * Authors:
+ * 		MenTaLguY <mental@rydia.net>
+ * 		Marco Cecchetti <mrcekets at gmail.com>
+ * 
+ * Copyright 2007-2008  authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -31,6 +35,7 @@
 #define SEEN_GEOM_PATH_H
 
 #include "point.h"
+#include "angle.h"
 #include <iterator>
 #include <algorithm>
 #include "exception.h"
@@ -264,84 +269,222 @@ typedef BezierCurve<1> LineSegment;
 typedef BezierCurve<2> QuadraticBezier;
 typedef BezierCurve<3> CubicBezier;
 
-class SVGEllipticalArc : public Curve {
-public:
-  SVGEllipticalArc() {}
 
-  SVGEllipticalArc(Point initial, double rx, double ry,
-                   double x_axis_rotation, bool large_arc,
-                   bool sweep, Point final)
-  : initial_(initial), rx_(rx), ry_(ry), x_axis_rotation_(x_axis_rotation),
-    large_arc_(large_arc), sweep_(sweep), final_(final)
-  {}
 
-  Curve *duplicate() const { return new SVGEllipticalArc(*this); }
 
-  Point initialPoint() const { return initial_; }
-  Point finalPoint() const { return final_; }
+class SVGEllipticalArc : public Curve
+{
+  public:
+	SVGEllipticalArc()
+	{}
+	
+    SVGEllipticalArc( Point _initial_point, double _rx, double _ry,
+                      double _rot_angle, bool _large_arc, bool _sweep,
+                      Point _final_point
+                    )
+        : m_initial_point(_initial_point), m_final_point(_final_point),
+          m_rx(_rx), m_ry(_ry), m_rot_angle(_rot_angle),
+          m_large_arc(_large_arc), m_sweep(_sweep)
+    {
+        //assert( (ray(X) >= 0) && (ray(Y) >= 0) );
+        if ( are_near(initialPoint(), finalPoint()) )
+        {
+            m_start_angle = m_end_angle = 0;
+            m_center = initialPoint();
+        }
+        else
+        {
+            calculate_center_and_extreme_angles();
+        }
+    }
+	  
+	Curve* duplicate() const
+	{
+		return new SVGEllipticalArc(*this);
+	}
+	
+    double center(Dim2 i) const
+    {
+        return m_center[i];
+    }
 
-  void setInitial(Point v) { initial_ = v; }
-  void setFinal(Point v) { final_ = v; }
+    Point center() const
+    {
+        return m_center;
+    }
 
-  //TODO: implement funcs
+    Point initialPoint() const
+    {
+        return m_initial_point;
+    }
 
-  bool isDegenerate() const { return toSBasis().isConstant(); }
-  Rect boundsFast() const;
-  Rect boundsExact() const;
-  Rect boundsLocal(Interval i, unsigned deg) const;
+    Point finalPoint() const
+    {
+        return m_final_point;
+    }
 
-  int winding(Point p) const {
-    return SBasisCurve(toSBasis()).winding(p);
-  }
+    double start_angle() const
+    {
+        return m_start_angle;
+    }
 
-  std::vector<double> roots(double v, Dim2 d) const;
+    double end_angle() const
+    {
+        return m_end_angle;
+    }
 
-  inline std::pair<SVGEllipticalArc, SVGEllipticalArc>
-  subdivide(Coord t) {
-    SVGEllipticalArc a(*this), b(*this);
-    a.final_ = b.initial_ = pointAt(t);
-    return std::pair<SVGEllipticalArc, SVGEllipticalArc>(a, b);
-  }
+    double ray(Dim2 i) const
+    {
+        return (i == 0) ? m_rx : m_ry;
+    }
 
-// TODO: how are the flags affected by reducing an arc from more than 180deg to less than 180deg?
-  Curve *portion(double f, double t) const {
-    SVGEllipticalArc *ret = new SVGEllipticalArc (*this);
-    ret->initial_ = pointAt(f);
-    ret->final_ = pointAt(t);
-    return ret;
-  }
+    bool large_arc_flag() const
+    {
+        return m_large_arc;
+    }
 
-// TODO: incomplete/buggy
-  Curve *reverse(double /*f*/, double /*t*/) const {
-    SVGEllipticalArc *ret = new SVGEllipticalArc (*this);
-    ret->initial_ = final_;
-    ret->final_ = initial_;
-    return ret;
-  }
+    bool sweep_flag() const
+    {
+        return m_sweep;
+    }
 
-  //TODO: this next def isn't right
-  Curve *transformed(Matrix const & m) const {
-    SVGEllipticalArc *ret = new SVGEllipticalArc (*this);
-    ret->initial_ = initial_ * m;
-    ret->final_ = final_ * m;
-    return ret;
-  }
+    double rotation_angle() const
+    {
+        return m_rot_angle;
+    }
 
-  Curve *derivative() const { throwNotImplemented(); }
+    void setInitial( const Point _point)
+    {
+        m_initial_point = _point;
+        calculate_center_and_extreme_angles();
+    }
 
-  std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const;
+    void setFinal( const Point _point)
+    {
+        m_final_point = _point;
+        calculate_center_and_extreme_angles();
+    }
 
-  D2<SBasis> toSBasis() const;
+    void setExtremes( const Point& _initial_point, const Point& _final_point )
+    {
+        m_initial_point = _initial_point;
+        m_final_point = _final_point;
+        calculate_center_and_extreme_angles();
+    }
 
-private:
-  Point initial_;
-  double rx_;
-  double ry_;
-  double x_axis_rotation_;
-  bool large_arc_;
-  bool sweep_;
-  Point final_;
-};
+    bool isDegenerate() const
+    {
+        return are_near(initialPoint(), finalPoint());
+    }
+    
+    // TODO: native implementation of the following methods
+    Rect boundsFast() const
+    {
+    	return SBasisCurve(toSBasis()).boundsFast();
+    }
+  
+    Rect boundsExact() const
+    {
+    	return SBasisCurve(toSBasis()).boundsExact();
+    }
+    
+    Rect boundsLocal(Interval i, unsigned int deg) const
+    {
+    	return SBasisCurve(toSBasis()).boundsLocal(i, deg);
+    }
+    
+    std::vector<double> roots(double v, Dim2 d) const
+    {
+    	return SBasisCurve(toSBasis()).roots(v, d);
+    }
+    
+    int winding(Point p) const
+    {
+    	return SBasisCurve(toSBasis()).winding(p);
+    }
+    
+    Curve *derivative() const
+    {
+    	return SBasisCurve(toSBasis()).derivative();
+    }
+    
+    Curve *transformed(Matrix const &m) const
+    {
+    	return SBasisCurve(toSBasis()).transformed(m);
+    }
+    
+    std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const
+    {
+    	return SBasisCurve(toSBasis()).pointAndDerivatives(t, n);
+    }
+    
+    D2<SBasis> toSBasis() const;
+    
+    double valueAt(Coord t, Dim2 d) const;
+
+    Point pointAt(Coord t) const
+    {
+        Coord tt = from_01_to_02PI(t);
+        double sin_rot_angle = std::sin(rotation_angle());
+        double cos_rot_angle = std::cos(rotation_angle());
+        Matrix m( ray(X) * cos_rot_angle, ray(X) * sin_rot_angle,
+                 -ray(Y) * sin_rot_angle, ray(Y) * cos_rot_angle,
+                  center(X),              center(Y) );
+        Point p( std::cos(tt), std::sin(tt) );
+        return p * m;
+    }
+
+    std::pair<SVGEllipticalArc, SVGEllipticalArc>
+    subdivide(Coord t) const
+    {
+        SVGEllipticalArc* arc1 = static_cast<SVGEllipticalArc*>(portion(0, t));
+        SVGEllipticalArc* arc2 = static_cast<SVGEllipticalArc*>(portion(t, 1));
+        assert( arc1 != NULL && arc2 != NULL);
+        std::pair<SVGEllipticalArc, SVGEllipticalArc> arc_pair(*arc1, *arc2);        
+        delete arc1;
+        delete arc2;
+        return arc_pair;
+    }
+
+    Curve* portion(double f, double t) const;
+    
+    // the arc is the same but traversed in the opposite direction
+    Curve* reverse() const
+    {
+        SVGEllipticalArc* rarc = new SVGEllipticalArc( *this );
+        rarc->m_sweep = !m_sweep;
+        rarc->m_initial_point = m_final_point;
+        rarc->m_final_point = m_initial_point;
+        rarc->m_start_angle = m_end_angle;
+        rarc->m_end_angle = m_start_angle;
+        return rarc;
+    }
+
+  private:
+    double sweep_angle() const
+    {
+        Coord d = end_angle() - start_angle();
+        if ( !sweep_flag() ) d = -d;
+        if ( d < 0 )
+            d += 2*M_PI;
+        return d;
+    }
+
+    Coord from_01_to_02PI(Coord t) const;
+
+    void calculate_center_and_extreme_angles();
+    
+  private:
+    Point m_initial_point, m_final_point;
+    double m_rx, m_ry, m_rot_angle;
+    bool m_large_arc, m_sweep;
+    double m_start_angle, m_end_angle;
+    Point m_center;
+    
+}; // end class SVGEllipticalArc
+
+
+
 
 template <typename IteratorImpl>
 class BaseIterator
