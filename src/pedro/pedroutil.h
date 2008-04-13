@@ -227,21 +227,27 @@ private:
 //########################################################################
 //########################################################################
 
+
 /**
+ * This is a utility version of a simple MD5 hash algorithm.  This is
+ * neither efficient nor fast.  It is intended to be a small simple utility
+ * for hashing small amounts of data in a non-time-critical place.
  *
+ * Note that this is a rewrite whose purpose is to remove any
+ * machine dependencies.
  */
 class Md5
 {
 public:
 
     /**
-     *
+     * Constructor
      */
     Md5()
         { init(); }
 
     /**
-     *
+     * Destructor
      */
     virtual ~Md5()
         {}
@@ -253,25 +259,35 @@ public:
     static void hash(unsigned char *dataIn,
                      unsigned long len, unsigned char *digest);
 
+    /**
+     * Static convenience method.
+     * Hash a byte array of a given length
+     */
     static DOMString hashHex(unsigned char *dataIn, unsigned long len);
+
+    /**
+     * Static convenience method.
+     * Hash a String
+     */
+    static DOMString hashHex(const DOMString &str);
 
     /**
      *  Initialize the context (also zeroizes contents)
      */
     virtual void init();
 
-    /**
-     *
+    /*
+     * Update with one character
      */
-    virtual void append(unsigned char dataIn);
+    virtual void append(unsigned char ch);
 
     /**
-     *
+     * Update with a byte buffer of a given length
      */
     virtual void append(unsigned char *dataIn, unsigned long len);
 
     /**
-     *
+     * Update with a string
      */
     virtual void append(const DOMString &str);
 
@@ -289,15 +305,18 @@ public:
 
 private:
 
-    void transform(unsigned long *buf, unsigned long *in);
+    void transform();
 
-    unsigned long buf[4];
-    unsigned long bits[2];
-    unsigned char in[64];
+    unsigned long hashBuf[4];
+    unsigned long inBuf[16];
+    unsigned long nrBytesHi;
+    unsigned long nrBytesLo;
+
+    unsigned long inb[4];  // Buffer for input bytes as longs
+    int           byteNr;  // which byte in long
+    int           longNr;  // which long in 8 long segment
 
 };
-
-
 
 
 
