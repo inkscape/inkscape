@@ -2108,8 +2108,12 @@ sp_style_set_ipaint_to_uri(SPStyle *style, SPIPaint *paint, const Inkscape::URI 
 static void
 sp_style_set_ipaint_to_uri_string (SPStyle *style, SPIPaint *paint, const gchar *uri)
 {
-    const Inkscape::URI IURI(uri);
-    sp_style_set_ipaint_to_uri(style, paint, &IURI, style->document);
+    try {
+        const Inkscape::URI IURI(uri);
+        sp_style_set_ipaint_to_uri(style, paint, &IURI, style->document);
+    } catch (...) {
+        g_warning("URI failed to parse: %s", uri);
+    }
 }
 
 void
