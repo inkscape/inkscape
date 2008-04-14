@@ -17,6 +17,8 @@ endif
 libnr_libnr_a_SOURCES =	\
 	libnr/in-svg-plane.h	\
 	libnr/n-art-bpath.h	\
+	libnr/n-art-bpath-2geom.cpp \
+	libnr/n-art-bpath-2geom.h \
 	libnr/nr-blit.cpp	\
 	libnr/nr-blit.h	\
 	libnr/nr-compose-transform.cpp	\
