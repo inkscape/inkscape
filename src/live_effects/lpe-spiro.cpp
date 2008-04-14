@@ -84,6 +84,11 @@ LPESpiro::~LPESpiro()
 }
 
 void
+LPESpiro::setup_nodepath(Inkscape::NodePath::Path *np)
+{
+} 
+
+void
 LPESpiro::doEffect(SPCurve * curve)
 {
     SPCurve *csrc = sp_curve_copy(curve);

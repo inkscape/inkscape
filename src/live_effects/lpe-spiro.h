@@ -22,6 +22,7 @@ public:
     LPESpiro(LivePathEffectObject *lpeobject);
     virtual ~LPESpiro();
 
+    virtual void setup_nodepath(Inkscape::NodePath::Path *np);
     virtual void doEffect(SPCurve * curve);
 
 private:
