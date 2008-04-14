@@ -18,6 +18,7 @@
 #include "libnr/n-art-bpath-2geom.h"
 #include "svg/svg.h"
 #include "ui/widget/scalar.h"
+#include "nodepath.h"
 
 #include <2geom/sbasis.h>
 #include <2geom/sbasis-geometric.h>
@@ -41,7 +42,7 @@ void
 VonKochPathParam::param_setup_nodepath(Inkscape::NodePath::Path *np)
 {  
     PathParam::param_setup_nodepath(np);
-    np->straight_path = true;
+    sp_nodepath_make_straight_path(np);
 }
 
 static const Util::EnumData<VonKochRefType> VonKochRefTypeData[VKREF_END] = {
