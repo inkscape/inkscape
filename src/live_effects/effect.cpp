@@ -396,7 +396,6 @@ Effect::resetDefaults(SPItem * /*item*/)
 void
 Effect::setup_nodepath(Inkscape::NodePath::Path *np)
 {
-    np->show_helperpath = true;
     np->helperpath_rgba = 0xff0000ff;
     np->helperpath_width = 1.0;
 }
