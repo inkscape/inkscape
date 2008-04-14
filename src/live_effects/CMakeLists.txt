@@ -27,7 +27,5 @@ lpe-test-doEffect-stack.cpp
 lpe-test-doEffect-stack.h
 lpe-vonkoch.cpp
 lpe-vonkoch.h
-n-art-bpath-2geom.cpp
-n-art-bpath-2geom.h
 )
 

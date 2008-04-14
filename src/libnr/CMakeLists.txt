@@ -3,6 +3,8 @@ in-svg-plane.h
 #in-svg-plane-test.cpp
 #in-svg-plane-test.h
 n-art-bpath.h
+n-art-bpath-2geom.cpp
+n-art-bpath-2geom.h
 nr-blit.cpp
 nr-blit.h
 nr-compose.cpp
