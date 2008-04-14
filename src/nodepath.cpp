@@ -970,9 +970,6 @@ static Inkscape::NodePath::Node *sp_nodepath_set_node_type(Inkscape::NodePath::N
     g_assert(node);
     g_assert(node->subpath);
 
-    if (type == static_cast<Inkscape::NodePath::NodeType>(static_cast< guint >(node->type) ) )
-        return node;
-
     if ((node->p.other != NULL) && (node->n.other != NULL)) {
         if ((node->code == NR_LINETO) && (node->n.other->code == NR_LINETO)) {
             type =Inkscape::NodePath::NODE_CUSP;
@@ -1007,48 +1004,157 @@ static Inkscape::NodePath::Node *sp_nodepath_set_node_type(Inkscape::NodePath::N
     return node;
 }
 
+bool
+sp_node_side_is_line (Inkscape::NodePath::Node *node, Inkscape::NodePath::NodeSide *side)
+{
+        Inkscape::NodePath::Node *othernode = side->other;
+        if (!othernode)
+            return false;
+        NRPathcode const code = sp_node_path_code_from_side(node, side);
+        if (code == NR_LINETO)
+            return true;
+        Inkscape::NodePath::NodeSide *other_to_me = NULL;
+        if (&node->p == side) {
+            other_to_me = &othernode->n;
+        } else if (&node->n == side) {
+            other_to_me = &othernode->p;
+        } 
+        if (!other_to_me)
+            return false;
+        bool is_line = 
+             (NR::L2(othernode->pos - other_to_me->pos) < 1e-6 &&
+              NR::L2(node->pos - side->pos) < 1e-6);
+        return is_line;
+}
+
 /**
- * Same as sp_nodepath_set_node_type(), but also converts, if necessary,
- * adjacent segments from lines to curves.
+ * Same as sp_nodepath_set_node_type(), but also converts, if necessary, adjacent segments from
+ * lines to curves.  If adjacent to one line segment, pulls out or rotates opposite handle to align
+ * with that segment, procucing half-smooth node. If already half-smooth, pull out the second handle too. 
+ * If already cusp and set to cusp, retracts handles.
 */
 void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::NodePath::NodeType type)
 {
-    bool p_line = (node->p.other != NULL) && (node->code == NR_LINETO || node->pos == node->p.pos);
-    bool n_line = (node->n.other != NULL) && (node->n.other->code == NR_LINETO || node->pos == node->n.pos);
-
     if (type == Inkscape::NodePath::NODE_SYMM || type == Inkscape::NodePath::NODE_SMOOTH) {
-        if (p_line && n_line) {
-            // only if both adjacent segments are lines,
-            // convert both to curves:
 
-            node->code = NR_CURVETO;
-            node->n.other->code = NR_CURVETO;
-
-            NR::Point leg_prev = node->pos - node->p.other->pos;
-            NR::Point leg_next = node->pos - node->n.other->pos;
-
-            double norm_leg_prev = L2(leg_prev);
-            double norm_leg_next = L2(leg_next);
-
-            // delta has length 1 and is orthogonal to bisecting line
-            NR::Point delta;
-            if (norm_leg_next > 0.0) {
-                delta = (norm_leg_prev / norm_leg_next) * leg_next - leg_prev;
-                (&delta)->normalize();
-            }
-
-            if (type == Inkscape::NodePath::NODE_SYMM) {
-                double norm_leg_avg = (norm_leg_prev + norm_leg_next) / 2;
-                node->p.pos = node->pos + 0.3 * norm_leg_avg * delta;
-                node->n.pos = node->pos - 0.3 * norm_leg_avg * delta;
+/* 
+  Here's the algorithm of converting node to smooth (Shift+S or toolbar button), in pseudocode:
+ 
+        if (two_handles) {
+            // do nothing, adjust_handles called via set_node_type will line them up
+        } else if (one_handle) {
+            if (opposite_to_handle_is_line) {
+                if (lined_up) {
+                    // already half-smooth; pull opposite handle too making it fully smooth
+                } else {
+                    // do nothing, adjust_handles will line the handle  up, producing a half-smooth node
+                }
             } else {
-                // length of handle is proportional to distance to adjacent node
-                node->p.pos = node->pos + 0.3 * norm_leg_prev * delta;
-                node->n.pos = node->pos - 0.3 * norm_leg_next * delta;
+                // pull opposite handle in line with the existing one
             }
-
-            sp_node_update_handles(node);
+        } else if (no_handles) {
+            if (both_segments_are_lines OR both_segments_are_curves) {
+                //pull both handles
+            } else {
+                // pull the handle opposite to line segment, making node half-smooth
+            }
         }
+*/
+        bool p_has_handle = (NR::L2(node->pos  - node->p.pos) > 1e-6);
+        bool n_has_handle = (NR::L2(node->pos  - node->n.pos) > 1e-6);
+        bool p_is_line = sp_node_side_is_line(node, &node->p);
+        bool n_is_line = sp_node_side_is_line(node, &node->n);
+
+        if (p_has_handle && n_has_handle) {
+            // do nothing, adjust_handles will line them up
+        } else if (p_has_handle || n_has_handle) {
+            if (p_has_handle && n_is_line) {
+                Radial line (node->n.other->pos - node->pos);
+                Radial handle (node->pos - node->p.pos);
+                if (fabs(line.a - handle.a) < 1e-3) { // lined up
+                    // already half-smooth; pull opposite handle too making it fully smooth
+                    node->n.pos = node->pos + (node->n.other->pos - node->pos) / 3;
+                } else {
+                    // do nothing, adjust_handles will line the handle  up, producing a half-smooth node
+                }
+            } else if (n_has_handle && p_is_line) {
+                Radial line (node->p.other->pos - node->pos);
+                Radial handle (node->pos - node->n.pos);
+                if (fabs(line.a - handle.a) < 1e-3) { // lined up
+                    // already half-smooth; pull opposite handle too making it fully smooth
+                    node->p.pos = node->pos + (node->p.other->pos - node->pos) / 3;
+                } else {
+                    // do nothing, adjust_handles will line the handle  up, producing a half-smooth node
+                }
+            } else if (p_has_handle && node->n.other) {
+                // pull n handle
+                node->n.other->code = NR_CURVETO;
+                double len =  (type == Inkscape::NodePath::NODE_SYMM)?
+                    NR::L2(node->p.pos - node->pos) :
+                    NR::L2(node->n.other->pos - node->pos) / 3;
+                node->n.pos = node->pos - (len / NR::L2(node->p.pos - node->pos)) * (node->p.pos - node->pos);
+            } else if (n_has_handle && node->p.other) {
+                // pull p handle
+                node->code = NR_CURVETO;
+                double len =  (type == Inkscape::NodePath::NODE_SYMM)?
+                    NR::L2(node->n.pos - node->pos) :
+                    NR::L2(node->p.other->pos - node->pos) / 3;
+                node->p.pos = node->pos - (len / NR::L2(node->n.pos - node->pos)) * (node->n.pos - node->pos);
+            }
+        } else if (!p_has_handle && !n_has_handle) {
+            if ((p_is_line && n_is_line) || (!p_is_line && node->p.other && !n_is_line && node->n.other)) {
+                // no handles, but both segments are either lnes or curves:
+                //pull both handles
+
+                // convert both to curves:
+                node->code = NR_CURVETO;
+                node->n.other->code = NR_CURVETO;
+
+                NR::Point leg_prev = node->pos - node->p.other->pos;
+                NR::Point leg_next = node->pos - node->n.other->pos;
+
+                double norm_leg_prev = L2(leg_prev);
+                double norm_leg_next = L2(leg_next);
+
+                NR::Point delta;
+                if (norm_leg_next > 0.0) {
+                    delta = (norm_leg_prev / norm_leg_next) * leg_next - leg_prev;
+                    (&delta)->normalize();
+                }
+
+                if (type == Inkscape::NodePath::NODE_SYMM) {
+                    double norm_leg_avg = (norm_leg_prev + norm_leg_next) / 2;
+                    node->p.pos = node->pos + 0.3 * norm_leg_avg * delta;
+                    node->n.pos = node->pos - 0.3 * norm_leg_avg * delta;
+                } else {
+                    // length of handle is proportional to distance to adjacent node
+                    node->p.pos = node->pos + 0.3 * norm_leg_prev * delta;
+                    node->n.pos = node->pos - 0.3 * norm_leg_next * delta;
+                }
+
+            } else {
+                // pull the handle opposite to line segment, making it half-smooth
+                if (p_is_line && node->n.other) {
+                    if (type != Inkscape::NodePath::NODE_SYMM) {
+                        // pull n handle
+                        node->n.other->code = NR_CURVETO;
+                        double len =  NR::L2(node->n.other->pos - node->pos) / 3;
+                        node->n.pos = node->pos + (len / NR::L2(node->p.other->pos - node->pos)) * (node->p.other->pos - node->pos);
+                    }
+                } else if (n_is_line && node->p.other) {
+                    if (type != Inkscape::NodePath::NODE_SYMM) {
+                        // pull p handle
+                        node->code = NR_CURVETO;
+                        double len =  NR::L2(node->p.other->pos - node->pos) / 3;
+                        node->p.pos = node->pos + (len / NR::L2(node->n.other->pos - node->pos)) * (node->n.other->pos - node->pos);
+                    }
+                }
+            }
+        }
+    } else if (type == Inkscape::NodePath::NODE_CUSP && node->type == Inkscape::NodePath::NODE_CUSP) {
+        // cusping a cusp: retract nodes
+        node->p.pos = node->pos;
+        node->n.pos = node->pos;
     }
 
     sp_nodepath_set_node_type (node, type);
@@ -2215,8 +2321,10 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
             //if these nodes are smooth or symmetrical, the endpoints will be thrown out of sync.
             //make sure these nodes are changed to cusp nodes so that, once the endpoints are moved,
             //the resulting nodes behave as expected.
-            sp_nodepath_convert_node_type(sample_cursor, Inkscape::NodePath::NODE_CUSP);
-            sp_nodepath_convert_node_type(sample_end, Inkscape::NodePath::NODE_CUSP);
+            if (sample_cursor->type != Inkscape::NodePath::NODE_CUSP)
+                sp_nodepath_convert_node_type(sample_cursor, Inkscape::NodePath::NODE_CUSP);
+            if (sample_end->type != Inkscape::NodePath::NODE_CUSP)
+                sp_nodepath_convert_node_type(sample_end, Inkscape::NodePath::NODE_CUSP);
 
             //adjust endpoints
             sample_cursor->n.pos = bez[1];
@@ -2965,53 +3073,41 @@ void restore_nodepath_selection(Inkscape::NodePath::Path *nodepath, GList *r)
             }
         }
     }
-
 }
+
 
 /**
 \brief Adjusts handle according to node type and line code.
 */
 static void sp_node_adjust_handle(Inkscape::NodePath::Node *node, gint which_adjust)
 {
-    double len, otherlen, linelen;
-
     g_assert(node);
 
    Inkscape::NodePath::NodeSide *me = sp_node_get_side(node, which_adjust);
    Inkscape::NodePath::NodeSide *other = sp_node_opposite_side(node, me);
 
-    /** \todo fixme: */
+   // nothing to do if we are an end node
     if (me->other == NULL) return;
     if (other->other == NULL) return;
 
-    /* I have line */
-
-    NRPathcode mecode, ocode;
-    if (which_adjust == 1) {
-        mecode = (NRPathcode)me->other->code;
-        ocode = (NRPathcode)node->code;
-    } else {
-        mecode = (NRPathcode)node->code;
-        ocode = (NRPathcode)other->other->code;
-    }
-
-    if (mecode == NR_LINETO) return;
-
-    /* I am curve */
-
-    if (other->other == NULL) return;
-
-    /* Other has line */
-
+    // nothing to do if we are a cusp node
     if (node->type == Inkscape::NodePath::NODE_CUSP) return;
 
-    NR::Point delta;
-    if (ocode == NR_LINETO) {
-        /* other is lineto, we are either smooth or symm */
+    // nothing to do if it's a line from the specified side of the node (i.e. no handle to adjust)
+    NRPathcode mecode;
+    if (which_adjust == 1) {
+        mecode = (NRPathcode)me->other->code;
+    } else {
+        mecode = (NRPathcode)node->code;
+    }
+    if (mecode == NR_LINETO) return;
+
+    if (sp_node_side_is_line(node, other)) {
+        // other is a line, and we are either smooth or symm
        Inkscape::NodePath::Node *othernode = other->other;
-        len = NR::L2(me->pos - node->pos);
-        delta = node->pos - othernode->pos;
-        linelen = NR::L2(delta);
+        double len = NR::L2(me->pos - node->pos);
+        NR::Point delta = node->pos - othernode->pos;
+        double linelen = NR::L2(delta);
         if (linelen < 1e-18)
             return;
         me->pos = node->pos + (len / linelen)*delta;
@@ -3019,19 +3115,17 @@ static void sp_node_adjust_handle(Inkscape::NodePath::Node *node, gint which_adj
     }
 
     if (node->type == Inkscape::NodePath::NODE_SYMM) {
-
+        // symmetrize 
         me->pos = 2 * node->pos - other->pos;
         return;
+    } else {
+        // smoothify
+        double len = NR::L2(me->pos - node->pos);
+        NR::Point delta = other->pos - node->pos;
+        double otherlen = NR::L2(delta);
+        if (otherlen < 1e-18) return;
+        me->pos = node->pos - (len / otherlen) * delta;
     }
-
-    /* We are smooth */
-
-    len = NR::L2(me->pos - node->pos);
-    delta = other->pos - node->pos;
-    otherlen = NR::L2(delta);
-    if (otherlen < 1e-18) return;
-
-    me->pos = node->pos - (len / otherlen) * delta;
 }
 
 /**
@@ -3046,17 +3140,14 @@ static void sp_node_adjust_handles(Inkscape::NodePath::Node *node)
     /* we are either smooth or symm */
 
     if (node->p.other == NULL) return;
-
     if (node->n.other == NULL) return;
 
-    if (node->code == NR_LINETO) {
-        if (node->n.other->code == NR_LINETO) return;
+    if (sp_node_side_is_line(node, &node->p)) {
         sp_node_adjust_handle(node, 1);
         return;
     }
 
-    if (node->n.other->code == NR_LINETO) {
-        if (node->code == NR_LINETO) return;
+    if (sp_node_side_is_line(node, &node->n)) {
         sp_node_adjust_handle(node, -1);
         return;
     }
@@ -3568,25 +3659,30 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint /*state*/,
         g_assert_not_reached();
     }
 
-    NRPathcode const othercode = sp_node_path_code_from_side(n, opposite);
-
     SnapManager const &m = n->subpath->nodepath->desktop->namedview->snap_manager;
     Inkscape::SnappedPoint s ;
-    if (opposite->other && (n->type != Inkscape::NodePath::NODE_CUSP) && (othercode == NR_LINETO)) {
-        /* We are smooth node adjacent with line */
-        NR::Point const delta = *p - n->pos;
-        NR::Coord const len = NR::L2(delta);
-        Inkscape::NodePath::Node *othernode = opposite->other;
-        NR::Point const ndelta = n->pos - othernode->pos;
-        NR::Coord const linelen = NR::L2(ndelta);
-        if (len > NR_EPSILON && linelen > NR_EPSILON) {
-            NR::Coord const scal = dot(delta, ndelta) / linelen;
-            (*p) = n->pos + (scal / linelen) * ndelta;
+
+    Inkscape::NodePath::Node *othernode = opposite->other;
+    if (othernode) {
+        if ((n->type != Inkscape::NodePath::NODE_CUSP) && sp_node_side_is_line(n, opposite)) {
+            /* We are smooth node adjacent with line */
+            NR::Point const delta = *p - n->pos;
+            NR::Coord const len = NR::L2(delta);
+            Inkscape::NodePath::Node *othernode = opposite->other;
+            NR::Point const ndelta = n->pos - othernode->pos;
+            NR::Coord const linelen = NR::L2(ndelta);
+            if (len > NR_EPSILON && linelen > NR_EPSILON) {
+                NR::Coord const scal = dot(delta, ndelta) / linelen;
+                (*p) = n->pos + (scal / linelen) * ndelta;
+            }
+            s = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, Inkscape::Snapper::ConstraintLine(*p, ndelta), n->subpath->nodepath->item);
+        } else {
+            s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, n->subpath->nodepath->item);
         }
-        s = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, Inkscape::Snapper::ConstraintLine(*p, ndelta), n->subpath->nodepath->item);
     } else {
         s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, n->subpath->nodepath->item);
     }
+
     *p = s.getPoint();
     if (s.getSnapped()) {
         n->subpath->nodepath->desktop->snapindicator->set_new_snappoint(s);
@@ -3644,21 +3740,8 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
         // 3. Snap to the angle of the opposite line, if any
         Inkscape::NodePath::Node *othernode = other->other;
         if (othernode) {
-            NRPathcode const othercode = sp_node_path_code_from_side(n, other);
-            Inkscape::NodePath::NodeSide *other_to_me;
-            if (n->p.knot == knot) {
-                other_to_me = &othernode->p;
-            } else if (n->n.knot == knot) {
-                other_to_me = &othernode->n;
-            } else {
-                g_assert_not_reached();
-            }
-            bool other_is_line = (othercode == NR_LINETO) || 
-                (NR::L2(othernode->pos - other_to_me->pos) < 1e-3 &&
-                 NR::L2(n->pos - other->pos) < 1e-3);
-
             NR::Point other_to_snap(0,0);
-            if (other_is_line) {
+            if (sp_node_side_is_line(n, other)) {
                 other_to_snap = othernode->pos - n->pos;
             } else {
                 other_to_snap = other->pos - n->pos;
