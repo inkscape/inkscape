@@ -308,6 +308,7 @@ NR::Maybe<NR::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *no
 
 void sp_nodepath_show_handles(Inkscape::NodePath::Path *nodepath, bool show);
 void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *nodepath, bool show);
+void sp_nodepath_make_straight_path(Inkscape::NodePath::Path *np);
 
 void sp_nodepath_selected_nodes_rotate (Inkscape::NodePath::Path * nodepath, gdouble angle, int which, bool screen);
 

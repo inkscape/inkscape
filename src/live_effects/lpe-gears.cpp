@@ -265,7 +265,7 @@ void
 LPEGears::setup_nodepath(Inkscape::NodePath::Path *np)
 {
     Effect::setup_nodepath(np);
-    np->straight_path = true;
+    sp_nodepath_make_straight_path(np);
 }
 
 } // namespace LivePathEffect
