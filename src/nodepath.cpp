@@ -4738,13 +4738,17 @@ void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *np, bool show) {
     }
 }
 
-/* this function does not work yet */
+/* sp_nodepath_make_straight_path:
+ *   Prevents user from curving the path by dragging a segment or activating handles etc.
+ *   The resulting path is a linear interpolation between nodal points, with only straight segments.
+ * !!! this function does not work completely yet: it does not actively straighten the path, only prevents the path from being curved
+ */
 void sp_nodepath_make_straight_path(Inkscape::NodePath::Path *np) {
     np->straight_path = true;
     np->show_handles = false;
     g_message("add code to make the path straight.");
     // do sp_nodepath_convert_node_type on all nodes?
-    // search for this text !!!   "Make selected segments lines"
+    // coding tip: search for this text : "Make selected segments lines"
 }
 
 

@@ -88,7 +88,7 @@ LPEBendPath::doBeforeEffect (SPLPEItem *lpeitem)
 
         using namespace Geom;
         Piecewise<D2<SBasis> > pwd2;
-        std::vector<Geom::Path> temppath;  
+        std::vector<Geom::Path> temppath;
 
         recursive_original_bbox(SP_GROUP(lpeitem), pwd2, temppath);
 
@@ -99,7 +99,7 @@ LPEBendPath::doBeforeEffect (SPLPEItem *lpeitem)
         D2<Piecewise<SBasis> > d2pw = make_cuts_independant(pwd2);
         boundingbox_X = bounds_exact(d2pw[0]);
         boundingbox_Y = bounds_exact(d2pw[1]);
-    }    
+    }
 
 }
 
@@ -119,7 +119,7 @@ LPEBendPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
     Piecewise<SBasis> x = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[1]) : Piecewise<SBasis>(patternd2[0]);
     Piecewise<SBasis> y = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[0]) : Piecewise<SBasis>(patternd2[1]);
 
-//We use the group bounding box size or the path bbox size to translate well x and y 
+//We use the group bounding box size or the path bbox size to translate well x and y
     if(groupSpecialBehavior == false)
     {
         boundingbox_X = bounds_exact(x);
@@ -153,7 +153,7 @@ LPEBendPath::resetDefaults(SPItem * item)
         // set the bend path to run horizontally in the middle of the bounding box of the original path
         using namespace Geom;
         Piecewise<D2<SBasis> > pwd2;
-        std::vector<Geom::Path> temppath;        
+        std::vector<Geom::Path> temppath;
 
         if (SP_IS_PATH(item))
         {
@@ -165,27 +165,25 @@ LPEBendPath::resetDefaults(SPItem * item)
             recursive_original_bbox(SP_GROUP(item), pwd2, temppath);
         }
 
-    for (unsigned int i=0; i < temppath.size(); i++) {
-        pwd2.concat( temppath[i].toPwSb() );
+        for (unsigned int i=0; i < temppath.size(); i++) {
+            pwd2.concat( temppath[i].toPwSb() );
         }
 
-    D2<Piecewise<SBasis> > d2pw = make_cuts_independant(pwd2);
-    boundingbox_X = bounds_exact(d2pw[0]);
-    boundingbox_Y = bounds_exact(d2pw[1]);
+        D2<Piecewise<SBasis> > d2pw = make_cuts_independant(pwd2);
+        boundingbox_X = bounds_exact(d2pw[0]);
+        boundingbox_Y = bounds_exact(d2pw[1]);
 
+        Point start(boundingbox_X.min(), (boundingbox_Y.max()+boundingbox_Y.min())/2);
+        Point end(boundingbox_X.max(), (boundingbox_Y.max()+boundingbox_Y.min())/2);
 
-    Point start(boundingbox_X.min(), (boundingbox_Y.max()+boundingbox_Y.min())/2);
-    Point end(boundingbox_X.max(), (boundingbox_Y.max()+boundingbox_Y.min())/2);
+        if ( Geom::are_near(start,end) ) {
+           end += Point(1.,0.);
+        }
 
-    if ( Geom::are_near(start,end) ) {
-       end += Point(1.,0.);
-       }
-    Geom::Path path;
-    path.start( start );
-    path.appendNew<Geom::LineSegment>( end );
-    bend_path.param_set_and_write_new_value( path.toPwSb() );
-
-
+        Geom::Path path;
+        path.start( start );
+        path.appendNew<Geom::LineSegment>( end );
+        bend_path.param_set_and_write_new_value( path.toPwSb() );
     }
 }
 
