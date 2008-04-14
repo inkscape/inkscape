@@ -7,6 +7,7 @@
 #include "live_effects/lpe-spiro.h"
 #include "display/curve.h"
 #include <libnr/n-art-bpath.h>
+#include "nodepath.h"
 
 #include "live_effects/bezctx.h"
 #include "live_effects/bezctx_intf.h"
@@ -86,7 +87,9 @@ LPESpiro::~LPESpiro()
 void
 LPESpiro::setup_nodepath(Inkscape::NodePath::Path *np)
 {
-} 
+    sp_nodepath_show_handles(np, false);
+    sp_nodepath_show_helperpath(np, false);
+}
 
 void
 LPESpiro::doEffect(SPCurve * curve)
