@@ -1582,7 +1582,7 @@ sp_style_merge_paint_prop_from_dying_parent(SPStyle *style,
      * I haven't given this much attention.  See comments below about
      * currentColor, colorProfile, and relative URIs.
      */
-    if (!child.set || child.inherit || child.currentcolor) {
+    if (!child.set || child.inherit) {
         sp_style_merge_ipaint(style, &child, &parent);
         child.set = parent.set;
         child.inherit = parent.inherit;
@@ -2146,6 +2146,8 @@ sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent)
         }
     } else if ( parent->isColor() ) {
         paint->setColor( parent->value.color );
+    } else if ( parent->isNoneSet() ) {
+        paint->noneSet = TRUE;
     } else if ( parent->isNone() ) {
         //
     } else {
