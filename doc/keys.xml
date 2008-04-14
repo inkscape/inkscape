@@ -756,7 +756,10 @@ groups) with the same effect as Alt+click.)</note>
 <group>
 <title>Change node type</title>
 <keys><key><shift/>C</key>  <action>make cusp</action></keys>
+<note>First Shift+C changes type of node; if you do another Shift+C on an already cusp node, it retracts its handles</note>
 <keys><key><shift/>S</key>  <action>make smooth</action></keys>
+<note>If a cusp node is adjacent to a line segment, first Shift+S makes it half-smooth with one handle collinear 
+with the segment; another Shift+S will expand a second handle</note>
 <keys><key><shift/>Y</key>  <action>make symmetric</action></keys>
 <note>When making smooth or symmetric, you can lock the position of one of the handles by hovering mouse over it.</note>
 <mouse><key><ctrl/><left-click/></key> <action>toggle smooth/cusp/symmetric</action></mouse>
