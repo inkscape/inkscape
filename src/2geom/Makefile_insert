@@ -75,6 +75,7 @@
 	2geom/solve-bezier-parametric.cpp	\
 	2geom/solver.h	\
 	2geom/sturm.h	\
+	2geom/svg-elliptical-arc.cpp \
 	2geom/svg-path.cpp	\
 	2geom/svg-path.h	\
 	2geom/svg-path-parser.cpp	\
