@@ -11,8 +11,8 @@ class C(coloreffect.ColorEffect):
   def colmod(self,r,g,b):
     this_color = '%02x%02x%02x' % (r, g, b)
 
-    fr = self.options.from_color.strip('"').replace('#', '')
-    to = self.options.to_color.strip('"').replace('#', '')
+    fr = self.options.from_color.strip('"').replace('#', '').lower()
+    to = self.options.to_color.strip('"').replace('#', '').lower()
        
     #inkex.debug(this_color+"|"+fr+"|"+to)
     if this_color == fr:

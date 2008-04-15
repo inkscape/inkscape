@@ -128,6 +128,11 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
         param = new ParamFloat(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     } else if (!strcmp(type, "string")) {
         param = new ParamString(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
+        const gchar * max_length = in_repr->attribute("max_length");
+        if (max_length != NULL) {
+        	ParamString * ps = dynamic_cast<ParamString *>(param);
+        	ps->setMaxLength(atoi(max_length));
+        }
     } else if (!strcmp(type, "description")) {
         param = new ParamDescription(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     } else if (!strcmp(type, "enum")) {

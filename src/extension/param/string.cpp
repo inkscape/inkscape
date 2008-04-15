@@ -84,11 +84,13 @@ ParamString::ParamString (const gchar * name, const gchar * guitext, const gchar
         defaultval = paramval;
     if (defaultval != NULL)
         _value = g_strdup(defaultval);
+    
+    _max_length = 0;
 
     return;
 }
 
-/** \brief  A special category of Gtk::Entry to handle string parameteres */
+/** \brief  A special type of Gtk::Entry to handle string parameteres */
 class ParamStringEntry : public Gtk::Entry {
 private:
     ParamString * _pref;
@@ -104,6 +106,7 @@ public:
         Gtk::Entry(), _pref(pref), _doc(doc), _node(node), _changeSignal(changeSignal) {
         if (_pref->get(NULL, NULL) != NULL)
             this->set_text(Glib::ustring(_pref->get(NULL, NULL)));
+        this->set_max_length(_pref->getMaxLength()); //Set the max lenght - default zero means no maximum
         this->signal_changed().connect(sigc::mem_fun(this, &ParamStringEntry::changed_text));
     };
     void changed_text (void);

@@ -21,6 +21,9 @@ private:
     /** \brief  Internal value.  This should point to a string that has
                 been allocated in memory.  And should be free'd. */
     gchar * _value;
+    /** \brief Internal value. This indicates the maximum leght of the string. Zero meaning unlimited. 
+      */
+    gint _max_length;
 public:
     ParamString(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     virtual ~ParamString(void);
@@ -29,6 +32,8 @@ public:
     const gchar * set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     void string (std::string &string);
+    void setMaxLength(int maxLenght) { _max_length = maxLenght; }
+    int getMaxLength(void) { return _max_length; }
 };
 
 
