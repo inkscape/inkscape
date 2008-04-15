@@ -54,6 +54,8 @@ LPEPerspectivePath::LPEPerspectivePath(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&offsety) );
     registerParameter( dynamic_cast<Parameter *>(&uses_plane_xy) );
 
+    concatenate_before_pwd2 = true; // don't split the path into its subpaths
+
     Persp3D *persp = persp3d_document_first_persp(inkscape_active_document());
 
     Proj::TransfMat3x4 pmat = persp->tmat;
