@@ -53,7 +53,7 @@
 #include "sp-paint-server.h"
 #include "inkscape_version.h"
 
-#include "FontFactory.h"
+#include "libnrtype/FontFactory.h"
 #include "libnrtype/font-instance.h"
 #include "libnrtype/font-style-to-pos.h"
 

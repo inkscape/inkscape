@@ -52,7 +52,7 @@
 #include "sp-mask.h"
 #include "sp-clippath.h"
 #ifdef WIN32
-#include "FontFactory.h" // USE_PANGO_WIN32
+#include "libnrtype/FontFactory.h" // USE_PANGO_WIN32
 #endif
 
 #include <unit-constants.h>
