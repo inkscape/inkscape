@@ -22,7 +22,7 @@
 #include "document.h"
 
 #include "win32.h"
-#include "system.h"
+#include "extension/system.h"
 #include "extension/print.h"
 #include <gtk/gtk.h>
 
