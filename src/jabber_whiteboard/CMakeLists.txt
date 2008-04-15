@@ -19,10 +19,10 @@ message-tags.h
 message-utilities.cpp
 message-utilities.h
 message-verifier.h
-node-tracker.cpp
-node-tracker.h
-node-utilities.cpp
-node-utilities.h
+#node-tracker.cpp
+#node-tracker.h
+#node-utilities.cpp
+#node-utilities.h
 pedrogui.cpp
 pedrogui.h
 session-file-selector.cpp

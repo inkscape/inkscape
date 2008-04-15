@@ -11,7 +11,7 @@ resource.cpp
 resource.h
 simple-sax.cpp
 simple-sax.h
-streamtest.cpp
+#streamtest.cpp
 stringstream.cpp
 stringstream.h
 sys.cpp

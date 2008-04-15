@@ -22,12 +22,12 @@ node-observer.h
 pi-node.h
 quote.cpp
 quote.h
-quote-test.cpp
-quote-test.h
+#quote-test.cpp
+#quote-test.h
 repr.cpp
 repr.h
-repr-action-test.cpp
-repr-action-test.h
+#repr-action-test.cpp
+#repr-action-test.h
 repr-css.cpp
 repr-io.cpp
 repr-sorting.cpp
