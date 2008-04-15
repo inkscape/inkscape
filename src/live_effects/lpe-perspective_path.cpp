@@ -28,6 +28,7 @@
 #include "live_effects/lpe-perspective_path.h"
 #include "display/curve.h"
 #include <libnr/n-art-bpath.h>
+#include "sp-item-group.h"
 
 #include "inkscape.h"
 
@@ -58,12 +59,25 @@ LPEPerspectivePath::LPEPerspectivePath(LivePathEffectObject *lpeobject) :
     Proj::TransfMat3x4 pmat = persp->tmat;
 
     pmat.copy_tmat(tmat);
+    
+    groupSpecialBehavior = false;
 }
 
 LPEPerspectivePath::~LPEPerspectivePath()
 {
 
 }
+
+void
+LPEPerspectivePath::doBeforeEffect (SPLPEItem *lpeitem)
+{
+    if(SP_IS_GROUP(lpeitem))
+    {
+        groupSpecialBehavior = true;
+        original_bbox(lpeitem);
+    }    
+}
+
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPEPerspectivePath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
@@ -79,15 +93,18 @@ LPEPerspectivePath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > cons
     D2<Piecewise<SBasis> > B = make_cuts_independant(path_a_pw);
     Piecewise<SBasis> preimage[4];
 
-    Geom::Interval bounds_X = bounds_fast(pwd2_in)[0];
-    Geom::Interval bounds_Y = bounds_fast(pwd2_in)[1];
+    if(!groupSpecialBehavior)
+    {
+        boundingbox_X = bounds_fast(pwd2_in)[0];
+        boundingbox_Y = bounds_fast(pwd2_in)[1];
+    }
 
-    Geom::Point orig = Geom::Point(uses_plane_xy ? bounds_X.max() : bounds_X.min(),
-                                   bounds_Y.middle());
+    Geom::Point orig = Geom::Point(uses_plane_xy ? boundingbox_X.max() : boundingbox_X.min(),
+                                   boundingbox_Y.middle());
     //Geom::Point orig = Geom::Point(bounds_X.min(), bounds_Y.middle());
     //orig = Geom::Point(orig[X], sp_document_height(inkscape_active_document()) - orig[Y]);
 
-    double offset = uses_plane_xy ? bounds_X.extent() : 0.0;
+    //double offset = uses_plane_xy ? boundingbox_X.extent() : 0.0;
 
     /**
     g_print ("Orig: (%8.2f, %8.2f)\n", orig[X], orig[Y]);

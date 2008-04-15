@@ -28,7 +28,7 @@ namespace Inkscape {
 namespace LivePathEffect {
 
 //for Bend path on group : we need information concerning the group Bounding box
-class LPEBendPath : public Effect, LivePathEffect_group_bbox {
+class LPEBendPath : public Effect, GroupBBoxEffect {
 public:
     LPEBendPath(LivePathEffectObject *lpeobject);
     virtual ~LPEBendPath();

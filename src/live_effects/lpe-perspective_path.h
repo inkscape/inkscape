@@ -17,6 +17,7 @@
 #include "live_effects/effect.h"
 #include "live_effects/parameter/parameter.h"
 #include "live_effects/parameter/bool.h"
+#include "live_effects/lpegroupbbox.h"
 
 #include <vector>
 #include "2geom/point.h"
@@ -24,10 +25,12 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
-class LPEPerspectivePath : public Effect {
+class LPEPerspectivePath : public Effect, GroupBBoxEffect {
 public:
     LPEPerspectivePath(LivePathEffectObject *lpeobject);
     virtual ~LPEPerspectivePath();
+    
+    virtual void doBeforeEffect (SPLPEItem *lpeitem);
 
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
@@ -45,6 +48,8 @@ private:
 
     std::vector<Geom::Point> handles;
     double tmat[3][4];
+    
+    bool groupSpecialBehavior;
 };
 
 } //namespace LivePathEffect

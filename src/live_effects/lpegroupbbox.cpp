@@ -33,32 +33,58 @@ namespace Inkscape {
 namespace LivePathEffect {
 
 void
-LivePathEffect_group_bbox::recursive_original_bbox(SPGroup *group, Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2, std::vector<Geom::Path> & temppath)
+GroupBBoxEffect::recursive_original_bbox(SPGroup *group, Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2, std::vector<Geom::Path> & temppath)
 {
-            std::vector<Geom::Path> tempsubpath;
-            GSList const *item_list = sp_item_group_item_list(group);
+    std::vector<Geom::Path> tempsubpath;
+    GSList const *item_list = sp_item_group_item_list(group);
 
-            for ( GSList const *iter = item_list; iter; iter = iter->next )
-            {
-                SPObject *subitem = static_cast<SPObject *>(iter->data);
-                if (SP_IS_PATH(subitem))
-                {
-                    //if there is not an original-d, just take the d
-                    if(SP_OBJECT_REPR(subitem)->attribute("inkscape:original-d") != NULL)      
-                        tempsubpath = SVGD_to_2GeomPath(SP_OBJECT_REPR(subitem)->attribute("inkscape:original-d"));
-                    else
-                        tempsubpath = SVGD_to_2GeomPath(SP_OBJECT_REPR(subitem)->attribute("d")); 
-                 
-                    temppath.insert(temppath.end(), tempsubpath.begin(), tempsubpath.end());
-                }else
-                if (SP_IS_GROUP(subitem))
-                {
-                    recursive_original_bbox(SP_GROUP(subitem), pwd2, temppath);
-                }
-
-            }
+    for ( GSList const *iter = item_list; iter; iter = iter->next )
+    {
+        SPObject *subitem = static_cast<SPObject *>(iter->data);
+        if (SP_IS_PATH(subitem))
+        {
+            //if there is not an original-d, just take the d
+            if(SP_OBJECT_REPR(subitem)->attribute("inkscape:original-d") != NULL)      
+                tempsubpath = SVGD_to_2GeomPath(SP_OBJECT_REPR(subitem)->attribute("inkscape:original-d"));
+            else
+                tempsubpath = SVGD_to_2GeomPath(SP_OBJECT_REPR(subitem)->attribute("d")); 
+            
+            temppath.insert(temppath.end(), tempsubpath.begin(), tempsubpath.end());
+        } 
+        else if (SP_IS_GROUP(subitem))
+        {
+            recursive_original_bbox(SP_GROUP(subitem), pwd2, temppath);
+        }
+    }
 }
 
+void
+GroupBBoxEffect::original_bbox(SPLPEItem *lpeitem)
+{
+
+    using namespace Geom;
+    Piecewise<D2<SBasis> > pwd2;
+    std::vector<Geom::Path> temppath;  
+
+
+    if (SP_IS_PATH(lpeitem))
+    {
+    //TODO : this won't work well with LPE stacking
+        temppath = SVGD_to_2GeomPath( SP_OBJECT_REPR(lpeitem)->attribute("inkscape:original-d"));
+    }
+    else if (SP_IS_GROUP(lpeitem))
+    {
+        recursive_original_bbox(SP_GROUP(lpeitem), pwd2, temppath);
+    }
+
+    for (unsigned int i=0; i < temppath.size(); i++) {
+        pwd2.concat( temppath[i].toPwSb() );
+    }
+
+    D2<Piecewise<SBasis> > d2pw = make_cuts_independant(pwd2);
+    boundingbox_X = bounds_exact(d2pw[0]);
+    boundingbox_Y = bounds_exact(d2pw[1]);
+}
 
 } // namespace LivePathEffect
 } /* namespace Inkscape */

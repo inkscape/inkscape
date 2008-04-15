@@ -1,5 +1,5 @@
 #ifndef INKSCAPE_LPEGROUPBBOX_H
-#define INKSCAPE_LPEGROUPBBOXP_H
+#define INKSCAPE_LPEGROUPBBOX_H
 
 /*
  * Inkscape::LivePathEffect_group_bbox
@@ -23,15 +23,19 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
-class LivePathEffect_group_bbox {
+class GroupBBoxEffect {
 protected:
 //if we need information concerning the group Bounding box and coordinates of each subshapes.
     Geom::Interval boundingbox_X;
     Geom::Interval boundingbox_Y;
 
-//Here is a recursive function to get the bbox of a group
-    void
-recursive_original_bbox(SPGroup *group, Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2, std::vector<Geom::Path> & temppath);
+//This set boundingbox_X and boundingbox_Y
+    void original_bbox(SPLPEItem *lpeitem);
+
+//Here is a recursive function to calculate the bbox of a group
+    void recursive_original_bbox(SPGroup *group, Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2, std::vector<Geom::Path> & temppath);
+
+
 
 };
 
