@@ -3270,6 +3270,7 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                       _("In color mode, act on objects' hue"),
                                                       NULL,
                                                       Inkscape::ICON_SIZE_DECORATION );
+        //TRANSLATORS:  "H" here stands for hue
         g_object_set( act, "short_label", _("H"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_doh), desktop );
@@ -3284,6 +3285,7 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                       _("In color mode, act on objects' saturation"),
                                                       NULL,
                                                       Inkscape::ICON_SIZE_DECORATION );
+        //TRANSLATORS: "S" here stands for Saturation
         g_object_set( act, "short_label", _("S"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_dos), desktop );
@@ -3298,6 +3300,7 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                       _("In color mode, act on objects' lightness"),
                                                       NULL,
                                                       Inkscape::ICON_SIZE_DECORATION );
+        //TRANSLATORS: "L" here stands for Lightness
         g_object_set( act, "short_label", _("L"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_dol), desktop );
@@ -3312,6 +3315,7 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                       _("In color mode, act on objects' opacity"),
                                                       NULL,
                                                       Inkscape::ICON_SIZE_DECORATION );
+        //TRANSLATORS: "O" here stands for Opacity
         g_object_set( act, "short_label", _("O"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_doo), desktop );
