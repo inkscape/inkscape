@@ -1255,6 +1255,12 @@ static void do_export_pdf(SPDocument* doc, gchar const* uri, char const* mime)
         (*i)->set_param_bool ("exportDrawing", FALSE);
     }
 
+    if (sp_export_area_canvas) {
+        (*i)->set_param_bool ("exportCanvas", TRUE);
+    } else {
+        (*i)->set_param_bool ("exportCanvas", FALSE);
+    }
+
     (*i)->save(doc, uri);
 }
 

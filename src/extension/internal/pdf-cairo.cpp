@@ -325,8 +325,8 @@ PrintCairoPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     _height = sp_document_height(doc) * PT_PER_PX;
 
     NRRect d;
-    bool   pageBoundingBox;
-    pageBoundingBox = mod->get_param_bool("pageBoundingBox");
+    bool   pageBoundingBox = mod->get_param_bool("pageBoundingBox");
+    SPItem* doc_item = SP_ITEM(mod->base);
     // printf("Page Bounding Box: %s\n", pageBoundingBox ? "TRUE" : "FALSE");
     NR::Matrix t (NR::identity());
     if (pageBoundingBox) {
@@ -335,24 +335,23 @@ PrintCairoPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
         d.y1 = _height;
     } else {
         // if not page, use our base, which is either root or the item we want to export
-        SPItem* doc_item = SP_ITEM(mod->base);
         sp_item_invoke_bbox(doc_item, &d, sp_item_i2doc_affine (doc_item), TRUE);
         // convert from px to pt
         d.x0 *= PT_PER_PX;
         d.x1 *= PT_PER_PX;
         d.y0 *= PT_PER_PX;
         d.y1 *= PT_PER_PX;
-
-        // When rendering a standalone object, we must set cairo's transform to the accumulated
-        // ancestor transform of that item - e.g. it may be rotated or skewed by its parent group, and
-        // we must reproduce that in the export even though we start traversing the tree from the
-        // object itself, ignoring its ancestors
-
-        // complete transform, including doc_item's own transform
-        t = sp_item_i2doc_affine (doc_item);
-        // subreact doc_item's transform (comes first) from it
-        t = NR::Matrix(doc_item->transform).inverse() * t;
     }
+
+    // When rendering a standalone object, we must set cairo's transform to the accumulated
+    // ancestor transform of that item - e.g. it may be rotated or skewed by its parent group, and
+    // we must reproduce that in the export even though we start traversing the tree from the
+    // object itself, ignoring its ancestors
+
+    // complete transform, including doc_item's own transform
+    t = sp_item_i2doc_affine (doc_item);
+    // subreact doc_item's transform (comes first) from it
+    t = NR::Matrix(doc_item->transform).inverse() * t;
 
     // create cairo context
     pdf_surface = cairo_pdf_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, d.x1-d.x0, d.y1-d.y0);
@@ -1061,6 +1060,7 @@ PrintCairoPDF::init(void)
         "<param name=\"pageBoundingBox\" type=\"boolean\">TRUE</param>\n"
         "<param name=\"textToPath\" type=\"boolean\">TRUE</param>\n"
         "<param name=\"exportDrawing\" type=\"boolean\">FALSE</param>\n"
+        "<param name=\"exportCanvas\" type=\"boolean\">FALSE</param>\n"
         "<param name=\"exportId\" type=\"string\"></param>\n"
         "<print/>\n"
         "</inkscape-extension>", new PrintCairoPDF());

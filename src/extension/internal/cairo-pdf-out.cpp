@@ -63,10 +63,14 @@ pdf_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int 
     /* Create new arena */
     const gchar* exportId = mod->get_param_string("exportId");
     bool exportDrawing = mod->get_param_bool("exportDrawing");
+    bool exportCanvas = mod->get_param_bool("exportCanvas");
     if (exportId && strcmp(exportId, "")) {
-        // we want to export the given item only, not page
+        // we want to export the given item only
         mod->base = SP_ITEM(doc->getObjectById(exportId));
-        mod->set_param_bool("pageBoundingBox", FALSE);
+        if (exportCanvas)
+            mod->set_param_bool("pageBoundingBox", TRUE);
+        else
+            mod->set_param_bool("pageBoundingBox", FALSE);
     } else {
         // we want to export the entire document from root
         mod->base = SP_ITEM(sp_document_root(doc));
@@ -166,6 +170,17 @@ CairoPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const g
         g_warning("Parameter <exportDrawing> might not exist");
     }
 
+    bool old_exportCanvas = false;
+    bool new_exportCanvas = false;
+    try {
+        old_exportCanvas  = ext->get_param_bool("exportCanvas");
+        new_exportCanvas  = mod->get_param_bool("exportCanvas");
+        ext->set_param_bool("exportCanvas", new_exportCanvas);
+    }
+    catch(...) {
+        g_warning("Parameter <exportCanvas> might not exist");
+    }
+
     gchar * final_name;
     final_name = g_strdup_printf("> %s", uri);
     ret = pdf_print_document_to_file(doc, final_name, 0, new_textToPath, new_blurToBitmap);
@@ -194,6 +209,12 @@ CairoPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const g
     }
     catch(...) {
         g_warning("Parameter <exportDrawing> might not exist");
+    }
+    try {
+        ext->set_param_bool("exportCanvas", old_exportCanvas);
+    }
+    catch(...) {
+        g_warning("Parameter <exportCanvas> might not exist");
     }
 
     if (!ret)
@@ -224,6 +245,7 @@ CairoPdfOutput::init (void)
 			"<param name=\"blurToBitmap\" gui-text=\"" N_("Convert blur effects to bitmaps") "\" type=\"boolean\">false</param>\n"
       "<param name=\"resolution\" gui-text=\"" N_("Preferred resolution (DPI) of bitmaps") "\" type=\"int\" min=\"72\" max=\"2400\">90</param>\n"
       "<param name=\"exportDrawing\" gui-text=\"" N_("Export drawing, not page") "\" type=\"boolean\">false</param>\n"
+      "<param name=\"exportCanvas\" gui-text=\"" N_("Export canvas") "\" type=\"boolean\">false</param>\n"
       "<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID") "\" type=\"string\"></param>\n"
       "<output>\n"
 				"<extension>.pdf</extension>\n"
