@@ -40,7 +40,7 @@
 #include <display/nr-arena-item.h>
 #include <display/nr-arena.h>
 #include "sp-item.h"
-#include "canvas-arena.h"
+#include "display/canvas-arena.h"
 
 #include "filedialog.h"
 #include "filedialogimpl-win32.h"
