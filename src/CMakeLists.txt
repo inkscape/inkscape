@@ -39,7 +39,7 @@ jabber_whiteboard
 jabber_whiteboard/dialog
 live_effects
 live_effects/parameter
-pedro
+#pedro
 removeoverlap
 svg
 trace
@@ -72,6 +72,7 @@ ENDFOREACH(dirlist)
 
 # All directories containing lists files that describe building internal libraries
 SET(libfolders
+2geom
 application
 dialogs
 libavoid
@@ -304,7 +305,7 @@ ${ONLY_WIN}
 # make executable for INKSCAPE
 ADD_EXECUTABLE(inkscape ${INKSCAPE_SRC})
 TARGET_LINK_LIBRARIES(inkscape
-	"${INKSCAPE_LINK_FLAGS}" avoid cola croco gdl nr nrtype vpsc
+	"${INKSCAPE_LINK_FLAGS}" 2geom avoid cola croco gdl nr nrtype vpsc
 )
 #INSTALL(TARGETS INKSCAPE
 #  RUNTIME DESTINATION bin

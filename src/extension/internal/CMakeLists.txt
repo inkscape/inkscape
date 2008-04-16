@@ -1,3 +1,8 @@
+IF(WIN32)
+SET(EXT_INT_WIN
+win32.cpp)
+ENDIF(WIN32)
+
 SET(extension_internal_SRC
 bluredge.cpp
 cairo-pdf-out.cpp
@@ -22,6 +27,6 @@ ps.cpp
 ps-out.cpp
 svg.cpp
 svgz.cpp
-win32.cpp
+${EXT_INT_WIN}
 wpg-input.cpp
 )
