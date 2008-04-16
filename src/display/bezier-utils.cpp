@@ -154,6 +154,7 @@ copy_without_nans_or_adjacent_duplicates(NR::Point const src[], unsigned src_len
             ++si;
             break;
         }
+        si ++;
     }
     unsigned di = 0;
     for (; si < src_len; ++si) {
