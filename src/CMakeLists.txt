@@ -25,9 +25,9 @@ dom
 dom/io
 dom/odf
 dom/util
-dom/work
+#dom/work
 extension
-extension/dxf2svg
+#extension/dxf2svg
 extension/implementation
 extension/internal
 extension/param
@@ -50,7 +50,7 @@ ui
 ui/dialog
 ui/view
 ui/widget
-utest
+#utest
 util
 widgets
 xml
