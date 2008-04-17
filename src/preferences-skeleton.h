@@ -48,6 +48,7 @@ static char const preferences_skeleton[] =
 "  </group>\n"
 "\n"
 "  <group id=\"tools\"\n"
+"         bounding_box=\"0\"\n"
 "         style=\"fill:none;stroke:black;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;\">\n"
 "    <group id=\"shapes\" style=\"fill-rule:evenodd;\" selcue=\"1\" gradientdrag=\"1\">\n"
 "      <eventcontext id=\"rect\" style=\"fill:blue;\" usecurrent=\"1\"/>\n"

@@ -340,10 +340,10 @@ void InkscapePreferences::initPageTools()
     _path_tools = _page_list.get_model()->get_path(iter_tools);
 
     _page_tools.add_group_header( _("Bounding box to use:"));
-    _t_bbox_visual.init ( _("Visual bounding box"), "tools", "bounding_box", "visual", false, 0);
+    _t_bbox_visual.init ( _("Visual bounding box"), "tools", "bounding_box", "0", false, 0); // 0 means visual
     _page_tools.add_line( true, "", _t_bbox_visual, "",
                             _("This bounding box includes stroke width, markers, filter margins, etc."));
-    _t_bbox_geometric.init ( _("Geometric bounding box"), "tools", "bounding_box", "geometric", true, &_t_bbox_visual);
+    _t_bbox_geometric.init ( _("Geometric bounding box"), "tools", "bounding_box", "1", true, &_t_bbox_visual); // 1 means geometric
     _page_tools.add_line( true, "", _t_bbox_geometric, "",
                             _("This bounding box includes only the bare path"));
 

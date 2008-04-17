@@ -77,8 +77,9 @@ void Inkscape::SelCue::_updateItemBboxes()
 
     g_return_if_fail(_selection != NULL);
 
-	gchar const *prefs_bbox = prefs_get_string_attribute("tools", "bounding_box");
-    SPItem::BBoxType bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;
+    int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
+    SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
+        SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
     
     for (GSList const *l = _selection->itemList(); l != NULL; l = l->next) {
         SPItem *item = (SPItem *) l->data;

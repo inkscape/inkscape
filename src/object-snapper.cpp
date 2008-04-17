@@ -156,8 +156,9 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::Snapper::PointType const &
         g_assert(!(p_is_a_node && p_is_a_bbox || p_is_a_bbox && p_is_a_guide || p_is_a_node && p_is_a_guide));        
         
         if (_snap_to_bboxnode) {
-            gchar const *prefs_bbox = prefs_get_string_attribute("tools", "bounding_box");
-            bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;
+            int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
+            bbox_type = (prefs_bbox ==0)? 
+                SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
         }
 
         for (std::vector<SPItem*>::const_iterator i = _candidates->begin(); i != _candidates->end(); i++) {
@@ -265,8 +266,9 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
         bool p_is_a_node = t & Inkscape::Snapper::SNAPPOINT_NODE;
         
         if (_snap_to_bboxpath) {
-            gchar const *prefs_bbox = prefs_get_string_attribute("tools", "bounding_box");
-            bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::APPROXIMATE_BBOX;
+            int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
+            bbox_type = (prefs_bbox ==0)? 
+                SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
         }
         
         // Consider the page border for snapping

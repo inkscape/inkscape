@@ -1663,8 +1663,9 @@ sp_item_convert_to_guides(SPItem *item) {
     SPNamedView *nv = sp_desktop_namedview(dt);
     (void)nv;
 
-    gchar const *prefs_bbox = prefs_get_string_attribute("tools", "bounding_box");
-    SPItem::BBoxType bbox_type = (prefs_bbox != NULL && strcmp(prefs_bbox, "geometric")==0)? SPItem::GEOMETRIC_BBOX : SPItem::RENDERING_BBOX;
+    int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
+    SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
+        SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
 
     NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(item, bbox_type);
     if (!bbox) {
