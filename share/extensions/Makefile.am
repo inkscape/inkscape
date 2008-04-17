@@ -78,6 +78,7 @@ extensions = \
 	ps2pdf.sh \
 	pturtle.py \
 	radiusrand.py \
+	restack.py \
 	render_barcode.py \
 	render_alphabetsoup.py \
 	render_alphabetsoup_config.py \
@@ -186,6 +187,7 @@ modules = \
 	randompos.inx \
 	render_barcode.inx \
 	render_alphabetsoup.inx \
+	restack.inx \
 	rubberstretch.inx \
 	rtree.inx \
 	sk_input.inx \
