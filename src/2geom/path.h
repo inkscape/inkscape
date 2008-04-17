@@ -637,8 +637,8 @@ public:
     Piecewise<D2<SBasis> > ret;
     ret.push_cut(0);
     unsigned i = 1;
-    // ignore that path is closed or open. pw<d2<>> is always open.
-    for(const_iterator it = begin(); it != end(); ++it) {
+    // pw<d2<>> is always open. so if path is closed, add closing segment as well to pwd2.
+    for(const_iterator it = begin(); it != end_default(); ++it) {
       if (!it->isDegenerate()) {
         ret.push(it->toSBasis(), i++);
       }
