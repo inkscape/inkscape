@@ -3,9 +3,9 @@
     <id>org.inkscape.help.manual</id>
 	<dependency type="executable" location="extensions">launch_webbrowser.py</dependency>
 	<param name="url" gui-hidden="1" type="string">http://tavmjong.free.fr/INKSCAPE/MANUAL/html/index.php</param>
-    <effect needs-document="no">
+    <effect needs-document="false">
 		<object-type>all</object-type>
-		<effects-menu hidden="yes"/>
+		<effects-menu hidden="true"/>
     </effect>
     <script>
         <command reldir="extensions" interpreter="python">launch_webbrowser.py</command>

@@ -4,6 +4,9 @@
     <dependency type="plugin" location="plugins">randompos</dependency>
     <effect>
         <object-type>all</object-type>
+	    <effects-menu>
+                <submenu _name="Object"/>
+            </effects-menu>
     </effect>
     <plugin>
         <name>randompos</name>

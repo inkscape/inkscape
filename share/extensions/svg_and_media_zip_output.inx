@@ -9,7 +9,7 @@
 		<mimetype>application/x-zip</mimetype>
 		<_filetypename>Compressed Inkscape SVG with media (*.zip)</_filetypename>
 		<_filetypetooltip>Inkscape's native file format compressed with Zip and including all media files</_filetypetooltip>
-		<dataloss>FALSE</dataloss>
+		<dataloss>false</dataloss>
 	</output>
     <script>
         <command reldir="extensions" interpreter="python">svg_and_media_zip_output.py</command>

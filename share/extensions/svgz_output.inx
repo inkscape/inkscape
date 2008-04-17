@@ -8,7 +8,7 @@
         <mimetype>image/x-svgz</mimetype>
         <_filetypename>Compressed Inkscape SVG (*.svgz)</_filetypename>
         <_filetypetooltip>Inkscape's native file format compressed with GZip</_filetypetooltip>
-        <dataloss>FALSE</dataloss>
+        <dataloss>false</dataloss>
     </output>
     <script>
         <command reldir="path">gzip -c</command>

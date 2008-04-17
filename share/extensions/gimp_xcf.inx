@@ -10,7 +10,7 @@
                 <mimetype>application/x-xcf</mimetype>
                 <_filetypename>GIMP XCF maintaining layers (*.XCF)</_filetypename>
                 <_filetypetooltip>GIMP XCF maintaining layers (*.XCF)</_filetypetooltip>
-                <dataloss>TRUE</dataloss>
+                <dataloss>true</dataloss>
     </output>
     <script>
         <command reldir="extensions" interpreter="python">gimp_xcf.py</command>

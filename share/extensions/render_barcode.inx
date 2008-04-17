@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <inkscape-extension>
   <_name>Barcode</_name>
   <id>org.inkscape.render.barcode</id>
@@ -6,7 +5,7 @@
   <dependency type="executable" location="extensions">render_barcode.py</dependency>
   <param name="type" type="enum" _gui-text="Barcode Type:">
     <item value="ean13">EAN13</item>
-	<item value="ean8">EAN8</item>
+    <item value="ean8">EAN8</item>
     <item value="ean13">UPC-A</item>
     <item value="ean13">UPC-E</item>
     <item value="ean13">UPC-5</item>
