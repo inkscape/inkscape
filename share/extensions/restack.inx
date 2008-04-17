@@ -26,7 +26,7 @@
     <effect>
 	<object-type>path</object-type>
 	<effects-menu>
-		<submenu _name="Modify Path"/>
+		<submenu _name="Arrange"/>
 	</effects-menu>
 	</effect>
     <script>
