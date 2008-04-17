@@ -237,6 +237,7 @@ class PotraceTracingEngine : public TracingEngine
      */
     int keepGoing;
 
+    std::vector<TracingEngineResult>traceGrayMap(GrayMap *grayMap);
 
 
     private:

@@ -67,6 +67,7 @@
 #include "color.h"
 
 #include "trace/trace.h"
+#include "trace/imagemap.h"
 #include "trace/potrace/inkscape-potrace.h"
 
 static void sp_flood_context_class_init(SPFloodContextClass *klass);
@@ -402,18 +403,24 @@ inline static bool check_if_pixel_is_paintable(guchar *px, unsigned char *trace_
  * \param transform The transform to apply to the final SVG path.
  * \param union_with_selection If true, merge the final SVG path with the current selection.
  */
-static void do_trace(GdkPixbuf *px, SPDesktop *desktop, NR::Matrix transform, bool union_with_selection) {
+static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *desktop, NR::Matrix transform, bool union_with_selection) {
     SPDocument *document = sp_desktop_document(desktop);
-    
-    Inkscape::Trace::Potrace::PotraceTracingEngine pte;
-        
-    pte.setTraceType(Inkscape::Trace::Potrace::TRACE_BRIGHTNESS);
-    pte.setInvert(false);
 
-    Glib::RefPtr<Gdk::Pixbuf> pixbuf = Glib::wrap(px, true);
-    
-    std::vector<Inkscape::Trace::TracingEngineResult> results = pte.trace(pixbuf);
-    
+    unsigned char *trace_t;
+
+    GrayMap *gray_map = GrayMapCreate(bci.width, bci.height);
+    for (unsigned int y = 0; y < bci.height ; y++) {
+        trace_t = get_pixel(trace_px, 0, y, bci.width);
+        for (unsigned int x = 0; x < bci.width ; x++) {
+            gray_map->setPixel(gray_map, x, y, is_pixel_colored(trace_t) ? GRAYMAP_BLACK : GRAYMAP_WHITE);
+            trace_t += 4;
+        }
+    }
+
+    Inkscape::Trace::Potrace::PotraceTracingEngine pte;
+    std::vector<Inkscape::Trace::TracingEngineResult> results = pte.traceGrayMap(gray_map);
+    gray_map->destroy(gray_map);
+
     Inkscape::XML::Node *layer_repr = SP_GROUP(desktop->currentLayer())->repr;
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
 
@@ -1091,16 +1098,9 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Only the visible part of the bounded area was filled.</b> If you want to fill all of the area, undo, zoom out, and fill again.")); 
     }
     
-    GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(trace_px,
-                                      GDK_COLORSPACE_RGB,
-                                      TRUE,
-                                      8, width, height, width * 4,
-                                      (GdkPixbufDestroyNotify)g_free,
-                                      NULL);
-
     NR::Matrix inverted_affine = NR::Matrix(affine).inverse();
     
-    do_trace(pixbuf, desktop, inverted_affine, union_with_selection);
+    do_trace(bci, trace_px, desktop, inverted_affine, union_with_selection);
 
     g_free(trace_px);
     

@@ -445,6 +445,30 @@ PotraceTracingEngine::traceSingle(GdkPixbuf * thePixbuf)
 
 
 /**
+ *  This allow routines that already generate GrayMaps to skip image filtering,
+ *  increasing performance.
+ */
+std::vector<TracingEngineResult>
+PotraceTracingEngine::traceGrayMap(GrayMap *grayMap)
+{
+
+    std::vector<TracingEngineResult> results;
+
+    brightnessFloor = 0.0; //important to set this
+
+    long nodeCount;
+    std::string d = grayMapToPath(grayMap, &nodeCount);
+
+    char *style = "fill:#000000";
+
+    //g_message("### GOT '%s' \n", d);
+    TracingEngineResult result(style, d, nodeCount);
+    results.push_back(result);
+
+    return results;
+}
+
+/**
  *  Called for multiple-scanning algorithms
  */
 std::vector<TracingEngineResult>
