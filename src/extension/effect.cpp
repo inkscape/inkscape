@@ -52,14 +52,14 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
 
         for (Inkscape::XML::Node *child = sp_repr_children(repr); child != NULL; child = child->next()) {
             if (!strcmp(child->name(), "effect")) {
-                if (child->attribute("needs-document") && !strcmp(child->attribute("needs-document"), "no")) {
+                if (child->attribute("needs-document") && !strcmp(child->attribute("needs-document"), "false")) {
                   no_doc = true;
                 }
                 for (Inkscape::XML::Node *effect_child = sp_repr_children(child); effect_child != NULL; effect_child = effect_child->next()) {
                     if (!strcmp(effect_child->name(), "effects-menu")) {
                         // printf("Found local effects menu in %s\n", this->get_name());
                         local_effects_menu = sp_repr_children(effect_child);
-                        if (effect_child->attribute("hidden") && !strcmp(effect_child->attribute("hidden"), "yes")) {
+                        if (effect_child->attribute("hidden") && !strcmp(effect_child->attribute("hidden"), "true")) {
                             hidden = true;
                         }
                     }

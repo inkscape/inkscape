@@ -72,7 +72,7 @@ Output::Output (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
                         filetypetooltip = g_strdup(sp_repr_children(child_repr)->content());
                     }
                     if (!strcmp(chname, "dataloss")) {
-                        if (!strcmp(sp_repr_children(child_repr)->content(), "FALSE")) {
+                        if (!strcmp(sp_repr_children(child_repr)->content(), "false")) {
 							dataloss = FALSE;
 						}
 					}
