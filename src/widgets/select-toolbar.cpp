@@ -64,7 +64,10 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
     using NR::X;
     using NR::Y;
     if ( sel && !sel->isEmpty() ) {
-        NR::Maybe<NR::Rect> const bbox(sel->bounds());
+        int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
+        SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
+            SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
+        NR::Maybe<NR::Rect> const bbox(sel->bounds(bbox_type));
         if ( bbox && !bbox->isEmpty() ) {
             UnitTracker *tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(G_OBJECT(spw), "tracker"));
             SPUnit const &unit = *tracker->getActiveUnit();
@@ -151,7 +154,10 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     SPDocument *document = sp_desktop_document(desktop);
 
     sp_document_ensure_up_to_date (document);
-    NR::Maybe<NR::Rect> bbox = selection->bounds();
+    int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
+    SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
+        SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
+    NR::Maybe<NR::Rect> bbox = selection->bounds(bbox_type);
 
     if ( !bbox || bbox->isEmpty() ) {
         g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
