@@ -122,6 +122,7 @@ conjugate_gradient(valarray<double> const &A,
     //std::max(-r.min(), r.max()), sqrt(r_r));
     // x is solution
 }
+
 /*
   Local Variables:
   mode:c++
@@ -131,4 +132,4 @@ conjugate_gradient(valarray<double> const &A,
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=4:softtabstop=4
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

@@ -80,4 +80,3 @@ unsigned centroid(Piecewise<D2<SBasis> > const &p, Point& centroid, double &area
 */
 // vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
 
- 	  	 

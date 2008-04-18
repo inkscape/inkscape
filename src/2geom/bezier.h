@@ -306,6 +306,7 @@ inline std::ostream &operator<< (std::ostream &out_file, const Bezier & b) {
 
 }
 #endif //SEEN_BEZIER_H
+
 /*
   Local Variables:
   mode:c++

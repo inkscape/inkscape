@@ -141,7 +141,7 @@ split_at_discontinuities (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwsbi
             piece.cuts.push_back(pwsbin.cuts[piece_start]);
             for (unsigned j = piece_start; j<i+1; j++){
                 piece.segs.push_back(pwsbin.segs[j]);
-                piece.cuts.push_back(pwsbin.cuts[j+1]);                
+                piece.cuts.push_back(pwsbin.cuts[j+1]);
             }
             ret.push_back(piece);
             piece_start = i+1;
@@ -151,3 +151,15 @@ split_at_discontinuities (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwsbi
 }
 
 }  // namespace Geom
+
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
