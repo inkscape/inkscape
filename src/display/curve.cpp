@@ -26,9 +26,6 @@
 
 #define SP_CURVE_LENSTEP 32
 
-static bool sp_bpath_good(NArtBpath const bpath[]);
-static NArtBpath *sp_bpath_clean(NArtBpath const bpath[]);
-static NArtBpath const *sp_bpath_check_subpath(NArtBpath const bpath[]);
 static unsigned sp_bpath_length(NArtBpath const bpath[]);
 static bool sp_bpath_closed(NArtBpath const bpath[]);
 
@@ -97,20 +94,15 @@ SPCurve *sp_curve_new_from_foreign_bpath(NArtBpath const bpath[])
     g_return_val_if_fail(bpath != NULL, NULL);
 
     NArtBpath *new_bpath;
-    if (!sp_bpath_good(bpath)) {
-        new_bpath = sp_bpath_clean(bpath);
-        g_return_val_if_fail(new_bpath != NULL, NULL);
-    } else {
-        unsigned const len = sp_bpath_length(bpath);
-        new_bpath = g_new(NArtBpath, len);
-        memcpy(new_bpath, bpath, len * sizeof(NArtBpath));
-    }
+    unsigned const len = sp_bpath_length(bpath);
+    new_bpath = g_new(NArtBpath, len);
+    memcpy(new_bpath, bpath, len * sizeof(NArtBpath));
 
     SPCurve *curve = g_new(SPCurve, 1);
 
     curve->refcount = 1;
     curve->_bpath = new_bpath;
-    curve->length = sp_bpath_length(new_bpath);
+    curve->length = len;
     curve->end = curve->length - 1;
     gint i = curve->end;
     for (; i > 0; i--)
@@ -933,107 +925,6 @@ sp_curve_backspace(SPCurve *curve)
 }
 
 /* Private methods */
-
-/**
- * True if all subpaths in bpath array pass consistency check.
- */
-static bool sp_bpath_good(NArtBpath const bpath[])
-{
-    g_return_val_if_fail(bpath != NULL, FALSE);
-
-    NArtBpath const *bp = bpath;
-    while (bp->code != NR_END) {
-        bp = sp_bpath_check_subpath(bp);
-        if (bp == NULL)
-            return false;
-    }
-
-    return true;
-}
-
-/**
- * Return copy of a bpath array, discarding any inconsistencies.
- */
-static NArtBpath *sp_bpath_clean(NArtBpath const bpath[])
-{
-    NArtBpath *new_bpath = g_new(NArtBpath, sp_bpath_length(bpath));
-
-    NArtBpath const *bp = bpath;
-    NArtBpath *np = new_bpath;
-
-    while (bp->code != NR_END) {
-        if (sp_bpath_check_subpath(bp)) {
-            *np++ = *bp++;
-            while ((bp->code == NR_LINETO) ||
-                   (bp->code == NR_CURVETO))
-                *np++ = *bp++;
-        } else {
-            bp++;
-            while ((bp->code == NR_LINETO) ||
-                   (bp->code == NR_CURVETO))
-                bp++;
-        }
-    }
-
-    if (np == new_bpath) {
-        g_free(new_bpath);
-        return NULL;
-    }
-
-    np->code = NR_END;
-    np += 1;
-
-    new_bpath = g_renew(NArtBpath, new_bpath, np - new_bpath);
-
-    return new_bpath;
-}
-
-/**
- * Perform consistency check of bpath array.
- * \return Address of NR_END node or NULL.
- */
-static NArtBpath const *sp_bpath_check_subpath(NArtBpath const bpath[])
-{
-    g_return_val_if_fail(bpath != NULL, NULL);
-
-    bool closed;
-    if (bpath->code == NR_MOVETO) {
-        closed = true;
-    } else if (bpath->code == NR_MOVETO_OPEN) {
-        closed = false;
-    } else {
-        return NULL;
-    }
-
-    gint len = 0;
-    gint i;
-    /** \todo
-     * effic: consider checking for END/MOVE/MOVETO inside switch block
-     */
-    for (i = 1; (bpath[i].code != NR_END) && (bpath[i].code != NR_MOVETO) && (bpath[i].code != NR_MOVETO_OPEN); i++) {
-        switch (bpath[i].code) {
-            case NR_LINETO:
-            case NR_CURVETO:
-                len++;
-                break;
-            default:
-                return NULL;
-        }
-    }
-
-    if (closed) {
-        if (len < 1)
-            return NULL;
-
-        if ((bpath->x3 != bpath[i-1].x3) || (bpath->y3 != bpath[i-1].y3))
-            return NULL;
-    } else {
-        if (len < 1)
-            return NULL;
-    }
-
-    return bpath + i;
-}
 
 /**
  * Returns index of first NR_END bpath in array.
