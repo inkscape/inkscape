@@ -410,9 +410,12 @@ static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *deskto
 
     GrayMap *gray_map = GrayMapCreate(bci.width, bci.height);
     for (unsigned int y = 0; y < bci.height ; y++) {
+        unsigned long *gray_map_t = gray_map->rows[y];
+
         trace_t = get_pixel(trace_px, 0, y, bci.width);
         for (unsigned int x = 0; x < bci.width ; x++) {
-            gray_map->setPixel(gray_map, x, y, is_pixel_colored(trace_t) ? GRAYMAP_BLACK : GRAYMAP_WHITE);
+            *gray_map_t = is_pixel_colored(trace_t) ? GRAYMAP_BLACK : GRAYMAP_WHITE;
+            gray_map_t++;
             trace_t += 4;
         }
     }
