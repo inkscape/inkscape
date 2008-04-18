@@ -47,6 +47,7 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
     bool hidden = false;
 
     no_doc = false;
+    no_live_preview = false;
 
     if (repr != NULL) {
 
@@ -54,6 +55,9 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
             if (!strcmp(child->name(), "effect")) {
                 if (child->attribute("needs-document") && !strcmp(child->attribute("needs-document"), "false")) {
                   no_doc = true;
+                }
+                if (child->attribute("needs-live-preview") && !strcmp(child->attribute("needs-live-preview"), "false")) {
+                  no_live_preview = true;
                 }
                 for (Inkscape::XML::Node *effect_child = sp_repr_children(child); effect_child != NULL; effect_child = effect_child->next()) {
                     if (!strcmp(effect_child->name(), "effects-menu")) {

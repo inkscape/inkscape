@@ -77,7 +77,7 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     set_default_response(Gtk::RESPONSE_OK);
     _button_ok->grab_focus();
 
-    if (_effect != NULL) {
+    if (_effect != NULL && !_effect->no_live_preview) {
         if (_param_preview == NULL) {
             XML::Document * doc = sp_repr_read_mem(live_param_xml, strlen(live_param_xml), NULL);
             _param_preview = Parameter::make(doc->root(), _effect);
