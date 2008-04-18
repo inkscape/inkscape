@@ -1,4 +1,5 @@
-<inkscape-extension>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>SVG 1.1 Specification</_name>
     <id>org.inkscape.help.svgspec</id>
 	<dependency type="executable" location="extensions">launch_webbrowser.py</dependency>

@@ -1,34 +1,30 @@
-<inkscape-extension>
-    <_name>Scatter</_name>
-    <id>math.univ-lille1.barraud.pathScatter</id>
-	<dependency type="executable" location="extensions">pathmodifier.py</dependency>
-	<dependency type="executable" location="extensions">pathScatter.py</dependency>
-	<dependency type="executable" location="extensions">inkex.py</dependency>
-	<_param name="title" type="description">This effect scatters a pattern along arbitrary "skeleton" paths. The pattern is the top most object in the selection. (groups of paths/shapes/clones... allowed)</_param>
-
-	<param name="follow" type="boolean" _gui-text="Follow path orientation.">false</param>
-	<param name="stretch" type="boolean" _gui-text="Stretch spaces to fit skeleton length">false</param>
-
-	<param name="space"     type="float"   _gui-text="Space between copies:" min="-10000.0" max="10000.0" >0.0</param>
-
-	<param name="noffset"   type="float"   _gui-text="Normal offset" min="-10000.0" max="10000.0">0.0</param>
-	<param name="toffset"   type="float"   _gui-text="Tangential offset"  min="-10000.0" max="10000.0" >0.0</param>
-
-	<param name="vertical"  type="boolean" _gui-text="Pattern is vertical">false</param>
-	<param name="copymode" type="optiongroup" _gui-text="Original pattern will be:">
-		<_option value="move">Moved</_option>
-      	<_option value="copy">Copied</_option>
-		<_option value="clone">Cloned</_option>
-	</param>
-	<param name="duplicate" type="boolean" _gui-text="Duplicate the pattern before deformation">true</param>
-    <effect>
-	<effects-menu>
-		<submenu _name="Generate from Path"/>
-	</effects-menu>
-    </effect>
-    <script>
-        <command reldir="extensions" interpreter="python">pathScatter.py</command>
-    </script>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Scatter</_name>
+  <id>math.univ-lille1.barraud.pathScatter</id>
+  <dependency type="executable" location="extensions">pathmodifier.py</dependency>
+  <dependency type="executable" location="extensions">pathScatter.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <_param name="title" type="description">This effect scatters a pattern along arbitrary "skeleton" paths. The pattern is the top most object in the selection. (groups of paths/shapes/clones... allowed)</_param>
+  <param name="follow" type="boolean" _gui-text="Follow path orientation.">false</param>
+  <param name="stretch" type="boolean" _gui-text="Stretch spaces to fit skeleton length">false</param>
+  <param name="space" type="float" _gui-text="Space between copies:" min="-10000.0" max="10000.0">0.0</param>
+  <param name="noffset" type="float" _gui-text="Normal offset" min="-10000.0" max="10000.0">0.0</param>
+  <param name="toffset" type="float" _gui-text="Tangential offset" min="-10000.0" max="10000.0">0.0</param>
+  <param name="vertical" type="boolean" _gui-text="Pattern is vertical">false</param>
+  <param name="copymode" type="optiongroup" _gui-text="Original pattern will be:">
+    <_option value="move">Moved</_option>
+    <_option value="copy">Copied</_option>
+    <_option value="clone">Cloned</_option>
+  </param>
+  <param name="duplicate" type="boolean" _gui-text="Duplicate the pattern before deformation">true</param>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Generate from Path"/>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">pathScatter.py</command>
+  </script>
 </inkscape-extension>
-
- 	  	 

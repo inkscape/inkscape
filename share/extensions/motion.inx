@@ -1,4 +1,5 @@
-<inkscape-extension>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>Extrude</_name>
     <id>org.ekips.filter.motion</id>
 	<dependency type="executable" location="extensions">motion.py</dependency>

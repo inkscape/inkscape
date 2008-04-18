@@ -1,4 +1,5 @@
-<inkscape-extension>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
 	<_name>fLIP cASE</_name>
 	<id>org.inkscape.text.flipcase</id>
 	<dependency type="executable" location="extensions">chardataeffect.py</dependency>

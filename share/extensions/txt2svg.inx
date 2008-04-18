@@ -1,4 +1,5 @@
-<inkscape-extension>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>Text Input</_name>
     <id>org.inkscape.input.txt</id>
     <dependency type="executable" location="extensions">txt2svg.pl</dependency>

@@ -1,4 +1,5 @@
-<inkscape-extension>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>Dimensions</_name>
     <id>se.lewerin.filter.dimension</id>
 	<dependency type="executable" location="extensions">dimension.py</dependency>

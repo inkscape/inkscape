@@ -1,4 +1,5 @@
-<inkscape-extension>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>DXF Input</_name>
     <id>org.inkscape.input.dxf</id>
     <dependency type="executable" _description="dxf2svg may come with Inkscape, but is also at http://dxf-svg-convert.sourceforge.net/">dxf2svg</dependency>

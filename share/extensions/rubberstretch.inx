@@ -1,4 +1,5 @@
-<inkscape-extension>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>Rubber Stretch</_name>
     <id>math.univ-lille1.barraud.spherify</id>
 	<dependency type="executable" location="extensions">pathmodifier.py</dependency>

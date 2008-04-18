@@ -1,4 +1,5 @@
-<inkscape-extension>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
 	<_name>Brighter</_name>
 	<id>org.inkscape.color.brighter</id>
 	<dependency type="executable" location="extensions">coloreffect.py</dependency>

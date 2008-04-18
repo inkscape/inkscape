@@ -1,4 +1,5 @@
-<inkscape-extension>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>AI 8.0 Output</_name>
     <id>org.inkscape.output.ai</id>
     <dependency type="executable" location="path">gs</dependency>

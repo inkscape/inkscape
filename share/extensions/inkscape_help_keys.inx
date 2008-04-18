@@ -1,4 +1,5 @@
-<inkscape-extension>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>Keys and Mouse Reference</_name>
     <id>org.inkscape.help.keys</id>
 	<dependency type="executable" location="extensions">launch_webbrowser.py</dependency>

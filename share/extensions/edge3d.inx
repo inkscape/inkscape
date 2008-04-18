@@ -1,4 +1,5 @@
-<inkscape-extension>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
   <_name>Edge 3D</_name>
   <id>org.greygreen.inkscape.effects.edge3d</id>
   <dependency type="executable" location="extensions">edge3d.py</dependency>

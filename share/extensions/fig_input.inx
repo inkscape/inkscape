@@ -1,4 +1,5 @@
-<inkscape-extension>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>XFIG Input</_name>
     <id>org.inkscape.input.fig</id>
     <dependency type="executable" location="path">fig2dev</dependency>

@@ -1,4 +1,5 @@
-<inkscape-extension>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>Random Point</_name>
     <id>org.inkscape.effect.randompnt</id>
     <dependency type="plugin" location="plugins">randompnt</dependency>
