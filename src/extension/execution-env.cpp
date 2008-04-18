@@ -22,6 +22,7 @@
 #include "ui/view/view.h"
 #include "sp-namedview.h"
 #include "desktop-handles.h"
+#include "display/sp-canvas.h"
 
 #include "util/glib-list-iterators.h"
 
@@ -124,8 +125,15 @@ ExecutionEnv::createWorkingDialog (void) {
         _visibleDialog = NULL;
     }
 
+    SPDesktop *desktop = (SPDesktop *)_doc;
+    GtkWidget *toplevel = gtk_widget_get_toplevel(&(desktop->canvas->widget));
+    if (!toplevel || !GTK_WIDGET_TOPLEVEL (toplevel)) 
+        return;
+    Gtk::Window *window = Glib::wrap(GTK_WINDOW(toplevel), false);
+
     gchar * dlgmessage = g_strdup_printf(_("'%s' working, please wait..."), _effect->get_name());
-    _visibleDialog = new Gtk::MessageDialog(dlgmessage,
+    _visibleDialog = new Gtk::MessageDialog(*window,
+                               dlgmessage,
                                false, // use markup
                                Gtk::MESSAGE_INFO,
                                Gtk::BUTTONS_CANCEL,
