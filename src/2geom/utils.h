@@ -78,7 +78,7 @@ inline double decimal_round(double const x, int const places) {
 
 }
 
-#endif
+#endif /* !LIB2GEOM_UTILS_HEADER */
 
 /*
   Local Variables:
