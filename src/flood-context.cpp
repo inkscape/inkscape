@@ -257,6 +257,10 @@ inline unsigned char * get_pixel(guchar *px, int x, int y, int width) {
     return px + (x + y * width) * 4;
 }
 
+inline unsigned char * get_trace_pixel(guchar *trace_px, int x, int y, int width) {
+    return trace_px + (x + y * width);
+}
+
 /**
  * \brief Generate the list of trace channel selection entries.
  */
@@ -339,20 +343,30 @@ static bool compare_pixels(unsigned char *check, unsigned char *orig, unsigned c
     return false;
 }
 
-static inline bool is_pixel_checked(unsigned char *t) { return t[0] == 1; }
-static inline bool is_pixel_queued(unsigned char *t) { return t[1] == 1; }
-static inline bool is_pixel_paintability_checked(unsigned char *t) { return t[2] != 0; }
-static inline bool is_pixel_paintable(unsigned char *t) { return t[2] == 1; }
-static inline bool is_pixel_colored(unsigned char *t) { return t[3] == 255; }
+enum {
+  PIXEL_CHECKED = 1,
+  PIXEL_QUEUED  = 2,
+  PIXEL_PAINTABLE = 4,
+  PIXEL_NOT_PAINTABLE = 8,
+  PIXEL_COLORED = 16
+};
 
-static inline void mark_pixel_checked(unsigned char *t) { t[0] = 1; }
-static inline void mark_pixel_unchecked(unsigned char *t) { t[0] = 0; }
-static inline void mark_pixel_queued(unsigned char *t) { t[1] = 1; }
-static inline void mark_pixel_paintable(unsigned char *t) { t[2] = 1; }
-static inline void mark_pixel_not_paintable(unsigned char *t) { t[2] = 2; }
-static inline void mark_pixel_colored(unsigned char *t) { t[3] = 255; }
+static inline bool is_pixel_checked(unsigned char *t) { return (*t & PIXEL_CHECKED) == PIXEL_CHECKED; }
+static inline bool is_pixel_queued(unsigned char *t) { return (*t & PIXEL_QUEUED) == PIXEL_QUEUED; }
+static inline bool is_pixel_paintability_checked(unsigned char *t) {
+  return !((*t & PIXEL_PAINTABLE) == 0) && ((*t & PIXEL_NOT_PAINTABLE) == 0);
+}
+static inline bool is_pixel_paintable(unsigned char *t) { return (*t & PIXEL_PAINTABLE) == PIXEL_PAINTABLE; }
+static inline bool is_pixel_colored(unsigned char *t) { return (*t & PIXEL_COLORED) == PIXEL_COLORED; }
 
-static inline void clear_pixel_paintability(unsigned char *t) { t[2] = 0; }
+static inline void mark_pixel_checked(unsigned char *t) { *t |= PIXEL_CHECKED; }
+static inline void mark_pixel_unchecked(unsigned char *t) { *t ^= PIXEL_CHECKED; }
+static inline void mark_pixel_queued(unsigned char *t) { *t |= PIXEL_QUEUED; }
+static inline void mark_pixel_paintable(unsigned char *t) { *t |= PIXEL_PAINTABLE; *t ^= PIXEL_NOT_PAINTABLE; }
+static inline void mark_pixel_not_paintable(unsigned char *t) { *t |= PIXEL_NOT_PAINTABLE; *t ^= PIXEL_PAINTABLE; }
+static inline void mark_pixel_colored(unsigned char *t) { *t |= PIXEL_COLORED; }
+
+static inline void clear_pixel_paintability(unsigned char *t) { *t ^= PIXEL_PAINTABLE; *t ^= PIXEL_NOT_PAINTABLE; }
 
 struct bitmap_coords_info {
     bool is_left;
@@ -412,11 +426,11 @@ static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *deskto
     for (unsigned int y = 0; y < bci.height ; y++) {
         unsigned long *gray_map_t = gray_map->rows[y];
 
-        trace_t = get_pixel(trace_px, 0, y, bci.width);
+        trace_t = get_trace_pixel(trace_px, 0, y, bci.width);
         for (unsigned int x = 0; x < bci.width ; x++) {
             *gray_map_t = is_pixel_colored(trace_t) ? GRAYMAP_BLACK : GRAYMAP_WHITE;
             gray_map_t++;
-            trace_t += 4;
+            trace_t++;
         }
     }
 
@@ -576,7 +590,7 @@ inline static unsigned int paint_pixel(guchar *px, guchar *trace_px, unsigned ch
         for (unsigned int ty = bci.y - bci.radius; ty <= bci.y + bci.radius; ty++) {
             for (unsigned int tx = bci.x - bci.radius; tx <= bci.x + bci.radius; tx++) {
                 if (coords_in_range(tx, ty, bci)) {
-                    trace_t = get_pixel(trace_px, tx, ty, bci.width);
+                    trace_t = get_trace_pixel(trace_px, tx, ty, bci.width);
                     if (!is_pixel_colored(trace_t)) {
                         if (check_if_pixel_is_paintable(px, trace_t, tx, ty, orig_color, bci)) {
                             mark_pixel_colored(trace_t); 
@@ -651,13 +665,11 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
     bool keep_tracing;
     bool initial_paint = true;
 
-    unsigned char *current_trace_t = get_pixel(trace_px, bci.x, bci.y, bci.width);
+    unsigned char *current_trace_t = get_trace_pixel(trace_px, bci.x, bci.y, bci.width);
     unsigned int paint_directions;
 
     bool currently_painting_top = false;
     bool currently_painting_bottom = false;
-
-    unsigned int pix_width = bci.width * 4;
 
     unsigned int top_ty = bci.y - 1;
     unsigned int bottom_ty = bci.y + 1;
@@ -687,7 +699,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
 
                 if (can_paint_top) {
                     if (paint_directions & PAINT_DIRECTION_UP) { 
-                        unsigned char *trace_t = current_trace_t - pix_width;
+                        unsigned char *trace_t = current_trace_t - bci.width;
                         if (!is_pixel_queued(trace_t)) {
                             bool ok_to_paint = check_if_pixel_is_paintable(px, trace_t, bci.x, top_ty, orig_color, bci);
 
@@ -706,7 +718,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
 
                 if (can_paint_bottom) {
                     if (paint_directions & PAINT_DIRECTION_DOWN) { 
-                        unsigned char *trace_t = current_trace_t + pix_width;
+                        unsigned char *trace_t = current_trace_t + bci.width;
                         if (!is_pixel_queued(trace_t)) {
                             bool ok_to_paint = check_if_pixel_is_paintable(px, trace_t, bci.x, bottom_ty, orig_color, bci);
 
@@ -725,12 +737,12 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
 
                 if (bci.is_left) {
                     if (paint_directions & PAINT_DIRECTION_LEFT) {
-                        bci.x -= 1; current_trace_t -= 4;
+                        bci.x--; current_trace_t--;
                         ok = true;
                     }
                 } else {
                     if (paint_directions & PAINT_DIRECTION_RIGHT) {
-                        bci.x += 1; current_trace_t += 4;
+                        bci.x++; current_trace_t++;
                         ok = true;
                     }
                 }
@@ -860,8 +872,8 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     nr_arena_item_unref(root);
     nr_object_unref((NRObject *) arena);
     
-    guchar *trace_px = g_new(guchar, 4 * width * height);
-    memset(trace_px, 0x00, 4 * width * height);
+    guchar *trace_px = g_new(guchar, width * height);
+    memset(trace_px, 0x00, width * height);
     
     std::deque<NR::Point> fill_queue;
     std::queue<NR::Point> color_queue;
@@ -919,7 +931,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
             if (i == 0) {
                 color_queue.push(pw);
             } else {
-                unsigned char *trace_t = get_pixel(trace_px, (int)pw[NR::X], (int)pw[NR::Y], width);
+                unsigned char *trace_t = get_trace_pixel(trace_px, (int)pw[NR::X], (int)pw[NR::Y], width);
                 push_point_onto_queue(&fill_queue, bci.max_queue_size, trace_t, (int)pw[NR::X], (int)pw[NR::Y]);
             }
         } else {
@@ -950,17 +962,17 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
 
         bci.merged_orig_pixel = merged_orig;
 
-        unsigned char *trace_t = get_pixel(trace_px, cx, cy, width);
+        unsigned char *trace_t = get_trace_pixel(trace_px, cx, cy, width);
         if (!is_pixel_checked(trace_t) && !is_pixel_colored(trace_t)) {
             if (check_if_pixel_is_paintable(px, trace_px, cx, cy, orig_color, bci)) {
                 shift_point_onto_queue(&fill_queue, bci.max_queue_size, trace_t, cx, cy);
 
                 if (!first_run) {
                     for (unsigned int y = 0; y < height; y++) {
-                        trace_t = get_pixel(trace_px, 0, y, width);
+                        trace_t = get_trace_pixel(trace_px, 0, y, width);
                         for (unsigned int x = 0; x < width; x++) {
                             clear_pixel_paintability(trace_t);
-                            trace_t += 4;
+                            trace_t++;
                         }
                     }
                 }
@@ -1021,7 +1033,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
             int x = (int)cp[NR::X];
             int y = (int)cp[NR::Y];
 
-            unsigned char *trace_t = get_pixel(trace_px, x, y, width);
+            unsigned char *trace_t = get_trace_pixel(trace_px, x, y, width);
             if (!is_pixel_checked(trace_t)) {
                 mark_pixel_checked(trace_t);
 
@@ -1059,7 +1071,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                 }
 
                 if (bci.x < width) {
-                    trace_t += 4;
+                    trace_t++;
                     if (!is_pixel_checked(trace_t) && !is_pixel_queued(trace_t)) {
                         mark_pixel_checked(trace_t);
                         bci.is_left = false;
