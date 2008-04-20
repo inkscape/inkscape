@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="744.09448819" height="1052.3622047" id="svg2" sodipodi:version="0.32" inkscape:version="0.46" sodipodi:docname="inkscape_filters.svg" inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs id="defs4">
+    <linearGradient inkscape:collect="always" id="linearGradient2396">
+      <stop style="stop-color: rgb(0, 204, 255); stop-opacity: 1;" offset="0" id="stop2398"/>
+      <stop style="stop-color: rgb(0, 0, 170); stop-opacity: 1;" offset="1" id="stop2400"/>
+    </linearGradient>
+    <inkscape:perspective sodipodi:type="inkscape:persp3d" inkscape:vp_x="-50 : 600 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="700 : 600 : 1" inkscape:persp3d-origin="300 : 400 : 1" id="perspective10"/>
+    <filter id="filter2424" inkscape:label="Drop Shadow">
+      <feGaussianBlur stdDeviation="2.8668571428571425" id="feGaussianBlur2426" in="SourceAlpha"/>
+      <feOffset dx="4" dy="4" id="feOffset2430"/>
+      <feColorMatrix id="feColorMatrix2432" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0"/>
+      <feComposite id="feComposite2434" in="SourceGraphic"/>
+    </filter>
+    <linearGradient inkscape:collect="always" xlink:href="#linearGradient2396" id="linearGradient2440" gradientUnits="userSpaceOnUse" x1="14.285715" y1="9.5050402" x2="141.44675" y2="152.88503"/>
+    <filter id="filter2442" inkscape:label="Apparition">
+      <feMorphology id="feMorphology2526" result="result0" in="SourceGraphic" radius="4"/>
+      <feGaussianBlur stdDeviation="9.2439050131926113" id="feGaussianBlur2444" in="result0"/>
+      <feComposite id="feComposite2446" in="SourceGraphic" operator="in"/>
+    </filter>
+    <filter id="filter2450" inkscape:label="Jelly Bean">
+      <feColorMatrix id="feColorMatrix2460" in="SourceGraphic" result="result0" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.85 0"/>
+      <feGaussianBlur stdDeviation="7.0222857142857134" id="feGaussianBlur2452" in="SourceAlpha"/>
+      <feSpecularLighting id="feSpecularLighting2454" specularExponent="7.971360381861575" specularConstant="0.80000000000000004" surfaceScale="10">
+        <feDistantLight id="feDistantLight2456" azimuth="225" elevation="17"/>
+      </feSpecularLighting>
+      <feComposite id="feComposite2458" in2="result0" operator="atop"/>
+    </filter>
+    <filter inkscape:label="Metal" id="filter2466">
+      <feColorMatrix id="feColorMatrix2764" result="result1" in="SourceGraphic" type="saturate" values="0.369458"/>
+      <feGaussianBlur in="SourceAlpha" id="feGaussianBlur2470" stdDeviation="7.0222857142857134"/>
+      <feSpecularLighting surfaceScale="10" specularConstant="3.8834951456310676" specularExponent="7.971360381861575" id="feSpecularLighting2472">
+        <feDistantLight elevation="17" azimuth="225" id="feDistantLight2474"/>
+      </feSpecularLighting>
+      <feComposite operator="atop" in2="result1" id="feComposite2476"/>
+    </filter>
+    <filter id="filter2498" inkscape:label="Motion Blur">
+      <feGaussianBlur stdDeviation="5 0.01" id="feGaussianBlur2500" in="SourceGraphic"/>
+    </filter>
+    <filter id="filter2508" inkscape:label="Cutout">
+      <feGaussianBlur stdDeviation="4.2312137203166218" id="feGaussianBlur2510" in="SourceAlpha"/>
+      <feOffset dx="5" dy="5" id="feOffset2514"/>
+      <feComposite id="feComposite2516" in="SourceGraphic" operator="out"/>
+    </filter>
+    <filter id="filter2530" inkscape:label="Jigsaw Piece">
+      <feSpecularLighting id="feSpecularLighting2534" specularExponent="18.527845036319611" specularConstant="2" surfaceScale="1" in="SourceAlpha">
+        <feDistantLight id="feDistantLight2536" azimuth="225" elevation="30"/>
+      </feSpecularLighting>
+      <feComposite id="feComposite2538" in2="SourceGraphic" operator="atop" result="result0"/>
+      <feMorphology id="feMorphology2540" operator="dilate" in="SourceAlpha" result="result1" radius="2"/>
+      <feComposite id="feComposite2542" in2="result1" in="result0"/>
+    </filter>
+    <filter id="filter2550" inkscape:label="Roughen">
+      <feTurbulence id="feTurbulence2552" baseFrequency="0.040000000000000001" in="SourceAlpha" type="turbulence" seed="0" numOctaves="3"/>
+      <feDisplacementMap id="feDisplacementMap2554" in="SourceGraphic" xChannelSelector="R" yChannelSelector="G" scale="6.6339066339066335" numOctaves="2"/>
+    </filter>
+    <filter inkscape:label="Rubber Stamp" id="filter2574">
+      <feTurbulence id="feTurbulence2580" type="fractalNoise" numOctaves="4" baseFrequency="0.064033264033264037" in="SourceGraphic" result="result1"/>
+      <feGaussianBlur stdDeviation="4.8612668463611852" id="feGaussianBlur2760" in="SourceAlpha"/>
+      <feComposite id="feComposite2754" in="SourceAlpha" operator="out"/>
+      <feComposite id="feComposite2756" in2="result1"/>
+      <feColorMatrix id="feColorMatrix2582" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9" numOctaves="3" result="result1"/>
+      <feComposite id="feComposite2762" in="SourceGraphic" operator="in" result="result1"/>
+      <feTurbulence id="feTurbulence3587" numOctaves="1" baseFrequency="0.03231597845601436"/>
+      <feDisplacementMap id="feDisplacementMap3589" in="result1" xChannelSelector="R" yChannelSelector="G" scale="4.0609137055837561"/>
+    </filter>
+    <filter id="filter2610" inkscape:label="Ink Bleed">
+      <feGaussianBlur stdDeviation="1.3291292875989447" id="feGaussianBlur2612" in="SourceGraphic" result="result1"/>
+      <feTurbulence id="feTurbulence2614" baseFrequency="0.033773087071240104" numOctaves="4" result="result0"/>
+      <feDisplacementMap id="feDisplacementMap2616" in2="result0" in="result1" xChannelSelector="R" yChannelSelector="G" scale="19.612590799031477" result="result2"/>
+      <feColorMatrix id="feColorMatrix2620" result="result3" values="2 0 0 0 0 0 2 0 0 0 0 0 2 0 0 0 0 0 0.7 0"/>
+      <feGaussianBlur stdDeviation="1.0653034300791555" id="feGaussianBlur2622" in="SourceGraphic" result="result4"/>
+      <feComposite id="feComposite2618" in2="result3" in="result4"/>
+    </filter>
+    <filter id="filter2565" inkscape:label="Fire" x="-0.080000000000000029" height="1.3900000000000001" width="1.21" y="-0.22000000000000008">
+      <feMorphology id="feMorphology2571" operator="dilate" radius="2.4128686327077746" result="result1"/>
+      <feTurbulence id="feTurbulence2573" numOctaves="1" baseFrequency="0.0900804289544236 0.027882037533512066"/>
+      <feColorMatrix id="feColorMatrix2577" values="2 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 1 0" result="result2" type="matrix"/>
+      <feDisplacementMap id="feDisplacementMap2581" in="result1" xChannelSelector="R" yChannelSelector="G" scale="10.319410319410318" result="result4"/>
+      <feFlood id="feFlood2585" flood-color="rgb(255,159,54)" flood-opacity="1" result="result3"/>
+      <feMorphology id="feMorphology2806" in="result4" result="result7" radius="3.755868544600939"/>
+      <feGaussianBlur stdDeviation="2.3571830985915487" id="feGaussianBlur2802" in="result7" result="result7"/>
+      <feComposite id="feComposite2587" operator="in" in="result3" in2="result4" result="result5"/>
+      <feComposite id="feComposite2804" in2="result7" operator="out"/>
+      <feOffset dx="-4.5" dy="-7" id="feOffset2591" result="result6"/>
+      <feGaussianBlur stdDeviation="4.8352546916890073" id="feGaussianBlur2593" result="result7"/>
+      <feComposite id="feComposite2583" in2="result6" in="SourceGraphic"/>
+      <feComposite id="feComposite2595" in2="result7"/>
+    </filter>
+    <filter id="filter2768" inkscape:label="Snow">
+      <feConvolveMatrix order="3 3" kernelMatrix="1 1 1 0 0 0 -1 -1 -1" id="feConvolveMatrix2770" preserveAlpha="false" divisor="3"/>
+      <feMorphology id="feMorphology2772" operator="dilate" radius="1 3.2345013477088949"/>
+      <feGaussianBlur stdDeviation="1.6270889487870621" id="feGaussianBlur2776" result="result0"/>
+      <feColorMatrix id="feColorMatrix2774" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 10 0" result="result1"/>
+      <feOffset dx="0" dy="1" id="feOffset2924" result="result5"/>
+      <feDiffuseLighting id="feDiffuseLighting2780" in="result0" diffuseConstant="2.2613065326633168" surfaceScale="1">
+        <feDistantLight id="feDistantLight2782" azimuth="225" elevation="32"/>
+      </feDiffuseLighting>
+      <feComposite id="feComposite2784" in2="result1" operator="in" result="result2"/>
+      <feColorMatrix id="feColorMatrix2922" values="0.4 0 0 0 0.6 0 0.4 0 0 0.6 0 0 0 0 1 0 0 0 1 0" result="result4"/>
+      <feComposite id="feComposite2786" in2="result5" in="result4"/>
+      <feComposite id="feComposite2790" in2="SourceGraphic"/>
+    </filter>
+    <filter id="filter2814" inkscape:label="Bloom">
+      <feGaussianBlur stdDeviation="2.1526428571428569" id="feGaussianBlur2816" in="SourceAlpha" result="result1"/>
+      <feSpecularLighting id="feSpecularLighting2818" surfaceScale="5" specularConstant="2" specularExponent="18.063876651982376" result="result0">
+        <feDistantLight id="feDistantLight2822" elevation="24" azimuth="225"/>
+      </feSpecularLighting>
+      <feComposite id="feComposite2848" in2="SourceAlpha" operator="in" result="result6"/>
+      <feMorphology id="feMorphology2858" operator="dilate" radius="5.7142857142857144"/>
+      <feGaussianBlur stdDeviation="5.7237142857142853" id="feGaussianBlur2824" result="result11"/>
+      <feDiffuseLighting id="feDiffuseLighting2830" in="result1" diffuseConstant="2.0099999999999998" result="result3" surfaceScale="5">
+        <feDistantLight id="feDistantLight2832" azimuth="225" elevation="25"/>
+      </feDiffuseLighting>
+      <feBlend blend="normal" id="feBlend2844" in2="SourceGraphic" in="result3" mode="multiply" result="result7"/>
+      <feComposite id="feComposite2846" in2="SourceAlpha" operator="in" in="result7"/>
+      <feBlend blend="normal" id="feBlend2842" in="result6" mode="lighten" result="result9"/>
+      <feComposite id="feComposite2856" in="result11"/>
+    </filter>
+    <filter id="filter2862" inkscape:label="Ridged border">
+      <feMorphology id="feMorphology2866" in="SourceAlpha" radius="4.2857142857142856"/>
+      <feComposite id="feComposite2868" in="SourceGraphic" operator="out"/>
+      <feGaussianBlur stdDeviation="1.2003571428571427" id="feGaussianBlur2870" result="result0"/>
+      <feDiffuseLighting id="feDiffuseLighting2874" diffuseConstant="1">
+        <feDistantLight id="feDistantLight2876" azimuth="225" elevation="66"/>
+      </feDiffuseLighting>
+      <feBlend blend="normal" id="feBlend2878" in2="SourceGraphic" mode="multiply"/>
+      <feComposite id="feComposite2880" in2="SourceAlpha" operator="in"/>
+    </filter>
+    <filter id="filter2888" inkscape:label="Ripple">
+      <feTurbulence id="feTurbulence2890" baseFrequency="0.001904761904761905 0.10666666666666667" numOctaves="1"/>
+      <feColorMatrix id="feColorMatrix2894" values="2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0.5"/>
+      <feDisplacementMap id="feDisplacementMap2892" in="SourceGraphic" scale="14.317180616740089" xChannelSelector="R" yChannelSelector="A"/>
+    </filter>
+    <filter id="filter2902" inkscape:label="Speckle">
+      <feTurbulence id="feTurbulence2904" type="fractalNoise" baseFrequency="0.20952380952380956" numOctaves="1" result="result1"/>
+      <feColorMatrix id="feColorMatrix2912" type="luminanceToAlpha" in="SourceGraphic" result="result0"/>
+      <feColorMatrix id="feColorMatrix2916" result="result2" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.8 0"/>
+      <feComposite id="feComposite2910" in2="result2" operator="over" in="result1"/>
+      <feColorMatrix id="feColorMatrix2906" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -14"/>
+      <feComposite id="feComposite2914" in="SourceGraphic" operator="out"/>
+    </filter>
+    <filter id="filter2928" inkscape:label="Oil Slick">
+      <feTurbulence id="feTurbulence2936" type="fractalNoise" numOctaves="5" baseFrequency="0.14299516908212559"/>
+      <feColorMatrix id="feColorMatrix2938" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 -3"/>
+      <feMorphology id="feMorphology2942" operator="dilate" radius="2.6570048309178742" result="result3"/>
+      <feTurbulence id="feTurbulence2944" numOctaves="2" baseFrequency="0.12077294685990339"/>
+      <feDisplacementMap id="feDisplacementMap2946" in="result3" xChannelSelector="R" yChannelSelector="A" scale="18.526785714285715" result="result4"/>
+      <feComposite id="feComposite2948" in="result4" operator="atop" in2="SourceGraphic"/>
+    </filter>
+    <filter inkscape:label="Frost" id="filter2952">
+      <feTurbulence baseFrequency="0.14299516908212559" numOctaves="5" type="fractalNoise" id="feTurbulence2954"/>
+      <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 -3" id="feColorMatrix2956"/>
+      <feComposite id="feComposite2972" in2="SourceAlpha" operator="in"/>
+      <feMorphology result="result3" radius="2.6570048309178742" operator="dilate" id="feMorphology2958"/>
+      <feTurbulence baseFrequency="0.12077294685990339" numOctaves="2" id="feTurbulence2960"/>
+      <feDisplacementMap result="result4" scale="10.044642857142858" yChannelSelector="A" xChannelSelector="R" in="result3" id="feDisplacementMap2962"/>
+      <feFlood id="feFlood2968" flood-color="rgb(255,255,255)" flood-opacity="1"/>
+      <feComposite id="feComposite2970" in2="result4" operator="in" result="result2"/>
+      <feComposite in2="SourceGraphic" operator="over" in="result2" id="feComposite2964"/>
+    </filter>
+    <filter inkscape:label="Leopard Fur" id="filter2652">
+      <feTurbulence baseFrequency="0.14299516908212559" numOctaves="5" type="fractalNoise" id="feTurbulence2654"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 -3.45" id="feColorMatrix2656"/>
+      <feComposite result="result3" id="feComposite2658" in2="SourceAlpha" operator="in"/>
+      <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 0" id="feColorMatrix2660"/>
+      <feMorphology result="result3" radius="1.8181818181818181" operator="dilate" id="feMorphology2662"/>
+      <feGaussianBlur result="result3" id="feGaussianBlur2664" stdDeviation="1"/>
+      <feGaussianBlur id="feGaussianBlur2666" stdDeviation="2.7287613293051356"/>
+      <feComposite in2="result3" result="result1" operator="out" id="feComposite2668"/>
+      <feColorMatrix result="result3" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 0" id="feColorMatrix2670"/>
+      <feFlood result="result2" flood-opacity="1" flood-color="rgb(209,151,45)" id="feFlood2672"/>
+      <feComposite operator="in" in="result2" in2="SourceGraphic" id="feComposite2674"/>
+      <feComposite in="result3" result="result3" operator="atop" id="feComposite2676"/>
+      <feGaussianBlur stdDeviation="7.1521428571428558" id="feGaussianBlur2682" in="SourceAlpha"/>
+      <feDiffuseLighting id="feDiffuseLighting2684" diffuseConstant="1.9197207678883073" surfaceScale="10.600706713780937">
+        <feDistantLight id="feDistantLight2686" azimuth="225" elevation="48"/>
+      </feDiffuseLighting>
+      <feBlend blend="normal" id="feBlend2688" in2="result3" mode="multiply" result="result3"/>
+      <feComposite id="feComposite2690" in2="SourceAlpha" operator="in" result="result3"/>
+      <feTurbulence baseFrequency="0.10577777777777778" numOctaves="3" id="feTurbulence2678"/>
+      <feDisplacementMap scale="4.5454545454545459" yChannelSelector="G" xChannelSelector="R" in="result3" id="feDisplacementMap2680"/>
+    </filter>
+    <filter id="filter2673" inkscape:label="Zebra">
+      <feColorMatrix id="feColorMatrix2675" type="matrix" values="0.15 0.3 0.05 0 0.5 0.15 0.3 0.05 0 0.5 0.15 0.3 0.05 0 0.5 0 0 0 1 0" result="result0"/>
+      <feTurbulence id="feTurbulence2677" numOctaves="1" baseFrequency="0.078388278388278387 0.012454212454212455"/>
+      <feColorMatrix id="feColorMatrix2679" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 -0.8"/>
+      <feComposite id="feComposite2683" in2="result0" operator="atop"/>
+    </filter>
+    <filter id="filter2687" inkscape:label="Clouds">
+      <feTurbulence id="feTurbulence2689" type="fractalNoise" baseFrequency="0.040293040293040296 0.10695970695970697" numOctaves="3"/>
+      <feColorMatrix id="feColorMatrix2691" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 -2.7" result="result0"/>
+      <feFlood id="feFlood2693" flood-color="rgb(255,255,255)" flood-opacity="1"/>
+      <feComposite id="feComposite2695" in2="result0" operator="in"/>
+      <feComposite id="feComposite2697" in2="SourceGraphic" operator="atop"/>
+    </filter>
+    <filter id="filter2729" inkscape:label="Etched Glass">
+      <feGaussianBlur stdDeviation="6.3056666666666654" id="feGaussianBlur2731" in="BackgroundImage"/>
+      <feComposite id="feComposite2733" in2="SourceAlpha" operator="in"/>
+      <feBlend blend="normal" id="feBlend2735" in2="SourceGraphic" mode="multiply"/>
+    </filter>
+    <filter inkscape:label="Crystal" id="filter3519">
+      <feBlend mode="multiply" in2="BackgroundImage" id="feBlend3525" blend="normal" in="SourceGraphic" result="result0"/>
+      <feGaussianBlur stdDeviation="3.7133333333333329" id="feGaussianBlur3529" in="SourceAlpha" result="result1"/>
+      <feSpecularLighting id="feSpecularLighting3527" specularExponent="128" specularConstant="1.7636684303350969" surfaceScale="3">
+        <feDistantLight id="feDistantLight3531" azimuth="225" elevation="45"/>
+      </feSpecularLighting>
+      <feComposite id="feComposite3535" in2="SourceAlpha" operator="in" result="result3"/>
+      <feSpecularLighting id="feSpecularLighting3547" in="result1" specularExponent="128" specularConstant="3.5273368606701938" surfaceScale="-5">
+        <feDistantLight id="feDistantLight3549" azimuth="225" elevation="32"/>
+      </feSpecularLighting>
+      <feComposite id="feComposite3551" in2="SourceAlpha" operator="in" result="result2"/>
+      <feMerge id="feMerge3555">
+        <feMergeNode inkscape:collect="always" id="feMergeNode3557" in="result0"/>
+        <feMergeNode inkscape:collect="always" id="feMergeNode3559" in="result3"/>
+        <feMergeNode inkscape:collect="always" id="feMergeNode3561" in="result2"/>
+      </feMerge>
+    </filter>
+    <filter id="filter3569" inkscape:label="Patterned Glass">
+      <feTurbulence id="feTurbulence3571" numOctaves="1" baseFrequency="0.10861423220973783"/>
+      <feDisplacementMap id="feDisplacementMap3573" in="BackgroundImage" xChannelSelector="R" yChannelSelector="G" scale="11.795774647887324"/>
+      <feComposite id="feComposite3575" in2="SourceAlpha" operator="in"/>
+      <feBlend blend="normal" id="feBlend3577" in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" gridtolerance="10000" guidetolerance="10" objecttolerance="10" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="1" inkscape:cx="602.89512" inkscape:cy="497.97199" inkscape:document-units="px" inkscape:current-layer="layer1" showgrid="false" inkscape:window-width="1680" inkscape:window-height="973" inkscape:window-x="0" inkscape:window-y="0"/>
+  <metadata id="metadata7">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1" style="">
+    <rect ry="4" rx="4" y="517.36218" x="373" height="20" width="329" id="rect3511" style="overflow: visible; marker: none; opacity: 1; fill: rgb(85, 212, 0); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline;" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <rect style="overflow: visible; marker: none; opacity: 1; fill: rgb(255, 0, 0); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline;" id="rect3509" width="329" height="20" x="357" y="493.36218" rx="4" ry="4" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <path sodipodi:type="star" style="overflow: visible; marker: none; opacity: 1; fill: url(#linearGradient2440) rgb(0, 0, 0); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline;" id="path2394" sodipodi:sides="4" sodipodi:cx="62.857143" sodipodi:cy="66.647896" sodipodi:r1="115.31678" sodipodi:r2="52.000786" sodipodi:arg1="0.83798123" sodipodi:arg2="1.6233794" inkscape:flatsided="false" inkscape:rounded="0.38" inkscape:randomized="0.204" d="M 135.84797,140.81171 C 116.22191,165.99999 79.668132,145.65744 45.208217,134.784 C 10.748302,123.91055 25.88935,162.83675 -5.4070413,144.43484 C -36.703432,126.03292 19.567837,104.27296 16.137445,73.507847 C 12.707054,42.742733 -28.318678,1.2561333 -6.04681,-26.77085 C 16.225058,-54.797834 52.578245,16.511272 87.701659,9.431986 C 122.82507,2.3527 115.97085,-14.949828 135.15978,12.590764 C 154.3487,40.131357 124.1811,37.232576 116.77243,70.708135 C 109.36376,104.18369 155.47402,115.62342 135.84797,140.81171 z" transform="matrix(0.470097, 0, 0, 0.470097, -196.476, 45.1958)"/>
+    <use x="0" y="0" xlink:href="#path2394" id="use2428" transform="translate(231.429, 6.28572)" width="744.09448" height="1052.3622" style="filter: url(#filter2424);" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <use style="filter: url(#filter2442);" height="1052.3622" width="744.09448" transform="translate(346.095, 6.28572)" id="use2436" xlink:href="#path2394" y="0" x="0" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <use x="0" y="0" xlink:href="#path2394" id="use2448" transform="translate(460.762, 6.28572)" width="744.09448" height="1052.3622" style="filter: url(#filter2450);" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <use style="filter: url(#filter2466);" height="1052.3622" width="744.09448" transform="translate(575.429, 6.28572)" id="use2462" xlink:href="#path2394" y="0" x="0" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text xml:space="preserve" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" x="64" y="149.362" id="text2478" sodipodi:linespacing="125%" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan sodipodi:role="line" id="tspan2480" x="64" y="149.362">Drop Shadow</tspan></text>
+    <text sodipodi:linespacing="125%" id="text2482" y="149.362" x="181" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" xml:space="preserve" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan y="149.362" x="181" id="tspan2484" sodipodi:role="line">Apparition</tspan></text>
+    <text xml:space="preserve" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" x="295" y="149.362" id="text2486" sodipodi:linespacing="125%" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan sodipodi:role="line" id="tspan2488" x="295" y="149.362">Jelly Bean</tspan></text>
+    <text sodipodi:linespacing="125%" id="text2490" y="149.362" x="410" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" xml:space="preserve" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan y="149.362" x="410" id="tspan2492" sodipodi:role="line">Metallic</tspan></text>
+    <use x="0" y="0" xlink:href="#path2394" id="use2496" transform="translate(698.429, 6.28572)" width="744.09448" height="1052.3622" style="filter: url(#filter2498);" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text xml:space="preserve" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" x="532" y="149.362" id="text2502" sodipodi:linespacing="125%" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan sodipodi:role="line" id="tspan2504" x="532" y="149.362">Motion Blur</tspan></text>
+    <use style="filter: url(#filter2508);" height="1052.3622" width="744.09448" transform="translate(815.429, 6.28572)" id="use2506" xlink:href="#path2394" y="0" x="0" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text sodipodi:linespacing="125%" id="text2518" y="149.362" x="651" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" xml:space="preserve" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan y="149.362" x="651" sodipodi:role="line" id="tspan2522">Cutout</tspan></text>
+    <use style="filter: url(#filter2530);" height="1052.3622" width="744.09448" transform="translate(229.429, 151.286)" id="use2528" xlink:href="#path2394" y="0" x="0" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text xml:space="preserve" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" x="63" y="299.362" id="text2544" sodipodi:linespacing="125%" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan id="tspan2546" sodipodi:role="line" x="63" y="299.362">Jigsaw Piece</tspan></text>
+    <use x="0" y="0" xlink:href="#path2394" id="use2548" transform="translate(348.429, 151.286)" width="744.09448" height="1052.3622" style="filter: url(#filter2550);" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text sodipodi:linespacing="125%" id="text2556" y="299.362" x="182" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" xml:space="preserve" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan y="299.362" x="182" sodipodi:role="line" id="tspan2796">Roughen</tspan></text>
+    <use height="1052.3622" width="744.09448" transform="translate(460.429, 151.286)" id="use2568" xlink:href="#path2394" y="0" x="0" style="filter: url(#filter2574);" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text xml:space="preserve" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" x="298" y="299.362" id="text2570" sodipodi:linespacing="125%" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan id="tspan2572" sodipodi:role="line" x="298" y="299.362">Rubber Stamp</tspan></text>
+    <use style="filter: url(#filter2610);" x="0" y="0" xlink:href="#path2394" id="use2604" transform="translate(576.429, 151.286)" width="744.09448" height="1052.3622" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text sodipodi:linespacing="125%" id="text2606" y="299.362" x="414" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" xml:space="preserve" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan y="299.362" x="414" sodipodi:role="line" id="tspan2608">Ink Bleed</tspan></text>
+    <text xml:space="preserve" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" x="525" y="299.362" id="text2658" sodipodi:linespacing="125%" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan id="tspan2660" sodipodi:role="line" x="525" y="299.362">Fire</tspan></text>
+    <use style="filter: url(#filter2565);" x="0" y="0" xlink:href="#path2394" id="use2563" transform="translate(696.429, 151.286)" width="744.09448" height="1052.3622" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <use height="1052.3622" width="744.09448" transform="translate(819.429, 151.286)" id="use2766" xlink:href="#path2394" y="0" x="0" style="filter: url(#filter2768);" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text sodipodi:linespacing="125%" id="text2792" y="299.362" x="649" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" xml:space="preserve" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan y="299.362" x="649" sodipodi:role="line" id="tspan2794">Snow</tspan></text>
+    <use x="0" y="0" xlink:href="#path2394" id="use2808" transform="translate(231.429, 294.286)" width="744.09448" height="1052.3622" style="filter: url(#filter2814);" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text sodipodi:linespacing="125%" id="text2810" y="435.362" x="63" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" xml:space="preserve" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan y="435.362" x="63" sodipodi:role="line" id="tspan2850">Bloom</tspan></text>
+    <use style="filter: url(#filter2862);" height="1052.3622" width="744.09448" transform="translate(350.429, 294.286)" id="use2860" xlink:href="#path2394" y="0" x="0" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text xml:space="preserve" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" x="184" y="435.362" id="text2882" sodipodi:linespacing="125%" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan id="tspan2884" sodipodi:role="line" x="184" y="435.362">Ridged Border</tspan></text>
+    <use x="0" y="0" xlink:href="#path2394" id="use2886" transform="translate(463.429, 294.286)" width="744.09448" height="1052.3622" style="filter: url(#filter2888);" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text sodipodi:linespacing="125%" id="text2896" y="435.362" x="298" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" xml:space="preserve" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan y="435.362" x="298" sodipodi:role="line" id="tspan2898">Ripple</tspan></text>
+    <use height="1052.3622" width="744.09448" transform="translate(579.429, 294.286)" id="use2900" xlink:href="#path2394" y="0" x="0" style="filter: url(#filter2902);" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text xml:space="preserve" style="overflow: visible; marker: none; font-size: 16.0611px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" x="413.413" y="435.145" id="text2918" sodipodi:linespacing="125%" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan id="tspan2920" sodipodi:role="line" x="413.413" y="435.145">Speckle</tspan></text>
+    <use style="filter: url(#filter2928);" x="0" y="0" xlink:href="#path2394" id="use2926" transform="translate(228.429, 437.286)" width="744.09448" height="1052.3622" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <use height="1052.3622" width="744.09448" transform="translate(696.429, 297.286)" id="use2966" xlink:href="#path2394" y="0" x="0" style="filter: url(#filter2952);" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text sodipodi:linespacing="125%" id="text2974" y="434.145" x="529.413" style="overflow: visible; marker: none; font-size: 16.0611px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" xml:space="preserve" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan y="434.145" x="529.413" sodipodi:role="line" id="tspan2976">Frost</tspan></text>
+    <use x="0" y="0" xlink:href="#path2394" id="use2978" transform="translate(817.429, 299.286)" width="744.09448" height="1052.3622" style="filter: url(#filter2652);" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text xml:space="preserve" style="overflow: visible; marker: none; font-size: 16.0611px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" x="652.413" y="434.145" id="text2596" sodipodi:linespacing="125%" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan sodipodi:role="line" x="652.413" y="434.145" id="tspan2600">Leopard Fur</tspan></text>
+    <text sodipodi:linespacing="125%" id="text2604" y="576.145" x="59.4135" style="overflow: visible; marker: none; font-size: 16.0611px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" xml:space="preserve" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan id="tspan2606" y="576.145" x="59.4135" sodipodi:role="line">Oil Slick</tspan></text>
+    <use height="1052.3622" width="744.09448" transform="translate(352.429, 437.286)" id="use2617" xlink:href="#path2394" y="0" x="0" style="filter: url(#filter2673);" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text xml:space="preserve" style="overflow: visible; marker: none; font-size: 16.0611px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" x="183.413" y="576.145" id="text2619" sodipodi:linespacing="125%" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan sodipodi:role="line" x="183.413" y="576.145" id="tspan2621">Zebra</tspan></text>
+    <use x="0" y="0" xlink:href="#path2394" id="use2685" transform="translate(467.429, 437.286)" width="744.09448" height="1052.3622" style="filter: url(#filter2687);" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text sodipodi:linespacing="125%" id="text2703" y="576.145" x="300.413" style="overflow: visible; marker: none; font-size: 16.0611px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" xml:space="preserve" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan id="tspan2705" y="576.145" x="300.413" sodipodi:role="line">Clouds</tspan></text>
+    <use style="filter: url(#filter2729);" height="1052.3622" width="744.09448" transform="translate(581.429, 438.286)" id="use2727" xlink:href="#path2394" y="0" x="0" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text xml:space="preserve" style="overflow: visible; marker: none; font-size: 16.0611px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" x="414.413" y="576.145" id="text3513" sodipodi:linespacing="125%" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan sodipodi:role="line" x="414.413" y="576.145" id="tspan3515">Etched Glass</tspan></text>
+    <use x="0" y="0" xlink:href="#path2394" id="use3517" transform="translate(698.429, 438.286)" width="744.09448" height="1052.3622" style="filter: url(#filter3519);" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text sodipodi:linespacing="125%" id="text3539" y="576.145" x="531.413" style="overflow: visible; marker: none; font-size: 16.0611px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" xml:space="preserve" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan y="576.145" x="531.413" sodipodi:role="line" id="tspan3543">Crystal</tspan></text>
+    <use style="filter: url(#filter3569);" height="1052.3622" width="744.09448" transform="translate(811.429, 438.286)" id="use3563" xlink:href="#path2394" y="0" x="0" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"/>
+    <text xml:space="preserve" style="overflow: visible; marker: none; font-size: 16.0611px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; opacity: 1; fill: rgb(128, 128, 128); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" x="645.413" y="576.145" id="text3565" sodipodi:linespacing="125%" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" inkscape:export-xdpi="90.026527" inkscape:export-ydpi="90.026527"><tspan sodipodi:role="line" x="645.413" y="576.145" id="tspan3579">Patterned Glass</tspan></text>
+    <text xml:space="preserve" style="overflow: visible; marker: none; font-size: 15px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-indent: 0pt; text-align: justify; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: start; opacity: 1; fill: rgb(0, 0, 0); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Impact;" x="617" y="590.362" id="text3603" sodipodi:linespacing="125%"><tspan sodipodi:role="line" id="tspan3605" x="617" y="590.362"/></text>
+    <a id="a3624" xlink:href="https://bugs.launchpad.net/inkscape/+bug/194928">
+      <g id="g3619">
+        <text inkscape:export-ydpi="90.026527" inkscape:export-xdpi="90.026527" inkscape:export-filename="/home/mauve/art/inkscape_filters.png" sodipodi:linespacing="125%" id="text3607" y="587.149" x="646.965" style="overflow: visible; marker: none; font-size: 8.56272px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; text-indent: 0pt; text-align: center; text-decoration: none; line-height: 125%; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; text-anchor: middle; fill: rgb(0, 85, 212); fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 1pt; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline; font-family: Trebuchet MS;" xml:space="preserve"><tspan id="tspan3609" y="587.149" x="646.965" sodipodi:role="line">not working due to bug #194928</tspan></text>
+        <path style="overflow: visible; marker: none; opacity: 1; fill: none; fill-opacity: 1; fill-rule: nonzero; stroke: rgb(0, 85, 212); stroke-width: 1; stroke-linecap: square; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1; visibility: visible; display: inline;" d="M 585.25,589.36218 L 708.75,589.36218" id="path3615"/>
+      </g>
+    </a>
+  </g>
+</svg>
