@@ -417,21 +417,23 @@ inline static bool check_if_pixel_is_paintable(guchar *px, unsigned char *trace_
  * \param transform The transform to apply to the final SVG path.
  * \param union_with_selection If true, merge the final SVG path with the current selection.
  */
-static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *desktop, NR::Matrix transform, bool union_with_selection) {
+static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *desktop, NR::Matrix transform, unsigned int min_x, unsigned int max_x, unsigned int min_y, unsigned int max_y, bool union_with_selection) {
     SPDocument *document = sp_desktop_document(desktop);
 
     unsigned char *trace_t;
 
-    GrayMap *gray_map = GrayMapCreate(bci.width, bci.height);
-    for (unsigned int y = 0; y < bci.height ; y++) {
-        unsigned long *gray_map_t = gray_map->rows[y];
+    GrayMap *gray_map = GrayMapCreate((max_x - min_x + 1), (max_y - min_y + 1));
+    unsigned int gray_map_y = 0;
+    for (unsigned int y = min_y; y <= max_y; y++) {
+        unsigned long *gray_map_t = gray_map->rows[gray_map_y];
 
-        trace_t = get_trace_pixel(trace_px, 0, y, bci.width);
-        for (unsigned int x = 0; x < bci.width ; x++) {
+        trace_t = get_trace_pixel(trace_px, min_x, y, bci.width);
+        for (unsigned int x = min_x; x <= max_x; x++) {
             *gray_map_t = is_pixel_colored(trace_t) ? GRAYMAP_BLACK : GRAYMAP_WHITE;
             gray_map_t++;
             trace_t++;
         }
+        gray_map_y++;
     }
 
     Inkscape::Trace::Potrace::PotraceTracingEngine pte;
@@ -657,7 +659,7 @@ static void shift_point_onto_queue(std::deque<NR::Point> *fill_queue, unsigned i
  * \param orig_color The original selected pixel to use as the fill target color.
  * \param bci The bitmap_coords_info structure.
  */
-static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci) {
+static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci, unsigned int *min_x, unsigned int *max_x) {
     bool aborted = false;
     bool reached_screen_boundary = false;
     bool ok;
@@ -686,6 +688,9 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
         } else {
             keep_tracing = (bci.x < bci.width);
         }
+
+        *min_x = MIN(*min_x, bci.x);
+        *max_x = MAX(*max_x, bci.x);
 
         if (keep_tracing) {
             if (check_if_pixel_is_paintable(px, current_trace_t, bci.x, bci.y, orig_color, bci)) {
@@ -945,6 +950,11 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
 
     unsigned long sort_size_threshold = 5;
 
+    unsigned int min_y = height;
+    unsigned int max_y = 0;
+    unsigned int min_x = width;
+    unsigned int max_x = 0;
+
     while (!color_queue.empty() && !aborted) {
         NR::Point color_point = color_queue.front();
         color_queue.pop();
@@ -1033,6 +1043,9 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
             int x = (int)cp[NR::X];
             int y = (int)cp[NR::Y];
 
+            min_y = MIN((unsigned int)y, min_y);
+            max_y = MAX((unsigned int)y, max_y);
+
             unsigned char *trace_t = get_trace_pixel(trace_px, x, y, width);
             if (!is_pixel_checked(trace_t)) {
                 mark_pixel_checked(trace_t);
@@ -1057,7 +1070,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                 bci.x = x;
                 bci.y = y;
 
-                ScanlineCheckResult result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
+                ScanlineCheckResult result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci, &min_x, &max_x);
 
                 switch (result) {
                     case SCANLINE_CHECK_ABORTED:
@@ -1077,7 +1090,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                         bci.is_left = false;
                         bci.x = x + 1;
 
-                        result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci);
+                        result = perform_bitmap_scanline_check(&fill_queue, px, trace_px, orig_color, bci, &min_x, &max_x);
 
                         switch (result) {
                             case SCANLINE_CHECK_ABORTED:
@@ -1112,10 +1125,19 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     if (reached_screen_boundary) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Only the visible part of the bounded area was filled.</b> If you want to fill all of the area, undo, zoom out, and fill again.")); 
     }
+
+    unsigned int trace_padding = bci.radius + 1;
+    if (min_y > trace_padding) { min_y -= trace_padding; }
+    if (max_y < (y_limit - trace_padding)) { max_y += trace_padding; }
+    if (min_x > trace_padding) { min_x -= trace_padding; }
+    if (max_x < (width - 1 - trace_padding)) { max_x += trace_padding; }
+
+    NR::Point min_start = NR::Point(min_x, min_y);
     
+    affine = scale * NR::translate(-origin * scale - min_start);
     NR::Matrix inverted_affine = NR::Matrix(affine).inverse();
     
-    do_trace(bci, trace_px, desktop, inverted_affine, union_with_selection);
+    do_trace(bci, trace_px, desktop, inverted_affine, min_x, max_x, min_y, max_y, union_with_selection);
 
     g_free(trace_px);
     
