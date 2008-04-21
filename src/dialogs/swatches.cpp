@@ -240,20 +240,20 @@ static void handleSecondaryClick( GtkWidget* widget, gint arg1, gpointer callbac
     }
 }
 
-static void handleEnterNotify( GtkWidget* widget, GdkEventCrossing* event, gpointer callback_data ) {
-    ColorItem* item = reinterpret_cast<ColorItem*>(callback_data);
-    if ( item ) {
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-        if ( desktop ) {
-            desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, g_strconcat(
-              _("Swatch info: <b>"),
-              item->def.descr.c_str(),
-              _("</b>"),
-              NULL
-            ));
-        }
-    }
-}
+// static void handleEnterNotify( GtkWidget* widget, GdkEventCrossing* event, gpointer callback_data ) {
+//     ColorItem* item = reinterpret_cast<ColorItem*>(callback_data);
+//     if ( item ) {
+//         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+//         if ( desktop ) {
+//             desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, g_strconcat(
+//               _("Swatch info: <b>"),
+//               item->def.descr.c_str(),
+//               _("</b>"),
+//               NULL
+//             ));
+//         }
+//     }
+// }
 
 static GtkWidget* popupMenu = 0;
 static ColorItem* bounceTarget = 0;
@@ -604,10 +604,15 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
                           G_CALLBACK(dragBegin),
                           this );
 
-        g_signal_connect( G_OBJECT(newBlot->gobj()),
-                          "enter-notify-event",
-                          G_CALLBACK(handleEnterNotify),
-                          this);
+//         g_signal_connect( G_OBJECT(newBlot->gobj()),
+//                           "enter-notify-event",
+//                           G_CALLBACK(handleEnterNotify),
+//                           this);
+
+//         g_signal_connect( G_OBJECT(newBlot->gobj()),
+//                           "enter-notify-event",
+//                           G_CALLBACK(handleEnterNotify),
+//                           this);
 
 //         g_signal_connect( G_OBJECT(newBlot->gobj()),
 //                           "drag-drop",
