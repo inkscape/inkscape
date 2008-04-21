@@ -4,7 +4,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2006 Bob Jamison
+ * Copyright (C) 2006-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -42,8 +42,9 @@ static void pl(unsigned long long val)
 }
 */
 
+#define TR32(x) ((x) & 0xffffffffL)
 
-static char *hexDigits = "0123456789abcdef";
+static const char *hexDigits = "0123456789abcdef";
 
 static std::string toHex(const std::vector<unsigned char> &bytes)
 {
@@ -129,38 +130,37 @@ void Sha1Digest::hashblock()
     for ( ; t < 20 ; t++)
         {
         //see 4.1.1 for the boolops on B,C, and D
-        T = (SHA_ROTL(a,5) + ((b&c)^(~b&d)) +  //Ch(b,c,d))
-                e + 0x5a827999L + W[t]) & 0xffffffffL;
+        T = TR32(SHA_ROTL(a,5) + ((b&c)^(~b&d)) +  //Ch(b,c,d))
+                e + 0x5a827999L + W[t]);
         e = d; d = c; c = SHA_ROTL(b, 30); b = a; a = T;
         //printf("%2d %08lx %08lx %08lx %08lx %08lx\n", t, a, b, c, d, e);
         }
     for ( ; t < 40 ; t++)
         {
-        T = (SHA_ROTL(a,5) + (b^c^d) +
-                e + 0x6ed9eba1L + W[t]) & 0xffffffffL;
+        T = TR32(SHA_ROTL(a,5) + (b^c^d) + e + 0x6ed9eba1L + W[t]);
         e = d; d = c; c = SHA_ROTL(b, 30); b = a; a = T;
         //printf("%2d %08lx %08lx %08lx %08lx %08lx\n", t, a, b, c, d, e);
         }
     for ( ; t < 60 ; t++)
         {
-        T = (SHA_ROTL(a,5) + ((b&c)^(b&d)^(c&d)) +
-                e + 0x8f1bbcdcL + W[t]) & 0xffffffffL;
+        T = TR32(SHA_ROTL(a,5) + ((b&c)^(b&d)^(c&d)) +
+                e + 0x8f1bbcdcL + W[t]);
         e = d; d = c; c = SHA_ROTL(b, 30); b = a; a = T;
         //printf("%2d %08lx %08lx %08lx %08lx %08lx\n", t, a, b, c, d, e);
         }
     for ( ; t < 80 ; t++)
         {
-        T = (SHA_ROTL(a,5) + (b^c^d) +
-                e + 0xca62c1d6L + W[t]) & 0xffffffffL;
+        T = TR32(SHA_ROTL(a,5) + (b^c^d) +
+                e + 0xca62c1d6L + W[t]);
         e = d; d = c; c = SHA_ROTL(b, 30); b = a; a = T;
         //printf("%2d %08lx %08lx %08lx %08lx %08lx\n", t, a, b, c, d, e);
         }
 
-    H[0] += a;
-    H[1] += b;
-    H[2] += c;
-    H[3] += d;
-    H[4] += e;
+    H[0] = TR32(H[0] + a);
+    H[1] = TR32(H[1] + b);
+    H[2] = TR32(H[2] + c);
+    H[3] = TR32(H[3] + d);
+    H[4] = TR32(H[4] + e);
 }
 
 
@@ -308,22 +308,22 @@ void Sha224Digest::hashblock()
     for (int t = 0 ; t < 64 ; t++)
         {
         //see 4.1.1 for the boolops
-        unsigned long T1 = h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
-            sha256constants[t] + W[t];
-        unsigned long T2 = SHA_SIGMA0(a) + SHA_Maj(a,b,c);
-        h = g; g = f; f = e; e = d  + T1 ; d = c; c = b; b = a; a = T1 + T2;
+        unsigned long T1 = TR32(h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
+            sha256constants[t] + W[t]);
+        unsigned long T2 = TR32(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
+        h = g; g = f; f = e; e = TR32(d  + T1); d = c; c = b; b = a; a = TR32(T1 + T2);
         //printf("%2d %08lx %08lx %08lx %08lx %08lx %08lx %08lx %08lx\n",
 		//         t, a, b, c, d, e, f, g, h);
         }
 
-    H[0] += a;
-    H[1] += b;
-    H[2] += c;
-    H[3] += d;
-    H[4] += e;
-    H[5] += f;
-    H[6] += g;
-    H[7] += h;
+    H[0] = TR32(H[0] + a);
+    H[1] = TR32(H[1] + b);
+    H[2] = TR32(H[2] + c);
+    H[3] = TR32(H[3] + d);
+    H[4] = TR32(H[4] + e);
+    H[5] = TR32(H[5] + f);
+    H[6] = TR32(H[6] + g);
+    H[7] = TR32(H[7] + h);
 }
 
 
@@ -424,7 +424,7 @@ void Sha256Digest::hashblock()
 
     //see 6.2.2
     for (int t = 16; t < 64 ; t++)
-        W[t] = SHA_sigma1(W[t-2]) + W[t-7] + SHA_sigma0(W[t-15]) + W[t-16];
+        W[t] = TR32(SHA_sigma1(W[t-2]) + W[t-7] + SHA_sigma0(W[t-15]) + W[t-16]);
 
     unsigned long a = H[0];
     unsigned long b = H[1];
@@ -438,22 +438,22 @@ void Sha256Digest::hashblock()
     for (int t = 0 ; t < 64 ; t++)
         {
         //see 4.1.1 for the boolops
-        unsigned long T1 = h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
-            sha256constants[t] + W[t];
-        unsigned long T2 = SHA_SIGMA0(a) + SHA_Maj(a,b,c);
-        h = g; g = f; f = e; e = d  + T1 ; d = c; c = b; b = a; a = T1 + T2;
+        unsigned long T1 = TR32(h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
+            sha256constants[t] + W[t]);
+        unsigned long T2 = TR32(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
+        h = g; g = f; f = e; e = TR32(d  + T1); d = c; c = b; b = a; a = TR32(T1 + T2);
         //printf("%2d %08lx %08lx %08lx %08lx %08lx %08lx %08lx %08lx\n",
 		//         t, a, b, c, d, e, f, g, h);
         }
 
-    H[0] += a;
-    H[1] += b;
-    H[2] += c;
-    H[3] += d;
-    H[4] += e;
-    H[5] += f;
-    H[6] += g;
-    H[7] += h;
+    H[0] = TR32(H[0] + a);
+    H[1] = TR32(H[1] + b);
+    H[2] = TR32(H[2] + c);
+    H[3] = TR32(H[3] + d);
+    H[4] = TR32(H[4] + e);
+    H[5] = TR32(H[5] + f);
+    H[6] = TR32(H[6] + g);
+    H[7] = TR32(H[7] + h);
 }
 
 
@@ -518,6 +518,8 @@ std::vector<unsigned char> Sha256Digest::finish()
 //########################################################################
 //##  SHA384
 //########################################################################
+
+#define TR64(x) ((x) & 0xffffffffffffffffLL)
 
 /**
  * SHA-384 and SHA-512 share the same operations and constants
@@ -621,7 +623,7 @@ void Sha384Digest::hashblock()
 
     //see 6.2.2
     for (int t = 16; t < 80 ; t++)
-        W[t] = SHA_sigma1(W[t-2]) + W[t-7] + SHA_sigma0(W[t-15]) + W[t-16];
+        W[t] = TR64(SHA_sigma1(W[t-2]) + W[t-7] + SHA_sigma0(W[t-15]) + W[t-16]);
 
     unsigned long long a = H[0];
     unsigned long long b = H[1];
@@ -635,20 +637,20 @@ void Sha384Digest::hashblock()
     for (int t = 0 ; t < 80 ; t++)
         {
         //see 4.1.1 for the boolops
-        unsigned long long T1 = h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
-            sha512constants[t] + W[t];
-        unsigned long long T2 = SHA_SIGMA0(a) + SHA_Maj(a,b,c);
-        h = g; g = f; f = e; e = d  + T1 ; d = c; c = b; b = a; a = T1 + T2;
+        unsigned long long T1 = TR64(h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
+            sha512constants[t] + W[t]);
+        unsigned long long T2 = TR64(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
+        h = g; g = f; f = e; e = TR64(d  + T1); d = c; c = b; b = a; a = TR64(T1 + T2);
         }
 
-    H[0] += a;
-    H[1] += b;
-    H[2] += c;
-    H[3] += d;
-    H[4] += e;
-    H[5] += f;
-    H[6] += g;
-    H[7] += h;
+    H[0] = TR64(H[0] + a);  
+    H[1] = TR64(H[1] + b);  
+    H[2] = TR64(H[2] + c);  
+    H[3] = TR64(H[3] + d);  
+    H[4] = TR64(H[4] + e);  
+    H[5] = TR64(H[5] + f);  
+    H[6] = TR64(H[6] + g);  
+    H[7] = TR64(H[7] + h);  
 }
 
 
@@ -764,7 +766,7 @@ void Sha512Digest::hashblock()
 
     //see 6.2.2
     for (int t = 16; t < 80 ; t++)
-        W[t] = SHA_sigma1(W[t-2]) + W[t-7] + SHA_sigma0(W[t-15]) + W[t-16];
+        W[t] = TR64(SHA_sigma1(W[t-2]) + W[t-7] + SHA_sigma0(W[t-15]) + W[t-16]);
 
     unsigned long long a = H[0];
     unsigned long long b = H[1];
@@ -778,20 +780,20 @@ void Sha512Digest::hashblock()
     for (int t = 0 ; t < 80 ; t++)
         {
         //see 4.1.1 for the boolops
-        unsigned long long T1 = h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
-            sha512constants[t] + W[t];
-        unsigned long long T2 = SHA_SIGMA0(a) + SHA_Maj(a,b,c);
-        h = g; g = f; f = e; e = d  + T1 ; d = c; c = b; b = a; a = T1 + T2;
+        unsigned long long T1 = TR64(h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
+            sha512constants[t] + W[t]);
+        unsigned long long T2 = TR64(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
+        h = g; g = f; f = e; e = TR64(d  + T1); d = c; c = b; b = a; a = TR64(T1 + T2);
         }
 
-    H[0] += a;
-    H[1] += b;
-    H[2] += c;
-    H[3] += d;
-    H[4] += e;
-    H[5] += f;
-    H[6] += g;
-    H[7] += h;
+    H[0] = TR64(H[0] + a);  
+    H[1] = TR64(H[1] + b);  
+    H[2] = TR64(H[2] + c);  
+    H[3] = TR64(H[3] + d);  
+    H[4] = TR64(H[4] + e);  
+    H[5] = TR64(H[5] + f);  
+    H[6] = TR64(H[6] + g);  
+    H[7] = TR64(H[7] + h);  
 }
 
 
@@ -1061,8 +1063,8 @@ std::vector<unsigned char> Md5Digest::finish()
 
 typedef struct
 {
-    char *msg;
-    char *val;
+    const char *msg;
+    const char *val;
 } TestPair;
 
 static TestPair md5tests[] =
