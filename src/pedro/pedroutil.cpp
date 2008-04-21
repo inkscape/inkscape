@@ -72,7 +72,7 @@ namespace Pedro
 //#################
 
 
-static char *base64encode =
+static const char *base64encode =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 
@@ -304,9 +304,6 @@ DOMString Base64Decoder::decodeToString(const DOMString &str)
 //########################################################################
 //########################################################################
 
-
-
-
 void Sha1::hash(unsigned char *dataIn, int len, unsigned char *digest)
 {
     Sha1 sha1;
@@ -314,7 +311,7 @@ void Sha1::hash(unsigned char *dataIn, int len, unsigned char *digest)
     sha1.finish(digest);
 }
 
-static char *sha1hex = "0123456789abcdef";
+static const char *sha1hex = "0123456789abcdef";
 
 DOMString Sha1::hashHex(unsigned char *dataIn, int len)
 {
@@ -340,40 +337,53 @@ DOMString Sha1::hashHex(const DOMString &str)
 void Sha1::init()
 {
 
-    lenW   = 0;
-    sizeHi = 0;
-    sizeLo = 0;
+    longNr    = 0;
+    byteNr    = 0;
+    nrBytesHi = 0;
+    nrBytesLo = 0;
 
     // Initialize H with the magic constants (see FIPS180 for constants)
-    H[0] = 0x67452301L;
-    H[1] = 0xefcdab89L;
-    H[2] = 0x98badcfeL;
-    H[3] = 0x10325476L;
-    H[4] = 0xc3d2e1f0L;
+    hashBuf[0] = 0x67452301L;
+    hashBuf[1] = 0xefcdab89L;
+    hashBuf[2] = 0x98badcfeL;
+    hashBuf[3] = 0x10325476L;
+    hashBuf[4] = 0xc3d2e1f0L;
+
+    for (int i = 0; i < 4; i++)
+        inb[i] = 0;
 
     for (int i = 0; i < 80; i++)
-        W[i] = 0;
+        inBuf[i] = 0;
 }
 
 
 void Sha1::append(unsigned char ch)
 {
-    // Read the data into W and process blocks as they get full
-    W[lenW / 4] <<= 8;
-    W[lenW / 4] |= (unsigned long)ch;
-    if ((++lenW) % 64 == 0)
+    if (nrBytesLo == 0xffffffffL)
         {
-        hashblock();
-        lenW = 0;
+        nrBytesHi++;
+        nrBytesLo = 0;
         }
-    sizeLo += 8;
-    sizeHi += (sizeLo < 8);
+    else
+        nrBytesLo++;
+
+    inb[byteNr++] = (unsigned long)ch;
+    if (byteNr >= 4)
+        {
+        inBuf[longNr++] = inb[0] << 24 | inb[1] << 16 |
+                          inb[2] << 8  | inb[3];
+        byteNr = 0;
+        }
+    if (longNr >= 16)
+        {
+        transform();
+        longNr = 0;
+        }
 }
 
 
 void Sha1::append(unsigned char *dataIn, int len)
 {
-    // Read the data into W and process blocks as they get full
     for (int i = 0; i < len; i++)
         append(dataIn[i]);
 }
@@ -385,33 +395,39 @@ void Sha1::append(const DOMString &str)
 }
 
 
-void Sha1::finish(unsigned char hashout[20])
+void Sha1::finish(unsigned char digest[20])
 {
-    unsigned char pad0x80 = 0x80;
-    unsigned char pad0x00 = 0x00;
-    unsigned char padlen[8];
+    //snapshot the bit count now before padding
+    unsigned long nrBitsLo = (nrBytesLo << 3) & 0xffffffff;
+    unsigned long nrBitsHi = (nrBytesHi << 3) | ((nrBytesLo >> 29) & 7);
 
-    // Pad with a binary 1 (e.g. 0x80), then zeroes, then length
-    padlen[0] = (unsigned char)((sizeHi >> 24) & 255);
-    padlen[1] = (unsigned char)((sizeHi >> 16) & 255);
-    padlen[2] = (unsigned char)((sizeHi >>  8) & 255);
-    padlen[3] = (unsigned char)((sizeHi >>  0) & 255);
-    padlen[4] = (unsigned char)((sizeLo >> 24) & 255);
-    padlen[5] = (unsigned char)((sizeLo >> 16) & 255);
-    padlen[6] = (unsigned char)((sizeLo >>  8) & 255);
-    padlen[7] = (unsigned char)((sizeLo >>  0) & 255);
+    //Append terminal char
+    append(0x80);
 
-    append(&pad0x80, 1);
+    //pad until we have a 56 of 64 bytes, allowing for 8 bytes at the end
+    while (longNr != 14)
+        append(0);
 
-    while (lenW != 56)
-        append(&pad0x00, 1);
-    append(padlen, 8);
 
-    // Output hash
-    for (int i = 0; i < 20; i++)
+    //##### Append length in bits
+    append((unsigned char)((nrBitsHi>>24) & 0xff));
+    append((unsigned char)((nrBitsHi>>16) & 0xff));
+    append((unsigned char)((nrBitsHi>> 8) & 0xff));
+    append((unsigned char)((nrBitsHi    ) & 0xff));
+    append((unsigned char)((nrBitsLo>>24) & 0xff));
+    append((unsigned char)((nrBitsLo>>16) & 0xff));
+    append((unsigned char)((nrBitsLo>> 8) & 0xff));
+    append((unsigned char)((nrBitsLo    ) & 0xff));
+
+
+    //copy out answer
+    int indx = 0;
+    for (int i=0 ; i<5 ; i++)
         {
-        hashout[i] = (unsigned char)(H[i / 4] >> 24);
-        H[i / 4] <<= 8;
+        digest[indx++] = (unsigned char)((hashBuf[i] >> 24) & 0xff);
+        digest[indx++] = (unsigned char)((hashBuf[i] >> 16) & 0xff);
+        digest[indx++] = (unsigned char)((hashBuf[i] >>  8) & 0xff);
+        digest[indx++] = (unsigned char)((hashBuf[i]      ) & 0xff);
         }
 
     // Re-initialize the context (also zeroizes contents)
@@ -419,10 +435,13 @@ void Sha1::finish(unsigned char hashout[20])
 }
 
 
-#define SHA_ROTL(X,n) ((((X) << (n)) | ((X) >> (32-(n)))) & 0xffffffffL)
 
-void Sha1::hashblock()
+#define SHA_ROTL(X,n) ((((X) << (n)) & 0xffffffff) | (((X) >> (32-(n))) & 0xffffffff))
+
+void Sha1::transform()
 {
+    unsigned long *W = inBuf;
+    unsigned long *H = hashBuf;
 
     for (int t = 16; t <= 79; t++)
         W[t] = SHA_ROTL(W[t-3] ^ W[t-8] ^ W[t-14] ^ W[t-16], 1);
@@ -437,7 +456,7 @@ void Sha1::hashblock()
 
     for (int t = 0; t <= 19; t++)
         {
-        TEMP = (SHA_ROTL(A,5) + (((C^D)&B)^D) +
+        TEMP = (SHA_ROTL(A,5) + ((B&C)|((~B)&D)) +
                 E + W[t] + 0x5a827999L) & 0xffffffffL;
         E = D; D = C; C = SHA_ROTL(B, 30); B = A; A = TEMP;
         }
@@ -449,7 +468,7 @@ void Sha1::hashblock()
         }
     for (int t = 40; t <= 59; t++)
         {
-        TEMP = (SHA_ROTL(A,5) + ((B&C)|(D&(B|C))) +
+        TEMP = (SHA_ROTL(A,5) + ((B&C)|(B&D)|(C&D)) +
                 E + W[t] + 0x8f1bbcdcL) & 0xffffffffL;
         E = D; D = C; C = SHA_ROTL(B, 30); B = A; A = TEMP;
         }
@@ -460,15 +479,12 @@ void Sha1::hashblock()
         E = D; D = C; C = SHA_ROTL(B, 30); B = A; A = TEMP;
         }
 
-    H[0] += A;
-    H[1] += B;
-    H[2] += C;
-    H[3] += D;
-    H[4] += E;
+    H[0] = (H[0] + A) & 0xffffffffL;
+    H[1] = (H[1] + B) & 0xffffffffL;
+    H[2] = (H[2] + C) & 0xffffffffL;
+    H[3] = (H[3] + D) & 0xffffffffL;
+    H[4] = (H[4] + E) & 0xffffffffL;
 }
-
-
-
 
 
 
@@ -477,7 +493,6 @@ void Sha1::hashblock()
 //### M D 5      H A S H I N G
 //########################################################################
 //########################################################################
-
 
 
 
@@ -525,7 +540,7 @@ void Md5::init()
 
 
 
-/*
+/**
  * Update with one character
  */
 void Md5::append(unsigned char ch)
@@ -582,38 +597,25 @@ void Md5::append(const DOMString &str)
 void Md5::finish(unsigned char *digest)
 {
     //snapshot the bit count now before padding
-    unsigned long nrBitsLo = nrBytesLo << 3;
+    unsigned long nrBitsLo = (nrBytesLo << 3) & 0xffffffff;
     unsigned long nrBitsHi = (nrBytesHi << 3) | ((nrBytesLo >> 29) & 7);
 
     //Append terminal char
     append(0x80);
 
-    //pad until we have a 56 of 64 bits, allowing for 8 bytes at the end
-    while (true)
-        {
-        int remain = (int)(nrBytesLo & 63);
-        if (remain == 56)
-            break;
+    //pad until we have a 56 of 64 bytes, allowing for 8 bytes at the end
+    while (longNr != 14)
         append(0);
-        }
 
     //##### Append length in bits
-    int shift;
-    shift = 0;
-    for (int i=0 ; i<4 ; i++)
-        {
-        unsigned char ch = (unsigned char)((nrBitsLo>>shift) & 0xff);
-        append(ch);
-        shift += 8;
-        }
-
-    shift = 0;
-    for (int i=0 ; i<4 ; i++)
-        {
-        unsigned char ch = (unsigned char)((nrBitsHi>>shift) & 0xff);
-        append(ch);
-        shift += 8;
-        }
+    append((unsigned char)((nrBitsLo    ) & 0xff));
+    append((unsigned char)((nrBitsLo>> 8) & 0xff));
+    append((unsigned char)((nrBitsLo>>16) & 0xff));
+    append((unsigned char)((nrBitsLo>>24) & 0xff));
+    append((unsigned char)((nrBitsHi    ) & 0xff));
+    append((unsigned char)((nrBitsHi>> 8) & 0xff));
+    append((unsigned char)((nrBitsHi>>16) & 0xff));
+    append((unsigned char)((nrBitsHi>>24) & 0xff));
 
     //copy out answer
     int indx = 0;
@@ -659,14 +661,14 @@ DOMString Md5::finishHex()
 
 // ## This is the central step in the MD5 algorithm.
 #define MD5STEP(f, w, x, y, z, data, s) \
-        ( w += (f(x, y, z) + data), M(w), w = w<<s | w>>(32-s), w += x, M(w) )
+	( w += (f(x, y, z) + data), M(w), w = w<<s | w>>(32-s), w += x, M(w) )
 
 /*
  * The core of the MD5 algorithm, this alters an existing MD5 hash to
  * reflect the addition of 16 longwords of new data.  MD5Update blocks
  * the data and converts bytes into longwords for this routine.
- * @parm buf points to an array of 4 unsigned longs
- * @parm in points to an array of 16 unsigned longs
+ * @parm buf points to an array of 4 unsigned 32bit (at least) integers
+ * @parm in points to an array of 16 unsigned 32bit (at least) integers
  */
 void Md5::transform()
 {
@@ -749,8 +751,6 @@ void Md5::transform()
     hashBuf[2] += c;
     hashBuf[3] += d;
 }
-
-
 
 
 
@@ -895,7 +895,7 @@ TcpSocket::TcpSocket(const std::string &hostnameArg, int port)
 
 #ifdef HAVE_SSL
 
-static void cryptoLockCallback(int mode, int type, const char *file, int line)
+static void cryptoLockCallback(int mode, int type, const char */*file*/, int /*line*/)
 {
     //printf("########### LOCK\n");
     static int modes[CRYPTO_NUM_LOCKS]; /* = {0, 0, ... } */
@@ -981,7 +981,7 @@ TcpSocket::TcpSocket(const TcpSocket &other)
 }
 
 
-void TcpSocket::error(char *fmt, ...)
+void TcpSocket::error(const char *fmt, ...)
 {
     static char buf[256];
     lastError = "TcpSocket err: ";

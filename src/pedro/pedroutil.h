@@ -158,14 +158,14 @@ private:
 //########################################################################
 
 /**
- *
+ *  This class performs a slow SHA1 hash on a stream of input data.
  */
 class Sha1
 {
 public:
 
     /**
-     *
+     * Constructor
      */
     Sha1()
         { init(); }
@@ -174,7 +174,7 @@ public:
      *
      */
     virtual ~Sha1()
-        {}
+        { init(); }
 
 
     /**
@@ -201,17 +201,17 @@ public:
     virtual void init();
 
     /**
-     *
+     *  Append a single character
      */
     virtual void append(unsigned char ch);
 
     /**
-     *
+     *  Append a data buffer
      */
     virtual void append(unsigned char *dataIn, int len);
 
     /**
-     *
+     *  Append a String
      */
     virtual void append(const DOMString &str);
 
@@ -224,12 +224,15 @@ public:
 
 private:
 
-    void hashblock();
+    void transform();
 
-    unsigned long H[5];
-    unsigned long W[80];
-    unsigned long sizeHi,sizeLo;
-    int lenW;
+    unsigned long hashBuf[5];
+    unsigned long inBuf[80];
+    unsigned long nrBytesHi;
+    unsigned long nrBytesLo;
+    int           longNr;
+    int           byteNr;
+    unsigned long inb[4];
 
 };
 
@@ -469,7 +472,7 @@ public:
 
     virtual ~TcpSocket();
     
-    void error(char *fmt, ...);
+    void error(const char *fmt, ...);
     
     DOMString &getLastError();
 

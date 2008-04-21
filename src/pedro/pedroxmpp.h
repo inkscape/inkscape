@@ -505,7 +505,7 @@ public:
     /**
      *  Assignment
      */
-    XmppEventListener(const XmppEventListener &other)
+    XmppEventListener(const XmppEventListener &/*other*/)
         {}
 
 
@@ -520,7 +520,7 @@ public:
      *  event handling.  Use event.getType() to decide what to do
      *  with the event.
      */
-    virtual void processXmppEvent(const XmppEvent &event)
+    virtual void processXmppEvent(const XmppEvent &/*event*/)
         {}
 
 };
@@ -567,13 +567,13 @@ public:
     /**
      * Send an error message to all subscribers
      */
-    void error(char *fmt, ...) G_GNUC_PRINTF(2,3);
+    void error(const char *fmt, ...) G_GNUC_PRINTF(2,3);
 
 
     /**
      * Send a status message to all subscribers
      */
-    void status(char *fmt, ...) G_GNUC_PRINTF(2,3);
+    void status(const char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     //###########################
     //# LISTENERS
@@ -722,7 +722,7 @@ public:
     /**
      *
      */
-    virtual bool write(char *fmt, ...) G_GNUC_PRINTF(2,3);
+    virtual bool write(const char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     //#######################
     //# V A R I A B L E S

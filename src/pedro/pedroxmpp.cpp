@@ -293,7 +293,7 @@ XmppEventTarget::~XmppEventTarget()
 /**
  *  Print a printf()-like formatted error message
  */
-void XmppEventTarget::error(char *fmt, ...)
+void XmppEventTarget::error(const char *fmt, ...)
 {
     va_list args;
     va_start(args,fmt);
@@ -311,7 +311,7 @@ void XmppEventTarget::error(char *fmt, ...)
 /**
  *  Print a printf()-like formatted trace message
  */
-void XmppEventTarget::status(char *fmt, ...)
+void XmppEventTarget::status(const char *fmt, ...)
 {
     va_list args;
     va_start(args,fmt);
@@ -672,7 +672,7 @@ bool XmppClient::pause(unsigned long millis)
 }
 
 
-static int strIndex(const DOMString &str, char *key)
+static int strIndex(const DOMString &str, const char *key)
 {
     unsigned int p = str.find(key);
     if (p == str.npos)
@@ -964,7 +964,7 @@ bool XmppClient::processMessage(Element *root)
             if (strIndex(body, " locked") >= 0)
                 {
                 printf("LOCKED!! ;)\n");
-                char *fmt =
+                const char *fmt =
                 "<iq id='create%d' to='%s' type='set'>"
                 "<query xmlns='http://jabber.org/protocol/muc#owner'>"
                 "<x xmlns='jabber:x:data' type='submit'/>"
@@ -1289,7 +1289,7 @@ bool XmppClient::receiveAndProcessLoop()
 //########################################################################
 
 
-bool XmppClient::write(char *fmt, ...)
+bool XmppClient::write(const char *fmt, ...)
 {
     bool rc = true;
     va_list args;
@@ -1323,7 +1323,7 @@ bool XmppClient::inBandRegistrationNew()
 {
     Parser parser;
 
-    char *fmt =
+    const char *fmt =
      "<iq type='get' id='regnew%d'>"
          "<query xmlns='jabber:iq:register'/>"
          "</iq>\n\n";
@@ -1419,7 +1419,7 @@ bool XmppClient::inBandRegistrationChangePassword(const DOMString &newpassword)
     Parser parser;
 
     //# Let's try it form-style to allow the common old/new password thing
-    char *fmt =
+    const char *fmt =
       "<iq type='set' id='regpass%d' to='%s'>"
       "  <query xmlns='jabber:iq:register'>"
       "    <x xmlns='jabber:x:data' type='form'>"
@@ -1456,10 +1456,10 @@ bool XmppClient::inBandRegistrationCancel()
 {
     Parser parser;
 
-    char *fmt =
+    const char *fmt =
      "<iq type='set' id='regcancel%d'>"
-          "<query xmlns='jabber:iq:register'><remove/></query>"
-          "</iq>\n\n";  
+     "<query xmlns='jabber:iq:register'><remove/></query>"
+     "</iq>\n\n";  
     if (!write(fmt, msgId++))
         return false;
 
@@ -1480,10 +1480,10 @@ bool XmppClient::iqAuthenticate(const DOMString &streamId)
 {
     Parser parser;
 
-    char *fmt =
-    "<iq type='get' to='%s' id='auth%d'>"
-    "<query xmlns='jabber:iq:auth'><username>%s</username></query>"
-    "</iq>\n";
+    const char *fmt =
+        "<iq type='get' to='%s' id='auth%d'>"
+        "<query xmlns='jabber:iq:auth'><username>%s</username></query>"
+        "</iq>\n";
     if (!write(fmt, realm.c_str(), msgId++, username.c_str()))
         return false;
 
@@ -1617,7 +1617,7 @@ static bool saslParse(const DOMString &s,
 bool XmppClient::saslMd5Authenticate()
 {
     Parser parser;
-    char *fmt =
+    const char *fmt =
     "<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' "
         "mechanism='DIGEST-MD5'/>\n";
     if (!write("%s",fmt))
@@ -1818,7 +1818,7 @@ bool XmppClient::saslPlainAuthenticate()
     DOMString base64Auth = encoder.finish();
     //printf("authbuf:%s\n", base64Auth.c_str());
 
-    char *fmt =
+    const char *fmt =
     "<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' "
     "mechanism='PLAIN'>%s</auth>\n";
     if (!write(fmt, base64Auth.c_str()))
@@ -1865,7 +1865,7 @@ bool XmppClient::saslAuthenticate(const DOMString &streamId)
     if (wantStartTls && !sock->getEnableSSL() && sock->getHaveSSL())
         {
         delete elem;
-        char *fmt =
+        const char *fmt =
         "<starttls xmlns='urn:ietf:params:xml:ns:xmpp-tls'/>\n";
         if (!write("%s",fmt))
             return false;
@@ -2022,7 +2022,7 @@ bool XmppClient::createSession()
         dispatchXmppEvent(event);
         }
 
-    char *fmt =
+    const char *fmt =
      "<stream:stream "
           "to='%s' "
           "xmlns='jabber:client' "
@@ -2244,7 +2244,7 @@ bool XmppClient::disconnect()
 {
     if (connected)
         {
-        char *fmt =
+        const char *fmt =
         "<presence type='unavailable'/>\n";
         write("%s",fmt);
         }
@@ -2277,7 +2277,7 @@ bool XmppClient::rosterAdd(const DOMString &rosterGroup,
 {
     if (!checkConnect())
         return false;
-    char *fmt =
+    const char *fmt =
     "<iq type='set' id='roster_%d'>"
     "<query xmlns='jabber:iq:roster'>"
     "<item jid='%s' name='%s'><group>%s</group></item>"
@@ -2299,7 +2299,7 @@ bool XmppClient::rosterDelete(const DOMString &otherJid)
 {
     if (!checkConnect())
         return false;
-    char *fmt =
+    const char *fmt =
     "<iq type='set' id='roster_%d'>"
     "<query xmlns='jabber:iq:roster'>"
     "<item jid='%s' subscription='remove'><group>%s</group></item>"
@@ -2391,7 +2391,7 @@ bool XmppClient::message(const DOMString &user, const DOMString &subj,
 
     if (xmlSubj.size() > 0)
         {
-        char *fmt =
+        const char *fmt =
         "<message to='%s' from='%s' type='chat'>"
         "<subject>%s</subject><body>%s</body></message>\n";
         if (!write(fmt, user.c_str(), jid.c_str(),
@@ -2400,7 +2400,7 @@ bool XmppClient::message(const DOMString &user, const DOMString &subj,
         }
     else
         {
-        char *fmt =
+        const char *fmt =
         "<message to='%s' from='%s'>"
         "<body>%s</body></message>\n";
         if (!write(fmt, user.c_str(), jid.c_str(), xmlMsg.c_str()))
@@ -2431,7 +2431,7 @@ bool XmppClient::presence(const DOMString &presence)
 
     DOMString xmlPres = toXml(presence);
 
-    char *fmt =
+    const char *fmt =
     "<presence><show>%s</show></presence>\n";
     if (!write(fmt, xmlPres.c_str()))
         return false;
@@ -2627,7 +2627,7 @@ std::vector<XmppUser> XmppClient::groupChatGetUserList(
  */
 bool XmppClient::groupChatJoin(const DOMString &groupJid,
                                const DOMString &nick,
-                               const DOMString &pass)
+                               const DOMString &/*pass*/)
 {
     if (!checkConnect())
         return false;
@@ -2636,7 +2636,7 @@ bool XmppClient::groupChatJoin(const DOMString &groupJid,
     if (user.size()<1)
         user = username;
 
-    char *fmt =
+    const char *fmt =
     "<presence to='%s/%s'>"
     "<x xmlns='http://jabber.org/protocol/muc'/></presence>\n";
     if (!write(fmt, groupJid.c_str(), user.c_str()))
@@ -2660,7 +2660,7 @@ bool XmppClient::groupChatLeave(const DOMString &groupJid,
     if (user.size()<1)
         user = username;
 
-    char *fmt =
+    const char *fmt =
     "<presence to='%s/%s' type='unavailable'>"
     "<x xmlns='http://jabber.org/protocol/muc'/></presence>\n";
     if (!write(fmt, groupJid.c_str(), user.c_str()))
@@ -2684,13 +2684,13 @@ bool XmppClient::groupChatMessage(const DOMString &groupJid,
 
     DOMString xmlMsg = toXml(msg);
 
-    char *fmt =
+    const char *fmt =
     "<message from='%s' to='%s' type='groupchat'>"
     "<body>%s</body></message>\n";
     if (!write(fmt, jid.c_str(), groupJid.c_str(), xmlMsg.c_str()))
         return false;
     /*
-    char *fmt =
+    const char *fmt =
     "<message to='%s' type='groupchat'>"
     "<body>%s</body></message>\n";
     if (!write(fmt, groupJid.c_str(), xmlMsg.c_str()))
@@ -2715,14 +2715,14 @@ bool XmppClient::groupChatPrivateMessage(const DOMString &groupJid,
     DOMString xmlMsg = toXml(msg);
 
     /*
-    char *fmt =
+    const char *fmt =
     "<message from='%s' to='%s/%s' type='chat'>"
     "<body>%s</body></message>\n";
     if (!write(fmt, jid.c_str(), groupJid.c_str(),
                toNick.c_str(), xmlMsg.c_str()))
         return false;
     */
-    char *fmt =
+    const char *fmt =
     "<message to='%s/%s' type='chat'>"
     "<body>%s</body></message>\n";
     if (!write(fmt, groupJid.c_str(),
@@ -2750,7 +2750,7 @@ bool XmppClient::groupChatPresence(const DOMString &groupJid,
 
     DOMString xmlPresence = toXml(presence);
 
-    char *fmt =
+    const char *fmt =
     "<presence to='%s/%s' type='%s'>"
     "<x xmlns='http://jabber.org/protocol/muc'/></presence>\n";
     if (!write(fmt, groupJid.c_str(),
@@ -2895,7 +2895,7 @@ bool XmppClient::outputStreamOpen(const DOMString &destId,
     outs->setPeerId(destId);
 
 
-    char *fmt =
+    const char *fmt =
     "<%s type='set' to='%s' id='%s'>"
     "<open sid='%s' block-size='4096'"
     " xmlns='http://jabber.org/protocol/ibb'/></%s>\n";
@@ -2960,7 +2960,7 @@ bool XmppClient::outputStreamWrite(const DOMString &streamId,
         DOMString b64data = encoder.finish();
 
 
-        char *fmt =
+        const char *fmt =
         "<message to='%s' id='msg%d'>"
         "<data xmlns='http://jabber.org/protocol/ibb' sid='%s' seq='%d'>"
         "%s"
@@ -3005,7 +3005,7 @@ bool XmppClient::outputStreamClose(const DOMString &streamId)
     outs->setMessageId(messageId);
 
     outs->setState(STREAM_CLOSING);
-    char *fmt =
+    const char *fmt =
     "<%s type='set' to='%s' id='%s'>"
     "<close sid='%s' xmlns='http://jabber.org/protocol/ibb'/></%s>\n";
     if (!write(fmt,
@@ -3050,7 +3050,7 @@ bool XmppClient::outputStreamClose(const DOMString &streamId)
  */
 bool XmppClient::inputStreamOpen(const DOMString &fromJid,
                                 const DOMString &streamId,
-                                const DOMString &iqId)
+                                const DOMString &/*iqId*/)
 {
     XmppStream *ins = new XmppStream();
 
@@ -3080,7 +3080,7 @@ bool XmppClient::inputStreamOpen(const DOMString &fromJid,
         ins->reset();
         return false;
         }
-    char *fmt =
+    const char *fmt =
     "<%s type='result' to='%s' id='%s'/>\n";
     if (!write(fmt, streamPacket.c_str(),
            fromJid.c_str(), ins->getMessageId().c_str()))
@@ -3107,7 +3107,7 @@ bool XmppClient::inputStreamClose(const DOMString &streamId)
 
     if (ins->getState() == STREAM_CLOSING)
         {
-        char *fmt =
+        const char *fmt =
         "<iq type='result' to='%s' id='%s'/>\n";
         if (!write(fmt, ins->getPeerId().c_str(),
                     ins->getMessageId().c_str()))
@@ -3294,7 +3294,7 @@ bool XmppClient::fileSend(const DOMString &destJidArg,
     struct tm *timeVal = gmtime(&(finfo.st_mtime));
     strftime(dtgBuf, 80, "%Y-%m-%dT%H:%M:%Sz", timeVal);
 
-    char *fmt =
+    const char *fmt =
     "<%s type='set' id='%s' to='%s'>"
     "<si xmlns='http://jabber.org/protocol/si' id='%s'"
       " mime-type='text/plain'"
@@ -3418,10 +3418,10 @@ bool XmppClient::fileReceive(const DOMString &fromJid,
                              const DOMString &iqId,
                              const DOMString &streamId,
                              const DOMString &fileName,
-                             long  fileSize,
-                             const DOMString &fileHash)
+                             long  /*fileSize*/,
+                             const DOMString &/*fileHash*/)
 {
-    char *fmt =
+    const char *fmt =
     "<%s type='result' to='%s' id='%s'>"
     "<si xmlns='http://jabber.org/protocol/si'>"
     "<file xmlns='http://jabber.org/protocol/si/profile/file-transfer'/>"
