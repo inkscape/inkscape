@@ -114,7 +114,7 @@ void
 CairoRendererOutput::init (void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>Cairo PNG Output</name>\n"
 			"<id>org.inkscape.output.png.cairo</id>\n"
 			"<output>\n"

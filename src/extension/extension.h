@@ -67,6 +67,11 @@
 /** Name of the extension error file */
 #define EXTENSION_ERROR_LOG_FILENAME  "extension-errors.log"
 
+
+#define INKSCAPE_EXTENSION_URI   "http://www.inkscape.org/namespace/inkscape/extension"
+#define INKSCAPE_EXTENSION_NS_NC "extension"
+#define INKSCAPE_EXTENSION_NS    "extension:"
+
 namespace Inkscape {
 namespace Extension {
 

@@ -32,7 +32,7 @@ void
 MedianFilter::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Median Filter") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.medianFilter</id>\n"
 			"<param name=\"radius\" gui-text=\"" N_("Radius") "\" type=\"float\" min=\"0\" max=\"100\">0</param>\n"			

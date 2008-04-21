@@ -36,7 +36,7 @@ void
 Level::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Level") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.level</id>\n"
 			"<param name=\"blackPoint\" gui-text=\"" N_("Black Point") "\" type=\"float\" min=\"0\" max=\"100\">0</param>\n"			

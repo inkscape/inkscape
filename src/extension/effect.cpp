@@ -52,7 +52,7 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
     if (repr != NULL) {
 
         for (Inkscape::XML::Node *child = sp_repr_children(repr); child != NULL; child = child->next()) {
-            if (!strcmp(child->name(), "effect")) {
+            if (!strcmp(child->name(), INKSCAPE_EXTENSION_NS "effect")) {
                 if (child->attribute("needs-document") && !strcmp(child->attribute("needs-document"), "false")) {
                   no_doc = true;
                 }
@@ -60,20 +60,20 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
                   no_live_preview = true;
                 }
                 for (Inkscape::XML::Node *effect_child = sp_repr_children(child); effect_child != NULL; effect_child = effect_child->next()) {
-                    if (!strcmp(effect_child->name(), "effects-menu")) {
+                    if (!strcmp(effect_child->name(), INKSCAPE_EXTENSION_NS "effects-menu")) {
                         // printf("Found local effects menu in %s\n", this->get_name());
                         local_effects_menu = sp_repr_children(effect_child);
                         if (effect_child->attribute("hidden") && !strcmp(effect_child->attribute("hidden"), "true")) {
                             hidden = true;
                         }
                     }
-                    if (!strcmp(effect_child->name(), "menu-name") ||
-                            !strcmp(effect_child->name(), "_menu-name")) {
+                    if (!strcmp(effect_child->name(), INKSCAPE_EXTENSION_NS "menu-name") ||
+                            !strcmp(effect_child->name(), INKSCAPE_EXTENSION_NS "_menu-name")) {
                         // printf("Found local effects menu in %s\n", this->get_name());
                         _verb.set_name(sp_repr_children(effect_child)->content());
                     }
-                    if (!strcmp(effect_child->name(), "menu-tip") ||
-                            !strcmp(effect_child->name(), "_menu-tip")) {
+                    if (!strcmp(effect_child->name(), INKSCAPE_EXTENSION_NS "menu-tip") ||
+                            !strcmp(effect_child->name(), INKSCAPE_EXTENSION_NS "_menu-tip")) {
                         // printf("Found local effects menu in %s\n", this->get_name());
                         _verb.set_tip(sp_repr_children(effect_child)->content());
                     }

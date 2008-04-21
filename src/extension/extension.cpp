@@ -79,6 +79,9 @@ Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementat
         /* TODO: Handle what happens if we don't have these two */
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
+			if (!strncmp(chname, INKSCAPE_EXTENSION_NS_NC, strlen(INKSCAPE_EXTENSION_NS_NC))) {
+				chname += strlen(INKSCAPE_EXTENSION_NS);
+			}
             if (chname[0] == '_') /* Allow _ for translation of tags */
                 chname++;
             if (!strcmp(chname, "id")) {

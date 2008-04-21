@@ -31,7 +31,7 @@ void
 Negate::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Negate") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.negate</id>\n"
 			"<effect>\n"

@@ -35,7 +35,7 @@ void
 Shade::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Shade") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.shade</id>\n"
 			"<param name=\"azimuth\" gui-text=\"" N_("Azimuth") "\" type=\"float\" min=\"-180\" max=\"180\">30</param>\n"

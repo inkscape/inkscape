@@ -43,7 +43,7 @@ void
 Channel::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Channel") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.channel</id>\n"
 			"<param name=\"layer\" gui-text=\"" N_("Layer") "\" type=\"enum\" >\n"

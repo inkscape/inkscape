@@ -33,7 +33,7 @@ void
 Wave::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Wave") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.wave</id>\n"
 			"<param name=\"amplitude\" gui-text=\"" N_("Amplitude") "\" type=\"float\" min=\"-720.0\" max=\"720.0\">25</param>\n"			

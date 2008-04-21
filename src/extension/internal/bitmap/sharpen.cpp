@@ -33,7 +33,7 @@ void
 Sharpen::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Sharpen") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.sharpen</id>\n"
 			"<param name=\"radius\" gui-text=\"" N_("Radius") "\" type=\"float\" min=\"0\" max=\"50\">1.0</param>\n"

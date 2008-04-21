@@ -1749,7 +1749,7 @@ PrintPS::init(void)
 {
     /* SVG in */
     (void) Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
         "<name>" N_("Postscript Print") "</name>\n"
         "<id>" SP_MODULE_KEY_PRINT_PS "</id>\n"
         "<param name=\"bitmap\" type=\"boolean\">FALSE</param>\n"

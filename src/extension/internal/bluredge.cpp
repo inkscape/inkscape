@@ -128,7 +128,7 @@ void
 BlurEdge::init (void)
 {
     Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("Inset/Outset Halo") "</name>\n"
             "<id>org.inkscape.effect.bluredge</id>\n"
             "<param name=\"blur-width\" gui-text=\"" N_("Width") "\" gui-description=\"" N_("Width in px of the halo") "\" scope=\"document\" type=\"float\" min=\"1.0\" max=\"50.0\">1.0</param>\n"

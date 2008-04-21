@@ -20,6 +20,7 @@
 
 #include <interface.h>
 
+#include "extension.h"
 #include "db.h"
 #include "input.h"
 #include "output.h"
@@ -390,8 +391,8 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
 
     /* sp_repr_print(repr); */
 
-    if (strcmp(repr->name(), "inkscape-extension")) {
-        g_warning("Extension definition started with <%s> instead of <inkscape-extension>.  Extension will not be created.\n", repr->name());
+    if (strcmp(repr->name(), INKSCAPE_EXTENSION_NS "inkscape-extension")) {
+        g_warning("Extension definition started with <%s> instead of <" INKSCAPE_EXTENSION_NS "inkscape-extension>.  Extension will not be created.\n", repr->name());
         return NULL;
     }
 
@@ -399,19 +400,19 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
     while (child_repr != NULL) {
         char const *element_name = child_repr->name();
         /* printf("Child: %s\n", child_repr->name()); */
-        if (!strcmp(element_name, "input")) {
+        if (!strcmp(element_name, INKSCAPE_EXTENSION_NS "input")) {
             module_functional_type = MODULE_INPUT;
-        } else if (!strcmp(element_name, "output")) {
+        } else if (!strcmp(element_name, INKSCAPE_EXTENSION_NS "output")) {
             module_functional_type = MODULE_OUTPUT;
-        } else if (!strcmp(element_name, "effect")) {
+        } else if (!strcmp(element_name, INKSCAPE_EXTENSION_NS "effect")) {
             module_functional_type = MODULE_FILTER;
-        } else if (!strcmp(element_name, "print")) {
+        } else if (!strcmp(element_name, INKSCAPE_EXTENSION_NS "print")) {
             module_functional_type = MODULE_PRINT;
-        } else if (!strcmp(element_name, "path-effect")) {
+        } else if (!strcmp(element_name, INKSCAPE_EXTENSION_NS "path-effect")) {
             module_functional_type = MODULE_PATH_EFFECT;
-        } else if (!strcmp(element_name, "script")) {
+        } else if (!strcmp(element_name, INKSCAPE_EXTENSION_NS "script")) {
             module_implementation_type = MODULE_EXTENSION;
-        } else if (!strcmp(element_name, "xslt")) {
+        } else if (!strcmp(element_name, INKSCAPE_EXTENSION_NS "xslt")) {
             module_implementation_type = MODULE_XSLT;
 #if 0
         } else if (!strcmp(element_name, "plugin")) {
@@ -496,7 +497,7 @@ build_from_file(gchar const *filename)
 {
     /* TODO: Need to define namespace here, need to write the
        DTD in general for this stuff */
-    Inkscape::XML::Document *doc = sp_repr_read_file(filename, NULL);
+    Inkscape::XML::Document *doc = sp_repr_read_file(filename, INKSCAPE_EXTENSION_URI);
     Extension *ext = build_from_reprdoc(doc, NULL);
     if (ext != NULL)
         Inkscape::GC::release(doc);
@@ -517,7 +518,7 @@ build_from_file(gchar const *filename)
 Extension *
 build_from_mem(gchar const *buffer, Implementation::Implementation *in_imp)
 {
-    Inkscape::XML::Document *doc = sp_repr_read_mem(buffer, strlen(buffer), NULL);
+    Inkscape::XML::Document *doc = sp_repr_read_mem(buffer, strlen(buffer), INKSCAPE_EXTENSION_URI);
     Extension *ext = build_from_reprdoc(doc, in_imp);
     Inkscape::GC::release(doc);
     return ext;

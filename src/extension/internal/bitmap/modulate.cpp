@@ -35,7 +35,7 @@ void
 Modulate::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Modulate") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.modulate</id>\n"			
 			"<param name=\"brightness\" gui-text=\"" N_("Brightness") "\" type=\"float\" min=\"0\" max=\"100\">1</param>\n"

@@ -31,7 +31,7 @@ void
 Normalize::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Normalize") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.normalize</id>\n"
 			"<effect>\n"

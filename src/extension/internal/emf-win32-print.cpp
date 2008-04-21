@@ -769,7 +769,7 @@ PrintEmfWin32::init (void)
 
     /* EMF print */
     ext = Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
         "<name>Enhanced Metafile Print</name>\n"
         "<id>org.inkscape.print.emf.win32</id>\n"
         "<param name=\"destination\" type=\"string\"></param>\n"

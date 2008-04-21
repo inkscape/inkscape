@@ -45,7 +45,7 @@ void
 Colorize::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Colorize") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.colorize</id>\n"
 			"<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">0</param>\n"

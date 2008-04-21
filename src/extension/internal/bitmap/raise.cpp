@@ -35,7 +35,7 @@ void
 Raise::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Raise") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.raise</id>\n"
 			"<param name=\"width\" gui-text=\"" N_("Width") "\" type=\"int\" min=\"0\" max=\"800\">6</param>\n"

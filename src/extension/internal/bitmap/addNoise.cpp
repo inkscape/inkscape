@@ -40,7 +40,7 @@ void
 AddNoise::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Add Noise") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.addNoise</id>\n"
 			"<param name=\"noiseType\" gui-text=\"" N_("Type") "\" type=\"enum\" >\n"

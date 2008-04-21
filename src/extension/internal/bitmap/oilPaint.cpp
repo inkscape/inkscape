@@ -32,7 +32,7 @@ void
 OilPaint::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Oil Paint") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.oilPaint</id>\n"
 			"<param name=\"radius\" gui-text=\"" N_("Radius") "\" type=\"int\" min=\"0\" max=\"50\">3</param>\n"			

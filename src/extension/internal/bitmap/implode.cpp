@@ -32,7 +32,7 @@ void
 Implode::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Implode") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.implode</id>\n"
 			"<param name=\"factor\" gui-text=\"" N_("Factor") "\" type=\"float\" min=\"0\" max=\"100\">10</param>\n"

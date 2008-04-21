@@ -32,7 +32,7 @@ void
 Edge::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Edge") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.edge</id>\n"
 			"<param name=\"radius\" gui-text=\"" N_("Radius") "\" type=\"int\" min=\"0\" max=\"100\">0</param>\n"

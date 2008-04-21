@@ -343,7 +343,7 @@ PrintLatex::init (void)
 	
 	/* SVG in */
     ext = Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("LaTeX Print") "</name>\n"
 			"<id>" SP_MODULE_KEY_PRINT_LATEX "</id>\n"
         		"<param name=\"destination\" type=\"string\"></param>\n"

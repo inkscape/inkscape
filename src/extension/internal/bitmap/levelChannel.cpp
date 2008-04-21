@@ -47,7 +47,7 @@ void
 LevelChannel::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Level (with Channel)") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.levelChannel</id>\n"
 			"<param name=\"channel\" gui-text=\"" N_("Channel") "\" type=\"enum\" >\n"

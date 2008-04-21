@@ -1681,7 +1681,7 @@ EmfWin32::init (void)
 
     /* EMF in */
     ext = Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("EMF Input") "</name>\n"
             "<id>org.inkscape.input.emf.win32</id>\n"
             "<input>\n"
@@ -1695,7 +1695,7 @@ EmfWin32::init (void)
 
     /* WMF in */
     ext = Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("WMF Input") "</name>\n"
             "<id>org.inkscape.input.wmf.win32</id>\n"
             "<input>\n"
@@ -1709,7 +1709,7 @@ EmfWin32::init (void)
 
     /* EMF out */
     ext = Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("EMF Output") "</name>\n"
             "<id>org.inkscape.output.emf.win32</id>\n"
             "<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">true</param>\n"

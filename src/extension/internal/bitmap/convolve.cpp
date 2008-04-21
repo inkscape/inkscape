@@ -45,7 +45,7 @@ void
 Convolve::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 // TRANSLATORS: see http://docs.gimp.org/en/gimp-tool-convolve.html
 			"<name>" N_("Convolve") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.convolve</id>\n"

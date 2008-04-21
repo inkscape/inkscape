@@ -103,10 +103,10 @@ XSLT::load(Inkscape::Extension::Extension *module)
 
     Inkscape::XML::Node *child_repr = sp_repr_children(module->get_repr());
     while (child_repr != NULL) {
-        if (!strcmp(child_repr->name(), "xslt")) {
+        if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "xslt")) {
             child_repr = sp_repr_children(child_repr);
             while (child_repr != NULL) {
-                if (!strcmp(child_repr->name(), "file")) {
+                if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "file")) {
                     _filename = solve_reldir(child_repr);
                 }
                 child_repr = sp_repr_next(child_repr);

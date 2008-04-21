@@ -85,7 +85,7 @@ void
 EpsOutput::init (void)
 {
     Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("Encapsulated Postscript Output") "</name>\n"
             "<id>org.inkscape.output.eps</id>\n"
             "<param name=\"pageBoundingBox\" type=\"boolean\" gui-text=\"" N_("Make bounding box around full page") "\">FALSE</param>\n"

@@ -2420,7 +2420,7 @@ void
 OdfOutput::init()
 {
     Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("OpenDocument Drawing Output") "</name>\n"
             "<id>org.inkscape.output.odf</id>\n"
             "<output>\n"

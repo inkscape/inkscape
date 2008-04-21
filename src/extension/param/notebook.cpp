@@ -71,6 +71,9 @@ ParamNotebookPage::ParamNotebookPage (const gchar * name, const gchar * guitext,
         Inkscape::XML::Node *child_repr = sp_repr_children(xml);
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
+			if (!strncmp(chname, INKSCAPE_EXTENSION_NS_NC, strlen(INKSCAPE_EXTENSION_NS_NC))) {
+				chname += strlen(INKSCAPE_EXTENSION_NS);
+			}
             if (chname[0] == '_') // Allow _ for translation of tags
                 chname++;
             if (!strcmp(chname, "param") || !strcmp(chname, "_param")) {
@@ -237,6 +240,9 @@ ParamNotebook::ParamNotebook (const gchar * name, const gchar * guitext, const g
         Inkscape::XML::Node *child_repr = sp_repr_children(xml);
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
+			if (!strncmp(chname, INKSCAPE_EXTENSION_NS_NC, strlen(INKSCAPE_EXTENSION_NS_NC))) {
+				chname += strlen(INKSCAPE_EXTENSION_NS);
+			}
             if (chname[0] == '_') // Allow _ for translation of tags
                 chname++;
             if (!strcmp(chname, "page")) {

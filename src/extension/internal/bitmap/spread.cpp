@@ -32,7 +32,7 @@ void
 Spread::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Spread") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.spread</id>\n"
 			"<param name=\"amount\" gui-text=\"" N_("Amount") "\" type=\"int\" min=\"0\" max=\"100\">3</param>\n"

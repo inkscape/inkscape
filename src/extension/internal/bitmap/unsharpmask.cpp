@@ -36,7 +36,7 @@ void
 Unsharpmask::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Unsharp Mask") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.unsharpmask</id>\n"
 			"<param name=\"radius\" gui-text=\"" N_("Radius") "\" type=\"float\" min=\"0.0\" max=\"50.0\">5.0</param>\n"

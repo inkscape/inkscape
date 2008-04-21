@@ -110,7 +110,7 @@ GdkpixbufInput::init(void)
             }
 
             gchar *xmlString = g_strdup_printf(
-                "<inkscape-extension>\n"
+                "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
                     "<name>" N_("%s GDK pixbuf Input") "</name>\n"
                     "<id>org.inkscape.input.gdkpixbuf.%s</id>\n"
                     "<input>\n"

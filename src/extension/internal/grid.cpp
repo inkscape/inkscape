@@ -188,7 +188,7 @@ void
 Grid::init (void)
 {
     Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("Grid") "</name>\n"
             "<id>org.inkscape.effect.grid</id>\n"
             "<param name=\"lineWidth\" gui-text=\"" N_("Line Width") "\" type=\"float\">1.0</param>\n"

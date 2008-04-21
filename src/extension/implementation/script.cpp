@@ -366,10 +366,10 @@ Script::load(Inkscape::Extension::Extension *module)
     /* This should probably check to find the executable... */
     Inkscape::XML::Node *child_repr = sp_repr_children(module->get_repr());
     while (child_repr != NULL) {
-        if (!strcmp(child_repr->name(), "script")) {
+        if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "script")) {
             child_repr = sp_repr_children(child_repr);
             while (child_repr != NULL) {
-                if (!strcmp(child_repr->name(), "command")) {
+                if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "command")) {
                     const gchar *interpretstr = child_repr->attribute("interpreter");
                     if (interpretstr != NULL) {
                         Glib::ustring interpString =
@@ -383,7 +383,7 @@ Script::load(Inkscape::Extension::Extension *module)
 
                     command.insert(command.end(), tmp);
                 }
-                if (!strcmp(child_repr->name(), "helper_extension")) {
+                if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "helper_extension")) {
                     helper_extension = sp_repr_children(child_repr)->content();
                 }
                 child_repr = sp_repr_next(child_repr);
@@ -427,12 +427,14 @@ Script::unload(Inkscape::Extension::Extension */*module*/)
 bool
 Script::check(Inkscape::Extension::Extension *module)
 {
+	int script_count = 0;
     Inkscape::XML::Node *child_repr = sp_repr_children(module->get_repr());
     while (child_repr != NULL) {
-        if (!strcmp(child_repr->name(), "script")) {
+        if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "script")) {
+			script_count++;
             child_repr = sp_repr_children(child_repr);
             while (child_repr != NULL) {
-                if (!strcmp(child_repr->name(), "check")) {
+                if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "check")) {
                     Glib::ustring command_text = solve_reldir(child_repr);
                     if (command_text.size() > 0) {
                         /* I've got the command */
@@ -442,7 +444,7 @@ Script::check(Inkscape::Extension::Extension *module)
                     }
                 }
 
-                if (!strcmp(child_repr->name(), "helper_extension")) {
+                if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "helper_extension")) {
                     gchar const *helper = sp_repr_children(child_repr)->content();
                     if (Inkscape::Extension::db.get(helper) == NULL) {
                         return false;
@@ -456,6 +458,10 @@ Script::check(Inkscape::Extension::Extension *module)
         }
         child_repr = sp_repr_next(child_repr);
     }
+
+	if (script_count == 0) {
+		return false;
+	}
 
     return true;
 }

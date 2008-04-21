@@ -34,7 +34,7 @@ void
 AdaptiveThreshold::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Adaptive Threshold") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.adaptiveThreshold</id>\n"
 			"<param name=\"width\" gui-text=\"" N_("Width") "\" type=\"int\" min=\"-100\" max=\"100\">5</param>\n"

@@ -726,7 +726,7 @@ PdfInput::init(void) {
 
     /* PDF in */
     ext = Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("PDF Input") "</name>\n"
             "<id>org.inkscape.input.pdf</id>\n"
             "<input>\n"
@@ -739,7 +739,7 @@ PdfInput::init(void) {
 
     /* AI in */
     ext = Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("AI Input") "</name>\n"
             "<id>org.inkscape.input.ai</id>\n"
             "<input>\n"

@@ -32,7 +32,7 @@ void
 Contrast::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Contrast") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.contrast</id>\n"
 			"<param name=\"sharpen\" gui-text=\"" N_("Sharpen") "\" type=\"int\" min=\"0\" max=\"100\">1</param>\n"

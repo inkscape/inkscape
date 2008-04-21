@@ -43,7 +43,7 @@ Svgz::init(void)
 
     /* SVGZ in */
     ext = Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("SVGZ Input") "</name>\n"
             "<id>" SP_MODULE_KEY_INPUT_SVGZ "</id>\n"
             "<dependency type=\"extension\">" SP_MODULE_KEY_INPUT_SVG "</dependency>\n"
@@ -58,7 +58,7 @@ Svgz::init(void)
 
 	/* SVGZ out Inkscape */
     ext = Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("SVGZ Output") "</name>\n"
             "<id>" SP_MODULE_KEY_OUTPUT_SVGZ_INKSCAPE "</id>\n"
             "<output>\n"
@@ -72,7 +72,7 @@ Svgz::init(void)
 
 	/* SVGZ out */
     ext = Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("SVGZ Output") "</name>\n"
             "<id>" SP_MODULE_KEY_OUTPUT_SVGZ "</id>\n"
             "<output>\n"

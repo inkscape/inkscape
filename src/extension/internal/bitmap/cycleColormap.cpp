@@ -32,7 +32,7 @@ void
 CycleColormap::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Cycle Colormap") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.cycleColormap</id>\n"
 			"<param name=\"amount\" gui-text=\"" N_("Amount") "\" type=\"int\" min=\"0\" max=\"360\">180</param>\n"

@@ -84,7 +84,7 @@ PdfInputCairo::init(void) {
     Inkscape::Extension::Extension * ext;
 
     ext = Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>PDF Input</name>\n"
             "<id>org.inkscape.input.pdf</id>\n"
             "<input>\n"

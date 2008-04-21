@@ -679,7 +679,7 @@ void
 PovOutput::init()
 {
     Inkscape::Extension::build_from_mem(
-        "<inkscape-extension>\n"
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("PovRay Output") "</name>\n"
             "<id>org.inkscape.output.pov</id>\n"
             "<output>\n"

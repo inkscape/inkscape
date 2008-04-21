@@ -114,7 +114,7 @@ void
 CairoRendererPdfOutput::init (void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>Cairo PDF Output (experimental)</name>\n"
 			"<id>org.inkscape.output.pdf.cairorenderer</id>\n"
 			"<output>\n"

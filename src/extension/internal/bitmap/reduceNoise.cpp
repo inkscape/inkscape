@@ -35,7 +35,7 @@ void
 ReduceNoise::init(void)
 {
 	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension>\n"
+		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Reduce Noise") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.reduceNoise</id>\n"
 			"<param name=\"order\" gui-text=\"" N_("Order") "\" type=\"int\" min=\"-1\" max=\"100\">-1</param>\n"

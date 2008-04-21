@@ -49,10 +49,13 @@ Output::Output (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
         child_repr = sp_repr_children(repr);
 
         while (child_repr != NULL) {
-            if (!strcmp(child_repr->name(), "output")) {
+            if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "output")) {
                 child_repr = sp_repr_children(child_repr);
                 while (child_repr != NULL) {
                     char const * chname = child_repr->name();
+					if (!strncmp(chname, INKSCAPE_EXTENSION_NS_NC, strlen(INKSCAPE_EXTENSION_NS_NC))) {
+						chname += strlen(INKSCAPE_EXTENSION_NS);
+					}
                     if (chname[0] == '_') /* Allow _ for translation of tags */
                         chname++;
                     if (!strcmp(chname, "extension")) {
