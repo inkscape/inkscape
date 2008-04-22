@@ -25,7 +25,7 @@
 
 
 //########################################################################
-//##  U T I L
+//##  U T I L I T Y
 //########################################################################
 
 /**
@@ -90,8 +90,8 @@ std::string Digest::finishHex()
  * Convenience method.  This is a simple way of getting a hash
  */
 std::vector<unsigned char> Digest::hash(Digest::HashType typ,
-				       unsigned char *buf,
-				       int len)
+                       unsigned char *buf,
+                       int len)
 {
     std::vector<unsigned char> ret;
     switch (typ)
@@ -148,30 +148,31 @@ std::vector<unsigned char> Digest::hash(Digest::HashType typ,
 
 
 /**
- * Convenience method.  This is a simple way of getting a hash
+ * Convenience method.  Same as above, but for a std::string
  */
 std::vector<unsigned char> Digest::hash(Digest::HashType typ,
-				       const std::string &str)
+                       const std::string &str)
 {
     return hash(typ, (unsigned char *)str.c_str(), str.size());
 }
 
 /**
- * Convenience method.  This is a simple way of getting a hash
+ * Convenience method.  Return a hexidecimal string of the hash of the buffer.
  */
 std::string Digest::hashHex(Digest::HashType typ,
-			   unsigned char *buf,
-			   int len)
+               unsigned char *buf,
+               int len)
 {
     std::vector<unsigned char> dig = hash(typ, buf, len);
     return toHex(dig);
 }
 
 /**
- * Convenience method.  This is a simple way of getting a hash
+ * Convenience method.  Return a hexidecimal string of the hash of the
+ *  string argument
  */
 std::string Digest::hashHex(Digest::HashType typ,
-			   const std::string &str)
+               const std::string &str)
 {
     std::vector<unsigned char> dig = hash(typ, str);
     return toHex(dig);
@@ -181,8 +182,8 @@ std::string Digest::hashHex(Digest::HashType typ,
 
 //4.1.1 and 4.1.2
 #define SHA_ROTL(X,n) ((((X) << (n)) & 0xffffffffL) | (((X) >> (32-(n))) & 0xffffffffL))
-#define	SHA_Ch(x,y,z)  ((z)^((x)&((y)^(z))))
-#define	SHA_Maj(x,y,z) (((x)&(y))^((z)&((x)^(y))))
+#define SHA_Ch(x,y,z)  ((z)^((x)&((y)^(z))))
+#define SHA_Maj(x,y,z) (((x)&(y))^((z)&((x)^(y))))
 
 
 //########################################################################
@@ -343,11 +344,11 @@ std::vector<unsigned char> Sha1::finish()
  * SHA-224 and SHA-512 share the same operations and constants
  */ 
 
-#define	SHA_Rot32(x,s) ((((x) >> s)&0xffffffffL) | (((x) << (32 - s))&0xffffffffL))
-#define	SHA_SIGMA0(x)  (SHA_Rot32(x,  2) ^ SHA_Rot32(x, 13) ^ SHA_Rot32(x, 22))
-#define	SHA_SIGMA1(x)  (SHA_Rot32(x,  6) ^ SHA_Rot32(x, 11) ^ SHA_Rot32(x, 25))
-#define	SHA_sigma0(x)  (SHA_Rot32(x,  7) ^ SHA_Rot32(x, 18) ^ ((x) >> 3))
-#define	SHA_sigma1(x)  (SHA_Rot32(x, 17) ^ SHA_Rot32(x, 19) ^ ((x) >> 10))
+#define    SHA_Rot32(x,s) ((((x) >> s)&0xffffffffL) | (((x) << (32 - s))&0xffffffffL))
+#define    SHA_SIGMA0(x)  (SHA_Rot32(x,  2) ^ SHA_Rot32(x, 13) ^ SHA_Rot32(x, 22))
+#define    SHA_SIGMA1(x)  (SHA_Rot32(x,  6) ^ SHA_Rot32(x, 11) ^ SHA_Rot32(x, 25))
+#define    SHA_sigma0(x)  (SHA_Rot32(x,  7) ^ SHA_Rot32(x, 18) ^ ((x) >> 3))
+#define    SHA_sigma1(x)  (SHA_Rot32(x, 17) ^ SHA_Rot32(x, 19) ^ ((x) >> 10))
 
 
 static unsigned long sha256table[64] =
@@ -453,7 +454,7 @@ void Sha224::transform()
         unsigned long T2 = TR32(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
         h = g; g = f; f = e; e = TR32(d  + T1); d = c; c = b; b = a; a = TR32(T1 + T2);
         //printf("%2d %08lx %08lx %08lx %08lx %08lx %08lx %08lx %08lx\n",
-		//         t, a, b, c, d, e, f, g, h);
+        //         t, a, b, c, d, e, f, g, h);
         }
 
     H[0] = TR32(H[0] + a);
@@ -589,7 +590,7 @@ void Sha256::transform()
         unsigned long T2 = TR32(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
         h = g; g = f; f = e; e = TR32(d  + T1); d = c; c = b; b = a; a = TR32(T1 + T2);
         //printf("%2d %08lx %08lx %08lx %08lx %08lx %08lx %08lx %08lx\n",
-		//         t, a, b, c, d, e, f, g, h);
+        //         t, a, b, c, d, e, f, g, h);
         }
 
     H[0] = TR32(H[0] + a);
@@ -654,11 +655,11 @@ std::vector<unsigned char> Sha256::finish()
 #undef SHA_sigma0
 #undef SHA_sigma1
 
-#define	SHA_Rot64(x,s) (((x) >> s) | ((x) << (64 - s)))
-#define	SHA_SIGMA0(x)  (SHA_Rot64(x, 28) ^ SHA_Rot64(x, 34) ^ SHA_Rot64(x, 39))
-#define	SHA_SIGMA1(x)  (SHA_Rot64(x, 14) ^ SHA_Rot64(x, 18) ^ SHA_Rot64(x, 41))
-#define	SHA_sigma0(x)  (SHA_Rot64(x,  1) ^ SHA_Rot64(x,  8) ^ ((x) >> 7))
-#define	SHA_sigma1(x)  (SHA_Rot64(x, 19) ^ SHA_Rot64(x, 61) ^ ((x) >> 6))
+#define SHA_Rot64(x,s) (((x) >> s) | ((x) << (64 - s)))
+#define SHA_SIGMA0(x)  (SHA_Rot64(x, 28) ^ SHA_Rot64(x, 34) ^ SHA_Rot64(x, 39))
+#define SHA_SIGMA1(x)  (SHA_Rot64(x, 14) ^ SHA_Rot64(x, 18) ^ SHA_Rot64(x, 41))
+#define SHA_sigma0(x)  (SHA_Rot64(x,  1) ^ SHA_Rot64(x,  8) ^ ((x) >> 7))
+#define SHA_sigma1(x)  (SHA_Rot64(x, 19) ^ SHA_Rot64(x, 61) ^ ((x) >> 6))
 
 
 static unsigned long long sha512constants[80] =
@@ -767,7 +768,7 @@ void Sha384::transform()
     unsigned long long *W = inBuf;
 
     /*
-	for (int t = 0; t < 16 ; t++)
+    for (int t = 0; t < 16 ; t++)
         {
         printf("%2d ", t);
         pl(W[t]);
@@ -922,7 +923,7 @@ void Sha512::transform()
     unsigned long long *H = hashBuf;
 
     /*
-	for (int t = 0; t < 16 ; t++)
+    for (int t = 0; t < 16 ; t++)
         {
         printf("%2d ", t);
         pl(W[t]);
@@ -1047,6 +1048,7 @@ void Md5::update(unsigned char ch)
     inb[byteNr++] = (unsigned long)ch;
     if (byteNr >= 4)
         {
+        //note the little-endianness
         unsigned long val =
              inb[3] << 24 | inb[2] << 16 | inb[1] << 8 | inb[0];
         inBuf[longNr++] = val;
@@ -1071,7 +1073,7 @@ void Md5::update(unsigned char ch)
 
 // ## This is the central step in the MD5 algorithm.
 #define MD5STEP(f, w, x, y, z, data, s) \
-	( w = TR32(w + (f(x, y, z) + data)), w = w<<s | w>>(32-s), w = TR32(w + x) )
+    ( w = TR32(w + (f(x, y, z) + data)), w = w<<s | w>>(32-s), w = TR32(w + x) )
 
 /*
  * The core of the MD5 algorithm, this alters an existing MD5 hash to
@@ -1193,6 +1195,7 @@ std::vector<unsigned char> Md5::finish()
     std::vector<unsigned char> res;
     for (int i=0 ; i<4 ; i++)
         {
+        //note the little-endianness
         res.push_back((unsigned char)((hashBuf[i]      ) & 0xff));
         res.push_back((unsigned char)((hashBuf[i] >>  8) & 0xff));
         res.push_back((unsigned char)((hashBuf[i] >> 16) & 0xff));
@@ -1216,11 +1219,14 @@ std::vector<unsigned char> Md5::finish()
 /**
  * Compile this file alone with -DDIGEST_TEST to run the
  * tests below:
- * > gcc -DDIGEST_TEST digest.cpp -o digest
- * > digest   
+ * > gcc -DDIGEST_TEST digest.cpp -o testdigest
+ * > testdigest   
+ * 
+ * If you add any new algorithms to this suite, then it is highly
+ * recommended that you add it to these tests and run it.   
  */
  
- #ifdef DIGEST_TEST
+#ifdef DIGEST_TEST
 
 
 typedef struct
@@ -1356,11 +1362,11 @@ bool hashTests(Digest &digest, TestPair *tp)
 bool millionATest(Digest &digest, const std::string &exp)
 {
     digest.reset();
-	for (int i=0 ; i<1000000 ; i++)
+    for (int i=0 ; i<1000000 ; i++)
         digest.append('a');
     std::string res = digest.finishHex();
     printf("\nHash of 1,000,000 'a'\n   calc %s\n   exp  %s\n",
-	     res.c_str(), exp.c_str());
+         res.c_str(), exp.c_str());
     if (res != exp)
         {
         printf("ERROR: Mismatch.\n");
@@ -1396,7 +1402,7 @@ static bool doTests()
     if (!hashTests(sha224, sha224tests))
         return false;
     if (!millionATest(sha224,
-	     "20794655980c91d8bbb4c1ea97618a4bf03f42581948b2ee4ee7ad67"))
+         "20794655980c91d8bbb4c1ea97618a4bf03f42581948b2ee4ee7ad67"))
         return false;
     printf("\n\n\n");
     printf("##########################################\n");
@@ -1406,7 +1412,7 @@ static bool doTests()
     if (!hashTests(sha256, sha256tests))
         return false;
     if (!millionATest(sha256,
-	     "cdc76e5c9914fb9281a1c7e284d73e67f1809a48a497200e046d39ccc7112cd0"))
+         "cdc76e5c9914fb9281a1c7e284d73e67f1809a48a497200e046d39ccc7112cd0"))
         return false;
     printf("\n\n\n");
     printf("##########################################\n");
@@ -1416,8 +1422,8 @@ static bool doTests()
     if (!hashTests(sha384, sha384tests))
         return false;
     /**/
-	if (!millionATest(sha384,
-		 "9d0e1809716474cb086e834e310a4a1ced149e9c00f248527972cec5704c2a5b"
+    if (!millionATest(sha384,
+         "9d0e1809716474cb086e834e310a4a1ced149e9c00f248527972cec5704c2a5b"
                 "07b8b3dc38ecc4ebae97ddd87f3d8985"))
         return false;
     /**/
@@ -1429,7 +1435,7 @@ static bool doTests()
     if (!hashTests(sha512, sha512tests))
         return false;
     if (!millionATest(sha512,
-		 "e718483d0ce769644e2e42c7bc15b4638e1f98b13b2044285632a803afa973eb"
+         "e718483d0ce769644e2e42c7bc15b4638e1f98b13b2044285632a803afa973eb"
              "de0ff244877ea60a4cb0432ce577c31beb009c5c2c49aa2e4eadb217ad8cc09b"))
         return false;
     return true;

@@ -2,7 +2,8 @@
 #define __DIGEST_H__
 /**
  * Secure Hashing Tool
- * *
+ *
+ *
  * Author:
  *   Bob Jamison
  *
@@ -40,7 +41,7 @@
  *  Or, use one of the static convenience methods:
  *
  *   example:  std::string digest =
- *                     Digest::hash(Digest::HASH_XXX, str);
+ *                     Digest::hashHex(Digest::HASH_XXX, str);
  *
  *    ...where HASH_XXX represents one of the hash
  *       algorithms listed in HashType.
@@ -50,15 +51,22 @@
  *  to prepare for the next use.
  *
  *
- *  Much effort has been made to make this code portable, and it
+ *  Much effort has been applied to make this code portable, and it
  *  has been tested on various 32- and 64-bit machines.  If you
  *  add another algorithm, please test it likewise.
  *
  *
  *  The SHA algorithms are derived directly from FIPS-180-3.  The
- *  SHA tests at the bottom are also directly from that document.
+ *  SHA tests at the bottom of digest.cpp are also directly from
+ *   that document.  
  *
  *  The MD5 algorithm is from RFC 1321
+ *  
+ *  To run the tests, compile standalone with -DDIGEST_TEST.  Example:
+ *  
+ *  g++ -DDIGEST_TEST digest.cpp -o testdigest    
+ *  or
+ *  g++ -DDIGEST_TEST -m64 digest.cpp -o testdigest    
  *
  */
 
@@ -67,8 +75,9 @@
 
 
 /**
- *  Base class.  Do not use this class directly.  Rather, use of of the
- *  subclasses below.
+ *  Base class.  Do not use instantiate class directly.  Rather, use of of the
+ *  subclasses below, or call one of this class's static convenience methods.
+ *   
  *  For all subclasses, overload reset(), update(unsigned char),
  *  transform(), and finish()
  */
@@ -224,6 +233,10 @@ protected:
      */
     int hashType;
 
+    /**
+     * Increment the count of bytes processed so far.  Should be called
+     * in update()
+     */              
     void incByteCount()
         {
         if (nrBytesLo == 0xffffffffL)
@@ -234,15 +247,33 @@ protected:
         else
            nrBytesLo++;
         }
+        
+    /**
+     * Clear the byte / bit count information.  Both for processing
+     * another message, also for security.   Should be called in reset()
+     */              
     void clearByteCount()
         {
         nrBytesHi = nrBytesLo = 0;
+        nrBitsHi  = nrBitsLo  = 0;
         }
+        
+    /**
+     * Calculates the bit count from the current byte count.  Should be called
+     * in finish(), before any padding is added.  This basically does a
+     * snapshot of the bitcount value before the padding.     
+     */                   
     void getBitCount()
         {
         nrBitsLo = (nrBytesLo << 3) & 0xffffffff;
         nrBitsHi = (nrBytesHi << 3) | ((nrBytesLo >> 29) & 7);
         }
+        
+    /**
+     * Common code for appending the 64-bit bitcount to the end of the
+     * message, after the padding.   Should be called after padding, just
+     * before outputting the result.
+     */                   
     void appendBitCount()
         {
         update((unsigned char)((nrBitsHi>>24) & 0xff));
@@ -255,6 +286,7 @@ protected:
         update((unsigned char)((nrBitsLo    ) & 0xff));
         }
 
+    //32/64 portable byte and bit counts
     unsigned long nrBytesHi;
     unsigned long nrBytesLo;
     unsigned long nrBitsHi;
