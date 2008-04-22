@@ -42,7 +42,18 @@ static void pl(unsigned long long val)
 }
 */
 
+
+
+/**
+ * 32/64-bit-isms.  These truncate their arguments to
+ * unsigned 32-bit or unsigned 64-bit.  For our math,
+ * we only require that unsigned longs be AT LEAST 32 bits,
+ * and that unsigned long longs be AT LEAST 64 bits.  Their
+ * exact lengths do not matter.
+ */
 #define TR32(x) ((x) & 0xffffffffL)
+#define TR64(x) ((x) & 0xffffffffffffffffLL)
+
 
 static const char *hexDigits = "0123456789abcdef";
 
@@ -75,9 +86,101 @@ std::string Digest::finishHex()
     return str;
 }
 
+/**
+ * Convenience method.  This is a simple way of getting a hash
+ */
+std::vector<unsigned char> Digest::hash(Digest::HashType typ,
+				       unsigned char *buf,
+				       int len)
+{
+    std::vector<unsigned char> ret;
+    switch (typ)
+        {
+        case HASH_MD5:
+            {
+            Md5 digest;
+            digest.append(buf, len);
+            ret = digest.finish();
+            break;
+            }
+        case HASH_SHA1:
+            {
+            Sha1 digest;
+            digest.append(buf, len);
+            ret = digest.finish();
+            break;
+            }
+        case HASH_SHA224:
+            {
+            Sha224 digest;
+            digest.append(buf, len);
+            ret = digest.finish();
+            break;
+            }
+        case HASH_SHA256:
+            {
+            Sha256 digest;
+            digest.append(buf, len);
+            ret = digest.finish();
+            break;
+            }
+        case HASH_SHA384:
+            {
+            Sha384 digest;
+            digest.append(buf, len);
+            ret = digest.finish();
+            break;
+            }
+        case HASH_SHA512:
+            {
+            Sha512 digest;
+            digest.append(buf, len);
+            ret = digest.finish();
+            break;
+            }
+        default:
+            {
+            break;
+            }
+        }
+    return ret;
+}
+
+
+/**
+ * Convenience method.  This is a simple way of getting a hash
+ */
+std::vector<unsigned char> Digest::hash(Digest::HashType typ,
+				       const std::string &str)
+{
+    return hash(typ, (unsigned char *)str.c_str(), str.size());
+}
+
+/**
+ * Convenience method.  This is a simple way of getting a hash
+ */
+std::string Digest::hashHex(Digest::HashType typ,
+			   unsigned char *buf,
+			   int len)
+{
+    std::vector<unsigned char> dig = hash(typ, buf, len);
+    return toHex(dig);
+}
+
+/**
+ * Convenience method.  This is a simple way of getting a hash
+ */
+std::string Digest::hashHex(Digest::HashType typ,
+			   const std::string &str)
+{
+    std::vector<unsigned char> dig = hash(typ, str);
+    return toHex(dig);
+}
+
+
 
 //4.1.1 and 4.1.2
-#define SHA_ROTL(X,n)  ( ((X) << (n)) | ( ((X) & 0xffffffffL) >> (32-(n))) )
+#define SHA_ROTL(X,n) ((((X) << (n)) & 0xffffffffL) | (((X) >> (32-(n))) & 0xffffffffL))
 #define	SHA_Ch(x,y,z)  ((z)^((x)&((y)^(z))))
 #define	SHA_Maj(x,y,z) (((x)&(y))^((z)&((x)^(y))))
 
@@ -90,27 +193,55 @@ std::string Digest::finishHex()
 /**
  *
  */
-void Sha1Digest::reset()
+void Sha1::reset()
 {
-    lenW   = 0;
-    size   = 0;
+    longNr    = 0;
+    byteNr    = 0;
 
     // Initialize H with the magic constants (see FIPS180 for constants)
-    H[0] = 0x67452301L;
-    H[1] = 0xefcdab89L;
-    H[2] = 0x98badcfeL;
-    H[3] = 0x10325476L;
-    H[4] = 0xc3d2e1f0L;
+    hashBuf[0] = 0x67452301L;
+    hashBuf[1] = 0xefcdab89L;
+    hashBuf[2] = 0x98badcfeL;
+    hashBuf[3] = 0x10325476L;
+    hashBuf[4] = 0xc3d2e1f0L;
 
-    for (int i = 0 ; i < 80 ; i++)
-        W[i] = 0;
+    for (int i = 0; i < 4; i++)
+        inb[i] = 0;
+
+    for (int i = 0; i < 80; i++)
+        inBuf[i] = 0;
+
+    clearByteCount();
 }
 
 
-
-
-void Sha1Digest::hashblock()
+/**
+ *
+ */
+void Sha1::update(unsigned char ch)
 {
+    incByteCount();
+
+    inb[byteNr++] = (unsigned long)ch;
+    if (byteNr >= 4)
+        {
+        inBuf[longNr++] = inb[0] << 24 | inb[1] << 16 |
+                          inb[2] << 8  | inb[3];
+        byteNr = 0;
+        }
+    if (longNr >= 16)
+        {
+        transform();
+        longNr = 0;
+        }
+}
+
+
+void Sha1::transform()
+{
+    unsigned long *W = inBuf;
+    unsigned long *H = hashBuf;
+
     //for (int t = 0; t < 16 ; t++)
     //    printf("%2d %08lx\n", t, W[t]);
 
@@ -130,7 +261,7 @@ void Sha1Digest::hashblock()
     for ( ; t < 20 ; t++)
         {
         //see 4.1.1 for the boolops on B,C, and D
-        T = TR32(SHA_ROTL(a,5) + ((b&c)^(~b&d)) +  //Ch(b,c,d))
+        T = TR32(SHA_ROTL(a,5) + ((b&c)|((~b)&d)) +  //Ch(b,c,d))
                 e + 0x5a827999L + W[t]);
         e = d; d = c; c = SHA_ROTL(b, 30); b = a; a = T;
         //printf("%2d %08lx %08lx %08lx %08lx %08lx\n", t, a, b, c, d, e);
@@ -164,61 +295,43 @@ void Sha1Digest::hashblock()
 }
 
 
-/**
- *
- */
-void Sha1Digest::update(unsigned char val)
-{
-    int wordNr = lenW >> 2;
-    W[wordNr] <<= 8;
-    W[wordNr] |= (unsigned long)val;
-    size += 8;
-    lenW++;
-    if (lenW >= 64)
-        {
-        hashblock();
-        lenW = 0;
-        }
-}
 
 
 /**
  *
  */
-std::vector<unsigned char> Sha1Digest::finish()
+std::vector<unsigned char> Sha1::finish()
 {
-    //save our size before padding
-    unsigned long long sizeOut = size;
-    
-    // Pad with a binary 1 (0x80)
-    update((unsigned char)0x80);
-    //append 0's to make a 56-byte buf.
-	//use mod, so that we will loop around once if already over 56
-    while (lenW != 56)
-        update((unsigned char)0x00);
-    //append 64-bit size
-    for (int shift = 56 ; shift>=0 ; shift-= 8)
-        {
-        unsigned char ch = (unsigned char)((sizeOut >> shift) & 0xff);
-        update(ch);
-        }
+    //snapshot the bit count now before padding
+    getBitCount();
 
-    // Output hash
-    std::vector<unsigned char> ret;
-    for (int wordNr = 0 ; wordNr < 5 ; wordNr++)
+    //Append terminal char
+    update(0x80);
+
+    //pad until we have a 56 of 64 bytes, allowing for 8 bytes at the end
+    while ((nrBytesLo & 63) != 56)
+        update(0);
+
+    //##### Append length in bits
+    appendBitCount();
+
+    //copy out answer
+    std::vector<unsigned char> res;
+    for (int i=0 ; i<5 ; i++)
         {
-        ret.push_back((unsigned char)((H[wordNr] >> 24) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >> 16) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >>  8) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr]      ) & 0xff));
+        res.push_back((unsigned char)((hashBuf[i] >> 24) & 0xff));
+        res.push_back((unsigned char)((hashBuf[i] >> 16) & 0xff));
+        res.push_back((unsigned char)((hashBuf[i] >>  8) & 0xff));
+        res.push_back((unsigned char)((hashBuf[i]      ) & 0xff));
         }
 
     // Re-initialize the context (also zeroizes contents)
     reset();
 
-    return ret;
-
+    return res;
 }
+
+
 
 
 //########################################################################
@@ -230,14 +343,14 @@ std::vector<unsigned char> Sha1Digest::finish()
  * SHA-224 and SHA-512 share the same operations and constants
  */ 
 
-#define	SHA_Rot32(x,s) (((x) >> s) | ((x) << (32 - s)))
+#define	SHA_Rot32(x,s) ((((x) >> s)&0xffffffffL) | (((x) << (32 - s))&0xffffffffL))
 #define	SHA_SIGMA0(x)  (SHA_Rot32(x,  2) ^ SHA_Rot32(x, 13) ^ SHA_Rot32(x, 22))
 #define	SHA_SIGMA1(x)  (SHA_Rot32(x,  6) ^ SHA_Rot32(x, 11) ^ SHA_Rot32(x, 25))
 #define	SHA_sigma0(x)  (SHA_Rot32(x,  7) ^ SHA_Rot32(x, 18) ^ ((x) >> 3))
 #define	SHA_sigma1(x)  (SHA_Rot32(x, 17) ^ SHA_Rot32(x, 19) ^ ((x) >> 10))
 
 
-static unsigned long sha256constants[64] =
+static unsigned long sha256table[64] =
 {
 0x428a2f98UL, 0x71374491UL, 0xb5c0fbcfUL, 0xe9b5dba5UL,
 0x3956c25bUL, 0x59f111f1UL, 0x923f82a4UL, 0xab1c5ed5UL,
@@ -264,161 +377,58 @@ static unsigned long sha256constants[64] =
 /**
  *
  */
-void Sha224Digest::reset()
+void Sha224::reset()
 {
-    lenW   = 0;
-    size   = 0;
+    longNr   = 0;
+    byteNr   = 0;
 
     // Initialize H with the magic constants (see FIPS180 for constants)
-    H[0] = 0xc1059ed8L;
-    H[1] = 0x367cd507L;
-    H[2] = 0x3070dd17L;
-    H[3] = 0xf70e5939L;
-    H[4] = 0xffc00b31L;
-    H[5] = 0x68581511L;
-    H[6] = 0x64f98fa7L;
-    H[7] = 0xbefa4fa4L;
+    hashBuf[0] = 0xc1059ed8L;
+    hashBuf[1] = 0x367cd507L;
+    hashBuf[2] = 0x3070dd17L;
+    hashBuf[3] = 0xf70e5939L;
+    hashBuf[4] = 0xffc00b31L;
+    hashBuf[5] = 0x68581511L;
+    hashBuf[6] = 0x64f98fa7L;
+    hashBuf[7] = 0xbefa4fa4L;
 
     for (int i = 0 ; i < 64 ; i++)
-        W[i] = 0;
-}
+        inBuf[i] = 0;
 
+    for (int i = 0 ; i < 4 ; i++)
+        inb[i] = 0;
 
-
-
-
-void Sha224Digest::hashblock()
-{
-    //for (int t = 0; t < 16 ; t++)
-    //    printf("%2d %08lx\n", t, W[t]);
-
-    //see 6.2.2
-    for (int t = 16; t < 64 ; t++)
-        W[t] = SHA_sigma1(W[t-2]) + W[t-7] + SHA_sigma0(W[t-15]) + W[t-16];
-
-    unsigned long a = H[0];
-    unsigned long b = H[1];
-    unsigned long c = H[2];
-    unsigned long d = H[3];
-    unsigned long e = H[4];
-    unsigned long f = H[5];
-    unsigned long g = H[6];
-    unsigned long h = H[7];
-
-    for (int t = 0 ; t < 64 ; t++)
-        {
-        //see 4.1.1 for the boolops
-        unsigned long T1 = TR32(h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
-            sha256constants[t] + W[t]);
-        unsigned long T2 = TR32(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
-        h = g; g = f; f = e; e = TR32(d  + T1); d = c; c = b; b = a; a = TR32(T1 + T2);
-        //printf("%2d %08lx %08lx %08lx %08lx %08lx %08lx %08lx %08lx\n",
-		//         t, a, b, c, d, e, f, g, h);
-        }
-
-    H[0] = TR32(H[0] + a);
-    H[1] = TR32(H[1] + b);
-    H[2] = TR32(H[2] + c);
-    H[3] = TR32(H[3] + d);
-    H[4] = TR32(H[4] + e);
-    H[5] = TR32(H[5] + f);
-    H[6] = TR32(H[6] + g);
-    H[7] = TR32(H[7] + h);
+    clearByteCount();
 }
 
 
 /**
  *
  */
-void Sha224Digest::update(unsigned char val)
+void Sha224::update(unsigned char ch)
 {
-    int wordNr = lenW >> 2;
-    W[wordNr] <<= 8;
-    W[wordNr] |= (unsigned long)val;
-    size += 8;
-    lenW++;
-    if (lenW >= 64)
+    incByteCount();
+
+    inb[byteNr++] = (unsigned long)ch;
+    if (byteNr >= 4)
         {
-        hashblock();
-        lenW = 0;
+        inBuf[longNr++] = inb[0] << 24 | inb[1] << 16 |
+                          inb[2] << 8  | inb[3];
+        byteNr = 0;
+        }
+    if (longNr >= 16)
+        {
+        transform();
+        longNr = 0;
         }
 }
 
 
-/**
- *
- */
-std::vector<unsigned char> Sha224Digest::finish()
+void Sha224::transform()
 {
-    //save our size before padding
-    unsigned long long sizeOut = size;
-    
-    // Pad with a binary 1 (0x80)
-    update((unsigned char)0x80);
-    //append 0's to make a 56-byte buf.
-	//use mod, so that we will loop around once if already over 56
-    while (lenW != 56)
-        update((unsigned char)0x00);
-    //append 64-bit size
-    for (int shift = 56 ; shift>=0 ; shift-= 8)
-        {
-        unsigned char ch = (unsigned char)((sizeOut >> shift) & 0xff);
-        update(ch);
-        }
+    unsigned long *W = inBuf;
+    unsigned long *H = hashBuf;
 
-    // Output hash
-    std::vector<unsigned char> ret;
-    for (int wordNr = 0 ; wordNr < 7 ; wordNr++)
-        {
-        ret.push_back((unsigned char)((H[wordNr] >> 24) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >> 16) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >>  8) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr]      ) & 0xff));
-        }
-
-    // Re-initialize the context (also zeroizes contents)
-    reset();
-
-    return ret;
-
-}
-
-//########################################################################
-//##  SHA256
-//########################################################################
-
-
-
-
-
-/**
- *
- */
-void Sha256Digest::reset()
-{
-    lenW   = 0;
-    size   = 0;
-
-    // Initialize H with the magic constants (see FIPS180 for constants)
-    H[0] = 0x6a09e667L;
-    H[1] = 0xbb67ae85L;
-    H[2] = 0x3c6ef372L;
-    H[3] = 0xa54ff53aL;
-    H[4] = 0x510e527fL;
-    H[5] = 0x9b05688cL;
-    H[6] = 0x1f83d9abL;
-    H[7] = 0x5be0cd19L;
-
-    for (int i = 0 ; i < 64 ; i++)
-        W[i] = 0;
-}
-
-
-
-
-
-void Sha256Digest::hashblock()
-{
     //for (int t = 0; t < 16 ; t++)
     //    printf("%2d %08lx\n", t, W[t]);
 
@@ -439,7 +449,7 @@ void Sha256Digest::hashblock()
         {
         //see 4.1.1 for the boolops
         unsigned long T1 = TR32(h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
-            sha256constants[t] + W[t]);
+            sha256table[t] + W[t]);
         unsigned long T2 = TR32(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
         h = g; g = f; f = e; e = TR32(d  + T1); d = c; c = b; b = a; a = TR32(T1 + T2);
         //printf("%2d %08lx %08lx %08lx %08lx %08lx %08lx %08lx %08lx\n",
@@ -457,53 +467,168 @@ void Sha256Digest::hashblock()
 }
 
 
+
 /**
  *
  */
-void Sha256Digest::update(unsigned char val)
+std::vector<unsigned char> Sha224::finish()
 {
-    int wordNr = lenW >> 2;
-    W[wordNr] <<= 8;
-    W[wordNr] |= (unsigned long)val;
-    size += 8;
-    lenW++;
-    if (lenW >= 64)
+    //save our size before padding
+    getBitCount();
+    
+    // Pad with a binary 1 (0x80)
+    update(0x80);
+    //append 0's to make a 56-byte buf.
+    while ((nrBytesLo & 63) != 56)
+        update(0);
+
+    //##### Append length in bits
+    appendBitCount();
+
+    // Output hash
+    std::vector<unsigned char> ret;
+    for (int i = 0 ; i < 7 ; i++)
         {
-        hashblock();
-        lenW = 0;
+        ret.push_back((unsigned char)((hashBuf[i] >> 24) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >> 16) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >>  8) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i]      ) & 0xff));
         }
+
+    // Re-initialize the context (also zeroizes contents)
+    reset();
+
+    return ret;
+
+}
+
+
+
+//########################################################################
+//##  SHA256
+//########################################################################
+
+
+/**
+ *
+ */
+void Sha256::reset()
+{
+    longNr   = 0;
+    byteNr   = 0;
+
+    // Initialize H with the magic constants (see FIPS180 for constants)
+    hashBuf[0] = 0x6a09e667L;
+    hashBuf[1] = 0xbb67ae85L;
+    hashBuf[2] = 0x3c6ef372L;
+    hashBuf[3] = 0xa54ff53aL;
+    hashBuf[4] = 0x510e527fL;
+    hashBuf[5] = 0x9b05688cL;
+    hashBuf[6] = 0x1f83d9abL;
+    hashBuf[7] = 0x5be0cd19L;
+
+    for (int i = 0 ; i < 64 ; i++)
+        inBuf[i] = 0;
+    for (int i = 0 ; i < 4 ; i++)
+        inb[i] = 0;
+
+    clearByteCount();
 }
 
 
 /**
  *
  */
-std::vector<unsigned char> Sha256Digest::finish()
+void Sha256::update(unsigned char ch)
+{
+    incByteCount();
+
+    inb[byteNr++] = (unsigned long)ch;
+    if (byteNr >= 4)
+        {
+        inBuf[longNr++] = inb[0] << 24 | inb[1] << 16 |
+                          inb[2] << 8  | inb[3];
+        byteNr = 0;
+        }
+    if (longNr >= 16)
+        {
+        transform();
+        longNr = 0;
+        }
+}
+
+
+
+
+void Sha256::transform()
+{
+    unsigned long *H = hashBuf;
+    unsigned long *W = inBuf;
+
+    //for (int t = 0; t < 16 ; t++)
+    //    printf("%2d %08lx\n", t, W[t]);
+
+    //see 6.2.2
+    for (int t = 16; t < 64 ; t++)
+        W[t] = TR32(SHA_sigma1(W[t-2]) + W[t-7] + SHA_sigma0(W[t-15]) + W[t-16]);
+
+    unsigned long a = H[0];
+    unsigned long b = H[1];
+    unsigned long c = H[2];
+    unsigned long d = H[3];
+    unsigned long e = H[4];
+    unsigned long f = H[5];
+    unsigned long g = H[6];
+    unsigned long h = H[7];
+
+    for (int t = 0 ; t < 64 ; t++)
+        {
+        //see 4.1.1 for the boolops
+        unsigned long T1 = TR32(h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
+            sha256table[t] + W[t]);
+        unsigned long T2 = TR32(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
+        h = g; g = f; f = e; e = TR32(d  + T1); d = c; c = b; b = a; a = TR32(T1 + T2);
+        //printf("%2d %08lx %08lx %08lx %08lx %08lx %08lx %08lx %08lx\n",
+		//         t, a, b, c, d, e, f, g, h);
+        }
+
+    H[0] = TR32(H[0] + a);
+    H[1] = TR32(H[1] + b);
+    H[2] = TR32(H[2] + c);
+    H[3] = TR32(H[3] + d);
+    H[4] = TR32(H[4] + e);
+    H[5] = TR32(H[5] + f);
+    H[6] = TR32(H[6] + g);
+    H[7] = TR32(H[7] + h);
+}
+
+
+
+/**
+ *
+ */
+std::vector<unsigned char> Sha256::finish()
 {
     //save our size before padding
-    unsigned long long sizeOut = size;
+    getBitCount();
     
     // Pad with a binary 1 (0x80)
-    update((unsigned char)0x80);
+    update(0x80);
     //append 0's to make a 56-byte buf.
-	//use mod, so that we will loop around once if already over 56
-    while (lenW != 56)
-        update((unsigned char)0x00);
-    //append 64-bit size
-    for (int shift = 56 ; shift>=0 ; shift-= 8)
-        {
-        unsigned char ch = (unsigned char)((sizeOut >> shift) & 0xff);
-        update(ch);
-        }
+    while ((nrBytesLo & 63) != 56)
+        update(0);
+
+    //##### Append length in bits
+    appendBitCount();
 
     // Output hash
     std::vector<unsigned char> ret;
-    for (int wordNr = 0 ; wordNr < 8 ; wordNr++)
+    for (int i = 0 ; i < 8 ; i++)
         {
-        ret.push_back((unsigned char)((H[wordNr] >> 24) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >> 16) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >>  8) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr]      ) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >> 24) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >> 16) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >>  8) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i]      ) & 0xff));
         }
 
     // Re-initialize the context (also zeroizes contents)
@@ -519,7 +644,6 @@ std::vector<unsigned char> Sha256Digest::finish()
 //##  SHA384
 //########################################################################
 
-#define TR64(x) ((x) & 0xffffffffffffffffLL)
 
 /**
  * SHA-384 and SHA-512 share the same operations and constants
@@ -587,31 +711,61 @@ static unsigned long long sha512constants[80] =
 /**
  *
  */
-void Sha384Digest::reset()
+void Sha384::reset()
 {
-    lenW   = 0;
-    size   = 0;
+    longNr   = 0;
+    byteNr   = 0;
 
     // SHA-384 differs from SHA-512 by these constants
-    H[0] = 0xcbbb9d5dc1059ed8ULL;
-    H[1] = 0x629a292a367cd507ULL;
-    H[2] = 0x9159015a3070dd17ULL;
-    H[3] = 0x152fecd8f70e5939ULL;
-    H[4] = 0x67332667ffc00b31ULL;
-    H[5] = 0x8eb44a8768581511ULL;
-    H[6] = 0xdb0c2e0d64f98fa7ULL;
-    H[7] = 0x47b5481dbefa4fa4ULL;
+    hashBuf[0] = 0xcbbb9d5dc1059ed8ULL;
+    hashBuf[1] = 0x629a292a367cd507ULL;
+    hashBuf[2] = 0x9159015a3070dd17ULL;
+    hashBuf[3] = 0x152fecd8f70e5939ULL;
+    hashBuf[4] = 0x67332667ffc00b31ULL;
+    hashBuf[5] = 0x8eb44a8768581511ULL;
+    hashBuf[6] = 0xdb0c2e0d64f98fa7ULL;
+    hashBuf[7] = 0x47b5481dbefa4fa4ULL;
 
     for (int i = 0 ; i < 80 ; i++)
-        W[i] = 0;
+        inBuf[i] = 0;
+    for (int i = 0 ; i < 8 ; i++)
+        inb[i] = 0;
+
+    clearByteCount();
+}
+
+
+/**
+ *
+ */
+void Sha384::update(unsigned char ch)
+{
+    incByteCount();
+
+    inb[byteNr++] = (unsigned long long)ch;
+    if (byteNr >= 8)
+        {
+        inBuf[longNr++] = inb[0] << 56 | inb[1] << 48 |
+                          inb[2] << 40 | inb[3] << 32 |
+                          inb[4] << 24 | inb[5] << 16 |
+                          inb[6] <<  8 | inb[7];
+        byteNr = 0;
+        }
+    if (longNr >= 16)
+        {
+        transform();
+        longNr = 0;
+        }
 }
 
 
 
 
-
-void Sha384Digest::hashblock()
+void Sha384::transform()
 {
+    unsigned long long *H = hashBuf;
+    unsigned long long *W = inBuf;
+
     /*
 	for (int t = 0; t < 16 ; t++)
         {
@@ -654,61 +808,43 @@ void Sha384Digest::hashblock()
 }
 
 
-/**
- *
- */
-void Sha384Digest::update(unsigned char val)
-{
-    int wordNr = lenW >> 3;
-    W[wordNr] <<= 8;
-    W[wordNr] |= (unsigned long)val;
-    size += 8;
-    lenW++;
-    if (lenW >= 128)
-        {
-        hashblock();
-        lenW = 0;
-        }
-}
-
 
 /**
  *
  */
-std::vector<unsigned char> Sha384Digest::finish()
+std::vector<unsigned char> Sha384::finish()
 {
     //save our size before padding
-    unsigned long long sizeOut = size;
+    getBitCount();
     
     // Pad with a binary 1 (0x80)
     update((unsigned char)0x80);
     //append 0's to make a 112-byte buf.
-	//we will loop around once if already over 112
-    while (lenW != 112)
-        update((unsigned char)0x00);
+    //we will loop around once if already over 112
+    while ((nrBytesLo & 127) != 112)
+        update(0);
         
     //append 128-bit size
-    for (int i = 0 ; i < 8 ; i++) //64 upper bits
+    //64 upper bits
+    for (int i = 0 ; i < 8 ; i++)
         update((unsigned char)0x00);
-    for (int shift = 56 ; shift>=0 ; shift-= 8) //64 lower length bits
-        {
-        unsigned char ch = (unsigned char)((sizeOut >> shift) & 0xff);
-        update(ch);
-        }
+    //64 lower bits
+    //##### Append length in bits
+    appendBitCount();
 
     // Output hash
     //for SHA-384, we use the left-most 6 64-bit words
     std::vector<unsigned char> ret;
-    for (int wordNr = 0 ; wordNr < 6 ; wordNr++)
+    for (int i = 0 ; i < 6 ; i++)
         {
-        ret.push_back((unsigned char)((H[wordNr] >> 56) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >> 48) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >> 40) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >> 32) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >> 24) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >> 16) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >>  8) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr]      ) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >> 56) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >> 48) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >> 40) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >> 32) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >> 24) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >> 16) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >>  8) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i]      ) & 0xff));
         }
 
     // Re-initialize the context (also zeroizes contents)
@@ -730,31 +866,61 @@ std::vector<unsigned char> Sha384Digest::finish()
 /**
  *
  */
-void Sha512Digest::reset()
+void Sha512::reset()
 {
-    lenW   = 0;
-    size   = 0;
+    longNr   = 0;
+    byteNr   = 0;
 
     // Initialize H with the magic constants (see FIPS180 for constants)
-    H[0] = 0x6a09e667f3bcc908ULL;
-    H[1] = 0xbb67ae8584caa73bULL;
-    H[2] = 0x3c6ef372fe94f82bULL;
-    H[3] = 0xa54ff53a5f1d36f1ULL;
-    H[4] = 0x510e527fade682d1ULL;
-    H[5] = 0x9b05688c2b3e6c1fULL;
-    H[6] = 0x1f83d9abfb41bd6bULL;
-    H[7] = 0x5be0cd19137e2179ULL;
+    hashBuf[0] = 0x6a09e667f3bcc908ULL;
+    hashBuf[1] = 0xbb67ae8584caa73bULL;
+    hashBuf[2] = 0x3c6ef372fe94f82bULL;
+    hashBuf[3] = 0xa54ff53a5f1d36f1ULL;
+    hashBuf[4] = 0x510e527fade682d1ULL;
+    hashBuf[5] = 0x9b05688c2b3e6c1fULL;
+    hashBuf[6] = 0x1f83d9abfb41bd6bULL;
+    hashBuf[7] = 0x5be0cd19137e2179ULL;
 
     for (int i = 0 ; i < 80 ; i++)
-        W[i] = 0;
+        inBuf[i] = 0;
+    for (int i = 0 ; i <  8 ; i++)
+        inb[i] = 0;
+
+    clearByteCount();
+}
+
+
+/**
+ *
+ */
+void Sha512::update(unsigned char ch)
+{
+    incByteCount();
+
+    inb[byteNr++] = (unsigned long long)ch;
+    if (byteNr >= 8)
+        {
+        inBuf[longNr++] = inb[0] << 56 | inb[1] << 48 |
+                          inb[2] << 40 | inb[3] << 32 |
+                          inb[4] << 24 | inb[5] << 16 |
+                          inb[6] <<  8 | inb[7];
+        byteNr = 0;
+        }
+    if (longNr >= 16)
+        {
+        transform();
+        longNr = 0;
+        }
 }
 
 
 
 
-
-void Sha512Digest::hashblock()
+void Sha512::transform()
 {
+    unsigned long long *W = inBuf;
+    unsigned long long *H = hashBuf;
+
     /*
 	for (int t = 0; t < 16 ; t++)
         {
@@ -797,60 +963,42 @@ void Sha512Digest::hashblock()
 }
 
 
-/**
- *
- */
-void Sha512Digest::update(unsigned char val)
-{
-    int wordNr = lenW >> 3;
-    W[wordNr] <<= 8;
-    W[wordNr] |= (unsigned long)val;
-    size += 8;
-    lenW++;
-    if (lenW >= 128)
-        {
-        hashblock();
-        lenW = 0;
-        }
-}
-
 
 /**
  *
  */
-std::vector<unsigned char> Sha512Digest::finish()
+std::vector<unsigned char> Sha512::finish()
 {
     //save our size before padding
-    unsigned long long sizeOut = size;
+    getBitCount();
     
     // Pad with a binary 1 (0x80)
-    update((unsigned char)0x80);
+    update(0x80);
     //append 0's to make a 112-byte buf.
-	//we will loop around once if already over 112
-    while (lenW != 112)
-        update((unsigned char)0x00);
+    //we will loop around once if already over 112
+    while ((nrBytesLo & 127) != 112)
+        update(0);
         
     //append 128-bit size
-    for (int i = 0 ; i < 8 ; i++) //64 upper bits
+    //64 upper bits
+    for (int i = 0 ; i < 8 ; i++)
         update((unsigned char)0x00);
-    for (int shift = 56 ; shift>=0 ; shift-= 8) //64 lower length bits
-        {
-        unsigned char ch = (unsigned char)((sizeOut >> shift) & 0xff);
-        update(ch);
-        }
+    //64 lower bits
+    //##### Append length in bits
+    appendBitCount();
 
     // Output hash
     std::vector<unsigned char> ret;
-    for (int wordNr = 0 ; wordNr < 8 ; wordNr++)
+    for (int i = 0 ; i < 8 ; i++)
         {
-        ret.push_back((unsigned char)((H[wordNr] >> 56) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >> 48) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >> 40) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >> 32) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >> 24) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >> 16) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr] >>  8) & 0xff));
-        ret.push_back((unsigned char)((H[wordNr]      ) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >> 56) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >> 48) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >> 40) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >> 32) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >> 24) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >> 16) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i] >>  8) & 0xff));
+        ret.push_back((unsigned char)((hashBuf[i]      ) & 0xff));
         }
 
     // Re-initialize the context (also zeroizes contents)
@@ -866,180 +1014,194 @@ std::vector<unsigned char> Sha512Digest::finish()
 //##  M D 5
 //########################################################################
 
-static int md5r[64] =
-{
-   7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22, 
-   5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,
-   4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23,
-   6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21
-};
-
-static unsigned long md5k[64] =
-{
-0xd76aa478L, 0xe8c7b756L, 0x242070dbL, 0xc1bdceeeL, 
-0xf57c0fafL, 0x4787c62aL, 0xa8304613L, 0xfd469501L, 
-0x698098d8L, 0x8b44f7afL, 0xffff5bb1L, 0x895cd7beL, 
-0x6b901122L, 0xfd987193L, 0xa679438eL, 0x49b40821L, 
-0xf61e2562L, 0xc040b340L, 0x265e5a51L, 0xe9b6c7aaL, 
-0xd62f105dL, 0x02441453L, 0xd8a1e681L, 0xe7d3fbc8L, 
-0x21e1cde6L, 0xc33707d6L, 0xf4d50d87L, 0x455a14edL, 
-0xa9e3e905L, 0xfcefa3f8L, 0x676f02d9L, 0x8d2a4c8aL, 
-0xfffa3942L, 0x8771f681L, 0x6d9d6122L, 0xfde5380cL, 
-0xa4beea44L, 0x4bdecfa9L, 0xf6bb4b60L, 0xbebfbc70L, 
-0x289b7ec6L, 0xeaa127faL, 0xd4ef3085L, 0x04881d05L, 
-0xd9d4d039L, 0xe6db99e5L, 0x1fa27cf8L, 0xc4ac5665L, 
-0xf4292244L, 0x432aff97L, 0xab9423a7L, 0xfc93a039L, 
-0x655b59c3L, 0x8f0ccc92L, 0xffeff47dL, 0x85845dd1L, 
-0x6fa87e4fL, 0xfe2ce6e0L, 0xa3014314L, 0x4e0811a1L, 
-0xf7537e82L, 0xbd3af235L, 0x2ad7d2bbL, 0xeb86d391L
-};
-
-#define MD5_ROTL(X,n) (((X) << (n)) | ((X) >> (32-(n))))
-
-
 /**
  *
  */
-void Md5Digest::reset()
+void Md5::reset()
 {
-    size  = 0;
-    lenW  = 0;
+    hashBuf[0]  = 0x67452301;
+    hashBuf[1]  = 0xefcdab89;
+    hashBuf[2]  = 0x98badcfe;
+    hashBuf[3]  = 0x10325476;
 
-    hash[0]  = 0x67452301L;
-    hash[1]  = 0xefcdab89L;
-    hash[2]  = 0x98badcfeL;
-    hash[3]  = 0x10325476L;
+    for (int i=0 ; i<16 ; i++)
+        inBuf[i] = 0;
+    for (int i=0 ; i<4 ; i++)
+        inb[i] = 0;
 
-    for (int i = 0 ; i < 64 ; i++)
-        W[i] = 0;
+    clearByteCount();
 
-}
-
-
-
-
-
-
-/**
- *
- */
-void Md5Digest::hashblock()
-{
-    //for (int t = 0; t < 16 ; t++)
-    //    printf("%2d %08lx\n", t, W[t]);
-
-    unsigned long a = hash[0];
-    unsigned long b = hash[1];
-    unsigned long c = hash[2];
-    unsigned long d = hash[3];
-
-    int t = 0;
-    for ( ; t < 16 ; t++)
-        {
-        unsigned long f = d ^ ( b & ( c ^ d));
-        unsigned int g = t;
-        unsigned long temp = d; d = c; c = b;
-        b += MD5_ROTL(((a + f + md5k[t] + W[g])), md5r[t]);
-        a = temp;
-        //printf("%2d %08lx %08lx %08lx %08lx\n", t, a, b, c, d);
-        }
-    for ( ; t < 32 ; t++)
-        {
-        unsigned long f = c ^ ( d & ( b ^ c));
-        unsigned int g = (5 * t + 1) & 0xf;
-        unsigned long temp = d; d = c; c = b;
-        b += MD5_ROTL(((a + f + md5k[t] + W[g])), md5r[t]);
-        a = temp;
-        }
-    for ( ; t < 48 ; t++)
-        {
-        unsigned long f = b ^ c ^ d;
-        unsigned int g = (3 * t + 5) & 0xf;
-        unsigned long temp = d; d = c; c = b;
-        b += MD5_ROTL(((a + f + md5k[t] + W[g])), md5r[t]);
-        a = temp;
-        }
-    for ( ; t < 64 ; t++)
-        {
-        unsigned long f = c ^ (b | ~d);
-        unsigned int g = (7 * t) & 0xf;
-        unsigned long temp = d; d = c; c = b;
-        b += MD5_ROTL(((a + f + md5k[t] + W[g])), md5r[t]);
-        a = temp;
-        }
-
-    hash[0] += a;
-    hash[1] += b;
-    hash[2] += c;
-    hash[3] += d;
+    byteNr    = 0;
+    longNr    = 0;
 }
 
 
 /**
  *
  */
-void Md5Digest::update(unsigned char val)
+void Md5::update(unsigned char ch)
 {
-    int wordNr = lenW >> 2;
-    /*
-	W[wordNr] <<= 8;
-    W[wordNr] |= (unsigned long)val;
-    */
-    W[wordNr] = ( (W[wordNr] >> 8) & 0x00ffffff ) |
-                ( ((unsigned long)val) << 24    );
-    size += 8;
-    lenW++;
-    if (lenW >= 64)
+    incByteCount();
+
+    //pack 64 bytes into 16 longs
+    inb[byteNr++] = (unsigned long)ch;
+    if (byteNr >= 4)
         {
-        hashblock();
-        lenW = 0;
+        unsigned long val =
+             inb[3] << 24 | inb[2] << 16 | inb[1] << 8 | inb[0];
+        inBuf[longNr++] = val;
+        byteNr = 0;
+        }
+    if (longNr >= 16)
+        {
+        transform();
+        longNr = 0;
         }
 }
 
 
 
+//#  The four core functions - F1 is optimized somewhat
+
+// #define F1(x, y, z) (x & y | ~x & z)
+#define F1(x, y, z) (z ^ (x & (y ^ z)))
+#define F2(x, y, z) F1(z, x, y)
+#define F3(x, y, z) (x ^ y ^ z)
+#define F4(x, y, z) (y ^ (x | ~z))
+
+// ## This is the central step in the MD5 algorithm.
+#define MD5STEP(f, w, x, y, z, data, s) \
+	( w = TR32(w + (f(x, y, z) + data)), w = w<<s | w>>(32-s), w = TR32(w + x) )
+
+/*
+ * The core of the MD5 algorithm, this alters an existing MD5 hash to
+ * reflect the addition of 16 longwords of new data.  MD5Update blocks
+ * the data and converts bytes into longwords for this routine.
+ * @parm buf points to an array of 4 unsigned 32bit (at least) integers
+ * @parm in points to an array of 16 unsigned 32bit (at least) integers
+ */
+void Md5::transform()
+{
+    unsigned long *i = inBuf;
+    unsigned long a  = hashBuf[0];
+    unsigned long b  = hashBuf[1];
+    unsigned long c  = hashBuf[2];
+    unsigned long d  = hashBuf[3];
+
+    MD5STEP(F1, a, b, c, d, i[ 0] + 0xd76aa478,  7);
+    MD5STEP(F1, d, a, b, c, i[ 1] + 0xe8c7b756, 12);
+    MD5STEP(F1, c, d, a, b, i[ 2] + 0x242070db, 17);
+    MD5STEP(F1, b, c, d, a, i[ 3] + 0xc1bdceee, 22);
+    MD5STEP(F1, a, b, c, d, i[ 4] + 0xf57c0faf,  7);
+    MD5STEP(F1, d, a, b, c, i[ 5] + 0x4787c62a, 12);
+    MD5STEP(F1, c, d, a, b, i[ 6] + 0xa8304613, 17);
+    MD5STEP(F1, b, c, d, a, i[ 7] + 0xfd469501, 22);
+    MD5STEP(F1, a, b, c, d, i[ 8] + 0x698098d8,  7);
+    MD5STEP(F1, d, a, b, c, i[ 9] + 0x8b44f7af, 12);
+    MD5STEP(F1, c, d, a, b, i[10] + 0xffff5bb1, 17);
+    MD5STEP(F1, b, c, d, a, i[11] + 0x895cd7be, 22);
+    MD5STEP(F1, a, b, c, d, i[12] + 0x6b901122,  7);
+    MD5STEP(F1, d, a, b, c, i[13] + 0xfd987193, 12);
+    MD5STEP(F1, c, d, a, b, i[14] + 0xa679438e, 17);
+    MD5STEP(F1, b, c, d, a, i[15] + 0x49b40821, 22);
+
+    MD5STEP(F2, a, b, c, d, i[ 1] + 0xf61e2562,  5);
+    MD5STEP(F2, d, a, b, c, i[ 6] + 0xc040b340,  9);
+    MD5STEP(F2, c, d, a, b, i[11] + 0x265e5a51, 14);
+    MD5STEP(F2, b, c, d, a, i[ 0] + 0xe9b6c7aa, 20);
+    MD5STEP(F2, a, b, c, d, i[ 5] + 0xd62f105d,  5);
+    MD5STEP(F2, d, a, b, c, i[10] + 0x02441453,  9);
+    MD5STEP(F2, c, d, a, b, i[15] + 0xd8a1e681, 14);
+    MD5STEP(F2, b, c, d, a, i[ 4] + 0xe7d3fbc8, 20);
+    MD5STEP(F2, a, b, c, d, i[ 9] + 0x21e1cde6,  5);
+    MD5STEP(F2, d, a, b, c, i[14] + 0xc33707d6,  9);
+    MD5STEP(F2, c, d, a, b, i[ 3] + 0xf4d50d87, 14);
+    MD5STEP(F2, b, c, d, a, i[ 8] + 0x455a14ed, 20);
+    MD5STEP(F2, a, b, c, d, i[13] + 0xa9e3e905,  5);
+    MD5STEP(F2, d, a, b, c, i[ 2] + 0xfcefa3f8,  9);
+    MD5STEP(F2, c, d, a, b, i[ 7] + 0x676f02d9, 14);
+    MD5STEP(F2, b, c, d, a, i[12] + 0x8d2a4c8a, 20);
+
+    MD5STEP(F3, a, b, c, d, i[ 5] + 0xfffa3942,  4);
+    MD5STEP(F3, d, a, b, c, i[ 8] + 0x8771f681, 11);
+    MD5STEP(F3, c, d, a, b, i[11] + 0x6d9d6122, 16);
+    MD5STEP(F3, b, c, d, a, i[14] + 0xfde5380c, 23);
+    MD5STEP(F3, a, b, c, d, i[ 1] + 0xa4beea44,  4);
+    MD5STEP(F3, d, a, b, c, i[ 4] + 0x4bdecfa9, 11);
+    MD5STEP(F3, c, d, a, b, i[ 7] + 0xf6bb4b60, 16);
+    MD5STEP(F3, b, c, d, a, i[10] + 0xbebfbc70, 23);
+    MD5STEP(F3, a, b, c, d, i[13] + 0x289b7ec6,  4);
+    MD5STEP(F3, d, a, b, c, i[ 0] + 0xeaa127fa, 11);
+    MD5STEP(F3, c, d, a, b, i[ 3] + 0xd4ef3085, 16);
+    MD5STEP(F3, b, c, d, a, i[ 6] + 0x04881d05, 23);
+    MD5STEP(F3, a, b, c, d, i[ 9] + 0xd9d4d039,  4);
+    MD5STEP(F3, d, a, b, c, i[12] + 0xe6db99e5, 11);
+    MD5STEP(F3, c, d, a, b, i[15] + 0x1fa27cf8, 16);
+    MD5STEP(F3, b, c, d, a, i[ 2] + 0xc4ac5665, 23);
+
+    MD5STEP(F4, a, b, c, d, i[ 0] + 0xf4292244,  6);
+    MD5STEP(F4, d, a, b, c, i[ 7] + 0x432aff97, 10);
+    MD5STEP(F4, c, d, a, b, i[14] + 0xab9423a7, 15);
+    MD5STEP(F4, b, c, d, a, i[ 5] + 0xfc93a039, 21);
+    MD5STEP(F4, a, b, c, d, i[12] + 0x655b59c3,  6);
+    MD5STEP(F4, d, a, b, c, i[ 3] + 0x8f0ccc92, 10);
+    MD5STEP(F4, c, d, a, b, i[10] + 0xffeff47d, 15);
+    MD5STEP(F4, b, c, d, a, i[ 1] + 0x85845dd1, 21);
+    MD5STEP(F4, a, b, c, d, i[ 8] + 0x6fa87e4f,  6);
+    MD5STEP(F4, d, a, b, c, i[15] + 0xfe2ce6e0, 10);
+    MD5STEP(F4, c, d, a, b, i[ 6] + 0xa3014314, 15);
+    MD5STEP(F4, b, c, d, a, i[13] + 0x4e0811a1, 21);
+    MD5STEP(F4, a, b, c, d, i[ 4] + 0xf7537e82,  6);
+    MD5STEP(F4, d, a, b, c, i[11] + 0xbd3af235, 10);
+    MD5STEP(F4, c, d, a, b, i[ 2] + 0x2ad7d2bb, 15);
+    MD5STEP(F4, b, c, d, a, i[ 9] + 0xeb86d391, 21);
+
+    hashBuf[0] = TR32(hashBuf[0] + a);
+    hashBuf[1] = TR32(hashBuf[1] + b);
+    hashBuf[2] = TR32(hashBuf[2] + c);
+    hashBuf[3] = TR32(hashBuf[3] + d);
+}
+
 
 /**
  *
  */
-std::vector<unsigned char> Md5Digest::finish()
+std::vector<unsigned char> Md5::finish()
 {
-    //save our size before padding
-    unsigned long long sizeOut = size;
-    
-    // Pad with a binary 1 (0x80)
-    update((unsigned char)0x80);
-    //append 0's to make a 56-byte buf.
-	//use mod, so that we will loop around once if already over 56
-    while (lenW != 56)
-        update((unsigned char)0x00);
+    //snapshot the bit count now before padding
+    getBitCount();
 
+    //Append terminal char
+    update(0x80);
 
-    //Append the length.  Lower 32 bits first
-    update( (unsigned char) ((sizeOut    ) & 0xff));
-    update( (unsigned char) ((sizeOut>> 8) & 0xff));
-    update( (unsigned char) ((sizeOut>>16) & 0xff));
-    update( (unsigned char) ((sizeOut>>24) & 0xff));
-    update( (unsigned char) ((sizeOut>>32) & 0xff));
-    update( (unsigned char) ((sizeOut>>40) & 0xff));
-    update( (unsigned char) ((sizeOut>>48) & 0xff));
-    update( (unsigned char) ((sizeOut>>56) & 0xff));
+    //pad until we have a 56 of 64 bytes, allowing for 8 bytes at the end
+    while (longNr != 14)
+        update(0);
 
-    //Output hash
-    std::vector<unsigned char> ret;
-    for (int wordNr = 0 ; wordNr<4 ; wordNr++)
+    //##### Append length in bits
+    // Don't use appendBitCount(), since md5 is little-endian
+    update((unsigned char)((nrBitsLo    ) & 0xff));
+    update((unsigned char)((nrBitsLo>> 8) & 0xff));
+    update((unsigned char)((nrBitsLo>>16) & 0xff));
+    update((unsigned char)((nrBitsLo>>24) & 0xff));
+    update((unsigned char)((nrBitsHi    ) & 0xff));
+    update((unsigned char)((nrBitsHi>> 8) & 0xff));
+    update((unsigned char)((nrBitsHi>>16) & 0xff));
+    update((unsigned char)((nrBitsHi>>24) & 0xff));
+
+    //copy out answer
+    std::vector<unsigned char> res;
+    for (int i=0 ; i<4 ; i++)
         {
-        unsigned long w = hash[wordNr];
-        ret.push_back( (unsigned char) ((w      ) & 0xff) );
-        ret.push_back( (unsigned char) ((w >>  8) & 0xff) );
-        ret.push_back( (unsigned char) ((w >> 16) & 0xff) );
-        ret.push_back( (unsigned char) ((w >> 24) & 0xff) );
+        res.push_back((unsigned char)((hashBuf[i]      ) & 0xff));
+        res.push_back((unsigned char)((hashBuf[i] >>  8) & 0xff));
+        res.push_back((unsigned char)((hashBuf[i] >> 16) & 0xff));
+        res.push_back((unsigned char)((hashBuf[i] >> 24) & 0xff));
         }
 
-    // Re-initialize the context (also zeroizes contents)
-    reset();
+    reset();  // Security!  ;-)
 
-    return ret;
+    return res;
 }
 
 
@@ -1212,7 +1374,7 @@ static bool doTests()
     printf("##########################################\n");
     printf("## MD5\n");
     printf("##########################################\n");
-    Md5Digest md5;
+    Md5 md5;
     if (!hashTests(md5, md5tests))
         return false;
     if (!millionATest(md5, "7707d6ae4e027c70eea2a935c2296f21"))
@@ -1221,7 +1383,7 @@ static bool doTests()
     printf("##########################################\n");
     printf("## SHA1\n");
     printf("##########################################\n");
-    Sha1Digest sha1;
+    Sha1 sha1;
     if (!hashTests(sha1, sha1tests))
         return false;
     if (!millionATest(sha1, "34aa973cd4c4daa4f61eeb2bdbad27316534016f"))
@@ -1230,7 +1392,7 @@ static bool doTests()
     printf("##########################################\n");
     printf("## SHA224\n");
     printf("##########################################\n");
-    Sha224Digest sha224;
+    Sha224 sha224;
     if (!hashTests(sha224, sha224tests))
         return false;
     if (!millionATest(sha224,
@@ -1240,7 +1402,7 @@ static bool doTests()
     printf("##########################################\n");
     printf("## SHA256\n");
     printf("##########################################\n");
-    Sha256Digest sha256;
+    Sha256 sha256;
     if (!hashTests(sha256, sha256tests))
         return false;
     if (!millionATest(sha256,
@@ -1250,7 +1412,7 @@ static bool doTests()
     printf("##########################################\n");
     printf("## SHA384\n");
     printf("##########################################\n");
-    Sha384Digest sha384;
+    Sha384 sha384;
     if (!hashTests(sha384, sha384tests))
         return false;
     /**/
@@ -1263,7 +1425,7 @@ static bool doTests()
     printf("##########################################\n");
     printf("## SHA512\n");
     printf("##########################################\n");
-    Sha512Digest sha512;
+    Sha512 sha512;
     if (!hashTests(sha512, sha512tests))
         return false;
     if (!millionATest(sha512,

@@ -3,7 +3,7 @@
 /**
  * Secure Hashing Tool
  * *
- * Authors:
+ * Author:
  *   Bob Jamison
  *
  * Copyright (C) 2006-2008 Bob Jamison
@@ -25,7 +25,7 @@
 
 /**
  *
- *  This base class and its subclasses  provide an easy API for providing
+ *  This base class and its subclasses provide an easy API for providing
  *  several different types of secure hashing functions for whatever use
  *  a developer might need.  This is not intended as a high-performance
  *  replacement for the fine implementations already available.  Rather, it
@@ -33,13 +33,32 @@
  *  hashing requirements, like for communications and authentication.
  *
  *  These hashes are intended to be simple to use.  For example:
- *  Sha256Digest digest;
+ *  Sha256 digest;
  *  digest.append("The quick brown dog");
  *  std::string result = digest.finishHex();
+ *
+ *  Or, use one of the static convenience methods:
+ *
+ *   example:  std::string digest =
+ *                     Digest::hash(Digest::HASH_XXX, str);
+ *
+ *    ...where HASH_XXX represents one of the hash
+ *       algorithms listed in HashType.
  *
  *  There are several forms of append() for convenience.
  *  finish() and finishHex() call reset() for both security and
  *  to prepare for the next use.
+ *
+ *
+ *  Much effort has been made to make this code portable, and it
+ *  has been tested on various 32- and 64-bit machines.  If you
+ *  add another algorithm, please test it likewise.
+ *
+ *
+ *  The SHA algorithms are derived directly from FIPS-180-3.  The
+ *  SHA tests at the bottom are also directly from that document.
+ *
+ *  The MD5 algorithm is from RFC 1321
  *
  */
 
@@ -50,7 +69,8 @@
 /**
  *  Base class.  Do not use this class directly.  Rather, use of of the
  *  subclasses below.
- *  For all subclasses, overload reset(), update(unsigned char), and finish()
+ *  For all subclasses, overload reset(), update(unsigned char),
+ *  transform(), and finish()
  */
 class Digest
 {
@@ -132,7 +152,7 @@ public:
      *  Overload this in every subclass
      */
     virtual void reset()
-        {}
+        { clearByteCount(); }
 
     /**
      *  Finish the hash and return its computed value
@@ -144,6 +164,43 @@ public:
         return ret;
         }
 
+
+    //########################
+    //# Convenience methods
+    //########################
+
+    /**
+     * Convenience method.  This is a simple way of getting a hash.
+     * call with:  std::vector<unsigned char> digest =
+     *             Digest::hash(Digest::HASH_XXX, buf, len);
+     */
+    static std::vector<unsigned char> hash(HashType typ,
+                                           unsigned char *buf,
+                                           int len);
+    /**
+     * Convenience method.  This is a simple way of getting a hash.
+     * call with:  std::vector<unsigned char> digest =
+     *             Digest::hash(Digest::HASH_XXX, str);
+     */
+    static std::vector<unsigned char> hash(HashType typ,
+                                           const std::string &str);
+
+    /**
+     * Convenience method.  This is a simple way of getting a hash.
+     * call with:  std::string digest =
+     *             Digest::hash(Digest::HASH_XXX, buf, len);
+     */
+    static std::string hashHex(HashType typ,
+                               unsigned char *buf,
+                               int len);
+    /**
+     * Convenience method.  This is a simple way of getting a hash.
+     * call with:  std::string digest =
+     *             Digest::hash(Digest::HASH_XXX, str);
+     */
+    static std::string hashHex(HashType typ,
+                               const std::string &str);
+
 protected:
 
     /**
@@ -154,9 +211,54 @@ protected:
         {}
 
     /**
+     *  Perform the particular block hashing algorithm for a
+     *  particular type of hash.
+     *  Overload this in every subclass
+     */
+    virtual void transform()
+        {}
+
+
+    /**
      * The enumerated type of the hash
      */
     int hashType;
+
+    void incByteCount()
+        {
+        if (nrBytesLo == 0xffffffffL)
+            {
+            nrBytesHi++;
+            nrBytesLo = 0;
+            }
+        else
+           nrBytesLo++;
+        }
+    void clearByteCount()
+        {
+        nrBytesHi = nrBytesLo = 0;
+        }
+    void getBitCount()
+        {
+        nrBitsLo = (nrBytesLo << 3) & 0xffffffff;
+        nrBitsHi = (nrBytesHi << 3) | ((nrBytesLo >> 29) & 7);
+        }
+    void appendBitCount()
+        {
+        update((unsigned char)((nrBitsHi>>24) & 0xff));
+        update((unsigned char)((nrBitsHi>>16) & 0xff));
+        update((unsigned char)((nrBitsHi>> 8) & 0xff));
+        update((unsigned char)((nrBitsHi    ) & 0xff));
+        update((unsigned char)((nrBitsLo>>24) & 0xff));
+        update((unsigned char)((nrBitsLo>>16) & 0xff));
+        update((unsigned char)((nrBitsLo>> 8) & 0xff));
+        update((unsigned char)((nrBitsLo    ) & 0xff));
+        }
+
+    unsigned long nrBytesHi;
+    unsigned long nrBytesLo;
+    unsigned long nrBitsHi;
+    unsigned long nrBitsLo;
 };
 
 
@@ -169,20 +271,20 @@ protected:
  *  Federal Information Processing Standards Publication 180-2
  *  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
  */
-class Sha1Digest : public Digest
+class Sha1 : public Digest
 {
 public:
 
     /**
      *  Constructor
      */
-    Sha1Digest()
+    Sha1()
         { hashType = HASH_SHA1; reset(); }
 
     /**
      *  Destructor
      */
-    virtual ~Sha1Digest()
+    virtual ~Sha1()
         { reset(); }
 
     /**
@@ -202,14 +304,19 @@ protected:
      */
     virtual void update(unsigned char val);
 
+    /**
+     *  Overloaded from Digest
+     */
+    virtual void transform();
+
 private:
 
-    void hashblock();
+    unsigned long hashBuf[5];
+    unsigned long inBuf[80];
 
-    unsigned long H[5];
-    unsigned long W[80];
-    unsigned long long size;
-    int lenW;
+    int longNr;
+    int byteNr;
+    unsigned long inb[4];
 
 };
 
@@ -224,20 +331,20 @@ private:
  *  Federal Information Processing Standards Publication 180-2
  *  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
  */
-class Sha224Digest : public Digest
+class Sha224 : public Digest
 {
 public:
 
     /**
      *  Constructor
      */
-    Sha224Digest()
+    Sha224()
         { hashType = HASH_SHA224; reset(); }
 
     /**
      *  Destructor
      */
-    virtual ~Sha224Digest()
+    virtual ~Sha224()
         { reset(); }
 
     /**
@@ -257,14 +364,18 @@ protected:
      */
     virtual void update(unsigned char val);
 
+    /**
+     *  Overloaded from Digest
+     */
+    virtual void transform();
+
 private:
 
-    void hashblock();
-
-    unsigned long H[8];
-    unsigned long W[64];
-    unsigned long long size;
-    int lenW;
+    unsigned long hashBuf[8];
+    unsigned long inBuf[64];
+    int longNr;
+    int byteNr;
+    unsigned long inb[4];
 
 };
 
@@ -276,20 +387,20 @@ private:
  *  Federal Information Processing Standards Publication 180-2
  *  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
  */
-class Sha256Digest : public Digest
+class Sha256 : public Digest
 {
 public:
 
     /**
      *  Constructor
      */
-    Sha256Digest()
+    Sha256()
         { hashType = HASH_SHA256; reset(); }
 
     /**
      *  Destructor
      */
-    virtual ~Sha256Digest()
+    virtual ~Sha256()
         { reset(); }
 
     /**
@@ -309,16 +420,21 @@ protected:
      */
     virtual void update(unsigned char val);
 
+    /**
+     *  Overloaded from Digest
+     */
+    virtual void transform();
+
 private:
 
-    void hashblock();
-
-    unsigned long H[8];
-    unsigned long W[64];
-    unsigned long long size;
-    int lenW;
+    unsigned long hashBuf[8];
+    unsigned long inBuf[64];
+    int longNr;
+    int byteNr;
+    unsigned long inb[4];
 
 };
+
 
 
 /**
@@ -327,20 +443,20 @@ private:
  *  Federal Information Processing Standards Publication 180-2
  *  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
  */
-class Sha384Digest : public Digest
+class Sha384 : public Digest
 {
 public:
 
     /**
      *  Constructor
      */
-    Sha384Digest()
+    Sha384()
         { hashType = HASH_SHA384; reset(); }
 
     /**
      *  Destructor
      */
-    virtual ~Sha384Digest()
+    virtual ~Sha384()
         { reset(); }
 
     /**
@@ -360,14 +476,20 @@ protected:
      */
     virtual void update(unsigned char val);
 
+    /**
+     *  Overloaded from Digest
+     */
+    virtual void transform();
+
+
+
 private:
 
-    void hashblock();
-
-    unsigned long long H[8];
-    unsigned long long W[80];
-    unsigned long long size;
-    int lenW;
+    unsigned long long hashBuf[8];
+    unsigned long long inBuf[80];
+    int longNr;
+    int byteNr;
+    unsigned long long inb[8];
 
 };
 
@@ -380,20 +502,20 @@ private:
  *  Federal Information Processing Standards Publication 180-2
  *  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
  */
-class Sha512Digest : public Digest
+class Sha512 : public Digest
 {
 public:
 
     /**
      *  Constructor
      */
-    Sha512Digest()
+    Sha512()
         { hashType = HASH_SHA512; reset(); }
 
     /**
      *  Destructor
      */
-    virtual ~Sha512Digest()
+    virtual ~Sha512()
         { reset(); }
 
     /**
@@ -413,14 +535,18 @@ protected:
      */
     virtual void update(unsigned char val);
 
+    /**
+     *  Overloaded from Digest
+     */
+    virtual void transform();
+
 private:
 
-    void hashblock();
-
-    unsigned long long H[8];
-    unsigned long long W[80];
-    unsigned long long size;
-    int lenW;
+    unsigned long long hashBuf[8];
+    unsigned long long inBuf[80];
+    int longNr;
+    int byteNr;
+    unsigned long long inb[8];
 
 };
 
@@ -436,20 +562,20 @@ private:
  * IETF RFC 1321, MD5 Specification
  * http://www.ietf.org/rfc/rfc1321.txt
  */
-class Md5Digest :  public Digest
+class Md5 :  public Digest
 {
 public:
 
     /**
      *  Constructor
      */
-    Md5Digest()
+    Md5()
         { hashType = HASH_MD5; reset(); }
 
     /**
      *  Destructor
      */
-    virtual ~Md5Digest()
+    virtual ~Md5()
         { reset(); }
 
     /**
@@ -469,14 +595,19 @@ protected:
      */
     virtual void update(unsigned char val);
 
+    /**
+     *  Overloaded from Digest
+     */
+    virtual void transform();
+
 private:
 
-    void hashblock();
+    unsigned long hashBuf[4];
+    unsigned long inBuf[16];
 
-    unsigned long hash[8];
-    unsigned long W[64];
-    unsigned long long size;
-    int lenW;
+    unsigned long inb[4];  // Buffer for input bytes as longs
+    int           byteNr;  // which byte in long
+    int           longNr;  // which long in 16-long buffer
 
 };
 
