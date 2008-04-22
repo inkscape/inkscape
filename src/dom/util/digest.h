@@ -59,6 +59,7 @@
  *  The SHA algorithms are derived directly from FIPS-180-3.  The
  *  SHA tests at the bottom of digest.cpp are also directly from
  *   that document.  
+ *  http://csrc.nist.gov/publications/drafts/fips_180-3/draft_fips-180-3_June-08-2007.pdf 
  *
  *  The MD5 algorithm is from RFC 1321
  *  
@@ -180,6 +181,7 @@ public:
 
     /**
      * Convenience method.  This is a simple way of getting a hash.
+     * Returns a byte buffer with the digest output.     
      * call with:  std::vector<unsigned char> digest =
      *             Digest::hash(Digest::HASH_XXX, buf, len);
      */
@@ -188,6 +190,7 @@ public:
                                            int len);
     /**
      * Convenience method.  This is a simple way of getting a hash.
+     * Returns a byte buffer with the digest output.     
      * call with:  std::vector<unsigned char> digest =
      *             Digest::hash(Digest::HASH_XXX, str);
      */
@@ -196,6 +199,7 @@ public:
 
     /**
      * Convenience method.  This is a simple way of getting a hash.
+     * Returns a string with the hexidecimal form of the digest output.     
      * call with:  std::string digest =
      *             Digest::hash(Digest::HASH_XXX, buf, len);
      */
@@ -204,6 +208,7 @@ public:
                                int len);
     /**
      * Convenience method.  This is a simple way of getting a hash.
+     * Returns a string with the hexidecimal form of the digest output.     
      * call with:  std::string digest =
      *             Digest::hash(Digest::HASH_XXX, str);
      */
@@ -301,7 +306,7 @@ protected:
  *  SHA-1,
  *  Section 6.1, SECURE HASH STANDARD
  *  Federal Information Processing Standards Publication 180-2
- *  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
+ *  http://csrc.nist.gov/publications/drafts/fips_180-3/draft_fips-180-3_June-08-2007.pdf 
  */
 class Sha1 : public Digest
 {
@@ -361,7 +366,7 @@ private:
  *  SHA-224,
  *  Section 6.1, SECURE HASH STANDARD
  *  Federal Information Processing Standards Publication 180-2
- *  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
+ *  http://csrc.nist.gov/publications/drafts/fips_180-3/draft_fips-180-3_June-08-2007.pdf 
  */
 class Sha224 : public Digest
 {
@@ -417,7 +422,7 @@ private:
  *  SHA-256,
  *  Section 6.1, SECURE HASH STANDARD
  *  Federal Information Processing Standards Publication 180-2
- *  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
+ *  http://csrc.nist.gov/publications/drafts/fips_180-3/draft_fips-180-3_June-08-2007.pdf 
  */
 class Sha256 : public Digest
 {
@@ -473,7 +478,7 @@ private:
  *  SHA-384,
  *  Section 6.1, SECURE HASH STANDARD
  *  Federal Information Processing Standards Publication 180-2
- *  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
+ *  http://csrc.nist.gov/publications/drafts/fips_180-3/draft_fips-180-3_June-08-2007.pdf 
  */
 class Sha384 : public Digest
 {
@@ -532,7 +537,7 @@ private:
  *  SHA-512,
  *  Section 6.1, SECURE HASH STANDARD
  *  Federal Information Processing Standards Publication 180-2
- *  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
+ *  http://csrc.nist.gov/publications/drafts/fips_180-3/draft_fips-180-3_June-08-2007.pdf 
  */
 class Sha512 : public Digest
 {
