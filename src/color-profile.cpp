@@ -941,11 +941,8 @@ Glib::ustring Inkscape::colorprofile_set_display_per( gpointer buf, guint bufLen
     id.clear();
 
     if ( buf && bufLen ) {
-        Md5Digest digest;
-        if ( buf && bufLen ) {
-            digest.append(reinterpret_cast<unsigned char*>(buf), bufLen);
-        }
-        id = digest.finishHex();
+        id = Digest::hashHex(Digest::HASH_MD5,
+                   reinterpret_cast<unsigned char*>(buf), bufLen);
 
         // Note: if this is not a valid profile, item.hprof will be set to null.
         item.hprof = cmsOpenProfileFromMem(buf, bufLen);
