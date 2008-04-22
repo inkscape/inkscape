@@ -98,6 +98,8 @@
 #include "internal/bitmap/wave.h"
 #endif /* WITH_IMAGE_MAGICK */
 
+#include "internal/filter/filter.h"
+
 extern gboolean inkscape_app_use_gui( Inkscape::Application const *app );
 
 namespace Inkscape {
@@ -229,6 +231,8 @@ init()
     Internal::Bitmap::Unsharpmask::init();
     Internal::Bitmap::Wave::init();
 #endif /* WITH_IMAGE_MAGICK */
+
+	Internal::Filter::Filter::filters_all();
 
     /* Load search path for extensions */
     if (Inkscape::Extension::Extension::search_path.size() == 0)

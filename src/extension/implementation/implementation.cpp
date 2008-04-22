@@ -19,6 +19,12 @@
 #include <extension/input.h>
 #include <extension/effect.h>
 
+#include "selection.h"
+#include "desktop.h"
+#include "desktop-handles.h"
+#include "ui/view/view.h"
+#include "util/glib-list-iterators.h"
+
 namespace Inkscape {
 namespace Extension {
 namespace Implementation {
@@ -91,8 +97,21 @@ Implementation::save(Inkscape::Extension::Output */*module*/, SPDocument */*doc*
 } /* Implementation::save */
 
 Gtk::Widget *
-Implementation::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View */*view*/, sigc::signal<void> * /*changeSignal*/, ImplementationDocumentCache * /*docCache*/) {
-    return module->autogui(NULL, NULL);
+Implementation::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, ImplementationDocumentCache * docCache) {
+    if (module->param_visible_count() == 0) return NULL;
+
+    SPDocument * current_document = view->doc();
+
+    using Inkscape::Util::GSListConstIterator;
+    GSListConstIterator<SPItem *> selected =
+           sp_desktop_selection((SPDesktop *)view)->itemList();
+    Inkscape::XML::Node * first_select = NULL;
+    if (selected != NULL) {
+        const SPItem * item = *selected;
+        first_select = SP_OBJECT_REPR(item);
+    }
+
+    return module->autogui(current_document, first_select, changeSignal);
 } /* Implementation::prefs_effect */
 
 void

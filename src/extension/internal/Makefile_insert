@@ -137,5 +137,9 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/latex-pstricks-out.cpp	\
 	extension/internal/latex-pstricks-out.h	\
 	$(extension_internal_libwpg) \
-	$(extension_internal_image_magick_sources)
+	$(extension_internal_image_magick_sources) \
+	\
+	extension/internal/filter/filter-all.cpp \
+	extension/internal/filter/filter.cpp \
+	extension/internal/filter/filter.h
 

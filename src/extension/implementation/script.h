@@ -87,13 +87,6 @@ public:
     virtual void save(Inkscape::Extension::Output *module,
                       SPDocument *doc,
                       gchar const *filename);
-    /**
-     *
-     */
-    virtual Gtk::Widget *prefs_effect(Inkscape::Extension::Effect *module,
-                                      Inkscape::UI::View::View * view,
-                                      sigc::signal<void> * changeSignal,
-									  ImplementationDocumentCache * docCache);
 
     /**
      *

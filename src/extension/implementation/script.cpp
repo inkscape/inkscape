@@ -540,38 +540,6 @@ Script::prefs_output(Inkscape::Extension::Output *module)
     return module->autogui(NULL, NULL);
 }
 
-
-
-/**
-    \return   A dialog for preferences
-    \brief    A stub funtion right now
-    \param    module    Module who's preferences need getting
-
-    This function should really do something, right now it doesn't.
-*/
-Gtk::Widget *
-Script::prefs_effect( Inkscape::Extension::Effect *module,
-                      Inkscape::UI::View::View *view,
-                      sigc::signal<void> * changeSignal,
-                      ImplementationDocumentCache * /*docCache*/ )
-{
-    SPDocument * current_document = view->doc();
-
-    using Inkscape::Util::GSListConstIterator;
-    GSListConstIterator<SPItem *> selected =
-           sp_desktop_selection((SPDesktop *)view)->itemList();
-    Inkscape::XML::Node * first_select = NULL;
-    if (selected != NULL) {
-        const SPItem * item = *selected;
-        first_select = SP_OBJECT_REPR(item);
-    }
-
-    return module->autogui(current_document, first_select, changeSignal);
-}
-
-
-
-
 /**
     \return  A new document that has been opened
     \brief   This function uses a filename that is put in, and calls
