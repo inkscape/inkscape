@@ -26,7 +26,7 @@
 #include <gdkmm/pixbuf.h>
 #include "inkscape.h"
 #include "desktop.h"
-#include "message-stack.h"
+#include "message-context.h"
 #include "document.h"
 #include "desktop-handles.h"
 #include "extension/db.h"
@@ -245,12 +245,25 @@ static gboolean handleEnterNotify( GtkWidget* widget, GdkEventCrossing* event, g
     if ( item ) {
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         if ( desktop ) {
-            desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, g_strconcat(
+            desktop->tipsMessageContext()->set(Inkscape::INFORMATION_MESSAGE, g_strconcat(
               _("Swatch info: <b>"),
               item->def.descr.c_str(),
               _("</b>"),
+              _(" - "),
+              _("<b>Click</b> to set fill, <b>Shift+click</b> to set stroke"),
               NULL
             ));
+        }
+    }
+    return FALSE;
+}
+
+static gboolean handleLeaveNotify( GtkWidget* widget, GdkEventCrossing* event, gpointer callback_data ) {
+    ColorItem* item = reinterpret_cast<ColorItem*>(callback_data);
+    if ( item ) {
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        if ( desktop ) {
+            desktop->tipsMessageContext()->clear();
         }
     }
     return FALSE;
@@ -608,6 +621,11 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
         g_signal_connect( G_OBJECT(newBlot->gobj()),
                           "enter-notify-event",
                           G_CALLBACK(handleEnterNotify),
+                          this);
+
+        g_signal_connect( G_OBJECT(newBlot->gobj()),
+                          "leave-notify-event",
+                          G_CALLBACK(handleLeaveNotify),
                           this);
 
 //         g_signal_connect( G_OBJECT(newBlot->gobj()),
