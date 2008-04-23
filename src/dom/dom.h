@@ -46,6 +46,9 @@
 
 #include <vector>
 
+#include "domptr.h"
+
+
 /**
  * What type of string do we want?  Pick one of the following
  * Then below, select one of the corresponding typedefs.
@@ -90,269 +93,6 @@ typedef unsigned long long DOMTimeStamp;
  */
 typedef void DOMUserData;
 
-
-/*#########################################################################
-## NodePtr
-#########################################################################*/
-
-/**
- * A simple Smart Pointer class that handles Nodes and all of its
- * descendants.  This is very similar to shared_ptr, but it is customized
- * to handle our needs. 
- */ 
-template<class T> class Ptr
-{
-public:
-
-    /**
-     * Simple constructor
-     */ 
-    Ptr()
-        { _ref = 0; }
-
-    /**
-     * Constructor upon a reference
-     */ 
-    template<class Y> Ptr(const Ptr<Y> &other)
-        {
-        _ref = other._ref;
-	    incrementRefCount(_ref);
-        }
-
-    /**
-     * Constructor upon a reference
-     */ 
-    Ptr(T * refArg, bool addRef = true)
-        {
-        _ref = refArg;
-        if(addRef)
-		    incrementRefCount(_ref);
-        }
-
-
-    /**
-     * Copy constructor
-     */ 
-    Ptr(const Ptr &other)
-        {
-        _ref = other._ref;
-	    incrementRefCount(_ref);
-        }
-
-    /**
-     * Destructor
-     */ 
-    virtual ~Ptr()
-    {
-        decrementRefCount(_ref);
-    }
-
-
-    /**
-     * Assignment operator
-     */ 
-    template<class Y> Ptr &operator=(const Ptr<Y> &other)
-        {
-        decrementRefCount(_ref);
-        _ref = other._ref;
-        incrementRefCount(_ref);
-        return *this;
-        }
-
-    /**
-     * Assignment operator
-     */ 
-    Ptr &operator=(const Ptr &other)
-        {
-        decrementRefCount(_ref);
-        _ref = other._ref;
-        incrementRefCount(_ref);
-        return *this;
-        }
-
-    /**
-     * Assignment operator
-     */ 
-    template<class Y> Ptr &operator=(Y * ref)
-        {
-        decrementRefCount(_ref);
-        _ref = ref;
-        incrementRefCount(_ref);
-        return *this;
-        }
-
-    /**
-     * Assignment operator
-     */ 
-    template<class Y> Ptr &operator=(const Y * ref)
-        {
-        decrementRefCount(_ref);
-        _ref = (Y *) ref;
-        incrementRefCount(_ref);
-        return *this;
-        }
-
-    /**
-     * Return the reference
-     */ 
-    T * get() const
-        {
-        return _ref;
-        }
-
-    /**
-     * Dereference operator
-     */ 
-    T &operator*() const
-        {
-        return *_ref;
-        }
-
-    /**
-     * Point-to operator
-     */ 
-    T *operator->() const
-        {
-        return _ref;
-        }
-
-    /**
-     * NOT bool operator.  How to check if we are null without a comparison
-     */	     
-    bool operator! () const
-        {
-        return (_ref == 0);
-        }
-
-    /**
-     * Swap what I reference with the other guy
-     */	     
-    void swap(Ptr &other)
-        {
-        T *tmp = _ref;
-        _ref = other._ref;
-        other._ref = tmp;
-        }
-
-    //The referenced item
-    T *_ref;
-};
-
-
-/**
- * Global definitions.  Many of these are used to mimic behaviour of
- * a real pointer 
- */
-
-/**
- * Equality
- */ 
-template<class T, class U> inline bool
-   operator==(const Ptr<T> &a, const Ptr<U> &b)
-{
-    return a.get() == b.get();
-}
-
-/**
- * Inequality
- */ 
-template<class T, class U> inline bool
-     operator!=(const Ptr<T> &a, const Ptr<U> &b)
-{
-    return a.get() != b.get();
-}
-
-/**
- * Equality
- */ 
-template<class T> inline bool
-     operator==(const Ptr<T> &a, T * b)
-{
-    return a.get() == b;
-}
-
-/**
- * Inequality
- */ 
-template<class T> inline bool
-     operator!=(const Ptr<T> &a, T * b)
-{
-    return a.get() != b;
-}
-
-/**
- * Equality
- */ 
-template<class T> inline bool
-     operator==(T * a, const Ptr<T> &b)
-{
-    return a == b.get();
-}
-
-/**
- * Inequality
- */ 
-template<class T> inline bool
-     operator!=(T * a, const Ptr<T> &b)
-{
-    return a != b.get();
-}
-
-
-/**
- * Less than
- */ 
-template<class T> inline bool
-     operator<(const Ptr<T> &a, const Ptr<T> &b)
-{
-    return std::less<T *>()(a.get(), b.get());
-}
-
-/**
- * Swap
- */ 
-template<class T> void
-     swap(Ptr<T> &a, Ptr<T> &b)
-{
-    a.swap(b);
-}
-
-
-/**
- * Get the pointer globally, for <algo>
- */ 
-template<class T> T * 
-    get_pointer(const Ptr<T> &p)
-{
-    return p.get();
-}
-
-/**
- * Static cast
- */ 
-template<class T, class U> Ptr<T>
-     static_pointer_cast(const Ptr<U> &p)
-{
-    return static_cast<T *>(p.get());
-}
-
-/**
- * Const cast
- */ 
-template<class T, class U> Ptr<T>
-     const_pointer_cast(const Ptr<U> &p)
-{
-    return const_cast<T *>(p.get());
-}
-
-/**
- * Dynamic cast
- */ 
-template<class T, class U> Ptr<T>
-     dynamic_pointer_cast(const Ptr<U> &p)
-{
-    return dynamic_cast<T *>(p.get());
-}
 
 
 /**
@@ -1248,7 +988,7 @@ public:
         }
 
     /**
-     *
+     * Get the number of nodes in this list
      */
     virtual unsigned long getLength()
         {
@@ -1321,49 +1061,56 @@ protected:
 ## NamedNodeMap
 #########################################################################*/
 
-class NamedNodeMapEntry
-{
-public:
-    NamedNodeMapEntry(const DOMString &theNamespaceURI,
-                      const DOMString &theName,
-                      const NodePtr   theNode)
-        {
-        namespaceURI = theNamespaceURI;
-        name         = theName;
-        node         = theNode;
-        }
-    NamedNodeMapEntry(const NamedNodeMapEntry &other)
-        {
-        assign(other);
-        }
-    NamedNodeMapEntry &operator=(const NamedNodeMapEntry &other)
-        {
-        assign(other);
-        return *this;
-        }
-    virtual ~NamedNodeMapEntry()
-        {
-        }
-    void assign(const NamedNodeMapEntry &other)
-        {
-        namespaceURI = other.namespaceURI;
-        name         = other.name;
-        node         = other.node;
-        }
-    DOMString namespaceURI;
-    DOMString name;
-    NodePtr   node;
-};
-
 /**
- *
+ * Contains a mapping from name->NodePtr.  Used for various purposes.  For
+ * example, a list of Attributes is a NamedNodeMap. 
  */
 class NamedNodeMap
 {
+private:
+
+    /**
+     * table entry.  Not an API item
+     */	     
+	class NamedNodeMapEntry
+	{
+	public:
+	    NamedNodeMapEntry(const DOMString &theNamespaceURI,
+	                      const DOMString &theName,
+	                      const NodePtr   theNode)
+	        {
+	        namespaceURI = theNamespaceURI;
+	        name         = theName;
+	        node         = theNode;
+	        }
+	    NamedNodeMapEntry(const NamedNodeMapEntry &other)
+	        {
+	        assign(other);
+	        }
+	    NamedNodeMapEntry &operator=(const NamedNodeMapEntry &other)
+	        {
+	        assign(other);
+	        return *this;
+	        }
+	    virtual ~NamedNodeMapEntry()
+	        {
+	        }
+	    void assign(const NamedNodeMapEntry &other)
+	        {
+	        namespaceURI = other.namespaceURI;
+	        name         = other.name;
+	        node         = other.node;
+	        }
+	    DOMString namespaceURI;
+	    DOMString name;
+	    NodePtr   node;
+	};
+
+
 public:
 
     /**
-     *
+     * Return the named node.  Return nullptr if not found.
      */
     virtual NodePtr getNamedItem(const DOMString& name)
         {
