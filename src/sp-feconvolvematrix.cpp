@@ -177,7 +177,7 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
                 feConvolveMatrix->kernelMatrix = helperfns_read_vector(value, (int) (feConvolveMatrix->order.getNumber() * feConvolveMatrix->order.getOptNumber()));
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             } else {
-                g_warning("You MUST pass a kernelMatrix parameter!");
+                g_warning("For feConvolveMatrix you MUST pass a kernelMatrix parameter!");
             }
             break;
         case SP_ATTR_DIVISOR:
