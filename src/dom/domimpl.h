@@ -384,7 +384,7 @@ public:
     /**
      *
      */
-    virtual DOMUserData *getUserData(const DOMString &namespaceURI);
+    virtual DOMUserData *getUserData(const DOMString &key);
 
 
     //##################

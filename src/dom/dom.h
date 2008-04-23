@@ -31,13 +31,24 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *  
+ * =======================================================================
+ *  NOTES:
+ * 
+ *  Notice that many of the classes defined here are pure virtual.  In other
+ *  words, they are purely unimplemented interfaces.  For the implementations
+ *  of them, look in domimpl.h and domimpl.cpp.
+ *  
+ *  Also, note that there is a domptr.cpp file that has a couple of necessary
+ *  functions which cannot be in a .h file
+ *             
  */
 
 #include <vector>
 
 /**
  * What type of string do we want?  Pick one of the following
- * Then below, select one of the corresponding typedefs? 
+ * Then below, select one of the corresponding typedefs.
  */ 
 
 #include <glibmm.h>
@@ -902,7 +913,8 @@ public:
 
 /**
  *  The basic Node class, which is the root of most other
- *  classes in DOM.
+ *  classes in DOM.  Thus it is by far the most important, and the one
+ *  whose implementation we must perform correctly. 
  */
 class Node
 {
@@ -964,113 +976,136 @@ public:
     virtual NodeList getChildNodes() = 0;
 
     /**
-     *
+     * Return the first sibling of the chidren of this node.  Return
+     * null if there is none.     
      */
     virtual NodePtr getFirstChild() = 0;
 
     /**
-     *
+     * Return the last sibling of the children of this node.  Return
+     * null if there is none.     
      */
     virtual NodePtr getLastChild() = 0;
 
     /**
-     *
+     * Return the node that is previous to this one in the parent's
+     * list of children.  Return null if there is none.     
      */
     virtual NodePtr getPreviousSibling() = 0;
 
     /**
-     *
+     * Return the node that is after this one in the parent's list
+     * of children.  Return null if there is none.     
      */
     virtual NodePtr getNextSibling() = 0;
 
     /**
-     *
+     * Get the list of all attributes of this node.
      */
     virtual NamedNodeMap &getAttributes() = 0;
 
 
     /**
-     *
+     * Return the document that created or inherited this node.
      */
     virtual DocumentPtr getOwnerDocument() = 0;
 
     /**
-     *
+     * Insert a node as a new child.  Place it before the referenced child.
+     * Place it at the end if the referenced child does not exist.     
      */
     virtual NodePtr insertBefore(const NodePtr newChild,
                        const NodePtr refChild)
                        throw(DOMException) = 0;
 
     /**
-     *
+     * Insert a node as a new child.  Replace the referenced child with it.
+     * Place it at the end if the referenced child does not exist.     
      */
     virtual NodePtr replaceChild(const NodePtr newChild,
                        const NodePtr oldChild)
                        throw(DOMException) = 0;
 
     /**
-     *
+     * Remove a node from the list of children.  Do nothing if the
+     * node is not a member of the child list.     
      */
     virtual NodePtr removeChild(const NodePtr oldChild)
                       throw(DOMException) = 0;
 
     /**
-     *
+     *  Add the node to the end of this node's child list.
      */
     virtual NodePtr appendChild(const NodePtr newChild)
                       throw(DOMException) = 0;
 
     /**
-     *
+     * Return true if this node has one or more children, else return false.
      */
     virtual bool hasChildNodes() = 0;
 
     /**
-     *
+     * Return a new node which has the name, type, value, attributes, and
+     * child list as this one.	    
+     * If 'deep' is true, continue cloning recursively with this node's children,
+     * so that the child list also contains clones of their respective nodes.     
      */
     virtual NodePtr cloneNode(bool deep) = 0;
 
     /**
-     *
+     *  Adjust this node and its children to have its namespaces and
+     *  prefixes in "canonical" order.     
      */
     virtual void normalize() = 0;
 
     /**
-     *
+     *  Return true if the named feature is supported by this node,
+     *  else false.     
      */
     virtual bool isSupported(const DOMString& feature,
                      const DOMString& version) = 0;
 
     /**
-     *
+     * Return the namespace of this node.  This would be whether the
+     * namespace were declared explicitly on this node, it has a namespace
+     * prefix, or it is inherits the namespace from an ancestor node.	      
      */
     virtual DOMString getNamespaceURI() = 0;
 
     /**
-     *
+     * Return the namespace prefix of this node, if any.  For example, if
+     * the tag were <svg:image> then the prefix would be "svg"     
      */
     virtual DOMString getPrefix() = 0;
 
     /**
-     *
+     *  Sets the namespace prefix of this node to the given value.  This
+     *  does not change the namespaceURI value.     
      */
     virtual void setPrefix(const DOMString& val) throw(DOMException) = 0;
 
     /**
-     *
+     * Return the local name of this node.  This is merely the name without
+     * any namespace or prefix.     
      */
     virtual DOMString getLocalName() = 0;
 
     /**
-     *
+     * Return true if this node has one or more attributes, else false.
      */
     virtual bool hasAttributes() = 0;
 
     /**
-     *
+     * Return the base URI of this node.  This is basically the "location" of this
+     * node, and is used in resolving the relative locations of other URIs.     
      */
     virtual DOMString getBaseURI() = 0;
 
+    /**
+     * DocumentPosition.
+     * This is used to describe the position of one node relative
+     * to another in a document
+     */	 	 	     
     typedef enum
         {
         DOCUMENT_POSITION_DISCONNECTED            = 0x01,
@@ -1083,56 +1118,69 @@ public:
 
 
     /**
-     *
+     * Get the position of this node relative to the node argument.
      */
     virtual unsigned short compareDocumentPosition(
 	                         const NodePtr other) = 0;
 
     /**
-     *
+     * This is a DOM L3 method.  Return the text value of this node and its
+     * children.  This is done by concatenating all of the TEXT_NODE and
+     * CDATA_SECTION nodes of this node and its children, in order, together.
+     *  Very handy.	 	 	      
      */
     virtual DOMString getTextContent() throw(DOMException) = 0;
 
 
     /**
-     *
+     * This is a DOM L3 method.  Remember, this is a destructive call.  This
+     * will replace all of the child nodes of this node with a single TEXT_NODE
+     * with the given text value.      
      */
     virtual void setTextContent(const DOMString &val) throw(DOMException) = 0;
 
 
     /**
-     *
+     *  This will search the tree from this node up, for a prefix that
+     *  has been assigned to the namespace argument.  Return "" if not found.     
      */
     virtual DOMString lookupPrefix(const DOMString &namespaceURI) =0;
 
 
     /**
-     *
+     *  Return true if this node is in the namespace of the argument, without
+     *  requiring an explicit namespace declaration or a suffix.     
      */
     virtual bool isDefaultNamespace(const DOMString &namespaceURI) =0;
 
 
     /**
-     *
+     * This will search the tree from this node up, for a namespace that
+     * has been assigned the suffix in the argument. Return "" if not found.     
      */
     virtual DOMString lookupNamespaceURI(const DOMString &prefix) =0;
 
 
     /**
-     *
+     * Return true if the argument node is equal to this one.  Use W3C rules
+     * for equality.     
      */
     virtual bool isEqualNode(const NodePtr node) =0;
 
 
 
     /**
-     *
+     * Return an opaque reference to the named feature.  Return null if
+     * not supported.  Using other than "" for the version will look for
+     * a feature with the given version.	      
      */
     virtual DOMObject *getFeature(const DOMString &feature,
                                  const DOMString &version) =0;
 
     /**
-     *
+     * Store a user data reference in this node, using the given key.
+     * A handler is an optional function object that will be called during
+     * future settings of this value.  See UserDataHandler for more info.	      
      */
     virtual DOMUserData *setUserData(const DOMString &key,
                                      const DOMUserData *data,
@@ -1140,9 +1188,10 @@ public:
 
 
     /**
-     *
+     *  Return a reference to the named user data object. Return null
+     *  if it does not exist.     
      */
-    virtual DOMUserData *getUserData(const DOMString &namespaceURI) =0;
+    virtual DOMUserData *getUserData(const DOMString &key) =0;
 
     //##################
     //# Non-API methods
