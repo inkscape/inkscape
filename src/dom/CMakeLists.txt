@@ -4,7 +4,6 @@ domimpl.cpp
 domptr.cpp
 domstring.cpp
 lsimpl.cpp
-minidom.cpp
 prop-css2.cpp
 prop-css.cpp
 prop-svg.cpp
