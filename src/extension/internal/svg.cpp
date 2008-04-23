@@ -73,7 +73,7 @@ Svg::init(void)
                 "<mimetype>image/x-inkscape-svg</mimetype>\n"
                 "<filetypename>" N_("Inkscape SVG (*.svg)") "</filetypename>\n"
                 "<filetypetooltip>" N_("SVG format with Inkscape extensions") "</filetypetooltip>\n"
-                "<dataloss>FALSE</dataloss>\n"
+                "<dataloss>false</dataloss>\n"
             "</output>\n"
         "</inkscape-extension>", new Svg());
 

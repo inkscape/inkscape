@@ -66,7 +66,7 @@ Svgz::init(void)
                 "<mimetype>image/x-inkscape-svg-compressed</mimetype>\n"
                 "<filetypename>" N_("Compressed Inkscape SVG (*.svgz)") "</filetypename>\n"
                 "<filetypetooltip>" N_("Inkscape's native file format compressed with GZip") "</filetypetooltip>\n"
-                "<dataloss>FALSE</dataloss>\n"
+                "<dataloss>false</dataloss>\n"
             "</output>\n"
         "</inkscape-extension>", new Svgz());
 

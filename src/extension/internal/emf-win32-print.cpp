@@ -773,8 +773,8 @@ PrintEmfWin32::init (void)
         "<name>Enhanced Metafile Print</name>\n"
         "<id>org.inkscape.print.emf.win32</id>\n"
         "<param name=\"destination\" type=\"string\"></param>\n"
-        "<param name=\"textToPath\" type=\"boolean\">TRUE</param>\n"
-        "<param name=\"pageBoundingBox\" type=\"boolean\">TRUE</param>\n"
+        "<param name=\"textToPath\" type=\"boolean\">true</param>\n"
+        "<param name=\"pageBoundingBox\" type=\"boolean\">true</param>\n"
         "<print/>\n"
         "</inkscape-extension>", new PrintEmfWin32());
 

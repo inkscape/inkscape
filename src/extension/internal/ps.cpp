@@ -1752,12 +1752,12 @@ PrintPS::init(void)
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
         "<name>" N_("Postscript Print") "</name>\n"
         "<id>" SP_MODULE_KEY_PRINT_PS "</id>\n"
-        "<param name=\"bitmap\" type=\"boolean\">FALSE</param>\n"
+        "<param name=\"bitmap\" type=\"boolean\">false</param>\n"
         "<param name=\"resolution\" type=\"string\">72</param>\n"
         "<param name=\"destination\" type=\"string\">| lp</param>\n"
-        "<param name=\"pageBoundingBox\" type=\"boolean\">TRUE</param>\n"
-        "<param name=\"textToPath\" type=\"boolean\">TRUE</param>\n"
-        "<param name=\"fontEmbedded\" type=\"boolean\">FALSE</param>\n"
+        "<param name=\"pageBoundingBox\" type=\"boolean\">true</param>\n"
+        "<param name=\"textToPath\" type=\"boolean\">true</param>\n"
+        "<param name=\"fontEmbedded\" type=\"boolean\">false</param>\n"
         "<print/>\n"
         "</inkscape-extension>", new PrintPS());
 }

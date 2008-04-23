@@ -29,7 +29,7 @@ ParamBool::ParamBool (const gchar * name, const gchar * guitext, const gchar * d
     if (sp_repr_children(xml) != NULL)
         defaultval = sp_repr_children(xml)->content();
 
-    if (defaultval != NULL && (!strcmp(defaultval, "TRUE") || !strcmp(defaultval, "true") || !strcmp(defaultval, "1"))) {
+    if (defaultval != NULL && (!strcmp(defaultval, "true") || !strcmp(defaultval, "true") || !strcmp(defaultval, "1"))) {
         _value = true;
     } else {
         _value = false;

@@ -392,7 +392,7 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
     /* sp_repr_print(repr); */
 
     if (strcmp(repr->name(), INKSCAPE_EXTENSION_NS "inkscape-extension")) {
-        g_warning("Extension definition started with <%s> instead of <" INKSCAPE_EXTENSION_NS "inkscape-extension>.  Extension will not be created.\n", repr->name());
+        g_warning("Extension definition started with <%s> instead of <" INKSCAPE_EXTENSION_NS "inkscape-extension>.  Extension will not be created. See http://wiki.inkscape.org/wiki/index.php/Extensions for reference.\n", repr->name());
         return NULL;
     }
 

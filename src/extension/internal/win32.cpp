@@ -490,7 +490,7 @@ PrintWin32::init (void)
 		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Windows 32-bit Print") "</name>\n"
 			"<id>" SP_MODULE_KEY_PRINT_WIN32 "</id>\n"
-			"<param name=\"textToPath\" type=\"boolean\">TRUE</param>\n"
+			"<param name=\"textToPath\" type=\"boolean\">true</param>\n"
 			"<print/>\n"
 		"</inkscape-extension>", new PrintWin32());
 
