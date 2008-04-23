@@ -8,11 +8,15 @@
  * which are provided for reference.  Most important is this one:
  *
  * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
+ * 
+ * More thorough explanations of the various classes and their algorithms
+ * can be found there.
+ *     
  *
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2006 Bob Jamison
+ * Copyright (C) 2006-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -31,18 +35,13 @@
 
 #include <vector>
 
-//# include this before the #ifdefs below
-#include "domconfig.h"
+/**
+ * What type of string do we want?  Pick one of the following
+ * Then below, select one of the corresponding typedefs? 
+ */ 
 
-#ifdef DOM_STRING_OWN
-#include "domstring.h"
-#else
-#ifdef DOM_STRING_GLIBMM
 #include <glibmm.h>
-#else
-#include <string>
-#endif
-#endif
+//#include <string>
 
 //# Unfortunate hack for a name collision
 #ifdef SEVERITY_ERROR
@@ -59,28 +58,27 @@ namespace dom
 {
 
 
-
-#ifdef DOM_STRING_OWN
-#else
-#ifdef DOM_STRING_GLIBMM
+/**
+ * This is the org::w3c::dom::DOMString definition.
+ * Which type do we want?
+ */  
 typedef Glib::ustring DOMString;
 typedef gunichar XMLCh;
-#else
-typedef std::string DOMString;
-typedef unsigned short XMLCh;
-#endif
-#endif
+
+//typedef std::string DOMString;
+//typedef unsigned short XMLCh;
 
 
 /**
- *
+ *  At least 64 bit time stamp value.
  */
 typedef unsigned long long DOMTimeStamp;
 
 /**
- *
+ *  This is used for storing refs to user-supplied data.
  */
 typedef void DOMUserData;
+
 
 /*#########################################################################
 ## NodePtr
@@ -88,7 +86,8 @@ typedef void DOMUserData;
 
 /**
  * A simple Smart Pointer class that handles Nodes and all of its
- * descendants 
+ * descendants.  This is very similar to shared_ptr, but it is customized
+ * to handle our needs. 
  */ 
 template<class T> class Ptr
 {
@@ -346,11 +345,16 @@ template<class T, class U> Ptr<T>
 
 
 /**
- *
+ *  This is used for opaque references to arbitrary objects from
+ *  the DOM tree. 
  */
 typedef void DOMObject;
 
 
+/**
+ * Forward references.  These are needed because of extensive
+ * inter-referencing within the DOM tree.
+ */  
 class NodeList;
 class NamedNodeMap;
 class DOMException;
@@ -366,6 +370,11 @@ class DOMErrorHandler;
 class DOMLocator;
 class DOMConfiguration;
 
+/**
+ * Smart pointer definitions.  Most methods that return references to
+ * Nodes of various types, will return one of these smart pointers instead,
+ * to allow refcounting and GC.
+ */   
 class Node;
 typedef Ptr<Node> NodePtr;
 class CharacterData;
@@ -418,8 +427,10 @@ typedef Ptr<Document> DocumentPtr;
 /*#########################################################################
 ## DOMException
 #########################################################################*/
+
 /**
- *  This is the only non-interface class
+ *  An Exception class.  Not an interface, since this is something that
+ *  all implementations must support. 
  */
 class DOMException
 {
@@ -464,12 +475,12 @@ public:
        {}
 
     /**
-     *
+     *  What type of exception?  One of the ExceptionCodes above.
      */
     unsigned short code;
 
     /**
-     *
+     * Some text describing the context that generated this exception.
      */
     DOMString msg;
 
@@ -493,12 +504,16 @@ public:
 ## DOMStringList
 #########################################################################*/
 
+/**
+ *  This holds a list of DOMStrings.  This is likely the response to a query,
+ *  or the value of an attribute. 
+ */ 
 class DOMStringList
 {
 public:
 
     /**
-     *
+     *  Get the nth string of the list
      */
     virtual DOMString item(unsigned long index)
         {
@@ -508,7 +523,7 @@ public:
         }
 
     /**
-     *
+     * How many strings in this list?
      */
     virtual unsigned long getLength()
         {
@@ -516,7 +531,7 @@ public:
         }
 
     /**
-     *
+     *  Is the argument string present in this list?  Lexically, not identically.
      */
     virtual bool contains(const DOMString &str)
         {
@@ -581,39 +596,44 @@ protected:
 /*#########################################################################
 ## NameList
 #########################################################################*/
-class NamePair
-{
-public:
-    NamePair(const DOMString &theNamespaceURI, const DOMString &theName)
-        {
-        namespaceURI = theNamespaceURI;
-        name         = theName;
-        }
-    NamePair(const NamePair &other)
-        {
-        namespaceURI = other.namespaceURI;
-        name         = other.name;
-        }
-    NamePair &operator=(const NamePair &other)
-        {
-        namespaceURI = other.namespaceURI;
-        name         = other.name;
-        return *this;
-        }
-    virtual ~NamePair() {}
-
-    DOMString namespaceURI;
-    DOMString name;
-};
 
 
-
+/**
+ * Constains a list of namespaced names.
+ */ 
 class NameList
 {
+private:
+
+    class NamePair
+    {
+	public:
+	    NamePair(const DOMString &theNamespaceURI, const DOMString &theName)
+	        {
+	        namespaceURI = theNamespaceURI;
+	        name         = theName;
+	        }
+	    NamePair(const NamePair &other)
+	        {
+	        namespaceURI = other.namespaceURI;
+	        name         = other.name;
+	        }
+	    NamePair &operator=(const NamePair &other)
+	        {
+	        namespaceURI = other.namespaceURI;
+	        name         = other.name;
+	        return *this;
+	        }
+	    virtual ~NamePair() {}
+	
+	    DOMString namespaceURI;
+	    DOMString name;
+	};
+
 public:
 
     /**
-     *
+     * Returns a name at the given index.  If out of range, return -1.
      */
     virtual DOMString getName(unsigned long index)
         {
@@ -623,7 +643,7 @@ public:
         }
 
     /**
-     *
+     * Returns a namespace at the given index.  If out of range, return -1.
      */
     virtual DOMString getNamespaceURI(unsigned long index)
         {
@@ -633,7 +653,7 @@ public:
         }
 
     /**
-     *
+     * Return the number of entries in this list.
      */
     virtual unsigned long getLength()
         {
@@ -641,7 +661,8 @@ public:
         }
 
     /**
-     *
+     * Return whether the name argument is present in the list.
+     * This is done lexically, not identically.     
      */
     virtual bool contains(const DOMString &name)
         {
@@ -654,7 +675,8 @@ public:
         }
 
     /**
-     *
+     * Return whether the namespaced name argument is present in the list.
+     * This is done lexically, not identically.     
      */
     virtual bool containsNS(const DOMString namespaceURI,const DOMString &name)
         {
@@ -698,6 +720,8 @@ public:
      *
      */
     virtual ~NameList() {}
+
+
 protected:
 
     std::vector<NamePair> namePairs;
@@ -708,12 +732,16 @@ protected:
 ## DOMImplementationList
 #########################################################################*/
 
+/**
+ * Contains a list of DOMImplementations, with accessors.
+ */ 
 class DOMImplementationList
 {
 public:
 
     /**
-     *
+     * Return a DOMImplementation at the given index.  If
+     * out of range, return NULL.     
      */
     virtual DOMImplementation *item(unsigned long index)
         {
@@ -723,14 +751,12 @@ public:
         }
 
     /**
-     *
+     * Return the number of DOMImplementations in this list.
      */
     virtual unsigned long getLength()
         {
         return (unsigned long) implementations.size();
         }
-
-
 
 
     //##################
@@ -776,17 +802,25 @@ protected:
 ## DOMImplementationSource
 #########################################################################*/
 
+/**
+ * This is usually the first item to be called when creating a Document.
+ * You will either find one DOMImplementation with a given set of features,
+ * or return a list that match.  Using "" will get any implementation
+ * available.
+ */    
 class DOMImplementationSource
 {
 public:
 
     /**
-     *
+     *  Return the first DOMImplementation with the given set of features.
+     *  Use "" to fetch any implementation. 
      */
     virtual DOMImplementation *getDOMImplementation(const DOMString &features) = 0;
 
     /**
-     *
+     *  Return a list of DOMImplementations with the given set of features.
+     *  Use "" to fetch any implementation. 
      */
     virtual DOMImplementationList getDOMImplementationList(const DOMString &features) = 0;
 
@@ -808,20 +842,22 @@ public:
 /*#########################################################################
 ## DOMImplementation
 #########################################################################*/
+
 /**
- *
+ * This is the class that actually creates a Document. 
  */
 class DOMImplementation
 {
 public:
+
     /**
-     *
+     *  Determine if this implementation has the given feature and version.
      */
     virtual bool hasFeature(const DOMString& feature, const DOMString& version) = 0;
 
 
     /**
-     *
+     *  Create a document type to be used in creating documents.
      */
     virtual DocumentTypePtr createDocumentType(
 	                               const DOMString& qualifiedName,
@@ -830,14 +866,16 @@ public:
                                    throw(DOMException) = 0;
 
     /**
-     *
+     *  Create a DOM document.
      */
     virtual DocumentPtr createDocument(const DOMString& namespaceURI,
                              const DOMString& qualifiedName,
                              DocumentTypePtr doctype)
                              throw(DOMException) = 0;
     /**
-     *
+     *  Return the thing which is the feature of this implementation.  Since
+     *  this is a "one size fits all" call, you will need to typecast the
+     *  result to the expected type.	      
      */
     virtual DOMObject *getFeature(const DOMString& feature,
                              const DOMString& version) = 0;
@@ -870,6 +908,9 @@ class Node
 {
 public:
 
+    /**
+     * Which of the DOM Core node types is this node?
+     */	     
     typedef enum
         {
         ELEMENT_NODE                   = 1,
@@ -887,32 +928,38 @@ public:
         } NodeType;
 
     /**
-     *
+     * Return the name of this node.
      */
     virtual DOMString getNodeName() = 0;
 
     /**
-     *
+     *  Return the value of this node.  The interpretation of the
+     *  value is type-specific.     
      */
     virtual DOMString getNodeValue() throw (DOMException) = 0;
 
     /**
-     *
+     *  Set the value of this node.  The interpretation of the
+     *  value is type-specific.     
      */
     virtual void setNodeValue(const DOMString& val) throw (DOMException) = 0;
 
     /**
-     *
+     *  Return the type of this Node.  One of the NodeType values above.
      */
     virtual unsigned short getNodeType() = 0;
 
     /**
-     *
+     *  Return the parent which references this node as a child in the DOM
+     *  tree.  Return NULL if there is none.     
      */
     virtual NodePtr getParentNode() = 0;
 
     /**
-     *
+     * Return a list of the children of this Node.
+     * NOTE: the spec expects this to be a "live" list that always
+     * reflects an accurate list of what the Node current possesses, not
+     * a snapshot.  How do we do this?	 	      
      */
     virtual NodeList getChildNodes() = 0;
 
@@ -1132,13 +1179,17 @@ protected:
 #########################################################################*/
 
 /**
- *
+ *  Contains a list of Nodes.  This is the standard API container for Nodes,
+ *  and is used in lieu of other lists, arrays, etc, in order to provide
+ *  a consistent API and algorithm.  
  */
 class NodeList
 {
 public:
+
     /**
-     *
+     *  Retrieve the Node at the given index.  Return NULL
+     *  if out of range.     
      */
     virtual NodePtr item(unsigned long index)
         {
