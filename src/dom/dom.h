@@ -40,7 +40,10 @@
  *  of them, look in domimpl.h and domimpl.cpp.
  *  
  *  Also, note that there is a domptr.cpp file that has a couple of necessary
- *  functions which cannot be in a .h file
+ *  functions which cannot be in a .h file.
+ *  
+ *  Some of the comments below are quoted from the W3C spec:
+ *  http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/core.html 
  *             
  */
 
@@ -1296,55 +1299,61 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * This is the base class for other text-oriented Nodes, such as TEXT_NODE
+ * or CDATA_SECTION_NODE. No DOM objects correspond directly to CharacterData.
  */
 class CharacterData : virtual public Node
 {
 public:
 
     /**
-     *
+     * This is an alias for getNodeValue()
      */
     virtual DOMString getData() throw(DOMException) = 0;
 
     /**
-     *
+     * This is an alias for setNodeValue()
      */
     virtual void setData(const DOMString& val) throw(DOMException) = 0;
 
     /**
-     *
+     * Return the number of characters contained in this node's data
      */
     virtual unsigned long getLength() = 0;
 
     /**
-     *
+     * Return a substring of this node's data, starting at offset, and
+     * continuing for 'count' characters. Throw an exception if this goes
+     * out of range.	   
      */
     virtual DOMString substringData(unsigned long offset,
                             unsigned long count)
                             throw(DOMException) = 0;
 
     /**
-     *
+     *  Append the argument string to the end of the node's current data.
      */
     virtual void appendData(const DOMString& arg) throw(DOMException) = 0;
 
     /**
-     *
+     * Insert the argument string at the offset position into the node's
+     * current data.  If the position is out of range, throw an Exception. 
      */
     virtual void insertData(unsigned long offset,
                     const DOMString& arg)
                     throw(DOMException) = 0;
 
     /**
-     *
+     * Delete 'count' characters from the node's data starting from the
+     * offset position.  If this goes out of range, throw an Exception.     
      */
     virtual void deleteData(unsigned long offset,
                     unsigned long count)
                     throw(DOMException) = 0;
 
     /**
-     *
+     *  Replace the 'count' characters at the offset position with the given
+     *  argument string. If this goes out of range, throw an Exception.
      */
     virtual void  replaceData(unsigned long offset,
                       unsigned long count,
@@ -1365,9 +1374,6 @@ public:
 };
 
 
-typedef Ptr<CharacterData> CharacterDataPtr;
-
-
 
 
 /*#########################################################################
@@ -1375,7 +1381,11 @@ typedef Ptr<CharacterData> CharacterDataPtr;
 #########################################################################*/
 
 /**
- *
+ *  The Attr interface represents an attribute in an Element object.
+ *  Typically the allowable values for the attribute are defined in a
+ *  schema associated with the document.
+ *  Since Attrs are not considered to be part of the DOM tree, parent,
+ *  previousSibling, and nextSibling are null. 
  */
 class Attr : virtual public Node
 {
@@ -1439,7 +1449,16 @@ public:
 #########################################################################*/
 
 /**
- *
+ * The Element interface represents an element in an XML document. 
+ * Elements may have attributes associated with them; since the Element interface 
+ * inherits from Node, the generic Node interface attribute attributes may be 
+ * used to retrieve the set of all attributes for an element. There are methods 
+ * on the Element interface to retrieve either an Attr object by name or an 
+ * attribute value by name. In XML, where an attribute value may contain entity 
+ * references, an Attr object should be retrieved to examine the possibly fairly 
+ * complex sub-tree representing the attribute value. On the other hand, in HTML, 
+ * where all attributes have simple string values, methods to directly access an 
+ * attribute value can safely be used as a convenience.
  */
 class Element : virtual public Node
 {
@@ -1586,7 +1605,12 @@ public:
 #########################################################################*/
 
 /**
- *
+ * The Text interface inherits from CharacterData and represents the textual 
+ * content (termed character data in XML) of an Element or Attr. If there is no 
+ * markup inside an element's content, the text is contained in a single object 
+ * implementing the Text interface that is the only child of the element. If 
+ * there is markup, it is parsed into the information items (elements, comments, 
+ * etc.) and Text nodes that form the list of children of the element.
  */
 class Text : virtual public CharacterData
 {
@@ -1634,7 +1658,10 @@ public:
 #########################################################################*/
 
 /**
- *
+ * This interface inherits from CharacterData and represents the content of a 
+ * comment, i.e., all the characters between the starting '<!--' and ending '-->'.
+ * Note that this is the definition of a comment in XML, and, in practice, 
+ * HTML, although some HTML tools may implement the full SGML comment structure.
  */
 class Comment : virtual public CharacterData
 {
@@ -1660,7 +1687,9 @@ public:
 #########################################################################*/
 
 /**
- *
+ * The TypeInfo interface represents a type referenced from Element or Attr nodes,
+ *  specified in the schemas associated with the document. The type is a pair of 
+ * a namespace URI and name properties, and depends on the document's schema.
  */
 class TypeInfo
 {
@@ -1678,6 +1707,9 @@ public:
     virtual DOMString getTypeNamespace()
         { return typeNameSpace; }
 
+    /**
+     *
+     */	     
     typedef enum
         {
         DERIVATION_RESTRICTION = 0x00000001,
@@ -1743,7 +1775,11 @@ private:
 #########################################################################*/
 
 /**
- *
+ * When associating an object to a key on a node using Node.setUserData() the 
+ * application can provide a handler that gets called when the node the object is 
+ * associated to is being cloned, imported, or renamed. This can be used by the 
+ * application to implement various behaviors regarding the data it associates to 
+ * the DOM nodes. This interface defines that handler.
  */
 class UserDataHandler
 {
@@ -1786,7 +1822,7 @@ public:
 #########################################################################*/
 
 /**
- *
+ * DOMError is an interface that describes an error. 
  */
 class DOMError
 {
@@ -1849,7 +1885,13 @@ public:
 #########################################################################*/
 
 /**
- *
+ * DOMErrorHandler is a callback interface that the DOM implementation can call 
+ * when reporting errors that happens while processing XML data, or when doing 
+ * some other processing (e.g. validating a document). A DOMErrorHandler object 
+ * can be attached to a Document using the "error-handler" on the 
+ * DOMConfiguration interface. If more than one error needs to be reported during 
+ * an operation, the sequence and numbers of the errors passed to the error 
+ * handler are implementation dependent.
  */
 class DOMErrorHandler
 {
@@ -1878,7 +1920,7 @@ public:
 #########################################################################*/
 
 /**
- *
+ * DOMLocator is an interface that describes a location (e.g. where an error occurred). 
  */
 class DOMLocator
 {
@@ -1932,7 +1974,13 @@ public:
 #########################################################################*/
 
 /**
- *
+ * The DOMConfiguration interface represents the configuration of a document and 
+ * maintains a table of recognized parameters. Using the configuration, it is 
+ * possible to change Document.normalizeDocument() behavior, such as replacing 
+ * the CDATASection nodes with Text nodes or specifying the type of the schema 
+ * that must be used when the validation of the Document is requested. 
+ * DOMConfiguration objects are also used in [DOM Level 3 Load and Save] in the 
+ * DOMParser and DOMSerializer interfaces.
  */
 class DOMConfiguration
 {
@@ -1982,8 +2030,13 @@ public:
 /*#########################################################################
 ## CDATASection
 #########################################################################*/
+
 /**
- *
+ * CDATA sections are used to escape blocks of text containing characters that 
+ * would otherwise be regarded as markup. The only delimiter that is recognized 
+ * in a CDATA section is the "]]>" string that ends the CDATA section. CDATA 
+ * sections cannot be nested. Their primary purpose is for including material 
+ * such as XML fragments, without needing to escape all the delimiters.
  */
 class CDATASection : virtual public Text
 {
@@ -2009,7 +2062,11 @@ public:
 #########################################################################*/
 
 /**
- *
+ * Each Document has a doctype attribute whose value is either null or a 
+ * DocumentType object. The DocumentType interface in the DOM Core provides an 
+ * interface to the list of entities that are defined for the document, and 
+ * little else because the effect of namespaces and the various XML schema 
+ * efforts on DTD representation are not clearly understood as of this writing.
  */
 class DocumentType : virtual public Node
 {
@@ -2065,7 +2122,12 @@ public:
 #########################################################################*/
 
 /**
- *
+ * This interface represents a notation declared in the DTD. A notation either 
+ * declares, by name, the format of an unparsed entity (see section 4.7 of the 
+ * XML 1.0 specification [XML 1.0]), or is used for formal declaration of 
+ * processing instruction targets (see section 2.6 of the XML 1.0 specification 
+ * [XML 1.0]). The nodeName attribute inherited from Node is set to the declared 
+ * name of the notation.
  */
 class Notation : virtual public Node
 {
@@ -2102,7 +2164,8 @@ public:
 #########################################################################*/
 
 /**
- *
+ * This interface represents a known entity, either parsed or unparsed, in an XML 
+ * document. Note that this models the entity itself not the entity declaration.
  */
 class Entity : virtual public Node
 {
@@ -2156,8 +2219,9 @@ public:
 /*#########################################################################
 ## EntityReference
 #########################################################################*/
+
 /**
- *
+ * EntityReference nodes may be used to represent an entity reference in the tree.
  */
 class EntityReference : virtual public Node
 {
@@ -2183,7 +2247,9 @@ public:
 #########################################################################*/
 
 /**
- *
+ * The ProcessingInstruction interface represents a "processing instruction", 
+ * used in XML as a way to keep processor-specific information in the text of the 
+ * document.
  */
 class ProcessingInstruction : virtual public Node
 {
@@ -2223,8 +2289,17 @@ public:
 /*#########################################################################
 ## DocumentFragment
 #########################################################################*/
+
 /**
- *
+ * DocumentFragment is a "lightweight" or "minimal" Document object. It is very 
+ * common to want to be able to extract a portion of a document's tree or to 
+ * create a new fragment of a document. Imagine implementing a user command like 
+ * cut or rearranging a document by moving fragments around. It is desirable to 
+ * have an object which can hold such fragments and it is quite natural to use a 
+ * Node for this purpose. While it is true that a Document object could fulfill 
+ * this role, a Document object can potentially be a heavyweight object, 
+ * depending on the underlying implementation. What is really needed for this is 
+ * a very lightweight object. DocumentFragment is such an object.
  */
 class DocumentFragment : virtual public Node
 {
@@ -2251,6 +2326,17 @@ public:
 #########################################################################*/
 
 /**
+ * From the spec:
+ *
+ * The Document interface represents the entire HTML or XML document. 
+ * Conceptually, it is the root of the document tree, and provides the primary 
+ * access to the document's data.
+ *
+ * Since elements, text nodes, comments, processing instructions, etc. cannot 
+ * exist outside the context of a Document, the Document interface also contains 
+ * the factory methods needed to create these objects. The Node objects created 
+ * have a ownerDocument attribute which associates them with the Document within 
+ * whose context they were created.
  *
  */
 class Document : virtual public Node
@@ -2258,22 +2344,24 @@ class Document : virtual public Node
 public:
 
     /**
-     *
+     * The Document Type Declaration (see DocumentType) associated with this document. 
      */
     virtual DocumentTypePtr getDoctype() = 0;
 
     /**
-     *
+     * The DOMImplementation object that handles this document. A DOM application
+     * may use objects from multiple implementations.
      */
     virtual DOMImplementation *getImplementation() = 0;
 
     /**
-     *
+     * This is a convenience attribute that allows direct access to the child
+     * node that is the document element of the document.
      */
     virtual ElementPtr getDocumentElement() = 0;
 
     /**
-     *
+     * Creates an element of the type specified.
      */
     virtual ElementPtr createElement(const DOMString& tagName)
                            throw(DOMException) = 0;
@@ -2284,7 +2372,7 @@ public:
     virtual DocumentFragmentPtr createDocumentFragment() = 0;
 
     /**
-     *
+     * Creates an TextNode with the text data specified.
      */
     virtual TextPtr createTextNode(const DOMString& data) = 0;
 
@@ -2380,53 +2468,104 @@ public:
     virtual void setXmlStandalone(bool val) throw (DOMException) = 0;
 
     /**
-     *
+     *  Gets the version (1.0, 1.1, etc) of this document.
      */
     virtual DOMString getXmlVersion() = 0;
 
     /**
-     *
+     *  Sets the XML version of this document.
      */
     virtual void setXmlVersion(const DOMString &version)
 	                           throw (DOMException) = 0;
 
     /**
-     *
+     * An attribute specifying whether error checking is enforced or not. When set to 
+     * false, the implementation is free to not test every possible error case 
+     * normally defined on DOM operations, and not raise any DOMException on DOM 
+     * operations or report errors while using Document.normalizeDocument(). In case 
+     * of error, the behavior is undefined. This attribute is true by default.   
      */
     virtual bool getStrictErrorChecking() = 0;
 
     /**
-     *
+     * Sets the value described above.
      */
     virtual void setStrictErrorChecking(bool val) = 0;
 
 
     /**
-     *
+     * Gets the document URI (the base location) of this Document.
      */
     virtual DOMString getDocumentURI() = 0;
 
     /**
-     *
+     * Sets the document URI (the base location) of this Document to the
+     * argument uri.     
      */
     virtual void setDocumentURI(const DOMString &uri) = 0;
 
     /**
-     *
+     * Attempts to adopt a node from another document to this document. If supported, 
+     * it changes the ownerDocument of the source node, its children, as well as the 
+     * attached attribute nodes if there are any. If the source node has a parent it 
+     * is first removed from the child list of its parent. This effectively allows 
+     * moving a subtree from one document to another (unlike importNode() which 
+     * create a copy of the source node instead of moving it). When it fails, 
+     * applications should use Document.importNode() instead. Note that if the 
+     * adopted node is already part of this document (i.e. the source and target 
+     * document are the same), this method still has the effect of removing the 
+     * source node from the child list of its parent, if any.   
      */
     virtual NodePtr adoptNode(const NodePtr source) throw (DOMException) = 0;
 
     /**
-     *
+     *  Get the configuration item associated with this Document
      */
     virtual DOMConfiguration *getDomConfig() = 0;
 
     /**
-     *
+     * This method acts as if the document was going through a save and load cycle, 
+     * putting the document in a "normal" form. As a consequence, this method updates 
+     * the replacement tree of EntityReference nodes and normalizes Text nodes, as 
+     * defined in the method Node.normalize(). Otherwise, the actual result depends 
+     * on the features being set on the Document.domConfig object and governing what 
+     * operations actually take place. Noticeably this method could also make the 
+     * document namespace well-formed according to the algorithm described in 
+     * Namespace Normalization, check the character normalization, remove the 
+     * CDATASection nodes, etc. See DOMConfiguration for details.
      */
     virtual void normalizeDocument() = 0;
 
     /**
+     * 
+     * Rename an existing node of type ELEMENT_NODE or ATTRIBUTE_NODE. When possible 
+     * this simply changes the name of the given node, otherwise this creates a new 
+     * node with the specified name and replaces the existing node with the new node 
+     * as described below. If simply changing the name of the given node is not 
+     * possible, the following operations are performed: a new node is created, any 
+     * registered event listener is registered on the new node, any user data 
+     * attached to the old node is removed from that node, the old node is removed 
+     * from its parent if it has one, the children are moved to the new node, if the 
+     * renamed node is an Element its attributes are moved to the new node, the new 
+     * node is inserted at the position the old node used to have in its parent's 
+     * child nodes list if it has one, the user data that was attached to the old 
+     * node is attached to the new node. When the node being renamed is an Element 
+     * only the specified attributes are moved, default attributes originated from 
+     * the DTD are updated according to the new element name. In addition, the 
+     * implementation may update default attributes from other schemas. Applications 
+     * should use Document.normalizeDocument() to guarantee these attributes are 
+     * up-to-date. When the node being renamed is an Attr that is attached to an 
+     * Element, the node is first removed from the Element attributes map. Then, once 
+     * renamed, either by modifying the existing node or creating a new one as 
+     * described above, it is put back.
+     *
+     * In addition,
+     * a user data event NODE_RENAMED is fired,
+     * when the implementation supports the feature "MutationNameEvents",
+     * each mutation operation involved in this method fires the appropriate
+     * event, and in the end the event {http://www.w3.org/2001/xml-events,
+     * DOMElementNameChanged} or {http://www.w3.org/2001/xml-events,
+     * DOMAttributeNameChanged} is fired.
      *
      */
     virtual NodePtr renameNode(const NodePtr n,
