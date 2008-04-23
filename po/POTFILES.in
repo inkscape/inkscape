@@ -1,5 +1,6 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
+# Generated from script by mfx at Wed Apr 23 11:35:26 CEST 2008 
 [encoding: UTF-8]
 inkscape.desktop.in
 src/2geom/bezier.h
@@ -10,8 +11,8 @@ src/box3d-context.cpp
 src/box3d.cpp
 src/connector-context.cpp
 src/context-fns.cpp
-src/desktop-events.cpp
 src/desktop.cpp
+src/desktop-events.cpp
 src/dialogs/clonetiler.cpp
 src/dialogs/debugdialog.cpp
 src/dialogs/eek-color-def.cpp
@@ -63,8 +64,8 @@ src/extension/internal/bitmap/enhance.cpp
 src/extension/internal/bitmap/equalize.cpp
 src/extension/internal/bitmap/gaussianBlur.cpp
 src/extension/internal/bitmap/implode.cpp
-src/extension/internal/bitmap/level.cpp
 src/extension/internal/bitmap/levelChannel.cpp
+src/extension/internal/bitmap/level.cpp
 src/extension/internal/bitmap/medianFilter.cpp
 src/extension/internal/bitmap/modulate.cpp
 src/extension/internal/bitmap/negate.cpp
@@ -95,9 +96,7 @@ src/extension/internal/filter/crystal.h
 src/extension/internal/filter/cutout.h
 src/extension/internal/filter/drop-shadow.h
 src/extension/internal/filter/etched-glass.h
-src/extension/internal/filter/filter-all.cpp
 src/extension/internal/filter/filter.cpp
-src/extension/internal/filter/filter.h
 src/extension/internal/filter/fire.h
 src/extension/internal/filter/frost.h
 src/extension/internal/filter/ink-bleed.h
@@ -119,14 +118,14 @@ src/extension/internal/filter/zebra.h
 src/extension/internal/gdkpixbuf-input.cpp
 src/extension/internal/gimpgrad.cpp
 src/extension/internal/grid.cpp
-src/extension/internal/latex-pstricks-out.cpp
 src/extension/internal/latex-pstricks.cpp
+src/extension/internal/latex-pstricks-out.cpp
 src/extension/internal/odf.cpp
 src/extension/internal/pdf-cairo.cpp
 src/extension/internal/pdfinput/pdf-input.cpp
 src/extension/internal/pov-out.cpp
-src/extension/internal/ps-out.cpp
 src/extension/internal/ps.cpp
+src/extension/internal/ps-out.cpp
 src/extension/internal/svg.cpp
 src/extension/internal/svgz.cpp
 src/extension/internal/win32.cpp
@@ -146,9 +145,8 @@ src/filter-enums.cpp
 src/flood-context.cpp
 src/gradient-context.cpp
 src/gradient-drag.cpp
-src/helper/units-test.cpp
 src/helper/units.cpp
-src/helper/units.h
+src/helper/units-test.cpp
 src/inkscape.cpp
 src/interface.cpp
 src/io/sys.cpp
@@ -161,15 +159,15 @@ src/jabber_whiteboard/session-manager.cpp
 src/knot.cpp
 src/knotholder.cpp
 src/libgdl/gdl-dock-bar.c
-src/libgdl/gdl-dock-item-grip.c
+src/libgdl/gdl-dock.c
 src/libgdl/gdl-dock-item.c
+src/libgdl/gdl-dock-item-grip.c
 src/libgdl/gdl-dock-master.c
 src/libgdl/gdl-dock-notebook.c
 src/libgdl/gdl-dock-object.c
 src/libgdl/gdl-dock-paned.c
 src/libgdl/gdl-dock-placeholder.c
 src/libgdl/gdl-dock-tablabel.c
-src/libgdl/gdl-dock.c
 src/libgdl/gdl-i18n.h
 src/libgdl/gdl-switcher.c
 src/libnrtype/FontFactory.cpp
@@ -200,8 +198,8 @@ src/node-context.cpp
 src/nodepath.cpp
 src/object-edit.cpp
 src/path-chemistry.cpp
-src/pen-context.cpp
 src/pencil-context.cpp
+src/pen-context.cpp
 src/persp3d.cpp
 src/preferences.cpp
 src/rect-context.cpp
@@ -213,12 +211,13 @@ src/shape-editor.cpp
 src/sp-anchor.cpp
 src/sp-ellipse.cpp
 src/sp-flowregion.cpp
-src/sp-flowtext.cpp
 src/sp-guide.cpp
 src/sp-image.cpp
-src/sp-item-group.cpp
+src/spiral-context.cpp
 src/sp-item.cpp
+src/sp-item-group.cpp
 src/sp-line.cpp
+src/splivarot.cpp
 src/sp-namedview.cpp
 src/sp-offset.cpp
 src/sp-path.cpp
@@ -226,14 +225,10 @@ src/sp-polygon.cpp
 src/sp-polyline.cpp
 src/sp-rect.cpp
 src/sp-spiral.cpp
-src/sp-star.cpp
-src/sp-switch.cpp
 src/sp-text.cpp
 src/sp-tref.cpp
 src/sp-tspan.cpp
 src/sp-use.cpp
-src/spiral-context.cpp
-src/splivarot.cpp
 src/star-context.cpp
 src/text-chemistry.cpp
 src/text-context.cpp
@@ -281,7 +276,6 @@ src/ui/widget/panel.cpp
 src/ui/widget/preferences-widget.cpp
 src/ui/widget/random.cpp
 src/ui/widget/rendering-options.cpp
-src/ui/widget/ruler.cpp
 src/ui/widget/selected-style.cpp
 src/ui/widget/spin-slider.cpp
 src/ui/widget/style-swatch.cpp
@@ -375,32 +369,31 @@ src/winmain.cpp
 [type: gettext/xml] share/extensions/perfectboundcover.inx
 [type: gettext/xml] share/extensions/perspective.inx
 [type: gettext/xml] share/extensions/ps_input.inx
-[type: gettext/xml] share/extensions/radiobutton_example.inx
 [type: gettext/xml] share/extensions/radiusrand.inx
 [type: gettext/xml] share/extensions/randompnt.inx
 [type: gettext/xml] share/extensions/randompos.inx
+[type: gettext/xml] share/extensions/render_alphabetsoup.inx
 [type: gettext/xml] share/extensions/render_barcode.inx
 [type: gettext/xml] share/extensions/restack.inx
 [type: gettext/xml] share/extensions/rtree.inx
 [type: gettext/xml] share/extensions/rubberstretch.inx
-[type: gettext/xml] share/extensions/sk_input.inx
 [type: gettext/xml] share/extensions/sk1_input.inx
+[type: gettext/xml] share/extensions/sk_input.inx
 [type: gettext/xml] share/extensions/spirograph.inx
 [type: gettext/xml] share/extensions/straightseg.inx
 [type: gettext/xml] share/extensions/summersnight.inx
-[type: gettext/xml] share/extensions/svg_and_media_zip_output.inx
 [type: gettext/xml] share/extensions/svg2xaml.inx
+[type: gettext/xml] share/extensions/svg_and_media_zip_output.inx
 [type: gettext/xml] share/extensions/svgz_input.inx
 [type: gettext/xml] share/extensions/svgz_output.inx
 [type: gettext/xml] share/extensions/text_braille.inx
 [type: gettext/xml] share/extensions/text_flipcase.inx
 [type: gettext/xml] share/extensions/text_lowercase.inx
-[type: gettext/xml] share/extensions/text_uppercase.inx
 [type: gettext/xml] share/extensions/text_randomcase.inx
 [type: gettext/xml] share/extensions/text_replace.inx
-[type: gettext/xml] share/extensions/text_titlecase.inx
 [type: gettext/xml] share/extensions/text_sentencecase.inx
-[type: gettext/xml] share/extensions/text_replace.inx
+[type: gettext/xml] share/extensions/text_titlecase.inx
+[type: gettext/xml] share/extensions/text_uppercase.inx
 [type: gettext/xml] share/extensions/txt2svg.inx
 [type: gettext/xml] share/extensions/whirl.inx
 [type: gettext/xml] share/extensions/wmf_input.inx
