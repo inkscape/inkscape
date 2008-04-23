@@ -21,7 +21,6 @@ dom_libdom_a_SOURCES =       \
     dom/ls.h                 \
     dom/lsimpl.cpp           \
     dom/lsimpl.h             \
-    dom/phoebedom.h          \
     dom/prop-css2.cpp        \
     dom/prop-css.cpp         \
     dom/prop-svg.cpp         \
