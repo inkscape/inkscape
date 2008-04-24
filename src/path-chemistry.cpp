@@ -67,9 +67,20 @@ sp_selected_path_combine(void)
     // set "busy" cursor
     desktop->setWaitingCursor();
 
-    sp_selected_path_to_curves0(FALSE, 0);
-
     GSList *items = g_slist_copy((GSList *) selection->itemList());
+    GSList *already_paths = NULL;
+    GSList *to_paths = NULL;
+    for (GSList *i = items; i != NULL; i = i->next) {
+        SPItem *item = (SPItem *) i->data;
+        if (SP_IS_PATH(item))
+            already_paths = g_slist_prepend(already_paths, item);
+        else
+            to_paths = g_slist_prepend(to_paths, item);
+    }
+    GSList *converted = NULL;
+    bool did = sp_item_list_to_curves(to_paths, &items, &converted);
+    items = g_slist_concat (items, converted);
+
     items = g_slist_sort(items, (GCompareFunc) sp_item_repr_compare_position);
     items = g_slist_reverse(items);
 
@@ -78,9 +89,9 @@ sp_selected_path_combine(void)
     char const *id = NULL;
     char const *transform = NULL;
     gchar *style = NULL;
+    gchar *path_effect = NULL;
 
     SPCurve* curve = 0;
-    bool did = false;
     SPItem *first = NULL;
     Inkscape::XML::Node *parent = NULL; 
 
@@ -91,7 +102,7 @@ sp_selected_path_combine(void)
             continue;
         did = true;
 
-        SPCurve *c = sp_shape_get_curve(SP_SHAPE(item));
+        SPCurve *c = sp_path_get_curve_for_edit(SP_PATH(item));
         if (first == NULL) {  // this is the topmost path
             first = item;
             parent = SP_OBJECT_REPR(first)->parent();
@@ -100,6 +111,7 @@ sp_selected_path_combine(void)
             transform = SP_OBJECT_REPR(first)->attribute("transform");
             // FIXME: merge styles of combined objects instead of using the first one's style
             style = g_strdup(SP_OBJECT_REPR(first)->attribute("style"));
+            path_effect = g_strdup(SP_OBJECT_REPR(first)->attribute("inkscape:path-effect"));
             //sp_curve_transform(c, item->transform);
             curve = c;
         } else {
@@ -130,7 +142,7 @@ sp_selected_path_combine(void)
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
-        // restore id, transform and style
+        // restore id, transform, path effect, and style
         repr->setAttribute("id", id);
         if (transform) repr->setAttribute("transform", transform);
         repr->setAttribute("style", style);
@@ -140,7 +152,12 @@ sp_selected_path_combine(void)
         gchar *dstring = sp_svg_write_path(SP_CURVE_BPATH(curve));
         sp_curve_unref(curve);
         repr->setAttribute("d", dstring);
+        if (path_effect)
+            repr->setAttribute("inkscape:original-d", dstring);
         g_free(dstring);
+
+        repr->setAttribute("inkscape:path-effect", path_effect);
+        g_free(path_effect);
 
         // add the new group to the parent of the topmost
         parent->appendChild(repr);
@@ -191,7 +208,7 @@ sp_selected_path_break_apart(void)
 
         SPPath *path = SP_PATH(item);
 
-        SPCurve *curve = sp_shape_get_curve(SP_SHAPE(path));
+        SPCurve *curve = sp_path_get_curve_for_edit(SP_PATH(path));
         if (curve == NULL)
             continue;
 
@@ -202,6 +219,7 @@ sp_selected_path_break_apart(void)
         char const *id = SP_OBJECT_REPR(item)->attribute("id");
 
         gchar *style = g_strdup(SP_OBJECT(item)->repr->attribute("style"));
+        gchar *path_effect = g_strdup(SP_OBJECT(item)->repr->attribute("inkscape:path-effect"));
 
         NArtBpath *abp = nr_artpath_affine(SP_CURVE_BPATH(curve), (SP_ITEM(path))->transform);
 
@@ -226,7 +244,11 @@ sp_selected_path_break_apart(void)
 
             gchar *str = sp_svg_write_path(SP_CURVE_BPATH(curve));
             repr->setAttribute("d", str);
+            if (path_effect)
+                repr->setAttribute("inkscape:original-d", str);
             g_free(str);
+
+            repr->setAttribute("inkscape:path-effect", path_effect);
 
             // add the new repr to the parent
             parent->appendChild(repr);
