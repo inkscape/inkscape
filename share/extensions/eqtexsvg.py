@@ -88,6 +88,7 @@ class EQTEXSVG(inkex.Effect):
         dvi_file = os.path.join(base_dir, "eq.dvi")
         svg_file = os.path.join(base_dir, "eq.svg")
         out_file = os.path.join(base_dir, "eq.out")
+        err_file = os.path.join(base_dir, "eq.err")
 
         def clean():
             os.remove(latex_file)
@@ -97,6 +98,8 @@ class EQTEXSVG(inkex.Effect):
             os.remove(dvi_file)
             os.remove(svg_file)
             os.remove(out_file)
+            if os.path.exists(err_file):
+                os.remove(err_file)
             os.rmdir(base_dir)
 
         create_equation_tex(latex_file, self.options.formula)
@@ -111,8 +114,19 @@ class EQTEXSVG(inkex.Effect):
             sys.exit(1)
 
         os.system('dvips -q -f -E -D 600 -y 5000 -o ' + ps_file + ' ' + dvi_file)
-        #os.system('cd ' + base_dir)
-        os.system('pstoedit -f plot-svg -dt -ssp ' + ps_file + ' ' + svg_file + '> ' + out_file)
+        # cd to base_dir is necessary, because pstoedit
+        # writes temporary files to cwd and needs write
+        # permissions
+        os.system('cd ' + base_dir + ' ; pstoedit -f plot-svg -dt -ssp ' + ps_file + ' ' + svg_file + '  > ' + out_file + ' 2> ' + err_file)
+
+        # forward errors to stderr but skip pstoedit header
+        if os.path.exists(err_file):
+            err_stream = open(err_file, 'r')
+            for line in err_stream:
+                if not line.startswith('pstoedit: version'):
+                    sys.stderr.write(line + '\n')
+            err_stream.close()
+ 
         svg_open(self, svg_file)
 
         clean()
