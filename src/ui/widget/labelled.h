@@ -36,8 +36,8 @@ public:
      * Allow the setting of the width of the labelled widget
      */
     void setWidgetSizeRequest(int width, int height);
-    const Gtk::Widget* const getWidget() const;
-    const Gtk::Label* const  getLabel() const;
+    Gtk::Widget const *getWidget() const;
+    Gtk::Label const *getLabel() const;
 
 protected:
     Gtk::Widget  *_widget;
