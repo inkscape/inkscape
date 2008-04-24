@@ -23,6 +23,7 @@
 
 #include "sp-path.h"
 #include "sp-item-group.h"
+#include "streq.h"
 #include "macros.h"
 #include "attributes.h"
 #include "sp-lpe-item.h"
@@ -159,7 +160,7 @@ sp_lpe_item_set(SPObject *object, unsigned int key, gchar const *value)
     switch (key) {
         case SP_ATTR_INKSCAPE_PATH_EFFECT:
             if ( value && lpeitem->path_effect_ref->lpeobject_href 
-                    && ( strcmp(value, lpeitem->path_effect_ref->lpeobject_href) == 0 ) ) {
+                 && streq(value, lpeitem->path_effect_ref->lpeobject_href) ) {
                 /* No change, do nothing. */
             } else {
                 if (value) {
