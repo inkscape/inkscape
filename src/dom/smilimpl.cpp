@@ -82,7 +82,7 @@ DOMString SMILElementImpl::getId()
 /**
  *
  */
-void SMILElementImpl::setId(const DOMString &val) throw (dom::DOMException)
+void SMILElementImpl::setId(const DOMString &/*val*/) throw (dom::DOMException)
 {
 }
 
@@ -189,7 +189,7 @@ DOMString SMILRegionElementImpl::getFit()
 /**
  *
  */
-void SMILRegionElementImpl::setFit(const DOMString &val) throw (dom::DOMException)
+void SMILRegionElementImpl::setFit(const DOMString &/*val*/) throw (dom::DOMException)
 {
 }
 
@@ -204,7 +204,7 @@ DOMString SMILRegionElementImpl::getTop()
 /**
  *
  */
-void SMILRegionElementImpl::setTop(const DOMString &val) throw (dom::DOMException)
+void SMILRegionElementImpl::setTop(const DOMString &/*val*/) throw (dom::DOMException)
 {
 }
 
@@ -219,7 +219,7 @@ long SMILRegionElementImpl::getZIndex()
 /**
  *
  */
-void SMILRegionElementImpl::setZIndex(long val) throw (dom::DOMException)
+void SMILRegionElementImpl::setZIndex(long /*val*/) throw (dom::DOMException)
 {
 }
 
@@ -253,7 +253,7 @@ DOMString SMILMediaElementImpl::getAbstractAttr()
 /**
  *
  */
-void SMILMediaElementImpl::setAbstractAttr(const DOMString &val)
+void SMILMediaElementImpl::setAbstractAttr(const DOMString &/*val*/)
                                    throw (dom::DOMException)
 {
 }
@@ -269,7 +269,7 @@ DOMString SMILMediaElementImpl::getAlt()
 /**
  *
  */
-void SMILMediaElementImpl::setAlt(const DOMString &val)
+void SMILMediaElementImpl::setAlt(const DOMString &/*val*/)
                                    throw (dom::DOMException)
 {
 }
@@ -285,7 +285,7 @@ DOMString SMILMediaElementImpl::getAuthor()
 /**
  *
  */
-void SMILMediaElementImpl::setAuthor(const DOMString &val)
+void SMILMediaElementImpl::setAuthor(const DOMString &/*val*/)
                                   throw (dom::DOMException)
 {
 }
@@ -301,7 +301,7 @@ DOMString SMILMediaElementImpl::getClipBegin()
 /**
  *
  */
-void SMILMediaElementImpl::setClipBegin(const DOMString &val)
+void SMILMediaElementImpl::setClipBegin(const DOMString &/*val*/)
                                  throw (dom::DOMException)
 {
 }
@@ -317,7 +317,7 @@ DOMString SMILMediaElementImpl::getClipEnd()
 /**
  *
  */
-void SMILMediaElementImpl::setClipEnd(const DOMString &val)
+void SMILMediaElementImpl::setClipEnd(const DOMString &/*val*/)
                                throw (dom::DOMException)
 {
 }
@@ -333,7 +333,7 @@ DOMString SMILMediaElementImpl::getCopyright()
 /**
  *
  */
-void SMILMediaElementImpl::setCopyright(const DOMString &val)
+void SMILMediaElementImpl::setCopyright(const DOMString &/*val*/)
                                   throw (dom::DOMException)
 {
 }
@@ -349,7 +349,7 @@ DOMString SMILMediaElementImpl::getLongdesc()
 /**
  *
  */
-void SMILMediaElementImpl::setLongdesc(const DOMString &val)
+void SMILMediaElementImpl::setLongdesc(const DOMString &/*val*/)
                                throw (dom::DOMException)
 {
 }
@@ -365,7 +365,7 @@ DOMString SMILMediaElementImpl::getPort()
 /**
  *
  */
-void SMILMediaElementImpl::setPort(const DOMString &val)
+void SMILMediaElementImpl::setPort(const DOMString &/*val*/)
                                  throw (dom::DOMException)
 {
 }
@@ -381,7 +381,7 @@ DOMString SMILMediaElementImpl::getReadIndex()
 /**
  *
  */
-void SMILMediaElementImpl::setReadIndex(const DOMString &val)
+void SMILMediaElementImpl::setReadIndex(const DOMString &/*val*/)
                                 throw (dom::DOMException)
 {
 }
@@ -397,7 +397,7 @@ DOMString SMILMediaElementImpl::getRtpformat()
 /**
  *
  */
-void SMILMediaElementImpl::setRtpformat(const DOMString &val)
+void SMILMediaElementImpl::setRtpformat(const DOMString &/*val*/)
                               throw (dom::DOMException)
 {
 }
@@ -413,7 +413,7 @@ DOMString SMILMediaElementImpl::getSrc()
 /**
  *
  */
-void SMILMediaElementImpl::setSrc(const DOMString &val)
+void SMILMediaElementImpl::setSrc(const DOMString &/*val*/)
                                  throw (dom::DOMException)
 {
 }
@@ -429,7 +429,7 @@ DOMString SMILMediaElementImpl::getStripRepeat()
 /**
  *
  */
-void SMILMediaElementImpl::setStripRepeat(const DOMString &val)
+void SMILMediaElementImpl::setStripRepeat(const DOMString &/*val*/)
                                  throw (dom::DOMException)
 {
 }
@@ -445,7 +445,7 @@ DOMString SMILMediaElementImpl::getTitle()
 /**
  *
  */
-void SMILMediaElementImpl::setTitle(const DOMString &val)
+void SMILMediaElementImpl::setTitle(const DOMString &/*val*/)
                                 throw (dom::DOMException)
 {
 }
@@ -461,7 +461,7 @@ DOMString SMILMediaElementImpl::getTransport()
 /**
  *
  */
-void SMILMediaElementImpl::setTransport(const DOMString &val)
+void SMILMediaElementImpl::setTransport(const DOMString &/*val*/)
                                  throw (dom::DOMException)
 {
 }
@@ -477,7 +477,7 @@ DOMString SMILMediaElementImpl::getType()
 /**
  *
  */
-void SMILMediaElementImpl::setType(const DOMString &val)
+void SMILMediaElementImpl::setType(const DOMString &/*val*/)
                                       throw (dom::DOMException)
 {
 }
@@ -534,7 +534,7 @@ unsigned short SMILAnimationImpl::getAdditive()
 /**
  *
  */
-void SMILAnimationImpl::setAdditive(unsigned short val)
+void SMILAnimationImpl::setAdditive(unsigned short /*val*/)
                                  throw (dom::DOMException)
 {
 }
@@ -550,7 +550,7 @@ unsigned short SMILAnimationImpl::getAccumulate()
 /**
  *
  */
-void SMILAnimationImpl::setAccumulate(unsigned short val)
+void SMILAnimationImpl::setAccumulate(unsigned short /*val*/)
                                 throw (dom::DOMException)
 {
 }
@@ -566,7 +566,7 @@ unsigned short SMILAnimationImpl::getCalcMode()
 /**
  *
  */
-void SMILAnimationImpl::setCalcMode(unsigned short val)
+void SMILAnimationImpl::setCalcMode(unsigned short /*val*/)
                                   throw (dom::DOMException)
 {
 }
@@ -582,7 +582,7 @@ DOMString SMILAnimationImpl::getKeySplines()
 /**
  *
  */
-void SMILAnimationImpl::setKeySplines(const DOMString &val)
+void SMILAnimationImpl::setKeySplines(const DOMString &/*val*/)
                                 throw (dom::DOMException)
 {
 }
@@ -615,7 +615,7 @@ DOMString SMILAnimationImpl::getValues()
 /**
  *
  */
-void SMILAnimationImpl::setValues(const DOMString &val)
+void SMILAnimationImpl::setValues(const DOMString &/*val*/)
                                throw (dom::DOMException)
 {
 }
@@ -631,7 +631,7 @@ DOMString SMILAnimationImpl::getFrom()
 /**
  *
  */
-void SMILAnimationImpl::setFrom(const DOMString &val)
+void SMILAnimationImpl::setFrom(const DOMString &/*val*/)
                                throw (dom::DOMException)
 {
 }
@@ -647,7 +647,7 @@ DOMString SMILAnimationImpl::getTo()
 /**
  *
  */
-void SMILAnimationImpl::setTo(const DOMString &val)
+void SMILAnimationImpl::setTo(const DOMString &/*val*/)
                               throw (dom::DOMException)
 {
 }
@@ -663,7 +663,7 @@ DOMString SMILAnimationImpl::getBy()
 /**
  *
  */
-void SMILAnimationImpl::setBy(const DOMString &val)
+void SMILAnimationImpl::setBy(const DOMString &/*val*/)
                                   throw (dom::DOMException)
 {
 }
@@ -716,7 +716,7 @@ DOMString SMILSetElementImpl::getTo()
 /**
  *
  */
-void SMILSetElementImpl::setTo(const DOMString &val)
+void SMILSetElementImpl::setTo(const DOMString &/*val*/)
 {
 }
 
@@ -749,7 +749,7 @@ DOMString SMILAnimateMotionElementImpl::getPath()
 /**
  *
  */
-void SMILAnimateMotionElementImpl::setPath(const DOMString &val)
+void SMILAnimateMotionElementImpl::setPath(const DOMString &/*val*/)
                                       throw(dom::DOMException)
 {
 }
@@ -765,7 +765,7 @@ DOMString SMILAnimateMotionElementImpl::getOrigin()
 /**
  *
  */
-void SMILAnimateMotionElementImpl::setOrigin(const DOMString &val)
+void SMILAnimateMotionElementImpl::setOrigin(const DOMString &/*val*/)
                                          throw(dom::DOMException)
 {
 }
@@ -815,9 +815,10 @@ SMILAnimateColorElementImpl::~SMILAnimateColorElementImpl()
 /**
  *
  */
-Element *SMILSwitchElementImpl::getSelectedElement()
+ElementPtr SMILSwitchElementImpl::getSelectedElement()
 {
-    return NULL;
+   ElementPtr ptr;
+    return ptr;
 }
 
 //##################

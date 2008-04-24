@@ -734,7 +734,7 @@ public:
     /**
      *
      */
-    virtual Element *getSelectedElement();
+    virtual ElementPtr getSelectedElement();
 
     //##################
     //# Non-API methods
