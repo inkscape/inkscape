@@ -31,7 +31,11 @@
  * ===========================================================================
  * NOTES
  * 
+ * This API and many of the comments come from this document: 
  * http://www.w3.org/TR/smil-boston-dom     
+ * 
+ * ...which is a DRAFT.  But it's the best we can find.  Can someone
+ * find a more finished, complete SMIL DOM document for us?  Thanks.   
  */
 
 
@@ -60,6 +64,7 @@ typedef dom::NodeList NodeList;
 typedef dom::Document Document;
 
 //forward declarations
+//SMIL (non-DOM) types
 class ElementExclusiveTimeContainer;
 class ElementLayout;
 class ElementParallelTimeContainer;
@@ -75,6 +80,7 @@ class Time;
 class TimeEvent;
 class TimeList;
 
+//SMIL Elements
 class SMILAnimateColorElement;
 typedef Ptr<SMILAnimateColorElement> SMILAnimateColorElementPtr;
 class SMILAnimateElement;
