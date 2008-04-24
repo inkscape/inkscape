@@ -18,30 +18,56 @@ namespace Internal {
 namespace Filter {
 
 class Snow : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+	virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+	Snow ( ) : Filter() { };
+	virtual ~Snow ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
 public:
 	static void init (void) {
-		filter_init("snow",     /* ID -- should be unique */
-		            N_("Snow"), /* Name in the menus, should have a N_() around it for translation */
-		            N_("When the weather outside is frightening..."),
-					             /* Menu tooltip to help users understand the name.  Should also have a N_() */
-					"<filter>\n"
-                        "<feConvolveMatrix order=\"3 3\" kernelMatrix=\"1 1 1 0 0 0 -1 -1 -1\" preserveAlpha=\"false\" divisor=\"3\"/>\n"
-                        "<feMorphology operator=\"dilate\" radius=\"1 3.2345013477088949\"/>\n"
-                        "<feGaussianBlur stdDeviation=\"1.6270889487870621\" result=\"result0\"/>\n"
-                        "<feColorMatrix values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 10 0\" result=\"result1\"/>\n"
-                        "<feOffset dx=\"0\" dy=\"1\" result=\"result5\"/>\n"
-                        "<feDiffuseLighting in=\"result0\" diffuseConstant=\"2.2613065326633168\" surfaceScale=\"1\">\n"
-                          "<feDistantLight azimuth=\"225\" elevation=\"32\"/>\n"
-                        "</feDiffuseLighting>\n"
-                        "<feComposite in2=\"result1\" operator=\"in\" result=\"result2\"/>\n"
-                        "<feColorMatrix values=\"0.4 0 0 0 0.6 0 0.4 0 0 0.6 0 0 0 0 1 0 0 0 1 0\" result=\"result4\"/>\n"
-                        "<feComposite in2=\"result5\" in=\"result4\"/>\n"
-                        "<feComposite in2=\"SourceGraphic\"/>\n"
-					"</filter>\n");
-						 /* The XML of the filter that should be added.  There
-						  * should be a <svg:filter> surrounding what you'd like
-						  * to be added with this effect. */
+		Inkscape::Extension::build_from_mem(
+			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+				"<name>" N_("Snow") "</name>\n"
+				"<id>org.inkscape.effect.filter.snow</id>\n"
+				"<param name=\"drift\" gui-text=\"" N_("Drift Size") "\" type=\"float\" min=\"0.0\" max=\"20.0\">3.5</param>\n"
+				"<effect>\n"
+					"<object-type>all</object-type>\n"
+					"<effects-menu>\n"
+						"<submenu name=\"" N_("Filter") "\" />\n"
+					"</effects-menu>\n"
+					"<menu-tip>" N_("When the weather outside is frightening...") "</menu-tip>\n"
+				"</effect>\n"
+			"</inkscape-extension>\n", new Snow());
 	};
+
+};
+
+gchar const *
+Snow::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+	if (_filter != NULL) g_free((void *)_filter);
+
+	float drift = ext->get_param_float("drift");
+
+	_filter = g_strdup_printf(
+				"<filter>\n"
+					"<feConvolveMatrix order=\"3 3\" kernelMatrix=\"1 1 1 0 0 0 -1 -1 -1\" preserveAlpha=\"false\" divisor=\"3\"/>\n"
+					"<feMorphology operator=\"dilate\" radius=\"1 %f\"/>\n"
+					"<feGaussianBlur stdDeviation=\"1.6270889487870621\" result=\"result0\"/>\n"
+					"<feColorMatrix values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 10 0\" result=\"result1\"/>\n"
+					"<feOffset dx=\"0\" dy=\"1\" result=\"result5\"/>\n"
+					"<feDiffuseLighting in=\"result0\" diffuseConstant=\"2.2613065326633168\" surfaceScale=\"1\">\n"
+					  "<feDistantLight azimuth=\"225\" elevation=\"32\"/>\n"
+					"</feDiffuseLighting>\n"
+					"<feComposite in2=\"result1\" operator=\"in\" result=\"result2\"/>\n"
+					"<feColorMatrix values=\"0.4 0 0 0 0.6 0 0.4 0 0 0.6 0 0 0 0 1 0 0 0 1 0\" result=\"result4\"/>\n"
+					"<feComposite in2=\"result5\" in=\"result4\"/>\n"
+					"<feComposite in2=\"SourceGraphic\"/>\n"
+				"</filter>\n", drift);
+
+	return _filter;
 };
 
 }; /* namespace Filter */

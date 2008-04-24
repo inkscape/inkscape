@@ -22,13 +22,12 @@ namespace Internal {
 namespace Filter {
 
 class DropShadow : public Inkscape::Extension::Internal::Filter::Filter {
-	int myvar;
 protected:
 	virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
 
 public:
 	DropShadow ( ) : Filter() { };
-	//virtual ~DropShadow ( ) { if (_filter != NULL) g_free(_filter); return; }
+	virtual ~DropShadow ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
 
 	static void init (void) {
 		Inkscape::Extension::build_from_mem(
