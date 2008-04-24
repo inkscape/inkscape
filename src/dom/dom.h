@@ -998,10 +998,10 @@ public:
         return (unsigned long) nodes.size();
         }
 
+
     //##################
     //# Non-API methods
     //##################
-
 
     /**
      *
@@ -1130,7 +1130,9 @@ public:
         }
 
     /**
-     *
+     * Adds a node using its nodeName attribute. If a node with that name is already
+     * present in this map, it is replaced by the new one. Replacing a node by itself
+     * has no effect.
      */
     virtual NodePtr setNamedItem(NodePtr arg) throw(DOMException)
         {
@@ -1155,7 +1157,7 @@ public:
 
 
     /**
-     *
+     * Removes a node specified by name.
      */
     virtual NodePtr removeNamedItem(const DOMString& name) throw(DOMException)
         {
@@ -1173,7 +1175,7 @@ public:
         }
 
     /**
-     *
+     *  Retrieves an item at the given index.  If out of bounds, return NULL
      */
     virtual NodePtr item(unsigned long index)
         {
@@ -1183,7 +1185,7 @@ public:
         }
 
     /**
-     *
+     * Return the number of items in this map
      */
     virtual unsigned long getLength()
         {
@@ -1191,7 +1193,7 @@ public:
         }
 
     /**
-     *
+     * Retrieves a node specified by local name and namespace URI.
      */
     virtual NodePtr getNamedItemNS(const DOMString& namespaceURI,
                                  const DOMString& localName)
@@ -1209,7 +1211,9 @@ public:
         }
 
     /**
-     *
+     * Adds a node using its namespaceURI and localName. If a node with that
+     * namespace URI and that local name is already present in this map, it is
+     * replaced by the new one. Replacing a node by itself has no effect.
      */
     virtual NodePtr setNamedItemNS(NodePtr arg) throw(DOMException)
         {
@@ -1233,7 +1237,7 @@ public:
         }
 
     /**
-     *
+     * Removes a node specified by local name and namespace URI.
      */
     virtual NodePtr removeNamedItemNS(const DOMString& namespaceURI,
                                     const DOMString& localName)
@@ -1251,6 +1255,7 @@ public:
             }
         return NULL;
         }
+
 
     //##################
     //# Non-API methods
@@ -1392,39 +1397,48 @@ class Attr : virtual public Node
 public:
 
     /**
-     *
+     * Returns the name of this attribute. If Node.localName is different
+     * from null, this attribute is a qualified name.
      */
     virtual DOMString getName() = 0;
 
     /**
-     *
+     * True if this attribute was explicitly given a value in the instance document,
+     * false otherwise. If the application changed the value of this attribute node
+     * (even if it ends up having the same value as the default value) then it is set
+     * to true. The implementation may handle attributes with default values from
+     * other schemas similarly but applications should use
+     * Document.normalizeDocument() to guarantee this information is up-to-date.
      */
     virtual bool getSpecified() = 0;
 
     /**
-     *
+     * Returns the value of the attribute
      */
     virtual DOMString getValue() = 0;
 
     /**
-     *
+     * Sets the value of the attribute
      */
     virtual void setValue(const DOMString& val) throw(DOMException) = 0;
 
     /**
-     *
+     * Return the Element that possesses this attribute
      */
     virtual ElementPtr getOwnerElement() = 0;
 
 
     /**
-     *
+     * The type information associated with this attribute.
      */
     virtual TypeInfo &getSchemaTypeInfo() = 0;
 
 
     /**
-     *
+     * Returns whether this attribute is known to be of type ID (i.e. to contain an
+     * identifier for its owner element) or not. When it is and its value is unique,
+     * the ownerElement of this attribute can be retrieved using the method
+     * Document.getElementById.
      */
     virtual bool getIsId() = 0;
 
@@ -1466,58 +1480,83 @@ public:
 
 
     /**
-     *
+     * The name of the element. If Node.localName is different from null,
+     * this attribute is a qualified name.
      */
     virtual DOMString getTagName() = 0;
 
     /**
-     *
+     * Retrieves an attribute value by name.
      */
     virtual DOMString getAttribute(const DOMString& name) = 0;
 
     /**
-     *
+     * Adds a new attribute. If an attribute with that name is already present in the
+     * element, its value is changed to be that of the value parameter. This value is
+     * a simple string; it is not parsed as it is being set. So any markup (such as
+     * syntax to be recognized as an entity reference) is treated as literal text,
+     * and needs to be appropriately escaped by the implementation when it is written
+     * out. In order to assign an attribute value that contains entity references,
+     * the user must create an Attr node plus any Text and EntityReference nodes,
+     * build the appropriate subtree, and use setAttributeNode to assign it as the
+     * value of an attribute.
      */
     virtual void setAttribute(const DOMString& name,
                       const DOMString& value)
                       throw(DOMException) = 0;
 
     /**
-     *
+     * Removes an attribute by name. If no attribute with this name is found,
+     * this method has no effect.
      */
     virtual void removeAttribute(const DOMString& name)
                          throw(DOMException) = 0;
 
     /**
-     *
+     * Retrieves an attribute node by name.
      */
     virtual AttrPtr getAttributeNode(const DOMString& name) = 0;
 
     /**
-     *
+     * Adds a new attribute node. If an attribute with that name (nodeName)
+     * is already present in the element, it is replaced by the new one.
+     * Replacing an attribute node by itself has no effect.
      */
     virtual AttrPtr setAttributeNode(AttrPtr newAttr)
                           throw(DOMException) = 0;
 
     /**
-     *
+     * Removes the specified attribute node.
      */
     virtual AttrPtr removeAttributeNode(AttrPtr oldAttr)
                              throw(DOMException) = 0;
 
     /**
-     *
+     * Returns a NodeList of all descendant Elements  with a given tag name,
+     * in document order.
      */
     virtual NodeList getElementsByTagName(const DOMString& name) = 0;
 
     /**
-     *
+     * Retrieves an attribute value by local name and namespace URI.
+     * Per [XML Namespaces], applications must use the value null as the
+     * namespaceURI parameter for methods if they wish to have no namespace.
      */
     virtual DOMString getAttributeNS(const DOMString& namespaceURI,
                              const DOMString& localName) = 0;
 
     /**
-     *
+     * Adds a new attribute. If an attribute with the same local name and namespace
+     * URI is already present on the element, its prefix is changed to be the prefix
+     * part of the qualifiedName, and its value is changed to be the value parameter.
+     * This value is a simple string; it is not parsed as it is being set. So any
+     * markup (such as syntax to be recognized as an entity reference) is treated as
+     * literal text, and needs to be appropriately escaped by the implementation when
+     * it is written out. In order to assign an attribute value that contains entity
+     * references, the user must create an Attr node plus any Text and
+     * EntityReference nodes, build the appropriate subtree, and use
+     * setAttributeNodeNS or setAttributeNode to assign it as the value of an
+     * attribute.
      */
     virtual void setAttributeNS(const DOMString& namespaceURI,
                         const DOMString& qualifiedName,
@@ -1525,62 +1564,70 @@ public:
                         throw(DOMException) = 0;
 
     /**
-     *
+     * Removes an attribute by local name and namespace URI.
      */
     virtual void removeAttributeNS(const DOMString& namespaceURI,
                            const DOMString& localName)
                            throw(DOMException) = 0;
 
     /**
-     *
+     * Retrieves an Attr node by local name and namespace URI.
      */
     virtual AttrPtr getAttributeNodeNS(const DOMString& namespaceURI,
                             const DOMString& localName) = 0;
 
     /**
-     *
+     * Adds a new attribute. If an attribute with that local name and
+     * that namespace URI is already present in the element, it is
+     * replaced by the new one. Replacing an attribute node by itself has no effect.
      */
     virtual AttrPtr setAttributeNodeNS(AttrPtr newAttr)
                             throw(DOMException) = 0;
 
     /**
-     *
+     * Returns a NodeList of all the descendant Elements  with a given
+     * local name and namespace URI in document order.
      */
     virtual NodeList getElementsByTagNameNS(const DOMString& namespaceURI,
                                     const DOMString& localName) = 0;
 
     /**
-     *
+     * Returns true when an attribute with a given name is specified on
+     * this element or has a default value, false  otherwise.
      */
     virtual bool hasAttribute(const DOMString& name) = 0;
 
     /**
-     *
+     * Returns true when an attribute with a given local name and namespace
+     * URI is specified on this element or has a default value, false otherwise.
      */
     virtual bool hasAttributeNS(const DOMString& namespaceURI,
                         const DOMString& localName) = 0;
 
     /**
-     *
+     * The type information associated with this element.
      */
     virtual TypeInfo &getSchemaTypeInfo() = 0;
 
 
     /**
-     *
+     * If the parameter isId is true, this method declares the specified
+     * attribute to be a user-determined ID attribute.
      */
     virtual void setIdAttribute(const DOMString &name,
                                 bool isId) throw (DOMException) = 0;
 
     /**
-     *
+     * If the parameter isId is true, this method declares the specified
+     * attribute to be a user-determined ID attribute.
      */
     virtual void setIdAttributeNS(const DOMString &namespaceURI,
                                   const DOMString &localName,
                                   bool isId) throw (DOMException) = 0;
 
     /**
-     *
+     * If the parameter isId is true, this method declares the specified
+     * attribute to be a user-determined ID attribute.
      */
     virtual void setIdAttributeNode(const AttrPtr idAttr,
                                     bool isId) throw (DOMException) = 0;
@@ -1617,24 +1664,43 @@ class Text : virtual public CharacterData
 public:
 
     /**
-     *
+     * Breaks this node into two nodes at the specified offset, keeping both in the
+     * tree as siblings. After being split, this node will contain all the content up
+     * to the offset point. A new node of the same type, which contains all the
+     * content at and after the offset point, is returned. If the original node had a
+     * parent node, the new node is inserted as the next sibling of the original
+     * node. When the offset is equal to the length of this node, the new node has no
+     * data.
      */
     virtual TextPtr splitText(unsigned long offset)
                     throw(DOMException) = 0;
 
     /**
-     *
+     * Returns whether this text node contains element content whitespace, often
+     * abusively called "ignorable whitespace". The text node is determined to
+     * contain whitespace in element content during the load of the document or if
+     * validation occurs while using Document.normalizeDocument().
      */
     virtual bool getIsElementContentWhitespace()= 0;
 
     /**
-     *
+     * Returns all text of Text nodes logically-adjacent text nodes
+     * to this node, concatenated in document order.
      */
     virtual DOMString getWholeText() = 0;
 
 
     /**
+     * Replaces the text of the current node and all logically-adjacent text nodes
+     * with the specified text. All logically-adjacent text nodes are removed
+     * including the current node unless it was the recipient of the replacement text.
      *
+     * This method returns the node which received the replacement text. The returned
+     * node is:
+     *    o  null, when the replacement text is the empty string;
+     *    o  the current node, except when the current node is read-only;
+     *    o  a new Text node of the same type (Text or CDATASection) as
+     *          the current node inserted at the location of the replacement.
      */
     virtual TextPtr replaceWholeText(const DOMString &content)
                                  throw(DOMException) = 0;
@@ -1696,19 +1762,31 @@ class TypeInfo
 public:
 
     /**
-     *
+     * The name of a type declared for the associated element or attribute,
+     *  or null if unknown.
      */
     virtual DOMString getTypeName()
         { return typeName; }
 
     /**
-     *
+     * The namespace of the type declared for the associated element
+     * or attribute or null if the element does not have declaration or
+     * if no namespace information is available.
      */
     virtual DOMString getTypeNamespace()
         { return typeNameSpace; }
 
     /**
-     *
+     * These are the available values for the derivationMethod parameter used by the
+     * method TypeInfo.isDerivedFrom(). It is a set of possible types of derivation,
+     * and the values represent bit positions. If a bit in the derivationMethod
+     * parameter is set to 1, the corresponding type of derivation will be taken into
+     * account when evaluating the derivation between the reference type definition
+     * and the other type definition. When using the isDerivedFrom method, combining
+     * all of them in the derivationMethod parameter is equivalent to invoking the
+     * method for each of them separately and combining the results with the OR
+     * boolean function. This specification only defines the type of derivation for
+     * XML Schema.
      */	     
     typedef enum
         {
@@ -1720,12 +1798,14 @@ public:
 
 
     /**
-     *
+     * This method returns if there is a derivation between the reference
+     * type definition, i.e. the TypeInfo on which the method is being called,
+     * and the other type definition, i.e. the one passed as parameters.
      */
-    virtual bool isDerivedFrom(const DOMString &typeNamespaceArg,
-                               const DOMString &typeNameArg,
-                               DerivationMethod derivationMethod)
-        { (void)typeNamespaceArg; (void)typeNameArg; (void)derivationMethod; return false; }
+    virtual bool isDerivedFrom(const DOMString &/*typeNamespaceArg*/,
+                               const DOMString &/*typeNameArg*/,
+                               DerivationMethod /*derivationMethod*/)
+        { return false; }
 
     //##################
     //# Non-API methods
@@ -1785,6 +1865,9 @@ class UserDataHandler
 {
 public:
 
+    /**
+     * An integer indicating the type of operation being performed on a node.
+     */
     typedef enum
         {
         NODE_CLONED     = 1,
@@ -1796,7 +1879,8 @@ public:
 
 
     /**
-     *
+     * This method is called whenever the node for which this handler
+     * is registered is imported or cloned.
      */
     virtual  void handle(unsigned short operation,
                          const DOMString &key,
@@ -1828,6 +1912,9 @@ class DOMError
 {
 public:
 
+    /**
+     * An integer indicating the severity of the error.
+     */
     typedef enum
         {
         SEVERITY_WARNING     = 1,
@@ -1837,32 +1924,35 @@ public:
 
 
     /**
-     *
+     * The severity of the error, either SEVERITY_WARNING, SEVERITY_ERROR,
+     * or SEVERITY_FATAL_ERROR.
      */
     virtual unsigned short getSeverity() =0;
 
     /**
-     *
+     * An implementation specific string describing the error that occurred.
      */
     virtual DOMString getMessage() =0;
 
     /**
-     *
+     * A DOMString indicating which related data is expected in relatedData.
+     * Users should refer to the specification of the error in order to find
+     * its DOMString type and relatedData  definitions if any.
      */
     virtual DOMString getType() =0;
 
     /**
-     *
+     * The related platform dependent exception if any.
      */
     virtual DOMObject *getRelatedException() =0;
 
     /**
-     *
+     * The related DOMError.type dependent data if any.
      */
     virtual DOMObject *getRelatedData() =0;
 
     /**
-     *
+     * The location of the error.
      */
     virtual DOMLocator *getLocation() =0;
 
@@ -1896,15 +1986,18 @@ public:
 class DOMErrorHandler
 {
 public:
+
     /**
-     *
+     * This method is called on the error handler when an error occurs.
+     * If an exception is thrown from this method, it is considered to be
+     * equivalent of returning true.
      */
     virtual bool handleError(const DOMError *error) =0;
+
 
     //##################
     //# Non-API methods
     //##################
-
 
     /**
      *
@@ -1927,34 +2020,39 @@ class DOMLocator
 public:
 
     /**
-     *
+     * The line number this locator is pointing to, or -1 if there is
+     * no column number available.
      */
     virtual long getLineNumber() =0;
 
     /**
-     *
+     * The column number this locator is pointing to, or -1 if there is
+     * no column number available.
      */
     virtual long getColumnNumber() =0;
 
     /**
-     *
+     * The byte offset into the input source this locator is pointing to
+     * or -1 if there is no byte offset available.
      */
     virtual long getByteOffset() =0;
 
     /**
-     *
+     * The UTF-16, as defined in [Unicode] and Amendment 1 of [ISO/IEC 10646],
+     * offset into the input source this locator is pointing to or -1
+     * if there is no UTF-16 offset available.
      */
     virtual long getUtf16Offset() =0;
 
 
     /**
-     *
+     * The node this locator is pointing to, or null if no node is available.
      */
     virtual NodePtr getRelatedNode() =0;
 
 
     /**
-     *
+     * The URI this locator is pointing to, or null if no URI is available.
      */
     virtual DOMString getUri() =0;
 
@@ -1981,32 +2079,38 @@ public:
  * that must be used when the validation of the Document is requested. 
  * DOMConfiguration objects are also used in [DOM Level 3 Load and Save] in the 
  * DOMParser and DOMSerializer interfaces.
+ *
+ * Look here for a list of valid parameters:
+ * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/core.html#DOMConfiguration
  */
 class DOMConfiguration
 {
 public:
 
     /**
-     *
+     * Set the value of a parameter.
      */
     virtual void setParameter(const DOMString &name,
                               const DOMUserData *value)
 							   throw (DOMException) =0;
 
     /**
-     *
+     * Return the value of a parameter if known.
      */
     virtual DOMUserData *getParameter(const DOMString &name)
                                       throw (DOMException) =0;
 
     /**
-     *
+     * Check if setting a parameter to a specific value is supported.
      */
     virtual bool canSetParameter(const DOMString &name,
                                  const DOMUserData *data) =0;
 
     /**
-     *
+     * The list of the parameters supported by this DOMConfiguration
+     * object and for which at least one value can be set by the application.
+     * Note that this list can also contain parameter names defined outside
+     * this specification.
      */
     virtual DOMStringList *getParameterNames() =0;
 
@@ -2073,32 +2177,38 @@ class DocumentType : virtual public Node
 public:
 
     /**
-     *
+     * The name of DTD; i.e., the name immediately following the DOCTYPE keyword.
      */
     virtual DOMString getName() = 0;
 
     /**
-     *
+     * A NamedNodeMap containing the general entities, both external and
+     * internal, declared in the DTD. Parameter entities are not contained.
+     * Duplicates are discarded.
      */
     virtual NamedNodeMap getEntities() = 0;
 
     /**
-     *
+     * A NamedNodeMap containing the notations declared in the DTD. Duplicates
+     * are discarded. Every node in this map also implements the
+     * Notation interface.
      */
     virtual NamedNodeMap getNotations() = 0;
 
     /**
-     *
+     * The public identifier of the external subset.
      */
     virtual DOMString getPublicId() = 0;
 
     /**
-     *
+     * The system identifier of the external subset. This may be an
+     * absolute URI or not.
      */
     virtual DOMString getSystemId() = 0;
 
     /**
-     *
+     * The internal subset as a string, or null if there is none. This
+     * does not contain the delimiting square brackets.
      */
     virtual DOMString getInternalSubset() = 0;
 
@@ -2134,12 +2244,14 @@ class Notation : virtual public Node
 public:
 
     /**
-     *
+     * The public identifier of this notation. If the public identifier was
+     * not specified, this is null.
      */
     virtual DOMString getPublicId() = 0;
 
     /**
-     *
+     * The system identifier of this notation. If the system identifier was
+     * not specified, this is null. This may be an absolute URI or not.
      */
     virtual DOMString getSystemId() = 0;
 
@@ -2172,32 +2284,40 @@ class Entity : virtual public Node
 public:
 
     /**
-     *
+     * The public identifier associated with the entity if specified,
+     *      and null otherwise.
      */
     virtual DOMString getPublicId() = 0;
 
     /**
-     *
+     * The system identifier associated with the entity if specified,
+     * and null otherwise. This may be an absolute URI or not.
      */
     virtual DOMString getSystemId() = 0;
 
     /**
-     *
+     * For unparsed entities, the name of the notation for the entity.
+     * For parsed entities, this is null.
      */
     virtual DOMString getNotationName() = 0;
 
     /**
-     *
+     * An attribute specifying the encoding used for this entity at the
+     * time of parsing, when it is an external parsed entity. This is null
+     * if it an entity from the internal subset or if it is not known.
      */
     virtual DOMString getInputEncoding() = 0;
 
     /**
-     *
+     * An attribute specifying, as part of the text declaration, the encoding
+     * of this entity, when it is an external parsed entity. This is null otherwise.
      */
     virtual DOMString getXmlEncoding() = 0;
 
     /**
-     *
+     * An attribute specifying, as part of the text declaration, the version
+     * number of this entity, when it is an external parsed entity.
+     * This is null otherwise.
      */
     virtual DOMString getXmlVersion() = 0;
 
@@ -2256,17 +2376,20 @@ class ProcessingInstruction : virtual public Node
 public:
 
     /**
-     *
+     * The target of this processing instruction. XML defines this as being
+     * the first token following the markup that begins the processing instruction.
      */
     virtual DOMString getTarget() = 0;
 
     /**
-     *
+     * The content of this processing instruction. This is from the first non
+     * white space character after the target to the character immediately
+     * preceding the ?>.
      */
     virtual DOMString getData() = 0;
 
     /**
-     *
+     *  Sets the content above.
      */
    virtual void setData(const DOMString& val) throw(DOMException) = 0;
 
@@ -2367,28 +2490,28 @@ public:
                            throw(DOMException) = 0;
 
     /**
-     *
+     * Creates a new, empty DocumentFragment
      */
     virtual DocumentFragmentPtr createDocumentFragment() = 0;
 
     /**
-     * Creates an TextNode with the text data specified.
+     * Creates an Text node with the text data specified.
      */
-    virtual TextPtr createTextNode(const DOMString& data) = 0;
+    virtual TextPtr createTextNode(const DOMString& text) = 0;
 
     /**
-     *
+     *  Creates a new Comment node with the argument text
      */
-    virtual CommentPtr createComment(const DOMString& data) = 0;
+    virtual CommentPtr createComment(const DOMString& text) = 0;
 
     /**
-     *
+     * Creates a new CDATASection node with the argument text
      */
-    virtual CDATASectionPtr createCDATASection(const DOMString& data)
+    virtual CDATASectionPtr createCDATASection(const DOMString& text)
                                      throw(DOMException) = 0;
 
     /**
-     *
+     * Creates a new ProcessingInstruction
      */
     virtual ProcessingInstructionPtr
 	           createProcessingInstruction(const DOMString& target,
@@ -2396,74 +2519,93 @@ public:
                                            throw(DOMException) = 0;
 
     /**
-     *
+     *  Creates a new Attr with the given name, but no value.
      */
     virtual AttrPtr createAttribute(const DOMString& name)
                           throw(DOMException) = 0;
 
     /**
-     *
+     * Creates a new EntityReference
      */
     virtual EntityReferencePtr createEntityReference(const DOMString& name)
                                            throw(DOMException) = 0;
 
     /**
-     *
+     * Searches the Document in document order for all elements with the given
+     *      tag name
      */
     virtual NodeList getElementsByTagName(const DOMString& tagname) = 0;
 
 
     /**
-     *
+     * Imports a node from another document to this document, without altering or
+     * removing the source node from the original document; this method creates a new
+     * copy of the source node. The returned node has no parent; (parentNode is
+     * null). For all nodes, importing a node creates a node object owned by the
+     * importing document, with attribute values identical to the source node's
+     * nodeName and nodeType, plus the attributes related to namespaces (prefix,
+     * localName, and namespaceURI). As in the cloneNode operation, the source node
+     * is not altered. User data associated to the imported node is not carried over.
+     * However, if any UserDataHandlers has been specified along with the associated
+     * data these handlers will be called with the appropriate parameters before this
+     * method returns. Additional information is copied as appropriate to the
+     * nodeType, attempting to mirror the behavior expected if a fragment of XML or
+     * HTML source was copied from one document to another, recognizing that the two
+     * documents may have different DTDs in the XML case. The following list
+     * describes the specifics for each type of node.
      */
     virtual NodePtr importNode(const NodePtr importedNode,
                      bool deep)
                      throw(DOMException) = 0;
 
     /**
-     *
+     *  Creates a new Element with the given namespace and qualifiedName.
+     *  Use "" for no namespace
      */
     virtual ElementPtr createElementNS(const DOMString& namespaceURI,
                              const DOMString& qualifiedName)
                              throw(DOMException) = 0;
 
     /**
-     *
+     * Creates a new Attr with the given namespace and qualifiedName.
      */
     virtual AttrPtr createAttributeNS(const DOMString& namespaceURI,
                             const DOMString& qualifiedName)
                             throw(DOMException) = 0;
 
     /**
-     *
+     * Searches the Document in document order for all elements with the given
+     *    namespace and tag name
      */
     virtual NodeList getElementsByTagNameNS(const DOMString& namespaceURI,
                                      const DOMString& localName) = 0;
 
     /**
-     *
+     *  Gets the element with the given id if it exists, else null.
      */
     virtual ElementPtr getElementById(const DOMString& elementId) = 0;
 
 
     /**
-     *
+     * Return the input encoding of this Document
      */
     virtual DOMString getInputEncoding() = 0;
 
 
     /**
-     *
+     * Return the XML encoding of this Document
      */
     virtual DOMString getXmlEncoding() = 0;
 
     /**
-     *
+     * An attribute specifying, as part of the XML declaration, whether
+     *   this document is standalone. This is false when unspecified.
      */
     virtual bool getXmlStandalone() = 0;
 
     /**
-     *
+     * Sets whether this is a standalone XML document.  No validation is
+     *    done here.
      */
     virtual void setXmlStandalone(bool val) throw (DOMException) = 0;
 
