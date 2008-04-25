@@ -38,7 +38,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.8.1, 2007-2008 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.8.2, 2007-2008 Bob Jamison"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -6161,14 +6161,16 @@ public:
 
     TaskCC(MakeBase &par) : Task(par)
         {
-        type = TASK_CC; name = "cc";
-        ccCommand   = "gcc";
-        cxxCommand  = "g++";
-        source      = ".";
-        dest        = ".";
-        flags       = "";
-        defines     = "";
-        includes    = "";
+        type = TASK_CC;
+		name            = "cc";
+        ccCommand       = "gcc";
+        cxxCommand      = "g++";
+        source          = ".";
+        dest            = ".";
+        flags           = "";
+        defines         = "";
+        includes        = "";
+        continueOnError = false;
         fileSet.clear();
         excludeInc.clear();
         }
@@ -6249,6 +6251,11 @@ public:
             dname.append(dirName);
             incs.append(parent.resolve(dname));
             }
+            
+        /**
+         * Compile each of the C files that need it
+         */
+		bool errorOccurred = false;		         
         std::vector<String> cfiles;
         for (viter=deps.begin() ; viter!=deps.end() ; viter++)
             {
@@ -6384,9 +6391,10 @@ public:
             if (!ret)
                 {
                 error("problem compiling: %s", errString.c_str());
-                return false;
+                errorOccurred = true;
                 }
-                
+            if (errorOccurred || !continueOnError)
+                break;
             }
 
         if (f)
@@ -6394,7 +6402,7 @@ public:
             fclose(f);
             }
         
-        return true;
+        return errorOccurred;
         }
 
     virtual bool parse(Element *elem)
@@ -6412,6 +6420,10 @@ public:
         if (!parent.getAttribute(elem, "destdir", s))
             return false;
         if (s.size()>0) dest = s;
+        if (!parent.getAttribute(elem, "continueOnError", s))
+            return false;
+        if (s=="true" || s=="yes")
+            continueOnError = true;
 
         std::vector<Element *> children = elem->getChildren();
         for (unsigned int i=0 ; i<children.size() ; i++)
@@ -6462,6 +6474,7 @@ protected:
     String   lastflags;
     String   defines;
     String   includes;
+    bool     continueOnError;
     FileSet  fileSet;
     FileList excludeInc;
     
