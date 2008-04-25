@@ -908,13 +908,21 @@ void InkscapePreferences::initPageMisc()
 
 
     // consider moving this to an UI tab:
-    _misc_small_toolbar.init( _("Make the commands toolbar icons smaller"), "toolbox", "small", true);
-    _page_misc.add_line( false, "", _misc_small_toolbar, "",
-                           _("Make the commands toolbar use the 'secondary' toolbar size (requires restart)"), true);
 
-    _misc_small_tools.init( _("Make the main toolbar icons smaller"), "toolbox.tools", "small", true);
-    _page_misc.add_line( false, "", _misc_small_tools, "",
-                           _("Make the main tools use the 'secondary' toolbar size (requires restart)"), true);
+    Glib::ustring sizeLabels[] = {_("Normal"), _("Medium"), _("Small")};
+    int sizeValues[] = {0, 1, 2};
+
+    _misc_small_toolbar.init( "toolbox", "small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
+    _page_misc.add_line( false, _("Commands toolbar icon size"), _misc_small_toolbar, "",
+                           _("Set the size for the commands toolbar to use (requires restart)"), false);
+
+    _misc_small_secondary.init( "toolbox", "secondary", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 1 );
+    _page_misc.add_line( false, _("Secondary toolbar icon size"), _misc_small_secondary, "",
+                           _("Set the size for the secondary toolbar to use (requires restart)"), false);
+
+    _misc_small_tools.init( "toolbox.tools", "small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
+    _page_misc.add_line( false, _("Main toolbar icon size"), _misc_small_tools, "",
+                           _("Set the size for the main tools to use (requires restart)"), false);
 
     _misc_recent.init("options.maxrecentdocuments", "value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
     _page_misc.add_line( false, _("Maximum number of recent documents:"), _misc_recent, "",

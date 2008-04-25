@@ -161,6 +161,10 @@ gint ege_select_one_action_get_icon_column( EgeSelectOneAction* action );
  */
 void ege_select_one_action_set_icon_column( EgeSelectOneAction* action, gint col );
 
+gint ege_select_one_action_get_icon_size( EgeSelectOneAction* action );
+
+void ege_select_one_action_set_icon_size( EgeSelectOneAction* action, gint size );
+
 
 /**
  * Returns the column used for the tooltip.

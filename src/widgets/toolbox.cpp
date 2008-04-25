@@ -129,6 +129,16 @@ static void       sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup
 namespace { GtkWidget *sp_text_toolbox_new (SPDesktop *desktop); }
 
 
+Inkscape::IconSize prefToSize( gchar const *path, gchar const *attr, int base ) {
+    static Inkscape::IconSize sizeChoices[] = {
+        Inkscape::ICON_SIZE_LARGE_TOOLBAR,
+        Inkscape::ICON_SIZE_SMALL_TOOLBAR,
+        Inkscape::ICON_SIZE_MENU
+    };
+    int index = prefs_get_int_attribute_limited( path, attr, base, 0, G_N_ELEMENTS(sizeChoices) );
+    return sizeChoices[index];
+}
+
 static struct {
     gchar const *type_name;
     gchar const *data_name;
@@ -575,8 +585,7 @@ GtkActionGroup* create_or_fetch_actions( SPDesktop* desktop )
         SP_VERB_ZOOM_SELECTION,
     };
 
-    gint shrinkTop = prefs_get_int_attribute_limited( "toolbox", "small", 1, 0, 1 );
-    Inkscape::IconSize toolboxSize = shrinkTop ? Inkscape::ICON_SIZE_SMALL_TOOLBAR : Inkscape::ICON_SIZE_LARGE_TOOLBAR;
+    Inkscape::IconSize toolboxSize = prefToSize("toolbox", "small");
 
     static std::map<SPDesktop*, GtkActionGroup*> groups;
     GtkActionGroup* mainActions = 0;
@@ -1043,12 +1052,14 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
     g_object_set_data( holder, "tracker", tracker );
 
+    Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
+
     {
         InkAction* inky = ink_action_new( "NodeInsertAction",
                                           _("Insert node"),
                                           _("Insert new nodes into selected segments"),
                                           "node_insert",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_object_set( inky, "short_label", _("Insert"), NULL );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_add), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1059,7 +1070,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                           _("Delete node"),
                                           _("Delete selected nodes"),
                                           "node_delete",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_object_set( inky, "short_label", _("Delete"), NULL );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_delete), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1070,7 +1081,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                           _("Join endnodes"),
                                           _("Join selected endnodes"),
                                           "node_join",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_object_set( inky, "short_label", _("Join"), NULL );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_join), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1081,7 +1092,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                           _("Break nodes"),
                                           _("Break path at selected nodes"),
                                           "node_break",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_break), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
@@ -1092,7 +1103,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                           _("Join with segment"),
                                           _("Join selected endnodes with a new segment"),
                                           "node_join_segment",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_join_segment), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
@@ -1102,7 +1113,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                           _("Delete segment"),
                                           _("Delete segment between two non-endpoint nodes"),
                                           "node_delete_segment",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_delete_segment), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
@@ -1112,7 +1123,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                           _("Node Cusp"),
                                           _("Make selected nodes corner"),
                                           "node_cusp",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_cusp), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
@@ -1122,7 +1133,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                           _("Node Smooth"),
                                           _("Make selected nodes smooth"),
                                           "node_smooth",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_smooth), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
@@ -1132,7 +1143,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                           _("Node Symmetric"),
                                           _("Make selected nodes symmetric"),
                                           "node_symmetric",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_symmetrical), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
@@ -1142,7 +1153,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                           _("Node Line"),
                                           _("Make selected segments lines"),
                                           "node_line",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_toline), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
@@ -1152,7 +1163,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                           _("Node Curve"),
                                           _("Make selected segments curves"),
                                           "node_curve",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_tocurve), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
@@ -1344,15 +1355,7 @@ static void
 setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 {
     GtkTooltips *tooltips=GTK_TOOLTIPS(g_object_get_data(G_OBJECT(toolbox), "tooltips"));
-    gint shrinkLeft = prefs_get_int_attribute_limited( "toolbox.tools", "small", 0, 0, 1 );
-    if ( (shrinkLeft == 0) && (prefs_get_int_attribute_limited( "toolbox.tools", "small", 1, 0, 1 ) == 1) ) {
-        // "toolbox.tools" was not set. Fallback to older value
-        shrinkLeft = prefs_get_int_attribute_limited( "toolbox.left", "small", 0, 0, 1 );
-
-        // Copy the setting forwards
-        prefs_set_int_attribute( "toolbox.tools", "small", shrinkLeft );
-    }
-    Inkscape::IconSize toolboxSize = shrinkLeft ? Inkscape::ICON_SIZE_SMALL_TOOLBAR : Inkscape::ICON_SIZE_LARGE_TOOLBAR;
+    Inkscape::IconSize toolboxSize = prefToSize("toolbox.tools", "small");
 
     for (int i = 0 ; tools[i].type_name ; i++ ) {
         GtkWidget *button =
@@ -1434,8 +1437,7 @@ setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
             g_free( tmp );
             tmp = 0;
 
-            gint shrinkTop = prefs_get_int_attribute_limited( "toolbox", "small", 1, 0, 1 );
-            Inkscape::IconSize toolboxSize = shrinkTop ? Inkscape::ICON_SIZE_SMALL_TOOLBAR : Inkscape::ICON_SIZE_LARGE_TOOLBAR;
+            Inkscape::IconSize toolboxSize = prefToSize("toolbox", "small");
             if ( prefs_get_int_attribute_limited( "toolbox", "icononly", 1, 0, 1 ) ) {
                 gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
             }
@@ -1537,8 +1539,8 @@ setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
     if ( prefs_get_int_attribute_limited( "toolbox", "icononly", 1, 0, 1 ) ) {
         gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
     }
-    gint shrinkTop = prefs_get_int_attribute_limited( "toolbox", "small", 1, 0, 1 );
-    Inkscape::IconSize toolboxSize = shrinkTop ? Inkscape::ICON_SIZE_SMALL_TOOLBAR : Inkscape::ICON_SIZE_LARGE_TOOLBAR;
+
+    Inkscape::IconSize toolboxSize = prefToSize("toolbox", "small");
     gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), (GtkIconSize)toolboxSize );
 
 
@@ -1986,6 +1988,8 @@ sp_toolbox_add_label(GtkWidget *tbl, gchar const *title, bool wide)
 
 static void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
+    Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
+
     {
         EgeOutputAction* act = ege_output_action_new( "StarStateAction", _("<b>New:</b>"), "", 0 );
         ege_output_action_set_use_markup( act, TRUE );
@@ -2025,6 +2029,7 @@ static void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
             g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
             ege_select_one_action_set_icon_column( act, 2 );
+            ege_select_one_action_set_icon_size( act, secondarySize );
             ege_select_one_action_set_tooltip_column( act, 1  );
 
             ege_select_one_action_set_active( act, isFlatSided ? 0 : 1 );
@@ -2351,6 +2356,7 @@ sp_rect_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl)
 static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     EgeAdjustmentAction* eact = 0;
+    Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
 
     {
         EgeOutputAction* act = ege_output_action_new( "RectStateAction", _("<b>New:</b>"), "", 0 );
@@ -2442,7 +2448,7 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                           _("Not rounded"),
                                           _("Make corners sharp"),
                                           "squared_corner",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_rtb_defaults), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
         gtk_action_set_sensitive( GTK_ACTION(inky), TRUE );
@@ -2988,6 +2994,7 @@ sp_spiral_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl
 static void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     EgeAdjustmentAction* eact = 0;
+    Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
 
     {
         EgeOutputAction* act = ege_output_action_new( "SpiralStateAction", _("<b>New:</b>"), "", 0 );
@@ -3044,7 +3051,7 @@ static void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
                                           _("Defaults"),
                                           _("Reset shape parameters to defaults (use Inkscape Preferences > Tools to change defaults)"),
                                           GTK_STOCK_CLEAR,
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_spl_tb_defaults), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
@@ -3143,6 +3150,8 @@ static void tweak_toggle_doo (GtkToggleAction *act, gpointer /*data*/) {
 
 static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
+    Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
+
     {
         /* Width */
         gchar const* labels[] = {_("(pinch tweak)"), 0, 0, 0, _("(default)"), 0, 0, 0, 0, _("(broad tweak)")};
@@ -3244,6 +3253,7 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
         g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
         ege_select_one_action_set_icon_column( act, 2 );
+        ege_select_one_action_set_icon_size( act, secondarySize );
         ege_select_one_action_set_tooltip_column( act, 1  );
 
         gint mode = prefs_get_int_attribute("tools.tweak", "mode", 0);
@@ -4016,6 +4026,7 @@ static void sp_arc_toolbox_selection_changed(Inkscape::Selection *selection, GOb
 static void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     EgeAdjustmentAction* eact = 0;
+    Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
 
 
     {
@@ -4078,6 +4089,7 @@ static void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions,
         ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
         g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
         ege_select_one_action_set_icon_column( act, 2 );
+        ege_select_one_action_set_icon_size( act, secondarySize );
         ege_select_one_action_set_tooltip_column( act, 1  );
 
         gchar const *openstr = prefs_get_string_attribute("tools.shapes.arc", "open");
@@ -4092,7 +4104,7 @@ static void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions,
                                           _("Make whole"),
                                           _("Make the shape a whole ellipse, not arc or segment"),
                                           "reset_circle",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_arctb_defaults), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
         gtk_action_set_sensitive( GTK_ACTION(inky), TRUE );
@@ -4978,6 +4990,7 @@ GtkWidget*
 sp_text_toolbox_new (SPDesktop *desktop)
 {
     GtkWidget   *tbl = gtk_hbox_new (FALSE, 0);
+    GtkIconSize secondarySize = static_cast<GtkIconSize>(prefToSize("toolbox", "secondary", 1));
 
     gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
     gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
@@ -5051,7 +5064,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     g_object_set_data (G_OBJECT (tbl), "family-tree-selection", tselection);
     g_object_set_data (G_OBJECT (tbl), "family-tree-view", treeview);
 
-    GtkWidget *image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_SMALL_TOOLBAR);
+    GtkWidget *image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, secondarySize);
     aux_toolbox_space (tbl, 1);
     GtkWidget *box = gtk_event_box_new ();
     gtk_container_add (GTK_CONTAINER (box), image);
@@ -5091,7 +5104,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     // left
     GtkWidget *rbutton = group;
     gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_LEFT, GTK_ICON_SIZE_SMALL_TOOLBAR));
+    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_LEFT, secondarySize));
     gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
 
     gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
@@ -5102,7 +5115,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     // center
     rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
     gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_CENTER, GTK_ICON_SIZE_SMALL_TOOLBAR));
+    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_CENTER, secondarySize));
     gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
 
     gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
@@ -5113,7 +5126,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     // right
     rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
     gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_RIGHT, GTK_ICON_SIZE_SMALL_TOOLBAR));
+    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_RIGHT, secondarySize));
     gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
 
     gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
@@ -5124,7 +5137,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     // fill
     rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
     gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_FILL, GTK_ICON_SIZE_SMALL_TOOLBAR));
+    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_FILL, secondarySize));
     gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
 
     gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
@@ -5144,7 +5157,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     // bold
     rbutton = gtk_toggle_button_new ();
     gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_BOLD, GTK_ICON_SIZE_SMALL_TOOLBAR));
+    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_BOLD, secondarySize));
     gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
     gtk_tooltips_set_tip(tt, rbutton, _("Bold"), NULL);
 
@@ -5155,7 +5168,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     // italic
     rbutton = gtk_toggle_button_new ();
     gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_ITALIC, GTK_ICON_SIZE_SMALL_TOOLBAR));
+    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_ITALIC, secondarySize));
     gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
     gtk_tooltips_set_tip(tt, rbutton, _("Italic"), NULL);
 
@@ -5177,7 +5190,8 @@ sp_text_toolbox_new (SPDesktop *desktop)
     // horizontal
     rbutton = group;
     gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton), sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_WRITING_MODE_LR));
+    gtk_container_add           (GTK_CONTAINER (rbutton),
+                                 sp_icon_new (static_cast<Inkscape::IconSize>(secondarySize), INKSCAPE_STOCK_WRITING_MODE_LR));
     gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
     gtk_tooltips_set_tip(tt, rbutton, _("Horizontal text"), NULL);
 
@@ -5188,7 +5202,8 @@ sp_text_toolbox_new (SPDesktop *desktop)
     // vertical
     rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
     gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton), sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_WRITING_MODE_TB));
+    gtk_container_add           (GTK_CONTAINER (rbutton),
+                                 sp_icon_new (static_cast<Inkscape::IconSize>(secondarySize), INKSCAPE_STOCK_WRITING_MODE_TB));
     gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
     gtk_tooltips_set_tip(tt, rbutton, _("Vertical text"), NULL);
 
@@ -5373,12 +5388,14 @@ static Inkscape::XML::NodeEventVector connector_tb_repr_events = {
 
 static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder )
 {
+    Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
+
     {
         InkAction* inky = ink_action_new( "ConnectorAvoidAction",
                                           _("Avoid"),
                                           _("Make connectors avoid selected objects"),
                                           "connector_avoid",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_connector_path_set_avoid), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
@@ -5388,7 +5405,7 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
                                           _("Ignore"),
                                           _("Make connectors ignore selected objects"),
                                           "connector_ignore",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_connector_path_set_ignore), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
@@ -5412,7 +5429,7 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
                                           _("Graph"),
                                           _("Nicely arrange selected connector network"),
                                           "graph_layout",
-                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+                                          secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_connector_graph_layout), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }

@@ -377,43 +377,44 @@ static GtkAction* create_action_for_verb( Inkscape::Verb* verb, Inkscape::UI::Vi
 void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     Inkscape::UI::View::View *view = desktop;
+    Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
 
     GtkAction* act = 0;
 
     GtkActionGroup* selectionActions = mainActions; // temporary
     std::vector<GtkAction*>* contextActions = new std::vector<GtkAction*>();
 
-    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_EDIT_SELECT_ALL), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_EDIT_SELECT_ALL), view, secondarySize );
     gtk_action_group_add_action( selectionActions, act );
-    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_EDIT_SELECT_ALL_IN_ALL_LAYERS), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_EDIT_SELECT_ALL_IN_ALL_LAYERS), view, secondarySize );
     gtk_action_group_add_action( selectionActions, act );
-    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_EDIT_DESELECT), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
-    gtk_action_group_add_action( selectionActions, act );
-    contextActions->push_back( act );
-
-    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_ROTATE_90_CCW), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
-    gtk_action_group_add_action( selectionActions, act );
-    contextActions->push_back( act );
-    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_ROTATE_90_CW), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
-    gtk_action_group_add_action( selectionActions, act );
-    contextActions->push_back( act );
-    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_FLIP_HORIZONTAL), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
-    gtk_action_group_add_action( selectionActions, act );
-    contextActions->push_back( act );
-    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_FLIP_VERTICAL), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_EDIT_DESELECT), view, secondarySize );
     gtk_action_group_add_action( selectionActions, act );
     contextActions->push_back( act );
 
-    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_TO_BACK), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_ROTATE_90_CCW), view, secondarySize );
     gtk_action_group_add_action( selectionActions, act );
     contextActions->push_back( act );
-    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_LOWER), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_ROTATE_90_CW), view, secondarySize );
     gtk_action_group_add_action( selectionActions, act );
     contextActions->push_back( act );
-    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_RAISE), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_FLIP_HORIZONTAL), view, secondarySize );
     gtk_action_group_add_action( selectionActions, act );
     contextActions->push_back( act );
-    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_TO_FRONT), view, Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_OBJECT_FLIP_VERTICAL), view, secondarySize );
+    gtk_action_group_add_action( selectionActions, act );
+    contextActions->push_back( act );
+
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_TO_BACK), view, secondarySize );
+    gtk_action_group_add_action( selectionActions, act );
+    contextActions->push_back( act );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_LOWER), view, secondarySize );
+    gtk_action_group_add_action( selectionActions, act );
+    contextActions->push_back( act );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_RAISE), view, secondarySize );
+    gtk_action_group_add_action( selectionActions, act );
+    contextActions->push_back( act );
+    act = create_action_for_verb( Inkscape::Verb::get(SP_VERB_SELECTION_TO_FRONT), view, secondarySize );
     gtk_action_group_add_action( selectionActions, act );
     contextActions->push_back( act );
 

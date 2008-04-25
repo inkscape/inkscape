@@ -94,6 +94,7 @@ struct _EgeSelectOneActionPrivate
     gint iconColumn;
     gint tooltipColumn;
     gint appearanceMode;
+    gint iconSize;
     GType radioActionType;
     GtkTreeModel* model;
     gchar* iconProperty;
@@ -109,6 +110,7 @@ enum {
     PROP_ICON_COLUMN,
     PROP_TOOLTIP_COLUMN,
     PROP_ICON_PROP,
+    PROP_ICON_SIZE,
     PROP_APPEARANCE
 };
 
@@ -203,6 +205,14 @@ void ege_select_one_action_class_init( EgeSelectOneActionClass* klass )
                                                               (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
         g_object_class_install_property( objClass,
+                                         PROP_ICON_SIZE,
+                                         g_param_spec_int( "icon-size",
+                                                           "Icon Size",
+                                                          "Target icon size",
+                                                           -1, 20, -1,
+                                                           (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+
+        g_object_class_install_property( objClass,
                                          PROP_APPEARANCE,
                                          g_param_spec_string( "appearance",
                                                               "Appearance hint",
@@ -234,6 +244,7 @@ void ege_select_one_action_init( EgeSelectOneAction* action )
     action->private_data->radioActionType = 0;
     action->private_data->model = 0;
     action->private_data->iconProperty = g_strdup("stock-id");
+    action->private_data->iconSize = -1;
     action->private_data->appearance = 0;
 
 /*     g_signal_connect( action, "notify", G_CALLBACK( fixup_labels ), NULL ); */
@@ -294,6 +305,17 @@ void ege_select_one_action_set_icon_column( EgeSelectOneAction* action, gint col
     g_object_set( G_OBJECT(action), "icon-column", col, NULL );
 }
 
+gint ege_select_one_action_get_icon_size( EgeSelectOneAction* action )
+{
+    g_return_val_if_fail( IS_EGE_SELECT_ONE_ACTION(action), 0 );
+    return action->private_data->iconSize;
+}
+
+void ege_select_one_action_set_icon_size( EgeSelectOneAction* action, gint size )
+{
+    g_object_set( G_OBJECT(action), "icon-size", size, NULL );
+}
+
 gint ege_select_one_action_get_tooltip_column( EgeSelectOneAction* action )
 {
     g_return_val_if_fail( IS_EGE_SELECT_ONE_ACTION(action), 0 );
@@ -336,6 +358,10 @@ void ege_select_one_action_get_property( GObject* obj, guint propId, GValue* val
 
         case PROP_ICON_PROP:
             g_value_set_string( value, action->private_data->iconProperty );
+            break;
+
+        case PROP_ICON_SIZE:
+            g_value_set_int( value, action->private_data->iconSize );
             break;
 
         case PROP_APPEARANCE:
@@ -387,6 +413,12 @@ void ege_select_one_action_set_property( GObject* obj, guint propId, const GValu
             gchar* newVal = g_value_dup_string( value );
             action->private_data->iconProperty = newVal;
             g_free( tmp );
+        }
+        break;
+
+        case PROP_ICON_SIZE:
+        {
+            action->private_data->iconSize = g_value_get_int( value );
         }
         break;
 
@@ -541,6 +573,11 @@ GtkWidget* create_tool_item( GtkAction* action )
                                               NULL );
                     if ( iconId ) {
                         g_object_set( G_OBJECT(obj), act->private_data->iconProperty, iconId, NULL );
+                    }
+
+                    if ( act->private_data->iconProperty >= 0 ) {
+                        /* TODO get this string to be set instead of hardcoded */
+                        g_object_set( G_OBJECT(obj), "iconSize", act->private_data->iconSize, NULL );
                     }
 
                     ract = GTK_RADIO_ACTION(obj);
