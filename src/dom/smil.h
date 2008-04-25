@@ -198,6 +198,23 @@ public:
      */
     ElementLayout(const ElementLayout &other)
         {
+        assign(other);
+        }
+
+    /**
+     *
+     */
+    ElementLayout &operator=(const ElementLayout &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+    /**
+     *
+     */
+    void assign(const ElementLayout &other)
+        {
         title           = other.title;
         backgroundColor = other.backgroundColor;
         height          = other.height;
@@ -962,6 +979,14 @@ public:
     /**
      *
      */
+    ElementTimeContainer &operator=(const ElementTimeContainer &/*other*/)
+        {
+        return *this;
+        }
+
+    /**
+     *
+     */
     virtual ~ElementTimeContainer() {}
 
 protected:
@@ -1343,6 +1368,14 @@ public:
      */
     ElementTimeControl(const ElementTimeControl &/*other*/)
         {
+        }
+
+    /**
+     *
+     */
+    ElementTimeControl &operator=(const ElementTimeControl &/*other*/)
+        {
+        return *this;
         }
 
     /**

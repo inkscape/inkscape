@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -25,6 +25,15 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *  
+ * =======================================================================
+ * NOTES
+ * 
+ * Views, Stylesheets and CSS are DOM Level 2 for the purposes of supporting
+ * SVG.  Be prepared in the future when they make Level 3 and SVG is likewise
+ * updated.  The API here and many of the comments come from this document:
+ * http://www.w3.org/TR/DOM-Level-2-Style/css.html    
+     
  */
 
 #ifndef __CSS_H__
@@ -69,12 +78,19 @@ class RGBColor;
 #########################################################################*/
 
 /**
- *
+ * The CSSRule interface is the abstract base interface for any type of CSS 
+ * statement. This includes both rule sets and at-rules. An implementation is 
+ * expected to preserve all rules specified in a CSS style sheet, even if the 
+ * rule is not recognized by the parser. Unrecognized rules are represented using 
+ * the CSSUnknownRule interface.
  */
 class CSSRule
 {
 public:
 
+    /**
+     * An integer indicating which type of rule this is.
+     */	     
     typedef enum
         {
         UNKNOWN_RULE    = 0,
@@ -88,7 +104,9 @@ public:
 
 
     /**
-     *
+     * The type of the rule, as defined above. The expectation is that 
+     * binding-specific casting methods can be used to cast down from an instance of 
+     * the CSSRule interface to the specific derived interface implied by the type.
      */
     virtual unsigned short getType()
         {
@@ -96,7 +114,8 @@ public:
         }
 
     /**
-     *
+     * The parsable textual representation of the rule. This reflects the current 
+     * state of the rule and not its initial value.
      */
     virtual DOMString getCssText()
         {
@@ -104,7 +123,9 @@ public:
         }
 
     /**
-     *
+     * The parsable textual representation of the rule. This reflects the current 
+     * state of the rule and not its initial value.
+     * Note that setting involves reparsing.     
      */
     virtual void setCssText(const DOMString &val) throw (dom::DOMException)
         {
@@ -112,7 +133,7 @@ public:
         }
 
     /**
-     *
+     * The style sheet that contains this rule.
      */
     virtual CSSStyleSheet *getParentStyleSheet()
         {
@@ -120,7 +141,9 @@ public:
         }
 
     /**
-     *
+     * If this rule is contained inside another rule (e.g. a style rule inside an 
+     * @media block), this is the containing rule. If this rule is not nested inside 
+     * any other rules, this returns null.
      */
     virtual CSSRule *getParentRule()
         {
@@ -148,6 +171,23 @@ public:
      *
      */
     CSSRule(const CSSRule &other)
+        {
+        assign(other);
+        }
+
+    /**
+     *
+     */
+    CSSRule &operator=(const CSSRule &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+    /**
+     *
+     */
+    void assign(const CSSRule &other)
         {
         type             = other.type;
         cssText          = other.cssText;
@@ -178,14 +218,19 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * The CSSRuleList interface provides the abstraction of an ordered collection of 
+ * CSS rules.
+ * 
+ * The items in the CSSRuleList are accessible via an integral index, starting 
+ * from 0.
  */
 class CSSRuleList
 {
 public:
 
     /**
-     *
+     * The number of CSSRules in the list. The range of valid child rule indices is 0 
+     * to length-1 inclusive.
      */
     virtual unsigned long getLength()
         {
@@ -193,7 +238,9 @@ public:
         }
 
     /**
-     *
+     * Used to retrieve a CSS rule by ordinal index. The order in this collection 
+     * represents the order of the rules in the CSS style sheet. If index is greater 
+     * than or equal to the number of rules in the list, this returns null.
      */
     virtual CSSRule item(unsigned long index)
         {
@@ -222,6 +269,15 @@ public:
     CSSRuleList(const CSSRuleList &other)
         {
         rules = other.rules;
+        }
+
+    /**
+     *
+     */
+    CSSRuleList &operator=(const CSSRuleList &other)
+        {
+        rules = other.rules;
+        return *this;
         }
 
     /**
@@ -276,14 +332,19 @@ friend class CSSStyleSheet;
 #########################################################################*/
 
 /**
- *
+ * The CSSStyleSheet interface is a concrete interface used to represent a CSS 
+ * style sheet i.e., a style sheet whose content type is "text/css".
  */
 class CSSStyleSheet : virtual public stylesheets::StyleSheet
 {
 public:
 
     /**
-     *
+     * If this style sheet comes from an @import rule, the ownerRule attribute will 
+     * contain the CSSImportRule. In that case, the ownerNode attribute in the 
+     * StyleSheet interface will be null. If the style sheet comes from an element or 
+     * a processing instruction, the ownerRule attribute will be null and the 
+     * ownerNode attribute will contain the Node.
      */
     virtual CSSRule *getOwnerRule()
         {
@@ -291,7 +352,8 @@ public:
         }
 
     /**
-     *
+     * The list of all CSS rules contained within the style sheet. This
+     * 	 includes both rule sets and at-rules.
      */
     virtual CSSRuleList getCssRules()
         {
@@ -299,7 +361,8 @@ public:
         }
 
     /**
-     *
+     * Used to insert a new rule into the style sheet. The new rule now
+     * 	 becomes part of the cascade. 
      */
     virtual unsigned long insertRule(const DOMString &/*ruleStr*/,
                                      unsigned long index)
@@ -310,7 +373,7 @@ public:
         }
 
     /**
-     *
+     * Used to delete a rule from the style sheet. 
      */
     virtual void deleteRule(unsigned long index)
                             throw (dom::DOMException)
@@ -335,6 +398,23 @@ public:
     CSSStyleSheet(const CSSStyleSheet &other) :
                   stylesheets::StyleSheet(other)
         {
+        assign(other);
+        }
+
+    /**
+     *
+     */
+    CSSStyleSheet &operator=(const CSSStyleSheet &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+    /**
+     *
+     */
+    void assign(const CSSStyleSheet &other)
+        {
         ownerRule = other.ownerRule;
         rules     = other.rules;
         }
@@ -357,25 +437,34 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * The CSSValue interface represents a simple or a complex value. A CSSValue 
+ * object only occurs in a context of a CSS property.
  */
 class CSSValue
 {
 public:
 
     /**
-     * UnitTypes
+     * An integer indicating which type of unit applies to the value.
      */
-    enum
+    typedef enum
         {
         CSS_INHERIT         = 0,
         CSS_PRIMITIVE_VALUE = 1,
         CSS_VALUE_LIST      = 2,
         CSS_CUSTOM          = 3
-        };
+        } UnitTypes;
 
     /**
-     *
+     * A code defining the type of the value as defined above.
+     */
+    virtual unsigned short getCssValueType()
+        {
+        return valueType;
+        }
+
+    /**
+     * A string representation of the current value.
      */
     virtual DOMString getCssText()
         {
@@ -383,20 +472,13 @@ public:
         }
 
     /**
-     *
+     * A string representation of the current value.
+     * Note that setting implies parsing.     
      */
     virtual void setCssText(const DOMString &val)
                             throw (dom::DOMException)
         {
         cssText = val;
-        }
-
-    /**
-     *
-     */
-    virtual unsigned short getCssValueType()
-        {
-        return valueType;
         }
 
     //##################
@@ -415,6 +497,23 @@ public:
      *
      */
     CSSValue(const CSSValue &other)
+        {
+        assign(other);
+        }
+
+    /**
+     *
+     */
+    CSSValue &operator=(const CSSValue &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+    /**
+     *
+     */
+    void assign(const CSSValue &other)
         {
         cssText   = other.cssText;
         valueType = other.valueType;
@@ -439,34 +538,51 @@ protected:
 ## CSSStyleDeclaration
 #########################################################################*/
 
-class CSSStyleDeclarationEntry
-{
-public:
-    CSSStyleDeclarationEntry(const DOMString &nameArg,
-                             const DOMString &valueArg,
-                             const DOMString &prioArg)
-    {
-        name  = nameArg;
-        value = valueArg;
-        prio  = prioArg;
-    }
-    virtual ~CSSStyleDeclarationEntry(){}
-    DOMString name;
-    DOMString value;
-    DOMString prio;
-};
-
-
-
 /**
- *
+ * The CSSStyleDeclaration interface represents a single CSS declaration block. 
+ * This interface may be used to determine the style properties currently set in 
+ * a block or to set style properties explicitly within the block.
+ * 
+ * While an implementation may not recognize all CSS properties within a CSS 
+ * declaration block, it is expected to provide access to all specified 
+ * properties in the style sheet through the CSSStyleDeclaration interface. 
+ * Furthermore, implementations that support a specific level of CSS should 
+ * correctly handle CSS shorthand properties for that level. For a further 
+ * discussion of shorthand properties, see the CSS2Properties interface.
+ * 
+ * This interface is also used to provide a read-only access to the computed 
+ * values of an element. See also the ViewCSS interface.
+ * 
+ * Note: The CSS Object Model doesn't provide an access to the specified or 
+ * actual values of the CSS cascade.
  */
 class CSSStyleDeclaration
 {
+private:
+
+	class CSSStyleDeclarationEntry
+	{
+	public:
+	    CSSStyleDeclarationEntry(const DOMString &nameArg,
+	                             const DOMString &valueArg,
+	                             const DOMString &prioArg)
+	        {
+	        name  = nameArg;
+	        value = valueArg;
+	        prio  = prioArg;
+	        }
+	    virtual ~CSSStyleDeclarationEntry(){}
+	    DOMString name;
+	    DOMString value;
+	    DOMString prio;
+	};
+	
+
 public:
 
     /**
-     *
+     * The parsable textual representation of the declaration block (excluding the 
+     * surrounding curly braces).
      */
     virtual DOMString getCssText()
         {
@@ -474,7 +590,10 @@ public:
         }
 
     /**
-     *
+     * The parsable textual representation of the declaration block (excluding the 
+     * surrounding curly braces). Setting this attribute will result in the parsing 
+     * of the new value and resetting of all the properties in the declaration block 
+     * including the removal or addition of properties.
      */
     virtual void setCssText(const DOMString &val)
                             throw (dom::DOMException)
@@ -483,7 +602,8 @@ public:
         }
 
     /**
-     *
+     * Used to retrieve the value of a CSS property if it has been explicitly
+     * 	 set within this declaration block. 
      */
     virtual DOMString getPropertyValue(const DOMString &propertyName)
         {
@@ -497,7 +617,11 @@ public:
         }
 
     /**
-     *
+     * Used to retrieve the object representation of the value of a CSS property if 
+     * it has been explicitly set within this declaration block. This method returns 
+     * null if the property is a shorthand property. Shorthand property values can 
+     * only be accessed and modified as strings, using the getPropertyValue and 
+     * setProperty methods.
      */
     virtual CSSValue getPropertyCSSValue(const DOMString &/*propertyName*/)
         {
@@ -506,7 +630,8 @@ public:
         }
 
     /**
-     *
+     * Used to remove a CSS property if it has been explicitly set within
+     * 	 this declaration block. 
      */
     virtual DOMString removeProperty(const DOMString &propertyName)
                                      throw (dom::DOMException)
@@ -521,7 +646,8 @@ public:
         }
 
     /**
-     *
+     * Used to retrieve the priority of a CSS property (e.g. the "important" 
+     * qualifier) if the property has been explicitly set in this declaration block.
      */
     virtual DOMString getPropertyPriority(const DOMString &propertyName)
         {
@@ -535,7 +661,7 @@ public:
         }
 
     /**
-     *
+     * Used to set a property value and priority within this declaration block. 
      */
     virtual void setProperty(const DOMString &propertyName,
                              const DOMString &value,
@@ -558,7 +684,8 @@ public:
         }
 
     /**
-     *
+     * The number of properties that have been explicitly set in this declaration 
+     * block. The range of valid indices is 0 to length-1 inclusive.
      */
     virtual unsigned long getLength()
         {
@@ -566,7 +693,10 @@ public:
         }
 
     /**
-     *
+     * Used to retrieve the properties that have been explicitly set in this 
+     * declaration block. The order of the properties retrieved using this method 
+     * does not have to be the order in which they were set. This method can be used 
+     * to iterate over all properties in this declaration block.
      */
     virtual DOMString item(unsigned long index)
         {
@@ -579,7 +709,8 @@ public:
         }
 
     /**
-     *
+     * The CSS rule that contains this declaration block or null if this 
+     * CSSStyleDeclaration is not attached to a CSSRule.
      */
     virtual CSSRule *getParentRule()
         {
@@ -601,8 +732,28 @@ public:
     /**
      *
      */
-    CSSStyleDeclaration(const CSSStyleDeclaration &/*other*/)
+    CSSStyleDeclaration(const CSSStyleDeclaration &other)
         {
+        assign(other);
+        }
+
+    /**
+     *
+     */
+    CSSStyleDeclaration &operator=(const CSSStyleDeclaration &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+    /**
+     *
+     */
+    void assign(const CSSStyleDeclaration &other)
+        {
+        parentRule = other.parentRule;
+        cssText    = other.cssText;
+        items      = other.items;
         }
 
     /**
@@ -627,14 +778,16 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * The CSSStyleRule interface represents a single rule set in a CSS style sheet.
  */
 class CSSStyleRule : virtual public CSSRule
 {
 public:
 
     /**
-     *
+     * The textual representation of the selector for the rule set. The 
+     * implementation may have stripped out insignificant whitespace while parsing 
+     * the selector.
      */
     virtual DOMString getSelectorText()
         {
@@ -642,7 +795,9 @@ public:
         }
 
     /**
-     *
+     * The textual representation of the selector for the rule set. The 
+     * implementation may have stripped out insignificant whitespace while parsing 
+     * the selector.  Setting implies reparsing.
      */
     virtual void setSelectorText(const DOMString &val)
                 throw (dom::DOMException)
@@ -652,7 +807,7 @@ public:
 
 
     /**
-     *
+     * The declaration-block of this rule set.
      */
     virtual CSSStyleDeclaration &getStyle()
         {
@@ -678,6 +833,23 @@ public:
      */
     CSSStyleRule(const CSSStyleRule &other) : CSSRule(other)
         {
+        assign(other);
+        }
+
+    /**
+     *
+     */
+    CSSStyleRule &operator=(const CSSStyleRule &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+    /**
+     *
+     */
+    void assign(const CSSStyleRule &other)
+        {
         selectorText = other.selectorText;
         style        = other.style;
         }
@@ -700,14 +872,15 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * The CSSMediaRule interface represents a @media rule in a CSS style sheet. A 
+ * @media rule can be used to delimit style rules for specific media types.
  */
 class CSSMediaRule : virtual public CSSRule
 {
 public:
 
     /**
-     *
+     * A list of media types for this rule.
      */
     virtual stylesheets::MediaList getMedia()
         {
@@ -715,7 +888,7 @@ public:
         }
 
     /**
-     *
+     * A list of all CSS rules contained within the media block.
      */
     virtual CSSRuleList getCssRules()
         {
@@ -723,7 +896,7 @@ public:
         }
 
     /**
-     *
+     * Used to insert a new rule into the media block. 
      */
     virtual unsigned long insertRule(const DOMString &/*ruleStr*/,
                                      unsigned long index)
@@ -737,7 +910,7 @@ public:
         }
 
     /**
-     *
+     * Used to delete a rule from the media block. 
      */
     virtual void deleteRule(unsigned long index)
                             throw(dom::DOMException)
@@ -761,6 +934,23 @@ public:
      *
      */
     CSSMediaRule(const CSSMediaRule &other) : CSSRule(other)
+        {
+        assign(other);
+        }
+
+    /**
+     *
+     */
+    CSSMediaRule &operator=(const CSSMediaRule &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+    /**
+     *
+     */
+    void assign(const CSSMediaRule &other)
         {
         mediaList = other.mediaList;
         cssRules  = other.cssRules;
@@ -786,14 +976,15 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * The CSSFontFaceRule interface represents a @font-face rule in a CSS style 
+ * sheet. The @font-face rule is used to hold a set of font descriptions.
  */
 class CSSFontFaceRule : virtual public CSSRule
 {
 public:
 
     /**
-     *
+     * The declaration-block of this rule.
      */
     virtual CSSStyleDeclaration getStyle()
         {
@@ -824,6 +1015,23 @@ public:
     /**
      *
      */
+    CSSFontFaceRule &operator=(const CSSFontFaceRule &other)
+        {
+        style = other.style;
+        return *this;
+        }
+
+    /**
+     *
+     */
+    void assign(const CSSFontFaceRule &other)
+        {
+        style = other.style;
+        }
+
+    /**
+     *
+     */
     virtual ~CSSFontFaceRule() {}
 
 protected:
@@ -839,14 +1047,16 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * The CSSPageRule interface represents a @page rule within a CSS style sheet. 
+ * The @page rule is used to specify the dimensions, orientation, margins, etc. 
+ * of a page box for paged media.
  */
 class CSSPageRule : virtual public CSSRule
 {
 public:
 
     /**
-     *
+     * The parsable textual representation of the page selector for the rule.
      */
     virtual DOMString getSelectorText()
         {
@@ -854,7 +1064,8 @@ public:
         }
 
     /**
-     *
+     * The parsable textual representation of the page selector for the rule.
+     * Setting implies parsing.     
      */
     virtual void setSelectorText(const DOMString &val)
                          throw(dom::DOMException)
@@ -864,7 +1075,7 @@ public:
 
 
     /**
-     *
+     * The declaration-block of this rule.
      */
     virtual CSSStyleDeclaration getStyle()
         {
@@ -888,6 +1099,23 @@ public:
      *
      */
     CSSPageRule(const CSSPageRule &other) : CSSRule(other)
+        {
+        assign(other);
+        }
+
+    /**
+     *
+     */
+    CSSPageRule &operator=(const CSSPageRule &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+    /**
+     *
+     */
+    void assign(const CSSPageRule &other)
         {
         selectorText = other.selectorText;
         style        = other.style;
@@ -914,14 +1142,16 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * The CSSImportRule interface represents a @import rule within a CSS style 
+ * sheet. The @import rule is used to import style rules from other style sheets.
  */
 class CSSImportRule : virtual public CSSRule
 {
 public:
 
     /**
-     *
+     * The location of the style sheet to be imported. The attribute will not contain 
+     * the "url(...)" specifier around the URI.
      */
     virtual DOMString getHref()
         {
@@ -929,7 +1159,7 @@ public:
         }
 
     /**
-     *
+     * A list of media types for which this style sheet may be used.
      */
     virtual stylesheets::MediaList getMedia()
         {
@@ -937,7 +1167,10 @@ public:
         }
 
     /**
-     *
+     * The style sheet referred to by this rule, if it has been loaded. The value of 
+     * this attribute is null if the style sheet has not yet been loaded or if it 
+     * will not be loaded (e.g. if the style sheet is for a media type not supported 
+     * by the user agent).
      */
     virtual CSSStyleSheet getStyleSheet()
         {
@@ -961,6 +1194,23 @@ public:
      *
      */
     CSSImportRule(const CSSImportRule &other) : CSSRule(other)
+        {
+        assign(other);
+        }
+
+    /**
+     *
+     */
+    CSSImportRule &operator=(const CSSImportRule &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+    /**
+     *
+     */
+    void assign(const CSSImportRule &other)
         {
         mediaList  = other.mediaList;
         styleSheet = other.styleSheet;
@@ -990,14 +1240,25 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * The CSSCharsetRule interface represents a @charset rule in a CSS style sheet. 
+ * The value of the encoding attribute does not affect the encoding of text data 
+ * in the DOM objects; this encoding is always UTF-16. After a stylesheet is 
+ * loaded, the value of the encoding attribute is the value found in the @charset 
+ * rule. If there was no @charset in the original document, then no 
+ * CSSCharsetRule is created. The value of the encoding attribute may also be 
+ * used as a hint for the encoding used on serialization of the style sheet.
+ * 
+ * The value of the @charset rule (and therefore of the CSSCharsetRule) may not 
+ * correspond to the encoding the document actually came in; character encoding 
+ * information e.g. in an HTTP header, has priority (see CSS document 
+ * representation) but this is not reflected in the CSSCharsetRule.
  */
 class CSSCharsetRule : virtual public CSSRule
 {
 public:
 
     /**
-     *
+     * The encoding information used in this @charset rule.
      */
     virtual DOMString getEncoding()
         {
@@ -1005,7 +1266,8 @@ public:
         }
 
     /**
-     *
+     * The encoding information used in this @charset rule.
+     * Setting implies parsing.     
      */
     virtual void setEncoding(const DOMString &val) throw (dom::DOMException)
         {
@@ -1035,6 +1297,15 @@ public:
     /**
      *
      */
+    CSSCharsetRule &operator=(const CSSCharsetRule &other)
+        {
+        encoding = other.encoding;
+        return *this;
+        }
+
+    /**
+     *
+     */
     virtual ~CSSCharsetRule() {}
 
 protected:
@@ -1052,7 +1323,8 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * The CSSUnknownRule interface represents an at-rule not supported by
+ *  this user agent.
  */
 class CSSUnknownRule : virtual public CSSRule
 {
@@ -1080,6 +1352,14 @@ public:
     /**
      *
      */
+    CSSUnknownRule &operator=(const CSSUnknownRule &/*other*/)
+        {
+        return *this;
+        }
+
+    /**
+     *
+     */
     virtual ~CSSUnknownRule() {}
 };
 
@@ -1094,14 +1374,23 @@ public:
 #########################################################################*/
 
 /**
- *
+ * The CSSValueList interface provides the abstraction of an ordered collection 
+ * of CSS values.
+ * 
+ * Some properties allow an empty list into their syntax. In that case, these 
+ * properties take the none identifier. So, an empty list means that the property 
+ * has the value none.
+ * 
+ * The items in the CSSValueList are accessible via an integral index, starting 
+ * from 0.
  */
 class CSSValueList : virtual public CSSValue
 {
 public:
 
     /**
-     *
+     * The number of CSSValues in the list. The range of valid values of the indices 
+     * is 0 to length-1 inclusive.
      */
     virtual unsigned long getLength()
         {
@@ -1109,7 +1398,9 @@ public:
         }
 
     /**
-     *
+     * Used to retrieve a CSSValue by ordinal index. The order in this collection 
+     * represents the order of the values in the CSS style property. If index is 
+     * greater than or equal to the number of values in the list, this returns null.
      */
     virtual CSSValue item(unsigned long index)
         {
@@ -1120,6 +1411,7 @@ public:
             }
         return items[index];
         }
+
 
     //##################
     //# Non-API methods
@@ -1143,6 +1435,15 @@ public:
     /**
      *
      */
+    CSSValueList &operator=(const CSSValueList &other)
+        {
+        items = other.items;
+        return *this;
+        }
+
+    /**
+     *
+     */
     virtual ~CSSValueList() {}
 
 protected:
@@ -1158,16 +1459,30 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * The CSSPrimitiveValue interface represents a single CSS value. This interface 
+ * may be used to determine the value of a specific style property currently set 
+ * in a block or to set a specific style property explicitly within the block. An 
+ * instance of this interface might be obtained from the getPropertyCSSValue 
+ * method of the CSSStyleDeclaration interface. A CSSPrimitiveValue object only 
+ * occurs in a context of a CSS property.
+ * 
+ * Conversions are allowed between absolute values (from millimeters to 
+ * centimeters, from degrees to radians, and so on) but not between relative 
+ * values. (For example, a pixel value cannot be converted to a centimeter value.)
+ * Percentage values can't be converted since they are relative to the parent 
+ * value (or another property value). There is one exception for color percentage 
+ * values: since a color percentage value is relative to the range 0-255, a color 
+ * percentage value can be converted to a number; (see also the RGBColor 
+ * interface).
  */
 class CSSPrimitiveValue : virtual public CSSValue
 {
 public:
 
     /**
-     * UnitTypes
+     *An integer indicating which type of unit applies to the value.
      */
-    enum
+    typedef enum
         {
         CSS_UNKNOWN    = 0,
         CSS_NUMBER     = 1,
@@ -1195,11 +1510,11 @@ public:
         CSS_COUNTER    = 23,
         CSS_RECT       = 24,
         CSS_RGBCOLOR   = 25
-        };
+        } UnitTypes;
 
 
     /**
-     *
+     * The type of the value as defined by the constants specified above.
      */
     virtual unsigned short getPrimitiveType()
         {
@@ -1207,7 +1522,9 @@ public:
         }
 
     /**
-     *
+     * A method to set the float value with a specified unit. If the property 
+     * attached with this value can not accept the specified unit or the float value, 
+     * the value will be unchanged and a DOMException will be raised.
      */
     virtual void setFloatValue(unsigned short unitType,
                                double doubleValueArg)
@@ -1216,8 +1533,11 @@ public:
         primitiveType = unitType;
         doubleValue = doubleValueArg;
         }
+
     /**
-     *
+     * This method is used to get a float value in a specified unit. If this CSS 
+     * value doesn't contain a float value or can't be converted into the specified 
+     * unit, a DOMException is raised.
      */
     virtual double getFloatValue(unsigned short /*unitType*/)
                                 throw (dom::DOMException)
@@ -1226,7 +1546,9 @@ public:
         }
 
     /**
-     *
+     * A method to set the string value with the specified unit. If the property 
+     * attached to this value can't accept the specified unit or the string value, 
+     * the value will be unchanged and a DOMException will be raised.
      */
     virtual void setStringValue(unsigned short /*stringType*/,
                                 const DOMString &stringValueArg)
@@ -1236,7 +1558,11 @@ public:
         }
 
     /**
-     *
+     * This method is used to get the string value. If the CSS value doesn't contain 
+     * a string value, a DOMException is raised.
+     * 
+     * Note: Some properties (like 'font-family' or 'voice-family') convert a 
+     * whitespace separated list of idents to a string.
      */
     virtual DOMString getStringValue() throw (dom::DOMException)
         {
@@ -1244,7 +1570,9 @@ public:
         }
 
     /**
-     *
+     * This method is used to get the Counter value. If this CSS value doesn't 
+     * contain a counter value, a DOMException is raised. Modification to the 
+     * corresponding style property can be achieved using the Counter interface.
      */
     virtual Counter *getCounterValue() throw (dom::DOMException)
         {
@@ -1252,7 +1580,9 @@ public:
         }
 
     /**
-     *
+     * This method is used to get the Rect value. If this CSS value doesn't contain a 
+     * rect value, a DOMException is raised. Modification to the corresponding style 
+     * property can be achieved using the Rect interface.
      */
     virtual Rect *getRectValue() throw (dom::DOMException)
         {
@@ -1260,7 +1590,9 @@ public:
         }
 
     /**
-     *
+     * This method is used to get the RGB color. If this CSS value doesn't contain a 
+     * RGB color value, a DOMException is raised. Modification to the corresponding 
+     * style property can be achieved using the RGBColor interface.
      */
     virtual RGBColor *getRGBColorValue() throw (dom::DOMException)
         {
@@ -1288,6 +1620,14 @@ public:
     /**
      *
      */
+    CSSPrimitiveValue &operator=(const CSSPrimitiveValue &/*other*/)
+        {
+        return *this;
+        }
+
+    /**
+     *
+     */
     virtual ~CSSPrimitiveValue() {}
 
 protected:
@@ -1308,14 +1648,25 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * The RGBColor interface is used to represent any RGB color value. This 
+ * interface reflects the values in the underlying style property. Hence, 
+ * modifications made to the CSSPrimitiveValue objects modify the style property.
+ * 
+ * A specified RGB color is not clipped (even if the number is outside the range 
+ * 0-255 or 0%-100%). A computed RGB color is clipped depending on the device.
+ * 
+ * Even if a style sheet can only contain an integer for a color value, the 
+ * internal storage of this integer is a float, and this can be used as a float 
+ * in the specified or the computed style.
+ * 
+ * A color percentage value can always be converted to a number and vice versa.
  */
 class RGBColor
 {
 public:
 
     /**
-     *
+     * This attribute is used for the red value of the RGB color.
      */
     virtual CSSPrimitiveValue getRed()
         {
@@ -1323,7 +1674,7 @@ public:
         }
 
     /**
-     *
+     * This attribute is used for the green value of the RGB color.
      */
     virtual CSSPrimitiveValue getGreen()
         {
@@ -1331,7 +1682,7 @@ public:
         }
 
     /**
-     *
+     * This attribute is used for the blue value of the RGB color.
      */
     virtual CSSPrimitiveValue getBlue()
         {
@@ -1361,6 +1712,23 @@ public:
      */
     RGBColor(const RGBColor &other)
         {
+        assign(other);
+        }
+
+    /**
+     *
+     */
+    RGBColor &operator=(const RGBColor &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+    /**
+     *
+     */
+    void assign(const RGBColor &other)
+        {
         red   = other.red;
         green = other.green;
         blue  = other.blue;
@@ -1386,14 +1754,16 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * The Rect interface is used to represent any rect value. This interface 
+ * reflects the values in the underlying style property. Hence, modifications 
+ * made to the CSSPrimitiveValue objects modify the style property.
  */
 class Rect
 {
 public:
 
     /**
-     *
+     * This attribute is used for the top of the rect.
      */
     virtual CSSPrimitiveValue getTop()
         {
@@ -1401,7 +1771,7 @@ public:
         }
 
     /**
-     *
+     * This attribute is used for the right of the rect.
      */
     virtual CSSPrimitiveValue getRight()
         {
@@ -1409,7 +1779,7 @@ public:
         }
 
     /**
-     *
+     * This attribute is used for the bottom of the rect.
      */
     virtual CSSPrimitiveValue getBottom()
         {
@@ -1417,7 +1787,7 @@ public:
         }
 
     /**
-     *
+     * This attribute is used for the left of the rect.
      */
     virtual CSSPrimitiveValue getLeft()
         {
@@ -1446,6 +1816,23 @@ public:
      *
      */
     Rect(const Rect &other)
+        {
+        assign(other);
+        }
+
+    /**
+     *
+     */
+    Rect &operator=(const Rect &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+    /**
+     *
+     */
+    void assign(const Rect &other)
         {
         top    = other.top;
         right  = other.right;
@@ -1476,14 +1863,15 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * The Counter interface is used to represent any counter or counters function 
+ * value. This interface reflects the values in the underlying style property.
  */
 class Counter
 {
 public:
 
     /**
-     *
+     * This attribute is used for the identifier of the counter.
      */
     virtual DOMString getIdentifier()
         {
@@ -1491,7 +1879,7 @@ public:
         }
 
     /**
-     *
+     * This attribute is used for the style of the list.
      */
     virtual DOMString getListStyle()
         {
@@ -1499,7 +1887,7 @@ public:
         }
 
     /**
-     *
+     * This attribute is used for the separator of the nested counters.
      */
     virtual DOMString getSeparator()
         {
@@ -1529,6 +1917,23 @@ public:
      */
     Counter(const Counter &other)
         {
+        assign(other);
+        }
+
+    /**
+     *
+     */
+    Counter &operator=(const Counter &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+    /**
+     *
+     */
+    void assign(const Counter &other)
+        {
         identifier = other.identifier;
         listStyle  = other.listStyle;
         separator  = other.separator;
@@ -1555,14 +1960,20 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * Inline style information attached to elements is exposed through the style 
+ * attribute. This represents the contents of the STYLE attribute for HTML 
+ * elements (or elements in other schemas or DTDs which use the STYLE attribute 
+ * in the same way). The expectation is that an instance of the 
+ * ElementCSSInlineStyle interface can be obtained by using binding-specific 
+ * casting methods on an instance of the Element interface when the element 
+ * supports inline CSS style informations.
  */
 class ElementCSSInlineStyle
 {
 public:
 
     /**
-     *
+     * The style attribute.
      */
     virtual CSSStyleDeclaration getStyle()
         {
@@ -1589,6 +2000,15 @@ public:
     /**
      *
      */
+    ElementCSSInlineStyle &operator=(const ElementCSSInlineStyle &other)
+        {
+        style = other.style;
+        return *this;
+        }
+
+    /**
+     *
+     */
     virtual ~ElementCSSInlineStyle() {}
 
 protected:
@@ -1606,8 +2026,54 @@ protected:
 #########################################################################*/
 
 /**
- *
- */
+ * The CSS2Properties interface represents a convenience mechanism for retrieving 
+ * and setting properties within a CSSStyleDeclaration. The attributes of this 
+ * interface correspond to all the properties specified in CSS2. Getting an 
+ * attribute of this interface is equivalent to calling the getPropertyValue 
+ * method of the CSSStyleDeclaration interface. Setting an attribute of this 
+ * interface is equivalent to calling the setProperty method of the 
+ * CSSStyleDeclaration interface.
+ * 
+ * A conformant implementation of the CSS module is not required to implement the 
+ * CSS2Properties interface. If an implementation does implement this interface, 
+ * the expectation is that language-specific methods can be used to cast from an 
+ * instance of the CSSStyleDeclaration interface to the CSS2Properties interface.
+ * 
+ * If an implementation does implement this interface, it is expected to 
+ * understand the specific syntax of the shorthand properties, and apply their 
+ * semantics; when the margin property is set, for example, the marginTop, 
+ * marginRight, marginBottom and marginLeft properties are actually being set by 
+ * the underlying implementation.
+ * 
+ * When dealing with CSS "shorthand" properties, the shorthand properties should 
+ * be decomposed into their component longhand properties as appropriate, and 
+ * when querying for their value, the form returned should be the shortest form 
+ * exactly equivalent to the declarations made in the ruleset. However, if there 
+ * is no shorthand declaration that could be added to the ruleset without 
+ * changing in any way the rules already declared in the ruleset (i.e., by adding 
+ * longhand rules that were previously not declared in the ruleset), then the 
+ * empty string should be returned for the shorthand property.
+ * 
+ * For example, querying for the font property should not return "normal normal 
+ * normal 14pt/normal Arial, sans-serif", when "14pt Arial, sans-serif" suffices. 
+ * (The normals are initial values, and are implied by use of the longhand 
+ * property.)
+ * 
+ * If the values for all the longhand properties that compose a particular string 
+ * are the initial values, then a string consisting of all the initial values 
+ * should be returned (e.g. a border-width value of "medium" should be returned 
+ * as such, not as "").
+ * 
+ * For some shorthand properties that take missing values from other sides, such 
+ * as the margin, padding, and border-[width|style|color] properties, the minimum 
+ * number of sides possible should be used; i.e., "0px 10px" will be returned 
+ * instead of "0px 10px 0px 10px".
+ * 
+ * If the value of a shorthand property can not be decomposed into its component 
+ * longhand properties, as is the case for the font property with a value of 
+ * "menu", querying for the values of the component longhand properties should 
+ * return the empty string.
+ *  */
 class CSS2Properties
 {
 public:
@@ -3705,6 +4171,23 @@ public:
      */
     CSS2Properties(const CSS2Properties &other)
         {
+        assign(other);
+        }
+
+    /**
+     *
+     */
+    CSS2Properties &operator=(const CSS2Properties &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+    /**
+     *
+     */
+    void assign(const CSS2Properties &other)
+        {
         azimuth              = other.azimuth;
         background           = other.background;
         backgroundAttachment = other.backgroundAttachment;
@@ -3977,14 +4460,23 @@ protected:
 #########################################################################*/
 
 /**
- *
+ * This interface represents a CSS view. The getComputedStyle method provides a 
+ * read only access to the computed values of an element.
+ * 
+ * The expectation is that an instance of the ViewCSS interface can be obtained 
+ * by using binding-specific casting methods on an instance of the AbstractView 
+ * interface.
+ * 
+ * Since a computed style is related to an Element node, if this element is 
+ * removed from the document, the associated CSSStyleDeclaration and CSSValue 
+ * related to this declaration are no longer valid.
  */
 class ViewCSS : virtual public views::AbstractView
 {
 public:
 
     /**
-     *
+     * This method is used to get the computed style as it is defined in [CSS2]. 
      */
     virtual CSSStyleDeclaration getComputedStyle(const Element &/*elt*/,
                                                  const DOMString &/*pseudoElt*/)
@@ -4014,6 +4506,14 @@ public:
     /**
      *
      */
+    ViewCSS &operator=(const ViewCSS &/*other*/)
+       {
+       return *this;
+       }
+
+    /**
+     *
+     */
     virtual ~ViewCSS() {}
 };
 
@@ -4026,14 +4526,30 @@ public:
 #########################################################################*/
 
 /**
- *
+ * This interface represents a document with a CSS view.
+ * 
+ * The getOverrideStyle method provides a mechanism through which a DOM author 
+ * could effect immediate change to the style of an element without modifying the 
+ * explicitly linked style sheets of a document or the inline style of elements 
+ * in the style sheets. This style sheet comes after the author style sheet in 
+ * the cascade algorithm and is called override style sheet. The override style 
+ * sheet takes precedence over author style sheets. An "!important" declaration 
+ * still takes precedence over a normal declaration. Override, author, and user 
+ * style sheets all may contain "!important" declarations. User "!important" 
+ * rules take precedence over both override and author "!important" rules, and 
+ * override "!important" rules take precedence over author "!important" rules.
+ * 
+ * The expectation is that an instance of the DocumentCSS interface can be 
+ * obtained by using binding-specific casting methods on an instance of the 
+ * Document interface.
  */
 class DocumentCSS : virtual public stylesheets::DocumentStyle
 {
 public:
 
     /**
-     *
+     * This method is used to retrieve the override style declaration for a specified 
+     * element and a specified pseudo-element.
      */
     virtual CSSStyleDeclaration getOverrideStyle(const Element */*elt*/,
                                                  const DOMString &/*pseudoElt*/)
@@ -4063,6 +4579,14 @@ public:
     /**
      *
      */
+    DocumentCSS &operator=(const DocumentCSS &/*other*/)
+       {
+       return *this;
+       }
+
+    /**
+     *
+     */
     virtual ~DocumentCSS() {}
 };
 
@@ -4076,14 +4600,16 @@ public:
 #########################################################################*/
 
 /**
- *
+ * This interface allows the DOM user to create a CSSStyleSheet outside the 
+ * context of a document. There is no way to associate the new CSSStyleSheet with 
+ * a document in DOM Level 2.
  */
 class DOMImplementationCSS : virtual public DOMImplementation
 {
 public:
 
     /**
-     *
+     * Creates a new CSSStyleSheet. 
      */
     virtual CSSStyleSheet createCSSStyleSheet(const DOMString &/*title*/,
                                               const DOMString &/*media*/)
@@ -4113,6 +4639,14 @@ public:
     /**
      *
      */
+    DOMImplementationCSS &operator=(const DOMImplementationCSS &/*other*/)
+       {
+       return *this;
+       }
+
+    /**
+     *
+     */
     virtual ~DOMImplementationCSS() {}
 };
 
@@ -4125,11 +4659,11 @@ public:
 
 }  //namespace css
 }  //namespace dom
-}  //namespace org
 }  //namespace w3c
+}  //namespace org
 
 
-#endif // __CSS_H__
+#endif /* __CSS_H__ */
 
 /*#########################################################################
 ## E N D    O F    F I L E
