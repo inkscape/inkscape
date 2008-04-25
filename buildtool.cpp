@@ -6393,7 +6393,7 @@ public:
                 error("problem compiling: %s", errString.c_str());
                 errorOccurred = true;
                 }
-            if (errorOccurred || !continueOnError)
+            if (errorOccurred && !continueOnError)
                 break;
             }
 
