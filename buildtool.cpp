@@ -4208,7 +4208,7 @@ bool MakeBase::parseFileList(Element *elem,
             {
             error("tag <%s> not allowed in <fileset>", tagName.c_str());
             return false;
-			}
+            }
         }
 
     String dir;
@@ -6162,7 +6162,7 @@ public:
     TaskCC(MakeBase &par) : Task(par)
         {
         type = TASK_CC;
-		name            = "cc";
+        name            = "cc";
         ccCommand       = "gcc";
         cxxCommand      = "g++";
         source          = ".";
@@ -6185,9 +6185,9 @@ public:
             String fname = excludeInc[i];
             if (fname == dirname)
                 return true;
-			}
+            }
         return false;
-		}
+        }
 
     virtual bool execute()
         {
@@ -6255,7 +6255,7 @@ public:
         /**
          * Compile each of the C files that need it
          */
-		bool errorOccurred = false;		         
+        bool errorOccurred = false;                 
         std::vector<String> cfiles;
         for (viter=deps.begin() ; viter!=deps.end() ; viter++)
             {
@@ -6387,6 +6387,7 @@ public:
                 fprintf(f, "\n");
                 fprintf(f, "#### STDOUT ###\n%s\n", outString.c_str());
                 fprintf(f, "#### STDERR ###\n%s\n\n", errString.c_str());
+                fflush(f);
                 }
             if (!ret)
                 {
@@ -6404,6 +6405,7 @@ public:
         
         return !errorOccurred;
         }
+
 
     virtual bool parse(Element *elem)
         {
@@ -6928,10 +6930,10 @@ public:
             cmd.append(" -target ");
             cmd.append(target);
             cmd.append(" ");
-			}
-		String fname = "javalist.btool";
-		FILE *f = fopen(fname.c_str(), "w");
-		int count = 0;
+            }
+        String fname = "javalist.btool";
+        FILE *f = fopen(fname.c_str(), "w");
+        int count = 0;
         for (unsigned int i=0 ; i<fileList.size() ; i++)
             {
             String fname = fileList[i];
@@ -6962,7 +6964,7 @@ public:
             {
             taskstatus("nothing to do");
             return true;
-			}
+            }
 
         taskstatus("compiling %d files", count);
 
