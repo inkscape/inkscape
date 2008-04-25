@@ -199,7 +199,8 @@
 
     <!-- Compile from source to build -->
     <cc cc="${arch}gcc" cxx="${arch}g++"
-             destdir="${build}/obj">
+             destdir="${build}/obj"
+			 continueOnError="false">
         <fileset dir="${src}">
             <!-- THINGS TO EXCLUDE -->
             <exclude name="2geom/chebyshev.cpp"/>

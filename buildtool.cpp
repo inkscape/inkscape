@@ -6402,7 +6402,7 @@ public:
             fclose(f);
             }
         
-        return errorOccurred;
+        return !errorOccurred;
         }
 
     virtual bool parse(Element *elem)
