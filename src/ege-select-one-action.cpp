@@ -577,7 +577,9 @@ GtkWidget* create_tool_item( GtkAction* action )
 
                     if ( act->private_data->iconProperty >= 0 ) {
                         /* TODO get this string to be set instead of hardcoded */
-                        g_object_set( G_OBJECT(obj), "iconSize", act->private_data->iconSize, NULL );
+                        if ( act->private_data->iconSize >= 0 ) {
+                            g_object_set( G_OBJECT(obj), "iconSize", act->private_data->iconSize, NULL );
+                        }
                     }
 
                     ract = GTK_RADIO_ACTION(obj);
