@@ -72,6 +72,7 @@ libinkpre_a_SOURCES =	\
 	dropper-context.cpp dropper-context.h	\
 	dyna-draw-context.cpp dyna-draw-context.h	\
 	enums.h	\
+	eraser-context.cpp eraser-context.h	\
 	event-context.cpp event-context.h	\
 	event-log.cpp event-log.h event.h      \
 	extract-uri.cpp extract-uri.h	\

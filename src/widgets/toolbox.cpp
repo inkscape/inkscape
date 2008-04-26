@@ -125,6 +125,7 @@ static void       sp_dropper_toolbox_prep(SPDesktop *desktop, GtkActionGroup* ma
 static GtkWidget *sp_empty_toolbox_new(SPDesktop *desktop);
 static void       sp_connector_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
+static void       sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 
 namespace { GtkWidget *sp_text_toolbox_new (SPDesktop *desktop); }
 
@@ -157,6 +158,7 @@ static struct {
     { "SPPencilContext",   "pencil_tool",    SP_VERB_CONTEXT_PENCIL, SP_VERB_CONTEXT_PENCIL_PREFS },
     { "SPPenContext",      "pen_tool",       SP_VERB_CONTEXT_PEN, SP_VERB_CONTEXT_PEN_PREFS },
     { "SPDynaDrawContext", "dyna_draw_tool", SP_VERB_CONTEXT_CALLIGRAPHIC, SP_VERB_CONTEXT_CALLIGRAPHIC_PREFS },
+    { "SPEraserContext",   "eraser_tool",    SP_VERB_CONTEXT_ERASER, SP_VERB_CONTEXT_ERASER_PREFS },
     { "SPFloodContext",    "paintbucket_tool",     SP_VERB_CONTEXT_PAINTBUCKET, SP_VERB_CONTEXT_PAINTBUCKET_PREFS },
     { "SPTextContext",     "text_tool",      SP_VERB_CONTEXT_TEXT, SP_VERB_CONTEXT_TEXT_PREFS },
     { "SPConnectorContext","connector_tool", SP_VERB_CONTEXT_CONNECTOR, SP_VERB_CONTEXT_CONNECTOR_PREFS },
@@ -199,6 +201,8 @@ static struct {
       SP_VERB_CONTEXT_PEN_PREFS,    "tools.freehand.pen",    N_("Style of new paths created by Pen")},
     { "SPDynaDrawContext", "calligraphy_toolbox", 0, sp_calligraphy_toolbox_prep,"CalligraphyToolbar",
       SP_VERB_CONTEXT_CALLIGRAPHIC_PREFS, "tools.calligraphic", N_("Style of new calligraphic strokes")},
+    { "SPEraserContext", "eraser_toolbox", 0, sp_eraser_toolbox_prep,"EraserToolbar",
+      SP_VERB_CONTEXT_ERASER_PREFS, "tools.eraser", _("TBD")},
     { "SPTextContext",   "text_toolbox",   sp_text_toolbox_new, 0,               0,
       SP_VERB_INVALID, 0, 0},
     { "SPDropperContext", "dropper_toolbox", 0, sp_dropper_toolbox_prep,         "DropperToolbar",
@@ -406,6 +410,12 @@ static gchar const * ui_descr =
         "    <toolitem action='AutoGapAction' />"
         "    <separator />"
         "    <toolitem action='PaintbucketResetAction' />"
+        "  </toolbar>"
+
+        "  <toolbar name='EraserToolbar'>"
+        "    <toolitem action='EraserWidthAction' />"
+        "    <separator />"
+        "    <toolitem action='EraserModeAction' />"
         "  </toolbar>"
 
         "  <toolbar name='DropperToolbar'>"
@@ -3866,6 +3876,29 @@ static void sp_arctb_end_value_changed(GtkAdjustment *adj, GObject *tbl)
     sp_arctb_startend_value_changed(adj,  tbl, "end", "start");
 }
 
+
+static void sp_erasertb_mode_changed( EgeSelectOneAction *act, GObject *tbl )
+{
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    gint eraserMode = (ege_select_one_action_get_active( act ) != 0) ? 1 : 0;
+    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+        prefs_set_int_attribute( "tools.eraser", "mode", eraserMode );
+    }
+
+    // only take action if run by the attr_changed listener
+    if (!g_object_get_data( tbl, "freeze" )) {
+        // in turn, prevent listener from responding
+        g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+        if ( eraserMode != 0 ) {
+        } else {
+        }
+        // TODO finish implementation
+
+        g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+    }
+}
+
 static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
@@ -4202,6 +4235,60 @@ static void sp_dropper_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* main
     }
 }
 
+
+
+static void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
+{
+    {
+        /* Width */
+        gchar const* labels[] = {_("(hairline)"), 0, 0, 0, _("(default)"), 0, 0, 0, 0, _("(broad stroke)")};
+        gdouble values[] = {1, 3, 5, 10, 15, 20, 30, 50, 75, 100};
+        EgeAdjustmentAction *eact = create_adjustment_action( "EraserWidthAction",
+                                                              _("Pen Width"), _("Width:"),
+                                                              _("The width of the eraser pen (relative to the visible canvas area)"),
+                                                              "tools.eraser", "width", 15,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-eraser",
+                                                              1, 100, 1.0, 10.0,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_ddc_width_value_changed,  0.01, 0, 100 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+    }
+
+    {
+        GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
+
+        GtkTreeIter iter;
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Delete"),
+                            1, _("Delete objects touched by the eraser"),
+                            2, "delete_object",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Cut"),
+                            1, _("Cut out from objects"),
+                            2, "difference",
+                            -1 );
+
+        EgeSelectOneAction* act = ege_select_one_action_new( "EraserModeAction", (""), (""), NULL, GTK_TREE_MODEL(model) );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+        g_object_set_data( holder, "eraser_mode_action", act );
+
+        ege_select_one_action_set_appearance( act, "full" );
+        ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
+        g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
+        ege_select_one_action_set_icon_column( act, 2 );
+        ege_select_one_action_set_tooltip_column( act, 1  );
+
+        gint eraserMode = (prefs_get_int_attribute("tools.eraser", "mode", 0) != 0) ? 1 : 0;
+        ege_select_one_action_set_active( act, eraserMode );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_erasertb_mode_changed), holder );
+    }
+    
+}
 
 //########################
 //##    Text Toolbox    ##

@@ -1443,6 +1443,9 @@ ContextVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_CONTEXT_PAINTBUCKET:
             tools_switch_current(TOOLS_PAINTBUCKET);
             break;
+        case SP_VERB_CONTEXT_ERASER:
+            tools_switch_current(TOOLS_ERASER);
+            break;
 
         case SP_VERB_CONTEXT_SELECT_PREFS:
             prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_SELECTOR);
@@ -1510,6 +1513,10 @@ ContextVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
         case SP_VERB_CONTEXT_PAINTBUCKET_PREFS:
             prefs_set_int_attribute ("dialogs.preferences", "page", PREFS_PAGE_TOOLS_PAINTBUCKET);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
+            break;
+        case SP_VERB_CONTEXT_ERASER_PREFS:
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_ERASER);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
 
@@ -2436,6 +2443,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Fill bounded areas"), "draw_paintbucket"),
     new ContextVerb(SP_VERB_CONTEXT_LPE, "ToolLPE", N_("LPE Edit"),
                     N_("Edit Live Path Effect parameters"), "draw_lpe"),
+    new ContextVerb(SP_VERB_CONTEXT_ERASER, "ToolEraser", N_("Eraser"),
+                    N_("Erase existing paths"), "draw_erase"),
     /* Tool prefs */
     new ContextVerb(SP_VERB_CONTEXT_SELECT_PREFS, "SelectPrefs", N_("Selector Preferences"),
                     N_("Open Preferences for the Selector tool"), NULL),
@@ -2471,6 +2480,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Open Preferences for the Connector tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_PAINTBUCKET_PREFS, "PaintBucketPrefs", N_("Paint Bucket Preferences"),
                     N_("Open Preferences for the Paint Bucket tool"), NULL),
+    new ContextVerb(SP_VERB_CONTEXT_ERASER_PREFS, "EraserPrefs", N_("Eraser Preferences"),
+                    N_("Open Preferences for the Eraser tool"), NULL),
 
     /* Zoom/View */
     new ZoomVerb(SP_VERB_ZOOM_IN, "ZoomIn", N_("Zoom In"), N_("Zoom in"), "zoom_in"),

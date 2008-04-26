@@ -40,6 +40,7 @@
 #include "spiral-context.h"
 #include "sp-spiral.h"
 #include "dyna-draw-context.h"
+#include "eraser-context.h"
 #include "pen-context.h"
 #include "pencil-context.h"
 #include "text-context.h"
@@ -74,6 +75,7 @@ static char const *const tool_names[] = {
     "tools.dropper",
     "tools.connector",
     "tools.paintbucket",
+    "tools.eraser",
     NULL
 };
 
@@ -96,6 +98,7 @@ static char const *const tool_ids[] = {
     "dropper",
     "connector",
     "paintbucket",
+    "eraser",
     NULL
 };
 
@@ -236,6 +239,12 @@ tools_switch(SPDesktop *dt, int num)
             dt->activate_guides(false);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
             dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> to paint a bounded area, <b>Shift+click</b> to union the new fill with the current selection, <b>Ctrl+click</b> to change the clicked object's fill and stroke to the current setting."));
+            break;
+        case TOOLS_ERASER:
+            dt->set_event_context(SP_TYPE_ERASER_CONTEXT, tool_names[num]);
+            dt->activate_guides(false);
+            inkscape_eventcontext_set(sp_desktop_event_context(dt));
+            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> to erase."));
             break;
     }
 }

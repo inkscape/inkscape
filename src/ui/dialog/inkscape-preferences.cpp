@@ -449,6 +449,8 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_paintbucket, _("Paint Bucket"), iter_tools, PREFS_PAGE_TOOLS_PAINTBUCKET);
     this->AddSelcueCheckbox(_page_paintbucket, "tools.paintbucket", false);
     this->AddNewObjectsStyle(_page_paintbucket, "tools.paintbucket");
+    //Calligraphy
+    this->AddPage(_page_eraser, _("Eraser"), iter_tools, PREFS_PAGE_TOOLS_ERASER);
     //Text
     this->AddPage(_page_text, _("Text"), iter_tools, PREFS_PAGE_TOOLS_TEXT);
     this->AddSelcueCheckbox(_page_text, "tools.text", true);
