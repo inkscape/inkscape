@@ -70,6 +70,11 @@ Filter::filters_all (void )
 	Speckle::init();
 	Zebra::init();
 
+
+	/* This should always be last, don't put stuff below this
+	 * line. */
+	Filter::filters_all_files();
+
 	return;
 }
 

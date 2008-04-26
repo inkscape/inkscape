@@ -25,6 +25,7 @@ extern "C" {
 #  define INKSCAPE_BINDDIR        BR_DATADIR( "/inkscape/bind" )
 #  define INKSCAPE_EXAMPLESDIR    BR_DATADIR( "/inkscape/examples" )
 #  define INKSCAPE_EXTENSIONDIR   BR_DATADIR( "/inkscape/extensions" )
+#  define INKSCAPE_FILTERDIR      BR_DATADIR( "/inkscape/filters" )
 #  define INKSCAPE_GRADIENTSDIR   BR_DATADIR( "/inkscape/gradients" )
 #  define INKSCAPE_KEYSDIR        BR_DATADIR( "/inkscape/keys" )
 #  define INKSCAPE_PIXMAPDIR      BR_DATADIR( "/inkscape/icons" )
@@ -46,6 +47,7 @@ extern "C" {
 #    define INKSCAPE_BINDDIR      "share\\bind"
 #    define INKSCAPE_EXAMPLESDIR  "share\\examples"
 #    define INKSCAPE_EXTENSIONDIR "share\\extensions"
+#    define INKSCAPE_FILTERDIR    "share\\filters"
 #    define INKSCAPE_GRADIENTSDIR "share\\gradients"
 #    define INKSCAPE_KEYSDIR      "share\\keys"
 #    define INKSCAPE_PIXMAPDIR    "share\\icons"
@@ -66,6 +68,7 @@ extern "C" {
 #    define INKSCAPE_BINDDIR      "Contents/Resources/bind"
 #    define INKSCAPE_EXAMPLESDIR  "Contents/Resources/examples"
 #    define INKSCAPE_EXTENSIONDIR "Contents/Resources/extensions"
+#    define INKSCAPE_FILTERDIR    "Contents/Resources/filters"
 #    define INKSCAPE_GRADIENTSDIR "Contents/Resources/gradients"
 #    define INKSCAPE_KEYSDIR      "Contents/Resources/keys"
 #    define INKSCAPE_PIXMAPDIR    "Contents/Resources/icons"
@@ -86,6 +89,7 @@ extern "C" {
 #    define INKSCAPE_BINDDIR      INKSCAPE_DATADIR "/inkscape/bind"
 #    define INKSCAPE_EXAMPLESDIR  INKSCAPE_DATADIR "/inkscape/examples"
 #    define INKSCAPE_EXTENSIONDIR INKSCAPE_DATADIR "/inkscape/extensions"
+#    define INKSCAPE_FILTERDIR    INKSCAPE_DATADIR "/inkscape/filters"
 #    define INKSCAPE_GRADIENTSDIR INKSCAPE_DATADIR "/inkscape/gradients"
 #    define INKSCAPE_KEYSDIR      INKSCAPE_DATADIR "/inkscape/keys"
 #    define INKSCAPE_PIXMAPDIR    INKSCAPE_DATADIR "/inkscape/icons"

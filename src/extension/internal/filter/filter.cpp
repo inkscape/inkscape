@@ -71,7 +71,7 @@ Filter::get_filter (Inkscape::Extension::Extension * ext) {
 }
 
 void 
-Filter::merge_filters (Inkscape::XML::Node * to, Inkscape::XML::Node * from, Inkscape::XML::Document * doc)
+Filter::merge_filters (Inkscape::XML::Node * to, Inkscape::XML::Node * from, Inkscape::XML::Document * doc, gchar * srcGraphic, gchar * srcGraphicAlpha)
 {
 	if (from == NULL) return;
 
@@ -82,6 +82,16 @@ Filter::merge_filters (Inkscape::XML::Node * to, Inkscape::XML::Node * from, Ink
 		//printf("Attribute List: %s\n", attr);
 		if (!strcmp(attr, "id")) continue; // nope, don't copy that one!
 		to->setAttribute(attr, from->attribute(attr));
+
+		if (!strcmp(attr, "in") || !strcmp(attr, "in2") || !strcmp(attr, "in3")) {
+			if (srcGraphic != NULL && !strcmp(from->attribute(attr), "SourceGraphic")) {
+				to->setAttribute(attr, srcGraphic);
+			}
+
+			if (srcGraphicAlpha != NULL && !strcmp(from->attribute(attr), "SourceAlpha")) {
+				to->setAttribute(attr, srcGraphicAlpha);
+			}
+		}
 	}
 
 	// for each child call recursively
@@ -92,11 +102,18 @@ Filter::merge_filters (Inkscape::XML::Node * to, Inkscape::XML::Node * from, Ink
 		
 		Inkscape::XML::Node * to_child = doc->createElement(name.c_str());
 		to->appendChild(to_child);
-		merge_filters(to_child, from_child, doc);
+		merge_filters(to_child, from_child, doc, srcGraphic, srcGraphicAlpha);
+
+		if (from_child == from->firstChild() && !strcmp("filter", from->name()) && srcGraphic != NULL && to_child->attribute("in") == NULL) {
+			to_child->setAttribute("in", srcGraphic);
+		}
 	}
 
 	return;
 }
+
+#define FILTER_SRC_GRAPHIC       "fbSourceGraphic"
+#define FILTER_SRC_GRAPHIC_ALPHA "fbSourceGraphicAlpha"
 
 void
 Filter::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache)
@@ -129,6 +146,35 @@ Filter::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *d
 
 			sp_repr_css_set_property(css, "filter", url.c_str());
 			sp_repr_css_set(node, css, "style");
+		} else {
+			if (strncmp(filter, "url(#", strlen("url(#")) || filter[strlen(filter) - 1] != ')') {
+				// This is not url(#id) -- we can't handle it
+				continue;
+			}
+
+			gchar * lfilter = g_strndup(filter + 5, strlen(filter) - 6);
+			Inkscape::XML::Node * filternode = NULL;
+			for (Inkscape::XML::Node * child = defsrepr->firstChild(); child != NULL; child = child->next()) {
+				if (!strcmp(lfilter, child->attribute("id"))) {
+					filternode = child;
+					break;
+				}
+			}
+			g_free(lfilter);
+
+			if (filternode == NULL) {
+				continue;
+			}
+
+			filternode->lastChild()->setAttribute("result", FILTER_SRC_GRAPHIC);
+
+			Inkscape::XML::Node * alpha = xmldoc->createElement("svg:feColorMatrix");
+			alpha->setAttribute("result", FILTER_SRC_GRAPHIC_ALPHA);
+			alpha->setAttribute("in", FILTER_SRC_GRAPHIC); // not required, but we're being explicit
+			alpha->setAttribute("values", "0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0");
+			filternode->appendChild(alpha);
+
+			merge_filters(filternode, get_filter(module)->root(), xmldoc, FILTER_SRC_GRAPHIC, FILTER_SRC_GRAPHIC_ALPHA);
 		}
     }
 

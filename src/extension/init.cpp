@@ -320,7 +320,6 @@ build_module_from_dir(gchar const *dirname)
 
     gchar *filename;
     while ((filename = (gchar *)g_dir_read_name(directory)) != NULL) {
-
         if (strlen(filename) < strlen(SP_MODULE_EXTENSION)) {
             continue;
         }
@@ -329,12 +328,14 @@ build_module_from_dir(gchar const *dirname)
             continue;
         }
 
-        gchar *pathname = g_strdup_printf("%s/%s", dirname, filename);
+        gchar *pathname = g_build_filename(dirname, filename, NULL);
         build_from_file(pathname);
         g_free(pathname);
     }
 
     g_dir_close(directory);
+
+	return;
 }
 
 

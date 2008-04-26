@@ -495,8 +495,6 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
 Extension *
 build_from_file(gchar const *filename)
 {
-    /* TODO: Need to define namespace here, need to write the
-       DTD in general for this stuff */
     Inkscape::XML::Document *doc = sp_repr_read_file(filename, INKSCAPE_EXTENSION_URI);
     Extension *ext = build_from_reprdoc(doc, NULL);
     if (ext != NULL)

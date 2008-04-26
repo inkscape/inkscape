@@ -25,7 +25,7 @@ protected:
 
 private:
 	Inkscape::XML::Document * get_filter (Inkscape::Extension::Extension * ext);
-	void merge_filters (Inkscape::XML::Node * to, Inkscape::XML::Node * from, Inkscape::XML::Document * doc);
+	void merge_filters (Inkscape::XML::Node * to, Inkscape::XML::Node * from, Inkscape::XML::Document * doc, gchar * srcGraphic = NULL, gchar * srcGraphicAlpha = NULL);
 
 public:
 	Filter();
@@ -38,6 +38,13 @@ public:
 
 	static void filter_init(gchar const * id, gchar const * name, gchar const * tip, gchar const * filter);
 	static void filters_all(void);
+
+	/* File loader related */
+	static void filters_all_files(void);
+	static void filters_load_dir(gchar * filename, gchar * menuname);
+	static void filters_load_file(gchar * filename, gchar * menuname);
+	static void filters_load_node(Inkscape::XML::Node * node, gchar * menuname);
+
 };
 
 }; /* namespace Filter */

@@ -97,6 +97,7 @@ src/extension/internal/filter/cutout.h
 src/extension/internal/filter/drop-shadow.h
 src/extension/internal/filter/etched-glass.h
 src/extension/internal/filter/filter.cpp
+src/extension/internal/filter/filter-file.cpp
 src/extension/internal/filter/fire.h
 src/extension/internal/filter/frost.h
 src/extension/internal/filter/ink-bleed.h
