@@ -199,32 +199,7 @@ static void rsvg_path_arc (RSVGParsePathCtx *ctx,
     ctx->cpy = y;
 }
 
-
-/* supply defaults for missing parameters, assuming relative coordinates
-   are to be interpreted as x,y */
-static void rsvg_parse_path_default_xy(RSVGParsePathCtx *ctx, int n_params)
-{
-    int i;
-
-    if (ctx->rel) {
-        for (i = ctx->param; i < n_params; i++) {
-            if (i > 2)
-                ctx->params[i] = ctx->params[i - 2];
-            else if (i == 1)
-                ctx->params[i] = ctx->cpy;
-            else if (i == 0)
-                /* we shouldn't get here (usually ctx->param > 0 as
-                   precondition) */
-                ctx->params[i] = ctx->cpx;
-        }
-    } else {
-        for (i = ctx->param; i < n_params; i++) {
-            ctx->params[i] = 0.0;
-        }
-    }
-}
-
-static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final)
+static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final, const char next_cmd)
 {
     double x1, y1, x2, y2, x3, y3;
 
@@ -241,9 +216,8 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final)
     switch (ctx->cmd) {
     case 'm':
         /* moveto */
-        if (ctx->param == 2 || final)
+        if (ctx->param == 2)
         {
-            rsvg_parse_path_default_xy (ctx, 2);
 #ifdef VERBOSE
             g_print ("'m' moveto %g,%g\n",
                      ctx->params[0], ctx->params[1]);
@@ -258,9 +232,8 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final)
         break;
     case 'l':
         /* lineto */
-        if (ctx->param == 2 || final)
+        if (ctx->param == 2)
         {
-            rsvg_parse_path_default_xy (ctx, 2);
 #ifdef VERBOSE
             g_print ("'l' lineto %g,%g\n",
                      ctx->params[0], ctx->params[1]);
@@ -274,9 +247,8 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final)
         break;
     case 'c':
         /* curveto */
-        if (ctx->param == 6 || final )
+        if (ctx->param == 6)
         {
-            rsvg_parse_path_default_xy (ctx, 6);
             x1 = ctx->params[0];
             y1 = ctx->params[1];
             x2 = ctx->params[2];
@@ -298,9 +270,8 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final)
         break;
     case 's':
         /* smooth curveto */
-        if (ctx->param == 4 || final)
+        if (ctx->param == 4)
         {
-            rsvg_parse_path_default_xy (ctx, 4);
             x1 = 2 * ctx->cpx - ctx->rpx;
             y1 = 2 * ctx->cpy - ctx->rpy;
             x2 = ctx->params[0];
@@ -352,9 +323,8 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final)
         /* non-normative reference:
            http://www.icce.rug.nl/erikjan/bluefuzz/beziers/beziers/beziers.html
         */
-        if (ctx->param == 4 || final)
+        if (ctx->param == 4)
         {
-            rsvg_parse_path_default_xy (ctx, 4);
             /* raise quadratic bezier to cubic */
             x1 = (ctx->cpx + 2 * ctx->params[0]) * (1.0 / 3.0);
             y1 = (ctx->cpy + 2 * ctx->params[1]) * (1.0 / 3.0);
@@ -377,7 +347,7 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final)
         break;
     case 't':
         /* Truetype quadratic bezier curveto */
-        if (ctx->param == 2 || final) {
+        if (ctx->param == 2) {
             double xc, yc; /* quadratic control point */
 
             xc = 2 * ctx->cpx - ctx->rpx;
@@ -400,48 +370,31 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final)
             ctx->cpx = x3;
             ctx->cpy = y3;
             ctx->param = 0;
-        } else if (final) {
-            if (ctx->param > 2) {
-                rsvg_parse_path_default_xy(ctx, 4);
-                /* raise quadratic bezier to cubic */
-                x1 = (ctx->cpx + 2 * ctx->params[0]) * (1.0 / 3.0);
-                y1 = (ctx->cpy + 2 * ctx->params[1]) * (1.0 / 3.0);
-                x3 = ctx->params[2];
-                y3 = ctx->params[3];
-                x2 = (x3 + 2 * ctx->params[0]) * (1.0 / 3.0);
-                y2 = (y3 + 2 * ctx->params[1]) * (1.0 / 3.0);
-#ifdef VERBOSE
-                g_print ("'t' curveto %g,%g %g,%g, %g,%g\n",
-                         x1, y1, x2, y2, x3, y3);
-#endif
-                rsvg_bpath_def_curveto (ctx->bpath,
-                                        x1, y1, x2, y2, x3, y3);
-                ctx->rpx = x2;
-                ctx->rpy = y2;
-                ctx->cpx = x3;
-                ctx->cpy = y3;
-            } else {
-                rsvg_parse_path_default_xy(ctx, 2);
-#ifdef VERBOSE
-                g_print ("'t' lineto %g,%g\n",
-                         ctx->params[0], ctx->params[1]);
-#endif
-                rsvg_bpath_def_lineto(ctx->bpath,
-                                      ctx->params[0], ctx->params[1]);
-                ctx->cpx = ctx->rpx = ctx->params[0];
-                ctx->cpy = ctx->rpy = ctx->params[1];
-            }
-            ctx->param = 0;
         }
         break;
     case 'a':
-        if (ctx->param == 7 || final)
+        if (ctx->param == 7)
         {
             rsvg_path_arc(ctx,
                           ctx->params[0], ctx->params[1], ctx->params[2],
                           (int) ctx->params[3], (int) ctx->params[4],
                           ctx->params[5], ctx->params[6]);
             ctx->param = 0;
+        }
+        break;
+    case 'z':
+        if (ctx->param == 0)
+        {
+            rsvg_bpath_def_closepath (ctx->bpath);
+
+            if (next_cmd != 0 && next_cmd != 'm') {
+                // This makes sure we do the right moveto if the closepath is followed by anything other than a moveto
+                ctx->cmd = 'm';
+                ctx->params[0] = ctx->cpx = ctx->rpx = ctx->spx;
+                ctx->params[1] = ctx->cpy = ctx->rpy = ctx->spy;
+                ctx->param = 2;
+                rsvg_parse_path_do_cmd(ctx, final, next_cmd);
+            }
         }
         break;
     default:
@@ -511,7 +464,7 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
             in_frac = true;
             frac = 1;
         }
-        else if ((c == 'E' || c == 'e') && in_num)
+        else if ((c == 'E' || c == 'e') && in_num && !in_exp)
         {
             /* fixme: Should we add `&& !in_exp' to the above condition?
              * It looks like the current code will parse `1e3e4' (as 1e4). */
@@ -520,9 +473,10 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
             exp = 0;
             exp_sign = 1;
         }
-        else if ((c == '+' || c == '-') && in_exp)
+        else if ((c == '+' || c == '-') && in_exp && exp_wait_sign)
         {
             exp_sign = c == '+' ? 1 : -1;
+            exp_wait_sign = false;
         }
         else if (in_num)
         {
@@ -567,7 +521,7 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
                 }
             }
             ctx->params[ctx->param++] = val;
-            rsvg_parse_path_do_cmd (ctx, false);
+            rsvg_parse_path_do_cmd (ctx, false, 0); // We don't know the next command yet
             if (c=='.') {
                 in_num = true;
                 val = 0;
@@ -595,33 +549,26 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
             exp_sign = 1;
             exp_wait_sign = false;
         }
-        else if (c == 'z' || c == 'Z')
-        {
-            if (ctx->param)
-                rsvg_parse_path_do_cmd (ctx, true);
-            rsvg_bpath_def_closepath (ctx->bpath);
-
-            ctx->cmd = 'm';
-            ctx->params[0] = ctx->cpx = ctx->rpx = ctx->spx;
-            ctx->params[1] = ctx->cpy = ctx->rpy = ctx->spy;
-            ctx->param = 2;
-        }
         else if (c >= 'A' && c <= 'Z' && c != 'E')
         {
-            if (ctx->param)
-                rsvg_parse_path_do_cmd (ctx, true);
-            ctx->cmd = c + 'a' - 'A';
+            char next_cmd = c + 'a' - 'A';
+            if (ctx->cmd)
+                rsvg_parse_path_do_cmd (ctx, true, next_cmd);
+            ctx->cmd = next_cmd;
             ctx->rel = false;
         }
         else if (c >= 'a' && c <= 'z' && c != 'e')
         {
-            if (ctx->param)
-                rsvg_parse_path_do_cmd (ctx, true);
-            ctx->cmd = c;
+            char next_cmd = c;
+            if (ctx->cmd)
+                rsvg_parse_path_do_cmd (ctx, true, next_cmd);
+            ctx->cmd = next_cmd;
             ctx->rel = true;
         }
         /* else c _should_ be whitespace or , */
     }
+    if (ctx->cmd)
+        rsvg_parse_path_do_cmd (ctx, true, 0);
 }
 
 
@@ -637,10 +584,6 @@ NArtBpath *sp_svg_read_path(gchar const *str)
     ctx.param = 0;
 
     rsvg_parse_path_data (&ctx, str);
-
-    if (ctx.param && ctx.cmd != 'm') {
-        rsvg_parse_path_do_cmd (&ctx, TRUE);
-    }
 
     gnome_canvas_bpath_def_art_finish (ctx.bpath);
 
