@@ -103,8 +103,8 @@ class EQTEXSVG(inkex.Effect):
             os.rmdir(base_dir)
 
         create_equation_tex(latex_file, self.options.formula)
-        #os.system('cd ' + base_dir)
-        os.system('latex -output-directory=' + base_dir + ' -halt-on-error ' + latex_file + ' > ' + out_file)
+        os.system('latex "-output-directory=%s" -halt-on-error "%s" > "%s"' \
+                  % (base_dir, latex_file, out_file))
 	try:
 	    os.stat(dvi_file)
 	except OSError:
@@ -113,11 +113,14 @@ class EQTEXSVG(inkex.Effect):
             print >>sys.stderr, "temporary files were left in:", base_dir
             sys.exit(1)
 
-        os.system('dvips -q -f -E -D 600 -y 5000 -o ' + ps_file + ' ' + dvi_file)
-        # cd to base_dir is necessary, because pstoedit
-        # writes temporary files to cwd and needs write
-        # permissions
-        os.system('cd ' + base_dir + ' ; pstoedit -f plot-svg -dt -ssp ' + ps_file + ' ' + svg_file + '  > ' + out_file + ' 2> ' + err_file)
+        os.system('dvips -q -f -E -D 600 -y 5000 -o "%s" "%s"' % (ps_file, dvi_file))
+        # cd to base_dir is necessary, because pstoedit writes
+        # temporary files to cwd and needs write permissions
+        separator = ';'
+        if os.name == 'nt':
+            separator = '&&'
+        os.system('cd "%s" %s pstoedit -f plot-svg -dt -ssp "%s" "%s" > "%s" 2> "%s"' \
+                  % (base_dir, separator, ps_file, svg_file, out_file, err_file))
 
         # forward errors to stderr but skip pstoedit header
         if os.path.exists(err_file):
