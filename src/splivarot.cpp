@@ -90,6 +90,12 @@ sp_selected_path_diff()
 }
 
 void
+sp_selected_path_diff_skip_undo()
+{
+    sp_selected_path_boolop(bool_op_diff, SP_VERB_NONE, _("Difference"));
+}
+
+void
 sp_selected_path_symdiff()
 {
     sp_selected_path_boolop(bool_op_symdiff, SP_VERB_SELECTION_SYMDIFF, _("Exclusion"));

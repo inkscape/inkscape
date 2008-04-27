@@ -837,7 +837,7 @@ set_to_accumulated(SPEraserContext *dc)
 
                         selection->set(item);
                         selection->add(dup);
-                        sp_selected_path_diff();
+                        sp_selected_path_diff_skip_undo();
                         if ( !selection->isEmpty() ) {
                             // If the item was not completely erased, add it back to the selection.
                             GSList const *selected2 = g_slist_copy(const_cast<GSList *>(selection->itemList()));

@@ -16,6 +16,7 @@ void sp_selected_path_union ();
 void sp_selected_path_union_skip_undo ();
 void sp_selected_path_intersect ();
 void sp_selected_path_diff ();
+void sp_selected_path_diff_skip_undo ();
 void sp_selected_path_symdiff ();
 void sp_selected_path_cut ();
 void sp_selected_path_slice ();
