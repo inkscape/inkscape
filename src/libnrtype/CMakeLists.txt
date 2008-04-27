@@ -35,3 +35,5 @@ TextWrapper.cpp
 TextWrapper.h
 )
 ADD_LIBRARY(nrtype STATIC ${libnrtype_SRC})
+TARGET_LINK_LIBRARIES(nrtype
+	"${INKSCAPE_LINK_FLAGS}" nr )

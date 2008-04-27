@@ -82,6 +82,7 @@ libgdl
 libnr
 libnrtype
 libvpsc
+livarot
 )
 
 FOREACH(dirlist ${libfolders})
@@ -305,7 +306,7 @@ ${ONLY_WIN}
 # make executable for INKSCAPE
 ADD_EXECUTABLE(inkscape ${INKSCAPE_SRC})
 TARGET_LINK_LIBRARIES(inkscape
-	"${INKSCAPE_LINK_FLAGS}" 2geom avoid cola croco gdl nr nrtype vpsc
+	"${INKSCAPE_LINK_FLAGS}" 2geom avoid cola croco gdl nr nrtype vpsc livarot
 )
 #INSTALL(TARGETS INKSCAPE
 #  RUNTIME DESTINATION bin
