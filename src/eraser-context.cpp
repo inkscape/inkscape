@@ -790,6 +790,7 @@ static void
 set_to_accumulated(SPEraserContext *dc)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(dc)->desktop;
+    bool workDone = false;
 
     if (!sp_curve_empty(dc->accumulated)) {
         NArtBpath *abp;
@@ -838,6 +839,7 @@ set_to_accumulated(SPEraserContext *dc)
                         selection->set(item);
                         selection->add(dup);
                         sp_selected_path_diff_skip_undo();
+                        workDone = true; // TODO set this only if something was cut.
                         if ( !selection->isEmpty() ) {
                             // If the item was not completely erased, add it back to the selection.
                             GSList const *selected2 = g_slist_copy(const_cast<GSList *>(selection->itemList()));
@@ -869,8 +871,13 @@ set_to_accumulated(SPEraserContext *dc)
         }
     }
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ERASER, 
-                     _("Draw eraser stroke"));
+
+    if ( workDone ) {
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ERASER, 
+                         _("Draw eraser stroke"));
+    } else {
+        sp_document_cancel(sp_desktop_document(desktop));
+    }
 }
 
 static void
