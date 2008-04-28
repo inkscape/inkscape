@@ -236,9 +236,6 @@ inkscape.rc
 inkscape-stock.cpp
 inkscape-stock.h
 inkscape_version.h.mingw
-inkview.cpp
-inkview-manifest.xml
-inkview.rc
 interface.cpp
 interface.h
 isinf.h
@@ -611,6 +608,12 @@ ${ONLY_WIN}
 # make executable for INKSCAPE
 ADD_EXECUTABLE(inkscape ${INKSCAPE_SRC})
 TARGET_LINK_LIBRARIES(inkscape
+	"${INKSCAPE_LINK_FLAGS}" 2geom avoid cola croco gdl nr nrtype vpsc livarot
+)
+
+# make executable for INKVIEW
+ADD_EXECUTABLE(inkview inkview.cpp)
+TARGET_LINK_LIBRARIES(inkview
 	"${INKSCAPE_LINK_FLAGS}" 2geom avoid cola croco gdl nr nrtype vpsc livarot
 )
 #INSTALL(TARGETS INKSCAPE
