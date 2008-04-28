@@ -819,44 +819,59 @@ set_to_accumulated(SPEraserContext *dc)
         g_free(str);
 
         if ( dc->repr ) {
+            bool wasSelection = false;
             Inkscape::Selection *selection = sp_desktop_selection(desktop);
             gint eraserMode = (prefs_get_int_attribute("tools.eraser", "mode", 0) != 0) ? 1 : 0;
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
-            if (!selection->isEmpty()) {
-                // Do selection-limited
-                if ( eraserMode == 0 ) {
-                    // Nuke
-                } else {
-                    // Cut-out
-                    std::vector<SPItem*> putBacks;
-                    GSList const *selected = g_slist_copy(const_cast<GSList *>(selection->itemList()));
-                    for (GSList const *i = selected ; i ; i = i->next ) {
-                        SPItem *item = SP_ITEM(i->data);
+
+            SPItem* acid = SP_ITEM(desktop->doc()->getObjectByRepr(dc->repr));
+            NR::Maybe<NR::Rect> eraserBbox = acid->getBounds(NR::identity());
+            NR::Rect bounds = (*eraserBbox) * desktop->doc2dt();
+            std::vector<SPItem*> remainingItems;
+            GSList* toWorkOn = 0;
+            if (selection->isEmpty()) {
+                toWorkOn = sp_document_partial_items_in_box(sp_desktop_document(desktop), desktop->dkey, bounds);
+                toWorkOn = g_slist_remove( toWorkOn, acid );
+            } else {
+                toWorkOn = g_slist_copy(const_cast<GSList*>(selection->itemList()));
+                wasSelection = true;
+            }
+
+            if ( g_slist_length(toWorkOn) > 0 ) {
+                for (GSList *i = toWorkOn ; i ; i = i->next ) {
+                    SPItem *item = SP_ITEM(i->data);
+                    NR::Maybe<NR::Rect> bbox = item->getBounds(NR::identity());
+                    if (bbox && bbox->intersects(*eraserBbox)) {
                         Inkscape::XML::Node* dup = dc->repr->duplicate(xml_doc);
                         dc->repr->parent()->appendChild(dup);
-                        Inkscape::GC::release(dup);
+                        Inkscape::GC::release(dup); // parent takes over
 
                         selection->set(item);
                         selection->add(dup);
                         sp_selected_path_diff_skip_undo();
                         workDone = true; // TODO set this only if something was cut.
                         if ( !selection->isEmpty() ) {
-                            // If the item was not completely erased, add it back to the selection.
-                            GSList const *selected2 = g_slist_copy(const_cast<GSList *>(selection->itemList()));
-                            for (GSList const *i2 = selected2 ; i2 ; i2 = i2->next ) {
-                                putBacks.push_back(SP_ITEM(i2->data));
+                            // If the item was not completely erased, track the new remainder.
+                            GSList *nowSel = g_slist_copy(const_cast<GSList *>(selection->itemList()));
+                            for (GSList const *i2 = nowSel ; i2 ; i2 = i2->next ) {
+                                remainingItems.push_back(SP_ITEM(i2->data));
                             }
+                            g_slist_free(nowSel);
                         }
+                    } else {
+                        remainingItems.push_back(item);
                     }
-                    g_slist_free ((GSList *) selected);
-
-                    selection->clear();
-                    selection->add(putBacks.begin(), putBacks.end());
                 }
-            } else {
-                // TODO finish
-            }
 
+                g_slist_free(toWorkOn);
+
+                selection->clear();
+                if ( wasSelection ) {
+                    if ( !remainingItems.empty() ) {
+                        selection->add(remainingItems.begin(), remainingItems.end());
+                    }
+                }
+            }
 
             // Remove the eraser stroke itself:
             sp_repr_unparent( dc->repr );
