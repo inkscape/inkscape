@@ -386,12 +386,14 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final, const char
         if (ctx->param == 0)
         {
             rsvg_bpath_def_closepath (ctx->bpath);
+            ctx->cpx = ctx->rpx = ctx->spx;
+            ctx->cpy = ctx->rpy = ctx->spy;
 
             if (next_cmd != 0 && next_cmd != 'm') {
                 // This makes sure we do the right moveto if the closepath is followed by anything other than a moveto
                 ctx->cmd = 'm';
-                ctx->params[0] = ctx->cpx = ctx->rpx = ctx->spx;
-                ctx->params[1] = ctx->cpy = ctx->rpy = ctx->spy;
+                ctx->params[0] = ctx->cpx;
+                ctx->params[1] = ctx->cpy;
                 ctx->param = 2;
                 rsvg_parse_path_do_cmd(ctx, final, next_cmd);
             }

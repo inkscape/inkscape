@@ -31,7 +31,7 @@ static inline NR::Point distTo(GnomeCanvasBpathDef *bpd, size_t idx1, size_t idx
 
 static bool isApproximatelyClosed(GnomeCanvasBpathDef *bpd) {
     int const np = prefs_get_int_attribute("options.svgoutput", "numericprecision", 8);
-    double const precision = pow(10.0, -np); // This roughly corresponds to a difference below the last significant digit
+    double const precision = 5*pow(10.0, -np); // This roughly corresponds to a difference below the last significant digit
 	int const initial = bpd->moveto_idx;
 	int const current = bpd->n_bpath - 1;
 	int const previous = bpd->n_bpath - 2;
@@ -187,8 +187,6 @@ gnome_canvas_bpath_def_closepath (GnomeCanvasBpathDef *bpd)
         // If it is approximately closed we close it here to prevent internal logic to fail.
         // In addition it is probably better to continue working with this end point, as it
         // is probably more precise than the original.
-        // NOTE: At the very least sp_bpath_check_subpath will fail, but it is not unreasonable
-        // to assume that there might be more places where similar problems would occur.
         bpath[n_bpath-1].x3 = bpath[bpd->moveto_idx].x3;
         bpath[n_bpath-1].y3 = bpath[bpd->moveto_idx].y3;
     }
