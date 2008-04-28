@@ -540,7 +540,7 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
 
         if (c == '\0')
             break;
-        else if ((c == '+' || c == '-') && !exp_wait_sign)
+        else if ((c == '+' || c == '-') && !in_exp && !exp_wait_sign)
         {
             sign = c == '+' ? 1 : -1;;
             val = 0;
@@ -599,7 +599,6 @@ NArtBpath *sp_svg_read_path(gchar const *str)
 
 gchar *sp_svg_write_path(NArtBpath const *bpath)
 {
-    Inkscape::SVGOStringStream os;
     bool closed=false;
     
     g_return_val_if_fail (bpath != NULL, NULL);
