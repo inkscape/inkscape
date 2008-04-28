@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2008  Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -27,17 +27,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-/**
- * Our base String stream classes.  We implement these to
- * be based on DOMString
- *
- * Authors:
- *   Bob Jamison <rjamison@titan.com>
- *
- * Copyright (C) 2004 Inkscape.org
- *
- * Released under GNU GPL, read the file 'COPYING' for more information
- */
 
 
 #include "uristream.h"
@@ -99,7 +88,7 @@ void UriInputStream::init() throw (StreamException)
             data        = (unsigned char *) uri.getPath().c_str();
             //printf("in data:'%s'\n", data);
             dataPos     = 0;
-            dataLen     = strlen((const char *)data);
+            dataLen     = uri.getPath().size();
             break;
             }
 
