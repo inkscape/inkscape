@@ -337,7 +337,7 @@ static void init_extended()
                         toolToUse[GDK_SOURCE_PEN] = TOOLS_CALLIGRAPHIC;
                         break;
                     case GDK_SOURCE_ERASER:
-                        toolToUse[GDK_SOURCE_ERASER] = TOOLS_TWEAK;
+                        toolToUse[GDK_SOURCE_ERASER] = TOOLS_ERASER;
                         break;
                     case GDK_SOURCE_CURSOR:
                         toolToUse[GDK_SOURCE_CURSOR] = TOOLS_SELECT;
