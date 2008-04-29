@@ -43,7 +43,7 @@ if test "$GCC" = "yes"; then
   ink_svd_CFLAGS="$CFLAGS"
   CFLAGS="-Wno-pointer-sign $CFLAGS"
   AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), AC_MSG_NOTICE([ compiler supports -Wno-pointer-sign]), CFLAGS="$ink_svd_CFLAGS")
-  CFLAGS="-Wall -Wformat-security -W -D_FORTIFY_SOURCE=2 $CFLAGS"
+  CFLAGS="-Wall -Wformat -Werror=format-security -W -D_FORTIFY_SOURCE=2 $CFLAGS"
   AC_LANG_POP
 fi
 
@@ -751,7 +751,7 @@ if test "$GXX" = "yes"; then
   # programmer deliberately has an unused parameter (e.g. because it's used
   # as a callback or similar function pointer use).
 
-  CXXFLAGS="-Wall -Wformat-security -W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch -D_FORTIFY_SOURCE=2 $CXXFLAGS"
+  CXXFLAGS="-Wall -Wformat -Werror=format-security -W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch -D_FORTIFY_SOURCE=2 $CXXFLAGS"
 
   dnl Test for arch-specific situations.
   case "$host_cpu" in
