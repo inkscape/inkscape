@@ -106,7 +106,7 @@ ElementPtr SVGDocumentImpl::createElementNS(const DOMString& namespaceURI,
 /**
  *
  */
-unsigned long SVGSVGElementImpl::suspendRedraw(unsigned long max_wait_milliseconds )
+unsigned long SVGSVGElementImpl::suspendRedraw(unsigned long /*max_wait_milliseconds*/ )
 {
     return 0L;
 }
@@ -114,7 +114,7 @@ unsigned long SVGSVGElementImpl::suspendRedraw(unsigned long max_wait_millisecon
 /**
  *
  */
-void SVGSVGElementImpl::unsuspendRedraw(unsigned long suspend_handle_id )
+void SVGSVGElementImpl::unsuspendRedraw(unsigned long /*suspend_handle_id*/ )
                                   throw ( DOMException )
 {
 }
@@ -160,8 +160,8 @@ bool SVGSVGElementImpl::animationsPaused(  )
 /**
  *
  */
-NodeList SVGSVGElementImpl::getIntersectionList(const SVGRect &rect,
-                                           const SVGElementPtr referenceElement )
+NodeList SVGSVGElementImpl::getIntersectionList(const SVGRect &/*rect*/,
+						const SVGElementPtr /*referenceElement*/ )
 {
     NodeList list;
     return list;
@@ -170,8 +170,8 @@ NodeList SVGSVGElementImpl::getIntersectionList(const SVGRect &rect,
 /**
  *
  */
-NodeList SVGSVGElementImpl::getEnclosureList(const SVGRect &rect,
-                                        const SVGElementPtr referenceElement )
+NodeList SVGSVGElementImpl::getEnclosureList(const SVGRect &/*rect*/,
+					     const SVGElementPtr /*referenceElement*/ )
 {
     NodeList list;
     return list;
@@ -180,8 +180,8 @@ NodeList SVGSVGElementImpl::getEnclosureList(const SVGRect &rect,
 /**
  *
  */
-bool SVGSVGElementImpl::checkIntersection(const SVGElementPtr element,
-                                          const SVGRect &rect )
+bool SVGSVGElementImpl::checkIntersection(const SVGElementPtr /*element*/,
+                                          const SVGRect &/*rect*/ )
 {
     return false;
 }
@@ -189,8 +189,8 @@ bool SVGSVGElementImpl::checkIntersection(const SVGElementPtr element,
 /**
  *
  */
-bool SVGSVGElementImpl::checkEnclosure(const SVGElementPtr element,
-                                       const SVGRect &rect )
+bool SVGSVGElementImpl::checkEnclosure(const SVGElementPtr /*element*/,
+                                       const SVGRect &/*rect*/ )
 {
     return false;
 }
@@ -205,7 +205,7 @@ void SVGSVGElementImpl::deselectAll(  )
 /**
  *
  */
-ElementPtr SVGSVGElementImpl::getElementById(const DOMString& elementId )
+ElementPtr SVGSVGElementImpl::getElementById(const DOMString& /*elementId*/ )
 {
     return NULL;
 }
@@ -406,7 +406,7 @@ double SVGPathElementImpl::getTotalLength(  )
 /**
  *
  */
-SVGPoint SVGPathElementImpl::getPointAtLength(double distance )
+SVGPoint SVGPathElementImpl::getPointAtLength(double /*distance*/ )
 {
     SVGPoint ret;
     return ret;
@@ -415,7 +415,7 @@ SVGPoint SVGPathElementImpl::getPointAtLength(double distance )
 /**
  *
  */
-unsigned long SVGPathElementImpl::getPathSegAtLength(double distance )
+unsigned long SVGPathElementImpl::getPathSegAtLength(double /*distance*/ )
 {
     return 0L;
 }
@@ -581,7 +581,7 @@ double SVGTextContentElementImpl::getComputedTextLength(  )
 /**
  *
  */
-double SVGTextContentElementImpl::getSubStringLength(unsigned long charnum, unsigned long nchars )
+double SVGTextContentElementImpl::getSubStringLength(unsigned long /*charnum*/, unsigned long /*nchars*/ )
                                      throw ( DOMException )
 {
     return 0.0;
@@ -590,7 +590,7 @@ double SVGTextContentElementImpl::getSubStringLength(unsigned long charnum, unsi
 /**
  *
  */
-SVGPoint SVGTextContentElementImpl::getStartPositionOfChar(unsigned long charnum )
+SVGPoint SVGTextContentElementImpl::getStartPositionOfChar(unsigned long /*charnum*/ )
                                               throw ( DOMException )
 {
     SVGPoint ret;
@@ -600,7 +600,7 @@ SVGPoint SVGTextContentElementImpl::getStartPositionOfChar(unsigned long charnum
 /**
  *
  */
-SVGPoint SVGTextContentElementImpl::getEndPositionOfChar(unsigned long charnum )
+SVGPoint SVGTextContentElementImpl::getEndPositionOfChar(unsigned long /*charnum*/ )
                                            throw ( DOMException )
 {
     SVGPoint ret;
@@ -610,7 +610,7 @@ SVGPoint SVGTextContentElementImpl::getEndPositionOfChar(unsigned long charnum )
 /**
  *
  */
-SVGRect SVGTextContentElementImpl::getExtentOfChar(unsigned long charnum )
+SVGRect SVGTextContentElementImpl::getExtentOfChar(unsigned long /*charnum*/ )
                                       throw ( DOMException )
 {
     SVGRect ret;
@@ -620,7 +620,7 @@ SVGRect SVGTextContentElementImpl::getExtentOfChar(unsigned long charnum )
 /**
  *
  */
-double SVGTextContentElementImpl::getRotationOfChar(unsigned long charnum )
+double SVGTextContentElementImpl::getRotationOfChar(unsigned long /*charnum*/ )
                                      throw ( DOMException )
 {
     return 0.0;
@@ -629,7 +629,7 @@ double SVGTextContentElementImpl::getRotationOfChar(unsigned long charnum )
 /**
  *
  */
-long SVGTextContentElementImpl::getCharNumAtPosition(const SVGPoint &point )
+long SVGTextContentElementImpl::getCharNumAtPosition(const SVGPoint &/*point*/ )
 {
     return 0L;
 }
@@ -637,8 +637,8 @@ long SVGTextContentElementImpl::getCharNumAtPosition(const SVGPoint &point )
 /**
  *
  */
-void SVGTextContentElementImpl::selectSubString(unsigned long charnum,
-                                                unsigned long nchars )
+void SVGTextContentElementImpl::selectSubString(unsigned long /*charnum*/,
+                                                unsigned long /*nchars*/ )
                                                 throw ( DOMException )
 {
 }
