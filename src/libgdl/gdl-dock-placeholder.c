@@ -491,7 +491,7 @@ gdl_dock_placeholder_dock (GdlDockObject    *object,
         GdlDockObject *toplevel;
         
         if (!gdl_dock_object_is_bound (GDL_DOCK_OBJECT (ph))) {
-            g_warning (_("Attempt to dock a dock object to an unbound placeholder"));
+            g_warning ("%s",_("Attempt to dock a dock object to an unbound placeholder"));
             return;
         }
         

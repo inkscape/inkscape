@@ -60,7 +60,7 @@ icon_set_from_data (GtkIconSet       *set,
 	
 	pixbuf = gdk_pixbuf_new_from_inline (data_size, icon_data, FALSE, &err);
 	if (err) {
-	    g_warning (err->message);
+	    g_warning ("%s",err->message);
 	    g_error_free (err);
 	    err = NULL;
 	    g_object_unref (source);
