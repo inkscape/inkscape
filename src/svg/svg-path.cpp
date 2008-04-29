@@ -404,94 +404,85 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final, const char
     }
 }
 
-static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
-{
-    int i = 0;
-    double val = 0;
-    char c = 0;
-    bool in_num = false;
-    bool in_frac = false;
-    bool in_exp = false;
-    bool exp_wait_sign = false;
-    int sign = 0;
-    int exp = 0;
-    int exp_sign = 0;
-    double frac = 0.0;
+static char const* rsvg_parse_unsigned_int(guint64 *val, char const *begin, bool zeroVal = true) {
+    if (zeroVal) *val = 0;
+    while('0' <= *begin && *begin <= '9') {
+        *val *= 10;
+        *val += *begin - '0';
+        begin++;
+    }
+    return begin;
+}
 
+static char const* rsvg_parse_sign(bool *neg, char const *begin) {
+    *neg = false;
+    if (*begin == '+') {
+        begin++;
+    } else if (*begin == '-') {
+        *neg = true;
+        begin++;
+    }
+    return begin;
+}
+
+static char const* rsvg_parse_int(gint64 *val, char const *begin) {
+    bool neg;
+    char const *begin_of_int = rsvg_parse_sign(&neg, begin);
+    char const *end_of_int = rsvg_parse_unsigned_int((guint64*)val, begin_of_int);
+    if (neg) *val = -(*val);
+    return end_of_int==begin_of_int ? begin : end_of_int;
+}
+
+static char const* rsvg_parse_unsigned_float(double *val, char const *begin) {
+    // A number is either one or more digits, optionally followed by a period and zero or more digits (and an exponent),
+    //                 or zero or more digits, followed by a period and one or more digits (and an exponent)
+    // See http://www.w3.org/TR/SVG/paths.html#PathDataBNF
+    guint64 intval;
+    int exp=0;
+    char const *begin_of_num = begin;
+    char const *end_of_num = rsvg_parse_unsigned_int(&intval, begin_of_num);
+    if (*end_of_num == '.') {
+        char const *begin_of_frac = end_of_num+1;
+        char const *end_of_frac = rsvg_parse_unsigned_int(&intval, begin_of_frac, false);
+        if (end_of_num != begin_of_num || end_of_frac != begin_of_frac) {
+            end_of_num = end_of_frac;
+            exp = -(int)(end_of_frac-begin_of_frac);
+        }
+    }
+    if (end_of_num != begin_of_num && (*end_of_num == 'e' || *end_of_num == 'E')) {
+        gint64 exponent;
+        char const *begin_of_exp = end_of_num+1;
+        char const *end_of_exp = rsvg_parse_int(&exponent, begin_of_exp);
+        if (end_of_exp != begin_of_exp) {
+            end_of_num = end_of_exp;
+            exp += (int)exponent;
+        }
+    }
+    *val = (double)intval * pow(10., exp);
+    return end_of_num;
+}
+
+static char const* rsvg_parse_float(double *val, char const *begin) {
+    bool neg;
+    char const *begin_of_num = rsvg_parse_sign(&neg, begin);
+    char const *end_of_num = rsvg_parse_unsigned_float(val, begin_of_num);
+    if (neg) *val = -(*val);
+    return end_of_num == begin_of_num ? begin : end_of_num;
+}
+
+static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, char const *begin) {
     /* fixme: Do better error processing: e.g. at least stop parsing as soon as we find an error.
      * At some point we'll need to do all of
      * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing.
      */
-    for (i = 0; ; i++)
-    {
-        c = data[i];
-        if (c >= '0' && c <= '9')
-        {
-            /* digit */
-            if (in_num)
-            {
-                if (in_exp)
-                {
-                    exp = (exp * 10) + c - '0';
-                    exp_wait_sign = false;
-                }
-                else if (in_frac)
-                    val += (frac *= 0.1) * (c - '0');
-                else
-                    val = (val * 10) + c - '0';
-            }
-            else
-            {
-                in_num = true;
-                assert(!in_frac && !in_exp);
-                exp = 0;
-                exp_sign = 1;
-                exp_wait_sign = false;
-                val = c - '0';
-                sign = 1;
-            }
-        }
-        else if (c == '.' && !(in_frac || in_exp))
-        {
-            if (!in_num)
-            {
-                in_num = true;
-                assert(!in_exp);
-                exp = 0;
-                exp_sign = 1;
-                exp_wait_sign = false;
-                val = 0;
-                sign = 1;
-            }
-            in_frac = true;
-            frac = 1;
-        }
-        else if ((c == 'E' || c == 'e') && in_num && !in_exp)
-        {
-            /* fixme: Should we add `&& !in_exp' to the above condition?
-             * It looks like the current code will parse `1e3e4' (as 1e4). */
-            in_exp = true;
-            exp_wait_sign = true;
-            exp = 0;
-            exp_sign = 1;
-        }
-        else if ((c == '+' || c == '-') && in_exp && exp_wait_sign)
-        {
-            exp_sign = c == '+' ? 1 : -1;
-            exp_wait_sign = false;
-        }
-        else if (in_num)
-        {
-            /* end of number */
-
-            val *= sign * pow (10, exp_sign * exp);
-            if (ctx->rel)
-            {
-                /* Handle relative coordinates. This switch statement attempts
-                   to determine _what_ the coords are relative to. This is
-                   underspecified in the 12 Apr working draft. */
-                switch (ctx->cmd)
-                {
+    do {
+        double val;
+        char const *end = rsvg_parse_float(&val, begin);
+        if (end != begin) {
+            begin = end;
+            if (ctx->rel) {
+                /* Handle relative coordinates. */
+                switch (ctx->cmd) {
                 case 'l':
                 case 'm':
                 case 'c':
@@ -503,7 +494,7 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
                     } else {
                         val += ctx->cpx; /* even param, x */
                     }
-		    break;
+                    break;
                 case 'a':
                     /* rule: sixth and seventh are x and y, rest are not
                        relative */
@@ -524,43 +515,15 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
             }
             ctx->params[ctx->param++] = val;
             rsvg_parse_path_do_cmd (ctx, false, 0); // We don't know the next command yet
-            if (c=='.') {
-                in_num = true;
-                val = 0;
-                in_frac = true;
-                in_exp = false;
-                frac = 1;
-            }
-            else {
-                in_num = false;
-                in_frac = false;
-                in_exp = false;
-            }
         }
-
-        if (c == '\0')
-            break;
-        else if ((c == '+' || c == '-') && !in_exp && !exp_wait_sign)
-        {
-            sign = c == '+' ? 1 : -1;;
-            val = 0;
-            in_num = true;
-            in_frac = false;
-            in_exp = false;
-            exp = 0;
-            exp_sign = 1;
-            exp_wait_sign = false;
-        }
-        else if (c >= 'A' && c <= 'Z' && c != 'E')
-        {
+        char c = *begin;
+        if (c >= 'A' && c <= 'Z' && c != 'E') {
             char next_cmd = c + 'a' - 'A';
             if (ctx->cmd)
                 rsvg_parse_path_do_cmd (ctx, true, next_cmd);
             ctx->cmd = next_cmd;
             ctx->rel = false;
-        }
-        else if (c >= 'a' && c <= 'z' && c != 'e')
-        {
+        } else if (c >= 'a' && c <= 'z' && c != 'e') {
             char next_cmd = c;
             if (ctx->cmd)
                 rsvg_parse_path_do_cmd (ctx, true, next_cmd);
@@ -568,7 +531,7 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
             ctx->rel = true;
         }
         /* else c _should_ be whitespace or , */
-    }
+    } while(*(begin++));
     if (ctx->cmd)
         rsvg_parse_path_do_cmd (ctx, true, 0);
 }
