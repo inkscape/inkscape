@@ -6,7 +6,7 @@
  * the current SVG document.
  *
  * Authors:
- *   Bob Jamison <rjamison@titan.com>
+ *   Bob Jamison <ishmal@inkscape.org>
  *
  * Copyright (C) 2004-2008 Authors
  *
@@ -72,7 +72,7 @@ private:
 	/**
 	 * Format text to our output buffer
 	 */     	
-	void out(char const *fmt, ...) G_GNUC_PRINTF(2,3);
+	void out(const char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     /**
      * Output a 2d vector

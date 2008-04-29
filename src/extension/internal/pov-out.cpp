@@ -9,7 +9,7 @@
  *      http://www.povray.org
  *
  * Authors:
- *   Bob Jamison <ishmalius@gmail.com>
+ *   Bob Jamison <ishmal@inkscape.org>
  *
  * Copyright (C) 2004-2008 Authors
  *
@@ -113,7 +113,7 @@ static PovOutput::String dstr(double d)
 /**
  *  Output data to the buffer, printf()-style
  */
-void PovOutput::out(char const *fmt, ...)
+void PovOutput::out(const char *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
@@ -132,11 +132,7 @@ void PovOutput::out(char const *fmt, ...)
  */
 void PovOutput::vec2(double a, double b)
 {
-    out("<");
-    out(dstr(a).c_str());
-    out(", ");
-    out(dstr(b).c_str());
-    out(">");
+    out("<%s, %s>", dstr(a).c_str(), dstr(b).c_str());
 }
 
 
@@ -146,13 +142,7 @@ void PovOutput::vec2(double a, double b)
  */
 void PovOutput::vec3(double a, double b, double c)
 {
-    out("<");
-    out(dstr(a).c_str());
-    out(", ");
-    out(dstr(b).c_str());
-    out(", ");
-    out(dstr(c).c_str());
-    out(">");
+    out("<%s, %s, %s>", dstr(a).c_str(), dstr(b).c_str(), dstr(c).c_str());
 }
 
 
@@ -162,15 +152,8 @@ void PovOutput::vec3(double a, double b, double c)
  */
 void PovOutput::vec4(double a, double b, double c, double d)
 {
-    out("<");
-    out(dstr(a).c_str());
-    out(", ");
-    out(dstr(b).c_str());
-    out(", ");
-    out(dstr(c).c_str());
-    out(", ");
-    out(dstr(d).c_str());
-    out(">");
+    out("<%s, %s, %s, %s>", dstr(a).c_str(), dstr(b).c_str(),
+	         dstr(c).c_str(), dstr(d).c_str());
 }
 
 
