@@ -99,7 +99,7 @@ Curve* SVGEllipticalArc::portion(double f, double t) const
 }
 
 // NOTE: doesn't work with 360 deg arcs
-void SVGEllipticalArc::calculate_center_and_extreme_angles()
+void SVGEllipticalArc::calculate_center_and_extreme_angles() throw(RangeError)
 {
     double sin_rot_angle = std::sin(rotation_angle());
     double cos_rot_angle = std::cos(rotation_angle());
@@ -125,8 +125,11 @@ void SVGEllipticalArc::calculate_center_and_extreme_angles()
             half_diff_angle = M_PI;
         else
         {
-            assert( -1 < arg && arg < 1 );
-            //  if it fails 
+        	if ( !(-1 < arg && arg < 1) )
+        		throwRangeError("there is no ellipse that satisfies the given "
+        						"constraints");
+            // assert( -1 < arg && arg < 1 );
+            // if it fails 
             // => there is no ellipse that satisfies the given constraints
             half_diff_angle = std::acos( arg );
         }
@@ -143,7 +146,10 @@ void SVGEllipticalArc::calculate_center_and_extreme_angles()
             half_diff_angle = -M_PI/2;
         else
         {
-            assert( -1 < arg && arg < 1 );  
+        	if ( !(-1 < arg && arg < 1) )
+        		throwRangeError("there is no ellipse that satisfies the given "
+        						"constraints");
+            // assert( -1 < arg && arg < 1 );
             // if it fails 
             // => there is no ellipse that satisfies the given constraints
             half_diff_angle = std::asin( arg );

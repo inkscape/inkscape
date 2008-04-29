@@ -472,7 +472,7 @@ class SVGEllipticalArc : public Curve
 
     Coord from_01_to_02PI(Coord t) const;
 
-    void calculate_center_and_extreme_angles();
+    void calculate_center_and_extreme_angles() throw(RangeError);
     
   private:
     Point m_initial_point, m_final_point;
