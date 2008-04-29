@@ -440,6 +440,8 @@ static int _win32_set_inkscape_env(char *argv0)
     tmp += szFullPath;
     tmp += "python;";
     tmp += szFullPath;
+    tmp += "python\\Scripts;";  // for uniconv.cmd
+    tmp += szFullPath;
     tmp += "perl";
     if(oldenv != NULL) {
         tmp += ";";

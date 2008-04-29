@@ -3,7 +3,7 @@
     <_name>Computer Graphics Metafile files input</_name>
     <id>org.inkscape.input.cgm</id>
     <dependency type="executable" location="path">uniconv</dependency>
-    <dependency type="executable" location="extensions">cdr2svg.sh</dependency>
+    <dependency type="executable" location="extensions">uniconv-ext.py</dependency>
     <input>
         <extension>.cgm</extension>
         <mimetype>application/x-xcgm</mimetype>
@@ -11,6 +11,6 @@
         <_filetypetooltip>Open Computer Graphics Metafile files</_filetypetooltip>
     </input>
     <script>
-        <command reldir="extensions">cdr2svg.sh</command>
+        <command reldir="extensions" interpreter="python">uniconv-ext.py</command>
     </script>
 </inkscape-extension>

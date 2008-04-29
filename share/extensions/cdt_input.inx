@@ -3,7 +3,7 @@
     <_name>Corel DRAW templates input</_name>
     <id>org.inkscape.input.cdt</id>
     <dependency type="executable" location="path">uniconv</dependency>
-    <dependency type="executable" location="extensions">cdr2svg.sh</dependency>
+    <dependency type="executable" location="extensions">uniconv-ext.py</dependency>
     <input>
         <extension>.cdt</extension>
         <mimetype>application/x-xcdt</mimetype>
@@ -11,6 +11,6 @@
         <_filetypetooltip>Open files saved in Corel DRAW 7-13</_filetypetooltip>
     </input>
     <script>
-        <command reldir="extensions">cdr2svg.sh</command>
+        <command reldir="extensions" interpreter="python">uniconv-ext.py</command>
     </script>
 </inkscape-extension>

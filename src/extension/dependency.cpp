@@ -213,17 +213,29 @@ Dependency::check (void) const
                             g_free(orig_path);
                             return TRUE;
                         }
+
                         // give it a 2nd try with ".exe" added
-                        gchar * final_name_exe = g_strdup_printf ("%s.exe", final_name);                        
+                        gchar * final_name_exe = g_strdup_printf("%s.exe", final_name);                        
                         if (Glib::file_test(final_name_exe, filetest)) {
                             g_free(final_name);
                             g_free(final_name_exe);
                             g_free(orig_path);
                             return TRUE;
                         }
-
-                        g_free(final_name);
                         g_free(final_name_exe);
+
+                        // and a 3rd try with ".cmd" added (mainly for UniConvertor)
+                        gchar * final_name_cmd = g_strdup_printf("%s.cmd", final_name);
+                        if (Glib::file_test(final_name_cmd, filetest)) {
+                            g_free(final_name);
+                            g_free(final_name_cmd);
+                            g_free(orig_path);
+                            return TRUE;
+                        }
+                        g_free(final_name_cmd);
+
+                        // give up
+                        g_free(final_name);
                     }
 
                     g_free(orig_path);
