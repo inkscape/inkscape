@@ -13,7 +13,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005-2007 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -81,23 +81,23 @@ public:
     /**
      * Copy constructor
      */
-    URI(DOMString const &str);
+    URI(const DOMString &str);
 
 
     /**
      * Parsing constructor
      */
-    URI(char const *str);
+    URI(const char *str);
 
     /**
      * Copy constructor
      */
-    URI(URI const &other);
+    URI(const URI &other);
 
     /**
      *  Assignment operator
      */
-    URI &operator=(URI const &other);
+    URI &operator=(const URI &other);
 
     /**
      * Destructor
@@ -107,7 +107,7 @@ public:
     /**
      * Parse a string to initialize this URI.
      */
-    virtual bool parse(DOMString const &str);
+    virtual bool parse(const DOMString &str);
 
     /**
      * Produce a string displaying this URI's current value, in W3C format.
@@ -399,7 +399,7 @@ public:
      *     "/../" or "/./".
      * 
      */
-    virtual URI resolve(URI const &other) const;
+    virtual URI resolve(const URI &other) const;
 
     /**
      * "Mends" a URI by examining the path, and converting it to canonical
@@ -414,7 +414,7 @@ private:
     void init();
 
     //assign values of other to this. used by copy constructor
-    void assign(URI const &other);
+    void assign(const URI &other);
 
     int scheme;
 
@@ -436,13 +436,13 @@ private:
 
     std::vector<int> fragment;
 
-    void error(char const *fmt, ...)
+    void error(const char *fmt, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif
     ;
 
-    void trace(char const *fmt, ...)
+    void trace(const char *fmt, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif

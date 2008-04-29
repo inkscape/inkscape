@@ -84,9 +84,8 @@ void UriInputStream::init() throw (StreamException)
 
         case URI::SCHEME_DATA:
             {
-            DOMString path = uri.getPath();
-            data        = (unsigned char *) uri.getPath().c_str();
-            //printf("in data:'%s'\n", data);
+            data        = uri.getPath();
+            //printf("in data:'%s'\n", data.c_str());
             dataPos     = 0;
             dataLen     = uri.getPath().size();
             break;
@@ -358,7 +357,7 @@ void UriOutputStream::close() throw(StreamException)
 
         case URI::SCHEME_DATA:
             {
-            uri = URI(data.c_str());
+            uri = URI(data);
             break;
             }
 
@@ -366,6 +365,7 @@ void UriOutputStream::close() throw(StreamException)
 
     closed = true;
 }
+
 
 /**
  *  Flushes this output stream and forces any buffered output

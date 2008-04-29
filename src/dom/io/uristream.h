@@ -13,7 +13,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -82,7 +82,7 @@ private:
     bool closed;
 
     FILE *inf;           //for file: uris
-    unsigned char *data; //for data: uris
+    DOMString data;      //for data: uris
     int dataPos;         //  current read position in data field
     int dataLen;         //  length of data buffer
 

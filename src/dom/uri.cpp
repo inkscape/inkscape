@@ -173,7 +173,7 @@ void URI::assign(const URI &other)
 //#########################################################################
 //#A T T R I B U T E S
 //#########################################################################
-static char *hexChars = "0123456789abcdef";
+static const char *hexChars = "0123456789abcdef";
 
 static DOMString toStr(const std::vector<int> &arr)
 {
@@ -342,9 +342,9 @@ static int findLast(const std::vector<int> &str, int ch)
 }
 
 
-static bool sequ(const std::vector<int> &str, char *key)
+static bool sequ(const std::vector<int> &str, const char *key)
 {
-    char *c = key;
+    char *c = (char *)key;
     for (unsigned int i=0 ; i<str.size() ; i++)
         {
         if (! (*c))
