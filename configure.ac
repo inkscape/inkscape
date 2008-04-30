@@ -50,8 +50,6 @@ if test "$GCC" = "yes"; then
 
   # Enable all default warnings, and also format and format security warnings
   CFLAGS="-Wall -Wformat -Wformat-security $CFLAGS"
-  # Have linker produce read-only relocations, if it knows how
-  CFLAGS="-Wl,-z,relro $CFLAGS"
   # What is just plain "-W" ?
   # Fortify source requires -O2 or higher, which is handled separately.
   CFLAGS="-W -D_FORTIFY_SOURCE=2 $CFLAGS"
@@ -66,6 +64,17 @@ if test "$GCC" = "yes"; then
   if test "x$gcc_opt_ok" != "xyes"; then
     CFLAGS="$ink_svd_CFLAGS"
   fi
+
+  # Have linker produce read-only relocations, if it knows how
+  AC_MSG_CHECKING([gcc support for -Wl,-z,relro])
+  ink_svd_CFLAGS="$CFLAGS"
+  CFLAGS="-Wl,-z,relro $CFLAGS"
+  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [gcc_opt_ok=yes], [gcc_opt_ok=no])
+  AC_MSG_RESULT([$gcc_opt_ok])
+  if test "x$gcc_opt_ok" != "xyes"; then
+    CFLAGS="$ink_svd_CFLAGS"
+  fi
+
 
   AC_LANG_POP
 fi
@@ -777,8 +786,6 @@ if test "$GXX" = "yes"; then
 
   # Enable all default warnings, and also format and format security warnings
   CXXFLAGS="-Wall -Wformat -Wformat-security $CXXFLAGS"
-  # Have linker produce read-only relocations, if it knows how
-  CXXFLAGS="-Wl,-z,relro $CXXFLAGS"
   # What is just plain "-W" ?
   # Fortify source requires -O2 or higher, which is handled separately.
   CXXFLAGS="-W -D_FORTIFY_SOURCE=2 $CXXFLAGS"
@@ -790,7 +797,17 @@ if test "$GXX" = "yes"; then
   AC_MSG_CHECKING([g++ support for -Werror=format-security])
   ink_svd_CXXFLAGS="$CXXFLAGS"
   CXXFLAGS="-Werror=format-security $CXXFLAGS"
-  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [gxx_opt_ok=yes], [gcc_opt_ok=no])
+  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [gxx_opt_ok=yes], [gxx_opt_ok=no])
+  AC_MSG_RESULT([$gxx_opt_ok])
+  if test "x$gxx_opt_ok" != "xyes"; then
+    CXXFLAGS="$ink_svd_CXXFLAGS"
+  fi
+
+  # Have linker produce read-only relocations, if it knows how
+  AC_MSG_CHECKING([g++ support for -Wl,-z,relro])
+  ink_svd_CXXFLAGS="$CXXFLAGS"
+  CXXFLAGS="-Wl,-z,relro $CXXFLAGS"
+  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [gxx_opt_ok=yes], [gxx_opt_ok=no])
   AC_MSG_RESULT([$gxx_opt_ok])
   if test "x$gxx_opt_ok" != "xyes"; then
     CXXFLAGS="$ink_svd_CXXFLAGS"
