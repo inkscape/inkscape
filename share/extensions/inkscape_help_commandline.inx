@@ -3,7 +3,7 @@
     <_name>Command Line Options</_name>
     <id>org.inkscape.help.commandline</id>
 	<dependency type="executable" location="extensions">launch_webbrowser.py</dependency>
-	<param name="url" gui-hidden="1" type="string">http://inkscape.org/doc/inkscape-man.html</param>
+	<param name="url" gui-hidden="true" type="string">http://inkscape.org/doc/inkscape-man.html</param>
     <effect needs-document="false">
 		<object-type>all</object-type>
 		<effects-menu hidden="true"/>
