@@ -1,5 +1,10 @@
 #!/usr/bin/env python 
 '''
+This extension either adds nodes to a path so that
+    a) no segment is longer than a maximum value 
+    or
+    b) so that each segment is divided into a given number of equal segments
+
 Copyright (C) 2005,2007 Aaron Spike, aaron@ekips.org
 
 This program is free software; you can redistribute it and/or modify
@@ -16,7 +21,9 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import inkex, cubicsuperpath, simplestyle, copy, math, re, bezmisc
+
+import inkex
+import cubicsuperpath, simplestyle, copy, math, re, bezmisc
 
 def numsegs(csp):
     return sum([len(p)-1 for p in csp])
@@ -58,11 +65,21 @@ def numlengths(csplen):
 class SplitIt(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
-        self.OptionParser.add_option("-m", "--max",
-                        action="store", type="float", 
-                        dest="max", default=0.0,
-                        help="maximum segment length")
+        self.OptionParser.add_option("--segments",
+                        action="store", type="int", 
+                        dest="segments", default=2,
+                        help="Number of segments to divide the path into")
+        self.OptionParser.add_option("--max",
+                        action="store", type="int", 
+                        dest="max", default=2,
+                        help="Number of segments to divide the path into")
+        self.OptionParser.add_option("--method",
+                        action="store", type="string", 
+                        dest="method", default='',
+                        help="The kind of division to perform")
+
     def effect(self):
+
         for id, node in self.selected.iteritems():
             if node.tag == inkex.addNS('path','svg'):
                 p = cubicsuperpath.parsePath(node.get('d'))
@@ -77,11 +94,15 @@ class SplitIt(inkex.Effect):
                     i = 1
                     while i <= len(sub)-1:
                         length = cspseglength(new[-1][-1], sub[i])
-                        if length > self.options.max:
+                        
+                        if self.options.method == 'bynum':
+                            splits = self.options.segments
+                        else:
                             splits = math.ceil(length/self.options.max)
-                            for s in xrange(int(splits),1,-1):
-                                new[-1][-1], next, sub[i] = cspbezsplitatlength(new[-1][-1], sub[i], 1.0/s)
-                                new[-1].append(next[:])
+
+                        for s in xrange(int(splits),1,-1):
+                            new[-1][-1], next, sub[i] = cspbezsplitatlength(new[-1][-1], sub[i], 1.0/s)
+                            new[-1].append(next[:])
                         new[-1].append(sub[i])
                         i+=1
                     
