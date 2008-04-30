@@ -17,7 +17,7 @@
 
 #include "ui/widget/registered-widget.h"
 #include "ui/widget/registry.h"
-#include "ui/widget/tolerance-slider.h"
+//#include "ui/widget/tolerance-slider.h"
 
 #include "xml/node-event-vector.h"
 

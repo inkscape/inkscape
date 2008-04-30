@@ -274,20 +274,20 @@ DocumentProperties::build_snap()
 {
     _page_snap.show();
 
-    _rsu_sno.init (_("Snap _distance"), _("Snap only when _closer than:"),
-                  _("Snapping distance, in screen pixels, for snapping to objects"),
+    _rsu_sno.init (_("Snap _distance"), _("Snap only when _closer than:"), _("Always snap"),
+                  _("Snapping distance, in screen pixels, for snapping to objects"), _("Always snap to objects, regardless of their distance"),
                   _("If set, objects only snap to another object when it's within the range specified below"),
                   "objecttolerance", _wr);
 
     //Options for snapping to grids
-    _rsu_sn.init (_("Snap d_istance"), _("Snap only when c_loser than:"),
-                  _("Snapping distance, in screen pixels, for snapping to grid"),
+    _rsu_sn.init (_("Snap d_istance"), _("Snap only when c_loser than:"), _("Always snap"),
+                  _("Snapping distance, in screen pixels, for snapping to grid"), _("Always snap to grids, regardless of the distance"),
                   _("If set, objects only snap to a grid line when it's within the range specified below"),
                   "gridtolerance", _wr);
 
     //Options for snapping to guides
-    _rsu_gusn.init (_("Snap dist_ance"), _("Snap only when close_r than:"),
-                _("Snapping distance, in screen pixels, for snapping to guides"),
+    _rsu_gusn.init (_("Snap dist_ance"), _("Snap only when close_r than:"), _("Always snap"),
+                _("Snapping distance, in screen pixels, for snapping to guides"), _("Always snap to guides, regardless of the distance"),
                 _("If set, objects only snap to a guide when it's within the range specified below"),
                 "guidetolerance", _wr);
 

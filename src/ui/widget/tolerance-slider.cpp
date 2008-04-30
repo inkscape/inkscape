@@ -54,7 +54,7 @@ ToleranceSlider::~ToleranceSlider()
 }
 
 void
-ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2, const Glib::ustring& tip1, const Glib::ustring& tip2, const Glib::ustring& key, Registry& wr)
+ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2, const Glib::ustring& label3, const Glib::ustring& tip1, const Glib::ustring& tip2, const Glib::ustring& tip3, const Glib::ustring& key, Registry& wr)
 {
     // hbox = label + slider
     //
@@ -87,17 +87,26 @@ ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2,
     
     Gtk::Label *theLabel2 = manage (new Gtk::Label (label2));
     theLabel2->set_use_underline();
-    _button = manage (new Gtk::CheckButton);
-    _tt.set_tip (*_button, tip2);
-    _button->add (*theLabel2);
-    _button->set_alignment (0.0, 0.5);
+    Gtk::Label *theLabel3 = manage (new Gtk::Label (label3));
+    theLabel3->set_use_underline();    
+    _button1 = manage (new Gtk::RadioButton);
+    _radio_button_group = _button1->get_group();
+    _button2 = manage (new Gtk::RadioButton);
+    _button2->set_group(_radio_button_group);    
+    _tt.set_tip (*_button1, tip2);
+    _tt.set_tip (*_button2, tip3);    
+    _button1->add (*theLabel3);
+    _button1->set_alignment (0.0, 0.5);    
+    _button2->add (*theLabel2);
+    _button2->set_alignment (0.0, 0.5);
     
-    _vbox->add (*_button);
+    _vbox->add (*_button1);
+    _vbox->add (*_button2);    
     // Here we need some extra pixels to get the vertical spacing right. Why? 
     _vbox->pack_end(*_hbox, true, true, 3); // add 3 px.  
     _key = key;
     _scale_changed_connection = _hscale->signal_value_changed().connect (sigc::mem_fun (*this, &ToleranceSlider::on_scale_changed));
-    _btn_toggled_connection = _button->signal_toggled().connect (sigc::mem_fun (*this, &ToleranceSlider::on_toggled));
+    _btn_toggled_connection = _button2->signal_toggled().connect (sigc::mem_fun (*this, &ToleranceSlider::on_toggled));
     _wr = &wr;
     _vbox->show_all_children();
 }
@@ -113,13 +122,15 @@ ToleranceSlider::setValue (double val)
 
     if (val > 9999.9) // magic value 10000.0
     {
-        _button->set_active (false);
+        _button1->set_active (true);
+        _button2->set_active (false);        
         _hbox->set_sensitive (false);
         val = 50.0;
     }
     else
     {
-        _button->set_active (true);
+        _button1->set_active (false);
+        _button2->set_active (true);        
         _hbox->set_sensitive (true);
     }
     _hscale->set_value (val);
@@ -142,7 +153,7 @@ ToleranceSlider::on_scale_changed()
 void
 ToleranceSlider::on_toggled()
 {
-    if (!_button->get_active())
+    if (!_button2->get_active())
     {
         _old_val = _hscale->get_value();
         _hbox->set_sensitive (false);

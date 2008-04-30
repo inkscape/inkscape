@@ -16,6 +16,7 @@
 
 #include <gtkmm/tooltips.h>
 #include <gtkmm/checkbutton.h>
+#include <gtkmm/radiobutton.h>
 
 namespace Inkscape {
 namespace UI {
@@ -29,8 +30,10 @@ public:
     ~ToleranceSlider();
     void init (const Glib::ustring& label1, 
             const Glib::ustring& label2, 
+            const Glib::ustring& label3,
             const Glib::ustring& tip1,
             const Glib::ustring& tip2, 
+            const Glib::ustring& tip3,
             const Glib::ustring& key, 
             Registry& wr);
     void setValue (double);
@@ -43,7 +46,9 @@ protected:
     void update (double val);
     Gtk::HBox         *_hbox;
     Gtk::HScale       *_hscale;
-    Gtk::CheckButton  *_button;
+    Gtk::RadioButtonGroup _radio_button_group;
+    Gtk::RadioButton  *_button1;
+    Gtk::RadioButton  *_button2;
     Gtk::Tooltips      _tt;
     Registry          *_wr;
     Glib::ustring      _key;
