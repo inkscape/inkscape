@@ -15,7 +15,6 @@ moduledir = $(datadir)/inkscape/extensions
 extensions = \
 	addnodes.py \
 	bezmisc.py \
-	cdr2svg.sh\
 	chardataeffect.py\
 	color_brighter.py\
 	color_custom.py\
@@ -104,6 +103,7 @@ extensions = \
 	text_replace.py \
 	text_braille.py \
 	txt2svg.pl \
+	uniconv-ext.py \
 	whirl.py
 
 otherstuff = \
