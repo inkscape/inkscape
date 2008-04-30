@@ -35,48 +35,60 @@ AC_PROG_CC
 AM_PROG_CC_C_O
 if test "$GCC" = "yes"; then
   # Enable some warnings from gcc.
-
   AC_LANG_PUSH(C)
-  # -Wno-pointer-sign is probably new in gcc 4.0; certainly it isn't accepted
-  # by gcc 2.95.
-  AC_MSG_CHECKING([gcc support for -Wno-pointer-sign])
-  ink_svd_CFLAGS="$CFLAGS"
-  CFLAGS="-Wno-pointer-sign $CFLAGS"
-  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [gcc_opt_ok=yes], [gcc_opt_ok=no])
-  AC_MSG_RESULT([$gcc_opt_ok])
-  if test "x$gcc_opt_ok" != "xyes"; then
-    CFLAGS="$ink_svd_CFLAGS"
-  fi
 
-  # Enable all default warnings, and also format and format security warnings
-  CFLAGS="-Wall -Wformat -Wformat-security $CFLAGS"
+  ####
+  # Generic cpp flags...
+
   # What is just plain "-W" ?
-  # Fortify source requires -O2 or higher, which is handled separately.
-  CFLAGS="-W -D_FORTIFY_SOURCE=2 $CFLAGS"
+  # Fortify source requires -O2 or higher, which is handled with newer autoconf
+  CPPFLAGS="-W -D_FORTIFY_SOURCE=2 $CPPFLAGS"
+  # Enable format and format security warnings
+  CPPFLAGS="-Wformat -Wformat-security $CPPFLAGS"
+  # Enable all default warnings
+  CPPFLAGS="-Wall $CPPFLAGS"
 
   # Test for -Werror=... (introduced some time post-4.0)
   # If we hit a format error -- it should be fatal.
-  AC_MSG_CHECKING([gcc support for -Werror=format-security])
+  AC_MSG_CHECKING([compiler support for -Werror=format-security])
+  ink_svd_CPPFLAGS="$CPPFLAGS"
+  CPPFLAGS="-Werror=format-security $CPPFLAGS"
+  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [ink_opt_ok=yes], [ink_opt_ok=no])
+  AC_MSG_RESULT([$ink_opt_ok])
+  if test "x$ink_opt_ok" != "xyes"; then
+    CPPFLAGS="$ink_svd_CPPFLAGS"
+  fi
+
+  ####
+  # C-specific flags...
+
+  # -Wno-pointer-sign is probably new in gcc 4.0; certainly it isn't accepted
+  # by gcc 2.95.
+  AC_MSG_CHECKING([compiler support for -Wno-pointer-sign])
   ink_svd_CFLAGS="$CFLAGS"
-  CFLAGS="-Werror=format-security $CFLAGS"
-  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [gcc_opt_ok=yes], [gcc_opt_ok=no])
-  AC_MSG_RESULT([$gcc_opt_ok])
-  if test "x$gcc_opt_ok" != "xyes"; then
+  CFLAGS="-Wno-pointer-sign $CFLAGS"
+  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [ink_opt_ok=yes], [ink_opt_ok=no])
+  AC_MSG_RESULT([$ink_opt_ok])
+  if test "x$ink_opt_ok" != "xyes"; then
     CFLAGS="$ink_svd_CFLAGS"
   fi
+
+  ####
+  # Linker flags...
 
   # Have linker produce read-only relocations, if it knows how
-  AC_MSG_CHECKING([gcc support for -Wl,-z,relro])
-  ink_svd_CFLAGS="$CFLAGS"
-  CFLAGS="-Wl,-z,relro $CFLAGS"
-  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [gcc_opt_ok=yes], [gcc_opt_ok=no])
-  AC_MSG_RESULT([$gcc_opt_ok])
-  if test "x$gcc_opt_ok" != "xyes"; then
-    CFLAGS="$ink_svd_CFLAGS"
+  AC_MSG_CHECKING([linker tolerates -z relro])
+  ink_svd_LDFLAGS="$LDFLAGS"
+  LDFLAGS="-Wl,-z,relro $LDFLAGS"
+  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [ink_opt_ok=yes], [ink_opt_ok=no])
+  AC_MSG_RESULT([$ink_opt_ok])
+  if test "x$ink_opt_ok" != "xyes"; then
+    LDFLAGS="$ink_svd_LDFLAGS"
   fi
 
-
   AC_LANG_POP
+
+  # C++-specific flags are defined further below.  Look for CXXFLAGS...
 fi
 
 dnl Honor aclocal flags
@@ -783,35 +795,8 @@ if test "$GXX" = "yes"; then
   # programmer deliberately has an unused parameter (e.g. because it's used
   # as a callback or similar function pointer use).
 
-
-  # Enable all default warnings, and also format and format security warnings
-  CXXFLAGS="-Wall -Wformat -Wformat-security $CXXFLAGS"
-  # What is just plain "-W" ?
-  # Fortify source requires -O2 or higher, which is handled separately.
-  CXXFLAGS="-W -D_FORTIFY_SOURCE=2 $CXXFLAGS"
   # Add even more stuff
-  CXXFLAGS="-W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch $CXXFLAGS"
-
-  # Test for -Werror=... (introduced some time post-4.0)
-  # If we hit a format error -- it should be fatal.
-  AC_MSG_CHECKING([g++ support for -Werror=format-security])
-  ink_svd_CXXFLAGS="$CXXFLAGS"
-  CXXFLAGS="-Werror=format-security $CXXFLAGS"
-  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [gxx_opt_ok=yes], [gxx_opt_ok=no])
-  AC_MSG_RESULT([$gxx_opt_ok])
-  if test "x$gxx_opt_ok" != "xyes"; then
-    CXXFLAGS="$ink_svd_CXXFLAGS"
-  fi
-
-  # Have linker produce read-only relocations, if it knows how
-  AC_MSG_CHECKING([g++ support for -Wl,-z,relro])
-  ink_svd_CXXFLAGS="$CXXFLAGS"
-  CXXFLAGS="-Wl,-z,relro $CXXFLAGS"
-  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [gxx_opt_ok=yes], [gxx_opt_ok=no])
-  AC_MSG_RESULT([$gxx_opt_ok])
-  if test "x$gxx_opt_ok" != "xyes"; then
-    CXXFLAGS="$ink_svd_CXXFLAGS"
-  fi
+  CXXFLAGS="-Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch $CXXFLAGS"
 
   dnl Test for arch-specific situations.
   case "$host_cpu" in
