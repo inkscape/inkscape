@@ -39,7 +39,7 @@ if test "$GCC" = "yes"; then
   AC_LANG_PUSH(C)
   # -Wno-pointer-sign is probably new in gcc 4.0; certainly it isn't accepted
   # by gcc 2.95.
-  AC_MSG_CHECKING([support for -Wno-pointer-sign])
+  AC_MSG_CHECKING([gcc support for -Wno-pointer-sign])
   ink_svd_CFLAGS="$CFLAGS"
   CFLAGS="-Wno-pointer-sign $CFLAGS"
   AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [gcc_opt_ok=yes], [gcc_opt_ok=no])
@@ -48,11 +48,17 @@ if test "$GCC" = "yes"; then
     CFLAGS="$ink_svd_CFLAGS"
   fi
 
-  # This seems safe so far...
+  # Enable all default warnings, and also format and format security warnings
   CFLAGS="-Wall -Wformat -Wformat-security $CFLAGS"
+  # Have linker produce read-only relocations, if it knows how
+  CFLAGS="-Wl,-z,relro $CFLAGS"
+  # What is just plain "-W" ?
+  # Fortify source requires -O2 or higher, which is handled separately.
+  CFLAGS="-W -D_FORTIFY_SOURCE=2 $CFLAGS"
 
   # Test for -Werror=... (introduced some time post-4.0)
-  AC_MSG_CHECKING([support for -Werror=format-security])
+  # If we hit a format error -- it should be fatal.
+  AC_MSG_CHECKING([gcc support for -Werror=format-security])
   ink_svd_CFLAGS="$CFLAGS"
   CFLAGS="-Werror=format-security $CFLAGS"
   AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [gcc_opt_ok=yes], [gcc_opt_ok=no])
@@ -61,8 +67,6 @@ if test "$GCC" = "yes"; then
     CFLAGS="$ink_svd_CFLAGS"
   fi
 
-  # Fortify source requires -O2 or higher...
-  CFLAGS="-W -D_FORTIFY_SOURCE=2 $CFLAGS"
   AC_LANG_POP
 fi
 
@@ -770,7 +774,27 @@ if test "$GXX" = "yes"; then
   # programmer deliberately has an unused parameter (e.g. because it's used
   # as a callback or similar function pointer use).
 
-  CXXFLAGS="-Wall -Wformat -Werror=format-security -W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch -D_FORTIFY_SOURCE=2 $CXXFLAGS"
+
+  # Enable all default warnings, and also format and format security warnings
+  CXXFLAGS="-Wall -Wformat -Wformat-security $CXXFLAGS"
+  # Have linker produce read-only relocations, if it knows how
+  CXXFLAGS="-Wl,-z,relro $CXXFLAGS"
+  # What is just plain "-W" ?
+  # Fortify source requires -O2 or higher, which is handled separately.
+  CXXFLAGS="-W -D_FORTIFY_SOURCE=2 $CXXFLAGS"
+  # Add even more stuff
+  CXXFLAGS="-W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch $CXXFLAGS"
+
+  # Test for -Werror=... (introduced some time post-4.0)
+  # If we hit a format error -- it should be fatal.
+  AC_MSG_CHECKING([g++ support for -Werror=format-security])
+  ink_svd_CXXFLAGS="$CXXFLAGS"
+  CXXFLAGS="-Werror=format-security $CXXFLAGS"
+  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [gxx_opt_ok=yes], [gcc_opt_ok=no])
+  AC_MSG_RESULT([$gxx_opt_ok])
+  if test "x$gxx_opt_ok" != "xyes"; then
+    CXXFLAGS="$ink_svd_CXXFLAGS"
+  fi
 
   dnl Test for arch-specific situations.
   case "$host_cpu" in
