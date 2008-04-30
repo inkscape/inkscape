@@ -63,20 +63,13 @@ public:
     void setEnabled(bool s);
     bool getEnabled() const {return _snap_enabled;}
 
-    void freeSnap(SnappedConstraints &sc,
+    virtual void freeSnap(SnappedConstraints &sc,
                           PointType const &t,
                           NR::Point const &p,
                           bool const &first_point,                                             
-                          std::vector<NR::Point> &points_to_snap,                         
-                          SPItem const *it) const;
-                          
-    void freeSnap(SnappedConstraints &sc,
-                          PointType const &t,
-                          NR::Point const &p,
-                          bool const &first_point,                                             
-                          std::vector<NR::Point> &points_to_snap,                         
-                          std::vector<SPItem const *> const &it,
-                          std::vector<NR::Point> *unselected_nodes) const;
+                          NR::Maybe<NR::Rect> const &bbox_to_snap,                         
+                          std::vector<SPItem const *> const *it,
+                          std::vector<NR::Point> *unselected_nodes) const {};
     
     class ConstraintLine
     {
@@ -103,21 +96,13 @@ public:
         NR::Point _direction;
     };
 
-    void constrainedSnap(SnappedConstraints &sc,
+    virtual void constrainedSnap(SnappedConstraints &sc,
                                  PointType const &t,
                                  NR::Point const &p,
                                  bool const &first_point,
-                                 std::vector<NR::Point> &points_to_snap,       
+                                 NR::Maybe<NR::Rect> const &bbox_to_snap,                         
                                  ConstraintLine const &c,
-                                 SPItem const *it) const;
-
-    void constrainedSnap(SnappedConstraints &sc,
-                                 PointType const &t,
-                                 NR::Point const &p,
-                                 bool const &first_point,
-                                 std::vector<NR::Point> &points_to_snap,                         
-                                 ConstraintLine const &c,
-                                 std::vector<SPItem const *> const &it) const;
+                                 std::vector<SPItem const *> const *it) const {};
                                  
 protected:
     SPNamedView const *_named_view;
@@ -129,41 +114,6 @@ private:
                                     // must be private to enforce the usage of getTolerance(), which retrieves 
                                     // the tolerance in screen pixels (making it zoom independent)
 
-
-    /**
-     *  Try to snap a point to whatever this snapper is interested in.  Any
-     *  snap that occurs will be to the nearest "interesting" thing (e.g. a
-     *  grid or guide line)
-     *
-     *  \param p Point to snap (desktop coordinates).
-     *  \param it Items that should not be snapped to.
-     *  \return Snapped point.
-     */
-    virtual void _doFreeSnap(SnappedConstraints &sc,
-                                     PointType const &t,
-                                     NR::Point const &p,
-                                     bool const &first_point,                                             
-                                     std::vector<NR::Point> &points_to_snap,
-                                     std::vector<SPItem const *> const &it,
-                                     std::vector<NR::Point> *unselected_nodes) const = 0;
-
-    /**
-     *  Try to snap a point to whatever this snapper is interested in, where
-     *  the snap point is constrained to lie along a specified vector from the
-     *  original point.
-     *
-     *  \param p Point to snap (desktop coordinates).
-     *  \param c Vector to constrain the snap to.
-     *  \param it Items that should not be snapped to.
-     *  \return Snapped point.
-     */    
-    virtual void _doConstrainedSnap(SnappedConstraints &sc,
-                                            PointType const &t,
-                                            NR::Point const &p,
-                                            bool const &first_point,
-                                            std::vector<NR::Point> &points_to_snap,
-                                            ConstraintLine const &c,
-                                            std::vector<SPItem const *> const &it) const = 0;
 };
 
 }

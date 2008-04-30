@@ -23,14 +23,18 @@ Inkscape::LineSnapper::LineSnapper(SPNamedView const *nv, NR::Coord const d) : S
 
 }
 
-void Inkscape::LineSnapper::_doFreeSnap(SnappedConstraints &sc,
+void Inkscape::LineSnapper::freeSnap(SnappedConstraints &sc,
                                                     Inkscape::Snapper::PointType const &t,
                                                     NR::Point const &p,
-                                                    bool const &f,
-                                                    std::vector<NR::Point> &points_to_snap,
-                                                    std::vector<SPItem const *> const &it,
-                                                    std::vector<NR::Point> *unselected_nodes) const
+                                                    bool const &/*f*/,
+                                                    NR::Maybe<NR::Rect> const &/*bbox_to_snap*/,
+                                                    std::vector<SPItem const *> const */*it*/,
+                                                    std::vector<NR::Point> */*unselected_nodes*/) const
 {
+    if (_snap_enabled == false || getSnapFrom(t) == false) {
+        return;
+    }    
+    
     /* Get the lines that we will try to snap to */
     const LineList lines = _getSnapLines(p);
 
@@ -53,15 +57,19 @@ void Inkscape::LineSnapper::_doFreeSnap(SnappedConstraints &sc,
     }    
 }
 
-void Inkscape::LineSnapper::_doConstrainedSnap(SnappedConstraints &sc,
-                                               Inkscape::Snapper::PointType const &/*t*/,
+void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
+                                               Inkscape::Snapper::PointType const &t,
                                                NR::Point const &p,
                                                bool const &/*f*/,
-                                               std::vector<NR::Point> &/*points_to_snap*/,
+                                               NR::Maybe<NR::Rect> const &/*bbox_to_snap*/,
                                                ConstraintLine const &c,
-                                               std::vector<SPItem const *> const &/*it*/) const
+                                               std::vector<SPItem const *> const */*it*/) const
 
 {
+    if (_snap_enabled == false || getSnapFrom(t) == false) {
+        return;
+    }
+    
     /* Get the lines that we will try to snap to */
     const LineList lines = _getSnapLines(p);
 

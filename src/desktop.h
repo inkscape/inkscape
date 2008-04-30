@@ -36,6 +36,7 @@
 #include "ui/view/edit-widget-interface.h"
 
 #include "display/rendermode.h"
+#include "display/snap-indicator.h"
 
 class NRRect;
 class SPCSSAttr;
@@ -77,7 +78,7 @@ namespace Inkscape {
   namespace Display {
       class TemporaryItemList;
       class TemporaryItem;
-      class SnapIndicator;
+      //class SnapIndicator;
   }
 }
 

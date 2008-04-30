@@ -21,28 +21,28 @@ class LineSnapper : public Snapper
 public:
   LineSnapper(SPNamedView const *nv, NR::Coord const d);
 
+  void freeSnap(SnappedConstraints &sc,
+                   Inkscape::Snapper::PointType const &t,
+                   NR::Point const &p,
+                   bool const &first_point,
+                   NR::Maybe<NR::Rect> const &bbox_to_snap,
+                   std::vector<SPItem const *> const *it,
+                   std::vector<NR::Point> *unselected_nodes) const;
+  
+  void constrainedSnap(SnappedConstraints &sc,
+                          Inkscape::Snapper::PointType const &t,
+                          NR::Point const &p,
+                          bool const &first_point,
+                          NR::Maybe<NR::Rect> const &bbox_to_snap,
+                          ConstraintLine const &c,
+                          std::vector<SPItem const *> const *it) const;
+
 protected:
   typedef std::list<std::pair<NR::Point, NR::Point> > LineList; 
   //first point is a vector normal to the line
   //second point is a point on the line
 
 private:
-  void _doFreeSnap(SnappedConstraints &sc,
-                   Inkscape::Snapper::PointType const &t,
-                   NR::Point const &p,
-                   bool const &first_point,
-                   std::vector<NR::Point> &points_to_snap,
-                   std::vector<SPItem const *> const &it,
-                   std::vector<NR::Point> *unselected_nodes) const;
-  
-  void _doConstrainedSnap(SnappedConstraints &sc,
-                          Inkscape::Snapper::PointType const &t,
-                          NR::Point const &p,
-                          bool const &first_point,
-                          std::vector<NR::Point> &points_to_snap,
-                          ConstraintLine const &c,
-                          std::vector<SPItem const *> const &it) const;
-  
   /**
    *  \param p Point that we are trying to snap.
    *  \return List of lines that we should try snapping to.

@@ -222,8 +222,9 @@ static NR::Point snap_knot_position(SPItem *item, NR::Point const &p)
     SPDesktop const *desktop = inkscape_active_desktop();
     NR::Matrix const i2d (sp_item_i2d_affine (item));
     NR::Point s = p * i2d;
-    SnapManager const &m = desktop->namedview->snap_manager;
-    s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, s, item).getPoint();
+    SnapManager &m = desktop->namedview->snap_manager;
+    m.setup(desktop, item);
+    s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, s).getPoint();
     return s * i2d.inverse();
 }
 

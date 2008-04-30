@@ -1233,7 +1233,8 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
         
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
-            Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta, SP_PATH(n->subpath->nodepath->item), &unselected_nodes);            
+            m.setup(nodepath->desktop, SP_PATH(n->subpath->nodepath->item), &unselected_nodes);
+            Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta);            
             if (s.getDistance() < best) {
                 best = s.getDistance();
                 best_abs = s;
@@ -3659,7 +3660,9 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint /*state*/,
         g_assert_not_reached();
     }
 
-    SnapManager const &m = n->subpath->nodepath->desktop->namedview->snap_manager;
+    SPDesktop *desktop = n->subpath->nodepath->desktop;
+    SnapManager &m = desktop->namedview->snap_manager;
+    m.setup(desktop, n->subpath->nodepath->item);
     Inkscape::SnappedPoint s ;
 
     Inkscape::NodePath::Node *othernode = opposite->other;
@@ -3675,18 +3678,13 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint /*state*/,
                 NR::Coord const scal = dot(delta, ndelta) / linelen;
                 (*p) = n->pos + (scal / linelen) * ndelta;
             }
-            s = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, Inkscape::Snapper::ConstraintLine(*p, ndelta), n->subpath->nodepath->item);
+            s = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, Inkscape::Snapper::ConstraintLine(*p, ndelta));
         } else {
-            s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, n->subpath->nodepath->item);
+            s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p);
         }
-    } else {
-        s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, n->subpath->nodepath->item);
     }
-
+    
     *p = s.getPoint();
-    if (s.getSnapped()) {
-        n->subpath->nodepath->desktop->snapindicator->set_new_snappoint(s);
-    }
 
     sp_node_adjust_handle(n, -which);
 

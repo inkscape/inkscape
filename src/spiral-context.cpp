@@ -265,8 +265,9 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 dragging = TRUE;
                 sc->center = Inkscape::setup_for_drag_start(desktop, event_context, event);
 
-                SnapManager const &m = desktop->namedview->snap_manager;
-                sc->center = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, sc->center, sc->item).getPoint();
+                SnapManager &m = desktop->namedview->snap_manager;
+                m.setup(desktop, sc->item);
+                sc->center = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, sc->center).getPoint();
 
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     ( GDK_KEY_PRESS_MASK |
@@ -293,8 +294,9 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 NR::Point const motion_w(event->motion.x, event->motion.y);
                 NR::Point motion_dt(event_context->desktop->w2d(motion_w));
                 
-                SnapManager const &m = desktop->namedview->snap_manager;
-                motion_dt = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt, sc->item).getPoint();
+                SnapManager &m = desktop->namedview->snap_manager;
+                m.setup(desktop, sc->item);
+                motion_dt = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt).getPoint();
                 sp_spiral_drag(sc, motion_dt, event->motion.state);
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
@@ -436,8 +438,9 @@ sp_spiral_drag(SPSpiralContext *sc, NR::Point p, guint state)
 
     NR::Point const p0 = sp_desktop_dt2root_xy_point(desktop, sc->center);
     NR::Point p1 = sp_desktop_dt2root_xy_point(desktop, p);
-    SnapManager const &m = desktop->namedview->snap_manager;
-    p1 = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p1, sc->item).getPoint();
+    SnapManager &m = desktop->namedview->snap_manager;
+    m.setup(desktop, sc->item);
+    p1 = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p1).getPoint();
 
     SPSpiral *spiral = SP_SPIRAL(sc->item);
 

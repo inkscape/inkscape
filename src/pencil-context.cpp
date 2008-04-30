@@ -32,7 +32,6 @@
 #include "pixmaps/cursor-pencil.xpm"
 #include "display/bezier-utils.h"
 #include "display/canvas-bpath.h"
-#include "display/snap-indicator.h"
 #include <glibmm/i18n.h>
 #include "libnr/in-svg-plane.h"
 #include "libnr/n-art-bpath.h"
@@ -246,8 +245,9 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                         // anchor, which is handled by the sibling branch above)
                         selection->clear();
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating new path"));
-                        SnapManager const &m = desktop->namedview->snap_manager;
-                        p = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p, NULL).getPoint();
+                        SnapManager &m = desktop->namedview->snap_manager;
+                        m.setup(desktop);
+                        p = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p).getPoint();
                     } else if (selection->singleItem() && SP_IS_PATH(selection->singleItem())) {
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Appending to selected path"));
                     }
@@ -274,8 +274,6 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
     }
     gint ret = FALSE;
     SPDesktop *const dt = pc->desktop;
-
-    dt->snapindicator->remove_snappoint();
 
     SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
     if (event_context->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
@@ -324,12 +322,10 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                 if (anchor) {
                     p = anchor->dp;
                 } else if ((mevent.state & GDK_SHIFT_MASK) == 0) {
-                    SnapManager const &m = dt->namedview->snap_manager;
-                    Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p, NULL);
+                    SnapManager &m = dt->namedview->snap_manager;
+                    m.setup(dt, NULL);
+                    Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p);
                     p = s.getPoint();
-                    if (s.getSnapped()) {
-                        dt->snapindicator->set_new_snappoint(s);
-                    }
                 }
                 if ( pc->npoints != 0 ) { // buttonpress may have happened before we entered draw context!
                     spdc_add_freehand_point(pc, p, mevent.state);

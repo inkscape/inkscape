@@ -85,7 +85,8 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
     bool const shift = state & GDK_SHIFT_MASK;
     bool const control = state & GDK_CONTROL_MASK;
 
-    SnapManager const &m = desktop->namedview->snap_manager;
+    SnapManager &m = desktop->namedview->snap_manager;
+    m.setup(desktop, item);
     Inkscape::SnappedPoint snappoint;
 
     if (control) {
@@ -132,11 +133,11 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
 
             /* Try to snap p[0] (the opposite corner) along the constraint vector */
             s[0] = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, p[0],
-                                     Inkscape::Snapper::ConstraintLine(p[0] - p[1]), item);
+                                     Inkscape::Snapper::ConstraintLine(p[0] - p[1]));
 
             /* Try to snap p[1] (the dragged corner) along the constraint vector */
             s[1] = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, p[1],
-                                     Inkscape::Snapper::ConstraintLine(p[1] - p[0]), item);
+                                     Inkscape::Snapper::ConstraintLine(p[1] - p[0]));
 
             /* Choose the best snap and update points accordingly */
             if (s[0].getDistance() < s[1].getDistance()) {
@@ -148,13 +149,14 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
                 p[1] = s[1].getPoint();
                 snappoint = s[1];
             }
+            desktop->snapindicator->set_new_snappoint(snappoint);
 
         } else {
 
             /* Our origin is the opposite corner.  Snap the drag point along the constraint vector */
             p[0] = center;
             snappoint = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, p[1],
-                                          Inkscape::Snapper::ConstraintLine(p[1] - p[0]), item);
+                                          Inkscape::Snapper::ConstraintLine(p[1] - p[0]));
             p[1] = snappoint.getPoint();
         }
 
@@ -169,8 +171,8 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
 
         Inkscape::SnappedPoint s[2];
 
-        s[0] = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p[0], item);
-        s[1] = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p[1], item);
+        s[0] = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p[0]);
+        s[1] = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p[1]);
 
         if (s[0].getDistance() < s[1].getDistance()) {
             p[0] = s[0].getPoint();
@@ -186,7 +188,7 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
 
         /* There's no constraint on the corner point, so just snap it to anything */
         p[0] = center;
-        snappoint = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, pt, item);
+        snappoint = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, pt);
         p[1] = snappoint.getPoint();
     }
 

@@ -23,7 +23,6 @@
 
 #include "macros.h"
 #include "display/sp-canvas.h"
-#include "display/snap-indicator.h"
 #include "sp-rect.h"
 #include "document.h"
 #include "sp-namedview.h"
@@ -284,8 +283,6 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
 
     event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
 
-    desktop->snapindicator->remove_snappoint();
-
     gint ret = FALSE;
     switch (event->type) {
     case GDK_BUTTON_PRESS:
@@ -307,13 +304,11 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             NR::Point const button_dt(desktop->w2d(button_w));
 
             /* Snap center */
-            SnapManager const &m = desktop->namedview->snap_manager;
-            Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, button_dt, rc->item);
+            SnapManager &m = desktop->namedview->snap_manager;
+            m.setup(desktop, rc->item);
+            Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, button_dt);
             rc->center = s.getPoint();
-            if (s.getSnapped()) {
-                desktop->snapindicator->set_new_snappoint(s);
-            }
-
+            
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                 ( GDK_KEY_PRESS_MASK |
                                   GDK_BUTTON_RELEASE_MASK       |
@@ -341,13 +336,11 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
                                      event->motion.y);
             NR::Point motion_dt(desktop->w2d(motion_w));
             
-            SnapManager const &m = desktop->namedview->snap_manager;
-            Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt, rc->item);
+            SnapManager &m = desktop->namedview->snap_manager;
+            m.setup(desktop, rc->item);
+            Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt);
             motion_dt = s.getPoint();
-            if (s.getSnapped()) {
-                desktop->snapindicator->set_new_snappoint(s);
-            }
-
+            
             sp_rect_drag(*rc, motion_dt, event->motion.state);
             gobble_motion_events(GDK_BUTTON1_MASK);
             ret = TRUE;

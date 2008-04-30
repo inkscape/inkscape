@@ -40,7 +40,6 @@
 #include "snap.h"
 #include "sp-path.h"
 #include "sp-namedview.h"
-#include "display/snap-indicator.h"
 
 static void sp_draw_context_class_init(SPDrawContextClass *klass);
 static void sp_draw_context_init(SPDrawContext *dc);
@@ -354,13 +353,11 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, NR::Point &p, N
         p = o + bdot * best;
 
         /* Snap it along best vector */
-        SnapManager const &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
+        SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
+        m.setup(SP_EVENT_CONTEXT_DESKTOP(ec), NULL);
         Inkscape::SnappedPoint const s = m.constrainedSnap( Inkscape::Snapper::SNAPPOINT_NODE,
-                                                            p, Inkscape::Snapper::ConstraintLine(best), NULL );
+                                                            p, Inkscape::Snapper::ConstraintLine(best));
         p = s.getPoint();
-        if (s.getSnapped()) {
-            SP_EVENT_CONTEXT_DESKTOP(ec)->snapindicator->set_new_snappoint(s);
-        }
     }
 }
 
@@ -372,12 +369,10 @@ void spdc_endpoint_snap_free(SPEventContext const * const ec, NR::Point& p, guin
         return;
     }
 
-    SnapManager const &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
-    Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p, NULL);
+    SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
+    m.setup(SP_EVENT_CONTEXT_DESKTOP(ec), NULL);
+    Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p);
     p = s.getPoint();
-    if (s.getSnapped()) {
-        SP_EVENT_CONTEXT_DESKTOP(ec)->snapindicator->set_new_snappoint(s);
-    }
 }
 
 static SPCurve *

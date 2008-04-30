@@ -43,8 +43,6 @@
 #include "snap.h"
 #include "sp-namedview.h"
 #include "selection-chemistry.h"
-#include "display/snap-indicator.h"
-
 
 #define GR_KNOT_COLOR_NORMAL 0xffffff00
 #define GR_KNOT_COLOR_MOUSEOVER 0xff000000
@@ -529,8 +527,6 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
     // FIXME: take from prefs
     double snap_dist = SNAP_DIST / dragger->parent->desktop->current_zoom();
 
-    dragger->parent->desktop->snapindicator->remove_snappoint();
-
     if (state & GDK_SHIFT_MASK) {
         // with Shift; unsnap if we carry more than one draggable
         if (dragger->draggables && dragger->draggables->next) {
@@ -582,12 +578,13 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
 
     if (!((state & GDK_SHIFT_MASK) || ((state & GDK_CONTROL_MASK) && (state & GDK_MOD1_MASK)))) {
         // Try snapping to the grid or guides
-        SnapManager const &m = dragger->parent->desktop->namedview->snap_manager;
-        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p, NULL);
+        SPDesktop *desktop = dragger->parent->desktop;
+        SnapManager &m = desktop->namedview->snap_manager;
+        m.setup(desktop);
+        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p);
         if (s.getSnapped()) {
             p = s.getPoint();
             sp_knot_moveto (knot, &p);
-            dragger->parent->desktop->snapindicator->set_new_snappoint(s);
         } else {
             bool was_snapped = false;
             double dist = NR_HUGE;
@@ -611,7 +608,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
                 }
             }
             if (was_snapped) {
-                dragger->parent->desktop->snapindicator->set_new_snappoint(s);
+                desktop->snapindicator->set_new_snappoint(s);
             }
         }
     }

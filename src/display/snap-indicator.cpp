@@ -3,8 +3,10 @@
  *
  * Authors:
  *   Johan Engelen
+ *   Diederik van Lierop
  *
  * Copyright (C) Johan Engelen 2008 <j.b.c.engelen@utwente.nl>
+ * Copyright (C) Diederik van Lierop 2008 <mail@diedenrezi.nl>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */

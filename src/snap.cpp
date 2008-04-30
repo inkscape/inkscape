@@ -29,6 +29,7 @@
 #include <libnr/nr-values.h>
 
 #include "display/canvas-grid.h"
+#include "display/snap-indicator.h"
 
 #include "inkscape.h"
 #include "desktop.h"
@@ -168,89 +169,46 @@ bool SnapManager::getSnapModeGuide() const
 }
 
 /**
- *  Try to snap a point to any interested snappers.
- *
- *  \param t Type of point.
- *  \param p Point.
- *  \param it Item to ignore when snapping.
- *  \return Snapped point.
- */
-
-Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
-                                             NR::Point const &p,
-                                             SPItem const *it,
-                                             NR::Maybe<NR::Point> point_not_to_snap_to) const
-
-{
-    std::vector<SPItem const *> lit;
-    if (it) {
-        lit.push_back(it);
-    }
-    
-    std::vector<NR::Point> points_to_snap;
-    points_to_snap.push_back(p);
-    
-    return freeSnap(t, p, true, points_to_snap, lit, NULL);
-}
-
-/**
- *  Try to snap a point to any interested snappers.
- *
- *  \param t Type of point.
- *  \param p Point.
- *  \param it Item to ignore when snapping.
- *  \return Snapped point.
- */
-
-Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
-                                             NR::Point const &p,
-                                             SPItem const *it,
-                                             std::vector<NR::Point> *unselected_nodes) const
-
-{
-    std::vector<SPItem const *> lit;
-    if (it) {
-        lit.push_back(it);
-    }
-    
-    std::vector<NR::Point> points_to_snap;
-    points_to_snap.push_back(p);
-    
-    return freeSnap(t, p, true, points_to_snap, lit, unselected_nodes);
-}
-
-
-/**
  *  Try to snap a point to any of the specified snappers.
  *
- *  \param t Type of point.
+ *  \param point_type Type of point.
  *  \param p Point.
  *  \param first_point If true then this point is the first one from a whole bunch of points 
  *  \param points_to_snap The whole bunch of points, all from the same selection and having the same transformation 
- *  \param it List of items to ignore when snapping.
- * \param snappers  List of snappers to try to snap to
+ *  \param snappers List of snappers to try to snap to
  *  \return Snapped point.
  */
 
-Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
+Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType point_type,
                                              NR::Point const &p,
-                                             bool const &first_point,
-                                             std::vector<NR::Point> &points_to_snap,
-                                             std::vector<SPItem const *> const &it,
-                                             std::vector<NR::Point> *unselected_nodes) const
+                                             bool first_point,
+                                             NR::Maybe<NR::Rect> const &bbox_to_snap) const
 {
     if (!SomeSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, NR_HUGE, 0, false);
     }
     
-    SnappedConstraints sc;        
-    
-    SnapperList const snappers = getSnappers();
-
-    for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        (*i)->freeSnap(sc, t, p, first_point, points_to_snap, it, unselected_nodes);
+    std::vector<SPItem const *> *items_to_ignore;
+    if (_item_to_ignore) { // If we have only a single item to ignore 
+        // then build a list containing this single item; 
+        // This single-item list will prevail over any other _items_to_ignore list, should that exist
+        items_to_ignore = new std::vector<SPItem const *>;
+        items_to_ignore->push_back(_item_to_ignore);
+    } else {
+        items_to_ignore = _items_to_ignore;
     }
-
+    
+    SnappedConstraints sc;
+    SnapperList const snappers = getSnappers();
+    
+    for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
+        (*i)->freeSnap(sc, point_type, p, first_point, bbox_to_snap, items_to_ignore, _unselected_nodes);
+    }
+    
+    if (_item_to_ignore) {
+        delete items_to_ignore;   
+    }
+    
     return findBestSnap(p, sc, false);
 }
 
@@ -258,62 +216,44 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
  *  Try to snap a point to any interested snappers.  A snap will only occur along
  *  a line described by a Inkscape::Snapper::ConstraintLine.
  *
- *  \param t Type of point.
- *  \param p Point.
- *  \param c Constraint line.
- *  \param it Item to ignore when snapping.
- *  \return Snapped point.
- */
-
-Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType t,
-                                                    NR::Point const &p,
-                                                    Inkscape::Snapper::ConstraintLine const &c,
-                                                    SPItem const *it) const
-{
-    std::vector<SPItem const *> lit;
-    if (it) {
-        lit.push_back(it);
-    }
-    
-    std::vector<NR::Point> points_to_snap;
-    points_to_snap.push_back(p);
-    
-    return constrainedSnap(t, p, true, points_to_snap, c, lit);
-}
-
-
-
-/**
- *  Try to snap a point to any interested snappers.  A snap will only occur along
- *  a line described by a Inkscape::Snapper::ConstraintLine.
- *
- *  \param t Type of point.
+ *  \param point_type Type of point.
  *  \param p Point.
  *  \param first_point If true then this point is the first one from a whole bunch of points 
  *  \param points_to_snap The whole bunch of points, all from the same selection and having the same transformation 
- *  \param c Constraint line.
- *  \param it List of items to ignore when snapping.
+ *  \param constraint Constraint line.
  *  \return Snapped point.
  */
 
-Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType t,
+Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType point_type,
                                                     NR::Point const &p,
-                                                    bool const &first_point,
-                                                    std::vector<NR::Point> &points_to_snap,
-                                                    Inkscape::Snapper::ConstraintLine const &c,
-                                                    std::vector<SPItem const *> const &it) const
+                                                    Inkscape::Snapper::ConstraintLine const &constraint,
+                                                    bool first_point,
+                                                    NR::Maybe<NR::Rect> const &bbox_to_snap) const
 {
     if (!SomeSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, NR_HUGE, 0, false);
     }
     
-    SnappedConstraints sc;
-        
+    std::vector<SPItem const *> *items_to_ignore;
+    if (_item_to_ignore) { // If we have only a single item to ignore 
+        // then build a list containing this single item; 
+        // This single-item list will prevail over any other _items_to_ignore list, should that exist
+        items_to_ignore = new std::vector<SPItem const *>;
+        items_to_ignore->push_back(_item_to_ignore);
+    } else {
+        items_to_ignore = _items_to_ignore;
+    }
+    
+    SnappedConstraints sc;    
     SnapperList const snappers = getSnappers();
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        (*i)->constrainedSnap(sc, t, p, first_point, points_to_snap, c, it);
+        (*i)->constrainedSnap(sc, point_type, p, first_point, bbox_to_snap, constraint, items_to_ignore);
     }
-
+    
+    if (_item_to_ignore) {
+        delete items_to_ignore;   
+    }
+    
     return findBestSnap(p, sc, true);
 }
 
@@ -340,7 +280,6 @@ Inkscape::SnappedPoint SnapManager::guideSnap(NR::Point const &p,
  *
  *  \param type Type of points being snapped.
  *  \param points List of points to snap.
- *  \param ignore List of items to ignore while snapping.
  *  \param constrained true if the snap is constrained.
  *  \param constraint Constraint line to use, if `constrained' is true, otherwise undefined.
  *  \param transformation_type Type of transformation to apply to points before trying to snap them.
@@ -353,7 +292,6 @@ Inkscape::SnappedPoint SnapManager::guideSnap(NR::Point const &p,
 Inkscape::SnappedPoint SnapManager::_snapTransformed(
     Inkscape::Snapper::PointType type,
     std::vector<NR::Point> const &points,
-    std::vector<SPItem const *> const &ignore,
     bool constrained,
     Inkscape::Snapper::ConstraintLine const &constraint,
     Transformation transformation_type,
@@ -375,6 +313,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
     }
     
     std::vector<NR::Point> transformed_points;
+    NR::Rect bbox;
     
     for (std::vector<NR::Point>::const_iterator i = points.begin(); i != points.end(); i++) {
 
@@ -408,6 +347,12 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
         }
         
         // add the current transformed point to the box hulling all transformed points
+        if (i == points.begin()) {
+            bbox = NR::Rect(transformed, transformed);    
+        } else {
+            bbox.expandTo(transformed);
+        }
+        
         transformed_points.push_back(transformed);
     }    
     
@@ -445,9 +390,9 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
             if (transformation_type == SCALE && !uniform) {
                 g_warning("Non-uniform constrained scaling is not supported!");   
             }
-            snapped_point = constrainedSnap(type, *j, i == points.begin(), transformed_points, dedicated_constraint, ignore);
+            snapped_point = constrainedSnap(type, *j, dedicated_constraint, i == points.begin(), bbox);
         } else {
-            snapped_point = freeSnap(type, *j, i == points.begin(), transformed_points, ignore, NULL);
+            snapped_point = freeSnap(type, *j, i == points.begin(), bbox);
         }
 
         NR::Point result;
@@ -590,19 +535,17 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
  *  Try to snap a list of points to any interested snappers after they have undergone
  *  a translation.
  *
- *  \param t Type of points.
+ *  \param point_type Type of points.
  *  \param p Points.
- *  \param it List of items to ignore when snapping.
  *  \param tr Proposed translation.
  *  \return Snapped translation, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-Inkscape::SnappedPoint SnapManager::freeSnapTranslation(Inkscape::Snapper::PointType t,
+Inkscape::SnappedPoint SnapManager::freeSnapTranslation(Inkscape::Snapper::PointType point_type,
                                                         std::vector<NR::Point> const &p,
-                                                        std::vector<SPItem const *> const &it,
                                                         NR::Point const &tr) const
 {
-    return _snapTransformed(t, p, it, false, NR::Point(), TRANSLATION, tr, NR::Point(), NR::X, false);
+    return _snapTransformed(point_type, p, false, NR::Point(), TRANSLATION, tr, NR::Point(), NR::X, false);
 }
 
 
@@ -611,21 +554,19 @@ Inkscape::SnappedPoint SnapManager::freeSnapTranslation(Inkscape::Snapper::Point
  *  translation.  A snap will only occur along a line described by a
  *  Inkscape::Snapper::ConstraintLine.
  *
- *  \param t Type of points.
+ *  \param point_type Type of points.
  *  \param p Points.
- *  \param it List of items to ignore when snapping.
- *  \param c Constraint line.
+ *  \param constraint Constraint line.
  *  \param tr Proposed translation.
  *  \return Snapped translation, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-Inkscape::SnappedPoint SnapManager::constrainedSnapTranslation(Inkscape::Snapper::PointType t,
+Inkscape::SnappedPoint SnapManager::constrainedSnapTranslation(Inkscape::Snapper::PointType point_type,
                                                                std::vector<NR::Point> const &p,
-                                                               std::vector<SPItem const *> const &it,
-                                                               Inkscape::Snapper::ConstraintLine const &c,
+                                                               Inkscape::Snapper::ConstraintLine const &constraint,
                                                                NR::Point const &tr) const
 {
-    return _snapTransformed(t, p, it, true, c, TRANSLATION, tr, NR::Point(), NR::X, false);
+    return _snapTransformed(point_type, p, true, constraint, TRANSLATION, tr, NR::Point(), NR::X, false);
 }
 
 
@@ -633,21 +574,19 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapTranslation(Inkscape::Snapper
  *  Try to snap a list of points to any interested snappers after they have undergone
  *  a scale.
  *
- *  \param t Type of points.
+ *  \param point_type Type of points.
  *  \param p Points.
- *  \param it List of items to ignore when snapping.
  *  \param s Proposed scale.
  *  \param o Origin of proposed scale.
  *  \return Snapped scale, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-Inkscape::SnappedPoint SnapManager::freeSnapScale(Inkscape::Snapper::PointType t,
+Inkscape::SnappedPoint SnapManager::freeSnapScale(Inkscape::Snapper::PointType point_type,
                                                   std::vector<NR::Point> const &p,
-                                                  std::vector<SPItem const *> const &it,
                                                   NR::scale const &s,
                                                   NR::Point const &o) const
 {
-    return _snapTransformed(t, p, it, false, NR::Point(), SCALE, NR::Point(s[NR::X], s[NR::Y]), o, NR::X, false);
+    return _snapTransformed(point_type, p, false, NR::Point(), SCALE, NR::Point(s[NR::X], s[NR::Y]), o, NR::X, false);
 }
 
 
@@ -656,22 +595,20 @@ Inkscape::SnappedPoint SnapManager::freeSnapScale(Inkscape::Snapper::PointType t
  *  a scale.  A snap will only occur along a line described by a
  *  Inkscape::Snapper::ConstraintLine.
  *
- *  \param t Type of points.
+ *  \param point_type Type of points.
  *  \param p Points.
- *  \param it List of items to ignore when snapping.
  *  \param s Proposed scale.
  *  \param o Origin of proposed scale.
  *  \return Snapped scale, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-Inkscape::SnappedPoint SnapManager::constrainedSnapScale(Inkscape::Snapper::PointType t,
+Inkscape::SnappedPoint SnapManager::constrainedSnapScale(Inkscape::Snapper::PointType point_type,
                                                          std::vector<NR::Point> const &p,
-                                                         std::vector<SPItem const *> const &it,
                                                          NR::scale const &s,
                                                          NR::Point const &o) const
 {
     // When constrained scaling, only uniform scaling is supported.
-    return _snapTransformed(t, p, it, true, NR::Point(), SCALE, NR::Point(s[NR::X], s[NR::Y]), o, NR::X, true);
+    return _snapTransformed(point_type, p, true, NR::Point(), SCALE, NR::Point(s[NR::X], s[NR::Y]), o, NR::X, true);
 }
 
 
@@ -679,9 +616,8 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapScale(Inkscape::Snapper::Poin
  *  Try to snap a list of points to any interested snappers after they have undergone
  *  a stretch.
  *
- *  \param t Type of points.
+ *  \param point_type Type of points.
  *  \param p Points.
- *  \param it List of items to ignore when snapping.
  *  \param s Proposed stretch.
  *  \param o Origin of proposed stretch.
  *  \param d Dimension in which to apply proposed stretch.
@@ -689,15 +625,14 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapScale(Inkscape::Snapper::Poin
  *  \return Snapped stretch, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(Inkscape::Snapper::PointType t,
+Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(Inkscape::Snapper::PointType point_type,
                                                             std::vector<NR::Point> const &p,
-                                                            std::vector<SPItem const *> const &it,
                                                             NR::Coord const &s,
                                                             NR::Point const &o,
                                                             NR::Dim2 d,
                                                             bool u) const
 {
-   return _snapTransformed(t, p, it, true, NR::Point(), STRETCH, NR::Point(s, s), o, d, u);
+   return _snapTransformed(point_type, p, true, NR::Point(), STRETCH, NR::Point(s, s), o, d, u);
 }
 
 
@@ -705,23 +640,21 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(Inkscape::Snapper::Po
  *  Try to snap a list of points to any interested snappers after they have undergone
  *  a skew.
  *
- *  \param t Type of points.
+ *  \param point_type Type of points.
  *  \param p Points.
- *  \param it List of items to ignore when snapping.
  *  \param s Proposed skew.
  *  \param o Origin of proposed skew.
  *  \param d Dimension in which to apply proposed skew.
  *  \return Snapped skew, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-Inkscape::SnappedPoint SnapManager::freeSnapSkew(Inkscape::Snapper::PointType t,
+Inkscape::SnappedPoint SnapManager::freeSnapSkew(Inkscape::Snapper::PointType point_type,
                                                  std::vector<NR::Point> const &p,
-                                                 std::vector<SPItem const *> const &it,
                                                  NR::Coord const &s,
                                                  NR::Point const &o,
                                                  NR::Dim2 d) const
 {
-   return _snapTransformed(t, p, it, false, NR::Point(), SKEW, NR::Point(s, s), o, d, false);
+   return _snapTransformed(point_type, p, false, NR::Point(), SKEW, NR::Point(s, s), o, d, false);
 }
 
 Inkscape::SnappedPoint SnapManager::findBestSnap(NR::Point const &p, SnappedConstraints &sc, bool constrained) const
@@ -821,7 +754,33 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(NR::Point const &p, SnappedCons
         }
     }
     
+    
+    // Update the snap indicator, if requested
+    if (_desktop_for_snapindicator) {
+        if (bestSnappedPoint.getSnapped()) {
+            _desktop_for_snapindicator->snapindicator->set_new_snappoint(bestSnappedPoint);
+        } else {
+            _desktop_for_snapindicator->snapindicator->remove_snappoint();
+        }
+    }
+    
     return bestSnappedPoint;         
+}
+
+void SnapManager::setup(SPDesktop const *desktop_for_snapindicator, SPItem const *item_to_ignore, std::vector<NR::Point> *unselected_nodes)
+{
+    _item_to_ignore = item_to_ignore;
+    _items_to_ignore = NULL;
+    _desktop_for_snapindicator = desktop_for_snapindicator;
+    _unselected_nodes = unselected_nodes;
+}
+
+void SnapManager::setup(SPDesktop const *desktop_for_snapindicator, std::vector<SPItem const *> &items_to_ignore, std::vector<NR::Point> *unselected_nodes)
+{
+    _item_to_ignore = NULL;
+    _items_to_ignore = &items_to_ignore;
+    _desktop_for_snapindicator = desktop_for_snapindicator;
+    _unselected_nodes = unselected_nodes;   
 }
 
 /*

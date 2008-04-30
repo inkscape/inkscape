@@ -142,19 +142,14 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 NR::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
                 NR::Point event_dt(desktop->w2d(event_w));
                 
-                SnapManager const &m = desktop->namedview->snap_manager;
+                SnapManager &m = desktop->namedview->snap_manager;
+                m.setup(desktop);
                 Inkscape::SnappedPoint snappoint = m.guideSnap(event_dt, normal);
                 event_dt = snappoint.getPoint();
 
                 sp_guideline_set_position(SP_GUIDELINE(guide), event_dt.to_2geom());
                 desktop->set_coordinate_status(event_dt);
-                desktop->setPosition (event_dt);
-
-                if (snappoint.getSnapped()) {
-                    desktop->snapindicator->set_new_snappoint(snappoint);
-                } else {
-                    desktop->snapindicator->remove_snappoint();
-                }
+                desktop->setPosition (event_dt);                
             }
             break;
     case GDK_BUTTON_RELEASE:
@@ -163,7 +158,8 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 NR::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
                 NR::Point event_dt(desktop->w2d(event_w));
                 
-                SnapManager const &m = desktop->namedview->snap_manager;
+                SnapManager &m = desktop->namedview->snap_manager;
+                m.setup(desktop);
                 event_dt = m.guideSnap(event_dt, normal).getPoint();
                                 
                 dragging = false;
@@ -245,7 +241,8 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 
                 // This is for snapping while dragging existing guidelines. New guidelines, 
                 // which are dragged off the ruler, are being snapped in sp_dt_ruler_event
-                SnapManager const &m = desktop->namedview->snap_manager;
+                SnapManager &m = desktop->namedview->snap_manager;
+                m.setup(desktop);
                 Inkscape::SnappedPoint snappoint = m.guideSnap(motion_dt, guide->normal_to_line);
                 motion_dt = snappoint.getPoint();
 
@@ -253,12 +250,6 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 moved = true;
                 desktop->set_coordinate_status(motion_dt);
                 desktop->setPosition (motion_dt);
-
-                if (snappoint.getSnapped()) {
-                    desktop->snapindicator->set_new_snappoint(snappoint);
-                } else {
-                    desktop->snapindicator->remove_snappoint();
-                }
 
                 ret = TRUE;
             }
@@ -270,7 +261,8 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                                             event->button.y);
                     NR::Point event_dt(desktop->w2d(event_w));
 
-                    SnapManager const &m = desktop->namedview->snap_manager;
+                    SnapManager &m = desktop->namedview->snap_manager;
+                    m.setup(desktop);
                     event_dt = m.guideSnap(event_dt, guide->normal_to_line).getPoint();
 
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {

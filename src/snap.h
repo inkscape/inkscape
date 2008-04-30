@@ -46,79 +46,58 @@ public:
     typedef std::list<const Inkscape::Snapper*> SnapperList;
 
     bool SomeSnapperMightSnap() const;
-
-    Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType t,
-                                    NR::Point const &p,
-                                    SPItem const *it,
-                                    NR::Maybe<NR::Point> point_not_to_snap_to = NR::Nothing()) const;
-                                    
-    Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType t,
-                                    NR::Point const &p,
-                                    SPItem const *it,
-                                    std::vector<NR::Point> *unselected_nodes) const;
     
-    Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType t,
-                                    NR::Point const &p,
-                                    bool const &first_point,
-                                    std::vector<NR::Point> &points_to_snap,
-                                    std::vector<SPItem const *> const &it,
-                                    std::vector<NR::Point> *unselected_nodes) const;
+    void setup(SPDesktop const *desktop_for_snapindicator = NULL, SPItem const *item_to_ignore = NULL, std::vector<NR::Point> *unselected_nodes = NULL);
+    void setup(SPDesktop const *desktop_for_snapindicator, std::vector<SPItem const *> &items_to_ignore, std::vector<NR::Point> *unselected_nodes = NULL);
 
-    Inkscape::SnappedPoint constrainedSnap(Inkscape::Snapper::PointType t,
+    Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType point_type,
+                                    NR::Point const &p,
+                                    bool first_point = true,
+                                    NR::Maybe<NR::Rect> const &bbox_to_snap = NR::Nothing()) const;
+
+    Inkscape::SnappedPoint constrainedSnap(Inkscape::Snapper::PointType point_type,
                                            NR::Point const &p,
-                                           Inkscape::Snapper::ConstraintLine const &c,
-                                           SPItem const *it) const;
-    
-    Inkscape::SnappedPoint constrainedSnap(Inkscape::Snapper::PointType t,
-                                           NR::Point const &p,
-                                           bool const &first_point,
-                                           std::vector<NR::Point> &points_to_snap,
-                                           Inkscape::Snapper::ConstraintLine const &c,
-                                           std::vector<SPItem const *> const &it) const;
+                                           Inkscape::Snapper::ConstraintLine const &constraint,
+                                           bool first_point = true,
+                                           NR::Maybe<NR::Rect> const &bbox_to_snap = NR::Nothing()) const;
                                            
     Inkscape::SnappedPoint guideSnap(NR::Point const &p,
                                      NR::Point const &guide_normal) const;
 
-    Inkscape::SnappedPoint freeSnapTranslation(Inkscape::Snapper::PointType t,
+    Inkscape::SnappedPoint freeSnapTranslation(Inkscape::Snapper::PointType point_type,
                                                std::vector<NR::Point> const &p,
-                                               std::vector<SPItem const *> const &it,
                                                NR::Point const &tr) const;
 
-    Inkscape::SnappedPoint constrainedSnapTranslation(Inkscape::Snapper::PointType t,
+    Inkscape::SnappedPoint constrainedSnapTranslation(Inkscape::Snapper::PointType point_type,
                                                       std::vector<NR::Point> const &p,
-                                                      std::vector<SPItem const *> const &it,
-                                                      Inkscape::Snapper::ConstraintLine const &c,
+                                                      Inkscape::Snapper::ConstraintLine const &constraint,
                                                       NR::Point const &tr) const;
 
-    Inkscape::SnappedPoint freeSnapScale(Inkscape::Snapper::PointType t,
+    Inkscape::SnappedPoint freeSnapScale(Inkscape::Snapper::PointType point_type,
                                          std::vector<NR::Point> const &p,
-                                         std::vector<SPItem const *> const &it,
                                          NR::scale const &s,
                                          NR::Point const &o) const;
 
-    Inkscape::SnappedPoint constrainedSnapScale(Inkscape::Snapper::PointType t,
+    Inkscape::SnappedPoint constrainedSnapScale(Inkscape::Snapper::PointType point_type,
                                                 std::vector<NR::Point> const &p,
-                                                std::vector<SPItem const *> const &it,
                                                 NR::scale const &s,
                                                 NR::Point const &o) const;
 
-    Inkscape::SnappedPoint constrainedSnapStretch(Inkscape::Snapper::PointType t,
+    Inkscape::SnappedPoint constrainedSnapStretch(Inkscape::Snapper::PointType point_type,
                                                    std::vector<NR::Point> const &p,
-                                                   std::vector<SPItem const *> const &it,
                                                    NR::Coord const &s,
                                                    NR::Point const &o,
                                                    NR::Dim2 d,
                                                    bool uniform) const;
 
-    Inkscape::SnappedPoint freeSnapSkew(Inkscape::Snapper::PointType t,
+    Inkscape::SnappedPoint freeSnapSkew(Inkscape::Snapper::PointType point_type,
                                         std::vector<NR::Point> const &p,
-                                        std::vector<SPItem const *> const &it,
                                         NR::Coord const &s,
                                         NR::Point const &o,
                                         NR::Dim2 d) const;
                                             
-  	Inkscape::SnappedPoint guideSnap(NR::Point const &p,
-                           Inkscape::ObjectSnapper::DimensionToSnap const snap_dim) const;
+  	//Inkscape::SnappedPoint guideSnap(NR::Point const &p,
+    //                       Inkscape::ObjectSnapper::DimensionToSnap const snap_dim) const;
   
 
     Inkscape::GuideSnapper guide;      ///< guide snapper
@@ -136,8 +115,8 @@ public:
     
     void setSnapIntersectionGG(bool enabled) {_intersectionGG = enabled;}
     void setSnapIntersectionLS(bool enabled) {_intersectionLS = enabled;}
-    bool getSnapIntersectionGG() { return _intersectionGG;}
-    bool getSnapIntersectionLS() { return _intersectionLS;}    
+    bool getSnapIntersectionGG() {return _intersectionGG;}
+    bool getSnapIntersectionLS() {return _intersectionLS;}    
 
     void setIncludeItemCenter(bool enabled)    {
         _include_item_center = enabled;
@@ -178,9 +157,13 @@ private:
     bool _intersectionLS;
     bool _snap_enabled_globally; //Toggles ALL snapping
     
+    std::vector<SPItem const *> *_items_to_ignore;
+    SPItem const *_item_to_ignore;
+    SPDesktop const *_desktop_for_snapindicator;    
+    std::vector<NR::Point> *_unselected_nodes;                                    
+    
     Inkscape::SnappedPoint _snapTransformed(Inkscape::Snapper::PointType type,
                                             std::vector<NR::Point> const &points,
-                                            std::vector<SPItem const *> const &ignore,
                                             bool constrained,
                                             Inkscape::Snapper::ConstraintLine const &constraint,
                                             Transformation transformation_type,

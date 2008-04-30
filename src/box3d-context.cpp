@@ -330,9 +330,9 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             bc->drag_ptC_proj[Proj::Z] = 0.25;
 
             /* Snap center */
-            SnapManager const &m = desktop->namedview->snap_manager;
-            bc->center = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE,
-                                    button_dt, bc->item).getPoint();
+            SnapManager &m = desktop->namedview->snap_manager;
+            m.setup(desktop, bc->item);
+            bc->center = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, button_dt).getPoint();
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                 ( GDK_KEY_PRESS_MASK |
@@ -361,8 +361,9 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
                                      event->motion.y);
             NR::Point motion_dt(desktop->w2d(motion_w));
 
-            SnapManager const &m = desktop->namedview->snap_manager;
-            motion_dt = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt, bc->item).getPoint();
+            SnapManager &m = desktop->namedview->snap_manager;
+            m.setup(desktop, bc->item);
+            motion_dt = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt).getPoint();
 
             bc->ctrl_dragged  = event->motion.state & GDK_CONTROL_MASK;
 
@@ -395,7 +396,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
                     bc->drag_ptB_proj.normalize();
                     bc->drag_ptC_proj = cur_persp->tmat.preimage (motion_dt, bc->drag_ptB_proj[Proj::X], Proj::X);
                 }
-                bc->drag_ptC = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, bc->drag_ptC, bc->item).getPoint();
+                bc->drag_ptC = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, bc->drag_ptC).getPoint();
             }
 
             sp_box3d_drag(*bc, event->motion.state);

@@ -917,7 +917,8 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
         // When scaling by an integer, snapping is not needed
     } else {
         // In all other cases we should try to snap now
-        SnapManager const &m = _desktop->namedview->snap_manager;
+        SnapManager &m = _desktop->namedview->snap_manager;
+        m.setup(NULL, _items_const);
         
         Inkscape::SnappedPoint bb, sn; 
         NR::Coord bd(NR_HUGE);
@@ -936,8 +937,8 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
             }
 
             // Snap along a suitable constraint vector from the origin.
-            bb = m.constrainedSnapScale(Snapper::SNAPPOINT_BBOX, _bbox_points, _items_const, default_scale, _origin_for_bboxpoints);
-            sn = m.constrainedSnapScale(Snapper::SNAPPOINT_NODE, _snap_points, _items_const, geom_scale, _origin_for_specpoints);
+            bb = m.constrainedSnapScale(Snapper::SNAPPOINT_BBOX, _bbox_points, default_scale, _origin_for_bboxpoints);
+            sn = m.constrainedSnapScale(Snapper::SNAPPOINT_NODE, _snap_points, geom_scale, _origin_for_specpoints);
     
             /* Choose the smaller difference in scale.  Since s[X] == s[Y] we can
             ** just compare difference in s[X].
@@ -946,8 +947,8 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
             sd = sn.getSnapped() ? fabs(sn.getTransformation()[NR::X] - geom_scale[NR::X]) : NR_HUGE;                
         } else {
             /* Scale aspect ratio is unlocked */    
-            bb = m.freeSnapScale(Snapper::SNAPPOINT_BBOX, _bbox_points, _items_const, default_scale, _origin_for_bboxpoints);
-            sn = m.freeSnapScale(Snapper::SNAPPOINT_NODE, _snap_points, _items_const, geom_scale, _origin_for_specpoints);
+            bb = m.freeSnapScale(Snapper::SNAPPOINT_BBOX, _bbox_points, default_scale, _origin_for_bboxpoints);
+            sn = m.freeSnapScale(Snapper::SNAPPOINT_NODE, _snap_points, geom_scale, _origin_for_specpoints);
     
             /* Pick the snap that puts us closest to the original scale */
             bd = bb.getSnapped() ? fabs(NR::L2(bb.getTransformation()) - NR::L2(default_scale.point())) : NR_HUGE;
@@ -957,6 +958,7 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
         if (!(bb.getSnapped() || sn.getSnapped())) {
             // We didn't snap at all! Don't update the handle position, just calculate the new transformation   
             _calcAbsAffineDefault(default_scale);
+            _desktop->snapindicator->remove_snappoint();
         } else if (bd < sd) {
             // We snapped the bbox (which is either visual or geometric) 
             _desktop->snapindicator->set_new_snappoint(bb);
@@ -1024,7 +1026,8 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
     } else {
         // In all other cases we should try to snap now
         
-        SnapManager const &m = _desktop->namedview->snap_manager;
+        SnapManager &m = _desktop->namedview->snap_manager;
+        m.setup(NULL, _items_const);
         
         Inkscape::SnappedPoint bb, sn; 
         g_assert(bb.getSnapped() == false); // Check initialization to catch any regression
@@ -1033,8 +1036,8 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
     
         bool symmetrical = state & GDK_CONTROL_MASK;        
         
-        bb = m.constrainedSnapStretch(Snapper::SNAPPOINT_BBOX, _bbox_points, _items_const, default_scale[axis], _origin_for_bboxpoints, axis, symmetrical);
-        sn = m.constrainedSnapStretch(Snapper::SNAPPOINT_NODE, _snap_points, _items_const, geom_scale[axis], _origin_for_specpoints, axis, symmetrical);
+        bb = m.constrainedSnapStretch(Snapper::SNAPPOINT_BBOX, _bbox_points, default_scale[axis], _origin_for_bboxpoints, axis, symmetrical);
+        sn = m.constrainedSnapStretch(Snapper::SNAPPOINT_NODE, _snap_points, geom_scale[axis], _origin_for_specpoints, axis, symmetrical);
         
         if (bb.getSnapped()) {
             // We snapped the bbox (which is either visual or geometric)
@@ -1057,6 +1060,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
         if (!(bb.getSnapped() || sn.getSnapped())) {
             // We didn't snap at all! Don't update the handle position, just calculate the new transformation
             _calcAbsAffineDefault(default_scale);
+            _desktop->snapindicator->remove_snappoint();
         } else if (bd < sd) {
             _desktop->snapindicator->set_new_snappoint(bb);
             // Calculate the new transformation and update the handle position
@@ -1143,12 +1147,13 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
     } else {
         // Snap to objects, grids, guides
         
-        SnapManager const &m = _desktop->namedview->snap_manager;
+        SnapManager &m = _desktop->namedview->snap_manager;
+        m.setup(NULL, _items_const);
 
         //TODO: While skewing, scaling in the opposite direction by integer multiples is also allowed. This is not handled though by freeSnapSkew / _snapTransformed yet!
         //TODO: We need a constrainedSnapSkew instead of a freeSnapSkew
-        Inkscape::SnappedPoint bb = m.freeSnapSkew(Inkscape::Snapper::SNAPPOINT_BBOX, _bbox_points, _items_const, skew[dim_a], _origin, dim_b);
-        Inkscape::SnappedPoint sn = m.freeSnapSkew(Inkscape::Snapper::SNAPPOINT_NODE, _snap_points, _items_const, skew[dim_a], _origin, dim_b);
+        Inkscape::SnappedPoint bb = m.freeSnapSkew(Inkscape::Snapper::SNAPPOINT_BBOX, _bbox_points, skew[dim_a], _origin, dim_b);
+        Inkscape::SnappedPoint sn = m.freeSnapSkew(Inkscape::Snapper::SNAPPOINT_NODE, _snap_points, skew[dim_a], _origin, dim_b);
 
         if (bb.getSnapped() || sn.getSnapped()) {
             // We snapped something, so change the skew to reflect it
@@ -1161,7 +1166,9 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
                 _desktop->snapindicator->set_new_snappoint(sn);
                 skew[dim_a] = sd;
             }            
-        }        
+        } else {
+            _desktop->snapindicator->remove_snappoint();
+        }       
     }
 
     // Update the handle position
@@ -1252,8 +1259,9 @@ gboolean Inkscape::SelTrans::rotateRequest(NR::Point &pt, guint state)
 
 gboolean Inkscape::SelTrans::centerRequest(NR::Point &pt, guint state)
 {
-    SnapManager const &m = _desktop->namedview->snap_manager;
-    pt = m.freeSnap(Snapper::SNAPPOINT_NODE, pt, NULL).getPoint();
+    SnapManager &m = _desktop->namedview->snap_manager;
+    m.setup(_desktop);
+    pt = m.freeSnap(Snapper::SNAPPOINT_NODE, pt).getPoint();
 
     if (state & GDK_CONTROL_MASK) {
         if ( fabs(_point[NR::X] - pt[NR::X]) > fabs(_point[NR::Y] - pt[NR::Y]) ) {
@@ -1345,7 +1353,8 @@ void sp_sel_trans_center(Inkscape::SelTrans *seltrans, SPSelTransHandle const &,
 
 void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
 {
-    SnapManager const &m = _desktop->namedview->snap_manager;
+    SnapManager &m = _desktop->namedview->snap_manager;
+    m.setup(_desktop, _items_const);
 
     /* The amount that we've moved by during this drag */
     NR::Point dxy = xy - _point;
@@ -1360,7 +1369,7 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
         ** FIXME: this will snap to more than just the grid, nowadays.
         */
 
-        dxy = m.freeSnap(Snapper::SNAPPOINT_NODE, dxy, NULL).getPoint();
+        dxy = m.freeSnap(Snapper::SNAPPOINT_NODE, dxy).getPoint();
 
     } else if (!shift) {
 
@@ -1379,13 +1388,11 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
             for (unsigned int dim = 0; dim < 2; dim++) {
                 s.push_back(m.constrainedSnapTranslation(Inkscape::Snapper::SNAPPOINT_BBOX,
                                                          _bbox_points,
-                                                         _items_const,
                                                          Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
                                                          dxy));
 
                 s.push_back(m.constrainedSnapTranslation(Inkscape::Snapper::SNAPPOINT_NODE,
                                                          _snap_points,
-                                                         _items_const,
                                                          Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
                                                          dxy));
             }
@@ -1398,10 +1405,8 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
     		g_get_current_time(&starttime); */
 
             /* Snap to things with no constraint */
-			s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAPPOINT_BBOX,
-                                              _bbox_points, _items_const, dxy));
-            s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAPPOINT_NODE,
-                                              _snap_points, _items_const, dxy));
+			s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAPPOINT_BBOX, _bbox_points, dxy));
+            s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAPPOINT_NODE, _snap_points, dxy));
 
           	/*g_get_current_time(&endtime);
           	double elapsed = ((((double)endtime.tv_sec - starttime.tv_sec) * G_USEC_PER_SEC + (endtime.tv_usec - starttime.tv_usec))) / 1000.0;
@@ -1424,6 +1429,8 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
         }
         if (best_snapped_point.getSnapped()) {
             _desktop->snapindicator->set_new_snappoint(best_snapped_point);   
+        } else {
+            _desktop->snapindicator->remove_snappoint();
         }
     }
 
