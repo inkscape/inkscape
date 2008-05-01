@@ -1643,26 +1643,41 @@ bool CssReader::parseFile(const DOMString &fileName)
 } // namespace org
 
 
-#ifdef TEST
+#ifdef CSSTEST
+
+static const char *fileNames[] =
+    {
+    "001.css",
+    "acid.css",
+    "base.css",
+    "inkscape.css",
+    "meyerweb.css",
+    NULL
+	};
+
+bool doTests()
+{
+    org::w3c::dom::css::CssReader parser;
+    for (char **fname = (char **)fileNames ; *fname ; fname++)
+       {
+       DOMString fileName = *fname;
+       if (!parser.parseFile(fileName))
+           {
+           printf("Test failed\n");
+           return false;
+           }
+	   }
+	return true;
+}
 
 int main(int argc, char **argv)
 {
-    org::w3c::dom::css::CssReader parser;
-    char *fileName;
-    fileName = "001.css";
-    //fileName = "acid.css";
-    //fileName = "base.css";
-    //fileName = "inkscape.css";
-    //fileName = "meyerweb.css";
-    if (!parser.parseFile(fileName))
-        {
-        printf("Test failed\n");
+    if (!doTests())
         return 1;
-        }
     return 0;
 }
 
-#endif /* TEST */
+#endif /* CSSTEST */
 
 //#########################################################################
 //# E N D    O F    F I L E
