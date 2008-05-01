@@ -10,7 +10,7 @@
     </param>
     <param name="max" type="float" min="0.1" max="10000.0" _gui-text="Maximum segment length (px)">10.0</param>
     <param name="segments" type="int" min="1" max="1000" _gui-text="Number of segments">2</param>
-    <effect>
+    <effect needs-live-preview="false">
         <object-type>path</object-type>
         <effects-menu>
             <submenu _name="Modify Path"/>
