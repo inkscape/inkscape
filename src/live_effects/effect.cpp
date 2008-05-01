@@ -147,7 +147,7 @@ Effect::getName()
 }
 
 void
-Effect::doBeforeEffect (SPLPEItem *lpeitem)
+Effect::doBeforeEffect (SPLPEItem */*lpeitem*/)
 {
     //Do nothing for simple effects
 }
@@ -246,7 +246,7 @@ Effect::readallParameters(Inkscape::XML::Node * repr)
         const gchar * value = repr->attribute(key);
         if (value) {
             bool accepted = param->param_readSVGValue(value);
-            if (!accepted) { 
+            if (!accepted) {
                 g_warning("Effect::readallParameters - '%s' not accepted for %s", value, key);
             }
         } else {
@@ -266,7 +266,7 @@ Effect::setParameter(const gchar * key, const gchar * new_value)
     if (param) {
         if (new_value) {
             bool accepted = param->param_readSVGValue(new_value);
-            if (!accepted) { 
+            if (!accepted) {
                 g_warning("Effect::setParameter - '%s' not accepted for %s", new_value, key);
             }
         } else {

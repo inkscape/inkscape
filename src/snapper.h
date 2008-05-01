@@ -22,7 +22,7 @@
 #include "snapped-line.h"
 
 struct SnappedConstraints {
-    std::list<Inkscape::SnappedPoint> points; 
+    std::list<Inkscape::SnappedPoint> points;
     std::list<Inkscape::SnappedLineSegment> lines;
     std::list<Inkscape::SnappedLine> grid_lines;
     std::list<Inkscape::SnappedLine> guide_lines;
@@ -50,11 +50,11 @@ public:
 
     void setSnapFrom(PointType t, bool s);
     bool getSnapFrom(PointType t) const;
-    
-    void setSnapperTolerance(NR::Coord t);    
+
+    void setSnapperTolerance(NR::Coord t);
     NR::Coord getSnapperTolerance() const; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
     bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
-    
+
     /**
     *  \return true if this Snapper will snap at least one kind of point.
     */
@@ -63,14 +63,14 @@ public:
     void setEnabled(bool s);
     bool getEnabled() const {return _snap_enabled;}
 
-    virtual void freeSnap(SnappedConstraints &sc,
-                          PointType const &t,
-                          NR::Point const &p,
-                          bool const &first_point,                                             
-                          NR::Maybe<NR::Rect> const &bbox_to_snap,                         
-                          std::vector<SPItem const *> const *it,
-                          std::vector<NR::Point> *unselected_nodes) const {};
-    
+    virtual void freeSnap(SnappedConstraints &/*sc*/,
+                          PointType const &/*t*/,
+                          NR::Point const &/*p*/,
+                          bool const &/*first_point*/,
+                          NR::Maybe<NR::Rect> const &/*bbox_to_snap*/,
+                          std::vector<SPItem const *> const */*it*/,
+                          std::vector<NR::Point> */*unselected_nodes*/) const {};
+
     class ConstraintLine
     {
     public:
@@ -88,7 +88,7 @@ public:
         NR::Point getDirection() const {
             return _direction;
         }
-        
+
     private:
 
         bool _has_point;
@@ -96,22 +96,22 @@ public:
         NR::Point _direction;
     };
 
-    virtual void constrainedSnap(SnappedConstraints &sc,
-                                 PointType const &t,
-                                 NR::Point const &p,
-                                 bool const &first_point,
-                                 NR::Maybe<NR::Rect> const &bbox_to_snap,                         
-                                 ConstraintLine const &c,
-                                 std::vector<SPItem const *> const *it) const {};
-                                 
+    virtual void constrainedSnap(SnappedConstraints &/*sc*/,
+                                 PointType const &/*t*/,
+                                 NR::Point const &/*p*/,
+                                 bool const &/*first_point*/,
+                                 NR::Maybe<NR::Rect> const &/*bbox_to_snap*/,
+                                 ConstraintLine const &/*c*/,
+                                 std::vector<SPItem const *> const */*it*/) const {};
+
 protected:
     SPNamedView const *_named_view;
     int _snap_from; ///< bitmap of point types that we will snap from
     bool _snap_enabled; ///< true if this snapper is enabled, otherwise false
-    
+
 private:
-    NR::Coord _snapper_tolerance;   ///< snap tolerance in desktop coordinates 
-                                    // must be private to enforce the usage of getTolerance(), which retrieves 
+    NR::Coord _snapper_tolerance;   ///< snap tolerance in desktop coordinates
+                                    // must be private to enforce the usage of getTolerance(), which retrieves
                                     // the tolerance in screen pixels (making it zoom independent)
 
 };

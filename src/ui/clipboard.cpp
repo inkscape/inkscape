@@ -963,7 +963,7 @@ SPDocument *ClipboardManagerImpl::_retrieveClipboard(Glib::ustring required_targ
  * Finds a suitable output extension to save the internal clipboard document,
  * then saves it to memory and sets the clipboard contents.
  */
-void ClipboardManagerImpl::_onGet(Gtk::SelectionData &sel, guint info)
+void ClipboardManagerImpl::_onGet(Gtk::SelectionData &sel, guint /*info*/)
 {
     g_assert( _clipboardSPDoc != NULL );
 

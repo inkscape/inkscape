@@ -19,7 +19,7 @@ typedef struct {
     int is_open;
 } bezctx_ink;
 
-void bezctx_ink_moveto(bezctx *bc, double x, double y, int is_open)
+void bezctx_ink_moveto(bezctx *bc, double x, double y, int /*is_open*/)
 {
     bezctx_ink *bi = (bezctx_ink *) bc;
     sp_curve_moveto(bi->curve, x, y);
@@ -140,7 +140,7 @@ LPESpiro::doEffect(SPCurve * curve)
                 // this point is not last, so makes sense to find a proper type for it
                 NArtBpath *next = NULL;
                 if (ib < len && (bpath[ib+1].code == NR_END || bpath[ib+1].code == NR_MOVETO_OPEN || bpath[ib+1].code == NR_MOVETO)) { // end of subpath
-                    if (closed) 
+                    if (closed)
                         next = first_in_subpath;
                 } else {
                     if (ib < len)
@@ -149,22 +149,22 @@ LPESpiro::doEffect(SPCurve * curve)
                         next = first_in_subpath;
                 }
                 if (next) {
-                    bool this_is_line = bpath[ib].code == NR_LINETO || 
+                    bool this_is_line = bpath[ib].code == NR_LINETO ||
                         (NR::L2(NR::Point(bpath[ib].x3, bpath[ib].y3) - NR::Point(bpath[ib].x2, bpath[ib].y2)) < 0.001);
-                    bool next_is_line = next->code == NR_LINETO || 
+                    bool next_is_line = next->code == NR_LINETO ||
                         (NR::L2(NR::Point(bpath[ib].x3, bpath[ib].y3) - NR::Point(next->x1, next->y1)) < 0.001);
                     double this_angle = NR_HUGE;
                     if (this_is_line) {
                         this_angle = atan2 (bpath[ib].x3 - pt[NR::X], bpath[ib].y3 - pt[NR::Y]);
                     } else if (bpath[ib].code == NR_CURVETO) {
                         this_angle = atan2 (bpath[ib].x3 - bpath[ib].x2, bpath[ib].y3 - bpath[ib].y2);
-                    } 
+                    }
                     double next_angle = NR_HUGE;
                     if (next_is_line) {
                         next_angle = atan2 (next->x3 - bpath[ib].x3, next->y3 - bpath[ib].y3);
                     } else if (next->code == NR_CURVETO) {
                         next_angle = atan2 (next->x1 - bpath[ib].x3, next->y1 - bpath[ib].y3);
-                    } 
+                    }
                     if (this_angle != NR_HUGE && next_angle != NR_HUGE && fabs(this_angle - next_angle) < 0.001) {
                         if (this_is_line && !next_is_line) {
                             path[ip].ty = ']';
