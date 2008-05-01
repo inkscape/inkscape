@@ -629,7 +629,7 @@ bool SvgReader::parseElement(SVGElementImplPtr parent,
         DOMString style = sourceElem->getAttribute("style");
         if (style.size() > 0)
             {
-            css::CssParser parser;
+            css::CssReader parser;
             style.insert(0, "{");
             style.append("}");
             //printf("CSS:%s\n", style.c_str());

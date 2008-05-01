@@ -43,7 +43,7 @@ namespace dom
 namespace css
 {
 
-class CssParser
+class CssReader
 {
 
 public:
@@ -51,13 +51,13 @@ public:
     /**
      *
      */
-    CssParser()
+    CssReader()
         {}
 
     /**
      *
      */
-    virtual ~CssParser()
+    virtual ~CssReader()
         {}
 
     /**

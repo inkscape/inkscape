@@ -49,7 +49,7 @@ namespace css
 /**
  * Get the column and row number of the given character position
  */
-void CssParser::getColumnAndRow(int p, int &colResult, int &rowResult, int &lastNL)
+void CssReader::getColumnAndRow(int p, int &colResult, int &rowResult, int &lastNL)
 {
     int col    = 1;
     int row    = 1;
@@ -76,7 +76,7 @@ void CssParser::getColumnAndRow(int p, int &colResult, int &rowResult, int &last
 /**
  *
  */
-void CssParser::error(char const *fmt, ...)
+void CssReader::error(char const *fmt, ...)
 {
     int lineNr;
     int colNr;
@@ -84,7 +84,7 @@ void CssParser::error(char const *fmt, ...)
     getColumnAndRow(lastPosition, colNr, lineNr, lastNL);
 
     va_list args;
-    fprintf(stderr, "CssParser:error at %d, line %d, column %d:",
+    fprintf(stderr, "CssReader:error at %d, line %d, column %d:",
                         lastPosition, lineNr, colNr);
     va_start(args, fmt);
     vfprintf(stderr, fmt, args);
@@ -115,7 +115,7 @@ void CssParser::error(char const *fmt, ...)
 /**
  *  Get the character at the position and record the fact
  */
-XMLCh CssParser::get(int p)
+XMLCh CssReader::get(int p)
 {
     if (p >= parselen)
         return 0;
@@ -131,7 +131,7 @@ XMLCh CssParser::get(int p)
  *  Test if the given substring exists at the given position
  *  in parsebuf.  Use get() in case of out-of-bounds
  */
-bool CssParser::match(int pos, const char *str)
+bool CssReader::match(int pos, const char *str)
 {
     while (*str)
        {
@@ -144,7 +144,7 @@ bool CssParser::match(int pos, const char *str)
 /**
  *
  */
-int CssParser::skipwhite(int p)
+int CssReader::skipwhite(int p)
 {
   while (p < parselen)
     {
@@ -204,7 +204,7 @@ int CssParser::skipwhite(int p)
 /**
  * get a word from the buffer
  */
-int CssParser::getWord(int p, DOMString &result)
+int CssReader::getWord(int p, DOMString &result)
 {
     XMLCh ch = get(p);
     if (!uni_is_letter(ch))
@@ -236,7 +236,7 @@ int CssParser::getWord(int p, DOMString &result)
 /**
  * get a word from the buffer
  */
-int CssParser::getNumber(int p0, double &result)
+int CssReader::getNumber(int p0, double &result)
 {
     int p=p0;
     DOMString str;
@@ -283,7 +283,7 @@ int CssParser::getNumber(int p0, double &result)
  * Assume that we are starting on a quote.  Ends on the char
  * after the final '"'
  */
-int CssParser::getQuoted(int p0, DOMString &result)
+int CssReader::getQuoted(int p0, DOMString &result)
 {
 
     int p = p0;
@@ -327,7 +327,7 @@ int CssParser::getQuoted(int p0, DOMString &result)
 /**
  * Not in api.  replaces URI return by lexer
  */
-int CssParser::getUri(int p0, DOMString &str)
+int CssReader::getUri(int p0, DOMString &str)
 {
     int p = p0;
     if (!match(p, "url("))
@@ -359,7 +359,7 @@ int CssParser::getUri(int p0, DOMString &str)
 /**
  * Skip to the end of the block
  */
-int CssParser::skipBlock(int p0)
+int CssReader::skipBlock(int p0)
 {
     int p = p0;
     while (p < parselen)
@@ -389,7 +389,7 @@ int CssParser::skipBlock(int p0)
  *     [ [ ruleset | media | page ] [S|CDO|CDC]* ]*
  *   ;
  */
-int CssParser::getStyleSheet(int p0)
+int CssReader::getStyleSheet(int p0)
 {
     int p = p0;
     int p2 = p;
@@ -483,7 +483,7 @@ int CssParser::getStyleSheet(int p0)
  *     [STRING|URI] S* [ medium [ COMMA S* medium]* ]? ';' S*
  *   ;
  */
-int CssParser::getImport(int p0)
+int CssReader::getImport(int p0)
 {
     int p = p0;
     if (!match(p, "@import"))
@@ -533,7 +533,7 @@ int CssParser::getImport(int p0)
  *   : MEDIA_SYM S* medium [ COMMA S* medium ]* LBRACE S* ruleset* '}' S*
  *   ;
  */
-int CssParser::getMedia(int p0)
+int CssReader::getMedia(int p0)
 {
     int p = p0;
     XMLCh ch;
@@ -600,7 +600,7 @@ int CssParser::getMedia(int p0)
  *   : IDENT S*
  *   ;
  */
-int CssParser::getMedium(int p0)
+int CssReader::getMedium(int p0)
 {
     int p = p0;
     p = skipwhite(p);
@@ -622,7 +622,7 @@ int CssParser::getMedium(int p0)
  *     LBRACE S* declaration [ ';' S* declaration ]* '}' S*
  *   ;
  */
-int CssParser::getPage(int p0)
+int CssReader::getPage(int p0)
 {
     int p = p0;
 
@@ -697,7 +697,7 @@ int CssParser::getPage(int p0)
  *   : ':' IDENT
  *   ;
  */
-int CssParser::getPseudoPage(int p0)
+int CssReader::getPseudoPage(int p0)
 {
     int p = p0;
     if (!match(p, ":"))
@@ -722,7 +722,7 @@ int CssParser::getPseudoPage(int p0)
  *     LBRACE S* declaration [ ';' S* declaration ]* '}' S*
  *   ;
  */
-int CssParser::getRuleSet(int p0)
+int CssReader::getRuleSet(int p0)
 {
     int p = p0;
     XMLCh ch;
@@ -815,7 +815,7 @@ int CssParser::getRuleSet(int p0)
  *   : simple_selector [ combinator simple_selector ]*
  *   ;
  */
-int CssParser::getSelector(int p0)
+int CssReader::getSelector(int p0)
 {
     int p = p0;
 
@@ -882,7 +882,7 @@ int CssParser::getSelector(int p0)
  *   | [ HASH | class | attrib | pseudo ]+
  *   ;
  */
-int CssParser::getSimpleSelector(int p0)
+int CssReader::getSimpleSelector(int p0)
 {
     int p = p0;
     int p2;
@@ -1094,7 +1094,7 @@ int CssParser::getSimpleSelector(int p0)
  *   | {empty}
  *   ;
  */
-int CssParser::getDeclaration(int p0, CSSStyleDeclaration &declarationList)
+int CssReader::getDeclaration(int p0, CSSStyleDeclaration &declarationList)
 {
     int p = p0;
 
@@ -1154,7 +1154,7 @@ int CssParser::getDeclaration(int p0, CSSStyleDeclaration &declarationList)
  *   : IMPORTANT_SYM S*
  *   ;
  */
-int CssParser::getPrio(int p0, DOMString &val)
+int CssReader::getPrio(int p0, DOMString &val)
 {
     int p = p0;
 
@@ -1182,7 +1182,7 @@ int CssParser::getPrio(int p0, DOMString &val)
  *   : term [ operator term ]*
  *   ;
  */
-int CssParser::getExpr(int p0)
+int CssReader::getExpr(int p0)
 {
     int p = p0;
 
@@ -1245,7 +1245,7 @@ int CssParser::getExpr(int p0)
  *   | STRING S* | IDENT S* | URI S* | hexcolor
  *   ;
  */
-int CssParser::getTerm(int p0)
+int CssReader::getTerm(int p0)
 {
     int p = p0;
     p = skipwhite(p);
@@ -1461,7 +1461,7 @@ int CssParser::getTerm(int p0)
  *   : FUNCTION S* expr ')' S*
  *   ;
  */
-int CssParser::getFunction(int p0)
+int CssReader::getFunction(int p0)
 {
     int p = p0;
 
@@ -1515,7 +1515,7 @@ int CssParser::getFunction(int p0)
  *   : HASH S*
  *   ;
  */
-int CssParser::getHexColor(int p0)
+int CssReader::getHexColor(int p0)
 {
     int p = p0;
 
@@ -1569,7 +1569,7 @@ int CssParser::getHexColor(int p0)
 /**
  *
  */
-bool CssParser::parse(const DOMString &str)
+bool CssReader::parse(const DOMString &str)
 {
     /*
     int len = str.size();
@@ -1605,7 +1605,7 @@ bool CssParser::parse(const DOMString &str)
 /**
  *
  */
-bool CssParser::parseFile(const DOMString &fileName)
+bool CssReader::parseFile(const DOMString &fileName)
 {
     DOMString tmp = fileName;
     char *fname = (char *)tmp.c_str();
@@ -1647,7 +1647,7 @@ bool CssParser::parseFile(const DOMString &fileName)
 
 int main(int argc, char **argv)
 {
-    org::w3c::dom::css::CssParser parser;
+    org::w3c::dom::css::CssReader parser;
     char *fileName;
     fileName = "001.css";
     //fileName = "acid.css";
