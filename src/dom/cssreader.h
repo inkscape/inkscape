@@ -1,5 +1,5 @@
-#ifndef __CSSPARSER_H__
-#define __CSSPARSER_H__
+#ifndef __CSSREADER_H__
+#define __CSSREADER_H__
 /**
  * Phoebe DOM Implementation.
  *
@@ -283,7 +283,7 @@ void getColumnAndRow(int p, int &col, int &row, int &lastNL);
 
 
 
-#endif /* __CSSPARSER_H__ */
+#endif /* __CSSREADER_H__ */
 //#########################################################################
 //# E N D    O F    F I L E
 //#########################################################################

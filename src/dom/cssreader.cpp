@@ -27,7 +27,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "cssparser.h"
+#include "cssreader.h"
 #include "ucd.h"
 
 #include <stdio.h>

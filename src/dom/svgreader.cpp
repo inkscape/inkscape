@@ -33,8 +33,8 @@
  */
 
 
-#include "svgparser.h"
-#include "dom/cssparser.h"
+#include "svgreader.h"
+#include "dom/cssreader.h"
 #include "dom/ucd.h"
 #include "xmlreader.h"
 

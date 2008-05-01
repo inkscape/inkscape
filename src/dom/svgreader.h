@@ -1,5 +1,5 @@
-#ifndef __SVGPARSER_H__
-#define __SVGPARSER_H__
+#ifndef __SVGREADER_H__
+#define __SVGREADER_H__
 
 /**
  * Phoebe DOM Implementation.
@@ -170,7 +170,7 @@ private:
 }  //namespace w3c
 }  //namespace org
 
-#endif /* __SVGPARSER_H__ */
+#endif /* __SVGREADER_H__ */
 /*#########################################################################
 ## E N D    O F    F I L E
 #########################################################################*/
