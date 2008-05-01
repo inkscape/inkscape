@@ -35,6 +35,9 @@
  * This API follows:
  * http://www.w3.org/TR/SVG11/svgdom.html
  *
+ * This file defines the main SVG-DOM Node types.  Other non-Node types are
+ * defined in svgtypes.h.
+ *    
  */
 
 

@@ -13,7 +13,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005-2007 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -74,12 +74,12 @@ public:
     /**
      *
      */
-    org::w3c::dom::DocumentPtr parseFile(char *fileName);
+    org::w3c::dom::DocumentPtr parseFile(const DOMString &fileName);
 
 
 private:
 
-    void error(char *format, ...)
+    void error(const char *format, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif
@@ -116,7 +116,7 @@ private:
     int        len;   //length of parsed region
     DOMString  parsebuf;
 
-    DOMString  loadFile(char *fileName);
+    DOMString  loadFile(const DOMString &fileName);
 
     int        lineNr;
     int        colNr;

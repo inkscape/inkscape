@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -29,7 +29,11 @@
 
 #include "svgimpl.h"
 
-
+/**
+ * This is the .cpp side of the SVG implementations classes.  Note that many
+ * of the sections for each of the classes is empty.   This is because that class
+ * has been implemented totally in svgimpl.h
+ */   
 
 namespace org
 {
@@ -161,7 +165,7 @@ bool SVGSVGElementImpl::animationsPaused(  )
  *
  */
 NodeList SVGSVGElementImpl::getIntersectionList(const SVGRect &/*rect*/,
-						const SVGElementPtr /*referenceElement*/ )
+                        const SVGElementPtr /*referenceElement*/ )
 {
     NodeList list;
     return list;
@@ -171,7 +175,7 @@ NodeList SVGSVGElementImpl::getIntersectionList(const SVGRect &/*rect*/,
  *
  */
 NodeList SVGSVGElementImpl::getEnclosureList(const SVGRect &/*rect*/,
-					     const SVGElementPtr /*referenceElement*/ )
+                         const SVGElementPtr /*referenceElement*/ )
 {
     NodeList list;
     return list;

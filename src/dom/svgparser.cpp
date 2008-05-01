@@ -25,12 +25,18 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *  
+ * =======================================================================
+ * NOTES
+ * 
+ *      
  */
 
 
 #include "svgparser.h"
 #include "dom/cssparser.h"
 #include "dom/ucd.h"
+#include "xmlreader.h"
 
 #include <stdarg.h>
 
@@ -54,10 +60,10 @@ namespace svg
 /**
  *
  */
-void SvgParser::error(char const *fmt, ...)
+void SvgReader::error(char const *fmt, ...)
 {
     va_list args;
-    fprintf(stderr, "SvgParser:error:");
+    fprintf(stderr, "SvgReader:error:");
     va_start(args, fmt);
     vfprintf(stderr, fmt, args);
     va_end(args) ;
@@ -73,7 +79,7 @@ void SvgParser::error(char const *fmt, ...)
 /**
  *  Get the character at the position and record the fact
  */
-XMLCh SvgParser::get(int p)
+XMLCh SvgReader::get(int p)
 {
     if (p >= parselen)
         return 0;
@@ -89,7 +95,7 @@ XMLCh SvgParser::get(int p)
  *  Test if the given substring exists at the given position
  *  in parsebuf.  Use get() in case of out-of-bounds
  */
-bool SvgParser::match(int pos, char const *str)
+bool SvgReader::match(int pos, char const *str)
 {
     while (*str)
        {
@@ -102,7 +108,7 @@ bool SvgParser::match(int pos, char const *str)
 /**
  *
  */
-int SvgParser::skipwhite(int p)
+int SvgReader::skipwhite(int p)
 {
   while (p < parselen)
     {
@@ -162,7 +168,7 @@ int SvgParser::skipwhite(int p)
 /**
  * get a word from the buffer
  */
-int SvgParser::getWord(int p, DOMString &result)
+int SvgReader::getWord(int p, DOMString &result)
 {
     XMLCh ch = get(p);
     if (!uni_is_letter(ch))
@@ -195,7 +201,7 @@ int SvgParser::getWord(int p, DOMString &result)
 /**
  * get a word from the buffer
  */
-int SvgParser::getNumber(int p0, double &result)
+int SvgReader::getNumber(int p0, double &result)
 {
     int p=p0;
 
@@ -249,7 +255,7 @@ int SvgParser::getNumber(int p0, double &result)
 /**
  * get a word from the buffer
  */
-int SvgParser::getNumber(int p0, double &result)
+int SvgReader::getNumber(int p0, double &result)
 {
     int p=p0;
 
@@ -278,7 +284,7 @@ int SvgParser::getNumber(int p0, double &result)
 }
 
 
-bool SvgParser::parseTransform(const DOMString &str)
+bool SvgReader::parseTransform(const DOMString &str)
 {
     parsebuf = str;
     parselen = str.size();
@@ -593,7 +599,7 @@ bool SvgParser::parseTransform(const DOMString &str)
 /**
  *
  */
-bool SvgParser::parseElement(SVGElementImplPtr parent,
+bool SvgReader::parseElement(SVGElementImplPtr parent,
                              ElementImplPtr sourceElem)
 {
     if (!parent || !sourceElem)
@@ -726,7 +732,7 @@ bool SvgParser::parseElement(SVGElementImplPtr parent,
 /**
  *
  */
-SVGDocumentPtr SvgParser::parse(const DocumentPtr src)
+SVGDocumentPtr SvgReader::parse(const DocumentPtr src)
 {
     if (!src)
         {
@@ -745,6 +751,44 @@ SVGDocumentPtr SvgParser::parse(const DocumentPtr src)
         }
 
     return doc;
+}
+
+
+
+/**
+ *
+ */
+SVGDocumentPtr SvgReader::parse(const DOMString &buf)
+{
+    /* remember, smartptrs are null-testable*/
+    SVGDocumentPtr svgdoc;
+    XmlReader parser;
+    DocumentPtr doc = parser.parse(buf);
+    if (!doc)
+        {
+        return svgdoc;
+        }
+    svgdoc = parse(doc);
+    return svgdoc;
+}
+
+
+
+/**
+ *
+ */
+SVGDocumentPtr SvgReader::parseFile(const DOMString &fileName)
+{
+    /* remember, smartptrs are null-testable*/
+    SVGDocumentPtr svgdoc;
+    XmlReader parser;
+    DocumentPtr doc = parser.parseFile(fileName);
+    if (!doc)
+        {
+        return svgdoc;
+        }
+    svgdoc = parse(doc);
+    return svgdoc;
 }
 
 

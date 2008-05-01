@@ -1719,7 +1719,7 @@ public:
      *
      */
     virtual double getSubStringLength(unsigned long charnum,
-	                                  unsigned long nchars )
+                                      unsigned long nchars )
                                       throw( DOMException );
 
     /**

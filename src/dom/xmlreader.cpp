@@ -49,9 +49,9 @@ namespace dom
 //#########################################################################
 struct EntityInfo
 {
-    char *escape;
+    const char *escape;
     int  escapeLength;
-    char *value;
+    const char *value;
 };
 
 
@@ -75,7 +75,7 @@ static EntityInfo entityTable[] =
 /**
  *
  */
-void XmlReader::error(char *fmt, ...)
+void XmlReader::error(const char *fmt, ...)
 {
     va_list args;
     fprintf(stderr, "XmlReader:error at line %d, column %d:", lineNr, colNr);
@@ -156,7 +156,7 @@ int XmlReader::peek(int p)
  *  Test if the given substring exists at the given position
  *  in parsebuf.  Use peek() in case of out-of-bounds
  */
-bool XmlReader::match(int pos, char const *str)
+bool XmlReader::match(int pos, const char *str)
 {
     while (*str)
        {
@@ -883,8 +883,9 @@ XmlReader::parse(const DOMString &str)
 {
 
     DocumentPtr doc = parse(str, 0, str.size());
+    if (!doc)
+        return doc;
     doc->normalizeDocument();
-
     return doc;
 }
 
@@ -892,12 +893,15 @@ XmlReader::parse(const DOMString &str)
  *
  */
 org::w3c::dom::DocumentPtr
-XmlReader::parseFile(char *fileName)
+XmlReader::parseFile(const DOMString &fileName)
 {
-
+    DocumentPtr doc;
+    
     DOMString buf = loadFile(fileName);
+    if (buf.size() == 0)
+        return doc; /*doc still null*/
 
-    DocumentPtr doc = parse(buf, 0, buf.size());
+    doc = parse(buf, 0, buf.size());
 
     return doc;
 }
@@ -912,16 +916,19 @@ XmlReader::parseFile(char *fileName)
  *
  */
 org::w3c::dom::DOMString
-XmlReader::loadFile(char *fileName)
+XmlReader::loadFile(const DOMString &fileName)
 {
-
-    if (!fileName)
-        return NULL;
-    FILE *f = fopen(fileName, "rb");
-    if (!f)
-        return NULL;
-
     DOMString buf;
+
+    if (fileName.size() == 0)
+        return buf;
+    FILE *f = fopen(fileName.c_str(), "rb");
+    if (!f)
+        {
+        //error here
+        return buf;
+        }
+
     while (!feof(f))
         {
         int ch = fgetc(f);

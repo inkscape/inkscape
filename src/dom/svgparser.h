@@ -13,7 +13,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005-2007 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -28,6 +28,19 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *  
+ * =======================================================================
+ * NOTES
+ * 
+ * This parser takes an XML document, as a file, string, or DOM Document,
+ * and attempts to parse it as an SVG-DOM  SVGDocument.
+ * 
+ * Look in svg.h and svgtypes.h for the classes which are the target of this
+ * parser.
+ * 
+ * They loosely follow the specification:
+ * http://www.w3.org/TR/SVG11/svgdom.html
+ *              
  */
 
 
@@ -43,35 +56,45 @@ namespace svg
 {
 
 
-class SvgParser
+class SvgReader
 {
 public:
 
     /**
      *
      */
-    SvgParser()
+    SvgReader()
         {
         }
 
     /**
      *
      */
-    SvgParser(const SvgParser &/*other*/)
+    SvgReader(const SvgReader &/*other*/)
         {
         }
 
     /**
      *
      */
-    virtual ~SvgParser()
+    virtual ~SvgReader()
         {
         }
 
     /**
      *
      */
-    SVGDocumentPtr parse(const DocumentPtr sourceDoc);
+    SVGDocumentPtr parse(const DocumentPtr /*sourceDoc*/);
+
+    /**
+     *
+     */
+    SVGDocumentPtr parse(const DOMString &/*buffer*/);
+
+    /**
+     *
+     */
+    SVGDocumentPtr parseFile(const DOMString &/*fileName*/);
 
 
 
