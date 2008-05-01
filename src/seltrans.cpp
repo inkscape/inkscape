@@ -1150,15 +1150,15 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
         SnapManager &m = _desktop->namedview->snap_manager;
         m.setup(NULL, _items_const);
 
-        //TODO: While skewing, scaling in the opposite direction by integer multiples is also allowed. This is not handled though by freeSnapSkew / _snapTransformed yet!
-        //TODO: We need a constrainedSnapSkew instead of a freeSnapSkew
-        Inkscape::SnappedPoint bb = m.freeSnapSkew(Inkscape::Snapper::SNAPPOINT_BBOX, _bbox_points, skew[dim_a], _origin, dim_b);
-        Inkscape::SnappedPoint sn = m.freeSnapSkew(Inkscape::Snapper::SNAPPOINT_NODE, _snap_points, skew[dim_a], _origin, dim_b);
+        Inkscape::Snapper::ConstraintLine const constraint(component_vectors[dim_b]);
+        NR::Point const s(skew[dim_a], scale[dim_a]);
+        Inkscape::SnappedPoint bb = m.constrainedSnapSkew(Inkscape::Snapper::SNAPPOINT_BBOX, _bbox_points, constraint, s, _origin, dim_b);
+        Inkscape::SnappedPoint sn = m.constrainedSnapSkew(Inkscape::Snapper::SNAPPOINT_NODE, _snap_points, constraint, s, _origin, dim_b);
 
         if (bb.getSnapped() || sn.getSnapped()) {
             // We snapped something, so change the skew to reflect it
-            NR::Coord const bd = bb.getSnapped() ? bb.getTransformation()[dim_b] : NR_HUGE;
-            NR::Coord const sd = sn.getSnapped() ? sn.getTransformation()[dim_b] : NR_HUGE;
+            NR::Coord const bd = bb.getSnapped() ? bb.getTransformation()[0] : NR_HUGE;
+            NR::Coord const sd = sn.getSnapped() ? sn.getTransformation()[0] : NR_HUGE;
             if (bd < sd) {
                 _desktop->snapindicator->set_new_snappoint(bb);
                 skew[dim_a] = bd;

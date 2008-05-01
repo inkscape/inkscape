@@ -324,7 +324,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 transformed = *i + transformation;
                 break;
             case SCALE:
-                transformed = ((*i - origin) * NR::scale(transformation[NR::X], transformation[NR::Y])) + origin;
+                transformed = (*i - origin) * NR::scale(transformation[NR::X], transformation[NR::Y]) + origin;
                 break;
             case STRETCH:
             {
@@ -339,8 +339,11 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 break;
             }
             case SKEW:
-                transformed = *i;
-                transformed[dim] += transformation[dim] * ((*i)[1 - dim] - origin[1 - dim]);
+                // Apply the skew factor
+                transformed[dim] = (*i)[dim] + transformation[0] * ((*i)[1 - dim] - origin[1 - dim]);
+                // While skewing, mirroring and scaling (by integer multiples) in the opposite direction is also allowed.
+                // Apply that scale factor here
+                transformed[1-dim] = (*i - origin)[1 - dim] * transformation[1] + origin[1 - dim];
                 break;
             default:
                 g_assert_not_reached();
@@ -384,9 +387,9 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 // running from the scaling origin to the original untransformed point. We will
                 // calculate that line here 
                 dedicated_constraint = Inkscape::Snapper::ConstraintLine(origin, (*i) - origin);
-            } else if (transformation_type == STRETCH || transformation_type == SKEW) { // when skewing or non-uniform stretching {
+            } else if (transformation_type == STRETCH) { // when non-uniform stretching {
                 dedicated_constraint = Inkscape::Snapper::ConstraintLine((*i), component_vectors[dim]);
-            } // else: leave the original constraint, e.g. for constrained translation 
+            } // else: leave the original constraint, e.g. for constrained translation and skewing 
             if (transformation_type == SCALE && !uniform) {
                 g_warning("Non-uniform constrained scaling is not supported!");   
             }
@@ -457,8 +460,9 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                     metric = std::abs(result[dim] - transformation[dim]);
                     break;
                 case SKEW:
-                    result[dim] = (snapped_point.getPoint()[dim] - (*i)[dim]) / ((*i)[1 - dim] - origin[1 - dim]);
-                    metric = std::abs(result[dim] - transformation[dim]);
+                    result[0] = (snapped_point.getPoint()[dim] - (*i)[dim]) / ((*i)[1 - dim] - origin[1 - dim]); // skew factor
+                    result[1] = transformation[1]; // scale factor
+                    metric = std::abs(result[0] - transformation[0]);
                     break;
                 default:
                     g_assert_not_reached();
@@ -648,13 +652,15 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(Inkscape::Snapper::Po
  *  \return Snapped skew, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-Inkscape::SnappedPoint SnapManager::freeSnapSkew(Inkscape::Snapper::PointType point_type,
+Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(Inkscape::Snapper::PointType point_type,
                                                  std::vector<NR::Point> const &p,
-                                                 NR::Coord const &s,
+                                                 Inkscape::Snapper::ConstraintLine const &constraint,
+                                                 NR::Point const &s,  
                                                  NR::Point const &o,
                                                  NR::Dim2 d) const
 {
-   return _snapTransformed(point_type, p, false, NR::Point(), SKEW, NR::Point(s, s), o, d, false);
+   // "s" contains skew factor in s[0], and scale factor in s[1]
+   return _snapTransformed(point_type, p, true, constraint, SKEW, s, o, d, false);
 }
 
 Inkscape::SnappedPoint SnapManager::findBestSnap(NR::Point const &p, SnappedConstraints &sc, bool constrained) const
@@ -764,6 +770,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(NR::Point const &p, SnappedCons
         }
     }
     
+    // std::cout << "findBestSnap = " << bestSnappedPoint.getPoint() << std::endl;
     return bestSnappedPoint;         
 }
 

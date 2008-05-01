@@ -90,16 +90,13 @@ public:
                                                    NR::Dim2 d,
                                                    bool uniform) const;
 
-    Inkscape::SnappedPoint freeSnapSkew(Inkscape::Snapper::PointType point_type,
+    Inkscape::SnappedPoint constrainedSnapSkew(Inkscape::Snapper::PointType point_type,
                                         std::vector<NR::Point> const &p,
-                                        NR::Coord const &s,
+                                        Inkscape::Snapper::ConstraintLine const &constraint,
+                                        NR::Point const &s, // s[0] = skew factor, s[1] = scale factor
                                         NR::Point const &o,
                                         NR::Dim2 d) const;
-                                            
-  	//Inkscape::SnappedPoint guideSnap(NR::Point const &p,
-    //                       Inkscape::ObjectSnapper::DimensionToSnap const snap_dim) const;
-  
-
+                                        
     Inkscape::GuideSnapper guide;      ///< guide snapper
     Inkscape::ObjectSnapper object;    ///< snapper to other objects
 
