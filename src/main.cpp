@@ -1263,6 +1263,12 @@ static void do_export_pdf(SPDocument* doc, gchar const* uri, char const* mime)
         (*i)->set_param_bool ("exportCanvas", FALSE);
     }
 
+    if (sp_export_text_to_path) {
+        (*i)->set_param_bool("textToPath", TRUE);
+    } else {
+        (*i)->set_param_bool("textToPath", FALSE);
+    }
+
     (*i)->save(doc, uri);
 }
 
