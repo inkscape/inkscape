@@ -732,7 +732,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
                                           fill_goal, do_fill,
                                           stroke_goal, do_stroke,
                                           opacity_goal, do_opacity,
-                                          p, radius, force, do_h, do_s, do_l, do_o));
+                                          p, radius, force, do_h, do_s, do_l, do_o))
                     did = true;
             }
         }
