@@ -41,14 +41,14 @@ using namespace Geom;
 
 LPECurveStitch::LPECurveStitch(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    strokepath(_("Stroke path"), _("The path that will be used as stitch."), "strokepath", &wr, this, "M0,0 L1,0"),
+    strokepath(_("Stitch path"), _("The path that will be used as stitch."), "strokepath", &wr, this, "M0,0 L1,0"),
     nrofpaths(_("Number of paths"), _("The number of paths that will be generated."), "count", &wr, this, 5),
     startpoint_edge_variation(_("Start edge variance"), _("The amount of random jitter to move the start points of the stitches inside & outside the guide path"), "startpoint_edge_variation", &wr, this, 0),
     startpoint_spacing_variation(_("Start spacing variance"), _("The amount of random shifting to move the start points of the stitches back & forth along the guide path"), "startpoint_spacing_variation", &wr, this, 0),
     endpoint_edge_variation(_("End edge variance"), _("The amount of randomness that moves the end points of the stitches inside & outside the guide path"), "endpoint_edge_variation", &wr, this, 0),
     endpoint_spacing_variation(_("End spacing variance"), _("The amount of random shifting to move the end points of the stitches back & forth along the guide path"), "endpoint_spacing_variation", &wr, this, 0),
-    prop_scale(_("Scale width"), _("Scaling of the width of the stroke path"), "prop_scale", &wr, this, 1),
-    scale_y_rel(_("Scale width relative"), _("Scale the width of the stroke path relative to its length"), "scale_y_rel", &wr, this, false)
+    prop_scale(_("Scale width"), _("Scale the width of the stitch path"), "prop_scale", &wr, this, 1),
+    scale_y_rel(_("Scale width relative to length"), _("Scale the width of the stitch path relative to its length"), "scale_y_rel", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&nrofpaths) );
     registerParameter( dynamic_cast<Parameter *>(&startpoint_edge_variation) );
