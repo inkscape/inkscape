@@ -55,6 +55,7 @@ extensions = \
 	funcplot.py \
 	gears.py\
 	gimp_xcf.py \
+	grid_polar.py \
 	handles.py \
 	ill2svg.pl \
 	inkex.py \
@@ -159,6 +160,7 @@ modules = \
 	funcplot.inx \
 	gears.inx\
 	gimp_xcf.inx \
+	grid_polar.inx \
 	handles.inx \
 	inkscape_help_askaquestion.inx \
 	inkscape_help_commandline.inx \
