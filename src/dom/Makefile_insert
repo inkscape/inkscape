@@ -7,8 +7,8 @@ dom/clean:
 
 dom_libdom_a_SOURCES =       \
 	dom/css.h                \
-	dom/cssparser.cpp        \
-	dom/cssparser.h          \
+	dom/cssreader.cpp        \
+	dom/cssreader.h          \
 	dom/dom.h                \
     dom/domconfig.h          \
 	dom/domimpl.cpp          \
@@ -31,8 +31,8 @@ dom_libdom_a_SOURCES =       \
 	dom/svg.h                \
 	dom/svgimpl.cpp          \
 	dom/svgimpl.h            \
-	dom/svgparser.cpp        \
-	dom/svgparser.h          \
+	dom/svgreader.cpp        \
+	dom/svgreader.h          \
 	dom/svgtypes.h           \
 	dom/traversal.h          \
 	dom/ucd.cpp              \
