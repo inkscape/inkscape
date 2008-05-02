@@ -6,8 +6,7 @@
     <effect>
         <object-type>all</object-type>
 	    <effects-menu>
-                <submenu _name= />
-            </effects-menu>
+        </effects-menu>
     </effect>
     <plugin>
         <name>randompos</name>
