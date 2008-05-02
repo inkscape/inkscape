@@ -356,7 +356,7 @@ void AboutBox::initStrings() {
      * This list is copied from the TRANSLATORS file.  It should
      * be periodically updated.
      */              
-    gchar *allTranslators =
+    gchar const *allTranslators =
     "3ARRANO.com <3arrano@3arrano.com>, 2005.\n"
     "Adib Taraben <theadib@yahoo.com>, 2004.\n"
     "Alastair McKinstry <mckinstry@computer.org>, 2000.\n"

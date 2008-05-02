@@ -411,7 +411,7 @@ struct poptOption options[] = {
 };
 
 static bool needToRecodeParams = true;
-gchar* blankParam = "";
+gchar const* blankParam = "";
 
 #ifdef WIN32
 static int _win32_set_inkscape_env(char *argv0)
