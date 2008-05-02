@@ -38,7 +38,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.8.2, 2007-2008 Bob Jamison"
+#define BUILDTOOL_VERSION  "BuildTool v0.8.3"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -3919,7 +3919,7 @@ bool MakeBase::listFiles(MakeBase &propRef, FileSet &fileSet)
         {
         for (iter = includes.begin() ; iter != includes.end() ; iter++)
             {
-            String pattern = *iter;
+            String &pattern = *iter;
             std::vector<String>::iterator siter;
             for (siter = fileList.begin() ; siter != fileList.end() ; siter++)
                 {
@@ -3942,7 +3942,7 @@ bool MakeBase::listFiles(MakeBase &propRef, FileSet &fileSet)
         std::vector<String>::iterator siter;
         for (siter = excludes.begin() ; siter != excludes.end() ; siter++)
             {
-            String pattern = *siter;
+            String &pattern = *siter;
             if (regexMatch(s, pattern))
                 {
                 //trace("EXCLUDED:%s", s.c_str());
@@ -5671,8 +5671,8 @@ bool DepTool::scanFile(const String &fname, FileRec *frec)
     String buf;
     while (!feof(f))
         {
-        int len = fread(readBuf, 1, readBufSize, f);
-        readBuf[len] = '\0';
+        int nrbytes = fread(readBuf, 1, readBufSize, f);
+        readBuf[nrbytes] = '\0';
         buf.append(readBuf);
         }
     fclose(f);
@@ -5791,7 +5791,7 @@ bool DepTool::generateDependencies()
         FileRec *include = iter->second;
         if (include->type == FileRec::CFILE)
             {
-            String cFileName   = iter->first;
+            //String cFileName   = iter->first;
             FileRec *ofile     = new FileRec(FileRec::OFILE);
             ofile->path        = include->path;
             ofile->baseName    = include->baseName;
@@ -6171,6 +6171,7 @@ public:
         defines         = "";
         includes        = "";
         continueOnError = false;
+        refreshCache    = false;
         fileSet.clear();
         excludeInc.clear();
         }
@@ -6197,9 +6198,9 @@ public:
         FILE *f = NULL;
         f = fopen("compile.lst", "w");
 
-        bool refreshCache = false;
+        //refreshCache is probably false here, unless specified otherwise
         String fullName = parent.resolve("build.dep");
-        if (isNewerThan(parent.getURI().getPath(), fullName))
+        if (refreshCache || isNewerThan(parent.getURI().getPath(), fullName))
             {
             taskstatus("regenerating C/C++ dependency cache");
             refreshCache = true;
@@ -6426,6 +6427,10 @@ public:
             return false;
         if (s=="true" || s=="yes")
             continueOnError = true;
+        if (!parent.getAttribute(elem, "refreshCache", s))
+            return false;
+        if (s=="true" || s=="yes")
+            refreshCache = true;
 
         std::vector<Element *> children = elem->getChildren();
         for (unsigned int i=0 ; i<children.size() ; i++)
@@ -6477,6 +6482,7 @@ protected:
     String   defines;
     String   includes;
     bool     continueOnError;
+    bool     refreshCache;
     FileSet  fileSet;
     FileList excludeInc;
     

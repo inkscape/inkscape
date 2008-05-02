@@ -7,7 +7,7 @@
  *   Bob Jamison
  *   Others 
  *
- * Copyright (C) 2006-2007 Inkscape.org
+ * Copyright (C) 2006-2008 Inkscape.org
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -42,26 +42,28 @@
 
   <!-- set global properties for this build -->
   <property environment="env"/>
-  <property name="version"     value="0.46+devel"/>
-  <property name="src"         location="src"/>
-  <property name="lib"         location="lib"/>
-  <property name="build"       location="build"/>
-  <property name="dist"        location="inkscape"/>
+  <property name="version"       value="0.46+devel"/>
+  <property name="src"           location="src"/>
+  <property name="lib"           location="lib"/>
+  <property name="build"         location="build"/>
+  <property name="dist"          location="inkscape"/>
 
   <!-- Use these settings for the native compiler -->  
   <!-- -->
-  <property name="arch"        value="mingw32-"/>
-  <property name="archutil"    value=""/>
-  <property name="gtk"         location="c:/devlibs"/>
+  <property name="arch"          value="mingw32-"/>
+  <property name="archutil"      value=""/>
+  <property name="gtk"           location="c:/devlibs"/>
   <!-- -->
 
   <!-- Use these settings for the cross compiler -->  
   <!--
-  <property name="arch"        value="i686-pc-mingw32-"/>
-  <property name="archutil"    value="${arch}"/>
-  <property name="gtk"         location="/target"/>
+  <property name="arch"          value="i686-pc-mingw32-"/>
+  <property name="archutil"      value="${arch}"/>
+  <property name="gtk"           location="/target"/>
   -->
 
+  <!-- Extra properties -->  
+  <property name="refresh"       value="false"/>
 
 
   <!--
@@ -200,7 +202,8 @@
     <!-- Compile from source to build -->
     <cc cc="${arch}gcc" cxx="${arch}g++"
              destdir="${build}/obj"
-			 continueOnError="false">
+			 continueOnError="false"
+			 refreshCache="${refresh}">
         <fileset dir="${src}">
             <!-- THINGS TO EXCLUDE -->
             <exclude name="2geom/chebyshev.cpp"/>
