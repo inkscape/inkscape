@@ -602,7 +602,6 @@ version.h
 zoom-context.cpp
 zoom-context.h
 ${ONLY_WIN}
-
 )
 
 # make executable for INKSCAPE
@@ -616,15 +615,4 @@ ADD_EXECUTABLE(inkview inkview.cpp)
 TARGET_LINK_LIBRARIES(inkview
 	"${INKSCAPE_LINK_FLAGS}" 2geom avoid cola croco gdl nr nrtype vpsc livarot
 )
-#INSTALL(TARGETS INKSCAPE
-#  RUNTIME DESTINATION bin
-#  LIBRARY DESTINATION lib
-#  ARCHIVE DESTINATION lib
-#)
 
-#FILE(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
-#INSTALL(FILES ${files} DESTINATION include/INKSCAPE/INKSCAPE)
-
-#CONFIGURE_FILE( ${CMAKE_SOURCE_DIR}/INKSCAPE.pc.in
-#                ${CMAKE_BINARY_DIR}/INKSCAPE.pc @ONLY IMMEDIATE )
-#INSTALL(FILES "${CMAKE_BINARY_DIR}/INKSCAPE.pc" DESTINATION lib/pkgconfig)

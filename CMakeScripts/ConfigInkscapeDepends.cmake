@@ -41,7 +41,7 @@ FOREACH(dep ${INKSCAPE_DEPENDS})
         message(STATUS "${dep}: FOUND")
         # Set Compiler Flags
         SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${${dep_name}_CFLAGS}")
-        SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${${dep_name}_CFLAGS}")
+#        SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${${dep_name}_CFLAGS}")
         SET(INKSCAPE_LINK_FLAGS "${INKSCAPE_LINK_FLAGS} ${${dep_name}_LINK_FLAGS}")
     ELSE("${dep}_FOUND")
         message(STATUS "${dep}: NOT FOUND")
@@ -65,7 +65,8 @@ FOREACH(opt ${INKSCAPE_OPTIONAL})
 #    PKGCONFIG_VERSION(${opt} "${opt}_VERSION")
     IF("${opt}_FOUND")
         message(STATUS "${opt}: FOUND")
-        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${${dep_name}_CFLAGS}")
+        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${${opt_name}_CFLAGS}")
+#        SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${${opt_name}_CFLAGS}")
         SET(INKSCAPE_LINK_FLAGS "${INKSCAPE_LINK_FLAGS} ${${opt_name}_LINK_FLAGS}")
     ELSE("${opt}_FOUND")
         message(STATUS "${opt}: NOT FOUND")
@@ -146,5 +147,8 @@ ENDIF(HAVE_CAIRO_PDF)
 # Create them in the binary root dir
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_BINARY_DIR}/config.h)
 FILE(WRITE ${CMAKE_BINARY_DIR}/inkscape_version.h "#define INKSCAPE_VERSION \"${INKSCAPE_VERSION}\"\n")
-INCLUDE_DIRECTORIES ("${CMAKE_BINARY_DIR}")  # Include base dir, so other files can refer to the generated files.
-# CMAKE_INCLUDE_CURRENT_DIR is not enough as it only includes the current dir and not the basedir with config.h in it
+
+#Linking check
+message(STATUS "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+message(STATUS "${INKSCAPE_LINK_FLAGS}")
+message(STATUS "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")

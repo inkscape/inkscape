@@ -1,7 +1,5 @@
 PROJECT(inkscape CXX C)
 
-MESSAGE(STATUS "Creating build files in: ${CMAKE_CURRENT_BINARY_DIR}")
-
 SET(INKSCAPE_VERSION 0.46+devel)
 SET(PROJECT_NAME inkscape)
 SET(CMAKE_BACKWARDS_COMPATIBILITY 2.4)
@@ -15,23 +13,10 @@ SET(CMAKE_COLOR_MAKEFILE ON)
 #Choose verbosity level
 SET(CMAKE_VERBOSE_MAKEFILE OFF)
 
-# Probably best to move all these path things to a single file
-IF(WIN32)
-    SET(PACKAGE_LOCALE_DIR "locale")
-ELSEIF(WIN32)
-    # TODO: check and change this to correct value:
-    SET(PACKAGE_LOCALE_DIR "locale")
-ENDIF(WIN32)
-
-
-SET(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
-SET(CMAKE_SKIP_RPATH:BOOL OFF)
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeScripts)
+INCLUDE(ConfigPaths)
 INCLUDE(ConfigCompileFlags)
 INCLUDE(ConfigInkscapeDepends)
-
-INCLUDE_DIRECTORIES ("${PROJECT_SOURCE_DIR}" src/)
-LINK_DIRECTORIES (src/)
 
 #SET(CMAKE_MAJOR_MINOR "${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}")
 #IF("${CMAKE_MAJOR_MINOR}" STREQUAL "2.2")
@@ -66,4 +51,3 @@ po
 FOREACH(dirlist ${folders})
 ADD_SUBDIRECTORY(${dirlist})
 ENDFOREACH(dirlist)
-
