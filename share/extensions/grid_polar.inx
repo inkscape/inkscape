@@ -7,7 +7,7 @@
     <param name="r_divs"       type="int"   min="1" max="1000" _gui-text="Major Circular Divisions">5</param>
     <param name="dr"           type="float" min="1" max="1000" _gui-text="Major Circular Divsion Spacing / px">50.0</param>
     <param name="r_subdivs"    type="int"   min="1" max="1000" _gui-text="Subdivisions per Major Circular Division">3</param>
-    <param name="r_log"        type="boolean" min="0" max="1"   _gui-text="Logarithmic Subdiv. (Base given by entry above)"></param>
+    <param name="r_log"        type="boolean"                  _gui-text="Logarithmic Subdiv. (Base given by entry above)">false</param>
     <param name="r_divs_th"    type="float" min="0" max="1000" _gui-text="Major Circular Division Thickness / px">2</param>
     <param name="r_subdivs_th" type="float" min="0" max="1000" _gui-text="Minor Circular Division Thickness / px">1</param>
     <param name="a_divs"       type="int"   min="1" max="1000" _gui-text="Angle Divisions">24</param>
@@ -16,7 +16,7 @@
     <param name="a_subdivs_cent"  type="int"   min="0" max="1000" _gui-text="Minor Angle Division End 'n' Divs. Before Centre">2</param>
     <param name="a_divs_th"    type="float" min="0" max="1000" _gui-text="Major Angular Division Thickness / px">2</param>
     <param name="a_subdivs_th" type="float" min="0" max="1000" _gui-text="Minor Angular Division Thickness / px">1</param>
-    <param name="c_dot_dia"    type="int"   min="1" max="1000" _gui-text="Centre Dot Diameter / px">5.0</param>
+    <param name="c_dot_dia"    type="float" min="1" max="1000" _gui-text="Centre Dot Diameter / px">5.0</param>
     <param name="a_labels"     type="optiongroup"              _gui-text="Circumferential Labels">
         <_option value="none">None</_option>
         <_option value="deg">Degrees</_option></param>
