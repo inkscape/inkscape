@@ -22,14 +22,69 @@ import sys, os, tempfile
 class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
+	self.OptionParser.add_option("-d", "--guides",
+						action="store", type="inkbool",
+						dest="saveGuides", default=False,
+						help="Save the Guides with the .XCF")
+	self.OptionParser.add_option("-r", "--grid",
+						action="store", type="inkbool",
+						dest="saveGrid", default=False,
+						help="Save the Grid with the .XCF")
     def output(self):
         pass
     def effect(self):
         svg_file = self.args[-1]
         docname = self.xpathSingle('/svg:svg/@sodipodi:docname')[:-4]
+	pageHeight = int(self.xpathSingle('/svg:svg/@height').split('.')[0])
+	pageWidth = int(self.xpathSingle('/svg:svg/@width').split('.')[0])
 
         #create os temp dir
         tmp_dir = tempfile.mkdtemp()
+	
+	hGuides = []
+	vGuides = []
+	if self.options.saveGuides:
+		guideXpath = "sodipodi:namedview/sodipodi:guide" #grab all guide tags in the namedview tag
+		for guideNode in self.document.xpath(guideXpath, namespaces=inkex.NSS):
+			ori = guideNode.get('orientation')
+			if  ori == '0,1':
+				#this is a horizontal guide
+				pos = int(guideNode.get('position').split(',')[1].split('.')[0])
+				#GIMP doesn't like guides that are outside of the image
+				if pos > 0 and pos < pageHeight:
+					#the origin is at the top in GIMP land
+					hGuides.append(str(pageHeight - pos))
+			elif ori == '1,0':
+				#this is a vertical guide
+				pos = int(guideNode.get('position').split(',')[0].split('.')[0])
+				#GIMP doesn't like guides that are outside of the image
+				if pos > 0 and pos < pageWidth:
+					vGuides.append(str(pos))
+	
+	hGList = ' '.join(hGuides)
+	vGList = ' '.join(vGuides)
+	
+	gridSpacingFunc = ''
+	gridOriginFunc = '' 
+	#GIMP only allows one rectangular grid
+	if self.options.saveGrid:
+		gridNode = self.xpathSingle("sodipodi:namedview/inkscape:grid[@type='xygrid' and (not(@units) or @units='px')]")
+		if gridNode != None:
+			#these attributes could be nonexistant
+			spacingX = gridNode.get('spacingx')
+			if spacingX == None: spacingX = '1  '
+				
+			spacingY = gridNode.get('spacingy')
+			if spacingY == None: spacingY = '1  '
+				
+			originX = gridNode.get('originx')
+			if originX == None: originX = '0  '
+			
+			originY = gridNode.get('originy')
+			if originY == None: originY = '0  '
+
+			gridSpacingFunc = '(gimp-image-grid-set-spacing img %s %s)' % (spacingX[:-2], spacingY[:-2])
+			gridOriginFunc = '(gimp-image-grid-set-offset img %s %s)'% (originX[:-2], originY[:-2])
 
         area = '--export-area-canvas'
         pngs = []
@@ -75,11 +130,30 @@ class MyEffect(inkex.Effect):
     )
     (map cons '(%s) '(%s))
   )
+
   (gimp-image-resize-to-layers img)
+
+  (for-each
+    (lambda (hGuide)
+      (gimp-image-add-hguide img hGuide)
+    )
+    '(%s)
+  )
+  
+  (for-each
+    (lambda (vGuide)
+      (gimp-image-add-vguide img vGuide)
+    )
+    '(%s)
+  )
+  
+  %s
+  %s
+
   (gimp-image-undo-enable img)
   (gimp-file-save RUN-NONINTERACTIVE img (car (gimp-image-get-active-layer img)) "%s" "%s"))
 (gimp-quit 0)
-        """ % (filelist, namelist, xcf, xcf)
+        """ % (filelist, namelist, hGList, vGList, gridSpacingFunc, gridOriginFunc, xcf, xcf)
 
         junk = os.path.join(tmp_dir, 'junk_from_gimp.txt')
         f = os.popen('gimp -i --batch-interpreter plug-in-script-fu-eval -b - > %s 2>&1' % junk,'w')
@@ -96,3 +170,4 @@ class MyEffect(inkex.Effect):
 
 e = MyEffect()
 e.affect()
+

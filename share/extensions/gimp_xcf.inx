@@ -6,6 +6,9 @@
 	<dependency type="executable" location="extensions">gimp_xcf.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
 	<dependency type="executable" location="path">gimp</dependency>
+	
+	<param name="guides" type="boolean" _gui-text="Save Guides:"></param>
+	<param name="grid" type="boolean" _gui-text="Save Grid:"></param>
     <output>
                 <extension>.xcf</extension>
                 <mimetype>application/x-xcf</mimetype>
