@@ -7,7 +7,9 @@
 # To find boost on Windows, use DEVLIBS_PATH variable set by mingwenv.bat
 
 FIND_PATH(BOOST_INCLUDE_DIR boost/weak_ptr.hpp 
-                            /usr/include 
+                            /usr/include/boost 
+                            /usr/include
+                            /usr/local/include/boost
                             /usr/local/include
                             $ENV{DEVLIBS_PATH}//include )
 
