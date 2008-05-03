@@ -57,6 +57,7 @@
 #include "sp-item.h"
 #include "inkscape.h"
 #include "color.h"
+#include "rubberband.h"
 #include "splivarot.h"
 #include "sp-item-group.h"
 #include "sp-shape.h"
@@ -203,11 +204,12 @@ sp_eraser_context_dispose(GObject *object)
 
     if (erc->currentshape) {
         gtk_object_destroy(GTK_OBJECT(erc->currentshape));
-        erc->currentshape = NULL;
+        erc->currentshape = 0;
     }
 
     if (erc->_message_context) {
         delete erc->_message_context;
+        erc->_message_context = 0;
     }
 
     G_OBJECT_CLASS(parent_class)->dispose(object);
@@ -582,6 +584,9 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
                     dc->repr = NULL;
                 }
 
+                Inkscape::Rubberband::get()->start(desktop, button_dt);
+                Inkscape::Rubberband::get()->setMode(RUBBERBAND_MODE_TOUCHPATH);
+
                 /* initialize first point */
                 dc->npoints = 0;
 
@@ -611,7 +616,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
             if ( dc->is_drawing && (event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning) {
                 dc->dragging = TRUE;
 
-                dc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Drawing</b> a eraser stroke"));
+                dc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Drawing</b> an eraser stroke"));
 
                 if (!sp_eraser_apply(dc, motion_dt)) {
                     ret = TRUE;
@@ -625,6 +630,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
                 }
                 ret = TRUE;
             }
+            Inkscape::Rubberband::get()->move(motion_dt);
         }
         break;
 
@@ -640,6 +646,8 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
 
         if (dc->dragging && event->button.button == 1 && !event_context->space_panning) {
             dc->dragging = FALSE;
+
+            NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
 
             sp_eraser_apply(dc, motion_dt);
 
@@ -662,6 +670,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
                 dc->repr = NULL;
             }
 
+            Inkscape::Rubberband::get()->stop();
             dc->_message_context->clear();
             ret = TRUE;
         }
@@ -730,6 +739,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
             }
             break;
         case GDK_Escape:
+            Inkscape::Rubberband::get()->stop();
             if (dc->is_drawing) {
                 // if drawing, cancel, otherwise pass it up for deselecting
                 eraser_cancel (dc);
@@ -776,13 +786,15 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
 static void
 clear_current(SPEraserContext *dc)
 {
-    /* reset bpath */
+    // reset bpath
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(dc->currentshape), NULL);
-    /* reset curve */
+
+    // reset curve
     sp_curve_reset(dc->currentcurve);
     sp_curve_reset(dc->cal1);
     sp_curve_reset(dc->cal2);
-    /* reset points */
+
+    // reset points
     dc->npoints = 0;
 }
 
@@ -830,7 +842,12 @@ set_to_accumulated(SPEraserContext *dc)
             std::vector<SPItem*> remainingItems;
             GSList* toWorkOn = 0;
             if (selection->isEmpty()) {
-                toWorkOn = sp_document_partial_items_in_box(sp_desktop_document(desktop), desktop->dkey, bounds);
+                if ( eraserMode ) {
+                    toWorkOn = sp_document_partial_items_in_box(sp_desktop_document(desktop), desktop->dkey, bounds);
+                } else {
+                    Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get();
+                    toWorkOn = sp_document_items_at_points(sp_desktop_document(desktop), desktop->dkey, r->getPoints());
+                }
                 toWorkOn = g_slist_remove( toWorkOn, acid );
             } else {
                 toWorkOn = g_slist_copy(const_cast<GSList*>(selection->itemList()));
@@ -838,32 +855,51 @@ set_to_accumulated(SPEraserContext *dc)
             }
 
             if ( g_slist_length(toWorkOn) > 0 ) {
-                for (GSList *i = toWorkOn ; i ; i = i->next ) {
-                    SPItem *item = SP_ITEM(i->data);
-                    NR::Maybe<NR::Rect> bbox = item->getBounds(NR::identity());
-                    if (bbox && bbox->intersects(*eraserBbox)) {
-                        Inkscape::XML::Node* dup = dc->repr->duplicate(xml_doc);
-                        dc->repr->parent()->appendChild(dup);
-                        Inkscape::GC::release(dup); // parent takes over
+                if ( eraserMode ) {
+                    for (GSList *i = toWorkOn ; i ; i = i->next ) {
+                        SPItem *item = SP_ITEM(i->data);
+                        if ( eraserMode ) {
+                            NR::Maybe<NR::Rect> bbox = item->getBounds(NR::identity());
+                            if (bbox && bbox->intersects(*eraserBbox)) {
+                                Inkscape::XML::Node* dup = dc->repr->duplicate(xml_doc);
+                                dc->repr->parent()->appendChild(dup);
+                                Inkscape::GC::release(dup); // parent takes over
 
-                        selection->set(item);
-                        selection->add(dup);
-                        sp_selected_path_diff_skip_undo();
-                        workDone = true; // TODO set this only if something was cut.
-                        if ( !selection->isEmpty() ) {
-                            // If the item was not completely erased, track the new remainder.
-                            GSList *nowSel = g_slist_copy(const_cast<GSList *>(selection->itemList()));
-                            for (GSList const *i2 = nowSel ; i2 ; i2 = i2->next ) {
-                                remainingItems.push_back(SP_ITEM(i2->data));
+                                selection->set(item);
+                                selection->add(dup);
+                                sp_selected_path_diff_skip_undo();
+                                workDone = true; // TODO set this only if something was cut.
+                                if ( !selection->isEmpty() ) {
+                                    // If the item was not completely erased, track the new remainder.
+                                    GSList *nowSel = g_slist_copy(const_cast<GSList *>(selection->itemList()));
+                                    for (GSList const *i2 = nowSel ; i2 ; i2 = i2->next ) {
+                                        remainingItems.push_back(SP_ITEM(i2->data));
+                                    }
+                                    g_slist_free(nowSel);
+                                }
+                            } else {
+                                remainingItems.push_back(item);
                             }
-                            g_slist_free(nowSel);
                         }
-                    } else {
-                        remainingItems.push_back(item);
+                    }
+                } else {
+                    for (GSList *i = toWorkOn ; i ; i = i->next ) {
+                        sp_object_ref( SP_ITEM(i->data), 0 );
+                    }
+                    for (GSList *i = toWorkOn ; i ; i = i->next ) {
+                        SPItem *item = SP_ITEM(i->data);
+                        item->deleteObject(true);
+                        sp_object_unref(item);
+                        workDone = true;
                     }
                 }
 
                 g_slist_free(toWorkOn);
+
+                if ( !eraserMode ) {
+                    //sp_selection_delete();
+                    remainingItems.clear();
+                }
 
                 selection->clear();
                 if ( wasSelection ) {
@@ -877,8 +913,6 @@ set_to_accumulated(SPEraserContext *dc)
             sp_repr_unparent( dc->repr );
             dc->repr = 0;
         }
-//         SP_OBJECT(item)->deleteObject(propagate, propagate_descendants);
-//         sp_object_unref((SPObject *)item, NULL);
     } else {
         if (dc->repr) {
             sp_repr_unparent(dc->repr);
@@ -929,7 +963,7 @@ static void
 accumulate_eraser(SPEraserContext *dc)
 {
     if ( !sp_curve_empty(dc->cal1) && !sp_curve_empty(dc->cal2) ) {
-        sp_curve_reset(dc->accumulated); /*  Is this required ?? */
+        sp_curve_reset(dc->accumulated); //  Is this required ??
         SPCurve *rev_cal2 = sp_curve_reverse(dc->cal2);
 
         g_assert(dc->cal1->end > 1);
@@ -1059,6 +1093,7 @@ fit_and_split(SPEraserContext *dc, gboolean release)
         g_print("[%d]Yup\n", dc->npoints);
 #endif
         if (!release) {
+            gint eraserMode = (prefs_get_int_attribute("tools.eraser", "mode", 0) != 0) ? 1 : 0;
             g_assert(!sp_curve_empty(dc->currentcurve));
 
             SPCanvasItem *cbp = sp_canvas_item_new(sp_desktop_sketch(SP_EVENT_CONTEXT(dc)->desktop),
@@ -1081,6 +1116,11 @@ fit_and_split(SPEraserContext *dc, gboolean release)
             g_signal_connect(G_OBJECT(cbp), "event", G_CALLBACK(sp_desktop_root_handler), SP_EVENT_CONTEXT(dc)->desktop);
 
             dc->segments = g_slist_prepend(dc->segments, cbp);
+
+            if ( !eraserMode ) {
+                sp_canvas_item_hide(cbp);
+                sp_canvas_item_hide(dc->currentshape);
+            }
         }
 
         dc->point1[0] = dc->point1[dc->npoints - 1];
