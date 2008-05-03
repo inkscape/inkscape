@@ -104,6 +104,7 @@ extensions = \
 	text_randomcase.py \
 	text_replace.py \
 	text_braille.py \
+	triangle.py \
 	txt2svg.pl \
 	uniconv-ext.py \
 	whirl.py
@@ -208,6 +209,7 @@ modules = \
 	text_randomcase.inx \
 	text_replace.inx \
 	text_braille.inx \
+	triangle.inx \
 	txt2svg.inx \
 	whirl.inx \
 	wmf_input.inx \

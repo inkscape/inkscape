@@ -396,6 +396,7 @@ src/winmain.cpp
 [type: gettext/xml] share/extensions/text_titlecase.inx
 [type: gettext/xml] share/extensions/text_uppercase.inx
 [type: gettext/xml] share/extensions/txt2svg.inx
+[type: gettext/xml] share/extensions/triangle.inx
 [type: gettext/xml] share/extensions/whirl.inx
 [type: gettext/xml] share/extensions/wmf_input.inx
 [type: gettext/xml] share/extensions/xaml2svg.inx
