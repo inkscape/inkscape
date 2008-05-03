@@ -976,7 +976,7 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
     }
 
     /* Status text */
-    _message_context.setF(Inkscape::NORMAL_MESSAGE,
+    _message_context.setF(Inkscape::IMMEDIATE_MESSAGE,
                           _("<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"),
                           100 * _absolute_affine[0], 100 * _absolute_affine[3]);
 
@@ -1075,7 +1075,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
     }
 
     // status text
-    _message_context.setF(Inkscape::NORMAL_MESSAGE,
+    _message_context.setF(Inkscape::IMMEDIATE_MESSAGE,
                           _("<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"),
                           100 * _absolute_affine[0], 100 * _absolute_affine[3]);
 
@@ -1190,7 +1190,7 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
 
     // Update the status text
     double degrees = mod360symm(Geom::rad_to_deg(radians));
-    _message_context.setF(Inkscape::NORMAL_MESSAGE,
+    _message_context.setF(Inkscape::IMMEDIATE_MESSAGE,
                           // TRANSLATORS: don't modify the first ";"
                           // (it will NOT be displayed as ";" - only the second one will be)
                           _("<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"),
@@ -1249,7 +1249,7 @@ gboolean Inkscape::SelTrans::rotateRequest(NR::Point &pt, guint state)
 
     // Update the status text
     double degrees = mod360symm(Geom::rad_to_deg(radians));
-    _message_context.setF(Inkscape::NORMAL_MESSAGE,
+    _message_context.setF(Inkscape::IMMEDIATE_MESSAGE,
                           // TRANSLATORS: don't modify the first ";"
                           // (it will NOT be displayed as ";" - only the second one will be)
                           _("<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"), degrees);
