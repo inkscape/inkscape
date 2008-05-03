@@ -611,8 +611,8 @@ TARGET_LINK_LIBRARIES(inkscape
 )
 
 # make executable for INKVIEW
-ADD_EXECUTABLE(inkview inkview.cpp)
-TARGET_LINK_LIBRARIES(inkview
-	"${INKSCAPE_LINK_FLAGS}" 2geom avoid cola croco gdl nr nrtype vpsc livarot
-)
+#ADD_EXECUTABLE(inkview inkview.cpp)
+#TARGET_LINK_LIBRARIES(inkview
+#	"${INKSCAPE_LINK_FLAGS}" 2geom avoid cola croco gdl nr nrtype vpsc livarot
+#)
 

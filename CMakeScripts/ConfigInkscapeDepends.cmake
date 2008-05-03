@@ -1,14 +1,16 @@
 SET(INKSCAPE_DEPENDS
+# the commented out below are required but pulled in with gtk+-2.0 & gtkmm-2.4
+# with some duplication that we can only remove if lookup each sub-lib individaully
+#    cairo
+#    cairomm-1.0
+#    glib-2.0
+#    glibmm-2.4
     gtk+-2.0
     gtkmm-2.4
-    cairo
-    cairomm-1.0
     sigc++-2.0
     lcms
     libgc1c2
     libpng
-    glib-2.0
-    glibmm-2.4
     libxml-2.0
     libxslt
     ImageMagick++
@@ -47,6 +49,7 @@ FOREACH(dep ${INKSCAPE_DEPENDS})
         message(STATUS "${dep}: NOT FOUND")
     ENDIF("${dep}_FOUND")
 ENDFOREACH(dep)
+
 # Include non pkg-config dependencies:
 INCLUDE(FindBoost)
 INCLUDE(FindGC)
@@ -147,8 +150,3 @@ ENDIF(HAVE_CAIRO_PDF)
 # Create them in the binary root dir
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_BINARY_DIR}/config.h)
 FILE(WRITE ${CMAKE_BINARY_DIR}/inkscape_version.h "#define INKSCAPE_VERSION \"${INKSCAPE_VERSION}\"\n")
-
-#Linking check
-message(STATUS "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-message(STATUS "${INKSCAPE_LINK_FLAGS}")
-message(STATUS "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
