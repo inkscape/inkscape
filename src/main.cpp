@@ -1414,10 +1414,12 @@ bool replaceArgs( int& argc, char**& argv )
                 if ( wildcarded )
                 {
 #ifdef REPLACEARGS_ANSI
-                    WIN32_FIND_DATAA data = {0};
+                    WIN32_FIND_DATAA data;
 #else
-                    WIN32_FIND_DATAW data = {0};
+                    WIN32_FIND_DATAW data;
 #endif // REPLACEARGS_ANSI
+
+                    memset((void *)&data, 0, sizeof(data));
 
                     int baseLen = wcslen(parsed[i1]) + 2;
                     wchar_t* base = new wchar_t[baseLen];
