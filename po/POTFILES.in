@@ -373,8 +373,6 @@ src/winmain.cpp
 [type: gettext/xml] share/extensions/perspective.inx
 [type: gettext/xml] share/extensions/ps_input.inx
 [type: gettext/xml] share/extensions/radiusrand.inx
-[type: gettext/xml] share/extensions/randompnt.inx
-[type: gettext/xml] share/extensions/randompos.inx
 [type: gettext/xml] share/extensions/render_alphabetsoup.inx
 [type: gettext/xml] share/extensions/render_barcode.inx
 [type: gettext/xml] share/extensions/restack.inx

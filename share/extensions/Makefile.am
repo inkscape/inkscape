@@ -187,8 +187,6 @@ modules = \
 	perspective.inx	\
 	ps_input.inx \
 	radiusrand.inx \
-	randompnt.inx \
-	randompos.inx \
 	render_barcode.inx \
 	render_alphabetsoup.inx \
 	restack.inx \
@@ -228,4 +226,5 @@ module_DATA = \
 EXTRA_DIST = \
 	radiobutton_example.inx	\
 	$(extension_SCRIPTS) $(otherstuff_DATA) $(module_DATA)
+
 
