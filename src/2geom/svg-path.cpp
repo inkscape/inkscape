@@ -50,7 +50,7 @@ void output(QuadraticBezier const &curve, SVGPathSink &sink) {
     sink.quadTo(curve[1], curve[2]);
 }
 
-void output(SVGEllipticalArc const &curve, SVGPathSink &sink) {
+void output(SVGEllipticalArc const &/*curve*/, SVGPathSink &/*sink*/) {
     // FIXME
 }
 
