@@ -161,16 +161,16 @@ static int readbit(FILE *f) {
 
 /* ---------------------------------------------------------------------- */
 
-/* read a PNM stream: P1-P6 format (see pnm(5)), or a BMP stream, and
+char const *gm_read_error = NULL;
+
+/** Read a PNM stream: P1-P6 format (see pnm(5)), or a BMP stream, and
    convert the output to a greymap. Return greymap in *gmp. Return 0
    on success, -1 on error with errno set, -2 on bad file format (with
    error message in gm_read_error), and 1 on premature end of file, -3
    on empty file (including files with only whitespace and comments),
    -4 if wrong magic number. If the return value is >=0, *gmp is
-   valid. */
-
-char *gm_read_error = NULL;
-
+   valid.
+   */
 int gm_read(FILE *f, greymap_t **gmp) {
   int magic[2];
 

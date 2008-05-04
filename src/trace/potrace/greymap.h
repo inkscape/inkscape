@@ -45,7 +45,7 @@ typedef struct greymap_s greymap_t;
 #define GM_MODE_POSITIVE 3
 #define GM_MODE_NEGATIVE 4
 
-extern char *gm_read_error;
+extern char const *gm_read_error;
 
 greymap_t *gm_new(int w, int h);
 greymap_t *gm_dup(greymap_t *gm);
