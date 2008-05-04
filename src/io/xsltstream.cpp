@@ -2,9 +2,9 @@
  * XSL Transforming input and output classes
  *
  * Authors:
- *   Bob Jamison <rjamison@titan.com>
+ *   Bob Jamison <ishmalius@gmail.com>
  *
- * Copyright (C) 2004 Inkscape.org
+ * Copyright (C) 2004-2008 Inkscape.org
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -25,25 +25,54 @@ namespace IO
 //#########################################################################
 //# X S L T    S T Y L E S H E E T
 //#########################################################################
+
 /**
  *
- */ 
-XsltStyleSheet::XsltStyleSheet(InputStream &xsltSource) throw (StreamException)
+ */
+XsltStyleSheet::XsltStyleSheet(InputStream &xsltSource)
+               throw (StreamException)
+                   : stylesheet(NULL)
+{
+    if (!read(xsltSource)) {
+        throw StreamException("read failed");
+        }
+}
+
+/**
+ *
+ */
+XsltStyleSheet::XsltStyleSheet()
+                    : stylesheet(NULL)
+{
+}
+
+
+
+/**
+ *
+ */
+bool XsltStyleSheet::read(InputStream &xsltSource)
 {
     StringOutputStream outs;
     pipeStream(xsltSource, outs);
     std::string strBuf = outs.getString().raw();
     xmlDocPtr doc = xmlParseMemory(strBuf.c_str(), strBuf.size());
     stylesheet = xsltParseStylesheetDoc(doc);
+    //following not necessary.  handled by xsltFreeStylesheet(stylesheet);
     //xmlFreeDoc(doc);
+    if (!stylesheet)
+        return false;
+    return true;
 }
+
 
 /**
  *
  */ 
 XsltStyleSheet::~XsltStyleSheet()
 {
-    xsltFreeStylesheet(stylesheet);
+    if (stylesheet)
+        xsltFreeStylesheet(stylesheet);
 }
 
 

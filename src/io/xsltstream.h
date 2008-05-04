@@ -5,9 +5,9 @@
  *
  *
  * Authors:
- *   Bob Jamison <rjamison@titan.com>
+ *   Bob Jamison <ishmalius@gmail.com>
  *
- * Copyright (C) 2004 Inkscape.org
+ * Copyright (C) 2004-2008 Inkscape.org
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -35,8 +35,24 @@ class XsltStyleSheet
 
 public:
 
+    /**
+     * Constructor with loading
+     */
     XsltStyleSheet(InputStream &source)  throw (StreamException);
-    
+
+    /**
+     * Simple constructor, no loading
+     */
+    XsltStyleSheet();
+
+    /**
+     * Loader
+     */
+    bool read(InputStream &source);
+
+    /**
+     * Destructor
+     */
     virtual ~XsltStyleSheet();
     
     xsltStylesheetPtr stylesheet;
