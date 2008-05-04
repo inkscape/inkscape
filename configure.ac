@@ -80,7 +80,7 @@ if test "$GCC" = "yes"; then
   AC_MSG_CHECKING([linker tolerates -z relro])
   ink_svd_LDFLAGS="$LDFLAGS"
   LDFLAGS="-Wl,-z,relro $LDFLAGS"
-  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [ink_opt_ok=yes], [ink_opt_ok=no])
+  AC_LINK_IFELSE(AC_LANG_PROGRAM([]), [ink_opt_ok=yes], [ink_opt_ok=no])
   AC_MSG_RESULT([$ink_opt_ok])
   if test "x$ink_opt_ok" != "xyes"; then
     LDFLAGS="$ink_svd_LDFLAGS"
