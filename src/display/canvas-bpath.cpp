@@ -43,7 +43,7 @@ sp_canvas_bpath_get_type (void)
     static GtkType type = 0;
     if (!type) {
         GtkTypeInfo info = {
-            "SPCanvasBPath",
+            (gchar *)"SPCanvasBPath",
             sizeof (SPCanvasBPath),
             sizeof (SPCanvasBPathClass),
             (GtkClassInitFunc) sp_canvas_bpath_class_init,

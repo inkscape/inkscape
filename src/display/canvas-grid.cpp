@@ -64,7 +64,7 @@ grid_canvasitem_get_type (void)
 
     if (!grid_canvasitem_type) {
         GtkTypeInfo grid_canvasitem_info = {
-            "GridCanvasItem",
+            (gchar *)"GridCanvasItem",
             sizeof (GridCanvasItem),
             sizeof (GridCanvasItemClass),
             (GtkClassInitFunc) grid_canvasitem_class_init,

@@ -40,7 +40,7 @@ FilterImage::~FilterImage()
 int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
     if (!feImageHref) return 0;
 
-    NRPixBlock* pb;
+    NRPixBlock* pb = NULL;
     bool free_pb_on_exit = false;
 
     if(from_element){

@@ -57,7 +57,7 @@ sp_canvas_arena_get_type (void)
     static GtkType type = 0;
     if (!type) {
         GtkTypeInfo info = {
-            "SPCanvasArena",
+            (gchar *)"SPCanvasArena",
             sizeof (SPCanvasArena),
             sizeof (SPCanvasArenaClass),
             (GtkClassInitFunc) sp_canvas_arena_class_init,

@@ -32,7 +32,7 @@ sp_canvas_acetate_get_type (void)
 	static GtkType acetate_type = 0;
 	if (!acetate_type) {
 		GtkTypeInfo acetate_info = {
-			"SPCanvasAcetate",
+			(gchar *)"SPCanvasAcetate",
 			sizeof (SPCanvasAcetate),
 			sizeof (SPCanvasAcetateClass),
 			(GtkClassInitFunc) sp_canvas_acetate_class_init,

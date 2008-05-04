@@ -116,6 +116,9 @@ int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &/*units
                     out_data[i] = CLAMP_D_TO_U8(256 * (_amplitude * pow((double)in_data[i]/256, _exponent) + _offset));
                 }
                 break;
+            case COMPONENTTRANSFER_TYPE_ERROR:
+                //TODO: report an error here
+                break;
         }
     }
 
