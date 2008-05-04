@@ -31,13 +31,13 @@
 
 struct CssProp_def
 {
-    char *name;
-    char *values;
-    char *defaultValue;
-    char *appliesTo;
+    const char *name;
+    const char *values;
+    const char *defaultValue;
+    const char *appliesTo;
     bool inherited;
-    char *percentages;
-    char *mediaGroups;
+    const char *percentages;
+    const char *mediaGroups;
 };
 
 typedef struct CssProp_def CssProp;
@@ -1154,7 +1154,7 @@ bool printTable()
 }
 
 
-int main(int argc, char **argv)
+int main(int /*argc*/, char **/*argv*/)
 {
     printTable();
     return 0;

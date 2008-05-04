@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -37,17 +37,17 @@ typedef bool (*parsefunc)(CssProp *prop, char *propName, char *propVal);
 struct CssProp_def
 {
     parsefunc func;
-    char *name;
-    char *values;
-    char *defaultValue;
-    char *appliesTo;
+    const char *name;
+    const char *values;
+    const char *defaultValue;
+    const char *appliesTo;
     bool inherited;
-    char *percentages;
-    char *mediaGroups;
+    const char *percentages;
+    const char *mediaGroups;
 };
 
 
-bool parseDefault(CssProp *prop, char *propName, char *propVal)
+bool parseDefault(CssProp */*prop*/, char *propName, char *propVal)
 {
     printf("######## '%s:%s'\n", propName, propVal);
     return true;
@@ -1296,9 +1296,9 @@ bool printTable()
 }
 
 
-int main(int argc, char **argv)
+int main(int /*argc*/, char **/*argv*/)
 {
     //printTable();
-    parseProperty("visibility", "hidden");
+    parseProperty((char *)"visibility", (char *)"hidden");
     return 0;
 }

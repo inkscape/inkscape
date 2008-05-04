@@ -727,7 +727,7 @@ printTable()
 }
 
 
-int main(int argc, char **argv)
+int main(int /*argc*/, char **/*argv*/)
 {
     printTable();
     return ( ferror(stdout) ? EXIT_FAILURE : EXIT_SUCCESS );
