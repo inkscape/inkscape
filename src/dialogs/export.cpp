@@ -200,7 +200,7 @@ sp_export_dialog_delete ( GtkObject */*object*/, GdkEvent */*event*/, gpointer /
 
 */
 static void
-sp_export_spinbutton_new ( gchar *key, float val, float min, float max,
+sp_export_spinbutton_new ( gchar const *key, float val, float min, float max,
                            float step, float page, GtkWidget *us,
                            GtkWidget *t, int x, int y,
                            const gchar *ll, const gchar *lr,
@@ -208,7 +208,7 @@ sp_export_spinbutton_new ( gchar *key, float val, float min, float max,
                            GCallback cb, GtkWidget *dlg )
 {
     GtkObject *a = gtk_adjustment_new (val, min, max, step, page, page);
-    gtk_object_set_data (a, "key", key);
+    gtk_object_set_data (a, "key", const_cast<gchar *>(key));
     gtk_object_set_data (GTK_OBJECT (dlg), (const gchar *)key, a);
 
     if (us) {
