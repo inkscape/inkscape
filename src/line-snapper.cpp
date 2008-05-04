@@ -97,7 +97,9 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
                     // This snappoint is therefore fully constrained, so there's no need
                     // to look for additional intersections; just return the snapped point
                     // and forget about the line
-                    sc.points.push_back(SnappedPoint(t, dist, getSnapperTolerance(), getSnapperAlwaysSnap())); 
+                    sc.points.push_back(SnappedPoint(t, Inkscape::SNAPTARGET_UNDEFINED, dist, getSnapperTolerance(), getSnapperAlwaysSnap()));
+                    // The type of the snap target is yet undefined, as we cannot tell whether 
+                    // we're snapping to grid or the guide lines; must be set by on a higher level   
                 }
             }
         }

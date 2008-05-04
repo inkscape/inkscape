@@ -185,7 +185,7 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType point_
                                              NR::Maybe<NR::Rect> const &bbox_to_snap) const
 {
     if (!SomeSnapperMightSnap()) {
-        return Inkscape::SnappedPoint(p, NR_HUGE, 0, false);
+        return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false);
     }
     
     std::vector<SPItem const *> *items_to_ignore;
@@ -231,7 +231,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
                                                     NR::Maybe<NR::Rect> const &bbox_to_snap) const
 {
     if (!SomeSnapperMightSnap()) {
-        return Inkscape::SnappedPoint(p, NR_HUGE, 0, false);
+        return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false);
     }
     
     std::vector<SPItem const *> *items_to_ignore;
@@ -263,7 +263,7 @@ Inkscape::SnappedPoint SnapManager::guideSnap(NR::Point const &p,
     // This method is used to snap a guide to nodes, while dragging the guide around
     
     if (!(object.GuidesMightSnap() && _snap_enabled_globally)) {
-        return Inkscape::SnappedPoint(p, NR_HUGE, 0, false);
+        return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false);
     }
     
     SnappedConstraints sc;
@@ -699,12 +699,14 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(NR::Point const &p, SnappedCons
     // search for the closest snapped grid line
     Inkscape::SnappedLine closestGridLine;
     if (getClosestSL(sc.grid_lines, closestGridLine)) {    
+        closestGridLine.setTarget(Inkscape::SNAPTARGET_GRID);
         sp_list.push_back(Inkscape::SnappedPoint(closestGridLine));
     }
     
     // search for the closest snapped guide line
     Inkscape::SnappedLine closestGuideLine;
     if (getClosestSL(sc.guide_lines, closestGuideLine)) {
+        closestGuideLine.setTarget(Inkscape::SNAPTARGET_GUIDE);
         sp_list.push_back(Inkscape::SnappedPoint(closestGuideLine));
     }
     
@@ -718,12 +720,14 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(NR::Point const &p, SnappedCons
         // search for the closest snapped intersection of grid lines
         Inkscape::SnappedPoint closestGridPoint;
         if (getClosestIntersectionSL(sc.grid_lines, closestGridPoint)) {
+            closestGridPoint.setTarget(Inkscape::SNAPTARGET_GRID_INTERSECTION);
             sp_list.push_back(closestGridPoint);
         }
         
         // search for the closest snapped intersection of guide lines
         Inkscape::SnappedPoint closestGuidePoint;
         if (getClosestIntersectionSL(sc.guide_lines, closestGuidePoint)) {
+            closestGuidePoint.setTarget(Inkscape::SNAPTARGET_GUIDE_INTERSECTION);
             sp_list.push_back(closestGuidePoint);
         }
         
@@ -731,13 +735,14 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(NR::Point const &p, SnappedCons
         if (_intersectionGG) {
     	    Inkscape::SnappedPoint closestGridGuidePoint;
     	    if (getClosestIntersectionSL(sc.grid_lines, sc.guide_lines, closestGridGuidePoint)) {
-    	        sp_list.push_back(closestGridGuidePoint);
+    	        closestGridGuidePoint.setTarget(Inkscape::SNAPTARGET_GRID_GUIDE_INTERSECTION);
+                sp_list.push_back(closestGridGuidePoint);
     	    }
         }
     }
     
     // now let's see which snapped point gets a thumbs up
-    Inkscape::SnappedPoint bestSnappedPoint = Inkscape::SnappedPoint(p, NR_HUGE, 0, false);
+    Inkscape::SnappedPoint bestSnappedPoint = Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false);
     for (std::list<Inkscape::SnappedPoint>::const_iterator i = sp_list.begin(); i != sp_list.end(); i++) {
 		// first find out if this snapped point is within snapping range
         if ((*i).getDistance() <= (*i).getTolerance()) {

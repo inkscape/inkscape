@@ -100,7 +100,8 @@ DocumentProperties::DocumentProperties()
       _rcp_gui(_("Guide co_lor:"), _("Guideline color"), _("Color of guidelines"), "guidecolor", "guideopacity", _wr),
       _rcp_hgui(_("_Highlight color:"), _("Highlighted guideline color"), _("Color of a guideline when it is under mouse"), "guidehicolor", "guidehiopacity", _wr),
     //---------------------------------------------------------------
-      _rcbsg(_("_Enable snapping"), _("Toggle snapping on or off"), "inkscape:snap-global", _wr),
+      _rcbs(_("_Enable snapping"), _("Toggle snapping on or off"), "inkscape:snap-global", _wr),
+      _rcbsi(_("_Enable snap indicator"), _("After snapping, a symbol is drawn at the point that has snapped"), "inkscape:snap-indicator", _wr),
       _rcbsnbb(_("_Bounding box corners"), _("Only available in the selector tool: snap bounding box corners to guides, to grids, and to other bounding boxes (but not to nodes or paths)"),
                   "inkscape:snap-bbox", _wr),
       _rcbsnn(_("_Nodes"), _("Snap nodes (e.g. path nodes, special points in shapes, gradient handles, text base points, transformation origins, etc.) to guides, to grids, to paths and to other nodes"),
@@ -306,8 +307,9 @@ DocumentProperties::build_snap()
     slaves.clear();
     slaves.push_back(&_rcbsnn);
     slaves.push_back(&_rcbsnbb);
+    slaves.push_back(&_rcbsi);
 
-    _rcbsg.setSlaveWidgets(slaves);
+    _rcbs.setSlaveWidgets(slaves);
 
     Gtk::Label *label_g = manage (new Gtk::Label);
     label_g->set_markup (_("<b>Snapping</b>"));
@@ -323,7 +325,8 @@ DocumentProperties::build_snap()
     Gtk::Widget *const array[] =
     {
         label_g,            0,
-        0,                  &_rcbsg,
+        0,                  &_rcbs,
+        0,                  &_rcbsi,
         0,                  0,
         label_w,            0,
         0,                  &_rcbsnn,
@@ -504,7 +507,8 @@ DocumentProperties::update()
 
     _rsu_gusn.setValue (nv->guidetolerance);
 
-    _rcbsg.setActive (nv->snap_manager.getSnapEnabledGlobally());
+    _rcbs.setActive (nv->snap_manager.getSnapEnabledGlobally());
+    _rcbsi.setActive (nv->snapindicator);
 
     //-----------------------------------------------------------grids page
 

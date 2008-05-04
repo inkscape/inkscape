@@ -8,7 +8,7 @@
  *   bulia byak <buliabyak@users.sf.net>
  *
  * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
- * Copyright (C) 1999-2005 Authors
+ * Copyright (C) 1999-2008 Authors
  * Copyright (C) 2000-2001 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -114,6 +114,7 @@ static void sp_namedview_init(SPNamedView *nv)
     nv->guides = NULL;
     nv->viewcount = 0;
     nv->grids = NULL;
+    nv->snapindicator = false;
 
     nv->default_layer_id = 0;
 
@@ -246,6 +247,7 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:window-x");
     sp_object_read_attr(object, "inkscape:window-y");
     sp_object_read_attr(object, "inkscape:snap-global");
+    sp_object_read_attr(object, "inkscape:snap-indicator");
     sp_object_read_attr(object, "inkscape:snap-bbox");
     sp_object_read_attr(object, "inkscape:snap-nodes");
     sp_object_read_attr(object, "inkscape:snap-guide");
@@ -454,6 +456,10 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             break;
     case SP_ATTR_INKSCAPE_SNAP_GLOBAL:
             nv->snap_manager.setSnapEnabledGlobally(value ? sp_str_to_bool(value) : TRUE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+    case SP_ATTR_INKSCAPE_SNAP_INDICATOR:
+            nv->snapindicator = (value) ? sp_str_to_bool (value) : FALSE;
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_BBOX:

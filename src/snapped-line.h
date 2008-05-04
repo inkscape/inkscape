@@ -26,7 +26,7 @@ class SnappedLineSegment : public SnappedPoint
 {
 public:
     SnappedLineSegment();
-    SnappedLineSegment(NR::Point snapped_point, NR::Coord snapped_distance, NR::Coord snapped_tolerance, bool always_snap, NR::Point start_point_of_line, NR::Point end_point_of_line);
+    SnappedLineSegment(NR::Point const &snapped_point, NR::Coord const &snapped_distance, NR::Coord const &snapped_tolerance, bool const &always_snap, NR::Point const &start_point_of_line, NR::Point const &end_point_of_line);
     ~SnappedLineSegment();
     Inkscape::SnappedPoint intersect(SnappedLineSegment const &line) const; //intersect with another SnappedLineSegment
     
@@ -41,7 +41,7 @@ class SnappedLine : public SnappedPoint
 {
 public:
     SnappedLine();
-    SnappedLine(NR::Point snapped_point, NR::Coord snapped_distance, NR::Coord snapped_tolerance, bool always_snap, NR::Point normal_to_line, NR::Point point_on_line);
+    SnappedLine(NR::Point const &snapped_point, NR::Coord const &snapped_distance, NR::Coord const &snapped_tolerance, bool const &always_snap, NR::Point const &normal_to_line, NR::Point const &point_on_line);
     ~SnappedLine();
     Inkscape::SnappedPoint intersect(SnappedLine const &line) const; //intersect with another SnappedLine
     // This line is described by this equation:
@@ -57,11 +57,11 @@ private:
 
 }
 
-bool getClosestSLS(std::list<Inkscape::SnappedLineSegment> &list, Inkscape::SnappedLineSegment &result);
-bool getClosestIntersectionSLS(std::list<Inkscape::SnappedLineSegment> &list, Inkscape::SnappedPoint &result);
-bool getClosestSL(std::list<Inkscape::SnappedLine> &list, Inkscape::SnappedLine &result);
-bool getClosestIntersectionSL(std::list<Inkscape::SnappedLine> &list, Inkscape::SnappedPoint &result);
-bool getClosestIntersectionSL(std::list<Inkscape::SnappedLine> &list1, std::list<Inkscape::SnappedLine> &list2, Inkscape::SnappedPoint &result);
+bool getClosestSLS(std::list<Inkscape::SnappedLineSegment> const &list, Inkscape::SnappedLineSegment &result);
+bool getClosestIntersectionSLS(std::list<Inkscape::SnappedLineSegment> const &list, Inkscape::SnappedPoint &result);
+bool getClosestSL(std::list<Inkscape::SnappedLine> const &list, Inkscape::SnappedLine &result);
+bool getClosestIntersectionSL(std::list<Inkscape::SnappedLine> const &list, Inkscape::SnappedPoint &result);
+bool getClosestIntersectionSL(std::list<Inkscape::SnappedLine> const &list1, std::list<Inkscape::SnappedLine> const &list2, Inkscape::SnappedPoint &result);
  
 
 #endif /* !SEEN_SNAPPEDLINE_H */

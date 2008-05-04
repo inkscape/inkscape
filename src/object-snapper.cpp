@@ -193,7 +193,7 @@ void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
     for (std::vector<NR::Point>::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
         NR::Coord dist = NR::L2(*k - p);        
         if (dist < getSnapperTolerance() && dist < s.getDistance()) {
-            s = SnappedPoint(*k, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
+            s = SnappedPoint(*k, SNAPTARGET_NODE, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
             success = true;
         }
     }
@@ -222,7 +222,7 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &s
         NR::Coord dist = NR::L2(*k - p_proj); // distance from node to the guide         
         NR::Coord dist2 = NR::L2(p - p_proj); // distance from projection of node on the guide, to the mouse location
         if ((dist < tol && dist2 < tol || getSnapperAlwaysSnap()) && dist < s.getDistance()) {
-            s = SnappedPoint(*k, dist, tol, getSnapperAlwaysSnap());
+            s = SnappedPoint(*k, SNAPTARGET_NODE, dist, tol, getSnapperAlwaysSnap());
             success = true;
         }
     }
@@ -435,7 +435,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                         } else {                
                             // for segments other than straight lines of a path, we'll return just the closest snapped point
                             if (dist < s.getDistance()) {
-                                s = SnappedPoint(o_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
+                                s = SnappedPoint(o_dt, SNAPTARGET_PATH, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
                                 success = true;
                             }
                         }
@@ -529,7 +529,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
                     // (within snapping range == between p_min_on_cl and p_max_on_cl == 0 < tb < 1)
                     if ((*m).tb >= 0 && (*m).tb <= 1 ) {
                         NR::Coord dist = NR::L2(desktop->dt2doc(p_proj_on_cl) - p_inters);
-                        SnappedPoint s(desktop->doc2dt(p_inters), dist, getSnapperTolerance(), getSnapperAlwaysSnap());
+                        SnappedPoint s(desktop->doc2dt(p_inters), SNAPTARGET_PATH, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
                         sc.points.push_back(s);    
                     }  
                 } 

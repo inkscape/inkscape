@@ -52,6 +52,7 @@ struct SPNamedView : public SPObjectGroup {
     SnapManager snap_manager;
     GSList * grids;
     bool grids_visible;
+    bool snapindicator;
 
     SPUnit const *doc_units;
 

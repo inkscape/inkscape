@@ -20,18 +20,34 @@
 
 namespace Inkscape
 {
+
+enum SnapTargetType {
+    SNAPTARGET_UNDEFINED,
+    SNAPTARGET_GRID,
+    SNAPTARGET_GRID_INTERSECTION,
+    SNAPTARGET_GUIDE,
+    SNAPTARGET_GUIDE_INTERSECTION,
+    SNAPTARGET_GRID_GUIDE_INTERSECTION,
+    SNAPTARGET_NODE,
+    SNAPTARGET_PATH,
+    SNAPTARGET_PATH_INTERSECTION,
+    SNAPTARGET_BBOX_CORNER,
+    SNAPTARGET_BBOX_EDGE,
+    SNAPTARGET_GRADIENT
+};
     
 /// Class describing the result of an attempt to snap.
 class SnappedPoint
 {
+
 public:
     SnappedPoint();
-    SnappedPoint(NR::Point p, NR::Coord d, NR::Coord t, bool a, bool at_intersection, NR::Coord d2, NR::Coord t2, bool a2);
-    SnappedPoint(NR::Point p, NR::Coord d, NR::Coord t, bool a);
+    SnappedPoint(NR::Point const &p, SnapTargetType const &target, NR::Coord const &d, NR::Coord const &t, bool const &a, bool const &at_intersection, NR::Coord const &d2, NR::Coord const &t2, bool const &a2);
+    SnappedPoint(NR::Point const &p, SnapTargetType const &target, NR::Coord const &d, NR::Coord const &t, bool const &a);
     ~SnappedPoint();
 
     NR::Coord getDistance() const;
-    void setDistance(NR::Coord d) {_distance = d;}
+    void setDistance(NR::Coord const d) {_distance = d;}
     NR::Coord getTolerance() const;
     bool getAlwaysSnap() const;
     NR::Coord getSecondDistance() const;
@@ -41,10 +57,13 @@ public:
     bool getAtIntersection() const {return _at_intersection;}
     bool getSnapped() const {return _distance < NR_HUGE;}
     NR::Point getTransformation() const {return _transformation;}
-    void setTransformation(NR::Point t) {_transformation = t;}
+    void setTransformation(NR::Point const t) {_transformation = t;}
+    void setTarget(SnapTargetType const target) {_target = target;}
+    SnapTargetType getTarget() {return _target;}
     
 protected:
     NR::Point _point; // Location of the snapped point
+    SnapTargetType _target; // Describes to what we've snapped to
     bool _at_intersection; // If true, the snapped point is at an intersection 
     
     /* Distance from original point to snapped point. If the snapped point is at

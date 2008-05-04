@@ -347,6 +347,7 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"inkscape:bbox-nodes", true},
     {"inkscape:snap-page", true},
     {"inkscape:snap-global", true},
+    {"inkscape:snap-indicator", true},
     {"inkscape:snap-bbox", true},
     {"inkscape:snap-nodes", true},
     {"inkscape:snap-guide", true},

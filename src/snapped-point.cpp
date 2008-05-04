@@ -12,8 +12,8 @@
 #include "snapped-point.h"
 
 // overloaded constructor
-Inkscape::SnappedPoint::SnappedPoint(NR::Point p, NR::Coord d, NR::Coord t, bool a)
-    : _point(p), _distance(d), _tolerance(t), _always_snap(a)
+Inkscape::SnappedPoint::SnappedPoint(NR::Point const &p, SnapTargetType const &target, NR::Coord const &d, NR::Coord const &t, bool const &a)
+    : _point(p), _target(target), _distance(d), _tolerance(t), _always_snap(a)
 {
     _at_intersection = false;
     _second_distance = NR_HUGE;
@@ -22,8 +22,8 @@ Inkscape::SnappedPoint::SnappedPoint(NR::Point p, NR::Coord d, NR::Coord t, bool
     _transformation = NR::Point(1,1);
 }
 
-Inkscape::SnappedPoint::SnappedPoint(NR::Point p, NR::Coord d, NR::Coord t, bool a, bool at_intersection, NR::Coord d2, NR::Coord t2, bool a2)
-    : _point(p), _at_intersection(at_intersection), _distance(d), _tolerance(t), _always_snap(a),
+Inkscape::SnappedPoint::SnappedPoint(NR::Point const &p, SnapTargetType const &target, NR::Coord const &d, NR::Coord const &t, bool const &a, bool const &at_intersection, NR::Coord const &d2, NR::Coord const &t2, bool const &a2)
+    : _point(p), _target(target), _at_intersection(at_intersection), _distance(d), _tolerance(t), _always_snap(a),
     _second_distance(d2), _second_tolerance(t2), _second_always_snap(a2)
 {
     _transformation = NR::Point(1,1);
@@ -32,6 +32,7 @@ Inkscape::SnappedPoint::SnappedPoint(NR::Point p, NR::Coord d, NR::Coord t, bool
 Inkscape::SnappedPoint::SnappedPoint()
 {
     _point = NR::Point(0,0);
+    _target = SNAPTARGET_UNDEFINED, 
     _distance = NR_HUGE;
     _tolerance = 0;
     _always_snap = false;

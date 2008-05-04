@@ -12,7 +12,7 @@
 #include <2geom/geom.h>
 #include "libnr/nr-values.h"
 
-Inkscape::SnappedLineSegment::SnappedLineSegment(NR::Point snapped_point, NR::Coord snapped_distance, NR::Coord snapped_tolerance, bool always_snap, NR::Point start_point_of_line, NR::Point end_point_of_line)
+Inkscape::SnappedLineSegment::SnappedLineSegment(NR::Point const &snapped_point, NR::Coord const &snapped_distance, NR::Coord const &snapped_tolerance, bool const &always_snap, NR::Point const &start_point_of_line, NR::Point const &end_point_of_line)
     : _start_point_of_line(start_point_of_line), _end_point_of_line(end_point_of_line) 
 {
 	_point = snapped_point;
@@ -67,17 +67,17 @@ Inkscape::SnappedPoint Inkscape::SnappedLineSegment::intersect(SnappedLineSegmen
         bool const use_this_as_primary = c1 || c2;
         Inkscape::SnappedLineSegment const *primarySLS = use_this_as_primary ? this : &line;
         Inkscape::SnappedLineSegment const *secondarySLS = use_this_as_primary ? &line : this;
-        return SnappedPoint(intersection, primarySLS->getDistance(), primarySLS->getTolerance(), primarySLS->getAlwaysSnap(), true, 
+        return SnappedPoint(intersection, SNAPTARGET_PATH_INTERSECTION, primarySLS->getDistance(), primarySLS->getTolerance(), primarySLS->getAlwaysSnap(), true, 
                                           secondarySLS->getDistance(), secondarySLS->getTolerance(), secondarySLS->getAlwaysSnap());
 	}
     
     // No intersection
-    return SnappedPoint(intersection, NR_HUGE, 0, false, false, NR_HUGE, 0, false);
+    return SnappedPoint(intersection, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, NR_HUGE, 0, false);
 };
 
 
 
-Inkscape::SnappedLine::SnappedLine(NR::Point snapped_point, NR::Coord snapped_distance, NR::Coord snapped_tolerance, bool always_snap, NR::Point normal_to_line, NR::Point point_on_line)
+Inkscape::SnappedLine::SnappedLine(NR::Point const &snapped_point, NR::Coord const &snapped_distance, NR::Coord const &snapped_tolerance, bool const &always_snap, NR::Point const &normal_to_line, NR::Point const &point_on_line)
     : _normal_to_line(normal_to_line), _point_on_line(point_on_line)
 {
 	_distance = snapped_distance;
@@ -142,16 +142,18 @@ Inkscape::SnappedPoint Inkscape::SnappedLine::intersect(SnappedLine const &line)
         bool const use_this_as_primary = c1 || c2;
         Inkscape::SnappedLine const *primarySL = use_this_as_primary ? this : &line;
         Inkscape::SnappedLine const *secondarySL = use_this_as_primary ? &line : this;
-        return SnappedPoint(intersection, primarySL->getDistance(), primarySL->getTolerance(), primarySL->getAlwaysSnap(), true, 
+        return SnappedPoint(intersection, Inkscape::SNAPTARGET_UNDEFINED, primarySL->getDistance(), primarySL->getTolerance(), primarySL->getAlwaysSnap(), true, 
                                           secondarySL->getDistance(), secondarySL->getTolerance(), secondarySL->getAlwaysSnap());
+        // The type of the snap target is yet undefined, as we cannot tell whether 
+        // we're snapping to grid or the guide lines; must be set by on a higher level                                          
     }
     
     // No intersection
-    return SnappedPoint(intersection, NR_HUGE, 0, false, false, NR_HUGE, 0, false);
+    return SnappedPoint(intersection, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, NR_HUGE, 0, false);
 }
 
 // search for the closest snapped line segment
-bool getClosestSLS(std::list<Inkscape::SnappedLineSegment> &list, Inkscape::SnappedLineSegment &result) 
+bool getClosestSLS(std::list<Inkscape::SnappedLineSegment> const &list, Inkscape::SnappedLineSegment &result) 
 {
 	bool success = false;
 	
@@ -166,7 +168,7 @@ bool getClosestSLS(std::list<Inkscape::SnappedLineSegment> &list, Inkscape::Snap
 }
 
 // search for the closest intersection of two snapped line segments, which are both member of the same collection
-bool getClosestIntersectionSLS(std::list<Inkscape::SnappedLineSegment> &list, Inkscape::SnappedPoint &result)
+bool getClosestIntersectionSLS(std::list<Inkscape::SnappedLineSegment> const &list, Inkscape::SnappedPoint &result)
 {
 	bool success = false;
 	
@@ -196,7 +198,7 @@ bool getClosestIntersectionSLS(std::list<Inkscape::SnappedLineSegment> &list, In
 }
 
 // search for the closest snapped line
-bool getClosestSL(std::list<Inkscape::SnappedLine> &list, Inkscape::SnappedLine &result) 
+bool getClosestSL(std::list<Inkscape::SnappedLine> const &list, Inkscape::SnappedLine &result) 
 {
 	bool success = false;
 	
@@ -211,7 +213,7 @@ bool getClosestSL(std::list<Inkscape::SnappedLine> &list, Inkscape::SnappedLine 
 }
 
 // search for the closest intersection of two snapped lines, which are both member of the same collection
-bool getClosestIntersectionSL(std::list<Inkscape::SnappedLine> &list, Inkscape::SnappedPoint &result)
+bool getClosestIntersectionSL(std::list<Inkscape::SnappedLine> const &list, Inkscape::SnappedPoint &result)
 {
 	bool success = false;
 	
@@ -241,7 +243,7 @@ bool getClosestIntersectionSL(std::list<Inkscape::SnappedLine> &list, Inkscape::
 }
 
 // search for the closest intersection of two snapped lines, which are in two different collections
-bool getClosestIntersectionSL(std::list<Inkscape::SnappedLine> &list1, std::list<Inkscape::SnappedLine> &list2, Inkscape::SnappedPoint &result)
+bool getClosestIntersectionSL(std::list<Inkscape::SnappedLine> const &list1, std::list<Inkscape::SnappedLine> const &list2, Inkscape::SnappedPoint &result)
 {
 	bool success = false;
 	

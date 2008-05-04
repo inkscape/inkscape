@@ -28,10 +28,10 @@ public:
 
     void set_new_snappoint(Inkscape::SnappedPoint const p);
     void remove_snappoint();
-
+    
 protected:
-    TemporaryItem * tempitem;
-    SPDesktop *desktop;
+    TemporaryItem *_tempitem;
+    SPDesktop *_desktop;
 
 private:
     SnapIndicator(const SnapIndicator&);
