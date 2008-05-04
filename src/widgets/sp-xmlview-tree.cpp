@@ -88,7 +88,7 @@ static const Inkscape::XML::NodeEventVector pi_repr_events = {
 static GtkCTreeClass * parent_class = NULL;
 
 GtkWidget *
-sp_xmlview_tree_new (Inkscape::XML::Node * repr, void * factory, void * data)
+sp_xmlview_tree_new (Inkscape::XML::Node * repr, void * /*factory*/, void * /*data*/)
 {
 	SPXMLViewTree * tree;
 

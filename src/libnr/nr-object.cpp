@@ -137,11 +137,11 @@ static void nr_object_class_init(NRObjectClass *c)
     c->cpp_ctor = NRObject::invoke_ctor<NRObject>;
 }
 
-static void nr_object_init (NRObject *object)
+static void nr_object_init (NRObject */*object*/)
 {
 }
 
-static void nr_object_finalize (NRObject *object)
+static void nr_object_finalize (NRObject */*object*/)
 {
 }
 
@@ -237,7 +237,7 @@ static void nr_active_object_class_init(NRActiveObjectClass *c)
     object_class->cpp_ctor = NRObject::invoke_ctor<NRActiveObject>;
 }
 
-static void nr_active_object_init(NRActiveObject *object)
+static void nr_active_object_init(NRActiveObject */*object*/)
 {
 }
 

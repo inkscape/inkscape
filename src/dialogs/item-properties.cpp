@@ -49,7 +49,7 @@ static win_data wd;
 
 // impossible original values to make sure they are read from prefs
 static gint x = -1000, y = -1000, w = 0, h = 0;
-static gchar *prefs_path = "dialogs.object";
+static gchar const *prefs_path = "dialogs.object";
 
 static void sp_item_widget_modify_selection (SPWidget *spw, Inkscape::Selection *selection, guint flags, GtkWidget *itemw);
 static void sp_item_widget_change_selection (SPWidget *spw, Inkscape::Selection *selection, GtkWidget *itemw);

@@ -1094,7 +1094,7 @@ int CssReader::getSimpleSelector(int p0)
  *   | {empty}
  *   ;
  */
-int CssReader::getDeclaration(int p0, CSSStyleDeclaration &declarationList)
+int CssReader::getDeclaration(int p0, CSSStyleDeclaration &/*declarationList*/)
 {
     int p = p0;
 
@@ -1653,7 +1653,7 @@ static const char *fileNames[] =
     "inkscape.css",
     "meyerweb.css",
     NULL
-	};
+    };
 
 bool doTests()
 {
@@ -1666,8 +1666,8 @@ bool doTests()
            printf("Test failed\n");
            return false;
            }
-	   }
-	return true;
+       }
+    return true;
 }
 
 int main(int argc, char **argv)

@@ -68,7 +68,7 @@ static win_data wd;
 
 // impossible original values to make sure they are read from prefs
 static gint x = -1000, y = -1000, w = 0, h = 0;
-static gchar *prefs_path = "dialogs.clonetiler";
+static gchar const *prefs_path = "dialogs.clonetiler";
 
 #define SB_MARGIN 1
 #define VB_MARGIN 4

@@ -1,7 +1,7 @@
 
 
 /* XPM */
-static char * core_xpm[] = {
+static char const * core_xpm[] = {
 "16 16 4 1",
 " 	c None",
 ".	c #808080",
@@ -25,7 +25,7 @@ static char * core_xpm[] = {
 "                "};
 
 /* XPM */
-static char *eraser[] = {
+static char const *eraser[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 5 1",
 "  c black",
@@ -53,7 +53,7 @@ static char *eraser[] = {
 };
 
 /* XPM */
-static char *mouse[] = {
+static char const *mouse[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 3 1",
 "  c black",
@@ -79,7 +79,7 @@ static char *mouse[] = {
 };
 
 /* XPM */
-static char *pen[] = {
+static char const *pen[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 3 1",
 "  c black",
@@ -105,7 +105,7 @@ static char *pen[] = {
 };
 
 /* XPM */
-static char *sidebuttons[] = {
+static char const *sidebuttons[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 4 1",
 "  c black",
@@ -132,7 +132,7 @@ static char *sidebuttons[] = {
 };
 
 /* XPM */
-static char *tablet[] = {
+static char const *tablet[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 3 1",
 "  c black",
@@ -158,7 +158,7 @@ static char *tablet[] = {
 };
 
 /* XPM */
-static char *tip[] = {
+static char const *tip[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 5 1",
 "  c black",
@@ -186,7 +186,7 @@ static char *tip[] = {
 };
 
 /* XPM */
-static char *button_none[] = {
+static char const *button_none[] = {
 /* columns rows colors chars-per-pixel */
 "8 8 3 1",
 "  c black",
@@ -203,7 +203,7 @@ static char *button_none[] = {
 "XXXXXXXX"
 };
 /* XPM */
-static char *button_off[] = {
+static char const *button_off[] = {
 /* columns rows colors chars-per-pixel */
 "8 8 4 1",
 "  c black",
@@ -221,7 +221,7 @@ static char *button_off[] = {
 "oooooooo"
 };
 /* XPM */
-static char *button_on[] = {
+static char const *button_on[] = {
 /* columns rows colors chars-per-pixel */
 "8 8 3 1",
 "  c black",
@@ -239,7 +239,7 @@ static char *button_on[] = {
 };
 
 /* XPM */
-static char * axis_none_xpm[] = {
+static char const * axis_none_xpm[] = {
 "24 8 3 1",
 " 	c None",
 ".	c #000000",
@@ -253,7 +253,7 @@ static char * axis_none_xpm[] = {
 "  .++++++++++++++++++.  ",
 "                        "};
 /* XPM */
-static char * axis_off_xpm[] = {
+static char const * axis_off_xpm[] = {
 "24 8 4 1",
 " 	c None",
 ".	c #808080",
@@ -268,7 +268,7 @@ static char * axis_off_xpm[] = {
 "  .++++++++++++++++++.  ",
 "                        "};
 /* XPM */
-static char * axis_on_xpm[] = {
+static char const * axis_on_xpm[] = {
 "24 8 3 1",
 " 	c None",
 ".	c #000000",

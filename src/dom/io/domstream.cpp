@@ -72,11 +72,11 @@ void pipeStream(InputStream &source, OutputStream &dest)
 //# F O R M A T T E D    P R I N T I N G
 //#########################################################################
 
-static char *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
+static char const *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
 
 static int dprintInt(Writer &outs,
                      long arg, int base,
-                     int flag, int width, int precision)
+                     int flag, int width, int /*precision*/)
 {
 
     DOMString buf;
@@ -217,7 +217,7 @@ static int dprintDouble(Writer &outs, double val,
  * XML entities.
  */
 static int dprintString(Writer &outs, const DOMString &str,
-                        int flags, int width, int precision)
+                        int flags, int /*width*/, int /*precision*/)
 {
     int len = str.size();
     if (flags == '#')

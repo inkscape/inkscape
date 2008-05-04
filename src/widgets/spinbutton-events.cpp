@@ -23,7 +23,7 @@
 
 
 gboolean
-spinbutton_focus_in (GtkWidget *w, GdkEventKey *event, gpointer data)
+spinbutton_focus_in (GtkWidget *w, GdkEventKey */*event*/, gpointer /*data*/)
 {
 	gdouble *ini;
 

@@ -146,7 +146,7 @@ DOMString &DOMString::assign(const std::string &str)
 }
 
 
-void DOMString::erase(unsigned long pos, unsigned long count)
+void DOMString::erase(unsigned long /*pos*/, unsigned long count)
 {
     std::vector<XMLCh>::iterator iter = chars.begin();
     chars.erase(iter, iter + count);

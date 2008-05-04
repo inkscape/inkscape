@@ -125,7 +125,7 @@ sp_group_class_init (SPGroupClass *klass)
 	item_class->show = sp_group_show;
 	item_class->hide = sp_group_hide;
 	item_class->snappoints = sp_group_snappoints;
-	
+
 	lpe_item_class->update_patheffect = sp_group_update_patheffect;
 }
 
@@ -470,7 +470,7 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 		SPItem *item = (SPItem *) doc->getObjectByRepr(repr);
 
 		sp_item_write_transform(item, repr, item->transform, NULL, false);
-		
+
 		Inkscape::GC::release(repr);
 		if (children && SP_IS_ITEM (item))
 			*children = g_slist_prepend (*children, item);
@@ -478,7 +478,7 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 		items = g_slist_remove (items, items->data);
 	}
 
-	if (do_done) 
+	if (do_done)
 		sp_document_done (doc, SP_VERB_NONE, _("Ungroup"));
 }
 
@@ -625,7 +625,7 @@ void CGroup::onChildRemoved(Inkscape::XML::Node */*child*/) {
     _group->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
-void CGroup::onUpdate(SPCtx *ctx, unsigned int flags) {    
+void CGroup::onUpdate(SPCtx *ctx, unsigned int flags) {
     SPItemCtx *ictx, cctx;
 
     ictx = (SPItemCtx *) ctx;
@@ -687,9 +687,9 @@ void CGroup::onModified(guint flags) {
 }
 
 void CGroup::calculateBBox(NRRect *bbox, NR::Matrix const &transform, unsigned const flags) {
-    
+
     NR::Maybe<NR::Rect> dummy_bbox = NR::Nothing();
-    
+
     GSList *l = _group->childList(false, SPObject::ActionBBox);
     while (l) {
         SPObject *o = SP_OBJECT (l->data);
@@ -697,10 +697,10 @@ void CGroup::calculateBBox(NRRect *bbox, NR::Matrix const &transform, unsigned c
             SPItem *child = SP_ITEM(o);
             NR::Matrix const ct(child->transform * transform);
             sp_item_invoke_bbox_full(child, &dummy_bbox, ct, flags, FALSE);
-        }        
+        }
         l = g_slist_remove (l, o);
     }
-    
+
     *bbox = NRRect(dummy_bbox);
 }
 
@@ -710,7 +710,7 @@ void CGroup::onPrint(SPPrintContext *ctx) {
         SPObject *o = SP_OBJECT (l->data);
         if (SP_IS_ITEM(o)) {
             sp_item_invoke_print (SP_ITEM (o), ctx);
-        }        
+        }
         l = g_slist_remove (l, o);
     }
 }
@@ -722,7 +722,7 @@ gint CGroup::getItemCount() {
             len++;
         }
     }
-    
+
     return len;
 }
 
@@ -802,7 +802,7 @@ void CGroup::onOrderChanged (Inkscape::XML::Node *child, Inkscape::XML::Node *, 
 }
 
 static void
-sp_group_update_patheffect (SPLPEItem *lpeitem, bool write)
+sp_group_update_patheffect (SPLPEItem *lpeitem, bool /*write*/)
 {
 #ifdef GROUP_VERBOSE
     g_message("sp_group_update_patheffect: %p\n", lpeitem);

@@ -576,7 +576,7 @@ sp_use_update(SPObject *object, SPCtx *ctx, unsigned flags)
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
       for (SPItemView *v = SP_ITEM(object)->display; v != NULL; v = v->next) {
-	nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
+        nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
       }
     }
 
@@ -634,7 +634,7 @@ sp_use_modified(SPObject *object, guint flags)
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
       for (SPItemView *v = SP_ITEM(object)->display; v != NULL; v = v->next) {
-	nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
+        nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
       }
     }
 

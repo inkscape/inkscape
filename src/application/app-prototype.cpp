@@ -14,11 +14,11 @@
 namespace Inkscape {
 namespace NSApplication {
 
-AppPrototype::AppPrototype() 
+AppPrototype::AppPrototype()
 {
 }
 
-AppPrototype::AppPrototype(int argc, const char **argv) 
+AppPrototype::AppPrototype(int /*argc*/, const char **/*argv*/)
 {
 }
 

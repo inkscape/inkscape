@@ -82,7 +82,7 @@ DOMImplementationSourceImpl::~DOMImplementationSourceImpl()
  *
  */
 DOMImplementation *DOMImplementationSourceImpl::getDOMImplementation(
-                           const DOMString &features)
+								     const DOMString &/*features*/)
 {
     return domImpl;
 }
@@ -91,7 +91,7 @@ DOMImplementation *DOMImplementationSourceImpl::getDOMImplementation(
  *
  */
 DOMImplementationList DOMImplementationSourceImpl::getDOMImplementationList(
-                           const DOMString &features)
+									    const DOMString &/*features*/)
 {
     return domImplList;
 }
@@ -124,8 +124,8 @@ DOMImplementationImpl::~DOMImplementationImpl()
 /**
  *
  */
-bool DOMImplementationImpl::hasFeature(const DOMString& feature,
-                        const DOMString& version)
+bool DOMImplementationImpl::hasFeature(const DOMString& /*feature*/,
+				       const DOMString& /*version*/)
 {
     return false;
 }
@@ -163,8 +163,8 @@ DocumentPtr DOMImplementationImpl::createDocument(
 /**
  *
  */
-DOMObject *DOMImplementationImpl::getFeature(const DOMString& feature,
-                         const DOMString& version)
+DOMObject *DOMImplementationImpl::getFeature(const DOMString& /*feature*/,
+					     const DOMString& /*version*/)
 
 {
     return NULL;
@@ -514,8 +514,8 @@ void NodeImpl::normalize()
 /**
  *
  */
-bool NodeImpl::isSupported(const DOMString& feature,
-                           const DOMString& version)
+bool NodeImpl::isSupported(const DOMString& /*feature*/,
+                           const DOMString& /*version*/)
 {
     //again, no idea
     return false;
@@ -891,8 +891,8 @@ bool NodeImpl::isEqualNode(const NodePtr nodeArg)
 /**
  *
  */
-DOMObject *NodeImpl::getFeature(const DOMString &feature,
-                             const DOMString &version)
+DOMObject *NodeImpl::getFeature(const DOMString &/*feature*/,
+				const DOMString &/*version*/)
 {
     //dont know
     return NULL;
@@ -1083,8 +1083,8 @@ NodeImpl::NodeImpl(DocumentImplPtr owner, const DOMString &nodeName)
 /**
  *
  */
-NodeImpl::NodeImpl(DocumentImplPtr owner, const DOMString &theNamespaceURI,
-                      const DOMString &qualifiedName) : Node()
+NodeImpl::NodeImpl(DocumentImplPtr owner, const DOMString &/*theNamespaceURI*/,
+		   const DOMString &qualifiedName) : Node()
 {
     init();
     ownerDocument = owner;

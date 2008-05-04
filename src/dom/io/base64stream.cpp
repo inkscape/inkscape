@@ -188,7 +188,7 @@ int Base64InputStream::get()
 //# B A S E 6 4    O U T P U T    S T R E A M
 //#########################################################################
 
-static char *base64encode =
+static char const *base64encode =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 /**
