@@ -1,114 +1,20 @@
-SET(INKSCAPE_SRC)
-
-# A macro to replace slashes and spaces in a string with underscores
-MACRO(SANITIZE_PATH _string_var)
-  STRING(REGEX REPLACE "[\\/ ]+" "_" ${_string_var} ${${_string_var}})
-ENDMACRO(SANITIZE_PATH _string_var)
-
-# A macro to prepend a given string onto the beginning of each string in a list
-MACRO(PREPEND _list _str)
-  SET(_temp_list ${${_list}})
-  SET(${_list})
-  FOREACH(x ${_temp_list})
-    SET(${_list} ${${_list}} ${_str}${x})
-  ENDFOREACH(x)
-ENDMACRO(PREPEND _list _str)
-
-# All folder with CMakeLists.txt files (excluding internal libraries)
-SET(srcfolders
-algorithms
-api
-bind
-debug
-dialogs
-display
-dom
-dom/io
-dom/odf
-dom/util
-#dom/work
-extension
-#extension/dxf2svg
-extension/implementation
-extension/internal
-extension/param
-graphlayout
-helper
-inkjar
-io
-jabber_whiteboard
-jabber_whiteboard/dialog
-live_effects
-live_effects/parameter
-pedro
-removeoverlap
-svg
-trace
-trace/potrace
-traits
-ui/cache
-ui
-ui/dialog
-ui/view
-ui/widget
-#utest
-util
-widgets
-xml
-)
-
-# 1) include each list file
-# 2) grab the variable inside 
-# 3) prepend the full relative path to each file in list
-# 4) append the list to INKSCAPE_SRC
-FOREACH(dirlist ${srcfolders})
-  SET(_temp_dirlist "${dirlist}")
-  MESSAGE(STATUS "Processing ${CMAKE_CURRENT_SOURCE_DIR}/${dirlist}/CMakeLists.txt")
-  INCLUDE(${CMAKE_CURRENT_SOURCE_DIR}/${dirlist}/CMakeLists.txt)
-  SANITIZE_PATH(dirlist)
-  PREPEND(${dirlist}_SRC "${_temp_dirlist}/")
-  SET(INKSCAPE_SRC ${INKSCAPE_SRC} ${${dirlist}_SRC})
-ENDFOREACH(dirlist)
-
-
-# All directories containing lists files that describe building internal libraries
-SET(libfolders
-2geom
-application
-#dialogs
-libavoid
-libcola
-libcroco
-libgdl
-libnr
-libnrtype
-libvpsc
-livarot
-)
-
-FOREACH(dirlist ${libfolders})
-  ADD_SUBDIRECTORY(${dirlist})
-ENDFOREACH(dirlist)
-
 IF(WIN32)
-SET(ONLY_WIN
-registrytool.cpp
-registrytool.h
-#deptool.cpp
-winmain.cpp
-)
+    SET(ONLY_WIN
+    registrytool.cpp
+    registrytool.h
+    #deptool.cpp
+    winmain.cpp)
 ELSEIF(WIN32)
-SET(ONLY_WIN)
+    SET(ONLY_WIN)
 ENDIF(WIN32)
 
 SET(INKSCAPE_SRC
-${INKSCAPE_SRC}
 approx-equal.h
 arc-context.cpp
 arc-context.h
 attributes.cpp
 attributes.h
-attributes-test.h
+#attributes-test.h
 axis-manip.cpp
 axis-manip.h
 bad-uri-exception.h
@@ -124,7 +30,7 @@ color.h
 color-profile.cpp
 color-profile-fns.h
 color-profile.h
-color-profile-test.h
+#color-profile-test.h
 color-rgba.h
 composite-undo-stack-observer.cpp
 composite-undo-stack-observer.h
@@ -155,7 +61,7 @@ device-manager.cpp
 device-manager.h
 dir-util.cpp
 dir-util.h
-dir-util-test.h
+#dir-util-test.h
 document.cpp
 document.h
 document-private.h
@@ -190,7 +96,7 @@ event-log.h
 extension
 extract-uri.cpp
 extract-uri.h
-extract-uri-test.h
+#extract-uri-test.h
 file.cpp
 file.h
 fill-or-stroke.h
@@ -273,7 +179,7 @@ message-stack.cpp
 message-stack.h
 mod360.cpp
 mod360.h
-mod360-test.h
+#mod360-test.h
 modifier-fns.h
 MultiPrinter.h
 node-context.cpp
@@ -320,7 +226,7 @@ rect-context.h
 remove-last.h
 require-config.h
 round.h
-round-test.h
+#round-test.h
 rubberband.cpp
 rubberband.h
 satisfied-guide-cns.cpp
@@ -335,7 +241,7 @@ selection.cpp
 selection-describer.cpp
 selection-describer.h
 selection.h
-selfname.tpl
+#selfname.tpl
 seltrans.cpp
 seltrans.h
 seltrans-handles.cpp
@@ -450,7 +356,7 @@ sp-gradient.h
 sp-gradient-reference.cpp
 sp-gradient-reference.h
 sp-gradient-spread.h
-sp-gradient-test.h
+#sp-gradient-test.h
 sp-gradient-units.h
 sp-gradient-vector.h
 sp-guide-attachment.h
@@ -531,7 +437,7 @@ sp-string.cpp
 sp-string.h
 sp-style-elem.cpp
 sp-style-elem.h
-sp-style-elem-test.h
+#sp-style-elem-test.h
 sp-switch.cpp
 sp-switch.h
 sp-symbol.cpp
@@ -563,15 +469,15 @@ streq.h
 strneq.h
 style.cpp
 style.h
-style-test.cpp
-style-test.h
+#style-test.cpp
+#style-test.h
 svg-profile.h
 svg-view.cpp
 svg-view.h
 svg-view-widget.cpp
 svg-view-widget.h
 syseq.h
-test-helpers.h
+#test-helpers.h
 text-chemistry.cpp
 text-chemistry.h
 text-context.cpp
@@ -596,13 +502,89 @@ vanishing-point.cpp
 vanishing-point.h
 verbs.cpp
 verbs.h
-verbs-test.h
+#verbs-test.h
 version.cpp
 version.h
 zoom-context.cpp
 zoom-context.h
 ${ONLY_WIN}
 )
+# All folder with CMakeLists.txt files (excluding internal libraries)
+SET(srcfolders
+algorithms
+api
+bind
+debug
+dialogs
+display
+dom
+dom/io
+dom/odf
+dom/util
+#dom/work
+extension
+#extension/dxf2svg
+extension/implementation
+extension/internal
+extension/param
+graphlayout
+helper
+inkjar
+io
+jabber_whiteboard
+jabber_whiteboard/dialog
+live_effects
+live_effects/parameter
+pedro
+removeoverlap
+svg
+trace
+trace/potrace
+traits
+ui/cache
+ui
+ui/dialog
+ui/view
+ui/widget
+#utest
+util
+widgets
+xml
+)
+
+# 1) include each list file
+# 2) grab the variable inside 
+# 3) prepend the full relative path to each file in list
+# 4) append the list to INKSCAPE_SRC
+FOREACH(dirlist ${srcfolders})
+  SET(_temp_dirlist "${dirlist}")
+  MESSAGE(STATUS "Processing ${CMAKE_CURRENT_SOURCE_DIR}/${dirlist}/CMakeLists.txt")
+  INCLUDE(${CMAKE_CURRENT_SOURCE_DIR}/${dirlist}/CMakeLists.txt)
+  SANITIZE_PATH(dirlist)
+  PREPEND(${dirlist}_SRC "${_temp_dirlist}/")
+  SET(INKSCAPE_SRC ${INKSCAPE_SRC} ${${dirlist}_SRC})
+ENDFOREACH(dirlist)
+
+
+# All directories containing lists files that describe building internal libraries
+SET(libfolders
+2geom
+application
+#dialogs
+libavoid
+libcola
+libcroco
+libgdl
+libnr
+libnrtype
+libvpsc
+livarot
+)
+
+FOREACH(dirlist ${libfolders})
+  ADD_SUBDIRECTORY(${dirlist})
+ENDFOREACH(dirlist)
+
 
 # make executable for INKSCAPE
 ADD_EXECUTABLE(inkscape ${INKSCAPE_SRC})

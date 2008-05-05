@@ -10,7 +10,7 @@ png-write.cpp
 stock-items.cpp
 unit-menu.cpp
 units.cpp
-units-test.cpp
+#units-test.cpp
 unit-tracker.cpp
 window.cpp
 sp-marshal.list

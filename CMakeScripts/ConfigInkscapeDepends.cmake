@@ -9,7 +9,7 @@ SET(INKSCAPE_DEPENDS
     gtkmm-2.4
     sigc++-2.0
     lcms
-    libgc1c2
+#    libgc1c2
     libpng
     libxml-2.0
     libxslt
@@ -52,7 +52,9 @@ ENDFOREACH(dep)
 
 # Include non pkg-config dependencies:
 INCLUDE(FindBoost)
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${BOOST_INCLUDE_DIR} ")
 INCLUDE(FindGC)
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${LIBGC_INCLUDE_DIR} ")
 INCLUDE(IncludeJava)
 # end Dependencies
 
