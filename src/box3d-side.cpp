@@ -221,7 +221,7 @@ box3d_side_set_shape (SPShape *shape)
         return;
     }
 
-    SPCurve *c = sp_curve_new ();
+    SPCurve *c = new SPCurve();
     // TODO: Draw the correct quadrangle here
     //       To do this, determine the perspective of the box, the orientation of the side (e.g., XY-FRONT)
     //       compute the coordinates of the corners in P^3, project them onto the canvas, and draw the
@@ -230,15 +230,15 @@ box3d_side_set_shape (SPShape *shape)
     unsigned int corners[4];
     box3d_side_compute_corner_ids(side, corners);
 
-    sp_curve_moveto (c, box3d_get_corner_screen(box, corners[0]));
-    sp_curve_lineto (c, box3d_get_corner_screen(box, corners[1]));
-    sp_curve_lineto (c, box3d_get_corner_screen(box, corners[2]));
-    sp_curve_lineto (c, box3d_get_corner_screen(box, corners[3]));
+    c->moveto(box3d_get_corner_screen(box, corners[0]));
+    c->lineto(box3d_get_corner_screen(box, corners[1]));
+    c->lineto(box3d_get_corner_screen(box, corners[2]));
+    c->lineto(box3d_get_corner_screen(box, corners[3]));
 
-    sp_curve_closepath (c);
+    c->closepath();
     sp_lpe_item_perform_path_effect(SP_LPE_ITEM (side), c);
     sp_shape_set_curve_insync (SP_SHAPE (side), c, TRUE);
-    sp_curve_unref (c);
+    c->unref();
 }
 
 void

@@ -285,7 +285,7 @@ sp_star_update_patheffect(SPLPEItem *lpeitem, bool write)
     if (write) {
         Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
         if ( shape->curve != NULL ) {
-            NArtBpath *abp = sp_curve_first_bpath(shape->curve);
+            NArtBpath *abp = shape->curve->first_bpath();
             if (abp) {
                 gchar *str = sp_svg_write_path(abp);
                 repr->setAttribute("d", str);
@@ -434,7 +434,7 @@ sp_star_set_shape (SPShape *shape)
 {
 	SPStar *star = SP_STAR (shape);
 
-	SPCurve *c = sp_curve_new ();
+	SPCurve *c = new SPCurve ();
 	
 	gint sides = star->sides;
 	bool not_rounded = (fabs (star->rounded) < 1e-4);
@@ -443,13 +443,12 @@ sp_star_set_shape (SPShape *shape)
 	// other places that call that function (e.g. the knotholder) need the exact point
 
 	// draw 1st segment
-	sp_curve_moveto (c, sp_star_get_xy (star, SP_STAR_POINT_KNOT1, 0, true));
+	c->moveto(sp_star_get_xy (star, SP_STAR_POINT_KNOT1, 0, true));
 	if (star->flatsided == false) {
 		if (not_rounded) {
-			sp_curve_lineto (c, sp_star_get_xy (star, SP_STAR_POINT_KNOT2, 0, true));
+			c->lineto(sp_star_get_xy (star, SP_STAR_POINT_KNOT2, 0, true));
 		} else {
-			sp_curve_curveto (c,
-				sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, 0, NEXT),
+			c->curveto(sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, 0, NEXT),
 				sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT2, 0, PREV),
 				sp_star_get_xy (star, SP_STAR_POINT_KNOT2, 0, true));
 		}
@@ -458,16 +457,14 @@ sp_star_set_shape (SPShape *shape)
 	// draw all middle segments
 	for (gint i = 1; i < sides; i++) {
 		if (not_rounded) {
-			sp_curve_lineto (c, sp_star_get_xy (star, SP_STAR_POINT_KNOT1, i, true));
+			c->lineto(sp_star_get_xy (star, SP_STAR_POINT_KNOT1, i, true));
 		} else {
 			if (star->flatsided == false) {
-				sp_curve_curveto (c,
-						sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT2, i - 1, NEXT),
+				c->curveto(sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT2, i - 1, NEXT),
 						sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, i, PREV),
 						sp_star_get_xy (star, SP_STAR_POINT_KNOT1, i, true));
 			} else {
-				sp_curve_curveto (c,
-						sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, i - 1, NEXT),
+				c->curveto(sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, i - 1, NEXT),
 						sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, i, PREV),
 						sp_star_get_xy (star, SP_STAR_POINT_KNOT1, i, true));
 			}
@@ -475,10 +472,9 @@ sp_star_set_shape (SPShape *shape)
 		if (star->flatsided == false) {
 
 			if (not_rounded) {
-                       sp_curve_lineto (c, sp_star_get_xy (star, SP_STAR_POINT_KNOT2, i, true));
+                       c->lineto(sp_star_get_xy (star, SP_STAR_POINT_KNOT2, i, true));
 			} else {
-				sp_curve_curveto (c,
-					sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, i, NEXT),
+				c->curveto(sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, i, NEXT),
 					sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT2, i, PREV),
 					sp_star_get_xy (star, SP_STAR_POINT_KNOT2, i, true));
 			}
@@ -487,25 +483,23 @@ sp_star_set_shape (SPShape *shape)
 	
 	// draw last segment
 		if (not_rounded) {
-			sp_curve_lineto (c, sp_star_get_xy (star, SP_STAR_POINT_KNOT1, 0, true));
+			c->lineto(sp_star_get_xy (star, SP_STAR_POINT_KNOT1, 0, true));
 		} else {
 			if (star->flatsided == false) {
-			sp_curve_curveto (c,
-				sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT2, sides - 1, NEXT),
+			c->curveto(sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT2, sides - 1, NEXT),
 				sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, 0, PREV),
 				sp_star_get_xy (star, SP_STAR_POINT_KNOT1, 0, true));
 			} else {
-			sp_curve_curveto (c,
-				sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, sides - 1, NEXT),
+			c->curveto(sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, sides - 1, NEXT),
 				sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, 0, PREV),
 				sp_star_get_xy (star, SP_STAR_POINT_KNOT1, 0, true));
 			}
 		}
 
-    sp_curve_closepath (c);
+    c->closepath();
     sp_lpe_item_perform_path_effect(SP_LPE_ITEM (star), c);
     sp_shape_set_curve_insync (SP_SHAPE (star), c, TRUE);
-    sp_curve_unref (c);
+    c->unref();
 }
 
 void

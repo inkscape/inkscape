@@ -327,7 +327,7 @@ PathParam::linked_modified(SPObject *linked_obj, guint /*flags*/)
         _pathvector = SVGD_to_2GeomPath(defvalue);
     } else {
         _pathvector = BPath_to_2GeomPath(SP_CURVE_BPATH(curve));
-        sp_curve_unref(curve);
+        curve->unref();
     }
 
     must_recalculate_pwd2 = true;

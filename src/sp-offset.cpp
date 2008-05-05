@@ -354,10 +354,10 @@ sp_offset_set(SPObject *object, unsigned key, gchar const *value)
                 offset->original = strdup (value);
 
                 bpath = sp_svg_read_path (offset->original);
-                curve = sp_curve_new_from_bpath (bpath);	// curve se chargera de detruire bpath
+                curve = SPCurve::new_from_bpath (bpath);	// curve se chargera de detruire bpath
                 g_assert (curve != NULL);
                 offset->originalPath = bpath_to_liv_path (SP_CURVE_BPATH(curve));
-                sp_curve_unref (curve);
+                curve->unref();
 
                 offset->knotSet = false;
                 if ( offset->isUpdating == false ) object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -533,10 +533,10 @@ sp_offset_set_shape(SPShape *shape)
         const char *res_d = SP_OBJECT(shape)->repr->attribute("inkscape:original");
         if ( res_d ) {
             NArtBpath *bpath = sp_svg_read_path (res_d);
-            SPCurve *c = sp_curve_new_from_bpath (bpath);
+            SPCurve *c = SPCurve::new_from_bpath (bpath);
             g_assert(c != NULL);
             sp_shape_set_curve_insync ((SPShape *) offset, c, TRUE);
-            sp_curve_unref (c);
+            c->unref();
         }
         return;
     }
@@ -782,10 +782,10 @@ sp_offset_set_shape(SPShape *shape)
         delete orig;
 
         NArtBpath *bpath = sp_svg_read_path (res_d);
-        SPCurve *c = sp_curve_new_from_bpath (bpath);
+        SPCurve *c = SPCurve::new_from_bpath (bpath);
         g_assert(c != NULL);
         sp_shape_set_curve_insync ((SPShape *) offset, c, TRUE);
-        sp_curve_unref (c);
+        c->unref();
 
         free (res_d);
     }
@@ -1036,7 +1036,7 @@ sp_offset_top_point (SPOffset * offset, NR::Point *px)
     Path *finalPath = bpath_to_liv_path (SP_CURVE_BPATH(curve));
     if (finalPath == NULL)
     {
-        sp_curve_unref (curve);
+        curve->unref();
         return;
     }
 
@@ -1053,7 +1053,7 @@ sp_offset_top_point (SPOffset * offset, NR::Point *px)
 
     delete theShape;
     delete finalPath;
-    sp_curve_unref (curve);
+    curve->unref();
 }
 
 // the listening functions
@@ -1178,7 +1178,7 @@ refresh_offset_source(SPOffset* offset)
 	    return;
     }
     orig = bpath_to_liv_path (SP_CURVE_BPATH(curve));
-    sp_curve_unref (curve);
+    curve->unref();
 
 
     // Finish up.

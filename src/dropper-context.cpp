@@ -111,9 +111,9 @@ static void sp_dropper_context_setup(SPEventContext *ec)
         ((SPEventContextClass *) parent_class)->setup(ec);
     }
 
-    SPCurve *c = sp_curve_new_from_foreign_bpath(spdc_circle);
+    SPCurve *c = SPCurve::new_from_foreign_bpath(spdc_circle);
     dc->area = sp_canvas_bpath_new(sp_desktop_controls(ec->desktop), c);
-    sp_curve_unref(c);
+    c->unref();
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(dc->area), 0x00000000,(SPWindRule)0);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->area), 0x0000007f, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     sp_canvas_item_hide(dc->area);

@@ -223,7 +223,7 @@ sp_dyna_draw_context_dispose(GObject *object)
     }
 
     if (ddc->accumulated) {
-        ddc->accumulated = sp_curve_unref(ddc->accumulated);
+        ddc->accumulated = ddc->accumulated->unref();
     }
 
     while (ddc->segments) {
@@ -231,9 +231,9 @@ sp_dyna_draw_context_dispose(GObject *object)
         ddc->segments = g_slist_remove(ddc->segments, ddc->segments->data);
     }
 
-    if (ddc->currentcurve) ddc->currentcurve = sp_curve_unref(ddc->currentcurve);
-    if (ddc->cal1) ddc->cal1 = sp_curve_unref(ddc->cal1);
-    if (ddc->cal2) ddc->cal2 = sp_curve_unref(ddc->cal2);
+    if (ddc->currentcurve) ddc->currentcurve = ddc->currentcurve->unref();
+    if (ddc->cal1) ddc->cal1 = ddc->cal1->unref();
+    if (ddc->cal2) ddc->cal2 = ddc->cal2->unref();
 
     if (ddc->currentshape) {
         gtk_object_destroy(GTK_OBJECT(ddc->currentshape));
@@ -258,11 +258,11 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
     if (((SPEventContextClass *) parent_class)->setup)
         ((SPEventContextClass *) parent_class)->setup(ec);
 
-    ddc->accumulated = sp_curve_new_sized(32);
-    ddc->currentcurve = sp_curve_new_sized(4);
+    ddc->accumulated = new SPCurve(32);
+    ddc->currentcurve = new SPCurve(4);
 
-    ddc->cal1 = sp_curve_new_sized(32);
-    ddc->cal2 = sp_curve_new_sized(32);
+    ddc->cal1 = new SPCurve(32);
+    ddc->cal2 = new SPCurve(32);
 
     ddc->currentshape = sp_canvas_item_new(sp_desktop_sketch(ec->desktop), SP_TYPE_CANVAS_BPATH, NULL);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(ddc->currentshape), DDC_RED_RGBA, SP_WIND_RULE_EVENODD);
@@ -271,9 +271,9 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
     g_signal_connect(G_OBJECT(ddc->currentshape), "event", G_CALLBACK(sp_desktop_root_handler), ec->desktop);
 
     {
-        SPCurve *c = sp_curve_new_from_foreign_bpath(hatch_area_circle);
+        SPCurve *c = SPCurve::new_from_foreign_bpath(hatch_area_circle);
         ddc->hatch_area = sp_canvas_bpath_new(sp_desktop_controls(ec->desktop), c);
-        sp_curve_unref(c);
+        c->unref();
         sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(ddc->hatch_area), 0x00000000,(SPWindRule)0);
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(ddc->hatch_area), 0x0000007f, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
         sp_canvas_item_hide(ddc->hatch_area);
@@ -598,7 +598,7 @@ calligraphic_cancel(SPDynaDrawContext *dc)
                 dc->segments = g_slist_remove(dc->segments, dc->segments->data);
             }
             /* reset accumulated curve */
-            sp_curve_reset(dc->accumulated);
+            dc->accumulated->reset();
             clear_current(dc);
             if (dc->repr) {
                 dc->repr = NULL;
@@ -631,7 +631,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 sp_dyna_draw_reset(dc, button_dt);
                 sp_dyna_draw_extinput(dc, event);
                 sp_dyna_draw_apply(dc, button_dt);
-                sp_curve_reset(dc->accumulated);
+                dc->accumulated->reset();
                 if (dc->repr) {
                     dc->repr = NULL;
                 }
@@ -891,7 +891,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             set_to_accumulated(dc, event->button.state & GDK_SHIFT_MASK); // performs document_done
 
             /* reset accumulated curve */
-            sp_curve_reset(dc->accumulated);
+            dc->accumulated->reset();
 
             clear_current(dc);
             if (dc->repr) {
@@ -1034,9 +1034,9 @@ clear_current(SPDynaDrawContext *dc)
     /* reset bpath */
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(dc->currentshape), NULL);
     /* reset curve */
-    sp_curve_reset(dc->currentcurve);
-    sp_curve_reset(dc->cal1);
-    sp_curve_reset(dc->cal2);
+    dc->currentcurve->reset();
+    dc->cal1->reset();
+    dc->cal2->reset();
     /* reset points */
     dc->npoints = 0;
 }
@@ -1046,7 +1046,7 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(dc)->desktop;
 
-    if (!sp_curve_empty(dc->accumulated)) {
+    if (!dc->accumulated->is_empty()) {
         NArtBpath *abp;
         gchar *str;
 
@@ -1065,7 +1065,7 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
             item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
             item->updateRepr();
         }
-        abp = nr_artpath_affine(sp_curve_first_bpath(dc->accumulated), sp_desktop_dt2root_affine(desktop));
+        abp = nr_artpath_affine(dc->accumulated->first_bpath(), sp_desktop_dt2root_affine(desktop));
         str = sp_svg_write_path(abp);
         g_assert( str != NULL );
         g_free(abp);
@@ -1118,16 +1118,16 @@ add_cap(SPCurve *curve,
     }
 
     if ( NR::L2(v_in) > DYNA_EPSILON || NR::L2(v_out) > DYNA_EPSILON ) {
-        sp_curve_curveto(curve, from + v_in, to + v_out, to);
+        curve->curveto(from + v_in, to + v_out, to);
     }
 }
 
 static void
 accumulate_calligraphic(SPDynaDrawContext *dc)
 {
-    if ( !sp_curve_empty(dc->cal1) && !sp_curve_empty(dc->cal2) ) {
-        sp_curve_reset(dc->accumulated); /*  Is this required ?? */
-        SPCurve *rev_cal2 = sp_curve_reverse(dc->cal2);
+    if ( !dc->cal1->is_empty() && !dc->cal2->is_empty() ) {
+        dc->accumulated->reset(); /*  Is this required ?? */
+        SPCurve *rev_cal2 = dc->cal2->reverse();
 
         g_assert(dc->cal1->end > 1);
         g_assert(rev_cal2->end > 1);
@@ -1138,20 +1138,20 @@ accumulate_calligraphic(SPDynaDrawContext *dc)
         g_assert(SP_CURVE_SEGMENT(dc->cal1, dc->cal1->end-1)->code == NR_CURVETO);
         g_assert(SP_CURVE_SEGMENT(rev_cal2, rev_cal2->end-1)->code == NR_CURVETO);
 
-        sp_curve_append(dc->accumulated, dc->cal1, FALSE);
+        dc->accumulated->append(dc->cal1, FALSE);
 
         add_cap(dc->accumulated, SP_CURVE_SEGMENT(dc->cal1, dc->cal1->end-1)->c(2), SP_CURVE_SEGMENT(dc->cal1, dc->cal1->end-1)->c(3), SP_CURVE_SEGMENT(rev_cal2, 0)->c(3), SP_CURVE_SEGMENT(rev_cal2, 1)->c(1), dc->cap_rounding);
 
-        sp_curve_append(dc->accumulated, rev_cal2, TRUE);
+        dc->accumulated->append(rev_cal2, TRUE);
 
         add_cap(dc->accumulated, SP_CURVE_SEGMENT(rev_cal2, rev_cal2->end-1)->c(2), SP_CURVE_SEGMENT(rev_cal2, rev_cal2->end-1)->c(3), SP_CURVE_SEGMENT(dc->cal1, 0)->c(3), SP_CURVE_SEGMENT(dc->cal1, 1)->c(1), dc->cap_rounding);
 
-        sp_curve_closepath(dc->accumulated);
+        dc->accumulated->closepath();
 
-        sp_curve_unref(rev_cal2);
+        rev_cal2->unref();
 
-        sp_curve_reset(dc->cal1);
-        sp_curve_reset(dc->cal2);
+        dc->cal1->reset();
+        dc->cal2->reset();
     }
 }
 
@@ -1186,11 +1186,11 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
         if ( dc->cal1->end == 0 || dc->cal2->end == 0 ) {
             /* dc->npoints > 0 */
             /* g_print("calligraphics(1|2) reset\n"); */
-            sp_curve_reset(dc->cal1);
-            sp_curve_reset(dc->cal2);
+            dc->cal1->reset();
+            dc->cal2->reset();
 
-            sp_curve_moveto(dc->cal1, dc->point1[0]);
-            sp_curve_moveto(dc->cal2, dc->point2[0]);
+            dc->cal1->moveto(dc->point1[0]);
+            dc->cal2->moveto(dc->point2[0]);
         }
 
         NR::Point b1[BEZIER_MAX_LENGTH];
@@ -1210,31 +1210,30 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
 #endif
             /* CanvasShape */
             if (! release) {
-                sp_curve_reset(dc->currentcurve);
-                sp_curve_moveto(dc->currentcurve, b1[0]);
+                dc->currentcurve->reset();
+                dc->currentcurve->moveto(b1[0]);
                 for (NR::Point *bp1 = b1; bp1 < b1 + BEZIER_SIZE * nb1; bp1 += BEZIER_SIZE) {
-                    sp_curve_curveto(dc->currentcurve, bp1[1],
+                    dc->currentcurve->curveto(bp1[1],
                                      bp1[2], bp1[3]);
                 }
-                sp_curve_lineto(dc->currentcurve,
-                                b2[BEZIER_SIZE*(nb2-1) + 3]);
+                dc->currentcurve->lineto(b2[BEZIER_SIZE*(nb2-1) + 3]);
                 for (NR::Point *bp2 = b2 + BEZIER_SIZE * ( nb2 - 1 ); bp2 >= b2; bp2 -= BEZIER_SIZE) {
-                    sp_curve_curveto(dc->currentcurve, bp2[2], bp2[1], bp2[0]);
+                    dc->currentcurve->curveto(bp2[2], bp2[1], bp2[0]);
                 }
                 // FIXME: dc->segments is always NULL at this point??
                 if (!dc->segments) { // first segment
                     add_cap(dc->currentcurve, b2[1], b2[0], b1[0], b1[1], dc->cap_rounding);
                 }
-                sp_curve_closepath(dc->currentcurve);
+                dc->currentcurve->closepath();
                 sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(dc->currentshape), dc->currentcurve);
             }
 
             /* Current calligraphic */
             for (NR::Point *bp1 = b1; bp1 < b1 + BEZIER_SIZE * nb1; bp1 += BEZIER_SIZE) {
-                sp_curve_curveto(dc->cal1, bp1[1], bp1[2], bp1[3]);
+                dc->cal1->curveto(bp1[1], bp1[2], bp1[3]);
             }
             for (NR::Point *bp2 = b2; bp2 < b2 + BEZIER_SIZE * nb2; bp2 += BEZIER_SIZE) {
-                sp_curve_curveto(dc->cal2, bp2[1], bp2[2], bp2[3]);
+                dc->cal2->curveto(bp2[1], bp2[2], bp2[3]);
             }
         } else {
             /* fixme: ??? */
@@ -1244,10 +1243,10 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
             draw_temporary_box(dc);
 
             for (gint i = 1; i < dc->npoints; i++) {
-                sp_curve_lineto(dc->cal1, dc->point1[i]);
+                dc->cal1->lineto(dc->point1[i]);
             }
             for (gint i = 1; i < dc->npoints; i++) {
-                sp_curve_lineto(dc->cal2, dc->point2[i]);
+                dc->cal2->lineto(dc->point2[i]);
             }
         }
 
@@ -1256,14 +1255,14 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
         g_print("[%d]Yup\n", dc->npoints);
 #endif
         if (!release) {
-            g_assert(!sp_curve_empty(dc->currentcurve));
+            g_assert(!dc->currentcurve->is_empty());
 
             SPCanvasItem *cbp = sp_canvas_item_new(sp_desktop_sketch(SP_EVENT_CONTEXT(dc)->desktop),
                                                    SP_TYPE_CANVAS_BPATH,
                                                    NULL);
-            SPCurve *curve = sp_curve_copy(dc->currentcurve);
+            SPCurve *curve = dc->currentcurve->copy();
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH (cbp), curve);
-            sp_curve_unref(curve);
+            curve->unref();
 
             guint32 fillColor = sp_desktop_get_color_tool (SP_ACTIVE_DESKTOP, "tools.calligraphic", true);
             //guint32 strokeColor = sp_desktop_get_color_tool (SP_ACTIVE_DESKTOP, "tools.calligraphic", false);
@@ -1291,20 +1290,20 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
 static void
 draw_temporary_box(SPDynaDrawContext *dc)
 {
-    sp_curve_reset(dc->currentcurve);
+    dc->currentcurve->reset();
 
-    sp_curve_moveto(dc->currentcurve, dc->point1[dc->npoints-1]);
+    dc->currentcurve->moveto(dc->point1[dc->npoints-1]);
     for (gint i = dc->npoints-2; i >= 0; i--) {
-        sp_curve_lineto(dc->currentcurve, dc->point1[i]);
+        dc->currentcurve->lineto(dc->point1[i]);
     }
     for (gint i = 0; i < dc->npoints; i++) {
-        sp_curve_lineto(dc->currentcurve, dc->point2[i]);
+        dc->currentcurve->lineto(dc->point2[i]);
     }
     if (dc->npoints >= 2) {
         add_cap(dc->currentcurve, dc->point2[dc->npoints-2], dc->point2[dc->npoints-1], dc->point1[dc->npoints-1], dc->point1[dc->npoints-2], dc->cap_rounding);
     }
 
-    sp_curve_closepath(dc->currentcurve);
+    dc->currentcurve->closepath();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(dc->currentshape), dc->currentcurve);
 }
 

@@ -304,7 +304,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
                             _bpaths_to_snap_to->push_back(bpath);
                             // Because we set doTransformation to true in bpath_for_curve, we
                             // will get a dupe of the path, which must be freed at some point
-                            sp_curve_unref(curve);
+                            curve->unref();
                         }
                     }
                 }
@@ -359,7 +359,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                 _bpaths_to_snap_to->push_back(bpath);
                 // Because we set doTransformation to true in bpath_for_curve, we
                 // will get a dupe of the path, which must be freed at some point
-                sp_curve_unref(curve);
+                curve->unref();
             }
         }   
         // Convert all bpaths to Paths, because here we really must have Paths
@@ -688,7 +688,7 @@ NArtBpath* Inkscape::ObjectSnapper::_getBorderBPath() const
 {
     NArtBpath *border_bpath = NULL;
     NR::Rect const border_rect = NR::Rect(NR::Point(0,0), NR::Point(sp_document_width(_named_view->document),sp_document_height(_named_view->document)));
-    SPCurve const *border_curve = sp_curve_new_from_rect(border_rect);
+    SPCurve const *border_curve = SPCurve::new_from_rect(border_rect);
     if (border_curve) {
         border_bpath = SP_CURVE_BPATH(border_curve); 
     }

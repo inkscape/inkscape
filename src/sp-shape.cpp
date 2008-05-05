@@ -199,7 +199,7 @@ sp_shape_release (SPObject *object)
 	  }
 	}
 	if (shape->curve) {
-		shape->curve = sp_curve_unref (shape->curve);
+		shape->curve = shape->curve->unref();
 	}
     
 	if (((SPObjectClass *) parent_class)->release) {
@@ -991,13 +991,13 @@ void
 sp_shape_set_curve (SPShape *shape, SPCurve *curve, unsigned int owner)
 {
 	if (shape->curve) {
-		shape->curve = sp_curve_unref (shape->curve);
+		shape->curve = shape->curve->unref();
 	}
 	if (curve) {
 		if (owner) {
-			shape->curve = sp_curve_ref (curve);
+			shape->curve = curve->ref();
 		} else {
-			shape->curve = sp_curve_copy (curve);
+			shape->curve = curve->copy();
 		}
 	}
         SP_OBJECT(shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -1010,7 +1010,7 @@ SPCurve *
 sp_shape_get_curve (SPShape *shape)
 {
 	if (shape->curve) {
-		return sp_curve_copy (shape->curve);
+		return shape->curve->copy();
 	}
 	return NULL;
 }
@@ -1022,13 +1022,13 @@ void
 sp_shape_set_curve_insync (SPShape *shape, SPCurve *curve, unsigned int owner)
 {
 	if (shape->curve) {
-		shape->curve = sp_curve_unref (shape->curve);
+		shape->curve = shape->curve->unref();
 	}
 	if (curve) {
 		if (owner) {
-			shape->curve = sp_curve_ref (curve);
+			shape->curve = curve->ref();
 		} else {
-			shape->curve = sp_curve_copy (curve);
+			shape->curve = curve->copy();
 		}
 	}
 }

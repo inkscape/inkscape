@@ -218,12 +218,12 @@ sp_line_set_shape (SPShape *shape)
 {
 	SPLine *line = SP_LINE (shape);
 
-	SPCurve *c = sp_curve_new ();
+	SPCurve *c = new SPCurve ();
 
-	sp_curve_moveto (c, line->x1.computed, line->y1.computed);
-	sp_curve_lineto (c, line->x2.computed, line->y2.computed);
+	c->moveto(line->x1.computed, line->y1.computed);
+	c->lineto(line->x2.computed, line->y2.computed);
 
 	sp_shape_set_curve_insync (shape, c, TRUE); // *_insync does not call update, avoiding infinite recursion when set_shape is called by update
 
-	sp_curve_unref (c);
+	c->unref();
 }

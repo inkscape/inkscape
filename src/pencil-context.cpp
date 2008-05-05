@@ -445,13 +445,13 @@ pencil_cancel (SPPencilContext *const pc)
 
     pc->state = SP_PENCIL_CONTEXT_IDLE;
 
-    sp_curve_reset(pc->red_curve);
+    pc->red_curve->reset();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), NULL);
     while (pc->green_bpaths) {
         gtk_object_destroy(GTK_OBJECT(pc->green_bpaths->data));
         pc->green_bpaths = g_slist_remove(pc->green_bpaths, pc->green_bpaths->data);
     }
-    sp_curve_reset(pc->green_curve);
+    pc->green_curve->reset();
     if (pc->green_anchor) {
         pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
     }
@@ -543,7 +543,7 @@ spdc_set_endpoint(SPPencilContext *const pc, NR::Point const p)
     }
     g_return_if_fail( pc->npoints > 0 );
 
-    sp_curve_reset(pc->red_curve);
+    pc->red_curve->reset();
     if ( ( p == pc->p[0] )
          || !in_svg_plane(p) )
     {
@@ -552,8 +552,8 @@ spdc_set_endpoint(SPPencilContext *const pc, NR::Point const p)
         pc->p[1] = p;
         pc->npoints = 2;
 
-        sp_curve_moveto(pc->red_curve, pc->p[0]);
-        sp_curve_lineto(pc->red_curve, pc->p[1]);
+        pc->red_curve->moveto(pc->p[0]);
+        pc->red_curve->lineto(pc->p[1]);
         pc->red_curve_is_valid = true;
 
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->red_curve);
@@ -574,7 +574,7 @@ spdc_finish_endpoint(SPPencilContext *const pc)
          || ( SP_CURVE_SEGMENT(pc->red_curve, 0)->c(3) ==
               SP_CURVE_SEGMENT(pc->red_curve, 1)->c(3)   ) )
     {
-        sp_curve_reset(pc->red_curve);
+        pc->red_curve->reset();
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), NULL);
     } else {
         /* Write curves to object. */
@@ -623,19 +623,19 @@ fit_and_split(SPPencilContext *pc)
          && unsigned(pc->npoints) < G_N_ELEMENTS(pc->p) )
     {
         /* Fit and draw and reset state */
-        sp_curve_reset(pc->red_curve);
-        sp_curve_moveto(pc->red_curve, b[0]);
-        sp_curve_curveto(pc->red_curve, b[1], b[2], b[3]);
+        pc->red_curve->reset();
+        pc->red_curve->moveto(b[0]);
+        pc->red_curve->curveto(b[1], b[2], b[3]);
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->red_curve);
         pc->red_curve_is_valid = true;
     } else {
         /* Fit and draw and copy last point */
 
-        g_assert(!sp_curve_empty(pc->red_curve));
+        g_assert(!pc->red_curve->is_empty());
 
         /* Set up direction of next curve. */
         {
-            NArtBpath const &last_seg = *sp_curve_last_bpath(pc->red_curve);
+            NArtBpath const &last_seg = *pc->red_curve->last_bpath();
             pc->p[0] = last_seg.c(3);
             pc->npoints = 1;
             g_assert( last_seg.code == NR_CURVETO );
@@ -646,12 +646,12 @@ fit_and_split(SPPencilContext *pc)
                                 : NR::unit_vector(req_vec) );
         }
 
-        sp_curve_append_continuous(pc->green_curve, pc->red_curve, 0.0625);
-        SPCurve *curve = sp_curve_copy(pc->red_curve);
+        pc->green_curve->append_continuous(pc->red_curve, 0.0625);
+        SPCurve *curve = pc->red_curve->copy();
 
         /// \todo fixme:
         SPCanvasItem *cshape = sp_canvas_bpath_new(sp_desktop_sketch(pc->desktop), curve);
-        sp_curve_unref(curve);
+        curve->unref();
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cshape), pc->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
 
         pc->green_bpaths = g_slist_prepend(pc->green_bpaths, cshape);

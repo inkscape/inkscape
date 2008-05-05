@@ -639,7 +639,7 @@ sp_selected_path_outline()
             gchar const *val = sp_repr_css_property(css, "stroke", NULL);
 
             if (val == NULL || strcmp(val, "none") == 0) {
-                sp_curve_unref(curve);
+                curve->unref();
                 continue;
             }
         }
@@ -716,7 +716,7 @@ sp_selected_path_outline()
         Path *orig = Path_for_item(item, false);
         if (orig == NULL) {
             g_free(style);
-            sp_curve_unref(curve);
+            curve->unref();
             continue;
         }
 
@@ -877,7 +877,7 @@ sp_selected_path_outline()
 
             Inkscape::GC::release(repr);
 
-            sp_curve_unref(curve);
+            curve->unref();
             selection->remove(item);
             SP_OBJECT(item)->deleteObject(false);
 
@@ -1052,7 +1052,7 @@ sp_selected_path_create_offset_object(int expand, bool updating)
     if (orig == NULL)
     {
         g_free(style);
-        sp_curve_unref(curve);
+        curve->unref();
         return;
     }
 
@@ -1089,7 +1089,7 @@ sp_selected_path_create_offset_object(int expand, bool updating)
         delete theRes;
     }
 
-    sp_curve_unref(curve);
+    curve->unref();
 
     if (res->descr_cmd.size() <= 1)
     {
@@ -1274,7 +1274,7 @@ sp_selected_path_do_offset(bool expand, double prefOffset)
         Path *orig = Path_for_item(item, false);
         if (orig == NULL) {
             g_free(style);
-            sp_curve_unref(curve);
+            curve->unref();
             continue;
         }
 
@@ -1362,7 +1362,7 @@ sp_selected_path_do_offset(bool expand, double prefOffset)
 
         did = true;
 
-        sp_curve_unref(curve);
+        curve->unref();
         // remember the position of the item
         gint pos = SP_OBJECT_REPR(item)->position();
         // remember parent
@@ -1482,11 +1482,11 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
     Path *orig = Path_for_item(item, false);
     if (orig == NULL) {
         g_free(style);
-        sp_curve_unref(curve);
+        curve->unref();
         return false;
     }
 
-    sp_curve_unref(curve);
+    curve->unref();
     // remember the position of the item
     gint pos = SP_OBJECT_REPR(item)->position();
     // remember parent
@@ -1733,7 +1733,7 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
         g_free(bpath); // see comment in bpath_for_curve
     }
     
-    sp_curve_unref(curve);
+    curve->unref();
     
     return dest;
 }

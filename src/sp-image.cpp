@@ -618,7 +618,7 @@ sp_image_release (SPObject *object)
 #endif // ENABLE_LCMS
 
     if (image->curve) {
-		image->curve = sp_curve_unref (image->curve);
+		image->curve = image->curve->unref();
 	}
 
 	if (((SPObjectClass *) parent_class)->release)
@@ -1454,7 +1454,7 @@ sp_image_set_curve(SPImage *image)
     //create a curve at the image's boundary for snapping
     if ((image->height.computed < 1e-18) || (image->width.computed < 1e-18) || (image->clip_ref->getObject())) {
         if (image->curve) {
-            image->curve = sp_curve_unref(image->curve);
+            image->curve = image->curve->unref();
         }
         return;
     }
@@ -1462,17 +1462,17 @@ sp_image_set_curve(SPImage *image)
     NRRect rect;
 	sp_image_bbox(image, &rect, NR::identity(), 0);
 	NR::Maybe<NR::Rect> rect2 = rect.upgrade();
-	SPCurve *c = sp_curve_new_from_rect(rect2);
+	SPCurve *c = SPCurve::new_from_rect(rect2);
         
     if (image->curve) {
-        image->curve = sp_curve_unref(image->curve);
+        image->curve = image->curve->unref();
     }
     
     if (c) {
-        image->curve = sp_curve_ref(c);
+        image->curve = c->ref();
     }
     
-    sp_curve_unref(c);    
+    c->unref();    
 }
 
 /**
@@ -1482,7 +1482,7 @@ SPCurve *
 sp_image_get_curve (SPImage *image)
 {
 	if (image->curve) {
-		return sp_curve_copy(image->curve);
+		return image->curve->copy();
 	}
 	return NULL;
 }

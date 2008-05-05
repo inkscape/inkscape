@@ -294,7 +294,7 @@ void PovOutput::doCurves(SPDocument *doc)
 
         SPShape *shape = SP_SHAPE(reprobj);
         SPCurve *curve = shape->curve;
-        if (sp_curve_empty(curve))
+        if (curve->is_empty())
             continue;
             
         nrShapes++;

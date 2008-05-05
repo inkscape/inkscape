@@ -164,16 +164,16 @@ sp_draw_context_setup(SPEventContext *ec)
     dc->red_bpath = sp_canvas_bpath_new(sp_desktop_sketch(ec->desktop), NULL);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->red_bpath), dc->red_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     /* Create red curve */
-    dc->red_curve = sp_curve_new_sized(4);
+    dc->red_curve = new SPCurve(4);
 
     /* Create blue bpath */
     dc->blue_bpath = sp_canvas_bpath_new(sp_desktop_sketch(ec->desktop), NULL);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->blue_bpath), dc->blue_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     /* Create blue curve */
-    dc->blue_curve = sp_curve_new_sized(8);
+    dc->blue_curve = new SPCurve(8);
 
     /* Create green curve */
-    dc->green_curve = sp_curve_new_sized(64);
+    dc->green_curve = new SPCurve(64);
     /* No green anchor by default */
     dc->green_anchor = NULL;
     dc->green_closed = FALSE;
@@ -280,10 +280,10 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
         /* Curve list */
         /* We keep it in desktop coordinates to eliminate calculation errors */
         SPCurve *norm = sp_path_get_curve_for_edit (SP_PATH(item));
-        sp_curve_transform(norm, sp_item_i2d_affine(dc->white_item));
+        norm->transform(sp_item_i2d_affine(dc->white_item));
         g_return_if_fail( norm != NULL );
-        dc->white_curves = g_slist_reverse(sp_curve_split(norm));
-        sp_curve_unref(norm);
+        dc->white_curves = g_slist_reverse(norm->split());
+        norm->unref();
         /* Anchor list */
         for (GSList *l = dc->white_curves; l != NULL; l = l->next) {
             SPCurve *c;
@@ -292,8 +292,8 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
             if ( SP_CURVE_BPATH(c)->code == NR_MOVETO_OPEN ) {
                 NArtBpath *s, *e;
                 SPDrawAnchor *a;
-                s = sp_curve_first_bpath(c);
-                e = sp_curve_last_bpath(c);
+                s = c->first_bpath();
+                e = c->last_bpath();
                 a = sp_draw_anchor_new(dc, c, TRUE, NR::Point(s->x3, s->y3));
                 dc->white_anchors = g_slist_prepend(dc->white_anchors, a);
                 a = sp_draw_anchor_new(dc, c, FALSE, NR::Point(e->x3, e->y3));
@@ -378,8 +378,8 @@ void spdc_endpoint_snap_free(SPEventContext const * const ec, NR::Point& p, guin
 static SPCurve *
 reverse_then_unref(SPCurve *orig)
 {
-    SPCurve *ret = sp_curve_reverse(orig);
-    sp_curve_unref(orig);
+    SPCurve *ret = orig->reverse();
+    orig->unref();
     return ret;
 }
 
@@ -395,24 +395,24 @@ spdc_concat_colors_and_flush(SPDrawContext *dc, gboolean forceclosed)
     SPCurve *c = dc->green_curve;
 
     /* Green */
-    dc->green_curve = sp_curve_new_sized(64);
+    dc->green_curve = new SPCurve(64);
     while (dc->green_bpaths) {
         gtk_object_destroy(GTK_OBJECT(dc->green_bpaths->data));
         dc->green_bpaths = g_slist_remove(dc->green_bpaths, dc->green_bpaths->data);
     }
     /* Blue */
-    sp_curve_append_continuous(c, dc->blue_curve, 0.0625);
-    sp_curve_reset(dc->blue_curve);
+    c->append_continuous(dc->blue_curve, 0.0625);
+    dc->blue_curve->reset();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(dc->blue_bpath), NULL);
     /* Red */
     if (dc->red_curve_is_valid) {
-        sp_curve_append_continuous(c, dc->red_curve, 0.0625);
+        c->append_continuous(dc->red_curve, 0.0625);
     }
-    sp_curve_reset(dc->red_curve);
+    dc->red_curve->reset();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(dc->red_bpath), NULL);
 
-    if (sp_curve_empty(c)) {
-        sp_curve_unref(c);
+    if (c->is_empty()) {
+        c->unref();
         return;
     }
 
@@ -420,10 +420,10 @@ spdc_concat_colors_and_flush(SPDrawContext *dc, gboolean forceclosed)
     if ( forceclosed || ( dc->green_anchor && dc->green_anchor->active ) ) {
         // We hit green anchor, closing Green-Blue-Red
         SP_EVENT_CONTEXT_DESKTOP(dc)->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Path is closed."));
-        sp_curve_closepath_current(c);
+        c->closepath_current();
         /* Closed path, just flush */
         spdc_flush_white(dc, c);
-        sp_curve_unref(c);
+        c->unref();
         return;
     }
 
@@ -438,9 +438,9 @@ spdc_concat_colors_and_flush(SPDrawContext *dc, gboolean forceclosed)
         if (dc->sa->start && !(dc->sa->curve->closed) ) {
             c = reverse_then_unref(c);
         }
-        sp_curve_append_continuous(dc->sa->curve, c, 0.0625);
-        sp_curve_unref(c);
-        sp_curve_closepath_current(dc->sa->curve);
+        dc->sa->curve->append_continuous(c, 0.0625);
+        c->unref();
+        dc->sa->curve->closepath_current();
         spdc_flush_white(dc, NULL);
         return;
     }
@@ -452,8 +452,8 @@ spdc_concat_colors_and_flush(SPDrawContext *dc, gboolean forceclosed)
         if (dc->sa->start) {
             s = reverse_then_unref(s);
         }
-        sp_curve_append_continuous(s, c, 0.0625);
-        sp_curve_unref(c);
+        s->append_continuous(c, 0.0625);
+        c->unref();
         c = s;
     } else /* Step D - test end */ if (dc->ea) {
         SPCurve *e = dc->ea->curve;
@@ -461,14 +461,14 @@ spdc_concat_colors_and_flush(SPDrawContext *dc, gboolean forceclosed)
         if (!dc->ea->start) {
             e = reverse_then_unref(e);
         }
-        sp_curve_append_continuous(c, e, 0.0625);
-        sp_curve_unref(e);
+        c->append_continuous(e, 0.0625);
+        e->unref();
     }
 
 
     spdc_flush_white(dc, c);
 
-    sp_curve_unref(c);
+    c->unref();
 }
 
 static char const *
@@ -494,21 +494,21 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
 
     if (dc->white_curves) {
         g_assert(dc->white_item);
-        c = sp_curve_concat(dc->white_curves);
+        c = SPCurve::concat(dc->white_curves);
         g_slist_free(dc->white_curves);
         dc->white_curves = NULL;
         if (gc) {
-            sp_curve_append(c, gc, FALSE);
+            c->append(gc, FALSE);
         }
     } else if (gc) {
         c = gc;
-        sp_curve_ref(c);
+        c->ref();
     } else {
         return;
     }
 
     /* Now we have to go back to item coordinates at last */
-    sp_curve_transform(c, ( dc->white_item
+    c->transform(( dc->white_item
                             ? sp_item_dt2i_affine(dc->white_item)
                             : sp_desktop_dt2root_affine(SP_EVENT_CONTEXT_DESKTOP(dc)) ));
 
@@ -516,7 +516,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
     SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
-    if ( c && !sp_curve_empty(c) ) {
+    if ( c && !c->is_empty() ) {
         /* We actually have something to write */
 
         bool has_lpe = false;
@@ -558,7 +558,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
         spdc_selection_modified(sp_desktop_selection(desktop), 0, dc);
     }
 
-    sp_curve_unref(c);
+    c->unref();
 
     /* Flush pending updates */
     sp_document_ensure_up_to_date(doc);
@@ -595,7 +595,7 @@ spdc_reset_white(SPDrawContext *dc)
         dc->white_item = NULL;
     }
     while (dc->white_curves) {
-        sp_curve_unref((SPCurve *) dc->white_curves->data);
+        reinterpret_cast<SPCurve *>(dc->white_curves->data)->unref();
         dc->white_curves = g_slist_remove(dc->white_curves, dc->white_curves->data);
     }
     while (dc->white_anchors) {
@@ -613,7 +613,7 @@ spdc_free_colors(SPDrawContext *dc)
         dc->red_bpath = NULL;
     }
     if (dc->red_curve) {
-        dc->red_curve = sp_curve_unref(dc->red_curve);
+        dc->red_curve = dc->red_curve->unref();
     }
     /* Blue */
     if (dc->blue_bpath) {
@@ -621,7 +621,7 @@ spdc_free_colors(SPDrawContext *dc)
         dc->blue_bpath = NULL;
     }
     if (dc->blue_curve) {
-        dc->blue_curve = sp_curve_unref(dc->blue_curve);
+        dc->blue_curve = dc->blue_curve->unref();
     }
     /* Green */
     while (dc->green_bpaths) {
@@ -629,7 +629,7 @@ spdc_free_colors(SPDrawContext *dc)
         dc->green_bpaths = g_slist_remove(dc->green_bpaths, dc->green_bpaths->data);
     }
     if (dc->green_curve) {
-        dc->green_curve = sp_curve_unref(dc->green_curve);
+        dc->green_curve = dc->green_curve->unref();
     }
     if (dc->green_anchor) {
         dc->green_anchor = sp_draw_anchor_destroy(dc->green_anchor);
@@ -640,7 +640,7 @@ spdc_free_colors(SPDrawContext *dc)
         dc->white_item = NULL;
     }
     while (dc->white_curves) {
-        sp_curve_unref((SPCurve *) dc->white_curves->data);
+        reinterpret_cast<SPCurve *>(dc->white_curves->data)->unref();
         dc->white_curves = g_slist_remove(dc->white_curves, dc->white_curves->data);
     }
     while (dc->white_anchors) {

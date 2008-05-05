@@ -308,7 +308,7 @@ sp_spiral_update_patheffect(SPLPEItem *lpeitem, bool write)
     if (write) {
         Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
         if ( shape->curve != NULL ) {
-            NArtBpath *abp = sp_curve_first_bpath(shape->curve);
+            NArtBpath *abp = shape->curve->first_bpath();
             if (abp) {
                 gchar *str = sp_svg_write_path(abp);
                 repr->setAttribute("d", str);
@@ -411,8 +411,7 @@ sp_spiral_fit_and_draw (SPSpiral const *spiral,
 #endif
 	if (depth != -1) {
 		for (i = 0; i < 4*depth; i += 4) {
-			sp_curve_curveto (c,
-					  bezier[i + 1],
+			c->curveto(bezier[i + 1],
 					  bezier[i + 2],
 					  bezier[i + 3]);
 		}
@@ -421,7 +420,7 @@ sp_spiral_fit_and_draw (SPSpiral const *spiral,
 		g_print ("cant_fit_cubic: t=%g\n", *t);
 #endif
 		for (i = 1; i < SAMPLE_SIZE; i++)
-			sp_curve_lineto (c, darray[i]);
+			c->lineto(darray[i]);
 	}
 	*t = next_t;
 	g_assert (is_unit_vector (hat2));
@@ -437,7 +436,7 @@ sp_spiral_set_shape (SPShape *shape)
 
 	SP_OBJECT (spiral)->requestModified(SP_OBJECT_MODIFIED_FLAG);
 
-	SPCurve *c = sp_curve_new ();
+	SPCurve *c = new SPCurve ();
 	
 #ifdef SPIRAL_VERBOSE
 	g_print ("cx=%g, cy=%g, exp=%g, revo=%g, rad=%g, arg=%g, t0=%g\n",
@@ -451,7 +450,7 @@ sp_spiral_set_shape (SPShape *shape)
 #endif
 
 	/* Initial moveto. */
-	sp_curve_moveto(c, sp_spiral_get_xy(spiral, spiral->t0));
+	c->moveto(sp_spiral_get_xy(spiral, spiral->t0));
 
 	double const tstep = SAMPLE_STEP / spiral->revo;
 	double const dstep = tstep / (SAMPLE_SIZE - 1);
@@ -469,7 +468,7 @@ sp_spiral_set_shape (SPShape *shape)
 
     sp_lpe_item_perform_path_effect(SP_LPE_ITEM (spiral), c);
     sp_shape_set_curve_insync ((SPShape *) spiral, c, TRUE);
-    sp_curve_unref (c);
+    c->unref();
 }
 
 /**

@@ -180,17 +180,17 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     if (curve == NULL)
         return NULL;
 
-    NArtBpath *bpath = sp_curve_first_bpath(curve);
+    NArtBpath *bpath = curve->first_bpath();
     gint length = curve->end;
     if (length == 0) {
-        sp_curve_unref(curve);
+        curve->unref();
         return NULL; // prevent crash for one-node paths
     }
 
     //Create new nodepath
     Inkscape::NodePath::Path *np = g_new(Inkscape::NodePath::Path, 1);
     if (!np) {
-        sp_curve_unref(curve);
+        curve->unref();
         return NULL;
     }
 
@@ -206,7 +206,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     np->helper_path = NULL;
     np->helperpath_rgba = prefs_get_int_attribute("tools.nodes", "highlight_color", 0xff0000ff);
     np->helperpath_width = 1.0;
-    np->curve = sp_curve_copy(curve);
+    np->curve = curve->copy();
     np->show_helperpath = prefs_get_int_attribute ("tools.nodes", "show_helperpath",  0) == 1;
     np->straight_path = false;
     if (IS_LIVEPATHEFFECT(object) && item) {
@@ -258,21 +258,21 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     np->subpaths = g_list_reverse(np->subpaths);
 
     g_free(typestr);
-    sp_curve_unref(curve);
+    curve->unref();
 
     // create the livarot representation from the same item
     sp_nodepath_ensure_livarot_path(np);
 
     // Draw helper curve
     if (np->show_helperpath) {
-        SPCurve *helper_curve = sp_curve_copy(np->curve);
-        sp_curve_transform(helper_curve, np->i2d );
+        SPCurve *helper_curve = np->curve->copy();
+        helper_curve->transform(np->i2d );
         np->helper_path = sp_canvas_bpath_new(sp_desktop_controls(desktop), helper_curve);
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(np->helper_path), np->helperpath_rgba, np->helperpath_width, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
         sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(np->helper_path), 0, SP_WIND_RULE_NONZERO);
         sp_canvas_item_move_to_z(np->helper_path, 0);
         sp_canvas_item_show(np->helper_path);
-        sp_curve_unref(helper_curve);
+        helper_curve->unref();
     }
 
     return np;
@@ -307,7 +307,7 @@ void sp_nodepath_destroy(Inkscape::NodePath::Path *np) {
         gtk_object_destroy(temp);
     }
     if (np->curve) {
-        sp_curve_unref(np->curve);
+        np->curve->unref();
         np->curve = NULL;
     }
 
@@ -336,7 +336,7 @@ void sp_nodepath_ensure_livarot_path(Inkscape::NodePath::Path *np)
         if (np->livarot_path)
             np->livarot_path->ConvertWithBackData(0.01);
 
-        sp_curve_unref(curve);
+        curve->unref();
     }
 }
 
@@ -533,16 +533,16 @@ static void update_object(Inkscape::NodePath::Path *np)
 {
     g_assert(np);
 
-    sp_curve_unref(np->curve);
+    np->curve->unref();
     np->curve = create_curve(np);
 
     sp_nodepath_set_curve(np, np->curve);
 
     if (np->show_helperpath) {
-        SPCurve * helper_curve = sp_curve_copy(np->curve);
-        sp_curve_transform(helper_curve, np->i2d );
+        SPCurve * helper_curve = np->curve->copy();
+        helper_curve->transform(np->i2d );
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(np->helper_path), helper_curve);
-        sp_curve_unref(helper_curve);
+        helper_curve->unref();
     }
 }
 
@@ -555,7 +555,7 @@ static void update_repr_internal(Inkscape::NodePath::Path *np)
 
     Inkscape::XML::Node *repr = np->object->repr;
 
-    sp_curve_unref(np->curve);
+    np->curve->unref();
     np->curve = create_curve(np);
 
     gchar *typestr = create_typestr(np);
@@ -576,10 +576,10 @@ static void update_repr_internal(Inkscape::NodePath::Path *np)
     g_free(typestr);
 
     if (np->show_helperpath) {
-        SPCurve * helper_curve = sp_curve_copy(np->curve);
-        sp_curve_transform(helper_curve, np->i2d );
+        SPCurve * helper_curve = np->curve->copy();
+        helper_curve->transform(np->i2d );
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(np->helper_path), helper_curve);
-        sp_curve_unref(helper_curve);
+        helper_curve->unref();
     }
  }
 
@@ -652,7 +652,7 @@ static void stamp_repr(Inkscape::NodePath::Path *np)
     Inkscape::GC::release(new_repr);
     g_free(svgpath);
     g_free(typestr);
-    sp_curve_unref(curve);
+    curve->unref();
 }
 
 /**
@@ -660,22 +660,20 @@ static void stamp_repr(Inkscape::NodePath::Path *np)
  */
 static SPCurve *create_curve(Inkscape::NodePath::Path *np)
 {
-    SPCurve *curve = sp_curve_new();
+    SPCurve *curve = new SPCurve();
 
     for (GList *spl = np->subpaths; spl != NULL; spl = spl->next) {
        Inkscape::NodePath::SubPath *sp = (Inkscape::NodePath::SubPath *) spl->data;
-        sp_curve_moveto(curve,
-                        sp->first->pos * np->d2i);
+        curve->moveto(sp->first->pos * np->d2i);
        Inkscape::NodePath::Node *n = sp->first->n.other;
         while (n) {
             NR::Point const end_pt = n->pos * np->d2i;
             switch (n->code) {
                 case NR_LINETO:
-                    sp_curve_lineto(curve, end_pt);
+                    curve->lineto(end_pt);
                     break;
                 case NR_CURVETO:
-                    sp_curve_curveto(curve,
-                                     n->p.other->n.pos * np->d2i,
+                    curve->curveto(n->p.other->n.pos * np->d2i,
                                      n->p.pos * np->d2i,
                                      end_pt);
                     break;
@@ -690,7 +688,7 @@ static SPCurve *create_curve(Inkscape::NodePath::Path *np)
             }
         }
         if (sp->closed) {
-            sp_curve_closepath(curve);
+            curve->closepath();
         }
     }
 
@@ -4673,12 +4671,12 @@ SPCurve* sp_nodepath_object_get_curve(SPObject *object, const gchar *key) {
     SPCurve *curve = NULL;
     if (SP_IS_PATH(object)) {
         SPCurve *curve_new = sp_path_get_curve_for_edit(SP_PATH(object));
-        curve = sp_curve_copy(curve_new);
+        curve = curve_new->copy();
     } else if ( IS_LIVEPATHEFFECT(object) && key) {
         const gchar *svgd = object->repr->attribute(key);
         if (svgd) {
             NArtBpath *bpath = sp_svg_read_path(svgd);
-            SPCurve *curve_new = sp_curve_new_from_bpath(bpath);
+            SPCurve *curve_new = SPCurve::new_from_bpath(bpath);
             if (curve_new) {
                 curve = curve_new; // don't do curve_copy because curve_new is already only created for us!
             } else {
@@ -4715,8 +4713,8 @@ void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *np, bool show) {
     np->show_helperpath = show;
 
     if (show) {
-        SPCurve *helper_curve = sp_curve_copy(np->curve);
-        sp_curve_transform(helper_curve, np->i2d );
+        SPCurve *helper_curve = np->curve->copy();
+        helper_curve->transform(np->i2d );
         if (!np->helper_path) {
             np->helper_path = sp_canvas_bpath_new(sp_desktop_controls(np->desktop), helper_curve);
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(np->helper_path), np->helperpath_rgba, np->helperpath_width, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
@@ -4726,7 +4724,7 @@ void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *np, bool show) {
         } else {
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(np->helper_path), helper_curve);
         }
-        sp_curve_unref(helper_curve);
+        helper_curve->unref();
     } else {
         if (np->helper_path) {
             GtkObject *temp = np->helper_path;

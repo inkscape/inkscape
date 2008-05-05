@@ -11,20 +11,22 @@
  * Copyright (C) 2000 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
  * Copyright (C) 2002 Lauris Kaplinski
+ * Copyright (C) 2008 Johan Engelen
  *
  * Released under GNU GPL
  */
 
+#include <display/curve.h>
+
 #include <string.h>
 #include <glib/gmem.h>
-#include <display/curve.h>
+#include "libnr/nr-point.h"
+#include "libnr/nr-rect.h"
 #include <libnr/n-art-bpath.h>
 #include <libnr/nr-point-matrix-ops.h>
 #include <libnr/nr-translate-ops.h>
 #include <cstring>
 #include <string>
-
-#define SP_CURVE_LENSTEP 32
 
 static unsigned sp_bpath_length(NArtBpath const bpath[]);
 static bool sp_bpath_closed(NArtBpath const bpath[]);
@@ -32,39 +34,52 @@ static bool sp_bpath_closed(NArtBpath const bpath[]);
 /* Constructors */
 
 /**
- * The returned curve's state is as if sp_curve_reset has just been called on it.
- */
-SPCurve *
-sp_curve_new()
-{
-    return sp_curve_new_sized(SP_CURVE_LENSTEP);
-}
-
-/**
- * Like sp_curve_new, but overriding the default initial capacity.
- *
- * The returned curve's state is as if sp_curve_reset has just been called on it.
- *
+ * The returned curve's state is as if SPCurve::reset has just been called on it.
  * \param length Initial number of NArtBpath elements allocated for bpath (including NR_END
  *    element).
  */
-SPCurve *
-sp_curve_new_sized(gint length)
+SPCurve::SPCurve(gint length)
+  : refcount(1),
+    _bpath(NULL),
+    end(0),
+    length(length),
+    substart(0),
+    hascpt(false),
+    posSet(false),
+    moving(false),
+    closed(false)
 {
-    g_return_val_if_fail(length > 0, NULL);
+    if (length <= 0) {
+        g_error("SPCurve::SPCurve called with invalid length parameter");
+        throw;
+    }
 
-    SPCurve *curve = g_new(SPCurve, 1);
+    _bpath = g_new(NArtBpath, length);
+    _bpath->code = NR_END;
+}
 
-    curve->refcount = 1;
-    curve->_bpath = g_new(NArtBpath, length);
-    curve->_bpath->code = NR_END;
-    curve->end = 0;
-    curve->length = length;
-    curve->substart = 0;
-    curve->hascpt = false;
-    curve->posSet = false;
-    curve->moving = false;
-    curve->closed = false;
+SPCurve *
+SPCurve::new_from_foreign_bpath(NArtBpath const *bpath)
+{
+    g_return_val_if_fail(bpath != NULL, NULL);
+
+    NArtBpath *new_bpath;
+    unsigned const len = sp_bpath_length(bpath);
+    new_bpath = g_new(NArtBpath, len);
+    memcpy(new_bpath, bpath, len * sizeof(NArtBpath));
+
+    SPCurve *curve = new SPCurve();
+
+    curve->_bpath = new_bpath;
+    curve->length = len;
+    curve->end = curve->length - 1;
+    gint i = curve->end;
+    for (; i > 0; i--)
+        if ((curve->_bpath[i].code == NR_MOVETO) ||
+            (curve->_bpath[i].code == NR_MOVETO_OPEN))
+            break;
+    curve->substart = i;
+    curve->closed = sp_bpath_closed(new_bpath);
 
     return curve;
 }
@@ -75,65 +90,42 @@ sp_curve_new_sized(gint length)
  * \return new SPCurve, or NULL if the curve was not created for some reason.
  */
 SPCurve *
-sp_curve_new_from_bpath(NArtBpath *bpath)
+SPCurve::new_from_bpath(NArtBpath *bpath)
 {
     g_return_val_if_fail(bpath != NULL, NULL);
 
-    SPCurve *curve = sp_curve_new_from_foreign_bpath(bpath);
+    SPCurve *curve = SPCurve::new_from_foreign_bpath(bpath);
     g_free(bpath);
     return curve;
 }
 
-/**
- * Convert const NArtBpath array to SPCurve.
- *
- * \return new SPCurve, or NULL if the curve was not created for some reason.
- */
-SPCurve *sp_curve_new_from_foreign_bpath(NArtBpath const bpath[])
-{
-    g_return_val_if_fail(bpath != NULL, NULL);
-
-    NArtBpath *new_bpath;
-    unsigned const len = sp_bpath_length(bpath);
-    new_bpath = g_new(NArtBpath, len);
-    memcpy(new_bpath, bpath, len * sizeof(NArtBpath));
-
-    SPCurve *curve = g_new(SPCurve, 1);
-
-    curve->refcount = 1;
-    curve->_bpath = new_bpath;
-    curve->length = len;
-    curve->end = curve->length - 1;
-    gint i = curve->end;
-    for (; i > 0; i--)
-        if ((curve->_bpath[i].code == NR_MOVETO) ||
-            (curve->_bpath[i].code == NR_MOVETO_OPEN))
-            break;
-    curve->substart = i;
-    curve->hascpt = false;
-    curve->posSet = false;
-    curve->moving = false;
-    curve->closed = sp_bpath_closed(new_bpath);
-
-    return curve;
-}
-
-SPCurve *sp_curve_new_from_rect(NR::Maybe<NR::Rect> const &rect)
+SPCurve *
+SPCurve::new_from_rect(NR::Maybe<NR::Rect> const &rect)
 {
     g_return_val_if_fail(rect, NULL);
 
-    SPCurve *c = sp_curve_new();
+    SPCurve *c =  new SPCurve();
 
     NR::Point p = rect->corner(0);
-    sp_curve_moveto(c, p);
+    c->moveto(p);
 
     for (int i=3; i>=0; i--) {
-        sp_curve_lineto(c, rect->corner(i));
+        c->lineto(rect->corner(i));
     }
-    sp_curve_closepath_current(c);
+    c->closepath_current();
 
     return c;
 }
+
+SPCurve::~SPCurve()
+{
+    if (_bpath) {
+        g_free(_bpath);
+        _bpath = NULL;
+    }
+}
+
+/* Methods */
 
 /**
  * Increase refcount of curve.
@@ -141,13 +133,13 @@ SPCurve *sp_curve_new_from_rect(NR::Maybe<NR::Rect> const &rect)
  * \todo should this be shared with other refcounting code?
  */
 SPCurve *
-sp_curve_ref(SPCurve *curve)
+SPCurve::ref()
 {
-    g_return_val_if_fail(curve != NULL, NULL);
+    g_return_val_if_fail(this != NULL, NULL);
 
-    curve->refcount += 1;
+    refcount += 1;
 
-    return curve;
+    return this;
 }
 
 /**
@@ -156,17 +148,18 @@ sp_curve_ref(SPCurve *curve)
  * \todo should this be shared with other refcounting code?
  */
 SPCurve *
-sp_curve_unref(SPCurve *curve)
+SPCurve::unref()
 {
-    g_return_val_if_fail(curve != NULL, NULL);
+    g_return_val_if_fail(this != NULL, NULL);
 
-    curve->refcount -= 1;
+    refcount -= 1;
 
-    if (curve->refcount < 1) {
-        if (curve->_bpath) {
-            g_free(curve->_bpath);
+    if (refcount < 1) {
+        if (_bpath) {
+            g_free(_bpath);
+            _bpath = NULL;
         }
-        g_free(curve);
+        delete this;
     }
 
     return NULL;
@@ -196,18 +189,18 @@ sp_curve_ensure_space(SPCurve *curve, gint space)
  * Create new curve from its own bpath array.
  */
 SPCurve *
-sp_curve_copy(SPCurve *curve)
+SPCurve::copy() const
 {
-    g_return_val_if_fail(curve != NULL, NULL);
+    g_return_val_if_fail(this != NULL, NULL);
 
-    return sp_curve_new_from_foreign_bpath(curve->_bpath);
+    return SPCurve::new_from_foreign_bpath(_bpath);
 }
 
 /**
  * Return new curve that is the concatenation of all curves in list.
  */
 SPCurve *
-sp_curve_concat(GSList const *list)
+SPCurve::concat(GSList const *list)
 {
     g_return_val_if_fail(list != NULL, NULL);
 
@@ -218,7 +211,7 @@ sp_curve_concat(GSList const *list)
         length += c->end;
     }
 
-    SPCurve *new_curve = sp_curve_new_sized(length + 1);
+    SPCurve *new_curve = new SPCurve(length + 1);
 
     NArtBpath *bp = new_curve->_bpath;
 
@@ -247,20 +240,20 @@ sp_curve_concat(GSList const *list)
  * Returns a list of new curves corresponding to the subpaths in \a curve.
  */
 GSList *
-sp_curve_split(SPCurve const *curve)
+SPCurve::split() const
 {
-    g_return_val_if_fail(curve != NULL, NULL);
+    g_return_val_if_fail(this != NULL, NULL);
 
     gint p = 0;
     GSList *l = NULL;
 
-    while (p < curve->end) {
+    while (p < end) {
         gint i = 1;
-        while ((curve->_bpath[p + i].code == NR_LINETO) ||
-               (curve->_bpath[p + i].code == NR_CURVETO))
+        while ((_bpath[p + i].code == NR_LINETO) ||
+               (_bpath[p + i].code == NR_CURVETO))
             i++;
-        SPCurve *new_curve = sp_curve_new_sized(i + 1);
-        memcpy(new_curve->_bpath, curve->_bpath + p, i * sizeof(NArtBpath));
+        SPCurve *new_curve = new SPCurve(i + 1);
+        memcpy(new_curve->_bpath, _bpath + p, i * sizeof(NArtBpath));
         new_curve->end = i;
         new_curve->_bpath[i].code = NR_END;
         new_curve->substart = 0;
@@ -307,208 +300,204 @@ tmpl_curve_transform(SPCurve *const curve, M const &m)
  * Transform all paths in curve using matrix.
  */
 void
-sp_curve_transform(SPCurve *const curve, NR::Matrix const &m)
+SPCurve::transform(NR::Matrix const &m)
 {
-    tmpl_curve_transform<NR::Matrix>(curve, m);
+    tmpl_curve_transform<NR::Matrix>(this, m);
 }
 
 /**
  * Transform all paths in curve using NR::translate.
  */
 void
-sp_curve_transform(SPCurve *const curve, NR::translate const &m)
+SPCurve::transform(NR::translate const &m)
 {
-    tmpl_curve_transform<NR::translate>(curve, m);
+    tmpl_curve_transform<NR::translate>(this, m);
 }
-
-
-/* Methods */
 
 /**
  * Set curve to empty curve.
  */
 void
-sp_curve_reset(SPCurve *curve)
+SPCurve::reset()
 {
-    g_return_if_fail(curve != NULL);
+    g_return_if_fail(this != NULL);
 
-    curve->_bpath->code = NR_END;
-    curve->end = 0;
-    curve->substart = 0;
-    curve->hascpt = false;
-    curve->posSet = false;
-    curve->moving = false;
-    curve->closed = false;
+    _bpath->code = NR_END;
+    end = 0;
+    substart = 0;
+    hascpt = false;
+    posSet = false;
+    moving = false;
+    closed = false;
 }
 
 /* Several consecutive movetos are ALLOWED */
 
 /**
- * Calls sp_curve_moveto() with point made of given coordinates.
+ * Calls SPCurve::moveto() with point made of given coordinates.
  */
 void
-sp_curve_moveto(SPCurve *curve, gdouble x, gdouble y)
+SPCurve::moveto(gdouble x, gdouble y)
 {
-    sp_curve_moveto(curve, NR::Point(x, y));
+    moveto(NR::Point(x, y));
 }
 
 /**
  * Perform a moveto to a point, thus starting a new subpath.
  */
 void
-sp_curve_moveto(SPCurve *curve, NR::Point const &p)
+SPCurve::moveto(NR::Point const &p)
 {
-    g_return_if_fail(curve != NULL);
-    g_return_if_fail(!curve->moving);
+    g_return_if_fail(this != NULL);
+    g_return_if_fail(!moving);
 
-    curve->substart = curve->end;
-    curve->hascpt = true;
-    curve->posSet = true;
-    curve->movePos = p;
+    substart = end;
+    hascpt = true;
+    posSet = true;
+    movePos = p;
 }
 
 /**
- * Calls sp_curve_lineto() with a point's coordinates.
+ * Calls SPCurve::lineto() with a point's coordinates.
  */
 void
-sp_curve_lineto(SPCurve *curve, NR::Point const &p)
+SPCurve::lineto(NR::Point const &p)
 {
-    sp_curve_lineto(curve, p[NR::X], p[NR::Y]);
+    lineto(p[NR::X], p[NR::Y]);
 }
 
 /**
  * Adds a line to the current subpath.
  */
 void
-sp_curve_lineto(SPCurve *curve, gdouble x, gdouble y)
+SPCurve::lineto(gdouble x, gdouble y)
 {
-    g_return_if_fail(curve != NULL);
-    g_return_if_fail(curve->hascpt);
+    g_return_if_fail(this != NULL);
+    g_return_if_fail(hascpt);
 
-    if (curve->moving) {
+    if (moving) {
         /* fix endpoint */
-        g_return_if_fail(!curve->posSet);
-        g_return_if_fail(curve->end > 1);
-        NArtBpath *bp = curve->_bpath + curve->end - 1;
+        g_return_if_fail(!posSet);
+        g_return_if_fail(end > 1);
+        NArtBpath *bp = _bpath + end - 1;
         g_return_if_fail(bp->code == NR_LINETO);
         bp->x3 = x;
         bp->y3 = y;
-        curve->moving = false;
+        moving = false;
         return;
     }
 
-    if (curve->posSet) {
+    if (posSet) {
         /* start a new segment */
-        sp_curve_ensure_space(curve, 2);
-        NArtBpath *bp = curve->_bpath + curve->end;
+        sp_curve_ensure_space(this, 2);
+        NArtBpath *bp = _bpath + end;
         bp->code = NR_MOVETO_OPEN;
-        bp->setC(3, curve->movePos);
+        bp->setC(3, movePos);
         bp++;
         bp->code = NR_LINETO;
         bp->x3 = x;
         bp->y3 = y;
         bp++;
         bp->code = NR_END;
-        curve->end += 2;
-        curve->posSet = false;
-        curve->closed = false;
+        end += 2;
+        posSet = false;
+        closed = false;
         return;
     }
 
     /* add line */
 
-    g_return_if_fail(curve->end > 1);
-    sp_curve_ensure_space(curve, 1);
-    NArtBpath *bp = curve->_bpath + curve->end;
+    g_return_if_fail(end > 1);
+    sp_curve_ensure_space(this, 1);
+    NArtBpath *bp = _bpath + end;
     bp->code = NR_LINETO;
     bp->x3 = x;
     bp->y3 = y;
     bp++;
     bp->code = NR_END;
-    curve->end++;
+    end++;
 }
 
 /// Unused
 void
-sp_curve_lineto_moving(SPCurve *curve, gdouble x, gdouble y)
+SPCurve::lineto_moving(gdouble x, gdouble y)
 {
-    g_return_if_fail(curve != NULL);
-    g_return_if_fail(curve->hascpt);
+    g_return_if_fail(this != NULL);
+    g_return_if_fail(hascpt);
 
-    if (curve->moving) {
+    if (moving) {
         /* change endpoint */
-        g_return_if_fail(!curve->posSet);
-        g_return_if_fail(curve->end > 1);
-        NArtBpath *bp = curve->_bpath + curve->end - 1;
+        g_return_if_fail(!posSet);
+        g_return_if_fail(end > 1);
+        NArtBpath *bp = _bpath + end - 1;
         g_return_if_fail(bp->code == NR_LINETO);
         bp->x3 = x;
         bp->y3 = y;
         return;
     }
 
-    if (curve->posSet) {
+    if (posSet) {
         /* start a new segment */
-        sp_curve_ensure_space(curve, 2);
-        NArtBpath *bp = curve->_bpath + curve->end;
+        sp_curve_ensure_space(this, 2);
+        NArtBpath *bp = _bpath + end;
         bp->code = NR_MOVETO_OPEN;
-        bp->setC(3, curve->movePos);
+        bp->setC(3, movePos);
         bp++;
         bp->code = NR_LINETO;
         bp->x3 = x;
         bp->y3 = y;
         bp++;
         bp->code = NR_END;
-        curve->end += 2;
-        curve->posSet = false;
-        curve->moving = true;
-        curve->closed = false;
+        end += 2;
+        posSet = false;
+        moving = true;
+        closed = false;
         return;
     }
 
     /* add line */
 
-    g_return_if_fail(curve->end > 1);
-    sp_curve_ensure_space(curve, 1);
-    NArtBpath *bp = curve->_bpath + curve->end;
+    g_return_if_fail(end > 1);
+    sp_curve_ensure_space(this, 1);
+    NArtBpath *bp = _bpath + end;
     bp->code = NR_LINETO;
     bp->x3 = x;
     bp->y3 = y;
     bp++;
     bp->code = NR_END;
-    curve->end++;
-    curve->moving = true;
+    end++;
+    moving = true;
 }
 
 /**
- * Calls sp_curve_curveto() with coordinates of three points.
+ * Calls SPCurve::curveto() with coordinates of three points.
  */
 void
-sp_curve_curveto(SPCurve *curve, NR::Point const &p0, NR::Point const &p1, NR::Point const &p2)
+SPCurve::curveto(NR::Point const &p0, NR::Point const &p1, NR::Point const &p2)
 {
     using NR::X;
     using NR::Y;
-    sp_curve_curveto(curve,
-                     p0[X], p0[Y],
-                     p1[X], p1[Y],
-                     p2[X], p2[Y]);
+    curveto( p0[X], p0[Y],
+             p1[X], p1[Y],
+             p2[X], p2[Y] );
 }
 
 /**
  * Adds a bezier segment to the current subpath.
  */
 void
-sp_curve_curveto(SPCurve *curve, gdouble x0, gdouble y0, gdouble x1, gdouble y1, gdouble x2, gdouble y2)
+SPCurve::curveto(gdouble x0, gdouble y0, gdouble x1, gdouble y1, gdouble x2, gdouble y2)
 {
-    g_return_if_fail(curve != NULL);
-    g_return_if_fail(curve->hascpt);
-    g_return_if_fail(!curve->moving);
+    g_return_if_fail(this != NULL);
+    g_return_if_fail(hascpt);
+    g_return_if_fail(!moving);
 
-    if (curve->posSet) {
+    if (posSet) {
         /* start a new segment */
-        sp_curve_ensure_space(curve, 2);
-        NArtBpath *bp = curve->_bpath + curve->end;
+        sp_curve_ensure_space(this, 2);
+        NArtBpath *bp = _bpath + end;
         bp->code = NR_MOVETO_OPEN;
-        bp->setC(3, curve->movePos);
+        bp->setC(3, movePos);
         bp++;
         bp->code = NR_CURVETO;
         bp->x1 = x0;
@@ -519,17 +508,17 @@ sp_curve_curveto(SPCurve *curve, gdouble x0, gdouble y0, gdouble x1, gdouble y1,
         bp->y3 = y2;
         bp++;
         bp->code = NR_END;
-        curve->end += 2;
-        curve->posSet = false;
-        curve->closed = false;
+        end += 2;
+        posSet = false;
+        closed = false;
         return;
     }
 
     /* add curve */
 
-    g_return_if_fail(curve->end > 1);
-    sp_curve_ensure_space(curve, 1);
-    NArtBpath *bp = curve->_bpath + curve->end;
+    g_return_if_fail(end > 1);
+    sp_curve_ensure_space(this, 1);
+    NArtBpath *bp = _bpath + end;
     bp->code = NR_CURVETO;
     bp->x1 = x0;
     bp->y1 = y0;
@@ -539,178 +528,178 @@ sp_curve_curveto(SPCurve *curve, gdouble x0, gdouble y0, gdouble x1, gdouble y1,
     bp->y3 = y2;
     bp++;
     bp->code = NR_END;
-    curve->end++;
+    end++;
 }
 
 /**
  * Close current subpath by possibly adding a line between start and end.
  */
 void
-sp_curve_closepath(SPCurve *curve)
+SPCurve::closepath()
 {
-    g_return_if_fail(curve != NULL);
-    g_return_if_fail(curve->hascpt);
-    g_return_if_fail(!curve->posSet);
-    g_return_if_fail(!curve->moving);
-    g_return_if_fail(!curve->closed);
+    g_return_if_fail(this != NULL);
+    g_return_if_fail(hascpt);
+    g_return_if_fail(!posSet);
+    g_return_if_fail(!moving);
+    g_return_if_fail(!closed);
     /* We need at least moveto, curveto, end. */
-    g_return_if_fail(curve->end - curve->substart > 1);
+    g_return_if_fail(end - substart > 1);
 
     {
-        NArtBpath *bs = curve->_bpath + curve->substart;
-        NArtBpath *be = curve->_bpath + curve->end - 1;
+        NArtBpath *bs = _bpath + substart;
+        NArtBpath *be = _bpath + end - 1;
 
         if (bs->c(3) != be->c(3)) {
-            sp_curve_lineto(curve, bs->c(3));
-            bs = curve->_bpath + curve->substart;
+            lineto(bs->c(3));
+            bs = _bpath + substart;
         }
 
         bs->code = NR_MOVETO;
     }
-    curve->closed = true;
+    closed = true;
 
-    for (NArtBpath const *bp = curve->_bpath; bp->code != NR_END; bp++) {
+    for (NArtBpath const *bp = _bpath; bp->code != NR_END; bp++) {
         /** \todo
          * effic: Maintain a count of NR_MOVETO_OPEN's (e.g. instead of
          * the closed boolean).
          */
         if (bp->code == NR_MOVETO_OPEN) {
-            curve->closed = false;
+            closed = false;
             break;
         }
     }
 
-    curve->hascpt = false;
+    hascpt = false;
 }
 
-/** Like sp_curve_closepath() but sets the end point of the current
+/** Like SPCurve::closepath() but sets the end point of the current
     command to the subpath start point instead of adding a new lineto.
 
     Used for freehand drawing when the user draws back to the start point.
 **/
 void
-sp_curve_closepath_current(SPCurve *curve)
+SPCurve::closepath_current()
 {
-    g_return_if_fail(curve != NULL);
-    g_return_if_fail(curve->hascpt);
-    g_return_if_fail(!curve->posSet);
-    g_return_if_fail(!curve->closed);
+    g_return_if_fail(this != NULL);
+    g_return_if_fail(hascpt);
+    g_return_if_fail(!posSet);
+    g_return_if_fail(!closed);
     /* We need at least moveto, curveto, end. */
-    g_return_if_fail(curve->end - curve->substart > 1);
+    g_return_if_fail(end - substart > 1);
 
     {
-        NArtBpath *bs = curve->_bpath + curve->substart;
-        NArtBpath *be = curve->_bpath + curve->end - 1;
+        NArtBpath *bs = _bpath + substart;
+        NArtBpath *be = _bpath + end - 1;
 
         be->x3 = bs->x3;
         be->y3 = bs->y3;
 
         bs->code = NR_MOVETO;
     }
-    curve->closed = true;
+    closed = true;
 
-    for (NArtBpath const *bp = curve->_bpath; bp->code != NR_END; bp++) {
+    for (NArtBpath const *bp = _bpath; bp->code != NR_END; bp++) {
         /** \todo
          * effic: Maintain a count of NR_MOVETO_OPEN's (e.g. instead of
          * the closed boolean).
          */
         if (bp->code == NR_MOVETO_OPEN) {
-            curve->closed = false;
+            closed = false;
             break;
         }
     }
 
-    curve->hascpt = false;
-    curve->moving = false;
+    hascpt = false;
+    moving = false;
 }
 
 /**
  * True if no paths are in curve.
  */
 bool
-sp_curve_empty(SPCurve *curve)
+SPCurve::is_empty() const
 {
-    g_return_val_if_fail(curve != NULL, TRUE);
+    g_return_val_if_fail(this != NULL, TRUE);
 
-    return (curve->_bpath->code == NR_END);
+    return (_bpath->code == NR_END);
 }
 
 /**
  * Return last subpath or NULL.
  */
 NArtBpath *
-sp_curve_last_bpath(SPCurve const *curve)
+SPCurve::last_bpath() const
 {
-    g_return_val_if_fail(curve != NULL, NULL);
+    g_return_val_if_fail(this != NULL, NULL);
 
-    if (curve->end == 0) {
+    if (end == 0) {
         return NULL;
     }
 
-    return curve->_bpath + curve->end - 1;
+    return _bpath + end - 1;
 }
 
 /**
  * Return first subpath or NULL.
  */
 NArtBpath *
-sp_curve_first_bpath(SPCurve const *curve)
+SPCurve::first_bpath() const
 {
-    g_return_val_if_fail(curve != NULL, NULL);
+    g_return_val_if_fail(this != NULL, NULL);
 
-    if (curve->end == 0) {
+    if (end == 0) {
         return NULL;
     }
 
-    return curve->_bpath;
+    return _bpath;
 }
 
 /**
  * Return first point of first subpath or (0,0).
  */
 NR::Point
-sp_curve_first_point(SPCurve const *const curve)
+SPCurve::first_point() const
 {
-    NArtBpath *const bpath = sp_curve_first_bpath(curve);
+    NArtBpath *const bpath = first_bpath();
     g_return_val_if_fail(bpath != NULL, NR::Point(0, 0));
     return bpath->c(3);
 }
 
 /**
- * Return the second point of first subpath or curve->movePos if curve too short.
+ * Return the second point of first subpath or movePos if curve too short.
  */
 NR::Point
-sp_curve_second_point(SPCurve const *const curve)
+SPCurve::second_point() const
 {
-    g_return_val_if_fail(curve != NULL, NR::Point(0, 0));
+    g_return_val_if_fail(this != NULL, NR::Point(0, 0));
 
-    if (curve->end < 1) {
-        return curve->movePos;
+    if (end < 1) {
+        return movePos;
     }
 
     NArtBpath *bpath = NULL;
-    if (curve->end < 2) {
-        bpath = curve->_bpath;
+    if (end < 2) {
+        bpath = _bpath;
     } else {
-        bpath = curve->_bpath + 1;
+        bpath = _bpath + 1;
     }
     g_return_val_if_fail(bpath != NULL, NR::Point(0, 0));
     return bpath->c(3);
 }
 
 /**
- * Return the second-last point of last subpath or curve->movePos if curve too short.
+ * Return the second-last point of last subpath or movePos if curve too short.
  */
 NR::Point
-sp_curve_penultimate_point(SPCurve const *const curve)
+SPCurve::penultimate_point() const
 {
-    g_return_val_if_fail(curve != NULL, NR::Point(0, 0));
+    g_return_val_if_fail(this != NULL, NR::Point(0, 0));
 
-    if (curve->end < 2) {
-        return curve->movePos;
+    if (end < 2) {
+        return movePos;
     }
 
-    NArtBpath *const bpath = curve->_bpath + curve->end - 2;
+    NArtBpath *const bpath = _bpath + end - 2;
     g_return_val_if_fail(bpath != NULL, NR::Point(0, 0));
     return bpath->c(3);
 }
@@ -719,9 +708,9 @@ sp_curve_penultimate_point(SPCurve const *const curve)
  * Return last point of last subpath or (0,0).
  */
 NR::Point
-sp_curve_last_point(SPCurve const *const curve)
+SPCurve::last_point() const
 {
-    NArtBpath *const bpath = sp_curve_last_bpath(curve);
+    NArtBpath *const bpath = last_bpath();
     g_return_val_if_fail(bpath != NULL, NR::Point(0, 0));
     return bpath->c(3);
 }
@@ -738,19 +727,19 @@ is_moveto(NRPathcode const c)
  * with all its markers drawn facing the other direction.
  **/
 SPCurve *
-sp_curve_reverse(SPCurve const *curve)
+SPCurve::reverse() const
 {
     /* We need at least moveto, curveto, end. */
-    g_return_val_if_fail(curve->end - curve->substart > 1, NULL);
+    g_return_val_if_fail(end - substart > 1, NULL);
 
-    NArtBpath const *be = curve->_bpath + curve->end - 1;
+    NArtBpath const *be = _bpath + end - 1;
 
-    g_assert(is_moveto(curve->_bpath[curve->substart].code));
-    g_assert(is_moveto(curve->_bpath[0].code));
+    g_assert(is_moveto(_bpath[substart].code));
+    g_assert(is_moveto(_bpath[0].code));
     g_assert((be+1)->code == NR_END);
 
-    SPCurve  *new_curve = sp_curve_new_sized(curve->length);
-    sp_curve_moveto(new_curve, be->c(3));
+    SPCurve  *new_curve = new SPCurve(length);
+    new_curve->moveto(be->c(3));
 
     for (NArtBpath const *bp = be; ; --bp) {
         switch (bp->code) {
@@ -759,18 +748,18 @@ sp_curve_reverse(SPCurve const *curve)
                 new_curve->_bpath[new_curve->substart].code = NR_MOVETO;
                 /* FALL-THROUGH */
             case NR_MOVETO_OPEN:
-                if (bp == curve->_bpath) {
+                if (bp == _bpath) {
                     return new_curve;
                 }
-                sp_curve_moveto(new_curve, (bp-1)->c(3));
+                new_curve->moveto((bp-1)->c(3));
                 break;
 
             case NR_LINETO:
-                sp_curve_lineto(new_curve, (bp-1)->c(3));
+                new_curve->lineto((bp-1)->c(3));
                 break;
 
             case NR_CURVETO:
-                sp_curve_curveto(new_curve, bp->c(2), bp->c(1), (bp-1)->c(3));
+                new_curve->curveto(bp->c(2), bp->c(1), (bp-1)->c(3));
                 break;
 
             default:
@@ -783,11 +772,10 @@ sp_curve_reverse(SPCurve const *curve)
  * Append \a curve2 to \a curve.
  */
 void
-sp_curve_append(SPCurve *curve,
-                SPCurve const *curve2,
+SPCurve::append(SPCurve const *curve2,
                 bool use_lineto)
 {
-    g_return_if_fail(curve != NULL);
+    g_return_if_fail(this != NULL);
     g_return_if_fail(curve2 != NULL);
 
     if (curve2->end < 1)
@@ -795,38 +783,38 @@ sp_curve_append(SPCurve *curve,
 
     NArtBpath const *bs = curve2->_bpath;
 
-    bool closed = curve->closed;
+    bool _closed = this->closed;
 
     for (NArtBpath const *bp = bs; bp->code != NR_END; bp++) {
         switch (bp->code) {
             case NR_MOVETO_OPEN:
-                if (use_lineto && curve->hascpt) {
-                    sp_curve_lineto(curve, bp->x3, bp->y3);
+                if (use_lineto && hascpt) {
+                    lineto(bp->x3, bp->y3);
                     use_lineto = FALSE;
                 } else {
-                    if (closed) sp_curve_closepath(curve);
-                    sp_curve_moveto(curve, bp->x3, bp->y3);
+                    if (_closed) closepath();
+                    moveto(bp->x3, bp->y3);
                 }
-                closed = false;
+                _closed = false;
                 break;
 
             case NR_MOVETO:
-                if (use_lineto && curve->hascpt) {
-                    sp_curve_lineto(curve, bp->x3, bp->y3);
+                if (use_lineto && hascpt) {
+                    lineto(bp->x3, bp->y3);
                     use_lineto = FALSE;
                 } else {
-                    if (closed) sp_curve_closepath(curve);
-                    sp_curve_moveto(curve, bp->x3, bp->y3);
+                    if (_closed) closepath();
+                    moveto(bp->x3, bp->y3);
                 }
-                closed = true;
+                _closed = true;
                 break;
 
             case NR_LINETO:
-                sp_curve_lineto(curve, bp->x3, bp->y3);
+                lineto(bp->x3, bp->y3);
                 break;
 
             case NR_CURVETO:
-                sp_curve_curveto(curve, bp->x1, bp->y1, bp->x2, bp->y2, bp->x3, bp->y3);
+                curveto(bp->x1, bp->y1, bp->x2, bp->y2, bp->x3, bp->y3);
                 break;
 
             case NR_END:
@@ -834,29 +822,29 @@ sp_curve_append(SPCurve *curve,
         }
     }
 
-    if (closed) {
-        sp_curve_closepath(curve);
+    if (_closed) {
+        closepath();
     }
 }
 
 /**
- * Append \a c1 to \a c0 with possible fusing of close endpoints.
+ * Append \a c1 to \a this with possible fusing of close endpoints.
  */
 SPCurve *
-sp_curve_append_continuous(SPCurve *c0, SPCurve const *c1, gdouble tolerance)
+SPCurve::append_continuous(SPCurve const *c1, gdouble tolerance)
 {
-    g_return_val_if_fail(c0 != NULL, NULL);
+    g_return_val_if_fail(this != NULL, NULL);
     g_return_val_if_fail(c1 != NULL, NULL);
-    g_return_val_if_fail(!c0->closed, NULL);
+    g_return_val_if_fail(!closed, NULL);
     g_return_val_if_fail(!c1->closed, NULL);
 
     if (c1->end < 1) {
-        return c0;
+        return this;
     }
 
-    NArtBpath *be = sp_curve_last_bpath(c0);
+    NArtBpath *be = last_bpath();
     if (be) {
-        NArtBpath const *bs = sp_curve_first_bpath(c1);
+        NArtBpath const *bs = c1->first_bpath();
         if ( bs
              && ( fabs( bs->x3 - be->x3 ) <= tolerance )
              && ( fabs( bs->y3 - be->y3 ) <= tolerance ) )
@@ -865,62 +853,62 @@ sp_curve_append_continuous(SPCurve *c0, SPCurve const *c1, gdouble tolerance)
              * fixme: Strictly we mess in case of multisegment mixed
              * open/close curves
              */
-            bool closed = false;
+            bool _closed = false;
             for (bs = bs + 1; bs->code != NR_END; bs++) {
                 switch (bs->code) {
                     case NR_MOVETO_OPEN:
-                        if (closed) sp_curve_closepath(c0);
-                        sp_curve_moveto(c0, bs->x3, bs->y3);
-                        closed = false;
+                        if (_closed) closepath();
+                        moveto(bs->x3, bs->y3);
+                        _closed = false;
                         break;
                     case NR_MOVETO:
-                        if (closed) sp_curve_closepath(c0);
-                        sp_curve_moveto(c0, bs->x3, bs->y3);
-                        closed = true;
+                        if (_closed) closepath();
+                        moveto(bs->x3, bs->y3);
+                        _closed = true;
                         break;
                     case NR_LINETO:
-                        sp_curve_lineto(c0, bs->x3, bs->y3);
+                        lineto(bs->x3, bs->y3);
                         break;
                     case NR_CURVETO:
-                        sp_curve_curveto(c0, bs->x1, bs->y1, bs->x2, bs->y2, bs->x3, bs->y3);
+                        curveto(bs->x1, bs->y1, bs->x2, bs->y2, bs->x3, bs->y3);
                         break;
                     case NR_END:
                         g_assert_not_reached();
                 }
             }
         } else {
-            sp_curve_append(c0, c1, TRUE);
+            append(c1, TRUE);
         }
     } else {
-        sp_curve_append(c0, c1, TRUE);
+        append(c1, TRUE);
     }
 
-    return c0;
+    return this;
 }
 
 /**
  * Remove last segment of curve.
  */
 void
-sp_curve_backspace(SPCurve *curve)
+SPCurve::backspace()
 {
-    g_return_if_fail(curve != NULL);
+    g_return_if_fail(this != NULL);
 
-    if (curve->end > 0) {
-        curve->end -= 1;
-        if (curve->end > 0) {
-            NArtBpath *bp = curve->_bpath + curve->end - 1;
+    if (end > 0) {
+        end -= 1;
+        if (end > 0) {
+            NArtBpath *bp = _bpath + end - 1;
             if ((bp->code == NR_MOVETO)     ||
                 (bp->code == NR_MOVETO_OPEN)  )
             {
-                curve->hascpt = true;
-                curve->posSet = true;
-                curve->closed = false;
-                curve->movePos = bp->c(3);
-                curve->end -= 1;
+                hascpt = true;
+                posSet = true;
+                closed = false;
+                movePos = bp->c(3);
+                end -= 1;
             }
         }
-        curve->_bpath[curve->end].code = NR_END;
+        _bpath[end].code = NR_END;
     }
 }
 
@@ -1062,23 +1050,23 @@ sp_curve_nonzero_distance_including_space(SPCurve const *const curve, double seg
 }
 
 void
-sp_curve_stretch_endpoints(SPCurve *curve, NR::Point const &new_p0, NR::Point const &new_p1)
+SPCurve::stretch_endpoints(NR::Point const &new_p0, NR::Point const &new_p1)
 {
-    if (sp_curve_empty(curve)) {
+    if (is_empty()) {
         return;
     }
-    g_assert(unsigned(SP_CURVE_LENGTH(curve)) + 1 == sp_bpath_length(curve->_bpath));
-    unsigned const nSegs = SP_CURVE_LENGTH(curve) - 1;
+    g_assert(unsigned(SP_CURVE_LENGTH(this)) + 1 == sp_bpath_length(_bpath));
+    unsigned const nSegs = SP_CURVE_LENGTH(this) - 1;
     g_assert(nSegs != 0);
     double *const seg2len = new double[nSegs];
-    double const tot_len = sp_curve_nonzero_distance_including_space(curve, seg2len);
-    NR::Point const offset0( new_p0 - sp_curve_first_point(curve) );
-    NR::Point const offset1( new_p1 - sp_curve_last_point(curve) );
-    curve->_bpath->setC(3, new_p0);
+    double const tot_len = sp_curve_nonzero_distance_including_space(this, seg2len);
+    NR::Point const offset0( new_p0 - first_point() );
+    NR::Point const offset1( new_p1 - last_point() );
+    _bpath->setC(3, new_p0);
     double begin_dist = 0.;
     for (unsigned si = 0; si < nSegs; ++si) {
         double const end_dist = begin_dist + seg2len[si];
-        NArtBpath &p = curve->_bpath[1 + si];
+        NArtBpath &p = _bpath[1 + si];
         switch (p.code) {
             case NR_LINETO:
             case NR_MOVETO:
@@ -1098,24 +1086,23 @@ sp_curve_stretch_endpoints(SPCurve *curve, NR::Point const &new_p0, NR::Point co
 
         begin_dist = end_dist;
     }
-    g_assert(L1(curve->_bpath[nSegs].c(3) - new_p1) < 1.);
+    g_assert(L1(_bpath[nSegs].c(3) - new_p1) < 1.);
     /* Explicit set for better numerical properties. */
-    curve->_bpath[nSegs].setC(3, new_p1);
+    _bpath[nSegs].setC(3, new_p1);
     delete [] seg2len;
 }
 
 void
-sp_curve_move_endpoints(SPCurve *curve, NR::Point const &new_p0,
-        NR::Point const &new_p1)
+SPCurve::move_endpoints(NR::Point const &new_p0, NR::Point const &new_p1)
 {
-    if (sp_curve_empty(curve)) {
+    if (is_empty()) {
         return;
     }
-    unsigned const nSegs = SP_CURVE_LENGTH(curve) - 1;
+    unsigned const nSegs = SP_CURVE_LENGTH(this) - 1;
     g_assert(nSegs != 0);
 
-    curve->_bpath->setC(3, new_p0);
-    curve->_bpath[nSegs].setC(3, new_p1);
+    _bpath->setC(3, new_p0);
+    _bpath[nSegs].setC(3, new_p1);
 }
 
 

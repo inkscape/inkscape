@@ -167,7 +167,7 @@ sp_genericellipse_update_patheffect(SPLPEItem *lpeitem, bool write)
     if (write) {
         Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
         if ( shape->curve != NULL ) {
-            NArtBpath *abp = sp_curve_first_bpath(shape->curve);
+            NArtBpath *abp = shape->curve->first_bpath();
             if (abp) {
                 gchar *str = sp_svg_write_path(abp);
                 repr->setAttribute("d", str);
@@ -273,12 +273,12 @@ static void sp_genericellipse_set_shape(SPShape *shape)
     }
 
     bpath[i].code = NR_END;
-    SPCurve *c = sp_curve_new_from_bpath(nr_artpath_affine(bpath, aff));
+    SPCurve *c = SPCurve::new_from_bpath(nr_artpath_affine(bpath, aff));
     g_assert(c != NULL);
 
     sp_lpe_item_perform_path_effect(SP_LPE_ITEM (ellipse), c);
     sp_shape_set_curve_insync((SPShape *) ellipse, c, TRUE);
-    sp_curve_unref(c);
+    c->unref();
 }
 
 static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p)

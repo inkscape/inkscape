@@ -790,9 +790,9 @@ pen_redraw_all (SPPenContext *const pc)
     if (pc->green_anchor)
         SP_CTRL(pc->green_anchor->ctrl)->moveto(pc->green_anchor->dp);
 
-    sp_curve_reset(pc->red_curve);
-    sp_curve_moveto(pc->red_curve, pc->p[0]);
-    sp_curve_curveto(pc->red_curve, pc->p[1], pc->p[2], pc->p[3]);
+    pc->red_curve->reset();
+    pc->red_curve->moveto(pc->p[0]);
+    pc->red_curve->curveto(pc->p[1], pc->p[2], pc->p[3]);
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->red_curve);
 
     // handles
@@ -806,7 +806,7 @@ pen_redraw_all (SPPenContext *const pc)
         sp_canvas_item_hide (pc->cl1);
     }
 
-    NArtBpath *const bpath = sp_curve_last_bpath(pc->green_curve);
+    NArtBpath *const bpath = pc->green_curve->last_bpath();
     if (bpath) {
         if (bpath->code == NR_CURVETO && NR::Point(bpath->x2, bpath->y2) != pc->p[0]) {
             SP_CTRL(pc->c0)->moveto(NR::Point(bpath->x2, bpath->y2));
@@ -827,7 +827,7 @@ pen_lastpoint_move (SPPenContext *const pc, gdouble x, gdouble y)
         return;
 
     // green
-    NArtBpath *const bpath = sp_curve_last_bpath(pc->green_curve);
+    NArtBpath *const bpath = pc->green_curve->last_bpath();
     if (bpath) {
         if (bpath->code == NR_CURVETO) {
             bpath->x2 += x;
@@ -861,7 +861,7 @@ pen_lastpoint_tocurve (SPPenContext *const pc)
         return;
 
     // red
-    NArtBpath *const bpath = sp_curve_last_bpath(pc->green_curve);
+    NArtBpath *const bpath = pc->green_curve->last_bpath();
     if (bpath && bpath->code == NR_CURVETO) {
         pc->p[1] = pc->p[0] + (NR::Point(bpath->x3, bpath->y3) - NR::Point(bpath->x2, bpath->y2));
     } else {
@@ -999,8 +999,8 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
         case GDK_BackSpace:
         case GDK_Delete:
         case GDK_KP_Delete:
-            if (sp_curve_is_empty(pc->green_curve)) {
-                if (!sp_curve_is_empty(pc->red_curve)) {
+            if (pc->green_curve->is_empty()) {
+                if (!pc->red_curve->is_empty()) {
                     pen_cancel (pc);
                     ret = TRUE;
                 } else {
@@ -1008,7 +1008,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
                 }
             } else {
                 /* Reset red curve */
-                sp_curve_reset(pc->red_curve);
+                pc->red_curve->reset();
                 /* Destroy topmost green bpath */
                 if (pc->green_bpaths) {
                     if (pc->green_bpaths->data)
@@ -1032,7 +1032,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
                                      ? p[e - 1].c(3)
                                      : pc->p[3] ));
                 pc->npoints = 2;
-                sp_curve_backspace(pc->green_curve);
+                pc->green_curve->backspace();
                 sp_canvas_item_hide(pc->c0);
                 sp_canvas_item_hide(pc->c1);
                 sp_canvas_item_hide(pc->cl0);
@@ -1052,17 +1052,17 @@ static void
 spdc_reset_colors(SPPenContext *pc)
 {
     /* Red */
-    sp_curve_reset(pc->red_curve);
+    pc->red_curve->reset();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), NULL);
     /* Blue */
-    sp_curve_reset(pc->blue_curve);
+    pc->blue_curve->reset();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->blue_bpath), NULL);
     /* Green */
     while (pc->green_bpaths) {
         gtk_object_destroy(GTK_OBJECT(pc->green_bpaths->data));
         pc->green_bpaths = g_slist_remove(pc->green_bpaths, pc->green_bpaths->data);
     }
-    sp_curve_reset(pc->green_curve);
+    pc->green_curve->reset();
     if (pc->green_anchor) {
         pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
     }
@@ -1119,16 +1119,16 @@ spdc_pen_set_subsequent_point(SPPenContext *const pc, NR::Point const p, bool st
     pc->p[3] = p;
     pc->p[4] = p;
     pc->npoints = 5;
-    sp_curve_reset(pc->red_curve);
-    sp_curve_moveto(pc->red_curve, pc->p[0]);
+    pc->red_curve->reset();
+    pc->red_curve->moveto(pc->p[0]);
     bool is_curve;
     if ( (pc->onlycurves)
          || ( pc->p[1] != pc->p[0] ) )
     {
-        sp_curve_curveto(pc->red_curve, pc->p[1], p, p);
+        pc->red_curve->curveto(pc->p[1], p, p);
         is_curve = true;
     } else {
-        sp_curve_lineto(pc->red_curve, p);
+        pc->red_curve->lineto(p);
         is_curve = false;
     }
 
@@ -1172,9 +1172,9 @@ spdc_pen_set_ctrl(SPPenContext *const pc, NR::Point const p, guint const state)
             NR::Point delta = p - pc->p[3];
             pc->p[2] = pc->p[3] - delta;
             is_symm = true;
-            sp_curve_reset(pc->red_curve);
-            sp_curve_moveto(pc->red_curve, pc->p[0]);
-            sp_curve_curveto(pc->red_curve, pc->p[1], pc->p[2], pc->p[3]);
+            pc->red_curve->reset();
+            pc->red_curve->moveto(pc->p[0]);
+            pc->red_curve->curveto(pc->p[1], pc->p[2], pc->p[3]);
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->red_curve);
         }
         SP_CTRL(pc->c0)->moveto(pc->p[2]);
@@ -1200,12 +1200,12 @@ spdc_pen_set_ctrl(SPPenContext *const pc, NR::Point const p, guint const state)
 static void
 spdc_pen_finish_segment(SPPenContext *const pc, NR::Point const /*p*/, guint const /*state*/)
 {
-    if (!sp_curve_empty(pc->red_curve)) {
-        sp_curve_append_continuous(pc->green_curve, pc->red_curve, 0.0625);
-        SPCurve *curve = sp_curve_copy(pc->red_curve);
+    if (!pc->red_curve->is_empty()) {
+        pc->green_curve->append_continuous(pc->red_curve, 0.0625);
+        SPCurve *curve = pc->red_curve->copy();
         /// \todo fixme:
         SPCanvasItem *cshape = sp_canvas_bpath_new(sp_desktop_sketch(pc->desktop), curve);
-        sp_curve_unref(curve);
+        curve->unref();
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cshape), pc->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
 
         pc->green_bpaths = g_slist_prepend(pc->green_bpaths, cshape);
@@ -1214,7 +1214,7 @@ spdc_pen_finish_segment(SPPenContext *const pc, NR::Point const /*p*/, guint con
         pc->p[1] = pc->p[4];
         pc->npoints = 2;
 
-        sp_curve_reset(pc->red_curve);
+        pc->red_curve->reset();
     }
 }
 
@@ -1227,7 +1227,7 @@ spdc_pen_finish(SPPenContext *const pc, gboolean const closed)
     pc->_message_context->clear();
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Drawing finished"));
 
-    sp_curve_reset(pc->red_curve);
+    pc->red_curve->reset();
     spdc_concat_colors_and_flush(pc, closed);
     pc->sa = NULL;
     pc->ea = NULL;

@@ -126,7 +126,7 @@ static Inkscape::XML::Node *sp_polygon_write(SPObject *object, Inkscape::XML::No
     }
 
     /* We can safely write points here, because all subclasses require it too (Lauris) */
-    NArtBpath *abp = sp_curve_first_bpath(shape->curve);
+    NArtBpath *abp = shape->curve->first_bpath();
     gchar *str = sp_svg_write_polygon(abp);
     repr->setAttribute("points", str);
     g_free(str);
@@ -171,7 +171,7 @@ static void sp_polygon_set(SPObject *object, unsigned int key, const gchar *valu
                  * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing. */
                 break;
             }
-            SPCurve *curve = sp_curve_new();
+            SPCurve *curve = new SPCurve();
             gboolean hascpt = FALSE;
 
             gchar const *cptr = value;
@@ -198,9 +198,9 @@ static void sp_polygon_set(SPObject *object, unsigned int key, const gchar *valu
                 }
 
                 if (hascpt) {
-                    sp_curve_lineto(curve, x, y);
+                    curve->lineto(x, y);
                 } else {
-                    sp_curve_moveto(curve, x, y);
+                    curve->moveto(x, y);
                     hascpt = TRUE;
                 }
             }
@@ -214,12 +214,12 @@ static void sp_polygon_set(SPObject *object, unsigned int key, const gchar *valu
                  * doesn't seem to like simply moveto followed by closepath.  The following works,
                  * but won't round-trip properly: I believe it will write as two points rather than
                  * one. */
-                sp_curve_lineto(curve, curve->movePos);
+                curve->lineto(curve->movePos);
             } else if (hascpt) {
-                sp_curve_closepath(curve);
+                curve->closepath();
             }
             sp_shape_set_curve(SP_SHAPE(polygon), curve, TRUE);
-            sp_curve_unref(curve);
+            curve->unref();
             break;
         }
         default:

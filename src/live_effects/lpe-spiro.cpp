@@ -22,13 +22,13 @@ typedef struct {
 void bezctx_ink_moveto(bezctx *bc, double x, double y, int /*is_open*/)
 {
     bezctx_ink *bi = (bezctx_ink *) bc;
-    sp_curve_moveto(bi->curve, x, y);
+    bi->curve->moveto(x, y);
 }
 
 void bezctx_ink_lineto(bezctx *bc, double x, double y)
 {
     bezctx_ink *bi = (bezctx_ink *) bc;
-    sp_curve_lineto(bi->curve, x, y);
+    bi->curve->lineto(x, y);
 }
 
 void bezctx_ink_quadto(bezctx *bc, double xm, double ym, double x3, double y3)
@@ -39,7 +39,7 @@ void bezctx_ink_quadto(bezctx *bc, double xm, double ym, double x3, double y3)
     double x1, y1;
     double x2, y2;
 
-    NR::Point last = sp_curve_last_point(bi->curve);
+    NR::Point last = bi->curve->last_point();
     x0 = last[NR::X];
     y0 = last[NR::Y];
     x1 = xm + (1./3) * (x0 - xm);
@@ -47,14 +47,14 @@ void bezctx_ink_quadto(bezctx *bc, double xm, double ym, double x3, double y3)
     x2 = xm + (1./3) * (x3 - xm);
     y2 = ym + (1./3) * (y3 - ym);
 
-    sp_curve_curveto(bi->curve, x1, y1, x2, y2, x3, y3);
+    bi->curve->curveto(x1, y1, x2, y2, x3, y3);
 }
 
 void bezctx_ink_curveto(bezctx *bc, double x1, double y1, double x2, double y2,
 		    double x3, double y3)
 {
     bezctx_ink *bi = (bezctx_ink *) bc;
-    sp_curve_curveto(bi->curve, x1, y1, x2, y2, x3, y3);
+    bi->curve->curveto(x1, y1, x2, y2, x3, y3);
 }
 
 bezctx *
@@ -94,8 +94,8 @@ LPESpiro::setup_nodepath(Inkscape::NodePath::Path *np)
 void
 LPESpiro::doEffect(SPCurve * curve)
 {
-    SPCurve *csrc = sp_curve_copy(curve);
-    sp_curve_reset(curve);
+    SPCurve *csrc = curve->copy();
+    curve->reset();
     bezctx *bc = new_bezctx_ink(curve);
     int len = SP_CURVE_LENGTH(csrc);
     spiro_cp *path = g_new (spiro_cp, len + 1);

@@ -178,10 +178,10 @@ SPConnEndPair::getEndpoints(NR::Point endPts[]) const {
         else
         {
             if (h == 0) {
-                endPts[h] = sp_curve_first_point(curve);
+                endPts[h] = curve->first_point();
             }
             else {
-                endPts[h] = sp_curve_last_point(curve);
+                endPts[h] = curve->last_point();
             }
         }
     }
@@ -302,12 +302,12 @@ SPConnEndPair::reroutePath(void)
     Avoid::PolyLine route = _connRef->route();
     _connRef->calcRouteDist();
 
-    sp_curve_reset(curve);
-    sp_curve_moveto(curve, endPt[0]);
+    curve->reset();
+    curve->moveto(endPt[0]);
 
     for (int i = 1; i < route.pn; ++i) {
         NR::Point p(route.ps[i].x, route.ps[i].y);
-        sp_curve_lineto(curve, p);
+        curve->lineto(p);
     }
 }
 

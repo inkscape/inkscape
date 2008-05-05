@@ -2060,7 +2060,7 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
         couts.printf("</draw:path>\n\n");
 
 
-        sp_curve_unref(curve);
+        curve->unref();
         }
 
     return true;

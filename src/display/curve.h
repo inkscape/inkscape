@@ -10,6 +10,7 @@
  * Copyright (C) 2000 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
  * Copyright (C) 2002 Lauris Kaplinski
+ * Copyright (C) 2008 Johan Engelen
  *
  * Released under GNU GPL
  */
@@ -18,11 +19,21 @@
 #include <glib/gslist.h>
 
 #include "libnr/nr-forward.h"
-#include "libnr/nr-point.h"
 #include "libnr/nr-rect.h"
 
+#define SP_CURVE_LENSTEP 32
+
 /// Wrapper around NArtBpath.
-struct SPCurve {
+class SPCurve {
+public:
+    /* Constructors */
+    SPCurve(gint length = SP_CURVE_LENSTEP);
+    static SPCurve * new_from_bpath(NArtBpath *bpath);
+    static SPCurve * new_from_foreign_bpath(NArtBpath const *bpath);
+    static SPCurve * new_from_rect(NR::Maybe<NR::Rect> const &rect);
+
+    virtual ~SPCurve();
+
     gint refcount;
     NArtBpath *_bpath;
     
@@ -59,61 +70,55 @@ struct SPCurve {
     
     /// True iff all subpaths are closed.
     bool closed : 1;
+
+    SPCurve * ref();
+    SPCurve * unref();
+
+    SPCurve * copy() const;
+
+    GSList * split() const;
+    void transform(NR::Matrix const &);
+    void transform(NR::translate const &);
+    void stretch_endpoints(NR::Point const &, NR::Point const &);
+    void move_endpoints(NR::Point const &, NR::Point const &);
+
+    void reset();
+
+    void moveto(NR::Point const &p);
+    void moveto(gdouble x, gdouble y);
+    void lineto(NR::Point const &p);
+    void lineto(gdouble x, gdouble y);
+    void lineto_moving(gdouble x, gdouble y);
+    void curveto(NR::Point const &p0, NR::Point const &p1, NR::Point const &p2);
+    void curveto(gdouble x0, gdouble y0, gdouble x1, gdouble y1, gdouble x2, gdouble y2);
+    void closepath();
+    void closepath_current();
+
+    SPCurve * append_continuous(SPCurve const *c1, gdouble tolerance);
+
+    bool is_empty() const;
+    NArtBpath * last_bpath() const;
+    NArtBpath * first_bpath() const;
+    NR::Point first_point() const;
+    NR::Point last_point() const;
+    NR::Point second_point() const;
+    NR::Point penultimate_point() const;
+
+    void append(SPCurve const *curve2, bool use_lineto);
+    SPCurve * reverse() const;
+    void backspace();
+
+    static SPCurve * concat(GSList const *list);
+
+private:
+    // Don't implement these:
+    SPCurve(const SPCurve&);
+    SPCurve& operator=(const SPCurve&);
 };
 
 #define SP_CURVE_LENGTH(c) (((SPCurve const *)(c))->end)
 #define SP_CURVE_BPATH(c) (((SPCurve const *)(c))->_bpath)
 #define SP_CURVE_SEGMENT(c,i) (((SPCurve const *)(c))->_bpath + (i))
-
-/* Constructors */
-
-SPCurve *sp_curve_new();
-SPCurve *sp_curve_new_sized(gint length);
-SPCurve *sp_curve_new_from_bpath(NArtBpath *bpath);
-SPCurve *sp_curve_new_from_foreign_bpath(NArtBpath const bpath[]);
-SPCurve *sp_curve_new_from_rect(NR::Maybe<NR::Rect> const &rect);
-
-SPCurve *sp_curve_ref(SPCurve *curve);
-SPCurve *sp_curve_unref(SPCurve *curve);
-
-SPCurve *sp_curve_copy(SPCurve *curve);
-SPCurve *sp_curve_concat(GSList const *list);
-GSList *sp_curve_split(SPCurve const *curve);
-void sp_curve_transform(SPCurve *curve, NR::Matrix const &);
-void sp_curve_transform(SPCurve *curve, NR::translate const &);
-void sp_curve_stretch_endpoints(SPCurve *curve, NR::Point const &, NR::Point const &);
-void sp_curve_move_endpoints(SPCurve *curve, NR::Point const &,
-        NR::Point const &);
-
-/* Methods */
-
-void sp_curve_reset(SPCurve *curve);
-
-void sp_curve_moveto(SPCurve *curve, NR::Point const &p);
-void sp_curve_moveto(SPCurve *curve, gdouble x, gdouble y);
-void sp_curve_lineto(SPCurve *curve, NR::Point const &p);
-void sp_curve_lineto(SPCurve *curve, gdouble x, gdouble y);
-void sp_curve_lineto_moving(SPCurve *curve, gdouble x, gdouble y);
-void sp_curve_curveto(SPCurve *curve, NR::Point const &p0, NR::Point const &p1, NR::Point const &p2);
-void sp_curve_curveto(SPCurve *curve, gdouble x0, gdouble y0, gdouble x1, gdouble y1, gdouble x2, gdouble y2);
-void sp_curve_closepath(SPCurve *curve);
-void sp_curve_closepath_current(SPCurve *curve);
-
-SPCurve *sp_curve_append_continuous(SPCurve *c0, SPCurve const *c1, gdouble tolerance);
-
-#define sp_curve_is_empty sp_curve_empty
-bool sp_curve_empty(SPCurve *curve);
-NArtBpath *sp_curve_last_bpath(SPCurve const *curve);
-NArtBpath *sp_curve_first_bpath(SPCurve const *curve);
-NR::Point sp_curve_first_point(SPCurve const *curve);
-NR::Point sp_curve_last_point(SPCurve const *curve);
-NR::Point sp_curve_second_point(SPCurve const *curve);
-NR::Point sp_curve_penultimate_point(SPCurve const *curve);
-
-void sp_curve_append(SPCurve *curve, SPCurve const *curve2, bool use_lineto);
-SPCurve *sp_curve_reverse(SPCurve const *curve);
-void sp_curve_backspace(SPCurve *curve);
-
 
 #endif /* !SEEN_DISPLAY_CURVE_H */
 

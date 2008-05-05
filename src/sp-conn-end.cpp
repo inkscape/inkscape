@@ -69,8 +69,8 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
         NR::Matrix h2i2anc[2];
         NR::Rect h2bbox_icoordsys[2];
         NR::Point last_seg_endPt[2] = {
-            sp_curve_second_point(path->curve),
-            sp_curve_penultimate_point(path->curve)
+            path->curve->second_point(),
+            path->curve->penultimate_point()
         };
         for (unsigned h = 0; h < 2; ++h) {
             NR::Maybe<NR::Rect> bbox = h2attItem[h]->getBounds(NR::identity());
@@ -102,13 +102,13 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
         NR::Point other_endpt;
         NR::Point last_seg_pt;
         if (h2attItem[0] != NULL) {
-            other_endpt = sp_curve_last_point(path->curve);
-            last_seg_pt = sp_curve_second_point(path->curve);
+            other_endpt = path->curve->last_point();
+            last_seg_pt = path->curve->second_point();
             ind = 0;
         }
         else {
-            other_endpt = sp_curve_first_point(path->curve);
-            last_seg_pt = sp_curve_penultimate_point(path->curve);
+            other_endpt = path->curve->first_point();
+            last_seg_pt = path->curve->penultimate_point();
             ind = 1;
         }
         NR::Point h2endPt_icoordsys[2];
@@ -225,11 +225,11 @@ static void
 change_endpts(SPCurve *const curve, NR::Point const h2endPt[2])
 {
 #if 0
-    sp_curve_reset(curve);
-    sp_curve_moveto(curve, h2endPt[0]);
-    sp_curve_lineto(curve, h2endPt[1]);
+    curve->reset();
+    curve->moveto(h2endPt[0]);
+    curve->lineto(h2endPt[1]);
 #else
-    sp_curve_move_endpoints(curve, h2endPt[0], h2endPt[1]);
+    curve->move_endpoints(h2endPt[0], h2endPt[1]);
 #endif
 }
 

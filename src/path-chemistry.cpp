@@ -112,12 +112,12 @@ sp_selected_path_combine(void)
             // FIXME: merge styles of combined objects instead of using the first one's style
             style = g_strdup(SP_OBJECT_REPR(first)->attribute("style"));
             path_effect = g_strdup(SP_OBJECT_REPR(first)->attribute("inkscape:path-effect"));
-            //sp_curve_transform(c, item->transform);
+            //c->transform(item->transform);
             curve = c;
         } else {
-            sp_curve_transform(c, item->getRelativeTransform(SP_OBJECT(first)));
-            sp_curve_append(curve, c, false);
-            sp_curve_unref(c);
+            c->transform(item->getRelativeTransform(SP_OBJECT(first)));
+            curve->append(c, false);
+            c->unref();
         }
 
         // unless this is the topmost object,
@@ -150,7 +150,7 @@ sp_selected_path_combine(void)
 
         // set path data corresponding to new curve
         gchar *dstring = sp_svg_write_path(SP_CURVE_BPATH(curve));
-        sp_curve_unref(curve);
+        curve->unref();
         repr->setAttribute("d", dstring);
         if (path_effect)
             repr->setAttribute("inkscape:original-d", dstring);
@@ -223,17 +223,17 @@ sp_selected_path_break_apart(void)
 
         NArtBpath *abp = nr_artpath_affine(SP_CURVE_BPATH(curve), (SP_ITEM(path))->transform);
 
-        sp_curve_unref(curve);
+        curve->unref();
 
         // it's going to resurrect as one of the pieces, so we delete without advertisement
         SP_OBJECT(item)->deleteObject(false);
 
-        curve = sp_curve_new_from_bpath(abp);
+        curve = SPCurve::new_from_bpath(abp);
         g_assert(curve != NULL);
 
-        GSList *list = sp_curve_split(curve);
+        GSList *list = curve->split();
 
-        sp_curve_unref(curve);
+        curve->unref();
 
         GSList *reprs = NULL;
         for (GSList *l = list; l != NULL; l = l->next) {
@@ -437,7 +437,7 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
     // otherwise we end up with zomby markup in the SVG file
     if(curve->end <= 0)
     {
-        sp_curve_unref(curve);
+        curve->unref();
         return NULL;
     }
 
@@ -469,7 +469,7 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
     gchar *def_str = sp_svg_write_path(SP_CURVE_BPATH(curve));
     repr->setAttribute("d", def_str);
     g_free(def_str);
-    sp_curve_unref(curve);
+    curve->unref();
     return repr;
 }
 
@@ -503,7 +503,7 @@ sp_selected_path_reverse()
         did = true;
         SPPath *path = SP_PATH(i->data);
 
-        SPCurve *rcurve = sp_curve_reverse(sp_path_get_curve_reference(path));
+        SPCurve *rcurve = sp_path_get_curve_reference(path)->reverse();
 
         gchar *str = sp_svg_write_path(SP_CURVE_BPATH(rcurve));
         if ( sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path)) ) {
@@ -513,7 +513,7 @@ sp_selected_path_reverse()
         }
         g_free(str);
 
-        sp_curve_unref(rcurve);
+        rcurve->unref();
     }
 
     desktop->clearWaitingCursor();

@@ -543,7 +543,7 @@ static void         GetDest(SPObject* child,Shape **computed,NR::Matrix itr_mat)
 		delete uncross;
 		delete n_shp;
 		delete temp;
-		sp_curve_unref(curve);
+		curve->unref();
 	} else {
 //		printf("no curve\n");
 	}

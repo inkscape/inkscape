@@ -232,7 +232,7 @@ sp_path_release(SPObject *object)
     path->connEndPair.release();
 
     if (path->original_curve) {
-        path->original_curve = sp_curve_unref (path->original_curve);
+        path->original_curve = path->original_curve->unref();
     }
 
     if (((SPObjectClass *) parent_class)->release) {
@@ -253,10 +253,10 @@ sp_path_set(SPObject *object, unsigned int key, gchar const *value)
         case SP_ATTR_INKSCAPE_ORIGINAL_D:
                 if (value) {
                     NArtBpath *bpath = sp_svg_read_path(value);
-                    SPCurve *curve = sp_curve_new_from_bpath(bpath);
+                    SPCurve *curve = SPCurve::new_from_bpath(bpath);
                     if (curve) {
                         sp_path_set_original_curve(path, curve, TRUE, true);
-                        sp_curve_unref(curve);
+                        curve->unref();
                     }
                 } else {
                     sp_path_set_original_curve(path, NULL, TRUE, true);
@@ -267,10 +267,10 @@ sp_path_set(SPObject *object, unsigned int key, gchar const *value)
             if (!sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path))) {
                 if (value) {
                     NArtBpath *bpath = sp_svg_read_path(value);
-                    SPCurve *curve = sp_curve_new_from_bpath(bpath);
+                    SPCurve *curve = SPCurve::new_from_bpath(bpath);
                     if (curve) {
                         sp_shape_set_curve((SPShape *) path, curve, TRUE);
-                        sp_curve_unref(curve);
+                        curve->unref();
                     }
                 } else {
                     sp_shape_set_curve((SPShape *) path, NULL, TRUE);
@@ -313,7 +313,7 @@ sp_path_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     if ( shape->curve != NULL ) {
-        NArtBpath *abp = sp_curve_first_bpath(shape->curve);
+        NArtBpath *abp = shape->curve->first_bpath();
         if (abp) {
             gchar *str = sp_svg_write_path(abp);
             repr->setAttribute("d", str);
@@ -327,7 +327,7 @@ sp_path_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 
     SPPath *path = (SPPath *) object;
     if ( path->original_curve != NULL ) {
-        NArtBpath *abp = sp_curve_first_bpath(path->original_curve);
+        NArtBpath *abp = path->original_curve->first_bpath();
         if (abp) {
             gchar *str = sp_svg_write_path(abp);
             repr->setAttribute("inkscape:original-d", str);
@@ -380,15 +380,15 @@ sp_path_set_transform(SPItem *item, NR::Matrix const &xform)
     // Transform the original-d path or the (ordinary) path
     bool original_path = (bool)path->original_curve;
     SPCurve *srccurve = original_path ? path->original_curve : shape->curve;
-    SPCurve *dstcurve = sp_curve_copy(srccurve);
+    SPCurve *dstcurve = srccurve->copy();
     if (dstcurve) {
-        sp_curve_transform(dstcurve, xform);
+        dstcurve->transform(xform);
         if (original_path) {
             sp_path_set_original_curve(path, dstcurve, TRUE, true);
         } else {
             sp_shape_set_curve(shape, dstcurve, TRUE);
         }
-        sp_curve_unref(dstcurve);
+        dstcurve->unref();
     }
 
     // Adjust stroke
@@ -415,16 +415,16 @@ sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
     SPShape *shape = (SPShape *) lpeitem;
     SPPath *path = (SPPath *) lpeitem;
     if (path->original_curve) {
-        SPCurve *curve = sp_curve_copy (path->original_curve);
+        SPCurve *curve = path->original_curve->copy();
         sp_lpe_item_perform_path_effect(SP_LPE_ITEM(shape), curve);
         sp_shape_set_curve(shape, curve, TRUE);
-        sp_curve_unref(curve);
+        curve->unref();
 
         if (write) {
             // could also do SP_OBJECT(shape)->updateRepr();  but only the d attribute needs updating.
             Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
             if ( shape->curve != NULL ) {
-                NArtBpath *abp = sp_curve_first_bpath(shape->curve);
+                NArtBpath *abp = shape->curve->first_bpath();
                 if (abp) {
                     gchar *str = sp_svg_write_path(abp);
                     repr->setAttribute("d", str);
@@ -454,13 +454,13 @@ void
 sp_path_set_original_curve (SPPath *path, SPCurve *curve, unsigned int owner, bool write)
 {
     if (path->original_curve) {
-        path->original_curve = sp_curve_unref (path->original_curve);
+        path->original_curve = path->original_curve->unref();
     }
     if (curve) {
         if (owner) {
-            path->original_curve = sp_curve_ref (curve);
+            path->original_curve = curve->ref();
         } else {
-            path->original_curve = sp_curve_copy (curve);
+            path->original_curve = curve->copy();
         }
     }
     sp_path_update_patheffect(path, write);
@@ -474,7 +474,7 @@ SPCurve *
 sp_path_get_original_curve (SPPath *path)
 {
     if (path->original_curve) {
-        return sp_curve_copy (path->original_curve);
+        return path->original_curve->copy();
     }
     return NULL;
 }

@@ -552,7 +552,7 @@ SPCurve *Layout::convertToCurves(iterator const &from_glyph, iterator const &to_
         bpath.path = (NArtBpath*)span.font->ArtBPath(_glyphs[glyph_index].glyph);
         if (bpath.path) {
             NArtBpath *abp = nr_artpath_affine(bpath.path, glyph_matrix);
-            SPCurve *c = sp_curve_new_from_bpath(abp);
+            SPCurve *c = SPCurve::new_from_bpath(abp);
             if (c) cc = g_slist_prepend(cc, c);
         }
     }
@@ -560,14 +560,14 @@ SPCurve *Layout::convertToCurves(iterator const &from_glyph, iterator const &to_
 
     SPCurve *curve;
     if ( cc ) {
-        curve = sp_curve_concat(cc);
+        curve = SPCurve::concat(cc);
     } else {
-        curve = sp_curve_new();
+        curve = new SPCurve();
     }
 
     while (cc) {
         /* fixme: This is dangerous, as we are mixing art_alloc and g_new */
-        sp_curve_unref((SPCurve *) cc->data);
+        reinterpret_cast<SPCurve *>(cc->data)->unref();
         cc = g_slist_remove(cc, cc->data);
     }
 

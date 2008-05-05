@@ -103,7 +103,7 @@ sp_canvas_bpath_destroy (GtkObject *object)
         cbp->stroke_shp = NULL;
     }
     if (cbp->curve) {
-        cbp->curve = sp_curve_unref (cbp->curve);
+        cbp->curve = cbp->curve->unref();
     }
 
     if (GTK_OBJECT_CLASS (parent_class)->destroy)
@@ -272,11 +272,11 @@ sp_canvas_bpath_set_bpath (SPCanvasBPath *cbp, SPCurve *curve)
     g_return_if_fail (SP_IS_CANVAS_BPATH (cbp));
 
     if (cbp->curve) {
-        cbp->curve = sp_curve_unref (cbp->curve);
+        cbp->curve = cbp->curve->unref();
     }
 
     if (curve) {
-        cbp->curve = sp_curve_ref (curve);
+        cbp->curve = curve->ref();
     }
 
     sp_canvas_item_request_update (SP_CANVAS_ITEM (cbp));

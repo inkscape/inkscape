@@ -105,7 +105,7 @@ sp_polyline_set (SPObject *object, unsigned int key, const gchar *value)
 		gboolean hascpt;
 
 		if (!value) break;
-		curve = sp_curve_new ();
+		curve = new SPCurve ();
 		hascpt = FALSE;
 
 		cptr = value;
@@ -132,15 +132,15 @@ sp_polyline_set (SPObject *object, unsigned int key, const gchar *value)
 			if (eptr == cptr) break;
 			cptr = eptr;
 			if (hascpt) {
-				sp_curve_lineto (curve, x, y);
+				curve->lineto(x, y);
 			} else {
-				sp_curve_moveto (curve, x, y);
+				curve->moveto(x, y);
 				hascpt = TRUE;
 			}
 		}
 		
 		sp_shape_set_curve (SP_SHAPE (polyline), curve, TRUE);
-		sp_curve_unref (curve);
+		curve->unref();
 		break;
 	}
 	default:

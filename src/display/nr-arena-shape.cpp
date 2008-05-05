@@ -142,7 +142,7 @@ nr_arena_shape_finalize(NRObject *object)
     if (shape->stroke_painter) sp_painter_free(shape->stroke_painter);
 
     if (shape->style) sp_style_unref(shape->style);
-    if (shape->curve) sp_curve_unref(shape->curve);
+    if (shape->curve) shape->curve->unref();
 
     ((NRObjectClass *) shape_parent_class)->finalize(object);
 }
@@ -333,7 +333,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
 
     if (!shape->curve || 
         !shape->style ||
-        sp_curve_is_empty(shape->curve) ||
+        shape->curve->is_empty() ||
         (( shape->_fill.paint.type() == NRArenaShape::Paint::NONE ) &&
          ( shape->_stroke.paint.type() == NRArenaShape::Paint::NONE && !outline) ))
     {
@@ -1188,13 +1188,13 @@ void nr_arena_shape_set_path(NRArenaShape *shape, SPCurve *curve,bool justTrans)
     nr_arena_item_request_render(NR_ARENA_ITEM(shape));
 
     if (shape->curve) {
-        sp_curve_unref(shape->curve);
+        shape->curve->unref();
         shape->curve = NULL;
     }
 
     if (curve) {
         shape->curve = curve;
-        sp_curve_ref(curve);
+        curve->ref();
     }
 
     nr_arena_item_request_update(NR_ARENA_ITEM(shape), NR_ARENA_ITEM_STATE_ALL, FALSE);

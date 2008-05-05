@@ -275,10 +275,10 @@ sp_connector_context_setup(SPEventContext *ec)
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(cc->red_bpath), 0x00000000,
             SP_WIND_RULE_NONZERO);
     /* Create red curve */
-    cc->red_curve = sp_curve_new_sized(4);
+    cc->red_curve = new SPCurve(4);
 
     /* Create green curve */
-    cc->green_curve = sp_curve_new_sized(64);
+    cc->green_curve = new SPCurve(64);
 
     // Notice the initial selection.
     cc_selection_changed(cc->selection, (gpointer) cc);
@@ -638,17 +638,17 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
             SPCurve *curve = (SP_SHAPE(path))->curve;
             if (cc->clickedhandle == cc->endpt_handle[0]) {
                 NR::Point o = cc->endpt_handle[1]->pos;
-                sp_curve_stretch_endpoints(curve, p * d2i, o * d2i);
+                curve->stretch_endpoints(p * d2i, o * d2i);
             }
             else {
                 NR::Point o = cc->endpt_handle[0]->pos;
-                sp_curve_stretch_endpoints(curve, o * d2i, p * d2i);
+                curve->stretch_endpoints(o * d2i, p * d2i);
             }
             sp_conn_adjust_path(path);
 
             // Copy this to the temporary visible path
-            cc->red_curve = sp_curve_copy(SP_SHAPE(path)->curve);
-            sp_curve_transform(cc->red_curve, i2d);
+            cc->red_curve = SP_SHAPE(path)->curve->copy();
+            cc->red_curve->transform(i2d);
 
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), cc->red_curve);
             ret = TRUE;
@@ -772,7 +772,7 @@ cc_connector_rerouting_finish(SPConnectorContext *const cc, NR::Point *const p)
     SPDocument *doc = sp_desktop_document(desktop);
     
     // Clear the temporary path:
-    sp_curve_reset(cc->red_curve);
+    cc->red_curve->reset();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), NULL);
 
     if (p != NULL)
@@ -805,10 +805,10 @@ static void
 spcc_reset_colors(SPConnectorContext *cc)
 {
     /* Red */
-    sp_curve_reset(cc->red_curve);
+    cc->red_curve->reset();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), NULL);
 
-    sp_curve_reset(cc->green_curve);
+    cc->green_curve->reset();
     cc->npoints = 0;
 }
 
@@ -849,15 +849,15 @@ spcc_connector_set_subsequent_point(SPConnectorContext *const cc, NR::Point cons
     Avoid::PolyLine route = cc->newConnRef->route();
     cc->newConnRef->calcRouteDist();
 
-    sp_curve_reset(cc->red_curve);
+    cc->red_curve->reset();
     NR::Point pt(route.ps[0].x, route.ps[0].y);
-    sp_curve_moveto(cc->red_curve, pt);
+    cc->red_curve->moveto(pt);
 
     for (int i = 1; i < route.pn; ++i) {
         NR::Point p(route.ps[i].x, route.ps[i].y);
-        sp_curve_lineto(cc->red_curve, p);
+        cc->red_curve->lineto(p);
     }
-    sp_curve_transform(cc->red_curve, dt->doc2dt());
+    cc->red_curve->transform(dt->doc2dt());
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), cc->red_curve);
 }
 
@@ -871,19 +871,19 @@ static void
 spcc_concat_colors_and_flush(SPConnectorContext *cc)
 {
     SPCurve *c = cc->green_curve;
-    cc->green_curve = sp_curve_new_sized(64);
+    cc->green_curve = new SPCurve(64);
 
-    sp_curve_reset(cc->red_curve);
+    cc->red_curve->reset();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), NULL);
 
-    if (sp_curve_empty(c)) {
-        sp_curve_unref(c);
+    if (c->is_empty()) {
+        c->unref();
         return;
     }
 
     spcc_flush_white(cc, c);
 
-    sp_curve_unref(c);
+    c->unref();
 }
 
 
@@ -902,20 +902,19 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
 
     if (gc) {
         c = gc;
-        sp_curve_ref(c);
+        c->ref();
     } else {
         return;
     }
 
     /* Now we have to go back to item coordinates at last */
-    sp_curve_transform(c,
-            sp_desktop_dt2root_affine(SP_EVENT_CONTEXT_DESKTOP(cc)));
+    c->transform(sp_desktop_dt2root_affine(SP_EVENT_CONTEXT_DESKTOP(cc)));
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
     SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
-    if ( c && !sp_curve_empty(c) ) {
+    if ( c && !c->is_empty() ) {
         /* We actually have something to write */
 
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
@@ -958,7 +957,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
         cc->newconn->updateRepr();
     }
 
-    sp_curve_unref(c);
+    c->unref();
 
     /* Flush pending updates */
     sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR, _("Create connector"));
@@ -969,14 +968,14 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
 static void
 spcc_connector_finish_segment(SPConnectorContext *const cc, NR::Point const /*p*/)
 {
-    if (!sp_curve_empty(cc->red_curve)) {
-        sp_curve_append_continuous(cc->green_curve, cc->red_curve, 0.0625);
+    if (!cc->red_curve->is_empty()) {
+        cc->green_curve->append_continuous(cc->red_curve, 0.0625);
 
         cc->p[0] = cc->p[3];
         cc->p[1] = cc->p[4];
         cc->npoints = 2;
 
-        sp_curve_reset(cc->red_curve);
+        cc->red_curve->reset();
     }
 }
 
@@ -987,7 +986,7 @@ spcc_connector_finish(SPConnectorContext *const cc)
     SPDesktop *const desktop = cc->desktop;
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Finishing connector"));
 
-    sp_curve_reset(cc->red_curve);
+    cc->red_curve->reset();
     spcc_concat_colors_and_flush(cc);
 
     cc->npoints = 0;
@@ -1078,11 +1077,10 @@ endpt_handler(SPKnot */*knot*/, GdkEvent *event, SPConnectorContext *cc)
                 }
 
                 // Show the red path for dragging.
-                cc->red_curve = sp_curve_copy(SP_PATH(cc->clickeditem)->curve);
+                cc->red_curve = SP_PATH(cc->clickeditem)->curve->copy();
                 NR::Matrix i2d = sp_item_i2d_affine(cc->clickeditem);
-                sp_curve_transform(cc->red_curve, i2d);
-                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath),
-                        cc->red_curve);
+                cc->red_curve->transform(i2d);
+                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), cc->red_curve);
 
                 cc->clickeditem->setHidden(true);
 
@@ -1172,10 +1170,10 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
     if (cc->active_conn == item)
     {
         // Just adjust handle positions.
-        NR::Point startpt = sp_curve_first_point(curve) * i2d;
+        NR::Point startpt = curve->first_point() * i2d;
         sp_knot_set_position(cc->endpt_handle[0], &startpt, 0);
 
-        NR::Point endpt = sp_curve_last_point(curve) * i2d;
+        NR::Point endpt = curve->last_point() * i2d;
         sp_knot_set_position(cc->endpt_handle[1], &endpt, 0);
 
         return;
@@ -1239,10 +1237,10 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
                 G_CALLBACK(endpt_handler), cc);
     }
 
-    NR::Point startpt = sp_curve_first_point(curve) * i2d;
+    NR::Point startpt = curve->first_point() * i2d;
     sp_knot_set_position(cc->endpt_handle[0], &startpt, 0);
 
-    NR::Point endpt = sp_curve_last_point(curve) * i2d;
+    NR::Point endpt = curve->last_point() * i2d;
     sp_knot_set_position(cc->endpt_handle[1], &endpt, 0);
 
     sp_knot_show(cc->endpt_handle[0]);

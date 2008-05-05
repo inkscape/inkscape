@@ -28,7 +28,7 @@ Inkscape::Rubberband::Rubberband()
 {
     _points.clear();
     _mode = RUBBERBAND_MODE_RECT;
-    _touchpath_curve = sp_curve_new_sized(2000);
+    _touchpath_curve = new SPCurve(2000);
 }
 
 void Inkscape::Rubberband::delete_canvas_items()
@@ -49,13 +49,13 @@ void Inkscape::Rubberband::delete_canvas_items()
 void Inkscape::Rubberband::start(SPDesktop *d, NR::Point const &p)
 {
     _points.clear();
-    sp_curve_reset(_touchpath_curve);
+    _touchpath_curve->reset();
     delete_canvas_items();
     _desktop = d;
     _start = p;
     _started = true;
     _points.push_back(_desktop->d2w(p));
-    sp_curve_moveto(_touchpath_curve, p);
+    _touchpath_curve->moveto(p);
 
     sp_canvas_force_full_redraw_after_interruptions(_desktop->canvas, 5);
 }
@@ -66,7 +66,7 @@ void Inkscape::Rubberband::stop()
     _mode = RUBBERBAND_MODE_RECT; // restore the default
 
     _points.clear();
-    sp_curve_reset(_touchpath_curve);
+    _touchpath_curve->reset();
 
     delete_canvas_items();
 
@@ -81,7 +81,7 @@ void Inkscape::Rubberband::move(NR::Point const &p)
 
     _end = p;
     _desktop->scroll_to_point(&p);
-    sp_curve_lineto (_touchpath_curve, p);
+    _touchpath_curve->lineto(p);
 
     NR::Point next = _desktop->d2w(p);
     // we want the points to be at most 0.5 screen pixels apart,
