@@ -10,7 +10,7 @@
     <effect>
 		<object-type>path</object-type>
                 <effects-menu>
-                    <submenu _name="Generate from Path"/>
+                    <submenu _name="Visualize Path"/>
                 </effects-menu>
     </effect>
     <script>
