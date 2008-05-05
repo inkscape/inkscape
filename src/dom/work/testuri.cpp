@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2006-2007 Bob Jamison
+ * Copyright (C) 2006-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -32,7 +32,7 @@
 
 typedef org::w3c::dom::URI URI;
 
-static bool doURI(char *uristr)
+static bool doURI(const char *uristr)
 {
     org::w3c::dom::URI uri(uristr);
     printf("##################################\n");
@@ -56,7 +56,7 @@ static bool test1()
     printf("########################################\n");
     printf("## TEST 1\n");
     printf("########################################\n");
-    char *uristr = "http://www.mit.edu:80/index.html?test=good#hello";
+    const char *uristr = "http://www.mit.edu:80/index.html?test=good#hello";
     doURI(uristr);
     uristr = "http://www.mit.edu:80";
     doURI(uristr);

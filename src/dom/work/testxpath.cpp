@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2006 Bob Jamison
+ * Copyright (C) 2006-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -54,9 +54,9 @@ typedef org::w3c::dom::xpath::XPathParser XPathParser;
 
 typedef struct
 {
-    char *xpathStr;
-    char *desc;
-    char *xml;
+    const char *xpathStr;
+    const char *desc;
+    const char *xml;
 } XpathTest;
 
 XpathTest xpathTests[] =
@@ -1333,7 +1333,7 @@ NULL,
 
 
 
-bool doStringTest(char *str)
+bool doStringTest(const char *str)
 {
     XPathParser xp;
     xp.setDebug(true);

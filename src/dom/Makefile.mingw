@@ -81,8 +81,8 @@ else
 # NATIVE COMPILER SETTINGS
 ##########################################################################
 
-CC      = i686-pc-mingw32-gcc
-CXX     = i686-pc-mingw32-g++
+CC      = mingw32-gcc
+CXX     = mingw32-g++
 AS      = as
 AR      = mingw32-ar
 RANLIB  = ranlib
@@ -115,16 +115,16 @@ RMDIRREC = cd inkscape & $(RMDIR) /s
 RMDIRREC1 = & cd ..
 
 #######  Where is your GTK directory?
-GTK=c:/gtk28
+GTK=c:/devlibs
 
 ####### Same thing, DOS style
-GTKDOS=c:\gtk28
+GTKDOS=c:\devlibs
 
 ####### Command to process .po files --> .mo
 MSGFMT = $(GTKDOS)$(S)bin$(S)msgfmt
 
 ####### change me!!
-DTG := 20050626
+DTG := 20080515
 
 endif
 ##########################################################################
@@ -135,16 +135,14 @@ endif
 
 
 INC = -I. -I..
-CFLAGS = -Wall -g -DXP_WIN 
+CFLAGS = -Wall -g
 LIBS = -lws2_32
 
 DOMOBJ = \
-cssparser.o       \
+cssreader.o       \
 domimpl.o         \
 domptr.o          \
 domstring.o       \
-jsengine.o        \
-jsdombind.o       \
 lsimpl.o          \
 smilimpl.o        \
 uri.o             \
@@ -162,7 +160,7 @@ io/uristream.o    \
 io/socket.o       \
 odf/odfdocument.o \
 svgimpl.o         \
-svgparser.o       \
+svgreader.o       \
 ucd.o             \
 util/thread.o     \
 util/ziptool.o
@@ -179,7 +177,7 @@ work/testzip.o
 
 OBJ = $(DOMOBJ)
 
-all: testdom.exe testhttp.exe testjs.exe \
+all: testdom.exe testhttp.exe  \
 testsvg.exe testuri.exe testxpath.exe testzip.exe
 
 testdom.exe: libdom.a work/testdom.o
@@ -187,9 +185,6 @@ testdom.exe: libdom.a work/testdom.o
 
 testhttp.exe: libdom.a work/testhttp.o
 	$(CXX) -o $@ work/testhttp.o libdom.a $(LIBS)
-
-testjs.exe: libdom.a work/testjs.o
-	$(CXX) -o $@ work/testjs.o libdom.a $(LIBS)
 
 testodf.exe: libdom.a work/testodf.o
 	$(CXX) -o $@ work/testodf.o libdom.a $(LIBS)
@@ -221,8 +216,6 @@ clean:
 	-$(RM) *.gch
 	-$(RM) testdom
 	-$(RM) testdom.exe
-	-$(RM) testjs
-	-$(RM) testjs.exe
 	-$(RM) testsvg
 	-$(RM) testsvg.exe
 	-$(RM) testuri
