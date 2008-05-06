@@ -255,24 +255,20 @@ ActionAlign::Coeffs const ActionAlign::_allCoeffs[10] = {
     {0., 0., 1., 0., 0., 0., 0., 1.}
 };
 
-struct BBoxSort
-{
-    SPItem *item;
-    float anchor;
-    NR::Rect bbox;
-    BBoxSort(SPItem *pItem, NR::Rect bounds, NR::Dim2 orientation, double kBegin, double kEnd) :
+BBoxSort::BBoxSort(SPItem *pItem, NR::Rect bounds, NR::Dim2 orientation, double kBegin, double kEnd) :
         item(pItem),
         bbox (bounds)
-    {
+{
         anchor = kBegin * bbox.min()[orientation] + kEnd * bbox.max()[orientation];
-    }
-    BBoxSort(const BBoxSort &rhs):
+}
+BBoxSort::BBoxSort(const BBoxSort &rhs) :
         //NOTE :  this copy ctor is called O(sort) when sorting the vector
         //this is bad. The vector should be a vector of pointers.
         //But I'll wait the bohem GC before doing that
-        item(rhs.item), anchor(rhs.anchor), bbox(rhs.bbox) {
-    }
-};
+        item(rhs.item), anchor(rhs.anchor), bbox(rhs.bbox) 
+{
+}
+
 bool operator< (const BBoxSort &a, const BBoxSort &b)
 {
     return (a.anchor < b.anchor);

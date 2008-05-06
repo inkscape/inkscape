@@ -104,6 +104,17 @@ private:
     AlignAndDistribute& operator=(AlignAndDistribute const &d);
 };
 
+
+struct BBoxSort
+{
+    SPItem *item;
+    float anchor;
+    NR::Rect bbox;
+    BBoxSort(SPItem *pItem, NR::Rect bounds, NR::Dim2 orientation, double kBegin, double kEnd);
+    BBoxSort(const BBoxSort &rhs);
+};
+bool operator< (const BBoxSort &a, const BBoxSort &b);
+
 } // namespace Dialog
 } // namespace UI
 } // namespace Inkscape
