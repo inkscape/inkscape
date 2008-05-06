@@ -1,3 +1,3 @@
-SET(api
-api/inkscape.idl
+SET(api_SRC
+#inkscape.idl
 )

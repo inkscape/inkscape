@@ -1,3 +1,11 @@
+IF(WIN32)
+SET(ui_dialog_WIN32_SRC
+filedialogimpl-win32.cpp
+filedialogimpl-win32.h)
+ELSEIF(WIN32)
+    SET(ui_dialog_WIN32_SRC)
+ENDIF(WIN32)
+
 SET(ui_dialog_SRC
 aboutbox.cpp
 aboutbox.h
@@ -22,8 +30,6 @@ filedialog.cpp
 filedialog.h
 filedialogimpl-gtkmm.cpp
 filedialogimpl-gtkmm.h
-filedialogimpl-win32.cpp
-filedialogimpl-win32.h
 fill-and-stroke.cpp
 fill-and-stroke.h
 filter-effects-dialog.cpp
@@ -71,4 +77,5 @@ undo-history.h
 #whiteboard-sharewithuser.h
 xml-editor.cpp
 xml-editor.h
+${ui_dialog_WIN32_SRC}
 )

@@ -513,6 +513,7 @@ ${ONLY_WIN}
 SET(srcfolders
 algorithms
 api
+application
 bind
 debug
 dialogs
@@ -526,7 +527,11 @@ extension
 #extension/dxf2svg
 extension/implementation
 extension/internal
+extension/internal/bitmap
+extension/internal/filter
+extension/internal/pdfinput
 extension/param
+extension/script
 graphlayout
 helper
 inkjar
@@ -569,8 +574,6 @@ ENDFOREACH(dirlist)
 # All directories containing lists files that describe building internal libraries
 SET(libfolders
 2geom
-application
-#dialogs
 libavoid
 libcola
 libcroco
