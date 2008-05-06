@@ -107,19 +107,23 @@ namespace {
 static GtkHBoxClass *fs_parent_class = NULL;
 static guint fs_signals[LAST_SIGNAL] = { 0 };
 
-GtkType sp_font_selector_get_type()
+GType sp_font_selector_get_type()
 {
-    static GtkType type = 0;
+    static GType type = 0;
     if (!type) {
-        static const GtkTypeInfo info = {
-            "SPFontSelector",
-            sizeof(SPFontSelector),
+        GTypeInfo info = {
             sizeof(SPFontSelectorClass),
-            (GtkClassInitFunc) sp_font_selector_class_init,
-            (GtkObjectInitFunc) sp_font_selector_init,
-            NULL, NULL, NULL
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_font_selector_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(SPFontSelector),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_font_selector_init,
+            0 // value_table
         };
-        type = gtk_type_unique(GTK_TYPE_HBOX, &info);
+        type = g_type_register_static(GTK_TYPE_HBOX, "SPFontSelector", &info, static_cast<GTypeFlags>(0));
     }
     return type;
 }
@@ -538,19 +542,23 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event);
 
 static GtkDrawingAreaClass *fp_parent_class = NULL;
 
-GtkType sp_font_preview_get_type()
+GType sp_font_preview_get_type()
 {
-    static GtkType type = 0;
+    static GType type = 0;
     if (!type) {
-        static const GtkTypeInfo info = {
-            "SPFontPreview",
-            sizeof (SPFontPreview),
-            sizeof (SPFontPreviewClass),
-            (GtkClassInitFunc) sp_font_preview_class_init,
-            (GtkObjectInitFunc) sp_font_preview_init,
-            NULL, NULL, NULL
+        GTypeInfo info = {
+            sizeof(SPFontPreviewClass),
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_font_preview_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(SPFontPreview),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_font_preview_init,
+            0 // value_table
         };
-        type = gtk_type_unique (GTK_TYPE_DRAWING_AREA, &info);
+        type = g_type_register_static(GTK_TYPE_DRAWING_AREA, "SPFontPreview", &info, static_cast<GTypeFlags>(0));
     }
     return type;
 }

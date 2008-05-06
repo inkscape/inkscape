@@ -434,7 +434,7 @@ PotraceTracingEngine::traceSingle(GdkPixbuf * thePixbuf)
 
     grayMap->destroy(grayMap);
 
-    char *style = "fill:#000000";
+    char const *style = "fill:#000000";
 
     //g_message("### GOT '%s' \n", d);
     TracingEngineResult result(style, d, nodeCount);
@@ -459,7 +459,7 @@ PotraceTracingEngine::traceGrayMap(GrayMap *grayMap)
     long nodeCount;
     std::string d = grayMapToPath(grayMap, &nodeCount);
 
-    char *style = "fill:#000000";
+    char const *style = "fill:#000000";
 
     //g_message("### GOT '%s' \n", d);
     TracingEngineResult result(style, d, nodeCount);

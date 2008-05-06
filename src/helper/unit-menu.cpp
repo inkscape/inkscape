@@ -58,20 +58,23 @@ static void sp_unit_selector_finalize(GObject *object);
 static GtkHBoxClass *unit_selector_parent_class;
 static guint signals[LAST_SIGNAL] = {0};
 
-GtkType
-sp_unit_selector_get_type(void)
+GType sp_unit_selector_get_type(void)
 {
-    static GtkType type = 0;
+    static GType type = 0;
     if (!type) {
-        static GtkTypeInfo const info = {
-            "SPUnitSelector",
-            sizeof(SPUnitSelector),
+        GTypeInfo info = {
             sizeof(SPUnitSelectorClass),
-            (GtkClassInitFunc) sp_unit_selector_class_init,
-            (GtkObjectInitFunc) sp_unit_selector_init,
-            NULL, NULL, NULL
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_unit_selector_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(SPUnitSelector),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_unit_selector_init,
+            0 // value_table
         };
-        type = gtk_type_unique(GTK_TYPE_HBOX, &info);
+        type = g_type_register_static(GTK_TYPE_HBOX, "SPUnitSelector", &info, static_cast<GTypeFlags>(0));
     }
     return type;
 }

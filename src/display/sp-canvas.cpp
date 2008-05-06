@@ -676,25 +676,25 @@ static SPCanvasItemClass *group_parent_class;
 /**
  * Registers SPCanvasGroup class with Gtk and returns its type number.
  */
-GtkType
-sp_canvas_group_get_type (void)
+GType sp_canvas_group_get_type(void)
 {
-    static GtkType group_type = 0;
-
-    if (!group_type) {
-        static GtkTypeInfo const group_info = {
-            "SPCanvasGroup",
-            sizeof (SPCanvasGroup),
-            sizeof (SPCanvasGroupClass),
-            (GtkClassInitFunc) sp_canvas_group_class_init,
-            (GtkObjectInitFunc) sp_canvas_group_init,
-            NULL, NULL, NULL
+    static GType type = 0;
+    if (!type) {
+        GTypeInfo info = {
+            sizeof(SPCanvasGroupClass),
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_canvas_group_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(SPCanvasGroup),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_canvas_group_init,
+            0 // value_table
         };
-
-        group_type = gtk_type_unique (sp_canvas_item_get_type (), &group_info);
+        type = g_type_register_static(sp_canvas_item_get_type(), "SPCanvasGroup", &info, static_cast<GTypeFlags>(0));
     }
-
-    return group_type;
+    return type;
 }
 
 /**
@@ -932,25 +932,25 @@ static int do_update (SPCanvas *canvas);
  *
  * \return The type ID of the SPCanvas class.
  **/
-GtkType
-sp_canvas_get_type (void)
+GType sp_canvas_get_type(void)
 {
-    static GtkType canvas_type = 0;
-
-    if (!canvas_type) {
-        static GtkTypeInfo const canvas_info = {
-            "SPCanvas",
-            sizeof (SPCanvas),
-            sizeof (SPCanvasClass),
-            (GtkClassInitFunc) sp_canvas_class_init,
-            (GtkObjectInitFunc) sp_canvas_init,
-            NULL, NULL, NULL
+    static GType type = 0;
+    if (!type) {
+        GTypeInfo info = {
+            sizeof(SPCanvasClass),
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_canvas_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(SPCanvas),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_canvas_init,
+            0 // value_table
         };
-
-        canvas_type = gtk_type_unique (GTK_TYPE_WIDGET, &canvas_info);
+        type = g_type_register_static(GTK_TYPE_WIDGET, "SPCanvas", &info, static_cast<GTypeFlags>(0));
     }
-
-    return canvas_type;
+    return type;
 }
 
 /**

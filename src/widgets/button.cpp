@@ -56,22 +56,25 @@ SPActionEventVector button_event_vector = {
          NULL
 };
 
-GtkType
-sp_button_get_type (void)
+GType sp_button_get_type(void)
 {
-	static GtkType type = 0;
-	if (!type) {
-		GtkTypeInfo info = {
-			"SPButton",
-			sizeof (SPButton),
-			sizeof (SPButtonClass),
-			(GtkClassInitFunc) sp_button_class_init,
-			(GtkObjectInitFunc) sp_button_init,
-			NULL, NULL, NULL
-		};
-		type = gtk_type_unique (GTK_TYPE_TOGGLE_BUTTON, &info);
-	}
-	return type;
+    static GType type = 0;
+    if (!type) {
+        GTypeInfo info = {
+            sizeof(SPButtonClass),
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_button_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(SPButton),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_button_init,
+            0 // value_table
+        };
+        type = g_type_register_static(GTK_TYPE_TOGGLE_BUTTON, "SPButton", &info, static_cast<GTypeFlags>(0));
+    }
+    return type;
 }
 
 static void

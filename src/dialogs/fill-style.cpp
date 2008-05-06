@@ -283,9 +283,9 @@ sp_fill_style_widget_fillrule_changed ( SPPaintSelector */*psel*/,
                       _("Change fill rule"));
 }
 
-static gchar *undo_label_1 = "fill:flatcolor:1";
-static gchar *undo_label_2 = "fill:flatcolor:2";
-static gchar *undo_label = undo_label_1;
+static gchar const *undo_label_1 = "fill:flatcolor:1";
+static gchar const *undo_label_2 = "fill:flatcolor:2";
+static gchar const *undo_label = undo_label_1;
 
 /**
 This is called repeatedly while you are dragging a color slider, only for flat color

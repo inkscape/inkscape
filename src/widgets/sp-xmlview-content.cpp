@@ -77,21 +77,24 @@ sp_xmlview_content_set_repr (SPXMLViewContent * text, Inkscape::XML::Node * repr
     }
 }
 
-GtkType
-sp_xmlview_content_get_type (void)
+GType sp_xmlview_content_get_type(void)
 {
     static GtkType type = 0;
 
     if (!type) {
-        static const GtkTypeInfo info = {
-            "SPXMLViewContent",
-            sizeof (SPXMLViewContent),
-            sizeof (SPXMLViewContentClass),
-            (GtkClassInitFunc) sp_xmlview_content_class_init,
-            (GtkObjectInitFunc) sp_xmlview_content_init,
-            NULL, NULL, NULL
+        GTypeInfo info = {
+            sizeof(SPXMLViewContentClass),
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_xmlview_content_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(SPXMLViewContent),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_xmlview_content_init,
+            0 // value_table
         };
-        type = gtk_type_unique (GTK_TYPE_TEXT_VIEW, &info);
+        type = g_type_register_static(GTK_TYPE_TEXT_VIEW, "SPXMLViewContent", &info, static_cast<GTypeFlags>(0));
     }
 
     return type;

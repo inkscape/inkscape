@@ -77,24 +77,27 @@ sp_xmlview_attr_list_set_repr (SPXMLViewAttrList * list, Inkscape::XML::Node * r
 	gtk_clist_thaw (GTK_CLIST (list));
 }
 
-GtkType
-sp_xmlview_attr_list_get_type (void)
+GType sp_xmlview_attr_list_get_type(void)
 {
-	static GtkType type = 0;
+    static GType type = 0;
 
-	if (!type) {
-		static const GtkTypeInfo info = {
-			"SPXMLViewAttrList",
-			sizeof (SPXMLViewAttrList),
-			sizeof (SPXMLViewAttrListClass),
-			(GtkClassInitFunc) sp_xmlview_attr_list_class_init,
-			(GtkObjectInitFunc) sp_xmlview_attr_list_init,
-			NULL, NULL, NULL
-		};
-		type = gtk_type_unique (GTK_TYPE_CLIST, &info);
-	}
+    if (!type) {
+        GTypeInfo info = {
+            sizeof(SPXMLViewAttrListClass),
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_xmlview_attr_list_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(SPXMLViewAttrList),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_xmlview_attr_list_init,
+            0 // value_table
+        };
+        type = g_type_register_static(GTK_TYPE_CLIST, "SPXMLViewAttrList", &info, static_cast<GTypeFlags>(0));
+    }
 
-	return type;
+    return type;
 }
 
 void

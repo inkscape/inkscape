@@ -243,20 +243,23 @@ SPDesktopWidget::window_get_pointer()
 /**
  * Registers SPDesktopWidget class and returns its type number.
  */
-GtkType
-sp_desktop_widget_get_type (void)
+GType sp_desktop_widget_get_type(void)
 {
     static GtkType type = 0;
     if (!type) {
-        static const GtkTypeInfo info = {
-            "SPDesktopWidget",
-            sizeof (SPDesktopWidget),
-            sizeof (SPDesktopWidgetClass),
-            (GtkClassInitFunc) sp_desktop_widget_class_init,
-            (GtkObjectInitFunc) sp_desktop_widget_init,
-            NULL, NULL, NULL
+        GTypeInfo info = {
+            sizeof(SPDesktopWidgetClass),
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_desktop_widget_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(SPDesktopWidget),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_desktop_widget_init,
+            0 // value_table
         };
-        type = gtk_type_unique (SP_TYPE_VIEW_WIDGET, &info);
+        type = g_type_register_static(SP_TYPE_VIEW_WIDGET, "SPDesktopWidget", &info, static_cast<GTypeFlags>(0));
     }
     return type;
 }

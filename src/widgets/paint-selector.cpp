@@ -88,20 +88,23 @@ static void sp_paint_selector_set_style_buttons(SPPaintSelector *psel, GtkWidget
 static GtkVBoxClass *parent_class;
 static guint psel_signals[LAST_SIGNAL] = {0};
 
-GtkType
-sp_paint_selector_get_type(void)
+GType sp_paint_selector_get_type(void)
 {
     static GtkType type = 0;
     if (!type) {
-        GtkTypeInfo info = {
-            "SPPaintSelector",
-            sizeof(SPPaintSelector),
+        GTypeInfo info = {
             sizeof(SPPaintSelectorClass),
-            (GtkClassInitFunc) sp_paint_selector_class_init,
-            (GtkObjectInitFunc) sp_paint_selector_init,
-            NULL, NULL, NULL
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_paint_selector_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(SPPaintSelector),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_paint_selector_init,
+            0 // value_table
         };
-        type = gtk_type_unique(GTK_TYPE_VBOX, &info);
+        type = g_type_register_static(GTK_TYPE_VBOX, "SPPaintSelector", &info, static_cast<GTypeFlags>(0));
     }
     return type;
 }
