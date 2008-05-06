@@ -47,7 +47,8 @@ svg/test-svg.cpp: $(svg_test_svg_includes) svg/Makefile_insert
 svg_test_svg_includes = \
 	$(srcdir)/svg/css-ostringstream-test.h	\
 	$(srcdir)/svg/stringstream-test.h	\
-	$(srcdir)/svg/svg-color-test.h
+	$(srcdir)/svg/svg-color-test.h \
+	$(srcdir)/svg/svg-path-test.h
 
 svg_libtest_svg_a_SOURCES = \
 	svg/test-svg.cpp	\
