@@ -150,22 +150,27 @@ LPESpiro::doEffect(SPCurve * curve)
                 }
                 if (next) {
                     bool this_is_line = bpath[ib].code == NR_LINETO ||
-                        (NR::L2(NR::Point(bpath[ib].x3, bpath[ib].y3) - NR::Point(bpath[ib].x2, bpath[ib].y2)) < 0.001);
+                        (NR::L2(NR::Point(bpath[ib].x3, bpath[ib].y3) - NR::Point(bpath[ib].x2, bpath[ib].y2)) < 1e-6);
                     bool next_is_line = next->code == NR_LINETO ||
-                        (NR::L2(NR::Point(bpath[ib].x3, bpath[ib].y3) - NR::Point(next->x1, next->y1)) < 0.001);
-                    double this_angle = NR_HUGE;
+                        (NR::L2(NR::Point(bpath[ib].x3, bpath[ib].y3) - NR::Point(next->x1, next->y1)) < 1e-6);
+                    NR::Point this_angle (0, 0);
                     if (this_is_line) {
-                        this_angle = atan2 (bpath[ib].x3 - pt[NR::X], bpath[ib].y3 - pt[NR::Y]);
+                        this_angle = NR::Point (bpath[ib].x3 - pt[NR::X], bpath[ib].y3 - pt[NR::Y]);
                     } else if (bpath[ib].code == NR_CURVETO) {
-                        this_angle = atan2 (bpath[ib].x3 - bpath[ib].x2, bpath[ib].y3 - bpath[ib].y2);
+                        this_angle = NR::Point (bpath[ib].x3 - bpath[ib].x2, bpath[ib].y3 - bpath[ib].y2);
                     }
-                    double next_angle = NR_HUGE;
+                    NR::Point next_angle (0, 0);
                     if (next_is_line) {
-                        next_angle = atan2 (next->x3 - bpath[ib].x3, next->y3 - bpath[ib].y3);
+                        next_angle = NR::Point (next->x3 - bpath[ib].x3, next->y3 - bpath[ib].y3);
                     } else if (next->code == NR_CURVETO) {
-                        next_angle = atan2 (next->x1 - bpath[ib].x3, next->y1 - bpath[ib].y3);
+                        next_angle = NR::Point (next->x1 - bpath[ib].x3, next->y1 - bpath[ib].y3);
                     }
-                    if (this_angle != NR_HUGE && next_angle != NR_HUGE && fabs(this_angle - next_angle) < 0.001) {
+                    double this_angle_L2 = NR::L2(this_angle);
+                    double next_angle_L2 = NR::L2(next_angle);
+                    double both_angles_L2 = NR::L2(this_angle + next_angle);
+                    if (this_angle_L2 > 1e-6 && 
+                        next_angle_L2 > 1e-6 && 
+                        this_angle_L2 + next_angle_L2 - both_angles_L2 < 1e-3) {
                         if (this_is_line && !next_is_line) {
                             path[ip].ty = ']';
                         } else if (next_is_line && !this_is_line) {
