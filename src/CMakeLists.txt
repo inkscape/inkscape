@@ -46,7 +46,7 @@ console-output-undo-observer.h
 context-fns.cpp
 context-fns.h
 decimal-round.h
-deptool.cpp
+#deptool.cpp
 desktop-affine.cpp
 desktop-affine.h
 desktop.cpp
