@@ -346,8 +346,11 @@ Effect::getParameter(const char * key)
 Parameter *
 Effect::getNextOncanvasEditableParam()
 {
+    if (param_vector.size() == 0) // no parameters
+        return NULL;
+
     oncanvasedit_it++;
-    if (oncanvasedit_it == static_cast<int>(param_vector.size())) {
+    if (oncanvasedit_it >= static_cast<int>(param_vector.size())) {
         oncanvasedit_it = 0;
     }
     int old_it = oncanvasedit_it;
