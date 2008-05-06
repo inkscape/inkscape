@@ -20,6 +20,7 @@
 #include "document.h"
 #include "desktop-handles.h"
 #include "transformation.h"
+#include "align-and-distribute.h"
 #include "libnr/nr-matrix-ops.h"
 #include "inkscape.h"
 #include "selection.h"
@@ -29,6 +30,7 @@
 #include "sp-item-transform.h"
 #include "macros.h"
 #include "sp-item.h"
+#include "util/glib-list-iterators.h"
 
 namespace Inkscape {
 namespace UI {
@@ -449,6 +451,7 @@ Transformation::onSwitchPage(GtkNotebookPage */*page*/,
     updateSelection((PageType)pagenum, sp_desktop_selection(getDesktop()));
 }
 
+
 void
 Transformation::updatePageMove(Inkscape::Selection *selection)
 {
@@ -596,6 +599,8 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
     double x = _scalar_move_horizontal.getValue("px");
     double y = _scalar_move_vertical.getValue("px");
 
+    if (prefs_get_int_attribute_limited ("dialogs.transformation", "applyseparately", 0, 0, 1) == 0) {
+        // move selection as a whole
     if (_check_move_relative.get_active()) {
         sp_selection_move_relative(selection, x, y);
     } else {
@@ -604,6 +609,64 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
             sp_selection_move_relative(selection,
                 x - bbox->min()[NR::X], y - bbox->min()[NR::Y]);
         }
+    }
+    } else {
+        // shift each object relatively to the previous one
+
+        using Inkscape::Util::GSListConstIterator;
+        std::list<SPItem *> selected;
+        selected.insert<GSListConstIterator<SPItem *> >(selected.end(), selection->itemList(), NULL);
+        if (selected.empty()) return;
+
+        if (fabs(x) > 1e-6) {
+            std::vector< BBoxSort  > sorted;
+            for (std::list<SPItem *>::iterator it(selected.begin());
+                 it != selected.end();
+                 ++it)
+            {
+                NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(*it);
+                if (bbox) {
+                    sorted.push_back(BBoxSort(*it, *bbox, NR::X, x > 0? 1. : 0., x > 0? 0. : 1.));
+                }
+            }
+            //sort bbox by anchors
+            std::sort(sorted.begin(), sorted.end());
+
+            double move = x;
+            for ( std::vector<BBoxSort> ::iterator it (sorted.begin());
+                  it < sorted.end();
+                  it ++ )
+            {
+                sp_item_move_rel(it->item, NR::translate(move, 0));
+                // move each next object by x relative to previous
+                move += x;
+            }
+        }
+        if (fabs(y) > 1e-6) {
+            std::vector< BBoxSort  > sorted;
+            for (std::list<SPItem *>::iterator it(selected.begin());
+                 it != selected.end();
+                 ++it)
+            {
+                NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(*it);
+                if (bbox) {
+                    sorted.push_back(BBoxSort(*it, *bbox, NR::Y, y > 0? 1. : 0., y > 0? 0. : 1.));
+                }
+            }
+            //sort bbox by anchors
+            std::sort(sorted.begin(), sorted.end());
+
+            double move = y;
+            for ( std::vector<BBoxSort> ::iterator it (sorted.begin());
+                  it < sorted.end();
+                  it ++ )
+            {
+                sp_item_move_rel(it->item, NR::translate(0, move));
+                // move each next object by x relative to previous
+                move += y;
+            }
+        }
+
     }
 
     sp_document_done ( sp_desktop_document (selection->desktop()) , SP_VERB_DIALOG_TRANSFORM,
