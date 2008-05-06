@@ -475,7 +475,7 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, char const *begin) {
      * At some point we'll need to do all of
      * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing.
      */
-    do {
+    while(*begin) {
         double val;
         char const *end = rsvg_parse_float(&val, begin);
         if (end != begin) {
@@ -515,23 +515,25 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, char const *begin) {
             }
             ctx->params[ctx->param++] = val;
             rsvg_parse_path_do_cmd (ctx, false, 0); // We don't know the next command yet
+        } else {
+            char c = *begin;
+            if (c >= 'A' && c <= 'Z' && c != 'E') {
+                char next_cmd = c + 'a' - 'A';
+                if (ctx->cmd)
+                    rsvg_parse_path_do_cmd (ctx, true, next_cmd);
+                ctx->cmd = next_cmd;
+                ctx->rel = false;
+            } else if (c >= 'a' && c <= 'z' && c != 'e') {
+                char next_cmd = c;
+                if (ctx->cmd)
+                    rsvg_parse_path_do_cmd (ctx, true, next_cmd);
+                ctx->cmd = next_cmd;
+                ctx->rel = true;
+            }
+            /* else c _should_ be whitespace or , */
+            begin++;
         }
-        char c = *begin;
-        if (c >= 'A' && c <= 'Z' && c != 'E') {
-            char next_cmd = c + 'a' - 'A';
-            if (ctx->cmd)
-                rsvg_parse_path_do_cmd (ctx, true, next_cmd);
-            ctx->cmd = next_cmd;
-            ctx->rel = false;
-        } else if (c >= 'a' && c <= 'z' && c != 'e') {
-            char next_cmd = c;
-            if (ctx->cmd)
-                rsvg_parse_path_do_cmd (ctx, true, next_cmd);
-            ctx->cmd = next_cmd;
-            ctx->rel = true;
-        }
-        /* else c _should_ be whitespace or , */
-    } while(*(begin++));
+    }
     if (ctx->cmd)
         rsvg_parse_path_do_cmd (ctx, true, 0);
 }
