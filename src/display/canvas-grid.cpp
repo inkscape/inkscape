@@ -887,8 +887,8 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
 
     //set correct coloring, depending preference (when zoomed out, always major coloring or minor coloring)
     guint32 _empcolor;
-    bool preference = prefs_get_int_attribute ("options.grids", "no_emphasize_when_zoomedout", 0) == 1;
-    if( (scaled[NR::X] || scaled[NR::Y]) && preference ) {
+    bool no_emp_when_zoomed_out = prefs_get_int_attribute ("options.grids", "no_emphasize_when_zoomedout", 0) == 1;
+    if( (scaled[NR::X] || scaled[NR::Y]) && no_emp_when_zoomed_out ) {
         _empcolor = color;
     } else {
         _empcolor = empcolor;
@@ -927,11 +927,19 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
             for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[NR::X], xlinenum++) {
                 gint const ix = (gint) Inkscape::round(x);
                 if ( (!scaled[NR::X] && (xlinenum % empspacing) != 0)
-                     || (!scaled[NR::Y] && (ylinenum % empspacing) != 0) )
+                     || (!scaled[NR::Y] && (ylinenum % empspacing) != 0)
+                     || ((scaled[NR::X] || scaled[NR::Y]) && no_emp_when_zoomed_out) )
                 {
                     grid_dot (buf, ix, iy, color | (guint32)0x000000FF); // put alpha to max value
                 } else {
+                    gint const pitch = 1;
+                    grid_dot (buf, ix-pitch, iy, _empcolor);
+                    grid_dot (buf, ix+pitch, iy, _empcolor);
+
                     grid_dot (buf, ix, iy, _empcolor | (guint32)0x000000FF);  // put alpha to max value
+
+                    grid_dot (buf, ix, iy-pitch, _empcolor);
+                    grid_dot (buf, ix, iy+pitch, _empcolor);
                 }
             }
 
