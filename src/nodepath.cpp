@@ -3680,6 +3680,8 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint /*state*/,
         } else {
             s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p);
         }
+    } else {
+        s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p);
     }
     
     *p = s.getPoint();
