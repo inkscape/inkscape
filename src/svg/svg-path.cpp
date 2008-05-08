@@ -199,19 +199,9 @@ static void rsvg_path_arc (RSVGParsePathCtx *ctx,
     ctx->cpy = y;
 }
 
-static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final, const char next_cmd)
+static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx)
 {
     double x1, y1, x2, y2, x3, y3;
-
-#ifdef VERBOSE
-    int i;
-
-    g_print ("parse_path %c:", ctx->cmd);
-    for (i = 0; i < ctx->param; i++) {
-        g_print(" %f", ctx->params[i]);
-    }
-    g_print (final ? ".\n" : "\n");
-#endif
 
     switch (ctx->cmd) {
     case 'm':
@@ -228,8 +218,12 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final, const char
             ctx->cpy = ctx->rpy = ctx->spy = ctx->params[1];
             ctx->param = 0;
             ctx->cmd = 'l';
+            /* Ref: http://www.w3.org/TR/SVG11/paths.html#PathDataMovetoCommands: "If a moveto is
+             * followed by multiple pairs of coordinates, the subsequent pairs are treated as
+             * implicit lineto commands." */
         }
         break;
+
     case 'l':
         /* lineto */
         if (ctx->param == 2)
@@ -245,6 +239,7 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final, const char
             ctx->param = 0;
         }
         break;
+
     case 'c':
         /* curveto */
         if (ctx->param == 6)
@@ -268,6 +263,7 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final, const char
             ctx->param = 0;
         }
         break;
+
     case 's':
         /* smooth curveto */
         if (ctx->param == 4)
@@ -291,6 +287,7 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final, const char
             ctx->param = 0;
         }
         break;
+
     case 'h':
         /* horizontal lineto */
         if (ctx->param == 1) {
@@ -304,6 +301,7 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final, const char
             ctx->param = 0;
         }
         break;
+
     case 'v':
         /* vertical lineto */
         if (ctx->param == 1) {
@@ -317,6 +315,7 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final, const char
             ctx->param = 0;
         }
         break;
+
     case 'q':
         /* quadratic bezier curveto */
 
@@ -345,6 +344,7 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final, const char
             ctx->param = 0;
         }
         break;
+
     case 't':
         /* Truetype quadratic bezier curveto */
         if (ctx->param == 2) {
@@ -372,6 +372,7 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final, const char
             ctx->param = 0;
         }
         break;
+
     case 'a':
         if (ctx->param == 7)
         {
@@ -382,25 +383,37 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final, const char
             ctx->param = 0;
         }
         break;
-    case 'z':
-        if (ctx->param == 0)
-        {
-            rsvg_bpath_def_closepath (ctx->bpath);
-            ctx->cpx = ctx->rpx = ctx->spx;
-            ctx->cpy = ctx->rpy = ctx->spy;
 
-            if (next_cmd != 0 && next_cmd != 'm') {
-                // This makes sure we do the right moveto if the closepath is followed by anything other than a moveto
-                ctx->cmd = 'm';
-                ctx->params[0] = ctx->cpx;
-                ctx->params[1] = ctx->cpy;
-                ctx->param = 2;
-                rsvg_parse_path_do_cmd(ctx, final, next_cmd);
-            }
-        }
-        break;
     default:
-        ctx->param = 0;
+        g_assert_not_reached();
+    }
+}
+
+static void rsvg_parse_path_do_closepath(RSVGParsePathCtx *const ctx, const char next_cmd)
+{
+    g_assert(ctx->param == 0);
+
+    rsvg_bpath_def_closepath (ctx->bpath);
+    ctx->cpx = ctx->rpx = ctx->spx;
+    ctx->cpy = ctx->rpy = ctx->spy;
+
+    if (next_cmd != 0 && next_cmd != 'm') {
+        // This makes sure we do the right moveto if the closepath is followed by anything other than a moveto.
+        /* Ref: http://www.w3.org/TR/SVG11/paths.html#PathDataClosePathCommand: "If a
+         * "closepath" is followed immediately by a "moveto", then the "moveto" identifies
+         * the start point of the next subpath. If a "closepath" is followed immediately by
+         * any other command, then the next subpath starts at the same initial point as the
+         * current subpath." */
+
+        ctx->cmd = 'm';
+        ctx->params[0] = ctx->cpx;
+        ctx->params[1] = ctx->cpy;
+        ctx->param = 2;
+        rsvg_parse_path_do_cmd(ctx);
+
+        /* Any token after a closepath must be a command, not a parameter.  We enforce this
+         * by clearing cmd rather than leaving as 'm'. */
+        ctx->cmd = '\0';
     }
 }
 
@@ -470,16 +483,72 @@ static char const* rsvg_parse_float(double *val, char const *begin) {
     return end_of_num == begin_of_num ? begin : end_of_num;
 }
 
-static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, char const *begin) {
+static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, char const *const begin) {
     /* fixme: Do better error processing: e.g. at least stop parsing as soon as we find an error.
      * At some point we'll need to do all of
      * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing.
      */
-    while(*begin) {
-        double val;
-        char const *end = rsvg_parse_float(&val, begin);
-        if (end != begin) {
-            begin = end;
+
+    /* Comma is always allowed after a number token (so long as it's followed by another number:
+     * see require_number), and never allowed anywhere else.  Only one comma is allowed between
+     * neighbouring number tokens. */
+    bool comma_allowed = false;
+
+    /* After a command other than closepath, and after a comma, we require a number. */
+    bool require_number = false;
+
+    for (char const *cur = begin;; ++cur) {
+        int const c = *cur;
+        if (c <= ' ') {
+            switch (c) {
+                case ' ':
+                case '\t':
+                case '\n':
+                case '\r':
+                    /* wsp */
+                    break;
+
+                case '\0':
+                    if (require_number || ctx->param) {
+                        goto error;
+                    }
+                    goto done;
+
+                default:
+                    goto error;
+            }
+        } else if (c == ',') {
+            if (!comma_allowed) {
+                goto error;
+            }
+            comma_allowed = false;
+            require_number = true;
+        } else if (c <= '9') {
+            if (!ctx->cmd || ctx->cmd == 'z') {
+                goto error;
+            }
+
+            double val;
+            char const *const end = rsvg_parse_float(&val, cur);
+            if (cur == end) {
+                goto error;
+            }
+
+            /* Special requirements for elliptical-arc arguments. */
+            if (ctx->cmd == 'a') {
+                if (ctx->param < 2) {
+                    if (c <= '-') {
+                        /* Error: sign not allowed for first two params. */
+                        goto error;
+                    }
+                } else if (ctx->param <= 4 && ctx->param >= 3) {
+                    if (end - cur != 1 || c < '0' || c > '1') {
+                        /* Error: flag must be either literally "0" or literally "1". */
+                        goto error;
+                    }
+                }
+            }
+
             if (ctx->rel) {
                 /* Handle relative coordinates. */
                 switch (ctx->cmd) {
@@ -514,28 +583,62 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, char const *begin) {
                 }
             }
             ctx->params[ctx->param++] = val;
-            rsvg_parse_path_do_cmd (ctx, false, 0); // We don't know the next command yet
+            rsvg_parse_path_do_cmd(ctx);
+            comma_allowed = true;
+            require_number = false;
+            cur = end - 1;
         } else {
-            char c = *begin;
-            if (c >= 'A' && c <= 'Z' && c != 'E') {
-                char next_cmd = c + 'a' - 'A';
-                if (ctx->cmd)
-                    rsvg_parse_path_do_cmd (ctx, true, next_cmd);
-                ctx->cmd = next_cmd;
+            /* Command. */
+            if (require_number || ctx->param) {
+                goto error;
+            }
+            char next_cmd;
+            if (c <= 'Z') {
+                next_cmd = c + ('a' - 'A');
                 ctx->rel = false;
-            } else if (c >= 'a' && c <= 'z' && c != 'e') {
-                char next_cmd = c;
-                if (ctx->cmd)
-                    rsvg_parse_path_do_cmd (ctx, true, next_cmd);
-                ctx->cmd = next_cmd;
+            } else {
+                next_cmd = c;
                 ctx->rel = true;
             }
-            /* else c _should_ be whitespace or , */
-            begin++;
+
+            comma_allowed = false;
+            require_number = true;
+            switch (next_cmd) {
+                case 'z':
+                    require_number = false;
+                case 'm':
+                case 'l':
+                case 'h':
+                case 'v':
+                case 'c':
+                case 's':
+                case 'q':
+                case 't':
+                case 'a':
+                    /* valid command */
+                    break;
+
+                default:
+                    goto error;
+            }
+
+            if (ctx->cmd == 'z') {
+                /* Closepath is the only command that allows no arguments. */
+                rsvg_parse_path_do_closepath(ctx, next_cmd);
+            }
+            ctx->cmd = next_cmd;
         }
     }
-    if (ctx->cmd)
-        rsvg_parse_path_do_cmd (ctx, true, 0);
+
+done:
+    if (ctx->cmd == 'z') {
+        rsvg_parse_path_do_closepath(ctx, 0);
+    }
+    return;
+
+error:
+    /* todo: set an error indicator. */
+    goto done;
 }
 
 

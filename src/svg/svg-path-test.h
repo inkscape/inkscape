@@ -186,8 +186,8 @@ public:
         bpath_good[1].x3 = .04;
         bpath_good[1].y3 = .02;
         bpath_good[2].code = NR_LINETO;
-        bpath_good[2].x3 = .04;
-        bpath_good[2].y3 = .08;
+        bpath_good[2].x3 = 1.5;
+        bpath_good[2].y3 = 1.6;
         bpath_good[3].code = NR_LINETO;
         bpath_good[3].x3 = .01;
         bpath_good[3].y3 = .08;
@@ -196,13 +196,13 @@ public:
         bpath_good[4].y3 = .02;
         bpath_good[5].code = NR_END;
         {   // Test decimals
-            char const * path_str = "M .01,.02 L 0.04,0.02 L.04,.08L0.01,0.08 z";
+            char const * path_str = "M .01,.02 L.04.02 L1.5,1.6L0.01,0.08 .01.02 z";
             NArtBpath * bpath = sp_svg_read_path(path_str);
             TS_ASSERT(bpathEqual(bpath,bpath_good));
             g_free(bpath);
         }
         {   // Test exponent
-            char const * path_str = "M 1e-2,.2e-1 L 0.004e1,0.0002e+2 L04E-2,.08e0L1.0e-2,80e-3 z";
+            char const * path_str = "M 1e-2,.2e-1 L 0.004e1,0.0002e+2 L0150E-2,1.6e0L1.0e-2,80e-3 z";
             NArtBpath * bpath = sp_svg_read_path(path_str);
             TS_ASSERT(bpathEqual(bpath,bpath_good));
             g_free(bpath);
@@ -431,7 +431,7 @@ public:
         bpath = sp_svg_read_path("M .01,.02 L 0.04,0.02 L.04,.08L0.01,0.08 z""M 1e-2,.2e-1 L 0.004e1,0.0002e+2 L04E-2,.08e0L1.0e-2,80e-3 z");
         path_str = sp_svg_write_path(bpath);
         new_bpath = sp_svg_read_path(path_str);
-        TS_ASSERT(bpathEqual(bpath,new_bpath));
+        TS_ASSERT(bpathEqual(bpath, new_bpath, 1e-16));
         g_free(bpath); g_free(path_str); g_free(new_bpath);
     }
 
