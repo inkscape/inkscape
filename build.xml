@@ -202,7 +202,7 @@
     <!-- Compile from source to build -->
     <cc cc="${arch}gcc" cxx="${arch}g++"
              destdir="${build}/obj"
-			 continueOnError="false"
+			 continueOnError="true"
 			 refreshCache="${refresh}">
         <fileset dir="${src}">
             <!-- THINGS TO EXCLUDE -->
