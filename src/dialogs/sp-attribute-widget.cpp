@@ -158,25 +158,14 @@ sp_attribute_widget_changed (GtkEditable *editable)
             text = NULL;
 
         if (spaw->hasobj && spaw->src.object) {
-
-            if (!sp_repr_set_attr ( SP_OBJECT_REPR (spaw->src.object),
-                                    spaw->attribute, text) )
-            {
-                /* Cannot set attribute */
-                text = SP_OBJECT_REPR (spaw->src.object)->attribute(spaw->attribute);
-                gtk_entry_set_text (GTK_ENTRY (spaw), text ? text : "");
-            }
+        
+            SP_OBJECT_REPR (spaw->src.object)->setAttribute(spaw->attribute, text, false);
             sp_document_done (SP_OBJECT_DOCUMENT (spaw->src.object), SP_VERB_NONE,
                               _("Set attribute"));
 
         } else if (spaw->src.repr) {
 
-            if (!sp_repr_set_attr (spaw->src.repr, spaw->attribute, text))
-            {
-                /* Cannot set attribute */
-                text = spaw->src.repr->attribute(spaw->attribute);
-                gtk_entry_set_text (GTK_ENTRY (spaw), text ? text : "");
-            }
+            spaw->src.repr->setAttribute(spaw->attribute, text, false);
             /* TODO: Warning! Undo will not be flushed in given case */
         }
         spaw->blocked = FALSE;
@@ -775,27 +764,13 @@ sp_attribute_table_entry_changed ( GtkEditable *editable,
                     text = NULL;
 
                 if (spat->hasobj && spat->src.object) {
-                    if (!sp_repr_set_attr ( SP_OBJECT_REPR (spat->src.object),
-                                            spat->attributes[i], text))
-                    {
-                        /* Cannot set attribute */
-                        text = SP_OBJECT_REPR (spat->src.object)->attribute(spat->attributes[i]);
-                        gtk_entry_set_text ( GTK_ENTRY (spat->entries[i]),
-                                             text ? text : (const gchar *) "");
-                    }
+                    SP_OBJECT_REPR (spat->src.object)->setAttribute(spat->attributes[i], text, false);
                     sp_document_done (SP_OBJECT_DOCUMENT (spat->src.object), SP_VERB_NONE,
                                       _("Set attribute"));
 
                 } else if (spat->src.repr) {
 
-                    if (!sp_repr_set_attr (spat->src.repr,
-                                           spat->attributes[i], text))
-                    {
-                        /* Cannot set attribute */
-                        text = spat->src.repr->attribute(spat->attributes[i]);
-                        gtk_entry_set_text ( GTK_ENTRY (spat->entries[i]),
-                                             text ? text : (const gchar *) "" );
-                    }
+                    spat->src.repr->setAttribute(spat->attributes[i], text, false);
                     /* TODO: Warning! Undo will not be flushed in given case */
                 }
                 spat->blocked = FALSE;

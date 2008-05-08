@@ -1423,9 +1423,7 @@ sp_object_setAttribute(SPObject *object, gchar const *key, gchar const *value, S
     g_return_if_fail(SP_EXCEPTION_IS_OK(ex));
 
     /// \todo fixme: Exception if object is NULL? */
-    if (!sp_repr_set_attr(object->repr, key, value)) {
-        ex->code = SP_NO_MODIFICATION_ALLOWED_ERR;
-    }
+    object->repr->setAttribute(key, value, false);
 }
 
 void
@@ -1435,9 +1433,7 @@ sp_object_removeAttribute(SPObject *object, gchar const *key, SPException *ex)
     g_return_if_fail(SP_EXCEPTION_IS_OK(ex));
 
     /// \todo fixme: Exception if object is NULL? */
-    if (!sp_repr_set_attr(object->repr, key, NULL)) {
-        ex->code = SP_NO_MODIFICATION_ALLOWED_ERR;
-    }
+    object->repr->setAttribute(key, NULL, false);
 }
 
 /* Helper */

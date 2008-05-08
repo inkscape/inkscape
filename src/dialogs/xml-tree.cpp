@@ -1463,11 +1463,7 @@ void cmd_set_attr(GtkObject */*object*/, gpointer /*data*/)
     gchar *value = gtk_text_buffer_get_text( gtk_text_view_get_buffer(attr_value),
                                        &start, &end, TRUE );
 
-    if (!sp_repr_set_attr(selected_repr, name, value)) {
-        gchar *message = g_strdup_printf(_("Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"), name, value);
-        _message_stack->flash(Inkscape::WARNING_MESSAGE, message);
-        g_free(message);
-    }
+    selected_repr->setAttribute(name, value, false);
 
     g_free(name);
     g_free(value);

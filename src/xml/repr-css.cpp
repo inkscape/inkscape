@@ -120,7 +120,7 @@ sp_repr_css_set_property(SPCSSAttr *css, gchar const *name, gchar const *value)
     g_assert(css != NULL);
     g_assert(name != NULL);
 
-    sp_repr_set_attr((Node *) css, name, value);
+    ((Node *) css)->setAttribute(name, value, false);
 }
 
 void
@@ -129,7 +129,7 @@ sp_repr_css_unset_property(SPCSSAttr *css, gchar const *name)
     g_assert(css != NULL);
     g_assert(name != NULL);
 
-    sp_repr_set_attr((Node *) css, name, "inkscape:unset");
+    ((Node *) css)->setAttribute(name, "inkscape:unset", false);
 }
 
 double
@@ -219,7 +219,7 @@ sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *const decl)
     guchar *const str_value_unsigned = cr_term_to_string(decl->value);
     gchar *const str_value = reinterpret_cast<gchar *>(str_value_unsigned);
     gchar *value_unquoted = attribute_unquote (str_value); // libcroco returns strings quoted in ""
-    sp_repr_set_attr((Node *) css, decl->property->stryng->str, value_unquoted);
+    ((Node *) css)->setAttribute(decl->property->stryng->str, value_unquoted, false);
     g_free(value_unquoted);
     g_free(str_value);
 }

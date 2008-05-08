@@ -46,7 +46,7 @@ gchar * create_pref(gchar const *father_path, gchar const *child){
     Inkscape::XML::Node *father = inkscape_get_repr(INKSCAPE, father_path);
     if (! father ) return NULL;
     Inkscape::XML::Node *repr = father->document()->createElement("group");
-    sp_repr_set_attr(repr, "id", child);
+    repr->setAttribute("id", child, false);
     father->appendChild(repr);
     return g_strdup_printf("%s.%s", father_path,child);
 }

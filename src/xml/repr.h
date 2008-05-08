@@ -140,14 +140,6 @@ char const *sp_xml_ns_prefix_uri(gchar const *prefix);
 
 Inkscape::XML::Document *sp_repr_document_new(gchar const *rootname);
 
-/* Contents */
-/// Sets the node's \a key attribute to \a value.
-inline unsigned sp_repr_set_attr(Inkscape::XML::Node *repr, gchar const *key, gchar const *value,
-                                 bool is_interactive = false) {
-    repr->setAttribute(key, value, is_interactive);
-    return true;
-}
-
 /* Tree */
 /// Returns the node's parent.
 inline Inkscape::XML::Node *sp_repr_parent(Inkscape::XML::Node const *repr) {

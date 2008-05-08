@@ -1203,7 +1203,7 @@ void sp_selection_remove_transform()
 
     GSList const *l = (GSList *) selection->reprList();
     while (l != NULL) {
-        sp_repr_set_attr((Inkscape::XML::Node*)l->data, "transform", NULL);
+        ((Inkscape::XML::Node*)l->data)->setAttribute("transform", NULL, false);
         l = l->next;
     }
 
@@ -1810,12 +1810,12 @@ sp_selection_clone()
         Inkscape::XML::Node *parent = sp_repr_parent(sel_repr);
 
         Inkscape::XML::Node *clone = xml_doc->createElement("svg:use");
-        sp_repr_set_attr(clone, "x", "0");
-        sp_repr_set_attr(clone, "y", "0");
-        sp_repr_set_attr(clone, "xlink:href", g_strdup_printf("#%s", sel_repr->attribute("id")));
-
-        sp_repr_set_attr(clone, "inkscape:transform-center-x", sel_repr->attribute("inkscape:transform-center-x"));
-        sp_repr_set_attr(clone, "inkscape:transform-center-y", sel_repr->attribute("inkscape:transform-center-y"));
+        clone->setAttribute("x", "0", false);
+        clone->setAttribute("y", "0", false);
+        clone->setAttribute("xlink:href", g_strdup_printf("#%s", sel_repr->attribute("id")), false);
+        
+        clone->setAttribute("inkscape:transform-center-x", sel_repr->attribute("inkscape:transform-center-x"), false);
+        clone->setAttribute("inkscape:transform-center-y", sel_repr->attribute("inkscape:transform-center-y"), false);
 
         // add the new clone to the top of the original's parent
         parent->appendChild(clone);
