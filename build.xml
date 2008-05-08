@@ -213,7 +213,6 @@
             <exclude name="test-all.cpp"/>
             <exclude name="display/testnr.cpp"/>
             <exclude name="display/bezier-utils-test.cpp"/>
-            <exclude name="dom/jsdombind.cpp"/>
             <exclude name="dom/work/.*"/>
             <exclude name="dom/odf/SvgOdg.cpp"/>
             <exclude name="extension/api.cpp"/>
@@ -286,7 +285,6 @@
         <defines>
             -DVERSION=\"${version}\"
             -DHAVE_CONFIG_H
-            -DXP_WIN <!-- for JS -->
             -D_INTL_REDIRECT_INLINE
             -DHAVE_SSL
             -DRELAYTOOL_SSL="static const int libssl_is_present=1; static int __attribute__((unused)) libssl_symbol_is_present(char *s){ return 1; }" <!-- inkboard -->
