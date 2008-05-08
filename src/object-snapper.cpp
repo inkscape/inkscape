@@ -510,8 +510,10 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
     NR::Point const p_max_on_cl = desktop->dt2doc(p_proj_on_cl + getSnapperTolerance() * direction_vector);
     
     Geom::Path cl;
+    std::vector<Geom::Path> clv;    
     cl.start(p_min_on_cl.to_2geom());
     cl.appendNew<Geom::LineSegment>(p_max_on_cl.to_2geom());
+    clv.push_back(cl);
     
     for (std::vector<NArtBpath*>::const_iterator k = _bpaths_to_snap_to->begin(); k != _bpaths_to_snap_to->end(); k++) {
         if (*k) {                        
@@ -519,15 +521,16 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
             // TODO: (Diederik) Only do this once for the first point, needs some storage of pointers in a member variable
             std::vector<Geom::Path> path_2geom = BPath_to_2GeomPath(*k);  
             
-            for (std::vector<Geom::Path>::const_iterator l = path_2geom.begin(); l != path_2geom.end(); l++) {
-                Geom::SimpleCrosser sxr;
-                Geom::Crossings crossings = sxr.crossings(*l, cl);
-                for (std::vector<Geom::Crossing>::const_iterator m = crossings.begin(); m != crossings.end(); m++) {
-                    // Reconstruct the point of intersection
-                    NR::Point p_inters = p_min_on_cl + ((*m).tb) * (p_max_on_cl - p_min_on_cl);
-                    // When it's within snapping range, then return it
-                    // (within snapping range == between p_min_on_cl and p_max_on_cl == 0 < tb < 1)
-                    if ((*m).tb >= 0 && (*m).tb <= 1 ) {
+            Geom::CrossingSet cs = Geom::crossings(clv, path_2geom);
+            if (cs.size() > 0) {
+                // We need only the first element of cs, because cl is only a single straight linesegment
+                // This first element contains a vector filled with crossings of cl with path_2geom
+                for (std::vector<Geom::Crossing>::const_iterator m = cs[0].begin(); m != cs[0].end(); m++) {                    
+                    if ((*m).ta >= 0 && (*m).ta <= 1 ) {
+                        // Reconstruct the point of intersection
+                        NR::Point p_inters = p_min_on_cl + ((*m).ta) * (p_max_on_cl - p_min_on_cl);
+                        // When it's within snapping range, then return it
+                        // (within snapping range == between p_min_on_cl and p_max_on_cl == 0 < ta < 1)                        
                         NR::Coord dist = NR::L2(desktop->dt2doc(p_proj_on_cl) - p_inters);
                         SnappedPoint s(desktop->doc2dt(p_inters), SNAPTARGET_PATH, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
                         sc.points.push_back(s);    
