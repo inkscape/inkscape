@@ -46,6 +46,7 @@
 #include "sp-font.h"
 #include "sp-glyph.h"
 #include "sp-missing-glyph.h"
+#include "sp-glyph-kerning.h"
 #include "sp-style-elem.h"
 #include "sp-switch.h"
 #include "color-profile-fns.h"
@@ -145,6 +146,7 @@ populate_dtables()
         { "svg:font", SP_TYPE_FONT },
         { "svg:glyph", SP_TYPE_GLYPH },
         { "svg:missing-glyph", SP_TYPE_MISSING_GLYPH },
+        { "svg:hkern", SP_TYPE_GLYPH_KERNING },
         { "svg:g", SP_TYPE_GROUP },
         { "svg:feBlend", SP_TYPE_FEBLEND },
         { "svg:feColorMatrix", SP_TYPE_FECOLORMATRIX },
