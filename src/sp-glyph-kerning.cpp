@@ -30,7 +30,7 @@ static void sp_glyph_kerning_update(SPObject *object, SPCtx *ctx, guint flags);
 
 static SPObjectClass *parent_class;
 
-GType sp_glyph_kerning_get_type(void)
+GType sp_glyph_kerning_h_get_type(void)
 {
     static GType type = 0;
 
@@ -42,12 +42,35 @@ GType sp_glyph_kerning_get_type(void)
             (GClassInitFunc) sp_glyph_kerning_class_init,
             NULL,	/* class_finalize */
             NULL,	/* class_data */
-            sizeof(SPGlyphKerning),
+            sizeof(SPHkern),
             16,	/* n_preallocs */
             (GInstanceInitFunc) sp_glyph_kerning_init,
             NULL,	/* value_table */
         };
-        type = g_type_register_static(SP_TYPE_OBJECT, "SPGlyphKerning", &info, (GTypeFlags) 0);
+        type = g_type_register_static(SP_TYPE_OBJECT, "SPHkern", &info, (GTypeFlags) 0);
+    }
+
+    return type;
+}
+
+GType sp_glyph_kerning_v_get_type(void)
+{
+    static GType type = 0;
+
+    if (!type) {
+        GTypeInfo info = {
+            sizeof(SPGlyphKerningClass),
+            NULL,	/* base_init */
+            NULL,	/* base_finalize */
+            (GClassInitFunc) sp_glyph_kerning_class_init,
+            NULL,	/* class_finalize */
+            NULL,	/* class_data */
+            sizeof(SPVkern),
+            16,	/* n_preallocs */
+            (GInstanceInitFunc) sp_glyph_kerning_init,
+            NULL,	/* value_table */
+        };
+        type = g_type_register_static(SP_TYPE_OBJECT, "SPVkern", &info, (GTypeFlags) 0);
     }
 
     return type;
@@ -100,39 +123,40 @@ static void sp_glyph_kerning_release(SPObject *object)
 
 static void sp_glyph_kerning_set(SPObject *object, unsigned int key, const gchar *value)
 {
-    SPGlyphKerning *glyphkern = SP_GLYPH_KERNING(object);
+    SPGlyphKerning * glyphkern = (SPGlyphKerning*) object; //even if it is a VKern this will work. I did it this way just to avoind warnings.
     double number;
+    const char* tag = (SP_IS_HKERN(object) ? "hkern" : "vkern");
 
     switch (key) {
         case SP_ATTR_U1:
             if (glyphkern->u1) g_free(glyphkern->u1);
             glyphkern->u1 = g_strdup(value);//todo: 
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-g_warning("<glyph-kerning>: SP_ATTR_U1: %s", value);
+g_warning("<%s>: SP_ATTR_U1: %s", tag, value);
              break;
         case SP_ATTR_U2:
             if (glyphkern->u2) g_free(glyphkern->u2);
             glyphkern->u2 = g_strdup(value);//todo: 
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-g_warning("<glyph-kerning>: SP_ATTR_U2: %s", value);
+g_warning("<%s>: SP_ATTR_U2: %s", tag, value);
              break;
         case SP_ATTR_G1:
             if (glyphkern->g1) g_free(glyphkern->g1);
             glyphkern->g1 = g_strdup(value);//todo: 
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-g_warning("<glyph-kerning>: SP_ATTR_G1: %s", value);
+g_warning("<%s>: SP_ATTR_G1: %s", tag, value);
              break;
         case SP_ATTR_G2:
             if (glyphkern->g2) g_free(glyphkern->g2);
             glyphkern->g2 = g_strdup(value);//todo: 
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-g_warning("<glyph-kerning>: SP_ATTR_G2: %s", value);
+g_warning("<%s>: SP_ATTR_G2: %s", tag, value);
              break;
 	case SP_ATTR_K:
             number = helperfns_read_number(value);
             if (number != glyphkern->k){
                 glyphkern->k = number;
-g_warning("<glyph-kerning>: SP_ATTR_K: %f", number);
+g_warning("<%s>: SP_ATTR_K: %f", tag, number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -142,6 +166,7 @@ g_warning("<glyph-kerning>: SP_ATTR_K: %f", number);
             }
             break;
     }
+///should free tag?
 }
 
 /**
@@ -150,7 +175,7 @@ g_warning("<glyph-kerning>: SP_ATTR_K: %f", number);
 static void
 sp_glyph_kerning_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    SPGlyphKerning *glyph = SP_GLYPH_KERNING(object);
+    SPGlyphKerning *glyph = (SPGlyphKerning *)object;
     (void)glyph;
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {

@@ -14,11 +14,17 @@
 
 #include "sp-object.h"
 
-#define SP_TYPE_GLYPH_KERNING (sp_glyph_kerning_get_type ())
-#define SP_GLYPH_KERNING(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_GLYPH_KERNING, SPGlyphKerning))
-#define SP_GLYPH_KERNING_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_GLYPH_KERNING, SPGlyphKerningClass))
-#define SP_IS_GLYPH_KERNING(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_GLYPH_KERNING))
-#define SP_IS_GLYPH_KERNING_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_GLYPH_KERNING))
+#define SP_TYPE_HKERN (sp_glyph_kerning_h_get_type ())
+#define SP_HKERN(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_HKERN, SPHkern))
+#define SP_HKERN_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_HKERN, SPGlyphKerningClass))
+#define SP_IS_HKERN(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_HKERN))
+#define SP_IS_HKERN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_HKERN))
+
+#define SP_TYPE_VKERN (sp_glyph_kerning_v_get_type ())
+#define SP_VKERN(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_VKERN, SPVkern))
+#define SP_VKERN_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_VKERN, SPGlyphKerningClass))
+#define SP_IS_VKERN(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_VKERN))
+#define SP_IS_VKERN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_VKERN))
 
 struct SPGlyphKerning : public SPObject {
     char* u1;
@@ -28,10 +34,14 @@ struct SPGlyphKerning : public SPObject {
     double k;
 };
 
+struct SPHkern : public SPGlyphKerning {};
+struct SPVkern : public SPGlyphKerning {};
+
 struct SPGlyphKerningClass {
 	SPObjectClass parent_class;
 };
 
-GType sp_glyph_kerning_get_type (void);
+GType sp_glyph_kerning_h_get_type (void);
+GType sp_glyph_kerning_v_get_type (void);
 
 #endif //#ifndef __SP_GLYPH_KERNING_H__
