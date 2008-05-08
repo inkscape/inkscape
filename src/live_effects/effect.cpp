@@ -44,6 +44,7 @@
 #include "live_effects/lpe-circle_with_radius.h"
 #include "live_effects/lpe-perspective_path.h"
 #include "live_effects/lpe-spiro.h"
+#include "live_effects/lpe-constructgrid.h"
 
 #include "nodepath.h"
 
@@ -67,6 +68,7 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {CIRCLE_WITH_RADIUS,    N_("Circle (center+radius)"), "circle_with_radius"},
     {PERSPECTIVE_PATH,      N_("Perspective path"),      "perspective_path"},
     {SPIRO,      N_("Spiro spline"),      "spiro"},
+    {CONSTRUCT_GRID,      N_("Construct grid"),      "construct_grid"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
@@ -112,6 +114,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case SPIRO:
             neweffect = static_cast<Effect*> ( new LPESpiro(lpeobj) );
+            break;
+        case CONSTRUCT_GRID:
+            neweffect = static_cast<Effect*> ( new LPEConstructGrid(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);

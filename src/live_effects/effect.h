@@ -65,6 +65,7 @@ enum EffectType {
     CIRCLE_WITH_RADIUS,
     PERSPECTIVE_PATH,
     SPIRO,
+    CONSTRUCT_GRID,
     INVALID_LPE // This must be last
 };
 
