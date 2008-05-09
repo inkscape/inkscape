@@ -24,7 +24,7 @@ namespace LivePathEffect {
 LPEKnot::LPEKnot(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     // initialise your parameters here:
-    interruption_width(_("Interruption width"), _("Howmuch the lower strand is obscured by the upper."), "interruption_width", &wr, this, 10)
+    interruption_width(_("Gap width"), _("The width of the gap in the path where it self-intersects"), "interruption_width", &wr, this, 10)
 {
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     registerParameter( dynamic_cast<Parameter *>(&interruption_width) );
