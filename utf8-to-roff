@@ -1,9 +1,25 @@
-#! /usr/bin/perl -w -CI
+if (true || '\'); then exec perl -CI "$0" "$@"; fi  # ') {}
+# The above uses the fact that backslash isn't special in single quotes in
+# shell script, whereas in perl it escapes the following single quote.
+#
+# The problem it tries to solve is that we want perl to be run with -CI flag
+# (to have stdin interpreted as utf-8), so we would use `#! /usr/bin/perl -CI',
+# except that if we do that then perl 5.10 complains about it being too late
+# to apply -CI if the script is run with `perl -CI ./utf8-to-roff', as we want
+# to do from the Makefile.  The reason we don't do `./utf8-to-roff' from the makefile
+# is that then we require the #! line to have the right location of perl instead of
+# just consulting the path.  (Similarly, we could use `#! /usr/bin/env perl -CI',
+# though that still requires that /usr/bin/env exist.)  The reason we don't just
+# remove the `-CI' from the #! line is that then the script couldn't be run correctly
+# with ./utf8-to-roff.
+
+
 # Converts a man page from utf8 (not understood by groff 1.18) to groff escapes.
 # I couldn't find any existing tool to convert from utf8 to groff, though I
 # seem to recall seeing some code to do so somewhere.
 #
 # Hereby released into public domain by Peter Moulder.
+use warnings;
 use strict;
 
 # Table generated automatically using:
