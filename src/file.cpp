@@ -891,80 +891,79 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
     }
 
     if (doc != NULL) {
-        // move imported defs to our document's defs
-        SPObject *in_defs = SP_DOCUMENT_DEFS(in_doc);
-        SPObject *defs = SP_DOCUMENT_DEFS(doc);
-
         Inkscape::IO::fixupHrefs(doc, in_doc->base, true);
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+        Inkscape::XML::Document *xml_in_doc = sp_document_repr_doc(in_doc);
 
+        SPObject *in_defs = SP_DOCUMENT_DEFS(in_doc);
         Inkscape::XML::Node *last_def = SP_OBJECT_REPR(in_defs)->lastChild();
-        for (SPObject *child = sp_object_first_child(defs);
-             child != NULL; child = SP_OBJECT_NEXT(child))
-        {
-            // FIXME: in case of id conflict, newly added thing will be re-ided and thus likely break a reference to it from imported stuff
-            SP_OBJECT_REPR(in_defs)->addChild(SP_OBJECT_REPR(child)->duplicate(xml_doc), last_def);
-        }
+        
+        SPCSSAttr *style = sp_css_attr_from_object(SP_DOCUMENT_ROOT(doc));
 
+        // Count the number of top-level items in the imported document.
         guint items_count = 0;
         for (SPObject *child = sp_object_first_child(SP_DOCUMENT_ROOT(doc));
-             child != NULL; child = SP_OBJECT_NEXT(child)) {
-            if (SP_IS_ITEM(child))
-                items_count ++;
+             child != NULL; child = SP_OBJECT_NEXT(child))
+        {
+            if (SP_IS_ITEM(child)) items_count++;
         }
-        SPCSSAttr *style = sp_css_attr_from_object (SP_DOCUMENT_ROOT (doc));
 
-        SPObject *new_obj = NULL;
-
+        // Create a new group if necessary.
+        Inkscape::XML::Node *newgroup = NULL;
         if ((style && style->firstChild()) || items_count > 1) {
-            // create group
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(in_doc);
-            Inkscape::XML::Node *newgroup = xml_doc->createElement("svg:g");
-            sp_repr_css_set (newgroup, style, "style");
+            newgroup = xml_in_doc->createElement("svg:g");
+            sp_repr_css_set(newgroup, style, "style");
+        }
 
-            for (SPObject *child = sp_object_first_child(SP_DOCUMENT_ROOT(doc)); child != NULL; child = SP_OBJECT_NEXT(child) ) {
-                if (SP_IS_ITEM(child)) {
-                    Inkscape::XML::Node *newchild = SP_OBJECT_REPR(child)->duplicate(xml_doc);
+        // Determine the place to insert the new object.
+        // This will be the current layer, if possible.
+        // FIXME: If there's no desktop (command line run?) we need
+        //        a document:: method to return the current layer.
+        //        For now, we just use the root in this case.
+        SPObject *place_to_insert;
+        if (desktop) place_to_insert = desktop->currentLayer();
+        else         place_to_insert = SP_DOCUMENT_ROOT(in_doc);
 
-                    // convert layers to groups; FIXME: add "preserve layers" mode where each layer
-                    // from impot is copied to the same-named layer in host
-                    newchild->setAttribute("inkscape:groupmode", NULL);
+        // Construct a new object representing the imported image,
+        // and insert it into the current document.
+        SPObject *new_obj = NULL;
+        for (SPObject *child = sp_object_first_child(SP_DOCUMENT_ROOT(doc));
+             child != NULL; child = SP_OBJECT_NEXT(child) )
+        {
+            if (SP_IS_ITEM(child)) {
+                Inkscape::XML::Node *newitem = SP_OBJECT_REPR(child)->duplicate(xml_in_doc);
 
-                    newgroup->appendChild(newchild);
-                }
+                // convert layers to groups, and make sure they are unlocked
+                // FIXME: add "preserve layers" mode where each layer from
+                //        import is copied to the same-named layer in host
+                newitem->setAttribute("inkscape:groupmode", NULL);
+                newitem->setAttribute("sodipodi:insensitive", NULL);
+
+                if (newgroup) newgroup->appendChild(newitem);
+                else new_obj = place_to_insert->appendChildRepr(newitem);
             }
-
-            if (desktop) {
-                // Add it to the current layer
-                new_obj = desktop->currentLayer()->appendChildRepr(newgroup);
-            } else {
-                // There's no desktop (command line run?)
-                // FIXME: For such cases we need a document:: method to return the current layer
-                new_obj = SP_DOCUMENT_ROOT(in_doc)->appendChildRepr(newgroup);
-            }
-
-            Inkscape::GC::release(newgroup);
-        } else {
-            // just add one item
-            for (SPObject *child = sp_object_first_child(SP_DOCUMENT_ROOT(doc)); child != NULL; child = SP_OBJECT_NEXT(child) ) {
-                if (SP_IS_ITEM(child)) {
-                    Inkscape::XML::Node *newitem = SP_OBJECT_REPR(child)->duplicate(xml_doc);
-                    newitem->setAttribute("inkscape:groupmode", NULL);
-
-                    if (desktop) {
-                        // Add it to the current layer
-                        new_obj = desktop->currentLayer()->appendChildRepr(newitem);
-                    } else {
-                        // There's no desktop (command line run?)
-                        // FIXME: For such cases we need a document:: method to return the current layer
-                        new_obj = SP_DOCUMENT_ROOT(in_doc)->appendChildRepr(newitem);
+            
+            // don't lose top-level defs or style elements
+            else if (SP_OBJECT_REPR(child)->type() == Inkscape::XML::ELEMENT_NODE) {
+                const gchar *tag = SP_OBJECT_REPR(child)->name();
+                if (!strcmp(tag, "svg:defs")) {
+                    for (SPObject *x = sp_object_first_child(child);
+                         x != NULL; x = SP_OBJECT_NEXT(x))
+                    {
+                        // FIXME: in case of id conflict, newly added thing will be re-ided
+                        // and thus likely break a reference to it from imported stuff
+                        SP_OBJECT_REPR(in_defs)->addChild(SP_OBJECT_REPR(x)->duplicate(xml_in_doc), last_def);
                     }
-
+                }
+                else if (!strcmp(tag, "svg:style")) {
+                    SP_DOCUMENT_ROOT(in_doc)->appendChildRepr(SP_OBJECT_REPR(child)->duplicate(xml_in_doc));
                 }
             }
         }
+        if (newgroup) new_obj = place_to_insert->appendChildRepr(newgroup);
 
-        if (style) sp_repr_css_attr_unref (style);
+        // release some stuff
+        if (newgroup) Inkscape::GC::release(newgroup);
+        if (style) sp_repr_css_attr_unref(style);
 
         // select and move the imported item
         if (new_obj && SP_IS_ITEM(new_obj)) {
