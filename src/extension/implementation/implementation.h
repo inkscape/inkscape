@@ -104,14 +104,14 @@ public:
     virtual unsigned release(Inkscape::Extension::Print *module);
     virtual unsigned comment(Inkscape::Extension::Print *module, const char * comment);
     virtual unsigned fill(Inkscape::Extension::Print *module,
-                          NRBPath const *bpath,
+                          const_NRBPath const *bpath,
                           NR::Matrix const *ctm,
                           SPStyle const *style,
                           NRRect const *pbox,
                           NRRect const *dbox,
                           NRRect const *bbox);
     virtual unsigned stroke(Inkscape::Extension::Print *module,
-                            NRBPath const *bpath,
+                            const_NRBPath const *bpath,
                             NR::Matrix const *transform,
                             SPStyle const *style,
                             NRRect const *pbox,

@@ -30,21 +30,26 @@
 #include <libnr/nr-forward.h>
 #include <libnr/nr-coord.h>
 
-NArtBpath* nr_artpath_affine(NArtBpath *s, NR::Matrix const &transform);
+NArtBpath* nr_artpath_affine(NArtBpath const *s, NR::Matrix const &transform);
 
+struct const_NRBPath {
+    NArtBpath const *path;
+};
 struct NRBPath {
-	NArtBpath *path;
+    NArtBpath *path;
+    operator const_NRBPath() { const_NRBPath bp = { path }; return bp; };
 };
 
-NRBPath *nr_path_duplicate_transform(NRBPath *d, NRBPath *s, NR::Matrix const *transform);
 
-NRBPath *nr_path_duplicate_transform(NRBPath *d, NRBPath *s, NR::Matrix const transform);
+NRBPath *nr_path_duplicate_transform(NRBPath *d, const_NRBPath *s, NR::Matrix const *transform);
 
-void nr_path_matrix_point_bbox_wind_distance (NRBPath *bpath, NR::Matrix const &m, NR::Point &pt,
+NRBPath *nr_path_duplicate_transform(NRBPath *d, const_NRBPath *s, NR::Matrix const transform);
+
+void nr_path_matrix_point_bbox_wind_distance (const_NRBPath const *bpath, NR::Matrix const &m, NR::Point &pt,
 					      NRRect *bbox, int *wind, NR::Coord *dist,
                      NR::Coord tolerance, NR::Rect *viewbox);
 
-void nr_path_matrix_bbox_union(NRBPath const *bpath, NR::Matrix const &m, NRRect *bbox);
+void nr_path_matrix_bbox_union(const_NRBPath *bpath, NR::Matrix const &m, NRRect *bbox);
 
 NArtBpath *nr_path_from_rect(NRRect const &r);
 

@@ -249,7 +249,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
         shape->ctm = gc->transform;
         if (state & NR_ARENA_ITEM_STATE_BBOX) {
             if (shape->curve) {
-                NRBPath bp;
+                const_NRBPath bp;
                 /* fixme: */
                 bbox.x0 = bbox.y0 = NR_HUGE;
                 bbox.x1 = bbox.y1 = -NR_HUGE;
@@ -277,7 +277,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
 
     if (shape->curve) {
-        NRBPath bp;
+        const_NRBPath bp;
         /* fixme: */
         bbox.x0 = bbox.y0 = NR_HUGE;
         bbox.x1 = bbox.y1 = -NR_HUGE;
@@ -1102,7 +1102,7 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
         width = 0;
     }
 
-    NRBPath bp;
+    const_NRBPath bp;
     bp.path = SP_CURVE_BPATH(shape->curve);
     double dist = NR_HUGE;
     int wind = 0;

@@ -45,13 +45,13 @@ public:
                                float opacity);
     unsigned int  release     (void);
     unsigned int  comment     (const char * comment);
-    unsigned int  fill        (NRBPath const *bpath,
+    unsigned int  fill        (const_NRBPath const *bpath,
                                NR::Matrix const *ctm,
                                SPStyle const *style,
                                NRRect const *pbox,
                                NRRect const *dbox,
                                NRRect const *bbox);
-    unsigned int  stroke      (NRBPath const *bpath,
+    unsigned int  stroke      (const_NRBPath const *bpath,
                                NR::Matrix const *transform,
                                SPStyle const *style,
                                NRRect const *pbox,

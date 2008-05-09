@@ -136,7 +136,7 @@ public:
     void addClippingRect(double x, double y, double width, double height);
 
     /* Rendering methods */
-    bool renderPath(NRBPath const *bpath, SPStyle const *style, NRRect const *pbox);
+    bool renderPath(const_NRBPath const *bpath, SPStyle const *style, NRRect const *pbox);
     bool renderImage(unsigned char *px, unsigned int w, unsigned int h, unsigned int rs,
                      NR::Matrix const *image_transform, SPStyle const *style);
     bool renderGlyphtext(PangoFont *font, NR::Matrix const *font_matrix,

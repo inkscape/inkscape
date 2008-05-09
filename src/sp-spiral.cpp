@@ -174,7 +174,7 @@ sp_spiral_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
                 //g_warning("sp_spiral_write(): No path to copy\n");
                 return NULL;
         }
-        NArtBpath *bpath = SP_CURVE_BPATH(curve);
+        NArtBpath const *bpath = SP_CURVE_BPATH(curve);
         if ( !bpath ) {
                 //g_warning("sp_spiral_write(): No path to copy\n");
                 return NULL;

@@ -826,7 +826,7 @@ sp_selected_path_outline()
 
                 SPShape *shape = SP_SHAPE(item);
 
-                for (NArtBpath* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
+                for (NArtBpath const* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
                     for (int m = SP_MARKER_LOC_START; m < SP_MARKER_LOC_QTY; m++) {
                         if (sp_shape_marker_required (shape, m, bp)) {
 
@@ -1729,18 +1729,15 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
     
     Path *dest = bpath_to_Path(bpath);
 
-    if (doTransformation) {
-        g_free(bpath); // see comment in bpath_for_curve
-    }
-    
+    g_free(bpath);
+
     curve->unref();
     
     return dest;
 }
 
 /* 
- * This function is buggy: it can either return a new NArtBpath, or an existing one.
- * It is therefore unclear whether the caller must g_free the path or not!
+ * This function always returns a new NArtBpath, the caller must g_free the returned path!
 */
 NArtBpath *
 bpath_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transformFull)
@@ -1748,22 +1745,23 @@ bpath_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transf
     if (curve == NULL)
         return NULL;
 
-    NArtBpath *bpath = SP_CURVE_BPATH(curve);
+    NArtBpath const *bpath = SP_CURVE_BPATH(curve);
     if (bpath == NULL) {
         return NULL;
     }
-    
+
+    NArtBpath *new_bpath; // we will get a duplicate which has to be freed at some point!
     if (doTransformation) {
-        NArtBpath *new_bpath; // we will get a duplicate which has to be freed at some point!
         if (transformFull) {
             new_bpath = nr_artpath_affine(bpath, sp_item_i2doc_affine(item));
         } else {
             new_bpath = nr_artpath_affine(bpath, item->transform);
         }
-        bpath = new_bpath;
+    } else {
+        new_bpath = nr_artpath_affine(bpath, NR::identity());
     }
 
-    return bpath;
+    return new_bpath;
 }
 
 SPCurve* curve_for_item(SPItem *item)

@@ -21,6 +21,7 @@ class translate;
 
 class NArtBpath;
 struct NRBPath;
+struct const_NRBPath;
 struct NRPixBlock;
 struct NRRect;
 struct NRRectL;

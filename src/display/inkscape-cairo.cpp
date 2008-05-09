@@ -46,7 +46,7 @@ nr_create_cairo_context (NRRectL *area, NRPixBlock *pb)
 
 /** Feeds path-creating calls to the cairo context translating them from the SPCurve, with the given transform and shift */
 void
-feed_curve_to_cairo (cairo_t *ct, NArtBpath *bpath, NR::Matrix trans, NR::Maybe<NR::Rect> area, bool optimize_stroke, double stroke_width)
+feed_curve_to_cairo (cairo_t *ct, NArtBpath const *bpath, NR::Matrix trans, NR::Maybe<NR::Rect> area, bool optimize_stroke, double stroke_width)
 {
     NR::Point next(0,0), last(0,0);
     if (!area || area->isEmpty()) 

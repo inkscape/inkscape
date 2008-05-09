@@ -176,7 +176,7 @@ public:
   void  DashPolylineFromStyle(SPStyle *style, float scale, float min_len);
   
   //utilitaire pour inkscape
-  void  LoadArtBPath(void *iP,NR::Matrix const &tr,bool doTransformation);
+  void  LoadArtBPath(void const *iP,NR::Matrix const &tr,bool doTransformation);
 	void* MakeArtBPath();
 	
 	void  Transform(const NR::Matrix &trans);

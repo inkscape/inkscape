@@ -36,7 +36,6 @@ public:
 
     void set_bpath(NArtBpath * new_bpath);
     NArtBpath const * get_bpath() const;
-    NArtBpath * get_bpath();
 
     /// Index in bpath[] of NR_END element.
     guint _end;

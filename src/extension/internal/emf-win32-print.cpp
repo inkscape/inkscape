@@ -485,7 +485,7 @@ PrintEmfWin32::release(Inkscape::Extension::Print *mod)
 
 unsigned int
 PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
-               NRBPath const *bpath, NR::Matrix const *transform, SPStyle const *style,
+               const_NRBPath const *bpath, NR::Matrix const *transform, SPStyle const *style,
                NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!hdc) return 0;
@@ -512,7 +512,7 @@ PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
 
 unsigned int
 PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
-                  const NRBPath *bpath, const NR::Matrix *transform, const SPStyle *style,
+                  const const_NRBPath *bpath, const NR::Matrix *transform, const SPStyle *style,
                   const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
 {
     if (!hdc) return 0;

@@ -156,14 +156,15 @@ void Layout::print(SPPrintContext *ctx,
             NRBPath bpath;
             bpath.path = (NArtBpath*)span.font->ArtBPath(_glyphs[glyph_index].glyph);
             if (bpath.path) {
-                NRBPath abp;
+                const_NRBPath abp;
                 _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
-                abp.path = nr_artpath_affine(bpath.path, glyph_matrix);
+                NArtBpath *temp_bpath = nr_artpath_affine(bpath.path, glyph_matrix);
+                abp.path = temp_bpath;
                 if (!text_source->style->fill.isNone())
                     sp_print_fill(ctx, &abp, &ctm, text_source->style, pbox, dbox, bbox);
                 if (!text_source->style->stroke.isNone())
                     sp_print_stroke(ctx, &abp, &ctm, text_source->style, pbox, dbox, bbox);
-                g_free(abp.path);
+                g_free(temp_bpath);
             }
             glyph_index++;
         } else {
@@ -234,7 +235,7 @@ void Layout::showGlyphs(CairoRenderContext *ctx) const
             NArtBpath *bpath = (NArtBpath*)span.font->ArtBPath(_glyphs[glyph_index].glyph);
             if (bpath) {
                 NArtBpath *abp = nr_artpath_affine(bpath, glyph_matrix);
-                NRBPath bpath;
+                const_NRBPath bpath;
                 bpath.path = abp;
                 SPStyle const *style = text_source->style;
                 ctx->renderPath(&bpath, style, NULL);

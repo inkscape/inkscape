@@ -322,7 +322,7 @@ sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 * \return 1 if a marker is required here, otherwise 0.
 */
 bool
-sp_shape_marker_required(SPShape const *shape, int const m, NArtBpath *bp)
+sp_shape_marker_required(SPShape const *shape, int const m, NArtBpath const *bp)
 {
     if (shape->marker[m] == NULL) {
         return false;
@@ -595,7 +595,7 @@ sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai)
 
             int n = 0;
 
-            for (NArtBpath *bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
+            for (NArtBpath const *bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
                 if (sp_shape_marker_required (shape, i, bp)) {
                     NR::Matrix const m(sp_shape_marker_get_transform(shape, bp));
                     sp_marker_show_instance ((SPMarker* ) shape->marker[i], ai,
@@ -637,7 +637,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
     if (shape->curve) {
 
         NRRect  cbbox;
-        NRBPath bp;
+        const_NRBPath bp;
 
         bp.path = SP_CURVE_BPATH (shape->curve);
 
@@ -664,7 +664,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
 
             // Union with bboxes of the markers, if any
             if (sp_shape_has_markers (shape)) {
-                for (NArtBpath* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
+                for (NArtBpath const* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
                     for (int m = SP_MARKER_LOC_START; m < SP_MARKER_LOC_QTY; m++) {
                         if (sp_shape_marker_required (shape, m, bp)) {
 
@@ -730,19 +730,19 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 
         SPStyle* style = SP_OBJECT_STYLE (item);
 
-	if (!style->fill.isNone()) {
-		NRBPath bp;
-		bp.path = SP_CURVE_BPATH(shape->curve);
-		sp_print_fill (ctx, &bp, &i2d, style, &pbox, &dbox, &bbox);
-	}
+    if (!style->fill.isNone()) {
+        const_NRBPath bp;
+        bp.path = SP_CURVE_BPATH(shape->curve);
+        sp_print_fill (ctx, &bp, &i2d, style, &pbox, &dbox, &bbox);
+    }
 
-	if (!style->stroke.isNone()) {
-		NRBPath bp;
-		bp.path = SP_CURVE_BPATH(shape->curve);
-		sp_print_stroke (ctx, &bp, &i2d, style, &pbox, &dbox, &bbox);
-	}
+    if (!style->stroke.isNone()) {
+        const_NRBPath bp;
+        bp.path = SP_CURVE_BPATH(shape->curve);
+        sp_print_stroke (ctx, &bp, &i2d, style, &pbox, &dbox, &bbox);
+    }
 
-        for (NArtBpath* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
+        for (NArtBpath const* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
             for (int m = SP_MARKER_LOC_START; m < SP_MARKER_LOC_QTY; m++) {
                 if (sp_shape_marker_required (shape, m, bp)) {
 
@@ -871,7 +871,7 @@ int
 sp_shape_number_of_markers (SPShape *shape, int type)
 {
     int n = 0;
-    for (NArtBpath* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
+    for (NArtBpath const* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
         if (sp_shape_marker_required (shape, type, bp)) {
             n++;
         }

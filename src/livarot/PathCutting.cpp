@@ -405,10 +405,10 @@ void* Path::MakeArtBPath(void)
 	return bpath;
 }
 
-void  Path::LoadArtBPath(void *iV,NR::Matrix const &trans,bool doTransformation)
+void  Path::LoadArtBPath(void const *iV,NR::Matrix const &trans,bool doTransformation)
 {
   if ( iV == NULL ) return;
-  NArtBpath *bpath = (NArtBpath*)iV;
+  NArtBpath const *bpath = (NArtBpath const*)iV;
   
   SetBackData (false);
   Reset();

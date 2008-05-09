@@ -121,12 +121,12 @@ box3d_side_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
     sp_shape_set_shape ((SPShape *) object);
 
     /* Duplicate the path */
-    SPCurve *curve = ((SPShape *) object)->curve;
+    SPCurve const *curve = ((SPShape *) object)->curve;
     //Nulls might be possible if this called iteratively
     if ( !curve ) {
         return NULL;
     }
-    NArtBpath *bpath = SP_CURVE_BPATH(curve);
+    NArtBpath const *bpath = SP_CURVE_BPATH(curve);
     if ( !bpath ) {
         return NULL;
     }

@@ -157,7 +157,7 @@ sp_path_convert_to_guides(SPItem *item)
 
     SPCurve *curve = SP_SHAPE(path)->curve;
     if (!curve) return;
-    NArtBpath *bpath = SP_CURVE_BPATH(curve);
+    NArtBpath const *bpath = SP_CURVE_BPATH(curve);
 
     NR::Point last_pt;
     NR::Point pt;

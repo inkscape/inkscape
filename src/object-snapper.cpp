@@ -321,9 +321,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
                         SPCurve *curve = curve_for_item(root_item); 
                         if (curve) {
                             NArtBpath *bpath = bpath_for_curve(root_item, curve, true, true);
-                            _bpaths_to_snap_to->push_back(bpath);
-                            // Because we set doTransformation to true in bpath_for_curve, we
-                            // will get a dupe of the path, which must be freed at some point
+                            _bpaths_to_snap_to->push_back(bpath); // we will get a dupe of the path, which must be freed at some point
                             curve->unref();
                         }
                     }
@@ -376,9 +374,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
             SPCurve *curve = curve_for_item(SP_ITEM(selected_path)); 
             if (curve) {
                 NArtBpath *bpath = bpath_for_curve(SP_ITEM(selected_path), curve, true, true);
-                _bpaths_to_snap_to->push_back(bpath);
-                // Because we set doTransformation to true in bpath_for_curve, we
-                // will get a dupe of the path, which must be freed at some point
+                _bpaths_to_snap_to->push_back(bpath); // we will get a dupe of the path, which must be freed at some point
                 curve->unref();
             }
         }   

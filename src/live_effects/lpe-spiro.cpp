@@ -99,12 +99,12 @@ LPESpiro::doEffect(SPCurve * curve)
     bezctx *bc = new_bezctx_ink(curve);
     int len = SP_CURVE_LENGTH(csrc);
     spiro_cp *path = g_new (spiro_cp, len + 1);
-    NArtBpath *bpath = csrc->get_bpath();
+    NArtBpath const *bpath = csrc->get_bpath();
     int ib = 0;
     int ip = 0;
     bool closed = false;
     NR::Point pt(0, 0);
-    NArtBpath *first_in_subpath = NULL;
+    NArtBpath const *first_in_subpath = NULL;
     while(ib <= len) {
         path [ip].x = bpath[ib].x3;
         path [ip].y = bpath[ib].y3;
@@ -138,7 +138,7 @@ LPESpiro::doEffect(SPCurve * curve)
             }
         } else {
                 // this point is not last, so makes sense to find a proper type for it
-                NArtBpath *next = NULL;
+                NArtBpath const *next = NULL;
                 if (ib < len && (bpath[ib+1].code == NR_END || bpath[ib+1].code == NR_MOVETO_OPEN || bpath[ib+1].code == NR_MOVETO)) { // end of subpath
                     if (closed)
                         next = first_in_subpath;

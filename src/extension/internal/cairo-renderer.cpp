@@ -178,12 +178,12 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
     SPStyle* style = SP_OBJECT_STYLE (item);
     CairoRenderer *renderer = ctx->getRenderer();
 
-    NRBPath bp;
+    const_NRBPath bp;
     bp.path = SP_CURVE_BPATH(shape->curve);
 
     ctx->renderPath(&bp, style, &pbox);
 
-    for (NArtBpath* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
+    for (NArtBpath const* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
         for (int m = SP_MARKER_LOC_START; m < SP_MARKER_LOC_QTY; m++) {
             if (sp_shape_marker_required (shape, m, bp)) {
 

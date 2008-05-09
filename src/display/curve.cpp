@@ -150,11 +150,13 @@ SPCurve::get_bpath() const
 {
     return _bpath;
 };
+/*
 NArtBpath *
 SPCurve::get_bpath()
 {
     return _bpath;
 };
+*/
 
 /**
  * Increase _refcount of curve.
@@ -273,7 +275,7 @@ SPCurve::split() const
 {
     g_return_val_if_fail(this != NULL, NULL);
 
-    gint p = 0;
+    guint p = 0;
     GSList *l = NULL;
 
     while (p < _end) {
@@ -304,7 +306,7 @@ tmpl_curve_transform(SPCurve *const curve, M const &m)
 {
     g_return_if_fail(curve != NULL);
 
-    for (gint i = 0; i < curve->_end; i++) {
+    for (guint i = 0; i < curve->_end; i++) {
         NArtBpath *p = curve->_bpath + i;
         switch (p->code) {
             case NR_MOVETO:

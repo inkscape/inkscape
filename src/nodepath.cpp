@@ -330,7 +330,7 @@ void sp_nodepath_ensure_livarot_path(Inkscape::NodePath::Path *np)
 {
     if (np && np->livarot_path == NULL) {
         SPCurve *curve = create_curve(np);
-        NArtBpath *bpath = SP_CURVE_BPATH(curve);
+        NArtBpath const *bpath = SP_CURVE_BPATH(curve);
         np->livarot_path = bpath_to_Path(bpath);
 
         if (np->livarot_path)

@@ -1240,7 +1240,7 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, NRRect const *pbox)
 }
 
 bool
-CairoRenderContext::renderPath(NRBPath const *bpath, SPStyle const *style, NRRect const *pbox)
+CairoRenderContext::renderPath(const_NRBPath const *bpath, SPStyle const *style, NRRect const *pbox)
 {
     g_assert( _is_valid );
 

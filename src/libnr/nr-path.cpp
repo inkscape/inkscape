@@ -20,7 +20,7 @@ static void nr_curve_bbox(NR::Point const p000, NR::Point const p001,
 			  NR::Point const p011, NR::Point const p111,
 			  NRRect *bbox);
 
-NRBPath *nr_path_duplicate_transform(NRBPath *d, NRBPath *s, NR::Matrix const *transform)
+NRBPath *nr_path_duplicate_transform(NRBPath *d, const_NRBPath *s, NR::Matrix const *transform)
 {
 	int i;
 
@@ -49,16 +49,17 @@ NRBPath *nr_path_duplicate_transform(NRBPath *d, NRBPath *s, NR::Matrix const *t
 	return d;
 }
 
-NRBPath *nr_path_duplicate_transform(NRBPath *d, NRBPath *s, NR::Matrix const transform) {
+NRBPath *nr_path_duplicate_transform(NRBPath *d, const_NRBPath *s, NR::Matrix const transform) {
 	NR::Matrix tr = transform;
 	return nr_path_duplicate_transform(d, s, &tr);
 }
 
-NArtBpath* nr_artpath_affine(NArtBpath *s, NR::Matrix const &aff) {
-	NRBPath bp, abp;
-	bp.path = s;
-	nr_path_duplicate_transform(&abp, &bp, aff);
-	return abp.path;
+NArtBpath* nr_artpath_affine(NArtBpath const *s, NR::Matrix const &aff) {
+    const_NRBPath bp;
+    bp.path = s;
+    NRBPath abp;
+    nr_path_duplicate_transform(&abp, &bp, aff);
+    return abp.path;
 }
 
 static void
@@ -212,7 +213,7 @@ nr_curve_bbox_wind_distance (NR::Coord x000, NR::Coord y000,
 }
 
 void
-nr_path_matrix_point_bbox_wind_distance (NRBPath *bpath, NR::Matrix const &m, NR::Point &pt,
+nr_path_matrix_point_bbox_wind_distance (const_NRBPath const *bpath, NR::Matrix const &m, NR::Point &pt,
 					     NRRect *bbox, int *wind, NR::Coord *dist,
 						 NR::Coord tolerance, NR::Rect *viewbox)
 {
@@ -449,7 +450,7 @@ nr_curve_bbox (NR::Coord x000, NR::Coord y000, NR::Coord x001, NR::Coord y001, N
 }
 
 void
-nr_path_matrix_bbox_union(NRBPath const *bpath, NR::Matrix const &m,
+nr_path_matrix_bbox_union(const_NRBPath *bpath, NR::Matrix const &m,
 			  NRRect *bbox)
 {
     using NR::X;

@@ -166,14 +166,14 @@ Implementation::comment(Inkscape::Extension::Print */*module*/, char const */*co
 }
 
 unsigned int
-Implementation::fill(Inkscape::Extension::Print */*module*/, NRBPath const */*bpath*/, NR::Matrix const */*ctm*/, SPStyle const */*style*/,
+Implementation::fill(Inkscape::Extension::Print */*module*/, const_NRBPath const */*bpath*/, NR::Matrix const */*ctm*/, SPStyle const */*style*/,
                      NRRect const */*pbox*/, NRRect const */*dbox*/, NRRect const */*bbox*/)
 {
     return 0;
 }
 
 unsigned int
-Implementation::stroke(Inkscape::Extension::Print */*module*/, NRBPath const */*bpath*/, NR::Matrix const */*transform*/, SPStyle const */*style*/,
+Implementation::stroke(Inkscape::Extension::Print */*module*/, const_NRBPath const */*bpath*/, NR::Matrix const */*transform*/, SPStyle const */*style*/,
                        NRRect const */*pbox*/, NRRect const */*dbox*/, NRRect const */*bbox*/)
 {
     return 0;

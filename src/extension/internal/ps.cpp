@@ -813,7 +813,7 @@ PrintPS::print_stroke_style(SVGOStringStream &os, SPStyle const *style)
 
 
 unsigned int
-PrintPS::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *const style,
+PrintPS::fill(Inkscape::Extension::Print *mod, const_NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *const style,
               NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -879,7 +879,7 @@ PrintPS::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NR::Matrix 
 
 
 unsigned int
-PrintPS::stroke(Inkscape::Extension::Print *mod, NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *style,
+PrintPS::stroke(Inkscape::Extension::Print *mod, const_NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *style,
                 NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.

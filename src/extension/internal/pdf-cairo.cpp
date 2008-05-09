@@ -579,7 +579,7 @@ PrintCairoPDF::print_fill_style(cairo_t *cr, SPStyle const *const style, NRRect 
 }
 
 unsigned int
-PrintCairoPDF::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *const style,
+PrintCairoPDF::fill(Inkscape::Extension::Print *mod, const_NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *const style,
               NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -679,7 +679,7 @@ PrintCairoPDF::print_stroke_style(cairo_t *cr, SPStyle const *style, NRRect cons
 }
 
 unsigned int
-PrintCairoPDF::stroke(Inkscape::Extension::Print *mod, NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *style,
+PrintCairoPDF::stroke(Inkscape::Extension::Print *mod, const_NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *style,
                 NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.

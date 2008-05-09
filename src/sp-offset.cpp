@@ -86,7 +86,7 @@ static gchar *sp_offset_description (SPItem * item);
 static void sp_offset_snappoints(SPItem const *item, SnapPointsIter p);
 static void sp_offset_set_shape (SPShape * shape);
 
-Path *bpath_to_liv_path (NArtBpath * bpath);
+Path *bpath_to_liv_path (NArtBpath const * bpath);
 
 static void refresh_offset_source(SPOffset* offset);
 
@@ -444,7 +444,7 @@ sp_offset_description(SPItem *item)
  * livarot Path. Duplicate of splivarot.
  */
 Path *
-bpath_to_liv_path(NArtBpath *bpath)
+bpath_to_liv_path(NArtBpath const *bpath)
 {
     if (bpath == NULL)
         return NULL;
