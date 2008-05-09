@@ -38,7 +38,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.8.3"
+#define BUILDTOOL_VERSION  "BuildTool v0.8.4"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -2990,6 +2990,11 @@ public:
     String resolve(const String &otherPath);
 
     /**
+     * replace variable refs like ${a} with their values
+     */         
+    bool eval(const String &s, String &result);
+
+    /**
      *  Get an element attribute, performing substitutions if necessary
      */
     bool getAttribute(Element *elem, const String &name, String &result);
@@ -3222,11 +3227,6 @@ protected:
     bool isNewerThan(const String &fileA, const String &fileB);
 
 private:
-
-    /**
-     * replace variable refs like ${a} with their values
-     */         
-    bool getSubstitutions(const String &s, String &result);
 
     int line;
 
@@ -3962,8 +3962,11 @@ bool MakeBase::listFiles(MakeBase &propRef, FileSet &fileSet)
 
 
 
-
-bool MakeBase::getSubstitutions(const String &str, String &result)
+/**
+ * Analyse a string, looking for any substitutions or other
+ * things that need resilution 
+ */
+bool MakeBase::eval(const String &str, String &result)
 {
     String s = trim(str);
     int len = (int)s.size();
@@ -4035,7 +4038,7 @@ bool MakeBase::getAttribute(Element *elem, const String &name,
                                     String &result)
 {
     String s = elem->getAttribute(name);
-    return getSubstitutions(s, result);
+    return eval(s, result);
 }
 
 
@@ -4043,7 +4046,7 @@ bool MakeBase::getValue(Element *elem, String &result)
 {
     String s = elem->getValue();
     //Replace all runs of whitespace with a single space
-    return getSubstitutions(s, result);
+    return eval(s, result);
 }
 
 
@@ -6024,6 +6027,7 @@ public:
         TASK_CC,
         TASK_COPY,
         TASK_DELETE,
+        TASK_ECHO,
         TASK_JAR,
         TASK_JAVAC,
         TASK_LINK,
@@ -6840,6 +6844,55 @@ private:
 
 
 /**
+ * Send a message to stdout
+ */
+class TaskEcho : public Task
+{
+public:
+
+    TaskEcho(MakeBase &par) : Task(par)
+        { type = TASK_ECHO; name = "echo"; }
+
+    virtual ~TaskEcho()
+        {}
+
+    virtual bool execute()
+        {
+        //let message have priority over text
+        if (message.size() > 0)
+            {
+            String s;
+			if (!parent.eval(message, s))
+			    return false;
+            fprintf(stdout, "%s\n", s.c_str());
+            }
+        else if (text.size() > 0)
+            {
+            String s;
+			if (!parent.eval(text, s))
+			    return false;
+            fprintf(stdout, "%s\n", s.c_str());
+            }
+        return true;
+        }
+
+    virtual bool parse(Element *elem)
+        {
+        text = elem->getValue();
+        text = leftJustify(text);
+        message = elem->getAttribute("message");
+        return true;
+        }
+
+private:
+
+    String message;
+    String text;
+};
+
+
+
+/**
  *
  */
 class TaskJar : public Task
@@ -7184,7 +7237,7 @@ private:
 
 
 /**
- * Create a named directory
+ * Create a named file
  */
 class TaskMakeFile : public Task
 {
@@ -7489,7 +7542,7 @@ public:
                 }
             
             }
-        taskstatus("%s", ret.c_str());
+        taskstatus("property %s = '%s'", propName.c_str(), ret.c_str());
         parent.setProperty(propName, ret);
         return true;
         }
@@ -8103,6 +8156,8 @@ Task *Task::createTask(Element *elem, int lineNr)
         task = new TaskCopy(parent);
     else if (tagName == "delete")
         task = new TaskDelete(parent);
+    else if (tagName == "echo")
+        task = new TaskEcho(parent);
     else if (tagName == "jar")
         task = new TaskJar(parent);
     else if (tagName == "javac")
