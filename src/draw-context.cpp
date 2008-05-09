@@ -25,6 +25,7 @@
 #include "svg/svg.h"
 #include <glibmm/i18n.h>
 #include "libnr/n-art-bpath.h"
+#include "display/curve.h"
 #include "desktop.h"
 #include "desktop-affine.h"
 #include "desktop-handles.h"
@@ -288,7 +289,7 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
         for (GSList *l = dc->white_curves; l != NULL; l = l->next) {
             SPCurve *c;
             c = (SPCurve*)l->data;
-            g_return_if_fail( c->end > 1 );
+            g_return_if_fail( c->_end > 1 );
             if ( SP_CURVE_BPATH(c)->code == NR_MOVETO_OPEN ) {
                 NArtBpath *s, *e;
                 SPDrawAnchor *a;
@@ -378,7 +379,7 @@ void spdc_endpoint_snap_free(SPEventContext const * const ec, NR::Point& p, guin
 static SPCurve *
 reverse_then_unref(SPCurve *orig)
 {
-    SPCurve *ret = orig->reverse();
+    SPCurve *ret = orig->create_reverse();
     orig->unref();
     return ret;
 }
@@ -431,11 +432,11 @@ spdc_concat_colors_and_flush(SPDrawContext *dc, gboolean forceclosed)
     if ( dc->sa && dc->ea
          && ( dc->sa->curve == dc->ea->curve )
          && ( ( dc->sa != dc->ea )
-              || dc->sa->curve->closed ) )
+              || dc->sa->curve->is_closed() ) )
     {
         // We hit bot start and end of single curve, closing paths
         SP_EVENT_CONTEXT_DESKTOP(dc)->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Closing path."));
-        if (dc->sa->start && !(dc->sa->curve->closed) ) {
+        if (dc->sa->start && !(dc->sa->curve->is_closed()) ) {
             c = reverse_then_unref(c);
         }
         dc->sa->curve->append_continuous(c, 0.0625);

@@ -232,9 +232,23 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &s
     }
 }
 
+/**
+ * Returns index of first NR_END bpath in array.
+ */
+static unsigned sp_bpath_length(NArtBpath const bpath[])
+{
+    g_return_val_if_fail(bpath != NULL, FALSE);
+    unsigned ret = 0;
+    while ( bpath[ret].code != NR_END ) {
+        ++ret;
+    }
+    ++ret;
+    return ret;
+}
+
 void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &t,
                                          bool const &first_point,
-                                         NArtBpath *border_bpath) const
+                                         NArtBpath const *border_bpath) const
 {
     // Now, let's first collect all paths to snap to. If we have a whole bunch of points to snap,
     // e.g. when translating an item using the selector tool, then we will only do this for the
@@ -254,8 +268,14 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
         }
         
         // Consider the page border for snapping
-        if (border_bpath != NULL) { 
-            _bpaths_to_snap_to->push_back(border_bpath);    
+        if (border_bpath != NULL) {
+            // make our own copy of the const*
+            NArtBpath *new_bpath;
+            unsigned const len = sp_bpath_length(border_bpath);
+            new_bpath = g_new(NArtBpath, len);
+            memcpy(new_bpath, border_bpath, len * sizeof(NArtBpath));
+
+            _bpaths_to_snap_to->push_back(new_bpath);    
         }
         
         for (std::vector<SPItem*>::const_iterator i = _candidates->begin(); i != _candidates->end(); i++) {
@@ -329,7 +349,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                                      bool const &first_point,
                                      std::vector<NR::Point> *unselected_nodes,
                                      SPPath const *selected_path,
-                                     NArtBpath *border_bpath) const
+                                     NArtBpath const *border_bpath) const
 {
     _collectPaths(t, first_point, border_bpath);
     // Now we can finally do the real snapping, using the paths collected above
@@ -482,7 +502,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
 {
     
     // Consider the page's border for snapping to
-    NArtBpath *border_bpath = _snap_to_page_border ? _getBorderBPath() : NULL;
+    NArtBpath const *border_bpath = _snap_to_page_border ? _getBorderBPath() : NULL;
     
     _collectPaths(t, first_point, border_bpath);
     
@@ -565,7 +585,7 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
     }
     
     // Consider the page's border for snapping to
-    NArtBpath *border_bpath = _snap_to_page_border ? _getBorderBPath() : NULL;   
+    NArtBpath const *border_bpath = _snap_to_page_border ? _getBorderBPath() : NULL;   
     
     if (_snap_to_itempath || _snap_to_bboxpath || _snap_to_page_border) {
         unsigned n = (unselected_nodes == NULL) ? 0 : unselected_nodes->size();
@@ -687,9 +707,9 @@ void Inkscape::ObjectSnapper::_clear_paths() const
     _paths_to_snap_to->clear();
 }
 
-NArtBpath* Inkscape::ObjectSnapper::_getBorderBPath() const
+NArtBpath const* Inkscape::ObjectSnapper::_getBorderBPath() const
 {
-    NArtBpath *border_bpath = NULL;
+    NArtBpath const *border_bpath = NULL;
     NR::Rect const border_rect = NR::Rect(NR::Point(0,0), NR::Point(sp_document_width(_named_view->document),sp_document_height(_named_view->document)));
     SPCurve const *border_curve = SPCurve::new_from_rect(border_rect);
     if (border_curve) {

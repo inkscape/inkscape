@@ -208,13 +208,13 @@ static void sp_polygon_set(SPObject *object, unsigned int key, const gchar *valu
             if (has_error || *cptr != '\0') {
                 /* TODO: Flag the document as in error, as per
                  * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing. */
-            } else if (curve->posSet) {
+            } else if (curve->_posSet) {
                 /* We've done a moveto but no lineto.  I'm not sure how we're supposed to represent
                  * a single-point polygon in SPCurve: sp_curve_closepath at the time of writing
                  * doesn't seem to like simply moveto followed by closepath.  The following works,
                  * but won't round-trip properly: I believe it will write as two points rather than
                  * one. */
-                curve->lineto(curve->movePos);
+                curve->lineto(curve->_movePos);
             } else if (hascpt) {
                 curve->closepath();
             }

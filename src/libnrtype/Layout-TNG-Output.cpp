@@ -20,6 +20,7 @@
 #include "font-instance.h"
 #include "svg/svg-length.h"
 #include "extension/internal/cairo-render-context.h"
+#include "display/curve.h"
 
 namespace Inkscape {
     namespace Extension {

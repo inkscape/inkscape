@@ -27,27 +27,28 @@
 class SPCurve {
 public:
     /* Constructors */
-    SPCurve(gint length = SP_CURVE_LENSTEP);
+    SPCurve(guint length = SP_CURVE_LENSTEP);
     static SPCurve * new_from_bpath(NArtBpath *bpath);
     static SPCurve * new_from_foreign_bpath(NArtBpath const *bpath);
     static SPCurve * new_from_rect(NR::Maybe<NR::Rect> const &rect);
 
     virtual ~SPCurve();
 
-    gint refcount;
-    NArtBpath *_bpath;
-    
+    void set_bpath(NArtBpath * new_bpath);
+    NArtBpath const * get_bpath() const;
+    NArtBpath * get_bpath();
+
     /// Index in bpath[] of NR_END element.
-    gint end;
+    guint _end;
 
     /// Allocated size (i.e., capacity) of bpath[] array.  Not to be confused 
     /// with the SP_CURVE_LENGTH macro, which returns the logical length of 
     /// the path (i.e., index of NR_END).
-    gint length;
+    guint _length;
 
     /// Index in bpath[] of the start (i.e., moveto element) of the last 
     /// subpath in this path.
-    gint substart;
+    guint _substart;
 
     /// Previous moveto position.
     /// \note This is used for coalescing moveto's, whereas if we're to 
@@ -55,21 +56,21 @@ public:
     /// midpoint markers.  Ref:
     /// http://www.w3.org/TR/SVG11/implnote.html#PathElementImplementationNotes
     /// (first subitem of the item about zero-length path segments)
-    NR::Point movePos;
+    NR::Point _movePos;
 
     /// True iff current point is defined.  Initially false for a new curve; 
     /// becomes true after moveto; becomes false on closepath.  Curveto, 
     /// lineto etc. require hascpt; hascpt remains true after lineto/curveto.
-    bool hascpt : 1;
+    bool _hascpt : 1;
     
     /// True iff previous was moveto.
-    bool posSet : 1;
+    bool _posSet : 1;
 
     /// True iff bpath end is moving.
-    bool moving : 1;
+    bool _moving : 1;
     
     /// True iff all subpaths are closed.
-    bool closed : 1;
+    bool _closed : 1;
 
     SPCurve * ref();
     SPCurve * unref();
@@ -97,6 +98,7 @@ public:
     SPCurve * append_continuous(SPCurve const *c1, gdouble tolerance);
 
     bool is_empty() const;
+    bool is_closed() const;
     NArtBpath * last_bpath() const;
     NArtBpath * first_bpath() const;
     NR::Point first_point() const;
@@ -105,20 +107,31 @@ public:
     NR::Point penultimate_point() const;
 
     void append(SPCurve const *curve2, bool use_lineto);
-    SPCurve * reverse() const;
+    SPCurve * create_reverse() const;
     void backspace();
 
     static SPCurve * concat(GSList const *list);
+
+    void ensure_space(guint space);
+
+protected:
+    gint _refcount;
+
+    NArtBpath *_bpath;
 
 private:
     // Don't implement these:
     SPCurve(const SPCurve&);
     SPCurve& operator=(const SPCurve&);
+
+    friend double sp_curve_distance_including_space(SPCurve const *const curve, double seg2len[]);
+    friend double sp_curve_nonzero_distance_including_space(SPCurve const *const curve, double seg2len[]);
+    template<class M> friend void tmpl_curve_transform(SPCurve *const curve, M const &m);
 };
 
-#define SP_CURVE_LENGTH(c) (((SPCurve const *)(c))->end)
-#define SP_CURVE_BPATH(c) (((SPCurve const *)(c))->_bpath)
-#define SP_CURVE_SEGMENT(c,i) (((SPCurve const *)(c))->_bpath + (i))
+#define SP_CURVE_LENGTH(c) (((SPCurve const *)(c))->_end)
+#define SP_CURVE_BPATH(c) ((c)->get_bpath())
+#define SP_CURVE_SEGMENT(c,i) ((c)->get_bpath() + (i))
 
 #endif /* !SEEN_DISPLAY_CURVE_H */
 

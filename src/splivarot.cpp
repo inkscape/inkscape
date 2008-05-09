@@ -1738,6 +1738,10 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
     return dest;
 }
 
+/* 
+ * This function is buggy: it can either return a new NArtBpath, or an existing one.
+ * It is therefore unclear whether the caller must g_free the path or not!
+*/
 NArtBpath *
 bpath_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transformFull)
 {

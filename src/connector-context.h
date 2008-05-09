@@ -14,7 +14,6 @@
 
 #include <sigc++/sigc++.h>
 #include <sigc++/connection.h>
-#include "display/curve.h"
 #include "event-context.h"
 #include <forward.h>
 #include <display/display-forward.h>

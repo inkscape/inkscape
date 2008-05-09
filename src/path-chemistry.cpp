@@ -435,7 +435,7 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
 
     // Prevent empty paths from being added to the document
     // otherwise we end up with zomby markup in the SVG file
-    if(curve->end <= 0)
+    if(curve->_end <= 0)
     {
         curve->unref();
         return NULL;
@@ -503,7 +503,7 @@ sp_selected_path_reverse()
         did = true;
         SPPath *path = SP_PATH(i->data);
 
-        SPCurve *rcurve = sp_path_get_curve_reference(path)->reverse();
+        SPCurve *rcurve = sp_path_get_curve_reference(path)->create_reverse();
 
         gchar *str = sp_svg_write_path(SP_CURVE_BPATH(rcurve));
         if ( sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path)) ) {

@@ -181,7 +181,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
         return NULL;
 
     NArtBpath *bpath = curve->first_bpath();
-    gint length = curve->end;
+    gint length = curve->_end;
     if (length == 0) {
         curve->unref();
         return NULL; // prevent crash for one-node paths

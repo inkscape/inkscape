@@ -20,8 +20,6 @@
  */
 
 #include "live_effects/lpe-skeleton.h"
-#include "display/curve.h"
-#include <libnr/n-art-bpath.h>
 
 // You might need to include other 2geom files. You can add them here:
 #include <2geom/path.h>
@@ -53,22 +51,6 @@ void
 LPESkeleton::doEffect (SPCurve * curve)
 {
     // spice this up to make the effect actually *do* something!
-}
-
-NArtBpath *
-LPESkeleton::doEffect_nartbpath (NArtBpath * path_in)
-{
-        NArtBpath *path_out;
-        unsigned ret = 0;
-        while ( path_in[ret].code != NR_END ) {
-            ++ret;
-        }
-        unsigned len = ++ret;
-        path_out = g_new(NArtBpath, len);
-
-        memcpy(path_out, path_in, len * sizeof(NArtBpath));   // spice this up to make the effect actually *do* something!
-
-        return path_out;
 }
 
 std::vector<Geom::Path>

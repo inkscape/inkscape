@@ -14,8 +14,7 @@
  */
 
 #include "live_effects/lpe-curvestitch.h"
-#include "display/curve.h"
-#include <libnr/n-art-bpath.h>
+
 #include "sp-item.h"
 #include "sp-path.h"
 #include "libnr/n-art-bpath-2geom.h"
@@ -29,7 +28,6 @@
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/d2.h>
 #include <2geom/matrix.h>
-
 
 #include "ui/widget/scalar.h"
 #include "libnr/nr-values.h"

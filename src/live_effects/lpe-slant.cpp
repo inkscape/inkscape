@@ -29,7 +29,7 @@ LPESlant::~LPESlant()
 void
 LPESlant::doEffect(SPCurve * curve)
 {
-    NArtBpath *bpath = curve->_bpath;
+    NArtBpath *bpath = curve->get_bpath();
     int i = 0;
     while(bpath[i].code != NR_END) {
         bpath[i].y1 += (bpath[i].x1-center[Geom::X]) * factor;

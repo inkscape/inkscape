@@ -19,7 +19,7 @@
 
 #include <libnrtype/nrtype-forward.h>
 
-#include <display/curve.h>
+#include <display/display-forward.h>
 #include <forward.h>
 #include <sp-paint-server.h>
 #include <display/nr-arena-item.h>

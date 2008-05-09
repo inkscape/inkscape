@@ -8,18 +8,8 @@
 
 #include "live_effects/parameter/path-reference.h"
 
-#include <cstring>
-#include <string>
-#include <string.h>
-
-#include "enums.h"
-
-#include "display/curve.h"
-#include "livarot/Path.h"
-#include "prefs-utils.h"
 #include "sp-shape.h"
 #include "sp-text.h"
-#include "uri.h"
 
 namespace Inkscape {
 namespace LivePathEffect {

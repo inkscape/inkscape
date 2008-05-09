@@ -73,7 +73,7 @@
 #include "sp-namedview.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
-
+#include "display/curve.h"
 
 static void sp_connector_context_class_init(SPConnectorContextClass *klass);
 static void sp_connector_context_init(SPConnectorContext *conn_context);
@@ -1252,7 +1252,7 @@ static bool cc_item_is_shape(SPItem *item)
 {
     if (SP_IS_PATH(item)) {
         SPCurve *curve = (SP_SHAPE(item))->curve;
-        if ( curve && !(curve->closed) ) {
+        if ( curve && !(curve->is_closed()) ) {
             // Open paths are connectors.
             return false;
         }
@@ -1271,7 +1271,7 @@ bool cc_item_is_connector(SPItem *item)
 {
     if (SP_IS_PATH(item)) {
         if (SP_PATH(item)->connEndPair.isAutoRoutingConn()) {
-            g_assert( !(SP_SHAPE(item)->curve->closed) );
+            g_assert( !(SP_SHAPE(item)->curve->is_closed()) );
             return true;
         }
     }

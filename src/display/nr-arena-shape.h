@@ -17,7 +17,7 @@
 #define NR_ARENA_SHAPE(obj) (NR_CHECK_INSTANCE_CAST ((obj), NR_TYPE_ARENA_SHAPE, NRArenaShape))
 #define NR_IS_ARENA_SHAPE(obj) (NR_CHECK_INSTANCE_TYPE ((obj), NR_TYPE_ARENA_SHAPE))
 
-#include "display/curve.h"
+#include "display/display-forward.h"
 #include "display/canvas-bpath.h"
 #include "forward.h"
 #include "sp-paint-server.h"

@@ -67,6 +67,7 @@
 #include "sp-flowtext.h"
 #include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
+#include "display/curve.h"
 #include "livarot/Shape.h"
 #include "isnan.h"
 #include "prefs-utils.h"

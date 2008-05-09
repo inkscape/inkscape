@@ -83,7 +83,7 @@
 #include "draw-context.h"
 #include "gradient-drag.h"
 #include "sp-guide.h"
-
+#include "display/curve.h"
 
 /**
  * \brief Return the name without underscores and ellipsis, for use in dialog

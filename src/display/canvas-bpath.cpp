@@ -142,7 +142,7 @@ sp_canvas_bpath_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
         Path*  thePath=new Path;
         thePath->LoadArtBPath(SP_CURVE_BPATH(cbp->curve), affine, true);
         thePath->Convert(0.25);
-        if ((cbp->fill_rgba & 0xff) && (cbp->curve->end > 2)) {
+        if ((cbp->fill_rgba & 0xff) && (cbp->curve->_end > 2)) {
             Shape* theShape=new Shape;
             thePath->Fill(theShape,0);
             if ( cbp->fill_shp == NULL ) cbp->fill_shp=new Shape;
@@ -165,7 +165,7 @@ sp_canvas_bpath_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
                 }
             }
         }
-        if ((cbp->stroke_rgba & 0xff) && (cbp->curve->end > 1)) {
+        if ((cbp->stroke_rgba & 0xff) && (cbp->curve->_end > 1)) {
             JoinType join=join_straight;
 //      Shape* theShape=new Shape;
             ButtType butt=butt_straight;

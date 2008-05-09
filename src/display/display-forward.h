@@ -9,7 +9,7 @@ struct SPCanvasItem;
 typedef struct _SPCanvasItemClass SPCanvasItemClass;
 struct SPCanvasGroup;
 struct SPCanvasGroupClass;
-struct SPCurve;
+class SPCurve;
 
 namespace Inkscape {
 namespace Display {

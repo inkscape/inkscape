@@ -123,8 +123,8 @@ sp_nodes_in_path(SPPath *path)
 {
     SPCurve *curve = SP_SHAPE(path)->curve;
     if (!curve) return 0;
-    gint r = curve->end;
-    gint i = curve->length - 1;
+    gint r = curve->_end;
+    gint i = curve->_length - 1;
     if (i > r) i = r; // sometimes after switching from node editor length is wrong, e.g. f6 - draw - f2 - tab - f1, this fixes it
     for (; i >= 0; i --)
         if (SP_CURVE_BPATH(curve)[i].code == NR_MOVETO)

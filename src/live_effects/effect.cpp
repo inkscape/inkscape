@@ -164,18 +164,13 @@ Effect::doBeforeEffect (SPLPEItem */*lpeitem*/)
 void
 Effect::doEffect (SPCurve * curve)
 {
-    NArtBpath *new_bpath = doEffect_nartbpath(SP_CURVE_BPATH(curve));
+    NArtBpath *new_bpath = doEffect_nartbpath(curve->get_bpath());
 
-    if (new_bpath && new_bpath != SP_CURVE_BPATH(curve)) {        // FIXME, add function to SPCurve to change bpath? or a copy function?
-        if (curve->_bpath) {
-            g_free(curve->_bpath); //delete old bpath
-        }
-        curve->_bpath = new_bpath;
-    }
+    curve->set_bpath(new_bpath);
 }
 
 NArtBpath *
-Effect::doEffect_nartbpath (NArtBpath * path_in)
+Effect::doEffect_nartbpath (NArtBpath const * path_in)
 {
     try {
         std::vector<Geom::Path> orig_pathv = BPath_to_2GeomPath(path_in);

@@ -41,6 +41,7 @@
 #include "document.h"
 #include "desktop-style.h"
 #include "macros.h"
+#include "display/curve.h"
 
 static void sp_pencil_context_class_init(SPPencilContextClass *klass);
 static void sp_pencil_context_init(SPPencilContext *pc);

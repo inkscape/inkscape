@@ -28,7 +28,6 @@ public:
 
 //  Choose to implement one of the doEffect functions. You can delete or comment out the others.
 //    virtual void doEffect (SPCurve * curve);
-//    virtual NArtBpath * doEffect_nartbpath (NArtBpath * path_in);
 //    virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> & path_in);
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 

@@ -110,7 +110,7 @@ private:
                       bool const &first_point,
                       std::vector<NR::Point> *unselected_nodes,
                       SPPath const *selected_path,
-                      NArtBpath *border_bpath) const;
+                      NArtBpath const *border_bpath) const;
                       
   void _snapPathsConstrained(SnappedConstraints &sc,
                  Inkscape::Snapper::PointType const &t,
@@ -122,10 +122,10 @@ private:
   
   void _collectPaths(Inkscape::Snapper::PointType const &t, 
                   bool const &first_point,
-                  NArtBpath *border_bpath = NULL) const;
+                  NArtBpath const *border_bpath = NULL) const;
                   
   void _clear_paths() const;
-  NArtBpath* _getBorderBPath() const;
+  NArtBpath const* _getBorderBPath() const;
   
   bool _snap_to_itemnode;
   bool _snap_to_itempath;

@@ -26,8 +26,6 @@
 #include "document.h"
 
 #include "live_effects/lpe-perspective_path.h"
-#include "display/curve.h"
-#include <libnr/n-art-bpath.h>
 #include "sp-item-group.h"
 
 #include "inkscape.h"

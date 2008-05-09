@@ -15,7 +15,7 @@
  */
 
 #include "sp-item.h"
-#include "display/curve.h"
+#include "display/display-forward.h"
 
 #define SP_TYPE_LPE_ITEM (sp_lpe_item_get_type())
 #define SP_LPE_ITEM(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_LPE_ITEM, SPLPEItem))

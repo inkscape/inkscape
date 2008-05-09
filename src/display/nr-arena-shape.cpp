@@ -17,6 +17,7 @@
 #include <display/canvas-arena.h>
 #include <display/nr-arena.h>
 #include <display/nr-arena-shape.h>
+#include "display/curve.h"
 #include <libnr/n-art-bpath.h>
 #include <libnr/nr-path.h>
 #include <libnr/nr-pixops.h>
@@ -431,7 +432,7 @@ void
 nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool force_shape)
 {
     if ((shape->_fill.paint.type() != NRArenaShape::Paint::NONE || force_shape) &&
-        ((shape->curve->end > 2) || (SP_CURVE_BPATH(shape->curve)[1].code == NR_CURVETO)) ) {
+        ((shape->curve->_end > 2) || (SP_CURVE_BPATH(shape->curve)[1].code == NR_CURVETO)) ) {
         if (TRUE || !shape->fill_shp) {
             NR::Matrix  cached_to_new = NR::identity();
             int isometry = 0;

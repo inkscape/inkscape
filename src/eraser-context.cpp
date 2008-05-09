@@ -964,24 +964,24 @@ accumulate_eraser(SPEraserContext *dc)
 {
     if ( !dc->cal1->is_empty() && !dc->cal2->is_empty() ) {
         dc->accumulated->reset(); /*  Is this required ?? */
-        SPCurve *rev_cal2 = dc->cal2->reverse();
+        SPCurve *rev_cal2 = dc->cal2->create_reverse();
 
-        g_assert(dc->cal1->end > 1);
-        g_assert(rev_cal2->end > 1);
+        g_assert(dc->cal1->_end > 1);
+        g_assert(rev_cal2->_end > 1);
         g_assert(SP_CURVE_SEGMENT(dc->cal1, 0)->code == NR_MOVETO_OPEN);
         g_assert(SP_CURVE_SEGMENT(rev_cal2, 0)->code == NR_MOVETO_OPEN);
         g_assert(SP_CURVE_SEGMENT(dc->cal1, 1)->code == NR_CURVETO);
         g_assert(SP_CURVE_SEGMENT(rev_cal2, 1)->code == NR_CURVETO);
-        g_assert(SP_CURVE_SEGMENT(dc->cal1, dc->cal1->end-1)->code == NR_CURVETO);
-        g_assert(SP_CURVE_SEGMENT(rev_cal2, rev_cal2->end-1)->code == NR_CURVETO);
+        g_assert(SP_CURVE_SEGMENT(dc->cal1, dc->cal1->_end-1)->code == NR_CURVETO);
+        g_assert(SP_CURVE_SEGMENT(rev_cal2, rev_cal2->_end-1)->code == NR_CURVETO);
 
         dc->accumulated->append(dc->cal1, FALSE);
 
-        add_cap(dc->accumulated, SP_CURVE_SEGMENT(dc->cal1, dc->cal1->end-1)->c(2), SP_CURVE_SEGMENT(dc->cal1, dc->cal1->end-1)->c(3), SP_CURVE_SEGMENT(rev_cal2, 0)->c(3), SP_CURVE_SEGMENT(rev_cal2, 1)->c(1), dc->cap_rounding);
+        add_cap(dc->accumulated, SP_CURVE_SEGMENT(dc->cal1, dc->cal1->_end-1)->c(2), SP_CURVE_SEGMENT(dc->cal1, dc->cal1->_end-1)->c(3), SP_CURVE_SEGMENT(rev_cal2, 0)->c(3), SP_CURVE_SEGMENT(rev_cal2, 1)->c(1), dc->cap_rounding);
 
         dc->accumulated->append(rev_cal2, TRUE);
 
-        add_cap(dc->accumulated, SP_CURVE_SEGMENT(rev_cal2, rev_cal2->end-1)->c(2), SP_CURVE_SEGMENT(rev_cal2, rev_cal2->end-1)->c(3), SP_CURVE_SEGMENT(dc->cal1, 0)->c(3), SP_CURVE_SEGMENT(dc->cal1, 1)->c(1), dc->cap_rounding);
+        add_cap(dc->accumulated, SP_CURVE_SEGMENT(rev_cal2, rev_cal2->_end-1)->c(2), SP_CURVE_SEGMENT(rev_cal2, rev_cal2->_end-1)->c(3), SP_CURVE_SEGMENT(dc->cal1, 0)->c(3), SP_CURVE_SEGMENT(dc->cal1, 1)->c(1), dc->cap_rounding);
 
         dc->accumulated->closepath();
 
@@ -1020,7 +1020,7 @@ fit_and_split(SPEraserContext *dc, gboolean release)
 #endif
 
         /* Current eraser */
-        if ( dc->cal1->end == 0 || dc->cal2->end == 0 ) {
+        if ( dc->cal1->_end == 0 || dc->cal2->_end == 0 ) {
             /* dc->npoints > 0 */
             /* g_print("erasers(1|2) reset\n"); */
             dc->cal1->reset();

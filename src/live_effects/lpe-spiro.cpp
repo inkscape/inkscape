@@ -99,7 +99,7 @@ LPESpiro::doEffect(SPCurve * curve)
     bezctx *bc = new_bezctx_ink(curve);
     int len = SP_CURVE_LENGTH(csrc);
     spiro_cp *path = g_new (spiro_cp, len + 1);
-    NArtBpath *bpath = csrc->_bpath;
+    NArtBpath *bpath = csrc->get_bpath();
     int ib = 0;
     int ip = 0;
     bool closed = false;

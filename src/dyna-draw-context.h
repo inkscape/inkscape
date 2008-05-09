@@ -18,7 +18,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "display/curve.h"
 #include "event-context.h"
 #include <display/display-forward.h>
 #include <libnr/nr-point.h>
