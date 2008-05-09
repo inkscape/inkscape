@@ -37,7 +37,6 @@
 #include "live_effects/lpe-sketch.h"
 #include "live_effects/lpe-vonkoch.h"
 #include "live_effects/lpe-knot.h"
-#include "live_effects/lpe-slant.h"
 #include "live_effects/lpe-test-doEffect-stack.h"
 #include "live_effects/lpe-gears.h"
 #include "live_effects/lpe-curvestitch.h"
@@ -60,7 +59,6 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {VONKOCH,               N_("VonKoch"),               "vonkoch"},
     {KNOT,                  N_("Knot"),                  "knot"},
 #ifdef LPE_ENABLE_TEST_EFFECTS
-    {SLANT,                 N_("Slant"),                 "slant"},
     {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),   "doeffectstacktest"},
 #endif
     {GEARS,                 N_("Gears"),                 "gears"},
@@ -93,9 +91,6 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             neweffect = static_cast<Effect*> ( new LPEKnot(lpeobj) );
             break;
 #ifdef LPE_ENABLE_TEST_EFFECTS
-            case SLANT:
-            neweffect = static_cast<Effect*> ( new LPESlant(lpeobj) );
-            break;
         case DOEFFECTSTACK_TEST:
             neweffect = static_cast<Effect*> ( new LPEdoEffectStackTest(lpeobj) );
             break;

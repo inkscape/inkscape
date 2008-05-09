@@ -57,7 +57,6 @@ enum EffectType {
     VONKOCH,
     KNOT,
 #ifdef LPE_ENABLE_TEST_EFFECTS
-    SLANT,
     DOEFFECTSTACK_TEST,
 #endif
     GEARS,
