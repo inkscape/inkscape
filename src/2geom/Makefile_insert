@@ -34,6 +34,11 @@
 	2geom/linear.h	\
 	2geom/matrix.cpp	\
 	2geom/matrix.h	\
+	2geom/nearest-point.cpp	\
+	2geom/nearest-point.h	\
+	2geom/numeric/linear_system.h	\
+	2geom/numeric/matrix.h	\
+	2geom/numeric/vector.h	\
 	2geom/ord.h	\
 	2geom/path-intersection.cpp	\
 	2geom/path-intersection.h	\

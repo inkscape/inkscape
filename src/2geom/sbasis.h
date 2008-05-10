@@ -113,21 +113,7 @@ public:
         return valueAt(t);
     }
 
-    std::vector<double> valueAndDerivatives(double t, unsigned n) const {
-        std::vector<double> ret;
-        if(n==1) {
-            ret.push_back(valueAt(t));
-            return ret;
-        }
-        if(n==2) {
-            double der;
-            ret.push_back(valueAndDerivative(t, der));
-            ret.push_back(der);
-            return ret;
-        }
-        //TODO
-        throwNotImplemented();
-    }
+    std::vector<double> valueAndDerivatives(double t, unsigned n) const;
 
     SBasis toSBasis() const { return SBasis(*this); }
 

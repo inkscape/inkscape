@@ -144,7 +144,7 @@ public:
     }
     inline bool isFinite() const {
         for(unsigned i = 0; i <= order(); i++) {
-            if(!is_finite(c_[i])) return false;
+            if(!IS_FINITE(c_[i])) return false;
         }
         return true;
     }

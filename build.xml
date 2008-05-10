@@ -404,6 +404,7 @@
            -lgdk_pixbuf-2.0
            -lpangocairo-1.0 -lpangoft2-1.0 -lpangowin32-1.0 -lpango-1.0
            -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0
+           -lgsl
            <!-- PERL -->
            -L${gtk}/perl/lib/CORE -lperl58
            <!-- PYTHON -->

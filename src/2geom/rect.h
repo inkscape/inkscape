@@ -153,7 +153,37 @@ inline boost::optional<Rect> intersect(Rect const & a, Rect const & b) {
     return x && y ? boost::optional<Rect>(Rect(*x, *y)) : boost::optional<Rect>();
 }
 
+inline
+double distanceSq( Point const& p, Rect const& rect )
+{
+	double dx = 0, dy = 0;
+	if ( p[X] < rect.left() )
+	{
+		dx = p[X] - rect.left();
+	}
+	else if ( p[X] > rect.right() )
+	{
+		dx = rect.right() - p[X];
+	}
+	if ( p[Y] < rect.top() )
+	{
+		dy = rect.top() - p[Y];
+	}
+	else if (  p[Y] > rect.bottom() )
+	{
+		dy = p[Y] - rect.bottom();
+	}
+	return dx*dx + dy*dy;
 }
+
+inline 
+double distance( Point const& p, Rect const& rect )
+{
+	return std::sqrt(distanceSq(p, rect));
+}
+
+
+} // end namespace Geom
 
 #endif //_2GEOM_RECT
 #endif //_2GEOM_D2

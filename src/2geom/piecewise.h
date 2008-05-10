@@ -104,7 +104,7 @@ class Piecewise {
     }
     //Convenience/implementation hiding function to add cuts.
     inline void push_cut(double c) {
-        assert_invariants(cuts.empty() || c > cuts.back());
+        ASSERT_INVARIANTS(cuts.empty() || c > cuts.back());
         cuts.push_back(c);
     }
     //Convenience/implementation hiding function to add segments.
@@ -147,7 +147,7 @@ class Piecewise {
 
     //Offsets the piecewise domain
     inline void offsetDomain(double o) {
-        assert(is_finite(o));
+        assert(IS_FINITE(o));
         if(o != 0)
             for(unsigned i = 0; i <= size(); i++)
                 cuts[i] += o;

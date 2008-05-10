@@ -27,15 +27,15 @@
  */
 
 #if defined(__isnan)
-# define is_nan(_a) (__isnan(_a))
+# define IS_NAN(_a) (__isnan(_a))
 #elif defined(__APPLE__) && __GNUC__ == 3
-# define is_nan(_a) (__isnan(_a))	/* MacOSX/Darwin definition < 10.4 */
+# define IS_NAN(_a) (__isnan(_a))	/* MacOSX/Darwin definition < 10.4 */
 #elif defined(WIN32) || defined(_isnan)
-# define is_nan(_a) (_isnan(_a)) 	/* Win32 definition */
+# define IS_NAN(_a) (_isnan(_a)) 	/* Win32 definition */
 #elif defined(isnan) || defined(__FreeBSD__)
-# define is_nan(_a) (isnan(_a))		/* GNU definition */
+# define IS_NAN(_a) (isnan(_a))		/* GNU definition */
 #else
-# define is_nan(_a) (std::isnan(_a))
+# define IS_NAN(_a) (std::isnan(_a))
 #endif
 /* If the above doesn't work, then try (a != a).
  * Also, please report a bug as per http://www.inkscape.org/report_bugs.php,
@@ -44,13 +44,13 @@
 
 
 #if defined(__isfinite)
-# define is_finite(_a) (__isfinite(_a))
+# define IS_FINITE(_a) (__isfinite(_a))
 #elif defined(__APPLE__) && __GNUC__ == 3
-# define is_finite(_a) (__isfinite(_a))	/* MacOSX/Darwin definition < 10.4 */
+# define IS_FINITE(_a) (__isfinite(_a))	/* MacOSX/Darwin definition < 10.4 */
 #elif defined(isfinite)
-# define is_finite(_a) (isfinite(_a))
+# define IS_FINITE(_a) (isfinite(_a))
 #else
-# define is_finite(_a) (std::isfinite(_a))
+# define IS_FINITE(_a) (std::isfinite(_a))
 #endif
 /* If the above doesn't work, then try (finite(_a) && !isNaN(_a)) or (!isNaN((_a) - (_a))).
  * Also, please report a bug as per http://www.inkscape.org/report_bugs.php,

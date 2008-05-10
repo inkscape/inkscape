@@ -36,7 +36,7 @@
 
 namespace Geom {
 
-// Base exception class, all 2geom exceptions should be derrived from this one.
+// Base exception class, all 2geom exceptions should be derived from this one.
 class Exception : public std::exception {
 public:
     Exception(const char * message, const char *file, const int line) {
@@ -53,7 +53,7 @@ public:
 protected:
     std::string msgstr;
 };
-#define throwException(message) throw(Geom::Exception(message, __FILE__, __LINE__))
+#define THROW_EXCEPTION(message) throw(Geom::Exception(message, __FILE__, __LINE__))
 
 //-----------------------------------------------------------------------
 // Two main exception classes: LogicalError and RangeError.
@@ -65,14 +65,14 @@ public:
     LogicalError(const char * message, const char *file, const int line)
         : Exception(message, file, line) {}
 };
-#define throwLogicalError(message) throw(LogicalError(message, __FILE__, __LINE__))
+#define THROW_LOGICALERROR(message) throw(LogicalError(message, __FILE__, __LINE__))
 
 class RangeError : public Exception {
 public:
     RangeError(const char * message, const char *file, const int line)
         : Exception(message, file, line) {}
 };
-#define throwRangeError(message) throw(RangeError(message, __FILE__, __LINE__))
+#define THROW_RANGEERROR(message) throw(RangeError(message, __FILE__, __LINE__))
 
 //-----------------------------------------------------------------------
 // Special case exceptions. Best used with the defines :)
@@ -82,29 +82,29 @@ public:
     NotImplemented(const char *file, const int line)
         : LogicalError("Method not implemented", file, line) {}
 };
-#define throwNotImplemented(i) throw(NotImplemented(__FILE__, __LINE__))
+#define THROW_NOTIMPLEMENTED(i) throw(NotImplemented(__FILE__, __LINE__))
 
 class InvariantsViolation : public LogicalError {
 public:
     InvariantsViolation(const char *file, const int line)
         : LogicalError("Invariants violation", file, line) {}
 };
-#define throwInvariantsViolation(i) throw(InvariantsViolation(__FILE__, __LINE__))
-#define assert_invariants(e)       ((e) ? (void)0 : throwInvariantsViolation())
+#define THROW_INVARIANTSVIOLATION(i) throw(InvariantsViolation(__FILE__, __LINE__))
+#define ASSERT_INVARIANTS(e)       ((e) ? (void)0 : THROW_INVARIANTSVIOLATION())
 
 class NotInvertible : public RangeError {
 public:
     NotInvertible(const char *file, const int line)
         : RangeError("Function does not have a unique inverse", file, line) {}
 };
-#define throwNotInvertible(i) throw(NotInvertible(__FILE__, __LINE__))
+#define THROW_NOTINVERTIBLE(i) throw(NotInvertible(__FILE__, __LINE__))
 
 class ContinuityError : public RangeError {
 public:
     ContinuityError(const char *file, const int line)
         : RangeError("Non-contiguous path", file, line) {}
 };
-#define throwContinuityError(i) throw(ContinuityError(__FILE__, __LINE__))
+#define THROW_CONTINUITYERROR(i) throw(ContinuityError(__FILE__, __LINE__))
 
 struct SVGPathParseError : public std::exception {
     char const *what() const throw() { return "parse error"; }

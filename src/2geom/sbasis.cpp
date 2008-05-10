@@ -68,6 +68,28 @@ bool SBasis::isFinite() const {
     return true;
 }
 
+std::vector<double> SBasis::valueAndDerivatives(double t, unsigned n) const {
+    std::vector<double> ret;
+    if(n==1) {
+        ret.push_back(valueAt(t));
+        return ret;
+    }
+    if(n==2) {
+        double der;
+        ret.push_back(valueAndDerivative(t, der));
+        ret.push_back(der);
+        return ret;
+    }
+    SBasis tmp = *this;
+    while(n > 0) {
+        ret.push_back(tmp.valueAt(t));
+        tmp = derivative(tmp);
+        n--;
+    }
+    return ret;
+}
+
+
 SBasis operator+(const SBasis& a, const SBasis& b) {
     SBasis result;
     const unsigned out_size = std::max(a.size(), b.size());

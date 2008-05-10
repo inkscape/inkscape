@@ -112,6 +112,11 @@ Matrix operator*(Matrix const &m, Scale const &s);
 Matrix operator*(Matrix const &m, Rotate const &r);
 Matrix operator*(Matrix const &m1, Matrix const &m2);
 
+Translate pow(Translate const &t, int n);
+Scale pow(Scale const &t, int n);
+Rotate pow(Rotate t, int n);
+Matrix pow(Matrix t, int n);
+
 //TODO: matrix to trans/scale/rotate
 
 } /* namespace Geom */

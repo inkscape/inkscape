@@ -45,6 +45,57 @@ Matrix operator*(Matrix const &m, Scale const &s) {
     return ret;
 }
 
+Translate pow(Translate const &t, int n) {
+    return Translate(t[0]*n, t[1]*n);
+}
+
+Coord pow(Coord x, long n) // shamelessly lifted from WP
+{
+    Coord result = 1;
+    while ( n ) {
+        if ( n & 1 ) {
+            result = result * x;
+            n = n-1;
+        }
+        x = x*x;
+        n = n/2;
+    }
+    return result;
+}
+Scale pow(Scale const &s, int n) {
+    return Scale(pow(s[0],n), pow(s[1],n));
+
+}
+
+Rotate pow(Rotate x, long n)
+{
+    Rotate result(0,1); // identity
+    while ( n ) {
+        if ( n & 1 ) {
+            result = result * x;
+            n = n-1;
+        }
+        x = x*x;
+        n = n/2;
+    }
+    return result;
+}
+
+Matrix pow(Matrix x, long n)
+{
+    Matrix result;
+    result.setIdentity();
+    while ( n ) {
+        if ( n & 1 ) {
+            result = result * x;
+            n = n-1;
+        }
+        x = x*x;
+        n = n/2;
+    }
+    return result;
+}
+
 }
 
 /*

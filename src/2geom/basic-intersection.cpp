@@ -61,7 +61,7 @@ find_intersections( vector<Geom::Point> const & A,
 
 std::vector<std::pair<double, double> > 
 find_self_intersections(OldBezier const &Sb) {
-    throwNotImplemented();
+    THROW_NOTIMPLEMENTED();
 }
 
 std::vector<std::pair<double, double> > 

@@ -165,8 +165,8 @@ copy_without_nans_or_adjacent_duplicates(Point const src[], unsigned src_len, Po
         if ( si == src_len ) {
             return 0;
         }
-        if (!is_nan(src[si][X]) &&
-            !is_nan(src[si][Y])) {
+        if (!IS_NAN(src[si][X]) &&
+            !IS_NAN(src[si][Y])) {
             dest[0] = Point(src[si]);
             ++si;
             break;
@@ -176,8 +176,8 @@ copy_without_nans_or_adjacent_duplicates(Point const src[], unsigned src_len, Po
     for (; si < src_len; ++si) {
         Point const src_pt = Point(src[si]);
         if ( src_pt != dest[di]
-             && !is_nan(src_pt[X])
-             && !is_nan(src_pt[Y])) {
+             && !IS_NAN(src_pt[X])
+             && !IS_NAN(src_pt[Y])) {
             dest[++di] = src_pt;
         }
     }
@@ -216,7 +216,7 @@ bezier_fit_cubic_full(Point bezier[], int split_points[],
         bezier[0] = data[0];
         bezier[3] = data[len - 1];
         double const dist = distance(bezier[0], bezier[3]) / 3.0;
-        if (is_nan(dist)) {
+        if (IS_NAN(dist)) {
             /* Numerical problem, fall back to straight line segment. */
             bezier[1] = bezier[0];
             bezier[2] = bezier[3];
@@ -619,7 +619,7 @@ NewtonRaphsonRootFind(BezierCurve const Q, Point const &P, double const u)
         }
     }
 
-    if (!is_finite(improved_u)) {
+    if (!IS_FINITE(improved_u)) {
         improved_u = u;
     } else if ( improved_u < 0.0 ) {
         improved_u = 0.0;
@@ -853,7 +853,7 @@ chord_length_parameterize(Point const d[], double u[], unsigned const len)
     double tot_len = u[len - 1];
     if(!( tot_len != 0 ))
         return;
-    if (is_finite(tot_len)) {
+    if (IS_FINITE(tot_len)) {
         for (unsigned i = 1; i < len; ++i) {
             u[i] /= tot_len;
         }

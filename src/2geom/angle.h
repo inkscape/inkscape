@@ -45,6 +45,49 @@ inline double deg_to_rad(double deg) { return deg*M_PI/180.0;}
 
 inline double rad_to_deg(double rad) { return rad*180.0/M_PI;}
 
+/*
+ *  start_angle and angle must belong to [0, 2PI[
+ *  and angle must belong to the cirsular arc defined by
+ *  start_angle, end_angle and with rotation direction cw
+ */
+inline
+double map_circular_arc_on_unit_interval( double angle, double start_angle, double end_angle, bool cw = true )
+{
+    double d = end_angle - start_angle;
+    double t = angle - start_angle;
+    if ( !cw ) 
+    {
+    	d = -d;
+    	t = -t;
+    }
+    if ( d < 0 ) d += 2*M_PI;	
+    if ( t < 0 ) t += 2*M_PI;
+    return t / d;
+}
+
+inline
+Coord map_unit_interval_on_circular_arc(Coord t, double start_angle, double end_angle, bool cw = true)
+{
+	double sweep_angle = end_angle - start_angle;
+	if ( !cw ) sweep_angle = -sweep_angle;
+	if ( sweep_angle < 0 ) sweep_angle += 2*M_PI;
+	
+    if ( cw )
+    {
+        Coord angle = start_angle + sweep_angle * t;
+        if ( !(angle < 2*M_PI) )
+            angle -= 2*M_PI;
+        return angle;
+    }
+    else
+    {
+        Coord angle = start_angle - sweep_angle * t;
+        if ( angle < 0 ) angle += 2*M_PI;
+        return angle;
+    }
+}
+
+
 }
 
 #endif

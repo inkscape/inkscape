@@ -33,6 +33,7 @@
 
 namespace Geom {
 
+
 int CurveHelpers::root_winding(Curve const &c, Point p) {
     std::vector<double> ts = c.roots(p[Y], Y);
 
@@ -74,6 +75,22 @@ int CurveHelpers::root_winding(Curve const &c, Point p) {
     return wind;
 }
 
+
+template<>
+inline
+double LineSegment::nearestPoint(Point const& p, double from, double to) const
+{
+	if ( from > to ) std::swap(from, to);
+	Point ip = pointAt(from);
+	Point fp = pointAt(to);
+	Point v = fp - ip;
+	double t = dot( p - ip, v ) / L2sq(v);
+	if ( t <= 0 )  		return from;
+	else if ( t >= 1 )  return to;
+	else 				return from + t*(to-from);
+}
+
+
 void Path::swap(Path &other) {
   std::swap(curves_, other.curves_);
   std::swap(closed_, other.closed_);
@@ -104,6 +121,167 @@ iter inc(iter const &x, unsigned n) {
   for(unsigned i = 0; i < n; i++)
     ret++;
   return ret;
+}
+
+std::vector<double> 
+Path::allNearestPoints(Point const& _point, double from, double to) const
+{
+	if ( from > to ) std::swap(from, to);
+	const Path& _path = *this;
+	unsigned int sz = _path.size();
+	if ( _path.closed() ) ++sz;
+	if ( from < 0 || to > sz )
+	{
+		THROW_RANGEERROR("[from,to] interval out of bounds");
+	}
+	double sif, st = modf(from, &sif);
+	double eif, et = modf(to, &eif);
+	unsigned int si = static_cast<unsigned int>(sif);
+	unsigned int ei = static_cast<unsigned int>(eif);
+	if ( si == sz )
+	{
+		--si;
+		st = 1;
+	}
+	if ( ei == sz )
+	{
+		--ei;
+		et = 1;
+	}
+	if ( si == ei )
+	{
+		std::vector<double>	all_nearest = 
+			_path[si].allNearestPoints(_point, st, et);
+		for ( unsigned int i = 0; i < all_nearest.size(); ++i )
+		{
+			all_nearest[i] = si + all_nearest[i];
+		}
+		return all_nearest;
+	}
+	std::vector<double> all_t;
+	std::vector< std::vector<double> > all_np;
+	all_np.push_back( _path[si].allNearestPoints(_point, st) );
+	std::vector<unsigned int> ni;
+	ni.push_back(si);
+	double dsq;
+	double mindistsq 
+		= distanceSq( _point, _path[si].pointAt( all_np.front().front() ) );
+	Rect bb;
+	for ( unsigned int i = si + 1; i < ei; ++i )
+	{
+		bb = _path[i].boundsFast();
+		dsq = distanceSq(_point, bb);
+		if ( mindistsq < dsq ) continue;
+		all_t = _path[i].allNearestPoints(_point);
+		dsq = distanceSq( _point, _path[i].pointAt( all_t.front() ) );
+		if ( mindistsq > dsq )
+		{
+			all_np.clear();
+			all_np.push_back(all_t);
+			ni.clear();
+			ni.push_back(i);
+			mindistsq = dsq;
+		}
+		else if ( mindistsq == dsq )
+		{
+			all_np.push_back(all_t);
+			ni.push_back(i);
+		}
+	}
+	bb = _path[ei].boundsFast();
+	dsq = distanceSq(_point, bb);
+	if ( mindistsq >= dsq )
+	{
+		all_t = _path[ei].allNearestPoints(_point, 0, et);
+		dsq = distanceSq( _point, _path[ei].pointAt( all_t.front() ) );
+		if ( mindistsq > dsq )
+		{
+			for ( unsigned int i = 0; i < all_t.size(); ++i )
+			{
+				all_t[i] = ei + all_t[i];
+			}
+			return all_t;
+		}
+		else if ( mindistsq == dsq )
+		{
+			all_np.push_back(all_t);
+			ni.push_back(ei);
+		}
+	}
+	std::vector<double> all_nearest;
+	for ( unsigned int i = 0; i < all_np.size(); ++i )
+	{
+		for ( unsigned int j = 0; j < all_np[i].size(); ++j )
+		{
+			all_nearest.push_back( ni[i] + all_np[i][j] );
+		}
+	}
+	return all_nearest;	
+}
+
+double Path::nearestPoint(Point const& _point, double from, double to) const
+{
+	if ( from > to ) std::swap(from, to);
+	const Path& _path = *this;
+	unsigned int sz = _path.size();
+	if ( _path.closed() ) ++sz;
+	if ( from < 0 || to > sz )
+	{
+		THROW_RANGEERROR("[from,to] interval out of bounds");
+	}
+	double sif, st = modf(from, &sif);
+	double eif, et = modf(to, &eif);
+	unsigned int si = static_cast<unsigned int>(sif);
+	unsigned int ei = static_cast<unsigned int>(eif);
+	if ( si == sz )
+	{
+		--si;
+		st = 1;
+	}
+	if ( ei == sz )
+	{
+		--ei;
+		et = 1;
+	}
+	if ( si == ei )
+	{
+		double nearest =
+			_path[si].nearestPoint(_point, st, et);
+		return si + nearest;
+	}
+	double t;
+	double nearest = _path[si].nearestPoint(_point, st);
+	unsigned int ni = si;
+	double dsq;
+	double mindistsq = distanceSq(_point, _path[si].pointAt(nearest));
+	Rect bb;
+	for ( unsigned int i = si + 1; i < ei; ++i )
+	{
+		bb = _path[i].boundsFast();
+		dsq = distanceSq(_point, bb);
+		if ( mindistsq <= dsq ) continue;
+		t = _path[i].nearestPoint(_point);
+		dsq = distanceSq(_point, _path[i].pointAt(t));
+		if ( mindistsq > dsq )
+		{
+			nearest = t;
+			ni = i;
+			mindistsq = dsq;
+		}
+	}
+	bb = _path[ei].boundsFast();
+	dsq = distanceSq(_point, bb);
+	if ( mindistsq > dsq )
+	{
+		t = _path[ei].nearestPoint(_point, 0, et);
+		dsq = distanceSq(_point, _path[ei].pointAt(t));
+		if ( mindistsq > dsq )
+		{
+			nearest = t;
+			ni = ei;
+		}
+	}
+	return ni + nearest;
 }
 
 //This assumes that you can't be perfect in your t-vals, and as such, tweaks the start
@@ -145,7 +323,7 @@ const double eps = .1;
 
 void Path::append(Curve const &curve) {
   if ( curves_.front() != final_ && !are_near(curve.initialPoint(), (*final_)[0], eps) ) {
-    throwContinuityError();
+    THROW_CONTINUITYERROR();
   }
   do_append(curve.duplicate());
 }
@@ -154,7 +332,7 @@ void Path::append(D2<SBasis> const &curve) {
   if ( curves_.front() != final_ ) {
     for ( int i = 0 ; i < 2 ; ++i ) {
       if ( !are_near(curve[i][0][0], (*final_)[0][i], eps) ) {
-        throwContinuityError();
+        THROW_CONTINUITYERROR();
       }
     }
   }
@@ -206,17 +384,17 @@ void Path::check_continuity(Sequence::iterator first_replaced,
   if ( first != last ) {
     if ( first_replaced != curves_.begin() ) {
       if ( !are_near( (*first_replaced)->initialPoint(), (*first)->initialPoint(), eps ) ) {
-        throwContinuityError();
+        THROW_CONTINUITYERROR();
       }
     }
     if ( last_replaced != (curves_.end()-1) ) {
       if ( !are_near( (*(last_replaced-1))->finalPoint(), (*(last-1))->finalPoint(), eps ) ) {
-        throwContinuityError();
+        THROW_CONTINUITYERROR();
       }
     }
   } else if ( first_replaced != last_replaced && first_replaced != curves_.begin() && last_replaced != curves_.end()-1) {
     if ( !are_near((*first_replaced)->initialPoint(), (*(last_replaced-1))->finalPoint(), eps ) ) {
-      throwContinuityError();
+      THROW_CONTINUITYERROR();
     }
   }
 }

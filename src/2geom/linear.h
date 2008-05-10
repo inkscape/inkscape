@@ -88,7 +88,7 @@ public:
     typedef double output_type;
     inline bool isZero() const { return a[0] == 0 && a[1] == 0; }
     inline bool isConstant() const { return a[0] == a[1]; }
-    inline bool isFinite() const { return is_finite(a[0]) && is_finite(a[1]); }
+    inline bool isFinite() const { return IS_FINITE(a[0]) && IS_FINITE(a[1]); }
 
     inline double at0() const { return a[0]; }
     inline double at1() const { return a[1]; }

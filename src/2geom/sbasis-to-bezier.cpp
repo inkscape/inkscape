@@ -112,7 +112,7 @@ D2<Bezier<order> > sbasis_to_bezier(D2<SBasis> const &B) {
 // mutating
 void
 subpath_from_sbasis(Geom::OldPathSetBuilder &pb, D2<SBasis> const &B, double tol, bool initial) {
-    assert(B.is_finite());
+    assert(B.IS_FINITE());
     if(B.tail_error(2) < tol || B.size() == 2) { // nearly cubic enough
         if(B.size() == 1) {
             if (initial) {
@@ -144,8 +144,8 @@ void
 subpath_from_sbasis_incremental(Geom::OldPathSetBuilder &pb, D2<SBasis> B, double tol, bool initial) {
     const unsigned k = 2; // cubic bezier
     double te = B.tail_error(k);
-    assert(B[0].is_finite());
-    assert(B[1].is_finite());
+    assert(B[0].IS_FINITE());
+    assert(B[1].IS_FINITE());
     
     //std::cout << "tol = " << tol << std::endl;
     while(1) {
@@ -181,7 +181,7 @@ subpath_from_sbasis_incremental(Geom::OldPathSetBuilder &pb, D2<SBasis> B, doubl
 
 void build_from_sbasis(Geom::PathBuilder &pb, D2<SBasis> const &B, double tol) {
     if (!B.isFinite()) {
-        throwException("assertion failed: B.isFinite()");
+        THROW_EXCEPTION("assertion failed: B.isFinite()");
     }
     if(tail_error(B, 2) < tol || sbasis_size(B) == 2) { // nearly cubic enough
         if(sbasis_size(B) <= 1) {
