@@ -36,23 +36,25 @@ static SPShapeClass *parent_class;
 
 GType sp_polygon_get_type(void)
 {
-    static GType polygon_type = 0;
+    static GType type = 0;
 
-    if (!polygon_type) {
-        GTypeInfo polygon_info = {
+    if (!type) {
+        GTypeInfo info = {
             sizeof(SPPolygonClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_polygon_class_init,
-            NULL, NULL,
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_polygon_class_init,
+            0, // class_finalize
+            0, // class_data
             sizeof(SPPolygon),
-            16,
-            (GInstanceInitFunc) sp_polygon_init,
-            NULL,   /* value_table */
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_polygon_init,
+            0 // value_table
         };
-        polygon_type = g_type_register_static(SP_TYPE_SHAPE, "SPPolygon", &polygon_info, (GTypeFlags) 0);
+        type = g_type_register_static(SP_TYPE_SHAPE, "SPPolygon", &info, static_cast<GTypeFlags>(0));
     }
 
-    return polygon_type;
+    return type;
 }
 
 static void sp_polygon_class_init(SPPolygonClass *pc)

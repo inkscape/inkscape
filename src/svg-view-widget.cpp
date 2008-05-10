@@ -33,22 +33,25 @@ static SPViewWidgetClass *widget_parent_class;
 /**
  * Registers SPSVGSPViewWidget class with Gtk and returns its type number.
  */
-GtkType
-sp_svg_view_widget_get_type (void)
+GType sp_svg_view_widget_get_type(void)
 {
-	static GtkType type = 0;
-	if (!type) {
-		GtkTypeInfo info = {
-			"SPSVGSPViewWidget",
-			sizeof (SPSVGSPViewWidget),
-			sizeof (SPSVGSPViewWidgetClass),
-			(GtkClassInitFunc) sp_svg_view_widget_class_init,
-			(GtkObjectInitFunc) sp_svg_view_widget_init,
-			NULL, NULL, NULL
-		};
-		type = gtk_type_unique (SP_TYPE_VIEW_WIDGET, &info);
-	}
-	return type;
+    static GType type = 0;
+    if (!type) {
+        GTypeInfo info = {
+            sizeof(SPSVGSPViewWidgetClass),
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_svg_view_widget_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(SPSVGSPViewWidget),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_svg_view_widget_init,
+            0 // value_table
+        };
+        type = g_type_register_static(SP_TYPE_VIEW_WIDGET, "SPSVGSPViewWidget", &info, static_cast<GTypeFlags>(0));
+    }
+    return type;
 }
 
 /**

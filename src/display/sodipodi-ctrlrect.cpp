@@ -38,22 +38,26 @@ static SPCanvasItemClass *parent_class;
 
 static const guint DASH_LENGTH = 4;
 
-GtkType sp_ctrlrect_get_type()
+GType sp_ctrlrect_get_type()
 {
-    static GtkType ctrlrect_type = 0;
+    static GType type = 0;
 
-    if (!ctrlrect_type) {
-        GtkTypeInfo ctrlrect_info = {
-            "SPCtrlRect",
-            sizeof(CtrlRect),
+    if (!type) {
+        GTypeInfo info = {
             sizeof(SPCtrlRectClass),
-            (GtkClassInitFunc) sp_ctrlrect_class_init,
-            (GtkObjectInitFunc) sp_ctrlrect_init,
-            NULL, NULL, NULL
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_ctrlrect_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(CtrlRect),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_ctrlrect_init,
+            0 // value_table
         };
-        ctrlrect_type = gtk_type_unique(SP_TYPE_CANVAS_ITEM, &ctrlrect_info);
+        type = g_type_register_static(SP_TYPE_CANVAS_ITEM, "SPCtrlRect", &info, static_cast<GTypeFlags>(0));
     }
-    return ctrlrect_type;
+    return type;
 }
 
 static void sp_ctrlrect_class_init(SPCtrlRectClass *c)

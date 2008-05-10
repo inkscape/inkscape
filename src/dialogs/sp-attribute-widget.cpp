@@ -46,23 +46,25 @@ static GtkEntryClass *parent_class;
 
 
 
-GtkType
-sp_attribute_widget_get_type (void)
+GType sp_attribute_widget_get_type(void)
 {
     static GtkType type = 0;
     if (!type) {
-        static const GtkTypeInfo info = {
-            "SPAttributeWidget",
-            sizeof (SPAttributeWidget),
-            sizeof (SPAttributeWidgetClass),
-            (GtkClassInitFunc) sp_attribute_widget_class_init,
-            (GtkObjectInitFunc) sp_attribute_widget_init,
-            NULL, NULL, NULL
+        GTypeInfo info = {
+            sizeof(SPAttributeWidgetClass),
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_attribute_widget_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(SPAttributeWidget),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_attribute_widget_init,
+            0 // value_table
         };
-        type = gtk_type_unique (GTK_TYPE_ENTRY, &info);
+        type = g_type_register_static(GTK_TYPE_ENTRY, "SPAttributeWidget", &info, static_cast<GTypeFlags>(0));
     }
     return type;
-
 } // end of sp_attribute_widget_get_type()
 
 
@@ -365,23 +367,25 @@ static GtkVBoxClass *table_parent_class;
 
 
 
-GtkType
-sp_attribute_table_get_type (void)
+GType sp_attribute_table_get_type(void)
 {
     static GtkType type = 0;
     if (!type) {
-        static const GtkTypeInfo info = {
-            "SPAttributeTable",
-            sizeof (SPAttributeTable),
-            sizeof (SPAttributeTableClass),
-            (GtkClassInitFunc) sp_attribute_table_class_init,
-            (GtkObjectInitFunc) sp_attribute_table_init,
-            NULL, NULL, NULL
+        GTypeInfo info = {
+            sizeof(SPAttributeTableClass),
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_attribute_table_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(SPAttributeTable),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_attribute_table_init,
+            0 // value_table
         };
-        type = gtk_type_unique (GTK_TYPE_VBOX, &info);
+        type = g_type_register_static(GTK_TYPE_VBOX, "SPAttributeTable", &info, static_cast<GTypeFlags>(0));
     }
     return type;
-
 } // end of sp_attribute_table_get_type()
 
 
