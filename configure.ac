@@ -601,18 +601,14 @@ dnl ******************************
 dnl Check for ImageMagick Magick++ 
 dnl ******************************
 
-AC_CHECK_LIB(Magick++, InitializeMagick, [AC_CHECK_HEADER(Magick++.h, magick_ok=yes, magick_ok=no)], magick_ok=no, -llcms -lfreetype -ljpeg -lfontconfig -lXext -lSM -lICE -lX11 -lz -lpthread -lm -lpthread)
-
+PKG_CHECK_MODULES(IMAGEMAGICK, ImageMagick++, magick_ok=yes, magick_ok=no)
 if test "x$magick_ok" = "xyes"; then
-	AC_CHECK_PROG(MAGICKPP_CONFIG, Magick++-config, yes, no)
-	if test "x$MAGICKPP_CONFIG" = "xyes"; then
-		IMAGEMAGICK_LIBS=`Magick++-config --libs`
-		AC_SUBST(IMAGEMAGICK_LIBS)
-		AC_DEFINE(WITH_IMAGE_MAGICK,1,[Image Magick++ support for bitmap effects])
-	fi
+      AC_DEFINE(WITH_IMAGE_MAGICK,1,[Image Magick++ support for bitmap effects])
 fi
-
 AM_CONDITIONAL(USE_IMAGE_MAGICK, test "x$magick_ok" = "xyes")
+
+AC_SUBST(IMAGEMAGICK_LIBS)
+AC_SUBST(IMAGEMAGICK_CFLAGS)
 
 dnl ******************************
 dnl   Unconditional dependencies
