@@ -24,6 +24,7 @@
 #include "macros.h"
 #include "sp-anchor.h"
 #include "sp-attribute-widget.h"
+#include "../xml/repr.h"
 
 #include <sigc++/connection.h>
 #include <sigc++/functors/ptr_fun.h>
@@ -54,6 +55,14 @@ static const SPAttrDesc anchor_desc[] = {
 
 static const SPAttrDesc image_desc[] = {
     { N_("URL:"), "xlink:href"},
+    { N_("X:"), "x"},
+    { N_("Y:"), "y"},
+    { N_("Width:"), "width"},
+    { N_("Height:"), "height"},
+    { NULL, NULL}
+};
+
+static const SPAttrDesc image_nohref_desc[] = {
     { N_("X:"), "x"},
     { N_("Y:"), "y"},
     { N_("Width:"), "width"},
@@ -132,7 +141,13 @@ sp_object_attributes_dialog (SPObject *object, const gchar *tag)
     if (!strcmp (tag, "Link")) {
         sp_object_attr_show_dialog (object, anchor_desc, tag);
     } else if (!strcmp (tag, "Image")) {
-        sp_object_attr_show_dialog (object, image_desc, tag);
+        Inkscape::XML::Node *ir = SP_OBJECT_REPR(object);
+        const gchar *href = ir->attribute("xlink:href");
+        if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
+            sp_object_attr_show_dialog (object, image_nohref_desc, tag);
+        } else {
+            sp_object_attr_show_dialog (object, image_desc, tag);
+        }
     } 
 
 } // end of sp_object_attributes_dialog()
