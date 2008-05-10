@@ -209,6 +209,7 @@ libinkpre_a_SOURCES =	\
 	sp-flowregion.h sp-flowregion.cpp \
 	sp-flowtext.h sp-flowtext.cpp \
         sp-font.cpp sp-font.h \
+        sp-font-face.cpp sp-font-face.h \
         sp-glyph.cpp sp-glyph.h \
         sp-missing-glyph.cpp sp-missing-glyph.h \
         sp-glyph-kerning.cpp sp-glyph-kerning.h \

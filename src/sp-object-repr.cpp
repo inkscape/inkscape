@@ -44,6 +44,7 @@
 #include "sp-flowregion.h"
 #include "sp-flowtext.h"
 #include "sp-font.h"
+#include "sp-font-face.h"
 #include "sp-glyph.h"
 #include "sp-missing-glyph.h"
 #include "sp-glyph-kerning.h"
@@ -144,6 +145,7 @@ populate_dtables()
         { "svg:flowRoot", SP_TYPE_FLOWTEXT },
         { "svg:flowSpan", SP_TYPE_FLOWTSPAN },
         { "svg:font", SP_TYPE_FONT },
+        { "svg:font-face", SP_TYPE_FONTFACE },
         { "svg:glyph", SP_TYPE_GLYPH },
         { "svg:missing-glyph", SP_TYPE_MISSING_GLYPH },
         { "svg:hkern", SP_TYPE_HKERN },
