@@ -89,8 +89,8 @@ GtkWidget *spw_vbox_checkbutton(GtkWidget *dialog, GtkWidget *vbox,
  */
 GtkWidget *
 spw_checkbutton(GtkWidget * dialog, GtkWidget * table,
-		const gchar * label, gchar * key, int col, int row,
-		int insensitive, GCallback cb)
+                const gchar * label, gchar * key, int /*col*/, int row,
+                int insensitive, GCallback cb)
 {
   GtkWidget *b;
 
