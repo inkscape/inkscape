@@ -471,7 +471,11 @@ gdouble sp_document_width(SPDocument *document)
     g_return_val_if_fail(document->priv != NULL, 0.0);
     g_return_val_if_fail(document->root != NULL, 0.0);
 
-    return SP_ROOT(document->root)->width.computed;
+    SPRoot *root = SP_ROOT(document->root);
+
+    if (root->width.unit == SVGLength::PERCENT && root->viewBox_set)
+        return root->viewBox.x1 - root->viewBox.x0;
+    return root->width.computed;
 }
 
 void
@@ -525,7 +529,11 @@ gdouble sp_document_height(SPDocument *document)
     g_return_val_if_fail(document->priv != NULL, 0.0);
     g_return_val_if_fail(document->root != NULL, 0.0);
 
-    return SP_ROOT(document->root)->height.computed;
+    SPRoot *root = SP_ROOT(document->root);
+
+    if (root->height.unit == SVGLength::PERCENT && root->viewBox_set)
+        return root->viewBox.y1 - root->viewBox.y0;
+    return root->height.computed;
 }
 
 /**
