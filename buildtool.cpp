@@ -38,7 +38,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.8.4"
+#define BUILDTOOL_VERSION  "BuildTool v0.9.0"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -2991,8 +2991,16 @@ public:
 
     /**
      * replace variable refs like ${a} with their values
-     */         
-    bool eval(const String &s, String &result);
+     * Assume that the string has already been syntax validated
+     */
+    String eval(const String &s, const String &defaultVal);
+
+    /**
+     * replace variable refs like ${a} with their values
+     * return true or false
+     * Assume that the string has already been syntax validated
+     */
+    bool evalBool(const String &s, bool defaultVal);
 
     /**
      *  Get an element attribute, performing substitutions if necessary
@@ -3034,7 +3042,10 @@ public:
         std::map<String, String>::iterator iter = properties.find(name);
         if (iter != properties.end())
             val = iter->second;
-        return val;
+        String sval;
+        if (!getSubstitutions(val, sval))
+            return false;
+        return sval;
         }
 
     /**
@@ -3060,9 +3071,34 @@ protected:
      *    If this prefix is seen in a substitution, use an environment
      *    variable.
      *             example:  <property environment="env"/>
-     *             ${env.JAVA_HOME}              
-     */     
+     *             ${env.JAVA_HOME}
+     */
     String envPrefix;
+
+    /**
+     *    If this prefix is seen in a substitution, use as a
+     *    pkg-config 'all' query
+     *             example:  <property pkg-config="pc"/>
+     *             ${pc.gtkmm}
+     */
+    String pcPrefix;
+
+    /**
+     *    If this prefix is seen in a substitution, use as a
+     *    pkg-config 'cflags' query
+     *             example:  <property pkg-config="pcc"/>
+     *             ${pcc.gtkmm}
+     */
+    String pccPrefix;
+
+    /**
+     *    If this prefix is seen in a substitution, use as a
+     *    pkg-config 'libs' query
+     *             example:  <property pkg-config="pcl"/>
+     *             ${pcl.gtkmm}
+     */
+    String pclPrefix;
+
 
 
 
@@ -3191,11 +3227,6 @@ protected:
     std::map<String, String> properties;
 
     /**
-     * Turn 'true' and 'false' into boolean values
-     */             
-    bool getBool(const String &str, bool &val);
-
-    /**
      * Create a directory, making intermediate dirs
      * if necessary
      */                  
@@ -3228,9 +3259,266 @@ protected:
 
 private:
 
+    bool pkgConfigRecursive(const String packageName,
+                            const String &path, 
+                            const String &prefix, 
+                            int query,
+                            String &result,
+                            std::set<String> &deplist);
+
+    /**
+     * utility method to query for "all", "cflags", or "libs" for this package and its
+     * dependencies.  0, 1, 2
+     */          
+    bool pkgConfigQuery(const String &packageName, int query, String &result);
+
+    /**
+     * replace a variable ref like ${a} with a value
+     */
+    bool lookupProperty(const String &s, String &result);
+    
+    /**
+     * replace variable refs in a sting like ${a} with their values
+     */
+    bool getSubstitutions(const String &s, String &result);
+
     int line;
 
 
+};
+
+
+
+/**
+ * Define the pkg-config class here, since it will be used in MakeBase method
+ * implementations. 
+ */
+class PkgConfig : public MakeBase
+{
+
+public:
+
+    /**
+     *
+     */
+    PkgConfig()
+        {
+		 path   = ".";
+		 prefix = "/target";
+		 init();
+		 }
+
+    /**
+     *
+     */
+    PkgConfig(const PkgConfig &other)
+        { assign(other); }
+
+    /**
+     *
+     */
+    PkgConfig &operator=(const PkgConfig &other)
+        { assign(other); return *this; }
+
+    /**
+     *
+     */
+    virtual ~PkgConfig()
+        { }
+
+    /**
+     *
+     */
+    virtual String getName()
+        { return name; }
+
+    /**
+     *
+     */
+    virtual String getPath()
+        { return path; }
+
+    /**
+     *
+     */
+    virtual void setPath(const String &val)
+        { path = val; }
+
+    /**
+     *
+     */
+    virtual String getPrefix()
+        { return prefix; }
+
+    /**
+     *  Allow the user to override the prefix in the file
+     */
+    virtual void setPrefix(const String &val)
+        { prefix = val; }
+
+    /**
+     *
+     */
+    virtual String getDescription()
+        { return description; }
+
+    /**
+     *
+     */
+    virtual String getCflags()
+        { return cflags; }
+
+    /**
+     *
+     */
+    virtual String getLibs()
+        { return libs; }
+
+    /**
+     *
+     */
+    virtual String getAll()
+        {
+         String ret = cflags;
+         ret.append(" ");
+         ret.append(libs);
+         return ret;
+        }
+
+    /**
+     *
+     */
+    virtual String getVersion()
+        { return version; }
+
+    /**
+     *
+     */
+    virtual int getMajorVersion()
+        { return majorVersion; }
+
+    /**
+     *
+     */
+    virtual int getMinorVersion()
+        { return minorVersion; }
+
+    /**
+     *
+     */
+    virtual int getMicroVersion()
+        { return microVersion; }
+
+    /**
+     *
+     */
+    virtual std::map<String, String> &getAttributes()
+        { return attrs; }
+
+    /**
+     *
+     */
+    virtual std::vector<String> &getRequireList()
+        { return requireList; }
+
+    /**
+     *  Read a file for its details
+     */         
+    virtual bool readFile(const String &fileName);
+
+    /**
+     *  Read a file for its details
+     */         
+    virtual bool query(const String &name);
+
+private:
+
+    void init()
+        {
+        //do not set path and prefix here
+        name         = "";
+        description  = "";
+        cflags       = "";
+        libs         = "";
+        requires     = "";
+        version      = "";
+        majorVersion = 0;
+        minorVersion = 0;
+        microVersion = 0;
+        fileName     = "";
+        attrs.clear();
+        requireList.clear();
+        }
+
+    void assign(const PkgConfig &other)
+        {
+        name         = other.name;
+        path         = other.path;
+        prefix       = other.prefix;
+        description  = other.description;
+        cflags       = other.cflags;
+        libs         = other.libs;
+        requires     = other.requires;
+        version      = other.version;
+        majorVersion = other.majorVersion;
+        minorVersion = other.minorVersion;
+        microVersion = other.microVersion;
+        fileName     = other.fileName;
+        attrs        = other.attrs;
+        requireList  = other.requireList;
+        }
+
+
+
+    int get(int pos);
+
+    int skipwhite(int pos);
+
+    int getword(int pos, String &ret);
+
+    /**
+     * Very important
+     */         
+    bool parseRequires();
+
+    void parseVersion();
+
+    bool parseLine(const String &lineBuf);
+
+    bool parse(const String &buf);
+
+    void dumpAttrs();
+
+    String name;
+
+    String path;
+
+    String prefix;
+
+    String description;
+
+    String cflags;
+
+    String libs;
+
+    String requires;
+
+    String version;
+
+    int majorVersion;
+
+    int minorVersion;
+
+    int microVersion;
+
+    String fileName;
+
+    std::map<String, String> attrs;
+
+    std::vector<String> requireList;
+
+    char *parsebuf;
+    int parselen;
 };
 
 
@@ -3896,9 +4184,19 @@ bool MakeBase::listFiles(const String &baseDir,
 }
 
 
+/**
+ * Several different classes extend MakeBase.  By "propRef", we mean
+ * the one holding the properties.  Likely "Make" itself
+ */
 bool MakeBase::listFiles(MakeBase &propRef, FileSet &fileSet)
 {
-    String baseDir = propRef.resolve(fileSet.getDirectory());
+    //before doing the list,  resolve any property references
+    //that might have been specified in the directory name, such as ${src}
+    String fsDir = fileSet.getDirectory();
+    String dir;
+    if (!propRef.getSubstitutions(fsDir, dir))
+        return false;
+    String baseDir = propRef.resolve(dir);
     std::vector<String> fileList;
     if (!listFiles(baseDir, "", fileList))
         return false;
@@ -3960,13 +4258,135 @@ bool MakeBase::listFiles(MakeBase &propRef, FileSet &fileSet)
 }
 
 
+/**
+ * 0 == all, 1 = cflags, 2 = libs
+ */ 
+bool MakeBase::pkgConfigRecursive(const String packageName,
+                                  const String &path, 
+                                  const String &prefix, 
+                                  int query,
+                                  String &result,
+                                  std::set<String> &deplist) 
+{
+    PkgConfig pkgConfig;
+    if (path.size() > 0)
+        pkgConfig.setPath(path);
+    if (prefix.size() > 0)
+	    pkgConfig.setPrefix(prefix);
+    if (!pkgConfig.query(packageName))
+        return false;
+    if (query == 0)
+        result = pkgConfig.getAll();
+    else if (query == 1)
+        result = pkgConfig.getCflags();
+    else
+        result = pkgConfig.getLibs();
+    deplist.insert(packageName);
+    std::vector<String> list = pkgConfig.getRequireList();
+    for (unsigned int i = 0 ; i<list.size() ; i++)
+        {
+        String depPkgName = list[i];
+        if (deplist.find(depPkgName) != deplist.end())
+            continue;
+        String val;
+        if (!pkgConfigRecursive(depPkgName, path, prefix, query, val, deplist))
+            {
+            error("Based on 'requires' attribute of package '%s'", packageName.c_str());
+            return false;
+            }
+        result.append(" ");
+        result.append(val);
+        }
+
+    return true;
+}
+
+bool MakeBase::pkgConfigQuery(const String &packageName, int query, String &result)
+{
+    std::set<String> deplist;
+    String path = getProperty("pkg-config-path");
+    if (path.size()>0)
+        path = resolve(path);
+    String prefix = getProperty("pkg-config-prefix");
+    String val;
+    if (!pkgConfigRecursive(packageName, path, prefix, query, val, deplist))
+        return false;
+    result = val;
+    return true;
+}
+
+
+
+/**
+ * replace a variable ref like ${a} with a value
+ */
+bool MakeBase::lookupProperty(const String &propertyName, String &result)
+{
+    String varname = propertyName;
+    if (envPrefix.size() > 0 &&
+        varname.compare(0, envPrefix.size(), envPrefix) == 0)
+        {
+        varname = varname.substr(envPrefix.size());
+        char *envstr = getenv(varname.c_str());
+        if (!envstr)
+            {
+            error("environment variable '%s' not defined", varname.c_str());
+            return false;
+            }
+        result = envstr;
+        }
+    else if (pcPrefix.size() > 0 &&
+        varname.compare(0, pcPrefix.size(), pcPrefix) == 0)
+        {
+        varname = varname.substr(pcPrefix.size());
+        String val;
+        if (!pkgConfigQuery(varname, 0, val))
+            return false;
+        result = val;
+        }
+    else if (pccPrefix.size() > 0 &&
+        varname.compare(0, pccPrefix.size(), pccPrefix) == 0)
+        {
+        varname = varname.substr(pccPrefix.size());
+        String val;
+        if (!pkgConfigQuery(varname, 1, val))
+            return false;
+        result = val;
+        }
+    else if (pclPrefix.size() > 0 &&
+        varname.compare(0, pclPrefix.size(), pclPrefix) == 0)
+        {
+        varname = varname.substr(pclPrefix.size());
+        String val;
+        if (!pkgConfigQuery(varname, 2, val))
+            return false;
+        result = val;
+        }
+    else
+        {
+        std::map<String, String>::iterator iter;
+        iter = properties.find(varname);
+        if (iter != properties.end())
+            {
+            result = iter->second;
+            }
+        else
+            {
+            error("property '%s' not found", varname.c_str());
+            return false;
+            }
+        }
+    return true;
+}
+
+
 
 
 /**
  * Analyse a string, looking for any substitutions or other
  * things that need resilution 
  */
-bool MakeBase::eval(const String &str, String &result)
+bool MakeBase::getSubstitutions(const String &str, String &result)
 {
     String s = trim(str);
     int len = (int)s.size();
@@ -3989,32 +4409,11 @@ bool MakeBase::eval(const String &str, String &result)
                     }
                 else if (ch == '}')
                     {
-                    std::map<String, String>::iterator iter;
                     varname = trim(varname);
-                    if (envPrefix.size() > 0 && varname.compare(0, envPrefix.size(), envPrefix) == 0)
-                        {
-                        varname = varname.substr(envPrefix.size());
-                        char *envstr = getenv(varname.c_str());
-                        if (!envstr)
-                            {
-                            error("environment variable '%s' not defined", varname.c_str());
-                            return false;
-                            }
-                        val.append(envstr);
-                        }
-                    else
-                        {
-                        iter = properties.find(varname);
-                        if (iter != properties.end())
-                            {
-                            val.append(iter->second);
-                            }
-                        else
-                            {
-                            error("property ${%s} not found", varname.c_str());
-                            return false;
-                            }
-                        }
+                    String varval;
+                    if (!lookupProperty(varname, varval))
+                        return false;
+                    val.append(varval);
                     break;
                     }
                 else
@@ -4034,37 +4433,68 @@ bool MakeBase::eval(const String &str, String &result)
 }
 
 
-bool MakeBase::getAttribute(Element *elem, const String &name,
-                                    String &result)
-{
-    String s = elem->getAttribute(name);
-    return eval(s, result);
-}
 
-
-bool MakeBase::getValue(Element *elem, String &result)
+/**
+ * replace variable refs like ${a} with their values
+ * Assume that the string has already been syntax validated
+ */
+String MakeBase::eval(const String &s, const String &defaultVal)
 {
-    String s = elem->getValue();
-    //Replace all runs of whitespace with a single space
-    return eval(s, result);
+    if (s.size()==0)
+        return defaultVal;
+    String ret;
+    if (getSubstitutions(s, ret))
+        return ret;
+    else
+        return defaultVal;
 }
 
 
 /**
- * Turn 'true' and 'false' into boolean values
- */             
-bool MakeBase::getBool(const String &str, bool &val)
+ * replace variable refs like ${a} with their values
+ * return true or false
+ * Assume that the string has already been syntax validated
+ */
+bool MakeBase::evalBool(const String &s, bool defaultVal)
 {
-    if (str == "true")
-        val = true;
-    else if (str == "false")
-        val = false;
+    if (s.size()==0)
+        return defaultVal;
+    String val = eval(s, "false");
+    if (s == "true" || s == "TRUE")
+        return true;
     else
-        {
-        error("expected 'true' or 'false'.  found '%s'", str.c_str());
-        return false;
-        }
-    return true;
+        return defaultVal;
+}
+
+
+/**
+ * Get a string attribute, testing it for proper syntax and
+ * property names.
+ */
+bool MakeBase::getAttribute(Element *elem, const String &name,
+                                    String &result)
+{
+    String s = elem->getAttribute(name);
+    String tmp;
+    bool ret = getSubstitutions(s, tmp);
+    if (ret)
+        result = s;  //assign -if- ok
+    return ret;
+}
+
+
+/**
+ * Get a string value, testing it for proper syntax and
+ * property names.
+ */
+bool MakeBase::getValue(Element *elem, String &result)
+{
+    String s = elem->getValue();
+    String tmp;
+    bool ret = getSubstitutions(s, tmp);
+    if (ret)
+        result = s;  //assign -if- ok
+    return ret;
 }
 
 
@@ -4517,230 +4947,6 @@ bool MakeBase::isNewerThan(const String &fileA, const String &fileB)
 //# P K G    C O N F I G
 //########################################################################
 
-/**
- *
- */
-class PkgConfig : public MakeBase
-{
-
-public:
-
-    /**
-     *
-     */
-    PkgConfig()
-        { path="."; init(); }
-
-    /**
-     *
-     */
-    PkgConfig(const PkgConfig &other)
-        { assign(other); }
-
-    /**
-     *
-     */
-    PkgConfig &operator=(const PkgConfig &other)
-        { assign(other); return *this; }
-
-    /**
-     *
-     */
-    virtual ~PkgConfig()
-        { }
-
-    /**
-     *
-     */
-    virtual String getName()
-        { return name; }
-
-    /**
-     *
-     */
-    virtual String getPath()
-        { return path; }
-
-    /**
-     *
-     */
-    virtual void setPath(const String &val)
-        { path = val; }
-
-    /**
-     *
-     */
-    virtual String getPrefix()
-        { return prefix; }
-
-    /**
-     *  Allow the user to override the prefix in the file
-     */
-    virtual void setPrefix(const String &val)
-        { prefix = val; }
-
-    /**
-     *
-     */
-    virtual String getDescription()
-        { return description; }
-
-    /**
-     *
-     */
-    virtual String getCflags()
-        { return cflags; }
-
-    /**
-     *
-     */
-    virtual String getLibs()
-        { return libs; }
-
-    /**
-     *
-     */
-    virtual String getAll()
-        {
-         String ret = cflags;
-         ret.append(" ");
-         ret.append(libs);
-         return ret;
-        }
-
-    /**
-     *
-     */
-    virtual String getVersion()
-        { return version; }
-
-    /**
-     *
-     */
-    virtual int getMajorVersion()
-        { return majorVersion; }
-
-    /**
-     *
-     */
-    virtual int getMinorVersion()
-        { return minorVersion; }
-
-    /**
-     *
-     */
-    virtual int getMicroVersion()
-        { return microVersion; }
-
-    /**
-     *
-     */
-    virtual std::map<String, String> &getAttributes()
-        { return attrs; }
-
-    /**
-     *
-     */
-    virtual std::vector<String> &getRequireList()
-        { return requireList; }
-
-    /**
-     *  Read a file for its details
-     */         
-    virtual bool readFile(const String &fileName);
-
-    /**
-     *  Read a file for its details
-     */         
-    virtual bool query(const String &name);
-
-private:
-
-    void init()
-        {
-        //do not set path or prefix here
-        name         = "";
-        description  = "";
-        cflags       = "";
-        libs         = "";
-        requires     = "";
-        version      = "";
-        majorVersion = 0;
-        minorVersion = 0;
-        microVersion = 0;
-        fileName     = "";
-        attrs.clear();
-        requireList.clear();
-        }
-
-    void assign(const PkgConfig &other)
-        {
-        name         = other.name;
-        path         = other.path;
-        prefix       = other.prefix;
-        description  = other.description;
-        cflags       = other.cflags;
-        libs         = other.libs;
-        requires     = other.requires;
-        version      = other.version;
-        majorVersion = other.majorVersion;
-        minorVersion = other.minorVersion;
-        microVersion = other.microVersion;
-        fileName     = other.fileName;
-        attrs        = other.attrs;
-        requireList  = other.requireList;
-        }
-
-
-
-    int get(int pos);
-
-    int skipwhite(int pos);
-
-    int getword(int pos, String &ret);
-
-    void parseRequires();
-
-    void parseVersion();
-
-    bool parseLine(const String &lineBuf);
-
-    bool parse(const String &buf);
-
-    void dumpAttrs();
-
-    String name;
-
-    String path;
-
-    String prefix;
-
-    String description;
-
-    String cflags;
-
-    String libs;
-
-    String requires;
-
-    String version;
-
-    int majorVersion;
-
-    int minorVersion;
-
-    int microVersion;
-
-    String fileName;
-
-    std::map<String, String> attrs;
-
-    std::vector<String> requireList;
-
-    char *parsebuf;
-    int parselen;
-};
-
 
 /**
  * Get a character from the buffer at pos.  If out of range,
@@ -4787,7 +4993,7 @@ int PkgConfig::getword(int pos, String &ret)
         int ch = get(pos);
         if (ch < 0)
             break;
-        if (!isalnum(ch) && ch != '_' && ch != '-'&& ch != '.')
+        if (!isalnum(ch) && ch != '_' && ch != '-' && ch != '+' && ch != '.')
             break;
         ret.push_back((char)ch);
         pos++;
@@ -4795,10 +5001,10 @@ int PkgConfig::getword(int pos, String &ret)
     return pos;
 }
 
-void PkgConfig::parseRequires()
+bool PkgConfig::parseRequires()
 {
     if (requires.size() == 0)
-        return;
+        return true;
     parsebuf = (char *)requires.c_str();
     parselen = requires.size();
     int pos = 0;
@@ -4813,7 +5019,9 @@ void PkgConfig::parseRequires()
         //trace("val %s", val.c_str());
         requireList.push_back(val);
         }
+    return true;
 }
+
 
 static int getint(const String str)
 {
@@ -6166,23 +6374,12 @@ public:
     TaskCC(MakeBase &par) : Task(par)
         {
         type = TASK_CC;
-        name            = "cc";
-        ccCommand       = "gcc";
-        cxxCommand      = "g++";
-        source          = ".";
-        dest            = ".";
-        flags           = "";
-        defines         = "";
-        includes        = "";
-        continueOnError = false;
-        refreshCache    = false;
-        fileSet.clear();
-        excludeInc.clear();
+        name = "cc";
         }
 
     virtual ~TaskCC()
         {}
-
+        
     virtual bool isExcludedInc(const String &dirname)
         {
         for (unsigned int i=0 ; i<excludeInc.size() ; i++)
@@ -6196,6 +6393,18 @@ public:
 
     virtual bool execute()
         {
+        //evaluate our parameters
+        String command         = parent.eval(commandOpt, "gcc");
+        String ccCommand       = parent.eval(ccCommandOpt, "gcc");
+        String cxxCommand      = parent.eval(cxxCommandOpt, "g++");
+        String source          = parent.eval(sourceOpt, ".");
+        String dest            = parent.eval(destOpt, ".");
+        String flags           = parent.eval(flagsOpt, "");
+        String defines         = parent.eval(definesOpt, "");
+        String includes        = parent.eval(includesOpt, "");
+        bool continueOnError   = parent.evalBool(continueOnErrorOpt, true);
+        bool refreshCache      = parent.evalBool(refreshCacheOpt, false);
+
         if (!listFiles(parent, fileSet))
             return false;
             
@@ -6415,26 +6624,20 @@ public:
     virtual bool parse(Element *elem)
         {
         String s;
-        if (!parent.getAttribute(elem, "command", s))
+        if (!parent.getAttribute(elem, "command", commandOpt))
             return false;
-        if (s.size()>0) { ccCommand = s; cxxCommand = s; }
-        if (!parent.getAttribute(elem, "cc", s))
+        if (commandOpt.size()>0)
+            { cxxCommandOpt = ccCommandOpt = commandOpt; }
+        if (!parent.getAttribute(elem, "cc", ccCommandOpt))
             return false;
-        if (s.size()>0) ccCommand = s;
-        if (!parent.getAttribute(elem, "cxx", s))
+        if (!parent.getAttribute(elem, "cxx", cxxCommandOpt))
             return false;
-        if (s.size()>0) cxxCommand = s;
-        if (!parent.getAttribute(elem, "destdir", s))
+        if (!parent.getAttribute(elem, "destdir", destOpt))
             return false;
-        if (s.size()>0) dest = s;
-        if (!parent.getAttribute(elem, "continueOnError", s))
+        if (!parent.getAttribute(elem, "continueOnError", continueOnErrorOpt))
             return false;
-        if (s=="true" || s=="yes")
-            continueOnError = true;
-        if (!parent.getAttribute(elem, "refreshCache", s))
+        if (!parent.getAttribute(elem, "refreshCache", refreshCacheOpt))
             return false;
-        if (s=="true" || s=="yes")
-            refreshCache = true;
 
         std::vector<Element *> children = elem->getChildren();
         for (unsigned int i=0 ; i<children.size() ; i++)
@@ -6443,27 +6646,27 @@ public:
             String tagName = child->getName();
             if (tagName == "flags")
                 {
-                if (!parent.getValue(child, flags))
+                if (!parent.getValue(child, flagsOpt))
                     return false;
-                flags = strip(flags);
+                flagsOpt = strip(flagsOpt);
                 }
             else if (tagName == "includes")
                 {
-                if (!parent.getValue(child, includes))
+                if (!parent.getValue(child, includesOpt))
                     return false;
-                includes = strip(includes);
+                includesOpt = strip(includesOpt);
                 }
             else if (tagName == "defines")
                 {
-                if (!parent.getValue(child, defines))
+                if (!parent.getValue(child, definesOpt))
                     return false;
-                defines = strip(defines);
+                definesOpt = strip(definesOpt);
                 }
             else if (tagName == "fileset")
                 {
                 if (!parseFileSet(child, parent, fileSet))
                     return false;
-                source = fileSet.getDirectory();
+                sourceOpt = fileSet.getDirectory();
                 }
             else if (tagName == "excludeinc")
                 {
@@ -6477,16 +6680,16 @@ public:
         
 protected:
 
-    String   ccCommand;
-    String   cxxCommand;
-    String   source;
-    String   dest;
-    String   flags;
-    String   lastflags;
-    String   defines;
-    String   includes;
-    bool     continueOnError;
-    bool     refreshCache;
+    String   commandOpt;
+    String   ccCommandOpt;
+    String   cxxCommandOpt;
+    String   sourceOpt;
+    String   destOpt;
+    String   flagsOpt;
+    String   definesOpt;
+    String   includesOpt;
+    String   continueOnErrorOpt;
+    String   refreshCacheOpt;
     FileSet  fileSet;
     FileList excludeInc;
     
@@ -6510,9 +6713,9 @@ public:
 
     TaskCopy(MakeBase &par) : Task(par)
         {
-        type = TASK_COPY; name = "copy";
-        cptype = CP_NONE;
-        verbose = false;
+        type        = TASK_COPY;
+        name        = "copy";
+        cptype      = CP_NONE;
         haveFileSet = false;
         }
 
@@ -6521,6 +6724,10 @@ public:
 
     virtual bool execute()
         {
+        String fileName   = parent.eval(fileNameOpt   , ".");
+        String toFileName = parent.eval(toFileNameOpt , ".");
+        String toDirName  = parent.eval(toDirNameOpt  , ".");
+        bool   verbose    = parent.evalBool(verboseOpt, false);
         switch (cptype)
            {
            case CP_TOFILE:
@@ -6555,7 +6762,7 @@ public:
                    {
                    if (!listFiles(parent, fileSet))
                        return false;
-                   String fileSetDir = fileSet.getDirectory();
+                   String fileSetDir = parent.eval(fileSet.getDirectory(), ".");
 
                    taskstatus("%s to %s",
                        fileSetDir.c_str(), toDirName.c_str());
@@ -6654,20 +6861,17 @@ public:
 
     virtual bool parse(Element *elem)
         {
-        if (!parent.getAttribute(elem, "file", fileName))
+        if (!parent.getAttribute(elem, "file", fileNameOpt))
             return false;
-        if (!parent.getAttribute(elem, "tofile", toFileName))
+        if (!parent.getAttribute(elem, "tofile", toFileNameOpt))
             return false;
-        if (toFileName.size() > 0)
+        if (toFileNameOpt.size() > 0)
             cptype = CP_TOFILE;
-        if (!parent.getAttribute(elem, "todir", toDirName))
+        if (!parent.getAttribute(elem, "todir", toDirNameOpt))
             return false;
-        if (toDirName.size() > 0)
+        if (toDirNameOpt.size() > 0)
             cptype = CP_TODIR;
-        String ret;
-        if (!parent.getAttribute(elem, "verbose", ret))
-            return false;
-        if (ret.size()>0 && !getBool(ret, verbose))
+        if (!parent.getAttribute(elem, "verbose", verboseOpt))
             return false;
             
         haveFileSet = false;
@@ -6689,27 +6893,27 @@ public:
             }
 
         //Perform validity checks
-        if (fileName.size()>0 && fileSet.size()>0)
+        if (fileNameOpt.size()>0 && fileSet.size()>0)
             {
             error("<copy> can only have one of : file= and <fileset>");
             return false;
             }
-        if (toFileName.size()>0 && toDirName.size()>0)
+        if (toFileNameOpt.size()>0 && toDirNameOpt.size()>0)
             {
             error("<copy> can only have one of : tofile= or todir=");
             return false;
             }
-        if (haveFileSet && toDirName.size()==0)
+        if (haveFileSet && toDirNameOpt.size()==0)
             {
             error("a <copy> task with a <fileset> must have : todir=");
             return false;
             }
-        if (cptype == CP_TOFILE && fileName.size()==0)
+        if (cptype == CP_TOFILE && fileNameOpt.size()==0)
             {
             error("<copy> tofile= must be associated with : file=");
             return false;
             }
-        if (cptype == CP_TODIR && fileName.size()==0 && !haveFileSet)
+        if (cptype == CP_TODIR && fileNameOpt.size()==0 && !haveFileSet)
             {
             error("<copy> todir= must be associated with : file= or <fileset>");
             return false;
@@ -6721,12 +6925,13 @@ public:
 private:
 
     int cptype;
-    String fileName;
-    FileSet fileSet;
-    String toFileName;
-    String toDirName;
-    bool verbose;
     bool haveFileSet;
+
+    FileSet fileSet;
+    String  fileNameOpt;
+    String  toFileNameOpt;
+    String  toDirNameOpt;
+    String  verboseOpt;
 };
 
 
@@ -6746,12 +6951,9 @@ public:
 
     TaskDelete(MakeBase &par) : Task(par)
         { 
-          type        = TASK_DELETE;
-          name        = "delete";
-          delType     = DEL_FILE;
-          verbose     = false;
-          quiet       = false;
-          failOnError = true;
+        type        = TASK_DELETE;
+        name        = "delete";
+        delType     = DEL_FILE;
         }
 
     virtual ~TaskDelete()
@@ -6759,6 +6961,11 @@ public:
 
     virtual bool execute()
         {
+        String dirName   = parent.eval(dirNameOpt, ".");
+        String fileName  = parent.eval(fileNameOpt, ".");
+        bool verbose     = parent.evalBool(verboseOpt, false);
+        bool quiet       = parent.evalBool(quietOpt, false);
+        bool failOnError = parent.evalBool(failOnErrorOpt, true);
         struct stat finfo;
         switch (delType)
             {
@@ -6798,36 +7005,29 @@ public:
 
     virtual bool parse(Element *elem)
         {
-        if (!parent.getAttribute(elem, "file", fileName))
+        if (!parent.getAttribute(elem, "file", fileNameOpt))
             return false;
-        if (fileName.size() > 0)
+        if (fileNameOpt.size() > 0)
             delType = DEL_FILE;
-        if (!parent.getAttribute(elem, "dir", dirName))
+        if (!parent.getAttribute(elem, "dir", dirNameOpt))
             return false;
-        if (dirName.size() > 0)
+        if (dirNameOpt.size() > 0)
             delType = DEL_DIR;
-        if (fileName.size()>0 && dirName.size()>0)
+        if (fileNameOpt.size()>0 && dirNameOpt.size()>0)
             {
             error("<delete> can have one attribute of file= or dir=");
             return false;
             }
-        if (fileName.size()==0 && dirName.size()==0)
+        if (fileNameOpt.size()==0 && dirNameOpt.size()==0)
             {
             error("<delete> must have one attribute of file= or dir=");
             return false;
             }
-        String ret;
-        if (!parent.getAttribute(elem, "verbose", ret))
+        if (!parent.getAttribute(elem, "verbose", verboseOpt))
             return false;
-        if (ret.size()>0 && !getBool(ret, verbose))
+        if (!parent.getAttribute(elem, "quiet", quietOpt))
             return false;
-        if (!parent.getAttribute(elem, "quiet", ret))
-            return false;
-        if (ret.size()>0 && !getBool(ret, quiet))
-            return false;
-        if (!parent.getAttribute(elem, "failonerror", ret))
-            return false;
-        if (ret.size()>0 && !getBool(ret, failOnError))
+        if (!parent.getAttribute(elem, "failonerror", failOnErrorOpt))
             return false;
         return true;
         }
@@ -6835,11 +7035,11 @@ public:
 private:
 
     int delType;
-    String dirName;
-    String fileName;
-    bool verbose;
-    bool quiet;
-    bool failOnError;
+    String dirNameOpt;
+    String fileNameOpt;
+    String verboseOpt;
+    String quietOpt;
+    String failOnErrorOpt;
 };
 
 
@@ -6859,35 +7059,33 @@ public:
     virtual bool execute()
         {
         //let message have priority over text
+        String message = parent.eval(messageOpt, "");
+        String text    = parent.eval(textOpt, "");
         if (message.size() > 0)
             {
-            String s;
-			if (!parent.eval(message, s))
-			    return false;
-            fprintf(stdout, "%s\n", s.c_str());
+            fprintf(stdout, "%s\n", message.c_str());
             }
         else if (text.size() > 0)
             {
-            String s;
-			if (!parent.eval(text, s))
-			    return false;
-            fprintf(stdout, "%s\n", s.c_str());
+            fprintf(stdout, "%s\n", text.c_str());
             }
         return true;
         }
 
     virtual bool parse(Element *elem)
         {
-        text = elem->getValue();
-        text = leftJustify(text);
-        message = elem->getAttribute("message");
+        if (!parent.getValue(elem, textOpt))
+            return false;
+        textOpt    = leftJustify(textOpt);
+        if (!parent.getAttribute(elem, "message", messageOpt))
+            return false;
         return true;
         }
 
 private:
 
-    String message;
-    String text;
+    String messageOpt;
+    String textOpt;
 };
 
 
@@ -6900,13 +7098,17 @@ class TaskJar : public Task
 public:
 
     TaskJar(MakeBase &par) : Task(par)
-        { type = TASK_JAR; name = "jar"; command = "jar";}
+        { type = TASK_JAR; name = "jar"; }
 
     virtual ~TaskJar()
         {}
 
     virtual bool execute()
         {
+        String command  = parent.eval(commandOpt, "jar");
+        String basedir  = parent.eval(basedirOpt, ".");
+        String destfile = parent.eval(destfileOpt, ".");
+
         String cmd = command;
         cmd.append(" -cf ");
         cmd.append(destfile);
@@ -6929,16 +7131,13 @@ public:
 
     virtual bool parse(Element *elem)
         {
-        String s;
-        if (!parent.getAttribute(elem, "command", s))
+        if (!parent.getAttribute(elem, "command", commandOpt))
             return false;
-        if (s.size() > 0)
-            command = s;
-        if (!parent.getAttribute(elem, "basedir", basedir))
+        if (!parent.getAttribute(elem, "basedir", basedirOpt))
             return false;
-        if (!parent.getAttribute(elem, "destfile", destfile))
+        if (!parent.getAttribute(elem, "destfile", destfileOpt))
             return false;
-        if (basedir.size() == 0 || destfile.size() == 0)
+        if (basedirOpt.size() == 0 || destfileOpt.size() == 0)
             {
             error("<jar> required both basedir and destfile attributes to be set");
             return false;
@@ -6947,9 +7146,10 @@ public:
         }
 
 private:
-    String command;
-    String basedir;
-    String destfile;
+
+    String commandOpt;
+    String basedirOpt;
+    String destfileOpt;
 };
 
 
@@ -6963,7 +7163,6 @@ public:
     TaskJavac(MakeBase &par) : Task(par)
         { 
         type = TASK_JAVAC; name = "javac";
-        command = "javac";
         }
 
     virtual ~TaskJavac()
@@ -6971,6 +7170,11 @@ public:
 
     virtual bool execute()
         {
+        String command  = parent.eval(commandOpt, "javac");
+        String srcdir   = parent.eval(srcdirOpt, ".");
+        String destdir  = parent.eval(destdirOpt, ".");
+        String target   = parent.eval(targetOpt, "");
+
         std::vector<String> fileList;
         if (!listFiles(srcdir, "", fileList))
             {
@@ -7044,31 +7248,28 @@ public:
 
     virtual bool parse(Element *elem)
         {
-        String s;
-        if (!parent.getAttribute(elem, "command", s))
+        if (!parent.getAttribute(elem, "command", commandOpt))
             return false;
-        if (s.size() > 0)
-            command = s;
-        if (!parent.getAttribute(elem, "srcdir", srcdir))
+        if (!parent.getAttribute(elem, "srcdir", srcdirOpt))
             return false;
-        if (!parent.getAttribute(elem, "destdir", destdir))
+        if (!parent.getAttribute(elem, "destdir", destdirOpt))
             return false;
-        if (srcdir.size() == 0 || destdir.size() == 0)
+        if (srcdirOpt.size() == 0 || destdirOpt.size() == 0)
             {
             error("<javac> required both srcdir and destdir attributes to be set");
             return false;
             }
-        if (!parent.getAttribute(elem, "target", target))
+        if (!parent.getAttribute(elem, "target", targetOpt))
             return false;
         return true;
         }
 
 private:
 
-    String command;
-    String srcdir;
-    String destdir;
-    String target;
+    String commandOpt;
+    String srcdirOpt;
+    String destdirOpt;
+    String targetOpt;
 
 };
 
@@ -7083,10 +7284,6 @@ public:
     TaskLink(MakeBase &par) : Task(par)
         {
         type = TASK_LINK; name = "link";
-        command = "g++";
-        doStrip = false;
-        stripCommand = "strip";
-        objcopyCommand = "objcopy";
         }
 
     virtual ~TaskLink()
@@ -7094,9 +7291,18 @@ public:
 
     virtual bool execute()
         {
+        String  command        = parent.eval(commandOpt, "g++");
+        String  fileName       = parent.eval(fileNameOpt, "");
+        String  flags          = parent.eval(flagsOpt, "");
+        String  libs           = parent.eval(libsOpt, "");
+        bool    doStrip        = parent.evalBool(doStripOpt, false);
+        String  symFileName    = parent.eval(symFileNameOpt, "");
+        String  stripCommand   = parent.eval(stripCommandOpt, "strip");
+        String  objcopyCommand = parent.eval(objcopyCommandOpt, "objcopy");
+
         if (!listFiles(parent, fileSet))
             return false;
-        String fileSetDir = fileSet.getDirectory();
+        String fileSetDir = parent.eval(fileSet.getDirectory(), ".");
         //trace("%d files in %s", fileSet.size(), fileSetDir.c_str());
         bool doit = false;
         String fullTarget = parent.resolve(fileName);
@@ -7172,26 +7378,17 @@ public:
 
     virtual bool parse(Element *elem)
         {
-        String s;
-        if (!parent.getAttribute(elem, "command", s))
+        if (!parent.getAttribute(elem, "command", commandOpt))
             return false;
-        if (s.size()>0)
-            command = s;
-        if (!parent.getAttribute(elem, "objcopycommand", s))
+        if (!parent.getAttribute(elem, "objcopycommand", objcopyCommandOpt))
             return false;
-        if (s.size()>0)
-            objcopyCommand = s;
-        if (!parent.getAttribute(elem, "stripcommand", s))
+        if (!parent.getAttribute(elem, "stripcommand", stripCommandOpt))
             return false;
-        if (s.size()>0)
-            stripCommand = s;
-        if (!parent.getAttribute(elem, "out", fileName))
+        if (!parent.getAttribute(elem, "out", fileNameOpt))
             return false;
-        if (!parent.getAttribute(elem, "strip", s))
+        if (!parent.getAttribute(elem, "strip", doStripOpt))
             return false;
-        if (s.size()>0 && !getBool(s, doStrip))
-            return false;
-        if (!parent.getAttribute(elem, "symfile", symFileName))
+        if (!parent.getAttribute(elem, "symfile", symFileNameOpt))
             return false;
             
         std::vector<Element *> children = elem->getChildren();
@@ -7206,15 +7403,15 @@ public:
                 }
             else if (tagName == "flags")
                 {
-                if (!parent.getValue(child, flags))
+                if (!parent.getValue(child, flagsOpt))
                     return false;
-                flags = strip(flags);
+                flagsOpt = strip(flagsOpt);
                 }
             else if (tagName == "libs")
                 {
-                if (!parent.getValue(child, libs))
+                if (!parent.getValue(child, libsOpt))
                     return false;
-                libs = strip(libs);
+                libsOpt = strip(libsOpt);
                 }
             }
         return true;
@@ -7222,15 +7419,16 @@ public:
 
 private:
 
-    String  command;
-    String  fileName;
-    String  flags;
-    String  libs;
     FileSet fileSet;
-    bool    doStrip;
-    String  symFileName;
-    String  stripCommand;
-    String  objcopyCommand;
+
+    String  commandOpt;
+    String  fileNameOpt;
+    String  flagsOpt;
+    String  libsOpt;
+    String  doStripOpt;
+    String  symFileNameOpt;
+    String  stripCommandOpt;
+    String  objcopyCommandOpt;
 
 };
 
@@ -7251,6 +7449,9 @@ public:
 
     virtual bool execute()
         {
+        String fileName = parent.eval(fileNameOpt, "");
+        String text     = parent.eval(textOpt, "");
+
         taskstatus("%s", fileName.c_str());
         String fullName = parent.resolve(fileName);
         if (!isNewerThan(parent.getURI().getPath(), fullName))
@@ -7276,24 +7477,24 @@ public:
 
     virtual bool parse(Element *elem)
         {
-        if (!parent.getAttribute(elem, "file", fileName))
+        if (!parent.getAttribute(elem, "file", fileNameOpt))
             return false;
-        if (fileName.size() == 0)
+        if (fileNameOpt.size() == 0)
             {
             error("<makefile> requires 'file=\"filename\"' attribute");
             return false;
             }
-        if (!parent.getValue(elem, text))
+        if (!parent.getValue(elem, textOpt))
             return false;
-        text = leftJustify(text);
+        textOpt = leftJustify(textOpt);
         //trace("dirname:%s", dirName.c_str());
         return true;
         }
 
 private:
 
-    String fileName;
-    String text;
+    String fileNameOpt;
+    String textOpt;
 };
 
 
@@ -7313,6 +7514,8 @@ public:
 
     virtual bool execute()
         {
+        String dirName = parent.eval(dirNameOpt, ".");
+        
         taskstatus("%s", dirName.c_str());
         String fullDir = parent.resolve(dirName);
         //trace("fullDir:%s", fullDir.c_str());
@@ -7323,9 +7526,9 @@ public:
 
     virtual bool parse(Element *elem)
         {
-        if (!parent.getAttribute(elem, "dir", dirName))
+        if (!parent.getAttribute(elem, "dir", dirNameOpt))
             return false;
-        if (dirName.size() == 0)
+        if (dirNameOpt.size() == 0)
             {
             error("<mkdir> requires 'dir=\"dirname\"' attribute");
             return false;
@@ -7335,7 +7538,7 @@ public:
 
 private:
 
-    String dirName;
+    String dirNameOpt;
 };
 
 
@@ -7348,19 +7551,18 @@ class TaskMsgFmt: public Task
 public:
 
     TaskMsgFmt(MakeBase &par) : Task(par)
-         {
-         type    = TASK_MSGFMT;
-         name    = "msgfmt";
-         command = "msgfmt";
-         owndir  = false;
-         outName = "";
-         }
+         { type = TASK_MSGFMT;  name = "msgfmt"; }
 
     virtual ~TaskMsgFmt()
         {}
 
     virtual bool execute()
         {
+        String  command   = parent.eval(commandOpt, "msgfmt");
+        String  toDirName = parent.eval(toDirNameOpt, ".");
+        String  outName   = parent.eval(outNameOpt, "");
+        bool    owndir    = parent.evalBool(owndirOpt, false);
+
         if (!listFiles(parent, fileSet))
             return false;
         String fileSetDir = fileSet.getDirectory();
@@ -7443,18 +7645,13 @@ public:
 
     virtual bool parse(Element *elem)
         {
-        String s;
-        if (!parent.getAttribute(elem, "command", s))
+        if (!parent.getAttribute(elem, "command", commandOpt))
             return false;
-        if (s.size()>0)
-            command = s;
-        if (!parent.getAttribute(elem, "todir", toDirName))
+        if (!parent.getAttribute(elem, "todir", toDirNameOpt))
             return false;
-        if (!parent.getAttribute(elem, "out", outName))
+        if (!parent.getAttribute(elem, "out", outNameOpt))
             return false;
-        if (!parent.getAttribute(elem, "owndir", s))
-            return false;
-        if (s.size()>0 && !getBool(s, owndir))
+        if (!parent.getAttribute(elem, "owndir", owndirOpt))
             return false;
             
         std::vector<Element *> children = elem->getChildren();
@@ -7473,11 +7670,12 @@ public:
 
 private:
 
-    String  command;
-    String  toDirName;
-    String  outName;
     FileSet fileSet;
-    bool    owndir;
+
+    String  commandOpt;
+    String  toDirNameOpt;
+    String  outNameOpt;
+    String  owndirOpt;
 
 };
 
@@ -7508,7 +7706,13 @@ public:
 
     virtual bool execute()
         {
-        String path = parent.resolve(pkg_config_path);
+        String pkgName       = parent.eval(pkgNameOpt,      "");
+        String prefix        = parent.eval(prefixOpt,       "");
+        String propName      = parent.eval(propNameOpt,     "");
+        String pkgConfigPath = parent.eval(pkgConfigPathOpt,"");
+        String query         = parent.eval(queryOpt,        "all");
+
+        String path = parent.resolve(pkgConfigPath);
         PkgConfig pkgconfig;
         pkgconfig.setPath(path);
         pkgconfig.setPrefix(prefix);
@@ -7517,105 +7721,63 @@ public:
             error("<pkg-config> query failed for '%s", name.c_str());
             return false;
             }
-        String ret;
-        switch (query)
-            {
-            case PKG_CONFIG_QUERY_CFLAGS:
-                {
-                ret = pkgconfig.getCflags();
-                break;
-                }
-            case PKG_CONFIG_QUERY_LIBS:
-                {
-                ret = pkgconfig.getLibs();
-                break;
-                }
-            case PKG_CONFIG_QUERY_ALL:
-                {
-                ret = pkgconfig.getAll();
-                break;
-                }
-            default:
-                {
-                error("<pkg-config> unhandled query : %d", query);
-                return false;
-                }
             
+        String val = "";
+        if (query == "cflags")
+            val = pkgconfig.getCflags();
+        else if (query == "libs")
+            val =pkgconfig.getLibs();
+        else if (query == "all")
+            val = pkgconfig.getAll();
+        else
+            {
+            error("<pkg-config> unhandled query : %s", query.c_str());
+            return false;
             }
-        taskstatus("property %s = '%s'", propName.c_str(), ret.c_str());
-        parent.setProperty(propName, ret);
+        taskstatus("property %s = '%s'", propName.c_str(), val.c_str());
+        parent.setProperty(propName, val);
         return true;
         }
 
     virtual bool parse(Element *elem)
         {
-        String s;
         //# NAME
-        if (!parent.getAttribute(elem, "name", s))
+        if (!parent.getAttribute(elem, "name", pkgNameOpt))
             return false;
-        if (s.size()>0)
-           pkgName = s;
-        else
+        if (pkgNameOpt.size()==0)
             {
             error("<pkg-config> requires 'name=\"package\"' attribute");
             return false;
             }
 
         //# PROPERTY
-        if (!parent.getAttribute(elem, "property", s))
+        if (!parent.getAttribute(elem, "property", propNameOpt))
             return false;
-        if (s.size()>0)
-           propName = s;
-        else
+        if (propNameOpt.size()==0)
             {
             error("<pkg-config> requires 'property=\"name\"' attribute");
             return false;
             }
-        if (parent.hasProperty(propName))
-            {
-            error("<pkg-config> property '%s' is already defined",
-                          propName.c_str());
-            return false;
-            }
-        parent.setProperty(propName, "undefined");
-
         //# PATH
-        if (!parent.getAttribute(elem, "path", s))
+        if (!parent.getAttribute(elem, "path", pkgConfigPathOpt))
             return false;
-        if (s.size()>0)
-           pkg_config_path = s;
-
         //# PREFIX
-        if (!parent.getAttribute(elem, "prefix", s))
+        if (!parent.getAttribute(elem, "prefix", prefixOpt))
             return false;
-        if (s.size()>0)
-           prefix = s;
-
         //# QUERY
-        if (!parent.getAttribute(elem, "query", s))
+        if (!parent.getAttribute(elem, "query", queryOpt))
             return false;
-        if (s == "cflags")
-            query = PKG_CONFIG_QUERY_CFLAGS;
-        else if (s == "libs")
-            query = PKG_CONFIG_QUERY_LIBS;
-        else if (s == "both")
-            query = PKG_CONFIG_QUERY_ALL;
-        else
-            {
-            error("<pkg-config> requires 'query=\"type\"' attribute");
-            error("where type = cflags, libs, or both");
-            return false;
-            }
+
         return true;
         }
 
 private:
 
-    String pkgName;
-    String prefix;
-    String propName;
-    String pkg_config_path;
-    int query;
+    String queryOpt;
+    String pkgNameOpt;
+    String prefixOpt;
+    String propNameOpt;
+    String pkgConfigPathOpt;
 
 };
 
@@ -7632,16 +7794,16 @@ class TaskRanlib : public Task
 public:
 
     TaskRanlib(MakeBase &par) : Task(par)
-        {
-        type = TASK_RANLIB; name = "ranlib";
-        command = "ranlib";
-        }
+        { type = TASK_RANLIB; name = "ranlib"; }
 
     virtual ~TaskRanlib()
         {}
 
     virtual bool execute()
         {
+        String fileName = parent.eval(fileNameOpt, "");
+        String command  = parent.eval(commandOpt, "ranlib");
+
         String fullName = parent.resolve(fileName);
         //trace("fullDir:%s", fullDir.c_str());
         String cmd = command;
@@ -7655,14 +7817,11 @@ public:
 
     virtual bool parse(Element *elem)
         {
-        String s;
-        if (!parent.getAttribute(elem, "command", s))
+        if (!parent.getAttribute(elem, "command", commandOpt))
             return false;
-        if (s.size()>0)
-           command = s;
-        if (!parent.getAttribute(elem, "file", fileName))
+        if (!parent.getAttribute(elem, "file", fileNameOpt))
             return false;
-        if (fileName.size() == 0)
+        if (fileNameOpt.size() == 0)
             {
             error("<ranlib> requires 'file=\"fileNname\"' attribute");
             return false;
@@ -7672,30 +7831,32 @@ public:
 
 private:
 
-    String fileName;
-    String command;
+    String fileNameOpt;
+    String commandOpt;
 };
 
 
 
 /**
- * Run the "ar" command to archive .o's into a .a
+ * Compile a resource file into a .res
  */
 class TaskRC : public Task
 {
 public:
 
     TaskRC(MakeBase &par) : Task(par)
-        {
-        type = TASK_RC; name = "rc";
-        command = "windres";
-        }
+        { type = TASK_RC; name = "rc"; }
 
     virtual ~TaskRC()
         {}
 
     virtual bool execute()
         {
+        String command  = parent.eval(commandOpt,  "windres");
+        String flags    = parent.eval(flagsOpt,    "");
+        String fileName = parent.eval(fileNameOpt, "");
+        String outName  = parent.eval(outNameOpt,  "");
+
         String fullFile = parent.resolve(fileName);
         String fullOut  = parent.resolve(outName);
         if (!isNewerThan(fullFile, fullOut))
@@ -7719,11 +7880,11 @@ public:
 
     virtual bool parse(Element *elem)
         {
-        if (!parent.getAttribute(elem, "command", command))
+        if (!parent.getAttribute(elem, "command", commandOpt))
             return false;
-        if (!parent.getAttribute(elem, "file", fileName))
+        if (!parent.getAttribute(elem, "file", fileNameOpt))
             return false;
-        if (!parent.getAttribute(elem, "out", outName))
+        if (!parent.getAttribute(elem, "out", outNameOpt))
             return false;
         std::vector<Element *> children = elem->getChildren();
         for (unsigned int i=0 ; i<children.size() ; i++)
@@ -7732,7 +7893,7 @@ public:
             String tagName = child->getName();
             if (tagName == "flags")
                 {
-                if (!parent.getValue(child, flags))
+                if (!parent.getValue(child, flagsOpt))
                     return false;
                 }
             }
@@ -7741,10 +7902,10 @@ public:
 
 private:
 
-    String command;
-    String flags;
-    String fileName;
-    String outName;
+    String commandOpt;
+    String flagsOpt;
+    String fileNameOpt;
+    String outNameOpt;
 
 };
 
@@ -7758,16 +7919,19 @@ class TaskSharedLib : public Task
 public:
 
     TaskSharedLib(MakeBase &par) : Task(par)
-        {
-        type = TASK_SHAREDLIB; name = "dll";
-        command = "dllwrap";
-        }
+        { type = TASK_SHAREDLIB; name = "dll"; }
 
     virtual ~TaskSharedLib()
         {}
 
     virtual bool execute()
         {
+        String command     = parent.eval(commandOpt, "dllwrap");
+        String fileName    = parent.eval(fileNameOpt, "");
+        String defFileName = parent.eval(defFileNameOpt, "");
+        String impFileName = parent.eval(impFileNameOpt, "");
+        String libs        = parent.eval(libsOpt, "");
+
         //trace("###########HERE %d", fileSet.size());
         bool doit = false;
         
@@ -7776,7 +7940,7 @@ public:
         
         if (!listFiles(parent, fileSet))
             return false;
-        String fileSetDir = fileSet.getDirectory();
+        String fileSetDir = parent.eval(fileSet.getDirectory(), ".");
 
         for (unsigned int i=0 ; i<fileSet.size() ; i++)
             {
@@ -7842,11 +8006,13 @@ public:
 
     virtual bool parse(Element *elem)
         {
-        if (!parent.getAttribute(elem, "file", fileName))
+        if (!parent.getAttribute(elem, "command", commandOpt))
             return false;
-        if (!parent.getAttribute(elem, "import", impFileName))
+        if (!parent.getAttribute(elem, "file", fileNameOpt))
             return false;
-        if (!parent.getAttribute(elem, "def", defFileName))
+        if (!parent.getAttribute(elem, "import", impFileNameOpt))
+            return false;
+        if (!parent.getAttribute(elem, "def", defFileNameOpt))
             return false;
             
         std::vector<Element *> children = elem->getChildren();
@@ -7861,9 +8027,9 @@ public:
                 }
             else if (tagName == "libs")
                 {
-                if (!parent.getValue(child, libs))
+                if (!parent.getValue(child, libsOpt))
                     return false;
-                libs = strip(libs);
+                libsOpt = strip(libsOpt);
                 }
             }
         return true;
@@ -7871,12 +8037,13 @@ public:
 
 private:
 
-    String command;
-    String fileName;
-    String defFileName;
-    String impFileName;
     FileSet fileSet;
-    String libs;
+
+    String commandOpt;
+    String fileNameOpt;
+    String defFileNameOpt;
+    String impFileNameOpt;
+    String libsOpt;
 
 };
 
@@ -7890,17 +8057,16 @@ class TaskStaticLib : public Task
 public:
 
     TaskStaticLib(MakeBase &par) : Task(par)
-        {
-        type = TASK_STATICLIB; name = "staticlib";
-        command = "ar crv";
-        }
+        { type = TASK_STATICLIB; name = "staticlib"; }
 
     virtual ~TaskStaticLib()
         {}
 
     virtual bool execute()
         {
-        //trace("###########HERE %d", fileSet.size());
+        String command = parent.eval(commandOpt, "ar crv");
+        String fileName = parent.eval(fileNameOpt, "");
+
         bool doit = false;
         
         String fullOut = parent.resolve(fileName);
@@ -7908,7 +8074,8 @@ public:
         
         if (!listFiles(parent, fileSet))
             return false;
-        String fileSetDir = fileSet.getDirectory();
+        String fileSetDir = parent.eval(fileSet.getDirectory(), ".");
+        //trace("###########HERE %s", fileSetDir.c_str());
 
         for (unsigned int i=0 ; i<fileSet.size() ; i++)
             {
@@ -7961,12 +8128,9 @@ public:
 
     virtual bool parse(Element *elem)
         {
-        String s;
-        if (!parent.getAttribute(elem, "command", s))
+        if (!parent.getAttribute(elem, "command", commandOpt))
             return false;
-        if (s.size()>0)
-            command = s;
-        if (!parent.getAttribute(elem, "file", fileName))
+        if (!parent.getAttribute(elem, "file", fileNameOpt))
             return false;
             
         std::vector<Element *> children = elem->getChildren();
@@ -7985,9 +8149,10 @@ public:
 
 private:
 
-    String command;
-    String fileName;
     FileSet fileSet;
+
+    String commandOpt;
+    String fileNameOpt;
 
 };
 
@@ -8009,6 +8174,10 @@ public:
 
     virtual bool execute()
         {
+        String command     = parent.eval(commandOpt, "strip");
+        String fileName    = parent.eval(fileNameOpt, "");
+        String symFileName = parent.eval(symFileNameOpt, "");
+
         String fullName = parent.resolve(fileName);
         //trace("fullDir:%s", fullDir.c_str());
         String cmd;
@@ -8028,7 +8197,7 @@ public:
                 }
             }
             
-        cmd = "strip ";
+        cmd = command;
         cmd.append(getNativePath(fullName));
         if (!executeCommand(cmd, "", outbuf, errbuf))
             {
@@ -8040,11 +8209,13 @@ public:
 
     virtual bool parse(Element *elem)
         {
-        if (!parent.getAttribute(elem, "file", fileName))
+        if (!parent.getAttribute(elem, "command", commandOpt))
             return false;
-        if (!parent.getAttribute(elem, "symfile", symFileName))
+        if (!parent.getAttribute(elem, "file", fileNameOpt))
             return false;
-        if (fileName.size() == 0)
+        if (!parent.getAttribute(elem, "symfile", symFileNameOpt))
+            return false;
+        if (fileNameOpt.size() == 0)
             {
             error("<strip> requires 'file=\"fileName\"' attribute");
             return false;
@@ -8054,8 +8225,9 @@ public:
 
 private:
 
-    String fileName;
-    String symFileName;
+    String commandOpt;
+    String fileNameOpt;
+    String symFileNameOpt;
 };
 
 
@@ -8074,6 +8246,8 @@ public:
 
     virtual bool execute()
         {
+        String fileName = parent.eval(fileNameOpt, "");
+
         String fullName = parent.resolve(fileName);
         String nativeFile = getNativePath(fullName);
         if (!isRegularFile(fullName) && !isDirectory(fullName))
@@ -8101,9 +8275,9 @@ public:
     virtual bool parse(Element *elem)
         {
         //trace("touch parse");
-        if (!parent.getAttribute(elem, "file", fileName))
+        if (!parent.getAttribute(elem, "file", fileNameOpt))
             return false;
-        if (fileName.size() == 0)
+        if (fileNameOpt.size() == 0)
             {
             error("<touch> requires 'file=\"fileName\"' attribute");
             return false;
@@ -8111,7 +8285,7 @@ public:
         return true;
         }
 
-    String fileName;
+    String fileNameOpt;
 };
 
 
@@ -8544,7 +8718,10 @@ void Make::init()
     specifiedTarget = "";
     baseDir         = "";
     description     = "";
-    envPrefix       = "";
+    envPrefix       = "env.";
+    pcPrefix        = "pc.";
+    pccPrefix       = "pcc.";
+    pclPrefix       = "pcl.";
     properties.clear();
     for (unsigned int i = 0 ; i < allTasks.size() ; i++)
         delete allTasks[i];
@@ -8925,11 +9102,6 @@ bool Make::parseProperty(Element *elem)
             }
         else if (attrName == "environment")
             {
-            if (envPrefix.size() > 0)
-                {
-                error("environment prefix can only be set once");
-                return false;
-                }
             if (attrVal.find('.') != attrVal.npos)
                 {
                 error("environment prefix cannot have a '.' in it");
@@ -8937,6 +9109,36 @@ bool Make::parseProperty(Element *elem)
                 }
             envPrefix = attrVal;
             envPrefix.push_back('.');
+            }
+        else if (attrName == "pkg-config")
+            {
+            if (attrVal.find('.') != attrVal.npos)
+                {
+                error("pkg-config prefix cannot have a '.' in it");
+                return false;
+                }
+            pcPrefix = attrVal;
+            pcPrefix.push_back('.');
+            }
+        else if (attrName == "pkg-config-cflags")
+            {
+            if (attrVal.find('.') != attrVal.npos)
+                {
+                error("pkg-config-cflags prefix cannot have a '.' in it");
+                return false;
+                }
+            pccPrefix = attrVal;
+            pccPrefix.push_back('.');
+            }
+        else if (attrName == "pkg-config-libs")
+            {
+            if (attrVal.find('.') != attrVal.npos)
+                {
+                error("pkg-config-libs prefix cannot have a '.' in it");
+                return false;
+                }
+            pclPrefix = attrVal;
+            pclPrefix.push_back('.');
             }
         }
 

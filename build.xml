@@ -41,7 +41,6 @@
     </description>
 
   <!-- set global properties for this build -->
-  <property environment="env"/>
   <property name="version"       value="0.46+devel"/>
   <property name="src"           location="src"/>
   <property name="lib"           location="lib"/>
@@ -65,6 +64,14 @@
   <!-- Extra properties -->  
   <property name="refresh"       value="false"/>
 
+  <!--
+    This is for package-config.  With these two settings, pkg-config
+    queries can be as simple as ${pcc.packageName} for cflags, and
+    ${pcl.packageName} for libs.  Dependencies are calculated automatically.
+  -->
+  <property name="pkg-config-path"   location="${gtk}/lib/pkgconfig"/>
+  <property name="pkg-config-prefix" location="${gtk}"/>
+
 
   <!--
   ########################################################################
@@ -75,16 +82,6 @@
       description=
       "Do all preparatory tasks, like make directories and copy files">
 
-
-    <!-- example of the <pkg-config> task
-      query can be cflags, libs, or both
-      prefix overrides the value of prefix="" in the file
-      the result of this entry can be later used as ${gtkmm}
-    -->
-    <!--
-    <pkg-config name="gtkmm-2.4" path="${gtk}/lib/pkgconfig"
-                query="both" property="gtkmm" prefix="${gtk}"/>
-    -->
 
     <mkdir dir="${build}"/>
     <mkdir dir="${build}/java"/>
@@ -292,23 +289,7 @@
         <includes>
             -I${gtk}/include
             <!-- GTK / GTKMM -->
-            -I${gtk}/include/glibmm-2.4
-            -I${gtk}/lib/glibmm-2.4/include
-            -I${gtk}/include/gtkmm-2.4
-            -I${gtk}/lib/gtkmm-2.4/include
-            -I${gtk}/include/gdkmm-2.4
-            -I${gtk}/lib/gdkmm-2.4/include
-            -I${gtk}/include/pangomm-1.4
-            -I${gtk}/include/atkmm-1.6
-            -I${gtk}/include/cairomm-1.0
-            -I${gtk}/include/sigc++-2.0
-            -I${gtk}/lib/sigc++-2.0/include
-            -I${gtk}/include/gtk-2.0
-            -I${gtk}/lib/gtk-2.0/include
-            -I${gtk}/include/atk-1.0
-            -I${gtk}/include/pango-1.0
-            -I${gtk}/include/glib-2.0
-            -I${gtk}/lib/glib-2.0/include
+            ${pcc.gtkmm-2.4}
             <!-- OTHER -->
             -I${gtk}/include/libxml2 
             -I${gtk}/include/freetype2
@@ -333,7 +314,6 @@
   ## T A R G E T    :    L I B
   ########################################################################
   -->
-  <!-- set depends to "compile,java" if you want to test that -->
   <target name="lib" depends="compile"
       description="create a static library">
     <staticlib command="${archutil}ar crsv"
@@ -398,17 +378,12 @@
        <libs>
            -L${gtk}/lib
            -lpoppler-cairo -lpoppler-glib -lpoppler.dll 
-           -lgtkmm-2.4 -lgdkmm-2.4 -lglibmm-2.4 
-           -latkmm-1.6 -lpangomm-1.4 -lsigc-2.0
-           -lgtk-win32-2.0 -lgdk-win32-2.0 -latk-1.0
-           -lgdk_pixbuf-2.0
-           -lpangocairo-1.0 -lpangoft2-1.0 -lpangowin32-1.0 -lpango-1.0
-           -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0
+           ${pcl.gtkmm-2.4}  ${pc.pangoft2} -lgthread-2.0
            -lgsl
            <!-- PERL -->
-           -L${gtk}/perl/lib/CORE -lperl58
+           <!-- -L${gtk}/perl/lib/CORE -lperl58 -->
            <!-- PYTHON -->
-           -L${gtk}/python/libs -lpython25
+           <!-- -L${gtk}/python/libs -lpython25 -->
            ${gtk}/bin/libxml2.dll
            ${gtk}/bin/libxslt.dll
            -lcairo.dll
@@ -462,12 +437,7 @@
        <libs>
            -L${gtk}/lib
            -lpoppler-cairo -lpoppler-glib -lpoppler.dll 
-           -lgtkmm-2.4 -lgdkmm-2.4 -lglibmm-2.4
-           -latkmm-1.6 -lpangomm-1.4 -lsigc-2.0
-           -lgtk-win32-2.0 -lgdk-win32-2.0 -latk-1.0
-           -lgdk_pixbuf-2.0
-           -lpangocairo-1.0 -lpangoft2-1.0 -lpangowin32-1.0 -lpango-1.0
-           -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0 -lcairo -lcairomm-1.0
+           ${pcl.gtkmm-2.4}
            <!-- PERL -->
            -L${gtk}/perl/lib/CORE -lperl58
            <!-- PYTHON -->
