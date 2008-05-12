@@ -70,7 +70,7 @@ class SplitIt(inkex.Effect):
                         dest="segments", default=2,
                         help="Number of segments to divide the path into")
         self.OptionParser.add_option("--max",
-                        action="store", type="int", 
+                        action="store", type="float", 
                         dest="max", default=2,
                         help="Number of segments to divide the path into")
         self.OptionParser.add_option("--method",
