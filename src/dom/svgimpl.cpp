@@ -96,6 +96,13 @@ ElementPtr SVGDocumentImpl::createElementNS(const DOMString& namespaceURI,
 //# Non-API methods
 //##################
 
+void SVGDocumentImpl::init()
+{
+    title       = "";
+    referrer    = "";
+    domain      = "";
+    rootElement = new SVGSVGElementImpl();
+}
 
 
 

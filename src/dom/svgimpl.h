@@ -153,19 +153,13 @@ protected:
 
 friend class SvgParser;
 
-    void init()
-        {
-        title       = "";
-        referrer    = "";
-        domain      = "";
-        rootElement = NULL;
-        }
+    void init();
 
     DOMString title;
     DOMString referrer;
     DOMString domain;
     DOMString url;
-    SVGSVGElementPtr rootElement;
+    SVGSVGElementImplPtr rootElement;
 };
 
 

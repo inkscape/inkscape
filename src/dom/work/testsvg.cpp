@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005-2006 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -29,35 +29,18 @@
 
 
 
+#include "svgreader.h"
 #include "lsimpl.h"
 
 using namespace org::w3c::dom;
 
 
-bool doTest(char *filename)
+bool doTest(char *fileName)
 {
 
-    ls::DOMImplementationLSImpl domImpl;
-    ls::LSInput input  = domImpl.createLSInput();
-    ls::LSParser &parser = domImpl.createLSParser(0, "");
-
-    DOMString buf;
-    FILE *f = fopen(filename, "rb");
-    if (!f)
-        {
-        printf("Cannot open %s for reading\n", filename);
-        return false;
-        }
-    while (!feof(f))
-        {
-        int ch = fgetc(f);
-        buf.push_back(ch);
-        }
-    fclose(f);
-    input.setStringData(buf);
-
     printf("######## PARSE ######################################\n");
-    DocumentPtr doc = parser.parse(input);
+    svg::SVGReader parser;
+    svg::SVGDocumentPtr doc = parser.parseFile(fileName);
 
     if (!doc)
         {
@@ -67,6 +50,7 @@ bool doTest(char *filename)
 
     //### OUTPUT
     printf("######## SERIALIZE ##################################\n");
+    ls::DOMImplementationLSImpl domImpl;
     ls::LSSerializer &serializer = domImpl.createLSSerializer();
     ls::LSOutput output = domImpl.createLSOutput();
     io::StdWriter writer;

@@ -57,8 +57,8 @@
  * Then below, select one of the corresponding typedefs.
  */ 
 
-#include <glibmm.h>
-//#include <string>
+//#include <glibmm.h>
+#include <string>
 
 //# Unfortunate hack for a name collision
 #ifdef SEVERITY_ERROR
@@ -79,11 +79,11 @@ namespace dom
  * This is the org::w3c::dom::DOMString definition.
  * Which type do we want?
  */  
-typedef Glib::ustring DOMString;
-typedef gunichar XMLCh;
+//typedef Glib::ustring DOMString;
+//typedef gunichar XMLCh;
 
-//typedef std::string DOMString;
-//typedef unsigned short XMLCh;
+typedef std::string DOMString;
+typedef unsigned short XMLCh;
 
 
 /**

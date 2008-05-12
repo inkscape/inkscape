@@ -177,7 +177,9 @@ work/testzip.o
 
 OBJ = $(DOMOBJ)
 
-all: testdom.exe testhttp.exe  \
+all: testsvg.exe
+
+tests: testdom.exe testhttp.exe  \
 testsvg.exe testuri.exe testxpath.exe testzip.exe
 
 testdom.exe: libdom.a work/testdom.o

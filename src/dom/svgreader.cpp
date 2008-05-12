@@ -60,14 +60,28 @@ namespace svg
 /**
  *
  */
-void SvgReader::error(char const *fmt, ...)
+void SVGReader::error(char const *fmt, ...)
 {
     va_list args;
-    fprintf(stderr, "SvgReader:error:");
+    fprintf(stderr, "SVGReader:error: ");
     va_start(args, fmt);
     vfprintf(stderr, fmt, args);
     va_end(args) ;
     fprintf(stderr, "\n");
+}
+
+
+/**
+ *
+ */
+void SVGReader::trace(char const *fmt, ...)
+{
+    va_list args;
+    fprintf(stdout, "SVGReader: ");
+    va_start(args, fmt);
+    vfprintf(stdout, fmt, args);
+    va_end(args) ;
+    fprintf(stdout, "\n");
 }
 
 
@@ -79,7 +93,7 @@ void SvgReader::error(char const *fmt, ...)
 /**
  *  Get the character at the position and record the fact
  */
-XMLCh SvgReader::get(int p)
+XMLCh SVGReader::get(int p)
 {
     if (p >= parselen)
         return 0;
@@ -95,7 +109,7 @@ XMLCh SvgReader::get(int p)
  *  Test if the given substring exists at the given position
  *  in parsebuf.  Use get() in case of out-of-bounds
  */
-bool SvgReader::match(int pos, char const *str)
+bool SVGReader::match(int pos, char const *str)
 {
     while (*str)
        {
@@ -108,7 +122,7 @@ bool SvgReader::match(int pos, char const *str)
 /**
  *
  */
-int SvgReader::skipwhite(int p)
+int SVGReader::skipwhite(int p)
 {
   while (p < parselen)
     {
@@ -168,7 +182,7 @@ int SvgReader::skipwhite(int p)
 /**
  * get a word from the buffer
  */
-int SvgReader::getWord(int p, DOMString &result)
+int SVGReader::getWord(int p, DOMString &result)
 {
     XMLCh ch = get(p);
     if (!uni_is_letter(ch))
@@ -201,7 +215,7 @@ int SvgReader::getWord(int p, DOMString &result)
 /**
  * get a word from the buffer
  */
-int SvgReader::getNumber(int p0, double &result)
+int SVGReader::getNumber(int p0, double &result)
 {
     int p=p0;
 
@@ -255,7 +269,7 @@ int SvgReader::getNumber(int p0, double &result)
 /**
  * get a word from the buffer
  */
-int SvgReader::getNumber(int p0, double &result)
+int SVGReader::getNumber(int p0, double &result)
 {
     int p=p0;
 
@@ -284,7 +298,7 @@ int SvgReader::getNumber(int p0, double &result)
 }
 
 
-bool SvgReader::parseTransform(const DOMString &str)
+bool SVGReader::parseTransform(const DOMString &str)
 {
     parsebuf = str;
     parselen = str.size();
@@ -599,10 +613,15 @@ bool SvgReader::parseTransform(const DOMString &str)
 /**
  *
  */
-bool SvgReader::parseElement(SVGElementImplPtr parent,
+bool SVGReader::parseElement(SVGElementImplPtr parent,
                              ElementImplPtr sourceElem)
 {
-    if (!parent || !sourceElem)
+    if (!parent)
+        {
+        error("NULL dest element");
+        return false;
+        }
+    if (!sourceElem)
         {
         error("NULL source element");
         return false;
@@ -732,7 +751,7 @@ bool SvgReader::parseElement(SVGElementImplPtr parent,
 /**
  *
  */
-SVGDocumentPtr SvgReader::parse(const DocumentPtr src)
+SVGDocumentPtr SVGReader::parse(const DocumentPtr src)
 {
     if (!src)
         {
@@ -758,7 +777,7 @@ SVGDocumentPtr SvgReader::parse(const DocumentPtr src)
 /**
  *
  */
-SVGDocumentPtr SvgReader::parse(const DOMString &buf)
+SVGDocumentPtr SVGReader::parse(const DOMString &buf)
 {
     /* remember, smartptrs are null-testable*/
     SVGDocumentPtr svgdoc;
@@ -777,7 +796,7 @@ SVGDocumentPtr SvgReader::parse(const DOMString &buf)
 /**
  *
  */
-SVGDocumentPtr SvgReader::parseFile(const DOMString &fileName)
+SVGDocumentPtr SVGReader::parseFile(const DOMString &fileName)
 {
     /* remember, smartptrs are null-testable*/
     SVGDocumentPtr svgdoc;
@@ -785,6 +804,7 @@ SVGDocumentPtr SvgReader::parseFile(const DOMString &fileName)
     DocumentPtr doc = parser.parseFile(fileName);
     if (!doc)
         {
+        error("Could not load xml doc");
         return svgdoc;
         }
     svgdoc = parse(doc);

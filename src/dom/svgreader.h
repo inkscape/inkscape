@@ -56,28 +56,28 @@ namespace svg
 {
 
 
-class SvgReader
+class SVGReader
 {
 public:
 
     /**
      *
      */
-    SvgReader()
+    SVGReader()
         {
         }
 
     /**
      *
      */
-    SvgReader(const SvgReader &/*other*/)
+    SVGReader(const SVGReader &/*other*/)
         {
         }
 
     /**
      *
      */
-    virtual ~SvgReader()
+    virtual ~SVGReader()
         {
         }
 
@@ -146,6 +146,15 @@ private:
      *
      */
     void error(char const *format, ...)
+    #ifdef G_GNUC_PRINTF
+    G_GNUC_PRINTF(2, 3)
+    #endif
+    ;
+
+    /**
+     *
+     */
+    void trace(char const *format, ...)
     #ifdef G_GNUC_PRINTF
     G_GNUC_PRINTF(2, 3)
     #endif
