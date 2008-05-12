@@ -8,7 +8,7 @@
 	<param name="steps" type="int" min="1" max="1000" _gui-text="Interpolation steps">5</param>
 	<param name="method" type="int" min="1" max="2" _gui-text="Interpolation method">2</param>
 	<param name="dup" type="boolean" _gui-text="Duplicate endpaths">true</param>
-	<param name="style" type="boolean" _gui-text="Interpolate style (experimental)">false</param>
+	<param name="style" type="boolean" _gui-text="Interpolate style">false</param>
     <effect>
 		<object-type>path</object-type>
                 <effects-menu>
