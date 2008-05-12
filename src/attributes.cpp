@@ -333,12 +333,12 @@ static SPStyleProp const props[] = {
     {SP_ATTR_K, "k"},
 
     /*<font-face>*/
-    {SP_ATTR_FONT_FAMILY, "font-family"},
-    {SP_ATTR_FONT_STYLE, "font-style"},
-    {SP_ATTR_FONT_VARIANT, "font-variant"},
-    {SP_ATTR_FONT_WEIGHT, "font-weight"},
-    {SP_ATTR_FONT_STRETCH, "font-stretch"},
-    {SP_ATTR_FONT_SIZE, "font-size"},
+    //{SP_ATTR_FONT_FAMILY, "font-family"}, these are already set for CSS2 (SP_PROP_FONT_FAMILY, SP_PROP_FONT_STYLE, SP_PROP_FONT_VARIANT etc...)
+    //{SP_ATTR_FONT_STYLE, "font-style"},
+    //{SP_ATTR_FONT_VARIANT, "font-variant"},
+    //{SP_ATTR_FONT_WEIGHT, "font-weight"},
+    //{SP_ATTR_FONT_STRETCH, "font-stretch"},
+    //{SP_ATTR_FONT_SIZE, "font-size"},
     {SP_ATTR_UNICODE_RANGE, "unicode-range"},
     {SP_ATTR_UNITS_PER_EM, "units-per-em"},
     {SP_ATTR_PANOSE_1, "panose-1"},
@@ -356,7 +356,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_ALPHABETIC, "alphabetic"},
     {SP_ATTR_MATHEMATICAL, "mathematical"},
     {SP_ATTR_HANGING, "hanging"},
-    {SP_ATTR_V_IDEOGRAPHIC, "ideographic"},
+    {SP_ATTR_V_IDEOGRAPHIC, "v-ideographic"},
     {SP_ATTR_V_ALPHABETIC, "v-alphabetic"},
     {SP_ATTR_V_MATHEMATICAL, "v-mathematical"},
     {SP_ATTR_V_HANGING, "v-hanging"},

@@ -52,6 +52,240 @@ private:
     bool isset;
 };
 
+static std::vector<FontFaceStyleType> sp_read_fontFaceStyleType(gchar const *value){
+    std::vector<FontFaceStyleType> v;
+
+    if (!value){
+        v.push_back(SP_FONTFACE_STYLE_ALL);
+        return v;
+    }
+    
+    if (strncmp(value, "all", 3) == 0){
+        value += 3;
+        while(value[0]==',' || value[0]==' ')
+            value++;
+        v.push_back(SP_FONTFACE_STYLE_ALL);
+        return v;
+    }
+
+    while(value[0]!='\0'){
+        switch(value[0]){
+            case 'n':
+                if (strncmp(value, "normal", 6) == 0){
+                    v.push_back(SP_FONTFACE_STYLE_NORMAL);
+                    value += 6;
+                }
+                break;
+            case 'i':
+                if (strncmp(value, "italic", 6) == 0){
+                    v.push_back(SP_FONTFACE_STYLE_ITALIC);
+                    value += 6;
+                }
+                break;
+            case 'o':
+                if (strncmp(value, "oblique", 7) == 0){
+                    v.push_back(SP_FONTFACE_STYLE_OBLIQUE);
+                    value += 7;
+                }
+                break;
+        }
+        while(value[0]==',' || value[0]==' ')
+            value++;
+    }
+    return v;
+}
+
+static std::vector<FontFaceVariantType> sp_read_fontFaceVariantType(gchar const *value){
+    std::vector<FontFaceVariantType> v;
+
+    if (!value){
+        v.push_back(SP_FONTFACE_VARIANT_NORMAL);
+        return v;
+    }
+
+    while(value[0]!='\0'){
+        switch(value[0]){
+            case 'n':
+                if (strncmp(value, "normal", 6) == 0){
+                    v.push_back(SP_FONTFACE_VARIANT_NORMAL);
+                    value += 6;
+                }
+                break;
+            case 's':
+                if (strncmp(value, "small-caps", 10) == 0){
+                    v.push_back(SP_FONTFACE_VARIANT_SMALL_CAPS);
+                    value += 10;
+                }
+                break;
+        }
+        while(value[0]==',' || value[0]==' ')
+            value++;
+    }
+    return v;
+}
+
+static std::vector<FontFaceWeightType> sp_read_fontFaceWeightType(gchar const *value){
+    std::vector<FontFaceWeightType> v;
+
+    if (!value){
+        v.push_back(SP_FONTFACE_WEIGHT_ALL);
+        return v;
+    }
+    
+    if (strncmp(value, "all", 3) == 0){
+        value += 3;
+        while(value[0]==',' || value[0]==' ')
+            value++;
+        v.push_back(SP_FONTFACE_WEIGHT_ALL);
+        return v;
+    }
+
+    while(value[0]!='\0'){
+        switch(value[0]){
+            case 'n':
+                if (strncmp(value, "normal", 6) == 0){
+                    v.push_back(SP_FONTFACE_WEIGHT_NORMAL);
+                    value += 6;
+                }
+                break;
+            case 'b':
+                if (strncmp(value, "bold", 4) == 0){
+                    v.push_back(SP_FONTFACE_WEIGHT_BOLD);
+                    value += 4;
+                }
+                break;
+            case '1':
+                if (strncmp(value, "100", 3) == 0){
+                    v.push_back(SP_FONTFACE_WEIGHT_100);
+                    value += 3;
+                }
+                break;
+            case '2':
+                if (strncmp(value, "200", 3) == 0){
+                    v.push_back(SP_FONTFACE_WEIGHT_200);
+                    value += 3;
+                }
+                break;
+            case '3':
+                if (strncmp(value, "300", 3) == 0){
+                    v.push_back(SP_FONTFACE_WEIGHT_300);
+                    value += 3;
+                }
+                break;
+            case '4':
+                if (strncmp(value, "400", 3) == 0){
+                    v.push_back(SP_FONTFACE_WEIGHT_400);
+                    value += 3;
+                }
+                break;
+            case '5':
+                if (strncmp(value, "500", 3) == 0){
+                    v.push_back(SP_FONTFACE_WEIGHT_500);
+                    value += 3;
+                }
+                break;
+            case '6':
+                if (strncmp(value, "600", 3) == 0){
+                    v.push_back(SP_FONTFACE_WEIGHT_600);
+                    value += 3;
+                }
+                break;
+            case '7':
+                if (strncmp(value, "700", 3) == 0){
+                    v.push_back(SP_FONTFACE_WEIGHT_700);
+                    value += 3;
+                }
+                break;
+            case '8':
+                if (strncmp(value, "800", 3) == 0){
+                    v.push_back(SP_FONTFACE_WEIGHT_800);
+                    value += 3;
+                }
+                break;
+            case '9':
+                if (strncmp(value, "900", 3) == 0){
+                    v.push_back(SP_FONTFACE_WEIGHT_900);
+                    value += 3;
+                }
+                break;
+        }
+        while(value[0]==',' || value[0]==' ')
+            value++;
+    }
+    return v;
+}
+
+static std::vector<FontFaceStretchType> sp_read_fontFaceStretchType(gchar const *value){
+    std::vector<FontFaceStretchType> v;
+
+    if (!value){
+        v.push_back(SP_FONTFACE_STRETCH_NORMAL);
+        return v;
+    }
+    
+    if (strncmp(value, "all", 3) == 0){
+        value += 3;
+        while(value[0]==',' || value[0]==' ')
+            value++;
+        v.push_back(SP_FONTFACE_STRETCH_ALL);
+        return v;
+    }
+
+    while(value[0]!='\0'){
+        switch(value[0]){
+            case 'n':
+                if (strncmp(value, "normal", 6) == 0){
+                    v.push_back(SP_FONTFACE_STRETCH_NORMAL);
+                    value += 6;
+                }
+                break;
+            case 'u':
+                if (strncmp(value, "ultra-condensed", 15) == 0){
+                    v.push_back(SP_FONTFACE_STRETCH_ULTRA_CONDENSED);
+                    value += 15;
+                }
+                if (strncmp(value, "ultra-expanded", 14) == 0){
+                    v.push_back(SP_FONTFACE_STRETCH_ULTRA_EXPANDED);
+                    value += 14;
+                }
+                break;
+            case 'e':
+                if (strncmp(value, "expanded", 8) == 0){
+                    v.push_back(SP_FONTFACE_STRETCH_EXPANDED);
+                    value += 8;
+                }
+                if (strncmp(value, "extra-condensed", 15) == 0){
+                    v.push_back(SP_FONTFACE_STRETCH_EXTRA_CONDENSED);
+                    value += 15;
+                }
+                if (strncmp(value, "extra-expanded", 14) == 0){
+                    v.push_back(SP_FONTFACE_STRETCH_EXTRA_EXPANDED);
+                    value += 14;
+                }
+                break;
+            case 'c':
+                if (strncmp(value, "condensed", 9) == 0){
+                    v.push_back(SP_FONTFACE_STRETCH_CONDENSED);
+                    value += 9;
+                }
+                break;
+            case 's':
+                if (strncmp(value, "semi-condensed", 14) == 0){
+                    v.push_back(SP_FONTFACE_STRETCH_SEMI_CONDENSED);
+                    value += 14;
+                }
+                if (strncmp(value, "semi-expanded", 13) == 0){
+                    v.push_back(SP_FONTFACE_STRETCH_SEMI_EXPANDED);
+                    value += 13;
+                }
+                break;
+        }
+        while(value[0]==',' || value[0]==' ')
+            value++;
+    }
+    return v;
+}
+
 static void sp_fontface_class_init(SPFontFaceClass *fc);
 static void sp_fontface_init(SPFontFace *font);
 
@@ -104,8 +338,23 @@ static void sp_fontface_class_init(SPFontFaceClass *fc)
     sp_object_class->update = sp_fontface_update;
 }
 
-static void sp_fontface_init(SPFontFace *font)
+static void sp_fontface_init(SPFontFace *face)
 {
+    std::vector<FontFaceStyleType> style;
+    style.push_back(SP_FONTFACE_STYLE_ALL);
+    face->font_style = style;
+
+    std::vector<FontFaceVariantType> variant;
+    variant.push_back(SP_FONTFACE_VARIANT_NORMAL);
+    face->font_variant = variant;
+
+    std::vector<FontFaceWeightType> weight;
+    weight.push_back(SP_FONTFACE_WEIGHT_ALL);
+    face->font_weight = weight;
+
+    std::vector<FontFaceStretchType> stretch;
+    stretch.push_back(SP_FONTFACE_STRETCH_NORMAL);
+    face->font_stretch = stretch;
 /*
     face->font_family = NULL;
     //face->font_style = ;
@@ -232,8 +481,104 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
 {
     SPFontFace *face = SP_FONTFACE(object);
     double number;
+    std::vector<FontFaceStyleType> style;
+    std::vector<FontFaceVariantType> variant;
+    std::vector<FontFaceWeightType> weight;
+    std::vector<FontFaceStretchType> stretch;
 
     switch (key) {
+	case SP_PROP_FONT_STYLE:
+            style = sp_read_fontFaceStyleType(value);
+            if (face->font_style.size() != style.size()){
+                face->font_style = style;
+g_warning("<font-face>: SP_ATTR_FONT_STYLE:");
+                for (unsigned int i=0;i<style.size();i++){
+                    g_warning("enum value: %d", style[i]);
+                }
+                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            } else {
+                for (unsigned int i=0;i<style.size();i++){
+                    if(style[i] != face->font_style[i]){
+                        face->font_style = style;
+g_warning("<font-face>: SP_ATTR_FONT_STYLE:");
+                        for (unsigned int i=0;i<style.size();i++){
+                            g_warning("enum value: %d", style[i]);
+                        }
+                        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                        break;
+                    }
+                }
+            }
+            break;
+	case SP_PROP_FONT_VARIANT:
+            variant = sp_read_fontFaceVariantType(value);
+            if (face->font_variant.size() != variant.size()){
+                face->font_variant = variant;
+g_warning("<font-face>: SP_ATTR_FONT_VARIANT:");
+                for (unsigned int i=0;i<variant.size();i++){
+                    g_warning("enum value: %d", variant[i]);
+                }
+                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            } else {
+                for (unsigned int i=0;i<variant.size();i++){
+                    if(variant[i] != face->font_variant[i]){
+                        face->font_variant = variant;
+g_warning("<font-face>: SP_ATTR_FONT_VARIANT:");
+                        for (unsigned int i=0;i<variant.size();i++){
+                            g_warning("- %d", variant[i]);
+                        }
+                        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                        break;
+                    }
+                }
+            }
+            break;
+	case SP_PROP_FONT_WEIGHT:
+            weight = sp_read_fontFaceWeightType(value);
+            if (face->font_weight.size() != weight.size()){
+                face->font_weight = weight;
+g_warning("<font-face>: SP_ATTR_FONT_WEIGHT:");
+                for (unsigned int i=0;i<weight.size();i++){
+                    g_warning("enum value: %d", weight[i]);
+                }
+                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            } else {
+                for (unsigned int i=0;i<weight.size();i++){
+                    if(weight[i] != face->font_weight[i]){
+                        face->font_weight = weight;
+g_warning("<font-face>: SP_ATTR_FONT_WEIGHT:");
+                        for (unsigned int i=0;i<weight.size();i++){
+                            g_warning("enum value: %d", weight[i]);
+                        }
+                        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                        break;
+                    }
+                }
+            }
+            break;
+	case SP_PROP_FONT_STRETCH:
+            stretch = sp_read_fontFaceStretchType(value);
+            if (face->font_stretch.size() != stretch.size()){
+                face->font_stretch = stretch;
+g_warning("<font-face>: SP_ATTR_FONT_STRETCH:");
+                for (unsigned int i=0;i<stretch.size();i++){
+                    g_warning("enum value: %d", stretch[i]);
+                }
+                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            } else {
+                for (unsigned int i=0;i<stretch.size();i++){
+                    if(stretch[i] != face->font_stretch[i]){
+                        face->font_stretch = stretch;
+g_warning("<font-face>: SP_ATTR_FONT_STRETCH:");
+                        for (unsigned int i=0;i<stretch.size();i++){
+                            g_warning("enum value: %d", stretch[i]);
+                        }
+                        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                        break;
+                    }
+                }
+            }
+            break;
 	case SP_ATTR_UNITS_PER_EM:
             number = helperfns_read_number(value);
             if (number != face->units_per_em){
