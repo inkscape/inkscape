@@ -26,8 +26,6 @@
 
 
 
-
-
 <!--
 ########################################################################
 ## P R O J E C T   :   I N K S C A P E
@@ -38,6 +36,9 @@
         Build file for the Inkscape SVG editor.  This file
         was written for GTK-2.10 on Win32, but it should work
         well for other types of builds with only minor adjustments.
+        Note that the default target is 'dist'.  You can execute other
+        targets instead, by "btool {target}",  like  "btool compile", if
+        you want to save time.
     </description>
 
   <!-- set global properties for this build -->
@@ -378,8 +379,7 @@
        <libs>
            -L${gtk}/lib
            -lpoppler-cairo -lpoppler-glib -lpoppler.dll 
-           ${pcl.gtkmm-2.4}  ${pc.pangoft2} -lgthread-2.0
-           -lgsl
+           ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${pcl.gthread-2.0}
            <!-- PERL -->
            <!-- -L${gtk}/perl/lib/CORE -lperl58 -->
            <!-- PYTHON -->
@@ -395,6 +395,7 @@
            -lfreetype.dll -lfontconfig.dll
            -lssl -lcrypto
            -llcms.dll
+           -lgsl
            -lpng -ljpeg.dll -ltiff.dll -lpopt ${gtk}/lib/zdll.lib
            -lgc
 		   -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
