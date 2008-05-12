@@ -762,8 +762,8 @@ SVGDocumentPtr SVGReader::parse(const DocumentPtr src)
     DOMImplementationImpl impl;
     doc = new SVGDocumentImpl(&impl, SVG_NAMESPACE, "svg" , NULL);
 
-    SVGElementImplPtr destElem = dynamic_cast<SVGElementImpl *>(doc->getRootElement().get());
-    ElementImplPtr    srcElem  = dynamic_cast<ElementImpl *>(src->getDocumentElement().get());
+    SVGElementImplPtr destElem = dynamic_pointer_cast<SVGElementImpl, SVGElement>(doc->getRootElement());
+    ElementImplPtr    srcElem  = dynamic_pointer_cast<ElementImpl, Element>(src->getDocumentElement());
     if (!parseElement(destElem, srcElem))
         {
         return NULL;
