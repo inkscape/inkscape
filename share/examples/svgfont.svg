@@ -1,0 +1,27 @@
+<?xml version="1.0" standalone="yes"?>
+<svg width="400px" height="300px" version="1.1"
+  xmlns = 'http://www.w3.org/2000/svg'>
+  <defs>
+    <font id="Font1" horiz-adv-x="1000">
+      <font-face font-family="Super Sans" font-weight="bold"
+           units-per-em="1234" font-style="normal, oblique" cap-height="600" x-height="400"
+           ascent="700" descent="300"
+           alphabetic="0" mathematical="350" ideographic="400" hanging="500">
+         <font-face-src>
+           <font-face-name name="Super Sans Bold"/>
+         </font-face-src>
+       </font-face>
+       <missing-glyph d="M0,0h200v200h-200z"/>
+       <glyph unicode="!" horiz-adv-x="300"><!-- Outline of exclam. pt. glyph --></glyph>
+       <glyph unicode="@"><!-- Outline of @ glyph --></glyph>
+       <hkern u1="@" u2="!" k="24" />
+       <vkern u2="asd%" g2="a!" k="224" />
+       <!-- more glyphs -->
+    </font>
+  </defs>
+  <text x="100" y="100"
+            style="font-family: 'Super Sans', Helvetica, sans-serif;
+                    font-weight: bold; font-style: normal">Text
+    using embedded font</text>
+</svg>
+
