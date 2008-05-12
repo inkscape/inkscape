@@ -554,7 +554,8 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 /* Snap center to nearest magnetic point */
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
-                rc->origin = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, button_dt).getPoint();
+                m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, button_dt);
+                rc->origin = button_dt;
             }
 
             ret = TRUE;

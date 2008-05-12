@@ -179,6 +179,26 @@ bool SnapManager::getSnapModeGuide() const
  *  \return Snapped point.
  */
 
+void SnapManager::freeSnapVoid(Inkscape::Snapper::PointType point_type,
+                                             NR::Point &p,
+                                             bool first_point,
+                                             NR::Maybe<NR::Rect> const &bbox_to_snap) const
+{
+    Inkscape::SnappedPoint const s = freeSnap(point_type, p, first_point, bbox_to_snap);                                                            
+    s.getPoint(p);
+}
+
+/**
+ *  Try to snap a point to any of the specified snappers.
+ *
+ *  \param point_type Type of point.
+ *  \param p Point.
+ *  \param first_point If true then this point is the first one from a whole bunch of points 
+ *  \param points_to_snap The whole bunch of points, all from the same selection and having the same transformation 
+ *  \param snappers List of snappers to try to snap to
+ *  \return Snapped point.
+ */
+
 Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType point_type,
                                              NR::Point const &p,
                                              bool first_point,
@@ -210,6 +230,28 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType point_
     }
     
     return findBestSnap(p, sc, false);
+}
+
+/**
+ *  Try to snap a point to any interested snappers.  A snap will only occur along
+ *  a line described by a Inkscape::Snapper::ConstraintLine.
+ *
+ *  \param point_type Type of point.
+ *  \param p Point.
+ *  \param first_point If true then this point is the first one from a whole bunch of points 
+ *  \param points_to_snap The whole bunch of points, all from the same selection and having the same transformation 
+ *  \param constraint Constraint line.
+ *  \return Snapped point.
+ */
+
+void SnapManager::constrainedSnapVoid(Inkscape::Snapper::PointType point_type,
+                                                    NR::Point &p,
+                                                    Inkscape::Snapper::ConstraintLine const &constraint,
+                                                    bool first_point,
+                                                    NR::Maybe<NR::Rect> const &bbox_to_snap) const
+{
+    Inkscape::SnappedPoint const s = constrainedSnap(point_type, p, constraint, first_point, bbox_to_snap);                                                            
+    s.getPoint(p);
 }
 
 /**
@@ -257,19 +299,19 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
     return findBestSnap(p, sc, true);
 }
 
-Inkscape::SnappedPoint SnapManager::guideSnap(NR::Point const &p,
-                                              NR::Point const &guide_normal) const
+void SnapManager::guideSnap(NR::Point &p, NR::Point const &guide_normal) const
 {
     // This method is used to snap a guide to nodes, while dragging the guide around
     
     if (!(object.GuidesMightSnap() && _snap_enabled_globally)) {
-        return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false);
+        return;
     }
     
     SnappedConstraints sc;
     object.guideSnap(sc, p, guide_normal);
     
-    return findBestSnap(p, sc, false);    
+    Inkscape::SnappedPoint const s = findBestSnap(p, sc, false);
+    s.getPoint(p);
 }
 
 
@@ -309,6 +351,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
     ** Also used to globally disable all snapping 
     */
     if (SomeSnapperMightSnap() == false) {
+        g_assert(points.size() > 0);
         return Inkscape::SnappedPoint();
     }
     

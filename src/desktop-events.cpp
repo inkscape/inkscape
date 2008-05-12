@@ -144,9 +144,8 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
-                Inkscape::SnappedPoint snappoint = m.guideSnap(event_dt, normal);
-                event_dt = snappoint.getPoint();
-
+                m.guideSnap(event_dt, normal);
+                
                 sp_guideline_set_position(SP_GUIDELINE(guide), event_dt.to_2geom());
                 desktop->set_coordinate_status(event_dt);
                 desktop->setPosition (event_dt);                
@@ -160,7 +159,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
-                event_dt = m.guideSnap(event_dt, normal).getPoint();
+                m.guideSnap(event_dt, normal);
                                 
                 dragging = false;
                 gtk_object_destroy(GTK_OBJECT(guide));
@@ -243,9 +242,8 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 // which are dragged off the ruler, are being snapped in sp_dt_ruler_event
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
-                Inkscape::SnappedPoint snappoint = m.guideSnap(motion_dt, guide->normal_to_line);
-                motion_dt = snappoint.getPoint();
-
+                m.guideSnap(motion_dt, guide->normal_to_line);
+                
                 sp_guide_moveto(*guide, motion_dt.to_2geom(), false);
                 moved = true;
                 desktop->set_coordinate_status(motion_dt);
@@ -263,7 +261,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
 
                     SnapManager &m = desktop->namedview->snap_manager;
                     m.setup(desktop);
-                    event_dt = m.guideSnap(event_dt, guide->normal_to_line).getPoint();
+                    m.guideSnap(event_dt, guide->normal_to_line);
 
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {
                         sp_guide_moveto(*guide, event_dt.to_2geom(), true);

@@ -40,6 +40,13 @@ SnapIndicator::set_new_snappoint(Inkscape::SnappedPoint const p)
     remove_snappoint();
     
     g_assert(_desktop != NULL);
+    
+    /* Commented out for now, because this might hide any snapping bug!
+    if (!p.getSnapped()) {
+       return; // If we haven't snapped, then it is of no use to draw a snapindicator
+    }
+    */
+    
     SPNamedView *nv = sp_desktop_namedview(_desktop);
     
     if (nv->snapindicator) {

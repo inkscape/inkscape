@@ -53,7 +53,21 @@ public:
     NR::Coord getSecondDistance() const;
     NR::Coord getSecondTolerance() const;
     bool getSecondAlwaysSnap() const;
-    NR::Point getPoint() const;
+    
+    /* This is the preferred method to find out which point we have snapped,
+     * to because it only returns a point if snapping has actually occured
+     * (by overwriting p)
+     */ 
+    void getPoint(NR::Point &p) const;
+    
+    /* This method however always returns a point, even if no snapping
+     * has occured; A check should be implemented in the calling code
+     * to check for snapping. Use this method only when really needed, e.g.
+     * when the calling code is trying to snap multiple points and must
+     * determine itself which point is most appropriate
+     */  
+    NR::Point getPoint() const {return _point;}
+     
     bool getAtIntersection() const {return _at_intersection;}
     bool getSnapped() const {return _distance < NR_HUGE;}
     NR::Point getTransformation() const {return _transformation;}

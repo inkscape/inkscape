@@ -282,7 +282,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
 
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop, sc->item);
-            sc->center = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, sc->center).getPoint();
+            m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, sc->center);
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                 GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
@@ -309,7 +309,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
             
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop, sc->item);
-            motion_dt = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt).getPoint();
+            m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt);
             
             sp_star_drag (sc, motion_dt, event->motion.state);
 
@@ -455,7 +455,7 @@ static void sp_star_drag(SPStarContext *sc, NR::Point p, guint state)
     /* Snap corner point with no constraints */
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, sc->item);
-    p1 = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p1).getPoint();
+    m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p1);
 
     SPStar *star = SP_STAR(sc->item);
 

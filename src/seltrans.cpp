@@ -1261,7 +1261,7 @@ gboolean Inkscape::SelTrans::centerRequest(NR::Point &pt, guint state)
 {
     SnapManager &m = _desktop->namedview->snap_manager;
     m.setup(_desktop);
-    pt = m.freeSnap(Snapper::SNAPPOINT_NODE, pt).getPoint();
+    m.freeSnap(Snapper::SNAPPOINT_NODE, pt);
 
     if (state & GDK_CONTROL_MASK) {
         if ( fabs(_point[NR::X] - pt[NR::X]) > fabs(_point[NR::Y] - pt[NR::Y]) ) {
@@ -1369,7 +1369,7 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
         ** FIXME: this will snap to more than just the grid, nowadays.
         */
 
-        dxy = m.freeSnap(Snapper::SNAPPOINT_NODE, dxy).getPoint();
+        m.freeSnap(Snapper::SNAPPOINT_NODE, dxy);
 
     } else if (!shift) {
 

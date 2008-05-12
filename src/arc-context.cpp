@@ -265,7 +265,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop, ac->item);                
-                ac->center = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, ac->center).getPoint();
+                m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, ac->center);
                 
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
@@ -292,7 +292,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop, ac->item);            
-                motion_dt = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt).getPoint();
+                m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt);
 
                 sp_arc_drag(ac, motion_dt, event->motion.state);
 

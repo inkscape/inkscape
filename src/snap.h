@@ -50,19 +50,33 @@ public:
     void setup(SPDesktop const *desktop_for_snapindicator = NULL, SPItem const *item_to_ignore = NULL, std::vector<NR::Point> *unselected_nodes = NULL);
     void setup(SPDesktop const *desktop_for_snapindicator, std::vector<SPItem const *> &items_to_ignore, std::vector<NR::Point> *unselected_nodes = NULL);
 
+    // freeSnapVoid() is preferred over freeSnap(), because it only returns a 
+    // point, by overwriting p, if snapping has occured; otherwise p is untouched    
+    void freeSnapVoid(Inkscape::Snapper::PointType point_type,
+                      NR::Point &p,
+                      bool first_point = true,
+                      NR::Maybe<NR::Rect> const &bbox_to_snap = NR::Nothing()) const;
+    
     Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType point_type,
                                     NR::Point const &p,
                                     bool first_point = true,
                                     NR::Maybe<NR::Rect> const &bbox_to_snap = NR::Nothing()) const;
-
+    
+    // constrainedSnapVoid() is preferred over constrainedSnap(), because it only returns a 
+    // point, by overwriting p, if snapping has occured; otherwise p is untouched
+    void constrainedSnapVoid(Inkscape::Snapper::PointType point_type,
+                             NR::Point &p,
+                             Inkscape::Snapper::ConstraintLine const &constraint,
+                             bool first_point = true,
+                             NR::Maybe<NR::Rect> const &bbox_to_snap = NR::Nothing()) const;
+    
     Inkscape::SnappedPoint constrainedSnap(Inkscape::Snapper::PointType point_type,
                                            NR::Point const &p,
                                            Inkscape::Snapper::ConstraintLine const &constraint,
                                            bool first_point = true,
                                            NR::Maybe<NR::Rect> const &bbox_to_snap = NR::Nothing()) const;
                                            
-    Inkscape::SnappedPoint guideSnap(NR::Point const &p,
-                                     NR::Point const &guide_normal) const;
+    void guideSnap(NR::Point &p, NR::Point const &guide_normal) const;
 
     Inkscape::SnappedPoint freeSnapTranslation(Inkscape::Snapper::PointType point_type,
                                                std::vector<NR::Point> const &p,
@@ -84,18 +98,18 @@ public:
                                                 NR::Point const &o) const;
 
     Inkscape::SnappedPoint constrainedSnapStretch(Inkscape::Snapper::PointType point_type,
-                                                   std::vector<NR::Point> const &p,
-                                                   NR::Coord const &s,
-                                                   NR::Point const &o,
-                                                   NR::Dim2 d,
-                                                   bool uniform) const;
+                                                  std::vector<NR::Point> const &p,
+                                                  NR::Coord const &s,
+                                                  NR::Point const &o,
+                                                  NR::Dim2 d,
+                                                  bool uniform) const;
 
     Inkscape::SnappedPoint constrainedSnapSkew(Inkscape::Snapper::PointType point_type,
-                                        std::vector<NR::Point> const &p,
-                                        Inkscape::Snapper::ConstraintLine const &constraint,
-                                        NR::Point const &s, // s[0] = skew factor, s[1] = scale factor
-                                        NR::Point const &o,
-                                        NR::Dim2 d) const;
+                                               std::vector<NR::Point> const &p,
+                                               Inkscape::Snapper::ConstraintLine const &constraint,
+                                               NR::Point const &s, // s[0] = skew factor, s[1] = scale factor
+                                               NR::Point const &o,
+                                               NR::Dim2 d) const;
                                         
     Inkscape::GuideSnapper guide;      ///< guide snapper
     Inkscape::ObjectSnapper object;    ///< snapper to other objects

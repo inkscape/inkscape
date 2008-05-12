@@ -248,7 +248,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating new path"));
                         SnapManager &m = desktop->namedview->snap_manager;
                         m.setup(desktop);
-                        p = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p).getPoint();
+                        m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p);
                     } else if (selection->singleItem() && SP_IS_PATH(selection->singleItem())) {
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Appending to selected path"));
                     }
@@ -325,8 +325,7 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                 } else if ((mevent.state & GDK_SHIFT_MASK) == 0) {
                     SnapManager &m = dt->namedview->snap_manager;
                     m.setup(dt, NULL);
-                    Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p);
-                    p = s.getPoint();
+                    m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p);
                 }
                 if ( pc->npoints != 0 ) { // buttonpress may have happened before we entered draw context!
                     spdc_add_freehand_point(pc, p, mevent.state);

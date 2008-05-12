@@ -1233,7 +1233,7 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
             m.setup(nodepath->desktop, SP_PATH(n->subpath->nodepath->item), &unselected_nodes);
             Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta);            
-            if (s.getDistance() < best) {
+            if (s.getSnapped() && (s.getDistance() < best)) {
                 best = s.getDistance();
                 best_abs = s;
                 best_pt = s.getPoint() - n->pos;
@@ -3684,8 +3684,8 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint /*state*/,
         s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p);
     }
     
-    *p = s.getPoint();
-
+    s.getPoint(*p);
+    
     sp_node_adjust_handle(n, -which);
 
     return FALSE;

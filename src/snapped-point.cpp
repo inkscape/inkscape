@@ -80,9 +80,13 @@ bool Inkscape::SnappedPoint::getSecondAlwaysSnap() const
 }
 
 
-NR::Point Inkscape::SnappedPoint::getPoint() const
+void Inkscape::SnappedPoint::getPoint(NR::Point &p) const
 {
-    return _point;
+    // When we have snapped
+    if (getSnapped()) { 
+        // then return the snapped point by overwriting p
+        p = _point;
+    } //otherwise p will be left untouched; this way the caller doesn't have to check wether we've snapped
 }
 
 // search for the closest snapped point
