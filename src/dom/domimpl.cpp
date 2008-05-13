@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -1343,7 +1343,7 @@ AttrImpl::AttrImpl(DocumentImplPtr owner, const DOMString &theName)
  *
  */
 AttrImpl::AttrImpl(DocumentImplPtr owner,
-                   const DOMString &theNamespaceURI,
+                   const DOMString &/*theNamespaceURI*/,
                    const DOMString &theQualifiedName)
                    : NodeImpl()
 {
@@ -1608,8 +1608,8 @@ TypeInfo &ElementImpl::getSchemaTypeInfo()
 /**
  *
  */
-void ElementImpl::setIdAttribute(const DOMString &name,
-                            bool isId) throw (DOMException)
+void ElementImpl::setIdAttribute(const DOMString &/*name*/,
+                            bool /*isId*/) throw (DOMException)
 {
     //fixme
 }
@@ -1617,9 +1617,9 @@ void ElementImpl::setIdAttribute(const DOMString &name,
 /**
  *
  */
-void ElementImpl::setIdAttributeNS(const DOMString &namespaceURI,
-                              const DOMString &localName,
-                              bool isId) throw (DOMException)
+void ElementImpl::setIdAttributeNS(const DOMString &/*namespaceURI*/,
+                              const DOMString &/*localName*/,
+                              bool /*isId*/) throw (DOMException)
 {
     //fixme
 }
@@ -1627,8 +1627,8 @@ void ElementImpl::setIdAttributeNS(const DOMString &namespaceURI,
 /**
  *
  */
-void ElementImpl::setIdAttributeNode(const AttrPtr idAttr,
-                                bool isId) throw (DOMException)
+void ElementImpl::setIdAttributeNode(const AttrPtr /*idAttr*/,
+                                bool /*isId*/) throw (DOMException)
 {
     //fixme
 }
@@ -1662,7 +1662,7 @@ ElementImpl::ElementImpl(DocumentImplPtr owner, const DOMString &tagName)
  *
  */
 ElementImpl::ElementImpl(DocumentImplPtr owner,
-                         const DOMString &theNamespaceURI,
+                         const DOMString &/*theNamespaceURI*/,
                          const DOMString &qualifiedName) :
                          NodeImpl()
 {
@@ -1959,7 +1959,7 @@ TextImpl::~TextImpl()
 /**
  *
  */
-TextPtr TextImpl::splitText(unsigned long offset)
+TextPtr TextImpl::splitText(unsigned long /*offset*/)
                 throw(DOMException)
 {
     return NULL;
@@ -1985,7 +1985,7 @@ DOMString TextImpl::getWholeText()
 /**
  *
  */
-TextPtr TextImpl::replaceWholeText(const DOMString &content)
+TextPtr TextImpl::replaceWholeText(const DOMString &/*content*/)
                              throw(DOMException)
 {
     return NULL;
@@ -2056,11 +2056,11 @@ UserDataHandlerImpl::~UserDataHandlerImpl()
 /**
  *
  */
-void UserDataHandlerImpl::handle(unsigned short operation,
-                     const DOMString &key,
-                     const DOMUserData *data,
-                     const NodePtr src,
-                     const NodePtr dst)
+void UserDataHandlerImpl::handle(unsigned short /*operation*/,
+                     const DOMString &/*key*/,
+                     const DOMUserData */*data*/,
+                     const NodePtr /*src*/,
+                     const NodePtr /*dst*/)
 {
     //do nothing.  do we need anything here?
 }
@@ -2270,15 +2270,15 @@ DOMConfigurationImpl::~DOMConfigurationImpl()
 /**
  *
  */
-void DOMConfigurationImpl::setParameter(const DOMString &name,
-                          const DOMUserData *value) throw (DOMException)
+void DOMConfigurationImpl::setParameter(const DOMString &/*name*/,
+                          const DOMUserData */*value*/) throw (DOMException)
 {
 }
 
 /**
  *
  */
-DOMUserData *DOMConfigurationImpl::getParameter(const DOMString &name)
+DOMUserData *DOMConfigurationImpl::getParameter(const DOMString &/*name*/)
                                   throw (DOMException)
 {
     return NULL;
@@ -2287,8 +2287,8 @@ DOMUserData *DOMConfigurationImpl::getParameter(const DOMString &name)
 /**
  *
  */
-bool DOMConfigurationImpl::canSetParameter(const DOMString &name,
-                             const DOMUserData *data)
+bool DOMConfigurationImpl::canSetParameter(const DOMString &/*name*/,
+                             const DOMUserData */*data*/)
 {
     return false;
 }
@@ -2646,7 +2646,7 @@ DOMString ProcessingInstructionImpl::getData()
 /**
  *
  */
-void ProcessingInstructionImpl::setData(const DOMString& val) throw(DOMException)
+void ProcessingInstructionImpl::setData(const DOMString& /*val*/) throw(DOMException)
 {
      //do something here
 }
@@ -2820,8 +2820,8 @@ NodeList DocumentImpl::getElementsByTagName(const DOMString& tagname)
 /**
  *
  */
-NodePtr DocumentImpl::importNode(const NodePtr importedNode,
-                 bool deep)
+NodePtr DocumentImpl::importNode(const NodePtr /*importedNode*/,
+                 bool /*deep*/)
                  throw(DOMException)
 {
     return NULL;
@@ -2951,7 +2951,7 @@ DOMString DocumentImpl::getDocumentURI()
 /**
  *
  */
-void DocumentImpl::setDocumentURI(const DOMString &uri)
+void DocumentImpl::setDocumentURI(const DOMString &/*uri*/)
 {
     //documentURI = stringCache(uri);
 }
@@ -2986,7 +2986,7 @@ void DocumentImpl::normalizeDocument()
  *
  */
 NodePtr DocumentImpl::renameNode(const NodePtr node,
-                               const DOMString &namespaceURI,
+                               const DOMString &/*namespaceURI*/,
                                const DOMString &qualifiedName)
                                throw (DOMException)
 {
@@ -3005,7 +3005,7 @@ NodePtr DocumentImpl::renameNode(const NodePtr node,
  *
  */
 DocumentImpl::DocumentImpl(const DOMImplementation *domImpl,
-                 const DOMString &theNamespaceURI,
+                 const DOMString &/*theNamespaceURI*/,
                  const DOMString &theQualifiedName,
                  const DocumentTypePtr theDoctype) : NodeImpl()
 {
