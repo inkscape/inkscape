@@ -98,7 +98,8 @@ public:
     InkboardDocument* getInkboardSession(Glib::ustring const& to);
 
 
-    void operator=(XmppEventListener const& other) {}
+    void operator=(XmppEventListener const& /*other*/)
+	    {}
 
 private:
 

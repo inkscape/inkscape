@@ -147,7 +147,7 @@ sp_skeleton_set(SPObject *object, unsigned int key, gchar const *value)
 {
     debug("0x%p %s(%u): '%s'",object,
             sp_attribute_name(key),key,value ? value : "<no value>");
-    SPSkeleton *skeleton = SP_SKELETON(object);
+    //SPSkeleton *skeleton = SP_SKELETON(object);
 
     /* See if any parents need this value. */
     if (((SPObjectClass *) skeleton_parent_class)->set) {

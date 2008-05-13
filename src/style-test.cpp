@@ -342,7 +342,7 @@ font_family_val(char const prop[], char const *const dummy_vals[])
  * `px') for better CSS interoperability.
  */
 static void
-unitful_length_val(char const prop[], char const *const dummy_vals[])
+unitful_length_val(char const /*prop*/[], char const *const dummy_vals[])
 {
     /* todo */
     assert(dummy_vals == NULL);
@@ -381,8 +381,9 @@ uri_or_enum_val(char const prop[], char const *const vals[])
 }
 
 static void
-suppress_warning_log_handler(gchar const *log_domain, GLogLevelFlags /*log_level*/,
-                             gchar const *message,
+suppress_warning_log_handler(gchar const */*log_domain*/,
+                             GLogLevelFlags /*log_level*/,
+                             gchar const */*message*/,
                              gpointer /*user_data*/)
 {
     /* todo: We could strncpy message to a static buffer for later testing with

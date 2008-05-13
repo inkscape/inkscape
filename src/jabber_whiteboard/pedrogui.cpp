@@ -4,7 +4,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -380,8 +380,8 @@ static const guint8 icon_xa[] =
 //#########################################################################
 
 
-void Roster::doubleClickCallback(const Gtk::TreeModel::Path &path,
-                   Gtk::TreeViewColumn *col)
+void Roster::doubleClickCallback(const Gtk::TreeModel::Path &/*path*/,
+                   Gtk::TreeViewColumn */*col*/)
 {
     Glib::RefPtr<Gtk::TreeModel> model = rosterView.get_model();
     Glib::RefPtr<Gtk::TreeSelection> sel = rosterView.get_selection();
@@ -699,8 +699,8 @@ void MessageList::postMessage(const DOMString &from, const DOMString &msg)
 //#########################################################################
 //# U S E R     L I S T
 //#########################################################################
-void UserList::doubleClickCallback(const Gtk::TreeModel::Path &path,
-                   Gtk::TreeViewColumn *col)
+void UserList::doubleClickCallback(const Gtk::TreeModel::Path &/*path*/,
+                   Gtk::TreeViewColumn */*col*/)
 {
     Glib::RefPtr<Gtk::TreeModel> model = userList.get_model();
     Glib::RefPtr<Gtk::TreeSelection> sel = userList.get_selection();
@@ -1092,7 +1092,7 @@ bool GroupChatWindow::receiveMessage(const DOMString &from,
 bool GroupChatWindow::receivePresence(const DOMString &fromNick,
                                       bool presence,
                                       const DOMString &show,
-                                      const DOMString &status)
+                                      const DOMString &/*status*/)
 {
 
     DOMString presStr = "";
@@ -1585,8 +1585,8 @@ void ConnectDialog::cancelCallback()
 
 
 void ConnectDialog::doubleClickCallback(
-                   const Gtk::TreeModel::Path &path,
-                   Gtk::TreeViewColumn *col)
+                   const Gtk::TreeModel::Path &/*path*/,
+                   Gtk::TreeViewColumn */*col*/)
 {
     Glib::RefPtr<Gtk::TreeModel> model = accountView.get_model();
     Glib::RefPtr<Gtk::TreeSelection> sel = accountView.get_selection();

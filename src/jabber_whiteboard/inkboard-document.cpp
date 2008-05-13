@@ -371,9 +371,9 @@ InkboardDocument::createPI(char const *target, char const* content)
 
 
 
-void InkboardDocument::notifyChildAdded(XML::Node &parent,
+void InkboardDocument::notifyChildAdded(XML::Node &/*parent*/,
                                         XML::Node &child,
-                                        XML::Node *prev)
+                                        XML::Node */*prev*/)
 {
     if (_in_transaction && state == State::IN_WHITEBOARD) {
 
@@ -389,9 +389,9 @@ void InkboardDocument::notifyChildAdded(XML::Node &parent,
     }
 }
 
-void InkboardDocument::notifyChildRemoved(XML::Node &parent,
+void InkboardDocument::notifyChildRemoved(XML::Node &/*parent*/,
                                           XML::Node &child,
-                                          XML::Node *prev)
+                                          XML::Node */*prev*/)
 {
     if (_in_transaction && state == State::IN_WHITEBOARD) 
     {
@@ -406,8 +406,8 @@ void InkboardDocument::notifyChildRemoved(XML::Node &parent,
 
 void InkboardDocument::notifyChildOrderChanged(XML::Node &parent,
                                                XML::Node &child,
-                                               XML::Node *old_prev,
-                                               XML::Node *new_prev)
+                                               XML::Node */*old_prev*/,
+                                               XML::Node */*new_prev*/)
 {
     if (_in_transaction && state == State::IN_WHITEBOARD) 
     {
@@ -424,7 +424,7 @@ void InkboardDocument::notifyChildOrderChanged(XML::Node &parent,
 }
 
 void InkboardDocument::notifyContentChanged(XML::Node &node,
-                                            Util::ptr_shared<char> old_content,
+                                            Util::ptr_shared<char> /*old_content*/,
                                             Util::ptr_shared<char> new_content)
 {
     if (_in_transaction && state == State::IN_WHITEBOARD) 
@@ -452,7 +452,7 @@ void InkboardDocument::notifyContentChanged(XML::Node &node,
 
 void InkboardDocument::notifyAttributeChanged(XML::Node &node,
                                               GQuark name,
-                                              Util::ptr_shared<char> old_value,
+                                              Util::ptr_shared<char> /*old_value*/,
                                               Util::ptr_shared<char> new_value)
 {
     if (_in_transaction && state == State::IN_WHITEBOARD) 

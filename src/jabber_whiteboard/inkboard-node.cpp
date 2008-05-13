@@ -60,11 +60,12 @@ InkboardDocument::composeNewMessage(Inkscape::XML::Node *node)
 }
 
 void
-InkboardDocument::changeConfigureText(Glib::ustring target, unsigned int version,
-        Glib::ustring text)
+InkboardDocument::changeConfigureText(Glib::ustring target,
+                                      unsigned int /*version*/,
+                                      Glib::ustring text)
 {
     XML::Node *node = this->tracker->get(target);
-    unsigned int elementVersion = this->tracker->getVersion(node);
+    //unsigned int elementVersion = this->tracker->getVersion(node);
 
     if(node)// && version == (elementVersion + 1))
     {
@@ -75,11 +76,13 @@ InkboardDocument::changeConfigureText(Glib::ustring target, unsigned int version
 }
 
 void
-InkboardDocument::changeConfigure(Glib::ustring target, unsigned int version, 
-        Glib::ustring attribute, Glib::ustring value)
+InkboardDocument::changeConfigure(Glib::ustring target,
+                                  unsigned int /*version*/, 
+                                  Glib::ustring attribute,
+								  Glib::ustring value)
 {
     XML::Node *node = this->tracker->get(target);
-    unsigned int elementVersion = this->tracker->getVersion(node);
+    //unsigned int elementVersion = this->tracker->getVersion(node);
 
     if(node)// && version == (elementVersion + 1))
     {
@@ -93,7 +96,7 @@ InkboardDocument::changeConfigure(Glib::ustring target, unsigned int version,
 
 void 
 InkboardDocument::changeNew(Glib::ustring parentid, Glib::ustring id, 
-        signed int index, Pedro::Element* data)
+        signed int /*index*/, Pedro::Element* data)
 {
 
     Glib::ustring name(data->getName());
