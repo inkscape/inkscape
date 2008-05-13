@@ -89,15 +89,15 @@ typedef enum {
 } ui_drop_target_info;
 
 static GtkTargetEntry ui_drop_target_entries [] = {
-    {"text/uri-list", 0, URI_LIST},
-    {"image/svg+xml", 0, SVG_XML_DATA},
-    {"image/svg",     0, SVG_DATA},
-    {"image/png",     0, PNG_DATA},
-    {"image/jpeg",    0, JPEG_DATA},
+    {(gchar *)"text/uri-list",                0, URI_LIST        },
+    {(gchar *)"image/svg+xml",                0, SVG_XML_DATA    },
+    {(gchar *)"image/svg",                    0, SVG_DATA        },
+    {(gchar *)"image/png",                    0, PNG_DATA        },
+    {(gchar *)"image/jpeg",                   0, JPEG_DATA       },
 #if ENABLE_MAGIC_COLORS
-    {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
+    {(gchar *)"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
 #endif // ENABLE_MAGIC_COLORS
-    {"application/x-color", 0, APP_X_COLOR}
+    {(gchar *)"application/x-color",          0, APP_X_COLOR     }
 };
 
 static GtkTargetEntry *completeDropTargets = 0;
