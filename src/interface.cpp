@@ -160,9 +160,6 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
 		
 		desktop_widget->window = win;
 
-        /* fixme: doesn't allow making window any smaller than this */
-        win->set_default_size(640, 480);
-		
         win->set_data("desktop", desktop);
         win->set_data("desktopwidget", desktop_widget);
 		
