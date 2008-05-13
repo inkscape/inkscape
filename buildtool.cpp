@@ -38,7 +38,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.9.0"
+#define BUILDTOOL_VERSION  "BuildTool v0.9.1"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -3278,7 +3278,13 @@ private:
     bool lookupProperty(const String &s, String &result);
     
     /**
-     * replace variable refs in a sting like ${a} with their values
+     * called by getSubstitutions().  This is in case a looked-up string
+     * has substitutions also.     
+     */
+    bool getSubstitutionsRecursive(const String &s, String &result, int depth);
+
+    /**
+     * replace variable refs in a string like ${a} with their values
      */
     bool getSubstitutions(const String &s, String &result);
 
@@ -4386,8 +4392,14 @@ bool MakeBase::lookupProperty(const String &propertyName, String &result)
  * Analyse a string, looking for any substitutions or other
  * things that need resilution 
  */
-bool MakeBase::getSubstitutions(const String &str, String &result)
+bool MakeBase::getSubstitutionsRecursive(const String &str,
+                                         String &result, int depth)
 {
+    if (depth > 4)
+        {
+        error("getSubstitutions: nesting of substitutions too deep");
+        return false;
+		}
     String s = trim(str);
     int len = (int)s.size();
     String val;
@@ -4413,7 +4425,11 @@ bool MakeBase::getSubstitutions(const String &str, String &result)
                     String varval;
                     if (!lookupProperty(varname, varval))
                         return false;
-                    val.append(varval);
+                    String varval2;
+                    //Now see if the answer has ${} in it, too
+                    if (!getSubstitutionsRecursive(varval, varval2, depth + 1))
+                        return false;
+                    val.append(varval2);
                     break;
                     }
                 else
@@ -4430,6 +4446,15 @@ bool MakeBase::getSubstitutions(const String &str, String &result)
         }
     result = val;
     return true;
+}
+
+/**
+ * Analyse a string, looking for any substitutions or other
+ * things that need resilution 
+ */
+bool MakeBase::getSubstitutions(const String &str, String &result)
+{
+    return getSubstitutionsRecursive(str, result, 0);
 }
 
 
@@ -7838,7 +7863,7 @@ private:
 
 
 /**
- * Compile a resource file into a .res
+ * Compile a resource file into a binary object
  */
 class TaskRC : public Task
 {
