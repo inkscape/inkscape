@@ -57,8 +57,11 @@
  * Then below, select one of the corresponding typedefs.
  */ 
 
+#ifdef DOM_STANDALONE
+#include <string>
+#else
 #include <glibmm.h>
-//#include <string>
+#endif
 
 //# Unfortunate hack for a name collision
 #ifdef SEVERITY_ERROR
@@ -78,13 +81,14 @@ namespace dom
 /**
  * This is the org::w3c::dom::DOMString definition.
  * Which type do we want?
- */  
+ */
+#ifdef DOM_STANDALONE
+typedef std::string DOMString;
+typedef unsigned short XMLCh;
+#else
 typedef Glib::ustring DOMString;
 typedef gunichar XMLCh;
-
-//typedef std::string DOMString;
-//typedef unsigned short XMLCh;
-
+#endif
 
 /**
  *  At least 64 bit time stamp value.
