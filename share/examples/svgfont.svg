@@ -11,17 +11,14 @@
            <font-face-name name="Super Sans Bold"/>
          </font-face-src>
        </font-face>
-       <missing-glyph d="M0,0h200v200h-200z"/>
-       <glyph unicode="!" horiz-adv-x="300"><!-- Outline of exclam. pt. glyph --></glyph>
-       <glyph unicode="@"><!-- Outline of @ glyph --></glyph>
-       <hkern u1="@" u2="!" k="24" />
-       <vkern u2="asd%" g2="a!" k="224" />
-       <!-- more glyphs -->
+       <!--<missing-glyph d="M0,0h200v200h-200z"/>--><!--  uncomment this line in orther to test missing-glyph -->
+       <glyph unicode="!" d="M0,0h500v500h-500z"><circle r='500' cx='500' cy='500' style="fill:none;stroke:green;"/></glyph>
+       <glyph unicode="@" d="M500,500h500v500h-500z"><circle r='250' cx='500' cy='500' style="fill:blue;"/></glyph>
+       <!--<hkern u1="!" u2="@" k="1000" />--><!-- uncomment this line in orther to test horizontal kerning-->
+
     </font>
   </defs>
   <text x="100" y="100"
-            style="font-family: 'Super Sans', Helvetica, sans-serif;
-                    font-weight: bold; font-style: normal">Text
-    using embedded font</text>
+            style="font-family: 'Super Sans';font-weight: bold; font-style: normal;fill:red;">A!@A</text>
 </svg>
 
