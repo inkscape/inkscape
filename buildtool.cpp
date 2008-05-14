@@ -38,7 +38,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.9.1"
+#define BUILDTOOL_VERSION  "BuildTool v0.9.2"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -3309,10 +3309,10 @@ public:
      */
     PkgConfig()
         {
-		 path   = ".";
-		 prefix = "/target";
-		 init();
-		 }
+         path   = ".";
+         prefix = "/target";
+         init();
+         }
 
     /**
      *
@@ -4278,7 +4278,7 @@ bool MakeBase::pkgConfigRecursive(const String packageName,
     if (path.size() > 0)
         pkgConfig.setPath(path);
     if (prefix.size() > 0)
-	    pkgConfig.setPrefix(prefix);
+        pkgConfig.setPrefix(prefix);
     if (!pkgConfig.query(packageName))
         return false;
     if (query == 0)
@@ -4390,16 +4390,17 @@ bool MakeBase::lookupProperty(const String &propertyName, String &result)
 
 /**
  * Analyse a string, looking for any substitutions or other
- * things that need resilution 
+ * things that need resolution 
  */
 bool MakeBase::getSubstitutionsRecursive(const String &str,
                                          String &result, int depth)
 {
-    if (depth > 4)
+    if (depth > 10)
         {
-        error("getSubstitutions: nesting of substitutions too deep");
+        error("nesting of substitutions too deep (>10) for '%s'",
+                        str.c_str());
         return false;
-		}
+        }
     String s = trim(str);
     int len = (int)s.size();
     String val;
@@ -6763,8 +6764,9 @@ public:
                         fileName.c_str(), toFileName.c_str());
                    String fullSource = parent.resolve(fileName);
                    String fullDest = parent.resolve(toFileName);
-                   //trace("copy %s to file %s", fullSource.c_str(),
-                   //                       fullDest.c_str());
+                   if (verbose)
+                       taskstatus("copy %s to file %s", fullSource.c_str(),
+                                          fullDest.c_str());
                    if (!isRegularFile(fullSource))
                        {
                        error("copy : file %s does not exist", fullSource.c_str());
@@ -6829,11 +6831,13 @@ public:
                        destPath.append(fileName);
                        String fullDest = parent.resolve(destPath);
                        //trace("fileName:%s", fileName.c_str());
-                       //trace("copy %s to new dir : %s", fullSource.c_str(),
-                       //                   fullDest.c_str());
+                       if (verbose)
+                           taskstatus("copy %s to new dir : %s",
+                                 fullSource.c_str(), fullDest.c_str());
                        if (!isNewerThan(fullSource, fullDest))
                            {
-                           //trace("copy skipping %s", fullSource.c_str());
+                           if (verbose)
+                               taskstatus("copy skipping %s", fullSource.c_str());
                            continue;
                            }
                        if (!copyFile(fullSource, fullDest))
@@ -6861,8 +6865,9 @@ public:
                        }
                    destPath.append(baseName);
                    String fullDest = parent.resolve(destPath);
-                   //trace("copy %s to new dir : %s", fullSource.c_str(),
-                   //                       fullDest.c_str());
+                   if (verbose)
+                       taskstatus("file %s to new dir : %s", fullSource.c_str(),
+                                          fullDest.c_str());
                    if (!isRegularFile(fullSource))
                        {
                        error("copy : file %s does not exist", fullSource.c_str());
@@ -6996,12 +7001,19 @@ public:
             {
             case DEL_FILE:
                 {
-                status("          : %s", fileName.c_str());
+                taskstatus("file: %s", fileName.c_str());
                 String fullName = parent.resolve(fileName);
                 char *fname = (char *)fullName.c_str();
+                if (!quiet && verbose)
+                    taskstatus("path: %s", fname);
                 //does not exist
                 if (stat(fname, &finfo)<0)
-                    return true;
+                    {
+                    if (failOnError)
+                        return false;
+                    else
+                        return true;
+                    }
                 //exists but is not a regular file
                 if (!S_ISREG(finfo.st_mode))
                     {
@@ -7018,8 +7030,10 @@ public:
                 }
             case DEL_DIR:
                 {
-                taskstatus("%s", dirName.c_str());
+                taskstatus("dir: %s", dirName.c_str());
                 String fullDir = parent.resolve(dirName);
+                if (!quiet && verbose)
+                    taskstatus("path: %s", fullDir.c_str());
                 if (!removeDirectory(fullDir))
                     return false;
                 return true;
