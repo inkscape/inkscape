@@ -327,7 +327,6 @@ libinkpost_a_SOURCES =	\
 	gradient-chemistry.cpp gradient-chemistry.h	\
 	ink-action.cpp	\
 	ink-action.h	\
-	lifecycle.h	\
 	memeq.h	\
 	round.h	\
 	streq.h	\
