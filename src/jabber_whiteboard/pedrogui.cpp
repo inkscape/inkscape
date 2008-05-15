@@ -1690,11 +1690,11 @@ bool ConnectDialog::doSetup()
     table.resize(6, 2);
     get_vbox()->pack_start(table);
 
-    parent.client.setHost("broadway.dynalias.com");
+    parent.client.setHost("enter server name");
     parent.client.setPort(5222);
     parent.client.setUsername("");
     parent.client.setPassword("");
-    parent.client.setResource("pedroXmpp");
+    parent.client.setResource("inkscape");
 
     hostLabel.set_text("Host");
     table.attach(hostLabel, 0, 1, 0, 1);
