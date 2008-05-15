@@ -89,6 +89,30 @@ private:
     }
 };
 
+// Wrapper for a simple pointer emulating the ManagedPtr interface
+template <typename T>
+class DumbPtr {
+public:
+    DumbPtr() : ptr(NULL) {}
+    DumbPtr(T *p) : ptr(p) {}
+    DumbPtr(DumbPtr const &other) : ptr(other.ptr) {}
+
+    operator T *() const { return ptr; }
+    T &operator*() const { return *ptr; }
+    T *operator->() const { return ptr; }
+    DumbPtr &operator=(T *p) {
+        ptr = p;
+        return *this;
+    }
+    DumbPtr &operator=(DumbPtr const &other) {
+        ptr = other.ptr;
+        return *this;
+    }
+
+private:
+    T *ptr;
+};
+
 // Dummy implementation of AbstractManaged to ease migration
 class DummyManaged : public virtual AbstractManaged {
 protected:
