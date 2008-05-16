@@ -533,7 +533,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         break;
     case GDK_BUTTON_PRESS:
         if ( event->button.button == 1 && !event_context->space_panning ) {
-            NR::Point const button_w(event->button.x, event->button.y);
+            NR::Point button_w(event->button.x, event->button.y);
 
             // save drag origin
             event_context->xp = (gint) button_w[NR::X];
@@ -542,7 +542,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
             dragging = true;
 
-            NR::Point const button_dt = desktop->w2d(button_w);
+            NR::Point button_dt = desktop->w2d(button_w);
             if (event->button.state & GDK_SHIFT_MASK) {
                 Inkscape::Rubberband::get()->start(desktop, button_dt);
             } else {
@@ -554,7 +554,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 /* Snap center to nearest magnetic point */
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
-                m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, button_dt);
+                m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, button_dt);
                 rc->origin = button_dt;
             }
 

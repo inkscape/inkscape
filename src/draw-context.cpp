@@ -356,7 +356,7 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, NR::Point &p, N
         /* Snap it along best vector */
         SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
         m.setup(SP_EVENT_CONTEXT_DESKTOP(ec), NULL);
-        m.constrainedSnap( Inkscape::Snapper::SNAPPOINT_NODE, p, Inkscape::Snapper::ConstraintLine(best));
+        m.constrainedSnapReturnByRef( Inkscape::Snapper::SNAPPOINT_NODE, p, Inkscape::Snapper::ConstraintLine(best));
     }
 }
 
@@ -370,7 +370,7 @@ void spdc_endpoint_snap_free(SPEventContext const * const ec, NR::Point& p, guin
 
     SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
     m.setup(SP_EVENT_CONTEXT_DESKTOP(ec), NULL);
-    m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p);
+    m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, p);
 }
 
 static SPCurve *

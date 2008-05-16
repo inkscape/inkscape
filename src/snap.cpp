@@ -179,7 +179,7 @@ bool SnapManager::getSnapModeGuide() const
  *  \return Snapped point.
  */
 
-void SnapManager::freeSnapVoid(Inkscape::Snapper::PointType point_type,
+void SnapManager::freeSnapReturnByRef(Inkscape::Snapper::PointType point_type,
                                              NR::Point &p,
                                              bool first_point,
                                              NR::Maybe<NR::Rect> const &bbox_to_snap) const
@@ -244,7 +244,7 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType point_
  *  \return Snapped point.
  */
 
-void SnapManager::constrainedSnapVoid(Inkscape::Snapper::PointType point_type,
+void SnapManager::constrainedSnapReturnByRef(Inkscape::Snapper::PointType point_type,
                                                     NR::Point &p,
                                                     Inkscape::Snapper::ConstraintLine const &constraint,
                                                     bool first_point,

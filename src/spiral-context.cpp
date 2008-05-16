@@ -267,7 +267,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop, sc->item);
-                m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, sc->center);
+                m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, sc->center);
 
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     ( GDK_KEY_PRESS_MASK |
@@ -296,7 +296,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop, sc->item);
-                m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt);
+                m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt);
                 sp_spiral_drag(sc, motion_dt, event->motion.state);
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
@@ -440,7 +440,7 @@ sp_spiral_drag(SPSpiralContext *sc, NR::Point p, guint state)
     NR::Point p1 = sp_desktop_dt2root_xy_point(desktop, p);
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, sc->item);
-    m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p1);
+    m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, p1);
 
     SPSpiral *spiral = SP_SPIRAL(sc->item);
 

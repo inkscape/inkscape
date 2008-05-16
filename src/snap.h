@@ -50,9 +50,9 @@ public:
     void setup(SPDesktop const *desktop_for_snapindicator = NULL, SPItem const *item_to_ignore = NULL, std::vector<NR::Point> *unselected_nodes = NULL);
     void setup(SPDesktop const *desktop_for_snapindicator, std::vector<SPItem const *> &items_to_ignore, std::vector<NR::Point> *unselected_nodes = NULL);
 
-    // freeSnapVoid() is preferred over freeSnap(), because it only returns a 
-    // point, by overwriting p, if snapping has occured; otherwise p is untouched    
-    void freeSnapVoid(Inkscape::Snapper::PointType point_type,
+    // freeSnapReturnByRef() is preferred over freeSnap(), because it only returns a 
+    // point if snapping has occured (by overwriting p); otherwise p is untouched    
+    void freeSnapReturnByRef(Inkscape::Snapper::PointType point_type,
                       NR::Point &p,
                       bool first_point = true,
                       NR::Maybe<NR::Rect> const &bbox_to_snap = NR::Nothing()) const;
@@ -62,9 +62,9 @@ public:
                                     bool first_point = true,
                                     NR::Maybe<NR::Rect> const &bbox_to_snap = NR::Nothing()) const;
     
-    // constrainedSnapVoid() is preferred over constrainedSnap(), because it only returns a 
+    // constrainedSnapReturnByRef() is preferred over constrainedSnap(), because it only returns a 
     // point, by overwriting p, if snapping has occured; otherwise p is untouched
-    void constrainedSnapVoid(Inkscape::Snapper::PointType point_type,
+    void constrainedSnapReturnByRef(Inkscape::Snapper::PointType point_type,
                              NR::Point &p,
                              Inkscape::Snapper::ConstraintLine const &constraint,
                              bool first_point = true,

@@ -1261,7 +1261,7 @@ gboolean Inkscape::SelTrans::centerRequest(NR::Point &pt, guint state)
 {
     SnapManager &m = _desktop->namedview->snap_manager;
     m.setup(_desktop);
-    m.freeSnap(Snapper::SNAPPOINT_NODE, pt);
+    m.freeSnapReturnByRef(Snapper::SNAPPOINT_NODE, pt);
 
     if (state & GDK_CONTROL_MASK) {
         if ( fabs(_point[NR::X] - pt[NR::X]) > fabs(_point[NR::Y] - pt[NR::Y]) ) {
@@ -1369,7 +1369,7 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
         ** FIXME: this will snap to more than just the grid, nowadays.
         */
 
-        m.freeSnap(Snapper::SNAPPOINT_NODE, dxy);
+        m.freeSnapReturnByRef(Snapper::SNAPPOINT_NODE, dxy);
 
     } else if (!shift) {
 
@@ -1434,14 +1434,14 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
         }
     }
 
-    if (control) {
-        /* Ensure that the horizontal and vertical constraint has been applied */
-        if (fabs(dxy[NR::X]) > fabs(dxy[NR::Y])) {
-            dxy[NR::Y] = 0;
-        } else {
-            dxy[NR::X] = 0;
-        }
-    }
+    //if (control) {
+    //    /* Ensure that the horizontal and vertical constraint has been applied */
+    //   if (fabs(dxy[NR::X]) > fabs(dxy[NR::Y])) {
+    //        dxy[NR::Y] = 0;
+    //    } else {
+    //        dxy[NR::X] = 0;
+    //    }
+    //}
 
     NR::Matrix const move((NR::translate(dxy)));
     NR::Point const norm(0, 0);

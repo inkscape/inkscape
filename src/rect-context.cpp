@@ -302,11 +302,6 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
 
             /* Position center */
             NR::Point const button_dt(desktop->w2d(button_w));
-
-            /* Snap center */
-            SnapManager &m = desktop->namedview->snap_manager;
-            m.setup(desktop, rc->item);
-            m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, button_dt);
             rc->center = button_dt;
             
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -315,6 +310,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
                                   GDK_POINTER_MOTION_MASK       |
                                   GDK_BUTTON_PRESS_MASK ),
                                 NULL, event->button.time);
+                                
             ret = TRUE;
         }
         break;
@@ -336,11 +332,11 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
                                      event->motion.y);
             NR::Point motion_dt(desktop->w2d(motion_w));
             
-            SnapManager &m = desktop->namedview->snap_manager;
-            m.setup(desktop, rc->item);
-            m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt);
+            //SnapManager &m = desktop->namedview->snap_manager;
+            //m.setup(desktop, rc->item);
+            //m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt);
             
-            sp_rect_drag(*rc, motion_dt, event->motion.state);
+            sp_rect_drag(*rc, motion_dt, event->motion.state); // this will also handle the snapping
             gobble_motion_events(GDK_BUTTON1_MASK);
             ret = TRUE;
         }
@@ -500,6 +496,11 @@ static void sp_rect_drag(SPRectContext &rc, NR::Point const pt, guint state)
         rc.item->updateRepr();
 
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
+        
+        /* Snap center */
+        SnapManager &m = desktop->namedview->snap_manager;
+        m.setup(desktop, rc.item);
+        m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, rc.center);     
     }
 
     NR::Rect const r = Inkscape::snap_rectangular_box(desktop, rc.item, pt, rc.center, state);

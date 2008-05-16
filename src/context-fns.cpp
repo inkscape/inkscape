@@ -197,11 +197,8 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
         /* There's no constraint on the corner point, so just snap it to anything */
         p[0] = center;
         p[1] = pt;
-        //std::cout << "pt        = " << pt << std::endl;
         snappoint = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, pt);
-        //std::cout << "snappoint.getPoint() = " << snappoint.getPoint() << std::endl;
         if (snappoint.getSnapped()) {
-            //std::cout << "we snapped here ..." << std::endl;
             p[1] = snappoint.getPoint();
         }
     }
@@ -213,8 +210,6 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
     p[0] = sp_desktop_dt2root_xy_point(desktop, p[0]);
     p[1] = sp_desktop_dt2root_xy_point(desktop, p[1]);
     
-    //std::cout << "after: p[0] vs. p[1] = " << p[0] << " | " << p[1] << std::endl;  
-
     return NR::Rect(NR::Point(MIN(p[0][NR::X], p[1][NR::X]), MIN(p[0][NR::Y], p[1][NR::Y])),
                     NR::Point(MAX(p[0][NR::X], p[1][NR::X]), MAX(p[0][NR::Y], p[1][NR::Y])));
 }
