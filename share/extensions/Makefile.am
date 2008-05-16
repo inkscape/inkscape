@@ -2,6 +2,7 @@
 SUBDIRS = \
 	alphabet_soup \
 	Barcode \
+	Poly3DObjects \
 	xaml2svg
 
 extensiondir = $(datadir)/inkscape/extensions
@@ -73,6 +74,7 @@ extensions = \
 	pathmodifier.py\
 	perfectboundcover.py \
 	perspective.py \
+	polyhedron_3d.py \
 	ps2dxf.sh \
 	ps2epsi.sh \
 	ps2pdf.cmd \
@@ -186,6 +188,7 @@ modules = \
 	pdf_output_via_gs_on_win32.inx.txt \
 	perfectboundcover.inx \
 	perspective.inx	\
+	polyhedron_3d.inx	\
 	ps_input.inx \
 	radiusrand.inx \
 	render_barcode.inx \
