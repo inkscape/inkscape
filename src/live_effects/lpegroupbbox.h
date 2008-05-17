@@ -8,35 +8,21 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-#include "live_effects/effect.h"
-#include "live_effects/parameter/path.h"
-#include "live_effects/parameter/enum.h"
-#include "live_effects/parameter/bool.h"
+#include "sp-lpe-item.h"
 
-#include <2geom/sbasis.h>
-#include <2geom/sbasis-geometric.h>
-#include <2geom/bezier-to-sbasis.h>
-#include <2geom/sbasis-to-bezier.h>
-#include <2geom/d2.h>
-#include <2geom/piecewise.h>
+#include <2geom/interval.h>
 
 namespace Inkscape {
 namespace LivePathEffect {
 
 class GroupBBoxEffect {
 protected:
-//if we need information concerning the group Bounding box and coordinates of each subshapes.
+	// Bounding box of the item the path effect is applied on
     Geom::Interval boundingbox_X;
     Geom::Interval boundingbox_Y;
 
-//This set boundingbox_X and boundingbox_Y
-    void original_bbox(SPLPEItem *lpeitem);
-
-//Here is a recursive function to calculate the bbox of a group
-    void recursive_original_bbox(SPGroup *group, Geom::Piecewise<Geom::D2<Geom::SBasis> > & pwd2, std::vector<Geom::Path> & temppath);
-
-
-
+	//This sets boundingbox_X and boundingbox_Y
+    void original_bbox(SPLPEItem *lpeitem, bool absolute = false);
 };
 
 }; //namespace LivePathEffect

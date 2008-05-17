@@ -416,8 +416,9 @@ sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
     SPPath *path = (SPPath *) lpeitem;
     if (path->original_curve) {
         SPCurve *curve = path->original_curve->copy();
+        sp_shape_set_curve_insync(shape, curve, TRUE);
         sp_lpe_item_perform_path_effect(SP_LPE_ITEM(shape), curve);
-        sp_shape_set_curve(shape, curve, TRUE);
+        SP_OBJECT(shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         curve->unref();
 
         if (write) {

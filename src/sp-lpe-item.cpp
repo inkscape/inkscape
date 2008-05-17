@@ -257,9 +257,10 @@ void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve) {
 
     if (sp_lpe_item_has_path_effect(lpeitem)) {
         LivePathEffectObject *lpeobj = sp_lpe_item_get_livepatheffectobject(lpeitem);
+        lpeobj->lpe->doBeforeEffect(lpeitem);
         lpeobj->lpe->doEffect(curve);
     }
-    
+
     SPObject *parent = lpeitem->parent;
     if (parent && SP_IS_LPE_ITEM(parent))
         sp_lpe_item_perform_path_effect(SP_LPE_ITEM(parent), curve);
@@ -276,11 +277,6 @@ sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool write)
 #endif
     g_return_if_fail (lpeitem != NULL);
     g_return_if_fail (SP_IS_LPE_ITEM (lpeitem));
-
-    if (sp_lpe_item_has_path_effect(lpeitem)) {
-        LivePathEffectObject *lpeobj = sp_lpe_item_get_livepatheffectobject(lpeitem);
-        lpeobj->lpe->doBeforeEffect(lpeitem);
-    }
 
     if (SP_LPE_ITEM_CLASS (G_OBJECT_GET_CLASS (lpeitem))->update_patheffect) {
         SP_LPE_ITEM_CLASS (G_OBJECT_GET_CLASS (lpeitem))->update_patheffect (lpeitem, write);
@@ -358,12 +354,21 @@ sp_lpe_item_cleanup_original_path_recursive(SPLPEItem *lpeitem)
     }
 }
 
-void sp_lpe_item_set_path_effect(SPLPEItem *lpeitem, gchar *value)
+void sp_lpe_item_set_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset)
 {
     if (!value) {
         sp_lpe_item_remove_path_effect(lpeitem, false);
     } else {
         SP_OBJECT_REPR(lpeitem)->setAttribute("inkscape:path-effect", value);
+        
+        // Ask the path effect to reset itself if it doesn't have parameters yet
+        if (lpeitem->path_effect_ref && reset) {
+            LivePathEffectObject *lpeobj = lpeitem->path_effect_ref->lpeobject;
+            if (lpeobj && lpeobj->lpe) {
+                // has to be called when all the subitems have their lpes applied
+                lpeobj->lpe->resetDefaults(lpeitem);
+            }
+        }
         
         // make sure there is an original-d for paths!!!
         sp_lpe_item_create_original_path_recursive(lpeitem);
@@ -374,7 +379,7 @@ void sp_lpe_item_set_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * new_
 {
     const gchar * repr_id = SP_OBJECT_REPR(new_lpeobj)->attribute("id");
     gchar *hrefstr = g_strdup_printf("#%s", repr_id);
-    sp_lpe_item_set_path_effect(lpeitem, hrefstr);
+    sp_lpe_item_set_path_effect(lpeitem, hrefstr, false);
     g_free(hrefstr);
 }
 

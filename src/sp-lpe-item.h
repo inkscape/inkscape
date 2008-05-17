@@ -48,7 +48,7 @@ LivePathEffectObject * sp_lpe_item_get_livepatheffectobject(SPLPEItem *lpeitem);
 Inkscape::LivePathEffect::Effect * sp_lpe_item_get_livepatheffect(SPLPEItem *lpeitem);
 void sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool write);
 void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve);
-void sp_lpe_item_set_path_effect(SPLPEItem *lpeitem, gchar *value);
+void sp_lpe_item_set_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset);
 void sp_lpe_item_set_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * new_lpeobj);
 void sp_lpe_item_remove_path_effect(SPLPEItem *lpeitem, bool keep_paths);
 bool sp_lpe_item_has_path_effect(SPLPEItem *lpeitem);

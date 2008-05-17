@@ -247,13 +247,8 @@ LivePathEffectEditor::onApply()
             Inkscape::GC::release(repr);
 
             gchar *href = g_strdup_printf("#%s", repr_id);
-            sp_lpe_item_set_path_effect(SP_LPE_ITEM(item), href);
+            sp_lpe_item_set_path_effect(SP_LPE_ITEM(item), href, true);
             g_free(href);
-
-            LivePathEffectObject *lpeobj = sp_lpe_item_get_livepatheffectobject(SP_LPE_ITEM(item));
-            if (lpeobj && lpeobj->lpe) {
-                lpeobj->lpe->resetDefaults(item);
-            }
 
             sp_document_done(doc, SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
                              _("Create and apply path effect"));
