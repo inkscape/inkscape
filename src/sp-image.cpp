@@ -27,6 +27,7 @@
 //#include <gdk-pixbuf/gdk-pixbuf-io.h>
 #include "display/nr-arena-image.h"
 #include <display/curve.h>
+#include <glib/gstdio.h>
 
 //Added for preserveAspectRatio support -- EAF
 #include "enums.h"
@@ -77,7 +78,7 @@ static NR::Matrix sp_image_set_transform (SPItem *item, NR::Matrix const &xform)
 static void sp_image_set_curve(SPImage *image);
 
 
-GdkPixbuf *sp_image_repr_read_image (const gchar *href, const gchar *absref, const gchar *base);
+static GdkPixbuf *sp_image_repr_read_image( time_t& modTime, gchar*& pixPath, const gchar *href, const gchar *absref, const gchar *base );
 static GdkPixbuf *sp_image_pixbuf_force_rgba (GdkPixbuf * pixbuf);
 static void sp_image_update_canvas_image (SPImage *image);
 static GdkPixbuf * sp_image_repr_read_dataURI (const gchar * uri_data);
@@ -246,18 +247,33 @@ void user_flush_data( png_structp /*png_ptr*/ )
     //g_message( "user_flush_data" );
 }
 
-GdkPixbuf*  pixbuf_new_from_file( const char *filename, GError **/*error*/ )
+static GdkPixbuf* pixbuf_new_from_file( const char *filename, time_t &modTime, gchar*& pixPath, GError **/*error*/ )
 {
     GdkPixbuf* buf = NULL;
     PushPull youme;
     gint dpiX = 0;
     gint dpiY = 0;
+    modTime = 0;
+    if ( pixPath ) {
+        g_free(pixPath);
+        pixPath = 0;
+    }
 
     //buf = gdk_pixbuf_new_from_file( filename, error );
     dump_fopen_call( filename, "pixbuf_new_from_file" );
     FILE* fp = fopen_utf8name( filename, "r" );
     if ( fp )
     {
+        {
+            struct stat st;
+            memset(&st, 0, sizeof(st));
+            int val = g_stat(filename, &st);
+            if ( !val ) {
+                modTime = st.st_mtime;
+                pixPath = g_strdup(filename);
+            }
+        }
+
         GdkPixbufLoader *loader = gdk_pixbuf_loader_new();
         if ( loader )
         {
@@ -507,67 +523,96 @@ GdkPixbuf*  pixbuf_new_from_file( const char *filename, GError **/*error*/ )
     return buf;
 }
 
+GdkPixbuf* pixbuf_new_from_file( const char *filename, GError **error )
+{
+    time_t modTime = 0;
+    gchar* pixPath = 0;
+    GdkPixbuf* result = pixbuf_new_from_file( filename, modTime, pixPath, error );
+    if (pixPath) {
+        g_free(pixPath);
+    }
+    return result;
+}
+
+
 }
 }
 
 GType
 sp_image_get_type (void)
 {
-	static GType image_type = 0;
-	if (!image_type) {
-		GTypeInfo image_info = {
-			sizeof (SPImageClass),
-			NULL,	/* base_init */
-			NULL,	/* base_finalize */
-			(GClassInitFunc) sp_image_class_init,
-			NULL,	/* class_finalize */
-			NULL,	/* class_data */
-			sizeof (SPImage),
-			16,	/* n_preallocs */
-			(GInstanceInitFunc) sp_image_init,
-			NULL,	/* value_table */
-		};
-		image_type = g_type_register_static (sp_item_get_type (), "SPImage", &image_info, (GTypeFlags)0);
-	}
-	return image_type;
+    static GType image_type = 0;
+    if (!image_type) {
+        GTypeInfo image_info = {
+            sizeof (SPImageClass),
+            NULL,       /* base_init */
+            NULL,       /* base_finalize */
+            (GClassInitFunc) sp_image_class_init,
+            NULL,       /* class_finalize */
+            NULL,       /* class_data */
+            sizeof (SPImage),
+            16, /* n_preallocs */
+            (GInstanceInitFunc) sp_image_init,
+            NULL,       /* value_table */
+        };
+        image_type = g_type_register_static (sp_item_get_type (), "SPImage", &image_info, (GTypeFlags)0);
+    }
+    return image_type;
 }
 
 static void
 sp_image_class_init (SPImageClass * klass)
 {
-	GObjectClass * gobject_class;
-	SPObjectClass * sp_object_class;
-	SPItemClass * item_class;
+    GObjectClass * gobject_class;
+    SPObjectClass * sp_object_class;
+    SPItemClass * item_class;
 
-	gobject_class = (GObjectClass *) klass;
-	sp_object_class = (SPObjectClass *) klass;
-	item_class = (SPItemClass *) klass;
+    gobject_class = (GObjectClass *) klass;
+    sp_object_class = (SPObjectClass *) klass;
+    item_class = (SPItemClass *) klass;
 
-	parent_class = (SPItemClass*)g_type_class_ref (sp_item_get_type ());
+    parent_class = (SPItemClass*)g_type_class_ref (sp_item_get_type ());
 
-	sp_object_class->build = sp_image_build;
-	sp_object_class->release = sp_image_release;
-	sp_object_class->set = sp_image_set;
-	sp_object_class->update = sp_image_update;
-	sp_object_class->write = sp_image_write;
+    sp_object_class->build = sp_image_build;
+    sp_object_class->release = sp_image_release;
+    sp_object_class->set = sp_image_set;
+    sp_object_class->update = sp_image_update;
+    sp_object_class->write = sp_image_write;
 
-	item_class->bbox = sp_image_bbox;
-	item_class->print = sp_image_print;
-	item_class->description = sp_image_description;
-	item_class->show = sp_image_show;
-	item_class->snappoints = sp_image_snappoints;
-	item_class->set_transform = sp_image_set_transform;
+    item_class->bbox = sp_image_bbox;
+    item_class->print = sp_image_print;
+    item_class->description = sp_image_description;
+    item_class->show = sp_image_show;
+    item_class->snappoints = sp_image_snappoints;
+    item_class->set_transform = sp_image_set_transform;
 }
 
-static void
-sp_image_init (SPImage *image)
+static void sp_image_init( SPImage *image )
 {
-	image->x.unset();
-	image->y.unset();
-	image->width.unset();
-	image->height.unset();
-	image->aspect_align = SP_ASPECT_NONE;
-	image->curve = NULL;
+    image->x.unset();
+    image->y.unset();
+    image->width.unset();
+    image->height.unset();
+    image->aspect_align = SP_ASPECT_NONE;
+
+    image->trimx = 0;
+    image->trimy = 0;
+    image->trimwidth = 0;
+    image->trimheight = 0;
+    image->viewx = 0;
+    image->viewy = 0;
+    image->viewwidth = 0;
+    image->viewheight = 0;
+
+    image->curve = NULL;
+
+    image->href = 0;
+#if ENABLE_LCMS
+    image->color_profile = 0;
+#endif // ENABLE_LCMS
+    image->pixbuf = 0;
+    image->pixPath = 0;
+    image->lastMod = 0;
 }
 
 static void
@@ -591,38 +636,42 @@ sp_image_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
 static void
 sp_image_release (SPObject *object)
 {
-	SPImage *image;
+    SPImage *image = SP_IMAGE(object);
 
-	image = SP_IMAGE (object);
+    if (SP_OBJECT_DOCUMENT (object)) {
+        /* Unregister ourselves */
+        sp_document_remove_resource (SP_OBJECT_DOCUMENT (object), "image", SP_OBJECT (object));
+    }
 
-	if (SP_OBJECT_DOCUMENT (object)) {
-		/* Unregister ourselves */
-		sp_document_remove_resource (SP_OBJECT_DOCUMENT (object), "image", SP_OBJECT (object));
-	}
+    if (image->href) {
+        g_free (image->href);
+        image->href = NULL;
+    }
 
-	if (image->href) {
-		g_free (image->href);
-		image->href = NULL;
-	}
-
-	if (image->pixbuf) {
-		gdk_pixbuf_unref (image->pixbuf);
-		image->pixbuf = NULL;
-	}
+    if (image->pixbuf) {
+        gdk_pixbuf_unref (image->pixbuf);
+        image->pixbuf = NULL;
+    }
 
 #if ENABLE_LCMS
-	if (image->color_profile) {
-		g_free (image->color_profile);
-		image->color_profile = NULL;
-	}
+    if (image->color_profile) {
+        g_free (image->color_profile);
+        image->color_profile = NULL;
+    }
 #endif // ENABLE_LCMS
 
-    if (image->curve) {
-		image->curve = image->curve->unref();
-	}
+    if (image->pixPath) {
+        g_free(image->pixPath);
+        image->pixPath = 0;
+    }
 
-	if (((SPObjectClass *) parent_class)->release)
-		((SPObjectClass *) parent_class)->release (object);
+    if (image->curve) {
+        image->curve = image->curve->unref();
+    }
+
+    if (((SPObjectClass *) parent_class)->release) {
+        ((SPObjectClass *) parent_class)->release (object);
+    }
 }
 
 static void
@@ -753,27 +802,32 @@ sp_image_set (SPObject *object, unsigned int key, const gchar *value)
 static void
 sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 {
-    SPImage *image;
-
-    image = (SPImage *) object;
+    SPImage *image = SP_IMAGE(object);
     SPDocument *doc = SP_OBJECT_DOCUMENT(object);
 
-	if (((SPObjectClass *) (parent_class))->update)
-		((SPObjectClass *) (parent_class))->update (object, ctx, flags);
+    if (((SPObjectClass *) (parent_class))->update)
+        ((SPObjectClass *) (parent_class))->update (object, ctx, flags);
 
-	if (flags & SP_IMAGE_HREF_MODIFIED_FLAG) {
-		if (image->pixbuf) {
-			gdk_pixbuf_unref (image->pixbuf);
-			image->pixbuf = NULL;
-		}
-		if (image->href) {
-			GdkPixbuf *pixbuf;
-			pixbuf = sp_image_repr_read_image (
-                    object->repr->attribute("xlink:href"),
-                    object->repr->attribute("sodipodi:absref"),
-                    doc->base);
-			if (pixbuf) {
-				pixbuf = sp_image_pixbuf_force_rgba (pixbuf);
+    if (flags & SP_IMAGE_HREF_MODIFIED_FLAG) {
+        if (image->pixbuf) {
+            gdk_pixbuf_unref (image->pixbuf);
+            image->pixbuf = NULL;
+        }
+        if ( image->pixPath ) {
+            g_free(image->pixPath);
+            image->pixPath = 0;
+        }
+        image->lastMod = 0;
+        if (image->href) {
+            GdkPixbuf *pixbuf;
+            pixbuf = sp_image_repr_read_image (
+                image->lastMod,
+                image->pixPath,
+                object->repr->attribute("xlink:href"),
+                object->repr->attribute("sodipodi:absref"),
+                doc->base);
+            if (pixbuf) {
+                pixbuf = sp_image_pixbuf_force_rgba (pixbuf);
 // BLIP
 #if ENABLE_LCMS
                                 if ( image->color_profile )
@@ -1105,12 +1159,16 @@ sp_image_show (SPItem *item, NRArena *arena, unsigned int /*key*/, unsigned int 
  *
  */
 
-GdkPixbuf *
-sp_image_repr_read_image (const gchar *href, const gchar *absref, const gchar *base)
+GdkPixbuf *sp_image_repr_read_image( time_t& modTime, char*& pixPath, const gchar *href, const gchar *absref, const gchar *base )
 {
     const gchar *filename, *docbase;
     gchar *fullname;
     GdkPixbuf *pixbuf;
+    modTime = 0;
+    if ( pixPath ) {
+        g_free(pixPath);
+        pixPath = 0;
+    }
 
     filename = href;
     if (filename != NULL) {
@@ -1118,7 +1176,7 @@ sp_image_repr_read_image (const gchar *href, const gchar *absref, const gchar *b
             fullname = g_filename_from_uri(filename, NULL, NULL);
             if (fullname) {
                 // TODO check this. Was doing a UTF-8 to filename conversion here.
-                pixbuf = Inkscape::IO::pixbuf_new_from_file (fullname, NULL);
+                pixbuf = Inkscape::IO::pixbuf_new_from_file (fullname, modTime, pixPath, NULL);
                 if (pixbuf != NULL) return pixbuf;
             }
         } else if (strncmp (filename,"data:",5) == 0) {
@@ -1138,7 +1196,7 @@ sp_image_repr_read_image (const gchar *href, const gchar *absref, const gchar *b
                 // different dir) or unset (when doc is not saved yet), so we check for base+href existence first,
                 // and if it fails, we also try to use bare href regardless of its g_path_is_absolute
                 if (g_file_test (fullname, G_FILE_TEST_EXISTS) && !g_file_test (fullname, G_FILE_TEST_IS_DIR)) {
-                    pixbuf = Inkscape::IO::pixbuf_new_from_file( fullname, NULL );
+                    pixbuf = Inkscape::IO::pixbuf_new_from_file( fullname, modTime, pixPath, NULL );
                     g_free (fullname);
                     if (pixbuf != NULL) return pixbuf;
                 }
@@ -1146,7 +1204,7 @@ sp_image_repr_read_image (const gchar *href, const gchar *absref, const gchar *b
 
             /* try filename as absolute */
             if (g_file_test (filename, G_FILE_TEST_EXISTS) && !g_file_test (filename, G_FILE_TEST_IS_DIR)) {
-                pixbuf = Inkscape::IO::pixbuf_new_from_file( filename, NULL );
+                pixbuf = Inkscape::IO::pixbuf_new_from_file( filename, modTime, pixPath, NULL );
                 if (pixbuf != NULL) return pixbuf;
             }
         }
@@ -1161,7 +1219,7 @@ sp_image_repr_read_image (const gchar *href, const gchar *absref, const gchar *b
 		else
 		    g_warning ("xlink:href did not resolve to a valid image file, now trying sodipodi:absref=\"%s\"", absref);
 
-        pixbuf = Inkscape::IO::pixbuf_new_from_file( filename, NULL );
+        pixbuf = Inkscape::IO::pixbuf_new_from_file( filename, modTime, pixPath, NULL );
         if (pixbuf != NULL) return pixbuf;
     }
     /* Nope: We do not find any valid pixmap file :-( */
@@ -1485,6 +1543,25 @@ sp_image_get_curve (SPImage *image)
 		return image->curve->copy();
 	}
 	return NULL;
+}
+
+void sp_image_refresh_if_outdated( SPImage* image )
+{
+    if ( image->href && image->lastMod ) {
+        // It *might* change
+
+        struct stat st;
+        memset(&st, 0, sizeof(st));
+        int val = g_stat(image->pixPath, &st);
+        if ( !val ) {
+            // stat call worked. Check time now
+            if ( st.st_mtime != image->lastMod ) {
+                SPCtx *ctx = 0;
+                unsigned int flags = SP_IMAGE_HREF_MODIFIED_FLAG;
+                sp_image_update(image, ctx, flags);
+            }
+        }
+    }
 }
 
 /*

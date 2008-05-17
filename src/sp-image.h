@@ -33,30 +33,32 @@ class SPImageClass;
 #define SP_IMAGE_HREF_MODIFIED_FLAG SP_OBJECT_USER_MODIFIED_FLAG_A
 
 struct SPImage : public SPItem {
-	SVGLength x;
-	SVGLength y;
-	SVGLength width;
-	SVGLength height;
+    SVGLength x;
+    SVGLength y;
+    SVGLength width;
+    SVGLength height;
 
-	// Added by EAF
-	/* preserveAspectRatio */
-	unsigned int aspect_align : 4;
-	unsigned int aspect_clip : 1;
-	int trimx, trimy, trimwidth, trimheight;
-	double viewx, viewy, viewwidth, viewheight;
-	
-	SPCurve *curve; // This curve is at the image's boundary for snapping
+    // Added by EAF
+    /* preserveAspectRatio */
+    unsigned int aspect_align : 4;
+    unsigned int aspect_clip : 1;
+    int trimx, trimy, trimwidth, trimheight;
+    double viewx, viewy, viewwidth, viewheight;
 
-	gchar *href;
+    SPCurve *curve; // This curve is at the image's boundary for snapping
+
+    gchar *href;
 #if ENABLE_LCMS
-        gchar *color_profile;
+    gchar *color_profile;
 #endif // ENABLE_LCMS
 
-	GdkPixbuf *pixbuf;
+    GdkPixbuf *pixbuf;
+    gchar *pixPath;
+    time_t lastMod;
 };
 
 struct SPImageClass {
-	SPItemClass parent_class;
+    SPItemClass parent_class;
 };
 
 GType sp_image_get_type (void);
@@ -64,5 +66,6 @@ GType sp_image_get_type (void);
 /* Return duplicate of curve or NULL */
 SPCurve *sp_image_get_curve (SPImage *image);
 
+void sp_image_refresh_if_outdated( SPImage* image );
 
 #endif

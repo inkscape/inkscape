@@ -60,6 +60,7 @@
 #include "color-profile-fns.h"
 #include "xml/node-observer.h"
 #include "box3d-context.h"
+#include "sp-image.h"
 
 #if defined (SOLARIS_2_8)
 #include "round.h"
@@ -440,7 +441,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     style = gtk_style_copy (GTK_WIDGET (dtw->canvas)->style);
     style->bg[GTK_STATE_NORMAL] = style->white;
     gtk_widget_set_style (GTK_WIDGET (dtw->canvas), style);
-    if ( prefs_get_int_attribute ("options.useextinput", "value", 1) ) 
+    if ( prefs_get_int_attribute ("options.useextinput", "value", 1) )
       gtk_widget_set_extension_events(GTK_WIDGET (dtw->canvas) , GDK_EXTENSION_EVENTS_ALL); //set extension events for tablets, unless disabled in preferences
     g_signal_connect (G_OBJECT (dtw->canvas), "event", G_CALLBACK (sp_desktop_widget_event), dtw);
     gtk_table_attach (GTK_TABLE (canvas_tbl), GTK_WIDGET(dtw->canvas), 1, 2, 1, 2, (GtkAttachOptions)(GTK_FILL | GTK_EXPAND), (GtkAttachOptions)(GTK_FILL | GTK_EXPAND), 0, 0);
@@ -1372,11 +1373,11 @@ sp_desktop_widget_update_hruler (SPDesktopWidget *dtw)
 {
     /* The viewbox (in integers) must exactly match the size of SPCanvasbuf's pixel buffer.
      * This is important because the former is being used for drawing the ruler, whereas
-     * the latter is used for drawing e.g. the grids and guides. Only when the viewbox 
+     * the latter is used for drawing e.g. the grids and guides. Only when the viewbox
      * coincides with the pixel buffer, everything will line up nicely.
-     */  
+     */
     NR::IRect viewbox = dtw->canvas->getViewboxIntegers();
-    
+
     double const scale = dtw->desktop->current_zoom();
     double s = viewbox.min()[NR::X] / scale - dtw->ruler_origin[NR::X];
     double e = viewbox.max()[NR::X] / scale - dtw->ruler_origin[NR::X];
@@ -1388,11 +1389,11 @@ sp_desktop_widget_update_vruler (SPDesktopWidget *dtw)
 {
     /* The viewbox (in integers) must exactly match the size of SPCanvasbuf's pixel buffer.
      * This is important because the former is being used for drawing the ruler, whereas
-     * the latter is used for drawing e.g. the grids and guides. Only when the viewbox 
+     * the latter is used for drawing e.g. the grids and guides. Only when the viewbox
      * coincides with the pixel buffer, everything will line up nicely.
      */
     NR::IRect viewbox = dtw->canvas->getViewboxIntegers();
-    
+
     double const scale = dtw->desktop->current_zoom();
     double s = viewbox.min()[NR::Y] / -scale - dtw->ruler_origin[NR::Y];
     double e = viewbox.max()[NR::Y] / -scale - dtw->ruler_origin[NR::Y];
@@ -1430,7 +1431,7 @@ sp_desktop_widget_adjustment_value_changed (GtkAdjustment */*adj*/, SPDesktopWid
     sp_desktop_widget_update_rulers (dtw);
 
     /*  update perspective lines if we are in the 3D box tool (so that infinite ones are shown correctly) */
-    sp_box3d_context_update_lines(dtw->desktop->event_context);    
+    sp_box3d_context_update_lines(dtw->desktop->event_context);
 
     dtw->update = 0;
 }
@@ -1438,6 +1439,14 @@ sp_desktop_widget_adjustment_value_changed (GtkAdjustment */*adj*/, SPDesktopWid
 /* we make the desktop window with focus active, signal is connected in interface.c */
 bool SPDesktopWidget::onFocusInEvent(GdkEventFocus*)
 {
+    {
+        GSList const *imageList = sp_document_get_resource_list(desktop->doc(), "image");
+        for (GSList const *p = imageList; p; p = p->next) {
+            SPImage* image = SP_IMAGE(p->data);
+            sp_image_refresh_if_outdated( image );
+        }
+    }
+
     inkscape_activate_desktop (desktop);
 
     return false;

@@ -17,6 +17,7 @@
 #include "../xml/repr.h"
 #include "desktop.h"
 #include "document.h"
+#include "message-stack.h"
 #include "ui/dialog/dialog-manager.h"
 
 static void sp_object_type_menu(GType type, SPObject *object, SPDesktop *desktop, GtkMenu *menu);
@@ -280,14 +281,13 @@ sp_anchor_link_remove(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 /* Image */
 
 static void sp_image_image_properties(GtkMenuItem *menuitem, SPAnchor *anchor);
+static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor);
 
 static void
 sp_image_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
 {
-    SPItem *item;
+    SPItem *item = SP_ITEM(object);
     GtkWidget *w;
-
-    item = (SPItem *) object;
 
     /* Link dialog */
     w = gtk_menu_item_new_with_mnemonic(_("Image _Properties"));
@@ -295,12 +295,50 @@ sp_image_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     gtk_signal_connect(GTK_OBJECT(w), "activate", GTK_SIGNAL_FUNC(sp_image_image_properties), item);
     gtk_widget_show(w);
     gtk_menu_append(GTK_MENU(m), w);
+
+    w = gtk_menu_item_new_with_mnemonic(_("Edit Image..."));
+    gtk_object_set_data(GTK_OBJECT(w), "desktop", desktop);
+    gtk_signal_connect(GTK_OBJECT(w), "activate", GTK_SIGNAL_FUNC(sp_image_image_edit), item);
+    gtk_widget_show(w);
+    gtk_menu_append(GTK_MENU(m), w);
+    Inkscape::XML::Node *ir = SP_OBJECT_REPR(object);
+    const gchar *href = ir->attribute("xlink:href");
+    if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
+        gtk_widget_set_sensitive( w, FALSE );
+    }
 }
 
 static void
 sp_image_image_properties(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 {
     sp_object_attributes_dialog(SP_OBJECT(anchor), "Image");
+}
+
+#define EDIT_APP "gimp"
+//#define EDIT_APP "krita"
+static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
+{
+    SPObject* obj = SP_OBJECT(anchor);
+    Inkscape::XML::Node *ir = SP_OBJECT_REPR(obj);
+    const gchar *href = ir->attribute("xlink:href");
+
+    GError* errThing = 0;
+    gchar const* args[] = {EDIT_APP, href, 0};
+    g_spawn_async(0, // working dir
+                  const_cast<gchar **>(args),
+                  0, //envp
+                  G_SPAWN_SEARCH_PATH,
+                  0, // child_setup
+                  0, // user_data
+                  0, //GPid *child_pid
+                  &errThing);
+    if ( errThing ) {
+        g_warning("Problem launching editor (%d). %s", errThing->code, errThing->message);
+        SPDesktop *desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+        desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, errThing->message);
+        g_error_free(errThing);
+        errThing = 0;
+    }
 }
 
 /* SPShape */
