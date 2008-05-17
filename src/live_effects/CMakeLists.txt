@@ -10,6 +10,8 @@ lpe-circle_with_radius.cpp
 lpe-circle_with_radius.h
 lpe-curvestitch.cpp
 lpe-curvestitch.h
+lpe-envelope.cpp
+lpe-envelope.h
 lpe-gears.cpp
 lpe-gears.h
 lpegroupbbox.cpp

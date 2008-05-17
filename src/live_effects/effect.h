@@ -65,6 +65,7 @@ enum EffectType {
     PERSPECTIVE_PATH,
     SPIRO,
     CONSTRUCT_GRID,
+    ENVELOPE,
     INVALID_LPE // This must be last
 };
 
