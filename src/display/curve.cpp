@@ -39,15 +39,15 @@ static bool sp_bpath_closed(NArtBpath const bpath[]);
  *    element).
  */
 SPCurve::SPCurve(guint length)
-  : _refcount(1),
-    _bpath(NULL),
-    _end(0),
+  : _end(0),
     _length(length),
     _substart(0),
     _hascpt(false),
     _posSet(false),
     _moving(false),
-    _closed(false)
+    _closed(false),
+    _refcount(1),
+    _bpath(NULL)
 {
     if (length <= 0) {
         g_error("SPCurve::SPCurve called with invalid length parameter");
@@ -1045,7 +1045,7 @@ sp_curve_distance_including_space(SPCurve const *const curve, double seg2len[])
     }
 
     NR::Point prev(curve->_bpath->c(3));
-    for (gint i = 1; i < curve->_end; ++i) {
+    for (guint i = 1; i < curve->_end; ++i) {
         NArtBpath &p = curve->_bpath[i];
         double seg_len = 0;
         switch (p.code) {
