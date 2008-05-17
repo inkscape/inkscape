@@ -275,7 +275,7 @@ sp_gradient_selector_get_vector (SPGradientSelector *sel)
 }
 
 static void
-sp_gradient_selector_vector_set (SPGradientVectorSelector *gvs, SPGradient *gr, SPGradientSelector *sel)
+sp_gradient_selector_vector_set (SPGradientVectorSelector */*gvs*/, SPGradient *gr, SPGradientSelector *sel)
 {
 	static gboolean blocked = FALSE;
 
@@ -289,7 +289,7 @@ sp_gradient_selector_vector_set (SPGradientVectorSelector *gvs, SPGradient *gr, 
 }
 
 static void
-sp_gradient_selector_edit_vector_clicked (GtkWidget *w, SPGradientSelector *sel)
+sp_gradient_selector_edit_vector_clicked (GtkWidget */*w*/, SPGradientSelector *sel)
 {
 	GtkWidget *dialog;
 
@@ -300,7 +300,7 @@ sp_gradient_selector_edit_vector_clicked (GtkWidget *w, SPGradientSelector *sel)
 }
 
 static void
-sp_gradient_selector_add_vector_clicked (GtkWidget *w, SPGradientSelector *sel)
+sp_gradient_selector_add_vector_clicked (GtkWidget */*w*/, SPGradientSelector *sel)
 {
 	SPDocument *doc = sp_gradient_vector_selector_get_document (
               SP_GRADIENT_VECTOR_SELECTOR (sel->vectors));
@@ -310,7 +310,7 @@ sp_gradient_selector_add_vector_clicked (GtkWidget *w, SPGradientSelector *sel)
 
 	SPGradient *gr = sp_gradient_vector_selector_get_gradient(
             SP_GRADIENT_VECTOR_SELECTOR (sel->vectors));
-	Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);		
+	Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
 	Inkscape::XML::Node *repr = NULL;
 

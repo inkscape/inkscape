@@ -256,7 +256,7 @@ sp_gradient_image_gradient_release (SPObject *, SPGradientImage *image)
 }
 
 static void
-sp_gradient_image_gradient_modified (SPObject *, guint flags, SPGradientImage *image)
+sp_gradient_image_gradient_modified (SPObject *, guint /*flags*/, SPGradientImage *image)
 {
 	sp_gradient_image_update (image);
 }
