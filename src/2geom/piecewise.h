@@ -73,6 +73,12 @@ class Piecewise {
         unsigned n = segN(t);
         return segs[n](segT(t, n));
     }
+    inline output_type firstValue() const {
+        return valueAt(cuts.front());
+    }
+    inline output_type lastValue() const {
+        return valueAt(cuts.back());
+    }
     std::vector<output_type> valueAndDerivatives(double t, unsigned cnt) const {
         unsigned n = segN(t);
         std::vector<output_type> ret, val = segs[n].valueAndDerivatives(segT(t, n), cnt);
