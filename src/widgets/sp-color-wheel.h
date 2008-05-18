@@ -57,7 +57,7 @@ struct SPColorWheelClass {
     void (* changed) (SPColorWheel *wheel);
 };
 
-GtkType sp_color_wheel_get_type (void);
+GType sp_color_wheel_get_type(void);
 
 GtkWidget *sp_color_wheel_new ();
 

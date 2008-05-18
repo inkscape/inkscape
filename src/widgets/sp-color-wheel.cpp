@@ -72,20 +72,23 @@ get_time (void)
 }
 */
 
-GtkType
-sp_color_wheel_get_type (void)
+GType sp_color_wheel_get_type(void)
 {
-    static GtkType type = 0;
+    static GType type = 0;
     if (!type) {
-        GtkTypeInfo info = {
-            "SPColorWheel",
-            sizeof (SPColorWheel),
-            sizeof (SPColorWheelClass),
-            (GtkClassInitFunc) sp_color_wheel_class_init,
-            (GtkObjectInitFunc) sp_color_wheel_init,
-            NULL, NULL, NULL
+        GTypeInfo info = {
+            sizeof(SPColorWheelClass),
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_color_wheel_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(SPColorWheel),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_color_wheel_init,
+            0 // value_table
         };
-        type = gtk_type_unique (GTK_TYPE_WIDGET, &info);
+        type = g_type_register_static(GTK_TYPE_WIDGET, "SPColorWheel", &info, static_cast<GTypeFlags>(0));
     }
     return type;
 }

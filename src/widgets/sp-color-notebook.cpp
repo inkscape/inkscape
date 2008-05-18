@@ -55,22 +55,25 @@ static SPColorSelectorClass *parent_class;
 #define XPAD 4
 #define YPAD 1
 
-GtkType
-sp_color_notebook_get_type (void)
+GType sp_color_notebook_get_type(void)
 {
-	static GtkType type = 0;
-	if (!type) {
-		GtkTypeInfo info = {
-			"SPColorNotebook",
-			sizeof (SPColorNotebook),
-			sizeof (SPColorNotebookClass),
-			(GtkClassInitFunc) sp_color_notebook_class_init,
-			(GtkObjectInitFunc) sp_color_notebook_init,
-			NULL, NULL, NULL
-		};
-		type = gtk_type_unique (SP_TYPE_COLOR_SELECTOR, &info);
-	}
-	return type;
+    static GtkType type = 0;
+    if (!type) {
+        GTypeInfo info = {
+            sizeof(SPColorNotebookClass),
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_color_notebook_class_init,
+            0, // class_finalize
+            0, // class_data
+            sizeof(SPColorNotebook),
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_color_notebook_init,
+            0 // value_table
+        };
+        type = g_type_register_static(SP_TYPE_COLOR_SELECTOR, "SPColorNotebook", &info, static_cast<GTypeFlags>(0));
+    }
+    return type;
 }
 
 static void

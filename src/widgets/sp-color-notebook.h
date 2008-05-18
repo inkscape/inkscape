@@ -93,7 +93,7 @@ struct SPColorNotebookClass {
     void (* changed) (SPColorNotebook *rgbsel);
 };
 
-GtkType sp_color_notebook_get_type (void);
+GType sp_color_notebook_get_type(void);
 
 GtkWidget *sp_color_notebook_new (void);
 
