@@ -163,6 +163,12 @@ Effect::effectType() {
 }
 
 void
+Effect::doOnApply (SPLPEItem */*lpeitem*/)
+{
+    // This is performed once when the effect is freshly applied to a path
+}
+
+void
 Effect::doBeforeEffect (SPLPEItem */*lpeitem*/)
 {
     //Do nothing for simple effects

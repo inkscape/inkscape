@@ -362,11 +362,15 @@ void sp_lpe_item_set_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset)
         SP_OBJECT_REPR(lpeitem)->setAttribute("inkscape:path-effect", value);
         
         // Ask the path effect to reset itself if it doesn't have parameters yet
-        if (lpeitem->path_effect_ref && reset) {
+        if (lpeitem->path_effect_ref) {
             LivePathEffectObject *lpeobj = lpeitem->path_effect_ref->lpeobject;
             if (lpeobj && lpeobj->lpe) {
-                // has to be called when all the subitems have their lpes applied
-                lpeobj->lpe->resetDefaults(lpeitem);
+                if(reset) {
+                    // has to be called when all the subitems have their lpes applied
+                    lpeobj->lpe->resetDefaults(lpeitem);
+                }
+                // perform this once when the effect is applied
+		lpeobj->lpe->doOnApply(SP_LPE_ITEM(lpeitem));
             }
         }
         

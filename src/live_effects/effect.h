@@ -83,6 +83,8 @@ public:
 
     EffectType effectType ();
 
+    virtual void doOnApply (SPLPEItem *lpeitem);
+
     virtual void doBeforeEffect (SPLPEItem *lpeitem);
 
     virtual void doEffect (SPCurve * curve);
