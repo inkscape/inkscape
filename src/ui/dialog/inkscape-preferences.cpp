@@ -106,6 +106,7 @@ InkscapePreferences::InkscapePreferences()
     initPageImportExport();
     initPageCMS();
     initPageGrids();
+    initPageSVGOutput();
     initPageMisc();
 
     signalPresent().connect(sigc::mem_fun(*this, &InkscapePreferences::_presentPages));
@@ -887,6 +888,43 @@ void InkscapePreferences::initPageGrids()
         _grids_axonom.add_line( false, _("Major grid line every"), _grids_axonom_empspacing, "", "", false);
 
     this->AddPage(_page_grids, _("Grids"), PREFS_PAGE_GRIDS);
+}
+
+void InkscapePreferences::initPageSVGOutput()
+{
+    _svgoutput_usenamedcolors.init( _("Use named colors"), "options.svgoutput", "usenamedcolors", false);
+    _page_svgoutput.add_line( false, "", _svgoutput_usenamedcolors, "", _("If set, write the CSS name of the color instead of it's numeric value."), false);
+
+    _page_svgoutput.add_group_header( _("XML looks"));
+
+    _svgoutput_inlineattrs.init( _("Inline attributes"), "options.svgoutput", "inlineattrs", false);
+    _page_svgoutput.add_line( false, "", _svgoutput_inlineattrs, "", _("Inline the XML attributes"), false);
+
+    _svgoutput_indent.init("options.svgoutput", "indent", 0.0, 1000.0, 1.0, 2.0, 2.0, true, false);
+    _page_svgoutput.add_line( false, _("Indent spaces"), _svgoutput_indent, "", _("The number of spaces to use for indentation."), false);
+
+    _page_svgoutput.add_group_header( _("Path string"));
+
+    _svgoutput_allowrelativecoordinates.init( _("Allow relative coordinates"), "options.svgoutput", "allowrelativecoordinates", true);
+    _page_svgoutput.add_line( false, "", _svgoutput_allowrelativecoordinates, "", _("If set, relative coordinates may be used in path data"), false);
+
+    /* seems this is never used in Inkscape code
+    _svgoutput_allowshorthands.init( _("Allow shorthands"), "options.svgoutput", "allowshorthands", true);
+    _page_svgoutput.add_line( false, "", _svgoutput_allowshorthands, "", _(""), false);
+    */
+
+    _svgoutput_forcerepeatcommands.init( _("Force repeat commands"), "options.svgoutput", "forcerepeatcommands", false);
+    _page_svgoutput.add_line( false, "", _svgoutput_forcerepeatcommands, "", _("If set, force repeating of the same command (i.e. output 'L 1,2 L 3,4' instead of 'L 1,2 3,4')."), false);
+
+    _page_svgoutput.add_group_header( _("Numeric data"));
+
+    _svgoutput_numericprecision.init("options.svgoutput", "numericprecision", 0.0, 1000.0, 1.0, 2.0, 8.0, true, false);
+    _page_svgoutput.add_line( false, _("Numeric precision"), _svgoutput_numericprecision, "", _("The number of digits to use behind the comma."), false);
+
+    _svgoutput_minimumexponent.init("options.svgoutput", "minimumexponent", -100.0, 100.0, 1.0, 2.0, -8.0, true, false);
+    _page_svgoutput.add_line( false, _("Minimum exponent"), _svgoutput_minimumexponent, "", _("The minimum size of a number (10 to the power of this exponent), smaller numbers will be written as zero."), false);
+
+    this->AddPage(_page_svgoutput, _("SVG Output"), PREFS_PAGE_SVGOUTPUT);
 }
 
 void InkscapePreferences::initPageMisc()

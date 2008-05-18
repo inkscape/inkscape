@@ -68,6 +68,7 @@ enum {
     PREFS_PAGE_IMPORTEXPORT,
     PREFS_PAGE_CMS,
     PREFS_PAGE_GRIDS,
+    PREFS_PAGE_SVGOUTPUT,
     PREFS_PAGE_MISC
 };
 
@@ -106,7 +107,7 @@ protected:
 
     DialogPage _page_mouse, _page_scrolling, _page_steps, _page_tools, _page_windows,
         _page_clones, _page_mask, _page_transforms, _page_filters, _page_select,
-        _page_importexport, _page_cms, _page_grids, _page_misc;
+        _page_importexport, _page_cms, _page_grids, _page_svgoutput, _page_misc;
     DialogPage _page_selector, _page_node, _page_tweak, _page_zoom, _page_shapes, _page_pencil, _page_pen,
                _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper;
     DialogPage _page_rectangle, _page_3dbox, _page_ellipse, _page_star, _page_spiral, _page_paintbucket, _page_eraser;
@@ -205,6 +206,16 @@ protected:
         PrefColorPicker     _grids_axonom_empcolor;
         PrefSpinButton      _grids_axonom_empspacing;
 
+    // SVG Output page:
+    PrefCheckButton   _svgoutput_usenamedcolors;
+    PrefSpinButton    _svgoutput_numericprecision;
+    PrefSpinButton    _svgoutput_minimumexponent;
+    PrefCheckButton   _svgoutput_inlineattrs;
+    PrefSpinButton    _svgoutput_indent;
+    PrefCheckButton   _svgoutput_allowrelativecoordinates;
+    PrefCheckButton   _svgoutput_allowshorthands;
+    PrefCheckButton   _svgoutput_forcerepeatcommands;
+
     PrefEntryButtonHBox _importexport_ocal_url;
     PrefEntry       _importexport_ocal_username;
     PrefEntry       _importexport_ocal_password;
@@ -239,6 +250,7 @@ protected:
     void initPageImportExport();
     void initPageCMS();
     void initPageGrids();
+    void initPageSVGOutput();
     void initPageMisc();
 
     void _presentPages();
