@@ -66,6 +66,7 @@ enum EffectType {
     SPIRO,
     CONSTRUCT_GRID,
     ENVELOPE,
+    PERP_BISECTOR,
     INVALID_LPE // This must be last
 };
 

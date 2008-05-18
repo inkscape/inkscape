@@ -44,5 +44,7 @@ live_effects_liblive_effects_a_SOURCES = \
 	live_effects/lpe-perspective_path.cpp	\
 	live_effects/lpe-perspective_path.h		\
 	live_effects/lpe-envelope.cpp	\
-	live_effects/lpe-envelope.h
+	live_effects/lpe-envelope.h	\
+	live_effects/lpe-perp_bisector.cpp	\
+	live_effects/lpe-perp_bisector.h
 
