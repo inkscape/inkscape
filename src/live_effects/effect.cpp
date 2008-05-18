@@ -45,6 +45,7 @@
 #include "live_effects/lpe-spiro.h"
 #include "live_effects/lpe-constructgrid.h"
 #include "live_effects/lpe-envelope.h"
+// end of includes
 
 #include "nodepath.h"
 
