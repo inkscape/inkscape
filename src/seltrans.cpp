@@ -1430,19 +1430,21 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
         if (best_snapped_point.getSnapped()) {
             _desktop->snapindicator->set_new_snappoint(best_snapped_point);
         } else {
-            _desktop->snapindicator->remove_snappoint();
+            // We didn't snap, so remove any previous snap indicator 
+            _desktop->snapindicator->remove_snappoint();            
+            if (control) {
+                // If we didn't snap, then we should still constrain horizontally or vertically
+                // (When we did snap, then this constraint has already been enforced by
+                // calling constrainedSnapTranslation() above)
+                if (fabs(dxy[NR::X]) > fabs(dxy[NR::Y])) {
+                    dxy[NR::Y] = 0;
+                } else {
+                    dxy[NR::X] = 0;
+                }
+            }
         }
     }
-
-    //if (control) {
-    //    /* Ensure that the horizontal and vertical constraint has been applied */
-    //   if (fabs(dxy[NR::X]) > fabs(dxy[NR::Y])) {
-    //        dxy[NR::Y] = 0;
-    //    } else {
-    //        dxy[NR::X] = 0;
-    //    }
-    //}
-
+    
     NR::Matrix const move((NR::translate(dxy)));
     NR::Point const norm(0, 0);
     transform(move, norm);
