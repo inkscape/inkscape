@@ -447,9 +447,9 @@ sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
  * Adds a original_curve to the path.  If owner is specified, a reference
  * will be made, otherwise the curve will be copied into the path.
  * Any existing curve in the path will be unreferenced first.
- * This routine triggers reapplication of the an effect is present
- * an also triggers a request to update the display. Does not write
-* result to XML when write=false.
+ * This routine triggers reapplication of an effect if present
+ * and also triggers a request to update the display. Does not write
+ * result to XML when write=false.
  */
 void
 sp_path_set_original_curve (SPPath *path, SPCurve *curve, unsigned int owner, bool write)
