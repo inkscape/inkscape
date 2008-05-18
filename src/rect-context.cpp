@@ -328,13 +328,8 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             // motion notify coordinates as given (no snapping back to origin)
             event_context->within_tolerance = false;
 
-            NR::Point const motion_w(event->motion.x,
-                                     event->motion.y);
+            NR::Point const motion_w(event->motion.x, event->motion.y);
             NR::Point motion_dt(desktop->w2d(motion_w));
-            
-            //SnapManager &m = desktop->namedview->snap_manager;
-            //m.setup(desktop, rc->item);
-            //m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt);
             
             sp_rect_drag(*rc, motion_dt, event->motion.state); // this will also handle the snapping
             gobble_motion_events(GDK_BUTTON1_MASK);
