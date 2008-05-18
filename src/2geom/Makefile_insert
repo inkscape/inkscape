@@ -27,6 +27,7 @@
 	2geom/d2-sbasis.h	\
 	2geom/d2.h	\
 	2geom/exception.h	\
+	2geom/forward.h	\
 	2geom/geom.cpp	\
 	2geom/geom.h	\
 	2geom/interval.h	\
@@ -44,6 +45,8 @@
 	2geom/path-intersection.h	\
 	2geom/path.cpp	\
 	2geom/path.h	\
+	2geom/pathvector.cpp	\
+	2geom/pathvector.h	\
 	2geom/piecewise.cpp	\
 	2geom/piecewise.h	\
 	2geom/point-l.h	\

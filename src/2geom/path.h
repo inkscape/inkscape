@@ -714,6 +714,7 @@ public:
       ret.append(*temp);
       delete temp;
     }
+    ret.closed_ = closed_;
     return ret;
   }
 
@@ -844,6 +845,11 @@ public:
     do_update(first.impl_, last.impl_, curves_.begin(), curves_.begin());
   }
 
+  // erase last segment of path
+  void erase_last() {
+    erase(curves_.end()-2);
+  }
+
   void replace(iterator replaced, Curve const &curve) {
     Sequence source(1, curve.duplicate());
     try {
@@ -906,6 +912,7 @@ public:
 
   void append(Curve const &curve);
   void append(D2<SBasis> const &curve);
+  void append(Path const &other);
 
   template <typename CurveType, typename A>
   void appendNew(A a) {

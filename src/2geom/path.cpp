@@ -339,6 +339,16 @@ void Path::append(D2<SBasis> const &curve) {
   do_append(new SBasisCurve(curve));
 }
 
+void Path::append(Path const &other)
+{
+    // Check that path stays continuous:
+    if ( !are_near( finalPoint(), other.initialPoint() ) ) {
+        THROW_CONTINUITYERROR();
+    }
+
+    insert(begin(), other.begin(), other.end());
+}
+
 void Path::do_update(Sequence::iterator first_replaced,
                      Sequence::iterator last_replaced,
                      Sequence::iterator first,

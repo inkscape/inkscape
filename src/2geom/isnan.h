@@ -1,5 +1,5 @@
-#ifndef __ISNAN_H__
-#define __ISNAN_H__
+#ifndef _2GEOM_ISNAN_H__
+#define _2GEOM_ISNAN_H__
 
 /*
  * Temporary fix for various misdefinitions of isnan().
@@ -58,7 +58,7 @@
  */
 
 
-#endif /* __ISNAN_H__ */
+#endif /* _2GEOM_ISNAN_H__ */
 
 /*
   Local Variables:
