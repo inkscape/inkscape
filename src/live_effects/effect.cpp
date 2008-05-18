@@ -157,6 +157,11 @@ Effect::getName()
         return Glib::ustring( _("No effect") );
 }
 
+EffectType
+Effect::effectType() {
+    return lpeobj->effecttype;
+}
+
 void
 Effect::doBeforeEffect (SPLPEItem */*lpeitem*/)
 {
