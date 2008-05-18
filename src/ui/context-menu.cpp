@@ -18,6 +18,7 @@
 #include "desktop.h"
 #include "document.h"
 #include "message-stack.h"
+#include "prefs-utils.h"
 #include "ui/dialog/dialog-manager.h"
 
 static void sp_object_type_menu(GType type, SPObject *object, SPDesktop *desktop, GtkMenu *menu);
@@ -296,7 +297,7 @@ sp_image_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     gtk_widget_show(w);
     gtk_menu_append(GTK_MENU(m), w);
 
-    w = gtk_menu_item_new_with_mnemonic(_("Edit Image..."));
+    w = gtk_menu_item_new_with_mnemonic(_("Edit Externally..."));
     gtk_object_set_data(GTK_OBJECT(w), "desktop", desktop);
     gtk_signal_connect(GTK_OBJECT(w), "activate", GTK_SIGNAL_FUNC(sp_image_image_edit), item);
     gtk_widget_show(w);
@@ -314,8 +315,25 @@ sp_image_image_properties(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
     sp_object_attributes_dialog(SP_OBJECT(anchor), "Image");
 }
 
-#define EDIT_APP "gimp"
-//#define EDIT_APP "krita"
+static gchar* getImageEditorName() {
+    gchar* value = 0;
+    gchar const *choices = prefs_get_string_attribute("options.bitmapeditor", "choices");
+    if ( choices && choices[0] ) {
+        gchar** splits = g_strsplit(choices, ",", 0);
+        gint numIems = g_strv_length(splits);
+
+        int setting = prefs_get_int_attribute_limited("options.bitmapeditor", "value", 0, 0, numIems);
+        value = g_strdup(splits[setting]);
+
+        g_strfreev(splits);
+    }
+
+    if (!value) {
+        value = g_strdup("gimp");
+    }
+    return value;
+}
+
 static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
 {
     SPObject* obj = SP_OBJECT(anchor);
@@ -323,7 +341,8 @@ static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
     const gchar *href = ir->attribute("xlink:href");
 
     GError* errThing = 0;
-    gchar const* args[] = {EDIT_APP, href, 0};
+    gchar* editorBin = getImageEditorName();
+    gchar const* args[] = {editorBin, href, 0};
     g_spawn_async(0, // working dir
                   const_cast<gchar **>(args),
                   0, //envp
@@ -339,6 +358,7 @@ static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
         g_error_free(errThing);
         errThing = 0;
     }
+    g_free(editorBin);
 }
 
 /* SPShape */

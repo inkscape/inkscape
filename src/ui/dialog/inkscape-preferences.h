@@ -166,6 +166,8 @@ protected:
     PrefCombo       _misc_small_secondary;
     PrefCombo       _misc_small_tools;
     PrefCombo       _misc_overs_bitmap;
+    PrefCombo       _misc_bitmap_editor;
+    PrefCheckButton _misc_bitmap_autoreload;
 
     Gtk::ComboBoxText   _cms_display_profile;
     PrefCheckButton     _cms_from_display;

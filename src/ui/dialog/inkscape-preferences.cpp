@@ -901,12 +901,13 @@ void InkscapePreferences::initPageMisc()
 
     _page_misc.add_line( false, _("Simplification threshold:"), _misc_simpl, "",
                            _("How strong is the Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."), false);
-    int const num_items = 5;
-    Glib::ustring labels[num_items] = {_("None"), _("2x2"), _("4x4"), _("8x8"), _("16x16")};
-    int values[num_items] = {0, 1, 2, 3, 4};
-    _misc_overs_bitmap.set_size_request(_sb_width);
-    _misc_overs_bitmap.init("options.bitmapoversample", "value", labels, values, num_items, 1);
-    _page_misc.add_line( false, _("Oversample bitmaps:"), _misc_overs_bitmap, "", "", false);
+    {
+        Glib::ustring labels[] = {_("None"), _("2x2"), _("4x4"), _("8x8"), _("16x16")};
+        int values[] = {0, 1, 2, 3, 4};
+        _misc_overs_bitmap.set_size_request(_sb_width);
+        _misc_overs_bitmap.init("options.bitmapoversample", "value", labels, values, G_N_ELEMENTS(values), 1);
+        _page_misc.add_line( false, _("Oversample bitmaps:"), _misc_overs_bitmap, "", "", false);
+    }
 
 
     // consider moving this to an UI tab:
@@ -930,6 +931,30 @@ void InkscapePreferences::initPageMisc()
     _page_misc.add_line( false, _("Maximum number of recent documents:"), _misc_recent, "",
                            _("The maximum length of the Open Recent list in the File menu"), false);
     _misc_simpl.init("options.simplifythreshold", "value", 0.0001, 1.0, 0.0001, 0.0010, 0.0010, false, false);
+
+
+    // -----------
+
+    _misc_bitmap_autoreload.init(_("Automatically reload bitmaps"), "options.bitmapautoreload", "value", true);
+    _page_misc.add_line( false, "", _misc_bitmap_autoreload, "",
+                           _("Enbles automatic reload of linked images when changed on disk."));
+    gchar const *choices = prefs_get_string_attribute("options.bitmapeditor", "choices");
+    if ( choices && choices[0] ) {
+        gchar** splits = g_strsplit(choices, ",", 0);
+        gint numIems = g_strv_length(splits);
+
+        Glib::ustring labels[numIems];
+        int values[numIems];
+        for ( gint i = 0; i < numIems; i++) {
+            values[i] = i;
+            labels[i] = splits[i];
+        }
+        _misc_bitmap_editor.init("options.bitmapeditor", "value", labels, values, numIems, 0);
+        _page_misc.add_line( false, _("Bitmap editor:"), _misc_bitmap_editor, "", "", false);
+
+        g_strfreev(splits);
+    }
+
 
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
 }

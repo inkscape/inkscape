@@ -1439,7 +1439,8 @@ sp_desktop_widget_adjustment_value_changed (GtkAdjustment */*adj*/, SPDesktopWid
 /* we make the desktop window with focus active, signal is connected in interface.c */
 bool SPDesktopWidget::onFocusInEvent(GdkEventFocus*)
 {
-    {
+
+    if (prefs_get_int_attribute_limited("options.bitmapautoreload", "value", 1, 0, 1)) {
         GSList const *imageList = sp_document_get_resource_list(desktop->doc(), "image");
         for (GSList const *p = imageList; p; p = p->next) {
             SPImage* image = SP_IMAGE(p->data);
