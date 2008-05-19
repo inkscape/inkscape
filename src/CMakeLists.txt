@@ -575,7 +575,7 @@ FOREACH(dirlist ${srcfolders})
   SET(INKSCAPE_SRC ${INKSCAPE_SRC} ${${dirlist}_SRC})
 ENDFOREACH(dirlist)
 
-
+SET(INKSCAPE_SRC ${INKSCAPE_SRC} ${GlibOutput})
 # All directories containing lists files that describe building internal libraries
 SET(libfolders
 2geom
