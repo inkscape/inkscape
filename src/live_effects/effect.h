@@ -18,6 +18,7 @@
 #include "util/enums.h"
 #include "sp-lpe-item.h"
 #include "knotholder.h"
+#include "parameter/bool.h"
 
 #define  LPE_CONVERSION_TOLERANCE 0.01    // FIXME: find good solution for this.
 
@@ -75,8 +76,6 @@ enum EffectType {
 extern const Util::EnumData<EffectType> LPETypeData[INVALID_LPE];
 extern const Util::EnumDataConverter<EffectType> LPETypeConverter;
 
-class Parameter;
-
 class Effect {
 public:
     static Effect* New(EffectType lpenr, LivePathEffectObject *lpeobj);
@@ -111,6 +110,8 @@ public:
     void readallParameters(Inkscape::XML::Node * repr);
     void setParameter(const gchar * key, const gchar * new_value);
 
+    inline bool isVisible() { return is_visible; }
+
     void editNextParamOncanvas(SPItem * item, SPDesktop * desktop);
 
 protected:
@@ -135,6 +136,8 @@ protected:
     std::vector<Parameter *> param_vector;
     std::vector<std::pair<SPKnotHolderSetFunc, SPKnotHolderGetFunc> > knotholder_func_vector;
     int oncanvasedit_it;
+    BoolParam is_visible;
+
     Inkscape::UI::Widget::Registry wr;
 
     LivePathEffectObject *lpeobj;

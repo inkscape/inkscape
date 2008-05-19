@@ -257,8 +257,10 @@ void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve) {
 
     if (sp_lpe_item_has_path_effect(lpeitem)) {
         LivePathEffectObject *lpeobj = sp_lpe_item_get_livepatheffectobject(lpeitem);
-        lpeobj->lpe->doBeforeEffect(lpeitem);
-        lpeobj->lpe->doEffect(curve);
+        if (lpeobj->lpe->isVisible()) {
+            lpeobj->lpe->doBeforeEffect(lpeitem);
+            lpeobj->lpe->doEffect(curve);
+        }
     }
 
     SPObject *parent = lpeitem->parent;

@@ -144,9 +144,11 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
 
 Effect::Effect(LivePathEffectObject *lpeobject)
     : oncanvasedit_it(0),
+      is_visible(_("Is visible?"), _("If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"), "is_visible", &wr, this, true),
       lpeobj(lpeobject),
       concatenate_before_pwd2(false)
 {
+    registerParameter( dynamic_cast<Parameter *>(&is_visible) );
 }
 
 Effect::~Effect()

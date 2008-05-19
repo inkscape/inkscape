@@ -73,6 +73,7 @@ SPKnotHolder *
 sp_item_knot_holder(SPItem *item, SPDesktop *desktop)
 {
     if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(item)) &&
+        sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item))->isVisible() &&
         sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item))->providesKnotholder()) {
         return sp_lpe_knot_holder(item, desktop);
     } else
