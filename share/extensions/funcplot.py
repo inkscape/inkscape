@@ -114,7 +114,7 @@ def drawfunction(xstart, xend, ybottom, ytop, samples, width, height, left, bott
         dx0 = (x1 - x0)/ds 
         dy0 = (y1 - y0)/ds
     else: # derivative given by the user
-        dx0 = 0 # Only works for rectangular coordinates
+        dx0 = 1 # Only works for rectangular coordinates
         dy0 = fp(xstart)
 
     # Start curve
@@ -138,7 +138,7 @@ def drawfunction(xstart, xend, ybottom, ytop, samples, width, height, left, bott
             dx1 = (x1 - x2)/ds
             dy1 = (y1 - y2)/ds
         else: # derivative given by the user
-            dx1 = 0 # Only works for rectangular coordinates
+            dx1 = 1 # Only works for rectangular coordinates
             dy1 = fp(x1)
         # create curve
         a.append([' C ',
