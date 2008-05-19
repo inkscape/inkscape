@@ -5,6 +5,7 @@ SET(INKSCAPE_DEPENDS
 #    cairomm-1.0
 #    glib-2.0
 #    glibmm-2.4
+    gsl
     gtk+-2.0
     gtkmm-2.4
     sigc++-2.0
@@ -14,7 +15,6 @@ SET(INKSCAPE_DEPENDS
     libxml-2.0
     libxslt
     ImageMagick++
-    libpopt
     freetype2)
 SET(INKSCAPE_OPTIONAL
     gnome-vfs-2.0

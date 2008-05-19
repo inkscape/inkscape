@@ -31,8 +31,6 @@ layer-properties.cpp
 layer-properties.h
 layers-panel.cpp
 layers-panel.h
-makefile.in
-Makefile_insert
 object-attributes.cpp
 object-attributes.h
 rdf.cpp

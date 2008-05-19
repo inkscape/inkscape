@@ -8,6 +8,8 @@ lpe-bendpath.cpp
 lpe-bendpath.h
 lpe-circle_with_radius.cpp
 lpe-circle_with_radius.h
+lpe-constructgrid.cpp
+lpe-constructgrid.h
 lpe-curvestitch.cpp
 lpe-curvestitch.h
 lpe-envelope.cpp
@@ -24,22 +26,23 @@ lpeobject-reference.cpp
 lpeobject-reference.h
 lpe-patternalongpath.cpp
 lpe-patternalongpath.h
+lpe-perp_bisector.cpp
+lpe-perp_bisector.h
 lpe-perspective_path.cpp
 lpe-perspective_path.h
 lpe-skeleton.cpp
 lpe-skeleton.h
 lpe-sketch.cpp
 lpe-sketch.h
-lpe-slant.cpp
-lpe-slant.h
 lpe-spiro.cpp
 lpe-spiro.h
+lpe-tangent_to_curve.cpp
+lpe-tangent_to_curve.h
 lpe-test-doEffect-stack.cpp
 lpe-test-doEffect-stack.h
 lpe-vonkoch.cpp
 lpe-vonkoch.h
 spiro.cpp
 spiro.h
-todo.txt
 )
 
