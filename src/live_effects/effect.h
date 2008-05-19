@@ -68,6 +68,7 @@ enum EffectType {
     CONSTRUCT_GRID,
     ENVELOPE,
     PERP_BISECTOR,
+    TANGENT_TO_CURVE,
     INVALID_LPE // This must be last
 };
 

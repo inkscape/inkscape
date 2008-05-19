@@ -46,5 +46,7 @@ live_effects_liblive_effects_a_SOURCES = \
 	live_effects/lpe-envelope.cpp	\
 	live_effects/lpe-envelope.h	\
 	live_effects/lpe-perp_bisector.cpp	\
-	live_effects/lpe-perp_bisector.h
+	live_effects/lpe-perp_bisector.h	\
+	live_effects/lpe-tangent_to_curve.cpp	\
+	live_effects/lpe-tangent_to_curve.h
 
