@@ -48,6 +48,17 @@
 namespace Geom
 {
 
+/*
+ * Given a line L specified by a point A and direction vector v,
+ * return the point on L nearest to p. Note that the returned value
+ * is with respect to the _normalized_ direction of v!
+ */
+inline double nearest_point(Point const &p, Point const &A, Point const &v)
+{
+    Point d(p - A);
+    return d[0] * v[0] + d[1] * v[1];
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // D2<SBasis> versions
 
