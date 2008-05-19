@@ -33,13 +33,23 @@ public:
 
     /* the knotholder functions must be declared friends */
     friend NR::Point attach_pt_get(SPItem *item);
+    friend NR::Point left_end_get(SPItem *item);
+    friend NR::Point right_end_get(SPItem *item);
     friend void attach_pt_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state);
+    friend void left_end_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state);
+    friend void right_end_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state);
 
 private:
     ScalarParam t_attach;
 
-    Geom::Point ptA;
+    ScalarParam length_left;
+    ScalarParam length_right;
+
+    Geom::Point ptA; // point of attachment to the curve
     Geom::Point derivA;
+
+    Geom::Point C; // left end of tangent
+    Geom::Point D; // right end of tangent
 
     LPETangentToCurve(const LPETangentToCurve&);
     LPETangentToCurve& operator=(const LPETangentToCurve&);

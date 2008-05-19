@@ -57,12 +57,52 @@ void attach_pt_set(SPItem *item, NR::Point const &p, NR::Point const &origin, gu
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true);
 }
 
+NR::Point left_end_get(SPItem *item) {
+    Inkscape::LivePathEffect::LPETangentToCurve *lpe =
+        (Inkscape::LivePathEffect::LPETangentToCurve *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+
+    return lpe->C;
+}
+
+NR::Point right_end_get(SPItem *item) {
+    Inkscape::LivePathEffect::LPETangentToCurve *lpe =
+        (Inkscape::LivePathEffect::LPETangentToCurve *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+
+    return lpe->D;
+}
+
+void left_end_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state) {
+    Inkscape::LivePathEffect::LPETangentToCurve *lpe =
+        (Inkscape::LivePathEffect::LPETangentToCurve *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+
+    double lambda = Geom::nearest_point(p.to_2geom(), lpe->ptA, lpe->derivA);
+    lpe->length_left.param_set_value(-lambda);
+
+    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true);
+}
+
+void right_end_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state) {
+    Inkscape::LivePathEffect::LPETangentToCurve *lpe =
+        (Inkscape::LivePathEffect::LPETangentToCurve *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+
+    double lambda = Geom::nearest_point(p.to_2geom(), lpe->ptA, lpe->derivA);
+    lpe->length_right.param_set_value(lambda);
+
+    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true);
+}
+
 LPETangentToCurve::LPETangentToCurve(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    t_attach(_("Location along curve"), _("Location of the point of attachment along the curve (between 0.0 and number-of-segments)"), "t_attach", &wr, this, 0.5)
+    t_attach(_("Location along curve"), _("Location of the point of attachment along the curve (between 0.0 and number-of-segments)"), "t_attach", &wr, this, 0.5),
+    length_left(_("Length left"), _("Specifies the left end of the tangent"), "length-left", &wr, this, 150),
+    length_right(_("Length right"), _("Specifies the right end of the tangent"), "length-right", &wr, this, 150)
 {
     registerParameter( dynamic_cast<Parameter *>(&t_attach) );
+    registerParameter( dynamic_cast<Parameter *>(&length_left) );
+    registerParameter( dynamic_cast<Parameter *>(&length_right) );
     registerKnotHolderHandle(attach_pt_set, attach_pt_get);
+    registerKnotHolderHandle(left_end_set, left_end_get);
+    registerKnotHolderHandle(right_end_set, right_end_get);
 }
 
 LPETangentToCurve::~LPETangentToCurve()
@@ -78,10 +118,10 @@ LPETangentToCurve::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const
     ptA = pwd2_in.valueAt(t_attach);
     derivA = unit_vector(derivative(pwd2_in).valueAt(t_attach));
 
-    Point A = ptA - derivA * 100;
-    Point B = ptA + derivA * 100;
+    C = ptA - derivA * length_left;
+    D = ptA + derivA * length_right;
 
-    output = Piecewise<D2<SBasis> >(D2<SBasis>(Linear(A[X], B[X]), Linear(A[Y], B[Y])));
+    output = Piecewise<D2<SBasis> >(D2<SBasis>(Linear(C[X], D[X]), Linear(C[Y], D[Y])));
 
     return output;
 }
