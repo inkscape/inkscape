@@ -18,6 +18,7 @@
 #include "desktop-handles.h"
 #include "event-context.h"
 #include "display/sodipodi-ctrl.h"
+#include "display/curve.h"
 
 /**
  * Creates an anchor object and initializes it.
@@ -31,6 +32,7 @@ sp_draw_anchor_new(SPDrawContext *dc, SPCurve *curve, gboolean start, NR::Point 
 
     a->dc = dc;
     a->curve = curve;
+    curve->ref();
     a->start = start;
     a->active = FALSE;
     a->dp = delta;
@@ -53,6 +55,9 @@ sp_draw_anchor_new(SPDrawContext *dc, SPCurve *curve, gboolean start, NR::Point 
 SPDrawAnchor *
 sp_draw_anchor_destroy(SPDrawAnchor *anchor)
 {
+    if (anchor->curve) {
+        anchor->curve->unref();
+    }
     if (anchor->ctrl) {
         gtk_object_destroy(GTK_OBJECT(anchor->ctrl));
     }
