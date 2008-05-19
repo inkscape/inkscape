@@ -5,7 +5,7 @@
     <dependency type="executable" location="extensions">polyhedron_3d.py</dependency>
     <dependency type="executable" location="extensions">inkex.py</dependency>
     <param name="tab" type="notebook">
-        <page name="common" _gui-text="Common Objects">
+        <page name="common" _gui-text="Model File">
             <param name="obj" type="optiongroup"  _gui-text="Object:">
                 <_option value="cube">Cube</_option>
                 <_option value="t_cube">Truncated Cube</_option>
@@ -26,6 +26,9 @@
                 <_option value="from_file">Load From File</_option>
                 </param>
             <param name="spec_file" type="string"  _gui-text="Filename:">great_rhombicuboct.obj</param>
+            <param name="type" type="optiongroup"  _gui-text="Object Type">
+                <_option value="face">Face-Specified</_option>
+                <_option value="edge">Edge-Specified</_option></param>
             <param name="cw_wound"  type="boolean" _gui-text="Clockwise Wound Object">0</param>
          </page>
          <page name="view" _gui-text="View">

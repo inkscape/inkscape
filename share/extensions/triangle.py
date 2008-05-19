@@ -39,7 +39,7 @@ from math import *
 def draw_SVG_tri( (x1, y1), (x2, y2), (x3, y3), (ox,oy), width, name, parent):
     style = { 'stroke': '#000000', 'stroke-width':str(width), 'fill': 'none' }
     tri_attribs = {'style':simplestyle.formatStyle(style),
-                    'inkscape:label':name,
+                    inkex.addNS('label','inkscape'):name,
                     'd':'M '+str(x1+ox)+','+str(y1+oy)+
                        ' L '+str(x2+ox)+','+str(y2+oy)+
                        ' L '+str(x3+ox)+','+str(y3+oy)+
@@ -191,4 +191,5 @@ class Grid_Polar(inkex.Effect):
 
 e = Grid_Polar()
 e.affect()
+
 

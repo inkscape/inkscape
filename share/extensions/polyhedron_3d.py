@@ -2,7 +2,7 @@
 '''
 Copyright (C) 2007 John Beard john.j.beard@gmail.com
 
-##This extension draws 3d objects from an .obj file stored in a local folder
+##This extension draws 3d objects from a Wavefront .obj 3D file stored in a local folder
 ##Many settings for appearance, lighting, rotation, etc are available.
 
 #                              ^y
@@ -16,11 +16,6 @@ Copyright (C) 2007 John Beard john.j.beard@gmail.com
 # |__--``           x   |__--``|
 #   IMAGE PLANE           SCENE|
 #                              |
-
-#The .obj file must contain "#Name:" followed by a name, 
-#and "#Type:" follwed by "edge_specified" or "face-specified"
-#if edge_specified is given, then faces cannot be drawn,
-#if face_specified is given then faces and edges can be drawn
 
 #Vertices are given as "v" followed by three numbers (x,y,z).
 #All files need a vertex list
@@ -63,29 +58,30 @@ except:
     inkex.debug("Failed to import the numpy module. This module is required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy.")
     sys.exit()
 
-def mydir():
+def objfile(name):
     import os.path
     if __name__ == '__main__':
         filename = sys.argv[0]
     else:
         filename = __file__
-    return os.path.abspath(os.path.dirname(filename))
+    path = os.path.abspath(os.path.dirname(filename))
+    path = os.path.join(path, 'Poly3DObjects', name)
+    return path
     
 def get_obj_data(obj, name):
-    infile = open(mydir() +'\\Poly3DObjects\\'+name)
+    infile = open(objfile(name))
     
     #regular expressions
     getname = '(.[nN]ame:\\s*)(.*)'
-    gettype = '(.[tT]ype:\\s*)([Ff]ace|[Ee]dge)(.specified)'
-    getvertex = '(v\\s+)([\-\\d*\.]*)\\s+([\-\\d*\.]*)\\s+([\-\\d*\.]*)'
+    floating = '([\-\+\\d*\.e]*)'
+    getvertex = '(v\\s+)'+floating+'\\s+'+floating+'\\s+'+floating
     getedgeline = '(l\\s+)(.*)'
     getfaceline = '(f\\s+)(.*)'
-    getnextint = '\\s*(\\d+)(.*)'
+    getnextint = '(\\d+)([/\\d]*)(.*)'#we need to deal with 133\343\123 or 123\\456 as one item
     
     obj.vtx = []
     obj.edg = []
     obj.fce = []
-    obj.type=''
     obj.name=''
     
     for line in infile:
@@ -93,10 +89,6 @@ def get_obj_data(obj, name):
             m = re.search(getname, line)
             if m:
                 obj.name = m.group(2)
-            m = re.search(gettype, line)
-            if m:
-                typestr = m.group(2).lower()
-                obj.type=typestr
         elif line[0:1] == 'v': #we have a vertex (maybe)
             m = re.search(getvertex, line)
             if m: #we have a valid vertex
@@ -109,7 +101,7 @@ def get_obj_data(obj, name):
                     m2 = re.search(getnextint, line)
                     if m2:
                         vtxlist.append( int(m2.group(1)) )
-                        line = m2.group(2)#remainder
+                        line = m2.group(3)#remainder
                     else:
                         line = None
                 if len(vtxlist) > 1:#we need at least 2 vertices to make an edge
@@ -123,16 +115,19 @@ def get_obj_data(obj, name):
                     m2 = re.search(getnextint, line)
                     if m2:
                         vtxlist.append( int(m2.group(1)) )
-                        line = m2.group(2)#remainder
+                        line = m2.group(3)#remainder
                     else:
                         line = None
                 if len(vtxlist) > 2:#we need at least 3 vertices to make an edge
                     obj.fce.append(vtxlist)
+    
+    if obj.name == '':#no name was found, use filename, without extension
+        obj.name = name[0:-4]
 
 def draw_SVG_dot((cx, cy), st, name, parent):
     style = { 'stroke': '#000000', 'stroke-width':str(st.th), 'fill': st.fill, 'stroke-opacity':st.s_opac, 'fill-opacity':st.f_opac}
     circ_attribs = {'style':simplestyle.formatStyle(style),
-                    'inkscape:label':name,
+                    inkex.addNS('label','inkscape'):name,
                     'r':str(st.r),
                     'cx':str(cx), 'cy':str(-cy)}
     inkex.etree.SubElement(parent, inkex.addNS('circle','svg'), circ_attribs )
@@ -141,7 +136,7 @@ def draw_SVG_line((x1, y1),(x2, y2), st, name, parent):
     #sys.stderr.write(str(p1))
     style = { 'stroke': '#000000', 'stroke-width':str(st.th)}
     line_attribs = {'style':simplestyle.formatStyle(style),
-                    'inkscape:label':name,
+                    inkex.addNS('label','inkscape'):name,
                     'd':'M '+str(x1)+','+str(-y1)+' L '+str(x2)+','+str(-y2)}
     inkex.etree.SubElement(parent, inkex.addNS('path','svg'), line_attribs )
     
@@ -157,7 +152,7 @@ def draw_SVG_poly(pts, face, st, name, parent):
     d = d + 'z' #close the polygon
     
     line_attribs = {'style':simplestyle.formatStyle(style),
-                    'inkscape:label':name,'d': d}
+                    inkex.addNS('label','inkscape'):name,'d': d}
     inkex.etree.SubElement(parent, inkex.addNS('path','svg'), line_attribs )
     
 def get_normal( pts, face): #returns the normal vector for the plane passing though the first three elements of face of pts
@@ -235,13 +230,14 @@ class Obj(object): #a 3d object defined by the vertices and the faces (eg a poly
     def __init__(self):
         None
 
-class Draw_From_Triangle(inkex.Effect):
+class Poly_3D(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option("--tab",
             action="store", type="string", 
             dest="tab", default="object") 
 
+#MODEL FILE SETTINGS
         self.OptionParser.add_option("--obj",
             action="store", type="string", 
             dest="obj", default='cube')
@@ -251,6 +247,9 @@ class Draw_From_Triangle(inkex.Effect):
         self.OptionParser.add_option("--cw_wound",
             action="store", type="inkbool", 
             dest="cw_wound", default='true')
+        self.OptionParser.add_option("--type",
+            action="store", type="string", 
+            dest="type", default='face')
 #VEIW SETTINGS
         self.OptionParser.add_option("--r1_ax",
             action="store", type="string", 
@@ -350,7 +349,6 @@ class Draw_From_Triangle(inkex.Effect):
         st.linejoin = 'round'
         
         file = ''
-        obj = Obj() #create the object
         if   so.obj == 'cube':
             file = 'cube.obj'
         elif so.obj == 't_cube':
@@ -385,7 +383,23 @@ class Draw_From_Triangle(inkex.Effect):
             file = 'trunc_dodec.obj'
         elif so.obj == 'from_file':
             file = so.spec_file
+            
+        obj = Obj() #create the object
         get_obj_data(obj, file)
+        
+        obj.type=''
+        if so.type == 'face':
+            if len(obj.fce) > 0:
+                obj.type = 'face'
+            else:
+                sys.stderr.write('No face data found in specified file\n')
+                obj.type = 'error'
+        else:
+            if len(obj.edg) > 0:
+                obj.type = 'edge'
+            else:
+                sys.stderr.write('No edge data found in specified file\n')
+                obj.type = 'error'
         
         trans_mat = mat(identity(3, float)) #init. trans matrix as identity matrix
         
@@ -483,10 +497,11 @@ class Draw_From_Triangle(inkex.Effect):
                     face_no = z_list[i][3]#the number of the face to draw
                     draw_SVG_poly(vp_pts, obj.fce[ face_no ], st, 'Face:'+str(face_no), proj)
             else:
-                sys.stderr.write('The selected file does not contain face data.\nPlease select point or edge plotting options.')
+                sys.stderr.write('Face Data Not Found. Ensure file contains face data, and check the file is imported as "Face-Specifed" under the "Model File" tab.\n')
         else:
-            sys.stderr.write('Internal Error. No view type selected')
+            sys.stderr.write('Internal Error. No view type selected\n')
         
-e = Draw_From_Triangle()
+e = Poly_3D()
 e.affect()
+
 

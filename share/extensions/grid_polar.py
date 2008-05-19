@@ -24,22 +24,18 @@ import inkex
 import simplestyle, sys
 from math import *
 
-def log_N(base, x): #computes the base-n log of x
-    return log(x)/log(base)
-
-def draw_SVG_ellipse(rx, ry, cx, cy, width, fill, name, parent):
+def draw_SVG_circle(r, cx, cy, width, fill, name, parent):
     style = { 'stroke': '#000000', 'stroke-width':str(width), 'fill': fill }
     circ_attribs = {'style':simplestyle.formatStyle(style),
-                    'inkscape:label':name,
-                    'sodipodi:cx':str(cx), 'sodipodi:cy':str(cy), 
-                    'sodipodi:rx':str(rx), 'sodipodi:ry':str(ry), 
-                    'sodipodi:type':'arc'}
-    inkex.etree.SubElement(parent, inkex.addNS('path','svg'), circ_attribs )
+                    'cx':str(cx), 'cy':str(cy), 
+                    'r':str(r),
+                    inkex.addNS('label','inkscape'):name}
+    circle = inkex.etree.SubElement(parent, inkex.addNS('circle','svg'), circ_attribs )
 
 def draw_SVG_line(x1, y1, x2, y2, width, name, parent):
     style = { 'stroke': '#000000', 'stroke-width':str(width), 'fill': 'none' }
     line_attribs = {'style':simplestyle.formatStyle(style),
-                    'inkscape:label':name,
+                    inkex.addNS('label','inkscape'):name,
                     'd':'M '+str(x1)+','+str(y1)+' L '+str(x2)+','+str(y2)}
     inkex.etree.SubElement(parent, inkex.addNS('path','svg'), line_attribs )
     
@@ -49,7 +45,7 @@ def draw_SVG_label_centred(x, y, string, font_size, name, parent):
              'fill-opacity': '1.0', 'stroke': 'none',
              'font-weight': 'normal', 'font-style': 'normal', 'fill': '#000000'}
     label_attribs = {'style':simplestyle.formatStyle(style),
-                     'inkscape:label':name,
+                     inkex.addNS('label','inkscape'):name,
                      'x':str(x), 'y':str(y)}
     label = inkex.etree.SubElement(parent, inkex.addNS('text','svg'), label_attribs)
     label.text = string
@@ -138,21 +134,19 @@ class Grid_Polar(inkex.Effect):
         
         #Create SVG circles
         for i in range(1, self.options.r_divs+1):
-            draw_SVG_ellipse(i*dr, i*dr, 0, 0, #major div circles
+            draw_SVG_circle(i*dr, 0, 0, #major div circles
                              self.options.r_divs_th, 'none',
                              'MajorDivCircle'+str(i)+':R'+str(i*dr), grid)
             
             if self.options.r_log: #logarithmic subdivisions
                 for j in range (2, self.options.r_subdivs):
-                    draw_SVG_ellipse(i*dr-(1-log_N(self.options.r_subdivs, j))*dr, #minor div circles
-                                     i*dr-(1-log_N(self.options.r_subdivs, j))*dr, 0, 0, 
-                                     self.options.r_subdivs_th, 'none',
+                    draw_SVG_circle(i*dr-(1-log(j, self.options.r_subdivs))*dr, #minor div circles
+                                    0, 0, self.options.r_subdivs_th, 'none',
                                      'MinorDivCircle'+str(i)+':Log'+str(j), grid)
             else: #linear subdivs
                 for j in range (1, self.options.r_subdivs):
-                    draw_SVG_ellipse(i*dr-j*dr/self.options.r_subdivs, #minor div circles
-                                     i*dr-j*dr/self.options.r_subdivs, 0, 0, 
-                                     self.options.r_subdivs_th, 'none',
+                    draw_SVG_circle(i*dr-j*dr/self.options.r_subdivs, #minor div circles
+                                     0, 0, self.options.r_subdivs_th, 'none',
                                      'MinorDivCircle'+str(i)+':R'+str(i*dr), grid)
         
         if self.options.a_divs == self.options.a_divs_cent: #the lines can go from the centre to the edge
@@ -182,7 +176,7 @@ class Grid_Polar(inkex.Effect):
                                   self.options.a_subdivs_th, 'RadialMinorGridline'+str(i), grid)
         
         if self.options.c_dot_dia <> 0: #if a non-zero diameter, draw the centre dot
-            draw_SVG_ellipse(self.options.c_dot_dia /2.0, self.options.c_dot_dia/2.0,
+            draw_SVG_circle(self.options.c_dot_dia /2.0,
                              0, 0, 0, '#000000', 'CentreDot', grid)
         
         if self.options.a_labels == 'deg':
@@ -198,4 +192,5 @@ class Grid_Polar(inkex.Effect):
 
 e = Grid_Polar()
 e.affect()
+
 

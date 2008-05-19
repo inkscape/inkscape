@@ -26,20 +26,17 @@ import inkex
 import simplestyle, sys
 from math import *
 
-def log_N(base, x): #computes the base-n log of x
-    return log(x)/log(base)
-
 def draw_SVG_line(x1, y1, x2, y2, width, name, parent):
     style = { 'stroke': '#000000', 'stroke-width':str(width), 'fill': 'none' }
     line_attribs = {'style':simplestyle.formatStyle(style),
-                    'inkscape:label':name,
+                    inkex.addNS('label','inkscape'):name,
                     'd':'M '+str(x1)+','+str(y1)+' L '+str(x2)+','+str(y2)}
     inkex.etree.SubElement(parent, inkex.addNS('path','svg'), line_attribs )
     
 def draw_SVG_rect(x,y,w,h, width, fill, name, parent):
     style = { 'stroke': '#000000', 'stroke-width':str(width), 'fill':fill}
     rect_attribs = {'style':simplestyle.formatStyle(style),
-                    'inkscape:label':name,
+                    inkex.addNS('label','inkscape'):name,
                     'x':str(x), 'y':str(y), 'width':str(w), 'height':str(h)}
     inkex.etree.SubElement(parent, inkex.addNS('rect','svg'), rect_attribs )
 
@@ -185,8 +182,8 @@ class Grid_Polar(inkex.Effect):
             if self.options.x_log: #log x subdivs
                 for j in range (1, sd):
                     if j>1: #the first loop is only for subsubdivs
-                        draw_SVG_line(self.options.dx*(i+log_N(sd, j)), 0,
-                                      self.options.dx*(i+log_N(sd, j)), ymax,
+                        draw_SVG_line(self.options.dx*(i+log(j, sd)), 0,
+                                      self.options.dx*(i+log(j, sd)), ymax,
                                       self.options.x_subdivs_th,
                                       'MinorXDiv'+str(i)+':'+str(j), minglx)
                                   
@@ -196,8 +193,8 @@ class Grid_Polar(inkex.Effect):
                                 ssd2 = ssd+1 #make even
                             else:
                                 ssd2 = ssd #no change
-                            draw_SVG_line(self.options.dx*(i+log_N(sd, j+k/float(ssd2) )), 0,
-                                          self.options.dx*(i+log_N(sd, j+k/float(ssd2) )), ymax,
+                            draw_SVG_line(self.options.dx*(i+log(j+k/float(ssd2),sd )), 0,
+                                          self.options.dx*(i+log(j+k/float(ssd2),sd )), ymax,
                                           self.options.x_subsubdivs_th,'SubminorXDiv'+str(i)+':'+str(j)+':'+str(k), mminglx)
             
             else: #linear x subdivs
@@ -228,8 +225,8 @@ class Grid_Polar(inkex.Effect):
             if self.options.y_log: #log y subdivs
                 for j in range (1, sd):
                     if j>1: #the first loop is only for subsubdivs
-                        draw_SVG_line(0,    self.options.dy*(i+1-log_N(sd, j)),
-                                      xmax, self.options.dy*(i+1-log_N(sd, j)),
+                        draw_SVG_line(0,    self.options.dy*(i+1-log(j,sd)),
+                                      xmax, self.options.dy*(i+1-log(j,sd)),
                                       self.options.y_subdivs_th,
                                       'MinorXDiv'+str(i)+':'+str(j), mingly)
                     
@@ -239,8 +236,8 @@ class Grid_Polar(inkex.Effect):
                                 ssd2 = ssd+1
                             else:
                                 ssd2 = ssd #no change
-                            draw_SVG_line(0,    self.options.dx*(i+1-log_N(sd, j+k/float(ssd2) )),
-                                          xmax, self.options.dx*(i+1-log_N(sd, j+k/float(ssd2) )),
+                            draw_SVG_line(0,    self.options.dx*(i+1-log(j+k/float(ssd2),sd )),
+                                          xmax, self.options.dx*(i+1-log(j+k/float(ssd2),sd )),
                                           self.options.y_subsubdivs_th,
                                           'SubminorXDiv'+str(i)+':'+str(j)+':'+str(k), mmingly)
             else: #linear y subdivs
@@ -261,4 +258,5 @@ class Grid_Polar(inkex.Effect):
 
 e = Grid_Polar()
 e.affect()
+
 
