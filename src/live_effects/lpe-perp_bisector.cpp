@@ -46,10 +46,7 @@ bisector_end_set(SPItem *item, NR::Point const &p, bool left) {
     Inkscape::LivePathEffect::LPEPerpBisector *lpe =
         (Inkscape::LivePathEffect::LPEPerpBisector *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
 
-    Geom::Point v(Geom::unit_vector(lpe->B - lpe->A));
-    Geom::Point diff(lpe->M - p.to_2geom());
-
-    double lambda = - v[Geom::Y] * diff[Geom::X] + v[Geom::X] * diff[Geom::Y];
+    double lambda = Geom::nearest_point(p.to_2geom(), lpe->M, lpe->perp_dir);
     if (left) {
         lpe->C = lpe->M + lpe->perp_dir * lambda;
         lpe->length_left.param_set_value(lambda);
