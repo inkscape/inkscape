@@ -182,7 +182,6 @@ src/live_effects/lpe-patternalongpath.cpp
 src/live_effects/lpe-perspective_path.cpp
 src/live_effects/lpe-skeleton.cpp
 src/live_effects/lpe-sketch.cpp
-src/live_effects/lpe-slant.cpp
 src/live_effects/lpe-test-doEffect-stack.cpp
 src/live_effects/lpe-vonkoch.cpp
 src/live_effects/parameter/bool.cpp
@@ -371,7 +370,7 @@ src/winmain.cpp
 [type: gettext/xml] share/extensions/pathscatter.inx
 [type: gettext/xml] share/extensions/perfectboundcover.inx
 [type: gettext/xml] share/extensions/perspective.inx
-[type: gettext/xml] share/extensions/polyhedron_3D.inx
+[type: gettext/xml] share/extensions/polyhedron_3d.inx
 [type: gettext/xml] share/extensions/ps_input.inx
 [type: gettext/xml] share/extensions/radiusrand.inx
 [type: gettext/xml] share/extensions/render_alphabetsoup.inx
