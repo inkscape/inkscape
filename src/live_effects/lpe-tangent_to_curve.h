@@ -45,6 +45,8 @@ private:
     ScalarParam length_left;
     ScalarParam length_right;
 
+    ScalarParam angle;
+
     Geom::Point ptA; // point of attachment to the curve
     Geom::Point derivA;
 

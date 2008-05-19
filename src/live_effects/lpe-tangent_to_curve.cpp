@@ -22,6 +22,7 @@
 #include "libnr/n-art-bpath-2geom.h"
 
 #include <2geom/path.h>
+#include <2geom/transforms.h>
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -95,11 +96,13 @@ LPETangentToCurve::LPETangentToCurve(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     t_attach(_("Location along curve"), _("Location of the point of attachment along the curve (between 0.0 and number-of-segments)"), "t_attach", &wr, this, 0.5),
     length_left(_("Length left"), _("Specifies the left end of the tangent"), "length-left", &wr, this, 150),
-    length_right(_("Length right"), _("Specifies the right end of the tangent"), "length-right", &wr, this, 150)
+    length_right(_("Length right"), _("Specifies the right end of the tangent"), "length-right", &wr, this, 150),
+    angle(_("Angle"), _("Additional angle between tangent and curve"), "angle", &wr, this, 0.0)
 {
     registerParameter( dynamic_cast<Parameter *>(&t_attach) );
     registerParameter( dynamic_cast<Parameter *>(&length_left) );
     registerParameter( dynamic_cast<Parameter *>(&length_right) );
+    registerParameter( dynamic_cast<Parameter *>(&angle) );
     registerKnotHolderHandle(attach_pt_set, attach_pt_get);
     registerKnotHolderHandle(left_end_set, left_end_get);
     registerKnotHolderHandle(right_end_set, right_end_get);
@@ -117,6 +120,10 @@ LPETangentToCurve::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const
 
     ptA = pwd2_in.valueAt(t_attach);
     derivA = unit_vector(derivative(pwd2_in).valueAt(t_attach));
+
+    // TODO: Why are positive angles measured clockwise, not counterclockwise?
+    Geom::Rotate rot(Geom::Rotate::from_degrees(-angle));
+    derivA = derivA * rot;
 
     C = ptA - derivA * length_left;
     D = ptA + derivA * length_right;
