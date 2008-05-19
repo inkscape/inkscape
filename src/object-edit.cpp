@@ -32,6 +32,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "sp-namedview.h"
+#include "live_effects/effect.h"
 
 #include "sp-pattern.h"
 #include "sp-path.h"
@@ -44,7 +45,7 @@
 
 #include "xml/repr.h"
 
-#include "isnan.h"
+#include "2geom/isnan.h"
 
 #define sp_round(v,m) (((v) < 0.0) ? ((ceil((v) / (m) - 0.5)) * (m)) : ((floor((v) / (m) + 0.5)) * (m)))
 
@@ -58,9 +59,23 @@ static SPKnotHolder *sp_misc_knot_holder(SPItem *item, SPDesktop *desktop);
 static SPKnotHolder *sp_flowtext_knot_holder(SPItem *item, SPDesktop *desktop);
 static void sp_pat_knot_holder(SPItem *item, SPKnotHolder *knot_holder);
 
+static SPKnotHolder *sp_lpe_knot_holder(SPItem *item, SPDesktop *desktop)
+{
+    SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
+
+    Inkscape::LivePathEffect::Effect *effect = sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+    effect->addHandles(knot_holder);
+
+    return knot_holder;
+}
+
 SPKnotHolder *
 sp_item_knot_holder(SPItem *item, SPDesktop *desktop)
 {
+    if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(item)) &&
+        sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item))->providesKnotholder()) {
+        return sp_lpe_knot_holder(item, desktop);
+    } else
     if (SP_IS_RECT(item)) {
         return sp_rect_knot_holder(item, desktop);
     } else if (SP_IS_BOX3D(item)) {
@@ -1101,7 +1116,7 @@ sp_spiral_outer_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*
             spiral->rad = rad_new;
             spiral->t0 = pow(r0 / spiral->rad, 1.0/spiral->exp);
         }
-        if (!isFinite(spiral->t0)) spiral->t0 = 0.0;
+        if (!IS_FINITE(spiral->t0)) spiral->t0 = 0.0;
         spiral->t0 = CLAMP(spiral->t0, 0.0, 0.999);
     }
 

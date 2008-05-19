@@ -17,6 +17,7 @@
 #include "ui/widget/registry.h"
 #include "util/enums.h"
 #include "sp-lpe-item.h"
+#include "knotholder.h"
 
 #define  LPE_CONVERSION_TOLERANCE 0.01    // FIXME: find good solution for this.
 
@@ -97,6 +98,9 @@ public:
 
     virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
 
+    bool providesKnotholder() { return knotholder_func_vector.size() > 0; }
+    void addHandles(SPKnotHolder *knotholder);
+
     Glib::ustring          getName();
     Inkscape::XML::Node *  getRepr();
     SPDocument *           getSPDoc();
@@ -124,9 +128,11 @@ protected:
             doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
     void registerParameter(Parameter * param);
+    void registerKnotHolderHandle(SPKnotHolderSetFunc set_func, SPKnotHolderGetFunc get_func);
     Parameter * getNextOncanvasEditableParam();
 
     std::vector<Parameter *> param_vector;
+    std::vector<std::pair<SPKnotHolderSetFunc, SPKnotHolderGetFunc> > knotholder_func_vector;
     int oncanvasedit_it;
     Inkscape::UI::Widget::Registry wr;
 

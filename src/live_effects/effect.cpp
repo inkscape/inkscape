@@ -299,9 +299,24 @@ Effect::registerParameter(Parameter * param)
     param_vector.push_back(param);
 }
 
+void
+Effect::registerKnotHolderHandle(SPKnotHolderSetFunc set_func, SPKnotHolderGetFunc get_func)
+{
+    knotholder_func_vector.push_back(std::make_pair(set_func, get_func));
+}
+
+// TODO: allow for adding click_functions and description strings, too
+void
+Effect::addHandles(SPKnotHolder *knotholder) {
+    std::vector<std::pair<SPKnotHolderSetFunc, SPKnotHolderGetFunc> >::iterator i;
+    for (i = knotholder_func_vector.begin(); i != knotholder_func_vector.end(); ++i) {
+        sp_knot_holder_add(knotholder, i->first, i->second, NULL, (""));
+    }
+}
+
 /**
-* This *creates* a new widget, management of deletion should be done by the caller
-*/
+ * This *creates* a new widget, management of deletion should be done by the caller
+ */
 Gtk::Widget *
 Effect::newWidget(Gtk::Tooltips * tooltips)
 {

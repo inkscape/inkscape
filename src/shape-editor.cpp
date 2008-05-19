@@ -190,7 +190,14 @@ void ShapeEditor::set_item(SPItem *item) {
     this->grab_node = -1;
 
     if (item) {
-        this->nodepath = sp_nodepath_new(desktop, item, (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0));
+        SPLPEItem *lpeitem = SP_LPE_ITEM(item);
+        if (!sp_lpe_item_has_path_effect(lpeitem) ||
+            !sp_lpe_item_get_livepatheffect(lpeitem)->providesKnotholder()) {
+            // only create nodepath if the item either doesn't have an LPE
+            // or the LPE doesn't provide a knotholder itself
+            this->nodepath =
+                sp_nodepath_new(desktop, item, (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0));
+        }
         if (this->nodepath) {
             this->nodepath->shape_editor = this;
         }
