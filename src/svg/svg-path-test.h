@@ -237,7 +237,7 @@ public:
         {   // Test relative
             char const * path_str = "m .1.2+0.3.0e0.0e0+6e-1-.3.0 z";
             NArtBpath * bpath = sp_svg_read_path(path_str);
-            TS_ASSERT(bpathEqual(bpath,bpath_good,.1e-8));
+            TS_ASSERT(bpathEqual(bpath,bpath_good));
             g_free(bpath);
         }
     }
@@ -436,7 +436,7 @@ public:
     }
 
 private:
-    bool bpathEqual(NArtBpath const * a, NArtBpath const * b, double eps = 0) {
+    bool bpathEqual(NArtBpath const * a, NArtBpath const * b, double eps = 1e-16) {
         while(a->code != NR_END && b->code == a->code) {
             switch(a->code) {
             case NR_MOVETO:
