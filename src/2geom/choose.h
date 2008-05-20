@@ -64,6 +64,15 @@ T choose(unsigned n, unsigned k) {
     return pascals_triangle[row+k];
 }
 
+// Is it faster to store them or compute them on demand?
+/*template <typename T>
+T choose(unsigned n, unsigned k) {
+	T r = 1;
+	for(unsigned i = 1; i <= k; i++)
+		r = (r*(n-k+i))/i;
+	return r;
+	}*/
+
 #endif
 
 /*

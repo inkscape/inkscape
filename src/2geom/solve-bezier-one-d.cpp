@@ -12,24 +12,37 @@ namespace Geom{
 template<class t>
 static int SGN(t x) { return (x > 0 ? 1 : (x < 0 ? -1 : 0)); } 
 
-/*
- *  Forward declarations
- */
-static void 
-Bernstein(double const *V,
-          unsigned degree,
-          double t,
-          double *Left,
-          double *Right);
-
-static unsigned 
-control_poly_flat_enough(double const *V, unsigned degree,
-			 double left_t, double right_t);
-
-const unsigned MAXDEPTH = 64;	/*  Maximum depth for recursion */
+const unsigned MAXDEPTH = 23; // Maximum depth for recursion.  Using floats means 23 bits precision max
 
 const double BEPSILON = ldexp(1.0,-MAXDEPTH-1); /*Flatness control value */
 
+/**
+ * This function is called _a lot_.  We have included various manual memory management stuff to reduce the amount of mallocing that goes on.  In the future it is possible that this will hurt performance.
+ **/
+class Bernsteins{
+public:
+    double *Vtemp;
+    unsigned N,degree;
+    std::vector<double> &solutions;
+    Bernsteins(int degr, std::vector<double> &so) : N(degr+1), degree(degr),solutions(so) {
+        Vtemp = new double[N*2];
+    }
+    ~Bernsteins() {
+        delete[] Vtemp;
+    }
+    void subdivide(double const *V,
+                   double t,
+                   double *Left,
+                   double *Right);
+
+    unsigned 
+    control_poly_flat_enough(double const *V);
+
+    void
+    find_bernstein_roots(double const *w, /* The control points  */
+                         unsigned depth,  /* The depth of the recursion */
+                         double left_t, double right_t);
+};
 /*
  *  find_bernstein_roots : Given an equation in Bernstein-Bernstein form, find all 
  *    of the roots in the open interval (0, 1).  Return the number of roots found.
@@ -41,10 +54,20 @@ find_bernstein_roots(double const *w, /* The control points  */
                      unsigned depth,	/* The depth of the recursion */
                      double left_t, double right_t)
 {  
+    Bernsteins B(degree, solutions);
+    B.find_bernstein_roots(w, depth, left_t, right_t);
+}
+
+void
+Bernsteins::find_bernstein_roots(double const *w, /* The control points  */
+                     unsigned depth,	/* The depth of the recursion */
+                     double left_t, double right_t) 
+{
+
     unsigned 	n_crossings = 0;	/*  Number of zero-crossings */
     
     int old_sign = SGN(w[0]);
-    for (unsigned i = 1; i <= degree; i++) {
+    for (unsigned i = 1; i < N; i++) {
         int sign = SGN(w[i]);
         if (sign) {
             if (sign != old_sign && old_sign) {
@@ -54,100 +77,36 @@ find_bernstein_roots(double const *w, /* The control points  */
         }
     }
     
-    switch (n_crossings) {
-    case 0: 	/* No solutions here	*/
+    if (n_crossings == 0) // no solutions here
         return;
 	
-    case 1:
+    if (n_crossings == 1) {
  	/* Unique solution	*/
         /* Stop recursion when the tree is deep enough	*/
         /* if deep enough, return 1 solution at midpoint  */
         if (depth >= MAXDEPTH) {
+            //printf("bottom out %d\n", depth);
             solutions.push_back((left_t + right_t) / 2.0);
             return;
         }
         
         // I thought secant method would be faster here, but it'aint. -- njh
-
-        if (control_poly_flat_enough(w, degree, left_t, right_t)) {
-            const double Ax = right_t - left_t;
-            const double Ay = w[degree] - w[0];
-
-            solutions.push_back(left_t - Ax*w[0] / Ay);
-            return;
-        }
-        break;
+        
+        // The original code went to some effort to try and terminate early when the curve is sufficiently flat.  However, it seems that in practice it almost always bottoms out, so leaving this code out actually speeds things up
+        if(0) if (control_poly_flat_enough(w)) {
+                //printf("flatten out %d\n", depth);
+                const double Ax = right_t - left_t;
+                const double Ay = w[degree] - w[0];
+                
+                solutions.push_back(left_t - Ax*w[0] / Ay);
+                return;
+            }
     }
 
     /* Otherwise, solve recursively after subdividing control polygon  */
-    double Left[degree+1],	/* New left and right  */
-           Right[degree+1];	/* control polygons  */
-    const double split = 0.5;
-    Bernstein(w, degree, split, Left, Right);
-    
-    double mid_t = left_t*(1-split) + right_t*split;
-    
-    find_bernstein_roots(Left,  degree, solutions, depth+1, left_t, mid_t);
-            
-    /* Solution is exactly on the subdivision point. */
-    if (Right[0] == 0)
-        solutions.push_back(mid_t);
-        
-    find_bernstein_roots(Right, degree, solutions, depth+1, mid_t, right_t);
-}
-
-/*
- *  control_poly_flat_enough :
- *	Check if the control polygon of a Bernstein curve is flat enough
- *	for recursive subdivision to bottom out.
- *
- */
-static unsigned 
-control_poly_flat_enough(double const *V, /* Control points	*/
-			 unsigned degree,
-			 double left_t, double right_t)	/* Degree of polynomial	*/
-{
-    /* Find the perpendicular distance from each interior control point to line connecting V[0] and
-     * V[degree] */
-
-    /* Derive the implicit equation for line connecting first */
-    /*  and last control points */
-    const double a = V[0] - V[degree];
-    const double b = right_t - left_t;
-    const double c = left_t * V[degree] - right_t * V[0] + a * left_t;
-
-    double max_distance_above = 0.0;
-    double max_distance_below = 0.0;
-    double ii = 0, dii = 1./degree;
-    for (unsigned i = 1; i < degree; i++) {
-        ii += dii;
-        /* Compute distance from each of the points to that line */
-        const double d = (a + V[i]) * ii*b  + c;
-        double dist = d*d;
-    // Find the largest distance
-        if (d < 0.0)
-            max_distance_below = std::min(max_distance_below, -dist);
-        else
-            max_distance_above = std::max(max_distance_above, dist);
-    }
-    
-    const double abSquared = (a * a) + (b * b);
-
-    const double intercept_1 = -(c + max_distance_above / abSquared);
-    const double intercept_2 = -(c + max_distance_below / abSquared);
-
-    /* Compute bounding interval*/
-    const double left_intercept = std::min(intercept_1, intercept_2);
-    const double right_intercept = std::max(intercept_1, intercept_2);
-
-    const double error = 0.5 * (right_intercept - left_intercept);
-    
-    if (error < BEPSILON * a)
-        return 1;
-    
-    return 0;
-}
-
+    double Left[N],	/* New left and right  */
+           Right[N];	/* control polygons  */
+    const double t = 0.5;
 
 
 /*
@@ -156,30 +115,81 @@ control_poly_flat_enough(double const *V, /* Control points	*/
  *      Fill in control points for resulting sub-curves.
  * 
  */
-static void 
-Bernstein(double const *V, /* Control pts	*/
-          unsigned degree,	/* Degree of bernstein curve */
-          double t,	/* Parameter value */
-          double *Left,	/* RETURN left half ctl pts */
-          double *Right)	/* RETURN right half ctl pts */
-{
-    double Vtemp[degree+1][degree+1];
-
-    /* Copy control points	*/
-    std::copy(V, V+degree+1, Vtemp[0]);
+    for (unsigned i = 0; i < N; i++)
+        Vtemp[i] = w[i];
 
     /* Triangle computation	*/
     const double omt = (1-t);
-    Left[0] = Vtemp[0][0];
-    Right[degree] = Vtemp[0][degree];
-    for (unsigned i = 1; i <= degree; i++) {
-        for (unsigned j = 0; j <= degree - i; j++) {
-            Vtemp[i][j] = omt*Vtemp[i-1][j] + t*Vtemp[i-1][j+1];
+    Left[0] = Vtemp[0];
+    Right[degree] = Vtemp[degree];
+    double *prev_row = Vtemp;
+    double *row = Vtemp + N;
+    for (unsigned i = 1; i < N; i++) {
+        for (unsigned j = 0; j < N - i; j++) {
+            row[j] = omt*prev_row[j] + t*prev_row[j+1];
         }
-        Left[i] = Vtemp[i][0];
-        Right[degree-i] = Vtemp[i][degree-i];
+        Left[i] = row[0];
+        Right[degree-i] = row[degree-i];
+        std::swap(prev_row, row);
     }
+    
+    double mid_t = left_t*(1-t) + right_t*t;
+    
+    find_bernstein_roots(Left, depth+1, left_t, mid_t);
+            
+    /* Solution is exactly on the subdivision point. */
+    if (Right[0] == 0)
+        solutions.push_back(mid_t);
+        
+    find_bernstein_roots(Right, depth+1, mid_t, right_t);
 }
+
+/*
+ *  control_poly_flat_enough :
+ *	Check if the control polygon of a Bernstein curve is flat enough
+ *	for recursive subdivision to bottom out.
+ *
+ */
+unsigned 
+Bernsteins::control_poly_flat_enough(double const *V)
+{
+    /* Find the perpendicular distance from each interior control point to line connecting V[0] and
+     * V[degree] */
+
+    /* Derive the implicit equation for line connecting first */
+    /*  and last control points */
+    const double a = V[0] - V[degree];
+
+    double max_distance_above = 0.0;
+    double max_distance_below = 0.0;
+    double ii = 0, dii = 1./degree;
+    for (unsigned i = 1; i < degree; i++) {
+        ii += dii;
+        /* Compute distance from each of the points to that line */
+        const double d = (a + V[i]) * ii  - a;
+        double dist = d*d;
+    // Find the largest distance
+        if (d < 0.0)
+            max_distance_below = std::min(max_distance_below, -dist);
+        else
+            max_distance_above = std::max(max_distance_above, dist);
+    }
+    
+    const double abSquared = 1./((a * a) + 1);
+
+    const double intercept_1 = (a - max_distance_above * abSquared);
+    const double intercept_2 = (a - max_distance_below * abSquared);
+
+    /* Compute bounding interval*/
+    const double left_intercept = std::min(intercept_1, intercept_2);
+    const double right_intercept = std::max(intercept_1, intercept_2);
+
+    const double error = 0.5 * (right_intercept - left_intercept);
+    //printf("error %g %g %g\n", error, a, BEPSILON * a);
+    return error < BEPSILON * a;
+}
+
+
 
 };
 

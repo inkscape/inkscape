@@ -208,7 +208,7 @@ public:
   bool isDegenerate() const { return inner.isConstant(); }
 
   void setInitial(Point v) { setPoint(0, v); }
-  void setFinal(Point v)   { setPoint(1, v); }
+  void setFinal(Point v)   { setPoint(order, v); }
 
   void setPoint(unsigned ix, Point v) { inner[X].setPoint(ix, v[X]); inner[Y].setPoint(ix, v[Y]); }
   Point const operator[](unsigned ix) const { return Point(inner[X][ix], inner[Y][ix]); }
@@ -308,10 +308,10 @@ double LineSegment::nearestPoint(Point const& p, double from, double to) const;
 
 
 
-class SVGEllipticalArc : public Curve
+class EllipticalArc : public Curve
 {
   public:
-	SVGEllipticalArc()
+	EllipticalArc()
 		: m_initial_point(Point(0,0)), m_final_point(Point(0,0)),
 		  m_rx(0), m_ry(0), m_rot_angle(0),
 		  m_large_arc(true), m_sweep(true)
@@ -320,10 +320,10 @@ class SVGEllipticalArc : public Curve
 		m_center = Point(0,0);
 	}
 	
-    SVGEllipticalArc( Point _initial_point, double _rx, double _ry,
-                      double _rot_angle, bool _large_arc, bool _sweep,
-                      Point _final_point
-                    )
+    EllipticalArc( Point _initial_point, double _rx, double _ry,
+                   double _rot_angle, bool _large_arc, bool _sweep,
+                   Point _final_point
+                  )
         : m_initial_point(_initial_point), m_final_point(_final_point),
           m_rx(_rx), m_ry(_ry), m_rot_angle(_rot_angle),
           m_large_arc(_large_arc), m_sweep(_sweep)
@@ -348,7 +348,7 @@ class SVGEllipticalArc : public Curve
 
 	Curve* duplicate() const
 	{
-		return new SVGEllipticalArc(*this);
+		return new EllipticalArc(*this);
 	}
 	
     double center(unsigned int i) const
@@ -495,13 +495,13 @@ class SVGEllipticalArc : public Curve
         return pointAtAngle(tt);
     }
 
-    std::pair<SVGEllipticalArc, SVGEllipticalArc>
+    std::pair<EllipticalArc, EllipticalArc>
     subdivide(Coord t) const
     {
-        SVGEllipticalArc* arc1 = static_cast<SVGEllipticalArc*>(portion(0, t));
-        SVGEllipticalArc* arc2 = static_cast<SVGEllipticalArc*>(portion(t, 1));
+        EllipticalArc* arc1 = static_cast<EllipticalArc*>(portion(0, t));
+        EllipticalArc* arc2 = static_cast<EllipticalArc*>(portion(t, 1));
         assert( arc1 != NULL && arc2 != NULL);
-        std::pair<SVGEllipticalArc, SVGEllipticalArc> arc_pair(*arc1, *arc2);        
+        std::pair<EllipticalArc, EllipticalArc> arc_pair(*arc1, *arc2);        
         delete arc1;
         delete arc2;
         return arc_pair;
@@ -512,7 +512,7 @@ class SVGEllipticalArc : public Curve
     // the arc is the same but traversed in the opposite direction
     Curve* reverse() const
     {
-        SVGEllipticalArc* rarc = new SVGEllipticalArc( *this );
+        EllipticalArc* rarc = new EllipticalArc( *this );
         rarc->m_sweep = !m_sweep;
         rarc->m_initial_point = m_final_point;
         rarc->m_final_point = m_initial_point;
@@ -541,7 +541,7 @@ class SVGEllipticalArc : public Curve
     double m_start_angle, m_end_angle;
     Point m_center;
     
-}; // end class SVGEllipticalArc
+}; // end class EllipticalArc
 
 
 
@@ -574,6 +574,17 @@ public:
   BaseIterator operator++(int) {
     BaseIterator old=*this;
     ++(*this);
+    return old;
+  }
+
+  BaseIterator &operator--() {
+    --impl_;
+    return *this;
+  }
+
+  BaseIterator operator--(int) {
+    BaseIterator old=*this;
+    --(*this);
     return old;
   }
 
@@ -668,14 +679,13 @@ public:
 
   Curve const &operator[](unsigned i) const { return *curves_[i]; }
 
-  iterator begin() { return curves_.begin(); }
-  iterator end() { return curves_.end()-1; }
-
   Curve const &front() const { return *curves_[0]; }
   Curve const &back() const { return *curves_[curves_.size()-2]; }
 
   const_iterator begin() const { return curves_.begin(); }
   const_iterator end() const { return curves_.end()-1; }
+  iterator begin() { return curves_.begin(); }
+  iterator end() { return curves_.end()-1; }
 
   const_iterator end_open() const { return curves_.end()-1; }
   const_iterator end_closed() const { return curves_.end(); }
@@ -909,6 +919,42 @@ public:
 
   Point initialPoint() const { return (*final_)[1]; }
   Point finalPoint() const { return (*final_)[0]; }
+
+  void setInitial(Point const& p)
+  {
+	  if ( empty() ) return;
+	  Curve* head = front().duplicate();
+	  head->setInitial(p);
+	  Sequence::iterator replaced = curves_.begin();
+	  Sequence source(1, head);
+	  try 
+	  {
+		  do_update(replaced, replaced + 1, source.begin(), source.end());
+	  } 
+	  catch (...) 
+	  {
+		  delete_range(source.begin(), source.end());
+		  throw;
+	  }
+  }
+
+  void setFinal(Point const& p)
+  {
+	  if ( empty() ) return;
+	  Curve* tail = back().duplicate();
+	  tail->setFinal(p);
+	  Sequence::iterator replaced = curves_.end() - 2;
+	  Sequence source(1, tail);
+	  try 
+	  {
+		  do_update(replaced, replaced + 1, source.begin(), source.end());
+	  } 
+	  catch (...) 
+	  {
+		  delete_range(source.begin(), source.end());
+		  throw;
+	  }	 
+  }
 
   void append(Curve const &curve);
   void append(D2<SBasis> const &curve);

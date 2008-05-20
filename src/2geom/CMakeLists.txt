@@ -20,6 +20,7 @@ crossing.h
 d2.h
 d2-sbasis.cpp
 d2-sbasis.h
+elliptical-arc.cpp
 exception.h
 forward.h
 geom.cpp
@@ -75,7 +76,6 @@ solve-bezier-one-d.cpp
 solve-bezier-parametric.cpp
 solver.h
 sturm.h
-svg-elliptical-arc.cpp
 svg-path.cpp
 svg-path.h
 svg-path-parser.cpp

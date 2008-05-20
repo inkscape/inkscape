@@ -27,6 +27,7 @@
 	2geom/d2-sbasis.h	\
 	2geom/d2.h	\
 	2geom/exception.h	\
+	2geom/elliptical-arc.cpp   \
 	2geom/forward.h	\
 	2geom/geom.cpp	\
 	2geom/geom.h	\
@@ -83,7 +84,6 @@
 	2geom/solve-bezier-parametric.cpp	\
 	2geom/solver.h	\
 	2geom/sturm.h	\
-	2geom/svg-elliptical-arc.cpp \
 	2geom/svg-path.cpp	\
 	2geom/svg-path.h	\
 	2geom/svg-path-parser.cpp	\

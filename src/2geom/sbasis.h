@@ -57,6 +57,9 @@ public:
     SBasis(Linear const & bo) {
         push_back(bo);
     }
+    SBasis(Linear* bo) {
+        push_back(*bo);
+    }
 
     //IMPL: FragmentConcept
     typedef double output_type;
@@ -86,29 +89,15 @@ public:
     double valueAt(double t) const {
         double s = t*(1-t);
         double p0 = 0, p1 = 0;
-        double sk = 1;
-//TODO: rewrite as horner
-        for(unsigned k = 0; k < size(); k++) {
-            p0 += sk*(*this)[k][0];
-            p1 += sk*(*this)[k][1];
-            sk *= s;
+        for(unsigned k = size(); k > 0; k--) {
+            const Linear &lin = (*this)[k-1];
+            p0 = p0*s + lin[0];
+            p1 = p1*s + lin[1];
         }
         return (1-t)*p0 + t*p1;
     }
-    double valueAndDerivative(double t, double &der) const {
-        double s = t*(1-t);
-        double p0 = 0, p1 = 0;
-        double sk = 1;
-//TODO: rewrite as horner
-        for(unsigned k = 0; k < size(); k++) {
-            p0 += sk*(*this)[k][0];
-            p1 += sk*(*this)[k][1];
-            sk *= s;
-        }
-        // p0 and p1 at this point form a linear approximation at t
-        der = p1 - p0;
-        return (1-t)*p0 + t*p1;
-    }
+    //double valueAndDerivative(double t, double &der) const {
+    //}
     double operator()(double t) const {
         return valueAt(t);
     }
@@ -135,7 +124,10 @@ public:
         while(!empty() && 0 == back()[0] && 0 == back()[1])
             pop_back();
     }
+
     void truncate(unsigned k) { if(k < size()) resize(k); }
+private:
+    void derive(); // in place version
 };
 
 //TODO: figure out how to stick this in linear, while not adding an sbasis dep
@@ -244,6 +236,8 @@ inline SBasis truncate(SBasis const &a, unsigned terms) {
 }
 
 SBasis multiply(SBasis const &a, SBasis const &b);
+// This performs a multiply and accumulate operation in about the same time as multiply.  return a*b + c
+SBasis multiply_add(SBasis const &a, SBasis const &b, SBasis c);
 
 SBasis integral(SBasis const &c);
 SBasis derivative(SBasis const &a);

@@ -78,7 +78,7 @@ typedef D2<Interval> Rect;
 class Shape;
 class Region;
 
-class SVGEllipticalArc;
+class EllipticalArc;
 class SVGPathSink;
 template <typename> class SVGPathGenerator;
 

@@ -11,6 +11,7 @@ Poly Poly::operator*(const Poly& p) const {
     }
     return result;
 }
+#define HAVE_GSL
 #ifdef HAVE_GSL
 #include <gsl/gsl_poly.h>
 #endif

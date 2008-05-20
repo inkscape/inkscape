@@ -99,6 +99,13 @@ public:
 };
 #define THROW_NOTINVERTIBLE(i) throw(NotInvertible(__FILE__, __LINE__))
 
+class InfiniteSolutions : public RangeError {
+public:
+	InfiniteSolutions(const char *file, const int line)
+        : RangeError("There are infinite solutions", file, line) {}
+};
+#define THROW_INFINITESOLUTIONS(i) throw(InfiniteSolutions(__FILE__, __LINE__))
+
 class ContinuityError : public RangeError {
 public:
     ContinuityError(const char *file, const int line)

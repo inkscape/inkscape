@@ -51,7 +51,7 @@ void output(QuadraticBezier const &curve, SVGPathSink &sink) {
     sink.quadTo(curve[1], curve[2]);
 }
 
-void output(SVGEllipticalArc const &/*curve*/, SVGPathSink &/*sink*/) {
+void output(EllipticalArc const &/*curve*/, SVGPathSink &/*sink*/) {
     // FIXME
     THROW_NOTIMPLEMENTED();
 }
@@ -75,7 +75,7 @@ void output_svg_path(Path &path, SVGPathSink &sink) {
         output_as<LineSegment>(*iter, sink) ||
         output_as<CubicBezier>(*iter, sink) ||
         output_as<QuadraticBezier>(*iter, sink) ||
-        output_as<SVGEllipticalArc>(*iter, sink) ||
+        output_as<EllipticalArc>(*iter, sink) ||
         output_as<Curve>(*iter, sink);
     }
 

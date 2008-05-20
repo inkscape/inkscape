@@ -78,7 +78,7 @@ public:
     void arcTo(double rx, double ry, double angle,
                bool large_arc, bool sweep, Point p)
     {
-        _path.template appendNew<SVGEllipticalArc>(rx, ry, angle,
+        _path.template appendNew<EllipticalArc>(rx, ry, angle,
                                                  large_arc, sweep, p);
     }
 

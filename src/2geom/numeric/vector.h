@@ -54,6 +54,7 @@ public:
 	{
 		assert( size() == _vector.size() );
 		gsl_vector_memcpy(m_vector, _vector.m_vector);
+		return (*this);
 	}
 	
 	void set_all(double x = 0)
