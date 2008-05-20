@@ -46,7 +46,7 @@ LPEdoEffectStackTest::doEffect (SPCurve * curve)
 }
 
 NArtBpath *
-LPEdoEffectStackTest::doEffect_nartbpath (NArtBpath * path_in)
+LPEdoEffectStackTest::doEffect_nartbpath (NArtBpath const * path_in)
 {
     if (step >= 2) {
         return Effect::doEffect_nartbpath(path_in);
