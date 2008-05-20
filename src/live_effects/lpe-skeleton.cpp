@@ -13,8 +13,8 @@
 /*
  * Authors:
  *   Johan Engelen
-*
-* Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+ *
+ * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -44,7 +44,7 @@ LPESkeleton::~LPESkeleton()
 
 /* ########################
  *  Choose to implement one of the doEffect functions. You can delete or comment out the others.
-*/
+ */
 
 /*
 void
