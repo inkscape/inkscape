@@ -19,7 +19,6 @@
 #include <glibmm/ustring.h>
 #include "libnr/nr-point.h"
 #include "libnr/nr-point-ops.h"
-#include "svg/stringstream.h"
 
 namespace Inkscape {
 
@@ -50,9 +49,9 @@ public:
 
     PathString &moveTo(NR::Point p) {
         _appendOp('M','m');
-        _appendPoint(p);
+        _appendPoint(p, true);
 
-        _current_point = _initial_point = p;
+        _initial_point = _current_point;
         return *this;
     }
 
@@ -62,9 +61,7 @@ public:
 
     PathString &lineTo(NR::Point p) {
         _appendOp('L','l');
-        _appendPoint(p);
-
-        _current_point = p;
+        _appendPoint(p, true);
         return *this;
     }
 
@@ -74,10 +71,8 @@ public:
 
     PathString &quadTo(NR::Point c, NR::Point p) {
         _appendOp('Q','q');
-        _appendPoint(c);
-        _appendPoint(p);
-
-        _current_point = p;
+        _appendPoint(c, false);
+        _appendPoint(p, true);
         return *this;
     }
 
@@ -90,11 +85,9 @@ public:
 
     PathString &curveTo(NR::Point c0, NR::Point c1, NR::Point p) {
         _appendOp('C','c');
-        _appendPoint(c0);
-        _appendPoint(c1);
-        _appendPoint(p);
-
-        _current_point = p;
+        _appendPoint(c0, false);
+        _appendPoint(c1, false);
+        _appendPoint(p, true);
         return *this;
     }
 
@@ -107,9 +100,7 @@ public:
         _appendValue(rot);
         _appendFlag(large_arc);
         _appendFlag(sweep);
-        _appendPoint(p);
-
-        _current_point = p;
+        _appendPoint(p, true);
         return *this;
     }
 
@@ -139,19 +130,25 @@ private:
         _rel_state.append(p);
     }
 
-    void _appendX(NR::Coord x) {
-        _abs_state.append(x);
-        _rel_state.append(x-_current_point[NR::X]);
+    void _appendX(NR::Coord x, bool sc) {
+        double rx;
+        _abs_state.append(x, rx);
+        _rel_state.appendRelative(rx, _current_point[NR::X]);
+        if (sc) _current_point[NR::X] = rx;
     }
 
-    void _appendY(NR::Coord y) {
-        _abs_state.append(y);
-        _rel_state.append(y-_current_point[NR::Y]);
+    void _appendY(NR::Coord y, bool sc) {
+        double ry;
+        _abs_state.append(y, ry);
+        _rel_state.appendRelative(ry, _current_point[NR::Y]);
+        if (sc) _current_point[NR::Y] = ry;
     }
 
-    void _appendPoint(NR::Point p) {
-        _abs_state.append(p);
-        _rel_state.append(p-_current_point);
+    void _appendPoint(NR::Point p, bool sc) {
+        NR::Point rp;
+        _abs_state.append(p, rp);
+        _rel_state.appendRelative(rp, _current_point);
+        if (sc) _current_point = rp;
     }
 
     struct State {
@@ -168,17 +165,12 @@ private:
             str.append(1, ( flag ? '1' : '0' ));
         }
 
-        void append(NR::Coord v) {
-            SVGOStringStream os;
-            os << ' ' << v;
-            str.append(os.str());
-        }
-
-        void append(NR::Point p) {
-            SVGOStringStream os;
-            os << ' ' << p[NR::X] << ',' << p[NR::Y];
-            str.append(os.str());
-        }
+        void append(NR::Coord v);
+        void append(NR::Point v);
+        void append(NR::Coord v, NR::Coord& rv);
+        void append(NR::Point p, NR::Point& rp);
+        void appendRelative(NR::Coord v, NR::Coord r);
+        void appendRelative(NR::Point p, NR::Point r);
 
         bool operator<=(const State& s) const {
             if ( str.size() < s.str.size() ) return true;
