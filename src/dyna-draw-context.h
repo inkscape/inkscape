@@ -1,5 +1,5 @@
-#ifndef __SP_DYNA_DRAW_CONTEXT_H__
-#define __SP_DYNA_DRAW_CONTEXT_H__
+#ifndef SP_DYNA_DRAW_CONTEXT_H_SEEN
+#define SP_DYNA_DRAW_CONTEXT_H_SEEN
 
 /*
  * Handwriting-like drawing mode
@@ -125,9 +125,9 @@ struct SPDynaDrawContextClass
     SPEventContextClass parent_class;
 };
 
-GtkType sp_dyna_draw_context_get_type(void);
+GType sp_dyna_draw_context_get_type(void);
 
-#endif
+#endif // SP_DYNA_DRAW_CONTEXT_H_SEEN
 
 /*
   Local Variables:

@@ -104,24 +104,25 @@ static NR::Point sp_eraser_get_vpoint(SPEraserContext const *erc, NR::Point n);
 static void draw_temporary_box(SPEraserContext *dc);
 
 
-static SPEventContextClass *parent_class;
+static SPEventContextClass *eraser_parent_class = 0;
 
-GtkType
-sp_eraser_context_get_type(void)
+GType sp_eraser_context_get_type(void)
 {
     static GType type = 0;
     if (!type) {
         GTypeInfo info = {
             sizeof(SPEraserContextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_eraser_context_class_init,
-            NULL, NULL,
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_eraser_context_class_init,
+            0, // class_finalize
+            0, // class_data
             sizeof(SPEraserContext),
-            4,
-            (GInstanceInitFunc) sp_eraser_context_init,
-            NULL,   /* value_table */
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_eraser_context_init,
+            0 // value_table
         };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPEraserContext", &info, (GTypeFlags)0);
+        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPEraserContext", &info, static_cast<GTypeFlags>(0));
     }
     return type;
 }
@@ -132,7 +133,7 @@ sp_eraser_context_class_init(SPEraserContextClass *klass)
     GObjectClass *object_class = (GObjectClass *) klass;
     SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
 
-    parent_class = (SPEventContextClass*)g_type_class_peek_parent(klass);
+    eraser_parent_class = (SPEventContextClass*)g_type_class_peek_parent(klass);
 
     object_class->dispose = sp_eraser_context_dispose;
 
@@ -212,7 +213,7 @@ sp_eraser_context_dispose(GObject *object)
         erc->_message_context = 0;
     }
 
-    G_OBJECT_CLASS(parent_class)->dispose(object);
+    G_OBJECT_CLASS(eraser_parent_class)->dispose(object);
 }
 
 static void
@@ -220,8 +221,8 @@ sp_eraser_context_setup(SPEventContext *ec)
 {
     SPEraserContext *erc = SP_ERASER_CONTEXT(ec);
 
-    if (((SPEventContextClass *) parent_class)->setup)
-        ((SPEventContextClass *) parent_class)->setup(ec);
+    if (((SPEventContextClass *) eraser_parent_class)->setup)
+        ((SPEventContextClass *) eraser_parent_class)->setup(ec);
 
     erc->accumulated = new SPCurve(32);
     erc->currentcurve = new SPCurve(4);
@@ -774,8 +775,8 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) parent_class)->root_handler(event_context, event);
+        if (((SPEventContextClass *) eraser_parent_class)->root_handler) {
+            ret = ((SPEventContextClass *) eraser_parent_class)->root_handler(event_context, event);
         }
     }
 

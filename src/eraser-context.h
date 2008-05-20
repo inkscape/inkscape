@@ -43,10 +43,7 @@ class SPEraserContextClass;
 #define ERC_MAX_TILT          1.0
 #define ERC_DEFAULT_TILT      0.0
 
-struct SPEraserContext
-{
-    SPEventContext event_context;
-
+struct SPEraserContext : public SPEventContext {
     /** accumulated shape which ultimately goes in svg:path */
     SPCurve *accumulated;
 
@@ -60,13 +57,16 @@ struct SPEraserContext
 
     /** left edge of the stroke; combined to get accumulated */
     SPCurve *cal1;
+
     /** right edge of the stroke; combined to get accumulated */
     SPCurve *cal2;
 
     /** left edge points for this segment */
     NR::Point point1[SAMPLING_SIZE];
+
     /** right edge points for this segment */
     NR::Point point2[SAMPLING_SIZE];
+
     /** number of edge points for this segment */
     gint npoints;
 
@@ -81,10 +81,12 @@ struct SPEraserContext
     NR::Point ang;
     NR::Point last;
     NR::Point del;
+
     /* extended input data */
     gdouble pressure;
     gdouble xtilt;
     gdouble ytilt;
+
     /* attributes */
     guint dragging : 1;           /* mouse state: mouse is dragging */
     guint usepressure : 1;
@@ -106,12 +108,9 @@ struct SPEraserContext
     bool abs_width;
 };
 
-struct SPEraserContextClass
-{
-    SPEventContextClass parent_class;
-};
+struct SPEraserContextClass : public SPEventContextClass{};
 
-GtkType sp_eraser_context_get_type(void);
+GType sp_eraser_context_get_type(void);
 
 #endif // SP_ERASER_CONTEXT_H_SEEN
 

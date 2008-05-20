@@ -119,22 +119,23 @@ static void draw_temporary_box(SPDynaDrawContext *dc);
 
 static SPEventContextClass *parent_class;
 
-GtkType
-sp_dyna_draw_context_get_type(void)
+GType sp_dyna_draw_context_get_type(void)
 {
     static GType type = 0;
     if (!type) {
         GTypeInfo info = {
             sizeof(SPDynaDrawContextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_dyna_draw_context_class_init,
-            NULL, NULL,
+            0, // base_init
+            0, // base_finalize
+            (GClassInitFunc)sp_dyna_draw_context_class_init,
+            0, // class_finalize
+            0, // class_data
             sizeof(SPDynaDrawContext),
-            4,
-            (GInstanceInitFunc) sp_dyna_draw_context_init,
-            NULL,   /* value_table */
+            0, // n_preallocs
+            (GInstanceInitFunc)sp_dyna_draw_context_init,
+            0 // value_table
         };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPDynaDrawContext", &info, (GTypeFlags)0);
+        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPDynaDrawContext", &info, static_cast<GTypeFlags>(0));
     }
     return type;
 }
