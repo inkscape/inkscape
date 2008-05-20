@@ -262,6 +262,11 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
 
                 dragging = true;
                 ac->center = Inkscape::setup_for_drag_start(desktop, event_context, event);
+                
+                /* Snap center */
+                SnapManager &m = desktop->namedview->snap_manager;
+                m.setup(desktop, NULL); //null, because we don't have an item yet
+                m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, ac->center);     
 
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
@@ -425,11 +430,6 @@ static void sp_arc_drag(SPArcContext *ac, NR::Point pt, guint state)
         ac->item->updateRepr();
 
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
-        
-        /* Snap center */
-        SnapManager &m = desktop->namedview->snap_manager;
-        m.setup(desktop, ac->item);
-        m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, ac->center);
     }
 
     bool ctrl_save = false;

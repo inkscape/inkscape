@@ -279,10 +279,11 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
             dragging = TRUE;
 
             sc->center = Inkscape::setup_for_drag_start(desktop, event_context, event);
-
+            
+            /* Snap center */
             SnapManager &m = desktop->namedview->snap_manager;
-            m.setup(desktop, sc->item);
-            m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, sc->center);
+            m.setup(desktop, NULL); //null, because we don't have an item yet
+            m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, sc->center);     
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                 GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
@@ -305,11 +306,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
             event_context->within_tolerance = false;
 
             NR::Point const motion_w(event->motion.x, event->motion.y);
-            NR::Point motion_dt(event_context->desktop->w2d(motion_w));
-            
-            SnapManager &m = desktop->namedview->snap_manager;
-            m.setup(desktop, sc->item);
-            m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt);
+            NR::Point motion_dt(desktop->w2d(motion_w));
             
             sp_star_drag (sc, motion_dt, event->motion.state);
 
@@ -449,14 +446,14 @@ static void sp_star_drag(SPStarContext *sc, NR::Point p, guint state)
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
     }
 
-    NR::Point const p0 = sp_desktop_dt2root_xy_point(desktop, sc->center);
-    NR::Point p1 = sp_desktop_dt2root_xy_point(desktop, p);
-
     /* Snap corner point with no constraints */
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, sc->item);
-    m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, p1);
-
+    m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, p);    
+    
+    NR::Point const p0 = sp_desktop_dt2root_xy_point(desktop, sc->center);
+    NR::Point p1 = sp_desktop_dt2root_xy_point(desktop, p);
+    
     SPStar *star = SP_STAR(sc->item);
 
     double const sides = (gdouble) sc->magnitude;

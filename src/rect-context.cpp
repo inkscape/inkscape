@@ -304,6 +304,11 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             NR::Point const button_dt(desktop->w2d(button_w));
             rc->center = button_dt;
             
+            /* Snap center */
+            SnapManager &m = desktop->namedview->snap_manager;
+            m.setup(desktop, NULL); //null, because we don't have an item yet
+            m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, rc->center);     
+            
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                 ( GDK_KEY_PRESS_MASK |
                                   GDK_BUTTON_RELEASE_MASK       |
@@ -491,11 +496,6 @@ static void sp_rect_drag(SPRectContext &rc, NR::Point const pt, guint state)
         rc.item->updateRepr();
 
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
-        
-        /* Snap center */
-        SnapManager &m = desktop->namedview->snap_manager;
-        m.setup(desktop, rc.item);
-        m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, rc.center);     
     }
 
     NR::Rect const r = Inkscape::snap_rectangular_box(desktop, rc.item, pt, rc.center, state);

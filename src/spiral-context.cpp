@@ -266,7 +266,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 sc->center = Inkscape::setup_for_drag_start(desktop, event_context, event);
 
                 SnapManager &m = desktop->namedview->snap_manager;
-                m.setup(desktop, sc->item);
+                m.setup(desktop, NULL); //null, because we don't have an item yet
                 m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, sc->center);
 
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
