@@ -88,6 +88,11 @@ public:
         NR::Point getDirection() const {
             return _direction;
         }
+        
+        void setPoint(NR::Point const &p) {
+            _point = p;
+            _has_point = true;        
+        }
 
     private:
 

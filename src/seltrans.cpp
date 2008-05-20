@@ -1386,6 +1386,11 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
             /* Snap to things, and also constrain to horizontal or vertical movement */
 
             for (unsigned int dim = 0; dim < 2; dim++) {
+                // When doing a constrained translation, all points will move in the same direction, i.e.
+                // either horizontally or vertically. Therefore we only have to specify the direction of
+                // the constraint-line once. The constraint lines are parallel, but might not be colinear.
+                // Therefore we will have to set the point through which the constraint-line runs
+                // individually for each point to be snapped; this will be handled however by _snapTransformed()
                 s.push_back(m.constrainedSnapTranslation(Inkscape::Snapper::SNAPPOINT_BBOX,
                                                          _bbox_points,
                                                          Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
@@ -1418,13 +1423,10 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
         g_assert(best_snapped_point.getDistance() == NR_HUGE);
         for (std::list<Inkscape::SnappedPoint>::const_iterator i = s.begin(); i != s.end(); i++) {
             if (i->getSnapped()) {
-                // std::cout << "moveTo() -> snapped to point: " << i->getPoint() << " with transformation: " << i->getTransformation();
                 if (i->getDistance() < best_snapped_point.getDistance()) {
                     best_snapped_point = *i;
                     dxy = i->getTransformation();
-                    // std::cout << " SEL";
                 }
-                //std::cout << std::endl;
             }
         }
         if (best_snapped_point.getSnapped()) {

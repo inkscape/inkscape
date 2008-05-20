@@ -432,7 +432,13 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 dedicated_constraint = Inkscape::Snapper::ConstraintLine(origin, (*i) - origin);
             } else if (transformation_type == STRETCH) { // when non-uniform stretching {
                 dedicated_constraint = Inkscape::Snapper::ConstraintLine((*i), component_vectors[dim]);
-            } // else: leave the original constraint, e.g. for constrained translation and skewing 
+            } else if (transformation_type == TRANSLATION) {
+                // When doing a constrained translation, all points will move in the same direction, i.e.
+                // either horizontally or vertically. The lines along which they move are therefore all
+                // parallel, but might not be colinear. Therefore we will have to set the point through
+                // which the constraint-line runs here, for each point individually. 
+                dedicated_constraint.setPoint(*i);
+            } // else: leave the original constraint, e.g. for skewing 
             if (transformation_type == SCALE && !uniform) {
                 g_warning("Non-uniform constrained scaling is not supported!");   
             }
