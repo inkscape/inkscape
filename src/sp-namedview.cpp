@@ -459,7 +459,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_INDICATOR:
-            nv->snapindicator = (value) ? sp_str_to_bool (value) : FALSE;
+            nv->snapindicator = (value) ? sp_str_to_bool (value) : TRUE;
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_BBOX:

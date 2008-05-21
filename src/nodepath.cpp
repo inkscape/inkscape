@@ -1202,13 +1202,13 @@ void sp_node_moveto(Inkscape::NodePath::Node *node, NR::Point p)
  * Call sp_node_moveto() for node selection and handle possible snapping.
  */
 static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, NR::Coord dx, NR::Coord dy,
-                                            bool const snap = true)
+                                            bool const snap, bool constrained = false, 
+                                            Inkscape::Snapper::ConstraintLine const &constraint = NR::Point())
 {
     NR::Coord best = NR_HUGE;
     NR::Point delta(dx, dy);
     NR::Point best_pt = delta;
     Inkscape::SnappedPoint best_abs;
-
     
     if (snap) {    
         /* When dragging a (selected) node, it should only snap to other nodes (i.e. unselected nodes), and
@@ -1231,8 +1231,15 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
         
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
-            m.setup(nodepath->desktop, SP_PATH(n->subpath->nodepath->item), &unselected_nodes);
-            Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta);            
+            m.setup(NULL, SP_PATH(n->subpath->nodepath->item), &unselected_nodes);
+            Inkscape::SnappedPoint s;
+            if (constrained) {
+                Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
+                dedicated_constraint.setPoint(n->pos);
+                s = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta, dedicated_constraint);
+            } else {
+                s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta);
+            }            
             if (s.getSnapped() && (s.getDistance() < best)) {
                 best = s.getDistance();
                 best_abs = s;
@@ -1242,6 +1249,8 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
                         
         if (best_abs.getSnapped()) {
             nodepath->desktop->snapindicator->set_new_snappoint(best_abs);
+        } else {
+            nodepath->desktop->snapindicator->remove_snappoint();    
         }
     }
 
@@ -3392,11 +3401,11 @@ node_request(SPKnot */*knot*/, NR::Point *p, guint state, gpointer data)
     NR::Point c;
     NR::Point pr;
 
-   Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
+    Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
     n->subpath->nodepath->desktop->snapindicator->remove_snappoint();
 
-   // If either (Shift and some handle retracted), or (we're already dragging out a handle)
+    // If either (Shift and some handle retracted), or (we're already dragging out a handle)
     if ( (!n->subpath->nodepath->straight_path) &&
          ( ((state & GDK_SHIFT_MASK) && ((n->n.other && n->n.pos == n->pos) || (n->p.other && n->p.pos == n->pos)))
            || n->dragging_out ) )
@@ -3540,14 +3549,23 @@ node_request(SPKnot */*knot*/, NR::Point *p, guint state, gpointer data)
             // move the node to the closest point
             sp_nodepath_selected_nodes_move(n->subpath->nodepath,
                                             n->origin[NR::X] + c[NR::X] - n->pos[NR::X],
-                                            n->origin[NR::Y] + c[NR::Y] - n->pos[NR::Y]);
+                                            n->origin[NR::Y] + c[NR::Y] - n->pos[NR::Y], 
+                                            true);
 
         } else {  // constraining to hor/vert
 
             if (fabs((*p)[NR::X] - n->origin[NR::X]) > fabs((*p)[NR::Y] - n->origin[NR::Y])) { // snap to hor
-                sp_nodepath_selected_nodes_move(n->subpath->nodepath, (*p)[NR::X] - n->pos[NR::X], n->origin[NR::Y] - n->pos[NR::Y]);
+                sp_nodepath_selected_nodes_move(n->subpath->nodepath,
+                                                (*p)[NR::X] - n->pos[NR::X], 
+                                                n->origin[NR::Y] - n->pos[NR::Y],
+                                                true, 
+                                                true, Inkscape::Snapper::ConstraintLine(component_vectors[NR::X]));
             } else { // snap to vert
-                sp_nodepath_selected_nodes_move(n->subpath->nodepath, n->origin[NR::X] - n->pos[NR::X], (*p)[NR::Y] - n->pos[NR::Y]);
+                sp_nodepath_selected_nodes_move(n->subpath->nodepath,
+                                                n->origin[NR::X] - n->pos[NR::X],
+                                                (*p)[NR::Y] - n->pos[NR::Y],
+                                                true,
+                                                true, Inkscape::Snapper::ConstraintLine(component_vectors[NR::Y]));
             }
         }
     } else { // move freely
