@@ -952,6 +952,7 @@ share/examples/Makefile
 share/extensions/Makefile
 share/extensions/alphabet_soup/Makefile
 share/extensions/Barcode/Makefile
+share/extensions/Poly3DObjects/Makefile
 share/extensions/xaml2svg/Makefile
 share/fonts/Makefile
 share/gradients/Makefile
