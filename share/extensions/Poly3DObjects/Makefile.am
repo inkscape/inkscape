@@ -30,6 +30,4 @@ Poly3DObjects_DATA = \
 	trunc_oct.obj \
 	trunc_tet.obj
 
-EXTRA_DIST = \
-	$(Poly3DObjectsdir_DATA)
-
+EXTRA_DIST = $(Poly3DObjects_DATA)
