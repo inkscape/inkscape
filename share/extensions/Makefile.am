@@ -2,6 +2,7 @@
 SUBDIRS = \
 	alphabet_soup \
 	Barcode \
+	Poly3DObjects \
 	xaml2svg
 
 extensiondir = $(datadir)/inkscape/extensions
