@@ -12,7 +12,6 @@ Poly3DObjects_DATA = \
 	icos.obj \
 	icosidodec.obj \
 	jessens_orthog_icos.obj \
-	Makefile.am \
 	methane.obj \
 	oct.obj \
 	rhomb_dodec.obj \
