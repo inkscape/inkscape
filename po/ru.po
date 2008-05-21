@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-05-04 02:43+0400\n"
-"PO-Revision-Date: 2008-05-04 04:14+0300\n"
+"POT-Creation-Date: 2008-05-18 22:41+0400\n"
+"PO-Revision-Date: 2008-05-21 14:04+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle
 msgstr "<b>Ctrl</b>: создать круг или эллипс с целым отношением сторон, ограничить угол дуги/сегмента"
 
 #: ../src/arc-context.cpp:342
-#: ../src/rect-context.cpp:388
+#: ../src/rect-context.cpp:387
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Shift</b>: рисовать вокруг начальной точки"
 
@@ -54,21 +54,21 @@ msgstr "<b>Эллипс</b>: %s &#215; %s; с <b>Ctrl</b> рисует круг 
 msgid "Create ellipse"
 msgstr "Создание эллипса"
 
-#: ../src/box3d-context.cpp:447
-#: ../src/box3d-context.cpp:454
-#: ../src/box3d-context.cpp:461
-#: ../src/box3d-context.cpp:468
-#: ../src/box3d-context.cpp:475
-#: ../src/box3d-context.cpp:482
+#: ../src/box3d-context.cpp:448
+#: ../src/box3d-context.cpp:455
+#: ../src/box3d-context.cpp:462
+#: ../src/box3d-context.cpp:469
+#: ../src/box3d-context.cpp:476
+#: ../src/box3d-context.cpp:483
 msgid "Change perspective (angle of PLs)"
 msgstr "Менять перспективу (угол параллельных линий)"
 
 #. status text
-#: ../src/box3d-context.cpp:637
+#: ../src/box3d-context.cpp:638
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr "<b>Параллелепипед</b>; с <b>Shift</b> — для выдавливания вдоль оси Z"
 
-#: ../src/box3d-context.cpp:661
+#: ../src/box3d-context.cpp:662
 msgid "Create 3D box"
 msgstr "Создание паралеллепипеда"
 
@@ -89,32 +89,32 @@ msgid "Reroute connector"
 msgstr "Объекты пересоединены"
 
 #. Flush pending updates
-#: ../src/connector-context.cpp:964
+#: ../src/connector-context.cpp:963
 msgid "Create connector"
 msgstr "Создание соединительной линии"
 
-#: ../src/connector-context.cpp:988
+#: ../src/connector-context.cpp:987
 msgid "Finishing connector"
 msgstr "Соединительная линия закрывается"
 
-#: ../src/connector-context.cpp:1132
+#: ../src/connector-context.cpp:1130
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr "<b>Точка соединения</b>: щелкните мышкой или перетащите для создания новой соединительной линии"
 
-#: ../src/connector-context.cpp:1205
+#: ../src/connector-context.cpp:1203
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr "<b>Конечная соединительная точка</b>: перетащите для пересоединения или соединения с новыми фигурами"
 
-#: ../src/connector-context.cpp:1316
+#: ../src/connector-context.cpp:1314
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Выделите <b>как минимум один объект (не соединительную линию)</b>."
 
-#: ../src/connector-context.cpp:1321
+#: ../src/connector-context.cpp:1319
 #: ../src/widgets/toolbox.cpp:5483
 msgid "Make connectors avoid selected objects"
 msgstr "Линии обходят выделенные объекты"
 
-#: ../src/connector-context.cpp:1322
+#: ../src/connector-context.cpp:1320
 #: ../src/widgets/toolbox.cpp:5493
 msgid "Make connectors ignore selected objects"
 msgstr "Линии игнорируют выделенные объекты"
@@ -137,21 +137,21 @@ msgstr "Нет предыдущего масштаба."
 msgid "No next zoom."
 msgstr "Нет следующего масштаба."
 
-#: ../src/desktop-events.cpp:176
+#: ../src/desktop-events.cpp:175
 msgid "Create guide"
 msgstr "Создание направляющей"
 
-#: ../src/desktop-events.cpp:222
-#: ../src/desktop-events.cpp:277
+#: ../src/desktop-events.cpp:221
+#: ../src/desktop-events.cpp:275
 #: ../src/dialogs/guidelinedialog.cpp:127
 msgid "Delete guide"
 msgstr "Удаление направляющей"
 
-#: ../src/desktop-events.cpp:271
+#: ../src/desktop-events.cpp:269
 msgid "Move guide"
 msgstr "Перемещение направляющей"
 
-#: ../src/desktop-events.cpp:292
+#: ../src/desktop-events.cpp:290
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>Направляющая</b>: %s"
@@ -1012,7 +1012,8 @@ msgstr "x_1"
 
 #. Stroke width
 #: ../src/dialogs/export.cpp:319
-#: ../src/dialogs/object-attributes.cpp:59
+#: ../src/dialogs/object-attributes.cpp:60
+#: ../src/dialogs/object-attributes.cpp:68
 #: ../src/dialogs/stroke-style.cpp:1090
 #: ../src/widgets/toolbox.cpp:3170
 #: ../src/widgets/toolbox.cpp:3574
@@ -1030,7 +1031,8 @@ msgstr "y_1"
 
 #: ../src/dialogs/export.cpp:335
 #: ../src/dialogs/export.cpp:495
-#: ../src/dialogs/object-attributes.cpp:60
+#: ../src/dialogs/object-attributes.cpp:61
+#: ../src/dialogs/object-attributes.cpp:69
 msgid "Height:"
 msgstr "Высота:"
 
@@ -1422,13 +1424,15 @@ msgid "Unit:"
 msgstr "Единица измерения:"
 
 #: ../src/dialogs/guidelinedialog.cpp:45
-#: ../src/dialogs/object-attributes.cpp:57
+#: ../src/dialogs/object-attributes.cpp:58
+#: ../src/dialogs/object-attributes.cpp:66
 #: ../src/widgets/toolbox.cpp:1242
 msgid "X:"
 msgstr "X:"
 
 #: ../src/dialogs/guidelinedialog.cpp:46
-#: ../src/dialogs/object-attributes.cpp:58
+#: ../src/dialogs/object-attributes.cpp:59
+#: ../src/dialogs/object-attributes.cpp:67
 #: ../src/widgets/toolbox.cpp:1260
 msgid "Y:"
 msgstr "Y:"
@@ -1469,9 +1473,9 @@ msgid "%d x %d"
 msgstr "%d x %d"
 
 #: ../src/dialogs/iconpreview.cpp:187
-#: ../src/ui/dialog/align-and-distribute.cpp:909
+#: ../src/ui/dialog/align-and-distribute.cpp:905
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1372
-#: ../src/widgets/desktop-widget.cpp:1539
+#: ../src/widgets/desktop-widget.cpp:1542
 msgid "Selection"
 msgstr "Выделение"
 
@@ -1686,49 +1690,50 @@ msgstr "Низ"
 msgid "X"
 msgstr "X"
 
-#: ../src/dialogs/object-attributes.cpp:38
+#: ../src/dialogs/object-attributes.cpp:39
 msgid "Href:"
 msgstr "Href:"
 
-#: ../src/dialogs/object-attributes.cpp:39
+#: ../src/dialogs/object-attributes.cpp:40
 msgid "Target:"
 msgstr "Target:"
 
-#: ../src/dialogs/object-attributes.cpp:40
+#: ../src/dialogs/object-attributes.cpp:41
 msgid "Type:"
 msgstr "Вид:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkRoleAttribute
 #. Identifies the type of the related resource with an absolute URI
-#: ../src/dialogs/object-attributes.cpp:43
+#: ../src/dialogs/object-attributes.cpp:44
 msgid "Role:"
 msgstr "Role:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkArcRoleAttribute
 #. For situations where the nature/role alone isn't enough, this offers an additional URI defining the purpose of the link.
-#: ../src/dialogs/object-attributes.cpp:46
+#: ../src/dialogs/object-attributes.cpp:47
 msgid "Arcrole:"
 msgstr "Arcrole:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkTitleAttribute
-#: ../src/dialogs/object-attributes.cpp:48
+#: ../src/dialogs/object-attributes.cpp:49
 msgid "Title:"
 msgstr "Название:"
 
-#: ../src/dialogs/object-attributes.cpp:49
+#: ../src/dialogs/object-attributes.cpp:50
+#: ../share/extensions/polyhedron_3d.inx.h:35
 msgid "Show:"
 msgstr "Show:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkActuateAttribute
-#: ../src/dialogs/object-attributes.cpp:51
+#: ../src/dialogs/object-attributes.cpp:52
 msgid "Actuate:"
 msgstr "Actuate:"
 
-#: ../src/dialogs/object-attributes.cpp:56
+#: ../src/dialogs/object-attributes.cpp:57
 msgid "URL:"
 msgstr "URL:"
 
-#: ../src/dialogs/object-attributes.cpp:104
+#: ../src/dialogs/object-attributes.cpp:113
 #, c-format
 msgid "%s Properties"
 msgstr "Свойства %s"
@@ -1909,8 +1914,8 @@ msgid "XML fragment for the RDF 'License' section."
 msgstr "XML-фрагмент RDF-раздела \"Лицензия\"."
 
 #. TRANSLATORS: "Set" is a verb here
-#: ../src/dialogs/sp-attribute-widget.cpp:170
-#: ../src/dialogs/sp-attribute-widget.cpp:787
+#: ../src/dialogs/sp-attribute-widget.cpp:166
+#: ../src/dialogs/sp-attribute-widget.cpp:773
 #: ../src/dialogs/xml-tree.cpp:533
 msgid "Set attribute"
 msgstr "Установить атрибут"
@@ -1945,7 +1950,7 @@ msgstr "Снятие обводки"
 #: ../src/dialogs/stroke-style.cpp:793
 #: ../src/filter-enums.cpp:95
 #: ../src/flood-context.cpp:288
-#: ../src/interface.cpp:829
+#: ../src/interface.cpp:826
 #: ../src/ui/dialog/filter-effects-dialog.cpp:507
 #: ../src/ui/dialog/inkscape-preferences.cpp:210
 #: ../src/ui/dialog/inkscape-preferences.cpp:374
@@ -1958,7 +1963,7 @@ msgstr "Нет"
 
 #: ../src/dialogs/stroke-style.cpp:848
 #: ../src/widgets/gradient-vector.cpp:264
-#: ../src/widgets/paint-selector.cpp:882
+#: ../src/widgets/paint-selector.cpp:885
 msgid "No document selected"
 msgstr "Документ не выбран"
 
@@ -2067,9 +2072,8 @@ msgid "Color: <b>"
 msgstr "Цвет: <b>"
 
 #: ../src/dialogs/swatches.cpp:251
-#, fuzzy
 msgid "</b>"
-msgstr "<b>Л:</b>"
+msgstr "</b>"
 
 #: ../src/dialogs/swatches.cpp:252
 msgid "; "
@@ -2274,34 +2278,34 @@ msgstr "Создать ветвь с текстом"
 
 #: ../src/dialogs/xml-tree.cpp:347
 #: ../src/dialogs/xml-tree.cpp:1414
-#: ../src/nodepath.cpp:2016
+#: ../src/nodepath.cpp:2014
 msgid "Duplicate node"
 msgstr "Дублирование ветви"
 
 #: ../src/dialogs/xml-tree.cpp:368
 #: ../src/dialogs/xml-tree.cpp:1431
-#: ../src/nodepath.cpp:3265
+#: ../src/nodepath.cpp:3263
 #: ../src/widgets/toolbox.cpp:1080
 msgid "Delete node"
 msgstr "Удаление ветви"
 
 #: ../src/dialogs/xml-tree.cpp:384
-#: ../src/dialogs/xml-tree.cpp:1580
+#: ../src/dialogs/xml-tree.cpp:1576
 msgid "Unindent node"
 msgstr "Переместить к корню"
 
 #: ../src/dialogs/xml-tree.cpp:399
-#: ../src/dialogs/xml-tree.cpp:1559
+#: ../src/dialogs/xml-tree.cpp:1555
 msgid "Indent node"
 msgstr "Переместить от корня"
 
 #: ../src/dialogs/xml-tree.cpp:411
-#: ../src/dialogs/xml-tree.cpp:1512
+#: ../src/dialogs/xml-tree.cpp:1508
 msgid "Raise node"
 msgstr "Поднять ветвь"
 
 #: ../src/dialogs/xml-tree.cpp:423
-#: ../src/dialogs/xml-tree.cpp:1529
+#: ../src/dialogs/xml-tree.cpp:1525
 msgid "Lower node"
 msgstr "Опустить ветвь"
 
@@ -2351,12 +2355,7 @@ msgstr "Создание ветви элемента"
 msgid "Create new text node"
 msgstr "Создание текстовой ветви"
 
-#: ../src/dialogs/xml-tree.cpp:1467
-#, c-format
-msgid "Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"
-msgstr "Невозможно установить <b>%s</b>: существует другой элемент со значением <b>%s</b>!"
-
-#: ../src/dialogs/xml-tree.cpp:1482
+#: ../src/dialogs/xml-tree.cpp:1478
 msgid "Change attribute"
 msgstr "Смена атрибута"
 
@@ -2528,22 +2527,22 @@ msgstr "Новый документ %d"
 msgid "Memory document %d"
 msgstr "Документ в памяти %d"
 
-#: ../src/document.cpp:585
+#: ../src/document.cpp:593
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Безымянный документ %d"
 
 #. We hit green anchor, closing Green-Blue-Red
-#: ../src/draw-context.cpp:422
+#: ../src/draw-context.cpp:420
 msgid "Path is closed."
 msgstr "Контур закрыт."
 
 #. We hit bot start and end of single curve, closing paths
-#: ../src/draw-context.cpp:437
+#: ../src/draw-context.cpp:435
 msgid "Closing path."
 msgstr "Закрываем контур"
 
-#: ../src/draw-context.cpp:551
+#: ../src/draw-context.cpp:549
 msgid "Draw path"
 msgstr "Создание контура"
 
@@ -2761,7 +2760,7 @@ msgstr "Адаптивная постеризация..."
 #: ../src/extension/internal/bluredge.cpp:134
 #: ../src/libgdl/gdl-dock.c:190
 #: ../src/libgdl/gdl-dock-placeholder.c:169
-#: ../src/live_effects/lpe-bendpath.cpp:60
+#: ../src/live_effects/lpe-bendpath.cpp:58
 #: ../src/live_effects/lpe-patternalongpath.cpp:64
 #: ../src/widgets/toolbox.cpp:2390
 #: ../src/widgets/toolbox.cpp:3170
@@ -2979,7 +2978,7 @@ msgstr "Свёртка"
 
 #: ../src/extension/internal/bitmap/convolve.cpp:52
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:41
-#: ../share/extensions/lindenmayer.inx.h:4
+#: ../share/extensions/lindenmayer.inx.h:6
 msgid "Order"
 msgstr "Порядок"
 
@@ -3305,7 +3304,6 @@ msgid "Number of inset/outset copies of the object to make"
 msgstr "Количество копий втяжки/растяжки объекта"
 
 #: ../src/extension/internal/bluredge.cpp:139
-#: ../share/extensions/dimension.inx.h:2
 #: ../share/extensions/interp.inx.h:3
 #: ../share/extensions/motion.inx.h:3
 #: ../share/extensions/pathalongpath.inx.h:4
@@ -3772,11 +3770,13 @@ msgstr "Интервал по вертикали"
 #: ../share/extensions/gears.inx.h:5
 #: ../share/extensions/grid_cartesian.inx.h:15
 #: ../share/extensions/grid_polar.inx.h:18
-#: ../share/extensions/lindenmayer.inx.h:9
+#: ../share/extensions/lindenmayer.inx.h:11
+#: ../share/extensions/polyhedron_3d.inx.h:29
 #: ../share/extensions/render_alphabetsoup.inx.h:3
 #: ../share/extensions/render_barcode.inx.h:5
 #: ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/spirograph.inx.h:6
+#: ../share/extensions/triangle.inx.h:10
 msgid "Render"
 msgstr "Отрисовка"
 
@@ -4136,7 +4136,7 @@ msgid "default.svg"
 msgstr "default.svg"
 
 #: ../src/file.cpp:225
-#: ../src/file.cpp:994
+#: ../src/file.cpp:993
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Не удалось загрузить запрошенный файл %s"
@@ -4198,8 +4198,8 @@ msgid "Document saved."
 msgstr "Документ сохранен."
 
 #: ../src/file.cpp:721
-#: ../src/file.cpp:1119
-#: ../src/file.cpp:1236
+#: ../src/file.cpp:1118
+#: ../src/file.cpp:1235
 #, c-format
 msgid "drawing%s"
 msgstr "рисунок%s"
@@ -4225,38 +4225,38 @@ msgstr "Файл не был изменен. Сохранение не треб�
 msgid "Saving document..."
 msgstr "Выполняется сохранение документа..."
 
-#: ../src/file.cpp:991
+#: ../src/file.cpp:990
 msgid "Import"
 msgstr "Импорт"
 
-#: ../src/file.cpp:1023
+#: ../src/file.cpp:1022
 msgid "Select file to import"
 msgstr "Выберите файл для импорта"
 
-#: ../src/file.cpp:1141
-#: ../src/file.cpp:1251
+#: ../src/file.cpp:1140
+#: ../src/file.cpp:1250
 msgid "Select file to export to"
 msgstr "Выберите файл для экспорта"
 
-#: ../src/file.cpp:1278
+#: ../src/file.cpp:1277
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Ошибка сохранения временной копии"
 
-#: ../src/file.cpp:1297
+#: ../src/file.cpp:1296
 msgid "Open Clip Art Login"
 msgstr "Вход в Open Clip Art"
 
-#: ../src/file.cpp:1318
+#: ../src/file.cpp:1317
 #, fuzzy, c-format
 msgid "Error exporting the document. Verify if the server name, username and password are correct, if the server has support for webdav and verify if you didn't forget to choose a license."
 msgstr "В ходе экспорта документа произошла ошибка. Проверьте, корректно ли введены имя сервера, имя пользователя и пароль, есть ли у сервера поддержка webdav, не забыли ли вы указать лицензию."
 
-#: ../src/file.cpp:1339
+#: ../src/file.cpp:1338
 msgid "Document exported..."
 msgstr "Документ экспортирован..."
 
-#: ../src/file.cpp:1367
+#: ../src/file.cpp:1366
 #: ../src/verbs.cpp:2179
 msgid "Import From Open Clip Art Library"
 msgstr "Импортировать из Open Clip Art Library"
@@ -4671,23 +4671,23 @@ msgstr "Упростить градиент"
 msgid "Create default gradient"
 msgstr "Создание обычного градиента"
 
-#: ../src/gradient-context.cpp:583
+#: ../src/gradient-context.cpp:584
 msgid "<b>Draw around</b> handles to select them"
 msgstr "<b>Обведите курсором мыши</b> рычаги, чтобы выделить их"
 
-#: ../src/gradient-context.cpp:681
+#: ../src/gradient-context.cpp:682
 msgid "<b>Ctrl</b>: snap gradient angle"
 msgstr "<b>Ctrl</b>: ограничить угол"
 
-#: ../src/gradient-context.cpp:682
+#: ../src/gradient-context.cpp:683
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Shift</b>: рисовать градиент вокруг начальной точки"
 
-#: ../src/gradient-context.cpp:802
+#: ../src/gradient-context.cpp:803
 msgid "Invert gradient"
 msgstr "Инвертирование градиента"
 
-#: ../src/gradient-context.cpp:918
+#: ../src/gradient-context.cpp:919
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
@@ -4695,7 +4695,7 @@ msgstr[0] "<b>Градиент</b> для %d объекта; <b>Ctrl</b> огр�
 msgstr[1] "<b>Градиент</b> для %d объектов; <b>Ctrl</b> ограничивает угол"
 msgstr[2] "<b>Градиент</b> для %d объектов; <b>Ctrl</b> ограничивает угол"
 
-#: ../src/gradient-context.cpp:922
+#: ../src/gradient-context.cpp:923
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr "Выделите <b>объекты</b>, к которым будет применен градиент."
 
@@ -5024,84 +5024,84 @@ msgstr ""
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:841
+#: ../src/interface.cpp:838
 msgid "Commands Bar"
 msgstr "Панель команд"
 
-#: ../src/interface.cpp:841
+#: ../src/interface.cpp:838
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Показать/скрыть панель команд (под меню)"
 
-#: ../src/interface.cpp:843
+#: ../src/interface.cpp:840
 msgid "Tool Controls Bar"
 msgstr "Панель параметров инструментов"
 
-#: ../src/interface.cpp:843
+#: ../src/interface.cpp:840
 msgid "Show or hide the Tool Controls bar"
 msgstr "Показать/скрыть панель с параметрами инструментов"
 
-#: ../src/interface.cpp:845
+#: ../src/interface.cpp:842
 msgid "_Toolbox"
 msgstr "_Панель инструментов"
 
-#: ../src/interface.cpp:845
+#: ../src/interface.cpp:842
 msgid "Show or hide the main toolbox (on the left)"
 msgstr "Показать/скрыть главную панель инструментов (слева)"
 
-#: ../src/interface.cpp:851
+#: ../src/interface.cpp:848
 msgid "_Palette"
 msgstr "О_бразцы цветов"
 
-#: ../src/interface.cpp:851
+#: ../src/interface.cpp:848
 msgid "Show or hide the color palette"
 msgstr "Показать/скрыть панель с палитрой цветов"
 
-#: ../src/interface.cpp:853
+#: ../src/interface.cpp:850
 msgid "_Statusbar"
 msgstr "_Строка состояния"
 
-#: ../src/interface.cpp:853
+#: ../src/interface.cpp:850
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "Показать/скрыть строку состояния (внизу окна)"
 
-#: ../src/interface.cpp:907
+#: ../src/interface.cpp:904
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "Глагол \"%s\" неизвестен"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1026
+#: ../src/interface.cpp:1023
 #, c-format
 msgid "Enter group #%s"
 msgstr "Войти в группу #%s"
 
-#: ../src/interface.cpp:1037
+#: ../src/interface.cpp:1034
 msgid "Go to parent"
 msgstr "На уровень выше"
 
-#: ../src/interface.cpp:1128
-#: ../src/interface.cpp:1213
+#: ../src/interface.cpp:1125
+#: ../src/interface.cpp:1210
 #: ../src/ui/widget/selected-style.cpp:466
 msgid "Drop color"
 msgstr "Перенос цвета"
 
-#: ../src/interface.cpp:1167
+#: ../src/interface.cpp:1164
 msgid "Drop color on gradient"
 msgstr "Перенос цвета на градиент"
 
-#: ../src/interface.cpp:1226
+#: ../src/interface.cpp:1223
 msgid "Could not parse SVG data"
 msgstr "Невозможно разобрать данные SVG"
 
-#: ../src/interface.cpp:1268
+#: ../src/interface.cpp:1265
 msgid "Drop SVG"
 msgstr "Drop SVG"
 
-#: ../src/interface.cpp:1326
+#: ../src/interface.cpp:1323
 msgid "Drop bitmap image"
 msgstr "Импорт растра"
 
-#: ../src/interface.cpp:1418
+#: ../src/interface.cpp:1415
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do you want to replace it?</span>\n"
@@ -5112,7 +5112,7 @@ msgstr ""
 "\n"
 "Этот файл уже есть в каталоге \"%s\". Замена перезапишет его содержание."
 
-#: ../src/interface.cpp:1425
+#: ../src/interface.cpp:1422
 msgid "Replace"
 msgstr "Заменить"
 
@@ -5434,10 +5434,10 @@ msgid "The new dock controller %p is automatic.  Only manual dock objects should
 msgstr "The new dock controller %p is automatic.  Only manual dock objects should be named controller."
 
 #: ../src/libgdl/gdl-dock-notebook.c:134
-#: ../src/ui/dialog/align-and-distribute.cpp:907
-#: ../src/ui/dialog/document-properties.cpp:133
+#: ../src/ui/dialog/align-and-distribute.cpp:903
+#: ../src/ui/dialog/document-properties.cpp:134
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1368
-#: ../src/widgets/desktop-widget.cpp:1531
+#: ../src/widgets/desktop-widget.cpp:1534
 msgid "Page"
 msgstr "Страница"
 
@@ -5617,142 +5617,143 @@ msgid "Knot"
 msgstr "Кельтский узел"
 
 #: ../src/live_effects/effect.cpp:62
-msgid "Slant"
-msgstr "Наклон"
-
-#: ../src/live_effects/effect.cpp:63
 msgid "doEffect stack test"
 msgstr "Последовательный тест эффектов"
 
-#: ../src/live_effects/effect.cpp:65
+#: ../src/live_effects/effect.cpp:64
 msgid "Gears"
 msgstr "Шестеренка"
 
-#: ../src/live_effects/effect.cpp:66
+#: ../src/live_effects/effect.cpp:65
 msgid "Stitch Sub-Paths"
 msgstr "Сшивка субконтуров"
 
-#: ../src/live_effects/effect.cpp:67
+#: ../src/live_effects/effect.cpp:66
 msgid "Circle (center+radius)"
 msgstr "Окружность (центр+радиус)"
 
-#: ../src/live_effects/effect.cpp:68
+#: ../src/live_effects/effect.cpp:67
 msgid "Perspective path"
 msgstr "Контур в перспективе"
 
-#: ../src/live_effects/effect.cpp:69
+#: ../src/live_effects/effect.cpp:68
 msgid "Spiro spline"
 msgstr ""
+
+#: ../src/live_effects/effect.cpp:69
+#, fuzzy
+msgid "Construct grid"
+msgstr "Линий конструкции"
 
 #: ../src/live_effects/effect.cpp:146
 msgid "No effect"
 msgstr "Без эффекта"
 
-#: ../src/live_effects/effect.cpp:187
+#: ../src/live_effects/effect.cpp:182
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "Прерывание при выполнении контурного эффекта"
 
-#: ../src/live_effects/effect.cpp:378
+#: ../src/live_effects/effect.cpp:376
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr "Правка параметра <b>%s</b>."
 
-#: ../src/live_effects/effect.cpp:383
+#: ../src/live_effects/effect.cpp:381
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "Ни один из параметров примененного эффекта не может быть изменен на холсте."
 
-#: ../src/live_effects/lpe-bendpath.cpp:59
+#: ../src/live_effects/lpe-bendpath.cpp:57
 msgid "Bend path"
 msgstr "Контур изгиба"
 
-#: ../src/live_effects/lpe-bendpath.cpp:59
+#: ../src/live_effects/lpe-bendpath.cpp:57
 msgid "Path along which to bend the original path"
 msgstr "Контур, по которому гнуть исходный контур"
 
-#: ../src/live_effects/lpe-bendpath.cpp:60
+#: ../src/live_effects/lpe-bendpath.cpp:58
 msgid "Width of the path"
 msgstr "Толщина контура"
 
-#: ../src/live_effects/lpe-bendpath.cpp:61
+#: ../src/live_effects/lpe-bendpath.cpp:59
 #: ../src/live_effects/lpe-patternalongpath.cpp:65
 msgid "Width in units of length"
 msgstr "Единица ширины = длина контура"
 
-#: ../src/live_effects/lpe-bendpath.cpp:61
+#: ../src/live_effects/lpe-bendpath.cpp:59
 msgid "Scale the width of the path in units of its length"
 msgstr "Измерять толщину контура в единицах, равных его длине"
 
-#: ../src/live_effects/lpe-bendpath.cpp:62
+#: ../src/live_effects/lpe-bendpath.cpp:60
 msgid "Original path is vertical"
 msgstr "Исходный контур вертикален"
 
-#: ../src/live_effects/lpe-bendpath.cpp:62
+#: ../src/live_effects/lpe-bendpath.cpp:60
 msgid "Rotates the original 90 degrees, before bending it along the bend path"
 msgstr "Повернуть исходный контур на 90° перед изгибом по контуру"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:44
+#: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "Stitch path"
 msgstr "Сшивающий контур"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:44
+#: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "The path that will be used as stitch."
 msgstr "Контур, которым сшивают"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:45
+#: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "Number of paths"
 msgstr "Количество контуров"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:45
+#: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "The number of paths that will be generated."
 msgstr "Число создаваемых контуров"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:46
+#: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid "Start edge variance"
 msgstr "Колебание края в начале"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:46
+#: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid "The amount of random jitter to move the start points of the stitches inside & outside the guide path"
 msgstr "Случайное колебание при смещении начальных точек швов внутри и снаружи направляющего контура"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:47
+#: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "Start spacing variance"
 msgstr "Колебание интервала в начале"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:47
+#: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "The amount of random shifting to move the start points of the stitches back & forth along the guide path"
 msgstr "Количество случайного смещения для перемещения начальных точек швов вперед и назад по направляющему контуру"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:48
+#: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "End edge variance"
 msgstr "Колебание края в конце"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:48
+#: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "The amount of randomness that moves the end points of the stitches inside & outside the guide path"
 msgstr "Случайное колебание при смещении конечных точек швов внутри и снаружи направляющего контура"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:49
+#: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid "End spacing variance"
 msgstr "Колебание интервала в конце"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:49
+#: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid "The amount of random shifting to move the end points of the stitches back & forth along the guide path"
 msgstr "Количество случайного смещения для перемещения конечных точек швов вперед и назад по направляющему контуру"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:50
+#: ../src/live_effects/lpe-curvestitch.cpp:48
 msgid "Scale width"
 msgstr "Масштаб ширины"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:50
+#: ../src/live_effects/lpe-curvestitch.cpp:48
 #, fuzzy
 msgid "Scale the width of the stitch path"
 msgstr "Масштабирование толщины обводящего контура"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:51
+#: ../src/live_effects/lpe-curvestitch.cpp:49
 #, fuzzy
 msgid "Scale width relative to length"
 msgstr "Относительный масштаб ширины"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:51
+#: ../src/live_effects/lpe-curvestitch.cpp:49
 #, fuzzy
 msgid "Scale the width of the stitch path relative to its length"
 msgstr "Менять толщину обводящего контура относительно его длины"
@@ -5774,14 +5775,15 @@ msgid "Tooth pressure angle (typically 20-25 deg).  The ratio of teeth not in co
 msgstr "Угол давления зубцов (обычно равен 20-25°). С соотношением зубцов не связан."
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-knot.cpp:35
+#: ../src/live_effects/lpe-knot.cpp:27
 #, fuzzy
-msgid "Interruption width"
-msgstr "Способ интерполяции"
+msgid "Gap width"
+msgstr "Равная ширина"
 
-#: ../src/live_effects/lpe-knot.cpp:35
-msgid "Howmuch the lower strand is obscured by the upper."
-msgstr ""
+#: ../src/live_effects/lpe-knot.cpp:27
+#, fuzzy
+msgid "The width of the gap in the path where it self-intersects"
+msgstr "Менять толщину обводящего контура относительно его длины"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:53
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -5868,191 +5870,174 @@ msgid "Rotate pattern 90 deg before applying"
 msgstr ""
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-perspective_path.cpp:44
+#: ../src/live_effects/lpe-perspective_path.cpp:42
 #, fuzzy
 msgid "Scale x"
 msgstr "Масштабирование"
 
-#: ../src/live_effects/lpe-perspective_path.cpp:44
+#: ../src/live_effects/lpe-perspective_path.cpp:42
 #, fuzzy
 msgid "Scale factor in x direction"
 msgstr "Состояние точек схода в направлении X"
 
-#: ../src/live_effects/lpe-perspective_path.cpp:45
+#: ../src/live_effects/lpe-perspective_path.cpp:43
 #, fuzzy
 msgid "Scale y"
 msgstr "Масштабирование"
 
-#: ../src/live_effects/lpe-perspective_path.cpp:45
+#: ../src/live_effects/lpe-perspective_path.cpp:43
 #, fuzzy
 msgid "Scale factor in y direction"
 msgstr "Состояние точек схода в направлении X"
 
-#: ../src/live_effects/lpe-perspective_path.cpp:46
+#: ../src/live_effects/lpe-perspective_path.cpp:44
 #, fuzzy
 msgid "Offset x"
 msgstr "Смещение"
 
-#: ../src/live_effects/lpe-perspective_path.cpp:46
+#: ../src/live_effects/lpe-perspective_path.cpp:44
 #, fuzzy
 msgid "Offset in x direction"
 msgstr "Угол в направлении X"
 
-#: ../src/live_effects/lpe-perspective_path.cpp:47
+#: ../src/live_effects/lpe-perspective_path.cpp:45
 #, fuzzy
 msgid "Offset y"
 msgstr "Смещение"
 
-#: ../src/live_effects/lpe-perspective_path.cpp:47
+#: ../src/live_effects/lpe-perspective_path.cpp:45
 #, fuzzy
 msgid "Offset in y direction"
 msgstr "Угол в направлении X"
 
-#: ../src/live_effects/lpe-perspective_path.cpp:48
+#: ../src/live_effects/lpe-perspective_path.cpp:46
 msgid "Uses XY plane?"
 msgstr ""
 
-#: ../src/live_effects/lpe-perspective_path.cpp:48
+#: ../src/live_effects/lpe-perspective_path.cpp:46
 msgid "If true, put the path on the left side of an imaginary box, otherwise on the right side"
 msgstr ""
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-skeleton.cpp:35
+#: ../src/live_effects/lpe-skeleton.cpp:33
 #, fuzzy
 msgid "Float parameter"
 msgstr "Параметры эффекта"
 
-#: ../src/live_effects/lpe-skeleton.cpp:35
+#: ../src/live_effects/lpe-skeleton.cpp:33
 msgid "just a real number like 1.4!"
 msgstr ""
 
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
-#: ../src/live_effects/lpe-sketch.cpp:37
+#: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Strokes"
 msgstr "Штрихов"
 
-#: ../src/live_effects/lpe-sketch.cpp:37
+#: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Draw that many approximating strokes"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:38
+#: ../src/live_effects/lpe-sketch.cpp:36
 msgid "Max stroke length"
 msgstr "Макс. длина штрихов"
 
-#: ../src/live_effects/lpe-sketch.cpp:39
+#: ../src/live_effects/lpe-sketch.cpp:37
 msgid "Maximum length of approximating strokes"
 msgstr "Максимальная длина аппроксимирующих штрихов"
 
-#: ../src/live_effects/lpe-sketch.cpp:40
+#: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Stroke length variation"
 msgstr "Вариативность длины штрихов"
 
-#: ../src/live_effects/lpe-sketch.cpp:41
+#: ../src/live_effects/lpe-sketch.cpp:39
 #, fuzzy
 msgid "Random variation of stroke length (relative to maximum length)"
 msgstr "Менять толщину обводящего контура относительно его длины"
 
-#: ../src/live_effects/lpe-sketch.cpp:42
+#: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
 msgstr "Макс. перекрытие"
 
-#: ../src/live_effects/lpe-sketch.cpp:43
+#: ../src/live_effects/lpe-sketch.cpp:41
 msgid "How much successive strokes should overlap (relative to maximum length)."
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:44
+#: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Overlap variation"
 msgstr "Вариативность перекрытия"
 
-#: ../src/live_effects/lpe-sketch.cpp:45
+#: ../src/live_effects/lpe-sketch.cpp:43
 msgid "Random variation of overlap (relative to maximum overlap)"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:46
+#: ../src/live_effects/lpe-sketch.cpp:44
 msgid "Max. end tolerance"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:47
+#: ../src/live_effects/lpe-sketch.cpp:45
 msgid "Maximum distance between ends of original and approximating paths (relative to maximum length)"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:48
+#: ../src/live_effects/lpe-sketch.cpp:46
 msgid "Parallel offset"
 msgstr "Параллельное смещение"
 
-#: ../src/live_effects/lpe-sketch.cpp:49
+#: ../src/live_effects/lpe-sketch.cpp:47
 msgid "Average distance from approximating path to original path"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:50
+#: ../src/live_effects/lpe-sketch.cpp:48
 msgid "Max. tremble"
 msgstr "Мак. дрожание"
 
-#: ../src/live_effects/lpe-sketch.cpp:51
+#: ../src/live_effects/lpe-sketch.cpp:49
 msgid "Maximum tremble magnitude"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:52
+#: ../src/live_effects/lpe-sketch.cpp:50
 msgid "Tremble frequency"
 msgstr "Частота дрожания"
 
-#: ../src/live_effects/lpe-sketch.cpp:53
+#: ../src/live_effects/lpe-sketch.cpp:51
 msgid "Avreage number of tremble periods in an approximating stroke"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:54
+#: ../src/live_effects/lpe-sketch.cpp:52
 msgid "Construction lines"
 msgstr "Линий конструкции"
 
-#: ../src/live_effects/lpe-sketch.cpp:55
+#: ../src/live_effects/lpe-sketch.cpp:53
 msgid "How many construction lines (tangents) to draw"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:56
+#: ../src/live_effects/lpe-sketch.cpp:54
 #: ../src/selection-chemistry.cpp:1427
 #: ../src/seltrans.cpp:454
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2235
-#: ../src/ui/dialog/transformation.cpp:666
+#: ../src/ui/dialog/transformation.cpp:736
 msgid "Scale"
 msgstr "Масштабирование"
 
-#: ../src/live_effects/lpe-sketch.cpp:57
+#: ../src/live_effects/lpe-sketch.cpp:55
 msgid "Scale factor relating curvature and length of construction lines (try 5*offset)"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:58
+#: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Max. length"
 msgstr "Макс. длина"
 
-#: ../src/live_effects/lpe-sketch.cpp:58
+#: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Maximum length of construction lines"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:59
+#: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Length variation"
 msgstr "Вариативность длины"
 
-#: ../src/live_effects/lpe-sketch.cpp:59
+#: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Random variation of the length of construction lines"
 msgstr ""
-
-#: ../src/live_effects/lpe-slant.cpp:18
-msgid "Slant factor"
-msgstr "Коэффициент наклона"
-
-#: ../src/live_effects/lpe-slant.cpp:18
-msgid "y = y + x*(slant factor)"
-msgstr "y = y + x*(коэффициент наклона)"
-
-#: ../src/live_effects/lpe-slant.cpp:19
-#: ../src/widgets/toolbox.cpp:5211
-msgid "Center"
-msgstr "Выключка по центру"
-
-#: ../src/live_effects/lpe-slant.cpp:19
-msgid "The x-coord of this point is around which the slant will happen"
-msgstr "Координата X, вокруг которой выполняется наклон"
 
 #: ../src/live_effects/lpe-test-doEffect-stack.cpp:23
 msgid "Stack step"
@@ -6063,52 +6048,52 @@ msgstr "Шаг складывания в стопку"
 msgid "point param"
 msgstr "пентаграмма"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:49
+#: ../src/live_effects/lpe-vonkoch.cpp:42
 msgid "Bounding box"
 msgstr "Площадка (BB)"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:50
+#: ../src/live_effects/lpe-vonkoch.cpp:43
 msgid "Last gen. segment"
 msgstr "Последний созданный сегмент"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:56
+#: ../src/live_effects/lpe-vonkoch.cpp:49
 msgid "Nb of generations"
 msgstr "Количество поколений"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:56
+#: ../src/live_effects/lpe-vonkoch.cpp:49
 msgid "Depth of the recursion --- keep low!!"
 msgstr ""
 
-#: ../src/live_effects/lpe-vonkoch.cpp:57
+#: ../src/live_effects/lpe-vonkoch.cpp:50
 #, fuzzy
 msgid "Generating path"
 msgstr "Создание нового контура"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:57
+#: ../src/live_effects/lpe-vonkoch.cpp:50
 msgid "Path whos segments define the fractal"
 msgstr ""
 
-#: ../src/live_effects/lpe-vonkoch.cpp:58
+#: ../src/live_effects/lpe-vonkoch.cpp:51
 msgid "Draw all generations"
 msgstr "Рисовать все поколения"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:58
+#: ../src/live_effects/lpe-vonkoch.cpp:51
 msgid "If unchecked, draw only the last generation"
 msgstr ""
 
-#: ../src/live_effects/lpe-vonkoch.cpp:59
+#: ../src/live_effects/lpe-vonkoch.cpp:52
 msgid "Reference"
 msgstr "На что ориентироваться"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:59
+#: ../src/live_effects/lpe-vonkoch.cpp:52
 msgid "Generating path segments define transforms in reference to bbox or last segment"
 msgstr ""
 
-#: ../src/live_effects/lpe-vonkoch.cpp:60
+#: ../src/live_effects/lpe-vonkoch.cpp:53
 msgid "Max complexity"
 msgstr "Макс. сложность"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:60
+#: ../src/live_effects/lpe-vonkoch.cpp:53
 msgid "Disable effect if the output is too complex"
 msgstr ""
 
@@ -6492,107 +6477,107 @@ msgstr "<b>Alt</b>: зафиксировать длину рычага; <b>Ctrl+
 msgid "Stamp"
 msgstr "Штамповка"
 
-#: ../src/nodepath.cpp:1478
-#: ../src/nodepath.cpp:1505
+#: ../src/nodepath.cpp:1476
+#: ../src/nodepath.cpp:1503
 msgid "Move nodes vertically"
 msgstr "Переместить узлы по вертикали"
 
-#: ../src/nodepath.cpp:1480
-#: ../src/nodepath.cpp:1507
+#: ../src/nodepath.cpp:1478
+#: ../src/nodepath.cpp:1505
 msgid "Move nodes horizontally"
 msgstr "Переместить узлы по горизонтали"
 
-#: ../src/nodepath.cpp:1482
-#: ../src/nodepath.cpp:1509
-#: ../src/nodepath.cpp:1524
-#: ../src/nodepath.cpp:3351
+#: ../src/nodepath.cpp:1480
+#: ../src/nodepath.cpp:1507
+#: ../src/nodepath.cpp:1522
+#: ../src/nodepath.cpp:3349
 msgid "Move nodes"
 msgstr "Перемещение узлов"
 
-#: ../src/nodepath.cpp:1562
+#: ../src/nodepath.cpp:1560
 msgid "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
 msgstr "<b>Рычаг узла</b>: перетаскивание с <b>Ctrl</b> ограничивает угол; с <b>Alt</b> фиксирует длину; с <b>Shift</b> синхронно вращает противоположный рычаг"
 
-#: ../src/nodepath.cpp:1732
+#: ../src/nodepath.cpp:1730
 msgid "Align nodes"
 msgstr "Выровнять узлы"
 
-#: ../src/nodepath.cpp:1794
+#: ../src/nodepath.cpp:1792
 msgid "Distribute nodes"
 msgstr "Расстановка узлов"
 
-#: ../src/nodepath.cpp:1832
+#: ../src/nodepath.cpp:1830
 msgid "Add nodes"
 msgstr "Добавление узлов"
 
-#: ../src/nodepath.cpp:1834
-#: ../src/nodepath.cpp:1906
+#: ../src/nodepath.cpp:1832
+#: ../src/nodepath.cpp:1904
 msgid "Add node"
 msgstr "Добавление узла"
 
-#: ../src/nodepath.cpp:1987
+#: ../src/nodepath.cpp:1985
 msgid "Break path"
 msgstr "Разбитие контура"
 
-#: ../src/nodepath.cpp:2043
+#: ../src/nodepath.cpp:2041
 msgid "Close subpath"
 msgstr "Закрытие подконтура"
 
-#: ../src/nodepath.cpp:2104
+#: ../src/nodepath.cpp:2102
 msgid "Join nodes"
 msgstr "Соединение узлов"
 
-#: ../src/nodepath.cpp:2131
+#: ../src/nodepath.cpp:2129
 msgid "Close subpath by segment"
 msgstr "Закрытие подконтура сегментом"
 
-#: ../src/nodepath.cpp:2185
+#: ../src/nodepath.cpp:2183
 msgid "Join nodes by segment"
 msgstr "Соединение узлов сегментом"
 
-#: ../src/nodepath.cpp:2198
-#: ../src/nodepath.cpp:2213
+#: ../src/nodepath.cpp:2196
+#: ../src/nodepath.cpp:2211
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Для соединения выделите <b>два оконечных узла</b>."
 
-#: ../src/nodepath.cpp:2370
-#: ../src/nodepath.cpp:2406
-#: ../src/nodepath.cpp:2410
+#: ../src/nodepath.cpp:2368
+#: ../src/nodepath.cpp:2404
+#: ../src/nodepath.cpp:2408
 msgid "Delete nodes"
 msgstr "Удаление узлов"
 
-#: ../src/nodepath.cpp:2372
+#: ../src/nodepath.cpp:2370
 msgid "Delete nodes preserving shape"
 msgstr "Удаление узлов без смены формы"
 
-#: ../src/nodepath.cpp:2429
-#: ../src/nodepath.cpp:2443
+#: ../src/nodepath.cpp:2427
+#: ../src/nodepath.cpp:2441
 msgid "Select <b>two non-endpoint nodes</b> on a path between which to delete segments."
 msgstr "Выделите <b>два неоконечных узла</b> контура, чтобы удалить сегменты между ними"
 
-#: ../src/nodepath.cpp:2539
+#: ../src/nodepath.cpp:2537
 msgid "Cannot find path between nodes."
 msgstr "Невозможно найти контур между узлами."
 
-#: ../src/nodepath.cpp:2571
+#: ../src/nodepath.cpp:2569
 #: ../src/widgets/toolbox.cpp:1123
 msgid "Delete segment"
 msgstr "Удаление сегмента"
 
-#: ../src/nodepath.cpp:2592
+#: ../src/nodepath.cpp:2590
 msgid "Change segment type"
 msgstr "Смена типа сегмента"
 
-#: ../src/nodepath.cpp:2609
-#: ../src/nodepath.cpp:3309
+#: ../src/nodepath.cpp:2607
+#: ../src/nodepath.cpp:3307
 msgid "Change node type"
 msgstr "Смена типа узла"
 
-#: ../src/nodepath.cpp:3588
+#: ../src/nodepath.cpp:3586
 msgid "Retract handle"
 msgstr "Втяжка узла"
 
-#: ../src/nodepath.cpp:3637
+#: ../src/nodepath.cpp:3635
 msgid "Move node handle"
 msgstr "Смещение рычага узла"
 
@@ -6847,17 +6832,17 @@ msgstr "Развернуть контур"
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "В выделении <b>нет контуров</b> для разворота."
 
-#: ../src/pencil-context.cpp:238
+#: ../src/pencil-context.cpp:239
 #: ../src/pen-context.cpp:427
 msgid "Continuing selected path"
 msgstr "Продолжение выделенного контура"
 
-#: ../src/pencil-context.cpp:247
+#: ../src/pencil-context.cpp:248
 #: ../src/pen-context.cpp:438
 msgid "Creating new path"
 msgstr "Создание нового контура"
 
-#: ../src/pencil-context.cpp:252
+#: ../src/pencil-context.cpp:253
 #: ../src/pen-context.cpp:442
 msgid "Appending to selected path"
 msgstr "Добавление к выделенному контуру"
@@ -6955,31 +6940,31 @@ msgstr ""
 "Inkscape запустится с исходными настройками.\n"
 "Измененные настройки не будут сохранены."
 
-#: ../src/rect-context.cpp:387
+#: ../src/rect-context.cpp:386
 msgid "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner circular"
 msgstr "<b>Ctrl</b>: квадрат или прямоугольник с целым соотношением сторон, закругленные углы"
 
-#: ../src/rect-context.cpp:541
+#: ../src/rect-context.cpp:540
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Прямоугольник</b>: %s &#215; %s; (с соотношением сторон %d:%d); с <b>Shift</b> рисует вокруг начальной точки"
 
-#: ../src/rect-context.cpp:544
+#: ../src/rect-context.cpp:543
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Прямоугольник</b>: %s &#215; %s; (с «золотым» соотношением сторон 1.618 : 1); с <b>Shift</b> рисует вокруг начальной точки"
 
-#: ../src/rect-context.cpp:546
+#: ../src/rect-context.cpp:545
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Прямоугольник</b>: %s &#215; %s; (с «золотым» соотношением сторон 1 : 1.618); с <b>Shift</b> рисует вокруг начальной точки"
 
-#: ../src/rect-context.cpp:550
+#: ../src/rect-context.cpp:549
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Прямоугольник</b>: %s x %s; с <b>Ctrl</b>: квадрат или прямоугольник с целым соотношением сторон, с <b>Shift</b> рисовать вокруг начальной точки"
 
-#: ../src/rect-context.cpp:571
+#: ../src/rect-context.cpp:570
 msgid "Create rectangle"
 msgstr "Создание прямоугольника"
 
@@ -7177,7 +7162,7 @@ msgstr "Повернуть на 90° против часовой стрелки"
 
 #: ../src/selection-chemistry.cpp:1365
 #: ../src/seltrans.cpp:457
-#: ../src/ui/dialog/transformation.cpp:687
+#: ../src/ui/dialog/transformation.cpp:757
 msgid "Rotate"
 msgstr "Вращение"
 
@@ -7200,7 +7185,7 @@ msgstr "Смещение по горизонтали"
 #: ../src/selection-chemistry.cpp:1474
 #: ../src/selection-chemistry.cpp:1502
 #: ../src/seltrans.cpp:451
-#: ../src/ui/dialog/transformation.cpp:610
+#: ../src/ui/dialog/transformation.cpp:680
 msgid "Move"
 msgstr "Смещение"
 
@@ -7526,7 +7511,7 @@ msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
 #: ../src/seltrans.cpp:460
-#: ../src/ui/dialog/transformation.cpp:745
+#: ../src/ui/dialog/transformation.cpp:815
 msgid "Skew"
 msgstr "Скос"
 
@@ -7880,7 +7865,7 @@ msgstr "Рисуется точка"
 msgid "Create single dot"
 msgstr "Рисование точки"
 
-#: ../src/sp-polygon.cpp:235
+#: ../src/sp-polygon.cpp:237
 msgid "<b>Polygon</b>"
 msgstr "<b>Многоугольник</b>"
 
@@ -8289,11 +8274,11 @@ msgstr "Векторизация растра"
 msgid "Trace: Done. %ld nodes created"
 msgstr "Векторизация: Готово. Создано узлов: %ld"
 
-#: ../src/tweak-context.cpp:959
+#: ../src/tweak-context.cpp:960
 msgid "<b>Nothing selected!</b> Select objects to tweak."
 msgstr "<b>Ничего не выделено!</b> Выделите объект(ы) для коррекции."
 
-#: ../src/tweak-context.cpp:964
+#: ../src/tweak-context.cpp:965
 #, c-format
 msgid "<b>Pushing %d</b> selected object"
 msgid_plural "<b>Pushing %d</b> selected objects"
@@ -8301,7 +8286,7 @@ msgstr[0] "<b>Толкается %d</b> выбранный объект"
 msgstr[1] "<b>Толкается %d</b> выбранных объекта"
 msgstr[2] "<b>Толкается %d</b> выбранных объектов"
 
-#: ../src/tweak-context.cpp:969
+#: ../src/tweak-context.cpp:970
 #, c-format
 msgid "<b>Shrinking %d</b> selected object"
 msgid_plural "<b>Shrinking %d</b> selected objects"
@@ -8309,7 +8294,7 @@ msgstr[0] "<b>Сокращается %d</b> выбранный объект"
 msgstr[1] "<b>Сокращаются %d</b> выбранных объекта"
 msgstr[2] "<b>Сокращается %d</b> выбранных объектов"
 
-#: ../src/tweak-context.cpp:974
+#: ../src/tweak-context.cpp:975
 #, c-format
 msgid "<b>Growing %d</b> selected object"
 msgid_plural "<b>Growing %d</b> selected objects"
@@ -8317,7 +8302,7 @@ msgstr[0] "<b>Наращивается %d</b> выбранный объект"
 msgstr[1] "<b>Наращиваются %d</b> выбранных объекта"
 msgstr[2] "<b>Наращивается %d</b> выбранных объектов"
 
-#: ../src/tweak-context.cpp:979
+#: ../src/tweak-context.cpp:980
 #, c-format
 msgid "<b>Attracting %d</b> selected object"
 msgid_plural "<b>Attracting %d</b> selected objects"
@@ -8325,7 +8310,7 @@ msgstr[0] "<b>Притягивается %d</b> выбранный объект"
 msgstr[1] "<b>Притягиваются %d</b> выбранных объекта"
 msgstr[2] "<b>Притягивается %d</b> выбранных объектов"
 
-#: ../src/tweak-context.cpp:984
+#: ../src/tweak-context.cpp:985
 #, c-format
 msgid "<b>Repelling %d</b> selected object"
 msgid_plural "<b>Repelling %d</b> selected objects"
@@ -8333,7 +8318,7 @@ msgstr[0] "<b>Отталкивается %d</b> выбранный объект"
 msgstr[1] "<b>Отталкиваются %d</b> выбранных объекта"
 msgstr[2] "<b>Отталкивается %d</b> выбранных объектов"
 
-#: ../src/tweak-context.cpp:989
+#: ../src/tweak-context.cpp:990
 #, c-format
 msgid "<b>Roughening %d</b> selected object"
 msgid_plural "<b>Roughening %d</b> selected objects"
@@ -8341,7 +8326,7 @@ msgstr[0] "<b>Огрубляется %d</b> выбранный объект"
 msgstr[1] "<b>Огрубляются %d</b> выбранных объекта"
 msgstr[2] "<b>Огрубляется %d</b> выбранных объектов"
 
-#: ../src/tweak-context.cpp:994
+#: ../src/tweak-context.cpp:995
 #, c-format
 msgid "<b>Painting %d</b> selected object"
 msgid_plural "<b>Painting %d</b> selected objects"
@@ -8349,7 +8334,7 @@ msgstr[0] "<b>Корректируется цвет %d</b> выбранного 
 msgstr[1] "<b>Корректируется цвет %d</b> выбранных объектов"
 msgstr[2] "<b>Корректируется цвет %d</b> выбранных объектов"
 
-#: ../src/tweak-context.cpp:999
+#: ../src/tweak-context.cpp:1000
 #, c-format
 msgid "<b>Jittering colors in %d</b> selected object"
 msgid_plural "<b>Jittering colors in %d</b> selected objects"
@@ -8357,35 +8342,35 @@ msgstr[0] "<b>Перебираются цвета %d</b> выбранного о
 msgstr[1] "<b>Перебираются цвета %d</b> выбранных объектов"
 msgstr[2] "<b>Перебираются цвета %d</b> выбранных объектов"
 
-#: ../src/tweak-context.cpp:1039
+#: ../src/tweak-context.cpp:1040
 msgid "Push tweak"
 msgstr "Коррекция толканием"
 
-#: ../src/tweak-context.cpp:1043
+#: ../src/tweak-context.cpp:1044
 msgid "Shrink tweak"
 msgstr "Коррекция сокращением"
 
-#: ../src/tweak-context.cpp:1047
+#: ../src/tweak-context.cpp:1048
 msgid "Grow tweak"
 msgstr "Коррекция наращиванием"
 
-#: ../src/tweak-context.cpp:1051
+#: ../src/tweak-context.cpp:1052
 msgid "Attract tweak"
 msgstr "Коррекция притяжением"
 
-#: ../src/tweak-context.cpp:1055
+#: ../src/tweak-context.cpp:1056
 msgid "Repel tweak"
 msgstr "Коррекция отталкиванием"
 
-#: ../src/tweak-context.cpp:1059
+#: ../src/tweak-context.cpp:1060
 msgid "Roughen tweak"
 msgstr "Коррекция огрублением"
 
-#: ../src/tweak-context.cpp:1063
+#: ../src/tweak-context.cpp:1064
 msgid "Color paint tweak"
 msgstr "Коррекция заливки цветом"
 
-#: ../src/tweak-context.cpp:1067
+#: ../src/tweak-context.cpp:1068
 msgid "Color jitter tweak"
 msgstr "Коррекция перебором цветов"
 
@@ -8534,213 +8519,213 @@ msgstr ""
 "Alexandre Prokoudine (alexandre.prokoudine@gmail.com), 2004-2008."
 
 #: ../src/ui/dialog/align-and-distribute.cpp:234
-#: ../src/ui/dialog/align-and-distribute.cpp:780
+#: ../src/ui/dialog/align-and-distribute.cpp:776
 msgid "Align"
 msgstr "Выровнять"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:396
-#: ../src/ui/dialog/align-and-distribute.cpp:781
+#: ../src/ui/dialog/align-and-distribute.cpp:392
+#: ../src/ui/dialog/align-and-distribute.cpp:777
 msgid "Distribute"
 msgstr "Расставить"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:465
+#: ../src/ui/dialog/align-and-distribute.cpp:461
 msgid "Minimum horizontal gap (in px units) between bounding boxes"
 msgstr "Минимальный горизонтальный интервал между рамками (в пикселах)"
 
 #. TRANSLATORS: Horizontal gap. Only put "H:" equivalent in the translation
-#: ../src/ui/dialog/align-and-distribute.cpp:467
+#: ../src/ui/dialog/align-and-distribute.cpp:463
 #, fuzzy
 msgid "gap|H:"
 msgstr "Концы:"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:475
+#: ../src/ui/dialog/align-and-distribute.cpp:471
 msgid "Minimum vertical gap (in px units) between bounding boxes"
 msgstr "Минимальный вертикальный интервал между рамками (в пикселах)"
 
 #. TRANSLATORS: Vertical gap
-#: ../src/ui/dialog/align-and-distribute.cpp:477
+#: ../src/ui/dialog/align-and-distribute.cpp:473
 msgid "V:"
 msgstr "В:"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:505
-#: ../src/ui/dialog/align-and-distribute.cpp:782
+#: ../src/ui/dialog/align-and-distribute.cpp:501
+#: ../src/ui/dialog/align-and-distribute.cpp:778
 #: ../src/widgets/toolbox.cpp:5555
 msgid "Remove overlaps"
 msgstr "Убрать перекрытия"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:535
+#: ../src/ui/dialog/align-and-distribute.cpp:531
 #: ../src/widgets/toolbox.cpp:5413
 msgid "Arrange connector network"
 msgstr "Гармоничная расстановка связанных объектов"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:565
+#: ../src/ui/dialog/align-and-distribute.cpp:561
 msgid "Unclump"
 msgstr "Разровнять"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:635
+#: ../src/ui/dialog/align-and-distribute.cpp:631
 msgid "Randomize positions"
 msgstr "Случайное расположение объектов"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:732
+#: ../src/ui/dialog/align-and-distribute.cpp:728
 msgid "Distribute text baselines"
 msgstr "Расстановка линий шрифта текста"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:752
+#: ../src/ui/dialog/align-and-distribute.cpp:748
 msgid "Align text baselines"
 msgstr "Выравнивание линий шрифта текста"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:783
+#: ../src/ui/dialog/align-and-distribute.cpp:779
 msgid "Connector network layout"
 msgstr "Внешний вид блок-схем"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:784
+#: ../src/ui/dialog/align-and-distribute.cpp:780
 msgid "Nodes"
 msgstr "Узлы"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:790
+#: ../src/ui/dialog/align-and-distribute.cpp:786
 msgid "Relative to: "
 msgstr "Относительно: "
 
-#: ../src/ui/dialog/align-and-distribute.cpp:795
+#: ../src/ui/dialog/align-and-distribute.cpp:791
 msgid "Align right sides of objects to left side of anchor"
 msgstr "Правые края объектов к левому краю якоря"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:798
+#: ../src/ui/dialog/align-and-distribute.cpp:794
 msgid "Align left sides"
 msgstr "Выровнять по левым краям"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:801
+#: ../src/ui/dialog/align-and-distribute.cpp:797
 msgid "Center on vertical axis"
 msgstr "Центрировать на вертикальной оси"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:804
+#: ../src/ui/dialog/align-and-distribute.cpp:800
 msgid "Align right sides"
 msgstr "Выровнять по правым краям"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:807
+#: ../src/ui/dialog/align-and-distribute.cpp:803
 msgid "Align left sides of objects to right side of anchor"
 msgstr "Левые края объектов к правому краю якоря"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:810
+#: ../src/ui/dialog/align-and-distribute.cpp:806
 msgid "Align bottoms of objects to top of anchor"
 msgstr "Нижние края объектов к верхнему краю якоря"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:813
+#: ../src/ui/dialog/align-and-distribute.cpp:809
 msgid "Align tops"
 msgstr "Выровнять по верхним краям"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:816
+#: ../src/ui/dialog/align-and-distribute.cpp:812
 msgid "Center on horizontal axis"
 msgstr "Центрировать на горизонтальной оси"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:819
+#: ../src/ui/dialog/align-and-distribute.cpp:815
 msgid "Align bottoms"
 msgstr "Выровнять по нижним краям"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:822
+#: ../src/ui/dialog/align-and-distribute.cpp:818
 msgid "Align tops of objects to bottom of anchor"
 msgstr "Верхние края объектов к нижнему краю якоря"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:827
+#: ../src/ui/dialog/align-and-distribute.cpp:823
 msgid "Align baseline anchors of texts vertically"
 msgstr "Выровнять текстовые опорные точки по вертикали"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:830
+#: ../src/ui/dialog/align-and-distribute.cpp:826
 msgid "Align baseline anchors of texts horizontally"
 msgstr "Выровнять текстовые опорные точки по горизонтали"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:835
+#: ../src/ui/dialog/align-and-distribute.cpp:831
 msgid "Make horizontal gaps between objects equal"
 msgstr "Выровнять интервалы между объектами по горизонтали"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:839
+#: ../src/ui/dialog/align-and-distribute.cpp:835
 msgid "Distribute left sides equidistantly"
 msgstr "Равноудаленно расставить левые края объектов"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:842
+#: ../src/ui/dialog/align-and-distribute.cpp:838
 msgid "Distribute centers equidistantly horizontally"
 msgstr "Равноудаленно расставить центры объектов по горизонтали"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:845
+#: ../src/ui/dialog/align-and-distribute.cpp:841
 msgid "Distribute right sides equidistantly"
 msgstr "Равноудаленно расставить правые края объектов"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:849
+#: ../src/ui/dialog/align-and-distribute.cpp:845
 msgid "Make vertical gaps between objects equal"
 msgstr "Выравнять интервалы между объектами по вертикали"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:853
+#: ../src/ui/dialog/align-and-distribute.cpp:849
 msgid "Distribute tops equidistantly"
 msgstr "Равноудаленно расставить верхние края"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:856
+#: ../src/ui/dialog/align-and-distribute.cpp:852
 msgid "Distribute centers equidistantly vertically"
 msgstr "Равноудаленно расставить центры объектов по вертикали"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:859
+#: ../src/ui/dialog/align-and-distribute.cpp:855
 msgid "Distribute bottoms equidistantly"
 msgstr "Равноудаленно расставить нижние края объектов"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:864
+#: ../src/ui/dialog/align-and-distribute.cpp:860
 msgid "Distribute baseline anchors of texts horizontally"
 msgstr "Распределить текстовые опорные точки по горизонтали"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:867
+#: ../src/ui/dialog/align-and-distribute.cpp:863
 msgid "Distribute baseline anchors of texts vertically"
 msgstr "Распределить текстовые опорные точки по вертикали"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:872
+#: ../src/ui/dialog/align-and-distribute.cpp:868
 msgid "Randomize centers in both dimensions"
 msgstr "Случайным образом расставить центры"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:875
+#: ../src/ui/dialog/align-and-distribute.cpp:871
 msgid "Unclump objects: try to equalize edge-to-edge distances"
 msgstr "Попробовать выравнять расстояния между краями объектов"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:880
+#: ../src/ui/dialog/align-and-distribute.cpp:876
 msgid "Move objects as little as possible so that their bounding boxes do not overlap"
 msgstr "Переместить объекты так, чтобы их рамки едва-едва не пересекались"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:884
+#: ../src/ui/dialog/align-and-distribute.cpp:880
 #: ../src/widgets/toolbox.cpp:5517
 msgid "Nicely arrange selected connector network"
 msgstr "Гармонично расставить связанные коннектором объекты"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:889
+#: ../src/ui/dialog/align-and-distribute.cpp:885
 msgid "Align selected nodes horizontally"
 msgstr "Выровнять выделенные узлы по горизонтали"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:892
+#: ../src/ui/dialog/align-and-distribute.cpp:888
 msgid "Align selected nodes vertically"
 msgstr "Выровнять выделенные узлы по вертикали"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:895
+#: ../src/ui/dialog/align-and-distribute.cpp:891
 msgid "Distribute selected nodes horizontally"
 msgstr "Распределить выделенные узлы по горизонтали"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:898
+#: ../src/ui/dialog/align-and-distribute.cpp:894
 msgid "Distribute selected nodes vertically"
 msgstr "Распределить выделенные узлы по вертикали"
 
 #. Rest of the widgetry
-#: ../src/ui/dialog/align-and-distribute.cpp:903
+#: ../src/ui/dialog/align-and-distribute.cpp:899
 msgid "Last selected"
 msgstr "Последнего выделенного"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:904
+#: ../src/ui/dialog/align-and-distribute.cpp:900
 msgid "First selected"
 msgstr "Первого выделенного"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:905
+#: ../src/ui/dialog/align-and-distribute.cpp:901
 msgid "Biggest item"
 msgstr "Наибольшего объекта"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:906
+#: ../src/ui/dialog/align-and-distribute.cpp:902
 msgid "Smallest item"
 msgstr "Наименьшего объекта"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:908
-#: ../src/widgets/desktop-widget.cpp:1535
+#: ../src/ui/dialog/align-and-distribute.cpp:904
+#: ../src/widgets/desktop-widget.cpp:1538
 msgid "Drawing"
 msgstr "Рисунок"
 
@@ -8866,251 +8851,260 @@ msgid "Toggle snapping on or off"
 msgstr "Включить или выключить прилипание"
 
 #: ../src/ui/dialog/document-properties.cpp:104
+#, fuzzy
+msgid "_Enable snap indicator"
+msgstr "_Включить прилипание"
+
+#: ../src/ui/dialog/document-properties.cpp:104
+msgid "After snapping, a symbol is drawn at the point that has snapped"
+msgstr ""
+
+#: ../src/ui/dialog/document-properties.cpp:105
 msgid "_Bounding box corners"
 msgstr "У_глы площадки (BB)"
 
-#: ../src/ui/dialog/document-properties.cpp:104
+#: ../src/ui/dialog/document-properties.cpp:105
 msgid "Only available in the selector tool: snap bounding box corners to guides, to grids, and to other bounding boxes (but not to nodes or paths)"
 msgstr "Работает только для Селектора: прилипание площадки к направляющим, сетке и другим площадкам (но не к узлам или контурам)"
 
-#: ../src/ui/dialog/document-properties.cpp:106
+#: ../src/ui/dialog/document-properties.cpp:107
 msgid "_Nodes"
 msgstr "_Узлы"
 
-#: ../src/ui/dialog/document-properties.cpp:106
+#: ../src/ui/dialog/document-properties.cpp:107
 msgid "Snap nodes (e.g. path nodes, special points in shapes, gradient handles, text base points, transformation origins, etc.) to guides, to grids, to paths and to other nodes"
 msgstr "Узлы (т.е. узлы контуров, управляющие ручки фигур, опорные точки градиентов, якорные точки текста и т.д.) прилипают направляющим, к линиям сетки, к контурам и к другим узлам"
 
 #. Options for snapping to objects
-#: ../src/ui/dialog/document-properties.cpp:109
+#: ../src/ui/dialog/document-properties.cpp:110
 msgid "Snap to path_s"
 msgstr "Прилипать к _контурам"
 
-#: ../src/ui/dialog/document-properties.cpp:109
+#: ../src/ui/dialog/document-properties.cpp:110
 msgid "Snap nodes to object paths"
 msgstr "Узлы прилипают к объектам"
 
-#: ../src/ui/dialog/document-properties.cpp:110
+#: ../src/ui/dialog/document-properties.cpp:111
 msgid "Snap to n_odes"
 msgstr "Прилипать к у_злам"
 
-#: ../src/ui/dialog/document-properties.cpp:110
+#: ../src/ui/dialog/document-properties.cpp:111
 msgid "Snap nodes and guides to object nodes"
 msgstr "Узлы и направляющие прилипают к узлам объектов"
 
-#: ../src/ui/dialog/document-properties.cpp:111
+#: ../src/ui/dialog/document-properties.cpp:112
 msgid "Snap to bounding bo_x edges"
 msgstr "Прилипать к краям пло_щадок"
 
-#: ../src/ui/dialog/document-properties.cpp:111
+#: ../src/ui/dialog/document-properties.cpp:112
 msgid "Snap bounding box corners and guides to bounding box edges"
 msgstr "Углы площадок и направляющие прилипают к краям площадок"
 
-#: ../src/ui/dialog/document-properties.cpp:112
+#: ../src/ui/dialog/document-properties.cpp:113
 msgid "Snap to bounding box co_rners"
 msgstr "Прилипать к углам _площадок"
 
-#: ../src/ui/dialog/document-properties.cpp:112
+#: ../src/ui/dialog/document-properties.cpp:113
 msgid "Snap bounding box corners to other bounding box corners"
 msgstr "Углы площадок прилипают к углам других площадок"
 
-#: ../src/ui/dialog/document-properties.cpp:113
+#: ../src/ui/dialog/document-properties.cpp:114
 #, fuzzy
 msgid "Snap to page border"
 msgstr "Показывать ка_йму холста"
 
-#: ../src/ui/dialog/document-properties.cpp:113
+#: ../src/ui/dialog/document-properties.cpp:114
 #, fuzzy
 msgid "Snap bounding box corners and nodes to the page border"
 msgstr "Углы площадок и направляющие прилипают к краям площадок"
 
 #. ---------------------------------------------------------------
 #. Applies to both nodes and guides, but not to bboxes, that's why its located here
-#: ../src/ui/dialog/document-properties.cpp:116
+#: ../src/ui/dialog/document-properties.cpp:117
 msgid "Rotation _center"
 msgstr "_Центр вращения"
 
-#: ../src/ui/dialog/document-properties.cpp:116
+#: ../src/ui/dialog/document-properties.cpp:117
 msgid "Consider the rotation center of an object when snapping"
 msgstr "Прилипать к центру вращения объекта"
 
-#: ../src/ui/dialog/document-properties.cpp:117
+#: ../src/ui/dialog/document-properties.cpp:118
 msgid "_Grid with guides"
 msgstr "С_етки с направляющими"
 
-#: ../src/ui/dialog/document-properties.cpp:117
+#: ../src/ui/dialog/document-properties.cpp:118
 msgid "Snap to grid-guide intersections"
 msgstr "Прилипание к пересечениям сетки с направляющими"
 
-#: ../src/ui/dialog/document-properties.cpp:118
+#: ../src/ui/dialog/document-properties.cpp:119
 msgid "_Line segments"
 msgstr "_Сегментов линий"
 
-#: ../src/ui/dialog/document-properties.cpp:118
+#: ../src/ui/dialog/document-properties.cpp:119
 msgid "Snap to intersections of line segments ('snap to paths' must be enabled, see the previous tab)"
 msgstr "Прилипать к пересечениям сегментов линий (в соседней вкладке должно быть включено прилипание к контурам)"
 
 #. TRANSLATORS: In Grid|_New translate only the word _New. It ref to grid
-#: ../src/ui/dialog/document-properties.cpp:123
+#: ../src/ui/dialog/document-properties.cpp:124
 msgid "Grid|_New"
 msgstr "Со_здать"
 
-#: ../src/ui/dialog/document-properties.cpp:123
+#: ../src/ui/dialog/document-properties.cpp:124
 msgid "Create new grid."
 msgstr "Создать новую сетку"
 
-#: ../src/ui/dialog/document-properties.cpp:124
+#: ../src/ui/dialog/document-properties.cpp:125
 #: ../src/ui/dialog/livepatheffect-editor.cpp:63
 msgid "_Remove"
 msgstr "_Удалить"
 
-#: ../src/ui/dialog/document-properties.cpp:124
+#: ../src/ui/dialog/document-properties.cpp:125
 msgid "Remove selected grid."
 msgstr "Удалить выделенную сетку"
 
-#: ../src/ui/dialog/document-properties.cpp:134
+#: ../src/ui/dialog/document-properties.cpp:135
 msgid "Guides"
 msgstr "Направляющие"
 
-#: ../src/ui/dialog/document-properties.cpp:135
+#: ../src/ui/dialog/document-properties.cpp:136
 #: ../src/ui/dialog/inkscape-preferences.cpp:889
 msgid "Grids"
 msgstr "Сетки"
 
-#: ../src/ui/dialog/document-properties.cpp:136
+#: ../src/ui/dialog/document-properties.cpp:137
 #: ../src/verbs.cpp:2493
 msgid "Snap"
 msgstr "Прилипание"
 
-#: ../src/ui/dialog/document-properties.cpp:137
+#: ../src/ui/dialog/document-properties.cpp:138
 msgid "Snap points"
 msgstr "Точки"
 
-#: ../src/ui/dialog/document-properties.cpp:226
+#: ../src/ui/dialog/document-properties.cpp:227
 msgid "<b>General</b>"
 msgstr "<b>Общие</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:228
+#: ../src/ui/dialog/document-properties.cpp:229
 msgid "<b>Border</b>"
 msgstr "<b>Кайма</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:230
+#: ../src/ui/dialog/document-properties.cpp:231
 msgid "<b>Format</b>"
 msgstr "<b>Формат</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:258
+#: ../src/ui/dialog/document-properties.cpp:259
 msgid "<b>Guides</b>"
 msgstr "<b>Направляющие</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:277
+#: ../src/ui/dialog/document-properties.cpp:278
 msgid "Snap _distance"
 msgstr "Радиус _прилипания"
 
-#: ../src/ui/dialog/document-properties.cpp:277
+#: ../src/ui/dialog/document-properties.cpp:278
 msgid "Snap only when _closer than:"
 msgstr "Прилипать _только если ближе чем:"
 
-#: ../src/ui/dialog/document-properties.cpp:277
-#: ../src/ui/dialog/document-properties.cpp:283
-#: ../src/ui/dialog/document-properties.cpp:289
+#: ../src/ui/dialog/document-properties.cpp:278
+#: ../src/ui/dialog/document-properties.cpp:284
+#: ../src/ui/dialog/document-properties.cpp:290
 msgid "Always snap"
 msgstr "Всегда прилипать"
 
-#: ../src/ui/dialog/document-properties.cpp:278
+#: ../src/ui/dialog/document-properties.cpp:279
 msgid "Snapping distance, in screen pixels, for snapping to objects"
 msgstr "Зона прилипания к объектам, в экранных пикселах"
 
-#: ../src/ui/dialog/document-properties.cpp:278
+#: ../src/ui/dialog/document-properties.cpp:279
 #, fuzzy
 msgid "Always snap to objects, regardless of their distance"
 msgstr "Если включено, объекты прилипают к ближайшему объекту вне зависимости от расстояния до него"
 
-#: ../src/ui/dialog/document-properties.cpp:279
+#: ../src/ui/dialog/document-properties.cpp:280
 msgid "If set, objects only snap to another object when it's within the range specified below"
 msgstr "Если включено, объекты прилипают к другим объектам только на указанном минимальном расстоянии"
 
 #. Options for snapping to grids
-#: ../src/ui/dialog/document-properties.cpp:283
+#: ../src/ui/dialog/document-properties.cpp:284
 msgid "Snap d_istance"
 msgstr "Радиус _прилипания"
 
-#: ../src/ui/dialog/document-properties.cpp:283
+#: ../src/ui/dialog/document-properties.cpp:284
 msgid "Snap only when c_loser than:"
 msgstr "Прилипать только _если ближе чем:"
 
-#: ../src/ui/dialog/document-properties.cpp:284
+#: ../src/ui/dialog/document-properties.cpp:285
 msgid "Snapping distance, in screen pixels, for snapping to grid"
 msgstr "Зона прилипания к сетке, в экранных точках"
 
-#: ../src/ui/dialog/document-properties.cpp:284
+#: ../src/ui/dialog/document-properties.cpp:285
 #, fuzzy
 msgid "Always snap to grids, regardless of the distance"
 msgstr "Если включено, объекты прилипают к ближайшей направляющей вне зависимости от расстояния до неё"
 
-#: ../src/ui/dialog/document-properties.cpp:285
+#: ../src/ui/dialog/document-properties.cpp:286
 msgid "If set, objects only snap to a grid line when it's within the range specified below"
 msgstr "Если включено, объекты прилипают к линиям сетки только на указанном минимальном расстоянии"
 
 #. Options for snapping to guides
-#: ../src/ui/dialog/document-properties.cpp:289
+#: ../src/ui/dialog/document-properties.cpp:290
 msgid "Snap dist_ance"
 msgstr "Радиус _прилипания"
 
-#: ../src/ui/dialog/document-properties.cpp:289
+#: ../src/ui/dialog/document-properties.cpp:290
 msgid "Snap only when close_r than:"
 msgstr "Прилипать только если _ближе чем:"
 
-#: ../src/ui/dialog/document-properties.cpp:290
+#: ../src/ui/dialog/document-properties.cpp:291
 msgid "Snapping distance, in screen pixels, for snapping to guides"
 msgstr "Зона прилипания к направляющим, в экранных точках"
 
-#: ../src/ui/dialog/document-properties.cpp:290
+#: ../src/ui/dialog/document-properties.cpp:291
 #, fuzzy
 msgid "Always snap to guides, regardless of the distance"
 msgstr "Если включено, объекты прилипают к ближайшей направляющей вне зависимости от расстояния до неё"
 
-#: ../src/ui/dialog/document-properties.cpp:291
+#: ../src/ui/dialog/document-properties.cpp:292
 msgid "If set, objects only snap to a guide when it's within the range specified below"
 msgstr "Если включено, объекты прилипают к направляющим только на указанном минимальном расстоянии"
 
-#: ../src/ui/dialog/document-properties.cpp:313
+#: ../src/ui/dialog/document-properties.cpp:315
 msgid "<b>Snapping</b>"
 msgstr "<b>Прилипание</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:315
+#: ../src/ui/dialog/document-properties.cpp:317
 msgid "<b>What snaps</b>"
 msgstr "<b>Что прилипает</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:317
+#: ../src/ui/dialog/document-properties.cpp:319
 msgid "<b>Snap to objects</b>"
 msgstr "<b>Прилипание к объектам</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:319
+#: ../src/ui/dialog/document-properties.cpp:321
 msgid "<b>Snap to grids</b>"
 msgstr "<b>Прилипание к сеткам</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:321
+#: ../src/ui/dialog/document-properties.cpp:323
 msgid "<b>Snap to guides</b>"
 msgstr "<b>Прилипание к направляющим</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:358
+#: ../src/ui/dialog/document-properties.cpp:361
 msgid "<b>Snapping to intersections of</b>"
 msgstr "<b>Прилипание к пересечениям</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:360
+#: ../src/ui/dialog/document-properties.cpp:363
 #, fuzzy
 msgid "<b>Special points to consider</b>"
 msgstr "<b>Прилипание к направляющим</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:430
+#: ../src/ui/dialog/document-properties.cpp:433
 msgid "<b>Creation</b>"
 msgstr "<b>Создание</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:431
+#: ../src/ui/dialog/document-properties.cpp:434
 msgid "<b>Defined grids</b>"
 msgstr "<b>Определённые пользователем сетки</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:646
+#: ../src/ui/dialog/document-properties.cpp:650
 msgid "Remove grid"
 msgstr "Удаление сетки"
 
@@ -9123,6 +9117,7 @@ msgid "Information"
 msgstr "Информация"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
+#: ../share/extensions/lindenmayer.inx.h:3
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
 msgstr "Справка"
@@ -9459,6 +9454,7 @@ msgstr "Высота области действия фильтра эффект
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 #: ../src/ui/dialog/tracedialog.cpp:553
 #: ../src/widgets/toolbox.cpp:3257
+#: ../share/extensions/triangle.inx.h:9
 msgid "Mode"
 msgstr "Режим"
 
@@ -10189,7 +10185,7 @@ msgstr "Корректор"
 #: ../src/ui/dialog/inkscape-preferences.cpp:401
 #: ../src/ui/view/edit-widget.cpp:1073
 #: ../src/verbs.cpp:2436
-#: ../src/widgets/desktop-widget.cpp:486
+#: ../src/widgets/desktop-widget.cpp:489
 #: ../share/extensions/render_alphabetsoup.inx.h:5
 msgid "Zoom"
 msgstr "Лупа"
@@ -11386,141 +11382,141 @@ msgstr "Прервать векторизацию"
 msgid "Execute the trace"
 msgstr "Векторизовать"
 
-#: ../src/ui/dialog/transformation.cpp:81
-#: ../src/ui/dialog/transformation.cpp:91
+#: ../src/ui/dialog/transformation.cpp:83
+#: ../src/ui/dialog/transformation.cpp:93
 msgid "_Horizontal"
 msgstr "По _горизонтали"
 
-#: ../src/ui/dialog/transformation.cpp:81
+#: ../src/ui/dialog/transformation.cpp:83
 msgid "Horizontal displacement (relative) or position (absolute)"
 msgstr "Смещение (относительное) или позиционирование (абсолютное) по горизонтали"
 
-#: ../src/ui/dialog/transformation.cpp:83
-#: ../src/ui/dialog/transformation.cpp:93
+#: ../src/ui/dialog/transformation.cpp:85
+#: ../src/ui/dialog/transformation.cpp:95
 msgid "_Vertical"
 msgstr "По _вертикали"
 
-#: ../src/ui/dialog/transformation.cpp:83
+#: ../src/ui/dialog/transformation.cpp:85
 msgid "Vertical displacement (relative) or position (absolute)"
 msgstr "Смещение (относительное) или позиционирование (абсолютное) по вертикали"
 
-#: ../src/ui/dialog/transformation.cpp:85
+#: ../src/ui/dialog/transformation.cpp:87
 msgid "_Width"
 msgstr "_Ширина"
 
-#: ../src/ui/dialog/transformation.cpp:85
+#: ../src/ui/dialog/transformation.cpp:87
 msgid "Horizontal size (absolute or percentage of current)"
 msgstr "Размер по горизонтали (абсолютный или в %)"
 
-#: ../src/ui/dialog/transformation.cpp:87
+#: ../src/ui/dialog/transformation.cpp:89
 msgid "_Height"
 msgstr "_Высота"
 
-#: ../src/ui/dialog/transformation.cpp:87
+#: ../src/ui/dialog/transformation.cpp:89
 msgid "Vertical size (absolute or percentage of current)"
 msgstr "Размер по вертикали (абсолютный или в %)"
 
-#: ../src/ui/dialog/transformation.cpp:89
+#: ../src/ui/dialog/transformation.cpp:91
 msgid "A_ngle"
 msgstr "_Угол:"
 
-#: ../src/ui/dialog/transformation.cpp:89
+#: ../src/ui/dialog/transformation.cpp:91
 msgid "Rotation angle (positive = counterclockwise)"
 msgstr "Угол поворота (больше 0 = против часовой стрелки)"
 
-#: ../src/ui/dialog/transformation.cpp:91
+#: ../src/ui/dialog/transformation.cpp:93
 msgid "Horizontal skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"
 msgstr "Угол скоса по горизонтали (больше 0 = против часовой стрелки), либо абсолютное смещение, либо процентное смещение"
 
-#: ../src/ui/dialog/transformation.cpp:93
+#: ../src/ui/dialog/transformation.cpp:95
 msgid "Vertical skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"
 msgstr "Угол скоса по вертикали (больше 0 = против часовой стрелки), либо абсолютное смещение, либо процентное смещение"
 
-#: ../src/ui/dialog/transformation.cpp:96
+#: ../src/ui/dialog/transformation.cpp:98
 msgid "Transformation matrix element A"
 msgstr "Преобразование элемента матрицы A"
 
-#: ../src/ui/dialog/transformation.cpp:97
+#: ../src/ui/dialog/transformation.cpp:99
 msgid "Transformation matrix element B"
 msgstr "Преобразование элемента матрицы B"
 
-#: ../src/ui/dialog/transformation.cpp:98
+#: ../src/ui/dialog/transformation.cpp:100
 msgid "Transformation matrix element C"
 msgstr "Преобразование элемента матрицы C"
 
-#: ../src/ui/dialog/transformation.cpp:99
+#: ../src/ui/dialog/transformation.cpp:101
 msgid "Transformation matrix element D"
 msgstr "Преобразование элемента матрицы D"
 
-#: ../src/ui/dialog/transformation.cpp:100
+#: ../src/ui/dialog/transformation.cpp:102
 msgid "Transformation matrix element E"
 msgstr "Преобразование элемента матрицы E"
 
-#: ../src/ui/dialog/transformation.cpp:101
+#: ../src/ui/dialog/transformation.cpp:103
 msgid "Transformation matrix element F"
 msgstr "Преобразование элемента матрицы F"
 
-#: ../src/ui/dialog/transformation.cpp:103
+#: ../src/ui/dialog/transformation.cpp:105
 msgid "Rela_tive move"
 msgstr "_Относительное смещение"
 
-#: ../src/ui/dialog/transformation.cpp:103
+#: ../src/ui/dialog/transformation.cpp:105
 msgid "Add the specified relative displacement to the current position; otherwise, edit the current absolute position directly"
 msgstr "Добавить указанное относительное смещение к текущей позиции; в противном случае изменить текущую абсолютную позицию напрямую"
 
-#: ../src/ui/dialog/transformation.cpp:104
+#: ../src/ui/dialog/transformation.cpp:106
 msgid "Scale proportionally"
 msgstr "Пропорциональное масштабирование"
 
-#: ../src/ui/dialog/transformation.cpp:104
+#: ../src/ui/dialog/transformation.cpp:106
 msgid "Preserve the width/height ratio of the scaled objects"
 msgstr "Сохранять соотношение ширины и высоты масштабируемых объектов"
 
-#: ../src/ui/dialog/transformation.cpp:105
+#: ../src/ui/dialog/transformation.cpp:107
 msgid "Apply to each _object separately"
 msgstr "Применить к _каждому объекту отдельно"
 
-#: ../src/ui/dialog/transformation.cpp:105
+#: ../src/ui/dialog/transformation.cpp:107
 msgid "Apply the scale/rotate/skew to each selected object separately; otherwise, transform the selection as a whole"
 msgstr "Применить масштабирование/вращение/скашивание к каждому объекту отдельно; в противном случае выделенное преобразовывается как один объект"
 
-#: ../src/ui/dialog/transformation.cpp:106
+#: ../src/ui/dialog/transformation.cpp:108
 msgid "Edit c_urrent matrix"
 msgstr "Изменить текущую _матрицу"
 
-#: ../src/ui/dialog/transformation.cpp:106
+#: ../src/ui/dialog/transformation.cpp:108
 msgid "Edit the current transform= matrix; otherwise, post-multiply transform= by this matrix"
 msgstr "Изменить текущую матрицу transform=; в противном случае, послеумножить transform= на эту матрицу"
 
-#: ../src/ui/dialog/transformation.cpp:116
+#: ../src/ui/dialog/transformation.cpp:118
 msgid "_Move"
 msgstr "_Смещение"
 
-#: ../src/ui/dialog/transformation.cpp:119
+#: ../src/ui/dialog/transformation.cpp:121
 msgid "_Scale"
 msgstr "_Масштаб"
 
-#: ../src/ui/dialog/transformation.cpp:122
+#: ../src/ui/dialog/transformation.cpp:124
 msgid "_Rotate"
 msgstr "_Вращение"
 
-#: ../src/ui/dialog/transformation.cpp:125
+#: ../src/ui/dialog/transformation.cpp:127
 msgid "Ske_w"
 msgstr "С_кос"
 
-#: ../src/ui/dialog/transformation.cpp:128
+#: ../src/ui/dialog/transformation.cpp:130
 msgid "Matri_x"
 msgstr "М_атрица"
 
-#: ../src/ui/dialog/transformation.cpp:151
+#: ../src/ui/dialog/transformation.cpp:153
 msgid "Reset the values on the current tab to defaults"
 msgstr "Сбросить значения в этой вкладке до исходных"
 
-#: ../src/ui/dialog/transformation.cpp:158
+#: ../src/ui/dialog/transformation.cpp:160
 msgid "Apply transformation to selection"
 msgstr "Применить эти изменения к выбранному"
 
-#: ../src/ui/dialog/transformation.cpp:772
+#: ../src/ui/dialog/transformation.cpp:842
 msgid "Edit transformation matrix"
 msgstr "Правка матрицы преобразования"
 
@@ -11885,23 +11881,23 @@ msgid "PLACEHOLDER, do not translate"
 msgstr "PLACEHOLDER, do not translate"
 
 #: ../src/ui/view/edit-widget.cpp:1062
-#: ../src/widgets/desktop-widget.cpp:377
+#: ../src/widgets/desktop-widget.cpp:380
 msgid "Zoom drawing if window size changes"
 msgstr "Изменять масштаб при изменении размеров окна"
 
 #: ../src/ui/view/edit-widget.cpp:1083
-#: ../src/widgets/desktop-widget.cpp:506
+#: ../src/widgets/desktop-widget.cpp:509
 msgid "Cursor coordinates"
 msgstr "Координаты курсора"
 
 #. display the initial welcome message in the statusbar
 #: ../src/ui/view/edit-widget.cpp:1100
-#: ../src/widgets/desktop-widget.cpp:554
+#: ../src/widgets/desktop-widget.cpp:557
 msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."
 msgstr "<b>Добро пожаловать в Inkscape!</b> Используйте инструменты фигур или рисования для создания объектов; используйте селектор (стрелку) для их перемещения и трансформации."
 
 #: ../src/ui/view/edit-widget.cpp:1211
-#: ../src/widgets/desktop-widget.cpp:840
+#: ../src/widgets/desktop-widget.cpp:843
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n"
@@ -11914,13 +11910,13 @@ msgstr ""
 
 #: ../src/ui/view/edit-widget.cpp:1222
 #: ../src/ui/view/edit-widget.cpp:1269
-#: ../src/widgets/desktop-widget.cpp:847
-#: ../src/widgets/desktop-widget.cpp:903
+#: ../src/widgets/desktop-widget.cpp:850
+#: ../src/widgets/desktop-widget.cpp:906
 msgid "Close _without saving"
 msgstr "_Не сохранять"
 
 #: ../src/ui/view/edit-widget.cpp:1257
-#: ../src/widgets/desktop-widget.cpp:895
+#: ../src/widgets/desktop-widget.cpp:898
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n"
@@ -11932,7 +11928,7 @@ msgstr ""
 "Сохранить документ в формате Inkscape SVG?"
 
 #: ../src/ui/view/edit-widget.cpp:1272
-#: ../src/widgets/desktop-widget.cpp:906
+#: ../src/widgets/desktop-widget.cpp:909
 msgid "_Save as SVG"
 msgstr "_Сохранить как SVG"
 
@@ -12153,13 +12149,13 @@ msgstr "Без обводки"
 
 #: ../src/ui/widget/selected-style.cpp:160
 #: ../src/ui/widget/style-swatch.cpp:307
-#: ../src/widgets/paint-selector.cpp:186
+#: ../src/widgets/paint-selector.cpp:189
 msgid "Pattern"
 msgstr "Текстура"
 
 #: ../src/ui/widget/selected-style.cpp:163
 #: ../src/ui/widget/style-swatch.cpp:309
-#: ../src/widgets/paint-selector.cpp:994
+#: ../src/widgets/paint-selector.cpp:997
 msgid "Pattern fill"
 msgstr "Текстурная заливка"
 
@@ -14246,37 +14242,38 @@ msgstr "Пунктир"
 msgid "Pattern offset"
 msgstr "Смещение пунктира"
 
-#: ../src/widgets/desktop-widget.cpp:616
+#: ../src/widgets/desktop-widget.cpp:619
 #, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr "%s: %d (каркас) — Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:618
+#: ../src/widgets/desktop-widget.cpp:621
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d — Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:622
+#: ../src/widgets/desktop-widget.cpp:625
 #, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "%s (каркас) — Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:624
+#: ../src/widgets/desktop-widget.cpp:627
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s — Inkscape"
 
 #. Family frame
-#: ../src/widgets/font-selector.cpp:150
+#: ../src/widgets/font-selector.cpp:154
 msgid "Font family"
 msgstr "Гарнитура"
 
 #. Style frame
-#: ../src/widgets/font-selector.cpp:181
+#: ../src/widgets/font-selector.cpp:185
+#: ../share/extensions/polyhedron_3d.inx.h:41
 msgid "Style"
 msgstr "Начертание"
 
-#: ../src/widgets/font-selector.cpp:219
+#: ../src/widgets/font-selector.cpp:223
 msgid "Font size:"
 msgstr "Кегль шрифта:"
 
@@ -14284,7 +14281,7 @@ msgstr "Кегль шрифта:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:628
+#: ../src/widgets/font-selector.cpp:636
 #: ../src/widgets/toolbox.cpp:5052
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "АаБбВвГгЁёФфЩщЯя$€¢?.;/()"
@@ -14447,53 +14444,53 @@ msgstr "Текущий слой"
 msgid "(root)"
 msgstr "(корень)"
 
-#: ../src/widgets/paint-selector.cpp:178
-#: ../src/widgets/paint-selector.cpp:561
+#: ../src/widgets/paint-selector.cpp:181
+#: ../src/widgets/paint-selector.cpp:564
 msgid "No paint"
 msgstr "Нет заливки"
 
-#: ../src/widgets/paint-selector.cpp:180
-#: ../src/widgets/paint-selector.cpp:633
+#: ../src/widgets/paint-selector.cpp:183
+#: ../src/widgets/paint-selector.cpp:636
 msgid "Flat color"
 msgstr "Плоский цвет"
 
-#: ../src/widgets/paint-selector.cpp:182
-#: ../src/widgets/paint-selector.cpp:704
+#: ../src/widgets/paint-selector.cpp:185
+#: ../src/widgets/paint-selector.cpp:707
 msgid "Linear gradient"
 msgstr "Линейный градиент"
 
-#: ../src/widgets/paint-selector.cpp:184
-#: ../src/widgets/paint-selector.cpp:707
+#: ../src/widgets/paint-selector.cpp:187
+#: ../src/widgets/paint-selector.cpp:710
 msgid "Radial gradient"
 msgstr "Радиальный градиент"
 
-#: ../src/widgets/paint-selector.cpp:188
+#: ../src/widgets/paint-selector.cpp:191
 msgid "Unset paint (make it undefined so it can be inherited)"
 msgstr "Убрать заливку (сделать ее неопределенной, чтобы она могла наследоваться)"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:200
+#: ../src/widgets/paint-selector.cpp:203
 msgid "Any path self-intersections or subpaths create holes in the fill (fill-rule: evenodd)"
 msgstr "Любые самопересечения или внутренние субконтуры образуют дыры в заливке (fill-rule: evenodd)"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:211
+#: ../src/widgets/paint-selector.cpp:214
 msgid "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr "Заливка имеет дыру, только если внутренний субконтур направлен в противоположную сторону относительно внешнего (fill-rule: nonzero)"
 
-#: ../src/widgets/paint-selector.cpp:528
+#: ../src/widgets/paint-selector.cpp:531
 msgid "No objects"
 msgstr "Нет объектов"
 
-#: ../src/widgets/paint-selector.cpp:539
+#: ../src/widgets/paint-selector.cpp:542
 msgid "Multiple styles"
 msgstr "Множественные стили"
 
-#: ../src/widgets/paint-selector.cpp:550
+#: ../src/widgets/paint-selector.cpp:553
 msgid "Paint is undefined"
 msgstr "Цвет не определен"
 
-#: ../src/widgets/paint-selector.cpp:981
+#: ../src/widgets/paint-selector.cpp:984
 msgid "Use the <b>Node tool</b> to adjust position, scale, and rotation of the pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to create a new pattern from selection."
 msgstr "Используйте <b>Инструмент правки узлов</b> для коррекции позиции, масштаба и вращения текстуры на холсте. Используйте команду <b>Объект → Текстура → Объект(ы) в текстуру</b>, чтобы создать новую текстуру из выделения."
 
@@ -14770,7 +14767,7 @@ msgstr "Атрибут"
 msgid "Value"
 msgstr "Значение"
 
-#: ../src/widgets/sp-xmlview-content.cpp:166
+#: ../src/widgets/sp-xmlview-content.cpp:169
 msgid "Type text in a text node"
 msgstr "Ввод текста в текстовую ветвь"
 
@@ -15907,6 +15904,10 @@ msgstr "Этот шрифт сейчас отсутствует в систем�
 msgid "Align left"
 msgstr "Выключка влево"
 
+#: ../src/widgets/toolbox.cpp:5211
+msgid "Center"
+msgstr "Выключка по центру"
+
 #: ../src/widgets/toolbox.cpp:5222
 msgid "Align right"
 msgstr "Выключка вправо"
@@ -16044,7 +16045,7 @@ msgstr "Макс. длина сегмента (px)"
 #: ../share/extensions/fractalize.inx.h:2
 #: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/perspective.inx.h:1
-#: ../share/extensions/radiusrand.inx.h:3
+#: ../share/extensions/radiusrand.inx.h:4
 #: ../share/extensions/rubberstretch.inx.h:3
 #: ../share/extensions/straightseg.inx.h:2
 #: ../share/extensions/summersnight.inx.h:2
@@ -16263,6 +16264,13 @@ msgstr "Для импорта файлов Dia должна быть устан�
 msgid "The dia2svg.sh script should be installed with your Inkscape distribution.  If you do not have it, there is likely to be something wrong with your Inkscape installation."
 msgstr "Сценарий dia2svg.sh должен быть установлен вместе с Inkscape. Если его у вас нет, значит что-то не так с вашей сборкой Inkscape."
 
+#: ../share/extensions/dimension.inx.h:2
+#: ../share/extensions/dots.inx.h:4
+#: ../share/extensions/handles.inx.h:2
+#: ../share/extensions/measure.inx.h:11
+msgid "Visualize Path"
+msgstr "Визуализация контура"
+
 #: ../share/extensions/dimension.inx.h:3
 msgid "X Offset"
 msgstr "Смещение по X"
@@ -16282,12 +16290,6 @@ msgstr "Кегль шрифта"
 #: ../share/extensions/dots.inx.h:3
 msgid "Number Nodes"
 msgstr "Нумерация узлов"
-
-#: ../share/extensions/dots.inx.h:4
-#: ../share/extensions/handles.inx.h:2
-#: ../share/extensions/measure.inx.h:11
-msgid "Visualize Path"
-msgstr "Визуализация контура"
 
 #: ../share/extensions/dxf_input.inx.h:1
 #: ../share/extensions/dxf_output.inx.h:1
@@ -16456,7 +16458,8 @@ msgid "Draw Axes"
 msgstr "Нарисовать оси"
 
 #: ../share/extensions/funcplot.inx.h:3
-msgid "End x-value"
+#, fuzzy
+msgid "End X value"
 msgstr "Конечное значение по оси X"
 
 #: ../share/extensions/funcplot.inx.h:4
@@ -16476,15 +16479,18 @@ msgid "Functions"
 msgstr "Справка по функциям"
 
 #: ../share/extensions/funcplot.inx.h:8
-msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
+#, fuzzy
+msgid "Isotropic scaling (uses smallest of width/xrange or height/yrange)"
 msgstr "Изотропное масштабирование"
 
 #: ../share/extensions/funcplot.inx.h:9
-msgid "Multiply x-range by 2*pi"
+#, fuzzy
+msgid "Multiply X range by 2*pi"
 msgstr "Умножить диапазон X на 2*pi"
 
 #: ../share/extensions/funcplot.inx.h:10
-msgid "Range and Sampling"
+#, fuzzy
+msgid "Range and sampling"
 msgstr "Диапазон и выборка"
 
 #: ../share/extensions/funcplot.inx.h:11
@@ -16496,15 +16502,18 @@ msgid "Samples"
 msgstr "Примеры"
 
 #: ../share/extensions/funcplot.inx.h:14
-msgid "Select a rectangle before calling effect. Rectangle determines x and y scales. With polar coordinates: Start and End x-values define the angle range in radians. x scale is set so left and right edges of rectangle are at +/-1. Isotropic scaling is disabled. First derivative is always determined numerically."
+#, fuzzy
+msgid "Select a rectangle before calling the extension, it will determine X and Y scales. With polar coordinates: Start and end X values define the angle range in radians. X scale is set so that left and right edges of rectangle are at +/-1. Isotropic scaling is disabled. First derivative is always determined numerically."
 msgstr "Перед вызовом эффекта выделите прямоугольник, который определит масштаб по X и Y. С полярными координатами: значения по X для начала и конца определяют диапазон угла в радианах. Масштаб X установлен так, что левые и правые края прямоугольника находятся в +/-1. Изотропное масштабирование отключено. Первое производное всегда задается числами."
 
 #: ../share/extensions/funcplot.inx.h:15
-msgid "Standard python math functions are available: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and e are also available."
+#, fuzzy
+msgid "Standard Python math functions are available: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and e are also available."
 msgstr "Возможно  использование следующих математических функций Python: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). Также возможно использование констант pi и e."
 
 #: ../share/extensions/funcplot.inx.h:16
-msgid "Start x-value"
+#, fuzzy
+msgid "Start X value"
 msgstr "Начальное значение по оси X"
 
 #: ../share/extensions/funcplot.inx.h:17
@@ -16516,11 +16525,13 @@ msgid "Use polar coordinates"
 msgstr "Использовать полярные координаты"
 
 #: ../share/extensions/funcplot.inx.h:19
-msgid "y-value of rectangle's bottom"
+#, fuzzy
+msgid "Y value of rectangle's bottom"
 msgstr "Координата низа прямоугольника по оси Y"
 
 #: ../share/extensions/funcplot.inx.h:20
-msgid "y-value of rectangle's top"
+#, fuzzy
+msgid "Y value of rectangle's top"
 msgstr "Координата верха прямоугольника по оси Y"
 
 #: ../share/extensions/gears.inx.h:1
@@ -16546,6 +16557,16 @@ msgstr "GIMP XCF"
 #: ../share/extensions/gimp_xcf.inx.h:2
 msgid "GIMP XCF maintaining layers (*.XCF)"
 msgstr "GIMP XCF со слоями (*.XCF)"
+
+#: ../share/extensions/gimp_xcf.inx.h:3
+#, fuzzy
+msgid "Save Grid:"
+msgstr "Полярная сетка"
+
+#: ../share/extensions/gimp_xcf.inx.h:4
+#, fuzzy
+msgid "Save Guides:"
+msgstr "Направляющие"
 
 #: ../share/extensions/grid_cartesian.inx.h:1
 msgid "Border Thickness / px"
@@ -16744,8 +16765,9 @@ msgid "Interpolate"
 msgstr "Интерполяция"
 
 #: ../share/extensions/interp.inx.h:5
-msgid "Interpolate style (experimental)"
-msgstr "Интерполировать стиль"
+#, fuzzy
+msgid "Interpolate style"
+msgstr "Интерполяция"
 
 #: ../share/extensions/interp.inx.h:6
 msgid "Interpolation method"
@@ -16760,34 +16782,42 @@ msgid "Axiom"
 msgstr "Аксиома"
 
 #: ../share/extensions/lindenmayer.inx.h:2
+msgid "Axiom and rules"
+msgstr ""
+
+#: ../share/extensions/lindenmayer.inx.h:4
 msgid "L-system"
 msgstr "Система Линденмайера"
 
-#: ../share/extensions/lindenmayer.inx.h:3
+#: ../share/extensions/lindenmayer.inx.h:5
 msgid "Left angle"
 msgstr "Левый угол"
 
-#: ../share/extensions/lindenmayer.inx.h:6
+#: ../share/extensions/lindenmayer.inx.h:8
 #, no-c-format
 msgid "Randomize angle (%)"
 msgstr "Случайный угол (%)"
 
-#: ../share/extensions/lindenmayer.inx.h:8
+#: ../share/extensions/lindenmayer.inx.h:10
 #, no-c-format
 msgid "Randomize step (%)"
 msgstr "Случайный шаг (%)"
 
-#: ../share/extensions/lindenmayer.inx.h:10
+#: ../share/extensions/lindenmayer.inx.h:12
 msgid "Right angle"
 msgstr "Правый угол"
 
-#: ../share/extensions/lindenmayer.inx.h:11
+#: ../share/extensions/lindenmayer.inx.h:13
 msgid "Rules"
 msgstr "Правила"
 
-#: ../share/extensions/lindenmayer.inx.h:12
+#: ../share/extensions/lindenmayer.inx.h:14
 msgid "Step length (px)"
 msgstr "Длина шага (px)"
+
+#: ../share/extensions/lindenmayer.inx.h:15
+msgid "The path is generated by applying the substitutions of Rules to the Axiom, Order times. The following commands are recognized in Axiom and Rules: Any of A,B,C,D,E,F: draw forward Any of G,H,I,J,K,L: move forward +: turn left -: turn right |: turn 180 degrees [: remember poing ]: return to remembered point"
+msgstr ""
 
 #: ../share/extensions/lorem_ipsum.inx.h:1
 msgid "Lorem ipsum"
@@ -17017,6 +17047,226 @@ msgstr "Укажите ширину:"
 msgid "Perspective"
 msgstr "Перспектива"
 
+#: ../share/extensions/polyhedron_3d.inx.h:1
+#, fuzzy
+msgid "3D Polyhedron"
+msgstr "Многоугольник"
+
+#: ../share/extensions/polyhedron_3d.inx.h:2
+#, fuzzy
+msgid "Clockwise Wound Object"
+msgstr "Отпирание объекта"
+
+#: ../share/extensions/polyhedron_3d.inx.h:3
+#, fuzzy
+msgid "Common Objects"
+msgstr "Объекты"
+
+#: ../share/extensions/polyhedron_3d.inx.h:4
+msgid "Cube"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:5
+msgid "Cuboctohedron"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:6
+msgid "Dodecahedron"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:7
+msgid "Draw Back-Facing Polygons"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:8
+#, fuzzy
+msgid "Edges"
+msgstr "Выделение краёв..."
+
+#: ../share/extensions/polyhedron_3d.inx.h:9
+#, fuzzy
+msgid "Faces"
+msgstr "Гладкость"
+
+#: ../share/extensions/polyhedron_3d.inx.h:10
+#, fuzzy
+msgid "Filename:"
+msgstr "Название профиля:"
+
+#: ../share/extensions/polyhedron_3d.inx.h:11
+msgid "Fill Colour (Blue)"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:12
+msgid "Fill Colour (Green)"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:13
+msgid "Fill Colour (Red)"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:15
+#, fuzzy, no-c-format
+msgid "Fill Opacity/ %"
+msgstr "Непрозрачность, %"
+
+#: ../share/extensions/polyhedron_3d.inx.h:16
+msgid "Great Dodecahedron"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:17
+msgid "Great Stellated Dodecahedron"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:18
+msgid "Icosahedron"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:19
+#, fuzzy
+msgid "Light x-Position"
+msgstr "Положение"
+
+#: ../share/extensions/polyhedron_3d.inx.h:20
+#, fuzzy
+msgid "Light y-Position"
+msgstr "Положение"
+
+#: ../share/extensions/polyhedron_3d.inx.h:21
+#, fuzzy
+msgid "Light z-Position"
+msgstr "Положение"
+
+#: ../share/extensions/polyhedron_3d.inx.h:22
+msgid "Line Thickness / px"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:23
+msgid "Load From File"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:24
+#, fuzzy
+msgid "Maximum"
+msgstr "Средние"
+
+#: ../share/extensions/polyhedron_3d.inx.h:25
+#, fuzzy
+msgid "Mean"
+msgstr "Металл"
+
+#: ../share/extensions/polyhedron_3d.inx.h:26
+#, fuzzy
+msgid "Minimum"
+msgstr "Минимальный размер"
+
+#: ../share/extensions/polyhedron_3d.inx.h:27
+#, fuzzy
+msgid "Object:"
+msgstr "Объект"
+
+#: ../share/extensions/polyhedron_3d.inx.h:28
+#, fuzzy
+msgid "Octahedron"
+msgstr "Другая"
+
+#: ../share/extensions/polyhedron_3d.inx.h:30
+#, fuzzy
+msgid "Report Normal Vector Information"
+msgstr "Информация об используемой памяти"
+
+#: ../share/extensions/polyhedron_3d.inx.h:31
+#, fuzzy
+msgid "Rotate Around:"
+msgstr "Вращение узлов"
+
+#: ../share/extensions/polyhedron_3d.inx.h:32
+#, fuzzy
+msgid "Rotation / Degrees"
+msgstr "Вращение (градусы)"
+
+#: ../share/extensions/polyhedron_3d.inx.h:33
+#, fuzzy
+msgid "Scaling Factor"
+msgstr "Коэффициент наклона"
+
+#: ../share/extensions/polyhedron_3d.inx.h:34
+#, fuzzy
+msgid "Shading"
+msgstr "Интервал"
+
+#: ../share/extensions/polyhedron_3d.inx.h:36
+msgid "Small Triambic Icosahedron"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:37
+msgid "Snub Cube"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:38
+msgid "Snub Dodecahedron"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:40
+#, fuzzy, no-c-format
+msgid "Stroke Opacity/ %"
+msgstr "Об_водка"
+
+#: ../share/extensions/polyhedron_3d.inx.h:42
+msgid "Tetrahedron"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:43
+#, fuzzy
+msgid "Then Rotate Around:"
+msgstr "без закругления"
+
+#: ../share/extensions/polyhedron_3d.inx.h:44
+msgid "Truncated Cube"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:45
+msgid "Truncated Dodecahedron"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:46
+msgid "Truncated Icosahedron"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:47
+msgid "Truncated Octahedron"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:48
+msgid "Truncated Tetrahedron"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:49
+#, fuzzy
+msgid "Vertices"
+msgstr "По _вертикали"
+
+#: ../share/extensions/polyhedron_3d.inx.h:50
+#, fuzzy
+msgid "View"
+msgstr "_Вид"
+
+#: ../share/extensions/polyhedron_3d.inx.h:51
+msgid "X-Axis"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:52
+msgid "Y-Axis"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:53
+msgid "Z-Axis"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:54
+msgid "Z-Sort Faces By:"
+msgstr ""
+
 #: ../share/extensions/ps_input.inx.h:1
 msgid "Postscript"
 msgstr "Postscript"
@@ -17034,22 +17284,28 @@ msgid "Jitter nodes"
 msgstr "Дрожание узлов"
 
 #: ../share/extensions/radiusrand.inx.h:2
-msgid "Maximum displacement, px"
+#, fuzzy
+msgid "Maximum displacement in X, px"
 msgstr "Макс. смещение, px"
 
-#: ../share/extensions/radiusrand.inx.h:4
+#: ../share/extensions/radiusrand.inx.h:3
+#, fuzzy
+msgid "Maximum displacement in Y, px"
+msgstr "Макс. смещение, px"
+
+#: ../share/extensions/radiusrand.inx.h:5
 msgid "Shift node handles"
 msgstr "Смещение рычагов узла"
 
-#: ../share/extensions/radiusrand.inx.h:5
+#: ../share/extensions/radiusrand.inx.h:6
 msgid "Shift nodes"
 msgstr "Смещение узлов"
 
-#: ../share/extensions/radiusrand.inx.h:6
+#: ../share/extensions/radiusrand.inx.h:7
 msgid "This effect randomly shifts the nodes (and optionally node handles) of the selected path."
 msgstr "Случайным образом сместить узлы (по выбору, также рычаги узлов) выбранного контура"
 
-#: ../share/extensions/radiusrand.inx.h:7
+#: ../share/extensions/radiusrand.inx.h:8
 msgid "Use normal distribution"
 msgstr "Использовать обычное распределение"
 
@@ -17145,9 +17401,8 @@ msgid "Top to Bottom (270)"
 msgstr "Опустить на _задний план"
 
 #: ../share/extensions/restack.inx.h:18
-#, fuzzy
 msgid "Vertical Point:"
-msgstr "Вертикальный текст"
+msgstr "<b> Смещение по Y:</b>"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -17330,6 +17585,61 @@ msgstr "Текстовые файлы (*.txt)"
 msgid "Text Input"
 msgstr "Импорт текстовых файлов"
 
+#: ../share/extensions/triangle.inx.h:1
+#, fuzzy
+msgid "Angle a / deg"
+msgstr "Угол (в градусах):"
+
+#: ../share/extensions/triangle.inx.h:2
+#, fuzzy
+msgid "Angle b / deg"
+msgstr "Угол (в градусах):"
+
+#: ../share/extensions/triangle.inx.h:3
+#, fuzzy
+msgid "Angle c / deg"
+msgstr "Угол (в градусах):"
+
+#: ../share/extensions/triangle.inx.h:4
+msgid "From Side a and Angles a, b"
+msgstr ""
+
+#: ../share/extensions/triangle.inx.h:5
+msgid "From Side c and Angles a, b"
+msgstr ""
+
+#: ../share/extensions/triangle.inx.h:6
+msgid "From Sides a, b and Angle a"
+msgstr ""
+
+#: ../share/extensions/triangle.inx.h:7
+msgid "From Sides a, b and Angle c"
+msgstr ""
+
+#: ../share/extensions/triangle.inx.h:8
+msgid "From Three Sides"
+msgstr ""
+
+#: ../share/extensions/triangle.inx.h:11
+#, fuzzy
+msgid "Side Length a / px"
+msgstr "Длина шага (px)"
+
+#: ../share/extensions/triangle.inx.h:12
+#, fuzzy
+msgid "Side Length b / px"
+msgstr "Длина шага (px)"
+
+#: ../share/extensions/triangle.inx.h:13
+#, fuzzy
+msgid "Side Length c / px"
+msgstr "Длина шага (px)"
+
+#: ../share/extensions/triangle.inx.h:14
+#, fuzzy
+msgid "Triangle"
+msgstr "Одиночные"
+
 #: ../share/extensions/whirl.inx.h:1
 msgid "Amount of whirl"
 msgstr "Величина завихрения"
@@ -17358,6 +17668,23 @@ msgstr "Импорт файлов Windows Metafile"
 msgid "XAML Input"
 msgstr "Импорт XAML"
 
+#~ msgid ""
+#~ "Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"
+#~ msgstr ""
+#~ "Невозможно установить <b>%s</b>: существует другой элемент со значением "
+#~ "<b>%s</b>!"
+#~ msgid "Slant"
+#~ msgstr "Наклон"
+
+#, fuzzy
+#~ msgid "Interruption width"
+#~ msgstr "Способ интерполяции"
+#~ msgid "y = y + x*(slant factor)"
+#~ msgstr "y = y + x*(коэффициент наклона)"
+#~ msgid "The x-coord of this point is around which the slant will happen"
+#~ msgstr "Координата X, вокруг которой выполняется наклон"
+#~ msgid "Interpolate style (experimental)"
+#~ msgstr "Интерполировать стиль"
 #~ msgid "Bend Path"
 #~ msgstr "Изгиб по контуру"
 #~ msgid "Stroke path"
