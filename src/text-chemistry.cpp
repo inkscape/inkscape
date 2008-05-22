@@ -508,7 +508,7 @@ flowtext_to_text()
         did = true;
 
         Inkscape::XML::Node *parent = SP_OBJECT_REPR(item)->parent();
-        parent->appendChild(repr);
+        parent->addChild(repr, SP_OBJECT_REPR(item));
 
         SPItem *new_item = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
         sp_item_write_transform(new_item, repr, item->transform);
