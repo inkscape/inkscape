@@ -245,14 +245,10 @@ static gboolean handleEnterNotify( GtkWidget* widget, GdkEventCrossing* event, g
     if ( item ) {
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         if ( desktop ) {
-            desktop->tipsMessageContext()->set(Inkscape::INFORMATION_MESSAGE, g_strconcat(
-              _("Color: <b>"),
-              item->def.descr.c_str(),
-              _("</b>"),
-              _("; "),
-              _("<b>Click</b> to set fill, <b>Shift+click</b> to set stroke"),
-              NULL
-            ));
+            gchar* msg = g_strdup_printf(_("Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"),
+                                         item->def.descr.c_str());
+            desktop->tipsMessageContext()->set(Inkscape::INFORMATION_MESSAGE, msg);
+            g_free(msg);
         }
     }
     return FALSE;
