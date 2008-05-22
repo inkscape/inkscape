@@ -7,7 +7,7 @@
  * Author:
  *   Ulf Erikson <ulferikson@users.sf.net>
  *
- * Copyright (C) 2006 Authors
+ * Copyright (C) 2006-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -28,6 +28,8 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+#include <stack>
+
 namespace Inkscape {
 namespace Extension {
 namespace Internal {
@@ -42,13 +44,18 @@ class PrintEmfWin32 : public Inkscape::Extension::Implementation::Implementation
     HBRUSH hbrush, hbrushOld;
     HPEN hpen, hpenOld;
 
+    std::stack<NR::Matrix> m_tr_stack;
     NArtBpath *fill_path;
     NArtBpath *fill_path_copy;
     NR::Matrix fill_transform;
     NRRect fill_pbox;
-    NR::Matrix text_transform;
+//    NR::Matrix text_transform;
+    bool stroke_and_fill;
+    bool fill_only;
+    bool simple_shape;
 
     unsigned int print_bpath (const NArtBpath *bp, const NR::Matrix *transform, NRRect const *pbox);
+    bool print_simple_shape (const NArtBpath *bp, const NR::Matrix *transform, NRRect const *pbox);
 
 public:
     PrintEmfWin32 (void);

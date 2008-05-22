@@ -5,7 +5,7 @@
  * Authors:
  *   Ulf Erikson <ulferikson@users.sf.net>
  *
- * Copyright (C) 2006 Authors
+ * Copyright (C) 2006-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -35,6 +35,11 @@
 #include "libnr/nr-point-matrix-ops.h"
 #include "libnr/nr-rect.h"
 #include "libnr/nr-matrix.h"
+#include "libnr/nr-matrix-ops.h" 
+#include "libnr/nr-matrix-scale-ops.h"
+#include "libnr/nr-matrix-translate-ops.h"
+#include "libnr/nr-scale-translate-ops.h"
+#include "libnr/nr-translate-scale-ops.h"
 #include "libnr/nr-matrix-fns.h"
 #include "libnr/nr-path.h"
 #include "libnr/nr-pixblock.h"
@@ -85,7 +90,10 @@ PrintEmfWin32::PrintEmfWin32 (void):
     hbrush(NULL),
     hbrushOld(NULL),
     hpen(NULL),
-    fill_path(NULL)
+    fill_path(NULL),
+    stroke_and_fill(false),
+    fill_only(false),
+    simple_shape(false)
 {
 }
 
@@ -164,12 +172,6 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
     // Get a Reference DC
     HDC hScreenDC = GetDC( NULL );
 
-    // Get the physical characteristics of the reference DC
-    float PixelsX = (float) GetDeviceCaps( hScreenDC, HORZRES );
-    float PixelsY = (float) GetDeviceCaps( hScreenDC, VERTRES );
-    float MMX = (float) GetDeviceCaps( hScreenDC, HORZSIZE );
-    float MMY = (float) GetDeviceCaps( hScreenDC, VERTSIZE );
-
     // Create the Metafile
     if (PrintWin32::is_os_wide())
         hdc = CreateEnhMetaFileW( hScreenDC, unicode_uri, &rc, NULL );
@@ -196,8 +198,8 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
     // Set the viewport extent to reflect
     // dwInchesX" x dwInchesY" in device units
     SetViewportExtEx( hdc,
-                      (int) ((float) dwInchesX*25.4f*PixelsX/MMX),
-                      (int) ((float) dwInchesY*25.4f*PixelsY/MMY),
+                      (int) ((float) dwInchesX*25.4f*PX_PER_MM),
+                      (int) ((float) dwInchesY*25.4f*PX_PER_MM),
                       NULL );
 
     SetRect( &rc, 0, 0, (int) ceil(dwInchesX*dwDPI), (int) ceil(dwInchesY*dwDPI) );
@@ -205,6 +207,7 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
     g_free(local_fn);
     g_free(unicode_fn);
 
+    m_tr_stack.push( NR::scale(1, -1) * NR::translate(0, sp_document_height(doc)));
     return 0;
 }
 
@@ -412,8 +415,12 @@ void
 PrintEmfWin32::flush_fill()
 {
     if (fill_path) {
+        stroke_and_fill = false;
+        fill_only = true;
         print_bpath(fill_path, &fill_transform, &fill_pbox);
-        FillPath( hdc );
+        fill_only = false;
+        if (!simple_shape)
+            FillPath( hdc );
         destroy_brush();
         delete[] fill_path;
         fill_path = NULL;
@@ -473,14 +480,23 @@ PrintEmfWin32::cmp_bpath(const NArtBpath *bp1, const NArtBpath *bp2)
 unsigned int
 PrintEmfWin32::bind(Inkscape::Extension::Print *mod, NR::Matrix const *transform, float opacity)
 {
-    text_transform = *transform;
-    return 0;
+    NR::Matrix tr = *transform;
+    
+    if (m_tr_stack.size()) {
+        NR::Matrix tr_top = m_tr_stack.top();
+        m_tr_stack.push(tr * tr_top);
+    } else {
+        m_tr_stack.push(tr);
+    }
+
+    return 1;
 }
 
 unsigned int
 PrintEmfWin32::release(Inkscape::Extension::Print *mod)
 {
-    return 0;
+    m_tr_stack.pop();
+    return 1;
 }
 
 unsigned int
@@ -489,6 +505,8 @@ PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
                NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!hdc) return 0;
+
+    NR::Matrix tf = m_tr_stack.top();
 
     flush_fill(); // flush any pending fills
 
@@ -501,7 +519,7 @@ PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
     }
 
     fill_path = copy_bpath( bpath->path );
-    fill_transform = *transform;
+    fill_transform = tf;
     fill_pbox = *pbox;
 
     // postpone fill in case of stroke-and-fill
@@ -517,28 +535,32 @@ PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
 {
     if (!hdc) return 0;
 
-    bool stroke_and_fill = ( cmp_bpath( bpath->path, fill_path ) == 0 );
+    NR::Matrix tf = m_tr_stack.top();
+
+    stroke_and_fill = ( cmp_bpath( bpath->path, fill_path ) == 0 );
 
     if (!stroke_and_fill) {
         flush_fill(); // flush any pending fills
     }
 
     if (style->stroke.isColor()) {
-        create_pen(style, transform);
+        create_pen(style, &tf);
     } else {
-        // create_pen(NULL, transform);
+        // create_pen(NULL, &tf);
         return 0;
     }
 
-    print_bpath(bpath->path, transform, pbox);
+    print_bpath(bpath->path, &tf, pbox);
 
     if (stroke_and_fill) {
-        StrokeAndFillPath( hdc );
+        if (!simple_shape)
+            StrokeAndFillPath( hdc );
         destroy_brush();
         delete[] fill_path;
         fill_path = NULL;
     } else {
-        StrokePath( hdc );
+        if (!simple_shape)
+            StrokePath( hdc );
     }
 
     destroy_pen();
@@ -547,12 +569,157 @@ PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
 }
 
 
+bool
+PrintEmfWin32::print_simple_shape(const NArtBpath *bpath, const NR::Matrix *transform, NRRect const *pbox)
+{
+    NR::Matrix tf = *transform;
+    const NArtBpath *bp = bpath;
+    
+    int nodes = 0;
+    int moves = 0;
+    int lines = 0;
+    int curves = 0;
+
+    while (bp->code != NR_END) {
+        nodes++;
+        switch (bp->code) {
+            case NR_MOVETO:
+            case NR_MOVETO_OPEN:
+                moves++;
+                break;
+            case NR_LINETO:
+                lines++;
+                break;
+            case NR_CURVETO:
+                curves++;
+                break;
+        }
+        bp += 1;
+    }
+
+    if (!nodes)
+        return false;
+    
+    POINT *lpPoints = new POINT[moves + lines + curves*3];
+    int i = 0;
+    bp = bpath;
+    while (bp->code != NR_END)
+    {
+        using NR::X;
+        using NR::Y;
+
+        NR::Point p1(bp->c(1) * tf);
+        NR::Point p2(bp->c(2) * tf);
+        NR::Point p3(bp->c(3) * tf);
+
+        p1[X] = (p1[X] * IN_PER_PX * dwDPI);
+        p2[X] = (p2[X] * IN_PER_PX * dwDPI);
+        p3[X] = (p3[X] * IN_PER_PX * dwDPI);
+        p1[Y] = (p1[Y] * IN_PER_PX * dwDPI);
+        p2[Y] = (p2[Y] * IN_PER_PX * dwDPI);
+        p3[Y] = (p3[Y] * IN_PER_PX * dwDPI);
+
+        LONG const x1 = (LONG) round(p1[X]);
+        LONG const y1 = (LONG) round(rc.bottom-p1[Y]);
+        LONG const x2 = (LONG) round(p2[X]);
+        LONG const y2 = (LONG) round(rc.bottom-p2[Y]);
+        LONG const x3 = (LONG) round(p3[X]);
+        LONG const y3 = (LONG) round(rc.bottom-p3[Y]);
+
+        switch (bp->code) {
+            case NR_MOVETO:
+            case NR_MOVETO_OPEN:
+            case NR_LINETO:
+                lpPoints[i].x = x3;
+                lpPoints[i].y = y3;
+                i = i + 1;
+                break;
+            case NR_CURVETO:
+                lpPoints[i].x = x1;
+                lpPoints[i].y = y1;
+                lpPoints[i+1].x = x2;
+                lpPoints[i+1].y = y2;
+                lpPoints[i+2].x = x3;
+                lpPoints[i+2].y = y3;
+                i = i + 3;
+                break;
+        }
+        
+        bp += 1;
+    }
+
+    bool done = false;
+    bool circular = (lpPoints[0].x == lpPoints[i-1].x) && (lpPoints[0].y == lpPoints[i-1].y);
+    bool polygon = false;
+    bool ellipse = false;
+    
+    if (moves == 1 && moves+lines == nodes && circular) {
+        polygon = true;
+    }
+    else if (moves == 1 && nodes == 5 && moves+curves == nodes && circular) {
+        if (lpPoints[0].x == lpPoints[1].x && lpPoints[1].x == lpPoints[11].x &&
+            lpPoints[5].x == lpPoints[6].x && lpPoints[6].x == lpPoints[7].x &&
+            lpPoints[2].x == lpPoints[10].x && lpPoints[3].x == lpPoints[9].x && lpPoints[4].x == lpPoints[8].x &&
+            lpPoints[2].y == lpPoints[3].y && lpPoints[3].y == lpPoints[4].y &&
+            lpPoints[8].y == lpPoints[9].y && lpPoints[9].y == lpPoints[10].y &&
+            lpPoints[5].y == lpPoints[1].y && lpPoints[6].y == lpPoints[0].y && lpPoints[7].y == lpPoints[11].y)
+        {
+            ellipse = true;
+        }
+    }
+
+    if (polygon || ellipse) {
+        HPEN hpenTmp = NULL;
+        HPEN hpenOld = NULL;
+        HBRUSH hbrushTmp = NULL;
+        HBRUSH hbrushOld = NULL;
+
+        if (!stroke_and_fill) {
+            if (fill_only) {
+                hpenTmp = (HPEN) GetStockObject(NULL_PEN);
+                hpenOld = (HPEN) SelectObject( hdc, hpenTmp );
+            }
+            else { // if (stroke_only)
+                hbrushTmp = (HBRUSH) GetStockObject(NULL_BRUSH);
+                hbrushOld = (HBRUSH) SelectObject( hdc, hbrushTmp );
+            }
+        }
+
+        if (polygon) {
+            Polygon( hdc, lpPoints, nodes );
+        }
+        else if (ellipse) {
+            Ellipse( hdc, lpPoints[6].x, lpPoints[3].y, lpPoints[0].x, lpPoints[9].y);
+        }
+        
+        done = true;
+
+        if (hpenOld)
+            SelectObject( hdc, hpenOld );
+        if (hpenTmp)
+            DeleteObject( hpenTmp );
+        if (hbrushOld)
+            SelectObject( hdc, hbrushOld );
+        if (hbrushTmp)
+            DeleteObject( hbrushTmp );
+    }
+
+    delete[] lpPoints;
+    
+    return done;
+}
+
 unsigned int
 PrintEmfWin32::print_bpath(const NArtBpath *bp, const NR::Matrix *transform, NRRect const *pbox)
 {
     unsigned int closed;
     NR::Matrix tf = *transform;
 
+    simple_shape = print_simple_shape(bp, &tf, pbox);
+
+    if (simple_shape)
+        return TRUE;
+    
     BeginPath( hdc );
     closed = FALSE;
     while (bp->code != NR_END) {
@@ -728,7 +895,7 @@ PrintEmfWin32::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
             g_free(lf);
         }
     }
-        
+    
     HFONT hfontOld = (HFONT) SelectObject(hdc, hfont);
 
     float rgb[3];
@@ -739,26 +906,28 @@ PrintEmfWin32::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
         style->text_align.value == SP_CSS_TEXT_ALIGN_RIGHT ? TA_RIGHT :
         style->text_align.value == SP_CSS_TEXT_ALIGN_CENTER ? TA_CENTER : TA_LEFT;
     SetTextAlign(hdc, TA_BASELINE | align);
+    SetBkMode(hdc, TRANSPARENT);
 
-    p = p * text_transform;
+    NR::Matrix tf = m_tr_stack.top();
+
+    p = p * tf;
     p[NR::X] = (p[NR::X] * IN_PER_PX * dwDPI);
     p[NR::Y] = (p[NR::Y] * IN_PER_PX * dwDPI);
 
+    LONG const xpos = (LONG) round(p[NR::X]);
+    LONG const ypos = (LONG) round(rc.bottom-p[NR::Y]);
+
     if (PrintWin32::is_os_wide()) {
         gunichar2 *unicode_text = g_utf8_to_utf16( text, -1, NULL, NULL, NULL );
-        TextOutW(hdc, p[NR::X], p[NR::Y], (WCHAR*)unicode_text, wcslen((wchar_t*)unicode_text));
+        TextOutW(hdc, xpos, ypos, (WCHAR*)unicode_text, wcslen((wchar_t*)unicode_text));
     }
     else {
-        TextOutA(hdc, p[NR::X], p[NR::Y], (CHAR*)text, strlen((char*)text));
+        TextOutA(hdc, xpos, ypos, (CHAR*)text, strlen((char*)text));
     }
 
     SelectObject(hdc, hfontOld);
     DeleteObject(hfont);
     
-    return 0;
-
-
-
     return 0;
 }
 

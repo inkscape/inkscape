@@ -4,7 +4,7 @@
  * Authors:
  *   Ulf Erikson <ulferikson@users.sf.net>
  *
- * Copyright (C) 2006 Authors
+ * Copyright (C) 2006-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
