@@ -42,6 +42,7 @@ template<> class BezierCurve<0>;
 typedef BezierCurve<2> QuadraticBezier;
 typedef BezierCurve<1> LineSegment;
 typedef BezierCurve<3> CubicBezier;
+class EllipticalArc;
 
 typedef double Coord;
 class Point;
@@ -78,7 +79,6 @@ typedef D2<Interval> Rect;
 class Shape;
 class Region;
 
-class EllipticalArc;
 class SVGPathSink;
 template <typename> class SVGPathGenerator;
 

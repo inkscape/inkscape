@@ -32,7 +32,6 @@
 #define SEEN_GEOM_PW_SB_H
 
 #include "sbasis.h"
-//#include "sbasis-2d.h"
 #include <vector>
 #include <map>
 

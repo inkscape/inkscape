@@ -59,7 +59,7 @@ PathVector operator* (PathVector const & path_in, Matrix const &m)
 PathVector reverse_paths_and_order (PathVector const & path_in)
 {
     PathVector path_out;
-    for (PathVector::const_reverse_iterator it = path_in.rbegin(); it != path_in.rend(); it++) {
+    for (PathVector::const_reverse_iterator it = path_in.rbegin(); it != path_in.rend(); ++it) {
         path_out.push_back( (*it).reverse() );
     }
     return path_out;

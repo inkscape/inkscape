@@ -31,7 +31,7 @@
 #include "path.h"
 #include "angle.h"
 
-#include <gsl/gsl_poly.h>
+#include "poly.h"
 
 #include <cfloat>
 
@@ -160,7 +160,7 @@ EllipticalArc::roots(double v, Dim2 d) const
 			
 			if ( initialPoint()[d] == v && finalPoint()[d] == v )
 			{
-				THROW_EXCEPTION("infinite solutions");
+				THROW_INFINITESOLUTIONS(0);
 			}
 			if ( (initialPoint()[d] < finalPoint()[d])
 				 && (initialPoint()[d] > v || finalPoint()[d] < v) )
@@ -717,7 +717,7 @@ allNearestPoints( Point const& p, double from, double to ) const
 		Point r = p - center();
 		if ( are_near(r, Point(0,0)) )
 		{
-			THROW_EXCEPTION("infinite nearest points");
+			THROW_INFINITESOLUTIONS(0);
 		}
 		// TODO: implement case r != 0
 //		Point np = ray(X) * unit_vector(r);
@@ -762,7 +762,8 @@ allNearestPoints( Point const& p, double from, double to ) const
 	double cosrot = std::cos( rotation_angle() );
 	double sinrot = std::sin( rotation_angle() );
 	double expr1 = ray(X) * (p_c[X] * cosrot + p_c[Y] * sinrot);
-	double coeff[5];
+	Poly coeff;
+	coeff.resize(5);
 	coeff[4] = ray(Y) * ( p_c[Y] * cosrot - p_c[X] * sinrot );
 	coeff[3] = 2 * ( rx2_ry2 + expr1 );
 	coeff[2] = 0;
@@ -791,16 +792,20 @@ allNearestPoints( Point const& p, double from, double to ) const
 	}
 	else
 	{
-		double sol[8];
-		gsl_poly_complex_workspace * w = gsl_poly_complex_workspace_alloc(5);
-		gsl_poly_complex_solve(coeff, 5, w, sol );
-		gsl_poly_complex_workspace_free(w);
-		
-		for ( unsigned int i = 0; i < 4; ++i )
-		{
-			if ( sol[2*i+1] == 0 ) real_sol.push_back(sol[2*i]);
-		}
+		real_sol = solve_reals(coeff);
 	}
+//	else
+//	{
+//		double sol[8];
+//		gsl_poly_complex_workspace * w = gsl_poly_complex_workspace_alloc(5);
+//		gsl_poly_complex_solve(coeff, 5, w, sol );
+//		gsl_poly_complex_workspace_free(w);
+//		
+//		for ( unsigned int i = 0; i < 4; ++i )
+//		{
+//			if ( sol[2*i+1] == 0 ) real_sol.push_back(sol[2*i]);
+//		}
+//	}
 		
 	for ( unsigned int i = 0; i < real_sol.size(); ++i )
 	{
