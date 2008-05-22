@@ -32,6 +32,7 @@
 #define SEEN_GEOM_PW_SB_H
 
 #include "sbasis.h"
+//#include "sbasis-2d.h"
 #include <vector>
 #include <map>
 
@@ -662,6 +663,16 @@ Piecewise<T> compose(Piecewise<T> const &f, Piecewise<SBasis> const &g){
   }
   return result;
 }
+
+/*
+Piecewise<D2<SBasis> > compose(D2<SBasis2d> const &sb2d, Piecewise<D2<SBasis> > const &pwd2sb){
+  Piecewise<D2<SBasis> > result;
+  result.push_cut(0.);
+  for(unsigned i = 0; i < pwd2sb.size(); i++){
+     result.push(compose_each(sb2d,pwd2sb[i]),i+1);
+  }
+  return result;
+}*/
 
 template <typename T>
 Piecewise<T> Piecewise<T>::operator()(SBasis f){return compose((*this),f);}
