@@ -12,7 +12,7 @@ SET(CMAKE_SKIP_RPATH:BOOL OFF)
 
 # Include base dir, so other files can refer to the generated files.
 # CMAKE_INCLUDE_CURRENT_DIR is not enough as it only includes the current dir and not the basedir with config.h in it
-INCLUDE_DIRECTORIES ("${CMAKE_BINARY_DIR}" "${PROJECT_SOURCE_DIR}" src/)  
+#INCLUDE_DIRECTORIES ("${CMAKE_BINARY_DIR}" "${PROJECT_SOURCE_DIR}" src/)  
 LINK_DIRECTORIES ("${LINK_DIRECTORIES}" "${CMAKE_BINARY_DIR}" "${PROJECT_SOURCE_DIR}" src/)
 
 #INSTALL(TARGETS INKSCAPE

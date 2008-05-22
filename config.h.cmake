@@ -30,7 +30,7 @@
 /* Define to 1 if you have the `bind_textdomain_codeset' function. */
 #cmakedefine HAVE_BIND_TEXTDOMAIN_CODESET 1
 
-/* Define to 1 if you have the <boost/concept_check.hpp> header file. */
+/* Define to 1 if you have the <concept_check.hpp> header file. */
 #cmakedefine HAVE_BOOST_CONCEPT_CHECK_HPP 1
 
 /* Whether the Cairo PDF backend is available */

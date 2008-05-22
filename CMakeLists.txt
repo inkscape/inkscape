@@ -1,28 +1,16 @@
-PROJECT(inkscape CXX C)
+PROJECT(inkscape)
 
 SET(INKSCAPE_VERSION 0.46+devel)
 SET(PROJECT_NAME inkscape)
-SET(CMAKE_BACKWARDS_COMPATIBILITY 2.4)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.4.6)
 SET(CMAKE_INCLUDE_CURRENT_DIR TRUE)
-
-# Set to true if compiler/linker should enable profiling:
-#SET(ENABLE_PROFILING TRUE)
-
-#Pretty colors
-SET(CMAKE_COLOR_MAKEFILE ON)
-#Choose verbosity level
-SET(CMAKE_VERBOSE_MAKEFILE OFF)
 
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeScripts)
 INCLUDE(ConfigPaths)
-INCLUDE(ConfigInkscapeDepends)
+INCLUDE(DefineDependsandFlags)
 INCLUDE(HelperMacros)
-
-#SET(CMAKE_MAJOR_MINOR "${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}")
-#IF("${CMAKE_MAJOR_MINOR}" STREQUAL "2.2")
-#    SET(CMAKE_AR "ar")
-#    SET(CMAKE_RANLIB "ranlib")
-#ENDIF("${CMAKE_MAJOR_MINOR}" STREQUAL "2.2")
+# Set to true if compiler/linker should enable profiling:
+#SET(ENABLE_PROFILING TRUE)
 
 #make dist target
 SET(INKSCAPE_DIST_PREFIX "${PROJECT_NAME}-${INKSCAPE_VERSION}")
