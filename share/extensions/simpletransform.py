@@ -175,3 +175,4 @@ def computeBBox(aList,mat=[[1,0,0],[0,1,0]]):
     return bbox
 
 
+# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

@@ -136,3 +136,6 @@ def intersectSegments(s1, s2):
 
 def dot(s1, s2):
     return s1.delta_x() * s2.delta_x() + s1.delta_y() * s2.delta_y()
+
+
+# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

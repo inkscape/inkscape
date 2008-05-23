@@ -169,3 +169,6 @@ class Length(inkex.Effect):
 
 e = Length()
 e.affect()
+
+
+# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

@@ -200,3 +200,5 @@ def rotatePath(p, a, cx = 0, cy = 0):
                     params[i] = (r * math.cos(theta)) + cx
                     params[i + 1] = (r * math.sin(theta)) + cy
 
+
+# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

@@ -248,3 +248,6 @@ if __name__ == '__main__':
     '''
     for curve in curves:
         print beziertatlength(curve,0.5)
+
+
+# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
