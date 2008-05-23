@@ -51,93 +51,95 @@ class Dimension(pathmodifier.PathModifier):
         defs = self.xpathSingle('/svg:svg//svg:defs')
         if not defs:
             defs = inkex.etree.SubElement(self.document.getroot(),inkex.addNS('defs','svg'))
-	marker = inkex.etree.SubElement(defs ,inkex.addNS('marker','svg'))
-	marker.set('id', name)
-	marker.set('orient', 'auto')
-	marker.set('refX', '0.0')
-	marker.set('refY', '0.0')
-	marker.set('style', 'overflow:visible')
-	marker.set(inkex.addNS('stockid','inkscape'), name)
+        marker = inkex.etree.SubElement(defs ,inkex.addNS('marker','svg'))
+        marker.set('id', name)
+        marker.set('orient', 'auto')
+        marker.set('refX', '0.0')
+        marker.set('refY', '0.0')
+        marker.set('style', 'overflow:visible')
+        marker.set(inkex.addNS('stockid','inkscape'), name)
 
-	arrow = inkex.etree.Element("path")
+        arrow = inkex.etree.Element("path")
         arrow.set('d', 'M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z ')
-	if rotate:
-		arrow.set('transform', 'scale(0.8) rotate(180) translate(12.5,0)')
-	else:
-		arrow.set('transform', 'scale(0.8) translate(12.5,0)')
+        if rotate:
+            arrow.set('transform', 'scale(0.8) rotate(180) translate(12.5,0)')
+        else:
+            arrow.set('transform', 'scale(0.8) translate(12.5,0)')
         arrow.set('style', 'fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none')
-	marker.append(arrow)
+        marker.append(arrow)
 
     def dimHLine(self, y, xlat):
-	line = inkex.etree.Element("path")
-	x1 = self.bbox[0] - xlat[0] * self.xoffset
-	x2 = self.bbox[1]
-	y = y - xlat[1] * self.yoffset
-	line.set('d', 'M %f %f H %f' % (x1, y, x2))
-	return line
+        line = inkex.etree.Element("path")
+        x1 = self.bbox[0] - xlat[0] * self.xoffset
+        x2 = self.bbox[1]
+        y = y - xlat[1] * self.yoffset
+        line.set('d', 'M %f %f H %f' % (x1, y, x2))
+        return line
 
     def dimVLine(self, x, xlat):
-	line = inkex.etree.Element("path")
-	x = x - xlat[0] * self.xoffset
-	y1 = self.bbox[2] - xlat[1] * self.yoffset
-	y2 = self.bbox[3]
-	line.set('d', 'M %f %f V %f' % (x, y1, y2))
-	return line
+        line = inkex.etree.Element("path")
+        x = x - xlat[0] * self.xoffset
+        y1 = self.bbox[2] - xlat[1] * self.yoffset
+        y2 = self.bbox[3]
+        line.set('d', 'M %f %f V %f' % (x, y1, y2))
+        return line
 
     def effect(self):
-	self.xoffset = self.options.xoffset
-	self.yoffset = self.options.yoffset
+        self.xoffset = self.options.xoffset
+        self.yoffset = self.options.yoffset
 
-	self.bbox = computeBBox(self.selected.values())
+        self.bbox = computeBBox(self.selected.values())
 
-	# Avoid ugly failure on rects and texts.
-	try:
-		testing_the_water = self.bbox[0]
-	except TypeError:
-		sys.exit('Unable to process this object.  Try changing it into a path first.')
+        # Avoid ugly failure on rects and texts.
+        try:
+            testing_the_water = self.bbox[0]
+        except TypeError:
+            sys.exit('Unable to process this object.  Try changing it into a path first.')
 
-	layer = self.current_layer
+        layer = self.current_layer
 
-	self.addMarker('Arrow1Lstart', False)
-	self.addMarker('Arrow1Lend',  True)
+        self.addMarker('Arrow1Lstart', False)
+        self.addMarker('Arrow1Lend',  True)
 
-	group = inkex.etree.Element("g")
-	group.set('fill', 'none')
-	group.set('stroke', 'black')
+        group = inkex.etree.Element("g")
+        group.set('fill', 'none')
+        group.set('stroke', 'black')
 
-	line = self.dimHLine(self.bbox[2], [0, 1])
-	line.set('marker-start', 'url(#Arrow1Lstart)')
-	line.set('marker-end', 'url(#Arrow1Lend)')
-	line.set('stroke-width', '1')
-	group.append(line)
+        line = self.dimHLine(self.bbox[2], [0, 1])
+        line.set('marker-start', 'url(#Arrow1Lstart)')
+        line.set('marker-end', 'url(#Arrow1Lend)')
+        line.set('stroke-width', '1')
+        group.append(line)
 
-	line = self.dimVLine(self.bbox[0], [0, 2])
-	line.set('stroke-width', '0.5')
-	group.append(line)
-	
-	line = self.dimVLine(self.bbox[1], [0, 2])
-	line.set('stroke-width', '0.5')
-	group.append(line)
-	
-	line = self.dimVLine(self.bbox[0], [1, 0])
-	line.set('marker-start', 'url(#Arrow1Lstart)')
-	line.set('marker-end', 'url(#Arrow1Lend)')
-	line.set('stroke-width', '1')
-	group.append(line)
-	
-	line = self.dimHLine(self.bbox[2], [2, 0])
-	line.set('stroke-width', '0.5')
-	group.append(line)
+        line = self.dimVLine(self.bbox[0], [0, 2])
+        line.set('stroke-width', '0.5')
+        group.append(line)
+        
+        line = self.dimVLine(self.bbox[1], [0, 2])
+        line.set('stroke-width', '0.5')
+        group.append(line)
+        
+        line = self.dimVLine(self.bbox[0], [1, 0])
+        line.set('marker-start', 'url(#Arrow1Lstart)')
+        line.set('marker-end', 'url(#Arrow1Lend)')
+        line.set('stroke-width', '1')
+        group.append(line)
+        
+        line = self.dimHLine(self.bbox[2], [2, 0])
+        line.set('stroke-width', '0.5')
+        group.append(line)
 
-	line = self.dimHLine(self.bbox[3], [2, 0])
-	line.set('stroke-width', '0.5')
-	group.append(line)
+        line = self.dimHLine(self.bbox[3], [2, 0])
+        line.set('stroke-width', '0.5')
+        group.append(line)
 
-	for id, node in self.selected.iteritems():
-		group.append(node)
-	
-	layer.append(group)
+        for id, node in self.selected.iteritems():
+            group.append(node)
+        
+        layer.append(group)
 
 e = Dimension()
 e.affect()
 
+
+# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
