@@ -190,8 +190,9 @@ class Grid_Polar(inkex.Effect):
                                        str(i*360/self.options.a_divs), 
                                        label_size, 'Label'+str(i), grid)
 
-e = Grid_Polar()
-e.affect()
+if __name__ == '__main__':
+    e = Grid_Polar()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

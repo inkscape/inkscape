@@ -228,5 +228,6 @@ class MyEffect(inkex.Effect):
       rect=inkex.etree.SubElement(flowRegion,inkex.addNS('rect','svg'),rattribs)
       self.addText(flowRoot)
 
-e = MyEffect()
-e.affect()
+if __name__ == '__main__':
+  e = MyEffect()
+  e.affect()

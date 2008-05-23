@@ -23,13 +23,13 @@ class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
 	self.OptionParser.add_option("-d", "--guides",
-						action="store", type="inkbool",
-						dest="saveGuides", default=False,
-						help="Save the Guides with the .XCF")
+                                     action="store", type="inkbool",
+                                     dest="saveGuides", default=False,
+                                     help="Save the Guides with the .XCF")
 	self.OptionParser.add_option("-r", "--grid",
-						action="store", type="inkbool",
-						dest="saveGrid", default=False,
-						help="Save the Grid with the .XCF")
+                                     action="store", type="inkbool",
+                                     dest="saveGrid", default=False,
+                                     help="Save the Grid with the .XCF")
     def output(self):
         pass
     def effect(self):
@@ -168,6 +168,7 @@ class MyEffect(inkex.Effect):
         sys.stdout.write(x.read())
         x.close()
 
-e = MyEffect()
-e.affect()
+if __name__ == '__main__':
+    e = MyEffect()
+    e.affect()
 

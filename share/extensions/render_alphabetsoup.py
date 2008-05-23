@@ -451,6 +451,7 @@ class AlphabetSoup(inkex.Effect):
 			new.set('d', simplepath.formatPath(image))
 			self.current_layer.append(new)
 
-e = AlphabetSoup()
-e.affect()
+if __name__ == '__main__':
+    e = AlphabetSoup()
+    e.affect()
 

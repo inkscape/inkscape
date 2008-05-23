@@ -50,8 +50,9 @@ class Handles(inkex.Effect):
                     attribs = {'style':simplestyle.formatStyle(s),'d':simplepath.formatPath(a)}
                     inkex.etree.SubElement(node.getparent(), inkex.addNS('path','svg'), attribs)
                     
-e = Handles()
-e.affect()
+if __name__ == '__main__':
+    e = Handles()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

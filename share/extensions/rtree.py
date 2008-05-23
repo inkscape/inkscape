@@ -57,8 +57,9 @@ class RTreeTurtle(inkex.Effect):
         attribs = {'d':t.getPath(),'style':simplestyle.formatStyle(s)}
         inkex.etree.SubElement(self.current_layer, inkex.addNS('path','svg'), attribs)
 
-e = RTreeTurtle()
-e.affect()
+if __name__ == '__main__':
+    e = RTreeTurtle()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

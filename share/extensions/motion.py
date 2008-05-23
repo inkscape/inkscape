@@ -105,8 +105,9 @@ class Motion(inkex.Effect):
                     else:
                         last = params[-2:]
 
-e = Motion()
-e.affect()
+if __name__ == '__main__':
+    e = Motion()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

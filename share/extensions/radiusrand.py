@@ -72,8 +72,9 @@ class RadiusRandomize(inkex.Effect):
                             csp[2]=randomize(csp[2], self.options.radiusx, self.options.radiusy, self.options.norm)
                 node.set('d',cubicsuperpath.formatPath(p))
 
-e = RadiusRandomize()
-e.affect()
+if __name__ == '__main__':
+    e = RadiusRandomize()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

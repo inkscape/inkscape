@@ -134,8 +134,9 @@ class EQTEXSVG(inkex.Effect):
 
         clean()
 
-e = EQTEXSVG()
-e.affect()
+if __name__ == '__main__':
+    e = EQTEXSVG()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

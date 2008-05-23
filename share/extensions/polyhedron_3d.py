@@ -501,8 +501,9 @@ class Poly_3D(inkex.Effect):
         else:
             sys.stderr.write('Internal Error. No view type selected\n')
         
-e = Poly_3D()
-e.affect()
+if __name__ == '__main__':
+    e = Poly_3D()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

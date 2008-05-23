@@ -54,6 +54,7 @@ class InsertBarcode(inkex.Effect):
 		else:
 			sys.stderr.write("Unable to make barcode with: " + str(self.options) + "\n")
 
-e = InsertBarcode()
-e.affect()
+if __name__ == '__main__':
+        e = InsertBarcode()
+        e.affect()
 

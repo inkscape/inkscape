@@ -73,8 +73,9 @@ class RubberStretch(pathmodifier.Diffeo):
             v[1]*=-1
         bpt[1]*=-1
 
-e = RubberStretch()
-e.affect()
+if __name__ == '__main__':
+    e = RubberStretch()
+    e.affect()
 
     
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

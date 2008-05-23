@@ -123,8 +123,9 @@ class Project(inkex.Effect):
         y = p[1]
         return [(x*m[0][0] + y*m[0][1] + m[0][2])/(x*m[2][0]+y*m[2][1]+m[2][2]),(x*m[1][0] + y*m[1][1] + m[1][2])/(x*m[2][0]+y*m[2][1]+m[2][2])]
 
-e = Project()
-e.affect()
+if __name__ == '__main__':
+    e = Project()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

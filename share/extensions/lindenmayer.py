@@ -108,8 +108,9 @@ class LSystem(inkex.Effect):
         attribs = {'style':simplestyle.formatStyle(s),'d':self.iterate()}
         inkex.etree.SubElement(self.current_layer,inkex.addNS('path','svg'),attribs)
 
-e = LSystem()
-e.affect()
+if __name__ == '__main__':
+    e = LSystem()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

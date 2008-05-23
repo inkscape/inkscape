@@ -158,8 +158,9 @@ class Gears(inkex.Effect):
         gear_attribs = {'style':simplestyle.formatStyle(style), 'd':path}
         gear = inkex.etree.SubElement(g, inkex.addNS('path','svg'), gear_attribs )
 
-e = Gears()
-e.affect()
+if __name__ == '__main__':
+    e = Gears()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

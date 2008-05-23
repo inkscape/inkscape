@@ -74,8 +74,9 @@ class Project(inkex.Effect):
         p = intersectSegments(vert,horz)
         return [p['x'],p['y']]    
 
-e = Project()
-e.affect()
+if __name__ == '__main__':
+    e = Project()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

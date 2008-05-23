@@ -89,8 +89,9 @@ class PathFractalize(inkex.Effect):
             """ recursively subdivide the segment right of the subdivision point """
             self.fractalize(a,subdivPoint[-2],subdivPoint[-1],x2,y2,s-1,f)
              
-e = PathFractalize()
-e.affect()
+if __name__ == '__main__':
+    e = PathFractalize()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

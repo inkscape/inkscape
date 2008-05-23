@@ -68,8 +68,9 @@ class Dots(inkex.Effect):
                 new.set('y', str(y))
                 new.text = str(text)
 
-e = Dots()
-e.affect()
+if __name__ == '__main__':
+    e = Dots()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

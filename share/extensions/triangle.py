@@ -189,8 +189,9 @@ class Grid_Polar(inkex.Effect):
             
             draw_tri_from_3_sides(s_a, s_b, s_c, offset, tri)
 
-e = Grid_Polar()
-e.affect()
+if __name__ == '__main__':
+    e = Grid_Polar()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

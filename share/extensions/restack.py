@@ -126,8 +126,9 @@ class Restack(inkex.Effect):
             for item in objlist:
                 svg.append( self.selected[item[1]])
 
-e = Restack()
-e.affect()
+if __name__ == '__main__':
+    e = Restack()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

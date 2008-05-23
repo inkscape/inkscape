@@ -42,8 +42,9 @@ class MyEffect(inkex.Effect):
                         np.append([cmd,[csp[1][0],csp[1][1]]])
                         node.set('d',simplepath.formatPath(np))
 
-e = MyEffect()
-e.affect()
+if __name__ == '__main__':
+    e = MyEffect()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

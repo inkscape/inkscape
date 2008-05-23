@@ -64,8 +64,9 @@ class MyEffect(inkex.Effect):
                                 inkex.debug('Difficulty finding the image data.')
                             break
 
-e = MyEffect()
-e.affect()
+if __name__ == '__main__':
+    e = MyEffect()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

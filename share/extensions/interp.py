@@ -308,8 +308,9 @@ class Interp(inkex.Effect):
                 attribs = {'style':simplestyle.formatStyle(basestyle),'d':cubicsuperpath.formatPath(interp)}
                 new = inkex.etree.SubElement(group,inkex.addNS('path','svg'), attribs)
 
-e = Interp()
-e.affect()
+if __name__ == '__main__':
+    e = Interp()
+    e.affect()
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
