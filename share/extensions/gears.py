@@ -142,7 +142,7 @@ class Gears(inkex.Effect):
                 r2 = point_on_circle(root_radius, base2)
                 p_tmp = [r1,b1,p1,o1,o2,p2,b2,r2]
 
-                    points.extend( p_tmp )
+            points.extend( p_tmp )
 
         path = points_to_svgd( points )
 
