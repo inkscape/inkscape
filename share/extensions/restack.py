@@ -49,24 +49,24 @@ class Restack(inkex.Effect):
 
             file = self.args[ -1 ]
             #get all bounding boxes in file by calling inkscape again with the --querry-all command line option
-			#it returns a comma seperated list structured id,x,y,w,h
+            #it returns a comma seperated list structured id,x,y,w,h
             _,f,err = os.popen3( "inkscape --query-all %s" % ( file ) )
             reader=csv.reader( f.readlines() )
             f.close()
             err.close()
-			
+
             #build a dictionary with id as the key
             dimen = dict()
             for line in reader:
                 dimen[line[0]] = map( float, line[1:])
-				
-			#find the center of all selected objects **Not the average!	
+
+            #find the center of all selected objects **Not the average!
             x,y,w,h = dimen[self.selected.keys()[0]]
             minx = x
             miny = y
             maxx = x + w
             maxy = y + h
-			
+
             for id, node in self.selected.iteritems():
                 # get the bounding box
                 x,y,w,h = dimen[id]
@@ -77,16 +77,16 @@ class Restack(inkex.Effect):
                 if y < miny:
                     miny = y
                 if (y + h) > maxy:
-                    maxy = y + h				
+                    maxy = y + h
 
             midx = (minx + maxx) / 2
             midy = (miny + maxy) / 2
-			
+
             #calculate distances fro each selected object
             for id, node in self.selected.iteritems():
                 # get the bounding box
                 x,y,w,h = dimen[id]
-                
+
                 # calc the comparison coords
                 if self.options.xanchor == "l":
                     cx = x
@@ -101,25 +101,25 @@ class Restack(inkex.Effect):
                     cy = y + h
                 else:  # middle
                     cy = y + h / 2
-				
+
                 #direction chosen
                 if self.options.direction == "tb" or self.options.angle == 270:
-               	    objlist.append([cy,id])
+                    objlist.append([cy,id])
                 elif self.options.direction == "bt" or self.options.angle == 90:
-               	    objlist.append([-cy,id])
+                    objlist.append([-cy,id])
                 elif self.options.direction == "lr" or self.options.angle == 0 or self.options.angle == 360:
-               	    objlist.append([cx,id])
+                    objlist.append([cx,id])
                 elif self.options.direction == "rl" or self.options.angle == 180:
-               	    objlist.append([-cx,id])			
+                    objlist.append([-cx,id])
                 elif self.options.direction == "aa":
                     distance = math.hypot(cx,cy)*(math.cos(math.radians(-self.options.angle)-math.atan2(cy, cx)))
-               	    objlist.append([distance,id])
+                    objlist.append([distance,id])
                 elif self.options.direction == "ro":
                     distance = math.hypot(midx - cx, midy - cy)
-               	    objlist.append([distance,id])
+                    objlist.append([distance,id])
                 elif self.options.direction == "ri":
                     distance = -math.hypot(midx - cx, midy - cy)
-               	    objlist.append([distance,id])
+                    objlist.append([distance,id])
 
             objlist.sort()
             #move them to the top of the object stack in this order.

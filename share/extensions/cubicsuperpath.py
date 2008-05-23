@@ -77,7 +77,7 @@ def ArcToPath(p1,params):
     #v=dTeta*2/pi*0.552
     v=dTeta*2/pi*4*(sqrt(2)-1)/3
     #if not sweepflag:
-    #	v*=-1
+    #    v*=-1
     p=[]
     for i in range(0,NbSectors+1,1):
         angle=start+i*dTeta

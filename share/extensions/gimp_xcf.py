@@ -40,7 +40,7 @@ class MyEffect(inkex.Effect):
 
         #create os temp dir
         tmp_dir = tempfile.mkdtemp()
-	
+
 	hGuides = []
 	vGuides = []
 	if self.options.saveGuides:
@@ -60,10 +60,10 @@ class MyEffect(inkex.Effect):
 				#GIMP doesn't like guides that are outside of the image
 				if pos > 0 and pos < pageWidth:
 					vGuides.append(str(pos))
-	
+
 	hGList = ' '.join(hGuides)
 	vGList = ' '.join(vGuides)
-	
+
 	gridSpacingFunc = ''
 	gridOriginFunc = '' 
 	#GIMP only allows one rectangular grid
@@ -73,13 +73,13 @@ class MyEffect(inkex.Effect):
 			#these attributes could be nonexistant
 			spacingX = gridNode.get('spacingx')
 			if spacingX == None: spacingX = '1  '
-				
+
 			spacingY = gridNode.get('spacingy')
 			if spacingY == None: spacingY = '1  '
-				
+
 			originX = gridNode.get('originx')
 			if originX == None: originX = '0  '
-			
+
 			originY = gridNode.get('originy')
 			if originY == None: originY = '0  '
 
@@ -139,14 +139,14 @@ class MyEffect(inkex.Effect):
     )
     '(%s)
   )
-  
+
   (for-each
     (lambda (vGuide)
       (gimp-image-add-vguide img vGuide)
     )
     '(%s)
   )
-  
+
   %s
   %s
 

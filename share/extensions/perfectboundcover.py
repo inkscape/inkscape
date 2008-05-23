@@ -19,13 +19,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import sys, inkex
 
 def caliper_to_ppi(caliper):
-  return 2 / caliper
+    return 2 / caliper
 
 def bond_weight_to_ppi(bond_weight):
-  return caliper_to_ppi(bond_weight * .0002)
+    return caliper_to_ppi(bond_weight * .0002)
 
 def points_to_ppi(points):
-  return caliper_to_ppi(points / 1000.0)
+    return caliper_to_ppi(points / 1000.0)
 
 class PerfectBoundCover(inkex.Effect):
     def __init__(self):

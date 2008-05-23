@@ -105,10 +105,10 @@ class EQTEXSVG(inkex.Effect):
         create_equation_tex(latex_file, self.options.formula)
         os.system('latex "-output-directory=%s" -halt-on-error "%s" > "%s"' \
                   % (base_dir, latex_file, out_file))
-	try:
-	    os.stat(dvi_file)
-	except OSError:
-	    print >>sys.stderr, "invalid LaTeX input:"
+        try:
+            os.stat(dvi_file)
+        except OSError:
+            print >>sys.stderr, "invalid LaTeX input:"
             print >>sys.stderr, self.options.formula
             print >>sys.stderr, "temporary files were left in:", base_dir
             sys.exit(1)

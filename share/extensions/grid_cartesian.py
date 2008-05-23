@@ -133,7 +133,7 @@ class Grid_Polar(inkex.Effect):
                            str( self.view_center[1]- ymax/2.0) + ')'
         g_attribs = {inkex.addNS('label','inkscape'):'Grid_Polar:X' + \
                      str( self.options.x_divs )+':Y'+str( self.options.y_divs ),
-                    'transform':t }
+                     'transform':t }
         grid = inkex.etree.SubElement(self.current_layer, 'g', g_attribs)
         
         #Group for major x gridlines

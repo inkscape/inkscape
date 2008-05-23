@@ -125,7 +125,7 @@ class Grid_Polar(inkex.Effect):
         t = 'translate(' + str( self.view_center[0] ) + ',' + str( self.view_center[1] ) + ')'
         g_attribs = {inkex.addNS('label','inkscape'):'Grid_Polar:R' +
                                  str( self.options.r_divs )+':A'+str( self.options.a_divs ),
-                   'transform':t }
+                     'transform':t }
         grid = inkex.etree.SubElement(self.current_layer, 'g', g_attribs)
 
         dr = self.options.dr                        #Distance between neighbouring circles
@@ -135,19 +135,19 @@ class Grid_Polar(inkex.Effect):
         #Create SVG circles
         for i in range(1, self.options.r_divs+1):
             draw_SVG_circle(i*dr, 0, 0, #major div circles
-                             self.options.r_divs_th, 'none',
-                             'MajorDivCircle'+str(i)+':R'+str(i*dr), grid)
+                            self.options.r_divs_th, 'none',
+                            'MajorDivCircle'+str(i)+':R'+str(i*dr), grid)
             
             if self.options.r_log: #logarithmic subdivisions
                 for j in range (2, self.options.r_subdivs):
                     draw_SVG_circle(i*dr-(1-log(j, self.options.r_subdivs))*dr, #minor div circles
                                     0, 0, self.options.r_subdivs_th, 'none',
-                                     'MinorDivCircle'+str(i)+':Log'+str(j), grid)
+                                    'MinorDivCircle'+str(i)+':Log'+str(j), grid)
             else: #linear subdivs
                 for j in range (1, self.options.r_subdivs):
                     draw_SVG_circle(i*dr-j*dr/self.options.r_subdivs, #minor div circles
-                                     0, 0, self.options.r_subdivs_th, 'none',
-                                     'MinorDivCircle'+str(i)+':R'+str(i*dr), grid)
+                                    0, 0, self.options.r_subdivs_th, 'none',
+                                    'MinorDivCircle'+str(i)+':R'+str(i*dr), grid)
         
         if self.options.a_divs == self.options.a_divs_cent: #the lines can go from the centre to the edge
             for i in range(0, self.options.a_divs):
@@ -177,7 +177,7 @@ class Grid_Polar(inkex.Effect):
         
         if self.options.c_dot_dia <> 0: #if a non-zero diameter, draw the centre dot
             draw_SVG_circle(self.options.c_dot_dia /2.0,
-                             0, 0, 0, '#000000', 'CentreDot', grid)
+                            0, 0, 0, '#000000', 'CentreDot', grid)
         
         if self.options.a_labels == 'deg':
             label_radius = rmax+self.options.a_label_outset  #radius of label centres

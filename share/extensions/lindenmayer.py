@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import inkex, simplestyle, pturtle, random
 
 def stripme(s):
-    return s.strip()	
+    return s.strip()
 
 class LSystem(inkex.Effect):
     def __init__(self):

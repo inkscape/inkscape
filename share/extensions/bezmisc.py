@@ -22,7 +22,7 @@ import math, cmath
 def rootWrapper(a,b,c,d):
     if a:
         #TODO: find a new cubic solver and put it here
-          #return solveCubicMonic(b/a,c/a,d/a)
+        #return solveCubicMonic(b/a,c/a,d/a)
         return ()
     elif b:
         det=c**2.0-4.0*b*d

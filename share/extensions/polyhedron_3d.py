@@ -424,7 +424,7 @@ class Poly_3D(inkex.Effect):
                                                                      so.r1_ax+str('%.2f'%so.r4_ang)+':'+
                                                                      so.r2_ax+str('%.2f'%so.r5_ang)+':'+
                                                                      so.r3_ax+str('%.2f'%so.r6_ang),
-                    'transform':t }
+                        'transform':t }
         proj = inkex.etree.SubElement(self.current_layer, 'g', proj_attribs)#the group to put everything in
         
         vp_pts=[] #the points as projected in the z-axis onto the viewplane

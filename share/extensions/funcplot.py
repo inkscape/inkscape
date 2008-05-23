@@ -99,10 +99,10 @@ def drawfunction(xstart, xend, ybottom, ytop, samples, width, height, left, bott
     x0 =   xstart
     y0 = f(xstart)
     if polar :
-      xp0 = y0 * cos( x0 )
-      yp0 = y0 * sin( x0 )
-      x0 = xp0
-      y0 = yp0
+        xp0 = y0 * cos( x0 )
+        yp0 = y0 * sin( x0 )
+        x0 = xp0
+        y0 = yp0
     if fponum or polar: # numerical derivative, using 0.001*step as the small differential
         x1 = xstart + ds # Second point AFTER first point (Good for first point)
         y1 = f(x1)

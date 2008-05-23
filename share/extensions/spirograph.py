@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#! /usr/bin/env python
 '''
 Copyright (C) 2007 Joel Holdsworth joel@airwebreathe.org.uk
 
@@ -22,31 +22,32 @@ class Spirograph(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option("-R", "--primaryr",
-                        action="store", type="float", 
+                        action="store", type="float",
                         dest="primaryr", default=60.0,
                         help="The radius of the outer gear")
         self.OptionParser.add_option("-r", "--secondaryr",
-                        action="store", type="float", 
+                        action="store", type="float",
                         dest="secondaryr", default=100.0,
                         help="The radius of the inner gear")
         self.OptionParser.add_option("-d", "--penr",
-                        action="store", type="float", 
+                        action="store", type="float",
                         dest="penr", default=50.0,
                         help="The distance of the pen from the inner gear")
         self.OptionParser.add_option("-p", "--gearplacement",
-                        action="store", type="string", 
+                        action="store", type="string",
                         dest="gearplacement", default=50.0,
                         help="Selects whether the gear is inside or outside the ring")
         self.OptionParser.add_option("-a", "--rotation",
-                        action="store", type="float", 
+                        action="store", type="float",
                         dest="rotation", default=0.0,
-                        help="The number of degrees to rotate the image by")                        
+                        help="The number of degrees to rotate the image by")
         self.OptionParser.add_option("-q", "--quality",
-                        action="store", type="int", 
+                        action="store", type="int",
                         dest="quality", default=16,
-                        help="The quality of the calculated output")                       
+                        help="The quality of the calculated output")
+
     def effect(self):
-    
+
         if self.options.secondaryr == 0:
             return
         if self.options.quality == 0:
@@ -58,42 +59,42 @@ class Spirograph(inkex.Effect):
         else:
             a = self.options.primaryr - self.options.secondaryr
             flip = 1
-        
+
         ratio = a / self.options.secondaryr
         if ratio == 0:
             return
         scale = 2 * math.pi / (ratio * self.options.quality)
-        
+
         rotation = - math.pi * self.options.rotation / 180;
-        
+
         new = inkex.etree.Element(inkex.addNS('path','svg'))
         s = { 'stroke': '#000000', 'fill': 'none' }
         new.set('style', simplestyle.formatStyle(s))
-        
+
         pathString = ''
         maxPointCount = 1000
-        
+
         for i in range(maxPointCount):
 
             theta = i * scale
-           
+
             x = a * math.cos(theta + rotation) + \
                 self.options.penr * math.cos(ratio * theta + rotation) * flip + \
                 self.view_center[0]
             y = a * math.sin(theta + rotation) - \
                 self.options.penr * math.sin(ratio * theta + rotation) + \
                 self.view_center[1]
-                
+
             dx = (-a * math.sin(theta + rotation) - \
                 ratio * self.options.penr * math.sin(ratio * theta + rotation) * flip) * scale / 3
             dy = (a * math.cos(theta + rotation) - \
                 ratio * self.options.penr * math.cos(ratio * theta + rotation)) * scale / 3
-            
+
             if i <= 0:
                 pathString += 'M ' + str(x) + ',' + str(y) + ' C ' + str(x + dx) + ',' + str(y + dy) + ' '
             else:
                 pathString += str(x - dx) + ',' + str(y - dy) + ' ' + str(x) + ',' + str(y)
-                    
+
                 if math.fmod(i / ratio, self.options.quality) == 0 and i % self.options.quality == 0:
                     pathString += 'Z'
                     break
@@ -102,8 +103,8 @@ class Spirograph(inkex.Effect):
                         pass # we reached the allowed maximum of points, stop here
                     else:
                         pathString += ' C ' + str(x + dx) + ',' + str(y + dy) + ' '
-                    
-        
+
+
         new.set('d', pathString)
         self.current_layer.append(new)
 

@@ -130,14 +130,14 @@ def boxunion(b1,b2):
         return((min(b1[0],b2[0]),max(b1[1],b2[1]),min(b1[2],b2[2]),max(b1[3],b2[3])))
 
 def roughBBox(path):
-    xmin,xMax,ymin,yMax=path[0][0][0][0],path[0][0][0][0],path[0][0][0][1],path[0][0][0][1]
+    xmin,xMax,ymin,yMax = path[0][0][0][0],path[0][0][0][0],path[0][0][0][1],path[0][0][0][1]
     for pathcomp in path:
         for ctl in pathcomp:
-           for pt in ctl:
-               xmin=min(xmin,pt[0])
-               xMax=max(xMax,pt[0])
-               ymin=min(ymin,pt[1])
-               yMax=max(yMax,pt[1])
+            for pt in ctl:
+                xmin = min(xmin,pt[0])
+                xMax = max(xMax,pt[0])
+                ymin = min(ymin,pt[1])
+                yMax = max(yMax,pt[1])
     return xmin,xMax,ymin,yMax
 
 def computeBBox(aList,mat=[[1,0,0],[0,1,0]]):

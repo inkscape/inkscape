@@ -73,7 +73,7 @@ class ColorEffect(inkex.Effect):
     return col
 
   def process_gradient(self, node, newid):
-    #if node.hasAttributes():				
+    #if node.hasAttributes():
        #this_id=node.getAttribute('id')
        #if this_id in self.visited:
          ## prevent multiple processing of the same gradient if it is used by more than one selected object

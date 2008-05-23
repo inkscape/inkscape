@@ -28,11 +28,11 @@ def calculateSubdivision(x1,y1,x2,y2,smoothness):
     """ Calculate normalized vector perpendicular to the vector (x3,y3) """
     length = math.sqrt(x3*x3 + y3*y3)
     if length != 0:
-      nx = -y3/length
-      ny = x3/length
+        nx = -y3/length
+        ny = x3/length
     else:
-      nx = 1
-      ny = 0
+        nx = 1
+        ny = 0
     """ Scale perpendicular vector by random factor """
     r = random.uniform(-length/(1+smoothness),length/(1+smoothness))
     nx = nx * r
