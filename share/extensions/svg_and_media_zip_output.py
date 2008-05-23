@@ -40,6 +40,8 @@ import zipfile
 import shutil
 import sys
 import tempfile
+import gettext
+_ = gettext.gettext
 
 class MyEffect(inkex.Effect):
     def __init__(self):
@@ -98,7 +100,7 @@ class MyEffect(inkex.Effect):
                 shutil.copy(tmp_dir + os.path.sep + absref,tmp_dir)
                 z.write(tmp_dir + os.path.sep + absref.encode("latin-1"),os.path.basename(absref).encode("latin-1"))
             else:
-                inkex.debug('Could not locate file: %s' % absref)
+                inkex.errormsg(_('Could not locate file: %s') % absref)
 
             node.set(inkex.addNS('href',u'xlink'),os.path.basename(absref))
             node.set(inkex.addNS('absref',u'sodipodi'),os.path.basename(absref))

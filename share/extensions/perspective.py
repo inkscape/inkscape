@@ -19,12 +19,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 Perspective approach & math by Dmitry Platonov, shadowjack@mail.ru, 2006
 """
 import sys, inkex, os, re, simplepath, cubicsuperpath 
+import gettext
+_ = gettext.gettext
 from ffgeom import *
 try:
     from numpy import *
     from numpy.linalg import *
 except:
-    inkex.debug("Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy.")
+    inkex.errormsg(_("Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."))
     sys.exit()
 
 uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'pc':15.0}
@@ -50,7 +52,7 @@ class Project(inkex.Effect):
         inkex.Effect.__init__(self)
     def effect(self):
         if len(self.options.ids) < 2:
-            inkex.debug("Requires two selected paths. The second must be exactly four nodes long.")
+            inkex.errormsg(_("This extension requires two selected paths."))
             sys.exit()            
             
         #obj is selected second
@@ -58,6 +60,9 @@ class Project(inkex.Effect):
         envelope = self.selected[self.options.ids[1]]
         if (obj.tag == inkex.addNS('path','svg') or obj.tag == inkex.addNS('g','svg')) and envelope.tag == inkex.addNS('path','svg'):
             path = cubicsuperpath.parsePath(envelope.get('d'))
+            if len(path) < 1 or len(path[0]) < 4:
+                inkex.errormsg(_("This extension requires that the second selected path be four nodes long."))
+                sys.exit()
             dp = zeros((4,2), dtype=float64)
             for i in range(4):
                 dp[i][0] = path[0][i][1][0]
@@ -68,7 +73,7 @@ class Project(inkex.Effect):
             file = self.args[-1]
             id = self.options.ids[0]
             for query in q.keys():
-                _,f,err = os.popen3('inkscape --query-%s --query-id=%s "%s"' % (query,id,file))
+                f,err = os.popen3('inkscape --query-%s --query-id=%s "%s"' % (query,id,file))[1:]
                 q[query] = float(f.read())
                 f.close()
                 err.close()

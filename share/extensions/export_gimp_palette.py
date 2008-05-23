@@ -11,7 +11,7 @@ import sys, simplestyle
 try:
     from xml.dom.minidom import parse
 except:
-    sys.exit('The export_gpl.py module requires PyXML. Please download the latest version from <http://pyxml.sourceforge.net/>.')
+    sys.exit(_('The export_gpl.py module requires PyXML.  Please download the latest version from <http://pyxml.sourceforge.net/>.'))
 
 colortags=(u'fill',u'stroke',u'stop-color',u'flood-color',u'lighting-color')
 colors={}
@@ -47,4 +47,4 @@ for k,v in sorted(colors.items()):
     print k+v
 
 
-# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
+# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8

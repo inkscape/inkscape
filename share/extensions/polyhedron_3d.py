@@ -52,10 +52,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import inkex
 import simplestyle, sys, simplepath, re
 from math import *
+import gettext
+_ = gettext.gettext
 try:
     from numpy import *
 except:
-    inkex.debug("Failed to import the numpy module. This module is required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy.")
+    inkex.errormsg(_("Failed to import the numpy module. This module is required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."))
     sys.exit()
 
 def objfile(name):

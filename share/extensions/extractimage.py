@@ -18,6 +18,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
 import inkex, base64, os
+import gettext
+_ = gettext.gettext
 
 class MyEffect(inkex.Effect):
     def __init__(self):
@@ -61,7 +63,7 @@ class MyEffect(inkex.Effect):
                                 open(path,'wb').write(data)
                                 node.set(inkex.addNS('href','xlink'),os.path.realpath(path)) #absolute for making in-mem cycles work
                             else:
-                                inkex.debug('Difficulty finding the image data.')
+                                inkex.errormsg(_('Difficulty finding the image data.'))
                             break
 
 if __name__ == '__main__':

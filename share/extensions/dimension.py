@@ -94,7 +94,7 @@ class Dimension(pathmodifier.PathModifier):
         try:
             testing_the_water = self.bbox[0]
         except TypeError:
-            sys.exit('Unable to process this object.  Try changing it into a path first.')
+            sys.exit(_('Unable to process this object.  Try changing it into a path first.'))
 
         layer = self.current_layer
 

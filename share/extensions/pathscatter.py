@@ -34,8 +34,9 @@ they move and rotate, deforming the pattern.
 import inkex, cubicsuperpath, bezmisc
 import pathmodifier, simpletransform 
 from lxml import etree
-
 import copy, math, re, random
+import gettext
+_ = gettext.gettext
 
 def zSort(inNode,idList):
     sortedList=[]
@@ -204,7 +205,7 @@ class PathScatter(pathmodifier.Diffeo):
     def effect(self):
 
         if len(self.options.ids)<2:
-            inkex.debug("This extension requires that you select two paths.")
+            inkex.errormsg(_("This extension requires two selected paths."))
             return
         self.prepareSelectionList()
 
@@ -254,10 +255,9 @@ class PathScatter(pathmodifier.Diffeo):
                     s+=dx
         self.patternNode.getparent().remove(self.patternNode)
 
-
 if __name__ == '__main__':
     e = PathScatter()
     e.affect()
 
-                    
+
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

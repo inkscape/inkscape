@@ -33,8 +33,9 @@ they move and rotate, deforming the pattern.
 
 import inkex, cubicsuperpath, bezmisc
 import pathmodifier,simpletransform
-
 import copy, math, re, random
+import gettext
+_ = gettext.gettext
 
 def flipxy(path):
     for pathcomp in path:
@@ -193,7 +194,7 @@ class PathAlongPath(pathmodifier.Diffeo):
 
     def effect(self):
         if len(self.options.ids)<2:
-            inkex.debug("This extension requires that you select two paths.")
+            inkex.errormsg(_("This extension requires two selected paths."))
             return
         self.prepareSelectionList()
         self.options.wave = (self.options.kind=="Ribbon")

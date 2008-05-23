@@ -30,6 +30,8 @@ interest and that should be shipped out in separate files...
 import inkex, cubicsuperpath, bezmisc, simplestyle
 from simpletransform import *
 import copy, math, re, random
+import gettext
+_ = gettext.gettext
 
 ####################################################################
 ##-- zOrder computation...
@@ -224,7 +226,7 @@ class PathModifier(inkex.Effect):
             newNode = self.unlinkClone(node,doReplace)
             return self.objectToPath(newNode,doReplace)
         else:
-            inkex.debug("Please first convert objects to paths!...(got '%s')"%node.tag)
+            inkex.errormsg(_("Please first convert objects to paths!  (Got <%s>.)") % node.tag)
             return None
 
     def objectsToPaths(self,aList,doReplace=True):

@@ -18,6 +18,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
 import inkex, os, base64
+import gettext
+_ = gettext.gettext
 
 class Embedder(inkex.Effect):
     def __init__(self):
@@ -74,7 +76,7 @@ class Embedder(inkex.Effect):
                 if (absref != None):
                     path=absref
             if (not os.path.isfile(path)):
-                inkex.debug('No xlink:href or sodipodi:absref attributes found, or they do not point to an existing file! Unable to embed image.')
+                inkex.errormsg(_('No xlink:href or sodipodi:absref attributes found, or they do not point to an existing file! Unable to embed image.'))
             
             if (os.path.isfile(path)):
                 file = open(path,"rb").read()
@@ -97,9 +99,9 @@ class Embedder(inkex.Effect):
                     if (absref != None):
                         del node.attrib[inkex.addNS('absref',u'sodipodi')]
                 else:
-                    inkex.debug("%s is not of type image/png, image/jpeg, image/bmp, image/gif or image/x-icon" % path)
+                    inkex.errormsg(_("%s is not of type image/png, image/jpeg, image/bmp, image/gif or image/x-icon") % path)
             else:
-                inkex.debug("Sorry we could not locate %s" % path)
+                inkex.errormsg(_("Sorry we could not locate %s") % path)
 
 if __name__ == '__main__':
     e = Embedder()

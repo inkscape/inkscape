@@ -1,3 +1,8 @@
+2008-05-23  Peter Moulder  <pmoulder@mail.csse.monash.edu.au>
+
+	* share/extensions/*.py: Use gettext for (many) error messages.
+	share/extensions/inkex.py: (errormsg): New function.
+
 2007-06-24  Joel Holdsworth  <joelholdsworth@yahoo.com>
     
     * modified the windows RC files to add version info and manifest data

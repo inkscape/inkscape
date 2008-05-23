@@ -17,6 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 import random, inkex, simplestyle, copy
+import gettext
+_ = gettext.gettext
 
 class MyEffect(inkex.Effect):
     def __init__(self):
@@ -36,7 +38,7 @@ class MyEffect(inkex.Effect):
             try:
                 style = simplestyle.parseStyle(node.get('style'))
             except:
-                inkex.debug("No style attribute found for id: %s" % id)
+                inkex.errormsg(_("No style attribute found for id: %s") % id)
                 continue
             
             stroke = style.get('stroke', '#000000')
@@ -51,7 +53,7 @@ class MyEffect(inkex.Effect):
                         else:
                             mnode = old_mnode
                     except:
-                        inkex.debug("unable to locate marker: %s" % marker_id)
+                        inkex.errormsg(_("unable to locate marker: %s") % marker_id)
                         continue
                         
                     new_id = self.uniqueId(marker_id, not self.options.modify)

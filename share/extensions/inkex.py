@@ -20,6 +20,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 """
 import sys, copy, optparse, random, re
+import gettext
+_ = gettext.gettext
 
 #a dictionary of all of the xmlns prefixes in a standard inkscape doc
 NSS = {
@@ -56,10 +58,27 @@ def unittouu(string):
 try:
     from lxml import etree
 except:
-    sys.exit('The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore this extension. Please download and install the latest version from <http://cheeseshop.python.org/pypi/lxml/>, or install it through your package manager by a command like: sudo apt-get install python-lxml')
+    sys.exit(_('The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore this extension. Please download and install the latest version from <http://cheeseshop.python.org/pypi/lxml/>, or install it through your package manager by a command like: sudo apt-get install python-lxml'))
 
 def debug(what):
     sys.stderr.write(str(what) + "\n")
+    return what
+
+def errormsg(msg):
+    """Intended for end-user-visible error messages.
+    
+       (Currently just writes to stderr with an appended newline, but could do
+       something better in future: e.g. could add markup to distinguish error
+       messages from status messages or debugging output.)
+      
+       Note that this should always be combined with translation:
+
+         import gettext
+         _ = gettext.gettext
+         ...
+         inkex.errormsg(_("This extension requires two selected paths."))
+    """
+    sys.stderr.write(str(msg) + "\n")
     return what
 
 def check_inkbool(option, opt, value):
@@ -165,7 +184,7 @@ class Effect:
         try:
             retval = self.document.xpath(path, namespaces=NSS)[0]
         except:
-            debug("No matching node for expression: %s" % path)
+            errormsg(_("No matching node for expression: %s") % path)
             retval = None
         return retval
             

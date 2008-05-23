@@ -19,14 +19,18 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 """
 import inkex, os, simplepath, cubicsuperpath
 from ffgeom import *
+import gettext
+_ = gettext.gettext
 
 class Project(inkex.Effect):
     def __init__(self):
             inkex.Effect.__init__(self)
     def effect(self):
         if len(self.options.ids) < 2:
-            inkex.debug("Requires two selected paths. The second must be exactly four nodes long.")
-            exit()            
+            inkex.errormsg(_("This extension requires two selected paths.")
+                           + "  "
+                           + _("The second path must be exactly four nodes long."))
+            exit()
             
         #obj is selected second
         obj = self.selected[self.options.ids[0]]
@@ -47,7 +51,7 @@ class Project(inkex.Effect):
             file = self.args[-1]
             id = self.options.ids[0]
             for query in self.q.keys():
-                _,f,err = os.popen3('inkscape --query-%s --query-id=%s "%s"' % (query,id,file))
+                f,err = os.popen3('inkscape --query-%s --query-id=%s "%s"' % (query,id,file))[1:]
                 self.q[query] = float(f.read())
                 f.close()
                 err.close()
