@@ -89,6 +89,8 @@ class Embedder(inkex.Effect):
                     type='image/bmp'
                 elif (file[:6]=='GIF87a' or file[:6]=='GIF89a'):
                     type='image/gif'
+                elif (file[:4]=='MM\x00\x2a' or file[:4]=='II\x2a\x00'):
+                    type='image/tiff'
                 #ico files lack any magic... therefore we check the filename instead
                 elif(path.endswith('.ico')):
                     type='image/x-icon' #official IANA registered MIME is 'image/vnd.microsoft.icon' tho
@@ -99,7 +101,7 @@ class Embedder(inkex.Effect):
                     if (absref != None):
                         del node.attrib[inkex.addNS('absref',u'sodipodi')]
                 else:
-                    inkex.errormsg(_("%s is not of type image/png, image/jpeg, image/bmp, image/gif or image/x-icon") % path)
+                    inkex.errormsg(_("%s is not of type image/png, image/jpeg, image/bmp, image/gif, image/tiff, or image/x-icon") % path)
             else:
                 inkex.errormsg(_("Sorry we could not locate %s") % path)
 
