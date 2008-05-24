@@ -103,6 +103,7 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
 		}
 		/* else stays false */
 	}
+    const gchar* appearance = in_repr->attribute("appearance");
 
     /* In this case we just don't have enough information */
     if (name == NULL || type == NULL) {
@@ -140,7 +141,11 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
     } else if (!strcmp(type, "notebook")) {
         param = new ParamNotebook(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     } else if (!strcmp(type, "optiongroup")) {
-        param = new ParamRadioButton(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
+        if (appearance && !strcmp(appearance, "minimal")) {
+            param = new ParamRadioButton(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr, ParamRadioButton::MINIMAL);
+        } else {
+            param = new ParamRadioButton(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr, ParamRadioButton::FULL);
+        }
     } else if (!strcmp(type, "color")) {
         param = new ParamColor(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     }

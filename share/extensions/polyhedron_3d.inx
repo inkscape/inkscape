@@ -6,7 +6,7 @@
     <dependency type="executable" location="extensions">inkex.py</dependency>
     <param name="tab" type="notebook">
         <page name="common" _gui-text="Model File">
-            <param name="obj" type="optiongroup"  _gui-text="Object:">
+            <param name="obj" type="optiongroup" appearance="minimal" _gui-text="Object:">
                 <_option value="cube">Cube</_option>
                 <_option value="t_cube">Truncated Cube</_option>
                 <_option value="sn_cube">Snub Cube</_option>
@@ -26,38 +26,38 @@
                 <_option value="from_file">Load From File</_option>
                 </param>
             <param name="spec_file" type="string"  _gui-text="Filename:">great_rhombicuboct.obj</param>
-            <param name="type" type="optiongroup"  _gui-text="Object Type">
+            <param name="type" type="optiongroup" appearance="minimal" _gui-text="Object Type">
                 <_option value="face">Face-Specified</_option>
                 <_option value="edge">Edge-Specified</_option></param>
             <param name="cw_wound"  type="boolean" _gui-text="Clockwise Wound Object">0</param>
          </page>
          <page name="view" _gui-text="View">
-            <param name="r1_ax" type="optiongroup"  _gui-text="Rotate Around:">
+            <param name="r1_ax" type="optiongroup" appearance="minimal" _gui-text="Rotate Around:">
                 <_option value="x">X-Axis</_option>
                 <_option value="y">Y-Axis</_option>
                 <_option value="z">Z-Axis</_option></param>
             <param name="r1_ang"  type="float"   min="-360" max="360"   _gui-text="Rotation / Degrees">0</param>
-            <param name="r2_ax" type="optiongroup"  _gui-text="Then Rotate Around:">
+            <param name="r2_ax" type="optiongroup" appearance="minimal" _gui-text="Then Rotate Around:">
                 <_option value="x">X-Axis</_option>
                 <_option value="y">Y-Axis</_option>
                 <_option value="z">Z-Axis</_option></param>
             <param name="r2_ang"  type="float"   min="-360" max="360"   _gui-text="Rotation / Degrees">0</param>
-            <param name="r3_ax" type="optiongroup"  _gui-text="Then Rotate Around:">
+            <param name="r3_ax" type="optiongroup" appearance="minimal" _gui-text="Then Rotate Around:">
                 <_option value="x">X-Axis</_option>
                 <_option value="y">Y-Axis</_option>
                 <_option value="z">Z-Axis</_option></param>
             <param name="r3_ang"  type="float"   min="-360" max="360"   _gui-text="Rotation / Degrees">0</param>
-            <param name="r4_ax" type="optiongroup"  _gui-text="Rotate Around:">
+            <param name="r4_ax" type="optiongroup" appearance="minimal" _gui-text="Rotate Around:">
                 <_option value="x">X-Axis</_option>
                 <_option value="y">Y-Axis</_option>
                 <_option value="z">Z-Axis</_option></param>
             <param name="r4_ang"  type="float"   min="-360" max="360"   _gui-text="Rotation / Degrees">0</param>
-            <param name="r5_ax" type="optiongroup"  _gui-text="Then Rotate Around:">
+            <param name="r5_ax" type="optiongroup" appearance="minimal" _gui-text="Then Rotate Around:">
                 <_option value="x">X-Axis</_option>
                 <_option value="y">Y-Axis</_option>
                 <_option value="z">Z-Axis</_option></param>
             <param name="r5_ang"  type="float"   min="-360" max="360"   _gui-text="Rotation / Degrees">0</param>
-            <param name="r6_ax" type="optiongroup"  _gui-text="Then Rotate Around:">
+            <param name="r6_ax" type="optiongroup" appearance="minimal" _gui-text="Then Rotate Around:">
                 <_option value="x">X-Axis</_option>
                 <_option value="y">Y-Axis</_option>
                 <_option value="z">Z-Axis</_option></param>
@@ -75,12 +75,12 @@
             <param name="lv_x" type="float" min="-100" max="100" _gui-text="Light x-Position">1</param>
             <param name="lv_y" type="float" min="-100" max="100" _gui-text="Light y-Position">1</param>
             <param name="lv_z" type="float" min="-100" max="100" _gui-text="Light z-Position">-2</param>
-            <param name="show" type="optiongroup"  _gui-text="Show:">
+            <param name="show" type="optiongroup" appearance="minimal" _gui-text="Show:">
                 <_option value="vtx">Vertices</_option>
                 <_option value="edg">Edges</_option>
                 <_option value="fce">Faces</_option></param>
             <param name="back"  type="boolean" _gui-text="Draw Back-Facing Polygons">0</param>
-            <param name="z_sort" type="optiongroup"  _gui-text="Z-Sort Faces By:">
+            <param name="z_sort" type="optiongroup" appearance="minimal" _gui-text="Z-Sort Faces By:">
                 <_option value="max">Maximum</_option>
                 <_option value="min">Minimum</_option>
                 <_option value="mean">Mean</_option></param>

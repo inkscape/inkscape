@@ -9,6 +9,7 @@
  *   Johan Engelen <johan@shouraizou.nl>
  *
  * Copyright (C) 2006-2007 Johan Engelen
+ * Copyright (C) 2008 Jon A. Cruz
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -19,6 +20,7 @@
 
 
 #include <gtkmm/box.h>
+#include <gtkmm/comboboxtext.h>
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/radiobuttongroup.h>
 #include <gtkmm/tooltips.h>
@@ -59,12 +61,20 @@ public:
     Glib::ustring * guitext;
 };
 
-ParamRadioButton::ParamRadioButton (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext)
+ParamRadioButton::ParamRadioButton (const gchar * name,
+                                    const gchar * guitext,
+                                    const gchar * desc,
+                                    const Parameter::_scope_t scope,
+                                    bool gui_hidden,
+                                    const gchar * gui_tip,
+                                    Inkscape::Extension::Extension * ext,
+                                    Inkscape::XML::Node * xml,
+                                    AppearanceMode mode) :
+    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext),
+    _value(0),
+    _mode(mode),
+    choices(0)
 {
-    choices = NULL;
-    _value = NULL;
-
     // Read XML tree to add enumeration items:
     // printf("Extension Constructor: ");
     if (xml != NULL) {
@@ -79,14 +89,14 @@ ParamRadioButton::ParamRadioButton (const gchar * name, const gchar * guitext, c
                     // don't translate when 'option' but do translate when '_option'
                      newguitext = new Glib::ustring( !strcmp(chname, "_option") ? _(contents) : contents );
                 else
-                    continue;  
-                    
+                    continue;
+
                 const char * val = child_repr->attribute("value");
                 if (val != NULL)
                     newvalue = new Glib::ustring(val);
                 else
                     newvalue = new Glib::ustring(contents);
-                            
+
                 if ( (newguitext) && (newvalue) ) {   // logical error if this is not true here
                     choices = g_slist_append( choices, new optionentry(newvalue, newguitext) );
                 }
@@ -219,6 +229,28 @@ ParamRadioButtonWdg::changed (void)
 }
 
 
+class ComboWdg : public Gtk::ComboBoxText {
+public:
+    ComboWdg(ParamRadioButton* base, SPDocument * doc, Inkscape::XML::Node * node) :
+        Gtk::ComboBoxText(),
+        base(base),
+        doc(doc),
+        node(node)
+    {
+    }
+    virtual ~ComboWdg() {}
+
+protected:
+    ParamRadioButton* base;
+    SPDocument* doc;
+    Inkscape::XML::Node* node;
+
+    virtual void on_changed() {
+        if ( base ) {
+            base->set(get_active_text().c_str(), doc, node);
+        }
+    }
+};
 
 /**
     \brief  Creates a combobox widget for an enumeration parameter
@@ -226,7 +258,7 @@ ParamRadioButtonWdg::changed (void)
 Gtk::Widget *
 ParamRadioButton::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
-	if (_gui_hidden) return NULL;
+    if (_gui_hidden) return NULL;
 
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
     Gtk::VBox * vbox = Gtk::manage(new Gtk::VBox(false, 0));
@@ -235,26 +267,46 @@ ParamRadioButton::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc
     label->show();
     hbox->pack_start(*label, false, false);
 
+    Gtk::ComboBoxText* cbt = 0;
+    bool comboSet = false;
+    if (_mode == MINIMAL) {
+        cbt = Gtk::manage(new ComboWdg(this, doc, node));
+        cbt->show();
+        vbox->pack_start(*cbt, false, false);
+    }
+
     // add choice strings as radiobuttons
     // and select last selected option (_value)
-    bool first = true;
-    ParamRadioButtonWdg * radio;
     Gtk::RadioButtonGroup group;
     for (GSList * list = choices; list != NULL; list = g_slist_next(list)) {
         optionentry * entr = reinterpret_cast<optionentry *>(list->data);
         Glib::ustring * text = entr->guitext;
-        if (first) {
-            radio = Gtk::manage(new ParamRadioButtonWdg(*text, this, doc, node, changeSignal));
-            group = radio->get_group();
-            first = false;
-        } else {
-            radio = Gtk::manage(new ParamRadioButtonWdg(group, *text, this, doc, node, changeSignal));
+        switch ( _mode ) {
+            case MINIMAL:
+            {
+                cbt->append_text(*text);
+                if (!entr->value->compare(_value)) {
+                    cbt->set_active_text(*text);
+                    comboSet = true;
+                }
+            }
+            break;
+            case COMPACT:
+            case FULL:
+            {
+                ParamRadioButtonWdg * radio = Gtk::manage(new ParamRadioButtonWdg(group, *text, this, doc, node, changeSignal));
+                radio->show();
+                vbox->pack_start(*radio, true, true);
+                if (!entr->value->compare(_value)) {
+                    radio->set_active();
+                }
+            }
+            break;
         }
-        radio->show();
-        vbox->pack_start(*radio, true, true);
-        if (!entr->value->compare(_value)) {
-            radio->set_active();
-        }
+    }
+
+    if ( (_mode == MINIMAL) && !comboSet) {
+        cbt->set_active(0);
     }
 
     vbox->show();
@@ -269,3 +321,13 @@ ParamRadioButton::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc
 }  /* namespace Extension */
 }  /* namespace Inkscape */
 
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
