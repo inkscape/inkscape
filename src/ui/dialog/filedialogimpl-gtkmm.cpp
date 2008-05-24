@@ -761,10 +761,6 @@ void FileOpenDialogImplGtk::createFilterMenu()
 bool
 FileOpenDialogImplGtk::show()
 {
-    Glib::ustring s = Glib::filename_to_utf8 (get_current_folder());
-    if (s.length() == 0)
-        s = getcwd (NULL, 0);
-    set_current_folder(Glib::filename_from_utf8(s)); //hack to force initial dir listing
     set_modal (TRUE);                      //Window
     sp_transientize((GtkWidget *)gobj());  //Make transient
     gint b = run();                        //Dialog
