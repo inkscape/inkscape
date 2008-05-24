@@ -493,7 +493,7 @@ sp_file_open_dialog(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
         else
             g_warning( "ERROR CONVERTING OPEN FILENAME TO UTF-8" );
 
-        open_path = fileName;
+        open_path = Glib::path_get_dirname (fileName);
         open_path.append(G_DIR_SEPARATOR_S);
         prefs_set_string_attribute("dialogs.open", "path", open_path.c_str());
 
