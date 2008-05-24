@@ -1139,7 +1139,6 @@ spdc_pen_set_subsequent_point(SPPenContext *const pc, NR::Point const p, bool st
             _("<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path" ):
             _("<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path");
         spdc_pen_set_angle_distance_status_message(pc, p, 0, message);
-        g_free(message);
     }
 }
 
@@ -1181,7 +1180,6 @@ spdc_pen_set_ctrl(SPPenContext *const pc, NR::Point const p, guint const state)
             _("<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only") :
             _("<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only");
         spdc_pen_set_angle_distance_status_message(pc, p, 3, message);
-        g_free(message);
     } else {
         g_warning("Something bad happened - npoints is %d", pc->npoints);
     }
