@@ -144,7 +144,7 @@ LPEPatternAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > con
         double scaling = 1;
         switch(type) {
             case PAPCT_REPEATED:
-                nbCopies = floor((uskeleton.domain().extent() - toffset + xspace)/(pattBndsX.extent()+xspace));
+                nbCopies = static_cast<int>(floor((uskeleton.domain().extent() - toffset + xspace)/(pattBndsX.extent()+xspace)));
                 pattBndsX = Interval(pattBndsX.min(),pattBndsX.max()+xspace);
                 break;
                 
@@ -160,12 +160,12 @@ LPEPatternAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > con
             case PAPCT_REPEATED_STRETCHED:
                 // if uskeleton is closed:
                 if(path_i.segs.front().at0() == path_i.segs.back().at1()){
-                    nbCopies = std::floor((uskeleton.domain().extent() - toffset)/(pattBndsX.extent()+xspace));
+                    nbCopies = static_cast<int>(std::floor((uskeleton.domain().extent() - toffset)/(pattBndsX.extent()+xspace)));
                     pattBndsX = Interval(pattBndsX.min(),pattBndsX.max()+xspace);
                     scaling = (uskeleton.domain().extent() - toffset)/(((double)nbCopies)*pattBndsX.extent());
                     // if not closed: no space at the end
                 }else{
-                    nbCopies = std::floor((uskeleton.domain().extent() - toffset + xspace)/(pattBndsX.extent()+xspace));
+                    nbCopies = static_cast<int>(std::floor((uskeleton.domain().extent() - toffset + xspace)/(pattBndsX.extent()+xspace)));
                     pattBndsX = Interval(pattBndsX.min(),pattBndsX.max()+xspace);
                     scaling = (uskeleton.domain().extent() - toffset)/(((double)nbCopies)*pattBndsX.extent() - xspace);
                 }
