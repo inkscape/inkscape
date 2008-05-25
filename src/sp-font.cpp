@@ -1,3 +1,5 @@
+#include "config.h"
+#ifdef ENABLE_SVG_FONTS
 #define __SP_FONT_C__
 
 /*
@@ -18,6 +20,8 @@
 #include "sp-missing-glyph.h"
 #include "document.h"
 #include "helper-fns.h"
+
+#include "display/nr-svgfonts.h"
 
 static void sp_font_class_init(SPFontClass *fc);
 static void sp_font_init(SPFont *font);
@@ -96,6 +100,8 @@ static void sp_font_build(SPObject *object, SPDocument *document, Inkscape::XML:
     sp_object_read_attr(object, "vert-origin-x");
     sp_object_read_attr(object, "vert-origin-y");
     sp_object_read_attr(object, "vert-adv-y");
+
+    nr_svgfonts_append_spfont(SP_FONT(object));
 }
 
 
@@ -270,7 +276,7 @@ static Inkscape::XML::Node *sp_font_write(SPObject *object, Inkscape::XML::Node 
 
     return repr;
 }
-
+#endif //#ifdef ENABLE_SVG_FONTS
 /*
   Local Variables:
   mode:c++

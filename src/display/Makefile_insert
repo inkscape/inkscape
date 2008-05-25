@@ -55,6 +55,8 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-plain-stuff-gdk.h	\
 	display/nr-plain-stuff.cpp	\
 	display/nr-plain-stuff.h	\
+	display/nr-svgfonts.cpp		\
+	display/nr-svgfonts.h		\
 	display/rendermode.h		\
 	display/snap-indicator.cpp	\
 	display/snap-indicator.h	\

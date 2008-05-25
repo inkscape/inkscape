@@ -37,6 +37,8 @@
 void nr_pixblock_render_shape_mask_or(NRPixBlock &m, Shape *theS);
 #endif
 
+#include "nr-svgfonts.h"
+
 static void nr_arena_glyphs_class_init(NRArenaGlyphsClass *klass);
 static void nr_arena_glyphs_init(NRArenaGlyphs *glyphs);
 static void nr_arena_glyphs_finalize(NRObject *object);

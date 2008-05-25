@@ -1,3 +1,5 @@
+#include "config.h"
+#ifdef ENABLE_SVG_FONTS
 #ifndef __SP_FONTFACE_H__
 #define __SP_FONTFACE_H__
 
@@ -65,3 +67,4 @@ struct SPFontFaceClass {
 GType sp_fontface_get_type (void);
 
 #endif //#ifndef __SP_FONTFACE_H__
+#endif //#ifdef ENABLE_SVG_FONTS

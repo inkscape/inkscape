@@ -1,3 +1,5 @@
+#include "config.h"
+#ifdef ENABLE_SVG_FONTS
 #define __SP_MISSING_GLYPH_C__
 
 /*
@@ -178,7 +180,7 @@ static Inkscape::XML::Node *sp_missing_glyph_write(SPObject *object, Inkscape::X
 
     return repr;
 }
-
+#endif //#ifdef ENABLE_SVG_FONTS
 /*
   Local Variables:
   mode:c++

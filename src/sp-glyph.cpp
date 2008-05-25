@@ -1,3 +1,5 @@
+#include "config.h"
+#ifdef ENABLE_SVG_FONTS
 #define __SP_GLYPH_C__
 
 /*
@@ -295,7 +297,7 @@ static Inkscape::XML::Node *sp_glyph_write(SPObject *object, Inkscape::XML::Node
 
     return repr;
 }
-
+#endif //#ifdef ENABLE_SVG_FONTS
 /*
   Local Variables:
   mode:c++

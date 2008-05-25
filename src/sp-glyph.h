@@ -1,3 +1,5 @@
+#include "config.h"
+#ifdef ENABLE_SVG_FONTS
 #ifndef __SP_GLYPH_H__
 #define __SP_GLYPH_H__
 
@@ -53,3 +55,4 @@ struct SPGlyphClass {
 GType sp_glyph_get_type (void);
 
 #endif //#ifndef __SP_GLYPH_H__
+#endif //#ifdef ENABLE_SVG_FONTS

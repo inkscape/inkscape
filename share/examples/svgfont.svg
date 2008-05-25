@@ -1,24 +1,19 @@
 <?xml version="1.0" standalone="yes"?>
 <svg width="400px" height="300px" version="1.1"
   xmlns = 'http://www.w3.org/2000/svg'>
-  <defs>
-    <font id="Font1" horiz-adv-x="1000">
-      <font-face font-family="Super Sans" font-weight="bold"
-           units-per-em="1234" font-style="normal, oblique" cap-height="600" x-height="400"
-           ascent="700" descent="300"
-           alphabetic="0" mathematical="350" ideographic="400" hanging="500">
-         <font-face-src>
-           <font-face-name name="Super Sans Bold"/>
-         </font-face-src>
-       </font-face>
-       <!--<missing-glyph d="M0,0h200v200h-200z"/>--><!--  uncomment this line in orther to test missing-glyph -->
-       <glyph unicode="!" d="M0,0h500v500h-500z"><circle r='500' cx='500' cy='500' style="fill:none;stroke:green;"/></glyph>
-       <glyph unicode="@" d="M500,500h500v500h-500z"><circle r='250' cx='500' cy='500' style="fill:blue;"/></glyph>
-       <!--<hkern u1="!" u2="@" k="1000" />--><!-- uncomment this line in orther to test horizontal kerning-->
 
+    <font id="Font1" horiz-adv-x="1000">
+       <font-face font-family="Super Sans" font-style="oblique" font-stretch="ultra-expanded" />
+       <glyph unicode="!" d="M0,0h500v500h-500z">
+          <circle r='500' cx='500' cy='500' style="fill:none;stroke:green;"/>
+       </glyph>
+       <glyph unicode="@" d="M500,500h500v500h-500z">
+          <circle r='250' cx='500' cy='500' style="fill:blue;"/>
+       </glyph>
+       <missing-glyph d="M0,0h1000v1000h-1000z"></missing-glyph>
+       <hkern u1="!" u2="@" k="1000" />
     </font>
-  </defs>
-  <text x="100" y="100"
-            style="font-family: 'Super Sans';font-weight: bold; font-style: normal;fill:red;">A!@A</text>
+
+  <text x="100" y="100" style="font-size:70;font-family:'Super Sans';fill:red;">This text is not used yet. Currently test strings are hardcoded...</text>
 </svg>
 
