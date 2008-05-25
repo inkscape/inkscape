@@ -589,9 +589,9 @@ libvpsc
 livarot
 )
 
-FOREACH(dirlist ${libfolders})
-  ADD_SUBDIRECTORY(${dirlist})
-ENDFOREACH(dirlist)
+FOREACH(dirlistsrc ${libfolders})
+  ADD_SUBDIRECTORY(${dirlistsrc})
+ENDFOREACH(dirlistsrc)
 
 
 ADD_LIBRARY(sp STATIC ${SP_SRC})
@@ -599,7 +599,7 @@ ADD_LIBRARY(sp STATIC ${SP_SRC})
 # make executable for INKSCAPE
 ADD_EXECUTABLE(inkscape ${INKSCAPE_SRC})
 TARGET_LINK_LIBRARIES(inkscape
-	"${INKSCAPE_LINK_FLAGS}" 2geom avoid cola croco gdl nr nrtype vpsc livarot sp
+	"${INKSCAPE_LIBS}" 2geom avoid cola croco gdl nr nrtype vpsc livarot sp
 )
 
 # make executable for INKVIEW

@@ -44,6 +44,7 @@ nr-filter-utils.cpp
 nr-light.cpp
 nr-plain-stuff.cpp
 nr-plain-stuff-gdk.cpp
+nr-svgfonts.h
 pixblock-scaler.cpp
 pixblock-transform.cpp
 snap-indicator.cpp
