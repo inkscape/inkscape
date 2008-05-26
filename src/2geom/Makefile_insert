@@ -8,6 +8,7 @@
 2geom_lib2geom_a_SOURCES = \
 	2geom/basic-intersection.cpp	\
 	2geom/basic-intersection.h	\
+	2geom/bezier-curve.h	\
 	2geom/bezier-to-sbasis.h	\
 	2geom/bezier-utils.cpp	\
 	2geom/bezier-utils.h	\
@@ -23,14 +24,19 @@
 	2geom/coord.h	\
 	2geom/crossing.cpp	\
 	2geom/crossing.h	\
+	2geom/curve.h	\
+	2geom/curves.h	\
+	2geom/curve-helpers.cpp	\
 	2geom/d2-sbasis.cpp	\
 	2geom/d2-sbasis.h	\
 	2geom/d2.h	\
 	2geom/exception.h	\
 	2geom/elliptical-arc.cpp   \
+	2geom/elliptical-arc.h	\
 	2geom/forward.h	\
 	2geom/geom.cpp	\
 	2geom/geom.h	\
+	2geom/hvlinesegment.h	\
 	2geom/interval.h	\
 	2geom/isnan.h	\
 	2geom/linear.h	\
@@ -67,6 +73,7 @@
 	2geom/region.h	\
 	2geom/sbasis-2d.cpp	\
 	2geom/sbasis-2d.h	\
+	2geom/sbasis-curve.h	\
 	2geom/sbasis-geometric.cpp	\
 	2geom/sbasis-geometric.h	\
 	2geom/sbasis-math.cpp	\

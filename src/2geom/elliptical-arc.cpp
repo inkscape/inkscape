@@ -28,9 +28,8 @@
  */
 
 
-#include "path.h"
-#include "angle.h"
-
+#include "elliptical-arc.h"
+#include "bezier-curve.h"
 #include "poly.h"
 
 #include <cfloat>

@@ -1,10 +1,11 @@
 /*
- * forward - this file contains forward declarations of 2geom types
+ * this file is only a helper header to include all curve types at once
  *
  * Authors:
- *  Johan Engelen <goejendaagh@zonnet.nl>
+ * 		MenTaLguY <mental@rydia.net>
+ * 		Marco Cecchetti <mrcekets at gmail.com>
  * 
- * Copyright 2008  authors
+ * Copyright 2007-2008  authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -30,64 +31,24 @@
  * the specific language governing rights and limitations.
  */
 
-#ifndef SEEN_GEOM_FORWARD_H
-#define SEEN_GEOM_FORWARD_H
 
-#include <vector>   // include this dependency so PathVector can be defined more explicitly
 
-namespace Geom {
 
-template <unsigned> class BezierCurve;
-template<> class BezierCurve<0>;
-typedef BezierCurve<2> QuadraticBezier;
-typedef BezierCurve<1> LineSegment;
-typedef BezierCurve<3> CubicBezier;
-class EllipticalArc;
+#ifndef _2GEOM_CURVES_H_
+#define _2GEOM_CURVES_H_
 
-class HLineSegment;
-class VLineSegment;
 
-typedef double Coord;
-class Point;
+#include "curve.h"
+#include "sbasis-curve.h"
+#include "bezier-curve.h"
+#include "hvlinesegment.h"
+#include "elliptical-arc.h"
 
-class Exception;
-class LogicalError;
-class RangeError;
-class NotImplemented;
-class InvariantsViolation;
-class NotInvertible;
-class ContinuityError;
 
-class Interval;
-class Linear;
-class Hat;
-class Tri;
+#endif // _2GEOM_CURVES_H_
 
-class Matrix;
-class Translate;
-class Rotate;
-class Scale;
 
-class Curve;
-class Path;
-typedef std::vector<Path> PathVector;
 
-template <class> class D2;
-template <typename> class Piecewise;
-class SBasis;
-class SBasisCurve;
-
-typedef D2<Interval> Rect;
-
-class Shape;
-class Region;
-
-class SVGPathSink;
-template <typename> class SVGPathGenerator;
-
-}
-
-#endif // SEEN_GEOM_FORWARD_H
 
 /*
   Local Variables:
@@ -99,3 +60,4 @@ template <typename> class SVGPathGenerator;
   End:
 */
 // vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+

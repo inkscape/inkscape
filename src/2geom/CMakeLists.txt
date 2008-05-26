@@ -3,6 +3,7 @@ angle.h
 basic-intersection.cpp
 basic-intersection.h
 bezier.h
+bezier-curve.h
 bezier-to-sbasis.h
 bezier-utils.cpp
 bezier-utils.h
@@ -17,14 +18,19 @@ convex-cover.h
 coord.h
 crossing.cpp
 crossing.h
+curve.h
+curves.h
+curve-helpers.cpp
 d2.h
 d2-sbasis.cpp
 d2-sbasis.h
 elliptical-arc.cpp
+elliptical-arc.h
 exception.h
 forward.h
 geom.cpp
 geom.h
+hvlinesegment.h
 interval.h
 isnan.h
 linear.h
@@ -60,6 +66,7 @@ region.h
 sbasis-2d.cpp
 sbasis-2d.h
 sbasis.cpp
+sbasis-curve.h
 sbasis-geometric.cpp
 sbasis-geometric.h
 sbasis.h
