@@ -14,6 +14,7 @@
 
 #include "svg/path-string.h"
 #include "svg/stringstream.h"
+#include "svg/svg.h"
 #include "prefs-utils.h"
 #include <algorithm>
 
@@ -60,19 +61,25 @@ void Inkscape::SVG::PathString::State::append(NR::Point p) {
 
 void Inkscape::SVG::PathString::State::append(NR::Coord v, NR::Coord &rv) {
     SVGOStringStream os;
-    os << ' ' << v;
-    str.append(os.str());
+    os << v;
+    str += ' ';
+    str += os.str();
     double c;
-    sscanf(os.str().c_str(), " %lf", &c);
+    sp_svg_number_read_d(os.str().c_str(), &c);
     rv = c;
 }
 
 void Inkscape::SVG::PathString::State::append(NR::Point p, NR::Point &rp) {
-    SVGOStringStream os;
-    os << ' ' << p[NR::X] << ',' << p[NR::Y];
-    str.append(os.str());
+    SVGOStringStream osx, osy;
+    osx << p[NR::X];
+    osy << p[NR::Y];
+    str += ' ';
+    str += osx.str();
+    str += ',';
+    str += osy.str();
     double x, y;
-    sscanf(os.str().c_str(), " %lf,%lf", &x, &y);
+    sp_svg_number_read_d(osx.str().c_str(), &x);
+    sp_svg_number_read_d(osy.str().c_str(), &y);
     rp[NR::X] = x;
     rp[NR::Y] = y;
 }
