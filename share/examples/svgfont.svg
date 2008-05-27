@@ -14,6 +14,17 @@
        <hkern u1="!" u2="@" k="1000" />
     </font>
 
+    <font id="Font2" horiz-adv-x="1000">
+       <font-face font-family="Super Sans2" font-style="oblique" font-stretch="ultra-expanded" />
+       <glyph unicode="!" d="M0,0h500v500h-500v-300h100v200h300v-300h-400z">
+          <circle r='500' cx='500' cy='500' style="fill:none;stroke:green;"/>
+       </glyph>
+       <glyph unicode="@" d="M500,500h250v250h-250z">
+          <circle r='250' cx='500' cy='500' style="fill:blue;"/>
+       </glyph>
+       <missing-glyph d="M0,0h1000v1000z"></missing-glyph>
+       <hkern u1="!" u2="@" k="1000" />
+    </font>
   <text x="100" y="100" style="font-size:70;font-family:'Super Sans';fill:red;">This text is not used yet. Currently test strings are hardcoded...</text>
 </svg>
 

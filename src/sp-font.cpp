@@ -101,7 +101,7 @@ static void sp_font_build(SPObject *object, SPDocument *document, Inkscape::XML:
     sp_object_read_attr(object, "vert-origin-y");
     sp_object_read_attr(object, "vert-adv-y");
 
-    nr_svgfonts_append_spfont(SP_FONT(object));
+    SvgFont* svgfont = new SvgFont(SP_FONT(object));
 }
 
 

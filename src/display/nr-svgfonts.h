@@ -16,9 +16,41 @@
 
 #include "../sp-font.h"
 #include "cairo.h"
+#include <gtkmm.h>
 
-void nr_svgfonts_append_spfont(SPFont* font);
-cairo_font_face_t* nr_svgfonts_get_user_font_face();
+#include <gtkmm/widget.h>
+#include <gtkmm/window.h>
+#include <gdkmm/drawable.h>
+#include <gdkmm/general.h>  // for cairo helper functions
+
+#include "../sp-glyph.h"
+#include "../sp-missing-glyph.h"
+#include "../sp-font.h"
+
+class SvgFont;
+
+class UserFont{
+public:
+UserFont(SvgFont* instance);
+cairo_font_face_t* face;
+};
+
+class SvgFont{
+public:
+SvgFont(SPFont* spfont);
+cairo_font_face_t* get_font_face();
+cairo_status_t scaled_font_init (cairo_scaled_font_t *scaled_font, cairo_font_extents_t *metrics);
+cairo_status_t scaled_font_unicode_to_glyph (cairo_scaled_font_t *scaled_font, unsigned long unicode, unsigned long *glyph);
+cairo_status_t scaled_font_render_glyph (cairo_scaled_font_t *scaled_font, unsigned long glyph, cairo_t *cr, cairo_text_extents_t *metrics);
+
+private:
+SPFont* font;
+UserFont* userfont;
+std::vector<SPGlyph*> glyphs;
+SPMissingGlyph* missingglyph;
+
+bool drawing_expose_cb (Gtk::Widget *widget, GdkEventExpose *event, gpointer data);
+};
 
 #endif //#ifndef __SVGFONTS_H__
 #endif //#ifdef ENABLE_SVG_FONTS

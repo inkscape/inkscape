@@ -14,32 +14,99 @@
 
 #include <libnr/n-art-bpath.h>
 #include "../style.h"
-#include "../sp-glyph.h"
-#include "../sp-missing-glyph.h"
-#include "../sp-font.h"
 #include <cairo.h>
 #include <vector>
 #include "svg/svg.h"
 #include "inkscape-cairo.h"
-#include <gtk/gtk.h>
+#include "nr-svgfonts.h"
 
-static std::vector<SPGlyph*> glyphs;
-static SPMissingGlyph* missingglyph = NULL;
-static std::vector<SPFont*> svgfonts;
+//***********************************//
+// SvgFontDrawingArea Implementation //
+//***********************************//
+class SvgFontDrawingArea : Gtk::DrawingArea{
+public:
+SvgFontDrawingArea(SvgFont* svgfont){
+	this->svgfont = svgfont;
+}
+private:
+SvgFont* svgfont;
 
-cairo_font_face_t* nr_svgfonts_get_user_font_face();
-void nr_svgfonts_append_spfont(SPFont* font);
-static cairo_status_t scaled_font_init (cairo_scaled_font_t *scaled_font, cairo_font_extents_t *metrics);
-static cairo_status_t scaled_font_unicode_to_glyph (cairo_scaled_font_t *scaled_font, unsigned long unicode, unsigned long *glyph);
-static cairo_status_t scaled_font_render_glyph (cairo_scaled_font_t *scaled_font, unsigned long glyph, cairo_t *cr, cairo_text_extents_t *metrics);
+bool on_expose_event (GdkEventExpose *event){
+  Glib::RefPtr<Gdk::Window> window = get_window();
+  Cairo::RefPtr<Cairo::Context> cr = window->create_cairo_context();
+  cr->set_font_face( Cairo::RefPtr<Cairo::FontFace>(new Cairo::FontFace(this->svgfont->get_font_face(), false /* does not have reference */)) );
+  cr->set_font_size (200);
+  cr->move_to (200, 200);
+  cr->show_text ("A@!A");
 
-void nr_svgfonts_append_spfont(SPFont* font){
-    svgfonts.push_back(font);
-    nr_svgfonts_get_user_font_face();
+  cr->move_to (200, 400);
+  cr->show_text ("A!@A");
+
+  return TRUE;
+}
+};//class SvgFontDrawingArea
+
+//*************************//
+// UserFont Implementation //
+//*************************//
+static cairo_user_data_key_t key;
+
+static cairo_status_t font_init_cb (cairo_scaled_font_t  *scaled_font,
+		       cairo_font_extents_t *metrics){
+	cairo_font_face_t*  face;
+	face = cairo_scaled_font_get_font_face(scaled_font);
+	SvgFont* instance = (SvgFont*) cairo_font_face_get_user_data(face, &key);
+	return instance->scaled_font_init(scaled_font, metrics);
 }
 
-static cairo_status_t
-scaled_font_init (cairo_scaled_font_t  *scaled_font,
+static cairo_status_t font_unicode_to_glyph_cb (cairo_scaled_font_t *scaled_font,
+				   unsigned long        unicode,
+				   unsigned long       *glyph){
+	cairo_font_face_t*  face;
+	face = cairo_scaled_font_get_font_face(scaled_font);
+	SvgFont* instance = (SvgFont*) cairo_font_face_get_user_data(face, &key);
+	return instance->scaled_font_unicode_to_glyph(scaled_font, unicode, glyph);
+}
+
+static cairo_status_t font_render_glyph_cb (cairo_scaled_font_t  *scaled_font,
+			       unsigned long         glyph,
+			       cairo_t              *cr,
+			       cairo_text_extents_t *metrics){
+	cairo_font_face_t*  face;
+	face = cairo_scaled_font_get_font_face(scaled_font);
+	SvgFont* instance = (SvgFont*) cairo_font_face_get_user_data(face, &key);
+	return instance->scaled_font_render_glyph(scaled_font, glyph, cr, metrics);
+}
+
+UserFont::UserFont(SvgFont* instance){
+	this->face = cairo_user_font_face_create ();
+	cairo_user_font_face_set_init_func             (this->face, font_init_cb);
+	cairo_user_font_face_set_render_glyph_func     (this->face, font_render_glyph_cb);
+	cairo_user_font_face_set_unicode_to_glyph_func (this->face, font_unicode_to_glyph_cb);
+
+	cairo_font_face_set_user_data (this->face, &key, (void*)instance, (cairo_destroy_func_t) NULL);
+}
+
+//******************************//
+// SvgFont class Implementation //
+//******************************//
+SvgFont::SvgFont(SPFont* spfont){
+	this->font = spfont;
+	this->missingglyph = NULL;
+	this->userfont = NULL;
+
+        Gtk::Window* window;
+        SvgFontDrawingArea* font_da;
+
+        window = new Gtk::Window();
+        window->set_default_size (1200, 850);
+        font_da = new SvgFontDrawingArea(this);
+        window->add((Gtk::Widget&) *font_da);
+        window->show_all();
+}
+
+cairo_status_t
+SvgFont::scaled_font_init (cairo_scaled_font_t  *scaled_font,
 		       cairo_font_extents_t *metrics)
 {
 //TODO
@@ -48,17 +115,17 @@ scaled_font_init (cairo_scaled_font_t  *scaled_font,
   return CAIRO_STATUS_SUCCESS;
 }
 
-static cairo_status_t
-scaled_font_unicode_to_glyph (cairo_scaled_font_t *scaled_font,
+cairo_status_t
+SvgFont::scaled_font_unicode_to_glyph (cairo_scaled_font_t *scaled_font,
 				   unsigned long        unicode,
 				   unsigned long       *glyph)
 {
 //g_warning("scaled_font_unicode_to_glyph CALL. unicode=%c", (char)unicode);
 
     unsigned long i;
-    for (i=0; i < (unsigned long) glyphs.size(); i++){
+    for (i=0; i < (unsigned long) this->glyphs.size(); i++){
         //TODO: compare unicode strings for ligadure glyphs (i.e. scaled_font_text_to_glyph)
-        if ( ((unsigned long) glyphs[i]->unicode[0]) == unicode){
+        if ( ((unsigned long) this->glyphs[i]->unicode[0]) == unicode){
             *glyph = i;
             return CAIRO_STATUS_SUCCESS;
         }
@@ -67,24 +134,24 @@ scaled_font_unicode_to_glyph (cairo_scaled_font_t *scaled_font,
     return CAIRO_STATUS_SUCCESS;
 }
 
-static cairo_status_t
-scaled_font_render_glyph (cairo_scaled_font_t  *scaled_font,
+cairo_status_t
+SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  *scaled_font,
 			       unsigned long         glyph,
 			       cairo_t              *cr,
 			       cairo_text_extents_t *metrics)
 {
 //g_warning("scaled_font_render_glyph CALL. glyph=%d", (int)glyph);
 
-    if (glyph > glyphs.size())     return CAIRO_STATUS_SUCCESS;
+    if (glyph > this->glyphs.size())     return CAIRO_STATUS_SUCCESS;
 
     SPObject* node;
-    if (glyph == glyphs.size()){
-        if (!missingglyph) return CAIRO_STATUS_SUCCESS;
-        node = (SPObject*) missingglyph;
+    if (glyph == this->glyphs.size()){
+        if (!this->missingglyph) return CAIRO_STATUS_SUCCESS;
+        node = (SPObject*) this->missingglyph;
         g_warning("RENDER MISSING-GLYPH");
     } else {
-        node = (SPObject*) glyphs[glyph];
-        g_warning("RENDER %c", glyphs[glyph]->unicode[0]);
+        node = (SPObject*) this->glyphs[glyph];
+        g_warning("RENDER %c", this->glyphs[glyph]->unicode[0]);
     }
 
     NArtBpath *bpath = NULL;
@@ -102,55 +169,22 @@ scaled_font_render_glyph (cairo_scaled_font_t  *scaled_font,
     return CAIRO_STATUS_SUCCESS;
 }
 
-
-bool drawing_expose_cb (GtkWidget *widget, GdkEventExpose *event, gpointer data)
-{
-  cairo_t *cr = gdk_cairo_create (widget->window);
-
-  cairo_set_font_face (cr, nr_svgfonts_get_user_font_face());
-  cairo_set_font_size (cr, 200);
-  cairo_move_to (cr, 200, 200);
-  cairo_show_text (cr, "A@!A");
-
-  cairo_move_to (cr, 200, 400);
-  cairo_show_text (cr, "A!@A");
-
-  cairo_destroy (cr);
-
-  return TRUE;
-}
-
-
-cairo_font_face_t * nr_svgfonts_get_user_font_face(){
-    static cairo_font_face_t *user_font_face = NULL;
-
-    if (!user_font_face) {
-        for(SPObject* node = svgfonts[0]->children;node;node=node->next){
+cairo_font_face_t*
+SvgFont::get_font_face(){
+    if (!this->userfont) {
+        for(SPObject* node = this->font->children;node;node=node->next){
             if (SP_IS_GLYPH(node)){
 	        g_warning("glyphs.push_back((SPGlyph*)node); (node->unicode[0]='%c')", ((SPGlyph*)node)->unicode[0]);
-                glyphs.push_back((SPGlyph*)node);
+                this->glyphs.push_back((SPGlyph*)node);
             }
             if (SP_IS_MISSING_GLYPH(node)){
 	        g_warning("missingglyph=(SPMissingGlyph*)node;");
-                missingglyph=(SPMissingGlyph*)node;
+                this->missingglyph=(SPMissingGlyph*)node;
             }
         }
-	user_font_face = cairo_user_font_face_create ();
-	cairo_user_font_face_set_init_func             (user_font_face, scaled_font_init);
-	cairo_user_font_face_set_render_glyph_func     (user_font_face, scaled_font_render_glyph);
-	cairo_user_font_face_set_unicode_to_glyph_func (user_font_face, scaled_font_unicode_to_glyph);
-
-        GtkWidget *window;
-        GtkWidget *drawing;
-
-        window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-        gtk_window_set_default_size (GTK_WINDOW(window), 1200, 850);
-        drawing = gtk_drawing_area_new ();
-        gtk_container_add (GTK_CONTAINER (window), drawing);
-        gtk_widget_show_all (window);
-        g_signal_connect (drawing, "expose-event", G_CALLBACK (drawing_expose_cb), NULL);
+	this->userfont = new UserFont(this);
     }
-    return user_font_face;
+    return this->userfont->face;
 }
 #endif //#ifdef ENABLE_SVG_FONTS
 
