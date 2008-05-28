@@ -39,6 +39,14 @@ void output(Curve const &curve, SVGPathSink &sink) {
     sink.curveTo(pts[0], pts[1], pts[2]);
 }
 
+void output(HLineSegment const &curve, SVGPathSink &sink) {
+    sink.hlineTo(curve.finalPoint()[X]);
+}
+
+void output(VLineSegment const &curve, SVGPathSink &sink) {
+    sink.vlineTo(curve.finalPoint()[Y]);
+}
+
 void output(LineSegment const &curve, SVGPathSink &sink) {
     sink.lineTo(curve[1]);
 }
@@ -51,9 +59,10 @@ void output(QuadraticBezier const &curve, SVGPathSink &sink) {
     sink.quadTo(curve[1], curve[2]);
 }
 
-void output(EllipticalArc const &/*curve*/, SVGPathSink &/*sink*/) {
-    // FIXME
-    THROW_NOTIMPLEMENTED();
+void output(EllipticalArc const &curve, SVGPathSink &sink) {
+    sink.arcTo( curve.ray(X), curve.ray(Y), curve.rotation_angle(), 
+    			curve.large_arc_flag(), curve.sweep_flag(), 
+    			curve.finalPoint() );
 }
 
 template <typename T>
@@ -72,6 +81,8 @@ void output_svg_path(Path &path, SVGPathSink &sink) {
 
     Path::iterator iter;
     for ( iter = path.begin() ; iter != path.end() ; ++iter ) {
+    	output_as<HLineSegment>(*iter, sink) ||
+    	output_as<VLineSegment>(*iter, sink) ||
         output_as<LineSegment>(*iter, sink) ||
         output_as<CubicBezier>(*iter, sink) ||
         output_as<QuadraticBezier>(*iter, sink) ||

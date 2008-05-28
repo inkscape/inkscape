@@ -39,6 +39,8 @@ namespace Geom {
 class SVGPathSink {
 public:
     virtual void moveTo(Point p) = 0;
+    virtual void hlineTo(Coord v) = 0;
+    virtual void vlineTo(Coord v) = 0;
     virtual void lineTo(Point p) = 0;
     virtual void curveTo(Point c0, Point c1, Point p) = 0;
     virtual void quadTo(Point c, Point p) = 0;
@@ -63,6 +65,15 @@ public:
         _in_path = true;
     }
 //TODO: what if _in_path = false?
+    
+    void hlineTo(Coord v) {
+    	_path.template appendNew<HLineSegment>(Point(v, _path.finalPoint()[Y]));
+    }
+    
+    void vlineTo(Coord v) {
+    	_path.template appendNew<VLineSegment>(Point(_path.finalPoint()[X], v));
+    }
+    
     void lineTo(Point p) {
         _path.template appendNew<LineSegment>(p);
     }
