@@ -155,8 +155,10 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  *scaled_font,
     }
 
     NArtBpath *bpath = NULL;
-    if (SP_IS_GLYPH(node)) bpath = sp_svg_read_path(((SPGlyph*)node)->d);
-    if (SP_IS_MISSING_GLYPH(node)) bpath = sp_svg_read_path(((SPMissingGlyph*)node)->d);
+    if (SP_IS_GLYPH(node) && ((SPGlyph*)node)->d) bpath = sp_svg_read_path(((SPGlyph*)node)->d);
+    if (SP_IS_MISSING_GLYPH(node) && ((SPMissingGlyph*)node)->d) bpath = sp_svg_read_path(((SPMissingGlyph*)node)->d);
+    
+    if (!bpath) return CAIRO_STATUS_SUCCESS;
 
     cairo_new_path(cr);
 
