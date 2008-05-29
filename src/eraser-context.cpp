@@ -122,7 +122,7 @@ GType sp_eraser_context_get_type(void)
             (GInstanceInitFunc)sp_eraser_context_init,
             0 // value_table
         };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPEraserContext", &info, static_cast<GTypeFlags>(0));
+        type = g_type_register_static(SP_TYPE_COMMON_CONTEXT, "SPEraserContext", &info, static_cast<GTypeFlags>(0));
     }
     return type;
 }
@@ -145,73 +145,15 @@ sp_eraser_context_class_init(SPEraserContextClass *klass)
 static void
 sp_eraser_context_init(SPEraserContext *erc)
 {
-    SPEventContext *event_context = SP_EVENT_CONTEXT(erc);
-
-    event_context->cursor_shape = cursor_eraser_xpm;
-    event_context->hot_x = 4;
-    event_context->hot_y = 4;
-
-    erc->accumulated = NULL;
-    erc->segments = NULL;
-    erc->currentcurve = NULL;
-    erc->currentshape = NULL;
-    erc->npoints = 0;
-    erc->cal1 = NULL;
-    erc->cal2 = NULL;
-    erc->repr = NULL;
-
-    /* Eraser values */
-    erc->cur = NR::Point(0,0);
-    erc->last = NR::Point(0,0);
-    erc->vel = NR::Point(0,0);
-    erc->vel_max = 0;
-    erc->acc = NR::Point(0,0);
-    erc->ang = NR::Point(0,0);
-    erc->del = NR::Point(0,0);
-
-    /* attributes */
-    erc->dragging = FALSE;
-
-    erc->mass = 0.3;
-    erc->drag = DRAG_DEFAULT;
-    erc->angle = 30.0;
-    erc->width = 0.2;
-    erc->pressure = ERC_DEFAULT_PRESSURE;
-
-    erc->vel_thin = 0.1;
-    erc->flatness = 0.9;
-    erc->cap_rounding = 0.0;
-
-    erc->abs_width = false;
+    erc->cursor_shape = cursor_eraser_xpm;
+    erc->hot_x = 4;
+    erc->hot_y = 4;
 }
 
 static void
 sp_eraser_context_dispose(GObject *object)
 {
-    SPEraserContext *erc = SP_ERASER_CONTEXT(object);
-
-    if (erc->accumulated) {
-        erc->accumulated = erc->accumulated->unref();
-    }
-
-    while (erc->segments) {
-        gtk_object_destroy(GTK_OBJECT(erc->segments->data));
-        erc->segments = g_slist_remove(erc->segments, erc->segments->data);
-    }
-
-    if (erc->currentcurve) erc->currentcurve = erc->currentcurve->unref();
-    if (erc->cal1) erc->cal1 = erc->cal1->unref();
-    if (erc->cal2) erc->cal2 = erc->cal2->unref();
-
-    if (erc->currentshape) {
-        gtk_object_destroy(GTK_OBJECT(erc->currentshape));
-        erc->currentshape = 0;
-    }
-
-    if (erc->_message_context) {
-        delete erc->_message_context;
-        erc->_message_context = 0;
-    }
+    //SPEraserContext *erc = SP_ERASER_CONTEXT(object);
 
     G_OBJECT_CLASS(eraser_parent_class)->dispose(object);
 }

@@ -117,7 +117,7 @@ static NR::Point sp_dyna_draw_get_vpoint(SPDynaDrawContext const *ddc, NR::Point
 static void draw_temporary_box(SPDynaDrawContext *dc);
 
 
-static SPEventContextClass *parent_class;
+static SPEventContextClass *dd_parent_class = 0;
 
 GType sp_dyna_draw_context_get_type(void)
 {
@@ -135,7 +135,7 @@ GType sp_dyna_draw_context_get_type(void)
             (GInstanceInitFunc)sp_dyna_draw_context_init,
             0 // value_table
         };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPDynaDrawContext", &info, static_cast<GTypeFlags>(0));
+        type = g_type_register_static(SP_TYPE_COMMON_CONTEXT, "SPDynaDrawContext", &info, static_cast<GTypeFlags>(0));
     }
     return type;
 }
@@ -146,7 +146,7 @@ sp_dyna_draw_context_class_init(SPDynaDrawContextClass *klass)
     GObjectClass *object_class = (GObjectClass *) klass;
     SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
 
-    parent_class = (SPEventContextClass*)g_type_class_peek_parent(klass);
+    dd_parent_class = (SPEventContextClass*)g_type_class_peek_parent(klass);
 
     object_class->dispose = sp_dyna_draw_context_dispose;
 
@@ -158,38 +158,9 @@ sp_dyna_draw_context_class_init(SPDynaDrawContextClass *klass)
 static void
 sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
 {
-    SPEventContext *event_context = SP_EVENT_CONTEXT(ddc);
-
-    event_context->cursor_shape = cursor_calligraphy_xpm;
-    event_context->hot_x = 4;
-    event_context->hot_y = 4;
-
-    ddc->accumulated = NULL;
-    ddc->segments = NULL;
-    ddc->currentcurve = NULL;
-    ddc->currentshape = NULL;
-    ddc->npoints = 0;
-    ddc->cal1 = NULL;
-    ddc->cal2 = NULL;
-    ddc->repr = NULL;
-
-    /* DynaDraw values */
-    ddc->cur = NR::Point(0,0);
-    ddc->last = NR::Point(0,0);
-    ddc->vel = NR::Point(0,0);
-    ddc->vel_max = 0;
-    ddc->acc = NR::Point(0,0);
-    ddc->ang = NR::Point(0,0);
-    ddc->del = NR::Point(0,0);
-
-    /* attributes */
-    ddc->dragging = FALSE;
-
-    ddc->mass = 0.3;
-    ddc->drag = DRAG_DEFAULT;
-    ddc->angle = 30.0;
-    ddc->width = 0.2;
-    ddc->pressure = DDC_DEFAULT_PRESSURE;
+    ddc->cursor_shape = cursor_calligraphy_xpm;
+    ddc->hot_x = 4;
+    ddc->hot_y = 4;
 
     ddc->vel_thin = 0.1;
     ddc->flatness = 0.9;
@@ -223,29 +194,8 @@ sp_dyna_draw_context_dispose(GObject *object)
         ddc->hatch_area = NULL;
     }
 
-    if (ddc->accumulated) {
-        ddc->accumulated = ddc->accumulated->unref();
-    }
 
-    while (ddc->segments) {
-        gtk_object_destroy(GTK_OBJECT(ddc->segments->data));
-        ddc->segments = g_slist_remove(ddc->segments, ddc->segments->data);
-    }
-
-    if (ddc->currentcurve) ddc->currentcurve = ddc->currentcurve->unref();
-    if (ddc->cal1) ddc->cal1 = ddc->cal1->unref();
-    if (ddc->cal2) ddc->cal2 = ddc->cal2->unref();
-
-    if (ddc->currentshape) {
-        gtk_object_destroy(GTK_OBJECT(ddc->currentshape));
-        ddc->currentshape = NULL;
-    }
-
-    if (ddc->_message_context) {
-        delete ddc->_message_context;
-    }
-
-    G_OBJECT_CLASS(parent_class)->dispose(object);
+    G_OBJECT_CLASS(dd_parent_class)->dispose(object);
 
     ddc->hatch_pointer_past.~list();
     ddc->hatch_nearest_past.~list();
@@ -256,8 +206,8 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
 {
     SPDynaDrawContext *ddc = SP_DYNA_DRAW_CONTEXT(ec);
 
-    if (((SPEventContextClass *) parent_class)->setup)
-        ((SPEventContextClass *) parent_class)->setup(ec);
+    if (((SPEventContextClass *) dd_parent_class)->setup)
+        ((SPEventContextClass *) dd_parent_class)->setup(ec);
 
     ddc->accumulated = new SPCurve(32);
     ddc->currentcurve = new SPCurve(4);
@@ -1020,8 +970,8 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) parent_class)->root_handler(event_context, event);
+        if (((SPEventContextClass *) dd_parent_class)->root_handler) {
+            ret = ((SPEventContextClass *) dd_parent_class)->root_handler(event_context, event);
         }
     }
 

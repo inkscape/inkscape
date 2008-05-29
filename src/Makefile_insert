@@ -49,6 +49,7 @@ libinkpre_a_SOURCES =	\
 	color-rgba.h	\
 	color-profile.cpp color-profile.h	\
 	color-profile-fns.h	\
+	common-context.cpp common-context.h\
 	conditions.cpp conditions.h\
 	conn-avoid-ref.cpp conn-avoid-ref.h	\
 	connector-context.cpp connector-context.h	\
