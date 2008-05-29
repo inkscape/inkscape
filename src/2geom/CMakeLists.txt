@@ -2,8 +2,8 @@ SET(2geom_SRC
 angle.h
 basic-intersection.cpp
 basic-intersection.h
-bezier.h
 bezier-curve.h
+bezier.h
 bezier-to-sbasis.h
 bezier-utils.cpp
 bezier-utils.h
@@ -19,8 +19,8 @@ coord.h
 crossing.cpp
 crossing.h
 curve.h
-curves.h
 curve-helpers.cpp
+curves.h
 d2.h
 d2-sbasis.cpp
 d2-sbasis.h

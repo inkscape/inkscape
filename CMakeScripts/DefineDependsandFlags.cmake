@@ -17,7 +17,7 @@ find_package(Popt REQUIRED)
 find_package(OpenSSL)
 INCLUDE(IncludeJava)
 # end Dependencies
-
+Message(STATUS "${GTKMM_LIBRARIES}-----${GTKMM_INCLUDE_DIRS}")
 #Linking 
 SET(INKSCAPE_LIBS 
 "${GTK2_LIBRARIES}"

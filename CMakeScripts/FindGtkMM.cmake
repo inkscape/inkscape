@@ -1,4 +1,5 @@
-# - Try to find GtkMM
+# - Try to find GtkMM (glibmm-2.4 gdkmm-2.4 pangomm-1.4 atkmm-1.6)
+#  Where not going to find gtk+-2.0 as this is covered using FindGTK2
 # Once done this will define
 #
 #  GTKMM_FOUND - system has GtkMM
@@ -12,61 +13,71 @@
 #  BSD license.
 #  For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 #
-
+SET(SubLibs
+gtkmm-2.4
+glibmm-2.4
+gdkmm-2.4
+pangomm-1.4
+atkmm-1.6
+)
 
 if (GTKMM_LIBRARIES AND GTKMM_INCLUDE_DIRS)
   # in cache already
   set(GTKMM_FOUND TRUE)
 else (GTKMM_LIBRARIES AND GTKMM_INCLUDE_DIRS)
+FOREACH(_SUBLIB ${SubLibs})
+  # Clean library name for header file
+  STRING(REGEX REPLACE "[-]([^ ]+)" "" _H_${_SUBLIB}  "${_SUBLIB}" )
   # use pkg-config to get the directories and then use these values
   # in the FIND_PATH() and FIND_LIBRARY() calls
   if (${CMAKE_MAJOR_VERSION} EQUAL 2 AND ${CMAKE_MINOR_VERSION} EQUAL 4)
     include(UsePkgConfig)
-    pkgconfig(gtkmm-2.4 _GTKMM_INCLUDEDIR _GTKMM_LIBDIR _GTKMM_LDFLAGS _GTKMM_CFLAGS)
+    pkgconfig(${_SUBLIB} _${_SUBLIB}_INCLUDEDIR _${_SUBLIB}_LIBDIR _${_SUBLIB}_LDFLAGS _${_SUBLIB}_CFLAGS)
   else (${CMAKE_MAJOR_VERSION} EQUAL 2 AND ${CMAKE_MINOR_VERSION} EQUAL 4)
     find_package(PkgConfig)
     if (PKG_CONFIG_FOUND)
-      pkg_check_modules(_GTKMM gtkmm-2.4)
+      pkg_check_modules(_${_SUBLIB} ${_SUBLIB})
     endif (PKG_CONFIG_FOUND)
   endif (${CMAKE_MAJOR_VERSION} EQUAL 2 AND ${CMAKE_MINOR_VERSION} EQUAL 4)
-  find_path(GTKMM_INCLUDE_DIR
+  find_path(${_SUBLIB}_INCLUDE_DIR
     NAMES
-      gtkmm.h
+      ${_H_${_SUBLIB}}.h
     PATHS
-      ${_GTKMM_INCLUDEDIR}
+      ${_${_SUBLIB}_INCLUDEDIR}
       /usr/include
       /usr/local/include
       /opt/local/include
       /sw/include
     PATH_SUFFIXES
-      gtkmm-2.4
+      ${_SUBLIB}
   )
 
-  find_library(GTKMM-2.4_LIBRARY
+  find_library(${_SUBLIB}_LIBRARY
     NAMES
-      gtkmm-2.4
+      ${_SUBLIB}
     PATHS
-      ${_GTKMM_LIBDIR}
+      ${_${_SUBLIB}_LIBDIR}
       /usr/lib
       /usr/local/lib
       /opt/local/lib
       /sw/lib
   )
 
-  if (GTKMM-2.4_LIBRARY)
-    set(GTKMM-2.4_FOUND TRUE)
-  endif (GTKMM-2.4_LIBRARY)
+  if (${_SUBLIB}_LIBRARY)
+    set(${_SUBLIB}_FOUND TRUE)
+  endif (${_SUBLIB}_LIBRARY)
 
-  set(GTKMM_INCLUDE_DIRS
-    ${GTKMM_INCLUDE_DIR}
+  LIST(APPEND GTKMM_INCLUDE_DIRS
+    ${${_SUBLIB}_INCLUDE_DIR}
   )
 
-  if (GTKMM-2.4_FOUND)
-    set(GTKMM_LIBRARIES
-      ${GTKMM_LIBRARIES}
-      ${GTKMM-2.4_LIBRARY}
+  if (${_SUBLIB}_FOUND)
+    LIST(APPEND GTKMM_LIBRARIES
+      ${${_SUBLIB}_LIBRARIES}
+      ${${_SUBLIB}_LIBRARY}
     )
-  endif (GTKMM-2.4_FOUND)
+  endif (${_SUBLIB}_FOUND)
+ENDFOREACH(_SUBLIB)
 
   if (GTKMM_INCLUDE_DIRS AND GTKMM_LIBRARIES)
      set(GTKMM_FOUND TRUE)

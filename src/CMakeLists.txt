@@ -236,6 +236,8 @@ color-profile.h
 color-rgba.h
 composite-undo-stack-observer.cpp
 composite-undo-stack-observer.h
+common-context.h
+common-context.cpp
 conditions.cpp
 conditions.h
 conn-avoid-ref.cpp
