@@ -479,9 +479,13 @@ static CreateVMFunc getCreateVMFunc()
  */
 static void getJavaRoot(String &javaroot)
 {
-    javaroot = getExePath();
+    /*
+	javaroot = getExePath();
     javaroot.append("\\");
     javaroot.append(INKSCAPE_BINDDIR);
+    javaroot.append("\\java");
+    */
+    javaroot = INKSCAPE_BINDDIR;
     javaroot.append("\\java");
 }
 

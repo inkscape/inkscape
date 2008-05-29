@@ -413,36 +413,41 @@ struct poptOption options[] = {
 static bool needToRecodeParams = true;
 gchar * blankParam = g_strdup("");
 
+
+
 #ifdef WIN32
-static int _win32_set_inkscape_env(char *argv0)
+
+/**
+ * Return the directory of the .exe that is currently running
+ */
+static Glib::ustring _win32_getExePath()
 {
-    CHAR szFullPath[_MAX_PATH];
+    char exeName[MAX_PATH+1];
+    GetModuleFileName(NULL, exeName, MAX_PATH);
+    char *slashPos = strrchr(exeName, '\\');
+    if (slashPos)
+        *slashPos = '\0';
+    Glib::ustring s = exeName;
+    return s;
+}
 
-    CHAR szDrive[_MAX_DRIVE];
-    CHAR szDir[_MAX_DIR];
-    CHAR szFile[_MAX_FNAME];
-    CHAR szExt[_MAX_EXT];
-
-    std::string tmp;
-
-    if (GetModuleFileName(NULL, szFullPath, sizeof(szFullPath)) == 0) {
-        strcpy(szFullPath, argv0);
-    }
-
-    _splitpath(szFullPath, szDrive, szDir, szFile, szExt);
-    strcpy(szFullPath, szDrive);
-    strcat(szFullPath, szDir);
+/**
+ * Set up the PATH and PYTHONPATH environment variables on
+ * win32
+ */  
+static int _win32_set_inkscape_env(const Glib::ustring &exePath)
+{
 
     char *oldenv = getenv("PATH");
-    tmp = "PATH=";
-    tmp += szFullPath;
+    Glib::ustring tmp = "PATH=";
+    tmp += exePath;
     tmp += ";";
-    tmp += szFullPath;
-    tmp += "python;";
-    tmp += szFullPath;
-    tmp += "python\\Scripts;";  // for uniconv.cmd
-    tmp += szFullPath;
-    tmp += "perl";
+    tmp += exePath;
+    tmp += "\\python;";
+    tmp += exePath;
+    tmp += "\\python\\Scripts;";  // for uniconv.cmd
+    tmp += exePath;
+    tmp += "\\perl";
     if(oldenv != NULL) {
         tmp += ";";
         tmp += oldenv;
@@ -451,12 +456,12 @@ static int _win32_set_inkscape_env(char *argv0)
 
     oldenv = getenv("PYTHONPATH");
     tmp = "PYTHONPATH=";
-    tmp += szFullPath;
-    tmp += "python;";
-    tmp += szFullPath;
-    tmp += "python\\Lib;";
-    tmp += szFullPath;
-    tmp += "python\\DLLs";
+    tmp += exePath;
+    tmp += "\\python;";
+    tmp += exePath;
+    tmp += "\\python\\Lib;";
+    tmp += exePath;
+    tmp += "\\python\\DLLs";
     if(oldenv != NULL) {
         tmp += ";";
         tmp += oldenv;
@@ -467,6 +472,12 @@ static int _win32_set_inkscape_env(char *argv0)
 }
 #endif
 
+
+
+/**
+ * This is the classic main() entry point of the program, though on some
+ * architectures it might be called by something else.
+ */  
 int
 main(int argc, char **argv)
 {
@@ -477,14 +488,30 @@ main(int argc, char **argv)
     fpsetmask(fpgetmask() & ~(FP_X_DZ | FP_X_INV));
 #endif
 
-#ifdef ENABLE_NLS
 #ifdef WIN32
-	_win32_set_inkscape_env(argv[0]);
+    /*
+      Set the current directory to the directory of the
+      executable.  This seems redundant, but is needed for
+      when inkscape.exe is executed from another directory.
+      We use relative paths on win32.
+      HKCR\svgfile\shell\open\command is a good example
+    */
+    Glib::ustring homedir = _win32_getExePath();
+    SetCurrentDirectory(homedir.c_str());
+	_win32_set_inkscape_env(homedir);
     RegistryTool rt;
     rt.setPathInfo();
-    gchar *pathBuf = g_strconcat(g_path_get_dirname(argv[0]), "\\", PACKAGE_LOCALE_DIR, NULL);
-    bindtextdomain(GETTEXT_PACKAGE, pathBuf);
-    g_free(pathBuf);
+#endif
+
+   /**
+    * Call bindtextdomain() for various machines's paths
+    */	   
+#ifdef ENABLE_NLS
+#ifdef WIN32
+    Glib::ustring localePath = homedir;
+	localePath += "\\";
+	localePath += PACKAGE_LOCALE_DIR;
+    bindtextdomain(GETTEXT_PACKAGE, localePath.c_str());
 #else
 #ifdef ENABLE_BINRELOC
     bindtextdomain(GETTEXT_PACKAGE, BR_LOCALEDIR(""));
@@ -513,21 +540,10 @@ main(int argc, char **argv)
     Inkscape::Debug::Logger::init();
 
     gboolean use_gui;
+
 #ifndef WIN32
     use_gui = (getenv("DISPLAY") != NULL);
 #else
-    /*
-      Set the current directory to the directory of the
-      executable.  This seems redundant, but is needed for
-      when inkscape.exe is executed from another directory.
-      We use relative paths on win32.
-      HKCR\svgfile\shell\open\command is a good example
-    */
-    /// \todo FIXME BROKEN - non-UTF-8 sneaks in here.
-    char *homedir = g_path_get_dirname(argv[0]);
-    SetCurrentDirectory(homedir);
-    g_free(homedir);
-
     use_gui = TRUE;
 #endif
     /* Test whether with/without GUI is forced */
@@ -594,6 +610,9 @@ main(int argc, char **argv)
     return app.run();
 }
 
+
+
+
 void fixupSingleFilename( gchar **orig, gchar **spare )
 {
     if ( orig && *orig && **orig ) {
@@ -609,6 +628,8 @@ void fixupSingleFilename( gchar **orig, gchar **spare )
         }
     }
 }
+
+
 
 GSList *fixupFilenameEncoding( GSList* fl )
 {

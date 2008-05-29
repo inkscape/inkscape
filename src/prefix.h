@@ -114,6 +114,17 @@ char *br_strcat	(const char *str1, const char *str2);
 char *br_extract_dir	(const char *path);
 char *br_extract_prefix(const char *path);
 
+#ifdef __WIN32__
+
+/**
+ * Win32 version of a relocatable function
+ */ 
+char *win32_relative_path(const char *childPath);
+
+#define WIN32_DATADIR(suffix) (win32_relative_path(suffix))
+
+#endif
+
 
 #ifdef __cplusplus
 }

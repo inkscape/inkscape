@@ -43,26 +43,26 @@ extern "C" {
 #    define CREATE_PATTERNSDIR    BR_DATADIR( "/create/patterns/vector" )
 #else
 #  ifdef WIN32
-#    define INKSCAPE_APPICONDIR   "pixmaps"
-#    define INKSCAPE_BINDDIR      "share\\bind"
-#    define INKSCAPE_EXAMPLESDIR  "share\\examples"
-#    define INKSCAPE_EXTENSIONDIR "share\\extensions"
-#    define INKSCAPE_FILTERDIR    "share\\filters"
-#    define INKSCAPE_GRADIENTSDIR "share\\gradients"
-#    define INKSCAPE_KEYSDIR      "share\\keys"
-#    define INKSCAPE_PIXMAPDIR    "share\\icons"
-#    define INKSCAPE_MARKERSDIR   "share\\markers"
-#    define INKSCAPE_PALETTESDIR  "share\\palettes"
-#    define INKSCAPE_PATTERNSDIR  "share\\patterns"
-#    define INKSCAPE_SCREENSDIR   "share\\screens"
-#    define INKSCAPE_TUTORIALSDIR "share\\tutorials"
-#    define INKSCAPE_PLUGINDIR    "plugins"
-#    define INKSCAPE_TEMPLATESDIR "share\\templates"
-#    define INKSCAPE_UIDIR        INKSCAPE_DATADIR "\\share\\ui"
+#    define INKSCAPE_APPICONDIR   WIN32_DATADIR("pixmaps")
+#    define INKSCAPE_BINDDIR      WIN32_DATADIR("share\\bind")
+#    define INKSCAPE_EXAMPLESDIR  WIN32_DATADIR("share\\examples")
+#    define INKSCAPE_EXTENSIONDIR WIN32_DATADIR("share\\extensions")
+#    define INKSCAPE_FILTERDIR    WIN32_DATADIR("share\\filters")
+#    define INKSCAPE_GRADIENTSDIR WIN32_DATADIR("share\\gradients")
+#    define INKSCAPE_KEYSDIR      WIN32_DATADIR("share\\keys")
+#    define INKSCAPE_PIXMAPDIR    WIN32_DATADIR("share\\icons")
+#    define INKSCAPE_MARKERSDIR   WIN32_DATADIR("share\\markers")
+#    define INKSCAPE_PALETTESDIR  WIN32_DATADIR("share\\palettes")
+#    define INKSCAPE_PATTERNSDIR  WIN32_DATADIR("share\\patterns")
+#    define INKSCAPE_SCREENSDIR   WIN32_DATADIR("share\\screens")
+#    define INKSCAPE_TUTORIALSDIR WIN32_DATADIR("share\\tutorials")
+#    define INKSCAPE_PLUGINDIR    WIN32_DATADIR("plugins")
+#    define INKSCAPE_TEMPLATESDIR WIN32_DATADIR("share\\templates")
+#    define INKSCAPE_UIDIR        WIN32_DATADIR("share\\ui")
 //CREATE V0.1  WIN32 support
-#    define CREATE_GRADIENTSDIR INKSCAPE_DATADIR "create\\gradients\\gimp"
-#    define CREATE_PALETTESDIR  INKSCAPE_DATADIR "create\\swatches"
-#    define CREATE_PATTERNSDIR  INKSCAPE_DATADIR "create\\patterns\\vector"
+#    define CREATE_GRADIENTSDIR   WIN32_DATADIR("create\\gradients\\gimp")
+#    define CREATE_PALETTESDIR    WIN32_DATADIR("create\\swatches")
+#    define CREATE_PATTERNSDIR    WIN32_DATADIR("create\\patterns\\vector")
 #  elif defined ENABLE_OSX_APP_LOCATIONS
 #    define INKSCAPE_APPICONDIR   "Contents/Resources/pixmaps"
 #    define INKSCAPE_BINDDIR      "Contents/Resources/bind"

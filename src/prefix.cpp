@@ -45,6 +45,7 @@
 #include <limits.h>
 #include "prefix.h"
 
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -423,5 +424,79 @@ br_extract_prefix (const char *path)
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
+
+
+
+#ifdef __WIN32__
+
+/**
+ * Provide a similar mechanism for Win32.  Enable a macro,
+ * WIN32_DATADIR, that can look up subpaths for inkscape resources 
+ */ 
+ 
+#include <windows.h>
+#include <glibmm/ustring.h>
+
+/**
+ * Return the directory of the .exe that is currently running
+ */
+static Glib::ustring win32_getExePath()
+{
+    char exeName[MAX_PATH+1];
+    GetModuleFileName(NULL, exeName, MAX_PATH);
+    char *slashPos = strrchr(exeName, '\\');
+    if (slashPos)
+        *slashPos = '\0';
+    Glib::ustring s = exeName;
+    return s;
+}
+
+
+/**
+ * Return the relocatable version of the datadir,
+ * probably c:\inkscape 
+ */
+static Glib::ustring win32_getDataDir()
+{
+    Glib::ustring dir = win32_getExePath();
+    if (INKSCAPE_DATADIR  && *INKSCAPE_DATADIR &&
+	    strcmp(INKSCAPE_DATADIR, ".") != 0)
+        {
+        dir += "\\";
+        dir += INKSCAPE_DATADIR;
+        }
+    return dir;
+}
+
+static Glib::ustring win32_getResourcePath(const Glib::ustring &childPath)
+{
+    Glib::ustring dir = win32_getDataDir();
+    if (childPath.size() > 0)
+        {
+        dir += "\\";
+        dir += childPath;
+        }
+    return dir;
+}
+
+
+/**
+ * This is the visible utility function
+ */ 
+char *win32_relative_path(const char *childPath)
+{
+    static char *returnPath = NULL;
+    if (!childPath)
+        childPath = "";
+    Glib::ustring resourcePath = win32_getResourcePath(childPath);
+    if (returnPath)
+        free(returnPath);
+    returnPath = strdup(resourcePath.c_str());
+    return returnPath;
+}
+#endif /* __WIN32__ */
+
+
+
 
 #endif /* _PREFIX_C */
