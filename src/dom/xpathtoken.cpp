@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2006 Bob Jamison
+ * Copyright (C) 2006-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -88,7 +88,7 @@ static bool tokInt(Token &tok, Stack &stack)
     return true;
 }
 
-static bool tokAnd(Token &tok, Stack &stack)
+static bool tokAnd(Token &/*tok*/, Stack &stack)
 {
     StackItem item1 = stack.pop();
     StackItem item2 = stack.pop();
@@ -97,7 +97,7 @@ static bool tokAnd(Token &tok, Stack &stack)
     return true;
 }
 
-static bool tokOr(Token &tok, Stack &stack)
+static bool tokOr(Token &/*tok*/, Stack &stack)
 {
     StackItem item1 = stack.pop();
     StackItem item2 = stack.pop();
@@ -106,7 +106,7 @@ static bool tokOr(Token &tok, Stack &stack)
     return true;
 }
 
-static bool tokMod(Token &tok, Stack &stack)
+static bool tokMod(Token &/*tok*/, Stack &stack)
 {
     StackItem item1 = stack.pop();
     StackItem item2 = stack.pop();
@@ -116,7 +116,7 @@ static bool tokMod(Token &tok, Stack &stack)
 }
 
 
-static bool tokDiv(Token &tok, Stack &stack)
+static bool tokDiv(Token &/*tok*/, Stack &stack)
 {
     StackItem item1 = stack.pop();
     StackItem item2 = stack.pop();
@@ -125,7 +125,7 @@ static bool tokDiv(Token &tok, Stack &stack)
     return true;
 }
 
-static bool tokMul(Token &tok, Stack &stack)
+static bool tokMul(Token &/*tok*/, Stack &stack)
 {
     StackItem item1 = stack.pop();
     StackItem item2 = stack.pop();
@@ -134,7 +134,7 @@ static bool tokMul(Token &tok, Stack &stack)
     return true;
 }
 
-static bool tokPlus(Token &tok, Stack &stack)
+static bool tokPlus(Token &/*tok*/, Stack &stack)
 {
     StackItem item1 = stack.pop();
     StackItem item2 = stack.pop();
@@ -143,7 +143,7 @@ static bool tokPlus(Token &tok, Stack &stack)
     return true;
 }
 
-static bool tokMinus(Token &tok, Stack &stack)
+static bool tokMinus(Token &/*tok*/, Stack &stack)
 {
     StackItem item1 = stack.pop();
     StackItem item2 = stack.pop();
@@ -153,7 +153,7 @@ static bool tokMinus(Token &tok, Stack &stack)
 }
 
 
-static bool tokNeg(Token &tok, Stack &stack)
+static bool tokNeg(Token &/*tok*/, Stack &stack)
 {
     StackItem item = stack.pop();
     item.dval = -item.dval;
@@ -163,7 +163,7 @@ static bool tokNeg(Token &tok, Stack &stack)
 }
 
 
-static bool tokEquals(Token &tok, Stack &stack)
+static bool tokEquals(Token &/*tok*/, Stack &stack)
 {
     StackItem item1 = stack.pop();
     StackItem item2 = stack.pop();
@@ -173,7 +173,7 @@ static bool tokEquals(Token &tok, Stack &stack)
 }
 
 
-static bool tokNotEquals(Token &tok, Stack &stack)
+static bool tokNotEquals(Token &/*tok*/, Stack &stack)
 {
     StackItem item1 = stack.pop();
     StackItem item2 = stack.pop();
@@ -183,7 +183,7 @@ static bool tokNotEquals(Token &tok, Stack &stack)
 }
 
 
-static bool tokLessThan(Token &tok, Stack &stack)
+static bool tokLessThan(Token &/*tok*/, Stack &stack)
 {
     StackItem item1 = stack.pop();
     StackItem item2 = stack.pop();
@@ -193,7 +193,7 @@ static bool tokLessThan(Token &tok, Stack &stack)
 }
 
 
-static bool tokLessThanEquals(Token &tok, Stack &stack)
+static bool tokLessThanEquals(Token &/*tok*/, Stack &stack)
 {
     StackItem item1 = stack.pop();
     StackItem item2 = stack.pop();
@@ -203,7 +203,7 @@ static bool tokLessThanEquals(Token &tok, Stack &stack)
 }
 
 
-static bool tokGreaterThanEquals(Token &tok, Stack &stack)
+static bool tokGreaterThanEquals(Token &/*tok*/, Stack &stack)
 {
     StackItem item1 = stack.pop();
     StackItem item2 = stack.pop();
@@ -213,7 +213,7 @@ static bool tokGreaterThanEquals(Token &tok, Stack &stack)
 }
 
 
-static bool tokGreaterThan(Token &tok, Stack &stack)
+static bool tokGreaterThan(Token &/*tok*/, Stack &stack)
 {
     StackItem item1 = stack.pop();
     StackItem item2 = stack.pop();
@@ -231,32 +231,32 @@ static bool tokGreaterThan(Token &tok, Stack &stack)
 //# X P A T H    I T E M S
 //###########################
 
-static bool tokAbsolute(Token &tok, Stack &stack)
+static bool tokAbsolute(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
-static bool tokRelative(Token &tok, Stack &stack)
+static bool tokRelative(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
-static bool tokStep(Token &tok, Stack &stack)
+static bool tokStep(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
-static bool tokNameTest(Token &tok, Stack &stack)
+static bool tokNameTest(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
-static bool tokExpr(Token &tok, Stack &stack)
+static bool tokExpr(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
-static bool tokUnion(Token &tok, Stack &stack)
+static bool tokUnion(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
@@ -269,79 +269,79 @@ static bool tokUnion(Token &tok, Stack &stack)
 //###########################
 
 
-static bool tokAxisAncestorOrSelf(Token &tok, Stack &stack)
+static bool tokAxisAncestorOrSelf(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokAxisAncestor(Token &tok, Stack &stack)
+static bool tokAxisAncestor(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokAxisAttribute(Token &tok, Stack &stack)
+static bool tokAxisAttribute(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokAxisChild(Token &tok, Stack &stack)
+static bool tokAxisChild(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokAxisDescendantOrSelf(Token &tok, Stack &stack)
+static bool tokAxisDescendantOrSelf(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokAxisDescendant(Token &tok, Stack &stack)
+static bool tokAxisDescendant(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokAxisFollowingSibling(Token &tok, Stack &stack)
+static bool tokAxisFollowingSibling(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokAxisFollowing(Token &tok, Stack &stack)
+static bool tokAxisFollowing(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokAxisNamespace(Token &tok, Stack &stack)
+static bool tokAxisNamespace(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokAxisParent(Token &tok, Stack &stack)
+static bool tokAxisParent(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokAxisPrecedingSibling(Token &tok, Stack &stack)
+static bool tokAxisPrecedingSibling(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokAxisPreceding(Token &tok, Stack &stack)
+static bool tokAxisPreceding(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokAxisSelf(Token &tok, Stack &stack)
+static bool tokAxisSelf(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
@@ -353,163 +353,163 @@ static bool tokAxisSelf(Token &tok, Stack &stack)
 //###########################
 
 
-static bool tokFuncLast(Token &tok, Stack &stack)
+static bool tokFuncLast(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncPosition(Token &tok, Stack &stack)
+static bool tokFuncPosition(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncCount(Token &tok, Stack &stack)
+static bool tokFuncCount(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncId(Token &tok, Stack &stack)
+static bool tokFuncId(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncLocalName(Token &tok, Stack &stack)
+static bool tokFuncLocalName(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncNamespaceUri(Token &tok, Stack &stack)
+static bool tokFuncNamespaceUri(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncName(Token &tok, Stack &stack)
+static bool tokFuncName(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncString(Token &tok, Stack &stack)
+static bool tokFuncString(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncConcat(Token &tok, Stack &stack)
+static bool tokFuncConcat(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncStartsWith(Token &tok, Stack &stack)
+static bool tokFuncStartsWith(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncContains(Token &tok, Stack &stack)
+static bool tokFuncContains(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncSubstringBefore(Token &tok, Stack &stack)
+static bool tokFuncSubstringBefore(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncSubstringAfter(Token &tok, Stack &stack)
+static bool tokFuncSubstringAfter(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncSubstring(Token &tok, Stack &stack)
+static bool tokFuncSubstring(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncStringLength(Token &tok, Stack &stack)
+static bool tokFuncStringLength(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncNormalizeSpace(Token &tok, Stack &stack)
+static bool tokFuncNormalizeSpace(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncTranslate(Token &tok, Stack &stack)
+static bool tokFuncTranslate(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncBoolean(Token &tok, Stack &stack)
+static bool tokFuncBoolean(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncNot(Token &tok, Stack &stack)
+static bool tokFuncNot(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncTrue(Token &tok, Stack &stack)
+static bool tokFuncTrue(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncFalse(Token &tok, Stack &stack)
+static bool tokFuncFalse(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncLang(Token &tok, Stack &stack)
+static bool tokFuncLang(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncNumber(Token &tok, Stack &stack)
+static bool tokFuncNumber(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncSum(Token &tok, Stack &stack)
+static bool tokFuncSum(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncFloor(Token &tok, Stack &stack)
+static bool tokFuncFloor(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncCeiling(Token &tok, Stack &stack)
+static bool tokFuncCeiling(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
 
 
-static bool tokFuncRound(Token &tok, Stack &stack)
+static bool tokFuncRound(Token &/*tok*/, Stack &/*stack*/)
 {
     return true;
 }
@@ -987,7 +987,7 @@ void TokenExecutor::reset()
  */
 int TokenExecutor::execute(std::vector<Token> &tokens,
                             int position,
-                            const NodePtr node,
+                            const NodePtr /*node*/,
                             NodeList &result)
 {
     Stack stack(*this);

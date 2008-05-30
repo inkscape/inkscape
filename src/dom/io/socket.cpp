@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -207,15 +207,15 @@ void TcpSocket::init()
         WSAStartup( wVersionRequested, &wsaData );
 #endif
 #ifdef HAVE_SSL
-	if (libssl_is_present)
-	{
+        if (libssl_is_present)
+            {
             sslStream  = NULL;
             sslContext = NULL;
-	    CRYPTO_set_locking_callback(cryptoLockCallback);
+            CRYPTO_set_locking_callback(cryptoLockCallback);
             CRYPTO_set_id_callback(cryptoIdCallback);
             SSL_library_init();
             SSL_load_error_strings();
-	}
+            }
 #endif
         tcp_socket_inited = true;
         }
@@ -471,10 +471,10 @@ long TcpSocket::available()
     if (count<=0 && sslEnabled)
         {
 #ifdef HAVE_SSL
-	if (libssl_is_present)
-	{
+        if (libssl_is_present)
+            {
             return SSL_pending(sslStream);
-	}
+            }
 #endif
         }
     return count;
@@ -494,19 +494,19 @@ bool TcpSocket::write(int ch)
     if (sslEnabled)
         {
 #ifdef HAVE_SSL
-	if (libssl_is_present)
-	{
-        int r = SSL_write(sslStream, &c, 1);
-        if (r<=0)
+        if (libssl_is_present)
             {
-            switch(SSL_get_error(sslStream, r))
+            int r = SSL_write(sslStream, &c, 1);
+            if (r<=0)
                 {
-                default:
+                switch(SSL_get_error(sslStream, r))
+                    {
+                    default:
                     printf("SSL write problem");
                     return -1;
+                    }
                 }
             }
-	}
 #endif
         }
     else
@@ -535,19 +535,19 @@ bool TcpSocket::write(const DOMString &strArg)
     if (sslEnabled)
         {
 #ifdef HAVE_SSL
-	if (libssl_is_present)
-	{
-        int r = SSL_write(sslStream, (unsigned char *)str.c_str(), len);
-        if (r<=0)
+        if (libssl_is_present)
             {
-            switch(SSL_get_error(sslStream, r))
+           int r = SSL_write(sslStream, (unsigned char *)str.c_str(), len);
+            if (r<=0)
                 {
-                default:
-                    printf("SSL write problem");
-                    return -1;
+                switch(SSL_get_error(sslStream, r))
+                    {
+                    default:
+                        printf("SSL write problem");
+                        return -1;
+                    }
                 }
             }
-	}
 #endif
         }
     else
@@ -592,28 +592,28 @@ int TcpSocket::read()
     if (sslEnabled)
         {
 #ifdef HAVE_SSL
-	if (libssl_is_present)
-	{
-        if (!sslStream)
-            return -1;
-        int r = SSL_read(sslStream, &ch, 1);
-        unsigned long err = SSL_get_error(sslStream, r);
-        switch (err)
+        if (libssl_is_present)
             {
-            case SSL_ERROR_NONE:
-                 break;
-            case SSL_ERROR_ZERO_RETURN:
+            if (!sslStream)
                 return -1;
-            case SSL_ERROR_SYSCALL:
-                printf("SSL read problem(syscall) %s\n",
-                     ERR_error_string(ERR_get_error(), NULL));
-                return -1;
-            default:
-                printf("SSL read problem %s\n",
-                     ERR_error_string(ERR_get_error(), NULL));
-                return -1;
+            int r = SSL_read(sslStream, &ch, 1);
+            unsigned long err = SSL_get_error(sslStream, r);
+            switch (err)
+                {
+                case SSL_ERROR_NONE:
+                     break;
+                case SSL_ERROR_ZERO_RETURN:
+                    return -1;
+                case SSL_ERROR_SYSCALL:
+                    printf("SSL read problem(syscall) %s\n",
+                         ERR_error_string(ERR_get_error(), NULL));
+                    return -1;
+                default:
+                    printf("SSL read problem %s\n",
+                         ERR_error_string(ERR_get_error(), NULL));
+                    return -1;
+                }
             }
-	}
 #endif
         }
     else

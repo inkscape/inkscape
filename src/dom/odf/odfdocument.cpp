@@ -5,7 +5,7 @@
  *
  * ---------------------------------------------------------------------
  *
- * Copyright (C) 2006 Bob Jamison
+ * Copyright (C) 2006-2008 Bob Jamison
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -135,7 +135,7 @@ OdfDocument::~OdfDocument()
 /**
  *
  */
-bool OdfDocument::readFile(const std::string &fileName)
+bool OdfDocument::readFile(const std::string &/*fileName*/)
 {
     return true;
 }
@@ -143,7 +143,7 @@ bool OdfDocument::readFile(const std::string &fileName)
 /**
  *
  */
-bool OdfDocument::writeFile(const std::string &fileName)
+bool OdfDocument::writeFile(const std::string &/*fileName*/)
 {
     return true;
 }

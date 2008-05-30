@@ -13,7 +13,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -65,7 +65,7 @@ protected:
 
     void spaces();
 
-    void po(char *str, ...) G_GNUC_PRINTF(2,3);
+    void po(const char *str, ...) G_GNUC_PRINTF(2,3);
 
     void pos(const DOMString &str);
 

@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -49,8 +49,8 @@ namespace xpath
  *
  */
 XPathExpression *XPathEvaluatorImpl::createExpression(
-                                     const DOMString &expression,
-                                     const XPathNSResolver *resolver)
+                                     const DOMString &/*expression*/,
+                                     const XPathNSResolver */*resolver*/)
                                      throw (XPathException, dom::DOMException)
 {
     return NULL;
@@ -60,7 +60,7 @@ XPathExpression *XPathEvaluatorImpl::createExpression(
 /**
  *
  */
-XPathNSResolver *XPathEvaluatorImpl::createNSResolver(const Node *nodeResolver)
+XPathNSResolver *XPathEvaluatorImpl::createNSResolver(const Node */*nodeResolver*/)
 {
     return NULL;
 }
@@ -70,11 +70,11 @@ XPathNSResolver *XPathEvaluatorImpl::createNSResolver(const Node *nodeResolver)
  *
  */
 XPathResult *XPathEvaluatorImpl::evaluate(
-                                const DOMString &expression,
-                                const Node *contextNode,
-                                const XPathNSResolver *resolver,
-                                const unsigned short type,
-                                const XPathResult *result)
+                                const DOMString &/*expression*/,
+                                const Node */*contextNode*/,
+                                const XPathNSResolver */*resolver*/,
+                                const unsigned short /*type*/,
+                                const XPathResult */*result*/)
                                 throw (XPathException, dom::DOMException)
 {
     return NULL;
@@ -97,9 +97,9 @@ XPathResult *XPathEvaluatorImpl::evaluate(
  *
  */
 XPathResult *XPathExpressionImpl::evaluate(
-                                const Node *contextNode,
-                                unsigned short type,
-                                const XPathResult *result)
+                                const Node */*contextNode*/,
+                                unsigned short /*type*/,
+                                const XPathResult */*result*/)
                                 throw (XPathException, dom::DOMException)
 {
     return NULL;
@@ -115,7 +115,7 @@ XPathResult *XPathExpressionImpl::evaluate(
 /**
  *
  */
-DOMString XPathNSResolverImpl::lookupNamespaceURI(const DOMString &prefix)
+DOMString XPathNSResolverImpl::lookupNamespaceURI(const DOMString &/*prefix*/)
 {
     return "";
 }
@@ -197,7 +197,7 @@ Node *XPathResultImpl::iterateNext() throw (XPathException, dom::DOMException)
 /**
  *
  */
-Node *XPathResultImpl::snapshotItem(unsigned long index) throw (XPathException)
+Node *XPathResultImpl::snapshotItem(unsigned long /*index*/) throw (XPathException)
 {
     return NULL;
 }
