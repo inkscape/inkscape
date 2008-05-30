@@ -59,13 +59,14 @@ static cairo_status_t font_init_cb (cairo_scaled_font_t  *scaled_font,
 	return instance->scaled_font_init(scaled_font, metrics);
 }
 
-static cairo_status_t font_unicode_to_glyph_cb (cairo_scaled_font_t *scaled_font,
-				   unsigned long        unicode,
-				   unsigned long       *glyph){
+static cairo_status_t font_text_to_glyphs_cb (cairo_scaled_font_t *scaled_font,
+				const char	*utf8,
+				cairo_glyph_t	**glyphs,
+				int		*num_glyphs){
 	cairo_font_face_t*  face;
 	face = cairo_scaled_font_get_font_face(scaled_font);
 	SvgFont* instance = (SvgFont*) cairo_font_face_get_user_data(face, &key);
-	return instance->scaled_font_unicode_to_glyph(scaled_font, unicode, glyph);
+	return instance->scaled_font_text_to_glyphs(scaled_font, utf8, glyphs, num_glyphs);
 }
 
 static cairo_status_t font_render_glyph_cb (cairo_scaled_font_t  *scaled_font,
@@ -80,9 +81,9 @@ static cairo_status_t font_render_glyph_cb (cairo_scaled_font_t  *scaled_font,
 
 UserFont::UserFont(SvgFont* instance){
 	this->face = cairo_user_font_face_create ();
-	cairo_user_font_face_set_init_func             (this->face, font_init_cb);
-	cairo_user_font_face_set_render_glyph_func     (this->face, font_render_glyph_cb);
-	cairo_user_font_face_set_unicode_to_glyph_func (this->face, font_unicode_to_glyph_cb);
+	cairo_user_font_face_set_init_func		(this->face, font_init_cb);
+	cairo_user_font_face_set_render_glyph_func	(this->face, font_render_glyph_cb);
+	cairo_user_font_face_set_text_to_glyphs_func	(this->face, font_text_to_glyphs_cb);
 
 	cairo_font_face_set_user_data (this->face, &key, (void*)instance, (cairo_destroy_func_t) NULL);
 }
@@ -115,22 +116,53 @@ SvgFont::scaled_font_init (cairo_scaled_font_t  *scaled_font,
   return CAIRO_STATUS_SUCCESS;
 }
 
-cairo_status_t
-SvgFont::scaled_font_unicode_to_glyph (cairo_scaled_font_t *scaled_font,
-				   unsigned long        unicode,
-				   unsigned long       *glyph)
-{
-//g_warning("scaled_font_unicode_to_glyph CALL. unicode=%c", (char)unicode);
+unsigned int compare_them(char* s1, char* s2){
+	unsigned int p=0;
+	while((s1[p] == s2[p]) && s1[p] != '\0' && s2[p] != '\0') p++;
+	if (s1[p]=='\0') return p;
+	else return 0;
+}
 
+cairo_status_t
+SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
+				const char	*utf8,
+				cairo_glyph_t	**glyphs,
+				int		*num_glyphs)
+{
     unsigned long i;
-    for (i=0; i < (unsigned long) this->glyphs.size(); i++){
-        //TODO: compare unicode strings for ligadure glyphs (i.e. scaled_font_text_to_glyph)
-        if ( ((unsigned long) this->glyphs[i]->unicode[0]) == unicode){
-            *glyph = i;
-            return CAIRO_STATUS_SUCCESS;
-        }
+    int count = 0;
+    char* _utf8 = (char*) utf8;
+    unsigned int len;
+
+    while(_utf8[0] != '\0'){
+	_utf8++;
+	count++;
     }
-    *glyph = i;
+
+    *glyphs = (cairo_glyph_t*) malloc(count*sizeof(cairo_glyph_t));
+
+
+    count=0;
+    _utf8 = (char*) utf8;
+    while(_utf8[0] != '\0'){
+	len = 0;
+        for (i=0; i < (unsigned long) this->glyphs.size(); i++){
+            if ( len = compare_them(this->glyphs[i]->unicode, _utf8) ){
+                (*glyphs)[count].index = i;
+                (*glyphs)[count].x = count; //TODO
+                (*glyphs)[count++].y = 0;  //TODO
+                _utf8+=len;
+		continue;
+            }
+        }
+	if (!len){
+        	(*glyphs)[count].index = i;
+        	(*glyphs)[count].x = count; //TODO
+        	(*glyphs)[count++].y = 0;  //TODO
+		_utf8++;
+	}
+    }
+    *num_glyphs = count;
     return CAIRO_STATUS_SUCCESS;
 }
 
@@ -140,8 +172,6 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  *scaled_font,
 			       cairo_t              *cr,
 			       cairo_text_extents_t *metrics)
 {
-//g_warning("scaled_font_render_glyph CALL. glyph=%d", (int)glyph);
-
     if (glyph > this->glyphs.size())     return CAIRO_STATUS_SUCCESS;
 
     SPObject* node;
@@ -151,7 +181,7 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  *scaled_font,
         g_warning("RENDER MISSING-GLYPH");
     } else {
         node = (SPObject*) this->glyphs[glyph];
-        g_warning("RENDER %c", this->glyphs[glyph]->unicode[0]);
+        g_warning("RENDER %s", this->glyphs[glyph]->unicode);
     }
 
     NArtBpath *bpath = NULL;
@@ -176,7 +206,7 @@ SvgFont::get_font_face(){
     if (!this->userfont) {
         for(SPObject* node = this->font->children;node;node=node->next){
             if (SP_IS_GLYPH(node)){
-	        g_warning("glyphs.push_back((SPGlyph*)node); (node->unicode[0]='%c')", ((SPGlyph*)node)->unicode[0]);
+	        g_warning("glyphs.push_back((SPGlyph*)node); (node->unicode='%s')", ((SPGlyph*)node)->unicode);
                 this->glyphs.push_back((SPGlyph*)node);
             }
             if (SP_IS_MISSING_GLYPH(node)){
