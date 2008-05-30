@@ -13,13 +13,13 @@ lpe-constructgrid.h
 lpe-curvestitch.cpp
 lpe-curvestitch.h
 lpe-envelope.cpp
-lpe-envelope.h
 lpe-gears.cpp
 lpe-gears.h
 lpegroupbbox.cpp
 lpegroupbbox.h
 lpe-knot.cpp
 lpe-knot.h
+lpe-lattice.cpp
 lpeobject.cpp
 lpeobject.h
 lpeobject-reference.cpp
@@ -45,4 +45,5 @@ lpe-vonkoch.h
 spiro.cpp
 spiro.h
 )
+
 

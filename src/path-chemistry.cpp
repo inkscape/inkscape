@@ -368,7 +368,7 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
         }
         
         if (SP_IS_GROUP(item)) {
-            sp_lpe_item_remove_path_effect(SP_LPE_ITEM(item), true);
+            sp_lpe_item_remove_all_path_effects(SP_LPE_ITEM(item), true);
             GSList *item_list = sp_item_group_item_list(SP_GROUP(item));
             
             GSList *item_to_select = NULL;

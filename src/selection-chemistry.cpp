@@ -893,7 +893,7 @@ void sp_selection_paste_livepatheffect()
 void sp_selection_remove_livepatheffect_impl(SPItem *item)
 {
     if ( item && SP_IS_LPE_ITEM(item) ) {
-        sp_lpe_item_remove_path_effect(SP_LPE_ITEM(item), false);
+        sp_lpe_item_remove_all_path_effects(SP_LPE_ITEM(item), false);
     }
 }
 

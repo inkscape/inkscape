@@ -63,8 +63,12 @@ static SPKnotHolder *sp_lpe_knot_holder(SPItem *item, SPDesktop *desktop)
 {
     SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
 
-    Inkscape::LivePathEffect::Effect *effect = sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
-    effect->addHandles(knot_holder);
+    Inkscape::LivePathEffect::Effect *effect = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+    if (!effect) {
+        g_error("sp_lpe_knot_holder: logical error, this method cannot be called with item having an LPE");
+    } else {
+        effect->addHandles(knot_holder);
+    }
 
     return knot_holder;
 }
@@ -72,12 +76,11 @@ static SPKnotHolder *sp_lpe_knot_holder(SPItem *item, SPDesktop *desktop)
 SPKnotHolder *
 sp_item_knot_holder(SPItem *item, SPDesktop *desktop)
 {
-    if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(item)) &&
-        sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item))->isVisible() &&
-        sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item))->providesKnotholder()) {
+    if (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)) &&
+        sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item))->isVisible() &&
+        sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item))->providesKnotholder()) {
         return sp_lpe_knot_holder(item, desktop);
-    } else
-    if (SP_IS_RECT(item)) {
+    } else if (SP_IS_RECT(item)) {
         return sp_rect_knot_holder(item, desktop);
     } else if (SP_IS_BOX3D(item)) {
         return box3d_knot_holder(item, desktop);

@@ -71,6 +71,7 @@
 
 #include "live_effects/lpeobject.h"
 #include "live_effects/effect.h"
+#include "live_effects/lpeobject-reference.h"
 
 #define noSP_ITEM_DEBUG_IDLE
 
@@ -1296,15 +1297,21 @@ sp_item_adjust_livepatheffect (SPItem *item, NR::Matrix const &postmul, bool set
 
     SPLPEItem *lpeitem = SP_LPE_ITEM (item);
     if ( sp_lpe_item_has_path_effect(lpeitem) ) {
-        LivePathEffectObject *lpeobj = sp_lpe_item_get_livepatheffectobject(lpeitem);
-        LivePathEffectObject *new_lpeobj = lpeobj->fork_private_if_necessary();
-        if (new_lpeobj != lpeobj) {
-            sp_lpe_item_set_path_effect(lpeitem, new_lpeobj);
-        }
-
-        Inkscape::LivePathEffect::Effect * effect = sp_lpe_item_get_livepatheffect(lpeitem);
-        if (effect) {
-            effect->transform_multiply (to_2geom(postmul), set);
+        PathEffectList effect_list =  sp_lpe_item_get_effect_list(lpeitem);
+        for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); it++)
+        {
+            // If the path effect is used by 2 or more items, fork it
+            // so that each object has its own independent copy of the effect
+            LivePathEffectObject *lpeobj = (*it)->lpeobject;
+            LivePathEffectObject *new_lpeobj = lpeobj->fork_private_if_necessary();
+            if (new_lpeobj != lpeobj) {
+                sp_lpe_item_replace_path_effect(lpeitem, lpeobj, new_lpeobj);
+            }
+        
+            if (lpeobj->lpe) {
+                Inkscape::LivePathEffect::Effect * effect = lpeobj->lpe;
+                effect->transform_multiply(to_2geom(postmul), set);
+            }
         }
     }
 }

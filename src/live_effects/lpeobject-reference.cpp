@@ -59,7 +59,7 @@ bool LPEObjectReference::_acceptObject(SPObject * const obj) const
 }
 
 void
-LPEObjectReference::link(char *to)
+LPEObjectReference::link(const char *to)
 {
     if ( to == NULL ) {
         quit_listening();

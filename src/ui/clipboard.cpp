@@ -61,6 +61,7 @@
 #include "sp-textpath.h"
 #include "sp-rect.h"
 #include "live_effects/lpeobject.h"
+#include "live_effects/lpeobject-reference.h"
 #include "live_effects/parameter/path.h"
 #include "svg/svg.h" // for sp_svg_transform_write, used in _copySelection
 #include "svg/css-ostringstream.h" // used in _parseColor
@@ -560,10 +561,14 @@ void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
         }
     }
     // For lpe items, copy liveeffect if applicable
+    // TODO: copy the whole effect stack. now it only copies current selected effect
     if (SP_IS_LPE_ITEM(item)) {
         SPLPEItem *lpeitem = SP_LPE_ITEM (item);
         if (sp_lpe_item_has_path_effect(lpeitem)) {
-            _copyNode(SP_OBJECT_REPR(SP_OBJECT(sp_lpe_item_get_livepatheffectobject(lpeitem))), _doc, _defs);
+            Inkscape::LivePathEffect::LPEObjectReference* lperef = sp_lpe_item_get_current_lpereference(lpeitem);
+            if (lperef && lperef->lpeobject) {
+                _copyNode(SP_OBJECT_REPR(SP_OBJECT(lperef->lpeobject)), _doc, _defs);
+            }
         }
     }
     // For 3D boxes, copy perspectives
@@ -900,7 +905,7 @@ void ClipboardManagerImpl::_applyPathEffect(SPItem *item, gchar const *effect)
         if (!obj) return;
         // if the effect is not used by anyone, we might as well take it
         LivePathEffectObject *lpeobj = LIVEPATHEFFECT(obj)->fork_private_if_necessary(1);
-        sp_lpe_item_set_path_effect(lpeitem, lpeobj);
+        sp_lpe_item_add_path_effect(lpeitem, lpeobj);
     }
 }
 

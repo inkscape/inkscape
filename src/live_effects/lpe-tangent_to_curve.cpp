@@ -27,19 +27,26 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
-/* FIXME: We should arguably make these member functions of LPETangentToCurve.
+/* FIXME: We should make these member functions of LPETangentToCurve.
           Is there an easy way to register member functions with knotholder?
- */
+    KNOWN BUG: Because of the above, this effect does not work well when in an LPE stack
+*/
 NR::Point attach_pt_get(SPItem *item) {
     Inkscape::LivePathEffect::LPETangentToCurve *lpe =
-        (Inkscape::LivePathEffect::LPETangentToCurve *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+        dynamic_cast<Inkscape::LivePathEffect::LPETangentToCurve *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
 
-    return lpe->ptA;
+    if (lpe)
+        return lpe->ptA;
+    else
+        return NR::Point(0,0);
 }
 
 void attach_pt_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state) {
     Inkscape::LivePathEffect::LPETangentToCurve *lpe =
-        (Inkscape::LivePathEffect::LPETangentToCurve *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+        dynamic_cast<Inkscape::LivePathEffect::LPETangentToCurve *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
+
+    if (!lpe)
+        return;
 
     using namespace Geom;
 
@@ -55,41 +62,56 @@ void attach_pt_set(SPItem *item, NR::Point const &p, NR::Point const &origin, gu
     double t0 = nearest_point(p.to_2geom(), pwd2);
     lpe->t_attach.param_set_value(t0);
 
-    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true);
+    // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
+    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true, true);
 }
 
 NR::Point left_end_get(SPItem *item) {
     Inkscape::LivePathEffect::LPETangentToCurve *lpe =
-        (Inkscape::LivePathEffect::LPETangentToCurve *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+        dynamic_cast<Inkscape::LivePathEffect::LPETangentToCurve *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
 
-    return lpe->C;
+    if (lpe)
+        return lpe->C;
+    else
+        return NR::Point(0,0);
 }
 
 NR::Point right_end_get(SPItem *item) {
     Inkscape::LivePathEffect::LPETangentToCurve *lpe =
-        (Inkscape::LivePathEffect::LPETangentToCurve *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+        dynamic_cast<Inkscape::LivePathEffect::LPETangentToCurve *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
 
-    return lpe->D;
+    if (lpe)
+        return lpe->D;
+    else
+        return NR::Point(0,0);
 }
 
 void left_end_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state) {
     Inkscape::LivePathEffect::LPETangentToCurve *lpe =
-        (Inkscape::LivePathEffect::LPETangentToCurve *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+        dynamic_cast<Inkscape::LivePathEffect::LPETangentToCurve *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
+
+    if (!lpe)
+        return;
 
     double lambda = Geom::nearest_point(p.to_2geom(), lpe->ptA, lpe->derivA);
     lpe->length_left.param_set_value(-lambda);
 
-    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true);
+    // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
+    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true, true);
 }
 
 void right_end_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state) {
     Inkscape::LivePathEffect::LPETangentToCurve *lpe =
-        (Inkscape::LivePathEffect::LPETangentToCurve *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+        dynamic_cast<Inkscape::LivePathEffect::LPETangentToCurve *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
+
+    if (!lpe)
+        return;
 
     double lambda = Geom::nearest_point(p.to_2geom(), lpe->ptA, lpe->derivA);
     lpe->length_right.param_set_value(lambda);
 
-    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true);
+    // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
+    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true, true);
 }
 
 LPETangentToCurve::LPETangentToCurve(LivePathEffectObject *lpeobject) :

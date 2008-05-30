@@ -41,7 +41,7 @@ public:
     sigc::connection _delete_connection;
     sigc::connection _changed_connection;
 
-    void            link(char* to);
+    void            link(const char* to);
     void            unlink(void);
     void            start_listening(LivePathEffectObject* to);
     void            quit_listening(void);

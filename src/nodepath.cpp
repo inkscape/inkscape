@@ -51,6 +51,7 @@
 #include <cstring>
 #include <string>
 #include "live_effects/lpeobject.h"
+#include "live_effects/effect.h"
 #include "live_effects/parameter/parameter.h"
 #include "util/mathfns.h"
 #include "display/snap-indicator.h"
@@ -236,9 +237,9 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
         if ( sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(np->object)) ) {
             np->repr_key = g_strdup("inkscape:original-d");
 
-            LivePathEffectObject *lpeobj = sp_lpe_item_get_livepatheffectobject(SP_LPE_ITEM(np->object));
-            if (lpeobj && lpeobj->lpe) {
-                lpeobj->lpe->setup_nodepath(np);
+            Inkscape::LivePathEffect::Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(np->object));
+            if (lpe) {
+                lpe->setup_nodepath(np);
             }
         } else {
             np->repr_key = g_strdup("d");

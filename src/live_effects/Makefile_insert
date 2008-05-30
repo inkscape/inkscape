@@ -32,8 +32,16 @@ live_effects_liblive_effects_a_SOURCES = \
 	live_effects/lpe-gears.h	\
 	live_effects/lpe-test-doEffect-stack.cpp	\
 	live_effects/lpe-test-doEffect-stack.h	\
+	live_effects/lpe-lattice.cpp	\
+	live_effects/lpe-lattice.h	\
+	live_effects/lpe-envelope.cpp	\
+	live_effects/lpe-envelope.h	\
 	live_effects/lpe-spiro.cpp	\
 	live_effects/lpe-spiro.h	\
+	live_effects/lpe-tangent_to_curve.cpp	\
+	live_effects/lpe-tangent_to_curve.h	\
+	live_effects/lpe-perp_bisector.cpp	\
+	live_effects/lpe-perp_bisector.h	\
 	live_effects/spiro.h	\
 	live_effects/spiro.cpp	\
 	live_effects/bezctx.h	\
@@ -42,11 +50,6 @@ live_effects_liblive_effects_a_SOURCES = \
 	live_effects/lpe-circle_with_radius.cpp	\
 	live_effects/lpe-circle_with_radius.h	\
 	live_effects/lpe-perspective_path.cpp	\
-	live_effects/lpe-perspective_path.h		\
-	live_effects/lpe-envelope.cpp	\
-	live_effects/lpe-envelope.h	\
-	live_effects/lpe-perp_bisector.cpp	\
-	live_effects/lpe-perp_bisector.h	\
-	live_effects/lpe-tangent_to_curve.cpp	\
-	live_effects/lpe-tangent_to_curve.h
+	live_effects/lpe-perspective_path.h
+
 

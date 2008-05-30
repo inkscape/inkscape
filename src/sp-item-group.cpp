@@ -23,6 +23,7 @@
 #include <string>
 
 #include "display/nr-arena-group.h"
+#include "display/curve.h"
 #include "libnr/nr-matrix-ops.h"
 #include "libnr/nr-matrix-fns.h"
 #include "xml/repr.h"
@@ -42,6 +43,8 @@
 #include "inkscape.h"
 #include "desktop-handles.h"
 #include "selection.h"
+#include "live_effects/lpeobject.h"
+#include "live_effects/lpeobject-reference.h"
 
 static void sp_group_class_init (SPGroupClass *klass);
 static void sp_group_init (SPGroup *group);
@@ -66,6 +69,7 @@ static void sp_group_hide (SPItem * item, unsigned int key);
 static void sp_group_snappoints (SPItem const *item, SnapPointsIter p);
 
 static void sp_group_update_patheffect(SPLPEItem *lpeitem, bool write);
+static void sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup);
 
 static SPLPEItemClass * parent_class;
 
@@ -207,6 +211,9 @@ sp_group_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 static void
 sp_group_modified (SPObject *object, guint flags)
 {
+    if (((SPObjectClass *) (parent_class))->modified)
+        ((SPObjectClass *) (parent_class))->modified (object, flags);
+
     SP_GROUP(object)->group->onModified(flags);
 }
 
@@ -364,7 +371,7 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
             gitem = SP_ITEM(group);
         }
 
-        sp_lpe_item_remove_path_effect(SP_LPE_ITEM(group), false);
+        sp_lpe_item_remove_all_path_effects(SP_LPE_ITEM(group), false);
 
 	/* Step 1 - generate lists of children objects */
 	GSList *items = NULL;
@@ -802,7 +809,7 @@ void CGroup::onOrderChanged (Inkscape::XML::Node *child, Inkscape::XML::Node *, 
 }
 
 static void
-sp_group_update_patheffect (SPLPEItem *lpeitem, bool /*write*/)
+sp_group_update_patheffect (SPLPEItem *lpeitem, bool write)
 {
 #ifdef GROUP_VERBOSE
     g_message("sp_group_update_patheffect: %p\n", lpeitem);
@@ -814,11 +821,51 @@ sp_group_update_patheffect (SPLPEItem *lpeitem, bool /*write*/)
     for ( GSList const *iter = item_list; iter; iter = iter->next ) {
         SPObject *subitem = static_cast<SPObject *>(iter->data);
         if (SP_IS_LPE_ITEM(subitem)) {
-            sp_lpe_item_update_patheffect(SP_LPE_ITEM(subitem), true);
+            if (SP_LPE_ITEM_CLASS (G_OBJECT_GET_CLASS (subitem))->update_patheffect) {
+                SP_LPE_ITEM_CLASS (G_OBJECT_GET_CLASS (subitem))->update_patheffect (SP_LPE_ITEM(subitem), write);
+            }
         }
+    }
+    
+    if (sp_lpe_item_has_path_effect(lpeitem) && sp_lpe_item_path_effects_enabled(lpeitem)) {
+        for (PathEffectList::iterator it = lpeitem->path_effect_list->begin(); it != lpeitem->path_effect_list->end(); it++)
+        {
+            LivePathEffectObject *lpeobj = (*it)->lpeobject;
+            lpeobj->lpe->doBeforeEffect(lpeitem);
+        }
+        
+        sp_group_perform_patheffect(SP_GROUP(lpeitem), SP_GROUP(lpeitem));
     }
 }
 
+static void
+sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup)
+{
+    GSList const *item_list = sp_item_group_item_list(SP_GROUP(group));
+    for ( GSList const *iter = item_list; iter; iter = iter->next ) {
+        SPObject *subitem = static_cast<SPObject *>(iter->data);
+        if (SP_IS_GROUP(subitem)) {
+            sp_group_perform_patheffect(SP_GROUP(subitem), topgroup);
+        } else if (SP_IS_SHAPE(subitem)) {
+            SPCurve * c = sp_shape_get_curve(SP_SHAPE(subitem));
+            sp_lpe_item_perform_path_effect(SP_LPE_ITEM(topgroup), c);
+            sp_shape_set_curve(SP_SHAPE(subitem), c, TRUE);
+            
+            Inkscape::XML::Node *repr = SP_OBJECT_REPR(subitem);
+ 
+                NArtBpath *abp = c->first_bpath();
+                if (abp) {
+                    gchar *str = sp_svg_write_path(abp);
+                    repr->setAttribute("d", str);
+                    g_free(str);
+                } else {
+                   repr->setAttribute("d", "");
+                }
+
+                c->unref();
+        }
+    }
+}
 
 /*
   Local Variables:

@@ -18,33 +18,43 @@
 #include <libnr/n-art-bpath.h>
 #include "sp-path.h"
 #include "line-geometry.h"
-
+#include "sp-lpe-item.h"
 #include <2geom/path.h>
 
 namespace Inkscape {
 namespace LivePathEffect {
 
-/* FIXME: We should arguably make these member functions of LPEPerpBisector.
+/* FIXME: We should make these member functions of LPEPerpBisector.
           Is there an easy way to register member functions with knotholder?
+   KNOWN BUG: Because of the above, this effect does not work well when in an LPE stack
  */
 NR::Point bisector_left_end_get(SPItem *item) {
     Inkscape::LivePathEffect::LPEPerpBisector *lpe =
-        (Inkscape::LivePathEffect::LPEPerpBisector *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+        dynamic_cast<Inkscape::LivePathEffect::LPEPerpBisector *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
 
-    return NR::Point(lpe->C);
+    if (lpe)
+        return NR::Point(lpe->C);
+    else
+        return NR::Point(0,0);
 }
 
 NR::Point bisector_right_end_get(SPItem *item) {
     Inkscape::LivePathEffect::LPEPerpBisector *lpe =
-        (Inkscape::LivePathEffect::LPEPerpBisector *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+        dynamic_cast<Inkscape::LivePathEffect::LPEPerpBisector *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
 
-    return NR::Point(lpe->D);
+    if (lpe)
+        return NR::Point(lpe->D);
+    else
+        return NR::Point(0,0);
 }
 
 void
 bisector_end_set(SPItem *item, NR::Point const &p, bool left) {
     Inkscape::LivePathEffect::LPEPerpBisector *lpe =
-        (Inkscape::LivePathEffect::LPEPerpBisector *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+        dynamic_cast<Inkscape::LivePathEffect::LPEPerpBisector *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
+
+    if (!lpe)
+        return;
 
     double lambda = Geom::nearest_point(p.to_2geom(), lpe->M, lpe->perp_dir);
     if (left) {
@@ -55,7 +65,8 @@ bisector_end_set(SPItem *item, NR::Point const &p, bool left) {
         lpe->length_right.param_set_value(-lambda);
     }
 
-    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true);
+    // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
+    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true, true);
 }
 
 void
@@ -70,16 +81,22 @@ bisector_right_end_set(SPItem *item, NR::Point const &p, NR::Point const &/*orig
 
 NR::Point path_start_get(SPItem *item) {
     Inkscape::LivePathEffect::LPEPerpBisector *lpe =
-        (Inkscape::LivePathEffect::LPEPerpBisector *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+        dynamic_cast<Inkscape::LivePathEffect::LPEPerpBisector *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
 
-    return NR::Point(lpe->A);
+    if (lpe)
+        return NR::Point(lpe->A);
+    else
+        return NR::Point(0,0);
 }
 
 NR::Point path_end_get(SPItem *item) {
     Inkscape::LivePathEffect::LPEPerpBisector *lpe =
-        (Inkscape::LivePathEffect::LPEPerpBisector *) sp_lpe_item_get_livepatheffect(SP_LPE_ITEM(item));
+        dynamic_cast<Inkscape::LivePathEffect::LPEPerpBisector *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
 
-    return NR::Point(lpe->B);
+    if (lpe)
+        return NR::Point(lpe->B);
+    else
+        return NR::Point(0,0);
 }
 
 void

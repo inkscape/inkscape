@@ -17,6 +17,8 @@
 #include "sp-item.h"
 #include "display/display-forward.h"
 
+#include <list>
+
 #define SP_TYPE_LPE_ITEM (sp_lpe_item_get_type())
 #define SP_LPE_ITEM(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_LPE_ITEM, SPLPEItem))
 #define SP_LPE_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_LPE_ITEM, SPLPEItemClass))
@@ -31,8 +33,14 @@ namespace LivePathEffect{
 };
 };
 
+typedef std::list<Inkscape::LivePathEffect::LPEObjectReference *> PathEffectList;
+
 struct SPLPEItem : public SPItem {
-    Inkscape::LivePathEffect::LPEObjectReference *path_effect_ref;
+    int path_effects_enabled;
+
+    PathEffectList* path_effect_list;
+    Inkscape::LivePathEffect::LPEObjectReference* current_path_effect;
+
     sigc::connection lpe_modified_connection;
 };
 
@@ -44,16 +52,24 @@ struct SPLPEItemClass {
 
 GType sp_lpe_item_get_type();
 
-LivePathEffectObject * sp_lpe_item_get_livepatheffectobject(SPLPEItem *lpeitem);
-Inkscape::LivePathEffect::Effect * sp_lpe_item_get_livepatheffect(SPLPEItem *lpeitem);
-void sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool write);
+void sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write);
 void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve);
-void sp_lpe_item_set_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset);
-void sp_lpe_item_set_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * new_lpeobj);
-void sp_lpe_item_remove_path_effect(SPLPEItem *lpeitem, bool keep_paths);
+void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset);
+void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * new_lpeobj);
+void sp_lpe_item_replace_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * old_lpeobj,
+                                        LivePathEffectObject * new_lpeobj);
+void sp_lpe_item_remove_all_path_effects(SPLPEItem *lpeitem, bool keep_paths);
+void sp_lpe_item_remove_current_path_effect(SPLPEItem *lpeitem, bool keep_paths);
+void sp_lpe_item_down_current_path_effect(SPLPEItem *lpeitem);
+void sp_lpe_item_up_current_path_effect(SPLPEItem *lpeitem);
 bool sp_lpe_item_has_path_effect(SPLPEItem *lpeitem);
 bool sp_lpe_item_has_path_effect_recursive(SPLPEItem *lpeitem);
 void sp_lpe_item_edit_next_param_oncanvas(SPLPEItem *lpeitem, SPDesktop *dt);
+PathEffectList sp_lpe_item_get_effect_list(SPLPEItem *lpeitem);
+Inkscape::LivePathEffect::LPEObjectReference* sp_lpe_item_get_current_lpereference(SPLPEItem *lpeitem);
+Inkscape::LivePathEffect::Effect* sp_lpe_item_get_current_lpe(SPLPEItem *lpeitem);
+bool sp_lpe_item_set_current_path_effect(SPLPEItem *lpeitem, Inkscape::LivePathEffect::LPEObjectReference* lperef);
+bool sp_lpe_item_path_effects_enabled(SPLPEItem *lpeitem);
 
 #endif /* !SP_LPE_ITEM_H_SEEN */
 

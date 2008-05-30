@@ -23,6 +23,7 @@
 #include "sp-item-group.h"
 #include "sp-path.h"
 #include "sp-rect.h"
+#include "sp-lpe-item.h"
 #include "path-chemistry.h"
 #include "live_effects/effect.h"
 #include "live_effects/lpeobject.h"
@@ -34,6 +35,10 @@
 #include "document-private.h"
 #include "xml/node.h"
 #include "xml/document.h"
+#include <gtkmm/stock.h>
+#include <gtkmm/toolbar.h>
+
+#include "live_effects/lpeobject-reference.h"
 
 namespace Inkscape {
 class Application;
@@ -59,38 +64,88 @@ static void lpeeditor_selection_changed (Inkscape::Selection * selection, gpoint
 LivePathEffectEditor::LivePathEffectEditor() 
     : UI::Widget::Panel("", "dialogs.livepatheffect", SP_VERB_DIALOG_LIVE_PATH_EFFECT),
       combo_effecttype(Inkscape::LivePathEffect::LPETypeConverter),
-      button_apply(_("_Apply"), _("Apply chosen effect to selection")),
-      button_remove(_("_Remove"), _("Remove effect from selection")),
       effectwidget(NULL),
       explain_label("", Gtk::ALIGN_CENTER),
       effectapplication_frame(_("Apply new effect")),
       effectcontrol_frame(_("Current effect")),
-      current_desktop(NULL)
+      effectlist_frame(_("Effect list")),
+      button_up(Gtk::Stock::GO_UP),
+      button_down(Gtk::Stock::GO_DOWN),
+      button_apply(Gtk::Stock::ADD),
+      button_remove(Gtk::Stock::REMOVE),
+      current_desktop(NULL),
+      current_lpeitem(NULL)
 {
     Gtk::Box *contents = _getContents();
     contents->set_spacing(4);
 
+    //Add the TreeView, inside a ScrolledWindow, with the button underneath:
+    scrolled_window.add(effectlist_view);
+    //Only show the scrollbars when they are necessary:
+    scrolled_window.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+
     effectapplication_hbox.set_spacing(4);
     effectcontrol_vbox.set_spacing(4);
+    effectlist_vbox.set_spacing(4);
 
     effectapplication_hbox.pack_start(combo_effecttype, true, true);
     effectapplication_hbox.pack_start(button_apply, true, true);
     effectapplication_frame.add(effectapplication_hbox);
 
+    effectlist_vbox.pack_start(scrolled_window, Gtk::PACK_EXPAND_WIDGET);
+    effectlist_vbox.pack_end(toolbar, Gtk::PACK_SHRINK);
+   // effectlist_vbox.pack_end(button_hbox, Gtk::PACK_SHRINK);
+    effectlist_frame.add(effectlist_vbox);
+
     effectcontrol_vbox.pack_start(explain_label, true, true);
-    effectcontrol_vbox.pack_end(button_remove, true, true);
     effectcontrol_frame.add(effectcontrol_vbox);
 
+ //   button_hbox.pack_start(button_up, true, true);
+ //   button_hbox.pack_start(button_down, true, true);
+ //   button_hbox.pack_end(button_remove, true, true);
+	toolbar.set_toolbar_style(Gtk::TOOLBAR_ICONS);	
+ // Add toolbar items to toolbar
+  toolbar.append(button_up);
+  toolbar.append(button_down);
+  toolbar.append(button_remove);
+
+  
+  // Add toolbar
+  //add_toolbar(toolbar);
+  toolbar.show_all(); //Show the toolbar and all its child widgets.
+
+      
+    //Create the Tree model:
+    effectlist_store = Gtk::ListStore::create(columns);
+    effectlist_view.set_model(effectlist_store);
+
+    effectlist_view.set_rules_hint();
+    effectlist_view.set_headers_clickable(true);
+    effectlist_view.set_headers_visible(true);
+
+    // Handle tree selections
+    effectlist_selection = effectlist_view.get_selection();
+    effectlist_selection->signal_changed().connect( sigc::mem_fun(*this, &LivePathEffectEditor::on_effect_selection_changed) );
+
+    effectlist_view.set_headers_visible(false);
+    //Add the TreeView's view columns:
+    effectlist_view.append_column("Effect", columns.col_name);
+
+
     contents->pack_start(effectapplication_frame, false, false);
+    contents->pack_start(effectlist_frame, true, true);
     contents->pack_start(effectcontrol_frame, false, false);
 
     // connect callback functions to buttons
     button_apply.signal_clicked().connect(sigc::mem_fun(*this, &LivePathEffectEditor::onApply));
     button_remove.signal_clicked().connect(sigc::mem_fun(*this, &LivePathEffectEditor::onRemove));
 
+    button_up.signal_clicked().connect(sigc::mem_fun(*this, &LivePathEffectEditor::onUp));
+    button_down.signal_clicked().connect(sigc::mem_fun(*this, &LivePathEffectEditor::onDown));
+
     show_all_children();
 
-    button_remove.hide();
+    //button_remove.hide();
 }
 
 LivePathEffectEditor::~LivePathEffectEditor() 
@@ -136,7 +191,7 @@ LivePathEffectEditor::showText(Glib::ustring const &str)
     }
 
     explain_label.set_label(str);
-    button_remove.hide();
+    //button_remove.hide();
 
     // fixme: do resizing of dialog ?
 }
@@ -147,21 +202,33 @@ LivePathEffectEditor::set_sensitize_all(bool sensitive)
     combo_effecttype.set_sensitive(sensitive);
     button_apply.set_sensitive(sensitive);
     button_remove.set_sensitive(sensitive);
+    effectlist_view.set_sensitive(sensitive);
+    button_up.set_sensitive(sensitive);
+    button_down.set_sensitive(sensitive);
 }
+
 
 void
 LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
 {
+    effectlist_store->clear();
+    current_lpeitem = NULL;
+
     if ( sel && !sel->isEmpty() ) {
         SPItem *item = sel->singleItem();
         if ( item ) {
             if ( SP_IS_LPE_ITEM(item) ) {
                 SPLPEItem *lpeitem = SP_LPE_ITEM(item);
-                LivePathEffectObject *lpeobj = sp_lpe_item_get_livepatheffectobject(lpeitem);
+
+                effect_list_update(lpeitem);
+
+                current_lpeitem = lpeitem;
+                
                 set_sensitize_all(true);
-                if (lpeobj) {
-                    if (lpeobj->lpe) {
-                        showParams(lpeobj->lpe);
+                if ( sp_lpe_item_has_path_effect(lpeitem) ) {
+                    Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(lpeitem);
+                    if (lpe) {
+                        showParams(lpe);
                     } else {
                         showText(_("Unknown effect is applied"));
                     }
@@ -184,6 +251,22 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
         set_sensitize_all(false);
     }
 }
+
+void
+LivePathEffectEditor::effect_list_update(SPLPEItem *lpeitem)
+{
+    effectlist_store->clear();
+    
+    PathEffectList effectlist = sp_lpe_item_get_effect_list(lpeitem);
+    PathEffectList::iterator it;
+    for( it = effectlist.begin() ; it!=effectlist.end(); it++ )
+    {
+         Gtk::TreeModel::Row row = *(effectlist_store->append());
+         row[columns.col_name] = (*it)->lpeobject->lpe->getName();
+         row[columns.lperef] = *it;
+    }
+}
+
 
 void 
 LivePathEffectEditor::setDesktop(SPDesktop *desktop)
@@ -247,7 +330,7 @@ LivePathEffectEditor::onApply()
             Inkscape::GC::release(repr);
 
             gchar *href = g_strdup_printf("#%s", repr_id);
-            sp_lpe_item_set_path_effect(SP_LPE_ITEM(item), href, true);
+            sp_lpe_item_add_path_effect(SP_LPE_ITEM(item), href, true);
             g_free(href);
 
             sp_document_done(doc, SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
@@ -265,14 +348,66 @@ LivePathEffectEditor::onRemove()
     if ( sel && !sel->isEmpty() ) {
         SPItem *item = sel->singleItem();
         if ( item && SP_IS_LPE_ITEM(item) ) {
-            sp_lpe_item_remove_path_effect(SP_LPE_ITEM(item), false);
-            showText(_("No effect applied"));
-            button_remove.set_sensitive(false);
+            sp_lpe_item_remove_current_path_effect(SP_LPE_ITEM(item), false);
+            
             sp_document_done ( sp_desktop_document (current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
                                _("Remove path effect") );
+
+            effect_list_update(SP_LPE_ITEM(item));
         }
     }
 }
+
+void LivePathEffectEditor::onUp()
+{
+	Inkscape::Selection *sel = _getSelection();
+    if ( sel && !sel->isEmpty() ) {
+        SPItem *item = sel->singleItem();
+        if ( item && SP_IS_LPE_ITEM(item) ) {
+            
+			sp_lpe_item_up_current_path_effect(SP_LPE_ITEM(item));
+            
+            sp_document_done ( sp_desktop_document (current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
+                               _("Remove path effect") );
+
+            effect_list_update(SP_LPE_ITEM(item));
+        }
+    }
+	
+}
+
+void LivePathEffectEditor::onDown()
+{
+	Inkscape::Selection *sel = _getSelection();
+    if ( sel && !sel->isEmpty() ) {
+        SPItem *item = sel->singleItem();
+        if ( item && SP_IS_LPE_ITEM(item) ) {
+            
+			sp_lpe_item_down_current_path_effect(SP_LPE_ITEM(item));
+            
+            sp_document_done ( sp_desktop_document (current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
+                               _("Remove path effect") );
+
+            effect_list_update(SP_LPE_ITEM(item));
+        }
+    }
+}
+
+void LivePathEffectEditor::on_effect_selection_changed()
+{
+    Glib::RefPtr<Gtk::TreeSelection> sel = effectlist_view.get_selection();
+    if (sel->count_selected_rows () == 0)
+        return;
+
+    Gtk::TreeModel::iterator it = sel->get_selected();
+    LivePathEffect::LPEObjectReference * lperef = (*it)[columns.lperef];
+
+    if (lperef && current_lpeitem) {
+        sp_lpe_item_set_current_path_effect(current_lpeitem, lperef);
+        showParams(lperef->lpeobject->lpe);
+    }
+}
+
 
 } // namespace Dialog
 } // namespace UI

@@ -47,8 +47,6 @@ private:
     BoolParam scale_y_rel;
     BoolParam    vertical_pattern;
 
-    bool groupSpecialBehavior;    
-
     void on_pattern_pasted();
 
     LPEBendPath(const LPEBendPath&);

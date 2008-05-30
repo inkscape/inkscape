@@ -464,7 +464,7 @@ sp_path_set_original_curve (SPPath *path, SPCurve *curve, unsigned int owner, bo
             path->original_curve = curve->copy();
         }
     }
-    sp_path_update_patheffect(path, write);
+    sp_lpe_item_update_patheffect(path, true, write);
     SP_OBJECT(path)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 

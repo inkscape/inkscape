@@ -48,8 +48,6 @@ private:
 
     std::vector<Geom::Point> handles;
     double tmat[3][4];
-    
-    bool groupSpecialBehavior;
 };
 
 } //namespace LivePathEffect

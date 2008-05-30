@@ -43,8 +43,9 @@
 #include "live_effects/lpe-circle_with_radius.h"
 #include "live_effects/lpe-perspective_path.h"
 #include "live_effects/lpe-spiro.h"
-#include "live_effects/lpe-constructgrid.h"
+#include "live_effects/lpe-lattice.h"
 #include "live_effects/lpe-envelope.h"
+#include "live_effects/lpe-constructgrid.h"
 #include "live_effects/lpe-perp_bisector.h"
 #include "live_effects/lpe-tangent_to_curve.h"
 // end of includes
@@ -66,14 +67,15 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),   "doeffectstacktest"},
 #endif
     {GEARS,                 N_("Gears"),                 "gears"},
-    {CURVE_STITCH,          N_("Stitch Sub-Paths"),      "curvestitching"},
+    {CURVE_STITCH,          N_("Stitch Sub-Paths"),       "curvestitching"},
     {CIRCLE_WITH_RADIUS,    N_("Circle (center+radius)"), "circle_with_radius"},
     {PERSPECTIVE_PATH,      N_("Perspective path"),      "perspective_path"},
     {SPIRO,      N_("Spiro spline"),      "spiro"},
-    {CONSTRUCT_GRID,        N_("Construct grid"),        "construct_grid"},
+    {LATTICE,               N_("Lattice Deformation"),   "lattice"},
     {ENVELOPE,              N_("Envelope Deformation"),  "envelope"},
+    {CONSTRUCT_GRID,        N_("Construct grid"),        "construct_grid"},
     {PERP_BISECTOR, N_("Perpendicular bisector"), "perp_bisector"},
-    {TANGENT_TO_CURVE, N_("Tangent to curve"), "tangent_to_curve"},
+    {TANGENT_TO_CURVE, N_("Tangent to curve"), "tangent_to_curve"}
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
@@ -108,6 +110,12 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
         case CURVE_STITCH:
             neweffect = static_cast<Effect*> ( new LPECurveStitch(lpeobj) );
             break;
+        case LATTICE:
+            neweffect = static_cast<Effect*> ( new LPELattice(lpeobj) );
+            break;
+        case ENVELOPE:
+            neweffect = static_cast<Effect*> ( new LPEEnvelope(lpeobj) );
+            break;
         case CIRCLE_WITH_RADIUS:
             neweffect = static_cast<Effect*> ( new LPECircleWithRadius(lpeobj) );
             break;
@@ -119,9 +127,6 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case CONSTRUCT_GRID:
             neweffect = static_cast<Effect*> ( new LPEConstructGrid(lpeobj) );
-            break;
-        case ENVELOPE:
-            neweffect = static_cast<Effect*> ( new LPEEnvelope(lpeobj) );
             break;
         case PERP_BISECTOR:
             neweffect = static_cast<Effect*> ( new LPEPerpBisector(lpeobj) );

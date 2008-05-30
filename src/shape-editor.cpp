@@ -191,9 +191,9 @@ void ShapeEditor::set_item(SPItem *item) {
 
     if (item) {
         SPLPEItem *lpeitem = SP_LPE_ITEM(item);
-        if (!sp_lpe_item_has_path_effect(lpeitem) ||
-            !sp_lpe_item_get_livepatheffect(lpeitem)->isVisible() ||
-            !sp_lpe_item_get_livepatheffect(lpeitem)->providesKnotholder()) {
+        if (!sp_lpe_item_get_current_lpe(lpeitem) ||   // if returns NULL, the whole expression evaluates to true and C++ will not call the otherwise crashing 2 functions below
+            !sp_lpe_item_get_current_lpe(lpeitem)->isVisible() ||
+            !sp_lpe_item_get_current_lpe(lpeitem)->providesKnotholder()) {
             // only create nodepath if the item either doesn't have an LPE
             // or the LPE is invisible or it doesn't provide a knotholder itself
             this->nodepath =

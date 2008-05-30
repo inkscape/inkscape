@@ -68,8 +68,6 @@ LPEBendPath::LPEBendPath(LivePathEffectObject *lpeobject) :
     prop_scale.param_set_increments(0.01, 0.10);
 
     concatenate_before_pwd2 = true;
-
-    groupSpecialBehavior = false;
 }
 
 LPEBendPath::~LPEBendPath()
@@ -80,12 +78,8 @@ LPEBendPath::~LPEBendPath()
 void
 LPEBendPath::doBeforeEffect (SPLPEItem *lpeitem)
 {
-    if(SP_IS_GROUP(lpeitem))
-    {
-        groupSpecialBehavior = true;
-
-        original_bbox(lpeitem);
-    }
+    // get the item bounding box
+    original_bbox(lpeitem);
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
@@ -105,11 +99,6 @@ LPEBendPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
     Piecewise<SBasis> y = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[0]) : Piecewise<SBasis>(patternd2[1]);
 
 //We use the group bounding box size or the path bbox size to translate well x and y
-    if(groupSpecialBehavior == false)
-    {
-        boundingbox_X = bounds_exact(x);
-        boundingbox_Y = bounds_exact(y);
-    }
     x-= vertical_pattern.get_value() ? boundingbox_Y.min() : boundingbox_X.min();
     y-= vertical_pattern.get_value() ? boundingbox_X.middle() : boundingbox_Y.middle();
 
