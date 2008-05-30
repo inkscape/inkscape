@@ -58,8 +58,11 @@ Rect Path::boundsFast() const {
 
 Rect Path::boundsExact() const {
   Rect bounds=front().boundsExact();
-  for ( const_iterator iter=++begin(); iter != end() ; ++iter ) {
-    bounds.unionWith(iter->boundsExact());
+  const_iterator iter = begin();
+  if ( iter != end() ) {
+    for ( ++iter; iter != end() ; ++iter ) {
+      bounds.unionWith(iter->boundsExact());
+    }
   }
   return bounds;
 }
