@@ -56,6 +56,9 @@ class LSystem(inkex.Effect):
                         action="store", type="string", 
                         dest="rules", default="F=FF-[-F+F+F]+[+F-F-F]",
                         help="replacement rules")
+        self.OptionParser.add_option("-t", "--tab",
+                        action="store", type="string",
+                        dest="tab")
         self.stack = []
         self.turtle = pturtle.pTurtle()
     def iterate(self):
