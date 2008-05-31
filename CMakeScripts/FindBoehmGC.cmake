@@ -26,6 +26,7 @@ else (BOEHMGC_LIBRARIES AND BOEHMGC_INCLUDE_DIRS)
       /usr/local/include
       /opt/local/include
       /sw/include
+      $ENV{DEVLIBS_PATH}//include//
     PATH_SUFFIXES
       gc
   )

@@ -48,6 +48,7 @@ FOREACH(_SUBLIB ${SubLibs})
       /usr/local/include
       /opt/local/include
       /sw/include
+      $ENV{DEVLIBS_PATH}//include//
     PATH_SUFFIXES
       ${_SUBLIB}
   )

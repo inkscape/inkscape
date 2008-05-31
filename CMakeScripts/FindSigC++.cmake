@@ -29,18 +29,28 @@ else (SIGC++_LIBRARIES AND SIGC++_INCLUDE_DIRS)
       pkg_check_modules(_SIGC++ sigc++-2.0)
     endif (PKG_CONFIG_FOUND)
   endif (${CMAKE_MAJOR_VERSION} EQUAL 2 AND ${CMAKE_MINOR_VERSION} EQUAL 4)
-  find_path(SIGC++_INCLUDE_DIR
-    NAMES
-      sigc++/sigc++.h
-    PATHS
+SET(_DIR_LIST
       ${_SIGC++_INCLUDEDIR}
       /usr/include
       /usr/local/include
       /opt/local/include
       /sw/include
+      $ENV{DEVLIBS_PATH}//include//
+   )
+FOREACH(_TEST_PATH ${_DIR_LIST})
+  find_path(${_TEST_PATH}_INCLUDE_DIR
+    NAMES
+      sigc++/sigc++.h
+      sigc++config.h
+    PATHS
+    ${_TEST_PATH}
     PATH_SUFFIXES
       sigc++-2.0
   )
+  LIST(APPEND SIGC++_INCLUDE_DIRS
+    ${${_TEST_PATH}_INCLUDE_DIR}
+  )
+ENDFOREACH(_TEST_PATH)  
 
   find_library(SIGC-2.0_LIBRARY
     NAMES
@@ -56,10 +66,6 @@ else (SIGC++_LIBRARIES AND SIGC++_INCLUDE_DIRS)
   if (SIGC-2.0_LIBRARY)
     set(SIGC-2.0_FOUND TRUE)
   endif (SIGC-2.0_LIBRARY)
-
-  set(SIGC++_INCLUDE_DIRS
-    ${SIGC++_INCLUDE_DIR}
-  )
 
   if (SIGC-2.0_FOUND)
     set(SIGC++_LIBRARIES

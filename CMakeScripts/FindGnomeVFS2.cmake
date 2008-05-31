@@ -38,6 +38,7 @@ else (GNOMEVFS2_LIBRARIES AND GNOMEVFS2_INCLUDE_DIRS)
       /usr/local/include
       /opt/local/include
       /sw/include
+      $ENV{DEVLIBS_PATH}//include//
     PATH_SUFFIXES
       gnome-vfs-2.0
   )

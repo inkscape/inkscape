@@ -19,6 +19,7 @@ lpegroupbbox.cpp
 lpegroupbbox.h
 lpe-knot.cpp
 lpe-knot.h
+lpe-lattice.h
 lpe-lattice.cpp
 lpeobject.cpp
 lpeobject.h

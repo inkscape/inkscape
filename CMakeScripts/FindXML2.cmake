@@ -38,6 +38,7 @@ else (XML2_LIBRARIES AND XML2_INCLUDE_DIRS)
       /usr/local/include
       /opt/local/include
       /sw/include
+      $ENV{DEVLIBS_PATH}//include//
     PATH_SUFFIXES
       libxml2
   )
