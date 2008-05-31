@@ -302,6 +302,9 @@ sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write)
     g_return_if_fail (lpeitem != NULL);
     g_return_if_fail (SP_IS_LPE_ITEM (lpeitem));
 
+    if (!sp_lpe_item_path_effects_enabled(lpeitem))
+        return;
+
     SPLPEItem *top;
 
     if (wholetree) {
