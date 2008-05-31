@@ -804,16 +804,12 @@ sp_item_invoke_bbox_full(SPItem const *item, NR::Maybe<NR::Rect> *bbox, NR::Matr
     }
 
     if (temp_bbox.x0 > temp_bbox.x1 || temp_bbox.y0 > temp_bbox.y1) {
-        // We'll assume here that when x0 > x1 or y0 > y1, the bbox is "nothing"
-        // However it has never been explicitely defined this way for NRRects
-        // (as opposed to NR::Maybe<NR::Rect>)
-        *bbox = NR::Nothing();
-        return;
-    }
-
-    if (temp_bbox.x0 == temp_bbox.y0 == NR_HUGE && temp_bbox.x1 == temp_bbox.y1 == -NR_HUGE) {
-        // The bbox hasn't been touched by the SPItemClass' bbox method
+        // Either the bbox hasn't been touched by the SPItemClass' bbox method 
+        // (it still has its initial values, see above: x0 = y0 = NR_HUGE and x1 = y1 = -NR_HUGE)
         // or it has explicitely been set to be like this (e.g. in sp_shape_bbox)
+        
+        // When x0 > x1 or y0 > y1, the bbox is considered to be "nothing", although it has not been 
+        // explicitely defined this way for NRRects (as opposed to NR::Maybe<NR::Rect>)
         *bbox = NR::Nothing();
         return;
     }
