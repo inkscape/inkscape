@@ -5,6 +5,7 @@ clouds.h
 crystal.h
 cutout.h
 drop-shadow.h
+emboss.h
 etched-glass.h
 filter-all.cpp
 filter.cpp
@@ -16,6 +17,7 @@ ink-bleed.h
 jelly-bean.h
 jigsaw-piece.h
 leopard-fur.h
+melt.h
 metal.h
 motion-blur.h
 oil-slick.h

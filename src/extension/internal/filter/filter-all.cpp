@@ -14,6 +14,7 @@
 #include "crystal.h"
 #include "cutout.h"
 #include "drop-shadow.h"
+#include "emboss.h"
 #include "etched-glass.h"
 #include "fire.h"
 #include "frost.h"
@@ -21,6 +22,7 @@
 #include "jelly-bean.h"
 #include "jigsaw-piece.h"
 #include "leopard-fur.h"
+#include "melt.h"
 #include "metal.h"
 #include "motion-blur.h"
 #include "oil-slick.h"
@@ -50,6 +52,7 @@ Filter::filters_all (void )
 	Crystal::init();
 	Cutout::init();
 	DropShadow::init();
+	Emboss::init();
 	EtchedGlass::init();
 	Fire::init();
 	Frost::init();
@@ -57,6 +60,7 @@ Filter::filters_all (void )
 	JellyBean::init();
 	JigsawPiece::init();
 	LeopardFur::init();
+	Melt::init();
 	Metal::init();
 	MotionBlur::init();
 	OilSlick::init();
