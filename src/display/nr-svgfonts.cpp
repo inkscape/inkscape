@@ -141,15 +141,25 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
 
     *glyphs = (cairo_glyph_t*) malloc(count*sizeof(cairo_glyph_t));
 
-
+    char* previous_unicode = NULL;
     count=0;
+    double x=0;
     _utf8 = (char*) utf8;
     while(_utf8[0] != '\0'){
 	len = 0;
         for (i=0; i < (unsigned long) this->glyphs.size(); i++){
             if ( len = compare_them(this->glyphs[i]->unicode, _utf8) ){
+	        for(SPObject* node = this->font->children;previous_unicode && node;node=node->next){
+	            if (SP_IS_HKERN(node)){
+	                if ( (((SPHkern*)node)->u1[0] == previous_unicode[0]) && (((SPHkern*)node)->u2[0] == this->glyphs[i]->unicode[0]))//TODO: strings
+				x -= (((SPHkern*)node)->k / this->font->horiz_adv_x);
+				//g_warning("k=%f, adv_x=%f, hkerning=%f", (SPHkern*)node)->k, this->font->horiz_adv_x, hkerning);
+				g_warning("x=%f",x);
+	            }
+		}
+		previous_unicode = this->glyphs[i]->unicode;
                 (*glyphs)[count].index = i;
-                (*glyphs)[count].x = count; //TODO
+                (*glyphs)[count].x = x++; //TODO
                 (*glyphs)[count++].y = 0;  //TODO
                 _utf8+=len;
 		continue;
@@ -157,7 +167,7 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
         }
 	if (!len){
         	(*glyphs)[count].index = i;
-        	(*glyphs)[count].x = count; //TODO
+        	(*glyphs)[count].x = x++; //TODO
         	(*glyphs)[count++].y = 0;  //TODO
 		_utf8++;
 	}

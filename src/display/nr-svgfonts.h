@@ -26,6 +26,7 @@
 #include "../sp-glyph.h"
 #include "../sp-missing-glyph.h"
 #include "../sp-font.h"
+#include "../sp-glyph-kerning.h"
 
 class SvgFont;
 
