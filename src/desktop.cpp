@@ -976,6 +976,16 @@ SPDesktop::zoom_drawing()
 }
 
 /**
+ * Scroll canvas by specific coordinate amount in svg coordinates.
+ */
+void
+SPDesktop::scroll_world_in_svg_coords (double dx, double dy, bool is_scrolling)
+{
+    double scale = expansion(_d2w);
+    scroll_world(dx*scale, dy*scale, is_scrolling);
+}
+
+/**
  * Scroll canvas by specific coordinate amount.
  */
 void

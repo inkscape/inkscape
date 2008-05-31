@@ -257,6 +257,7 @@ struct SPDesktop : public Inkscape::UI::View::View
         using NR::Y;
         scroll_world(scroll[X], scroll[Y], is_scrolling);
     }
+    void scroll_world_in_svg_coords (double dx, double dy, bool is_scrolling = false);
 
     void getWindowGeometry (gint &x, gint &y, gint &w, gint &h);
     void setWindowPosition (NR::Point p);

@@ -48,6 +48,8 @@
 #include "inkscape-private.h"
 #include "inkscape_version.h"
 #include "sp-object-repr.h"
+#include "sp-namedview.h"
+#include "desktop.h"
 #include "document-private.h"
 #include "dir-util.h"
 #include "unit-constants.h"
@@ -557,6 +559,14 @@ void SPDocument::fitToRect(NR::Rect const &rect)
     NR::translate const tr(NR::Point(0, (old_height - h))
                            - rect.min());
     SP_GROUP(root)->translateChildItems(tr);
+    SPNamedView *nv = sp_document_namedview(this, 0);
+    if(nv) {
+        NR::translate tr2(-rect.min());
+        nv->translateGuides(tr2);
+
+        // update the viewport so the drawing appears to stay where it was
+        nv->scrollAllDesktops(-tr2[0], tr2[1], false);
+    }
 }
 
 void sp_document_set_uri(SPDocument *document, gchar const *uri)

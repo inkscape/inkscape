@@ -87,6 +87,9 @@ struct SPNamedView : public SPObjectGroup {
     guint getViewCount();
     GSList const *getViewList() const;
     SPMetric getDefaultMetric() const;
+
+    void translateGuides(NR::translate const &translation);
+    void scrollAllDesktops(double dx, double dy, bool is_scrolling);
 };
 
 struct SPNamedViewClass {

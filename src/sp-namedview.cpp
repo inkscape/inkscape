@@ -1063,6 +1063,23 @@ Inkscape::CanvasGrid * sp_namedview_get_first_enabled_grid(SPNamedView *namedvie
     return NULL;
 }
 
+void SPNamedView::translateGuides(NR::translate const &tr) {
+    for (GSList *l = guides; l != NULL; l = l->next) {
+        SPGuide &guide = *SP_GUIDE(l->data);
+        Geom::Point point_on_line = guide.point_on_line;
+        point_on_line[0] += tr[0];
+        point_on_line[1] += tr[1];
+        sp_guide_moveto(guide, point_on_line, true);
+    }
+}
+
+void SPNamedView::scrollAllDesktops(double dx, double dy, bool is_scrolling) {
+        for(GSList *l = views; l; l = l->next) {
+            SPDesktop *desktop = static_cast<SPDesktop *>(l->data);
+            desktop->scroll_world_in_svg_coords(dx, dy, is_scrolling);
+        }
+}
+
 
 /*
   Local Variables:
