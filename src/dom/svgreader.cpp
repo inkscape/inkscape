@@ -101,7 +101,7 @@ typedef enum
 /**
  * Defines a hyperlink
  */
-SVG_A_ELEMENT,
+SVG_A_ELEMENT = 0,
 /**
  * Allows control over glyphs used to render particular character
  *  data (e.g. for music symbols or Asian text)
@@ -425,7 +425,11 @@ SVG_VIEW_ELEMENT,
 /**
  *
  */
-SVG_VKERN_ELEMENT
+SVG_VKERN_ELEMENT,
+/**
+ *
+ */
+SVG_MAX_ELEMENT
 
 } SVGElementType;
 
@@ -524,10 +528,39 @@ SVGElementTableEntry svgElementTable[] =
   { "tspan",                 SVG_TSPAN_ELEMENT               },
   { "use",                   SVG_USE_ELEMENT                 },
   { "view",                  SVG_VIEW_ELEMENT                },
-  { "vkern",                 SVG_VKERN_ELEMENT               }
+  { "vkern",                 SVG_VKERN_ELEMENT               },
+  { NULL,                    -1                              }
   };
 
 
+/**
+ * Look up the SVG Element type enum for a given string
+ * Return -1 if not found
+ */
+int svgElementStrToEnum(const char *str)
+{
+    if (!str)
+        return -1;
+    for (SVGElementTableEntry *entry = svgElementTable ;
+          entry->name; entry++)
+        {
+        if (strcmp(str, entry->name) == 0)
+            return entry->type;
+        }
+    return -1;
+}
+
+
+/**
+ * Return the string corresponding to a given SVG element type enum
+ * Return "unknown" if not found
+ */
+const char *svgElementStrToEnum(int type)
+{
+    if (type < 0 || type >= SVG_MAX_ELEMENT)
+        return "unknown";
+    return svgElementTable[type].name;
+}
 
 
 /**
