@@ -321,7 +321,7 @@ static char const preferences_skeleton[] =
 "  <group\n"
 "     id=\"toolbox\"\n"
 "     icononly=\"1\"\n"
-"     secondary=\"1\">\n"
+"     secondary=\"1\"\n"
 "     small=\"1\">\n"
 "    <group\n"
 "       id=\"tools\"\n"
