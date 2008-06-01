@@ -11,7 +11,7 @@
           <circle r='250' cx='500' cy='500' style="fill:blue;"/>
        </glyph>
        <missing-glyph d="M0,0h1000v1000h-1000z"></missing-glyph>
-       <hkern u1="!" u2="@" k="1000" />
+       <hkern u1="!" u2="@" k="500" />
     </font>
 
     <font id="Font2" horiz-adv-x="1100">
