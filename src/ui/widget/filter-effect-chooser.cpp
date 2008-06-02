@@ -56,7 +56,15 @@ sigc::signal<void>& SimpleFilterModifier::signal_blend_blur_changed()
 
 const Glib::ustring SimpleFilterModifier::get_blend_mode()
 {
-    return _blend.get_active_row_number() == 5 ? "filter" : _blend.get_active_data()->key;
+    if (_blend.get_active_row_number() == 5) {
+        return "filter";
+    } else {
+        const Util::EnumData<NR::FilterBlendMode> *d = _blend.get_active_data();
+        if (d)
+            return _blend.get_active_data()->key;
+        else
+            return "filter";
+    }
 }
 
 void SimpleFilterModifier::set_blend_mode(const int val)

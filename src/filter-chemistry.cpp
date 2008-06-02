@@ -349,7 +349,7 @@ modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *item,
                                       gdouble radius)
 {
     if (!item->style || !item->style->filter.set) {
-        //return new_filter_gaussian_blur_from_item(document, item, radius);
+        return new_filter_simple_from_item(document, item, "normal", radius);
     }
 
     SPFilter *filter = SP_FILTER(item->style->getFilter());

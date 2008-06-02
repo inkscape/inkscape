@@ -104,6 +104,7 @@ ObjectCompositeSettings::_blendBlurValueChanged()
     if (!desktop) {
         return;
     }
+    SPDocument *document = sp_desktop_document (desktop);
 
     if (_blocked)
         return;
@@ -121,40 +122,34 @@ ObjectCompositeSettings::_blendBlurValueChanged()
         radius = 0;
     }
 
-    const Glib::ustring blendmode = _fe_cb.get_blend_mode();
+    //const Glib::ustring blendmode = _fe_cb.get_blend_mode();
 
-    SPFilter *filter = 0;
-    const bool remfilter = (blendmode == "normal" && radius == 0) || (blendmode == "filter" && !filter);
-
-    if(blendmode != "filter" || filter) {
-        SPDocument *document = sp_desktop_document (desktop);
-
-        //apply created filter to every selected item
-        for (StyleSubject::iterator i = _subject->begin() ; i != _subject->end() ; ++i ) {
-            if (!SP_IS_ITEM(*i)) {
-                continue;
-            }
-
-            SPItem * item = SP_ITEM(*i);
-            SPStyle *style = SP_OBJECT_STYLE(item);
-            g_assert(style != NULL);
-
-            if(remfilter) {
-                remove_filter (item, false);
-            }
-            else {
-                if(blendmode != "filter")
-                    filter = new_filter_simple_from_item(document, item, blendmode.c_str(), radius);
-                sp_style_set_property_url (SP_OBJECT(item), "filter", SP_OBJECT(filter), false);
-            }
-
-            //request update
-            SP_OBJECT(item)->requestDisplayUpdate(( SP_OBJECT_MODIFIED_FLAG |
-                                                    SP_OBJECT_STYLE_MODIFIED_FLAG ));
+    //apply created filter to every selected item
+    for (StyleSubject::iterator i = _subject->begin() ; i != _subject->end() ; ++i ) {
+        if (!SP_IS_ITEM(*i)) {
+            continue;
         }
+
+        SPItem * item = SP_ITEM(*i);
+        SPStyle *style = SP_OBJECT_STYLE(item);
+        g_assert(style != NULL);
+
+        if (radius == 0 && item->style->filter.set
+            && filter_is_single_gaussian_blur(SP_FILTER(item->style->getFilter()))) {
+            remove_filter(item, false);
+        }
+        else {
+            SPFilter *filter = modify_filter_gaussian_blur_from_item(document, item, radius);
+            sp_style_set_property_url(item, "filter", filter, false);
+        }
+
+        //request update
+        item->requestDisplayUpdate(( SP_OBJECT_MODIFIED_FLAG |
+                                     SP_OBJECT_STYLE_MODIFIED_FLAG ));
     }
 
-    sp_document_maybe_done (sp_desktop_document (desktop), _blur_tag.c_str(), _verb_code, _("Change blur"));
+    sp_document_maybe_done (document, _blur_tag.c_str(), _verb_code,
+                            _("Change blur"));
 
     // resume interruptibility
     sp_canvas_end_forced_full_redraws(sp_desktop_canvas(desktop));
