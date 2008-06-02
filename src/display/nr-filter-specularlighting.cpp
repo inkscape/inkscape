@@ -86,7 +86,7 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
     Fvector L, N, LC, H;
     gdouble inter;
 
-    nr_pixblock_setup_fast(out, in->mode,
+    nr_pixblock_setup_fast(out, NR_PIXBLOCK_MODE_R8G8B8A8N,
             in->area.x0, in->area.y0, in->area.x1, in->area.y1,
             true);
     unsigned char *data_i = NR_PIXBLOCK_PX (in);
