@@ -277,6 +277,14 @@ void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve) {
         for (PathEffectList::iterator it = lpeitem->path_effect_list->begin(); it != lpeitem->path_effect_list->end(); ++it)
         {
             LivePathEffectObject *lpeobj = (*it)->lpeobject;
+            if (!lpeobj) {
+                g_warning("sp_lpe_item_perform_path_effect - NULL lpeobj in list!");
+                return;
+            }
+            if (!lpeobj->lpe) {
+                g_warning("sp_lpe_item_perform_path_effect - lpeobj without lpe!");
+                return;
+            }
 
             if (lpeobj->lpe->isVisible()) {
                 // Groups have their doBeforeEffect called elsewhere
