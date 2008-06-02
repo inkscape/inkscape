@@ -213,8 +213,8 @@ static void sp_feMorphology_build_renderer(SPFilterPrimitive *primitive, NR::Fil
     sp_filter_primitive_renderer_common(primitive, nr_primitive); 
     
     nr_morphology->set_operator(sp_morphology->Operator);
-    nr_morphology->set_xradius( (int)sp_morphology->radius.getNumber() );
-    nr_morphology->set_yradius( (int)sp_morphology->radius.getOptNumber() );
+    nr_morphology->set_xradius( sp_morphology->radius.getNumber() );
+    nr_morphology->set_yradius( sp_morphology->radius.getOptNumber() );
 }
 
 /*

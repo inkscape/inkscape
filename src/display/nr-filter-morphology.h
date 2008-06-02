@@ -34,13 +34,13 @@ public:
     virtual void area_enlarge(NRRectL &area, Matrix const &trans);
     virtual FilterTraits get_input_traits();
     void set_operator(FilterMorphologyOperator &o);
-    void set_xradius(int x);
-    void set_yradius(int y);
+    void set_xradius(double x);
+    void set_yradius(double y);
 
 private:
     FilterMorphologyOperator Operator;
-    int xradius;
-    int yradius;
+    double xradius;
+    double yradius;
 };
 
 } /* namespace NR */

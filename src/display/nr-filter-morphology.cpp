@@ -11,6 +11,9 @@
 
 #include "display/nr-filter-morphology.h"
 #include "display/nr-filter-units.h"
+#include "libnr/nr-blit.h"
+#include "libnr/nr-matrix.h"
+#include "libnr/nr-matrix-fns.h"
 
 namespace NR {
 
@@ -25,7 +28,7 @@ FilterPrimitive * FilterMorphology::create() {
 FilterMorphology::~FilterMorphology()
 {}
 
-int FilterMorphology::render(FilterSlot &slot, FilterUnits const &/*units*/) {
+int FilterMorphology::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in = slot.get(_input);
     if (!in) {
         g_warning("Missing source image for feMorphology (in=%d)", _input);
@@ -34,12 +37,30 @@ int FilterMorphology::render(FilterSlot &slot, FilterUnits const &/*units*/) {
 
     NRPixBlock *out = new NRPixBlock;
 
+    // this primitive is defined for premultiplied RGBA values,
+    // thus convert them to that format
+    bool free_in_on_exit = false;
+    if (in->mode != NR_PIXBLOCK_MODE_R8G8B8A8P) {
+        NRPixBlock *original_in = in;
+        in = new NRPixBlock;
+        nr_pixblock_setup_fast(in, NR_PIXBLOCK_MODE_R8G8B8A8P,
+                               original_in->area.x0, original_in->area.y0,
+                               original_in->area.x1, original_in->area.y1,
+                               true);
+        nr_blit_pixblock_pixblock(in, original_in);
+        free_in_on_exit = true;
+    }
+
+    Matrix p2pb = units.get_matrix_primitiveunits2pb();
+    int const xradius = (int)round(this->xradius * expansionX(p2pb));
+    int const yradius = (int)round(this->yradius * expansionY(p2pb));
+
     int x0=in->area.x0;
     int y0=in->area.y0;
     int x1=in->area.x1;
     int y1=in->area.y1;
     int w=x1-x0, h=y1-y0;
-    int x,y,i,j;
+    int x, y, i, j;
     int rmax,gmax,bmax,amax;
     int rmin,gmin,bmin,amin;
 
@@ -48,14 +69,14 @@ int FilterMorphology::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     unsigned char *in_data = NR_PIXBLOCK_PX(in);
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
 
-    for(x=xradius; x<w-xradius; x++){
-        for(y=yradius; y<h-yradius; y++){
-            rmin=rmax=in_data[4*(x + w*y)];
-            gmin=gmax=in_data[4*(x + w*y)+1];
-            bmin=bmax=in_data[4*(x + w*y)+2];
-            amin=amax=in_data[4*(x + w*y)+3];
-            for(i=x-xradius;i<x+xradius;i++){
-                for(j=y-yradius;j<y+yradius;j++){
+    for(x = 0 ; x < w ; x++){
+        for(y = 0 ; y < h ; y++){
+            rmin = gmin = bmin = amin = 255;
+            rmax = gmax = bmax = amax = 0;
+            for(i = x - xradius ; i < x + xradius ; i++){
+                if (i < 0 || i >= w) continue;
+                for(j = y - yradius ; j < y + yradius ; j++){
+                    if (j < 0 || j >= h) continue;
                     if(in_data[4*(i + w*j)]>rmax) rmax = in_data[4*(i + w*j)];
                     if(in_data[4*(i + w*j)+1]>gmax) gmax = in_data[4*(i + w*j)+1];
                     if(in_data[4*(i + w*j)+2]>bmax) bmax = in_data[4*(i + w*j)+2];
@@ -81,28 +102,36 @@ int FilterMorphology::render(FilterSlot &slot, FilterUnits const &/*units*/) {
         }
     }
 
+    if (free_in_on_exit) {
+        nr_pixblock_release(in);
+        delete in;
+    }
+
     out->empty = FALSE;
     slot.set(_output, out);
     return 0;
 }
 
-void FilterMorphology::area_enlarge(NRRectL &area, Matrix const &/*trans*/)
+void FilterMorphology::area_enlarge(NRRectL &area, Matrix const &trans)
 {
-    area.x0-=xradius;
-    area.x1+=xradius;
-    area.y0-=yradius;
-    area.y1+=yradius;
+    int const enlarge_x = (int)round(this->xradius * expansionX(trans));
+    int const enlarge_y = (int)round(this->yradius * expansionY(trans));
+
+    area.x0 -= enlarge_x;
+    area.x1 += enlarge_x;
+    area.y0 -= enlarge_y;
+    area.y1 += enlarge_y;
 }
 
 void FilterMorphology::set_operator(FilterMorphologyOperator &o){
     Operator = o;
 }
 
-void FilterMorphology::set_xradius(int x){
+void FilterMorphology::set_xradius(double x){
     xradius = x;
 }
 
-void FilterMorphology::set_yradius(int y){
+void FilterMorphology::set_yradius(double y){
     yradius = y;
 }
 
