@@ -5,8 +5,9 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Stephen Silver <sasilver@users.sourceforge.net>
  *
- * Copyright (C) 1999-2005 authors
+ * Copyright (C) 1999-2008 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -1362,36 +1363,6 @@ SPObject::emitModified(unsigned int flags)
     g_object_unref(G_OBJECT(this));
 }
 
-/*
- * Get and set descriptive parameters
- *
- * These are inefficent, so they are not intended to be used interactively
- */
-
-gchar const *
-sp_object_title_get(SPObject */*object*/)
-{
-    return NULL;
-}
-
-gchar const *
-sp_object_description_get(SPObject */*object*/)
-{
-    return NULL;
-}
-
-unsigned int
-sp_object_title_set(SPObject */*object*/, gchar const */*title*/)
-{
-    return FALSE;
-}
-
-unsigned int
-sp_object_description_set(SPObject */*object*/, gchar const */*desc*/)
-{
-    return FALSE;
-}
-
 gchar const *
 sp_object_tagName_get(SPObject const *object, SPException *ex)
 {
@@ -1591,6 +1562,166 @@ sp_object_prev(SPObject *child)
     return NULL;
 }
 
+/* Titles and descriptions */
+
+/* Note:
+   Titles and descriptions are stored in 'title' and 'desc' child elements
+   (see section 5.4 of the SVG 1.0 and 1.1 specifications).  The spec allows
+   an element to have more than one 'title' child element, but strongly
+   recommends against this and requires using the first one if a choice must
+   be made.  The same applies to 'desc' elements.  Therefore, these functions
+   ignore all but the first 'title' child element and first 'desc' child
+   element, except when deleting a title or description.
+*/
+
+/**
+ * Returns the title of this object, or NULL if there is none.
+ * The caller must free the returned string using g_free() - see comment
+ * for getTitleOrDesc() below.
+ */
+gchar *
+SPObject::title() const
+{
+    return getTitleOrDesc("svg:title");
+}
+
+/**
+ * Sets the title of this object
+ * A NULL or purely whitespace argument is interpreted as meaning that
+ * the existing title (if any) should be deleted.
+ */
+void
+SPObject::setTitle(gchar const *title)
+{
+    setTitleOrDesc(title, "svg:title");
+}
+
+/**
+ * Returns the description of this object, or NULL if there is none.
+ * The caller must free the returned string using g_free() - see comment
+ * for getTitleOrDesc() below.
+ */
+gchar *
+SPObject::desc() const
+{
+    return getTitleOrDesc("svg:desc");
+}
+
+/**
+ * Sets the description of this object.
+ * A NULL or purely whitespace argument is interpreted as meaning that
+ * the existing description (if any) should be deleted.
+ */
+void
+SPObject::setDesc(gchar const *desc)
+{
+    setTitleOrDesc(desc, "svg:desc");
+}
+
+/**
+ * Returns the title or description of this object, or NULL if there is none.
+ *
+ * The SVG spec allows 'title' and 'desc' elements to contain text marked up
+ * using elements from other namespaces.  Therefore, this function cannot
+ * in general just return a pointer to an existing string - it must instead
+ * construct a string containing the title or description without the mark-up.
+ * Consequently, the return value is a newly allocated string (or NULL), and
+ * must be freed (using g_free()) by the caller.
+ */
+gchar *
+SPObject::getTitleOrDesc(gchar const *svg_tagname) const
+{
+    SPObject *elem = findFirstChild(svg_tagname);
+    if (elem == NULL) return NULL;
+    return g_string_free(elem->textualContent(), FALSE);
+}
+
+/**
+ * Sets or deletes the title or description of this object.
+ */
+void
+SPObject::setTitleOrDesc(gchar const *value, gchar const *svg_tagname)
+{
+    SPObject *elem = findFirstChild(svg_tagname);
+
+    // if the new title/description is NULL, or just whitespace,
+    // then delete any existing title/description
+    bool just_whitespace = true;
+    if (value)
+        for (const gchar *cp = value; *cp; ++cp) {
+            if (!std::strchr("\r\n \t", *cp)) {
+                just_whitespace = false;
+                break;
+            }
+        }
+    if (just_whitespace) {
+        // delete the title/description(s)
+        while (elem) {
+            elem->deleteObject();
+            elem = findFirstChild(svg_tagname);
+        }
+        return;
+    }
+
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+
+    if (elem == NULL) {
+        // create a new 'title' or 'desc' element, putting it at the
+        // beginning (in accordance with the spec's recommendations)
+        Inkscape::XML::Node *xml_elem = xml_doc->createElement(svg_tagname);
+        repr->addChild(xml_elem, NULL);
+        elem = document->getObjectByRepr(xml_elem);
+    }
+    else {
+        // remove the current content of the 'text' or 'desc' element
+        SPObject *child;
+        while (NULL != (child = elem->firstChild())) child->deleteObject();
+    }
+
+    // add the new content
+    elem->appendChildRepr(xml_doc->createTextNode(value));
+}
+
+/**
+ * Find the first child of this object with a given tag name,
+ * and return it.  Returns NULL if there is no matching child.
+ */
+SPObject *
+SPObject::findFirstChild(gchar const *tagname) const
+{
+    for (SPObject *child = children; child; child = child->next)
+    {
+        if (child->repr->type() == Inkscape::XML::ELEMENT_NODE &&
+            !strcmp(child->repr->name(), tagname)) return child;
+    }
+    return NULL;
+}
+
+/**
+ * Return the full textual content of an element (typically all the
+ * content except the tags).
+ * Must not be used on anything except elements.
+ */
+GString*
+SPObject::textualContent() const
+{
+    GString* text = g_string_new("");
+
+    for (const SPObject *child = firstChild(); child; child = child->next)
+    {
+        Inkscape::XML::NodeType child_type = child->repr->type();
+        
+        if (child_type == Inkscape::XML::ELEMENT_NODE) {
+            GString * new_text = child->textualContent();
+            g_string_append(text, new_text->str);
+            g_string_free(new_text, TRUE);
+        }
+        else if (child_type == Inkscape::XML::TEXT_NODE) {
+            g_string_append(text, child->repr->content());
+        }
+    }
+    return text;
+}
 
 /*
   Local Variables:

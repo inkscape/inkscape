@@ -191,7 +191,6 @@ sp_item_widget_new (void)
     gtk_table_attach ( GTK_TABLE (t), f, 0, 3, 3, 4,
                        (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
                        (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ), 0, 0 );
-    gtk_object_set_data (GTK_OBJECT (spw), "desc_frame", l);
 
     /* Create the text view box for the object description */
     GtkWidget *textframe = gtk_frame_new(NULL);
@@ -199,8 +198,10 @@ sp_item_widget_new (void)
     gtk_widget_set_sensitive (GTK_WIDGET (textframe), FALSE);
     gtk_container_add (GTK_CONTAINER (f), textframe);
     gtk_frame_set_shadow_type (GTK_FRAME (textframe), GTK_SHADOW_IN);
+    gtk_object_set_data(GTK_OBJECT(spw), "desc_frame", textframe);
 
     tf = gtk_text_view_new();
+    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(tf), GTK_WRAP_WORD);
     desc_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tf));
     gtk_text_buffer_set_text(desc_buffer, "", -1);
     gtk_container_add (GTK_CONTAINER (textframe), tf);
@@ -324,7 +325,27 @@ sp_item_widget_setup ( SPWidget *spw, Inkscape::Selection *selection )
         w = GTK_WIDGET(gtk_object_get_data (GTK_OBJECT (spw), "label"));
         gtk_entry_set_text (GTK_ENTRY (w), obj->defaultLabel());
         gtk_widget_set_sensitive (w, TRUE);
-        w = GTK_WIDGET(gtk_object_get_data (GTK_OBJECT (spw), "label_label"));
+
+        /* Title */
+        w = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "title"));
+        gchar *title = obj->title();
+        if (title) {
+            gtk_entry_set_text(GTK_ENTRY(w), title);
+            g_free(title);
+        }
+        else gtk_entry_set_text(GTK_ENTRY(w), "");
+        gtk_widget_set_sensitive(w, TRUE);
+
+        /* Description */
+        gchar *desc = obj->desc();
+        if (desc) {
+            w = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "desc"));
+            GtkTextBuffer *buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(w));
+            gtk_text_buffer_set_text(buf, desc, -1);
+            g_free(desc);
+        }
+        w = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "desc_frame"));
+        gtk_widget_set_sensitive(w, TRUE);
     }
 
     gtk_object_set_data (GTK_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));
@@ -419,21 +440,32 @@ sp_item_widget_label_changed( GtkWidget */*widget*/, SPWidget *spw )
     }
 
     /* Retrieve the title */
-    GtkWidget *w = GTK_WIDGET(gtk_object_get_data (GTK_OBJECT (spw), "title"));
-    gchar *title = (gchar *)gtk_entry_get_text (GTK_ENTRY (w));
-    if (title != NULL) {
+    GtkWidget *w = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "title"));
+    gchar *title = (gchar *)gtk_entry_get_text(GTK_ENTRY (w));
+    g_assert(title != NULL);
+    gchar *old_title = obj->title();
+    if (old_title == NULL || strcmp(title, old_title)) {
         obj->setTitle(title);
-        sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
-                                _("Set object title"));
+        sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
+                         _("Set object title"));
     }
+    g_free(old_title);
 
     /* Retrieve the description */
-    gchar *desc = NULL; /* TODO:  get text from text buffer */
-    if (desc != NULL) {
+    GtkTextView *tv = GTK_TEXT_VIEW(gtk_object_get_data(GTK_OBJECT(spw), "desc"));
+    GtkTextBuffer *buf = gtk_text_view_get_buffer(tv);
+    GtkTextIter start, end;
+    gtk_text_buffer_get_bounds(buf, &start, &end);
+    gchar *desc = gtk_text_buffer_get_text(buf, &start, &end, TRUE);
+    g_assert(desc != NULL);
+    gchar *old_desc = obj->desc();
+    if (old_desc == NULL || strcmp(desc, old_desc)) {
         obj->setDesc(desc);
-        sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
-                                _("Set object description"));
+        sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
+                         _("Set object description"));
     }
+    g_free(old_desc);
+    g_free(desc);
 
     gtk_object_set_data (GTK_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));
 

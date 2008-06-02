@@ -53,8 +53,6 @@
 #define SP_OBJECT_PREV(o) (sp_object_prev((SPObject *) (o)))
 #define SP_OBJECT_HREFCOUNT(o) (((SPObject *) (o))->hrefcount)
 #define SP_OBJECT_STYLE(o) (((SPObject *) (o))->style)
-#define SP_OBJECT_TITLE(o) sp_object_title_get((SPObject *) (o))
-#define SP_OBJECT_DESCRIPTION(o) sp_object_description_get((SPObject *) (o))
 
 
 #include <glib-object.h>
@@ -240,14 +238,14 @@ struct SPObject : public GObject {
     void setLabel(gchar const *label);
 
     /** Retrieves the title of this object */
-    gchar const *title() const { return NULL; /* TODO */ }
+    gchar *title() const;
     /** Sets the title of this object */
-    void setTitle(gchar const *title) { (void)title; /* TODO */ }
+    void setTitle(gchar const *title);
 
     /** Retrieves the description of this object */
-    gchar const *desc() const { return NULL; /* TODO */ }
+    gchar *desc() const;
     /** Sets the description of this object */
-    void setDesc(gchar const *desc) { (void)desc; /* TODO */ }
+    void setDesc(gchar const *desc);
 
     /** @brief Set the policy under which this object will be
      *         orphan-collected.
@@ -488,6 +486,14 @@ struct SPObject : public GObject {
     CollectionPolicy _collection_policy;
     gchar *_label;
     mutable gchar *_default_label;
+
+private:
+    // Private member functions used in the definitions of setTitle(),
+    // setDesc(), title() and desc().
+    void setTitleOrDesc(gchar const *value, gchar const *svg_tagname);
+    gchar * getTitleOrDesc(gchar const *svg_tagname) const;
+    SPObject * findFirstChild(gchar const *tagname) const;
+    GString * textualContent() const;
 };
 
 /// The SPObject vtable.
@@ -534,17 +540,6 @@ void sp_object_invoke_build(SPObject *object, SPDocument *document, Inkscape::XM
 void sp_object_set(SPObject *object, unsigned int key, gchar const *value);
 
 void sp_object_read_attr(SPObject *object, gchar const *key);
-
-/*
- * Get and set descriptive parameters.
- *
- * These are inefficent, so they are not intended to be used interactively.
- */
-
-gchar const *sp_object_title_get(SPObject *object);
-gchar const *sp_object_description_get(SPObject *object);
-unsigned int sp_object_title_set(SPObject *object, gchar const *title);
-unsigned int sp_object_description_set(SPObject *object, gchar const *desc);
 
 /* Public */
 
