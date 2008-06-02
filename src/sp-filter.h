@@ -16,6 +16,8 @@
 
 #include <map>
 
+#include <gtkmm.h>
+
 #include "number-opt-number.h"
 #include "sp-object.h"
 #include "sp-filter-units.h"
@@ -81,6 +83,11 @@ int sp_filter_primitive_count(SPFilter *filter);
 
 int sp_filter_get_image_name(SPFilter *filter, gchar const *name);
 int sp_filter_set_image_name(SPFilter *filter, gchar const *name);
+
+/*
+ * Returns a result image name that is not in use inside this filter.
+ */
+Glib::ustring sp_filter_get_new_result_name(SPFilter *filter);
 
 #endif /* !SP_FILTER_H_SEEN */
 

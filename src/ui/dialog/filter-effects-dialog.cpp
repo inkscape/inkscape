@@ -1917,7 +1917,7 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
                         // Make sure the target has a result
                         const gchar *gres = repr->attribute("result");
                         if(!gres) {
-                            result = "result" + Glib::Ascii::dtostr(SP_FILTER(prim->parent)->_image_number_next);
+                            result = sp_filter_get_new_result_name(SP_FILTER(prim->parent));
                             repr->setAttribute("result", result.c_str());
                             in_val = result.c_str();
                         }

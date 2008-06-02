@@ -22,6 +22,8 @@
 using std::map;
 using std::pair;
 
+#include <gtkmm.h>
+
 #include "attributes.h"
 #include "document.h"
 #include "sp-filter.h"
@@ -114,6 +116,7 @@ sp_filter_init(SPFilter *filter)
 
     filter->_image_name = new std::map<gchar *, int, ltstr>;
     filter->_image_name->clear();
+    filter->_image_number_next = 0;
 
     filter->filterRes = NumberOptNumber();
 
@@ -474,6 +477,28 @@ int sp_filter_set_image_name(SPFilter *filter, gchar const *name) {
         return (*ret.first).second;
     }
     return value;
+}
+
+Glib::ustring sp_filter_get_new_result_name(SPFilter *filter) {
+    g_assert(filter != NULL);
+    int largest = 0;
+
+    SPObject *primitive_obj = filter->children;
+    while (primitive_obj) {
+        if (SP_IS_FILTER_PRIMITIVE(primitive_obj)) {
+            Inkscape::XML::Node *repr = SP_OBJECT_REPR(primitive_obj);
+            char const *result = repr->attribute("result");
+            int index;
+            if (result && sscanf(result, "result%d", &index) == 1) {
+                if (index > largest) {
+                    largest = index;
+                }
+            }
+        }
+        primitive_obj = primitive_obj->next;
+    }
+
+    return "result" + Glib::Ascii::dtostr(largest + 1);
 }
 
 bool ltstr::operator()(const char* s1, const char* s2) const
