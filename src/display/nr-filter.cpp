@@ -178,7 +178,7 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
 
     NRPixBlock *in = new NRPixBlock;
     nr_pixblock_setup_fast(in, pb->mode, pb->area.x0, pb->area.y0,
-                           pb->area.x1, pb->area.y1, false);
+                           pb->area.x1, pb->area.y1, true);
     if (in->size != NR_PIXBLOCK_SIZE_TINY && in->data.px == NULL) {
         g_warning("NR::Filter::render: failed to reserve temporary buffer");
         return 0;

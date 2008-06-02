@@ -50,7 +50,7 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/) {
         nr_pixblock_setup_fast(in, NR_PIXBLOCK_MODE_R8G8B8A8N,
                                original_in->area.x0, original_in->area.y0,
                                original_in->area.x1, original_in->area.y1,
-                               false);
+                               true);
         nr_blit_pixblock_pixblock(in, original_in);
         free_in_on_exit = true;
     }
