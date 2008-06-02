@@ -3,23 +3,24 @@ palettesdir = $(datadir)/inkscape/palettes
 
 palettes_DATA = \
     README \
-    inkscape.gpl \
-    Tango-Palette.gpl \
-    svg.gpl \
-    webhex.gpl \
-    websafe22.gpl \
     Blues.gpl \
+    echo-palette.gpl \
     Gold.gpl \
     Greens.gpl \
     Gray.gpl \
     Hilite.gpl \
+    inkscape.gpl \
+    LaTeX-Beamer.gpl \
     Khaki.gpl \
+    MATLAB-Jet-72.gpl \
     Reds.gpl \
     Royal.gpl \
+    svg.gpl \
+    Tango-Palette.gpl \
     Topographic.gpl \
     Ubuntu.gpl \
-    windowsXP.gpl \
-    LaTeX-Beamer.gpl
-    
+    webhex.gpl \
+    websafe22.gpl \
+    windowsXP.gpl     
 
 EXTRA_DIST = $(palettes_DATA)
