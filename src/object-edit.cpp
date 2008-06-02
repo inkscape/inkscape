@@ -76,9 +76,11 @@ static SPKnotHolder *sp_lpe_knot_holder(SPItem *item, SPDesktop *desktop)
 SPKnotHolder *
 sp_item_knot_holder(SPItem *item, SPDesktop *desktop)
 {
-    if (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)) &&
-        sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item))->isVisible() &&
-        sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item))->providesKnotholder()) {
+    if ( SP_IS_LPE_ITEM(item) &&
+         sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)) &&
+         sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item))->isVisible() &&
+         sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item))->providesKnotholder() )
+    {
         return sp_lpe_knot_holder(item, desktop);
     } else if (SP_IS_RECT(item)) {
         return sp_rect_knot_holder(item, desktop);
