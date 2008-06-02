@@ -218,40 +218,10 @@ static ProfileFloatElement f_profile[PROFILE_FLOAT_SIZE] = {
 static void
 sp_eraser_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
 {
-    SPEraserContext *erc = SP_ERASER_CONTEXT(ec);
-
-    if (!strcmp(key, "mass")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.2 );
-        erc->mass = CLAMP(dval, -1000.0, 1000.0);
-    } else if (!strcmp(key, "wiggle")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : (1 - DRAG_DEFAULT));
-        erc->drag = CLAMP((1 - dval), DRAG_MIN, DRAG_MAX); // drag is inverse to wiggle
-    } else if (!strcmp(key, "angle")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.0);
-        erc->angle = CLAMP (dval, -90, 90);
-    } else if (!strcmp(key, "width")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.1 );
-        erc->width = CLAMP(dval, -1000.0, 1000.0);
-    } else if (!strcmp(key, "thinning")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.1 );
-        erc->vel_thin = CLAMP(dval, -1.0, 1.0);
-    } else if (!strcmp(key, "tremor")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.0 );
-        erc->tremor = CLAMP(dval, 0.0, 1.0);
-    } else if (!strcmp(key, "flatness")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : 1.0 );
-        erc->flatness = CLAMP(dval, 0, 1.0);
-    } else if (!strcmp(key, "usepressure")) {
-        erc->usepressure = (val && strcmp(val, "0"));
-    } else if (!strcmp(key, "usetilt")) {
-        erc->usetilt = (val && strcmp(val, "0"));
-    } else if (!strcmp(key, "abs_width")) {
-        erc->abs_width = (val && strcmp(val, "0"));
-    } else if (!strcmp(key, "cap_rounding")) {
-        erc->cap_rounding = ( val ? g_ascii_strtod (val, NULL) : 0.0 );
+    //pass on up to parent class to handle common attributes.
+    if ( eraser_parent_class->set ) {
+        eraser_parent_class->set(ec, key, val);
     }
-
-    //g_print("ERC: %g %g %g %g\n", erc->mass, erc->drag, erc->angle, erc->width);
 }
 
 static double

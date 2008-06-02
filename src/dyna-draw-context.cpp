@@ -79,9 +79,6 @@
 
 #define DYNA_MIN_WIDTH 1.0e-6
 
-#define DRAG_MIN 0.0
-#define DRAG_DEFAULT 1.0
-#define DRAG_MAX 1.0
 
 // FIXME: move it to some shared file to be reused by both calligraphy and dropper
 #define C1 0.552
@@ -258,39 +255,15 @@ sp_dyna_draw_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
 {
     SPDynaDrawContext *ddc = SP_DYNA_DRAW_CONTEXT(ec);
 
-    if (!strcmp(key, "mass")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.2 );
-        ddc->mass = CLAMP(dval, -1000.0, 1000.0);
-    } else if (!strcmp(key, "wiggle")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : (1 - DRAG_DEFAULT));
-        ddc->drag = CLAMP((1 - dval), DRAG_MIN, DRAG_MAX); // drag is inverse to wiggle
-    } else if (!strcmp(key, "angle")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.0);
-        ddc->angle = CLAMP (dval, -90, 90);
-    } else if (!strcmp(key, "width")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.1 );
-        ddc->width = CLAMP(dval, -1000.0, 1000.0);
-    } else if (!strcmp(key, "thinning")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.1 );
-        ddc->vel_thin = CLAMP(dval, -1.0, 1.0);
-    } else if (!strcmp(key, "tremor")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.0 );
-        ddc->tremor = CLAMP(dval, 0.0, 1.0);
-    } else if (!strcmp(key, "flatness")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : 1.0 );
-        ddc->flatness = CLAMP(dval, 0, 1.0);
-    } else if (!strcmp(key, "tracebackground")) {
+    if (!strcmp(key, "tracebackground")) {
         ddc->trace_bg = (val && strcmp(val, "0"));
-    } else if (!strcmp(key, "usepressure")) {
-        ddc->usepressure = (val && strcmp(val, "0"));
-    } else if (!strcmp(key, "usetilt")) {
-        ddc->usetilt = (val && strcmp(val, "0"));
-    } else if (!strcmp(key, "abs_width")) {
-        ddc->abs_width = (val && strcmp(val, "0"));
     } else if (!strcmp(key, "keep_selected")) {
         ddc->keep_selected = (val && strcmp(val, "0"));
-    } else if (!strcmp(key, "cap_rounding")) {
-        ddc->cap_rounding = ( val ? g_ascii_strtod (val, NULL) : 0.0 );
+    } else {
+        //pass on up to parent class to handle common attributes.
+        if ( dd_parent_class->set ) {
+            dd_parent_class->set(ec, key, val);
+        }
     }
 
     //g_print("DDC: %g %g %g %g\n", ddc->mass, ddc->drag, ddc->angle, ddc->width);

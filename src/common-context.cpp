@@ -8,10 +8,13 @@
 #include "forward.h"
 #include "message-context.h"
 
-#define DRAG_DEFAULT 1.0
 #define MIN_PRESSURE      0.0
 #define MAX_PRESSURE      1.0
 #define DEFAULT_PRESSURE  1.0
+
+#define DRAG_MIN 0.0
+#define DRAG_DEFAULT 1.0
+#define DRAG_MAX 1.0
 
 
 static void sp_common_context_class_init(SPCommonContextClass *klass);
@@ -143,18 +146,64 @@ static void sp_common_context_dispose(GObject *object)
 }
 
 
-static void sp_common_context_setup(SPEventContext */*ec*/)
+static void sp_common_context_setup(SPEventContext *ec)
 {
+    if ( common_parent_class->setup ) {
+        common_parent_class->setup(ec);
+    }
 }
 
 
-static void sp_common_context_set(SPEventContext */*ec*/, gchar const */*key*/, gchar const */*value*/)
+static void sp_common_context_set(SPEventContext *ec, gchar const *key, gchar const *value)
 {
+    SPCommonContext *ctx = SP_COMMON_CONTEXT(ec);
+
+    if (!strcmp(key, "mass")) {
+        double const dval = ( value ? g_ascii_strtod (value, NULL) : 0.2 );
+        ctx->mass = CLAMP(dval, -1000.0, 1000.0);
+    } else if (!strcmp(key, "wiggle")) {
+        double const dval = ( value ? g_ascii_strtod (value, NULL) : (1 - DRAG_DEFAULT));
+        ctx->drag = CLAMP((1 - dval), DRAG_MIN, DRAG_MAX); // drag is inverse to wiggle
+    } else if (!strcmp(key, "angle")) {
+        double const dval = ( value ? g_ascii_strtod (value, NULL) : 0.0);
+        ctx->angle = CLAMP (dval, -90, 90);
+    } else if (!strcmp(key, "width")) {
+        double const dval = ( value ? g_ascii_strtod (value, NULL) : 0.1 );
+        ctx->width = CLAMP(dval, -1000.0, 1000.0);
+    } else if (!strcmp(key, "thinning")) {
+        double const dval = ( value ? g_ascii_strtod (value, NULL) : 0.1 );
+        ctx->vel_thin = CLAMP(dval, -1.0, 1.0);
+    } else if (!strcmp(key, "tremor")) {
+        double const dval = ( value ? g_ascii_strtod (value, NULL) : 0.0 );
+        ctx->tremor = CLAMP(dval, 0.0, 1.0);
+    } else if (!strcmp(key, "flatness")) {
+        double const dval = ( value ? g_ascii_strtod (value, NULL) : 1.0 );
+        ctx->flatness = CLAMP(dval, 0, 1.0);
+    } else if (!strcmp(key, "usepressure")) {
+        ctx->usepressure = ( value && strcmp(value, "0"));
+    } else if (!strcmp(key, "usetilt")) {
+        ctx->usetilt = ( value && strcmp(value, "0"));
+    } else if (!strcmp(key, "abs_width")) {
+        ctx->abs_width = ( value && strcmp(value, "0"));
+    } else if (!strcmp(key, "cap_rounding")) {
+        ctx->cap_rounding = ( value ? g_ascii_strtod (value, NULL) : 0.0 );
+    }
 }
 
-static gint sp_common_context_root_handler(SPEventContext */*event_context*/, GdkEvent */*event*/)
+static gint sp_common_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
-  return 0;
+    gint ret = FALSE;
+
+    // TODO add common hanlding
+
+
+    if ( !ret ) {
+        if ( common_parent_class->root_handler ) {
+            ret = common_parent_class->root_handler(event_context, event);
+        }
+    }
+
+    return ret;
 }
 
 /*
