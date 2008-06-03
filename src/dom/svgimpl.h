@@ -66,6 +66,364 @@ class SVGDocumentImpl;
 typedef Ptr<SVGDocumentImpl> SVGDocumentImplPtr;
 
 /*#########################################################################
+## Types
+#########################################################################*/
+
+typedef enum
+{
+/**
+ * Defines a hyperlink
+ */
+SVG_A_ELEMENT = 0,
+/**
+ * Allows control over glyphs used to render particular character
+ *  data (e.g. for music symbols or Asian text)
+ */
+SVG_ALTGLYPH_ELEMENT,
+/**
+ * Defines a set of glyph substitutions (e.g. for music symbols or Asian text)
+ */
+SVG_ALTGLYPHDEF_ELEMENT,
+/**
+ * Defines a candidate set of glyph substitutions (e.g. for music symbols
+ *  or Asian text)
+ */
+SVG_ALTGLYPHITEM_ELEMENT,
+/**
+ * Animates an attribute or property over time
+ */
+SVG_ANIMATE_ELEMENT,
+/**
+ * Specifies a color transformation over time
+ */
+SVG_ANIMATECOLOR_ELEMENT,
+/**
+ * Causes an element to move along a motion path
+ */
+SVG_ANIMATEMOTION_ELEMENT,
+/**
+ * Animates a transformation attribute on an element
+ */
+SVG_ANIMATETRANSFORM_ELEMENT,
+/**
+ * Defines a circle
+ */
+SVG_CIRCLE_ELEMENT,
+/**
+ *
+ */
+SVG_CLIPPATH_ELEMENT,
+/**
+ * Specifies a color profile description
+ */
+SVG_COLOR_PROFILE_ELEMENT,
+/**
+ * Defines a platform-independent cursor
+ */
+SVG_CURSOR_ELEMENT,
+/**
+ * Defines a separate font definition resource
+ */
+SVG_DEFINITION_SRC_ELEMENT,
+/**
+ * A container for referenced elements
+ */
+SVG_DEFS_ELEMENT,
+/**
+ * A text-only description for elements in SVG - not displayed as part
+ *  of the graphics. User agents may display the text as a tooltip
+ */
+SVG_DESC_ELEMENT,
+/**
+ * Defines an ellipse
+ */
+SVG_ELLIPSE_ELEMENT,
+/**
+ * SVG filter. Composites two objects together using different blending modes
+ */
+SVG_FEBLEND_ELEMENT,
+/**
+ * SVG filter. Applies a matrix transformation
+ */
+SVG_FECOLORMATRIX_ELEMENT,
+/**
+ * SVG filter. Performs component-wise remapping of data
+ */
+SVG_FECOMPONENTTRANSFER_ELEMENT,
+/**
+ * SVG filter.
+ */
+SVG_FECOMPOSITE_ELEMENT,
+/**
+ * SVG filter.
+ */
+SVG_FECONVOLVEMATRIX_ELEMENT,
+/**
+ * SVG filter.
+ */
+SVG_FEDIFFUSELIGHTING_ELEMENT,
+/**
+ * SVG filter.
+ */
+SVG_FEDISPLACEMENTMAP_ELEMENT,
+/**
+ * SVG filter. Defines a light source
+ */
+SVG_FEDISTANTLIGHT_ELEMENT,
+/**
+ * SVG filter.
+ */
+SVG_FEFLOOD_ELEMENT,
+/**
+ * SVG filter. Sub-element to feComponentTransfer
+ */
+SVG_FEFUNCA_ELEMENT,
+/**
+ * SVG filter. Sub-element to feComponentTransfer
+ */
+SVG_FEFUNCB_ELEMENT,
+/**
+ * SVG filter. Sub-element to feComponentTransfer
+ */
+SVG_FEFUNCG_ELEMENT,
+/**
+ * SVG filter. Sub-element to feComponentTransfer
+ */
+SVG_FEFUNCR_ELEMENT,
+/**
+ * SVG filter. Performs a Gaussian blur on the image
+ */
+SVG_FEGAUSSIANBLUR_ELEMENT,
+/**
+ * SVG filter.
+ */
+SVG_FEIMAGE_ELEMENT,
+/**
+ * SVG filter. Creates image layers on top of each other
+ */
+SVG_FEMERGE_ELEMENT,
+/**
+ * SVG filter. Sub-element to feMerge
+ */
+SVG_FEMERGENODE_ELEMENT,
+/**
+ * SVG filter. Performs a "fattening" or "thinning" on a source graphic
+ */
+SVG_FEMORPHOLOGY_ELEMENT,
+/**
+ * SVG filter. Moves an image relative to its current position
+ */
+SVG_FEOFFSET_ELEMENT,
+/**
+ * SVG filter.
+ */
+SVG_FEPOINTLIGHT_ELEMENT,
+/**
+ * SVG filter.
+ */
+SVG_FESPECULARLIGHTING_ELEMENT,
+/**
+ * SVG filter.
+ */
+SVG_FESPOTLIGHT_ELEMENT,
+/**
+ * SVG filter.
+ */
+SVG_FETILE_ELEMENT,
+/**
+ * SVG filter.
+ */
+SVG_FETURBULENCE_ELEMENT,
+/**
+ * Container for filter effects
+ */
+SVG_FILTER_ELEMENT,
+/**
+ * Defines a font
+ */
+SVG_FONT_ELEMENT,
+/**
+ * Describes the characteristics of a font
+ */
+SVG_FONT_FACE_ELEMENT,
+/**
+ *
+ */
+SVG_FONT_FACE_FORMAT_ELEMENT,
+/**
+ *
+ */
+SVG_FONT_FACE_NAME_ELEMENT,
+/**
+ *
+ */
+SVG_FONT_FACE_SRC_ELEMENT,
+/**
+ *
+ */
+SVG_FONT_FACE_URI_ELEMENT,
+/**
+ *
+ */
+SVG_FOREIGNOBJECT_ELEMENT,
+/**
+ * A container element for grouping together related elements
+ */
+SVG_G_ELEMENT,
+/**
+ * Defines the graphics for a given glyph
+ */
+SVG_GLYPH_ELEMENT,
+/**
+ * Defines a possible glyph to use
+ */
+SVG_GLYPHREF_ELEMENT,
+/**
+ *
+ */
+SVG_HKERN_ELEMENT,
+/**
+ *
+ */
+SVG_IMAGE_ELEMENT,
+/**
+ * Defines a line
+ */
+SVG_LINE_ELEMENT,
+/**
+ * Defines a linear gradient
+ */
+SVG_LINEARGRADIENT_ELEMENT,
+/**
+ *
+ */
+SVG_MARKER_ELEMENT,
+/**
+ *
+ */
+SVG_MASK_ELEMENT,
+/**
+ * Specifies metadata
+ */
+SVG_METADATA_ELEMENT,
+/**
+ *
+ */
+SVG_MISSING_GLYPH_ELEMENT,
+/**
+ *
+ */
+SVG_MPATH_ELEMENT,
+/**
+ * Defines a path
+ */
+SVG_PATH_ELEMENT,
+/**
+ *
+ */
+SVG_PATTERN_ELEMENT,
+/**
+ * Defines a closed shape that consists of a set of connected straight lines
+ */
+SVG_POLYGON_ELEMENT,
+/**
+ * Defines a set of connected straight lines
+ */
+SVG_POLYLINE_ELEMENT,
+/**
+ * Defines a radial gradient
+ */
+SVG_RADIALGRADIENT_ELEMENT,
+/**
+ * Defines a rectangle
+ */
+SVG_RECT_ELEMENT,
+/**
+ * Container for scripts (e.g., ECMAScript)
+ */
+SVG_SCRIPT_ELEMENT,
+/**
+ * Sets the value of an attribute for a specified duration
+ */
+SVG_SET_ELEMENT,
+/**
+ *
+ */
+SVG_STOP_ELEMENT,
+/**
+ * Allows style sheets to be embedded directly within SVG content
+ */
+SVG_STYLE_ELEMENT,
+/**
+ * Defines an SVG document fragment
+ */
+SVG_SVG_ELEMENT,
+/**
+ *
+ */
+SVG_SWITCH_ELEMENT,
+/**
+ *
+ */
+SVG_SYMBOL_ELEMENT,
+/**
+ *
+ */
+SVG_TEXT_ELEMENT,
+/**
+ *
+ */
+SVG_TEXTPATH_ELEMENT,
+/**
+ * A text-only description for elements in SVG - not displayed as part of
+ *  the graphics. User agents may display the text as a tooltip
+ */
+SVG_TITLE_ELEMENT,
+/**
+ *
+ */
+SVG_TREF_ELEMENT,
+/**
+ *
+ */
+SVG_TSPAN_ELEMENT,
+/**
+ *
+ */
+SVG_USE_ELEMENT,
+/**
+ *
+ */
+SVG_VIEW_ELEMENT,
+/**
+ *
+ */
+SVG_VKERN_ELEMENT,
+/**
+ *
+ */
+SVG_MAX_ELEMENT
+
+} SVGElementType;
+
+
+
+
+/**
+ * Look up the SVG Element type enum for a given string
+ * Return -1 if not found
+ */
+int svgElementStrToEnum(const char *str);
+
+
+/**
+ * Return the string corresponding to a given SVG element type enum
+ * Return "unknown" if not found
+ */
+const char *svgElementEnumToStr(int type);
+
+
+/*#########################################################################
 ## SVGDocumentImpl
 #########################################################################*/
 

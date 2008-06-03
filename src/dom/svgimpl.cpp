@@ -46,6 +46,143 @@ namespace svg
 
 
 /*#########################################################################
+## Element type lookup table
+#########################################################################*/
+
+/**
+ * Used for mapping name->enum and enum->name. For SVG element types.
+ */
+typedef struct
+{
+    const char *name;
+    int         type;
+} SVGElementTableEntry;
+
+
+
+SVGElementTableEntry svgElementTable[] =
+{
+  { "a",                     SVG_A_ELEMENT                   },
+  { "altGlyph",              SVG_ALTGLYPH_ELEMENT            },
+  { "altGlyphDef",           SVG_ALTGLYPHDEF_ELEMENT         },
+  { "altGlyphItem",          SVG_ALTGLYPHITEM_ELEMENT        },
+  { "animate",               SVG_ANIMATE_ELEMENT             },
+  { "animateColor",          SVG_ANIMATECOLOR_ELEMENT        },
+  { "animateMotion",         SVG_ANIMATEMOTION_ELEMENT       },
+  { "animateTransform",      SVG_ANIMATETRANSFORM_ELEMENT    },
+  { "circle",                SVG_CIRCLE_ELEMENT              },
+  { "clipPath",              SVG_CLIPPATH_ELEMENT            },
+  { "color-profile",         SVG_COLOR_PROFILE_ELEMENT       },
+  { "cursor",                SVG_CURSOR_ELEMENT              },
+  { "definition-src",        SVG_DEFINITION_SRC_ELEMENT      },
+  { "defs",                  SVG_DEFS_ELEMENT                },
+  { "desc",                  SVG_DESC_ELEMENT                },
+  { "ellipse",               SVG_ELLIPSE_ELEMENT             },
+  { "feBlend",               SVG_FEBLEND_ELEMENT             },
+  { "feColorMatrix",         SVG_FECOLORMATRIX_ELEMENT       },
+  { "feComponentTransfer",   SVG_FECOMPONENTTRANSFER_ELEMENT },
+  { "feComposite",           SVG_FECOMPOSITE_ELEMENT         },
+  { "feConvolveMatrix",      SVG_FECONVOLVEMATRIX_ELEMENT    },
+  { "feDiffuseLighting",     SVG_FEDIFFUSELIGHTING_ELEMENT   },
+  { "feDisplacementMap",     SVG_FEDISPLACEMENTMAP_ELEMENT   },
+  { "feDistantLight",        SVG_FEDISTANTLIGHT_ELEMENT      },
+  { "feFlood",               SVG_FEFLOOD_ELEMENT             },
+  { "feFuncA",               SVG_FEFUNCA_ELEMENT             },
+  { "feFuncB",               SVG_FEFUNCB_ELEMENT             },
+  { "feFuncG",               SVG_FEFUNCG_ELEMENT             },
+  { "feFuncR",               SVG_FEFUNCR_ELEMENT             },
+  { "feGaussianBlur",        SVG_FEGAUSSIANBLUR_ELEMENT      },
+  { "feImage",               SVG_FEIMAGE_ELEMENT             },
+  { "feMerge",               SVG_FEMERGE_ELEMENT             },
+  { "feMergeNode",           SVG_FEMERGENODE_ELEMENT         },
+  { "feMorphology",          SVG_FEMORPHOLOGY_ELEMENT        },
+  { "feOffset",              SVG_FEOFFSET_ELEMENT            },
+  { "fePointLight",          SVG_FEPOINTLIGHT_ELEMENT        },
+  { "feSpecularLighting",    SVG_FESPECULARLIGHTING_ELEMENT  },
+  { "feSpotLight",           SVG_FESPOTLIGHT_ELEMENT         },
+  { "feTile",                SVG_FETILE_ELEMENT              },
+  { "feTurbulence",          SVG_FETURBULENCE_ELEMENT        },
+  { "filter",                SVG_FILTER_ELEMENT              },
+  { "font",                  SVG_FONT_ELEMENT                },
+  { "font-face",             SVG_FONT_FACE_ELEMENT           },
+  { "font-face-format",      SVG_FONT_FACE_FORMAT_ELEMENT    },
+  { "font-face-name",        SVG_FONT_FACE_NAME_ELEMENT      },
+  { "font-face-src",         SVG_FONT_FACE_SRC_ELEMENT       },
+  { "font-face-uri",         SVG_FONT_FACE_URI_ELEMENT       },
+  { "foreignObject",         SVG_FOREIGNOBJECT_ELEMENT       },
+  { "g",                     SVG_G_ELEMENT                   },
+  { "glyph",                 SVG_GLYPH_ELEMENT               },
+  { "glyphRef",              SVG_GLYPHREF_ELEMENT            },
+  { "hkern",                 SVG_HKERN_ELEMENT               },
+  { "image",                 SVG_IMAGE_ELEMENT               },
+  { "line",                  SVG_LINE_ELEMENT                },
+  { "linearGradient",        SVG_LINEARGRADIENT_ELEMENT      },
+  { "marker",                SVG_MARKER_ELEMENT              },
+  { "mask",                  SVG_MASK_ELEMENT                },
+  { "metadata",              SVG_METADATA_ELEMENT            },
+  { "missing-glyph",         SVG_MISSING_GLYPH_ELEMENT       },
+  { "mpath",                 SVG_MPATH_ELEMENT               },
+  { "path",                  SVG_PATH_ELEMENT                },
+  { "pattern",               SVG_PATTERN_ELEMENT             },
+  { "polygon",               SVG_POLYGON_ELEMENT             },
+  { "polyline",              SVG_POLYLINE_ELEMENT            },
+  { "radialGradient",        SVG_RADIALGRADIENT_ELEMENT      },
+  { "rect",                  SVG_RECT_ELEMENT                },
+  { "script",                SVG_SCRIPT_ELEMENT              },
+  { "set",                   SVG_SET_ELEMENT                 },
+  { "stop",                  SVG_STOP_ELEMENT                },
+  { "style",                 SVG_STYLE_ELEMENT               },
+  { "svg",                   SVG_SVG_ELEMENT                 },
+  { "switch",                SVG_SWITCH_ELEMENT              },
+  { "symbol",                SVG_SYMBOL_ELEMENT              },
+  { "text",                  SVG_TEXT_ELEMENT                },
+  { "textPath",              SVG_TEXTPATH_ELEMENT            },
+  { "title",                 SVG_TITLE_ELEMENT               },
+  { "tref",                  SVG_TREF_ELEMENT                },
+  { "tspan",                 SVG_TSPAN_ELEMENT               },
+  { "use",                   SVG_USE_ELEMENT                 },
+  { "view",                  SVG_VIEW_ELEMENT                },
+  { "vkern",                 SVG_VKERN_ELEMENT               }
+  };
+
+
+static int _entryComparison(const void *vkey, const void *ventry)
+{
+    const char *key = (const char *)vkey;
+    const SVGElementTableEntry *entry = (const SVGElementTableEntry *)ventry;
+    return strcmp(key, entry->name);
+}
+
+/**
+ * Look up the SVG Element type enum for a given string
+ * Return -1 if not found
+ */
+int svgElementStrToEnum(const char *str)
+{
+    if (!str)
+        return -1;
+    SVGElementTableEntry *entry = 
+           (SVGElementTableEntry *)bsearch(str, svgElementTable,
+            SVG_MAX_ELEMENT, sizeof(SVGElementTableEntry), _entryComparison);
+    if (!entry)
+        return -1;
+    return entry->type;
+}
+
+
+/**
+ * Return the string corresponding to a given SVG element type enum
+ * Return "unknown" if not found
+ */
+const char *svgElementEnumToStr(int type)
+{
+    if (type < 0 || type >= SVG_MAX_ELEMENT)
+        return "unknown";
+    return svgElementTable[type].name;
+}
+
+
+/*#########################################################################
 ## SVGElementImpl
 #########################################################################*/
 
@@ -74,7 +211,339 @@ namespace svg
 ElementPtr SVGDocumentImpl::createElement(const DOMString& tagName)
                            throw(DOMException)
 {
-    SVGElementPtr elem = new SVGElementImpl(this, tagName);
+    ElementPtr elem;
+    int elementType = svgElementStrToEnum(tagName.c_str());
+    switch (elementType)
+        {
+        case SVG_A_ELEMENT:
+            {
+            elem = new SVGAElementImpl();
+            break;
+            }                  
+        case SVG_ALTGLYPH_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_ALTGLYPHDEF_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_ALTGLYPHITEM_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_ANIMATE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_ANIMATECOLOR_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_ANIMATEMOTION_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_ANIMATETRANSFORM_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_CIRCLE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_CLIPPATH_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_COLOR_PROFILE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_CURSOR_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_DEFINITION_SRC_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_DEFS_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_DESC_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_ELLIPSE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEBLEND_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FECOLORMATRIX_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FECOMPONENTTRANSFER_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FECOMPOSITE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FECONVOLVEMATRIX_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEDIFFUSELIGHTING_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEDISPLACEMENTMAP_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEDISTANTLIGHT_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEFLOOD_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEFUNCA_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEFUNCB_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEFUNCG_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEFUNCR_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEGAUSSIANBLUR_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEIMAGE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEMERGE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEMERGENODE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEMORPHOLOGY_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEOFFSET_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FEPOINTLIGHT_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FESPECULARLIGHTING_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FESPOTLIGHT_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FETILE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FETURBULENCE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FILTER_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FONT_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FONT_FACE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FONT_FACE_FORMAT_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FONT_FACE_NAME_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FONT_FACE_SRC_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FONT_FACE_URI_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_FOREIGNOBJECT_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_G_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_GLYPH_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_GLYPHREF_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_HKERN_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_IMAGE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_LINE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_LINEARGRADIENT_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_MARKER_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_MASK_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_METADATA_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_MISSING_GLYPH_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_MPATH_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_PATH_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_PATTERN_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_POLYGON_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_POLYLINE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_RADIALGRADIENT_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_RECT_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_SCRIPT_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_SET_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_STOP_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_STYLE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_SVG_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_SWITCH_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_SYMBOL_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_TEXT_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_TEXTPATH_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_TITLE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_TREF_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_TSPAN_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_USE_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_VIEW_ELEMENT:
+            {
+            break;
+            }                  
+        case SVG_VKERN_ELEMENT:
+            {
+            break;
+            }                  
+        default:
+            {
+            }
+        }
     return elem;
 }
 
@@ -86,7 +555,11 @@ ElementPtr SVGDocumentImpl::createElementNS(const DOMString& namespaceURI,
                              const DOMString& qualifiedName)
                              throw(DOMException)
 {
-    SVGElementPtr elem = new SVGElementImpl(this, namespaceURI, qualifiedName);
+    ElementPtr elem;
+    if (namespaceURI == SVG_NAMESPACE)
+        elem = createElement(qualifiedName);
+    else
+        elem = new SVGElementImpl(this, namespaceURI, qualifiedName);
     return elem;
 }
 
