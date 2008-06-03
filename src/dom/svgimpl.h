@@ -3845,6 +3845,18 @@ public:
     virtual SVGAnimatedNumber getDiffuseConstant()
         { return diffuseConstant; }
 
+    /**
+     *
+     */
+    virtual SVGAnimatedNumber getKernelUnitLengthX()
+        { return kernelUnitLengthX; }
+
+    /**
+     *
+     */
+    virtual SVGAnimatedNumber getKernelUnitLengthY()
+        { return kernelUnitLengthY; }
+
 
 
     //##################
@@ -3861,6 +3873,8 @@ protected:
     SVGAnimatedString in1;
     SVGAnimatedNumber surfaceScale;
     SVGAnimatedNumber diffuseConstant;
+    SVGAnimatedNumber kernelUnitLengthX;
+    SVGAnimatedNumber kernelUnitLengthY;
 
 };
 

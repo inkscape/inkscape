@@ -222,322 +222,402 @@ ElementPtr SVGDocumentImpl::createElement(const DOMString& tagName)
             }                  
         case SVG_ALTGLYPH_ELEMENT:
             {
+            elem = new SVGAltGlyphElementImpl();
             break;
             }                  
         case SVG_ALTGLYPHDEF_ELEMENT:
             {
+            elem = new SVGAltGlyphDefElementImpl();
             break;
             }                  
         case SVG_ALTGLYPHITEM_ELEMENT:
             {
+            elem = new SVGAltGlyphItemElementImpl();
             break;
             }                  
         case SVG_ANIMATE_ELEMENT:
             {
+            elem = new SVGAnimateElementImpl();
             break;
             }                  
         case SVG_ANIMATECOLOR_ELEMENT:
             {
+            elem = new SVGAnimateColorElementImpl();
             break;
             }                  
         case SVG_ANIMATEMOTION_ELEMENT:
             {
+            elem = new SVGAnimateMotionElementImpl();
             break;
             }                  
         case SVG_ANIMATETRANSFORM_ELEMENT:
             {
+            elem = new SVGAnimateTransformElementImpl();
             break;
             }                  
         case SVG_CIRCLE_ELEMENT:
             {
+            elem = new SVGCircleElementImpl();
             break;
             }                  
         case SVG_CLIPPATH_ELEMENT:
             {
+            elem = new SVGClipPathElementImpl();
             break;
             }                  
         case SVG_COLOR_PROFILE_ELEMENT:
             {
+            elem = new SVGColorProfileElementImpl();
             break;
             }                  
         case SVG_CURSOR_ELEMENT:
             {
+            elem = new SVGCursorElementImpl();
             break;
             }                  
         case SVG_DEFINITION_SRC_ELEMENT:
             {
+            elem = new SVGDefinitionSrcElementImpl();
             break;
             }                  
         case SVG_DEFS_ELEMENT:
             {
+            elem = new SVGDefsElementImpl();
             break;
             }                  
         case SVG_DESC_ELEMENT:
             {
+            elem = new SVGDescElementImpl();
             break;
             }                  
         case SVG_ELLIPSE_ELEMENT:
             {
+            elem = new SVGEllipseElementImpl();
             break;
             }                  
         case SVG_FEBLEND_ELEMENT:
             {
+            elem = new SVGFEBlendElementImpl();
             break;
             }                  
         case SVG_FECOLORMATRIX_ELEMENT:
             {
+            elem = new SVGFEColorMatrixElementImpl();
             break;
             }                  
         case SVG_FECOMPONENTTRANSFER_ELEMENT:
             {
+            elem = new SVGFEComponentTransferElementImpl();
             break;
             }                  
         case SVG_FECOMPOSITE_ELEMENT:
             {
+            elem = new SVGFECompositeElementImpl();
             break;
             }                  
         case SVG_FECONVOLVEMATRIX_ELEMENT:
             {
+            elem = new SVGFEConvolveMatrixElementImpl();
             break;
             }                  
         case SVG_FEDIFFUSELIGHTING_ELEMENT:
             {
+            elem = new SVGFEDiffuseLightingElementImpl();
             break;
             }                  
         case SVG_FEDISPLACEMENTMAP_ELEMENT:
             {
+            elem = new SVGFEDisplacementMapElementImpl();
             break;
             }                  
         case SVG_FEDISTANTLIGHT_ELEMENT:
             {
+            elem = new SVGFEDistantLightElementImpl();
             break;
             }                  
         case SVG_FEFLOOD_ELEMENT:
             {
+            elem = new SVGFEFloodElementImpl();
             break;
             }                  
         case SVG_FEFUNCA_ELEMENT:
             {
+            elem = new SVGFEFuncAElementImpl();
             break;
             }                  
         case SVG_FEFUNCB_ELEMENT:
             {
+            elem = new SVGFEFuncBElementImpl();
             break;
             }                  
         case SVG_FEFUNCG_ELEMENT:
             {
+            elem = new SVGFEFuncGElementImpl();
             break;
             }                  
         case SVG_FEFUNCR_ELEMENT:
             {
+            elem = new SVGFEFuncRElementImpl();
             break;
             }                  
         case SVG_FEGAUSSIANBLUR_ELEMENT:
             {
+            elem = new SVGFEGaussianBlurElementImpl();
             break;
             }                  
         case SVG_FEIMAGE_ELEMENT:
             {
+            elem = new SVGFEImageElementImpl();
             break;
             }                  
         case SVG_FEMERGE_ELEMENT:
             {
+            elem = new SVGFEMergeElementImpl();
             break;
             }                  
         case SVG_FEMERGENODE_ELEMENT:
             {
+            elem = new SVGFEMergeNodeElementImpl();
             break;
             }                  
         case SVG_FEMORPHOLOGY_ELEMENT:
             {
+            elem = new SVGFEMorphologyElementImpl();
             break;
             }                  
         case SVG_FEOFFSET_ELEMENT:
             {
+            elem = new SVGFEOffsetElementImpl();
             break;
             }                  
         case SVG_FEPOINTLIGHT_ELEMENT:
             {
+            elem = new SVGFEPointLightElementImpl();
             break;
             }                  
         case SVG_FESPECULARLIGHTING_ELEMENT:
             {
+            elem = new SVGFESpecularLightingElementImpl();
             break;
             }                  
         case SVG_FESPOTLIGHT_ELEMENT:
             {
+            elem = new SVGFESpotLightElementImpl();
             break;
             }                  
         case SVG_FETILE_ELEMENT:
             {
+            elem = new SVGFETileElementImpl();
             break;
             }                  
         case SVG_FETURBULENCE_ELEMENT:
             {
+            elem = new SVGFETurbulenceElementImpl();
             break;
             }                  
         case SVG_FILTER_ELEMENT:
             {
+            elem = new SVGFilterElementImpl();
             break;
             }                  
         case SVG_FONT_ELEMENT:
             {
+            elem = new SVGAElementImpl();
             break;
             }                  
         case SVG_FONT_FACE_ELEMENT:
             {
+            elem = new SVGFontElementImpl();
             break;
             }                  
         case SVG_FONT_FACE_FORMAT_ELEMENT:
             {
+            elem = new SVGFontFaceFormatElementImpl();
             break;
             }                  
         case SVG_FONT_FACE_NAME_ELEMENT:
             {
+            elem = new SVGFontFaceNameElementImpl();
             break;
             }                  
         case SVG_FONT_FACE_SRC_ELEMENT:
             {
+            elem = new SVGFontFaceSrcElementImpl();
             break;
             }                  
         case SVG_FONT_FACE_URI_ELEMENT:
             {
+            elem = new SVGFontFaceUriElementImpl();
             break;
             }                  
         case SVG_FOREIGNOBJECT_ELEMENT:
             {
+            elem = new SVGForeignObjectElementImpl();
             break;
             }                  
         case SVG_G_ELEMENT:
             {
+            elem = new SVGGElementImpl();
             break;
             }                  
         case SVG_GLYPH_ELEMENT:
             {
+            elem = new SVGGlyphElementImpl();
             break;
             }                  
         case SVG_GLYPHREF_ELEMENT:
             {
+            elem = new SVGGlyphRefElementImpl();
             break;
             }                  
         case SVG_HKERN_ELEMENT:
             {
+            elem = new SVGHKernElementImpl();
             break;
             }                  
         case SVG_IMAGE_ELEMENT:
             {
+            elem = new SVGImageElementImpl();
             break;
             }                  
         case SVG_LINE_ELEMENT:
             {
+            elem = new SVGLineElementImpl();
             break;
             }                  
         case SVG_LINEARGRADIENT_ELEMENT:
             {
+            elem = new SVGLinearGradientElementImpl();
             break;
             }                  
         case SVG_MARKER_ELEMENT:
             {
+            elem = new SVGMarkerElementImpl();
             break;
             }                  
         case SVG_MASK_ELEMENT:
             {
+            elem = new SVGMaskElementImpl();
             break;
             }                  
         case SVG_METADATA_ELEMENT:
             {
+            elem = new SVGMetadataElementImpl();
             break;
             }                  
         case SVG_MISSING_GLYPH_ELEMENT:
             {
+            elem = new SVGMissingGlyphElementImpl();
             break;
             }                  
         case SVG_MPATH_ELEMENT:
             {
+            elem = new SVGMPathElementImpl();
             break;
             }                  
         case SVG_PATH_ELEMENT:
             {
+            elem = new SVGPathElementImpl();
             break;
             }                  
         case SVG_PATTERN_ELEMENT:
             {
+            elem = new SVGPatternElementImpl();
             break;
             }                  
         case SVG_POLYGON_ELEMENT:
             {
+            elem = new SVGPolygonElementImpl();
             break;
             }                  
         case SVG_POLYLINE_ELEMENT:
             {
+            elem = new SVGPolylineElementImpl();
             break;
             }                  
         case SVG_RADIALGRADIENT_ELEMENT:
             {
+            elem = new SVGRadialGradientElementImpl();
             break;
             }                  
         case SVG_RECT_ELEMENT:
             {
+            elem = new SVGRectElementImpl();
             break;
             }                  
         case SVG_SCRIPT_ELEMENT:
             {
+            elem = new SVGScriptElementImpl();
             break;
             }                  
         case SVG_SET_ELEMENT:
             {
+            elem = new SVGSetElementImpl();
             break;
             }                  
         case SVG_STOP_ELEMENT:
             {
+            elem = new SVGStopElementImpl();
             break;
             }                  
         case SVG_STYLE_ELEMENT:
             {
+            elem = new SVGStyleElementImpl();
             break;
             }                  
         case SVG_SVG_ELEMENT:
             {
+            elem = new SVGSVGElementImpl();
             break;
             }                  
         case SVG_SWITCH_ELEMENT:
             {
+            elem = new SVGSwitchElementImpl();
             break;
             }                  
         case SVG_SYMBOL_ELEMENT:
             {
+            elem = new SVGSymbolElementImpl();
             break;
             }                  
         case SVG_TEXT_ELEMENT:
             {
+            elem = new SVGTextElementImpl();
             break;
             }                  
         case SVG_TEXTPATH_ELEMENT:
             {
+            elem = new SVGTextPathElementImpl();
             break;
             }                  
         case SVG_TITLE_ELEMENT:
             {
+            elem = new SVGTitleElementImpl();
             break;
             }                  
         case SVG_TREF_ELEMENT:
             {
+            elem = new SVGTRefElementImpl();
             break;
             }                  
         case SVG_TSPAN_ELEMENT:
             {
+            elem = new SVGTSpanElementImpl();
             break;
             }                  
         case SVG_USE_ELEMENT:
             {
+            elem = new SVGUseElementImpl();
             break;
             }                  
         case SVG_VIEW_ELEMENT:
             {
+            elem = new SVGViewElementImpl();
             break;
             }                  
         case SVG_VKERN_ELEMENT:
             {
+            elem = new SVGVKernElementImpl();
             break;
             }                  
         default:
