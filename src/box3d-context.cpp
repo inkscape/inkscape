@@ -141,7 +141,7 @@ static void sp_box3d_context_dispose(GObject *object)
     }
 
     if (ec->shape_knot_holder) {
-        sp_knot_holder_destroy(ec->shape_knot_holder);
+        delete ec->shape_knot_holder;
         ec->shape_knot_holder = NULL;
     }
 
@@ -176,7 +176,7 @@ static void sp_box3d_context_selection_changed(Inkscape::Selection *selection, g
     SPEventContext *ec = SP_EVENT_CONTEXT(bc);
 
     if (ec->shape_knot_holder) { // destroy knotholder
-        sp_knot_holder_destroy(ec->shape_knot_holder);
+        delete ec->shape_knot_holder;
         ec->shape_knot_holder = NULL;
     }
 

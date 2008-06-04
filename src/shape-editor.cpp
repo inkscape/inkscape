@@ -82,7 +82,7 @@ void ShapeEditor::unset_item() {
     }
 
     if (this->knotholder) {
-        sp_knot_holder_destroy(this->knotholder);
+        delete this->knotholder;
         this->knotholder = NULL;
     }
 }
@@ -257,7 +257,7 @@ void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject,
 *  pass a new knotholder to ShapeEditor to manage (and delete)
 */
 void
-ShapeEditor::set_knotholder(SPKnotHolder * knot_holder)
+ShapeEditor::set_knotholder(KnotHolder * knot_holder)
 {
     unset_item();
 

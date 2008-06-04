@@ -22,7 +22,7 @@
 #include "xml/repr.h"
 #include "perspective-line.h"
 
-#include "knotholder.h" // FIXME: can we avoid direct access to knotholder_update_knots?
+#include "knotholder.h" // FIXME: can we avoid direct access to KnotHolder::update_knots?
 
 namespace Box3D {
 
@@ -601,7 +601,7 @@ void
 VPDrag::updateBoxHandles ()
 {
     // FIXME: Is there a way to update the knots without accessing the
-    //        (previously) statically linked function knotholder_update_knots?
+    //        (previously) statically linked function KnotHolder::update_knots?
 
     GSList *sel = (GSList *) selection->itemList();
     if (!sel)
@@ -615,7 +615,7 @@ VPDrag::updateBoxHandles ()
     SPEventContext *ec = inkscape_active_event_context();
     g_assert (ec != NULL);
     if (ec->shape_knot_holder != NULL) {
-        knotholder_update_knots(ec->shape_knot_holder, (SPItem *) sel->data);
+        ec->shape_knot_holder->update_knots();
     }
 }
 

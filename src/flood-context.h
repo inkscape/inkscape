@@ -17,8 +17,6 @@
 #include "helper/unit-menu.h"
 #include "helper/units.h"
 
-struct SPKnotHolder;
-
 #define SP_TYPE_FLOOD_CONTEXT            (sp_flood_context_get_type ())
 #define SP_FLOOD_CONTEXT(obj)            (GTK_CHECK_CAST ((obj), SP_TYPE_FLOOD_CONTEXT, SPFloodContext))
 #define SP_FLOOD_CONTEXT_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), SP_TYPE_FLOOD_CONTEXT, SPFloodContextClass))

@@ -135,7 +135,7 @@ static void sp_rect_context_dispose(GObject *object)
     }
 
     if (ec->shape_knot_holder) {
-        sp_knot_holder_destroy(ec->shape_knot_holder);
+        delete ec->shape_knot_holder;
         ec->shape_knot_holder = NULL;
     }
 
@@ -170,7 +170,7 @@ void sp_rect_context_selection_changed(Inkscape::Selection *selection, gpointer 
     SPEventContext *ec = SP_EVENT_CONTEXT(rc);
 
     if (ec->shape_knot_holder) { // destroy knotholder
-        sp_knot_holder_destroy(ec->shape_knot_holder);
+        delete ec->shape_knot_holder;
         ec->shape_knot_holder = NULL;
     }
 

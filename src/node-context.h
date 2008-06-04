@@ -16,7 +16,6 @@
 #include "forward.h"
 #include "display/display-forward.h"
 #include "nodepath.h"
-struct SPKnotHolder;
 namespace Inkscape { class Selection; }
 
 #define SP_TYPE_NODE_CONTEXT            (sp_node_context_get_type ())

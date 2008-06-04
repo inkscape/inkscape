@@ -319,10 +319,10 @@ Effect::registerKnotHolderHandle(SPKnotHolderSetFunc set_func, SPKnotHolderGetFu
 
 // TODO: allow for adding click_functions and description strings, too
 void
-Effect::addHandles(SPKnotHolder *knotholder) {
+Effect::addHandles(KnotHolder *knotholder) {
     std::vector<std::pair<SPKnotHolderSetFunc, SPKnotHolderGetFunc> >::iterator i;
     for (i = knotholder_func_vector.begin(); i != knotholder_func_vector.end(); ++i) {
-        sp_knot_holder_add(knotholder, i->first, i->second, NULL, (""));
+        //knotholder->add(i->first, i->second, NULL, (""));
     }
 }
 

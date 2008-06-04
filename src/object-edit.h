@@ -13,7 +13,55 @@
 
 #include "knotholder.h"
 
-SPKnotHolder *sp_item_knot_holder (SPItem *item, SPDesktop *desktop);
+KnotHolder *sp_item_knot_holder (SPItem *item, SPDesktop *desktop);
+
+class RectKnotHolder : public KnotHolder {
+public:
+    RectKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler);
+    virtual ~RectKnotHolder() {};
+};
+
+class Box3DKnotHolder : public KnotHolder {
+public:
+    Box3DKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler);
+    virtual ~Box3DKnotHolder() {};
+};
+
+class ArcKnotHolder : public KnotHolder {
+public:
+    ArcKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler);
+    virtual ~ArcKnotHolder() {};
+};
+
+class StarKnotHolder : public KnotHolder {
+public:
+    StarKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler);
+    virtual ~StarKnotHolder() {};
+};
+
+class SpiralKnotHolder : public KnotHolder {
+public:
+    SpiralKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler);
+    virtual ~SpiralKnotHolder() {};
+};
+
+class OffsetKnotHolder : public KnotHolder {
+public:
+    OffsetKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler);
+    virtual ~OffsetKnotHolder() {};
+};
+
+class FlowtextKnotHolder : public KnotHolder {
+public:
+    FlowtextKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler);
+    virtual ~FlowtextKnotHolder() {};
+};
+
+class MiscKnotHolder : public KnotHolder {
+public:
+    MiscKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler);
+    virtual ~MiscKnotHolder() {};
+};
 
 #endif
 

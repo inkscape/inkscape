@@ -131,7 +131,7 @@ sp_spiral_context_dispose(GObject *object)
     if (sc->item) sp_spiral_finish(sc);
 
     if (ec->shape_knot_holder) {
-        sp_knot_holder_destroy(ec->shape_knot_holder);
+        delete ec->shape_knot_holder;
         ec->shape_knot_holder = NULL;
     }
 
@@ -167,7 +167,7 @@ sp_spiral_context_selection_changed(Inkscape::Selection *selection, gpointer dat
     SPEventContext *ec = SP_EVENT_CONTEXT(sc);
 
     if (ec->shape_knot_holder) { // desktroy knotholder
-        sp_knot_holder_destroy(ec->shape_knot_holder);
+        delete ec->shape_knot_holder;
         ec->shape_knot_holder = NULL;
     }
 

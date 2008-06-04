@@ -6,6 +6,7 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Mitsuru Oka
+ *   Maximilian Albert <maximilian.albert@gmail.com>
  *
  * Licensed under GNU GPL
  */
@@ -28,7 +29,7 @@
 #include "inkscape.h"
 #include "snap.h"
 #include "desktop-affine.h"
-#include <style.h>
+#include "style.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "sp-namedview.h"
@@ -42,6 +43,7 @@
 #include "object-edit.h"
 
 #include <libnr/nr-scale-ops.h>
+#include <libnr/nr-matrix-div.h>
 
 #include "xml/repr.h"
 
@@ -49,19 +51,9 @@
 
 #define sp_round(v,m) (((v) < 0.0) ? ((ceil((v) / (m) - 0.5)) * (m)) : ((floor((v) / (m) + 0.5)) * (m)))
 
-static SPKnotHolder *sp_rect_knot_holder(SPItem *item, SPDesktop *desktop);
-static SPKnotHolder *box3d_knot_holder(SPItem *item, SPDesktop *desktop);
-static SPKnotHolder *sp_arc_knot_holder(SPItem *item, SPDesktop *desktop);
-static SPKnotHolder *sp_star_knot_holder(SPItem *item, SPDesktop *desktop);
-static SPKnotHolder *sp_spiral_knot_holder(SPItem *item, SPDesktop *desktop);
-static SPKnotHolder *sp_offset_knot_holder(SPItem *item, SPDesktop *desktop);
-static SPKnotHolder *sp_misc_knot_holder(SPItem *item, SPDesktop *desktop);
-static SPKnotHolder *sp_flowtext_knot_holder(SPItem *item, SPDesktop *desktop);
-static void sp_pat_knot_holder(SPItem *item, SPKnotHolder *knot_holder);
-
-static SPKnotHolder *sp_lpe_knot_holder(SPItem *item, SPDesktop *desktop)
+static KnotHolder *sp_lpe_knot_holder(SPItem *item, SPDesktop *desktop)
 {
-    SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
+    KnotHolder *knot_holder = new KnotHolder(desktop, item, NULL);
 
     Inkscape::LivePathEffect::Effect *effect = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
     if (!effect) {
@@ -73,170 +65,69 @@ static SPKnotHolder *sp_lpe_knot_holder(SPItem *item, SPDesktop *desktop)
     return knot_holder;
 }
 
-SPKnotHolder *
+KnotHolder *
 sp_item_knot_holder(SPItem *item, SPDesktop *desktop)
 {
-    if ( SP_IS_LPE_ITEM(item) &&
-         sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)) &&
-         sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item))->isVisible() &&
-         sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item))->providesKnotholder() )
-    {
-        return sp_lpe_knot_holder(item, desktop);
+    KnotHolder *knotholder = NULL;
+
+    if (SP_IS_LPE_ITEM(item) &&
+        sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)) &&
+        sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item))->isVisible() &&
+        sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item))->providesKnotholder()) {
+        knotholder = sp_lpe_knot_holder(item, desktop);
     } else if (SP_IS_RECT(item)) {
-        return sp_rect_knot_holder(item, desktop);
+        knotholder = new RectKnotHolder(desktop, item, NULL);
     } else if (SP_IS_BOX3D(item)) {
-        return box3d_knot_holder(item, desktop);
+        knotholder = new Box3DKnotHolder(desktop, item, NULL);
     } else if (SP_IS_ARC(item)) {
-        return sp_arc_knot_holder(item, desktop);
+        knotholder = new ArcKnotHolder(desktop, item, NULL);
     } else if (SP_IS_STAR(item)) {
-        return sp_star_knot_holder(item, desktop);
+        knotholder = new StarKnotHolder(desktop, item, NULL);
     } else if (SP_IS_SPIRAL(item)) {
-        return sp_spiral_knot_holder(item, desktop);
+        knotholder = new SpiralKnotHolder(desktop, item, NULL);
     } else if (SP_IS_OFFSET(item)) {
-        return sp_offset_knot_holder(item, desktop);
+        knotholder = new OffsetKnotHolder(desktop, item, NULL);
     } else if (SP_IS_FLOWTEXT(item) && SP_FLOWTEXT(item)->has_internal_frame()) {
-        return sp_flowtext_knot_holder(item, desktop);
-    } else {
-        return sp_misc_knot_holder(item, desktop);
+        knotholder = new FlowtextKnotHolder(desktop, SP_FLOWTEXT(item)->get_frame(NULL), NULL);
+    } else if ((SP_OBJECT(item)->style->fill.isPaintserver())
+               && SP_IS_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style))) {
+        knotholder->add_pattern_knotholder();
     }
 
-    return NULL;
-}
-
-
-/* Pattern manipulation */
-
-static gdouble sp_pattern_extract_theta(SPPattern *pat, gdouble scale)
-{
-    gdouble theta = asin(pat->patternTransform[1] / scale);
-    if (pat->patternTransform[0] < 0) theta = M_PI - theta ;
-    return theta;
-}
-
-static gdouble sp_pattern_extract_scale(SPPattern *pat)
-{
-    gdouble s = pat->patternTransform[1];
-    gdouble c = pat->patternTransform[0];
-    gdouble xscale = sqrt(c * c + s * s);
-    return xscale;
-}
-
-static NR::Point sp_pattern_extract_trans(SPPattern const *pat)
-{
-    return NR::Point(pat->patternTransform[4], pat->patternTransform[5]);
-}
-
-static void
-sp_pattern_xy_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
-{
-    SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
-
-    NR::Point p_snapped = p;
-
-    if ( state & GDK_CONTROL_MASK ) {
-        if (fabs((p - origin)[NR::X]) > fabs((p - origin)[NR::Y])) {
-            p_snapped[NR::Y] = origin[NR::Y];
-        } else {
-            p_snapped[NR::X] = origin[NR::X];
-        }
-    }
-
-    if (state)  {
-        NR::Point const q = p_snapped - sp_pattern_extract_trans(pat);
-        sp_item_adjust_pattern(item, NR::Matrix(NR::translate(q)));
-    }
-
-    item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-}
-
-
-static NR::Point sp_pattern_xy_get(SPItem *item)
-{
-    SPPattern const *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
-    return sp_pattern_extract_trans(pat);
-}
-
-static NR::Point sp_pattern_angle_get(SPItem *item)
-{
-    SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
-
-    gdouble x = (pattern_width(pat)*0.5);
-    gdouble y = 0;
-    NR::Point delta = NR::Point(x,y);
-    gdouble scale = sp_pattern_extract_scale(pat);
-    gdouble theta = sp_pattern_extract_theta(pat, scale);
-    delta = delta * NR::Matrix(NR::rotate(theta))*NR::Matrix(NR::scale(scale,scale));
-    delta = delta + sp_pattern_extract_trans(pat);
-    return delta;
-}
-
-static void
-sp_pattern_angle_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
-{
-    int const snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
-
-    SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
-
-    // get the angle from pattern 0,0 to the cursor pos
-    NR::Point delta = p - sp_pattern_extract_trans(pat);
-    gdouble theta = atan2(delta);
-
-    if ( state & GDK_CONTROL_MASK ) {
-        theta = sp_round(theta, M_PI/snaps);
-    }
-
-    // get the scale from the current transform so we can keep it.
-    gdouble scl = sp_pattern_extract_scale(pat);
-    NR::Matrix rot =  NR::Matrix(NR::rotate(theta)) * NR::Matrix(NR::scale(scl,scl));
-    NR::Point const t = sp_pattern_extract_trans(pat);
-    rot[4] = t[NR::X];
-    rot[5] = t[NR::Y];
-    sp_item_adjust_pattern(item, rot, true);
-    item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-}
-
-static void
-sp_pattern_scale_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
-{
-    SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
-
-    // Get the scale from the position of the knotholder,
-    NR::Point d = p - sp_pattern_extract_trans(pat);
-    gdouble s = NR::L2(d);
-    gdouble pat_x = pattern_width(pat) * 0.5;
-    gdouble pat_y = pattern_height(pat) * 0.5;
-    gdouble pat_h = hypot(pat_x, pat_y);
-    gdouble scl = s / pat_h;
-
-    // get angle from current transform, (need get current scale first to calculate angle)
-    gdouble oldscale = sp_pattern_extract_scale(pat);
-    gdouble theta = sp_pattern_extract_theta(pat,oldscale);
-
-    NR::Matrix rot =  NR::Matrix(NR::rotate(theta)) * NR::Matrix(NR::scale(scl,scl));
-    NR::Point const t = sp_pattern_extract_trans(pat);
-    rot[4] = t[NR::X];
-    rot[5] = t[NR::Y];
-    sp_item_adjust_pattern(item, rot, true);
-    item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-}
-
-
-static NR::Point sp_pattern_scale_get(SPItem *item)
-{
-    SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
-
-    gdouble x = pattern_width(pat)*0.5;
-    gdouble y = pattern_height(pat)*0.5;
-    NR::Point delta = NR::Point(x,y);
-    NR::Matrix a = pat->patternTransform;
-    a[4] = 0;
-    a[5] = 0;
-    delta = delta * a;
-    delta = delta + sp_pattern_extract_trans(pat);
-    return delta;
+    return knotholder;
 }
 
 /* SPRect */
+
+/* handle for horizontal rounding radius */
+class RectKnotHolderEntityRX : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click_func(guint state);
+};
+
+/* handle for vertical rounding radius */
+class RectKnotHolderEntityRY : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click_func(guint state);
+};
+
+/* handle for width/height adjustment */
+class RectKnotHolderEntityWH : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+};
+
+/* handle for x/y adjustment */
+class RectKnotHolderEntityXY : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+};
 
 static NR::Point snap_knot_position(SPItem *item, NR::Point const &p)
 {
@@ -249,14 +140,16 @@ static NR::Point snap_knot_position(SPItem *item, NR::Point const &p)
     return s * i2d.inverse();
 }
 
-static NR::Point sp_rect_rx_get(SPItem *item)
+NR::Point
+RectKnotHolderEntityRX::knot_get_func()
 {
     SPRect *rect = SP_RECT(item);
 
     return NR::Point(rect->x.computed + rect->width.computed - rect->rx.computed, rect->y.computed);
 }
 
-static void sp_rect_rx_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
+void
+RectKnotHolderEntityRX::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPRect *rect = SP_RECT(item);
 
@@ -274,18 +167,38 @@ static void sp_rect_rx_set(SPItem *item, NR::Point const &p, NR::Point const &/*
         rect->rx._set = true;
     }
 
+    update_knot();
+
     ((SPObject*)rect)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
+void
+RectKnotHolderEntityRX::knot_click_func(guint state)
+{
+    SPRect *rect = SP_RECT(item);
 
-static NR::Point sp_rect_ry_get(SPItem *item)
+    if (state & GDK_SHIFT_MASK) {
+        /* remove rounding from rectangle */
+        SP_OBJECT_REPR(rect)->setAttribute("rx", NULL);
+        SP_OBJECT_REPR(rect)->setAttribute("ry", NULL);
+    } else if (state & GDK_CONTROL_MASK) {
+        /* Ctrl-click sets the vertical rounding to be the same as the horizontal */
+        SP_OBJECT_REPR(rect)->setAttribute("ry", SP_OBJECT_REPR(rect)->attribute("rx"));
+    }
+
+    update_knot();
+}
+
+NR::Point
+RectKnotHolderEntityRY::knot_get_func()
 {
     SPRect *rect = SP_RECT(item);
 
     return NR::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->ry.computed);
 }
 
-static void sp_rect_ry_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
+void
+RectKnotHolderEntityRY::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPRect *rect = SP_RECT(item);
 
@@ -311,42 +224,20 @@ static void sp_rect_ry_set(SPItem *item, NR::Point const &p, NR::Point const &/*
         rect->ry._set = true;
     }
 
+    update_knot();
+
     ((SPObject *)rect)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-/**
- *  Remove rounding from a rectangle.
- */
-static void rect_remove_rounding(SPRect *rect)
-{
-    SP_OBJECT_REPR(rect)->setAttribute("rx", NULL);
-    SP_OBJECT_REPR(rect)->setAttribute("ry", NULL);
-}
-
-/**
- *  Called when the horizontal rounding radius knot is clicked.
- */
-static void sp_rect_rx_knot_click(SPItem *item, guint state)
+void
+RectKnotHolderEntityRY::knot_click_func(guint state)
 {
     SPRect *rect = SP_RECT(item);
 
     if (state & GDK_SHIFT_MASK) {
-        rect_remove_rounding(rect);
-    } else if (state & GDK_CONTROL_MASK) {
-        /* Ctrl-click sets the vertical rounding to be the same as the horizontal */
-        SP_OBJECT_REPR(rect)->setAttribute("ry", SP_OBJECT_REPR(rect)->attribute("rx"));
-    }
-}
-
-/**
- *  Called when the vertical rounding radius knot is clicked.
- */
-static void sp_rect_ry_knot_click(SPItem *item, guint state)
-{
-    SPRect *rect = SP_RECT(item);
-
-    if (state & GDK_SHIFT_MASK) {
-        rect_remove_rounding(rect);
+        /* remove rounding */
+        SP_OBJECT_REPR(rect)->setAttribute("rx", NULL);
+        SP_OBJECT_REPR(rect)->setAttribute("ry", NULL);
     } else if (state & GDK_CONTROL_MASK) {
         /* Ctrl-click sets the vertical rounding to be the same as the horizontal */
         SP_OBJECT_REPR(rect)->setAttribute("rx", SP_OBJECT_REPR(rect)->attribute("ry"));
@@ -368,7 +259,8 @@ static void sp_rect_clamp_radii(SPRect *rect)
     }
 }
 
-static NR::Point sp_rect_wh_get(SPItem *item)
+NR::Point
+RectKnotHolderEntityWH::knot_get_func()
 {
     SPRect *rect = SP_RECT(item);
 
@@ -429,21 +321,26 @@ static void sp_rect_wh_set_internal(SPRect *rect, NR::Point const &p, NR::Point 
     ((SPObject *)rect)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static void sp_rect_wh_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+void
+RectKnotHolderEntityWH::knot_set_func(NR::Point const &p, NR::Point const &origin, guint state)
 {
     SPRect *rect = SP_RECT(item);
 
     sp_rect_wh_set_internal(rect, p, origin, state);
+
+    update_knot();
 }
 
-static NR::Point sp_rect_xy_get(SPItem *item)
+NR::Point
+RectKnotHolderEntityXY::knot_get_func()
 {
     SPRect *rect = SP_RECT(item);
 
     return NR::Point(rect->x.computed, rect->y.computed);
 }
 
-static void sp_rect_xy_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+void
+RectKnotHolderEntityXY::knot_set_func(NR::Point const &p, NR::Point const &origin, guint state)
 {
     SPRect *rect = SP_RECT(item);
 
@@ -510,52 +407,61 @@ static void sp_rect_xy_set(SPItem *item, NR::Point const &p, NR::Point const &or
 
     sp_rect_clamp_radii(rect);
 
+    update_knot();
+
     ((SPObject *)rect)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static SPKnotHolder *sp_rect_knot_holder(SPItem *item, SPDesktop *desktop)
+RectKnotHolder::RectKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler) :
+    KnotHolder(desktop, item, relhandler)
 {
-    SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
+    RectKnotHolderEntityRX *entity_rx = new RectKnotHolderEntityRX();
+    RectKnotHolderEntityRY *entity_ry = new RectKnotHolderEntityRY();
+    RectKnotHolderEntityWH *entity_wh = new RectKnotHolderEntityWH();
+    RectKnotHolderEntityXY *entity_xy = new RectKnotHolderEntityXY();
+    entity_rx->create(desktop, item, this,
+                      _("Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> "
+                        "to make the vertical radius the same"),
+                       SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR);
+    entity_ry->create(desktop, item, this,
+                      _("Adjust the <b>vertical rounding</b> radius; with <b>Ctrl</b> "
+                        "to make the horizontal radius the same"),
+                      SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR);
+    entity_wh->create(desktop, item, this,
+                      _("Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b>"
+                        "to lock ratio or stretch in one dimension only"),
+                      SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR);
+    entity_xy->create(desktop, item, this,
+                      _("Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b>"
+                        "to lock ratio or stretch in one dimension only"),
+                      SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR);
+    entity.push_back(entity_rx);
+    entity.push_back(entity_ry);
+    entity.push_back(entity_wh);
+    entity.push_back(entity_xy);
 
-    sp_knot_holder_add_full(
-      knot_holder, sp_rect_rx_set, sp_rect_rx_get, sp_rect_rx_knot_click,
-      SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR,
-      _("Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the vertical "
-        "radius the same"));
-
-    sp_knot_holder_add_full(
-      knot_holder, sp_rect_ry_set, sp_rect_ry_get, sp_rect_ry_knot_click,
-      SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR,
-      _("Adjust the <b>vertical rounding</b> radius; with <b>Ctrl</b> to make the horizontal "
-        "radius the same")
-      );
-
-    sp_knot_holder_add_full(
-      knot_holder, sp_rect_wh_set, sp_rect_wh_get, NULL,
-      SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR,
-      _("Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to lock ratio "
-        "or stretch in one dimension only")
-      );
-
-    sp_knot_holder_add_full(
-      knot_holder, sp_rect_xy_set, sp_rect_xy_get, NULL,
-      SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR,
-      _("Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to lock ratio "
-        "or stretch in one dimension only")
-      );
-
-    sp_pat_knot_holder(item, knot_holder);
-    return knot_holder;
+    add_pattern_knotholder();
 }
 
 /* Box3D (= the new 3D box structure) */
 
-static NR::Point box3d_knot_get(SPItem *item, guint knot_id)
+class Box3DKnotHolderEntity : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func() = 0;
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state) = 0;
+
+    static NR::Point knot_get_func_generic(SPItem *item, unsigned int knot_id);
+    static void knot_set_func_generic(SPItem *item, unsigned int knot_id, NR::Point const &p, guint state);
+};
+
+NR::Point
+Box3DKnotHolderEntity::knot_get_func_generic(SPItem *item, unsigned int knot_id)
 {
     return box3d_get_corner_screen(SP_BOX3D(item), knot_id);
 }
 
-static void box3d_knot_set(SPItem *item, guint knot_id, NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+void
+Box3DKnotHolderEntity::knot_set_func_generic(SPItem *item, unsigned int knot_id, NR::Point const &new_pos, guint state)
 {
     NR::Point const s = snap_knot_position(item, new_pos);
 
@@ -575,12 +481,164 @@ static void box3d_knot_set(SPItem *item, guint knot_id, NR::Point const &new_pos
     box3d_position_set(box);
 }
 
-static NR::Point box3d_knot_center_get (SPItem *item)
+class Box3DKnotHolderEntity0 : public Box3DKnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+};
+
+class Box3DKnotHolderEntity1 : public Box3DKnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+};
+
+class Box3DKnotHolderEntity2 : public Box3DKnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+};
+
+class Box3DKnotHolderEntity3 : public Box3DKnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+};
+
+class Box3DKnotHolderEntity4 : public Box3DKnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+};
+
+class Box3DKnotHolderEntity5 : public Box3DKnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+};
+
+class Box3DKnotHolderEntity6 : public Box3DKnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+};
+
+class Box3DKnotHolderEntity7 : public Box3DKnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+};
+
+class Box3DKnotHolderEntityCenter : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+};
+
+NR::Point
+Box3DKnotHolderEntity0::knot_get_func()
 {
-    return box3d_get_center_screen (SP_BOX3D(item));
+    return knot_get_func_generic(item, 0);
 }
 
-static void box3d_knot_center_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+NR::Point
+Box3DKnotHolderEntity1::knot_get_func()
+{
+    return knot_get_func_generic(item, 1);
+}
+
+NR::Point
+Box3DKnotHolderEntity2::knot_get_func()
+{
+    return knot_get_func_generic(item, 2);
+}
+
+NR::Point
+Box3DKnotHolderEntity3::knot_get_func()
+{
+    return knot_get_func_generic(item, 3);
+}
+
+NR::Point
+Box3DKnotHolderEntity4::knot_get_func()
+{
+    return knot_get_func_generic(item, 4);
+}
+
+NR::Point
+Box3DKnotHolderEntity5::knot_get_func()
+{
+    return knot_get_func_generic(item, 5);
+}
+
+NR::Point
+Box3DKnotHolderEntity6::knot_get_func()
+{
+    return knot_get_func_generic(item, 6);
+}
+
+NR::Point
+Box3DKnotHolderEntity7::knot_get_func()
+{
+    return knot_get_func_generic(item, 7);
+}
+
+NR::Point
+Box3DKnotHolderEntityCenter::knot_get_func()
+{
+    return box3d_get_center_screen(SP_BOX3D(item));
+}
+
+void
+Box3DKnotHolderEntity0::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+{
+    knot_set_func_generic(item, 0, new_pos, state);
+}
+
+void
+Box3DKnotHolderEntity1::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+{
+    knot_set_func_generic(item, 1, new_pos, state);
+}
+
+void
+Box3DKnotHolderEntity2::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+{
+    knot_set_func_generic(item, 2, new_pos, state);
+}
+
+void
+Box3DKnotHolderEntity3::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+{
+    knot_set_func_generic(item, 3, new_pos, state);
+}
+
+void
+Box3DKnotHolderEntity4::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+{
+    knot_set_func_generic(item, 4, new_pos, state);
+}
+
+void
+Box3DKnotHolderEntity5::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+{
+    knot_set_func_generic(item, 5, new_pos, state);
+}
+
+void
+Box3DKnotHolderEntity6::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+{
+    knot_set_func_generic(item, 6, new_pos, state);
+}
+
+void
+Box3DKnotHolderEntity7::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+{
+    knot_set_func_generic(item, 7, new_pos, state);
+}
+
+void
+Box3DKnotHolderEntityCenter::knot_set_func(NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
     NR::Point const s = snap_knot_position(item, new_pos);
 
@@ -594,121 +652,88 @@ static void box3d_knot_center_set(SPItem *item, NR::Point const &new_pos, NR::Po
     box3d_position_set(box);
 }
 
-static void box3d_knot0_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
+Box3DKnotHolder::Box3DKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler) :
+    KnotHolder(desktop, item, relhandler)
 {
-    box3d_knot_set(item, 0, new_pos, origin, state);
+    Box3DKnotHolderEntity0 *entity_corner0 = new Box3DKnotHolderEntity0();
+    Box3DKnotHolderEntity1 *entity_corner1 = new Box3DKnotHolderEntity1();
+    Box3DKnotHolderEntity2 *entity_corner2 = new Box3DKnotHolderEntity2();
+    Box3DKnotHolderEntity3 *entity_corner3 = new Box3DKnotHolderEntity3();
+    Box3DKnotHolderEntity4 *entity_corner4 = new Box3DKnotHolderEntity4();
+    Box3DKnotHolderEntity5 *entity_corner5 = new Box3DKnotHolderEntity5();
+    Box3DKnotHolderEntity6 *entity_corner6 = new Box3DKnotHolderEntity6();
+    Box3DKnotHolderEntity7 *entity_corner7 = new Box3DKnotHolderEntity7();
+    Box3DKnotHolderEntityCenter *entity_center = new Box3DKnotHolderEntityCenter();
+
+    entity_corner0->create(desktop, item, this,
+                           _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; "
+                             "with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
+    entity_corner1->create(desktop, item, this,
+                           _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; "
+                             "with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
+    entity_corner2->create(desktop, item, this,
+                           _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; "
+                             "with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
+    entity_corner3->create(desktop, item, this,
+                           _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; "
+                             "with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
+    entity_corner4->create(desktop, item, this,
+                     _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; "
+                       "with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
+    entity_corner5->create(desktop, item, this,
+                     _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; "
+                       "with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
+    entity_corner6->create(desktop, item, this,
+                     _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; "
+                       "with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
+    entity_corner7->create(desktop, item, this,
+                     _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; "
+                       "with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
+    entity_center->create(desktop, item, this,
+                          _("Move the box in perspective"),
+                          SP_KNOT_SHAPE_CROSS);
+
+    entity.push_back(entity_corner0);
+    entity.push_back(entity_corner1);
+    entity.push_back(entity_corner2);
+    entity.push_back(entity_corner3);
+    entity.push_back(entity_corner4);
+    entity.push_back(entity_corner5);
+    entity.push_back(entity_corner6);
+    entity.push_back(entity_corner7);
+    entity.push_back(entity_center);
+
+    add_pattern_knotholder();
 }
-
-static void box3d_knot1_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
-{
-    box3d_knot_set(item, 1, new_pos, origin, state);
-}
-
-static void box3d_knot2_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
-{
-    box3d_knot_set(item, 2, new_pos, origin, state);
-}
-
-static void box3d_knot3_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
-{
-    box3d_knot_set(item, 3, new_pos, origin, state);
-}
-
-static void box3d_knot4_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
-{
-    box3d_knot_set(item, 4, new_pos, origin, state);
-}
-
-static void box3d_knot5_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
-{
-    box3d_knot_set(item, 5, new_pos, origin, state);
-}
-
-static void box3d_knot6_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
-{
-    box3d_knot_set(item, 6, new_pos, origin, state);
-}
-
-static void box3d_knot7_set(SPItem *item, NR::Point const &new_pos, NR::Point const &origin, guint state)
-{
-    box3d_knot_set(item, 7, new_pos, origin, state);
-}
-
-static NR::Point box3d_knot0_get(SPItem *item)
-{
-    return box3d_knot_get(item, 0);
-}
-
-static NR::Point box3d_knot1_get(SPItem *item)
-{
-    return box3d_knot_get(item, 1);
-}
-
-static NR::Point box3d_knot2_get(SPItem *item)
-{
-    return box3d_knot_get(item, 2);
-}
-
-static NR::Point box3d_knot3_get(SPItem *item)
-{
-    return box3d_knot_get(item, 3);
-}
-
-static NR::Point box3d_knot4_get(SPItem *item)
-{
-    return box3d_knot_get(item, 4);
-}
-
-static NR::Point box3d_knot5_get(SPItem *item)
-{
-    return box3d_knot_get(item, 5);
-}
-
-static NR::Point box3d_knot6_get(SPItem *item)
-{
-    return box3d_knot_get(item, 6);
-}
-
-static NR::Point box3d_knot7_get(SPItem *item)
-{
-    return box3d_knot_get(item, 7);
-}
-
-SPKnotHolder *
-box3d_knot_holder(SPItem *item, SPDesktop *desktop)
-{
-    g_assert(item != NULL);
-    SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
-
-    sp_knot_holder_add(knot_holder, box3d_knot0_set, box3d_knot0_get, NULL,
-                       _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, box3d_knot1_set, box3d_knot1_get, NULL,
-                       _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, box3d_knot2_set, box3d_knot2_get, NULL,
-                       _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, box3d_knot3_set, box3d_knot3_get, NULL,
-                       _("Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, box3d_knot4_set, box3d_knot4_get, NULL,
-                       _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, box3d_knot5_set, box3d_knot5_get, NULL,
-                       _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, box3d_knot6_set, box3d_knot6_get, NULL,
-                       _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-    sp_knot_holder_add(knot_holder, box3d_knot7_set, box3d_knot7_get, NULL,
-                       _("Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"));
-
-    // center dragging
-    sp_knot_holder_add_full(knot_holder, box3d_knot_center_set, box3d_knot_center_get, NULL,
-                            SP_KNOT_SHAPE_CROSS, SP_KNOT_MODE_XOR,_("Move the box in perspective"));
-
-    sp_pat_knot_holder(item, knot_holder);
-
-    return knot_holder;
-}
-
-
 
 /* SPArc */
+
+class ArcKnotHolderEntityStart : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+};
+
+class ArcKnotHolderEntityEnd : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click_func(guint state);
+};
+
+class ArcKnotHolderEntityRX : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click_func(guint state);
+};
+
+class ArcKnotHolderEntityRY : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click_func(guint state);
+};
 
 /*
  * return values:
@@ -728,8 +753,8 @@ sp_genericellipse_side(SPGenericEllipse *ellipse, NR::Point const &p)
     return 0;
 }
 
-static void
-sp_arc_start_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
+void
+ArcKnotHolderEntityStart::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
@@ -750,7 +775,8 @@ sp_arc_start_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, 
     ((SPObject *)arc)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static NR::Point sp_arc_start_get(SPItem *item)
+NR::Point
+ArcKnotHolderEntityStart::knot_get_func()
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
@@ -758,8 +784,8 @@ static NR::Point sp_arc_start_get(SPItem *item)
     return sp_arc_get_xy(arc, ge->start);
 }
 
-static void
-sp_arc_end_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
+void
+ArcKnotHolderEntityEnd::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
@@ -780,7 +806,8 @@ sp_arc_end_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, gu
     ((SPObject *)arc)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static NR::Point sp_arc_end_get(SPItem *item)
+NR::Point
+ArcKnotHolderEntityEnd::knot_get_func()
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
@@ -788,8 +815,9 @@ static NR::Point sp_arc_end_get(SPItem *item)
     return sp_arc_get_xy(arc, ge->end);
 }
 
-static void
-sp_arc_startend_click(SPItem *item, guint state)
+
+void
+ArcKnotHolderEntityEnd::knot_click_func(guint state)
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
 
@@ -800,8 +828,8 @@ sp_arc_startend_click(SPItem *item, guint state)
 }
 
 
-static void
-sp_arc_rx_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
+void
+ArcKnotHolderEntityRX::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
@@ -817,15 +845,27 @@ sp_arc_rx_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, gui
     ((SPObject *)arc)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static NR::Point sp_arc_rx_get(SPItem *item)
+NR::Point
+ArcKnotHolderEntityRX::knot_get_func()
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
 
     return (NR::Point(ge->cx.computed, ge->cy.computed) -  NR::Point(ge->rx.computed, 0));
 }
 
-static void
-sp_arc_ry_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
+void
+ArcKnotHolderEntityRX::knot_click_func(guint state)
+{
+    SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
+
+    if (state & GDK_CONTROL_MASK) {
+        ge->ry.computed = ge->rx.computed;
+        ((SPObject *)ge)->updateRepr();
+    }
+}
+
+void
+ArcKnotHolderEntityRY::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
@@ -841,26 +881,16 @@ sp_arc_ry_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, gui
     ((SPObject *)arc)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static NR::Point sp_arc_ry_get(SPItem *item)
+NR::Point
+ArcKnotHolderEntityRY::knot_get_func()
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
 
     return (NR::Point(ge->cx.computed, ge->cy.computed) -  NR::Point(0, ge->ry.computed));
 }
 
-static void
-sp_arc_rx_click(SPItem *item, guint state)
-{
-    SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
-
-    if (state & GDK_CONTROL_MASK) {
-        ge->ry.computed = ge->rx.computed;
-        ((SPObject *)ge)->updateRepr();
-    }
-}
-
-static void
-sp_arc_ry_click(SPItem *item, guint state)
+void
+ArcKnotHolderEntityRY::knot_click_func(guint state)
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
 
@@ -870,33 +900,53 @@ sp_arc_ry_click(SPItem *item, guint state)
     }
 }
 
-static SPKnotHolder *
-sp_arc_knot_holder(SPItem *item, SPDesktop *desktop)
+ArcKnotHolder::ArcKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler) :
+    KnotHolder(desktop, item, relhandler)
 {
-    SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
+    ArcKnotHolderEntityRX *entity_rx = new ArcKnotHolderEntityRX();
+    ArcKnotHolderEntityRY *entity_ry = new ArcKnotHolderEntityRY();
+    ArcKnotHolderEntityStart *entity_start = new ArcKnotHolderEntityStart();
+    ArcKnotHolderEntityEnd *entity_end = new ArcKnotHolderEntityEnd();
+    entity_rx->create(desktop, item, this,
+                      _("Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"),
+                      SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR);
+    entity_ry->create(desktop, item, this,
+                      _("Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"),
+                      SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR);
+    entity_start->create(desktop, item, this,
+                         _("Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>"
+                           "to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"),
+                         SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR);
+    entity_end->create(desktop, item, this,
+                       _("Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; "
+                         "drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"),
+                       SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR);
+    entity.push_back(entity_rx);
+    entity.push_back(entity_ry);
+    entity.push_back(entity_start);
+    entity.push_back(entity_end);
 
-    sp_knot_holder_add_full(knot_holder, sp_arc_rx_set, sp_arc_rx_get, sp_arc_rx_click,
-                            SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR,
-                            _("Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"));
-    sp_knot_holder_add_full(knot_holder, sp_arc_ry_set, sp_arc_ry_get, sp_arc_ry_click,
-                            SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR,
-                            _("Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"));
-    sp_knot_holder_add_full(knot_holder, sp_arc_start_set, sp_arc_start_get, sp_arc_startend_click,
-                            SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR,
-                            _("Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"));
-    sp_knot_holder_add_full(knot_holder, sp_arc_end_set, sp_arc_end_get, sp_arc_startend_click,
-                            SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR,
-                            _("Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"));
-
-    sp_pat_knot_holder(item, knot_holder);
-
-    return knot_holder;
+    add_pattern_knotholder();
 }
 
 /* SPStar */
 
-static void
-sp_star_knot1_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
+class StarKnotHolderEntity1 : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click_func(guint state);
+};
+
+class StarKnotHolderEntity2 : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click_func(guint state);
+};
+
+void
+StarKnotHolderEntity1::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPStar *star = SP_STAR(item);
 
@@ -921,8 +971,8 @@ sp_star_knot1_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/,
     ((SPObject *)star)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static void
-sp_star_knot2_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
+void
+StarKnotHolderEntity2::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPStar *star = SP_STAR(item);
 
@@ -950,7 +1000,8 @@ sp_star_knot2_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/,
     }
 }
 
-static NR::Point sp_star_knot1_get(SPItem *item)
+NR::Point
+StarKnotHolderEntity1::knot_get_func()
 {
     g_assert(item != NULL);
 
@@ -960,7 +1011,8 @@ static NR::Point sp_star_knot1_get(SPItem *item)
 
 }
 
-static NR::Point sp_star_knot2_get(SPItem *item)
+NR::Point
+StarKnotHolderEntity2::knot_get_func()
 {
     g_assert(item != NULL);
 
@@ -986,27 +1038,55 @@ sp_star_knot_click(SPItem *item, guint state)
     }
 }
 
-static SPKnotHolder *
-sp_star_knot_holder(SPItem *item, SPDesktop *desktop)
+void
+StarKnotHolderEntity1::knot_click_func(guint state)
 {
-    /* we don't need to get parent knot_holder */
-    SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
-    g_assert(item != NULL);
+    return sp_star_knot_click(item, state);
+}
 
+void
+StarKnotHolderEntity2::knot_click_func(guint state)
+{
+    return sp_star_knot_click(item, state);
+}
+
+StarKnotHolder::StarKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler) :
+    KnotHolder(desktop, item, relhandler)
+{
     SPStar *star = SP_STAR(item);
 
-    sp_knot_holder_add(knot_holder, sp_star_knot1_set, sp_star_knot1_get, sp_star_knot_click,
-                       _("Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to round; with <b>Alt</b> to randomize"));
-    if (star->flatsided == false)
-        sp_knot_holder_add(knot_holder, sp_star_knot2_set, sp_star_knot2_get, sp_star_knot_click,
-                           _("Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to randomize"));
+    StarKnotHolderEntity1 *entity1 = new StarKnotHolderEntity1();
+    entity1->create(desktop, item, this,
+                    _("Adjust the <b>tip radius</b> of the star or polygon; "
+                      "with <b>Shift</b> to round; with <b>Alt</b> to randomize"));
+    entity.push_back(entity1);
 
-    sp_pat_knot_holder(item, knot_holder);
+    if (star->flatsided == false) {
+        StarKnotHolderEntity2 *entity2 = new StarKnotHolderEntity2();
+        entity2->create(desktop, item, this,
+                        _("Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star rays "
+                          "radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to randomize"));
+        entity.push_back(entity2);
+    }
 
-    return knot_holder;
+    add_pattern_knotholder();
 }
 
 /* SPSpiral */
+
+class SpiralKnotHolderEntityInner : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click_func(guint state);
+};
+
+class SpiralKnotHolderEntityOuter : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+};
+
 
 /*
  * set attributes via inner (t=t0) knot point:
@@ -1014,8 +1094,8 @@ sp_star_knot_holder(SPItem *item, SPDesktop *desktop)
  *   [shift]   increase/decrease inner and outer arg synchronizely
  *   [control] constrain inner arg to round per PI/4
  */
-static void
-sp_spiral_inner_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
+void
+SpiralKnotHolderEntityInner::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
@@ -1056,8 +1136,8 @@ sp_spiral_inner_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*
  *   [default] increase/decrease revolution factor
  *   [control] constrain inner arg to round per PI/4
  */
-static void
-sp_spiral_outer_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint state)
+void
+SpiralKnotHolderEntityOuter::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
@@ -1129,22 +1209,24 @@ sp_spiral_outer_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*
     ((SPObject *)spiral)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static NR::Point sp_spiral_inner_get(SPItem *item)
+NR::Point
+SpiralKnotHolderEntityInner::knot_get_func()
 {
     SPSpiral *spiral = SP_SPIRAL(item);
 
     return sp_spiral_get_xy(spiral, spiral->t0);
 }
 
-static NR::Point sp_spiral_outer_get(SPItem *item)
+NR::Point
+SpiralKnotHolderEntityOuter::knot_get_func()
 {
     SPSpiral *spiral = SP_SPIRAL(item);
 
     return sp_spiral_get_xy(spiral, 1.0);
 }
 
-static void
-sp_spiral_inner_click(SPItem *item, guint state)
+void
+SpiralKnotHolderEntityInner::knot_click_func(guint state)
 {
     SPSpiral *spiral = SP_SPIRAL(item);
 
@@ -1157,25 +1239,33 @@ sp_spiral_inner_click(SPItem *item, guint state)
     }
 }
 
-static SPKnotHolder *
-sp_spiral_knot_holder(SPItem *item, SPDesktop *desktop)
+SpiralKnotHolder::SpiralKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler) :
+    KnotHolder(desktop, item, relhandler)
 {
-    SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
+    SpiralKnotHolderEntityInner *entity_inner = new SpiralKnotHolderEntityInner();
+    SpiralKnotHolderEntityOuter *entity_outer = new SpiralKnotHolderEntityOuter();
+    entity_inner->create(desktop, item, this,
+                         _("Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; "
+                           "with <b>Alt</b> to converge/diverge"));
+    entity_outer->create(desktop, item, this,
+                         _("Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
+                           "with <b>Shift</b> to scale/rotate"));
+    entity.push_back(entity_inner);
+    entity.push_back(entity_outer);
 
-    sp_knot_holder_add(knot_holder, sp_spiral_inner_set, sp_spiral_inner_get, sp_spiral_inner_click,
-                       _("Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to converge/diverge"));
-    sp_knot_holder_add(knot_holder, sp_spiral_outer_set, sp_spiral_outer_get, NULL,
-                       _("Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to scale/rotate"));
-
-    sp_pat_knot_holder(item, knot_holder);
-
-    return knot_holder;
+    add_pattern_knotholder();
 }
 
 /* SPOffset */
 
-static void
-sp_offset_offset_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
+class OffsetKnotHolderEntity : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+};
+
+void
+OffsetKnotHolderEntity::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
 {
     SPOffset *offset = SP_OFFSET(item);
 
@@ -1187,7 +1277,8 @@ sp_offset_offset_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin
 }
 
 
-static NR::Point sp_offset_offset_get(SPItem *item)
+NR::Point
+OffsetKnotHolderEntity::knot_get_func()
 {
     SPOffset *offset = SP_OFFSET(item);
 
@@ -1196,76 +1287,49 @@ static NR::Point sp_offset_offset_get(SPItem *item)
     return np;
 }
 
-static SPKnotHolder *
-sp_offset_knot_holder(SPItem *item, SPDesktop *desktop)
+OffsetKnotHolder::OffsetKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler) :
+    KnotHolder(desktop, item, relhandler)
 {
-    SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
+    OffsetKnotHolderEntity *entity_offset = new OffsetKnotHolderEntity();
+    entity_offset->create(desktop, item, this,
+                          _("Adjust the <b>offset distance</b>"));
+    entity.push_back(entity_offset);
 
-    sp_knot_holder_add(knot_holder, sp_offset_offset_set, sp_offset_offset_get, NULL,
-                       _("Adjust the <b>offset distance</b>"));
-
-    sp_pat_knot_holder(item, knot_holder);
-
-    return knot_holder;
+    add_pattern_knotholder();
 }
 
-static SPKnotHolder *
-sp_misc_knot_holder(SPItem *item, SPDesktop *desktop) // FIXME: eliminate, instead make a pattern-drag similar to gradient-drag
-{
-    if ((SP_OBJECT(item)->style->fill.isPaintserver())
-        && SP_IS_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style)))
-    {
-        SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, item, NULL);
+class FlowtextKnotHolderEntity : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get_func();
+    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+};
 
-        sp_pat_knot_holder(item, knot_holder);
-
-        return knot_holder;
-    }
-    return NULL;
-}
-
-static void
-sp_pat_knot_holder(SPItem *item, SPKnotHolder *knot_holder)
-{
-    if ((SP_OBJECT(item)->style->fill.isPaintserver())
-        && SP_IS_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style)))
-    {
-        sp_knot_holder_add_full(knot_holder, sp_pattern_xy_set, sp_pattern_xy_get, NULL, SP_KNOT_SHAPE_CROSS, SP_KNOT_MODE_XOR,
-                                // TRANSLATORS: This refers to the pattern that's inside the object
-                                _("<b>Move</b> the pattern fill inside the object"));
-        sp_knot_holder_add_full(knot_holder, sp_pattern_scale_set, sp_pattern_scale_get, NULL, SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR,
-                                _("<b>Scale</b> the pattern fill uniformly"));
-        sp_knot_holder_add_full(knot_holder, sp_pattern_angle_set, sp_pattern_angle_get, NULL, SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR,
-                                _("<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"));
-    }
-}
-
-static NR::Point sp_flowtext_corner_get(SPItem *item)
+NR::Point
+FlowtextKnotHolderEntity::knot_get_func()
 {
     SPRect *rect = SP_RECT(item);
 
     return NR::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed);
 }
 
-static void
-sp_flowtext_corner_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state)
+void
+FlowtextKnotHolderEntity::knot_set_func(NR::Point const &p, NR::Point const &origin, guint state)
 {
     SPRect *rect = SP_RECT(item);
 
     sp_rect_wh_set_internal(rect, p, origin, state);
 }
 
-static SPKnotHolder *
-sp_flowtext_knot_holder(SPItem *item, SPDesktop *desktop)
+FlowtextKnotHolder::FlowtextKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler) :
+    KnotHolder(desktop, item, relhandler)
 {
-    SPKnotHolder *knot_holder = sp_knot_holder_new(desktop, SP_FLOWTEXT(item)->get_frame(NULL), NULL);
+    g_assert(item != NULL);
 
-    sp_knot_holder_add(knot_holder, sp_flowtext_corner_set, sp_flowtext_corner_get, NULL,
-                       _("Drag to resize the <b>flowed text frame</b>"));
-
-    return knot_holder;
+    FlowtextKnotHolderEntity *entity_flowtext = new FlowtextKnotHolderEntity();
+    entity_flowtext->create(desktop, item, this,
+                            _("Drag to resize the <b>flowed text frame</b>"));
+    entity.push_back(entity_flowtext);
 }
-
 
 /*
   Local Variables:

@@ -32,8 +32,11 @@ typedef void (* PointParamKnotHolderSetFunc) (SPItem *item, NR::Point const &p, 
 typedef NR::Point (* PointParamKnotHolderGetFunc) (SPItem *item);
 typedef void (* PointParamKnotHolderClickedFunc) (SPItem *item, guint state);
 
-class PointParamKnotHolder : public SPKnotHolder {
+class PointParamKnotHolder : public KnotHolder {
 public:
+    PointParamKnotHolder(SPDesktop *desktop, SPObject *lpeobject, const gchar * key, SPItem *item);
+    ~PointParamKnotHolder();
+
     LivePathEffectObject * lpeobject;
     Inkscape::XML::Node  * repr;
     const gchar          * repr_key;
@@ -45,17 +48,6 @@ public:
                     guint32             color,
                     const gchar *tip );
 };
-
-struct PointParamKnotHolderClass : SPKnotHolderClass {
-};
-
-PointParamKnotHolder *pointparam_knot_holder_new(SPDesktop *desktop, SPObject *lpeobject, const gchar * key, SPItem *item);
-
-GType pointparam_knot_holder_get_type();
-
-
-#define INKSCAPE_TYPE_POINTPARAM_KNOT_HOLDER      (Inkscape::pointparam_knot_holder_get_type())
-
 
 } // namespace Inkscape
 

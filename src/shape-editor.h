@@ -24,7 +24,7 @@ class Path;
 #include "libnr/nr-point.h"
 #include "libnr/nr-maybe.h"
 
-class SPKnotHolder;
+class KnotHolder;
 class SPDesktop;
 class SPNodeContext;
 class ShapeEditorsCollective;
@@ -37,7 +37,7 @@ public:
 
     void set_item (SPItem *item);
     void set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject, const char * key);
-    void set_knotholder(SPKnotHolder * knot_holder);
+    void set_knotholder(KnotHolder * knot_holder);
     void reset_item ();
     void unset_item ();
 
@@ -121,7 +121,7 @@ private:
     SPDesktop *desktop;
 
     Inkscape::NodePath::Path *nodepath;
-    SPKnotHolder *knotholder;
+    KnotHolder *knotholder;
 
     ShapeEditorsCollective *container;
 

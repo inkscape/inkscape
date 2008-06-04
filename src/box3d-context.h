@@ -20,8 +20,6 @@
 #include "proj_pt.h"
 #include "vanishing-point.h"
 
-struct SPKnotHolder;
-
 #define SP_TYPE_BOX3D_CONTEXT            (sp_box3d_context_get_type ())
 #define SP_BOX3D_CONTEXT(obj)            (GTK_CHECK_CAST ((obj), SP_TYPE_BOX3D_CONTEXT, Box3DContext))
 #define SP_BOX3D_CONTEXT_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), SP_TYPE_BOX3D_CONTEXT, Box3DContextClass))

@@ -335,10 +335,12 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                         g_signal_emit(knot,
                                       knot_signals[UNGRABBED], 0,
                                       event->button.state);
+                        knot->_ungrabbed_signal.emit();
                     } else {
                         g_signal_emit(knot,
                                       knot_signals[CLICKED], 0,
                                       event->button.state);
+                        knot->_click_signal.emit(knot, event->button.state);
                     }
                     grabbed = FALSE;
                     moved = FALSE;
@@ -560,6 +562,7 @@ void sp_knot_set_position(SPKnot *knot, NR::Point *p, guint state)
                   knot_signals[MOVED], 0,
                   p,
                   state);
+    knot->_moved_signal.emit(knot, p, state);
 }
 
 /**

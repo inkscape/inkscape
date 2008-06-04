@@ -1053,7 +1053,7 @@ ec_shape_event_attr_changed(Inkscape::XML::Node */*shape_repr*/, gchar const *na
     SPEventContext *ec = SP_EVENT_CONTEXT(data);
 
     if (ec->shape_knot_holder) {
-        sp_knot_holder_destroy(ec->shape_knot_holder);
+        delete ec->shape_knot_holder;
     }
     ec->shape_knot_holder = NULL;
 

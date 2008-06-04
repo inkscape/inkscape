@@ -123,7 +123,7 @@ static void sp_arc_context_dispose(GObject *object)
     ac->sel_changed_connection.~connection();
 
     if (ec->shape_knot_holder) {
-        sp_knot_holder_destroy(ec->shape_knot_holder);
+        delete ec->shape_knot_holder;
         ec->shape_knot_holder = NULL;
     }
 
@@ -161,7 +161,7 @@ void sp_arc_context_selection_changed(Inkscape::Selection * selection, gpointer 
     SPEventContext *ec = SP_EVENT_CONTEXT(ac);
 
     if (ec->shape_knot_holder) { // desktroy knotholder
-        sp_knot_holder_destroy(ec->shape_knot_holder);
+        delete ec->shape_knot_holder;
         ec->shape_knot_holder = NULL;
     }
 

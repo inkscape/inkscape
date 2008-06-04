@@ -100,7 +100,7 @@ public:
     virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
 
     bool providesKnotholder() { return knotholder_func_vector.size() > 0; }
-    void addHandles(SPKnotHolder *knotholder);
+    void addHandles(KnotHolder *knotholder);
 
     Glib::ustring          getName();
     Inkscape::XML::Node *  getRepr();

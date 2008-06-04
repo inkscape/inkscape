@@ -24,8 +24,7 @@
 struct GrDrag;
 struct SPDesktop;
 struct SPItem;
-struct SPKnotHolder;
-
+class KnotHolder;
 namespace NR {
     class Point;
 }
@@ -72,7 +71,7 @@ struct SPEventContext : public GObject {
     GrDrag *_grdrag;
     GrDrag *get_drag () {return _grdrag;}
 
-    SPKnotHolder *shape_knot_holder;
+    KnotHolder *shape_knot_holder;
     Inkscape::XML::Node *shape_repr;
 
     bool space_panning;

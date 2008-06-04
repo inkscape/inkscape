@@ -2,14 +2,16 @@
 #define __SP_KNOTHOLDER_H__
 
 /*
- * SPKnotHolder - Hold SPKnot list and manage signals
+ * KnotHolder - Hold SPKnot list and manage signals
  *
  * Author:
  *   Mitsuru Oka <oka326@parkcity.ne.jp>
+ *   Maximilian Albert <maximilian.albert@gmail.com>
  *
  * Copyright (C) 1999-2001 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
  * Copyright (C) 2001 Mitsuru Oka
+ * Copyright (C) 2008 Maximilian Albert
  *
  * Released under GNU GPL
  *
@@ -19,6 +21,8 @@
 #include "knot-enums.h"
 #include "forward.h"
 #include "libnr/nr-forward.h"
+#include "knot-holder-entity.h"
+#include <list>
 
 namespace Inkscape {
 namespace XML {
@@ -32,10 +36,24 @@ typedef NR::Point (* SPKnotHolderGetFunc) (SPItem *item);
 /* fixme: Think how to make callbacks most sensitive (Lauris) */
 typedef void (* SPKnotHolderReleasedFunc) (SPItem *item);
 
-struct SPKnotHolder : GObject {
+class KnotHolder {
+public:
+    KnotHolder() {} // do nothing in the default constructor
+    KnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler);
+    virtual ~KnotHolder();
+
+    void update_knots();
+
+    void knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state);
+    void knot_clicked_handler(SPKnot *knot, guint state);
+    void knot_ungrabbed_handler();
+
+    void add_pattern_knotholder();
+
+//private:
     SPDesktop *desktop;
-    SPItem *item;
-    GSList *entity;
+    SPItem *item; // TODO: Remove this and keep the actual item (e.g., SPRect etc.) in the item-specific knotholders
+    std::list<KnotHolderEntity *> entity;
 
     SPKnotHolderReleasedFunc released;
 
@@ -44,34 +62,11 @@ struct SPKnotHolder : GObject {
     gboolean local_change; ///< if true, no need to recreate knotholder if repr was changed.
 };
 
-struct SPKnotHolderClass : GObjectClass {
-};
-
-/* fixme: As a temporary solution, if released is NULL knotholder flushes undo itself (Lauris) */
-SPKnotHolder *sp_knot_holder_new(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler);
-
-void sp_knot_holder_destroy(SPKnotHolder *knots);
-
-void sp_knot_holder_add(SPKnotHolder *knot_holder,
-                        SPKnotHolderSetFunc knot_set,
-                        SPKnotHolderGetFunc knot_get,
-                        void (* knot_click) (SPItem *item, guint state),
-                        gchar const *tip);
-
-void sp_knot_holder_add_full(SPKnotHolder *knot_holder,
-                             SPKnotHolderSetFunc knot_set,
-                             SPKnotHolderGetFunc knot_get,
-                             void (* knot_click) (SPItem *item, guint state),
-                             SPKnotShapeType shape,
-                             SPKnotModeType mode,
-                             gchar const *tip);
-
-GType sp_knot_holder_get_type();
-
-// FIXME: This is an ugly hack! What is the right way to update the knots from VPDrag::updateBoxHandles() ?
-void knotholder_update_knots(SPKnotHolder *knot_holder, SPItem *item);
-
-#define SP_TYPE_KNOT_HOLDER      (sp_knot_holder_get_type())
+/**
+void knot_clicked_handler(SPKnot *knot, guint state, gpointer data);
+void knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state, gpointer data);
+void knot_ungrabbed_handler(SPKnot *knot, unsigned int state, KnotHolder *kh);
+**/
 
 #endif /* !__SP_KNOTHOLDER_H__ */
 

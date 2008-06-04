@@ -17,7 +17,6 @@
 #include <sigc++/sigc++.h>
 #include "event-context.h"
 #include "libnr/nr-point.h"
-struct SPKnotHolder;
 
 #define SP_TYPE_SPIRAL_CONTEXT            (sp_spiral_context_get_type ())
 #define SP_SPIRAL_CONTEXT(obj)            (GTK_CHECK_CAST ((obj), SP_TYPE_SPIRAL_CONTEXT, SPSpiralContext))

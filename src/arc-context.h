@@ -19,7 +19,6 @@
 
 #include <libnr/nr-point.h>
 #include "event-context.h"
-struct SPKnotHolder;
 
 #define SP_TYPE_ARC_CONTEXT            (sp_arc_context_get_type())
 #define SP_ARC_CONTEXT(obj)            (GTK_CHECK_CAST((obj), SP_TYPE_ARC_CONTEXT, SPArcContext))

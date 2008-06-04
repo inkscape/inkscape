@@ -136,7 +136,7 @@ PointParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
         tools_switch_current(TOOLS_NODES);
     }
 
-    PointParamKnotHolder * kh =  pointparam_knot_holder_new( dt, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str(), item);
+    PointParamKnotHolder * kh =  new PointParamKnotHolder(dt, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str(), item);
     if (kh) {
         kh->add_knot(* dynamic_cast<Geom::Point *>( this ), NULL, knot_shape, knot_mode, knot_color, param_getTooltip()->c_str() );
 

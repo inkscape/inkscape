@@ -20,6 +20,7 @@
 #include "forward.h"
 #include <libnr/nr-point.h>
 #include "knot-enums.h"
+#include <sigc++/sigc++.h>
 
 class SPKnot;
 class SPKnotClass;
@@ -64,6 +65,16 @@ struct SPKnot : GObject {
     gulong _event_handler_id;
 
     double pressure; /**< The tablet pen pressure when the knot is being dragged. */
+
+    // C++ signals
+    /**
+    sigc::signal<void, NR::Point const &, NR::Point const &, guint> _moved_signal;
+    sigc::signal<void, guint> _click_signal;
+    sigc::signal<NR::Point> _ungrabbed_signal;
+    **/
+    sigc::signal<void, SPKnot *, NR::Point const *, guint> _moved_signal;
+    sigc::signal<void, SPKnot *, guint> _click_signal;
+    sigc::signal<void> _ungrabbed_signal;
 
     //TODO: all the members above should eventualle become private, accessible via setters/getters
     inline void setSize (guint i) {size = i;}

@@ -185,7 +185,7 @@ sp_text_context_dispose(GObject *obj)
     Inkscape::Rubberband::get()->stop();
 
     if (ec->shape_knot_holder) {
-        sp_knot_holder_destroy(ec->shape_knot_holder);
+        delete ec->shape_knot_holder;
         ec->shape_knot_holder = NULL;
     }
     if (ec->shape_repr) { // remove old listener
@@ -1377,7 +1377,7 @@ sp_text_context_selection_changed(Inkscape::Selection *selection, SPTextContext 
     SPEventContext *ec = SP_EVENT_CONTEXT(tc);
 
     if (ec->shape_knot_holder) { // destroy knotholder
-        sp_knot_holder_destroy(ec->shape_knot_holder);
+        delete ec->shape_knot_holder;
         ec->shape_knot_holder = NULL;
     }
 

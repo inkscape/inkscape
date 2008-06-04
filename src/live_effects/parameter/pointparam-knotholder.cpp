@@ -33,86 +33,31 @@ namespace Inkscape {
 static void pointparam_knot_clicked_handler (SPKnot *knot, guint state, PointParamKnotHolder *kh);
 static void pointparam_knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state, PointParamKnotHolder *kh);
 static void pointparam_knot_ungrabbed_handler (SPKnot *knot, unsigned int state, PointParamKnotHolder *kh);
-static void pointparam_knot_holder_class_init(PointParamKnotHolderClass *klass);
 
-void pointparam_knot_holder_dispose(GObject *object);
-
-static SPKnotHolderClass *parent_class;
-
-/**
- * Registers PointParamKnotHolder class and returns its type number.
- */
-GType pointparam_knot_holder_get_type()
+PointParamKnotHolder::PointParamKnotHolder(SPDesktop *desktop, SPObject *lpeobject, const gchar * key, SPItem *item)
 {
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(PointParamKnotHolderClass),
-            NULL,	/* base_init */
-            NULL,	/* base_finalize */
-            (GClassInitFunc) pointparam_knot_holder_class_init,
-            NULL,	/* class_finalize */
-            NULL,	/* class_data */
-            sizeof (PointParamKnotHolder),
-            16,	/* n_preallocs */
-            NULL,
-            NULL
-        };
-        type = g_type_register_static (G_TYPE_OBJECT, "InkscapePointParamKnotHolder", &info, (GTypeFlags) 0);
+    if (!desktop || !item || !SP_IS_ITEM(item)) {
+        g_print ("Error! Throw an exception, please!\n");
     }
-    return type;
-}
 
-/**
- * PointParamKnotHolder vtable initialization.
- */
-static void pointparam_knot_holder_class_init(PointParamKnotHolderClass *klass)
-{
-    GObjectClass *gobject_class;
-    gobject_class = (GObjectClass *) klass;
-
-    parent_class = (SPKnotHolderClass*) g_type_class_peek_parent(klass);
-    gobject_class->dispose = pointparam_knot_holder_dispose;
-}
-
-PointParamKnotHolder *pointparam_knot_holder_new(SPDesktop *desktop, SPObject *lpeobject, const gchar * key, SPItem *item)
-{
-    g_return_val_if_fail(desktop != NULL, NULL);
-    g_return_val_if_fail(item != NULL, NULL);
-    g_return_val_if_fail(SP_IS_ITEM(item), NULL);
-
-    PointParamKnotHolder *knot_holder = (PointParamKnotHolder*)g_object_new (INKSCAPE_TYPE_POINTPARAM_KNOT_HOLDER, 0);
-    knot_holder->desktop = desktop;
-    knot_holder->item = item;
-    knot_holder->lpeobject = LIVEPATHEFFECT(lpeobject);
+    this->desktop = desktop;
+    this->item = item;
+    this->lpeobject = LIVEPATHEFFECT(lpeobject);
     g_object_ref(G_OBJECT(item));
     g_object_ref(G_OBJECT(lpeobject));
-    knot_holder->entity = NULL;
 
-    knot_holder->released = NULL;
+    this->released = NULL;
 
-    knot_holder->repr = lpeobject->repr;
-    knot_holder->repr_key = key;
+    this->repr = lpeobject->repr;
+    this->repr_key = key;
 
-    knot_holder->local_change = FALSE;
-
-    return knot_holder;
+    this->local_change = FALSE;
 }
 
-void pointparam_knot_holder_dispose(GObject *object) {
-    PointParamKnotHolder *kh = G_TYPE_CHECK_INSTANCE_CAST((object), INKSCAPE_TYPE_POINTPARAM_KNOT_HOLDER, PointParamKnotHolder);
-
-    g_object_unref(G_OBJECT(kh->item));
-    g_object_unref(G_OBJECT(kh->lpeobject));
-    while (kh->entity) {
-        SPKnotHolderEntity *e = (SPKnotHolderEntity *) kh->entity->data;
-        g_signal_handler_disconnect(e->knot, e->_click_handler_id);
-        g_signal_handler_disconnect(e->knot, e->_ungrab_handler_id);
-        /* unref should call destroy */
-        g_object_unref(e->knot);
-        g_free(e);
-        kh->entity = g_slist_remove(kh->entity, e);
-    }
+PointParamKnotHolder::~PointParamKnotHolder()
+{
+    g_object_unref(G_OBJECT(this->item));
+    g_object_unref(G_OBJECT(this->lpeobject));
 }
 
 void
@@ -125,25 +70,13 @@ PointParamKnotHolder::add_knot (
     const gchar *tip )
 {
     /* create new SPKnotHolderEntry */
-    SPKnotHolderEntity *e = g_new(SPKnotHolderEntity, 1);
-    e->knot = sp_knot_new(desktop, tip);
-    e->knot_set = NULL;
-    e->knot_get = NULL;
-    if (knot_click) {
-        e->knot_click = knot_click;
-    } else {
-        e->knot_click = NULL;
-    }
+    // TODO: knot_click can't be set any more with the new KnotHolder design; make it a virtual function?
+    KnotHolderEntity *e = new KnotHolderEntity();
+    e->create(this->desktop, this->item, this, tip, shape, mode, color);
 
-    g_object_set(G_OBJECT (e->knot->item), "shape", shape, NULL);
-    g_object_set(G_OBJECT (e->knot->item), "mode", mode, NULL);
+    entity.push_back(e);
 
-    e->knot->fill [SP_KNOT_STATE_NORMAL] = color;
-    g_object_set (G_OBJECT (e->knot->item), "fill_color", color, NULL);
-
-    entity = g_slist_append(entity, e);
-
-    /* Move to current point. */
+    // Move to current point.
     NR::Point dp = p * sp_item_i2d_affine(item);
     sp_knot_set_position(e->knot, &dp, SP_KNOT_STATE_NORMAL);
 
