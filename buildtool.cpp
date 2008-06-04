@@ -38,7 +38,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.9.2"
+#define BUILDTOOL_VERSION  "BuildTool v0.9.3"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -3551,12 +3551,29 @@ void MakeBase::error(const char *fmt, ...)
 void MakeBase::status(const char *fmt, ...)
 {
     va_list args;
-    va_start(args,fmt);
     //fprintf(stdout, " ");
+    va_start(args,fmt);
     vfprintf(stdout, fmt, args);
+    va_end(args);
     fprintf(stdout, "\n");
-    va_end(args) ;
+    fflush(stdout);
 }
+
+
+/**
+ *  Print a printf()-like formatted trace message
+ */
+void MakeBase::trace(const char *fmt, ...)
+{
+    va_list args;
+    fprintf(stdout, "Make: ");
+    va_start(args,fmt);
+    vfprintf(stdout, fmt, args);
+    va_end(args) ;
+    fprintf(stdout, "\n");
+    fflush(stdout);
+}
+
 
 
 /**
@@ -3568,20 +3585,6 @@ String MakeBase::resolve(const String &otherPath)
     URI fullURI = uri.resolve(otherURI);
     String ret = fullURI.toString();
     return ret;
-}
-
-
-/**
- *  Print a printf()-like formatted trace message
- */
-void MakeBase::trace(const char *fmt, ...)
-{
-    va_list args;
-    va_start(args,fmt);
-    fprintf(stdout, "Make: ");
-    vfprintf(stdout, fmt, args);
-    fprintf(stdout, "\n");
-    va_end(args) ;
 }
 
 
@@ -4048,8 +4051,10 @@ bool MakeBase::executeCommand(const String &command,
 
 #else //do it unix-style
 
+    String pipeCommand = command;
+    pipeCommand.append("  2>&1");
     String s;
-    FILE *f = popen(command.c_str(), "r");
+    FILE *f = popen(pipeCommand.c_str(), "r");
     int errnum = 0;
     if (f)
         {
