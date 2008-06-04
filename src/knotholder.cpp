@@ -37,10 +37,6 @@
 
 class SPDesktop;
 
-//static void knot_clicked_handler (SPKnot *knot, guint state, gpointer data);
-//static void knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state, gpointer data);
-//static void knot_ungrabbed_handler (SPKnot *knot, unsigned int state, KnotHolder *kh);
-
 KnotHolder::KnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler)
 {
     Inkscape::XML::Node *repr = SP_OBJECT(item)->repr;
@@ -67,12 +63,6 @@ KnotHolder::~KnotHolder() {
     entity.clear(); // this shouldn't be necessary, though
 }
 
-/** TODO: is this still needed?
-void sp_knot_holder_destroy(SPKnotHolder *kh) {
-    g_object_unref(kh);
-    }
-**/
-
 /**
  * \param p In desktop coordinates.
  */
@@ -97,7 +87,7 @@ KnotHolder::knot_clicked_handler(SPKnot *knot, guint state)
         KnotHolderEntity *e = *i;
         if (e->knot == knot) {
             // no need to test whether knot_click exists since it's virtual now
-            e->knot_click_func(state);
+            e->knot_click(state);
             break;
         }
     }
@@ -142,7 +132,7 @@ KnotHolder::knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state)
         KnotHolderEntity *e = *i;
         if (e->knot == knot) {
             NR::Point const q = *p / sp_item_i2d_affine(item);
-            e->knot_set_func(q, e->knot->drag_origin / sp_item_i2d_affine(item), state);
+            e->knot_set(q, e->knot->drag_origin / sp_item_i2d_affine(item), state);
             break;
         }
     }

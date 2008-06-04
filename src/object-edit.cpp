@@ -102,31 +102,31 @@ sp_item_knot_holder(SPItem *item, SPDesktop *desktop)
 /* handle for horizontal rounding radius */
 class RectKnotHolderEntityRX : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual void knot_click_func(guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click(guint state);
 };
 
 /* handle for vertical rounding radius */
 class RectKnotHolderEntityRY : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual void knot_click_func(guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click(guint state);
 };
 
 /* handle for width/height adjustment */
 class RectKnotHolderEntityWH : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 /* handle for x/y adjustment */
 class RectKnotHolderEntityXY : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 static NR::Point snap_knot_position(SPItem *item, NR::Point const &p)
@@ -141,7 +141,7 @@ static NR::Point snap_knot_position(SPItem *item, NR::Point const &p)
 }
 
 NR::Point
-RectKnotHolderEntityRX::knot_get_func()
+RectKnotHolderEntityRX::knot_get()
 {
     SPRect *rect = SP_RECT(item);
 
@@ -149,7 +149,7 @@ RectKnotHolderEntityRX::knot_get_func()
 }
 
 void
-RectKnotHolderEntityRX::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
+RectKnotHolderEntityRX::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPRect *rect = SP_RECT(item);
 
@@ -173,7 +173,7 @@ RectKnotHolderEntityRX::knot_set_func(NR::Point const &p, NR::Point const &/*ori
 }
 
 void
-RectKnotHolderEntityRX::knot_click_func(guint state)
+RectKnotHolderEntityRX::knot_click(guint state)
 {
     SPRect *rect = SP_RECT(item);
 
@@ -190,7 +190,7 @@ RectKnotHolderEntityRX::knot_click_func(guint state)
 }
 
 NR::Point
-RectKnotHolderEntityRY::knot_get_func()
+RectKnotHolderEntityRY::knot_get()
 {
     SPRect *rect = SP_RECT(item);
 
@@ -198,7 +198,7 @@ RectKnotHolderEntityRY::knot_get_func()
 }
 
 void
-RectKnotHolderEntityRY::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
+RectKnotHolderEntityRY::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPRect *rect = SP_RECT(item);
 
@@ -230,7 +230,7 @@ RectKnotHolderEntityRY::knot_set_func(NR::Point const &p, NR::Point const &/*ori
 }
 
 void
-RectKnotHolderEntityRY::knot_click_func(guint state)
+RectKnotHolderEntityRY::knot_click(guint state)
 {
     SPRect *rect = SP_RECT(item);
 
@@ -260,7 +260,7 @@ static void sp_rect_clamp_radii(SPRect *rect)
 }
 
 NR::Point
-RectKnotHolderEntityWH::knot_get_func()
+RectKnotHolderEntityWH::knot_get()
 {
     SPRect *rect = SP_RECT(item);
 
@@ -322,7 +322,7 @@ static void sp_rect_wh_set_internal(SPRect *rect, NR::Point const &p, NR::Point 
 }
 
 void
-RectKnotHolderEntityWH::knot_set_func(NR::Point const &p, NR::Point const &origin, guint state)
+RectKnotHolderEntityWH::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
 {
     SPRect *rect = SP_RECT(item);
 
@@ -332,7 +332,7 @@ RectKnotHolderEntityWH::knot_set_func(NR::Point const &p, NR::Point const &origi
 }
 
 NR::Point
-RectKnotHolderEntityXY::knot_get_func()
+RectKnotHolderEntityXY::knot_get()
 {
     SPRect *rect = SP_RECT(item);
 
@@ -340,7 +340,7 @@ RectKnotHolderEntityXY::knot_get_func()
 }
 
 void
-RectKnotHolderEntityXY::knot_set_func(NR::Point const &p, NR::Point const &origin, guint state)
+RectKnotHolderEntityXY::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
 {
     SPRect *rect = SP_RECT(item);
 
@@ -447,21 +447,21 @@ RectKnotHolder::RectKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderRel
 
 class Box3DKnotHolderEntity : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func() = 0;
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state) = 0;
+    virtual NR::Point knot_get() = 0;
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state) = 0;
 
-    static NR::Point knot_get_func_generic(SPItem *item, unsigned int knot_id);
-    static void knot_set_func_generic(SPItem *item, unsigned int knot_id, NR::Point const &p, guint state);
+    static NR::Point knot_get_generic(SPItem *item, unsigned int knot_id);
+    static void knot_set_generic(SPItem *item, unsigned int knot_id, NR::Point const &p, guint state);
 };
 
 NR::Point
-Box3DKnotHolderEntity::knot_get_func_generic(SPItem *item, unsigned int knot_id)
+Box3DKnotHolderEntity::knot_get_generic(SPItem *item, unsigned int knot_id)
 {
     return box3d_get_corner_screen(SP_BOX3D(item), knot_id);
 }
 
 void
-Box3DKnotHolderEntity::knot_set_func_generic(SPItem *item, unsigned int knot_id, NR::Point const &new_pos, guint state)
+Box3DKnotHolderEntity::knot_set_generic(SPItem *item, unsigned int knot_id, NR::Point const &new_pos, guint state)
 {
     NR::Point const s = snap_knot_position(item, new_pos);
 
@@ -483,162 +483,162 @@ Box3DKnotHolderEntity::knot_set_func_generic(SPItem *item, unsigned int knot_id,
 
 class Box3DKnotHolderEntity0 : public Box3DKnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 class Box3DKnotHolderEntity1 : public Box3DKnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 class Box3DKnotHolderEntity2 : public Box3DKnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 class Box3DKnotHolderEntity3 : public Box3DKnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 class Box3DKnotHolderEntity4 : public Box3DKnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 class Box3DKnotHolderEntity5 : public Box3DKnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 class Box3DKnotHolderEntity6 : public Box3DKnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 class Box3DKnotHolderEntity7 : public Box3DKnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 class Box3DKnotHolderEntityCenter : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 NR::Point
-Box3DKnotHolderEntity0::knot_get_func()
+Box3DKnotHolderEntity0::knot_get()
 {
-    return knot_get_func_generic(item, 0);
+    return knot_get_generic(item, 0);
 }
 
 NR::Point
-Box3DKnotHolderEntity1::knot_get_func()
+Box3DKnotHolderEntity1::knot_get()
 {
-    return knot_get_func_generic(item, 1);
+    return knot_get_generic(item, 1);
 }
 
 NR::Point
-Box3DKnotHolderEntity2::knot_get_func()
+Box3DKnotHolderEntity2::knot_get()
 {
-    return knot_get_func_generic(item, 2);
+    return knot_get_generic(item, 2);
 }
 
 NR::Point
-Box3DKnotHolderEntity3::knot_get_func()
+Box3DKnotHolderEntity3::knot_get()
 {
-    return knot_get_func_generic(item, 3);
+    return knot_get_generic(item, 3);
 }
 
 NR::Point
-Box3DKnotHolderEntity4::knot_get_func()
+Box3DKnotHolderEntity4::knot_get()
 {
-    return knot_get_func_generic(item, 4);
+    return knot_get_generic(item, 4);
 }
 
 NR::Point
-Box3DKnotHolderEntity5::knot_get_func()
+Box3DKnotHolderEntity5::knot_get()
 {
-    return knot_get_func_generic(item, 5);
+    return knot_get_generic(item, 5);
 }
 
 NR::Point
-Box3DKnotHolderEntity6::knot_get_func()
+Box3DKnotHolderEntity6::knot_get()
 {
-    return knot_get_func_generic(item, 6);
+    return knot_get_generic(item, 6);
 }
 
 NR::Point
-Box3DKnotHolderEntity7::knot_get_func()
+Box3DKnotHolderEntity7::knot_get()
 {
-    return knot_get_func_generic(item, 7);
+    return knot_get_generic(item, 7);
 }
 
 NR::Point
-Box3DKnotHolderEntityCenter::knot_get_func()
+Box3DKnotHolderEntityCenter::knot_get()
 {
     return box3d_get_center_screen(SP_BOX3D(item));
 }
 
 void
-Box3DKnotHolderEntity0::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+Box3DKnotHolderEntity0::knot_set(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
 {
-    knot_set_func_generic(item, 0, new_pos, state);
+    knot_set_generic(item, 0, new_pos, state);
 }
 
 void
-Box3DKnotHolderEntity1::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+Box3DKnotHolderEntity1::knot_set(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
 {
-    knot_set_func_generic(item, 1, new_pos, state);
+    knot_set_generic(item, 1, new_pos, state);
 }
 
 void
-Box3DKnotHolderEntity2::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+Box3DKnotHolderEntity2::knot_set(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
 {
-    knot_set_func_generic(item, 2, new_pos, state);
+    knot_set_generic(item, 2, new_pos, state);
 }
 
 void
-Box3DKnotHolderEntity3::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+Box3DKnotHolderEntity3::knot_set(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
 {
-    knot_set_func_generic(item, 3, new_pos, state);
+    knot_set_generic(item, 3, new_pos, state);
 }
 
 void
-Box3DKnotHolderEntity4::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+Box3DKnotHolderEntity4::knot_set(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
 {
-    knot_set_func_generic(item, 4, new_pos, state);
+    knot_set_generic(item, 4, new_pos, state);
 }
 
 void
-Box3DKnotHolderEntity5::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+Box3DKnotHolderEntity5::knot_set(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
 {
-    knot_set_func_generic(item, 5, new_pos, state);
+    knot_set_generic(item, 5, new_pos, state);
 }
 
 void
-Box3DKnotHolderEntity6::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+Box3DKnotHolderEntity6::knot_set(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
 {
-    knot_set_func_generic(item, 6, new_pos, state);
+    knot_set_generic(item, 6, new_pos, state);
 }
 
 void
-Box3DKnotHolderEntity7::knot_set_func(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
+Box3DKnotHolderEntity7::knot_set(NR::Point const &new_pos, NR::Point const &/*origin*/, guint state)
 {
-    knot_set_func_generic(item, 7, new_pos, state);
+    knot_set_generic(item, 7, new_pos, state);
 }
 
 void
-Box3DKnotHolderEntityCenter::knot_set_func(NR::Point const &new_pos, NR::Point const &origin, guint state)
+Box3DKnotHolderEntityCenter::knot_set(NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
     NR::Point const s = snap_knot_position(item, new_pos);
 
@@ -710,29 +710,29 @@ Box3DKnotHolder::Box3DKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderR
 
 class ArcKnotHolderEntityStart : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 class ArcKnotHolderEntityEnd : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual void knot_click_func(guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click(guint state);
 };
 
 class ArcKnotHolderEntityRX : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual void knot_click_func(guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click(guint state);
 };
 
 class ArcKnotHolderEntityRY : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual void knot_click_func(guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click(guint state);
 };
 
 /*
@@ -754,7 +754,7 @@ sp_genericellipse_side(SPGenericEllipse *ellipse, NR::Point const &p)
 }
 
 void
-ArcKnotHolderEntityStart::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
+ArcKnotHolderEntityStart::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
@@ -776,7 +776,7 @@ ArcKnotHolderEntityStart::knot_set_func(NR::Point const &p, NR::Point const &/*o
 }
 
 NR::Point
-ArcKnotHolderEntityStart::knot_get_func()
+ArcKnotHolderEntityStart::knot_get()
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
@@ -785,7 +785,7 @@ ArcKnotHolderEntityStart::knot_get_func()
 }
 
 void
-ArcKnotHolderEntityEnd::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
+ArcKnotHolderEntityEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
@@ -807,7 +807,7 @@ ArcKnotHolderEntityEnd::knot_set_func(NR::Point const &p, NR::Point const &/*ori
 }
 
 NR::Point
-ArcKnotHolderEntityEnd::knot_get_func()
+ArcKnotHolderEntityEnd::knot_get()
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
@@ -817,7 +817,7 @@ ArcKnotHolderEntityEnd::knot_get_func()
 
 
 void
-ArcKnotHolderEntityEnd::knot_click_func(guint state)
+ArcKnotHolderEntityEnd::knot_click(guint state)
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
 
@@ -829,7 +829,7 @@ ArcKnotHolderEntityEnd::knot_click_func(guint state)
 
 
 void
-ArcKnotHolderEntityRX::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
+ArcKnotHolderEntityRX::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
@@ -846,7 +846,7 @@ ArcKnotHolderEntityRX::knot_set_func(NR::Point const &p, NR::Point const &/*orig
 }
 
 NR::Point
-ArcKnotHolderEntityRX::knot_get_func()
+ArcKnotHolderEntityRX::knot_get()
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
 
@@ -854,7 +854,7 @@ ArcKnotHolderEntityRX::knot_get_func()
 }
 
 void
-ArcKnotHolderEntityRX::knot_click_func(guint state)
+ArcKnotHolderEntityRX::knot_click(guint state)
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
 
@@ -865,7 +865,7 @@ ArcKnotHolderEntityRX::knot_click_func(guint state)
 }
 
 void
-ArcKnotHolderEntityRY::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
+ArcKnotHolderEntityRY::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
@@ -882,7 +882,7 @@ ArcKnotHolderEntityRY::knot_set_func(NR::Point const &p, NR::Point const &/*orig
 }
 
 NR::Point
-ArcKnotHolderEntityRY::knot_get_func()
+ArcKnotHolderEntityRY::knot_get()
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
 
@@ -890,7 +890,7 @@ ArcKnotHolderEntityRY::knot_get_func()
 }
 
 void
-ArcKnotHolderEntityRY::knot_click_func(guint state)
+ArcKnotHolderEntityRY::knot_click(guint state)
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
 
@@ -933,20 +933,20 @@ ArcKnotHolder::ArcKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderRelea
 
 class StarKnotHolderEntity1 : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual void knot_click_func(guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click(guint state);
 };
 
 class StarKnotHolderEntity2 : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual void knot_click_func(guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click(guint state);
 };
 
 void
-StarKnotHolderEntity1::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
+StarKnotHolderEntity1::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPStar *star = SP_STAR(item);
 
@@ -972,7 +972,7 @@ StarKnotHolderEntity1::knot_set_func(NR::Point const &p, NR::Point const &/*orig
 }
 
 void
-StarKnotHolderEntity2::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
+StarKnotHolderEntity2::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPStar *star = SP_STAR(item);
 
@@ -1001,7 +1001,7 @@ StarKnotHolderEntity2::knot_set_func(NR::Point const &p, NR::Point const &/*orig
 }
 
 NR::Point
-StarKnotHolderEntity1::knot_get_func()
+StarKnotHolderEntity1::knot_get()
 {
     g_assert(item != NULL);
 
@@ -1012,7 +1012,7 @@ StarKnotHolderEntity1::knot_get_func()
 }
 
 NR::Point
-StarKnotHolderEntity2::knot_get_func()
+StarKnotHolderEntity2::knot_get()
 {
     g_assert(item != NULL);
 
@@ -1039,13 +1039,13 @@ sp_star_knot_click(SPItem *item, guint state)
 }
 
 void
-StarKnotHolderEntity1::knot_click_func(guint state)
+StarKnotHolderEntity1::knot_click(guint state)
 {
     return sp_star_knot_click(item, state);
 }
 
 void
-StarKnotHolderEntity2::knot_click_func(guint state)
+StarKnotHolderEntity2::knot_click(guint state)
 {
     return sp_star_knot_click(item, state);
 }
@@ -1076,15 +1076,15 @@ StarKnotHolder::StarKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderRel
 
 class SpiralKnotHolderEntityInner : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual void knot_click_func(guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual void knot_click(guint state);
 };
 
 class SpiralKnotHolderEntityOuter : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 
@@ -1095,7 +1095,7 @@ public:
  *   [control] constrain inner arg to round per PI/4
  */
 void
-SpiralKnotHolderEntityInner::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
+SpiralKnotHolderEntityInner::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
@@ -1137,7 +1137,7 @@ SpiralKnotHolderEntityInner::knot_set_func(NR::Point const &p, NR::Point const &
  *   [control] constrain inner arg to round per PI/4
  */
 void
-SpiralKnotHolderEntityOuter::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint state)
+SpiralKnotHolderEntityOuter::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
@@ -1210,7 +1210,7 @@ SpiralKnotHolderEntityOuter::knot_set_func(NR::Point const &p, NR::Point const &
 }
 
 NR::Point
-SpiralKnotHolderEntityInner::knot_get_func()
+SpiralKnotHolderEntityInner::knot_get()
 {
     SPSpiral *spiral = SP_SPIRAL(item);
 
@@ -1218,7 +1218,7 @@ SpiralKnotHolderEntityInner::knot_get_func()
 }
 
 NR::Point
-SpiralKnotHolderEntityOuter::knot_get_func()
+SpiralKnotHolderEntityOuter::knot_get()
 {
     SPSpiral *spiral = SP_SPIRAL(item);
 
@@ -1226,7 +1226,7 @@ SpiralKnotHolderEntityOuter::knot_get_func()
 }
 
 void
-SpiralKnotHolderEntityInner::knot_click_func(guint state)
+SpiralKnotHolderEntityInner::knot_click(guint state)
 {
     SPSpiral *spiral = SP_SPIRAL(item);
 
@@ -1260,12 +1260,12 @@ SpiralKnotHolder::SpiralKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolde
 
 class OffsetKnotHolderEntity : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 void
-OffsetKnotHolderEntity::knot_set_func(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
+OffsetKnotHolderEntity::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
 {
     SPOffset *offset = SP_OFFSET(item);
 
@@ -1278,7 +1278,7 @@ OffsetKnotHolderEntity::knot_set_func(NR::Point const &p, NR::Point const &/*ori
 
 
 NR::Point
-OffsetKnotHolderEntity::knot_get_func()
+OffsetKnotHolderEntity::knot_get()
 {
     SPOffset *offset = SP_OFFSET(item);
 
@@ -1300,12 +1300,12 @@ OffsetKnotHolder::OffsetKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolde
 
 class FlowtextKnotHolderEntity : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 NR::Point
-FlowtextKnotHolderEntity::knot_get_func()
+FlowtextKnotHolderEntity::knot_get()
 {
     SPRect *rect = SP_RECT(item);
 
@@ -1313,7 +1313,7 @@ FlowtextKnotHolderEntity::knot_get_func()
 }
 
 void
-FlowtextKnotHolderEntity::knot_set_func(NR::Point const &p, NR::Point const &origin, guint state)
+FlowtextKnotHolderEntity::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
 {
     SPRect *rect = SP_RECT(item);
 

@@ -60,6 +60,21 @@ PointParamKnotHolder::~PointParamKnotHolder()
     g_object_unref(G_OBJECT(this->lpeobject));
 }
 
+class KnotHolderEntityPointParam : public KnotHolderEntity {
+public:
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+};
+
+NR::Point
+KnotHolderEntityPointParam::knot_get() {
+    return NR::Point(0,0);
+}
+
+void
+KnotHolderEntityPointParam::knot_set(NR::Point const &p, NR::Point const &origin, guint state) {
+}
+
 void
 PointParamKnotHolder::add_knot (
     Geom::Point         & p,
@@ -70,8 +85,7 @@ PointParamKnotHolder::add_knot (
     const gchar *tip )
 {
     /* create new SPKnotHolderEntry */
-    // TODO: knot_click can't be set any more with the new KnotHolder design; make it a virtual function?
-    KnotHolderEntity *e = new KnotHolderEntity();
+    KnotHolderEntity *e = new KnotHolderEntityPointParam();
     e->create(this->desktop, this->item, this, tip, shape, mode, color);
 
     entity.push_back(e);

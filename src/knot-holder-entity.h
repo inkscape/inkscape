@@ -45,9 +45,9 @@ public:
 
     /* the get/set/click handlers are virtual functions; each handler class for a knot
        should be derived from KnotHolderEntity and override these functions */
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get_func();
-    virtual void knot_click_func(guint state);
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state) = 0;
+    virtual NR::Point knot_get() = 0;
+    virtual void knot_click(guint state) {}
 
     void update_knot();
 
@@ -70,42 +70,26 @@ public:
     sigc::connection _moved_connection;
     sigc::connection _click_connection;
     sigc::connection _ungrabbed_connection;
-
-    /**
-     * Called solely from knot_moved_handler.
-     *
-     * \param p Requested position of the knot, in item coordinates
-     * \param origin Position where the knot started being dragged
-     * \param state GTK event state (for keyboard modifiers)
-     */
-    void (* knot_set) (SPItem *item, NR::Point const &p, NR::Point const &origin, guint state);
-
-    /**
-     * Returns the position of the knot representation, in item coordinates.
-     */
-    NR::Point (* knot_get) (SPItem *item);
-
-    void (* knot_click) (SPItem *item, guint state);
 };
 
 /* pattern manipulation */
 
 class PatternKnotHolderEntityXY : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 class PatternKnotHolderEntityAngle : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 class PatternKnotHolderEntityScale : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get_func();
-    virtual void knot_set_func(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 #endif /* !SEEN_KNOT_HOLDER_ENTITY_H */
