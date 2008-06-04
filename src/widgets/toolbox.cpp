@@ -54,6 +54,7 @@
 #include <glibmm/i18n.h>
 #include "helper/unit-menu.h"
 #include "helper/units.h"
+#include "live_effects/effect.h"
 
 #include "inkscape.h"
 #include "conn-avoid-ref.h"
@@ -64,6 +65,7 @@
 
 #include "connector-context.h"
 #include "node-context.h"
+#include "draw-context.h"
 #include "shape-editor.h"
 #include "tweak-context.h"
 #include "sp-rect.h"
@@ -360,9 +362,11 @@ static gchar const * ui_descr =
         "  </toolbar>"
 
         "  <toolbar name='PenToolbar'>"
+        "    <toolitem action='SpiroSplineModeActionPen' />"
         "  </toolbar>"
 
         "  <toolbar name='PencilToolbar'>"
+        "    <toolitem action='SpiroSplineModeActionPencil' />"
         "  </toolbar>"
 
         "  <toolbar name='CalligraphyToolbar'>"
@@ -3078,15 +3082,35 @@ static void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
 //##     Pen/Pencil    ##
 //########################
 
-
-static void sp_pen_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* /*mainActions*/, GObject* /*holder*/)
+static void sp_pc_spiro_spline_mode_changed(GtkToggleAction *act, GObject* /*tbl*/)
 {
-    // Put stuff here
+    prefs_set_int_attribute("tools.freehand", "spiro-spline-mode", gtk_toggle_action_get_active(act) ? 1 : 0);
 }
 
-static void sp_pencil_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* /*mainActions*/, GObject* /*holder*/)
+static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, const char* action_name)
 {
-    // Put stuff here
+    /* Spiro Spline Mode toggle button */
+    {
+        InkToggleAction* act = ink_toggle_action_new(action_name,
+                                                     _("Spiro Spline Mode"),
+                                                     _("Automatically apply the 'Spiro Spline' live path effect to newly drawn paths"),
+                                                     "spiro_splines_mode",
+                                                     Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action(mainActions, GTK_ACTION(act));
+        g_signal_connect_after(G_OBJECT(act), "toggled", G_CALLBACK(sp_pc_spiro_spline_mode_changed), holder);
+        gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), prefs_get_int_attribute("tools.freehand", "spiro-spline-mode", 0));
+        g_object_set_data( holder, "spiro_spline_mode", act );
+    }
+}
+
+static void sp_pen_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* mainActions, GObject* holder)
+{
+    sp_add_spiro_toggle(mainActions, holder, "SpiroSplineModeActionPen");
+}
+
+static void sp_pencil_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* mainActions, GObject* holder)
+{
+    sp_add_spiro_toggle(mainActions, holder, "SpiroSplineModeActionPencil");
 }
 
 //########################
@@ -3783,7 +3807,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             gtk_action_set_sensitive( act, TRUE );
             g_object_set_data( holder, "profile_save_delete", act );
         }
-    }    
+    }
 }
 
 

@@ -249,8 +249,17 @@ sp_draw_context_root_handler(SPEventContext *ec, GdkEvent *event)
 void
 spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
 {
-    if (item && dc->waiting_LPE != Inkscape::LivePathEffect::INVALID_LPE) {
-        Inkscape::LivePathEffect::Effect::createAndApply(dc->waiting_LPE, dc->desktop->doc(), item);
+    using namespace Inkscape::LivePathEffect;
+
+    // TODO: sort this out as soon as we use automatic LPE application for other things than spiro mode, too
+    if (item) {
+        if (prefs_get_int_attribute("tools.freehand", "spiro-spline-mode", 0)) {
+            Effect::createAndApply(SPIRO, dc->desktop->doc(), item);
+            return;
+        }
+        if (dc->waiting_LPE != INVALID_LPE) {
+            Effect::createAndApply(dc->waiting_LPE, dc->desktop->doc(), item);
+        }
     }
 }
 
