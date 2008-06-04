@@ -16,6 +16,8 @@
 #include "desktop.h"
 #include "inkscape.h"
 #include "document.h"
+#include "document-private.h"
+#include "xml/document.h"
 #include <glibmm/i18n.h>
 
 #include "live_effects/lpeobject.h"
@@ -145,6 +147,32 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
     }
 
     return neweffect;
+}
+
+void
+Effect::createAndApply(const char* name, SPDocument *doc, SPItem *item)
+{
+    // Path effect definition
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+    Inkscape::XML::Node *repr = xml_doc->createElement("inkscape:path-effect");
+    repr->setAttribute("effect", name);
+
+    SP_OBJECT_REPR(SP_DOCUMENT_DEFS(doc))->addChild(repr, NULL); // adds to <defs> and assigns the 'id' attribute
+    const gchar * repr_id = repr->attribute("id");
+    Inkscape::GC::release(repr);
+
+    gchar *href = g_strdup_printf("#%s", repr_id);
+    sp_lpe_item_add_path_effect(SP_LPE_ITEM(item), href, true);
+    g_free(href);
+
+    sp_document_done(doc, SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
+                     _("Create and apply path effect"));
+}
+
+void
+Effect::createAndApply(EffectType type, SPDocument *doc, SPItem *item)
+{
+    createAndApply(LPETypeConverter.get_key(type).c_str(), doc, item);
 }
 
 Effect::Effect(LivePathEffectObject *lpeobject)

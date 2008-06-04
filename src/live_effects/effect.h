@@ -80,6 +80,8 @@ extern const Util::EnumDataConverter<EffectType> LPETypeConverter;
 class Effect {
 public:
     static Effect* New(EffectType lpenr, LivePathEffectObject *lpeobj);
+    static void createAndApply(const char* name, SPDocument *doc, SPItem *item);
+    static void createAndApply(EffectType type, SPDocument *doc, SPItem *item);
 
     virtual ~Effect();
 

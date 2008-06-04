@@ -32,9 +32,8 @@
 #include "inkscape.h"
 #include "desktop-handles.h"
 #include "desktop.h"
-#include "document-private.h"
+#include "document.h"
 #include "xml/node.h"
-#include "xml/document.h"
 #include <gtkmm/stock.h>
 #include <gtkmm/toolbar.h>
 
@@ -320,21 +319,7 @@ LivePathEffectEditor::onApply()
                 item = sel->singleItem(); // get new item
             }
 
-            // Path effect definition
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
-            Inkscape::XML::Node *repr = xml_doc->createElement("inkscape:path-effect");
-            repr->setAttribute("effect", data->key.c_str() );
-
-            SP_OBJECT_REPR(SP_DOCUMENT_DEFS(doc))->addChild(repr, NULL); // adds to <defs> and assigns the 'id' attribute
-            const gchar * repr_id = repr->attribute("id");
-            Inkscape::GC::release(repr);
-
-            gchar *href = g_strdup_printf("#%s", repr_id);
-            sp_lpe_item_add_path_effect(SP_LPE_ITEM(item), href, true);
-            g_free(href);
-
-            sp_document_done(doc, SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
-                             _("Create and apply path effect"));
+            LivePathEffect::Effect::createAndApply(data->key.c_str(), doc, item);
 
             onSelectionChanged(sel);
         }
