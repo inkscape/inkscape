@@ -639,6 +639,18 @@ class SVGSVGElementImpl : virtual public SVGSVGElement,
 public:
 
     /**
+     * Retrieves an attribute value by name.
+     */
+    virtual DOMString getAttribute(const DOMString& name);
+
+    /**
+     * Sets an attribute value
+     */
+    virtual void setAttribute(const DOMString& name,
+                      const DOMString& value)
+                      throw(DOMException);
+
+    /**
      *
      */
     virtual SVGAnimatedLength getX()

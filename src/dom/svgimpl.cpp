@@ -46,6 +46,29 @@ namespace svg
 
 
 /*#########################################################################
+## U T I L I T Y
+#########################################################################*/
+
+static DOMString d2s(double d)
+{
+   char buf[40];
+   snprintf(buf, 40, "%f", d);
+   DOMString s(buf);
+   return s;
+}
+
+static double s2d(const DOMString &s)
+{
+    const char *begin = s.c_str();
+    char *end;
+    double val = strtod(begin, &end);
+    if (end <= begin)
+        return 0.0;
+    return val;
+}
+
+
+/*#########################################################################
 ## Element type lookup table
 #########################################################################*/
 
@@ -665,6 +688,36 @@ void SVGDocumentImpl::init()
 /*#########################################################################
 ## SVGSVGElementImpl
 #########################################################################*/
+
+
+/**
+ * Retrieves an attribute value by name.
+ */
+DOMString SVGSVGElementImpl::getAttribute(const DOMString& name)
+{
+    DOMString s;
+    if (name == "x")
+        s = d2s(x.getAnimVal().getValue());
+    else if (name == "y")
+        s = d2s(y.getAnimVal().getValue());
+    else 
+	    s = SVGElement::getAttribute(name);
+	return s;
+}
+
+/**
+ * Sets an attribute value
+ */
+void SVGSVGElementImpl::setAttribute(const DOMString& name,
+                  const DOMString& value)
+                  throw(DOMException)
+{
+    if (name == "x")
+        x.getAnimVal().setValue(s2d(value));
+    else if (name == "y")
+        y.getAnimVal().setValue(s2d(value));
+    SVGElement::setAttribute(name, value);
+}
 
 
 /**
