@@ -19,6 +19,7 @@
 #include <forward.h>
 #include <display/display-forward.h>
 #include <libnr/nr-point.h>
+#include "live_effects/effect.h"
 
 /* Freehand context */
 
@@ -68,6 +69,9 @@ struct SPDrawContext : public SPEventContext{
     /* End anchor */
     SPDrawAnchor *ea;
 
+    /* type of the LPE that is to be applied automatically to a finished path (if any) */
+    Inkscape::LivePathEffect::EffectType waiting_LPE;
+
     sigc::connection sel_changed_connection;
     sigc::connection sel_modified_connection;
 
@@ -83,7 +87,7 @@ SPDrawAnchor *spdc_test_inside(SPDrawContext *dc, NR::Point p);
 void spdc_concat_colors_and_flush(SPDrawContext *dc, gboolean forceclosed);
 void spdc_endpoint_snap_rotation(SPEventContext const *const ec, NR::Point &p, NR::Point const o, guint state);
 void spdc_endpoint_snap_free(SPEventContext const *ec, NR::Point &p, guint state);
-
+void spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item);
 
 #endif
 

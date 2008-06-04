@@ -115,6 +115,8 @@ sp_draw_context_init(SPDrawContext *dc)
     dc->green_color = 0x00ff007f;
     dc->red_curve_is_valid = false;
 
+    dc->waiting_LPE = Inkscape::LivePathEffect::INVALID_LPE;
+
     new (&dc->sel_changed_connection) sigc::connection();
     new (&dc->sel_modified_connection) sigc::connection();
 }
@@ -241,6 +243,16 @@ sp_draw_context_root_handler(SPEventContext *ec, GdkEvent *event)
     return ret;
 }
 
+/*
+ * If we have an item and a waiting LPE, apply the effect to the item
+ */
+void
+spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
+{
+    if (item && dc->waiting_LPE != Inkscape::LivePathEffect::INVALID_LPE) {
+        Inkscape::LivePathEffect::Effect::createAndApply(dc->waiting_LPE, dc->desktop->doc(), item);
+    }
+}
 
 /*
  * Selection handlers
@@ -249,6 +261,8 @@ sp_draw_context_root_handler(SPEventContext *ec, GdkEvent *event)
 static void
 spdc_selection_changed(Inkscape::Selection *sel, SPDrawContext *dc)
 {
+    spdc_check_for_and_apply_waiting_LPE(dc, sel->singleItem());
+
     if (dc->attach) {
         spdc_attach_selection(dc, sel);
     }
