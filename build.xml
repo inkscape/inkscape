@@ -512,6 +512,8 @@
     <copy file="${gtk}/bin/libwpd-stream-0.8.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/jpeg62.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libpng13.dll" todir="${dist}"/>
+    <!-- GTK changed their dep file name for PNG!   :-(  -->
+    <copy file="${gtk}/bin/libpng13.dll" tofile="${dist}/libpng12-0.dll"/>
     <copy file="${gtk}/bin/libtiff3.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/msvcr70.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/msvcr71.dll" todir="${dist}"/>
@@ -540,6 +542,7 @@
         </fileset>
     </copy>
     <copy todir="${dist}/share"> <fileset dir="${gtk}/share/themes"/> </copy>
+    <copy todir="${dist}/share"> <fileset dir="${gtk}/share/poppler"/> </copy>
     <mkdir dir="${dist}/data"/>
     <mkdir dir="${dist}/locale"/>
     <mkdir dir="${dist}/modules"/>
