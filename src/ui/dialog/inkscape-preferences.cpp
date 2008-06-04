@@ -398,32 +398,40 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_tweak, _("Tweak"), iter_tools, PREFS_PAGE_TOOLS_NODE);
     AddSelcueCheckbox(_page_tweak, "tools.tweak", true);
     AddGradientCheckbox(_page_tweak, "tools.tweak", false);
+
     //Zoom
     this->AddPage(_page_zoom, _("Zoom"), iter_tools, PREFS_PAGE_TOOLS_ZOOM);
     AddSelcueCheckbox(_page_zoom, "tools.zoom", true);
     AddGradientCheckbox(_page_zoom, "tools.zoom", false);
+
     //Shapes
     Gtk::TreeModel::iterator iter_shapes = this->AddPage(_page_shapes, _("Shapes"), iter_tools, PREFS_PAGE_TOOLS_SHAPES);
     _path_shapes = _page_list.get_model()->get_path(iter_shapes);
     this->AddSelcueCheckbox(_page_shapes, "tools.shapes", true);
     this->AddGradientCheckbox(_page_shapes, "tools.shapes", true);
+
     //Rectangle
     this->AddPage(_page_rectangle, _("Rectangle"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_RECT);
     this->AddNewObjectsStyle(_page_rectangle, "tools.shapes.rect");
     this->AddConvertGuidesCheckbox(_page_rectangle, "tools.shapes.rect", true);
+
     //3D box
     this->AddPage(_page_3dbox, _("3D Box"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_3DBOX);
     this->AddNewObjectsStyle(_page_3dbox, "tools.shapes.3dbox");
     this->AddConvertGuidesCheckbox(_page_3dbox, "tools.shapes.3dbox", true);
+
     //ellipse
     this->AddPage(_page_ellipse, _("Ellipse"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_ELLIPSE);
     this->AddNewObjectsStyle(_page_ellipse, "tools.shapes.arc");
+
     //star
     this->AddPage(_page_star, _("Star"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_STAR);
     this->AddNewObjectsStyle(_page_star, "tools.shapes.star");
+
     //spiral
     this->AddPage(_page_spiral, _("Spiral"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_SPIRAL);
     this->AddNewObjectsStyle(_page_spiral, "tools.shapes.spiral");
+
     //Pencil
     this->AddPage(_page_pencil, _("Pencil"), iter_tools, PREFS_PAGE_TOOLS_PENCIL);
     this->AddSelcueCheckbox(_page_pencil, "tools.freehand.pencil", true);
@@ -433,11 +441,13 @@ void InkscapePreferences::initPageTools()
                            false );
     this->AddNewObjectsStyle(_page_pencil, "tools.freehand.pencil");
     this->AddDotSizeSpinbutton(_page_pencil, "tools.freehand.pencil", 3.0);
+
     //Pen
     this->AddPage(_page_pen, _("Pen"), iter_tools, PREFS_PAGE_TOOLS_PEN);
     this->AddSelcueCheckbox(_page_pen, "tools.freehand.pen", true);
     this->AddNewObjectsStyle(_page_pen, "tools.freehand.pen");
     this->AddDotSizeSpinbutton(_page_pen, "tools.freehand.pen", 3.0);
+
     //Calligraphy
     this->AddPage(_page_calligraphy, _("Calligraphy"), iter_tools, PREFS_PAGE_TOOLS_CALLIGRAPHY);
     this->AddSelcueCheckbox(_page_calligraphy, "tools.calligraphic", false);
@@ -450,16 +460,21 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_paintbucket, _("Paint Bucket"), iter_tools, PREFS_PAGE_TOOLS_PAINTBUCKET);
     this->AddSelcueCheckbox(_page_paintbucket, "tools.paintbucket", false);
     this->AddNewObjectsStyle(_page_paintbucket, "tools.paintbucket");
-    //Calligraphy
+
+    //Eraser
     this->AddPage(_page_eraser, _("Eraser"), iter_tools, PREFS_PAGE_TOOLS_ERASER);
+    this->AddNewObjectsStyle(_page_eraser, "tools.eraser");
+
     //Text
     this->AddPage(_page_text, _("Text"), iter_tools, PREFS_PAGE_TOOLS_TEXT);
     this->AddSelcueCheckbox(_page_text, "tools.text", true);
     this->AddGradientCheckbox(_page_text, "tools.text", true);
     this->AddNewObjectsStyle(_page_text, "tools.text");
+
     //Gradient
     this->AddPage(_page_gradient, _("Gradient"), iter_tools, PREFS_PAGE_TOOLS_GRADIENT);
     this->AddSelcueCheckbox(_page_gradient, "tools.gradient", true);
+
     //Connector
     this->AddPage(_page_connector, _("Connector"), iter_tools, PREFS_PAGE_TOOLS_CONNECTOR);
     this->AddSelcueCheckbox(_page_connector, "tools.connector", true);
@@ -502,7 +517,7 @@ void InkscapePreferences::initPageWindows()
                             _("Floating"));
 
 #ifndef WIN32 // non-Win32 special code to enable transient dialogs
-	_page_windows.add_group_header( _("Dialogs on top:"));
+    _page_windows.add_group_header( _("Dialogs on top:"));
 
     _page_windows.add_line( true, "", _win_ontop_none, "",
                             _("Dialogs are treated as regular windows"));
