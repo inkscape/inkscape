@@ -8,7 +8,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2008 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -33,9 +33,9 @@
 
 typedef struct
 {
-    HKEY key;
-    int  strlen;
-    char *str;
+    HKEY       key;
+    int        strlen;
+    const char *str;
 } KeyTableEntry;
 
 
@@ -50,6 +50,10 @@ KeyTableEntry keyTable[] =
     { NULL,                 0, NULL                    }
 };
 
+
+/**
+ * Set the string value of a key/name registry entry
+ */ 
 bool RegistryTool::setStringValue(const Glib::ustring &keyNameArg,
                                   const Glib::ustring &valueName,
                                   const Glib::ustring &value)
@@ -93,6 +97,11 @@ bool RegistryTool::setStringValue(const Glib::ustring &keyNameArg,
     return true;
 }
 
+
+
+/**
+ * Get the full path, directory, and base file name of this running executable
+ */ 
 bool RegistryTool::getExeInfo(Glib::ustring &fullPath,
                               Glib::ustring &path,
                               Glib::ustring &exeName)
@@ -123,6 +132,11 @@ bool RegistryTool::getExeInfo(Glib::ustring &fullPath,
 }
 
 
+
+/**
+ * Append our subdirectories to the Application Path for this
+ * application
+ */  
 bool RegistryTool::setPathInfo()
 {
     Glib::ustring fullPath;
@@ -162,6 +176,15 @@ bool RegistryTool::setPathInfo()
 
 #ifdef TESTREG
 
+
+/**
+ * Compile this file with
+ *      g++ -DTESTREG registrytool.cpp -o registrytool
+ *  to run these tests.
+ */
+ 
+ 
+    
 void testReg()
 {
     RegistryTool rt;

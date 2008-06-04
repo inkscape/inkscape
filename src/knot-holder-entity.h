@@ -47,7 +47,7 @@ public:
        should be derived from KnotHolderEntity and override these functions */
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state) = 0;
     virtual NR::Point knot_get() = 0;
-    virtual void knot_click(guint state) {}
+    virtual void knot_click(guint /*state*/) {}
 
     void update_knot();
 
