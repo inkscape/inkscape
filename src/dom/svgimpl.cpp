@@ -28,6 +28,8 @@
  */
 
 #include "svgimpl.h"
+#include <cstring>
+using std::strcmp;
 
 /**
  * This is the .cpp side of the SVG implementations classes.  Note that many

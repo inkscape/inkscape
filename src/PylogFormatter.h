@@ -1,6 +1,7 @@
 #ifndef PYLOG_FORMATTER_H_SEEN
 #define PYLOG_FORMATTER_H_SEEN
 
+#include <cstring>
 #include <cxxtest/Flags.h>
 
 #ifndef _CXXTEST_HAVE_STD
@@ -38,6 +39,7 @@ public:
 
     virtual void leaveWorld( const WorldDescription & desc )
     {
+        using std::strlen;
         unsigned int skippedCount = 0;
         unsigned int failedCount = 0;
         unsigned int warnedCount = 0;
@@ -59,8 +61,8 @@ public:
                 (*_o) << test.suiteName() << "_|_" << test.testName();
                 (*_o) << " ";
 
-                int sent = strlen( test.suiteName() ) + strlen( test.testName() ) + 1;
-                for ( int z = sent; z < 56; z++ ) {
+                unsigned const sent = strlen( test.suiteName() ) + strlen( test.testName() ) + 1;
+                for ( unsigned z = sent; z < 56; z++ ) {
                     (*_o) << " ";
                 }
 

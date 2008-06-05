@@ -33,6 +33,7 @@
 #include "poly.h"
 
 #include <cfloat>
+#include <limits>
 
 
 

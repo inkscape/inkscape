@@ -7,6 +7,7 @@
 
 #include "forward.h"
 #include "message-context.h"
+#include "streq.h"
 
 #define MIN_PRESSURE      0.0
 #define MAX_PRESSURE      1.0
@@ -153,39 +154,50 @@ static void sp_common_context_setup(SPEventContext *ec)
     }
 }
 
+static inline bool
+get_bool_value(char const *const val)
+{
+    return ( val && *val == '1' );
+    /* The only possible values if written by inkscape are NULL (attribute not present)
+     * or "0" or "1".
+     *
+     * For other values (e.g. if modified by a human without following the above rules), the
+     * current implementation does the right thing for empty string, "no", "false", "n", "f"
+     * but the wrong thing for "yes", "true", "y", "t". */
+}
 
 static void sp_common_context_set(SPEventContext *ec, gchar const *key, gchar const *value)
 {
     SPCommonContext *ctx = SP_COMMON_CONTEXT(ec);
 
-    if (!strcmp(key, "mass")) {
+    if (streq(key, "mass")) {
         double const dval = ( value ? g_ascii_strtod (value, NULL) : 0.2 );
         ctx->mass = CLAMP(dval, -1000.0, 1000.0);
-    } else if (!strcmp(key, "wiggle")) {
+    } else if (streq(key, "wiggle")) {
         double const dval = ( value ? g_ascii_strtod (value, NULL) : (1 - DRAG_DEFAULT));
         ctx->drag = CLAMP((1 - dval), DRAG_MIN, DRAG_MAX); // drag is inverse to wiggle
-    } else if (!strcmp(key, "angle")) {
+    } else if (streq(key, "angle")) {
         double const dval = ( value ? g_ascii_strtod (value, NULL) : 0.0);
         ctx->angle = CLAMP (dval, -90, 90);
-    } else if (!strcmp(key, "width")) {
+    } else if (streq(key, "width")) {
         double const dval = ( value ? g_ascii_strtod (value, NULL) : 0.1 );
         ctx->width = CLAMP(dval, -1000.0, 1000.0);
-    } else if (!strcmp(key, "thinning")) {
+    } else if (streq(key, "thinning")) {
         double const dval = ( value ? g_ascii_strtod (value, NULL) : 0.1 );
         ctx->vel_thin = CLAMP(dval, -1.0, 1.0);
-    } else if (!strcmp(key, "tremor")) {
+    } else if (streq(key, "tremor")) {
         double const dval = ( value ? g_ascii_strtod (value, NULL) : 0.0 );
         ctx->tremor = CLAMP(dval, 0.0, 1.0);
-    } else if (!strcmp(key, "flatness")) {
+    } else if (streq(key, "flatness")) {
         double const dval = ( value ? g_ascii_strtod (value, NULL) : 1.0 );
         ctx->flatness = CLAMP(dval, 0, 1.0);
-    } else if (!strcmp(key, "usepressure")) {
-        ctx->usepressure = ( value && strcmp(value, "0"));
-    } else if (!strcmp(key, "usetilt")) {
-        ctx->usetilt = ( value && strcmp(value, "0"));
-    } else if (!strcmp(key, "abs_width")) {
-        ctx->abs_width = ( value && strcmp(value, "0"));
-    } else if (!strcmp(key, "cap_rounding")) {
+    } else if (streq(key, "usepressure")) {
+        ctx->usepressure = get_bool_value(value);
+    } else if (streq(key, "usetilt")) {
+        ctx->usetilt = get_bool_value(value);
+    } else if (streq(key, "abs_width")) {
+        ctx->abs_width = get_bool_value(value);
+    } else if (streq(key, "cap_rounding")) {
         ctx->cap_rounding = ( value ? g_ascii_strtod (value, NULL) : 0.0 );
     }
 }
