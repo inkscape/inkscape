@@ -1095,8 +1095,8 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
             if (imageTable.find(oldName) == imageTable.end())
                 {
                 char buf[64];
-                snprintf(buf, 63, "Pictures/image%d%s",
-                    (int)imageTable.size(), ext.c_str());
+                snprintf(buf, sizeof(buf), "Pictures/image%u%s",
+                         imageTable.size(), ext.c_str());
                 Glib::ustring newName = buf;
                 imageTable[oldName] = newName;
                 Glib::ustring comment = "old name was: ";
@@ -1353,7 +1353,7 @@ bool OdfOutput::writeStyle(ZipFile &zf)
             outs.printf("<svg:linearGradient ");
             outs.printf("id=\"%#s_g\" ", gi.name.c_str());
             outs.printf("draw:name=\"%#s_g\"\n", gi.name.c_str());
-            outs.printf("    draw:display-name=\"imported linear %d\"\n",
+            outs.printf("    draw:display-name=\"imported linear %u\"\n",
                         gradientCount);
             outs.printf("    svg:x1=\"%05.3fcm\" svg:y1=\"%05.3fcm\"\n",
                         gi.x1, gi.y1);
