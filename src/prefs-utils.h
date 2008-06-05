@@ -18,7 +18,6 @@
 bool pref_path_exists(gchar const *path);
 unsigned int pref_path_number_of_children(gchar const *path);
 gchar * create_pref(gchar const *father_path, gchar const *child);
-bool get_pref_children(gchar const *father_path, GSList ** children);
 gchar * get_pref_nth_child(gchar const *father_path, unsigned int n);
 
 void prefs_set_int_attribute(gchar const *path, gchar const *attr, long long int value);

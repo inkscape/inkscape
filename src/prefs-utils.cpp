@@ -50,19 +50,7 @@ gchar * create_pref(gchar const *father_path, gchar const *child){
     father->appendChild(repr);
     return g_strdup_printf("%s.%s", father_path,child);
 }
-/**
-\brief gets the list of children from a pref. Please free all that stuff after use.
-*/
-bool get_pref_children(gchar const *father_path, GSList ** children){
-    Inkscape::XML::Node *father = inkscape_get_repr(INKSCAPE, father_path);
-    if (! father ) return false;
-    Inkscape::XML::Node *child_repr = sp_repr_children(father);  
-    while (child_repr) {
-        *children = g_slist_prepend(*children, g_strdup_printf("%s.%s",father_path,child_repr->attribute("id")));
-        child_repr = sp_repr_next(child_repr);
-    }
 
-}
 /**
 \brief gets the nth children of a pref, starting from one (first child <=> n=1). returns NULL if out of bounds or father does not exist. Please free all that stuff after use.
 */
@@ -162,7 +150,7 @@ prefs_get_string_attribute(gchar const *path, gchar const *attr)
 {
     Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE, path);
     if (repr) {
-        return (char *) repr->attribute(attr);
+        return repr->attribute(attr);
     }
     return NULL;
 }
