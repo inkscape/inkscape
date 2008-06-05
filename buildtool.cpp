@@ -45,7 +45,6 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <sys/stat.h>
-#include <sys/wait.h>
 #include <time.h>
 #include <sys/time.h>
 #include <utime.h>
@@ -60,6 +59,8 @@
 
 #ifdef __WIN32__
 #include <windows.h>
+#else
+#include <sys/wait.h>
 #endif
 
 
