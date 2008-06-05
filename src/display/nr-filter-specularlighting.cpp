@@ -108,7 +108,8 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_BLUE]);
-                data_o[j++] = MAX(MAX(data_o[j-3], data_o[j-2]), data_o[j-1]);
+                data_o[j] = MAX(MAX(data_o[j-3], data_o[j-2]), data_o[j-1]);
+                ++j;
             }
             out->empty = FALSE;
             delete dl;
@@ -135,7 +136,8 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_BLUE]);
-                data_o[j++] = MAX(MAX(data_o[j-3], data_o[j-2]), data_o[j-1]);
+                data_o[j] = MAX(MAX(data_o[j-3], data_o[j-2]), data_o[j-1]);
+                ++j;
             }
             out->empty = FALSE;
             delete pl;
@@ -162,7 +164,8 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_BLUE]);
-                data_o[j++] = MAX(MAX(data_o[j-3], data_o[j-2]), data_o[j-1]);
+                data_o[j] = MAX(MAX(data_o[j-3], data_o[j-2]), data_o[j-1]);
+                ++j;
             }
             out->empty = FALSE;
             delete sl;
