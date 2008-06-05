@@ -12,7 +12,7 @@
 class Mod360Test : public CxxTest::TestSuite
 {
 public:
-    static double const inf() { return INFINITY; }
+    static double inf() { return INFINITY; }
     static double nan() { return ((double)INFINITY) - ((double)INFINITY); }
 
     void testMod360()
