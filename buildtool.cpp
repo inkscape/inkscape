@@ -38,7 +38,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.9.3"
+#define BUILDTOOL_VERSION  "BuildTool v0.9.4"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -54,6 +54,8 @@
 #include <map>
 #include <set>
 #include <vector>
+#include <algorithm>
+
 
 #ifdef __WIN32__
 #include <windows.h>
