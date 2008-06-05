@@ -46,7 +46,7 @@ BoolParam::param_readSVGValue(const gchar * strvalue)
 }
 
 gchar *
-BoolParam::param_writeSVGValue() const
+BoolParam::param_getSVGValue() const
 {
     gchar * str = g_strdup(value ? "true" : "false");
     return str;

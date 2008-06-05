@@ -79,7 +79,7 @@ ScalarParam::param_readSVGValue(const gchar * strvalue)
 }
 
 gchar *
-ScalarParam::param_writeSVGValue() const
+ScalarParam::param_getSVGValue() const
 {
     Inkscape::SVGOStringStream os;
     os << value;

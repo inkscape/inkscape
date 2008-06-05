@@ -58,7 +58,7 @@ public:
     virtual ~Parameter() {};
 
     virtual bool param_readSVGValue(const gchar * strvalue) = 0;   // returns true if new value is valid / accepted.
-    virtual gchar * param_writeSVGValue() const = 0;
+    virtual gchar * param_getSVGValue() const = 0;
 
     virtual void param_set_default() = 0;
 
@@ -107,7 +107,7 @@ public:
     virtual ParamType paramType() { return SCALAR_PARAM; }
 
     virtual bool param_readSVGValue(const gchar * strvalue);
-    virtual gchar * param_writeSVGValue() const;
+    virtual gchar * param_getSVGValue() const;
 
     virtual void param_set_default();
     void param_set_value(gdouble val);

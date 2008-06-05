@@ -33,7 +33,7 @@ public:
     virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
 
     virtual bool param_readSVGValue(const gchar * strvalue);
-    virtual gchar * param_writeSVGValue() const;
+    virtual gchar * param_getSVGValue() const;
 
     void param_setValue(bool newvalue);
     virtual void param_set_default();

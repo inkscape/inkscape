@@ -32,7 +32,7 @@ public:
     virtual ParamType paramType() { return RANDOM_PARAM; }
 
     virtual bool param_readSVGValue(const gchar * strvalue);
-    virtual gchar * param_writeSVGValue() const;
+    virtual gchar * param_getSVGValue() const;
     virtual void param_set_default();
 
     virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);

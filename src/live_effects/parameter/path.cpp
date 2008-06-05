@@ -127,7 +127,7 @@ PathParam::param_readSVGValue(const gchar * strvalue)
 }
 
 gchar *
-PathParam::param_writeSVGValue() const
+PathParam::param_getSVGValue() const
 {
     if (href) {
         return href;

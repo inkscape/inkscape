@@ -68,7 +68,7 @@ PointParam::param_readSVGValue(const gchar * strvalue)
 }
 
 gchar *
-PointParam::param_writeSVGValue() const
+PointParam::param_getSVGValue() const
 {
     Inkscape::SVGOStringStream os;
     os << *dynamic_cast<Geom::Point const *>( this );

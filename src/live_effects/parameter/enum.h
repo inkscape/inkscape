@@ -63,7 +63,7 @@ public:
 
         return true;
     };
-    gchar * param_writeSVGValue() const {
+    gchar * param_getSVGValue() const {
         gchar * str = g_strdup( enumdataconv->get_key(value).c_str() );
         return str;
     };

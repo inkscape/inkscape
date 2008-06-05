@@ -66,7 +66,7 @@ RandomParam::param_readSVGValue(const gchar * strvalue)
 }
 
 gchar *
-RandomParam::param_writeSVGValue() const
+RandomParam::param_getSVGValue() const
 {
     Inkscape::SVGOStringStream os;
     os << value << ';' << startseed;
