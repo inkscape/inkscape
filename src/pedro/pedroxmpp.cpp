@@ -1162,7 +1162,7 @@ bool XmppClient::processIq(Element *root)
              "IQ set does not contain a 'from' address because "
              "the entity is not registered with the server");
             }
-        error("%s",(char *)errMsg.c_str());
+        error("%s", errMsg.c_str());
         }
 
     else if (id.find("regcancel") != id.npos)
@@ -1201,7 +1201,7 @@ bool XmppClient::processIq(Element *root)
                  "IQ set does not contain a 'from' address because "
                  "the entity is not registered with the server");
             }
-        error("%s",(char *)errMsg.c_str());
+        error("%s", errMsg.c_str());
         }
 
     return true;
@@ -1394,7 +1394,7 @@ bool XmppClient::inBandRegistrationNew()
             {
             errMsg.append("some registration information was not provided");
             }
-        error("%s",(char *)errMsg.c_str());
+        error("%s", errMsg.c_str());
         delete elem;
         return false;
         }

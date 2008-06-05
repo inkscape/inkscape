@@ -320,7 +320,7 @@ private:
 
     void getLineAndColumn(long pos, long *lineNr, long *colNr);
 
-    void error(char *fmt, ...) G_GNUC_PRINTF(2,3);
+    void error(char const *fmt, ...) G_GNUC_PRINTF(2,3);
 
     int peek(long pos);
 

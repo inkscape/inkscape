@@ -246,7 +246,7 @@ void Parser::getLineAndColumn(long pos, long *lineNr, long *colNr)
 }
 
 
-void Parser::error(char *fmt, ...)
+void Parser::error(char const *fmt, ...)
 {
     long lineNr;
     long colNr;
