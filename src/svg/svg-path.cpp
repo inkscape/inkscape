@@ -471,7 +471,10 @@ static char const* rsvg_parse_unsigned_float(double *val, char const *begin) {
             exp += (int)exponent;
         }
     }
-    *val = (double)intval * pow(10., exp);
+
+    *val = ( exp < 0
+             ? intval / pow(10, -exp)
+             : intval * pow(10, exp) );
     return end_of_num;
 }
 

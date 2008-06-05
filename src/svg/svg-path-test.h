@@ -431,7 +431,7 @@ public:
         bpath = sp_svg_read_path("M .01,.02 L 0.04,0.02 L.04,.08L0.01,0.08 z""M 1e-2,.2e-1 L 0.004e1,0.0002e+2 L04E-2,.08e0L1.0e-2,80e-3 z");
         path_str = sp_svg_write_path(bpath);
         new_bpath = sp_svg_read_path(path_str);
-        TS_ASSERT(bpathEqual(bpath, new_bpath, 1e-16));
+        TS_ASSERT(bpathEqual(bpath, new_bpath, 1e-17));
         g_free(bpath); g_free(path_str); g_free(new_bpath);
     }
 
