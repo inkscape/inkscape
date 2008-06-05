@@ -59,6 +59,7 @@ extensions = \
 	grid_cartesian.py \
 	grid_polar.py \
 	handles.py \
+	hpgl_output.py \
 	ill2svg.pl \
 	inkex.py \
 	interp.py \
@@ -167,6 +168,7 @@ modules = \
 	grid_cartesian.inx \
 	grid_polar.inx \
 	handles.inx \
+	hpgl_output.inx \
 	inkscape_help_askaquestion.inx \
 	inkscape_help_commandline.inx \
 	inkscape_help_faq.inx\
