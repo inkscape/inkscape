@@ -45,6 +45,7 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <time.h>
 #include <sys/time.h>
 #include <utime.h>
@@ -690,7 +691,7 @@ static const TRexChar *trex_matchnode(TRex* exp,TRexNode *node,const TRexChar *s
             return cur;
     }                 
     case OP_WB:
-        if(str == exp->_bol && !isspace(*str)
+        if((str == exp->_bol && !isspace(*str))
          || (str == exp->_eol && !isspace(*(str-1)))
          || (!isspace(*str) && isspace(*(str+1)))
          || (isspace(*str) && !isspace(*(str+1))) ) {
@@ -3866,6 +3867,9 @@ static String win32LastError()
 
 
 
+
+#ifdef __WIN32__
+
 /**
  * Execute a system call, using pipes to send data to the
  * program's stdin,  and reading stdout and stderr.
@@ -3882,7 +3886,6 @@ bool MakeBase::executeCommand(const String &command,
     outbuf.clear();
     errbuf.clear();
     
-#ifdef __WIN32__
 
     /*
     I really hate having win32 code in this program, but the
@@ -4051,36 +4054,104 @@ bool MakeBase::executeCommand(const String &command,
 
     return ret;
 
-#else //do it unix-style
+} 
 
-    String pipeCommand = command;
-    pipeCommand.append("  2>&1");
-    String s;
-    FILE *f = popen(pipeCommand.c_str(), "r");
-    int errnum = 0;
-    if (f)
+#else  /*do it unix style*/
+
+/**
+ * Execute a system call, using pipes to send data to the
+ * program's stdin,  and reading stdout and stderr.
+ */
+bool MakeBase::executeCommand(const String &command,
+                              const String &inbuf,
+                              String &outbuf,
+                              String &errbuf)
+{
+
+    status("============ cmd ============\n%s\n=============================",
+                command.c_str());
+
+    outbuf.clear();
+    errbuf.clear();
+    
+
+    int outfds[2];
+    if (pipe(outfds) < 0)
+        return false;
+    int errfds[2];
+    if (pipe(errfds) < 0)
+        return false;
+    int pid = fork();
+    if (pid < 0)
         {
-        while (true)
-            {
-            int ch = fgetc(f);
-            if (ch < 0)
-                break;
-            s.push_back((char)ch);
-            }
-        errnum = pclose(f);
-        }
-    outbuf = s;
-    if (errnum != 0)
-        {
-        error("exec of command '%s' failed : %s",
+        close(outfds[0]);
+        close(outfds[1]);
+        close(errfds[0]);
+        close(errfds[1]);
+        error("launch of command '%s' failed : %s",
              command.c_str(), strerror(errno));
         return false;
         }
-    else
-        return true;
+    else if (pid > 0) // parent
+        {
+        close(outfds[1]);
+        close(errfds[1]);
+        }
+    else // == 0, child
+        {
+        close(outfds[0]);
+        dup2(outfds[1], STDOUT_FILENO);
+        close(outfds[1]);
+        close(errfds[0]);
+        dup2(errfds[1], STDERR_FILENO);
+        close(errfds[1]);
+
+        char *args[4];
+        args[0] = (char *)"sh";
+        args[1] = (char *)"-c";
+        args[2] = (char *)command.c_str();
+        args[3] = NULL;
+        execv("/bin/sh", args);
+        _exit(EXIT_FAILURE);
+        }
+
+    String outb;
+    String errb;
+
+    while (1)
+        {
+        unsigned char outch;
+        int rout = read(outfds[0], &outch, 1);
+        if (rout>0)
+             outb.push_back(outch);
+        unsigned char errch;
+        int rerr = read(errfds[0], &errch, 1);
+        if (rerr>0)
+            errb.push_back(errch);
+        if (rerr <=0 && rerr <=0)
+            break;
+        }
+
+    int childReturnValue;
+    wait(&childReturnValue);
+
+    close(outfds[0]);
+    close(errfds[0]);
+
+    outbuf = outb;
+    errbuf = errb;
+
+    if (childReturnValue != 0)
+        {
+        error("exec of command '%s' failed : %s",
+             command.c_str(), strerror(childReturnValue));
+        return false;
+        }
+
+    return true;
+} 
 
 #endif
-} 
 
 
 
@@ -4493,10 +4564,12 @@ bool MakeBase::evalBool(const String &s, bool defaultVal)
     if (s.size()==0)
         return defaultVal;
     String val = eval(s, "false");
-    if (s == "true" || s == "TRUE")
+    if (val.size()==0)
+        return defaultVal;
+    if (val == "true" || val == "TRUE")
         return true;
     else
-        return defaultVal;
+        return false;
 }
 
 
