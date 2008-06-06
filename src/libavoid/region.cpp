@@ -20,6 +20,7 @@
  * 
 */
 
+#include <stdio.h>
 #include <cstdlib>
 #include <algorithm>
 #include <cassert>
