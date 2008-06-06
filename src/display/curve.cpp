@@ -778,6 +778,8 @@ SPCurve::closepath()
     command to the subpath start point instead of adding a new lineto.
 
     Used for freehand drawing when the user draws back to the start point.
+  
+  2GEOMified
 **/
 void
 SPCurve::closepath_current()
@@ -834,6 +836,7 @@ SPCurve::closepath_current()
 
 /**
  * True if no paths are in curve.
+ * 2GEOMproof
  */
 bool
 SPCurve::is_empty() const
@@ -851,6 +854,7 @@ SPCurve::is_empty() const
 
 /**
  * True iff all subpaths are closed.
+ * 2GEOMproof
  */
 bool
 SPCurve::is_closed() const
@@ -1130,6 +1134,7 @@ SPCurve::append(SPCurve const *curve2,
 
 /**
  * Append \a c1 to \a this with possible fusing of close endpoints.
+ * 2GEOMproof. Needs to be recoded when NArtBpath is no longer there. Right now, it applies the same changes to bpath and pathv depending on bpath
  */
 SPCurve *
 SPCurve::append_continuous(SPCurve const *c1, gdouble tolerance)
@@ -1194,6 +1199,7 @@ SPCurve::append_continuous(SPCurve const *c1, gdouble tolerance)
 /**
  * Remove last segment of curve.
  * (Only used once in /src/pen-context.cpp)
+ * 2GEOMified
  */
 void
 SPCurve::backspace()
@@ -1366,7 +1372,7 @@ sp_curve_nonzero_distance_including_space(SPCurve const *const curve, double seg
 }
 
 /**
- * 
+ * 2GEOMified
  */
 void
 SPCurve::stretch_endpoints(NR::Point const &new_p0, NR::Point const &new_p1)
@@ -1478,6 +1484,7 @@ SPCurve::nodes_in_path() const
 
 /**
  *  Adds p to the last point (and last handle if present) of the last path
+ * 2GEOMified
  */
 void
 SPCurve::last_point_additive_move(Geom::Point const & p)
