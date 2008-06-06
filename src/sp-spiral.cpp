@@ -167,26 +167,21 @@ sp_spiral_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
      // make sure the curve is rebuilt with all up-to-date parameters
      sp_spiral_set_shape ((SPShape *) spiral);
 
-        //Duplicate the path
-        SPCurve *curve = ((SPShape *) spiral)->curve;
-        //Nulls might be possible if this called iteratively
-        if ( !curve ) {
-                //g_warning("sp_spiral_write(): No path to copy\n");
-                return NULL;
-        }
-        NArtBpath const *bpath = SP_CURVE_BPATH(curve);
-        if ( !bpath ) {
-                //g_warning("sp_spiral_write(): No path to copy\n");
-                return NULL;
-        }
-	char *d = sp_svg_write_path ( bpath );
-	repr->setAttribute("d", d);
-	g_free (d);
+    //Duplicate the path
+    SPCurve *curve = ((SPShape *) spiral)->curve;
+    //Nulls might be possible if this called iteratively
+    if ( !curve ) {
+            //g_warning("sp_spiral_write(): No path to copy\n");
+            return NULL;
+    }
+    char *d = sp_svg_write_path ( curve->get_pathvector() );
+    repr->setAttribute("d", d);
+    g_free (d);
 
-	if (((SPObjectClass *) (parent_class))->write)
-		((SPObjectClass *) (parent_class))->write (object, repr, flags | SP_SHAPE_WRITE_PATH);
+    if (((SPObjectClass *) (parent_class))->write)
+        ((SPObjectClass *) (parent_class))->write (object, repr, flags | SP_SHAPE_WRITE_PATH);
 
-	return repr;
+    return repr;
 }
 
 /**
@@ -308,14 +303,9 @@ sp_spiral_update_patheffect(SPLPEItem *lpeitem, bool write)
     if (write) {
         Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
         if ( shape->curve != NULL ) {
-            NArtBpath const * abp = shape->curve->get_bpath();
-            if (abp) {
-                gchar *str = sp_svg_write_path(abp);
-                repr->setAttribute("d", str);
-                g_free(str);
-            } else {
-                repr->setAttribute("d", "");
-            }
+            gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
+            repr->setAttribute("d", str);
+            g_free(str);
         } else {
             repr->setAttribute("d", NULL);
         }
