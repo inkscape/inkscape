@@ -27,10 +27,15 @@ namespace Widget {
 
 DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& long_name,
                    const Glib::ustring& icon_name, State state) :
-    _dock (dock),
-    _prev_state (state),
-    _window (NULL),
-    _dock_item_action_area (NULL)
+    _dock(dock),
+    _prev_state(state),
+    _prev_position(0),
+    _window(0),
+    _x(0),
+    _y(0),
+    _grab_focus_on_realize(false),
+    _gdl_dock_item(0),
+    _dock_item_action_area(0)
 {
 
     GdlDockItemBehavior gdl_dock_behavior =
