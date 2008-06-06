@@ -148,8 +148,8 @@ copy_without_nans_or_adjacent_duplicates(NR::Point const src[], unsigned src_len
         if ( si == src_len ) {
             return 0;
         }
-        if (!isNaN(src[si][NR::X]) &&
-            !isNaN(src[si][NR::Y])) {
+        if (!IS_NAN(src[si][NR::X]) &&
+            !IS_NAN(src[si][NR::Y])) {
             dest[0] = NR::Point(src[si]);
             ++si;
             break;
@@ -160,8 +160,8 @@ copy_without_nans_or_adjacent_duplicates(NR::Point const src[], unsigned src_len
     for (; si < src_len; ++si) {
         NR::Point const src_pt = NR::Point(src[si]);
         if ( src_pt != dest[di]
-             && !isNaN(src_pt[NR::X])
-             && !isNaN(src_pt[NR::Y])) {
+             && !IS_NAN(src_pt[NR::X])
+             && !IS_NAN(src_pt[NR::Y])) {
             dest[++di] = src_pt;
         }
     }
@@ -201,7 +201,7 @@ sp_bezier_fit_cubic_full(NR::Point bezier[], int split_points[],
         double const dist = ( L2( data[len - 1]
                                   - data[0] )
                               / 3.0 );
-        if (isNaN(dist)) {
+        if (IS_NAN(dist)) {
             /* Numerical problem, fall back to straight line segment. */
             bezier[1] = bezier[0];
             bezier[2] = bezier[3];
@@ -604,7 +604,7 @@ NewtonRaphsonRootFind(BezierCurve const Q, NR::Point const &P, gdouble const u)
         }
     }
 
-    if (!isFinite(improved_u)) {
+    if (!IS_FINITE(improved_u)) {
         improved_u = u;
     } else if ( improved_u < 0.0 ) {
         improved_u = 0.0;
@@ -835,7 +835,7 @@ chord_length_parameterize(NR::Point const d[], gdouble u[], unsigned const len)
     /* Then scale to [0.0 .. 1.0]. */
     gdouble tot_len = u[len - 1];
     g_return_if_fail( tot_len != 0 );
-    if (isFinite(tot_len)) {
+    if (IS_FINITE(tot_len)) {
         for (unsigned i = 1; i < len; ++i) {
             u[i] /= tot_len;
         }
@@ -849,7 +849,7 @@ chord_length_parameterize(NR::Point const d[], gdouble u[], unsigned const len)
     /** \todo
      * It's been reported that u[len - 1] can differ from 1.0 on some 
      * systems (amd64), despite it having been calculated as x / x where x 
-     * is isFinite and non-zero.
+     * is IS_FINITE and non-zero.
      */
     if (u[len - 1] != 1) {
         double const diff = u[len - 1] - 1;

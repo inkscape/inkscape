@@ -285,7 +285,7 @@ sp_star_update_patheffect(SPLPEItem *lpeitem, bool write)
     if (write) {
         Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
         if ( shape->curve != NULL ) {
-            NArtBpath *abp = shape->curve->first_bpath();
+            NArtBpath const * abp = shape->curve->get_bpath();
             if (abp) {
                 gchar *str = sp_svg_write_path(abp);
                 repr->setAttribute("d", str);

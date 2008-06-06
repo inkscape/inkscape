@@ -132,7 +132,7 @@ void ConstrainedMajorizationLayout::majlayout(
             }
             b[i] += degree * coords[i];
         }
-        assert(!isNaN(b[i]));
+        assert(!IS_NAN(b[i]));
     }
     if(constrainedLayout) {
         setupDummyVars();

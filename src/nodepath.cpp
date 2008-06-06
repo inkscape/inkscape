@@ -95,7 +95,7 @@ static GMemChunk *nodechunk = NULL;
 
 /* Creation from object */
 
-static NArtBpath *subpath_from_bpath(Inkscape::NodePath::Path *np, NArtBpath *b, gchar const *t);
+static NArtBpath const * subpath_from_bpath(Inkscape::NodePath::Path *np, NArtBpath const *b, gchar const *t);
 static gchar *parse_nodetypes(gchar const *types, gint length);
 
 /* Object updating */
@@ -181,8 +181,8 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     if (curve == NULL)
         return NULL;
 
-    NArtBpath *bpath = curve->first_bpath();
-    gint length = curve->_end;
+    NArtBpath const *bpath = curve->get_bpath();
+    gint length = curve->get_length();
     if (length == 0) {
         curve->unref();
         return NULL; // prevent crash for one-node paths
@@ -250,7 +250,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     gchar *typestr = parse_nodetypes(nodetypes, length);
 
     // create the subpath(s) from the bpath
-    NArtBpath *b = bpath;
+    NArtBpath const *b = bpath;
     while (b->code != NR_END) {
         b = subpath_from_bpath(np, b, typestr + (b - bpath));
     }
@@ -444,7 +444,7 @@ static void sp_nodepath_cleanup(Inkscape::NodePath::Path *nodepath)
  * \param t The node type.
  * \todo Fixme: t should be a proper type, rather than gchar
  */
-static NArtBpath *subpath_from_bpath(Inkscape::NodePath::Path *np, NArtBpath *b, gchar const *t)
+static NArtBpath const * subpath_from_bpath(Inkscape::NodePath::Path *np, NArtBpath const *b, gchar const *t)
 {
     NR::Point ppos, pos, npos;
 

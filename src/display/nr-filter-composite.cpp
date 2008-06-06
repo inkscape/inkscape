@@ -207,7 +207,7 @@ void FilterComposite::set_operator(FeCompositeOperator op) {
 }
 
 void FilterComposite::set_arithmetic(double k1, double k2, double k3, double k4) {
-    if (!isFinite(k1) || !isFinite(k2) || !isFinite(k3) || !isFinite(k4)) {
+    if (!IS_FINITE(k1) || !IS_FINITE(k2) || !IS_FINITE(k3) || !IS_FINITE(k4)) {
         g_warning("Non-finite parameter for feComposite arithmetic operator");
         return;
     }

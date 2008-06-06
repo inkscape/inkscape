@@ -18,7 +18,7 @@
 void NR::Point::normalize() {
 	double len = hypot(_pt[0], _pt[1]);
 	g_return_if_fail(len != 0);
-	g_return_if_fail(!isNaN(len));
+	g_return_if_fail(!IS_NAN(len));
 	static double const inf = 1e400;
 	if(len != inf) {
 		*this /= len;

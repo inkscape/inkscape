@@ -17,7 +17,7 @@
 
 #include "sp-item.h"
 #include "sp-path.h"
-#include "libnr/n-art-bpath-2geom.h"
+#include "svg/svg.h"
 #include "xml/repr.h"
 
 #include <2geom/path.h>
@@ -158,7 +158,7 @@ LPECurveStitch::resetDefaults(SPItem * item)
     
     // calculate bounding box:  (isn't there a simpler way?)
     Piecewise<D2<SBasis> > pwd2;
-    std::vector<Geom::Path> temppath = SVGD_to_2GeomPath( SP_OBJECT_REPR(item)->attribute("inkscape:original-d"));
+    std::vector<Geom::Path> temppath = sp_svg_read_pathv( SP_OBJECT_REPR(item)->attribute("inkscape:original-d"));
     for (unsigned int i=0; i < temppath.size(); i++) {
         pwd2.concat( temppath[i].toPwSb() );
     }

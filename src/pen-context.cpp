@@ -806,7 +806,7 @@ pen_redraw_all (SPPenContext *const pc)
         sp_canvas_item_hide (pc->cl1);
     }
 
-    NArtBpath *const bpath = pc->green_curve->last_bpath();
+    NArtBpath const * bpath = pc->green_curve->last_bpath();
     if (bpath) {
         if (bpath->code == NR_CURVETO && NR::Point(bpath->x2, bpath->y2) != pc->p[0]) {
             SP_CTRL(pc->c0)->moveto(NR::Point(bpath->x2, bpath->y2));
@@ -827,14 +827,9 @@ pen_lastpoint_move (SPPenContext *const pc, gdouble x, gdouble y)
         return;
 
     // green
-    NArtBpath *const bpath = pc->green_curve->last_bpath();
+    NArtBpath const * bpath = pc->green_curve->last_bpath();
     if (bpath) {
-        if (bpath->code == NR_CURVETO) {
-            bpath->x2 += x;
-            bpath->y2 += y;
-        }
-        bpath->x3 += x;
-        bpath->y3 += y;
+        pc->green_curve->last_point_additive_move( Geom::Point(x,y) );
     } else {
         // start anchor too
         if (pc->green_anchor) {
@@ -861,7 +856,7 @@ pen_lastpoint_tocurve (SPPenContext *const pc)
         return;
 
     // red
-    NArtBpath *const bpath = pc->green_curve->last_bpath();
+    NArtBpath const * bpath = pc->green_curve->last_bpath();
     if (bpath && bpath->code == NR_CURVETO) {
         pc->p[1] = pc->p[0] + (NR::Point(bpath->x3, bpath->y3) - NR::Point(bpath->x2, bpath->y2));
     } else {

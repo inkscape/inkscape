@@ -1672,7 +1672,7 @@ sp_style_merge_length_prop_from_dying_parent(LengthT &child, LengthT const &pare
                  * fixme: Have separate ex ratio parameter.
                  * Get x height from libnrtype or pango.
                  */
-                if (!isFinite(child.value)) {
+                if (!IS_FINITE(child.value)) {
                     child.value = child.computed;
                     child.unit = SP_CSS_UNIT_NONE;
                 }

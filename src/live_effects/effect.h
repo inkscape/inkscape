@@ -125,8 +125,6 @@ protected:
     // the order in which they appear is the order in which they are
     // called by this base class. (i.e. doEffect(SPCurve * curve) defaults to calling
     // doEffect(std::vector<Geom::Path> )
-    virtual NArtBpath *
-            doEffect_nartbpath (NArtBpath const * path_in) __attribute__ ((deprecated));
     virtual std::vector<Geom::Path>
             doEffect_path (std::vector<Geom::Path> const & path_in);
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> >

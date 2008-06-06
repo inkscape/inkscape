@@ -736,7 +736,7 @@ set_to_accumulated(SPEraserContext *dc)
             item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
             item->updateRepr();
         }
-        abp = nr_artpath_affine(dc->accumulated->first_bpath(), sp_desktop_dt2root_affine(desktop));
+        abp = nr_artpath_affine(dc->accumulated->get_bpath(), sp_desktop_dt2root_affine(desktop));
         str = sp_svg_write_path(abp);
         g_assert( str != NULL );
         g_free(abp);
@@ -879,22 +879,22 @@ accumulate_eraser(SPEraserContext *dc)
         dc->accumulated->reset(); /*  Is this required ?? */
         SPCurve *rev_cal2 = dc->cal2->create_reverse();
 
-        g_assert(dc->cal1->_end > 1);
-        g_assert(rev_cal2->_end > 1);
+        g_assert(dc->cal1->get_length() > 1);
+        g_assert(rev_cal2->get_length() > 1);
         g_assert(SP_CURVE_SEGMENT(dc->cal1, 0)->code == NR_MOVETO_OPEN);
         g_assert(SP_CURVE_SEGMENT(rev_cal2, 0)->code == NR_MOVETO_OPEN);
         g_assert(SP_CURVE_SEGMENT(dc->cal1, 1)->code == NR_CURVETO);
         g_assert(SP_CURVE_SEGMENT(rev_cal2, 1)->code == NR_CURVETO);
-        g_assert(SP_CURVE_SEGMENT(dc->cal1, dc->cal1->_end-1)->code == NR_CURVETO);
-        g_assert(SP_CURVE_SEGMENT(rev_cal2, rev_cal2->_end-1)->code == NR_CURVETO);
+        g_assert(SP_CURVE_SEGMENT(dc->cal1, dc->cal1->get_length()-1)->code == NR_CURVETO);
+        g_assert(SP_CURVE_SEGMENT(rev_cal2, rev_cal2->get_length()-1)->code == NR_CURVETO);
 
         dc->accumulated->append(dc->cal1, FALSE);
 
-        add_cap(dc->accumulated, SP_CURVE_SEGMENT(dc->cal1, dc->cal1->_end-1)->c(2), SP_CURVE_SEGMENT(dc->cal1, dc->cal1->_end-1)->c(3), SP_CURVE_SEGMENT(rev_cal2, 0)->c(3), SP_CURVE_SEGMENT(rev_cal2, 1)->c(1), dc->cap_rounding);
+        add_cap(dc->accumulated, SP_CURVE_SEGMENT(dc->cal1, dc->cal1->get_length()-1)->c(2), SP_CURVE_SEGMENT(dc->cal1, dc->cal1->get_length()-1)->c(3), SP_CURVE_SEGMENT(rev_cal2, 0)->c(3), SP_CURVE_SEGMENT(rev_cal2, 1)->c(1), dc->cap_rounding);
 
         dc->accumulated->append(rev_cal2, TRUE);
 
-        add_cap(dc->accumulated, SP_CURVE_SEGMENT(rev_cal2, rev_cal2->_end-1)->c(2), SP_CURVE_SEGMENT(rev_cal2, rev_cal2->_end-1)->c(3), SP_CURVE_SEGMENT(dc->cal1, 0)->c(3), SP_CURVE_SEGMENT(dc->cal1, 1)->c(1), dc->cap_rounding);
+        add_cap(dc->accumulated, SP_CURVE_SEGMENT(rev_cal2, rev_cal2->get_length()-1)->c(2), SP_CURVE_SEGMENT(rev_cal2, rev_cal2->get_length()-1)->c(3), SP_CURVE_SEGMENT(dc->cal1, 0)->c(3), SP_CURVE_SEGMENT(dc->cal1, 1)->c(1), dc->cap_rounding);
 
         dc->accumulated->closepath();
 
@@ -933,7 +933,7 @@ fit_and_split(SPEraserContext *dc, gboolean release)
 #endif
 
         /* Current eraser */
-        if ( dc->cal1->_end == 0 || dc->cal2->_end == 0 ) {
+        if ( dc->cal1->get_length() == 0 || dc->cal2->get_length() == 0 ) {
             /* dc->npoints > 0 */
             /* g_print("erasers(1|2) reset\n"); */
             dc->cal1->reset();

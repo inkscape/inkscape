@@ -704,7 +704,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                                 // so _gradually_ let go attraction to prevent jerks
                                 target = (dc->hatch_spacing * speed + hatch_dist * (SPEED_NORMAL - speed))/SPEED_NORMAL;                            
                             }
-                            if (!isNaN(dot) && dot < -0.5) {// flip
+                            if (!IS_NAN(dot) && dot < -0.5) {// flip
                                 target = -target;
                             }
 
@@ -775,7 +775,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 } else {
                     // Not drawing but spacing set: gray, center snapped, fixed radius
                     NR::Point c = (nearest + dc->hatch_spacing * hatch_unit_vector) * motion_to_curve.inverse();
-                    if (!isNaN(c[NR::X]) && !isNaN(c[NR::Y])) {
+                    if (!IS_NAN(c[NR::X]) && !IS_NAN(c[NR::Y])) {
                         NR::Matrix const sm (NR::scale(dc->hatch_spacing, dc->hatch_spacing) * NR::translate(c));
                         sp_canvas_item_affine_absolute(dc->hatch_area, sm);
                         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x7f7f7fff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
@@ -989,7 +989,7 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
             item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
             item->updateRepr();
         }
-        abp = nr_artpath_affine(dc->accumulated->first_bpath(), sp_desktop_dt2root_affine(desktop));
+        abp = nr_artpath_affine(dc->accumulated->get_bpath(), sp_desktop_dt2root_affine(desktop));
         str = sp_svg_write_path(abp);
         g_assert( str != NULL );
         g_free(abp);
@@ -1053,22 +1053,22 @@ accumulate_calligraphic(SPDynaDrawContext *dc)
         dc->accumulated->reset(); /*  Is this required ?? */
         SPCurve *rev_cal2 = dc->cal2->create_reverse();
 
-        g_assert(dc->cal1->_end > 1);
-        g_assert(rev_cal2->_end > 1);
+        g_assert(dc->cal1->get_length() > 1);
+        g_assert(rev_cal2->get_length() > 1);
         g_assert(SP_CURVE_SEGMENT(dc->cal1, 0)->code == NR_MOVETO_OPEN);
         g_assert(SP_CURVE_SEGMENT(rev_cal2, 0)->code == NR_MOVETO_OPEN);
         g_assert(SP_CURVE_SEGMENT(dc->cal1, 1)->code == NR_CURVETO);
         g_assert(SP_CURVE_SEGMENT(rev_cal2, 1)->code == NR_CURVETO);
-        g_assert(SP_CURVE_SEGMENT(dc->cal1, dc->cal1->_end-1)->code == NR_CURVETO);
-        g_assert(SP_CURVE_SEGMENT(rev_cal2, rev_cal2->_end-1)->code == NR_CURVETO);
+        g_assert(SP_CURVE_SEGMENT(dc->cal1, dc->cal1->get_length()-1)->code == NR_CURVETO);
+        g_assert(SP_CURVE_SEGMENT(rev_cal2, rev_cal2->get_length()-1)->code == NR_CURVETO);
 
         dc->accumulated->append(dc->cal1, FALSE);
 
-        add_cap(dc->accumulated, SP_CURVE_SEGMENT(dc->cal1, dc->cal1->_end-1)->c(2), SP_CURVE_SEGMENT(dc->cal1, dc->cal1->_end-1)->c(3), SP_CURVE_SEGMENT(rev_cal2, 0)->c(3), SP_CURVE_SEGMENT(rev_cal2, 1)->c(1), dc->cap_rounding);
+        add_cap(dc->accumulated, SP_CURVE_SEGMENT(dc->cal1, dc->cal1->get_length()-1)->c(2), SP_CURVE_SEGMENT(dc->cal1, dc->cal1->get_length()-1)->c(3), SP_CURVE_SEGMENT(rev_cal2, 0)->c(3), SP_CURVE_SEGMENT(rev_cal2, 1)->c(1), dc->cap_rounding);
 
         dc->accumulated->append(rev_cal2, TRUE);
 
-        add_cap(dc->accumulated, SP_CURVE_SEGMENT(rev_cal2, rev_cal2->_end-1)->c(2), SP_CURVE_SEGMENT(rev_cal2, rev_cal2->_end-1)->c(3), SP_CURVE_SEGMENT(dc->cal1, 0)->c(3), SP_CURVE_SEGMENT(dc->cal1, 1)->c(1), dc->cap_rounding);
+        add_cap(dc->accumulated, SP_CURVE_SEGMENT(rev_cal2, rev_cal2->get_length()-1)->c(2), SP_CURVE_SEGMENT(rev_cal2, rev_cal2->get_length()-1)->c(3), SP_CURVE_SEGMENT(dc->cal1, 0)->c(3), SP_CURVE_SEGMENT(dc->cal1, 1)->c(1), dc->cap_rounding);
 
         dc->accumulated->closepath();
 
@@ -1107,7 +1107,7 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
 #endif
 
         /* Current calligraphic */
-        if ( dc->cal1->_end == 0 || dc->cal2->_end == 0 ) {
+        if ( dc->cal1->get_length() == 0 || dc->cal2->get_length() == 0 ) {
             /* dc->npoints > 0 */
             /* g_print("calligraphics(1|2) reset\n"); */
             dc->cal1->reset();

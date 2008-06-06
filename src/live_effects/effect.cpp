@@ -221,40 +221,22 @@ Effect::doBeforeEffect (SPLPEItem */*lpeitem*/)
 void
 Effect::doEffect (SPCurve * curve)
 {
-    NArtBpath *new_bpath = doEffect_nartbpath(curve->get_bpath());
+    NArtBpath const *bpath_in = curve->get_bpath();
 
-    curve->set_bpath(new_bpath);
-}
+    std::vector<Geom::Path> result_pathv;
 
-NArtBpath *
-Effect::doEffect_nartbpath (NArtBpath const * path_in)
-{
     try {
-        std::vector<Geom::Path> orig_pathv = BPath_to_2GeomPath(path_in);
+        std::vector<Geom::Path> orig_pathv = BPath_to_2GeomPath(bpath_in);
 
-        std::vector<Geom::Path> result_pathv = doEffect_path(orig_pathv);
-
-        NArtBpath *new_bpath = BPath_from_2GeomPath(result_pathv);
-
-        return new_bpath;
+        result_pathv = doEffect_path(orig_pathv);
     }
     catch (std::exception & e) {
         g_warning("Exception during LPE %s execution. \n %s", getName().c_str(), e.what());
         SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
             _("An exception occurred during execution of the Path Effect.") );
-
-        NArtBpath *path_out;
-
-        unsigned ret = 0;
-        while ( path_in[ret].code != NR_END ) {
-            ++ret;
-        }
-        unsigned len = ++ret;
-
-        path_out = g_new(NArtBpath, len);
-        memcpy(path_out, path_in, len * sizeof(NArtBpath));
-        return path_out;
     }
+
+    curve->set_pathv(result_pathv);
 }
 
 std::vector<Geom::Path>

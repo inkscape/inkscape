@@ -10,8 +10,7 @@
  */
 
 #include <glibmm/ustring.h>
-#include <2geom/point.h>
-#include <2geom/path.h>
+#include <2geom/forward.h>
 
 struct SPDesktop;
 struct SPItem;

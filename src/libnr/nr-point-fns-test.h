@@ -26,11 +26,11 @@ public:
         part_nan( 3., nan ),
         inf_left( -inf, 5.0 )
     {
-        TS_ASSERT( isNaN(nan) );
-        TS_ASSERT( !isNaN(small) );
+        TS_ASSERT( IS_NAN(nan) );
+        TS_ASSERT( !IS_NAN(small) );
 
-        setupValid &= isNaN(nan);
-        setupValid &= !isNaN(small);
+        setupValid &= IS_NAN(nan);
+        setupValid &= !IS_NAN(small);
     }
     virtual ~NrPointFnsTest() {}
 
@@ -65,7 +65,7 @@ public:
         TS_ASSERT_EQUALS( NR::L1(small_left), small  );
         TS_ASSERT_EQUALS( NR::L1(inf_left), inf  );
         TS_ASSERT_EQUALS( NR::L1(small_n3_4), 7.0 * small  );
-        TS_ASSERT(isNaN(NR::L1(part_nan)));
+        TS_ASSERT(IS_NAN(NR::L1(part_nan)));
     }
 
     void testL2(void)
@@ -75,7 +75,7 @@ public:
         TS_ASSERT_EQUALS( NR::L2(small_left), small );
         TS_ASSERT_EQUALS( NR::L2(inf_left), inf );
         TS_ASSERT_EQUALS( NR::L2(small_n3_4), 5.0 * small );
-        TS_ASSERT( isNaN(NR::L2(part_nan)) );
+        TS_ASSERT( IS_NAN(NR::L2(part_nan)) );
     }
 
     void testLInfty(void)
@@ -85,7 +85,7 @@ public:
         TS_ASSERT_EQUALS( NR::LInfty(small_left), small );
         TS_ASSERT_EQUALS( NR::LInfty(inf_left), inf );
         TS_ASSERT_EQUALS( NR::LInfty(small_n3_4), 4.0 * small );
-        TS_ASSERT( isNaN(NR::LInfty(part_nan)) );
+        TS_ASSERT( IS_NAN(NR::LInfty(part_nan)) );
     }
 
     void testIsZero(void)

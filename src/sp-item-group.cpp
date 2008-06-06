@@ -853,7 +853,7 @@ sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup)
             
             Inkscape::XML::Node *repr = SP_OBJECT_REPR(subitem);
  
-                NArtBpath *abp = c->first_bpath();
+                NArtBpath const *abp = c->first_bpath();
                 if (abp) {
                     gchar *str = sp_svg_write_path(abp);
                     repr->setAttribute("d", str);

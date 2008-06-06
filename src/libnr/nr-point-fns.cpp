@@ -7,7 +7,7 @@ using NR::Point;
 NR::Coord NR::LInfty(Point const &p) {
     NR::Coord const a(fabs(p[0]));
     NR::Coord const b(fabs(p[1]));
-    return ( a < b || isNaN(b)
+    return ( a < b || IS_NAN(b)
              ? b
              : a );
 }

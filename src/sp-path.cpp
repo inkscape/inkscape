@@ -122,14 +122,9 @@ gint
 sp_nodes_in_path(SPPath *path)
 {
     SPCurve *curve = SP_SHAPE(path)->curve;
-    if (!curve) return 0;
-    gint r = curve->_end;
-    gint i = curve->_length - 1;
-    if (i > r) i = r; // sometimes after switching from node editor length is wrong, e.g. f6 - draw - f2 - tab - f1, this fixes it
-    for (; i >= 0; i --)
-        if (SP_CURVE_BPATH(curve)[i].code == NR_MOVETO)
-            r --;
-    return r;
+    if (!curve)
+        return 0;
+    return curve->nodes_in_path();
 }
 
 static gchar *
@@ -313,7 +308,7 @@ sp_path_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     if ( shape->curve != NULL ) {
-        NArtBpath *abp = shape->curve->first_bpath();
+        NArtBpath const * abp = shape->curve->get_bpath();
         if (abp) {
             gchar *str = sp_svg_write_path(abp);
             repr->setAttribute("d", str);
@@ -327,7 +322,7 @@ sp_path_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 
     SPPath *path = (SPPath *) object;
     if ( path->original_curve != NULL ) {
-        NArtBpath *abp = path->original_curve->first_bpath();
+        NArtBpath const * abp = path->original_curve->get_bpath();
         if (abp) {
             gchar *str = sp_svg_write_path(abp);
             repr->setAttribute("inkscape:original-d", str);
@@ -419,7 +414,7 @@ sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
             // could also do SP_OBJECT(shape)->updateRepr();  but only the d attribute needs updating.
             Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
             if ( shape->curve != NULL ) {
-                NArtBpath *abp = shape->curve->first_bpath();
+                NArtBpath const *abp = shape->curve->get_bpath();
                 if (abp) {
                     gchar *str = sp_svg_write_path(abp);
                     repr->setAttribute("d", str);

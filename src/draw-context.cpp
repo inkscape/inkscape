@@ -312,9 +312,9 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
         for (GSList *l = dc->white_curves; l != NULL; l = l->next) {
             SPCurve *c;
             c = (SPCurve*)l->data;
-            g_return_if_fail( c->_end > 1 );
+            g_return_if_fail( c->get_length() > 1 );
             if ( SP_CURVE_BPATH(c)->code == NR_MOVETO_OPEN ) {
-                NArtBpath *s, *e;
+                NArtBpath const *s, *e;
                 SPDrawAnchor *a;
                 s = c->first_bpath();
                 e = c->last_bpath();

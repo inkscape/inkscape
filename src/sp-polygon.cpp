@@ -28,7 +28,6 @@ static void sp_polygon_init(SPPolygon *polygon);
 
 static void sp_polygon_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static Inkscape::XML::Node *sp_polygon_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
-static void sp_polygon_set(SPObject *object, unsigned int key, const gchar *value);
 
 static gchar *sp_polygon_description(SPItem *item);
 
@@ -128,7 +127,7 @@ static Inkscape::XML::Node *sp_polygon_write(SPObject *object, Inkscape::XML::No
     }
 
     /* We can safely write points here, because all subclasses require it too (Lauris) */
-    NArtBpath *abp = shape->curve->first_bpath();
+    NArtBpath const * abp = shape->curve->get_bpath();
     gchar *str = sp_svg_write_polygon(abp);
     repr->setAttribute("points", str);
     g_free(str);
@@ -162,7 +161,7 @@ static gboolean polygon_get_value(gchar const **p, gdouble *v)
 }
 
 
-static void sp_polygon_set(SPObject *object, unsigned int key, const gchar *value)
+void sp_polygon_set(SPObject *object, unsigned int key, const gchar *value)
 {
     SPPolygon *polygon = SP_POLYGON(object);
 

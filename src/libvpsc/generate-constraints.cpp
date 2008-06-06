@@ -79,8 +79,8 @@ bool CmpNodePos::operator() (const Node* u, const Node* v) const {
 	if (v->pos < u->pos) {
 		return false;
 	}
-	if (isNaN(u->pos) != isNaN(v->pos)) {
-		return isNaN(u->pos);
+	if (IS_NAN(u->pos) != IS_NAN(v->pos)) {
+		return IS_NAN(u->pos);
 	}
 	return u < v;
 
@@ -153,9 +153,9 @@ int compare_events(const void *a, const void *b) {
 		return 1;
 	} else if(ea->pos < eb->pos) {
 		return -1;
-	} else if(isNaN(ea->pos) != isNaN(ea->pos)) {
+	} else if(IS_NAN(ea->pos) != IS_NAN(ea->pos)) {
 		/* See comment in CmpNodePos. */
-		return ( isNaN(ea->pos)
+		return ( IS_NAN(ea->pos)
 			 ? -1
 			 : 1 );
 	}

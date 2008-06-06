@@ -113,10 +113,10 @@ PathParam::param_readSVGValue(const gchar * strvalue)
             } catch (Inkscape::BadURIException &e) {
                 g_warning("%s", e.what());
                 ref.detach();
-                _pathvector = SVGD_to_2GeomPath(defvalue);
+                _pathvector = sp_svg_read_pathv(defvalue);
             }
         } else {
-            _pathvector = SVGD_to_2GeomPath(strvalue);
+            _pathvector = sp_svg_read_pathv(strvalue);
         }
 
         signal_path_changed.emit();
@@ -132,7 +132,7 @@ PathParam::param_getSVGValue() const
     if (href) {
         return href;
     } else {
-        gchar * svgd = SVGD_from_2GeomPath( _pathvector );
+        gchar * svgd = sp_svg_write_path( _pathvector );
         return svgd;
     }
 }
@@ -233,7 +233,7 @@ PathParam::param_set_and_write_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis>
 {
     remove_link();
     _pathvector = Geom::path_from_piecewise(newpath, LPE_CONVERSION_TOLERANCE);
-    gchar * svgd = SVGD_from_2GeomPath( _pathvector );
+    gchar * svgd = sp_svg_write_path( _pathvector );
     param_write_to_repr(svgd);
     g_free(svgd);
     // force value upon pwd2 and don't recalculate.
@@ -248,7 +248,7 @@ PathParam::param_set_and_write_new_value (std::vector<Geom::Path> const & newpat
     _pathvector = newpath;
     must_recalculate_pwd2 = true;
 
-    gchar * svgd = SVGD_from_2GeomPath( _pathvector );
+    gchar * svgd = sp_svg_write_path( _pathvector );
     param_write_to_repr(svgd);
     g_free(svgd);
 }
@@ -324,7 +324,7 @@ PathParam::linked_modified(SPObject *linked_obj, guint /*flags*/)
 
     if (curve == NULL) {
         // curve invalid, set default value
-        _pathvector = SVGD_to_2GeomPath(defvalue);
+        _pathvector = sp_svg_read_pathv(defvalue);
     } else {
         _pathvector = BPath_to_2GeomPath(SP_CURVE_BPATH(curve));
         curve->unref();

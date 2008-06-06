@@ -222,7 +222,7 @@ void ClipboardManagerImpl::copy()
 void ClipboardManagerImpl::copyPathParameter(Inkscape::LivePathEffect::PathParam *pp)
 {
     if ( pp == NULL ) return;
-    gchar *svgd = SVGD_from_2GeomPath( pp->get_pathvector() );
+    gchar *svgd = sp_svg_write_path( pp->get_pathvector() );
     if ( svgd == NULL || *svgd == '\0' ) return;
 
     _discardInternalClipboard();

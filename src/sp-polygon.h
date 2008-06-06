@@ -30,4 +30,7 @@ struct SPPolygonClass {
 
 GType sp_polygon_get_type (void);
 
+// made 'public' so that SPCurve can set it as friend:
+void sp_polygon_set(SPObject *object, unsigned int key, const gchar *value);
+
 #endif

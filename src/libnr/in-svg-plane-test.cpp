@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
     NR::Point const small_n3_4(-3.0 * small, 4.0 * small);
     NR::Point const part_nan(3., nan);
 
-    assert(isNaN(nan));
-    assert(!isNaN(small));
+    assert(IS_NAN(nan));
+    assert(!IS_NAN(small));
 
     UTEST_TEST("in_svg_plane") {
         UTEST_ASSERT(in_svg_plane(p3n4));

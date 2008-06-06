@@ -546,8 +546,8 @@ NR::Matrix
 sp_shape_marker_get_transform(SPShape const *shape, NArtBpath const *bp)
 {
     g_return_val_if_fail(( is_moveto(SP_CURVE_BPATH(shape->curve)[0].code)
-                           && ( 0 < shape->curve->_end )
-                           && ( SP_CURVE_BPATH(shape->curve)[shape->curve->_end].code == NR_END ) ),
+                           && ( 0 < shape->curve->get_length() )
+                           && ( SP_CURVE_BPATH(shape->curve)[shape->curve->get_length()].code == NR_END ) ),
                          NR::Matrix(NR::translate(bp->c(3))));
     double const angle1 = incoming_tangent(bp);
     double const angle2 = outgoing_tangent(bp);

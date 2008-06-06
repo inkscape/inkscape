@@ -24,8 +24,8 @@ int main(int argc, char *argv[])
     Point const part_nan(3., nan);
     Point const inf_left(-inf, 5.0);
 
-    assert(isNaN(nan));
-    assert(!isNaN(small));
+    assert(IS_NAN(nan));
+    assert(!IS_NAN(small));
 
     UTEST_TEST("L1") {
         UTEST_ASSERT( NR::L1(p0) == 0.0 );
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
         UTEST_ASSERT( NR::L1(small_left) == small );
         UTEST_ASSERT( NR::L1(inf_left) == inf );
         UTEST_ASSERT( NR::L1(small_n3_4) == 7.0 * small );
-        UTEST_ASSERT(isNaN(NR::L1(part_nan)));
+        UTEST_ASSERT(IS_NAN(NR::L1(part_nan)));
     }
 
     UTEST_TEST("L2") {
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
         UTEST_ASSERT( NR::L2(small_left) == small );
         UTEST_ASSERT( NR::L2(inf_left) == inf );
         UTEST_ASSERT( NR::L2(small_n3_4) == 5.0 * small );
-        UTEST_ASSERT(isNaN(NR::L2(part_nan)));
+        UTEST_ASSERT(IS_NAN(NR::L2(part_nan)));
     }
 
     UTEST_TEST("LInfty") {
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
         UTEST_ASSERT( NR::LInfty(small_left) == small );
         UTEST_ASSERT( NR::LInfty(inf_left) == inf );
         UTEST_ASSERT( NR::LInfty(small_n3_4) == 4.0 * small );
-        UTEST_ASSERT(isNaN(NR::LInfty(part_nan)));
+        UTEST_ASSERT(IS_NAN(NR::LInfty(part_nan)));
     }
 
     UTEST_TEST("is_zero") {

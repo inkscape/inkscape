@@ -13,9 +13,7 @@
 #include <2geom/path.h>
 #include <libnr/n-art-bpath.h>
 
-std::vector<Geom::Path>  SVGD_to_2GeomPath (char const *svgd);
 std::vector<Geom::Path>  BPath_to_2GeomPath (NArtBpath const *bpath);
-char *                   SVGD_from_2GeomPath(std::vector<Geom::Path> const & path);
 NArtBpath *              BPath_from_2GeomPath (std::vector<Geom::Path> const & path);
 
 

@@ -21,8 +21,8 @@ public:
         small_n3_4( -3.0 * small, 4.0 * small ),
         part_nan( 3., nan )
     {
-        setupValid &= isNaN(nan);
-        setupValid &= !isNaN(small);
+        setupValid &= IS_NAN(nan);
+        setupValid &= !IS_NAN(small);
     }
     virtual ~InSvgPlaneTest() {}
 

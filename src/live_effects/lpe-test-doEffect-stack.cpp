@@ -45,31 +45,10 @@ LPEdoEffectStackTest::doEffect (SPCurve * curve)
     }
 }
 
-NArtBpath *
-LPEdoEffectStackTest::doEffect_nartbpath (NArtBpath const * path_in)
-{
-    if (step >= 2) {
-        return Effect::doEffect_nartbpath(path_in);
-    } else {
-        // return here
-        NArtBpath *path_out;
-
-        unsigned ret = 0;
-        while ( path_in[ret].code != NR_END ) {
-            ++ret;
-        }
-        unsigned len = ++ret;
-
-        path_out = g_new(NArtBpath, len);
-        memcpy(path_out, path_in, len * sizeof(NArtBpath));
-        return path_out;
-    }
-}
-
 std::vector<Geom::Path>
 LPEdoEffectStackTest::doEffect_path (std::vector<Geom::Path> const & path_in)
 {
-    if (step >= 3) {
+    if (step >= 2) {
         return Effect::doEffect_path(path_in);
     } else {
         // return here

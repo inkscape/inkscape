@@ -38,6 +38,11 @@
 #include "gnome-canvas-bpath-util.h"
 #include "svg/path-string.h"
 
+#include <2geom/pathvector.h>
+#include <2geom/path.h>
+#include <2geom/sbasis-to-bezier.h>
+#include <2geom/svg-path.h>
+#include <2geom/svg-path-parser.h>
 
 /* This module parses an SVG path element into an RsvgBpathDef.
 
@@ -668,6 +673,21 @@ NArtBpath *sp_svg_read_path(gchar const *str)
     return bpath;
 }
 
+Geom::PathVector sp_svg_read_pathv(char const * str)
+{
+    std::vector<Geom::Path> pathv;
+
+    // TODO: enable this exception catching. don't catch now to better see when things go wrong
+//    try {
+        pathv = Geom::parse_svg_path(str);
+//    }
+//    catch (std::runtime_error e) {
+//        g_warning("SVGPathParseError: %s", e.what());
+//    }
+
+    return pathv;
+}
+
 gchar *sp_svg_write_path(NArtBpath const *bpath)
 {
     bool closed=false;
@@ -705,6 +725,53 @@ gchar *sp_svg_write_path(NArtBpath const *bpath)
     }
     if (closed) {
         str.closePath();
+    }
+
+    return g_strdup(str.c_str());
+}
+
+static void sp_svg_write_curve(Inkscape::SVG::PathString & str, Geom::Curve const * c) {
+    if(Geom::LineSegment const *line_segment = dynamic_cast<Geom::LineSegment const  *>(c)) {
+        str.lineTo( (*line_segment)[1][0], (*line_segment)[1][1] );
+    }
+    else if(Geom::QuadraticBezier const *quadratic_bezier = dynamic_cast<Geom::QuadraticBezier const  *>(c)) {
+        str.quadTo( (*quadratic_bezier)[1][0], (*quadratic_bezier)[1][0],
+                    (*quadratic_bezier)[2][0], (*quadratic_bezier)[2][1] );
+    }
+    else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const  *>(c)) {
+        str.curveTo( (*cubic_bezier)[1][0], (*cubic_bezier)[1][1],
+                     (*cubic_bezier)[2][0], (*cubic_bezier)[2][1],
+                     (*cubic_bezier)[3][0], (*cubic_bezier)[3][1] );
+    }
+    else if(Geom::EllipticalArc const *svg_elliptical_arc = dynamic_cast<Geom::EllipticalArc const *>(c)) {
+        str.arcTo( svg_elliptical_arc->ray(0), svg_elliptical_arc->ray(1),
+                   svg_elliptical_arc->rotation_angle(),
+                   svg_elliptical_arc->large_arc_flag(), svg_elliptical_arc->sweep_flag(),
+                   svg_elliptical_arc->finalPoint() );
+    } else { 
+        //this case handles sbasis as well as all other curve types
+        Geom::Path sbasis_path = Geom::path_from_sbasis(c->toSBasis(), 0.1);
+
+        //recurse to convert the new path resulting from the sbasis to svgd
+        for(Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {
+            sp_svg_write_curve(str, &(*iter));
+        }
+    }
+}
+
+gchar * sp_svg_write_path(Geom::PathVector const &p) {
+    Inkscape::SVG::PathString str;
+
+    for(Geom::PathVector::const_iterator pit = p.begin(); pit != p.end(); pit++) {
+        str.moveTo( pit->initialPoint()[0], pit->initialPoint()[1] );
+
+        for(Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_open(); cit++) {
+            sp_svg_write_curve(str, &(*cit));
+        }
+
+        if (pit->closed()) {
+            str.closePath();
+        }
     }
 
     return g_strdup(str.c_str());

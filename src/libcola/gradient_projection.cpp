@@ -50,7 +50,7 @@ unsigned GradientProjection::solve(double * b) {
     solver = setupVPSC();
     //cerr << "in gradient projection: n=" << n << endl;
     for (i=0;i<n;i++) {
-        assert(!isNaN(place[i]));
+        assert(!IS_NAN(place[i]));
         assert(!isinf(place[i]));
         vars[i]->desiredPosition=place[i];
     }
@@ -98,7 +98,7 @@ unsigned GradientProjection::solve(double * b) {
         // move to new unconstrained position
 		for (i=0; i<n; i++) {
 			place[i]-=alpha*g[i];
-            assert(!isNaN(place[i]));
+            assert(!IS_NAN(place[i]));
             assert(!isinf(place[i]));
             vars[i]->desiredPosition=place[i];
 		}
