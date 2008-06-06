@@ -59,8 +59,6 @@
 
 #ifdef __WIN32__
 #include <windows.h>
-#else
-#include <sys/wait.h>
 #endif
 
 
@@ -4059,6 +4057,8 @@ bool MakeBase::executeCommand(const String &command,
 
 #else  /*do it unix style*/
 
+#include <sys/wait.h>
+
 /**
  * Execute a system call, using pipes to send data to the
  * program's stdin,  and reading stdout and stderr.
@@ -4119,25 +4119,28 @@ bool MakeBase::executeCommand(const String &command,
     String outb;
     String errb;
 
-    while (1)
+    FILE *stdOutRead = fdopen(outfds[0], "r");
+    while (!feof(stdOutRead))
         {
-        unsigned char outch;
-        int rout = read(outfds[0], &outch, 1);
-        if (rout>0)
-             outb.push_back(outch);
-        unsigned char errch;
-        int rerr = read(errfds[0], &errch, 1);
-        if (rerr>0)
-            errb.push_back(errch);
-        if (rout <=0 && rerr <=0)
+        char ch = fgetc(stdOutRead);
+        if (ch<0)
             break;
+        outb.push_back(ch);
+        }
+    FILE *stdErrRead = fdopen(errfds[0], "r");
+    while (!feof(stdErrRead))
+        {
+        char ch = fgetc(stdErrRead);
+        if (ch<0)
+            break;
+        errb.push_back(ch);
         }
 
     int childReturnValue;
     wait(&childReturnValue);
 
-    close(outfds[0]);
-    close(errfds[0]);
+    fclose(stdOutRead);
+    fclose(stdErrRead);
 
     outbuf = outb;
     errbuf = errb;
