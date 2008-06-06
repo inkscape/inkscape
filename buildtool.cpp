@@ -4059,6 +4059,8 @@ bool MakeBase::executeCommand(const String &command,
 
 #include <sys/wait.h>
 
+
+
 /**
  * Execute a system call, using pipes to send data to the
  * program's stdin,  and reading stdout and stderr.
@@ -4119,28 +4121,50 @@ bool MakeBase::executeCommand(const String &command,
     String outb;
     String errb;
 
-    FILE *stdOutRead = fdopen(outfds[0], "r");
-    while (!feof(stdOutRead))
+    int outRead = outfds[0];
+    int errRead = errfds[0];
+    int max = outRead;
+    if (errRead > max)
+        max = errRead;
+
+    bool outOpen = true;
+    bool errOpen = true;
+
+    while (outOpen && errOpen)
         {
-        char ch = fgetc(stdOutRead);
-        if (ch<0)
+        char ch;
+        fd_set fdset;
+        FD_ZERO(&fdset);
+        if (outOpen)
+            FD_SET(outRead, &fdset);
+        if (errOpen)
+            FD_SET(errRead, &fdset);
+        int ret = select(max+1, &fdset, NULL, NULL, NULL);
+        if (ret < 0)
             break;
-        outb.push_back(ch);
-        }
-    FILE *stdErrRead = fdopen(errfds[0], "r");
-    while (!feof(stdErrRead))
-        {
-        char ch = fgetc(stdErrRead);
-        if (ch<0)
-            break;
-        errb.push_back(ch);
+        if (FD_ISSET(outRead, &fdset))
+            {
+            read(outRead, &ch, 1);
+            if (ch <= 0)
+                outOpen = false;
+            else
+                outb.push_back(ch);
+            }
+        if (FD_ISSET(errRead, &fdset))
+            {
+            read(errRead, &ch, 1);
+            if (ch <= 0)
+                errOpen = false;
+            else
+                errb.push_back(ch);
+            }
         }
 
     int childReturnValue;
     wait(&childReturnValue);
 
-    fclose(stdOutRead);
-    fclose(stdErrRead);
+    close(outRead);
+    close(errRead);
 
     outbuf = outb;
     errbuf = errb;
