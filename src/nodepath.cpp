@@ -560,7 +560,7 @@ static void update_repr_internal(Inkscape::NodePath::Path *np)
     np->curve = create_curve(np);
 
     gchar *typestr = create_typestr(np);
-    gchar *svgpath = sp_svg_write_path(SP_CURVE_BPATH(np->curve));
+    gchar *svgpath = sp_svg_write_path(np->curve->get_pathvector());
 
     // determine if path has an effect applied and write to correct "d" attribute.
     if (repr->attribute(np->repr_key) == NULL || strcmp(svgpath, repr->attribute(np->repr_key))) { // d changed
@@ -637,7 +637,7 @@ static void stamp_repr(Inkscape::NodePath::Path *np)
     SPCurve *curve = create_curve(np);
     gchar *typestr = create_typestr(np);
 
-    gchar *svgpath = sp_svg_write_path(SP_CURVE_BPATH(curve));
+    gchar *svgpath = sp_svg_write_path(curve->get_pathvector());
 
     new_repr->setAttribute(np->repr_key, svgpath);
     new_repr->setAttribute(np->repr_nodetypes_key, typestr);
@@ -4722,7 +4722,7 @@ void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve) {
     } else if ( IS_LIVEPATHEFFECT(np->object) ) {
         // FIXME: this writing to string and then reading from string is bound to be slow.
         // create a method to convert from curve directly to 2geom...
-        gchar *svgpath = sp_svg_write_path(SP_CURVE_BPATH(np->curve));
+        gchar *svgpath = sp_svg_write_path( np->curve->get_pathvector() );
         LIVEPATHEFFECT(np->object)->lpe->setParameter(np->repr_key, svgpath);
         g_free(svgpath);
 
