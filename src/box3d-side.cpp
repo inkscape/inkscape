@@ -126,11 +126,7 @@ box3d_side_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
     if ( !curve ) {
         return NULL;
     }
-    NArtBpath const *bpath = SP_CURVE_BPATH(curve);
-    if ( !bpath ) {
-        return NULL;
-    }
-    char *d = sp_svg_write_path ( bpath );
+    char *d = sp_svg_write_path ( curve->get_pathvector() );
     repr->setAttribute("d", d);
     g_free (d);
 
