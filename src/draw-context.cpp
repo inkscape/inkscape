@@ -551,7 +551,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
             sp_desktop_apply_style_tool(desktop, repr, tool_name(dc), false);
         }
 
-        gchar *str = sp_svg_write_path(SP_CURVE_BPATH(c));
+        gchar *str = sp_svg_write_path( c->get_pathvector() );
         g_assert( str != NULL );
         if (has_lpe)
             repr->setAttribute("inkscape:original-d", str);
