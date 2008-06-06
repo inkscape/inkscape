@@ -29,7 +29,7 @@ namespace Filter {
 void
 Filter::filters_all_files (void)
 {
-	filters_load_dir(INKSCAPE_FILTERDIR, _("Bundled"));
+	filters_load_dir((gchar *)INKSCAPE_FILTERDIR, _("Bundled"));
 	filters_load_dir(profile_path("filters"), _("Personal"));
 
 	return;
