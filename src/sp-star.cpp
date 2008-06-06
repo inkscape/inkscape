@@ -152,10 +152,10 @@ sp_star_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 		sp_repr_set_svg_double(repr, "inkscape:randomized", star->randomized);
 	}
 
-	sp_star_set_shape ((SPShape *) star);
-	char *d = sp_svg_write_path (SP_CURVE_BPATH(((SPShape *) star)->curve));
-	repr->setAttribute("d", d);
-	g_free (d);
+    sp_star_set_shape ((SPShape *) star);
+    char *d = sp_svg_write_path (((SPShape *) star)->curve->get_pathvector());
+    repr->setAttribute("d", d);
+    g_free (d);
 
 	if (((SPObjectClass *) (parent_class))->write)
 		((SPObjectClass *) (parent_class))->write (object, repr, flags);
