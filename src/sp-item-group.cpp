@@ -853,16 +853,11 @@ sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup)
             
             Inkscape::XML::Node *repr = SP_OBJECT_REPR(subitem);
  
-                NArtBpath const *abp = c->first_bpath();
-                if (abp) {
-                    gchar *str = sp_svg_write_path(abp);
-                    repr->setAttribute("d", str);
-                    g_free(str);
-                } else {
-                   repr->setAttribute("d", "");
-                }
+            gchar *str = sp_svg_write_path(c->get_pathvector());
+            repr->setAttribute("d", str);
+            g_free(str);
 
-                c->unref();
+            c->unref();
         }
     }
 }
