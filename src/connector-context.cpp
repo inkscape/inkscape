@@ -921,7 +921,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
         /* Set style */
         sp_desktop_apply_style_tool(desktop, repr, "tools.connector", false);
 
-        gchar *str = sp_svg_write_path(SP_CURVE_BPATH(c));
+        gchar *str = sp_svg_write_path( c->get_pathvector() );
         g_assert( str != NULL );
         repr->setAttribute("d", str);
         g_free(str);
