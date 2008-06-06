@@ -4144,16 +4144,14 @@ bool MakeBase::executeCommand(const String &command,
             break;
         if (FD_ISSET(outRead, &fdset))
             {
-            read(outRead, &ch, 1);
-            if (ch <= 0)
+            if (read(outRead, &ch, 1) <= 0 || ch <= 0)
                 outOpen = false;
             else
                 outb.push_back(ch);
             }
         if (FD_ISSET(errRead, &fdset))
             {
-            read(errRead, &ch, 1);
-            if (ch <= 0)
+            if (read(errRead, &ch, 1) <= 0 || ch <= 0)
                 errOpen = false;
             else
                 errb.push_back(ch);
