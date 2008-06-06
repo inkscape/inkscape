@@ -94,6 +94,8 @@ namespace Widget {
 StyleSwatch::StyleSwatch(SPCSSAttr *css, gchar const *main_tip)
     :
       _tool_path(NULL),
+      _desktop(0),
+      _verb_t(0),
       _css (NULL),
 
       _watched(NULL),
