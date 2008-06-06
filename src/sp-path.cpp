@@ -308,28 +308,18 @@ sp_path_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     if ( shape->curve != NULL ) {
-        NArtBpath const * abp = shape->curve->get_bpath();
-        if (abp) {
-            gchar *str = sp_svg_write_path(abp);
-            repr->setAttribute("d", str);
-            g_free(str);
-        } else {
-            repr->setAttribute("d", "");
-        }
+        gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
+        repr->setAttribute("d", str);
+        g_free(str);
     } else {
         repr->setAttribute("d", NULL);
     }
 
     SPPath *path = (SPPath *) object;
     if ( path->original_curve != NULL ) {
-        NArtBpath const * abp = path->original_curve->get_bpath();
-        if (abp) {
-            gchar *str = sp_svg_write_path(abp);
-            repr->setAttribute("inkscape:original-d", str);
-            g_free(str);
-        } else {
-            repr->setAttribute("inkscape:original-d", "");
-        }
+        gchar *str = sp_svg_write_path(path->original_curve->get_pathvector());
+        repr->setAttribute("inkscape:original-d", str);
+        g_free(str);
     } else {
         repr->setAttribute("inkscape:original-d", NULL);
     }
@@ -414,14 +404,9 @@ sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
             // could also do SP_OBJECT(shape)->updateRepr();  but only the d attribute needs updating.
             Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
             if ( shape->curve != NULL ) {
-                NArtBpath const *abp = shape->curve->get_bpath();
-                if (abp) {
-                    gchar *str = sp_svg_write_path(abp);
-                    repr->setAttribute("d", str);
-                    g_free(str);
-                } else {
-                    repr->setAttribute("d", "");
-                }
+                gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
+                repr->setAttribute("d", str);
+                g_free(str);
             } else {
                 repr->setAttribute("d", NULL);
             }
