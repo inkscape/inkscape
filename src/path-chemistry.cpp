@@ -149,7 +149,7 @@ sp_selected_path_combine(void)
         g_free(style);
 
         // set path data corresponding to new curve
-        gchar *dstring = sp_svg_write_path(SP_CURVE_BPATH(curve));
+        gchar *dstring = sp_svg_write_path(curve->get_pathvector());
         curve->unref();
         repr->setAttribute("d", dstring);
         if (path_effect)
@@ -242,7 +242,7 @@ sp_selected_path_break_apart(void)
             Inkscape::XML::Node *repr = parent->document()->createElement("svg:path");
             repr->setAttribute("style", style);
 
-            gchar *str = sp_svg_write_path(SP_CURVE_BPATH(curve));
+            gchar *str = sp_svg_write_path(curve->get_pathvector());
             repr->setAttribute("d", str);
             if (path_effect)
                 repr->setAttribute("inkscape:original-d", str);
@@ -466,7 +466,7 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
     repr->setAttribute("inkscape:transform-center-y", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-y"), false);
 
     /* Definition */
-    gchar *def_str = sp_svg_write_path(SP_CURVE_BPATH(curve));
+    gchar *def_str = sp_svg_write_path(curve->get_pathvector());
     repr->setAttribute("d", def_str);
     g_free(def_str);
     curve->unref();
@@ -505,7 +505,7 @@ sp_selected_path_reverse()
 
         SPCurve *rcurve = sp_path_get_curve_reference(path)->create_reverse();
 
-        gchar *str = sp_svg_write_path(SP_CURVE_BPATH(rcurve));
+        gchar *str = sp_svg_write_path(rcurve->get_pathvector());
         if ( sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path)) ) {
             SP_OBJECT_REPR(path)->setAttribute("inkscape:original-d", str);
         } else {
