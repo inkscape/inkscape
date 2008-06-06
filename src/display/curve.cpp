@@ -37,7 +37,7 @@
 static unsigned sp_bpath_length(NArtBpath const bpath[]);
 static bool sp_bpath_closed(NArtBpath const bpath[]);
 
-// #define NO_CHECKS   // define this to disable the warnings about unequal paths in SPCurve
+#define NO_CHECKS   // define this to disable the checking for unequal paths in SPCurve, improves performance by a lot!
 
 static void debug_out( char const * text, Geom::PathVector const & pathv) {
 #ifndef NO_CHECKS
