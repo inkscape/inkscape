@@ -37,7 +37,7 @@
 static unsigned sp_bpath_length(NArtBpath const bpath[]);
 static bool sp_bpath_closed(NArtBpath const bpath[]);
 
-#define NO_CHECKS
+// #define NO_CHECKS   // define this to disable the warnings about unequal paths in SPCurve
 
 static void debug_out( char const * text, Geom::PathVector const & pathv) {
 #ifndef NO_CHECKS
@@ -252,12 +252,14 @@ SPCurve::set_pathv(Geom::PathVector const & new_pathv)
 NArtBpath const *
 SPCurve::get_bpath() const
 {
+    debug_check("SPCurve::get_bpath", this);
     return _bpath;
 };
 
 Geom::PathVector const &
 SPCurve::get_pathvector() const
 {
+    debug_check("SPCurve::get_pathvector", this);
     return _pathv;
 }
 
@@ -464,9 +466,9 @@ SPCurve::transform(NR::Matrix const &m)
 {
     tmpl_curve_transform<NR::Matrix>(this, m);
 
-    transform(to_2geom(m));
+    _pathv = _pathv * to_2geom(m);
 
-    debug_check("SPCurve::transform", this);
+    debug_check("SPCurve::transform(NR::Matrix const &m)", this);
 }
 
 /**
@@ -475,7 +477,11 @@ SPCurve::transform(NR::Matrix const &m)
 void
 SPCurve::transform(Geom::Matrix const &m)
 {
+    tmpl_curve_transform<NR::Matrix>(this, from_2geom(m));
+
     _pathv = _pathv * m;
+
+    debug_check("SPCurve::transform(Geom::Matrix const &m)", this);
 }
 
 /**
@@ -487,9 +493,9 @@ SPCurve::transform(NR::translate const &m)
 {
     tmpl_curve_transform<NR::translate>(this, m);
 
-    transform(to_2geom(m));
+    _pathv = _pathv * to_2geom(m);
 
-    debug_check("SPCurve::transform translate", this);
+    debug_check("SPCurve::transform(NR::translate const &m)", this);
 }
 
 /**
@@ -833,6 +839,9 @@ bool
 SPCurve::is_empty() const
 {
     g_return_val_if_fail(this != NULL, TRUE);
+
+    if (!_bpath)
+        return true;
 
     bool empty = _pathv.empty(); /* || _pathv.front().empty(); */
     debug_check("SPCurve::is_empty", (_bpath->code == NR_END)  ==  empty );
