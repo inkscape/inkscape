@@ -4129,7 +4129,7 @@ bool MakeBase::executeCommand(const String &command,
         int rerr = read(errfds[0], &errch, 1);
         if (rerr>0)
             errb.push_back(errch);
-        if (rerr <=0 && rerr <=0)
+        if (rout <=0 && rerr <=0)
             break;
         }
 
