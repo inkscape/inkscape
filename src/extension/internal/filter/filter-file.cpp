@@ -29,7 +29,7 @@ namespace Filter {
 void
 Filter::filters_all_files (void)
 {
-	filters_load_dir((gchar *)INKSCAPE_FILTERDIR, _("Bundled"));
+	filters_load_dir(INKSCAPE_FILTERDIR, _("Bundled"));
 	filters_load_dir(profile_path("filters"), _("Personal"));
 
 	return;
@@ -38,7 +38,7 @@ Filter::filters_all_files (void)
 #define INKSCAPE_FILTER_FILE  ".svg"
 
 void
-Filter::filters_load_dir (gchar * dirname, gchar * menuname)
+Filter::filters_load_dir (gchar const * dirname, gchar * menuname)
 {
     if (!dirname) {
         g_warning(_("Null external module directory name.  Filters will not be loaded."));

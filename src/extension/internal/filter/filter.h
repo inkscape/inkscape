@@ -41,7 +41,7 @@ public:
 
 	/* File loader related */
 	static void filters_all_files(void);
-	static void filters_load_dir(gchar * filename, gchar * menuname);
+	static void filters_load_dir(gchar const * filename, gchar * menuname);
 	static void filters_load_file(gchar * filename, gchar * menuname);
 	static void filters_load_node(Inkscape::XML::Node * node, gchar * menuname);
 
