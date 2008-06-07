@@ -39,22 +39,25 @@ static bool sp_bpath_closed(NArtBpath const bpath[]);
 
 #define NO_CHECKS   // define this to disable the checking for unequal paths in SPCurve, improves performance by a lot!
 
-static void debug_out( char const * text, Geom::PathVector const & pathv) {
+
 #ifndef NO_CHECKS
+static void debug_out( char const * text, Geom::PathVector const & pathv) {
     char * str = sp_svg_write_path(pathv);
     g_message("%s : %s", text, str);
     g_free(str);
-#endif
 }
-static void debug_out( char const * text, NArtBpath const * bpath) {
+#endif
+
 #ifndef NO_CHECKS
+static void debug_out( char const * text, NArtBpath const * bpath) {
     char * str = sp_svg_write_path(bpath);
     g_message("%s : %s", text, str);
     g_free(str);
-#endif
 }
-void SPCurve::debug_check( char const * text, SPCurve const * curve) {
+#endif
+
 #ifndef NO_CHECKS
+void SPCurve::debug_check( char const * text, SPCurve const * curve) {
     char * pathv_str = sp_svg_write_path(curve->_pathv);
     char * bpath_str = sp_svg_write_path(curve->_bpath);
     if ( strcmp(pathv_str, bpath_str) ) {
@@ -64,13 +67,18 @@ void SPCurve::debug_check( char const * text, SPCurve const * curve) {
     }
     g_free(pathv_str);
     g_free(bpath_str);
+#else
+void SPCurve::debug_check( char const *, SPCurve const *) {
 #endif
 }
-void SPCurve::debug_check( char const * text, bool a) {
+
 #ifndef NO_CHECKS
+void SPCurve::debug_check( char const * text, bool a) {
     if ( !a ) {
         g_message("%s : bool fail", text);
     }
+#else
+void SPCurve::debug_check( char const *, bool) {
 #endif
 }
 
