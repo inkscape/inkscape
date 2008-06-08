@@ -57,6 +57,7 @@ sp_selected_path_combine(void)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    SPDocument *doc = sp_desktop_document(desktop);
     
     if (g_slist_length((GSList *) selection->itemList()) < 2) {
         sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>at least two objects</b> to combine."));
@@ -68,18 +69,17 @@ sp_selected_path_combine(void)
     desktop->setWaitingCursor();
 
     GSList *items = g_slist_copy((GSList *) selection->itemList());
-    GSList *already_paths = NULL;
     GSList *to_paths = NULL;
     for (GSList *i = items; i != NULL; i = i->next) {
         SPItem *item = (SPItem *) i->data;
-        if (SP_IS_PATH(item))
-            already_paths = g_slist_prepend(already_paths, item);
-        else
+        if (!SP_IS_PATH(item))
             to_paths = g_slist_prepend(to_paths, item);
     }
     GSList *converted = NULL;
     bool did = sp_item_list_to_curves(to_paths, &items, &converted);
-    items = g_slist_concat (items, converted);
+    g_slist_free(to_paths);
+    for (GSList *i = converted; i != NULL; i = i->next)
+        items = g_slist_prepend(items, doc->getObjectByRepr((Inkscape::XML::Node*)(i->data)));
 
     items = g_slist_sort(items, (GCompareFunc) sp_item_repr_compare_position);
     items = g_slist_reverse(items);
