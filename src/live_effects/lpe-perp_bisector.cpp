@@ -138,10 +138,12 @@ LPEPerpBisector::LPEPerpBisector(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&length_left) );
     registerParameter( dynamic_cast<Parameter *>(&length_right) );
 
+/**
     registerKnotHolderHandle(path_start_set, path_start_get);
     registerKnotHolderHandle(path_end_set, path_end_get);
     registerKnotHolderHandle(bisector_left_end_set, bisector_left_end_get);
     registerKnotHolderHandle(bisector_right_end_set, bisector_right_end_get);
+**/
 }
 
 LPEPerpBisector::~LPEPerpBisector()

@@ -102,8 +102,7 @@ public:
     virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
 
     virtual bool providesKnotholder() { return false; }
-    void addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
-    virtual void addKnotHolderHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
+    void addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
     Glib::ustring          getName();
     Inkscape::XML::Node *  getRepr();
@@ -132,10 +131,12 @@ protected:
             doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
     void registerParameter(Parameter * param);
-    void registerKnotHolderHandle(SPKnotHolderSetFunc set_func, SPKnotHolderGetFunc get_func);
+    void registerKnotHolderHandle(KnotHolderEntity* entity, const char* descr);
+    void addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
     Parameter * getNextOncanvasEditableParam();
 
     std::vector<Parameter *> param_vector;
+    std::vector<std::pair<KnotHolderEntity*, const char*> > kh_entity_vector;
     int oncanvasedit_it;
     BoolParam is_visible;
 
@@ -157,3 +158,14 @@ private:
 } //namespace Inkscape
 
 #endif
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

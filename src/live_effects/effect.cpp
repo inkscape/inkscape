@@ -321,14 +321,26 @@ Effect::registerParameter(Parameter * param)
     param_vector.push_back(param);
 }
 
-// TODO: Does it still make sense to use this? E.g., should we keep a list of knotholder entities
-//       in the effect itself and add them here in a semi-automatic manner (similarly to how it is
-//       done with parameters) instead of adding each one separately in the overloaded function
-//       addKnotHolderHandles()?
+// TODO: should we provide a way to alter the handle's appearance?
 void
-Effect::registerKnotHolderHandle(SPKnotHolderSetFunc set_func, SPKnotHolderGetFunc get_func)
+Effect::registerKnotHolderHandle(KnotHolderEntity* entity, const char* descr)
 {
-    //knotholder_func_vector.push_back(std::make_pair(set_func, get_func));
+    kh_entity_vector.push_back(std::make_pair(entity, descr));
+}
+
+/**
+ * Add all registered LPE knotholder handles to the knotholder
+ */
+void
+Effect::addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
+    std::vector<std::pair<KnotHolderEntity*, const char*> >::iterator i;
+    for (i = kh_entity_vector.begin(); i != kh_entity_vector.end(); ++i) {
+        KnotHolderEntity *entity = i->first;
+        const char *descr = i->second;
+
+        entity->create(desktop, item, knotholder, descr);
+        knotholder->add(entity);
+    }
 }
 
 void
@@ -344,14 +356,6 @@ Effect::addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem 
             g_print ("Parameter is *not* of type PointParam\n");
         }
     }
-}
-
-/**
- * Virtual method to add knotholder handles for LPE items
- */
-void
-Effect::addKnotHolderHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
-{
 }
 
 /**

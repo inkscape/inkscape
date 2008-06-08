@@ -29,7 +29,6 @@ public:
     virtual ~LPETangentToCurve();
 
     bool providesKnotholder() { return true; }
-    virtual void addKnotHolderHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> >
       doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);

@@ -27,44 +27,6 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
-LPETangentToCurve::LPETangentToCurve(LivePathEffectObject *lpeobject) :
-    Effect(lpeobject),
-    angle(_("Angle"), _("Additional angle between tangent and curve"), "angle", &wr, this, 0.0),
-    t_attach(_("Location along curve"), _("Location of the point of attachment along the curve (between 0.0 and number-of-segments)"), "t_attach", &wr, this, 0.5),
-    length_left(_("Length left"), _("Specifies the left end of the tangent"), "length-left", &wr, this, 150),
-    length_right(_("Length right"), _("Specifies the right end of the tangent"), "length-right", &wr, this, 150)
-{
-    registerParameter( dynamic_cast<Parameter *>(&angle) );
-    registerParameter( dynamic_cast<Parameter *>(&t_attach) );
-    registerParameter( dynamic_cast<Parameter *>(&length_left) );
-    registerParameter( dynamic_cast<Parameter *>(&length_right) );
-}
-
-LPETangentToCurve::~LPETangentToCurve()
-{
-}
-
-Geom::Piecewise<Geom::D2<Geom::SBasis> >
-LPETangentToCurve::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
-{
-    using namespace Geom;
-    Piecewise<D2<SBasis> > output;
-
-    ptA = pwd2_in.valueAt(t_attach);
-    derivA = unit_vector(derivative(pwd2_in).valueAt(t_attach));
-
-    // TODO: Why are positive angles measured clockwise, not counterclockwise?
-    Geom::Rotate rot(Geom::Rotate::from_degrees(-angle));
-    derivA = derivA * rot;
-
-    C = ptA - derivA * length_left;
-    D = ptA + derivA * length_right;
-
-    output = Piecewise<D2<SBasis> >(D2<SBasis>(Linear(C[X], D[X]), Linear(C[Y], D[Y])));
-
-    return output;
-}
-
 class KnotHolderEntityAttachPt : public KnotHolderEntity
 {
 public:
@@ -95,23 +57,46 @@ public:
     virtual void onKnotUngrabbed();
 };
 
-void
-LPETangentToCurve::addKnotHolderHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
+LPETangentToCurve::LPETangentToCurve(LivePathEffectObject *lpeobject) :
+    Effect(lpeobject),
+    angle(_("Angle"), _("Additional angle between tangent and curve"), "angle", &wr, this, 0.0),
+    t_attach(_("Location along curve"), _("Location of the point of attachment along the curve (between 0.0 and number-of-segments)"), "t_attach", &wr, this, 0.5),
+    length_left(_("Length left"), _("Specifies the left end of the tangent"), "length-left", &wr, this, 150),
+    length_right(_("Length right"), _("Specifies the right end of the tangent"), "length-right", &wr, this, 150)
 {
-    KnotHolderEntityLeftEnd *entity_left_end = new KnotHolderEntityLeftEnd();
-    KnotHolderEntityRightEnd *entity_right_end = new KnotHolderEntityRightEnd();
-    KnotHolderEntityAttachPt *entity_attach_pt = new KnotHolderEntityAttachPt();
+    registerParameter( dynamic_cast<Parameter *>(&angle) );
+    registerParameter( dynamic_cast<Parameter *>(&t_attach) );
+    registerParameter( dynamic_cast<Parameter *>(&length_left) );
+    registerParameter( dynamic_cast<Parameter *>(&length_right) );
 
-    entity_left_end->create(desktop, item, knotholder,
-                            _("Adjust the \"left\" end of the tangent"));
-    entity_right_end->create(desktop, item, knotholder,
-                            _("Adjust the \"right\" end of the tangent"));
-    entity_attach_pt->create(desktop, item, knotholder,
-                            _("Adjust the point of attachment of the tangent"));
+    registerKnotHolderHandle(new KnotHolderEntityAttachPt(), _("Adjust the \"left\" end of the tangent"));
+    registerKnotHolderHandle(new KnotHolderEntityLeftEnd(), _("Adjust the \"right\" end of the tangent"));
+    registerKnotHolderHandle(new KnotHolderEntityRightEnd(), _("Adjust the point of attachment of the tangent"));
+}
 
-    knotholder->add(entity_left_end);
-    knotholder->add(entity_right_end);
-    knotholder->add(entity_attach_pt);
+LPETangentToCurve::~LPETangentToCurve()
+{
+}
+
+Geom::Piecewise<Geom::D2<Geom::SBasis> >
+LPETangentToCurve::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
+{
+    using namespace Geom;
+    Piecewise<D2<SBasis> > output;
+
+    ptA = pwd2_in.valueAt(t_attach);
+    derivA = unit_vector(derivative(pwd2_in).valueAt(t_attach));
+
+    // TODO: Why are positive angles measured clockwise, not counterclockwise?
+    Geom::Rotate rot(Geom::Rotate::from_degrees(-angle));
+    derivA = derivA * rot;
+
+    C = ptA - derivA * length_left;
+    D = ptA + derivA * length_right;
+
+    output = Piecewise<D2<SBasis> >(D2<SBasis>(Linear(C[X], D[X]), Linear(C[Y], D[Y])));
+
+    return output;
 }
 
 static LPETangentToCurve *
