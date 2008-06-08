@@ -32,6 +32,7 @@ class SPNodeContext;
 class SPNodeContextClass;
 
 struct SPNodeContext {
+        // FIXME: shouldn't this be a pointer???
 	SPEventContext event_context;
 
 	guint drag : 1;
@@ -58,6 +59,7 @@ struct SPNodeContext {
  
     SPItem * flashed_item;
     Inkscape::Display::TemporaryItem * flash_tempitem;
+    SPCanvasItem * flash_permitem;
     int remove_flash_counter;
 };
 

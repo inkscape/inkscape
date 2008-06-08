@@ -22,6 +22,8 @@ public:
     LPESpiro(LivePathEffectObject *lpeobject);
     virtual ~LPESpiro();
 
+    virtual LPEPathFlashType pathFlashType() { return SUPPRESS_FLASH; }
+
     virtual void setup_nodepath(Inkscape::NodePath::Path *np);
     virtual void doEffect(SPCurve * curve);
 

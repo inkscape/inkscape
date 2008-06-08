@@ -38,6 +38,8 @@ public:
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> >
       doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
+    virtual LPEPathFlashType pathFlashType() { return PERMANENT_FLASH; }
+
     /* the knotholder entity classes must be declared friends */
     friend class TtC::KnotHolderEntityLeftEnd;
     friend class TtC::KnotHolderEntityRightEnd;

@@ -35,6 +35,7 @@
 #include "style.h"
 #include "splivarot.h"
 #include "shape-editor.h"
+#include "live_effects/effect.h"
 
 // needed for flash nodepath upon mouseover:
 #include "display/canvas-bpath.h"
@@ -115,6 +116,12 @@ sp_node_context_dispose(GObject *object)
 
     ec->enableGrDrag(false);
 
+    if (nc->flash_permitem) {
+        // hack!!! (we add a temporary canvasitem with life time 1 ms)
+        nc->flash_tempitem = nc->event_context.desktop->add_temporary_canvasitem (nc->flash_permitem, 1);
+        nc->flash_permitem = NULL;
+    }
+
     nc->sel_changed_connection.disconnect();
     nc->sel_changed_connection.~connection();
 
@@ -170,6 +177,44 @@ sp_node_context_setup(SPEventContext *ec)
     nc->shape_editor->update_statusbar();
 }
 
+static SPCanvasItem *
+sp_node_context_generate_helperpath(SPDesktop *desktop, SPPath *path) {
+    // This should be put somewhere else under the name of "generate helperpath" or something. Because basically this is copied of code from nodepath...
+    SPCurve *curve_new = sp_path_get_curve_for_edit(path);
+    SPCurve *flash_curve = curve_new->copy();
+    flash_curve->transform(sp_item_i2d_affine(SP_ITEM(path)));
+    SPCanvasItem * canvasitem = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), flash_curve);
+    // would be nice if its color could be XORed or something, now it is invisible for red stroked objects...
+    // unless we also flash the nodes...
+    guint32 color = prefs_get_int_attribute("tools.nodes", "highlight_color", 0xff0000ff);
+    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvasitem), color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+    sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(canvasitem), 0, SP_WIND_RULE_NONZERO);
+    sp_canvas_item_show(canvasitem);
+    flash_curve->unref();
+    return canvasitem;
+}
+
+static void
+sp_node_context_flash_path(SPEventContext *event_context, SPItem *item, guint timeout) {
+    SPNodeContext *nc = SP_NODE_CONTEXT(event_context);
+
+    nc->remove_flash_counter = 3; // for some reason root_handler is called twice after each item_handler...
+    if (nc->flashed_item != item) {
+        // we entered a new item
+        nc->flashed_item = item;
+        SPDesktop *desktop = event_context->desktop;
+        if (nc->flash_tempitem) {
+            desktop->remove_temporary_canvasitem(nc->flash_tempitem);
+            nc->flash_tempitem = NULL;
+        }
+
+        if (SP_IS_PATH(item)) {
+            SPCanvasItem *canvasitem = sp_node_context_generate_helperpath(desktop, SP_PATH(item));
+            nc->flash_tempitem = desktop->add_temporary_canvasitem (canvasitem, timeout);
+        }
+    }
+}
+
 /**
 \brief  Callback that processes the "changed" signal on the selection;
 destroys old and creates new nodepath and reassigns listeners to the new selected item's repr
@@ -184,6 +229,21 @@ sp_node_context_selection_changed(Inkscape::Selection *selection, gpointer data)
     SPItem *item = selection->singleItem(); 
     nc->shape_editor->set_item(item);
 
+    if (nc->flash_permitem) {
+        // hack!!! (we add a temporary canvasitem with life time 1 ms)
+        nc->flash_tempitem = nc->event_context.desktop->add_temporary_canvasitem (nc->flash_permitem, 1);
+        nc->flash_permitem = NULL;
+    }
+    if (SP_IS_LPE_ITEM(item)) {
+        Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+        if (lpe && lpe->pathFlashType() == Inkscape::LivePathEffect::PERMANENT_FLASH) {
+            if (SP_IS_PATH(item)) {
+                SPCanvasItem *canvasitem = sp_node_context_generate_helperpath(nc->event_context.desktop, SP_PATH(item));
+                nc->flash_permitem = canvasitem;
+            }
+        }
+    }
+
     nc->shape_editor->update_statusbar();
 }
 
@@ -197,41 +257,27 @@ sp_node_context_show_modifier_tip(SPEventContext *event_context, GdkEvent *event
          _("<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"));
 }
 
-
 static gint
 sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
 {
     gint ret = FALSE;
-    SPNodeContext *nc = SP_NODE_CONTEXT(event_context);
 
-    if (  prefs_get_int_attribute ("tools.nodes", "pathflash_enabled", 0) == 1  ) {
-        nc->remove_flash_counter = 3; // for some reason root_handler is called twice after each item_handler...
-        if (nc->flashed_item != item) {
-            // we entered a new item
-            nc->flashed_item = item;
-            SPDesktop *desktop = event_context->desktop;
-            if (nc->flash_tempitem) {
-                desktop->remove_temporary_canvasitem(nc->flash_tempitem);
-                nc->flash_tempitem = NULL;
-            }
-
-            if (SP_IS_PATH(item)) {
-            // This should be put somewhere else under the name of "generate helperpath" or something. Because basically this is copied of code from nodepath...
-                SPCurve *curve_new = sp_path_get_curve_for_edit(SP_PATH(item));
-                SPCurve *flash_curve = curve_new->copy();
-                flash_curve->transform(sp_item_i2d_affine(item) );
-                SPCanvasItem * canvasitem = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), flash_curve);
-            // would be nice if its color could be XORed or something, now it is invisible for red stroked objects...
-            // unless we also flash the nodes...
-                guint32 color = prefs_get_int_attribute("tools.nodes", "highlight_color", 0xff0000ff);
-                sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvasitem), color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-                sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(canvasitem), 0, SP_WIND_RULE_NONZERO);
-                sp_canvas_item_show(canvasitem);
-                flash_curve->unref();
-                guint timeout = prefs_get_int_attribute("tools.nodes", "pathflash_timeout", 500);
-                nc->flash_tempitem = desktop->add_temporary_canvasitem (canvasitem, timeout);
+    if (prefs_get_int_attribute ("tools.nodes", "pathflash_enabled", 0) == 1) {
+        guint timeout = prefs_get_int_attribute("tools.nodes", "pathflash_timeout", 500);
+        if (SP_IS_LPE_ITEM(item)) {
+            Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+            if (lpe) {
+                if (lpe->pathFlashType() == Inkscape::LivePathEffect::SUPPRESS_FLASH) {
+                    // return if flash is suppressed or if we want a permanent "flash" (this is handled
+                    // in sp_node_context_selection_changed()
+                    return ret;
+                }
+                if (lpe->pathFlashType() == Inkscape::LivePathEffect::PERMANENT_FLASH) {
+                    timeout = 0;
+                }
             }
         }
+        sp_node_context_flash_path(event_context, item, timeout);
     }
 
     if (((SPEventContextClass *) parent_class)->item_handler)

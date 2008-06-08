@@ -77,6 +77,12 @@ enum EffectType {
 extern const Util::EnumData<EffectType> LPETypeData[INVALID_LPE];
 extern const Util::EnumDataConverter<EffectType> LPETypeConverter;
 
+enum LPEPathFlashType {
+    SUPPRESS_FLASH,
+    PERMANENT_FLASH,
+    DEFAULT
+};
+
 class Effect {
 public:
     static Effect* New(EffectType lpenr, LivePathEffectObject *lpeobj);
@@ -102,6 +108,7 @@ public:
     virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
 
     bool providesKnotholder() { return (kh_entity_vector.size() > 0); }
+    virtual LPEPathFlashType pathFlashType() { return DEFAULT; }
     void addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
     Glib::ustring          getName();
