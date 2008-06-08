@@ -8,6 +8,7 @@
 #include <glibmm/ustring.h>
 
 #include "xml/repr.h"
+#include "xml/simple-document.h"
 #include "xml/simple-node.h"
 #include "style.h"
 #include "libcroco/cr-sel-eng.h"
@@ -21,20 +22,28 @@ using Inkscape::XML::Document;
 
 struct SPCSSAttrImpl : public SimpleNode, public SPCSSAttr {
 public:
-    SPCSSAttrImpl() : SimpleNode(g_quark_from_static_string("css")) {}
+    SPCSSAttrImpl(Document *doc)
+    : SimpleNode(g_quark_from_static_string("css"), doc) {}
+    SPCSSAttrImpl(SPCSSAttrImpl const &other, Document *doc)
+    : SimpleNode(other, doc) {}
 
     NodeType type() const { return Inkscape::XML::ELEMENT_NODE; }
 
 protected:
-    SimpleNode *_duplicate(Document* /*doc*/) const { return new SPCSSAttrImpl(*this); }
+    SimpleNode *_duplicate(Document* doc) const { return new SPCSSAttrImpl(*this, doc); }
 };
 
 static void sp_repr_css_add_components(SPCSSAttr *css, Node *repr, gchar const *attr);
 
+
 SPCSSAttr *
 sp_repr_css_attr_new()
 {
-    return new SPCSSAttrImpl();
+    static Inkscape::XML::Document *attr_doc=NULL;
+    if (!attr_doc) {
+        attr_doc = new Inkscape::XML::SimpleDocument();
+    }
+    return new SPCSSAttrImpl(attr_doc);
 }
 
 void

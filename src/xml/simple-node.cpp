@@ -160,33 +160,32 @@ using Util::cons;
 using Util::rest;
 using Util::set_rest;
 
-SimpleNode::SimpleNode(int code)
+SimpleNode::SimpleNode(int code, Document *document)
 : Node(), _name(code), _attributes(), _child_count(0),
   _cached_positions_valid(false)
 {
-    this->_document = NULL;
-    this->_document = NULL;
+    this->_document = document;
     this->_parent = this->_next = NULL;
     this->_first_child = this->_last_child = NULL;
 
     _observers.add(_subtree_observers);
 }
 
-SimpleNode::SimpleNode(SimpleNode const &node)
+SimpleNode::SimpleNode(SimpleNode const &node, Document *document)
 : Node(),
   _cached_position(node._cached_position),
   _name(node._name), _attributes(), _content(node._content),
   _child_count(node._child_count),
   _cached_positions_valid(node._cached_positions_valid)
 {
-    _document = NULL;
+    _document = document;
     _parent = _next = NULL;
     _first_child = _last_child = NULL;
 
     for ( Node *child = node._first_child ;
           child != NULL ; child = child->next() )
     {
-        Node *child_copy=child->duplicate(NULL); // FIXME
+        Node *child_copy=child->duplicate(document);
 
         child_copy->_setParent(this);
         if (_last_child) {

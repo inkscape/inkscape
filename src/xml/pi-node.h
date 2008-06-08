@@ -23,16 +23,18 @@ namespace Inkscape {
 namespace XML {
 
 struct PINode : public SimpleNode {
-    explicit PINode(GQuark target, Util::ptr_shared<char> content)
-    : SimpleNode(target)
+    PINode(GQuark target, Util::ptr_shared<char> content, Document *doc)
+    : SimpleNode(target, doc)
     {
         setContent(content);
     }
+    PINode(PINode const &other, Document *doc)
+    : SimpleNode(other, doc) {}
 
     Inkscape::XML::NodeType type() const { return Inkscape::XML::PI_NODE; }
 
 protected:
-    SimpleNode *_duplicate(Document* /*doc*/) const { return new PINode(*this); }
+    SimpleNode *_duplicate(Document* doc) const { return new PINode(*this, doc); }
 };
 
 }

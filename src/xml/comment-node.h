@@ -23,16 +23,19 @@ namespace Inkscape {
 namespace XML {
 
 struct CommentNode : public SimpleNode {
-    explicit CommentNode(Util::ptr_shared<char> content)
-    : SimpleNode(g_quark_from_static_string("comment"))
+    CommentNode(Util::ptr_shared<char> content, Document *doc)
+    : SimpleNode(g_quark_from_static_string("comment"), doc)
     {
         setContent(content);
     }
 
+    CommentNode(CommentNode const &other, Document *doc)
+    : SimpleNode(other, doc) {}
+
     Inkscape::XML::NodeType type() const { return Inkscape::XML::COMMENT_NODE; }
 
 protected:
-    SimpleNode *_duplicate(Document* /*doc*/) const { return new CommentNode(*this); }
+    SimpleNode *_duplicate(Document* doc) const { return new CommentNode(*this, doc); }
 };
 
 }

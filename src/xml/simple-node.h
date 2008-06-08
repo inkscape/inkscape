@@ -113,8 +113,8 @@ public:
     }
 
 protected:
-    SimpleNode(int code);
-    SimpleNode(SimpleNode const &repr);
+    SimpleNode(int code, Document *document);
+    SimpleNode(SimpleNode const &repr, Document *document);
 
     virtual SimpleNode *_duplicate(Document *doc) const=0;
 

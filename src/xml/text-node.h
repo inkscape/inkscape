@@ -23,16 +23,18 @@ namespace Inkscape {
 namespace XML {
 
 struct TextNode : public SimpleNode {
-    TextNode(Util::ptr_shared<char> content)
-    : SimpleNode(g_quark_from_static_string("string"))
+    TextNode(Util::ptr_shared<char> content, Document *doc)
+    : SimpleNode(g_quark_from_static_string("string"), doc)
     {
         setContent(content);
     }
+    TextNode(TextNode const &other, Document *doc)
+    : SimpleNode(other, doc) {}
 
     Inkscape::XML::NodeType type() const { return Inkscape::XML::TEXT_NODE; }
 
 protected:
-    SimpleNode *_duplicate(Document* /*doc*/) const { return new TextNode(*this); }
+    SimpleNode *_duplicate(Document* doc) const { return new TextNode(*this, doc); }
 };
 
 }

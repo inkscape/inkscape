@@ -104,7 +104,7 @@ InkboardDocument::changeNew(Glib::ustring parentid, Glib::ustring id,
     if(name == "text")
     { 
         XML::Node *parent = this->tracker->get(parentid);
-        XML::Node *node = new XML::TextNode(Util::share_string(data->getValue().c_str()));
+        XML::Node *node = new XML::TextNode(Util::share_string(data->getValue().c_str()), this);
 
         if(parent && node)
         {
@@ -113,7 +113,7 @@ InkboardDocument::changeNew(Glib::ustring parentid, Glib::ustring id,
         }
     }else
     {
-        XML::Node *node = new XML::ElementNode(g_quark_from_string(name.c_str()));
+        XML::Node *node = new XML::ElementNode(g_quark_from_string(name.c_str()), this);
         this->tracker->put(id,node);
 
         XML::Node *parent = (parentid != "ROOT") 

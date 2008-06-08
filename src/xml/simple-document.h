@@ -30,7 +30,8 @@ class SimpleDocument : public SimpleNode,
 {
 public:
     explicit SimpleDocument()
-    : SimpleNode(g_quark_from_static_string("xml")), _in_transaction(false)
+    : SimpleNode(g_quark_from_static_string("xml"), NULL),
+      _in_transaction(false)
     {
         _initBindings();
     }

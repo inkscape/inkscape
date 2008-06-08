@@ -44,7 +44,7 @@ namespace Whiteboard {
 
 InkboardDocument::InkboardDocument(int code, State::SessionType sessionType,
                                    Glib::ustring const& to)
-: XML::SimpleNode(code), sessionType(sessionType), recipient(to),
+: XML::SimpleNode(code, NULL), sessionType(sessionType), recipient(to),
   _in_transaction(false)
 {
     _initBindings();
@@ -348,25 +348,25 @@ InkboardDocument::commitUndoable()
 XML::Node*
 InkboardDocument::createElement(char const* name)
 {
-    return new XML::ElementNode(g_quark_from_string(name));
+    return new XML::ElementNode(g_quark_from_string(name), this);
 }
 
 XML::Node*
 InkboardDocument::createTextNode(char const* content)
 {
-    return new XML::TextNode(Util::share_string(content));
+    return new XML::TextNode(Util::share_string(content), this);
 }
 
 XML::Node*
 InkboardDocument::createComment(char const* content)
 {
-    return new XML::CommentNode(Util::share_string(content));
+    return new XML::CommentNode(Util::share_string(content), this);
 }
 
 XML::Node*
 InkboardDocument::createPI(char const *target, char const* content)
 {
-    return new XML::PINode(g_quark_from_string(target), Util::share_string(content));
+    return new XML::PINode(g_quark_from_string(target), Util::share_string(content), this);
 }
 
 

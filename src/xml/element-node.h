@@ -23,13 +23,15 @@ namespace XML {
 
 class ElementNode : public SimpleNode {
 public:
-    explicit ElementNode(int code)
-    : SimpleNode(code) {}
+    ElementNode(int code, Document *doc)
+    : SimpleNode(code, doc) {}
+    ElementNode(ElementNode const &other, Document *doc)
+    : SimpleNode(other, doc) {}
 
     Inkscape::XML::NodeType type() const { return Inkscape::XML::ELEMENT_NODE; }
 
 protected:
-    SimpleNode *_duplicate(Document* /*doc*/) const { return new ElementNode(*this); }
+    SimpleNode *_duplicate(Document* doc) const { return new ElementNode(*this, doc); }
 };
 
 }
