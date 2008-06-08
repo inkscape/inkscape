@@ -362,11 +362,13 @@ static gchar const * ui_descr =
         "  </toolbar>"
 
         "  <toolbar name='PenToolbar'>"
-        "    <toolitem action='SpiroSplineModeActionPen' />"
+        "    <toolitem action='FreehandModeActionPenTemp' />"
+        "    <toolitem action='FreehandModeActionPen' />"
         "  </toolbar>"
 
         "  <toolbar name='PencilToolbar'>"
-        "    <toolitem action='SpiroSplineModeActionPencil' />"
+        "    <toolitem action='FreehandModeActionPencilTemp' />"
+        "    <toolitem action='FreehandModeActionPencil' />"
         "  </toolbar>"
 
         "  <toolbar name='CalligraphyToolbar'>"
@@ -3082,35 +3084,80 @@ static void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
 //##     Pen/Pencil    ##
 //########################
 
-static void sp_pc_spiro_spline_mode_changed(GtkToggleAction *act, GObject* /*tbl*/)
+static void sp_pc_spiro_spline_mode_changed(EgeSelectOneAction* act, GObject* /*tbl*/)
 {
-    prefs_set_int_attribute("tools.freehand", "spiro-spline-mode", gtk_toggle_action_get_active(act) ? 1 : 0);
+    prefs_set_int_attribute("tools.freehand", "spiro-spline-mode", ege_select_one_action_get_active(act));
 }
 
-static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, const char* action_name)
+static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, bool tool_is_pencil)
 {
-    /* Spiro Spline Mode toggle button */
+    // FIXME: No action is needed, we only want a simple label. But sp_toolbox_add_label() always
+    //        adds the label at the end of the toolbar, whence this workarund. How to avoid this?
     {
-        InkToggleAction* act = ink_toggle_action_new(action_name,
-                                                     _("Spiro Spline Mode"),
-                                                     _("Automatically apply the 'Spiro Spline' live path effect to newly drawn paths"),
-                                                     "spiro_splines_mode",
-                                                     Inkscape::ICON_SIZE_DECORATION );
-        gtk_action_group_add_action(mainActions, GTK_ACTION(act));
-        g_signal_connect_after(G_OBJECT(act), "toggled", G_CALLBACK(sp_pc_spiro_spline_mode_changed), holder);
-        gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), prefs_get_int_attribute("tools.freehand", "spiro-spline-mode", 0));
-        g_object_set_data( holder, "spiro_spline_mode", act );
+        EgeOutputAction* act = ege_output_action_new(
+            tool_is_pencil ?
+            "FreehandModeActionPencilTemp" :
+            "FreehandModeActionPenTemp",
+            _("<b>Mode:</b>"), "", 0 );
+        ege_output_action_set_use_markup( act, TRUE );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_object_set_data( holder, "freehand_mode_action", act );
+    }
+
+    /* Freehand mode toggle buttons */
+    {
+        EgeAdjustmentAction* eact = 0;
+        //gchar const *flatsidedstr = prefs_get_string_attribute( "tools.shapes.star", "isflatsided" );
+        //bool isSpiroMode = flatsidedstr ? (strcmp(flatsidedstr, "false") != 0) : true;
+        guint spiroMode = prefs_get_int_attribute("tools.freehand", "spiro-spline-mode", 0);
+        Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
+
+        {
+            GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
+
+            GtkTreeIter iter;
+            gtk_list_store_append( model, &iter );
+            gtk_list_store_set( model, &iter,
+                                0, _("Bézier"),
+                                1, _("Regular Bézier mode"),
+                                2, "bezier_mode",
+                                -1 );
+
+            gtk_list_store_append( model, &iter );
+            gtk_list_store_set( model, &iter,
+                                0, _("Spiro"),
+                                1, _("Spiro splines mode"),
+                                2, "spiro_splines_mode",
+                                -1 );
+
+            EgeSelectOneAction* act = ege_select_one_action_new(tool_is_pencil ?
+                                                                "FreehandModeActionPencil" :
+                                                                "FreehandModeActionPen",
+                                                                (""), (""), NULL, GTK_TREE_MODEL(model) );
+            gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+            g_object_set_data( holder, "freehande_mode_action", act );
+
+            ege_select_one_action_set_appearance( act, "full" );
+            ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
+            g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
+            ege_select_one_action_set_icon_column( act, 2 );
+            ege_select_one_action_set_icon_size( act, secondarySize );
+            ege_select_one_action_set_tooltip_column( act, 1  );
+
+            ege_select_one_action_set_active( act, spiroMode);
+            g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_pc_spiro_spline_mode_changed), holder);
+        }
     }
 }
 
 static void sp_pen_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* mainActions, GObject* holder)
 {
-    sp_add_spiro_toggle(mainActions, holder, "SpiroSplineModeActionPen");
+    sp_add_spiro_toggle(mainActions, holder, false);
 }
 
 static void sp_pencil_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* mainActions, GObject* holder)
 {
-    sp_add_spiro_toggle(mainActions, holder, "SpiroSplineModeActionPencil");
+    sp_add_spiro_toggle(mainActions, holder, true);
 }
 
 //########################
