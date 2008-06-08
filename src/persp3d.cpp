@@ -230,7 +230,6 @@ persp3d_create_xml_element (SPDocument *document, Persp3D *dup) {// if dup is gi
         str = proj_origin.coord_string();
         repr->setAttribute("inkscape:persp3d-origin", str);
         g_free (str);
-        Inkscape::GC::release(repr);
     }
 
     /* Append the new persp3d to defs */
