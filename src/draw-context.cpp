@@ -313,14 +313,11 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
             SPCurve *c;
             c = (SPCurve*)l->data;
             g_return_if_fail( c->get_length() > 1 );
-            if ( SP_CURVE_BPATH(c)->code == NR_MOVETO_OPEN ) {
-                NArtBpath const *s, *e;
+            if ( !c->is_closed() ) {
                 SPDrawAnchor *a;
-                s = c->first_bpath();
-                e = c->last_bpath();
-                a = sp_draw_anchor_new(dc, c, TRUE, NR::Point(s->x3, s->y3));
+                a = sp_draw_anchor_new(dc, c, TRUE, c->first_point());
                 dc->white_anchors = g_slist_prepend(dc->white_anchors, a);
-                a = sp_draw_anchor_new(dc, c, FALSE, NR::Point(e->x3, e->y3));
+                a = sp_draw_anchor_new(dc, c, FALSE, c->last_point());
                 dc->white_anchors = g_slist_prepend(dc->white_anchors, a);
             }
         }
