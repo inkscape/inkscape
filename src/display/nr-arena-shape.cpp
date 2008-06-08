@@ -24,6 +24,7 @@
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-blit.h>
+#include <libnr/nr-convert2geom.h>
 #include <livarot/Path.h>
 #include <livarot/float-line.h>
 #include <livarot/int-line.h>
@@ -748,7 +749,7 @@ cairo_arena_shape_render_outline(cairo_t *ct, NRArenaItem *item, NR::Maybe<NR::R
     cairo_set_tolerance(ct, 1.25); // low quality, but good enough for outline mode
     cairo_new_path(ct);
 
-    feed_curve_to_cairo (ct, SP_CURVE_BPATH(shape->curve), NR::Matrix(shape->ctm), area, true, 0);
+    feed_pathvector_to_cairo (ct, shape->curve->get_pathvector(), to_2geom(shape->ctm), area, true, 0);
 
     cairo_stroke(ct);
 
@@ -829,7 +830,7 @@ cairo_arena_shape_render_stroke(NRArenaItem *item, NRRectL *area, NRPixBlock *pb
     cairo_set_tolerance(ct, 0.1);
     cairo_new_path(ct);
 
-    feed_curve_to_cairo (ct, SP_CURVE_BPATH(shape->curve), NR::Matrix(shape->ctm), area->upgrade(), true, style_width);
+    feed_pathvector_to_cairo (ct, shape->curve->get_pathvector(), to_2geom(shape->ctm), area->upgrade(), true, style_width);
 
     cairo_stroke(ct);
 
@@ -1004,7 +1005,7 @@ cairo_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 
         cairo_new_path(ct);
 
-        feed_curve_to_cairo (ct, SP_CURVE_BPATH(shape->curve), NR::Matrix(shape->ctm), (area)->upgrade(), false, 0);
+        feed_pathvector_to_cairo (ct, shape->curve->get_pathvector(), to_2geom(shape->ctm), (area)->upgrade(), false, 0);
 
         cairo_fill(ct);
 
