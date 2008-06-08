@@ -1,7 +1,7 @@
 #define __CURVE_C__
 
 /** \file
- * Routines for SPCurve and for NArtBpath arrays in general.
+ * Routines for SPCurve and for NArtBpath arrays / Geom::PathVector in general.
  */
 
 /*
@@ -895,6 +895,21 @@ SPCurve::last_bpath() const
 }
 
 /**
+ * Return last path in PathVector or NULL.
+ */
+Geom::Path const *
+SPCurve::last_path() const
+{
+    g_return_val_if_fail(this != NULL, NULL);
+
+    if (is_empty()) {
+        return NULL;
+    }
+
+    return &_pathv.back();
+}
+
+/**
  * Return first subpath or NULL.
  */
 NArtBpath const *
@@ -907,6 +922,21 @@ SPCurve::first_bpath() const
     }
 
     return _bpath;
+}
+
+/**
+ * Return first path in PathVector or NULL.
+ */
+Geom::Path const *
+SPCurve::first_path() const
+{
+    g_return_val_if_fail(this != NULL, NULL);
+
+    if (is_empty()) {
+        return NULL;
+    }
+
+    return &_pathv.front();
 }
 
 /**
@@ -1080,9 +1110,9 @@ SPCurve::append(SPCurve const *curve2,
             case NR_MOVETO_OPEN:
                 if (use_lineto && _hascpt) {
                     lineto(bp->x3, bp->y3);
-                    use_lineto = FALSE;
+                    use_lineto = false;
                 } else {
-                    if (closed) closepath();
+                    if (closed && _hascpt) closepath();
                     moveto(bp->x3, bp->y3);
                 }
                 closed = false;
@@ -1093,7 +1123,7 @@ SPCurve::append(SPCurve const *curve2,
                     lineto(bp->x3, bp->y3);
                     use_lineto = FALSE;
                 } else {
-                    if (closed) closepath();
+                    if (closed && _hascpt) closepath();
                     moveto(bp->x3, bp->y3);
                 }
                 closed = true;
