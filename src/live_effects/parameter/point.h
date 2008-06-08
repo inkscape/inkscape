@@ -16,14 +16,14 @@
 
 #include "live_effects/parameter/parameter.h"
 
-#include "knot-enums.h"
+#include "knot-holder-entity.h"
 
 namespace Inkscape {
 
 namespace LivePathEffect {
 
 
-class PointParam : public Geom::Point, public Parameter {
+class PointParam : public Geom::Point, public Parameter, public KnotHolderEntity {
 public:
     PointParam( const Glib::ustring& label,
                 const Glib::ustring& tip,
@@ -50,6 +50,13 @@ public:
     virtual void param_transform_multiply(Geom::Matrix const& /*postmul*/, bool /*set*/);
 
     void set_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint32 color);
+
+    /* these are overloaded from KnotHolderEntity */
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_click(guint state);
+
+    virtual bool isLPEParam() { return true; }
 
 private:
     PointParam(const PointParam&);

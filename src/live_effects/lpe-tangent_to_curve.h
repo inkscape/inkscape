@@ -28,24 +28,23 @@ public:
     LPETangentToCurve(LivePathEffectObject *lpeobject);
     virtual ~LPETangentToCurve();
 
+    bool providesKnotholder() { return true; }
+    virtual void addKnotHolderHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
+
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> >
       doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
-    /* the knotholder functions must be declared friends */
-    friend NR::Point attach_pt_get(SPItem *item);
-    friend NR::Point left_end_get(SPItem *item);
-    friend NR::Point right_end_get(SPItem *item);
-    friend void attach_pt_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state);
-    friend void left_end_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state);
-    friend void right_end_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state);
+    /* the knotholder entity classes must be declared friends */
+    friend class KnotHolderEntityLeftEnd;
+    friend class KnotHolderEntityRightEnd;
+    friend class KnotHolderEntityAttachPt;
 
 private:
-    ScalarParam t_attach;
+    ScalarParam angle;
 
+    ScalarParam t_attach;
     ScalarParam length_left;
     ScalarParam length_right;
-
-    ScalarParam angle;
 
     Geom::Point ptA; // point of attachment to the curve
     Geom::Point derivA;

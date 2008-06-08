@@ -101,8 +101,9 @@ public:
 
     virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
 
-    bool providesKnotholder() { return knotholder_func_vector.size() > 0; }
-    void addHandles(KnotHolder *knotholder);
+    virtual bool providesKnotholder() { return false; }
+    void addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
+    virtual void addKnotHolderHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
     Glib::ustring          getName();
     Inkscape::XML::Node *  getRepr();
@@ -135,7 +136,6 @@ protected:
     Parameter * getNextOncanvasEditableParam();
 
     std::vector<Parameter *> param_vector;
-    std::vector<std::pair<SPKnotHolderSetFunc, SPKnotHolderGetFunc> > knotholder_func_vector;
     int oncanvasedit_it;
     BoolParam is_visible;
 

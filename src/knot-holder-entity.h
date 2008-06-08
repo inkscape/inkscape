@@ -43,11 +43,17 @@ public:
                         SPKnotModeType mode = SP_KNOT_MODE_XOR,
                         guint32 color = 0xffffff00);
 
+    /* derived classes like PointParam for LPEs use this, e.g., to indicate that we must not call
+       delete on their pointer when a knotholder is destroyed */
+    virtual bool isLPEParam() { return false; }
+
     /* the get/set/click handlers are virtual functions; each handler class for a knot
        should be derived from KnotHolderEntity and override these functions */
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state) = 0;
     virtual NR::Point knot_get() = 0;
     virtual void knot_click(guint /*state*/) {}
+    virtual void onKnotUngrabbed() {} // this is called 'manually' from KnotHolder; would it be
+                                      // more efficient to establish another signal connection?
 
     void update_knot();
 

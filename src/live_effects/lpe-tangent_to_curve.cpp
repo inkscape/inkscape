@@ -27,107 +27,17 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
-/* FIXME: We should make these member functions of LPETangentToCurve.
-          Is there an easy way to register member functions with knotholder?
-    KNOWN BUG: Because of the above, this effect does not work well when in an LPE stack
-*/
-NR::Point attach_pt_get(SPItem *item) {
-    Inkscape::LivePathEffect::LPETangentToCurve *lpe =
-        dynamic_cast<Inkscape::LivePathEffect::LPETangentToCurve *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
-
-    if (lpe)
-        return lpe->ptA;
-    else
-        return NR::Point(0,0);
-}
-
-void attach_pt_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state) {
-    Inkscape::LivePathEffect::LPETangentToCurve *lpe =
-        dynamic_cast<Inkscape::LivePathEffect::LPETangentToCurve *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
-
-    if (!lpe)
-        return;
-
-    using namespace Geom;
-
-    // FIXME: There must be a better way of converting the path's SPCurve* to pwd2.
-    SPCurve *curve = sp_path_get_curve_for_edit (SP_PATH(item));
-    const NArtBpath *bpath = curve->get_bpath();
-    Piecewise<D2<SBasis> > pwd2;
-    std::vector<Geom::Path> pathv = BPath_to_2GeomPath(bpath);
-    for (unsigned int i=0; i < pathv.size(); i++) {
-        pwd2.concat(pathv[i].toPwSb());
-    }
-
-    double t0 = nearest_point(p.to_2geom(), pwd2);
-    lpe->t_attach.param_set_value(t0);
-
-    // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
-    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true, true);
-}
-
-NR::Point left_end_get(SPItem *item) {
-    Inkscape::LivePathEffect::LPETangentToCurve *lpe =
-        dynamic_cast<Inkscape::LivePathEffect::LPETangentToCurve *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
-
-    if (lpe)
-        return lpe->C;
-    else
-        return NR::Point(0,0);
-}
-
-NR::Point right_end_get(SPItem *item) {
-    Inkscape::LivePathEffect::LPETangentToCurve *lpe =
-        dynamic_cast<Inkscape::LivePathEffect::LPETangentToCurve *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
-
-    if (lpe)
-        return lpe->D;
-    else
-        return NR::Point(0,0);
-}
-
-void left_end_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state) {
-    Inkscape::LivePathEffect::LPETangentToCurve *lpe =
-        dynamic_cast<Inkscape::LivePathEffect::LPETangentToCurve *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
-
-    if (!lpe)
-        return;
-
-    double lambda = Geom::nearest_point(p.to_2geom(), lpe->ptA, lpe->derivA);
-    lpe->length_left.param_set_value(-lambda);
-
-    // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
-    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true, true);
-}
-
-void right_end_set(SPItem *item, NR::Point const &p, NR::Point const &origin, guint state) {
-    Inkscape::LivePathEffect::LPETangentToCurve *lpe =
-        dynamic_cast<Inkscape::LivePathEffect::LPETangentToCurve *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
-
-    if (!lpe)
-        return;
-
-    double lambda = Geom::nearest_point(p.to_2geom(), lpe->ptA, lpe->derivA);
-    lpe->length_right.param_set_value(lambda);
-
-    // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
-    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true, true);
-}
-
 LPETangentToCurve::LPETangentToCurve(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
+    angle(_("Angle"), _("Additional angle between tangent and curve"), "angle", &wr, this, 0.0),
     t_attach(_("Location along curve"), _("Location of the point of attachment along the curve (between 0.0 and number-of-segments)"), "t_attach", &wr, this, 0.5),
     length_left(_("Length left"), _("Specifies the left end of the tangent"), "length-left", &wr, this, 150),
-    length_right(_("Length right"), _("Specifies the right end of the tangent"), "length-right", &wr, this, 150),
-    angle(_("Angle"), _("Additional angle between tangent and curve"), "angle", &wr, this, 0.0)
+    length_right(_("Length right"), _("Specifies the right end of the tangent"), "length-right", &wr, this, 150)
 {
+    registerParameter( dynamic_cast<Parameter *>(&angle) );
     registerParameter( dynamic_cast<Parameter *>(&t_attach) );
     registerParameter( dynamic_cast<Parameter *>(&length_left) );
     registerParameter( dynamic_cast<Parameter *>(&length_right) );
-    registerParameter( dynamic_cast<Parameter *>(&angle) );
-    registerKnotHolderHandle(attach_pt_set, attach_pt_get);
-    registerKnotHolderHandle(left_end_set, left_end_get);
-    registerKnotHolderHandle(right_end_set, right_end_get);
 }
 
 LPETangentToCurve::~LPETangentToCurve()
@@ -154,6 +64,157 @@ LPETangentToCurve::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const
 
     return output;
 }
+
+class KnotHolderEntityAttachPt : public KnotHolderEntity
+{
+public:
+    virtual bool isLPEParam() { return true; }
+
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void onKnotUngrabbed();
+};
+
+class KnotHolderEntityLeftEnd : public KnotHolderEntity
+{
+public:
+    virtual bool isLPEParam() { return true; }
+
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void onKnotUngrabbed();
+};
+
+class KnotHolderEntityRightEnd : public KnotHolderEntity
+{
+public:
+    virtual bool isLPEParam() { return true; }
+
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void onKnotUngrabbed();
+};
+
+void
+LPETangentToCurve::addKnotHolderHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
+{
+    KnotHolderEntityLeftEnd *entity_left_end = new KnotHolderEntityLeftEnd();
+    KnotHolderEntityRightEnd *entity_right_end = new KnotHolderEntityRightEnd();
+    KnotHolderEntityAttachPt *entity_attach_pt = new KnotHolderEntityAttachPt();
+
+    entity_left_end->create(desktop, item, knotholder,
+                            _("Adjust the \"left\" end of the tangent"));
+    entity_right_end->create(desktop, item, knotholder,
+                            _("Adjust the \"right\" end of the tangent"));
+    entity_attach_pt->create(desktop, item, knotholder,
+                            _("Adjust the point of attachment of the tangent"));
+
+    knotholder->add(entity_left_end);
+    knotholder->add(entity_right_end);
+    knotholder->add(entity_attach_pt);
+}
+
+static LPETangentToCurve *
+get_effect(SPItem *item)
+{
+    Effect *effect = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+    if (effect->effectType() != TANGENT_TO_CURVE) {
+        g_print ("Warning: Effect is not of type LPETangentToCurve!\n");
+        return NULL;
+    }
+    return static_cast<LPETangentToCurve *>(effect);
+}
+
+void
+KnotHolderEntityAttachPt::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
+{
+     using namespace Geom;
+ 
+     LPETangentToCurve* lpe = get_effect(item);
+
+    // FIXME: There must be a better way of converting the path's SPCurve* to pwd2.
+    SPCurve *curve = sp_path_get_curve_for_edit (SP_PATH(item));
+    const NArtBpath *bpath = curve->get_bpath();
+    Piecewise<D2<SBasis> > pwd2;
+    std::vector<Geom::Path> pathv = BPath_to_2GeomPath(bpath);
+    for (unsigned int i=0; i < pathv.size(); i++) {
+        pwd2.concat(pathv[i].toPwSb());
+    }
+
+    double t0 = nearest_point(p.to_2geom(), pwd2);
+    lpe->t_attach.param_set_value(t0);
+
+    // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
+    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true, true);
+}
+
+void
+KnotHolderEntityLeftEnd::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
+{
+    LPETangentToCurve *lpe = get_effect(item);
+    
+    double lambda = Geom::nearest_point(p.to_2geom(), lpe->ptA, lpe->derivA);
+    lpe->length_left.param_set_value(-lambda);
+
+    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);    
+}
+
+void
+KnotHolderEntityRightEnd::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
+{
+    LPETangentToCurve *lpe = get_effect(item);
+    
+    double lambda = Geom::nearest_point(p.to_2geom(), lpe->ptA, lpe->derivA);
+    lpe->length_right.param_set_value(lambda);
+
+    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);    
+}
+
+NR::Point
+KnotHolderEntityAttachPt::knot_get()
+{
+    LPETangentToCurve* lpe = get_effect(item);
+    return lpe->ptA;
+}
+
+NR::Point
+KnotHolderEntityLeftEnd::knot_get()
+{
+    LPETangentToCurve *lpe = get_effect(item);
+    return lpe->C;
+}
+
+NR::Point
+KnotHolderEntityRightEnd::knot_get()
+{
+    LPETangentToCurve *lpe = get_effect(item);
+    return lpe->D;
+}
+
+void
+KnotHolderEntityAttachPt::onKnotUngrabbed()
+{
+    LPETangentToCurve *lpe = get_effect(item);
+    lpe->t_attach.write_to_SVG();
+}
+
+void
+KnotHolderEntityLeftEnd::onKnotUngrabbed()
+{
+    LPETangentToCurve *lpe = get_effect(item);
+    lpe->length_left.write_to_SVG();
+}
+
+void
+KnotHolderEntityRightEnd::onKnotUngrabbed()
+{
+    LPETangentToCurve *lpe = get_effect(item);
+    lpe->length_right.write_to_SVG();
+}
+ 
+ 
+
+
 
 } //namespace LivePathEffect
 } /* namespace Inkscape */

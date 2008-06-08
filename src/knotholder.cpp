@@ -58,7 +58,16 @@ KnotHolder::KnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFun
 KnotHolder::~KnotHolder() {
     g_object_unref(G_OBJECT(item));
     for(std::list<KnotHolderEntity *>::iterator i = entity.begin(); i != entity.end(); ++i) {
-        delete *i;
+        KnotHolderEntity* e = (*i);
+        if (!e->isLPEParam()) {
+            // knotholder entity may be deleted
+            delete (*i);
+        } else {
+            // we must not delete the entity since it's an LPE parameter,
+            // but the handle should be destroyed
+            g_object_unref(e->knot);
+        }
+        (*i) = NULL;
     }
     entity.clear(); // this shouldn't be necessary, though
 }
@@ -145,13 +154,23 @@ KnotHolder::knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state)
 }
 
 void
-KnotHolder::knot_ungrabbed_handler()
+KnotHolder::knot_ungrabbed_handler(SPKnot *knot)
 {
     if (this->released) {
         this->released(this->item);
     } else {
         SPObject *object = (SPObject *) this->item;
         object->updateRepr(object->repr, SP_OBJECT_WRITE_EXT);
+
+        /* do cleanup tasks (e.g., for LPE items write the parameter values
+         * that were changed by dragging the handle to SVG)
+         */
+        for(std::list<KnotHolderEntity *>::iterator i = this->entity.begin(); i != this->entity.end(); ++i) {
+            KnotHolderEntity *e = *i;
+            if (e->knot == knot) {
+                e->onKnotUngrabbed(); // for most KnotHolderEntitys this does nothing
+            }
+        }
 
         unsigned int object_verb = SP_VERB_NONE;
 
@@ -175,6 +194,12 @@ KnotHolder::knot_ungrabbed_handler()
         sp_document_done(SP_OBJECT_DOCUMENT (object), object_verb,
                          _("Move handle"));
     }
+}
+
+void
+KnotHolder::add(KnotHolderEntity *e)
+{
+    entity.push_back(e);
 }
 
 void

@@ -335,7 +335,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                         g_signal_emit(knot,
                                       knot_signals[UNGRABBED], 0,
                                       event->button.state);
-                        knot->_ungrabbed_signal.emit();
+                        knot->_ungrabbed_signal.emit(knot);
                     } else {
                         g_signal_emit(knot,
                                       knot_signals[CLICKED], 0,

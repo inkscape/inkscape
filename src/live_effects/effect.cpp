@@ -321,19 +321,37 @@ Effect::registerParameter(Parameter * param)
     param_vector.push_back(param);
 }
 
+// TODO: Does it still make sense to use this? E.g., should we keep a list of knotholder entities
+//       in the effect itself and add them here in a semi-automatic manner (similarly to how it is
+//       done with parameters) instead of adding each one separately in the overloaded function
+//       addKnotHolderHandles()?
 void
 Effect::registerKnotHolderHandle(SPKnotHolderSetFunc set_func, SPKnotHolderGetFunc get_func)
 {
-    knotholder_func_vector.push_back(std::make_pair(set_func, get_func));
+    //knotholder_func_vector.push_back(std::make_pair(set_func, get_func));
 }
 
-// TODO: allow for adding click_functions and description strings, too
 void
-Effect::addHandles(KnotHolder *knotholder) {
-    std::vector<std::pair<SPKnotHolderSetFunc, SPKnotHolderGetFunc> >::iterator i;
-    for (i = knotholder_func_vector.begin(); i != knotholder_func_vector.end(); ++i) {
-        //knotholder->add(i->first, i->second, NULL, (""));
+Effect::addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
+    using namespace std;
+    for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
+        if ((*p)->paramType() == Inkscape::LivePathEffect::POINT_PARAM) {
+            g_print ("Parameter is of type PointParam\n");
+            KnotHolderEntity *e = dynamic_cast<KnotHolderEntity *>(*p);
+            e->create(desktop, item, knotholder);
+            knotholder->add(e);
+        } else {
+            g_print ("Parameter is *not* of type PointParam\n");
+        }
     }
+}
+
+/**
+ * Virtual method to add knotholder handles for LPE items
+ */
+void
+Effect::addKnotHolderHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
+{
 }
 
 /**

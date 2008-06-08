@@ -74,7 +74,7 @@ struct SPKnot : GObject {
     **/
     sigc::signal<void, SPKnot *, NR::Point const *, guint> _moved_signal;
     sigc::signal<void, SPKnot *, guint> _click_signal;
-    sigc::signal<void> _ungrabbed_signal;
+    sigc::signal<void, SPKnot *> _ungrabbed_signal;
 
     //TODO: all the members above should eventualle become private, accessible via setters/getters
     inline void setSize (guint i) {size = i;}

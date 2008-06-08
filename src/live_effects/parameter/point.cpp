@@ -162,12 +162,33 @@ PointParam::set_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint
     knot_color = color;
 }
 
+void
+PointParam::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
+{
+    g_print ("PointParam::knot_set() was called!\n");
+    param_setValue(p.to_2geom());
+}
+
+NR::Point
+PointParam::knot_get()
+{
+    g_print ("PointParam::knot_get() was called.\n");
+    g_print ("We return (%f, %f)\n", (*this)[0], (*this)[1]);
+    return *this;
+}
+
+void
+PointParam::knot_click(guint state)
+{
+    g_print ("PointParam::knot_click() was called!\n");
+}
 
 // CALLBACKS:
 
 void
 PointParam::on_button_click()
 {
+    g_print ("PointParam::on_button_click()\n");
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     SPItem * item = sp_desktop_selection(desktop)->singleItem();
     if (item != NULL) {

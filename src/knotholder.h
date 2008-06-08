@@ -46,7 +46,9 @@ public:
 
     void knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state);
     void knot_clicked_handler(SPKnot *knot, guint state);
-    void knot_ungrabbed_handler();
+    void knot_ungrabbed_handler(SPKnot *knot);
+
+    void add(KnotHolderEntity *e);
 
     void add_pattern_knotholder();
 
