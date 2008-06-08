@@ -13,6 +13,8 @@
  */
 
 #include <libnr/n-art-bpath.h>
+#include <2geom/pathvector.h>
+#include <2geom/transforms.h>
 #include "../style.h"
 #include <cairo.h>
 #include <vector>
@@ -223,19 +225,23 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  *scaled_font,
 
     //glyphs can be described by arbitrary SVG declared in the childnodes of a glyph node
     // or using the d attribute of a glyph node.
-    // bpath stores the path description from the d attribute:
-    NArtBpath *bpath = NULL;
-    if (SP_IS_GLYPH(node) && ((SPGlyph*)node)->d) bpath = sp_svg_read_path(((SPGlyph*)node)->d);
-    if (SP_IS_MISSING_GLYPH(node) && ((SPMissingGlyph*)node)->d) bpath = sp_svg_read_path(((SPMissingGlyph*)node)->d);
+    // pathv stores the path description from the d attribute:
+    Geom::PathVector pathv;
+    if (SP_IS_GLYPH(node) && ((SPGlyph*)node)->d) {
+        pathv = sp_svg_read_pathv(((SPGlyph*)node)->d);
+    } else if (SP_IS_MISSING_GLYPH(node) && ((SPMissingGlyph*)node)->d) {
+        pathv = sp_svg_read_pathv(((SPMissingGlyph*)node)->d);
+    } else {
+        return CAIRO_STATUS_SUCCESS;  // FIXME: is this the right code to return?
+    }
 
-    if (bpath){
-	    //This glyph have a path description on its d attribute, so we render it:
-	    cairo_new_path(cr);
-	    NR::scale s(1.0/((SPFont*) node->parent)->horiz_adv_x);
-	    NR::Matrix t(s);
-	    NRRect area(0,0,1,1); //I need help here!
-	    feed_curve_to_cairo (cr, bpath, t, area.upgrade(), false, 0);
-	    cairo_fill(cr);
+    if (!pathv.empty()){
+        //This glyph has a path description on its d attribute, so we render it:
+        cairo_new_path(cr);
+        Geom::Scale s(1.0/((SPFont*) node->parent)->horiz_adv_x);
+        NRRect area(0,0,1,1); //I need help here!
+        feed_pathvector_to_cairo (cr, pathv, s, area.upgrade(), false, 0);
+        cairo_fill(cr);
     }
 
     //TODO: render the SVG described on this glyph's child nodes.
