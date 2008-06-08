@@ -20,7 +20,6 @@
 inline Geom::Point to_2geom(NR::Point const & _pt) {
     return Geom::Point(_pt[0], _pt[1]);
 }
-
 inline NR::Point from_2geom(Geom::Point const & _pt) {
     return NR::Point(_pt[0], _pt[1]);
 }
@@ -29,7 +28,6 @@ inline Geom::Matrix to_2geom(NR::Matrix const & mat) {
     Geom::Matrix mat2geom(mat[0], mat[1], mat[2], mat[3], mat[4], mat[5]);
     return mat2geom;
 }
-
 inline NR::Matrix from_2geom(Geom::Matrix const & mat) {
     NR::Matrix mat2geom(mat[0], mat[1], mat[2], mat[3], mat[4], mat[5]);
     return mat2geom;
@@ -39,6 +37,10 @@ inline Geom::Translate to_2geom(NR::translate const & mat) {
     return Geom::Translate( mat.offset[0], mat.offset[1] );
 }
 
+inline Geom::Rect to_2geom(NR::Rect const & rect) {
+    Geom::Rect rect2geom(to_2geom(rect.min()), to_2geom(rect.max()));
+    return rect2geom;
+}
 inline NR::Rect from_2geom(Geom::Rect const & rect2geom) {
     NR::Rect rect(rect2geom.min(), rect2geom.max());
     return rect;
