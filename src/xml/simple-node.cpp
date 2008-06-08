@@ -164,6 +164,8 @@ SimpleNode::SimpleNode(int code, Document *document)
 : Node(), _name(code), _attributes(), _child_count(0),
   _cached_positions_valid(false)
 {
+    g_assert(document != NULL);
+
     this->_document = document;
     this->_parent = this->_next = NULL;
     this->_first_child = this->_last_child = NULL;
@@ -178,6 +180,8 @@ SimpleNode::SimpleNode(SimpleNode const &node, Document *document)
   _child_count(node._child_count),
   _cached_positions_valid(node._cached_positions_valid)
 {
+    g_assert(document != NULL);
+
     _document = document;
     _parent = _next = NULL;
     _first_child = _last_child = NULL;

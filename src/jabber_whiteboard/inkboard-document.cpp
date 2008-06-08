@@ -44,7 +44,7 @@ namespace Whiteboard {
 
 InkboardDocument::InkboardDocument(int code, State::SessionType sessionType,
                                    Glib::ustring const& to)
-: XML::SimpleNode(code, NULL), sessionType(sessionType), recipient(to),
+: XML::SimpleNode(code, this), sessionType(sessionType), recipient(to),
   _in_transaction(false)
 {
     _initBindings();
