@@ -23,20 +23,25 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
+namespace TtC {
+  // we need a separate namespace to avoid clashes with LPEPerpBisector
+  class KnotHolderEntityLeftEnd;
+  class KnotHolderEntityRightEnd;
+  class KnotHolderEntityAttachPt;
+}
+
 class LPETangentToCurve : public Effect {
 public:
     LPETangentToCurve(LivePathEffectObject *lpeobject);
     virtual ~LPETangentToCurve();
 
-    bool providesKnotholder() { return true; }
-
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> >
       doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
     /* the knotholder entity classes must be declared friends */
-    friend class KnotHolderEntityLeftEnd;
-    friend class KnotHolderEntityRightEnd;
-    friend class KnotHolderEntityAttachPt;
+    friend class TtC::KnotHolderEntityLeftEnd;
+    friend class TtC::KnotHolderEntityRightEnd;
+    friend class TtC::KnotHolderEntityAttachPt;
 
 private:
     ScalarParam angle;

@@ -101,7 +101,7 @@ public:
 
     virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
 
-    virtual bool providesKnotholder() { return false; }
+    bool providesKnotholder() { return (kh_entity_vector.size() > 0); }
     void addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
     Glib::ustring          getName();

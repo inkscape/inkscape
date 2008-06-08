@@ -22,6 +22,13 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
+namespace PB {
+  // we need a separate namespace to avoid clashes with LPETangentToCurve
+  class KnotHolderEntityLeftEnd;
+  class KnotHolderEntityRightEnd;
+  void bisector_end_set(SPItem *item, NR::Point const &p, bool left);
+}
+
 class LPEPerpBisector : public Effect {
 public:
     LPEPerpBisector(LivePathEffectObject *lpeobject);
@@ -34,13 +41,10 @@ public:
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> >
       doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
-    /* the knotholder functions below must be declared friends */
-    friend NR::Point bisector_left_end_get(SPItem *item);
-    friend NR::Point bisector_right_end_get(SPItem *item);
-    friend NR::Point path_start_get(SPItem *item);
-    friend NR::Point path_end_get(SPItem *item);
-    friend void bisector_end_set(SPItem *item, NR::Point const &p, bool left = true);
-    friend void path_set_start_end(SPItem *item, NR::Point const &p, bool start = true);
+    /* the knotholder entity functions must be declared friends */
+    friend class PB::KnotHolderEntityLeftEnd;
+    friend class PB::KnotHolderEntityRightEnd;
+    friend void PB::bisector_end_set(SPItem *item, NR::Point const &p, bool left = true);
 
 private:
     ScalarParam length_left;

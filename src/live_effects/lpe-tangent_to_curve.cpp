@@ -27,6 +27,8 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
+namespace TtC {
+
 class KnotHolderEntityAttachPt : public KnotHolderEntity
 {
 public:
@@ -57,6 +59,8 @@ public:
     virtual void onKnotUngrabbed();
 };
 
+} // namespace TtC
+
 LPETangentToCurve::LPETangentToCurve(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     angle(_("Angle"), _("Additional angle between tangent and curve"), "angle", &wr, this, 0.0),
@@ -69,9 +73,9 @@ LPETangentToCurve::LPETangentToCurve(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&length_left) );
     registerParameter( dynamic_cast<Parameter *>(&length_right) );
 
-    registerKnotHolderHandle(new KnotHolderEntityAttachPt(), _("Adjust the \"left\" end of the tangent"));
-    registerKnotHolderHandle(new KnotHolderEntityLeftEnd(), _("Adjust the \"right\" end of the tangent"));
-    registerKnotHolderHandle(new KnotHolderEntityRightEnd(), _("Adjust the point of attachment of the tangent"));
+    registerKnotHolderHandle(new TtC::KnotHolderEntityAttachPt(), _("Adjust the \"left\" end of the tangent"));
+    registerKnotHolderHandle(new TtC::KnotHolderEntityLeftEnd(), _("Adjust the \"right\" end of the tangent"));
+    registerKnotHolderHandle(new TtC::KnotHolderEntityRightEnd(), _("Adjust the point of attachment of the tangent"));
 }
 
 LPETangentToCurve::~LPETangentToCurve()
@@ -99,6 +103,9 @@ LPETangentToCurve::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const
     return output;
 }
 
+namespace TtC {
+
+// TODO: make this more generic
 static LPETangentToCurve *
 get_effect(SPItem *item)
 {
@@ -197,9 +204,7 @@ KnotHolderEntityRightEnd::onKnotUngrabbed()
     lpe->length_right.write_to_SVG();
 }
  
- 
-
-
+} // namespace TtC
 
 } //namespace LivePathEffect
 } /* namespace Inkscape */

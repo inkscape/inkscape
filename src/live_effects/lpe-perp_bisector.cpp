@@ -23,29 +23,50 @@
 
 namespace Inkscape {
 namespace LivePathEffect {
+namespace PB {
 
-/* FIXME: We should make these member functions of LPEPerpBisector.
-          Is there an easy way to register member functions with knotholder?
-   KNOWN BUG: Because of the above, this effect does not work well when in an LPE stack
- */
-NR::Point bisector_left_end_get(SPItem *item) {
-    Inkscape::LivePathEffect::LPEPerpBisector *lpe =
-        dynamic_cast<Inkscape::LivePathEffect::LPEPerpBisector *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
+class KnotHolderEntityLeftEnd : public KnotHolderEntity
+{
+public:
+    virtual bool isLPEParam() { return true; }
 
-    if (lpe)
-        return NR::Point(lpe->C);
-    else
-        return NR::Point(0,0);
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void onKnotUngrabbed();
+};
+
+class KnotHolderEntityRightEnd : public KnotHolderEntity
+{
+public:
+    virtual bool isLPEParam() { return true; }
+
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void onKnotUngrabbed();
+};
+
+// TODO: Make this more generic
+static LPEPerpBisector *
+get_effect(SPItem *item)
+{
+    Effect *effect = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+    if (effect->effectType() != PERP_BISECTOR) {
+        g_print ("Warning: Effect is not of type LPEPerpBisector!\n");
+        return NULL;
+    }
+    return static_cast<LPEPerpBisector *>(effect);
 }
 
-NR::Point bisector_right_end_get(SPItem *item) {
-    Inkscape::LivePathEffect::LPEPerpBisector *lpe =
-        dynamic_cast<Inkscape::LivePathEffect::LPEPerpBisector *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
+NR::Point
+KnotHolderEntityLeftEnd::knot_get() {
+    Inkscape::LivePathEffect::LPEPerpBisector *lpe = get_effect(item);
+    return NR::Point(lpe->C);
+}
 
-    if (lpe)
-        return NR::Point(lpe->D);
-    else
-        return NR::Point(0,0);
+NR::Point
+KnotHolderEntityRightEnd::knot_get() {
+    Inkscape::LivePathEffect::LPEPerpBisector *lpe = get_effect(item);
+    return NR::Point(lpe->D);
 }
 
 void
@@ -70,15 +91,30 @@ bisector_end_set(SPItem *item, NR::Point const &p, bool left) {
 }
 
 void
-bisector_left_end_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/) {
+KnotHolderEntityLeftEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/) {
     bisector_end_set(item, p);
 }
 
 void
-bisector_right_end_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/) {
+KnotHolderEntityRightEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/) {
     bisector_end_set(item, p, false);
 }
 
+void
+KnotHolderEntityLeftEnd::onKnotUngrabbed()
+{
+    LPEPerpBisector *lpe = get_effect(item);
+    lpe->length_left.write_to_SVG();
+}
+
+void
+KnotHolderEntityRightEnd::onKnotUngrabbed()
+{
+    LPEPerpBisector *lpe = get_effect(item);
+    lpe->length_right.write_to_SVG();
+}
+
+/**
 NR::Point path_start_get(SPItem *item) {
     Inkscape::LivePathEffect::LPEPerpBisector *lpe =
         dynamic_cast<Inkscape::LivePathEffect::LPEPerpBisector *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
@@ -119,14 +155,17 @@ path_set_start_end(SPItem *item, NR::Point const &p, bool start) {
     sp_path_set_original_curve(SP_PATH(item), c, TRUE, true);
     c->unref();
 }
+**/
 
-void path_start_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/) {
-    path_set_start_end(item, p);
-}
+//void path_start_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/) {
+//    path_set_start_end(item, p);
+//}
 
-void path_end_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/) {
-    path_set_start_end(item, p, false);
-}
+//void path_end_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/) {
+//    path_set_start_end(item, p, false);
+//}
+
+} //namescape PB
 
 LPEPerpBisector::LPEPerpBisector(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
@@ -138,6 +177,8 @@ LPEPerpBisector::LPEPerpBisector(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&length_left) );
     registerParameter( dynamic_cast<Parameter *>(&length_right) );
 
+    registerKnotHolderHandle(new PB::KnotHolderEntityLeftEnd(), _("Lala"));
+    registerKnotHolderHandle(new PB::KnotHolderEntityRightEnd(), _("Lolo"));
 /**
     registerKnotHolderHandle(path_start_set, path_start_get);
     registerKnotHolderHandle(path_end_set, path_end_get);
