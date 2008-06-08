@@ -2,6 +2,7 @@
  * Helper functions to use cairo with inkscape
  *
  * Copyright (C) 2007 bulia byak
+ * Copyright (C) 2008 Johan Engelen
  *
  * Released under GNU GPL
  *
@@ -16,15 +17,21 @@
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-pixblock.h>
+#include <libnr/nr-convert2geom.h>
 #include "../style.h"
 #include "nr-arena.h"
-
+#include <2geom/pathvector.h>
+#include <2geom/matrix.h>
+#include <2geom/point.h>
+#include <2geom/path.h>
+#include <2geom/transforms.h>
+#include <2geom/sbasis-to-bezier.h>
 
 /** Creates a cairo context to render to the given pixblock on the given area */
 cairo_t *
 nr_create_cairo_context (NRRectL *area, NRPixBlock *pb)
 {
-    if (!nr_rect_l_test_intersect (&pb->area, area)) 
+    if (!nr_rect_l_test_intersect (&pb->area, area))
         return NULL;
 
     NRRectL clip;
@@ -49,7 +56,7 @@ void
 feed_curve_to_cairo (cairo_t *ct, NArtBpath const *bpath, NR::Matrix trans, NR::Maybe<NR::Rect> area, bool optimize_stroke, double stroke_width)
 {
     NR::Point next(0,0), last(0,0);
-    if (!area || area->isEmpty()) 
+    if (!area || area->isEmpty())
         return;
     NR::Point shift = area->min();
     NR::Rect view = *area;
@@ -92,9 +99,9 @@ feed_curve_to_cairo (cairo_t *ct, NArtBpath const *bpath, NR::Matrix trans, NR::
                 }
                 last = next;
                 next -= shift;
-                if (!optimize_stroke || swept.intersects(view)) 
+                if (!optimize_stroke || swept.intersects(view))
                     cairo_line_to(ct, next[NR::X], next[NR::Y]);
-                else 
+                else
                     cairo_move_to(ct, next[NR::X], next[NR::Y]);
                 break;
 
@@ -119,7 +126,7 @@ feed_curve_to_cairo (cairo_t *ct, NArtBpath const *bpath, NR::Matrix trans, NR::
                 tm1 -= shift;
                 tm2 -= shift;
                 tm3 -= shift;
-                if (!optimize_stroke || swept.intersects(view)) 
+                if (!optimize_stroke || swept.intersects(view))
                     cairo_curve_to (ct, tm1[NR::X], tm1[NR::Y], tm2[NR::X], tm2[NR::Y], tm3[NR::X], tm3[NR::Y]);
                 else
                     cairo_move_to(ct, tm3[NR::X], tm3[NR::Y]);
@@ -132,6 +139,108 @@ feed_curve_to_cairo (cairo_t *ct, NArtBpath const *bpath, NR::Matrix trans, NR::
     }
 }
 
+
+static void
+feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Rect view, bool optimize_stroke)
+{
+    if(Geom::LineSegment const* line_segment = dynamic_cast<Geom::LineSegment const*>(&c)) {
+        if (!optimize_stroke) {
+            cairo_line_to(cr, (*line_segment)[1][0], (*line_segment)[1][1]);
+        } else {
+            Geom::Rect swept((*line_segment)[0], (*line_segment)[1]);
+            if (swept.intersects(view)) {
+                cairo_line_to(cr, (*line_segment)[1][0], (*line_segment)[1][1]);
+            } else {
+                cairo_move_to(cr, (*line_segment)[1][0], (*line_segment)[1][1]);
+            }
+        }
+    }
+    else if(Geom::QuadraticBezier const *quadratic_bezier = dynamic_cast<Geom::QuadraticBezier const*>(&c)) {
+        std::vector<Geom::Point> points = quadratic_bezier->points();
+        Geom::Point b1 = points[0] + (2./3) * (points[1] - points[0]);
+        Geom::Point b2 = b1 + (1./3) * (points[2] - points[0]);
+        if (!optimize_stroke) {
+            cairo_curve_to(cr, b1[0], b1[1], b2[0], b2[1], points[2][0], points[2][1]);
+        } else {
+            Geom::Rect swept(points[0], points[2]);
+            swept.expandTo(points[1]);
+            if (swept.intersects(view)) {
+                cairo_curve_to(cr, b1[0], b1[1], b2[0], b2[1], points[2][0], points[2][1]);
+            } else {
+                cairo_move_to(cr, points[2][0], points[2][1]);
+            }
+        }
+    }
+    else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const*>(&c)) {
+        std::vector<Geom::Point> points = cubic_bezier->points();
+        if (!optimize_stroke) {
+            cairo_curve_to(cr, points[1][0], points[1][1], points[2][0], points[2][1], points[3][0], points[3][1]);
+        } else {
+            Geom::Rect swept(points[0], points[3]);
+            swept.expandTo(points[1]);
+            swept.expandTo(points[2]);
+            if (swept.intersects(view)) {
+                cairo_curve_to(cr, points[1][0], points[1][1], points[2][0], points[2][1], points[3][0], points[3][1]);
+            } else {
+                cairo_move_to(cr, points[3][0], points[3][1]);
+            }
+        }
+    }
+//    else if(Geom::EllipticalArc const *svg_elliptical_arc = dynamic_cast<Geom::EllipticalArc *>(c)) {
+//        //TODO: get at the innards and spit them out to cairo
+//    }
+    else {
+        //this case handles sbasis as well as all other curve types
+        Geom::Path sbasis_path = path_from_sbasis(c.toSBasis(), 0.1);
+
+        //recurse to convert the new path resulting from the sbasis to svgd
+        for(Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {
+            feed_curve_to_cairo(cr, *iter, view, optimize_stroke);
+        }
+    }
+}
+
+
+/** Feeds path-creating calls to the cairo context translating them from the SPCurve, with the given transform and shift */
+void
+feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, NR::Maybe<NR::Rect> area, bool optimize_stroke, double stroke_width)
+{
+    if (!area || area->isEmpty())
+        return;
+    if (path.empty())
+        return;
+
+    // Transform all coordinates to coords within "area"
+    Geom::Point shift = to_2geom(area->min());
+    NR::Rect view = *area;
+    view.growBy (stroke_width);
+    view = view * from_2geom(Geom::Translate(-shift));
+    Geom::Path const path_trans = path * (trans * Geom::Translate(-shift));
+
+    cairo_move_to(ct, path_trans.initialPoint()[0], path_trans.initialPoint()[1] );
+
+    for(Geom::Path::const_iterator cit = path_trans.begin(); cit != path_trans.end_open(); ++cit) {
+        feed_curve_to_cairo(ct, *cit, to_2geom(view), optimize_stroke);
+    }
+
+    if (path.closed()) {
+        cairo_line_to(ct, path_trans.initialPoint()[0], path_trans.initialPoint()[1] );
+    }
+}
+
+/** Feeds path-creating calls to the cairo context translating them from the SPCurve, with the given transform and shift */
+void
+feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv, Geom::Matrix trans, NR::Maybe<NR::Rect> area, bool optimize_stroke, double stroke_width)
+{
+    if (!area || area->isEmpty())
+        return;
+    if (pathv.empty())
+        return;
+
+    for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it) {
+        feed_path_to_cairo(ct, *it, trans, area, optimize_stroke, stroke_width);
+    }
+}
 
 /*
   Local Variables:
