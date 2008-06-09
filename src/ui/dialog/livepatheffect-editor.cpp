@@ -55,6 +55,12 @@ static void lpeeditor_selection_changed (Inkscape::Selection * selection, gpoint
     lpeeditor->onSelectionChanged(selection);
 }
 
+static void lpeeditor_selection_modified (Inkscape::Selection * selection, guint /*flags*/, gpointer data)
+{
+    LivePathEffectEditor *lpeeditor = static_cast<LivePathEffectEditor *>(data);
+    lpeeditor->onSelectionChanged(selection);
+}
+
 
 /*#######################
  * LivePathEffectEditor
@@ -157,6 +163,7 @@ LivePathEffectEditor::~LivePathEffectEditor()
 
     if (current_desktop) {
         selection_changed_connection.disconnect();
+        selection_modified_connection.disconnect();
     }
 }
 
@@ -238,7 +245,7 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
             }
               else
             {
-                showText(_("Item is not compound by paths"));
+                showText(_("Item is not a path or shape"));
                 set_sensitize_all(false);
             }
         } else {
@@ -278,6 +285,7 @@ LivePathEffectEditor::setDesktop(SPDesktop *desktop)
 
     if (current_desktop) {
         selection_changed_connection.disconnect();
+        selection_modified_connection.disconnect();
     }
 
     current_desktop = desktop;
@@ -285,6 +293,8 @@ LivePathEffectEditor::setDesktop(SPDesktop *desktop)
         Inkscape::Selection *selection = sp_desktop_selection(desktop);
         selection_changed_connection = selection->connectChanged(
             sigc::bind (sigc::ptr_fun(&lpeeditor_selection_changed), this ) );
+        selection_modified_connection = selection->connectModified(
+            sigc::bind (sigc::ptr_fun(&lpeeditor_selection_modified), this ) );
 
         onSelectionChanged(selection);
     } else {
@@ -350,10 +360,10 @@ void LivePathEffectEditor::onUp()
         SPItem *item = sel->singleItem();
         if ( item && SP_IS_LPE_ITEM(item) ) {
             
-			sp_lpe_item_up_current_path_effect(SP_LPE_ITEM(item));
+			      sp_lpe_item_up_current_path_effect(SP_LPE_ITEM(item));
             
             sp_document_done ( sp_desktop_document (current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
-                               _("Remove path effect") );
+                               _("Move path effect up") );
 
             effect_list_update(SP_LPE_ITEM(item));
         }
@@ -368,10 +378,10 @@ void LivePathEffectEditor::onDown()
         SPItem *item = sel->singleItem();
         if ( item && SP_IS_LPE_ITEM(item) ) {
             
-			sp_lpe_item_down_current_path_effect(SP_LPE_ITEM(item));
+      			sp_lpe_item_down_current_path_effect(SP_LPE_ITEM(item));
             
             sp_document_done ( sp_desktop_document (current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
-                               _("Remove path effect") );
+                               _("Move path effect down") );
 
             effect_list_update(SP_LPE_ITEM(item));
         }
