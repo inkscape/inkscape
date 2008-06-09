@@ -64,6 +64,8 @@ void sp_selection_paste_style();
 void sp_selection_paste_livepatheffect();
 void sp_selection_remove_livepatheffect();
 
+void sp_selection_remove_filter();
+
 void sp_set_style_clipboard (SPCSSAttr *css);
 
 void sp_selection_paste_size(bool apply_x, bool apply_y);

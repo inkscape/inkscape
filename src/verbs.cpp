@@ -881,6 +881,9 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_EDIT_REMOVE_LIVEPATHEFFECT:
             sp_selection_remove_livepatheffect();
             break;
+        case SP_VERB_EDIT_REMOVE_FILTER:
+            sp_selection_remove_filter();
+            break;
         case SP_VERB_EDIT_DELETE:
             sp_selection_delete();
             break;
@@ -2217,6 +2220,8 @@ Verb *Verb::_base_verbs[] = {
                  N_("Apply the path effect of the copied object to selection"), NULL),
     new EditVerb(SP_VERB_EDIT_REMOVE_LIVEPATHEFFECT, "RemoveLivePathEffect", N_("Remove Path _Effect"),
                  N_("Remove any path effects from selected objects"), NULL),
+    new EditVerb(SP_VERB_EDIT_REMOVE_FILTER, "RemoveFilter", N_("Remove Filter"),
+                 N_("Remove any filters from selected objects"), NULL),
     new EditVerb(SP_VERB_EDIT_DELETE, "EditDelete", N_("_Delete"),
                  N_("Delete selection"), GTK_STOCK_DELETE),
     new EditVerb(SP_VERB_EDIT_DUPLICATE, "EditDuplicate", N_("Duplic_ate"),

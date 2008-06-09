@@ -27,7 +27,7 @@
 #include "svg/svg.h"
 #include "inkscape.h"
 #include "desktop.h"
-//#include "desktop-style.h"
+#include "desktop-style.h"
 #include "selection.h"
 #include "tools-switch.h"
 #include "desktop-handles.h"
@@ -917,9 +917,32 @@ void sp_selection_remove_livepatheffect()
 
     }
 
-    sp_document_done(sp_desktop_document (desktop), SP_VERB_EDIT_PASTE_LIVEPATHEFFECT,
+    sp_document_done(sp_desktop_document (desktop), SP_VERB_EDIT_REMOVE_LIVEPATHEFFECT,
                      _("Remove live path effect"));
 }
+
+void sp_selection_remove_filter ()
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop == NULL) return;
+
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+
+    // check if something is selected
+    if (selection->isEmpty()) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to remove filters from."));
+        return;
+    }
+
+    SPCSSAttr *css = sp_repr_css_attr_new();
+    sp_repr_css_unset_property(css, "filter");
+    sp_desktop_set_style(desktop, css);
+    sp_repr_css_attr_unref(css);
+
+    sp_document_done(sp_desktop_document (desktop), SP_VERB_EDIT_REMOVE_FILTER,
+                     _("Remove filter"));
+}
+
 
 void sp_selection_paste_size (bool apply_x, bool apply_y)
 {
@@ -2342,11 +2365,16 @@ sp_selection_create_bitmap_copy ()
         return;
     }
 
+    desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Rendering bitmap..."));
+    // set "busy" cursor
+    desktop->setWaitingCursor();
+
     // Get the bounding box of the selection
     NRRect bbox;
     sp_document_ensure_up_to_date (document);
     selection->bounds(&bbox);
     if (NR_RECT_DFLS_TEST_EMPTY(&bbox)) {
+        desktop->clearWaitingCursor();
         return; // exceptional situation, so not bother with a translatable error message, just quit quietly
     }
 
@@ -2410,7 +2438,7 @@ sp_selection_create_bitmap_copy ()
     unsigned width = (unsigned) floor ((bbox.x1 - bbox.x0) * res / PX_PER_IN);
     unsigned height =(unsigned) floor ((bbox.y1 - bbox.y0) * res / PX_PER_IN);
 
-    // Find out if we have to run a filter
+    // Find out if we have to run an external filter
     gchar const *run = NULL;
     gchar const *filter = prefs_get_string_attribute ("options.createbitmap", "filter");
     if (filter) {
@@ -2501,6 +2529,8 @@ sp_selection_create_bitmap_copy ()
         sp_document_done (document, SP_VERB_SELECTION_CREATE_BITMAP,
                           _("Create bitmap"));
     }
+
+    desktop->clearWaitingCursor();
 
     g_free (filename);
     g_free (filepath);
