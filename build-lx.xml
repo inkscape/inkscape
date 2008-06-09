@@ -50,7 +50,9 @@
   <property name="arch"          value=""/>
   <property name="archutil"      value=""/>
   <property name="devlibs"       location="/usr"/>
-  <!-- -->
+  <property name="datadir"       location="${dist}/share"/>
+
+   <!-- -->
 
   <!-- Use these settings for the MinGW native compiler -->  
   <!--
@@ -282,7 +284,7 @@
         </excludeinc>
         <flags>
             -Wall -Wformat -Werror=format-security -W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch
-            -O2
+            -O2 -g
             -mms-bitfields
         </flags>
         <defines>
@@ -298,9 +300,9 @@
             ${pcc.gtkmm-2.4}
             <!-- OTHER -->
             -I${devlibs}/include/libxml2 
-            -I${devlibs}/include/freetype2
-            -I${devlibs}/include/cairo
-            -I${devlibs}/include/poppler
+            ${pcc.freetype2}
+            ${pcc.cairo}
+            ${pcc.poppler}
             -I${devlibs}/include/gc
             -I${devlibs}/include/libwpg-0.1
             -I${devlibs}/include/libwpd-0.8
@@ -448,146 +450,66 @@
       description="generate the distribution directory with all needed files">
 
     <!-- Create the distribution directory -->
-    <copy file="${build}/inkscape" todir="${dist}"/>
-    <copy file="${build}/inkscape.dbg" todir="${dist}"/>
-    <copy file="AUTHORS" todir="${dist}"/>
-    <copy file="COPYING" todir="${dist}"/>
-    <copy file="COPYING.LIB" todir="${dist}"/>
-    <copy file="NEWS" todir="${dist}"/>
-    <copy file="README" todir="${dist}"/>
-    <copy file="TRANSLATORS" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libatkmm-1.6-1.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libglibmm-2.4-1.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libgtkmm-2.4-1.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libgdkmm-2.4-1.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libpangomm-1.4-1.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libcairomm-1.0-1.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libsigc-2.0-0.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/freetype6.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libatk-1.0-0.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libgdk-win32-2.0-0.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libgdk_pixbuf-2.0-0.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libglib-2.0-0.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libgmodule-2.0-0.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libgobject-2.0-0.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libgtk-win32-2.0-0.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libgthread-2.0-0.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libcairo-2.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libpoppler-3.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libpangocairo-1.0-0.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libpango-1.0-0.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libpangoft2-1.0-0.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libpangowin32-1.0-0.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/freetype6.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libfontconfig-1.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libxml2.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libxslt.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libexpat.dll" todir="${dist}"/>
-    <!--<copy file="${devlibs}/bin/libexpat.dll" tofile="${dist}/xmlparse.dll"/>-->
-    <copy file="${devlibs}/bin/libwpg-0.1.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libwpg-stream-0.1.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libwpd-0.8.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libwpd-stream-0.8.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/jpeg62.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libpng13.dll" todir="${dist}"/>
-    <!-- GTK changed their dep file name for PNG!   :-(  -->
-    <copy file="${devlibs}/bin/libpng13.dll" tofile="${dist}/libpng12-0.dll"/>
-    <copy file="${devlibs}/bin/libtiff3.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/msvcr70.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/msvcr71.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/zlib1.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/iconv.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/libpopt-0.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/liblcms-1.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/intl.dll" todir="${dist}"/>
-    <copy file="${devlibs}/bin/intl.dll" tofile="${dist}/libintl-2.dll"/>
+    <mkdir dir="${dist}/bin"/>
+    <mkdir dir="${dist}/lib"/>
 
-    <!-- MSGFMT files -->
-    <copy todir="${dist}">
-        <fileset dir="${build}/locale">
-          <exclude name=".*\.am"/>
-        </fileset>
+    <!-- Copy Inkscape files -->
+    <copy file="${build}/inkscape"     todir="${dist}/bin"/>
+    <copy file="${build}/inkscape.dbg" todir="${dist}/bin"/>
+    <copy file="AUTHORS"               todir="${dist}"/>
+    <copy file="COPYING"               todir="${dist}"/>
+    <copy file="COPYING.LIB"           todir="${dist}"/>
+    <copy file="NEWS"                  todir="${dist}"/>
+    <copy file="README"                todir="${dist}"/>
+    <copy file="TRANSLATORS"           todir="${dist}"/>
+    <copy todir="${datadir}/inkscape">  
+        <fileset dir="share/clipart"> <exclude name=".*\.am"/> </fileset>
+    </copy>
+    <copy todir="${datadir}/inkscape">  
+        <fileset dir="share/examples"> <exclude name=".*\.am"/> </fileset>
+    </copy>
+    <copy todir="${datadir}/inkscape">  
+        <fileset dir="share/extensions"> <exclude name=".*\.am"/> </fileset>
+    </copy>
+    <copy todir="${datadir}/inkscape">  
+        <fileset dir="share/fonts"> <exclude name=".*\.am"/> </fileset>
+    </copy>
+    <copy todir="${datadir}/inkscape">  
+        <fileset dir="share/gradients"> <exclude name=".*\.am"/> </fileset>
+    </copy>
+    <copy todir="${datadir}/inkscape">  
+        <fileset dir="share/icons"> <exclude name=".*\.am"/> </fileset>
+    </copy>
+    <copy todir="${datadir}/inkscape">  
+        <fileset dir="share/keys"> <exclude name=".*\.am"/> </fileset>
+    </copy>
+    <copy todir="${datadir}/inkscape">  
+        <fileset dir="share/markers"> <exclude name=".*\.am"/> </fileset>
+    </copy>
+    <copy todir="${datadir}/inkscape">  
+        <fileset dir="share/palettes"> <exclude name=".*\.am"/> </fileset>
+    </copy>
+    <copy todir="${datadir}/inkscape">  
+        <fileset dir="share/patterns"> <exclude name=".*\.am"/> </fileset>
+    </copy>
+    <copy todir="${datadir}/inkscape">  
+        <fileset dir="share/screens"> <exclude name=".*\.am"/> </fileset>
+    </copy>
+    <copy todir="${datadir}/inkscape">  
+        <fileset dir="share/templates"> <exclude name=".*\.am"/> </fileset>
+    </copy>
+    <copy todir="${datadir}/inkscape">  
+        <fileset dir="share/tutorials"> <exclude name=".*\.am"/> </fileset>
+    </copy>
+    <copy todir="${datadir}/inkscape">  
+        <fileset dir="share/ui"> <exclude name=".*\.am"/> </fileset>
+    </copy>
+    <copy todir="${datadir}">
+        <fileset dir="${build}/locale"> <exclude name=".*\.am"/> </fileset>
     </copy>
 
-    <!-- GTK -->
-    <copy todir="${dist}"> <fileset dir="${devlibs}/etc"/> </copy>
-    <copy todir="${dist}/lib"> <fileset dir="${devlibs}/lib/gtk-2.0"/> </copy>
-    <copy todir="${dist}/lib"> <fileset dir="${devlibs}/lib/glib-2.0"/> </copy>
-    <copy todir="${dist}/lib"> <fileset dir="${devlibs}/lib/locale"/> </copy>
-    <copy todir="${dist}">
-        <fileset dir="share">
-          <exclude name=".*\.am"/>
-        </fileset>
-    </copy>
-    <copy todir="${dist}/share"> <fileset dir="${devlibs}/share/themes"/> </copy>
-    <copy todir="${dist}/share"> <fileset dir="${devlibs}/share/poppler"/> </copy>
-    <mkdir dir="${dist}/data"/>
-    <mkdir dir="${dist}/locale"/>
-    <mkdir dir="${dist}/modules"/>
-    <mkdir dir="${dist}/plugins"/>
-    <copy file="${devlibs}/bin/gdb.exe" todir="${dist}"/>
+    <!-- Copy devlibs files -->
 
-    <!-- Necessary to run extensions on windows if it is not in the path -->
-    <copy file="${devlibs}/bin/gspawn-win32-helper.exe" todir="${dist}"/>
-    <copy file="${devlibs}/bin/gspawn-win32-helper-console.exe" todir="${dist}"/>
-
-    <!-- PERL -->
-    <copy file="${devlibs}/perl/bin/perl58.dll" todir="${dist}"/>
-
-    <!-- PYTHON -->
-    <copy file="${devlibs}/python/python25.dll" todir="${dist}"/>
-    <copy file="${devlibs}/python/python.exe" todir="${dist}/python"/>
-    <copy file="${devlibs}/python/pythonw.exe" todir="${dist}/python"/>
-    <copy todir="${dist}/python"> <fileset dir="${devlibs}/python/Lib"/> </copy>
-    <copy todir="${dist}/python"> <fileset dir="${devlibs}/python/DLLs"/> </copy>
-    <copy todir="${dist}/python"> <fileset dir="${devlibs}/python/Scripts"/> </copy>
-
-    <!--<copy file="${devlibs}/share/themes/MS-Windows/gtk-2.0/gtkrc" todir="${dist}/etc/gtk-2.0"/>-->
-    <makefile file="${dist}/etc/gtk-2.0/gtkrc">
-    gtk-icon-sizes = "gtk-menu=16,16:gtk-small-toolbar=16,16:gtk-large-toolbar=24,24:gtk-dnd=32,32:inkscape-decoration=16,16"
-    gtk-toolbar-icon-size = small-toolbar
-
-    # disable images in buttons. i've only seen ugly delphi apps use this feature.
-    gtk-button-images = 0
-
-    # enable/disable images in menus. most "stock" microsoft apps don't use these, except sparingly.
-    # the office apps use them heavily, though.
-    gtk-menu-images = 1
-
-    # use the win32 button ordering instead of the GNOME HIG one, where applicable
-    gtk-alternative-button-order = 1
-
-    style "msw-default"
-    {
-      GtkWidget::interior-focus = 1
-      GtkOptionMenu::indicator-size = { 9, 5 }
-      GtkOptionMenu::indicator-spacing = { 7, 5, 2, 2 }
-      GtkSpinButton::shadow-type = in
-
-      # Owen and I disagree that these should be themable
-      #GtkUIManager::add-tearoffs = 0
-      #GtkComboBox::add-tearoffs = 0
-
-      GtkComboBox::appears-as-list = 1
-      GtkComboBox::focus-on-click = 0
-
-      GOComboBox::add_tearoffs = 0
-
-      GtkTreeView::allow-rules = 0
-      GtkTreeView::expander-size = 12
-
-      GtkExpander::expander-size = 12
-
-      GtkScrolledWindow::scrollbar_spacing = 1
-
-      GtkSeparatorMenuItem::horizontal-padding = 2
-
-      engine "wimp"
-      {
-      }
-    }
-    class "*" style "msw-default"
-    </makefile>
 
   </target>
 
@@ -610,7 +532,7 @@
   -->
   <target name="jar" depends="javac"
       description="pack java classes and resources into a jar file">
-    <copy todir="${build}/java/classes"> <fileset dir="${devlibs}/bind/data"/> </copy>
+    <copy todir="${build}/java/classes"> <fileset dir="bind/data"/></copy>
     <jar basedir="${build}/java/classes" destfile="${build}/java/lib/inkscape.jar"/>
   </target>
 
@@ -621,8 +543,8 @@
   -->
   <target name="binddist" depends="jar"
       description="pack java classes and resources into a jar file">
-    <copy todir="${dist}/share/bind"> <fileset dir="${devlibs}/bind/java"/> </copy>
-    <copy todir="${dist}/share/bind/java"> <fileset dir="${build}/java/lib"/> </copy>
+    <copy todir="${datadir}/inkscape/bind">      <fileset dir="bind/java"/> </copy>
+    <copy todir="${datadir}/inkscape/bind/java"> <fileset dir="${build}/java/lib"/>    </copy>
 
   </target>
 
@@ -647,8 +569,9 @@
   <target name="dist-all" depends="dist"
         description="generate the distribution, along with inkview" >
 
-    <copy file="${build}/inkview.exe" todir="${dist}"/>
-    <copy file="${build}/inkview.dbg" todir="${dist}"/>
+    <copy file="${build}/inkview"     todir="${dist}/bin"/>
+    <copy file="${build}/inkview.dbg" todir="${dist}/bin"/>
+
   </target>
 
 
