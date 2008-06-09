@@ -24,10 +24,13 @@ example_DATA = \
 	animated-clock.svg \
 	blend_modes.svg \
 	flow-go.svg \
-	lighting_effects.svg \
-	turbulence_effects.svg \
+	lighting_filters.svg \
+	turbulence_filters.svg \
 	live-path-effects-curvestitch.svg \
 	live-path-effects-gears.svg \
-	live-path-effects-pathalongpath.svg
+	live-path-effects-pathalongpath.svg \
+	filters.svg \
+	svgfont.svg \
+	tref.svg
 
 EXTRA_DIST = $(example_DATA)
