@@ -36,7 +36,7 @@ using std::pair;
 #define SP_MACROS_SILENT
 #include "macros.h"
 
-#include "display/nr-filter.cpp"
+#include "display/nr-filter.h"
 
 /* Filter base class */
 

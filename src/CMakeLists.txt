@@ -357,6 +357,7 @@ knot-enums.h
 knot.h
 knotholder.cpp
 knot-holder-entity.h
+knot-holder-entity.cpp
 knotholder.h
 layer-fns.cpp
 layer-fns.h
