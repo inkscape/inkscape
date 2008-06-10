@@ -123,9 +123,8 @@ KnotHolderEntityAttachPt::knot_set(NR::Point const &p, NR::Point const &origin, 
 
     // FIXME: There must be a better way of converting the path's SPCurve* to pwd2.
     SPCurve *curve = sp_path_get_curve_for_edit (SP_PATH(item));
-    const NArtBpath *bpath = curve->get_bpath();
+    Geom::PathVector pathv = curve->get_pathvector();
     Piecewise<D2<SBasis> > pwd2;
-    std::vector<Geom::Path> pathv = BPath_to_2GeomPath(bpath);
     for (unsigned int i=0; i < pathv.size(); i++) {
         pwd2.concat(pathv[i].toPwSb());
     }
@@ -134,7 +133,7 @@ KnotHolderEntityAttachPt::knot_set(NR::Point const &p, NR::Point const &origin, 
     lpe->t_attach.param_set_value(t0);
 
     // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
-    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), true, true);
+    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
 }
 
 void
