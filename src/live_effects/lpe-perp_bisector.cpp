@@ -179,6 +179,7 @@ void
 LPEPerpBisector::doOnApply (SPLPEItem *lpeitem)
 {
     /* make the path a straight line */
+    /**
     SPCurve* curve = sp_path_get_curve_for_edit (SP_PATH(lpeitem)); // TODO: Should we use sp_shape_get_curve()?
 
     Geom::Point A((curve->first_point()).to_2geom());
@@ -190,6 +191,7 @@ LPEPerpBisector::doOnApply (SPLPEItem *lpeitem)
     // TODO: Why doesn't sp_path_set_original_curve(SP_PATH(lpeitem), c, TRUE, true) work?
     SP_PATH(lpeitem)->original_curve = c->ref();
     c->unref();
+    **/
 }
 
 
