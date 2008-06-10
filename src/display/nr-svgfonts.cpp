@@ -12,7 +12,7 @@
  * Read the file 'COPYING' for more information.
  */
 
-#include <libnr/n-art-bpath.h>
+#include <libnr/n-art-bpath-2geom.h>
 #include <2geom/pathvector.h>
 #include <2geom/transforms.h>
 #include "../style.h"
@@ -160,7 +160,7 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
     while(_utf8[0] != '\0'){
 	len = 0;
         for (i=0; i < (unsigned long) this->glyphs.size(); i++){
-            if ( len = compare_them(this->glyphs[i]->unicode, _utf8) ){
+            if ( (len = compare_them(this->glyphs[i]->unicode, _utf8)) ){
 		//check whether is there a glyph declared on the SVG document
 		// that matches with the text string in its current position
 	        for(SPObject* node = this->font->children;previous_unicode && node;node=node->next){
