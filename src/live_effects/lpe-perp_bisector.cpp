@@ -32,7 +32,6 @@ public:
 
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
     virtual NR::Point knot_get();
-    virtual void onKnotUngrabbed();
 };
 
 class KnotHolderEntityRightEnd : public KnotHolderEntity
@@ -42,7 +41,6 @@ public:
 
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
     virtual NR::Point knot_get();
-    virtual void onKnotUngrabbed();
 };
 
 // TODO: Make this more generic
@@ -98,20 +96,6 @@ KnotHolderEntityLeftEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*
 void
 KnotHolderEntityRightEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/) {
     bisector_end_set(item, p, false);
-}
-
-void
-KnotHolderEntityLeftEnd::onKnotUngrabbed()
-{
-    LPEPerpBisector *lpe = get_effect(item);
-    lpe->length_left.write_to_SVG();
-}
-
-void
-KnotHolderEntityRightEnd::onKnotUngrabbed()
-{
-    LPEPerpBisector *lpe = get_effect(item);
-    lpe->length_right.write_to_SVG();
 }
 
 /**

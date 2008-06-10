@@ -96,6 +96,7 @@ public:
     virtual void doOnApply (SPLPEItem *lpeitem);
 
     virtual void doBeforeEffect (SPLPEItem *lpeitem);
+    void writeParamsToSVG();
 
     virtual void doEffect (SPCurve * curve);
 

@@ -52,8 +52,7 @@ public:
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state) = 0;
     virtual NR::Point knot_get() = 0;
     virtual void knot_click(guint /*state*/) {}
-    virtual void onKnotUngrabbed() {} // this is called 'manually' from KnotHolder; would it be
-                                      // more efficient to establish another signal connection?
+    virtual void onKnotUngrabbed() {}
 
     void update_knot();
 

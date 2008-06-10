@@ -29,6 +29,7 @@
 #include "box3d.h"
 #include "sp-pattern.h"
 #include "style.h"
+#include "live_effects/lpeobject.h"
 
 #include "xml/repr.h" // for debugging only
 
@@ -165,6 +166,17 @@ KnotHolder::knot_ungrabbed_handler(SPKnot *knot)
         /* do cleanup tasks (e.g., for LPE items write the parameter values
          * that were changed by dragging the handle to SVG)
          */
+        if (SP_IS_LPE_ITEM(item)) {
+            // This writes all parameters to SVG. Is this sufficiently efficient or should we only write
+            // the ones that were changed (e.g., via the individual handles' onKnotUngrabbed() method?            
+            Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+            if (lpe) {
+                LivePathEffectObject *lpeobj = lpe->getLPEObj();
+                SP_OBJECT(lpeobj)->updateRepr();
+            }
+        }
+        // this was once used to write individual parameter values to SVG but this is now done globally above;
+        // we leave the calls to onKnotUngrabbed, anyway, in case any other cleanup tasks need to be done
         for(std::list<KnotHolderEntity *>::iterator i = this->entity.begin(); i != this->entity.end(); ++i) {
             KnotHolderEntity *e = *i;
             if (e->knot == knot) {

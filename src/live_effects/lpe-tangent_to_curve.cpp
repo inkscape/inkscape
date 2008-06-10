@@ -36,7 +36,6 @@ public:
 
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
     virtual NR::Point knot_get();
-    virtual void onKnotUngrabbed();
 };
 
 class KnotHolderEntityLeftEnd : public KnotHolderEntity
@@ -46,7 +45,6 @@ public:
 
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
     virtual NR::Point knot_get();
-    virtual void onKnotUngrabbed();
 };
 
 class KnotHolderEntityRightEnd : public KnotHolderEntity
@@ -56,7 +54,6 @@ public:
 
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
     virtual NR::Point knot_get();
-    virtual void onKnotUngrabbed();
 };
 
 } // namespace TtC
@@ -183,27 +180,6 @@ KnotHolderEntityRightEnd::knot_get()
     return lpe->D;
 }
 
-void
-KnotHolderEntityAttachPt::onKnotUngrabbed()
-{
-    LPETangentToCurve *lpe = get_effect(item);
-    lpe->t_attach.write_to_SVG();
-}
-
-void
-KnotHolderEntityLeftEnd::onKnotUngrabbed()
-{
-    LPETangentToCurve *lpe = get_effect(item);
-    lpe->length_left.write_to_SVG();
-}
-
-void
-KnotHolderEntityRightEnd::onKnotUngrabbed()
-{
-    LPETangentToCurve *lpe = get_effect(item);
-    lpe->length_right.write_to_SVG();
-}
- 
 } // namespace TtC
 
 } //namespace LivePathEffect

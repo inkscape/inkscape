@@ -215,6 +215,16 @@ Effect::doBeforeEffect (SPLPEItem */*lpeitem*/)
 }
 
 
+void
+Effect::writeParamsToSVG() {
+    g_print ("Parameters get written to SVG\n");
+    std::vector<Inkscape::LivePathEffect::Parameter *>::iterator p;
+    for (p = param_vector.begin(); p != param_vector.end(); ++p) {
+        g_print ("writing parameter %s to SVG\n", (*p)->param_key.c_str());
+        (*p)->write_to_SVG();
+    }
+}
+
 /*
  *  Here be the doEffect function chain:
  */

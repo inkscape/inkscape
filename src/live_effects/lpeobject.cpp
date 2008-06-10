@@ -221,6 +221,8 @@ livepatheffect_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 
 //    lpeobj->lpe->write(repr); something like this.
 
+    lpeobj->lpe->writeParamsToSVG();
+
     if (((SPObjectClass *) livepatheffect_parent_class)->write)
         (* ((SPObjectClass *) livepatheffect_parent_class)->write)(object, repr, flags);
 
