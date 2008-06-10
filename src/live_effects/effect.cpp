@@ -50,6 +50,7 @@
 #include "live_effects/lpe-constructgrid.h"
 #include "live_effects/lpe-perp_bisector.h"
 #include "live_effects/lpe-tangent_to_curve.h"
+#include "live_effects/lpe-mirror_reflect.h"
 // end of includes
 
 #include "nodepath.h"
@@ -77,7 +78,8 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {ENVELOPE,              N_("Envelope Deformation"),  "envelope"},
     {CONSTRUCT_GRID,        N_("Construct grid"),        "construct_grid"},
     {PERP_BISECTOR, N_("Perpendicular bisector"), "perp_bisector"},
-    {TANGENT_TO_CURVE, N_("Tangent to curve"), "tangent_to_curve"}
+    {TANGENT_TO_CURVE, N_("Tangent to curve"), "tangent_to_curve"},
+    {MIRROR_REFLECT, N_("Mirror reflection"), "mirror_reflect"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
@@ -135,6 +137,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case TANGENT_TO_CURVE:
             neweffect = static_cast<Effect*> ( new LPETangentToCurve(lpeobj) );
+            break;
+        case MIRROR_REFLECT:
+            neweffect = static_cast<Effect*> ( new LPEMirrorReflect(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);

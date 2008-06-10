@@ -71,6 +71,7 @@ enum EffectType {
     CONSTRUCT_GRID,
     PERP_BISECTOR,
     TANGENT_TO_CURVE,
+    MIRROR_REFLECT,
     INVALID_LPE // This must be last
 };
 
