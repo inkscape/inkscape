@@ -435,6 +435,8 @@ void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset)
                 // has to be called when all the subitems have their lpes applied
                 lpeobj->lpe->resetDefaults(lpeitem);
             }
+            /* perform this once when the effect is applied */
+            lpeobj->lpe->doOnApply(SP_LPE_ITEM(lpeitem));
         }
 
         //Enable the path effects now that everything is ready to apply the new path effect
