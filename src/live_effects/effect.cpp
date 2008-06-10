@@ -217,10 +217,8 @@ Effect::doBeforeEffect (SPLPEItem */*lpeitem*/)
 
 void
 Effect::writeParamsToSVG() {
-    g_print ("Parameters get written to SVG\n");
     std::vector<Inkscape::LivePathEffect::Parameter *>::iterator p;
     for (p = param_vector.begin(); p != param_vector.end(); ++p) {
-        g_print ("writing parameter %s to SVG\n", (*p)->param_key.c_str());
         (*p)->write_to_SVG();
     }
 }
@@ -358,12 +356,9 @@ Effect::addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem 
     using namespace std;
     for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
         if ((*p)->paramType() == Inkscape::LivePathEffect::POINT_PARAM) {
-            g_print ("Parameter is of type PointParam\n");
             KnotHolderEntity *e = dynamic_cast<KnotHolderEntity *>(*p);
             e->create(desktop, item, knotholder);
             knotholder->add(e);
-        } else {
-            g_print ("Parameter is *not* of type PointParam\n");
         }
     }
 }
