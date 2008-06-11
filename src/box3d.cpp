@@ -273,19 +273,17 @@ static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Node *r
             repr->setAttribute("inkscape:perspectiveID", box->persp_href);
         } else {
             /* box is not yet linked to a perspective; use the document's current perspective */
-            SPDocument *doc = inkscape_active_document();
+            SPDocument *doc = SP_OBJECT_DOCUMENT(object);
             if (box->persp_ref->getURI()) {
                 gchar *uri_string = box->persp_ref->getURI()->toString();
                 repr->setAttribute("inkscape:perspectiveID", uri_string);
                 g_free(uri_string);
-            } else if (doc) {
+            } else {
                 Inkscape::XML::Node *persp_repr = SP_OBJECT_REPR(doc->current_persp3d);
                 const gchar *persp_id = persp_repr->attribute("id");
                 gchar *href = g_strdup_printf("#%s", persp_id);
                 repr->setAttribute("inkscape:perspectiveID", href);
                 g_free(href);
-            } else {
-                g_print ("No active document while creating perspective!!!\n");
             }
         }
 
