@@ -115,7 +115,7 @@ get_effect(SPItem *item)
 }
 
 void
-KnotHolderEntityAttachPt::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
+KnotHolderEntityAttachPt::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
 {
      using namespace Geom;
  
@@ -137,7 +137,7 @@ KnotHolderEntityAttachPt::knot_set(NR::Point const &p, NR::Point const &origin, 
 }
 
 void
-KnotHolderEntityLeftEnd::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
+KnotHolderEntityLeftEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
 {
     LPETangentToCurve *lpe = get_effect(item);
     
@@ -148,7 +148,7 @@ KnotHolderEntityLeftEnd::knot_set(NR::Point const &p, NR::Point const &origin, g
 }
 
 void
-KnotHolderEntityRightEnd::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
+KnotHolderEntityRightEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
 {
     LPETangentToCurve *lpe = get_effect(item);
     

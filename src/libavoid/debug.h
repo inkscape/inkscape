@@ -42,7 +42,7 @@ inline void db_printf(const char *fmt, ...)
     va_end(ap);
 }
 #else
-inline void db_printf(const char *fmt, ...)
+inline void db_printf(const char */*fmt*/, ...)
 {
 }
 #endif

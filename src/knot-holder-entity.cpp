@@ -139,7 +139,7 @@ PatternKnotHolderEntityAngle::knot_get()
 }
 
 void
-PatternKnotHolderEntityAngle::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
+PatternKnotHolderEntityAngle::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     int const snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
@@ -164,7 +164,7 @@ PatternKnotHolderEntityAngle::knot_set(NR::Point const &p, NR::Point const &orig
 }
 
 void
-PatternKnotHolderEntityScale::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
+PatternKnotHolderEntityScale::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
 {
     SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 

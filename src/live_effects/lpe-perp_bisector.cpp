@@ -176,7 +176,7 @@ LPEPerpBisector::~LPEPerpBisector()
 }
 
 void
-LPEPerpBisector::doOnApply (SPLPEItem *lpeitem)
+LPEPerpBisector::doOnApply (SPLPEItem */*lpeitem*/)
 {
     /* make the path a straight line */
     /**
