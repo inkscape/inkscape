@@ -52,14 +52,14 @@
   <!-- -->
   <property name="arch"          value="mingw32-"/>
   <property name="archutil"      value=""/>
-  <property name="gtk"           location="c:/devlibs"/>
+  <property name="devlibs"       location="c:/devlibs"/>
   <!-- -->
 
   <!-- Use these settings for the cross compiler -->  
   <!--
   <property name="arch"          value="i686-pc-mingw32-"/>
   <property name="archutil"      value="${arch}"/>
-  <property name="gtk"           location="/target"/>
+  <property name="devlibs"       location="/target"/>
   -->
 
   <!-- Extra properties -->  
@@ -70,8 +70,8 @@
     queries can be as simple as ${pcc.packageName} for cflags, and
     ${pcl.packageName} for libs.  Dependencies are calculated automatically.
   -->
-  <property name="pkg-config-path"   location="${gtk}/lib/pkgconfig"/>
-  <property name="pkg-config-prefix" location="${gtk}"/>
+  <property name="pkg-config-path"   location="${devlibs}/lib/pkgconfig"/>
+  <property name="pkg-config-prefix" location="${devlibs}"/>
 
 
   <!--
@@ -288,21 +288,21 @@
             -DRELAYTOOL_SSL="static const int libssl_is_present=1; static int __attribute__((unused)) libssl_symbol_is_present(char *s){ return 1; }" <!-- inkboard -->
         </defines>
         <includes>
-            -I${gtk}/include
+            -I${devlibs}/include
             <!-- GTK / GTKMM -->
             ${pcc.gtkmm-2.4}
             <!-- OTHER -->
-            -I${gtk}/include/libxml2 
-            -I${gtk}/include/freetype2
-            -I${gtk}/include/cairo
-            -I${gtk}/include/poppler
-            -I${gtk}/include/gc
-            -I${gtk}/include/libwpg-0.1
-            -I${gtk}/include/libwpd-0.8
+            -I${devlibs}/include/libxml2 
+            -I${devlibs}/include/freetype2
+            -I${devlibs}/include/cairo
+            -I${devlibs}/include/poppler
+            -I${devlibs}/include/gc
+            -I${devlibs}/include/libwpg-0.1
+            -I${devlibs}/include/libwpd-0.8
             <!-- PERL -->
-            <!-- -Wno-comment -I${gtk}/perl/lib/CORE -->
+            <!-- -Wno-comment -I${devlibs}/perl/lib/CORE -->
             <!-- PYTHON -->
-            -I${gtk}/python/include
+            -I${devlibs}/python/include
             <!-- JAVA -->
             -I${src}/bind/javainc -I${src}/bind/javainc/win32
         </includes>
@@ -377,26 +377,26 @@
            <include name="libinkscape.a"/>
        </fileset>
        <libs>
-           -L${gtk}/lib
+           -L${devlibs}/lib
            -lpoppler-cairo -lpoppler-glib -lpoppler.dll 
            ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${pcl.gthread-2.0}
            <!-- PERL -->
-           <!-- -L${gtk}/perl/lib/CORE -lperl58 -->
+           <!-- -L${devlibs}/perl/lib/CORE -lperl58 -->
            <!-- PYTHON -->
-           <!-- -L${gtk}/python/libs -lpython25 -->
-           ${gtk}/bin/libxml2.dll
-           ${gtk}/bin/libxslt.dll
+           <!-- -L${devlibs}/python/libs -lpython25 -->
+           ${devlibs}/bin/libxml2.dll
+           ${devlibs}/bin/libxslt.dll
            -lcairo.dll
            -lcairomm-1.0.dll
 		   -lwpg-0.1.dll -lwpg-stream-0.1.dll
            -lwpd-0.8.dll -lwpd-stream-0.8.dll
-           ${gtk}/lib/iconv.lib
+           ${devlibs}/lib/iconv.lib
            -lMagick++ -lWand -lMagick
            -lfreetype.dll -lfontconfig.dll
            -lssl -lcrypto
            -llcms.dll
            -lgsl
-           -lpng -ljpeg.dll -ltiff.dll -lpopt ${gtk}/lib/zdll.lib
+           -lpng -ljpeg.dll -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
            -lgc
 		   -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            <!-- 2geom -->
@@ -436,23 +436,23 @@
            <include name="libinkscape.a"/>
        </fileset>
        <libs>
-           -L${gtk}/lib
+           -L${devlibs}/lib
            -lpoppler-cairo -lpoppler-glib -lpoppler.dll 
            ${pcl.gtkmm-2.4}
            <!-- PERL -->
-           -L${gtk}/perl/lib/CORE -lperl58
+           -L${devlibs}/perl/lib/CORE -lperl58
            <!-- PYTHON -->
-           -L${gtk}/python/libs -lpython25
-           ${gtk}/bin/libxml2.dll
-           ${gtk}/bin/libxslt.dll
-           ${gtk}/lib/iconv.lib
+           -L${devlibs}/python/libs -lpython25
+           ${devlibs}/bin/libxml2.dll
+           ${devlibs}/bin/libxslt.dll
+           ${devlibs}/lib/iconv.lib
 		   -lcairo.dll -lcairomm-1.0.dll
            -lwpg-0.1.dll -lwpg-stream-0.1.dll
            -lMagick++ -lWand -lMagick
            -lfreetype.dll -lfontconfig.dll
            -llcms.dll
            -lssl -lcrypto
-           -lpng -ljpeg.dll -ltiff.dll -lpopt ${gtk}/lib/zdll.lib
+           -lpng -ljpeg.dll -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
            -lgc -mwindows
 		   -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
        </libs>
@@ -470,59 +470,59 @@
       description="generate the distribution directory with all needed files">
 
     <!-- Create the distribution directory -->
-    <copy file="${build}/inkscape.exe" todir="${dist}"/>
-	<copy file="${build}/inkscape.dbg" todir="${dist}"/>
-    <copy file="AUTHORS" todir="${dist}"/>
-    <copy file="COPYING" todir="${dist}"/>
-    <copy file="COPYING.LIB" todir="${dist}"/>
-    <copy file="NEWS" todir="${dist}"/>
-    <copy file="README" todir="${dist}"/>
-    <copy file="TRANSLATORS" todir="${dist}"/>
-    <copy file="${gtk}/bin/libatkmm-1.6-1.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libglibmm-2.4-1.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libgtkmm-2.4-1.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libgdkmm-2.4-1.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libpangomm-1.4-1.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libcairomm-1.0-1.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libsigc-2.0-0.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/freetype6.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libatk-1.0-0.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libgdk-win32-2.0-0.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libgdk_pixbuf-2.0-0.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libglib-2.0-0.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libgmodule-2.0-0.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libgobject-2.0-0.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libgtk-win32-2.0-0.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libgthread-2.0-0.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libcairo-2.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libpoppler-3.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libpangocairo-1.0-0.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libpango-1.0-0.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libpangoft2-1.0-0.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libpangowin32-1.0-0.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/freetype6.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libfontconfig-1.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libxml2.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libxslt.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libexpat.dll" todir="${dist}"/>
-    <!--<copy file="${gtk}/bin/libexpat.dll" tofile="${dist}/xmlparse.dll"/>-->
-    <copy file="${gtk}/bin/libwpg-0.1.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libwpg-stream-0.1.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libwpd-0.8.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libwpd-stream-0.8.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/jpeg62.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libpng13.dll" todir="${dist}"/>
+    <copy todir="${dist}" file="${build}/inkscape.exe"/>
+	<copy todir="${dist}" file="${build}/inkscape.dbg"/>
+    <copy todir="${dist}" file="AUTHORS"/>
+    <copy todir="${dist}" file="COPYING"/>
+    <copy todir="${dist}" file="COPYING.LIB"/>
+    <copy todir="${dist}" file="NEWS"/>
+    <copy todir="${dist}" file="README"/>
+    <copy todir="${dist}" file="TRANSLATORS"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libatkmm-1.6-1.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libglibmm-2.4-1.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libgtkmm-2.4-1.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libgdkmm-2.4-1.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpangomm-1.4-1.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libcairomm-1.0-1.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libsigc-2.0-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/freetype6.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libatk-1.0-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libgdk-win32-2.0-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libgdk_pixbuf-2.0-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libglib-2.0-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libgmodule-2.0-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libgobject-2.0-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libgtk-win32-2.0-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libgthread-2.0-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libcairo-2.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpoppler-3.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpangocairo-1.0-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpango-1.0-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpangoft2-1.0-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpangowin32-1.0-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/freetype6.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libfontconfig-1.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libxml2.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libxslt.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libexpat.dll"/>
+    <!--<copy file="${devlibs}/bin/libexpat.dll" tofile="${dist}/xmlparse.dll"/>-->
+    <copy todir="${dist}" file="${devlibs}/bin/libwpg-0.1.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libwpg-stream-0.1.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libwpd-0.8.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libwpd-stream-0.8.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/jpeg62.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpng13.dll"/>
     <!-- GTK changed their dep file name for PNG!   :-(  -->
-    <copy file="${gtk}/bin/libpng13.dll" tofile="${dist}/libpng12-0.dll"/>
-    <copy file="${gtk}/bin/libtiff3.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/msvcr70.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/msvcr71.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/zlib1.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/iconv.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libpopt-0.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/liblcms-1.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/intl.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/intl.dll" tofile="${dist}/libintl-2.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpng12-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libtiff3.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/msvcr70.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/msvcr71.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/zlib1.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/iconv.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpopt-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/liblcms-1.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/intl.dll"/>
+    <copy file="${devlibs}/bin/intl.dll" tofile="${dist}/libintl-2.dll"/>
 
     <!-- MSGFMT files -->
     <copy todir="${dist}">
@@ -531,40 +531,41 @@
         </fileset>
     </copy>
 
+    <mkdir dir="${dist}/data"/>
+    <mkdir dir="${dist}/locale"/>
+    <mkdir dir="${dist}/modules"/>
+    <mkdir dir="${dist}/plugins"/>
+
     <!-- GTK -->
-    <copy todir="${dist}"> <fileset dir="${gtk}/etc"/> </copy>
-    <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/gtk-2.0"/> </copy>
-    <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/glib-2.0"/> </copy>
-    <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/locale"/> </copy>
+    <copy todir="${dist}">     <fileset dir="${devlibs}/etc"/> </copy>
+    <copy todir="${dist}/lib"> <fileset dir="${devlibs}/lib/gtk-2.0"/> </copy>
+    <copy todir="${dist}/lib"> <fileset dir="${devlibs}/lib/glib-2.0"/> </copy>
     <copy todir="${dist}">
         <fileset dir="share">
           <exclude name=".*\.am"/>
         </fileset>
     </copy>
-    <copy todir="${dist}/share"> <fileset dir="${gtk}/share/themes"/> </copy>
-    <copy todir="${dist}/share"> <fileset dir="${gtk}/share/poppler"/> </copy>
-    <mkdir dir="${dist}/data"/>
-    <mkdir dir="${dist}/locale"/>
-    <mkdir dir="${dist}/modules"/>
-    <mkdir dir="${dist}/plugins"/>
-    <copy file="${gtk}/bin/gdb.exe" todir="${dist}"/>
+    <copy todir="${dist}/share"> <fileset dir="${devlibs}/share/locale"/> </copy>
+    <copy todir="${dist}/share"> <fileset dir="${devlibs}/share/themes"/> </copy>
+    <copy todir="${dist}/share"> <fileset dir="${devlibs}/share/poppler"/> </copy>
+    <copy todir="${dist}" file="${devlibs}/bin/gdb.exe"/>
 
     <!-- Necessary to run extensions on windows if it is not in the path -->
-    <copy file="${gtk}/bin/gspawn-win32-helper.exe" todir="${dist}"/>
-    <copy file="${gtk}/bin/gspawn-win32-helper-console.exe" todir="${dist}"/>
+    <copy todir="${dist}" file="${devlibs}/bin/gspawn-win32-helper.exe"/>
+    <copy todir="${dist}" file="${devlibs}/bin/gspawn-win32-helper-console.exe"/>
 
     <!-- PERL -->
-    <copy file="${gtk}/perl/bin/perl58.dll" todir="${dist}"/>
+    <copy todir="${dist}" file="${devlibs}/perl/bin/perl58.dll"/>
 
     <!-- PYTHON -->
-    <copy file="${gtk}/python/python25.dll" todir="${dist}"/>
-    <copy file="${gtk}/python/python.exe" todir="${dist}/python"/>
-    <copy file="${gtk}/python/pythonw.exe" todir="${dist}/python"/>
-    <copy todir="${dist}/python"> <fileset dir="${gtk}/python/Lib"/> </copy>
-    <copy todir="${dist}/python"> <fileset dir="${gtk}/python/DLLs"/> </copy>
-    <copy todir="${dist}/python"> <fileset dir="${gtk}/python/Scripts"/> </copy>
+    <copy todir="${dist}" file="${devlibs}/python/python25.dll"/>
+    <copy todir="${dist}/python" file="${devlibs}/python/python.exe" />
+    <copy todir="${dist}/python" file="${devlibs}/python/pythonw.exe"/>
+    <copy todir="${dist}/python"> <fileset dir="${devlibs}/python/Lib"/> </copy>
+    <copy todir="${dist}/python"> <fileset dir="${devlibs}/python/DLLs"/> </copy>
+    <copy todir="${dist}/python"> <fileset dir="${devlibs}/python/Scripts"/> </copy>
 
-    <!--<copy file="${gtk}/share/themes/MS-Windows/gtk-2.0/gtkrc" todir="${dist}/etc/gtk-2.0"/>-->
+    <!--<copy file="${devlibs}/share/themes/MS-Windows/gtk-2.0/gtkrc" todir="${dist}/etc/gtk-2.0"/>-->
     <makefile file="${dist}/etc/gtk-2.0/gtkrc">
     gtk-icon-sizes = "gtk-menu=16,16:gtk-small-toolbar=16,16:gtk-large-toolbar=24,24:gtk-dnd=32,32:inkscape-decoration=16,16"
     gtk-toolbar-icon-size = small-toolbar
@@ -632,7 +633,7 @@
   -->
   <target name="jar" depends="javac"
       description="pack java classes and resources into a jar file">
-    <copy todir="${build}/java/classes"> <fileset dir="${gtk}/bind/data"/> </copy>
+    <copy todir="${build}/java/classes"> <fileset dir="${devlibs}/bind/data"/> </copy>
     <jar basedir="${build}/java/classes" destfile="${build}/java/lib/inkscape.jar"/>
   </target>
 
@@ -643,7 +644,7 @@
   -->
   <target name="binddist" depends="jar"
       description="pack java classes and resources into a jar file">
-    <copy todir="${dist}/share/bind"> <fileset dir="${gtk}/bind/java"/> </copy>
+    <copy todir="${dist}/share/bind"> <fileset dir="${devlibs}/bind/java"/> </copy>
     <copy todir="${dist}/share/bind/java"> <fileset dir="${build}/java/lib"/> </copy>
 
   </target>
