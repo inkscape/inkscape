@@ -203,8 +203,8 @@
     <!-- Compile from source to build -->
     <cc cc="${arch}gcc" cxx="${arch}g++"
              destdir="${build}/obj"
-			 continueOnError="false"
-			 refreshCache="${refresh}">
+             continueOnError="false"
+             refreshCache="${refresh}">
         <fileset dir="${src}">
             <!-- THINGS TO EXCLUDE -->
             <exclude name="2geom/chebyshev.cpp"/>
@@ -284,7 +284,7 @@
         </excludeinc>
         <flags>
             -Wall -Wformat -Werror=format-security -W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch
-            -O2 -g
+            -O2
         </flags>
         <defines>
             -DVERSION=\"${version}\"
@@ -298,15 +298,12 @@
             <!-- GTK / GTKMM -->
             ${pcc.gtkmm-2.4}
             <!-- OTHER -->
-            -I${devlibs}/include/libxml2 
+            ${pcc.libxslt}
             ${pcc.freetype2}
             ${pcc.cairo}
             ${pcc.poppler}
             -I${devlibs}/include/gc
-            -I${devlibs}/include/libwpg-0.1
-            -I${devlibs}/include/libwpd-0.8
-            <!-- PERL -->
-            <!-- -Wno-comment -I${devlibs}/perl/lib/CORE -->
+            ${pcc.libwpg-0.1} ${pcc.libwpg-stream-0.1}
             <!-- PYTHON -->
             -I${devlibs}/python/include
             <!-- JAVA -->
@@ -378,18 +375,15 @@
            ${pcl.gtkmm-2.4}
            ${pcl.cairo} ${pcl.cairomm-1.0}
            ${pcl.gthread-2.0}
-           -lxml2 -lxslt
-           -lwpg-0.1 -lwpg-stream-0.1
+           ${pcl.libxslt}
+           ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
            ${pcl.ImageMagick++}
            ${pcl.fontconfig} ${pcl.freetype2}
            ${pcl.lcms}
            ${pcl.gsl}
            -lssl -lcrypto
            -lpng -ljpeg -ltiff -lpopt -lz
-           -lgc
-	   -lm
-           <!-- 2geom -->
-           <!-- -l2geom -->
+           -lgc -lm
        </libs>
     </link>
   </target>
@@ -433,7 +427,7 @@
            -lssl -lcrypto
            -lpng -ljpeg -ltiff -lpopt -lz
            -lgc
-	   -lintl -liconv -lm
+       -lintl -liconv -lm
        </libs>
     </link>
   </target>
