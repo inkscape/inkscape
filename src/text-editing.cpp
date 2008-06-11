@@ -270,6 +270,9 @@ static Inkscape::XML::Node* duplicate_node_without_children(Inkscape::XML::Docum
         case Inkscape::XML::COMMENT_NODE:
             return xml_doc->createComment(old_node->content());
 
+        case Inkscape::XML::PI_NODE:
+            return xml_doc->createPI(old_node->name(), old_node->content());
+
         case Inkscape::XML::DOCUMENT_NODE:
             return NULL;   // this had better never happen
     }
