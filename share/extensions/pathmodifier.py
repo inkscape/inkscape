@@ -226,7 +226,7 @@ class PathModifier(inkex.Effect):
             newNode = self.unlinkClone(node,doReplace)
             return self.objectToPath(newNode,doReplace)
         else:
-            inkex.errormsg(_("Please first convert objects to paths!  (Got <%s>.)") % node.tag)
+            inkex.errormsg(_("Please first convert objects to paths!  (Got [%s].)") % node.tag)
             return None
 
     def objectsToPaths(self,aList,doReplace=True):

@@ -11,7 +11,7 @@ import sys, simplestyle
 try:
     from xml.dom.minidom import parse
 except:
-    sys.exit(_('The export_gpl.py module requires PyXML.  Please download the latest version from <http://pyxml.sourceforge.net/>.'))
+    sys.exit(_('The export_gpl.py module requires PyXML.  Please download the latest version from http://pyxml.sourceforge.net/.'))
 
 colortags=(u'fill',u'stroke',u'stop-color',u'flood-color',u'lighting-color')
 colors={}

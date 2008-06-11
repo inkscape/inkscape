@@ -58,7 +58,7 @@ def unittouu(string):
 try:
     from lxml import etree
 except:
-    sys.exit(_('The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore this extension. Please download and install the latest version from <http://cheeseshop.python.org/pypi/lxml/>, or install it through your package manager by a command like: sudo apt-get install python-lxml'))
+    sys.exit(_('The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore this extension. Please download and install the latest version from http://cheeseshop.python.org/pypi/lxml/, or install it through your package manager by a command like: sudo apt-get install python-lxml'))
 
 def debug(what):
     sys.stderr.write(str(what) + "\n")
