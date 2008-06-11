@@ -844,11 +844,11 @@ Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
                 for (Inkscape::XML::Node * newroot_namedview_child = child->firstChild();
                         newroot_namedview_child != NULL;
                         newroot_namedview_child = newroot_namedview_child->next()) {
-                    oldroot_namedview->appendChild(newroot_namedview_child->duplicate(child->document()));
+                    oldroot_namedview->appendChild(newroot_namedview_child->duplicate(oldroot->document()));
                 }
             }
         } else {
-            oldroot->appendChild(child->duplicate(newroot->document()));
+            oldroot->appendChild(child->duplicate(oldroot->document()));
         }
     }
 
