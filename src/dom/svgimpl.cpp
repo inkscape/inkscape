@@ -75,106 +75,144 @@ static double s2d(const DOMString &s)
 #########################################################################*/
 
 /**
- * Used for mapping name->enum and enum->name. For SVG element types.
+ * Used for mapping name->enum and enum->name.
+ *  For SVG element and interface types.
  */
 typedef struct
 {
     const char *name;
     int         type;
-} SVGElementTableEntry;
+} SVGTableEntry;
 
 
 
-SVGElementTableEntry svgElementTable[] =
+SVGTableEntry interfaceTable[] = 
+{                                  
+    { "SVGAngle",                     SVG_ANGLE                       },
+    { "SVGAnimatedAngle",             SVG_ANIMATED_ANGLE              },
+    { "SVGAnimatedBoolean",           SVG_ANIMATED_BOOLEAN            },
+    { "SVGAnimatedEnumeration",       SVG_ANIMATED_ENUMERATION        },
+    { "SVGAnimatedInteger",           SVG_ANIMATED_INTEGER            },
+    { "SVGAnimatedLength",            SVG_ANIMATED_LENGTH             },
+    { "SVGAnimatedLengthList",        SVG_ANIMATED_LENGTH_LIST        },
+    { "SVGAnimatedNumber",            SVG_ANIMATED_NUMBER             },
+    { "SVGAnimatedNumberList",        SVG_ANIMATED_NUMBER_LIST        },
+    { "SVGAnimatedRect",              SVG_ANIMATED_RECT               },
+    { "SVGAnimatedString",            SVG_ANIMATED_STRING             },
+    { "SVGColor",                     SVG_COLOR                       },
+    { "SVGCSSRule",                   SVG_CSS_RULE                    },
+    { "SVGExternalResourcesRequired", SVG_EXTERNAL_RESOURCES_REQUIRED },
+    { "SVGFitToViewBox",              SVG_FIT_TO_VIEWBOX              },
+    { "SVGICCColor",                  SVG_ICCCOLOR                    },
+    { "SVGLangSpace",                 SVG_LANG_SPACE                  },
+    { "SVGLength",                    SVG_LENGTH                      },
+    { "SVGLengthList",                SVG_LENGTH_LIST                 },
+    { "SVGLocatable",                 SVG_LOCATABLE                   },
+    { "SVGNumber",                    SVG_NUMBER                      },
+    { "SVGNumberList",                SVG_NUMBER_LIST                 },
+    { "SVGRect",                      SVG_RECT                        },
+    { "SVGRenderingIntent",           SVG_RENDERING_INTENT            },
+    { "SVGStringList",                SVG_STRING_LIST                 },
+    { "SVGStylable",                  SVG_STYLABLE                    },
+    { "SVGTests",                     SVG_TESTS                       },
+    { "SVGTransformable",             SVG_TRANSFORMABLE               },
+    { "SVGUnitTypes",                 SVG_UNIT_TYPES                  },
+    { "SVGURIReference",              SVG_URI_REFERENCE               },
+    { "SVGViewSpec",                  SVG_VIEW_SPEC                   },
+    { "SVGZoomAndPan",                SVG_ZOOM_AND_PAN                }
+};
+
+
+SVGTableEntry elementTable[] =
 {
-  { "a",                     SVG_A_ELEMENT                   },
-  { "altGlyph",              SVG_ALTGLYPH_ELEMENT            },
-  { "altGlyphDef",           SVG_ALTGLYPHDEF_ELEMENT         },
-  { "altGlyphItem",          SVG_ALTGLYPHITEM_ELEMENT        },
-  { "animate",               SVG_ANIMATE_ELEMENT             },
-  { "animateColor",          SVG_ANIMATECOLOR_ELEMENT        },
-  { "animateMotion",         SVG_ANIMATEMOTION_ELEMENT       },
-  { "animateTransform",      SVG_ANIMATETRANSFORM_ELEMENT    },
-  { "circle",                SVG_CIRCLE_ELEMENT              },
-  { "clipPath",              SVG_CLIPPATH_ELEMENT            },
-  { "color-profile",         SVG_COLOR_PROFILE_ELEMENT       },
-  { "cursor",                SVG_CURSOR_ELEMENT              },
-  { "definition-src",        SVG_DEFINITION_SRC_ELEMENT      },
-  { "defs",                  SVG_DEFS_ELEMENT                },
-  { "desc",                  SVG_DESC_ELEMENT                },
-  { "ellipse",               SVG_ELLIPSE_ELEMENT             },
-  { "feBlend",               SVG_FEBLEND_ELEMENT             },
-  { "feColorMatrix",         SVG_FECOLORMATRIX_ELEMENT       },
-  { "feComponentTransfer",   SVG_FECOMPONENTTRANSFER_ELEMENT },
-  { "feComposite",           SVG_FECOMPOSITE_ELEMENT         },
-  { "feConvolveMatrix",      SVG_FECONVOLVEMATRIX_ELEMENT    },
-  { "feDiffuseLighting",     SVG_FEDIFFUSELIGHTING_ELEMENT   },
-  { "feDisplacementMap",     SVG_FEDISPLACEMENTMAP_ELEMENT   },
-  { "feDistantLight",        SVG_FEDISTANTLIGHT_ELEMENT      },
-  { "feFlood",               SVG_FEFLOOD_ELEMENT             },
-  { "feFuncA",               SVG_FEFUNCA_ELEMENT             },
-  { "feFuncB",               SVG_FEFUNCB_ELEMENT             },
-  { "feFuncG",               SVG_FEFUNCG_ELEMENT             },
-  { "feFuncR",               SVG_FEFUNCR_ELEMENT             },
-  { "feGaussianBlur",        SVG_FEGAUSSIANBLUR_ELEMENT      },
-  { "feImage",               SVG_FEIMAGE_ELEMENT             },
-  { "feMerge",               SVG_FEMERGE_ELEMENT             },
-  { "feMergeNode",           SVG_FEMERGENODE_ELEMENT         },
-  { "feMorphology",          SVG_FEMORPHOLOGY_ELEMENT        },
-  { "feOffset",              SVG_FEOFFSET_ELEMENT            },
-  { "fePointLight",          SVG_FEPOINTLIGHT_ELEMENT        },
-  { "feSpecularLighting",    SVG_FESPECULARLIGHTING_ELEMENT  },
-  { "feSpotLight",           SVG_FESPOTLIGHT_ELEMENT         },
-  { "feTile",                SVG_FETILE_ELEMENT              },
-  { "feTurbulence",          SVG_FETURBULENCE_ELEMENT        },
-  { "filter",                SVG_FILTER_ELEMENT              },
-  { "font",                  SVG_FONT_ELEMENT                },
-  { "font-face",             SVG_FONT_FACE_ELEMENT           },
-  { "font-face-format",      SVG_FONT_FACE_FORMAT_ELEMENT    },
-  { "font-face-name",        SVG_FONT_FACE_NAME_ELEMENT      },
-  { "font-face-src",         SVG_FONT_FACE_SRC_ELEMENT       },
-  { "font-face-uri",         SVG_FONT_FACE_URI_ELEMENT       },
-  { "foreignObject",         SVG_FOREIGNOBJECT_ELEMENT       },
-  { "g",                     SVG_G_ELEMENT                   },
-  { "glyph",                 SVG_GLYPH_ELEMENT               },
-  { "glyphRef",              SVG_GLYPHREF_ELEMENT            },
-  { "hkern",                 SVG_HKERN_ELEMENT               },
-  { "image",                 SVG_IMAGE_ELEMENT               },
-  { "line",                  SVG_LINE_ELEMENT                },
-  { "linearGradient",        SVG_LINEARGRADIENT_ELEMENT      },
-  { "marker",                SVG_MARKER_ELEMENT              },
-  { "mask",                  SVG_MASK_ELEMENT                },
-  { "metadata",              SVG_METADATA_ELEMENT            },
-  { "missing-glyph",         SVG_MISSING_GLYPH_ELEMENT       },
-  { "mpath",                 SVG_MPATH_ELEMENT               },
-  { "path",                  SVG_PATH_ELEMENT                },
-  { "pattern",               SVG_PATTERN_ELEMENT             },
-  { "polygon",               SVG_POLYGON_ELEMENT             },
-  { "polyline",              SVG_POLYLINE_ELEMENT            },
-  { "radialGradient",        SVG_RADIALGRADIENT_ELEMENT      },
-  { "rect",                  SVG_RECT_ELEMENT                },
-  { "script",                SVG_SCRIPT_ELEMENT              },
-  { "set",                   SVG_SET_ELEMENT                 },
-  { "stop",                  SVG_STOP_ELEMENT                },
-  { "style",                 SVG_STYLE_ELEMENT               },
-  { "svg",                   SVG_SVG_ELEMENT                 },
-  { "switch",                SVG_SWITCH_ELEMENT              },
-  { "symbol",                SVG_SYMBOL_ELEMENT              },
-  { "text",                  SVG_TEXT_ELEMENT                },
-  { "textPath",              SVG_TEXTPATH_ELEMENT            },
-  { "title",                 SVG_TITLE_ELEMENT               },
-  { "tref",                  SVG_TREF_ELEMENT                },
-  { "tspan",                 SVG_TSPAN_ELEMENT               },
-  { "use",                   SVG_USE_ELEMENT                 },
-  { "view",                  SVG_VIEW_ELEMENT                },
-  { "vkern",                 SVG_VKERN_ELEMENT               }
-  };
+    { "a",                            SVG_A_ELEMENT                   },
+    { "altGlyph",                     SVG_ALTGLYPH_ELEMENT            },
+    { "altGlyphDef",                  SVG_ALTGLYPHDEF_ELEMENT         },
+    { "altGlyphItem",                 SVG_ALTGLYPHITEM_ELEMENT        },
+    { "animate",                      SVG_ANIMATE_ELEMENT             },
+    { "animateColor",                 SVG_ANIMATECOLOR_ELEMENT        },
+    { "animateMotion",                SVG_ANIMATEMOTION_ELEMENT       },
+    { "animateTransform",             SVG_ANIMATETRANSFORM_ELEMENT    },
+    { "circle",                       SVG_CIRCLE_ELEMENT              },
+    { "clipPath",                     SVG_CLIPPATH_ELEMENT            },
+    { "color-profile",                SVG_COLOR_PROFILE_ELEMENT       },
+    { "cursor",                       SVG_CURSOR_ELEMENT              },
+    { "definition-src",               SVG_DEFINITION_SRC_ELEMENT      },
+    { "defs",                         SVG_DEFS_ELEMENT                },
+    { "desc",                         SVG_DESC_ELEMENT                },
+    { "ellipse",                      SVG_ELLIPSE_ELEMENT             },
+    { "feBlend",                      SVG_FEBLEND_ELEMENT             },
+    { "feColorMatrix",                SVG_FECOLORMATRIX_ELEMENT       },
+    { "feComponentTransfer",          SVG_FECOMPONENTTRANSFER_ELEMENT },
+    { "feComposite",                  SVG_FECOMPOSITE_ELEMENT         },
+    { "feConvolveMatrix",             SVG_FECONVOLVEMATRIX_ELEMENT    },
+    { "feDiffuseLighting",            SVG_FEDIFFUSELIGHTING_ELEMENT   },
+    { "feDisplacementMap",            SVG_FEDISPLACEMENTMAP_ELEMENT   },
+    { "feDistantLight",               SVG_FEDISTANTLIGHT_ELEMENT      },
+    { "feFlood",                      SVG_FEFLOOD_ELEMENT             },
+    { "feFuncA",                      SVG_FEFUNCA_ELEMENT             },
+    { "feFuncB",                      SVG_FEFUNCB_ELEMENT             },
+    { "feFuncG",                      SVG_FEFUNCG_ELEMENT             },
+    { "feFuncR",                      SVG_FEFUNCR_ELEMENT             },
+    { "feGaussianBlur",               SVG_FEGAUSSIANBLUR_ELEMENT      },
+    { "feImage",                      SVG_FEIMAGE_ELEMENT             },
+    { "feMerge",                      SVG_FEMERGE_ELEMENT             },
+    { "feMergeNode",                  SVG_FEMERGENODE_ELEMENT         },
+    { "feMorphology",                 SVG_FEMORPHOLOGY_ELEMENT        },
+    { "feOffset",                     SVG_FEOFFSET_ELEMENT            },
+    { "fePointLight",                 SVG_FEPOINTLIGHT_ELEMENT        },
+    { "feSpecularLighting",           SVG_FESPECULARLIGHTING_ELEMENT  },
+    { "feSpotLight",                  SVG_FESPOTLIGHT_ELEMENT         },
+    { "feTile",                       SVG_FETILE_ELEMENT              },
+    { "feTurbulence",                 SVG_FETURBULENCE_ELEMENT        },
+    { "filter",                       SVG_FILTER_ELEMENT              },
+    { "font",                         SVG_FONT_ELEMENT                },
+    { "font-face",                    SVG_FONT_FACE_ELEMENT           },
+    { "font-face-format",             SVG_FONT_FACE_FORMAT_ELEMENT    },
+    { "font-face-name",               SVG_FONT_FACE_NAME_ELEMENT      },
+    { "font-face-src",                SVG_FONT_FACE_SRC_ELEMENT       },
+    { "font-face-uri",                SVG_FONT_FACE_URI_ELEMENT       },
+    { "foreignObject",                SVG_FOREIGNOBJECT_ELEMENT       },
+    { "g",                            SVG_G_ELEMENT                   },
+    { "glyph",                        SVG_GLYPH_ELEMENT               },
+    { "glyphRef",                     SVG_GLYPHREF_ELEMENT            },
+    { "hkern",                        SVG_HKERN_ELEMENT               },
+    { "image",                        SVG_IMAGE_ELEMENT               },
+    { "line",                         SVG_LINE_ELEMENT                },
+    { "linearGradient",               SVG_LINEARGRADIENT_ELEMENT      },
+    { "marker",                       SVG_MARKER_ELEMENT              },
+    { "mask",                         SVG_MASK_ELEMENT                },
+    { "metadata",                     SVG_METADATA_ELEMENT            },
+    { "missing-glyph",                SVG_MISSING_GLYPH_ELEMENT       },
+    { "mpath",                        SVG_MPATH_ELEMENT               },
+    { "path",                         SVG_PATH_ELEMENT                },
+    { "pattern",                      SVG_PATTERN_ELEMENT             },
+    { "polygon",                      SVG_POLYGON_ELEMENT             },
+    { "polyline",                     SVG_POLYLINE_ELEMENT            },
+    { "radialGradient",               SVG_RADIALGRADIENT_ELEMENT      },
+    { "rect",                         SVG_RECT_ELEMENT                },
+    { "script",                       SVG_SCRIPT_ELEMENT              },
+    { "set",                          SVG_SET_ELEMENT                 },
+    { "stop",                         SVG_STOP_ELEMENT                },
+    { "style",                        SVG_STYLE_ELEMENT               },
+    { "svg",                          SVG_SVG_ELEMENT                 },
+    { "switch",                       SVG_SWITCH_ELEMENT              },
+    { "symbol",                       SVG_SYMBOL_ELEMENT              },
+    { "text",                         SVG_TEXT_ELEMENT                },
+    { "textPath",                     SVG_TEXTPATH_ELEMENT            },
+    { "title",                        SVG_TITLE_ELEMENT               },
+    { "tref",                         SVG_TREF_ELEMENT                },
+    { "tspan",                        SVG_TSPAN_ELEMENT               },
+    { "use",                          SVG_USE_ELEMENT                 },
+    { "view",                         SVG_VIEW_ELEMENT                },
+    { "vkern",                        SVG_VKERN_ELEMENT               }
+};
 
 
 static int _entryComparison(const void *vkey, const void *ventry)
 {
     const char *key = (const char *)vkey;
-    const SVGElementTableEntry *entry = (const SVGElementTableEntry *)ventry;
+    const SVGTableEntry *entry = (const SVGTableEntry *)ventry;
     return strcmp(key, entry->name);
 }
 
@@ -186,9 +224,9 @@ int svgElementStrToEnum(const char *str)
 {
     if (!str)
         return -1;
-    SVGElementTableEntry *entry = 
-           (SVGElementTableEntry *)bsearch(str, svgElementTable,
-            SVG_MAX_ELEMENT, sizeof(SVGElementTableEntry), _entryComparison);
+    SVGTableEntry *entry = 
+           (SVGTableEntry *)bsearch(str, elementTable,
+            SVG_MAX_ELEMENT, sizeof(SVGTableEntry), _entryComparison);
     if (!entry)
         return -1;
     return entry->type;
@@ -203,7 +241,43 @@ const char *svgElementEnumToStr(int type)
 {
     if (type < 0 || type >= SVG_MAX_ELEMENT)
         return "unknown";
-    return svgElementTable[type].name;
+    return elementTable[type].name;
+}
+
+
+/**
+ * Look up the SVG Interface type enum for a given string
+ * Return -1 if not found
+ */
+int svgInterfaceStrToEnum(const char *str)
+{
+    if (!str)
+        return -1;
+    SVGTableEntry *entry = 
+           (SVGTableEntry *)bsearch(str, interfaceTable,
+            SVG_NR_INTERFACES, sizeof(SVGTableEntry), _entryComparison);
+    if (!entry)
+        return -1;
+    return entry->type;
+}
+
+
+/**
+ * Return the string corresponding to a given SVG element type enum
+ * Return "unknown" if not found
+ */
+const char *svgInterfaceEnumToStr(int type)
+{
+    if (type < 1 || type > (int)SVG_ZOOM_AND_PAN)
+        return "unknown";
+    SVGTableEntry *entry = interfaceTable;
+    for (int i = 0 ; i < SVG_NR_INTERFACES ; i++)
+        {
+        if (entry->type == type)
+            return entry->name;
+        entry++;
+		}
+    return "unknown";
 }
 
 

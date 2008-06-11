@@ -68,7 +68,51 @@ typedef Ptr<SVGDocumentImpl> SVGDocumentImplPtr;
 /*#########################################################################
 ## Types
 #########################################################################*/
+/**
+ * Bitmasks for has_an interface for SVGElement
+ */ 
+#define SVG_ANGLE                          0x00000001
+#define SVG_ANIMATED_ANGLE                 0x00000002
+#define SVG_ANIMATED_BOOLEAN               0x00000004
+#define SVG_ANIMATED_ENUMERATION           0x00000008
+#define SVG_ANIMATED_INTEGER               0x00000010
+#define SVG_ANIMATED_LENGTH                0x00000020
+#define SVG_ANIMATED_LENGTH_LIST           0x00000040
+#define SVG_ANIMATED_NUMBER                0x00000080
+#define SVG_ANIMATED_NUMBER_LIST           0x00000100
+#define SVG_ANIMATED_RECT                  0x00000200
+#define SVG_ANIMATED_STRING                0x00000400
+#define SVG_COLOR                          0x00000800
+#define SVG_CSS_RULE                       0x00001000
+#define SVG_EXTERNAL_RESOURCES_REQUIRED    0x00002000
+#define SVG_FIT_TO_VIEWBOX                 0x00004000
+#define SVG_ICCCOLOR                       0x00008000
+#define SVG_LANG_SPACE                     0x00010000
+#define SVG_LENGTH                         0x00020000
+#define SVG_LENGTH_LIST                    0x00040000
+#define SVG_LOCATABLE                      0x00080000
+#define SVG_NUMBER                         0x00100000
+#define SVG_NUMBER_LIST                    0x00200000
+#define SVG_RECT                           0x00400000
+#define SVG_RENDERING_INTENT               0x00800000
+#define SVG_STRING_LIST                    0x01000000
+#define SVG_STYLABLE                       0x02000000
+#define SVG_TESTS                          0x04000000
+#define SVG_TRANSFORMABLE                  0x08000000
+#define SVG_UNIT_TYPES                     0x10000000
+#define SVG_URI_REFERENCE                  0x20000000
+#define SVG_VIEW_SPEC                      0x40000000
+#define SVG_ZOOM_AND_PAN                   0x80000000
 
+/**
+ * How many above?  Quite handy
+ */ 
+#define SVG_NR_INTERFACES                  32
+
+
+/**
+ * Enumerations for SVGElement types
+ */ 
 typedef enum
 {
 /**
