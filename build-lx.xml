@@ -285,7 +285,6 @@
         <flags>
             -Wall -Wformat -Werror=format-security -W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch
             -O2 -g
-            -mms-bitfields
         </flags>
         <defines>
             -DVERSION=\"${version}\"
