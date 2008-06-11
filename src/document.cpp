@@ -309,6 +309,9 @@ sp_document_create(Inkscape::XML::Document *rdoc,
     }
     /* End of quick hack 3 */
 
+    /* Eliminate any claim to adhere to a profile, as we don't try to */
+    rroot->setAttribute("baseProfile", NULL);
+
     // creating namedview
     if (!sp_item_group_get_child_by_name((SPGroup *) document->root, NULL, "sodipodi:namedview")) {
         // if there's none in the document already,
