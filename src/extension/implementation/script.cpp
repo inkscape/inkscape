@@ -53,6 +53,7 @@ FIXME:
 #include "extension/db.h"
 #include "script.h"
 #include "dialogs/dialog-events.h"
+#include "application/application.h"
 
 #include "util/glib-list-iterators.h"
 
@@ -1047,7 +1048,9 @@ Script::execute (const std::list<std::string> &in_command,
     }
 
     Glib::ustring stderr_data = fileerr.string();
-    if (stderr_data.length() != 0) {
+    if (stderr_data.length() != 0 &&
+        Inkscape::NSApplication::Application::getUseGui()
+       ) {
         checkStderr(stderr_data, Gtk::MESSAGE_INFO,
                                  _("Inkscape has received additional data from the script executed.  "
                                    "The script did not return an error, but this may indicate the results will not be as expected."));
