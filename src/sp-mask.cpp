@@ -43,7 +43,7 @@ static void sp_mask_set (SPObject *object, unsigned int key, const gchar *value)
 static void sp_mask_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
 static void sp_mask_update (SPObject *object, SPCtx *ctx, guint flags);
 static void sp_mask_modified (SPObject *object, guint flags);
-static Inkscape::XML::Node *sp_mask_write (SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_mask_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 SPMaskView *sp_mask_view_new_prepend (SPMaskView *list, unsigned int key, NRArenaItem *arenaitem);
 SPMaskView *sp_mask_view_list_remove (SPMaskView *list, SPMaskView *view);
@@ -257,15 +257,14 @@ sp_mask_modified (SPObject *object, guint flags)
 }
 
 static Inkscape::XML::Node *
-sp_mask_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_mask_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
 	if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-                Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
 		repr = xml_doc->createElement("svg:mask");
 	}
 
 	if (((SPObjectClass *) (parent_class))->write)
-		((SPObjectClass *) (parent_class))->write (object, repr, flags);
+		((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
 
 	return repr;
 }

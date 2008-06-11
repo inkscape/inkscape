@@ -67,7 +67,7 @@ static void sp_image_build (SPObject * object, SPDocument * document, Inkscape::
 static void sp_image_release (SPObject * object);
 static void sp_image_set (SPObject *object, unsigned int key, const gchar *value);
 static void sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags);
-static Inkscape::XML::Node *sp_image_write (SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_image_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static void sp_image_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
 static void sp_image_print (SPItem * item, SPPrintContext *ctx);
@@ -1003,14 +1003,13 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 }
 
 static Inkscape::XML::Node *
-sp_image_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_image_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
 	SPImage *image;
 
 	image = SP_IMAGE (object);
 
 	if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-                Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
 		repr = xml_doc->createElement("svg:image");
 	}
 
@@ -1026,7 +1025,7 @@ sp_image_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 #endif // ENABLE_LCMS
 
 	if (((SPObjectClass *) (parent_class))->write)
-		((SPObjectClass *) (parent_class))->write (object, repr, flags);
+		((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
 
 	return repr;
 }

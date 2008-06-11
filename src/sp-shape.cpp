@@ -57,7 +57,7 @@ static void sp_shape_release (SPObject *object);
 static void sp_shape_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags);
 static void sp_shape_modified (SPObject *object, unsigned int flags);
-static Inkscape::XML::Node *sp_shape_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_shape_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
 void sp_shape_print (SPItem * item, SPPrintContext * ctx);
@@ -219,10 +219,10 @@ sp_shape_set(SPObject *object, unsigned int key, gchar const *value)
 }
 
 static Inkscape::XML::Node *
-sp_shape_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_shape_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     if (((SPObjectClass *)(parent_class))->write) {
-        ((SPObjectClass *)(parent_class))->write(object, repr, flags);
+        ((SPObjectClass *)(parent_class))->write(object, doc, repr, flags);
     }
 
     return repr;

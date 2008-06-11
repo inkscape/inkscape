@@ -31,7 +31,7 @@ static void sp_spiral_class_init (SPSpiralClass *klass);
 static void sp_spiral_init (SPSpiral *spiral);
 
 static void sp_spiral_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
-static Inkscape::XML::Node *sp_spiral_write (SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_spiral_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_spiral_set (SPObject *object, unsigned int key, const gchar *value);
 static void sp_spiral_update (SPObject *object, SPCtx *ctx, guint flags);
 
@@ -141,12 +141,11 @@ sp_spiral_build (SPObject * object, SPDocument * document, Inkscape::XML::Node *
  * Virtual write: write spiral attributes to corresponding repr.
  */
 static Inkscape::XML::Node *
-sp_spiral_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_spiral_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
 	SPSpiral *spiral = SP_SPIRAL (object);
 
 	if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-                Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
 		repr = xml_doc->createElement("svg:path");
 	}
 
@@ -179,7 +178,7 @@ sp_spiral_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
     g_free (d);
 
     if (((SPObjectClass *) (parent_class))->write)
-        ((SPObjectClass *) (parent_class))->write (object, repr, flags | SP_SHAPE_WRITE_PATH);
+        ((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags | SP_SHAPE_WRITE_PATH);
 
     return repr;
 }

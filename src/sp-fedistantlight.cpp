@@ -39,7 +39,7 @@ static void sp_fedistantlight_build(SPObject *object, SPDocument *document, Inks
 static void sp_fedistantlight_release(SPObject *object);
 static void sp_fedistantlight_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_fedistantlight_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_fedistantlight_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_fedistantlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static SPObjectClass *feDistantLight_parent_class;
 
@@ -202,12 +202,12 @@ sp_fedistantlight_update(SPObject *object, SPCtx *ctx, guint flags)
  * Writes its settings to an incoming repr object, if any.
  */
 static Inkscape::XML::Node *
-sp_fedistantlight_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_fedistantlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPFeDistantLight *fedistantlight = SP_FEDISTANTLIGHT(object);
 
     if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
+        repr = SP_OBJECT_REPR(object)->duplicate(doc);
     }
 
     if (fedistantlight->azimuth_set)
@@ -216,7 +216,7 @@ sp_fedistantlight_write(SPObject *object, Inkscape::XML::Node *repr, guint flags
         sp_repr_set_css_double(repr, "elevation", fedistantlight->elevation);
 
     if (((SPObjectClass *) feDistantLight_parent_class)->write) {
-        ((SPObjectClass *) feDistantLight_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) feDistantLight_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

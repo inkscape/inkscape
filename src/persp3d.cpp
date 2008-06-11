@@ -30,7 +30,7 @@ static void persp3d_build(SPObject *object, SPDocument *document, Inkscape::XML:
 static void persp3d_release(SPObject *object);
 static void persp3d_set(SPObject *object, unsigned key, gchar const *value);
 static void persp3d_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *persp3d_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *persp3d_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static void persp3d_on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive, void * data);
 
@@ -256,14 +256,13 @@ persp3d_document_first_persp (SPDocument *document) {
  * Virtual write: write object attributes to repr.
  */
 static Inkscape::XML::Node *
-persp3d_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+persp3d_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     Persp3D *persp = SP_PERSP3D(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD & SP_OBJECT_WRITE_EXT) && !repr) {
         // this is where we end up when saving as plain SVG (also in other circumstances?);
         // hence we don't set the sodipodi:type attribute
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("inkscape:perspective");
     }
 
@@ -283,7 +282,7 @@ persp3d_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     if (((SPObjectClass *) persp3d_parent_class)->write)
-        (* ((SPObjectClass *) persp3d_parent_class)->write)(object, repr, flags);
+        (* ((SPObjectClass *) persp3d_parent_class)->write)(object, xml_doc, repr, flags);
 
     return repr;
 }

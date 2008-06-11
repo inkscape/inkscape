@@ -861,7 +861,7 @@ sp_main_console(int argc, char const **argv)
                 Inkscape::XML::Node *repr;
                 rdoc = sp_repr_document_new("svg:svg");
                 repr = rdoc->root();
-                repr = sp_document_root(doc)->updateRepr(repr, SP_OBJECT_WRITE_BUILD);
+                repr = sp_document_root(doc)->updateRepr(rdoc, repr, SP_OBJECT_WRITE_BUILD);
                 sp_repr_save_file(repr->document(), sp_export_svg, SP_SVG_NS_URI);
             }
             if (sp_export_ps) {

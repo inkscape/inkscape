@@ -342,12 +342,11 @@ void ColorProfile::set( SPObject *object, unsigned key, gchar const *value )
 /**
  * Callback: write attributes to associated repr.
  */
-Inkscape::XML::Node* ColorProfile::write( SPObject *object, Inkscape::XML::Node *repr, guint flags )
+Inkscape::XML::Node* ColorProfile::write( SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags )
 {
     ColorProfile *cprof = COLORPROFILE(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:color-profile");
     }
 
@@ -368,7 +367,7 @@ Inkscape::XML::Node* ColorProfile::write( SPObject *object, Inkscape::XML::Node 
     }
 
     if (cprof_parent_class->write) {
-        (* cprof_parent_class->write)(object, repr, flags);
+        (* cprof_parent_class->write)(object, xml_doc, repr, flags);
     }
 
     return repr;

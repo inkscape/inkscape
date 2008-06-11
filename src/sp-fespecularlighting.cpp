@@ -45,7 +45,7 @@ static void sp_feSpecularLighting_child_added(SPObject *object,
                                     Inkscape::XML::Node *ref);
 static void sp_feSpecularLighting_remove_child(SPObject *object, Inkscape::XML::Node *child);
 static void sp_feSpecularLighting_order_changed(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref);
-static Inkscape::XML::Node *sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_feSpecularLighting_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 static void sp_feSpecularLighting_children_modified(SPFeSpecularLighting *sp_specularlighting);
 
@@ -266,7 +266,7 @@ sp_feSpecularLighting_update(SPObject *object, SPCtx *ctx, guint flags)
  * Writes its settings to an incoming repr object, if any.
  */
 static Inkscape::XML::Node *
-sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPFeSpecularLighting *fespecularlighting = SP_FESPECULARLIGHTING(object);
     
@@ -276,7 +276,7 @@ sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint f
             // is this sane?
             //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
-            repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
+            repr = SP_OBJECT_REPR(object)->duplicate(doc);
         }
     }
     if (fespecularlighting->surfaceScale_set)
@@ -292,7 +292,7 @@ sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint f
         repr->setAttribute("lighting-color", c);
     }
     if (((SPObjectClass *) feSpecularLighting_parent_class)->write) {
-        ((SPObjectClass *) feSpecularLighting_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) feSpecularLighting_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

@@ -48,7 +48,7 @@ static void sp_root_child_added(SPObject *object, Inkscape::XML::Node *child, In
 static void sp_root_remove_child(SPObject *object, Inkscape::XML::Node *child);
 static void sp_root_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_root_modified(SPObject *object, guint flags);
-static Inkscape::XML::Node *sp_root_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_root_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static NRArenaItem *sp_root_show(SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 static void sp_root_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
@@ -577,12 +577,11 @@ sp_root_modified(SPObject *object, guint flags)
  * Writes the object into the repr object, then calls the parent's write routine.
  */
 static Inkscape::XML::Node *
-sp_root_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_root_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPRoot *root = SP_ROOT(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:svg");
     }
 
@@ -611,7 +610,7 @@ sp_root_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     if (((SPObjectClass *) (parent_class))->write)
-        ((SPObjectClass *) (parent_class))->write(object, repr, flags);
+        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
 
     return repr;
 }

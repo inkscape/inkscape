@@ -48,7 +48,7 @@ static void sp_skeleton_build(SPObject *object, SPDocument *document, Inkscape::
 static void sp_skeleton_release(SPObject *object);
 static void sp_skeleton_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_skeleton_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_skeleton_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_skeleton_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static SPObjectClass *skeleton_parent_class;
 
@@ -180,7 +180,7 @@ sp_skeleton_update(SPObject *object, SPCtx *ctx, guint flags)
  * Writes its settings to an incoming repr object, if any.
  */
 static Inkscape::XML::Node *
-sp_skeleton_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_skeleton_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     debug("0x%p",object);
     //SPSkeleton *skeleton = SP_SKELETON(object);
@@ -191,12 +191,12 @@ sp_skeleton_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
             // is this sane?
             repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
-            repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
+            repr = SP_OBJECT_REPR(object)->duplicate(doc);
         }
     }
 
     if (((SPObjectClass *) skeleton_parent_class)->write) {
-        ((SPObjectClass *) skeleton_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) skeleton_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

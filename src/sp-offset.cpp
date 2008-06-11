@@ -75,7 +75,7 @@ static void sp_offset_finalize(GObject *obj);
 
 static void sp_offset_build (SPObject * object, SPDocument * document,
                              Inkscape::XML::Node * repr);
-static Inkscape::XML::Node *sp_offset_write (SPObject * object, Inkscape::XML::Node * repr,
+static Inkscape::XML::Node *sp_offset_write (SPObject * object, Inkscape::XML::Document *doc, Inkscape::XML::Node * repr,
                                 guint flags);
 static void sp_offset_set (SPObject * object, unsigned int key,
                            const gchar * value);
@@ -259,12 +259,11 @@ sp_offset_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
  * Virtual write: write offset attributes to corresponding repr.
  */
 static Inkscape::XML::Node *
-sp_offset_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_offset_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPOffset *offset = SP_OFFSET (object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        Inkscape::XML::Document *xml_doc = SP_OBJECT_REPR(object)->document();
         repr = xml_doc->createElement("svg:path");
     }
 
@@ -292,7 +291,7 @@ sp_offset_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     g_free (d);
 
     if (((SPObjectClass *) (parent_class))->write)
-        ((SPObjectClass *) (parent_class))->write (object, repr,
+        ((SPObjectClass *) (parent_class))->write (object, xml_doc, repr,
                                                    flags | SP_SHAPE_WRITE_PATH);
 
     return repr;

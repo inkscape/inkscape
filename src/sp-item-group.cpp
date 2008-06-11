@@ -57,7 +57,7 @@ static void sp_group_remove_child (SPObject * object, Inkscape::XML::Node * chil
 static void sp_group_order_changed (SPObject * object, Inkscape::XML::Node * child, Inkscape::XML::Node * old_ref, Inkscape::XML::Node * new_ref);
 static void sp_group_update (SPObject *object, SPCtx *ctx, guint flags);
 static void sp_group_modified (SPObject *object, guint flags);
-static Inkscape::XML::Node *sp_group_write (SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_group_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_group_set(SPObject *object, unsigned key, char const *value);
 
 static void sp_group_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
@@ -218,7 +218,7 @@ sp_group_modified (SPObject *object, guint flags)
 }
 
 static Inkscape::XML::Node *
-sp_group_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_group_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
 	SPGroup *group;
 	SPObject *child;
@@ -229,12 +229,11 @@ sp_group_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 	if (flags & SP_OBJECT_WRITE_BUILD) {
 		GSList *l;
 		if (!repr) {
-                    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
                     repr = xml_doc->createElement("svg:g");
                 }
 		l = NULL;
 		for (child = sp_object_first_child(object); child != NULL; child = SP_OBJECT_NEXT(child) ) {
-			crepr = child->updateRepr(NULL, flags);
+			crepr = child->updateRepr(xml_doc, NULL, flags);
 			if (crepr) l = g_slist_prepend (l, crepr);
 		}
 		while (l) {
@@ -261,7 +260,7 @@ sp_group_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 	}
 
 	if (((SPObjectClass *) (parent_class))->write)
-		((SPObjectClass *) (parent_class))->write (object, repr, flags);
+		((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
 
 	return repr;
 }

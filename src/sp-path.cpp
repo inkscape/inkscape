@@ -53,7 +53,7 @@ static void sp_path_release(SPObject *object);
 static void sp_path_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_path_set(SPObject *object, unsigned key, gchar const *value);
 
-static Inkscape::XML::Node *sp_path_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_path_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static NR::Matrix sp_path_set_transform(SPItem *item, NR::Matrix const &xform);
 static gchar * sp_path_description(SPItem *item);
 static void sp_path_convert_to_guides(SPItem *item);
@@ -298,12 +298,11 @@ sp_path_set(SPObject *object, unsigned int key, gchar const *value)
  * Writes the path object into a Inkscape::XML::Node
  */
 static Inkscape::XML::Node *
-sp_path_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_path_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPShape *shape = (SPShape *) object;
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:path");
     }
 
@@ -327,7 +326,7 @@ sp_path_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     SP_PATH(shape)->connEndPair.writeRepr(repr);
 
     if (((SPObjectClass *)(parent_class))->write) {
-        ((SPObjectClass *)(parent_class))->write(object, repr, flags);
+        ((SPObjectClass *)(parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;

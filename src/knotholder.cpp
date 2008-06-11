@@ -161,7 +161,7 @@ KnotHolder::knot_ungrabbed_handler(SPKnot *knot)
         this->released(this->item);
     } else {
         SPObject *object = (SPObject *) this->item;
-        object->updateRepr(object->repr, SP_OBJECT_WRITE_EXT);
+        object->updateRepr();
 
         /* do cleanup tasks (e.g., for LPE items write the parameter values
          * that were changed by dragging the handle to SVG)

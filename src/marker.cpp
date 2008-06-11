@@ -46,7 +46,7 @@ static void sp_marker_build (SPObject *object, SPDocument *document, Inkscape::X
 static void sp_marker_release (SPObject *object);
 static void sp_marker_set (SPObject *object, unsigned int key, const gchar *value);
 static void sp_marker_update (SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_marker_write (SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_marker_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static NRArenaItem *sp_marker_private_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 static void sp_marker_private_hide (SPItem *item, unsigned int key);
@@ -489,14 +489,13 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
  * Writes the object's properties into its repr object.
  */
 static Inkscape::XML::Node *
-sp_marker_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_marker_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
 	SPMarker *marker;
 
 	marker = SP_MARKER (object);
 
 	if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-		Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
 		repr = xml_doc->createElement("svg:marker");
 	}
 
@@ -543,7 +542,7 @@ sp_marker_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 	repr->setAttribute("preserveAspectRatio", object->repr->attribute("preserveAspectRatio"));
 
 	if (((SPObjectClass *) (parent_class))->write)
-		((SPObjectClass *) (parent_class))->write (object, repr, flags);
+		((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
 
 	return repr;
 }

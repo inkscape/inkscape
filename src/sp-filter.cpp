@@ -51,7 +51,7 @@ static void sp_filter_child_added(SPObject *object,
                                     Inkscape::XML::Node *child,
                                     Inkscape::XML::Node *ref);
 static void sp_filter_remove_child(SPObject *object, Inkscape::XML::Node *child);
-static Inkscape::XML::Node *sp_filter_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_filter_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static void filter_ref_changed(SPObject *old_ref, SPObject *ref, SPFilter *filter);
 static void filter_ref_modified(SPObject *href, guint flags, SPFilter *filter);
@@ -281,12 +281,12 @@ sp_filter_update(SPObject *object, SPCtx *ctx, guint flags)
  * Writes its settings to an incoming repr object, if any.
  */
 static Inkscape::XML::Node *
-sp_filter_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_filter_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPFilter *filter = SP_FILTER(object);
 
     if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
+        repr = SP_OBJECT_REPR(object)->duplicate(doc);
     }
 
     if ((flags & SP_OBJECT_WRITE_ALL) || filter->filterUnits_set) {
@@ -350,7 +350,7 @@ sp_filter_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     if (((SPObjectClass *) filter_parent_class)->write) {
-        ((SPObjectClass *) filter_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) filter_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

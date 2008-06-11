@@ -56,7 +56,7 @@ private:
     static void release( SPObject *object );
     static void build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr );
     static void set( SPObject *object, unsigned key, gchar const *value );
-    static Inkscape::XML::Node *write( SPObject *object, Inkscape::XML::Node *repr, guint flags );
+    static Inkscape::XML::Node *write( SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags );
 #if ENABLE_LCMS
     static DWORD _getInputFormat( icColorSpaceSignature space );
     void _clearProfile();

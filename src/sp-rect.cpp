@@ -39,7 +39,7 @@ static void sp_rect_init(SPRect *rect);
 static void sp_rect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_rect_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_rect_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_rect_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_rect_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static gchar *sp_rect_description(SPItem *item);
 static NR::Matrix sp_rect_set_transform(SPItem *item, NR::Matrix const &xform);
@@ -197,12 +197,11 @@ sp_rect_update(SPObject *object, SPCtx *ctx, guint flags)
 }
 
 static Inkscape::XML::Node *
-sp_rect_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_rect_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPRect *rect = SP_RECT(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:rect");
     }
 
@@ -214,7 +213,7 @@ sp_rect_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     sp_repr_set_svg_double(repr, "y", rect->y.computed);
 
     if (((SPObjectClass *) parent_class)->write)
-        ((SPObjectClass *) parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) parent_class)->write(object, xml_doc, repr, flags);
 
     return repr;
 }

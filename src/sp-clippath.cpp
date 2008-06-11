@@ -45,7 +45,7 @@ static void sp_clippath_set(SPObject *object, unsigned int key, gchar const *val
 static void sp_clippath_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
 static void sp_clippath_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_clippath_modified(SPObject *object, guint flags);
-static Inkscape::XML::Node *sp_clippath_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_clippath_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 SPClipPathView *sp_clippath_view_new_prepend(SPClipPathView *list, unsigned int key, NRArenaItem *arenaitem);
 SPClipPathView *sp_clippath_view_list_remove(SPClipPathView *list, SPClipPathView *view);
@@ -242,15 +242,14 @@ sp_clippath_modified(SPObject *object, guint flags)
 }
 
 static Inkscape::XML::Node *
-sp_clippath_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_clippath_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:clipPath");
     }
 
     if (((SPObjectClass *) (parent_class))->write)
-        ((SPObjectClass *) (parent_class))->write(object, repr, flags);
+        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
 
     return repr;
 }

@@ -209,7 +209,7 @@ Svg::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *uri)
     } else {
         rdoc = sp_repr_document_new ("svg:svg");
         repr = rdoc->root();
-        repr = sp_document_root (doc)->updateRepr(repr, SP_OBJECT_WRITE_BUILD);
+        repr = sp_document_root (doc)->updateRepr(rdoc, repr, SP_OBJECT_WRITE_BUILD);
     }
 
     Inkscape::IO::fixupHrefs( doc, save_path, spns );

@@ -39,7 +39,7 @@ static void sp_fespotlight_build(SPObject *object, SPDocument *document, Inkscap
 static void sp_fespotlight_release(SPObject *object);
 static void sp_fespotlight_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_fespotlight_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_fespotlight_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_fespotlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static SPObjectClass *feSpotLight_parent_class;
 
@@ -328,12 +328,12 @@ sp_fespotlight_update(SPObject *object, SPCtx *ctx, guint flags)
  * Writes its settings to an incoming repr object, if any.
  */
 static Inkscape::XML::Node *
-sp_fespotlight_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_fespotlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPFeSpotLight *fespotlight = SP_FESPOTLIGHT(object);
 
     if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
+        repr = SP_OBJECT_REPR(object)->duplicate(doc);
     }
 
     if (fespotlight->x_set)
@@ -354,7 +354,7 @@ sp_fespotlight_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         sp_repr_set_css_double(repr, "limitingConeAngle", fespotlight->limitingConeAngle);
 
     if (((SPObjectClass *) feSpotLight_parent_class)->write) {
-        ((SPObjectClass *) feSpotLight_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) feSpotLight_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

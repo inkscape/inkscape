@@ -32,7 +32,7 @@ static void sp_flowregion_child_added (SPObject * object, Inkscape::XML::Node * 
 static void sp_flowregion_remove_child (SPObject * object, Inkscape::XML::Node * child);
 static void sp_flowregion_update (SPObject *object, SPCtx *ctx, guint flags);
 static void sp_flowregion_modified (SPObject *object, guint flags);
-static Inkscape::XML::Node *sp_flowregion_write (SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_flowregion_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static gchar * sp_flowregion_description (SPItem * item);
 
@@ -46,7 +46,7 @@ static void sp_flowregionexclude_child_added (SPObject * object, Inkscape::XML::
 static void sp_flowregionexclude_remove_child (SPObject * object, Inkscape::XML::Node * child);
 static void sp_flowregionexclude_update (SPObject *object, SPCtx *ctx, guint flags);
 static void sp_flowregionexclude_modified (SPObject *object, guint flags);
-static Inkscape::XML::Node *sp_flowregionexclude_write (SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_flowregionexclude_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static gchar * sp_flowregionexclude_description (SPItem * item);
 
@@ -231,17 +231,16 @@ sp_flowregion_modified (SPObject *object, guint flags)
 }
 
 static Inkscape::XML::Node *
-sp_flowregion_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_flowregion_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     if (flags & SP_OBJECT_WRITE_BUILD) {
 	if ( repr == NULL ) {
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
             repr = xml_doc->createElement("svg:flowRegion");
 	}
 
         GSList *l = NULL;
         for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-            Inkscape::XML::Node *crepr = child->updateRepr(NULL, flags);
+            Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
             if (crepr) l = g_slist_prepend(l, crepr);
         }
 
@@ -258,7 +257,7 @@ sp_flowregion_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
 	if (((SPObjectClass *) (flowregion_parent_class))->write)
-		((SPObjectClass *) (flowregion_parent_class))->write (object, repr, flags);
+		((SPObjectClass *) (flowregion_parent_class))->write (object, xml_doc, repr, flags);
 
 	return repr;
 }
@@ -448,17 +447,16 @@ sp_flowregionexclude_modified (SPObject *object, guint flags)
 }
 
 static Inkscape::XML::Node *
-sp_flowregionexclude_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_flowregionexclude_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     if (flags & SP_OBJECT_WRITE_BUILD) {
         if ( repr == NULL ) {
-	    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
             repr = xml_doc->createElement("svg:flowRegionExclude");
 	}
 
         GSList *l = NULL;
         for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-            Inkscape::XML::Node *crepr = child->updateRepr(NULL, flags);
+            Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
             if (crepr) l = g_slist_prepend(l, crepr);
         }
 
@@ -475,7 +473,7 @@ sp_flowregionexclude_write (SPObject *object, Inkscape::XML::Node *repr, guint f
     }
 
 	if (((SPObjectClass *) (flowregionexclude_parent_class))->write)
-		((SPObjectClass *) (flowregionexclude_parent_class))->write (object, repr, flags);
+		((SPObjectClass *) (flowregionexclude_parent_class))->write (object, xml_doc, repr, flags);
 
 	return repr;
 }

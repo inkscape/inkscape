@@ -40,7 +40,7 @@ static void sp_gaussianBlur_build(SPObject *object, SPDocument *document, Inksca
 static void sp_gaussianBlur_release(SPObject *object);
 static void sp_gaussianBlur_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_gaussianBlur_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_gaussianBlur_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_gaussianBlur_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_gaussianBlur_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 
 static SPFilterPrimitiveClass *gaussianBlur_parent_class;
@@ -155,7 +155,7 @@ sp_gaussianBlur_update(SPObject *object, SPCtx *ctx, guint flags)
  * Writes its settings to an incoming repr object, if any.
  */
 static Inkscape::XML::Node *
-sp_gaussianBlur_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_gaussianBlur_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
 
     // Inkscape-only object, not copied during an "plain SVG" dump:
@@ -164,12 +164,12 @@ sp_gaussianBlur_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
             // is this sane?
             // repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
-            repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
+            repr = SP_OBJECT_REPR(object)->duplicate(doc); // FIXME
         }
     }
 
     if (((SPObjectClass *) gaussianBlur_parent_class)->write) {
-        ((SPObjectClass *) gaussianBlur_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) gaussianBlur_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

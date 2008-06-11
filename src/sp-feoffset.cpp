@@ -34,7 +34,7 @@ static void sp_feOffset_build(SPObject *object, SPDocument *document, Inkscape::
 static void sp_feOffset_release(SPObject *object);
 static void sp_feOffset_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feOffset_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_feOffset_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_feOffset_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_feOffset_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 
 static SPFilterPrimitiveClass *feOffset_parent_class;
@@ -164,7 +164,7 @@ sp_feOffset_update(SPObject *object, SPCtx *ctx, guint flags)
  * Writes its settings to an incoming repr object, if any.
  */
 static Inkscape::XML::Node *
-sp_feOffset_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_feOffset_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     // Inkscape-only object, not copied during an "plain SVG" dump:
     if (flags & SP_OBJECT_WRITE_EXT) {
@@ -173,12 +173,12 @@ sp_feOffset_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
             // Not. Causes coredumps.
             // repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
-            repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
+            repr = SP_OBJECT_REPR(object)->duplicate(doc);
         }
     }
 
     if (((SPObjectClass *) feOffset_parent_class)->write) {
-        ((SPObjectClass *) feOffset_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) feOffset_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

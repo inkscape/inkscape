@@ -85,7 +85,7 @@ static void sp_object_release(SPObject *object);
 static void sp_object_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 
 static void sp_object_private_set(SPObject *object, unsigned int key, gchar const *value);
-static Inkscape::XML::Node *sp_object_private_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_object_private_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 /* Real handlers of repr signals */
 
@@ -1076,7 +1076,7 @@ sp_object_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gchar c
     // manual changes to extension attributes require the normal
     // attributes, which depend on them, to be updated immediately
     if (is_interactive) {
-        object->updateRepr(repr, 0);
+        object->updateRepr(0);
     }
 }
 
@@ -1112,10 +1112,10 @@ sp_xml_get_space_string(unsigned int space)
  * Callback for write event.
  */
 static Inkscape::XML::Node *
-sp_object_private_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_object_private_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     if (!repr && (flags & SP_OBJECT_WRITE_BUILD)) {
-        repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
+        repr = SP_OBJECT_REPR(object)->duplicate(doc);
         if (!( flags & SP_OBJECT_WRITE_EXT )) {
             repr->setAttribute("inkscape:collect", NULL);
         }
@@ -1180,7 +1180,7 @@ SPObject::updateRepr(unsigned int flags) {
     if (!SP_OBJECT_IS_CLONED(this)) {
         Inkscape::XML::Node *repr=SP_OBJECT_REPR(this);
         if (repr) {
-            return updateRepr(repr, flags);
+            return updateRepr(repr->document(), repr, flags);
         } else {
             g_critical("Attempt to update non-existent repr");
             return NULL;
@@ -1196,7 +1196,9 @@ SPObject::updateRepr(unsigned int flags) {
  *  saving as "Plain SVG"
  */
 Inkscape::XML::Node *
-SPObject::updateRepr(Inkscape::XML::Node *repr, unsigned int flags) {
+SPObject::updateRepr(Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, unsigned int flags) {
+    g_assert(doc != NULL);
+
     if (SP_OBJECT_IS_CLONED(this)) {
         /* cloned objects have no repr */
         return NULL;
@@ -1205,13 +1207,12 @@ SPObject::updateRepr(Inkscape::XML::Node *repr, unsigned int flags) {
         if (!(flags & SP_OBJECT_WRITE_BUILD) && !repr) {
             repr = SP_OBJECT_REPR(this);
         }
-        return ((SPObjectClass *) G_OBJECT_GET_CLASS(this))->write(this, repr, flags);
+        return ((SPObjectClass *) G_OBJECT_GET_CLASS(this))->write(this, doc, repr, flags);
     } else {
         g_warning("Class %s does not implement ::write", G_OBJECT_TYPE_NAME(this));
         if (!repr) {
             if (flags & SP_OBJECT_WRITE_BUILD) {
-                /// \todo FIXME:  Plumb an appropriate XML::Document into this
-                repr = SP_OBJECT_REPR(this)->duplicate(NULL);
+                repr = SP_OBJECT_REPR(this)->duplicate(doc);
             }
             /// \todo FIXME: else probably error (Lauris) */
         } else {

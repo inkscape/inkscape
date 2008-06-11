@@ -39,7 +39,7 @@ static void sp_fepointlight_build(SPObject *object, SPDocument *document, Inksca
 static void sp_fepointlight_release(SPObject *object);
 static void sp_fepointlight_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_fepointlight_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_fepointlight_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_fepointlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static SPObjectClass *fePointLight_parent_class;
 
@@ -225,12 +225,12 @@ sp_fepointlight_update(SPObject *object, SPCtx *ctx, guint flags)
  * Writes its settings to an incoming repr object, if any.
  */
 static Inkscape::XML::Node *
-sp_fepointlight_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_fepointlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPFePointLight *fepointlight = SP_FEPOINTLIGHT(object);
 
     if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
+        repr = SP_OBJECT_REPR(object)->duplicate(doc);
     }
 
     if (fepointlight->x_set)
@@ -241,7 +241,7 @@ sp_fepointlight_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         sp_repr_set_css_double(repr, "z", fepointlight->z);
 
     if (((SPObjectClass *) fePointLight_parent_class)->write) {
-        ((SPObjectClass *) fePointLight_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) fePointLight_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

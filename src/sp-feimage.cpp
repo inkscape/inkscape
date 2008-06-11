@@ -38,7 +38,7 @@ static void sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::X
 static void sp_feImage_release(SPObject *object);
 static void sp_feImage_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feImage_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_feImage_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_feImage_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_feImage_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 
 static SPFilterPrimitiveClass *feImage_parent_class;
@@ -213,7 +213,7 @@ sp_feImage_update(SPObject *object, SPCtx *ctx, guint flags)
  * Writes its settings to an incoming repr object, if any.
  */
 static Inkscape::XML::Node *
-sp_feImage_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_feImage_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     // Inkscape-only object, not copied during an "plain SVG" dump:
     if (flags & SP_OBJECT_WRITE_EXT) {
@@ -221,12 +221,12 @@ sp_feImage_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
             // is this sane?
             //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
-            repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
+            repr = SP_OBJECT_REPR(object)->duplicate(doc);
         }
     }
 
     if (((SPObjectClass *) feImage_parent_class)->write) {
-        ((SPObjectClass *) feImage_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) feImage_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

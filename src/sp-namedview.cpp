@@ -53,7 +53,7 @@ static void sp_namedview_release(SPObject *object);
 static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *value);
 static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
 static void sp_namedview_remove_child(SPObject *object, Inkscape::XML::Node *child);
-static Inkscape::XML::Node *sp_namedview_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_namedview_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static void sp_namedview_setup_guides(SPNamedView * nv);
 
@@ -687,7 +687,7 @@ static void sp_namedview_remove_child(SPObject *object, Inkscape::XML::Node *chi
     }
 }
 
-static Inkscape::XML::Node *sp_namedview_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node *sp_namedview_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     if ( ( flags & SP_OBJECT_WRITE_EXT ) &&
          repr != SP_OBJECT_REPR(object) )
@@ -695,8 +695,7 @@ static Inkscape::XML::Node *sp_namedview_write(SPObject *object, Inkscape::XML::
         if (repr) {
             repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
-             /// \todo FIXME:  Plumb an appropriate XML::Document into this
-             repr = SP_OBJECT_REPR(object)->duplicate(NULL);
+             repr = SP_OBJECT_REPR(object)->duplicate(doc);
         }
     }
 

@@ -22,7 +22,7 @@ static void sp_objectgroup_init (SPObjectGroup *objectgroup);
 static void sp_objectgroup_child_added (SPObject * object, Inkscape::XML::Node * child, Inkscape::XML::Node * ref);
 static void sp_objectgroup_remove_child (SPObject * object, Inkscape::XML::Node * child);
 static void sp_objectgroup_order_changed (SPObject * object, Inkscape::XML::Node * child, Inkscape::XML::Node * old_ref, Inkscape::XML::Node * new_ref);
-static Inkscape::XML::Node *sp_objectgroup_write (SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_objectgroup_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static SPObjectClass *parent_class;
 
@@ -98,7 +98,7 @@ sp_objectgroup_order_changed (SPObject *object, Inkscape::XML::Node *child, Inks
 }
 
 static Inkscape::XML::Node *
-sp_objectgroup_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_objectgroup_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
 	SPObjectGroup *group;
 	SPObject *child;
@@ -109,12 +109,11 @@ sp_objectgroup_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 	if (flags & SP_OBJECT_WRITE_BUILD) {
 		GSList *l;
 		if (!repr) {
-			Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
 		       	repr = xml_doc->createElement("svg:g");
 		}
 		l = NULL;
 		for ( child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-			crepr = child->updateRepr(NULL, flags);
+			crepr = child->updateRepr(xml_doc, NULL, flags);
 			if (crepr) l = g_slist_prepend (l, crepr);
 		}
 		while (l) {
@@ -129,7 +128,7 @@ sp_objectgroup_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 	}
 
 	if (((SPObjectClass *) (parent_class))->write)
-		((SPObjectClass *) (parent_class))->write (object, repr, flags);
+		((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
 
 	return repr;
 }

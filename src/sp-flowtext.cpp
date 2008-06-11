@@ -43,7 +43,7 @@ static void sp_flowtext_child_added(SPObject *object, Inkscape::XML::Node *child
 static void sp_flowtext_remove_child(SPObject *object, Inkscape::XML::Node *child);
 static void sp_flowtext_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_flowtext_modified(SPObject *object, guint flags);
-static Inkscape::XML::Node *sp_flowtext_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_flowtext_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_flowtext_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_flowtext_set(SPObject *object, unsigned key, gchar const *value);
 
@@ -291,16 +291,15 @@ sp_flowtext_set(SPObject *object, unsigned key, gchar const *value)
 }
 
 static Inkscape::XML::Node *
-sp_flowtext_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_flowtext_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     if ( flags & SP_OBJECT_WRITE_BUILD ) {
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         if ( repr == NULL ) repr = xml_doc->createElement("svg:flowRoot");
         GSList *l = NULL;
         for (SPObject *child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
             Inkscape::XML::Node *c_repr = NULL;
             if ( SP_IS_FLOWDIV(child) || SP_IS_FLOWPARA(child) || SP_IS_FLOWREGION(child) || SP_IS_FLOWREGIONEXCLUDE(child)) {
-                c_repr = child->updateRepr(NULL, flags);
+                c_repr = child->updateRepr(xml_doc, NULL, flags);
             }
             if ( c_repr ) l = g_slist_prepend(l, c_repr);
         }
@@ -318,7 +317,7 @@ sp_flowtext_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     if (((SPObjectClass *) (parent_class))->write)
-        ((SPObjectClass *) (parent_class))->write(object, repr, flags);
+        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
 
     return repr;
 }

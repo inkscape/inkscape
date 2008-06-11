@@ -12,7 +12,7 @@ static void sp_style_elem_class_init(SPStyleElemClass *klass);
 static void sp_style_elem_build(SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr);
 static void sp_style_elem_set(SPObject *object, unsigned const key, gchar const *const value);
 static void sp_style_elem_read_content(SPObject *);
-static Inkscape::XML::Node *sp_style_elem_write(SPObject *, Inkscape::XML::Node *, guint flags);
+static Inkscape::XML::Node *sp_style_elem_write(SPObject *, Inkscape::XML::Document *, Inkscape::XML::Node *, guint flags);
 
 static SPObjectClass *parent_class;
 
@@ -120,10 +120,9 @@ child_order_changed_cb(Inkscape::XML::Node *, Inkscape::XML::Node *,
 }
 
 static Inkscape::XML::Node *
-sp_style_elem_write(SPObject *const object, Inkscape::XML::Node *repr, guint const flags)
+sp_style_elem_write(SPObject *const object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint const flags)
 {
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:style");
     }
 
@@ -140,7 +139,7 @@ sp_style_elem_write(SPObject *const object, Inkscape::XML::Node *repr, guint con
     /* todo: media */
 
     if (((SPObjectClass *) parent_class)->write)
-        ((SPObjectClass *) parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) parent_class)->write(object, xml_doc, repr, flags);
 
     return repr;
 }

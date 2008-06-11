@@ -1680,7 +1680,7 @@ static void sp_stb_magnitude_value_changed( GtkAdjustment *adj, GObject *dataKlu
             sp_repr_set_svg_double(repr, "sodipodi:arg2",
                                    (sp_repr_get_double_attribute(repr, "sodipodi:arg1", 0.5)
                                     + M_PI / (gint)adj->value));
-            SP_OBJECT((SPItem *) items->data)->updateRepr(repr, SP_OBJECT_WRITE_EXT);
+            SP_OBJECT((SPItem *) items->data)->updateRepr();
             modmade = true;
         }
     }
@@ -1721,7 +1721,7 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKl
                 sp_repr_set_svg_double(repr, "sodipodi:r1", r2*adj->value);
             }
 
-            SP_OBJECT((SPItem *) items->data)->updateRepr(repr, SP_OBJECT_WRITE_EXT);
+            SP_OBJECT((SPItem *) items->data)->updateRepr();
             modmade = true;
         }
     }
@@ -1763,7 +1763,7 @@ static void sp_stb_sides_flat_state_changed( EgeSelectOneAction *act, GObject *d
         if (SP_IS_STAR((SPItem *) items->data)) {
             Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) items->data);
             repr->setAttribute("inkscape:flatsided", flat ? "true" : "false" );
-            SP_OBJECT((SPItem *) items->data)->updateRepr(repr, SP_OBJECT_WRITE_EXT);
+            SP_OBJECT((SPItem *) items->data)->updateRepr();
             modmade = true;
         }
     }
@@ -1800,7 +1800,7 @@ static void sp_stb_rounded_value_changed( GtkAdjustment *adj, GObject *dataKludg
         if (SP_IS_STAR((SPItem *) items->data)) {
             Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) items->data);
             sp_repr_set_svg_double(repr, "inkscape:rounded", (gdouble) adj->value);
-            SP_OBJECT(items->data)->updateRepr(repr, SP_OBJECT_WRITE_EXT);
+            SP_OBJECT(items->data)->updateRepr();
             modmade = true;
         }
     }
@@ -1834,7 +1834,7 @@ static void sp_stb_randomized_value_changed( GtkAdjustment *adj, GObject *dataKl
         if (SP_IS_STAR((SPItem *) items->data)) {
             Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) items->data);
             sp_repr_set_svg_double(repr, "inkscape:randomized", (gdouble) adj->value);
-            SP_OBJECT(items->data)->updateRepr(repr, SP_OBJECT_WRITE_EXT);
+            SP_OBJECT(items->data)->updateRepr();
             modmade = true;
         }
     }
@@ -2871,7 +2871,7 @@ sp_spl_tb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *value_nam
         if (SP_IS_SPIRAL((SPItem *) items->data)) {
             Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) items->data);
             sp_repr_set_svg_double( repr, namespaced_name, adj->value );
-            SP_OBJECT((SPItem *) items->data)->updateRepr(repr, SP_OBJECT_WRITE_EXT);
+            SP_OBJECT((SPItem *) items->data)->updateRepr();
             modmade = true;
         }
     }
@@ -3999,7 +3999,7 @@ static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
             if (SP_IS_ARC((SPItem *) items->data)) {
                 Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) items->data);
                 repr->setAttribute("sodipodi:open", "true");
-                SP_OBJECT((SPItem *) items->data)->updateRepr(repr, SP_OBJECT_WRITE_EXT);
+                SP_OBJECT((SPItem *) items->data)->updateRepr();
                 modmade = true;
             }
         }
@@ -4011,7 +4011,7 @@ static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
             if (SP_IS_ARC((SPItem *) items->data))    {
                 Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) items->data);
                 repr->setAttribute("sodipodi:open", NULL);
-                SP_OBJECT((SPItem *) items->data)->updateRepr(repr, SP_OBJECT_WRITE_EXT);
+                SP_OBJECT((SPItem *) items->data)->updateRepr();
                 modmade = true;
             }
         }

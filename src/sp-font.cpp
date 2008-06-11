@@ -29,7 +29,7 @@ static void sp_font_init(SPFont *font);
 static void sp_font_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_font_release(SPObject *object);
 static void sp_font_set(SPObject *object, unsigned int key, const gchar *value);
-static Inkscape::XML::Node *sp_font_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_font_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static void sp_font_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
 static void sp_font_remove_child(SPObject *object, Inkscape::XML::Node *child);
@@ -245,12 +245,11 @@ sp_font_update(SPObject *object, SPCtx *ctx, guint flags)
 
 #define COPY_ATTR(rd,rs,key) (rd)->setAttribute((key), rs->attribute(key));
 
-static Inkscape::XML::Node *sp_font_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node *sp_font_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPFont *font = SP_FONT(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:font");
     }
 
@@ -271,7 +270,7 @@ static Inkscape::XML::Node *sp_font_write(SPObject *object, Inkscape::XML::Node 
     }
 
     if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write(object, repr, flags);
+        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;

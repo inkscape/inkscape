@@ -41,7 +41,7 @@ static void sp_metadata_build (SPObject * object, SPDocument * document, Inkscap
 static void sp_metadata_release (SPObject *object);
 static void sp_metadata_set (SPObject *object, unsigned int key, const gchar *value);
 static void sp_metadata_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_metadata_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_metadata_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static SPObjectClass *metadata_parent_class;
 
@@ -183,7 +183,7 @@ sp_metadata_update(SPObject *object, SPCtx *ctx, guint flags)
  * \brief Writes it's settings to an incoming repr object, if any
  */
 static Inkscape::XML::Node *
-sp_metadata_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_metadata_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     debug("0x%08x",(unsigned int)object);
     //SPMetadata *metadata = SP_METADATA(object);
@@ -193,12 +193,12 @@ sp_metadata_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         if (repr) {
             repr->mergeFrom(SP_OBJECT_REPR (object), "id");
         } else {
-            repr = SP_OBJECT_REPR (object)->duplicate(NULL); // FIXME
+            repr = SP_OBJECT_REPR (object)->duplicate(doc);
         }
     }
 
     if (((SPObjectClass *) metadata_parent_class)->write)
-        ((SPObjectClass *) metadata_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) metadata_parent_class)->write(object, doc, repr, flags);
 
     return repr;
 }

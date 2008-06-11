@@ -45,7 +45,7 @@ static void sp_feDiffuseLighting_child_added(SPObject *object,
                                     Inkscape::XML::Node *ref);
 static void sp_feDiffuseLighting_remove_child(SPObject *object, Inkscape::XML::Node *child);
 static void sp_feDiffuseLighting_order_changed(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref);
-static Inkscape::XML::Node *sp_feDiffuseLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_feDiffuseLighting_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_feDiffuseLighting_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 static void sp_feDiffuseLighting_children_modified(SPFeDiffuseLighting *sp_diffuselighting);
 
@@ -239,7 +239,7 @@ sp_feDiffuseLighting_update(SPObject *object, SPCtx *ctx, guint flags)
  * Writes its settings to an incoming repr object, if any.
  */
 static Inkscape::XML::Node *
-sp_feDiffuseLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_feDiffuseLighting_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPFeDiffuseLighting *fediffuselighting = SP_FEDIFFUSELIGHTING(object);
     
@@ -249,7 +249,7 @@ sp_feDiffuseLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint fl
             // is this sane?
             //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
-            repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
+            repr = SP_OBJECT_REPR(object)->duplicate(doc);
         }
     }
     
@@ -270,7 +270,7 @@ sp_feDiffuseLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint fl
         repr->setAttribute("lighting-color", NULL);
         
     if (((SPObjectClass *) feDiffuseLighting_parent_class)->write) {
-        ((SPObjectClass *) feDiffuseLighting_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) feDiffuseLighting_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

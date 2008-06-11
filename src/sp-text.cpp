@@ -65,7 +65,7 @@ static void sp_text_child_added (SPObject *object, Inkscape::XML::Node *rch, Ink
 static void sp_text_remove_child (SPObject *object, Inkscape::XML::Node *rch);
 static void sp_text_update (SPObject *object, SPCtx *ctx, guint flags);
 static void sp_text_modified (SPObject *object, guint flags);
-static Inkscape::XML::Node *sp_text_write (SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_text_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static void sp_text_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
 static NRArenaItem *sp_text_show (SPItem *item, NRArena *arena, unsigned key, unsigned flags);
@@ -299,12 +299,11 @@ sp_text_modified (SPObject *object, guint flags)
 }
 
 static Inkscape::XML::Node *
-sp_text_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_text_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPText *text = SP_TEXT (object);
 
     if (flags & SP_OBJECT_WRITE_BUILD) {
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         if (!repr)
             repr = xml_doc->createElement("svg:text");
         GSList *l = NULL;
@@ -313,7 +312,7 @@ sp_text_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
             if (SP_IS_STRING(child)) {
                 crepr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
             } else {
-                crepr = child->updateRepr(NULL, flags);
+                crepr = child->updateRepr(xml_doc, NULL, flags);
             }
             if (crepr) l = g_slist_prepend (l, crepr);
         }
@@ -344,7 +343,7 @@ sp_text_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
         SP_OBJECT_REPR(text)->setAttribute("sodipodi:linespacing", NULL);
 
     if (((SPObjectClass *) (text_parent_class))->write)
-        ((SPObjectClass *) (text_parent_class))->write (object, repr, flags);
+        ((SPObjectClass *) (text_parent_class))->write (object, xml_doc, repr, flags);
 
     return repr;
 }

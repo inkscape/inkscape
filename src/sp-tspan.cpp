@@ -58,7 +58,7 @@ static void sp_tspan_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_tspan_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_tspan_modified(SPObject *object, unsigned flags);
 static void sp_tspan_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
-static Inkscape::XML::Node *sp_tspan_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_tspan_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static char *sp_tspan_description (SPItem *item);
 
 static SPItemClass *tspan_parent_class;
@@ -230,11 +230,10 @@ static void sp_tspan_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
 }
 
 static Inkscape::XML::Node *
-sp_tspan_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_tspan_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPTSpan *tspan = SP_TSPAN(object);
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
-	
+
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         repr = xml_doc->createElement("svg:tspan");
     }
@@ -246,9 +245,9 @@ sp_tspan_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
             Inkscape::XML::Node* c_repr=NULL;
             if ( SP_IS_TSPAN(child) || SP_IS_TREF(child) ) {
-                c_repr = child->updateRepr(NULL, flags);
+                c_repr = child->updateRepr(xml_doc, NULL, flags);
             } else if ( SP_IS_TEXTPATH(child) ) {
-                //c_repr = child->updateRepr(NULL, flags); // shouldn't happen
+                //c_repr = child->updateRepr(xml_doc, NULL, flags); // shouldn't happen
             } else if ( SP_IS_STRING(child) ) {
                 c_repr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
             }
@@ -264,7 +263,7 @@ sp_tspan_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
             if ( SP_IS_TSPAN(child) || SP_IS_TREF(child) ) {
                 child->updateRepr(flags);
             } else if ( SP_IS_TEXTPATH(child) ) {
-                //c_repr = child->updateRepr(NULL, flags); // shouldn't happen
+                //c_repr = child->updateRepr(xml_doc, NULL, flags); // shouldn't happen
             } else if ( SP_IS_STRING(child) ) {
                 SP_OBJECT_REPR(child)->setContent(SP_STRING(child)->string.c_str());
             }
@@ -272,7 +271,7 @@ sp_tspan_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 	
     if (((SPObjectClass *) tspan_parent_class)->write)
-        ((SPObjectClass *) tspan_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) tspan_parent_class)->write(object, xml_doc, repr, flags);
 	
     return repr;
 }
@@ -299,7 +298,7 @@ static void sp_textpath_release(SPObject *object);
 static void sp_textpath_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_textpath_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_textpath_modified(SPObject *object, unsigned flags);
-static Inkscape::XML::Node *sp_textpath_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_textpath_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static SPItemClass *textpath_parent_class;
 
@@ -502,11 +501,10 @@ sp_textpath_modified(SPObject *object, unsigned flags)
     }
 }
 static Inkscape::XML::Node *
-sp_textpath_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_textpath_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPTextPath *textpath = SP_TEXTPATH(object);
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
-	
+
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         repr = xml_doc->createElement("svg:textPath");
     }
@@ -531,9 +529,9 @@ sp_textpath_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
             Inkscape::XML::Node* c_repr=NULL;
             if ( SP_IS_TSPAN(child) || SP_IS_TREF(child) ) {
-                c_repr = child->updateRepr(NULL, flags);
+                c_repr = child->updateRepr(xml_doc, NULL, flags);
             } else if ( SP_IS_TEXTPATH(child) ) {
-                //c_repr = child->updateRepr(NULL, flags); // shouldn't happen
+                //c_repr = child->updateRepr(xml_doc, NULL, flags); // shouldn't happen
             } else if ( SP_IS_STRING(child) ) {
                 c_repr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
             }
@@ -549,7 +547,7 @@ sp_textpath_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
             if ( SP_IS_TSPAN(child) || SP_IS_TREF(child) ) {
                 child->updateRepr(flags);
             } else if ( SP_IS_TEXTPATH(child) ) {
-                //c_repr = child->updateRepr(NULL, flags); // shouldn't happen
+                //c_repr = child->updateRepr(xml_doc, NULL, flags); // shouldn't happen
             } else if ( SP_IS_STRING(child) ) {
                 SP_OBJECT_REPR(child)->setContent(SP_STRING(child)->string.c_str());
             }
@@ -557,7 +555,7 @@ sp_textpath_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 	
     if (((SPObjectClass *) textpath_parent_class)->write)
-        ((SPObjectClass *) textpath_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) textpath_parent_class)->write(object, xml_doc, repr, flags);
 	
     return repr;
 }

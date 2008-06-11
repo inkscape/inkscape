@@ -43,7 +43,7 @@ static void sp_lpe_item_release(SPObject *object);
 static void sp_lpe_item_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_lpe_item_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_lpe_item_modified (SPObject *object, unsigned int flags);
-static Inkscape::XML::Node *sp_lpe_item_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_lpe_item_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags);
 
 static void sp_lpe_item_child_added (SPObject * object, Inkscape::XML::Node * child, Inkscape::XML::Node * ref);
 static void sp_lpe_item_remove_child (SPObject * object, Inkscape::XML::Node * child);
@@ -251,7 +251,7 @@ sp_lpe_item_modified (SPObject *object, unsigned int flags)
  * Writes its settings to an incoming repr object, if any.
  */
 static Inkscape::XML::Node *
-sp_lpe_item_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_lpe_item_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPLPEItem *lpeitem = (SPLPEItem *) object;
 
@@ -263,7 +263,7 @@ sp_lpe_item_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     if (((SPObjectClass *)(parent_class))->write) {
-        ((SPObjectClass *)(parent_class))->write(object, repr, flags);
+        ((SPObjectClass *)(parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;

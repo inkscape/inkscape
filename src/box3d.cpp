@@ -47,7 +47,7 @@ static void box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::N
 static void box3d_release(SPObject *object);
 static void box3d_set(SPObject *object, unsigned int key, const gchar *value);
 static void box3d_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static gchar *box3d_description(SPItem *item);
 static NR::Matrix box3d_set_transform(SPItem *item, NR::Matrix const &xform);
@@ -256,14 +256,13 @@ box3d_update(SPObject *object, SPCtx *ctx, guint flags)
 }
 
 
-static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPBox3D *box = SP_BOX3D(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         // this is where we end up when saving as plain SVG (also in other circumstances?)
         // thus we don' set "sodipodi:type" so that the box is only saved as an ordinary svg:g
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:g");
     }
 
@@ -302,7 +301,7 @@ static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Node *r
     }
 
     if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write(object, repr, flags);
+        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;

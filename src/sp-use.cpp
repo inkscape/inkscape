@@ -47,7 +47,7 @@ static void sp_use_finalize(GObject *obj);
 static void sp_use_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_use_release(SPObject *object);
 static void sp_use_set(SPObject *object, unsigned key, gchar const *value);
-static Inkscape::XML::Node *sp_use_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_use_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_use_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_use_modified(SPObject *object, guint flags);
 
@@ -242,17 +242,16 @@ sp_use_set(SPObject *object, unsigned key, gchar const *value)
 }
 
 static Inkscape::XML::Node *
-sp_use_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_use_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPUse *use = SP_USE(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:use");
     }
 
     if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write(object, repr, flags);
+        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
     }
 
     sp_repr_set_svg_double(repr, "x", use->x.computed);

@@ -38,7 +38,7 @@ static void sp_feColorMatrix_build(SPObject *object, SPDocument *document, Inksc
 static void sp_feColorMatrix_release(SPObject *object);
 static void sp_feColorMatrix_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feColorMatrix_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_feColorMatrix_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_feColorMatrix_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_feColorMatrix_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 
 static SPFilterPrimitiveClass *feColorMatrix_parent_class;
@@ -186,7 +186,7 @@ sp_feColorMatrix_update(SPObject *object, SPCtx *ctx, guint flags)
  * Writes its settings to an incoming repr object, if any.
  */
 static Inkscape::XML::Node *
-sp_feColorMatrix_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_feColorMatrix_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     // Inkscape-only object, not copied during an "plain SVG" dump:
     if (flags & SP_OBJECT_WRITE_EXT) {
@@ -194,12 +194,12 @@ sp_feColorMatrix_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
             // is this sane?
             //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
-            repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
+            repr = SP_OBJECT_REPR(object)->duplicate(doc);
         }
     }
 
     if (((SPObjectClass *) feColorMatrix_parent_class)->write) {
-        ((SPObjectClass *) feColorMatrix_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) feColorMatrix_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

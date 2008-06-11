@@ -398,7 +398,7 @@ Inkscape::Text::Layout::iterator sp_te_insert_line (SPItem *item, Inkscape::Text
         // TODO
         // I think the only case to put here is arbitrary gaps, which nobody uses yet
     }
-    item->updateRepr(SP_OBJECT_REPR(item),SP_OBJECT_WRITE_EXT);
+    item->updateRepr();
     unsigned char_index = layout->iteratorToCharIndex(position);
     te_update_layout_now(item);
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -520,7 +520,7 @@ sp_te_insert(SPItem *item, Inkscape::Text::Layout::iterator const &position, gch
         }
     }
 
-    item->updateRepr(SP_OBJECT_REPR(item),SP_OBJECT_WRITE_EXT);
+    item->updateRepr();
     unsigned char_index = layout->iteratorToCharIndex(position);
     te_update_layout_now(item);
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);

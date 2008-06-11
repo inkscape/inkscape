@@ -340,7 +340,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
                  NR::Matrix const &affine = NR::Matrix(NR::translate(move));
                  sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * affine);
                  sp_item_write_transform(item, repr, item->transform,  NULL);
-                 SP_OBJECT (current_row->data)->updateRepr(repr, SP_OBJECT_WRITE_EXT);
+                 SP_OBJECT (current_row->data)->updateRepr();
                  cnt +=1;
              }
              g_slist_free (current_row);

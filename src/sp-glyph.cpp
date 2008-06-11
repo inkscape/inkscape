@@ -25,7 +25,7 @@ static void sp_glyph_init(SPGlyph *glyph);
 static void sp_glyph_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_glyph_release(SPObject *object);
 static void sp_glyph_set(SPObject *object, unsigned int key, const gchar *value);
-static Inkscape::XML::Node *sp_glyph_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_glyph_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_glyph_update(SPObject *object, SPCtx *ctx, guint flags);
 
 static SPObjectClass *parent_class;
@@ -257,12 +257,11 @@ sp_glyph_update(SPObject *object, SPCtx *ctx, guint flags)
 
 #define COPY_ATTR(rd,rs,key) (rd)->setAttribute((key), rs->attribute(key));
 
-static Inkscape::XML::Node *sp_glyph_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node *sp_glyph_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
 //    SPGlyph *glyph = SP_GLYPH(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:glyph");
     }
 
@@ -292,7 +291,7 @@ static Inkscape::XML::Node *sp_glyph_write(SPObject *object, Inkscape::XML::Node
     }
 
     if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write(object, repr, flags);
+        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;

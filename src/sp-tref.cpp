@@ -63,7 +63,7 @@ static void sp_tref_release(SPObject *object);
 static void sp_tref_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_tref_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_tref_modified(SPObject *object, guint flags);
-static Inkscape::XML::Node *sp_tref_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_tref_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static void sp_tref_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
 static gchar *sp_tref_description(SPItem *item);
@@ -290,14 +290,13 @@ sp_tref_modified(SPObject *object, guint flags)
  * Writes its settings to an incoming repr object, if any.
  */
 static Inkscape::XML::Node *
-sp_tref_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_tref_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     debug("0x%p",object);
 
     SPTRef *tref = SP_TREF(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:tref");
     }
 
@@ -311,7 +310,7 @@ sp_tref_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     if (((SPObjectClass *) tref_parent_class)->write) {
-        ((SPObjectClass *) tref_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) tref_parent_class)->write(object, xml_doc, repr, flags);
     }
 
     return repr;

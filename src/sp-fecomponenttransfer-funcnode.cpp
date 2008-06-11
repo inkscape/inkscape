@@ -40,7 +40,7 @@ static void sp_fefuncnode_build(SPObject *object, SPDocument *document, Inkscape
 static void sp_fefuncnode_release(SPObject *object);
 static void sp_fefuncnode_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_fefuncnode_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_fefuncnode_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_fefuncnode_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static SPObjectClass *feFuncNode_parent_class;
 
@@ -309,12 +309,12 @@ sp_fefuncnode_update(SPObject *object, SPCtx *ctx, guint flags)
  * Writes its settings to an incoming repr object, if any.
  */
 static Inkscape::XML::Node *
-sp_fefuncnode_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_fefuncnode_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPFeFuncNode *fefuncnode = SP_FEFUNCNODE(object);
 
     if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
+        repr = SP_OBJECT_REPR(object)->duplicate(doc);
     }
 
     (void)fefuncnode;
@@ -327,7 +327,7 @@ TODO: I'm not sure what to do here...
         sp_repr_set_css_double(repr, "elevation", fefuncnode->elevation);*/
 
     if (((SPObjectClass *) feFuncNode_parent_class)->write) {
-        ((SPObjectClass *) feFuncNode_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) feFuncNode_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

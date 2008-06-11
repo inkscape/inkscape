@@ -67,6 +67,7 @@
 namespace Inkscape {
 namespace XML {
 class Node;
+class Document;
 }
 }
 
@@ -374,7 +375,7 @@ struct SPObject : public GObject {
     /** @brief Updates the object's repr based on the object's state.
      *
      *  This method updates the the repr attached to the object to reflect the object's current
-     *  state; see the two-argument version for details.
+     *  state; see the three-argument version for details.
      *
      *  @param flags object write flags that apply to this update
      *
@@ -402,7 +403,7 @@ struct SPObject : public GObject {
      *
      *  @return the updated repr
      */
-    Inkscape::XML::Node *updateRepr(Inkscape::XML::Node *repr, unsigned int flags);
+    Inkscape::XML::Node *updateRepr(Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, unsigned int flags);
 
     /** @brief Queues an deferred update of this object's display.
      *
@@ -518,7 +519,7 @@ struct SPObjectClass {
     /* Modification handler */
     void (* modified) (SPObject *object, unsigned int flags);
 
-    Inkscape::XML::Node * (* write) (SPObject *object, Inkscape::XML::Node *repr, unsigned int flags);
+    Inkscape::XML::Node * (* write) (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, unsigned int flags);
 };
 
 

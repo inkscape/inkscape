@@ -82,7 +82,7 @@ static void sp_item_build(SPObject *object, SPDocument *document, Inkscape::XML:
 static void sp_item_release(SPObject *object);
 static void sp_item_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_item_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *sp_item_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_item_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static gchar *sp_item_private_description(SPItem *item);
 static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p);
@@ -654,7 +654,7 @@ sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
 }
 
 static Inkscape::XML::Node *
-sp_item_write(SPObject *const object, Inkscape::XML::Node *repr, guint flags)
+sp_item_write(SPObject *const object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPItem *item = SP_ITEM(object);
 
@@ -686,7 +686,7 @@ sp_item_write(SPObject *const object, Inkscape::XML::Node *repr, guint flags)
     }
 
     if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write(object, repr, flags);
+        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;

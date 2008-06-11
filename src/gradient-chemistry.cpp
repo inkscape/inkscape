@@ -75,7 +75,7 @@ sp_gradient_ensure_vector_normalized(SPGradient *gr)
     /* If gr hrefs some other gradient, remove the href */
     if (gr->ref->getObject()) {
         /* We are hrefing someone, so require flattening */
-        SP_OBJECT(gr)->updateRepr(((SPObject *) gr)->repr, SP_OBJECT_WRITE_EXT | SP_OBJECT_WRITE_ALL);
+        SP_OBJECT(gr)->updateRepr(SP_OBJECT_WRITE_EXT | SP_OBJECT_WRITE_ALL);
         sp_gradient_repr_set_link(SP_OBJECT_REPR(gr), NULL);
     }
 

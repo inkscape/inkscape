@@ -39,7 +39,7 @@ static void sp_feComponentTransfer_update(SPObject *object, SPCtx *ctx, guint fl
 static void sp_feComponentTransfer_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
 static void sp_feComponentTransfer_remove_child(SPObject *object, Inkscape::XML::Node *child);
 static void sp_feComponentTransfer_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
-static Inkscape::XML::Node *sp_feComponentTransfer_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_feComponentTransfer_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static SPFilterPrimitiveClass *feComponentTransfer_parent_class;
 
 GType
@@ -208,7 +208,7 @@ sp_feComponentTransfer_update(SPObject *object, SPCtx *ctx, guint flags)
  * Writes its settings to an incoming repr object, if any.
  */
 static Inkscape::XML::Node *
-sp_feComponentTransfer_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+sp_feComponentTransfer_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     // Inkscape-only object, not copied during an "plain SVG" dump:
     if (flags & SP_OBJECT_WRITE_EXT) {
@@ -216,12 +216,12 @@ sp_feComponentTransfer_write(SPObject *object, Inkscape::XML::Node *repr, guint 
             // is this sane?
             //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
-            repr = SP_OBJECT_REPR(object)->duplicate(NULL); // FIXME
+            repr = SP_OBJECT_REPR(object)->duplicate(doc);
         }
     }
 
     if (((SPObjectClass *) feComponentTransfer_parent_class)->write) {
-        ((SPObjectClass *) feComponentTransfer_parent_class)->write(object, repr, flags);
+        ((SPObjectClass *) feComponentTransfer_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

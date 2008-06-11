@@ -28,7 +28,7 @@ static void livepatheffect_build(SPObject *object, SPDocument *document, Inkscap
 static void livepatheffect_release(SPObject *object);
 
 static void livepatheffect_set(SPObject *object, unsigned key, gchar const *value);
-static Inkscape::XML::Node *livepatheffect_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *livepatheffect_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static void livepatheffect_on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive, void * data);
 
@@ -203,7 +203,7 @@ livepatheffect_set(SPObject *object, unsigned key, gchar const *value)
  * Virtual write: write object attributes to repr.
  */
 static Inkscape::XML::Node *
-livepatheffect_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+livepatheffect_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
 #ifdef LIVEPATHEFFECT_VERBOSE
     g_print("Write livepatheffect");
@@ -212,7 +212,6 @@ livepatheffect_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     LivePathEffectObject *lpeobj = LIVEPATHEFFECT(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("inkscape:path-effect");
     }
 
@@ -224,7 +223,7 @@ livepatheffect_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     lpeobj->lpe->writeParamsToSVG();
 
     if (((SPObjectClass *) livepatheffect_parent_class)->write)
-        (* ((SPObjectClass *) livepatheffect_parent_class)->write)(object, repr, flags);
+        (* ((SPObjectClass *) livepatheffect_parent_class)->write)(object, xml_doc, repr, flags);
 
     return repr;
 }

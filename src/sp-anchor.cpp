@@ -32,7 +32,7 @@ static void sp_anchor_init(SPAnchor *anchor);
 static void sp_anchor_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_anchor_release(SPObject *object);
 static void sp_anchor_set(SPObject *object, unsigned int key, const gchar *value);
-static Inkscape::XML::Node *sp_anchor_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *sp_anchor_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static gchar *sp_anchor_description(SPItem *item);
 static gint sp_anchor_event(SPItem *item, SPEvent *event);
@@ -143,12 +143,11 @@ static void sp_anchor_set(SPObject *object, unsigned int key, const gchar *value
 
 #define COPY_ATTR(rd,rs,key) (rd)->setAttribute((key), rs->attribute(key));
 
-static Inkscape::XML::Node *sp_anchor_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node *sp_anchor_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPAnchor *anchor = SP_ANCHOR(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(object));
         repr = xml_doc->createElement("svg:a");
     }
 
@@ -165,7 +164,7 @@ static Inkscape::XML::Node *sp_anchor_write(SPObject *object, Inkscape::XML::Nod
     }
 
     if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write(object, repr, flags);
+        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;
