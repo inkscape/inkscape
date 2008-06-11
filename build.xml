@@ -293,12 +293,11 @@
             ${pcc.gtkmm-2.4}
             <!-- OTHER -->
             -I${devlibs}/include/libxml2 
-            -I${devlibs}/include/freetype2
-            -I${devlibs}/include/cairo
-            -I${devlibs}/include/poppler
+            ${pcc.freetype2}
+            ${pcc.cairo}
+            ${pcc.poppler}
             -I${devlibs}/include/gc
-            -I${devlibs}/include/libwpg-0.1
-            -I${devlibs}/include/libwpd-0.8
+            ${pcc.libwpg-0.1} ${pcc.libwpg-stream-0.1}
             <!-- PERL -->
             <!-- -Wno-comment -I${devlibs}/perl/lib/CORE -->
             <!-- PYTHON -->
@@ -378,29 +377,21 @@
        </fileset>
        <libs>
            -L${devlibs}/lib
-           -lpoppler-cairo -lpoppler-glib -lpoppler.dll 
+           ${pcl.poppler-cairo} ${pcl.poppler-glib} ${pcl.poppler} 
            ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${pcl.gthread-2.0}
-           <!-- PERL -->
-           <!-- -L${devlibs}/perl/lib/CORE -lperl58 -->
-           <!-- PYTHON -->
-           <!-- -L${devlibs}/python/libs -lpython25 -->
            ${devlibs}/bin/libxml2.dll
            ${devlibs}/bin/libxslt.dll
-           -lcairo.dll
-           -lcairomm-1.0.dll
-		   -lwpg-0.1.dll -lwpg-stream-0.1.dll
-           -lwpd-0.8.dll -lwpd-stream-0.8.dll
+           ${pcl.cairo} ${pcl.cairomm-1.0}
+		   ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
            ${devlibs}/lib/iconv.lib
-           -lMagick++ -lWand -lMagick
-           -lfreetype.dll -lfontconfig.dll
+           ${pcl.ImageMagick++}
+           ${pcl.fontconfig} ${pcl.freetype2}
            -lssl -lcrypto
-           -llcms.dll
-           -lgsl
+           ${pcl.lcms}
+           ${pcl.gsl}
            -lpng -ljpeg.dll -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
            -lgc
 		   -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
-           <!-- 2geom -->
-           <!-- -l2geom -->
        </libs>
     </link>
   </target>
