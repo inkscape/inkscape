@@ -788,6 +788,8 @@ CairoRenderContext::finish(void)
         cairo_show_page(_cr);
 
     cairo_destroy(_cr);
+    cairo_surface_finish(_surface);
+    cairo_status_t status = cairo_surface_status(_surface);
     cairo_surface_destroy(_surface);
     _cr = NULL;
     _surface = NULL;
@@ -805,7 +807,10 @@ CairoRenderContext::finish(void)
         _stream = NULL;
     }
 
-    return true;
+    if (status == CAIRO_STATUS_SUCCESS)
+        return true;
+    else
+        return false;
 }
 
 void

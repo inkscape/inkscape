@@ -383,6 +383,8 @@ PrintCairoPDF::finish(Inkscape::Extension::Print *mod)
     cairo_show_page(cr);
 
     cairo_destroy(cr);
+    cairo_surface_finish(pdf_surface);
+    cairo_status_t status = cairo_surface_status(pdf_surface);
     cairo_surface_destroy(pdf_surface);
     cr = NULL;
     pdf_surface = NULL;
@@ -394,7 +396,10 @@ PrintCairoPDF::finish(Inkscape::Extension::Print *mod)
     fclose(_stream);
     _stream = 0;
 
-    return 1;
+    if (status == CAIRO_STATUS_SUCCESS)
+        return true;
+    else
+        return false;
 }
 
 unsigned int
