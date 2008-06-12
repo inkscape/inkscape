@@ -108,6 +108,8 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 
     Persp3D *current_persp3d; // "currently active" perspective (e.g., newly created boxes are attached to this one)
 
+    GSList *_collection_queue;
+
     void add_persp3d (Persp3D * const persp);
     void remove_persp3d (Persp3D * const persp);
 
@@ -130,8 +132,6 @@ sigc::connection connectCommit(CommitSignal::slot_type slot);
 
     void _emitModified();
 
-    GSList *_collection_queue;
-
     void addUndoObserver(Inkscape::UndoStackObserver& observer);
     void removeUndoObserver(Inkscape::UndoStackObserver& observer);
 
@@ -141,7 +141,7 @@ sigc::connection connectCommit(CommitSignal::slot_type slot);
     bool isSeeking() const;
 
     bool isModifiedSinceSave() const { return modified_since_save; }
-    void setModifiedSinceSave(bool modified=true) {
+    void setModifiedSinceSave(bool modified = true) {
         modified_since_save = modified;
     }
 

@@ -77,33 +77,30 @@ static gint doc_count = 0;
 
 static unsigned long next_serial = 0;
 
-SPDocument::SPDocument() {
-    SPDocumentPrivate *p;
-
-    keepalive = FALSE;
-    virgin    = TRUE;
-
-    modified_id = 0;
-
-    rdoc = NULL;
-    rroot = NULL;
-    root = NULL;
-    style_cascade = cr_cascade_new(NULL, NULL, NULL);
-
-    uri = NULL;
-    base = NULL;
-    name = NULL;
-
-    _collection_queue = NULL;
-
-    // Initialise instance of connector router.
-    router = new Avoid::Router();
+SPDocument::SPDocument() :
+    keepalive(FALSE),
+    virgin(TRUE),
+    modified_since_save(FALSE),
+    rdoc(0),
+    rroot(0),
+    root(0),
+    style_cascade(cr_cascade_new(NULL, NULL, NULL)),
+    uri(0),
+    base(0),
+    name(0),
+    priv(0), // reset in ctor
+    actionkey(0),
+    modified_id(0),
+    profileManager(0), // deferred until after other initialization
+    router(new Avoid::Router()),
+    perspectives(0),
+    current_persp3d(0),
+    _collection_queue(0)
+{
     // Don't use the Consolidate moves optimisation.
     router->ConsolidateMoves = false;
 
-    perspectives = NULL;
-
-    p = new SPDocumentPrivate();
+    SPDocumentPrivate *p = new SPDocumentPrivate();
 
     p->serial = next_serial++;
 
