@@ -69,7 +69,7 @@ LPEPerspectivePath::~LPEPerspectivePath()
 void
 LPEPerspectivePath::doBeforeEffect (SPLPEItem *lpeitem)
 {
-    original_bbox(lpeitem, true); 
+    original_bbox(lpeitem, true);
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
@@ -128,7 +128,7 @@ LPEPerspectivePath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > cons
             + preimage[2] * tmat[j][2]
             +               tmat[j][3];
     }
-    D2<Piecewise<SBasis> > result(divide(res[0],res[2], 3), 
+    D2<Piecewise<SBasis> > result(divide(res[0],res[2], 3),
                                   divide(res[1],res[2], 3));
 
     Piecewise<D2<SBasis> > output = sectionize(result);

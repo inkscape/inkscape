@@ -444,7 +444,7 @@ void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset)
                 lpe->resetDefaults(lpeitem);
             }
 
-            // perform this once when the effect is applied 
+            // perform this once when the effect is applied
             lpe->doOnApply(SP_LPE_ITEM(lpeitem));
 
             // if the effect expects a number of mouse clicks to set a parameter path, perform the

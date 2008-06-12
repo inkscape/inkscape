@@ -168,8 +168,8 @@ LPESpiro::doEffect(SPCurve * curve)
                     double this_angle_L2 = NR::L2(this_angle);
                     double next_angle_L2 = NR::L2(next_angle);
                     double both_angles_L2 = NR::L2(this_angle + next_angle);
-                    if (this_angle_L2 > 1e-6 && 
-                        next_angle_L2 > 1e-6 && 
+                    if (this_angle_L2 > 1e-6 &&
+                        next_angle_L2 > 1e-6 &&
                         this_angle_L2 + next_angle_L2 - both_angles_L2 < 1e-3) {
                         if (this_is_line && !next_is_line) {
                             path[ip].ty = ']';

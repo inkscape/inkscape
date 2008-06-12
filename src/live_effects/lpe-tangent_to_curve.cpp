@@ -144,7 +144,7 @@ KnotHolderEntityLeftEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*
     double lambda = Geom::nearest_point(p.to_2geom(), lpe->ptA, lpe->derivA);
     lpe->length_left.param_set_value(-lambda);
 
-    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);    
+    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
 }
 
 void
@@ -155,7 +155,7 @@ KnotHolderEntityRightEnd::knot_set(NR::Point const &p, NR::Point const &/*origin
     double lambda = Geom::nearest_point(p.to_2geom(), lpe->ptA, lpe->derivA);
     lpe->length_right.param_set_value(lambda);
 
-    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);    
+    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
 }
 
 NR::Point
