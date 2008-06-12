@@ -36,6 +36,7 @@
 #include "pdf-parser.h"
 
 #include "document-private.h"
+#include "application/application.h"
 
 #include "dialogs/dialog-events.h"
 #include <gtk/gtkdialog.h>
@@ -626,16 +627,23 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
 
         return NULL;
     }
-    PdfImportDialog *dlg = new PdfImportDialog(pdf_doc, uri);
-    if (!dlg->showDialog()) {
-        delete dlg;
-        delete pdf_doc;
 
-        return NULL;
+    PdfImportDialog *dlg = NULL;
+    if (Inkscape::NSApplication::Application::getUseGui()) {
+        dlg = new PdfImportDialog(pdf_doc, uri);
+        if (!dlg->showDialog()) {
+            delete dlg;
+            delete pdf_doc;
+            return NULL;
+        }
     }
 
     // Get needed page
-    int page_num = dlg->getSelectedPage();
+    int page_num;
+    if (dlg)
+        page_num = dlg->getSelectedPage();
+    else 
+        page_num = 1;
     Catalog *catalog = pdf_doc->getCatalog();
     Page *page = catalog->getPage(page_num);
 
@@ -653,7 +661,8 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
 
     // Get preferences
     Inkscape::XML::Node *prefs = builder->getPreferences();
-    dlg->getImportSettings(prefs);
+    if (dlg)
+        dlg->getImportSettings(prefs);
 
     // Apply crop settings
     PDFRectangle *clipToBox = NULL;
