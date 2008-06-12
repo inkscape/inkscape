@@ -694,7 +694,7 @@ private :
         {
             if (SP_IS_TEXT (*it) || SP_IS_FLOWTEXT (*it)) {
                 Inkscape::Text::Layout const *layout = te_get_layout(*it);
-                NR::Point base = layout->characterAnchorPoint(layout->begin()) * sp_item_i2d_affine(*it);
+                NR::Point base = layout->characterAnchorPoint(layout->begin()) * from_2geom(sp_item_i2d_affine(*it));
                 if (base[NR::X] < b_min[NR::X]) b_min[NR::X] = base[NR::X];
                 if (base[NR::Y] < b_min[NR::Y]) b_min[NR::Y] = base[NR::Y];
                 if (base[NR::X] > b_max[NR::X]) b_max[NR::X] = base[NR::X];
@@ -735,7 +735,7 @@ private :
             {
                 if (SP_IS_TEXT (*it) || SP_IS_FLOWTEXT (*it)) {
                     Inkscape::Text::Layout const *layout = te_get_layout(*it);
-                    NR::Point base = layout->characterAnchorPoint(layout->begin()) * sp_item_i2d_affine(*it);
+                    NR::Point base = layout->characterAnchorPoint(layout->begin()) * from_2geom(sp_item_i2d_affine(*it));
                     NR::Point t(0.0, 0.0);
                     t[_orientation] = b_min[_orientation] - base[_orientation];
                     sp_item_move_rel(*it, NR::translate(t));

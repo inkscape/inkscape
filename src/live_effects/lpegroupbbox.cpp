@@ -23,7 +23,7 @@ GroupBBoxEffect::original_bbox(SPLPEItem *lpeitem, bool absolute)
     
     NR::Matrix transform;
     if (absolute) {
-        transform = sp_item_i2doc_affine(item);
+        transform = from_2geom(sp_item_i2doc_affine(item));
     }
     else {
         transform = NR::identity();

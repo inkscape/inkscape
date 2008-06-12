@@ -148,7 +148,7 @@ sp_path_convert_to_guides(SPItem *item)
     SPDocument *doc = SP_OBJECT_DOCUMENT(path);
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
-    NR::Matrix const i2d (sp_item_i2d_affine(SP_ITEM(path)));
+    NR::Matrix const i2d (from_2geom(sp_item_i2d_affine(SP_ITEM(path))));
 
     SPCurve *curve = SP_SHAPE(path)->curve;
     if (!curve) return;
@@ -514,7 +514,7 @@ void freehand_create_single_dot(SPEventContext *ec, NR::Point const &pt, char co
 
     /* put the circle where the mouse click occurred and set the diameter to the
        current stroke width, multiplied by the amount specified in the preferences */
-    NR::Matrix const i2d (sp_item_i2d_affine (item));
+    NR::Matrix const i2d (from_2geom(sp_item_i2d_affine (item)));
     NR::Point pp = pt * i2d;
     double rad = 0.5 * prefs_get_double_attribute(tool, "dot-size", 3.0);
     if (event_state & GDK_MOD1_MASK) {

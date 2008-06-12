@@ -450,7 +450,7 @@ static void sp_arc_drag(SPArcContext *ac, NR::Point pt, guint state)
         NR::Point c = r.midpoint();
         if (!ctrl_save) {
             if (fabs(dir[NR::X]) > 1E-6 && fabs(dir[NR::Y]) > 1E-6) {
-                NR::Matrix const i2d (sp_item_i2d_affine (ac->item));
+                NR::Matrix const i2d (from_2geom(sp_item_i2d_affine (ac->item)));
                 NR::Point new_dir = pt * i2d - c;
                 new_dir[NR::X] *= dir[NR::Y] / dir[NR::X];
                 double lambda = NR::L2(new_dir) / dir[NR::Y];

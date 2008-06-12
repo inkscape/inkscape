@@ -429,7 +429,7 @@ text_unflow ()
         rtext->setAttribute("style", SP_OBJECT_REPR(flowtext)->attribute("style")); // fixme: transfer style attrs too; and from descendants
 
         NRRect bbox;
-        sp_item_invoke_bbox(SP_ITEM(flowtext), &bbox, sp_item_i2doc_affine(SP_ITEM(flowtext)), TRUE);
+        sp_item_invoke_bbox(SP_ITEM(flowtext), &bbox, from_2geom(sp_item_i2doc_affine(SP_ITEM(flowtext))), TRUE);
         NR::Point xy(bbox.x0, bbox.y0);
         if (xy[NR::X] != 1e18 && xy[NR::Y] != 1e18) {
             sp_repr_set_svg_double(rtext, "x", xy[NR::X]);

@@ -614,8 +614,8 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
         return NULL; // sandbox broken?
 
     // Find object's bbox in document
-    NR::Matrix const i2doc(sp_item_i2doc_affine(SP_ITEM(object)));
-    NR::Maybe<NR::Rect> dbox = SP_ITEM(object)->getBounds(i2doc);
+    Geom::Matrix const i2doc(sp_item_i2doc_affine(SP_ITEM(object)));
+    NR::Maybe<NR::Rect> dbox = SP_ITEM(object)->getBounds(from_2geom(i2doc));
 
     if (!dbox) {
         return NULL;

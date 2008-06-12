@@ -33,7 +33,7 @@ sp_item_rotate_rel(SPItem *item, NR::rotate const &rotation)
     NR::Matrix affine = NR::Matrix(inverse(s)) * NR::Matrix(rotation) * NR::Matrix(s);
 
     // Rotate item.
-    sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * affine);
+    sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * to_2geom(affine));
     // Use each item's own transform writer, consistent with sp_selection_apply_affine()
     sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
 
@@ -49,7 +49,7 @@ sp_item_scale_rel (SPItem *item, NR::scale const &scale)
     NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(item);
     if (bbox) {
         NR::translate const s(bbox->midpoint()); // use getCenter?
-        sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * inverse(s) * scale * s);
+        sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * to_2geom(NR::Matrix(inverse(s)) * scale * s));
         sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
     }
 }
@@ -63,7 +63,7 @@ sp_item_skew_rel (SPItem *item, double skewX, double skewY)
     NR::Matrix const skew(1, skewY, skewX, 1, 0, 0);
     NR::Matrix affine = NR::Matrix(inverse(s)) * skew * NR::Matrix(s);
 
-    sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * affine);
+    sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * to_2geom(affine));
     sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
 
     // Restore the center position (it's changed because the bbox center changed)
@@ -74,7 +74,7 @@ sp_item_skew_rel (SPItem *item, double skewX, double skewY)
 
 void sp_item_move_rel(SPItem *item, NR::translate const &tr)
 {
-	sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * tr);
+	sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * to_2geom(tr));
 
 	sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
 }

@@ -283,7 +283,7 @@ static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p)
     
     SPGenericEllipse *ellipse = SP_GENERICELLIPSE(item);
     sp_genericellipse_normalize(ellipse);
-    NR::Matrix const i2d = sp_item_i2d_affine(item);
+    NR::Matrix const i2d = from_2geom(sp_item_i2d_affine(item));
 
     // figure out if we have a slice, whilst guarding against rounding errors
     bool slice = false;

@@ -863,7 +863,7 @@ bool FileOpenDialogImplWin32::set_svg_preview()
     NR::Maybe<NR::Rect> maybeArea(area);
     sp_document_ensure_up_to_date (svgDoc);
     sp_item_invoke_bbox((SPItem *) svgDoc->root, &maybeArea,
-        sp_item_i2r_affine((SPItem *)(svgDoc->root)), TRUE);
+        from_2geom(sp_item_i2r_affine((SPItem *)(svgDoc->root))), TRUE);
 
     NRArena *const arena = NRArena::create();
 

@@ -188,8 +188,8 @@ void             SPFlowregion::UpdateComputed(void)
 {
 	SPObject* object=SP_OBJECT(this);
 
-	NR::Matrix itr_mat=sp_item_i2root_affine (SP_ITEM(object));
-	itr_mat=itr_mat.inverse();
+    NR::Matrix itr_mat = from_2geom(sp_item_i2root_affine (SP_ITEM(object)));
+    itr_mat = itr_mat.inverse();
 
     for (std::vector<Shape*>::iterator it = computed.begin() ; it != computed.end() ; it++)
         delete *it;
@@ -406,12 +406,12 @@ void             SPFlowregionExclude::UpdateComputed(void)
 {
 	SPObject* object=SP_OBJECT(this);
 
-	if (computed) {
+    if (computed) {
         delete computed;
         computed = NULL;
     }
-	NR::Matrix itr_mat=sp_item_i2root_affine (SP_ITEM(object));
-	itr_mat=itr_mat.inverse();
+    NR::Matrix itr_mat = from_2geom(sp_item_i2root_affine (SP_ITEM(object)));
+    itr_mat = itr_mat.inverse();
 
 	for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 		GetDest(child,&computed,itr_mat);
@@ -524,7 +524,7 @@ static void         GetDest(SPObject* child,Shape **computed,NR::Matrix itr_mat)
 
 	if ( curve ) {
 		Path*   temp=new Path;
-		NR::Matrix tr_mat=sp_item_i2root_affine (SP_ITEM(u_child));
+        NR::Matrix tr_mat = from_2geom(sp_item_i2root_affine (SP_ITEM(u_child)));
 		tr_mat=itr_mat*tr_mat;
 		temp->LoadArtBPath(SP_CURVE_BPATH(curve),tr_mat,true);
 		Shape*  n_shp=new Shape;

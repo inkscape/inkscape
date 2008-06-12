@@ -49,8 +49,8 @@ sp_compare_x_position(SPItem *first, SPItem *second)
     using NR::X;
     using NR::Y;
 
-    NR::Maybe<NR::Rect> a = first->getBounds(sp_item_i2doc_affine(first));
-    NR::Maybe<NR::Rect> b = second->getBounds(sp_item_i2doc_affine(second));
+    NR::Maybe<NR::Rect> a = first->getBounds(from_2geom(sp_item_i2doc_affine(first)));
+    NR::Maybe<NR::Rect> b = second->getBounds(from_2geom(sp_item_i2doc_affine(second)));
 
     if ( !a || !b ) {
         // FIXME?
@@ -89,8 +89,8 @@ sp_compare_x_position(SPItem *first, SPItem *second)
 int
 sp_compare_y_position(SPItem *first, SPItem *second)
 {
-    NR::Maybe<NR::Rect> a = first->getBounds(sp_item_i2doc_affine(first));
-    NR::Maybe<NR::Rect> b = second->getBounds(sp_item_i2doc_affine(second));
+    NR::Maybe<NR::Rect> a = first->getBounds(from_2geom(sp_item_i2doc_affine(first)));
+    NR::Maybe<NR::Rect> b = second->getBounds(from_2geom(sp_item_i2doc_affine(second)));
 
     if ( !a || !b ) {
         // FIXME?
@@ -169,7 +169,7 @@ void TileDialog::Grid_Arrange ()
     cnt=0;
     for (; items != NULL; items = items->next) {
         SPItem *item = SP_ITEM(items->data);
-        NR::Maybe<NR::Rect> b = item->getBounds(sp_item_i2doc_affine(item));
+        NR::Maybe<NR::Rect> b = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
         if (!b) {
             continue;
         }
@@ -211,7 +211,7 @@ void TileDialog::Grid_Arrange ()
         const GSList *sizes = sorted;
         for (; sizes != NULL; sizes = sizes->next) {
             SPItem *item = SP_ITEM(sizes->data);
-            NR::Maybe<NR::Rect> b = item->getBounds(sp_item_i2doc_affine(item));
+            NR::Maybe<NR::Rect> b = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
             if (b) {
                 width = b->dimensions()[NR::X];
                 height = b->dimensions()[NR::Y];
@@ -318,7 +318,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
              for (; current_row != NULL; current_row = current_row->next) {
                  SPItem *item=SP_ITEM(current_row->data);
                  Inkscape::XML::Node *repr = SP_OBJECT_REPR(item);
-                 NR::Maybe<NR::Rect> b = item->getBounds(sp_item_i2doc_affine(item));
+                 NR::Maybe<NR::Rect> b = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
                  NR::Point min;
                  if (b) {
                      width = b->dimensions()[NR::X];
@@ -338,7 +338,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
                  // signs are inverted between x and y due to y inversion
                  NR::Point move = NR::Point(new_x - min[NR::X], min[NR::Y] - new_y);
                  NR::Matrix const &affine = NR::Matrix(NR::translate(move));
-                 sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * affine);
+                 sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * to_2geom(affine));
                  sp_item_write_transform(item, repr, item->transform,  NULL);
                  SP_OBJECT (current_row->data)->updateRepr();
                  cnt +=1;

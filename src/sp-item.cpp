@@ -65,6 +65,8 @@
 #include "libnr/nr-convert2geom.h"
 #include "algorithms/find-last-if.h"
 #include "util/reverse-list.h"
+#include <2geom/rect.h>
+#include <2geom/transforms.h>
 
 #include "xml/repr.h"
 #include "extract-uri.h"
@@ -286,7 +288,7 @@ SPItem::setExplicitlyHidden(bool const val) {
  */
 void
 SPItem::setCenter(NR::Point object_centre) {
-    NR::Maybe<NR::Rect> bbox = getBounds(sp_item_i2d_affine(this));
+    NR::Maybe<NR::Rect> bbox = getBounds(from_2geom(sp_item_i2d_affine(this)));
     if (bbox) {
         transform_center_x = object_centre[NR::X] - bbox->midpoint()[NR::X];
         if (fabs(transform_center_x) < 1e-5) // rounding error
@@ -308,7 +310,7 @@ bool SPItem::isCenterSet() {
 }
 
 NR::Point SPItem::getCenter() const {
-    NR::Maybe<NR::Rect> bbox = getBounds(sp_item_i2d_affine(this));
+    NR::Maybe<NR::Rect> bbox = getBounds(from_2geom(sp_item_i2d_affine(this)));
     if (bbox) {
         return bbox->midpoint() + NR::Point (this->transform_center_x, this->transform_center_y);
     } else {
@@ -701,6 +703,15 @@ NR::Maybe<NR::Rect> SPItem::getBounds(NR::Matrix const &transform,
     return r;
 }
 
+NR::Maybe<Geom::Rect>
+SPItem::getBounds(Geom::Matrix const &transform, SPItem::BBoxType type, unsigned int /*dkey*/)
+const
+{
+    NR::Maybe<NR::Rect> r = NR::Nothing();
+    sp_item_invoke_bbox_full(this, &r, from_2geom(transform), type, TRUE);
+    return NR::Maybe<Geom::Rect>(to_2geom(*r));
+}
+
 void
 sp_item_invoke_bbox(SPItem const *item, NR::Maybe<NR::Rect> *bbox, NR::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
 {
@@ -783,7 +794,7 @@ sp_item_invoke_bbox_full(SPItem const *item, NR::Maybe<NR::Rect> *bbox, NR::Matr
                 }
 
                 // transform the expansions by the item's transform:
-                NR::Matrix i2d = sp_item_i2d_affine (item);
+                NR::Matrix i2d = from_2geom(sp_item_i2d_affine (item));
                 dx0 *= NR::expansionX(i2d);
                 dx1 *= NR::expansionX(i2d);
                 dy0 *= NR::expansionY(i2d);
@@ -893,19 +904,19 @@ sp_item_bbox_desktop(SPItem *item, NRRect *bbox, SPItem::BBoxType type)
     g_assert(SP_IS_ITEM(item));
     g_assert(bbox != NULL);
 
-    sp_item_invoke_bbox(item, bbox, sp_item_i2d_affine(item), TRUE, type);
+    sp_item_invoke_bbox(item, bbox, from_2geom(sp_item_i2d_affine(item)), TRUE, type);
 }
 
 NR::Maybe<NR::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type)
 {
     NR::Maybe<NR::Rect> rect = NR::Nothing();
-    sp_item_invoke_bbox(item, &rect, sp_item_i2d_affine(item), TRUE, type);
+    sp_item_invoke_bbox(item, &rect, from_2geom(sp_item_i2d_affine(item)), TRUE, type);
     return rect;
 }
 
 static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p)
 {
-    NR::Maybe<NR::Rect> bbox = item->getBounds(sp_item_i2d_affine(item));
+    NR::Maybe<NR::Rect> bbox = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
     /* Just the corners of the bounding box suffices given that we don't yet
        support angled guide lines. */
 
@@ -1456,38 +1467,38 @@ sp_item_convert_item_to_guides(SPItem *item) {
  * \pre \a ancestor really is an ancestor (\>=) of \a object, or NULL.
  *   ("Ancestor (\>=)" here includes as far as \a object itself.)
  */
-NR::Matrix
+Geom::Matrix
 i2anc_affine(SPObject const *object, SPObject const *const ancestor) {
-    NR::Matrix ret(NR::identity());
+    Geom::Matrix ret(Geom::identity());
     g_return_val_if_fail(object != NULL, ret);
 
     /* stop at first non-renderable ancestor */
     while ( object != ancestor && SP_IS_ITEM(object) ) {
         if (SP_IS_ROOT(object)) {
-            ret *= SP_ROOT(object)->c2p;
+            ret *= to_2geom(SP_ROOT(object)->c2p);
         }
-        ret *= SP_ITEM(object)->transform;
+        ret *= to_2geom(SP_ITEM(object)->transform);
         object = SP_OBJECT_PARENT(object);
     }
     return ret;
 }
 
-NR::Matrix
+Geom::Matrix
 i2i_affine(SPObject const *src, SPObject const *dest) {
-    g_return_val_if_fail(src != NULL && dest != NULL, NR::identity());
+    g_return_val_if_fail(src != NULL && dest != NULL, Geom::identity());
     SPObject const *ancestor = src->nearestCommonAncestor(dest);
-    return i2anc_affine(src, ancestor) / i2anc_affine(dest, ancestor);
+    return to_2geom( from_2geom(i2anc_affine(src, ancestor)) / from_2geom(i2anc_affine(dest, ancestor)) );
 }
 
 NR::Matrix SPItem::getRelativeTransform(SPObject const *dest) const {
-    return i2i_affine(this, dest);
+    return from_2geom(i2i_affine(this, dest));
 }
 
 /**
  * Returns the accumulated transformation of the item and all its ancestors, including root's viewport.
  * \pre (item != NULL) and SP_IS_ITEM(item).
  */
-NR::Matrix sp_item_i2doc_affine(SPItem const *item)
+Geom::Matrix sp_item_i2doc_affine(SPItem const *item)
 {
     return i2anc_affine(item, NULL);
 }
@@ -1497,46 +1508,46 @@ NR::Matrix sp_item_i2doc_affine(SPItem const *item)
  * Used in path operations mostly.
  * \pre (item != NULL) and SP_IS_ITEM(item).
  */
-NR::Matrix sp_item_i2root_affine(SPItem const *item)
+Geom::Matrix sp_item_i2root_affine(SPItem const *item)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_ITEM(item));
 
-    NR::Matrix ret(NR::identity());
-    g_assert(ret.test_identity());
+    Geom::Matrix ret(Geom::identity());
+    g_assert(ret.isIdentity());
     while ( NULL != SP_OBJECT_PARENT(item) ) {
-        ret *= item->transform;
+        ret *= to_2geom(item->transform);
         item = SP_ITEM(SP_OBJECT_PARENT(item));
     }
     g_assert(SP_IS_ROOT(item));
 
-    ret *= item->transform;
+    ret *= to_2geom(item->transform);
 
     return ret;
 }
 
 /* fixme: This is EVIL!!! */
-
-NR::Matrix sp_item_i2d_affine(SPItem const *item)
+// fix this note: why/what evil? :)
+Geom::Matrix sp_item_i2d_affine(SPItem const *item)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_ITEM(item));
 
-    NR::Matrix const ret( sp_item_i2doc_affine(item)
-                          * NR::scale(1, -1)
-                          * NR::translate(0, sp_document_height(SP_OBJECT_DOCUMENT(item))) );
+    Geom::Matrix const ret( sp_item_i2doc_affine(item)
+                          * Geom::Scale(1, -1)
+                          * Geom::Translate(0, sp_document_height(SP_OBJECT_DOCUMENT(item))) );
     return ret;
 }
 
 // same as i2d but with i2root instead of i2doc
-NR::Matrix sp_item_i2r_affine(SPItem const *item)
+Geom::Matrix sp_item_i2r_affine(SPItem const *item)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_ITEM(item));
 
-    NR::Matrix const ret( sp_item_i2root_affine(item)
-                          * NR::scale(1, -1)
-                          * NR::translate(0, sp_document_height(SP_OBJECT_DOCUMENT(item))) );
+    Geom::Matrix const ret( sp_item_i2root_affine(item)
+                          * Geom::Scale(1, -1)
+                          * Geom::Translate(0, sp_document_height(SP_OBJECT_DOCUMENT(item))) );
     return ret;
 }
 
@@ -1544,11 +1555,11 @@ NR::Matrix sp_item_i2r_affine(SPItem const *item)
  * Converts a matrix \a m into the desktop coords of the \a item.
  * Will become a noop when we eliminate the coordinate flipping.
  */
-NR::Matrix matrix_to_desktop(NR::Matrix const m, SPItem const *item)
+Geom::Matrix matrix_to_desktop(Geom::Matrix const m, SPItem const *item)
 {
-    NR::Matrix const ret(m
-                         * NR::translate(0, -sp_document_height(SP_OBJECT_DOCUMENT(item)))
-                         * NR::scale(1, -1));
+    Geom::Matrix const ret(m
+                         * Geom::Translate(0, -sp_document_height(SP_OBJECT_DOCUMENT(item)))
+                         * Geom::Scale(1, -1));
     return ret;
 }
 
@@ -1556,33 +1567,33 @@ NR::Matrix matrix_to_desktop(NR::Matrix const m, SPItem const *item)
  * Converts a matrix \a m from the desktop coords of the \a item.
  * Will become a noop when we eliminate the coordinate flipping.
  */
-NR::Matrix matrix_from_desktop(NR::Matrix const m, SPItem const *item)
+Geom::Matrix matrix_from_desktop(Geom::Matrix const m, SPItem const *item)
 {
-    NR::Matrix const ret(NR::scale(1, -1)
-                         * NR::translate(0, sp_document_height(SP_OBJECT_DOCUMENT(item)))
+    Geom::Matrix const ret(Geom::Scale(1, -1)
+                         * Geom::Translate(0, sp_document_height(SP_OBJECT_DOCUMENT(item)))
                          * m);
     return ret;
 }
 
-void sp_item_set_i2d_affine(SPItem *item, NR::Matrix const &i2dt)
+void sp_item_set_i2d_affine(SPItem *item, Geom::Matrix const &i2dt)
 {
     g_return_if_fail( item != NULL );
     g_return_if_fail( SP_IS_ITEM(item) );
 
-    NR::Matrix dt2p; /* desktop to item parent transform */
+    Geom::Matrix dt2p; /* desktop to item parent transform */
     if (SP_OBJECT_PARENT(item)) {
         dt2p = sp_item_i2d_affine((SPItem *) SP_OBJECT_PARENT(item)).inverse();
     } else {
-        dt2p = ( NR::translate(0, -sp_document_height(SP_OBJECT_DOCUMENT(item)))
-                 * NR::scale(1, -1) );
+        dt2p = ( Geom::Translate(0, -sp_document_height(SP_OBJECT_DOCUMENT(item)))
+                 * Geom::Scale(1, -1) );
     }
 
-    NR::Matrix const i2p( i2dt * dt2p );
-    sp_item_set_item_transform(item, i2p);
+    Geom::Matrix const i2p( i2dt * dt2p );
+    sp_item_set_item_transform(item, from_2geom(i2p));
 }
 
 
-NR::Matrix
+Geom::Matrix
 sp_item_dt2i_affine(SPItem const *item)
 {
     /* fixme: Implement the right way (Lauris) */

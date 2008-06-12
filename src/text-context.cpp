@@ -1508,8 +1508,8 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
     if (tc->text) {
         NR::Point p0, p1;
         sp_te_get_cursor_coords(tc->text, tc->text_sel_end, p0, p1);
-        NR::Point const d0 = p0 * sp_item_i2d_affine(SP_ITEM(tc->text));
-        NR::Point const d1 = p1 * sp_item_i2d_affine(SP_ITEM(tc->text));
+        NR::Point const d0 = p0 * from_2geom(sp_item_i2d_affine(SP_ITEM(tc->text)));
+        NR::Point const d1 = p1 * from_2geom(sp_item_i2d_affine(SP_ITEM(tc->text)));
 
         // scroll to show cursor
         if (scroll_to_see) {
@@ -1573,7 +1573,7 @@ static void sp_text_context_update_text_selection(SPTextContext *tc)
 
     std::vector<NR::Point> quads;
     if (tc->text != NULL)
-        quads = sp_te_create_selection_quads(tc->text, tc->text_sel_start, tc->text_sel_end, sp_item_i2d_affine(tc->text));
+        quads = sp_te_create_selection_quads(tc->text, tc->text_sel_start, tc->text_sel_end, from_2geom(sp_item_i2d_affine(tc->text)));
     for (unsigned i = 0 ; i < quads.size() ; i += 4) {
         SPCanvasItem *quad_canvasitem;
         quad_canvasitem = sp_canvas_item_new(sp_desktop_controls(tc->desktop), SP_TYPE_CTRLQUADR, NULL);

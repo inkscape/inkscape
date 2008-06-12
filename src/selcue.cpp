@@ -126,7 +126,7 @@ void Inkscape::SelCue::_updateItemBboxes()
         if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) { // visualize baseline
             Inkscape::Text::Layout const *layout = te_get_layout(item);
             if (layout != NULL) {
-                NR::Point a = layout->characterAnchorPoint(layout->begin()) * sp_item_i2d_affine(item);
+                NR::Point a = layout->characterAnchorPoint(layout->begin()) * from_2geom(sp_item_i2d_affine(item));
                 baseline_point = sp_canvas_item_new(sp_desktop_controls(_desktop), SP_TYPE_CTRL,
                                                     "mode", SP_CTRL_MODE_XOR,
                                                     "size", 4.0,

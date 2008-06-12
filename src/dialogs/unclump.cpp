@@ -35,7 +35,7 @@ unclump_center (SPItem *item)
         return i->second;
     }
 
-    NR::Maybe<NR::Rect> r = item->getBounds(sp_item_i2d_affine(item));
+    NR::Maybe<NR::Rect> r = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
     if (r) {
     	NR::Point const c = r->midpoint();
     	c_cache[SP_OBJECT_ID(item)] = c;
@@ -54,7 +54,7 @@ unclump_wh (SPItem *item)
     if ( i != wh_cache.end() ) {
         wh = i->second;
     } else {
-        NR::Maybe<NR::Rect> r = item->getBounds(sp_item_i2d_affine(item));
+        NR::Maybe<NR::Rect> r = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
 	if (r) {
             wh = r->dimensions();
             wh_cache[SP_OBJECT_ID(item)] = wh;
@@ -298,7 +298,7 @@ unclump_push (SPItem *from, SPItem *what, double dist)
 
     //g_print ("push %s at %g,%g from %g,%g by %g,%g, dist %g\n", SP_OBJECT_ID(what), it[NR::X],it[NR::Y], p[NR::X],p[NR::Y], by[NR::X],by[NR::Y], dist);
 
-    sp_item_set_i2d_affine(what, sp_item_i2d_affine(what) * move);
+    sp_item_set_i2d_affine(what, sp_item_i2d_affine(what) * to_2geom(move));
     sp_item_write_transform(what, SP_OBJECT_REPR(what), what->transform, NULL);
 }
 
@@ -321,7 +321,7 @@ unclump_pull (SPItem *to, SPItem *what, double dist)
 
     //g_print ("pull %s at %g,%g to %g,%g by %g,%g, dist %g\n", SP_OBJECT_ID(what), it[NR::X],it[NR::Y], p[NR::X],p[NR::Y], by[NR::X],by[NR::Y], dist);
 
-    sp_item_set_i2d_affine(what, sp_item_i2d_affine(what) * move);
+    sp_item_set_i2d_affine(what, sp_item_i2d_affine(what) * to_2geom(move));
     sp_item_write_transform(what, SP_OBJECT_REPR(what), what->transform, NULL);
 }
 

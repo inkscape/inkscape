@@ -289,7 +289,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
                 root_item = sp_use_root(SP_USE(*i));
                 g_return_if_fail(root_item);
             } else {
-                i2doc = sp_item_i2doc_affine(*i);
+                i2doc = from_2geom(sp_item_i2doc_affine(*i));
                 root_item = *i;
             }
 

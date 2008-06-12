@@ -428,7 +428,7 @@ static void sp_text_snappoints(SPItem const *item, SnapPointsIter p)
     // the baseline anchor of the first char
     Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) item);
     if(layout != NULL) {
-        *p = layout->characterAnchorPoint(layout->begin()) * sp_item_i2d_affine(item);
+        *p = layout->characterAnchorPoint(layout->begin()) * from_2geom(sp_item_i2d_affine(item));
     }
 }
 
@@ -493,7 +493,7 @@ sp_text_print (SPItem *item, SPPrintContext *ctx)
     dbox.y0 = 0.0;
     dbox.x1 = sp_document_width (SP_OBJECT_DOCUMENT (item));
     dbox.y1 = sp_document_height (SP_OBJECT_DOCUMENT (item));
-    NR::Matrix const ctm = sp_item_i2d_affine(item);
+    NR::Matrix const ctm = from_2geom(sp_item_i2d_affine(item));
 
     group->layout.print(ctx,&pbox,&dbox,&bbox,ctm);
 }

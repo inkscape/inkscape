@@ -62,7 +62,7 @@ KnotHolderEntity::~KnotHolderEntity()
 void
 KnotHolderEntity::update_knot()
 {
-    NR::Matrix const i2d(sp_item_i2d_affine(item));
+    NR::Matrix const i2d(from_2geom(sp_item_i2d_affine(item)));
 
     NR::Point dp(knot_get() * i2d);
 

@@ -122,7 +122,7 @@ NR::Point path_end_get(SPItem *item) {
 void
 path_set_start_end(SPItem *item, NR::Point const &p, bool start) {
     SPCurve* curve = sp_path_get_curve_for_edit (SP_PATH(item)); // TODO: Should we use sp_shape_get_curve()?
-    NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM(item)));
+    Geom::Matrix const i2d (sp_item_i2d_affine (SP_ITEM(item)));
 
     Geom::Point A, B;
     if (start) {

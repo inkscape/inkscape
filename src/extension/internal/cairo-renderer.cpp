@@ -173,7 +173,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
 
     /* fixme: Think (Lauris) */
     sp_item_invoke_bbox(item, &pbox, NR::identity(), TRUE);
-    NR::Matrix const i2d = sp_item_i2d_affine(item);
+    NR::Matrix const i2d = from_2geom(sp_item_i2d_affine(item));
 
     SPStyle* style = SP_OBJECT_STYLE (item);
     CairoRenderer *renderer = ctx->getRenderer();
@@ -362,9 +362,9 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 
     // Get the bounding box of the selection
-    //NR::Maybe<NR::Rect> _bbox = item->getBounds(sp_item_i2d_affine(item));
-    // NRRect bbox = item->getBounds(sp_item_i2d_affine(item));
-    NRRect bbox(item->getBounds(sp_item_i2d_affine(item)));
+    //NR::Maybe<NR::Rect> _bbox = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
+    // NRRect bbox = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
+    NRRect bbox(item->getBounds(from_2geom(sp_item_i2d_affine(item))));
 
 
     // List of the items to show; all others will be hidden
@@ -417,7 +417,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     }
     */
     // Calculate the matrix that will be applied to the image so that it exactly overlaps the source objects
-    NR::Matrix eek = sp_item_i2d_affine (SP_ITEM(parent_object));
+    NR::Matrix eek = from_2geom(sp_item_i2d_affine (SP_ITEM(parent_object)));
     NR::Matrix t;
 
     double shift_x = bbox.x0;
@@ -585,7 +585,7 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc)
         d.y1 = ceil(ctx->_height);
     } else {
         SPItem* doc_item = SP_ITEM(sp_document_root(doc));
-        sp_item_invoke_bbox(doc_item, &d, sp_item_i2r_affine(doc_item), TRUE);
+        sp_item_invoke_bbox(doc_item, &d, from_2geom(sp_item_i2r_affine(doc_item)), TRUE);
         if (ctx->_vector_based_target) {
             // convert from px to pt
             d.x0 *= PT_PER_PX;

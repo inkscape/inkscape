@@ -407,7 +407,7 @@ box3d_get_corner_screen (SPBox3D const *box, guint id, bool item_coords) {
     if (!box3d_get_perspective(box)) {
         return NR::Point (NR_HUGE, NR_HUGE);
     }
-    NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM(box)));
+    NR::Matrix const i2d (from_2geom(sp_item_i2d_affine (SP_ITEM(box))));
     if (item_coords) {
         return box3d_get_perspective(box)->tmat.image(proj_corner).affine() * i2d.inverse();
     } else {
@@ -431,7 +431,7 @@ box3d_get_center_screen (SPBox3D *box) {
     if (!box3d_get_perspective(box)) {
         return NR::Point (NR_HUGE, NR_HUGE);
     }
-    NR::Matrix const i2d (sp_item_i2d_affine (SP_ITEM(box)));
+    NR::Matrix const i2d (from_2geom(sp_item_i2d_affine (SP_ITEM(box))));
     return box3d_get_perspective(box)->tmat.image(proj_center).affine() * i2d.inverse();
 }
 

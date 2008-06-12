@@ -510,7 +510,7 @@ static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *deskto
             sp_item_write_transform(SP_ITEM(reprobj), pathRepr, transform, NULL);
             
             // premultiply the item transform by the accumulated parent transform in the paste layer
-            NR::Matrix local = sp_item_i2doc_affine(SP_GROUP(desktop->currentLayer()));
+            NR::Matrix local = from_2geom(sp_item_i2doc_affine(SP_GROUP(desktop->currentLayer())));
             if (!local.test_identity()) {
                 gchar const *t_str = pathRepr->attribute("transform");
                 NR::Matrix item_t (NR::identity());

@@ -726,7 +726,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 	dbox.x1 = sp_document_width (SP_OBJECT_DOCUMENT (item));
 	dbox.y1 = sp_document_height (SP_OBJECT_DOCUMENT (item));
 	sp_item_bbox_desktop (item, &bbox);
-	NR::Matrix const i2d = sp_item_i2d_affine(item);
+	NR::Matrix const i2d = from_2geom(sp_item_i2d_affine(item));
 
         SPStyle* style = SP_OBJECT_STYLE (item);
 
@@ -1047,7 +1047,7 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
         return;
     }
     
-    NR::Matrix const i2d (sp_item_i2d_affine (item));
+    NR::Matrix const i2d (from_2geom(sp_item_i2d_affine (item)));
     NArtBpath const *b = SP_CURVE_BPATH(shape->curve);    
     
     // Cycle through the nodes in the concatenated subpaths

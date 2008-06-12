@@ -286,7 +286,7 @@ void PovOutput::doCurves(SPDocument *doc)
             continue;
 
         SPItem *item = SP_ITEM(reprobj);
-        NR::Matrix tf = sp_item_i2d_affine(item);
+        NR::Matrix tf = from_2geom(sp_item_i2d_affine(item));
 
         //### Get the Shape
         if (!SP_IS_SHAPE(reprobj))//Bulia's suggestion.  Allow all shapes

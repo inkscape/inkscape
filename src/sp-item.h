@@ -23,6 +23,8 @@
 #include "sp-object.h"
 #include <libnr/nr-matrix.h>
 #include <libnr/nr-rect.h>
+#include <2geom/forward.h>
+#include <libnr/nr-convert2geom.h>
 
 class SPGuideConstraint;
 struct SPClipPathReference;
@@ -153,6 +155,7 @@ struct SPItem : public SPObject {
     void lowerToBottom();
 
     NR::Maybe<NR::Rect> getBounds(NR::Matrix const &transform, BBoxType type=APPROXIMATE_BBOX, unsigned int dkey=0) const;
+    NR::Maybe<Geom::Rect> getBounds(Geom::Matrix const &transform, BBoxType type=APPROXIMATE_BBOX, unsigned int dkey=0) const;
 
     sigc::connection _clip_ref_connection;
     sigc::connection _mask_ref_connection;
@@ -251,14 +254,14 @@ NRArenaItem *sp_item_get_arenaitem(SPItem *item, unsigned int key);
 void sp_item_bbox_desktop(SPItem *item, NRRect *bbox, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
 NR::Maybe<NR::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
 
-NR::Matrix i2anc_affine(SPObject const *item, SPObject const *ancestor);
-NR::Matrix i2i_affine(SPObject const *src, SPObject const *dest);
+Geom::Matrix i2anc_affine(SPObject const *item, SPObject const *ancestor);
+Geom::Matrix i2i_affine(SPObject const *src, SPObject const *dest);
 
-NR::Matrix sp_item_i2doc_affine(SPItem const *item);
-NR::Matrix sp_item_i2root_affine(SPItem const *item);
+Geom::Matrix sp_item_i2doc_affine(SPItem const *item);
+Geom::Matrix sp_item_i2root_affine(SPItem const *item);
 
-NR::Matrix matrix_to_desktop (NR::Matrix m, SPItem const *item);
-NR::Matrix matrix_from_desktop (NR::Matrix m, SPItem const *item);
+Geom::Matrix matrix_to_desktop (Geom::Matrix m, SPItem const *item);
+Geom::Matrix matrix_from_desktop (Geom::Matrix m, SPItem const *item);
 
 /* fixme: - these are evil, but OK */
 
@@ -268,10 +271,10 @@ NR::Matrix matrix_from_desktop (NR::Matrix m, SPItem const *item);
  *
  * \return TRANSFORM.
  */
-NR::Matrix sp_item_i2d_affine(SPItem const *item);
-NR::Matrix sp_item_i2r_affine(SPItem const *item);
-void sp_item_set_i2d_affine(SPItem *item, NR::Matrix const &transform);
-NR::Matrix sp_item_dt2i_affine(SPItem const *item);
+Geom::Matrix sp_item_i2d_affine(SPItem const *item);
+Geom::Matrix sp_item_i2r_affine(SPItem const *item);
+void sp_item_set_i2d_affine(SPItem *item, Geom::Matrix const &transform);
+Geom::Matrix sp_item_dt2i_affine(SPItem const *item);
 int sp_item_repr_compare_position(SPItem *first, SPItem *second);
 SPItem *sp_item_first_item_child (SPObject *obj);
 

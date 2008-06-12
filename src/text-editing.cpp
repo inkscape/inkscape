@@ -80,7 +80,7 @@ sp_te_input_is_empty (SPObject const *item)
 Inkscape::Text::Layout::iterator
 sp_te_get_position_by_coords (SPItem const *item, NR::Point &i_p)
 {
-    NR::Matrix  im=sp_item_i2d_affine (item);
+    NR::Matrix im = from_2geom(sp_item_i2d_affine (item));
     im = im.inverse();
 
     NR::Point p = i_p * im;
@@ -948,7 +948,7 @@ sp_te_adjust_kerning_screen (SPItem *item, Inkscape::Text::Layout::iterator cons
     // divide increment by zoom
     // divide increment by matrix expansion
     gdouble factor = 1 / desktop->current_zoom();
-    NR::Matrix t = sp_item_i2doc_affine(item);
+    NR::Matrix t = from_2geom(sp_item_i2doc_affine(item));
     factor = factor / NR::expansion(t);
     by = factor * by;
 
@@ -970,7 +970,7 @@ sp_te_adjust_rotation_screen(SPItem *text, Inkscape::Text::Layout::iterator cons
     // divide increment by zoom
     // divide increment by matrix expansion
     gdouble factor = 1 / desktop->current_zoom();
-    NR::Matrix t = sp_item_i2doc_affine(text);
+    NR::Matrix t = from_2geom(sp_item_i2doc_affine(text));
     factor = factor / NR::expansion(t);
     Inkscape::Text::Layout const *layout = te_get_layout(text);
     if (layout == NULL) return;
@@ -1055,7 +1055,7 @@ sp_te_adjust_tspan_letterspacing_screen(SPItem *text, Inkscape::Text::Layout::it
     gdouble const zoom = desktop->current_zoom();
     gdouble const zby = (by
                          / (zoom * (nb_let > 1 ? nb_let - 1 : 1))
-                         / NR::expansion(sp_item_i2doc_affine(SP_ITEM(source_obj))));
+                         / NR::expansion(from_2geom(sp_item_i2doc_affine(SP_ITEM(source_obj)))));
     val += zby;
 
     if (start == end) {
@@ -1114,7 +1114,7 @@ sp_te_adjust_linespacing_screen (SPItem *text, Inkscape::Text::Layout::iterator 
     gdouble zby = by / (desktop->current_zoom() * (line_count == 0 ? 1 : line_count));
 
     // divide increment by matrix expansion
-    NR::Matrix t = sp_item_i2doc_affine (SP_ITEM(text));
+    NR::Matrix t = from_2geom(sp_item_i2doc_affine (SP_ITEM(text)));
     zby = zby / NR::expansion(t);
 
     switch (style->line_height.unit) {

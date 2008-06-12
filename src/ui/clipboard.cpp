@@ -496,7 +496,7 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
         // write the complete accumulated transform passed to us
         // (we're dealing with unattached representations, so we write to their attributes
         // instead of using sp_item_set_transform)
-        gchar *transform_str = sp_svg_transform_write(sp_item_i2doc_affine(SP_ITEM(i->data)));
+        gchar *transform_str = sp_svg_transform_write(from_2geom(sp_item_i2doc_affine(SP_ITEM(i->data))));
         obj_copy->setAttribute("transform", transform_str);
         g_free(transform_str);
     }

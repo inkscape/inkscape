@@ -1106,7 +1106,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
             }
 
             NRRect area;
-            sp_item_invoke_bbox(item, &area, sp_item_i2r_affine((SPItem *) item), TRUE);
+            sp_item_invoke_bbox(item, &area, from_2geom(sp_item_i2r_affine((SPItem *) item)), TRUE);
 
             gint width = (gint) ((area.x1 - area.x0) * dpi / PX_PER_IN + 0.5);
             gint height = (gint) ((area.y1 - area.y0) * dpi / PX_PER_IN + 0.5);

@@ -312,7 +312,7 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
         /* Curve list */
         /* We keep it in desktop coordinates to eliminate calculation errors */
         SPCurve *norm = sp_path_get_curve_for_edit (SP_PATH(item));
-        norm->transform(sp_item_i2d_affine(dc->white_item));
+        norm->transform(from_2geom(sp_item_i2d_affine(dc->white_item)));
         g_return_if_fail( norm != NULL );
         dc->white_curves = g_slist_reverse(norm->split());
         norm->unref();
@@ -535,7 +535,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
 
     /* Now we have to go back to item coordinates at last */
     c->transform(( dc->white_item
-                            ? sp_item_dt2i_affine(dc->white_item)
+                            ? from_2geom(sp_item_dt2i_affine(dc->white_item))
                             : sp_desktop_dt2root_affine(SP_EVENT_CONTEXT_DESKTOP(dc)) ));
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
@@ -569,7 +569,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
             SPItem *item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
             dc->selection->set(repr);
             Inkscape::GC::release(repr);
-            item->transform = i2i_affine(desktop->currentRoot(), desktop->currentLayer());
+            item->transform = from_2geom(i2i_affine(desktop->currentRoot(), desktop->currentLayer()));
             item->updateRepr();
         }
 

@@ -632,7 +632,7 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
             g_assert( SP_IS_PATH(cc->clickeditem));
 
             // Update the hidden path
-            NR::Matrix i2d = sp_item_i2d_affine(cc->clickeditem);
+            NR::Matrix i2d = from_2geom(sp_item_i2d_affine(cc->clickeditem));
             NR::Matrix d2i = i2d.inverse();
             SPPath *path = SP_PATH(cc->clickeditem);
             SPCurve *curve = (SP_SHAPE(path))->curve;
@@ -930,7 +930,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
         cc->newconn = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
         cc->selection->set(repr);
         Inkscape::GC::release(repr);
-        cc->newconn->transform = i2i_affine(desktop->currentRoot(), desktop->currentLayer());
+        cc->newconn->transform = from_2geom(i2i_affine(desktop->currentRoot(), desktop->currentLayer()));
         cc->newconn->updateRepr();
 
         bool connection = false;
@@ -1078,7 +1078,7 @@ endpt_handler(SPKnot */*knot*/, GdkEvent *event, SPConnectorContext *cc)
 
                 // Show the red path for dragging.
                 cc->red_curve = SP_PATH(cc->clickeditem)->curve->copy();
-                NR::Matrix i2d = sp_item_i2d_affine(cc->clickeditem);
+                NR::Matrix i2d = from_2geom(sp_item_i2d_affine(cc->clickeditem));
                 cc->red_curve->transform(i2d);
                 sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), cc->red_curve);
 
@@ -1165,7 +1165,7 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
     g_assert( SP_IS_PATH(item) );
 
     SPCurve *curve = SP_SHAPE(SP_PATH(item))->curve;
-    NR::Matrix i2d = sp_item_i2d_affine(item);
+    NR::Matrix i2d = from_2geom(sp_item_i2d_affine(item));
 
     if (cc->active_conn == item)
     {

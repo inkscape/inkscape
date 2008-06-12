@@ -120,7 +120,7 @@ sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines)
 
         // Scale the style by the inverse of the accumulated parent transform in the paste context.
         {
-            NR::Matrix const local(sp_item_i2doc_affine(SP_ITEM(o)));
+            NR::Matrix const local(from_2geom(sp_item_i2doc_affine(SP_ITEM(o))));
             double const ex(NR::expansion(local));
             if ( ( ex != 0. )
                  && ( ex != 1. ) ) {
@@ -394,7 +394,7 @@ stroke_average_width (GSList const *objects)
         if (!SP_IS_ITEM (l->data))
             continue;
 
-        NR::Matrix i2d = sp_item_i2d_affine (SP_ITEM(l->data));
+        NR::Matrix i2d = from_2geom(sp_item_i2d_affine (SP_ITEM(l->data)));
 
         SPObject *object = SP_OBJECT(l->data);
 
@@ -660,7 +660,7 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
 
         n_stroked ++;
 
-        NR::Matrix i2d = sp_item_i2d_affine (SP_ITEM(obj));
+        NR::Matrix i2d = from_2geom(sp_item_i2d_affine (SP_ITEM(obj)));
         double sw = style->stroke_width.computed * NR::expansion(i2d);
 
         if (prev_sw != -1 && fabs(sw - prev_sw) > 1e-3)
@@ -876,7 +876,7 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
         if (!style) continue;
 
         texts ++;
-        size += style->font_size.computed * NR::expansion(sp_item_i2d_affine(SP_ITEM(obj))); /// \todo FIXME: we assume non-% units here
+        size += style->font_size.computed * NR::expansion(from_2geom(sp_item_i2d_affine(SP_ITEM(obj)))); /// \todo FIXME: we assume non-% units here
 
         if (style->letter_spacing.normal) {
             if (!different && (letterspacing_prev == 0 || letterspacing_prev == letterspacing))
@@ -1211,7 +1211,7 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
         if (!style) continue;
         if (!SP_IS_ITEM(obj)) continue;
 
-        NR::Matrix i2d = sp_item_i2d_affine (SP_ITEM(obj));
+        NR::Matrix i2d = from_2geom(sp_item_i2d_affine (SP_ITEM(obj)));
 
         items ++;
 

@@ -221,7 +221,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     // to a change in repr by regenerating nodepath     --bb
     sp_object_read_attr(SP_OBJECT(np->item), "transform");
 
-    np->i2d  = sp_item_i2d_affine(np->item);
+    np->i2d  = from_2geom(sp_item_i2d_affine(np->item));
     np->d2i  = np->i2d.inverse();
 
     np->repr = repr;

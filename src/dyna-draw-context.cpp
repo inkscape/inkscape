@@ -609,7 +609,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     }
 
                     // calculate pointer point in the guide item's coords
-                    motion_to_curve = sp_item_dt2i_affine(selected) * sp_item_i2doc_affine(selected);
+                    motion_to_curve = from_2geom(sp_item_dt2i_affine(selected) * sp_item_i2doc_affine(selected));
                     pointer = motion_dt * motion_to_curve;
 
                     // calculate the nearest point on the guide path

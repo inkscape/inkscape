@@ -940,8 +940,7 @@ static Glib::ustring formatTransform(NR::Matrix &tf)
 static NR::Matrix getODFTransform(const SPItem *item)
 {
     //### Get SVG-to-ODF transform
-    NR::Matrix tf;
-    tf                   = sp_item_i2d_affine(item);
+    NR::Matrix tf = from_2geom(sp_item_i2d_affine(item));
     //Flip Y into document coordinates
     double doc_height    = sp_document_height(SP_ACTIVE_DOCUMENT);
     NR::Matrix doc2dt_tf = NR::Matrix(NR::scale(1.0, -1.0));
