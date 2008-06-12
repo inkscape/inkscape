@@ -21,6 +21,8 @@ lpe-knot.cpp
 lpe-knot.h
 lpe-lattice.h
 lpe-lattice.cpp
+lpe-mirror_reflect.cpp
+lpe-mirror_reflect.h
 lpeobject.cpp
 lpeobject.h
 lpeobject-reference.cpp

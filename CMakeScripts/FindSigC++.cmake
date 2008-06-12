@@ -6,7 +6,7 @@
 #  SIGC++_LIBRARIES - Link these to use SIGC++
 #  SIGC++_DEFINITIONS - Compiler switches required for using SIGC++
 #
-#  Copyright (c) 2008 Joshua L. Blocher <verbalshadow@gmail.com>
+#  Copyright (c) 2008 Andreas Schneider <mail@cynapses.org>
 #
 #  Redistribution and use is allowed according to the terms of the New
 #  BSD license.
@@ -29,28 +29,32 @@ else (SIGC++_LIBRARIES AND SIGC++_INCLUDE_DIRS)
       pkg_check_modules(_SIGC++ sigc++-2.0)
     endif (PKG_CONFIG_FOUND)
   endif (${CMAKE_MAJOR_VERSION} EQUAL 2 AND ${CMAKE_MINOR_VERSION} EQUAL 4)
-SET(_DIR_LIST
+
+  find_path(SIGC++_INCLUDE_DIR
+    NAMES
+      sigc++/sigc++.h
+    PATHS
       ${_SIGC++_INCLUDEDIR}
       /usr/include
       /usr/local/include
       /opt/local/include
       /sw/include
-      $ENV{DEVLIBS_PATH}//include//
-   )
-FOREACH(_TEST_PATH ${_DIR_LIST})
-  find_path(${_TEST_PATH}_INCLUDE_DIR
-    NAMES
-      sigc++/sigc++.h
-      sigc++config.h
-    PATHS
-    ${_TEST_PATH}
     PATH_SUFFIXES
       sigc++-2.0
   )
-  LIST(APPEND SIGC++_INCLUDE_DIRS
-    ${${_TEST_PATH}_INCLUDE_DIR}
+
+  find_path(SIGC++_CONFIG_INCLUDE_DIR
+    NAMES
+      sigc++config.h
+    PATHS
+      ${_SIGC++_INCLUDEDIR}
+      /usr/include
+      /usr/local/include
+      /opt/local/include
+      /sw/include
+      /usr/lib/sigc++-2.0/include
+      /usr/lib64/sigc++-2.0/include
   )
-ENDFOREACH(_TEST_PATH)  
 
   find_library(SIGC-2.0_LIBRARY
     NAMES
@@ -66,6 +70,11 @@ ENDFOREACH(_TEST_PATH)
   if (SIGC-2.0_LIBRARY)
     set(SIGC-2.0_FOUND TRUE)
   endif (SIGC-2.0_LIBRARY)
+
+  set(SIGC++_INCLUDE_DIRS
+    ${SIGC++_INCLUDE_DIR}
+    ${SIGC++_CONFIG_INCLUDE_DIR}
+  )
 
   if (SIGC-2.0_FOUND)
     set(SIGC++_LIBRARIES
@@ -92,4 +101,5 @@ ENDFOREACH(_TEST_PATH)
   mark_as_advanced(SIGC++_INCLUDE_DIRS SIGC++_LIBRARIES)
 
 endif (SIGC++_LIBRARIES AND SIGC++_INCLUDE_DIRS)
+
 
