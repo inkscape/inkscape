@@ -105,6 +105,7 @@ class Matrix {
 };
 
 Matrix operator*(Matrix const &a, Matrix const &b);
+inline Matrix &operator*=(Matrix &a, Matrix const &b) { a = a * b; return a; }
 
 /** A function to print out the Matrix (for debugging) */
 inline std::ostream &operator<< (std::ostream &out_file, const Geom::Matrix &m) {
