@@ -785,8 +785,14 @@ pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent)
             SPEventContext *ec = SP_EVENT_CONTEXT(pc);
             Inkscape::Selection *selection = sp_desktop_selection (ec->desktop);
 
-            pc->waiting_LPE->acceptParamPath(SP_PATH(selection->singleItem()));
-            selection->add(SP_OBJECT(pc->waiting_item));
+            if (pc->waiting_LPE) {
+                // we have an already created LPE waiting for a path
+                pc->waiting_LPE->acceptParamPath(SP_PATH(selection->singleItem()));
+                selection->add(SP_OBJECT(pc->waiting_item));
+            } else {
+                // the case that we need to create a new LPE and apply it to the just-drawn path is
+                // handled in spdc_check_for_and_apply_waiting_LPE() in draw-context.cpp
+            }
         }
     }
 

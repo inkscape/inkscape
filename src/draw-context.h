@@ -70,7 +70,7 @@ struct SPDrawContext : public SPEventContext{
     SPDrawAnchor *ea;
 
     /* type of the LPE that is to be applied automatically to a finished path (if any) */
-    Inkscape::LivePathEffect::EffectType waiting_LPE;
+    Inkscape::LivePathEffect::EffectType waiting_LPE_type;
 
     sigc::connection sel_changed_connection;
     sigc::connection sel_modified_connection;

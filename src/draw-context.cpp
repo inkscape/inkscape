@@ -115,7 +115,7 @@ sp_draw_context_init(SPDrawContext *dc)
     dc->green_color = 0x00ff007f;
     dc->red_curve_is_valid = false;
 
-    dc->waiting_LPE = Inkscape::LivePathEffect::INVALID_LPE;
+    dc->waiting_LPE_type = Inkscape::LivePathEffect::INVALID_LPE;
 
     new (&dc->sel_changed_connection) sigc::connection();
     new (&dc->sel_modified_connection) sigc::connection();
@@ -245,20 +245,20 @@ sp_draw_context_root_handler(SPEventContext *ec, GdkEvent *event)
 
 /*
  * If we have an item and a waiting LPE, apply the effect to the item
+ * (spiro spline mode is treated separately)
  */
 void
 spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
 {
     using namespace Inkscape::LivePathEffect;
 
-    // TODO: sort this out as soon as we use automatic LPE application for other things than spiro mode, too
     if (item) {
         if (prefs_get_int_attribute("tools.freehand", "spiro-spline-mode", 0)) {
             Effect::createAndApply(SPIRO, dc->desktop->doc(), item);
             return;
         }
-        if (dc->waiting_LPE != INVALID_LPE) {
-            Effect::createAndApply(dc->waiting_LPE, dc->desktop->doc(), item);
+        if (dc->waiting_LPE_type != INVALID_LPE) {
+            Effect::createAndApply(dc->waiting_LPE_type, dc->desktop->doc(), item);
         }
     }
 }
@@ -270,6 +270,8 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
 static void
 spdc_selection_changed(Inkscape::Selection *sel, SPDrawContext *dc)
 {
+    // note: in draw context, selection_changed() is only called when a new item was created;
+    // otherwise the following function call would yield wrong results
     spdc_check_for_and_apply_waiting_LPE(dc, sel->singleItem());
 
     if (dc->attach) {

@@ -46,7 +46,7 @@ struct SPPenContext : public SPDrawContext {
     bool polylines_only;
 
     unsigned int expecting_clicks_for_LPE; // if positive, finish the path after this many clicks
-    Inkscape::LivePathEffect::Effect *waiting_LPE;
+    Inkscape::LivePathEffect::Effect *waiting_LPE; // if NULL, waiting_LPE_type in SPDrawContext is taken into account
     SPLPEItem *waiting_item;
 
     SPCanvasItem *c0, *c1, *cl0, *cl1;
