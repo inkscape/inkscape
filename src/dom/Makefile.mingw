@@ -135,7 +135,7 @@ endif
 
 
 INC = -I. -I..
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -DDOM_STANDALONE
 LIBS = -lws2_32
 
 DOMOBJ = \
