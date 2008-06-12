@@ -215,6 +215,9 @@ LPEEnvelope::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
         /*Of course, the result is not perfect, but on a graphical point of view, this is sufficent.*/
 
     }
+
+    // do nothing when xx and yy are both false
+    return pwd2_in;
 }
 
 void
