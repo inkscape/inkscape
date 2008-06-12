@@ -1299,14 +1299,16 @@ sp_item_adjust_livepatheffect (SPItem *item, NR::Matrix const &postmul, bool set
             // If the path effect is used by 2 or more items, fork it
             // so that each object has its own independent copy of the effect
             LivePathEffectObject *lpeobj = (*it)->lpeobject;
-            LivePathEffectObject *new_lpeobj = lpeobj->fork_private_if_necessary();
-            if (new_lpeobj != lpeobj) {
-                sp_lpe_item_replace_path_effect(lpeitem, lpeobj, new_lpeobj);
-            }
+            if (lpeobj) {
+                LivePathEffectObject *new_lpeobj = lpeobj->fork_private_if_necessary();
+                if (new_lpeobj != lpeobj) {
+                    sp_lpe_item_replace_path_effect(lpeitem, lpeobj, new_lpeobj);
+                }
         
-            if (lpeobj->lpe) {
-                Inkscape::LivePathEffect::Effect * effect = lpeobj->lpe;
-                effect->transform_multiply(to_2geom(postmul), set);
+                if (lpeobj->lpe) {
+                    Inkscape::LivePathEffect::Effect * effect = lpeobj->lpe;
+                    effect->transform_multiply(to_2geom(postmul), set);
+                }
             }
         }
     }
