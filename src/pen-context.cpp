@@ -42,7 +42,7 @@
 #include "helper/units.h"
 #include "macros.h"
 #include "context-fns.h"
-
+#include "live_effects/effect.h"
 
 static void sp_pen_context_class_init(SPPenContextClass *klass);
 static void sp_pen_context_init(SPPenContext *pc);
@@ -177,6 +177,12 @@ sp_pen_context_dispose(GObject *object)
     }
 
     G_OBJECT_CLASS(pen_parent_class)->dispose(object);
+
+    pc->polylines_only = false;
+    if (pc->expecting_clicks_for_LPE > 0) {
+        // we received too few clicks to sanely set the parameter path so we remove the LPE from the item
+        //sp_lpe_item_remove_current_path_effect(SP_LPE_ITEM(pc->waiting_item), false);
+    }
 }
 
 /**
@@ -378,7 +384,9 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
     SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
 
     gint ret = FALSE;
-    if (bevent.button == 1 && !event_context->space_panning) {
+    if (bevent.button == 1 && !event_context->space_panning
+        && pc->expecting_clicks_for_LPE != 1) { // when the last click for a waiting LPE occurs we want to finish the path
+
 
         if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
             return TRUE;
@@ -497,7 +505,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
             default:
                 break;
         }
-    } else if (bevent.button == 3) {
+    } else if (bevent.button == 3 || pc->expecting_clicks_for_LPE == 1) { // when the last click for a waiting LPE occurs we want to finish the path
         if (pc->npoints != 0) {
 
             spdc_pen_finish_segment(pc, event_dt, bevent.state);
@@ -764,6 +772,22 @@ pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent)
         ret = TRUE;
 
         dc->green_closed = FALSE;
+    }
+
+    // TODO: can we be sure that the path was created correctly?
+    // TODO: should we offer an option to collect the clicks in a list?
+    if (pc->expecting_clicks_for_LPE > 0) {
+        --pc->expecting_clicks_for_LPE;
+
+        if (pc->expecting_clicks_for_LPE == 0) {
+            pc->polylines_only = false;
+
+            SPEventContext *ec = SP_EVENT_CONTEXT(pc);
+            Inkscape::Selection *selection = sp_desktop_selection (ec->desktop);
+
+            //pc->waiting_LPE->acceptParamPath(SP_PATH(selection->singleItem()));
+            //selection->add(SP_OBJECT(pc->waiting_item));
+        }
     }
 
     return ret;
@@ -1214,6 +1238,11 @@ spdc_pen_finish_segment(SPPenContext *const pc, NR::Point const /*p*/, guint con
 static void
 spdc_pen_finish(SPPenContext *const pc, gboolean const closed)
 {
+    if (pc->expecting_clicks_for_LPE > 1) {
+        // don't let the path be finished before we have collected the required number of mouse clicks
+        return;
+    }
+
     pen_disable_events(pc);
     
     SPDesktop *const desktop = pc->desktop;

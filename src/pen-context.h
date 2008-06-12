@@ -40,6 +40,8 @@ struct SPPenContext : public SPDrawContext {
 
     bool polylines_only;
 
+    unsigned int expecting_clicks_for_LPE; // if positive, finish the path after this many clicks
+
     SPCanvasItem *c0, *c1, *cl0, *cl1;
     
     unsigned int events_disabled : 1;
