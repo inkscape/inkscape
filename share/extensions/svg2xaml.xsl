@@ -306,11 +306,25 @@ exclude-result-prefixes="rdf xlink msxsl">
 <xsl:template mode="stroke_linecap" match="*">
   <xsl:choose>
     <xsl:when test="@stroke-linecap">
+      <xsl:attribute name="StrokeStartLineCap">
+        <xsl:call-template name="linecap_svg_to_xaml"><xsl:with-param name="linecap"><xsl:value-of select="@stroke-linecap" /></xsl:with-param></xsl:call-template>
+      </xsl:attribute>
       <xsl:attribute name="StrokeEndLineCap">
         <xsl:call-template name="linecap_svg_to_xaml"><xsl:with-param name="linecap"><xsl:value-of select="@stroke-linecap" /></xsl:with-param></xsl:call-template>
       </xsl:attribute></xsl:when>
     <xsl:when test="@style and contains(@style, 'stroke-linecap:')">
+      <xsl:variable name="StrokeStartLineCap" select="substring-after(@style, 'stroke-linecap:')" />
       <xsl:variable name="StrokeEndLineCap" select="substring-after(@style, 'stroke-linecap:')" />
+      <xsl:attribute name="StrokeStartLineCap">
+        <xsl:choose>
+          <xsl:when test="contains($StrokeStartLineCap, ';')">
+            <xsl:call-template name="linecap_svg_to_xaml"><xsl:with-param name="linecap"><xsl:value-of select="substring-before($StrokeStartLineCap, ';')" /></xsl:with-param></xsl:call-template>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:call-template name="linecap_svg_to_xaml"><xsl:with-param name="linecap"><xsl:value-of select="$StrokeStartLineCap" /></xsl:with-param></xsl:call-template>
+          </xsl:otherwise>
+        </xsl:choose>  
+      </xsl:attribute>
       <xsl:attribute name="StrokeEndLineCap">
         <xsl:choose>
           <xsl:when test="contains($StrokeEndLineCap, ';')">
