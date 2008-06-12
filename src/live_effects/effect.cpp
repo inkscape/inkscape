@@ -19,6 +19,10 @@
 #include "document-private.h"
 #include "xml/document.h"
 #include <glibmm/i18n.h>
+#include "pen-context.h"
+#include "tools-switch.h"
+#include "message-stack.h"
+#include "desktop.h"
 
 #include "live_effects/lpeobject.h"
 #include "live_effects/parameter/parameter.h"
@@ -183,6 +187,7 @@ Effect::createAndApply(EffectType type, SPDocument *doc, SPItem *item)
 Effect::Effect(LivePathEffectObject *lpeobject)
     : oncanvasedit_it(0),
       is_visible(_("Is visible?"), _("If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"), "is_visible", &wr, this, true),
+      done_pathparam_set(false),
       lpeobj(lpeobject),
       concatenate_before_pwd2(false)
 {
@@ -207,18 +212,48 @@ Effect::effectType() {
     return lpeobj->effecttype;
 }
 
+/**
+ * Is performed a single time when the effect is freshly applied to a path
+ */
 void
 Effect::doOnApply (SPLPEItem */*lpeitem*/)
 {
-    // This is performed once when the effect is freshly applied to a path
 }
 
+/**
+ * Is performed each time before the effect is updated.
+ */
 void
 Effect::doBeforeEffect (SPLPEItem */*lpeitem*/)
 {
     //Do nothing for simple effects
 }
 
+/**
+ * Effects have a parameter path set before they are applied by accepting a nonzero number of mouse
+ * clicks. This method activates the pen context, which waits for the specified number of clicks.
+ * Override Effect::acceptsNumParams() to set the number of expected mouse clicks.
+ */
+void
+Effect::doAcceptPathPreparations(SPLPEItem *lpeitem)
+{
+    // switch to pen context
+    SPDesktop *desktop = inkscape_active_desktop(); // TODO: Is there a better method to find the item's desktop?
+    if (!tools_isactive(desktop, TOOLS_FREEHAND_PEN)) {
+        tools_switch(desktop, TOOLS_FREEHAND_PEN);
+    }
+
+    SPEventContext *ec = desktop->event_context;
+    SPPenContext *pc = SP_PEN_CONTEXT(ec);
+    pc->expecting_clicks_for_LPE = this->acceptsNumParams();
+    pc->waiting_LPE = this;
+    pc->waiting_item = lpeitem;
+    pc->polylines_only = true;
+
+    ec->desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE,
+        g_strdup_printf(_("Please specify a parameter path for the LPE '%s' with %d mouse clicks"),
+                        getName().c_str(), acceptsNumParams()));
+}
 
 void
 Effect::writeParamsToSVG() {
@@ -226,6 +261,16 @@ Effect::writeParamsToSVG() {
     for (p = param_vector.begin(); p != param_vector.end(); ++p) {
         (*p)->write_to_SVG();
     }
+}
+
+/**
+ * If the effect expects a path parameter (specified by a number of mouse clicks) before it is
+ * applied, this is the method that processes the resulting path. Override it to customize it for
+ * your LPE. But don't forget to call the parent method so that done_pathparam_set is set to true!
+ */
+void
+Effect::acceptParamPath (SPPath *param_path) {
+    done_pathparam_set = true;
 }
 
 /*

@@ -28,7 +28,8 @@ public:
     LPEMirrorReflect(LivePathEffectObject *lpeobject);
     virtual ~LPEMirrorReflect();
 
-    virtual void doOnApply (SPLPEItem *lpeitem);
+    virtual void acceptParamPath (SPPath *param_path);
+    virtual int acceptsNumParams() { return 2; }
 
     virtual LPEPathFlashType pathFlashType() { return PERMANENT_FLASH; }
 

@@ -95,9 +95,15 @@ public:
     EffectType effectType ();
 
     virtual void doOnApply (SPLPEItem *lpeitem);
-
     virtual void doBeforeEffect (SPLPEItem *lpeitem);
+
     void writeParamsToSVG();
+
+    virtual void acceptParamPath (SPPath *param_path);
+    virtual int acceptsNumParams() { return 0; }
+    void doAcceptPathPreparations(SPLPEItem *lpeitem);
+
+    inline bool pathParamAccepted() { return done_pathparam_set; }
 
     virtual void doEffect (SPCurve * curve);
 
@@ -148,6 +154,7 @@ protected:
     std::vector<std::pair<KnotHolderEntity*, const char*> > kh_entity_vector;
     int oncanvasedit_it;
     BoolParam is_visible;
+    bool done_pathparam_set;
 
     Inkscape::UI::Widget::Registry wr;
 

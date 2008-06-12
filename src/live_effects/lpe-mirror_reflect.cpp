@@ -38,22 +38,20 @@ LPEMirrorReflect::~LPEMirrorReflect()
 }
 
 void
-LPEMirrorReflect::doOnApply (SPLPEItem *lpeitem)
-{
+LPEMirrorReflect::acceptParamPath (SPPath *param_path) {
     using namespace Geom;
 
-    SPCurve *curve = sp_path_get_curve_for_edit (SP_PATH(lpeitem));
-    Point A(curve->first_point().to_2geom());
-    Point B(curve->last_point().to_2geom());
-
-    Point M = (2*A + B)/3; // some point between A and B (a bit closer to A)
-    Point perp_dir = unit_vector((B - A).ccw());
+    SPCurve* curve = sp_path_get_curve_for_edit (param_path);
+    Geom::Point A(curve->first_point().to_2geom());
+    Geom::Point B(curve->last_point().to_2geom());
     
-    Point C(M[X], M[Y] + 150);
-    Point D(M[X], M[Y] - 150);
-
-    Piecewise<D2<SBasis> > rline = Piecewise<D2<SBasis> >(D2<SBasis>(Linear(C[X], D[X]), Linear(C[Y], D[Y])));
+    Piecewise<D2<SBasis> > rline = Piecewise<D2<SBasis> >(D2<SBasis>(Linear(A[X], B[X]), Linear(A[Y], B[Y])));
     reflection_line.param_set_and_write_new_value(rline);
+
+    SP_OBJECT(param_path)->deleteObject(true);
+
+    // don't remove this; needed for cleanup tasks
+    Effect::acceptParamPath(param_path);
 }
 
 std::vector<Geom::Path>

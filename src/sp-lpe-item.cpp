@@ -286,13 +286,20 @@ void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve) {
                 return;
             }
 
-            if (lpeobj->lpe->isVisible()) {
-                // Groups have their doBeforeEffect called elsewhere
-                if (!SP_IS_GROUP(lpeitem)) {
-                    lpeobj->lpe->doBeforeEffect(lpeitem);
+            Inkscape::LivePathEffect::Effect *lpe = lpeobj->lpe;
+            if (lpe->isVisible()) {
+                if (lpe->acceptsNumParams() > 0 && !lpe->pathParamAccepted()) {
+                    // if the effect expects mouse input before being applied and the input is not finished
+                    // yet, we don't alter the path
+                    return;
                 }
 
-                lpeobj->lpe->doEffect(curve);
+                // Groups have their doBeforeEffect called elsewhere
+                if (!SP_IS_GROUP(lpeitem)) {
+                    lpe->doBeforeEffect(lpeitem);
+                }
+
+                lpe->doEffect(curve);
             }
         }
     }
@@ -430,13 +437,21 @@ void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset)
 
         LivePathEffectObject *lpeobj = lpeitem->path_effect_list->back()->lpeobject;
         if (lpeobj && lpeobj->lpe) {
+            Inkscape::LivePathEffect::Effect *lpe = lpeobj->lpe;
             // Ask the path effect to reset itself if it doesn't have parameters yet
             if (reset) {
                 // has to be called when all the subitems have their lpes applied
-                lpeobj->lpe->resetDefaults(lpeitem);
+                lpe->resetDefaults(lpeitem);
             }
-            /* perform this once when the effect is applied */
-            lpeobj->lpe->doOnApply(SP_LPE_ITEM(lpeitem));
+
+            // perform this once when the effect is applied 
+            lpe->doOnApply(SP_LPE_ITEM(lpeitem));
+
+            // if the effect expects a number of mouse clicks to set a parameter path, perform the
+            // necessary preparations
+            if (lpe->acceptsNumParams() > 0) {
+                lpe->doAcceptPathPreparations(lpeitem);
+            }
         }
 
         //Enable the path effects now that everything is ready to apply the new path effect

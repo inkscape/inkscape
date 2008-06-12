@@ -181,7 +181,7 @@ sp_pen_context_dispose(GObject *object)
     pc->polylines_only = false;
     if (pc->expecting_clicks_for_LPE > 0) {
         // we received too few clicks to sanely set the parameter path so we remove the LPE from the item
-        //sp_lpe_item_remove_current_path_effect(SP_LPE_ITEM(pc->waiting_item), false);
+        sp_lpe_item_remove_current_path_effect(pc->waiting_item, false);
     }
 }
 
@@ -785,8 +785,8 @@ pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent)
             SPEventContext *ec = SP_EVENT_CONTEXT(pc);
             Inkscape::Selection *selection = sp_desktop_selection (ec->desktop);
 
-            //pc->waiting_LPE->acceptParamPath(SP_PATH(selection->singleItem()));
-            //selection->add(SP_OBJECT(pc->waiting_item));
+            pc->waiting_LPE->acceptParamPath(SP_PATH(selection->singleItem()));
+            selection->add(SP_OBJECT(pc->waiting_item));
         }
     }
 

@@ -7,6 +7,11 @@
 
 #include "draw-context.h"
 
+namespace Inkscape {
+namespace LivePathEffect {
+class Effect;
+}
+}
 
 #define SP_TYPE_PEN_CONTEXT (sp_pen_context_get_type())
 #define SP_PEN_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_PEN_CONTEXT, SPPenContext))
@@ -41,6 +46,8 @@ struct SPPenContext : public SPDrawContext {
     bool polylines_only;
 
     unsigned int expecting_clicks_for_LPE; // if positive, finish the path after this many clicks
+    Inkscape::LivePathEffect::Effect *waiting_LPE;
+    SPLPEItem *waiting_item;
 
     SPCanvasItem *c0, *c1, *cl0, *cl1;
     
