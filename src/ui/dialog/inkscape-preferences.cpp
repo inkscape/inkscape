@@ -986,6 +986,30 @@ void InkscapePreferences::initPageMisc()
     _misc_simpl.init("options.simplifythreshold", "value", 0.0001, 1.0, 0.0001, 0.0010, 0.0010, false, false);
 
 
+    // Autosave options 
+    _misc_autosave_enable.init( _("Enable auto-save of document"), "options.autosave", "enable", false);
+    _page_misc.add_line(false, "", _misc_autosave_enable, "", _("Automatically saves the current document to disk at a given interval, thus minimizing loss at a crash"), false);
+    _misc_autosave_interval.init("options.autosave", "interval", 1.0, 10800.0, 1.0, 10.0, 10.0, true, false);
+    _page_misc.add_line(true, _("Interval (in minutes):"), _misc_autosave_interval, "", _("Sets the interval (in minutes) at which a workspace will be automatically saved to disk"), false);
+    _misc_autosave_path.init("options.autosave", "path", true);
+    _page_misc.add_line(true, _("Path:"), _misc_autosave_path, "", _("Sets the directory where autosaves will be written"), false);
+    _misc_autosave_max.init("options.autosave", "max", 1.0, 100.0, 1.0, 10.0, 10.0, true, false);
+    _page_misc.add_line(true, _("Maximum number of autosaves"), _misc_autosave_max, "", _("Allows for limiting the space used by autosaves, by setting a maximum number of allowed files"), false);
+
+    /* When changing the interval or enabling/disabling the autosave function,
+     * update our running configuration
+     *
+     * FIXME!
+     * the inkscape_autosave_init should be called AFTER the values have been changed
+     * (which cannot be guaranteed from here)
+     *
+     * For now, autosave-settings will not change until restart
+     */
+    /*
+    _misc_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+    _misc_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+    */
+
     // -----------
 
     _misc_bitmap_autoreload.init(_("Automatically reload bitmaps"), "options.bitmapautoreload", "value", true);

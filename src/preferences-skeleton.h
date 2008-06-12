@@ -264,6 +264,7 @@ static char const preferences_skeleton[] =
 "           masks=\"65535\"/>\n" // 0x0000ffff
 "    <group id=\"svgoutput\" usenamedcolors=\"0\" numericprecision=\"8\" minimumexponent=\"-8\" inlineattrs=\"0\" indent=\"2\" allowrelativecoordinates=\"1\" allowshorthands=\"1\" forcerepeatcommands=\"0\"/>\n"
 "    <group id=\"forkgradientvectors\" value=\"1\"/>\n"
+"    <group id=\"autosave\" enable=\"0\" interval=\"10\" path=\"\" max=\"10\"/>\n"
 "    <group id=\"grids\""
 "      no_emphasize_when_zoomedout=\"0\">\n"
 "      <group id=\"xy\" "

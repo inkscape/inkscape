@@ -169,6 +169,10 @@ protected:
     PrefCombo       _misc_overs_bitmap;
     PrefCombo       _misc_bitmap_editor;
     PrefCheckButton _misc_bitmap_autoreload;
+    PrefCheckButton _misc_autosave_enable;
+    PrefSpinButton  _misc_autosave_interval;
+    PrefEntry       _misc_autosave_path;
+    PrefSpinButton  _misc_autosave_max;
 
     Gtk::ComboBoxText   _cms_display_profile;
     PrefCheckButton     _cms_from_display;

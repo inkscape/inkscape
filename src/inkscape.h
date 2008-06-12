@@ -29,6 +29,8 @@ namespace Inkscape {
 
 #define INKSCAPE inkscape_get_instance()
 
+void inkscape_autosave_init();
+
 void inkscape_application_init (const gchar *argv0, gboolean use_gui);
 
 bool inkscape_load_config (const gchar *filename, Inkscape::XML::Document *config, const gchar *skeleton, unsigned int skel_size, const gchar *e_notreg, const gchar *e_notxml, const gchar *e_notsp, const gchar *warn);
