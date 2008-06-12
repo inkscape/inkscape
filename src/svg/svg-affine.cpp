@@ -30,12 +30,25 @@
 #include <libnr/nr-scale-matrix-ops.h>
 #include <libnr/nr-translate-matrix-ops.h>
 #include <libnr/nr-translate-rotate-ops.h>
+#include <libnr/nr-convert2geom.h>
 #include "svg.h"
 #include "prefs-utils.h"
 
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
 #endif
+
+bool
+sp_svg_transform_read(gchar const *str, Geom::Matrix *transform)
+{
+    NR::Matrix mat;
+    if (sp_svg_transform_read(str, &mat)) {
+        *transform = to_2geom(mat);
+        return true;
+    } else {
+        return false;
+    }
+}
 
 bool
 sp_svg_transform_read(gchar const *str, NR::Matrix *transform)
@@ -160,6 +173,21 @@ sp_svg_transform_read(gchar const *str, NR::Matrix *transform)
 }
 
 #define EQ(a,b) (fabs ((a) - (b)) < 1e-9)
+
+gchar *
+sp_svg_transform_write(Geom::Matrix const &transform)
+{
+    Geom::Matrix const t(transform);
+    return sp_svg_transform_write(&t);
+}
+
+
+gchar *
+sp_svg_transform_write(Geom::Matrix const *transform)
+{
+    NR::Matrix const t(from_2geom(*transform));
+    return sp_svg_transform_write(&t);
+}
 
 gchar *
 sp_svg_transform_write(NR::Matrix const &transform)

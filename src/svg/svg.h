@@ -54,8 +54,11 @@ unsigned int sp_svg_length_read_ldd (const gchar *str, SVGLength::Unit *unit, do
 
 std::string sp_svg_length_write_with_units(SVGLength const &length);
 
+bool sp_svg_transform_read(gchar const *str, Geom::Matrix *transform);
 bool sp_svg_transform_read(gchar const *str, NR::Matrix *transform);
 
+gchar *sp_svg_transform_write(Geom::Matrix const &transform);
+gchar *sp_svg_transform_write(Geom::Matrix const *transform);
 gchar *sp_svg_transform_write(NR::Matrix const &transform);
 gchar *sp_svg_transform_write(NR::Matrix const *transform);
 
