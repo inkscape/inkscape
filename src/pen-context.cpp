@@ -145,6 +145,8 @@ sp_pen_context_init(SPPenContext *pc)
     pc->cl1 = NULL;
     
     pc->events_disabled = 0;
+
+    pc->polylines_only = false;
 }
 
 /**
@@ -473,10 +475,13 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                                 p = event_dt;
                                 spdc_endpoint_snap(pc, p, bevent.state); /* Snap node only if not hitting anchor. */
                                 spdc_pen_set_subsequent_point(pc, p, true);
+                                if (pc->polylines_only) {
+                                    spdc_pen_finish_segment(pc, p, bevent.state);
+                                }
                             }
 
                         }
-                        pc->state = SP_PEN_CONTEXT_CONTROL;
+                        pc->state = pc->polylines_only ? SP_PEN_CONTEXT_POINT : SP_PEN_CONTEXT_CONTROL;
                         ret = TRUE;
                         break;
                     case SP_PEN_CONTEXT_CONTROL:
@@ -624,7 +629,11 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
                     // snap the handle
                     spdc_endpoint_snap_handle(pc, p, mevent.state);
 
-                    spdc_pen_set_ctrl(pc, p, mevent.state);
+                    if (!pc->polylines_only) {
+                        spdc_pen_set_ctrl(pc, p, mevent.state);
+                    } else {
+                        spdc_pen_set_ctrl(pc, pc->p[1], mevent.state);
+                    }
                     gobble_motion_events(GDK_BUTTON1_MASK);
                     ret = TRUE;
                     break;
@@ -717,8 +726,10 @@ pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent)
                 switch (pc->state) {
                     case SP_PEN_CONTEXT_POINT:
                     case SP_PEN_CONTEXT_CONTROL:
-                        spdc_endpoint_snap(pc, p, revent.state);
-                        spdc_pen_finish_segment(pc, p, revent.state);
+                        if (!pc->polylines_only) {
+                            spdc_endpoint_snap(pc, p, revent.state);
+                            spdc_pen_finish_segment(pc, p, revent.state);
+                        }
                         break;
                     case SP_PEN_CONTEXT_CLOSE:
                         spdc_endpoint_snap(pc, p, revent.state);
