@@ -254,9 +254,6 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
 {
     using namespace Inkscape::LivePathEffect;
 
-    if (!SP_IS_PEN_CONTEXT(dc))
-        return;
-
     if (item) {
         if (prefs_get_int_attribute("tools.freehand", "spiro-spline-mode", 0)) {
             Effect::createAndApply(SPIRO, dc->desktop->doc(), item);
@@ -266,7 +263,9 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
             Effect::createAndApply(dc->waiting_LPE_type, dc->desktop->doc(), item);
             dc->waiting_LPE_type = INVALID_LPE;
         }
-        SP_PEN_CONTEXT(dc)->polylines_only = false;
+        if (SP_IS_PEN_CONTEXT(dc)) {
+            SP_PEN_CONTEXT(dc)->polylines_only = false;
+        }
     }
 }
 
