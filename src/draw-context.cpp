@@ -138,6 +138,8 @@ sp_draw_context_dispose(GObject *object)
         dc->selection = NULL;
     }
 
+    dc->waiting_LPE_type = Inkscape::LivePathEffect::INVALID_LPE;
+
     spdc_free_colors(dc);
 
     G_OBJECT_CLASS(draw_parent_class)->dispose(object);
@@ -252,6 +254,9 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
 {
     using namespace Inkscape::LivePathEffect;
 
+    if (!SP_IS_PEN_CONTEXT(dc))
+        return;
+
     if (item) {
         if (prefs_get_int_attribute("tools.freehand", "spiro-spline-mode", 0)) {
             Effect::createAndApply(SPIRO, dc->desktop->doc(), item);
@@ -259,7 +264,9 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
         }
         if (dc->waiting_LPE_type != INVALID_LPE) {
             Effect::createAndApply(dc->waiting_LPE_type, dc->desktop->doc(), item);
+            dc->waiting_LPE_type = INVALID_LPE;
         }
+        SP_PEN_CONTEXT(dc)->polylines_only = false;
     }
 }
 

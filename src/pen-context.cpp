@@ -42,7 +42,6 @@
 #include "helper/units.h"
 #include "macros.h"
 #include "context-fns.h"
-#include "live_effects/effect.h"
 
 static void sp_pen_context_class_init(SPPenContextClass *klass);
 static void sp_pen_context_init(SPPenContext *pc);
@@ -147,6 +146,7 @@ sp_pen_context_init(SPPenContext *pc)
     pc->events_disabled = 0;
 
     pc->polylines_only = false;
+    pc->waiting_LPE = NULL;
 }
 
 /**
@@ -179,6 +179,7 @@ sp_pen_context_dispose(GObject *object)
     G_OBJECT_CLASS(pen_parent_class)->dispose(object);
 
     pc->polylines_only = false;
+    pc->waiting_LPE = NULL;
     if (pc->expecting_clicks_for_LPE > 0) {
         // we received too few clicks to sanely set the parameter path so we remove the LPE from the item
         sp_lpe_item_remove_current_path_effect(pc->waiting_item, false);
@@ -385,8 +386,8 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
 
     gint ret = FALSE;
     if (bevent.button == 1 && !event_context->space_panning
-        && pc->expecting_clicks_for_LPE != 1) { // when the last click for a waiting LPE occurs we want to finish the path
-
+        // when the last click for a waiting LPE occurs we want to finish the path
+        && pc->expecting_clicks_for_LPE != 1) {
 
         if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
             return TRUE;
@@ -427,28 +428,28 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                                 break;
                             }
 
+                            // TODO: Perhaps it would be nicer to rearrange the following case
+                            // distinction so that the case of a waiting LPE is treated separately
+
                             /* Set start anchor */
                             pc->sa = anchor;
                             NR::Point p;
-                            if (anchor) {
-
-                                /* Adjust point to anchor if needed */
+                            if (anchor && !sp_pen_context_has_waiting_LPE(pc)) {
+                                /* Adjust point to anchor if needed; if we have a waiting LPE, we need
+                                   a fresh path to be created so don't continue an existing one */
                                 p = anchor->dp;
                                 desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Continuing selected path"));
-
                             } else {
-
                                 // This is the first click of a new curve; deselect item so that
                                 // this curve is not combined with it (unless it is drawn from its
                                 // anchor, which is handled by the sibling branch above)
                                 Inkscape::Selection * const selection = sp_desktop_selection(desktop);
-                                if (!(bevent.state & GDK_SHIFT_MASK)) {
-
+                                if (!(bevent.state & GDK_SHIFT_MASK) || sp_pen_context_has_waiting_LPE(pc)) {
+                                    /* if we have a waiting LPE, we need a fresh path to be created
+                                       so don't append to an existing one */
                                     selection->clear();
                                     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating new path"));
-
                                 } else if (selection->singleItem() && SP_IS_PATH(selection->singleItem())) {
-
                                     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Appending to selected path"));
                                 }
 
@@ -519,6 +520,10 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
 
             ret = TRUE;
         }
+    }
+
+    if (pc->expecting_clicks_for_LPE) {
+        --pc->expecting_clicks_for_LPE;
     }
 
     return ret;
@@ -776,23 +781,21 @@ pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent)
 
     // TODO: can we be sure that the path was created correctly?
     // TODO: should we offer an option to collect the clicks in a list?
-    if (pc->expecting_clicks_for_LPE > 0) {
-        --pc->expecting_clicks_for_LPE;
+    if (pc->expecting_clicks_for_LPE == 0 && sp_pen_context_has_waiting_LPE(pc)) {
+        pc->polylines_only = false;
 
-        if (pc->expecting_clicks_for_LPE == 0) {
+        SPEventContext *ec = SP_EVENT_CONTEXT(pc);
+        Inkscape::Selection *selection = sp_desktop_selection (ec->desktop);
+
+        if (pc->waiting_LPE) {
+            // we have an already created LPE waiting for a path
+            pc->waiting_LPE->acceptParamPath(SP_PATH(selection->singleItem()));
+            selection->add(SP_OBJECT(pc->waiting_item));
+            pc->waiting_LPE = NULL;
             pc->polylines_only = false;
-
-            SPEventContext *ec = SP_EVENT_CONTEXT(pc);
-            Inkscape::Selection *selection = sp_desktop_selection (ec->desktop);
-
-            if (pc->waiting_LPE) {
-                // we have an already created LPE waiting for a path
-                pc->waiting_LPE->acceptParamPath(SP_PATH(selection->singleItem()));
-                selection->add(SP_OBJECT(pc->waiting_item));
-            } else {
-                // the case that we need to create a new LPE and apply it to the just-drawn path is
-                // handled in spdc_check_for_and_apply_waiting_LPE() in draw-context.cpp
-            }
+        } else {
+            // the case that we need to create a new LPE and apply it to the just-drawn path is
+            // handled in spdc_check_for_and_apply_waiting_LPE() in draw-context.cpp
         }
     }
 

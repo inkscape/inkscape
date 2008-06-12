@@ -6,12 +6,7 @@
  */
 
 #include "draw-context.h"
-
-namespace Inkscape {
-namespace LivePathEffect {
-class Effect;
-}
-}
+#include "live_effects/effect.h"
 
 #define SP_TYPE_PEN_CONTEXT (sp_pen_context_get_type())
 #define SP_PEN_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_PEN_CONTEXT, SPPenContext))
@@ -58,6 +53,12 @@ struct SPPenContext : public SPDrawContext {
 struct SPPenContextClass : public SPEventContextClass { };
 
 GType sp_pen_context_get_type();
+
+inline bool sp_pen_context_has_waiting_LPE(SPPenContext *pc) {
+    // note: waiting_LPE_type is defined in SPDrawContext
+    return (pc->waiting_LPE != NULL ||
+            pc->waiting_LPE_type != Inkscape::LivePathEffect::INVALID_LPE);
+}
 
 
 #endif /* !SEEN_PEN_CONTEXT_H */
