@@ -286,6 +286,7 @@
             -D_INTL_REDIRECT_INLINE
             -DHAVE_SSL
             -DRELAYTOOL_SSL="static const int libssl_is_present=1; static int __attribute__((unused)) libssl_symbol_is_present(char *s){ return 1; }" <!-- inkboard -->
+            -DPOPPLER_NEW_GFXFONT <!-- poppler changed the api for 0.8.3 -->
         </defines>
         <includes>
             -I${devlibs}/include
@@ -382,7 +383,7 @@
            ${devlibs}/bin/libxml2.dll
            ${devlibs}/bin/libxslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
-		   ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
+           ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
            ${devlibs}/lib/iconv.lib
            ${pcl.ImageMagick++}
            ${pcl.fontconfig} ${pcl.freetype2}
@@ -391,7 +392,7 @@
            ${pcl.gsl}
            -lpng -ljpeg.dll -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
            -lgc
-		   -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
+           -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
        </libs>
     </link>
   </target>
@@ -437,7 +438,7 @@
            ${devlibs}/bin/libxml2.dll
            ${devlibs}/bin/libxslt.dll
            ${devlibs}/lib/iconv.lib
-		   -lcairo.dll -lcairomm-1.0.dll
+           -lcairo.dll -lcairomm-1.0.dll
            -lwpg-0.1.dll -lwpg-stream-0.1.dll
            -lMagick++ -lWand -lMagick
            -lfreetype.dll -lfontconfig.dll
@@ -445,7 +446,7 @@
            -lssl -lcrypto
            -lpng -ljpeg.dll -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
            -lgc -mwindows
-		   -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
+           -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
        </libs>
     </link>
   </target>
@@ -462,7 +463,7 @@
 
     <!-- Create the distribution directory -->
     <copy todir="${dist}" file="${build}/inkscape.exe"/>
-	<copy todir="${dist}" file="${build}/inkscape.dbg"/>
+    <copy todir="${dist}" file="${build}/inkscape.dbg"/>
     <copy todir="${dist}" file="AUTHORS"/>
     <copy todir="${dist}" file="COPYING"/>
     <copy todir="${dist}" file="COPYING.LIB"/>
