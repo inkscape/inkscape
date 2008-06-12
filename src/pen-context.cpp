@@ -1128,8 +1128,7 @@ spdc_pen_set_subsequent_point(SPPenContext *const pc, NR::Point const p, bool st
     pc->red_curve->reset();
     pc->red_curve->moveto(pc->p[0]);
     bool is_curve;
-    if ( (pc->onlycurves)
-         || ( pc->p[1] != pc->p[0] ) )
+    if (pc->p[1] != pc->p[0])
     {
         pc->red_curve->curveto(pc->p[1], p, p);
         is_curve = true;

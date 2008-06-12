@@ -37,7 +37,6 @@ struct SPPenContext : public SPDrawContext {
 
     unsigned int mode : 1;
     unsigned int state : 2;
-    unsigned int onlycurves : 1;
 
     bool polylines_only;
 
