@@ -295,11 +295,11 @@ main (int argc, const char **argv)
 		}
 
 		ss.slides[ss.length++] = strdup (argv[i]);
-		ss.doc = sp_document_new (ss.slides[ss.current], TRUE, false);
 
-		if (!ss.doc && ++ss.current >= ss.length) {
-		    /* No loadable documents */
-		    return 1;
+                if (!ss.doc) {
+                    ss.doc = sp_document_new (ss.slides[ss.current], TRUE, false);
+                    if (!ss.doc)
+                        ++ss.current;
 		}
 #ifdef WITH_INKJAR
 	    }
@@ -321,10 +321,11 @@ main (int argc, const char **argv)
     g_signal_connect (G_OBJECT (w), "delete_event", (GCallback) sp_svgview_main_delete, &ss);
     g_signal_connect (G_OBJECT (w), "key_press_event", (GCallback) sp_svgview_main_key_press, &ss);
 
-    ss.view = sp_svg_view_widget_new (ss.doc);
-    sp_svg_view_widget_set_resize (SP_SVG_VIEW_WIDGET (ss.view), FALSE, sp_document_width (ss.doc), sp_document_height (ss.doc));
     sp_document_ensure_up_to_date (ss.doc);
+    ss.view = sp_svg_view_widget_new (ss.doc);
     sp_document_unref (ss.doc);
+    sp_svg_view_widget_set_resize (SP_SVG_VIEW_WIDGET (ss.view), FALSE, 
+                                   sp_document_width (ss.doc), sp_document_height (ss.doc));
     gtk_widget_show (ss.view);
     gtk_container_add (GTK_CONTAINER (w), ss.view);
 
@@ -441,8 +442,8 @@ static void
 sp_svgview_set_document(struct SPSlideShow *ss, SPDocument *doc, int current)
 {
     if (doc && doc != ss->doc) {
-        reinterpret_cast<SPSVGView*>(SP_VIEW_WIDGET_VIEW (ss->view))->setDocument (doc);
         sp_document_ensure_up_to_date (doc);
+        reinterpret_cast<SPSVGView*>(SP_VIEW_WIDGET_VIEW (ss->view))->setDocument (doc);
         if (ss->doc) {
             delete ss->doc;
         }
