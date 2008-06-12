@@ -78,7 +78,9 @@ typedef dom::NodeList NodeList;
 
 
 class SVGElement;
+typedef Ptr<SVGElement> SVGElementPtr;
 class SVGUseElement;
+typedef Ptr<SVGUseElement> SVGUseElementPtr;
 class SVGAnimatedPreserveAspectRatio;
 
 
@@ -3104,18 +3106,18 @@ public:
     /**
      *
      */
-    virtual SVGElement *getNearestViewportElement()
+    virtual SVGElementPtr getNearestViewportElement()
         {
-        SVGElement *result = NULL;
+        SVGElementPtr result;
         return result;
         }
 
     /**
      *
      */
-    virtual SVGElement *getFarthestViewportElement()
+    virtual SVGElementPtr getFarthestViewportElement()
         {
-        SVGElement *result = NULL;
+        SVGElementPtr result;
         return result;
         }
 
@@ -3780,7 +3782,7 @@ public:
     /**
      *
      */
-    virtual SVGElement *getViewTarget()
+    virtual SVGElementPtr getViewTarget()
         { return viewTarget; }
 
     /**
@@ -3849,7 +3851,7 @@ public:
 
 protected:
 
-    SVGElement *viewTarget;
+    SVGElementPtr viewTarget;
     SVGTransformList transform;
 };
 
@@ -6707,13 +6709,13 @@ public:
     /**
      *
      */
-    virtual SVGElement *getCorrespondingElement()
+    virtual SVGElementPtr getCorrespondingElement()
         { return correspondingElement; }
 
     /**
      *
      */
-    virtual SVGUseElement *getCorrespondingUseElement()
+    virtual SVGUseElementPtr getCorrespondingUseElement()
         { return correspondingUseElement; }
 
     /**
@@ -6793,8 +6795,8 @@ public:
 
 protected:
 
-    SVGElement    *correspondingElement;
-    SVGUseElement *correspondingUseElement;
+    SVGElementPtr      correspondingElement;
+    SVGUseElementPtr   correspondingUseElement;
 
 };
 
