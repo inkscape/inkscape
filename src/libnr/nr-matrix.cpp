@@ -219,7 +219,7 @@ bool Matrix::is_rotation(Coord const eps) const {
 
 
 /**
- *
+ *  test whether the matrix is the identity matrix (true).  (2geom's Matrix::isIdentity() does the same)
  */
 bool Matrix::test_identity() const {
     return matrix_equalp(*this, NR_MATRIX_IDENTITY, NR_EPSILON);
@@ -230,7 +230,7 @@ bool Matrix::test_identity() const {
 
 
 /**
- *
+ * calculates the descriminant of the matrix. (Geom::Coord Matrix::descrim() does the same)
  */
 double expansion(Matrix const &m) {
     return sqrt(fabs(m.det()));
