@@ -8,9 +8,10 @@
  *   Chema Celorio <chema@celorio.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Bruno Dilly <bruno.dilly@gmail.com>
+ *   Stephen Silver <sasilver@users.sourceforge.net>
  *
  * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
- * Copyright (C) 1999-2005 Authors
+ * Copyright (C) 1999-2008 Authors
  * Copyright (C) 2004 David Turner
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
@@ -65,6 +66,7 @@
 #include "application/editor.h"
 #include "inkscape.h"
 #include "uri.h"
+#include "extract-uri.h"
 
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs.h>
@@ -871,6 +873,206 @@ sp_file_save_a_copy(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
 ## I M P O R T
 ######################*/
 
+typedef enum { REF_HREF, REF_STYLE, REF_URL } ID_REF_TYPE;
+
+struct IdReference {
+    ID_REF_TYPE type;
+    SPObject *elem;
+    const char *attr;  // property or href-like attribute
+};
+
+typedef std::map<std::string, std::list<IdReference> > refmap_type;
+
+typedef std::pair<SPObject*, std::string> id_changeitem_type;
+typedef std::list<id_changeitem_type> id_changelist_type;
+
+const char *href_like_attributes[] = {
+    "inkscape:href",
+    "inkscape:path-effect",
+    "inkscape:perspectiveID",
+    "inkscape:tiled-clone-of",
+    "xlink:href",
+};
+#define NUM_HREF_LIKE_ATTRIBUTES (sizeof(href_like_attributes) / sizeof(*href_like_attributes))
+
+const SPIPaint SPStyle::* SPIPaint_members[] = {
+    &SPStyle::color,
+    &SPStyle::fill,
+    &SPStyle::stroke,
+};
+const char* SPIPaint_properties[] = {
+    "color",
+    "fill",
+    "stroke",
+};
+#define NUM_SPIPAINT_PROPERTIES (sizeof(SPIPaint_properties) / sizeof(*SPIPaint_properties))
+
+const char* other_url_properties[] = {
+    "clip-path",
+    "color-profile",
+    "cursor",
+    "marker-end",
+    "marker-mid",
+    "marker-start",
+    "mask",
+};
+#define NUM_OTHER_URL_PROPERTIES (sizeof(other_url_properties) / sizeof(*other_url_properties))
+
+/**
+ *  Build a table of places where ids are referenced, for a given element.
+ *  FIXME: There are some types of references not yet dealt with here
+ *         (e.g., ID selectors in CSS stylesheets).
+ */
+static void
+find_references(SPObject *elem, refmap_type *refmap)
+{
+    Inkscape::XML::Node *repr_elem = SP_OBJECT_REPR(elem);
+    SPStyle *style = SP_OBJECT_STYLE(elem);
+
+    /* check for xlink:href="#..." and similar */
+    for (unsigned i = 0; i < NUM_HREF_LIKE_ATTRIBUTES; ++i) {
+        const char *attr = href_like_attributes[i];
+        const gchar *val = repr_elem->attribute(attr);
+        if (val && val[0] == '#') {
+            std::string id(val+1);
+            IdReference idref = { REF_HREF, elem, attr };
+            (*refmap)[id].push_back(idref);
+        }
+    }
+
+    /* check for url(#...) references in 'fill' or 'stroke' */
+    for (unsigned i = 0; i < NUM_SPIPAINT_PROPERTIES; ++i) {
+        const SPIPaint SPStyle::*prop = SPIPaint_members[i];
+        const SPIPaint *paint = &(style->*prop);
+        if (paint->isPaintserver()) {
+            const gchar *id = SP_OBJECT_ID(paint->value.href->getObject());
+            IdReference idref = { REF_STYLE, elem, SPIPaint_properties[i] };
+            (*refmap)[id].push_back(idref);
+        }
+    }
+
+    /* check for url(#...) references in 'filter' */
+    const SPIFilter *filter = &(style->filter);
+    if (filter->href) {
+        const gchar *id = SP_OBJECT_ID(filter->href->getObject());
+        IdReference idref = { REF_STYLE, elem, "filter" };
+        (*refmap)[id].push_back(idref);
+    }
+
+    /* check for other url(#...) references */
+    for (unsigned i = 0; i < NUM_OTHER_URL_PROPERTIES; ++i) {
+        const char *attr = other_url_properties[i];
+        const gchar *value = repr_elem->attribute(attr);
+        if (value) {
+            const gchar *uri = extract_uri(value);
+            if (uri && uri[0] == '#') {
+                IdReference idref = { REF_URL, elem, attr };
+                (*refmap)[uri+1].push_back(idref);
+            }
+        }
+    }
+    
+    /* recurse */
+    for (SPObject *child = sp_object_first_child(elem);
+         child; child = SP_OBJECT_NEXT(child) )
+    {
+        find_references(child, refmap);
+    }
+}
+
+/**
+ *  Change any ids that clash with ids in the current document, and make
+ *  a list of those changes that will require fixing up references.
+ */
+static void
+change_clashing_ids(SPDocument *imported_doc, SPDocument *current_doc,
+                    SPObject *elem, const refmap_type *refmap,
+                    id_changelist_type *id_changes)
+{
+    const gchar *id = SP_OBJECT_ID(elem);
+
+    if (id && current_doc->getObjectById(id)) {
+        // Choose a new id.
+        // To try to preserve any meaningfulness that the original id
+        // may have had, the new id is the old id followed by a hyphen
+        // and one or more digits.
+        std::string old_id(id);
+        std::string new_id(old_id + '-');
+        for (;;) {
+            new_id += "0123456789"[std::rand() % 10];
+            const char *str = new_id.c_str();
+            if (current_doc->getObjectById(str) == NULL &&
+                imported_doc->getObjectById(str) == NULL) break;
+        }
+        // Change to the new id
+        SP_OBJECT_REPR(elem)->setAttribute("id", new_id.c_str());
+        // Make a note of this change, if we need to fix up refs to it
+        if (refmap->find(old_id) != refmap->end())
+            id_changes->push_back(id_changeitem_type(elem, old_id));
+    }
+
+    /* recurse */
+    for (SPObject *child = sp_object_first_child(elem);
+         child; child = SP_OBJECT_NEXT(child) )
+    {
+        change_clashing_ids(imported_doc, current_doc, child, refmap, id_changes);
+    }
+}
+
+/**
+ *  Fix up references to changed ids.
+ */
+static void
+fix_up_refs(const refmap_type *refmap, const id_changelist_type &id_changes)
+{
+    id_changelist_type::const_iterator pp;
+    const id_changelist_type::const_iterator pp_end = id_changes.end();
+    for (pp = id_changes.begin(); pp != pp_end; ++pp) {
+        SPObject *obj = pp->first;
+        refmap_type::const_iterator pos = refmap->find(pp->second);
+        std::list<IdReference>::const_iterator it;
+        const std::list<IdReference>::const_iterator it_end = pos->second.end();
+        for (it = pos->second.begin(); it != it_end; ++it) {
+            if (it->type == REF_HREF) {
+                gchar *new_uri = g_strdup_printf("#%s", SP_OBJECT_ID(obj));
+                SP_OBJECT_REPR(it->elem)->setAttribute(it->attr, new_uri);
+                g_free(new_uri);
+            }
+            else if (it->type == REF_STYLE) {
+                sp_style_set_property_url(it->elem, it->attr, obj, false);
+            }
+            else if (it->type == REF_URL) {
+                gchar *url = g_strdup_printf("url(#%s)", SP_OBJECT_ID(obj));
+                SP_OBJECT_REPR(it->elem)->setAttribute(it->attr, url);
+                g_free(url);
+            }
+            else g_assert(0); // shouldn't happen
+        }
+    }
+}
+
+/**
+ *  This function resolves ID clashes between the document being imported
+ *  and the current open document: IDs in the imported document that would
+ *  clash with IDs in the existing document are changed, and references to
+ *  those IDs are updated accordingly.
+ */
+void
+prevent_id_clashes(SPDocument *imported_doc, SPDocument *current_doc)
+{
+    refmap_type *refmap = new refmap_type;
+    id_changelist_type id_changes;
+    SPObject *imported_root = SP_DOCUMENT_ROOT(imported_doc);
+        
+    find_references(imported_root, refmap);
+    change_clashing_ids(imported_doc, current_doc, imported_root, refmap,
+                        &id_changes);
+    fix_up_refs(refmap, id_changes);
+
+    delete refmap;
+}
+
+
 /**
  *  Import a resource.  Called by sp_file_import()
  */
@@ -894,6 +1096,8 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
         Inkscape::IO::fixupHrefs(doc, in_doc->base, true);
         Inkscape::XML::Document *xml_in_doc = sp_document_repr_doc(in_doc);
 
+        prevent_id_clashes(doc, in_doc);
+        
         SPObject *in_defs = SP_DOCUMENT_DEFS(in_doc);
         Inkscape::XML::Node *last_def = SP_OBJECT_REPR(in_defs)->lastChild();
         
@@ -949,8 +1153,6 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
                     for (SPObject *x = sp_object_first_child(child);
                          x != NULL; x = SP_OBJECT_NEXT(x))
                     {
-                        // FIXME: in case of id conflict, newly added thing will be re-ided
-                        // and thus likely break a reference to it from imported stuff
                         SP_OBJECT_REPR(in_defs)->addChild(SP_OBJECT_REPR(x)->duplicate(xml_in_doc), last_def);
                     }
                 }
