@@ -86,7 +86,12 @@ InkscapePreferences::InkscapePreferences()
     //Pages
     Gtk::VBox* vbox_page = Gtk::manage(new Gtk::VBox());
     Gtk::Frame* title_frame = Gtk::manage(new Gtk::Frame());
-    hbox_list_page->pack_start(*vbox_page, true, true, 0);
+
+    Gtk::ScrolledWindow* pageScroller = Gtk::manage(new Gtk::ScrolledWindow());
+    pageScroller->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    pageScroller->add(*vbox_page);
+    hbox_list_page->pack_start(*pageScroller, true, true, 0);
+
     title_frame->add(_page_title);
     vbox_page->pack_start(*title_frame, false, false, 0);
     vbox_page->pack_start(_page_frame, true, true, 0);
