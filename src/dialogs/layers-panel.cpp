@@ -63,7 +63,8 @@ enum {
     BUTTON_UP,
     BUTTON_DOWN,
 //    BUTTON_DUPLICATE,
-    BUTTON_DELETE
+    BUTTON_DELETE,
+    BUTTON_SOLO
 };
 
 class ImageToggler : public Gtk::CellRendererPixbuf {
@@ -353,6 +354,10 @@ bool LayersPanel::_executeAction()
             {
                 _fireAction( SP_VERB_LAYER_DELETE );
             }
+            case BUTTON_SOLO:
+            {
+                _fireAction( SP_VERB_LAYER_SOLO );
+            }
             break;
         }
 
@@ -575,7 +580,7 @@ void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
                 row[_model->_colVisible] = newValue;
                 item->setHidden( !newValue  );
                 item->updateRepr();
-                sp_document_done( _desktop->doc() , SP_VERB_DIALOG_LAYERS, 
+                sp_document_done( _desktop->doc() , SP_VERB_DIALOG_LAYERS,
                                   newValue? _("Unhide layer") : _("Hide layer"));
             }
             break;
@@ -586,7 +591,7 @@ void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
                 row[_model->_colLocked] = newValue;
                 item->setLocked( newValue );
                 item->updateRepr();
-                sp_document_done( _desktop->doc() , SP_VERB_DIALOG_LAYERS, 
+                sp_document_done( _desktop->doc() , SP_VERB_DIALOG_LAYERS,
                                   newValue? _("Lock layer") : _("Unlock layer"));
             }
             break;
@@ -777,6 +782,7 @@ LayersPanel::LayersPanel() :
     {
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_RENAME, 0, "Rename", (int)BUTTON_RENAME ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_NEW, 0, "New", (int)BUTTON_NEW ) );
+        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_SOLO, 0, "Solo", (int)BUTTON_SOLO ) );
 
          _popupMenu.items().push_back( Gtk::Menu_Helpers::SeparatorElem() );
 

@@ -1251,6 +1251,15 @@ LayerVerb::perform(SPAction *action, void *data, void */*pdata*/)
             }
             break;
         }
+        case SP_VERB_LAYER_SOLO: {
+            if ( dt->currentLayer() == dt->currentRoot() ) {
+                dt->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("No current layer."));
+            } else {
+                dt->toggleLayerSolo( dt->currentLayer() );
+                sp_document_maybe_done(sp_desktop_document(dt), "layer:solo", SP_VERB_LAYER_SOLO, _("Toggle layer solo"));
+            }
+            break;
+        }
     }
 
     return;
@@ -2372,6 +2381,8 @@ Verb *Verb::_base_verbs[] = {
                   N_("Lower the current layer"), "lower_layer"),
     new LayerVerb(SP_VERB_LAYER_DELETE, "LayerDelete", N_("_Delete Current Layer"),
                   N_("Delete the current layer"), "delete_layer"),
+    new LayerVerb(SP_VERB_LAYER_SOLO, "LayerSolo", N_("_Solo Current Layer"),
+                  N_("Solo the current layer"), 0),
 
     /* Object */
     new ObjectVerb(SP_VERB_OBJECT_ROTATE_90_CW, "ObjectRotate90", N_("Rotate _90&#176; CW"),

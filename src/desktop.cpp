@@ -85,6 +85,7 @@
 #include "xml/repr.h"
 #include "message-context.h"
 #include "device-manager.h"
+#include "layer-fns.h"
 #include "layer-manager.h"
 #include "event-log.h"
 #include "display/canvas-grid.h"
@@ -465,6 +466,31 @@ void SPDesktop::setCurrentLayer(SPObject *object) {
     g_return_if_fail( currentRoot() == object || (currentRoot() && currentRoot()->isAncestorOf(object)) );
     // printf("Set Layer to ID: %s\n", SP_OBJECT_ID(object));
     _layer_hierarchy->setBottom(object);
+}
+
+void SPDesktop::toggleLayerSolo(SPObject *object) {
+    g_return_if_fail(SP_IS_GROUP(object));
+    g_return_if_fail( currentRoot() == object || (currentRoot() && currentRoot()->isAncestorOf(object)) );
+
+    bool othersShowing = false;
+    std::vector<SPObject*> layers;
+    for ( SPObject* obj = Inkscape::next_layer(currentRoot(), object); obj; obj = Inkscape::next_layer(currentRoot(), obj) ) {
+        layers.push_back(obj);
+        othersShowing |= !SP_ITEM(obj)->isHidden();
+    }
+    for ( SPObject* obj = Inkscape::previous_layer(currentRoot(), object); obj; obj = Inkscape::previous_layer(currentRoot(), obj) ) {
+        layers.push_back(obj);
+        othersShowing |= !SP_ITEM(obj)->isHidden();
+    }
+
+
+    if ( SP_ITEM(object)->isHidden() ) {
+        SP_ITEM(object)->setHidden(false);
+    }
+
+    for ( std::vector<SPObject*>::iterator it = layers.begin(); it != layers.end(); ++it ) {
+        SP_ITEM(*it)->setHidden(othersShowing);
+    }
 }
 
 /**

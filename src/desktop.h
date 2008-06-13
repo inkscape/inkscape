@@ -209,6 +209,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     SPObject *currentRoot() const;
     SPObject *currentLayer() const;
     void setCurrentLayer(SPObject *object);
+    void toggleLayerSolo(SPObject *object);
     SPObject *layerForObject(SPObject *object);
     bool isLayer(SPObject *object) const;
     bool isWithinViewport(SPItem *item) const;
