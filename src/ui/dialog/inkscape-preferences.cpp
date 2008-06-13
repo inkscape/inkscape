@@ -93,20 +93,23 @@ InkscapePreferences::InkscapePreferences()
     _page_frame.set_shadow_type(Gtk::SHADOW_IN);
     title_frame->set_shadow_type(Gtk::SHADOW_IN);
 
-    initPageMouse();
-    initPageScrolling();
-    initPageSteps();
     initPageTools();
-    initPageWindows();
+    initPageSelecting();
+    initPageTransforms();
     initPageClones();
     initPageMasks();
-    initPageTransforms();
     initPageFilters();
-    initPageSelecting();
-    initPageImportExport();
+    initPageBitmaps();
     initPageCMS();
     initPageGrids();
     initPageSVGOutput();
+    initPageAutosave();
+    initPageImportExport();
+    initPageUI();
+    initPageMouse();
+    initPageScrolling();
+    initPageSteps();
+    initPageWindows();
     initPageMisc();
 
     signalPresent().connect(sigc::mem_fun(*this, &InkscapePreferences::_presentPages));
@@ -874,13 +877,13 @@ void InkscapePreferences::initPageGrids()
         _grids_xy.add_line( false, _("Spacing Y"), _grids_xy_spacing_y, "", _("Distance between horizontal grid lines"), false);
 
         _grids_xy_color.init(_("Grid line color"), "options.grids.xy", "color", 0x0000ff20);
-        _grids_xy.add_line( false, _("Grid line color"), _grids_xy_color, "", _("Selects the color used for normal grid lines."), false);
+        _grids_xy.add_line( false, _("Grid line color"), _grids_xy_color, "", _("Color used for normal grid lines"), false);
         _grids_xy_empcolor.init(_("Major grid line color"), "options.grids.xy", "empcolor", 0x0000ff40);
-        _grids_xy.add_line( false, _("Major grid line color"), _grids_xy_empcolor, "", _("Selects the color used for major (highlighted) grid lines."), false);
+        _grids_xy.add_line( false, _("Major grid line color"), _grids_xy_empcolor, "", _("Color used for major (highlighted) grid lines"), false);
         _grids_xy_empspacing.init("options.grids.xy", "empspacing", 1.0, 1000.0, 1.0, 5.0, 5.0, true, false);
         _grids_xy.add_line( false, _("Major grid line every"), _grids_xy_empspacing, "", "", false);
         _grids_xy_dotted.init( _("Show dots instead of lines"), "options.grids.xy", "dotted", false);
-        _grids_xy.add_line( false, "", _grids_xy_dotted, "", _("If set, displays dots at gridpoints instead of gridlines"), false);
+        _grids_xy.add_line( false, "", _grids_xy_dotted, "", _("If set, display dots at gridpoints instead of gridlines"), false);
 
     // CanvasAxonomGrid properties:
         _grids_axonom_units.init("options.grids.axonom", "units");
@@ -896,9 +899,9 @@ void InkscapePreferences::initPageGrids()
         _grids_axonom.add_line( false, _("Angle X"), _grids_axonom_angle_x, "", _("Angle of x-axis"), false);
         _grids_axonom.add_line( false, _("Angle Z"), _grids_axonom_angle_z, "", _("Angle of z-axis"), false);
         _grids_axonom_color.init(_("Grid line color"), "options.grids.axonom", "color", 0x0000ff20);
-        _grids_axonom.add_line( false, _("Grid line color"), _grids_axonom_color, "", _("Selects the color used for normal grid lines."), false);
+        _grids_axonom.add_line( false, _("Grid line color"), _grids_axonom_color, "", _("Color used for normal grid lines"), false);
         _grids_axonom_empcolor.init(_("Major grid line color"), "options.grids.axonom", "empcolor", 0x0000ff40);
-        _grids_axonom.add_line( false, _("Major grid line color"), _grids_axonom_empcolor, "", _("Selects the color used for major (highlighted) grid lines."), false);
+        _grids_axonom.add_line( false, _("Major grid line color"), _grids_axonom_empcolor, "", _("Color used for major (highlighted) grid lines"), false);
         _grids_axonom_empspacing.init("options.grids.axonom", "empspacing", 1.0, 1000.0, 1.0, 5.0, 5.0, true, false);
         _grids_axonom.add_line( false, _("Major grid line every"), _grids_axonom_empspacing, "", "", false);
 
@@ -908,17 +911,17 @@ void InkscapePreferences::initPageGrids()
 void InkscapePreferences::initPageSVGOutput()
 {
     _svgoutput_usenamedcolors.init( _("Use named colors"), "options.svgoutput", "usenamedcolors", false);
-    _page_svgoutput.add_line( false, "", _svgoutput_usenamedcolors, "", _("If set, write the CSS name of the color instead of it's numeric value."), false);
+    _page_svgoutput.add_line( false, "", _svgoutput_usenamedcolors, "", _("If set, write the CSS name of the color when available (e.g. 'red' or 'magenta') instead of the numeric value"), false);
 
-    _page_svgoutput.add_group_header( _("XML looks"));
+    _page_svgoutput.add_group_header( _("XML formatting"));
 
     _svgoutput_inlineattrs.init( _("Inline attributes"), "options.svgoutput", "inlineattrs", false);
-    _page_svgoutput.add_line( false, "", _svgoutput_inlineattrs, "", _("Inline the XML attributes"), false);
+    _page_svgoutput.add_line( false, "", _svgoutput_inlineattrs, "", _("Put attributes on the same line as the element tag"), false);
 
     _svgoutput_indent.init("options.svgoutput", "indent", 0.0, 1000.0, 1.0, 2.0, 2.0, true, false);
-    _page_svgoutput.add_line( false, _("Indent spaces"), _svgoutput_indent, "", _("The number of spaces to use for indentation."), false);
+    _page_svgoutput.add_line( false, _("Indent, spaces"), _svgoutput_indent, "", _("The number of spaces to use for indenting nested elements; set to 0 for no indentation"), false);
 
-    _page_svgoutput.add_group_header( _("Path string"));
+    _page_svgoutput.add_group_header( _("Path data"));
 
     _svgoutput_allowrelativecoordinates.init( _("Allow relative coordinates"), "options.svgoutput", "allowrelativecoordinates", true);
     _page_svgoutput.add_line( false, "", _svgoutput_allowrelativecoordinates, "", _("If set, relative coordinates may be used in path data"), false);
@@ -929,18 +932,104 @@ void InkscapePreferences::initPageSVGOutput()
     */
 
     _svgoutput_forcerepeatcommands.init( _("Force repeat commands"), "options.svgoutput", "forcerepeatcommands", false);
-    _page_svgoutput.add_line( false, "", _svgoutput_forcerepeatcommands, "", _("If set, force repeating of the same command (i.e. output 'L 1,2 L 3,4' instead of 'L 1,2 3,4')."), false);
+    _page_svgoutput.add_line( false, "", _svgoutput_forcerepeatcommands, "", _("Force repeating of the same path command (for example, 'L 1,2 L 3,4' instead of 'L 1,2 3,4')"), false);
 
-    _page_svgoutput.add_group_header( _("Numeric data"));
+    _page_svgoutput.add_group_header( _("Numbers"));
 
     _svgoutput_numericprecision.init("options.svgoutput", "numericprecision", 0.0, 1000.0, 1.0, 2.0, 8.0, true, false);
-    _page_svgoutput.add_line( false, _("Numeric precision"), _svgoutput_numericprecision, "", _("The number of digits to use behind the comma."), false);
+    _page_svgoutput.add_line( false, _("Numeric precision"), _svgoutput_numericprecision, "", _("How many digits to write after the decimal dot"), false);
 
     _svgoutput_minimumexponent.init("options.svgoutput", "minimumexponent", -100.0, 100.0, 1.0, 2.0, -8.0, true, false);
-    _page_svgoutput.add_line( false, _("Minimum exponent"), _svgoutput_minimumexponent, "", _("The minimum size of a number (10 to the power of this exponent), smaller numbers will be written as zero."), false);
+    _page_svgoutput.add_line( false, _("Minimum exponent"), _svgoutput_minimumexponent, "", _("The smallest number written to SVG is 10 to the power of this exponent; anything smaller is written as zero."), false);
 
-    this->AddPage(_page_svgoutput, _("SVG Output"), PREFS_PAGE_SVGOUTPUT);
+    this->AddPage(_page_svgoutput, _("SVG output"), PREFS_PAGE_SVGOUTPUT);
 }
+
+void InkscapePreferences::initPageUI()
+{
+     Glib::ustring sizeLabels[] = {_("Normal"), _("Medium"), _("Small")};
+    int sizeValues[] = {0, 1, 2};
+
+    _misc_small_toolbar.init( "toolbox", "small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
+    _page_ui.add_line( false, _("Commands bar icon size"), _misc_small_toolbar, "",
+                           _("Set the size for the commands toolbar to use (requires restart)"), false);
+
+    _misc_small_secondary.init( "toolbox", "secondary", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 1 );
+    _page_ui.add_line( false, _("Tool controls bar icon size"), _misc_small_secondary, "",
+                           _("Set the size for the secondary toolbar to use (requires restart)"), false);
+
+    _misc_small_tools.init( "toolbox.tools", "small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
+    _page_ui.add_line( false, _("Main toolbar icon size"), _misc_small_tools, "",
+                           _("Set the size for the main tools to use (requires restart)"), false);
+
+    this->AddPage(_page_ui, _("Interface"), PREFS_PAGE_UI);
+}
+
+
+void InkscapePreferences::initPageAutosave()
+{
+    // Autosave options 
+    _autosave_autosave_enable.init( _("Enable autosave (requires restart)"), "options.autosave", "enable", false);
+    _page_autosave.add_line(false, "", _autosave_autosave_enable, "", _("Automatically save the current document(s) at a given interval, thus minimizing loss in case of a crash"), false);
+    _autosave_autosave_interval.init("options.autosave", "interval", 1.0, 10800.0, 1.0, 10.0, 10.0, true, false);
+    _page_autosave.add_line(true, _("Interval (in minutes)"), _autosave_autosave_interval, "", _("Interval (in minutes) at which document will be autosaved"), false);
+    _autosave_autosave_path.init("options.autosave", "path", true);
+    _page_autosave.add_line(true, _("Path"), _autosave_autosave_path, "", _("The directory where autosaves will be written"), false);
+    _autosave_autosave_max.init("options.autosave", "max", 1.0, 100.0, 1.0, 10.0, 10.0, true, false);
+    _page_autosave.add_line(true, _("Maximum number of autosaves"), _autosave_autosave_max, "", _("Maximum number of autosaved files; use this to limit the storage space used"), false);
+
+    /* When changing the interval or enabling/disabling the autosave function,
+     * update our running configuration
+     *
+     * FIXME!
+     * the inkscape_autosave_init should be called AFTER the values have been changed
+     * (which cannot be guaranteed from here)
+     *
+     * For now, autosave-settings will not change until restart
+     */
+    /*
+    _autosave_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+    _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+    */
+
+    // -----------
+
+    this->AddPage(_page_autosave, _("Autosave"), PREFS_PAGE_AUTOSAVE);
+}
+
+void InkscapePreferences::initPageBitmaps()
+{
+    {
+        Glib::ustring labels[] = {_("None"), _("2x2"), _("4x4"), _("8x8"), _("16x16")};
+        int values[] = {0, 1, 2, 3, 4};
+        _misc_overs_bitmap.set_size_request(_sb_width);
+        _misc_overs_bitmap.init("options.bitmapoversample", "value", labels, values, G_N_ELEMENTS(values), 1);
+        _page_bitmaps.add_line( false, _("Oversample bitmaps:"), _misc_overs_bitmap, "", "", false);
+    }
+
+    _misc_bitmap_autoreload.init(_("Automatically reload bitmaps"), "options.bitmapautoreload", "value", true);
+    _page_bitmaps.add_line( false, "", _misc_bitmap_autoreload, "",
+                           _("Automatically reload linked images when file is changed on disk"));
+    gchar const *choices = prefs_get_string_attribute("options.bitmapeditor", "choices");
+    if ( choices && choices[0] ) {
+        gchar** splits = g_strsplit(choices, ",", 0);
+        gint numIems = g_strv_length(splits);
+
+        Glib::ustring labels[numIems];
+        int values[numIems];
+        for ( gint i = 0; i < numIems; i++) {
+            values[i] = i;
+            labels[i] = splits[i];
+        }
+        _misc_bitmap_editor.init("options.bitmapeditor", "value", labels, values, numIems, 0);
+        _page_bitmaps.add_line( false, _("Bitmap editor:"), _misc_bitmap_editor, "", "", false);
+
+        g_strfreev(splits);
+    }
+
+    this->AddPage(_page_bitmaps, _("Bitmaps"), PREFS_PAGE_BITMAPS);
+}
+
 
 void InkscapePreferences::initPageMisc()
 {
@@ -954,83 +1043,12 @@ void InkscapePreferences::initPageMisc()
 
     _page_misc.add_line( false, _("Simplification threshold:"), _misc_simpl, "",
                            _("How strong is the Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."), false);
-    {
-        Glib::ustring labels[] = {_("None"), _("2x2"), _("4x4"), _("8x8"), _("16x16")};
-        int values[] = {0, 1, 2, 3, 4};
-        _misc_overs_bitmap.set_size_request(_sb_width);
-        _misc_overs_bitmap.init("options.bitmapoversample", "value", labels, values, G_N_ELEMENTS(values), 1);
-        _page_misc.add_line( false, _("Oversample bitmaps:"), _misc_overs_bitmap, "", "", false);
-    }
 
-
-    // consider moving this to an UI tab:
-
-    Glib::ustring sizeLabels[] = {_("Normal"), _("Medium"), _("Small")};
-    int sizeValues[] = {0, 1, 2};
-
-    _misc_small_toolbar.init( "toolbox", "small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
-    _page_misc.add_line( false, _("Commands bar icon size"), _misc_small_toolbar, "",
-                           _("Set the size for the commands toolbar to use (requires restart)"), false);
-
-    _misc_small_secondary.init( "toolbox", "secondary", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 1 );
-    _page_misc.add_line( false, _("Tool controls bar icon size"), _misc_small_secondary, "",
-                           _("Set the size for the secondary toolbar to use (requires restart)"), false);
-
-    _misc_small_tools.init( "toolbox.tools", "small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
-    _page_misc.add_line( false, _("Main toolbar icon size"), _misc_small_tools, "",
-                           _("Set the size for the main tools to use (requires restart)"), false);
 
     _misc_recent.init("options.maxrecentdocuments", "value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
-    _page_misc.add_line( false, _("Maximum number of recent documents:"), _misc_recent, "",
+    _page_misc.add_line( false, _("Maximum documents in Open Recent:"), _misc_recent, "",
                            _("The maximum length of the Open Recent list in the File menu"), false);
     _misc_simpl.init("options.simplifythreshold", "value", 0.0001, 1.0, 0.0001, 0.0010, 0.0010, false, false);
-
-
-    // Autosave options 
-    _misc_autosave_enable.init( _("Enable auto-save of document"), "options.autosave", "enable", false);
-    _page_misc.add_line(false, "", _misc_autosave_enable, "", _("Automatically saves the current document to disk at a given interval, thus minimizing loss at a crash"), false);
-    _misc_autosave_interval.init("options.autosave", "interval", 1.0, 10800.0, 1.0, 10.0, 10.0, true, false);
-    _page_misc.add_line(true, _("Interval (in minutes):"), _misc_autosave_interval, "", _("Sets the interval (in minutes) at which a workspace will be automatically saved to disk"), false);
-    _misc_autosave_path.init("options.autosave", "path", true);
-    _page_misc.add_line(true, _("Path:"), _misc_autosave_path, "", _("Sets the directory where autosaves will be written"), false);
-    _misc_autosave_max.init("options.autosave", "max", 1.0, 100.0, 1.0, 10.0, 10.0, true, false);
-    _page_misc.add_line(true, _("Maximum number of autosaves"), _misc_autosave_max, "", _("Allows for limiting the space used by autosaves, by setting a maximum number of allowed files"), false);
-
-    /* When changing the interval or enabling/disabling the autosave function,
-     * update our running configuration
-     *
-     * FIXME!
-     * the inkscape_autosave_init should be called AFTER the values have been changed
-     * (which cannot be guaranteed from here)
-     *
-     * For now, autosave-settings will not change until restart
-     */
-    /*
-    _misc_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-    _misc_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-    */
-
-    // -----------
-
-    _misc_bitmap_autoreload.init(_("Automatically reload bitmaps"), "options.bitmapautoreload", "value", true);
-    _page_misc.add_line( false, "", _misc_bitmap_autoreload, "",
-                           _("Enbles automatic reload of linked images when changed on disk."));
-    gchar const *choices = prefs_get_string_attribute("options.bitmapeditor", "choices");
-    if ( choices && choices[0] ) {
-        gchar** splits = g_strsplit(choices, ",", 0);
-        gint numIems = g_strv_length(splits);
-
-        Glib::ustring labels[numIems];
-        int values[numIems];
-        for ( gint i = 0; i < numIems; i++) {
-            values[i] = i;
-            labels[i] = splits[i];
-        }
-        _misc_bitmap_editor.init("options.bitmapeditor", "value", labels, values, numIems, 0);
-        _page_misc.add_line( false, _("Bitmap editor:"), _misc_bitmap_editor, "", "", false);
-
-        g_strfreev(splits);
-    }
 
 
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);

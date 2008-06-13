@@ -36,9 +36,6 @@
 // Otherwise the commands that open the dialog with the new page will fail.
 
 enum {
-    PREFS_PAGE_MOUSE,
-    PREFS_PAGE_SCROLLING,
-    PREFS_PAGE_STEPS,
     PREFS_PAGE_TOOLS,
     PREFS_PAGE_TOOLS_SELECTOR,
     PREFS_PAGE_TOOLS_NODE,
@@ -59,16 +56,22 @@ enum {
     PREFS_PAGE_TOOLS_GRADIENT,
     PREFS_PAGE_TOOLS_CONNECTOR,
     PREFS_PAGE_TOOLS_DROPPER,
-    PREFS_PAGE_WINDOWS,
+    PREFS_PAGE_SELECTING,
+    PREFS_PAGE_TRANSFORMS,
     PREFS_PAGE_CLONES,
     PREFS_PAGE_MASKS,
     PREFS_PAGE_FILTERS,
-    PREFS_PAGE_TRANSFORMS,
-    PREFS_PAGE_SELECTING,
-    PREFS_PAGE_IMPORTEXPORT,
+    PREFS_PAGE_BITMAPS,
     PREFS_PAGE_CMS,
     PREFS_PAGE_GRIDS,
     PREFS_PAGE_SVGOUTPUT,
+    PREFS_PAGE_AUTOSAVE,
+    PREFS_PAGE_IMPORTEXPORT,
+    PREFS_PAGE_UI,
+    PREFS_PAGE_MOUSE,
+    PREFS_PAGE_SCROLLING,
+    PREFS_PAGE_STEPS,
+    PREFS_PAGE_WINDOWS,
     PREFS_PAGE_MISC
 };
 
@@ -107,7 +110,8 @@ protected:
 
     DialogPage _page_mouse, _page_scrolling, _page_steps, _page_tools, _page_windows,
         _page_clones, _page_mask, _page_transforms, _page_filters, _page_select,
-        _page_importexport, _page_cms, _page_grids, _page_svgoutput, _page_misc;
+        _page_importexport, _page_cms, _page_grids, _page_svgoutput, _page_misc, 
+        _page_ui, _page_autosave, _page_bitmaps;
     DialogPage _page_selector, _page_node, _page_tweak, _page_zoom, _page_shapes, _page_pencil, _page_pen,
                _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper;
     DialogPage _page_rectangle, _page_3dbox, _page_ellipse, _page_star, _page_spiral, _page_paintbucket, _page_eraser;
@@ -169,10 +173,11 @@ protected:
     PrefCombo       _misc_overs_bitmap;
     PrefCombo       _misc_bitmap_editor;
     PrefCheckButton _misc_bitmap_autoreload;
-    PrefCheckButton _misc_autosave_enable;
-    PrefSpinButton  _misc_autosave_interval;
-    PrefEntry       _misc_autosave_path;
-    PrefSpinButton  _misc_autosave_max;
+
+    PrefCheckButton _autosave_autosave_enable;
+    PrefSpinButton  _autosave_autosave_interval;
+    PrefEntry       _autosave_autosave_path;
+    PrefSpinButton  _autosave_autosave_max;
 
     Gtk::ComboBoxText   _cms_display_profile;
     PrefCheckButton     _cms_from_display;
@@ -255,6 +260,9 @@ protected:
     void initPageCMS();
     void initPageGrids();
     void initPageSVGOutput();
+    void initPageUI();
+    void initPageAutosave();
+    void initPageBitmaps();
     void initPageMisc();
 
     void _presentPages();
