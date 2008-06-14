@@ -61,6 +61,9 @@ def run(command_format, prog_name):
 
     # If successful, copy the SVG file to stdout.
     if msg is None:
+        if os.name == 'nt':  # make stdout work in binary on Windows
+            import msvcrt
+            msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
         try:
             f = open(svgfile, "rb")
             data = f.read()
