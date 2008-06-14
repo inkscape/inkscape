@@ -46,7 +46,7 @@ namespace Geom {
 //
 class Interval {
 private:
-    Coord _b[2];
+    Coord _b[2]; // this should always hold: _b[0] <= _b[1], otherwise the interval is empty.
 
 public:
     //TODO: I just know this'll pop up somewhere, starting off someone's interval at 0...  I can't see how to avoid this.
@@ -71,7 +71,7 @@ public:
     inline Coord extent() const { return _b[1] - _b[0]; }
     inline Coord middle() const { return (_b[1] + _b[0]) * 0.5; }
     
-    inline bool isEmpty() const { return _b[0] == _b[1]; }
+    inline bool isEmpty() const { return _b[0] >= _b[1]; }
     inline bool contains(Coord val) const { return _b[0] <= val && val <= _b[1]; }
     bool contains(const Interval & val) const { return _b[0] <= val._b[0] && val._b[1] <= _b[1]; }
     bool intersects(const Interval & val) const {
