@@ -68,3 +68,4 @@ ENDIF(HAVE_CAIRO_PDF)
 # Create them in the binary root dir
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_BINARY_DIR}/config.h)
 FILE(WRITE ${CMAKE_BINARY_DIR}/inkscape_version.h "#define INKSCAPE_VERSION \"${INKSCAPE_VERSION}\"\n")
+add_definitions(-DHAVE_CONFIG_H)
