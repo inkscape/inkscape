@@ -3,10 +3,10 @@
   <_name>Scatter</_name>
   <id>math.univ-lille1.barraud.pathScatter</id>
   <dependency type="executable" location="extensions">pathmodifier.py</dependency>
-  <dependency type="executable" location="extensions">pathScatter.py</dependency>
+  <dependency type="executable" location="extensions">pathscatter.py</dependency>
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <_param name="title" type="description">This effect scatters a pattern along arbitrary "skeleton" paths. The pattern is the top most object in the selection. (groups of paths/shapes/clones... allowed)</_param>
-  <param name="follow" type="boolean" _gui-text="Follow path orientation.">false</param>
+  <param name="follow" type="boolean" _gui-text="Follow path orientation">false</param>
   <param name="stretch" type="boolean" _gui-text="Stretch spaces to fit skeleton length">false</param>
   <param name="space" type="float" _gui-text="Space between copies:" min="-10000.0" max="10000.0">0.0</param>
   <param name="noffset" type="float" _gui-text="Normal offset" min="-10000.0" max="10000.0">0.0</param>
@@ -25,6 +25,6 @@
     </effects-menu>
   </effect>
   <script>
-    <command reldir="extensions" interpreter="python">pathScatter.py</command>
+    <command reldir="extensions" interpreter="python">pathscatter.py</command>
   </script>
 </inkscape-extension>
