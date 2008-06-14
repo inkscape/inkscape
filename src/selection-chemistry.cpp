@@ -221,7 +221,7 @@ void sp_selection_delete()
 }
 
 /* fixme: sequencing */
-void sp_selection_duplicate()
+void sp_selection_duplicate(bool suppressDone)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
@@ -256,8 +256,10 @@ void sp_selection_duplicate()
         Inkscape::GC::release(copy);
     }
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_DUPLICATE,
-                     _("Duplicate"));
+    if ( !suppressDone ) {
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_DUPLICATE,
+                         _("Duplicate"));
+    }
 
     selection->setReprList(newsel);
 
@@ -960,7 +962,7 @@ void sp_selection_paste_size_separately (bool apply_x, bool apply_y)
                      _("Paste size separately"));
 }
 
-void sp_selection_to_next_layer ()
+void sp_selection_to_next_layer(bool suppressDone)
 {
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
 
@@ -992,8 +994,10 @@ void sp_selection_to_next_layer ()
         g_slist_free (copied);
         if (temp_clip) g_slist_free (temp_clip);
         if (next) dt->setCurrentLayer(next);
-        sp_document_done(sp_desktop_document (dt), SP_VERB_LAYER_MOVE_TO_NEXT,
-                         _("Raise to next layer"));
+        if ( !suppressDone ) {
+            sp_document_done(sp_desktop_document (dt), SP_VERB_LAYER_MOVE_TO_NEXT,
+                             _("Raise to next layer"));
+        }
     } else {
         no_more = true;
     }
@@ -1005,7 +1009,7 @@ void sp_selection_to_next_layer ()
     g_slist_free ((GSList *) items);
 }
 
-void sp_selection_to_prev_layer ()
+void sp_selection_to_prev_layer(bool suppressDone)
 {
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
 
@@ -1037,8 +1041,10 @@ void sp_selection_to_prev_layer ()
         g_slist_free (copied);
         if (temp_clip) g_slist_free (temp_clip);
         if (next) dt->setCurrentLayer(next);
-        sp_document_done(sp_desktop_document (dt), SP_VERB_LAYER_MOVE_TO_PREV,
-                         _("Lower to previous layer"));
+        if ( !suppressDone ) {
+            sp_document_done(sp_desktop_document (dt), SP_VERB_LAYER_MOVE_TO_PREV,
+                             _("Lower to previous layer"));
+        }
     } else {
         no_more = true;
     }

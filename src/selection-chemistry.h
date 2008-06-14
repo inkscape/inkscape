@@ -29,7 +29,7 @@ namespace LivePathEffect {
 class SPCSSAttr;
 
 void sp_selection_delete();
-void sp_selection_duplicate();
+void sp_selection_duplicate(bool suppressDone = false);
 void sp_edit_clear_all();
 
 void sp_edit_select_all();
@@ -71,8 +71,8 @@ void sp_set_style_clipboard (SPCSSAttr *css);
 void sp_selection_paste_size(bool apply_x, bool apply_y);
 void sp_selection_paste_size_separately(bool apply_x, bool apply_y);
 
-void sp_selection_to_next_layer ();
-void sp_selection_to_prev_layer ();
+void sp_selection_to_next_layer( bool suppressDone = false );
+void sp_selection_to_prev_layer( bool suppressDone = false );
 
 void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const &affine, bool set_i2d = true);
 void sp_selection_remove_transform (void);

@@ -37,6 +37,7 @@
 #include <gtkmm/filechooserdialog.h>
 #include <gtkmm/stock.h>
 
+#include "layer-manager.h"
 #include "dialogs/text-edit.h"
 #include "dialogs/xml-tree.h"
 #include "dialogs/item-properties.h"
@@ -1219,6 +1220,31 @@ LayerVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
             break;
         }
+        case SP_VERB_LAYER_DUPLICATE: {
+            if ( dt->currentLayer() != dt->currentRoot() ) {
+                SPObject *new_layer = Inkscape::create_layer(dt->currentRoot(), dt->currentLayer(), LPOS_BELOW);
+                if ( dt->currentLayer()->label() ) {
+                    gchar* name = g_strdup_printf(_("%s copy"), dt->currentLayer()->label());
+                    dt->layer_manager->renameLayer( new_layer, name );
+                    g_free(name);
+                }
+
+                sp_edit_select_all();
+                sp_selection_duplicate(true);
+                sp_selection_to_prev_layer(true);
+                dt->setCurrentLayer(new_layer);
+                sp_edit_select_all();
+
+                sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_DUPLICATE,
+                                 _("Duplicate layer"));
+                
+                // TRANSLATORS: this means "The layer has been duplicated."
+                dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Duplicated layer."));
+            } else {
+                dt->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("No current layer."));
+            }
+            break;
+        }
         case SP_VERB_LAYER_DELETE: {
             if ( dt->currentLayer() != dt->currentRoot() ) {
                 sp_desktop_selection(dt)->clear();
@@ -2379,9 +2405,11 @@ Verb *Verb::_base_verbs[] = {
                   N_("Raise the current layer"), "raise_layer"),
     new LayerVerb(SP_VERB_LAYER_LOWER, "LayerLower", N_("_Lower Layer"),
                   N_("Lower the current layer"), "lower_layer"),
+    new LayerVerb(SP_VERB_LAYER_DUPLICATE, "LayerDuplicate", N_("Duplicate Current Layer..."),
+                  N_("Duplicate an existing layer"), 0),
     new LayerVerb(SP_VERB_LAYER_DELETE, "LayerDelete", N_("_Delete Current Layer"),
                   N_("Delete the current layer"), "delete_layer"),
-    new LayerVerb(SP_VERB_LAYER_SOLO, "LayerSolo", N_("_Solo Current Layer"),
+    new LayerVerb(SP_VERB_LAYER_SOLO, "LayerSolo", N_("_Show/hide other layers"),
                   N_("Solo the current layer"), 0),
 
     /* Object */

@@ -62,7 +62,7 @@ enum {
     BUTTON_BOTTOM,
     BUTTON_UP,
     BUTTON_DOWN,
-//    BUTTON_DUPLICATE,
+    BUTTON_DUPLICATE,
     BUTTON_DELETE,
     BUTTON_SOLO
 };
@@ -348,6 +348,11 @@ bool LayersPanel::_executeAction()
             case BUTTON_DOWN:
             {
                 _fireAction( SP_VERB_LAYER_LOWER );
+            }
+            break;
+            case BUTTON_DUPLICATE:
+            {
+                _fireAction( SP_VERB_LAYER_DUPLICATE );
             }
             break;
             case BUTTON_DELETE:
@@ -781,6 +786,7 @@ LayersPanel::LayersPanel() :
     // -------------------------------------------------------
     {
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_RENAME, 0, "Rename", (int)BUTTON_RENAME ) );
+        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_DUPLICATE, 0, "Duplicate", (int)BUTTON_DUPLICATE ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_NEW, 0, "New", (int)BUTTON_NEW ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_SOLO, 0, "Solo", (int)BUTTON_SOLO ) );
 

@@ -136,6 +136,7 @@ static char const menus_skeleton[] =
 "   </submenu>\n"
 "   <submenu name=\"" N_("_Layer") "\">\n"
 "       <verb verb-id=\"LayerNew\" />\n"
+"       <verb verb-id=\"LayerDuplicate\" />\n"
 "       <verb verb-id=\"LayerRename\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"LayerNext\" />\n"
