@@ -25,6 +25,7 @@
 #include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-blit.h>
 #include <libnr/nr-convert2geom.h>
+#include <2geom/pathvector.h>
 #include <livarot/Path.h>
 #include <livarot/float-line.h>
 #include <livarot/int-line.h>
@@ -225,7 +226,7 @@ nr_arena_shape_set_child_position(NRArenaItem *item, NRArenaItem *child, NRArena
 
 void nr_arena_shape_update_stroke(NRArenaShape *shape, NRGC* gc, NRRectL *area);
 void nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool force_shape = false);
-void nr_arena_shape_add_bboxes(NRArenaShape* shape,NRRect &bbox);
+void nr_arena_shape_add_bboxes(NRArenaShape* shape, Geom::Rect &bbox);
 
 /**
  * Updates the arena shape 'item' and all of its children, including the markers.
@@ -233,7 +234,7 @@ void nr_arena_shape_add_bboxes(NRArenaShape* shape,NRRect &bbox);
 static guint
 nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, guint reset)
 {
-    NRRect bbox;
+    Geom::Rect boundingbox;
 
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
 
@@ -250,16 +251,12 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
         shape->ctm = gc->transform;
         if (state & NR_ARENA_ITEM_STATE_BBOX) {
             if (shape->curve) {
-                const_NRBPath bp;
-                /* fixme: */
-                bbox.x0 = bbox.y0 = NR_HUGE;
-                bbox.x1 = bbox.y1 = -NR_HUGE;
-                bp.path = SP_CURVE_BPATH(shape->curve);
-                nr_path_matrix_bbox_union(&bp, gc->transform, &bbox);
-                item->bbox.x0 = (gint32)(bbox.x0 - 1.0F);
-                item->bbox.y0 = (gint32)(bbox.y0 - 1.0F);
-                item->bbox.x1 = (gint32)(bbox.x1 + 1.9999F);
-                item->bbox.y1 = (gint32)(bbox.y1 + 1.9999F);
+                Geom::PathVector pv = shape->curve->get_pathvector() * to_2geom(gc->transform);
+                boundingbox = bounds_exact(pv);
+                item->bbox.x0 = (gint32)(boundingbox[0][0] - 1.0F);
+                item->bbox.y0 = (gint32)(boundingbox[1][0] - 1.0F);
+                item->bbox.x1 = (gint32)(boundingbox[0][1] + 1.9999F);
+                item->bbox.y1 = (gint32)(boundingbox[1][1] + 1.9999F);
             }
             if (beststate & NR_ARENA_ITEM_STATE_BBOX) {
                 for (NRArenaItem *child = shape->markers; child != NULL; child = child->next) {
@@ -272,44 +269,35 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
 
     shape->delayed_shp=true;
     shape->ctm = gc->transform;
-    bbox.x0 = bbox.y0 = NR_HUGE;
-    bbox.x1 = bbox.y1 = -NR_HUGE;
+    boundingbox[0][0] = boundingbox[1][0] = NR_HUGE;
+    boundingbox[0][1] = boundingbox[1][1] = -NR_HUGE;
 
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
 
     if (shape->curve) {
-        const_NRBPath bp;
-        /* fixme: */
-        bbox.x0 = bbox.y0 = NR_HUGE;
-        bbox.x1 = bbox.y1 = -NR_HUGE;
-        bp.path = SP_CURVE_BPATH(shape->curve);
-        nr_path_matrix_bbox_union(&bp, gc->transform, &bbox);
+        Geom::PathVector pv = shape->curve->get_pathvector() * to_2geom(gc->transform);
+        boundingbox = bounds_exact(pv);
+
         if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline) {
             float width, scale;
             scale = NR::expansion(gc->transform);
             width = MAX(0.125, shape->_stroke.width * scale);
             if ( fabs(shape->_stroke.width * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
-                bbox.x0-=width;
-                bbox.x1+=width;
-                bbox.y0-=width;
-                bbox.y1+=width;
+                boundingbox.expandBy(width);
             }
             // those pesky miters, now
             float miterMax=width*shape->_stroke.mitre_limit;
             if ( miterMax > 0.01 ) {
                 // grunt mode. we should compute the various miters instead (one for each point on the curve)
-                bbox.x0-=miterMax;
-                bbox.x1+=miterMax;
-                bbox.y0-=miterMax;
-                bbox.y1+=miterMax;
+                boundingbox.expandBy(miterMax);
             }
         }
     } else {
     }
-    shape->approx_bbox.x0 = (gint32)(bbox.x0 - 1.0F);
-    shape->approx_bbox.y0 = (gint32)(bbox.y0 - 1.0F);
-    shape->approx_bbox.x1 = (gint32)(bbox.x1 + 1.9999F);
-    shape->approx_bbox.y1 = (gint32)(bbox.y1 + 1.9999F);
+    shape->approx_bbox.x0 = (gint32)(boundingbox[0][0] - 1.0F);
+    shape->approx_bbox.y0 = (gint32)(boundingbox[1][0] - 1.0F);
+    shape->approx_bbox.x1 = (gint32)(boundingbox[0][1] + 1.9999F);
+    shape->approx_bbox.y1 = (gint32)(boundingbox[1][1] + 1.9999F);
     if ( area && nr_rect_l_test_intersect(area, &shape->approx_bbox) ) shape->delayed_shp=false;
 
     /* Release state data */
@@ -350,21 +338,22 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
         nr_arena_shape_update_stroke(shape, gc, area);
         nr_arena_shape_update_fill(shape, gc, area);
 
-        bbox.x0 = bbox.y0 = bbox.x1 = bbox.y1 = 0.0;
-        nr_arena_shape_add_bboxes(shape,bbox);
+        boundingbox[0][0] = boundingbox[0][1] = boundingbox[1][0] = boundingbox[1][1] = 0.0;
+        nr_arena_shape_add_bboxes(shape, boundingbox);
 
-        shape->approx_bbox.x0 = (gint32)(bbox.x0 - 1.0F);
-        shape->approx_bbox.y0 = (gint32)(bbox.y0 - 1.0F);
-        shape->approx_bbox.x1 = (gint32)(bbox.x1 + 1.9999F);
-        shape->approx_bbox.y1 = (gint32)(bbox.y1 + 1.9999F);
+        shape->approx_bbox.x0 = (gint32)(boundingbox[0][0] - 1.0F);
+        shape->approx_bbox.y0 = (gint32)(boundingbox[1][0] - 1.0F);
+        shape->approx_bbox.x1 = (gint32)(boundingbox[0][1] + 1.9999F);
+        shape->approx_bbox.y1 = (gint32)(boundingbox[1][1] + 1.9999F);
     }
 
-    if (nr_rect_d_test_empty(&bbox)) return NR_ARENA_ITEM_STATE_ALL;
+    if (boundingbox.isEmpty())
+        return NR_ARENA_ITEM_STATE_ALL;
 
-    item->bbox.x0 = (gint32)(bbox.x0 - 1.0F);
-    item->bbox.y0 = (gint32)(bbox.y0 - 1.0F);
-    item->bbox.x1 = (gint32)(bbox.x1 + 1.0F);
-    item->bbox.y1 = (gint32)(bbox.y1 + 1.0F);
+    item->bbox.x0 = (gint32)(boundingbox[0][0] - 1.0F);
+    item->bbox.y0 = (gint32)(boundingbox[1][0] - 1.0F);
+    item->bbox.x1 = (gint32)(boundingbox[0][1] + 1.0F);
+    item->bbox.y1 = (gint32)(boundingbox[1][1] + 1.0F);
     nr_arena_request_render_rect(item->arena, &item->bbox);
 
     item->render_opacity = TRUE;
@@ -673,7 +662,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
 
 
 void
-nr_arena_shape_add_bboxes(NRArenaShape* shape, NRRect &bbox)
+nr_arena_shape_add_bboxes(NRArenaShape* shape, Geom::Rect &bbox)
 {
     if ( shape->stroke_shp ) {
         shape->stroke_shp->CalcBBox();
@@ -681,28 +670,9 @@ nr_arena_shape_add_bboxes(NRArenaShape* shape, NRRect &bbox)
         shape->stroke_shp->rightX=ceil(shape->stroke_shp->rightX);
         shape->stroke_shp->topY=floor(shape->stroke_shp->topY);
         shape->stroke_shp->bottomY=ceil(shape->stroke_shp->bottomY);
-        if ( bbox.x0 >= bbox.x1 ) {
-            if ( shape->stroke_shp->leftX < shape->stroke_shp->rightX ) {
-                bbox.x0=shape->stroke_shp->leftX;
-                bbox.x1=shape->stroke_shp->rightX;
-            }
-        } else {
-            if ( shape->stroke_shp->leftX < bbox.x0 )
-                bbox.x0=shape->stroke_shp->leftX;
-            if ( shape->stroke_shp->rightX > bbox.x1 )
-                bbox.x1=shape->stroke_shp->rightX;
-        }
-        if ( bbox.y0 >= bbox.y1 ) {
-            if ( shape->stroke_shp->topY < shape->stroke_shp->bottomY ) {
-                bbox.y0=shape->stroke_shp->topY;
-                bbox.y1=shape->stroke_shp->bottomY;
-            }
-        } else {
-            if ( shape->stroke_shp->topY < bbox.y0 )
-                bbox.y0=shape->stroke_shp->topY;
-            if ( shape->stroke_shp->bottomY > bbox.y1 )
-                bbox.y1=shape->stroke_shp->bottomY;
-        }
+        Geom::Rect stroke_bbox( Geom::Interval(shape->stroke_shp->leftX, shape->stroke_shp->rightX),
+                                Geom::Interval(shape->stroke_shp->topY,  shape->stroke_shp->bottomY) );
+        bbox.unionWith(stroke_bbox);
     }
     if ( shape->fill_shp ) {
         shape->fill_shp->CalcBBox();
@@ -710,24 +680,9 @@ nr_arena_shape_add_bboxes(NRArenaShape* shape, NRRect &bbox)
         shape->fill_shp->rightX=ceil(shape->fill_shp->rightX);
         shape->fill_shp->topY=floor(shape->fill_shp->topY);
         shape->fill_shp->bottomY=ceil(shape->fill_shp->bottomY);
-        if ( bbox.x0 >= bbox.x1 ) {
-            if ( shape->fill_shp->leftX < shape->fill_shp->rightX ) {
-                bbox.x0=shape->fill_shp->leftX;
-                bbox.x1=shape->fill_shp->rightX;
-            }
-        } else {
-            if ( shape->fill_shp->leftX < bbox.x0 ) bbox.x0=shape->fill_shp->leftX;
-            if ( shape->fill_shp->rightX > bbox.x1 ) bbox.x1=shape->fill_shp->rightX;
-        }
-        if ( bbox.y0 >= bbox.y1 ) {
-            if ( shape->fill_shp->topY < shape->fill_shp->bottomY ) {
-                bbox.y0=shape->fill_shp->topY;
-                bbox.y1=shape->fill_shp->bottomY;
-            }
-        } else {
-            if ( shape->fill_shp->topY < bbox.y0 ) bbox.y0=shape->fill_shp->topY;
-            if ( shape->fill_shp->bottomY > bbox.y1 ) bbox.y1=shape->fill_shp->bottomY;
-        }
+        Geom::Rect fill_bbox( Geom::Interval(shape->stroke_shp->leftX, shape->stroke_shp->rightX),
+                              Geom::Interval(shape->stroke_shp->topY,  shape->stroke_shp->bottomY) );
+        bbox.unionWith(fill_bbox);
     }
 }
 
