@@ -78,8 +78,6 @@ extensions = \
 	polyhedron_3d.py \
 	ps2dxf.sh \
 	ps2epsi.sh \
-	ps2pdf.cmd \
-	ps2pdf.sh \
 	ps2pdf-ext.py \
 	pturtle.py \
 	radiusrand.py \
@@ -188,8 +186,6 @@ modules = \
 	outline2svg.inx \
 	pathalongpath.inx\
 	pathscatter.inx\
-	pdf_output.inx.txt \
-	pdf_output_via_gs_on_win32.inx.txt \
 	perfectboundcover.inx \
 	perspective.inx	\
 	polyhedron_3d.inx	\
