@@ -246,6 +246,92 @@ const char *svgElementEnumToStr(int type);
 
 
 /*#########################################################################
+## SVGValue
+#########################################################################*/
+
+
+/**
+ * A helper class to provide a common API across several data types
+ */
+class SVGValue
+{
+public:
+
+    /**
+     * Constructors
+     */
+    SVGValue()
+        { init(); }
+
+    SVGValue(const SVGValue &other)
+        { assign(other); }
+
+    SVGValue(double val)
+        { init(); type = SVG_DOUBLE; dval = val; }
+
+    SVGValue(long val)
+        { init(); type = SVG_INT; ival = val; }
+
+    SVGValue(const DOMString &val)
+        { init(); type = SVG_STRING; sval = val; }
+
+    int getType()
+        { return type; }
+
+    /**
+     * Assignment
+     */
+    SVGValue &operator=(const SVGValue &val)
+        { assign(val); return *this; }
+
+    SVGValue &operator=(double val)
+        { init(); type = SVG_DOUBLE; dval = val; return *this; }
+
+    SVGValue &operator=(long val)
+        { init(); type = SVG_INT; ival = val; return *this; }
+
+    SVGValue &operator=(const DOMString &val)
+        { init(); type = SVG_STRING; sval = val; return *this; }
+
+    /**
+     * Getters
+     */
+    double doubleValue()
+        { return dval; }
+        
+    long intValue()
+        { return ival; }
+        
+    DOMString &stringValue()
+        { return sval; }
+
+private:
+
+    void init()
+        {
+        type = SVG_DOUBLE;
+        dval = 0.0;
+        ival = 0;
+        sval.clear();
+        }
+
+    void assign(const SVGValue &other)
+        {
+        type = other.type;
+        dval = other.dval;
+        ival = other.ival;
+        sval = other.sval;
+        }
+
+    int       type;
+    double    dval;
+    long      ival;
+    DOMString sval;
+
+};
+
+
+/*#########################################################################
 ## SVGElement
 #########################################################################*/
 
