@@ -369,6 +369,10 @@ static gchar const * ui_descr =
         "  <toolbar name='PencilToolbar'>"
         "    <toolitem action='FreehandModeActionPencilTemp' />"
         "    <toolitem action='FreehandModeActionPencil' />"
+        "    <separator />"
+        "    <toolitem action='PencilToleranceAction' />"    
+        "    <separator />"
+        "    <toolitem action='PencilResetAction' />"
         "  </toolbar>"
 
         "  <toolbar name='CalligraphyToolbar'>"
@@ -3106,7 +3110,6 @@ static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, bo
 
     /* Freehand mode toggle buttons */
     {
-        EgeAdjustmentAction* eact = 0;
         //gchar const *flatsidedstr = prefs_get_string_attribute( "tools.shapes.star", "isflatsided" );
         //bool isSpiroMode = flatsidedstr ? (strcmp(flatsidedstr, "false") != 0) : true;
         guint spiroMode = prefs_get_int_attribute("tools.freehand", "spiro-spline-mode", 0);
@@ -3155,10 +3158,120 @@ static void sp_pen_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* mainActi
     sp_add_spiro_toggle(mainActions, holder, false);
 }
 
-static void sp_pencil_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* mainActions, GObject* holder)
+
+static void
+sp_pencil_tb_defaults(GtkWidget */*widget*/, GtkObject *obj)
+{
+    GtkWidget *tbl = GTK_WIDGET(obj);
+
+    GtkAdjustment *adj;
+
+    // fixme: make settable
+    gdouble tolerance = 4;
+
+    adj = (GtkAdjustment*)gtk_object_get_data(obj, "tolerance");
+    gtk_adjustment_set_value(adj, tolerance);
+    gtk_adjustment_value_changed(adj);
+
+    spinbutton_defocus(GTK_OBJECT(tbl));
+}
+
+static void
+sp_pencil_tb_tolerance_value_changed(GtkAdjustment *adj, GObject *tbl)
+{
+
+    // quit if run by the attr_changed listener
+    if (g_object_get_data( tbl, "freeze" )) {
+        return;
+    }
+    // in turn, prevent listener from responding
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+    prefs_set_double_attribute("tools.freehand.pencil", 
+                               "tolerance", adj->value);
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+    
+}
+
+
+
+static void
+sp_pencil_tb_tolerance_value_changed_external(Inkscape::XML::Node *repr, 
+                                              const gchar *key, 
+                                              const gchar *oldval, 
+                                              const gchar *newval, 
+                                              bool is_interactive, 
+                                              void * data)
+{
+    GObject* tbl = G_OBJECT(data);
+    if (g_object_get_data( tbl, "freeze" )) {
+        return;
+    }    
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    GtkAdjustment * adj = (GtkAdjustment*)g_object_get_data(tbl,
+                                                            "tolerance");
+    
+    double v = prefs_get_double_attribute("tools.freehand.pencil", 
+                                            "tolerance", adj->value);
+    gtk_adjustment_set_value(adj, v);
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+    
+}
+
+static Inkscape::XML::NodeEventVector pencil_node_events = 
+{
+    NULL, 
+    NULL, 
+    sp_pencil_tb_tolerance_value_changed_external,
+    NULL, 
+    NULL,
+};
+
+
+static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     sp_add_spiro_toggle(mainActions, holder, true);
+
+    EgeAdjustmentAction* eact = 0;
+
+    /* Tolerance */
+    {
+
+        eact = create_adjustment_action( "PencilToleranceAction",
+                 _("Number of pixels allowed in interpolating"), 
+                                         _("Tolerance:"), _("Tolerance"),
+                                         "tools.freehand.pencil", "tolerance", 
+                                         3.0,
+                                         GTK_WIDGET(desktop->canvas), NULL, 
+                                         holder, TRUE, "altx-pencil",
+                                         0.5, 100.0, 0.5, 1.0, 
+                                         NULL, NULL, 0,
+                                         sp_pencil_tb_tolerance_value_changed,
+                                         1, 2);
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+
+        Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE, 
+                                                      "tools.freehand.pencil");
+        repr->addListener(&pencil_node_events, G_OBJECT(holder));
+        g_object_set_data(G_OBJECT(holder), "repr", repr);
+
+    }
+    /* Reset */
+    {
+        InkAction* inky = ink_action_new( "PencilResetAction",
+                                          _("Defaults"),
+                                          _("Reset pencil parameters to defaults (use Inkscape Preferences > Tools to change defaults)"),
+                                          GTK_STOCK_CLEAR,
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_pencil_tb_defaults), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+    
+    g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
+
 }
+
 
 //########################
 //##       Tweak        ##
