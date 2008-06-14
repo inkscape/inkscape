@@ -80,6 +80,7 @@ extensions = \
 	ps2epsi.sh \
 	ps2pdf.cmd \
 	ps2pdf.sh \
+	ps2pdf-ext.py \
 	pturtle.py \
 	radiusrand.py \
 	restack.py \
@@ -88,6 +89,7 @@ extensions = \
 	render_alphabetsoup_config.py \
 	rtree.py \
 	rubberstretch.py\
+	run_command.py \
 	simplepath.py \
 	simplepath.rb \
 	simplestyle.py \
