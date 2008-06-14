@@ -33,6 +33,14 @@ Piecewise<SBasis>
 atan2(Piecewise<D2<SBasis> >const &vect, 
            double tol=.01, unsigned order=3);
 
+D2<Piecewise<SBasis> >
+tan2(SBasis const &angle, 
+           double tol=.01, unsigned order=3);
+
+D2<Piecewise<SBasis> >
+tan2(Piecewise<SBasis> const &angle, 
+           double tol=.01, unsigned order=3);
+
 Piecewise<D2<SBasis> >
 unitVector(D2<SBasis> const &vect, 
            double tol=.01, unsigned order=3);

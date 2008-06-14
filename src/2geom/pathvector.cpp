@@ -65,6 +65,59 @@ PathVector reverse_paths_and_order (PathVector const & path_in)
     return path_out;
 }
 
+Rect bounds_fast( PathVector const& pv )
+{
+    typedef PathVector::const_iterator const_iterator;
+    
+    Rect bound;
+    if (pv.empty()) return bound;
+    
+    bound = (pv.begin())->boundsFast();
+    double top = bound.top();
+    double bottom = bound.bottom();
+    double left = bound.left();
+    double right = bound.right();
+    for (const_iterator it = ++(pv.begin()); it != pv.end(); ++it)
+    {
+        bound = it->boundsFast();
+        if ( top > bound.top() )           top = bound.top();
+        if ( bottom < bound.bottom() )     bottom = bound.bottom();
+        if ( left > bound.left() )         left = bound.left();
+        if ( right < bound.right() )       right = bound.right();
+    }
+    bound[0][0] = left;
+    bound[0][1] = right;
+    bound[1][0] = top;
+    bound[1][1] = bottom;
+    return bound;
+}
+
+Rect bounds_exact( PathVector const& pv )
+{
+    typedef PathVector::const_iterator const_iterator;
+    
+    Rect bound;
+    if (pv.empty()) return bound;
+    
+    bound = (pv.begin())->boundsExact();
+    double top = bound.top();
+    double bottom = bound.bottom();
+    double left = bound.left();
+    double right = bound.right();
+    for (const_iterator it = ++(pv.begin()); it != pv.end(); ++it)
+    {
+        bound = it->boundsExact();
+        if ( top > bound.top() )           top = bound.top();
+        if ( bottom < bound.bottom() )     bottom = bound.bottom();
+        if ( left > bound.left() )         left = bound.left();
+        if ( right < bound.right() )       right = bound.right();
+    }
+    bound[0][0] = left;
+    bound[0][1] = right;
+    bound[1][0] = top;
+    bound[1][1] = bottom;
+    return bound;
+}
 
 } // namespace Geom
 

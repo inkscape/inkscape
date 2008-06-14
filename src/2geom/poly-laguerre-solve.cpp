@@ -12,7 +12,7 @@ cdouble laguerre_internal_complex(Poly const & p,
     double n = p.degree();
     quad_root = false;
     const unsigned shuffle_rate = 10;
-    static double shuffle[] = {0, 0.5, 0.25, 0.75, 0.125, 0.375, 0.625, 0.875, 1.0};
+    //static double shuffle[] = {0, 0.5, 0.25, 0.75, 0.125, 0.375, 0.625, 0.875, 1.0};
     unsigned shuffle_counter = 0;
     while(std::norm(a) > (tol*tol)) {
         //std::cout << "xk = " << xk << std::endl;
@@ -132,7 +132,12 @@ laguerre(Poly p, const double tol) {
 std::vector<double>
 laguerre_real_interval(Poly const & ply,
                        const double lo, const double hi,
-                       const double tol) {
+                       const double tol) 
+{
+    /* not implemented*/
+    assert(false);
+    std::vector<double> result;
+    return result;
 }
 
 /*

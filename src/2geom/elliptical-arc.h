@@ -166,7 +166,7 @@ class EllipticalArc : public Curve
         return ( are_near(ray(X), 0) || are_near(ray(Y), 0) );
     }
     
-    // TODO: native implementation of the following methods
+    
     Rect boundsFast() const
     {
     	return boundsExact();
@@ -174,6 +174,7 @@ class EllipticalArc : public Curve
   
     Rect boundsExact() const;
     
+    // TODO: native implementation of the following methods
     Rect boundsLocal(Interval i, unsigned int deg) const
     {
     	return SBasisCurve(toSBasis()).boundsLocal(i, deg);
@@ -193,6 +194,7 @@ class EllipticalArc : public Curve
     	return allNearestPoints(p, from, to).front();
     }
     
+    // TODO: native implementation of the following methods
     int winding(Point p) const
     {
     	return SBasisCurve(toSBasis()).winding(p);
@@ -200,6 +202,7 @@ class EllipticalArc : public Curve
     
     Curve *derivative() const;
     
+    // TODO: native implementation of the following methods
     Curve *transformed(Matrix const &m) const
     {
     	return SBasisCurve(toSBasis()).transformed(m);

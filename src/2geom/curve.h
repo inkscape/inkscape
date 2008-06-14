@@ -105,10 +105,16 @@ public:
 
   virtual Point pointAt(Coord t) const { return pointAndDerivatives(t, 1).front(); }
   virtual Coord valueAt(Coord t, Dim2 d) const { return pointAt(t)[d]; }
+  virtual Point operator() (double t)  const { return pointAt(t); }
   virtual std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const = 0;
   virtual D2<SBasis> toSBasis() const = 0;
 };
 
+inline
+Coord nearest_point(Point const& p, Curve const& c)
+{
+	return c.nearestPoint(p);
+}
 
 } // end namespace Geom
 

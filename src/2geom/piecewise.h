@@ -704,6 +704,7 @@ Piecewise<T> derivative(Piecewise<T> const &a) {
 }
 
 std::vector<double> roots(Piecewise<SBasis> const &f);
+Piecewise<SBasis> reverse(Piecewise<SBasis> const &f);
 
 }
 

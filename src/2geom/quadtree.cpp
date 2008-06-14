@@ -1,5 +1,17 @@
 #include "quadtree.h"
 
+namespace Geom{
+Quad* QuadTree::search(Rect const &r) {
+    return search(r[0].min(), r[1].min(),
+                  r[0].max(), r[1].max());
+}
+
+void QuadTree::insert(Rect const &r, int shape) {
+    insert(r[0].min(), r[1].min(),
+           r[0].max(), r[1].max(), shape);
+}
+
+
 Quad* QuadTree::search(double x0, double y0, double x1, double y1) {
     Quad *q = root;
         
@@ -116,6 +128,8 @@ void QuadTree::erase(Quad *q, int shape) {
     }
     return;
 }
+
+};
 
 /*
   Local Variables:

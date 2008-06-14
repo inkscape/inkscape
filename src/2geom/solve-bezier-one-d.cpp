@@ -86,6 +86,11 @@ Bernsteins::find_bernstein_roots(double const *w, /* The control points  */
         /* if deep enough, return 1 solution at midpoint  */
         if (depth >= MAXDEPTH) {
             //printf("bottom out %d\n", depth);
+            const double Ax = right_t - left_t;
+            const double Ay = w[degree] - w[0];
+            
+            solutions.push_back(left_t - Ax*w[0] / Ay);
+            return;
             solutions.push_back((left_t + right_t) / 2.0);
             return;
         }
@@ -101,6 +106,7 @@ Bernsteins::find_bernstein_roots(double const *w, /* The control points  */
                 solutions.push_back(left_t - Ax*w[0] / Ay);
                 return;
             }
+
     }
 
     /* Otherwise, solve recursively after subdividing control polygon  */

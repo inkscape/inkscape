@@ -266,6 +266,12 @@ public:
 	  return (*this)[i].valueAt(lt, d);
   }
 
+  
+  Point operator() (double t) const
+  {
+	  return pointAt(t);
+  }
+  
   std::vector<double> roots(double v, Dim2 d) const {
     std::vector<double> res;
     for(unsigned i = 0; i <= size(); i++) {
@@ -297,6 +303,9 @@ public:
 	  return nearestPoint(_point, 0, sz);
   }
    
+  Rect boundsFast();
+  Rect boundsExact();
+  
   void appendPortionTo(Path &p, double f, double t) const;
 
   Path portion(double f, double t) const {
@@ -542,6 +551,13 @@ inline static Piecewise<D2<SBasis> > paths_to_pw(std::vector<Path> paths) {
     }
     return ret;
 }
+
+inline
+Coord nearest_point(Point const& p, Path const& c)
+{
+	return c.nearestPoint(p);
+}
+
 
 /*
 class PathPortion : public Curve {

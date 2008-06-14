@@ -46,6 +46,8 @@ PathVector operator* (PathVector const & path_in, Matrix const &m);
 
 PathVector reverse_paths_and_order (PathVector const & path_in);
 
+Rect bounds_fast( PathVector const & pv );
+Rect bounds_exact( PathVector const & pv );
 }
 
 #endif // SEEN_GEOM_PATHVECTOR_H

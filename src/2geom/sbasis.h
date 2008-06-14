@@ -296,6 +296,7 @@ inline std::ostream &operator<< (std::ostream &out_file, const SBasis & p) {
     return out_file;
 }
 
+// These are deprecated, use sbasis-math versions if possible
 SBasis sin(Linear bo, int k);
 SBasis cos(Linear bo, int k);
 

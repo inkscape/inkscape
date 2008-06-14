@@ -114,7 +114,7 @@ ConvexHull::angle_sort() {
 void
 ConvexHull::graham_scan() {
     unsigned stac = 2;
-    for(int i = 2; i < boundary.size(); i++) {
+    for(unsigned int i = 2; i < boundary.size(); i++) {
         double o = SignedTriangleArea(boundary[stac-2], 
                                       boundary[stac-1], 
                                       boundary[i]);
@@ -350,6 +350,7 @@ ConvexHull sweepline_intersection(ConvexHull const &a, ConvexHull const &b) {
     // al and bl now point to the top of the first pair of edges that overlap in y value
     double sweep_y = std::min(a.boundary[al][Y],
                               b.boundary[bl][Y]);
+    return ret;
 }
 
 /*** ConvexHull intersection(ConvexHull a, ConvexHull b);
@@ -359,10 +360,11 @@ ConvexHull sweepline_intersection(ConvexHull const &a, ConvexHull const &b) {
  */
 ConvexHull intersection(ConvexHull a, ConvexHull b) {
     ConvexHull ret;
+    /*
     int ai = 0, bi = 0;
     int aj = a.boundary.size() - 1;
     int bj = b.boundary.size() - 1;
-    
+    */
     /*while (true) {
         if(a[ai]
     }*/

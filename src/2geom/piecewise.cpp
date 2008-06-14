@@ -167,6 +167,22 @@ std::vector<double> roots(Piecewise<SBasis> const &f){
     return result;
 }
 
+Piecewise<SBasis> reverse(Piecewise<SBasis> const &f) {
+    Piecewise<SBasis> ret = Piecewise<SBasis>();
+    ret.cuts.resize(f.cuts.size());
+    ret.segs.resize(f.segs.size());
+    double start = f.cuts[0];
+    double end = f.cuts.back();
+    for (unsigned i = 0; i < f.cuts.size(); i++) {
+        double x = f.cuts[f.cuts.size() - 1 - i];
+        ret.cuts[i] = end - (x - start);
+    }
+    for (unsigned i = 0; i < f.segs.size(); i++)
+        ret.segs[i] = reverse(f[f.segs.size() - i - 1]);
+    return ret;
+}
+
+
 }
 /*
   Local Variables:

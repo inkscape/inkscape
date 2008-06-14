@@ -170,6 +170,11 @@ class HLineSegment : public Curve
 		if ( from > to ) std::swap(from, to);
 		double xfrom = pointAt(from)[X];
 		double xto = pointAt(to)[X];
+		if ( xfrom > xto )
+		{
+		    std::swap(xfrom, xto);
+		    std::swap(from, to);
+		}
 		if ( p[X] > xfrom && p[X] < xto )
 		{
 			return (p[X] - initialPoint()[X]) / (finalPoint()[X] - initialPoint()[X]);
@@ -395,6 +400,11 @@ class VLineSegment : public Curve
 		if ( from > to ) std::swap(from, to);
 		double yfrom = pointAt(from)[Y];
 		double yto = pointAt(to)[Y];
+		if (yfrom > yto)
+		{
+		    std::swap(yfrom, yto);
+		    std::swap(from, to);
+		}
 		if ( p[Y] > yfrom && p[Y] < yto )
 		{
 			return (p[Y] - initialPoint()[Y]) / (finalPoint()[Y] - initialPoint()[Y]);

@@ -157,6 +157,17 @@ Geom::atan2(D2<SBasis> const &vect, double tol, unsigned order){
     return atan2(Piecewise<D2<SBasis> >(vect),tol,order);
 }
 
+//tan2 is the pseudo-inverse of atan2.  It takes an angle and returns a unit_vector that points in the direction of angle.
+D2<Piecewise<SBasis> >
+Geom::tan2(SBasis const &angle, double tol, unsigned order){
+    return tan2(Piecewise<SBasis>(angle), tol, order);
+}
+
+D2<Piecewise<SBasis> >
+Geom::tan2(Piecewise<SBasis> const &angle, double tol, unsigned order){
+    return D2<Piecewise<SBasis> >(cos(angle, tol, order), sin(angle, tol, order));
+}
+
 //unitVector(x,y) is computed as (b,-a) where a and b are solutions of:
 //     ax+by=0 (eqn1)   and   a^2+b^2=1 (eqn2)
 Piecewise<D2<SBasis> >

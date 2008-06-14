@@ -45,7 +45,7 @@ std::vector<std::complex<double> > solve(Poly const & pp) {
        
     gsl_complex_packed_ptr z = new double[p.degree()*2];
     double* a = new double[p.size()];
-    for(int i = 0; i < p.size(); i++)
+    for(unsigned int i = 0; i < p.size(); i++)
         a[i] = p[i];
     std::vector<std::complex<double> > roots;
     //roots.resize(p.degree());
@@ -55,7 +55,7 @@ std::vector<std::complex<double> > solve(Poly const & pp) {
      
     gsl_poly_complex_workspace_free (w);
      
-    for (int i = 0; i < p.degree(); i++) {
+    for (unsigned int i = 0; i < p.degree(); i++) {
         roots.push_back(std::complex<double> (z[2*i] ,z[2*i+1]));
         //printf ("z%d = %+.18f %+.18f\n", i, z[2*i], z[2*i+1]);
     }    
@@ -67,7 +67,7 @@ std::vector<double > solve_reals(Poly const & p) {
     std::vector<std::complex<double> > roots = solve(p);
     std::vector<double> real_roots;
     
-    for(int i = 0; i < roots.size(); i++) {
+    for(unsigned int i = 0; i < roots.size(); i++) {
         if(roots[i].imag() == 0) // should be more lenient perhaps
             real_roots.push_back(roots[i].real());
     }
