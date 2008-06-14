@@ -223,7 +223,7 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, NR:
         feed_curve_to_cairo(ct, *cit, to_2geom(view), optimize_stroke);
     }
 
-    if (path.closed()) {
+    if (path_trans.closed()) {
         cairo_line_to(ct, path_trans.initialPoint()[0], path_trans.initialPoint()[1] );
     }
 }
