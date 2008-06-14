@@ -29,6 +29,9 @@
 #include "sp-lpe-item.h"
 #include "xml/repr.h"
 #include "uri.h"
+#include "message-stack.h"
+#include "inkscape.h"
+#include "desktop.h"
 
 #include <algorithm>
 
@@ -299,7 +302,14 @@ void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve) {
                     lpe->doBeforeEffect(lpeitem);
                 }
 
-                lpe->doEffect(curve);
+                try {
+                    lpe->doEffect(curve);
+                }
+                catch (std::exception & e) {
+                    g_warning("Exception during LPE %s execution. \n %s", lpe->getName().c_str(), e.what());
+                    SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
+                        _("An exception occurred during execution of the Path Effect.") );
+                }
             }
         }
     }

@@ -21,8 +21,6 @@
 #include <glibmm/i18n.h>
 #include "pen-context.h"
 #include "tools-switch.h"
-#include "message-stack.h"
-#include "desktop.h"
 
 #include "live_effects/lpeobject.h"
 #include "live_effects/parameter/parameter.h"
@@ -279,20 +277,9 @@ Effect::acceptParamPath (SPPath *param_path) {
 void
 Effect::doEffect (SPCurve * curve)
 {
-    NArtBpath const *bpath_in = curve->get_bpath();
+    std::vector<Geom::Path> orig_pathv = curve->get_pathvector();
 
-    std::vector<Geom::Path> result_pathv;
-
-    try {
-        std::vector<Geom::Path> orig_pathv = BPath_to_2GeomPath(bpath_in);
-
-        result_pathv = doEffect_path(orig_pathv);
-    }
-    catch (std::exception & e) {
-        g_warning("Exception during LPE %s execution. \n %s", getName().c_str(), e.what());
-        SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
-            _("An exception occurred during execution of the Path Effect.") );
-    }
+    std::vector<Geom::Path> result_pathv = doEffect_path(orig_pathv);
 
     curve->set_pathv(result_pathv);
 }
