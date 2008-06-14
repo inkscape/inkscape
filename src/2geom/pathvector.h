@@ -36,6 +36,8 @@
 #define SEEN_GEOM_PATHVECTOR_H
 
 #include "forward.h"
+#include "path.h"
+#include "rect.h"
 
 namespace Geom {
 
