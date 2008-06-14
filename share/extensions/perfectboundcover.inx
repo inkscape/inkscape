@@ -10,7 +10,7 @@
   <param name="pages" type="int" min="4" max="6000" _gui-text="Number of Pages">64</param>
   <param name="removeguides" type="boolean" _gui-text="Remove existing guides">true</param>
   <_param name="paper" type="description">Interior Pages</_param>
-  <param name="paperthicknessmeasurement" _gui-text="Paper Thickness Measurement" type="optiongroup">
+  <param name="paperthicknessmeasurement" _gui-text="Paper Thickness Measurement" type="optiongroup" appearance="minimal">
       <_option value="ppi">Pages Per Inch (PPI)</_option>
       <_option value="caliper">Caliper (inches)</_option>
       <_option value="points">Points</_option>
@@ -19,7 +19,7 @@
   </param>
   <param precision="4" name="paperthickness" type="float" min="0.000" max="1000.000" _gui-text="Value">0</param>
   <_param name="cover" type="description">Cover</_param>
-  <param name="coverthicknessmeasurement" _gui-text="Cover Thickness Measurement" type="optiongroup">
+  <param name="coverthicknessmeasurement" _gui-text="Cover Thickness Measurement" type="optiongroup" appearance="minimal">
       <_option value="ppi">Pages Per Inch (PPI)</_option>
       <_option value="caliper">Caliper (inches)</_option>
       <_option value="points">Points</_option>

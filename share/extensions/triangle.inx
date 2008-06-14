@@ -10,7 +10,7 @@
     <param name="a_a"       type="float"   min="0"    max="180"   _gui-text="Angle a / deg">60</param>
     <param name="a_b"       type="float"   min="0"    max="180"   _gui-text="Angle b / deg">30</param>
     <param name="a_c"       type="float"   min="0"    max="180"   _gui-text="Angle c / deg">90</param>
-    <param name="mode"      type="optiongroup"                    _gui-text="Mode">
+    <param name="mode"      type="optiongroup"                    _gui-text="Mode"  appearance="minimal">
         <_option value="3_sides">From Three Sides</_option>
         <_option value="s_ab_a_c">From Sides a, b and Angle c</_option>
         <_option value="s_ab_a_a">From Sides a, b and Angle a</_option>
