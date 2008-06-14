@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 """
-pstoedit-ext.py
-Python script for running pstoedit in Inkscape extensions
+ps2pdf-ext.py
+Python script for running ps2pdf in Inkscape extensions
 
 Copyright (C) 2008 Stephen Silver
 
