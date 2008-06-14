@@ -13,6 +13,13 @@
 #include "live_effects/bezctx_intf.h"
 #include "live_effects/spiro.h"
 
+// For handling un-continuous paths:
+#include <2geom/pathvector.h>
+#include <2geom/matrix.h>
+#include "message-stack.h"
+#include "inkscape.h"
+#include "desktop.h"
+
 typedef struct {
     bezctx base;
     SPCurve *curve;
@@ -94,6 +101,8 @@ LPESpiro::setup_nodepath(Inkscape::NodePath::Path *np)
 void
 LPESpiro::doEffect(SPCurve * curve)
 {
+    Geom::PathVector original_pathv = curve->get_pathvector();
+
     SPCurve *csrc = curve->copy();
     curve->reset();
     bezctx *bc = new_bezctx_ink(curve);
@@ -192,6 +201,18 @@ LPESpiro::doEffect(SPCurve * curve)
         ib++;
     }
     g_free (path);
+
+    // FIXME: refactor the spiro code such that it cannot generate non-continous paths!
+    // sometimes, the code above generates a path that is not continuous. if so, undo the effect by resetting the original path.
+    try {
+        curve->get_pathvector() * Geom::identity(); // tests for continuity, this makes LPE Spiro slower of course :-(
+    }
+    catch (std::exception & e) {
+        g_warning("Exception during LPE Spiro execution. \n %s", e.what());
+        SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
+            _("An exception occurred during execution of the Spiro Path Effect.") );
+        curve->set_pathv(original_pathv);
+    }
 }
 
 }; //namespace LivePathEffect
