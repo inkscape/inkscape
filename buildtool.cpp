@@ -38,7 +38,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.9.4"
+#define BUILDTOOL_VERSION  "BuildTool v0.9.5"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -5407,7 +5407,11 @@ bool PkgConfig::query(const String &pkgName)
     fname.append(".pc");
 
     if (!readFile(fname))
+        {
+        error("Cannot find package '%s'. Do you have it installed?",
+                       pkgName.c_str());
         return false;
+        }
     
     return true;
 }
