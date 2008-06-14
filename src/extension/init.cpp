@@ -172,7 +172,7 @@ init()
     Internal::PdfInput::init();
 #endif
 #ifdef HAVE_POPPLER_GLIB
-    if (1) {
+    if (0) {
     Internal::PdfInputCairo::init();
     }
 #endif
