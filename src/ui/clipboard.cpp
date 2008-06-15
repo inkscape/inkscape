@@ -95,6 +95,7 @@ public:
     virtual bool pastePathEffect();
     virtual Glib::ustring getPathParameter();
     virtual Glib::ustring getShapeOrTextObjectId();
+    virtual const gchar *getFirstObjectID();
 
     ClipboardManagerImpl();
     ~ClipboardManagerImpl();
@@ -271,6 +272,40 @@ bool ClipboardManagerImpl::paste(bool in_place)
     sp_document_unref(tempdoc);
 
     return true;
+}
+
+/**
+ * @brief Returns the id of the first visible copied object
+ */
+const gchar *ClipboardManagerImpl::getFirstObjectID()
+{
+    SPDocument *tempdoc = _retrieveClipboard("image/x-inkscape-svg");
+    if ( tempdoc == NULL ) {
+        return NULL;
+    }
+
+    Inkscape::XML::Node
+        *root = sp_document_repr_root(tempdoc);
+
+    if (!root)
+        return NULL;
+
+    Inkscape::XML::Node *ch = sp_repr_children(root);
+    while (ch != NULL && 
+           strcmp(ch->name(), "svg:g") &&
+           strcmp(ch->name(), "svg:path") &&
+           strcmp(ch->name(), "svg:use") &&
+           strcmp(ch->name(), "svg:text") &&
+           strcmp(ch->name(), "svg:image") &&
+           strcmp(ch->name(), "svg:rect")
+        )
+        ch = ch->next();
+
+    if (ch) {
+        return ch->attribute("id");
+    }
+
+    return NULL;
 }
 
 

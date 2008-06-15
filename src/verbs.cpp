@@ -897,6 +897,9 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_EDIT_UNLINK_CLONE:
             sp_selection_unlink();
             break;
+        case SP_VERB_EDIT_RELINK_CLONE:
+            sp_selection_relink();
+            break;
         case SP_VERB_EDIT_CLONE_SELECT_ORIGINAL:
             sp_select_clone_original();
             break;
@@ -2264,7 +2267,9 @@ Verb *Verb::_base_verbs[] = {
     new EditVerb(SP_VERB_EDIT_CLONE, "EditClone", N_("Create Clo_ne"),
                  N_("Create a clone (a copy linked to the original) of selected object"), "edit_clone"),
     new EditVerb(SP_VERB_EDIT_UNLINK_CLONE, "EditUnlinkClone", N_("Unlin_k Clone"),
-                 N_("Cut the selected clone's link to its original, turning it into a standalone object"), "edit_unlink_clone"),
+                 N_("Cut the selected clones' links to the originals, turning them into standalone objects"), "edit_unlink_clone"),
+    new EditVerb(SP_VERB_EDIT_RELINK_CLONE, "EditRelinkClone", N_("Relink to Copied"),
+                 N_("Relink the selected clones to the object currently on the clipboard"), NULL),
     new EditVerb(SP_VERB_EDIT_CLONE_SELECT_ORIGINAL, "EditCloneSelectOriginal", N_("Select _Original"),
                  N_("Select the object to which the selected clone is linked"), "edit_select_original"),
     // TRANSLATORS: Convert selection to a line marker

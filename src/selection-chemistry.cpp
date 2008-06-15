@@ -1865,6 +1865,56 @@ sp_selection_clone()
 }
 
 void
+sp_selection_relink()
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (!desktop)
+        return;
+
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+
+    if (selection->isEmpty()) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>clones</b> to relink."));
+        return;
+    }
+
+    Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
+    const gchar *newid = cm->getFirstObjectID();
+    if (!newid) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Copy an <b>object</b> to clipboard to relink clones to."));
+        return;
+    }
+    gchar *newref = g_strdup_printf ("#%s", newid);
+
+    // Get a copy of current selection.
+    GSList *new_select = NULL;
+    bool relinked = false;
+    for (GSList *items = (GSList *) selection->itemList();
+         items != NULL;
+         items = items->next)
+    {
+        SPItem *item = (SPItem *) items->data;
+
+        if (!SP_IS_USE(item))
+            continue;
+
+        SP_OBJECT_REPR(item)->setAttribute("xlink:href", newref);
+        SP_OBJECT(item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        relinked = true;
+    }
+
+    g_free(newref);
+
+    if (!relinked) {
+        desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No clones to relink</b> in the selection."));
+    } else {
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_UNLINK_CLONE,
+                     _("Relink clone"));
+    }
+}
+
+
+void
 sp_selection_unlink()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -1874,7 +1924,7 @@ sp_selection_unlink()
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select a <b>clone</b> to unlink."));
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>clones</b> to unlink."));
         return;
     }
 

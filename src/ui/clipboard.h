@@ -47,6 +47,7 @@ public:
     virtual bool pastePathEffect() = 0;
     virtual Glib::ustring getPathParameter() = 0;
     virtual Glib::ustring getShapeOrTextObjectId() = 0;
+    virtual const gchar *getFirstObjectID() = 0;
     
     static ClipboardManager *get();
 protected:

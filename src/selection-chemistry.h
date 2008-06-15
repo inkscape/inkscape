@@ -39,6 +39,7 @@ void sp_edit_invert_in_all_layers ();
 
 void sp_selection_clone();
 void sp_selection_unlink();
+void sp_selection_relink();
 void sp_select_clone_original ();
 
 void sp_selection_to_marker(bool apply = true);
