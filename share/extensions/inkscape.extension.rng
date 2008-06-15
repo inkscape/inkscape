@@ -281,6 +281,11 @@
         <attribute name="type">
           <value>optiongroup</value>
         </attribute>
+        <optional>
+          <attribute name="appearance">
+            <value>minimal</value>
+          </attribute>
+        </optional>
         <oneOrMore>
           <choice>
             <element name="option">
