@@ -16,6 +16,8 @@ helper/unit-menu.$(OBJEXT): helper/sp-marshal.h
 helper_libspchelp_a_SOURCES =	\
 	helper/action.cpp	\
 	helper/action.h	\
+	helper/geom.cpp	\
+	helper/geom.h	\
 	helper/gnome-utils.cpp	\
 	helper/gnome-utils.h	\
 	helper/helper-forward.h	\
