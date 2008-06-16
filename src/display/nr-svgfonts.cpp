@@ -166,11 +166,11 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
 	        for(SPObject* node = this->font->children;previous_unicode && node;node=node->next){
 		    //apply glyph kerning if appropriate
 	            if (SP_IS_HKERN(node) && is_horizontal_text){
-	                if ( (((SPHkern*)node)->u1[0] == previous_unicode[0]) && (((SPHkern*)node)->u2[0] == this->glyphs[i]->unicode[0]))//TODO: strings
+	                if ( (((SPHkern*)node)->u1->contains(previous_unicode[0])) && (((SPHkern*)node)->u2->contains(this->glyphs[i]->unicode[0]) ))//TODO: verify what happens when using unicode strings.
 				x -= (((SPHkern*)node)->k / this->font->horiz_adv_x);
 	            }
 		    if (SP_IS_VKERN(node) && !is_horizontal_text){
-	                if ( (((SPVkern*)node)->u1[0] == previous_unicode[0]) && (((SPVkern*)node)->u2[0] == this->glyphs[i]->unicode[0]))//TODO: strings
+	                if ( (((SPVkern*)node)->u1->contains(previous_unicode[0])) && (((SPVkern*)node)->u2->contains(this->glyphs[i]->unicode[0]) ))//TODO: idem
 				y -= (((SPVkern*)node)->k / this->font->vert_adv_y);
 	            }
 		}

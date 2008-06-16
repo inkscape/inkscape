@@ -132,13 +132,13 @@ static void sp_glyph_kerning_set(SPObject *object, unsigned int key, const gchar
     switch (key) {
         case SP_ATTR_U1:
             if (glyphkern->u1) g_free(glyphkern->u1);
-            glyphkern->u1 = g_strdup(value);//todo: 
+            glyphkern->u1 = new UnicodeRange(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 g_warning("<%s>: SP_ATTR_U1: %s", tag, value);
              break;
         case SP_ATTR_U2:
             if (glyphkern->u2) g_free(glyphkern->u2);
-            glyphkern->u2 = g_strdup(value);//todo: 
+            glyphkern->u2 = new UnicodeRange(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 g_warning("<%s>: SP_ATTR_U2: %s", tag, value);
              break;

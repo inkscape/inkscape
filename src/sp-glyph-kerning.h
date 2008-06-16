@@ -15,6 +15,7 @@
  */
 
 #include "sp-object.h"
+#include "unicoderange.h"
 
 #define SP_TYPE_HKERN (sp_glyph_kerning_h_get_type ())
 #define SP_HKERN(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_HKERN, SPHkern))
@@ -29,9 +30,9 @@
 #define SP_IS_VKERN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_VKERN))
 
 struct SPGlyphKerning : public SPObject {
-    char* u1;
+    UnicodeRange* u1;
     char* g1;
-    char* u2;
+    UnicodeRange* u2;
     char* g2;
     double k;
 };
