@@ -664,24 +664,28 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
 void
 nr_arena_shape_add_bboxes(NRArenaShape* shape, Geom::Rect &bbox)
 {
+    /* TODO: are these two if's mutually exclusive? ( i.e. "shape->stroke_shp <=> !shape->fill_shp" )
+     * if so, then this can be written much more compact ! */
+
     if ( shape->stroke_shp ) {
-        shape->stroke_shp->CalcBBox();
-        shape->stroke_shp->leftX=floor(shape->stroke_shp->leftX);
-        shape->stroke_shp->rightX=ceil(shape->stroke_shp->rightX);
-        shape->stroke_shp->topY=floor(shape->stroke_shp->topY);
-        shape->stroke_shp->bottomY=ceil(shape->stroke_shp->bottomY);
-        Geom::Rect stroke_bbox( Geom::Interval(shape->stroke_shp->leftX, shape->stroke_shp->rightX),
-                                Geom::Interval(shape->stroke_shp->topY,  shape->stroke_shp->bottomY) );
+        Shape *larger = shape->stroke_shp;
+        larger->CalcBBox();
+        larger->leftX   = floor(larger->leftX);
+        larger->rightX  = ceil(larger->rightX);
+        larger->topY    = floor(larger->topY);
+        larger->bottomY = ceil(larger->bottomY);
+        Geom::Rect stroke_bbox( Geom::Interval(larger->leftX, larger->rightX),
+                                Geom::Interval(larger->topY,  larger->bottomY) );
         bbox.unionWith(stroke_bbox);
     }
 
     if ( shape->fill_shp ) {
-        shape->fill_shp->CalcBBox();
-        shape->fill_shp->leftX=floor(shape->fill_shp->leftX);
-        shape->fill_shp->rightX=ceil(shape->fill_shp->rightX);
-        shape->fill_shp->topY=floor(shape->fill_shp->topY);
-        shape->fill_shp->bottomY=ceil(shape->fill_shp->bottomY);
-        Shape *larger = shape->stroke_shp ? shape->stroke_shp : shape->fill_shp;
+        Shape *larger = shape->fill_shp;
+        larger->CalcBBox();
+        larger->leftX   = floor(larger->leftX);
+        larger->rightX  = ceil(larger->rightX);
+        larger->topY    = floor(larger->topY);
+        larger->bottomY = ceil(larger->bottomY);
         Geom::Rect fill_bbox( Geom::Interval(larger->leftX, larger->rightX),
                               Geom::Interval(larger->topY,  larger->bottomY) );
         bbox.unionWith(fill_bbox);
