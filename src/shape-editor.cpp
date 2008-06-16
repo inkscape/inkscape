@@ -192,13 +192,14 @@ void ShapeEditor::set_item(SPItem *item) {
     if (item) {
         if (SP_IS_LPE_ITEM(item)) {
             SPLPEItem *lpeitem = SP_LPE_ITEM(item);
-            if (!sp_lpe_item_get_current_lpe(lpeitem) ||   // if returns NULL, the whole expression evaluates to true and C++ will not call the otherwise crashing 2 functions below
-                !sp_lpe_item_get_current_lpe(lpeitem)->isVisible() ||
-                !sp_lpe_item_get_current_lpe(lpeitem)->providesKnotholder()) {
-                    // only create nodepath if the item either doesn't have an LPE
-                    // or the LPE is invisible or it doesn't provide a knotholder itself
-                    this->nodepath =
-                        sp_nodepath_new(desktop, item, (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0));
+            Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(lpeitem);
+            if (!(lpe && lpe->isVisible() && lpe->providesKnotholder())) {
+                // only create nodepath if the item either doesn't have an LPE
+                // or the LPE is invisible or it doesn't provide a knotholder itself
+                this->nodepath = sp_nodepath_new(desktop, item,
+                                                 (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0));
+            } else if (lpe && lpe->isVisible() && lpe->showOrigPath()) {
+                sp_lpe_item_add_temporary_canvasitems(lpeitem, desktop);
             }
         }
 

@@ -152,6 +152,20 @@ static void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve)
 // active_node indicates mouseover node
 Inkscape::NodePath::Node * Inkscape::NodePath::Path::active_node = NULL;
 
+static void sp_nodepath_draw_helper_curve(Inkscape::NodePath::Path *np, SPDesktop *desktop) {
+    // Draw helper curve
+    if (np->show_helperpath) {
+        SPCurve *helper_curve = np->curve->copy();
+        helper_curve->transform(np->i2d );
+        np->helper_path = sp_canvas_bpath_new(sp_desktop_controls(desktop), helper_curve);
+        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(np->helper_path), np->helperpath_rgba, np->helperpath_width, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+        sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(np->helper_path), 0, SP_WIND_RULE_NONZERO);
+        sp_canvas_item_move_to_z(np->helper_path, 0);
+        sp_canvas_item_show(np->helper_path);
+        helper_curve->unref();
+    }
+}
+
 /**
  * \brief Creates new nodepath from item
  */
@@ -208,7 +222,13 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     np->helperpath_rgba = prefs_get_int_attribute("tools.nodes", "highlight_color", 0xff0000ff);
     np->helperpath_width = 1.0;
     np->curve = curve->copy();
-    np->show_helperpath = prefs_get_int_attribute ("tools.nodes", "show_helperpath",  0) == 1;
+    np->show_helperpath = (prefs_get_int_attribute ("tools.nodes", "show_helperpath",  0) == 1);
+    if (SP_IS_LPE_ITEM(object)) {
+        Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(object));
+        if (lpe && lpe->isVisible() && lpe->showOrigPath()) {
+            np->show_helperpath = true;
+        }            
+    }
     np->straight_path = false;
     if (IS_LIVEPATHEFFECT(object) && item) {
         np->item = item;
@@ -264,17 +284,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     // create the livarot representation from the same item
     sp_nodepath_ensure_livarot_path(np);
 
-    // Draw helper curve
-    if (np->show_helperpath) {
-        SPCurve *helper_curve = np->curve->copy();
-        helper_curve->transform(np->i2d );
-        np->helper_path = sp_canvas_bpath_new(sp_desktop_controls(desktop), helper_curve);
-        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(np->helper_path), np->helperpath_rgba, np->helperpath_width, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-        sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(np->helper_path), 0, SP_WIND_RULE_NONZERO);
-        sp_canvas_item_move_to_z(np->helper_path, 0);
-        sp_canvas_item_show(np->helper_path);
-        helper_curve->unref();
-    }
+    sp_nodepath_draw_helper_curve(np, desktop);
 
     return np;
 }

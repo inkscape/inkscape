@@ -48,7 +48,6 @@ struct SPNodeContext {
 	bool rb_escaped;
 
 	sigc::connection sel_changed_connection;
-	sigc::connection sel_modified_connection;
 
 	Inkscape::MessageContext *_node_message_context;
 

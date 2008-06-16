@@ -116,6 +116,8 @@ public:
 
     virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
 
+    // TODO: providesKnotholder() is currently used as an indicator of whether a nodepath is
+    // created for an item or not. When we allow both at the same time, this needs rethinking!
     bool providesKnotholder() { return (kh_entity_vector.size() > 0); }
     virtual LPEPathFlashType pathFlashType() { return DEFAULT; }
     void addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
@@ -124,6 +126,7 @@ public:
     inline bool providesOwnFlashPaths() {
         return provides_own_flash_paths || show_orig_path;
     }
+    inline bool showOrigPath() { return show_orig_path; }
 
     Glib::ustring          getName();
     Inkscape::XML::Node *  getRepr();

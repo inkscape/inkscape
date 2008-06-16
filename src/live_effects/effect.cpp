@@ -408,12 +408,16 @@ Effect::addHelperPaths(SPLPEItem *lpeitem, SPDesktop *desktop)
 {
     g_return_if_fail(SP_IS_PATH(lpeitem));
 
-    if (show_orig_path) {
+    if (providesKnotholder() && showOrigPath()) {
+        // TODO: we assume that if the LPE provides its own knotholder, there is no nodepath so we
+        // must create the helper curve for the original path manually; when we allow nodepaths and
+        // knotholders alongside each other, this needs to be rethought!
         SPCanvasItem *canvasitem = sp_nodepath_generate_helperpath(desktop, SP_PATH(lpeitem));
         // TODO: Make sure the tempitem doesn't get destroyed when the mouse leaves the item
         Inkscape::Display::TemporaryItem* tmpitem = desktop->add_temporary_canvasitem (canvasitem, 0);
         lpeitem->lpe_helperpaths.push_back(tmpitem);
     }
+
     addHelperPathsImpl(lpeitem, desktop);
 }
 

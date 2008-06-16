@@ -37,6 +37,8 @@
 #include "shape-editor.h"
 #include "live_effects/effect.h"
 
+#include "sp-lpe-item.h"
+
 // needed for flash nodepath upon mouseover:
 #include "display/canvas-bpath.h"
 #include "display/curve.h"
@@ -119,6 +121,12 @@ sp_node_context_dispose(GObject *object)
     nc->sel_changed_connection.disconnect();
     nc->sel_changed_connection.~connection();
 
+    // TODO: should this be here?
+    SPItem *item = sp_desktop_selection(ec->desktop)->singleItem();
+    if (item && SP_IS_LPE_ITEM(item)) {
+        sp_lpe_item_remove_temporary_canvasitems(SP_LPE_ITEM(item), ec->desktop);
+    }
+
     delete nc->shape_editor;
 
     if (nc->_node_message_context) {
@@ -138,11 +146,8 @@ sp_node_context_setup(SPEventContext *ec)
 
     Inkscape::Selection *selection = sp_desktop_selection (ec->desktop);
     nc->sel_changed_connection.disconnect();
-    nc->sel_modified_connection.disconnect();
     nc->sel_changed_connection =
         selection->connectChanged(sigc::bind(sigc::ptr_fun(&sp_node_context_selection_changed), (gpointer)nc));
-    nc->sel_modified_connection =
-        selection->connectModified(sigc::bind(sigc::ptr_fun(&sp_node_context_selection_modified), (gpointer)nc));
 
     SPItem *item = selection->singleItem();
 
@@ -210,27 +215,6 @@ sp_node_context_selection_changed(Inkscape::Selection *selection, gpointer data)
     SPItem *item = selection->singleItem(); 
     nc->shape_editor->set_item(item);
     nc->shape_editor->update_statusbar();
-}
-
-/**
-\brief  Callback that processes the "modified" signal on the selection;
-updates temporary canvasitems associated to LPEItems in the selection
-*/
-void
-sp_node_context_selection_modified(Inkscape::Selection *selection, guint /*flags*/, gpointer /*data*/)
-{
-    // TODO: do this for *all* items in the selection
-    SPItem *item = selection->singleItem();
-
-    // TODO: This is *very* inefficient! Can we avoid destroying and recreating the temporary
-    // items? Also, we should only update those that actually need it!
-    if (item && SP_IS_LPE_ITEM(item)) {
-        SPLPEItem *lpeitem = SP_LPE_ITEM(item);
-        SPDesktop *desktop = selection->desktop();
-
-        sp_lpe_item_remove_temporary_canvasitems(lpeitem, desktop);
-        sp_lpe_item_add_temporary_canvasitems(lpeitem, desktop);
-    }
 }
 
 void
