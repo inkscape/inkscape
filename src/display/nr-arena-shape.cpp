@@ -252,7 +252,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
         if (state & NR_ARENA_ITEM_STATE_BBOX) {
             if (shape->curve) {
                 Geom::PathVector pv = shape->curve->get_pathvector() * to_2geom(gc->transform);
-                boundingbox = bounds_exact(pv);
+                boundingbox = Geom::bounds_fast(pv);
                 item->bbox.x0 = (gint32)(boundingbox[0][0] - 1.0F);
                 item->bbox.y0 = (gint32)(boundingbox[1][0] - 1.0F);
                 item->bbox.x1 = (gint32)(boundingbox[0][1] + 1.9999F);
@@ -276,7 +276,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
 
     if (shape->curve) {
         Geom::PathVector pv = shape->curve->get_pathvector() * to_2geom(gc->transform);
-        boundingbox = bounds_exact(pv);
+        boundingbox = Geom::bounds_fast(pv);
 
         if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline) {
             float width, scale;
