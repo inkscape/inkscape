@@ -197,10 +197,10 @@ Effect::Effect(LivePathEffectObject *lpeobject)
     : oncanvasedit_it(0),
       is_visible(_("Is visible?"), _("If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"), "is_visible", &wr, this, true),
       done_pathparam_set(false),
-      provides_own_flash_paths(true), // is automatically set to false if providesOwnFlashPaths() is not overridden
       show_orig_path(false),
       lpeobj(lpeobject),
-      concatenate_before_pwd2(false)
+      concatenate_before_pwd2(false),
+      provides_own_flash_paths(true) // is automatically set to false if providesOwnFlashPaths() is not overridden
 {
     registerParameter( dynamic_cast<Parameter *>(&is_visible) );
 }
