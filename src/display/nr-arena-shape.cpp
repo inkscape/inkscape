@@ -674,14 +674,16 @@ nr_arena_shape_add_bboxes(NRArenaShape* shape, Geom::Rect &bbox)
                                 Geom::Interval(shape->stroke_shp->topY,  shape->stroke_shp->bottomY) );
         bbox.unionWith(stroke_bbox);
     }
+
     if ( shape->fill_shp ) {
         shape->fill_shp->CalcBBox();
         shape->fill_shp->leftX=floor(shape->fill_shp->leftX);
         shape->fill_shp->rightX=ceil(shape->fill_shp->rightX);
         shape->fill_shp->topY=floor(shape->fill_shp->topY);
         shape->fill_shp->bottomY=ceil(shape->fill_shp->bottomY);
-        Geom::Rect fill_bbox( Geom::Interval(shape->stroke_shp->leftX, shape->stroke_shp->rightX),
-                              Geom::Interval(shape->stroke_shp->topY,  shape->stroke_shp->bottomY) );
+        Shape *larger = shape->stroke_shp ? shape->stroke_shp : shape->fill_shp;
+        Geom::Rect fill_bbox( Geom::Interval(larger->leftX, larger->rightX),
+                              Geom::Interval(larger->topY,  larger->bottomY) );
         bbox.unionWith(fill_bbox);
     }
 }
