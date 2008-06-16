@@ -991,6 +991,39 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
             }
             break;
 
+        case GDK_P:
+        case GDK_p:
+            if (MOD__SHIFT_ONLY) {
+                pc->polylines_only = !pc->polylines_only;
+                g_print ("polylines_only mode is now %s\n", pc->polylines_only ? "true" : "false");
+                ret = TRUE;
+            }
+            break;
+
+        case GDK_C:
+        case GDK_c:
+            if (MOD__SHIFT_ONLY) {
+                sp_pen_context_wait_for_LPE_mouse_clicks(pc, Inkscape::LivePathEffect::CIRCLE_3PTS, 3);
+                ret = TRUE;
+            }
+            break;
+
+        case GDK_B:
+        case GDK_b:
+            if (MOD__SHIFT_ONLY) {
+                sp_pen_context_wait_for_LPE_mouse_clicks(pc, Inkscape::LivePathEffect::PERP_BISECTOR, 2);
+                ret = TRUE;
+            }
+            break;
+
+        case GDK_A:
+        case GDK_a:
+            if (MOD__SHIFT_ONLY) {
+                sp_pen_context_wait_for_LPE_mouse_clicks(pc, Inkscape::LivePathEffect::ANGLE_BISECTOR, 3);
+                ret = TRUE;
+            }
+            break;
+
         case GDK_U:
         case GDK_u:
             if (MOD__SHIFT_ONLY) {
@@ -1297,6 +1330,8 @@ void
 sp_pen_context_wait_for_LPE_mouse_clicks(SPPenContext *pc, Inkscape::LivePathEffect::EffectType effect_type,
                                          unsigned int num_clicks, bool use_polylines)
 {
+    g_print ("Now waiting for %s to be applied\n",
+             Inkscape::LivePathEffect::LPETypeConverter.get_label(effect_type).c_str());
     pc->expecting_clicks_for_LPE = num_clicks;
     pc->polylines_only = use_polylines;
     pc->waiting_LPE_type = effect_type;
