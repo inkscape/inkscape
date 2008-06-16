@@ -31,8 +31,6 @@ public:
     virtual void acceptParamPath (SPPath *param_path);
     virtual int acceptsNumParams() { return 2; }
 
-    virtual LPEPathFlashType pathFlashType() { return SUPPRESS_FLASH; }
-
     virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
 
 private:

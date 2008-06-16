@@ -236,15 +236,11 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
         guint timeout = prefs_get_int_attribute("tools.nodes", "pathflash_timeout", 500);
         if (SP_IS_LPE_ITEM(item)) {
             Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
-            if (lpe) {
-                if (lpe->pathFlashType() == Inkscape::LivePathEffect::SUPPRESS_FLASH) {
-                    // suppressed and permanent flashes for LPE items are handled in
-                    // sp_node_context_selection_changed()
-                    return ret;
-                }
-                if (lpe->pathFlashType() == Inkscape::LivePathEffect::PERMANENT_FLASH) {
-                    timeout = 0;
-                }
+            if (lpe && (lpe->providesOwnFlashPaths() ||
+                        lpe->pathFlashType() == Inkscape::LivePathEffect::SUPPRESS_FLASH)) {
+                // path should be suppressed or permanent; this is handled in
+                // sp_node_context_selection_changed()
+                return ret;
             }
         }
         sp_node_context_flash_path(event_context, item, timeout);

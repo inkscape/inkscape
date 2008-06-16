@@ -81,7 +81,7 @@ extern const Util::EnumDataConverter<EffectType> LPETypeConverter;
 
 enum LPEPathFlashType {
     SUPPRESS_FLASH,
-    PERMANENT_FLASH,
+//    PERMANENT_FLASH,
     DEFAULT
 };
 
@@ -119,6 +119,8 @@ public:
     // TODO: providesKnotholder() is currently used as an indicator of whether a nodepath is
     // created for an item or not. When we allow both at the same time, this needs rethinking!
     bool providesKnotholder() { return (kh_entity_vector.size() > 0); }
+    // TODO: in view of providesOwnFlashPaths() below, this is somewhat redundant
+    //       (but spiro lpe still needs it!)
     virtual LPEPathFlashType pathFlashType() { return DEFAULT; }
     void addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
