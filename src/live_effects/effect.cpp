@@ -56,6 +56,7 @@
 #include "live_effects/lpe-perp_bisector.h"
 #include "live_effects/lpe-tangent_to_curve.h"
 #include "live_effects/lpe-mirror_reflect.h"
+#include "live_effects/lpe-circle_3pts.h"
 // end of includes
 
 namespace Inkscape {
@@ -83,6 +84,7 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {PERP_BISECTOR, N_("Perpendicular bisector"), "perp_bisector"},
     {TANGENT_TO_CURVE, N_("Tangent to curve"), "tangent_to_curve"},
     {MIRROR_REFLECT, N_("Mirror reflection"), "mirror_reflect"},
+    {CIRCLE_3PTS, N_("Circle through 3 points"), "circle_3pts"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
@@ -143,6 +145,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case MIRROR_REFLECT:
             neweffect = static_cast<Effect*> ( new LPEMirrorReflect(lpeobj) );
+            break;
+        case CIRCLE_3PTS:
+            neweffect = static_cast<Effect*> ( new LPECircle3Pts(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);

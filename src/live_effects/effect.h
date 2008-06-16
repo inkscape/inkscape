@@ -73,6 +73,7 @@ enum EffectType {
     PERP_BISECTOR,
     TANGENT_TO_CURVE,
     MIRROR_REFLECT,
+    CIRCLE_3PTS,
     INVALID_LPE // This must be last
 };
 
