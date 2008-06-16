@@ -1293,6 +1293,15 @@ pen_enable_events(SPPenContext *const pc) {
   pc->events_disabled--;
 }
 
+void
+sp_pen_context_wait_for_LPE_mouse_clicks(SPPenContext *pc, Inkscape::LivePathEffect::EffectType effect_type,
+                                         unsigned int num_clicks, bool use_polylines)
+{
+    pc->expecting_clicks_for_LPE = num_clicks;
+    pc->polylines_only = use_polylines;
+    pc->waiting_LPE_type = effect_type;
+}
+
 /*
   Local Variables:
   mode:c++

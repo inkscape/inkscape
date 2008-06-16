@@ -60,6 +60,8 @@ inline bool sp_pen_context_has_waiting_LPE(SPPenContext *pc) {
             pc->waiting_LPE_type != Inkscape::LivePathEffect::INVALID_LPE);
 }
 
+void sp_pen_context_wait_for_LPE_mouse_clicks(SPPenContext *pc, Inkscape::LivePathEffect::EffectType effect_type,
+                                              unsigned int num_clicks, bool use_polylines = true);
 
 #endif /* !SEEN_PEN_CONTEXT_H */
 
