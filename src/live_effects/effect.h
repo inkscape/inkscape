@@ -74,6 +74,7 @@ enum EffectType {
     TANGENT_TO_CURVE,
     MIRROR_REFLECT,
     CIRCLE_3PTS,
+    ANGLE_BISECTOR,
     INVALID_LPE // This must be last
 };
 
