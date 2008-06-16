@@ -1,4 +1,7 @@
-#include<unicoderange.h>
+#include "unicoderange.h"
+
+#include <malloc.h>
+#include <string.h>
 
 static unsigned int hex2int(char* s){
 	int res=0;
