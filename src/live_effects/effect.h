@@ -120,11 +120,12 @@ public:
 
     // TODO: providesKnotholder() is currently used as an indicator of whether a nodepath is
     // created for an item or not. When we allow both at the same time, this needs rethinking!
-    bool providesKnotholder() { return (kh_entity_vector.size() > 0); }
+    bool providesKnotholder();
     // TODO: in view of providesOwnFlashPaths() below, this is somewhat redundant
     //       (but spiro lpe still needs it!)
     virtual LPEPathFlashType pathFlashType() { return DEFAULT; }
     void addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
+    void addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
     void addHelperPaths(SPLPEItem *lpeitem, SPDesktop *desktop);
     inline bool providesOwnFlashPaths() {
@@ -160,7 +161,6 @@ protected:
 
     void registerParameter(Parameter * param);
     void registerKnotHolderHandle(KnotHolderEntity* entity, const char* descr);
-    void addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
     Parameter * getNextOncanvasEditableParam();
 
     virtual void addHelperPathsImpl(SPLPEItem *lpeitem, SPDesktop *desktop);

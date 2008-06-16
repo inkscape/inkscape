@@ -100,7 +100,6 @@ PointParam::param_newWidget(Gtk::Tooltips * tooltips)
     pIcon->show();
     pButton->add(*pIcon);
     pButton->show();
-    pButton->signal_clicked().connect(sigc::mem_fun(*this, &PointParam::on_button_click));
 
     Gtk::HBox * hbox = Gtk::manage( new Gtk::HBox() );
     static_cast<Gtk::HBox*>(hbox)->pack_start(*pButton, true, true);
@@ -165,35 +164,20 @@ PointParam::set_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint
 void
 PointParam::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
 {
-    g_print ("PointParam::knot_set() was called!\n");
     param_setValue(p.to_2geom());
+    sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
 }
 
 NR::Point
 PointParam::knot_get()
 {
-    g_print ("PointParam::knot_get() was called.\n");
-    g_print ("We return (%f, %f)\n", (*this)[0], (*this)[1]);
     return *this;
 }
 
 void
 PointParam::knot_click(guint state)
 {
-    g_print ("PointParam::knot_click() was called!\n");
-}
-
-// CALLBACKS:
-
-void
-PointParam::on_button_click()
-{
-    g_print ("PointParam::on_button_click()\n");
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    SPItem * item = sp_desktop_selection(desktop)->singleItem();
-    if (item != NULL) {
-        param_editOncanvas(item, desktop);
-    }
+    g_print ("This is the handle associated to the parameter '%s'\n", param_key.c_str());
 }
 
 } /* namespace LivePathEffect */

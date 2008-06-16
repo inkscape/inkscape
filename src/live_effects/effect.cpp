@@ -569,6 +569,23 @@ Effect::transform_multiply(Geom::Matrix const& postmul, bool set)
     }
 }
 
+bool
+Effect::providesKnotholder()
+{
+    // does the effect actively provide any knotholder entities of its own?
+    if (kh_entity_vector.size() > 0)
+        return true;
+
+    // otherwise: are there any PointParams?
+    for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
+        if ((*p)->paramType() == Inkscape::LivePathEffect::POINT_PARAM) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 } /* namespace LivePathEffect */
 
 } /* namespace Inkscape */
