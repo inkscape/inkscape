@@ -595,14 +595,15 @@ void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
             }
         }
     }
-    // For lpe items, copy liveeffect if applicable
-    // TODO: copy the whole effect stack. now it only copies current selected effect
+    // For lpe items, copy lpe stack if applicable
     if (SP_IS_LPE_ITEM(item)) {
         SPLPEItem *lpeitem = SP_LPE_ITEM (item);
         if (sp_lpe_item_has_path_effect(lpeitem)) {
-            Inkscape::LivePathEffect::LPEObjectReference* lperef = sp_lpe_item_get_current_lpereference(lpeitem);
-            if (lperef && lperef->lpeobject) {
-                _copyNode(SP_OBJECT_REPR(SP_OBJECT(lperef->lpeobject)), _doc, _defs);
+            for (PathEffectList::iterator it = lpeitem->path_effect_list->begin(); it != lpeitem->path_effect_list->end(); ++it)
+            {
+                LivePathEffectObject *lpeobj = (*it)->lpeobject;
+                if (lpeobj)
+                    _copyNode(SP_OBJECT_REPR(SP_OBJECT(lpeobj)), _doc, _defs);
             }
         }
     }
