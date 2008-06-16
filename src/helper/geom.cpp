@@ -11,6 +11,8 @@
  * Released under GNU GPL
  */
 
+#include "helper/geom.h"
+
 #include <2geom/pathvector.h>
 #include <2geom/transforms.h>
  
@@ -20,6 +22,11 @@ bounds_fast_transformed(Geom::PathVector const & pv, Geom::Matrix const & t)
     return Geom::bounds_fast(pv * t);
 }
 
+Geom::Rect
+bounds_exact_transformed(Geom::PathVector const & pv, Geom::Matrix const & t)
+{
+    return Geom::bounds_exact(pv * t);
+}
 
 /*
   Local Variables:

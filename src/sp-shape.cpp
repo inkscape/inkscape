@@ -21,6 +21,8 @@
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-translate-ops.h>
 #include <libnr/nr-scale-matrix-ops.h>
+#include <2geom/rect.h>
+#include "helper/geom.h"
 
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
@@ -637,14 +639,12 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
     if (shape->curve) {
 
         NRRect  cbbox;
-        const_NRBPath bp;
 
-        bp.path = SP_CURVE_BPATH (shape->curve);
-
-        cbbox.x0 = cbbox.y0 = NR_HUGE;
-        cbbox.x1 = cbbox.y1 = -NR_HUGE;
-
-        nr_path_matrix_bbox_union(&bp, transform, &cbbox);
+        Geom::Rect geombbox = bounds_exact_transformed(shape->curve->get_pathvector(), to_2geom(transform));
+        cbbox.x0 = geombbox[0][0];
+        cbbox.y0 = geombbox[1][0];
+        cbbox.x1 = geombbox[0][1];
+        cbbox.y1 = geombbox[1][1];
 
         if ((SPItem::BBoxType) flags != SPItem::GEOMETRIC_BBOX) {
             

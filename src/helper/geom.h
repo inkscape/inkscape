@@ -15,6 +15,7 @@
 #include <2geom/forward.h>
 
 Geom::Rect bounds_fast_transformed(Geom::PathVector const & pv, Geom::Matrix const & t);
+Geom::Rect bounds_exact_transformed(Geom::PathVector const & pv, Geom::Matrix const & t);
 
 #endif  // INKSCAPE_HELPER_GEOM_H
 
