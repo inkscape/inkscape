@@ -65,6 +65,8 @@ LPETangentToCurve::LPETangentToCurve(LivePathEffectObject *lpeobject) :
     length_left(_("Length left"), _("Specifies the left end of the tangent"), "length-left", &wr, this, 150),
     length_right(_("Length right"), _("Specifies the right end of the tangent"), "length-right", &wr, this, 150)
 {
+    show_orig_path = true;
+
     registerParameter( dynamic_cast<Parameter *>(&angle) );
     registerParameter( dynamic_cast<Parameter *>(&t_attach) );
     registerParameter( dynamic_cast<Parameter *>(&length_left) );

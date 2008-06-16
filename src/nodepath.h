@@ -307,6 +307,7 @@ NR::Rect sp_node_selected_bbox (Inkscape::NodePath::Path *nodepath);
 NR::Maybe<NR::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis);
 
 void sp_nodepath_show_handles(Inkscape::NodePath::Path *nodepath, bool show);
+SPCanvasItem *sp_nodepath_generate_helperpath(SPDesktop *desktop, SPPath *path);
 void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *nodepath, bool show);
 void sp_nodepath_make_straight_path(Inkscape::NodePath::Path *np);
 

@@ -116,12 +116,6 @@ sp_node_context_dispose(GObject *object)
 
     ec->enableGrDrag(false);
 
-    if (nc->flash_permitem) {
-        // hack!!! (we add a temporary canvasitem with life time 1 ms)
-        nc->flash_tempitem = nc->event_context.desktop->add_temporary_canvasitem (nc->flash_permitem, 1);
-        nc->flash_permitem = NULL;
-    }
-
     nc->sel_changed_connection.disconnect();
     nc->sel_changed_connection.~connection();
 
@@ -142,10 +136,14 @@ sp_node_context_setup(SPEventContext *ec)
     if (((SPEventContextClass *) parent_class)->setup)
         ((SPEventContextClass *) parent_class)->setup(ec);
 
+    Inkscape::Selection *selection = sp_desktop_selection (ec->desktop);
     nc->sel_changed_connection.disconnect();
-    nc->sel_changed_connection = sp_desktop_selection(ec->desktop)->connectChanged(sigc::bind(sigc::ptr_fun(&sp_node_context_selection_changed), (gpointer)nc));
+    nc->sel_modified_connection.disconnect();
+    nc->sel_changed_connection =
+        selection->connectChanged(sigc::bind(sigc::ptr_fun(&sp_node_context_selection_changed), (gpointer)nc));
+    nc->sel_modified_connection =
+        selection->connectModified(sigc::bind(sigc::ptr_fun(&sp_node_context_selection_modified), (gpointer)nc));
 
-    Inkscape::Selection *selection = sp_desktop_selection(ec->desktop);
     SPItem *item = selection->singleItem();
 
     nc->shape_editor = new ShapeEditor(ec->desktop);
@@ -177,23 +175,6 @@ sp_node_context_setup(SPEventContext *ec)
     nc->shape_editor->update_statusbar();
 }
 
-static SPCanvasItem *
-sp_node_context_generate_helperpath(SPDesktop *desktop, SPPath *path) {
-    // This should be put somewhere else under the name of "generate helperpath" or something. Because basically this is copied of code from nodepath...
-    SPCurve *curve_new = sp_path_get_curve_for_edit(path);
-    SPCurve *flash_curve = curve_new->copy();
-    flash_curve->transform(from_2geom(sp_item_i2d_affine(SP_ITEM(path))));
-    SPCanvasItem * canvasitem = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), flash_curve);
-    // would be nice if its color could be XORed or something, now it is invisible for red stroked objects...
-    // unless we also flash the nodes...
-    guint32 color = prefs_get_int_attribute("tools.nodes", "highlight_color", 0xff0000ff);
-    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvasitem), color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-    sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(canvasitem), 0, SP_WIND_RULE_NONZERO);
-    sp_canvas_item_show(canvasitem);
-    flash_curve->unref();
-    return canvasitem;
-}
-
 static void
 sp_node_context_flash_path(SPEventContext *event_context, SPItem *item, guint timeout) {
     SPNodeContext *nc = SP_NODE_CONTEXT(event_context);
@@ -209,7 +190,7 @@ sp_node_context_flash_path(SPEventContext *event_context, SPItem *item, guint ti
         }
 
         if (SP_IS_PATH(item)) {
-            SPCanvasItem *canvasitem = sp_node_context_generate_helperpath(desktop, SP_PATH(item));
+            SPCanvasItem *canvasitem = sp_nodepath_generate_helperpath(desktop, SP_PATH(item));
             nc->flash_tempitem = desktop->add_temporary_canvasitem (canvasitem, timeout);
         }
     }
@@ -228,23 +209,28 @@ sp_node_context_selection_changed(Inkscape::Selection *selection, gpointer data)
     nc->shape_editor->unset_item();
     SPItem *item = selection->singleItem(); 
     nc->shape_editor->set_item(item);
-
-    if (nc->flash_permitem) {
-        // hack!!! (we add a temporary canvasitem with life time 1 ms)
-        nc->flash_tempitem = nc->event_context.desktop->add_temporary_canvasitem (nc->flash_permitem, 1);
-        nc->flash_permitem = NULL;
-    }
-    if (SP_IS_LPE_ITEM(item)) {
-        Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
-        if (lpe && lpe->pathFlashType() == Inkscape::LivePathEffect::PERMANENT_FLASH) {
-            if (SP_IS_PATH(item)) {
-                SPCanvasItem *canvasitem = sp_node_context_generate_helperpath(nc->event_context.desktop, SP_PATH(item));
-                nc->flash_permitem = canvasitem;
-            }
-        }
-    }
-
     nc->shape_editor->update_statusbar();
+}
+
+/**
+\brief  Callback that processes the "modified" signal on the selection;
+updates temporary canvasitems associated to LPEItems in the selection
+*/
+void
+sp_node_context_selection_modified(Inkscape::Selection *selection, guint /*flags*/, gpointer /*data*/)
+{
+    // TODO: do this for *all* items in the selection
+    SPItem *item = selection->singleItem();
+
+    // TODO: This is *very* inefficient! Can we avoid destroying and recreating the temporary
+    // items? Also, we should only update those that actually need it!
+    if (item && SP_IS_LPE_ITEM(item)) {
+        SPLPEItem *lpeitem = SP_LPE_ITEM(item);
+        SPDesktop *desktop = selection->desktop();
+
+        sp_lpe_item_remove_temporary_canvasitems(lpeitem, desktop);
+        sp_lpe_item_add_temporary_canvasitems(lpeitem, desktop);
+    }
 }
 
 void
@@ -268,8 +254,8 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
             Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
             if (lpe) {
                 if (lpe->pathFlashType() == Inkscape::LivePathEffect::SUPPRESS_FLASH) {
-                    // return if flash is suppressed or if we want a permanent "flash" (this is handled
-                    // in sp_node_context_selection_changed()
+                    // suppressed and permanent flashes for LPE items are handled in
+                    // sp_node_context_selection_changed()
                     return ret;
                 }
                 if (lpe->pathFlashType() == Inkscape::LivePathEffect::PERMANENT_FLASH) {

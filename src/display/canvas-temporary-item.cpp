@@ -23,10 +23,15 @@ namespace Display {
 
 /** lifetime is measured in milliseconds
  */
-TemporaryItem::TemporaryItem(SPCanvasItem *item, guint lifetime)
+TemporaryItem::TemporaryItem(SPCanvasItem *item, guint lifetime, bool deselect_destroy)
     : canvasitem(item),
-      timeout_id(0)
+      timeout_id(0),
+      destroy_on_deselect(deselect_destroy)
 {
+    if (lifetime > 0 && destroy_on_deselect) {
+        g_print ("Warning: lifetime should be 0 when destroy_on_deselect is true\n");
+        lifetime = 0;
+    }
     // zero lifetime means stay forever, so do not add timeout event.
     if (lifetime > 0) {
         timeout_id = g_timeout_add(lifetime, &TemporaryItem::_timeout, this);

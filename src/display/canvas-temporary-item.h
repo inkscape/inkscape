@@ -21,7 +21,7 @@ namespace Display {
 
 class TemporaryItem  {
 public:
-    TemporaryItem(SPCanvasItem *item, guint lifetime);
+    TemporaryItem(SPCanvasItem *item, guint lifetime, bool destroy_on_deselect = false);
     virtual ~TemporaryItem();
 
     sigc::signal<void, TemporaryItem *> signal_timeout;
@@ -31,6 +31,7 @@ protected:
 
     SPCanvasItem * canvasitem;   /** The item we are holding on to */
     guint timeout_id;     /** ID by which glib knows the timeout event */
+    bool destroy_on_deselect; // only destroy when parent item is deselected, not when mouse leaves
 
     static gboolean _timeout(gpointer data); ///< callback for when lifetime expired
 

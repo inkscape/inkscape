@@ -157,6 +157,8 @@ LPEPerpBisector::LPEPerpBisector(LivePathEffectObject *lpeobject) :
     length_right(_("Length right"), _("Specifies the right end of the bisector"), "length-right", &wr, this, 200),
     A(0,0), B(0,0), M(0,0), C(0,0), D(0,0), perp_dir(0,0)
 {
+    show_orig_path = true;
+
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     registerParameter( dynamic_cast<Parameter *>(&length_left) );
     registerParameter( dynamic_cast<Parameter *>(&length_right) );

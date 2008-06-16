@@ -48,6 +48,7 @@ struct SPNodeContext {
 	bool rb_escaped;
 
 	sigc::connection sel_changed_connection;
+	sigc::connection sel_modified_connection;
 
 	Inkscape::MessageContext *_node_message_context;
 
@@ -59,7 +60,6 @@ struct SPNodeContext {
  
     SPItem * flashed_item;
     Inkscape::Display::TemporaryItem * flash_tempitem;
-    SPCanvasItem * flash_permitem;
     int remove_flash_counter;
 };
 
@@ -72,5 +72,17 @@ struct SPNodeContextClass {
 GtkType sp_node_context_get_type (void);
 
 void sp_node_context_selection_changed (Inkscape::Selection * selection, gpointer data);
+void sp_node_context_selection_modified (Inkscape::Selection * selection, guint flags, gpointer data);
 
 #endif
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

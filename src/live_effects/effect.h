@@ -27,6 +27,7 @@
 struct SPDocument;
 struct SPDesktop;
 struct SPItem;
+class SPNodeContext;
 class NArtBpath;
 struct LivePathEffectObject;
 
@@ -119,6 +120,11 @@ public:
     virtual LPEPathFlashType pathFlashType() { return DEFAULT; }
     void addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
+    void addHelperPaths(SPLPEItem *lpeitem, SPDesktop *desktop);
+    inline bool providesOwnFlashPaths() {
+        return provides_own_flash_paths || show_orig_path;
+    }
+
     Glib::ustring          getName();
     Inkscape::XML::Node *  getRepr();
     SPDocument *           getSPDoc();
@@ -150,11 +156,16 @@ protected:
     void addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
     Parameter * getNextOncanvasEditableParam();
 
+    virtual void addHelperPathsImpl(SPLPEItem *lpeitem, SPDesktop *desktop);
+
     std::vector<Parameter *> param_vector;
     std::vector<std::pair<KnotHolderEntity*, const char*> > kh_entity_vector;
     int oncanvasedit_it;
     BoolParam is_visible;
     bool done_pathparam_set;
+
+    bool show_orig_path; // set this to true in derived effects to automatically have the original
+                         // path displayed as helperpath
 
     Inkscape::UI::Widget::Registry wr;
 
@@ -165,6 +176,8 @@ protected:
     bool concatenate_before_pwd2;
 
 private:
+    bool provides_own_flash_paths; // if true, the standard flash path is suppressed
+
     Effect(const Effect&);
     Effect& operator=(const Effect&);
 };

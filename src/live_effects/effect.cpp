@@ -21,6 +21,9 @@
 #include <glibmm/i18n.h>
 #include "pen-context.h"
 #include "tools-switch.h"
+#include "message-stack.h"
+#include "desktop.h"
+#include "nodepath.h"
 
 #include "live_effects/lpeobject.h"
 #include "live_effects/parameter/parameter.h"
@@ -54,8 +57,6 @@
 #include "live_effects/lpe-tangent_to_curve.h"
 #include "live_effects/lpe-mirror_reflect.h"
 // end of includes
-
-#include "nodepath.h"
 
 namespace Inkscape {
 
@@ -186,6 +187,8 @@ Effect::Effect(LivePathEffectObject *lpeobject)
     : oncanvasedit_it(0),
       is_visible(_("Is visible?"), _("If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"), "is_visible", &wr, this, true),
       done_pathparam_set(false),
+      provides_own_flash_paths(true), // is automatically set to false if providesOwnFlashPaths() is not overridden
+      show_orig_path(false),
       lpeobj(lpeobject),
       concatenate_before_pwd2(false)
 {
@@ -398,6 +401,27 @@ Effect::addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem 
             knotholder->add(e);
         }
     }
+}
+
+void
+Effect::addHelperPaths(SPLPEItem *lpeitem, SPDesktop *desktop)
+{
+    g_return_if_fail(SP_IS_PATH(lpeitem));
+
+    if (show_orig_path) {
+        SPCanvasItem *canvasitem = sp_nodepath_generate_helperpath(desktop, SP_PATH(lpeitem));
+        // TODO: Make sure the tempitem doesn't get destroyed when the mouse leaves the item
+        Inkscape::Display::TemporaryItem* tmpitem = desktop->add_temporary_canvasitem (canvasitem, 0);
+        lpeitem->lpe_helperpaths.push_back(tmpitem);
+    }
+    addHelperPathsImpl(lpeitem, desktop);
+}
+
+void
+Effect::addHelperPathsImpl(SPLPEItem *lpeitem, SPDesktop *desktop)
+{
+    // if this method is overloaded in derived classes, provides_own_flash_paths will be true
+    provides_own_flash_paths = false;
 }
 
 /**

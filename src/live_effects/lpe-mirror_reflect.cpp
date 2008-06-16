@@ -29,6 +29,8 @@ LPEMirrorReflect::LPEMirrorReflect(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     reflection_line(_("Reflection line"), _("Line which serves as 'mirror' for the reflection"), "reflection_line", &wr, this, "M0,0 L100,100")
 {
+    show_orig_path = true;
+
     registerParameter( dynamic_cast<Parameter *>(&reflection_line) );
 }
 

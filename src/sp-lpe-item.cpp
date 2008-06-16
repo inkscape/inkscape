@@ -708,6 +708,25 @@ bool sp_lpe_item_path_effects_enabled(SPLPEItem *lpeitem)
     return lpeitem->path_effects_enabled > 0;
 }
 
+void
+sp_lpe_item_add_temporary_canvasitems(SPLPEItem *lpeitem, SPDesktop *desktop)
+{
+    Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(lpeitem);
+    if (lpe) {
+        lpe->addHelperPaths(lpeitem, desktop);
+    }
+}
+
+void
+sp_lpe_item_remove_temporary_canvasitems(SPLPEItem *lpeitem, SPDesktop *desktop)
+{
+    // destroy all temporary canvasitems created by LPEs
+    std::vector<Inkscape::Display::TemporaryItem*>::iterator i;
+    for (i = lpeitem->lpe_helperpaths.begin(); i != lpeitem->lpe_helperpaths.end(); ++i) {
+        desktop->remove_temporary_canvasitem(*i);
+    }
+}
+
 /*
   Local Variables:
   mode:c++
