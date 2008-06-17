@@ -92,2071 +92,13 @@ typedef Ptr<SVGElement> SVGElementPtr;
 class SVGDocument;
 typedef Ptr<SVGDocument> SVGDocumentPtr;
 
+
+
 //########################################################################
 //########################################################################
-//########################################################################
-//#   I N T E R F A C E S
-//########################################################################
+//#   V A L U E S
 //########################################################################
 //########################################################################
-
-
-
-/*#########################################################################
-## SVGMatrix
-#########################################################################*/
-
-/**
- *  In SVG, a Matrix is defined like this:
- *
- * | a  c  e |
- * | b  d  f |
- * | 0  0  1 |
- *
- */
-class SVGMatrix
-{
-public:
-
-
-    /**
-     *
-     */
-    virtual double getA()
-        { return a; }
-
-    /**
-     *
-     */
-    virtual void setA(double val) throw (DOMException)
-        { a = val; }
-
-    /**
-     *
-     */
-    virtual double getB()
-        { return b; }
-
-    /**
-     *
-     */
-    virtual void setB(double val) throw (DOMException)
-        { b = val; }
-
-    /**
-     *
-     */
-    virtual double getC()
-        { return c; }
-
-    /**
-     *
-     */
-    virtual void setC(double val) throw (DOMException)
-        { c = val; }
-
-    /**
-     *
-     */
-    virtual double getD()
-        { return d; }
-
-    /**
-     *
-     */
-    virtual void setD(double val) throw (DOMException)
-        { d = val; }
-    /**
-     *
-     */
-    virtual double getE()
-        { return e; }
-
-    /**
-     *
-     */
-    virtual void setE(double val) throw (DOMException)
-        { e = val; }
-    /**
-     *
-     */
-    virtual double getF()
-        { return f; }
-
-    /**
-     *
-     */
-    virtual void setF(double val) throw (DOMException)
-        { f = val; }
-
-
-    /**
-     * Return the result of postmultiplying this matrix with another.
-     */
-    virtual SVGMatrix multiply(const SVGMatrix &other)
-        {
-        SVGMatrix result;
-        result.a = a * other.a  +  c * other.b;
-        result.b = b * other.a  +  d * other.b;
-        result.c = a * other.c  +  c * other.d;
-        result.d = b * other.c  +  d * other.d;
-        result.e = a * other.e  +  c * other.f  +  e;
-        result.f = b * other.e  +  d * other.f  +  f;
-        return result;
-        }
-
-    /**
-     *  Calculate the inverse of this matrix
-     *
-     */
-    virtual SVGMatrix inverse(  ) throw( SVGException )
-        {
-        /*###########################################
-        The determinant of a 3x3 matrix E
-           (let's use our own notation for a bit)
-
-            A  B  C
-            D  E  F
-            G  H  I
-        is
-            AEI - AFH - BDI + BFG + CDH - CEG
-
-        Since in our affine transforms, G and H==0 and I==1,
-        this reduces to:
-            AE - BD
-        In SVG's naming scheme, that is:  a * d - c * b .  SIMPLE!
-
-        In a similar method of attack, SVG's adjunct matrix is:
-
-           d  -c   cf-ed
-          -b   a   eb-af
-           0   0   ad-cb
-
-        To get the inverse matrix, we divide the adjunct matrix by
-        the determinant.  Notice that (ad-cb)/(ad-cb)==1.  Very cool.
-        So what we end up with is this:
-
-           a =  d/(ad-cb)  c = -c/(ad-cb)   e = (cf-ed)/(ad-cb)
-           b = -b/(ad-cb)  d =  a/(ad-cb)   f = (eb-af)/(ad-cb)
-
-        (Since this would be in all SVG-DOM implementations,
-         somebody needed to document this!  ^^ )
-        #############################################*/
-
-        SVGMatrix result;
-        double determinant = a * d  -  c * b;
-        if (determinant < 1.0e-18)//invertible?
-            {
-            result.identity();//cop out
-            return result;
-            }
-
-        double idet = 1.0 / determinant;
-        result.a =   d * idet;
-        result.b =  -b * idet;
-        result.c =  -c * idet;
-        result.d =   a * idet;
-        result.e =  (c*f - e*d) * idet;
-        result.f =  (e*b - a*f) * idet;
-        return result;
-        }
-
-    /**
-     * Equivalent to multiplying by:
-     *  | 1  0  x |
-     *  | 0  1  y |
-     *  | 0  0  1 |
-     *
-     */
-    virtual SVGMatrix translate(double x, double y )
-        {
-        SVGMatrix result;
-        result.a = a;
-        result.b = b;
-        result.c = c;
-        result.d = d;
-        result.e = a * x  +  c * y  +  e;
-        result.f = b * x  +  d * y  +  f;
-        return result;
-        }
-
-    /**
-     * Equivalent to multiplying by:
-     *  | scale  0      0 |
-     *  | 0      scale  0 |
-     *  | 0      0      1 |
-     *
-     */
-    virtual SVGMatrix scale(double scale)
-        {
-        SVGMatrix result;
-        result.a = a * scale;
-        result.b = b * scale;
-        result.c = c * scale;
-        result.d = d * scale;
-        result.e = e;
-        result.f = f;
-        return result;
-        }
-
-    /**
-     * Equivalent to multiplying by:
-     *  | scaleX  0       0 |
-     *  | 0       scaleY  0 |
-     *  | 0       0       1 |
-     *
-     */
-    virtual SVGMatrix scaleNonUniform(double scaleX,
-                                      double scaleY )
-        {
-        SVGMatrix result;
-        result.a = a * scaleX;
-        result.b = b * scaleX;
-        result.c = c * scaleY;
-        result.d = d * scaleY;
-        result.e = e;
-        result.f = f;
-        return result;
-        }
-
-    /**
-     * Equivalent to multiplying by:
-     *  | cos(a) -sin(a)   0 |
-     *  | sin(a)  cos(a)   0 |
-     *  | 0       0        1 |
-     *
-     */
-    virtual SVGMatrix rotate (double angle)
-        {
-        double sina  = sin(angle);
-        double msina = -sina;
-        double cosa  = cos(angle);
-        SVGMatrix result;
-        result.a = a * cosa   +  c * sina;
-        result.b = b * cosa   +  d + sina;
-        result.c = a * msina  +  c * cosa;
-        result.d = b * msina  +  d * cosa;
-        result.e = e;
-        result.f = f;
-        return result;
-        }
-
-    /**
-     * Equivalent to multiplying by:
-     *  | cos(a) -sin(a)   0 |
-     *  | sin(a)  cos(a)   0 |
-     *  | 0       0        1 |
-     *  In this case, angle 'a' is computed as the artangent
-     *  of the slope y/x .  It is negative if the slope is negative.
-     */
-    virtual SVGMatrix rotateFromVector(double x, double y)
-                                      throw( SVGException )
-        {
-        double angle = atan(y / x);
-        if (y < 0.0)
-            angle = -angle;
-        SVGMatrix result;
-        double sina  = sin(angle);
-        double msina = -sina;
-        double cosa  = cos(angle);
-        result.a = a * cosa   +  c * sina;
-        result.b = b * cosa   +  d + sina;
-        result.c = a * msina  +  c * cosa;
-        result.d = b * msina  +  d * cosa;
-        result.e = e;
-        result.f = f;
-        return result;
-        }
-
-    /**
-     * Equivalent to multiplying by:
-     *  | -1   0   0 |
-     *  | 0    1   0 |
-     *  | 0    0   1 |
-     *
-     */
-    virtual SVGMatrix flipX(  )
-        {
-        SVGMatrix result;
-        result.a = -a;
-        result.b = -b;
-        result.c =  c;
-        result.d =  d;
-        result.e =  e;
-        result.f =  f;
-        return result;
-        }
-
-    /**
-     * Equivalent to multiplying by:
-     *  | 1   0   0 |
-     *  | 0  -1   0 |
-     *  | 0   0   1 |
-     *
-     */
-    virtual SVGMatrix flipY( )
-        {
-        SVGMatrix result;
-        result.a =  a;
-        result.b =  b;
-        result.c = -c;
-        result.d = -d;
-        result.e =  e;
-        result.f =  f;
-        return result;
-        }
-
-    /**
-     *  | 1   tan(a)  0 |
-     *  | 0   1       0 |
-     *  | 0   0       1 |
-     *
-     */
-    virtual SVGMatrix skewX(double angle)
-        {
-        double tana = tan(angle);
-        SVGMatrix result;
-        result.a =  a;
-        result.b =  b;
-        result.c =  a * tana + c;
-        result.d =  b * tana + d;
-        result.e =  e;
-        result.f =  f;
-        return result;
-        }
-
-    /**
-     * Equivalent to multiplying by:
-     *  | 1       0   0 |
-     *  | tan(a)  1   0 |
-     *  | 0       0   1 |
-     *
-     */
-    virtual SVGMatrix skewY(double angle)
-        {
-        double tana = tan(angle);
-        SVGMatrix result;
-        result.a =  a + c * tana;
-        result.b =  b + d * tana;
-        result.c =  c;
-        result.d =  d;
-        result.e =  e;
-        result.f =  f;
-        return result;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGMatrix()
-        {
-        identity();
-        }
-
-    /**
-     *
-     */
-    SVGMatrix(double aArg, double bArg, double cArg,
-              double dArg, double eArg, double fArg )
-        {
-        a = aArg; b = bArg; c = cArg;
-        d = dArg; e = eArg; f = fArg;
-        }
-
-    /**
-     * Copy constructor
-     */
-    SVGMatrix(const SVGMatrix &other)
-        {
-        a = other.a;
-        b = other.b;
-        c = other.c;
-        d = other.d;
-        e = other.e;
-        f = other.f;
-        }
-
-
-
-    /**
-     *
-     */
-    virtual ~SVGMatrix() {}
-
-protected:
-
-friend class SVGTransform;
-
-    /*
-     * Set to the identify matrix
-     */
-   void identity()
-       {
-       a = 1.0;
-       b = 0.0;
-       c = 0.0;
-       d = 1.0;
-       e = 0.0;
-       f = 0.0;
-       }
-
-    double a, b, c, d, e, f;
-
-};
-
-
-/*#########################################################################
-## SVGTransform
-#########################################################################*/
-
-/**
- *
- */
-class SVGTransform
-{
-public:
-
-    /**
-     * Transform Types
-     */
-    typedef enum
-        {
-        SVG_TRANSFORM_UNKNOWN   = 0,
-        SVG_TRANSFORM_MATRIX    = 1,
-        SVG_TRANSFORM_TRANSLATE = 2,
-        SVG_TRANSFORM_SCALE     = 3,
-        SVG_TRANSFORM_ROTATE    = 4,
-        SVG_TRANSFORM_SKEWX     = 5,
-        SVG_TRANSFORM_SKEWY     = 6,
-        } TransformType;
-
-    /**
-     *
-     */
-    virtual unsigned short getType()
-        { return type; }
-
-
-    /**
-     *
-     */
-    virtual SVGMatrix getMatrix()
-        {
-        return matrix;
-        }
-
-    /**
-     *
-     */
-    virtual double getAngle()
-        {
-        return angle;
-        }
-
-
-    /**
-     *
-     */
-    virtual void setMatrix(const SVGMatrix &matrixArg)
-        {
-        type = SVG_TRANSFORM_MATRIX;
-        matrix = matrixArg;
-        }
-
-    /**
-     *
-     */
-    virtual void setTranslate (double tx, double ty )
-        {
-        type = SVG_TRANSFORM_TRANSLATE;
-        matrix.setA(1.0);
-        matrix.setB(0.0);
-        matrix.setC(0.0);
-        matrix.setD(1.0);
-        matrix.setE(tx);
-        matrix.setF(ty);
-        }
-
-    /**
-     *
-     */
-    virtual void setScale (double sx, double sy )
-        {
-        type = SVG_TRANSFORM_SCALE;
-        matrix.setA(sx);
-        matrix.setB(0.0);
-        matrix.setC(0.0);
-        matrix.setD(sy);
-        matrix.setE(0.0);
-        matrix.setF(0.0);
-        }
-
-    /**
-     *
-     */
-    virtual void setRotate (double angleArg, double cx, double cy)
-        {
-        angle = angleArg;
-        setTranslate(cx, cy);
-        type = SVG_TRANSFORM_ROTATE;
-        matrix.rotate(angle);
-        }
-
-    /**
-     *
-     */
-    virtual void setSkewX (double angleArg)
-        {
-        angle = angleArg;
-        type = SVG_TRANSFORM_SKEWX;
-        matrix.identity();
-        matrix.skewX(angle);
-        }
-
-    /**
-     *
-     */
-    virtual void setSkewY (double angleArg)
-        {
-        angle = angleArg;
-        type = SVG_TRANSFORM_SKEWY;
-        matrix.identity();
-        matrix.skewY(angle);
-        }
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGTransform()
-        {
-        type = SVG_TRANSFORM_UNKNOWN;
-        angle = 0.0;
-        }
-
-    /**
-     *
-     */
-    SVGTransform(const SVGTransform &other)
-        {
-        type   = other.type;
-        angle  = other.angle;
-        matrix = other.matrix;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGTransform()
-        {}
-
-protected:
-
-    int type;
-    double angle;
-
-    SVGMatrix matrix;
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGTransformList
-#########################################################################*/
-
-/**
- *
- */
-class SVGTransformList
-{
-public:
-
-
-    /**
-     *
-     */
-    virtual unsigned long getNumberOfItems()
-        { return items.size(); }
-
-
-    /**
-     *
-     */
-    virtual void clear( ) throw( DOMException )
-        { items.clear(); }
-
-    /**
-     *
-     */
-    virtual SVGTransform initialize (const SVGTransform &newItem)
-                         throw( DOMException, SVGException )
-        {
-        items.clear();
-        items.push_back(newItem);
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGTransform getItem (unsigned long index )
-                    throw( DOMException )
-        {
-        if (index>=items.size())
-            {
-            SVGTransform transform;
-            return transform;
-            }
-        return items[index];
-        }
-
-    /**
-     *
-     */
-    virtual SVGTransform insertItemBefore (const SVGTransform &newItem,
-                                           unsigned long index )
-                                      throw( DOMException, SVGException )
-        {
-        if (index > items.size())
-            items.push_back(newItem);
-        else
-            {
-            std::vector<SVGTransform>::iterator iter = items.begin() + index;
-            items.insert(iter, newItem);
-            }
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGTransform replaceItem (const SVGTransform &newItem,
-                                       unsigned long index )
-                                throw( DOMException, SVGException )
-        {
-        if (index>=items.size())
-            {
-            SVGTransform transform;
-            return transform;
-            }
-        else
-            {
-            std::vector<SVGTransform>::iterator iter = items.begin() + index;
-            *iter = newItem;
-            }
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGTransform removeItem (unsigned long index )
-                                     throw( DOMException )
-        {
-        if (index>=items.size())
-            {
-            SVGTransform transform;
-            return transform;
-            }
-        std::vector<SVGTransform>::iterator iter = items.begin() + index;
-        SVGTransform oldItem = *iter;
-        items.erase(iter);
-        return oldItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGTransform appendItem (const SVGTransform &newItem)
-                                  throw( DOMException, SVGException )
-        {
-        items.push_back(newItem);
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGTransform createSVGTransformFromMatrix(const SVGMatrix &matrix)
-        {
-        SVGTransform transform;
-        transform.setMatrix(matrix);
-        return transform;
-        }
-
-    /**
-     *
-     */
-    virtual SVGTransform consolidate()
-        {
-        SVGMatrix matrix;
-        for (unsigned int i=0 ; i<items.size() ; i++)
-            matrix = matrix.multiply(items[i].getMatrix());
-        SVGTransform transform;
-        transform.setMatrix(matrix);
-        items.clear();
-        items.push_back(transform);
-        return transform;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGTransformList()
-        {}
-
-    /**
-     *
-     */
-    SVGTransformList(const SVGTransformList &other)
-        {
-        items = other.items;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGTransformList() {}
-
-protected:
-
-    std::vector<SVGTransform> items;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGAnimatedTransformList
-#########################################################################*/
-
-/**
- *
- */
-class SVGAnimatedTransformList
-{
-public:
-
-    /**
-     *
-     */
-    virtual SVGTransformList getBaseVal()
-        { return baseVal; }
-
-    /**
-     *
-     */
-    virtual SVGTransformList getAnimVal()
-        { return animVal; }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGAnimatedTransformList()
-        {}
-
-    /**
-     *
-     */
-    SVGAnimatedTransformList(const SVGAnimatedTransformList &other)
-        {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGAnimatedTransformList() {}
-
-protected:
-
-    SVGTransformList baseVal;
-    SVGTransformList animVal;
-
-};
-
-
-
-
-/*#########################################################################
-## SVGAnimatedBoolean
-#########################################################################*/
-
-/**
- *
- */
-class SVGAnimatedBoolean
-{
-public:
-
-    /**
-     *
-     */
-    virtual bool getBaseVal()
-        {
-        return baseVal;
-        }
-
-    /**
-     *
-     */
-    virtual void setBaseVal(bool val) throw (DOMException)
-        {
-        baseVal = val;
-        }
-
-    /**
-     *
-     */
-    virtual bool getAnimVal()
-        {
-        return animVal;
-        }
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGAnimatedBoolean()
-        {
-        baseVal = animVal = false;
-        }
-
-    /**
-     *
-     */
-    SVGAnimatedBoolean(const SVGAnimatedBoolean &other)
-        {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGAnimatedBoolean() {}
-
-protected:
-
-    bool baseVal, animVal;
-
-};
-
-
-
-
-/*#########################################################################
-## SVGAnimatedString
-#########################################################################*/
-
-/**
- *
- */
-class SVGAnimatedString
-{
-public:
-
-    /**
-     *
-     */
-    virtual DOMString getBaseVal()
-        {
-        return baseVal;
-        }
-
-    /**
-     *
-     */
-    virtual void setBaseVal(const DOMString &val)
-                            throw (DOMException)
-        {
-        baseVal = val;
-        }
-
-    /**
-     *
-     */
-    virtual DOMString getAnimVal()
-        {
-        return animVal;
-        }
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-
-    /**
-     *
-     */
-    SVGAnimatedString()
-        {
-        baseVal = "";
-        animVal = "";
-        }
-
-    /**
-     *
-     */
-    SVGAnimatedString(const SVGAnimatedString &other)
-        {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGAnimatedString() {}
-
-protected:
-
-    DOMString baseVal, animVal;
-
-};
-
-
-
-
-
-/*#########################################################################
-## SVGStringList
-#########################################################################*/
-
-/**
- *
- */
-class SVGStringList
-{
-public:
-
-
-    /**
-     *
-     */
-    virtual unsigned long getNumberOfItems()
-        {
-        return items.size();
-        }
-
-    /**
-     *
-     */
-    virtual void clear () throw( DOMException )
-       {
-       items.clear();
-       }
-
-    /**
-     *
-     */
-    virtual DOMString initialize ( const DOMString& newItem )
-                    throw( DOMException, SVGException )
-        {
-        items.clear();
-        items.push_back(newItem);
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual DOMString getItem ( unsigned long index )
-                    throw( DOMException )
-        {
-        if (index >= items.size())
-            return "";
-        return items[index];
-        }
-
-    /**
-     *
-     */
-    virtual DOMString insertItemBefore ( const DOMString& newItem,
-                                 unsigned long index )
-                               throw( DOMException, SVGException )
-        {
-        if (index>=items.size())
-            {
-            items.push_back(newItem);
-            }
-        else
-            {
-            std::vector<DOMString>::iterator iter = items.begin() + index;
-            items.insert(iter, newItem);
-            }
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual DOMString replaceItem ( const DOMString& newItem,
-                                    unsigned long index )
-                                throw( DOMException, SVGException )
-        {
-        if (index>=items.size())
-            return "";
-        std::vector<DOMString>::iterator iter = items.begin() + index;
-        *iter = newItem;
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual DOMString removeItem ( unsigned long index )
-                    throw( DOMException )
-        {
-        if (index>=items.size())
-            return "";
-        std::vector<DOMString>::iterator iter = items.begin() + index;
-        DOMString oldstr = *iter;
-        items.erase(iter);
-        return oldstr;
-        }
-
-    /**
-     *
-     */
-    virtual DOMString appendItem ( const DOMString& newItem )
-                    throw( DOMException, SVGException )
-        {
-        items.push_back(newItem);
-        return newItem;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGStringList() {}
-
-    /**
-     *
-     */
-   SVGStringList(const SVGStringList &other)
-       {
-       items = other.items;
-       }
-
-    /**
-     *
-     */
-    virtual ~SVGStringList() {}
-
-protected:
-
-    std::vector<DOMString>items;
-
-};
-
-
-
-
-
-/*#########################################################################
-## SVGAnimatedEnumeration
-#########################################################################*/
-
-/**
- *
- */
-class SVGAnimatedEnumeration
-{
-public:
-
-    /**
-     *
-     */
-    virtual unsigned short getBaseVal()
-        {
-        return baseVal;
-        }
-
-    /**
-     *
-     */
-    virtual void setBaseVal(unsigned short val)
-                                     throw (DOMException)
-        {
-        baseVal = val;
-        }
-
-    /**
-     *
-     */
-    virtual unsigned short getAnimVal()
-        {
-        return animVal;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-
-    /**
-     *
-     */
-    SVGAnimatedEnumeration()
-        {
-        baseVal = animVal = 0;
-        }
-
-    /**
-     *
-     */
-    SVGAnimatedEnumeration(const SVGAnimatedEnumeration &other)
-        {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGAnimatedEnumeration() {}
-
-protected:
-
-    int baseVal, animVal;
-
-};
-
-
-
-
-
-/*#########################################################################
-## SVGAnimatedInteger
-#########################################################################*/
-
-/**
- *
- */
-class SVGAnimatedInteger
-{
-public:
-
-
-    /**
-     *
-     */
-    virtual long getBaseVal()
-        {
-        return baseVal;
-        }
-
-    /**
-     *
-     */
-    virtual void setBaseVal(long val) throw (DOMException)
-        {
-        baseVal = val;
-        }
-
-    /**
-     *
-     */
-    virtual long getAnimVal()
-        {
-        return animVal;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-
-    /**
-     *
-     */
-    SVGAnimatedInteger()
-        { baseVal = animVal = 0L;}
-
-
-    /**
-     *
-     */
-    SVGAnimatedInteger(long value)
-        {
-        baseVal = value;
-        animVal = 0L;
-        }
-
-    /**
-     *
-     */
-    SVGAnimatedInteger(long baseValArg, long animValArg)
-        {
-        baseVal = baseValArg;
-        animVal = animValArg;
-        }
-
-
-    /**
-     *
-     */
-    SVGAnimatedInteger(const SVGAnimatedInteger &other)
-        {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGAnimatedInteger() {}
-
-protected:
-
-    long baseVal, animVal;
-
-};
-
-
-
-
-
-/*#########################################################################
-## SVGNumber
-#########################################################################*/
-
-/**
- *
- */
-class SVGNumber
-{
-public:
-
-
-    /**
-     *
-     */
-    virtual double getValue()
-        {
-        return value;
-        }
-
-    /**
-     *
-     */
-    virtual void setValue(double val) throw (DOMException)
-        {
-        value = val;
-        }
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGNumber()
-        {
-        value = 0.0;
-        }
-
-    /**
-     *
-     */
-    SVGNumber(const SVGNumber &other)
-        {
-        value = other.value;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGNumber() {}
-
-protected:
-
-    double value;
-
-};
-
-
-
-
-
-/*#########################################################################
-## SVGAnimatedNumber
-#########################################################################*/
-
-/**
- *
- */
-class SVGAnimatedNumber
-{
-public:
-
-
-
-    /**
-     *
-     */
-    virtual double getBaseVal()
-        {
-        return baseVal;
-        }
-
-    /**
-     *
-     */
-    virtual void setBaseVal(double val) throw (DOMException)
-        {
-        baseVal = val;
-        }
-
-    /**
-     *
-     */
-    virtual double getAnimVal()
-        {
-        return animVal;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGAnimatedNumber()
-        {
-        baseVal = animVal = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGAnimatedNumber(double val)
-        {
-        baseVal = val;
-        animVal = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGAnimatedNumber(double baseValArg, double animValArg)
-        {
-        baseVal = baseValArg;
-        animVal = animValArg;
-        }
-
-    /**
-     *
-     */
-    SVGAnimatedNumber(const SVGAnimatedNumber &other)
-        {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGAnimatedNumber() {}
-
-protected:
-
-    double baseVal, animVal;
-
-};
-
-
-
-
-
-/*#########################################################################
-## SVGNumberList
-#########################################################################*/
-
-/**
- *
- */
-class SVGNumberList
-{
-public:
-
-    /**
-     *
-     */
-    virtual unsigned long getNumberOfItems()
-        {
-        return items.size();
-        }
-
-
-    /**
-     *
-     */
-    virtual void clear() throw( DOMException )
-        {
-        items.clear();
-        }
-
-    /**
-     *
-     */
-    virtual SVGNumber initialize (const SVGNumber &newItem)
-                    throw( DOMException, SVGException )
-        {
-        items.clear();
-        items.push_back(newItem);
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGNumber getItem ( unsigned long index )
-                                  throw( DOMException )
-        {
-        if (index>=items.size())
-            {
-            SVGNumber num;
-            return num;
-            }
-        return items[index];
-        }
-
-    /**
-     *
-     */
-    virtual SVGNumber insertItemBefore ( const SVGNumber &newItem,
-                                         unsigned long index )
-                                         throw( DOMException, SVGException )
-        {
-        if (index>=items.size())
-            {
-            items.push_back(newItem);
-            }
-        else
-            {
-            std::vector<SVGNumber>::iterator iter = items.begin() + index;
-            items.insert(iter, newItem);
-            }
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGNumber replaceItem ( const SVGNumber &newItem,
-                                    unsigned long index )
-                                    throw( DOMException, SVGException )
-        {
-        if (index>=items.size())
-            {
-            SVGNumber num;
-            return num;
-            }
-        std::vector<SVGNumber>::iterator iter = items.begin() + index;
-        *iter = newItem;
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGNumber removeItem ( unsigned long index )
-                                  throw( DOMException )
-        {
-        if (index>=items.size())
-            {
-            SVGNumber num;
-            return num;
-            }
-        std::vector<SVGNumber>::iterator iter = items.begin() + index;
-        SVGNumber oldval = *iter;
-        items.erase(iter);
-        return oldval;
-        }
-
-    /**
-     *
-     */
-    virtual SVGNumber appendItem ( const SVGNumber &newItem )
-                                   throw( DOMException, SVGException )
-        {
-        items.push_back(newItem);
-        return newItem;
-        }
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGNumberList() {}
-
-    /**
-     *
-     */
-    SVGNumberList(const SVGNumberList &other)
-        {
-        items = other.items;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGNumberList() {}
-
-protected:
-
-    std::vector<SVGNumber>items;
-
-};
-
-
-
-
-
-/*#########################################################################
-## SVGAnimatedNumberList
-#########################################################################*/
-
-/**
- *
- */
-class SVGAnimatedNumberList
-{
-public:
-
-
-    /**
-     *
-     */
-    virtual SVGNumberList &getBaseVal()
-        {
-        return baseVal;
-        }
-
-    /**
-     *
-     */
-    virtual SVGNumberList &getAnimVal()
-        {
-        return animVal;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGAnimatedNumberList() {}
-
-    /**
-     *
-     */
-    SVGAnimatedNumberList(const SVGAnimatedNumberList &other)
-        {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGAnimatedNumberList() {}
-
-protected:
-
-    SVGNumberList baseVal;
-    SVGNumberList animVal;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGLength
-#########################################################################*/
-
-/**
- *
- */
-class SVGLength
-{
-public:
-
-    /**
-     * Length Unit Types
-     */
-    typedef enum
-        {
-        SVG_LENGTHTYPE_UNKNOWN    = 0,
-        SVG_LENGTHTYPE_NUMBER     = 1,
-        SVG_LENGTHTYPE_PERCENTAGE = 2,
-        SVG_LENGTHTYPE_EMS        = 3,
-        SVG_LENGTHTYPE_EXS        = 4,
-        SVG_LENGTHTYPE_PX         = 5,
-        SVG_LENGTHTYPE_CM         = 6,
-        SVG_LENGTHTYPE_MM         = 7,
-        SVG_LENGTHTYPE_IN         = 8,
-        SVG_LENGTHTYPE_PT         = 9,
-        SVG_LENGTHTYPE_PC         = 10
-        } LengthUnitType;
-
-
-    /**
-     *
-     */
-    virtual unsigned short getUnitType( )
-        {
-        return unitType;
-        }
-
-    /**
-     *
-     */
-    virtual double getValue( )
-        {
-        return value;
-        }
-
-    /**
-     *
-     */
-    virtual void setValue( double val )  throw (DOMException)
-        {
-        value = val;
-        }
-
-    /**
-     *
-     */
-    virtual double getValueInSpecifiedUnits( )
-        {
-        double result = 0.0;
-        //fill this in
-        return result;
-        }
-
-    /**
-     *
-     */
-    virtual void setValueInSpecifiedUnits( double /*val*/ )
-                                           throw (DOMException)
-        {
-        //fill this in
-        }
-
-    /**
-     *
-     */
-    virtual DOMString getValueAsString( )
-        {
-        DOMString ret;
-        char buf[32];
-        snprintf(buf, 31, "%f", value);
-        ret.append(buf);
-        return ret;
-        }
-
-    /**
-     *
-     */
-    virtual void setValueAsString( const DOMString& /*val*/ )
-                                   throw (DOMException)
-        {
-        }
-
-
-    /**
-     *
-     */
-    virtual void newValueSpecifiedUnits ( unsigned short /*unitType*/, double /*val*/ )
-        {
-        }
-
-    /**
-     *
-     */
-    virtual void convertToSpecifiedUnits ( unsigned short /*unitType*/ )
-        {
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGLength()
-        {
-        unitType = SVG_LENGTHTYPE_UNKNOWN;
-        value    = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGLength(const SVGLength &other)
-        {
-        unitType  = other.unitType;
-        value     = other.value;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGLength() {}
-
-protected:
-
-    int unitType;
-
-    double value;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGAnimatedLength
-#########################################################################*/
-
-/**
- *
- */
-class SVGAnimatedLength
-{
-public:
-
-    /**
-     *
-     */
-    virtual SVGLength &getBaseVal()
-        {
-        return baseVal;
-        }
-
-    /**
-     *
-     */
-    virtual SVGLength &getAnimVal()
-        {
-        return animVal;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGAnimatedLength() {}
-
-    /**
-     *
-     */
-    SVGAnimatedLength(const SVGAnimatedLength &other)
-        {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGAnimatedLength() {}
-
-protected:
-
-    SVGLength baseVal, animVal;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGLengthList
-#########################################################################*/
-
-/**
- *
- */
-class SVGLengthList
-{
-public:
-
-    /**
-     *
-     */
-    virtual unsigned long getNumberOfItems()
-        {
-        return items.size();
-        }
-
-
-    /**
-     *
-     */
-    virtual void clear (  ) throw( DOMException )
-        {
-        items.clear();
-        }
-
-    /**
-     *
-     */
-    virtual SVGLength initialize (const SVGLength &newItem )
-                    throw( DOMException, SVGException )
-        {
-        items.clear();
-        items.push_back(newItem);
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGLength getItem (unsigned long index)
-                    throw( DOMException )
-        {
-        if (index>=items.size())
-            {
-            SVGLength ret;
-            return ret;
-            }
-        return items[index];
-        }
-
-    /**
-     *
-     */
-    virtual SVGLength insertItemBefore (const SVGLength &newItem,
-                                         unsigned long index )
-                                   throw( DOMException, SVGException )
-        {
-        if (index>=items.size())
-            {
-            items.push_back(newItem);
-            }
-        else
-            {
-            std::vector<SVGLength>::iterator iter = items.begin() + index;
-            items.insert(iter, newItem);
-            }
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGLength replaceItem (const SVGLength &newItem,
-                                    unsigned long index )
-                               throw( DOMException, SVGException )
-        {
-        if (index>=items.size())
-            {
-            SVGLength ret;
-            return ret;
-            }
-        std::vector<SVGLength>::iterator iter = items.begin() + index;
-        *iter = newItem;
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGLength removeItem (unsigned long index )
-                    throw( DOMException )
-        {
-        if (index>=items.size())
-            {
-            SVGLength ret;
-            return ret;
-            }
-        std::vector<SVGLength>::iterator iter = items.begin() + index;
-        SVGLength oldval = *iter;
-        items.erase(iter);
-        return oldval;
-        }
-
-    /**
-     *
-     */
-    virtual SVGLength appendItem (const SVGLength &newItem )
-                    throw( DOMException, SVGException )
-        {
-        items.push_back(newItem);
-        return newItem;
-        }
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGLengthList() {}
-
-    /**
-     *
-     */
-    SVGLengthList(const SVGLengthList &other)
-        {
-        items = other.items;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGLengthList() {}
-
-protected:
-
-    std::vector<SVGLength>items;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGAnimatedLengthList
-#########################################################################*/
-
-/**
- *
- */
-class SVGAnimatedLengthList
-{
-public:
-
-    /**
-     *
-     */
-    virtual SVGLengthList &getBaseVal()
-        {
-        return baseVal;
-        }
-
-    /**
-     *
-     */
-    virtual SVGLengthList &getAnimVal()
-        {
-        return animVal;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGAnimatedLengthList() {}
-
-    /**
-     *
-     */
-   SVGAnimatedLengthList(const SVGAnimatedLengthList &other)
-        {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGAnimatedLengthList() {}
-
-protected:
-
-    SVGLengthList baseVal, animVal;
-
-};
-
 
 
 
@@ -2190,86 +132,50 @@ public:
     /**
      *
      */
-    virtual unsigned short getUnitType()
-        {
-        return unitType;
-        }
+    unsigned short getUnitType();
 
     /**
      *
      */
-    virtual double getValue()
-        {
-        return value;
-        }
+    double getValue();
 
     /**
      *
      */
-    virtual void setValue(double val) throw (DOMException)
-        {
-        value = val;
-        }
+    void setValue(double val) throw(DOMException);
 
     /**
      *
      */
-    virtual double getValueInSpecifiedUnits()
-        {
-        double result = 0.0;
-        //convert here
-        return result;
-        }
+    double getValueInSpecifiedUnits();
 
     /**
      *
      */
-    virtual void setValueInSpecifiedUnits(double /*val*/)
-                                     throw (DOMException)
-        {
-        //do conversion
-        }
+    void setValueInSpecifiedUnits(double /*val*/)
+                                     throw(DOMException);
 
     /**
      *
      */
-    virtual DOMString getValueAsString()
-        {
-        DOMString result;
-        char buf[32];
-        snprintf(buf, 31, "%f", value);
-        result.append(buf);
-        return result;
-        }
+    DOMString getValueAsString();
 
     /**
      *
      */
-    virtual void setValueAsString(const DOMString &/*val*/)
-                                  throw (DOMException)
-        {
-        //convert here
-        }
-
+    void setValueAsString(const DOMString &/*val*/)
+                                  throw(DOMException);
 
     /**
      *
      */
-    virtual void newValueSpecifiedUnits (unsigned short /*unitType*/,
-                                         double /*valueInSpecifiedUnits*/ )
-        {
-        //convert here
-        }
+    void newValueSpecifiedUnits(unsigned short /*unitType*/,
+                                double /*valueInSpecifiedUnits*/);
 
     /**
      *
      */
-    virtual void convertToSpecifiedUnits (unsigned short /*unitType*/ )
-        {
-        //convert here
-        }
-
-
+    void convertToSpecifiedUnits(unsigned short /*unitType*/);
 
     //##################
     //# Non-API methods
@@ -2278,25 +184,17 @@ public:
     /**
      *
      */
-    SVGAngle()
-        {
-        unitType = SVG_ANGLETYPE_UNKNOWN;
-        value    = 0.0;
-        }
+    SVGAngle();
 
     /**
      *
      */
-    SVGAngle(const SVGAngle &other)
-        {
-        unitType = other.unitType;
-        value    = other.value;
-        }
+    SVGAngle(const SVGAngle &other);
 
     /**
      *
      */
-    virtual ~SVGAngle() {}
+    ~SVGAngle();
 
 protected:
 
@@ -2309,144 +207,6 @@ protected:
 
 
 
-
-
-/*#########################################################################
-## SVGAnimatedAngle
-#########################################################################*/
-
-/**
- *
- */
-class SVGAnimatedAngle
-{
-public:
-
-    /**
-     *
-     */
-    virtual SVGAngle getBaseVal()
-        {
-        return baseVal;
-        }
-
-    /**
-     *
-     */
-    virtual SVGAngle getAnimVal()
-        {
-        return animVal;
-        }
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGAnimatedAngle() {}
-
-    /**
-     *
-     */
-    SVGAnimatedAngle(const SVGAngle &angle)
-        { baseVal = angle; }
-
-    /**
-     *
-     */
-    SVGAnimatedAngle(const SVGAnimatedAngle &other)
-        {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGAnimatedAngle() {}
-
-protected:
-
-    SVGAngle baseVal, animVal;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGICCColor
-#########################################################################*/
-
-/**
- *
- */
-class SVGICCColor
-{
-public:
-
-    /**
-     *
-     */
-    virtual DOMString getColorProfile()
-        {
-        return colorProfile;
-        }
-
-    /**
-     *
-     */
-    virtual void setColorProfile(const DOMString &val) throw (DOMException)
-        {
-        colorProfile = val;
-        }
-
-    /**
-     *
-     */
-    virtual SVGNumberList &getColors()
-        {
-        return colors;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGICCColor() {}
-
-    /**
-     *
-     */
-    SVGICCColor(const SVGICCColor &other)
-        {
-        colorProfile = other.colorProfile;
-        colors       = other.colors;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGICCColor() {}
-
-protected:
-
-    DOMString colorProfile;
-
-    SVGNumberList colors;
-
-};
-
-
 /*#########################################################################
 ## SVGColor
 #########################################################################*/
@@ -2454,7 +214,7 @@ protected:
 /**
  *
  */
-class SVGColor : virtual public css::CSSValue
+class SVGColor : public css::CSSValue
 {
 public:
 
@@ -2474,58 +234,39 @@ public:
     /**
      *
      */
-    virtual unsigned short getColorType()
-        {
-        return colorType;
-        }
+    unsigned short getColorType();
 
     /**
      *
      */
-    virtual css::RGBColor getRgbColor()
-        {
-        css::RGBColor col;
-        return col;
-        }
+    css::RGBColor getRgbColor();
 
     /**
      *
      */
-    virtual SVGICCColor getIccColor()
-        {
-        SVGICCColor col;
-        return col;
-        }
+    SVGICCColor getIccColor();
 
 
     /**
      *
      */
-    virtual void setRGBColor (const DOMString& /*rgbColor*/ )
-                              throw( SVGException )
-        {
-        }
+    void setRGBColor(const DOMString& /*rgbColor*/)
+                              throw(SVGException);
 
     /**
      *
      */
-    virtual void setRGBColorICCColor (const DOMString& /*rgbColor*/,
-                                      const DOMString& /*iccColor*/ )
-                                      throw( SVGException )
-        {
-        }
+    void setRGBColorICCColor(const DOMString& /*rgbColor*/,
+                                      const DOMString& /*iccColor*/)
+                                      throw(SVGException);
 
     /**
      *
      */
-    virtual void setColor (unsigned short /*colorType*/,
+    void setColor(unsigned short /*colorType*/,
                            const DOMString& /*rgbColor*/,
-                           const DOMString& /*iccColor*/ )
-                           throw( SVGException )
-        {
-        }
-
-
+                           const DOMString& /*iccColor*/)
+                           throw(SVGException);
 
     //##################
     //# Non-API methods
@@ -2534,23 +275,17 @@ public:
     /**
      *
      */
-    SVGColor()
-        {
-        colorType = SVG_COLORTYPE_UNKNOWN;
-        }
+    SVGColor();
 
     /**
      *
      */
-    SVGColor(const SVGColor &other) : css::CSSValue(other)
-        {
-        colorType = other.colorType;
-        }
+    SVGColor(const SVGColor &other) : css::CSSValue(other);
 
     /**
      *
      */
-    virtual ~SVGColor() {}
+    ~SVGColor();
 
 protected:
 
@@ -2561,153 +296,31 @@ protected:
 
 
 
-
-
-
-
-
-
 /*#########################################################################
-## SVGRect
+## SVGICCColor
 #########################################################################*/
 
 /**
  *
  */
-class SVGRect
+class SVGICCColor
 {
 public:
 
     /**
      *
      */
-    virtual double getX()
-        {
-        return x;
-        }
+    DOMString getColorProfile();
 
     /**
      *
      */
-    virtual void setX(double val) throw (DOMException)
-        {
-        x = val;
-        }
+    void setColorProfile(const DOMString &val) throw(DOMException);
 
     /**
      *
      */
-    virtual double getY()
-        {
-        return y;
-        }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        {
-        y = val;
-        }
-
-    /**
-     *
-     */
-    virtual double getWidth()
-        {
-        return width;
-        }
-
-    /**
-     *
-     */
-    virtual void setWidth(double val) throw (DOMException)
-        {
-        width = val;
-        }
-
-    /**
-     *
-     */
-    virtual double getHeight()
-        {
-        return height;
-        }
-
-    /**
-     *
-     */
-    virtual void setHeight(double val) throw (DOMException)
-        {
-        height = val;
-        }
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGRect()
-        {
-        x = y = width = height = 0.0;
-        }
-
-    /**
-     *
-     */
-    SVGRect(const SVGRect &other)
-        {
-        x = other.x;
-        y = other.y;
-        width = other.width;
-        height = other.height;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGRect() {}
-
-protected:
-
-    double x, y, width, height;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGAnimatedRect
-#########################################################################*/
-
-/**
- *
- */
-class SVGAnimatedRect
-{
-public:
-
-    /**
-     *
-     */
-    virtual SVGRect &getBaseVal()
-        {
-        return baseVal;
-        }
-
-    /**
-     *
-     */
-    virtual SVGRect &getAnimVal()
-        {
-        return animVal;
-        }
+    SVGNumberList &getColors();
 
 
 
@@ -2718,31 +331,414 @@ public:
     /**
      *
      */
-    SVGAnimatedRect()
-        {
-        }
+    SVGICCColor();
 
     /**
      *
      */
-    SVGAnimatedRect(const SVGAnimatedRect &other)
-        {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
-        }
+    SVGICCColor(const SVGICCColor &other);
 
     /**
      *
      */
-    virtual ~SVGAnimatedRect() {}
+    ~SVGICCColor();
 
 protected:
 
-    SVGRect baseVal, animVal;
+    DOMString colorProfile;
+
+    SVGNumberList colors;
 
 };
 
 
+/*#########################################################################
+## SVGLength
+#########################################################################*/
+
+/**
+ *
+ */
+class SVGLength
+{
+public:
+
+    /**
+     * Length Unit Types
+     */
+    typedef enum
+        {
+        SVG_LENGTHTYPE_UNKNOWN    = 0,
+        SVG_LENGTHTYPE_NUMBER     = 1,
+        SVG_LENGTHTYPE_PERCENTAGE = 2,
+        SVG_LENGTHTYPE_EMS        = 3,
+        SVG_LENGTHTYPE_EXS        = 4,
+        SVG_LENGTHTYPE_PX         = 5,
+        SVG_LENGTHTYPE_CM         = 6,
+        SVG_LENGTHTYPE_MM         = 7,
+        SVG_LENGTHTYPE_IN         = 8,
+        SVG_LENGTHTYPE_PT         = 9,
+        SVG_LENGTHTYPE_PC         = 10
+        } LengthUnitType;
+
+    /**
+     *
+     */
+    unsigned short getUnitType();
+
+    /**
+     *
+     */
+    double getValue();
+
+    /**
+     *
+     */
+    void setValue(double val)  throw(DOMException);
+
+    /**
+     *
+     */
+    double getValueInSpecifiedUnits();
+
+    /**
+     *
+     */
+    void setValueInSpecifiedUnits(double /*val*/) throw(DOMException);
+
+    /**
+     *
+     */
+    DOMString getValueAsString();
+
+    /**
+     *
+     */
+    void setValueAsString(const DOMString& /*val*/) throw(DOMException);
+
+    /**
+     *
+     */
+    void newValueSpecifiedUnits(unsigned short /*unitType*/, double /*val*/);
+
+    /**
+     *
+     */
+    void convertToSpecifiedUnits(unsigned short /*unitType*/);
+
+    //##################
+    //# Non-API methods
+    //##################
+
+    /**
+     *
+     */
+    SVGLength();
+
+    /**
+     *
+     */
+    SVGLength(const SVGLength &other);
+
+    /**
+     *
+     */
+    ~SVGLength();
+
+protected:
+
+    int unitType;
+
+    double value;
+
+};
+
+/*#########################################################################
+## SVGMatrix
+#########################################################################*/
+
+/**
+ *  In SVG, a Matrix is defined like this:
+ *
+ * | a  c  e |
+ * | b  d  f |
+ * | 0  0  1 |
+ *
+ */
+class SVGMatrix
+{
+public:
+
+
+    /**
+     *
+     */
+    double getA();
+
+    /**
+     *
+     */
+    void setA(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    double getB();
+
+    /**
+     *
+     */
+    void setB(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    double getC();
+
+    /**
+     *
+     */
+    void setC(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    double getD();
+
+    /**
+     *
+     */
+    void setD(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    double getE();
+
+    /**
+     *
+     */
+    void setE(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    double getF();
+
+    /**
+     *
+     */
+    void setF(double val) throw(DOMException);
+
+
+    /**
+     * Return the result of postmultiplying this matrix with another.
+     */
+    SVGMatrix multiply(const SVGMatrix &other);
+
+    /**
+     *  Calculate the inverse of this matrix
+     *
+     *
+     *   The determinant of a 3x3 matrix E
+     *     (let's use our own notation for a bit)
+     *
+     *       A  B  C
+     *       D  E  F
+     *       G  H  I
+     *   is
+     *       AEI - AFH - BDI + BFG + CDH - CEG
+     *
+     *   Since in our affine transforms, G and H==0 and I==1,
+     *   this reduces to:
+     *       AE - BD
+     *   In SVG's naming scheme, that is:  a * d - c * b .  SIMPLE!
+     *
+     *   In a similar method of attack, SVG's adjunct matrix is:
+     *
+     *      d  -c   cf-ed
+     *     -b   a   eb-af
+     *      0   0   ad-cb
+     *
+     *   To get the inverse matrix, we divide the adjunct matrix by
+     *   the determinant.  Notice that(ad-cb)/(ad-cb)==1.  Very cool.
+     *   So what we end up with is this:
+     *
+     *      a =  d/(ad-cb)  c = -c/(ad-cb)   e =(cf-ed)/(ad-cb)
+     *      b = -b/(ad-cb)  d =  a/(ad-cb)   f =(eb-af)/(ad-cb)
+     *
+     *  (Since this would be in all SVG-DOM implementations,
+     *    somebody needed to document this!  ^^)
+     *
+     */
+    SVGMatrix inverse() throw(SVGException);
+
+    /**
+     * Equivalent to multiplying by:
+     *  | 1  0  x |
+     *  | 0  1  y |
+     *  | 0  0  1 |
+     *
+     */
+    SVGMatrix translate(double x, double y);
+
+    /**
+     * Equivalent to multiplying by:
+     *  | scale  0      0 |
+     *  | 0      scale  0 |
+     *  | 0      0      1 |
+     *
+     */
+    SVGMatrix scale(double scale);
+
+    /**
+     * Equivalent to multiplying by:
+     *  | scaleX  0       0 |
+     *  | 0       scaleY  0 |
+     *  | 0       0       1 |
+     *
+     */
+    SVGMatrix scaleNonUniform(double scaleX, double scaleY);
+
+    /**
+     * Equivalent to multiplying by:
+     *  | cos(a) -sin(a)   0 |
+     *  | sin(a)  cos(a)   0 |
+     *  | 0       0        1 |
+     *
+     */
+    SVGMatrix rotate(double angle);
+
+    /**
+     * Equivalent to multiplying by:
+     *  | cos(a) -sin(a)   0 |
+     *  | sin(a)  cos(a)   0 |
+     *  | 0       0        1 |
+     *  In this case, angle 'a' is computed as the artangent
+     *  of the slope y/x .  It is negative if the slope is negative.
+     */
+    SVGMatrix rotateFromVector(double x, double y) throw(SVGException);
+
+    /**
+     * Equivalent to multiplying by:
+     *  | -1   0   0 |
+     *  | 0    1   0 |
+     *  | 0    0   1 |
+     *
+     */
+    SVGMatrix flipX();
+
+    /**
+     * Equivalent to multiplying by:
+     *  | 1   0   0 |
+     *  | 0  -1   0 |
+     *  | 0   0   1 |
+     *
+     */
+    SVGMatrix flipY();
+
+    /**
+     *  | 1   tan(a)  0 |
+     *  | 0   1       0 |
+     *  | 0   0       1 |
+     *
+     */
+    SVGMatrix skewX(double angle);
+
+    /**
+     * Equivalent to multiplying by:
+     *  | 1       0   0 |
+     *  | tan(a)  1   0 |
+     *  | 0       0   1 |
+     *
+     */
+    SVGMatrix skewY(double angle);
+
+
+    //##################
+    //# Non-API methods
+    //##################
+
+    /**
+     *
+     */
+    SVGMatrix();
+
+    /**
+     *
+     */
+    SVGMatrix(double aArg, double bArg, double cArg,
+              double dArg, double eArg, double fArg);
+
+    /**
+     * Copy constructor
+     */
+    SVGMatrix(const SVGMatrix &other);
+
+    /**
+     *
+     */
+    ~SVGMatrix() {}
+
+protected:
+
+friend class SVGTransform;
+
+    /*
+     * Set to the identify matrix
+     */
+    void identity();
+
+    double a, b, c, d, e, f;
+
+};
+
+
+/*#########################################################################
+## SVGNumber
+#########################################################################*/
+
+/**
+ *
+ */
+class SVGNumber
+{
+public:
+
+    /**
+     *
+     */
+    double getValue();
+
+    /**
+     *
+     */
+    void setValue(double val) throw(DOMException);
+
+    //##################
+    //# Non-API methods
+    //##################
+
+    /**
+     *
+     */
+    SVGNumber();
+
+    /**
+     *
+     */
+    SVGNumber(const SVGNumber &other);
+
+    /**
+     *
+     */
+    ~SVGNumber();
+
+protected:
+
+    double value;
+
+};
 
 /*#########################################################################
 ## SVGPoint
@@ -2755,42 +751,30 @@ class SVGPoint
 {
 public:
 
-
+    /**
+     *
+     */
+    double getX();
 
     /**
      *
      */
-    virtual double getX()
-        { return x; }
+    void setX(double val) throw(DOMException);
 
     /**
      *
      */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
+    double getY();
 
     /**
      *
      */
-    virtual double getY()
-        { return y; }
+    void setY(double val) throw(DOMException);
 
     /**
      *
      */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-    /**
-     *
-     */
-    virtual SVGPoint matrixTransform(const SVGMatrix &/*matrix*/)
-        {
-        SVGPoint point;
-        return point;
-        }
-
-
+    SVGPoint matrixTransform(const SVGMatrix &/*matrix*/);
 
     //##################
     //# Non-API methods
@@ -2799,22 +783,17 @@ public:
     /**
      *
      */
-    SVGPoint()
-        { x = y = 0; }
+    SVGPoint();
 
     /**
      *
      */
-    SVGPoint(const SVGPoint &other)
-        {
-        x = other.x;
-        y = other.y;
-        }
+    SVGPoint(const SVGPoint &other);
 
     /**
      *
      */
-    virtual ~SVGPoint() {}
+    ~SVGPoint();
 
 protected:
 
@@ -2822,174 +801,167 @@ protected:
 };
 
 
-
-
-
-
 /*#########################################################################
-## SVGPointList
+## SVGPathSeg
 #########################################################################*/
 
 /**
  *
  */
-class SVGPointList
+class SVGPathSeg
 {
 public:
 
     /**
-     *
-     */
-    virtual unsigned long getNumberOfItems()
-        { return items.size(); }
-
-    /**
-     *
-     */
-    virtual void clear() throw( DOMException )
-        { items.clear(); }
-
-    /**
-     *
-     */
-    virtual SVGPoint initialize(const SVGPoint &newItem)
-                             throw( DOMException, SVGException )
-        {
-        items.clear();
-        items.push_back(newItem);
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGPoint getItem(unsigned long index )
-                             throw( DOMException )
-        {
-        if (index >= items.size())
-            {
-            SVGPoint point;
-            return point;
-            }
-        return items[index];
-        }
-
-    /**
-     *
-     */
-    virtual SVGPoint insertItemBefore(const SVGPoint &newItem,
-                                      unsigned long index )
-                                      throw( DOMException, SVGException )
-        {
-        if (index >= items.size())
-            items.push_back(newItem);
-        else
-            {
-            std::vector<SVGPoint>::iterator iter = items.begin() + index;
-            items.insert(iter, newItem);
-            }
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGPoint replaceItem(const SVGPoint &newItem,
-                                  unsigned long index )
-                                  throw( DOMException, SVGException )
-        {
-        if (index >= items.size())
-            {
-            SVGPoint point;
-            return point;
-            }
-        std::vector<SVGPoint>::iterator iter = items.begin() + index;
-        *iter = newItem;
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGPoint removeItem(unsigned long index )
-                                  throw( DOMException )
-        {
-        if (index >= items.size())
-            {
-            SVGPoint point;
-            return point;
-            }
-        std::vector<SVGPoint>::iterator iter = items.begin() + index;
-        SVGPoint oldItem = *iter;
-        items.erase(iter);
-        return oldItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGPoint appendItem(const SVGPoint &newItem)
-                              throw( DOMException, SVGException )
-        {
-        items.push_back(newItem);
-        return newItem;
-        }
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPointList() {}
-
-
-    /**
-     *
-     */
-    SVGPointList(const SVGPointList &other)
-        {
-        items = other.items;
-        }
-
-
-    /**
-     *
-     */
-    virtual ~SVGPointList() {}
-
-protected:
-
-    std::vector<SVGPoint> items;
-
-};
-
-
-
-
-/*#########################################################################
-## SVGUnitTypes
-#########################################################################*/
-
-/**
- *
- */
-class SVGUnitTypes
-{
-public:
-
-    /**
-     * Unit Types
+     *  Path Segment Types
      */
     typedef enum
         {
-        SVG_UNIT_TYPE_UNKNOWN           = 0,
-        SVG_UNIT_TYPE_USERSPACEONUSE    = 1,
-        SVG_UNIT_TYPE_OBJECTBOUNDINGBOX = 2
-        } UnitType;
+        PATHSEG_UNKNOWN                      = 0,
+        PATHSEG_CLOSEPATH                    = 1,
+        PATHSEG_MOVETO_ABS                   = 2,
+        PATHSEG_MOVETO_REL                   = 3,
+        PATHSEG_LINETO_ABS                   = 4,
+        PATHSEG_LINETO_REL                   = 5,
+        PATHSEG_CURVETO_CUBIC_ABS            = 6,
+        PATHSEG_CURVETO_CUBIC_REL            = 7,
+        PATHSEG_CURVETO_QUADRATIC_ABS        = 8,
+        PATHSEG_CURVETO_QUADRATIC_REL        = 9,
+        PATHSEG_ARC_ABS                      = 10,
+        PATHSEG_ARC_REL                      = 11,
+        PATHSEG_LINETO_HORIZONTAL_ABS        = 12,
+        PATHSEG_LINETO_HORIZONTAL_REL        = 13,
+        PATHSEG_LINETO_VERTICAL_ABS          = 14,
+        PATHSEG_LINETO_VERTICAL_REL          = 15,
+        PATHSEG_CURVETO_CUBIC_SMOOTH_ABS     = 16,
+        PATHSEG_CURVETO_CUBIC_SMOOTH_REL     = 17,
+        PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS = 18,
+        PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL = 19
+        } PathSegmentType;
 
+    /**
+     *
+     */
+    unsigned short getPathSegType();
+
+    /**
+     *
+     */
+    DOMString getPathSegTypeAsLetter();
+
+    /**
+     * From the various subclasses
+     */
+
+    /**
+     *
+     */
+    double getX();
+
+    /**
+     *
+     */
+    void setX(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    double getX1();
+
+    /**
+     *
+     */
+    void setX1(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    double getX2();
+
+    /**
+     *
+     */
+    void setX2(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    double getY()
+
+    /**
+     *
+     */
+    void setY(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    double getY1()
+
+    /**
+     *
+     */
+    void setY1(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    double getY2();
+
+    /**
+     *
+     */
+    void setY2(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    double getR1();
+
+    /**
+     *
+     */
+    void setR1(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    double getR2();
+
+    /**
+     *
+     */
+    void setR2(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    double getAngle();
+
+    /**
+     *
+     */
+    void setAngle(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    bool getLargeArcFlag();
+
+    /**
+     *
+     */
+    void setLargeArcFlag(bool val) throw(DOMException);
+
+    /**
+     *
+     */
+    bool getSweepFlag();
+
+    /**
+     *
+     */
+    void setSweepFlag(bool val) throw(DOMException);
 
 
     //##################
@@ -2999,58 +971,97 @@ public:
     /**
      *
      */
-    SVGUnitTypes() {}
+    SVGPathSeg();
 
     /**
      *
      */
-    virtual ~SVGUnitTypes() {}
+    SVGPathSeg(int typeArg);
 
+    /**
+     *
+     */
+    SVGPathSeg(const SVGPathSeg &other);
+
+    /**
+     *
+     */
+    SVGPathSeg &operator=(const SVGPathSeg &other);
+
+    /**
+     *
+     */
+    ~SVGPathSeg();
+
+protected:
+
+    void init();
+    
+    void assign(const SVGPathSeg &other);
+
+    int type;
+    double x, y, x1, y1, x2, y2;
+    double r1, r2;
+    double angle;
+    bool largeArcFlag;
+    bool sweepFlag;
 };
-
-
 
 
 
 
 /*#########################################################################
-## SVGStylable
+## SVGPaint
 #########################################################################*/
 
 /**
  *
  */
-class SVGStylable
+class SVGPaint : public SVGColor
 {
 public:
 
     /**
-     *
+     * Paint Types
      */
-    virtual SVGAnimatedString getClassName()
+    typedef enum
         {
-        return className;
-        }
+        SVG_PAINTTYPE_UNKNOWN               = 0,
+        SVG_PAINTTYPE_RGBCOLOR              = 1,
+        SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR     = 2,
+        SVG_PAINTTYPE_NONE                  = 101,
+        SVG_PAINTTYPE_CURRENTCOLOR          = 102,
+        SVG_PAINTTYPE_URI_NONE              = 103,
+        SVG_PAINTTYPE_URI_CURRENTCOLOR      = 104,
+        SVG_PAINTTYPE_URI_RGBCOLOR          = 105,
+        SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR = 106,
+        SVG_PAINTTYPE_URI                   = 107
+        } PaintType;
+
 
     /**
      *
      */
-    virtual css::CSSStyleDeclaration getStyle()
-        {
-        return style;
-        }
-
+    unsigned short getPaintType();
 
     /**
      *
      */
-    virtual css::CSSValue getPresentationAttribute (const DOMString& /*name*/ )
-        {
-        css::CSSValue val;
-        //perform a lookup
-        return val;
-        }
+    DOMString getUri();
 
+    /**
+     *
+     */
+    void setUri(const DOMString& uriArg);
+
+    /**
+     *
+     */
+    void setPaint(unsigned short paintTypeArg,
+                           const DOMString& uriArg,
+                           const DOMString& /*rgbColor*/,
+                           const DOMString& /*iccColor*/)
+                           throw(SVGException);
 
     //##################
     //# Non-API methods
@@ -3059,403 +1070,24 @@ public:
     /**
      *
      */
-    SVGStylable() {}
+    SVGPaint();
 
     /**
      *
      */
-    SVGStylable(const SVGStylable &other)
-        {
-        className = other.className;
-        style     = other.style;
-        }
+    SVGPaint(const SVGPaint &other);
 
     /**
      *
      */
-    virtual ~SVGStylable() {}
+    ~SVGPaint();
 
 protected:
 
-    SVGAnimatedString className;
-    css::CSSStyleDeclaration style;
+    unsigned int paintType;
+    DOMString uri;
 
 };
-
-
-/*#########################################################################
-## SVGLocatable
-#########################################################################*/
-
-/**
- *
- */
-class SVGLocatable
-{
-public:
-
-    /**
-     *
-     */
-    virtual SVGElementPtr getNearestViewportElement()
-        {
-        SVGElementPtr result;
-        return result;
-        }
-
-    /**
-     *
-     */
-    virtual SVGElementPtr getFarthestViewportElement()
-        {
-        SVGElementPtr result;
-        return result;
-        }
-
-    /**
-     *
-     */
-    virtual SVGRect getBBox (  )
-        {
-        return bbox;
-        }
-
-    /**
-     *
-     */
-    virtual SVGMatrix getCTM (  )
-        {
-        return ctm;
-        }
-
-    /**
-     *
-     */
-    virtual SVGMatrix getScreenCTM (  )
-        {
-        return screenCtm;
-        }
-
-    /**
-     *
-     */
-    virtual SVGMatrix getTransformToElement (const SVGElement &/*element*/)
-                    throw( SVGException )
-        {
-        SVGMatrix result;
-        //do calculations
-        return result;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGLocatable() {}
-
-    /**
-     *
-     */
-    SVGLocatable(const SVGLocatable &/*other*/)
-        {
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGLocatable() {}
-
-protected:
-
-    SVGRect bbox;
-    SVGMatrix ctm;
-    SVGMatrix screenCtm;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGTransformable
-#########################################################################*/
-
-/**
- *
- */
-class SVGTransformable : public SVGLocatable
-{
-public:
-
-
-    /**
-     *
-     */
-    virtual SVGAnimatedTransformList &getTransform()
-        {
-        return transforms;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGTransformable() {}
-
-    /**
-     *
-     */
-    SVGTransformable(const SVGTransformable &other) : SVGLocatable(other)
-        {
-        transforms = other.transforms;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGTransformable() {}
-
-protected:
-
-    SVGAnimatedTransformList transforms;
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGTests
-#########################################################################*/
-
-/**
- *
- */
-class SVGTests
-{
-public:
-
-
-    /**
-     *
-     */
-    virtual SVGStringList &getRequiredFeatures()
-        {
-        return requiredFeatures;
-        }
-
-    /**
-     *
-     */
-    virtual SVGStringList &getRequiredExtensions()
-        {
-        return requiredExtensions;
-        }
-
-    /**
-     *
-     */
-    virtual SVGStringList &getSystemLanguage()
-        {
-        return systemLanguage;
-        }
-
-
-    /**
-     *
-     */
-    virtual bool hasExtension (const DOMString& /*extension*/ )
-        {
-        return false;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGTests() {}
-
-    /**
-     *
-     */
-    SVGTests(const SVGTests &other)
-        {
-        requiredFeatures   = other.requiredFeatures;
-        requiredExtensions = other.requiredExtensions;
-        systemLanguage     = other.systemLanguage;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGTests() {}
-
-protected:
-
-    SVGStringList requiredFeatures;
-    SVGStringList requiredExtensions;
-    SVGStringList systemLanguage;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGLangSpace
-#########################################################################*/
-
-/**
- *
- */
-class SVGLangSpace
-{
-public:
-
-
-    /**
-     *
-     */
-    virtual DOMString getXmllang()
-        {
-        return xmlLang;
-        }
-
-    /**
-     *
-     */
-    virtual void setXmllang(const DOMString &val)
-                                     throw (DOMException)
-        {
-        xmlLang = val;
-        }
-
-    /**
-     *
-     */
-    virtual DOMString getXmlspace()
-        {
-        return xmlSpace;
-        }
-
-    /**
-     *
-     */
-    virtual void setXmlspace(const DOMString &val)
-                                     throw (DOMException)
-        {
-        xmlSpace = val;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGLangSpace() {}
-
-    /**
-     *
-     */
-    SVGLangSpace(const SVGLangSpace &other)
-        {
-        xmlLang  = other.xmlLang;
-        xmlSpace = other.xmlSpace;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGLangSpace() {}
-
-protected:
-
-    DOMString xmlLang;
-    DOMString xmlSpace;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGExternalResourcesRequired
-#########################################################################*/
-
-/**
- *
- */
-class SVGExternalResourcesRequired
-{
-public:
-
-
-    /**
-     *
-     */
-    virtual SVGAnimatedBoolean getExternalResourcesRequired()
-        { return required; }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGExternalResourcesRequired()
-        {  }
-
-
-    /**
-     *
-     */
-    SVGExternalResourcesRequired(const SVGExternalResourcesRequired &other)
-        {
-        required = other.required;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGExternalResourcesRequired() {}
-
-protected:
-
-    SVGAnimatedBoolean required;
-
-};
-
-
-
 
 
 
@@ -3504,28 +1136,22 @@ public:
     /**
      *
      */
-    virtual unsigned short getAlign()
-        { return align; }
+    unsigned short getAlign();
 
     /**
      *
      */
-    virtual void setAlign(unsigned short val) throw (DOMException)
-        { align = val; }
+    void setAlign(unsigned short val) throw(DOMException);
 
     /**
      *
      */
-    virtual unsigned short getMeetOrSlice()
-        { return meetOrSlice; }
+    unsigned short getMeetOrSlice();
 
     /**
      *
      */
-    virtual void setMeetOrSlice(unsigned short val) throw (DOMException)
-        { meetOrSlice = val; }
-
-
+    void setMeetOrSlice(unsigned short val) throw(DOMException);
 
     //##################
     //# Non-API methods
@@ -3534,25 +1160,17 @@ public:
     /**
      *
      */
-    SVGPreserveAspectRatio()
-        {
-        align       = SVG_PRESERVEASPECTRATIO_UNKNOWN;
-        meetOrSlice = SVG_MEETORSLICE_UNKNOWN;
-        }
+    SVGPreserveAspectRatio();
 
     /**
      *
      */
-    SVGPreserveAspectRatio(const SVGPreserveAspectRatio &other)
-        {
-        align       = other.align;
-        meetOrSlice = other.meetOrSlice;
-        }
+    SVGPreserveAspectRatio(const SVGPreserveAspectRatio &other);
 
     /**
      *
      */
-    virtual ~SVGPreserveAspectRatio() {}
+    ~SVGPreserveAspectRatio();
 
 protected:
 
@@ -3563,32 +1181,205 @@ protected:
 
 
 
-
-
-
 /*#########################################################################
-## SVGAnimatedPreserveAspectRatio
+## SVGRect
 #########################################################################*/
 
 /**
  *
  */
-class SVGAnimatedPreserveAspectRatio
+class SVGRect
 {
 public:
 
+    /**
+     *
+     */
+    double getX();
 
     /**
      *
      */
-    virtual SVGPreserveAspectRatio getBaseVal()
-        { return baseVal; }
+    void setX(double val) throw(DOMException);
 
     /**
      *
      */
-    virtual SVGPreserveAspectRatio getAnimVal()
-        { return animVal; }
+    double getY();
+
+    /**
+     *
+     */
+    void setY(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    double getWidth();
+
+    /**
+     *
+     */
+    void setWidth(double val) throw(DOMException);
+
+    /**
+     *
+     */
+    double getHeight();
+
+    /**
+     *
+     */
+    void setHeight(double val) throw(DOMException);
+
+
+    //##################
+    //# Non-API methods
+    //##################
+
+    /**
+     *
+     */
+    SVGRect();
+
+    /**
+     *
+     */
+    SVGRect(const SVGRect &other);
+
+    /**
+     *
+     */
+    ~SVGRect();
+
+protected:
+
+    double x, y, width, height;
+
+};
+
+/*#########################################################################
+## SVGTransform
+#########################################################################*/
+
+/**
+ *
+ */
+class SVGTransform
+{
+public:
+
+    /**
+     * Transform Types
+     */
+    typedef enum
+        {
+        SVG_TRANSFORM_UNKNOWN   = 0,
+        SVG_TRANSFORM_MATRIX    = 1,
+        SVG_TRANSFORM_TRANSLATE = 2,
+        SVG_TRANSFORM_SCALE     = 3,
+        SVG_TRANSFORM_ROTATE    = 4,
+        SVG_TRANSFORM_SKEWX     = 5,
+        SVG_TRANSFORM_SKEWY     = 6,
+        } TransformType;
+
+    /**
+     *
+     */
+    unsigned short getType();
+
+
+    /**
+     *
+     */
+    SVGMatrix getMatrix();
+
+    /**
+     *
+     */
+    double getAngle();
+
+    /**
+     *
+     */
+    void setMatrix(const SVGMatrix &matrixArg);
+
+    /**
+     *
+     */
+    void setTranslate(double tx, double ty);
+
+    /**
+     *
+     */
+    void setScale(double sx, double sy);
+
+    /**
+     *
+     */
+    void setRotate(double angleArg, double cx, double cy);
+
+    /**
+     *
+     */
+    void setSkewX(double angleArg);
+
+    /**
+     *
+     */
+    void setSkewY(double angleArg);
+
+
+    //##################
+    //# Non-API methods
+    //##################
+
+    /**
+     *
+     */
+    SVGTransform();
+
+    /**
+     *
+     */
+    SVGTransform(const SVGTransform &other);
+
+    /**
+     *
+     */
+    ~SVGTransform();
+
+protected:
+
+    int type;
+    double angle;
+
+    SVGMatrix matrix;
+};
+
+
+
+
+/*#########################################################################
+## SVGUnitTypes
+#########################################################################*/
+
+/**
+ *
+ */
+class SVGUnitTypes
+{
+public:
+
+    /**
+     * Unit Types
+     */
+    typedef enum
+        {
+        SVG_UNIT_TYPE_UNKNOWN           = 0,
+        SVG_UNIT_TYPE_USERSPACEONUSE    = 1,
+        SVG_UNIT_TYPE_OBJECTBOUNDINGBOX = 2
+        } UnitType;
 
 
 
@@ -3599,28 +1390,751 @@ public:
     /**
      *
      */
-    SVGAnimatedPreserveAspectRatio() {}
+    SVGUnitTypes();
 
     /**
      *
      */
-    SVGAnimatedPreserveAspectRatio(const SVGAnimatedPreserveAspectRatio &other)
+    ~SVGUnitTypes();
+
+};
+
+
+
+
+/*#########################################################################
+## SVGValue
+#########################################################################*/
+
+/**
+ * This is a helper class that will hold several types of data.  It will
+ * be used in those situations where methods are common to different 
+ * interfaces, except for the data type.  This class holds the following:
+ * SVGAngle
+ * SVGBoolean
+ * SVGEnumeration
+ * SVGInteger
+ * SVGLength
+ * SVGNumber
+ * SVGPreserveAspectRatio
+ * SVGRect
+ * SVGString
+ */   
+class SVGValue
+{
+public:
+
+    /**
+     *
+     */
+    typedef enum
         {
-        baseVal = other.baseVal;
-        baseVal = other.animVal;
-        }
+        SVG_ANGLE,
+        SVG_BOOLEAN,
+        SVG_ENUMERATION,
+        SVG_INTEGER,
+        SVG_LENGTH,
+        SVG_NUMBER,
+        SVG_PRESERVE_ASPECT_RATIO,
+        SVG_RECT,
+        SVG_STRING,
+        } SVGValueType;
+
+    /**
+     * Constructor
+     */
+    SVGValue();
+    
+    /**
+     * Copy constructor
+     */
+    SVGValue(const SVGValue &other);
+    
+    /**
+     * Assignment
+     */
+    SVGValue &operator=(const SVGValue &other);
+    
+    /**
+     *
+     */
+    ~SVGValue();
+        
+    //###########################
+    //  TYPES
+    //###########################
+
+    /**
+     *  Angle
+     */
+    SVGValue(const SVGAngle &v);
+    
+    SVGAngle angleValue();
+    
+    /**
+     * Boolean
+     */
+    SVGValue(bool v);
+    
+    bool booleanValue();
+    
+    
+    /**
+     * Enumeration
+     */
+    SVGValue(short v);
+    
+    short enumerationValue();
+
+    /**
+     * Integer
+     */
+    SVGValue(long v);
+    
+    long integerValue();
+    
+    /**
+     * Length
+     */
+    SVGValue(const SVGLength &v);
+    
+    SVGLength lengthValue();
+    
+    /**
+     * Number
+     */
+    SVGValue(double v);
+    
+    double numberValue();
+
+    /**
+     * PathSegment
+     */
+    SVGValue(const SVGPathSeg &v);
+    
+    SVGPathSeg pathDataValue();
+    
+    
+    /**
+     * Points
+     */
+    SVGValue(const SVGPointList &v);
+    
+    SVGPointList pointListValue();
+    
+    
+    /**
+     * PreserveAspectRatio
+     */
+    SVGValue(const SVGPreserveAspectRatio &v);
+    
+    SVGPreserveAspectRatio preserveAspectRatioValue();
+    
+    /**
+     * Rect
+     */
+    SVGValue(const SVGRect &v);
+    
+    SVGRect rectValue();
+    
+    /**
+     * String
+     */
+    SVGValue(const DOMString &v);
+    
+    DOMString stringValue();
+    
+    /**
+     * TransformList
+     */
+    SVGValue(const SVGTransformList &v);
+    
+    SVGTransformList transformListValue();
+    
+    
+private:
+
+    void init();
+    
+    void assign(const SVGValue &other);
+    
+    short                  type;
+    SVGAngle               angleval;       // SVGAngle
+    bool                   bval;           // SVGBoolean
+    short                  eval;           // SVGEnumeration
+    long                   ival;           // SVGInteger
+    SVGLength              lengthval;      // SVGLength
+    double                 dval;           // SVGNumber
+    SVGPathSegment         segval;         // SVGPathSegment
+    SVGPreserveAcpectRatio parval;         // SVGPreserveAspectRatio
+    SVGRect                rval;           // SVGRect
+    DOMString              sval;           // SVGString
+
+};
+
+
+/*#########################################################################
+## SVGValueList
+#########################################################################*/
+
+/**
+ * THis is used to generify a bit the several different types of lists:
+ *
+ * SVGLengthList      -> SVGValueList<SVGLength>
+ * SVGNumberList      -> SVGValueList<SVGNumber>
+ * SVGPathData        -> SVGValueList<SVGPathSeg>
+ * SVGPoints          -> SVGValueList<SVGPoint>
+ * SVGTransformList   -> SVGValueList<SVGTransform>
+ */
+class SVGValueList
+{
+public:
 
     /**
      *
      */
-    virtual ~SVGAnimatedPreserveAspectRatio() {}
+    typedef enum
+        {
+        SVG_LIST_LENGTH,
+        SVG_LIST_NUMBER,
+        SVG_LIST_PATHSEG,
+        SVG_LIST_POINT,
+        SVG_LIST_TRANSFORM
+        } SVGValueListTypes;
+
+    /**
+     *
+     */
+    unsigned long getNumberOfItems();
+
+
+    /**
+     *
+     */
+    void clear() throw(DOMException);
+
+    /**
+     *
+     */
+    SVGValue getItem(unsigned long index) throw(DOMException);
+
+    /**
+     *
+     */
+    SVGValue insertItemBefore(const SVGValue &newItem,
+                                   unsigned long index)
+                                   throw(DOMException, SVGException);
+
+    /**
+     *
+     */
+    SVGValue replaceItem(const SVGValue &newItem,
+                              unsigned long index)
+                              throw(DOMException, SVGException);
+
+    /**
+     *
+     */
+    SVGValue removeItem(unsigned long index) throw(DOMException);
+
+    /**
+     *
+     */
+    SVGValue appendItem(const SVGValue &newItem)
+                             throw(DOMException, SVGException);
+
+    /**
+     * Matrix
+     */
+    SVGValue initialize(const SVGValue &newItem)
+                         throw(DOMException, SVGException);
+
+    /**
+     * Matrix
+     */
+    SVGValue createSVGTransformFromMatrix(const SVGValue &matrix);
+
+    /**
+     * Matrix
+     */
+    SVGValue consolidate();
+
+
+    //##################
+    //# Non-API methods
+    //##################
+
+    /**
+     *
+     */
+    SVGValueList();
+
+    /**
+     *
+     */
+    SVGValueList(const SVGValueList &other);
+
+    /**
+     *
+     */
+    ~SVGValueList();
 
 protected:
 
-    SVGPreserveAspectRatio baseVal;
-    SVGPreserveAspectRatio animVal;
+    std::vector<SVGValue> items;
 
 };
+
+
+
+
+
+/*#########################################################################
+## SVGAnimatedValue
+#########################################################################*/
+
+/**
+ * This class is used to merge all of the "Animated" values, with only
+ * a different type, into a single API.  This class subsumes the following:
+ * SVGAnimatedAngle
+ * SVGAnimatedBoolean
+ * SVGAnimatedEnumeration
+ * SVGAnimatedInteger
+ * SVGAnimatedLength
+ * SVGAnimatedLengthList
+ * SVGAnimatedNumber
+ * SVGAnimatedNumberList
+ * SVGAnimatedPathData
+ * SVGAnimatedPoints
+ * SVGAnimatedPreserveAspectRatio
+ * SVGAnimatedRect
+ * SVGAnimatedString
+ * SVGAnimatedTransformList
+ */
+class SVGAnimatedValue
+{
+public:
+
+    /**
+     *
+     */
+    SVGValue &getBaseVal();
+
+    /**
+     *
+     */
+    void setBaseVal(const SVGValue &val) throw (DOMException);
+
+    /**
+     *
+     */
+    SVGValue &getAnimVal();
+
+    /**
+     *
+     */
+    SVGAnimatedValue();
+    
+    /**
+     *
+     */
+    SVGAnimatedValue(const SVGValue &baseValue);
+
+    /**
+     *
+     */
+    SVGAnimatedValue(const SVGValue &baseValue, const SVGValue &animValue);
+
+    /**
+     *
+     */
+    SVGAnimatedValue(const SVGAnimatedValue &other);
+
+    /**
+     *
+     */
+    SVGAnimatedValue &operator=(const SVGAnimatedValue &other);
+
+    /**
+     *
+     */
+    SVGAnimatedValue &operator=(const SVGValue &baseVal);
+
+    /**
+     *
+     */
+    ~SVGAnimatedValue();
+    
+private:
+
+    void init();
+    
+    void assign(const SVGAnimatedValue &other);
+    
+    SVGValue baseVal;
+    
+    SVGValue animVal;
+}
+
+
+
+
+
+
+
+//########################################################################
+//########################################################################
+//#   I N T E R F A C E S
+//########################################################################
+//########################################################################
+
+
+
+
+
+
+
+/*#########################################################################
+## SVGStylable
+#########################################################################*/
+
+/**
+ *
+ */
+class SVGStylable
+{
+public:
+
+    /**
+     *
+     */
+    SVGAnimatedString getClassName();
+
+    /**
+     *
+     */
+    css::CSSStyleDeclaration getStyle();
+
+
+    /**
+     *
+     */
+    css::CSSValue getPresentationAttribute(const DOMString& /*name*/);
+
+    //##################
+    //# Non-API methods
+    //##################
+
+    /**
+     *
+     */
+    SVGStylable();
+
+    /**
+     *
+     */
+    SVGStylable(const SVGStylable &other);
+
+    /**
+     *
+     */
+    ~SVGStylable();
+
+protected:
+
+    SVGAnimatedString className;
+    css::CSSStyleDeclaration style;
+
+};
+
+
+
+
+
+/*#########################################################################
+## SVGLocatable
+#########################################################################*/
+
+/**
+ *
+ */
+class SVGLocatable
+{
+public:
+
+    /**
+     *
+     */
+    SVGElementPtr getNearestViewportElement();
+
+    /**
+     *
+     */
+    SVGElementPtr getFarthestViewportElement();
+
+    /**
+     *
+     */
+    SVGRect getBBox();
+
+    /**
+     *
+     */
+    SVGMatrix getCTM();
+
+    /**
+     *
+     */
+    SVGMatrix getScreenCTM();
+
+    /**
+     *
+     */
+    SVGMatrix getTransformToElement(const SVGElement &/*element*/)
+                    throw(SVGException);
+
+    //##################
+    //# Non-API methods
+    //##################
+
+    /**
+     *
+     */
+    SVGLocatable();
+
+    /**
+     *
+     */
+    SVGLocatable(const SVGLocatable &/*other*/);
+
+    /**
+     *
+     */
+    ~SVGLocatable();
+
+protected:
+
+    SVGRect bbox;
+    SVGMatrix ctm;
+    SVGMatrix screenCtm;
+
+};
+
+
+/*#########################################################################
+## SVGTransformable
+#########################################################################*/
+
+/**
+ *
+ */
+class SVGTransformable : public SVGLocatable
+{
+public:
+
+
+    /**
+     *
+     */
+    SVGAnimatedTransformList &getTransform();
+
+    //##################
+    //# Non-API methods
+    //##################
+
+    /**
+     *
+     */
+    SVGTransformable();
+
+    /**
+     *
+     */
+    SVGTransformable(const SVGTransformable &other) : SVGLocatable(other);
+
+    /**
+     *
+     */
+    ~SVGTransformable();
+
+protected:
+
+    SVGAnimatedTransformList transforms;
+};
+
+
+
+
+
+
+/*#########################################################################
+## SVGTests
+#########################################################################*/
+
+/**
+ *
+ */
+class SVGTests
+{
+public:
+
+    /**
+     *
+     */
+    SVGValueList &getRequiredFeatures();
+
+    /**
+     *
+     */
+    SVGValueList &getRequiredExtensions();
+
+    /**
+     *
+     */
+    SVGValueList &getSystemLanguage();
+
+    /**
+     *
+     */
+    bool hasExtension(const DOMString& /*extension*/);
+
+    //##################
+    //# Non-API methods
+    //##################
+
+    /**
+     *
+     */
+    SVGTests();
+
+    /**
+     *
+     */
+    SVGTests(const SVGTests &other);
+
+    /**
+     *
+     */
+    ~SVGTests();
+
+protected:
+
+    SVGStringList requiredFeatures;
+    SVGStringList requiredExtensions;
+    SVGStringList systemLanguage;
+
+};
+
+
+
+
+
+
+/*#########################################################################
+## SVGLangSpace
+#########################################################################*/
+
+/**
+ *
+ */
+class SVGLangSpace
+{
+public:
+
+
+    /**
+     *
+     */
+    DOMString getXmlLang();
+
+    /**
+     *
+     */
+    void setXmlLang(const DOMString &val) throw(DOMException);
+
+    /**
+     *
+     */
+    DOMString getXmlSpace();
+
+    /**
+     *
+     */
+    void setXmlSpace(const DOMString &val) throw(DOMException);
+
+    //##################
+    //# Non-API methods
+    //##################
+
+    /**
+     *
+     */
+    SVGLangSpace();
+
+    /**
+     *
+     */
+    SVGLangSpace(const SVGLangSpace &other);
+
+    /**
+     *
+     */
+    ~SVGLangSpace();
+
+protected:
+
+    DOMString xmlLang;
+    DOMString xmlSpace;
+
+};
+
+
+
+/*#########################################################################
+## SVGExternalResourcesRequired
+#########################################################################*/
+
+/**
+ *
+ */
+class SVGExternalResourcesRequired
+{
+public:
+
+    /**
+     *
+     */
+    SVGAnimatedBoolean getExternalResourcesRequired();
+
+    //##################
+    //# Non-API methods
+    //##################
+
+    /**
+     *
+     */
+    SVGExternalResourcesRequired();
+
+    /**
+     *
+     */
+    SVGExternalResourcesRequired(const SVGExternalResourcesRequired &other);
+
+    /**
+     *
+     */
+    ~SVGExternalResourcesRequired();
+
+protected:
+
+    SVGAnimatedBoolean required;
+
+};
+
+
+
+
+
 
 
 
@@ -3639,16 +2153,12 @@ public:
     /**
      *
      */
-    virtual SVGAnimatedRect getViewBox()
-        { return viewBox; }
+    SVGAnimatedRect getViewBox();
 
     /**
      *
      */
-    virtual SVGAnimatedPreserveAspectRatio getPreserveAspectRatio()
-        { return preserveAspectRatio; }
-
-
+    SVGAnimatedPreserveAspectRatio getPreserveAspectRatio();
 
     //##################
     //# Non-API methods
@@ -3657,23 +2167,17 @@ public:
     /**
      *
      */
-    SVGFitToViewBox()
-        {}
+    SVGFitToViewBox();
 
     /**
      *
      */
-
-    SVGFitToViewBox(const SVGFitToViewBox &other)
-        {
-        viewBox = other.viewBox;
-        preserveAspectRatio = other.preserveAspectRatio;
-        }
+    SVGFitToViewBox(const SVGFitToViewBox &other);
 
     /**
      *
      */
-    virtual ~SVGFitToViewBox() {}
+    ~SVGFitToViewBox();
 
 protected:
 
@@ -3695,7 +2199,6 @@ class SVGZoomAndPan
 {
 public:
 
-
     /**
      * Zoom and Pan Types
      */
@@ -3706,19 +2209,15 @@ public:
         SVG_ZOOMANDPAN_MAGNIFY = 2
         } ZoomAndPanType;
 
+    /**
+     *
+     */
+    unsigned short getZoomAndPan();
 
     /**
      *
      */
-    virtual unsigned short getZoomAndPan()
-        { return zoomAndPan; }
-
-    /**
-     *
-     */
-    virtual void setZoomAndPan(unsigned short val) throw (DOMException)
-        { zoomAndPan = val; }
-
+    void setZoomAndPan(unsigned short val) throw(DOMException);
 
     //##################
     //# Non-API methods
@@ -3727,19 +2226,17 @@ public:
     /**
      *
      */
-    SVGZoomAndPan()
-        { zoomAndPan = SVG_ZOOMANDPAN_UNKNOWN; }
+    SVGZoomAndPan();
 
     /**
      *
      */
-    SVGZoomAndPan(const SVGZoomAndPan &other)
-        { zoomAndPan = other.zoomAndPan; }
+    SVGZoomAndPan(const SVGZoomAndPan &other);
 
     /**
      *
      */
-    virtual ~SVGZoomAndPan() {}
+    ~SVGZoomAndPan();
 
 protected:
 
@@ -3767,52 +2264,32 @@ public:
     /**
      *
      */
-    virtual SVGTransformList getTransform()
-        { return transform; }
+    SVGTransformList getTransform();
 
     /**
      *
      */
-    virtual SVGElementPtr getViewTarget()
-        { return viewTarget; }
+    SVGElementPtr getViewTarget();
 
     /**
      *
      */
-    virtual DOMString getViewBoxString()
-        {
-        DOMString ret;
-        return ret;
-        }
+    DOMString getViewBoxString();
 
     /**
      *
      */
-    virtual DOMString getPreserveAspectRatioString()
-        {
-        DOMString ret;
-        return ret;
-        }
+    DOMString getPreserveAspectRatioString();
 
     /**
      *
      */
-    virtual DOMString getTransformString()
-        {
-        DOMString ret;
-        return ret;
-        }
+    DOMString getTransformString();
 
     /**
      *
      */
-    virtual DOMString getViewTargetString()
-        {
-        DOMString ret;
-        return ret;
-        }
-
-
+    DOMString getViewTargetString();
 
     //##################
     //# Non-API methods
@@ -3821,34 +2298,23 @@ public:
     /**
      *
      */
-    SVGViewSpec()
-        {
-        viewTarget = NULL;
-        }
+    SVGViewSpec();
 
     /**
      *
      */
-    SVGViewSpec(const SVGViewSpec &other) : SVGZoomAndPan(other), SVGFitToViewBox(other)
-        {
-        viewTarget = other.viewTarget;
-        transform  = other.transform;
-        }
+    SVGViewSpec(const SVGViewSpec &other);
 
     /**
      *
      */
-    virtual ~SVGViewSpec() {}
+    ~SVGViewSpec();
 
 protected:
 
     SVGElementPtr viewTarget;
     SVGTransformList transform;
 };
-
-
-
-
 
 
 /*#########################################################################
@@ -3865,10 +2331,7 @@ public:
     /**
      *
      */
-    virtual SVGAnimatedString getHref()
-        { return href; }
-
-
+    SVGAnimatedString getHref();
 
     //##################
     //# Non-API methods
@@ -3877,20 +2340,17 @@ public:
     /**
      *
      */
-    SVGURIReference() {}
+    SVGURIReference();
 
     /**
      *
      */
-    SVGURIReference(const SVGURIReference &other)
-        {
-        href = other.href;
-        }
+    SVGURIReference(const SVGURIReference &other);
 
     /**
      *
      */
-    virtual ~SVGURIReference() {}
+    ~SVGURIReference();
 
 protected:
 
@@ -3930,19 +2390,17 @@ public:
     /**
      *
      */
-    SVGCSSRule()
-        { type = COLOR_PROFILE_RULE; }
+    SVGCSSRule();
 
     /**
      *
      */
-    SVGCSSRule(const SVGCSSRule &other) : css::CSSRule(other)
-        { type = COLOR_PROFILE_RULE; }
+    SVGCSSRule(const SVGCSSRule &other);
 
     /**
      *
      */
-    virtual ~SVGCSSRule() {}
+    ~SVGCSSRule();
 
 };
 
@@ -3981,23 +2439,17 @@ public:
     /**
      *
      */
-    SVGRenderingIntent()
-        {
-        renderingIntentType = RENDERING_INTENT_UNKNOWN;
-        }
+    SVGRenderingIntent();
 
     /**
      *
      */
-    SVGRenderingIntent(const SVGRenderingIntent &other)
-        {
-        renderingIntentType = other.renderingIntentType;
-        }
+    SVGRenderingIntent(const SVGRenderingIntent &other);
 
     /**
      *
      */
-    virtual ~SVGRenderingIntent() {}
+    ~SVGRenderingIntent();
 
 protected:
 
@@ -4008,2383 +2460,6 @@ protected:
 
 
 
-
-
-/*#########################################################################
-###########################################################################
-## P A T H    S E G M E N T S
-###########################################################################
-#########################################################################*/
-
-static char const *const pathSegLetters[] =
-{
-    "@", // PATHSEG_UNKNOWN,
-    "z", // PATHSEG_CLOSEPATH
-    "M", // PATHSEG_MOVETO_ABS
-    "m", // PATHSEG_MOVETO_REL,
-    "L", // PATHSEG_LINETO_ABS
-    "l", // PATHSEG_LINETO_REL
-    "C", // PATHSEG_CURVETO_CUBIC_ABS
-    "c", // PATHSEG_CURVETO_CUBIC_REL
-    "Q", // PATHSEG_CURVETO_QUADRATIC_ABS,
-    "q", // PATHSEG_CURVETO_QUADRATIC_REL
-    "A", // PATHSEG_ARC_ABS
-    "a", // PATHSEG_ARC_REL,
-    "H", // PATHSEG_LINETO_HORIZONTAL_ABS,
-    "h", // PATHSEG_LINETO_HORIZONTAL_REL
-    "V", // PATHSEG_LINETO_VERTICAL_ABS
-    "v", // PATHSEG_LINETO_VERTICAL_REL
-    "S", // PATHSEG_CURVETO_CUBIC_SMOOTH_ABS
-    "s", // PATHSEG_CURVETO_CUBIC_SMOOTH_REL
-    "T", // PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS
-    "t"  // PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL
-};
-
-/*#########################################################################
-## SVGPathSeg
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSeg
-{
-public:
-
-
-
-    /**
-     *  Path Segment Types
-     */
-    typedef enum
-        {
-        PATHSEG_UNKNOWN                      = 0,
-        PATHSEG_CLOSEPATH                    = 1,
-        PATHSEG_MOVETO_ABS                   = 2,
-        PATHSEG_MOVETO_REL                   = 3,
-        PATHSEG_LINETO_ABS                   = 4,
-        PATHSEG_LINETO_REL                   = 5,
-        PATHSEG_CURVETO_CUBIC_ABS            = 6,
-        PATHSEG_CURVETO_CUBIC_REL            = 7,
-        PATHSEG_CURVETO_QUADRATIC_ABS        = 8,
-        PATHSEG_CURVETO_QUADRATIC_REL        = 9,
-        PATHSEG_ARC_ABS                      = 10,
-        PATHSEG_ARC_REL                      = 11,
-        PATHSEG_LINETO_HORIZONTAL_ABS        = 12,
-        PATHSEG_LINETO_HORIZONTAL_REL        = 13,
-        PATHSEG_LINETO_VERTICAL_ABS          = 14,
-        PATHSEG_LINETO_VERTICAL_REL          = 15,
-        PATHSEG_CURVETO_CUBIC_SMOOTH_ABS     = 16,
-        PATHSEG_CURVETO_CUBIC_SMOOTH_REL     = 17,
-        PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS = 18,
-        PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL = 19
-        } PathSegmentType;
-
-    /**
-     *
-     */
-    virtual unsigned short getPathSegType()
-        { return type; }
-
-    /**
-     *
-     */
-    virtual DOMString getPathSegTypeAsLetter()
-        {
-        int typ = type;
-        if (typ<0 || typ>PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL)
-            typ = PATHSEG_UNKNOWN;
-        char const *ch = pathSegLetters[typ];
-        DOMString letter = ch;
-        return letter;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPathSeg()
-        { type = PATHSEG_UNKNOWN; }
-
-    /**
-     *
-     */
-    SVGPathSeg(const SVGPathSeg &other)
-        {
-        type = other.type;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSeg() {}
-
-protected:
-
-    int type;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGPathSegClosePath
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegClosePath : public SVGPathSeg
-{
-public:
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPathSegClosePath()
-        {
-        type = PATHSEG_CLOSEPATH;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegClosePath(const SVGPathSegClosePath &other) : SVGPathSeg(other)
-        {
-        type = PATHSEG_CLOSEPATH;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegClosePath() {}
-
-};
-
-
-
-
-/*#########################################################################
-## SVGPathSegMovetoAbs
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegMovetoAbs : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPathSegMovetoAbs()
-        {
-        type = PATHSEG_MOVETO_ABS;
-        x = y = 0.0;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegMovetoAbs(double xArg, double yArg)
-        {
-        type = PATHSEG_MOVETO_ABS;
-        x = xArg; y = yArg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegMovetoAbs(const SVGPathSegMovetoAbs &other) : SVGPathSeg(other)
-        {
-        type = PATHSEG_MOVETO_ABS;
-        x = other.x; y = other.y;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegMovetoAbs() {}
-
-protected:
-
-    double x,y;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGPathSegMovetoRel
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegMovetoRel : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPathSegMovetoRel()
-        {
-        type = PATHSEG_MOVETO_REL;
-        x = y = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGPathSegMovetoRel(double xArg, double yArg)
-        {
-        type = PATHSEG_MOVETO_REL;
-        x = xArg; y = yArg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegMovetoRel(const SVGPathSegMovetoRel &other) : SVGPathSeg(other)
-        {
-        type = PATHSEG_MOVETO_REL;
-        x = other.x; y = other.y;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegMovetoRel() {}
-
-protected:
-
-    double x,y;
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGPathSegLinetoAbs
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegLinetoAbs : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPathSegLinetoAbs()
-        {
-        type = PATHSEG_LINETO_ABS;
-        x = y = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGPathSegLinetoAbs(double xArg, double yArg)
-        {
-        type = PATHSEG_LINETO_ABS;
-        x = xArg; y = yArg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegLinetoAbs(const SVGPathSegLinetoAbs &other) : SVGPathSeg(other)
-        {
-        type = PATHSEG_LINETO_ABS;
-        x = other.x; y = other.y;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegLinetoAbs() {}
-
-protected:
-
-    double x,y;
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGPathSegLinetoRel
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegLinetoRel : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPathSegLinetoRel()
-        {
-        type = PATHSEG_LINETO_REL;
-        x = y = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGPathSegLinetoRel(double xArg, double yArg)
-        {
-        type = PATHSEG_LINETO_REL;
-        x = xArg; y = yArg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegLinetoRel(const SVGPathSegLinetoRel &other) : SVGPathSeg(other)
-        {
-        type = PATHSEG_LINETO_REL;
-        x = other.x; y = other.y;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegLinetoRel() {}
-
-protected:
-
-    double x,y;
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGPathSegCurvetoCubicAbs
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegCurvetoCubicAbs : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-    /**
-     *
-     */
-    virtual double getX1()
-        { return x1; }
-
-    /**
-     *
-     */
-    virtual void setX1(double val) throw (DOMException)
-        { x1 = val; }
-
-    /**
-     *
-     */
-    virtual double getY1()
-        { return y1; }
-
-    /**
-     *
-     */
-    virtual void setY1(double val) throw (DOMException)
-        { y1 = val; }
-
-
-    /**
-     *
-     */
-    virtual double getX2()
-        { return x2; }
-
-    /**
-     *
-     */
-    virtual void setX2(double val) throw (DOMException)
-        { x2 = val; }
-
-    /**
-     *
-     */
-    virtual double getY2()
-        { return y2; }
-
-    /**
-     *
-     */
-    virtual void setY2(double val) throw (DOMException)
-        { y2 = val; }
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoCubicAbs()
-        {
-        type = PATHSEG_CURVETO_CUBIC_ABS;
-        x = y = x1 = y1 = x2 = y2 = 0.0;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoCubicAbs(double xArg,  double yArg,
-                              double x1Arg, double y1Arg,
-                              double x2Arg, double y2Arg)
-        {
-        type = PATHSEG_CURVETO_CUBIC_ABS;
-        x  = xArg;   y  = yArg;
-        x1 = x1Arg;  y1 = y1Arg;
-        x2 = x2Arg;  y2 = y2Arg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoCubicAbs(const SVGPathSegCurvetoCubicAbs &other)
-                     : SVGPathSeg(other)
-        {
-        type = PATHSEG_CURVETO_CUBIC_ABS;
-        x  = other.x;  y  = other.y;
-        x1 = other.x1; y1 = other.y1;
-        x2 = other.x2; y2 = other.y2;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegCurvetoCubicAbs() {}
-
-protected:
-
-    double x, y, x1, y1, x2, y2;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGPathSegCurvetoCubicRel
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegCurvetoCubicRel : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-    /**
-     *
-     */
-    virtual double getX1()
-        { return x1; }
-
-    /**
-     *
-     */
-    virtual void setX1(double val) throw (DOMException)
-        { x1 = val; }
-
-    /**
-     *
-     */
-    virtual double getY1()
-        { return y1; }
-
-    /**
-     *
-     */
-    virtual void setY1(double val) throw (DOMException)
-        { y1 = val; }
-
-
-    /**
-     *
-     */
-    virtual double getX2()
-        { return x2; }
-
-    /**
-     *
-     */
-    virtual void setX2(double val) throw (DOMException)
-        { x2 = val; }
-
-    /**
-     *
-     */
-    virtual double getY2()
-        { return y2; }
-
-    /**
-     *
-     */
-    virtual void setY2(double val) throw (DOMException)
-        { y2 = val; }
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoCubicRel()
-        {
-        type = PATHSEG_CURVETO_CUBIC_REL;
-        x = y = x1 = y1 = x2 = y2 = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoCubicRel(double xArg,  double yArg,
-                              double x1Arg, double y1Arg,
-                              double x2Arg, double y2Arg)
-        {
-        type = PATHSEG_CURVETO_CUBIC_REL;
-        x  = xArg;   y  = yArg;
-        x1 = x1Arg;  y1 = y1Arg;
-        x2 = x2Arg;  y2 = y2Arg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoCubicRel(const SVGPathSegCurvetoCubicRel &other)
-                     : SVGPathSeg(other)
-        {
-        type = PATHSEG_CURVETO_CUBIC_REL;
-        x  = other.x;  y  = other.y;
-        x1 = other.x1; y1 = other.y1;
-        x2 = other.x2; y2 = other.y2;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegCurvetoCubicRel() {}
-
-protected:
-
-    double x, y, x1, y1, x2, y2;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGPathSegCurvetoQuadraticAbs
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegCurvetoQuadraticAbs : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-    /**
-     *
-     */
-    virtual double getX1()
-        { return x1; }
-
-    /**
-     *
-     */
-    virtual void setX1(double val) throw (DOMException)
-        { x1 = val; }
-
-    /**
-     *
-     */
-    virtual double getY1()
-        { return y1; }
-
-    /**
-     *
-     */
-    virtual void setY1(double val) throw (DOMException)
-        { y1 = val; }
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoQuadraticAbs()
-        {
-        type = PATHSEG_CURVETO_QUADRATIC_ABS;
-        x = y = x1 = y1 = 0.0;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoQuadraticAbs(double xArg,  double yArg,
-                              double x1Arg, double y1Arg)
-        {
-        type = PATHSEG_CURVETO_QUADRATIC_ABS;
-        x  = xArg;   y  = yArg;
-        x1 = x1Arg;  y1 = y1Arg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoQuadraticAbs(const SVGPathSegCurvetoQuadraticAbs &other)
-                     : SVGPathSeg(other)
-        {
-        type = PATHSEG_CURVETO_QUADRATIC_ABS;
-        x  = other.x;  y  = other.y;
-        x1 = other.x1; y1 = other.y1;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegCurvetoQuadraticAbs() {}
-
-protected:
-
-    double x, y, x1, y1;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGPathSegCurvetoQuadraticRel
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegCurvetoQuadraticRel : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-    /**
-     *
-     */
-    virtual double getX1()
-        { return x1; }
-
-    /**
-     *
-     */
-    virtual void setX1(double val) throw (DOMException)
-        { x1 = val; }
-
-    /**
-     *
-     */
-    virtual double getY1()
-        { return y1; }
-
-    /**
-     *
-     */
-    virtual void setY1(double val) throw (DOMException)
-        { y1 = val; }
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoQuadraticRel()
-        {
-        type = PATHSEG_CURVETO_QUADRATIC_REL;
-        x = y = x1 = y1 = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoQuadraticRel(double xArg,  double yArg,
-                                  double x1Arg, double y1Arg)
-        {
-        type = PATHSEG_CURVETO_QUADRATIC_REL;
-        x  = xArg;   y  = yArg;
-        x1 = x1Arg;  y1 = y1Arg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoQuadraticRel(const SVGPathSegCurvetoQuadraticRel &other)
-                     : SVGPathSeg(other)
-        {
-        type = PATHSEG_CURVETO_QUADRATIC_REL;
-        x  = other.x;  y  = other.y;
-        x1 = other.x1; y1 = other.y1;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegCurvetoQuadraticRel() {}
-
-protected:
-
-    double x, y, x1, y1;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGPathSegArcAbs
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegArcAbs : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-    /**
-     *
-     */
-    virtual double getR1()
-        { return r1; }
-
-    /**
-     *
-     */
-    virtual void setR1(double val) throw (DOMException)
-        { r1 = val; }
-
-    /**
-     *
-     */
-    virtual double getR2()
-        { return r2; }
-
-    /**
-     *
-     */
-    virtual void setR2(double val) throw (DOMException)
-        { r2 = val; }
-
-    /**
-     *
-     */
-    virtual double getAngle()
-        { return angle; }
-
-    /**
-     *
-     */
-    virtual void setAngle(double val) throw (DOMException)
-        { angle = val; }
-
-    /**
-     *
-     */
-    virtual bool getLargeArcFlag()
-        { return largeArcFlag; }
-
-    /**
-     *
-     */
-    virtual void setLargeArcFlag(bool val) throw (DOMException)
-        { largeArcFlag = val; }
-
-    /**
-     *
-     */
-    virtual bool getSweepFlag()
-        { return sweepFlag; }
-
-    /**
-     *
-     */
-    virtual void setSweepFlag(bool val) throw (DOMException)
-        { sweepFlag = val; }
-
-    //##################
-    //# Non-API methods
-    //##################
-
-
-    /**
-     *
-     */
-    SVGPathSegArcAbs()
-        {
-        type = PATHSEG_ARC_ABS;
-        x = y = r1 = r2 = angle = 0.0;
-        largeArcFlag = sweepFlag = false;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegArcAbs(double xArg,  double yArg,
-                     double r1Arg, double r2Arg,
-                     double angleArg,
-                     bool largeArcFlagArg,
-                     bool sweepFlagArg )
-
-        {
-        type = PATHSEG_ARC_ABS;
-        x  = xArg;   y  = yArg;
-        r1 = r1Arg;  r2 = r2Arg;
-        angle        = angleArg;
-        largeArcFlag = largeArcFlagArg;
-        sweepFlag    = sweepFlagArg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegArcAbs(const SVGPathSegArcAbs &other)
-                     : SVGPathSeg(other)
-        {
-        type = PATHSEG_ARC_ABS;
-        x  = other.x;  y  = other.y;
-        r1 = other.r1; r2 = other.r2;
-        angle        = other.angle;
-        largeArcFlag = other.largeArcFlag;
-        sweepFlag    = other.sweepFlag;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegArcAbs() {}
-
-protected:
-
-    double x, y, r1, r2, angle;
-    bool largeArcFlag;
-    bool sweepFlag;
-
-};
-
-
-
-/*#########################################################################
-## SVGPathSegArcRel
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegArcRel : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-    /**
-     *
-     */
-    virtual double getR1()
-        { return r1; }
-
-    /**
-     *
-     */
-    virtual void setR1(double val) throw (DOMException)
-        { r1 = val; }
-
-    /**
-     *
-     */
-    virtual double getR2()
-        { return r2; }
-
-    /**
-     *
-     */
-    virtual void setR2(double val) throw (DOMException)
-        { r2 = val; }
-
-    /**
-     *
-     */
-    virtual double getAngle()
-        { return angle; }
-
-    /**
-     *
-     */
-    virtual void setAngle(double val) throw (DOMException)
-        { angle = val; }
-
-    /**
-     *
-     */
-    virtual bool getLargeArcFlag()
-        { return largeArcFlag; }
-
-    /**
-     *
-     */
-    virtual void setLargeArcFlag(bool val) throw (DOMException)
-        { largeArcFlag = val; }
-
-    /**
-     *
-     */
-    virtual bool getSweepFlag()
-        { return sweepFlag; }
-
-    /**
-     *
-     */
-    virtual void setSweepFlag(bool val) throw (DOMException)
-        { sweepFlag = val; }
-
-    //##################
-    //# Non-API methods
-    //##################
-
-
-    /**
-     *
-     */
-    SVGPathSegArcRel()
-        {
-        type = PATHSEG_ARC_REL;
-        x = y = r1 = r2 = angle = 0.0;
-        largeArcFlag = sweepFlag = false;
-        }
-
-
-    /**
-     *
-     */
-    SVGPathSegArcRel(double xArg, double yArg,
-                     double r1Arg, double r2Arg,
-                     double angleArg,
-                     bool largeArcFlagArg,
-                     bool sweepFlagArg )
-
-        {
-        type = PATHSEG_ARC_REL;
-        x  = xArg;   y  = yArg;
-        r1 = r1Arg;  r2 = r2Arg;
-        angle        = angleArg;
-        largeArcFlag = largeArcFlagArg;
-        sweepFlag    = sweepFlagArg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegArcRel(const SVGPathSegArcRel &other)
-                     : SVGPathSeg(other)
-        {
-        type = PATHSEG_ARC_REL;
-        x  = other.x;  y  = other.y;
-        r1 = other.r1; r2 = other.r2;
-        angle        = other.angle;
-        largeArcFlag = other.largeArcFlag;
-        sweepFlag    = other.sweepFlag;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegArcRel() {}
-
-protected:
-
-    double x, y, r1, r2, angle;
-    bool largeArcFlag;
-    bool sweepFlag;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGPathSegLinetoHorizontalAbs
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegLinetoHorizontalAbs : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPathSegLinetoHorizontalAbs()
-        {
-        type = PATHSEG_LINETO_HORIZONTAL_ABS;
-        x = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGPathSegLinetoHorizontalAbs(double xArg)
-        {
-        type = PATHSEG_LINETO_HORIZONTAL_ABS;
-        x = xArg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegLinetoHorizontalAbs(const SVGPathSegLinetoHorizontalAbs &other)
-                     : SVGPathSeg(other)
-        {
-        type = PATHSEG_LINETO_HORIZONTAL_ABS;
-        x = other.x;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegLinetoHorizontalAbs() {}
-
-protected:
-
-    double x;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGPathSegLinetoHorizontalRel
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegLinetoHorizontalRel : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPathSegLinetoHorizontalRel()
-        {
-        type = PATHSEG_LINETO_HORIZONTAL_REL;
-        x = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGPathSegLinetoHorizontalRel(double xArg)
-        {
-        type = PATHSEG_LINETO_HORIZONTAL_REL;
-        x = xArg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegLinetoHorizontalRel(const SVGPathSegLinetoHorizontalRel &other)
-                     : SVGPathSeg(other)
-        {
-        type = PATHSEG_LINETO_HORIZONTAL_REL;
-        x = other.x;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegLinetoHorizontalRel() {}
-
-protected:
-
-    double x;
-
-};
-
-
-
-/*#########################################################################
-## SVGPathSegLinetoVerticalAbs
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegLinetoVerticalAbs : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPathSegLinetoVerticalAbs()
-        {
-        type = PATHSEG_LINETO_VERTICAL_ABS;
-        y = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGPathSegLinetoVerticalAbs(double yArg)
-        {
-        type = PATHSEG_LINETO_VERTICAL_ABS;
-        y = yArg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegLinetoVerticalAbs(const SVGPathSegLinetoVerticalAbs &other)
-                     : SVGPathSeg(other)
-        {
-        type = PATHSEG_LINETO_VERTICAL_ABS;
-        y = other.y;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegLinetoVerticalAbs() {}
-
-protected:
-
-    double y;
-
-};
-
-
-
-/*#########################################################################
-## SVGPathSegLinetoVerticalRel
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegLinetoVerticalRel : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPathSegLinetoVerticalRel()
-        {
-        type = PATHSEG_LINETO_VERTICAL_REL;
-        y = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGPathSegLinetoVerticalRel(double yArg)
-        {
-        type = PATHSEG_LINETO_VERTICAL_REL;
-        y = yArg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegLinetoVerticalRel(const SVGPathSegLinetoVerticalRel &other)
-                     : SVGPathSeg(other)
-        {
-        type = PATHSEG_LINETO_VERTICAL_REL;
-        y = other.y;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegLinetoVerticalRel() {}
-
-protected:
-
-    double y;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGPathSegCurvetoCubicSmoothAbs
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegCurvetoCubicSmoothAbs : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-    /**
-     *
-     */
-    virtual double getX2()
-        { return x2; }
-
-    /**
-     *
-     */
-    virtual void setX2(double val) throw (DOMException)
-        { x2 = val; }
-
-    /**
-     *
-     */
-    virtual double getY2()
-        { return y2; }
-
-    /**
-     *
-     */
-    virtual void setY2(double val) throw (DOMException)
-        { y2 = val; }
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoCubicSmoothAbs()
-        {
-        type = PATHSEG_CURVETO_CUBIC_SMOOTH_ABS;
-        x = y = x2 = y2 = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoCubicSmoothAbs(double xArg,   double yArg,
-                                    double x2Arg, double y2Arg)
-        {
-        type = PATHSEG_CURVETO_CUBIC_SMOOTH_ABS;
-        x  = xArg;    y  = yArg;
-        x2 = x2Arg;   y2 = y2Arg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoCubicSmoothAbs(const SVGPathSegCurvetoCubicSmoothAbs &other)
-                     : SVGPathSeg(other)
-        {
-        type = PATHSEG_CURVETO_CUBIC_SMOOTH_ABS;
-        x  = other.x;  y  = other.y;
-        x2 = other.x2; y2 = other.y2;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegCurvetoCubicSmoothAbs() {}
-
-protected:
-
-    double x, y, x2, y2;
-
-};
-
-
-
-/*#########################################################################
-## SVGPathSegCurvetoCubicSmoothRel
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegCurvetoCubicSmoothRel : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-    /**
-     *
-     */
-    virtual double getX2()
-        { return x2; }
-
-    /**
-     *
-     */
-    virtual void setX2(double val) throw (DOMException)
-        { x2 = val; }
-
-    /**
-     *
-     */
-    virtual double getY2()
-        { return y2; }
-
-    /**
-     *
-     */
-    virtual void setY2(double val) throw (DOMException)
-        { y2 = val; }
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoCubicSmoothRel()
-        {
-        type = PATHSEG_CURVETO_CUBIC_SMOOTH_REL;
-        x = y = x2 = y2 = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoCubicSmoothRel(double xArg,   double yArg,
-                                    double x2Arg, double y2Arg)
-        {
-        type = PATHSEG_CURVETO_CUBIC_SMOOTH_REL;
-        x  = xArg;    y  = yArg;
-        x2 = x2Arg;   y2 = y2Arg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoCubicSmoothRel(const SVGPathSegCurvetoCubicSmoothRel &other)
-                     : SVGPathSeg(other)
-        {
-        type = PATHSEG_CURVETO_CUBIC_SMOOTH_REL;
-        x  = other.x;  y  = other.y;
-        x2 = other.x2; y2 = other.y2;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegCurvetoCubicSmoothRel() {}
-
-protected:
-
-    double x, y, x2, y2;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGPathSegCurvetoQuadraticSmoothAbs
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegCurvetoQuadraticSmoothAbs : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoQuadraticSmoothAbs()
-        {
-        type = PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS;
-        x = y = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoQuadraticSmoothAbs(double xArg, double yArg)
-        {
-        type = PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS;
-        x = xArg;     y = yArg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoQuadraticSmoothAbs(const SVGPathSegCurvetoQuadraticSmoothAbs &other)
-                     : SVGPathSeg(other)
-        {
-        type = PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS;
-        x = y = 0.0;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegCurvetoQuadraticSmoothAbs() {}
-
-protected:
-
-    double x, y;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGPathSegCurvetoQuadraticSmoothRel
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegCurvetoQuadraticSmoothRel : public SVGPathSeg
-{
-public:
-
-    /**
-     *
-     */
-    virtual double getX()
-        { return x; }
-
-    /**
-     *
-     */
-    virtual void setX(double val) throw (DOMException)
-        { x = val; }
-
-    /**
-     *
-     */
-    virtual double getY()
-        { return y; }
-
-    /**
-     *
-     */
-    virtual void setY(double val) throw (DOMException)
-        { y = val; }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoQuadraticSmoothRel()
-        {
-        type = PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL;
-        x = y = 0.0;
-        }
-
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoQuadraticSmoothRel(double xArg, double yArg)
-        {
-        type = PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL;
-        x = xArg;     y = yArg;
-        }
-
-    /**
-     *
-     */
-    SVGPathSegCurvetoQuadraticSmoothRel(const SVGPathSegCurvetoQuadraticSmoothRel &other)
-                     : SVGPathSeg(other)
-        {
-        type = PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL;
-        x = y = 0.0;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegCurvetoQuadraticSmoothRel() {}
-
-protected:
-
-    double x, y;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGPathSegList
-#########################################################################*/
-
-/**
- *
- */
-class SVGPathSegList
-{
-public:
-
-    /**
-     *
-     */
-    virtual unsigned long getNumberOfItems()
-        { return items.size(); }
-
-
-    /**
-     *
-     */
-    virtual void clear () throw( DOMException )
-        { items.clear(); }
-
-    /**
-     *
-     */
-    virtual SVGPathSeg initialize (const SVGPathSeg &newItem)
-                    throw( DOMException, SVGException )
-        {
-        items.clear();
-        items.push_back(newItem);
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGPathSeg getItem (unsigned long index)
-                    throw( DOMException )
-        {
-        if (index >= items.size())
-            {
-            SVGPathSeg seg;
-            return seg;
-            }
-        return items[index];
-        }
-
-    /**
-     *
-     */
-    virtual SVGPathSeg insertItemBefore(const SVGPathSeg &newItem,
-                                        unsigned long index )
-                          throw( DOMException, SVGException )
-        {
-        if (index >= items.size())
-            items.push_back(newItem);
-        else
-            {
-            std::vector<SVGPathSeg>::iterator iter = items.begin() + index;
-            items.insert(iter, newItem);
-            }
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGPathSeg replaceItem(const SVGPathSeg &newItem,
-                                   unsigned long index )
-                              throw( DOMException, SVGException )
-        {
-        if (index >= items.size())
-            {
-            SVGPathSeg seg;
-            return seg;
-            }
-        std::vector<SVGPathSeg>::iterator iter = items.begin() + index;
-        *iter = newItem;
-        return newItem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGPathSeg removeItem (unsigned long index)
-                                  throw (DOMException)
-        {
-        if (index >= items.size())
-            {
-            SVGPathSeg seg;
-            return seg;
-            }
-        std::vector<SVGPathSeg>::iterator iter = items.begin() + index;
-        SVGPathSeg olditem = *iter;
-        items.erase(iter);
-        return olditem;
-        }
-
-    /**
-     *
-     */
-    virtual SVGPathSeg appendItem (const SVGPathSeg &newItem)
-                    throw( DOMException, SVGException )
-        {
-        items.push_back(newItem);
-        return newItem;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPathSegList() {}
-
-
-    /**
-     *
-     */
-    SVGPathSegList(const SVGPathSegList &other)
-        {
-        items = other.items;
-        }
-
-
-    /**
-     *
-     */
-    virtual ~SVGPathSegList() {}
-
-protected:
-
-    std::vector<SVGPathSeg> items;
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGAnimatedPathData
-#########################################################################*/
-
-/**
- *
- */
-class SVGAnimatedPathData
-{
-public:
-
-    /**
-     *
-     */
-    virtual SVGPathSegList getPathSegList()
-        {
-        SVGPathSegList list;
-        return list;
-        }
-
-    /**
-     *
-     */
-    virtual SVGPathSegList getNormalizedPathSegList()
-        {
-        SVGPathSegList list;
-        return list;
-        }
-
-    /**
-     *
-     */
-    virtual SVGPathSegList getAnimatedPathSegList()
-        {
-        SVGPathSegList list;
-        return list;
-        }
-
-    /**
-     *
-     */
-    virtual SVGPathSegList getAnimatedNormalizedPathSegList()
-        {
-        SVGPathSegList list;
-        return list;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-   SVGAnimatedPathData()
-        {}
-
-    /**
-     *
-     */
-   SVGAnimatedPathData(const SVGAnimatedPathData &/*other*/)
-        {
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGAnimatedPathData() {}
-
-};
-
-
-
-
-
-
-/*#########################################################################
-## SVGAnimatedPoints
-#########################################################################*/
-
-/**
- *
- */
-class SVGAnimatedPoints
-{
-public:
-
-    /**
-     *
-     */
-    virtual SVGPointList getPoints()
-        { return points; }
-
-    /**
-     *
-     */
-    virtual SVGPointList getAnimatedPoints()
-        { return animatedPoints; }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGAnimatedPoints() {}
-
-    /**
-     *
-     */
-    SVGAnimatedPoints(const SVGAnimatedPoints &other)
-        {
-        points         = other.points;
-        animatedPoints = other.animatedPoints;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGAnimatedPoints() {}
-
-protected:
-
-    SVGPointList points;
-    SVGPointList animatedPoints;
-
-};
-
-
-
-
-
-/*#########################################################################
-## SVGPaint
-#########################################################################*/
-
-/**
- *
- */
-class SVGPaint : public SVGColor
-{
-public:
-
-
-    /**
-     * Paint Types
-     */
-    typedef enum
-        {
-        SVG_PAINTTYPE_UNKNOWN               = 0,
-        SVG_PAINTTYPE_RGBCOLOR              = 1,
-        SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR     = 2,
-        SVG_PAINTTYPE_NONE                  = 101,
-        SVG_PAINTTYPE_CURRENTCOLOR          = 102,
-        SVG_PAINTTYPE_URI_NONE              = 103,
-        SVG_PAINTTYPE_URI_CURRENTCOLOR      = 104,
-        SVG_PAINTTYPE_URI_RGBCOLOR          = 105,
-        SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR = 106,
-        SVG_PAINTTYPE_URI                   = 107
-        } PaintType;
-
-
-    /**
-     *
-     */
-    virtual unsigned short getPaintType()
-        { return paintType; }
-
-    /**
-     *
-     */
-    virtual DOMString getUri()
-        { return uri; }
-
-    /**
-     *
-     */
-    virtual void setUri (const DOMString& uriArg )
-        { uri = uriArg; }
-
-    /**
-     *
-     */
-    virtual void setPaint (unsigned short paintTypeArg,
-                           const DOMString& uriArg,
-                           const DOMString& /*rgbColor*/,
-                           const DOMString& /*iccColor*/ )
-                           throw( SVGException )
-        {
-        paintType = paintTypeArg;
-        uri       = uriArg;
-        //do something with rgbColor
-        //do something with iccColor;
-        }
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPaint()
-        {
-        uri       = "";
-        paintType = SVG_PAINTTYPE_UNKNOWN;
-        }
-
-    /**
-     *
-     */
-    SVGPaint(const SVGPaint &other) : css::CSSValue(other), SVGColor(other)
-        {
-        uri       = "";
-        paintType = SVG_PAINTTYPE_UNKNOWN;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGPaint() {}
-
-protected:
-
-    unsigned int paintType;
-    DOMString uri;
-
-};
 
 
 
@@ -6401,41 +2476,36 @@ class SVGColorProfileRule : public SVGCSSRule,
 {
 
 public:
+
    /**
      *
      */
-    virtual DOMString getSrc()
-        { return src; }
+    DOMString getSrc();
 
     /**
      *
      */
-    virtual void setSrc(const DOMString &val) throw (DOMException)
-        { src = val; }
+    void setSrc(const DOMString &val) throw(DOMException);
 
     /**
      *
      */
-    virtual DOMString getName()
-        { return name; }
+    DOMString getName();
 
     /**
      *
      */
-    virtual void setName(const DOMString &val) throw (DOMException)
-        { name = val; }
+    void setName(const DOMString &val) throw(DOMException);
 
     /**
      *
      */
-    virtual unsigned short getRenderingIntent()
-        { return renderingIntent; }
+    unsigned short getRenderingIntent();
 
     /**
      *
      */
-    virtual void setRenderingIntent(unsigned short val) throw (DOMException)
-        { renderingIntent = val; }
+    void setRenderingIntent(unsigned short val) throw(DOMException)
 
 
     //##################
@@ -6445,23 +2515,17 @@ public:
     /**
      *
      */
-    SVGColorProfileRule() {}
+    SVGColorProfileRule();
 
     /**
      *
      */
-    SVGColorProfileRule(const SVGColorProfileRule &other)
-               : SVGCSSRule(other), SVGRenderingIntent(other)
-        {
-        renderingIntent = other.renderingIntent;
-        src             = other.src;
-        name            = other.name;
-        }
+    SVGColorProfileRule(const SVGColorProfileRule &other);
 
     /**
      *
      */
-    virtual ~SVGColorProfileRule() {}
+    ~SVGColorProfileRule();
 
 protected:
 
@@ -6484,68 +2548,50 @@ class SVGFilterPrimitiveStandardAttributes : public SVGStylable
 {
 public:
 
-
+    /**
+     *
+     */
+    SVGAnimatedLength getX();
 
     /**
      *
      */
-    virtual SVGAnimatedLength getX()
-        { return x; }
+    SVGAnimatedLength getY();
 
     /**
      *
      */
-    virtual SVGAnimatedLength getY()
-        { return y; }
+    SVGAnimatedLength getWidth();
 
     /**
      *
      */
-    virtual SVGAnimatedLength getWidth()
-        { return width; }
+    SVGAnimatedLength getHeight();
 
     /**
      *
      */
-    virtual SVGAnimatedLength getHeight()
-        { return height; }
-
-    /**
-     *
-     */
-    virtual SVGAnimatedString getResult()
-        { return result; }
-
-
+    SVGAnimatedString getResult();
 
     //##################
     //# Non-API methods
     //##################
 
+    /**
+     *
+     */
+    SVGFilterPrimitiveStandardAttributes();
 
     /**
      *
      */
-    SVGFilterPrimitiveStandardAttributes()
-        {}
+    SVGFilterPrimitiveStandardAttributes(
+                const SVGFilterPrimitiveStandardAttributes &other);
 
     /**
      *
      */
-    SVGFilterPrimitiveStandardAttributes(const SVGFilterPrimitiveStandardAttributes &other)
-                                 : SVGStylable(other)
-        {
-        x      = other.x;
-        y      = other.y;
-        width  = other.width;
-        height = other.height;
-        result = other.result;
-        }
-
-    /**
-     *
-     */
-    virtual ~SVGFilterPrimitiveStandardAttributes() {}
+    ~SVGFilterPrimitiveStandardAttributes();
 
 protected:
 
@@ -6556,15 +2602,6 @@ protected:
     SVGAnimatedString result;
 
 };
-
-
-
-
-
-
-
-
-
 
 
 /*#########################################################################
@@ -6585,18 +2622,17 @@ public:
     /**
      *
      */
-    SVGEvent() {}
+    SVGEvent();
 
     /**
      *
      */
-    SVGEvent(const SVGEvent &other) : events::Event(other)
-        {}
+    SVGEvent(const SVGEvent &other);
 
     /**
      *
      */
-    virtual ~SVGEvent() {}
+    ~SVGEvent();
 
 };
 
@@ -6617,33 +2653,27 @@ public:
     /**
      *
      */
-    virtual SVGRect getZoomRectScreen()
-        { return zoomRectScreen; }
+    SVGRect getZoomRectScreen();
 
     /**
      *
      */
-    virtual double getPreviousScale()
-        { return previousScale; }
+    double getPreviousScale();
 
     /**
      *
      */
-    virtual SVGPoint getPreviousTranslate()
-        { return previousTranslate; }
+    SVGPoint getPreviousTranslate();
 
     /**
      *
      */
-    virtual double getNewScale()
-        { return newScale; }
+    double getNewScale();
 
    /**
      *
      */
-    virtual SVGPoint getNewTranslate()
-        { return newTranslate; }
-
+    SVGPoint getNewTranslate()
 
 
     //##################
@@ -6653,26 +2683,17 @@ public:
     /**
      *
      */
-    SVGZoomEvent()
-        {}
+    SVGZoomEvent();
 
     /**
      *
      */
-    SVGZoomEvent(const SVGZoomEvent &other) : events::Event(other),
-                                              events::UIEvent(other)
-        {
-        zoomRectScreen    = other.zoomRectScreen;
-        previousScale     = other.previousScale;
-        previousTranslate = other.previousTranslate;
-        newScale          = other.newScale;
-        newTranslate      = other.newTranslate;
-        }
+    SVGZoomEvent(const SVGZoomEvent &other);
 
     /**
      *
      */
-    virtual ~SVGZoomEvent() {}
+    ~SVGZoomEvent();
 
 protected:
 
@@ -6700,66 +2721,44 @@ public:
     /**
      *
      */
-    virtual SVGElementPtr getCorrespondingElement()
-        { return correspondingElement; }
+    SVGElementPtr getCorrespondingElement();
 
     /**
      *
      */
-    virtual SVGUseElementPtr getCorrespondingUseElement()
-        { return correspondingUseElement; }
+    SVGUseElementPtr getCorrespondingUseElement();
 
     /**
      *
      */
-    virtual SVGElementInstance getParentNode()
-        {
-        SVGElementInstance ret;
-        return ret;
-        }
+    SVGElementInstance getParentNode();
 
     /**
      *  Since we are using stack types and this is a circular definition,
      *  we will instead implement this as a global function below:
      *   SVGElementInstanceList getChildNodes(const SVGElementInstance instance);
      */
-    //virtual SVGElementInstanceList getChildNodes();
+    //SVGElementInstanceList getChildNodes();
 
     /**
      *
      */
-    virtual SVGElementInstance getFirstChild()
-        {
-        SVGElementInstance ret;
-        return ret;
-        }
+    SVGElementInstance getFirstChild();
 
     /**
      *
      */
-    virtual SVGElementInstance getLastChild()
-        {
-        SVGElementInstance ret;
-        return ret;
-        }
+    SVGElementInstance getLastChild();
 
     /**
      *
      */
-    virtual SVGElementInstance getPreviousSibling()
-        {
-        SVGElementInstance ret;
-        return ret;
-        }
+    SVGElementInstance getPreviousSibling();
 
     /**
      *
      */
-    virtual SVGElementInstance getNextSibling()
-        {
-        SVGElementInstance ret;
-        return ret;
-        }
+    SVGElementInstance getNextSibling();
 
 
     //##################
@@ -6769,20 +2768,17 @@ public:
     /**
      *
      */
-    SVGElementInstance() {}
+    SVGElementInstance();
 
     /**
      *
      */
-    SVGElementInstance(const SVGElementInstance &other)
-                        : events::EventTarget(other)
-        {
-        }
+    SVGElementInstance(const SVGElementInstance &other);
 
     /**
      *
      */
-    virtual ~SVGElementInstance() {}
+    ~SVGElementInstance();
 
 protected:
 
@@ -6807,36 +2803,22 @@ class SVGElementInstanceList
 {
 public:
 
+    /**
+     *
+     */
+    unsigned long getLength();
 
     /**
      *
      */
-    virtual unsigned long getLength()
-        { return items.size(); }
-
-    /**
-     *
-     */
-    virtual SVGElementInstance item (unsigned long index )
-        {
-        if (index >= items.size())
-            {
-            SVGElementInstance ret;
-            return ret;
-            }
-        return items[index];
-        }
+    SVGElementInstance item(unsigned long index);
 
     /**
      *  This static method replaces the circular definition of:
      *        SVGElementInstanceList SVGElementInstance::getChildNodes()
      *
      */
-    static SVGElementInstanceList getChildNodes(const SVGElementInstance &/*instance*/)
-        {
-        SVGElementInstanceList list;
-        return list;
-        }
+    static SVGElementInstanceList getChildNodes(const SVGElementInstance &/*instance*/);
 
 
     //##################
@@ -6846,20 +2828,17 @@ public:
     /**
      *
      */
-    SVGElementInstanceList() {}
+    SVGElementInstanceList();
 
     /**
      *
      */
-    SVGElementInstanceList(const SVGElementInstanceList &other)
-        {
-        items = other.items;
-        }
+    SVGElementInstanceList(const SVGElementInstanceList &other);
 
     /**
      *
      */
-    virtual ~SVGElementInstanceList() {}
+    ~SVGElementInstanceList();
 
 protected:
 
@@ -6869,115 +2848,9 @@ protected:
 };
 
 
-/**
- * This is a helper class that will hold several types of data.  It will
- * be used in those situations where methods are common to different 
- * interfaces, except for the data type.
- */   
-class SVGValue
-{
-public:
-
-    typedef enum
-        {
-        SVG_DOUBLE,
-        SVG_INT,
-        SVG_STRING
-	    }SVGValueType;
-
-    SVGValue(long v)
-        {
-        init();
-        ival = d;
-        type = SVG_INT;
-	    }
-	
-    SVGValue(double v)
-        {
-        init();
-        dval = v;
-        type = SVG_DOUBLE;
-	    }
-	
-    SVGValue(const DOMString &v)
-        {
-        init();
-        sval = v;
-        type = SVG_STRING;
-	    }
-	
-    SVGValue(const SVGValue &other)
-        {
-        assign(other);
-	    }
-	
-    SVGValue &operator=(const SVGValue &other)
-        {
-        assign(other);
-        return *this;
-	    }
-	
-    SVGValue &operator=(long v)
-        {
-        init();
-        ival = v;
-        type = SVG_INT;
-        return *this;
-	    }
-	
-    SVGValue &operator=(double v)
-        {
-        init();
-        ival = v;
-        type = SVG_DOUBLE;
-        return *this;
-	    }
-	
-    SVGValue &operator=(const DOMString &v)
-        {
-        init();
-        sval = v;
-        type = SVG_STRING;
-        return *this;
-	    }
-	
-	~SVGValue()
-	    {}
-	    
-	long intValue()
-	    { return ival; }
-
-	double doubleValue()
-	    { return ival; }
-
-	DOMString &stringValue()
-	    { return sval; }
 
 
-private:
 
-    void init()
-        {
-        type = SVG_DOUBLE;
-        ival = 0;
-		dval = 0.0;    
-		sval = "";
-	    }
-	
-    void assign(const SVGValue &other)
-        {
-        type = other.type;
-        ival = other.ival;
-		dval = other.dval;
-		sval = other.sval;
-	    }
-	
-	int       type;
-	double    dval;
-	long      ival;
-	DOMString sval;
-
-};
 
 
 
@@ -7146,91 +3019,6 @@ const char *svgElementEnumToStr(int type);
 
 
 
-/*#########################################################################
-## SVGValue
-#########################################################################*/
-
-
-/**
- * A helper class to provide a common API across several data types
- */
-class SVGValue
-{
-public:
-
-    /**
-     * Constructors
-     */
-    SVGValue()
-        { init(); }
-
-    SVGValue(const SVGValue &other)
-        { assign(other); }
-
-    SVGValue(double val)
-        { init(); type = SVG_DOUBLE; dval = val; }
-
-    SVGValue(long val)
-        { init(); type = SVG_INT; ival = val; }
-
-    SVGValue(const DOMString &val)
-        { init(); type = SVG_STRING; sval = val; }
-
-    int getType()
-        { return type; }
-
-    /**
-     * Assignment
-     */
-    SVGValue &operator=(const SVGValue &val)
-        { assign(val); return *this; }
-
-    SVGValue &operator=(double val)
-        { init(); type = SVG_DOUBLE; dval = val; return *this; }
-
-    SVGValue &operator=(long val)
-        { init(); type = SVG_INT; ival = val; return *this; }
-
-    SVGValue &operator=(const DOMString &val)
-        { init(); type = SVG_STRING; sval = val; return *this; }
-
-    /**
-     * Getters
-     */
-    double doubleValue()
-        { return dval; }
-        
-    long intValue()
-        { return ival; }
-        
-    DOMString &stringValue()
-        { return sval; }
-
-private:
-
-    void init()
-        {
-        type = SVG_DOUBLE;
-        dval = 0.0;
-        ival = 0;
-        sval.clear();
-        }
-
-    void assign(const SVGValue &other)
-        {
-        type = other.type;
-        dval = other.dval;
-        ival = other.ival;
-        sval = other.sval;
-        }
-
-    int       type;
-    double    dval;
-    long      ival;
-    DOMString sval;
-
-};
-
 
 /*#########################################################################
 ## SVGElement
@@ -7257,7 +3045,7 @@ public:
     /**
      * Set the value of the id attribute on the given element.
      */
-    void setId(const DOMString &val) throw (DOMException);
+    void setId(const DOMString &val) throw(DOMException);
 
     /**
      * Corresponds to attribute xml:base on the given element.
@@ -7267,7 +3055,7 @@ public:
     /**
      * Corresponds to attribute xml:base on the given element.
      */
-    void setXmlBase(const DOMString &val) throw (DOMException);
+    void setXmlBase(const DOMString &val) throw(DOMException);
 
     /**
      * The nearest ancestor 'svg' element. Null if the given element is the
@@ -7306,7 +3094,7 @@ public:
     /**
      *
      */
-    void setValue(double val) throw (DOMException);
+    void setValue(double val) throw(DOMException);
 
     /**
      *
@@ -7316,7 +3104,7 @@ public:
     /**
      *
      */
-    void setValueInSpecifiedUnits(double /*val*/) throw (DOMException);
+    void setValueInSpecifiedUnits(double /*val*/) throw(DOMException);
 
     /**
      *
@@ -7326,7 +3114,7 @@ public:
     /**
      *
      */
-    void setValueAsString(const DOMString &/*val*/) throw (DOMException);
+    void setValueAsString(const DOMString &/*val*/) throw(DOMException);
 
 
     /**
@@ -7341,170 +3129,85 @@ public:
     void convertToSpecifiedUnits(unsigned short /*unitType*/);
 
     //####################################################################
-    //# SVGAnimatedAngle            
+    //## The following animated types are rolled up into a single
+    //## SVGAnimatedValue interface
+    //####################################################################
+
+    //####################################################################
+    //## SVGAnimatedAngle
+    //####################################################################
+
+    //####################################################################
+    //## SVGAnimatedBoolean
+    //####################################################################
+
+    //####################################################################
+    //## SVGAnimatedEnumeration
+    //####################################################################
+
+    //####################################################################
+    //## SVGAnimatedInteger
+    //####################################################################
+
+    //####################################################################
+    //## SVGAnimatedLength
+    //####################################################################
+
+    //####################################################################
+    //## SVGAnimatedLengthList
+    //####################################################################
+
+    //####################################################################
+    //## SVGAnimatedNumber
+    //####################################################################
+
+    //####################################################################
+    //## SVGAnimatedNumberList
+    //####################################################################
+
+    //####################################################################
+    //## SVGAnimatedPathData
+    //####################################################################
+
+    //####################################################################
+    //## SVGAnimatedPoints
+    //####################################################################
+
+    //####################################################################
+    //## SVGAnimatedPreserveAspectRatio
+    //####################################################################
+
+    //####################################################################
+    //## SVGAnimatedRect
+    //####################################################################
+
+    //####################################################################
+    //## SVGAnimatedString
+    //####################################################################
+
+    //####################################################################
+    //## SVGAnimatedTransformList
+    //####################################################################
+
+    //####################################################################
+    //# SVGAnimatedValue          
     //####################################################################
 
     /**
      *
      */
-    SVGAngle getBaseAngleVal();
+    SVGValue &getBaseVal();
 
     /**
      *
      */
-    SVGAngle getAnimAngleVal();
-
-
-    //####################################################################
-    //# SVGAnimatedBoolean          
-    //####################################################################
+    void setBaseVal(const SVGValue &val) throw (DOMException);
 
     /**
      *
      */
-    bool getBaseBooleanVal();
+    SVGValue &getAnimVal();
 
-    /**
-     *
-     */
-    void setBaseBooleanVal(bool val) throw (DOMException);
-
-    /**
-     *
-     */
-    bool getAnimBooleanVal();
-
-    //####################################################################
-    //# SVGAnimatedEnumeration      
-    //####################################################################
-
-    /**
-     *
-     */
-    unsigned short getBaseEnumerationVal();
-
-    /**
-     *
-     */
-    void setBaseEnumerationVal(unsigned short val) throw (DOMException);
-
-    /**
-     *
-     */
-    unsigned short getAnimEnumerationVal();
-
-    //####################################################################
-    //# SVGAnimatedInteger          
-    //####################################################################
-
-    /**
-     *
-     */
-    long getBaseIntegerVal();
-
-    /**
-     *
-     */
-    void setBaseIntegerVal(long val) throw (DOMException);
-
-    /**
-     *
-     */
-    long getAnimIntegerVal();
-
-    //####################################################################
-    //# SVGAnimatedLength           
-    //####################################################################
-
-    /**
-     *
-     */
-    SVGLength &getBaseLengthVal();
-
-    /**
-     *
-     */
-    SVGLength &getAnimLengthVal();
-
-    //####################################################################
-    //# SVGAnimatedLengthList       
-    //####################################################################
-
-    /**
-     *
-     */
-    SVGLengthList &getBaseLengthListVal();
-
-    /**
-     *
-     */
-    SVGLengthList &getAnimLengthListVal();
-
-    //####################################################################
-    //# SVGAnimatedNumber           
-    //####################################################################
-
-    /**
-     *
-     */
-    double getBaseNumberVal();
-
-    /**
-     *
-     */
-    void setBaseNumberVal(double val) throw (DOMException);
-
-    /**
-     *
-     */
-    double getAnimNumberVal();
-
-    //####################################################################
-    //# SVGAnimatedNumberList       
-    //####################################################################
-
-    /**
-     *
-     */
-    SVGNumberList &getBaseNumberListVal();
-
-    /**
-     *
-     */
-    SVGNumberList &getAnimNumberListVal();
-
-    //####################################################################
-    //# SVGAnimatedRect             
-    //####################################################################
-
-    /**
-     *
-     */
-    SVGRect &getBaseRectVal();
-
-    /**
-     *
-     */
-    SVGRect &getAnimRectVal();
-
-    //####################################################################
-    //# SVGAnimatedString           
-    //####################################################################
-
-    /**
-     *
-     */
-    DOMString getBaseVal();
-
-    /**
-     *
-     */
-    void setBaseVal(const DOMString &val) throw (DOMException);
-
-    /**
-     *
-     */
-    DOMString getAnimVal();
 
     //####################################################################
     //# SVGColor                    
@@ -7527,7 +3230,7 @@ public:
      * A string representation of the current value.
      * Note that setting implies parsing.     
      */
-    void setCssText(const DOMString &val) throw (dom::DOMException);
+    void setCssText(const DOMString &val) throw(dom::DOMException);
 
 
     /**
@@ -7549,14 +3252,14 @@ public:
     /**
      *
      */
-    void setRGBColor(const DOMString& /*rgbColor*/) throw (SVGException);
+    void setRGBColor(const DOMString& /*rgbColor*/) throw(SVGException);
 
     /**
      *
      */
     void setRGBColorICCColor(const DOMString& /*rgbColor*/,
                              const DOMString& /*iccColor*/)
-                             throw (SVGException);
+                             throw(SVGException);
 
     /**
      *
@@ -7564,7 +3267,7 @@ public:
     void setColor(unsigned short /*colorType*/,
                            const DOMString& /*rgbColor*/,
                            const DOMString& /*iccColor*/)
-                           throw (SVGException);
+                           throw(SVGException);
 
     //####################################################################
     //# SVGCSSRule                  
@@ -7591,7 +3294,7 @@ public:
      * state of the rule and not its initial value.
      * Note that setting involves reparsing.     
      */
-    void setCssText(const DOMString &val) throw (DOMException);
+    void setCssText(const DOMString &val) throw(DOMException);
 
     /**
      * From CSSRule    
@@ -7642,7 +3345,7 @@ public:
     /**
      *
      */
-    void setColorProfile(const DOMString &val) throw (DOMException);
+    void setColorProfile(const DOMString &val) throw(DOMException);
 
     /**
      *
@@ -7661,7 +3364,7 @@ public:
     /**
      *
      */
-    void setXmllang(const DOMString &val) throw (DOMException);
+    void setXmllang(const DOMString &val) throw(DOMException);
 
     /**
      *
@@ -7671,7 +3374,7 @@ public:
     /**
      *
      */
-    void setXmlspace(const DOMString &val) throw (DOMException);
+    void setXmlspace(const DOMString &val) throw(DOMException);
 
     //####################################################################
     //# SVGLength                   
@@ -7690,7 +3393,7 @@ public:
     /**
      *
      */
-    void setValue(double val) throw (DOMException);
+    void setValue(double val) throw(DOMException);
 
     /**
      *
@@ -7700,7 +3403,7 @@ public:
     /**
      *
      */
-    void setValueInSpecifiedUnits(double /*val*/) throw (DOMException);
+    void setValueInSpecifiedUnits(double /*val*/) throw(DOMException);
 
     /**
      *
@@ -7710,7 +3413,7 @@ public:
     /**
      *
      */
-    void setValueAsString(const DOMString& /*val*/) throw (DOMException);
+    void setValueAsString(const DOMString& /*val*/) throw(DOMException);
 
 
     /**
@@ -7736,41 +3439,41 @@ public:
     /**
      *
      */
-    void clear() throw (DOMException);
+    void clear() throw(DOMException);
 
     /**
      *
      */
     SVGLength initialize(const SVGLength &newItem)
-                    throw (DOMException, SVGException);
+                    throw(DOMException, SVGException);
 
     /**
      *
      */
-    SVGLength getItem(unsigned long index) throw (DOMException);
+    SVGLength getItem(unsigned long index) throw(DOMException);
 
     /**
      *
      */
     SVGLength insertItemBefore(const SVGLength &newItem, unsigned long index)
-                                   throw (DOMException, SVGException);
+                                   throw(DOMException, SVGException);
 
     /**
      *
      */
     SVGLength replaceItem(const SVGLength &newItem, unsigned long index)
-                               throw (DOMException, SVGException);
+                               throw(DOMException, SVGException);
 
     /**
      *
      */
-    SVGLength removeItem(unsigned long index) throw (DOMException);
+    SVGLength removeItem(unsigned long index) throw(DOMException);
 
     /**
      *
      */
     SVGLength appendItem(const SVGLength &newItem)
-                    throw (DOMException, SVGException);
+                    throw(DOMException, SVGException);
 
     //####################################################################
     //# SVGLocatable                
@@ -7805,7 +3508,7 @@ public:
      *
      */
     SVGMatrix getTransformToElement(const SVGElement &/*element*/)
-                                    throw (SVGException);
+                                    throw(SVGException);
 
     //####################################################################
     //# SVGNumber                   
@@ -7819,7 +3522,7 @@ public:
     /**
      *
      */
-    void setValue(double val) throw (DOMException);
+    void setValue(double val) throw(DOMException);
 
     //####################################################################
     //# SVGNumberList               
@@ -7834,41 +3537,41 @@ public:
     /**
      *
      */
-    void clear() throw (DOMException);
+    void clear() throw(DOMException);
 
     /**
      *
      */
     SVGNumber initialize(const SVGNumber &newItem)
-                    throw (DOMException, SVGException);
+                    throw(DOMException, SVGException);
 
     /**
      *
      */
-    SVGNumber getItem(unsigned long index) throw (DOMException);
+    SVGNumber getItem(unsigned long index) throw(DOMException);
 
     /**
      *
      */
     SVGNumber insertItemBefore(const SVGNumber &newItem, unsigned long index)
-                                         throw (DOMException, SVGException);
+                                         throw(DOMException, SVGException);
 
     /**
      *
      */
     SVGNumber replaceItem(const SVGNumber &newItem, unsigned long index)
-                          throw (DOMException, SVGException);
+                          throw(DOMException, SVGException);
 
     /**
      *
      */
-    SVGNumber removeItem(unsigned long index) throw (DOMException);
+    SVGNumber removeItem(unsigned long index) throw(DOMException);
 
     /**
      *
      */
     SVGNumber appendItem(const SVGNumber &newItem)
-                                   throw (DOMException, SVGException);
+                                   throw(DOMException, SVGException);
 
     //####################################################################
     //# SVGRect                     
@@ -7882,7 +3585,7 @@ public:
     /**
      *
      */
-    void setX(double val) throw (DOMException);
+    void setX(double val) throw(DOMException);
 
     /**
      *
@@ -7892,7 +3595,7 @@ public:
     /**
      *
      */
-    void setY(double val) throw (DOMException);
+    void setY(double val) throw(DOMException);
 
     /**
      *
@@ -7902,7 +3605,7 @@ public:
     /**
      *
      */
-    void setWidth(double val) throw (DOMException);
+    void setWidth(double val) throw(DOMException);
 
     /**
      *
@@ -7912,7 +3615,7 @@ public:
     /**
      *
      */
-    void setHeight(double val) throw (DOMException);
+    void setHeight(double val) throw(DOMException);
 
     //####################################################################
     //# SVGRenderingIntent          
@@ -7930,41 +3633,41 @@ public:
     /**
      *
      */
-    void clear() throw (DOMException);
+    void clear() throw(DOMException);
 
     /**
      *
      */
     DOMString initialize(const DOMString& newItem)
-                    throw (DOMException, SVGException);
+                    throw(DOMException, SVGException);
 
     /**
      *
      */
-    DOMString getItem(unsigned long index) throw (DOMException);
+    DOMString getItem(unsigned long index) throw(DOMException);
 
     /**
      *
      */
     DOMString insertItemBefore(const DOMString& newItem, unsigned long index)
-                               throw (DOMException, SVGException);
+                               throw(DOMException, SVGException);
 
     /**
      *
      */
     DOMString replaceItem(const DOMString& newItem, unsigned long index)
-                                throw (DOMException, SVGException);
+                                throw(DOMException, SVGException);
 
     /**
      *
      */
-    DOMString removeItem(unsigned long index) throw (DOMException);
+    DOMString removeItem(unsigned long index) throw(DOMException);
 
     /**
      *
      */
     DOMString appendItem(const DOMString& newItem)
-                    throw (DOMException, SVGException);
+                    throw(DOMException, SVGException);
 
     //####################################################################
     //# SVGStylable                 
@@ -8077,7 +3780,7 @@ public:
     /**
      *
      */
-    void setZoomAndPan(unsigned short val) throw (DOMException);
+    void setZoomAndPan(unsigned short val) throw(DOMException);
 
     //####################################################################
     //####################################################################
@@ -8110,7 +3813,7 @@ public:
     /**
      * Set the attribute glyphRef on the given element.
      */
-    void setGlyphRef(const DOMString &val) throw (DOMException);
+    void setGlyphRef(const DOMString &val) throw(DOMException);
 
     /**
      * Get the attribute format on the given element.
@@ -8120,7 +3823,7 @@ public:
     /**
      * Set the attribute format on the given element.
      */
-    void setFormat(const DOMString &val) throw (DOMException);
+    void setFormat(const DOMString &val) throw(DOMException);
 
 
     //####################################################################
@@ -8174,7 +3877,7 @@ public:
     /**
      *
      */
-    double getSimpleDuration() throw (DOMException);
+    double getSimpleDuration() throw(DOMException);
 
 
 
@@ -8223,7 +3926,7 @@ public:
     /**
      * Set the attribute local on the given element.
      */
-    void setLocal(const DOMString &val) throw (DOMException);
+    void setLocal(const DOMString &val) throw(DOMException);
 
     /**
      * Get the attribute name on the given element.
@@ -8233,7 +3936,7 @@ public:
     /**
      * Set the attribute name on the given element.
      */
-    void setName(const DOMString &val) throw (DOMException);
+    void setName(const DOMString &val) throw(DOMException);
 
     /**
      * Set the attribute rendering-intent on the given element.
@@ -8245,7 +3948,7 @@ public:
     /**
      * Get the attribute rendering-intent on the given element.
      */
-    void setRenderingIntent(unsigned short val) throw (DOMException);
+    void setRenderingIntent(unsigned short val) throw(DOMException);
 
 
     //####################################################################
@@ -9074,7 +4777,7 @@ public:
     /**
      * Set the attribute glyphRef on the given element.
      */
-    void setGlyphRef(const DOMString &val) throw (DOMException);
+    void setGlyphRef(const DOMString &val) throw(DOMException);
 
     /**
      * Get the attribute format on the given element.
@@ -9084,7 +4787,7 @@ public:
     /**
      * Set the attribute format on the given element.
      */
-    void setFormat(const DOMString &val) throw (DOMException);
+    void setFormat(const DOMString &val) throw(DOMException);
 
     /**
      * Get the attribute x on the given element.
@@ -9094,7 +4797,7 @@ public:
     /**
      * Set the attribute x on the given element.
      */
-    void setX(double val) throw (DOMException);
+    void setX(double val) throw(DOMException);
 
     /**
      * Get the attribute y on the given element.
@@ -9104,7 +4807,7 @@ public:
     /**
      * Set the attribute y on the given element.
      */
-    void setY(double val) throw (DOMException);
+    void setY(double val) throw(DOMException);
 
     /**
      * Get the attribute dx on the given element.
@@ -9114,7 +4817,7 @@ public:
     /**
      * Set the attribute dx on the given element.
      */
-    void setDx(double val) throw (DOMException);
+    void setDx(double val) throw(DOMException);
 
     /**
      * Get the attribute dy on the given element.
@@ -9124,7 +4827,7 @@ public:
     /**
      * Set the attribute dy on the given element.
      */
-    void setDy(double val) throw (DOMException);
+    void setDy(double val) throw(DOMException);
 
 
     //####################################################################
@@ -9367,8 +5070,144 @@ public:
     //####################################################################
 
     //####################################################################
+    //# SVGMissingGlyphElement
+    //####################################################################
+
+
+    //####################################################################
     //# SVGMPathElement
     //####################################################################
+
+    /**
+     * Corresponds to attribute pathLength on the given 'path' element.
+     */
+    SVGAnimatedNumber getPathLength();
+
+    /**
+     * Returns the user agent's computed value for the total length of the path using
+     * the user agent's distance-along-a-path algorithm, as a distance in the current
+     * user coordinate system.
+     */
+    double getTotalLength();
+
+    /**
+     * Returns the(x,y) coordinate in user space which is distance units along the
+     * path, utilizing the user agent's distance-along-a-path algorithm.
+     */
+    SVGPoint getPointAtLength(double distance);
+
+    /**
+     * Returns the index into pathSegList which is distance units along the path,
+     * utilizing the user agent's distance-along-a-path algorithm.
+     */
+    unsigned long getPathSegAtLength(double distance);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegClosePath object.
+     */
+    SVGPathSeg createSVGPathSegClosePath();
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegMovetoAbs object.
+     */
+    SVGPathSeg createSVGPathSegMovetoAbs(double x, double y);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegMovetoRel object.
+     */
+    SVGPathSeg createSVGPathSegMovetoRel(double x, double y);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegLinetoAbs object.
+     */
+    SVGPathSeg createSVGPathSegLinetoAbs(double x, double y);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegLinetoRel object.
+     */
+    SVGPathSeg createSVGPathSegLinetoRel(double x, double y);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegCurvetoCubicAbs object.
+     */
+    SVGPathSeg createSVGPathSegCurvetoCubicAbs(double x, double y,
+                        double x1, double y1, double x2, double y2);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegCurvetoCubicRel object.
+     */
+    SVGPathSeg createSVGPathSegCurvetoCubicRel(double x, double y,
+                        double x1, double y1, double x2, double y2);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegCurvetoQuadraticAbs object.
+     */
+    SVGPathSeg createSVGPathSegCurvetoQuadraticAbs(double x, double y,
+                         double x1, double y1);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegCurvetoQuadraticRel object.
+     */
+    SVGPathSeg createSVGPathSegCurvetoQuadraticRel(double x, double y,
+                         double x1, double y1);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegArcAbs object.
+     */
+    SVGPathSeg createSVGPathSegArcAbs(double x, double y,
+                         double r1, double r2, double angle,
+                         bool largeArcFlag, bool sweepFlag);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegArcRel object.
+     */
+    SVGPathSeg createSVGPathSegArcRel(double x, double y, double r1,
+                         double r2, double angle, bool largeArcFlag,
+                         bool sweepFlag);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegLinetoHorizontalAbs object.
+     */
+    SVGPathSeg createSVGPathSegLinetoHorizontalAbs(double x);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegLinetoHorizontalRel object.
+     */
+    SVGPathSeg createSVGPathSegLinetoHorizontalRel(double x);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegLinetoVerticalAbs object.
+     */
+    SVGPathSeg createSVGPathSegLinetoVerticalAbs(double y);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegLinetoVerticalRel object.
+     */
+    SVGPathSeg createSVGPathSegLinetoVerticalRel(double y);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegCurvetoCubicSmoothAbs object.
+     */
+    SVGPathSeg createSVGPathSegCurvetoCubicSmoothAbs(double x, double y,
+                                             double x2, double y2);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegCurvetoCubicSmoothRel object.
+     */
+    SVGPathSeg createSVGPathSegCurvetoCubicSmoothRel(double x, double y,
+                                                      double x2, double y2);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegCurvetoQuadraticSmoothAbs
+     *      object.
+     */
+    SVGPathSeg createSVGPathSegCurvetoQuadraticSmoothAbs(double x, double y);
+
+    /**
+     * Returns a stand-alone, parentless SVGPathSegCurvetoQuadraticSmoothRel
+     *      object.
+     */
+    SVGPathSeg createSVGPathSegCurvetoQuadraticSmoothRel(double x, double y);
 
     //####################################################################
     //# SVGPathElement
@@ -9423,161 +5262,6 @@ public:
     //####################################################################
     //# SVGPolygonElement
     //####################################################################
-
-    //####################################################################
-    //# SVGMissingGlyphElement
-    //####################################################################
-
-    /**
-     * Corresponds to attribute pathLength on the given 'path' element.
-     */
-    SVGAnimatedNumber getPathLength();
-
-    /**
-     * Returns the user agent's computed value for the total length of the path using
-     * the user agent's distance-along-a-path algorithm, as a distance in the current
-     * user coordinate system.
-     */
-    double getTotalLength();
-
-    /**
-     * Returns the(x,y) coordinate in user space which is distance units along the
-     * path, utilizing the user agent's distance-along-a-path algorithm.
-     */
-    SVGPoint getPointAtLength(double distance);
-
-    /**
-     * Returns the index into pathSegList which is distance units along the path,
-     * utilizing the user agent's distance-along-a-path algorithm.
-     */
-    unsigned long getPathSegAtLength(double distance);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegClosePath object.
-     */
-    SVGPathSegClosePath
-              createSVGPathSegClosePath();
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegMovetoAbs object.
-     */
-    SVGPathSegMovetoAbs
-              createSVGPathSegMovetoAbs(double x, double y);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegMovetoRel object.
-     */
-    SVGPathSegMovetoRel
-              createSVGPathSegMovetoRel(double x, double y);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegLinetoAbs object.
-     */
-    SVGPathSegLinetoAbs
-              createSVGPathSegLinetoAbs(double x, double y);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegLinetoRel object.
-     */
-    SVGPathSegLinetoRel
-              createSVGPathSegLinetoRel(double x, double y);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegCurvetoCubicAbs object.
-     */
-    SVGPathSegCurvetoCubicAbs
-              createSVGPathSegCurvetoCubicAbs(double x, double y,
-                        double x1, double y1, double x2, double y2);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegCurvetoCubicRel object.
-     */
-    SVGPathSegCurvetoCubicRel
-              createSVGPathSegCurvetoCubicRel(double x, double y,
-                        double x1, double y1, double x2, double y2);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegCurvetoQuadraticAbs object.
-     */
-    SVGPathSegCurvetoQuadraticAbs
-              createSVGPathSegCurvetoQuadraticAbs(double x, double y,
-                         double x1, double y1);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegCurvetoQuadraticRel object.
-     */
-    SVGPathSegCurvetoQuadraticRel
-              createSVGPathSegCurvetoQuadraticRel(double x, double y,
-                         double x1, double y1);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegArcAbs object.
-     */
-    SVGPathSegArcAbs
-              createSVGPathSegArcAbs(double x, double y,
-                         double r1, double r2, double angle,
-                         bool largeArcFlag, bool sweepFlag);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegArcRel object.
-     */
-    SVGPathSegArcRel
-              createSVGPathSegArcRel(double x, double y, double r1,
-                         double r2, double angle, bool largeArcFlag,
-                         bool sweepFlag);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegLinetoHorizontalAbs object.
-     */
-    SVGPathSegLinetoHorizontalAbs
-              createSVGPathSegLinetoHorizontalAbs(double x);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegLinetoHorizontalRel object.
-     */
-    SVGPathSegLinetoHorizontalRel
-              createSVGPathSegLinetoHorizontalRel(double x);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegLinetoVerticalAbs object.
-     */
-    SVGPathSegLinetoVerticalAbs
-              createSVGPathSegLinetoVerticalAbs(double y);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegLinetoVerticalRel object.
-     */
-    SVGPathSegLinetoVerticalRel
-              createSVGPathSegLinetoVerticalRel(double y);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegCurvetoCubicSmoothAbs object.
-     */
-    SVGPathSegCurvetoCubicSmoothAbs
-              createSVGPathSegCurvetoCubicSmoothAbs(double x, double y,
-                                             double x2, double y2);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegCurvetoCubicSmoothRel object.
-     */
-    SVGPathSegCurvetoCubicSmoothRel
-              createSVGPathSegCurvetoCubicSmoothRel(double x, double y,
-                                                      double x2, double y2);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegCurvetoQuadraticSmoothAbs
-     *      object.
-     */
-    SVGPathSegCurvetoQuadraticSmoothAbs
-              createSVGPathSegCurvetoQuadraticSmoothAbs(double x, double y);
-
-    /**
-     * Returns a stand-alone, parentless SVGPathSegCurvetoQuadraticSmoothRel
-     *      object.
-     */
-    SVGPathSegCurvetoQuadraticSmoothRel
-              createSVGPathSegCurvetoQuadraticSmoothRel(double x, double y);
-
 
     //####################################################################
     //# SVGRadialGradientElement
@@ -9662,7 +5346,7 @@ public:
     /**
      *
      */
-    void setType(const DOMString &val) throw (DOMException);
+    void setType(const DOMString &val) throw(DOMException);
 
     //####################################################################
     //# SVGSetElement
@@ -9691,7 +5375,7 @@ public:
     /**
      * Set the attribute xml:space on the given element.
      */
-    void setXmlspace(const DOMString &val) throw (DOMException);
+    void setXmlspace(const DOMString &val) throw(DOMException);
 
     /**
      * Get the attribute type on the given 'style' element.
@@ -9701,7 +5385,7 @@ public:
     /**
      * Set the attribute type on the given 'style' element.
      */
-    void setType(const DOMString &val) throw (DOMException);
+    void setType(const DOMString &val) throw(DOMException);
 
     /**
      * Get the attribute media on the given 'style' element.
@@ -9711,7 +5395,7 @@ public:
     /**
      * Set the attribute media on the given 'style' element.
      */
-    void setMedia(const DOMString &val) throw (DOMException);
+    void setMedia(const DOMString &val) throw(DOMException);
 
     /**
      * Get the attribute title on the given 'style' element.
@@ -9721,7 +5405,7 @@ public:
     /**
      * Set the attribute title on the given 'style' element.
      */
-    void setTitle(const DOMString &val) throw (DOMException);
+    void setTitle(const DOMString &val) throw(DOMException);
 
     //####################################################################
     //# SVGSymbolElement
@@ -9759,7 +5443,7 @@ public:
     /**
      * Set the attribute contentScriptType on the given 'svg' element.
      */
-    void setContentScriptType(const DOMString &val) throw (DOMException);
+    void setContentScriptType(const DOMString &val) throw(DOMException);
 
 
     /**
@@ -9770,7 +5454,7 @@ public:
     /**
      * Set the attribute contentStyleType on the given 'svg' element.
      */
-    void setContentStyleType(const DOMString &val) throw (DOMException);
+    void setContentStyleType(const DOMString &val) throw(DOMException);
 
     /**
      * The position and size of the viewport(implicit or explicit) that corresponds
@@ -9830,7 +5514,7 @@ public:
     /**
      * Set the value above
      */
-    void setUseCurrentView(bool val) throw (DOMException);
+    void setUseCurrentView(bool val) throw(DOMException);
 
     /**
      * The definition of the initial view(i.e., before magnification and panning) of
@@ -9879,7 +5563,7 @@ public:
     /**
      *  Set the value above.
      */
-    void setCurrentScale(double val) throw (DOMException);
+    void setCurrentScale(double val) throw(DOMException);
 
     /**
      * The corresponding translation factor that takes into account
@@ -9907,7 +5591,7 @@ public:
     /**
      * Cancels a specified suspendRedraw() by providing a unique suspend_handle_id.
      */
-    void unsuspendRedraw(unsigned long suspend_handle_id) throw (DOMException);
+    void unsuspendRedraw(unsigned long suspend_handle_id) throw(DOMException);
 
     /**
      * Cancels all currently active suspendRedraw() method calls. This method is most
@@ -10029,14 +5713,14 @@ public:
     /**
      * Creates an SVGTransform object outside of any document trees.
      * The object is initialized to an identity matrix transform
-     *     (SVG_TRANSFORM_MATRIX).
+     *    (SVG_TRANSFORM_MATRIX).
      */
     SVGTransform createSVGTransform();
 
     /**
      * Creates an SVGTransform object outside of any document trees.
      * The object is initialized to the given matrix transform
-     *     (i.e., SVG_TRANSFORM_MATRIX).
+     *    (i.e., SVG_TRANSFORM_MATRIX).
      */
     SVGTransform createSVGTransformFromMatrix(const SVGMatrix &matrix);
 
@@ -10108,7 +5792,7 @@ public:
      * assumptions about glyph metrics.
      */
     double getSubStringLength(unsigned long charnum, unsigned long nchars)
-                                     throw (DOMException);
+                                     throw(DOMException);
 
     /**
      * Returns the current text position before rendering the character in the user
@@ -10120,7 +5804,7 @@ public:
      * a single glyph or a sequence of glyphs), then each of the inseparable
      * characters will return the start position for the first glyph.
      */
-    SVGPoint getStartPositionOfChar(unsigned long charnum) throw (DOMException);
+    SVGPoint getStartPositionOfChar(unsigned long charnum) throw(DOMException);
 
     /**
      * Returns the current text position after rendering the character in the user
@@ -10132,7 +5816,7 @@ public:
      * inseparably(e.g., as a single glyph or a sequence of glyphs), then each of
      * the inseparable characters will return the end position for the last glyph.
      */
-    SVGPoint getEndPositionOfChar(unsigned long charnum) throw (DOMException);
+    SVGPoint getEndPositionOfChar(unsigned long charnum) throw(DOMException);
 
     /**
      * Returns a tightest rectangle which defines the minimum and maximum X and Y
@@ -10142,7 +5826,7 @@ public:
      * characters are rendered inseparably(e.g., as a single glyph or a sequence of
      * glyphs), then each of the inseparable characters will return the same extent.
      */
-    SVGRect getExtentOfChar(unsigned long charnum) throw (DOMException);
+    SVGRect getExtentOfChar(unsigned long charnum) throw(DOMException);
 
     /**
      * Returns the rotation value relative to the current user coordinate system used
@@ -10158,7 +5842,7 @@ public:
      *(e.g., as a single glyph or a sequence of glyphs), then each of the
      * inseparable characters will return the same rotation value.
      */
-    double getRotationOfChar(unsigned long charnum) throw (DOMException);
+    double getRotationOfChar(unsigned long charnum) throw(DOMException);
 
     /**
      * Returns the index of the character whose corresponding glyph cell bounding box
@@ -10179,7 +5863,7 @@ public:
      *      selected the substring interactively.
      */
     void selectSubString(unsigned long charnum, unsigned long nchars)
-                                  throw (DOMException);
+                                  throw(DOMException);
 
 
 
@@ -10444,7 +6128,7 @@ public:
      * Returns the SVGDocument  object for the referenced SVG document.
      */
     SVGDocumentPtr getSVGDocument()
-                    throw (DOMException);
+                    throw(DOMException);
 
     //##################
     //# Non-API methods
