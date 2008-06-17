@@ -326,31 +326,32 @@ Curve* EllipticalArc::derivative() const
 std::vector<Point> 
 EllipticalArc::pointAndDerivatives(Coord t, unsigned int n) const
 {
+    unsigned int nn = n+1; // nn represents the size of the result vector.
 	std::vector<Point> result;
-	result.reserve(n);
+	result.reserve(nn);
 	double angle = map_unit_interval_on_circular_arc(t, start_angle(), 
 			                                         end_angle(), sweep_flag());
 	EllipticalArc ea(*this);
 	ea.m_center = Point(0,0);
-	unsigned int m = std::min(n, 4u);
+	unsigned int m = std::min(nn, 4u);
 	for ( unsigned int i = 0; i < m; ++i )
 	{
 		result.push_back( ea.pointAtAngle(angle) );
 		angle += M_PI/2;
 		if ( !(angle < 2*M_PI) ) angle -= 2*M_PI;
 	}
-	m = n / 4;
+	m = nn / 4;
 	for ( unsigned int i = 1; i < m; ++i )
 	{
 		for ( unsigned int j = 0; j < 4; ++j )
 			result.push_back( result[j] );
 	}
-	m = n - 4 * m;
+	m = nn - 4 * m;
 	for ( unsigned int i = 0; i < m; ++i )
 	{
 		result.push_back( result[i] );
 	}
-	if ( !result.empty() ) // n != 0
+	if ( !result.empty() ) // nn != 0
 		result[0] = pointAtAngle(angle);
 	return result;
 }

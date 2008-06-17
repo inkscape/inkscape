@@ -330,10 +330,26 @@ void subdiv_sbasis(SBasis const & s,
 
 // It is faster to use the bernstein root finder for small degree polynomials (<100?.
 
+std::vector<double> roots1(SBasis const & s) {
+    std::vector<double> res;
+    double d = s[0][0] - s[0][1];
+    if(d != 0) {
+        double r = s[0][0] / d;
+        if(0 <= r and r <= 1)
+            res.push_back(r);
+    }
+    return res;
+}
+
 std::vector<double> roots(SBasis const & s) {
-    if(s.size() == 0) return std::vector<double>();
-    
-    return sbasis_to_bezier(s).roots();
+    switch(s.size()) {
+    case 0:
+        return std::vector<double>();
+    case 1:
+        return roots1(s);
+    default:
+        return sbasis_to_bezier(s).roots();
+    }
 }
 
 };

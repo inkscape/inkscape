@@ -103,10 +103,14 @@ public:
 
   virtual Curve *transformed(Matrix const &m) const = 0;
 
-  virtual Point pointAt(Coord t) const { return pointAndDerivatives(t, 1).front(); }
+  virtual Point pointAt(Coord t) const { return pointAndDerivatives(t, 0).front(); }
   virtual Coord valueAt(Coord t, Dim2 d) const { return pointAt(t)[d]; }
   virtual Point operator() (double t)  const { return pointAt(t); }
+  
+  /* pointAndDerivatives returns a vector that looks like the following:
+   *  [ point at t, 1st derivative at t, 2nd derivative at t, ... , n'th derivative at t] */
   virtual std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const = 0;
+
   virtual D2<SBasis> toSBasis() const = 0;
 };
 

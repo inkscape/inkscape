@@ -69,15 +69,12 @@ bool SBasis::isFinite() const {
 }
 
 std::vector<double> SBasis::valueAndDerivatives(double t, unsigned n) const {
-    std::vector<double> ret(n);
-    if(n==1) {
-        ret.push_back(valueAt(t));
-        return ret;
-    }
+    std::vector<double> ret(n+1);
+    ret.push_back(valueAt(t));
     SBasis tmp = *this;
     for(unsigned i = 0; i < n; i++) {
-        ret[i] = tmp.valueAt(t);
         tmp.derive();
+        ret[i] = tmp.valueAt(t);
     }
     return ret;
 }

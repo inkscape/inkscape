@@ -78,7 +78,7 @@ struct FragmentConcept {
         o = t.at1();
         o = t.valueAt(d);
         o = t(d);
-        v = t.valueAndDerivatives(d, u);
+        v = t.valueAndDerivatives(d, u-1);
 		//Is a pure derivative (ignoring others) accessor ever much faster?
 		//u = number of values returned. first val is value.
         sb = t.toSBasis();

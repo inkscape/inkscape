@@ -171,7 +171,7 @@ public:
     std::vector<Coord> valueAndDerivatives(Coord t, unsigned n_derivs) const {
         std::vector<Coord> val_n_der;
         Coord d_[order()+1];
-        unsigned nn = n_derivs;
+        unsigned nn = n_derivs + 1; // the size of the result vector equals n_derivs+1
         if(nn > order())
             //nn = order();
             nn = order()+1;

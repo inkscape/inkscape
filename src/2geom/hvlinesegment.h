@@ -243,20 +243,25 @@ class HLineSegment : public Curve
 		
 		return initialPoint()[X] + t * (finalPoint()[X] - initialPoint()[X]);
 	}
-	
-	std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const
-	{
-		std::vector<Point> result;
-		if ( n > 0)
-			result.push_back(pointAt(t));
-		if (n > 1)
-		{
-			double x = finalPoint()[X] - initialPoint()[X];
-			result.push_back( Point(x, 0) );
-		}
-		return result;
-	}
-	
+
+    std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const
+    {
+        std::vector<Point> result;
+        result.push_back(pointAt(t));
+        if (n > 0)
+        {
+            double x = finalPoint()[X] - initialPoint()[X];
+            result.push_back( Point(x, 0) );
+        }
+        if (n > 1)
+        {
+            /* higher order derivatives are zero,
+             * so the other n-1 vector elements are (0,0) */
+            result.insert( result.end(), n-1, Point(0, 0) );
+        }
+        return result;
+    }
+
 	D2<SBasis> toSBasis() const
 	{
 		return m_line_seg.toSBasis();
@@ -473,20 +478,25 @@ class VLineSegment : public Curve
 		
 		return initialPoint()[Y] + t * (finalPoint()[Y] - initialPoint()[Y]);
 	}
-	
-	std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const
-	{
-		std::vector<Point> result;
-		if ( n > 0)
-			result.push_back(pointAt(t));
-		if (n > 1)
-		{
-			double y = finalPoint()[Y] - initialPoint()[Y];
-			result.push_back( Point(0, y) );
-		}
-		return result;
-	}
-	
+
+    std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const
+    {
+        std::vector<Point> result;
+        result.push_back(pointAt(t));
+        if (n > 0)
+        {
+            double y = finalPoint()[Y] - initialPoint()[Y];
+            result.push_back( Point(0, y) );
+        }
+        if (n > 1)
+        {
+            /* higher order derivatives are zero,
+             * so the other n-1 vector elements are (0,0) */
+            result.insert( result.end(), n-1, Point(0, 0) );
+        }
+        return result;
+    }
+
 	D2<SBasis> toSBasis() const
 	{
 		return m_line_seg.toSBasis();

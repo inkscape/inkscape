@@ -79,9 +79,9 @@ class Piecewise {
     inline output_type lastValue() const {
         return valueAt(cuts.back());
     }
-    std::vector<output_type> valueAndDerivatives(double t, unsigned cnt) const {
+    std::vector<output_type> valueAndDerivatives(double t, unsigned n_derivs) const {
         unsigned n = segN(t);
-        std::vector<output_type> ret, val = segs[n].valueAndDerivatives(segT(t, n), cnt);
+        std::vector<output_type> ret, val = segs[n].valueAndDerivatives(segT(t, n), n_derivs);
         double mult = 1;
         for(unsigned i = 0; i < val.size(); i++) {
             ret.push_back(val[i] * mult);

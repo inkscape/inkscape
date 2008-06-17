@@ -88,11 +88,11 @@ class D2{
         boost::function_requires<FragmentConcept<T> >();
         return (*this)(t);
     }
-    std::vector<Point > valueAndDerivatives(double t, unsigned count) const {
-        std::vector<Coord> x = f[X].valueAndDerivatives(t, count),
-                           y = f[Y].valueAndDerivatives(t, count);
+    std::vector<Point > valueAndDerivatives(double t, unsigned n) const {
+        std::vector<Coord> x = f[X].valueAndDerivatives(t, n),
+                           y = f[Y].valueAndDerivatives(t, n);
         std::vector<Point> res;
-        for(unsigned i = 0; i < count; i++) {
+        for(unsigned i = 0; i <= n; i++) {
             res.push_back(Point(x[i], y[i]));
         }
         return res;
