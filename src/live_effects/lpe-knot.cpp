@@ -62,7 +62,7 @@ findShadowedTime(Geom::Path &patha,
     if(curveidx == pathb.size() && timeoncurve == 0) { curveidx--; timeoncurve = 0.99999;}
     assert(curveidx >= 0 && curveidx < pathb.size());
     
-    std::vector<Point> MV = pathb[unsigned(curveidx)].pointAndDerivatives(timeoncurve,2);
+    std::vector<Point> MV = pathb[unsigned(curveidx)].pointAndDerivatives(timeoncurve,1);
     Point T = unit_vector(MV.at(1));
     Point N = T.cw();
     Point A = MV.at(0)-10*width*T, B = MV.at(0)+10*width*T;
