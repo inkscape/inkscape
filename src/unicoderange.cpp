@@ -1,6 +1,6 @@
 #include "unicoderange.h"
 
-#include <malloc.h>
+#include <stdlib.h>
 #include <string.h>
 
 static unsigned int hex2int(char* s){
