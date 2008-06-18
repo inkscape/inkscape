@@ -111,6 +111,23 @@ public:
    *  [ point at t, 1st derivative at t, 2nd derivative at t, ... , n'th derivative at t] */
   virtual std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const = 0;
 
+  /* unitTangentAt returns the unit vector tangent to the curve at position t
+   * (in the direction of increasing t). The method uses l'Hopital's rule when the derivative
+   * is (0,0), parameter n determines the maximum nr of iterations (for when higher derivatives are also (0,0) ).
+   * Point(0,0) is returned if no non-zero derivative could be found. */
+  virtual Point unitTangentAt(Coord t, unsigned n = 3) const
+  {
+    for (unsigned deriv_n = 1; deriv_n <= n; deriv_n++) {
+      Point deriv = pointAndDerivatives(t, deriv_n)[deriv_n];
+      Coord length = deriv.length();
+      if ( ! are_near(length, 0) ) {
+         // length of derivative is non-zero, so return unit vector
+         return deriv / length;
+      }
+    }
+    return Point (0,0);
+  };
+
   virtual D2<SBasis> toSBasis() const = 0;
 };
 

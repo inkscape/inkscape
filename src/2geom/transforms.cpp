@@ -46,6 +46,7 @@ Matrix operator*(Matrix const &m, Scale const &s) {
 }
 
 Matrix operator*(Matrix const &m, Rotate const &r) {
+    // TODO: we just convert the Rotate to a matrix and use the existing operator*(); is there a better way?
     Matrix ret(m);
     ret *= (Matrix) r;
     return ret;
