@@ -23,6 +23,7 @@
 #include "display/curve.h"
 #include "libnr/n-art-bpath-2geom.h"
 #include "svg/svg.h"
+#include "nodepath.h"
 
 #include <2geom/sbasis.h>
 #include <2geom/sbasis-2d.h>
@@ -32,6 +33,8 @@
 #include <2geom/d2.h>
 #include <2geom/piecewise.h>
 #include <2geom/transforms.h>
+
+#include "desktop.h" // TODO: should be factored out (see below)
 
 using namespace Geom;
 
@@ -231,9 +234,59 @@ LPELattice::resetDefaults(SPItem * item)
     
     grid_point15[Geom::X] = 2.0/3*boundingbox_X.max()+1.0/3*boundingbox_X.min();
     grid_point15[Geom::Y] = 2.0/3*boundingbox_Y.max()+1.0/3*boundingbox_Y.min();
+}
+
+void
+LPELattice::addHelperPathsImpl(SPLPEItem *lpeitem, SPDesktop *desktop)
+{
+    SPCurve *c = new SPCurve ();
+    c->moveto(grid_point0);
+    c->lineto(grid_point4);
+    c->lineto(grid_point5);
+    c->lineto(grid_point1);
+
+    c->moveto(grid_point8);
+    c->lineto(grid_point12);
+    c->lineto(grid_point13);
+    c->lineto(grid_point9);
+
+    c->moveto(grid_point10);
+    c->lineto(grid_point14);
+    c->lineto(grid_point15);
+    c->lineto(grid_point11);
+
+    c->moveto(grid_point2);
+    c->lineto(grid_point6);
+    c->lineto(grid_point7);
+    c->lineto(grid_point3);
 
 
-    
+    c->moveto(grid_point0);
+    c->lineto(grid_point8);
+    c->lineto(grid_point10);
+    c->lineto(grid_point2);
+
+    c->moveto(grid_point4);
+    c->lineto(grid_point12);
+    c->lineto(grid_point14);
+    c->lineto(grid_point6);
+
+    c->moveto(grid_point5);
+    c->lineto(grid_point13);
+    c->lineto(grid_point15);
+    c->lineto(grid_point7);
+
+    c->moveto(grid_point1);
+    c->lineto(grid_point9);
+    c->lineto(grid_point11);
+    c->lineto(grid_point3);
+
+    // TODO: factor this out (and remove the #include of desktop.h above)
+    SPCanvasItem *canvasitem = sp_nodepath_generate_helperpath(desktop, c, SP_ITEM(lpeitem), 0x009000ff);
+    Inkscape::Display::TemporaryItem* tmpitem = desktop->add_temporary_canvasitem (canvasitem, 0);
+    lpeitem->lpe_helperpaths.push_back(tmpitem);
+
+    c->unref();
 }
 
 /* ######################## */

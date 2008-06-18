@@ -4741,14 +4741,13 @@ void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve) {
 }
 
 SPCanvasItem *
-sp_nodepath_generate_helperpath(SPDesktop *desktop, SPCurve *curve, const SPItem *item) {
+sp_nodepath_generate_helperpath(SPDesktop *desktop, SPCurve *curve, const SPItem *item, guint32 color = 0xff0000ff) {
     SPCurve *flash_curve = curve->copy();
     Geom::Matrix i2d = item ? sp_item_i2d_affine(item) : Geom::identity();
     flash_curve->transform(i2d);
     SPCanvasItem * canvasitem = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), flash_curve);
     // would be nice if its color could be XORed or something, now it is invisible for red stroked objects...
     // unless we also flash the nodes...
-    guint32 color = prefs_get_int_attribute("tools.nodes", "highlight_color", 0xff0000ff);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvasitem), color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(canvasitem), 0, SP_WIND_RULE_NONZERO);
     sp_canvas_item_show(canvasitem);
@@ -4758,7 +4757,8 @@ sp_nodepath_generate_helperpath(SPDesktop *desktop, SPCurve *curve, const SPItem
 
 SPCanvasItem *
 sp_nodepath_generate_helperpath(SPDesktop *desktop, SPPath *path) {
-    return sp_nodepath_generate_helperpath(desktop, sp_path_get_curve_for_edit(path), SP_ITEM(path));
+    return sp_nodepath_generate_helperpath(desktop, sp_path_get_curve_for_edit(path), SP_ITEM(path),
+                                           prefs_get_int_attribute("tools.nodes", "highlight_color", 0xff0000ff));
 }
 
 void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *np, bool show) {

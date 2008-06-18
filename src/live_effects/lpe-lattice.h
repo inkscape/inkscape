@@ -39,6 +39,8 @@ public:
     
     virtual void resetDefaults(SPItem * item);
 
+protected:
+    virtual void addHelperPathsImpl(SPLPEItem *lpeitem, SPDesktop *desktop);
 
 
 private:

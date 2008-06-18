@@ -434,9 +434,19 @@ Effect::addHelperPaths(SPLPEItem *lpeitem, SPDesktop *desktop)
         // must create the helper curve for the original path manually; once we allow nodepaths and
         // knotholders alongside each other, this needs to be rethought!
         SPCanvasItem *canvasitem = sp_nodepath_generate_helperpath(desktop, SP_PATH(lpeitem));
-        // TODO: Make sure the tempitem doesn't get destroyed when the mouse leaves the item
         Inkscape::Display::TemporaryItem* tmpitem = desktop->add_temporary_canvasitem (canvasitem, 0);
         lpeitem->lpe_helperpaths.push_back(tmpitem);
+    }
+
+    for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
+        if ((*p)->paramType() == Inkscape::LivePathEffect::PATH_PARAM) {
+            SPCurve *c = new SPCurve(static_cast<Inkscape::LivePathEffect::PathParam*>(*p)->get_pathvector());
+
+            // TODO: factor this out (also the copied code above); see also lpe-lattice.cpp
+            SPCanvasItem *canvasitem = sp_nodepath_generate_helperpath(desktop, c, SP_ITEM(lpeitem), 0x009000ff);
+            Inkscape::Display::TemporaryItem* tmpitem = desktop->add_temporary_canvasitem (canvasitem, 0);
+            lpeitem->lpe_helperpaths.push_back(tmpitem);
+        }
     }
 
     addHelperPathsImpl(lpeitem, desktop);
