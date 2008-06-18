@@ -72,9 +72,9 @@ LPETangentToCurve::LPETangentToCurve(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&length_left) );
     registerParameter( dynamic_cast<Parameter *>(&length_right) );
 
-    registerKnotHolderHandle(new TtC::KnotHolderEntityAttachPt(), _("Adjust the \"left\" end of the tangent"));
-    registerKnotHolderHandle(new TtC::KnotHolderEntityLeftEnd(), _("Adjust the \"right\" end of the tangent"));
-    registerKnotHolderHandle(new TtC::KnotHolderEntityRightEnd(), _("Adjust the point of attachment of the tangent"));
+    registerKnotHolderHandle(new TtC::KnotHolderEntityAttachPt(), _("Adjust the point of attachment of the tangent"));
+    registerKnotHolderHandle(new TtC::KnotHolderEntityLeftEnd(), _("Adjust the \"left\" end of the tangent"));
+    registerKnotHolderHandle(new TtC::KnotHolderEntityRightEnd(), _("Adjust the \"right\" end of the tangent"));
 }
 
 LPETangentToCurve::~LPETangentToCurve()
