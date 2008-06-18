@@ -512,7 +512,7 @@ gr_change_widget (SPDesktop *desktop)
 GtkWidget *
 sp_gradient_toolbox_new(SPDesktop *desktop)
 {
-    GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
+    GtkWidget *tbl = gtk_toolbar_new();
 
     gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
     gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
@@ -521,7 +521,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
 
     sp_toolbox_add_label(tbl, _("<b>New:</b>"));
 
-    aux_toolbox_space(tbl, AUX_SPACING);
+    // TODO replace aux_toolbox_space(tbl, AUX_SPACING);
 
     {
     GtkWidget *cvbox = gtk_vbox_new (FALSE, 0);
@@ -556,14 +556,14 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     }
 
     gtk_box_pack_start(GTK_BOX(cvbox), cbox, TRUE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(tbl), cvbox, FALSE, FALSE, 0);
+    gtk_toolbar_append_widget( GTK_TOOLBAR(tbl), cvbox, "", "" );
     }
 
-    aux_toolbox_space(tbl, AUX_SPACING);
+    // TODO replace aux_toolbox_space(tbl, AUX_SPACING);
 
     sp_toolbox_add_label(tbl, _("on"), false);
 
-    aux_toolbox_space(tbl, AUX_SPACING);
+    // TODO replace aux_toolbox_space(tbl, AUX_SPACING);
 
     {
         GtkWidget *cvbox = gtk_vbox_new (FALSE, 0);
@@ -598,17 +598,17 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     }
 
     gtk_box_pack_start(GTK_BOX(cvbox), cbox, TRUE, TRUE, 3);
-    gtk_box_pack_start(GTK_BOX(tbl), cvbox, FALSE, FALSE, 0);
+    gtk_toolbar_append_widget( GTK_TOOLBAR(tbl), cvbox, "", "" );
     }
 
 
     sp_toolbox_add_label(tbl, _("<b>Change:</b>"));
 
-    aux_toolbox_space(tbl, AUX_SPACING);
+    // TODO replace aux_toolbox_space(tbl, AUX_SPACING);
 
     {
         GtkWidget *vectors = gr_change_widget (desktop);
-        gtk_box_pack_start (GTK_BOX (tbl), vectors, FALSE, FALSE, 0);
+        gtk_toolbar_append_widget( GTK_TOOLBAR(tbl), vectors, "", "" );
     }
 
     gtk_widget_show_all(tbl);

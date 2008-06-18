@@ -508,7 +508,13 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     }
 
     // Insert spw into the toolbar.
-    gtk_box_pack_start(GTK_BOX(holder), spw, FALSE, FALSE, 0);
+    if ( GTK_IS_BOX(holder) ) {
+        gtk_box_pack_start(GTK_BOX(holder), spw, FALSE, FALSE, 0);
+    } else if ( GTK_IS_TOOLBAR(holder) ) {
+        gtk_toolbar_append_widget( GTK_TOOLBAR(holder), spw, "Text", "priv" );
+    } else {
+        g_warning("Unexpected holder type");
+    }
 
     // "Transform with object" buttons
 
