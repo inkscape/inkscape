@@ -994,8 +994,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
         case GDK_P:
         case GDK_p:
             if (MOD__SHIFT_ONLY) {
-                pc->polylines_only = !pc->polylines_only;
-                g_print ("polylines_only mode is now %s\n", pc->polylines_only ? "true" : "false");
+                sp_pen_context_wait_for_LPE_mouse_clicks(pc, Inkscape::LivePathEffect::PARALLEL, 2);
                 ret = TRUE;
             }
             break;
