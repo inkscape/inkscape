@@ -42,6 +42,9 @@ struct SPLPEItem : public SPItem {
     Inkscape::LivePathEffect::LPEObjectReference* current_path_effect;
     std::vector<Inkscape::Display::TemporaryItem*> lpe_helperpaths;
 
+    bool adding_helperpaths;
+    bool removing_helperpaths;
+
     sigc::connection lpe_modified_connection;
 };
 

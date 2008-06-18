@@ -198,7 +198,7 @@ void ShapeEditor::set_item(SPItem *item) {
                 // or the LPE is invisible or it doesn't provide a knotholder itself
                 this->nodepath = sp_nodepath_new(desktop, item,
                                                  (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0));
-            } else if (lpe && lpe->isVisible() && lpe->showOrigPath()) {
+            } else if (lpe && lpe->isVisible()) {
                 sp_lpe_item_add_temporary_canvasitems(lpeitem, desktop);
             }
         }
