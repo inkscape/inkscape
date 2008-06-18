@@ -4741,11 +4741,10 @@ void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve) {
 }
 
 SPCanvasItem *
-sp_nodepath_generate_helperpath(SPDesktop *desktop, SPPath *path) {
-    // This should be put somewhere else under the name of "generate helperpath" or something. Because basically this is copied of code from nodepath...
-    SPCurve *curve_new = sp_path_get_curve_for_edit(path);
-    SPCurve *flash_curve = curve_new->copy();
-    flash_curve->transform(sp_item_i2d_affine(SP_ITEM(path)));
+sp_nodepath_generate_helperpath(SPDesktop *desktop, SPCurve *curve, const SPItem *item) {
+    SPCurve *flash_curve = curve->copy();
+    Geom::Matrix i2d = item ? sp_item_i2d_affine(item) : Geom::identity();
+    flash_curve->transform(i2d);
     SPCanvasItem * canvasitem = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), flash_curve);
     // would be nice if its color could be XORed or something, now it is invisible for red stroked objects...
     // unless we also flash the nodes...
@@ -4755,6 +4754,11 @@ sp_nodepath_generate_helperpath(SPDesktop *desktop, SPPath *path) {
     sp_canvas_item_show(canvasitem);
     flash_curve->unref();
     return canvasitem;
+}
+
+SPCanvasItem *
+sp_nodepath_generate_helperpath(SPDesktop *desktop, SPPath *path) {
+    return sp_nodepath_generate_helperpath(desktop, sp_path_get_curve_for_edit(path), SP_ITEM(path));
 }
 
 void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *np, bool show) {
