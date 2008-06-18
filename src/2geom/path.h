@@ -137,7 +137,7 @@ private:
  *
  * The only difference between a closed and an open path is whether end()
  * returns end_closed() or end_open().  The idea behind this is to let
- * any path be stroked using [begin(), end()), and filled using
+ * any path be stroked using [begin(), end_default()), and filled using
  * [begin(), end_closed()), without requiring a separate "filled" version
  * of the path to use for filling.
  */
@@ -196,6 +196,11 @@ public:
 
   Curve const &front() const { return *curves_[0]; }
   Curve const &back() const { return *curves_[curves_.size()-2]; }
+  Curve const &back_open() const { return *curves_[curves_.size()-2]; }
+  Curve const &back_closed() const { return *curves_[curves_.size()-1]; }
+  Curve const &back_default() const {
+    return ( closed_ ? back_closed() : back_open() );
+  }
 
   const_iterator begin() const { return curves_.begin(); }
   const_iterator end() const { return curves_.end()-1; }
