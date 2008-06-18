@@ -395,11 +395,19 @@ SPDesktop::~SPDesktop() {}
 /* Public methods */
 
 
+/* These methods help for temporarily showing things on-canvas.
+ * The *only* valid use of the TemporaryItem* that you get from add_temporary_canvasitem
+ * is when you want to prematurely remove the item from the canvas, by calling
+ * desktop->remove_temporary_canvasitem(tempitem).
+ */
 /** Note that lifetime is measured in milliseconds
-* it is perfectly safe to ignore the returned pointer: the object is deleted by itself, so don't delete it elsewhere!
-* The return value should only be used as argument for SPDesktop::remove_temporary_canvasitem, because the object might be deleted already.
-* move_to_bottom = true by default so the item does not interfere with handling of other items on the canvas like nodes.
-*/
+ * One should *not* keep a reference to the SPCanvasItem, the temporary item code will
+ * delete the object for you and the reference will become invalid without you knowing it.
+ * It is perfectly safe to ignore the returned pointer: the object is deleted by itself, so don't delete it elsewhere!
+ * The *only* valid use of the returned TemporaryItem* is as argument for SPDesktop::remove_temporary_canvasitem,
+ * because the object might be deleted already without you knowing it.
+ * move_to_bottom = true by default so the item does not interfere with handling of other items on the canvas like nodes.
+ */
 Inkscape::Display::TemporaryItem *
 SPDesktop::add_temporary_canvasitem (SPCanvasItem *item, guint lifetime, bool move_to_bottom)
 {
