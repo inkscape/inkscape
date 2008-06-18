@@ -57,9 +57,6 @@
 #include "dom/smil.h"
 
 
-
-#include "svgtypes.h"
-
 #include <math.h>
 
 #define SVG_NAMESPACE "http://www.w3.org/2000/svg"
@@ -89,8 +86,38 @@ typedef dom::NodeList NodeList;
 
 class SVGElement;
 typedef Ptr<SVGElement> SVGElementPtr;
+class SVGUseElement;
+typedef Ptr<SVGUseElement> SVGUseElementPtr;
 class SVGDocument;
 typedef Ptr<SVGDocument> SVGDocumentPtr;
+
+/*#########################################################################
+## SVGException
+#########################################################################*/
+
+/**
+ *
+ */
+class SVGException
+{
+public:
+
+    /**
+     * SVGExceptionCode
+     */
+    typedef enum
+        {
+        SVG_WRONG_TYPE_ERR           = 0,
+        SVG_INVALID_VALUE_ERR        = 1,
+        SVG_MATRIX_NOT_INVERTABLE    = 2
+        } SVGExceptionCode;
+
+    unsigned short   code;
+};
+
+
+
+
 
 
 
@@ -126,8 +153,6 @@ public:
         SVG_ANGLETYPE_RAD         = 3,
         SVG_ANGLETYPE_GRAD        = 4
         } AngleUnitType;
-
-
 
     /**
      *
@@ -201,153 +226,6 @@ protected:
     int unitType;
 
     double value;
-
-};
-
-
-
-
-/*#########################################################################
-## SVGColor
-#########################################################################*/
-
-/**
- *
- */
-class SVGColor : public css::CSSValue
-{
-public:
-
-
-    /**
-     * Color Types
-     */
-    typedef enum
-        {
-        SVG_COLORTYPE_UNKNOWN           = 0,
-        SVG_COLORTYPE_RGBCOLOR          = 1,
-        SVG_COLORTYPE_RGBCOLOR_ICCCOLOR = 2,
-        SVG_COLORTYPE_CURRENTCOLOR      = 3
-        } ColorType;
-
-
-    /**
-     *
-     */
-    unsigned short getColorType();
-
-    /**
-     *
-     */
-    css::RGBColor getRgbColor();
-
-    /**
-     *
-     */
-    SVGICCColor getIccColor();
-
-
-    /**
-     *
-     */
-    void setRGBColor(const DOMString& /*rgbColor*/)
-                              throw(SVGException);
-
-    /**
-     *
-     */
-    void setRGBColorICCColor(const DOMString& /*rgbColor*/,
-                                      const DOMString& /*iccColor*/)
-                                      throw(SVGException);
-
-    /**
-     *
-     */
-    void setColor(unsigned short /*colorType*/,
-                           const DOMString& /*rgbColor*/,
-                           const DOMString& /*iccColor*/)
-                           throw(SVGException);
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGColor();
-
-    /**
-     *
-     */
-    SVGColor(const SVGColor &other) : css::CSSValue(other);
-
-    /**
-     *
-     */
-    ~SVGColor();
-
-protected:
-
-    int colorType;
-
-};
-
-
-
-
-/*#########################################################################
-## SVGICCColor
-#########################################################################*/
-
-/**
- *
- */
-class SVGICCColor
-{
-public:
-
-    /**
-     *
-     */
-    DOMString getColorProfile();
-
-    /**
-     *
-     */
-    void setColorProfile(const DOMString &val) throw(DOMException);
-
-    /**
-     *
-     */
-    SVGNumberList &getColors();
-
-
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGICCColor();
-
-    /**
-     *
-     */
-    SVGICCColor(const SVGICCColor &other);
-
-    /**
-     *
-     */
-    ~SVGICCColor();
-
-protected:
-
-    DOMString colorProfile;
-
-    SVGNumberList colors;
 
 };
 
@@ -886,7 +764,7 @@ public:
     /**
      *
      */
-    double getY()
+    double getY();
 
     /**
      *
@@ -896,7 +774,7 @@ public:
     /**
      *
      */
-    double getY1()
+    double getY1();
 
     /**
      *
@@ -1006,89 +884,6 @@ protected:
     bool largeArcFlag;
     bool sweepFlag;
 };
-
-
-
-
-/*#########################################################################
-## SVGPaint
-#########################################################################*/
-
-/**
- *
- */
-class SVGPaint : public SVGColor
-{
-public:
-
-    /**
-     * Paint Types
-     */
-    typedef enum
-        {
-        SVG_PAINTTYPE_UNKNOWN               = 0,
-        SVG_PAINTTYPE_RGBCOLOR              = 1,
-        SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR     = 2,
-        SVG_PAINTTYPE_NONE                  = 101,
-        SVG_PAINTTYPE_CURRENTCOLOR          = 102,
-        SVG_PAINTTYPE_URI_NONE              = 103,
-        SVG_PAINTTYPE_URI_CURRENTCOLOR      = 104,
-        SVG_PAINTTYPE_URI_RGBCOLOR          = 105,
-        SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR = 106,
-        SVG_PAINTTYPE_URI                   = 107
-        } PaintType;
-
-
-    /**
-     *
-     */
-    unsigned short getPaintType();
-
-    /**
-     *
-     */
-    DOMString getUri();
-
-    /**
-     *
-     */
-    void setUri(const DOMString& uriArg);
-
-    /**
-     *
-     */
-    void setPaint(unsigned short paintTypeArg,
-                           const DOMString& uriArg,
-                           const DOMString& /*rgbColor*/,
-                           const DOMString& /*iccColor*/)
-                           throw(SVGException);
-
-    //##################
-    //# Non-API methods
-    //##################
-
-    /**
-     *
-     */
-    SVGPaint();
-
-    /**
-     *
-     */
-    SVGPaint(const SVGPaint &other);
-
-    /**
-     *
-     */
-    ~SVGPaint();
-
-protected:
-
-    unsigned int paintType;
-    DOMString uri;
-
-};
-
 
 
 /*#########################################################################
@@ -1518,9 +1313,9 @@ public:
     /**
      * Points
      */
-    SVGValue(const SVGPointList &v);
+    SVGValue(const SVGPoint &v);
     
-    SVGPointList pointListValue();
+    SVGPoint pointValue();
     
     
     /**
@@ -1547,9 +1342,9 @@ public:
     /**
      * TransformList
      */
-    SVGValue(const SVGTransformList &v);
+    SVGValue(const SVGTransform &v);
     
-    SVGTransformList transformListValue();
+    SVGTransform transformValue();
     
     
 private:
@@ -1565,10 +1360,12 @@ private:
     long                   ival;           // SVGInteger
     SVGLength              lengthval;      // SVGLength
     double                 dval;           // SVGNumber
-    SVGPathSegment         segval;         // SVGPathSegment
-    SVGPreserveAcpectRatio parval;         // SVGPreserveAspectRatio
+    SVGPathSeg             segval;         // SVGPathSeg
+    SVGPoint               pointval;       // SVGPoint
+    SVGPreserveAspectRatio parval;         // SVGPreserveAspectRatio
     SVGRect                rval;           // SVGRect
     DOMString              sval;           // SVGString
+    SVGTransform           transformval;   // SVGTransform
 
 };
 
@@ -1581,7 +1378,7 @@ private:
  * THis is used to generify a bit the several different types of lists:
  *
  * SVGLengthList      -> SVGValueList<SVGLength>
- * SVGNumberList      -> SVGValueList<SVGNumber>
+ * SVGValueList      -> SVGValueList<SVGNumber>
  * SVGPathData        -> SVGValueList<SVGPathSeg>
  * SVGPoints          -> SVGValueList<SVGPoint>
  * SVGTransformList   -> SVGValueList<SVGTransform>
@@ -1696,20 +1493,17 @@ protected:
 /**
  * This class is used to merge all of the "Animated" values, with only
  * a different type, into a single API.  This class subsumes the following:
- * SVGAnimatedAngle
- * SVGAnimatedBoolean
- * SVGAnimatedEnumeration
- * SVGAnimatedInteger
- * SVGAnimatedLength
- * SVGAnimatedLengthList
- * SVGAnimatedNumber
- * SVGAnimatedNumberList
+ * SVGAnimatedValue
+ * SVGAnimatedValue
+ * SVGAnimatedValue
+ * SVGAnimatedValue
+ * SVGAnimatedValue
+ * SVGAnimatedValue
  * SVGAnimatedPathData
  * SVGAnimatedPoints
  * SVGAnimatedPreserveAspectRatio
- * SVGAnimatedRect
- * SVGAnimatedString
- * SVGAnimatedTransformList
+ * SVGAnimatedValue
+ * SVGAnimatedValue
  */
 class SVGAnimatedValue
 {
@@ -1774,10 +1568,312 @@ private:
     SVGValue baseVal;
     
     SVGValue animVal;
-}
+
+};
+
+
+/*#########################################################################
+## SVGAnimatedValueList
+#########################################################################*/
+
+/**
+ * This class is used to merge all of the "Animated" values, with only
+ * a different type, into a single API.  This class subsumes the following:
+ * SVGAnimatedValueList
+ * SVGAnimatedValueList
+ * SVGAnimatedTransformList
+ */
+class SVGAnimatedValueList
+{
+public:
+
+    /**
+     *
+     */
+    SVGValueList &getBaseVal();
+
+    /**
+     *
+     */
+    void setBaseVal(const SVGValueList &val) throw (DOMException);
+
+    /**
+     *
+     */
+    SVGValueList &getAnimVal();
+
+    /**
+     *
+     */
+    SVGAnimatedValueList();
+    
+    /**
+     *
+     */
+    SVGAnimatedValueList(const SVGValueList &baseValue);
+
+    /**
+     *
+     */
+    SVGAnimatedValueList(const SVGValueList &baseValue, const SVGValueList &animValue);
+
+    /**
+     *
+     */
+    SVGAnimatedValueList(const SVGAnimatedValueList &other);
+
+    /**
+     *
+     */
+    SVGAnimatedValueList &operator=(const SVGAnimatedValueList &other);
+
+    /**
+     *
+     */
+    SVGAnimatedValueList &operator=(const SVGValueList &baseVal);
+
+    /**
+     *
+     */
+    ~SVGAnimatedValueList();
+    
+private:
+
+    void init();
+    
+    void assign(const SVGAnimatedValueList &other);
+    
+    SVGValueList baseVal;
+    
+    SVGValueList animVal;
+
+};
 
 
 
+/*#########################################################################
+## SVGICCColor
+#########################################################################*/
+
+/**
+ *
+ */
+class SVGICCColor
+{
+public:
+
+    /**
+     *
+     */
+    DOMString getColorProfile();
+
+    /**
+     *
+     */
+    void setColorProfile(const DOMString &val) throw(DOMException);
+
+    /**
+     *
+     */
+    SVGValueList &getColors();
+
+
+
+    //##################
+    //# Non-API methods
+    //##################
+
+    /**
+     *
+     */
+    SVGICCColor();
+
+    /**
+     *
+     */
+    SVGICCColor(const SVGICCColor &other);
+
+    /**
+     *
+     */
+    ~SVGICCColor();
+
+protected:
+
+    DOMString colorProfile;
+
+    SVGValueList colors;
+
+};
+
+
+
+/*#########################################################################
+## SVGColor
+#########################################################################*/
+
+/**
+ *
+ */
+class SVGColor : public css::CSSValue
+{
+public:
+
+
+    /**
+     * Color Types
+     */
+    typedef enum
+        {
+        SVG_COLORTYPE_UNKNOWN           = 0,
+        SVG_COLORTYPE_RGBCOLOR          = 1,
+        SVG_COLORTYPE_RGBCOLOR_ICCCOLOR = 2,
+        SVG_COLORTYPE_CURRENTCOLOR      = 3
+        } ColorType;
+
+
+    /**
+     *
+     */
+    unsigned short getColorType();
+
+    /**
+     *
+     */
+    css::RGBColor getRgbColor();
+
+    /**
+     *
+     */
+    SVGICCColor getIccColor();
+
+
+    /**
+     *
+     */
+    void setRGBColor(const DOMString& /*rgbColor*/)
+                              throw(SVGException);
+
+    /**
+     *
+     */
+    void setRGBColorICCColor(const DOMString& /*rgbColor*/,
+                                      const DOMString& /*iccColor*/)
+                                      throw(SVGException);
+
+    /**
+     *
+     */
+    void setColor(unsigned short /*colorType*/,
+                           const DOMString& /*rgbColor*/,
+                           const DOMString& /*iccColor*/)
+                           throw(SVGException);
+
+    //##################
+    //# Non-API methods
+    //##################
+
+    /**
+     *
+     */
+    SVGColor();
+
+    /**
+     *
+     */
+    SVGColor(const SVGColor &other);
+
+    /**
+     *
+     */
+    ~SVGColor();
+
+protected:
+
+    int colorType;
+
+};
+
+
+
+/*#########################################################################
+## SVGPaint
+#########################################################################*/
+
+/**
+ *
+ */
+class SVGPaint : public SVGColor
+{
+public:
+
+    /**
+     * Paint Types
+     */
+    typedef enum
+        {
+        SVG_PAINTTYPE_UNKNOWN               = 0,
+        SVG_PAINTTYPE_RGBCOLOR              = 1,
+        SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR     = 2,
+        SVG_PAINTTYPE_NONE                  = 101,
+        SVG_PAINTTYPE_CURRENTCOLOR          = 102,
+        SVG_PAINTTYPE_URI_NONE              = 103,
+        SVG_PAINTTYPE_URI_CURRENTCOLOR      = 104,
+        SVG_PAINTTYPE_URI_RGBCOLOR          = 105,
+        SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR = 106,
+        SVG_PAINTTYPE_URI                   = 107
+        } PaintType;
+
+
+    /**
+     *
+     */
+    unsigned short getPaintType();
+
+    /**
+     *
+     */
+    DOMString getUri();
+
+    /**
+     *
+     */
+    void setUri(const DOMString& uriArg);
+
+    /**
+     *
+     */
+    void setPaint(unsigned short paintTypeArg,
+                           const DOMString& uriArg,
+                           const DOMString& /*rgbColor*/,
+                           const DOMString& /*iccColor*/)
+                           throw(SVGException);
+
+    //##################
+    //# Non-API methods
+    //##################
+
+    /**
+     *
+     */
+    SVGPaint();
+
+    /**
+     *
+     */
+    SVGPaint(const SVGPaint &other);
+
+    /**
+     *
+     */
+    ~SVGPaint();
+
+protected:
+
+    unsigned int paintType;
+    DOMString uri;
+
+};
 
 
 
@@ -1808,7 +1904,7 @@ public:
     /**
      *
      */
-    SVGAnimatedString getClassName();
+    SVGAnimatedValue getClassName();
 
     /**
      *
@@ -1842,7 +1938,7 @@ public:
 
 protected:
 
-    SVGAnimatedString className;
+    SVGAnimatedValue className;
     css::CSSStyleDeclaration style;
 
 };
@@ -1936,7 +2032,7 @@ public:
     /**
      *
      */
-    SVGAnimatedTransformList &getTransform();
+    SVGAnimatedValueList &getTransform();
 
     //##################
     //# Non-API methods
@@ -1950,7 +2046,7 @@ public:
     /**
      *
      */
-    SVGTransformable(const SVGTransformable &other) : SVGLocatable(other);
+    SVGTransformable(const SVGTransformable &other);
 
     /**
      *
@@ -1959,11 +2055,8 @@ public:
 
 protected:
 
-    SVGAnimatedTransformList transforms;
+    SVGAnimatedValueList transforms;
 };
-
-
-
 
 
 
@@ -2019,9 +2112,9 @@ public:
 
 protected:
 
-    SVGStringList requiredFeatures;
-    SVGStringList requiredExtensions;
-    SVGStringList systemLanguage;
+    SVGValueList requiredFeatures;
+    SVGValueList requiredExtensions;
+    SVGValueList systemLanguage;
 
 };
 
@@ -2102,9 +2195,9 @@ class SVGExternalResourcesRequired
 public:
 
     /**
-     *
+     * boolean
      */
-    SVGAnimatedBoolean getExternalResourcesRequired();
+    SVGAnimatedValue getExternalResourcesRequired();
 
     //##################
     //# Non-API methods
@@ -2127,7 +2220,7 @@ public:
 
 protected:
 
-    SVGAnimatedBoolean required;
+    SVGAnimatedValue required; //boolean
 
 };
 
@@ -2151,14 +2244,14 @@ class SVGFitToViewBox
 public:
 
     /**
-     *
+     * rect
      */
-    SVGAnimatedRect getViewBox();
+    SVGAnimatedValue getViewBox();
 
     /**
-     *
+     * preserveAspectRatio
      */
-    SVGAnimatedPreserveAspectRatio getPreserveAspectRatio();
+    SVGAnimatedValue getPreserveAspectRatio();
 
     //##################
     //# Non-API methods
@@ -2181,9 +2274,8 @@ public:
 
 protected:
 
-    SVGAnimatedRect viewBox;
-
-    SVGAnimatedPreserveAspectRatio preserveAspectRatio;
+    SVGAnimatedValue viewBox; //rect
+    SVGAnimatedValue preserveAspectRatio;
 
 };
 
@@ -2264,7 +2356,7 @@ public:
     /**
      *
      */
-    SVGTransformList getTransform();
+    SVGValueList getTransform();
 
     /**
      *
@@ -2313,7 +2405,7 @@ public:
 protected:
 
     SVGElementPtr viewTarget;
-    SVGTransformList transform;
+    SVGValueList transform;
 };
 
 
@@ -2329,9 +2421,9 @@ class SVGURIReference
 public:
 
     /**
-     *
+     * string
      */
-    SVGAnimatedString getHref();
+    SVGAnimatedValue getHref();
 
     //##################
     //# Non-API methods
@@ -2354,7 +2446,7 @@ public:
 
 protected:
 
-    SVGAnimatedString href;
+    SVGAnimatedValue href;
 
 };
 
@@ -2505,7 +2597,7 @@ public:
     /**
      *
      */
-    void setRenderingIntent(unsigned short val) throw(DOMException)
+    void setRenderingIntent(unsigned short val) throw(DOMException);
 
 
     //##################
@@ -2549,29 +2641,29 @@ class SVGFilterPrimitiveStandardAttributes : public SVGStylable
 public:
 
     /**
-     *
+     * length
      */
-    SVGAnimatedLength getX();
+    SVGAnimatedValue getX();
 
     /**
-     *
+     * length
      */
-    SVGAnimatedLength getY();
+    SVGAnimatedValue getY();
 
     /**
-     *
+     * length
      */
-    SVGAnimatedLength getWidth();
+    SVGAnimatedValue getWidth();
 
     /**
-     *
+     * length
      */
-    SVGAnimatedLength getHeight();
+    SVGAnimatedValue getHeight();
 
     /**
-     *
+     * string
      */
-    SVGAnimatedString getResult();
+    SVGAnimatedValue getResult();
 
     //##################
     //# Non-API methods
@@ -2595,11 +2687,11 @@ public:
 
 protected:
 
-    SVGAnimatedLength x;
-    SVGAnimatedLength y;
-    SVGAnimatedLength width;
-    SVGAnimatedLength height;
-    SVGAnimatedString result;
+    SVGAnimatedValue x;
+    SVGAnimatedValue y;
+    SVGAnimatedValue width;
+    SVGAnimatedValue height;
+    SVGAnimatedValue result;
 
 };
 
@@ -2673,7 +2765,7 @@ public:
    /**
      *
      */
-    SVGPoint getNewTranslate()
+    SVGPoint getNewTranslate();
 
 
     //##################
@@ -3071,716 +3163,6 @@ public:
     SVGElementPtr getViewportElement();
 
 
-    //####################################################################
-    //####################################################################
-    //# I N T E R F A C E S
-    //####################################################################
-    //####################################################################
-
-    //####################################################################
-    //# SVGAngle                    
-    //####################################################################
-
-    /**
-     *
-     */
-    unsigned short getUnitType();
-
-    /**
-     *
-     */
-    double getValue();
-
-    /**
-     *
-     */
-    void setValue(double val) throw(DOMException);
-
-    /**
-     *
-     */
-    double getValueInSpecifiedUnits();
-
-    /**
-     *
-     */
-    void setValueInSpecifiedUnits(double /*val*/) throw(DOMException);
-
-    /**
-     *
-     */
-    DOMString getValueAsString();
-
-    /**
-     *
-     */
-    void setValueAsString(const DOMString &/*val*/) throw(DOMException);
-
-
-    /**
-     *
-     */
-    void newValueSpecifiedUnits(unsigned short /*unitType*/,
-                                double /*valueInSpecifiedUnits*/);
-
-    /**
-     *
-     */
-    void convertToSpecifiedUnits(unsigned short /*unitType*/);
-
-    //####################################################################
-    //## The following animated types are rolled up into a single
-    //## SVGAnimatedValue interface
-    //####################################################################
-
-    //####################################################################
-    //## SVGAnimatedAngle
-    //####################################################################
-
-    //####################################################################
-    //## SVGAnimatedBoolean
-    //####################################################################
-
-    //####################################################################
-    //## SVGAnimatedEnumeration
-    //####################################################################
-
-    //####################################################################
-    //## SVGAnimatedInteger
-    //####################################################################
-
-    //####################################################################
-    //## SVGAnimatedLength
-    //####################################################################
-
-    //####################################################################
-    //## SVGAnimatedLengthList
-    //####################################################################
-
-    //####################################################################
-    //## SVGAnimatedNumber
-    //####################################################################
-
-    //####################################################################
-    //## SVGAnimatedNumberList
-    //####################################################################
-
-    //####################################################################
-    //## SVGAnimatedPathData
-    //####################################################################
-
-    //####################################################################
-    //## SVGAnimatedPoints
-    //####################################################################
-
-    //####################################################################
-    //## SVGAnimatedPreserveAspectRatio
-    //####################################################################
-
-    //####################################################################
-    //## SVGAnimatedRect
-    //####################################################################
-
-    //####################################################################
-    //## SVGAnimatedString
-    //####################################################################
-
-    //####################################################################
-    //## SVGAnimatedTransformList
-    //####################################################################
-
-    //####################################################################
-    //# SVGAnimatedValue          
-    //####################################################################
-
-    /**
-     *
-     */
-    SVGValue &getBaseVal();
-
-    /**
-     *
-     */
-    void setBaseVal(const SVGValue &val) throw (DOMException);
-
-    /**
-     *
-     */
-    SVGValue &getAnimVal();
-
-
-    //####################################################################
-    //# SVGColor                    
-    //####################################################################
-
-    /**
-     * From CSSValue 
-     * A code defining the type of the value as defined above.
-     */
-    unsigned short getCssValueType();
-
-    /**
-     * From CSSValue 
-     * A string representation of the current value.
-     */
-    DOMString getCssText();
-
-    /**
-     * From CSSValue 
-     * A string representation of the current value.
-     * Note that setting implies parsing.     
-     */
-    void setCssText(const DOMString &val) throw(dom::DOMException);
-
-
-    /**
-     *
-     */
-    unsigned short getColorType();
-
-    /**
-     *
-     */
-    css::RGBColor getRgbColor();
-
-    /**
-     *
-     */
-    SVGICCColor getIccColor();
-
-
-    /**
-     *
-     */
-    void setRGBColor(const DOMString& /*rgbColor*/) throw(SVGException);
-
-    /**
-     *
-     */
-    void setRGBColorICCColor(const DOMString& /*rgbColor*/,
-                             const DOMString& /*iccColor*/)
-                             throw(SVGException);
-
-    /**
-     *
-     */
-    void setColor(unsigned short /*colorType*/,
-                           const DOMString& /*rgbColor*/,
-                           const DOMString& /*iccColor*/)
-                           throw(SVGException);
-
-    //####################################################################
-    //# SVGCSSRule                  
-    //####################################################################
-
-    /**
-     * From CSSRule    
-     * The type of the rule, as defined above. The expectation is that 
-     * binding-specific casting methods can be used to cast down from an instance of 
-     * the CSSRule interface to the specific derived interface implied by the type.
-     */
-    unsigned short getType();
-
-    /**
-     * From CSSRule    
-     * The parsable textual representation of the rule. This reflects the current 
-     * state of the rule and not its initial value.
-     */
-    DOMString getCssText();
-
-    /**
-     * From CSSRule    
-     * The parsable textual representation of the rule. This reflects the current 
-     * state of the rule and not its initial value.
-     * Note that setting involves reparsing.     
-     */
-    void setCssText(const DOMString &val) throw(DOMException);
-
-    /**
-     * From CSSRule    
-     * The style sheet that contains this rule.
-     */
-    css::CSSStyleSheet *getParentStyleSheet();
-
-    /**
-     * From CSSRule    
-     * If this rule is contained inside another rule(e.g. a style rule inside an 
-     * @media block), this is the containing rule. If this rule is not nested inside 
-     * any other rules, this returns null.
-     */
-    css::CSSRule *getParentRule();
-
-    //####################################################################
-    //# SVGExternalResourcesRequired
-    //####################################################################
-
-    /**
-     *
-     */
-    SVGAnimatedBoolean getExternalResourcesRequired();
-
-    //####################################################################
-    //# SVGFitToViewBox             
-    //####################################################################
-
-    /**
-     *
-     */
-    SVGAnimatedRect getViewBox();
-
-    /**
-     *
-     */
-    SVGAnimatedPreserveAspectRatio getPreserveAspectRatio();
-
-    //####################################################################
-    //# SVGICCColor                 
-    //####################################################################
-
-    /**
-     *
-     */
-    DOMString getColorProfile();
-
-    /**
-     *
-     */
-    void setColorProfile(const DOMString &val) throw(DOMException);
-
-    /**
-     *
-     */
-    SVGNumberList &getColors();
-
-    //####################################################################
-    //# SVGLangSpace                
-    //####################################################################
-
-    /**
-     *
-     */
-    DOMString getXmllang();
-
-    /**
-     *
-     */
-    void setXmllang(const DOMString &val) throw(DOMException);
-
-    /**
-     *
-     */
-    DOMString getXmlspace();
-
-    /**
-     *
-     */
-    void setXmlspace(const DOMString &val) throw(DOMException);
-
-    //####################################################################
-    //# SVGLength                   
-    //####################################################################
-
-    /**
-     *
-     */
-    unsigned short getUnitType();
-
-    /**
-     *
-     */
-    double getValue();
-
-    /**
-     *
-     */
-    void setValue(double val) throw(DOMException);
-
-    /**
-     *
-     */
-    double getValueInSpecifiedUnits();
-
-    /**
-     *
-     */
-    void setValueInSpecifiedUnits(double /*val*/) throw(DOMException);
-
-    /**
-     *
-     */
-    DOMString getValueAsString();
-
-    /**
-     *
-     */
-    void setValueAsString(const DOMString& /*val*/) throw(DOMException);
-
-
-    /**
-     *
-     */
-    void newValueSpecifiedUnits(unsigned short /*unitType*/, double /*val*/);
-
-    /**
-     *
-     */
-    void convertToSpecifiedUnits(unsigned short /*unitType*/);
-
-    //####################################################################
-    //# SVGLengthList               
-    //####################################################################
-
-    /**
-     *
-     */
-    unsigned long getNumberOfItems();
-
-
-    /**
-     *
-     */
-    void clear() throw(DOMException);
-
-    /**
-     *
-     */
-    SVGLength initialize(const SVGLength &newItem)
-                    throw(DOMException, SVGException);
-
-    /**
-     *
-     */
-    SVGLength getItem(unsigned long index) throw(DOMException);
-
-    /**
-     *
-     */
-    SVGLength insertItemBefore(const SVGLength &newItem, unsigned long index)
-                                   throw(DOMException, SVGException);
-
-    /**
-     *
-     */
-    SVGLength replaceItem(const SVGLength &newItem, unsigned long index)
-                               throw(DOMException, SVGException);
-
-    /**
-     *
-     */
-    SVGLength removeItem(unsigned long index) throw(DOMException);
-
-    /**
-     *
-     */
-    SVGLength appendItem(const SVGLength &newItem)
-                    throw(DOMException, SVGException);
-
-    //####################################################################
-    //# SVGLocatable                
-    //####################################################################
-
-    /**
-     *
-     */
-    SVGElementPtr getNearestViewportElement();
-
-    /**
-     *
-     */
-    SVGElement *getFarthestViewportElement();
-
-    /**
-     *
-     */
-    SVGRect getBBox();
-
-    /**
-     *
-     */
-    SVGMatrix getCTM();
-
-    /**
-     *
-     */
-    SVGMatrix getScreenCTM();
-
-    /**
-     *
-     */
-    SVGMatrix getTransformToElement(const SVGElement &/*element*/)
-                                    throw(SVGException);
-
-    //####################################################################
-    //# SVGNumber                   
-    //####################################################################
-
-    /**
-     *
-     */
-    double getValue();
-
-    /**
-     *
-     */
-    void setValue(double val) throw(DOMException);
-
-    //####################################################################
-    //# SVGNumberList               
-    //####################################################################
-
-    /**
-     *
-     */
-    unsigned long getNumberOfItems();
-
-
-    /**
-     *
-     */
-    void clear() throw(DOMException);
-
-    /**
-     *
-     */
-    SVGNumber initialize(const SVGNumber &newItem)
-                    throw(DOMException, SVGException);
-
-    /**
-     *
-     */
-    SVGNumber getItem(unsigned long index) throw(DOMException);
-
-    /**
-     *
-     */
-    SVGNumber insertItemBefore(const SVGNumber &newItem, unsigned long index)
-                                         throw(DOMException, SVGException);
-
-    /**
-     *
-     */
-    SVGNumber replaceItem(const SVGNumber &newItem, unsigned long index)
-                          throw(DOMException, SVGException);
-
-    /**
-     *
-     */
-    SVGNumber removeItem(unsigned long index) throw(DOMException);
-
-    /**
-     *
-     */
-    SVGNumber appendItem(const SVGNumber &newItem)
-                                   throw(DOMException, SVGException);
-
-    //####################################################################
-    //# SVGRect                     
-    //####################################################################
-
-    /**
-     *
-     */
-    double getX();
-
-    /**
-     *
-     */
-    void setX(double val) throw(DOMException);
-
-    /**
-     *
-     */
-    double getY();
-
-    /**
-     *
-     */
-    void setY(double val) throw(DOMException);
-
-    /**
-     *
-     */
-    double getWidth();
-
-    /**
-     *
-     */
-    void setWidth(double val) throw(DOMException);
-
-    /**
-     *
-     */
-    double getHeight();
-
-    /**
-     *
-     */
-    void setHeight(double val) throw(DOMException);
-
-    //####################################################################
-    //# SVGRenderingIntent          
-    //####################################################################
-
-    //####################################################################
-    //# SVGStringList               
-    //####################################################################
-
-    /**
-     *
-     */
-    unsigned long getNumberOfItems();
-
-    /**
-     *
-     */
-    void clear() throw(DOMException);
-
-    /**
-     *
-     */
-    DOMString initialize(const DOMString& newItem)
-                    throw(DOMException, SVGException);
-
-    /**
-     *
-     */
-    DOMString getItem(unsigned long index) throw(DOMException);
-
-    /**
-     *
-     */
-    DOMString insertItemBefore(const DOMString& newItem, unsigned long index)
-                               throw(DOMException, SVGException);
-
-    /**
-     *
-     */
-    DOMString replaceItem(const DOMString& newItem, unsigned long index)
-                                throw(DOMException, SVGException);
-
-    /**
-     *
-     */
-    DOMString removeItem(unsigned long index) throw(DOMException);
-
-    /**
-     *
-     */
-    DOMString appendItem(const DOMString& newItem)
-                    throw(DOMException, SVGException);
-
-    //####################################################################
-    //# SVGStylable                 
-    //####################################################################
-
-    /**
-     *
-     */
-    SVGAnimatedString getClassName();
-
-    /**
-     *
-     */
-    css::CSSStyleDeclaration getStyle();
-
-    /**
-     *
-     */
-    css::CSSValue getPresentationAttribute(const DOMString& /*name*/);
-
-    //####################################################################
-    //# SVGTests                    
-    //####################################################################
-
-    /**
-     *
-     */
-    SVGStringList &getRequiredFeatures();
-
-    /**
-     *
-     */
-    SVGStringList &getRequiredExtensions();
-
-    /**
-     *
-     */
-    SVGStringList &getSystemLanguage();
-
-    /**
-     *
-     */
-    bool hasExtension(const DOMString& /*extension*/);
-
-    //####################################################################
-    //# SVGTransformable            
-    //####################################################################
-
-    /**
-     *
-     */
-    SVGAnimatedTransformList &getTransform();
-
-    //####################################################################
-    //# SVGUnitTypes                
-    //####################################################################
-
-    //####################################################################
-    //# SVGURIReference             
-    //####################################################################
-
-    /**
-     *
-     */
-    SVGAnimatedString getHref();
-
-    //####################################################################
-    //# SVGViewSpec                 
-    //####################################################################
-
-    /**
-     *
-     */
-    SVGTransformList getTransform();
-
-    /**
-     *
-     */
-    SVGElement *getViewTarget();
-
-    /**
-     *
-     */
-    DOMString getViewBoxString();
-
-    /**
-     *
-     */
-    DOMString getPreserveAspectRatioString();
-
-    /**
-     *
-     */
-    DOMString getTransformString();
-
-    /**
-     *
-     */
-    DOMString getViewTargetString();
-
-    //####################################################################
-    //# SVGZoomAndPan               
-    //####################################################################
-
-    /**
-     *
-     */
-    unsigned short getZoomAndPan();
-
-    /**
-     *
-     */
-    void setZoomAndPan(unsigned short val) throw(DOMException);
 
     //####################################################################
     //####################################################################
@@ -3796,7 +3178,7 @@ public:
     /**
      *
      */
-    SVGAnimatedString getTarget();
+    SVGAnimatedValue getTarget();
 
 
 
@@ -3888,17 +3270,17 @@ public:
     /**
      * Corresponds to attribute cx on the given 'circle' element.
      */
-    SVGAnimatedLength getCx();
+    SVGAnimatedValue getCx();
 
     /**
      * Corresponds to attribute cy on the given 'circle' element.
      */
-    SVGAnimatedLength getCy();
+    SVGAnimatedValue getCy();
 
     /**
      * Corresponds to attribute r on the given 'circle' element.
      */
-    SVGAnimatedLength getR();
+    SVGAnimatedValue getR();
 
     //####################################################################
     //# SVGClipPathElement
@@ -3909,7 +3291,7 @@ public:
      * Corresponds to attribute clipPathUnits on the given 'clipPath' element.
      *      Takes one of the constants defined in SVGUnitTypes.
      */
-    SVGAnimatedEnumeration getClipPathUnits();
+    SVGAnimatedValue getClipPathUnits();
 
 
 
@@ -3973,52 +3355,53 @@ public:
     /**
      * Corresponds to attribute type on the given element. Takes one\
      *      of the Component Transfer Types.
+     *  -- also in SVGCSSRule
      */
-    SVGAnimatedEnumeration getType();
+    // SVGAnimatedValue getType();
 
     /**
      * Corresponds to attribute tableValues on the given element.
      */
-    SVGAnimatedNumberList getTableValues();
+    SVGAnimatedValueList getTableValues();
 
     /**
      * Corresponds to attribute slope on the given element.
      */
-    SVGAnimatedNumber getSlope();
+    SVGAnimatedValue getSlope();
 
     /**
      * Corresponds to attribute intercept on the given element.
      */
-    SVGAnimatedNumber getIntercept();
+    SVGAnimatedValue getIntercept();
 
     /**
      * Corresponds to attribute amplitude on the given element.
      */
-    SVGAnimatedNumber getAmplitude();
+    SVGAnimatedValue getAmplitude();
 
     /**
      * Corresponds to attribute exponent on the given element.
      */
-    SVGAnimatedNumber getExponent();
+    SVGAnimatedValue getExponent();
 
     /**
      * Corresponds to attribute offset on the given element.
      */
-    SVGAnimatedNumber getOffset();
+    SVGAnimatedValue getOffset();
 
     //####################################################################
     //# SVGCursorElement
     //####################################################################
 
     /**
-     *
+     * -- also in SVGRect
      */
-    SVGAnimatedLength getX();
+    // SVGAnimatedValue getX();
 
     /**
-     *
+     * -- also in SVGRect
      */
-    SVGAnimatedLength getY();
+    // SVGAnimatedValue getY();
 
 
     //####################################################################
@@ -4039,23 +3422,25 @@ public:
 
     /**
      * Corresponds to attribute cx on the given 'ellipse' element.
+     * -- also in Circle
      */
-    SVGAnimatedLength getCx();
+    // SVGAnimatedValue getCx();
 
     /**
      * Corresponds to attribute cy on the given 'ellipse' element.
+     * -- also in Circle
      */
-    SVGAnimatedLength getCy();
+    // SVGAnimatedValue getCy();
 
     /**
      * Corresponds to attribute rx on the given 'ellipse' element.
      */
-    SVGAnimatedLength getRx();
+    SVGAnimatedValue getRx();
 
     /**
      * Corresponds to attribute ry on the given 'ellipse' element.
      */
-    SVGAnimatedLength getRy();
+    SVGAnimatedValue getRy();
 
 
     //####################################################################
@@ -4078,18 +3463,18 @@ public:
     /**
      * Corresponds to attribute in on the given 'feBlend' element.
      */
-    SVGAnimatedString getIn1();
+    SVGAnimatedValue getIn1();
 
     /**
      * Corresponds to attribute in2 on the given 'feBlend' element.
      */
-    SVGAnimatedString getIn2();
+    SVGAnimatedValue getIn2();
 
     /**
      * Corresponds to attribute mode on the given 'feBlend' element.
      *      Takes one of the Blend Mode Types.
      */
-    SVGAnimatedEnumeration getMode();
+    SVGAnimatedValue getMode();
 
 
     //####################################################################
@@ -4111,20 +3496,22 @@ public:
 
     /**
      * Corresponds to attribute in on the given 'feColorMatrix' element.
+     * - also in feBlend
      */
-    SVGAnimatedString getIn1();
+    // SVGAnimatedValue getIn1();
 
     /**
      * Corresponds to attribute type on the given 'feColorMatrix' element.
      *      Takes one of the Color Matrix Types.
+     * -- also in CSSRule
      */
-    SVGAnimatedEnumeration getType();
+    // SVGAnimatedValue getType();
 
     /**
      * Corresponds to attribute values on the given 'feColorMatrix' element.
      * Provides access to the contents of the values attribute.
      */
-    SVGAnimatedNumberList getValues();
+    SVGAnimatedValueList getValues();
 
 
     //####################################################################
@@ -4134,8 +3521,9 @@ public:
 
     /**
      * Corresponds to attribute in on the given 'feComponentTransfer'  element.
+     * -- also in feBlend
      */
-    SVGAnimatedString getIn1();
+    // SVGAnimatedValue getIn1();
 
     //####################################################################
     //# SVGFECompositeElement
@@ -4157,39 +3545,41 @@ public:
 
     /**
      * Corresponds to attribute in on the given 'feComposite' element.
+     * -- also in feBlend
      */
-    SVGAnimatedString getIn1();
+    // SVGAnimatedValue getIn1();
 
     /**
      * Corresponds to attribute in2 on the given 'feComposite' element.
+     * -- also in feBlend
      */
-    SVGAnimatedString getIn2();
+    // SVGAnimatedValue getIn2();
 
     /**
      * Corresponds to attribute operator on the given 'feComposite' element.
      *      Takes one of the Composite Operators.
      */
-    SVGAnimatedEnumeration getOperator();
+    SVGAnimatedValue getOperator();
 
     /**
      * Corresponds to attribute k1 on the given 'feComposite' element.
      */
-    SVGAnimatedNumber getK1();
+    SVGAnimatedValue getK1();
 
     /**
      * Corresponds to attribute k2 on the given 'feComposite' element.
      */
-    SVGAnimatedNumber getK2();
+    SVGAnimatedValue getK2();
 
     /**
      * Corresponds to attribute k3 on the given 'feComposite' element.
      */
-    SVGAnimatedNumber getK3();
+    SVGAnimatedValue getK3();
 
     /**
      * Corresponds to attribute k4 on the given 'feComposite' element.
      */
-    SVGAnimatedNumber getK4();
+    SVGAnimatedValue getK4();
 
 
     //####################################################################
@@ -4212,61 +3602,61 @@ public:
     /**
      * Corresponds to attribute order on the given 'feConvolveMatrix'  element.
      */
-    SVGAnimatedInteger getOrderX();
+    SVGAnimatedValue getOrderX();
 
     /**
      * Corresponds to attribute order on the given 'feConvolveMatrix'  element.
      */
-    SVGAnimatedInteger getOrderY();
+    SVGAnimatedValue getOrderY();
 
     /**
      * Corresponds to attribute kernelMatrix on the given element.
      */
-    SVGAnimatedNumberList getKernelMatrix();
+    SVGAnimatedValueList getKernelMatrix();
 
     /**
      * Corresponds to attribute divisor on the given 'feConvolveMatrix' element.
      */
-    SVGAnimatedNumber getDivisor();
+    SVGAnimatedValue getDivisor();
 
     /**
      * Corresponds to attribute bias on the given 'feConvolveMatrix'  element.
      */
-    SVGAnimatedNumber getBias();
+    SVGAnimatedValue getBias();
 
     /**
      * Corresponds to attribute targetX on the given 'feConvolveMatrix'  element.
      */
-    SVGAnimatedInteger getTargetX();
+    SVGAnimatedValue getTargetX();
 
     /**
      * Corresponds to attribute targetY on the given 'feConvolveMatrix'  element.
      */
-    SVGAnimatedInteger getTargetY();
+    SVGAnimatedValue getTargetY();
 
     /**
      * Corresponds to attribute edgeMode on the given 'feConvolveMatrix'
      *      element. Takes one of the Edge Mode Types.
      */
-    SVGAnimatedEnumeration getEdgeMode();
+    SVGAnimatedValue getEdgeMode();
 
     /**
      * Corresponds to attribute kernelUnitLength on the
      *      given 'feConvolveMatrix'  element.
      */
-    SVGAnimatedLength getKernelUnitLengthX();
+    SVGAnimatedValue getKernelUnitLengthX();
 
     /**
      * Corresponds to attribute kernelUnitLength on the given
      *      'feConvolveMatrix'  element.
      */
-    SVGAnimatedLength getKernelUnitLengthY();
+    SVGAnimatedValue getKernelUnitLengthY();
 
     /**
      * Corresponds to attribute preserveAlpha on the
      *      given 'feConvolveMatrix'  element.
      */
-    SVGAnimatedBoolean getPreserveAlpha();
+    SVGAnimatedValue getPreserveAlpha();
 
 
 
@@ -4277,32 +3667,33 @@ public:
 
     /**
      * Corresponds to attribute in on the given 'feDiffuseLighting'  element.
+     * -- also in feBlend
      */
-    SVGAnimatedString getIn1();
+    // SVGAnimatedValue getIn1();
 
     /**
      * Corresponds to attribute surfaceScale on the given
      *      'feDiffuseLighting'  element.
      */
-    SVGAnimatedNumber getSurfaceScale();
+    SVGAnimatedValue getSurfaceScale();
 
     /**
      * Corresponds to attribute diffuseConstant on the given
      *      'feDiffuseLighting'  element.
      */
-    SVGAnimatedNumber getDiffuseConstant();
+    SVGAnimatedValue getDiffuseConstant();
 
     /**
      * Corresponds to attribute kernelUnitLength on the given
      *      'feDiffuseLighting'  element.
      */
-    SVGAnimatedNumber getKernelUnitLengthX();
+    // SVGAnimatedValue getKernelUnitLengthX();
 
     /**
      * Corresponds to attribute kernelUnitLength on the given
      *      'feDiffuseLighting'  element.
      */
-    SVGAnimatedNumber getKernelUnitLengthY();
+    // SVGAnimatedValue getKernelUnitLengthY();
 
 
 
@@ -4326,29 +3717,31 @@ public:
 
     /**
      *
+     * -- also in feBlend
      */
-    SVGAnimatedString getIn1();
+    // SVGAnimatedValue getIn1();
+
+    /**
+     *
+     * -- also in feBlend
+     */
+    // SVGAnimatedValue getIn2();
+
 
     /**
      *
      */
-    SVGAnimatedString getIn2();
-
-
-    /**
-     *
-     */
-    SVGAnimatedNumber getScale();
+    SVGAnimatedValue getScale();
 
     /**
      *
      */
-    SVGAnimatedEnumeration getXChannelSelector();
+    SVGAnimatedValue getXChannelSelector();
 
     /**
      *
      */
-    SVGAnimatedEnumeration getYChannelSelector();
+    SVGAnimatedValue getYChannelSelector();
 
     //####################################################################
     //# SVGFEDistantLightElement
@@ -4358,14 +3751,14 @@ public:
     /**
      * Corresponds to attribute azimuth on the given 'feDistantLight'  element.
      */
-    SVGAnimatedNumber getAzimuth();
+    SVGAnimatedValue getAzimuth();
 
 
     /**
      * Corresponds to attribute elevation on the given 'feDistantLight'
      *    element
      */
-    SVGAnimatedNumber getElevation();
+    SVGAnimatedValue getElevation();
 
 
     //####################################################################
@@ -4375,8 +3768,9 @@ public:
 
     /**
      *
+     * -- also in feBlend
      */
-    SVGAnimatedString getIn1();
+    // SVGAnimatedValue getIn1();
 
 
     //####################################################################
@@ -4403,19 +3797,20 @@ public:
 
     /**
      *
+     * -- also in feBlend
      */
-    SVGAnimatedString getIn1();
+    // SVGAnimatedValue getIn1();
 
 
     /**
      *
      */
-    SVGAnimatedNumber getStdDeviationX();
+    SVGAnimatedValue getStdDeviationX();
 
     /**
      *
      */
-    SVGAnimatedNumber getStdDeviationY();
+    SVGAnimatedValue getStdDeviationY();
 
 
     /**
@@ -4456,24 +3851,25 @@ public:
 
     /**
      *
+     * -- also in feBlend
      */
-    SVGAnimatedString getIn1();
+    // SVGAnimatedValue getIn1();
 
 
     /**
      *
      */
-    SVGAnimatedEnumeration getOperator();
+    // SVGAnimatedValue getOperator();
 
     /**
      *
      */
-    SVGAnimatedLength getRadiusX();
+    SVGAnimatedValue getRadiusX();
 
     /**
      *
      */
-    SVGAnimatedLength getRadiusY();
+    SVGAnimatedValue getRadiusY();
 
     //####################################################################
     //# SVGFEOffsetElement
@@ -4481,18 +3877,19 @@ public:
 
     /**
      *
+     * -- also in feBlend
      */
-    SVGAnimatedString getIn1();
+    // SVGAnimatedValue getIn1();
 
     /**
      *
      */
-    SVGAnimatedLength getDx();
+    SVGAnimatedValue getDx();
 
     /**
      *
      */
-    SVGAnimatedLength getDy();
+    SVGAnimatedValue getDy();
 
 
     //####################################################################
@@ -4502,17 +3899,17 @@ public:
     /**
      * Corresponds to attribute x on the given 'fePointLight' element.
      */
-    SVGAnimatedNumber getX();
+    SVGAnimatedValue getX();
 
     /**
      * Corresponds to attribute y on the given 'fePointLight' element.
      */
-    SVGAnimatedNumber getY();
+    SVGAnimatedValue getY();
 
     /**
      * Corresponds to attribute z on the given 'fePointLight' element.
      */
-    SVGAnimatedNumber getZ();
+    SVGAnimatedValue getZ();
 
     //####################################################################
     //# SVGFESpecularLightingElement
@@ -4521,23 +3918,24 @@ public:
 
     /**
      *
+     * -- also in feBlend
      */
-    SVGAnimatedString getIn1();
+    // SVGAnimatedValue getIn1();
 
     /**
      *
      */
-    SVGAnimatedNumber getSurfaceScale();
+    // SVGAnimatedValue getSurfaceScale();
 
     /**
      *
      */
-    SVGAnimatedNumber getSpecularConstant();
+    SVGAnimatedValue getSpecularConstant();
 
     /**
      *
      */
-    SVGAnimatedNumber getSpecularExponent();
+    SVGAnimatedValue getSpecularExponent();
 
 
     //####################################################################
@@ -4547,44 +3945,44 @@ public:
     /**
      * Corresponds to attribute x on the given 'feSpotLight' element.
      */
-    SVGAnimatedNumber getX();
+    // SVGAnimatedValue getX();
 
     /**
      * Corresponds to attribute y on the given 'feSpotLight' element.
      */
-    SVGAnimatedNumber getY();
+    // SVGAnimatedValue getY();
 
     /**
      * Corresponds to attribute z on the given 'feSpotLight' element.
      */
-    SVGAnimatedNumber getZ();
+    // SVGAnimatedValue getZ();
 
     /**
      * Corresponds to attribute pointsAtX on the given 'feSpotLight' element.
      */
-    SVGAnimatedNumber getPointsAtX();
+    SVGAnimatedValue getPointsAtX();
 
     /**
      * Corresponds to attribute pointsAtY on the given 'feSpotLight' element.
      */
-    SVGAnimatedNumber getPointsAtY();
+    SVGAnimatedValue getPointsAtY();
 
     /**
      * Corresponds to attribute pointsAtZ on the given 'feSpotLight' element.
      */
-    SVGAnimatedNumber getPointsAtZ();
+    SVGAnimatedValue getPointsAtZ();
 
     /**
      * Corresponds to attribute specularExponent on the
      *      given 'feSpotLight'  element.
      */
-    SVGAnimatedNumber getSpecularExponent();
+    // SVGAnimatedValue getSpecularExponent();
 
     /**
      * Corresponds to attribute limitingConeAngle on the
      *      given 'feSpotLight'  element.
      */
-    SVGAnimatedNumber getLimitingConeAngle();
+    SVGAnimatedValue getLimitingConeAngle();
 
 
     //####################################################################
@@ -4594,8 +3992,9 @@ public:
 
     /**
      *
+     * -- also in feBlend
      */
-    SVGAnimatedString getIn1();
+    // SVGAnimatedValue getIn1();
 
 
     //####################################################################
@@ -4628,32 +4027,32 @@ public:
     /**
      *
      */
-    SVGAnimatedNumber getBaseFrequencyX();
+    SVGAnimatedValue getBaseFrequencyX();
 
     /**
      *
      */
-    SVGAnimatedNumber getBaseFrequencyY();
+    SVGAnimatedValue getBaseFrequencyY();
 
     /**
      *
      */
-    SVGAnimatedInteger getNumOctaves();
+    SVGAnimatedValue getNumOctaves();
 
     /**
      *
      */
-    SVGAnimatedNumber getSeed();
+    SVGAnimatedValue getSeed();
 
     /**
      *
      */
-    SVGAnimatedEnumeration getStitchTiles();
+    SVGAnimatedValue getStitchTiles();
 
     /**
      *
      */
-    SVGAnimatedEnumeration getType();
+    SVGAnimatedValue getType();
 
 
 
@@ -4666,47 +4065,47 @@ public:
      * Corresponds to attribute filterUnits on the given 'filter' element. Takes one
      * of the constants defined in SVGUnitTypes.
      */
-    SVGAnimatedEnumeration getFilterUnits();
+    SVGAnimatedValue getFilterUnits();
 
     /**
      * Corresponds to attribute primitiveUnits on the given 'filter' element. Takes
      * one of the constants defined in SVGUnitTypes.
      */
-    SVGAnimatedEnumeration getPrimitiveUnits();
+    SVGAnimatedValue getPrimitiveUnits();
 
     /**
      *
      */
-    SVGAnimatedLength getX();
+    // SVGAnimatedValue getX();
 
     /**
      * Corresponds to attribute x on the given 'filter' element.
      */
-    SVGAnimatedLength getY();
+    // SVGAnimatedValue getY();
 
     /**
      * Corresponds to attribute y on the given 'filter' element.
      */
-    SVGAnimatedLength getWidth();
+    // SVGAnimatedValue getWidth();
 
     /**
      * Corresponds to attribute height on the given 'filter' element.
      */
-    SVGAnimatedLength getHeight();
+    // SVGAnimatedValue getHeight();
 
 
     /**
      * Corresponds to attribute filterRes on the given 'filter' element.
      *      Contains the X component of attribute filterRes.
      */
-    SVGAnimatedInteger getFilterResX();
+    SVGAnimatedValue getFilterResX();
 
     /**
      * Corresponds to attribute filterRes on the given 'filter' element.
      * Contains the Y component(possibly computed automatically)
      *      of attribute filterRes.
      */
-    SVGAnimatedInteger getFilterResY();
+    SVGAnimatedValue getFilterResY();
 
     /**
      * Sets the values for attribute filterRes.
@@ -4745,22 +4144,22 @@ public:
     /**
      *
      */
-    SVGAnimatedLength getX();
+    // SVGAnimatedValue getX();
 
     /**
      *
      */
-    SVGAnimatedLength getY();
+    // SVGAnimatedValue getY();
 
     /**
      *
      */
-    SVGAnimatedLength getWidth();
+    // SVGAnimatedValue getWidth();
 
     /**
      *
      */
-    SVGAnimatedLength getHeight();
+    // SVGAnimatedValue getHeight();
 
 
 
@@ -4772,62 +4171,62 @@ public:
     /**
      * Get the attribute glyphRef on the given element.
      */
-    DOMString getGlyphRef();
+    // DOMString getGlyphRef();
 
     /**
      * Set the attribute glyphRef on the given element.
      */
-    void setGlyphRef(const DOMString &val) throw(DOMException);
+    // void setGlyphRef(const DOMString &val) throw(DOMException);
 
     /**
      * Get the attribute format on the given element.
      */
-    DOMString getFormat();
+    // DOMString getFormat();
 
     /**
      * Set the attribute format on the given element.
      */
-    void setFormat(const DOMString &val) throw(DOMException);
+    // void setFormat(const DOMString &val) throw(DOMException);
 
     /**
      * Get the attribute x on the given element.
      */
-    double getX();
+    // double getX();
 
     /**
      * Set the attribute x on the given element.
      */
-    void setX(double val) throw(DOMException);
+    // void setX(double val) throw(DOMException);
 
     /**
      * Get the attribute y on the given element.
      */
-    double getY();
+    // double getY();
 
     /**
      * Set the attribute y on the given element.
      */
-    void setY(double val) throw(DOMException);
+    // void setY(double val) throw(DOMException);
 
     /**
      * Get the attribute dx on the given element.
      */
-    double getDx();
+    // double getDx();
 
     /**
      * Set the attribute dx on the given element.
      */
-    void setDx(double val) throw(DOMException);
+    // void setDx(double val) throw(DOMException);
 
     /**
      * Get the attribute dy on the given element.
      */
-    double getDy();
+    // double getDy();
 
     /**
      * Set the attribute dy on the given element.
      */
-    void setDy(double val) throw(DOMException);
+    // void setDy(double val) throw(DOMException);
 
 
     //####################################################################
@@ -4851,18 +4250,18 @@ public:
      * Corresponds to attribute gradientUnits on the given element.
      *      Takes one of the constants defined in SVGUnitTypes.
      */
-    SVGAnimatedEnumeration getGradientUnits();
+    SVGAnimatedValue &getGradientUnits();
 
     /**
      * Corresponds to attribute gradientTransform on the given element.
      */
-    SVGAnimatedTransformList getGradientTransform();
+    SVGAnimatedValueList &getGradientTransform();
 
     /**
      * Corresponds to attribute spreadMethod on the given element.
      *      One of the Spread Method Types.
      */
-    SVGAnimatedEnumeration getSpreadMethod();
+    SVGAnimatedValue &getSpreadMethod();
 
 
 
@@ -4877,28 +4276,28 @@ public:
     /**
      * Corresponds to attribute x on the given 'image' element.
      */
-    SVGAnimatedLength getX();
+    // SVGAnimatedValue getX();
 
     /**
      * Corresponds to attribute y on the given 'image' element.
      */
-    SVGAnimatedLength getY();
+    // SVGAnimatedValue getY();
 
     /**
      * Corresponds to attribute width on the given 'image' element.
      */
-    SVGAnimatedLength getWidth();
+    // SVGAnimatedValue getWidth();
 
     /**
      * Corresponds to attribute height on the given 'image' element.
      */
-    SVGAnimatedLength getHeight();
+    // SVGAnimatedValue getHeight();
 
 
     /**
      * Corresponds to attribute preserveAspectRatio on the given element.
      */
-    SVGAnimatedPreserveAspectRatio getPreserveAspectRatio();
+    // SVGAnimatedPreserveAspectRatio getPreserveAspectRatio();
 
     //####################################################################
     //# SVGLinearGradientElement
@@ -4907,22 +4306,22 @@ public:
     /**
      * Corresponds to attribute x1 on the given 'linearGradient'  element.
      */
-    SVGAnimatedLength getX1();
+    // SVGAnimatedValue getX1();
 
     /**
      * Corresponds to attribute y1 on the given 'linearGradient'  element.
      */
-    SVGAnimatedLength getY1();
+    // SVGAnimatedValue getY1();
 
     /**
      * Corresponds to attribute x2 on the given 'linearGradient'  element.
      */
-    SVGAnimatedLength getX2();
+    // SVGAnimatedValue getX2();
 
     /**
      * Corresponds to attribute y2 on the given 'linearGradient'  element.
      */
-    SVGAnimatedLength getY2();
+    // SVGAnimatedValue getY2();
 
 
 
@@ -4933,22 +4332,22 @@ public:
     /**
      * Corresponds to attribute x1 on the given 'line' element.
      */
-    SVGAnimatedLength getX1();
+    // SVGAnimatedValue getX1();
 
     /**
      * Corresponds to attribute y1 on the given 'line' element.
      */
-    SVGAnimatedLength getY1();
+    // SVGAnimatedValue getY1();
 
     /**
      * Corresponds to attribute x2 on the given 'line' element.
      */
-    SVGAnimatedLength getX2();
+    // SVGAnimatedValue getX2();
 
     /**
      * Corresponds to attribute y2 on the given 'line' element.
      */
-    SVGAnimatedLength getY2();
+    // SVGAnimatedValue getY2();
 
 
     //####################################################################
@@ -4980,41 +4379,41 @@ public:
     /**
      * Corresponds to attribute refX on the given 'marker' element.
      */
-    SVGAnimatedLength getRefX();
+    SVGAnimatedValue getRefX();
 
     /**
      * Corresponds to attribute refY on the given 'marker' element.
      */
-    SVGAnimatedLength getRefY();
+    SVGAnimatedValue getRefY();
 
     /**
      * Corresponds to attribute markerUnits on the given 'marker' element.
      *      One of the Marker Units Types defined above.
      */
-    SVGAnimatedEnumeration getMarkerUnits();
+    SVGAnimatedValue getMarkerUnits();
 
     /**
      * Corresponds to attribute markerWidth on the given 'marker' element.
      */
-    SVGAnimatedLength getMarkerWidth();
+    SVGAnimatedValue getMarkerWidth();
 
     /**
      * Corresponds to attribute markerHeight on the given 'marker' element.
      */
-    SVGAnimatedLength getMarkerHeight();
+    SVGAnimatedValue getMarkerHeight();
 
     /**
      * Corresponds to attribute orient on the given 'marker' element.
      *      One of the Marker Orientation Types defined above.
      */
-    SVGAnimatedEnumeration getOrientType();
+    SVGAnimatedValue getOrientType();
 
     /**
      * Corresponds to attribute orient on the given 'marker' element.
      * If markerUnits is SVG_MARKER_ORIENT_ANGLE, the angle value for
      * attribute orient; otherwise, it will be set to zero.
      */
-    SVGAnimatedAngle getOrientAngle();
+    SVGAnimatedValue getOrientAngle();
 
 
     /**
@@ -5037,33 +4436,33 @@ public:
      * Corresponds to attribute maskUnits on the given 'mask' element. Takes one of
      * the constants defined in SVGUnitTypes.
      */
-    SVGAnimatedEnumeration getMaskUnits();
+    SVGAnimatedValue getMaskUnits();
 
     /**
      * Corresponds to attribute maskContentUnits on the given 'mask' element. Takes
      * one of the constants defined in SVGUnitTypes.
      */
-    SVGAnimatedEnumeration getMaskContentUnits();
+    SVGAnimatedValue getMaskContentUnits();
 
     /**
      * Corresponds to attribute x on the given 'mask' element.
      */
-    SVGAnimatedLength getX();
+    // SVGAnimatedValue getX();
 
     /**
      * Corresponds to attribute y on the given 'mask' element.
      */
-    SVGAnimatedLength getY();
+    // SVGAnimatedValue getY();
 
     /**
      * Corresponds to attribute width on the given 'mask' element.
      */
-    SVGAnimatedLength getWidth();
+    // SVGAnimatedValue getWidth();
 
     /**
      * Corresponds to attribute height on the given 'mask' element.
      */
-    SVGAnimatedLength getHeight();
+    // SVGAnimatedValue getHeight();
 
     //####################################################################
     //# SVGMetadataElement
@@ -5081,7 +4480,7 @@ public:
     /**
      * Corresponds to attribute pathLength on the given 'path' element.
      */
-    SVGAnimatedNumber getPathLength();
+    SVGAnimatedValue getPathLength();
 
     /**
      * Returns the user agent's computed value for the total length of the path using
@@ -5221,38 +4620,38 @@ public:
      * Corresponds to attribute patternUnits on the given 'pattern' element.
      * Takes one of the constants defined in SVGUnitTypes.
      */
-    SVGAnimatedEnumeration getPatternUnits();
+    SVGAnimatedValue getPatternUnits();
 
     /**
      * Corresponds to attribute patternContentUnits on the given 'pattern'
      *      element. Takes one of the constants defined in SVGUnitTypes.
      */
-    SVGAnimatedEnumeration getPatternContentUnits();
+    SVGAnimatedValue getPatternContentUnits();
 
     /**
      * Corresponds to attribute patternTransform on the given 'pattern' element.
      */
-    SVGAnimatedTransformList getPatternTransform();
+    SVGAnimatedValueList &getPatternTransform();
 
     /**
      * Corresponds to attribute x on the given 'pattern' element.
      */
-    SVGAnimatedLength getX();
+    // SVGAnimatedValue getX();
 
     /**
      *
      */
-    SVGAnimatedLength getY();
+    // SVGAnimatedValue getY();
 
     /**
      * Corresponds to attribute width on the given 'pattern' element.
      */
-    SVGAnimatedLength getWidth();
+    // SVGAnimatedValue getWidth();
 
     /**
      * Corresponds to attribute height on the given 'pattern' element.
      */
-    SVGAnimatedLength getHeight();
+    // SVGAnimatedValue getHeight();
 
 
     //####################################################################
@@ -5271,31 +4670,31 @@ public:
     /**
      * Corresponds to attribute cx on the given 'radialGradient'  element.
      */
-    SVGAnimatedLength getCx();
+    // SVGAnimatedValue getCx();
 
 
     /**
      * Corresponds to attribute cy on the given 'radialGradient'  element.
      */
-    SVGAnimatedLength getCy();
+    // SVGAnimatedValue getCy();
 
 
     /**
      * Corresponds to attribute r on the given 'radialGradient'  element.
      */
-    SVGAnimatedLength getR();
+    // SVGAnimatedValue getR();
 
 
     /**
      * Corresponds to attribute fx on the given 'radialGradient'  element.
      */
-    SVGAnimatedLength getFx();
+    SVGAnimatedValue getFx();
 
 
     /**
      * Corresponds to attribute fy on the given 'radialGradient'  element.
      */
-    SVGAnimatedLength getFy();
+    SVGAnimatedValue getFy();
 
 
     //####################################################################
@@ -5305,33 +4704,33 @@ public:
     /**
      * Corresponds to attribute x on the given 'rect' element.
      */
-    SVGAnimatedLength getX();
+    // SVGAnimatedValue getX();
 
     /**
      * Corresponds to attribute y on the given 'rect' element.
      */
-    SVGAnimatedLength getY();
+    // SVGAnimatedValue getY();
 
     /**
      * Corresponds to attribute width on the given 'rect' element.
      */
-    SVGAnimatedLength getWidth();
+    // SVGAnimatedValue getWidth();
 
     /**
      * Corresponds to attribute height on the given 'rect' element.
      */
-    SVGAnimatedLength getHeight();
+    // SVGAnimatedValue getHeight();
 
 
     /**
      * Corresponds to attribute rx on the given 'rect' element.
      */
-    SVGAnimatedLength getRx();
+    // SVGAnimatedValue getRx();
 
     /**
      * Corresponds to attribute ry on the given 'rect' element.
      */
-    SVGAnimatedLength getRy();
+    // SVGAnimatedValue getRy();
 
 
     //####################################################################
@@ -5341,12 +4740,12 @@ public:
     /**
      *
      */
-    DOMString getType();
+    // DOMString getType();
 
     /**
      *
      */
-    void setType(const DOMString &val) throw(DOMException);
+    // void setType(const DOMString &val) throw(DOMException);
 
     //####################################################################
     //# SVGSetElement
@@ -5360,7 +4759,7 @@ public:
     /**
      * Corresponds to attribute offset on the given 'stop' element.
      */
-    SVGAnimatedNumber getOffset();
+    // SVGAnimatedValue getOffset();
 
 
     //####################################################################
@@ -5380,12 +4779,12 @@ public:
     /**
      * Get the attribute type on the given 'style' element.
      */
-    DOMString getType();
+    // DOMString getType();
 
     /**
      * Set the attribute type on the given 'style' element.
      */
-    void setType(const DOMString &val) throw(DOMException);
+    // void setType(const DOMString &val) throw(DOMException);
 
     /**
      * Get the attribute media on the given 'style' element.
@@ -5418,22 +4817,22 @@ public:
     /**
      * Corresponds to attribute x on the given 'svg' element.
      */
-    SVGAnimatedLength getX();
+    // SVGAnimatedValue getX();
 
     /**
      * Corresponds to attribute y on the given 'svg' element.
      */
-    SVGAnimatedLength getY();
+    // SVGAnimatedValue getY();
 
     /**
      * Corresponds to attribute width on the given 'svg' element.
      */
-    SVGAnimatedLength getWidth();
+    // SVGAnimatedValue getWidth();
 
     /**
      * Corresponds to attribute height on the given 'svg' element.
      */
-    SVGAnimatedLength getHeight();
+    // SVGAnimatedValue getHeight();
 
     /**
      * Get the attribute contentScriptType on the given 'svg' element.
@@ -5630,7 +5029,7 @@ public:
      * Returns the current time in seconds relative to the start time for
      *      the current SVG document fragment.
      */
-    double getCurrentTime();
+    // double getCurrentTime();
 
     /**
      * Adjusts the clock for this SVG document fragment, establishing
@@ -5757,14 +5156,14 @@ public:
     /**
      * Corresponds to attribute textLength on the given element.
      */
-    SVGAnimatedLength getTextLength();
+    SVGAnimatedValue getTextLength();
 
 
     /**
      * Corresponds to attribute lengthAdjust on the given element. The value must be
      * one of the length adjust constants specified above.
      */
-    SVGAnimatedEnumeration getLengthAdjust();
+    SVGAnimatedValue getLengthAdjust();
 
 
     /**
@@ -5898,19 +5297,19 @@ public:
     /**
      * Corresponds to attribute startOffset on the given 'textPath' element.
      */
-    SVGAnimatedLength getStartOffset();
+    SVGAnimatedValue getStartOffset();
 
     /**
      * Corresponds to attribute method on the given 'textPath' element. The value
      * must be one of the method type constants specified above.
      */
-    SVGAnimatedEnumeration getMethod();
+    SVGAnimatedValue getMethod();
 
     /**
      * Corresponds to attribute spacing on the given 'textPath' element.
      *  The value must be one of the spacing type constants specified above.
      */
-    SVGAnimatedEnumeration getSpacing();
+    SVGAnimatedValue getSpacing();
 
 
     //####################################################################
@@ -5921,28 +5320,28 @@ public:
     /**
      * Corresponds to attribute x on the given element.
      */
-    SVGAnimatedLength getX();
+    // SVGAnimatedValue getX();
 
     /**
      * Corresponds to attribute y on the given element.
      */
-    SVGAnimatedLength getY();
+    // SVGAnimatedValue getY();
 
     /**
      * Corresponds to attribute dx on the given element.
      */
-    SVGAnimatedLength getDx();
+    // SVGAnimatedValue getDx();
 
     /**
      * Corresponds to attribute dy on the given element.
      */
-    SVGAnimatedLength getDy();
+    // SVGAnimatedValue getDy();
 
 
     /**
      * Corresponds to attribute rotate on the given element.
      */
-    SVGAnimatedNumberList getRotate();
+    SVGAnimatedValueList getRotate();
 
 
     //####################################################################
@@ -5968,22 +5367,22 @@ public:
     /**
      * Corresponds to attribute x on the given 'use' element.
      */
-    SVGAnimatedLength getX();
+    // SVGAnimatedValue getX();
 
     /**
      * Corresponds to attribute y on the given 'use' element.
      */
-    SVGAnimatedLength getY();
+    // SVGAnimatedValue getY();
 
     /**
      * Corresponds to attribute width on the given 'use' element.
      */
-    SVGAnimatedLength getWidth();
+    // SVGAnimatedValue getWidth();
 
     /**
      * Corresponds to attribute height on the given 'use' element.
      */
-    SVGAnimatedLength getHeight();
+    // SVGAnimatedValue getHeight();
 
     /**
      * The root of the "instance tree". See description of SVGElementInstance for
@@ -6012,7 +5411,7 @@ public:
     /**
      *
      */
-    SVGStringList getViewTarget();
+    SVGValueList getViewTarget();
 
 
 
