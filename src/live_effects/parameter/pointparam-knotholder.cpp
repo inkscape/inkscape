@@ -112,7 +112,7 @@ static void pointparam_knot_clicked_handler(SPKnot */*knot*/, guint /*state*/, P
  */
 static void pointparam_knot_moved_handler(SPKnot */*knot*/, NR::Point const *p, guint /*state*/, PointParamKnotHolder *kh)
 {
-    NR::Matrix const i2d(from_2geom(sp_item_i2d_affine(kh->item)));
+    NR::Matrix const i2d(from_2geom(sp_item_i2d_affine(kh->getItem())));
     NR::Point pos = (*p) / i2d;
 
     Inkscape::SVGOStringStream os;
@@ -123,7 +123,7 @@ static void pointparam_knot_moved_handler(SPKnot */*knot*/, NR::Point const *p, 
 
 static void pointparam_knot_ungrabbed_handler(SPKnot *knot, unsigned int /*state*/, PointParamKnotHolder *kh)
 {
-    NR::Matrix const i2d(from_2geom(sp_item_i2d_affine(kh->item)));
+    NR::Matrix const i2d(from_2geom(sp_item_i2d_affine(kh->getItem())));
     NR::Point pos = sp_knot_position(knot) / i2d;
 
     Inkscape::SVGOStringStream os;

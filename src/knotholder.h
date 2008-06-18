@@ -52,14 +52,17 @@ public:
 
     void add_pattern_knotholder();
 
-//private:
+    const SPItem *getItem() { return item; }
+
+    friend class ShapeEditor;
+
+protected:
     SPDesktop *desktop;
     SPItem *item; // TODO: Remove this and keep the actual item (e.g., SPRect etc.) in the item-specific knotholders
+    Inkscape::XML::Node *repr; ///< repr of the item, for setting and releasing listeners.
     std::list<KnotHolderEntity *> entity;
 
     SPKnotHolderReleasedFunc released;
-
-    Inkscape::XML::Node *repr; ///< repr of the item, for setting and releasing listeners.
 
     gboolean local_change; ///< if true, no need to recreate knotholder if repr was changed.
 };
