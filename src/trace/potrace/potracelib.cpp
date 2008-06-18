@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "potracelib.h"
+#include <inkscape_version.h>
 #include "curve.h"
 #include "decompose.h"
 #include "trace.h"
@@ -109,5 +110,5 @@ void potrace_param_free(potrace_param_t *p) {
 }
 
 char *potrace_version(void) {
-  return "potracelib "VERSION"";
+  return "potracelib "INKSCAPE_VERSION"";
 }
