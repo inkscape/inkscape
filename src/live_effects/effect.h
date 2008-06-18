@@ -76,6 +76,7 @@ enum EffectType {
     CIRCLE_3PTS,
     ANGLE_BISECTOR,
     PARALLEL,
+    COPY_ROTATE,
     INVALID_LPE // This must be last
 };
 
