@@ -75,6 +75,7 @@ enum EffectType {
     MIRROR_REFLECT,
     CIRCLE_3PTS,
     ANGLE_BISECTOR,
+    PARALLEL,
     INVALID_LPE // This must be last
 };
 

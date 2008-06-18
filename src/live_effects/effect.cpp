@@ -58,6 +58,7 @@
 #include "live_effects/lpe-mirror_reflect.h"
 #include "live_effects/lpe-circle_3pts.h"
 #include "live_effects/lpe-angle_bisector.h"
+#include "live_effects/lpe-parallel.h"
 // end of includes
 
 namespace Inkscape {
@@ -87,6 +88,7 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {MIRROR_REFLECT, N_("Mirror reflection"), "mirror_reflect"},
     {CIRCLE_3PTS, N_("Circle through 3 points"), "circle_3pts"},
     {ANGLE_BISECTOR, N_("Angle bisector"), "angle_bisector"},
+    {PARALLEL, N_("Parallel"), "parallel"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
@@ -153,6 +155,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case ANGLE_BISECTOR:
             neweffect = static_cast<Effect*> ( new LPEAngleBisector(lpeobj) );
+            break;
+        case PARALLEL:
+            neweffect = static_cast<Effect*> ( new LPEParallel(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);
