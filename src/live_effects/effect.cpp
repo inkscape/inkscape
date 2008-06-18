@@ -251,9 +251,9 @@ Effect::doBeforeEffect (SPLPEItem */*lpeitem*/)
 }
 
 /**
- * Effects have a parameter path set before they are applied by accepting a nonzero number of mouse
- * clicks. This method activates the pen context, which waits for the specified number of clicks.
- * Override Effect::acceptsNumParams() to set the number of expected mouse clicks.
+ * Effects can have a parameter path set before they are applied by accepting a nonzero number of
+ * mouse clicks. This method activates the pen context, which waits for the specified number of
+ * clicks. Override Effect::acceptsNumParams() to return the number of expected mouse clicks.
  */
 void
 Effect::doAcceptPathPreparations(SPLPEItem *lpeitem)
@@ -426,11 +426,12 @@ Effect::addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem 
 void
 Effect::addHelperPaths(SPLPEItem *lpeitem, SPDesktop *desktop)
 {
+    g_return_if_fail(desktop);
     g_return_if_fail(SP_IS_PATH(lpeitem));
 
     if (providesKnotholder() && showOrigPath()) {
         // TODO: we assume that if the LPE provides its own knotholder, there is no nodepath so we
-        // must create the helper curve for the original path manually; when we allow nodepaths and
+        // must create the helper curve for the original path manually; once we allow nodepaths and
         // knotholders alongside each other, this needs to be rethought!
         SPCanvasItem *canvasitem = sp_nodepath_generate_helperpath(desktop, SP_PATH(lpeitem));
         // TODO: Make sure the tempitem doesn't get destroyed when the mouse leaves the item
