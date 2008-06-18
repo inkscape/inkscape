@@ -90,6 +90,8 @@
 #include "../inkscape-stock.h"
 #include "icon.h"
 #include "graphlayout/graphlayout.h"
+#include "interface.h"
+#include "shortcuts.h"
 
 #include "mod360.h"
 
@@ -500,25 +502,20 @@ sp_toolbox_button_new_from_verb_with_doubleclick(GtkWidget *t, Inkscape::IconSiz
     /* fixme: Implement sp_button_new_from_action */
     GtkWidget *b = sp_button_new(size, type, action, doubleclick_action, tt);
     gtk_widget_show(b);
-    if ( GTK_IS_BOX(t) ) {
-        gtk_box_pack_start(GTK_BOX(t), b, FALSE, FALSE, 0);
-    } else if ( GTK_IS_TOOLBAR(t) ) {
-        gtk_toolbar_append_widget( GTK_TOOLBAR(t), b, "Text", "priv" );
+
+
+    unsigned int shortcut = sp_shortcut_get_primary(verb);
+    if (shortcut) {
+        gchar key[256];
+        sp_ui_shortcut_string(shortcut, key);
+        gchar *tip = g_strdup_printf ("%s (%s)", action->tip, key);
+        gtk_toolbar_append_widget( GTK_TOOLBAR(t), b, tip, 0 );
+        g_free(tip);
+    } else {
+        gtk_toolbar_append_widget( GTK_TOOLBAR(t), b, action->tip, 0 );
     }
 
     return b;
-}
-
-GtkWidget *sp_toolbox_button_new_from_verb(GtkWidget *t, Inkscape::IconSize size, SPButtonType type, Inkscape::Verb *verb,
-                                           Inkscape::UI::View::View *view, GtkTooltips *tt)
-{
-    return sp_toolbox_button_new_from_verb_with_doubleclick(t, size, type, verb, NULL, view, tt);
-}
-
-GtkWidget * sp_toolbox_button_normal_new_from_verb(GtkWidget *t, Inkscape::IconSize size, Inkscape::Verb *verb,
-                                                   Inkscape::UI::View::View *view, GtkTooltips *tt)
-{
-    return sp_toolbox_button_new_from_verb(t, size, SP_BUTTON_TYPE_NORMAL, verb, view, tt);
 }
 
 
@@ -1350,7 +1347,12 @@ sp_tool_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop)
 void
 sp_aux_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop)
 {
-    toolbox_set_desktop(gtk_bin_get_child(GTK_BIN(toolbox)), desktop, setup_aux_toolbox, update_aux_toolbox, static_cast<sigc::connection*>(g_object_get_data(G_OBJECT(toolbox), "event_context_connection")));
+    toolbox_set_desktop(gtk_bin_get_child(GTK_BIN(toolbox)),
+                        desktop,
+                        setup_aux_toolbox,
+                        update_aux_toolbox,
+                        static_cast<sigc::connection*>(g_object_get_data(G_OBJECT(toolbox),
+                                                                         "event_context_connection")));
 }
 
 void
