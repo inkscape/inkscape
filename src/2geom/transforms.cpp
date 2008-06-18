@@ -45,6 +45,12 @@ Matrix operator*(Matrix const &m, Scale const &s) {
     return ret;
 }
 
+Matrix operator*(Matrix const &m, Rotate const &r) {
+    Matrix ret(m);
+    ret *= (Matrix) r;
+    return ret;
+}
+
 Translate pow(Translate const &t, int n) {
     return Translate(t[0]*n, t[1]*n);
 }

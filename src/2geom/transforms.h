@@ -82,7 +82,7 @@ class Rotate {
     explicit Rotate(Coord theta) : vec(std::cos(theta), std::sin(theta)) {}
     Rotate(Point const &p) {Point v = p; v.normalize(); vec = v;} //TODO: UGLY!
     explicit Rotate(Coord x, Coord y) { Rotate(Point(x, y)); }
-    inline operator Matrix() const { return Matrix(vec[X], vec[Y], vec[Y], -vec[X], 0, 0); }
+    inline operator Matrix() const { return Matrix(vec[X], -vec[Y], vec[Y], vec[X], 0, 0); }
 
     inline Coord operator[](Dim2 const dim) const { return vec[dim]; }
     inline Coord operator[](unsigned const dim) const { return vec[dim]; }
