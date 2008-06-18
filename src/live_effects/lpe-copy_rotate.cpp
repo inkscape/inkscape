@@ -67,9 +67,13 @@ LPECopyRotate::~LPECopyRotate()
 void
 LPECopyRotate::doOnApply(SPLPEItem *lpeitem)
 {
-    origin.param_setValue(SP_SHAPE(lpeitem)->curve->first_point().to_2geom());
-    A = pwd2_in.firstValue();
-    B = pwd2_in.lastValue();
+    SPCurve *curve = SP_SHAPE(lpeitem)->curve;
+
+    A = curve->first_point().to_2geom();
+    B = curve->last_point().to_2geom();
+
+    origin.param_setValue(A);
+
     dir = unit_vector(B - A);
     dist_angle_handle = L2(B - A);
 }
@@ -121,7 +125,11 @@ KnotHolderEntityAngle::knot_set(NR::Point const &p, NR::Point const &/*origin*/,
 
     // FIXME: is the minus sign due to a bug in 2geom?
     lpe->angle.param_set_value(rad_to_deg(-angle_between(lpe->dir, p.to_2geom() - lpe->origin)));
-    lpe->dist_angle_handle = L2(p - lpe->origin);
+    if (state & GDK_SHIFT_MASK) {
+        lpe->dist_angle_handle = L2(lpe->B - lpe->A);
+    } else {
+        lpe->dist_angle_handle = L2(p - lpe->origin);
+    }
 
     // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
