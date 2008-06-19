@@ -82,19 +82,22 @@ namespace Inkscape {
 namespace NodePath {
 
 /**
- * This is a node on a subpath
+ * The entire nodepath, containing multiple subpaths
  */
 class Path;
 
 /**
- * This is a subdivision of a NodePath
+ * A subpath is a continuous chain of linked nodes
  */
 class SubPath;
 
+/**
+ * One side of a node, i.e. prev or next
+ */
 class NodeSide;
 
 /**
- * This is a node (point) along a subpath
+ * A node on a subpath
  */
 class Node;
 
