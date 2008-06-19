@@ -372,7 +372,7 @@ static gchar const * ui_descr =
         "    <toolitem action='FreehandModeActionPencilTemp' />"
         "    <toolitem action='FreehandModeActionPencil' />"
         "    <separator />"
-        "    <toolitem action='PencilToleranceAction' />"    
+        "    <toolitem action='PencilToleranceAction' />"
         "    <separator />"
         "    <toolitem action='PencilResetAction' />"
         "  </toolbar>"
@@ -449,7 +449,7 @@ static gchar const * ui_descr =
         "</ui>"
 ;
 
-static GtkActionGroup* create_or_fetch_actions( SPDesktop* desktop );
+static Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop );
 
 static void toolbox_set_desktop (GtkWidget *toolbox, SPDesktop *desktop, SetupFunction setup_func, UpdateFunction update_func, sigc::connection*);
 
@@ -461,6 +461,133 @@ static void update_aux_toolbox (SPDesktop *desktop, SPEventContext *eventcontext
 
 static void setup_commands_toolbox (GtkWidget *toolbox, SPDesktop *desktop);
 static void update_commands_toolbox (SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
+
+
+GtkWidget * sp_toolbox_button_new_from_verb_with_doubleclick( GtkWidget *t, Inkscape::IconSize size, SPButtonType type,
+                                                              Inkscape::Verb *verb, Inkscape::Verb *doubleclick_verb,
+                                                              Inkscape::UI::View::View *view, GtkTooltips *tt);
+
+class VerbAction : public Gtk::Action {
+public:
+    static Glib::RefPtr<VerbAction> create(Inkscape::Verb* verb, Inkscape::Verb* verb2, Inkscape::UI::View::View *view, GtkTooltips *tooltips);
+
+    virtual ~VerbAction();
+    virtual void set_active(bool active = true);
+
+protected:
+    virtual Gtk::Widget* create_menu_item_vfunc();
+    virtual Gtk::Widget* create_tool_item_vfunc();
+
+    virtual void connect_proxy_vfunc(Gtk::Widget* proxy);
+    virtual void disconnect_proxy_vfunc(Gtk::Widget* proxy);
+
+    virtual void on_activate();
+
+private:
+    Inkscape::Verb* verb;
+    Inkscape::Verb* verb2;
+    Inkscape::UI::View::View *view;
+    GtkTooltips *tooltips;
+    bool active;
+
+    VerbAction(Inkscape::Verb* verb, Inkscape::Verb* verb2, Inkscape::UI::View::View *view, GtkTooltips *tooltips);
+};
+
+
+Glib::RefPtr<VerbAction> VerbAction::create(Inkscape::Verb* verb, Inkscape::Verb* verb2, Inkscape::UI::View::View *view, GtkTooltips *tooltips)
+{
+    Glib::RefPtr<VerbAction> result;
+    SPAction *action = verb->get_action(view);
+    if ( action ) {
+        //SPAction* action2 = verb2 ? verb2->get_action(view) : 0;
+        result = Glib::RefPtr<VerbAction>(new VerbAction(verb, verb2, view, tooltips));
+    }
+
+    return result;
+}
+
+VerbAction::VerbAction(Inkscape::Verb* verb, Inkscape::Verb* verb2, Inkscape::UI::View::View *view, GtkTooltips *tooltips) :
+    Gtk::Action(Glib::ustring(verb->get_id()), Gtk::StockID(GTK_STOCK_ABOUT), Glib::ustring(verb->get_name()), Glib::ustring(verb->get_tip())),
+    verb(verb),
+    verb2(verb2),
+    view(view),
+    tooltips(tooltips),
+    active(false)
+{
+}
+
+VerbAction::~VerbAction()
+{
+}
+
+Gtk::Widget* VerbAction::create_menu_item_vfunc()
+{
+    Gtk::Widget* widg = Gtk::Action::create_menu_item_vfunc();
+//     g_message("create_menu_item_vfunc() = %p  for '%s'", widg, verb->get_id());
+    return widg;
+}
+
+Gtk::Widget* VerbAction::create_tool_item_vfunc()
+{
+//     Gtk::Widget* widg = Gtk::Action::create_tool_item_vfunc();
+    Inkscape::IconSize toolboxSize = prefToSize("toolbox.tools", "small");
+    GtkWidget* toolbox = 0;
+    GtkWidget *button = sp_toolbox_button_new_from_verb_with_doubleclick( toolbox, toolboxSize,
+                                                                          SP_BUTTON_TYPE_TOGGLE,
+                                                                          verb,
+                                                                          verb2,
+                                                                          view,
+                                                                          tooltips );
+    if ( active ) {
+        sp_button_toggle_set_down( SP_BUTTON(button), active);
+    }
+    gtk_widget_show_all( button );
+    Gtk::Widget* wrapped = Glib::wrap(button);
+    Gtk::ToolItem* holder = Gtk::manage(new Gtk::ToolItem());
+    holder->add(*wrapped);
+
+//     g_message("create_tool_item_vfunc() = %p  for '%s'", holder, verb->get_id());
+    return holder;
+}
+
+void VerbAction::connect_proxy_vfunc(Gtk::Widget* proxy)
+{
+//     g_message("connect_proxy_vfunc(%p)  for '%s'", proxy, verb->get_id());
+    Gtk::Action::connect_proxy_vfunc(proxy);
+}
+
+void VerbAction::disconnect_proxy_vfunc(Gtk::Widget* proxy)
+{
+//     g_message("disconnect_proxy_vfunc(%p)  for '%s'", proxy, verb->get_id());
+    Gtk::Action::disconnect_proxy_vfunc(proxy);
+}
+
+void VerbAction::set_active(bool active)
+{
+    this->active = active;
+    Glib::SListHandle<Gtk::Widget*> proxies = get_proxies();
+    for ( Glib::SListHandle<Gtk::Widget*>::iterator it = proxies.begin(); it != proxies.end(); ++it ) {
+        Gtk::ToolItem* ti = dynamic_cast<Gtk::ToolItem*>(*it);
+        if (ti) {
+            // *should* have one child that is the SPButton
+            Gtk::Widget* child = ti->get_child();
+            if ( child && SP_IS_BUTTON(child->gobj()) ) {
+                SPButton* button = SP_BUTTON(child->gobj());
+                sp_button_toggle_set_down( button, active );
+            }
+        }
+    }
+}
+
+void VerbAction::on_activate()
+{
+    if ( verb ) {
+        SPAction *action = verb->get_action(view);
+        if ( action ) {
+            sp_action_perform(action, 0);
+        }
+    }
+}
 
 /* Global text entry widgets necessary for update */
 /* GtkWidget *dropper_rgb_entry,
@@ -509,10 +636,14 @@ sp_toolbox_button_new_from_verb_with_doubleclick(GtkWidget *t, Inkscape::IconSiz
         gchar key[256];
         sp_ui_shortcut_string(shortcut, key);
         gchar *tip = g_strdup_printf ("%s (%s)", action->tip, key);
-        gtk_toolbar_append_widget( GTK_TOOLBAR(t), b, tip, 0 );
+        if ( t ) {
+            gtk_toolbar_append_widget( GTK_TOOLBAR(t), b, tip, 0 );
+        }
         g_free(tip);
     } else {
-        gtk_toolbar_append_widget( GTK_TOOLBAR(t), b, action->tip, 0 );
+        if ( t ) {
+            gtk_toolbar_append_widget( GTK_TOOLBAR(t), b, action->tip, 0 );
+        }
     }
 
     return b;
@@ -561,7 +692,7 @@ static GtkAction* create_action_for_verb( Inkscape::Verb* verb, Inkscape::UI::Vi
     return act;
 }
 
-GtkActionGroup* create_or_fetch_actions( SPDesktop* desktop )
+Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop )
 {
     Inkscape::UI::View::View *view = desktop;
     gint verbsToUse[] = {
@@ -608,26 +739,40 @@ GtkActionGroup* create_or_fetch_actions( SPDesktop* desktop )
 
     Inkscape::IconSize toolboxSize = prefToSize("toolbox", "small");
 
-    static std::map<SPDesktop*, GtkActionGroup*> groups;
-    GtkActionGroup* mainActions = 0;
+    static std::map<SPDesktop*, Glib::RefPtr<Gtk::ActionGroup> > groups;
+    Glib::RefPtr<Gtk::ActionGroup> mainActions;
     if ( groups.find(desktop) != groups.end() ) {
         mainActions = groups[desktop];
     }
 
     if ( !mainActions ) {
-        mainActions = gtk_action_group_new("main");
+        mainActions = Gtk::ActionGroup::create("main");
         groups[desktop] = mainActions;
     }
 
     for ( guint i = 0; i < G_N_ELEMENTS(verbsToUse); i++ ) {
         Inkscape::Verb* verb = Inkscape::Verb::get(verbsToUse[i]);
         if ( verb ) {
-            if ( !gtk_action_group_get_action( mainActions, verb->get_id() ) ) {
+            if (!mainActions->get_action(verb->get_id())) {
                 GtkAction* act = create_action_for_verb( verb, view, toolboxSize );
-                gtk_action_group_add_action( mainActions, act );
+                mainActions->add(Glib::wrap(act));
             }
         }
     }
+
+    if ( !mainActions->get_action("ToolZoom") ) {
+        GtkTooltips *tt = gtk_tooltips_new();
+        for ( guint i = 0; i < G_N_ELEMENTS(tools) && tools[i].type_name; i++ ) {
+            Glib::RefPtr<VerbAction> va = VerbAction::create(Inkscape::Verb::get(tools[i].verb), Inkscape::Verb::get(tools[i].doubleclick_verb), view, tt);
+            if ( va ) {
+                mainActions->add(va);
+                if ( i == 0 ) {
+                    va->set_active(true);
+                }
+            }
+        }
+    }
+
 
     return mainActions;
 }
@@ -665,11 +810,11 @@ sp_tool_toolbox_new()
     gtk_handle_box_set_shadow_type(GTK_HANDLE_BOX(hb), GTK_SHADOW_OUT);
     gtk_handle_box_set_snap_edge(GTK_HANDLE_BOX(hb), GTK_POS_LEFT);
 
-     gtk_container_add(GTK_CONTAINER(hb), tb);
-     gtk_widget_show(GTK_WIDGET(tb));
+    gtk_container_add(GTK_CONTAINER(hb), tb);
+    gtk_widget_show(GTK_WIDGET(tb));
 
     sigc::connection* conn = new sigc::connection;
-     g_object_set_data(G_OBJECT(hb), "event_context_connection", conn);
+    g_object_set_data(G_OBJECT(hb), "event_context_connection", conn);
 
     g_signal_connect(G_OBJECT(hb), "child_detached", G_CALLBACK(handlebox_detached), static_cast<gpointer>(0));
     g_signal_connect(G_OBJECT(hb), "child_attached", G_CALLBACK(handlebox_attached), static_cast<gpointer>(0));
@@ -1329,18 +1474,12 @@ static void sp_zoom_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* /*mainA
 void
 sp_tool_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop)
 {
-    if ( GTK_IS_BIN(toolbox) ) {
-        toolbox_set_desktop(gtk_bin_get_child(GTK_BIN(toolbox)), desktop, setup_tool_toolbox, update_tool_toolbox, static_cast<sigc::connection*>(g_object_get_data(G_OBJECT(toolbox), "event_context_connection")));
-    } else if (GTK_IS_TOOLBAR(toolbox) ) {
-        toolbox_set_desktop(toolbox,
-                            desktop,
-                            setup_tool_toolbox,
-                            update_tool_toolbox,
-                            static_cast<sigc::connection*>(g_object_get_data(G_OBJECT(toolbox),
-                                                                             "event_context_connection")));
-    } else {
-        g_warning("Unexpected toolbox type");
-    }
+    toolbox_set_desktop(toolbox,
+                        desktop,
+                        setup_tool_toolbox,
+                        update_tool_toolbox,
+                        static_cast<sigc::connection*>(g_object_get_data(G_OBJECT(toolbox),
+                                                                         "event_context_connection")));
 }
 
 
@@ -1400,33 +1539,75 @@ toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop, SetupFunction setup_
 static void
 setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 {
-    GtkTooltips *tooltips=GTK_TOOLTIPS(g_object_get_data(G_OBJECT(toolbox), "tooltips"));
-    Inkscape::IconSize toolboxSize = prefToSize("toolbox.tools", "small");
+    gchar const * descr =
+        "<ui>"
+        "  <toolbar name='ToolToolbar'>"
+        "    <toolitem action='ToolSelector' />"
+        "    <toolitem action='ToolNode' />"
+        "    <toolitem action='ToolTweak' />"
+        "    <toolitem action='ToolZoom' />"
+        "    <toolitem action='ToolRect' />"
+        "    <toolitem action='Tool3DBox' />"
+        "    <toolitem action='ToolArc' />"
+        "    <toolitem action='ToolStar' />"
+        "    <toolitem action='ToolSpiral' />"
+        "    <toolitem action='ToolPencil' />"
+        "    <toolitem action='ToolPen' />"
+        "    <toolitem action='ToolCalligraphic' />"
+        "    <toolitem action='ToolEraser' />"
+        "    <toolitem action='ToolPaintBucket' />"
+        "    <toolitem action='ToolText' />"
+        "    <toolitem action='ToolConnector' />"
+        "    <toolitem action='ToolGradient' />"
+        "    <toolitem action='ToolDropper' />"
+        "  </toolbar>"
+        "</ui>";
+    Glib::RefPtr<Gtk::ActionGroup> mainActions = create_or_fetch_actions( desktop );
+    GtkUIManager* mgr = gtk_ui_manager_new();
+    GError* errVal = 0;
 
-    for (int i = 0 ; tools[i].type_name ; i++ ) {
-        GtkWidget *button =
-            sp_toolbox_button_new_from_verb_with_doubleclick( toolbox, toolboxSize,
-                                                              SP_BUTTON_TYPE_TOGGLE,
-                                                              Inkscape::Verb::get(tools[i].verb),
-                                                              Inkscape::Verb::get(tools[i].doubleclick_verb),
-                                                              desktop,
-                                                              tooltips );
+    gtk_ui_manager_insert_action_group( mgr, mainActions->gobj(), 0 );
+    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
 
-        g_object_set_data( G_OBJECT(toolbox), tools[i].data_name,
-                           (gpointer)button );
+    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/ToolToolbar" );
+    if ( prefs_get_int_attribute_limited( "toolbox", "icononly", 1, 0, 1 ) ) {
+        gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
     }
+    Inkscape::IconSize toolboxSize = prefToSize("toolbox.tools", "small");
+    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), (GtkIconSize)toolboxSize );
+
+    gtk_toolbar_set_orientation(GTK_TOOLBAR(toolBar), GTK_ORIENTATION_VERTICAL);
+    gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolBar), TRUE);
+
+    g_object_set_data(G_OBJECT(toolBar), "desktop", NULL);
+
+    GtkWidget* child = gtk_bin_get_child(GTK_BIN(toolbox));
+    if ( child ) {
+        gtk_container_remove( GTK_CONTAINER(toolbox), child );
+    }
+
+    gtk_container_add( GTK_CONTAINER(toolbox), toolBar );
+//     Inkscape::IconSize toolboxSize = prefToSize("toolbox.tools", "small");
 }
 
 
 static void
-update_tool_toolbox( SPDesktop */*desktop*/, SPEventContext *eventcontext, GtkWidget *toolbox )
+update_tool_toolbox( SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox )
 {
     gchar const *const tname = ( eventcontext
                                  ? gtk_type_name(GTK_OBJECT_TYPE(eventcontext))
                                  : NULL );
+    Glib::RefPtr<Gtk::ActionGroup> mainActions = create_or_fetch_actions( desktop );
+
     for (int i = 0 ; tools[i].type_name ; i++ ) {
-        SPButton *button = SP_BUTTON(g_object_get_data(G_OBJECT(toolbox), tools[i].data_name));
-        sp_button_toggle_set_down(button, tname && !strcmp(tname, tools[i].type_name));
+        Glib::RefPtr<Gtk::Action> act = mainActions->get_action( Inkscape::Verb::get(tools[i].verb)->get_id() );
+        if ( act ) {
+            bool setActive = tname && !strcmp(tname, tools[i].type_name);
+            Glib::RefPtr<VerbAction> verbAct = Glib::RefPtr<VerbAction>::cast_dynamic(act);
+            if ( verbAct ) {
+                verbAct->set_active(setActive);
+            }
+        }
     }
 }
 
@@ -1434,10 +1615,10 @@ static void
 setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 {
     GtkSizeGroup* grouper = gtk_size_group_new( GTK_SIZE_GROUP_BOTH );
-    GtkActionGroup* mainActions = create_or_fetch_actions( desktop );
+    Glib::RefPtr<Gtk::ActionGroup> mainActions = create_or_fetch_actions( desktop );
     GtkUIManager* mgr = gtk_ui_manager_new();
     GError* errVal = 0;
-    gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
+    gtk_ui_manager_insert_action_group( mgr, mainActions->gobj(), 0 );
     gtk_ui_manager_add_ui_from_string( mgr, ui_descr, -1, &errVal );
 
     std::map<std::string, GtkWidget*> dataHolders;
@@ -1450,7 +1631,7 @@ setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
             g_object_set_data( G_OBJECT(kludge), "dtw", desktop->canvas);
             g_object_set_data( G_OBJECT(kludge), "desktop", desktop);
             dataHolders[aux_toolboxes[i].type_name] = kludge;
-            aux_toolboxes[i].prep_func( desktop, mainActions, G_OBJECT(kludge) );
+            aux_toolboxes[i].prep_func( desktop, mainActions->gobj(), G_OBJECT(kludge) );
         } else {
 
             GtkWidget *sub_toolbox = 0;
@@ -1572,13 +1753,13 @@ setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <toolitem action='DialogDocumentProperties' />"
         "  </toolbar>"
         "</ui>";
-    GtkActionGroup* mainActions = create_or_fetch_actions( desktop );
+    Glib::RefPtr<Gtk::ActionGroup> mainActions = create_or_fetch_actions( desktop );
 
 
     GtkUIManager* mgr = gtk_ui_manager_new();
     GError* errVal = 0;
 
-    gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
+    gtk_ui_manager_insert_action_group( mgr, mainActions->gobj(), 0 );
     gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
 
     GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/CommandsToolbar" );
