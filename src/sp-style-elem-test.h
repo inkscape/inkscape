@@ -84,7 +84,7 @@ public:
 
         sp_object_set(SP_OBJECT(style_elem), SP_ATTR_TYPE, "text/css");
         Inkscape::XML::Node *repr = sp_document_repr_doc(_doc)->createElement("svg:style");
-        SP_OBJECT(style_elem)->updateRepr(repr, SP_OBJECT_WRITE_ALL);
+        SP_OBJECT(style_elem)->updateRepr(sp_document_repr_doc(_doc), repr, SP_OBJECT_WRITE_ALL);
         {
             gchar const *typ = repr->attribute("type");
             TS_ASSERT( typ != NULL );
