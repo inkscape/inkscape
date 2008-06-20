@@ -610,6 +610,15 @@ AM_CONDITIONAL(USE_IMAGE_MAGICK, test "x$magick_ok" = "xyes")
 AC_SUBST(IMAGEMAGICK_LIBS)
 AC_SUBST(IMAGEMAGICK_CFLAGS)
 
+dnl ***********************************************************************************************************
+dnl Check for a Cairo version that implements user-fonts feature, so that we conditionally add SVGFonts support
+dnl ***********************************************************************************************************
+
+PKG_CHECK_MODULES(CAIRO_USER_FONTS, cairo > 1.6.4, cairouserfonts=yes, cairouserfonts=no)
+if test "x$cairouserfonts" = "xyes"; then
+       AC_DEFINE(ENABLE_SVG_FONTS, 1, [SVG Fonts should be used])
+fi
+
 dnl ******************************
 dnl   Unconditional dependencies
 dnl ******************************
@@ -794,10 +803,6 @@ if test "$GXX" = "yes"; then
   # Add even more stuff
   CXXFLAGS="-Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch $CXXFLAGS"
 
-  ## This is evil!
-  CXXFLAGS=""
-  CFLAGS=""
-
   dnl Test for arch-specific situations.
   case "$host_cpu" in
     mips|mipsel)
@@ -956,6 +961,7 @@ share/examples/Makefile
 share/extensions/Makefile
 share/extensions/alphabet_soup/Makefile
 share/extensions/Barcode/Makefile
+share/extensions/Poly3DObjects/Makefile
 share/extensions/xaml2svg/Makefile
 share/fonts/Makefile
 share/gradients/Makefile
