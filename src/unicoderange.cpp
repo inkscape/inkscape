@@ -68,7 +68,7 @@ bool UnicodeRange::contains(gchar unicode){
 
 	unsigned int unival;
 	unival = g_utf8_get_char (&unicode);
-	g_warning("unival=%d", unival);
+//	g_warning("unival=%d", unival);
 	char uni[9] = "00000000";
 	uni[8]= '\0';
 	unsigned char val;
