@@ -173,7 +173,6 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
 
     /* fixme: Think (Lauris) */
     sp_item_invoke_bbox(item, &pbox, NR::identity(), TRUE);
-    NR::Matrix const i2d = from_2geom(sp_item_i2d_affine(item));
 
     SPStyle* style = SP_OBJECT_STYLE (item);
     CairoRenderer *renderer = ctx->getRenderer();
