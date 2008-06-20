@@ -9,6 +9,7 @@
  *
  * Copyright (C) 1999-2003 Lauris Kaplinski
  *               2004-2006 Bryce Harrington
+ *               2008      Johan Engelen
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -24,6 +25,8 @@
 #include "libnr/nr-scale-matrix-ops.h"
 #include "libnr/nr-translate-matrix-ops.h"
 #include "libnr/nr-rotate-fns.h"
+#include "libnr/nr-convert2geom.h"
+#include <2geom/matrix.h>
 #include "svg/svg.h"
 #include "display/nr-arena-group.h"
 #include "xml/repr.h"
@@ -628,9 +631,9 @@ sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size)
  * show and transform a child item in the arena for all views with the given key.
  */
 NRArenaItem *
-sp_marker_show_instance (SPMarker *marker, NRArenaItem *parent,
-			 unsigned int key, unsigned int pos,
-			 NR::Matrix const &base, float linewidth)
+sp_marker_show_instance ( SPMarker *marker, NRArenaItem *parent,
+                          unsigned int key, unsigned int pos,
+                          Geom::Matrix const &base, float linewidth)
 {
 	for (SPMarkerView *v = marker->views; v != NULL; v = v->next) {
 		if (v->key == key) {
@@ -652,11 +655,11 @@ sp_marker_show_instance (SPMarker *marker, NRArenaItem *parent,
 			if (v->items[pos]) {
 				NR::Matrix m;
 				if (marker->orient_auto) {
-					m = base;
+					m = from_2geom(base);
 				} else {
 					/* fixme: Orient units (Lauris) */
 					m = NR::Matrix(rotate_degrees(marker->orient));
-					m *= get_translation(base);
+					m *= get_translation(from_2geom(base));
 				}
 				if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
 					m = NR::scale(linewidth) * m;

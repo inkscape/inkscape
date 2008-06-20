@@ -22,6 +22,8 @@
 #include <libnr/nr-matrix-translate-ops.h>
 #include <libnr/nr-scale-matrix-ops.h>
 #include <2geom/rect.h>
+#include <2geom/transforms.h>
+#include <2geom/pathvector.h>
 #include "helper/geom.h"
 
 #include <sigc++/functors/ptr_fun.h>
@@ -581,32 +583,108 @@ sp_shape_marker_get_transform(SPShape const *shape, NArtBpath const *bp)
 }
 
 /**
+ * Calculate the transform required to get a marker's path object in the
+ * right place for particular path segment on a shape.
+ *
+ * \see sp_shape_marker_update_marker_view.
+ *
+ * \param p Point where the marker should be placed.
+ * \param t1 Tangent of end of curvesegment before marker
+ * \param t2 Tangent of start of curvesegment after marker
+ * \return Transform matrix.
+ *
+ * From SVG spec:
+ * The axes of the temporary new user coordinate system are aligned according to the orient attribute on the 'marker'
+ * element and the slope of the curve at the given vertex. (Note: if there is a discontinuity at a vertex, the slope
+ * is the average of the slopes of the two segments of the curve that join at the given vertex. If a slope cannot be
+ * determined, the slope is assumed to be zero.)
+ */
+Geom::Matrix
+sp_shape_marker_get_transform(Geom::Point p, Geom::Point t1, Geom::Point t2)
+{
+    double const angle1 = Geom::atan2(t1);
+    double const angle2 = Geom::atan2(t2);
+
+    double ret_angle;
+    ret_angle = .5 * (angle1 + angle2);
+
+    if ( fabs( angle2 - angle1 ) > M_PI ) {
+        /* ret_angle is in the middle of the larger of the two sectors between angle1 and
+         * angle2, so flip it by 180degrees to force it to the middle of the smaller sector.
+         *
+         * (Imagine a circle with rays drawn at angle1 and angle2 from the centre of the
+         * circle.  Those two rays divide the circle into two sectors.)
+         */
+        ret_angle += M_PI;
+    }
+
+    return Geom::Rotate(ret_angle) * Geom::Translate(p);
+}
+
+/**
  * Updates the instances (views) of a given marker in a shape.
  * Marker views have to be scaled already.  The transformation
  * is retrieved and then shown by calling sp_marker_show_instance.
+ *
+ * TODO: correctly handle the 'marker' attribute.
+ * "Using the marker property from a style sheet is equivalent to using all three (start, mid, end)."
+ * See painting-marker-03-f.svg in SVG 1.1 Full test suite.
  */
 static void
 sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai)
 {
-	SPStyle *style = ((SPObject *) shape)->style;
+    SPStyle *style = ((SPObject *) shape)->style;
 
-        for (int i = SP_MARKER_LOC_START; i < SP_MARKER_LOC_QTY; i++) {
-            if (shape->marker[i] == NULL) {
-                continue;
+    // position arguments to sp_marker_show_instance, basically counts the amount of markers.
+    int start_pos = 0;
+    int mid_pos = 0;
+    int end_pos = 0;
+
+    Geom::PathVector const & pathv = shape->curve->get_pathvector();
+    for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
+        if ( shape->marker[SP_MARKER_LOC_START] ) {
+            Geom::Point p = path_it->front().pointAt(0);
+            Geom::Point tang = path_it->front().unitTangentAt(0);
+            Geom::Matrix const m (sp_shape_marker_get_transform(p, tang, tang));
+            sp_marker_show_instance ((SPMarker* ) shape->marker[SP_MARKER_LOC_START], ai,
+                                     NR_ARENA_ITEM_GET_KEY(ai) + SP_MARKER_LOC_START, start_pos, m,
+                                     style->stroke_width.computed);
+             start_pos++;
+        }
+
+        if ( shape->marker[SP_MARKER_LOC_MID] ) {
+            Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
+            Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
+            while (curve_it2 != path_it->end_default())
+            {
+                /* Put marker between curve_it1 and curve_it2.
+                 * Loop to end_default (so including closing segment), because when a path is closed,
+                 * there should be a midpoint marker between last segment and closing straight line segment
+                 */
+                Geom::Point p = curve_it1->pointAt(1);
+                Geom::Point tang1 = curve_it1->unitTangentAt(1);
+                Geom::Point tang2 = curve_it2->unitTangentAt(0);
+                Geom::Matrix const m (sp_shape_marker_get_transform(p, tang1, tang2));
+                sp_marker_show_instance ((SPMarker* ) shape->marker[SP_MARKER_LOC_MID], ai,
+                                         NR_ARENA_ITEM_GET_KEY(ai) + SP_MARKER_LOC_MID, mid_pos, m,
+                                         style->stroke_width.computed);
+                mid_pos++;
+
+                ++curve_it1;
+                ++curve_it2;
             }
+        }
 
-            int n = 0;
-
-            for (NArtBpath const *bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
-                if (sp_shape_marker_required (shape, i, bp)) {
-                    NR::Matrix const m(sp_shape_marker_get_transform(shape, bp));
-                    sp_marker_show_instance ((SPMarker* ) shape->marker[i], ai,
-                                             NR_ARENA_ITEM_GET_KEY(ai) + i, n, m,
-                                             style->stroke_width.computed);
-                    n++;
-                }
-            }
-	}
+        if ( shape->marker[SP_MARKER_LOC_END] ) {
+            Geom::Point p = path_it->back_default().pointAt(1);
+            Geom::Point tang = path_it->back_default().unitTangentAt(1);
+            Geom::Matrix const m (sp_shape_marker_get_transform(p, tang, tang));
+            sp_marker_show_instance ((SPMarker* ) shape->marker[SP_MARKER_LOC_END], ai,
+                                     NR_ARENA_ITEM_GET_KEY(ai) + SP_MARKER_LOC_END, end_pos, m,
+                                     style->stroke_width.computed);
+            end_pos++;
+        }
+    }
 }
 
 /**

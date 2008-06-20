@@ -8,6 +8,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *
  * Copyright (C) 1999-2003 Lauris Kaplinski
+ * Copyright (C) 2008      Johan Engelen
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -27,6 +28,7 @@ class SPMarkerView;
 
 #include <libnr/nr-matrix.h>
 #include <libnr/nr-rect.h>
+#include <2geom/forward.h>
 #include "svg/svg-length.h"
 #include "enums.h"
 #include "sp-item-group.h"
@@ -87,7 +89,7 @@ protected:
 void sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size);
 NRArenaItem *sp_marker_show_instance (SPMarker *marker, NRArenaItem *parent,
 				      unsigned int key, unsigned int pos,
-				      NR::Matrix const &base, float linewidth);
+				      Geom::Matrix const &base, float linewidth);
 void sp_marker_hide (SPMarker *marker, unsigned int key);
 const gchar *generate_marker (GSList *reprs, NR::Rect bounds, SPDocument *document, NR::Matrix transform, NR::Matrix move);
 
