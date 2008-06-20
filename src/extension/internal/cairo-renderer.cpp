@@ -41,6 +41,9 @@
 #include "libnr/nr-scale-translate-ops.h"
 #include "libnr/nr-translate-matrix-ops.h"
 #include "libnr/nr-translate-scale-ops.h"
+#include "libnr/nr-convert2geom.h"
+#include <2geom/transforms.h>
+#include <2geom/pathvector.h>
 
 #include <glib/gmem.h>
 
@@ -163,6 +166,7 @@ static void sp_image_render(SPItem *item, CairoRenderContext *ctx);
 static void sp_symbol_render(SPItem *item, CairoRenderContext *ctx);
 static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx);
 
+/* TODO FIXME: this does not render painting-marker-01-f.svg of SVG1.1 Test suite correctly. (orientation of one of the markers middle left ) */
 static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
 {
     NRRect pbox;
@@ -182,14 +186,44 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
 
     ctx->renderPath(&bp, style, &pbox);
 
-    for (NArtBpath const* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
-        for (int m = SP_MARKER_LOC_START; m < SP_MARKER_LOC_QTY; m++) {
-            if (sp_shape_marker_required (shape, m, bp)) {
+    Geom::PathVector const & pathv = shape->curve->get_pathvector();
+    for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
+        if ( shape->marker[SP_MARKER_LOC_START] ) {
+            SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_START]);
+            SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_START]));
 
-                SPMarker* marker = SP_MARKER (shape->marker[m]);
-                SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[m]));
+            Geom::Point p = path_it->front().pointAt(0);
+            Geom::Point tang = path_it->front().unitTangentAt(0);
+            NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(p, tang, tang)));
 
-                NR::Matrix tr(sp_shape_marker_get_transform(shape, bp));
+            if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
+                tr = NR::scale(style->stroke_width.computed) * tr;
+            }
+
+            tr = marker_item->transform * marker->c2p * tr;
+
+            NR::Matrix old_tr = marker_item->transform;
+            marker_item->transform = tr;
+            renderer->renderItem (ctx, marker_item);
+            marker_item->transform = old_tr;
+        }
+
+        if ( shape->marker[SP_MARKER_LOC_MID] ) {
+            Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
+            Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
+            while (curve_it2 != path_it->end_default())
+            {
+                /* Put marker between curve_it1 and curve_it2.
+                 * Loop to end_default (so including closing segment), because when a path is closed,
+                 * there should be a midpoint marker between last segment and closing straight line segment */
+
+                SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_MID]);
+                SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_MID]));
+
+                Geom::Point p = curve_it1->pointAt(1);
+                Geom::Point tang1 = curve_it1->unitTangentAt(1);
+                Geom::Point tang2 = curve_it2->unitTangentAt(0);
+                NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(p, tang1, tang2)));
 
                 if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                     tr = NR::scale(style->stroke_width.computed) * tr;
@@ -201,7 +235,30 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
                 marker_item->transform = tr;
                 renderer->renderItem (ctx, marker_item);
                 marker_item->transform = old_tr;
+
+                ++curve_it1;
+                ++curve_it2;
             }
+        }
+
+        if ( shape->marker[SP_MARKER_LOC_END] ) {
+            SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_END]);
+            SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_END]));
+
+            Geom::Point p = path_it->back_default().pointAt(1);
+            Geom::Point tang = path_it->back_default().unitTangentAt(1);
+            NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(p, tang, tang)));
+
+            if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
+                tr = NR::scale(style->stroke_width.computed) * tr;
+            }
+
+            tr = marker_item->transform * marker->c2p * tr;
+
+            NR::Matrix old_tr = marker_item->transform;
+            marker_item->transform = tr;
+            renderer->renderItem (ctx, marker_item);
+            marker_item->transform = old_tr;
         }
     }
 }

@@ -17,6 +17,7 @@
 #include "display/display-forward.h"
 #include "sp-lpe-item.h"
 #include "sp-marker-loc.h"
+#include <2geom/forward.h>
 
 #include <sigc++/connection.h>
 
@@ -63,6 +64,7 @@ void sp_shape_set_marker (SPObject *object, unsigned int key, const gchar *value
 int sp_shape_has_markers (SPShape const *shape);
 int sp_shape_number_of_markers (SPShape* Shape, int type);
 NR::Matrix sp_shape_marker_get_transform(SPShape const *shape, NArtBpath const *bp);
+Geom::Matrix sp_shape_marker_get_transform(Geom::Point & p, Geom::Point & t1, Geom::Point & t2);
 bool sp_shape_marker_required(SPShape const *shape, int const m, NArtBpath const *bp);
 
 #endif

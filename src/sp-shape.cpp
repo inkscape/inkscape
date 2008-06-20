@@ -600,7 +600,7 @@ sp_shape_marker_get_transform(SPShape const *shape, NArtBpath const *bp)
  * determined, the slope is assumed to be zero.)
  */
 Geom::Matrix
-sp_shape_marker_get_transform(Geom::Point p, Geom::Point t1, Geom::Point t2)
+sp_shape_marker_get_transform(Geom::Point & p, Geom::Point & t1, Geom::Point & t2)
 {
     double const angle1 = Geom::atan2(t1);
     double const angle2 = Geom::atan2(t2);
