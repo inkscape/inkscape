@@ -735,7 +735,7 @@ static void sp_svg_write_curve(Inkscape::SVG::PathString & str, Geom::Curve cons
         str.lineTo( (*line_segment)[1][0], (*line_segment)[1][1] );
     }
     else if(Geom::QuadraticBezier const *quadratic_bezier = dynamic_cast<Geom::QuadraticBezier const  *>(c)) {
-        str.quadTo( (*quadratic_bezier)[1][0], (*quadratic_bezier)[1][0],
+        str.quadTo( (*quadratic_bezier)[1][0], (*quadratic_bezier)[1][1],
                     (*quadratic_bezier)[2][0], (*quadratic_bezier)[2][1] );
     }
     else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const  *>(c)) {
