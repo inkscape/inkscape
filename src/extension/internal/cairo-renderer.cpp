@@ -186,6 +186,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
 
     ctx->renderPath(&bp, style, &pbox);
 
+    /* TODO: make code prettier: lots of variables can be taken out of the loop! */
     Geom::PathVector const & pathv = shape->curve->get_pathvector();
     for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
         if ( shape->marker[SP_MARKER_LOC_START] ) {
