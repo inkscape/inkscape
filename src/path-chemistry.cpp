@@ -37,7 +37,7 @@
 #include "selection.h"
 #include "desktop-handles.h"
 #include "box3d.h"
-
+#include <2geom/pathvector.h>
 #include "path-chemistry.h"
 
 /* Helper functions for sp_selected_path_to_curves */
@@ -221,14 +221,14 @@ sp_selected_path_break_apart(void)
         gchar *style = g_strdup(SP_OBJECT(item)->repr->attribute("style"));
         gchar *path_effect = g_strdup(SP_OBJECT(item)->repr->attribute("inkscape:path-effect"));
 
-        NArtBpath *abp = nr_artpath_affine(SP_CURVE_BPATH(curve), (SP_ITEM(path))->transform);
+        Geom::PathVector apv = curve->get_pathvector() * to_2geom(SP_ITEM(path)->transform);
 
         curve->unref();
 
         // it's going to resurrect as one of the pieces, so we delete without advertisement
         SP_OBJECT(item)->deleteObject(false);
 
-        curve = SPCurve::new_from_bpath(abp);
+        curve = new SPCurve(apv);
         g_assert(curve != NULL);
 
         GSList *list = curve->split();
