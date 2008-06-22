@@ -21,13 +21,62 @@ std::vector<Geom::Path>
 BPath_to_2GeomPath(NArtBpath const * bpath)
 {
     std::vector<Geom::Path> pathv;
-    char *svgpath = sp_svg_write_path(bpath);
-    if (!svgpath) {
-        g_warning("BPath_to_2GeomPath - empty path returned");
+    if (!bpath) {
         return pathv;
     }
-    pathv = sp_svg_read_pathv(svgpath);
-    g_free(svgpath);
+
+    NArtBpath const *bp = bpath;   // points to element within bpath
+    Geom::Path * current = NULL;   // points to current path
+    while (bp->code != NR_END) {
+        if ( current &&
+             ( (bp->code == NR_MOVETO) || (bp->code == NR_MOVETO_OPEN) )
+            )
+        {   // about to start a new path, correct the current path: nartbpath manually adds the closing line segment so erase it for closed path.
+            if (current->closed() && !current->empty()) {
+                // but only remove this last segment if it is a *linesegment*:
+                if ( typeid(current->back()) == typeid(Geom::LineSegment) ) {
+                    current->erase_last();
+                }
+            }
+        }
+
+        switch(bp->code) {
+            case NR_MOVETO:
+                pathv.push_back( Geom::Path() );  // for some reason Geom::Path(Point) does not work...
+                current = &pathv.back();
+                current->start( Geom::Point(bp->x3, bp->y3) );
+                current->close(true);
+            break;
+
+            case NR_MOVETO_OPEN:
+                pathv.push_back( Geom::Path() );  // for some reason Geom::Path(Point) does not work...
+                current = &pathv.back();
+                current->start( Geom::Point(bp->x3, bp->y3) );
+                current->close(false);
+            break;
+
+            case NR_LINETO:
+                current->appendNew<Geom::LineSegment>( Geom::Point(bp->x3, bp->y3) );
+            break;
+
+            case NR_CURVETO:
+                current->appendNew<Geom::CubicBezier> ( Geom::Point(bp->x1, bp->y1), Geom::Point(bp->x2, bp->y2), Geom::Point(bp->x3, bp->y3) );
+            break;
+
+            case NR_END:
+                g_error("BPath_to_2GeomPath: logical error");
+            break;
+        }
+        ++bp;
+    }
+    if ( current && current->closed() && !current->empty() ) {
+        // correct the current path: nartbpath manually adds the closing line segment so erase it for closed path.
+        // but only remove this last segment if it is a *linesegment*:
+        if ( typeid(current->back()) == typeid(Geom::LineSegment) ) {
+            current->erase_last();
+        }
+    }
+
     return pathv;
 }
 
