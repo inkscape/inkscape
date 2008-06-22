@@ -207,7 +207,7 @@ LPESpiro::doEffect(SPCurve * curve)
     try {
         curve->get_pathvector() * Geom::identity(); // tests for continuity, this makes LPE Spiro slower of course :-(
     }
-    catch (std::exception & e) {
+    catch (Geom::ContinuityError & e) {
         g_warning("Exception during LPE Spiro execution. \n %s", e.what());
         SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
             _("An exception occurred during execution of the Spiro Path Effect.") );
