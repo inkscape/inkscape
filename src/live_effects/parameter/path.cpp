@@ -326,7 +326,7 @@ PathParam::linked_modified(SPObject *linked_obj, guint /*flags*/)
         // curve invalid, set default value
         _pathvector = sp_svg_read_pathv(defvalue);
     } else {
-        _pathvector = BPath_to_2GeomPath(SP_CURVE_BPATH(curve));
+        _pathvector = curve->get_pathvector();
         curve->unref();
     }
 
