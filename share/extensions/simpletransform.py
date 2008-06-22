@@ -26,10 +26,11 @@ import copy, math, re
 def parseTransform(transf,mat=[[1.0,0.0,0.0],[0.0,1.0,0.0]]):
     if transf=="" or transf==None:
         return(mat)
-    result=re.match("(translate|scale|rotate|skewX|skewY|matrix)\(([^)]*)\)",transf)
+    stransf = transf.strip()
+    result=re.match("(translate|scale|rotate|skewX|skewY|matrix)\s*\(([^)]*)\)",stransf)
 #-- translate --
     if result.group(1)=="translate":
-        args=result.group(2).split(",")
+        args=result.group(2).replace(' ',',').split(",")
         dx=float(args[0])
         if len(args)==1:
             dy=0.0
@@ -37,8 +38,8 @@ def parseTransform(transf,mat=[[1.0,0.0,0.0],[0.0,1.0,0.0]]):
             dy=float(args[1])
         matrix=[[1,0,dx],[0,1,dy]]
 #-- scale --
-    if result.groups(1)=="scale":
-        args=result.group(2).split(",")
+    if result.group(1)=="scale":
+        args=result.group(2).replace(' ',',').split(",")
         sx=float(args[0])
         if len(args)==1:
             sy=sx
@@ -46,30 +47,30 @@ def parseTransform(transf,mat=[[1.0,0.0,0.0],[0.0,1.0,0.0]]):
             sy=float(args[1])
         matrix=[[sx,0,0],[0,sy,0]]
 #-- rotate --
-    if result.groups(1)=="rotate":
-        args=result.group(2).split(",")
+    if result.group(1)=="rotate":
+        args=result.group(2).replace(' ',',').split(",")
         a=float(args[0])*math.pi/180
         if len(args)==1:
             cx,cy=(0.0,0.0)
         else:
-            cx,cy=args[1:]
+            cx,cy=map(float,args[1:])
         matrix=[[math.cos(a),-math.sin(a),cx],[math.sin(a),math.cos(a),cy]]
 #-- skewX --
-    if result.groups(1)=="skewX":
+    if result.group(1)=="skewX":
         a=float(result.group(2))*math.pi/180
         matrix=[[1,math.tan(a),0],[0,1,0]]
-#-- skewX --
-    if result.groups(1)=="skewX":
+#-- skewY --
+    if result.group(1)=="skewY":
         a=float(result.group(2))*math.pi/180
         matrix=[[1,0,0],[math.tan(a),1,0]]
 #-- matrix --
     if result.group(1)=="matrix":
-        a11,a21,a12,a22,v1,v2=result.group(2).split(",")
+        a11,a21,a12,a22,v1,v2=result.group(2).replace(' ',',').split(",")
         matrix=[[float(a11),float(a12),float(v1)],[float(a21),float(a22),float(v2)]]
-    
+
     matrix=composeTransform(mat,matrix)
-    if result.end()<len(transf):
-        return(parseTransform(transf[result.end():],matrix))
+    if result.end()<len(stransf):
+        return(parseTransform(stransf[result.end():],matrix))
     else:
         return matrix
 
