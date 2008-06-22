@@ -22,6 +22,10 @@
 #include "livarot/path-description.h"
 #include "libnr/n-art-bpath.h"
 #include "libnr/nr-point-matrix-ops.h"
+#include "libnr/nr-convert2geom.h"
+#include <2geom/pathvector.h>
+#include <2geom/matrix.h>
+#include <2geom/sbasis-to-bezier.h>
 
 void  Path::DashPolyline(float head,float tail,float body,int nbD,float *dashs,bool stPlain,float stOffset)
 {
@@ -403,6 +407,71 @@ void* Path::MakeArtBPath(void)
   }
 	bpath[nb_cmd].code=NR_END;
 	return bpath;
+}
+
+void  Path::AddCurve(Geom::Curve const *c)
+{
+    if(Geom::LineSegment const *line_segment = dynamic_cast<Geom::LineSegment const *>(c)) {
+        LineTo( NR::Point((*line_segment)[1][0], (*line_segment)[1][1]) );
+    }
+    /*
+    else if(Geom::QuadraticBezier const *quadratic_bezier = dynamic_cast<Geom::QuadraticBezier const  *>(c)) {
+        ...
+    }
+    */
+    else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const *>(c)) {
+        Geom::Point tmp = (*cubic_bezier)[3];
+        Geom::Point tms = 3 * ((*cubic_bezier)[1] - (*cubic_bezier)[0]);
+        Geom::Point tme = 3 * ((*cubic_bezier)[3] - (*cubic_bezier)[2]);
+        CubicTo (from_2geom(tmp), from_2geom(tms), from_2geom(tme));
+    }
+    else if(Geom::EllipticalArc const *svg_elliptical_arc = dynamic_cast<Geom::EllipticalArc const *>(c)) {
+        ArcTo( from_2geom(svg_elliptical_arc->finalPoint()),
+               svg_elliptical_arc->ray(0), svg_elliptical_arc->ray(1),
+               svg_elliptical_arc->rotation_angle(),
+               svg_elliptical_arc->large_arc_flag(), svg_elliptical_arc->sweep_flag() );
+    } else { 
+        //this case handles sbasis as well as all other curve types
+        Geom::Path sbasis_path = Geom::path_from_sbasis(c->toSBasis(), 0.1);
+
+        //recurse to convert the new path resulting from the sbasis to svgd
+        for(Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {
+            AddCurve(&*iter);
+        }
+    }
+}
+
+/**  append is false by default: it means that the path should be resetted. If it is true, the path is not resetted and Geom::Path will be appended as a new path
+ */
+void  Path::LoadPath(Geom::Path const &path, Geom::Matrix const &tr, bool doTransformation, bool append)
+{
+    if (!append) {
+        SetBackData (false);
+        Reset();
+    }
+    if (path.empty())
+        return;
+
+    Geom::Path const pathtr = doTransformation ? path * tr : path;
+
+    MoveTo( from_2geom(pathtr.initialPoint()) );
+
+    for(Geom::Path::const_iterator cit = pathtr.begin(); cit != pathtr.end_open(); ++cit) {
+        AddCurve(&*cit);
+    }
+
+    if (pathtr.closed()) {
+        Close();
+    }
+}
+
+void  Path::LoadPathVector(Geom::PathVector const &pv, Geom::Matrix const &tr, bool doTransformation)
+{
+    SetBackData (false);
+    Reset();
+    for(Geom::PathVector::const_iterator it = pv.begin(); it != pv.end(); ++it) {
+        LoadPath(*it, tr, doTransformation, true);
+    }
 }
 
 void  Path::LoadArtBPath(void const *iV,NR::Matrix const &trans,bool doTransformation)

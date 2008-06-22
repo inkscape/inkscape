@@ -14,6 +14,7 @@
 #include "livarot/livarot-forward.h"
 #include "libnr/nr-point.h"
 #include <libnr/nr-rect-l.h>
+#include <2geom/forward.h>
 
 struct SPStyle;
 
@@ -177,6 +178,8 @@ public:
   
   //utilitaire pour inkscape
   void  LoadArtBPath(void const *iP,NR::Matrix const &tr,bool doTransformation);
+  void  LoadPath(Geom::Path const &path, Geom::Matrix const &tr, bool doTransformation, bool append = false);
+  void  LoadPathVector(Geom::PathVector const &pv, Geom::Matrix const &tr, bool doTransformation);
 	void* MakeArtBPath();
 	
 	void  Transform(const NR::Matrix &trans);
@@ -381,6 +384,10 @@ public:
   bool   ExtendFit(int off, int N, fitting_tables &data,double treshhold, PathDescrCubicTo & res,int &worstP);
   double RaffineTk (NR::Point pt, NR::Point p0, NR::Point p1, NR::Point p2, NR::Point p3, double it);
   void   FlushPendingAddition(Path* dest,PathDescr *lastAddition,PathDescrCubicTo &lastCubic,int lastAD);
+
+private:
+    void  AddCurve(Geom::Curve const *c);
+
 };
 #endif
 
