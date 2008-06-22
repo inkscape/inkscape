@@ -524,9 +524,9 @@ static void         GetDest(SPObject* child,Shape **computed,NR::Matrix itr_mat)
 
 	if ( curve ) {
 		Path*   temp=new Path;
-        NR::Matrix tr_mat = from_2geom(sp_item_i2root_affine (SP_ITEM(u_child)));
-		tr_mat=itr_mat*tr_mat;
-		temp->LoadArtBPath(SP_CURVE_BPATH(curve),tr_mat,true);
+        Geom::Matrix tr_mat = sp_item_i2root_affine (SP_ITEM(u_child));
+        tr_mat = to_2geom(itr_mat) * tr_mat;
+        temp->LoadPathVector(curve->get_pathvector(), tr_mat, true);
 		Shape*  n_shp=new Shape;
 		temp->Convert(0.25);
 		temp->Fill(n_shp,0);

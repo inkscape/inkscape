@@ -24,6 +24,7 @@
 #include <livarot/int-line.h>
 #include <livarot/BitLigne.h>
 #include <libnr/nr-pixops.h>
+#include <libnr/nr-convert2geom.h>
 
 void nr_pixblock_render_bpath_rgba (Shape* theS,uint32_t color,NRRectL &area,char* destBuf,int stride);
 
@@ -140,7 +141,7 @@ sp_canvas_bpath_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
 
     if ((cbp->fill_rgba & 0xff) || (cbp->stroke_rgba & 0xff)) {
         Path*  thePath=new Path;
-        thePath->LoadArtBPath(SP_CURVE_BPATH(cbp->curve), affine, true);
+        thePath->LoadPathVector(cbp->curve->get_pathvector(), to_2geom(affine), true);
         thePath->Convert(0.25);
         if ((cbp->fill_rgba & 0xff) && (cbp->curve->get_length() > 2)) {
             Shape* theShape=new Shape;

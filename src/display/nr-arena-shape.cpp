@@ -443,8 +443,8 @@ nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool fo
                 Path*  thePath=new Path;
                 Shape* theShape=new Shape;
                 {
-                    NR::Matrix   tempMat(gc->transform);
-                    thePath->LoadArtBPath(SP_CURVE_BPATH(shape->curve),tempMat,true);
+                    Geom::Matrix tempMat(to_2geom(gc->transform));
+                    thePath->LoadPathVector(shape->curve->get_pathvector(), tempMat, true);
                 }
 
                 if (is_inner_area(*area, NR_ARENA_ITEM(shape)->bbox)) {
@@ -558,8 +558,8 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
             Path*  thePath = new Path;
             Shape* theShape = new Shape;
             {
-                NR::Matrix   tempMat(gc->transform);
-                thePath->LoadArtBPath(SP_CURVE_BPATH(shape->curve), tempMat, true);
+                Geom::Matrix   tempMat( to_2geom(gc->transform) );
+                thePath->LoadPathVector(shape->curve->get_pathvector(), tempMat, true);
             }
 
             // add some padding to the rendering area, so clipped path does not go into a render area
