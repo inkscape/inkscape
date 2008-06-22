@@ -24,6 +24,7 @@
 #include <libnr/n-art-bpath.h>
 #include <libnr/nr-path.h>
 #include <libnr/nr-matrix-fns.h>
+#include <2geom/pathvector.h>
 
 #include "svg/svg.h"
 #include "xml/repr.h"
@@ -247,8 +248,8 @@ sp_path_set(SPObject *object, unsigned int key, gchar const *value)
     switch (key) {
         case SP_ATTR_INKSCAPE_ORIGINAL_D:
                 if (value) {
-                    NArtBpath *bpath = sp_svg_read_path(value);
-                    SPCurve *curve = SPCurve::new_from_bpath(bpath);
+                    Geom::PathVector pv = sp_svg_read_pathv(value);
+                    SPCurve *curve = new SPCurve(pv);
                     if (curve) {
                         sp_path_set_original_curve(path, curve, TRUE, true);
                         curve->unref();
@@ -261,8 +262,8 @@ sp_path_set(SPObject *object, unsigned int key, gchar const *value)
        case SP_ATTR_D:
             if (!sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path))) {
                 if (value) {
-                    NArtBpath *bpath = sp_svg_read_path(value);
-                    SPCurve *curve = SPCurve::new_from_bpath(bpath);
+                    Geom::PathVector pv = sp_svg_read_pathv(value);
+                    SPCurve *curve = new SPCurve(pv);
                     if (curve) {
                         sp_shape_set_curve((SPShape *) path, curve, TRUE);
                         curve->unref();

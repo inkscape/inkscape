@@ -39,6 +39,7 @@
 
 #include "libnr/n-art-bpath.h"
 #include <libnr/nr-matrix-fns.h>
+#include <2geom/pathvector.h>
 
 #include "xml/repr.h"
 
@@ -347,13 +348,11 @@ sp_offset_set(SPObject *object, unsigned key, gchar const *value)
                     offset->original = NULL;
                     offset->originalPath = NULL;
                 }
-                NArtBpath *bpath;
-                SPCurve *curve;
 
                 offset->original = strdup (value);
 
-                bpath = sp_svg_read_path (offset->original);
-                curve = SPCurve::new_from_bpath (bpath);	// curve se chargera de detruire bpath
+                Geom::PathVector pv = sp_svg_read_pathv(offset->original);
+                SPCurve *curve = new SPCurve(pv);         // fixme: translate this: curve se chargera de detruire bpath
                 g_assert (curve != NULL);
                 offset->originalPath = bpath_to_liv_path (SP_CURVE_BPATH(curve));
                 curve->unref();
@@ -531,8 +530,8 @@ sp_offset_set_shape(SPShape *shape)
 
         const char *res_d = SP_OBJECT(shape)->repr->attribute("inkscape:original");
         if ( res_d ) {
-            NArtBpath *bpath = sp_svg_read_path (res_d);
-            SPCurve *c = SPCurve::new_from_bpath (bpath);
+            Geom::PathVector pv = sp_svg_read_pathv(res_d);
+            SPCurve *c = new SPCurve(pv);
             g_assert(c != NULL);
             sp_shape_set_curve_insync ((SPShape *) offset, c, TRUE);
             c->unref();
@@ -780,8 +779,8 @@ sp_offset_set_shape(SPShape *shape)
         }
         delete orig;
 
-        NArtBpath *bpath = sp_svg_read_path (res_d);
-        SPCurve *c = SPCurve::new_from_bpath (bpath);
+        Geom::PathVector pv = sp_svg_read_pathv(res_d);
+        SPCurve *c = new SPCurve(pv);
         g_assert(c != NULL);
         sp_shape_set_curve_insync ((SPShape *) offset, c, TRUE);
         c->unref();
