@@ -4734,8 +4734,7 @@ sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *
     SPStyle *query =
         sp_style_new (SP_ACTIVE_DOCUMENT);
 
-    int result_fontspec =
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
+//    int result_fontspec = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
     int result_family =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
@@ -4942,7 +4941,7 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
     int result_fontspec =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
-    font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
+    //font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
 
     SPCSSAttr *css = sp_repr_css_attr_new ();
 
@@ -5111,14 +5110,9 @@ sp_text_toolbox_style_toggled (GtkToggleButton  *button,
     int result_fontspec =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
-    int result_family =
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
-
-    int result_style =
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
-
-    int result_numbers =
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+    //int result_family = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
+    //int result_style = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
+    //int result_numbers = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
 
     Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
     Glib::ustring newFontSpec = "";
