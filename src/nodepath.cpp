@@ -4706,12 +4706,10 @@ SPCurve* sp_nodepath_object_get_curve(SPObject *object, const gchar *key) {
     } else if ( IS_LIVEPATHEFFECT(object) && key) {
         const gchar *svgd = object->repr->attribute(key);
         if (svgd) {
-            NArtBpath *bpath = sp_svg_read_path(svgd);
-            SPCurve *curve_new = SPCurve::new_from_bpath(bpath);
+            Geom::PathVector pv = sp_svg_read_pathv(svgd);
+            SPCurve *curve_new = new SPCurve(pv);
             if (curve_new) {
                 curve = curve_new; // don't do curve_copy because curve_new is already only created for us!
-            } else {
-                g_free(bpath);
             }
         }
     }
