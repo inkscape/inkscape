@@ -228,6 +228,9 @@ style_name_compare(char const *aa, char const *bb)
     return strcasecmp(a, b);
 }
 
+/*
+ defined but not used:
+
 static int
 style_record_compare(void const *aa, void const *bb)
 {
@@ -252,6 +255,7 @@ static void font_factory_style_list_destructor(NRStyleList *list)
     }
     if ( list->records ) g_free(list->records);
 }
+*/
 
 /**
  * On Win32 performs a stricmp(a,b), otherwise does a strcasecmp(a,b)

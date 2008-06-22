@@ -261,53 +261,53 @@ unsigned int font_instance::Attribute(const gchar *key, gchar *str, unsigned int
 	} else if ( strcmp(key,"style") == 0 ) {
 		PangoStyle v=pango_font_description_get_style(descr);
 		if ( v == PANGO_STYLE_ITALIC ) {
-			res="italic";
+			res=(char*)"italic";
 		} else if ( v == PANGO_STYLE_OBLIQUE ) {
-			res="oblique";
+			res=(char*)"oblique";
 		} else {
-			res="normal";
+			res=(char*)"normal";
 		}
 		free_res=false;
 	} else if ( strcmp(key,"weight") == 0 ) {
 		PangoWeight v=pango_font_description_get_weight(descr);
 		if ( v <= PANGO_WEIGHT_ULTRALIGHT ) {
-			res="200";
+			res=(char*)"200";
 		} else if ( v <= PANGO_WEIGHT_LIGHT ) {
-			res="300";
+			res=(char*)"300";
 		} else if ( v <= PANGO_WEIGHT_NORMAL ) {
-			res="normal";
+			res=(char*)"normal";
 		} else if ( v <= PANGO_WEIGHT_BOLD ) {
-			res="bold";
+			res=(char*)"bold";
 		} else if ( v <= PANGO_WEIGHT_ULTRABOLD ) {
-		    res="800";
+		    res=(char*)"800";
 		} else { // HEAVY
-			res="900";
+			res=(char*)"900";
 		}
 		free_res=false;
 	} else if ( strcmp(key,"stretch") == 0 ) {
 		PangoStretch v=pango_font_description_get_stretch(descr);
 		if ( v <= PANGO_STRETCH_EXTRA_CONDENSED ) {
-			res="extra-condensed";
+			res=(char*)"extra-condensed";
 		} else if ( v <= PANGO_STRETCH_CONDENSED ) {
-			res="condensed";
+			res=(char*)"condensed";
 		} else if ( v <= PANGO_STRETCH_SEMI_CONDENSED ) {
-			res="semi-condensed";
+			res=(char*)"semi-condensed";
 		} else if ( v <= PANGO_STRETCH_NORMAL ) {
-			res="normal";
+			res=(char*)"normal";
 		} else if ( v <= PANGO_STRETCH_SEMI_EXPANDED ) {
-			res="semi-expanded";
+			res=(char*)"semi-expanded";
 		} else if ( v <= PANGO_STRETCH_EXPANDED ) {
-			res="expanded";
+			res=(char*)"expanded";
 		} else {
-			res="extra-expanded";
+			res=(char*)"extra-expanded";
 		}
 		free_res=false;
 	} else if ( strcmp(key,"variant") == 0 ) {
 		PangoVariant v=pango_font_description_get_variant(descr);
 		if ( v == PANGO_VARIANT_SMALL_CAPS ) {
-			res="small-caps";
+			res=(char*)"small-caps";
 		} else {
-			res="normal";
+			res=(char*)"normal";
 		}
 		free_res=false;
 	} else {
