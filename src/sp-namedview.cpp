@@ -34,7 +34,6 @@
 #include "desktop.h"
 #include "conn-avoid-ref.h" // for defaultConnSpacing.
 
-#include "isnan.h" //temp fix for isnan().  include last
 
 #define DEFAULTTOLERANCE 0.4
 #define DEFAULTGRIDCOLOR 0x3f3fff25

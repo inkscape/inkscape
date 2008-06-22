@@ -52,7 +52,6 @@
 #include "2geom/angle.h"
 #include "display/snap-indicator.h"
 
-#include "isnan.h" //temp fix.  make sure included last
 
 static void sp_remove_handles(SPKnot *knot[], gint num);
 

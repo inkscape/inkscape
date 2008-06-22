@@ -20,7 +20,7 @@
 #include <cstdlib>
 #include <limits>
 
-#include "isnan.h"
+#include "2geom/isnan.h"
 
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-gaussian.h"

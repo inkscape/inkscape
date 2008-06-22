@@ -4,7 +4,7 @@
 #include <cmath>
 
 #include "libnr/in-svg-plane.h"
-#include "isnan.h"
+#include "2geom/isnan.h"
 
 class InSvgPlaneTest : public CxxTest::TestSuite
 {

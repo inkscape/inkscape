@@ -349,7 +349,6 @@ inkscape_version.h.mingw
 interface.cpp
 interface.h
 isinf.h
-isnan.h
 isnormal.h
 jabber_whiteboard
 knot.cpp

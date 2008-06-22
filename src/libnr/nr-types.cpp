@@ -4,7 +4,7 @@
 
 #include <libnr/nr-types.h>
 
-#include "isnan.h" //temporary fix for isnan()
+#include "2geom/isnan.h"
 
 /** Scales this vector to make it a unit vector (within rounding error).
  *

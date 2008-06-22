@@ -12,7 +12,7 @@
 #include <cmath>
 #include <vector>
 
-#include "isnan.h"
+#include "2geom/isnan.h"
 #include "sp-femerge.h"
 #include "display/nr-filter-merge.h"
 #include "display/nr-filter-pixops.h"

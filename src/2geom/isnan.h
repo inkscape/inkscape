@@ -16,11 +16,11 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  *
- * 2005 modification hereby placed in public domain.  Probably supercedes the 2004 copyright
- * for the code itself.
+ * 2005 modification hereby placed in public domain.  Probably supercedes 
+ * the 2004 copyright for the code itself.
  */
 
-#include <cmath>
+#include <math.h>
 /* You might try changing the above to <cmath> if you have problems.
  * Whether you use math.h or cmath, you may need to edit the .cpp file
  * and/or other .h files to use the same header file.
@@ -32,7 +32,9 @@
 # define IS_NAN(_a) (__isnan(_a))	/* MacOSX/Darwin definition < 10.4 */
 #elif defined(WIN32) || defined(_isnan)
 # define IS_NAN(_a) (_isnan(_a)) 	/* Win32 definition */
-#elif defined(isnan) || defined(__FreeBSD__)
+#elif defined(isnan) || defined(__FreeBSD__) || defined(__osf__)
+# define IS_NAN(_a) (isnan(_a))		/* GNU definition */
+#elif defined (SOLARIS_2_8) && __GNUC__ == 3 && __GNUC_MINOR__ == 2
 # define IS_NAN(_a) (isnan(_a))		/* GNU definition */
 #else
 # define IS_NAN(_a) (std::isnan(_a))
@@ -47,12 +49,20 @@
 # define IS_FINITE(_a) (__isfinite(_a))
 #elif defined(__APPLE__) && __GNUC__ == 3
 # define IS_FINITE(_a) (__isfinite(_a))	/* MacOSX/Darwin definition < 10.4 */
+#elif defined(__sgi)
+# define IS_FINITE(_a) (_isfinite(_a))
 #elif defined(isfinite)
 # define IS_FINITE(_a) (isfinite(_a))
+#elif defined(__osf__)
+# define IS_FINITE(_a) (finite(_a) && !IS_NAN(_a))
+#elif defined (SOLARIS_2_8) && __GNUC__ == 3 && __GNUC_MINOR__ == 2
+#include  <ieeefp.h>
+#define IS_FINITE(_a) (finite(_a) && !IS_NAN(_a))
 #else
 # define IS_FINITE(_a) (std::isfinite(_a))
 #endif
-/* If the above doesn't work, then try (finite(_a) && !isNaN(_a)) or (!isNaN((_a) - (_a))).
+/* If the above doesn't work, then try (finite(_a) && !IS_NAN(_a)) or 
+ * (!IS_NAN((_a) - (_a))).
  * Also, please report a bug as per http://www.inkscape.org/report_bugs.php,
  * giving information about what platform and compiler version you're using.
  */

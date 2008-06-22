@@ -33,8 +33,8 @@
 
 #ifndef SEEN_LINEAR_H
 #define SEEN_LINEAR_H
-#include "isnan.h"
 #include "interval.h"
+#include "isnan.h"
 
 namespace Geom{
 

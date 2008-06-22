@@ -42,7 +42,7 @@
 #include "svg/css-ostringstream.h"
 #include "xml/repr.h"
 #include "unit-constants.h"
-#include "isnan.h"
+#include "2geom/isnan.h"
 #include "macros.h"
 
 #include "sp-filter-reference.h"

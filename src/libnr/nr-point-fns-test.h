@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 #include "libnr/nr-point-fns.h"
-#include "isnan.h"
+#include "2geom/isnan.h"
 
 using NR::Point;
 

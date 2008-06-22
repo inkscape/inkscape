@@ -92,7 +92,7 @@ libinkpre_a_SOURCES =	\
 	inkscape-stock.cpp inkscape-stock.h\
 	inkscape.cpp inkscape.h inkscape-private.h	\
 	interface.cpp interface.h	\
-	isnan.h isinf.h \
+	isinf.h \
 	isnormal.h \
 	knot-enums.h	\
 	knot-holder-entity.h knot-holder-entity.cpp	\

@@ -65,7 +65,7 @@
 #include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
 #include "livarot/Shape.h"
-#include "isnan.h"
+#include "2geom/isnan.h"
 
 #include "dyna-draw-context.h"
 

@@ -16,7 +16,7 @@
 #include "generate-constraints.h"
 #include "constraint.h"
 
-#include "isnan.h" /* Include last */
+#include "2geom/isnan.h" /* Include last */
 
 using std::set;
 using std::vector;

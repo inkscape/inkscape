@@ -17,7 +17,7 @@
 #include <libvpsc/constraint.h>
 #include "gradient_projection.h"
 #include <iostream>
-#include "isnan.h"
+#include "2geom/isnan.h"
 #include "isinf.h"
 #include <math.h>
 

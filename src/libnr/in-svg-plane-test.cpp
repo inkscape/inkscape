@@ -3,7 +3,7 @@
 
 #include "libnr/in-svg-plane.h"
 #include "utest/utest.h"
-#include "isnan.h"
+#include "2geom/isnan.h"
 
 int main(int argc, char *argv[])
 {

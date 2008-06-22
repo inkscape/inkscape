@@ -4,7 +4,7 @@
 
 #include <cxxtest/TestSuite.h>
 
-#include <isnan.h>
+#include "2geom/isnan.h"
 
 #include "mod360.h"
 
