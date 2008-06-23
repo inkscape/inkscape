@@ -17,6 +17,7 @@
 #include <2geom/transforms.h>
 #include <2geom/rect.h>
 #include <2geom/coord.h>
+#include <glibmm.h>
 
 /* Fast bbox calculation */
 /* Thanks to Nathan Hurst for suggesting it */
@@ -138,9 +139,8 @@ bounds_exact_transformed(Geom::PathVector const & pv, Geom::Matrix const & t)
     if (pv.empty())
         return bbox;
 
-    Geom::Curve *temp = pv.front().front().transformed(t);
-    bbox = temp->boundsExact(); // need decent starting bbox. could be improved by using large numbers for initial bbox (interval(huge,-huge))
-    delete temp;
+    Geom::Point initial = pv.front().initialPoint() * t;
+    bbox = Geom::Rect(initial, initial);        // obtain well defined bbox as starting point to unionWith
 
     for (Geom::PathVector::const_iterator it = pv.begin(); it != pv.end(); ++it) {
         bbox.expandTo(it->initialPoint() * t);
