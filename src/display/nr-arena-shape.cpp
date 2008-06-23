@@ -252,8 +252,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
         shape->ctm = gc->transform;
         if (state & NR_ARENA_ITEM_STATE_BBOX) {
             if (shape->curve) {
-                // note: the original code before 2geom used to calculate the exact bounding box, for speed we take the approx bbox here
-                boundingbox = bounds_fast_transformed(shape->curve->get_pathvector(), to_2geom(gc->transform));
+                boundingbox = bounds_exact_transformed(shape->curve->get_pathvector(), to_2geom(gc->transform));
                 item->bbox.x0 = (gint32)(boundingbox[0][0] - 1.0F);
                 item->bbox.y0 = (gint32)(boundingbox[1][0] - 1.0F);
                 item->bbox.x1 = (gint32)(boundingbox[0][1] + 1.9999F);
@@ -276,8 +275,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
 
     if (shape->curve) {
-        // note: the original code before 2geom used to calculate the exact bounding box, for speed we take the approx bbox here
-        boundingbox = bounds_fast_transformed(shape->curve->get_pathvector(), to_2geom(gc->transform));
+        boundingbox = bounds_exact_transformed(shape->curve->get_pathvector(), to_2geom(gc->transform));
 
         if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline) {
             float width, scale;
