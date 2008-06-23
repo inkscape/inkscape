@@ -139,7 +139,7 @@ bounds_exact_transformed(Geom::PathVector const & pv, Geom::Matrix const & t)
         return bbox;
 
     Geom::Curve *temp = pv.front().front().transformed(t);
-    bbox = temp->boundsExact();
+    bbox = temp->boundsExact(); // need decent starting bbox. could be improved by using large numbers for initial bbox (interval(huge,-huge))
     delete temp;
 
     for (Geom::PathVector::const_iterator it = pv.begin(); it != pv.end(); ++it) {
