@@ -15,7 +15,7 @@
 #include <2geom/path.h>
 #include <2geom/svg-path.h>
 #include <2geom/svg-path-parser.h>
-
+#include <typeinfo>
 
 std::vector<Geom::Path>
 BPath_to_2GeomPath(NArtBpath const * bpath)
