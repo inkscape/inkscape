@@ -26,6 +26,7 @@
 #include <libnr/nr-blit.h>
 #include <libnr/nr-convert2geom.h>
 #include <2geom/pathvector.h>
+#include <2geom/curves.h>
 #include <livarot/Path.h>
 #include <livarot/float-line.h>
 #include <livarot/int-line.h>
@@ -36,7 +37,7 @@
 #include "sp-filter.h"
 #include "sp-filter-reference.h"
 #include "display/nr-filter.h"
-
+#include <typeinfo>
 #include <cairo.h>
 
 //int  showRuns=0;
@@ -417,12 +418,35 @@ static bool is_inner_area(NRRectL const &outer, NRRectL const &inner) {
     return (outer.x0 <= inner.x0 && outer.y0 <= inner.y0 && outer.x1 >= inner.x1 && outer.y1 >= inner.y1);
 }
 
+/* returns true if the pathvector has a region that needs fill.
+ * is for optimizing purposes, so should be fast and can falsely return true. 
+ * CANNOT falsely return false.
+static bool has_inner_area(Geom::PathVector const & pv) {
+    // return false for the cases where there is surely no region to be filled
+    if (pv.empty())
+        return false;
+
+    if ( (pv.size() == 1) && (pv.front().size() <= 1) ) {
+        // vector has only one path with only one segment, see if that's a non-curve segment: that would mean no internal region
+        Geom::Curve const & c = pv.front().front();
+        if ( typeid(c) == typeid(Geom::LineSegment) )
+            return false;
+        if ( typeid(c) == typeid(Geom::HLineSegment) )
+            return false;
+        if ( typeid(c) == typeid(Geom::VLineSegment) )
+            return false;
+    }
+
+    return true; //too costly to see if it has region to be filled, so return true.
+}
+
 /** force_shape is used for clipping paths, when we need the shape for clipping even if it's not filled */
 void
 nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool force_shape)
 {
     if ((shape->_fill.paint.type() != NRArenaShape::Paint::NONE || force_shape) &&
-        ((shape->curve->get_length() > 2) || (SP_CURVE_BPATH(shape->curve)[1].code == NR_CURVETO)) ) {
+//        ((shape->curve->get_length() > 2) || (SP_CURVE_BPATH(shape->curve)[1].code == NR_CURVETO)) ) {  // <-- this used to be the old code, i think it has to determine that the path has a sort of 'internal region' where fill would occur
+          has_inner_area(shape->curve->get_pathvector()) ) {
         if (TRUE || !shape->fill_shp) {
             NR::Matrix  cached_to_new = NR::identity();
             int isometry = 0;
