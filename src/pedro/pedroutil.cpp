@@ -24,7 +24,7 @@
 
 #include <stdio.h>
 #include <stdarg.h>
-
+#include <string.h>
 #include <sys/stat.h>
 
 #include "pedroutil.h"
