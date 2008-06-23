@@ -20,6 +20,7 @@
 
 #include "document.h"
 #include "helper-fns.h"
+#include <string>
 
 static void sp_glyph_kerning_class_init(SPGlyphKerningClass *gc);
 static void sp_glyph_kerning_init(SPGlyphKerning *glyph);
@@ -123,6 +124,25 @@ static void sp_glyph_kerning_release(SPObject *object)
     }
 }
 
+GlyphNames::GlyphNames(const gchar* value){
+        if (value) this->names = strdup(value);
+}
+
+GlyphNames::~GlyphNames(){
+    if (this->names) g_free(this->names);
+}
+
+bool GlyphNames::contains(gchar* name){
+    if (!(this->names) || !name) return false;
+    std::istringstream is(this->names);
+    std::string str;
+    std::string s(name);
+    while (is >> str){
+        if (str == s) return true;
+    }
+    return false;
+}
+
 static void sp_glyph_kerning_set(SPObject *object, unsigned int key, const gchar *value)
 {
     SPGlyphKerning * glyphkern = (SPGlyphKerning*) object; //even if it is a VKern this will work. I did it this way just to avoind warnings.
@@ -131,26 +151,26 @@ static void sp_glyph_kerning_set(SPObject *object, unsigned int key, const gchar
 
     switch (key) {
         case SP_ATTR_U1:
-            if (glyphkern->u1) g_free(glyphkern->u1);
+            if (glyphkern->u1) delete glyphkern->u1;
             glyphkern->u1 = new UnicodeRange(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 g_warning("<%s>: SP_ATTR_U1: %s", tag, value);
              break;
         case SP_ATTR_U2:
-            if (glyphkern->u2) g_free(glyphkern->u2);
+            if (glyphkern->u2) delete glyphkern->u2;
             glyphkern->u2 = new UnicodeRange(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 g_warning("<%s>: SP_ATTR_U2: %s", tag, value);
              break;
         case SP_ATTR_G1:
-            if (glyphkern->g1) g_free(glyphkern->g1);
-            glyphkern->g1 = g_strdup(value);//todo: 
+            if (glyphkern->g1) delete glyphkern->g1;
+            glyphkern->g1 = new GlyphNames(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 g_warning("<%s>: SP_ATTR_G1: %s", tag, value);
              break;
         case SP_ATTR_G2:
-            if (glyphkern->g2) g_free(glyphkern->g2);
-            glyphkern->g2 = g_strdup(value);//todo: 
+            if (glyphkern->g2) delete glyphkern->g2;
+            glyphkern->g2 = new GlyphNames(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 g_warning("<%s>: SP_ATTR_G2: %s", tag, value);
              break;

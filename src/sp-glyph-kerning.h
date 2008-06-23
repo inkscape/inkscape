@@ -29,11 +29,20 @@
 #define SP_IS_VKERN(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_VKERN))
 #define SP_IS_VKERN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_VKERN))
 
+class GlyphNames{
+public: 
+GlyphNames(const gchar* value);
+~GlyphNames();
+bool contains(gchar* name);
+private:
+gchar* names;
+};
+
 struct SPGlyphKerning : public SPObject {
     UnicodeRange* u1;
-    char* g1;
+    GlyphNames* g1;
     UnicodeRange* u2;
-    char* g2;
+    GlyphNames* g2;
     double k;
 };
 

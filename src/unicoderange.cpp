@@ -18,6 +18,7 @@ static unsigned int hex2int(char* s){
 }
 
 UnicodeRange::UnicodeRange(const gchar* value){
+	if (!value) return;
 	gchar* val = (gchar*) value;
 	while(val[0] != '\0'){
 		if (val[0]=='U' && val[1]=='+'){

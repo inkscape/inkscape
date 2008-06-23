@@ -152,7 +152,9 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
     //We use that info to allocate memory for the glyphs
     *glyphs = (cairo_glyph_t*) malloc(count*sizeof(cairo_glyph_t));
 
-    char* previous_unicode = NULL; //This is used for kerning 
+    char* previous_unicode = NULL; //This is used for kerning
+    gchar* previous_glyph_name = NULL; //This is used for kerning
+
     count=0;
     double x=0, y=0;//These vars store the position of the glyph within the rendered string
     bool is_horizontal_text = true; //TODO
@@ -166,15 +168,25 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
 	        for(SPObject* node = this->font->children;previous_unicode && node;node=node->next){
 		    //apply glyph kerning if appropriate
 	            if (SP_IS_HKERN(node) && is_horizontal_text){
-	                if ( (((SPHkern*)node)->u1->contains(previous_unicode[0])) && (((SPHkern*)node)->u2->contains(this->glyphs[i]->unicode[0]) ))//TODO: verify what happens when using unicode strings.
+	                if ( 	(((SPHkern*)node)->u1->contains(previous_unicode[0])
+				 || ((SPHkern*)node)->g1->contains(previous_glyph_name)) &&
+				(((SPHkern*)node)->u2->contains(this->glyphs[i]->unicode[0])
+				 || ((SPHkern*)node)->g2->contains(this->glyphs[i]->glyph_name))
+			)//TODO: verify what happens when using unicode strings.
 				x -= (((SPHkern*)node)->k / this->font->horiz_adv_x);
 	            }
 		    if (SP_IS_VKERN(node) && !is_horizontal_text){
-	                if ( (((SPVkern*)node)->u1->contains(previous_unicode[0])) && (((SPVkern*)node)->u2->contains(this->glyphs[i]->unicode[0]) ))//TODO: idem
+	                if (	(((SPVkern*)node)->u1->contains(previous_unicode[0])
+				 || ((SPVkern*)node)->g1->contains(previous_glyph_name)) &&
+				(((SPVkern*)node)->u2->contains(this->glyphs[i]->unicode[0])
+				 || ((SPVkern*)node)->g2->contains(this->glyphs[i]->glyph_name))
+			)//TODO: idem
 				y -= (((SPVkern*)node)->k / this->font->vert_adv_y);
 	            }
 		}
 		previous_unicode = this->glyphs[i]->unicode;//used for kerning checking
+		previous_glyph_name = this->glyphs[i]->glyph_name;//used for kerning checking
+
                 (*glyphs)[count].index = i;
                 (*glyphs)[count].x = x;
                 (*glyphs)[count++].y = y;
