@@ -420,7 +420,7 @@ static bool is_inner_area(NRRectL const &outer, NRRectL const &inner) {
 
 /* returns true if the pathvector has a region that needs fill.
  * is for optimizing purposes, so should be fast and can falsely return true. 
- * CANNOT falsely return false.
+ * CANNOT falsely return false. */
 static bool has_inner_area(Geom::PathVector const & pv) {
     // return false for the cases where there is surely no region to be filled
     if (pv.empty())
