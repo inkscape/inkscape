@@ -4115,7 +4115,7 @@ bool MakeBase::executeCommand(const String &command,
         args[2] = (char *)command.c_str();
         args[3] = NULL;
         execv("/bin/sh", args);
-        _exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
         }
 
     String outb;
@@ -4145,20 +4145,20 @@ bool MakeBase::executeCommand(const String &command,
         if (FD_ISSET(outRead, &fdset))
             {
             if (read(outRead, &ch, 1) <= 0)
-                outOpen = false;
+                { outOpen = false; }
             else if (ch <= 0)
-                outOpen = false;
+                { /* outOpen = false; */ }
             else
-                outb.push_back(ch);
+                { outb.push_back(ch); }
             }
         if (FD_ISSET(errRead, &fdset))
             {
             if (read(errRead, &ch, 1) <= 0)
-                errOpen = false;
+                { errOpen = false; }
             else if (ch <= 0)
-                errOpen = false;
+                { /* errOpen = false; */ }
             else
-                errb.push_back(ch);
+                { errb.push_back(ch); }
             }
         }
 
