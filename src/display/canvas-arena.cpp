@@ -201,29 +201,29 @@ sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
     bh = buf->rect.y1 - buf->rect.y0;
     if ((bw < 1) || (bh < 1)) return;
 
-            NRRectL area;
-            NRPixBlock cb;
+    NRRectL area;
+    NRPixBlock cb;
 
-            area.x0 = buf->rect.x0;
-            area.y0 = buf->rect.y0;
-            area.x1 = buf->rect.x1;
-            area.y1 = buf->rect.y1;
+    area.x0 = buf->rect.x0;
+    area.y0 = buf->rect.y0;
+    area.x1 = buf->rect.x1;
+    area.y1 = buf->rect.y1;
 
-            nr_pixblock_setup_extern (&cb, NR_PIXBLOCK_MODE_R8G8B8A8P, area.x0, area.y0, area.x1, area.y1,
-                                      buf->buf,
-                                      buf->buf_rowstride,
-                                      FALSE, FALSE);
+    nr_pixblock_setup_extern (&cb, NR_PIXBLOCK_MODE_R8G8B8A8P, area.x0, area.y0, area.x1, area.y1,
+                              buf->buf,
+                              buf->buf_rowstride,
+                              FALSE, FALSE);
 
-            cb.visible_area = buf->visible_rect;
-            cairo_t *ct = nr_create_cairo_context (&area, &cb);
-            nr_arena_item_invoke_render (ct, arena->root, &area, &cb, 0);
+    cb.visible_area = buf->visible_rect;
+    cairo_t *ct = nr_create_cairo_context (&area, &cb);
+    nr_arena_item_invoke_render (ct, arena->root, &area, &cb, 0);
 
-                cairo_surface_t *cst = cairo_get_target(ct);
-                cairo_destroy (ct);
-                cairo_surface_finish (cst);
-                cairo_surface_destroy (cst);
+    cairo_surface_t *cst = cairo_get_target(ct);
+    cairo_destroy (ct);
+    cairo_surface_finish (cst);
+    cairo_surface_destroy (cst);
 
-            nr_pixblock_release (&cb);
+    nr_pixblock_release (&cb);
 }
 
 static double

@@ -1641,18 +1641,18 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
 
 #ifdef CANVAS_OUTPUT_VIA_CAIRO
 
-    buf.cst = cairo_image_surface_create_for_data (
-        buf.buf,
-        CAIRO_FORMAT_ARGB32,  // unpacked, i.e. 32 bits! one byte is unused
-        x1 - x0, y1 - y0,
-        buf.buf_rowstride
-        );
-    cairo_t *window_ct = gdk_cairo_create(SP_CANVAS_WINDOW (canvas));
-    cairo_set_source_surface (window_ct, buf.cst, x0 - canvas->x0, y0 - canvas->y0);
-    cairo_paint (window_ct);
-    cairo_destroy (window_ct);
-    cairo_surface_finish (buf.cst);
-    cairo_surface_destroy (buf.cst);
+        buf.cst = cairo_image_surface_create_for_data (
+            buf.buf,
+            CAIRO_FORMAT_ARGB32,  // unpacked, i.e. 32 bits! one byte is unused
+            x1 - x0, y1 - y0,
+            buf.buf_rowstride
+            );
+        cairo_t *window_ct = gdk_cairo_create(SP_CANVAS_WINDOW (canvas));
+        cairo_set_source_surface (window_ct, buf.cst, x0 - canvas->x0, y0 - canvas->y0);
+        cairo_paint (window_ct);
+        cairo_destroy (window_ct);
+        cairo_surface_finish (buf.cst);
+        cairo_surface_destroy (buf.cst);
 
 #else
 
@@ -1661,9 +1661,9 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
 
         NRPixBlock b4;
         nr_pixblock_setup_extern (&b4, NR_PIXBLOCK_MODE_R8G8B8A8P, x0, y0, x1, y1,
-                                      buf.buf,
-                                      buf.buf_rowstride,
-                                      FALSE, FALSE);
+                                  buf.buf,
+                                  buf.buf_rowstride,
+                                  FALSE, FALSE);
 
         // this does the 32->24 squishing, using an assembler routine:
         nr_blit_pixblock_pixblock (&b3, &b4);
@@ -1679,9 +1679,7 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
 
         nr_pixblock_release (&b3);
         nr_pixblock_release (&b4);
-
 #endif
-
     }
 
     cairo_surface_t *cst = cairo_get_target(buf.ct);
