@@ -42,11 +42,6 @@ void sp_canvas_item_move_to_z (SPCanvasItem * item, gint z);
 
 gint sp_canvas_item_compare_z (SPCanvasItem * a, SPCanvasItem * b);
 
-class Shape;
-class raster_info;
-void ctrl_run_A8_OR (raster_info &dest, void *data, int st, float vst, int en, float ven);
-void nr_pixblock_render_ctrl_rgba (Shape* theS, uint32_t color, NRRectL &area, char* destBuf, int stride);
-
 #endif
 
 /*
