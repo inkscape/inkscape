@@ -826,12 +826,12 @@ grid_hline (SPCanvasBuf *buf, gint y, gint xs, gint xe, guint32 rgba)
         a = NR_RGBA32_A (rgba);
         x0 = MAX (buf->rect.x0, xs);
         x1 = MIN (buf->rect.x1, xe + 1);
-        p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 3;
+        p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 4;
         for (x = x0; x < x1; x++) {
             p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
             p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
             p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
-            p += 3;
+            p += 4;
         }
     }
 }
@@ -849,7 +849,7 @@ grid_vline (SPCanvasBuf *buf, gint x, gint ys, gint ye, guint32 rgba)
         a = NR_RGBA32_A (rgba);
         y0 = MAX (buf->rect.y0, ys);
         y1 = MIN (buf->rect.y1, ye + 1);
-        p = buf->buf + (y0 - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 3;
+        p = buf->buf + (y0 - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 4;
         for (y = y0; y < y1; y++) {
             p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
             p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
@@ -870,7 +870,7 @@ grid_dot (SPCanvasBuf *buf, gint x, gint y, guint32 rgba)
         g = NR_RGBA32_G (rgba);
         b = NR_RGBA32_B (rgba);
         a = NR_RGBA32_A (rgba);
-        p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 3;
+        p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 4;
         p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
         p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
         p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);

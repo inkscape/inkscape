@@ -102,7 +102,7 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
         int p0 = buf->rect.y0;
         int p1 = buf->rect.y1;
         int step = buf->buf_rowstride;
-        unsigned char *d = buf->buf + 3 * (position - buf->rect.x0);
+        unsigned char *d = buf->buf + 4 * (position - buf->rect.x0);
 
         for (int p = p0; p < p1; p++) {
             d[0] = NR_COMPOSEN11_1111(r, a, d[0]);
@@ -118,7 +118,7 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
 
         int p0 = buf->rect.x0;
         int p1 = buf->rect.x1;
-        int step = 3;
+        int step = 4;
         unsigned char *d = buf->buf + (position - buf->rect.y0) * buf->buf_rowstride;
 
         for (int p = p0; p < p1; p++) {
@@ -269,7 +269,7 @@ sp_guideline_setpixel (SPCanvasBuf *buf, gint x, gint y, guint32 rgba)
         g = NR_RGBA32_G (rgba);
         b = NR_RGBA32_B (rgba);
         a = NR_RGBA32_A (rgba);
-        guchar * p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 3;
+        guchar * p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 4;
         p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
         p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
         p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);

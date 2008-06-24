@@ -512,7 +512,7 @@ sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf)
     bool colormode;
 
     for (y = y0; y <= y1; y++) {
-        p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 3;
+        p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 4;
         q = ctrl->cache + ((y - ctrl->box.y0) * (ctrl->span*2+1) + (x0 - ctrl->box.x0)) * 4;
         for (x = x0; x <= x1; x++) {
             a = *(q + 3);
@@ -527,13 +527,13 @@ sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf)
                 p[1] = COMPOSE_N (p[1], q[1], a);
                 p[2] = COMPOSE_N (p[2], q[2], a);
                 q += 4;
-                p += 3;
+                p += 4;
             } else if (ctrl->mode == SP_CTRL_MODE_XOR) {
                 p[0] = COMPOSE_X (p[0], q[0], a);
                 p[1] = COMPOSE_X (p[1], q[1], a);
                 p[2] = COMPOSE_X (p[2], q[2], a);
                 q += 4;
-                p += 3;
+                p += 4;
             }
         }
     }

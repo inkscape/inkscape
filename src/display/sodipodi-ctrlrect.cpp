@@ -100,14 +100,14 @@ static void sp_ctrlrect_hline(SPCanvasBuf *buf, gint y, gint xs, gint xe, guint3
         guint const a = RGBA_A(rgba);
         gint const x0 = MAX(buf->rect.x0, xs);
         gint const x1 = MIN(buf->rect.x1, xe + 1);
-        guchar *p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 3;
+        guchar *p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 4;
         for (gint x = x0; x < x1; x++) {
             if (!dashed || ((x / DASH_LENGTH) % 2)) {
                 p[0] = INK_COMPOSE(r, a, p[0]);
                 p[1] = INK_COMPOSE(g, a, p[1]);
                 p[2] = INK_COMPOSE(b, a, p[2]);
             }
-            p += 3;
+            p += 4;
         }
     }
 }
@@ -121,7 +121,7 @@ static void sp_ctrlrect_vline(SPCanvasBuf *buf, gint x, gint ys, gint ye, guint3
         guint const a = RGBA_A(rgba);
         gint const y0 = MAX(buf->rect.y0, ys);
         gint const y1 = MIN(buf->rect.y1, ye + 1);
-        guchar *p = buf->buf + (y0 - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 3;
+        guchar *p = buf->buf + (y0 - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 4;
         for (gint y = y0; y < y1; y++) {
             if (!dashed || ((y / DASH_LENGTH) % 2)) {
                 p[0] = INK_COMPOSE(r, a, p[0]);
@@ -145,12 +145,12 @@ static void sp_ctrlrect_area(SPCanvasBuf *buf, gint xs, gint ys, gint xe, gint y
     gint const y0 = MAX(buf->rect.y0, ys);
     gint const y1 = MIN(buf->rect.y1, ye + 1);
     for (gint y = y0; y < y1; y++) {
-        guchar *p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 3;
+        guchar *p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 4;
         for (gint x = x0; x < x1; x++) {
             p[0] = INK_COMPOSE(r, a, p[0]);
             p[1] = INK_COMPOSE(g, a, p[1]);
             p[2] = INK_COMPOSE(b, a, p[2]);
-            p += 3;
+            p += 4;
         }
     }
 }
