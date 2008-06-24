@@ -20,8 +20,6 @@
 #include "display/nr-arena.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-gaussian.h"
-#include <livarot/Path.h>
-#include <livarot/Shape.h>
 #include "sp-filter.h"
 #include "sp-filter-reference.h"
 #include "sp-gaussian-blur.h"
@@ -35,9 +33,6 @@ int nr_arena_image_y_sample = 1;
  * NRArenaCanvasImage
  *
  */
-
-// defined in nr-arena-shape.cpp
-void nr_pixblock_render_shape_mask_or(NRPixBlock &m, Shape *theS);
 
 static void nr_arena_image_class_init (NRArenaImageClass *klass);
 static void nr_arena_image_init (NRArenaImage *image);
