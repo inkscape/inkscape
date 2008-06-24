@@ -157,22 +157,27 @@ feed_curve_to_cairo (cairo_t *ct, NArtBpath const *bpath, NR::Matrix trans, NR::
 
 
 static void
-feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Rect view, bool optimize_stroke)
+feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Matrix & trans, Geom::Rect view, bool optimize_stroke)
 {
     if(Geom::LineSegment const* line_segment = dynamic_cast<Geom::LineSegment const*>(&c)) {
+    // same logic can be used for hlinesegment and vlinesegment: just use finalpoint
+        Geom::Point end_tr = (*line_segment)[1] * trans;
         if (!optimize_stroke) {
-            cairo_line_to(cr, (*line_segment)[1][0], (*line_segment)[1][1]);
+            cairo_line_to(cr, end_tr[0], end_tr[1]);
         } else {
-            Geom::Rect swept((*line_segment)[0], (*line_segment)[1]);
+            Geom::Rect swept((*line_segment)[0]*trans, end_tr);
             if (swept.intersects(view)) {
-                cairo_line_to(cr, (*line_segment)[1][0], (*line_segment)[1][1]);
+                cairo_line_to(cr, end_tr[0], end_tr[1]);
             } else {
-                cairo_move_to(cr, (*line_segment)[1][0], (*line_segment)[1][1]);
+                cairo_move_to(cr, end_tr[0], end_tr[1]);
             }
         }
     }
     else if(Geom::QuadraticBezier const *quadratic_bezier = dynamic_cast<Geom::QuadraticBezier const*>(&c)) {
         std::vector<Geom::Point> points = quadratic_bezier->points();
+        points[0] *= trans;
+        points[1] *= trans;
+        points[2] *= trans;
         Geom::Point b1 = points[0] + (2./3) * (points[1] - points[0]);
         Geom::Point b2 = b1 + (1./3) * (points[2] - points[0]);
         if (!optimize_stroke) {
@@ -189,9 +194,14 @@ feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Rect view, bool opt
     }
     else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const*>(&c)) {
         std::vector<Geom::Point> points = cubic_bezier->points();
+        //points[0] *= trans; // don't do this one here for fun: it is only needed for optimized strokes
+        points[1] *= trans;
+        points[2] *= trans;
+        points[3] *= trans;
         if (!optimize_stroke) {
             cairo_curve_to(cr, points[1][0], points[1][1], points[2][0], points[2][1], points[3][0], points[3][1]);
         } else {
+            points[0] *= trans;  // didn't transform this point yet
             Geom::Rect swept(points[0], points[3]);
             swept.expandTo(points[1]);
             swept.expandTo(points[2]);
@@ -211,7 +221,7 @@ feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Rect view, bool opt
 
         //recurse to convert the new path resulting from the sbasis to svgd
         for(Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {
-            feed_curve_to_cairo(cr, *iter, view, optimize_stroke);
+            feed_curve_to_cairo(cr, *iter, trans, view, optimize_stroke);
         }
     }
 }
@@ -231,16 +241,24 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, NR:
     NR::Rect view = *area;
     view.growBy (stroke_width);
     view = view * from_2geom(Geom::Translate(-shift));
-    Geom::Path const path_trans = path * (trans * Geom::Translate(-shift));
+    //  Pass transformation to feed_curve, so that we don't need to create a whole new path.
+    Geom::Matrix transshift(trans * Geom::Translate(-shift));
 
-    cairo_move_to(ct, path_trans.initialPoint()[0], path_trans.initialPoint()[1] );
+    Geom::Point initial = path.initialPoint() * transshift;
+    cairo_move_to(ct, initial[0], initial[1] );
 
-    for(Geom::Path::const_iterator cit = path_trans.begin(); cit != path_trans.end_open(); ++cit) {
-        feed_curve_to_cairo(ct, *cit, to_2geom(view), optimize_stroke);
+    for(Geom::Path::const_iterator cit = path.begin(); cit != path.end_open(); ++cit) {
+        feed_curve_to_cairo(ct, *cit, transshift, to_2geom(view), optimize_stroke);
     }
 
-    if (path_trans.closed()) {
-        cairo_line_to(ct, path_trans.initialPoint()[0], path_trans.initialPoint()[1] );
+    if (path.closed()) {
+        cairo_line_to(ct, initial[0], initial[1]);
+        // I think we should use cairo_close_path(ct) here but it doesn't work. (the closing line is not rendered completely)
+        /* according to cairo documentation:
+           The behavior of cairo_close_path() is distinct from simply calling cairo_line_to() with the equivalent coordinate
+           in the case of stroking. When a closed sub-path is stroked, there are no caps on the ends of the sub-path. Instead,
+           there is a line join connecting the final and initial segments of the sub-path. 
+        */
     }
 }
 
