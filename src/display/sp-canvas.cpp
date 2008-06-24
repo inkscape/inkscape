@@ -40,6 +40,8 @@
 #include "color-profile-fns.h"
 #endif // ENABLE_LCMS
 #include "display/rendermode.h"
+#include "libnr/nr-blit.h"
+#include "display/inkscape-cairo.h"
 
 // Define this to visualize the regions to be redrawn
 //#define DEBUG_REDRAW 1;
@@ -1574,7 +1576,7 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
     // Mark the region clean
     sp_canvas_mark_rect(canvas, x0, y0, x1, y1, 0);
 
-    buf.buf_rowstride = sw * 3; // CAIRO FIXME: for cairo output, the buffer must be RGB unpacked, i.e. sw * 4
+    buf.buf_rowstride = sw * 4; 
     buf.rect.x0 = x0;
     buf.rect.y0 = y0;
     buf.rect.x1 = x1;
@@ -1588,6 +1590,8 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
                     | (color->green & 0xff00)
                     | (color->blue >> 8));
     buf.is_empty = true;
+
+    buf.ct = nr_create_cairo_context_canvasbuf (&(buf.visible_rect), &buf);
 
     if (canvas->root->flags & SP_CANVAS_ITEM_VISIBLE) {
         SP_CANVAS_ITEM_GET_CLASS (canvas->root)->render (canvas->root, &buf);
@@ -1616,27 +1620,6 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
                             x0 - canvas->x0, y0 - canvas->y0,
                             x1 - x0, y1 - y0);
     } else {
-/*
-// CAIRO FIXME: after SPCanvasBuf is made 32bpp throughout, this rgb_draw below can be replaced with the below.
-// Why this must not be done currently:
-// - all canvas items (handles, nodes etc) paint themselves assuming 24bpp
-// - cairo assumes bgra, but we have rgba, so r and b get swapped (until we paint all with cairo too)
-// - it does not seem to be any faster; in fact since with 32bpp, buf contains less pixels,
-// we need more bufs to paint a given area and as a result it's even a bit slower
-
-    cairo_surface_t* cst = cairo_image_surface_create_for_data (
-        buf.buf,
-        CAIRO_FORMAT_RGB24,  // unpacked, i.e. 32 bits! one byte is unused
-        x1 - x0, y1 - y0,
-        buf.buf_rowstride
-        );
-        cairo_t *ct = gdk_cairo_create(SP_CANVAS_WINDOW (canvas));
-        cairo_set_source_surface (ct, cst, x0 - canvas->x0, y0 - canvas->y0);
-        cairo_paint (ct);
-    cairo_destroy (ct);
-    cairo_surface_finish (cst);
-    cairo_surface_destroy (cst);
-*/
 
 #if ENABLE_LCMS
         if ( transf && canvas->enable_cms_display_adj ) {
@@ -1647,15 +1630,64 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
         }
 #endif // ENABLE_LCMS
 
+// Now we only need to output the prepared pixmap to the actual screen, and this define chooses one
+// of the two ways to do it. The cairo way is direct and straightforward, but unfortunately
+// noticeably slower. I asked Carl Worth but he was unable so far to suggest any specific reason
+// for this slowness. So, for now we use the oldish method: squeeze out 32bpp buffer to 24bpp and
+// use gdk_draw_rgb_image_dithalign, for unfortunately gdk can only handle 24 bpp, which cairo
+// cannot handle at all. Still, this way is currently faster even despite the blit with squeeze.
+
+///#define CANVAS_OUTPUT_VIA_CAIRO
+
+#ifdef CANVAS_OUTPUT_VIA_CAIRO
+
+    buf.cst = cairo_image_surface_create_for_data (
+        buf.buf,
+        CAIRO_FORMAT_ARGB32,  // unpacked, i.e. 32 bits! one byte is unused
+        x1 - x0, y1 - y0,
+        buf.buf_rowstride
+        );
+    cairo_t *window_ct = gdk_cairo_create(SP_CANVAS_WINDOW (canvas));
+    cairo_set_source_surface (window_ct, buf.cst, x0 - canvas->x0, y0 - canvas->y0);
+    cairo_paint (window_ct);
+    cairo_destroy (window_ct);
+    cairo_surface_finish (buf.cst);
+    cairo_surface_destroy (buf.cst);
+
+#else
+
+        NRPixBlock b3;
+        nr_pixblock_setup_fast (&b3, NR_PIXBLOCK_MODE_R8G8B8, x0, y0, x1, y1, TRUE);
+
+        NRPixBlock b4;
+        nr_pixblock_setup_extern (&b4, NR_PIXBLOCK_MODE_R8G8B8A8P, x0, y0, x1, y1,
+                                      buf.buf,
+                                      buf.buf_rowstride,
+                                      FALSE, FALSE);
+
+        // this does the 32->24 squishing, using an assembler routine:
+        nr_blit_pixblock_pixblock (&b3, &b4);
+
         gdk_draw_rgb_image_dithalign (SP_CANVAS_WINDOW (canvas),
                                       canvas->pixmap_gc,
                                       x0 - canvas->x0, y0 - canvas->y0,
                                       x1 - x0, y1 - y0,
                                       GDK_RGB_DITHER_MAX,
-                                      buf.buf,
+                                      b3.data.px,
                                       sw * 3,
                                       x0 - canvas->x0, y0 - canvas->y0);
+
+        nr_pixblock_release (&b3);
+        nr_pixblock_release (&b4);
+
+#endif
+
     }
+
+    cairo_surface_t *cst = cairo_get_target(buf.ct);
+    cairo_destroy (buf.ct);
+    cairo_surface_finish (cst);
+    cairo_surface_destroy (cst);
 
     if (canvas->rendermode != Inkscape::RENDERMODE_OUTLINE) {
         nr_pixelstore_256K_free (buf.buf);
@@ -1827,15 +1859,14 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
     gdk_window_get_pointer (GTK_WIDGET(canvas)->window, &x, &y, NULL);
     setup.mouse_loc = sp_canvas_window_to_world (canvas, NR::Point(x,y));
 
-    // CAIRO FIXME: the sw/sh calculations below all assume 24bpp, need fixing for 32bpp
     if (canvas->rendermode != Inkscape::RENDERMODE_OUTLINE) {
         // use 256K as a compromise to not slow down gradients
-        // 256K is the cached buffer and we need 3 channels
-        setup.max_pixels = 87381; // 256K/3
+        // 256K is the cached buffer and we need 4 channels
+        setup.max_pixels = 65536; // 256K/4
     } else {
         // paths only, so 1M works faster
-        // 1M is the cached buffer and we need 3 channels
-        setup.max_pixels = 349525;
+        // 1M is the cached buffer and we need 4 channels
+        setup.max_pixels = 262144; 
     }
 
     // Start the clock

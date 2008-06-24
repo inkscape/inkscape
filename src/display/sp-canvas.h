@@ -62,6 +62,7 @@ struct SPCanvasBuf{
     guint32 bg_color;
     // If empty, ignore contents of buffer and use a solid area of bg_color
     bool is_empty;
+    cairo_t *ct;
 };
 
 /**
