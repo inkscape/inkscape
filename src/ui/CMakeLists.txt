@@ -1,16 +1,8 @@
 SET(ui_SRC
 clipboard.cpp
-clipboard.h
 context-menu.cpp
-context-menu.h
 icons.cpp
-icons.h
-previewable.h
-previewfillable.h
 previewholder.cpp
-previewholder.h
 stock.cpp
-stock.h
 stock-items.cpp
-stock-items.h
 )
