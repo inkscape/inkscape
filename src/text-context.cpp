@@ -1577,7 +1577,9 @@ static void sp_text_context_update_text_selection(SPTextContext *tc)
     for (unsigned i = 0 ; i < quads.size() ; i += 4) {
         SPCanvasItem *quad_canvasitem;
         quad_canvasitem = sp_canvas_item_new(sp_desktop_controls(tc->desktop), SP_TYPE_CTRLQUADR, NULL);
-        sp_ctrlquadr_set_rgba32(SP_CTRLQUADR(quad_canvasitem), 0x000000ff);
+        // FIXME: make the color settable in prefs
+        // for now, use semitrasparent blue, as cairo cannot do inversion :(
+        sp_ctrlquadr_set_rgba32(SP_CTRLQUADR(quad_canvasitem), 0x00777777);
         sp_ctrlquadr_set_coords(SP_CTRLQUADR(quad_canvasitem), quads[i], quads[i+1], quads[i+2], quads[i+3]);
         sp_canvas_item_show(quad_canvasitem);
         tc->text_selection_quads.push_back(quad_canvasitem);
