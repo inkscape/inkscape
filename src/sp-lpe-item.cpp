@@ -351,8 +351,8 @@ sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write)
     // TODO: ditch inkscape_active_desktop()
     SPDesktop *desktop = inkscape_active_desktop();
     if (desktop) {
-        sp_lpe_item_remove_temporary_canvasitems(lpeitem, desktop);
-        sp_lpe_item_add_temporary_canvasitems(lpeitem, desktop);
+        //sp_lpe_item_remove_temporary_canvasitems(lpeitem, desktop);
+        //sp_lpe_item_add_temporary_canvasitems(lpeitem, desktop);
     }
 
     if (SP_LPE_ITEM_CLASS (G_OBJECT_GET_CLASS (top))->update_patheffect) {
