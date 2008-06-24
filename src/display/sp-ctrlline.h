@@ -15,8 +15,6 @@
  */
 
 #include "sp-canvas.h"
-#include <livarot/Shape.h>
-
 
 struct SPItem;
 
@@ -28,7 +26,7 @@ struct SPCtrlLine : public SPCanvasItem{
     SPItem *item;  // the item to which this line belongs in some sense; may be NULL for some users
     guint32 rgba;
     NR::Point s, e;
-    Shape* shp;
+    NR::Matrix affine;
 };
 struct SPCtrlLineClass : public SPCanvasItemClass{};
 
