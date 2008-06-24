@@ -20,6 +20,7 @@
 #include <libnr/nr-convert2geom.h>
 #include "../style.h"
 #include "nr-arena.h"
+#include "sp-canvas.h"
 #include <2geom/pathvector.h>
 #include <2geom/matrix.h>
 #include <2geom/point.h>
@@ -29,26 +30,41 @@
 
 /** Creates a cairo context to render to the given pixblock on the given area */
 cairo_t *
-nr_create_cairo_context (NRRectL *area, NRPixBlock *pb)
+nr_create_cairo_context_for_data (NRRectL *area, NRRectL *buf_area, unsigned char *px, unsigned int rowstride)
 {
-    if (!nr_rect_l_test_intersect (&pb->area, area))
+    if (!nr_rect_l_test_intersect (buf_area, area))
         return NULL;
 
     NRRectL clip;
-    nr_rect_l_intersect (&clip, &pb->area, area);
-    unsigned char *dpx = NR_PIXBLOCK_PX (pb) + (clip.y0 - pb->area.y0) * pb->rs + NR_PIXBLOCK_BPP (pb) * (clip.x0 - pb->area.x0);
+    nr_rect_l_intersect (&clip, buf_area, area);
+    unsigned char *dpx = px + (clip.y0 - buf_area->y0) * rowstride + 4 * (clip.x0 - buf_area->x0);
     int width = area->x1 - area->x0;
     int height = area->y1 - area->y0;
     // even though cairo cannot draw in nonpremul mode, select ARGB32 for R8G8B8A8N as the closest; later eliminate R8G8B8A8N everywhere
     cairo_surface_t* cst = cairo_image_surface_create_for_data
         (dpx,
-         ((pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8P || pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8N) ? CAIRO_FORMAT_ARGB32 : (pb->mode == NR_PIXBLOCK_MODE_R8G8B8? CAIRO_FORMAT_RGB24 : CAIRO_FORMAT_A8)),
+         CAIRO_FORMAT_ARGB32,
          width,
          height,
-         pb->rs);
+         rowstride);
     cairo_t *ct = cairo_create (cst);
 
     return ct;
+}
+
+/** Creates a cairo context to render to the given SPCanvasBuf on the given area */
+cairo_t *
+nr_create_cairo_context_canvasbuf (NRRectL *area, SPCanvasBuf *b)
+{
+    return nr_create_cairo_context_for_data (&(b->rect), &(b->rect), b->buf, b->buf_rowstride);
+}
+
+
+/** Creates a cairo context to render to the given NRPixBlock on the given area */
+cairo_t *
+nr_create_cairo_context (NRRectL *area, NRPixBlock *pb)
+{
+    return nr_create_cairo_context_for_data (area, &(pb->area), NR_PIXBLOCK_PX (pb), pb->rs);
 }
 
 /** Feeds path-creating calls to the cairo context translating them from the SPCurve, with the given transform and shift */
