@@ -187,9 +187,8 @@ sp_canvas_arena_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
 static void
 sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
 {
-    gint bw, bh, sw, sh;
-    gint x, y;
-
+    gint bw, bh;
+ 
     SPCanvasArena *arena = SP_CANVAS_ARENA (item);
 
     nr_arena_item_invoke_update (arena->root, NULL, &arena->gc,
@@ -202,140 +201,29 @@ sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
     bh = buf->rect.y1 - buf->rect.y0;
     if ((bw < 1) || (bh < 1)) return;
 
-    // FIXME: currently this function is a huge waste. It receives a buffer but creates a new one and loops
-    // within the large one, doing arena painting in several blocks. This just makes no sense because the
-    // buf that we are given is already only a strip of the screen, created by one iteration of a loop in
-    // sp_canvas_paint_rect_internal. With the current numbers, this function's buffer is always 1/4
-    // smaller than the one we get, because they both are the same number of bytes but
-    // buf uses 3 bytes per pixel (24bpp, packed) while the pixblock created here uses 4 bytes (32bpp).
-    // Eventually I want to switch buf to using 4 bytes (see comment in canvas.cpp) and then remove
-    // from here the sw/sh calculation, the loop, and creating the intermediate buffer, allowing arena
-    // just render into buf in one go.
-
-    if (arena->arena->rendermode != Inkscape::RENDERMODE_OUTLINE) { // use 256K as a compromise to not slow down gradients
-        /* 256K is the cached buffer and we need 4 channels */
-        if (bw * bh < 65536) { // 256K/4
-            /* We can go with single buffer */
-            sw = bw;
-            sh = bh;
-        } else if (bw <= 4096) {
-            /* Go with row buffer */
-            sw = bw;
-            sh = 65536 / bw;
-        } else if (bh <= 4096) {
-            /* Go with column buffer */
-            sw = 65536 / bh;
-            sh = bh;
-        } else {
-            sw = 256;
-            sh = 256;
-        }
-    } else { // paths only, so 1M works faster
-        /* 1M is the cached buffer and we need 4 channels */
-        if (bw * bh < 262144) { // 1M/4
-            /* We can go with single buffer */
-            sw = bw;
-            sh = bh;
-        } else if (bw <= 8192) {
-            /* Go with row buffer */
-            sw = bw;
-            sh = 262144 / bw;
-        } else if (bh <= 8192) {
-            /* Go with column buffer */
-            sw = 262144 / bh;
-            sh = bh;
-        } else {
-            sw = 512;
-            sh = 512;
-        }
-    }
-
-/*
-This define chooses between two modes: When on, arena renders into a temporary
-32bpp buffer, and the result is then squished into the SPCanvasBuf. When off, arena
-renders directly to SPCanvasBuf. However currently this gives no speed advantage,
-perhaps because the lack of squishing is offset by the need for arena items to render
-to the inconvenient (and probably slower) 24bpp buffer. When SPCanvasBuf is
-switched to 32bpp and cairo drawing, however, this define should be removed to
-streamline rendering.
-*/
-#define STRICT_RGBA
-
-    for (y = buf->rect.y0; y < buf->rect.y1; y += sh) {
-        for (x = buf->rect.x0; x < buf->rect.x1; x += sw) {
             NRRectL area;
-#ifdef STRICT_RGBA
-            NRPixBlock pb;
-#endif
             NRPixBlock cb;
 
-            area.x0 = x;
-            area.y0 = y;
-            area.x1 = MIN (x + sw, buf->rect.x1);
-            area.y1 = MIN (y + sh, buf->rect.y1);
+            area.x0 = buf->rect.x0;
+            area.y0 = buf->rect.y0;
+            area.x1 = buf->rect.x1;
+            area.y1 = buf->rect.y1;
 
-#ifdef STRICT_RGBA
-            nr_pixblock_setup_fast (&pb, NR_PIXBLOCK_MODE_R8G8B8A8P, area.x0, area.y0, area.x1, area.y1, TRUE);
-#endif
-
-// CAIRO FIXME: switch this to R8G8B8A8P and 4 * ...
-            nr_pixblock_setup_extern (&cb, NR_PIXBLOCK_MODE_R8G8B8, area.x0, area.y0, area.x1, area.y1,
-                                      buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + 3 * (x - buf->rect.x0),
+            nr_pixblock_setup_extern (&cb, NR_PIXBLOCK_MODE_R8G8B8A8P, area.x0, area.y0, area.x1, area.y1,
+                                      buf->buf,
                                       buf->buf_rowstride,
                                       FALSE, FALSE);
 
-#ifdef STRICT_RGBA
-            pb.visible_area = buf->visible_rect;
-
-            if (pb.data.px != NULL) {
-                cairo_t *ct = nr_create_cairo_context (&area, &pb);
-
-                nr_arena_item_invoke_render (ct, arena->root, &area, &pb, 0);
-
-                if (pb.empty == FALSE) {
-
-                    if (arena->arena->rendermode == Inkscape::RENDERMODE_OUTLINE) {
-                        // currently we only use cairo in outline mode
-
-                        // ENDIANNESS FIX
-                        // Inkscape and GTK use fixed byte order in their buffers: r, g, b, a.
-                        // Cairo reads/writes buffer values as in32s and therefore depends on the hardware byte order
-                        // (little-endian vs big-endian).
-                        // Until we move ALL of inkscape rendering and screen display to cairo,
-                        // we must reverse the order for big-endian architectures (e.g. PowerPC).
-                        if (G_BYTE_ORDER == G_BIG_ENDIAN) {
-                            unsigned char *start = NR_PIXBLOCK_PX(&pb);
-                            unsigned char *end = start + pb.rs * (pb.area.y1 - pb.area.y0);
-                            for (unsigned char *i = start; i < end; i += 4) {
-                                unsigned char tmp0 = i[0];
-                                unsigned char tmp1 = i[1];
-                                i[0] = i[3];
-                                i[1] = i[2];
-                                i[2] = tmp1;
-                                i[3] = tmp0;
-                            }
-                        }
-                    }
-
-                    // this does the 32->24 squishing, using an assembler routine:
-                    nr_blit_pixblock_pixblock (&cb, &pb);
-                }
+            cb.visible_area = buf->visible_rect;
+            cairo_t *ct = nr_create_cairo_context (&area, &cb);
+            nr_arena_item_invoke_render (ct, arena->root, &area, &cb, 0);
 
                 cairo_surface_t *cst = cairo_get_target(ct);
                 cairo_destroy (ct);
                 cairo_surface_finish (cst);
                 cairo_surface_destroy (cst);
-            }
-
-            nr_pixblock_release (&pb);
-#else
-            cb.visible_area = buf->visible_rect;
-            nr_arena_item_invoke_render (NULL, arena->root, &area, &cb, 0);
-#endif
 
             nr_pixblock_release (&cb);
-        }
-    }
 }
 
 static double
