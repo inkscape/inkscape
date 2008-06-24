@@ -88,6 +88,7 @@ libinkpre_a_SOURCES =	\
 	help.cpp help.h	\
 	helper-fns.h \
 	icon-size.h \
+	id-clash.cpp id-clash.h	\
 	ige-mac-menu.h ige-mac-menu.c \
 	inkscape-stock.cpp inkscape-stock.h\
 	inkscape.cpp inkscape.h inkscape-private.h	\

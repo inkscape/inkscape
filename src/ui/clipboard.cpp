@@ -72,6 +72,7 @@
 #include "tools-switch.h"
 #include "libnr/n-art-bpath-2geom.h"
 #include "path-chemistry.h"
+#include "id-clash.h"
 
 /// @brief Made up mimetype to represent Gdk::Pixbuf clipboard contents
 #define CLIPBOARD_GDK_PIXBUF_TARGET "image/x-gdk-pixbuf"
@@ -787,29 +788,9 @@ void ClipboardManagerImpl::_pasteDefs(SPDocument *clipdoc)
         *target_defs = SP_OBJECT_REPR(SP_DOCUMENT_DEFS(target_document));
     Inkscape::XML::Document *target_xmldoc = sp_document_repr_doc(target_document);
 
+    prevent_id_clashes(clipdoc, target_document);
+    
     for (Inkscape::XML::Node *def = defs->firstChild() ; def ; def = def->next()) {
-        /// @todo TODO: implement def id collision resolution in ClipboardManagerImpl::_pasteDefs()
-
-        /*
-        // simplistic solution: when a collision occurs, add "a" to id until it's unique
-        Glib::ustring pasted_id = def->attribute("id");
-        if ( pasted_id.empty() ) continue; // defs without id are useless
-        Glib::ustring pasted_id_original = pasted_id;
-
-        while(sp_repr_lookup_child(target_defs, "id", pasted_id.data())) {
-            pasted_id.append("a");
-        }
-
-        if ( pasted_id != pasted_id_original ) {
-            def->setAttribute("id", pasted_id.data());
-            // Update the id in the rest of the document so there are no dangling references
-            // How to do that?
-            _changeIdReferences(clipdoc, pasted_id_original, pasted_id);
-        }
-        */
-        if (sp_repr_lookup_child(target_defs, "id", def->attribute("id")))
-            continue; // skip duplicate defs - temporary non-solution
-
         _copyNode(def, target_xmldoc, target_defs);
     }
 }

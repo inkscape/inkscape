@@ -147,6 +147,7 @@ gradient-context.cpp
 gradient-drag.cpp
 guide-snapper.cpp
 help.cpp
+id-clash.cpp
 ige-mac-menu.c
 ink-action.cpp
 inkscape.cpp
