@@ -16,6 +16,8 @@
 #include "libnr/nr-matrix-div.h"
 #include "libnr/nr-pixops.h"
 #include "sp-canvas-util.h"
+#include <string.h>  /* for memset */
+
 
 void
 sp_canvas_update_bbox (SPCanvasItem *item, int x1, int y1, int x2, int y2)
