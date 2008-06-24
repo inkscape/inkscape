@@ -18,13 +18,13 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include <livarot/Shape.h>
-#include <livarot/Path.h>
+#include "display/inkscape-cairo.h"
+#include "color.h"
 
 struct SPCtrlQuadr : public SPCanvasItem{
     guint32 rgba;
     NR::Point p1, p2, p3, p4;
-    Shape* shp;
+    NR::Matrix affine;    
 };
 
 struct SPCtrlQuadrClass : public SPCanvasItemClass{};
@@ -79,7 +79,6 @@ sp_ctrlquadr_init (SPCtrlQuadr *ctrlquadr)
     ctrlquadr->p2 = NR::Point(0, 0);
     ctrlquadr->p3 = NR::Point(0, 0);
     ctrlquadr->p4 = NR::Point(0, 0);
-    ctrlquadr->shp=NULL;
 }
 
 static void
@@ -88,13 +87,6 @@ sp_ctrlquadr_destroy (GtkObject *object)
     g_return_if_fail (object != NULL);
     g_return_if_fail (SP_IS_CTRLQUADR (object));
 
-    SPCtrlQuadr *ctrlquadr = SP_CTRLQUADR (object);
-
-    if (ctrlquadr->shp) {
-        delete ctrlquadr->shp;
-        ctrlquadr->shp = NULL;
-    }
-
     if (GTK_OBJECT_CLASS (parent_class)->destroy)
         (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
 }
@@ -102,26 +94,53 @@ sp_ctrlquadr_destroy (GtkObject *object)
 static void
 sp_ctrlquadr_render (SPCanvasItem *item, SPCanvasBuf *buf)
 {
-    SPCtrlQuadr *ctrlquadr = SP_CTRLQUADR (item);
+    SPCtrlQuadr *cq = SP_CTRLQUADR (item);
 
-    NRRectL  area;
-    area.x0=buf->rect.x0;
-    area.x1=buf->rect.x1;
-    area.y0=buf->rect.y0;
-    area.y1=buf->rect.y1;
+    NR::Rect area (NR::Point(buf->rect.x0, buf->rect.y0), NR::Point(buf->rect.x1, buf->rect.y1));
 
-    if (ctrlquadr->shp) {
-        sp_canvas_prepare_buffer (buf);
-        nr_pixblock_render_ctrl_rgba (ctrlquadr->shp,ctrlquadr->rgba,area,(char*)buf->buf, buf->buf_rowstride);
-    }
+    if (!buf->ct)
+        return;
+
+    // RGB / BGR
+    cairo_new_path(buf->ct);
+
+    NR::Point min = NR::Point(buf->rect.x0, buf->rect.y0);
+
+    NR::Point p1 = (cq->p1 * cq->affine) - min;
+    NR::Point p2 = (cq->p2 * cq->affine) - min;
+    NR::Point p3 = (cq->p3 * cq->affine) - min;
+    NR::Point p4 = (cq->p4 * cq->affine) - min;
+
+    cairo_move_to(buf->ct, p1[NR::X], p1[NR::Y]);
+    cairo_line_to(buf->ct, p2[NR::X], p2[NR::Y]);
+    cairo_line_to(buf->ct, p3[NR::X], p3[NR::Y]);
+    cairo_line_to(buf->ct, p4[NR::X], p4[NR::Y]);
+    cairo_line_to(buf->ct, p1[NR::X], p1[NR::Y]);
+
+    // FIXME: this is supposed to draw inverse but cairo apparently is unable of this trick :(
+    //cairo_set_operator (buf->ct, CAIRO_OPERATOR_XOR);
+
+    cairo_set_source_rgba(buf->ct, SP_RGBA32_B_F(cq->rgba), SP_RGBA32_G_F(cq->rgba), SP_RGBA32_R_F(cq->rgba), SP_RGBA32_A_F(cq->rgba));
+    cairo_fill(buf->ct);
 }
+
+#define MIN4(a,b,c,d)\
+   ((a <= b && a <= c && a <= d) ? a : \
+    (b <= a && b <= c && b <= d) ? b : \
+    (c <= a && c <= b && c <= d) ? c : \
+    d )
+
+#define MAX4(a,b,c,d)\
+   ((a >= b && a >= c && a >= d) ? a : \
+    (b >= a && b >= c && b >= d) ? b : \
+    (c >= a && c >= b && c >= d) ? c : \
+    d )
+
 
 static void
 sp_ctrlquadr_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
 {
-    NRRect dbox;
-
-    SPCtrlQuadr *cl = SP_CTRLQUADR (item);
+    SPCtrlQuadr *cq = SP_CTRLQUADR (item);
 
     sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 
@@ -130,41 +149,17 @@ sp_ctrlquadr_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int 
 
     sp_canvas_item_reset_bounds (item);
 
-    dbox.x0=dbox.x1=dbox.y0=dbox.y1=0;
-    if (cl->shp) {
-        delete cl->shp;
-        cl->shp = NULL;
-    }
-    Path* thePath = new Path;
-    thePath->MoveTo(cl->p1 * affine);
-    thePath->LineTo(cl->p2 * affine);
-    thePath->LineTo(cl->p3 * affine);
-    thePath->LineTo(cl->p4 * affine);
-    thePath->LineTo(cl->p1 * affine);
+    cq->affine = affine;
 
-    thePath->Convert(1.0);
-
-    if ( cl->shp == NULL ) cl->shp=new Shape;
-    thePath->Fill(cl->shp, 0);
-
-    cl->shp->CalcBBox();
-    if ( cl->shp->leftX < cl->shp->rightX ) {
-        if ( dbox.x0 >= dbox.x1 ) {
-            dbox.x0=cl->shp->leftX;dbox.x1=cl->shp->rightX;
-            dbox.y0=cl->shp->topY;dbox.y1=cl->shp->bottomY;
-        } else {
-            if ( cl->shp->leftX < dbox.x0 ) dbox.x0=cl->shp->leftX;
-            if ( cl->shp->rightX > dbox.x1 ) dbox.x1=cl->shp->rightX;
-            if ( cl->shp->topY < dbox.y0 ) dbox.y0=cl->shp->topY;
-            if ( cl->shp->bottomY > dbox.y1 ) dbox.y1=cl->shp->bottomY;
-        }
-    }
-    delete thePath;
-
-    item->x1 = (int)dbox.x0;
-    item->y1 = (int)dbox.y0;
-    item->x2 = (int)dbox.x1;
-    item->y2 = (int)dbox.y1;
+    NR::Point p1(cq->p1 * affine);
+    NR::Point p2(cq->p2 * affine);
+    NR::Point p3(cq->p3 * affine);
+    NR::Point p4(cq->p4 * affine);
+        
+    item->x1 = (int)(MIN4(p1[NR::X], p2[NR::X], p3[NR::X], p4[NR::X]));
+    item->y1 = (int)(MIN4(p1[NR::Y], p2[NR::Y], p3[NR::Y], p4[NR::Y]));
+    item->x2 = (int)(MAX4(p1[NR::X], p2[NR::X], p3[NR::X], p4[NR::X]));
+    item->y2 = (int)(MAX4(p1[NR::Y], p2[NR::Y], p3[NR::Y], p4[NR::Y]));
 
     sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 }
