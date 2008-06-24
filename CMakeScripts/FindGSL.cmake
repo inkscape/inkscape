@@ -6,7 +6,7 @@
 #  GSL_LIBRARIES - Link these to use GSL
 #  GSL_DEFINITIONS - Compiler switches required for using GSL
 #
-#  Copyright (c) 2008  Joshua L. Blocher <verbalshadow@gmail.com>
+#  Copyright (c) 2008 Joshua L. Blocher <verbalshadow@gmail.com>
 #
 #  Redistribution and use is allowed according to the terms of the New
 #  BSD license.
@@ -31,14 +31,13 @@ else (GSL_LIBRARIES AND GSL_INCLUDE_DIRS)
   endif (${CMAKE_MAJOR_VERSION} EQUAL 2 AND ${CMAKE_MINOR_VERSION} EQUAL 4)
   find_path(GSL_INCLUDE_DIR
     NAMES
-      gsl_matrix.h
+      gsl_blas.h
     PATHS
       ${_GSL_INCLUDEDIR}
       /usr/include
       /usr/local/include
       /opt/local/include
       /sw/include
-      $ENV{DEVLIBS_PATH}//include//
     PATH_SUFFIXES
       gsl
   )
