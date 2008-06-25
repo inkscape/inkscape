@@ -1816,6 +1816,9 @@ DialogVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_DIALOG_FILTER_EFFECTS:
             dt->_dlg_mgr->showDialog("FilterEffectsDialog");
             break;
+        case SP_VERB_DIALOG_SVG_FONTS:
+            dt->_dlg_mgr->showDialog("SvgFontsDialog");
+            break;
         default:
             break;
     }
@@ -2632,6 +2635,8 @@ Verb *Verb::_base_verbs[] = {
                    N_("Manage path effects"), NULL),
     new DialogVerb(SP_VERB_DIALOG_FILTER_EFFECTS, "DialogFilterEffects", N_("Filter Effects..."),
                    N_("Manage SVG filter effects"), NULL),
+    new DialogVerb(SP_VERB_DIALOG_SVG_FONTS, "DialogSVGFonts", N_("SVG Fonts..."),
+                   N_("Manage SVG fonts"), NULL),
 
     /* Help */
     new HelpVerb(SP_VERB_HELP_ABOUT_EXTENSIONS, "HelpAboutExtensions", N_("About E_xtensions"),

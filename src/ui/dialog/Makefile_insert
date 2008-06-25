@@ -52,6 +52,8 @@ ui_dialog_libuidialog_a_SOURCES =		\
 	ui/dialog/print.h			\
 	ui/dialog/scriptdialog.cpp		\
 	ui/dialog/scriptdialog.h		\
+	ui/dialog/svg-fonts-dialog.cpp	\
+	ui/dialog/svg-fonts-dialog.h		\
 	ui/dialog/text-properties.cpp		\
 	ui/dialog/text-properties.h		\
 	ui/dialog/tracedialog.cpp		\

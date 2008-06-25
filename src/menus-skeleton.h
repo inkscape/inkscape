@@ -162,6 +162,8 @@ static char const menus_skeleton[] =
 "       <verb verb-id=\"DialogFilterEffects\" />\n"
 "       <verb verb-id=\"RemoveFilter\" />\n"
 "       <separator/>\n"
+"       <verb verb-id=\"DialogSVGFonts\" />\n"
+"       <separator/>\n"
 "       <verb verb-id=\"SelectionGroup\" />\n"
 "       <verb verb-id=\"SelectionUnGroup\" />\n"
 "       <separator/>\n"
