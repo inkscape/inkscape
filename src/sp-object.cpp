@@ -1067,7 +1067,7 @@ sp_object_read_attr(SPObject *object, gchar const *key)
  * Callback for attr_changed node event.
  */
 static void
-sp_object_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gchar const */*oldval*/, gchar const */*newval*/, bool is_interactive, gpointer data)
+sp_object_repr_attr_changed(Inkscape::XML::Node */*repr*/, gchar const *key, gchar const */*oldval*/, gchar const */*newval*/, bool is_interactive, gpointer data)
 {
     SPObject *object = SP_OBJECT(data);
 
