@@ -43,6 +43,7 @@
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/svg-path.h>
 #include <2geom/svg-path-parser.h>
+#include <2geom/exception.h>
 
 /* This module parses an SVG path element into an RsvgBpathDef.
 
@@ -676,14 +677,18 @@ NArtBpath *sp_svg_read_path(gchar const *str)
 Geom::PathVector sp_svg_read_pathv(char const * str)
 {
     std::vector<Geom::Path> pathv;
+    if (!str)
+        return pathv;  // return empty pathvector when str == NULL
 
-    // TODO: enable this exception catching. don't catch now to better see when things go wrong
-//    try {
+    try {
         pathv = Geom::parse_svg_path(str);
-//    }
-//    catch (std::runtime_error e) {
-//        g_warning("SVGPathParseError: %s", e.what());
-//    }
+    }
+    catch (Geom::SVGPathParseError e) {
+        g_warning("SVGPathParseError: %s", e.what());
+        g_warning("svgd str: %s", str);
+        throw Geom::SVGPathParseError();      // rethrow, maybe not necessary, can instead return empty path?
+        return std::vector<Geom::Path>();
+    }
 
     return pathv;
 }
