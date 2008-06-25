@@ -147,7 +147,7 @@ void Messages::captureLogMessages()
         handlerGtkmm = g_log_set_handler("gtkmm", flags,
               dialogLoggingFunction, (gpointer)this);
     }
-    message("log capture started");
+    message((char*)"log capture started");
 }
 
 void Messages::releaseLogMessages()
@@ -176,7 +176,7 @@ void Messages::releaseLogMessages()
         g_log_remove_handler("gtkmm", handlerGtkmm);
         handlerGtkmm = 0;
     }
-    message("log capture discontinued");
+    message((char*)"log capture discontinued");
 }
 
 } //namespace Dialog

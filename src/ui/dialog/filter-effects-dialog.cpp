@@ -2213,7 +2213,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _k4 = _settings->add_spinslider(0, SP_ATTR_K4, _("K4"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
 
     _settings->type(NR_FILTER_CONVOLVEMATRIX);
-    _convolve_order = _settings->add_dualspinbutton("3", SP_ATTR_ORDER, _("Size"), 1, 5, 1, 1, 0, _("width of the convolve matrix"), _("height of the convolve matrix"));
+    _convolve_order = _settings->add_dualspinbutton((char*)"3", SP_ATTR_ORDER, _("Size"), 1, 5, 1, 1, 0, _("width of the convolve matrix"), _("height of the convolve matrix"));
     _convolve_target = _settings->add_multispinbutton(/*default x:*/ (double) 0, /*default y:*/ (double) 0, SP_ATTR_TARGETX, SP_ATTR_TARGETY, _("Target"), 0, 4, 1, 1, 0, _("X coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."), _("Y coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."));
     //TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
     _convolve_matrix = _settings->add_matrix(SP_ATTR_KERNELMATRIX, _("Kernel"), _("This matrix describes the convolve operation that is applied to the input image in order to calculate the pixel colors at the output. Different arrangements of values in this matrix result in various possible visual effects. An identity matrix would lead to a motion blur effect (parallel to the matrix diagonal) while a matrix filled with a constant non-zero value would lead to a common blur effect."));
