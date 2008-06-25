@@ -821,7 +821,7 @@ sp_item_invoke_bbox_full(SPItem const *item, NR::Maybe<NR::Rect> *bbox, NR::Matr
         
         // When x0 > x1 or y0 > y1, the bbox is considered to be "nothing", although it has not been 
         // explicitely defined this way for NRRects (as opposed to NR::Maybe<NR::Rect>)
-        *bbox = NR::Nothing();
+        // So union bbox with nothing = do nothing, just return
         return;
     }
 
