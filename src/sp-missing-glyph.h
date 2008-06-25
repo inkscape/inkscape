@@ -1,4 +1,7 @@
-#include "config.h"
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #ifdef ENABLE_SVG_FONTS
 #ifndef __SP_MISSING_GLYPH_H__
 #define __SP_MISSING_GLYPH_H__

@@ -1,4 +1,7 @@
-#include "config.h"
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #ifdef ENABLE_SVG_FONTS
 #define __SP_ANCHOR_C__
 
