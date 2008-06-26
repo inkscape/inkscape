@@ -21,6 +21,8 @@
 
 #include <gtkmm/liststore.h>
 #include <gtkmm/treeview.h>
+#include <gtkmm/entry.h>
+#include <gtkmm/box.h>
 
 using namespace Inkscape::UI::Widget;
 
@@ -55,7 +57,24 @@ private:
     };
     Glib::RefPtr<Gtk::ListStore> _model;
     Columns _columns;
-    Gtk::TreeView _list;
+    Gtk::TreeView _font_list;
+    Gtk::VBox _font_settings;
+    class EntryWidget : public Gtk::HBox
+        {
+        public:
+            EntryWidget()
+            {
+                this->add(this->_label);
+                this->add(this->_entry);
+            }
+            void set_label(const gchar* l){
+		this->_label.set_text(l);
+	    }
+        private:
+            Gtk::Label _label;
+            Gtk::Entry _entry;
+        };
+    EntryWidget _font_family, _font_variant;
 };
 
 } // namespace Dialog
