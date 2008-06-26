@@ -87,8 +87,6 @@ static gchar *sp_offset_description (SPItem * item);
 static void sp_offset_snappoints(SPItem const *item, SnapPointsIter p);
 static void sp_offset_set_shape (SPShape * shape);
 
-Path *bpath_to_liv_path (NArtBpath const * bpath);
-
 static void refresh_offset_source(SPOffset* offset);
 
 static void sp_offset_start_listening(SPOffset *offset,SPObject* to);
@@ -352,10 +350,8 @@ sp_offset_set(SPObject *object, unsigned key, gchar const *value)
                 offset->original = strdup (value);
 
                 Geom::PathVector pv = sp_svg_read_pathv(offset->original);
-                SPCurve *curve = new SPCurve(pv);         // fixme: translate this: curve se chargera de detruire bpath
-                g_assert (curve != NULL);
-                offset->originalPath = bpath_to_liv_path (SP_CURVE_BPATH(curve));
-                curve->unref();
+                offset->originalPath = new Path;
+                reinterpret_cast<Path *>(offset->originalPath)->LoadPathVector(pv);
 
                 offset->knotSet = false;
                 if ( offset->isUpdating == false ) object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -435,75 +431,6 @@ sp_offset_description(SPItem *item)
         return g_strdup_printf(_("<b>Dynamic offset</b>, %s by %f pt"),
                                (offset->rad >= 0)? _("outset") : _("inset"), fabs (offset->rad));
     }
-}
-
-/**
- * Converts an NArtBpath (like the one stored in a SPCurve) into a
- * livarot Path. Duplicate of splivarot.
- */
-Path *
-bpath_to_liv_path(NArtBpath const *bpath)
-{
-    if (bpath == NULL)
-        return NULL;
-
-    Path *dest = new Path;
-    dest->SetBackData (false);
-    {
-        int i;
-        bool closed = false;
-        float lastX = 0.0;
-        float lastY = 0.0;
-
-        for (i = 0; bpath[i].code != NR_END; i++)
-        {
-            switch (bpath[i].code)
-            {
-                case NR_LINETO:
-                    lastX = bpath[i].x3;
-                    lastY = bpath[i].y3;
-                    {
-                        NR::Point  tmp(lastX,lastY);
-                        dest->LineTo (tmp);
-                    }
-                    break;
-
-                case NR_CURVETO:
-                {
-                    NR::Point  tmp(bpath[i].x3, bpath[i].y3);
-                    NR::Point  tms;
-                    tms[0]=3 * (bpath[i].x1 - lastX);
-                    tms[1]=3 * (bpath[i].y1 - lastY);
-                    NR::Point  tme;
-                    tme[0]=3 * (bpath[i].x3 - bpath[i].x2);
-                    tme[1]= 3 * (bpath[i].y3 - bpath[i].y2);
-                    dest->CubicTo (tmp,tms,tme);
-                }
-                lastX = bpath[i].x3;
-                lastY = bpath[i].y3;
-                break;
-
-                case NR_MOVETO_OPEN:
-                case NR_MOVETO:
-                    if (closed)
-                        dest->Close ();
-                    closed = (bpath[i].code == NR_MOVETO);
-                    lastX = bpath[i].x3;
-                    lastY = bpath[i].y3;
-                    {
-                        NR::Point tmp(lastX,lastY);
-                        dest->MoveTo(tmp);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-        if (closed)
-            dest->Close ();
-    }
-
-    return dest;
 }
 
 /**
@@ -1030,13 +957,14 @@ sp_offset_top_point (SPOffset * offset, NR::Point *px)
         if (curve == NULL)
             return;
     }
-
-    Path *finalPath = bpath_to_liv_path (SP_CURVE_BPATH(curve));
-    if (finalPath == NULL)
+    if (curve->is_empty())
     {
         curve->unref();
         return;
     }
+
+    Path *finalPath = new Path;
+    finalPath->LoadPathVector(curve->get_pathvector());
 
     Shape *theShape = new Shape;
 
@@ -1155,7 +1083,6 @@ refresh_offset_source(SPOffset* offset)
 {
     if ( offset == NULL ) return;
     offset->sourceDirty=false;
-    Path *orig = NULL;
 
     // le mauvais cas: pas d'attribut d => il faut verifier que c'est une SPShape puis prendre le contour
     // The bad case: no d attribute.  Must check that it's an SPShape and then take the outline.
@@ -1173,9 +1100,10 @@ refresh_offset_source(SPOffset* offset)
     if (SP_IS_TEXT (item)) {
         curve = SP_TEXT (item)->getNormalizedBpath ();
         if (curve == NULL)
-	    return;
+        return;
     }
-    orig = bpath_to_liv_path (SP_CURVE_BPATH(curve));
+    Path *orig = new Path;
+    orig->LoadPathVector(curve->get_pathvector());
     curve->unref();
 
 

@@ -452,6 +452,8 @@ void  Path::LoadPath(Geom::Path const &path, Geom::Matrix const &tr, bool doTran
     if (path.empty())
         return;
 
+    // TODO: this can be optimized by not generating a new path here, but doing the transform in AddCurve
+    //       directly on the curve parameters
     Geom::Path const pathtr = doTransformation ? path * tr : path;
 
     MoveTo( from_2geom(pathtr.initialPoint()) );
@@ -463,6 +465,11 @@ void  Path::LoadPath(Geom::Path const &path, Geom::Matrix const &tr, bool doTran
     if (pathtr.closed()) {
         Close();
     }
+}
+
+void  Path::LoadPathVector(Geom::PathVector const &pv)
+{
+    LoadPathVector(pv, Geom::Matrix(), false);
 }
 
 void  Path::LoadPathVector(Geom::PathVector const &pv, Geom::Matrix const &tr, bool doTransformation)
