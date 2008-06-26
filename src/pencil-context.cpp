@@ -571,8 +571,7 @@ static void
 spdc_finish_endpoint(SPPencilContext *const pc)
 {
     if ( ( SP_CURVE_LENGTH(pc->red_curve) != 2 )
-         || ( SP_CURVE_SEGMENT(pc->red_curve, 0)->c(3) ==
-              SP_CURVE_SEGMENT(pc->red_curve, 1)->c(3)   ) )
+         || ( pc->red_curve->first_point() == pc->red_curve->second_point()   ) )
     {
         pc->red_curve->reset();
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), NULL);
