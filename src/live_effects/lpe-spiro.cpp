@@ -211,7 +211,7 @@ LPESpiro::doEffect(SPCurve * curve)
         g_warning("Exception during LPE Spiro execution. \n %s", e.what());
         SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
             _("An exception occurred during execution of the Spiro Path Effect.") );
-        curve->set_pathv(original_pathv);
+        curve->set_pathvector(original_pathv);
     }
 }
 

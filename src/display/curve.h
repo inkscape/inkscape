@@ -40,7 +40,7 @@ public:
 
     virtual ~SPCurve();
 
-    void set_pathv(Geom::PathVector const & new_pathv);
+    void set_pathvector(Geom::PathVector const & new_pathv);
     NArtBpath const * get_bpath() const;
     Geom::PathVector const & get_pathvector() const;
 

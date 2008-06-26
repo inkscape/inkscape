@@ -226,7 +226,7 @@ SPCurve::~SPCurve()
 /* Methods */
 
 void
-SPCurve::set_pathv(Geom::PathVector const & new_pathv)
+SPCurve::set_pathvector(Geom::PathVector const & new_pathv)
 {
     _pathv = new_pathv;
 
@@ -251,7 +251,7 @@ SPCurve::set_pathv(Geom::PathVector const & new_pathv)
     _substart = i;
     _closed = sp_bpath_closed(_bpath);
 
-    debug_check("SPCurve::set_pathv", this);
+    debug_check("SPCurve::set_pathvector", this);
 }
 
 /**

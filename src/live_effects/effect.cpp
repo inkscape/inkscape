@@ -304,7 +304,7 @@ Effect::doEffect (SPCurve * curve)
 
     std::vector<Geom::Path> result_pathv = doEffect_path(orig_pathv);
 
-    curve->set_pathv(result_pathv);
+    curve->set_pathvector(result_pathv);
 }
 
 std::vector<Geom::Path>
