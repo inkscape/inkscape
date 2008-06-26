@@ -341,8 +341,8 @@ void sp_nodepath_ensure_livarot_path(Inkscape::NodePath::Path *np)
 {
     if (np && np->livarot_path == NULL) {
         SPCurve *curve = create_curve(np);
-        NArtBpath const *bpath = SP_CURVE_BPATH(curve);
-        np->livarot_path = bpath_to_Path(bpath);
+        np->livarot_path = new Path;
+        np->livarot_path->LoadPathVector(curve->get_pathvector(), Geom::Matrix(), false);
 
         if (np->livarot_path)
             np->livarot_path->ConvertWithBackData(0.01);
