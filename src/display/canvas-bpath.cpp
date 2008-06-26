@@ -118,15 +118,12 @@ sp_canvas_bpath_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
 
     cbp->affine = affine;
 
-    const_NRBPath bp;
-    bp.path = cbp->curve->get_bpath();
-    NRRect bbox;
-    nr_path_matrix_bbox_union(&bp, affine, &bbox);
+    Geom::Rect bbox = bounds_exact_transformed(cbp->curve->get_pathvector(), to_2geom(affine));
 
-    item->x1 = (int)bbox.x0 - 1;
-    item->y1 = (int)bbox.y0 - 1;
-    item->x2 = (int)bbox.x1 + 1;
-    item->y2 = (int)bbox.y1 + 1;
+    item->x1 = (int)bbox.min()[Geom::X] - 1;
+    item->y1 = (int)bbox.min()[Geom::Y] - 1;
+    item->x2 = (int)bbox.max()[Geom::X] + 1;
+    item->y2 = (int)bbox.max()[Geom::Y] + 1;
 
     sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 }
