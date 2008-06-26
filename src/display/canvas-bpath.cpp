@@ -26,6 +26,7 @@
 #include <libnr/nr-pixops.h>
 #include <libnr/nr-convert2geom.h>
 #include <libnr/nr-path.h>
+#include "helper/geom.h"
 
 void nr_pixblock_render_bpath_rgba (Shape* theS,uint32_t color,NRRectL &area,char* destBuf,int stride);
 
@@ -182,19 +183,16 @@ sp_canvas_bpath_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_it
 {
     SPCanvasBPath *cbp = SP_CANVAS_BPATH (item);
 
-    const_NRBPath bp;
     if ( !cbp->curve  || 
          ((cbp->stroke_rgba & 0xff) == 0 && (cbp->fill_rgba & 0xff) == 0 ) || 
          cbp->curve->get_length() <= 1)
         return NR_HUGE;
 
-    bp.path = cbp->curve->get_bpath();
-
     double width = 0.5;
     NR::Rect viewbox = item->canvas->getViewbox();
         viewbox.growBy (width);
     double dist = NR_HUGE;
-    nr_path_matrix_point_bbox_wind_distance(&bp, cbp->affine, p, NULL, NULL, &dist, 0.5, &viewbox);
+    pathv_matrix_point_bbox_wind_distance(cbp->curve->get_pathvector(), cbp->affine, p, NULL, NULL, &dist, 0.5, &viewbox);
 
     if (dist <= 1.0) {
         *actual_item = item;

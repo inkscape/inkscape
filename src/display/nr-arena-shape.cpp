@@ -1086,8 +1086,6 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
         width = 0;
     }
 
-    const_NRBPath bp;
-    bp.path = SP_CURVE_BPATH(shape->curve);
     double dist = NR_HUGE;
     int wind = 0;
     bool needfill = (shape->_fill.paint.type() != NRArenaShape::Paint::NONE 
@@ -1096,9 +1094,9 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
     if (item->arena->canvasarena) {
         NR::Rect viewbox = item->arena->canvasarena->item.canvas->getViewbox();
         viewbox.growBy (width);
-        nr_path_matrix_point_bbox_wind_distance(&bp, shape->ctm, p, NULL, needfill? &wind : NULL, &dist, 0.5, &viewbox);
+        pathv_matrix_point_bbox_wind_distance(shape->curve->get_pathvector(), shape->ctm, p, NULL, needfill? &wind : NULL, &dist, 0.5, &viewbox);
     } else {
-        nr_path_matrix_point_bbox_wind_distance(&bp, shape->ctm, p, NULL, needfill? &wind : NULL, &dist, 0.5, NULL);
+        pathv_matrix_point_bbox_wind_distance(shape->curve->get_pathvector(), shape->ctm, p, NULL, needfill? &wind : NULL, &dist, 0.5, NULL);
     }
 
     g_get_current_time (&tfinish);
