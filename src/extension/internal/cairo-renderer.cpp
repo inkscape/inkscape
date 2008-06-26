@@ -181,13 +181,11 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
     SPStyle* style = SP_OBJECT_STYLE (item);
     CairoRenderer *renderer = ctx->getRenderer();
 
-    const_NRBPath bp;
-    bp.path = SP_CURVE_BPATH(shape->curve);
+    Geom::PathVector const & pathv = shape->curve->get_pathvector();
 
-    ctx->renderPath(&bp, style, &pbox);
+    ctx->renderPathVector(pathv, style, &pbox);
 
     /* TODO: make code prettier: lots of variables can be taken out of the loop! */
-    Geom::PathVector const & pathv = shape->curve->get_pathvector();
     for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
         if ( shape->marker[SP_MARKER_LOC_START] ) {
             SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_START]);
