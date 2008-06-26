@@ -14,10 +14,21 @@
 #include "helper/geom.h"
 
 #include <2geom/pathvector.h>
+#include <2geom/path.h>
 #include <2geom/transforms.h>
 #include <2geom/rect.h>
 #include <2geom/coord.h>
+#include <2geom/sbasis-to-bezier.h>
+#include <libnr/nr-convert2geom.h>
 #include <glibmm.h>
+
+using Geom::X;
+using Geom::Y;
+
+#define NR_HUGE   1e18
+
+//#################################################################################
+// BOUNDING BOX CALCULATIONS
 
 /* Fast bbox calculation */
 /* Thanks to Nathan Hurst for suggesting it */
@@ -177,6 +188,299 @@ bounds_exact_transformed(Geom::PathVector const & pv, Geom::Matrix const & t)
     //return Geom::bounds_exact(pv * t);
     return bbox;
 }
+
+
+
+static void
+geom_line_wind_distance (Geom::Coord x0, Geom::Coord y0, Geom::Coord x1, Geom::Coord y1, Geom::Point &pt, int *wind, Geom::Coord *best)
+{
+    Geom::Coord Ax, Ay, Bx, By, Dx, Dy, s;
+    Geom::Coord dist2;
+
+    /* Find distance */
+    Ax = x0;
+    Ay = y0;
+    Bx = x1;
+    By = y1;
+    Dx = x1 - x0;
+    Dy = y1 - y0;
+    const Geom::Coord Px = pt[X];
+    const Geom::Coord Py = pt[Y];
+
+    if (best) {
+        s = ((Px - Ax) * Dx + (Py - Ay) * Dy) / (Dx * Dx + Dy * Dy);
+        if (s <= 0.0) {
+            dist2 = (Px - Ax) * (Px - Ax) + (Py - Ay) * (Py - Ay);
+        } else if (s >= 1.0) {
+            dist2 = (Px - Bx) * (Px - Bx) + (Py - By) * (Py - By);
+        } else {
+            Geom::Coord Qx, Qy;
+            Qx = Ax + s * Dx;
+            Qy = Ay + s * Dy;
+            dist2 = (Px - Qx) * (Px - Qx) + (Py - Qy) * (Py - Qy);
+        }
+
+        if (dist2 < (*best * *best)) *best = sqrt (dist2);
+    }
+
+    if (wind) {
+        /* Find wind */
+        if ((Ax >= Px) && (Bx >= Px)) return;
+        if ((Ay >= Py) && (By >= Py)) return;
+        if ((Ay < Py) && (By < Py)) return;
+        if (Ay == By) return;
+        /* Ctach upper y bound */
+        if (Ay == Py) {
+            if (Ax < Px) *wind -= 1;
+            return;
+        } else if (By == Py) {
+            if (Bx < Px) *wind += 1;
+            return;
+        } else {
+            Geom::Coord Qx;
+            /* Have to calculate intersection */
+            Qx = Ax + Dx * (Py - Ay) / Dy;
+            if (Qx < Px) {
+                *wind += (Dy > 0.0) ? 1 : -1;
+            }
+        }
+    }
+}
+
+static void
+geom_cubic_bbox_wind_distance (Geom::Coord x000, Geom::Coord y000,
+                 Geom::Coord x001, Geom::Coord y001,
+                 Geom::Coord x011, Geom::Coord y011,
+                 Geom::Coord x111, Geom::Coord y111,
+                 Geom::Point &pt,
+                 Geom::Rect *bbox, int *wind, Geom::Coord *best,
+                 Geom::Coord tolerance)
+{
+    Geom::Coord x0, y0, x1, y1, len2;
+    int needdist, needwind, needline;
+
+    const Geom::Coord Px = pt[X];
+    const Geom::Coord Py = pt[Y];
+
+    needdist = 0;
+    needwind = 0;
+    needline = 0;
+
+    if (bbox) cubic_bbox (x000, y000, x001, y001, x011, y011, x111, y111, *bbox);
+
+    x0 = MIN (x000, x001);
+    x0 = MIN (x0, x011);
+    x0 = MIN (x0, x111);
+    y0 = MIN (y000, y001);
+    y0 = MIN (y0, y011);
+    y0 = MIN (y0, y111);
+    x1 = MAX (x000, x001);
+    x1 = MAX (x1, x011);
+    x1 = MAX (x1, x111);
+    y1 = MAX (y000, y001);
+    y1 = MAX (y1, y011);
+    y1 = MAX (y1, y111);
+
+    if (best) {
+        /* Quickly adjust to endpoints */
+        len2 = (x000 - Px) * (x000 - Px) + (y000 - Py) * (y000 - Py);
+        if (len2 < (*best * *best)) *best = (Geom::Coord) sqrt (len2);
+        len2 = (x111 - Px) * (x111 - Px) + (y111 - Py) * (y111 - Py);
+        if (len2 < (*best * *best)) *best = (Geom::Coord) sqrt (len2);
+
+        if (((x0 - Px) < *best) && ((y0 - Py) < *best) && ((Px - x1) < *best) && ((Py - y1) < *best)) {
+            /* Point is inside sloppy bbox */
+            /* Now we have to decide, whether subdivide */
+            /* fixme: (Lauris) */
+            if (((y1 - y0) > 5.0) || ((x1 - x0) > 5.0)) {
+                needdist = 1;
+            } else {
+                needline = 1;
+            }
+        }
+    }
+    if (!needdist && wind) {
+        if ((y1 >= Py) && (y0 < Py) && (x0 < Px)) {
+            /* Possible intersection at the left */
+            /* Now we have to decide, whether subdivide */
+            /* fixme: (Lauris) */
+            if (((y1 - y0) > 5.0) || ((x1 - x0) > 5.0)) {
+                needwind = 1;
+            } else {
+                needline = 1;
+            }
+        }
+    }
+
+    if (needdist || needwind) {
+        Geom::Coord x00t, x0tt, xttt, x1tt, x11t, x01t;
+        Geom::Coord y00t, y0tt, yttt, y1tt, y11t, y01t;
+        Geom::Coord s, t;
+
+        t = 0.5;
+        s = 1 - t;
+
+        x00t = s * x000 + t * x001;
+        x01t = s * x001 + t * x011;
+        x11t = s * x011 + t * x111;
+        x0tt = s * x00t + t * x01t;
+        x1tt = s * x01t + t * x11t;
+        xttt = s * x0tt + t * x1tt;
+
+        y00t = s * y000 + t * y001;
+        y01t = s * y001 + t * y011;
+        y11t = s * y011 + t * y111;
+        y0tt = s * y00t + t * y01t;
+        y1tt = s * y01t + t * y11t;
+        yttt = s * y0tt + t * y1tt;
+
+        geom_cubic_bbox_wind_distance (x000, y000, x00t, y00t, x0tt, y0tt, xttt, yttt, pt, NULL, wind, best, tolerance);
+        geom_cubic_bbox_wind_distance (xttt, yttt, x1tt, y1tt, x11t, y11t, x111, y111, pt, NULL, wind, best, tolerance);
+    } else if (1 || needline) {
+        geom_line_wind_distance (x000, y000, x111, y111, pt, wind, best);
+    }
+}
+
+static void
+geom_curve_bbox_wind_distance(Geom::Curve const * c, Geom::Matrix const &m,
+                 Geom::Point &pt,
+                 Geom::Rect *bbox, int *wind, Geom::Coord *dist,
+                 Geom::Coord tolerance, Geom::Rect *viewbox,
+                 Geom::Point &p0) // pass p0 through as it represents the last endpoint added (the finalPoint of last curve)
+{
+    if(Geom::LineSegment const *line_segment = dynamic_cast<Geom::LineSegment const  *>(c)) {   // TODO: make it work for HLineSegment too! (use finalPoint)
+        Geom::Point pe = (*line_segment)[1] * m;
+        if (bbox) {
+            bbox->expandTo(pe);
+        }
+        if (dist || wind) {
+            if (wind) { // we need to pick fill, so do what we're told
+                geom_line_wind_distance (p0[X], p0[Y], pe[X], pe[Y], pt, wind, dist);
+            } else { // only stroke is being picked; skip this segment if it's totally outside the viewbox
+                Geom::Rect swept(p0, pe);
+                if (!viewbox || swept.intersects(*viewbox))
+                    geom_line_wind_distance (p0[X], p0[Y], pe[X], pe[Y], pt, wind, dist);
+            }
+        }
+        p0 = pe;
+    }
+    else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const  *>(c)) {
+        Geom::Point p1 = (*cubic_bezier)[1] * m;
+        Geom::Point p2 = (*cubic_bezier)[2] * m;
+        Geom::Point p3 = (*cubic_bezier)[3] * m;
+
+        // get approximate bbox from handles (convex hull property of beziers):
+        Geom::Rect swept(p0, p3);
+        swept.expandTo(p1);
+        swept.expandTo(p2);
+
+        if (!viewbox || swept.intersects(*viewbox)) { // we see this segment, so do full processing
+            geom_cubic_bbox_wind_distance ( p0[X], p0[Y],
+                                            p1[X], p1[Y],
+                                            p2[X], p2[Y],
+                                            p3[X], p3[Y],
+                                            pt,
+                                            bbox, wind, dist, tolerance);
+        } else {
+            if (wind) { // if we need fill, we can just pretend it's a straight line
+                geom_line_wind_distance (p0[X], p0[Y], p3[X], p3[Y], pt, wind, dist);
+            } else { // otherwise, skip it completely
+            }
+        }
+        p0 = p3;
+    } else { 
+        //this case handles sbasis as well as all other curve types
+        Geom::Path sbasis_path = Geom::path_from_sbasis(c->toSBasis(), 0.1);
+
+        //recurse to convert the new path resulting from the sbasis to svgd
+        for(Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {
+            geom_curve_bbox_wind_distance(&(*iter), m, pt, bbox, wind, dist, tolerance, viewbox, p0);
+        }
+    }
+}
+
+/* Calculates...
+   and returns ... in *wind and the distance to ... in *dist.
+   Returns bounding box in *bbox if bbox!=NULL.
+ */
+void
+pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, Geom::Matrix const &m, Geom::Point &pt,
+                         Geom::Rect *bbox, int *wind, Geom::Coord *dist,
+                         Geom::Coord tolerance, Geom::Rect *viewbox)
+{
+    if (pathv.empty()) {
+        if (wind) *wind = 0;
+        if (dist) *dist = NR_HUGE;
+        return;
+    }
+
+    // remember last point of last curve
+    Geom::Point p0(0,0);
+
+    // remembering the start of subpath
+    Geom::Point p_start(0,0);
+    bool start_set = false;
+
+    for (Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it) {
+
+        if (start_set) { // this is a new subpath
+            if (wind && (p0 != p_start)) // for correct fill picking, each subpath must be closed
+                geom_line_wind_distance (p0[X], p0[Y], p_start[X], p_start[Y], pt, wind, dist);
+        }
+        p0 = it->initialPoint() * m;
+        p_start = p0;
+        start_set = true;
+        if (bbox) {
+            bbox->expandTo(p0);
+        }
+
+        // loop including closing segment if path is closed
+        for (Geom::Path::const_iterator cit = it->begin(); cit != it->end_default(); ++cit) {
+            geom_curve_bbox_wind_distance(&*cit, m, pt, bbox, wind, dist, tolerance, viewbox, p0);
+        }
+    }
+
+    if (start_set) { 
+        if (wind && (p0 != p_start)) // for correct picking, each subpath must be closed
+            geom_line_wind_distance (p0[X], p0[Y], p_start[X], p_start[Y], pt, wind, dist);
+    }
+}
+
+// temporary wrapper
+void
+pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, NR::Matrix const &m, NR::Point &pt,
+                         NR::Rect *bbox, int *wind, NR::Coord *dist,
+                         NR::Coord tolerance, NR::Rect *viewbox)
+{
+    Geom::Point _pt(to_2geom(pt));
+    Geom::Rect _bbox;
+    if (bbox)
+        _bbox = to_2geom(*bbox);
+    Geom::Coord _dist;
+    if (dist)
+        _dist = *dist;
+    Geom::Rect _viewbox;
+    if (viewbox)
+        _viewbox = to_2geom(*viewbox);
+
+    pathv_matrix_point_bbox_wind_distance( pathv, to_2geom(m), _pt,
+                                           bbox ? &_bbox : NULL,
+                                           wind,
+                                           dist ? &_dist : NULL,
+                                           tolerance,
+                                           viewbox ? &_viewbox : NULL );
+
+    if (bbox)
+        *bbox = from_2geom(_bbox);
+    if (dist)
+        *dist = _dist;
+    if (viewbox)
+        *viewbox = from_2geom(_viewbox);
+}
+//#################################################################################
+
+
+
 
 /*
   Local Variables:
