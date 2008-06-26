@@ -345,7 +345,7 @@ static void
 geom_curve_bbox_wind_distance(Geom::Curve const * c, Geom::Matrix const &m,
                  Geom::Point const &pt,
                  Geom::Rect *bbox, int *wind, Geom::Coord *dist,
-                 Geom::Coord tolerance, Geom::Rect *viewbox,
+                 Geom::Coord tolerance, Geom::Rect const *viewbox,
                  Geom::Point &p0) // pass p0 through as it represents the last endpoint added (the finalPoint of last curve)
 {
     if(Geom::LineSegment const *line_segment = dynamic_cast<Geom::LineSegment const  *>(c)) {   // TODO: make it work for HLineSegment too! (use finalPoint)
@@ -406,7 +406,7 @@ geom_curve_bbox_wind_distance(Geom::Curve const * c, Geom::Matrix const &m,
 void
 pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, Geom::Matrix const &m, Geom::Point const &pt,
                          Geom::Rect *bbox, int *wind, Geom::Coord *dist,
-                         Geom::Coord tolerance, Geom::Rect *viewbox)
+                         Geom::Coord tolerance, Geom::Rect const *viewbox)
 {
     if (pathv.empty()) {
         if (wind) *wind = 0;
@@ -450,7 +450,7 @@ pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, Geom::Mat
 void
 pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, NR::Matrix const &m, NR::Point const &pt,
                          NR::Rect *bbox, int *wind, NR::Coord *dist,
-                         NR::Coord tolerance, NR::Rect *viewbox)
+                         NR::Coord tolerance, NR::Rect const *viewbox)
 {
     Geom::Rect _bbox;
     if (bbox)
@@ -473,8 +473,6 @@ pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, NR::Matri
         *bbox = from_2geom(_bbox);
     if (dist)
         *dist = _dist;
-    if (viewbox)
-        *viewbox = from_2geom(_viewbox);
 }
 //#################################################################################
 
