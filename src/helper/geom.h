@@ -19,10 +19,10 @@
 Geom::Rect bounds_fast_transformed(Geom::PathVector const & pv, Geom::Matrix const & t);
 Geom::Rect bounds_exact_transformed(Geom::PathVector const & pv, Geom::Matrix const & t);
 
-void pathv_matrix_point_bbox_wind_distance ( Geom::PathVector const & pathv, NR::Matrix const &m, NR::Point &pt,
+void pathv_matrix_point_bbox_wind_distance ( Geom::PathVector const & pathv, NR::Matrix const &m, NR::Point const &pt,
                                              NR::Rect *bbox, int *wind, NR::Coord *dist,
                                              NR::Coord tolerance, NR::Rect *viewbox) __attribute__ ((deprecated));
-void pathv_matrix_point_bbox_wind_distance ( Geom::PathVector const & pathv, Geom::Matrix const &m, Geom::Point &pt,
+void pathv_matrix_point_bbox_wind_distance ( Geom::PathVector const & pathv, Geom::Matrix const &m, Geom::Point const &pt,
                                              Geom::Rect *bbox, int *wind, Geom::Coord *dist,
                                              Geom::Coord tolerance, Geom::Rect *viewbox);
 

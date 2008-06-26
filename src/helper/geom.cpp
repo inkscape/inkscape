@@ -192,7 +192,7 @@ bounds_exact_transformed(Geom::PathVector const & pv, Geom::Matrix const & t)
 
 
 static void
-geom_line_wind_distance (Geom::Coord x0, Geom::Coord y0, Geom::Coord x1, Geom::Coord y1, Geom::Point &pt, int *wind, Geom::Coord *best)
+geom_line_wind_distance (Geom::Coord x0, Geom::Coord y0, Geom::Coord x1, Geom::Coord y1, Geom::Point const &pt, int *wind, Geom::Coord *best)
 {
     Geom::Coord Ax, Ay, Bx, By, Dx, Dy, s;
     Geom::Coord dist2;
@@ -252,7 +252,7 @@ geom_cubic_bbox_wind_distance (Geom::Coord x000, Geom::Coord y000,
                  Geom::Coord x001, Geom::Coord y001,
                  Geom::Coord x011, Geom::Coord y011,
                  Geom::Coord x111, Geom::Coord y111,
-                 Geom::Point &pt,
+                 Geom::Point const &pt,
                  Geom::Rect *bbox, int *wind, Geom::Coord *best,
                  Geom::Coord tolerance)
 {
@@ -343,7 +343,7 @@ geom_cubic_bbox_wind_distance (Geom::Coord x000, Geom::Coord y000,
 
 static void
 geom_curve_bbox_wind_distance(Geom::Curve const * c, Geom::Matrix const &m,
-                 Geom::Point &pt,
+                 Geom::Point const &pt,
                  Geom::Rect *bbox, int *wind, Geom::Coord *dist,
                  Geom::Coord tolerance, Geom::Rect *viewbox,
                  Geom::Point &p0) // pass p0 through as it represents the last endpoint added (the finalPoint of last curve)
@@ -404,7 +404,7 @@ geom_curve_bbox_wind_distance(Geom::Curve const * c, Geom::Matrix const &m,
    Returns bounding box in *bbox if bbox!=NULL.
  */
 void
-pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, Geom::Matrix const &m, Geom::Point &pt,
+pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, Geom::Matrix const &m, Geom::Point const &pt,
                          Geom::Rect *bbox, int *wind, Geom::Coord *dist,
                          Geom::Coord tolerance, Geom::Rect *viewbox)
 {
@@ -448,11 +448,10 @@ pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, Geom::Mat
 
 // temporary wrapper
 void
-pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, NR::Matrix const &m, NR::Point &pt,
+pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, NR::Matrix const &m, NR::Point const &pt,
                          NR::Rect *bbox, int *wind, NR::Coord *dist,
                          NR::Coord tolerance, NR::Rect *viewbox)
 {
-    Geom::Point _pt(to_2geom(pt));
     Geom::Rect _bbox;
     if (bbox)
         _bbox = to_2geom(*bbox);
@@ -463,7 +462,7 @@ pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, NR::Matri
     if (viewbox)
         _viewbox = to_2geom(*viewbox);
 
-    pathv_matrix_point_bbox_wind_distance( pathv, to_2geom(m), _pt,
+    pathv_matrix_point_bbox_wind_distance( pathv, to_2geom(m), to_2geom(pt),
                                            bbox ? &_bbox : NULL,
                                            wind,
                                            dist ? &_dist : NULL,
