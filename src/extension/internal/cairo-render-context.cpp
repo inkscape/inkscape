@@ -34,6 +34,8 @@
 #include <libnr/nr-matrix-scale-ops.h>
 #include <libnr/nr-matrix-translate-ops.h>
 #include <libnr/nr-scale-matrix-ops.h>
+#include <libnr/n-art-bpath-2geom.h>
+#include <2geom/pathvector.h>
 
 #include <glib/gmem.h>
 
@@ -1242,6 +1244,17 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, NRRect const *pbox)
     }
     cairo_set_line_cap(_cr, cap);
     cairo_set_miter_limit(_cr, MAX(1, style->stroke_miterlimit.value));
+}
+
+bool
+CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle const *style, NRRect const *pbox)
+{
+    NArtBpath * bpath = BPath_from_2GeomPath (pathv);
+    const_NRBPath *bp;
+    bp->path = bpath;
+    bool retvalue = renderPath(bp, style, pbox);
+    g_free(bpath);
+    return retvalue;
 }
 
 bool

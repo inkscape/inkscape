@@ -23,6 +23,7 @@
 
 #include "libnr/nr-path.h"
 #include <libnr/nr-matrix-ops.h>
+#include <2geom/forward.h>
 
 #include "style.h"
 
@@ -136,6 +137,7 @@ public:
     void addClippingRect(double x, double y, double width, double height);
 
     /* Rendering methods */
+    bool renderPathVector(Geom::PathVector const & pathv, SPStyle const *style, NRRect const *pbox);
     bool renderPath(const_NRBPath const *bpath, SPStyle const *style, NRRect const *pbox);
     bool renderImage(unsigned char *px, unsigned int w, unsigned int h, unsigned int rs,
                      NR::Matrix const *image_transform, SPStyle const *style);
