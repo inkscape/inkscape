@@ -189,10 +189,10 @@ sp_canvas_bpath_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_it
         return NR_HUGE;
 
     double width = 0.5;
-    NR::Rect viewbox = item->canvas->getViewbox();
-        viewbox.growBy (width);
+    Geom::Rect viewbox = to_2geom(item->canvas->getViewbox());
+    viewbox.expandBy (width);
     double dist = NR_HUGE;
-    pathv_matrix_point_bbox_wind_distance(cbp->curve->get_pathvector(), cbp->affine, p, NULL, NULL, &dist, 0.5, &viewbox);
+    pathv_matrix_point_bbox_wind_distance(cbp->curve->get_pathvector(), to_2geom(cbp->affine), to_2geom(p), NULL, NULL, &dist, 0.5, &viewbox);
 
     if (dist <= 1.0) {
         *actual_item = item;
