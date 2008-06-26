@@ -33,7 +33,9 @@
 #include "ui/dialog/memory.h"
 #include "ui/dialog/messages.h"
 #include "ui/dialog/scriptdialog.h"
+#ifdef ENABLE_SVG_FONTS
 #include "ui/dialog/svg-fonts-dialog.h"
+#endif // ENABLE_SVG_FONTS
 #include "ui/dialog/text-properties.h"
 #include "ui/dialog/tracedialog.h"
 #include "ui/dialog/transformation.h"

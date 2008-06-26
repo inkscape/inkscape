@@ -3,7 +3,6 @@
 #endif
 
 #ifdef ENABLE_SVG_FONTS
-#define __SP_FONT_C__
 
 /*
  * SVG <font> element implementation

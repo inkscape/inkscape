@@ -2,9 +2,8 @@
 # include <config.h>
 #endif
 
-#ifdef ENABLE_SVG_FONTS
-#ifndef __SP_FONT_H__
-#define __SP_FONT_H__
+#ifndef SP_FONT_H_SEEN
+#define SP_FONT_H_SEEN
 
 /*
  * SVG <font> element implementation
@@ -35,10 +34,9 @@ struct SPFont : public SPObject {
 };
 
 struct SPFontClass {
-	SPObjectClass parent_class;
+    SPObjectClass parent_class;
 };
 
 GType sp_font_get_type (void);
 
-#endif //#ifndef __SP_FONT_H__
-#endif //#ifdef ENABLE_SVG_FONTS
+#endif //#ifndef SP_FONT_H_SEEN

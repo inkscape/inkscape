@@ -24,7 +24,7 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/box.h>
 
-using namespace Inkscape::UI::Widget;
+struct SPFont;
 
 namespace Inkscape {
 namespace UI {

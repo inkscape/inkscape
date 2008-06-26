@@ -1,7 +1,6 @@
 #include "config.h"
-#ifdef ENABLE_SVG_FONTS
-#ifndef __SVGFONTS_H__
-#define __SVGFONTS_H__
+#ifndef NR_SVGFONTS_H_SEEN
+#define NR_SVGFONTS_H_SEEN
 /*
  * SVGFonts rendering headear
  *
@@ -14,7 +13,6 @@
  * Read the file 'COPYING' for more information.
  */
 
-#include "../sp-font.h"
 #include "cairo.h"
 #include <gtkmm.h>
 
@@ -29,6 +27,7 @@
 #include "../sp-glyph-kerning.h"
 
 class SvgFont;
+struct SPFont;
 
 class UserFont{
 public:
@@ -53,6 +52,4 @@ SPMissingGlyph* missingglyph;
 bool drawing_expose_cb (Gtk::Widget *widget, GdkEventExpose *event, gpointer data);
 };
 
-#endif //#ifndef __SVGFONTS_H__
-#endif //#ifdef ENABLE_SVG_FONTS
-
+#endif //#ifndef NR_SVGFONTS_H_SEEN
