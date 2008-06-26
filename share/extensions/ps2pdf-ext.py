@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 import sys
 from run_command import run
 
-#run('pstoedit -f plot-svg -dt -ssp "%s" "%%s"' % sys.argv[1], "pstoedit")
-run('ps2pdf "%s" "%%s"' % sys.argv[1], "ps2pdf")
+run('ps2pdf "%s" "%%s"' % sys.argv[1].replace("%","%%"), "ps2pdf")
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

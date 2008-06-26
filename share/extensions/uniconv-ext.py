@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 import sys
 from run_command import run
 
-run('uniconv "%s" "%%s"' % sys.argv[1], "UniConvertor")
+run('uniconv "%s" "%%s"' % sys.argv[1].replace("%","%%"), "UniConvertor")
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
