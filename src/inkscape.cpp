@@ -653,8 +653,7 @@ inkscape_crash_handler (int /*signum*/)
                 savednames = g_slist_prepend (savednames, g_strdup (c));
                 fclose (file);
             } else {
-                docname = repr->attribute("sodipodi:docname");
-                failednames = g_slist_prepend (failednames, (docname) ? g_strdup (docname) : g_strdup (_("Untitled document")));
+                failednames = g_slist_prepend (failednames, (doc->name) ? g_strdup (doc->name) : g_strdup (_("Untitled document")));
             }
             count++;
         }
