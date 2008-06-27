@@ -3,7 +3,7 @@
     <_name>XFIG Input</_name>
     <id>org.inkscape.input.fig</id>
     <dependency type="executable" location="path">fig2dev</dependency>
-    <dependency type="executable" location="extensions">fig2svg.sh</dependency>
+    <dependency type="executable" location="extensions">fig2dev-ext.py</dependency>
     <input>
         <extension>.fig</extension>
         <mimetype>image/x-xfig</mimetype>
@@ -12,6 +12,6 @@
         <output_extension>org.inkscape.output.fig</output_extension>
     </input>
     <script>
-        <command reldir="extensions">fig2svg.sh</command>
+        <command reldir="extensions" interpreter="python">fig2dev-ext.py</command>
     </script>
 </inkscape-extension>

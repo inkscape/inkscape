@@ -50,7 +50,7 @@ extensions = \
 	export_gimp_palette.py \
 	extractimage.py \
 	ffgeom.py\
-	fig2svg.sh \
+	fig2dev-ext.py \
 	flatten.py \
 	fractalize.py \
 	funcplot.py \
