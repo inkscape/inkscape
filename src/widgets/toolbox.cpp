@@ -1816,50 +1816,6 @@ sp_empty_toolbox_new(SPDesktop *desktop)
     return tbl;
 }
 
-// helper UI functions
-
-GtkWidget *
-sp_tb_spinbutton(
-    gchar *label, gchar const *tooltip,
-    gchar const *path, gchar const *data, gdouble def,
-    GtkWidget *us,
-    GtkWidget *tbl,
-    gboolean altx, gchar const *altx_mark,
-    gdouble lower, gdouble upper, gdouble step, gdouble page,
-    void (*callback)(GtkAdjustment *, GtkWidget *),
-    gdouble climb = 0.1, guint digits = 3, double factor = 1.0)
-{
-    GtkTooltips *tt = gtk_tooltips_new();
-
-    GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-
-    GtkWidget *l = gtk_label_new(label);
-    gtk_widget_show(l);
-    gtk_misc_set_alignment(GTK_MISC(l), 1.0, 0.5);
-    gtk_container_add(GTK_CONTAINER(hb), l);
-
-    GtkObject *a = gtk_adjustment_new(prefs_get_double_attribute(path, data, def) * factor,
-                                      lower, upper, step, page, page);
-    gtk_object_set_data(GTK_OBJECT(tbl), data, a);
-    if (us)
-        sp_unit_selector_add_adjustment(SP_UNIT_SELECTOR(us), GTK_ADJUSTMENT(a));
-
-    GtkWidget *sb = gtk_spin_button_new(GTK_ADJUSTMENT(a), climb, digits);
-    gtk_tooltips_set_tip(tt, sb, tooltip, NULL);
-    if (altx)
-        gtk_object_set_data(GTK_OBJECT(sb), altx_mark, sb);
-    gtk_widget_set_size_request(sb,
-                                (upper <= 1.0 || digits == 0)? AUX_SPINBUTTON_WIDTH_SMALL - 10: AUX_SPINBUTTON_WIDTH_SMALL,
-                                AUX_SPINBUTTON_HEIGHT);
-    gtk_widget_show(sb);
-    gtk_signal_connect(GTK_OBJECT(sb), "focus-in-event", GTK_SIGNAL_FUNC(spinbutton_focus_in), tbl);
-    gtk_signal_connect(GTK_OBJECT(sb), "key-press-event", GTK_SIGNAL_FUNC(spinbutton_keypress), tbl);
-    gtk_container_add(GTK_CONTAINER(hb), sb);
-    gtk_signal_connect(GTK_OBJECT(a), "value_changed", GTK_SIGNAL_FUNC(callback), tbl);
-
-    return hb;
-}
-
 #define MODE_LABEL_WIDTH 70
 
 //########################
