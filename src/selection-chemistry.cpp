@@ -1887,7 +1887,6 @@ sp_selection_relink()
     gchar *newref = g_strdup_printf ("#%s", newid);
 
     // Get a copy of current selection.
-    GSList *new_select = NULL;
     bool relinked = false;
     for (GSList *items = (GSList *) selection->itemList();
          items != NULL;
@@ -2544,7 +2543,8 @@ sp_selection_create_bitmap_copy ()
     // Run filter, if any
     if (run) {
         g_print ("Running external filter: %s\n", run);
-        system (run);
+        int retval;
+        retval = system (run);
     }
 
     // Import the image back
