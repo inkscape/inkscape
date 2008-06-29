@@ -850,11 +850,15 @@ pen_redraw_all (SPPenContext *const pc)
         sp_canvas_item_hide (pc->cl1);
     }
 
-    NArtBpath const * bpath = pc->green_curve->last_bpath();
-    if (bpath) {
-        if (bpath->code == NR_CURVETO && NR::Point(bpath->x2, bpath->y2) != pc->p[0]) {
-            SP_CTRL(pc->c0)->moveto(NR::Point(bpath->x2, bpath->y2));
-            sp_ctrlline_set_coords(SP_CTRLLINE(pc->cl0), NR::Point(bpath->x2, bpath->y2), pc->p[0]);
+    Geom::Curve const * last_seg = pc->green_curve->last_segment();
+    if (last_seg) {
+        Geom::CubicBezier const * cubic = dynamic_cast<Geom::CubicBezier const *>( last_seg );
+        if ( cubic &&
+             (*cubic)[2] != to_2geom(pc->p[0]) )
+        {
+            NR::Point p2 = from_2geom((*cubic)[2]);
+            SP_CTRL(pc->c0)->moveto(p2);
+            sp_ctrlline_set_coords(SP_CTRLLINE(pc->cl0), p2, pc->p[0]);
             sp_canvas_item_show (pc->c0);
             sp_canvas_item_show (pc->cl0);
         } else {
@@ -898,10 +902,9 @@ pen_lastpoint_tocurve (SPPenContext *const pc)
     if (pc->npoints != 5)
         return;
 
-    // red
-    NArtBpath const * bpath = pc->green_curve->last_bpath();
-    if (bpath && bpath->code == NR_CURVETO) {
-        pc->p[1] = pc->p[0] + (NR::Point(bpath->x3, bpath->y3) - NR::Point(bpath->x2, bpath->y2));
+    Geom::CubicBezier const * cubic = dynamic_cast<Geom::CubicBezier const *>( pc->green_curve->last_segment() );
+    if ( cubic ) {
+        pc->p[1] = pc->p[0] + from_2geom( (*cubic)[3] - (*cubic)[2] );
     } else {
         pc->p[1] = pc->p[0] + (1./3)*(pc->p[3] - pc->p[0]);
     }
