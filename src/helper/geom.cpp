@@ -12,7 +12,7 @@
  */
 
 #include "helper/geom.h"
-
+#include <typeinfo>
 #include <2geom/pathvector.h>
 #include <2geom/path.h>
 #include <2geom/transforms.h>
@@ -158,13 +158,15 @@ bounds_exact_transformed(Geom::PathVector const & pv, Geom::Matrix const & t)
 
         // don't loop including closing segment, since that segment can never increase the bbox
         for (Geom::Path::const_iterator cit = it->begin(); cit != it->end_open(); ++cit) {
-            Geom::Curve const *c = &*cit;
+            Geom::Curve const &c = *cit;
 
-            if(Geom::LineSegment const *line_segment = dynamic_cast<Geom::LineSegment const *>(c))
+            if( typeid(c) == typeid(Geom::LineSegment) ||
+                typeid(c) == typeid(Geom::HLineSegment) ||
+                typeid(c) == typeid(Geom::VLineSegment)    )
             {
-                bbox.expandTo( (*line_segment)[1] * t );
+                bbox.expandTo( c.finalPoint() * t );
             }
-            else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const  *>(c))
+            else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const  *>(&c))
             {
                 Geom::Point c0 = (*cubic_bezier)[0] * t;
                 Geom::Point c1 = (*cubic_bezier)[1] * t;
@@ -342,14 +344,17 @@ geom_cubic_bbox_wind_distance (Geom::Coord x000, Geom::Coord y000,
 }
 
 static void
-geom_curve_bbox_wind_distance(Geom::Curve const * c, Geom::Matrix const &m,
+geom_curve_bbox_wind_distance(Geom::Curve const & c, Geom::Matrix const &m,
                  Geom::Point const &pt,
                  Geom::Rect *bbox, int *wind, Geom::Coord *dist,
                  Geom::Coord tolerance, Geom::Rect const *viewbox,
                  Geom::Point &p0) // pass p0 through as it represents the last endpoint added (the finalPoint of last curve)
 {
-    if(Geom::LineSegment const *line_segment = dynamic_cast<Geom::LineSegment const  *>(c)) {   // TODO: make it work for HLineSegment too! (use finalPoint)
-        Geom::Point pe = (*line_segment)[1] * m;
+    if( typeid(c) == typeid(Geom::LineSegment) ||
+        typeid(c) == typeid(Geom::HLineSegment) ||
+        typeid(c) == typeid(Geom::VLineSegment) )
+    {
+        Geom::Point pe = c.finalPoint() * m;
         if (bbox) {
             bbox->expandTo(pe);
         }
@@ -364,7 +369,7 @@ geom_curve_bbox_wind_distance(Geom::Curve const * c, Geom::Matrix const &m,
         }
         p0 = pe;
     }
-    else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const  *>(c)) {
+    else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const  *>(&c)) {
         Geom::Point p1 = (*cubic_bezier)[1] * m;
         Geom::Point p2 = (*cubic_bezier)[2] * m;
         Geom::Point p3 = (*cubic_bezier)[3] * m;
@@ -390,11 +395,11 @@ geom_curve_bbox_wind_distance(Geom::Curve const * c, Geom::Matrix const &m,
         p0 = p3;
     } else { 
         //this case handles sbasis as well as all other curve types
-        Geom::Path sbasis_path = Geom::path_from_sbasis(c->toSBasis(), 0.1);
+        Geom::Path sbasis_path = Geom::path_from_sbasis(c.toSBasis(), 0.1);
 
         //recurse to convert the new path resulting from the sbasis to svgd
         for(Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {
-            geom_curve_bbox_wind_distance(&(*iter), m, pt, bbox, wind, dist, tolerance, viewbox, p0);
+            geom_curve_bbox_wind_distance(*iter, m, pt, bbox, wind, dist, tolerance, viewbox, p0);
         }
     }
 }
@@ -436,7 +441,7 @@ pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, Geom::Mat
 
         // loop including closing segment if path is closed
         for (Geom::Path::const_iterator cit = it->begin(); cit != it->end_default(); ++cit) {
-            geom_curve_bbox_wind_distance(&*cit, m, pt, bbox, wind, dist, tolerance, viewbox, p0);
+            geom_curve_bbox_wind_distance(*cit, m, pt, bbox, wind, dist, tolerance, viewbox, p0);
         }
     }
 

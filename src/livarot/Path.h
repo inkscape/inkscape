@@ -386,7 +386,7 @@ public:
   void   FlushPendingAddition(Path* dest,PathDescr *lastAddition,PathDescrCubicTo &lastCubic,int lastAD);
 
 private:
-    void  AddCurve(Geom::Curve const *c);
+    void  AddCurve(Geom::Curve const &c);
 
 };
 #endif
