@@ -1606,7 +1606,7 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
             // While drawing with the pen/pencil tool, zoom towards the end of the unfinished path
             if (tools_isactive(dt, TOOLS_FREEHAND_PENCIL) || tools_isactive(dt, TOOLS_FREEHAND_PEN)) {
                 SPCurve *rc = SP_DRAW_CONTEXT(ec)->red_curve;
-                if (rc->last_bpath()) {
+                if (!rc->is_empty()) {
                     NR::Point const zoom_to (rc->last_point());
                     dt->zoom_relative_keep_point(zoom_to, mul*zoom_inc);
                     break;
@@ -1624,7 +1624,7 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
             // While drawing with the pen/pencil tool, zoom away from the end of the unfinished path
             if (tools_isactive(dt, TOOLS_FREEHAND_PENCIL) || tools_isactive(dt, TOOLS_FREEHAND_PEN)) {
                 SPCurve *rc = SP_DRAW_CONTEXT(ec)->red_curve;
-                if (rc->last_bpath()) {
+                if (!rc->is_empty()) {
                     NR::Point const zoom_to (rc->last_point());
                     dt->zoom_relative_keep_point(zoom_to, 1 / (mul*zoom_inc));
                     break;

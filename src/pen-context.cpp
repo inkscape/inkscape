@@ -871,8 +871,7 @@ pen_lastpoint_move (SPPenContext *const pc, gdouble x, gdouble y)
         return;
 
     // green
-    NArtBpath const * bpath = pc->green_curve->last_bpath();
-    if (bpath) {
+    if (!pc->green_curve->is_empty()) {
         pc->green_curve->last_point_additive_move( Geom::Point(x,y) );
     } else {
         // start anchor too
