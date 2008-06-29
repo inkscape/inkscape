@@ -1068,13 +1068,15 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
 
     if (!shape->curve) return NULL;
     if (!shape->style) return NULL;
-    if (SP_SCALE24_TO_FLOAT(shape->style->opacity.value) == 0) // fully transparent, no pick
+
+    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
+
+    if (SP_SCALE24_TO_FLOAT(shape->style->opacity.value) == 0 && !outline) 
+        // fully transparent, no pick unless outline mode
         return NULL;
 
     GTimeVal tstart, tfinish;
     g_get_current_time (&tstart);
-
-    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
 
     double width;
     if (outline) {
