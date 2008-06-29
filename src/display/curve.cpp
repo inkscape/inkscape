@@ -895,6 +895,23 @@ SPCurve::last_bpath() const
 }
 
 /**
+ * Return last pathsegment (possibly the closing path segment) in PathVector or NULL.
+ * equal in functionality to SPCurve::last_bpath()
+ */
+Geom::Curve const *
+SPCurve::last_segment() const
+{
+    if (is_empty()) {
+        return NULL;
+    }
+    if (_pathv.back().empty()) {
+        return NULL;
+    }
+
+    return &_pathv.back().back_default();
+}
+
+/**
  * Return last path in PathVector or NULL.
  */
 Geom::Path const *
@@ -922,6 +939,23 @@ SPCurve::first_bpath() const
     }
 
     return _bpath;
+}
+
+/**
+ * Return first pathsegment in PathVector or NULL.
+ * equal in functionality to SPCurve::first_bpath()
+ */
+Geom::Curve const *
+SPCurve::first_segment() const
+{
+    if (is_empty()) {
+        return NULL;
+    }
+    if (_pathv.front().empty()) {
+        return NULL;
+    }
+
+    return &_pathv.front().front();
 }
 
 /**
@@ -1020,8 +1054,8 @@ SPCurve::last_point() const
         return NR::Point(0, 0);
 
     debug_check("SPCurve::last_point", bpath->c(3) == _pathv.back().finalPoint() );
-    return bpath->c(3);
-    // return from_2geom( _pathv.back().finalPoint() );
+    //return bpath->c(3);
+    return from_2geom( _pathv.back().finalPoint() );
 }
 
 inline static bool
