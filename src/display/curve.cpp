@@ -854,10 +854,10 @@ SPCurve::is_empty() const
     if (!_bpath)
         return true;
 
-    bool empty = _pathv.empty(); /* || _pathv.front().empty(); */
+    bool empty = _pathv.empty() || _pathv.front().empty();
     debug_check("SPCurve::is_empty", (_bpath->code == NR_END)  ==  empty );
 
-    return (_bpath->code == NR_END);
+    return empty;
 }
 
 /**
@@ -876,7 +876,7 @@ SPCurve::is_closed() const
     }
     debug_check("SPCurve::is_closed", (closed)  ==  (_closed) );
 
-    return _closed;
+    return closed;
 }
 
 /**
@@ -971,8 +971,8 @@ SPCurve::first_point() const
 
     debug_check("SPCurve::first_point", bpath->c(3) == _pathv.front().initialPoint() );
 
-    return bpath->c(3);
-    // return from_2geom( _pathv.front().initialPoint() );
+    //return bpath->c(3);
+    return from_2geom( _pathv.front().initialPoint() );
 }
 
 /**
