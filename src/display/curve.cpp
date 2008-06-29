@@ -927,21 +927,6 @@ SPCurve::last_path() const
 }
 
 /**
- * Return first subpath or NULL.
- */
-NArtBpath const *
-SPCurve::first_bpath() const
-{
-    g_return_val_if_fail(this != NULL, NULL);
-
-    if (_end == 0) {
-        return NULL;
-    }
-
-    return _bpath;
-}
-
-/**
  * Return first pathsegment in PathVector or NULL.
  * equal in functionality to SPCurve::first_bpath()
  */
@@ -979,7 +964,7 @@ SPCurve::first_path() const
 NR::Point
 SPCurve::first_point() const
 {
-    NArtBpath const * bpath = first_bpath();
+    NArtBpath const * bpath = get_bpath();
     g_return_val_if_fail(bpath != NULL, NR::Point(0, 0));
     if (is_empty())
         return NR::Point(0, 0);
@@ -1224,7 +1209,7 @@ SPCurve::append_continuous(SPCurve const *c1, gdouble tolerance)
 
     NArtBpath const *be = last_bpath();
     if (be) {
-        NArtBpath const *bs = c1->first_bpath();
+        NArtBpath const *bs = c1->get_bpath();
         if ( bs
              && ( fabs( bs->x3 - be->x3 ) <= tolerance )
              && ( fabs( bs->y3 - be->y3 ) <= tolerance ) )

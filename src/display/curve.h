@@ -80,7 +80,6 @@ public:
     NArtBpath const * last_bpath() const;
     Geom::Curve const * last_segment() const;
     Geom::Path const * last_path() const;
-    NArtBpath const * first_bpath() const;
     Geom::Curve const * first_segment() const;
     Geom::Path const * first_path() const;
     NR::Point first_point() const;
