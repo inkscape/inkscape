@@ -159,13 +159,15 @@ feed_curve_to_cairo (cairo_t *ct, NArtBpath const *bpath, NR::Matrix trans, NR::
 static void
 feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Matrix & trans, Geom::Rect view, bool optimize_stroke)
 {
-    if(Geom::LineSegment const* line_segment = dynamic_cast<Geom::LineSegment const*>(&c)) {
-    // same logic can be used for hlinesegment and vlinesegment: just use finalpoint
-        Geom::Point end_tr = (*line_segment)[1] * trans;
+    if( typeid(c) == typeid(Geom::LineSegment) || 
+        typeid(c) == typeid(Geom::HLineSegment) || 
+        typeid(c) == typeid(Geom::VLineSegment) )
+    {
+        Geom::Point end_tr = c.finalPoint() * trans;
         if (!optimize_stroke) {
             cairo_line_to(cr, end_tr[0], end_tr[1]);
         } else {
-            Geom::Rect swept((*line_segment)[0]*trans, end_tr);
+            Geom::Rect swept(c.initialPoint()*trans, end_tr);
             if (swept.intersects(view)) {
                 cairo_line_to(cr, end_tr[0], end_tr[1]);
             } else {
