@@ -310,6 +310,9 @@ sp_pen_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
         case GDK_BUTTON_PRESS:
             ret = pen_handle_button_press(pc, event->button);
             break;
+        case GDK_BUTTON_RELEASE:
+            ret = pen_handle_button_release(pc, event->button);
+            break;
         default:
             break;
     }
@@ -393,6 +396,15 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
             return TRUE;
         }
 
+        if (!pc->grab ) {
+            /* Grab mouse, so release will not pass unnoticed */
+            pc->grab = SP_CANVAS_ITEM(desktop->acetate);
+            sp_canvas_item_grab(pc->grab, ( GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK   |
+                                            GDK_BUTTON_RELEASE_MASK |
+                                            GDK_POINTER_MOTION_MASK  ),
+                                NULL, bevent.time);
+        }
+
         pen_drag_origin_w = event_w;
         pen_within_tolerance = true;
 
@@ -465,7 +477,6 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                             pc->ea = anchor;
                             NR::Point p;
                             if (anchor) {
-
                                 p = anchor->dp;
                                 // we hit an anchor, will finish the curve (either with or without closing)
                                 // in release handler
@@ -480,7 +491,6 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                                 break;
 
                             } else {
-
                                 p = event_dt;
                                 spdc_endpoint_snap(pc, p, bevent.state); /* Snap node only if not hitting anchor. */
                                 spdc_pen_set_subsequent_point(pc, p, true);
@@ -488,8 +498,8 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                                     spdc_pen_finish_segment(pc, p, bevent.state);
                                 }
                             }
-
                         }
+
                         pc->state = pc->polylines_only ? SP_PEN_CONTEXT_POINT : SP_PEN_CONTEXT_CONTROL;
                         ret = TRUE;
                         break;
@@ -538,12 +548,13 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
     gint ret = FALSE;
 
     SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
+    SPDesktop * const dt = SP_EVENT_CONTEXT_DESKTOP(event_context);
 
     if (event_context->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
         // allow scrolling
         return FALSE;
     }
-    
+   
     if (pc->events_disabled) {
         // skip motion events if pen events are disabled
         return FALSE;
@@ -562,16 +573,6 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
     // (indicating they intend to move the object, not click), then always process the
     // motion notify coordinates as given (no snapping back to origin)
     pen_within_tolerance = false;
-
-    SPDesktop *const dt = pc->desktop;
-    if ( ( mevent.state & GDK_BUTTON1_MASK ) && !pc->grab ) {
-        /* Grab mouse, so release will not pass unnoticed */
-        pc->grab = SP_CANVAS_ITEM(dt->acetate);
-        sp_canvas_item_grab(pc->grab, ( GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK   |
-                                        GDK_BUTTON_RELEASE_MASK |
-                                        GDK_POINTER_MOTION_MASK  ),
-                            NULL, mevent.time);
-    }
 
     /* Find desktop coordinates */
     NR::Point p = dt->w2d(event_w);
