@@ -446,6 +446,22 @@ sp_repr_lookup_name( Inkscape::XML::Node *repr, gchar const *name, gint maxdepth
 }
 
 /**
+ * Determine if the node is a 'title', 'desc' or 'metadata' element.
+ */
+bool
+sp_repr_is_meta_element(const Inkscape::XML::Node *node)
+{
+    if (node == NULL) return false;
+    if (node->type() != Inkscape::XML::ELEMENT_NODE) return false;
+    gchar const *name = node->name();
+    if (name == NULL) return false;
+    if (!std::strcmp(name, "svg:title")) return true;
+    if (!std::strcmp(name, "svg:desc")) return true;
+    if (!std::strcmp(name, "svg:metadata")) return true;
+    return false;
+}
+
+/**
  * Parses the boolean value of an attribute "key" in repr and sets val accordingly, or to FALSE if
  * the attr is not set.
  *

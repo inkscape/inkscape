@@ -457,8 +457,10 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 	if (objects) {
 	    Inkscape::XML::Node *last_def = SP_OBJECT_REPR(defs)->lastChild();
 	    while (objects) {
-		SP_OBJECT_REPR(defs)->addChild((Inkscape::XML::Node *) objects->data, last_def);
-		Inkscape::GC::release((Inkscape::XML::Node *) objects->data);
+                Inkscape::XML::Node *repr = (Inkscape::XML::Node *) objects->data;
+                if (!sp_repr_is_meta_element(repr))
+                    SP_OBJECT_REPR(defs)->addChild(repr, last_def);
+                Inkscape::GC::release(repr);
 		objects = g_slist_remove (objects, objects->data);
 	    }
 	}

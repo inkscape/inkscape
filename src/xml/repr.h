@@ -211,6 +211,8 @@ inline void sp_repr_unparent(Inkscape::XML::Node *repr) {
     }
 }
 
+bool sp_repr_is_meta_element(const Inkscape::XML::Node *node);
+
 /* Convenience */
 unsigned sp_repr_get_boolean(Inkscape::XML::Node *repr, gchar const *key, unsigned *val);
 unsigned sp_repr_get_int(Inkscape::XML::Node *repr, gchar const *key, int *val);
