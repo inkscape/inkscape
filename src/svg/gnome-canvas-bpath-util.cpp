@@ -31,16 +31,13 @@ static inline NR::Point distTo(GnomeCanvasBpathDef *bpd, size_t idx1, size_t idx
 
 static bool isApproximatelyClosed(GnomeCanvasBpathDef *bpd) {
     int const np = prefs_get_int_attribute("options.svgoutput", "numericprecision", 8);
-    double const precision = 5*pow(10.0, -np); // This roughly corresponds to a difference below the last significant digit
+    double const precision = pow(10.0, -(np+1)); // This roughly corresponds to a difference below the last significant digit
 	int const initial = bpd->moveto_idx;
 	int const current = bpd->n_bpath - 1;
-	int const previous = bpd->n_bpath - 2;
-    NR::Point distToPrev(distTo(bpd, current, previous));
     NR::Point distToInit(distTo(bpd, current, initial));
-    // NOTE: It would be better to determine the uncertainty while parsing, in rsvg_parse_path_data, but this seems to perform reasonably well
     return
-        distToInit[NR::X] <= distToPrev[NR::X]*precision &&
-        distToInit[NR::Y] <= distToPrev[NR::Y]*precision;
+        distToInit[NR::X] <= abs(bpd->bpath[current].c(3)[NR::X])*precision &&
+        distToInit[NR::Y] <= abs(bpd->bpath[current].c(3)[NR::Y])*precision;
 }
 
 GnomeCanvasBpathDef *
