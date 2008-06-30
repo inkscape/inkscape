@@ -3416,10 +3416,11 @@ static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
                                          3.0,
                                          GTK_WIDGET(desktop->canvas), NULL,
                                          holder, TRUE, "altx-pencil",
-                                         0.5, 100.0, 0.5, 1.0,
+                                         0.5, 100.0, 0.5, 0,
                                          NULL, NULL, 0,
                                          sp_pencil_tb_tolerance_value_changed,
                                          1, 2);
+        ege_adjustment_action_set_appearance( eact, "full" );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
 
         Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE,
@@ -3525,9 +3526,10 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                               _("Width"), _("Width:"), _("The width of the tweak area (relative to the visible canvas area)"),
                                                               "tools.tweak", "width", 15,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-tweak",
-                                                              1, 100, 1.0, 10.0,
+                                                              1, 100, 1.0, 0.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_tweak_width_value_changed,  0.01, 0, 100 );
+        ege_adjustment_action_set_appearance( eact, "full" );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     }
@@ -3541,9 +3543,10 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                               _("Force"), _("Force:"), _("The force of the tweak action"),
                                                               "tools.tweak", "force", 20,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "tweak-force",
-                                                              1, 100, 1.0, 10.0,
+                                                              1, 100, 1.0, 0.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_tweak_force_value_changed,  0.01, 0, 100 );
+        ege_adjustment_action_set_appearance( eact, "full" );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     }
@@ -3930,9 +3933,10 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               _("The width of the calligraphic pen (relative to the visible canvas area)"),
                                                               "tools.calligraphic", "width", 15,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-calligraphy",
-                                                              1, 100, 1.0, 10.0,
+                                                              1, 100, 1.0, 0.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_width_value_changed,  0.01, 0, 100 );
+        ege_adjustment_action_set_appearance( eact, "full" );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -3983,7 +3987,6 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               0.0, 1.0, 0.01, 0.1,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_flatness_value_changed, 0.01, 2 );
-        ege_adjustment_action_set_appearance( eact, "full" );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -4014,7 +4017,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               _("Increase to make strokes rugged and trembling"),
                                                               "tools.calligraphic", "tremor", 0.0,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
-                                                              0.0, 1.0, 0.01, 0.1,
+                                                              0.0, 1.0, 0.01, 0.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_tremor_value_changed, 0.01, 2 );
 
@@ -4032,7 +4035,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               _("Increase to make the pen waver and wiggle"),
                                                               "tools.calligraphic", "wiggle", 0.0,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
-                                                              0.0, 1.0, 0.01, 0.1,
+                                                              0.0, 1.0, 0.01, 0.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_wiggle_value_changed, 0.01, 2 );
         ege_adjustment_action_set_appearance( eact, "full" );
@@ -4049,9 +4052,10 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               _("Increase to make the pen drag behind, as if slowed by inertia"),
                                                               "tools.calligraphic", "mass", 0.02,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
-                                                              0.0, 1.0, 0.01, 0.1,
+                                                              0.0, 1.0, 0.01, 0.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_mass_value_changed, 0.01, 2 );
+        ege_adjustment_action_set_appearance( eact, "full" );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -4606,9 +4610,10 @@ static void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
                                                               _("The width of the eraser pen (relative to the visible canvas area)"),
                                                               "tools.eraser", "width", 15,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-eraser",
-                                                              1, 100, 1.0, 10.0,
+                                                              1, 100, 1.0, 0.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_width_value_changed,  0.01, 0, 100 );
+        ege_adjustment_action_set_appearance( eact, "full" );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     }
@@ -6013,10 +6018,11 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             _("Fill Threshold"), _("Threshold:"),
             _("The maximum allowed difference between the clicked pixel and the neighboring pixels to be counted in the fill"),
             "tools.paintbucket", "threshold", 5, GTK_WIDGET(desktop->canvas), NULL, holder, TRUE,
-            "inkscape:paintbucket-threshold", 0, 100.0, 1.0, 10.0,
+            "inkscape:paintbucket-threshold", 0, 100.0, 1.0, 0.0,
             0, 0, 0,
             paintbucket_threshold_changed, 1, 0 );
 
+        ege_adjustment_action_set_appearance( eact, "full" );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 
