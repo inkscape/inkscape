@@ -45,6 +45,7 @@ public:
     Geom::PathVector const & get_pathvector() const;
 
     guint get_length() const;
+    guint get_segment_count() const;
 
     SPCurve * ref();
     SPCurve * unref();

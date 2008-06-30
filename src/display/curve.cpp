@@ -283,6 +283,22 @@ SPCurve::get_length() const
     return _end;
 }
 
+/*
+ * Returns the number of segments of all paths summed
+ */
+guint
+SPCurve::get_segment_count() const
+{
+    guint nr = 0;
+    for(Geom::PathVector::const_iterator it = _pathv.begin(); it != _pathv.end(); ++it) {
+        nr += (*it).size();
+
+        if (it->closed())   nr += 1;
+    }
+    return nr;
+}
+
+
 /**
  * Increase _refcount of curve.
  *
