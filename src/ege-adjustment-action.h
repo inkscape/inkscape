@@ -148,6 +148,15 @@ GtkWidget* ege_adjustment_action_get_focuswidget( EgeAdjustmentAction* action );
  */
 void ege_adjustment_action_set_descriptions( EgeAdjustmentAction* action, gchar const** descriptions, gdouble const* values, guint count );
 
+/**
+ * Sets a hint to be used in determining the display form.
+ * This is the XForms style 'appearance' hint: "full", "compact", "minimal".
+ *
+ * @param action The action to set the tooltip column for.
+ * @param val The value of the appearance hint.
+ */
+void ege_adjustment_action_set_appearance( EgeAdjustmentAction* action, gchar const* val );
+
 /** Callback type for post-creation 'fixup' pass on generated widgets */
 typedef void (*EgeWidgetFixup)(GtkWidget *widget);
 

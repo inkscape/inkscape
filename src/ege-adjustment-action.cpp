@@ -46,6 +46,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtktoolitem.h>
 #include <gtk/gtkspinbutton.h>
+#include <gtk/gtkhscale.h>
 #include <gtk/gtkhbox.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtkmisc.h>
@@ -80,6 +81,14 @@ static void egeAct_free_all_descriptions( EgeAdjustmentAction* action );
 static GtkActionClass* gParentClass = 0;
 static GQuark gDataName = 0;
 
+enum {
+    APPEARANCE_UNKNOWN = -1,
+    APPEARANCE_NONE = 0,
+    APPEARANCE_FULL,    // label, then all choices represented by separate buttons
+    APPEARANCE_COMPACT, // label, then choices in a drop-down menu
+    APPEARANCE_MINIMAL, // no label, just choices in a drop-down menu
+};
+
 typedef struct _EgeAdjustmentDescr EgeAdjustmentDescr;
 
 struct _EgeAdjustmentDescr
@@ -102,8 +111,10 @@ struct _EgeAdjustmentActionPrivate
     gdouble lastVal;
     gdouble step;
     gdouble page;
+    gint appearanceMode;
     gboolean transferFocus;
     GList* descriptions;
+    gchar* appearance;
 };
 
 #define EGE_ADJUSTMENT_ACTION_GET_PRIVATE( o ) ( G_TYPE_INSTANCE_GET_PRIVATE( (o), EGE_ADJUSTMENT_ACTION_TYPE, EgeAdjustmentActionPrivate ) )
@@ -114,7 +125,8 @@ enum {
     PROP_CLIMB_RATE,
     PROP_DIGITS,
     PROP_SELFID,
-    PROP_TOOL_POST
+    PROP_TOOL_POST,
+    PROP_APPEARANCE
 };
 
 enum {
@@ -216,6 +228,14 @@ static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass )
                                                                "Function for final adjustments",
                                                                (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
+        g_object_class_install_property( objClass,
+                                         PROP_APPEARANCE,
+                                         g_param_spec_string( "appearance",
+                                                              "Appearance hint",
+                                                              "A hint for how to display",
+                                                              "",
+                                                              (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+
         g_type_class_add_private( klass, sizeof(EgeAdjustmentActionClass) );
     }
 }
@@ -235,8 +255,10 @@ static void ege_adjustment_action_init( EgeAdjustmentAction* action )
     action->private_data->lastVal = 0.0;
     action->private_data->step = 0.0;
     action->private_data->page = 0.0;
+    action->private_data->appearanceMode = APPEARANCE_NONE;
     action->private_data->transferFocus = FALSE;
     action->private_data->descriptions = 0;
+    action->private_data->appearance = 0;
 }
 
 static void ege_adjustment_action_finalize( GObject* object )
@@ -310,6 +332,10 @@ static void ege_adjustment_action_get_property( GObject* obj, guint propId, GVal
             g_value_set_pointer( value, (void*)action->private_data->toolPost );
             break;
 
+        case PROP_APPEARANCE:
+            g_value_set_string( value, action->private_data->appearance );
+            break;
+
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID( obj, propId, pspec );
     }
@@ -373,6 +399,27 @@ void ege_adjustment_action_set_property( GObject* obj, guint propId, const GValu
         case PROP_TOOL_POST:
         {
             action->private_data->toolPost = (EgeWidgetFixup)g_value_get_pointer( value );
+        }
+        break;
+
+        case PROP_APPEARANCE:
+        {
+            gchar* tmp = action->private_data->appearance;
+            gchar* newVal = g_value_dup_string( value );
+            action->private_data->appearance = newVal;
+            g_free( tmp );
+
+            if ( !action->private_data->appearance || (strcmp("", newVal) == 0) ) {
+                action->private_data->appearanceMode = APPEARANCE_NONE;
+            } else if ( strcmp("full", newVal) == 0 ) {
+                action->private_data->appearanceMode = APPEARANCE_FULL;
+            } else if ( strcmp("compact", newVal) == 0 ) {
+                action->private_data->appearanceMode = APPEARANCE_COMPACT;
+            } else if ( strcmp("minimal", newVal) == 0 ) {
+                action->private_data->appearanceMode = APPEARANCE_MINIMAL;
+            } else {
+                action->private_data->appearanceMode = APPEARANCE_UNKNOWN;
+            }
         }
         break;
 
@@ -460,6 +507,11 @@ void ege_adjustment_action_set_descriptions( EgeAdjustmentAction* action, gchar 
     }
 }
 
+void ege_adjustment_action_set_appearance( EgeAdjustmentAction* action, gchar const* val )
+{
+    g_object_set( G_OBJECT(action), "appearance", val, NULL );
+}
+
 static void process_menu_action( GtkWidget* obj, gpointer data )
 {
     GtkCheckMenuItem* item = GTK_CHECK_MENU_ITEM(obj);
@@ -538,7 +590,7 @@ static void create_single_menu_item( GCallback toggleCb, int val, GtkWidget* men
         cur = g_list_next( cur );
     }
 
-    str = g_strdup_printf( act->private_data->format, num, 
+    str = g_strdup_printf( act->private_data->format, num,
                            ((marker && marker->descr) ? ": " : ""),
                            ((marker && marker->descr) ? marker->descr : ""));
 
@@ -705,9 +757,16 @@ static GtkWidget* create_tool_item( GtkAction* action )
 
     if ( IS_EGE_ADJUSTMENT_ACTION(action) ) {
         EgeAdjustmentAction* act = EGE_ADJUSTMENT_ACTION( action );
-        GtkWidget* spinbutton = gtk_spin_button_new( act->private_data->adj, act->private_data->climbRate, act->private_data->digits );
+        GtkWidget* spinbutton = 0;
         GtkWidget* hb = gtk_hbox_new( FALSE, 5 );
         GValue value;
+
+        if ( act->private_data->appearanceMode == APPEARANCE_FULL ) {
+            spinbutton = gtk_hscale_new( act->private_data->adj);
+            gtk_widget_set_size_request(spinbutton, 100, -1);
+        } else {
+            spinbutton = gtk_spin_button_new( act->private_data->adj, act->private_data->climbRate, act->private_data->digits );
+        }
 
         item = GTK_WIDGET( gtk_tool_item_new() );
 
@@ -737,7 +796,11 @@ static GtkWidget* create_tool_item( GtkAction* action )
 
         gtk_box_pack_start( GTK_BOX(hb), filler1, FALSE, FALSE, 0 );
         gtk_box_pack_start( GTK_BOX(hb), lbl, FALSE, FALSE, 0 );
-        gtk_box_pack_start( GTK_BOX(hb), spinbutton, FALSE, FALSE, 0 );
+        if ( act->private_data->appearanceMode == APPEARANCE_FULL ) {
+            gtk_box_pack_start( GTK_BOX(hb), spinbutton, TRUE, TRUE, 0 );
+        }  else {
+            gtk_box_pack_start( GTK_BOX(hb), spinbutton, FALSE, FALSE, 0 );
+        }
 
         gtk_container_add( GTK_CONTAINER(item), hb );
 
@@ -752,7 +815,11 @@ static GtkWidget* create_tool_item( GtkAction* action )
         g_signal_connect( G_OBJECT(spinbutton), "value-changed", G_CALLBACK(value_changed_cb), action );
 
         g_signal_connect_swapped( G_OBJECT(spinbutton), "event", G_CALLBACK(event_cb), action );
-        gtk_entry_set_width_chars( GTK_ENTRY(spinbutton), act->private_data->digits + 3 );
+        if ( act->private_data->appearanceMode == APPEARANCE_FULL ) {
+            /* */
+        } else {
+            gtk_entry_set_width_chars( GTK_ENTRY(spinbutton), act->private_data->digits + 3 );
+        }
 
         gtk_widget_show_all( item );
 
@@ -791,7 +858,11 @@ gboolean focus_in_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
     (void)event;
     if ( IS_EGE_ADJUSTMENT_ACTION(data) ) {
         EgeAdjustmentAction* action = EGE_ADJUSTMENT_ACTION( data );
-        action->private_data->lastVal = gtk_spin_button_get_value( GTK_SPIN_BUTTON(widget) );
+        if ( GTK_IS_SPIN_BUTTON(widget) ) {
+            action->private_data->lastVal = gtk_spin_button_get_value( GTK_SPIN_BUTTON(widget) );
+        } else if (GTK_IS_RANGE(widget) ) {
+            action->private_data->lastVal = gtk_range_get_value( GTK_RANGE(widget) );
+        }
         action->private_data->transferFocus = TRUE;
     }
 

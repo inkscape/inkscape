@@ -3357,45 +3357,45 @@ sp_pencil_tb_tolerance_value_changed(GtkAdjustment *adj, GObject *tbl)
     }
     // in turn, prevent listener from responding
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
-    prefs_set_double_attribute("tools.freehand.pencil", 
+    prefs_set_double_attribute("tools.freehand.pencil",
                                "tolerance", adj->value);
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-    
+
 }
 
 
 
 static void
-sp_pencil_tb_tolerance_value_changed_external(Inkscape::XML::Node *repr, 
-                                              const gchar *key, 
-                                              const gchar *oldval, 
-                                              const gchar *newval, 
-                                              bool is_interactive, 
+sp_pencil_tb_tolerance_value_changed_external(Inkscape::XML::Node *repr,
+                                              const gchar *key,
+                                              const gchar *oldval,
+                                              const gchar *newval,
+                                              bool is_interactive,
                                               void * data)
 {
     GObject* tbl = G_OBJECT(data);
     if (g_object_get_data( tbl, "freeze" )) {
         return;
-    }    
+    }
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
     GtkAdjustment * adj = (GtkAdjustment*)g_object_get_data(tbl,
                                                             "tolerance");
-    
-    double v = prefs_get_double_attribute("tools.freehand.pencil", 
+
+    double v = prefs_get_double_attribute("tools.freehand.pencil",
                                             "tolerance", adj->value);
     gtk_adjustment_set_value(adj, v);
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-    
+
 }
 
-static Inkscape::XML::NodeEventVector pencil_node_events = 
+static Inkscape::XML::NodeEventVector pencil_node_events =
 {
-    NULL, 
-    NULL, 
+    NULL,
+    NULL,
     sp_pencil_tb_tolerance_value_changed_external,
-    NULL, 
+    NULL,
     NULL,
 };
 
@@ -3410,19 +3410,19 @@ static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
     {
 
         eact = create_adjustment_action( "PencilToleranceAction",
-                 _("Number of pixels allowed in interpolating"), 
+                 _("Number of pixels allowed in interpolating"),
                                          _("Tolerance:"), _("Tolerance"),
-                                         "tools.freehand.pencil", "tolerance", 
+                                         "tools.freehand.pencil", "tolerance",
                                          3.0,
-                                         GTK_WIDGET(desktop->canvas), NULL, 
+                                         GTK_WIDGET(desktop->canvas), NULL,
                                          holder, TRUE, "altx-pencil",
-                                         0.5, 100.0, 0.5, 1.0, 
+                                         0.5, 100.0, 0.5, 1.0,
                                          NULL, NULL, 0,
                                          sp_pencil_tb_tolerance_value_changed,
                                          1, 2);
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
 
-        Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE, 
+        Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE,
                                                       "tools.freehand.pencil");
         repr->addListener(&pencil_node_events, G_OBJECT(holder));
         g_object_set_data(G_OBJECT(holder), "repr", repr);
@@ -3438,7 +3438,7 @@ static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_pencil_tb_defaults), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
-    
+
     g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
 
 }
@@ -3859,13 +3859,13 @@ static void sp_dcc_save_profile( GtkWidget */*widget*/, GObject *dataKludge ){
 
     unsigned int new_index = pref_path_number_of_children("tools.calligraphic.preset") +1;
     gchar *profile_id = g_strdup_printf("dcc%d", new_index);
-    gchar *pref_path = create_pref("tools.calligraphic.preset",profile_id);    
-    
+    gchar *pref_path = create_pref("tools.calligraphic.preset",profile_id);
+
     for (unsigned i = 0; i < PROFILE_FLOAT_SIZE; ++i) {
         ProfileFloatElement const &pe = f_profile[i];
         double v = prefs_get_double_attribute_limited("tools.calligraphic",pe.name, pe.def, pe.min, pe.max);
         prefs_set_double_attribute(pref_path,pe.name,v);
-    }    
+    }
     for (unsigned i = 0; i < PROFILE_INT_SIZE; ++i) {
         ProfileIntElement const &pe = i_profile[i];
         int v = prefs_get_int_attribute_limited("tools.calligraphic",pe.name, pe.def,pe.min, pe.max);
@@ -3887,11 +3887,11 @@ static void sp_dcc_save_profile( GtkWidget */*widget*/, GObject *dataKludge ){
 
 
 static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject *dataKludge) {
-    
-    gint preset_index = ege_select_one_action_get_active( act ); 
+
+    gint preset_index = ege_select_one_action_get_active( act );
     gchar *profile_name = get_pref_nth_child("tools.calligraphic.preset", preset_index);
-       
-    if ( profile_name) {        
+
+    if ( profile_name) {
         g_object_set_data(dataKludge, "profile_selector",NULL); //temporary hides the selector so no one will updadte it
         for (unsigned i = 0; i < PROFILE_FLOAT_SIZE; ++i) {
             ProfileFloatElement const &pe = f_profile[i];
@@ -3900,7 +3900,7 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject *dataKludge) 
             if ( adj ) {
                 gtk_adjustment_set_value(adj, v);
             }
-        } 
+        }
         for (unsigned i = 0; i < PROFILE_INT_SIZE; ++i) {
             ProfileIntElement const &pe = i_profile[i];
             int v = prefs_get_int_attribute_limited(profile_name, pe.name, pe.def, pe.min, pe.max);
@@ -3983,6 +3983,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               0.0, 1.0, 0.01, 0.1,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_flatness_value_changed, 0.01, 2 );
+        ege_adjustment_action_set_appearance( eact, "full" );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -4017,6 +4018,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_tremor_value_changed, 0.01, 2 );
 
+        ege_adjustment_action_set_appearance( eact, "full" );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -4033,6 +4035,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               0.0, 1.0, 0.01, 0.1,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_wiggle_value_changed, 0.01, 2 );
+        ege_adjustment_action_set_appearance( eact, "full" );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -4096,7 +4099,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
 
         /*calligraphic profile */
         {
-            GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_INT );            
+            GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_INT );
             gchar *pref_path;
 
 
@@ -4111,9 +4114,9 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             while (child_repr) {
                 GtkTreeIter iter;
                 char *preset_name = (char *) child_repr->attribute("name");
-                gtk_list_store_append( model, &iter );                
-                gtk_list_store_set( model, &iter, 0, preset_name, 1, ++ii, -1 );                
-                child_repr = sp_repr_next(child_repr); 
+                gtk_list_store_append( model, &iter );
+                gtk_list_store_set( model, &iter, 0, preset_name, 1, ++ii, -1 );
+                child_repr = sp_repr_next(child_repr);
             }
 
             pref_path = NULL;
@@ -4122,7 +4125,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK(sp_ddc_change_profile), holder );
             gtk_action_group_add_action( mainActions, GTK_ACTION(act1) );
             g_object_set_data( holder, "profile_selector", act1 );
-        
+
         }
 
         /*Save or delete calligraphic profile */
@@ -4642,7 +4645,7 @@ static void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
         ege_select_one_action_set_active( act, eraserMode );
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_erasertb_mode_changed), holder );
     }
-    
+
 }
 
 //########################
