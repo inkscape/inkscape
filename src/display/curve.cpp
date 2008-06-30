@@ -1030,17 +1030,13 @@ SPCurve::penultimate_point() const
 
     NArtBpath *const bpath = _bpath + _end - 2;
     g_return_val_if_fail(bpath != NULL, NR::Point(0, 0));
-    
-    Geom::Point p(NR_HUGE, NR_HUGE);
-    Geom::Curve const& back = _pathv.back().back();
-    if (_pathv.back().closed()) {
-        p = back.finalPoint();
-    } else {
-        p = back.initialPoint();
-    }
 
-    debug_check("SPCurve::penultimate_point", bpath->c(3) == p );
-    return bpath->c(3);
+
+    Geom::Curve const& back = _pathv.back().back_default();
+    Geom::Point p = back.initialPoint();
+
+    debug_check("SPCurve::penultimate_point", bpath->c(3) == from_2geom(p) );
+    return from_2geom(p);
 }
 
 /**
