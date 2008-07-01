@@ -186,14 +186,14 @@ SimpleNode::SimpleNode(SimpleNode const &node, Document *document)
     _parent = _next = NULL;
     _first_child = _last_child = NULL;
 
-    for ( Node *child = node._first_child ;
-          child != NULL ; child = child->next() )
+    for ( SimpleNode *child = node._first_child ;
+          child != NULL ; child = child->_next )
     {
-        Node *child_copy=child->duplicate(document);
+        SimpleNode *child_copy=dynamic_cast<SimpleNode *>(child->duplicate(document));
 
         child_copy->_setParent(this);
         if (_last_child) {
-            _last_child->_setNext(child_copy);
+            _last_child->_next = child_copy;
         } else {
             _first_child = child_copy;
         }
@@ -243,8 +243,8 @@ unsigned SimpleNode::position() const {
 unsigned SimpleNode::_childPosition(Node const &child) const {
     if (!_cached_positions_valid) {
         unsigned position=0;
-        for ( Node *sibling = _first_child ;
-              sibling ; sibling = sibling->next() )
+        for ( SimpleNode *sibling = _first_child ;
+              sibling ; sibling = sibling->_next )
         {
             sibling->_setCachedPosition(position);
             position++;
@@ -255,8 +255,8 @@ unsigned SimpleNode::_childPosition(Node const &child) const {
 }
 
 Node *SimpleNode::nthChild(unsigned index) {
-    Node *child = _first_child;
-    for ( ; index > 0 && child ; child = child->next() ) {
+    SimpleNode *child = _first_child;
+    for ( ; index > 0 && child ; child = child->_next ) {
         index--;
     }
     return child;
@@ -371,7 +371,7 @@ void SimpleNode::addChild(Node *generic_child, Node *generic_ref) {
 
     Debug::EventTracker<DebugAddChild> tracker(*this, *child, ref);
 
-    Node *next;
+    SimpleNode *next;
     if (ref) {
         next = ref->_next;
         ref->_next = child;
@@ -413,7 +413,7 @@ void SimpleNode::removeChild(Node *generic_child) {
 
     Debug::EventTracker<DebugRemoveChild> tracker(*this, *child);
 
-    Node *next = child->_next;
+    SimpleNode *next = child->_next;
     if (ref) {
         ref->_next = next;
     } else {
@@ -452,7 +452,7 @@ void SimpleNode::changeOrder(Node *generic_child, Node *generic_ref) {
 
     if (prev == ref) { return; }
 
-    Node *next;
+    SimpleNode *next;
 
     /* Remove from old position. */
     next = child->_next;
@@ -490,9 +490,9 @@ void SimpleNode::setPosition(int pos) {
     // a position beyond the end of the list means the end of the list;
     // a negative position is the same as an infinitely large position
 
-    Node *ref=NULL;
-    for ( Node *sibling = _parent->firstChild() ;
-          sibling && pos ; sibling = sibling->next() )
+    SimpleNode *ref=NULL;
+    for ( SimpleNode *sibling = _parent->_first_child ;
+          sibling && pos ; sibling = sibling->_next )
     {
         if ( sibling != this ) {
             ref = sibling;
@@ -544,9 +544,9 @@ void SimpleNode::synthesizeEvents(NodeEventVector const *vector, void *data) {
         }
     }
     if (vector->child_added) {
-        Node *ref = NULL;
-        for ( Node *child = this->_first_child ;
-              child ; child = child->next() )
+        SimpleNode *ref = NULL;
+        for ( SimpleNode *child = this->_first_child ;
+              child ; child = child->_next )
         {
             vector->child_added(this, child, ref, data);
             ref = child;

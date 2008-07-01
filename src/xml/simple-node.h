@@ -121,7 +121,7 @@ protected:
 public: // ideally these should be protected somehow...
     NodeObserver &_subtreeObservers() { return _subtree_observers; }
     void _setParent(Node *parent);
-    void _setNext(Node *next) { _next = next; }
+    void _setNext(Node *next) { _next = dynamic_cast<SimpleNode *>(next); }
 
     unsigned _childPosition(Node const &child) const;
     unsigned _cachedPosition() const { return _cached_position; }
@@ -132,8 +132,8 @@ public: // ideally these should be protected somehow...
 private:
     void operator=(Node const &); // no assign
 
-    Node *_parent;
-    Node *_next;
+    SimpleNode *_parent;
+    SimpleNode *_next;
     Document *_document;
     mutable unsigned _cached_position;
 
@@ -145,8 +145,8 @@ private:
 
     unsigned _child_count;
     mutable bool _cached_positions_valid;
-    Node *_first_child;
-    Node *_last_child;
+    SimpleNode *_first_child;
+    SimpleNode *_last_child;
 
     CompositeNodeObserver _observers;
     CompositeNodeObserver _subtree_observers;
