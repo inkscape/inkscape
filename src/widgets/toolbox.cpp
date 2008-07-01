@@ -220,6 +220,11 @@ static struct {
     { NULL, NULL, NULL, NULL, NULL, SP_VERB_INVALID, NULL, NULL }
 };
 
+#if GTK_CHECK_VERSION(2,12,0)
+#define TOOLBAR_SLIDER_HINT "minimal"
+#else // GTK_CHECK_VERSION(2,12,0)
+#define TOOLBAR_SLIDER_HINT "full"
+#endif // GTK_CHECK_VERSION(2,12,0)
 
 static gchar const * ui_descr =
         "<ui>"
@@ -3420,7 +3425,7 @@ static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
                                          NULL, NULL, 0,
                                          sp_pencil_tb_tolerance_value_changed,
                                          1, 2);
-        ege_adjustment_action_set_appearance( eact, "full" );
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
 
         Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE,
@@ -3529,7 +3534,7 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                               1, 100, 1.0, 0.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_tweak_width_value_changed,  0.01, 0, 100 );
-        ege_adjustment_action_set_appearance( eact, "full" );
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     }
@@ -3546,7 +3551,7 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                               1, 100, 1.0, 0.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_tweak_force_value_changed,  0.01, 0, 100 );
-        ege_adjustment_action_set_appearance( eact, "full" );
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     }
@@ -3936,7 +3941,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               1, 100, 1.0, 0.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_width_value_changed,  0.01, 0, 100 );
-        ege_adjustment_action_set_appearance( eact, "full" );
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -4021,7 +4026,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_tremor_value_changed, 0.01, 2 );
 
-        ege_adjustment_action_set_appearance( eact, "full" );
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -4038,7 +4043,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               0.0, 1.0, 0.01, 0.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_wiggle_value_changed, 0.01, 2 );
-        ege_adjustment_action_set_appearance( eact, "full" );
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -4055,7 +4060,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               0.0, 1.0, 0.01, 0.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_mass_value_changed, 0.01, 2 );
-        ege_adjustment_action_set_appearance( eact, "full" );
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -4613,7 +4618,7 @@ static void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
                                                               1, 100, 1.0, 0.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_width_value_changed,  0.01, 0, 100 );
-        ege_adjustment_action_set_appearance( eact, "full" );
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     }
@@ -6022,7 +6027,7 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             0, 0, 0,
             paintbucket_threshold_changed, 1, 0 );
 
-        ege_adjustment_action_set_appearance( eact, "full" );
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 
