@@ -3,6 +3,7 @@
  *
  * Authors:
  *   Bob Jamison
+ *   Jasper van de Gronde
  *
  * Copyright (C) 2006-2008 Bob Jamison
  *
@@ -2778,7 +2779,7 @@ public:
     /**
      *
      */
-    String getDirectory()
+    String getDirectory() const
         { return directory; }
         
     /**
@@ -2796,7 +2797,7 @@ public:
     /**
      *
      */
-    std::vector<String> getFiles()
+    std::vector<String> getFiles() const
         { return files; }
         
     /**
@@ -2808,7 +2809,7 @@ public:
     /**
      *
      */
-    std::vector<String> getIncludes()
+    std::vector<String> getIncludes() const
         { return includes; }
         
     /**
@@ -2820,19 +2821,19 @@ public:
     /**
      *
      */
-    std::vector<String> getExcludes()
+    std::vector<String> getExcludes() const
         { return excludes; }
         
     /**
      *
      */
-    unsigned int size()
+    unsigned int size() const
         { return files.size(); }
         
     /**
      *
      */
-    String operator[](int index)
+    String operator[](int index) const
         { return files[index]; }
         
     /**
@@ -6374,6 +6375,8 @@ public:
         TASK_NONE,
         TASK_CC,
         TASK_COPY,
+        TASK_CXXTEST_PART,
+        TASK_CXXTEST_ROOT,
         TASK_DELETE,
         TASK_ECHO,
         TASK_JAR,
@@ -7076,6 +7079,208 @@ private:
     String  toFileNameOpt;
     String  toDirNameOpt;
     String  verboseOpt;
+};
+
+
+/**
+ * Generate CxxTest files
+ */
+class TaskCxxTestPart: public Task
+{
+public:
+
+    TaskCxxTestPart(MakeBase &par) : Task(par)
+         {
+         type    = TASK_CXXTEST_PART;
+         name    = "cxxtestpart";
+         }
+
+    virtual ~TaskCxxTestPart()
+        {}
+
+    virtual bool execute()
+        {
+        if (!listFiles(parent, fileSet))
+            return false;
+        String fileSetDir = parent.eval(fileSet.getDirectory(), ".");
+                
+        String fullDest = parent.resolve(parent.eval(destPathOpt, "."));
+        String cmd = parent.eval(commandOpt, "cxxtestgen.py");
+        cmd.append(" --part -o ");
+        cmd.append(fullDest);
+
+        unsigned int newFiles = 0;
+        for (unsigned int i=0 ; i<fileSet.size() ; i++)
+            {
+            String fileName = fileSet[i];
+            if (getSuffix(fileName) != "h")
+                continue;
+            String sourcePath;
+            if (fileSetDir.size()>0)
+                {
+                sourcePath.append(fileSetDir);
+                sourcePath.append("/");
+                }
+            sourcePath.append(fileName);
+            String fullSource = parent.resolve(sourcePath);
+
+            cmd.append(" ");
+            cmd.append(fullSource);
+            if (isNewerThan(fullSource, fullDest)) newFiles++;
+            }
+        
+        if (newFiles>0) {
+            size_t const lastSlash = fullDest.find_last_of('/');
+            if (lastSlash != fullDest.npos) {
+                String directory(fullDest, 0, lastSlash);
+                if (!createDirectory(directory))
+                    return false;
+            }
+
+            String outString, errString;
+            if (!executeCommand(cmd.c_str(), "", outString, errString))
+                {
+                error("<cxxtestpart> problem: %s", errString.c_str());
+                return false;
+                }
+        }
+
+        return true;
+        }
+
+    virtual bool parse(Element *elem)
+        {
+        if (!parent.getAttribute(elem, "command", commandOpt))
+            return false;
+        if (!parent.getAttribute(elem, "out", destPathOpt))
+            return false;
+            
+        std::vector<Element *> children = elem->getChildren();
+        for (unsigned int i=0 ; i<children.size() ; i++)
+            {
+            Element *child = children[i];
+            String tagName = child->getName();
+            if (tagName == "fileset")
+                {
+                if (!parseFileSet(child, parent, fileSet))
+                    return false;
+                }
+            }
+        return true;
+        }
+
+private:
+
+    String  commandOpt;
+    String  destPathOpt;
+    FileSet fileSet;
+
+};
+
+
+/**
+ * Generate the CxxTest root file
+ */
+class TaskCxxTestRoot: public Task
+{
+public:
+
+    TaskCxxTestRoot(MakeBase &par) : Task(par)
+         {
+         type    = TASK_CXXTEST_ROOT;
+         name    = "cxxtestroot";
+         }
+
+    virtual ~TaskCxxTestRoot()
+        {}
+
+    virtual bool execute()
+        {
+        if (!listFiles(parent, fileSet))
+            return false;
+        String fileSetDir = parent.eval(fileSet.getDirectory(), ".");
+        unsigned int newFiles = 0;
+                
+        String fullDest = parent.resolve(parent.eval(destPathOpt, "."));
+        String cmd = parent.eval(commandOpt, "cxxtestgen.py");
+        cmd.append(" --root -o ");
+        cmd.append(fullDest);
+        String templateFile = parent.eval(templateFileOpt, "");
+        if (templateFile.size()>0) {
+            String fullTemplate = parent.resolve(templateFile);
+            cmd.append(" --template=");
+            cmd.append(fullTemplate);
+            if (isNewerThan(fullTemplate, fullDest)) newFiles++;
+        }
+
+        for (unsigned int i=0 ; i<fileSet.size() ; i++)
+            {
+            String fileName = fileSet[i];
+            if (getSuffix(fileName) != "h")
+                continue;
+            String sourcePath;
+            if (fileSetDir.size()>0)
+                {
+                sourcePath.append(fileSetDir);
+                sourcePath.append("/");
+                }
+            sourcePath.append(fileName);
+            String fullSource = parent.resolve(sourcePath);
+
+            cmd.append(" ");
+            cmd.append(fullSource);
+            if (isNewerThan(fullSource, fullDest)) newFiles++;
+            }
+        
+        if (newFiles>0) {
+            size_t const lastSlash = fullDest.find_last_of('/');
+            if (lastSlash != fullDest.npos) {
+                String directory(fullDest, 0, lastSlash);
+                if (!createDirectory(directory))
+                    return false;
+            }
+
+            String outString, errString;
+            if (!executeCommand(cmd.c_str(), "", outString, errString))
+                {
+                error("<cxxtestroot> problem: %s", errString.c_str());
+                return false;
+                }
+        }
+
+        return true;
+        }
+
+    virtual bool parse(Element *elem)
+        {
+        if (!parent.getAttribute(elem, "command", commandOpt))
+            return false;
+        if (!parent.getAttribute(elem, "template", templateFileOpt))
+            return false;
+        if (!parent.getAttribute(elem, "out", destPathOpt))
+            return false;
+            
+        std::vector<Element *> children = elem->getChildren();
+        for (unsigned int i=0 ; i<children.size() ; i++)
+            {
+            Element *child = children[i];
+            String tagName = child->getName();
+            if (tagName == "fileset")
+                {
+                if (!parseFileSet(child, parent, fileSet))
+                    return false;
+                }
+            }
+        return true;
+        }
+
+private:
+
+    String  commandOpt;
+    String  templateFileOpt;
+    String  destPathOpt;
+    FileSet fileSet;
+
 };
 
 
@@ -8481,6 +8686,10 @@ Task *Task::createTask(Element *elem, int lineNr)
         task = new TaskCC(parent);
     else if (tagName == "copy")
         task = new TaskCopy(parent);
+    else if (tagName == "cxxtestpart")
+        task = new TaskCxxTestPart(parent);
+    else if (tagName == "cxxtestroot")
+        task = new TaskCxxTestRoot(parent);
     else if (tagName == "delete")
         task = new TaskDelete(parent);
     else if (tagName == "echo")

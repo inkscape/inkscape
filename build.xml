@@ -53,6 +53,7 @@
   <property name="arch"          value="mingw32-"/>
   <property name="archutil"      value=""/>
   <property name="devlibs"       location="c:/devlibs"/>
+  <property name="cxxtest"       location="cxxtest"/>
   <!-- -->
 
   <!-- Use these settings for the cross compiler -->  
@@ -191,10 +192,88 @@
 
   <!--
   ########################################################################
+  ## T A R G E T    :    C X X T E S T
+  ########################################################################
+  -->
+  <target name="cxxtest" depends="init"
+        description="generate test files" >
+
+    <!-- Generate CxxTest files -->
+    <cxxtestpart command="python ${cxxtest}/cxxtestgen.py"
+                 out="${src}/test-src.cpp">
+        <fileset dir="${src}">
+            <include name="attributes-test.h"/>
+            <include name="color-profile-test.h"/>
+            <include name="dir-util-test.h"/>
+            <include name="extract-uri-test.h"/>
+            <include name="mod360-test.h"/>
+            <include name="round-test.h"/>
+            <include name="sp-gradient-test.h"/>
+            <include name="sp-style-elem-test.h"/>
+            <include name="syle-test.h"/>
+            <include name="test-helpers.h"/>
+            <include name="verbs-test.h"/>
+        </fileset>
+    </cxxtestpart>
+    <cxxtestpart command="python ${cxxtest}/cxxtestgen.py" 
+                 out="${src}/display/test-display.cpp">
+        <fileset dir="${src}/display">
+            <include name="bezier-utils-test.h"/>
+        </fileset>
+    </cxxtestpart>
+    <cxxtestpart command="python ${cxxtest}/cxxtestgen.py" 
+                 out="${src}/helper/test-helper.cpp">
+        <fileset dir="${src}/helper">
+            <include name="units-test.h"/>
+        </fileset>
+    </cxxtestpart>
+    <cxxtestpart command="python ${cxxtest}/cxxtestgen.py" 
+                 out="${src}/libnr/test-nr.cpp">
+        <fileset dir="${src}/libnr">
+            <include name="nr-types-test.h"/>
+            <include name="nr-translate-test.h"/>
+            <include name="nr-rotate-test.h"/>
+            <include name="nr-scale-test.h"/>
+            <include name="nr-point-fns-test.h"/>
+            <include name="nr-rotate-fns-test.h"/>
+            <include name="in-svg-plane-test.h"/>
+            <include name="nr-matrix-test.h"/>
+        </fileset>
+    </cxxtestpart>
+    <cxxtestpart command="python ${cxxtest}/cxxtestgen.py" 
+                 out="${src}/svg/test-svg.cpp">
+        <fileset dir="${src}/svg">
+            <include name="css-ostringstream-test.h"/>
+            <include name="stringstream-test.h"/>
+            <include name="svg-color-test.h"/>
+            <include name="svg-path-test.h"/>
+        </fileset>
+    </cxxtestpart>
+    <cxxtestpart command="python ${cxxtest}/cxxtestgen.py" 
+                 out="${src}/xml/test-xml.cpp">
+        <fileset dir="${src}/xml">
+            <include name="repr-action-test.h"/>
+            <include name="quote-test.h"/>
+        </fileset>
+    </cxxtestpart>
+    <cxxtestroot command="python ${cxxtest}/cxxtestgen.py" 
+                 out="${src}/test-main.cpp"
+                 template="${src}/selfname.tpl">
+        <fileset dir="${src}">
+            <include name="MultiPrinter.h"/>
+            <include name="PylogFormatter.h"/>
+            <include name="TRPIFormatter.h"/>
+        </fileset>
+    </cxxtestroot>
+  </target>
+
+
+  <!--
+  ########################################################################
   ## T A R G E T    :    C O M P I L E
   ########################################################################
   -->
-  <target name="compile" depends="init"
+  <target name="compile" depends="cxxtest"
         description="compile the source to .o" >
 
     <!-- Compile from source to build -->
@@ -208,7 +287,8 @@
             <exclude name="ast/.*"/>
             <exclude name="bonobo/.*"/>
             <exclude name="deptool.cpp"/>
-            <exclude name="test-all.cpp"/>
+            <!--<exclude name="test-main.cpp"/>-->
+            <!--<exclude name="test-src.cpp"/>-->
             <exclude name="display/testnr.cpp"/>
             <exclude name="display/bezier-utils-test.cpp"/>
             <exclude name="dom/work/.*"/>
@@ -222,7 +302,7 @@
             <exclude name="extract-uri-test.cpp"/>
             <exclude name="helper/units-test.cpp"/>
             <!-- exclude name="inkview.cpp"/-->
-            <exclude name="libnr/test-nr.cpp"/>
+            <!--<exclude name="libnr/test-nr.cpp"/>-->
             <exclude name="libnr/test-nr-main.cpp"/>
             <exclude name="libnr/testnr.cpp"/>
             <exclude name="libnr/in-svg-plane-test.cpp"/>
@@ -240,14 +320,17 @@
             <exclude name="trace/potrace/potest.cpp"/>
             <exclude name="round-test.cpp"/>
             <exclude name="sp-gradient-test.cpp"/>
+            <exclude name="style-test.cpp"/>
             <exclude name="svg/ftos.cpp"/>
-            <exclude name="svg/test-svg.cpp"/>
+            <!--<exclude name="svg/test-svg.cpp"/>-->
             <exclude name="svg/test-svg-main.cpp"/>
+            <exclude name="svg/test-stubs.cpp"/>
             <exclude name="utest/.*"/>
+            <exclude name="util/list-container-test.cpp"/>
             <exclude name="widgets/test-widgets.cpp"/>
             <exclude name="xml/quote-test.cpp"/>
             <exclude name="xml/repr-action-test.cpp"/>
-            <exclude name="xml/test-xml.cpp"/>
+            <!--<exclude name="xml/test-xml.cpp"/>-->
             <exclude name="xml/test-xml-main.cpp"/>
             <exclude name="io/streamtest.cpp"/>
             <!--JABBER-->
@@ -299,6 +382,7 @@
             ${pcc.poppler}
             -I${devlibs}/include/gc
             ${pcc.libwpg-0.1} ${pcc.libwpg-stream-0.1}
+            -I${cxxtest}
             <!-- PERL -->
             <!-- -Wno-comment -I${devlibs}/perl/lib/CORE -->
             <!-- PYTHON -->
@@ -323,6 +407,14 @@
            <exclude name="main.o"/>
            <exclude name="winmain.o"/>
            <exclude name="inkview.o"/>
+           <!-- CxxTest -->
+           <exclude name="obj/test-main.o"/>
+           <exclude name="obj/test-src.o"/>
+           <exclude name="obj/display/test-display.o"/>
+           <exclude name="obj/helper/test-helper.o"/>
+           <exclude name="obj/libnr/test-nr.o"/>
+           <exclude name="obj/svg/test-svg.o"/>
+           <exclude name="obj/xml/test-xml.o"/>
        </fileset>
     </staticlib>
   </target>
@@ -451,6 +543,52 @@
     </link>
   </target>
 
+
+
+  <!--
+  ########################################################################
+  ## T A R G E T    :    L I N K C X X T E S T S
+  ########################################################################
+  -->
+  <target name="linkcxxtests" depends="lib"
+      description="link objects and library to create executable">
+
+    <link command="${arch}g++" out="${build}/cxxtests.exe"
+              strip="true" symfile="${build}/cxxtests.dbg"
+              stripcommand="${archutil}strip"
+              objcopycommand="${archutil}objcopy">
+       <flags>
+       </flags>
+       <fileset dir="${build}">
+           <include name="obj/test-main.o"/>
+           <include name="obj/test-src.o"/>
+           <include name="obj/display/test-display.o"/>
+           <include name="obj/helper/test-helper.o"/>
+           <include name="obj/libnr/test-nr.o"/>
+           <include name="obj/svg/test-svg.o"/>
+           <include name="obj/xml/test-xml.o"/>
+           <include name="libinkscape.a"/>
+       </fileset>
+       <libs>
+           -L${devlibs}/lib
+           ${pcl.poppler-cairo} ${pcl.poppler-glib} ${pcl.poppler} 
+           ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${pcl.gthread-2.0}
+           ${devlibs}/bin/libxml2.dll
+           ${devlibs}/bin/libxslt.dll
+           ${pcl.cairo} ${pcl.cairomm-1.0}
+           ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
+           ${devlibs}/lib/iconv.lib
+           ${pcl.ImageMagick++}
+           ${pcl.fontconfig} ${pcl.freetype2}
+           -lssl -lcrypto
+           ${pcl.lcms}
+           ${pcl.gsl}
+           -lpng -ljpeg.dll -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
+           -lgc
+           -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
+       </libs>
+    </link>
+  </target>
 
 
   <!--
@@ -682,6 +820,14 @@
     <delete dir="${dist}"/>
     <delete file="build.dep"/>
     <delete file="config.h"/>
+
+    <delete file="${src}/test-main.cpp"/>
+    <delete file="${src}/test-src.cpp"/>
+    <delete file="${src}/display/test-display.cpp"/>
+    <delete file="${src}/helper/test-helper.cpp"/>
+    <delete file="${src}/libnr/test-nr.cpp"/>
+    <delete file="${src}/svg/test-svg.cpp"/>
+    <delete file="${src}/xml/test-xml.cpp"/>
 
   </target>
 

@@ -1,11 +1,30 @@
 #include <cxxtest/TestSuite.h>
 
+#include <cstdlib>
+#include <glib.h>
+
+#include "repr.h"
+#include "event-fns.h"
+
+static void * const null_ptr = 0;
+
 class XmlReprActionTest : public CxxTest::TestSuite
 {
+    Inkscape::XML::Document *document;
+    Inkscape::XML::Node *a, *b, *c, *root;
+
 public:
 
     XmlReprActionTest()
     {
+        Inkscape::GC::init();
+
+        document = sp_repr_document_new("test");
+        root = document->root();
+
+        a = document->createElement("a");
+        b = document->createElement("b");
+        c = document->createElement("c");
     }
     virtual ~XmlReprActionTest() {}
 
@@ -14,9 +33,62 @@ public:
     static XmlReprActionTest *createSuite() { return new XmlReprActionTest(); }
     static void destroySuite( XmlReprActionTest *suite ) { delete suite; }
 
-    void testFoo()
+    void testRollbackOfNodeAddition()
     {
+        sp_repr_begin_transaction(document);
+        TS_ASSERT_EQUALS(sp_repr_parent(a) , null_ptr);
+
+        root->appendChild(a);
+        TS_ASSERT_EQUALS(sp_repr_parent(a) , root);
+
+        sp_repr_rollback(document);
+        TS_ASSERT_EQUALS(sp_repr_parent(a) , null_ptr);
     }
+
+    void testRollbackOfNodeRemoval()
+    {
+        root->appendChild(a);
+
+        sp_repr_begin_transaction(document);
+        TS_ASSERT_EQUALS(sp_repr_parent(a) , root);
+
+        sp_repr_unparent(a);
+        TS_ASSERT_EQUALS(sp_repr_parent(a) , null_ptr);
+
+        sp_repr_rollback(document);
+        TS_ASSERT_EQUALS(sp_repr_parent(a) , root);
+
+        sp_repr_unparent(a);
+    }
+
+    void testRollbackOfNodeReordering()
+    {
+        root->appendChild(a);
+        root->appendChild(b);
+        root->appendChild(c);
+
+        sp_repr_begin_transaction(document);
+        TS_ASSERT_EQUALS(sp_repr_next(a) , b);
+        TS_ASSERT_EQUALS(sp_repr_next(b) , c);
+        TS_ASSERT_EQUALS(sp_repr_next(c) , null_ptr);
+
+        root->changeOrder(b, c);
+        TS_ASSERT_EQUALS(sp_repr_next(a) , c);
+        TS_ASSERT_EQUALS(sp_repr_next(b) , null_ptr);
+        TS_ASSERT_EQUALS(sp_repr_next(c) , b);
+
+        sp_repr_rollback(document);
+        TS_ASSERT_EQUALS(sp_repr_next(a) , b);
+        TS_ASSERT_EQUALS(sp_repr_next(b) , c);
+        TS_ASSERT_EQUALS(sp_repr_next(c) , null_ptr);
+
+        sp_repr_unparent(a);
+        sp_repr_unparent(b);
+        sp_repr_unparent(c);
+    }
+
+    /* lots more tests needed ... */
+
 };
 
 /*
