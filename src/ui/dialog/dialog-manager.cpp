@@ -21,14 +21,12 @@
 #include "ui/dialog/align-and-distribute.h"
 #include "ui/dialog/document-metadata.h"
 #include "ui/dialog/document-properties.h"
-#include "ui/dialog/export.h"
 #include "ui/dialog/extension-editor.h"
 #include "ui/dialog/fill-and-stroke.h"
 #include "ui/dialog/filter-effects-dialog.h"
 #include "ui/dialog/find.h"
 #include "ui/dialog/inkscape-preferences.h"
 #include "ui/dialog/input.h"
-#include "ui/dialog/layer-editor.h"
 #include "ui/dialog/livepatheffect-editor.h"
 #include "ui/dialog/memory.h"
 #include "ui/dialog/messages.h"
@@ -36,11 +34,9 @@
 #ifdef ENABLE_SVG_FONTS
 #include "ui/dialog/svg-fonts-dialog.h"
 #endif // ENABLE_SVG_FONTS
-#include "ui/dialog/text-properties.h"
 #include "ui/dialog/tracedialog.h"
 #include "ui/dialog/transformation.h"
 #include "ui/dialog/undo-history.h"
-#include "ui/dialog/xml-editor.h"
 #include "ui/dialog/panel-dialog.h"
 
 #include "dialogs/layers-panel.h"
@@ -95,14 +91,12 @@ DialogManager::DialogManager() {
         registerFactory("AlignAndDistribute",  &create<AlignAndDistribute,   FloatingBehavior>);
         registerFactory("DocumentMetadata",    &create<DocumentMetadata,     FloatingBehavior>);
         registerFactory("DocumentProperties",  &create<DocumentProperties,   FloatingBehavior>);
-        registerFactory("Export",              &create<Export,               FloatingBehavior>);
         registerFactory("ExtensionEditor",     &create<ExtensionEditor,      FloatingBehavior>);
         registerFactory("FillAndStroke",       &create<FillAndStroke,        FloatingBehavior>);
         registerFactory("FilterEffectsDialog", &create<FilterEffectsDialog,  FloatingBehavior>);
         registerFactory("Find",                &create<Find,                 FloatingBehavior>);
         registerFactory("IconPreviewPanel",    &create<IconPreviewPanel,     FloatingBehavior>);
         registerFactory("InkscapePreferences", &create<InkscapePreferences,  FloatingBehavior>);
-        registerFactory("LayerEditor",         &create<LayerEditor,          FloatingBehavior>);
         registerFactory("LayersPanel",         &create<LayersPanel,          FloatingBehavior>);
         registerFactory("LivePathEffect",      &create<LivePathEffectEditor, FloatingBehavior>);
         registerFactory("Memory",              &create<Memory,               FloatingBehavior>);
@@ -112,13 +106,10 @@ DialogManager::DialogManager() {
         registerFactory("SvgFontsDialog",      &create<SvgFontsDialog,       FloatingBehavior>);
 #endif
         registerFactory("Swatches",            &create<SwatchesPanel,        FloatingBehavior>);
-        registerFactory("TextProperties",      &create<TextProperties,       FloatingBehavior>);
         registerFactory("TileDialog",          &create<TileDialog,           FloatingBehavior>);
         registerFactory("Trace",               &create<TraceDialog,          FloatingBehavior>);
         registerFactory("Transformation",      &create<Transformation,       FloatingBehavior>);
         registerFactory("UndoHistory",         &create<UndoHistory,          FloatingBehavior>);
-        registerFactory("XmlEditor",           &create<XmlEditor,            FloatingBehavior>);
-
         registerFactory("InputDevices",        &create<InputDialog,           FloatingBehavior>);
 
     } else {
@@ -126,14 +117,12 @@ DialogManager::DialogManager() {
         registerFactory("AlignAndDistribute",  &create<AlignAndDistribute,   DockBehavior>);
         registerFactory("DocumentMetadata",    &create<DocumentMetadata,     DockBehavior>);
         registerFactory("DocumentProperties",  &create<DocumentProperties,   DockBehavior>);
-        registerFactory("Export",              &create<Export,               DockBehavior>);
         registerFactory("ExtensionEditor",     &create<ExtensionEditor,      DockBehavior>);
         registerFactory("FillAndStroke",       &create<FillAndStroke,        DockBehavior>);
         registerFactory("FilterEffectsDialog", &create<FilterEffectsDialog,  DockBehavior>);
         registerFactory("Find",                &create<Find,                 DockBehavior>);
         registerFactory("IconPreviewPanel",    &create<IconPreviewPanel,     DockBehavior>);
         registerFactory("InkscapePreferences", &create<InkscapePreferences,  DockBehavior>);
-        registerFactory("LayerEditor",         &create<LayerEditor,          DockBehavior>);
         registerFactory("LayersPanel",         &create<LayersPanel,          DockBehavior>);
         registerFactory("LivePathEffect",      &create<LivePathEffectEditor, DockBehavior>);
         registerFactory("Memory",              &create<Memory,               DockBehavior>);
@@ -143,13 +132,10 @@ DialogManager::DialogManager() {
         registerFactory("SvgFontsDialog",      &create<SvgFontsDialog,       DockBehavior>);
 #endif
         registerFactory("Swatches",            &create<SwatchesPanel,        DockBehavior>);
-        registerFactory("TextProperties",      &create<TextProperties,       DockBehavior>);
         registerFactory("TileDialog",          &create<TileDialog,           DockBehavior>);
         registerFactory("Trace",               &create<TraceDialog,          DockBehavior>);
         registerFactory("Transformation",      &create<Transformation,       DockBehavior>);
         registerFactory("UndoHistory",         &create<UndoHistory,          DockBehavior>);
-        registerFactory("XmlEditor",           &create<XmlEditor,            DockBehavior>);
-
         registerFactory("InputDevices",        &create<InputDialog,          DockBehavior>);
 
     }
