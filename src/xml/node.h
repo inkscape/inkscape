@@ -103,15 +103,6 @@ public:
 
 protected:
     Node(Node const &) : Anchored() {}
-
-public: // ideally these should be protected too somehow...
-    virtual NodeObserver &_subtreeObservers()=0;
-    virtual void _setParent(Node *parent)=0;
-    virtual void _setNext(Node *next)=0;
-
-    virtual unsigned _childPosition(Node const &child) const=0;
-    virtual unsigned _cachedPosition() const=0;
-    virtual void _setCachedPosition(unsigned position) const=0;
 };
 
 }

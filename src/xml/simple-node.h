@@ -118,19 +118,11 @@ protected:
 
     virtual SimpleNode *_duplicate(Document *doc) const=0;
 
-public: // ideally these should be protected somehow...
-    NodeObserver &_subtreeObservers() { return _subtree_observers; }
-    void _setParent(Node *parent);
-    void _setNext(Node *next) { _next = dynamic_cast<SimpleNode *>(next); }
-
-    unsigned _childPosition(Node const &child) const;
-    unsigned _cachedPosition() const { return _cached_position; }
-    void _setCachedPosition(unsigned position) const {
-        _cached_position = position;
-    }
-
 private:
     void operator=(Node const &); // no assign
+
+    void _setParent(SimpleNode *parent);
+    unsigned _childPosition(SimpleNode const &child) const;
 
     SimpleNode *_parent;
     SimpleNode *_next;

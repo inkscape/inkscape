@@ -240,18 +240,18 @@ unsigned SimpleNode::position() const {
     return _parent->_childPosition(*this);
 }
 
-unsigned SimpleNode::_childPosition(Node const &child) const {
+unsigned SimpleNode::_childPosition(SimpleNode const &child) const {
     if (!_cached_positions_valid) {
         unsigned position=0;
         for ( SimpleNode *sibling = _first_child ;
               sibling ; sibling = sibling->_next )
         {
-            sibling->_setCachedPosition(position);
+            sibling->_cached_position = position;
             position++;
         }
         _cached_positions_valid = true;
     }
-    return child._cachedPosition();
+    return child._cached_position;
 }
 
 Node *SimpleNode::nthChild(unsigned index) {
@@ -277,10 +277,9 @@ bool SimpleNode::matchAttributeName(gchar const *partial_name) const {
     return false;
 }
 
-void SimpleNode::_setParent(Node *generic_parent) {
-    SimpleNode *parent = dynamic_cast<SimpleNode *>(generic_parent);
+void SimpleNode::_setParent(SimpleNode *parent) {
     if (_parent) {
-        _subtree_observers.remove(dynamic_cast<SimpleNode *>(_parent)->_subtree_observers);
+        _subtree_observers.remove(_parent->_subtree_observers);
     }
     _parent = parent;
     if (parent) {
