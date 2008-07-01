@@ -56,7 +56,6 @@ InkboardDocument::_initBindings()
     this->sm = &SessionManager::instance();
     this->state = State::INITIAL;
     this->tracker = new KeyNodeTable();
-    _bindDocument(*this);
 }
 
 void

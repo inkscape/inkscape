@@ -25,10 +25,6 @@ namespace Inkscape {
 
 namespace XML {
 
-void SimpleDocument::_initBindings() {
-    _bindDocument(*this);
-}
-
 void SimpleDocument::beginTransaction() {
     g_assert(!_in_transaction);
     _in_transaction = true;

@@ -122,7 +122,6 @@ public: // ideally these should be protected somehow...
     NodeObserver &_subtreeObservers() { return _subtree_observers; }
     void _setParent(Node *parent);
     void _setNext(Node *next) { _next = next; }
-    void _bindDocument(Document &document);
 
     unsigned _childPosition(Node const &child) const;
     unsigned _cachedPosition() const { return _cached_position; }

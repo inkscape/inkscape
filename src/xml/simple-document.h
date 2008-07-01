@@ -31,10 +31,7 @@ class SimpleDocument : public SimpleNode,
 public:
     explicit SimpleDocument()
     : SimpleNode(g_quark_from_static_string("xml"), this),
-      _in_transaction(false)
-    {
-        _initBindings();
-    }
+      _in_transaction(false) {}
 
     NodeType type() const { return Inkscape::XML::DOCUMENT_NODE; }
 
@@ -70,10 +67,7 @@ public:
 protected:
     SimpleDocument(SimpleDocument const &doc)
     : Node(), SimpleNode(doc), Document(), NodeObserver(),
-      _in_transaction(false)
-    {
-        _initBindings();
-    }
+      _in_transaction(false) {}
 
     SimpleNode *_duplicate(Document* /*doc*/) const
     {
@@ -81,8 +75,6 @@ protected:
     }
 
 private:
-    void _initBindings();
-
     bool _in_transaction;
     LogBuilder _log_builder;
 };

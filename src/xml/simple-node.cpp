@@ -301,10 +301,7 @@ void SimpleNode::setContent(gchar const *content) {
     _content = new_content;
 
     if ( _content != old_content ) {
-        if (_document) {
-            _document->logger()->notifyContentChanged(*this, old_content, _content);
-        }
-
+        _document->logger()->notifyContentChanged(*this, old_content, _content);
         _observers.notifyContentChanged(*this, old_content, _content);
     }
 }
@@ -355,16 +352,14 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const /*is_
     }
 
     if ( new_value != old_value && (!old_value || !new_value || strcmp(old_value, new_value))) {
-        if (_document) {
-            _document->logger()->notifyAttributeChanged(*this, key, old_value, new_value);
-        }
-
+        _document->logger()->notifyAttributeChanged(*this, key, old_value, new_value);
         _observers.notifyAttributeChanged(*this, key, old_value, new_value);
     }
 }
 
 void SimpleNode::addChild(Node *child, Node *ref) {
     g_assert(child);
+    g_assert(child->document() == _document);
     g_assert(!ref || ref->parent() == this);
     g_assert(!child->parent());
 
@@ -397,24 +392,8 @@ void SimpleNode::addChild(Node *child, Node *ref) {
     child->_setNext(next);
     _child_count++;
 
-    if (_document) {
-        child->_bindDocument(*_document);
-        _document->logger()->notifyChildAdded(*this, *child, ref);
-    }
-
+    _document->logger()->notifyChildAdded(*this, *child, ref);
     _observers.notifyChildAdded(*this, *child, ref);
-}
-
-void SimpleNode::_bindDocument(Document &document) {
-    g_assert(!_document || _document == &document);
-
-    if (!_document) {
-        _document = &document;
-
-        for ( Node *child = _first_child ; child != NULL ; child = child->next() ) {
-            child->_bindDocument(document);
-        }
-    }
 }
 
 void SimpleNode::removeChild(Node *child) {
@@ -442,10 +421,7 @@ void SimpleNode::removeChild(Node *child) {
     child->_setParent(NULL);
     _child_count--;
 
-    if (_document) {
-        _document->logger()->notifyChildRemoved(*this, *child, ref);
-    }
-
+    _document->logger()->notifyChildRemoved(*this, *child, ref);
     _observers.notifyChildRemoved(*this, *child, ref);
 }
 
@@ -489,10 +465,7 @@ void SimpleNode::changeOrder(Node *child, Node *ref) {
 
     _cached_positions_valid = false;
 
-    if (_document) {
-        _document->logger()->notifyChildOrderChanged(*this, *child, prev, ref);
-    }
-
+    _document->logger()->notifyChildOrderChanged(*this, *child, prev, ref);
     _observers.notifyChildOrderChanged(*this, *child, prev, ref);
 }
 
