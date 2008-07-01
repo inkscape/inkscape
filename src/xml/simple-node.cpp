@@ -277,13 +277,14 @@ bool SimpleNode::matchAttributeName(gchar const *partial_name) const {
     return false;
 }
 
-void SimpleNode::_setParent(Node *parent) {
-   if (_parent) {
-        _subtree_observers.remove(_parent->_subtreeObservers());
+void SimpleNode::_setParent(Node *generic_parent) {
+    SimpleNode *parent = dynamic_cast<SimpleNode *>(generic_parent);
+    if (_parent) {
+        _subtree_observers.remove(dynamic_cast<SimpleNode *>(_parent)->_subtree_observers);
     }
     _parent = parent;
     if (parent) {
-        _subtree_observers.add(parent->_subtreeObservers());
+        _subtree_observers.add(parent->_subtree_observers);
     }
 }
 
@@ -357,18 +358,23 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const /*is_
     }
 }
 
-void SimpleNode::addChild(Node *child, Node *ref) {
-    g_assert(child);
-    g_assert(child->document() == _document);
-    g_assert(!ref || ref->parent() == this);
-    g_assert(!child->parent());
+void SimpleNode::addChild(Node *generic_child, Node *generic_ref) {
+    g_assert(generic_child);
+    g_assert(generic_child->document() == _document);
+    g_assert(!generic_ref || generic_ref->document() == _document);
+
+    SimpleNode *child=dynamic_cast<SimpleNode *>(generic_child);
+    SimpleNode *ref=dynamic_cast<SimpleNode *>(generic_ref);
+
+    g_assert(!ref || ref->_parent == this);
+    g_assert(!child->_parent);
 
     Debug::EventTracker<DebugAddChild> tracker(*this, *child, ref);
 
     Node *next;
     if (ref) {
-        next = ref->next();
-        ref->_setNext(child);
+        next = ref->_next;
+        ref->_next = child;
     } else {
         next = _first_child;
         _first_child = child;
@@ -378,10 +384,10 @@ void SimpleNode::addChild(Node *child, Node *ref) {
         // set cached position if possible when appending
         if (!ref) {
             // if !next && !ref, child is sole child
-            child->_setCachedPosition(0);
+            child->_cached_position = 0;
             _cached_positions_valid = true;
         } else if (_cached_positions_valid) {
-            child->_setCachedPosition(ref->_cachedPosition() + 1);
+            child->_cached_position = ref->_cached_position + 1;
         }
     } else {
         // invalidate cached positions otherwise
@@ -389,24 +395,27 @@ void SimpleNode::addChild(Node *child, Node *ref) {
     }
 
     child->_setParent(this);
-    child->_setNext(next);
+    child->_next = next;
     _child_count++;
 
     _document->logger()->notifyChildAdded(*this, *child, ref);
     _observers.notifyChildAdded(*this, *child, ref);
 }
 
-void SimpleNode::removeChild(Node *child) {
-    g_assert(child);
-    g_assert(child->parent() == this);
+void SimpleNode::removeChild(Node *generic_child) {
+    g_assert(generic_child);
+    g_assert(generic_child->document() == _document);
 
-    Node *ref = ( child != _first_child ? previous_node(child) : NULL );
+    SimpleNode *child=dynamic_cast<SimpleNode *>(generic_child);
+    SimpleNode *ref=dynamic_cast<SimpleNode *>(previous_node(child));
+
+    g_assert(child->_parent == this);
 
     Debug::EventTracker<DebugRemoveChild> tracker(*this, *child);
 
-    Node *next = child->next();
+    Node *next = child->_next;
     if (ref) {
-        ref->_setNext(next);
+        ref->_next = next;
     } else {
         _first_child = next;
     }
@@ -417,7 +426,7 @@ void SimpleNode::removeChild(Node *child) {
         _cached_positions_valid = false;
     }
 
-    child->_setNext(NULL);
+    child->_next = NULL;
     child->_setParent(NULL);
     _child_count--;
 
@@ -425,13 +434,19 @@ void SimpleNode::removeChild(Node *child) {
     _observers.notifyChildRemoved(*this, *child, ref);
 }
 
-void SimpleNode::changeOrder(Node *child, Node *ref) {
-    g_return_if_fail(child);
+void SimpleNode::changeOrder(Node *generic_child, Node *generic_ref) {
+    g_assert(generic_child);
+    g_assert(generic_child->document() == this->_document);
+    g_assert(!generic_ref || generic_ref->document() == this->_document);
+
+    SimpleNode *const child=dynamic_cast<SimpleNode *>(generic_child);
+    SimpleNode *const ref=dynamic_cast<SimpleNode *>(generic_ref);
+
     g_return_if_fail(child->parent() == this);
     g_return_if_fail(child != ref);
     g_return_if_fail(!ref || ref->parent() == this);
 
-    Node *const prev = previous_node(child);
+    SimpleNode *const prev=dynamic_cast<SimpleNode *>(previous_node(child));
 
     Debug::EventTracker<DebugSetChildPosition> tracker(*this, *child, prev, ref);
 
@@ -440,9 +455,9 @@ void SimpleNode::changeOrder(Node *child, Node *ref) {
     Node *next;
 
     /* Remove from old position. */
-    next=child->next();
+    next = child->_next;
     if (prev) {
-        prev->_setNext(next);
+        prev->_next = next;
     } else {
         _first_child = next;
     }
@@ -452,13 +467,13 @@ void SimpleNode::changeOrder(Node *child, Node *ref) {
 
     /* Insert at new position. */
     if (ref) {
-        next = ref->next();
-        ref->_setNext(child);
+        next = ref->_next;
+        ref->_next = child;
     } else {
         next = _first_child;
         _first_child = child;
     }
-    child->_setNext(next);
+    child->_next = next;
     if (!next) {
         _last_child = child;
     }
