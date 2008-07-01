@@ -43,7 +43,6 @@ InkboardDocument::composeNewMessage(Inkscape::XML::Node *node)
 {
     Glib::ustring parentKey;
     Glib::ustring key = this->tracker->get(node);
-    Inkscape::XML::Node *parent = node->parent();
 
     Glib::ustring tempParentKey = this->tracker->get(node->parent());
     if(tempParentKey.size() < 1)
@@ -51,7 +50,7 @@ InkboardDocument::composeNewMessage(Inkscape::XML::Node *node)
     else
         parentKey = tempParentKey;
 
-    unsigned int index = parent->_childPosition(*node);
+    unsigned int index = node->position();
 
     Message::Message nodeMessage = MessageUtilities::objectToString(node);
     Message::Message message = String::ucompose(Vars::NEW_MESSAGE,parentKey,key,index,0,nodeMessage);

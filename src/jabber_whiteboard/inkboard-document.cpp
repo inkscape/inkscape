@@ -410,13 +410,10 @@ void InkboardDocument::notifyChildOrderChanged(XML::Node &parent,
 {
     if (_in_transaction && state == State::IN_WHITEBOARD) 
     {
-        XML::Node *element = (XML::Node *)&child;
-        XML::Node *parentElement = (XML::Node *)&parent;
-
-        unsigned int index = parentElement->_childPosition(*element);
+        unsigned int index = child.position();
 
         Message::Message message = String::ucompose(Vars::MOVE_MESSAGE,
-                tracker->get(element),index);
+                tracker->get(&child),index);
 
         send(getRecipient(),Message::MOVE,message);
     }
