@@ -32,7 +32,10 @@ LPESkeleton::LPESkeleton(LivePathEffectObject *lpeobject) :
     // initialise your parameters here:
     number(_("Float parameter"), _("just a real number like 1.4!"), "svgname", &wr, this, 1.2)
 {
-    // register all your parameters here, so Inkscape knows which parameters this effect has:
+    /* uncomment the following line to have the original path displayed while the item is selected */
+    //show_orig_path = true;
+
+    /* register all your parameters here, so Inkscape knows which parameters this effect has: */
     registerParameter( dynamic_cast<Parameter *>(&number) );
 }
 
