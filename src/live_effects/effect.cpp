@@ -413,11 +413,12 @@ Effect::addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
 
 void
 Effect::addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
-    using namespace std;
+    using namespace Inkscape::LivePathEffect;
     for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
-        if ((*p)->paramType() == Inkscape::LivePathEffect::POINT_PARAM) {
+        if ((*p)->paramType() == POINT_PARAM) {
+            PointParam *pparam = static_cast<PointParam *>(*p);
             KnotHolderEntity *e = dynamic_cast<KnotHolderEntity *>(*p);
-            e->create(desktop, item, knotholder);
+            e->create(desktop, item, knotholder, pparam->handleTip());
             knotholder->add(e);
         }
     }

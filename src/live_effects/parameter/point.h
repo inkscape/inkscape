@@ -30,7 +30,8 @@ public:
                 const Glib::ustring& key,
                 Inkscape::UI::Widget::Registry* wr,
                 Effect* effect,
-                Geom::Point default_value = Geom::Point(0,0));
+                const gchar *handle_tip = NULL,
+		Geom::Point default_value = Geom::Point(0,0) ); // tip for automatically associated on-canvas handle
     virtual ~PointParam();
 
     virtual ParamType paramType() { return POINT_PARAM; }
@@ -39,6 +40,7 @@ public:
 
     bool param_readSVGValue(const gchar * strvalue);
     gchar * param_getSVGValue() const;
+    inline const gchar *handleTip() const { return handle_tip ? handle_tip : param_tooltip.c_str(); }
 
     void param_setValue(Geom::Point newpoint);
     void param_set_default();
@@ -69,6 +71,7 @@ private:
     SPKnotShapeType knot_shape;
     SPKnotModeType knot_mode;
     guint32 knot_color;
+    gchar *handle_tip;
 };
 
 

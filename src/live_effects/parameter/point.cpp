@@ -32,7 +32,7 @@ namespace LivePathEffect {
 
 PointParam::PointParam( const Glib::ustring& label, const Glib::ustring& tip,
                         const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
-                        Effect* effect, Geom::Point default_value )
+                        Effect* effect, const gchar *htip, Geom::Point default_value)
     : Geom::Point(default_value), Parameter(label, tip, key, wr, effect), defvalue(default_value)
 {
     oncanvas_editable = true;
@@ -40,10 +40,13 @@ PointParam::PointParam( const Glib::ustring& label, const Glib::ustring& tip,
     knot_shape = SP_KNOT_SHAPE_SQUARE;
     knot_mode  = SP_KNOT_MODE_XOR;
     knot_color = 0x00ff0000;
+    handle_tip = g_strdup(htip);
 }
 
 PointParam::~PointParam()
 {
+    if (handle_tip)
+        g_free(handle_tip);
 }
 
 void

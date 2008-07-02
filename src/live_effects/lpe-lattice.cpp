@@ -45,22 +45,22 @@ LPELattice::LPELattice(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     
     // initialise your parameters here:
-    grid_point0(_("Control handle 0"), _("Tadah"), "gridpoint0", &wr, this),
-    grid_point1(_("Control handle 1"), _("Tadah"), "gridpoint1", &wr, this),
-    grid_point2(_("Control handle 2"), _("Tadah"), "gridpoint2", &wr, this),
-    grid_point3(_("Control handle 3"), _("Tadah"), "gridpoint3", &wr, this),
-    grid_point4(_("Control handle 4"), _("Tadah"), "gridpoint4", &wr, this),
-    grid_point5(_("Control handle 5"), _("Tadah"), "gridpoint5", &wr, this),
-    grid_point6(_("Control handle 6"), _("Tadah"), "gridpoint6", &wr, this),
-    grid_point7(_("Control handle 7"), _("Tadah"), "gridpoint7", &wr, this),
-    grid_point8(_("Control handle 8"), _("Tadah"), "gridpoint8", &wr, this),
-    grid_point9(_("Control handle 9"), _("Tadah"), "gridpoint9", &wr, this),
-    grid_point10(_("Control handle 10"), _("Tadah"), "gridpoint10", &wr, this),
-    grid_point11(_("Control handle 11"), _("Tadah"), "gridpoint11", &wr, this),
-    grid_point12(_("Control handle 12"), _("Tadah"), "gridpoint12", &wr, this),
-    grid_point13(_("Control handle 13"), _("Tadah"), "gridpoint13", &wr, this),
-    grid_point14(_("Control handle 14"), _("Tadah"), "gridpoint14", &wr, this),
-    grid_point15(_("Control handle 15"), _("Tadah"), "gridpoint15", &wr, this)
+    grid_point0(_("Control handle 0"), _("Control handle 0"), "gridpoint0", &wr, this),
+    grid_point1(_("Control handle 1"), _("Control handle 1"), "gridpoint1", &wr, this),
+    grid_point2(_("Control handle 2"), _("Control handle 2"), "gridpoint2", &wr, this),
+    grid_point3(_("Control handle 3"), _("Control handle 3"), "gridpoint3", &wr, this),
+    grid_point4(_("Control handle 4"), _("Control handle 4"), "gridpoint4", &wr, this),
+    grid_point5(_("Control handle 5"), _("Control handle 5"), "gridpoint5", &wr, this),
+    grid_point6(_("Control handle 6"), _("Control handle 6"), "gridpoint6", &wr, this),
+    grid_point7(_("Control handle 7"), _("Control handle 7"), "gridpoint7", &wr, this),
+    grid_point8(_("Control handle 8"), _("Control handle 8"), "gridpoint8", &wr, this),
+    grid_point9(_("Control handle 9"), _("Control handle 9"), "gridpoint9", &wr, this),
+    grid_point10(_("Control handle 10"), _("Control handle 10"), "gridpoint10", &wr, this),
+    grid_point11(_("Control handle 11"), _("Control handle 11"), "gridpoint11", &wr, this),
+    grid_point12(_("Control handle 12"), _("Control handle 12"), "gridpoint12", &wr, this),
+    grid_point13(_("Control handle 13"), _("Control handle 13"), "gridpoint13", &wr, this),
+    grid_point14(_("Control handle 14"), _("Control handle 14"), "gridpoint14", &wr, this),
+    grid_point15(_("Control handle 15"), _("Control handle 15"), "gridpoint15", &wr, this)
     
 {
     // register all your parameters here, so Inkscape knows which parameters this effect has:

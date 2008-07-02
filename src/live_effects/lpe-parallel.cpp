@@ -47,7 +47,7 @@ public:
 LPEParallel::LPEParallel(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     // initialise your parameters here:
-    offset_pt(_("Offset"), _("Tadah"), "offset_pt", &wr, this),
+    offset_pt(_("Offset"), _("Adjust the offset"), "offset_pt", &wr, this),
     length_left(_("Length left"), _("Specifies the left end of the parallel"), "length-left", &wr, this, 150),
     length_right(_("Length right"), _("Specifies the right end of the parallel"), "length-right", &wr, this, 150)
 {
