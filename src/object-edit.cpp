@@ -88,6 +88,7 @@ sp_item_knot_holder(SPItem *item, SPDesktop *desktop)
         knotholder = new FlowtextKnotHolder(desktop, SP_FLOWTEXT(item)->get_frame(NULL), NULL);
     } else if ((SP_OBJECT(item)->style->fill.isPaintserver())
                && SP_IS_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style))) {
+        knotholder = new KnotHolder(desktop, item, NULL);
         knotholder->add_pattern_knotholder();
     }
 
