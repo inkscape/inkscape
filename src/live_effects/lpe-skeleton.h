@@ -20,6 +20,15 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
+// each knotholder handle for your LPE requires a separate class derived from KnotHolderEntity;
+// define it in lpe-skeleton.cpp and register it in the effect's constructor
+/**
+namespace Skeleton {
+  // we need a separate namespace to avoid clashes with other LPEs
+  class KnotHolderEntityMyHandle;
+}
+**/
+
 class LPESkeleton : public Effect {
 public:
     LPESkeleton(LivePathEffectObject *lpeobject);
@@ -29,6 +38,9 @@ public:
 //    virtual void doEffect (SPCurve * curve);
 //    virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
+
+    /* the knotholder entity classes (if any) must be declared friends */
+    //friend class Skeleton::KnotHolderEntityMyHandle;
 
 private:
     // add the parameters for your effect here:
