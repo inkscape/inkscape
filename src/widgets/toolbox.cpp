@@ -220,11 +220,7 @@ static struct {
     { NULL, NULL, NULL, NULL, NULL, SP_VERB_INVALID, NULL, NULL }
 };
 
-#if GTK_CHECK_VERSION(2,12,0)
-#define TOOLBAR_SLIDER_HINT "minimal"
-#else // GTK_CHECK_VERSION(2,12,0)
 #define TOOLBAR_SLIDER_HINT "full"
-#endif // GTK_CHECK_VERSION(2,12,0)
 
 static gchar const * ui_descr =
         "<ui>"
