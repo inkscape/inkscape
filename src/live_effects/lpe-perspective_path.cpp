@@ -30,11 +30,23 @@
 
 #include "inkscape.h"
 
-// You might need to include other 2geom files. You can add them here:
 #include <2geom/path.h>
 
 namespace Inkscape {
 namespace LivePathEffect {
+
+namespace PP {
+
+class KnotHolderEntityOffset : public KnotHolderEntity
+{
+public:
+    virtual bool isLPEParam() { return true; }
+
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+};
+
+} // namespace PP
 
 LPEPerspectivePath::LPEPerspectivePath(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
@@ -51,6 +63,8 @@ LPEPerspectivePath::LPEPerspectivePath(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&offsetx) );
     registerParameter( dynamic_cast<Parameter *>(&offsety) );
     registerParameter( dynamic_cast<Parameter *>(&uses_plane_xy) );
+
+    registerKnotHolderHandle(new PP::KnotHolderEntityOffset(), _("Adjust the origin"));
 
     concatenate_before_pwd2 = true; // don't split the path into its subpaths
 
@@ -86,13 +100,12 @@ LPEPerspectivePath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > cons
     D2<Piecewise<SBasis> > B = make_cuts_independant(path_a_pw);
     Piecewise<SBasis> preimage[4];
 
-    Geom::Point orig = Geom::Point(uses_plane_xy ? boundingbox_X.max() : boundingbox_X.min(),
-                                   boundingbox_Y.middle());
-
     //Geom::Point orig = Geom::Point(bounds_X.min(), bounds_Y.middle());
     //orig = Geom::Point(orig[X], sp_document_height(inkscape_active_document()) - orig[Y]);
 
     //double offset = uses_plane_xy ? boundingbox_X.extent() : 0.0;
+
+    orig = Point(uses_plane_xy ? boundingbox_X.max() : boundingbox_X.min(), boundingbox_Y.middle());
 
     /**
     g_print ("Orig: (%8.2f, %8.2f)\n", orig[X], orig[Y]);
@@ -136,7 +149,42 @@ LPEPerspectivePath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > cons
     return output;
 }
 
-/* ######################## */
+namespace PP {
+
+// TODO: make this more generic
+static LPEPerspectivePath *
+get_effect(SPItem *item)
+{
+    Effect *effect = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+    if (effect->effectType() != PERSPECTIVE_PATH) {
+        g_print ("Warning: Effect is not of type LPEPerspectivePath!\n");
+        return NULL;
+    }
+    return static_cast<LPEPerspectivePath *>(effect);
+}
+
+void
+KnotHolderEntityOffset::knot_set(NR::Point const &p, NR::Point const &origin, guint /*state*/)
+{
+    using namespace Geom;
+ 
+    LPEPerspectivePath* lpe = get_effect(item);
+
+    lpe->offsetx.param_set_value((p - origin)[NR::X]);
+    lpe->offsety.param_set_value(-(p - origin)[NR::Y]); // additional minus sign is due to coordinate system flipping
+
+    // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
+    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
+}
+
+NR::Point
+KnotHolderEntityOffset::knot_get()
+{
+    LPEPerspectivePath* lpe = get_effect(item);
+    return lpe->orig + Geom::Point(lpe->offsetx, -lpe->offsety);
+}
+
+} // namespace PP
 
 } //namespace LivePathEffect
 } /* namespace Inkscape */

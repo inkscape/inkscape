@@ -25,6 +25,11 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
+namespace PP {
+  // we need a separate namespace to avoid clashes with other LPEs
+  class KnotHolderEntityOffset;
+}
+
 class LPEPerspectivePath : public Effect, GroupBBoxEffect {
 public:
     LPEPerspectivePath(LivePathEffectObject *lpeobject);
@@ -34,14 +39,20 @@ public:
 
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
+    /* the knotholder entity classes must be declared friends */
+    friend class PP::KnotHolderEntityOffset;
+
 private:
     // add the parameters for your effect here:
     ScalarParam scalex;
     ScalarParam scaley;
+    // TODO: rewrite this using a PointParam instead of two ScalarParams
     ScalarParam offsetx;
     ScalarParam offsety;
     BoolParam uses_plane_xy;
     // there are all kinds of parameters. Check the /live_effects/parameter directory which types exist!
+
+    Geom::Point orig;
 
     LPEPerspectivePath(const LPEPerspectivePath&);
     LPEPerspectivePath& operator=(const LPEPerspectivePath&);
