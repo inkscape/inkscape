@@ -97,19 +97,9 @@ PointParam::param_newWidget(Gtk::Tooltips * tooltips)
     pointwdg->clearProgrammatically();
     pointwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change point parameter"));
 
-    Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( "draw_node", Inkscape::ICON_SIZE_BUTTON) );
-    Gtk::Button * pButton = Gtk::manage(new Gtk::Button());
-    pButton->set_relief(Gtk::RELIEF_NONE);
-    pIcon->show();
-    pButton->add(*pIcon);
-    pButton->show();
-
     Gtk::HBox * hbox = Gtk::manage( new Gtk::HBox() );
-    static_cast<Gtk::HBox*>(hbox)->pack_start(*pButton, true, true);
     static_cast<Gtk::HBox*>(hbox)->pack_start(*pointwdg, true, true);
     static_cast<Gtk::HBox*>(hbox)->show_all_children();
-
-    tooltips->set_tip(*pButton, _("Edit on-canvas"));
 
     return dynamic_cast<Gtk::Widget *> (hbox);
 }
