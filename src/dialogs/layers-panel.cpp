@@ -729,6 +729,7 @@ LayersPanel::LayersPanel() :
 
     _scroller.add( _tree );
     _scroller.set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC );
+    _scroller.set_shadow_type(Gtk::SHADOW_IN);
 
     _watching.push_back( &_compositeSettings );
 
