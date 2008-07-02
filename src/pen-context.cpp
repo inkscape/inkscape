@@ -1090,20 +1090,21 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
                     pc->green_bpaths = g_slist_remove(pc->green_bpaths, pc->green_bpaths->data);
                 }
                 /* Get last segment */
-                NArtBpath const *const p = SP_CURVE_BPATH(pc->green_curve);
-                gint const e = SP_CURVE_LENGTH(pc->green_curve);
-                if ( e < 2 ) {
-                    g_warning("Green curve length is %d", e);
+                if ( pc->green_curve->is_empty() ) {
+                    g_warning("pen_handle_key_press, case GDK_KP_Delete: Green curve is empty");
                     break;
                 }
-                pc->p[0] = p[e - 2].c(3);
-                if (p[e - 1].code == NR_CURVETO) {
-                    pc->p[1] = p[e - 1].c(1);
+                // The code below assumes that pc->green_curve has only ONE path !
+                Geom::Path const & path = pc->green_curve->get_pathvector().back();
+                Geom::Curve const * crv = &path.back_default();
+                pc->p[0] = crv->initialPoint();
+                if ( Geom::CubicBezier const * cubic = dynamic_cast<Geom::CubicBezier const *>(crv)) {
+                    pc->p[1] = from_2geom( (*cubic)[1] );
                 } else {
                     pc->p[1] = pc->p[0];
                 }
                 NR::Point const pt(( pc->npoints < 4
-                                     ? p[e - 1].c(3)
+                                     ? crv->finalPoint()
                                      : pc->p[3] ));
                 pc->npoints = 2;
                 pc->green_curve->backspace();
