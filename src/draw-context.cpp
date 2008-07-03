@@ -42,6 +42,7 @@
 #include "sp-path.h"
 #include "sp-namedview.h"
 #include "live_effects/lpe-patternalongpath.h"
+#include "style.h"
 
 static void sp_draw_context_class_init(SPDrawContextClass *klass);
 static void sp_draw_context_init(SPDrawContext *dc);
@@ -271,6 +272,11 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
     if (item) {
         int shape = prefs_get_int_attribute("tools.freehand", "shape", 0);
 
+        bool shape_applied = false;
+        SPCSSAttr *css_item = sp_css_attr_from_object (SP_OBJECT(item), SP_STYLE_FLAG_ALWAYS);
+        const char *cfill = sp_repr_css_property(css_item, "fill", "none");
+        const char *cstroke = sp_repr_css_property(css_item, "stroke", "none");
+
         switch (shape) {
             case 0:
                 break;
@@ -279,7 +285,8 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
                 Effect::createAndApply(PATTERN_ALONG_PATH, dc->desktop->doc(), item);
                 Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
                 static_cast<LPEPatternAlongPath*>(lpe)->pattern.on_paste_button_click();
-                return;
+
+                shape_applied = true;
             }
             case 2:
             {
@@ -292,10 +299,20 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
                 c->closepath();
                 spdc_paste_curve_as_param_path(c, dc, item);
                 c->unref();
-                return;
+
+                shape_applied = true;
             }
             default:
                 break;
+        }
+        if (shape_applied) {
+            // apply original stroke color as fill and unset stroke; then return
+            SPCSSAttr *css = sp_repr_css_attr_new();
+            sp_repr_css_set_property (css, "fill", cstroke);
+            sp_repr_css_set_property (css, "stroke", "none");
+            sp_desktop_apply_css_recursive(SP_OBJECT(item), css, true);
+            sp_repr_css_attr_unref(css);
+            return;
         }
 
         if (prefs_get_int_attribute("tools.freehand", "spiro-spline-mode", 0)) {
