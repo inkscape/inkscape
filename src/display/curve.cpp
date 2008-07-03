@@ -303,13 +303,10 @@ SPCurve::get_segment_count() const
  * Increase _refcount of curve.
  *
  * \todo should this be shared with other refcounting code?
- * 2GEOMproof
  */
 SPCurve *
 SPCurve::ref()
 {
-    g_return_val_if_fail(this != NULL, NULL);
-
     _refcount += 1;
 
     return this;
@@ -319,13 +316,10 @@ SPCurve::ref()
  * Decrease refcount of curve, with possible destruction.
  *
  * \todo should this be shared with other refcounting code?
- * 2GEOMproof
  */
 SPCurve *
 SPCurve::unref()
 {
-    g_return_val_if_fail(this != NULL, NULL);
-
     _refcount -= 1;
 
     if (_refcount < 1) {
@@ -364,8 +358,6 @@ SPCurve::ensure_space(guint space)
 SPCurve *
 SPCurve::copy() const
 {
-    g_return_val_if_fail(this != NULL, NULL);
-
     return SPCurve::new_from_foreign_bpath(_bpath);
 }
 
@@ -376,8 +368,6 @@ SPCurve::copy() const
 SPCurve *
 SPCurve::concat(GSList const *list)
 {
-    g_return_val_if_fail(list != NULL, NULL);
-
     gint length = 0;
 
     for (GSList const *l = list; l != NULL; l = l->next) {
@@ -424,8 +414,6 @@ SPCurve::concat(GSList const *list)
 GSList *
 SPCurve::split() const
 {
-    g_return_val_if_fail(this != NULL, NULL);
-
     guint p = 0;
     GSList *l = NULL;
 
@@ -529,8 +517,6 @@ SPCurve::transform(NR::translate const &m)
 void
 SPCurve::reset()
 {
-    g_return_if_fail(this != NULL);
-
     _bpath->code = NR_END;
     _end = 0;
     _substart = 0;
@@ -569,7 +555,6 @@ SPCurve::moveto(Geom::Point const &p)
 void
 SPCurve::moveto(NR::Point const &p)
 {
-    g_return_if_fail(this != NULL);
     g_return_if_fail(!_moving);
 
     _substart = _end;
@@ -606,7 +591,6 @@ SPCurve::lineto(NR::Point const &p)
 void
 SPCurve::lineto(gdouble x, gdouble y)
 {
-    g_return_if_fail(this != NULL);
     g_return_if_fail(_hascpt);
 
     if (_moving) {
@@ -692,7 +676,6 @@ SPCurve::curveto(NR::Point const &p0, NR::Point const &p1, NR::Point const &p2)
 void
 SPCurve::curveto(gdouble x0, gdouble y0, gdouble x1, gdouble y1, gdouble x2, gdouble y2)
 {
-    g_return_if_fail(this != NULL);
     g_return_if_fail(_hascpt);
     g_return_if_fail(!_moving);
 
@@ -746,7 +729,6 @@ SPCurve::curveto(gdouble x0, gdouble y0, gdouble x1, gdouble y1, gdouble x2, gdo
 void
 SPCurve::closepath()
 {
-    g_return_if_fail(this != NULL);
     g_return_if_fail(_hascpt);
     g_return_if_fail(!_posSet);
     g_return_if_fail(!_moving);
@@ -808,7 +790,6 @@ SPCurve::closepath()
 void
 SPCurve::closepath_current()
 {
-    g_return_if_fail(this != NULL);
     g_return_if_fail(_hascpt);
     g_return_if_fail(!_posSet);
     g_return_if_fail(!_closed);
@@ -892,8 +873,6 @@ SPCurve::is_closed() const
 NArtBpath const *
 SPCurve::last_bpath() const
 {
-    g_return_val_if_fail(this != NULL, NULL);
-
     if (_end == 0) {
         return NULL;
     }
@@ -1006,8 +985,6 @@ SPCurve::second_point() const
 NR::Point
 SPCurve::penultimate_point() const
 {
-    g_return_val_if_fail(this != NULL, NR::Point(0, 0));
-
     if (_end < 2) {
         return _movePos;
     }
@@ -1105,7 +1082,6 @@ void
 SPCurve::append(SPCurve const *curve2,
                 bool use_lineto)
 {
-    g_return_if_fail(this != NULL);
     g_return_if_fail(curve2 != NULL);
 
     if (curve2->is_empty())
@@ -1189,7 +1165,6 @@ SPCurve::append(SPCurve const *curve2,
 SPCurve *
 SPCurve::append_continuous(SPCurve const *c1, gdouble tolerance)
 {
-    g_return_val_if_fail(this != NULL, NULL);
     g_return_val_if_fail(c1 != NULL, NULL);
     g_return_val_if_fail(!_closed, NULL);
     g_return_val_if_fail(!c1->_closed, NULL);
@@ -1254,8 +1229,6 @@ SPCurve::append_continuous(SPCurve const *c1, gdouble tolerance)
 void
 SPCurve::backspace()
 {
-    g_return_if_fail(this != NULL);
-
     if ( is_empty() )
         return;
 
