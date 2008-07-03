@@ -278,9 +278,11 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
 
         switch (shape) {
             case 0:
+                // don't apply any shape
                 break;
             case 1:
             {
+                // take shape from clipboard; TODO: catch the case where clipboard is empty
                 Effect::createAndApply(PATTERN_ALONG_PATH, dc->desktop->doc(), item);
                 Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
                 static_cast<LPEPatternAlongPath*>(lpe)->pattern.on_paste_button_click();
@@ -290,6 +292,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
             }
             case 2:
             {
+                // "crescendo"
                 // TODO: this is only for illustration (we create a "crescendo"-shaped path
                 //       manually; eventually we should read the path from a separate file)
                 SPCurve *c = new SPCurve();
@@ -305,6 +308,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
             }
             case 3:
             {
+                // "decrescendo"
                 // TODO: this is only for illustration (we create a "decrescendo"-shaped path
                 //       manually; eventually we should read the path from a separate file)
                 SPCurve *c = new SPCurve();
