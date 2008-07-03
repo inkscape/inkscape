@@ -274,7 +274,6 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
 
         bool shape_applied = false;
         SPCSSAttr *css_item = sp_css_attr_from_object (SP_OBJECT(item), SP_STYLE_FLAG_ALWAYS);
-        const char *cfill = sp_repr_css_property(css_item, "fill", "none");
         const char *cstroke = sp_repr_css_property(css_item, "stroke", "none");
 
         switch (shape) {
@@ -287,8 +286,24 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
                 static_cast<LPEPatternAlongPath*>(lpe)->pattern.on_paste_button_click();
 
                 shape_applied = true;
+                break;
             }
             case 2:
+            {
+                // TODO: this is only for illustration (we create a "crescendo"-shaped path
+                //       manually; eventually we should read the path from a separate file)
+                SPCurve *c = new SPCurve();
+                c->moveto(0,5);
+                c->lineto(200,10);
+                c->lineto(200,0);
+                c->closepath();
+                spdc_paste_curve_as_param_path(c, dc, item);
+                c->unref();
+
+                shape_applied = true;
+                break;
+            }
+            case 3:
             {
                 // TODO: this is only for illustration (we create a "decrescendo"-shaped path
                 //       manually; eventually we should read the path from a separate file)
@@ -301,6 +316,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
                 c->unref();
 
                 shape_applied = true;
+                break;
             }
             default:
                 break;

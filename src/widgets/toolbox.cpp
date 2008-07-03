@@ -3342,6 +3342,7 @@ GList * freehand_shape_dropdown_items_list() {
 
     glist = g_list_append (glist, _("None"));
     glist = g_list_append (glist, _("Clipboard"));
+    glist = g_list_append (glist, _("Crescendo"));
     glist = g_list_append (glist, _("Decrescendo"));
 
     return glist;
