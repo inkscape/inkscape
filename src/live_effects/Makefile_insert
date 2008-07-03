@@ -60,5 +60,7 @@ live_effects_liblive_effects_a_SOURCES = \
 	live_effects/lpe-parallel.cpp	\
 	live_effects/lpe-parallel.h	\
 	live_effects/lpe-copy_rotate.cpp	\
-	live_effects/lpe-copy_rotate.h
+	live_effects/lpe-copy_rotate.h	\
+	live_effects/lpe-offset.cpp	\
+	live_effects/lpe-offset.h
 

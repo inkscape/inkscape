@@ -77,6 +77,7 @@ enum EffectType {
     ANGLE_BISECTOR,
     PARALLEL,
     COPY_ROTATE,
+    OFFSET,
     INVALID_LPE // This must be last
 };
 
