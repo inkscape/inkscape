@@ -9,11 +9,11 @@ This is wrong, it should read
    W_{q,q} = 1 (n even)
 
 */
-#include "sbasis-to-bezier.h"
-#include "choose.h"
-#include "svg-path.h"
+#include <2geom/sbasis-to-bezier.h>
+#include <2geom/choose.h>
+#include <2geom/svg-path.h>
 #include <iostream>
-#include "exception.h"
+#include <2geom/exception.h>
 
 namespace Geom{
 

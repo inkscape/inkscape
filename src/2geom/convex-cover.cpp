@@ -29,7 +29,7 @@
  *
  */
 
-#include "convex-cover.h"
+#include <2geom/convex-cover.h>
 #include <algorithm>
 #include <map>
 /** Todo:
@@ -264,7 +264,7 @@ proposed algorithm:  We must be very careful about rounding here.
 */
 bool
 ConvexHull::no_colinear_points() const {
-
+    // XXX: implement me!
 }
 
 bool
@@ -292,8 +292,8 @@ bridges(ConvexHull a, ConvexHull b) {
     map<int, int> abridges;
     map<int, int> bbridges;
 
-    for(int ia = 0; ia < a.boundary.size(); ia++) {
-        for(int ib = 0; ib < b.boundary.size(); ib++) {
+    for(unsigned ia = 0; ia < a.boundary.size(); ia++) {
+        for(unsigned ib = 0; ib < b.boundary.size(); ib++) {
             Point d = b[ib] - a[ia];
             Geom::Coord e = cross(d, a[ia - 1] - a[ia]), f = cross(d, a[ia + 1] - a[ia]);
             Geom::Coord g = cross(d, b[ib - 1] - a[ia]), h = cross(d, b[ib + 1] - a[ia]);
@@ -336,8 +336,8 @@ unsigned find_bottom_right(ConvexHull const &a) {
 ConvexHull sweepline_intersection(ConvexHull const &a, ConvexHull const &b) {
     ConvexHull ret;
     
-    int al = 0;
-    int bl = 0;
+    unsigned al = 0;
+    unsigned bl = 0;
     
     while(al+1 < a.boundary.size() &&
           (a.boundary[al+1][Y] > b.boundary[bl][Y])) {
@@ -348,8 +348,8 @@ ConvexHull sweepline_intersection(ConvexHull const &a, ConvexHull const &b) {
         bl++;
     }
     // al and bl now point to the top of the first pair of edges that overlap in y value
-    double sweep_y = std::min(a.boundary[al][Y],
-                              b.boundary[bl][Y]);
+    //double sweep_y = std::min(a.boundary[al][Y],
+    //                          b.boundary[bl][Y]);
     return ret;
 }
 
@@ -358,7 +358,7 @@ ConvexHull sweepline_intersection(ConvexHull const &a, ConvexHull const &b) {
  * (Proof: take any two points both in a and in b.  Any point between them is in a by convexity,
  * and in b by convexity, thus in both.  Need to prove still finite bounds.)
  */
-ConvexHull intersection(ConvexHull a, ConvexHull b) {
+ConvexHull intersection(ConvexHull /*a*/, ConvexHull /*b*/) {
     ConvexHull ret;
     /*
     int ai = 0, bi = 0;
@@ -384,13 +384,13 @@ ConvexHull merge(ConvexHull a, ConvexHull b) {
     ab[-1] = 0;
     bb[-1] = 0;
 
-    int i = -1;
+    int i = -1; // XXX: i is int but refers to vector indices
 
     if(a.boundary[0][1] > b.boundary[0][1]) goto start_b;
     while(true) {
         for(; ab.count(i) == 0; i++) {
             ret.boundary.push_back(a[i]);
-            if(i >= a.boundary.size()) return ret;
+            if(i >= (int)a.boundary.size()) return ret;
         }
         if(ab[i] == 0 && i != -1) break;
         i = ab[i];
@@ -398,7 +398,7 @@ ConvexHull merge(ConvexHull a, ConvexHull b) {
         
         for(; bb.count(i) == 0; i++) {
             ret.boundary.push_back(b[i]);
-            if(i >= b.boundary.size()) return ret;
+            if(i >= (int)b.boundary.size()) return ret;
         }
         if(bb[i] == 0 && i != -1) break;
         i = bb[i];

@@ -1,7 +1,7 @@
-#include "shape.h"
-#include "utils.h"
-#include "sweep.h"
-#include "ord.h"
+#include <2geom/shape.h>
+#include <2geom/utils.h>
+#include <2geom/sweep.h>
+#include <2geom/ord.h>
 
 #include <iostream>
 #include <algorithm>

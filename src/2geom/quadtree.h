@@ -1,7 +1,7 @@
 #include <vector>
 #include <cassert>
 
-#include "d2.h"
+#include <2geom/d2.h>
 
 namespace Geom{
 

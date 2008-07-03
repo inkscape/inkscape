@@ -32,6 +32,7 @@
  */
 
 #include <cmath>
+#include <vector>
 
 namespace Geom {
 
@@ -75,6 +76,9 @@ inline double decimal_round(double const x, int const places) {
     double const multiplier = std::pow(10.0, places);
     return round( x * multiplier ) / multiplier;
 }
+
+
+void binomial_coefficients(std::vector<size_t>& bc, size_t n);
 
 }
 

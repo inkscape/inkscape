@@ -7,8 +7,8 @@
 
 #include <iostream>
 
-#include "coord.h"
-#include "utils.h"
+#include <2geom/coord.h>
+#include <2geom/utils.h>
 
 namespace Geom {
 
@@ -91,7 +91,7 @@ class Point {
             _pt[i] += o._pt[i];
         }
         return *this;
-    }  
+    }
     inline Point &operator-=(Point const &o) {
         for ( unsigned i = 0 ; i < 2 ; ++i ) {
             _pt[i] -= o._pt[i];
@@ -177,6 +177,12 @@ extern double angle_between(Point const a, Point const b);
 //IMPL: NearConcept
 inline bool are_near(Point const &a, Point const &b, double const eps=EPSILON) {
     return ( are_near(a[X],b[X],eps) && are_near(a[Y],b[Y],eps) );
+}
+
+inline
+Point middle_point(Point const& P1, Point const& P2)
+{
+    return (P1 + P2) / 2;
 }
 
 /** Returns p * Geom::rotate_degrees(90), but more efficient.

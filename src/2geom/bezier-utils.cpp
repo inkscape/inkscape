@@ -51,9 +51,9 @@
 # include <ieefp.h>
 #endif
 
-#include "bezier-utils.h"
+#include <2geom/bezier-utils.h>
 
-#include "isnan.h"
+#include <2geom/isnan.h>
 #include <assert.h>
 
 namespace Geom{

@@ -1,11 +1,11 @@
 #ifndef __GEOM_PATH_INTERSECTION_H
 #define __GEOM_PATH_INTERSECTION_H
 
-#include "path.h"
+#include <2geom/path.h>
 
-#include "crossing.h"
+#include <2geom/crossing.h>
 
-#include "sweep.h"
+#include <2geom/sweep.h>
 
 namespace Geom {
 

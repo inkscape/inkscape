@@ -39,9 +39,9 @@
 
 #include <vector>
 
-#include "d2.h"
-#include "piecewise.h"
-#include "exception.h"
+#include <2geom/d2.h>
+#include <2geom/piecewise.h>
+#include <2geom/exception.h>
 
 
 

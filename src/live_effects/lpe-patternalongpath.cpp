@@ -98,7 +98,7 @@ LPEPatternAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > con
 
     PAPCopyType type = copytype.get_value();
 
-    D2<Piecewise<SBasis> > patternd2 = make_cuts_independant(pattern.get_pwd2());
+    D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(pattern.get_pwd2());
     Piecewise<SBasis> x0 = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[1]) : Piecewise<SBasis>(patternd2[0]);
     Piecewise<SBasis> y0 = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[0]) : Piecewise<SBasis>(patternd2[1]);
     Interval pattBndsX = bounds_exact(x0);

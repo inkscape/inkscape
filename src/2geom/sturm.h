@@ -1,8 +1,8 @@
 #ifndef LIB2GEOM_STURM_HEADER
 #define LIB2GEOM_STURM_HEADER
 
-#include "poly.h"
-#include "utils.h"
+#include <2geom/poly.h>
+#include <2geom/utils.h>
 
 namespace Geom {
 

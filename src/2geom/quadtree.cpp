@@ -1,4 +1,4 @@
-#include "quadtree.h"
+#include <2geom/quadtree.h>
 
 namespace Geom{
 Quad* QuadTree::search(Rect const &r) {

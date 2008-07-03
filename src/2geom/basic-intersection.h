@@ -1,7 +1,7 @@
-#include "sbasis.h"
-#include "bezier-to-sbasis.h"
-#include "sbasis-to-bezier.h"
-#include "d2.h"
+#include <2geom/sbasis.h>
+#include <2geom/bezier-to-sbasis.h>
+#include <2geom/sbasis-to-bezier.h>
+#include <2geom/d2.h>
 
 namespace Geom {
 

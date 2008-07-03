@@ -36,7 +36,7 @@
  * convex hull class is included here (the convex-hull header is wrong)
  */
 
-#include "point.h"
+#include <2geom/point.h>
 #include <vector>
 
 namespace Geom{

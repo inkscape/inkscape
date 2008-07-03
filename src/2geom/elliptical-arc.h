@@ -38,10 +38,10 @@
 #define _2GEOM_ELLIPTICAL_ARC_H_
 
 
-#include "curve.h"
-#include "angle.h"
-#include "utils.h"
-#include "sbasis-curve.h"  // for non-native methods
+#include <2geom/curve.h>
+#include <2geom/angle.h>
+#include <2geom/utils.h>
+#include <2geom/sbasis-curve.h>  // for non-native methods
 
 #include <algorithm>
 

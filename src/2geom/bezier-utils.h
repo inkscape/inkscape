@@ -38,7 +38,7 @@
  *
  */
 
-#include "point.h"
+#include <2geom/point.h>
 
 namespace Geom{
 

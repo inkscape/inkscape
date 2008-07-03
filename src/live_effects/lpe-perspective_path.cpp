@@ -97,7 +97,7 @@ LPEPerspectivePath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > cons
     //        remove this once we have unified coordinate systems
     path_a_pw = path_a_pw + Geom::Point(offsetx, -offsety);
 
-    D2<Piecewise<SBasis> > B = make_cuts_independant(path_a_pw);
+    D2<Piecewise<SBasis> > B = make_cuts_independent(path_a_pw);
     Piecewise<SBasis> preimage[4];
 
     //Geom::Point orig = Geom::Point(bounds_X.min(), bounds_Y.middle());

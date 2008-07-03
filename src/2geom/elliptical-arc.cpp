@@ -28,9 +28,9 @@
  */
 
 
-#include "elliptical-arc.h"
-#include "bezier-curve.h"
-#include "poly.h"
+#include <2geom/elliptical-arc.h>
+#include <2geom/bezier-curve.h>
+#include <2geom/poly.h>
 
 #include <cfloat>
 #include <limits>

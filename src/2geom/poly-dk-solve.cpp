@@ -1,4 +1,4 @@
-#include "poly-dk-solve.h"
+#include <2geom/poly-dk-solve.h>
 #include <iterator>
 
 /*** implementation of the Durand-Kerner method.  seems buggy*/

@@ -34,7 +34,7 @@
 //TODO: define a truncated compose(sb,sb, order) and extend it to pw<sb>.
 //TODO: in all these functions, compute 'order' according to 'tol'.
 
-#include "sbasis-math.h"
+#include <2geom/sbasis-math.h>
 //#define ZERO 1e-3
 
 

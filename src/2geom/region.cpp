@@ -1,7 +1,7 @@
-#include "region.h"
-#include "utils.h"
+#include <2geom/region.h>
+#include <2geom/utils.h>
 
-#include "shape.h"
+#include <2geom/shape.h>
 
 namespace Geom {
 

@@ -31,12 +31,12 @@
 #ifndef _2GEOM_D2  //If this is change, change the guard in rect.h as well.
 #define _2GEOM_D2
 
-#include "point.h"
-#include "interval.h"
-#include "matrix.h"
+#include <2geom/point.h>
+#include <2geom/interval.h>
+#include <2geom/matrix.h>
 
 #include <boost/concept_check.hpp>
-#include "concepts.h"
+#include <2geom/concepts.h>
 
 namespace Geom{
 
@@ -373,8 +373,8 @@ D2<T> integral(D2<T> const & a) {
 
 } //end namespace Geom
 
-#include "rect.h"
-#include "d2-sbasis.h"
+#include <2geom/rect.h>
+#include <2geom/d2-sbasis.h>
 
 namespace Geom{
 

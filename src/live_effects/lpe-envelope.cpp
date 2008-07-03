@@ -98,7 +98,7 @@ LPEEnvelope::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
     n4 = force_continuity(remove_short_cuts(n4,.1));
 
 
-    D2<Piecewise<SBasis> > patternd2 = make_cuts_independant(pwd2_in);
+    D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(pwd2_in);
     Piecewise<SBasis> x = Piecewise<SBasis>(patternd2[0]);
     Piecewise<SBasis> y = Piecewise<SBasis>(patternd2[1]);
 

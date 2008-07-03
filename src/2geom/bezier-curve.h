@@ -38,9 +38,9 @@
 #define _2GEOM_BEZIER_CURVE_H_
 
 
-#include "curve.h"
-#include "sbasis-curve.h" // for non-native winding method
-#include "bezier.h"
+#include <2geom/curve.h>
+#include <2geom/sbasis-curve.h> // for non-native winding method
+#include <2geom/bezier.h>
 
 #include <algorithm>
 

@@ -164,7 +164,7 @@ LPEVonKoch::resetDefaults(SPItem * item)
         pwd2.concat( temppath[i].toPwSb() );
     }
 
-    D2<Piecewise<SBasis> > d2pw = make_cuts_independant(pwd2);
+    D2<Piecewise<SBasis> > d2pw = make_cuts_independent(pwd2);
     Interval bndsX = bounds_exact(d2pw[0]);
     Interval bndsY = bounds_exact(d2pw[1]);
     Point start(bndsX.min(), (bndsY.max()+bndsY.min())/2);

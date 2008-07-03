@@ -1,4 +1,4 @@
-#include "sweep.h"
+#include <2geom/sweep.h>
 
 #include <algorithm>
 

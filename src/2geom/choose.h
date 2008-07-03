@@ -42,7 +42,7 @@ T choose(unsigned n, unsigned k) {
     static unsigned rows_done = 0;
     // indexing is (0,0,), (1,0), (1,1), (2, 0)...
     // to get (i, j) i*(i+1)/2 + j
-    if(k < 0 || k > n) return 0;
+    if(/*k < 0 ||*/ k > n) return 0;
     if(rows_done <= n) {// we haven't got there yet
         if(rows_done == 0) {
             pascals_triangle.push_back(1);

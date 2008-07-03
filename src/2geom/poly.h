@@ -5,7 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include <complex>
-#include "utils.h"
+#include <2geom/utils.h>
 
 class Poly : public std::vector<double>{
 public:

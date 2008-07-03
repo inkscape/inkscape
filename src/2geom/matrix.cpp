@@ -12,9 +12,9 @@
  * This code is in public domain
  */
 
-#include "utils.h"
-#include "matrix.h"
-#include "point.h"
+#include <2geom/utils.h>
+#include <2geom/matrix.h>
+#include <2geom/point.h>
 
 namespace Geom {
 

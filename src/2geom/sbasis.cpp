@@ -33,8 +33,8 @@
 
 #include <cmath>
 
-#include "sbasis.h"
-#include "isnan.h"
+#include <2geom/sbasis.h>
+#include <2geom/isnan.h>
 
 namespace Geom{
 
@@ -258,6 +258,8 @@ SBasis integral(SBasis const &c) {
 SBasis derivative(SBasis const &a) {
     SBasis c;
     c.resize(a.size(), Linear(0,0));
+    if(a.isZero())
+        return c;
 
     for(unsigned k = 0; k < a.size()-1; k++) {
         double d = (2*k+1)*(a[k][1] - a[k][0]);
@@ -278,6 +280,7 @@ SBasis derivative(SBasis const &a) {
 }
 
 void SBasis::derive() { // in place version
+    if(isZero()) return;
     for(unsigned k = 0; k < size()-1; k++) {
         double d = (2*k+1)*((*this)[k][1] - (*this)[k][0]);
         

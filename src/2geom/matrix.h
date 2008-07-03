@@ -19,7 +19,7 @@
 
 //#include <glib/gmessages.h>
 
-#include "point.h"
+#include <2geom/point.h>
 
 namespace Geom {
 

@@ -1,7 +1,7 @@
 #ifndef SEEN_Geom_TRANSFORMS_H
 #define SEEN_Geom_TRANSFORMS_H
 
-#include "matrix.h"
+#include <2geom/matrix.h>
 #include <cmath>
 
 namespace Geom {

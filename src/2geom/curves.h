@@ -4,7 +4,7 @@
  * Authors:
  * 		MenTaLguY <mental@rydia.net>
  * 		Marco Cecchetti <mrcekets at gmail.com>
- * 
+ *
  * Copyright 2007-2008  authors
  *
  * This library is free software; you can redistribute it and/or
@@ -38,11 +38,12 @@
 #define _2GEOM_CURVES_H_
 
 
-#include "curve.h"
-#include "sbasis-curve.h"
-#include "bezier-curve.h"
-#include "hvlinesegment.h"
-#include "elliptical-arc.h"
+#include <2geom/curve.h>
+#include <2geom/sbasis-curve.h>
+#include <2geom/bezier-curve.h>
+#include <2geom/hvlinesegment.h>
+#include <2geom/elliptical-arc.h>
+#include <2geom/svg-elliptical-arc.h>
 
 
 #endif // _2GEOM_CURVES_H_

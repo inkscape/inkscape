@@ -38,7 +38,7 @@
 #define _2GEOM_SBASIS_CURVE_H_
 
 
-#include "curve.h"
+#include <2geom/curve.h>
 
 
 namespace Geom 

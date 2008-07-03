@@ -35,9 +35,9 @@
 #include <vector>
 #include <iterator>
 #include <stdexcept>
-#include "exception.h"
-#include "point.h"
-#include "svg-path.h"
+#include <2geom/exception.h>
+#include <2geom/point.h>
+#include <2geom/svg-path.h>
 
 namespace Geom {
 

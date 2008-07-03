@@ -31,8 +31,8 @@
  */
 
 
-#include "curve.h"
-#include "ord.h"
+#include <2geom/curve.h>
+#include <2geom/ord.h>
 
 
 namespace Geom 

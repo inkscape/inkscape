@@ -33,12 +33,12 @@
 #ifndef SEEN_BEZIER_H
 #define SEEN_BEZIER_H
 
-#include "coord.h"
+#include <2geom/coord.h>
 #include <valarray>
-#include "isnan.h"
-#include "bezier-to-sbasis.h"
-#include "d2.h"
-#include "solver.h"
+#include <2geom/isnan.h>
+#include <2geom/bezier-to-sbasis.h>
+#include <2geom/d2.h>
+#include <2geom/solver.h>
 #include <boost/optional/optional.hpp>
 
 namespace Geom {

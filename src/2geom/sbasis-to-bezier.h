@@ -1,8 +1,8 @@
 #ifndef _SBASIS_TO_BEZIER
 #define _SBASIS_TO_BEZIER
 
-#include "d2.h"
-#include "path.h"
+#include <2geom/d2.h>
+#include <2geom/path.h>
 
 namespace Geom{
 // this produces a degree k bezier from a degree k sbasis

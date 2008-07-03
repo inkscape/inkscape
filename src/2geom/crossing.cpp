@@ -1,5 +1,5 @@
-#include "crossing.h"
-#include "path.h"
+#include <2geom/crossing.h>
+#include <2geom/path.h>
 
 namespace Geom {
 
@@ -169,7 +169,7 @@ CrossingSet reverse_tb(CrossingSet const &cr, unsigned split, std::vector<double
     return ret;
 }
 
-void clean(Crossings &cr_a, Crossings &cr_b) {
+void clean(Crossings &/*cr_a*/, Crossings &/*cr_b*/) {
 /*    if(cr_a.empty()) return;
     
     //Remove anything with dupes

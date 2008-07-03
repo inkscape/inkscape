@@ -1,8 +1,8 @@
 #ifndef __2GEOM_REGION_H
 #define __2GEOM_REGION_H
 
-#include "path.h"
-#include "path-intersection.h"
+#include <2geom/path.h>
+#include <2geom/path-intersection.h>
 
 namespace Geom {
 

@@ -2,7 +2,7 @@
 #define __2GEOM_SWEEP_H__
 
 #include <vector>
-#include "d2.h"
+#include <2geom/d2.h>
 
 namespace Geom {
 

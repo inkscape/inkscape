@@ -44,9 +44,9 @@ also allow you to find intersections of multiple curves but require solving n*m 
 #include <cmath>
 #include <map>
 
-#include "sbasis.h"
-#include "sbasis-to-bezier.h"
-#include "solver.h"
+#include <2geom/sbasis.h>
+#include <2geom/sbasis-to-bezier.h>
+#include <2geom/solver.h>
 
 using namespace std;
 

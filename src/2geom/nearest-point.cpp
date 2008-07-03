@@ -32,7 +32,7 @@
  */
 
 
-#include "nearest-point.h"
+#include <2geom/nearest-point.h>
 
 namespace Geom
 {
@@ -87,9 +87,9 @@ double nearest_point( Point const& p,
 
 std::vector<double> 
 all_nearest_points( Point const& p, 
-		            D2<SBasis> const& c, 
-		            D2<SBasis> const& dc, 
-		            double from, double to )
+		    D2<SBasis> const& c, 
+		    D2<SBasis> const& /*dc*/, 
+		    double from, double to )
 {
 	std::swap(from, to);
 	if ( from > to ) std::swap(from, to);

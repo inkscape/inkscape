@@ -39,8 +39,8 @@
 #define SEEN_GEOM_SB_CALCULS_H
 
 
-#include "sbasis.h"
-#include "piecewise.h"
+#include <2geom/sbasis.h>
+#include <2geom/piecewise.h>
 
 namespace Geom{
 //-|x|---------------------------------------------------------------

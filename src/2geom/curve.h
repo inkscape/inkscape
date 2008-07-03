@@ -38,14 +38,14 @@
 #define _2GEOM_CURVE_H_
 
 
-#include "coord.h"
-#include "point.h"
-#include "interval.h"
-#include "nearest-point.h"
-#include "sbasis.h"
-#include "d2.h"
-#include "matrix.h"
-#include "exception.h"
+#include <2geom/coord.h>
+#include <2geom/point.h>
+#include <2geom/interval.h>
+#include <2geom/nearest-point.h>
+#include <2geom/sbasis.h>
+#include <2geom/d2.h>
+#include <2geom/matrix.h>
+#include <2geom/exception.h>
 
 #include <vector>
 
@@ -101,6 +101,14 @@ public:
 	  return all_nearest_points(p, toSBasis(), from, to);
   }
 
+  /*
+  Path operator*=(Matrix)
+  This is not possible, because:
+  A Curve can be many things, for example a HLineSegment.
+  Such a segment cannot be transformed and stay a HLineSegment in general (take for example rotations).
+  This means that these curves become a different type of curve, hence one should use "transformed(Matrix).
+  */
+
   virtual Curve *transformed(Matrix const &m) const = 0;
 
   virtual Point pointAt(Coord t) const { return pointAndDerivatives(t, 0).front(); }
@@ -129,6 +137,7 @@ public:
   };
 
   virtual D2<SBasis> toSBasis() const = 0;
+  virtual bool operator==(Curve const &c) const { return this == &c;}
 };
 
 inline

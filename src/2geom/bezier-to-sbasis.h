@@ -31,10 +31,10 @@
 #ifndef _BEZIER_TO_SBASIS
 #define _BEZIER_TO_SBASIS
 
-#include "coord.h"
+#include <2geom/coord.h>
 
-#include "d2.h"
-#include "point.h"
+#include <2geom/d2.h>
+#include <2geom/point.h>
 
 namespace Geom{
 

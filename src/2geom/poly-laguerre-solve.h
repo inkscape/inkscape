@@ -1,4 +1,4 @@
-#include "poly.h"
+#include <2geom/poly.h>
 #include <complex>
 
 std::vector<std::complex<double> > 

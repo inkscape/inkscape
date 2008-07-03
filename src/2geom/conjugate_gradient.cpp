@@ -32,7 +32,7 @@
 #include <stdlib.h>
 #include <valarray>
 #include <cassert>
-#include "conjugate_gradient.h"
+#include <2geom/conjugate_gradient.h>
 
 /* lifted wholely from wikipedia. */
 
@@ -55,9 +55,12 @@ matrix_times_vector(valarray<double> const &matrix, /* m * n */
     }
 }
 
+/**
+// only used in commented code below
 static double Linfty(valarray<double> const &vec) {
     return std::max(vec.max(), -vec.min());
 }
+**/
 
 double
 inner(valarray<double> const &x, 
@@ -96,7 +99,7 @@ conjugate_gradient(valarray<double> const &A,
 		   valarray<double> &x, 
 		   valarray<double> const &b, 
 		   unsigned n, double tol,
-		   unsigned max_iterations, bool ortho1) {
+		   unsigned max_iterations, bool /*ortho1*/) {
     valarray<double> Ap(n), p(n), r(n);
     matrix_times_vector(A,x,Ap);
     r=b-Ap; 

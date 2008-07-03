@@ -34,7 +34,7 @@
 
 
 
-#include "path.h"
+#include <2geom/path.h>
 
 
 namespace Geom 
@@ -49,7 +49,9 @@ void Path::swap(Path &other) {
 }
 
 Rect Path::boundsFast() const {
-  Rect bounds=front().boundsFast();
+  Rect bounds;
+  if (empty()) return bounds;
+  bounds=front().boundsFast();
   const_iterator iter = begin();
   if ( iter != end() ) {
 	  for ( ++iter; iter != end() ; ++iter ) {
@@ -60,7 +62,9 @@ Rect Path::boundsFast() const {
 }
 
 Rect Path::boundsExact() const {
-  Rect bounds=front().boundsExact();
+  Rect bounds;
+  if (empty()) return bounds;
+  bounds=front().boundsExact();
   const_iterator iter = begin();
   if ( iter != end() ) {
     for ( ++iter; iter != end() ; ++iter ) {
@@ -69,6 +73,33 @@ Rect Path::boundsExact() const {
   }
   return bounds;
 }
+
+/*
+Rect Path::boundsFast()
+{
+    Rect bound;
+    if (empty()) return bound;
+    
+    bound = begin()->boundsFast();
+    for (iterator it = ++begin(); it != end(); ++it)
+    {
+        bound.unionWith(it->boundsFast());
+    }
+    return bound;
+}
+
+Rect Path::boundsExact()
+{
+    Rect bound;
+    if (empty()) return bound;
+    
+    bound = begin()->boundsExact();
+    for (iterator it = ++begin(); it != end(); ++it)
+    {
+        bound.unionWith(it->boundsExact());
+    }
+    return bound;
+    }*/
 
 template<typename iter>
 iter inc(iter const &x, unsigned n) {
@@ -239,33 +270,6 @@ double Path::nearestPoint(Point const& _point, double from, double to) const
 	return ni + nearest;
 }
 
-Rect Path::boundsFast()
-{
-    Rect bound;
-    if (empty()) return bound;
-    
-    bound = begin()->boundsFast();
-    for (iterator it = ++begin(); it != end(); ++it)
-    {
-        bound.unionWith(it->boundsFast());
-    }
-    return bound;
-}
-
-Rect Path::boundsExact()
-{
-    Rect bound;
-    if (empty()) return bound;
-    
-    bound = begin()->boundsExact();
-    for (iterator it = ++begin(); it != end(); ++it)
-    {
-        bound.unionWith(it->boundsExact());
-    }
-    return bound;
-}
-
-//This assumes that you can't be perfect in your t-vals, and as such, tweaks the start
 void Path::appendPortionTo(Path &ret, double from, double to) const {
   assert(from >= 0 && to >= 0);
   if(to == 0) to = size()+0.999999;
@@ -276,7 +280,7 @@ void Path::appendPortionTo(Path &ret, double from, double to) const {
   const_iterator fromi = inc(begin(), (unsigned)fi);
   if(fi == ti && from < to) {
     Curve *v = fromi->portion(ff, tf);
-    ret.append(*v);
+    ret.append(*v, STITCH_DISCONTINUOUS);
     delete v;
     return;
   }
@@ -284,59 +288,28 @@ void Path::appendPortionTo(Path &ret, double from, double to) const {
   if(ff != 1.) {
     Curve *fromv = fromi->portion(ff, 1.);
     //fromv->setInitial(ret.finalPoint());
-    ret.append(*fromv);
+    ret.append(*fromv, STITCH_DISCONTINUOUS);
     delete fromv;
   }
   if(from >= to) {
     const_iterator ender = end();
     if(ender->initialPoint() == ender->finalPoint()) ender++;
-    ret.insert(ret.end(), ++fromi, ender);
-    ret.insert(ret.end(), begin(), toi);
+    ret.insert(ret.end(), ++fromi, ender, STITCH_DISCONTINUOUS);
+    ret.insert(ret.end(), begin(), toi, STITCH_DISCONTINUOUS);
   } else {
-    ret.insert(ret.end(), ++fromi, toi);
+    ret.insert(ret.end(), ++fromi, toi, STITCH_DISCONTINUOUS);
   }
   Curve *tov = toi->portion(0., tf);
-  ret.append(*tov);
+  ret.append(*tov, STITCH_DISCONTINUOUS);
   delete tov;
-}
-
-const double eps = .1;
-
-void Path::append(Curve const &curve) {
-  if ( curves_.front() != final_ && !are_near(curve.initialPoint(), (*final_)[0], eps) ) {
-    THROW_CONTINUITYERROR();
-  }
-  do_append(curve.duplicate());
-}
-
-void Path::append(D2<SBasis> const &curve) {
-  if ( curves_.front() != final_ ) {
-    for ( int i = 0 ; i < 2 ; ++i ) {
-      if ( !are_near(curve[i][0][0], (*final_)[0][i], eps) ) {
-        THROW_CONTINUITYERROR();
-      }
-    }
-  }
-  do_append(new SBasisCurve(curve));
-}
-
-void Path::append(Path const &other)
-{
-    // Check that path stays continuous:
-    if ( !are_near( finalPoint(), other.initialPoint() ) ) {
-        THROW_CONTINUITYERROR();
-    }
-
-    insert(begin(), other.begin(), other.end());
 }
 
 void Path::do_update(Sequence::iterator first_replaced,
                      Sequence::iterator last_replaced,
                      Sequence::iterator first,
-                    Sequence::iterator last)
+                     Sequence::iterator last)
 {
   // note: modifies the contents of [first,last)
-
   check_continuity(first_replaced, last_replaced, first, last);
   delete_range(first_replaced, last_replaced);
   if ( ( last - first ) == ( last_replaced - first_replaced ) ) {
@@ -356,6 +329,10 @@ void Path::do_update(Sequence::iterator first_replaced,
 void Path::do_append(Curve *curve) {
   if ( curves_.front() == final_ ) {
     final_->setPoint(1, curve->initialPoint());
+  } else {
+    if (curve->initialPoint() != finalPoint()) {
+      THROW_CONTINUITYERROR();
+    }
   }
   curves_.insert(curves_.end()-1, curve);
   final_->setPoint(0, curve->finalPoint());
@@ -367,6 +344,28 @@ void Path::delete_range(Sequence::iterator first, Sequence::iterator last) {
   }
 }
 
+void Path::stitch(Sequence::iterator first_replaced,
+                  Sequence::iterator last_replaced,
+                  Sequence &source)
+{
+  if (!source.empty()) {
+    if ( first_replaced != curves_.begin() ) {
+      if ( (*first_replaced)->initialPoint() != source.front()->initialPoint() ) {
+        source.insert(source.begin(), new StitchSegment((*first_replaced)->initialPoint(), source.front()->initialPoint()));
+      }
+    }
+    if ( last_replaced != (curves_.end()-1) ) {
+      if ( (*last_replaced)->finalPoint() != source.back()->finalPoint() ) {
+        source.insert(source.end(), new StitchSegment(source.back()->finalPoint(), (*last_replaced)->finalPoint()));
+      }
+    }
+  } else if ( first_replaced != last_replaced && first_replaced != curves_.begin() && last_replaced != curves_.end()-1) {
+    if ( (*first_replaced)->initialPoint() != (*(last_replaced-1))->finalPoint() ) {
+      source.insert(source.begin(), new StitchSegment((*(last_replaced-1))->finalPoint(), (*first_replaced)->initialPoint()));
+    }
+  }
+}
+
 void Path::check_continuity(Sequence::iterator first_replaced,
                             Sequence::iterator last_replaced,
                             Sequence::iterator first,
@@ -374,17 +373,17 @@ void Path::check_continuity(Sequence::iterator first_replaced,
 {
   if ( first != last ) {
     if ( first_replaced != curves_.begin() ) {
-      if ( !are_near( (*first_replaced)->initialPoint(), (*first)->initialPoint(), eps ) ) {
+      if ( (*first_replaced)->initialPoint() != (*first)->initialPoint() ) {
         THROW_CONTINUITYERROR();
       }
     }
     if ( last_replaced != (curves_.end()-1) ) {
-      if ( !are_near( (*(last_replaced-1))->finalPoint(), (*(last-1))->finalPoint(), eps ) ) {
+      if ( (*(last_replaced-1))->finalPoint() != (*(last-1))->finalPoint() ) {
         THROW_CONTINUITYERROR();
       }
     }
   } else if ( first_replaced != last_replaced && first_replaced != curves_.begin() && last_replaced != curves_.end()-1) {
-    if ( !are_near((*first_replaced)->initialPoint(), (*(last_replaced-1))->finalPoint(), eps ) ) {
+    if ( (*first_replaced)->initialPoint() != (*(last_replaced-1))->finalPoint() ) {
       THROW_CONTINUITYERROR();
     }
   }

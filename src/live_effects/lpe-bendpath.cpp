@@ -94,7 +94,7 @@ LPEBendPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
     Piecewise<D2<SBasis> > n = rot90(derivative(uskeleton));
     n = force_continuity(remove_short_cuts(n,.1));
 
-    D2<Piecewise<SBasis> > patternd2 = make_cuts_independant(pwd2_in);
+    D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(pwd2_in);
     Piecewise<SBasis> x = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[1]) : Piecewise<SBasis>(patternd2[0]);
     Piecewise<SBasis> y = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[0]) : Piecewise<SBasis>(patternd2[1]);
 

@@ -2,7 +2,7 @@
 #define SEEN_Geom_POINT_L_H
 
 #include <stdexcept>
-#include "point.h"
+#include <2geom/point.h>
 
 namespace Geom {
 

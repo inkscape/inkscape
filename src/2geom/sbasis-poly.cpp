@@ -1,4 +1,4 @@
-#include "sbasis-poly.h"
+#include <2geom/sbasis-poly.h>
 
 namespace Geom{
 

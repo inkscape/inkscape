@@ -2,8 +2,8 @@
 #define __GEOM_CROSSING_H
 
 #include <vector>
-#include "rect.h"
-#include "sweep.h"
+#include <2geom/rect.h>
+#include <2geom/sweep.h>
 
 namespace Geom {
 

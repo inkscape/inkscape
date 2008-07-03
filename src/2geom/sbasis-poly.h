@@ -1,8 +1,8 @@
 #ifndef _SBASIS_TO_POLY
 #define _SBASIS_TO_POLY
 
-#include "poly.h"
-#include "sbasis.h"
+#include <2geom/poly.h>
+#include <2geom/sbasis.h>
 
 /*** Conversion between SBasis and Poly.  Not recommended for general
  * use due to instability.

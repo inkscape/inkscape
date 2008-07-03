@@ -4,7 +4,7 @@
 #include <vector>
 #include <set>
 
-#include "region.h"
+#include <2geom/region.h>
 
 //TODO: BBOX optimizations
 

@@ -37,7 +37,7 @@
 #define SEEN_INTERVAL_H
 
 #include <assert.h>
-#include "coord.h"
+#include <2geom/coord.h>
 
 #include <boost/optional/optional.hpp>
 

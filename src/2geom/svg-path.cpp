@@ -28,9 +28,9 @@
  *
  */
 
-#include "sbasis-to-bezier.h"
-#include "svg-path.h"
-#include "exception.h"
+#include <2geom/sbasis-to-bezier.h>
+#include <2geom/svg-path.h>
+#include <2geom/exception.h>
 
 namespace Geom {
 

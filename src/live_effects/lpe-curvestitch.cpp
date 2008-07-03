@@ -78,7 +78,7 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> const & path_in)
         startpoint_spacing_variation.resetRandomizer();
         endpoint_spacing_variation.resetRandomizer();
 
-        D2<Piecewise<SBasis> > stroke = make_cuts_independant(strokepath.get_pwd2());
+        D2<Piecewise<SBasis> > stroke = make_cuts_independent(strokepath.get_pwd2());
         Interval bndsStroke = bounds_exact(stroke[0]);
         gdouble scaling = bndsStroke.max() - bndsStroke.min();
         Interval bndsStrokeY = bounds_exact(stroke[1]);
@@ -162,7 +162,7 @@ LPECurveStitch::resetDefaults(SPItem * item)
     for (unsigned int i=0; i < temppath.size(); i++) {
         pwd2.concat( temppath[i].toPwSb() );
     }
-    D2<Piecewise<SBasis> > d2pw = make_cuts_independant(pwd2);
+    D2<Piecewise<SBasis> > d2pw = make_cuts_independent(pwd2);
     Interval bndsX = bounds_exact(d2pw[0]);
     Interval bndsY = bounds_exact(d2pw[1]);
     Point start(bndsX.min(), (bndsY.max()+bndsY.min())/2);

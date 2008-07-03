@@ -3,8 +3,8 @@
 #include <vector>
 #include <cassert>
 #include <algorithm>
-#include "d2.h"
-#include "sbasis.h"
+#include <2geom/d2.h>
+#include <2geom/sbasis.h>
 #include <iostream>
 
 namespace Geom{

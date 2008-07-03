@@ -32,7 +32,7 @@
 #define _2GEOM_HVLINESEGMENT_H_
 
 
-#include "bezier-curve.h"
+#include <2geom/bezier-curve.h>
 
 
 namespace Geom

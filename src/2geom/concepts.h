@@ -31,9 +31,9 @@
 #ifndef SEEN_CONCEPTS_H
 #define SEEN_CONCEPTS_H
 
-#include "sbasis.h"
-#include "interval.h"
-#include "point.h"
+#include <2geom/sbasis.h>
+#include <2geom/interval.h>
+#include <2geom/point.h>
 #include <vector>
 #include <boost/concept_check.hpp>
 

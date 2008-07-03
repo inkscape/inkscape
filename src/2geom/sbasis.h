@@ -37,10 +37,10 @@
 #include <cassert>
 #include <iostream>
 
-#include "linear.h"
-#include "interval.h"
-#include "utils.h"
-#include "exception.h"
+#include <2geom/linear.h>
+#include <2geom/interval.h>
+#include <2geom/utils.h>
+#include <2geom/exception.h>
 
 namespace Geom {
 

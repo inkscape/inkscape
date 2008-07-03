@@ -6,8 +6,8 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
-#include "geom.h"
-#include "point.h"
+#include <2geom/geom.h>
+#include <2geom/point.h>
 
 namespace Geom {
 

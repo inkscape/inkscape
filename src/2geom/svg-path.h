@@ -31,7 +31,7 @@
 #ifndef SEEN_SVG_PATH_H
 #define SEEN_SVG_PATH_H
 
-#include "path.h"
+#include <2geom/path.h>
 #include <iterator>
 
 namespace Geom {

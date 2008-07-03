@@ -1,4 +1,4 @@
-#include "d2.h"
+#include <2geom/d2.h>
 /* One would think that we would include d2-sbasis.h, however,
  * you cannot actually include it in anything - only d2 may import it.
  * This is due to the trickinesses of template submatching. */
@@ -38,7 +38,7 @@ Piecewise<D2<SBasis> > sectionize(D2<Piecewise<SBasis> > const &a) {
     return ret;
 }
 
-D2<Piecewise<SBasis> > make_cuts_independant(Piecewise<D2<SBasis> > const &a) {
+D2<Piecewise<SBasis> > make_cuts_independent(Piecewise<D2<SBasis> > const &a) {
     D2<Piecewise<SBasis> > ret;
     for(unsigned d = 0; d < 2; d++) {
         for(unsigned i = 0; i < a.size(); i++)

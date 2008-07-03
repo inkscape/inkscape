@@ -35,10 +35,10 @@
 #ifndef SEEN_GEOM_PATHVECTOR_CPP
 #define SEEN_GEOM_PATHVECTOR_CPP
 
-#include "pathvector.h"
+#include <2geom/pathvector.h>
 
-#include "path.h"
-#include "matrix.h"
+#include <2geom/path.h>
+#include <2geom/matrix.h>
 
 namespace Geom {
 
