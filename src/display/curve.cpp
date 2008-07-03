@@ -859,7 +859,7 @@ SPCurve::closepath_current()
 }
 
 /**
- * True if no paths are in curve.
+ * True if no paths are in curve. If it only contains a path with only a moveto, the path is considered NON-empty
  * 2GEOMproof
  */
 bool
@@ -870,7 +870,7 @@ SPCurve::is_empty() const
     if (!_bpath)
         return true;
 
-    bool empty = _pathv.empty() || _pathv.front().empty();
+    bool empty = _pathv.empty();
     debug_check("SPCurve::is_empty", (_bpath->code == NR_END)  ==  empty );
 
     return empty;
@@ -994,7 +994,8 @@ SPCurve::first_point() const
 /**
  * Return the second point of first subpath or _movePos if curve too short.
  * If the pathvector is empty, this returns (0,0). If the first path is only a moveto, this method
- * returns the first point of the second path, if it exists. Otherwise (0,0)
+ * returns the first point of the second path, if it exists. If there is no 2nd path, it returns the
+ * first point of the first path.
  *
  * FIXME: for empty paths this should return (NR_HUGE,NR_HUGE)
  */
@@ -1017,7 +1018,20 @@ SPCurve::second_point() const
 
     debug_check("SPCurve::second_point", bpath->c(3) == _pathv.front()[0].finalPoint() );
 
-    return bpath->c(3);
+    if (is_empty()) {
+        return NR::Point(0,0);
+    }
+    else if (_pathv.front().empty()) {
+        // first path is only a moveto
+        // check if there is second path
+        if (_pathv.size() > 1) {
+            return _pathv[1].initialPoint();
+        } else {
+            return _pathv[0].initialPoint();
+        }
+    }
+    else
+        return _pathv.front()[0].finalPoint();
 }
 
 /**
