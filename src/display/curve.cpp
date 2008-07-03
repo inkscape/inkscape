@@ -860,25 +860,17 @@ SPCurve::closepath_current()
 
 /**
  * True if no paths are in curve. If it only contains a path with only a moveto, the path is considered NON-empty
- * 2GEOMproof
  */
 bool
 SPCurve::is_empty() const
 {
-    g_return_val_if_fail(this != NULL, TRUE);
-
-    if (!_bpath)
-        return true;
-
     bool empty = _pathv.empty();
-    debug_check("SPCurve::is_empty", (_bpath->code == NR_END)  ==  empty );
 
     return empty;
 }
 
 /**
  * True iff all subpaths are closed.
- * 2GEOMproof
  */
 bool
 SPCurve::is_closed() const
@@ -890,7 +882,6 @@ SPCurve::is_closed() const
             break;
         }
     }
-    debug_check("SPCurve::is_closed", (closed)  ==  (_closed) );
 
     return closed;
 }
@@ -933,8 +924,6 @@ SPCurve::last_segment() const
 Geom::Path const *
 SPCurve::last_path() const
 {
-    g_return_val_if_fail(this != NULL, NULL);
-
     if (is_empty()) {
         return NULL;
     }
@@ -965,8 +954,6 @@ SPCurve::first_segment() const
 Geom::Path const *
 SPCurve::first_path() const
 {
-    g_return_val_if_fail(this != NULL, NULL);
-
     if (is_empty()) {
         return NULL;
     }
@@ -980,14 +967,9 @@ SPCurve::first_path() const
 NR::Point
 SPCurve::first_point() const
 {
-    NArtBpath const * bpath = get_bpath();
-    g_return_val_if_fail(bpath != NULL, NR::Point(0, 0));
     if (is_empty())
         return NR::Point(0, 0);
 
-    debug_check("SPCurve::first_point", bpath->c(3) == _pathv.front().initialPoint() );
-
-    //return bpath->c(3);
     return from_2geom( _pathv.front().initialPoint() );
 }
 
@@ -997,27 +979,11 @@ SPCurve::first_point() const
  * returns the first point of the second path, if it exists. If there is no 2nd path, it returns the
  * first point of the first path.
  *
- * FIXME: for empty paths this should return (NR_HUGE,NR_HUGE)
+ * FIXME: for empty paths shouldn't this return (NR_HUGE,NR_HUGE)
  */
 NR::Point
 SPCurve::second_point() const
 {
-    g_return_val_if_fail(this != NULL, NR::Point(0, 0));
-
-    if (_end < 1) {
-        return _movePos;
-    }
-
-    NArtBpath *bpath = NULL;
-    if (_end < 2) {
-        bpath = _bpath;
-    } else {
-        bpath = _bpath + 1;
-    }
-    g_return_val_if_fail(bpath != NULL, NR::Point(0, 0));
-
-    debug_check("SPCurve::second_point", bpath->c(3) == _pathv.front()[0].finalPoint() );
-
     if (is_empty()) {
         return NR::Point(0,0);
     }
@@ -1059,17 +1025,14 @@ SPCurve::penultimate_point() const
 
 /**
  * Return last point of last subpath or (0,0).  TODO: shouldn't this be (NR_HUGE, NR_HUGE) to be able to tell it apart from normal (0,0) ?
+ * If the last path is only a moveto, then return that point.
  */
 NR::Point
 SPCurve::last_point() const
 {
-    NArtBpath const * bpath = last_bpath();
-    g_return_val_if_fail(bpath != NULL, NR::Point(0, 0));
     if (is_empty())
         return NR::Point(0, 0);
 
-    debug_check("SPCurve::last_point", bpath->c(3) == _pathv.back().finalPoint() );
-    //return bpath->c(3);
     return from_2geom( _pathv.back().finalPoint() );
 }
 
