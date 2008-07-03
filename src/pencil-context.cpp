@@ -570,7 +570,7 @@ spdc_set_endpoint(SPPencilContext *const pc, NR::Point const p)
 static void
 spdc_finish_endpoint(SPPencilContext *const pc)
 {
-    if ( ( pc->red_curve->get_segment_count() != 1 )
+    if ( ( pc->red_curve->is_empty() )
          || ( pc->red_curve->first_point() == pc->red_curve->second_point()   ) )
     {
         pc->red_curve->reset();
