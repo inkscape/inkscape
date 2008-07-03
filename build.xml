@@ -245,8 +245,16 @@
         <fileset dir="${src}/svg">
             <include name="css-ostringstream-test.h"/>
             <include name="stringstream-test.h"/>
+            <include name="svg-affine-test.h"/>
             <include name="svg-color-test.h"/>
+            <include name="svg-length-test.h"/>
             <include name="svg-path-test.h"/>
+        </fileset>
+    </cxxtestpart>
+    <cxxtestpart command="python ${cxxtest}/cxxtestgen.py" 
+                 out="${src}/util/test-util.cpp">
+        <fileset dir="${src}/util">
+            <include name="list-container-test.h"/>
         </fileset>
     </cxxtestpart>
     <cxxtestpart command="python ${cxxtest}/cxxtestgen.py" 
@@ -414,6 +422,7 @@
            <exclude name="obj/helper/test-helper.o"/>
            <exclude name="obj/libnr/test-nr.o"/>
            <exclude name="obj/svg/test-svg.o"/>
+           <exclude name="obj/util/test-util.o"/>
            <exclude name="obj/xml/test-xml.o"/>
        </fileset>
     </staticlib>
@@ -566,6 +575,7 @@
            <include name="obj/helper/test-helper.o"/>
            <include name="obj/libnr/test-nr.o"/>
            <include name="obj/svg/test-svg.o"/>
+           <include name="obj/util/test-util.o"/>
            <include name="obj/xml/test-xml.o"/>
            <include name="libinkscape.a"/>
        </fileset>
@@ -827,6 +837,7 @@
     <delete file="${src}/helper/test-helper.cpp"/>
     <delete file="${src}/libnr/test-nr.cpp"/>
     <delete file="${src}/svg/test-svg.cpp"/>
+    <delete file="${src}/util/test-util.cpp"/>
     <delete file="${src}/xml/test-xml.cpp"/>
 
   </target>
