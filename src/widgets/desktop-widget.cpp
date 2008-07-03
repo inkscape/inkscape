@@ -62,7 +62,7 @@
 #include "box3d-context.h"
 #include "sp-image.h"
 
-#if defined (SOLARIS_2_8)
+#if defined (SOLARIS) && (SOLARIS == 8)
 #include "round.h"
 using Inkscape::round;
 #endif

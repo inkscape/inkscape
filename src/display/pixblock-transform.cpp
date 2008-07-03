@@ -13,7 +13,7 @@
 
 #include <glib.h>
 #include <cmath>
-#if defined (SOLARIS_2_8)
+#if defined (SOLARIS) && (SOLARIS == 8)
 #include "round.h"
 using Inkscape::round;
 #endif 

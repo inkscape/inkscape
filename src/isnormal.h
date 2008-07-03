@@ -5,7 +5,7 @@
  * Fix for missing std::isnormal with SOLARIS8/GCC3.2
  */
  
-#if defined (SOLARIS_2_8) && __GNUC__ == 3 && __GNUC_MINOR__ == 2
+#if defined (SOLARIS)
 
 	#include <ieeefp.h>
 	#define isnormal(x) (fpclass(x) >= FP_NZERO)

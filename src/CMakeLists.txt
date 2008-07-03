@@ -305,15 +305,15 @@ FOREACH(dirlistsrc ${libfolders})
   ADD_SUBDIRECTORY(${dirlistsrc})
 ENDFOREACH(dirlistsrc)
 
-
+message(status "${INKSCAPE_LIBS}")
 ADD_LIBRARY(sp STATIC ${SP_SRC})
 TARGET_LINK_LIBRARIES(sp 
-	"${INKSCAPE_LIBS}" 2geom avoid cola croco gdl nr nrtype vpsc livarot sp
+	 2geom avoid cola croco gdl nr nrtype vpsc livarot
 )
 # make executable for INKSCAPE
 ADD_EXECUTABLE(inkscape ${INKSCAPE_SRC})
 TARGET_LINK_LIBRARIES(inkscape
-	"${INKSCAPE_LIBS}" 2geom avoid cola croco gdl nr nrtype vpsc livarot sp
+	 2geom avoid cola croco gdl nr nrtype vpsc livarot sp
 )
 
 # make executable for INKVIEW

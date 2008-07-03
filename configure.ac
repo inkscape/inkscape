@@ -257,19 +257,20 @@ esac
 AC_MSG_RESULT([$platform_win32])
 AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
 
-AC_MSG_CHECKING([for Solaris 2.8 platform])
+AC_MSG_CHECKING([for Solaris platform])
 case "$host" in
-  *-solaris2.8)
-    platform_solaris_2_8=yes
-    CFLAGS="$CFLAGS -DSOLARIS_2_8"
-    CXXFLAGS="$CXXFLAGS -DSOLARIS_2_8"
+  *-solaris2.*)
+    platform_solaris=yes
+    solaris_version=`echo $host|sed -e 's/^.*-solaris2\.//' -e s'/\..*$//'`
+    CFLAGS="$CFLAGS -DSOLARIS=$solaris_version"
+    CXXFLAGS="$CXXFLAGS -DSOLARIS=$solaris_version"
     ;;
   *)
-    platform_solaris_2_8=no
+    platform_solaris=no
     ;;
 esac
-AC_MSG_RESULT([$platform_solaris_2_8])
-AM_CONDITIONAL(PLATFORM_SOLARIS_2_8, test "$platform_solaris_2_8" = "yes")
+AC_MSG_RESULT([$platform_solaris])
+AM_CONDITIONAL(PLATFORM_SOLARIS, test "$platform_solaris" = "yes")
 
 dnl ******************************
 dnl Xft checking
