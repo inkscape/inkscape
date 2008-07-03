@@ -993,6 +993,10 @@ SPCurve::first_point() const
 
 /**
  * Return the second point of first subpath or _movePos if curve too short.
+ * If the pathvector is empty, this returns (0,0). If the first path is only a moveto, this method
+ * returns the first point of the second path, if it exists. Otherwise (0,0)
+ *
+ * FIXME: for empty paths this should return (NR_HUGE,NR_HUGE)
  */
 NR::Point
 SPCurve::second_point() const
