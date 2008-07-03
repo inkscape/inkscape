@@ -186,6 +186,7 @@ src/live_effects/lpe-gears.cpp
 src/live_effects/lpe-knot.cpp
 src/live_effects/lpe-lattice.cpp
 src/live_effects/lpe-mirror_reflect.cpp
+src/live_effects/lpe-offset.cpp
 src/live_effects/lpe-parallel.cpp
 src/live_effects/lpe-patternalongpath.cpp
 src/live_effects/lpe-perp_bisector.cpp
@@ -257,7 +258,6 @@ src/ui/dialog/aboutbox.cpp
 src/ui/dialog/align-and-distribute.cpp
 src/ui/dialog/document-metadata.cpp
 src/ui/dialog/document-properties.cpp
-src/ui/dialog/export.cpp
 src/ui/dialog/extension-editor.cpp
 src/ui/dialog/filedialogimpl-gtkmm.cpp
 src/ui/dialog/filedialogimpl-win32.cpp
@@ -272,7 +272,6 @@ src/ui/dialog/ocaldialogs.cpp
 src/ui/dialog/print.cpp
 src/ui/dialog/scriptdialog.cpp
 src/ui/dialog/session-player.cpp
-src/ui/dialog/text-properties.cpp
 src/ui/dialog/tracedialog.cpp
 src/ui/dialog/transformation.cpp
 src/ui/dialog/whiteboard-connect.cpp
