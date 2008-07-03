@@ -321,7 +321,8 @@ box3d_position_set (SPBox3D *box)
     /* This draws the curve and calls requestDisplayUpdate() for each side (the latter is done in
        box3d_side_position_set() to avoid update conflicts with the parent box) */
     for (SPObject *child = sp_object_first_child(SP_OBJECT (box)); child != NULL; child = SP_OBJECT_NEXT(child) ) {
-        box3d_side_position_set (SP_BOX3D_SIDE (child));
+        if (SP_IS_BOX3D_SIDE(child))
+            box3d_side_position_set(SP_BOX3D_SIDE(child));
     }
 }
 
@@ -365,21 +366,22 @@ box3d_set_transform(SPItem *item, NR::Matrix const &xform)
     gdouble const sw = hypot(ret[0], ret[1]);
     gdouble const sh = hypot(ret[2], ret[3]);
 
-    SPItem *sideitem = NULL;
-    for (SPObject *side = sp_object_first_child(box); side != NULL; side = SP_OBJECT_NEXT(side)) {
-        sideitem = SP_ITEM(side);
+    for (SPObject *child = sp_object_first_child(box); child != NULL; child = SP_OBJECT_NEXT(child)) {
+        if (SP_IS_ITEM(child)) {
+            SPItem *childitem = SP_ITEM(child);
 
-        // Adjust stroke width
-        sp_item_adjust_stroke(sideitem, sqrt(fabs(sw * sh)));
+            // Adjust stroke width
+            sp_item_adjust_stroke(childitem, sqrt(fabs(sw * sh)));
 
-        // Adjust pattern fill
-        sp_item_adjust_pattern(sideitem, xform);
+            // Adjust pattern fill
+            sp_item_adjust_pattern(childitem, xform);
 
-        // Adjust gradient fill
-        sp_item_adjust_gradient(sideitem, xform);
+            // Adjust gradient fill
+            sp_item_adjust_gradient(childitem, xform);
 
-        // Adjust LPE
-        sp_item_adjust_livepatheffect(item, xform);
+            // Adjust LPE
+            sp_item_adjust_livepatheffect(childitem, xform);
+        }
     }
 
     return NR::identity();
@@ -1148,8 +1150,9 @@ static std::map<int, Box3DSide *>
 box3d_get_sides (SPBox3D *box) {
     std::map<int, Box3DSide *> sides;
     for (SPObject *side = sp_object_first_child(box); side != NULL; side = SP_OBJECT_NEXT(side)) {
-        sides[Box3D::face_to_int(sp_repr_get_int_attribute(SP_OBJECT_REPR(side),
-                                                           "inkscape:box3dsidetype", -1))] = SP_BOX3D_SIDE(side);
+        if (SP_IS_BOX3D_SIDE(side))
+            sides[Box3D::face_to_int(sp_repr_get_int_attribute(SP_OBJECT_REPR(side),
+                                                               "inkscape:box3dsidetype", -1))] = SP_BOX3D_SIDE(side);
     }
     sides.erase(-1);
     return sides;
