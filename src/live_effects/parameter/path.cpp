@@ -346,21 +346,26 @@ PathParam::on_edit_button_click()
 }
 
 void
-PathParam::on_paste_button_click()
+PathParam::paste_param_path(const char *svgd)
 {
-    Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
-    Glib::ustring svgd = cm->getPathParameter();
-    
     if (svgd == "")
         return;
 
     // remove possible link to path
     remove_link();
 
-    param_write_to_repr(svgd.data());
+    param_write_to_repr(svgd);
     signal_path_pasted.emit();
     sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
                      _("Paste path parameter"));
+}
+
+void
+PathParam::on_paste_button_click()
+{
+    Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
+    Glib::ustring svgd = cm->getPathParameter();
+    paste_param_path(svgd.data());
 }
 
 void

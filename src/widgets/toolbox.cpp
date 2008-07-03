@@ -367,6 +367,8 @@ static gchar const * ui_descr =
         "  <toolbar name='PenToolbar'>"
         "    <toolitem action='FreehandModeActionPenTemp' />"
         "    <toolitem action='FreehandModeActionPen' />"
+        "    <separator />"
+        "    <toolitem action='SetPenShapeAction'/>"
         "  </toolbar>"
 
         "  <toolbar name='PencilToolbar'>"
@@ -376,6 +378,8 @@ static gchar const * ui_descr =
         "    <toolitem action='PencilToleranceAction' />"
         "    <separator />"
         "    <toolitem action='PencilResetAction' />"
+        "    <separator />"
+        "    <toolitem action='SetPencilShapeAction'/>"
         "  </toolbar>"
 
         "  <toolbar name='CalligraphyToolbar'>"
@@ -3325,9 +3329,57 @@ static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, bo
     }
 }
 
+static void sp_freehand_change_shape(EgeSelectOneAction* act, GObject *dataKludge) {
+    gint shape = ege_select_one_action_get_active( act );
+    prefs_set_int_attribute("tools.freehand", "shape", shape);
+}
+
+/**
+ * \brief Generate the list of freehand advanced shape option entries.
+ */
+GList * freehand_shape_dropdown_items_list() {
+    GList *glist = NULL;
+
+    glist = g_list_append (glist, _("None"));
+    glist = g_list_append (glist, _("Clipboard"));
+    glist = g_list_append (glist, _("Decrescendo"));
+
+    return glist;
+}
+
+static void
+sp_freehand_add_advanced_shape_options(GtkActionGroup* mainActions, GObject* holder, bool tool_is_pencil) {
+    /*advanced shape options */
+    {
+        GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_INT );
+
+        GList* items = 0;
+        gint count = 0;
+        for ( items = freehand_shape_dropdown_items_list(); items ; items = g_list_next(items) )
+        {
+            GtkTreeIter iter;
+            gtk_list_store_append( model, &iter );
+            gtk_list_store_set( model, &iter, 0, reinterpret_cast<gchar*>(items->data), 1, count, -1 );
+            count++;
+        }
+        g_list_free( items );
+        items = 0;
+        EgeSelectOneAction* act1 = ege_select_one_action_new(
+            tool_is_pencil ? "SetPencilShapeAction" : "SetPenShapeAction",
+            _("Shape:"), (""), NULL, GTK_TREE_MODEL(model));
+        g_object_set( act1, "short_label", _("Shape:"), NULL );
+        ege_select_one_action_set_appearance( act1, "compact" );
+        ege_select_one_action_set_active( act1, prefs_get_int_attribute("tools.freehand", "shape", 0) );
+        g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK(sp_freehand_change_shape), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act1) );
+        g_object_set_data( holder, "shape_action", act1 );
+    }
+}
+
 static void sp_pen_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* mainActions, GObject* holder)
 {
     sp_add_spiro_toggle(mainActions, holder, false);
+    sp_freehand_add_advanced_shape_options(mainActions, holder, false);
 }
 
 
@@ -3430,6 +3482,10 @@ static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
         g_object_set_data(G_OBJECT(holder), "repr", repr);
 
     }
+
+    /* advanced shape options */
+    sp_freehand_add_advanced_shape_options(mainActions, holder, true);
+
     /* Reset */
     {
         InkAction* inky = ink_action_new( "PencilResetAction",

@@ -55,6 +55,9 @@ public:
     sigc::signal <void> signal_path_pasted;
     sigc::signal <void> signal_path_changed;
 
+    void paste_param_path(const char *svgd);
+    void on_paste_button_click();
+
 protected:
     std::vector<Geom::Path> _pathvector;   // this is primary data storage, since it is closest to SVG.
 
@@ -75,7 +78,6 @@ protected:
     void linked_modified(SPObject *linked_obj, guint flags);
 
     void on_edit_button_click();
-    void on_paste_button_click();
     void on_copy_button_click();
     void on_link_button_click();
 

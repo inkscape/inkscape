@@ -34,8 +34,8 @@ public:
 
     virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
 
-private:
     PathParam  pattern;
+private:
     EnumParam<PAPCopyType> copytype;
     ScalarParam  prop_scale;
     BoolParam scale_y_rel;
