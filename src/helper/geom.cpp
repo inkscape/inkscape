@@ -160,9 +160,9 @@ bounds_exact_transformed(Geom::PathVector const & pv, Geom::Matrix const & t)
         for (Geom::Path::const_iterator cit = it->begin(); cit != it->end_open(); ++cit) {
             Geom::Curve const &c = *cit;
 
-            if( typeid(c) == typeid(Geom::LineSegment) ||
-                typeid(c) == typeid(Geom::HLineSegment) ||
-                typeid(c) == typeid(Geom::VLineSegment)    )
+            if( dynamic_cast<Geom::LineSegment const*>(&c) ||
+                dynamic_cast<Geom::HLineSegment const*>(&c) ||
+                dynamic_cast<Geom::VLineSegment const*>(&c)    )
             {
                 bbox.expandTo( c.finalPoint() * t );
             }
@@ -350,9 +350,9 @@ geom_curve_bbox_wind_distance(Geom::Curve const & c, Geom::Matrix const &m,
                  Geom::Coord tolerance, Geom::Rect const *viewbox,
                  Geom::Point &p0) // pass p0 through as it represents the last endpoint added (the finalPoint of last curve)
 {
-    if( typeid(c) == typeid(Geom::LineSegment) ||
-        typeid(c) == typeid(Geom::HLineSegment) ||
-        typeid(c) == typeid(Geom::VLineSegment) )
+    if( dynamic_cast<Geom::LineSegment const*>(&c) ||
+        dynamic_cast<Geom::HLineSegment const*>(&c) ||
+        dynamic_cast<Geom::VLineSegment const*>(&c) )
     {
         Geom::Point pe = c.finalPoint() * m;
         if (bbox) {

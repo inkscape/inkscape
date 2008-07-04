@@ -411,11 +411,11 @@ void* Path::MakeArtBPath(void)
 
 void  Path::AddCurve(Geom::Curve const &c)
 {
-    if( typeid(c) == typeid(Geom::LineSegment) ||
-        typeid(c) == typeid(Geom::HLineSegment) ||
-        typeid(c) == typeid(Geom::VLineSegment)   )
+    if( dynamic_cast<Geom::LineSegment const*>(&c) ||
+        dynamic_cast<Geom::HLineSegment const*>(&c) ||
+        dynamic_cast<Geom::VLineSegment const*>(&c) )
     {
-        LineTo( to_2geom(c.finalPoint()) );
+        LineTo( from_2geom(c.finalPoint()) );
     }
     /*
     else if(Geom::QuadraticBezier const *quadratic_bezier = dynamic_cast<Geom::QuadraticBezier const  *>(c)) {

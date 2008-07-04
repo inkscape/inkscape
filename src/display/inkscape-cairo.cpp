@@ -10,7 +10,6 @@
 
 #include <cairo.h>
 
-#include <typeinfo>
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -160,9 +159,9 @@ feed_curve_to_cairo (cairo_t *ct, NArtBpath const *bpath, NR::Matrix trans, NR::
 static void
 feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Matrix & trans, Geom::Rect view, bool optimize_stroke)
 {
-    if( typeid(c) == typeid(Geom::LineSegment) ||
-        typeid(c) == typeid(Geom::HLineSegment) ||
-        typeid(c) == typeid(Geom::VLineSegment) )
+    if( dynamic_cast<Geom::LineSegment const*>(&c) ||
+        dynamic_cast<Geom::HLineSegment const*>(&c) ||
+        dynamic_cast<Geom::VLineSegment const*>(&c) )
     {
         Geom::Point end_tr = c.finalPoint() * trans;
         if (!optimize_stroke) {

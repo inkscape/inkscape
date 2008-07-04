@@ -426,13 +426,13 @@ static bool has_inner_area(Geom::PathVector const & pv) {
 
     if ( (pv.size() == 1) && (pv.front().size() <= 1) ) {
         // vector has only one path with only one segment, see if that's a non-curve segment: that would mean no internal region
-        Geom::Curve const & c = pv.front().front();
-        if ( typeid(c) == typeid(Geom::LineSegment) )
+        Geom::Curve const * c = & pv.front().front();
+        if ( dynamic_cast<Geom::LineSegment const*>(c) ||
+             dynamic_cast<Geom::HLineSegment const*>(c) ||
+             dynamic_cast<Geom::VLineSegment const*>(c) )
+        {
             return false;
-        if ( typeid(c) == typeid(Geom::HLineSegment) )
-            return false;
-        if ( typeid(c) == typeid(Geom::VLineSegment) )
-            return false;
+        }
     }
 
     return true; //too costly to see if it has region to be filled, so return true.
