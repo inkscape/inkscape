@@ -1060,9 +1060,14 @@ sp_shape_has_markers (SPShape const *shape)
 int
 sp_shape_number_of_markers (SPShape *shape, int type)
 {
-    int n = 0;
-    for (NArtBpath const* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
-        if (sp_shape_marker_required (shape, type, bp)) {
+    Geom::PathVector const & pathv = shape->curve->get_pathvector();
+
+    guint n = shape->marker[SP_MARKER_LOC_START] ?  pathv.size() : 0;
+
+    for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
+        n += shape->marker[SP_MARKER_LOC_MID] ?  path_it->size() : 0;
+
+        if ( shape->marker[SP_MARKER_LOC_END] && !path_it->empty()) {
             n++;
         }
     }
