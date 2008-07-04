@@ -270,8 +270,11 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
     using namespace Inkscape::LivePathEffect;
 
     if (item) {
-        int shape = prefs_get_int_attribute("tools.freehand", "shape", 0);
+        if (prefs_get_int_attribute("tools.freehand", "spiro-spline-mode", 0)) {
+            Effect::createAndApply(SPIRO, dc->desktop->doc(), item);
+        }
 
+        int shape = prefs_get_int_attribute("tools.freehand", "shape", 0);
         bool shape_applied = false;
         SPCSSAttr *css_item = sp_css_attr_from_object (SP_OBJECT(item), SP_STYLE_FLAG_ALWAYS);
         const char *cstroke = sp_repr_css_property(css_item, "stroke", "none");
@@ -335,10 +338,6 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
             return;
         }
 
-        if (prefs_get_int_attribute("tools.freehand", "spiro-spline-mode", 0)) {
-            Effect::createAndApply(SPIRO, dc->desktop->doc(), item);
-            return;
-        }
         if (dc->waiting_LPE_type != INVALID_LPE) {
             Effect::createAndApply(dc->waiting_LPE_type, dc->desktop->doc(), item);
             dc->waiting_LPE_type = INVALID_LPE;
