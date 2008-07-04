@@ -146,29 +146,27 @@ sp_path_convert_to_guides(SPItem *item)
 {
     SPPath *path = SP_PATH(item);
 
-    SPDocument *doc = SP_OBJECT_DOCUMENT(path);
-    std::list<std::pair<Geom::Point, Geom::Point> > pts;
-
-    NR::Matrix const i2d (from_2geom(sp_item_i2d_affine(SP_ITEM(path))));
-
     SPCurve *curve = SP_SHAPE(path)->curve;
     if (!curve) return;
-    NArtBpath const *bpath = SP_CURVE_BPATH(curve);
 
-    NR::Point last_pt;
-    NR::Point pt;
-    for (int i = 0; bpath[i].code != NR_END; i++){
-        if (bpath[i].code == NR_LINETO) {
-            /* we only convert straight line segments (converting curve segments would be unintuitive) */
-            pt = bpath[i].c(3) * i2d;
-            pts.push_back(std::make_pair(last_pt.to_2geom(), pt.to_2geom()));
+    std::list<std::pair<Geom::Point, Geom::Point> > pts;
+
+    Geom::Matrix const i2d (sp_item_i2d_affine(SP_ITEM(path)));
+
+    Geom::PathVector const & pv = curve->get_pathvector();
+    for(Geom::PathVector::const_iterator pit = pv.begin(); pit != pv.end(); ++pit) {
+        for(Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_default(); ++cit) {
+            // only add curves for straight line segments
+            if( dynamic_cast<Geom::LineSegment const *>(&*cit) ||
+                dynamic_cast<Geom::HLineSegment const *>(&*cit) ||
+                dynamic_cast<Geom::VLineSegment const *>(&*cit) )
+            {
+                pts.push_back(std::make_pair(cit->initialPoint() * i2d, cit->finalPoint() * i2d));
+            }
         }
-
-        /* remember current point for potential reuse in the next step
-           (e.g., in case this was an NR_MOVETO or NR_MOVETO_OPEN) */
-        last_pt = bpath[i].c(3) * i2d;
     }
 
+    SPDocument *doc = SP_OBJECT_DOCUMENT(path);
     sp_guide_pt_pairs_to_guides(doc, pts);
 }
 
