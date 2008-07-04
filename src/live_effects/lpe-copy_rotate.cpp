@@ -38,10 +38,10 @@ public:
 
 LPECopyRotate::LPECopyRotate(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    include_original(_("Include original?"), _(""), "include_original", &wr, this, true),
     angle(_("Angle"), _("Angle"), "angle", &wr, this, 30.0),
     num_copies(_("Number of copies"), _("Number of copies of the original path"), "num_copies", &wr, this, 1),
     origin(_("Origin"), _("Origin of the rotation"), "origin", &wr, this, "Adjust the origin of the rotation"),
+    include_original(_("Include original?"), _(""), "include_original", &wr, this, true),
     dist_angle_handle(100)
 {
     show_orig_path = true;
