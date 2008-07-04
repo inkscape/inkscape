@@ -5,8 +5,9 @@
  */
 
 /*
- * Author:
+ * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Johan Engelen
  *
  * Copyright (C) 2000 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.

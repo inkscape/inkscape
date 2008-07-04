@@ -331,7 +331,7 @@ void PovOutput::doCurves(SPDocument *doc)
 
         //Count the NR_CURVETOs/LINETOs
         int segmentCount=0;
-        NArtBpath const *bp = SP_CURVE_BPATH(curve);
+        NArtBpath const *bp = curve->get_bpath();
         for (int curveNr=0 ; curveNr<curveLength ; curveNr++, bp++)
             if (bp->code == NR_CURVETO || bp->code == NR_LINETO)
                 segmentCount++;
@@ -353,7 +353,7 @@ void PovOutput::doCurves(SPDocument *doc)
         out("    0.0, //bottom\n");
         out("    %d //nr points\n", segmentCount * 4);
         int segmentNr = 0;
-        bp = SP_CURVE_BPATH(curve);
+        bp = curve->get_bpath();
         
         nrSegments += curveLength;
 

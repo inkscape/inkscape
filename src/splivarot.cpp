@@ -826,7 +826,7 @@ sp_selected_path_outline()
 
                 SPShape *shape = SP_SHAPE(item);
 
-                for (NArtBpath const* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
+                for (NArtBpath const* bp = curve->get_bpath(); bp->code != NR_END; bp++) {
                     for (int m = SP_MARKER_LOC_START; m < SP_MARKER_LOC_QTY; m++) {
                         if (sp_shape_marker_required (shape, m, bp)) {
 

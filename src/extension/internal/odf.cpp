@@ -2050,7 +2050,7 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
                        bbox_width * 1000.0, bbox_height * 1000.0);
 
         couts.printf("    svg:d=\"");
-        int nrPoints = writePath(couts, SP_CURVE_BPATH(curve),
+        int nrPoints = writePath(couts, curve->get_bpath(),
                              tf, bbox_x, bbox_y);
         couts.printf("\"");
 
