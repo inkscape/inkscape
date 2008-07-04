@@ -92,33 +92,20 @@ public:
         assert(result.size() == out_size);
         return result;
     }
-// equivalent to multiply by x^terms, discard negative terms
-    Poly shifted(unsigned terms) const {
+
+    /** Equivalent to multiply by x^terms. */
+    Poly shifted(unsigned const terms) const {
         Poly result;
-        // This was a no-op and breaks the build on x86_64, as it's trying
-        // to take maximum of 32-bit and 64-bit integers
-        //const unsigned out_size = std::max(unsigned(0), size()+terms);
-        const size_type out_size = size() + terms;
+        size_type const out_size = size() + terms;
         result.reserve(out_size);
 
-// By definition an unsigned can not be less than zero
-// TODO someone who understands the intent needs to correct this properly
-//         if(terms < 0) {
-//             for(unsigned i = 0; i < out_size; i++) {
-//                 result.push_back((*this)[i-terms]);
-//             }
-//         } else {
-            for(unsigned i = 0; i < terms; i++) {
-                result.push_back(0.0);
-            }
-            for(unsigned i = 0; i < size(); i++) {
-                result.push_back((*this)[i]);
-            }
-//         }
-        
+	result.resize(terms, 0.0);
+	result.insert(result.end(), this->begin(), this->end());
+
         assert(result.size() == out_size);
         return result;
     }
+
     Poly operator*(const Poly& p) const;
     
     template <typename T>
