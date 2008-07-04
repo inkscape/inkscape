@@ -48,7 +48,7 @@
 #include "libnr/nr-path.h"
 #include "xml/repr.h"
 #include "xml/repr-sorting.h"
-
+#include <2geom/pathvector.h>
 #include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-translate-ops.h>
@@ -1762,6 +1762,27 @@ bpath_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transf
     }
 
     return new_bpath;
+}
+
+/* 
+ * NOTE: Returns empty pathvector if curve == NULL
+ * TODO: see if calling this method can be optimized. All the pathvector copying might be slow.
+ */
+Geom::PathVector
+pathvector_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transformFull)
+{
+    if (curve == NULL)
+        return Geom::PathVector();
+
+    if (doTransformation) {
+        if (transformFull) {
+            return (curve->get_pathvector()) * sp_item_i2doc_affine(item);
+        } else {
+            return (curve->get_pathvector()) * to_2geom(item->transform);
+        }
+    } else {
+        return curve->get_pathvector();
+    }
 }
 
 SPCurve* curve_for_item(SPItem *item)

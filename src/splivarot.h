@@ -8,6 +8,7 @@
  */
 
 #include "livarot/Path.h"
+#include <2geom/forward.h>
 
 // boolean operations
 // work on the current selection
@@ -45,6 +46,7 @@ void sp_selected_path_simplify ();
 
 Path *Path_for_item(SPItem *item, bool doTransformation, bool transformFull = true);
 NArtBpath *bpath_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transformFull);
+Geom::PathVector pathvector_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transformFull);
 SPCurve *curve_for_item(SPItem *item);
 NR::Maybe<Path::cut_position> get_nearest_position_on_Path(Path *path, NR::Point p, unsigned seg = 0);
 NR::Point get_point_on_Path(Path *path, int piece, double t);

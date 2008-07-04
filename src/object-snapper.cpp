@@ -320,7 +320,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
                     if (!very_lenghty_prose && !very_complex_path) {
                         SPCurve *curve = curve_for_item(root_item); 
                         if (curve) {
-                            NArtBpath *bpath = bpath_for_curve(root_item, curve, true, true);
+                            NArtBpath *bpath = bpath_for_curve(root_item, curve, true, true); // perhaps for speed, get a reference to the Geom::pathvector, and store the transformation besides it. apply transformation on the snap points, instead of generating whole new path
                             _bpaths_to_snap_to->push_back(bpath); // we will get a dupe of the path, which must be freed at some point
                             curve->unref();
                         }
