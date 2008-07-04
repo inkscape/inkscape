@@ -477,6 +477,7 @@ double sp_svg_read_percentage(char const *str, double def)
     return v;
 }
 
+// TODO handle FOOT in case. But first add unit tests to detect the ommission-
 gchar const *sp_svg_length_get_css_units(SVGLength::Unit unit)
 {
     switch (unit) {
