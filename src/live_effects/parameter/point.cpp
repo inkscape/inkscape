@@ -78,7 +78,7 @@ PointParam::param_getSVGValue() const
 }
 
 Gtk::Widget *
-PointParam::param_newWidget(Gtk::Tooltips * tooltips)
+PointParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
 {
     Inkscape::UI::Widget::RegisteredTransformedPoint * pointwdg = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredTransformedPoint( param_label,
@@ -153,7 +153,7 @@ PointParam::set_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint
 }
 
 void
-PointParam::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
+PointParam::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
 {
     param_setValue(p.to_2geom());
     sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
@@ -166,7 +166,7 @@ PointParam::knot_get()
 }
 
 void
-PointParam::knot_click(guint state)
+PointParam::knot_click(guint /*state*/)
 {
     g_print ("This is the handle associated to the parameter '%s'\n", param_key.c_str());
 }

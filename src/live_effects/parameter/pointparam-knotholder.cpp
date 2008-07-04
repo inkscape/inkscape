@@ -72,12 +72,13 @@ KnotHolderEntityPointParam::knot_get() {
 }
 
 void
-KnotHolderEntityPointParam::knot_set(NR::Point const &p, NR::Point const &origin, guint state) {
+KnotHolderEntityPointParam::knot_set(NR::Point const &/*p*/, NR::Point const &/*origin*/, guint /*state*/) {
 }
 
 void
 PointParamKnotHolder::add_knot (
     Geom::Point         & p,
+// TODO: check if knot_click being ignored is bad:
     PointParamKnotHolderClickedFunc knot_click,
     SPKnotShapeType     shape,
     SPKnotModeType      mode,

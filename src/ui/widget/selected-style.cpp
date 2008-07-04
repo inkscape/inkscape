@@ -1343,7 +1343,7 @@ RotateableStrokeWidth::~RotateableStrokeWidth() {
 }
 
 double
-RotateableStrokeWidth::value_adjust(double current, double by, guint modifier, bool final)
+RotateableStrokeWidth::value_adjust(double current, double by, guint /*modifier*/, bool final)
 {
     double newval;
     // by is -1..1

@@ -83,7 +83,7 @@ LPEMirrorReflect::doEffect_path (std::vector<Geom::Path> const & path_in)
     m = m * m2.inverse();
     m = m * m1;
 
-    for (int i = 0; i < path_in.size(); ++i) {
+    for (int i = 0; i < static_cast<int>(path_in.size()); ++i) {
         path_out.push_back(path_in[i] * m);
     }
 

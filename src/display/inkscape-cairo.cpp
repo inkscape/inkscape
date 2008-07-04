@@ -55,7 +55,7 @@ nr_create_cairo_context_for_data (NRRectL *area, NRRectL *buf_area, unsigned cha
 
 /** Creates a cairo context to render to the given SPCanvasBuf on the given area */
 cairo_t *
-nr_create_cairo_context_canvasbuf (NRRectL *area, SPCanvasBuf *b)
+nr_create_cairo_context_canvasbuf (NRRectL */*area*/, SPCanvasBuf *b)
 {
     return nr_create_cairo_context_for_data (&(b->rect), &(b->rect), b->buf, b->buf_rowstride);
 }

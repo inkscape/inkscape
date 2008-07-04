@@ -306,8 +306,9 @@ int FloatLigne::AppendBord(float spos, float sval, float epos, float eval, float
 
 
 // insertion in a boubly-linked list. nothing interesting here
-void FloatLigne::InsertBord(int no, float p, int guess)
+void FloatLigne::InsertBord(int no, float /*p*/, int guess)
 {
+// TODO check if ignoring p is bad
     if ( no < 0 || no >= int(bords.size()) ) {
         return;
     }

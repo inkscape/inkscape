@@ -69,7 +69,7 @@ AVLTree *AVLTree::leaf(AVLTree *from, Side s)
     return NULL;
 }
 
-AVLTree *AVLTree::leafFromDad(AVLTree *from, Side s)
+AVLTree *AVLTree::leafFromDad(AVLTree */*from*/, Side s)
 {
     if (son[s]) {
 	return son[s]->leafFromDad(this, s);

@@ -295,7 +295,7 @@ Effect::writeParamsToSVG() {
  * your LPE. But don't forget to call the parent method so that done_pathparam_set is set to true!
  */
 void
-Effect::acceptParamPath (SPPath *param_path) {
+Effect::acceptParamPath (SPPath */*param_path*/) {
     done_pathparam_set = true;
 }
 
@@ -460,7 +460,7 @@ Effect::addHelperPaths(SPLPEItem *lpeitem, SPDesktop *desktop)
 }
 
 void
-Effect::addHelperPathsImpl(SPLPEItem *lpeitem, SPDesktop *desktop)
+Effect::addHelperPathsImpl(SPLPEItem */*lpeitem*/, SPDesktop */*desktop*/)
 {
     // if this method is overloaded in derived classes, provides_own_flash_paths will be true
     provides_own_flash_paths = false;
