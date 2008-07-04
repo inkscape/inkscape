@@ -27,10 +27,12 @@ namespace LivePathEffect {
 
 LPEMirrorReflect::LPEMirrorReflect(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
+    discard_orig_path(_("Discard original path?"), _("Check this to only keep the mirrored part of the path"), "discard_orig_path", &wr, this, false),
     reflection_line(_("Reflection line"), _("Line which serves as 'mirror' for the reflection"), "reflection_line", &wr, this, "M0,0 L100,100")
 {
     show_orig_path = true;
 
+    registerParameter( dynamic_cast<Parameter *>(&discard_orig_path) );
     registerParameter( dynamic_cast<Parameter *>(&reflection_line) );
 }
 
@@ -60,6 +62,9 @@ std::vector<Geom::Path>
 LPEMirrorReflect::doEffect_path (std::vector<Geom::Path> const & path_in)
 {
     std::vector<Geom::Path> path_out;
+    if (!discard_orig_path) {
+        path_out = path_in;
+    }
 
     std::vector<Geom::Path> mline(reflection_line.get_pathvector());
     Geom::Point A(mline.front().initialPoint());

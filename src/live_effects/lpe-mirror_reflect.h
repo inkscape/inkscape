@@ -34,6 +34,7 @@ public:
     virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
 
 private:
+    BoolParam discard_orig_path;
     PathParam reflection_line;
 
     LPEMirrorReflect(const LPEMirrorReflect&);
