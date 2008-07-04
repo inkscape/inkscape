@@ -35,11 +35,9 @@ PointParam::PointParam( const Glib::ustring& label, const Glib::ustring& tip,
                         Effect* effect, const gchar *htip, Geom::Point default_value)
     : Geom::Point(default_value), Parameter(label, tip, key, wr, effect), defvalue(default_value)
 {
-    oncanvas_editable = true;
-
-    knot_shape = SP_KNOT_SHAPE_SQUARE;
+    knot_shape = SP_KNOT_SHAPE_DIAMOND;
     knot_mode  = SP_KNOT_MODE_XOR;
-    knot_color = 0x00ff0000;
+    knot_color = 0xffffff00;
     handle_tip = g_strdup(htip);
 }
 

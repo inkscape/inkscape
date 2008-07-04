@@ -423,7 +423,8 @@ Effect::addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem 
         if ((*p)->paramType() == POINT_PARAM) {
             PointParam *pparam = static_cast<PointParam *>(*p);
             KnotHolderEntity *e = dynamic_cast<KnotHolderEntity *>(*p);
-            e->create(desktop, item, knotholder, pparam->handleTip());
+            e->create(desktop, item, knotholder, pparam->handleTip(),
+                      pparam->knotShape(), pparam->knotMode(), pparam->knotColor());
             knotholder->add(e);
         }
     }

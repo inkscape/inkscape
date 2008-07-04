@@ -52,6 +52,9 @@ public:
     virtual void param_transform_multiply(Geom::Matrix const& /*postmul*/, bool /*set*/);
 
     void set_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint32 color);
+    SPKnotShapeType knotShape() { return knot_shape; }
+    SPKnotModeType knotMode() { return knot_mode; }
+    guint32 knotColor() { return knot_color; }
 
     /* these are overloaded from KnotHolderEntity */
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
