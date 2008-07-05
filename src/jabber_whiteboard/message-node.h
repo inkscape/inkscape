@@ -19,6 +19,7 @@
 #include "gc-managed.h"
 #include "gc-anchored.h"
 #include "gc-finalized.h"
+#include "message.h"
 
 namespace Inkscape {
 
