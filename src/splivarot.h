@@ -9,6 +9,9 @@
 
 #include "livarot/Path.h"
 #include <2geom/forward.h>
+#include <2geom/path.h>
+class SPCurve;
+struct SPItem;
 
 // boolean operations
 // work on the current selection
