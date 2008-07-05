@@ -22,6 +22,8 @@
 #ifndef __GDL_STOCK_H__
 #define __GDL_STOCK_H__
 
+#include <glib/gmacros.h>   // G_BEGIN_DECLS
+
 G_BEGIN_DECLS
 
 #define GDL_STOCK_CLOSE			"gdl-close"
