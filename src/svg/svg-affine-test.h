@@ -40,6 +40,7 @@ private:
     static test_t const read_scale_tests[3];
     static test_t const read_rotate_tests[4];
     static test_t const read_skew_tests[3];
+    static char const * read_fail_tests[25];
     static test_t const write_matrix_tests[2];
     static test_t const write_translate_tests[3];
     static test_t const write_scale_tests[2];
@@ -155,6 +156,9 @@ public:
 
     void testReadConcatenation()
     {
+        // NOTE: According to the SVG specification (see the syntax at http://www.w3.org/TR/SVG/coords.html#TransformAttribute
+        //       there should be 1 or more comma-wsp sequences between transforms... This doesn't make sense and it seems
+        //       likely that instead of a + they meant a ? (zero or one comma-wsp sequences).
         char const * str = "skewY(17)skewX(9)translate(7,13)scale(2)rotate(13)translate(3,5)";
         Geom::Matrix ref(2.0199976232558053, 1.0674773585906016, -0.14125199392774669, 1.9055550612095459, 14.412730624347654, 28.499820929377454); // Precomputed using Mathematica
         Geom::Matrix cm;
@@ -162,15 +166,21 @@ public:
         TS_ASSERT_RELATION(approx_equal , ref , cm);
     }
 
-    // TODO: Perhaps check faulty transforms (like "translate(1,2,3)", or "matrix(1,2,3,4,5)", or ...)
+    void testReadFailures()
+    {
+        for(size_t i=0; i<G_N_ELEMENTS(read_fail_tests); i++) {
+            Geom::Matrix cm;
+            TSM_ASSERT(read_fail_tests[i] , !sp_svg_transform_read(read_fail_tests[i], &cm));
+        }
+    }
 };
 
 static double const DEGREE = M_PI/180.;
 
 SvgAffineTest::test_t const SvgAffineTest::read_matrix_tests[3] = {
     {"matrix(0,0,0,0,0,0)",Geom::Matrix(0,0,0,0,0,0)},
-    {"matrix(1,2,3,4,5,6)",Geom::Matrix(1,2,3,4,5,6)},
-    {"matrix(1 2 -3,-4,5e6,-6e-7)",Geom::Matrix(1,2,-3,-4,5e6,-6e-7)}};
+    {" matrix(1,2,3,4,5,6)",Geom::Matrix(1,2,3,4,5,6)},
+    {"matrix (1 2 -3,-4,5e6,-6e-7)",Geom::Matrix(1,2,-3,-4,5e6,-6e-7)}};
 SvgAffineTest::test_t const SvgAffineTest::read_translate_tests[3] = {
     {"translate(1)",Geom::Matrix(1,0,0,1,1,0)},
     {"translate(1,1)",Geom::Matrix(1,0,0,1,1,1)},
@@ -188,6 +198,32 @@ SvgAffineTest::test_t const SvgAffineTest::read_skew_tests[3] = {
     {"skewX( 30)",Geom::Matrix(1,0,tan(30.*DEGREE),1,0,0)},
     {"skewX(-30)",Geom::Matrix(1,0,tan(-30.*DEGREE),1,0,0)},
     {"skewY(390)",Geom::Matrix(1,tan(30.*DEGREE),0,1,0,0)}};
+char const * SvgAffineTest::read_fail_tests[25] = {
+    "matrix((1,2,3,4,5,6)",
+    "matrix((1,2,3,4,5,6))",
+    "matrix(1,2,3,4,5,6))",
+    "matrix(,1,2,3,4,5,6)",
+    "matrix(1,2,3,4,5,6,)",
+    "matrix(1,2,3,4,5,)",
+    "matrix(1,2,3,4,5)",
+    "matrix(1,2,3,4,5e6-3)", // Here numbers HAVE to be separated by a comma-wsp sequence
+    "matrix(1,2,3,4,5e6.3)", // Here numbers HAVE to be separated by a comma-wsp sequence
+    "translate()",
+    "translate(,)",
+    "translate(1,)",
+    "translate(1,6,)",
+    "translate(1,6,0)",
+    "scale()",
+    "scale(1,6,2)",
+    "rotate()",
+    "rotate(1,6)",
+    "rotate(1,6,)",
+    "rotate(1,6,3,4)",
+    "skewX()",
+    "skewX(-)",
+    "skewX(.)",
+    "skewY(,)",
+    "skewY(1,2)"};
 
 SvgAffineTest::test_t const SvgAffineTest::write_matrix_tests[2] = {
     {"matrix(1,2,3,4,5,6)",Geom::Matrix(1,2,3,4,5,6)},

@@ -230,6 +230,7 @@
     <cxxtestpart command="python ${cxxtest}/cxxtestgen.py" 
                  out="${src}/libnr/test-nr.cpp">
         <fileset dir="${src}/libnr">
+            <include name="nr-compose-test.h"/>
             <include name="nr-types-test.h"/>
             <include name="nr-translate-test.h"/>
             <include name="nr-rotate-test.h"/>
@@ -314,8 +315,6 @@
             <exclude name="libnr/test-nr-main.cpp"/>
             <exclude name="libnr/testnr.cpp"/>
             <exclude name="libnr/in-svg-plane-test.cpp"/>
-            <exclude name="libnr/nr-compose-reference.cpp"/>
-            <exclude name="libnr/nr-compose-test.cpp"/>
             <exclude name="libnr/nr-matrix-test.cpp"/>
             <exclude name="libnr/nr-point-fns-test.cpp"/>
             <exclude name="libnr/nr-rotate-fns-test.cpp"/>
@@ -420,6 +419,7 @@
            <exclude name="obj/test-src.o"/>
            <exclude name="obj/display/test-display.o"/>
            <exclude name="obj/helper/test-helper.o"/>
+           <exclude name="obj/libnr/nr-compose-reference.o"/>
            <exclude name="obj/libnr/test-nr.o"/>
            <exclude name="obj/svg/test-svg.o"/>
            <exclude name="obj/util/test-util.o"/>
@@ -573,6 +573,7 @@
            <include name="obj/test-src.o"/>
            <include name="obj/display/test-display.o"/>
            <include name="obj/helper/test-helper.o"/>
+           <include name="obj/libnr/nr-compose-reference.o"/>
            <include name="obj/libnr/test-nr.o"/>
            <include name="obj/svg/test-svg.o"/>
            <include name="obj/util/test-util.o"/>
