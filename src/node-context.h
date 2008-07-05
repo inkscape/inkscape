@@ -11,6 +11,7 @@
  * This code is in public domain
  */
 
+#include <gtk/gtktypeutils.h>
 #include <sigc++/sigc++.h>
 #include "event-context.h"
 #include "forward.h"
