@@ -14,6 +14,7 @@
 #include "ui/widget/registered-enums.h"
 #include <gtkmm/tooltips.h>
 
+#include "live_effects/effect.h"
 #include "live_effects/parameter/parameter.h"
 #include "verbs.h"
 
