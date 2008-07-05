@@ -1,9 +1,10 @@
 #ifndef SEEN_CONN_AVOID_REF
 #define SEEN_CONN_AVOID_REF
 
-/*
+/** \file
  * A class for handling shape interaction with libavoid.
- *
+ */
+/*
  * Authors:
  *   Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
@@ -12,13 +13,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-
+#include <glib/gslist.h>
 #include <sigc++/connection.h>
 
+struct SPDesktop;
 struct SPItem;
-namespace Avoid {
-    class ShapeRef;
-}
+namespace Avoid { class ShapeRef; }
 
 class SPAvoidRef {
 public:
