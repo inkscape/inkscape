@@ -12,7 +12,12 @@
  */
 
 #include <2geom/forward.h>
-
+#include <cairo/cairo.h>
+#include "libnr/nr-matrix.h"
+#include "libnr/nr-maybe.h"
+#include "libnr/nr-rect.h"
+class NArtBpath;
+struct NRPixBlock;
 class SPCanvasBuf;
 
 cairo_t *nr_create_cairo_context_canvasbuf (NRRectL *area, SPCanvasBuf *b);
