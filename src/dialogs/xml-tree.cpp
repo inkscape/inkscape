@@ -1304,7 +1304,16 @@ void on_clicked_get_editable_text(GtkWidget */*widget*/, gpointer data)
     dest->text = gtk_editable_get_chars(dest->editable, 0, -1);
 }
 
-
+gboolean
+quit_on_esc (GtkWidget *w, GdkEventKey *event, GObject */*tbl*/)
+{
+    switch (get_group0_keyval (event)) {
+        case GDK_Escape: // defocus
+            gtk_widget_destroy(w);
+            return TRUE;
+    }
+    return FALSE;
+}
 
 void cmd_new_element_node(GtkObject */*object*/, gpointer /*data*/)
 {
@@ -1321,6 +1330,7 @@ void cmd_new_element_node(GtkObject */*object*/, gpointer /*data*/)
     gtk_window_set_transient_for(GTK_WINDOW(window), GTK_WINDOW(dlg));
     gtk_window_set_modal(GTK_WINDOW(window), TRUE);
     gtk_signal_connect(GTK_OBJECT(window), "destroy", gtk_main_quit, NULL);
+    gtk_signal_connect(GTK_OBJECT(window), "key-press-event", G_CALLBACK(quit_on_esc), window);
 
     vbox = gtk_vbox_new(FALSE, 4);
     gtk_container_add(GTK_CONTAINER(window), vbox);
@@ -1337,6 +1347,8 @@ void cmd_new_element_node(GtkObject */*object*/, gpointer /*data*/)
     gtk_box_pack_start(GTK_BOX(vbox), bbox, FALSE, TRUE, 0);
 
     cancel = gtk_button_new_with_label(_("Cancel"));
+    GTK_WIDGET_SET_FLAGS( GTK_WIDGET(cancel),
+                           GTK_CAN_DEFAULT );
     gtk_signal_connect_object( GTK_OBJECT(cancel), "clicked",
                                 G_CALLBACK(gtk_widget_destroy),
                                 GTK_OBJECT(window) );
@@ -1365,9 +1377,7 @@ void cmd_new_element_node(GtkObject */*object*/, gpointer /*data*/)
 
     gtk_main();
 
-    g_assert(selected_repr != NULL);
-
-    if (name.text) {
+    if (selected_repr != NULL && name.text) {
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(current_document);
         Inkscape::XML::Node *new_repr;
         new_repr = xml_doc->createElement(name.text);
