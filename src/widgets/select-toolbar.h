@@ -1,9 +1,10 @@
 #ifndef SEEN_SELECT_TOOLBAR_H
 #define SEEN_SELECT_TOOLBAR_H
 
-/*
+/** \file
  * Selector aux toolbar
- *
+ */
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <bulia@dr.com>
@@ -13,9 +14,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <gtk/gtkactiongroup.h>
 #include <gtk/gtkstyle.h>
-
-#include <forward.h>
+struct SPDesktop;
 
 void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 
