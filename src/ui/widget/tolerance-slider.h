@@ -2,7 +2,8 @@
  * \brief 
  *
  * This widget is part of the Document properties dialog.
- *
+ */
+/*
  * Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *
@@ -14,9 +15,11 @@
 #ifndef INKSCAPE_UI_WIDGET_TOLERANCE_SLIDER__H_
 #define INKSCAPE_UI_WIDGET_TOLERANCE_SLIDER__H_
 
+#include <gtkmm/box.h>
 #include <gtkmm/tooltips.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/radiobutton.h>
+#include <gtkmm/scale.h>
 
 namespace Inkscape {
 namespace UI {
