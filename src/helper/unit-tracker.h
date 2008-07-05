@@ -16,6 +16,7 @@
 #include <map>
 
 #include <gtk/gtkaction.h>
+#include <gtk/gtkliststore.h>
 
 #include "helper/units.h"
 
