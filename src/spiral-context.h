@@ -1,9 +1,10 @@
 #ifndef __SP_SPIRAL_CONTEXT_H__
 #define __SP_SPIRAL_CONTEXT_H__
 
-/*
+/** \file
  * Spiral drawing context
- *
+ */
+/*
  * Authors:
  *   Mitsuru Oka
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -14,6 +15,7 @@
  * Released under GNU GPL
  */
 
+#include <gtk/gtktypeutils.h>
 #include <sigc++/sigc++.h>
 #include "event-context.h"
 #include "libnr/nr-point.h"
