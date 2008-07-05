@@ -1,5 +1,7 @@
 #include <gdk/gdkevents.h>
+#include "libnr/nr-rect.h"
 struct SPDesktop;
+struct SPItem;
 
 const double goldenratio = 1.61803398874989484820; // golden ratio
 
