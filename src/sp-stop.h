@@ -2,16 +2,16 @@
 #define SEEN_SP_STOP_H
 
 /** \file
- *
  * SPStop: SVG <stop> implementation.
- *
+ */
+/*
  * Authors?
  */
 
 #include <glib/gtypes.h>
 //#include <glib-object.h>
-//#include "sp-object.h"
-//#include "color.h"
+#include "sp-object.h"
+#include "color.h"
 #include "sp-stop-fns.h"
 
 class SPObjectClass;
