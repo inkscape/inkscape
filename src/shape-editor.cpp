@@ -101,9 +101,8 @@ bool ShapeEditor::has_local_change () {
 }
 
 void ShapeEditor::decrement_local_change () {
-    if (this->nodepath) {
-        if (this->nodepath->local_change > 0)
-            this->nodepath->local_change--;
+    if (this->nodepath && this->nodepath->local_change > 0) {
+        this->nodepath->local_change--;
     } else if (this->knotholder) {
         this->knotholder->local_change = FALSE;
     }
