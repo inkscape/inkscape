@@ -13,6 +13,7 @@
  */
 
 #include "event-context.h"
+#include <gtk/gtktypeutils.h>
 
 #define SP_TYPE_SELECT_CONTEXT            (sp_select_context_get_type ())
 #define SP_SELECT_CONTEXT(obj)            (GTK_CHECK_CAST ((obj), SP_TYPE_SELECT_CONTEXT, SPSelectContext))
@@ -20,6 +21,7 @@
 #define SP_IS_SELECT_CONTEXT(obj)         (GTK_CHECK_TYPE ((obj), SP_TYPE_SELECT_CONTEXT))
 #define SP_IS_SELECT_CONTEXT_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), SP_TYPE_SELECT_CONTEXT))
 
+struct SPCanvasItem;
 class SPSelectContext;
 class SPSelectContextClass;
 
