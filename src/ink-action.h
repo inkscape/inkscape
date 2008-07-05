@@ -7,6 +7,7 @@
 #include <gtk/gtktoggleaction.h>
 #include <gtk/gtkradioaction.h>
 #include <glib-object.h>
+#include "icon-size.h"
 
 /* Equivalent to GTK Actions of the same type, but can support Inkscape SVG icons */
 
