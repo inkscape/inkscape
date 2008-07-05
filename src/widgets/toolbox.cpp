@@ -1597,7 +1597,7 @@ setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 
 
 static void
-update_tool_toolbox( SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox )
+update_tool_toolbox( SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget */*toolbox*/ )
 {
     gchar const *const tname = ( eventcontext
                                  ? gtk_type_name(GTK_OBJECT_TYPE(eventcontext))
@@ -3329,7 +3329,7 @@ static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, bo
     }
 }
 
-static void sp_freehand_change_shape(EgeSelectOneAction* act, GObject *dataKludge) {
+static void sp_freehand_change_shape(EgeSelectOneAction* act, GObject */*dataKludge*/) {
     gint shape = ege_select_one_action_get_active( act );
     prefs_set_int_attribute("tools.freehand", "shape", shape);
 }
@@ -3420,11 +3420,11 @@ sp_pencil_tb_tolerance_value_changed(GtkAdjustment *adj, GObject *tbl)
 
 
 static void
-sp_pencil_tb_tolerance_value_changed_external(Inkscape::XML::Node *repr,
-                                              const gchar *key,
-                                              const gchar *oldval,
-                                              const gchar *newval,
-                                              bool is_interactive,
+sp_pencil_tb_tolerance_value_changed_external(Inkscape::XML::Node */*repr*/,
+                                              const gchar */*key*/,
+                                              const gchar */*oldval*/,
+                                              const gchar */*newval*/,
+                                              bool /*is_interactive*/,
                                               void * data)
 {
     GObject* tbl = G_OBJECT(data);

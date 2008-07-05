@@ -1060,6 +1060,7 @@ sp_shape_has_markers (SPShape const *shape)
 int
 sp_shape_number_of_markers (SPShape *shape, int type)
 {
+// TODO fixme: this looks very bad that the type parameter is ignored.
     Geom::PathVector const & pathv = shape->curve->get_pathvector();
 
     guint n = shape->marker[SP_MARKER_LOC_START] ?  pathv.size() : 0;
