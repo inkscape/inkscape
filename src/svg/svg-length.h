@@ -4,7 +4,8 @@
 /**
  *  \file src/svg/svg-length.h
  *  \brief SVG length type
- *
+ */
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Carl Hetherington <inkscape@carlh.net>
@@ -14,6 +15,8 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#include <glib/gtypes.h>
 
 class SVGLength
 {
