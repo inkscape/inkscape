@@ -14,8 +14,13 @@
  */
 
 #include <glib/gtypes.h>
-struct SPItem;
+#include <utility>   // std::pair
+#include "libnrtype/Layout-TNG.h"
 class SPCSSAttr;
+struct SPItem;
+struct SPObject;
+struct SPStyle;
+namespace NR { class Matrix; }
 namespace NR { class Point; }
 
 typedef std::pair<Inkscape::Text::Layout::iterator, Inkscape::Text::Layout::iterator> iterator_pair; 
