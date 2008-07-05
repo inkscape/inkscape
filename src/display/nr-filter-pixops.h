@@ -1,6 +1,8 @@
 #ifndef __NR_FILTER_PIXOPS_H__
 #define __NR_FILTER_PIXOPS_H__
 
+#include "libnr/nr-pixblock.h"
+
 /*
  * Per-pixel image manipulation functions.
  * These can be used by all filter primitives, which combine two images on
