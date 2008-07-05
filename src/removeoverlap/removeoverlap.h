@@ -1,6 +1,7 @@
-/**
+/** \file
  * \brief Remove overlaps function
- *
+ */
+/*
  * Authors:
  *   Tim Dwyer <tgdwyer@gmail.com>
  *
@@ -11,6 +12,8 @@
 
 #ifndef SEEN_REMOVEOVERLAP_H
 #define SEEN_REMOVEOVERLAP_H
+
+#include <glib/gslist.h>
 
 void removeoverlap(GSList const *items, double xGap, double yGap);
 
