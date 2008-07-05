@@ -102,7 +102,7 @@ public:
         TS_ASSERT(c_a == c_c);
         c_c = c_a;
         TS_ASSERT(c_a == c_c);
-    }		
+    }
 
     void testFillConstructor()
     {
@@ -230,7 +230,7 @@ public:
         TS_ASSERT(full_list != exp_list);
         full_list.erase_after(full_list.begin());
         TS_ASSERT(full_list == exp_list);
-    }		
+    }
 };
 
 /*
