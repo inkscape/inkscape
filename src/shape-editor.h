@@ -14,15 +14,13 @@
 
 #include <forward.h>
 
-namespace Inkscape {
-namespace NodePath {
-class Path;
-}
-}
+namespace Inkscape { namespace NodePath { class Path; } }
+namespace NR { class Rect; }
 
 #include "libnr/nr-path-code.h"
 #include "libnr/nr-point.h"
 #include "libnr/nr-maybe.h"
+#include <vector>
 
 class KnotHolder;
 class SPDesktop;
