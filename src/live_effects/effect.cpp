@@ -197,9 +197,6 @@ Effect::createAndApply(const char* name, SPDocument *doc, SPItem *item)
     gchar *href = g_strdup_printf("#%s", repr_id);
     sp_lpe_item_add_path_effect(SP_LPE_ITEM(item), href, true);
     g_free(href);
-
-    sp_document_done(doc, SP_VERB_DIALOG_LIVE_PATH_EFFECT,
-                     _("Create and apply path effect"));
 }
 
 void

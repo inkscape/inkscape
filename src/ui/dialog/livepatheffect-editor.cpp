@@ -331,6 +331,9 @@ LivePathEffectEditor::onApply()
 
             LivePathEffect::Effect::createAndApply(data->key.c_str(), doc, item);
 
+            sp_document_done(doc, SP_VERB_DIALOG_LIVE_PATH_EFFECT,
+                     _("Create and apply path effect"));
+
             onSelectionChanged(sel);
         }
     }

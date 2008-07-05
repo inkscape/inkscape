@@ -356,8 +356,6 @@ PathParam::paste_param_path(const char *svgd)
 
     param_write_to_repr(svgd);
     signal_path_pasted.emit();
-    sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
-                     _("Paste path parameter"));
 }
 
 void
@@ -366,6 +364,8 @@ PathParam::on_paste_button_click()
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
     Glib::ustring svgd = cm->getPathParameter();
     paste_param_path(svgd.data());
+    sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
+                     _("Paste path parameter"));
 }
 
 void
