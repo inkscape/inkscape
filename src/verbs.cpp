@@ -2097,10 +2097,10 @@ FitCanvasVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
     switch ((long) data) {
         case SP_VERB_FIT_CANVAS_TO_SELECTION:
-            fit_canvas_to_selection(dt);
+            verb_fit_canvas_to_selection(dt);
             break;
         case SP_VERB_FIT_CANVAS_TO_DRAWING:
-            fit_canvas_to_drawing(doc);
+            verb_fit_canvas_to_drawing(dt);
             break;
         case SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING:
             fit_canvas_to_selection_or_drawing(dt);

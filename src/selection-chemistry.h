@@ -116,9 +116,11 @@ void sp_selection_create_bitmap_copy ();
 void sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer);
 void sp_selection_unset_mask(bool apply_clip_path);
 
-void fit_canvas_to_selection(SPDesktop *desktop);
-void fit_canvas_to_drawing(SPDocument *doc);
-void fit_canvas_to_selection_or_drawing(SPDesktop *desktop);
+bool fit_canvas_to_selection(SPDesktop *);
+void verb_fit_canvas_to_selection(SPDesktop *);
+bool fit_canvas_to_drawing(SPDocument *);
+void verb_fit_canvas_to_drawing(SPDesktop *);
+void fit_canvas_to_selection_or_drawing(SPDesktop *);
 
 void unlock_all(SPDesktop *dt);
 void unlock_all_in_all_layers(SPDesktop *dt);

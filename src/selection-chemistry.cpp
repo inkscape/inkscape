@@ -2814,33 +2814,67 @@ void sp_selection_unset_mask(bool apply_clip_path) {
         sp_document_done (doc, SP_VERB_OBJECT_UNSET_MASK, _("Release mask"));
 }
 
-void fit_canvas_to_selection(SPDesktop *desktop) {
-    g_return_if_fail(desktop != NULL);
+/**
+ * Returns true if an undoable change should be recorded.
+ */
+bool
+fit_canvas_to_selection(SPDesktop *desktop)
+{
+    g_return_val_if_fail(desktop != NULL, false);
     SPDocument *doc = sp_desktop_document(desktop);
 
-    g_return_if_fail(doc != NULL);
-    g_return_if_fail(desktop->selection != NULL);
+    g_return_val_if_fail(doc != NULL, false);
+    g_return_val_if_fail(desktop->selection != NULL, false);
 
     if (desktop->selection->isEmpty()) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to fit canvas to."));
-        return;
+        return false;
     }
     NR::Maybe<NR::Rect> const bbox(desktop->selection->bounds());
     if (bbox && !bbox->isEmpty()) {
         doc->fitToRect(*bbox);
+        return true;
+    } else {
+        return false;
     }
-};
+}
 
-void fit_canvas_to_drawing(SPDocument *doc) {
-    g_return_if_fail(doc != NULL);
+/**
+ * Fit canvas to the bounding box of the selection, as an undoable action.
+ */
+void
+verb_fit_canvas_to_selection(SPDesktop *const desktop)
+{
+    if (fit_canvas_to_selection(desktop)) {
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_FIT_CANVAS_TO_SELECTION,
+                         _("Fit Page to Selection"));
+    }
+}
+
+bool
+fit_canvas_to_drawing(SPDocument *doc)
+{
+    g_return_val_if_fail(doc != NULL, false);
 
     sp_document_ensure_up_to_date(doc);
     SPItem const *const root = SP_ITEM(doc->root);
     NR::Maybe<NR::Rect> const bbox(root->getBounds(from_2geom(sp_item_i2r_affine(root))));
     if (bbox && !bbox->isEmpty()) {
         doc->fitToRect(*bbox);
+        return true;
+    } else {
+        return false;
     }
-};
+}
+
+void
+verb_fit_canvas_to_drawing(SPDesktop *desktop)
+{
+    if (fit_canvas_to_drawing(sp_desktop_document(desktop))) {
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_FIT_CANVAS_TO_DRAWING,
+                         _("Fit Page to Drawing"));
+    }
+}
 
 void fit_canvas_to_selection_or_drawing(SPDesktop *desktop) {
     g_return_if_fail(desktop != NULL);
@@ -2849,14 +2883,13 @@ void fit_canvas_to_selection_or_drawing(SPDesktop *desktop) {
     g_return_if_fail(doc != NULL);
     g_return_if_fail(desktop->selection != NULL);
 
-    if (desktop->selection->isEmpty()) {
-        fit_canvas_to_drawing(doc);
-    } else {
-        fit_canvas_to_selection(desktop);
+    bool const changed = ( desktop->selection->isEmpty()
+                           ? fit_canvas_to_drawing(doc)
+                           : fit_canvas_to_selection(desktop) );
+    if (changed) {
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING,
+                         _("Fit Page to Selection or Drawing"));
     }
-
-    sp_document_done(doc, SP_VERB_FIT_CANVAS_TO_DRAWING,
-                     _("Fit page to selection"));
 };
 
 static void itemtree_map(void (*f)(SPItem *, SPDesktop *), SPObject *root, SPDesktop *desktop) {
