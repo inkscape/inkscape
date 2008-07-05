@@ -65,4 +65,5 @@ svg_test_svg_LDADD = \
 	svg/libspsvg.a	\
 	svg/libtest-svg.a 	\
 	svg/libtest-stubs.a 	\
+	2geom/lib2geom.a	\
 	$(INKSCAPE_LIBS)
