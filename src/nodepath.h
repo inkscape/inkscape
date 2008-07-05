@@ -21,6 +21,9 @@
 #include <gdk/gdkevents.h>
 #include <list>
 
+struct SPCanvasItem;
+class SPCurve;
+struct SPItem;
 class SPObject;
 class SPDesktop;
 class SPPath;
