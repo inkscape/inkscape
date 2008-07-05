@@ -96,12 +96,8 @@ bool ShapeEditor::has_knotholder () {
 }
 
 bool ShapeEditor::has_local_change () {
-    if (this->nodepath)
-        return (this->nodepath->local_change != 0);
-    else if (this->knotholder)
-        return (this->knotholder->local_change != 0);
-    else
-        return false;
+    return ((this->nodepath && this->nodepath->local_change) ||
+            (this->knotholder && this->knotholder->local_change != 0));
 }
 
 void ShapeEditor::decrement_local_change () {
