@@ -89,12 +89,26 @@ class BaseMatrixImpl
 
 	bool is_positive() const
 	{
-		return gsl_matrix_ispos(m_matrix);
+        for ( unsigned int i = 0; i < rows(); ++i )
+        {
+            for ( unsigned int j = 0; j < columns(); ++j )
+            {
+                if ( (*this)(i,j) <= 0 ) return false;
+            }
+        }
+        return true;
 	}
 
 	bool is_negative() const
 	{
-		return gsl_matrix_isneg(m_matrix);
+        for ( unsigned int i = 0; i < rows(); ++i )
+        {
+            for ( unsigned int j = 0; j < columns(); ++j )
+            {
+                if ( (*this)(i,j) >= 0 ) return false;
+            }
+        }
+        return true;
 	}
 
 	bool is_non_negative() const

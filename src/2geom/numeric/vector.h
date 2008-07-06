@@ -73,12 +73,20 @@ class BaseVectorImpl
 
 	bool is_positive() const
 	{
-		return gsl_vector_ispos(m_vector);
+	    for ( size_t i = 0; i < size(); ++i )
+	    {
+	        if ( (*this)[i] <= 0 ) return false;
+	    }
+		return true;
 	}
 
 	bool is_negative() const
 	{
-		return gsl_vector_isneg(m_vector);
+        for ( size_t i = 0; i < size(); ++i )
+        {
+            if ( (*this)[i] >= 0 ) return false;
+        }
+        return true;
 	}
 
 	bool is_non_negative() const
