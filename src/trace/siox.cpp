@@ -343,10 +343,9 @@ public:
 /**
  *  Create an image with the given width and height
  */
-// TODO check this. Seems bad that the params are ignored
 SioxImage::SioxImage(unsigned int widthArg, unsigned int heightArg)
 {
-    init(width, height);
+    init(widthArg, heightArg);
 }
 
 /**
