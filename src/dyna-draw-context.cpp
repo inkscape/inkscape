@@ -103,7 +103,7 @@ static gint sp_dyna_draw_context_root_handler(SPEventContext *ec, GdkEvent *even
 
 static void clear_current(SPDynaDrawContext *dc);
 static void set_to_accumulated(SPDynaDrawContext *dc, bool unionize);
-static void add_cap(SPCurve *curve, NR::Point const &pre, NR::Point const &from, NR::Point const &to, NR::Point const &post, double rounding);
+static void add_cap(SPCurve *curve, NR::Point const &from, NR::Point const &to, double rounding);
 static void accumulate_calligraphic(SPDynaDrawContext *dc);
 
 static void fit_and_split(SPDynaDrawContext *ddc, gboolean release);
@@ -1018,31 +1018,16 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
 
 static void
 add_cap(SPCurve *curve,
-        NR::Point const &pre, NR::Point const &from,
-        NR::Point const &to, NR::Point const &post,
+        NR::Point const &from,
+        NR::Point const &to, 
         double rounding)
 {
-    NR::Point vel = rounding * NR::rot90( to - from ) / sqrt(2.0);
-    double mag = NR::L2(vel);
+    if (NR::L2( to - from ) > DYNA_EPSILON) {
+        NR::Point vel = rounding * NR::rot90( to - from ) / sqrt(2.0);
+        double mag = NR::L2(vel);
 
-    NR::Point v_in = from - pre;
-    double mag_in = NR::L2(v_in);
-    if ( mag_in > DYNA_EPSILON ) {
-        v_in = mag * v_in / mag_in;
-    } else {
-        v_in = NR::Point(0, 0);
-    }
-
-    NR::Point v_out = to - post;
-    double mag_out = NR::L2(v_out);
-    if ( mag_out > DYNA_EPSILON ) {
-        v_out = mag * v_out / mag_out;
-    } else {
-        v_out = NR::Point(0, 0);
-    }
-
-    if ( NR::L2(v_in) > DYNA_EPSILON || NR::L2(v_out) > DYNA_EPSILON ) {
-        curve->curveto(from + v_in, to + v_out, to);
+        NR::Point v = mag * NR::rot90( to - from ) / NR::L2( to - from );
+        curve->curveto(from + v, to + v, to);
     }
 }
 
@@ -1064,11 +1049,11 @@ accumulate_calligraphic(SPDynaDrawContext *dc)
 
         dc->accumulated->append(dc->cal1, FALSE);
 
-        add_cap(dc->accumulated, SP_CURVE_SEGMENT(dc->cal1, dc->cal1->get_length()-1)->c(2), SP_CURVE_SEGMENT(dc->cal1, dc->cal1->get_length()-1)->c(3), SP_CURVE_SEGMENT(rev_cal2, 0)->c(3), SP_CURVE_SEGMENT(rev_cal2, 1)->c(1), dc->cap_rounding);
+        add_cap(dc->accumulated, SP_CURVE_SEGMENT(dc->cal1, dc->cal1->get_length()-1)->c(3), SP_CURVE_SEGMENT(rev_cal2, 0)->c(3), dc->cap_rounding);
 
         dc->accumulated->append(rev_cal2, TRUE);
 
-        add_cap(dc->accumulated, SP_CURVE_SEGMENT(rev_cal2, rev_cal2->get_length()-1)->c(2), SP_CURVE_SEGMENT(rev_cal2, rev_cal2->get_length()-1)->c(3), SP_CURVE_SEGMENT(dc->cal1, 0)->c(3), SP_CURVE_SEGMENT(dc->cal1, 1)->c(1), dc->cap_rounding);
+        add_cap(dc->accumulated, SP_CURVE_SEGMENT(rev_cal2, rev_cal2->get_length()-1)->c(3), SP_CURVE_SEGMENT(dc->cal1, 0)->c(3), dc->cap_rounding);
 
         dc->accumulated->closepath();
 
@@ -1146,7 +1131,7 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
                 }
                 // FIXME: dc->segments is always NULL at this point??
                 if (!dc->segments) { // first segment
-                    add_cap(dc->currentcurve, b2[1], b2[0], b1[0], b1[1], dc->cap_rounding);
+                    add_cap(dc->currentcurve, b2[0], b1[0], dc->cap_rounding);
                 }
                 dc->currentcurve->closepath();
                 sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(dc->currentshape), dc->currentcurve);
@@ -1216,15 +1201,16 @@ draw_temporary_box(SPDynaDrawContext *dc)
 {
     dc->currentcurve->reset();
 
-    dc->currentcurve->moveto(dc->point1[dc->npoints-1]);
+    dc->currentcurve->moveto(dc->point2[dc->npoints-1]);
     for (gint i = dc->npoints-2; i >= 0; i--) {
-        dc->currentcurve->lineto(dc->point1[i]);
-    }
-    for (gint i = 0; i < dc->npoints; i++) {
         dc->currentcurve->lineto(dc->point2[i]);
     }
+    for (gint i = 0; i < dc->npoints; i++) {
+        dc->currentcurve->lineto(dc->point1[i]);
+    }
+
     if (dc->npoints >= 2) {
-        add_cap(dc->currentcurve, dc->point2[dc->npoints-2], dc->point2[dc->npoints-1], dc->point1[dc->npoints-1], dc->point1[dc->npoints-2], dc->cap_rounding);
+        add_cap(dc->currentcurve, dc->point1[dc->npoints-1], dc->point2[dc->npoints-1], dc->cap_rounding);
     }
 
     dc->currentcurve->closepath();
