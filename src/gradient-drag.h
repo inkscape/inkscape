@@ -19,13 +19,11 @@
 #include <vector>
 
 #include <forward.h>
+#include <libnr/nr-forward.h>
 #include <knot-enums.h>
 
 struct SPItem;
 struct SPKnot;
-namespace NR {
-class Point;
-}
 
 /**
 This class represents a single draggable point of a gradient. It remembers the item

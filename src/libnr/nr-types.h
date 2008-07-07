@@ -24,14 +24,7 @@
 #include <libnr/nr-point-ops.h>
 #include <libnr/nr-rect.h>
 #include <libnr/nr-rect-l.h>
-
-namespace NR {
-
-class Rect;
-class Matrix;
-
-} /* namespace NR */
-
+#include <libnr/nr-forward.h>
 
 #endif /* !__NR_TYPES_H__ */
 

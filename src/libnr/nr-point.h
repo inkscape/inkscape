@@ -12,6 +12,7 @@
 
 #include <libnr/nr-coord.h>
 #include <libnr/nr-dim2.h>
+#include <libnr/nr-forward.h>
 
 //#include "round.h"
 #include "decimal-round.h"
@@ -19,8 +20,6 @@
 #include <2geom/point.h>
 
 namespace NR {
-
-class Matrix;
 
 /// Cartesian point.
 class Point {

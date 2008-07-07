@@ -20,7 +20,7 @@
 #include "gc-managed.h"
 #include "gc-finalized.h"
 #include "gc-anchored.h"
-
+#include <libnr/nr-forward.h>
 
 /**
  * Iterates until true or returns false.
@@ -52,10 +52,6 @@ struct StopOnNonZero {
   }
 };
 
-
-namespace NR {
-    class Point;
-}
 class SPDocument;
 
 namespace Inkscape {

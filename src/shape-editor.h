@@ -13,9 +13,9 @@
  */
 
 #include <forward.h>
+#include <libnr/nr-forward.h>
 
 namespace Inkscape { namespace NodePath { class Path; } }
-namespace NR { class Rect; }
 
 #include "libnr/nr-path-code.h"
 #include "libnr/nr-point.h"

@@ -14,6 +14,7 @@
 #include <map>
 #include <glibmm/ustring.h>
 #include <2geom/path.h>
+#include <2geom/forward.h>
 #include "ui/widget/registry.h"
 #include "util/enums.h"
 #include "sp-lpe-item.h"
@@ -35,10 +36,6 @@ namespace Gtk {
     class Widget;
     class VBox;
     class Tooltips;
-}
-
-namespace Geom {
-    class Matrix;
 }
 
 namespace Inkscape {

@@ -2,7 +2,7 @@
 #define __SATISFIED_GUIDE_CNS_H__
 
 #include <forward.h>
-namespace NR { class Point; }
+#include <libnr/nr-forward.h>
 #include <vector>
 class SPGuideConstraint;
 

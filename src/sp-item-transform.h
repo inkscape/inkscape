@@ -2,11 +2,7 @@
 #define SP_ITEM_TRANSFORM_H
 
 #include "forward.h"
-namespace NR {
-class translate;
-class rotate;
-class Rect;
-}
+#include <libnr/nr-forward.h>
 
 void sp_item_rotate_rel(SPItem *item, NR::rotate const &rotation);
 void sp_item_scale_rel (SPItem *item, NR::scale const &scale);

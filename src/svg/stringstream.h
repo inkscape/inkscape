@@ -5,9 +5,8 @@
 #include <sstream>
 #include <string>
 
-namespace Geom {
-    class Point;
-}
+#include <2geom/forward.h>
+
 namespace Inkscape {
 
 typedef std::ios_base &(*std_oct_type)(std::ios_base &);

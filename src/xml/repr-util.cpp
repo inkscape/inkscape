@@ -29,7 +29,7 @@
 
 
 #include <glib.h>
-
+#include <2geom/point.h>
 #include "svg/stringstream.h"
 #include "svg/css-ostringstream.h"
 
@@ -592,7 +592,7 @@ sp_repr_set_svg_double(Inkscape::XML::Node *repr, gchar const *key, double val)
     return true;
 }
 
-unsigned sp_repr_set_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point val)
+unsigned sp_repr_set_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point const & val)
 {
     g_return_val_if_fail(repr != NULL, FALSE);
     g_return_val_if_fail(key != NULL, FALSE);

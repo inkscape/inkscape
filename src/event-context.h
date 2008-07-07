@@ -21,13 +21,12 @@
 #include <gdk/gdktypes.h>
 #include <gdk/gdkevents.h>
 
+#include <libnr/nr-forward.h>
+
 struct GrDrag;
 struct SPDesktop;
 struct SPItem;
 class KnotHolder;
-namespace NR {
-    class Point;
-}
 
 namespace Inkscape {
     class MessageContext;

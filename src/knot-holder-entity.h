@@ -19,12 +19,10 @@
 
 #include <glib/gtypes.h>
 #include "knot.h"
+#include <libnr/nr-forward.h>
 
 struct SPItem;
 struct SPKnot;
-namespace NR {
-class Point;
-}
 
 class SPDesktop;
 class KnotHolder;
