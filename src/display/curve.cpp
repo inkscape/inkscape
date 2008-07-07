@@ -299,7 +299,6 @@ SPCurve::get_segment_count() const
     return nr;
 }
 
-
 /**
  * Increase _refcount of curve.
  *
@@ -882,8 +881,8 @@ SPCurve::last_bpath() const
 }
 
 /**
- * Return last pathsegment (possibly the closing path segment) in PathVector or NULL.
- * equal in functionality to SPCurve::last_bpath()
+ * Return last pathsegment (possibly the closing path segment) of the last path in PathVector or NULL.
+ * If the last path is empty (contains only a moveto), the function returns NULL
  */
 Geom::Curve const *
 SPCurve::last_segment() const
