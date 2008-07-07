@@ -588,11 +588,6 @@ sp_shape_marker_get_transform(SPShape const *shape, NArtBpath const *bp)
  *
  * \see sp_shape_marker_update_marker_view.
  *
- * \param p Point where the marker should be placed.
- * \param t1 Tangent of end of curvesegment before marker
- * \param t2 Tangent of start of curvesegment after marker
- * \return Transform matrix.
- *
  * From SVG spec:
  * The axes of the temporary new user coordinate system are aligned according to the orient attribute on the 'marker'
  * element and the slope of the curve at the given vertex. (Note: if there is a discontinuity at a vertex, the slope
@@ -600,10 +595,16 @@ sp_shape_marker_get_transform(SPShape const *shape, NArtBpath const *bp)
  * determined, the slope is assumed to be zero.)
  */
 Geom::Matrix
-sp_shape_marker_get_transform(Geom::Point & p, Geom::Point & t1, Geom::Point & t2)
+sp_shape_marker_get_transform(Geom::Curve const & c1, Geom::Curve const & c2)
 {
-    double const angle1 = Geom::atan2(t1);
-    double const angle2 = Geom::atan2(t2);
+    Geom::Point p = c1.pointAt(1);
+    Geom::Curve * c1_reverse = c1.reverse();
+    Geom::Point tang1 = - c1_reverse->unitTangentAt(0);
+    delete c1_reverse;
+    Geom::Point tang2 = c2.unitTangentAt(0);
+
+    double const angle1 = Geom::atan2(tang1);
+    double const angle2 = Geom::atan2(tang2);
 
     double ret_angle;
     ret_angle = .5 * (angle1 + angle2);
@@ -619,6 +620,28 @@ sp_shape_marker_get_transform(Geom::Point & p, Geom::Point & t1, Geom::Point & t
     }
 
     return Geom::Rotate(ret_angle) * Geom::Translate(p);
+}
+Geom::Matrix
+sp_shape_marker_get_transform_at_start(Geom::Curve const & c)
+{
+    Geom::Point p = c.pointAt(0);
+    Geom::Point tang = c.unitTangentAt(0);
+
+    double const angle = Geom::atan2(tang);
+
+    return Geom::Rotate(angle) * Geom::Translate(p);
+}
+Geom::Matrix
+sp_shape_marker_get_transform_at_end(Geom::Curve const & c)
+{
+    Geom::Point p = c.pointAt(1);
+    Geom::Curve * c_reverse = c.reverse();
+    Geom::Point tang = - c_reverse->unitTangentAt(0);
+    delete c_reverse;
+
+    double const angle = Geom::atan2(tang);
+
+    return Geom::Rotate(angle) * Geom::Translate(p);
 }
 
 /**
@@ -643,9 +666,7 @@ sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai)
     Geom::PathVector const & pathv = shape->curve->get_pathvector();
     for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
         if ( shape->marker[SP_MARKER_LOC_START] ) {
-            Geom::Point p = path_it->front().pointAt(0);
-            Geom::Point tang = path_it->front().unitTangentAt(0);
-            Geom::Matrix const m (sp_shape_marker_get_transform(p, tang, tang));
+            Geom::Matrix const m (sp_shape_marker_get_transform_at_start(path_it->front()));
             sp_marker_show_instance ((SPMarker* ) shape->marker[SP_MARKER_LOC_START], ai,
                                      NR_ARENA_ITEM_GET_KEY(ai) + SP_MARKER_LOC_START, start_pos, m,
                                      style->stroke_width.computed);
@@ -661,10 +682,7 @@ sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai)
                  * Loop to end_default (so including closing segment), because when a path is closed,
                  * there should be a midpoint marker between last segment and closing straight line segment
                  */
-                Geom::Point p = curve_it1->pointAt(1);
-                Geom::Point tang1 = curve_it1->unitTangentAt(1);
-                Geom::Point tang2 = curve_it2->unitTangentAt(0);
-                Geom::Matrix const m (sp_shape_marker_get_transform(p, tang1, tang2));
+                Geom::Matrix const m (sp_shape_marker_get_transform(*curve_it1, *curve_it2));
                 sp_marker_show_instance ((SPMarker* ) shape->marker[SP_MARKER_LOC_MID], ai,
                                          NR_ARENA_ITEM_GET_KEY(ai) + SP_MARKER_LOC_MID, mid_pos, m,
                                          style->stroke_width.computed);
@@ -676,9 +694,7 @@ sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai)
         }
 
         if ( shape->marker[SP_MARKER_LOC_END] ) {
-            Geom::Point p = path_it->back_default().pointAt(1);
-            Geom::Point tang = path_it->back_default().unitTangentAt(1);
-            Geom::Matrix const m (sp_shape_marker_get_transform(p, tang, tang));
+            Geom::Matrix const m (sp_shape_marker_get_transform_at_end(path_it->back_default()));
             sp_marker_show_instance ((SPMarker* ) shape->marker[SP_MARKER_LOC_END], ai,
                                      NR_ARENA_ITEM_GET_KEY(ai) + SP_MARKER_LOC_END, end_pos, m,
                                      style->stroke_width.computed);
@@ -749,9 +765,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
                         SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_START]);
                         SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_START]));
 
-                        Geom::Point p = path_it->front().pointAt(0);
-                        Geom::Point tang = path_it->front().unitTangentAt(0);
-                        NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(p, tang, tang)));
+                        NR::Matrix tr(from_2geom(sp_shape_marker_get_transform_at_start(path_it->front())));
 
                         if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                             tr = NR::scale(style->stroke_width.computed) * tr;
@@ -779,10 +793,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
                             SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_MID]);
                             SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_MID]));
 
-                            Geom::Point p = curve_it1->pointAt(1);
-                            Geom::Point tang1 = curve_it1->unitTangentAt(1);
-                            Geom::Point tang2 = curve_it2->unitTangentAt(0);
-                            NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(p, tang1, tang2)));
+                            NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(*curve_it1, *curve_it2)));
 
                             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                                 tr = NR::scale(style->stroke_width.computed) * tr;
@@ -806,9 +817,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
                         SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_END]);
                         SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_END]));
 
-                        Geom::Point p = path_it->back_default().pointAt(1);
-                        Geom::Point tang = path_it->back_default().unitTangentAt(1);
-                        NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(p, tang, tang)));
+                        NR::Matrix tr(from_2geom(sp_shape_marker_get_transform_at_end(path_it->back_default())));
 
                         if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                             tr = NR::scale(style->stroke_width.computed) * tr;
@@ -885,9 +894,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
             SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_START]);
             SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_START]));
 
-            Geom::Point p = path_it->front().pointAt(0);
-            Geom::Point tang = path_it->front().unitTangentAt(0);
-            NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(p, tang, tang)));
+            NR::Matrix tr(from_2geom(sp_shape_marker_get_transform_at_start(path_it->front())));
 
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                 tr = NR::scale(style->stroke_width.computed) * tr;
@@ -913,10 +920,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
                 SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_MID]);
                 SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_MID]));
 
-                Geom::Point p = curve_it1->pointAt(1);
-                Geom::Point tang1 = curve_it1->unitTangentAt(1);
-                Geom::Point tang2 = curve_it2->unitTangentAt(0);
-                NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(p, tang1, tang2)));
+                NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(*curve_it1, *curve_it2)));
 
                 if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                     tr = NR::scale(style->stroke_width.computed) * tr;
@@ -938,9 +942,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
             SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_END]);
             SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_END]));
 
-            Geom::Point p = path_it->back_default().pointAt(1);
-            Geom::Point tang = path_it->back_default().unitTangentAt(1);
-            NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(p, tang, tang)));
+            NR::Matrix tr(from_2geom(sp_shape_marker_get_transform_at_end(path_it->back_default())));
 
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                 tr = NR::scale(style->stroke_width.computed) * tr;

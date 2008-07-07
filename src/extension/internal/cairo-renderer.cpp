@@ -191,9 +191,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
             SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_START]);
             SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_START]));
 
-            Geom::Point p = path_it->front().pointAt(0);
-            Geom::Point tang = path_it->front().unitTangentAt(0);
-            NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(p, tang, tang)));
+            NR::Matrix tr(from_2geom(sp_shape_marker_get_transform_at_start(path_it->front())));
 
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                 tr = NR::scale(style->stroke_width.computed) * tr;
@@ -219,10 +217,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
                 SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_MID]);
                 SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_MID]));
 
-                Geom::Point p = curve_it1->pointAt(1);
-                Geom::Point tang1 = curve_it1->unitTangentAt(1);
-                Geom::Point tang2 = curve_it2->unitTangentAt(0);
-                NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(p, tang1, tang2)));
+                NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(*curve_it1, *curve_it2)));
 
                 if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                     tr = NR::scale(style->stroke_width.computed) * tr;
@@ -244,9 +239,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
             SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_END]);
             SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_END]));
 
-            Geom::Point p = path_it->back_default().pointAt(1);
-            Geom::Point tang = path_it->back_default().unitTangentAt(1);
-            NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(p, tang, tang)));
+            NR::Matrix tr(from_2geom(sp_shape_marker_get_transform_at_end(path_it->back_default())));
 
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                 tr = NR::scale(style->stroke_width.computed) * tr;
