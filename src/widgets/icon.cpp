@@ -20,6 +20,9 @@
 #include <gtk/gtkiconfactory.h>
 #include <gtk/gtkstock.h>
 #include <gtk/gtkimage.h>
+#include <gtkmm/iconfactory.h>
+#include <gtkmm/iconset.h>
+#include <gtkmm/iconsource.h>
 #include <gtkmm/image.h>
 
 #include "path-prefix.h"
@@ -54,10 +57,8 @@ static void sp_icon_screen_changed( GtkWidget *widget, GdkScreen *previous_scree
 static void sp_icon_style_set( GtkWidget *widget, GtkStyle *previous_style );
 static void sp_icon_theme_changed( SPIcon *icon );
 
-static guchar *sp_icon_image_load_pixmap(gchar const *name, unsigned lsize, unsigned psize);
-static guchar *sp_icon_image_load_svg(gchar const *name, unsigned lsize, unsigned psize);
-
-static guchar *sp_icon_image_load(SPIcon *icon, gchar const *name);
+static GdkPixbuf *sp_icon_image_load_pixmap(gchar const *name, unsigned lsize, unsigned psize);
+static GdkPixbuf *sp_icon_image_load_svg(gchar const *name, unsigned lsize, unsigned psize);
 
 static void sp_icon_overlay_pixels( guchar *px, int width, int height, int stride,
                                     unsigned r, unsigned g, unsigned b );
@@ -79,6 +80,10 @@ static GtkIconSize iconSizeLookup[] = {
     GTK_ICON_SIZE_DIALOG,
     GTK_ICON_SIZE_MENU, // for Inkscape::ICON_SIZE_DECORATION
 };
+
+static Glib::RefPtr<Gtk::IconFactory> inkyIcons;
+static std::map<Glib::ustring, Gtk::IconSet *> iconSetCache;
+
 
 GtkType
 sp_icon_get_type()
@@ -195,36 +200,22 @@ static int sp_icon_expose(GtkWidget *widget, GdkEventExpose *event)
     return TRUE;
 }
 
+// PUBLIC CALL:
 void sp_icon_fetch_pixbuf( SPIcon *icon )
 {
     if ( icon ) {
         if ( !icon->pb ) {
-            guchar *pixels = 0;
-
             icon->psize = sp_icon_get_phys_size(icon->lsize);
 
-            pixels = sp_icon_image_load( icon, icon->name );
+            GdkPixbuf *pb = sp_icon_image_load_svg( icon->name, icon->lsize, icon->psize );
+            if (!pb) {
+                pb = sp_icon_image_load_pixmap( icon->name, icon->lsize, icon->psize );
+            }
 
-            if (pixels) {
-                // don't pass the g_free because we're caching the pixel
-                // space loaded through ...
-                // I just changed this. make sure sp_icon_image_load still does the right thing.
-                icon->pb = gdk_pixbuf_new_from_data(pixels, GDK_COLORSPACE_RGB, TRUE, 8,
-                                                    icon->psize, icon->psize, icon->psize * 4,
-                                                    /*(GdkPixbufDestroyNotify)g_free*/NULL, NULL);
+            if ( pb ) {
+                icon->pb = pb;
                 icon->pb_faded = gdk_pixbuf_copy(icon->pb);
-
-                pixels = gdk_pixbuf_get_pixels(icon->pb_faded);
-                size_t stride = gdk_pixbuf_get_rowstride(icon->pb_faded);
-                pixels += 3; // alpha
-                for ( int row = 0 ; row < icon->psize ; row++ ) {
-                    guchar *row_pixels = pixels;
-                    for ( int column = 0 ; column < icon->psize ; column++ ) {
-                        *row_pixels = *row_pixels >> 1;
-                        row_pixels += 4;
-                    }
-                    pixels += stride;
-                }
+                gdk_pixbuf_saturate_and_pixelate(icon->pb, icon->pb_faded, 0.5, TRUE);
             } else {
                 /* TODO: We should do something more useful if we can't load the image. */
                 g_warning ("failed to load icon '%s'", icon->name);
@@ -323,6 +314,7 @@ sp_icon_new( Inkscape::IconSize lsize, gchar const *name )
     return sp_icon_new_full( lsize, name );
 }
 
+// PUBLIC CALL:
 Gtk::Widget *sp_icon_get_icon( Glib::ustring const &oid, Inkscape::IconSize size )
 {
     Gtk::Widget *result = 0;
@@ -340,30 +332,18 @@ Gtk::Widget *sp_icon_get_icon( Glib::ustring const &oid, Inkscape::IconSize size
     return result;
 }
 
-// Try to load the named svg, falling back to pixmaps
-guchar *
-sp_icon_image_load( SPIcon *icon, gchar const *name )
-{
-    guchar *px = sp_icon_image_load_svg( name, icon->lsize, icon->psize );
-    if (!px) {
-        px = sp_icon_image_load_pixmap(name, icon->lsize, icon->psize);
-    }
-
-    return px;
-}
-
 GtkIconSize
 sp_icon_get_gtk_size(int size)
 {
-    static GtkIconSize map[64] = {(GtkIconSize)0};
+    static GtkIconSize sizemap[64] = {(GtkIconSize)0};
     size = CLAMP(size, 4, 63);
-    if (!map[size]) {
+    if (!sizemap[size]) {
         static int count = 0;
         char c[64];
         g_snprintf(c, 64, "InkscapeIcon%d", count++);
-        map[size] = gtk_icon_size_register(c, size, size);
+        sizemap[size] = gtk_icon_size_register(c, size, size);
     }
-    return map[size];
+    return sizemap[size];
 }
 
 static void injectCustomSize()
@@ -393,8 +373,15 @@ static void injectCustomSize()
         sizeMapDone = true;
     }
 
+    static bool hit = false;
+    if ( !hit ) {
+        hit = true;
+        inkyIcons = Gtk::IconFactory::create();
+        inkyIcons->add_default();
+    }
 }
 
+// PUBLIC CALL:
 int sp_icon_get_phys_size(int size)
 {
     static bool init = false;
@@ -539,14 +526,9 @@ static void sp_icon_paint(SPIcon *icon, GdkRectangle const *area)
     }
 }
 
-static guchar *
-sp_icon_image_load_pixmap(gchar const *name, unsigned /*lsize*/, unsigned psize)
+GdkPixbuf *sp_icon_image_load_pixmap(gchar const *name, unsigned /*lsize*/, unsigned psize)
 {
-    gchar *path;
-    guchar *px;
-    GdkPixbuf *pb;
-
-    path = (gchar *) g_strdup_printf("%s/%s.png", INKSCAPE_PIXMAPDIR, name);
+    gchar *path = (gchar *) g_strdup_printf("%s/%s.png", INKSCAPE_PIXMAPDIR, name);
     // TODO: bulia, please look over
     gsize bytesRead = 0;
     gsize bytesWritten = 0;
@@ -556,7 +538,7 @@ sp_icon_image_load_pixmap(gchar const *name, unsigned /*lsize*/, unsigned psize)
                                                  &bytesRead,
                                                  &bytesWritten,
                                                  &error);
-    pb = gdk_pixbuf_new_from_file(localFilename, NULL);
+    GdkPixbuf *pb = gdk_pixbuf_new_from_file(localFilename, NULL);
     g_free(localFilename);
     g_free(path);
     if (!pb) {
@@ -574,27 +556,21 @@ sp_icon_image_load_pixmap(gchar const *name, unsigned /*lsize*/, unsigned psize)
         g_free(localFilename);
         g_free(path);
     }
+
     if (pb) {
-        if (!gdk_pixbuf_get_has_alpha(pb))
+        if (!gdk_pixbuf_get_has_alpha(pb)) {
             gdk_pixbuf_add_alpha(pb, FALSE, 0, 0, 0);
+        }
+
         if ( ( static_cast<unsigned>(gdk_pixbuf_get_width(pb)) != psize )
              || ( static_cast<unsigned>(gdk_pixbuf_get_height(pb)) != psize ) ) {
             GdkPixbuf *spb = gdk_pixbuf_scale_simple(pb, psize, psize, GDK_INTERP_HYPER);
             g_object_unref(G_OBJECT(pb));
             pb = spb;
         }
-        guchar *spx = gdk_pixbuf_get_pixels(pb);
-        int srs = gdk_pixbuf_get_rowstride(pb);
-        px = g_new(guchar, 4 * psize * psize);
-        for (unsigned y = 0; y < psize; y++) {
-            memcpy(px + 4 * y * psize, spx + y * srs, 4 * psize);
-        }
-        g_object_unref(G_OBJECT(pb));
-
-        return px;
     }
 
-    return NULL;
+    return pb;
 }
 
 // takes doc, root, icon, and icon name to produce pixels
@@ -735,7 +711,7 @@ struct svg_doc_cache_t
 };
 
 static std::map<Glib::ustring, svg_doc_cache_t *> doc_cache;
-static std::map<Glib::ustring, guchar *> px_cache;
+static std::map<Glib::ustring, GdkPixbuf *> pb_cache;
 
 static Glib::ustring icon_cache_key(gchar const *name,
                                     unsigned lsize, unsigned psize)
@@ -748,9 +724,9 @@ static Glib::ustring icon_cache_key(gchar const *name,
     return key;
 }
 
-static guchar *get_cached_pixels(Glib::ustring const &key) {
-    std::map<Glib::ustring, guchar *>::iterator found=px_cache.find(key);
-    if ( found != px_cache.end() ) {
+static GdkPixbuf *get_cached_pixbuf(Glib::ustring const &key) {
+    std::map<Glib::ustring, GdkPixbuf *>::iterator found = pb_cache.find(key);
+    if ( found != pb_cache.end() ) {
         return found->second;
     }
     return NULL;
@@ -828,36 +804,66 @@ static guchar *load_svg_pixels(gchar const *name,
     return px;
 }
 
+static void addToIconSet(GdkPixbuf* pb, gchar const* name, unsigned lsize, unsigned /*psize*/) {
+    Gtk::IconSet* icnset = 0;
+    if ( iconSetCache.find(name) == iconSetCache.end() ) {
+        icnset = new Gtk::IconSet();
+        iconSetCache[name] = icnset;
+        inkyIcons->add(Gtk::StockID(name), *icnset);
+    } else {
+        icnset = iconSetCache[name];
+    }
+    Gtk::IconSource src;
+    src.set_pixbuf( Glib::wrap(pb) );
+    src.set_size( Gtk::IconSize(lsize) );
+    //src.set_state_wildcarded();
+    icnset->add_source(src);
+}
+
 // returns true if icon needed preloading, false if nothing was done
 static bool prerender_icon(gchar const *name, unsigned lsize, unsigned psize)
 {
     Glib::ustring key = icon_cache_key(name, lsize, psize);
-    guchar *px = get_cached_pixels(key);
-    if (px) {
+    GdkPixbuf *pb = get_cached_pixbuf(key);
+    if (pb) {
         return false;
     } else {
-        px = load_svg_pixels(name, lsize, psize);
+        guchar* px = load_svg_pixels(name, lsize, psize);
         if (px) {
-            px_cache[key] = px;
+            pb = gdk_pixbuf_new_from_data(px, GDK_COLORSPACE_RGB, TRUE, 8,
+                                          psize, psize, psize * 4,
+                                          /*(GdkPixbufDestroyNotify)g_free*/NULL, NULL);
+
+            pb_cache[key] = pb;
+            addToIconSet(pb, name, lsize, psize);
         }
         return true;
     }
 }
 
-static guchar *
-sp_icon_image_load_svg(gchar const *name, unsigned lsize, unsigned psize)
+static GdkPixbuf *sp_icon_image_load_svg(gchar const *name, unsigned lsize, unsigned psize)
 {
     Glib::ustring key = icon_cache_key(name, lsize, psize);
 
     // did we already load this icon at this scale/size?
-    guchar *px = get_cached_pixels(key);
-    if (!px) {
-        px = load_svg_pixels(name, lsize, psize);
+    GdkPixbuf* pb = get_cached_pixbuf(key);
+    if (!pb) {
+        guchar *px = load_svg_pixels(name, lsize, psize);
         if (px) {
-            px_cache[key] = px;
+            // don't pass the g_free because we're caching the pixel
+            // space loaded through ...
+            // I just changed this. make sure sp_icon_image_load still does the right thing.
+            pb = gdk_pixbuf_new_from_data(px, GDK_COLORSPACE_RGB, TRUE, 8,
+                                          psize, psize, psize * 4,
+                                          /*(GdkPixbufDestroyNotify)g_free*/NULL, NULL);
+            pb_cache[key] = pb;
+            addToIconSet(pb, name, lsize, psize);
         }
     }
-    return px;
+
+    // increase refcount since we're hading out ownership
+    g_object_ref(G_OBJECT(pb));
+    return pb;
 }
 
 void sp_icon_overlay_pixels(guchar *px, int width, int height, int stride,
