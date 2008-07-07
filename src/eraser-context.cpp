@@ -879,22 +879,27 @@ accumulate_eraser(SPEraserContext *dc)
         dc->accumulated->reset(); /*  Is this required ?? */
         SPCurve *rev_cal2 = dc->cal2->create_reverse();
 
-        g_assert(dc->cal1->get_length() > 1);
-        g_assert(rev_cal2->get_length() > 1);
-        g_assert(SP_CURVE_SEGMENT(dc->cal1, 0)->code == NR_MOVETO_OPEN);
-        g_assert(SP_CURVE_SEGMENT(rev_cal2, 0)->code == NR_MOVETO_OPEN);
-        g_assert(SP_CURVE_SEGMENT(dc->cal1, 1)->code == NR_CURVETO);
-        g_assert(SP_CURVE_SEGMENT(rev_cal2, 1)->code == NR_CURVETO);
-        g_assert(SP_CURVE_SEGMENT(dc->cal1, dc->cal1->get_length()-1)->code == NR_CURVETO);
-        g_assert(SP_CURVE_SEGMENT(rev_cal2, rev_cal2->get_length()-1)->code == NR_CURVETO);
+        g_assert(dc->cal1->get_segment_count() > 0);
+        g_assert(rev_cal2->get_segment_count() > 0);
+        g_assert( ! dc->cal1->first_path()->closed() );
+        g_assert( ! rev_cal2->first_path()->closed() );
+
+        Geom::CubicBezier const * dc_cal1_firstseg  = dynamic_cast<Geom::CubicBezier const *>( dc->cal1->first_segment() );
+        Geom::CubicBezier const * rev_cal2_firstseg = dynamic_cast<Geom::CubicBezier const *>( rev_cal2->first_segment() );
+        Geom::CubicBezier const * dc_cal1_lastseg   = dynamic_cast<Geom::CubicBezier const *>( dc->cal1->last_segment() );
+        Geom::CubicBezier const * rev_cal2_lastseg  = dynamic_cast<Geom::CubicBezier const *>( rev_cal2->last_segment() );
+        g_assert( dc_cal1_firstseg );
+        g_assert( rev_cal2_firstseg );
+        g_assert( dc_cal1_lastseg );
+        g_assert( rev_cal2_lastseg );
 
         dc->accumulated->append(dc->cal1, FALSE);
 
-        add_cap(dc->accumulated, SP_CURVE_SEGMENT(dc->cal1, dc->cal1->get_length()-1)->c(2), SP_CURVE_SEGMENT(dc->cal1, dc->cal1->get_length()-1)->c(3), SP_CURVE_SEGMENT(rev_cal2, 0)->c(3), SP_CURVE_SEGMENT(rev_cal2, 1)->c(1), dc->cap_rounding);
+        add_cap(dc->accumulated, (*dc_cal1_lastseg)[2], (*dc_cal1_lastseg)[3], (*rev_cal2_firstseg)[3], (*rev_cal2_firstseg)[1], dc->cap_rounding);
 
         dc->accumulated->append(rev_cal2, TRUE);
 
-        add_cap(dc->accumulated, SP_CURVE_SEGMENT(rev_cal2, rev_cal2->get_length()-1)->c(2), SP_CURVE_SEGMENT(rev_cal2, rev_cal2->get_length()-1)->c(3), SP_CURVE_SEGMENT(dc->cal1, 0)->c(3), SP_CURVE_SEGMENT(dc->cal1, 1)->c(1), dc->cap_rounding);
+        add_cap(dc->accumulated, (*rev_cal2_lastseg)[2], (*rev_cal2_lastseg)[3], (*dc_cal1_firstseg)[3], (*dc_cal1_firstseg)[1], dc->cap_rounding);
 
         dc->accumulated->closepath();
 
