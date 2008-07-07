@@ -713,6 +713,9 @@
 
     # disable images in buttons. i've only seen ugly delphi apps use this feature.
     gtk-button-images = 0
+    
+    # disable the annoying beep in editable controls
+    gtk-error-bell = 0
 
     # enable/disable images in menus. most "stock" microsoft apps don't use these, except sparingly.
     # the office apps use them heavily, though.
