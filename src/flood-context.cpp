@@ -55,6 +55,7 @@
 #include "libnr/nr-translate-matrix-ops.h"
 #include "libnr/nr-translate-scale-ops.h"
 #include "libnr/nr-matrix-ops.h"
+#include <2geom/pathvector.h>
 #include "sp-item.h"
 #include "sp-root.h"
 #include "sp-defs.h"
@@ -455,9 +456,9 @@ static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *deskto
         /* Set style */
         sp_desktop_apply_style_tool (desktop, pathRepr, "tools.paintbucket", false);
 
-        NArtBpath *bpath = sp_svg_read_path(result.getPathData().c_str());
-        Path *path = bpath_to_Path(bpath);
-        g_free(bpath);
+        Geom::PathVector pathv = sp_svg_read_pathv(result.getPathData().c_str());
+        Path *path = new Path;
+        path->LoadPathVector(pathv);
 
         if (offset != 0) {
         
