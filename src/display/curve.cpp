@@ -38,51 +38,6 @@
 static unsigned sp_bpath_length(NArtBpath const bpath[]);
 static bool sp_bpath_closed(NArtBpath const bpath[]);
 
-#define NO_CHECKS   // define this to disable the checking for unequal paths in SPCurve, improves performance by a lot!
-
-
-#ifndef NO_CHECKS
-static void debug_out( char const * text, Geom::PathVector const & pathv) {
-    char * str = sp_svg_write_path(pathv);
-    g_message("%s : %s", text, str);
-    g_free(str);
-}
-#endif
-
-#ifndef NO_CHECKS
-static void debug_out( char const * text, NArtBpath const * bpath) {
-    char * str = sp_svg_write_path(bpath);
-    g_message("%s : %s", text, str);
-    g_free(str);
-}
-#endif
-
-#ifndef NO_CHECKS
-void SPCurve::debug_check( char const * text, SPCurve const * curve) {
-    char * pathv_str = sp_svg_write_path(curve->_pathv);
-    char * bpath_str = sp_svg_write_path(curve->_bpath);
-    if ( strcmp(pathv_str, bpath_str) ) {
-        g_message("%s : unequal paths", text);
-        g_message("bpath : %s", bpath_str);
-        g_message("pathv : %s", pathv_str);
-    }
-    g_free(pathv_str);
-    g_free(bpath_str);
-#else
-void SPCurve::debug_check( char const *, SPCurve const *) {
-#endif
-}
-
-#ifndef NO_CHECKS
-void SPCurve::debug_check( char const * text, bool a) {
-    if ( !a ) {
-        g_message("%s : bool fail", text);
-    }
-#else
-void SPCurve::debug_check( char const *, bool) {
-#endif
-}
-
 /* Constructors */
 
 /**
@@ -112,8 +67,6 @@ SPCurve::SPCurve(guint length)
     _bpath->code = NR_END;
 
     _pathv.clear();
-
-    debug_check("SPCurve::SPCurve(guint length)", this);
 }
 
 SPCurve::SPCurve(Geom::PathVector const& pathv)
@@ -140,8 +93,6 @@ SPCurve::SPCurve(Geom::PathVector const& pathv)
             break;
     _substart = i;
     _closed = sp_bpath_closed(_bpath);
-
-    debug_check("SPCurve::SPCurve(Geom::PathVector const& pathv)", this);
 }
 
 // * 2GEOMproof
@@ -170,8 +121,6 @@ SPCurve::new_from_foreign_bpath(NArtBpath const *bpath)
 
     curve->_pathv = BPath_to_2GeomPath(curve->_bpath);
 
-    debug_check("SPCurve::new_from_foreign_bpath", curve);
-
     return curve;
 }
 
@@ -188,8 +137,6 @@ SPCurve::new_from_bpath(NArtBpath *bpath)
 
     SPCurve *curve = SPCurve::new_from_foreign_bpath(bpath);
     g_free(bpath);
-
-    debug_check("SPCurve::new_from_bpath", curve);
 
     return curve;
 }
@@ -209,8 +156,6 @@ SPCurve::new_from_rect(NR::Maybe<NR::Rect> const &rect)
         c->lineto(rect->corner(i));
     }
     c->closepath_current();
-
-    debug_check("SPCurve::new_from_rect", c);
 
     return c;
 }
@@ -251,8 +196,6 @@ SPCurve::set_pathvector(Geom::PathVector const & new_pathv)
             break;
     _substart = i;
     _closed = sp_bpath_closed(_bpath);
-
-    debug_check("SPCurve::set_pathvector", this);
 }
 
 /**
@@ -261,14 +204,12 @@ SPCurve::set_pathvector(Geom::PathVector const & new_pathv)
 NArtBpath const *
 SPCurve::get_bpath() const
 {
-    debug_check("SPCurve::get_bpath", this);
     return _bpath;
 };
 
 Geom::PathVector const &
 SPCurve::get_pathvector() const
 {
-    debug_check("SPCurve::get_pathvector", this);
     return _pathv;
 }
 
@@ -402,8 +343,6 @@ SPCurve::concat(GSList const *list)
         new_curve->_pathv.insert( new_curve->_pathv.end(), c->get_pathvector().begin(), c->get_pathvector().end() );
     }
 
-    debug_check("SPCurve::concat", new_curve);
-
     return new_curve;
 }
 
@@ -469,20 +408,14 @@ tmpl_curve_transform(SPCurve * curve, M const &m)
     }
 }
 
-/**
- * Transform all paths in curve using matrix.
- * 2GEOMified, can be deleted when completely 2geom
- */
+
 void
 SPCurve::transform(NR::Matrix const &m)
 {
-    tmpl_curve_transform<NR::Matrix>(this, m);
+    transform(to_2geom(m));
+};
 
-    _pathv = _pathv * to_2geom(m);
-
-    debug_check("SPCurve::transform(NR::Matrix const &m)", this);
-}
-
+    
 /**
  * Transform all paths in curve using matrix.
  */
@@ -492,22 +425,6 @@ SPCurve::transform(Geom::Matrix const &m)
     tmpl_curve_transform<NR::Matrix>(this, from_2geom(m));
 
     _pathv = _pathv * m;
-
-    debug_check("SPCurve::transform(Geom::Matrix const &m)", this);
-}
-
-/**
- * Transform all paths in curve using NR::translate.
- * 2GEOMified, can be deleted when completely 2geom
- */
-void
-SPCurve::transform(NR::translate const &m)
-{
-    tmpl_curve_transform<NR::translate>(this, m);
-
-    _pathv = _pathv * to_2geom(m);
-
-    debug_check("SPCurve::transform(NR::translate const &m)", this);
 }
 
 /**
@@ -526,8 +443,6 @@ SPCurve::reset()
     _closed = false;
 
     _pathv.clear();
-
-    debug_check("SPCurve::reset", this);
 }
 
 /* Several consecutive movetos are ALLOWED */
@@ -563,9 +478,6 @@ SPCurve::moveto(NR::Point const &p)
     _movePos = p;
     _pathv.push_back( Geom::Path() );  // for some reason Geom::Path(p) does not work...
     _pathv.back().start(to_2geom(p));
-
-    // the output is not the same. This is because SPCurve *incorrectly* coaslesces multiple moveto's into one for NArtBpath.
-//    debug_check("SPCurve::moveto", this);
 }
 
 /**
@@ -641,8 +553,6 @@ SPCurve::lineto(gdouble x, gdouble y)
         _end++;
         _pathv.back().appendNew<Geom::LineSegment>( Geom::Point(x,y) );
     }
-
-    debug_check("SPCurve::lineto", this);
 }
 
 /**
@@ -718,8 +628,6 @@ SPCurve::curveto(gdouble x0, gdouble y0, gdouble x1, gdouble y1, gdouble x2, gdo
         if (_pathv.empty())  g_message("leeg");
         else _pathv.back().appendNew<Geom::CubicBezier>( Geom::Point(x0,y0), Geom::Point(x1,y1), Geom::Point(x2,y2) );
     }
-
-    debug_check("SPCurve::curveto", this);
 }
 
 /**
@@ -776,8 +684,6 @@ SPCurve::closepath()
     }
 
     _hascpt = false;
-
-    debug_check("SPCurve::closepath", this);
 }
 
 /** Like SPCurve::closepath() but sets the end point of the current
@@ -835,8 +741,6 @@ SPCurve::closepath_current()
 
     _hascpt = false;
     _moving = false;
-
-    debug_check("SPCurve::closepath_current", this);
 }
 
 /**
@@ -995,8 +899,6 @@ SPCurve::penultimate_point() const
 
     Geom::Curve const& back = _pathv.back().back_default();
     Geom::Point p = back.initialPoint();
-
-    debug_check("SPCurve::penultimate_point", bpath->c(3) == from_2geom(p) );
     return from_2geom(p);
 }
 
@@ -1068,8 +970,6 @@ SPCurve::create_reverse() const
     }
 
     new_curve->_pathv = Geom::reverse_paths_and_order(_pathv);
-
-    debug_check("SPCurve::create_reverse", new_curve);
 }
 
 /**
@@ -1134,8 +1034,6 @@ SPCurve::append(SPCurve const *curve2,
         closepath();
     }
 
-    debug_check("SPCurve::append", this);
-
     /* 2GEOM code when code above is removed:
     if (use_lineto) {
         Geom::PathVector::const_iterator it = curve2->_pathv.begin();
@@ -1172,8 +1070,6 @@ SPCurve::append_continuous(SPCurve const *c1, gdouble tolerance)
     if (c1->_end < 1) {
         return this;
     }
-
-    debug_check("SPCurve::append_continuous 11", this);
 
     NArtBpath const *be = last_bpath();
     if (be) {
@@ -1216,8 +1112,6 @@ SPCurve::append_continuous(SPCurve const *c1, gdouble tolerance)
         append(c1, TRUE);
     }
 
-    debug_check("SPCurve::append_continuous", this);
-
     return this;
 }
 
@@ -1253,8 +1147,6 @@ SPCurve::backspace()
         _pathv.back().erase_last();
         _pathv.back().close(false);
     }
-
-    debug_check("SPCurve::backspace", this);
 }
 
 /* Private methods */
@@ -1453,8 +1345,6 @@ SPCurve::stretch_endpoints(NR::Point const &new_p0, NR::Point const &new_p1)
     Geom::Piecewise<Geom::D2<Geom::SBasis> > offsetpath = Geom::sectionize( Geom::D2<Geom::Piecewise<Geom::SBasis> >(offsetx, offsety) );
     pwd2 += offsetpath;
     _pathv = Geom::path_from_piecewise( pwd2, 0.001 );
-
-    debug_check("SPCurve::stretch_endpoints", this);
 }
 
 /**
@@ -1475,8 +1365,6 @@ SPCurve::move_endpoints(NR::Point const &new_p0, NR::Point const &new_p1)
 
     _pathv.front().setInitial(to_2geom(new_p0));
     _pathv.front().setFinal(to_2geom(new_p1));
-
-    debug_check("SPCurve::move_endpoints", this);
 }
 
 /**
@@ -1499,8 +1387,6 @@ SPCurve::nodes_in_path() const
 
         nr++; // count last node (this works also for closed paths because although they don't have a 'last node', they do have an extra segment
     }
-
-    debug_check("SPCurve::nodes_in_path", r == (gint)nr);
 
     return r;
 }
@@ -1536,8 +1422,6 @@ SPCurve::last_point_additive_move(Geom::Point const & p)
         newcube.setPoint(2, newcube[2] + p);
         _pathv.back().replace( --_pathv.back().end(), newcube );
     }
-
-    debug_check("SPCurve::last_point_additive_move", this);
 }
 
 /*

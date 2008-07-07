@@ -53,9 +53,8 @@ public:
     SPCurve * copy() const;
 
     GSList * split() const;
+    void transform(NR::Matrix const &m);
     void transform(Geom::Matrix const &m);
-    void transform(NR::Matrix const &);
-    void transform(NR::translate const &);
     void stretch_endpoints(NR::Point const &, NR::Point const &);
     void move_endpoints(NR::Point const &, NR::Point const &);
     void last_point_additive_move(Geom::Point const & p);
@@ -145,17 +144,12 @@ private:
 //friends:
     friend double sp_curve_distance_including_space(SPCurve const *const curve, double seg2len[]);
     friend double sp_curve_nonzero_distance_including_space(SPCurve const *const curve, double seg2len[]);
-    template<class M> friend void tmpl_curve_transform(SPCurve *const curve, M const &m);
-    // this function is the only one who needs read access to _movePos and _posSet
-    friend void sp_polygon_set(SPObject *object, unsigned int key, const gchar *value);
-
-    static void debug_check( char const * text, SPCurve const * curve);
-    static void debug_check( char const * text, bool a);
+    template<class M> friend void tmpl_curve_transform(SPCurve * curve, M const &m);
 };
 
 #define SP_CURVE_LENGTH(c) (((SPCurve const *)(c))->get_length())
 #define SP_CURVE_BPATH(c) (((SPCurve const *)(c))->get_bpath())
-#define SP_CURVE_SEGMENT(c,i) (((SPCurve const *)(c))->get_bpath() + (i))
+
 
 #endif /* !SEEN_DISPLAY_CURVE_H */
 
