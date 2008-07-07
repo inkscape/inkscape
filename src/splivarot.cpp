@@ -598,6 +598,29 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
     delete res;
 }
 
+static
+void sp_selected_path_outline_add_marker( SPObject *marker_object, Geom::Matrix marker_transform, NR::scale stroke_scale, NR::Matrix transform,
+                                       Inkscape::XML::Node *g_repr, Inkscape::XML::Document *xml_doc, SPDocument * doc )
+{
+    SPMarker* marker = SP_MARKER (marker_object);
+    SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker_object));
+
+    NR::Matrix tr(from_2geom(marker_transform));
+
+    if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
+        tr = stroke_scale * tr;
+    }
+
+    // total marker transform
+    tr = marker_item->transform * marker->c2p * tr * transform;
+
+    if (SP_OBJECT_REPR(marker_item)) {
+        Inkscape::XML::Node *m_repr = SP_OBJECT_REPR(marker_item)->duplicate(xml_doc);
+        g_repr->appendChild(m_repr);
+        SPItem *marker_item = (SPItem *) doc->getObjectByRepr(m_repr);
+        sp_item_write_transform(marker_item, m_repr, tr);
+    }
+}
 
 void
 sp_selected_path_outline()
@@ -789,7 +812,8 @@ sp_selected_path_outline()
 
         if (res->descr_cmd.size() > 1) { // if there's 0 or 1 node left, drop this path altogether
 
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+            SPDocument * doc = sp_desktop_document(desktop);
+            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
             Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
             // restore old style
@@ -811,7 +835,7 @@ sp_selected_path_outline()
 
             if (SP_IS_SHAPE(item) && sp_shape_has_markers (SP_SHAPE(item))) {
 
-                Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+                Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
                 Inkscape::XML::Node *g_repr = xml_doc->createElement("svg:g");
 
                 // add the group to the parent
@@ -821,37 +845,46 @@ sp_selected_path_outline()
 
                 g_repr->appendChild(repr);
                 repr->setAttribute("id", id);
-                SPItem *newitem = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
+                SPItem *newitem = (SPItem *) doc->getObjectByRepr(repr);
                 sp_item_write_transform(newitem, repr, transform);
 
                 SPShape *shape = SP_SHAPE(item);
 
-                for (NArtBpath const* bp = curve->get_bpath(); bp->code != NR_END; bp++) {
-                    for (int m = SP_MARKER_LOC_START; m < SP_MARKER_LOC_QTY; m++) {
-                        if (sp_shape_marker_required (shape, m, bp)) {
+                Geom::PathVector const & pathv = curve->get_pathvector();
+                for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
+                    if ( SPObject *marker_obj = shape->marker[SP_MARKER_LOC_START] ) {
+                        Geom::Matrix const m (sp_shape_marker_get_transform_at_start(path_it->front()));
+                        sp_selected_path_outline_add_marker( marker_obj, m,
+                                                             NR::scale(i_style->stroke_width.computed), transform,
+                                                             g_repr, xml_doc, doc );
+                    }
 
-                            SPMarker* marker = SP_MARKER (shape->marker[m]);
-                            SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[m]));
+                    if ( SPObject *marker_obj = shape->marker[SP_MARKER_LOC_MID] ) {
+                        Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
+                        Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
+                        while (curve_it2 != path_it->end_default())
+                        {
+                            /* Put marker between curve_it1 and curve_it2.
+                             * Loop to end_default (so including closing segment), because when a path is closed,
+                             * there should be a midpoint marker between last segment and closing straight line segment
+                             */
+                            Geom::Matrix const m (sp_shape_marker_get_transform(*curve_it1, *curve_it2));
+                            sp_selected_path_outline_add_marker( marker_obj, m,
+                                                                 NR::scale(i_style->stroke_width.computed), transform,
+                                                                 g_repr, xml_doc, doc );
 
-                            NR::Matrix tr(sp_shape_marker_get_transform(shape, bp));
-
-                            if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                                tr = NR::scale(i_style->stroke_width.computed) * tr;
-                            }
-
-                            // total marker transform
-                            tr = marker_item->transform * marker->c2p * tr * transform;
-
-                            if (SP_OBJECT_REPR(marker_item)) {
-                                Inkscape::XML::Node *m_repr = SP_OBJECT_REPR(marker_item)->duplicate(xml_doc);
-                                g_repr->appendChild(m_repr);
-                                SPItem *marker_item = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(m_repr);
-                                sp_item_write_transform(marker_item, m_repr, tr);
-                            }
+                            ++curve_it1;
+                            ++curve_it2;
                         }
                     }
-                }
 
+                    if ( SPObject *marker_obj = shape->marker[SP_MARKER_LOC_END] ) {
+                        Geom::Matrix const m (sp_shape_marker_get_transform_at_end(path_it->back_default()));
+                        sp_selected_path_outline_add_marker( marker_obj, m,
+                                                             NR::scale(i_style->stroke_width.computed), transform,
+                                                             g_repr, xml_doc, doc );
+                    }
+                }
 
                 selection->add(g_repr);
 
