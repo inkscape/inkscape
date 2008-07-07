@@ -614,13 +614,13 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 
     if (!style->fill.isNone()) {
         const_NRBPath bp;
-        bp.path = SP_CURVE_BPATH(shape->curve);
+        bp.path = shape->curve->get_bpath();
         sp_print_fill (ctx, &bp, &i2d, style, &pbox, &dbox, &bbox);
     }
 
     if (!style->stroke.isNone()) {
         const_NRBPath bp;
-        bp.path = SP_CURVE_BPATH(shape->curve);
+        bp.path = shape->curve->get_bpath();
         sp_print_stroke (ctx, &bp, &i2d, style, &pbox, &dbox, &bbox);
     }
 
