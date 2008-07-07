@@ -799,20 +799,44 @@ sp_shape_has_markers (SPShape const *shape)
 int
 sp_shape_number_of_markers (SPShape *shape, int type)
 {
-// TODO fixme: this looks very bad that the type parameter is ignored.
     Geom::PathVector const & pathv = shape->curve->get_pathvector();
 
-    guint n = shape->marker[SP_MARKER_LOC_START] ?  pathv.size() : 0;
+    switch(type) {
+        case SP_MARKER_LOC_START:
+            return shape->marker[SP_MARKER_LOC_START] ? pathv.size() : 0;
 
-    for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
-        n += shape->marker[SP_MARKER_LOC_MID] ?  path_it->size() : 0;
-
-        if ( shape->marker[SP_MARKER_LOC_END] && !path_it->empty()) {
-            n++;
+        case SP_MARKER_LOC_MID:
+        {
+            if ( shape->marker[SP_MARKER_LOC_MID] ) {
+            guint n = 0;
+                for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
+                    n += path_it->size();
+                    n += path_it->closed() ? 1 : 0;
+                }
+                return n;
+            } else {
+                return 0;
+            }
         }
-    }
 
-    return n;
+        case SP_MARKER_LOC_END:
+        {
+            if ( shape->marker[SP_MARKER_LOC_END] ) {
+                guint n = 0;
+                for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
+                    if (!path_it->empty()) {
+                        n++;
+                    }
+                }
+                return n;
+            } else {
+                return 0;
+            }
+        }
+
+        default:
+            return 0;
+    }
 }
 
 /**
