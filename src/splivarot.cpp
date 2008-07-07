@@ -1754,15 +1754,14 @@ Path *
 Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
 {
     SPCurve *curve = curve_for_item(item);
-    NArtBpath *bpath = bpath_for_curve(item, curve, doTransformation, transformFull);
-    
-    if (bpath == NULL) {
+    if (curve == NULL) {
         return NULL;
     }
-    
-    Path *dest = bpath_to_Path(bpath);
 
-    g_free(bpath);
+    Geom::PathVector pathv = pathvector_for_curve(item, curve, doTransformation, transformFull);
+
+    Path *dest = new Path;
+    dest->LoadPathVector(pathv);
 
     curve->unref();
     
