@@ -177,8 +177,7 @@ sp_svg_transform_read(gchar const *str, NR::Matrix *transform)
 gchar *
 sp_svg_transform_write(Geom::Matrix const &transform)
 {
-    Geom::Matrix const t(transform);
-    return sp_svg_transform_write(&t);
+    return sp_svg_transform_write(&transform);
 }
 
 
