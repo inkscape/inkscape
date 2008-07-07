@@ -22,6 +22,7 @@
 #include <libnr/nr-matrix-div.h>
 #include <libnr/nr-matrix-fns.h>
 
+#include "inkscape.h"
 #include "document.h"
 #include "attributes.h"
 #include "style.h"
@@ -110,8 +111,6 @@ sp_rect_init(SPRect */*rect*/)
 static void
 sp_rect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    SPRect *rect = SP_RECT(object);
-
     if (((SPObjectClass *) parent_class)->build)
         ((SPObjectClass *) parent_class)->build(object, document, repr);
 
@@ -578,7 +577,6 @@ sp_rect_convert_to_guides(SPItem *item) {
         return;
     }
 
-    SPDocument *doc = SP_OBJECT_DOCUMENT(rect);
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
     NR::Matrix const i2d (from_2geom(sp_item_i2d_affine(SP_ITEM(rect))));
@@ -593,7 +591,7 @@ sp_rect_convert_to_guides(SPItem *item) {
     pts.push_back(std::make_pair(A3.to_2geom(), A4.to_2geom()));
     pts.push_back(std::make_pair(A4.to_2geom(), A1.to_2geom()));
 
-    sp_guide_pt_pairs_to_guides(doc, pts);
+    sp_guide_pt_pairs_to_guides(inkscape_active_desktop(), pts);
 }
 
 /*

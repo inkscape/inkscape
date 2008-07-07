@@ -22,6 +22,7 @@
 #include <algorithm>
 #include <cstring>
 #include <string>
+#include "desktop-handles.h"
 #include "display/guideline.h"
 #include "svg/svg.h"
 #include "svg/stringstream.h"
@@ -241,8 +242,8 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
 }
 
 SPGuide *
-sp_guide_create(SPDocument *doc, Geom::Point const &pt1, Geom::Point const &pt2) {
-    SPDesktop *desktop = inkscape_active_desktop();
+sp_guide_create(SPDesktop *desktop, Geom::Point const &pt1, Geom::Point const &pt2) {
+    SPDocument *doc=sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
@@ -260,14 +261,15 @@ sp_guide_create(SPDocument *doc, Geom::Point const &pt1, Geom::Point const &pt2)
 }
 
 void
-sp_guide_pt_pairs_to_guides(SPDocument *doc, std::list<std::pair<Geom::Point, Geom::Point> > &pts) {
+sp_guide_pt_pairs_to_guides(SPDesktop *dt, std::list<std::pair<Geom::Point, Geom::Point> > &pts) {
     for (std::list<std::pair<Geom::Point, Geom::Point> >::iterator i = pts.begin(); i != pts.end(); ++i) {
-        sp_guide_create(doc, (*i).first, (*i).second);
+        sp_guide_create(dt, (*i).first, (*i).second);
     }
 }
 
 void
-sp_guide_create_guides_around_page(SPDocument *doc) {
+sp_guide_create_guides_around_page(SPDesktop *dt) {
+    SPDocument *doc=sp_desktop_document(dt);
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
     Geom::Point A(0, 0);
@@ -280,7 +282,7 @@ sp_guide_create_guides_around_page(SPDocument *doc) {
     pts.push_back(std::make_pair<Geom::Point, Geom::Point>(C, D));
     pts.push_back(std::make_pair<Geom::Point, Geom::Point>(D, A));
 
-    sp_guide_pt_pairs_to_guides(doc, pts);
+    sp_guide_pt_pairs_to_guides(dt, pts);
 
     sp_document_done (doc, SP_VERB_NONE, _("Guides around page"));
 }

@@ -977,7 +977,7 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
 
         case SP_VERB_EDIT_GUIDES_AROUND_PAGE:
-            sp_guide_create_guides_around_page(sp_desktop_document(dt));
+            sp_guide_create_guides_around_page(dt);
             break;
 
         case SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER:

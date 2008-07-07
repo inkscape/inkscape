@@ -166,8 +166,7 @@ sp_path_convert_to_guides(SPItem *item)
         }
     }
 
-    SPDocument *doc = SP_OBJECT_DOCUMENT(path);
-    sp_guide_pt_pairs_to_guides(doc, pts);
+    sp_guide_pt_pairs_to_guides(inkscape_active_desktop(), pts);
 }
 
 /**

@@ -1701,7 +1701,7 @@ sp_item_convert_to_guides(SPItem *item) {
     pts.push_back(std::make_pair(C.to_2geom(), D.to_2geom()));
     pts.push_back(std::make_pair(D.to_2geom(), A.to_2geom()));
 
-    sp_guide_pt_pairs_to_guides(SP_OBJECT_DOCUMENT(item), pts);
+    sp_guide_pt_pairs_to_guides(dt, pts);
 }
 
 /*
