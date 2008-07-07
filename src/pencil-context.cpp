@@ -634,12 +634,11 @@ fit_and_split(SPPencilContext *pc)
 
         /* Set up direction of next curve. */
         {
-            NArtBpath const &last_seg = *pc->red_curve->last_bpath();
-            pc->p[0] = last_seg.c(3);
+            Geom::CubicBezier const * last_seg = dynamic_cast<Geom::CubicBezier const *>(pc->red_curve->last_segment());
+            g_assert( last_seg );      // Relevance: validity of (*last_seg)[2]
+            pc->p[0] = last_seg->finalPoint();
             pc->npoints = 1;
-            g_assert( last_seg.code == NR_CURVETO );
-            /* Relevance: validity of last_seg.c(2). */
-            NR::Point const req_vec( pc->p[0] - last_seg.c(2) );
+            NR::Point const req_vec( pc->p[0] - (*last_seg)[2] );
             pc->req_tangent = ( ( NR::is_zero(req_vec) || !in_svg_plane(req_vec) )
                                 ? NR::Point(0, 0)
                                 : NR::unit_vector(req_vec) );
