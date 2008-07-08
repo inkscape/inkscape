@@ -48,10 +48,6 @@
 #include "message-context.h"
 #include "prefs-utils.h"
 #include "pixmaps/cursor-eraser.xpm"
-#include "libnr/n-art-bpath.h"
-#include "libnr/nr-path.h"
-#include "libnr/nr-matrix-ops.h"
-#include "libnr/nr-scale-translate-ops.h"
 #include "xml/repr.h"
 #include "context-fns.h"
 #include "sp-item.h"
@@ -66,7 +62,8 @@
 #include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
 #include "livarot/Shape.h"
-#include "2geom/isnan.h"
+#include <2geom/isnan.h>
+#include <2geom/pathvector.h>
 
 #include "eraser-context.h"
 
@@ -718,9 +715,6 @@ set_to_accumulated(SPEraserContext *dc)
     bool workDone = false;
 
     if (!dc->accumulated->is_empty()) {
-        NArtBpath *abp;
-        gchar *str;
-
         if (!dc->repr) {
             /* Create object */
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
@@ -736,10 +730,9 @@ set_to_accumulated(SPEraserContext *dc)
             item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
             item->updateRepr();
         }
-        abp = nr_artpath_affine(dc->accumulated->get_bpath(), sp_desktop_dt2root_affine(desktop));
-        str = sp_svg_write_path(abp);
+        Geom::PathVector pathv = dc->accumulated->get_pathvector() * to_2geom(sp_desktop_dt2root_affine(desktop));
+        gchar *str = sp_svg_write_path(pathv);
         g_assert( str != NULL );
-        g_free(abp);
         dc->repr->setAttribute("d", str);
         g_free(str);
 

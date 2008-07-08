@@ -52,6 +52,7 @@
 #include "libnr/nr-path.h"
 #include "libnr/nr-matrix-ops.h"
 #include "libnr/nr-scale-translate-ops.h"
+#include "libnr/nr-convert2geom.h"
 #include "xml/repr.h"
 #include "context-fns.h"
 #include "sp-item.h"
@@ -65,7 +66,8 @@
 #include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
 #include "livarot/Shape.h"
-#include "2geom/isnan.h"
+#include <2geom/isnan.h>
+#include <2geom/pathvector.h>
 
 #include "dyna-draw-context.h"
 
@@ -971,9 +973,6 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
     SPDesktop *desktop = SP_EVENT_CONTEXT(dc)->desktop;
 
     if (!dc->accumulated->is_empty()) {
-        NArtBpath *abp;
-        gchar *str;
-
         if (!dc->repr) {
             /* Create object */
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
@@ -989,10 +988,9 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
             item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
             item->updateRepr();
         }
-        abp = nr_artpath_affine(dc->accumulated->get_bpath(), sp_desktop_dt2root_affine(desktop));
-        str = sp_svg_write_path(abp);
+        Geom::PathVector pathv = dc->accumulated->get_pathvector() * to_2geom(sp_desktop_dt2root_affine(desktop));
+        gchar *str = sp_svg_write_path(pathv);
         g_assert( str != NULL );
-        g_free(abp);
         dc->repr->setAttribute("d", str);
         g_free(str);
 

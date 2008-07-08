@@ -18,7 +18,7 @@
 #include "sp-polygon.h"
 #include "display/curve.h"
 #include <glibmm/i18n.h>
-#include "libnr/n-art-bpath.h"
+#include <2geom/pathvector.h>
 #include "svg/stringstream.h"
 #include "xml/repr.h"
 #include "document.h"
@@ -87,27 +87,23 @@ static void sp_polygon_build(SPObject *object, SPDocument *document, Inkscape::X
 
 /*
  * sp_svg_write_polygon: Write points attribute for polygon tag.
- * @bpath:
- *
+ * pathv may only contain paths with only straight line segments
  * Return value: points attribute string.
  */
-static gchar *sp_svg_write_polygon(const NArtBpath *bpath)
+static gchar *sp_svg_write_polygon(Geom::PathVector const & pathv)
 {
-    g_return_val_if_fail(bpath != NULL, NULL);
-
     Inkscape::SVGOStringStream os;
 
-    for (int i = 0; bpath[i].code != NR_END; i++) {
-        switch (bpath [i].code) {
-            case NR_LINETO:
-            case NR_MOVETO:
-            case NR_MOVETO_OPEN:
-                os << bpath [i].x3 << "," << bpath [i].y3 << " ";
-                break;
-
-            case NR_CURVETO:
-            default:
-                g_assert_not_reached();
+    for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit) {
+        for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_default(); ++cit) {
+            if ( dynamic_cast<Geom::LineSegment const *>(&*cit) ||
+                 dynamic_cast<Geom::HLineSegment const *>(&*cit) ||
+                 dynamic_cast<Geom::VLineSegment const *>(&*cit) )
+            {
+                os << cit->finalPoint()[0] << "," << cit->finalPoint()[1] << " ";
+            } else {
+                g_error("sp_svg_write_polygon: polygon path contains non-straight line segments");
+            }
         }
     }
 
@@ -126,8 +122,7 @@ static Inkscape::XML::Node *sp_polygon_write(SPObject *object, Inkscape::XML::Do
     }
 
     /* We can safely write points here, because all subclasses require it too (Lauris) */
-    NArtBpath const * abp = shape->curve->get_bpath();
-    gchar *str = sp_svg_write_polygon(abp);
+    gchar *str = sp_svg_write_polygon(shape->curve->get_pathvector());
     repr->setAttribute("points", str);
     g_free(str);
 
