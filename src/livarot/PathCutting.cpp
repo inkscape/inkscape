@@ -24,8 +24,10 @@
 #include "libnr/nr-point-matrix-ops.h"
 #include "libnr/nr-convert2geom.h"
 #include <2geom/pathvector.h>
+#include <2geom/point.h>
 #include <2geom/matrix.h>
 #include <2geom/sbasis-to-bezier.h>
+#include "../display/canvas-bpath.h"
 
 void  Path::DashPolyline(float head,float tail,float body,int nbD,float *dashs,bool stPlain,float stOffset)
 {
@@ -260,7 +262,6 @@ void Path::DashSubPath(int spL, int spP, std::vector<path_lineto> const &orig_pt
     }
   }
 }
-#include "../display/canvas-bpath.h"
 
 void* Path::MakeArtBPath(void)
 {
@@ -407,6 +408,120 @@ void* Path::MakeArtBPath(void)
   }
 	bpath[nb_cmd].code=NR_END;
 	return bpath;
+}
+
+Geom::PathVector *
+Path::MakePathVector()
+{
+    Geom::PathVector *pv = new Geom::PathVector();
+    Geom::Path * currentpath = NULL;
+
+    NR::Point   lastP,bezSt,bezEn;
+    int         bezNb=0;
+    for (int i=0;i<int(descr_cmd.size());i++) {
+        int const typ = descr_cmd[i]->getType();
+        switch ( typ ) {
+            case descr_close:
+            {
+                currentpath->close(true);
+            }
+            break;
+
+            case descr_lineto:
+            {
+                PathDescrLineTo *nData = dynamic_cast<PathDescrLineTo *>(descr_cmd[i]);
+                currentpath->appendNew<Geom::LineSegment>(Geom::Point(nData->p[0], nData->p[1]));
+                lastP = nData->p;
+            }
+            break;
+
+            case descr_moveto:
+            {
+                PathDescrMoveTo *nData = dynamic_cast<PathDescrMoveTo *>(descr_cmd[i]);
+                pv->push_back(Geom::Path());
+                currentpath = &pv->back();
+                currentpath->start(Geom::Point(nData->p[0], nData->p[1]));
+                lastP = nData->p;
+            }
+            break;
+
+            case descr_arcto:
+            {
+                /* TODO: add testcase for this descr_arcto case */
+                PathDescrArcTo *nData = dynamic_cast<PathDescrArcTo *>(descr_cmd[i]);
+                currentpath->appendNew<Geom::SVGEllipticalArc>( nData->rx, nData->ry, nData->angle, nData->large, nData->clockwise, to_2geom(nData->p) );
+                lastP = nData->p;
+            }
+            break;
+
+            case descr_cubicto:
+            {
+                PathDescrCubicTo *nData = dynamic_cast<PathDescrCubicTo *>(descr_cmd[i]);
+                gdouble x1=lastP[0]+0.333333*nData->start[0];
+                gdouble y1=lastP[1]+0.333333*nData->start[1];
+                gdouble x2=nData->p[0]-0.333333*nData->end[0];
+                gdouble y2=nData->p[1]-0.333333*nData->end[1];
+                gdouble x3=nData->p[0];
+                gdouble y3=nData->p[1];
+                currentpath->appendNew<Geom::CubicBezier>( Geom::Point(x1,y1) , Geom::Point(x2,y2) , Geom::Point(x3,y3) );
+                lastP = nData->p;
+            }
+            break;
+
+            case descr_bezierto:
+            {
+                PathDescrBezierTo *nData = dynamic_cast<PathDescrBezierTo *>(descr_cmd[i]);
+                if ( nData->nb <= 0 ) {
+                    currentpath->appendNew<Geom::LineSegment>( Geom::Point(nData->p[0], nData->p[1]) );
+                    bezNb=0;
+                } else if ( nData->nb == 1 ){
+                    PathDescrIntermBezierTo *iData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[i+1]);
+                    gdouble x1=0.333333*(lastP[0]+2*iData->p[0]);
+                    gdouble y1=0.333333*(lastP[1]+2*iData->p[1]);
+                    gdouble x2=0.333333*(nData->p[0]+2*iData->p[0]);
+                    gdouble y2=0.333333*(nData->p[1]+2*iData->p[1]);
+                    gdouble x3=nData->p[0];
+                    gdouble y3=nData->p[1];
+                    currentpath->appendNew<Geom::CubicBezier>( Geom::Point(x1,y1) , Geom::Point(x2,y2) , Geom::Point(x3,y3) );
+                    bezNb=0;
+                } else {
+                    bezSt = 2*lastP-nData->p;
+                    bezEn = nData->p;
+                    bezNb = nData->nb;
+                }
+                lastP = nData->p;
+            }
+            break;
+
+            case descr_interm_bezier:
+            {
+                if ( bezNb > 0 ) {
+                    PathDescrIntermBezierTo *nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[i]);
+                    NR::Point p_m=nData->p,p_s=0.5*(bezSt+p_m),p_e;
+                    if ( bezNb > 1 ) {
+                        PathDescrIntermBezierTo *iData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[i+1]);
+                        p_e=0.5*(p_m+iData->p);
+                    } else {
+                        p_e=bezEn;
+                    }
+
+                    NR::Point  cp1=0.333333*(p_s+2*p_m),cp2=0.333333*(2*p_m+p_e);
+                    gdouble x1=cp1[0];
+                    gdouble y1=cp1[1];
+                    gdouble x2=cp2[0];
+                    gdouble y2=cp2[1];
+                    gdouble x3=p_e[0];
+                    gdouble y3=p_e[1];
+                    currentpath->appendNew<Geom::CubicBezier>( Geom::Point(x1,y1) , Geom::Point(x2,y2) , Geom::Point(x3,y3) );
+
+                    bezNb--;
+                }
+            }
+            break;
+        }
+    }
+
+    return pv;
 }
 
 void  Path::AddCurve(Geom::Curve const &c)

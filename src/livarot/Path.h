@@ -180,10 +180,11 @@ public:
   void  LoadPath(Geom::Path const &path, Geom::Matrix const &tr, bool doTransformation, bool append = false);
   void  LoadPathVector(Geom::PathVector const &pv, Geom::Matrix const &tr, bool doTransformation);
   void  LoadPathVector(Geom::PathVector const &pv);
-	void* MakeArtBPath();
-	
-	void  Transform(const NR::Matrix &trans);
-  
+  void* MakeArtBPath();
+  Geom::PathVector* MakePathVector();
+
+  void  Transform(const NR::Matrix &trans);
+
   // decompose le chemin en ses sous-chemin
   // killNoSurf=true -> oublie les chemins de surface nulle
   Path**      SubPaths(int &outNb,bool killNoSurf);
