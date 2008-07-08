@@ -1,8 +1,8 @@
-#ifndef INKSCAPE_LPE_MIRROR_REFLECT_H
-#define INKSCAPE_LPE_MIRROR_REFLECT_H
+#ifndef INKSCAPE_LPE_MIRROR_SYMMETRY_H
+#define INKSCAPE_LPE_MIRROR_SYMMETRY_H
 
 /** \file
- * LPE <mirror_reflection> implementation: mirrors a path with respect to a given line.
+ * LPE <mirror_symmetry> implementation: mirrors a path with respect to a given line.
  */
 /*
  * Authors:
@@ -23,10 +23,10 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
-class LPEMirrorReflect : public Effect {
+class LPEMirrorSymmetry : public Effect {
 public:
-    LPEMirrorReflect(LivePathEffectObject *lpeobject);
-    virtual ~LPEMirrorReflect();
+    LPEMirrorSymmetry(LivePathEffectObject *lpeobject);
+    virtual ~LPEMirrorSymmetry();
 
     virtual void acceptParamPath (SPPath *param_path);
     virtual int acceptsNumParams() { return 2; }
@@ -37,8 +37,8 @@ private:
     BoolParam discard_orig_path;
     PathParam reflection_line;
 
-    LPEMirrorReflect(const LPEMirrorReflect&);
-    LPEMirrorReflect& operator=(const LPEMirrorReflect&);
+    LPEMirrorSymmetry(const LPEMirrorSymmetry&);
+    LPEMirrorSymmetry& operator=(const LPEMirrorSymmetry&);
 };
 
 } //namespace LivePathEffect

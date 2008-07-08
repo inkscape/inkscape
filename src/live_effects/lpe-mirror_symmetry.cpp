@@ -1,6 +1,6 @@
-#define INKSCAPE_LPE_MIRROR_REFLECT_CPP
+#define INKSCAPE_LPE_MIRROR_SYMMETRY_CPP
 /** \file
- * LPE <mirror_reflection> implementation: mirrors a path with respect to a given line.
+ * LPE <mirror_symmetry> implementation: mirrors a path with respect to a given line.
  */
 /*
  * Authors:
@@ -13,7 +13,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "live_effects/lpe-mirror_reflect.h"
+#include "live_effects/lpe-mirror_symmetry.h"
 #include <sp-path.h>
 #include <display/curve.h>
 #include <svg/path-string.h>
@@ -25,7 +25,7 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
-LPEMirrorReflect::LPEMirrorReflect(LivePathEffectObject *lpeobject) :
+LPEMirrorSymmetry::LPEMirrorSymmetry(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     discard_orig_path(_("Discard original path?"), _("Check this to only keep the mirrored part of the path"), "discard_orig_path", &wr, this, false),
     reflection_line(_("Reflection line"), _("Line which serves as 'mirror' for the reflection"), "reflection_line", &wr, this, "M0,0 L100,100")
@@ -36,13 +36,13 @@ LPEMirrorReflect::LPEMirrorReflect(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&reflection_line) );
 }
 
-LPEMirrorReflect::~LPEMirrorReflect()
+LPEMirrorSymmetry::~LPEMirrorSymmetry()
 {
 
 }
 
 void
-LPEMirrorReflect::acceptParamPath (SPPath *param_path) {
+LPEMirrorSymmetry::acceptParamPath (SPPath *param_path) {
     using namespace Geom;
 
     SPCurve* curve = sp_path_get_curve_for_edit (param_path);
@@ -59,7 +59,7 @@ LPEMirrorReflect::acceptParamPath (SPPath *param_path) {
 }
 
 std::vector<Geom::Path>
-LPEMirrorReflect::doEffect_path (std::vector<Geom::Path> const & path_in)
+LPEMirrorSymmetry::doEffect_path (std::vector<Geom::Path> const & path_in)
 {
     std::vector<Geom::Path> path_out;
     if (!discard_orig_path) {

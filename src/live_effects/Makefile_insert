@@ -51,8 +51,8 @@ live_effects_liblive_effects_a_SOURCES = \
 	live_effects/lpe-circle_with_radius.h	\
 	live_effects/lpe-perspective_path.cpp	\
 	live_effects/lpe-perspective_path.h		\
-	live_effects/lpe-mirror_reflect.cpp	\
-	live_effects/lpe-mirror_reflect.h	\
+	live_effects/lpe-mirror_symmetry.cpp	\
+	live_effects/lpe-mirror_symmetry.h	\
 	live_effects/lpe-circle_3pts.cpp	\
 	live_effects/lpe-circle_3pts.h	\
 	live_effects/lpe-angle_bisector.cpp	\

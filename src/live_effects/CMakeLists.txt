@@ -10,7 +10,7 @@ lpe-gears.cpp
 lpegroupbbox.cpp
 lpe-knot.cpp
 lpe-lattice.cpp
-lpe-mirror_reflect.cpp
+lpe-mirror_symmetry.cpp
 lpeobject.cpp
 lpeobject-reference.cpp
 lpe-patternalongpath.cpp
