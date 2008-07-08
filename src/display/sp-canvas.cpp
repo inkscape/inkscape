@@ -24,6 +24,7 @@
 
 #include <gtk/gtkmain.h>
 #include <gtk/gtksignal.h>
+#include <gtk/gtkversion.h>
 
 #include <gtkmm.h>
 
@@ -42,6 +43,13 @@
 #include "display/rendermode.h"
 #include "libnr/nr-blit.h"
 #include "display/inkscape-cairo.h"
+
+// GTK_CHECK_VERSION returns false on failure
+#define HAS_GDK_EVENT_REQUEST_MOTIONS GTK_CHECK_VERSION(2, 12, 0)
+
+// gtk_check_version returns non-NULL on failure
+static bool const HAS_BROKEN_MOTION_HINTS =
+  gtk_check_version(2, 12, 0) != NULL || !HAS_GDK_EVENT_REQUEST_MOTIONS;
 
 // Define this to visualize the regions to be redrawn
 //#define DEBUG_REDRAW 1;
@@ -530,6 +538,11 @@ sp_canvas_item_grab (SPCanvasItem *item, guint event_mask, GdkCursor *cursor, gu
 
     if (!(item->flags & SP_CANVAS_ITEM_VISIBLE))
         return -1;
+
+    if (HAS_BROKEN_MOTION_HINTS && ( event_mask & GDK_POINTER_MOTION_HINT_MASK )) {
+        event_mask &= ~GDK_POINTER_MOTION_HINT_MASK;
+        event_mask |= GDK_POINTER_MOTION_MASK;
+    }
 
     /* fixme: Top hack (Lauris) */
     /* fixme: If we add key masks to event mask, Gdk will abort (Lauris) */
@@ -1117,7 +1130,7 @@ sp_canvas_realize (GtkWidget *widget)
                              GDK_EXPOSURE_MASK |
                              GDK_BUTTON_PRESS_MASK |
                              GDK_BUTTON_RELEASE_MASK |
-                             GDK_POINTER_MOTION_MASK |
+                             ( HAS_BROKEN_MOTION_HINTS ? GDK_POINTER_MOTION_MASK : GDK_POINTER_MOTION_HINT_MASK ) |
                              GDK_PROXIMITY_IN_MASK |
                              GDK_PROXIMITY_OUT_MASK |
                              GDK_KEY_PRESS_MASK |
@@ -1225,7 +1238,7 @@ emit_event (SPCanvas *canvas, GdkEvent *event)
             mask = GDK_LEAVE_NOTIFY_MASK;
             break;
         case GDK_MOTION_NOTIFY:
-            mask = GDK_POINTER_MOTION_MASK;
+            mask = GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK;
             break;
         case GDK_BUTTON_PRESS:
         case GDK_2BUTTON_PRESS:
@@ -1534,12 +1547,23 @@ sp_canvas_scroll (GtkWidget *widget, GdkEventScroll *event)
     return emit_event (SP_CANVAS (widget), (GdkEvent *) event);
 }
 
+#if HAS_GDK_EVENT_REQUEST_MOTIONS
+static inline void request_motions(GdkWindow *, GdkEventMotion *event) {
+    gdk_event_request_motions(event);
+}
+#else
+static inline void request_motions(GdkWindow *w, GdkEventMotion *) {
+    gdk_window_get_pointer(w, NULL, NULL, NULL);
+}
+#endif
+
 /**
  * Motion event handler for the canvas.
  */
 static int
 sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
 {
+    int status;
     SPCanvas *canvas = SP_CANVAS (widget);
 
     if (event->window != SP_CANVAS_WINDOW (canvas))
@@ -1548,17 +1572,16 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
     if (canvas->pixmap_gc == NULL) // canvas being deleted
         return FALSE;
 
-    if (canvas->grabbed_event_mask & GDK_POINTER_MOTION_HINT_MASK) {
-        gint x, y;
-        gdk_window_get_pointer (widget->window, &x, &y, NULL);
-        event->x = x;
-        event->y = y;
-    }
-
     canvas->state = event->state;
     pick_current_item (canvas, (GdkEvent *) event);
 
-    return emit_event (canvas, (GdkEvent *) event);
+    status = emit_event (canvas, (GdkEvent *) event);
+
+    if (event->is_hint) {
+        request_motions(widget->window, event);
+    }
+
+    return status;
 }
 
 static void
