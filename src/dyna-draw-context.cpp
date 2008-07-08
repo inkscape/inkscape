@@ -81,20 +81,6 @@
 
 #define DYNA_MIN_WIDTH 1.0e-6
 
-
-// FIXME: move it to some shared file to be reused by both calligraphy and dropper
-#define C1 0.552
-static NArtBpath const hatch_area_circle[] = {
-    { NR_MOVETO, 0, 0, 0, 0, -1, 0 },
-    { NR_CURVETO, -1, C1, -C1, 1, 0, 1 },
-    { NR_CURVETO, C1, 1, 1, C1, 1, 0 },
-    { NR_CURVETO, 1, -C1, C1, -1, 0, -1 },
-    { NR_CURVETO, -C1, -1, -1, -C1, -1, 0 },
-    { NR_END, 0, 0, 0, 0, 0, 0 }
-};
-#undef C1
-
-
 static void sp_dyna_draw_context_class_init(SPDynaDrawContextClass *klass);
 static void sp_dyna_draw_context_init(SPDynaDrawContext *ddc);
 static void sp_dyna_draw_context_dispose(GObject *object);
@@ -221,7 +207,15 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
     g_signal_connect(G_OBJECT(ddc->currentshape), "event", G_CALLBACK(sp_desktop_root_handler), ec->desktop);
 
     {
-        SPCurve *c = SPCurve::new_from_foreign_bpath(hatch_area_circle);
+        /* TODO: this can be done either with an arcto, and should maybe also be put in a general file (other tools use this as well) */
+        SPCurve *c = new SPCurve();
+        const double C1 = 0.552;
+        c->moveto(-1,0);
+        c->curveto(-1, C1, -C1, 1, 0, 1 );
+        c->curveto(C1, 1, 1, C1, 1, 0 );
+        c->curveto(1, -C1, C1, -1, 0, -1 );
+        c->curveto(-C1, -1, -1, -C1, -1, 0 );
+        c->closepath();
         ddc->hatch_area = sp_canvas_bpath_new(sp_desktop_controls(ec->desktop), c);
         c->unref();
         sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(ddc->hatch_area), 0x00000000,(SPWindRule)0);

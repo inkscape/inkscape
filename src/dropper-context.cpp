@@ -111,7 +111,15 @@ static void sp_dropper_context_setup(SPEventContext *ec)
         ((SPEventContextClass *) parent_class)->setup(ec);
     }
 
-    SPCurve *c = SPCurve::new_from_foreign_bpath(spdc_circle);
+    /* TODO: have a look at sp_dyna_draw_context_setup where the same is done.. generalize? at least make it an arcto! */
+    SPCurve *c = new SPCurve();
+    const double C1 = 0.552;
+    c->moveto(-1,0);
+    c->curveto(-1, C1, -C1, 1, 0, 1 );
+    c->curveto(C1, 1, 1, C1, 1, 0 );
+    c->curveto(1, -C1, C1, -1, 0, -1 );
+    c->curveto(-C1, -1, -1, -C1, -1, 0 );
+    c->closepath();
     dc->area = sp_canvas_bpath_new(sp_desktop_controls(ec->desktop), c);
     c->unref();
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(dc->area), 0x00000000,(SPWindRule)0);
