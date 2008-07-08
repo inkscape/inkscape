@@ -14,7 +14,7 @@
 #include <libnr/nr-rect.h>
 #include <libnrtype/font-glyph.h>
 #include <libnrtype/font-instance.h>
-
+#include <2geom/pathvector.h>
 #include <livarot/Path.h>
 
 #include "RasterFont.h"
@@ -179,6 +179,7 @@ font_instance::~font_instance(void)
 	for (int i=0;i<nbGlyph;i++) {
 		if ( glyphs[i].outline ) delete glyphs[i].outline;
 		if ( glyphs[i].artbpath ) free(glyphs[i].artbpath);
+        if ( glyphs[i].pathvector ) delete glyphs[i].pathvector;
 	}
 	if ( glyphs ) free(glyphs);
 	nbGlyph=maxGlyph=0;
@@ -430,6 +431,7 @@ void font_instance::LoadGlyph(int glyph_id)
 		font_glyph  n_g;
 		n_g.outline=NULL;
 		n_g.artbpath=NULL;
+        n_g.pathvector=NULL;
 		n_g.bbox[0]=n_g.bbox[1]=n_g.bbox[2]=n_g.bbox[3]=0;
 		bool   doAdd=false;
 
@@ -557,6 +559,7 @@ void font_instance::LoadGlyph(int glyph_id)
 			if ( n_g.outline ) {
 				n_g.outline->FastBBox(n_g.bbox[0],n_g.bbox[1],n_g.bbox[2],n_g.bbox[3]);
 				n_g.artbpath=n_g.outline->MakeArtBPath();
+                n_g.pathvector=n_g.outline->MakePathVector();
 			}
 			glyphs[nbGlyph]=n_g;
 			id_to_no[glyph_id]=nbGlyph;
@@ -673,6 +676,23 @@ void* font_instance::ArtBPath(int glyph_id)
 	}
 	if ( no < 0 ) return NULL;
 	return glyphs[no].artbpath;
+}
+
+Geom::PathVector* font_instance::PathVector(int glyph_id)
+{
+    int no = -1;
+    if ( id_to_no.find(glyph_id) == id_to_no.end() ) {
+        LoadGlyph(glyph_id);
+        if ( id_to_no.find(glyph_id) == id_to_no.end() ) {
+            // didn't load
+        } else {
+            no = id_to_no[glyph_id];
+        }
+    } else {
+        no = id_to_no[glyph_id];
+    }
+    if ( no < 0 ) return NULL;
+    return glyphs[no].pathvector;
 }
 
 double font_instance::Advance(int glyph_id,bool vertical)

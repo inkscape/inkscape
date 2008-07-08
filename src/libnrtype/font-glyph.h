@@ -3,6 +3,7 @@
 
 #include <libnrtype/nrtype-forward.h>
 #include <livarot/livarot-forward.h>
+#include <2geom/forward.h>
 
 // the info for a glyph in a font. it's totally resolution- and fontsize-independent
 struct font_glyph {
@@ -12,6 +13,7 @@ struct font_glyph {
 																			 // as the fonts sometimes contain
     Path*          outline;            // outline as a livarot Path
     void*          artbpath;           // outline as a artbpath, for text->curve stuff (should be unified with livarot)
+    Geom::PathVector* pathvector;      // outline as 2geom pathvector, for text->curve stuff (should be unified with livarot)
 };
 
 
