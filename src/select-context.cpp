@@ -341,7 +341,7 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                     }
                     sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->drawing),
                                         GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_BUTTON_PRESS_MASK |
-                                        GDK_POINTER_MOTION_HINT_MASK,
+                                        GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK,
                                         NULL, event->button.time);
                     sc->grabbed = SP_CANVAS_ITEM(desktop->drawing);
 
@@ -448,7 +448,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     sc->grabbed = NULL;
                 }
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
-                                    GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
+                                    GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
                                     NULL, event->button.time);
                 sc->grabbed = SP_CANVAS_ITEM(desktop->acetate);
 

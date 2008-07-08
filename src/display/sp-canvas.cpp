@@ -45,7 +45,7 @@
 #include "display/inkscape-cairo.h"
 
 // GTK_CHECK_VERSION returns false on failure
-#define HAS_GDK_EVENT_REQUEST_MOTIONS FALSE && GTK_CHECK_VERSION(2, 12, 0)
+#define HAS_GDK_EVENT_REQUEST_MOTIONS GTK_CHECK_VERSION(2, 12, 0)
 
 // gtk_check_version returns non-NULL on failure
 static bool const HAS_BROKEN_MOTION_HINTS =
@@ -539,9 +539,8 @@ sp_canvas_item_grab (SPCanvasItem *item, guint event_mask, GdkCursor *cursor, gu
     if (!(item->flags & SP_CANVAS_ITEM_VISIBLE))
         return -1;
 
-    if (HAS_BROKEN_MOTION_HINTS && ( event_mask & GDK_POINTER_MOTION_HINT_MASK )) {
+    if (HAS_BROKEN_MOTION_HINTS) {
         event_mask &= ~GDK_POINTER_MOTION_HINT_MASK;
-        event_mask |= GDK_POINTER_MOTION_MASK;
     }
 
     /* fixme: Top hack (Lauris) */
@@ -1130,7 +1129,9 @@ sp_canvas_realize (GtkWidget *widget)
                              GDK_EXPOSURE_MASK |
                              GDK_BUTTON_PRESS_MASK |
                              GDK_BUTTON_RELEASE_MASK |
-                             ( HAS_BROKEN_MOTION_HINTS ? GDK_POINTER_MOTION_MASK : GDK_POINTER_MOTION_HINT_MASK ) |
+                             GDK_POINTER_MOTION_MASK |
+                             ( HAS_BROKEN_MOTION_HINTS ?
+                               0 : GDK_POINTER_MOTION_HINT_MASK ) |
                              GDK_PROXIMITY_IN_MASK |
                              GDK_PROXIMITY_OUT_MASK |
                              GDK_KEY_PRESS_MASK |
@@ -1238,7 +1239,7 @@ emit_event (SPCanvas *canvas, GdkEvent *event)
             mask = GDK_LEAVE_NOTIFY_MASK;
             break;
         case GDK_MOTION_NOTIFY:
-            mask = GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK;
+            mask = GDK_POINTER_MOTION_MASK;
             break;
         case GDK_BUTTON_PRESS:
         case GDK_2BUTTON_PRESS:

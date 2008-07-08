@@ -615,8 +615,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                 tc->p0 = desktop->w2d(button_pt);
                 Inkscape::Rubberband::get()->start(desktop, tc->p0);
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
-                                    GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_BUTTON_PRESS_MASK |
-                                        GDK_POINTER_MOTION_HINT_MASK,
+                                    GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK,
                                     NULL, event->button.time);
                 tc->grabbed = SP_CANVAS_ITEM(desktop->acetate);
                 tc->creating = 1;
