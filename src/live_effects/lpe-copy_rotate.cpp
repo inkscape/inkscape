@@ -94,7 +94,9 @@ LPECopyRotate::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
     }
 
     for (int i = 1; i <= num_copies; ++i) {
-        Rotate rot(deg_to_rad(angle * i));
+        // I first suspected the minus sign to be a bug in 2geom but it is
+        // likely due to SVG's choice of coordinate system orientation (max)
+        Rotate rot(-deg_to_rad(angle * i));
         Matrix t = Translate(-origin) * rot * Translate(origin);
         output.concat(pwd2_in * t);
     }
@@ -123,7 +125,8 @@ KnotHolderEntityAngle::knot_set(NR::Point const &p, NR::Point const &/*origin*/,
 {
     LPECopyRotate* lpe = get_effect(item);
 
-    // FIXME: is the minus sign due to a bug in 2geom?
+    // I first suspected the minus sign to be a bug in 2geom but it is
+    // likely due to SVG's choice of coordinate system orientation (max)
     lpe->angle.param_set_value(rad_to_deg(-angle_between(lpe->dir, p.to_2geom() - lpe->origin)));
     if (state & GDK_SHIFT_MASK) {
         lpe->dist_angle_handle = L2(lpe->B - lpe->A);
@@ -139,10 +142,9 @@ NR::Point
 KnotHolderEntityAngle::knot_get()
 {
     LPECopyRotate* lpe = get_effect(item);
-
-    // FIXME: is the minus sign due to a bug in 2geom?
+    // I first suspected the minus sign to be a bug in 2geom but it is
+    // likely due to SVG's choice of coordinate system orientation (max)
     Point d = lpe->dir * Rotate(-deg_to_rad(lpe->angle)) * lpe->dist_angle_handle;
-
     return lpe->origin + d;
 }
 
