@@ -62,6 +62,8 @@ static void fit_and_split(SPPencilContext *pc);
 
 
 static SPDrawContextClass *pencil_parent_class;
+static NR::Point pencil_drag_origin_w(0, 0);
+static bool pencil_within_tolerance = false;
 
 /**
  * Register SPPencilContext class with Gdk and return its type number.
@@ -222,6 +224,9 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
         /* Test whether we hit any anchor. */
         SPDrawAnchor *anchor = spdc_test_inside(pc, button_w);
 
+        pencil_drag_origin_w = NR::Point(bevent.x,bevent.y);
+        pencil_within_tolerance = true;
+
         switch (pc->state) {
             case SP_PENCIL_CONTEXT_ADDLINE:
                 /* Current segment will be finished with release */
@@ -296,6 +301,19 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
 
     /* Test whether we hit any anchor. */
     SPDrawAnchor *anchor = spdc_test_inside(pc, NR::Point(mevent.x, mevent.y));
+
+    if (pencil_within_tolerance) {
+        gint const tolerance = prefs_get_int_attribute_limited("options.dragtolerance",
+                                                               "value", 0, 0, 100);
+        if ( NR::LInfty( NR::Point(mevent.x,mevent.y) - pencil_drag_origin_w ) < tolerance ) {
+            return FALSE;   // Do not drag if we're within tolerance from origin.
+        }
+    }
+
+    // Once the user has moved farther than tolerance from the original location
+    // (indicating they intend to move the object, not click), then always process the
+    // motion notify coordinates as given (no snapping back to origin)
+    pencil_within_tolerance = false;
 
     switch (pc->state) {
         case SP_PENCIL_CONTEXT_ADDLINE:
