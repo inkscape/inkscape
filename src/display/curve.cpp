@@ -34,6 +34,7 @@
 #include <2geom/sbasis-geometric.h>
 #include <2geom/sbasis-to-bezier.h>
 #include "svg/svg.h"
+#include <2geom/point.h>
 
 static unsigned sp_bpath_length(NArtBpath const bpath[]);
 static bool sp_bpath_closed(NArtBpath const bpath[]);
@@ -143,17 +144,15 @@ SPCurve::new_from_bpath(NArtBpath *bpath)
 
 // * 2GEOMproof
 SPCurve *
-SPCurve::new_from_rect(NR::Maybe<NR::Rect> const &rect)
+SPCurve::new_from_rect(Geom::Rect const &rect)
 {
-    g_return_val_if_fail(rect, NULL);
-
     SPCurve *c =  new SPCurve();
 
-    NR::Point p = rect->corner(0);
+    NR::Point p = rect.corner(0);
     c->moveto(p);
 
     for (int i=3; i>=0; i--) {
-        c->lineto(rect->corner(i));
+        c->lineto(rect.corner(i));
     }
     c->closepath_current();
 

@@ -23,6 +23,8 @@
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-translate-matrix-ops.h>
 #include <libnr/nr-scale-translate-ops.h>
+#include <libnr/nr-convert2geom.h>
+#include <2geom/rect.h>
 //#define GDK_PIXBUF_ENABLE_BACKEND 1
 //#include <gdk-pixbuf/gdk-pixbuf-io.h>
 #include "display/nr-arena-image.h"
@@ -1518,8 +1520,8 @@ sp_image_set_curve(SPImage *image)
     
     NRRect rect;
 	sp_image_bbox(image, &rect, NR::identity(), 0);
-	NR::Maybe<NR::Rect> rect2 = rect.upgrade();
-	SPCurve *c = SPCurve::new_from_rect(rect2);
+    Geom::Rect rect2 = to_2geom(*rect.upgrade());
+    SPCurve *c = SPCurve::new_from_rect(rect2);
         
     if (image->curve) {
         image->curve = image->curve->unref();

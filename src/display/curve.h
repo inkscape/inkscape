@@ -19,7 +19,6 @@
 #include <glib/gslist.h>
 
 #include <2geom/forward.h>
-#include <2geom/point.h>
 
 #include "libnr/nr-forward.h"
 #include "libnr/nr-rect.h"
@@ -36,7 +35,7 @@ public:
     SPCurve(Geom::PathVector const& pathv);
     static SPCurve * new_from_bpath(NArtBpath *bpath);
     static SPCurve * new_from_foreign_bpath(NArtBpath const *bpath);
-    static SPCurve * new_from_rect(NR::Maybe<NR::Rect> const &rect);
+    static SPCurve * new_from_rect(Geom::Rect const &rect);
 
     virtual ~SPCurve();
 

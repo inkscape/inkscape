@@ -16,7 +16,9 @@
 #include "libnr/nr-rect-ops.h"
 #include "libnr/nr-point-fns.h"
 #include "libnr/n-art-bpath-2geom.h"
-#include "2geom/path-intersection.h"
+#include <2geom/path-intersection.h>
+#include <2geom/point.h>
+#include <2geom/rect.h>
 #include "document.h"
 #include "sp-namedview.h"
 #include "sp-image.h"
@@ -706,7 +708,7 @@ void Inkscape::ObjectSnapper::_clear_paths() const
 NArtBpath const* Inkscape::ObjectSnapper::_getBorderBPath() const
 {
     NArtBpath const *border_bpath = NULL;
-    NR::Rect const border_rect = NR::Rect(NR::Point(0,0), NR::Point(sp_document_width(_named_view->document),sp_document_height(_named_view->document)));
+    Geom::Rect const border_rect = Geom::Rect(Geom::Point(0,0), Geom::Point(sp_document_width(_named_view->document),sp_document_height(_named_view->document)));
     SPCurve const *border_curve = SPCurve::new_from_rect(border_rect);
     if (border_curve) {
         border_bpath = SP_CURVE_BPATH(border_curve); 
