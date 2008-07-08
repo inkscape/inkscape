@@ -45,7 +45,7 @@
 #include "display/inkscape-cairo.h"
 
 // GTK_CHECK_VERSION returns false on failure
-#define HAS_GDK_EVENT_REQUEST_MOTIONS GTK_CHECK_VERSION(2, 12, 0)
+#define HAS_GDK_EVENT_REQUEST_MOTIONS FALSE && GTK_CHECK_VERSION(2, 12, 0)
 
 // gtk_check_version returns non-NULL on failure
 static bool const HAS_BROKEN_MOTION_HINTS =
