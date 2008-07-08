@@ -21,6 +21,8 @@
 #include <libnr/n-art-bpath.h>
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-fns.h>
+#include <libnr/nr-convert2geom.h>
+#include <2geom/matrix.h>
 #include "../style.h"
 #include "nr-arena.h"
 #include "nr-arena-glyphs.h"
@@ -462,11 +464,11 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
         for (child = group->children; child != NULL; child = child->next) {
             NRArenaGlyphs *g = NR_ARENA_GLYPHS(child);
 
-            NArtBpath *bpath = (NArtBpath *) g->font->ArtBPath(g->glyph);
+            Geom::PathVector const * pathv = g->font->PathVector(g->glyph);
 
             cairo_new_path(ct);
-            NR::Matrix g_t(g->g_transform);
-            feed_curve_to_cairo (ct, bpath, g_t * group->ctm, (pb->area).upgrade(), false, 0);
+            Geom::Matrix transform = to_2geom(g->g_transform * group->ctm);
+            feed_pathvector_to_cairo (ct, *pathv, transform, (pb->area).upgrade(), false, 0);
             cairo_fill(ct);
             pb->empty = FALSE;
         }
@@ -610,15 +612,13 @@ void
 nr_arena_glyphs_group_add_component(NRArenaGlyphsGroup *sg, font_instance *font, int glyph, NR::Matrix const *transform)
 {
     NRArenaGroup *group;
-    NRBPath bpath;
 
     group = NR_ARENA_GROUP(sg);
 
-    bpath.path = ( font
-                   ? (NArtBpath *) font->ArtBPath(glyph)
-                   : NULL );
-    if ( bpath.path ) {
-
+    Geom::PathVector const * pathv = ( font
+                                       ? font->PathVector(glyph)
+                                       : NULL );
+    if ( pathv ) {
         nr_arena_item_request_render(NR_ARENA_ITEM(group));
 
         NRArenaItem *new_arena = NRArenaGlyphs::create(group->arena);

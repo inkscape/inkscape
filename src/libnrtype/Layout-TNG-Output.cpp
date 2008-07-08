@@ -17,10 +17,12 @@
 #include "livarot/Path.h"
 #include "libnr/nr-matrix-fns.h"
 #include "libnr/nr-scale-matrix-ops.h"
+#include "libnr/nr-convert2geom.h"
 #include "font-instance.h"
 #include "svg/svg-length.h"
 #include "extension/internal/cairo-render-context.h"
 #include "display/curve.h"
+#include <2geom/pathvector.h>
 
 namespace Inkscape {
     namespace Extension {
@@ -232,14 +234,11 @@ void Layout::showGlyphs(CairoRenderContext *ctx) const
         NR::Matrix glyph_matrix;
         _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
         if (clip_mode) {
-            NArtBpath *bpath = (NArtBpath*)span.font->ArtBPath(_glyphs[glyph_index].glyph);
-            if (bpath) {
-                NArtBpath *abp = nr_artpath_affine(bpath, glyph_matrix);
-                const_NRBPath bpath;
-                bpath.path = abp;
+            Geom::PathVector const *pathv = span.font->PathVector(_glyphs[glyph_index].glyph);
+            if (pathv) {
+                Geom::PathVector pathv_trans = (*pathv) * to_2geom(glyph_matrix);
                 SPStyle const *style = text_source->style;
-                ctx->renderPath(&bpath, style, NULL);
-                g_free(abp);
+                ctx->renderPathVector(pathv_trans, style, NULL);
             }
             glyph_index++;
             continue;
@@ -550,11 +549,10 @@ SPCurve *Layout::convertToCurves(iterator const &from_glyph, iterator const &to_
         Span const &span = _glyphs[glyph_index].span(this);
         _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
 
-        NRBPath bpath;
-        bpath.path = (NArtBpath*)span.font->ArtBPath(_glyphs[glyph_index].glyph);
-        if (bpath.path) {
-            NArtBpath *abp = nr_artpath_affine(bpath.path, glyph_matrix);
-            SPCurve *c = SPCurve::new_from_bpath(abp);
+        Geom::PathVector const * pathv = span.font->PathVector(_glyphs[glyph_index].glyph);
+        if (pathv) {
+            Geom::PathVector pathv_trans = (*pathv) * to_2geom(glyph_matrix);
+            SPCurve *c = new SPCurve(pathv_trans);
             if (c) cc = g_slist_prepend(cc, c);
         }
     }
