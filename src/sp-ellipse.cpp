@@ -19,8 +19,6 @@
 #endif
 
 
-#include "libnr/n-art-bpath.h"
-#include "libnr/nr-path.h"
 #include "libnr/nr-matrix-fns.h"
 #include "svg/svg.h"
 #include "svg/path-string.h"
@@ -29,6 +27,7 @@
 #include "style.h"
 #include "display/curve.h"
 #include <glibmm/i18n.h>
+#include <2geom/transforms.h>
 
 #include "document.h"
 #include "sp-ellipse.h"
@@ -182,7 +181,7 @@ sp_genericellipse_update_patheffect(SPLPEItem *lpeitem, bool write)
 #define C1 0.552
 
 /* fixme: Think (Lauris) */
-
+/* Can't we use arcto in this method? */
 static void sp_genericellipse_set_shape(SPShape *shape)
 {
     double rx, ry, s, e;
@@ -211,20 +210,8 @@ static void sp_genericellipse_set_shape(SPShape *shape)
         slice = TRUE;
     }
 
-    NR::Matrix aff = NR::Matrix(NR::scale(rx, ry));
-    aff[4] = ellipse->cx.computed;
-    aff[5] = ellipse->cy.computed;
-
-    NArtBpath bpath[16];
-    i = 0;
-    if (ellipse->closed) {
-        bpath[i].code = NR_MOVETO;
-    } else {
-        bpath[i].code = NR_MOVETO_OPEN;
-    }
-    bpath[i].x3 = cos(ellipse->start);
-    bpath[i].y3 = sin(ellipse->start);
-    i++;
+    SPCurve * curve = new SPCurve();
+    curve->moveto(cos(ellipse->start), sin(ellipse->start));
 
     for (s = ellipse->start; s < ellipse->end; s += M_PI_2) {
         e = s + M_PI_2;
@@ -243,37 +230,22 @@ static void sp_genericellipse_set_shape(SPShape *shape)
         g_print("step %d s %f e %f coords %f %f %f %f %f %f\n",
                 i, s, e, x1, y1, x2, y2, x3, y3);
 #endif
-        bpath[i].code = NR_CURVETO;
-        bpath[i].x1 = x1;
-        bpath[i].y1 = y1;
-        bpath[i].x2 = x2;
-        bpath[i].y2 = y2;
-        bpath[i].x3 = x3;
-        bpath[i].y3 = y3;
-        i++;
+        curve->curveto(x1,y1, x2,y2, x3,y3);
     }
 
-    if (slice && ellipse->closed) {
-        bpath[i].code = NR_LINETO;
-        bpath[i].x3 = 0.0;
-        bpath[i].y3 = 0.0;
-        i++;
-        bpath[i].code = NR_LINETO;
-        bpath[i].x3 = bpath[0].x3;
-        bpath[i].y3 = bpath[0].y3;
-        i++;
-    } else if (ellipse->closed) {
-        bpath[i-1].x3 = bpath[0].x3;
-        bpath[i-1].y3 = bpath[0].y3;
+    if (slice && ellipse->closed) {  // TODO: is this check for "ellipse->closed" necessary?
+        curve->lineto(0., 0.);
+    }
+    if (ellipse->closed) {
+        curve->closepath();
     }
 
-    bpath[i].code = NR_END;
-    SPCurve *c = SPCurve::new_from_bpath(nr_artpath_affine(bpath, aff));
-    g_assert(c != NULL);
+    Geom::Matrix aff = Geom::Scale(rx, ry) * Geom::Translate(ellipse->cx.computed, ellipse->cy.computed);
+    curve->transform(aff);
 
-    sp_lpe_item_perform_path_effect(SP_LPE_ITEM (ellipse), c);
-    sp_shape_set_curve_insync((SPShape *) ellipse, c, TRUE);
-    c->unref();
+    sp_lpe_item_perform_path_effect(SP_LPE_ITEM (ellipse), curve);
+    sp_shape_set_curve_insync((SPShape *) ellipse, curve, TRUE);
+    curve->unref();
 }
 
 static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p)
