@@ -553,7 +553,7 @@ unsigned SPText::_buildLayoutInput(SPObject *root, Inkscape::Text::Layout::Optio
             Glib::ustring const &string = SP_STRING(child)->string;
             layout.appendText(string, root->style, child, &optional_attrs, child_attrs_offset + length);
             length += string.length();
-        } else {
+        } else if (!sp_repr_is_meta_element(child->repr)) {
             length += _buildLayoutInput(child, optional_attrs, child_attrs_offset + length, in_textpath);
         }
     }

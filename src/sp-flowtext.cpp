@@ -463,7 +463,7 @@ void SPFlowtext::_buildLayoutInput(SPObject *root, Shape const *exclusion_shape,
                 layout.appendWrapShape(&shapes->back());
             }
         }
-        else if (!SP_IS_FLOWREGIONEXCLUDE(child))
+        else if (!SP_IS_FLOWREGIONEXCLUDE(child) && !sp_repr_is_meta_element(child->repr))
             _buildLayoutInput(child, exclusion_shape, shapes, pending_line_break_object);
     }
 
