@@ -49,7 +49,7 @@
 
 // gtk_check_version returns non-NULL on failure
 static bool const HAS_BROKEN_MOTION_HINTS =
-  gtk_check_version(2, 12, 0) != NULL || !HAS_GDK_EVENT_REQUEST_MOTIONS;
+  true || gtk_check_version(2, 12, 0) != NULL || !HAS_GDK_EVENT_REQUEST_MOTIONS;
 
 // Define this to visualize the regions to be redrawn
 //#define DEBUG_REDRAW 1;
@@ -1548,15 +1548,12 @@ sp_canvas_scroll (GtkWidget *widget, GdkEventScroll *event)
     return emit_event (SP_CANVAS (widget), (GdkEvent *) event);
 }
 
-#if HAS_GDK_EVENT_REQUEST_MOTIONS
-static inline void request_motions(GdkWindow *, GdkEventMotion *event) {
-    gdk_event_request_motions(event);
-}
-#else
-static inline void request_motions(GdkWindow *w, GdkEventMotion *) {
+static inline void request_motions(GdkWindow *w, GdkEventMotion *event) {
     gdk_window_get_pointer(w, NULL, NULL, NULL);
-}
+#if HAS_GDK_EVENT_REQUEST_MOTIONS
+    gdk_event_request_motions(event);
 #endif
+}
 
 /**
  * Motion event handler for the canvas.
