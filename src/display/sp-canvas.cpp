@@ -43,6 +43,9 @@
 #include "display/rendermode.h"
 #include "libnr/nr-blit.h"
 #include "display/inkscape-cairo.h"
+#include "debug/gdk-event-latency-tracker.h"
+
+using Inkscape::Debug::GdkEventLatencyTracker;
 
 // GTK_CHECK_VERSION returns false on failure
 #define HAS_GDK_EVENT_REQUEST_MOTIONS GTK_CHECK_VERSION(2, 12, 0)
@@ -102,6 +105,7 @@ enum {ITEM_EVENT, ITEM_LAST_SIGNAL};
 
 static void sp_canvas_request_update (SPCanvas *canvas);
 
+static void track_latency(GdkEvent const *event);
 static void sp_canvas_item_class_init (SPCanvasItemClass *klass);
 static void sp_canvas_item_init (SPCanvasItem *item);
 static void sp_canvas_item_dispose (GObject *object);
@@ -1097,6 +1101,14 @@ sp_canvas_destroy (GtkObject *object)
         (* GTK_OBJECT_CLASS (canvas_parent_class)->destroy) (object);
 }
 
+static void track_latency(GdkEvent const *event) {
+    GdkEventLatencyTracker &tracker = GdkEventLatencyTracker::default_tracker();
+    boost::optional<double> latency = tracker.process(event);
+    if (latency && *latency > 2.0) {
+        g_warning("Event latency reached %f sec", *latency);
+    }
+}
+
 /**
  * Returns new canvas as widget.
  */
@@ -1563,6 +1575,8 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
 {
     int status;
     SPCanvas *canvas = SP_CANVAS (widget);
+
+    track_latency((GdkEvent *)event);
 
     if (event->window != SP_CANVAS_WINDOW (canvas))
         return FALSE;

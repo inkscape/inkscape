@@ -5,5 +5,6 @@ log-display-config.cpp
 logger.cpp
 sysv-heap.cpp
 timestamp.cpp
+gdk-event-latency-tracker.cpp
 )
 

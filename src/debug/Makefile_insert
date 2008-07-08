@@ -14,5 +14,6 @@ debug_libinkdebug_a_SOURCES = \
 	debug/log-display-config.cpp debug/log-display-config.h \
 	debug/simple-event.h \
 	debug/sysv-heap.cpp debug/sysv-heap.h \
+	debug/gdk-event-latency-tracker.cpp debug/gdk-event-latency-tracker.h \
         debug/timestamp.cpp debug/timestamp.h
 
