@@ -888,11 +888,11 @@ accumulate_eraser(SPEraserContext *dc)
 
         dc->accumulated->append(dc->cal1, FALSE);
 
-        add_cap(dc->accumulated, (*dc_cal1_lastseg)[2], (*dc_cal1_lastseg)[3], (*rev_cal2_firstseg)[3], (*rev_cal2_firstseg)[1], dc->cap_rounding);
+        add_cap(dc->accumulated, (*dc_cal1_lastseg)[2], (*dc_cal1_lastseg)[3], (*rev_cal2_firstseg)[0], (*rev_cal2_firstseg)[1], dc->cap_rounding);
 
         dc->accumulated->append(rev_cal2, TRUE);
 
-        add_cap(dc->accumulated, (*rev_cal2_lastseg)[2], (*rev_cal2_lastseg)[3], (*dc_cal1_firstseg)[3], (*dc_cal1_firstseg)[1], dc->cap_rounding);
+        add_cap(dc->accumulated, (*rev_cal2_lastseg)[2], (*rev_cal2_lastseg)[3], (*dc_cal1_firstseg)[0], (*dc_cal1_firstseg)[1], dc->cap_rounding);
 
         dc->accumulated->closepath();
 

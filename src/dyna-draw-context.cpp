@@ -1046,11 +1046,11 @@ accumulate_calligraphic(SPDynaDrawContext *dc)
 
         dc->accumulated->append(dc->cal1, false);
 
-        add_cap(dc->accumulated, (*dc_cal1_lastseg)[3], (*rev_cal2_firstseg)[3], dc->cap_rounding);
+        add_cap(dc->accumulated, (*dc_cal1_lastseg)[3], (*rev_cal2_firstseg)[0], dc->cap_rounding);
 
         dc->accumulated->append(rev_cal2, true);
 
-        add_cap(dc->accumulated, (*rev_cal2_lastseg)[3], (*dc_cal1_firstseg)[3], dc->cap_rounding);
+        add_cap(dc->accumulated, (*rev_cal2_lastseg)[3], (*dc_cal1_firstseg)[0], dc->cap_rounding);
 
         dc->accumulated->closepath();
 
