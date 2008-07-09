@@ -57,19 +57,14 @@ class Embedder(inkex.Effect):
             absref=node.get(inkex.addNS('absref','sodipodi'))
             href=xlink
             svg=self.document.getroot().xpath('/svg:svg', namespaces=inkex.NSS)[0]
-            docbase=svg.get(inkex.addNS('docbase','sodipodi'))
-
             path=''
             #path selection strategy:
             # 1. href if absolute
-            # 2. sodipodi:docbase + href
-            # 3. realpath-ified href
-            # 4. absref, only if the above does not point to a file
+            # 2. realpath-ified href
+            # 3. absref, only if the above does not point to a file
             if (href != None):
                 if (os.path.isabs(href)):
                     path=os.path.realpath(href)
-                elif (docbase != None):
-                    path=os.path.join(docbase,href)
                 else:
                     path=os.path.realpath(href)
             if (not os.path.isfile(path)):

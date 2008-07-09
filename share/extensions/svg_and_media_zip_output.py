@@ -53,7 +53,6 @@ class MyEffect(inkex.Effect):
     def effect(self):
         ttmp_orig = self.document.getroot()
 
-        docbase = ttmp_orig.get(inkex.addNS('docbase',u'sodipodi'),'')
         docname = ttmp_orig.get(inkex.addNS('docname',u'sodipodi'))
 
         orig_tmpfile = sys.argv[1]
