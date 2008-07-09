@@ -92,7 +92,7 @@ static gint sp_dyna_draw_context_root_handler(SPEventContext *ec, GdkEvent *even
 static void clear_current(SPDynaDrawContext *dc);
 static void set_to_accumulated(SPDynaDrawContext *dc, bool unionize);
 static void add_cap(SPCurve *curve, NR::Point const &from, NR::Point const &to, double rounding);
-static void accumulate_calligraphic(SPDynaDrawContext *dc);
+static bool accumulate_calligraphic(SPDynaDrawContext *dc);
 
 static void fit_and_split(SPDynaDrawContext *ddc, gboolean release);
 
@@ -807,8 +807,10 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
             /* Create object */
             fit_and_split(dc, TRUE);
-            accumulate_calligraphic(dc);
-            set_to_accumulated(dc, event->button.state & GDK_SHIFT_MASK); // performs document_done
+            if (accumulate_calligraphic(dc))
+                set_to_accumulated(dc, event->button.state & GDK_SHIFT_MASK); // performs document_done
+            else
+                g_warning ("Failed to create path: invalid data in dc->cal1 or dc->cal2");
 
             /* reset accumulated curve */
             dc->accumulated->reset();
@@ -1023,26 +1025,49 @@ add_cap(SPCurve *curve,
     }
 }
 
-static void
+static bool
 accumulate_calligraphic(SPDynaDrawContext *dc)
 {
-    if ( !dc->cal1->is_empty() && !dc->cal2->is_empty() ) {
-        dc->accumulated->reset(); /*  Is this required ?? */
-        SPCurve *rev_cal2 = dc->cal2->create_reverse();
+        if (
+            dc->cal1->is_empty() ||
+            dc->cal2->is_empty() ||
+            (dc->cal1->get_segment_count() <= 0) ||
+            dc->cal1->first_path()->closed() 
+            ) {
+            dc->cal1->reset();
+            dc->cal2->reset();
+            return false; // failure
+        }
 
-        g_assert(dc->cal1->get_segment_count() > 0);
-        g_assert(rev_cal2->get_segment_count() > 0);
-        g_assert( ! dc->cal1->first_path()->closed() );
-        g_assert( ! rev_cal2->first_path()->closed() );
+        SPCurve *rev_cal2 = dc->cal2->create_reverse();
+        if (
+            (rev_cal2->get_segment_count() <= 0) ||
+            rev_cal2->first_path()->closed() 
+            ) {
+            rev_cal2->unref();
+            dc->cal1->reset();
+            dc->cal2->reset();
+            return false; // failure
+        }
 
         Geom::CubicBezier const * dc_cal1_firstseg  = dynamic_cast<Geom::CubicBezier const *>( dc->cal1->first_segment() );
         Geom::CubicBezier const * rev_cal2_firstseg = dynamic_cast<Geom::CubicBezier const *>( rev_cal2->first_segment() );
         Geom::CubicBezier const * dc_cal1_lastseg   = dynamic_cast<Geom::CubicBezier const *>( dc->cal1->last_segment() );
         Geom::CubicBezier const * rev_cal2_lastseg  = dynamic_cast<Geom::CubicBezier const *>( rev_cal2->last_segment() );
-        g_assert( dc_cal1_firstseg );
-        g_assert( rev_cal2_firstseg );
-        g_assert( dc_cal1_lastseg );
-        g_assert( rev_cal2_lastseg );
+
+        if (
+            !dc_cal1_firstseg ||
+            !rev_cal2_firstseg ||
+            !dc_cal1_lastseg ||
+            !rev_cal2_lastseg 
+            ) {
+            rev_cal2->unref();
+            dc->cal1->reset();
+            dc->cal2->reset();
+            return false; // failure
+        }
+
+        dc->accumulated->reset(); /*  Is this required ?? */
 
         dc->accumulated->append(dc->cal1, false);
 
@@ -1058,7 +1083,8 @@ accumulate_calligraphic(SPDynaDrawContext *dc)
 
         dc->cal1->reset();
         dc->cal2->reset();
-    }
+
+        return true; // success
 }
 
 static double square(double const x)
