@@ -3467,16 +3467,17 @@ static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
 
     /* Tolerance */
     {
-
+        gchar const* labels[] = {_("(many nodes, rough)"), ("(default)"), 0, 0, 0, 0, ("(few nodes, smooth)")};
+        gdouble values[] = {1, 10, 20, 30, 50, 75, 100};
         eact = create_adjustment_action( "PencilToleranceAction",
-                 _("Number of pixels allowed in interpolating"),
-                                         _("Tolerance:"), _("Tolerance"),
+                                         _("Smoothing:"), _("Smoothing"),
+                 _("How much smoothing (simplifying) is applied to the line"),
                                          "tools.freehand.pencil", "tolerance",
                                          3.0,
                                          GTK_WIDGET(desktop->canvas), NULL,
                                          holder, TRUE, "altx-pencil",
-                                         0.5, 100.0, 0.5, 0,
-                                         NULL, NULL, 0,
+                                         1, 100.0, 0.5, 0,
+                                         labels, values, G_N_ELEMENTS(labels),
                                          sp_pencil_tb_tolerance_value_changed,
                                          1, 2);
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
