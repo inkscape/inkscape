@@ -780,6 +780,7 @@ static GtkWidget* create_tool_item( GtkAction* action )
         if ( act->private_data->appearanceMode == APPEARANCE_FULL ) {
             spinbutton = gtk_hscale_new( act->private_data->adj);
             gtk_widget_set_size_request(spinbutton, 100, -1);
+            gtk_scale_set_digits (GTK_SCALE(spinbutton), 0);
 #if GTK_CHECK_VERSION(2,12,0)
         } else if ( act->private_data->appearanceMode == APPEARANCE_MINIMAL ) {
             spinbutton = gtk_scale_button_new( GTK_ICON_SIZE_MENU, 0, 100, 2, 0 );
