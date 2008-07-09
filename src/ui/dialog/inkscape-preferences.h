@@ -135,8 +135,6 @@ protected:
     PrefSpinButton  _t_node_pathflash_timeout;
     PrefColorPicker _t_node_pathoutline_color;
 
-    PrefSpinButton  _t_pencil_tolerance;
-
     PrefRadioButton _win_dockable, _win_floating;
     PrefRadioButton _win_ontop_none, _win_ontop_normal, _win_ontop_agressive;
     PrefRadioButton _win_save_geom_off, _win_save_geom, _win_save_geom_prefs;

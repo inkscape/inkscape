@@ -443,10 +443,6 @@ void InkscapePreferences::initPageTools()
     //Pencil
     this->AddPage(_page_pencil, _("Pencil"), iter_tools, PREFS_PAGE_TOOLS_PENCIL);
     this->AddSelcueCheckbox(_page_pencil, "tools.freehand.pencil", true);
-    _t_pencil_tolerance.init ( "tools.freehand.pencil", "tolerance", 0.0, 100.0, 0.5, 1.0, 10.0, false, false);
-    _page_pencil.add_line( false, _("Tolerance:"), _t_pencil_tolerance, "",
-                           _("This value affects the amount of smoothing applied to freehand lines; lower values produce more uneven paths with more nodes"),
-                           false );
     this->AddNewObjectsStyle(_page_pencil, "tools.freehand.pencil");
     this->AddDotSizeSpinbutton(_page_pencil, "tools.freehand.pencil", 3.0);
 
