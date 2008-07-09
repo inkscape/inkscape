@@ -306,6 +306,9 @@ sp_document_create(Inkscape::XML::Document *rdoc,
     }
     /* End of quick hack 3 */
 
+    /* Eliminate obsolete sodipodi:docbase, for privacy reasons */
+    rroot->setAttribute("sodipodi:docbase", NULL);
+    
     /* Eliminate any claim to adhere to a profile, as we don't try to */
     rroot->setAttribute("baseProfile", NULL);
 
