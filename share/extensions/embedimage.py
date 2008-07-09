@@ -53,10 +53,9 @@ class Embedder(inkex.Effect):
 
     def embedImage(self, node):
         xlink = node.get(inkex.addNS('href','xlink'))
-        if (xlink[:4]!='data'):
+        if xlink is None or xlink[:5] != 'data:':
             absref=node.get(inkex.addNS('absref','sodipodi'))
             href=xlink
-            svg=self.document.getroot().xpath('/svg:svg', namespaces=inkex.NSS)[0]
             path=''
             #path selection strategy:
             # 1. href if absolute
@@ -70,9 +69,12 @@ class Embedder(inkex.Effect):
             if (not os.path.isfile(path)):
                 if (absref != None):
                     path=absref
+
             if (not os.path.isfile(path)):
                 inkex.errormsg(_('No xlink:href or sodipodi:absref attributes found, or they do not point to an existing file! Unable to embed image.'))
-            
+                if path:
+                    inkex.errormsg(_("Sorry we could not locate %s") % path)
+
             if (os.path.isfile(path)):
                 file = open(path,"rb").read()
                 embed=True
@@ -97,8 +99,6 @@ class Embedder(inkex.Effect):
                         del node.attrib[inkex.addNS('absref',u'sodipodi')]
                 else:
                     inkex.errormsg(_("%s is not of type image/png, image/jpeg, image/bmp, image/gif, image/tiff, or image/x-icon") % path)
-            else:
-                inkex.errormsg(_("Sorry we could not locate %s") % path)
 
 if __name__ == '__main__':
     e = Embedder()
