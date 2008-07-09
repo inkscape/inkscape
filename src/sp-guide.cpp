@@ -194,7 +194,7 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
                 unsigned int success = sp_svg_number_read_d(strarray[0], &newx);
                 success += sp_svg_number_read_d(strarray[1], &newy);
                 g_strfreev (strarray);
-                if (success == 2) {
+                if (success == 2 && (fabs(newx) > 1e-6 || fabs(newy) > 1e-6)) {
                     Geom::Point direction(newx, newy);
                     direction.normalize();
                     guide->normal_to_line = direction;
