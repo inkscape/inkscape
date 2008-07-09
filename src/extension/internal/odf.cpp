@@ -1095,7 +1095,7 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
                 {
                 char buf[64];
                 snprintf(buf, sizeof(buf), "Pictures/image%u%s",
-                         imageTable.size(), ext.c_str());
+                         static_cast<unsigned int>(imageTable.size()), ext.c_str());
                 Glib::ustring newName = buf;
                 imageTable[oldName] = newName;
                 Glib::ustring comment = "old name was: ";
