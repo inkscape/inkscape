@@ -81,9 +81,20 @@ static GtkIconSize iconSizeLookup[] = {
     GTK_ICON_SIZE_MENU, // for Inkscape::ICON_SIZE_DECORATION
 };
 
-static Glib::RefPtr<Gtk::IconFactory> inkyIcons;
-static std::map<Glib::ustring, Gtk::IconSet *> iconSetCache;
+class IconCacheItem
+{
+public:
+    IconCacheItem( Inkscape::IconSize lsize, GdkPixbuf* pb ) :
+        _lsize( lsize ),
+        _pb( pb )
+    {}
+    Inkscape::IconSize _lsize;
+    GdkPixbuf* _pb;
+};
 
+static Glib::RefPtr<Gtk::IconFactory> inkyIcons;
+static std::map<Glib::ustring, std::vector<IconCacheItem> > iconSetCache;
+static std::map<gpointer, gulong> mapHandlerMap;
 
 GtkType
 sp_icon_get_type()
@@ -251,25 +262,15 @@ static void sp_icon_theme_changed( SPIcon *icon )
 }
 
 
+static void imageMapCB(GtkWidget* widget, gpointer user_data);
+static void populate_placeholder_icon(gchar const* name, unsigned lsize);
+
 static GtkWidget *
 sp_icon_new_full( Inkscape::IconSize lsize, gchar const *name )
 {
     static gint dump = prefs_get_int_attribute_limited( "debug.icons", "dumpGtk", 0, 0, 1 );
-    static gint fallback = prefs_get_int_attribute_limited( "debug.icons", "checkNames", 0, 0, 1 );
-
-    addPreRender( lsize, name );
-
-    GtkStockItem stock;
-    gboolean tryLoad = gtk_stock_lookup( name, &stock );
-    if ( !tryLoad && fallback ) {
-        tryLoad |= strncmp("gtk-", name, 4 ) == 0;
-    }
-    if ( !tryLoad && fallback ) {
-        tryLoad |= strncmp("gnome-", name, 6 ) == 0;
-    }
 
     GtkWidget *widget = 0;
-    if ( tryLoad ) {
         gint trySize = CLAMP( static_cast<gint>(lsize), 0, static_cast<gint>(G_N_ELEMENTS(iconSizeLookup) - 1) );
 
         if ( !sizeMapDone ) {
@@ -280,11 +281,21 @@ sp_icon_new_full( Inkscape::IconSize lsize, gchar const *name )
         if ( img ) {
             GtkImageType type = gtk_image_get_storage_type( GTK_IMAGE(img) );
             if ( type == GTK_IMAGE_STOCK ) {
+                GtkStockItem stock;
+                gboolean stockFound = gtk_stock_lookup( name, &stock );
+                if ( !stockFound ) {
+                    // It's not showing as a stock ID, so assume it will be present internally
+                    populate_placeholder_icon( name, lsize );
+                    addPreRender( lsize, name );
+
+                    // Add a hook to render if set visible before prerender is done.
+                    gulong handlerId = g_signal_connect( G_OBJECT(img), "map", G_CALLBACK(imageMapCB), GINT_TO_POINTER(0) );
+                    mapHandlerMap[img] = handlerId;
+                }
                 widget = GTK_WIDGET(img);
                 img = 0;
-
                 if ( dump ) {
-                    g_message( "loaded gtk  '%s' %d  (GTK_IMAGE_STOCK)", name, lsize );
+                    g_message( "loaded gtk  '%s' %d  (GTK_IMAGE_STOCK) %s", name, lsize, (stockFound ? "STOCK" : "local") );
                 }
             } else {
                 if ( dump ) {
@@ -294,9 +305,9 @@ sp_icon_new_full( Inkscape::IconSize lsize, gchar const *name )
                 img = 0;
             }
         }
-    }
 
     if ( !widget ) {
+        //g_message("Creating an SPIcon instance for %s:%d", name, (int)lsize);
         SPIcon *icon = (SPIcon *)g_object_new(SP_TYPE_ICON, NULL);
         icon->lsize = lsize;
         icon->name = g_strdup(name);
@@ -804,20 +815,39 @@ static guchar *load_svg_pixels(gchar const *name,
     return px;
 }
 
-static void addToIconSet(GdkPixbuf* pb, gchar const* name, unsigned lsize, unsigned /*psize*/) {
-    Gtk::IconSet* icnset = 0;
+static void populate_placeholder_icon(gchar const* name, unsigned lsize)
+{
     if ( iconSetCache.find(name) == iconSetCache.end() ) {
-        icnset = new Gtk::IconSet();
-        iconSetCache[name] = icnset;
-        inkyIcons->add(Gtk::StockID(name), *icnset);
-    } else {
-        icnset = iconSetCache[name];
+        // only add a placeholder if nothing is already set
+        Gtk::IconSet icnset;
+        Gtk::IconSource src;
+        src.set_icon_name( GTK_STOCK_MISSING_IMAGE );
+        src.set_size( Gtk::IconSize(lsize) );
+        icnset.add_source(src);
+        inkyIcons->add(Gtk::StockID(name), icnset);
     }
-    Gtk::IconSource src;
-    src.set_pixbuf( Glib::wrap(pb) );
-    src.set_size( Gtk::IconSize(lsize) );
-    //src.set_state_wildcarded();
-    icnset->add_source(src);
+}
+
+static void addToIconSet(GdkPixbuf* pb, gchar const* name, unsigned lsize, unsigned /*psize*/) {
+    for ( std::vector<IconCacheItem>::iterator it = iconSetCache[name].begin(); it != iconSetCache[name].end(); ++it ) {
+        if ( it->_lsize == Inkscape::IconSize(lsize) ) {
+            iconSetCache[name].erase(it);
+            break;
+        }
+    }
+    iconSetCache[name].push_back(IconCacheItem(Inkscape::IconSize(lsize), pb));
+
+    Gtk::IconSet icnset;
+    for ( std::vector<IconCacheItem>::iterator it = iconSetCache[name].begin(); it != iconSetCache[name].end(); ++it ) {
+        Gtk::IconSource src;
+        g_object_ref( G_OBJECT(it->_pb) );
+        src.set_pixbuf( Glib::wrap(it->_pb) );
+        src.set_size( Gtk::IconSize(it->_lsize) );
+        src.set_size_wildcarded( (it->_lsize != 1) || (iconSetCache[name].size() == 1) );
+        src.set_state_wildcarded( true );
+        icnset.add_source(src);
+    }
+    inkyIcons->add(Gtk::StockID(name), icnset);
 }
 
 // returns true if icon needed preloading, false if nothing was done
@@ -832,8 +862,7 @@ static bool prerender_icon(gchar const *name, unsigned lsize, unsigned psize)
         if (px) {
             pb = gdk_pixbuf_new_from_data(px, GDK_COLORSPACE_RGB, TRUE, 8,
                                           psize, psize, psize * 4,
-                                          /*(GdkPixbufDestroyNotify)g_free*/NULL, NULL);
-
+                                          (GdkPixbufDestroyNotify)g_free, NULL);
             pb_cache[key] = pb;
             addToIconSet(pb, name, lsize, psize);
         }
@@ -850,12 +879,9 @@ static GdkPixbuf *sp_icon_image_load_svg(gchar const *name, unsigned lsize, unsi
     if (!pb) {
         guchar *px = load_svg_pixels(name, lsize, psize);
         if (px) {
-            // don't pass the g_free because we're caching the pixel
-            // space loaded through ...
-            // I just changed this. make sure sp_icon_image_load still does the right thing.
             pb = gdk_pixbuf_new_from_data(px, GDK_COLORSPACE_RGB, TRUE, 8,
                                           psize, psize, psize * 4,
-                                          /*(GdkPixbufDestroyNotify)g_free*/NULL, NULL);
+                                          (GdkPixbufDestroyNotify)g_free, NULL);
             pb_cache[key] = pb;
             addToIconSet(pb, name, lsize, psize);
         }
@@ -952,10 +978,13 @@ static void addPreRender( Inkscape::IconSize lsize, gchar const *name )
 
 gboolean icon_prerender_task(gpointer /*data*/) {
     if (!pendingRenders.empty()) {
-        preRenderItem single=pendingRenders.front();
-        pendingRenders.pop();
-        int psize = sp_icon_get_phys_size(single._lsize);
-        prerender_icon(single._name.c_str(), single._lsize, psize);
+        bool workDone = false;
+        do {
+            preRenderItem single = pendingRenders.front();
+            pendingRenders.pop();
+            int psize = sp_icon_get_phys_size(single._lsize);
+            workDone = prerender_icon(single._name.c_str(), single._lsize, psize);
+        } while (!pendingRenders.empty() && !workDone);
     }
 
     if (!pendingRenders.empty()) {
@@ -965,6 +994,35 @@ gboolean icon_prerender_task(gpointer /*data*/) {
         return FALSE;
     }
 }
+
+void imageMapCB(GtkWidget* widget, gpointer user_data) {
+    gchar* id = 0;
+    GtkIconSize size = GTK_ICON_SIZE_INVALID;
+    gtk_image_get_stock(GTK_IMAGE(widget), &id, &size);
+    if ( id ) {
+        int psize = sp_icon_get_phys_size(size);
+        prerender_icon(id, size, psize);
+
+        std::vector<IconCacheItem>& iconSet = iconSetCache[id];
+        for ( std::vector<IconCacheItem>::iterator it = iconSet.begin(); it != iconSet.end(); ++it ) {
+            GObject* obj = G_OBJECT(it->_pb);
+            if ( obj ) {
+            }
+        }
+    }
+
+
+    std::map<gpointer, gulong>::iterator it =  mapHandlerMap.find(widget);
+
+    if ( it != mapHandlerMap.end() ) {
+        gulong handlerId = it->second;
+        if ( g_signal_handler_is_connected(widget, handlerId) ) {
+            g_signal_handler_disconnect(widget, handlerId);
+        }
+        mapHandlerMap.erase(it);
+    }
+}
+
 
 /*
   Local Variables:
