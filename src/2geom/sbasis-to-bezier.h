@@ -16,9 +16,11 @@ SBasis bezier_to_sbasis(Bezier const &B);
 std::vector<Geom::Point>
 sbasis_to_bezier(D2<SBasis> const &B, unsigned q = 0);
 
-std::vector<Path> path_from_piecewise(Piecewise<D2<SBasis> > const &B, double tol);
+std::vector<Path> path_from_piecewise(Piecewise<D2<SBasis> > const &B, double tol, bool only_cubicbeziers = false);
 
-Path path_from_sbasis(D2<SBasis> const &B, double tol);
+Path path_from_sbasis(D2<SBasis> const &B, double tol, bool only_cubicbeziers = false);
+inline Path cubicbezierpath_from_sbasis(D2<SBasis> const &B, double tol)
+    { return path_from_sbasis(B, tol, true); } ;
 
 };
 #endif

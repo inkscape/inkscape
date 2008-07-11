@@ -179,35 +179,44 @@ subpath_from_sbasis_incremental(Geom::OldPathSetBuilder &pb, D2<SBasis> B, doubl
 
 #endif
 
-void build_from_sbasis(Geom::PathBuilder &pb, D2<SBasis> const &B, double tol) {
+/*
+ * If only_cubicbeziers is true, the resulting path may only contain CubicBezier curves.
+ */
+void build_from_sbasis(Geom::PathBuilder &pb, D2<SBasis> const &B, double tol, bool only_cubicbeziers) {
     if (!B.isFinite()) {
         THROW_EXCEPTION("assertion failed: B.isFinite()");
     }
     if(tail_error(B, 2) < tol || sbasis_size(B) == 2) { // nearly cubic enough
-        if(sbasis_size(B) <= 1) {
+        if( !only_cubicbeziers && (sbasis_size(B) <= 1) ) {
             pb.lineTo(B.at1());
         } else {
             std::vector<Geom::Point> bez = sbasis_to_bezier(B, 2);
             pb.curveTo(bez[1], bez[2], bez[3]);
         }
     } else {
-        build_from_sbasis(pb, compose(B, Linear(0, 0.5)), tol);
-        build_from_sbasis(pb, compose(B, Linear(0.5, 1)), tol);
+        build_from_sbasis(pb, compose(B, Linear(0, 0.5)), tol, only_cubicbeziers);
+        build_from_sbasis(pb, compose(B, Linear(0.5, 1)), tol, only_cubicbeziers);
     }
 }
 
+/*
+ * If only_cubicbeziers is true, the resulting path may only contain CubicBezier curves.
+ */
 Path
-path_from_sbasis(D2<SBasis> const &B, double tol) {
+path_from_sbasis(D2<SBasis> const &B, double tol, bool only_cubicbeziers) {
     PathBuilder pb;
     pb.moveTo(B.at0());
-    build_from_sbasis(pb, B, tol);
+    build_from_sbasis(pb, B, tol, only_cubicbeziers);
     pb.finish();
     return pb.peek().front();
 }
 
+/*
+ * If only_cubicbeziers is true, the resulting path may only contain CubicBezier curves.
+ */
 //TODO: some of this logic should be lifted into svg-path
 std::vector<Geom::Path>
-path_from_piecewise(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &B, double tol) {
+path_from_piecewise(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &B, double tol, bool only_cubicbeziers) {
     Geom::PathBuilder pb;
     if(B.size() == 0) return pb.peek();
     Geom::Point start = B[0].at0();
@@ -219,7 +228,7 @@ path_from_piecewise(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &B, double to
                 //last line seg already there
                 goto no_add;
             }
-            build_from_sbasis(pb, B[i], tol);
+            build_from_sbasis(pb, B[i], tol, only_cubicbeziers);
             if(are_near(start, B[i].at1())) {
                 //it's closed
                 pb.closePath();
@@ -229,7 +238,7 @@ path_from_piecewise(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &B, double to
             start = B[i+1].at0();
             pb.moveTo(start);
         } else {
-            build_from_sbasis(pb, B[i], tol);
+            build_from_sbasis(pb, B[i], tol, only_cubicbeziers);
         }
     }
     pb.finish();
