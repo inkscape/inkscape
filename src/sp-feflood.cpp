@@ -76,8 +76,9 @@ sp_feFlood_class_init(SPFeFloodClass *klass)
 }
 
 static void
-sp_feFlood_init(SPFeFlood */*feFlood*/)
+sp_feFlood_init(SPFeFlood *feFlood)
 {
+    feFlood->opacity = 1;
 }
 
 /**
@@ -116,6 +117,7 @@ sp_feFlood_set(SPObject *object, unsigned int key, gchar const *value)
     SPFeFlood *feFlood = SP_FEFLOOD(object);
     (void)feFlood;
     gchar const *cend_ptr = NULL;
+    gchar *end_ptr = NULL;
     guint32 read_color;
     double read_num;
     
@@ -130,7 +132,16 @@ sp_feFlood_set(SPObject *object, unsigned int key, gchar const *value)
             }
             break;
         case SP_PROP_FLOOD_OPACITY:
-            read_num = helperfns_read_number(value);
+            if (value) {
+                read_num = g_ascii_strtod(value, &end_ptr);
+                if (*end_ptr) {
+                    g_warning("Unable to convert \"%s\" to number", value);
+                    read_num = 1;
+                }
+            }
+            else {
+                read_num = 1;
+            }
             if (read_num != feFlood->opacity){
                 feFlood->opacity = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
