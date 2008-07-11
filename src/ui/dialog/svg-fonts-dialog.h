@@ -30,12 +30,12 @@
 class SvgFontDrawingArea : Gtk::DrawingArea{
 public:
     SvgFontDrawingArea();
-    void set_text(gchar*);
+    void set_text(Glib::ustring);
     void set_svgfont(SvgFont*);
     void redraw();
 private:
     SvgFont* svgfont;
-    gchar* text;
+    Glib::ustring text;
     bool on_expose_event (GdkEventExpose *event);
 };
 
@@ -56,6 +56,7 @@ public:
     void update_fonts();
     SvgFont* get_selected_svgfont();
     void on_font_selection_changed();
+    void on_preview_text_changed();
 private:
     class Columns : public Gtk::TreeModel::ColumnRecord
         {
@@ -75,7 +76,9 @@ private:
     Columns _columns;
     Gtk::TreeView _font_list;
     Gtk::VBox _font_settings;
+    Gtk::Entry _preview_entry;
     SvgFontDrawingArea _font_da;
+
     class EntryWidget : public Gtk::HBox
         {
         public:

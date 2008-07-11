@@ -18,7 +18,7 @@
 #include "svg-fonts-dialog.h"
 
 SvgFontDrawingArea::SvgFontDrawingArea(){
-	this->text = (gchar*) "A@!A!@A";
+	this->text = "Sample Text";
 	this->svgfont = NULL;
         ((Gtk::Widget*) this)->set_size_request(150, 50);
 }
@@ -27,7 +27,7 @@ void SvgFontDrawingArea::set_svgfont(SvgFont* svgfont){
 	this->svgfont = svgfont;
 }
 
-void SvgFontDrawingArea::set_text(gchar* text){
+void SvgFontDrawingArea::set_text(Glib::ustring text){
 	this->text = text;
 }
 
@@ -42,7 +42,7 @@ bool SvgFontDrawingArea::on_expose_event (GdkEventExpose *event){
     cr->set_font_face( Cairo::RefPtr<Cairo::FontFace>(new Cairo::FontFace(this->svgfont->get_font_face(), false /* does not have reference */)) );
     cr->set_font_size (20);
     cr->move_to (20, 20);
-    cr->show_text (this->text);
+    cr->show_text (this->text.c_str());
   }
   return TRUE;
 }
@@ -70,6 +70,12 @@ void SvgFontsDialog::update_fonts()
         const gchar* id = SP_OBJECT_ID(f);
         row[_columns.label] = lbl ? lbl : (id ? id : "font");
     }
+}
+
+void SvgFontsDialog::on_preview_text_changed(){
+//    _font_da.set_text((gchar*) _preview_entry.get_text().c_str());
+    _font_da.set_text(_preview_entry.get_text());
+    _font_da.redraw();
 }
 
 void SvgFontsDialog::on_font_selection_changed(){
@@ -101,7 +107,17 @@ SvgFontsDialog::SvgFontsDialog()
 
     this->update_fonts();
 
+    _preview_entry.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_preview_text_changed));
+
     _getContents()->add((Gtk::Widget&) _font_da);
+    _getContents()->add(_preview_entry);
+
+/*    Gtk::HBox* preview_box = Gtk::manage(new Gtk::HBox());
+    _preview_entry.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_preview_text_changed));
+    preview_box->add(_preview_entry);
+    preview_box->add((Gtk::Widget&) _font_da);
+
+    _getContents()->add(*preview_box);*/
     _getContents()->show_all();
 
 //Settings for the selected SVGFont:
