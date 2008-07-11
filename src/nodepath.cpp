@@ -885,16 +885,22 @@ static Inkscape::NodePath::Node *sp_nodepath_node_break(Inkscape::NodePath::Node
        Inkscape::NodePath::SubPath *newsubpath = sp_nodepath_subpath_new(np);
 
         // duplicate the break node as start of the new subpath
-       Inkscape::NodePath::Node *newnode = sp_nodepath_node_new(newsubpath, NULL, (Inkscape::NodePath::NodeType)node->type, NR_MOVETO, &node->pos, &node->pos, &node->n.pos);
+        Inkscape::NodePath::Node *newnode = sp_nodepath_node_new(newsubpath, NULL, (Inkscape::NodePath::NodeType)node->type, NR_MOVETO, &node->pos, &node->pos, &node->n.pos);
 
-        while (node->n.other) { // copy the remaining nodes into the new subpath
-           Inkscape::NodePath::Node *n  = node->n.other;
-           Inkscape::NodePath::Node *nn = sp_nodepath_node_new(newsubpath, NULL, (Inkscape::NodePath::NodeType)n->type, (NRPathcode)n->code, &n->p.pos, &n->pos, &n->n.pos);
-            if (n->selected) {
-                sp_nodepath_node_select(nn, TRUE, TRUE); //preserve selection
-            }
-            sp_nodepath_node_destroy(n); // remove the point on the original subpath
+        // attach rest of curve to new node
+        g_assert(node->n.other);
+        newnode->n.other = node->n.other; node->n.other = NULL;
+        newnode->n.other->p.other = newnode;
+        newsubpath->last = sp->last;
+        sp->last = node;
+        node = newnode;
+        while (node->n.other) {
+            node = node->n.other;
+            node->subpath = newsubpath;
+            sp->nodes = g_list_remove(sp->nodes, node);
+            newsubpath->nodes = g_list_prepend(newsubpath->nodes, node);
         }
+
 
         return newnode;
     }
@@ -1985,13 +1991,15 @@ void sp_node_selected_break(Inkscape::NodePath::Path *nodepath)
 {
     if (!nodepath) return;
 
+    GList *tempin = g_list_copy(nodepath->selected);
     GList *temp = NULL;
-    for (GList *l = nodepath->selected; l != NULL; l = l->next) {
+    for (GList *l = tempin; l != NULL; l = l->next) {
        Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
        Inkscape::NodePath::Node *nn = sp_nodepath_node_break(n);
         if (nn == NULL) continue; // no break, no new node
         temp = g_list_prepend(temp, nn);
     }
+    g_list_free(tempin);
 
     if (temp) {
         sp_nodepath_deselect(nodepath);
