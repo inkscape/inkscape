@@ -22,29 +22,6 @@
 #include "inkscape-cairo.h"
 #include "nr-svgfonts.h"
 
-//***********************************//
-// SvgFontDrawingArea Implementation //
-//***********************************//
-class SvgFontDrawingArea : Gtk::DrawingArea{
-public:
-SvgFontDrawingArea(SvgFont* svgfont){
-	this->svgfont = svgfont;
-}
-private:
-SvgFont* svgfont;
-
-bool on_expose_event (GdkEventExpose *event){
-  Glib::RefPtr<Gdk::Window> window = get_window();
-  Cairo::RefPtr<Cairo::Context> cr = window->create_cairo_context();
-  cr->set_font_face( Cairo::RefPtr<Cairo::FontFace>(new Cairo::FontFace(this->svgfont->get_font_face(), false /* does not have reference */)) );
-  cr->set_font_size (100);
-  cr->move_to (100, 100);
-  cr->show_text ("A@!A!@A");
-
-  return TRUE;
-}
-};//class SvgFontDrawingArea
-
 //*************************//
 // UserFont Implementation //
 //*************************//
@@ -98,16 +75,6 @@ SvgFont::SvgFont(SPFont* spfont){
 	this->font = spfont;
 	this->missingglyph = NULL;
 	this->userfont = NULL;
-
-	//This is an auxiliary gtkWindow used only while we do not have proper Pango integration with cairo-user-fonts.
-        Gtk::Window* window;
-        SvgFontDrawingArea* font_da;
-
-        window = new Gtk::Window();
-        window->set_default_size (1200, 850);
-        font_da = new SvgFontDrawingArea(this);
-        window->add((Gtk::Widget&) *font_da);
-        window->show_all();
 }
 
 cairo_status_t

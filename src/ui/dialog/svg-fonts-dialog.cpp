@@ -17,6 +17,36 @@
 
 #include "svg-fonts-dialog.h"
 
+SvgFontDrawingArea::SvgFontDrawingArea(){
+	this->text = (gchar*) "A@!A!@A";
+	this->svgfont = NULL;
+        ((Gtk::Widget*) this)->set_size_request(150, 50);
+}
+
+void SvgFontDrawingArea::set_svgfont(SvgFont* svgfont){
+	this->svgfont = svgfont;
+}
+
+void SvgFontDrawingArea::set_text(gchar* text){
+	this->text = text;
+}
+
+void SvgFontDrawingArea::redraw(){
+	((Gtk::Widget*) this)->queue_draw();
+}
+
+bool SvgFontDrawingArea::on_expose_event (GdkEventExpose *event){
+  if (this->svgfont){
+    Glib::RefPtr<Gdk::Window> window = get_window();
+    Cairo::RefPtr<Cairo::Context> cr = window->create_cairo_context();
+    cr->set_font_face( Cairo::RefPtr<Cairo::FontFace>(new Cairo::FontFace(this->svgfont->get_font_face(), false /* does not have reference */)) );
+    cr->set_font_size (20);
+    cr->move_to (20, 20);
+    cr->show_text (this->text);
+  }
+  return TRUE;
+}
+
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
@@ -35,10 +65,24 @@ void SvgFontsDialog::update_fonts()
         Gtk::TreeModel::Row row = *_model->append();
         SPFont* f = (SPFont*)l->data;
         row[_columns.font] = f;
+        row[_columns.svgfont] = new SvgFont(f);
         const gchar* lbl = f->label();
         const gchar* id = SP_OBJECT_ID(f);
         row[_columns.label] = lbl ? lbl : (id ? id : "font");
     }
+}
+
+void SvgFontsDialog::on_font_selection_changed(){
+    _font_da.set_svgfont(this->get_selected_svgfont());
+    _font_da.redraw();
+}
+
+SvgFont* SvgFontsDialog::get_selected_svgfont()
+{
+    Gtk::TreeModel::iterator i = _font_list.get_selection()->get_selected();
+    if(i)
+        return (*i)[_columns.svgfont];
+    return NULL;
 }
 
 SvgFontsDialog::SvgFontsDialog()
@@ -53,14 +97,19 @@ SvgFontsDialog::SvgFontsDialog()
     _model = Gtk::ListStore::create(_columns);
     _font_list.set_model(_model);
     _font_list.append_column_editable("_Font", _columns.label);
+    _font_list.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_font_selection_changed));
+
     this->update_fonts();
 
-//Settings for the selected SVGFont:
-    _font_family.set_label("font-family");
-    _font_variant.set_label("font-variant");
+    _getContents()->add((Gtk::Widget&) _font_da);
+    _getContents()->show_all();
 
-    _font_settings.add(_font_family);
-    _font_settings.add(_font_variant);
+//Settings for the selected SVGFont:
+//    _font_family.set_label("font-family");
+//    _font_variant.set_label("font-variant");
+
+//    _font_settings.add(_font_family);
+//    _font_settings.add(_font_variant);
 }
 
 SvgFontsDialog::~SvgFontsDialog(){}
