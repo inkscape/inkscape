@@ -760,7 +760,7 @@ static void sp_svg_write_curve(Inkscape::SVG::PathString & str, Geom::Curve cons
         str.verticalLineTo( ... ); */
     } else { 
         //this case handles sbasis as well as all other curve types
-        Geom::Path sbasis_path = Geom::path_from_sbasis(c->toSBasis(), 0.1);
+        Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(c->toSBasis(), 0.1);
 
         //recurse to convert the new path resulting from the sbasis to svgd
         for(Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {

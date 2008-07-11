@@ -395,7 +395,7 @@ geom_curve_bbox_wind_distance(Geom::Curve const & c, Geom::Matrix const &m,
         p0 = p3;
     } else { 
         //this case handles sbasis as well as all other curve types
-        Geom::Path sbasis_path = Geom::path_from_sbasis(c.toSBasis(), 0.1);
+        Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(c.toSBasis(), 0.1);
 
         //recurse to convert the new path resulting from the sbasis to svgd
         for(Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {

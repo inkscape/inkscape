@@ -219,7 +219,7 @@ feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Matrix & trans, Geo
 //    }
     else {
         //this case handles sbasis as well as all other curve types
-        Geom::Path sbasis_path = path_from_sbasis(c.toSBasis(), 0.1);
+        Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(c.toSBasis(), 0.1);
 
         //recurse to convert the new path resulting from the sbasis to svgd
         for(Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {
