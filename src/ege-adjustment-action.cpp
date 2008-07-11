@@ -41,6 +41,7 @@
 
 /* Note: this file should be kept compilable as both .cpp and .c */
 
+#include <cmath>
 #include <string.h>
 
 #include <gdk/gdkkeysyms.h>
@@ -767,6 +768,12 @@ static gboolean event_cb( EgeAdjustmentAction* act, GdkEvent* evt )
     return handled;
 }
 
+static gchar*
+slider_format_falue (GtkScale* scale, gdouble value, gchar *label)
+{
+    return g_strdup_printf("%s %d", label, (int) round(value));
+}
+
 static GtkWidget* create_tool_item( GtkAction* action )
 {
     GtkWidget* item = 0;
@@ -775,12 +782,19 @@ static GtkWidget* create_tool_item( GtkAction* action )
         EgeAdjustmentAction* act = EGE_ADJUSTMENT_ACTION( action );
         GtkWidget* spinbutton = 0;
         GtkWidget* hb = gtk_hbox_new( FALSE, 5 );
+
         GValue value;
+        memset( &value, 0, sizeof(value) );
+        g_value_init( &value, G_TYPE_STRING );
+        g_object_get_property( G_OBJECT(action), "short_label", &value );
+        const gchar* sss = g_value_get_string( &value );
 
         if ( act->private_data->appearanceMode == APPEARANCE_FULL ) {
             spinbutton = gtk_hscale_new( act->private_data->adj);
             gtk_widget_set_size_request(spinbutton, 100, -1);
             gtk_scale_set_digits (GTK_SCALE(spinbutton), 0);
+            gtk_signal_connect(GTK_OBJECT(spinbutton), "format-value", GTK_SIGNAL_FUNC(slider_format_falue), (void *) sss);
+
 #if GTK_CHECK_VERSION(2,12,0)
         } else if ( act->private_data->appearanceMode == APPEARANCE_MINIMAL ) {
             spinbutton = gtk_scale_button_new( GTK_ICON_SIZE_MENU, 0, 100, 2, 0 );
@@ -792,14 +806,6 @@ static GtkWidget* create_tool_item( GtkAction* action )
         }
 
         item = GTK_WIDGET( gtk_tool_item_new() );
-
-        memset( &value, 0, sizeof(value) );
-        g_value_init( &value, G_TYPE_STRING );
-        g_object_get_property( G_OBJECT(action), "short_label", &value );
-        const gchar* sss = g_value_get_string( &value );
-
-        GtkWidget* lbl = gtk_label_new( sss ? sss : "wwww" );
-        GtkWidget* filler1 = gtk_label_new(" ");
 
         {
             GValue tooltip;
@@ -815,10 +821,14 @@ static GtkWidget* create_tool_item( GtkAction* action )
             }
         }
 
-        gtk_misc_set_alignment( GTK_MISC(lbl), 1.0, 0.5 );
+        if ( act->private_data->appearanceMode != APPEARANCE_FULL ) {
+            GtkWidget* lbl = gtk_label_new( sss ? sss : "wwww" );
+            GtkWidget* filler1 = gtk_label_new(" ");
+            gtk_misc_set_alignment( GTK_MISC(lbl), 1.0, 0.5 );
+            gtk_box_pack_start( GTK_BOX(hb), filler1, FALSE, FALSE, 0 );
+            gtk_box_pack_start( GTK_BOX(hb), lbl, FALSE, FALSE, 0 );
+        }
 
-        gtk_box_pack_start( GTK_BOX(hb), filler1, FALSE, FALSE, 0 );
-        gtk_box_pack_start( GTK_BOX(hb), lbl, FALSE, FALSE, 0 );
         if ( act->private_data->appearanceMode == APPEARANCE_FULL ) {
             gtk_box_pack_start( GTK_BOX(hb), spinbutton, TRUE, TRUE, 0 );
         }  else {
