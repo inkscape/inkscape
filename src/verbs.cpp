@@ -2290,7 +2290,7 @@ Verb *Verb::_base_verbs[] = {
     new EditVerb(SP_VERB_EDIT_CLEAR_ALL, "EditClearAll", N_("Clea_r All"),
                  N_("Delete all objects from document"), NULL),
     new EditVerb(SP_VERB_EDIT_SELECT_ALL, "EditSelectAll", N_("Select Al_l"),
-                 N_("Select all objects or all nodes"), "selection_select_all"),
+                 N_("Select all objects or all nodes"), "edit-select-all"),
     new EditVerb(SP_VERB_EDIT_SELECT_ALL_IN_ALL_LAYERS, "EditSelectAllInAllLayers", N_("Select All in All La_yers"),
                  N_("Select all objects in all visible and unlocked layers"), "selection_select_all_in_all_layers"),
     new EditVerb(SP_VERB_EDIT_INVERT, "EditInvert", N_("In_vert Selection"),
@@ -2555,10 +2555,10 @@ Verb *Verb::_base_verbs[] = {
                  "zoom_2_to_1"),
 #ifdef HAVE_GTK_WINDOW_FULLSCREEN
     new ZoomVerb(SP_VERB_FULLSCREEN, "FullScreen", N_("_Fullscreen"), N_("Stretch this document window to full screen"),
-                 "fullscreen"),
+                 "view-fullscreen"),
 #endif /* HAVE_GTK_WINDOW_FULLSCREEN */
     new ZoomVerb(SP_VERB_VIEW_NEW, "ViewNew", N_("Duplic_ate Window"), N_("Open a new window with the same document"),
-                 "view_new"),
+                 "window-new"),
     new ZoomVerb(SP_VERB_VIEW_NEW_PREVIEW, "ViewNewPreview", N_("_New View Preview"),
                  N_("New View Preview"), NULL/*"view_new_preview"*/),
 
