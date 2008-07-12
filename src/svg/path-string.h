@@ -65,6 +65,18 @@ public:
         return *this;
     }
 
+    PathString &horizontalLineTo(NR::Coord x) {
+        _appendOp('H','h');
+        _appendX(x, true);
+        return *this;
+    }
+
+    PathString &verticalLineTo(NR::Coord y) {
+        _appendOp('V','v');
+        _appendY(y, true);
+        return *this;
+    }
+
     PathString &quadTo(NR::Coord cx, NR::Coord cy, NR::Coord x, NR::Coord y) {
         return quadTo(NR::Point(cx, cy), NR::Point(x, y));
     }
@@ -129,7 +141,7 @@ private:
         _abs_state.append(p);
         _rel_state.append(p);
     }
-/*
+
     void _appendX(NR::Coord x, bool sc) {
         double rx;
         _abs_state.append(x, rx);
@@ -142,7 +154,7 @@ private:
         _abs_state.append(y, ry);
         _rel_state.appendRelative(ry, _current_point[NR::Y]);
         if (sc) _current_point[NR::Y] = ry;
-    }*/
+    }
 
     void _appendPoint(NR::Point p, bool sc) {
         NR::Point rp;
@@ -167,9 +179,9 @@ private:
 
         void append(NR::Coord v);
         void append(NR::Point v);
-        //void append(NR::Coord v, NR::Coord& rv);
+        void append(NR::Coord v, NR::Coord& rv);
         void append(NR::Point p, NR::Point& rp);
-        //void appendRelative(NR::Coord v, NR::Coord r);
+        void appendRelative(NR::Coord v, NR::Coord r);
         void appendRelative(NR::Point p, NR::Point r);
 
         bool operator<=(const State& s) const {

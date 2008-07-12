@@ -84,6 +84,11 @@ void Inkscape::SVG::PathString::State::append(NR::Point p, NR::Point &rp) {
     appendCoord(str, p[NR::Y], rp[NR::Y]);
 }
 
+void Inkscape::SVG::PathString::State::append(NR::Coord v, NR::Coord& rv) {
+    str += ' ';
+    appendCoord(str, v, rv);
+}
+
 // NOTE: The following two appendRelative methods will not be exact if the total number of digits needed
 // to represent the difference exceeds the precision of a double. This is not very likely though, and if
 // it does happen the imprecise value is not likely to be chosen (because it will probably be a lot longer
@@ -136,6 +141,11 @@ void Inkscape::SVG::PathString::State::appendRelative(NR::Point p, NR::Point r) 
     appendRelativeCoord(str, p[NR::X], r[NR::X]);
     str += ',';
     appendRelativeCoord(str, p[NR::Y], r[NR::Y]);
+}
+
+void Inkscape::SVG::PathString::State::appendRelative(NR::Coord v, NR::Coord r) {
+    str += ' ';
+    appendRelativeCoord(str, v, r);
 }
 
 /*

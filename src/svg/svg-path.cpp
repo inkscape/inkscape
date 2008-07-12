@@ -762,11 +762,12 @@ static void sp_svg_write_curve(Inkscape::SVG::PathString & str, Geom::Curve cons
                    svg_elliptical_arc->rotation_angle(),
                    svg_elliptical_arc->large_arc_flag(), svg_elliptical_arc->sweep_flag(),
                    svg_elliptical_arc->finalPoint() );
-/*    else if(Geom::HLineSegment const *hline_segment = dynamic_cast<Geom::HLineSegment const  *>(c)) {
-        str.horizontalLineTo( ... );
+    }
+    else if(Geom::HLineSegment const *hline_segment = dynamic_cast<Geom::HLineSegment const  *>(c)) {
+        str.horizontalLineTo( hline_segment->finalPoint()[0] );
     }
     else if(Geom::VLineSegment const *vline_segment = dynamic_cast<Geom::VLineSegment const  *>(c)) {
-        str.verticalLineTo( ... ); */
+        str.verticalLineTo( vline_segment->finalPoint()[1] );
     } else { 
         //this case handles sbasis as well as all other curve types
         Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(c->toSBasis(), 0.1);
