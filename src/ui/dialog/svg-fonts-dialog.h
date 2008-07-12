@@ -32,8 +32,10 @@ public:
     SvgFontDrawingArea();
     void set_text(Glib::ustring);
     void set_svgfont(SvgFont*);
+    void set_size(int x, int y);
     void redraw();
 private:
+    int x,y;
     SvgFont* svgfont;
     Glib::ustring text;
     bool on_expose_event (GdkEventExpose *event);

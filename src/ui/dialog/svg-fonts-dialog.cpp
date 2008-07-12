@@ -21,7 +21,6 @@
 SvgFontDrawingArea::SvgFontDrawingArea(){
 	this->text = "";
 	this->svgfont = NULL;
-        ((Gtk::Widget*) this)->set_size_request(150, 50);
 }
 
 void SvgFontDrawingArea::set_svgfont(SvgFont* svgfont){
@@ -30,6 +29,12 @@ void SvgFontDrawingArea::set_svgfont(SvgFont* svgfont){
 
 void SvgFontDrawingArea::set_text(Glib::ustring text){
 	this->text = text;
+}
+
+void SvgFontDrawingArea::set_size(int x, int y){
+    this->x = x;
+    this->y = y;
+    ((Gtk::Widget*) this)->set_size_request(x, y);
 }
 
 void SvgFontDrawingArea::redraw(){
@@ -41,8 +46,8 @@ bool SvgFontDrawingArea::on_expose_event (GdkEventExpose *event){
     Glib::RefPtr<Gdk::Window> window = get_window();
     Cairo::RefPtr<Cairo::Context> cr = window->create_cairo_context();
     cr->set_font_face( Cairo::RefPtr<Cairo::FontFace>(new Cairo::FontFace(this->svgfont->get_font_face(), false /* does not have reference */)) );
-    cr->set_font_size (20);
-    cr->move_to (20, 20);
+    cr->set_font_size (this->y);
+    cr->move_to (10, 10);
     cr->show_text (this->text.c_str());
   }
   return TRUE;
@@ -187,6 +192,9 @@ SvgFontsDialog::SvgFontsDialog()
     kernvbox->add(*kerning_selector);
     kernvbox->add((Gtk::Widget&) kerning_preview);
     kernvbox->add(kerning_spin);
+
+    kerning_preview.set_size(300, 150);
+    _font_da.set_size(150, 50);
 
 //Text Preview:
     _preview_entry.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_preview_text_changed));
