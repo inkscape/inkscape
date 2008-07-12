@@ -95,8 +95,8 @@ static GMemChunk *nodechunk = NULL;
 
 /* Creation from object */
 
-static NArtBpath const * subpath_from_bpath(Inkscape::NodePath::Path *np, NArtBpath const *b, gchar const *t);
-static gchar *parse_nodetypes(gchar const *types, gint length);
+static NArtBpath const * subpath_from_bpath(Inkscape::NodePath::Path *np, NArtBpath const *b, Inkscape::NodePath::NodeType const *t);
+static Inkscape::NodePath::NodeType * parse_nodetypes(gchar const *types, gint length);
 
 /* Object updating */
 
@@ -195,7 +195,6 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     if (curve == NULL)
         return NULL;
 
-    NArtBpath const *bpath = curve->get_bpath();
     gint length = curve->get_length();
     if (length == 0) {
         curve->unref();
@@ -267,9 +266,10 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     }
 
     gchar const *nodetypes = np->repr->attribute(np->repr_nodetypes_key);
-    gchar *typestr = parse_nodetypes(nodetypes, length);
+    Inkscape::NodePath::NodeType *typestr = parse_nodetypes(nodetypes, length);
 
     // create the subpath(s) from the bpath
+    NArtBpath const *bpath = curve->get_bpath();
     NArtBpath const *b = bpath;
     while (b->code != NR_END) {
         b = subpath_from_bpath(np, b, typestr + (b - bpath));
@@ -278,7 +278,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     // reverse the list, because sp_nodepath_subpath_new() used g_list_prepend instead of append (for speed)
     np->subpaths = g_list_reverse(np->subpaths);
 
-    g_free(typestr);
+    delete[] typestr;
     curve->unref();
 
     // create the livarot representation from the same item
@@ -452,9 +452,8 @@ static void sp_nodepath_cleanup(Inkscape::NodePath::Path *nodepath)
 /**
  * Create new nodepath from b, make it subpath of np.
  * \param t The node type.
- * \todo Fixme: t should be a proper type, rather than gchar
  */
-static NArtBpath const * subpath_from_bpath(Inkscape::NodePath::Path *np, NArtBpath const *b, gchar const *t)
+static NArtBpath const * subpath_from_bpath(Inkscape::NodePath::Path *np, NArtBpath const *b, Inkscape::NodePath::NodeType const *t)
 {
     NR::Point ppos, pos, npos;
 
@@ -470,7 +469,7 @@ static NArtBpath const * subpath_from_bpath(Inkscape::NodePath::Path *np, NArtBp
         npos = pos;
     }
     Inkscape::NodePath::Node *n;
-    n = sp_nodepath_node_new(sp, NULL, (Inkscape::NodePath::NodeType) *t, NR_MOVETO, &pos, &pos, &npos);
+    n = sp_nodepath_node_new(sp, NULL, *t, NR_MOVETO, &pos, &pos, &npos);
     g_assert(sp->first == n);
     g_assert(sp->last  == n);
 
@@ -499,13 +498,14 @@ static NArtBpath const * subpath_from_bpath(Inkscape::NodePath::Path *np, NArtBp
 }
 
 /**
- * Convert from sodipodi:nodetypes to new style type string.
+ * Convert from sodipodi:nodetypes to new style type array.
  */
-static gchar *parse_nodetypes(gchar const *types, gint length)
+static
+Inkscape::NodePath::NodeType * parse_nodetypes(gchar const *types, gint length)
 {
     g_assert(length > 0);
 
-    gchar *typestr = g_new(gchar, length + 1);
+    Inkscape::NodePath::NodeType *typestr = new Inkscape::NodePath::NodeType[length + 1];
 
     gint pos = 0;
 
