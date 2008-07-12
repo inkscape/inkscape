@@ -27,11 +27,10 @@
 #include "libnr/nr-scale-translate-ops.h"
 #include "libnr/nr-translate-scale-ops.h"
 #include <libnr/nr-matrix-fns.h>
-#include <libnr/n-art-bpath-2geom.h>
+#include <2geom/pathvector.h>
+#include <2geom/sbasis-to-bezier.h>
 
-#include "libnr/n-art-bpath.h"
 #include "sp-item.h"
-
 
 #include "style.h"
 
@@ -217,9 +216,7 @@ PrintLatex::fill(Inkscape::Extension::Print *mod,
 
         os << "\\pscustom[linestyle=none,fillstyle=solid,fillcolor=curcolor]\n{\n";
 
-        NArtBpath * bpath = BPath_from_2GeomPath(pathv);
-        print_bpath(os, bpath, transform);
-        g_free(bpath);
+        print_pathvector(os, pathv, transform);
 
         os << "}\n}\n";
 
@@ -262,9 +259,7 @@ PrintLatex::stroke (Inkscape::Extension::Print *mod, Geom::PathVector const &pat
 
         os <<"]\n{\n";
 
-        NArtBpath * bpath = BPath_from_2GeomPath(pathv);
-        print_bpath(os, bpath, transform);
-        g_free(bpath);
+        print_pathvector(os, pathv, transform);
 
         os << "}\n}\n";
 
@@ -274,61 +269,59 @@ PrintLatex::stroke (Inkscape::Extension::Print *mod, Geom::PathVector const &pat
     return 0;
 }
 
+// FIXME: why is 'transform' argument not used?
 void
-PrintLatex::print_bpath(SVGOStringStream &os, const NArtBpath *bp, const NR::Matrix *transform)
+PrintLatex::print_pathvector(SVGOStringStream &os, Geom::PathVector const &pathv_in, const NR::Matrix * /*transform*/)
 {
-    unsigned int closed;
-    NR::Matrix tf=*transform;
-    NR::Matrix tf_stack=m_tr_stack.top();
+    if (pathv_in.empty())
+        return;
+
+//    NR::Matrix tf=*transform;   // why was this here?
+    NR::Matrix tf_stack=m_tr_stack.top(); // and why is transform argument not used?
+    Geom::PathVector pathv = pathv_in * to_2geom(tf_stack); // generates new path, which is a bit slow, but this doesn't have to be performance optimized
 
     os << "\\newpath\n";
-    closed = FALSE;
-    while (bp->code != NR_END) {
-        using NR::X;
-        using NR::Y;
 
-//        NR::Point const p1(bp->c(1) * tf);
-//        NR::Point const p2(bp->c(2) * tf);
-//        NR::Point const p3(bp->c(3) * tf);
+    for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it) {
 
-        NR::Point const p1(bp->c(1) * tf_stack);
-        NR::Point const p2(bp->c(2) * tf_stack);
-        NR::Point const p3(bp->c(3) * tf_stack);
+        os << "\\moveto(" << it->initialPoint()[Geom::X] << "," << it->initialPoint()[Geom::Y] << ")\n";
 
-        double const x1 = p1[X], y1 = p1[Y];
-        double const x2 = p2[X], y2 = p2[Y];
-        double const x3 = p3[X], y3 = p3[Y];
-        
-        switch (bp->code) {
-            case NR_MOVETO:
-                if (closed) {
-                    os << "\\closepath\n";
-                }
-                closed = TRUE;
-                os << "\\moveto(" << x3 << "," << y3 << ")\n";
-                break;
-            case NR_MOVETO_OPEN:
-                if (closed) {
-                    os << "\\closepath\n";
-                }
-                closed = FALSE;
-                os << "\\moveto(" << x3 << "," << y3 << ")\n";
-                break;
-            case NR_LINETO:
-                os << "\\lineto(" << x3 << "," << y3 << ")\n";
-                break;
-            case NR_CURVETO:
-                os << "\\curveto(" << x1 << "," << y1 << ")("
-                   << x2 << "," << y2 << ")("
-                   << x3 << "," << y3 << ")\n";
-                break;
-            default:
-                break;
+        for(Geom::Path::const_iterator cit = it->begin(); cit != it->end_open(); ++cit) {
+            print_2geomcurve(os, *cit);
         }
-        bp += 1;
+
+        if (it->closed()) {
+            os << "\\closepath\n";
+        }
+
     }
-    if (closed) {
-        os << "\\closepath\n";
+}
+
+void
+PrintLatex::print_2geomcurve(SVGOStringStream &os, Geom::Curve const & c )
+{
+    using Geom::X;
+    using Geom::Y;
+
+    if( dynamic_cast<Geom::LineSegment const*>(&c) ||
+        dynamic_cast<Geom::HLineSegment const*>(&c) ||
+        dynamic_cast<Geom::VLineSegment const*>(&c) )
+    {
+        os << "\\lineto(" << c.finalPoint()[X] << "," << c.finalPoint()[Y] << ")\n";
+    }
+    else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const*>(&c)) {
+        std::vector<Geom::Point> points = cubic_bezier->points();
+        os << "\\curveto(" << points[1][X] << "," << points[1][Y] << ")("
+                           << points[2][X] << "," << points[2][Y] << ")("
+                           << points[3][X] << "," << points[3][Y] << ")\n";
+    }                                             
+    else {
+        //this case handles sbasis as well as all other curve types
+        Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(c.toSBasis(), 0.1);
+
+        for(Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {
+            print_2geomcurve(os, *iter);
+        }
     }
 }
 

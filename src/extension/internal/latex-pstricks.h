@@ -33,7 +33,8 @@ class PrintLatex : public Inkscape::Extension::Implementation::Implementation {
     
     std::stack<NR::Matrix> m_tr_stack;
 
-    void print_bpath (SVGOStringStream &os, const NArtBpath *bp, const NR::Matrix *transform);
+    void print_pathvector(SVGOStringStream &os, Geom::PathVector const &pathv_in, const NR::Matrix * /*transform*/);
+    void print_2geomcurve(SVGOStringStream &os, Geom::Curve const & c );
 
 public:
         PrintLatex (void);
