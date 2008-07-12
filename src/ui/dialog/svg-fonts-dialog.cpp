@@ -69,10 +69,11 @@ void GlyphComboBox::update(SPFont* spfont){
 }
 
 void SvgFontsDialog::on_kerning_changed(){
-    //set kerning value = spin.value()
-    this->kerning_pair->k = kerning_spin.get_value();
-    kerning_preview.redraw();
-    _font_da.redraw();
+    if (this->kerning_pair){
+        this->kerning_pair->k = kerning_spin.get_value();
+        kerning_preview.redraw();
+        _font_da.redraw();
+    }
 }
 
 void SvgFontsDialog::on_glyphs_changed(){
@@ -95,6 +96,8 @@ void SvgFontsDialog::on_glyphs_changed(){
 //TODO:
     //if not found,
       //create new kern node
+    if (this->kerning_pair)
+        kerning_spin.set_value(this->kerning_pair->k);
 }
 
 /* Add all fonts in the document to the combobox. */
@@ -123,11 +126,19 @@ void SvgFontsDialog::on_preview_text_changed(){
 }
 
 void SvgFontsDialog::on_font_selection_changed(){
-    first_glyph.update(this->get_selected_spfont());
-    second_glyph.update(this->get_selected_spfont());
-    kerning_preview.set_svgfont(this->get_selected_svgfont());
-    _font_da.set_svgfont(this->get_selected_svgfont());
+    SPFont* spfont = this->get_selected_spfont();
+    SvgFont* svgfont = this->get_selected_svgfont();
+    first_glyph.update(spfont);
+    second_glyph.update(spfont);
+    kerning_preview.set_svgfont(svgfont);
+    _font_da.set_svgfont(svgfont);
     _font_da.redraw();
+
+    int steps = 50;
+    double set_width = spfont->horiz_adv_x;
+    kerning_spin.set_range(0,set_width);
+    kerning_spin.set_increments(int(set_width/steps),2*int(set_width/steps));
+    kerning_spin.set_value(0);
 }
 
 SvgFont* SvgFontsDialog::get_selected_svgfont()
@@ -169,8 +180,6 @@ SvgFontsDialog::SvgFontsDialog()
     Gtk::HBox* kerning_selector = Gtk::manage(new Gtk::HBox());
     kerning_selector->add(first_glyph);
     kerning_selector->add(second_glyph);
-    kerning_spin.set_range(0,1000);
-    kerning_spin.set_increments(10,20);
     first_glyph.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_glyphs_changed));
     second_glyph.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_glyphs_changed));
     kerning_spin.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_kerning_changed));
