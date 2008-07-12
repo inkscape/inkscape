@@ -36,6 +36,7 @@
 
 #include "libnr/n-art-bpath.h"
 #include "gnome-canvas-bpath-util.h"
+#include "svg/svg.h"
 #include "svg/path-string.h"
 
 #include <2geom/pathvector.h>
@@ -674,20 +675,28 @@ NArtBpath *sp_svg_read_path(gchar const *str)
     return bpath;
 }
 
+/*
+ * Parses the path in str. When an error is found in the pathstring, this method
+ * returns a truncated path up to where the error was found in the pathstring.
+ * Returns an empty PathVector when str==NULL
+ */
 Geom::PathVector sp_svg_read_pathv(char const * str)
 {
-    std::vector<Geom::Path> pathv;
+    Geom::PathVector pathv;
     if (!str)
         return pathv;  // return empty pathvector when str == NULL
 
+
+    typedef std::back_insert_iterator<Geom::PathVector> Inserter;
+    Inserter iter(pathv);
+    Geom::SVGPathGenerator<Inserter> generator(iter);
+
     try {
-        pathv = Geom::parse_svg_path(str);
+        Geom::parse_svg_path(str, generator);
     }
     catch (Geom::SVGPathParseError e) {
-        g_warning("SVGPathParseError: %s", e.what());
-        g_warning("svgd str: %s", str);
-        throw Geom::SVGPathParseError();      // rethrow, maybe not necessary, can instead return empty path?
-        return std::vector<Geom::Path>();
+        generator.finish();
+        g_warning("Malformed SVG path, truncated path up to where error was found.\n Input path=\"%s\"\n Parsed path=\"%s\"", str, sp_svg_write_path(pathv));
     }
 
     return pathv;
