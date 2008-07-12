@@ -77,6 +77,8 @@
 #include <cstdlib>
 #include <cmath>
 
+#include <2geom/sbasis-to-bezier.h>
+
 /*
 using std::atof;
 using std::ceil;
@@ -830,9 +832,7 @@ PrintPS::fill(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, NR
 
         print_fill_style(os, style, pbox);
 
-        NArtBpath * bpath = BPath_from_2GeomPath(pathv);
-        print_bpath(os, bpath);
-        g_free(bpath);
+        print_pathvector(os, pathv);
 
         if (style->fill_rule.computed == SP_WIND_RULE_EVENODD) {
             if (style->fill.isColor()) {
@@ -893,9 +893,7 @@ PrintPS::stroke(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, 
 
         print_stroke_style(os, style);
 
-        NArtBpath * bpath = BPath_from_2GeomPath(pathv);
-        print_bpath(os, bpath);
-        g_free(bpath);
+        print_pathvector(os, pathv);
 
         os << "stroke\n";
 
@@ -1439,43 +1437,56 @@ PrintPS::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
 /* PostScript helpers */
 
 void
-PrintPS::print_bpath(SVGOStringStream &os, NArtBpath const *bp)
+PrintPS::print_pathvector(SVGOStringStream &os, Geom::PathVector const &pathv)
 {
+    if (pathv.empty())
+        return;
+
     os << "newpath\n";
-    bool closed = false;
-    while (bp->code != NR_END) {
-        switch (bp->code) {
-            case NR_MOVETO:
-                if (closed) {
-                    os << "closepath\n";
-                }
-                closed = true;
-                os << bp->x3 << " " << bp->y3 << " moveto\n";
-                break;
-            case NR_MOVETO_OPEN:
-                if (closed) {
-                    os << "closepath\n";
-                }
-                closed = false;
-                os << bp->x3 << " " << bp->y3 << " moveto\n";
-                break;
-            case NR_LINETO:
-                os << bp->x3 << " " << bp->y3 << " lineto\n";
-                break;
-            case NR_CURVETO:
-                os << bp->x1 << " " << bp->y1 << " "
-                   << bp->x2 << " " << bp->y2 << " "
-                   << bp->x3 << " " << bp->y3 << " curveto\n";
-                break;
-            default:
-                break;
+
+    for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it) {
+
+        os << it->initialPoint()[Geom::X] << " " << it->initialPoint()[Geom::Y] << " moveto\n";
+
+        for(Geom::Path::const_iterator cit = it->begin(); cit != it->end_open(); ++cit) {
+            print_2geomcurve(os, *cit);
         }
-        bp += 1;
-    }
-    if (closed) {
-        os << "closepath\n";
+
+        if (it->closed()) {
+            os << "closepath\n";
+        }
+
     }
 }
+
+void
+PrintPS::print_2geomcurve(SVGOStringStream &os, Geom::Curve const & c )
+{
+    using Geom::X;
+    using Geom::Y;
+
+    if( dynamic_cast<Geom::LineSegment const*>(&c) ||
+        dynamic_cast<Geom::HLineSegment const*>(&c) ||
+        dynamic_cast<Geom::VLineSegment const*>(&c) )
+    {
+        os << c.finalPoint()[X] << " " << c.finalPoint()[Y] << " lineto\n";
+    }
+    else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const*>(&c)) {
+        std::vector<Geom::Point> points = cubic_bezier->points();
+        os << points[1][X] << " " << points[1][Y] << " "
+           << points[2][X] << " " << points[2][Y] << " "
+           << points[3][X] << " " << points[3][Y] << " curveto\n";
+    }
+    else {
+        //this case handles sbasis as well as all other curve types
+        Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(c.toSBasis(), 0.1);
+
+        for(Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {
+            print_2geomcurve(os, *iter);
+        }
+    }
+}
+
 
 /* The following code is licensed under GNU GPL.
 ** The packbits, ascii85 and imaging printing code

@@ -47,7 +47,8 @@ class PrintPS : public Inkscape::Extension::Implementation::Implementation {
     //map strings of font types to enumeration of int values
     std::map<std::string, FontType> _fontTypesMap;
 
-    void print_bpath(SVGOStringStream &os, NArtBpath const *bp);
+    void print_2geomcurve(SVGOStringStream &os, Geom::Curve const & c );
+    void print_pathvector(SVGOStringStream &os, Geom::PathVector const &pathv);
 
     void print_fill_style(SVGOStringStream &os, SPStyle const *style, NRRect const *pbox);
     void print_stroke_style(SVGOStringStream &os, SPStyle const *style);
