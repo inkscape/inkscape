@@ -45,7 +45,7 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-class GlyphComboBox : public Gtk::Combo {
+class GlyphComboBox : public Gtk::ComboBoxText {
 public:
     GlyphComboBox();
     void update(SPFont*);
@@ -64,6 +64,7 @@ public:
     SPFont* get_selected_spfont();
     void on_font_selection_changed();
     void on_preview_text_changed();
+    void on_glyphs_changed();
 private:
     class Columns : public Gtk::TreeModel::ColumnRecord
         {

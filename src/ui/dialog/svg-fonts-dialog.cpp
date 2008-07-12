@@ -16,6 +16,7 @@
 #ifdef ENABLE_SVG_FONTS
 
 #include "svg-fonts-dialog.h"
+#include <string.h>
 
 SvgFontDrawingArea::SvgFontDrawingArea(){
 	this->text = "";
@@ -58,14 +59,21 @@ GlyphComboBox::GlyphComboBox(){
 
 void GlyphComboBox::update(SPFont* spfont){
     if (spfont) {
+        this->clear();
         for(SPObject* node = spfont->children; node; node=node->next){
             if (SP_IS_GLYPH(node)){
-	        g_warning("glyphCombo unicode='%s'", ((SPGlyph*)node)->unicode);
+                this->append_text(((SPGlyph*)node)->unicode);
             }
         }
     }
 }
 
+void SvgFontsDialog::on_glyphs_changed(){
+    std::string str1(first_glyph.get_active_text());
+    std::string str2(second_glyph.get_active_text());
+    kerning_preview.set_text((gchar*) (str1+str2).c_str());
+    kerning_preview.redraw();
+}
 
 /* Add all fonts in the document to the combobox. */
 void SvgFontsDialog::update_fonts()
@@ -95,6 +103,7 @@ void SvgFontsDialog::on_preview_text_changed(){
 void SvgFontsDialog::on_font_selection_changed(){
     first_glyph.update(this->get_selected_spfont());
     second_glyph.update(this->get_selected_spfont());
+    kerning_preview.set_svgfont(this->get_selected_svgfont());
     _font_da.set_svgfont(this->get_selected_svgfont());
     _font_da.redraw();
 }
@@ -138,6 +147,8 @@ SvgFontsDialog::SvgFontsDialog()
     Gtk::HBox* kerning_selector = Gtk::manage(new Gtk::HBox());
     kerning_selector->add(first_glyph);
     kerning_selector->add(second_glyph);
+    first_glyph.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_glyphs_changed));
+    second_glyph.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_glyphs_changed));
 
     Gtk::SpinButton* kerning_spin = Gtk::manage(new Gtk::SpinButton());
     kernvbox->add(*kerning_selector);
