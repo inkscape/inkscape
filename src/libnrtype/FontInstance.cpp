@@ -178,7 +178,6 @@ font_instance::~font_instance(void)
 
 	for (int i=0;i<nbGlyph;i++) {
 		if ( glyphs[i].outline ) delete glyphs[i].outline;
-		if ( glyphs[i].artbpath ) free(glyphs[i].artbpath);
         if ( glyphs[i].pathvector ) delete glyphs[i].pathvector;
 	}
 	if ( glyphs ) free(glyphs);
@@ -430,7 +429,6 @@ void font_instance::LoadGlyph(int glyph_id)
 		}
 		font_glyph  n_g;
 		n_g.outline=NULL;
-		n_g.artbpath=NULL;
         n_g.pathvector=NULL;
 		n_g.bbox[0]=n_g.bbox[1]=n_g.bbox[2]=n_g.bbox[3]=0;
 		bool   doAdd=false;
@@ -558,7 +556,6 @@ void font_instance::LoadGlyph(int glyph_id)
 		if ( doAdd ) {
 			if ( n_g.outline ) {
 				n_g.outline->FastBBox(n_g.bbox[0],n_g.bbox[1],n_g.bbox[2],n_g.bbox[3]);
-				n_g.artbpath=n_g.outline->MakeArtBPath();
                 n_g.pathvector=n_g.outline->MakePathVector();
 			}
 			glyphs[nbGlyph]=n_g;
@@ -659,23 +656,6 @@ Path* font_instance::Outline(int glyph_id,Path* copyInto)
 		return copyInto;
 	}
 	return src_o;
-}
-
-void* font_instance::ArtBPath(int glyph_id)
-{
-	int no=-1;
-	if ( id_to_no.find(glyph_id) == id_to_no.end() ) {
-		LoadGlyph(glyph_id);
-		if ( id_to_no.find(glyph_id) == id_to_no.end() ) {
-			// didn't load
-		} else {
-			no=id_to_no[glyph_id];
-		}
-	} else {
-		no=id_to_no[glyph_id];
-	}
-	if ( no < 0 ) return NULL;
-	return glyphs[no].artbpath;
 }
 
 Geom::PathVector* font_instance::PathVector(int glyph_id)

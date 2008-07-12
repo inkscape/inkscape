@@ -70,8 +70,6 @@ public:
     Path*                Outline(int glyph_id, Path *copyInto=NULL);
 		                        // queries the outline of the glyph (in livarot Path form), and copies it into copyInto instead
 		                        // of allocating a new Path if copyInto != NULL
-    void*                ArtBPath(int glyph_id);
-                         // returns the artbpath for this glyph. no refcounting needed, it's deallocated when the font_instance dies
     Geom::PathVector*    PathVector(int glyph_id);
                          // returns the 2geom-type pathvector for this glyph. no refcounting needed, it's deallocated when the font_instance dies
     double               Advance(int glyph_id, bool vertical);
