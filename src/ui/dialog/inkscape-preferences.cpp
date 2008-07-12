@@ -963,6 +963,10 @@ void InkscapePreferences::initPageUI()
     _page_ui.add_line( false, _("Main toolbar icon size"), _misc_small_tools, "",
                            _("Set the size for the main tools to use (requires restart)"), false);
 
+    _misc_recent.init("options.maxrecentdocuments", "value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
+    _page_ui.add_line( false, _("Maximum documents in Open Recent:"), _misc_recent, "",
+                           _("The maximum length of the Open Recent list in the File menu"), false);
+
     this->AddPage(_page_ui, _("Interface"), PREFS_PAGE_UI);
 }
 
@@ -1042,15 +1046,9 @@ void InkscapePreferences::initPageMisc()
     _page_misc.add_line( false, "", _misc_forkvectors, "",
                            _("When on, shared gradient definitions are automatically forked on change; uncheck to allow sharing of gradient definitions so that editing one object may affect other objects using the same gradient"), true);
 
+    _misc_simpl.init("options.simplifythreshold", "value", 0.0001, 1.0, 0.0001, 0.0010, 0.0010, false, false);
     _page_misc.add_line( false, _("Simplification threshold:"), _misc_simpl, "",
                            _("How strong is the Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."), false);
-
-
-    _misc_recent.init("options.maxrecentdocuments", "value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
-    _page_misc.add_line( false, _("Maximum documents in Open Recent:"), _misc_recent, "",
-                           _("The maximum length of the Open Recent list in the File menu"), false);
-    _misc_simpl.init("options.simplifythreshold", "value", 0.0001, 1.0, 0.0001, 0.0010, 0.0010, false, false);
-
 
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
 }
