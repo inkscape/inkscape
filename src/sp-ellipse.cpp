@@ -188,7 +188,7 @@ static void sp_genericellipse_set_shape(SPShape *shape)
     double x0, y0, x1, y1, x2, y2, x3, y3;
     double len;
     gint slice = FALSE;
-    gint i;
+ //   gint i;
 
     SPGenericEllipse *ellipse = (SPGenericEllipse *) shape;
 

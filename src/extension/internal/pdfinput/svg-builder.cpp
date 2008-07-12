@@ -759,7 +759,7 @@ void SvgBuilder::_addStopToGradient(Inkscape::XML::Node *gradient, double offset
         double gray = (double)color->r / 65535.0;
         gray = CLAMP(gray, 0.0, 1.0);
         os_opacity << gray;
-        color_text = "#ffffff";
+        color_text = (char*) "#ffffff";
     } else {
         os_opacity << opacity;
         color_text = svgConvertGfxRGB(color);
@@ -854,22 +854,22 @@ void SvgBuilder::updateStyle(GfxState *state) {
  * This array holds info about translating font weight names to more or less CSS equivalents
  */
 static char *font_weight_translator[][2] = {
-    {"bold", "bold"},
-    {"light", "300"},
-    {"black", "900"},
-    {"heavy", "900"},
-    {"ultrabold", "800"},
-    {"extrabold", "800"},
-    {"demibold", "600"},
-    {"semibold", "600"},
-    {"medium", "500"},
-    {"book", "normal"},
-    {"regular", "normal"},
-    {"roman", "normal"},
-    {"normal", "normal"},
-    {"ultralight", "200"},
-    {"extralight", "200"},
-    {"thin", "100"}
+    {(char*) "bold",        (char*) "bold"},
+    {(char*) "light",       (char*) "300"},
+    {(char*) "black",       (char*) "900"},
+    {(char*) "heavy",       (char*) "900"},
+    {(char*) "ultrabold",   (char*) "800"},
+    {(char*) "extrabold",   (char*) "800"},
+    {(char*) "demibold",    (char*) "600"},
+    {(char*) "semibold",    (char*) "600"},
+    {(char*) "medium",      (char*) "500"},
+    {(char*) "book",        (char*) "normal"},
+    {(char*) "regular",     (char*) "normal"},
+    {(char*) "roman",       (char*) "normal"},
+    {(char*) "normal",      (char*) "normal"},
+    {(char*) "ultralight",  (char*) "200"},
+    {(char*) "extralight",  (char*) "200"},
+    {(char*) "thin",        (char*) "100"}
 };
 
 /**
@@ -892,7 +892,7 @@ void SvgBuilder::updateFont(GfxState *state) {
     } else if (font->getName()) {
         _font_specification = font->getName()->getCString();
     } else {
-        _font_specification = "Arial";
+        _font_specification = (char*) "Arial";
     }
 
     // Prune the font name to get the correct font family name
@@ -942,9 +942,9 @@ void SvgBuilder::updateFont(GfxState *state) {
     char *css_font_weight = NULL;
     if ( font_weight != GfxFont::WeightNotDefined ) {
         if ( font_weight == GfxFont::W400 ) {
-            css_font_weight = "normal";
+            css_font_weight = (char*) "normal";
         } else if ( font_weight == GfxFont::W700 ) {
-            css_font_weight = "bold";
+            css_font_weight = (char*) "bold";
         } else {
             gchar weight_num[4] = "100";
             weight_num[0] = (gchar)( '1' + (font_weight - GfxFont::W100) );
@@ -959,7 +959,7 @@ void SvgBuilder::updateFont(GfxState *state) {
             }
         }
     } else {
-        css_font_weight = "normal";
+        css_font_weight = (char*) "normal";
     }
     if (css_font_weight) {
         sp_repr_css_set_property(_font_style, "font-weight", css_font_weight);
@@ -974,31 +974,31 @@ void SvgBuilder::updateFont(GfxState *state) {
     gchar *stretch_value = NULL;
     switch (font_stretch) {
         case GfxFont::UltraCondensed:
-            stretch_value = "ultra-condensed";
+            stretch_value = (char*) "ultra-condensed";
             break;
         case GfxFont::ExtraCondensed:
-            stretch_value = "extra-condensed";
+            stretch_value = (char*) "extra-condensed";
             break;
         case GfxFont::Condensed:
-            stretch_value = "condensed";
+            stretch_value = (char*) "condensed";
             break;
         case GfxFont::SemiCondensed:
-            stretch_value = "semi-condensed";
+            stretch_value = (char*) "semi-condensed";
             break;
         case GfxFont::Normal:
-            stretch_value = "normal";
+            stretch_value = (char*) "normal";
             break;
         case GfxFont::SemiExpanded:
-            stretch_value = "semi-expanded";
+            stretch_value = (char*) "semi-expanded";
             break;
         case GfxFont::Expanded:
-            stretch_value = "expanded";
+            stretch_value = (char*) "expanded";
             break;
         case GfxFont::ExtraExpanded:
-            stretch_value = "extra-expanded";
+            stretch_value = (char*) "extra-expanded";
             break;
         case GfxFont::UltraExpanded:
-            stretch_value = "ultra-expanded";
+            stretch_value = (char*) "ultra-expanded";
             break;
         default:
             break;
