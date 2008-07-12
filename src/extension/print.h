@@ -45,13 +45,13 @@ public:
                                float opacity);
     unsigned int  release     (void);
     unsigned int  comment     (const char * comment);
-    unsigned int  fill        (const_NRBPath const *bpath,
+    unsigned int  fill        (Geom::PathVector const &pathv,
                                NR::Matrix const *ctm,
                                SPStyle const *style,
                                NRRect const *pbox,
                                NRRect const *dbox,
                                NRRect const *bbox);
-    unsigned int  stroke      (const_NRBPath const *bpath,
+    unsigned int  stroke      (Geom::PathVector const &pathv,
                                NR::Matrix const *transform,
                                SPStyle const *style,
                                NRRect const *pbox,

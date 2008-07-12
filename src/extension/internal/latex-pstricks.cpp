@@ -27,7 +27,7 @@
 #include "libnr/nr-scale-translate-ops.h"
 #include "libnr/nr-translate-scale-ops.h"
 #include <libnr/nr-matrix-fns.h>
-
+#include <libnr/n-art-bpath-2geom.h>
 
 #include "libnr/n-art-bpath.h"
 #include "sp-item.h"
@@ -201,8 +201,8 @@ unsigned int PrintLatex::comment (Inkscape::Extension::Print * module,
 
 unsigned int
 PrintLatex::fill(Inkscape::Extension::Print *mod,
-		 const_NRBPath const *bpath, NR::Matrix const *transform, SPStyle const *style,
-		 NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
+        Geom::PathVector const &pathv, NR::Matrix const *transform, SPStyle const *style,
+        NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
 
@@ -217,7 +217,9 @@ PrintLatex::fill(Inkscape::Extension::Print *mod,
 
         os << "\\pscustom[linestyle=none,fillstyle=solid,fillcolor=curcolor]\n{\n";
 
-        print_bpath(os, bpath->path, transform);
+        NArtBpath * bpath = BPath_from_2GeomPath(pathv);
+        print_bpath(os, bpath, transform);
+        g_free(bpath);
 
         os << "}\n}\n";
 
@@ -228,7 +230,7 @@ PrintLatex::fill(Inkscape::Extension::Print *mod,
 }
 
 unsigned int
-PrintLatex::stroke (Inkscape::Extension::Print *mod, const const_NRBPath *bpath, const NR::Matrix *transform, const SPStyle *style,
+PrintLatex::stroke (Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, const NR::Matrix *transform, const SPStyle *style,
 			      const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -260,7 +262,9 @@ PrintLatex::stroke (Inkscape::Extension::Print *mod, const const_NRBPath *bpath,
 
         os <<"]\n{\n";
 
-        print_bpath(os, bpath->path, transform);
+        NArtBpath * bpath = BPath_from_2GeomPath(pathv);
+        print_bpath(os, bpath, transform);
+        g_free(bpath);
 
         os << "}\n}\n";
 

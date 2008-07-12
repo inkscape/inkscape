@@ -43,6 +43,7 @@
 #include "libnr/nr-matrix-fns.h"
 #include "libnr/nr-path.h"
 #include "libnr/nr-pixblock.h"
+#include <libnr/n-art-bpath-2geom.h>
 #include "display/canvas-bpath.h"
 #include "sp-item.h"
 
@@ -501,7 +502,7 @@ PrintEmfWin32::release(Inkscape::Extension::Print *mod)
 
 unsigned int
 PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
-               const_NRBPath const *bpath, NR::Matrix const *transform, SPStyle const *style,
+               Geom::PathVector const &pathv, NR::Matrix const *transform, SPStyle const *style,
                NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!hdc) return 0;
@@ -518,7 +519,9 @@ PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
         return 0;
     }
 
-    fill_path = copy_bpath( bpath->path );
+    NArtBpath * bpath = BPath_from_2GeomPath(pathv);
+    fill_path = copy_bpath( bpath );
+    g_free(bpath);
     fill_transform = tf;
     fill_pbox = *pbox;
 
@@ -530,14 +533,16 @@ PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
 
 unsigned int
 PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
-                  const const_NRBPath *bpath, const NR::Matrix *transform, const SPStyle *style,
+                  Geom::PathVector const &pathv, const NR::Matrix *transform, const SPStyle *style,
                   const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
 {
     if (!hdc) return 0;
 
     NR::Matrix tf = m_tr_stack.top();
 
-    stroke_and_fill = ( cmp_bpath( bpath->path, fill_path ) == 0 );
+    NArtBpath * bpath = BPath_from_2GeomPath(pathv);
+
+    stroke_and_fill = ( cmp_bpath( bpath, fill_path ) == 0 );
 
     if (!stroke_and_fill) {
         flush_fill(); // flush any pending fills
@@ -550,7 +555,7 @@ PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
         return 0;
     }
 
-    print_bpath(bpath->path, &tf, pbox);
+    print_bpath(bpath, &tf, pbox);
 
     if (stroke_and_fill) {
         if (!simple_shape)
@@ -563,6 +568,7 @@ PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
             StrokePath( hdc );
     }
 
+    g_free(bpath);
     destroy_pen();
 
     return 0;

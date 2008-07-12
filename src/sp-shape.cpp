@@ -613,15 +613,11 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
         SPStyle* style = SP_OBJECT_STYLE (item);
 
     if (!style->fill.isNone()) {
-        const_NRBPath bp;
-        bp.path = shape->curve->get_bpath();
-        sp_print_fill (ctx, &bp, &i2d, style, &pbox, &dbox, &bbox);
+        sp_print_fill (ctx, shape->curve->get_pathvector(), &i2d, style, &pbox, &dbox, &bbox);
     }
 
     if (!style->stroke.isNone()) {
-        const_NRBPath bp;
-        bp.path = shape->curve->get_bpath();
-        sp_print_stroke (ctx, &bp, &i2d, style, &pbox, &dbox, &bbox);
+        sp_print_stroke (ctx, shape->curve->get_pathvector(), &i2d, style, &pbox, &dbox, &bbox);
     }
 
     /* TODO: make code prettier: lots of variables can be taken out of the loop! */

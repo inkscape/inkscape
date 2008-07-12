@@ -79,17 +79,17 @@ Print::comment (const char * comment)
 }
 
 unsigned int
-Print::fill (const const_NRBPath *bpath, const NR::Matrix *ctm, const SPStyle *style,
+Print::fill (Geom::PathVector const &pathv, const NR::Matrix *ctm, const SPStyle *style,
                    const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
 {
-    return imp->fill (this, bpath, ctm, style, pbox, dbox, bbox);
+    return imp->fill (this, pathv, ctm, style, pbox, dbox, bbox);
 }
 
 unsigned int
-Print::stroke (const const_NRBPath *bpath, const NR::Matrix *transform, const SPStyle *style,
+Print::stroke (Geom::PathVector const &pathv, const NR::Matrix *transform, const SPStyle *style,
                  const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
 {
-    return imp->stroke (this, bpath, transform, style, pbox, dbox, bbox);
+    return imp->stroke (this, pathv, transform, style, pbox, dbox, bbox);
 }
 
 unsigned int

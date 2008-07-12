@@ -155,18 +155,14 @@ void Layout::print(SPPrintContext *ctx,
         Span const &span = _spans[_characters[_glyphs[glyph_index].in_character].in_span];
         InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_input_stream[span.in_input_stream_item]);
         if (text_to_path || _path_fitted) {
-            NRBPath bpath;
-            bpath.path = (NArtBpath*)span.font->ArtBPath(_glyphs[glyph_index].glyph);
-            if (bpath.path) {
-                const_NRBPath abp;
+            Geom::PathVector const * pv = span.font->PathVector(_glyphs[glyph_index].glyph);
+            if (pv) {
                 _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
-                NArtBpath *temp_bpath = nr_artpath_affine(bpath.path, glyph_matrix);
-                abp.path = temp_bpath;
+                Geom::PathVector temp_pv = (*pv) * to_2geom(glyph_matrix);
                 if (!text_source->style->fill.isNone())
-                    sp_print_fill(ctx, &abp, &ctm, text_source->style, pbox, dbox, bbox);
+                    sp_print_fill(ctx, temp_pv, &ctm, text_source->style, pbox, dbox, bbox);
                 if (!text_source->style->stroke.isNone())
-                    sp_print_stroke(ctx, &abp, &ctm, text_source->style, pbox, dbox, bbox);
-                g_free(temp_bpath);
+                    sp_print_stroke(ctx, temp_pv, &ctm, text_source->style, pbox, dbox, bbox);
             }
             glyph_index++;
         } else {

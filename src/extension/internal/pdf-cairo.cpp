@@ -33,6 +33,7 @@
 #include <errno.h>
 
 #include <libnr/n-art-bpath.h>
+#include <libnr/n-art-bpath-2geom.h>
 
 #include <glib/gmem.h>
 #include <gtk/gtkstock.h>
@@ -584,7 +585,7 @@ PrintCairoPDF::print_fill_style(cairo_t *cr, SPStyle const *const style, NRRect 
 }
 
 unsigned int
-PrintCairoPDF::fill(Inkscape::Extension::Print *mod, const_NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *const style,
+PrintCairoPDF::fill(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, NR::Matrix const *ctm, SPStyle const *const style,
               NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -599,7 +600,9 @@ PrintCairoPDF::fill(Inkscape::Extension::Print *mod, const_NRBPath const *bpath,
         cairo_save(cr);
 
         print_fill_style(cr, style, pbox);
-        print_bpath(cr, bpath->path);
+        NArtBpath * bpath = BPath_from_2GeomPath(pathv);
+        print_bpath(cr, bpath);
+        g_free(bpath);
         if (style->fill_rule.computed == SP_WIND_RULE_EVENODD) {
             cairo_set_fill_rule(cr, CAIRO_FILL_RULE_EVEN_ODD);
         } else {
@@ -684,7 +687,7 @@ PrintCairoPDF::print_stroke_style(cairo_t *cr, SPStyle const *style, NRRect cons
 }
 
 unsigned int
-PrintCairoPDF::stroke(Inkscape::Extension::Print *mod, const_NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *style,
+PrintCairoPDF::stroke(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, NR::Matrix const *ctm, SPStyle const *style,
                 NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -697,7 +700,9 @@ PrintCairoPDF::stroke(Inkscape::Extension::Print *mod, const_NRBPath const *bpat
         cairo_save(cr);
 
         print_stroke_style(cr, style, pbox);
-        print_bpath(cr, bpath->path);
+        NArtBpath * bpath = BPath_from_2GeomPath(pathv);
+        print_bpath(cr, bpath);
+        g_free(bpath);
         cairo_stroke(cr);
 
         cairo_restore(cr);

@@ -33,6 +33,7 @@
 
 #include <libnr/n-art-bpath.h>
 #include <libnr/nr-matrix-fns.h>
+#include <libnr/n-art-bpath-2geom.h>
 
 #include <glib/gmem.h>
 #include <glib/gstrfuncs.h>
@@ -813,7 +814,7 @@ PrintPS::print_stroke_style(SVGOStringStream &os, SPStyle const *style)
 
 
 unsigned int
-PrintPS::fill(Inkscape::Extension::Print *mod, const_NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *const style,
+PrintPS::fill(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, NR::Matrix const *ctm, SPStyle const *const style,
               NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -829,7 +830,9 @@ PrintPS::fill(Inkscape::Extension::Print *mod, const_NRBPath const *bpath, NR::M
 
         print_fill_style(os, style, pbox);
 
-        print_bpath(os, bpath->path);
+        NArtBpath * bpath = BPath_from_2GeomPath(pathv);
+        print_bpath(os, bpath);
+        g_free(bpath);
 
         if (style->fill_rule.computed == SP_WIND_RULE_EVENODD) {
             if (style->fill.isColor()) {
@@ -879,7 +882,7 @@ PrintPS::fill(Inkscape::Extension::Print *mod, const_NRBPath const *bpath, NR::M
 
 
 unsigned int
-PrintPS::stroke(Inkscape::Extension::Print *mod, const_NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *style,
+PrintPS::stroke(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, NR::Matrix const *ctm, SPStyle const *style,
                 NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -890,7 +893,9 @@ PrintPS::stroke(Inkscape::Extension::Print *mod, const_NRBPath const *bpath, NR:
 
         print_stroke_style(os, style);
 
-        print_bpath(os, bpath->path);
+        NArtBpath * bpath = BPath_from_2GeomPath(pathv);
+        print_bpath(os, bpath);
+        g_free(bpath);
 
         os << "stroke\n";
 

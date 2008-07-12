@@ -13,6 +13,7 @@
 
 #include <gtkmm.h>
 #include <libnr/nr-path.h>
+#include <2geom/forward.h>
 #include "forward.h"
 #include "extension/extension-forward.h"
 
@@ -24,9 +25,9 @@ unsigned int sp_print_bind(SPPrintContext *ctx, NR::Matrix const &transform, flo
 unsigned int sp_print_bind(SPPrintContext *ctx, NR::Matrix const *transform, float opacity);
 unsigned int sp_print_release(SPPrintContext *ctx);
 unsigned int sp_print_comment(SPPrintContext *ctx, char const *comment);
-unsigned int sp_print_fill(SPPrintContext *ctx, const_NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *style,
+unsigned int sp_print_fill(SPPrintContext *ctx, Geom::PathVector const &pathv, NR::Matrix const *ctm, SPStyle const *style,
                            NRRect const *pbox, NRRect const *dbox, NRRect const *bbox);
-unsigned int sp_print_stroke(SPPrintContext *ctx, const_NRBPath const *bpath, NR::Matrix const *transform, SPStyle const *style,
+unsigned int sp_print_stroke(SPPrintContext *ctx, Geom::PathVector const &pathv, NR::Matrix const *transform, SPStyle const *style,
                              NRRect const *pbox, NRRect const *dbox, NRRect const *bbox);
 
 unsigned int sp_print_image_R8G8B8A8_N(SPPrintContext *ctx,

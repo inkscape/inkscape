@@ -52,17 +52,17 @@ sp_print_comment(SPPrintContext *ctx, char const *comment)
 }
 
 unsigned int
-sp_print_fill(SPPrintContext *ctx, const_NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *style,
+sp_print_fill(SPPrintContext *ctx, Geom::PathVector const &pathv, NR::Matrix const *ctm, SPStyle const *style,
               NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
-    return ctx->module->fill(bpath, ctm, style, pbox, dbox, bbox);
+    return ctx->module->fill(pathv, ctm, style, pbox, dbox, bbox);
 }
 
 unsigned int
-sp_print_stroke(SPPrintContext *ctx, const_NRBPath const *bpath, NR::Matrix const *ctm, SPStyle const *style,
+sp_print_stroke(SPPrintContext *ctx, Geom::PathVector const &pathv, NR::Matrix const *ctm, SPStyle const *style,
                 NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
-    return ctx->module->stroke(bpath, ctm, style, pbox, dbox, bbox);
+    return ctx->module->stroke(pathv, ctm, style, pbox, dbox, bbox);
 }
 
 unsigned int

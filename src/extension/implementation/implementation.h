@@ -21,6 +21,7 @@
 #include "libnr/nr-forward.h"
 #include "libnr/nr-point.h"
 #include "xml/node.h"
+#include <2geom/forward.h>
 
 namespace Inkscape {
 namespace Extension {
@@ -104,14 +105,14 @@ public:
     virtual unsigned release(Inkscape::Extension::Print *module);
     virtual unsigned comment(Inkscape::Extension::Print *module, const char * comment);
     virtual unsigned fill(Inkscape::Extension::Print *module,
-                          const_NRBPath const *bpath,
+                          Geom::PathVector const &pathv,
                           NR::Matrix const *ctm,
                           SPStyle const *style,
                           NRRect const *pbox,
                           NRRect const *dbox,
                           NRRect const *bbox);
     virtual unsigned stroke(Inkscape::Extension::Print *module,
-                            const_NRBPath const *bpath,
+                            Geom::PathVector const &pathv,
                             NR::Matrix const *transform,
                             SPStyle const *style,
                             NRRect const *pbox,
