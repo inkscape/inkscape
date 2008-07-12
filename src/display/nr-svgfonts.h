@@ -14,13 +14,7 @@
  */
 
 #include "cairo.h"
-//#include <gtkmm.h>
-
 #include <gtkmm/widget.h>
-//#include <gtkmm/window.h>
-//#include <gdkmm/drawable.h>
-//#include <gdkmm/general.h>  // for cairo helper functions
-
 #include "../sp-glyph.h"
 #include "../sp-missing-glyph.h"
 #include "../sp-font.h"

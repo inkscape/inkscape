@@ -18,7 +18,7 @@
 #include "svg-fonts-dialog.h"
 
 SvgFontDrawingArea::SvgFontDrawingArea(){
-	this->text = "Sample Text";
+	this->text = "";
 	this->svgfont = NULL;
         ((Gtk::Widget*) this)->set_size_request(150, 50);
 }
@@ -73,7 +73,7 @@ void SvgFontsDialog::update_fonts()
 }
 
 void SvgFontsDialog::on_preview_text_changed(){
-//    _font_da.set_text((gchar*) _preview_entry.get_text().c_str());
+    _font_da.set_text((gchar*) _preview_entry.get_text().c_str());
     _font_da.set_text(_preview_entry.get_text());
     _font_da.redraw();
 }
@@ -107,25 +107,14 @@ SvgFontsDialog::SvgFontsDialog()
 
     this->update_fonts();
 
+//Text Preview:
     _preview_entry.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_preview_text_changed));
-
+    _getContents()->add(*Gtk::manage(new Gtk::Label("Preview Text:")));
     _getContents()->add((Gtk::Widget&) _font_da);
+    _preview_entry.set_text("Sample Text");
+    _font_da.set_text("Sample Text");
     _getContents()->add(_preview_entry);
-
-/*    Gtk::HBox* preview_box = Gtk::manage(new Gtk::HBox());
-    _preview_entry.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_preview_text_changed));
-    preview_box->add(_preview_entry);
-    preview_box->add((Gtk::Widget&) _font_da);
-
-    _getContents()->add(*preview_box);*/
     _getContents()->show_all();
-
-//Settings for the selected SVGFont:
-//    _font_family.set_label("font-family");
-//    _font_variant.set_label("font-variant");
-
-//    _font_settings.add(_font_family);
-//    _font_settings.add(_font_variant);
 }
 
 SvgFontsDialog::~SvgFontsDialog(){}

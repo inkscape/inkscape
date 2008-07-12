@@ -153,7 +153,6 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
 		}
 		previous_unicode = this->glyphs[i]->unicode;//used for kerning checking
 		previous_glyph_name = this->glyphs[i]->glyph_name;//used for kerning checking
-
                 (*glyphs)[count].index = i;
                 (*glyphs)[count].x = x;
                 (*glyphs)[count++].y = y;
@@ -161,9 +160,11 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
 		if (is_horizontal_text) x++;
 		else y++;
                 _utf8+=len; //advance 'len' chars in our string pointer
-		continue;
+		//continue;
+		goto dirty;
             }
         }
+dirty:
 	if (!len){
         	(*glyphs)[count].index = i;
         	(*glyphs)[count].x = x;
