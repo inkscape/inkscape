@@ -32,9 +32,6 @@
 #include <signal.h>
 #include <errno.h>
 
-#include <libnr/n-art-bpath.h>
-#include <libnr/n-art-bpath-2geom.h>
-
 #include <glib/gmem.h>
 #include <gtk/gtkstock.h>
 #include <gtk/gtkvbox.h>
