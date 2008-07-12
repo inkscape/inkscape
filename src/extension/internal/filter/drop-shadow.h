@@ -34,15 +34,16 @@ public:
 			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 				"<name>" N_("Drop Shadow") "</name>\n"
 				"<id>org.inkscape.effect.filter.drop-shadow</id>\n"
-				"<param name=\"blur\" gui-text=\"" N_("Amount of Blur") "\" type=\"float\" min=\"0.0\" max=\"50.0\">2.0</param>\n"
-				"<param name=\"xoffset\" gui-text=\"" N_("Horizontal Offset") "\" type=\"float\" min=\"-50.0\" max=\"50.0\">4.0</param>\n"
-				"<param name=\"yoffset\" gui-text=\"" N_("Vertical Offset") "\" type=\"float\" min=\"-50.0\" max=\"50.0\">4.0</param>\n"
+				"<param name=\"blur\" gui-text=\"" N_("Blur radius, px") "\" type=\"float\" min=\"0.0\" max=\"200.0\">2.0</param>\n"
+				"<param name=\"opacity\" gui-text=\"" N_("Opacity, %") "\" type=\"float\" min=\"0.0\" max=\"100.0\">50</param>\n"				
+				"<param name=\"xoffset\" gui-text=\"" N_("Horizontal offset, px") "\" type=\"float\" min=\"-50.0\" max=\"50.0\">4.0</param>\n"
+				"<param name=\"yoffset\" gui-text=\"" N_("Vertical offset, px") "\" type=\"float\" min=\"-50.0\" max=\"50.0\">4.0</param>\n"
 				"<effect>\n"
 					"<object-type>all</object-type>\n"
 					"<effects-menu>\n"
 						"<submenu name=\"" N_("Filter") "\" />\n"
 					"</effects-menu>\n"
-					"<menu-tip>" N_("I hate text") "</menu-tip>\n"
+					"<menu-tip>" N_("Black, blurred drop shadow") "</menu-tip>\n"
 				"</effect>\n"
 			"</inkscape-extension>\n", new DropShadow());
 	};
@@ -55,18 +56,20 @@ DropShadow::get_filter_text (Inkscape::Extension::Extension * ext)
 	if (_filter != NULL) g_free((void *)_filter);
 
 	float blur = ext->get_param_float("blur");
+	float opacity = ext->get_param_float("opacity") / 100;
 	float x = ext->get_param_float("xoffset");
 	float y = ext->get_param_float("yoffset");
 
 	_filter = g_strdup_printf(
 		"<filter>\n"
 			"<feGaussianBlur in=\"SourceAlpha\" stdDeviation=\"%f\" result=\"blur\"/>\n"
-			"<feOffset in=\"blur\" dx=\"%f\" dy=\"%f\" result=\"offsetBlur\"/>\n"
+                        "<feColorMatrix result=\"bluralpha\" type=\"matrix\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %f 0 \" />\n"
+			"<feOffset in=\"bluralpha\" dx=\"%f\" dy=\"%f\" result=\"offsetBlur\"/>\n"
 			"<feMerge>\n"
 				"<feMergeNode in=\"offsetBlur\"/>\n"
 				"<feMergeNode in=\"SourceGraphic\"/>\n"
 			"</feMerge>\n"
-		"</filter>\n", blur, x, y);
+		"</filter>\n", blur, opacity, x, y);
 
 	return _filter;
 };
