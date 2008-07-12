@@ -156,8 +156,12 @@ feed_curve_to_cairo (cairo_t *ct, NArtBpath const *bpath, NR::Matrix trans, NR::
 }
 
 
+/*
+ * Can be called recursively.
+ * If optimize_stroke == false, the view Rect is not used.
+ */
 static void
-feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Matrix & trans, Geom::Rect view, bool optimize_stroke)
+feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Matrix const & trans, Geom::Rect view, bool optimize_stroke)
 {
     if( dynamic_cast<Geom::LineSegment const*>(&c) ||
         dynamic_cast<Geom::HLineSegment const*>(&c) ||
@@ -229,7 +233,32 @@ feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Matrix & trans, Geo
 }
 
 
-/** Feeds path-creating calls to the cairo context translating them from the SPCurve, with the given transform and shift */
+/** Feeds path-creating calls to the cairo context translating them from the Path, with the given transform and shift */
+void
+feed_path_to_cairo (cairo_t *ct, Geom::Path const &path)
+{
+    if (path.empty())
+        return;
+
+    cairo_move_to(ct, path.initialPoint()[0], path.initialPoint()[1] );
+
+    for(Geom::Path::const_iterator cit = path.begin(); cit != path.end_open(); ++cit) {
+        feed_curve_to_cairo(ct, *cit, Geom::identity(), Geom::Rect(), false); // optimize_stroke is false, so the view rect is not used
+    }
+
+    if (path.closed()) {
+        cairo_line_to(ct, path.initialPoint()[0], path.initialPoint()[1]);
+//        cairo_close_path(ct);
+        /* I think we should use cairo_close_path(ct) here but it doesn't work. (the closing line is not rendered completely)
+           According to cairo documentation:
+           The behavior of cairo_close_path() is distinct from simply calling cairo_line_to() with the equivalent coordinate
+           in the case of stroking. When a closed sub-path is stroked, there are no caps on the ends of the sub-path. Instead,
+           there is a line join connecting the final and initial segments of the sub-path. 
+        */
+    }
+}
+
+/** Feeds path-creating calls to the cairo context translating them from the Path, with the given transform and shift */
 void
 feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, NR::Maybe<NR::Rect> area, bool optimize_stroke, double stroke_width)
 {
@@ -255,8 +284,9 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, NR:
 
     if (path.closed()) {
         cairo_line_to(ct, initial[0], initial[1]);
-        // I think we should use cairo_close_path(ct) here but it doesn't work. (the closing line is not rendered completely)
-        /* according to cairo documentation:
+//        cairo_close_path(ct);
+        /* I think we should use cairo_close_path(ct) here but it doesn't work. (the closing line is not rendered completely)
+           According to cairo documentation:
            The behavior of cairo_close_path() is distinct from simply calling cairo_line_to() with the equivalent coordinate
            in the case of stroking. When a closed sub-path is stroked, there are no caps on the ends of the sub-path. Instead,
            there is a line join connecting the final and initial segments of the sub-path. 
@@ -264,7 +294,7 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, NR:
     }
 }
 
-/** Feeds path-creating calls to the cairo context translating them from the SPCurve, with the given transform and shift */
+/** Feeds path-creating calls to the cairo context translating them from the PathVector, with the given transform and shift */
 void
 feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv, Geom::Matrix trans, NR::Maybe<NR::Rect> area, bool optimize_stroke, double stroke_width)
 {
@@ -275,6 +305,18 @@ feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv, Geom::Matr
 
     for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it) {
         feed_path_to_cairo(ct, *it, trans, area, optimize_stroke, stroke_width);
+    }
+}
+
+/** Feeds path-creating calls to the cairo context translating them from the PathVector */
+void
+feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv)
+{
+    if (pathv.empty())
+        return;
+
+    for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it) {
+        feed_path_to_cairo(ct, *it);
     }
 }
 
