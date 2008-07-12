@@ -233,8 +233,8 @@ feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Matrix const & tran
 }
 
 
-/** Feeds path-creating calls to the cairo context translating them from the Path, with the given transform and shift */
-void
+/** Feeds path-creating calls to the cairo context translating them from the Path */
+static void
 feed_path_to_cairo (cairo_t *ct, Geom::Path const &path)
 {
     if (path.empty())
@@ -259,7 +259,7 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path)
 }
 
 /** Feeds path-creating calls to the cairo context translating them from the Path, with the given transform and shift */
-void
+static void
 feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, NR::Maybe<NR::Rect> area, bool optimize_stroke, double stroke_width)
 {
     if (!area || area->isEmpty())
@@ -303,6 +303,8 @@ feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv, Geom::Matr
     if (pathv.empty())
         return;
 
+    cairo_new_path(ct);
+
     for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it) {
         feed_path_to_cairo(ct, *it, trans, area, optimize_stroke, stroke_width);
     }
@@ -314,6 +316,8 @@ feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv)
 {
     if (pathv.empty())
         return;
+
+    cairo_new_path(ct);
 
     for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it) {
         feed_path_to_cairo(ct, *it);

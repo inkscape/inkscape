@@ -50,7 +50,6 @@ class PrintCairoPDF : public Inkscape::Extension::Implementation::Implementation
     unsigned short _dpi;
     bool _bitmap;
 
-    void print_bpath(cairo_t *cr, NArtBpath const *bp);
     cairo_pattern_t *create_pattern_for_paint(SPPaintServer const *const paintserver, NRRect const *pbox, float alpha);
     
     void print_fill_style(cairo_t *cr, SPStyle const *const style, NRRect const *pbox);

@@ -48,6 +48,7 @@
 #include <glibmm/i18n.h>
 #include "display/nr-arena-item.h"
 #include "display/canvas-bpath.h"
+#include "display/inkscape-cairo.h"
 #include "sp-item.h"
 #include "style.h"
 #include "sp-linear-gradient.h"
@@ -600,9 +601,9 @@ PrintCairoPDF::fill(Inkscape::Extension::Print *mod, Geom::PathVector const &pat
         cairo_save(cr);
 
         print_fill_style(cr, style, pbox);
-        NArtBpath * bpath = BPath_from_2GeomPath(pathv);
-        print_bpath(cr, bpath);
-        g_free(bpath);
+
+        feed_pathvector_to_cairo(cr, pathv);
+
         if (style->fill_rule.computed == SP_WIND_RULE_EVENODD) {
             cairo_set_fill_rule(cr, CAIRO_FILL_RULE_EVEN_ODD);
         } else {
@@ -700,9 +701,8 @@ PrintCairoPDF::stroke(Inkscape::Extension::Print *mod, Geom::PathVector const &p
         cairo_save(cr);
 
         print_stroke_style(cr, style, pbox);
-        NArtBpath * bpath = BPath_from_2GeomPath(pathv);
-        print_bpath(cr, bpath);
-        g_free(bpath);
+
+        feed_pathvector_to_cairo(cr, pathv);
         cairo_stroke(cr);
 
         cairo_restore(cr);
@@ -987,43 +987,6 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
 }
 
 /* Helper functions */
-
-void
-PrintCairoPDF::print_bpath(cairo_t *cr, NArtBpath const *bp)
-{
-    cairo_new_path(cr);
-    bool closed = false;
-    while (bp->code != NR_END) {
-        switch (bp->code) {
-            case NR_MOVETO:
-                if (closed) {
-                    cairo_close_path(cr);
-                }
-                closed = true;
-                cairo_move_to(cr, bp->x3, bp->y3);
-                break;
-            case NR_MOVETO_OPEN:
-                if (closed) {
-                    cairo_close_path(cr);
-                }
-                closed = false;
-                cairo_move_to(cr, bp->x3, bp->y3);
-                break;
-            case NR_LINETO:
-                cairo_line_to(cr, bp->x3, bp->y3);
-                break;
-            case NR_CURVETO:
-                cairo_curve_to(cr, bp->x1, bp->y1, bp->x2, bp->y2, bp->x3, bp->y3);
-                break;
-            default:
-                break;
-        }
-        bp += 1;
-    }
-    if (closed) {
-        cairo_close_path(cr);
-    }
-}
 
 static void
 _concat_transform(cairo_t *cr, double xx, double yx, double xy, double yy, double x0, double y0)
