@@ -45,6 +45,12 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
+class GlyphComboBox : public Gtk::Combo {
+public:
+    GlyphComboBox();
+    void update(SPFont*);
+};
+
 class SvgFontsDialog : public UI::Widget::Panel {
 public:
     SvgFontsDialog();
@@ -55,6 +61,7 @@ public:
 
     void update_fonts();
     SvgFont* get_selected_svgfont();
+    SPFont* get_selected_spfont();
     void on_font_selection_changed();
     void on_preview_text_changed();
 private:
@@ -63,12 +70,12 @@ private:
         public:
             Columns()
             {
-                add(font);
+                add(spfont);
                 add(svgfont);
                 add(label);
             }
 
-            Gtk::TreeModelColumn<SPFont*> font;
+            Gtk::TreeModelColumn<SPFont*> spfont;
             Gtk::TreeModelColumn<SvgFont*> svgfont;
             Gtk::TreeModelColumn<Glib::ustring> label;
     };
@@ -77,7 +84,8 @@ private:
     Gtk::TreeView _font_list;
     Gtk::VBox _font_settings;
     Gtk::Entry _preview_entry;
-    SvgFontDrawingArea _font_da;
+    SvgFontDrawingArea _font_da, kerning_preview;
+    GlyphComboBox first_glyph, second_glyph;
 
     class EntryWidget : public Gtk::HBox
         {

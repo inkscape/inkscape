@@ -53,6 +53,20 @@ namespace Dialog {
 
 /*** SvgFontsDialog ***/
 
+GlyphComboBox::GlyphComboBox(){
+}
+
+void GlyphComboBox::update(SPFont* spfont){
+    if (spfont) {
+        for(SPObject* node = spfont->children; node; node=node->next){
+            if (SP_IS_GLYPH(node)){
+	        g_warning("glyphCombo unicode='%s'", ((SPGlyph*)node)->unicode);
+            }
+        }
+    }
+}
+
+
 /* Add all fonts in the document to the combobox. */
 void SvgFontsDialog::update_fonts()
 {
@@ -64,7 +78,7 @@ void SvgFontsDialog::update_fonts()
     for(const GSList *l = fonts; l; l = l->next) {
         Gtk::TreeModel::Row row = *_model->append();
         SPFont* f = (SPFont*)l->data;
-        row[_columns.font] = f;
+        row[_columns.spfont] = f;
         row[_columns.svgfont] = new SvgFont(f);
         const gchar* lbl = f->label();
         const gchar* id = SP_OBJECT_ID(f);
@@ -79,6 +93,8 @@ void SvgFontsDialog::on_preview_text_changed(){
 }
 
 void SvgFontsDialog::on_font_selection_changed(){
+    first_glyph.update(this->get_selected_spfont());
+    second_glyph.update(this->get_selected_spfont());
     _font_da.set_svgfont(this->get_selected_svgfont());
     _font_da.redraw();
 }
@@ -88,6 +104,14 @@ SvgFont* SvgFontsDialog::get_selected_svgfont()
     Gtk::TreeModel::iterator i = _font_list.get_selection()->get_selected();
     if(i)
         return (*i)[_columns.svgfont];
+    return NULL;
+}
+
+SPFont* SvgFontsDialog::get_selected_spfont()
+{
+    Gtk::TreeModel::iterator i = _font_list.get_selection()->get_selected();
+    if(i)
+        return (*i)[_columns.spfont];
     return NULL;
 }
 
@@ -106,6 +130,19 @@ SvgFontsDialog::SvgFontsDialog()
     _font_list.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_font_selection_changed));
 
     this->update_fonts();
+
+//kerning setup:
+    Gtk::VBox* kernvbox = Gtk::manage(new Gtk::VBox());
+    _font_settings.add(*kernvbox);
+    kernvbox->add(*Gtk::manage(new Gtk::Label("Kerning Setup:")));
+    Gtk::HBox* kerning_selector = Gtk::manage(new Gtk::HBox());
+    kerning_selector->add(first_glyph);
+    kerning_selector->add(second_glyph);
+
+    Gtk::SpinButton* kerning_spin = Gtk::manage(new Gtk::SpinButton());
+    kernvbox->add(*kerning_selector);
+    kernvbox->add((Gtk::Widget&) kerning_preview);
+    kernvbox->add(*kerning_spin);
 
 //Text Preview:
     _preview_entry.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_preview_text_changed));
