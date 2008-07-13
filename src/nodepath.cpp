@@ -23,6 +23,8 @@
 #include <glibmm/i18n.h>
 #include "libnr/n-art-bpath.h"
 #include "libnr/nr-path.h"
+#include <2geom/pathvector.h>
+#include <2geom/sbasis-to-bezier.h>
 #include "helper/units.h"
 #include "knot.h"
 #include "inkscape.h"
@@ -96,6 +98,9 @@ static GMemChunk *nodechunk = NULL;
 /* Creation from object */
 
 static NArtBpath const * subpath_from_bpath(Inkscape::NodePath::Path *np, NArtBpath const *b, Inkscape::NodePath::NodeType const *t);
+static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVector const & pathv, Inkscape::NodePath::NodeType const *t);
+static void add_curve_to_subpath( Inkscape::NodePath::Path *np, Inkscape::NodePath::SubPath *sp, Geom::Curve const & c,
+                                  Inkscape::NodePath::NodeType const *t, guint & i, NR::Point & ppos, NRPathcode & pcode  );
 static Inkscape::NodePath::NodeType * parse_nodetypes(gchar const *types, gint length);
 
 /* Object updating */
@@ -269,11 +274,12 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     Inkscape::NodePath::NodeType *typestr = parse_nodetypes(nodetypes, length);
 
     // create the subpath(s) from the bpath
-    NArtBpath const *bpath = curve->get_bpath();
-    NArtBpath const *b = bpath;
-    while (b->code != NR_END) {
-        b = subpath_from_bpath(np, b, typestr + (b - bpath));
-    }
+//    NArtBpath const *bpath = curve->get_bpath();
+//    NArtBpath const *b = bpath;
+//    while (b->code != NR_END) {
+//        b = subpath_from_bpath(np, b, typestr + (b - bpath));
+//    }
+    subpaths_from_pathvector(np, curve->get_pathvector(), typestr);
 
     // reverse the list, because sp_nodepath_subpath_new() used g_list_prepend instead of append (for speed)
     np->subpaths = g_list_reverse(np->subpaths);
@@ -496,6 +502,67 @@ static NArtBpath const * subpath_from_bpath(Inkscape::NodePath::Path *np, NArtBp
 
     return b;
 }
+
+/**
+ * Create new nodepaths from pathvector, make it subpaths of np.
+ * \param t The node type array.
+ */
+static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVector const & pathv, Inkscape::NodePath::NodeType const *t)
+{
+    guint i = 0;  // index into node type array
+    for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit) {
+        if (pit->empty())
+            continue;  // don't add single knot paths
+
+        Inkscape::NodePath::SubPath *sp = sp_nodepath_subpath_new(np);
+
+        NR::Point ppos = from_2geom(pit->initialPoint()) * np->i2d;
+        NRPathcode pcode = NR_MOVETO;
+
+        for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit) {
+            add_curve_to_subpath(np, sp, *cit, t, i, ppos, pcode);
+        }
+
+        if (pit->closed()) {
+            // Add last knot (because sp_nodepath_subpath_close kills the last knot)
+            // Remember that last closing segment is always a lineto, and that its endpoint is the path's initialPoint because the path is closed
+            NR::Point pos = from_2geom(pit->initialPoint()) * np->i2d;
+            sp_nodepath_node_new(sp, NULL, t[i++], NR_LINETO, &pos, &pos, &pos);
+            sp_nodepath_subpath_close(sp);
+        }
+    }
+}
+// should add initial point of curve with type of previous curve:
+static void add_curve_to_subpath(Inkscape::NodePath::Path *np, Inkscape::NodePath::SubPath *sp, Geom::Curve const & c, Inkscape::NodePath::NodeType const *t, guint & i,
+                                 NR::Point & ppos, NRPathcode & pcode)
+{
+    if( dynamic_cast<Geom::LineSegment const*>(&c) ||
+        dynamic_cast<Geom::HLineSegment const*>(&c) ||
+        dynamic_cast<Geom::VLineSegment const*>(&c) )
+    {
+        NR::Point pos = from_2geom(c.initialPoint()) * np->i2d;
+        sp_nodepath_node_new(sp, NULL, t[i++], pcode, &ppos, &pos, &pos);
+        ppos = from_2geom(c.finalPoint());
+        pcode = NR_LINETO;
+    }
+    else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const*>(&c)) {
+        std::vector<Geom::Point> points = cubic_bezier->points();
+        NR::Point pos = from_2geom(points[0]) * np->i2d;
+        NR::Point npos = from_2geom(points[1]) * np->i2d;
+        sp_nodepath_node_new(sp, NULL, t[i++], pcode, &ppos, &pos, &npos);
+        ppos = from_2geom(points[2]) * np->i2d;
+        pcode = NR_CURVETO;
+    }
+    else {
+        //this case handles sbasis as well as all other curve types
+        Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(c.toSBasis(), 0.1);
+
+        for(Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {
+            add_curve_to_subpath(np, sp, *iter, t, i, ppos, pcode);
+        }
+    }
+}
+
 
 /**
  * Convert from sodipodi:nodetypes to new style type array.
