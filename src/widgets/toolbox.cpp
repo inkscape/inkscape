@@ -3878,7 +3878,7 @@ static void sp_ddc_trace_background_changed( GtkToggleAction *act, GObject*  tbl
 
 static void sp_ddc_tilt_state_changed( GtkToggleAction *act, GObject*  tbl )
 {
-    GtkAction * calligraphy_angle = static_cast<GtkAction *> (g_object_get_data(tbl,"angle"));
+    GtkAction * calligraphy_angle = static_cast<GtkAction *> (g_object_get_data(tbl,"angle_action"));
     prefs_set_int_attribute( "tools.calligraphic", "usetilt", gtk_toggle_action_get_active( act ) ? 1 : 0 );
     update_presets_list(tbl);
     if (calligraphy_angle )
@@ -4054,6 +4054,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_angle_value_changed, 1, 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        g_object_set_data( holder, "angle_action", eact );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         calligraphy_angle = eact;
         }
