@@ -51,6 +51,7 @@
 #include "desktop-handles.h"
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
+#include "xml/attribute-record.h"
 #include <glibmm/i18n.h>
 #include "helper/unit-menu.h"
 #include "helper/units.h"
@@ -3805,6 +3806,10 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 //##     Calligraphy    ##
 //########################
 static void update_presets_list(GObject *dataKludge ){
+
+    if (g_object_get_data(dataKludge, "presets_blocked")) 
+        return;
+
     EgeSelectOneAction *sel = static_cast<EgeSelectOneAction *>(g_object_get_data(dataKludge, "profile_selector"));
     if (sel) {
         ege_select_one_action_set_active(sel, 0 );
@@ -3920,6 +3925,9 @@ static void sp_dcc_save_profile( GtkWidget */*widget*/, GObject *dataKludge ){
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
     if (! desktop) return;
 
+    if (g_object_get_data(dataKludge, "presets_blocked")) 
+        return;
+
     Inkscape::UI::Dialogs::CalligraphicProfileDialog::show(desktop);
     if ( ! Inkscape::UI::Dialogs::CalligraphicProfileDialog::applied()) return;
     Glib::ustring profile_name = Inkscape::UI::Dialogs::CalligraphicProfileDialog::getProfileName();
@@ -3953,31 +3961,43 @@ static void sp_dcc_save_profile( GtkWidget */*widget*/, GObject *dataKludge ){
 }
 
 
-static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject *dataKludge) {
+static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl) {
 
     gint preset_index = ege_select_one_action_get_active( act );
-    gchar *profile_name = get_pref_nth_child("tools.calligraphic.preset", preset_index);
+    gchar *preset_path = get_pref_nth_child("tools.calligraphic.preset", preset_index);
 
-    if ( profile_name) {
-        g_object_set_data(dataKludge, "profile_selector",NULL); //temporary hides the selector so no one will updadte it
-        for (unsigned i = 0; i < PROFILE_FLOAT_SIZE; ++i) {
-            ProfileFloatElement const &pe = f_profile[i];
-            double v = prefs_get_double_attribute_limited(profile_name, pe.name, pe.def, pe.min, pe.max);
-            GtkAdjustment* adj = static_cast<GtkAdjustment *>(g_object_get_data(dataKludge, pe.name));
-            if ( adj ) {
-                gtk_adjustment_set_value(adj, v);
+    if (preset_path) {
+        g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(TRUE)); //temporarily block the selector so no one will updadte it while we're reading it
+
+        Inkscape::XML::Node *preset_repr = inkscape_get_repr(INKSCAPE, preset_path);
+
+        for ( Inkscape::Util::List<Inkscape::XML::AttributeRecord const> iter = preset_repr->attributeList();
+              iter; 
+              ++iter ) {
+            const gchar *attr_name = g_quark_to_string(iter->key);
+            if (!strcmp(attr_name, "id") || !strcmp(attr_name, "name"))
+                continue;
+            void *widget = g_object_get_data(tbl, attr_name);
+            if (widget) {
+                if (GTK_IS_ADJUSTMENT(widget)) {
+                    double v = prefs_get_double_attribute(preset_path, attr_name, 0); // fixme: no min/max checks here, add?
+                    GtkAdjustment* adj = static_cast<GtkAdjustment *>(widget);
+                    gtk_adjustment_set_value(adj, v);
+                    //std::cout << "set adj " << attr_name << " to " << v << "\n";
+                } else if (GTK_IS_TOGGLE_ACTION(widget)) {
+                    int v = prefs_get_int_attribute(preset_path, attr_name, 0); // fixme: no min/max checks here, add?
+                    GtkToggleAction* toggle = static_cast<GtkToggleAction *>(widget);
+                    gtk_toggle_action_set_active(toggle, v);
+                    //std::cout << "set toggle " << attr_name << " to " << v << "\n";
+                } else {
+                    g_warning("Unknown widget type for preset: %s\n", attr_name);
+                }
+            } else {
+                g_warning("Bad key found in preset: %s\n", attr_name);
             }
         }
-        for (unsigned i = 0; i < PROFILE_INT_SIZE; ++i) {
-            ProfileIntElement const &pe = i_profile[i];
-            int v = prefs_get_int_attribute_limited(profile_name, pe.name, pe.def, pe.min, pe.max);
-            GtkToggleAction* toggle = static_cast<GtkToggleAction *>(g_object_get_data(dataKludge, pe.name));
-            if ( toggle ) {
-                gtk_toggle_action_set_active(toggle, v);
-            } else printf("No toggle");
-        }
-        free(profile_name);
-        g_object_set_data(dataKludge, "profile_selector",act); //restore selector visibility
+        free(preset_path);
+        g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(FALSE));
     }
 
 }
@@ -4035,7 +4055,6 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               sp_ddc_angle_value_changed, 1, 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
-        g_object_set_data( holder, "angle", eact );
         calligraphy_angle = eact;
         }
 
