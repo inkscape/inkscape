@@ -226,6 +226,7 @@ SPCurve::get_length() const
 
 /*
  * Returns the number of segments of all paths summed
+ * This count includes the closing line segment of a closed path.
  */
 guint
 SPCurve::get_segment_count() const

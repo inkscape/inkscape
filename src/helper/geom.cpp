@@ -481,6 +481,44 @@ pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, NR::Matri
 }
 //#################################################################################
 
+/*
+ * Converts all segments in all paths to Geom::LineSegment or Geom::HLineSegment or
+ * Geom::VLineSegment or Geom::CubicBezier.
+ */
+Geom::PathVector
+pathv_to_linear_and_cubic_beziers( Geom::PathVector const &pathv )
+{
+    Geom::PathVector output;
+
+    for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit) {
+        output.push_back( Geom::Path() );
+        output.back().start( pit->initialPoint() );
+        output.back().close( pit->closed() );
+
+        for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_open(); ++cit) {
+            if( dynamic_cast<Geom::LineSegment const*>(&*cit) ||
+                dynamic_cast<Geom::HLineSegment const*>(&*cit) ||
+                dynamic_cast<Geom::VLineSegment const*>(&*cit) )
+            {
+                output.back().append(*cit);
+            }
+            else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const*>(&*cit)) {
+                output.back().append(*cit);
+            }
+            else {
+                // convert all other curve types to cubicbeziers
+                Geom::Path cubicbezier_path = Geom::cubicbezierpath_from_sbasis(cit->toSBasis(), 0.1);
+
+                for(Geom::Path::iterator iter = cubicbezier_path.begin(); iter != cubicbezier_path.end(); ++iter) {
+                    output.back().append(*iter);
+                }
+            }
+        }
+    }
+    
+    return output;
+}
+
 
 
 

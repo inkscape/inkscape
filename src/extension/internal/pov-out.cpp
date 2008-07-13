@@ -28,7 +28,9 @@
 #include <display/curve.h>
 #include <libnr/n-art-bpath.h>
 #include <extension/system.h>
-
+#include <2geom/pathvector.h>
+#include <2geom/rect.h>
+#include "helper/geom.h"
 #include <io/sys.h>
 
 #include <string>
@@ -257,6 +259,9 @@ void PovOutput::doTail()
  */
 void PovOutput::doCurves(SPDocument *doc)
 {
+    using Geom::X;
+    using Geom::Y;
+
     std::vector<Inkscape::XML::Node *>results;
     //findElementsByTagName(results, SP_ACTIVE_DOCUMENT->rroot, "path");
     findElementsByTagName(results, SP_ACTIVE_DOCUMENT->rroot, NULL);
@@ -287,7 +292,7 @@ void PovOutput::doCurves(SPDocument *doc)
             continue;
 
         SPItem *item = SP_ITEM(reprobj);
-        NR::Matrix tf = from_2geom(sp_item_i2d_affine(item));
+        Geom::Matrix tf = sp_item_i2d_affine(item);
 
         //### Get the Shape
         if (!SP_IS_SHAPE(reprobj))//Bulia's suggestion.  Allow all shapes
@@ -327,21 +332,16 @@ void PovOutput::doCurves(SPDocument *doc)
 
         povShapes.push_back(shapeInfo); //passed all tests.  save the info
 
-        int curveLength = SP_CURVE_LENGTH(curve);
+        // convert the path to only lineto's and cubic curveto's:
+        Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curve->get_pathvector() * tf );
 
-        //Count the NR_CURVETOs/LINETOs
-        int segmentCount=0;
-        NArtBpath const *bp = curve->get_bpath();
-        for (int curveNr=0 ; curveNr<curveLength ; curveNr++, bp++)
-            if (bp->code == NR_CURVETO || bp->code == NR_LINETO)
-                segmentCount++;
-
-        double cminx  =  bignum;
-        double cmaxx  = -bignum;
-        double cminy  =  bignum;
-        double cmaxy  = -bignum;
-        double lastx  = 0.0;
-        double lasty  = 0.0;
+        //Count the NR_CURVETOs/LINETOs (including closing line segment)
+        guint segmentCount = 0;
+        for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it) {
+            segmentCount += (*it).size();
+            if (it->closed())
+                segmentCount += 1;
+        }
 
         out("/*###################################################\n");
         out("### PRISM:  %s\n", id.c_str());
@@ -353,94 +353,54 @@ void PovOutput::doCurves(SPDocument *doc)
         out("    0.0, //bottom\n");
         out("    %d //nr points\n", segmentCount * 4);
         int segmentNr = 0;
-        bp = curve->get_bpath();
-        
-        nrSegments += curveLength;
 
-        for (int curveNr=0 ; curveNr < curveLength ; curveNr++)
-            {
-            using NR::X;
-            using NR::Y;
-            //transform points.  note overloaded '*'
-            NR::Point const p1(bp->c(1) * tf);
-            NR::Point const p2(bp->c(2) * tf);
-            NR::Point const p3(bp->c(3) * tf);
-            double const x1 = p1[X], y1 = p1[Y];
-            double const x2 = p2[X], y2 = p2[Y];
-            double const x3 = p3[X], y3 = p3[Y];
+        nrSegments += segmentCount;
 
-            switch (bp->code)
+        Geom::Rect cminmax( pathv.front().initialPoint(), pathv.front().initialPoint() );  // at moment of writing, 2geom lacks proper initialization of empty intervals in rect...
+        for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit) {
+
+            cminmax.expandTo(pit->initialPoint());
+
+            for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit) {
+
+                if( dynamic_cast<Geom::LineSegment const *> (&*cit) ||
+                    dynamic_cast<Geom::HLineSegment const *>(&*cit) ||
+                    dynamic_cast<Geom::VLineSegment const *>(&*cit) )
                 {
-                case NR_MOVETO:
-                case NR_MOVETO_OPEN:
-                    {
-                    //fprintf(f, "moveto: %f %f\n", bp->x3, bp->y3);
-                    break;
-                    }
-                case NR_CURVETO:
-                    {
-                    //fprintf(f, "    /*%4d*/ <%f, %f>, <%f, %f>, <%f,%f>, <%f,%f>",
-                    //        segmentNr++, lastx, lasty, x1, y1, x2, y2, x3, y3);
                     segment(segmentNr++,
-                            lastx, lasty, x1, y1, x2, y2, x3, y3);
+                            cit->initialPoint()[X], cit->initialPoint()[Y], cit->initialPoint()[X], cit->initialPoint()[Y],
+                            cit->finalPoint()[X], cit->finalPoint()[Y], cit->finalPoint()[X], cit->finalPoint()[Y] );
                     nrNodes += 8;
-
-                    if (segmentNr < segmentCount)
-                        out(",\n");
-                    else
-                        out("\n");
-
-                    if (lastx < cminx)
-                        cminx = lastx;
-                    if (lastx > cmaxx)
-                        cmaxx = lastx;
-                    if (lasty < cminy)
-                        cminy = lasty;
-                    if (lasty > cmaxy)
-                        cmaxy = lasty;
-                    break;
-                    }
-                case NR_LINETO:
-                    {
-                    //NOTE: we need to carefully handle line->curve and curve->line
-                    //    transitions.
-                    //fprintf(f, "    /*%4d*/ <%f, %f>, <%f, %f>, <%f,%f>, <%f,%f>",
-                    //        segmentNr++, lastx, lasty, lastx, lasty, x3, y3, x3, y3);
-                    segment(segmentNr++,
-                            lastx, lasty, lastx, lasty, x3, y3, x3, y3);
-                    nrNodes += 8;
-
-                    if (segmentNr < segmentCount)
-                        out(",\n");
-                    else
-                        out("\n");
-
-                    //fprintf(f, "lineto\n");
-                    if (lastx < cminx)
-                        cminx = lastx;
-                    if (lastx > cmaxx)
-                        cmaxx = lastx;
-                    if (lasty < cminy)
-                        cminy = lasty;
-                    if (lasty > cmaxy)
-                        cmaxy = lasty;
-                    break;
-                    }
-                case NR_END:
-                    {
-                    //fprintf(f, "end\n");
-                    break;
-                    }
                 }
-            lastx = x3;
-            lasty = y3;
-            bp++;
+                else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit)) {
+                    std::vector<Geom::Point> points = cubic->points();
+                    segment(segmentNr++,
+                            points[0][X],points[0][Y], points[1][X],points[1][Y], points[2][X],points[2][Y], points[3][X],points[3][Y]);
+                    nrNodes += 8;
+                }
+                else {
+                    g_error ("logical error, because pathv_to_linear_and_cubic_beziers was used");
+                }
+
+                if (segmentNr <= segmentCount)
+                    out(",\n");
+                else
+                    out("\n");
+
+                cminmax.expandTo(cit->finalPoint());
+
             }
+        }
+
         out("}\n");
 
-
+        double cminx = cminmax.min()[X];
+        double cmaxx = cminmax.max()[X];
+        double cminy = cminmax.min()[Y];
+        double cmaxy = cminmax.max()[Y];
+                     
         //# prefix for following declarations
-	    char *pfx = (char *)id.c_str();
+        char *pfx = (char *)id.c_str();
 
         out("#declare %s_MIN_X    = %s;\n", pfx, dstr(cminx).c_str());
         out("#declare %s_CENTER_X = %s;\n", pfx, dstr((cmaxx+cminx)/2.0).c_str());
