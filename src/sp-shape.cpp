@@ -16,7 +16,6 @@
 # include "config.h"
 #endif
 
-#include <libnr/n-art-bpath.h>
 #include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-translate-ops.h>
@@ -25,6 +24,7 @@
 #include <2geom/transforms.h>
 #include <2geom/pathvector.h>
 #include "helper/geom.h"
+#include "helper/geom-nodetype.h"
 
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
@@ -1001,37 +1001,39 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
     if (shape->curve == NULL) {
         return;
     }
-    
-    NR::Matrix const i2d (from_2geom(sp_item_i2d_affine (item)));
-    NArtBpath const *b = SP_CURVE_BPATH(shape->curve);    
-    
-    // Cycle through the nodes in the concatenated subpaths
-    while (b->code != NR_END) {
-        NR::Point pos = b->c(3) * i2d; // this is the current node
-        
-        // NR_MOVETO Indicates the start of a closed subpath, see nr-path-code.h
-        // If we're looking at a closed subpath, then we can skip this first 
-        // point of the subpath because it's coincident with the last point.  
-        if (b->code != NR_MOVETO) {
-            if (b->code == NR_MOVETO_OPEN || b->code == NR_LINETO || b[1].code == NR_LINETO || b[1].code == NR_END) {
-                // end points of a line segment are always considered for snapping
-                *p = pos; 
-            } else {        
-                // g_assert(b->code == NR_CURVETO);
-                NR::Point ppos, npos;
-                ppos = b->code == NR_CURVETO ? b->c(2) * i2d : pos; // backward handle 
-                npos = b[1].code == NR_CURVETO ? b[1].c(1) * i2d : pos; // forward handle            
-                // Determine whether a node is at a smooth part of the path, by 
-                // calculating a measure for the collinearity of the handles
-                bool c1 = fabs (Inkscape::Util::triangle_area (pos, ppos, npos)) < 1; // points are (almost) collinear
-                bool c2 = NR::L2(pos - ppos) < 1e-6 || NR::L2(pos - npos) < 1e-6; // endnode, or a node with a retracted handle
-                if (!(c1 & !c2)) {
-                    *p = pos; // only return non-smooth nodes ("cusps")
-                }
+
+    Geom::PathVector const &pathv = shape->curve->get_pathvector();
+    if (pathv.empty())
+        return;
+
+    Geom::Matrix const i2d (sp_item_i2d_affine (item));
+
+    for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
+        *p = from_2geom(path_it->initialPoint() * i2d);
+
+        Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
+        Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
+        while (curve_it2 != path_it->end_closed())
+        {
+            /* Test whether to add the node between curve_it1 and curve_it2.
+             * Loop to end_closed (so always including closing segment), the last node to be added
+             * is the node between the closing segment and the segment before that one. Regardless
+             * of the path being closed. If the path is closed, the final point was already added by
+             * adding the initial point. */
+
+            Geom::NodeType nodetype = Geom::get_nodetype(*curve_it1, *curve_it2);
+
+            // Only add cusp nodes. TODO: Shouldn't this be a preference instead?
+            if (nodetype == Geom::NODE_NONE) {
+                *p = from_2geom(curve_it1->finalPoint() * i2d);
             }
+            if (nodetype == Geom::NODE_CUSP) {
+                *p = from_2geom(curve_it1->finalPoint() * i2d);
+            }
+
+            ++curve_it1;
+            ++curve_it2;
         }
-        
-        b++;
     }
 }
 
