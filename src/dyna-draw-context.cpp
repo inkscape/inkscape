@@ -1115,7 +1115,7 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
 #endif
 
         /* Current calligraphic */
-        if ( dc->cal1->get_length() == 0 || dc->cal2->get_length() == 0 ) {
+        if ( dc->cal1->is_empty() || dc->cal2->is_empty() ) {
             /* dc->npoints > 0 */
             /* g_print("calligraphics(1|2) reset\n"); */
             dc->cal1->reset();

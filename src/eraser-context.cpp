@@ -931,7 +931,7 @@ fit_and_split(SPEraserContext *dc, gboolean release)
 #endif
 
         /* Current eraser */
-        if ( dc->cal1->get_length() == 0 || dc->cal2->get_length() == 0 ) {
+        if ( dc->cal1->is_empty() || dc->cal2->is_empty() ) {
             /* dc->npoints > 0 */
             /* g_print("erasers(1|2) reset\n"); */
             dc->cal1->reset();
