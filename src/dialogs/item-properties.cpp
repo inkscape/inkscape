@@ -442,14 +442,9 @@ sp_item_widget_label_changed( GtkWidget */*widget*/, SPWidget *spw )
     /* Retrieve the title */
     GtkWidget *w = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "title"));
     gchar *title = (gchar *)gtk_entry_get_text(GTK_ENTRY (w));
-    g_assert(title != NULL);
-    gchar *old_title = obj->title();
-    if (old_title == NULL || strcmp(title, old_title)) {
-        obj->setTitle(title);
+    if (obj->setTitle(title))
         sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
                          _("Set object title"));
-    }
-    g_free(old_title);
 
     /* Retrieve the description */
     GtkTextView *tv = GTK_TEXT_VIEW(gtk_object_get_data(GTK_OBJECT(spw), "desc"));
@@ -457,14 +452,9 @@ sp_item_widget_label_changed( GtkWidget */*widget*/, SPWidget *spw )
     GtkTextIter start, end;
     gtk_text_buffer_get_bounds(buf, &start, &end);
     gchar *desc = gtk_text_buffer_get_text(buf, &start, &end, TRUE);
-    g_assert(desc != NULL);
-    gchar *old_desc = obj->desc();
-    if (old_desc == NULL || strcmp(desc, old_desc)) {
-        obj->setDesc(desc);
+    if (obj->setDesc(desc))
         sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
                          _("Set object description"));
-    }
-    g_free(old_desc);
     g_free(desc);
 
     gtk_object_set_data (GTK_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));

@@ -1588,13 +1588,14 @@ SPObject::title() const
 
 /**
  * Sets the title of this object
- * A NULL or purely whitespace argument is interpreted as meaning that
- * the existing title (if any) should be deleted.
+ * A NULL first argument is interpreted as meaning that the existing title
+ * (if any) should be deleted.
+ * The second argument is optional - see setTitleOrDesc() below for details.
  */
-void
-SPObject::setTitle(gchar const *title)
+bool
+SPObject::setTitle(gchar const *title, bool verbatim)
 {
-    setTitleOrDesc(title, "svg:title");
+    return setTitleOrDesc(title, "svg:title", verbatim);
 }
 
 /**
@@ -1610,13 +1611,14 @@ SPObject::desc() const
 
 /**
  * Sets the description of this object.
- * A NULL or purely whitespace argument is interpreted as meaning that
- * the existing description (if any) should be deleted.
+ * A NULL first argument is interpreted as meaning that the existing
+ * description (if any) should be deleted.
+ * The second argument is optional - see setTitleOrDesc() below for details.
  */
-void
-SPObject::setDesc(gchar const *desc)
+bool
+SPObject::setDesc(gchar const *desc, bool verbatim)
 {
-    setTitleOrDesc(desc, "svg:desc");
+    return setTitleOrDesc(desc, "svg:desc", verbatim);
 }
 
 /**
@@ -1639,29 +1641,58 @@ SPObject::getTitleOrDesc(gchar const *svg_tagname) const
 
 /**
  * Sets or deletes the title or description of this object.
+ * A NULL 'value' argument causes the title or description to be deleted.
+ *
+ * 'verbatim' parameter:
+ * If verbatim==true, then the title or description is set to exactly the
+ * specified value.  If verbatim==false then two exceptions are made:
+ *   (1) If the specified value is just whitespace, then the title/description
+ *       is deleted.
+ *   (2) If the specified value is the same as the current value except for
+ *       mark-up, then the current value is left unchanged.
+ * This is usually the desired behaviour, so 'verbatim' defaults to false for
+ * setTitle() and setDesc().
+ *
+ * The return value is true if a change was made to the title/description,
+ * and usually false otherwise.
  */
-void
-SPObject::setTitleOrDesc(gchar const *value, gchar const *svg_tagname)
+bool
+SPObject::setTitleOrDesc(gchar const *value, gchar const *svg_tagname, bool verbatim)
 {
-    SPObject *elem = findFirstChild(svg_tagname);
-
-    // if the new title/description is NULL, or just whitespace,
-    // then delete any existing title/description
-    bool just_whitespace = true;
-    if (value)
-        for (const gchar *cp = value; *cp; ++cp) {
-            if (!std::strchr("\r\n \t", *cp)) {
-                just_whitespace = false;
-                break;
+    if (!verbatim) {
+        // If the new title/description is just whitespace,
+        // treat it as though it were NULL.
+        if (value) {
+            bool just_whitespace = true;
+            for (const gchar *cp = value; *cp; ++cp) {
+                if (!std::strchr("\r\n \t", *cp)) {
+                    just_whitespace = false;
+                    break;
+                }
+            }
+            if (just_whitespace) value = NULL;
+        }
+        // Don't stomp on mark-up if there is no real change.
+        if (value) {
+            gchar *current_value = getTitleOrDesc(svg_tagname);
+            if (current_value) {
+                bool different = std::strcmp(current_value, value);
+                g_free(current_value);
+                if (!different) return false;
             }
         }
-    if (just_whitespace) {
+    }
+
+    SPObject *elem = findFirstChild(svg_tagname);
+
+    if (value == NULL) {
+        if (elem == NULL) return false;
         // delete the title/description(s)
         while (elem) {
             elem->deleteObject();
             elem = findFirstChild(svg_tagname);
         }
-        return;
+        return true;
     }
 
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
@@ -1672,6 +1703,7 @@ SPObject::setTitleOrDesc(gchar const *value, gchar const *svg_tagname)
         Inkscape::XML::Node *xml_elem = xml_doc->createElement(svg_tagname);
         repr->addChild(xml_elem, NULL);
         elem = document->getObjectByRepr(xml_elem);
+        Inkscape::GC::release(xml_elem);
     }
     else {
         // remove the current content of the 'text' or 'desc' element
@@ -1681,6 +1713,7 @@ SPObject::setTitleOrDesc(gchar const *value, gchar const *svg_tagname)
 
     // add the new content
     elem->appendChildRepr(xml_doc->createTextNode(value));
+    return true;
 }
 
 /**

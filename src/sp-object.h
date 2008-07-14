@@ -241,12 +241,12 @@ struct SPObject : public GObject {
     /** Retrieves the title of this object */
     gchar *title() const;
     /** Sets the title of this object */
-    void setTitle(gchar const *title);
+    bool setTitle(gchar const *title, bool verbatim=false);
 
     /** Retrieves the description of this object */
     gchar *desc() const;
     /** Sets the description of this object */
-    void setDesc(gchar const *desc);
+    bool setDesc(gchar const *desc, bool verbatim=false);
 
     /** @brief Set the policy under which this object will be
      *         orphan-collected.
@@ -491,7 +491,7 @@ struct SPObject : public GObject {
 private:
     // Private member functions used in the definitions of setTitle(),
     // setDesc(), title() and desc().
-    void setTitleOrDesc(gchar const *value, gchar const *svg_tagname);
+    bool setTitleOrDesc(gchar const *value, gchar const *svg_tagname, bool verbatim);
     gchar * getTitleOrDesc(gchar const *svg_tagname) const;
     SPObject * findFirstChild(gchar const *tagname) const;
     GString * textualContent() const;
