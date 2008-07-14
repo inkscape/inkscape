@@ -31,8 +31,8 @@ struct SPObject;
 class SPCurve {
 public:
     /* Constructors */
-    SPCurve(guint length = SP_CURVE_LENSTEP);
-    SPCurve(Geom::PathVector const& pathv);
+    explicit SPCurve(guint length = SP_CURVE_LENSTEP);
+    explicit SPCurve(Geom::PathVector const& pathv);
     static SPCurve * new_from_bpath(NArtBpath *bpath);
     static SPCurve * new_from_foreign_bpath(NArtBpath const *bpath);
     static SPCurve * new_from_rect(Geom::Rect const &rect);
