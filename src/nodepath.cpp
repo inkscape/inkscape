@@ -21,8 +21,6 @@
 #include "display/sodipodi-ctrl.h"
 #include "display/sp-canvas-util.h"
 #include <glibmm/i18n.h>
-#include "libnr/n-art-bpath.h"
-#include "libnr/nr-path.h"
 #include <2geom/pathvector.h>
 #include <2geom/sbasis-to-bezier.h>
 #include "helper/units.h"
@@ -97,11 +95,10 @@ static GMemChunk *nodechunk = NULL;
 
 /* Creation from object */
 
-static NArtBpath const * subpath_from_bpath(Inkscape::NodePath::Path *np, NArtBpath const *b, Inkscape::NodePath::NodeType const *t);
 static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVector const & pathv, Inkscape::NodePath::NodeType const *t);
 static void add_curve_to_subpath( Inkscape::NodePath::Path *np, Inkscape::NodePath::SubPath *sp, Geom::Curve const & c,
                                   Inkscape::NodePath::NodeType const *t, guint & i, NR::Point & ppos, NRPathcode & pcode  );
-static Inkscape::NodePath::NodeType * parse_nodetypes(gchar const *types, gint length);
+static Inkscape::NodePath::NodeType * parse_nodetypes(gchar const *types, guint length);
 
 /* Object updating */
 
@@ -200,8 +197,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     if (curve == NULL)
         return NULL;
 
-    gint length = curve->get_length();
-    if (length == 0) {
+    if (curve->get_segment_count() < 1) {
         curve->unref();
         return NULL; // prevent crash for one-node paths
     }
@@ -270,16 +266,20 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
         }
     }
 
+    /* Calculate length of the nodetype string. The closing/starting point for closed paths is counted twice.
+     * So for example a closed rectangle has a nodetypestring of length 5.
+     * To get the correct count, one can count all segments in the paths, and then add the total number of (non-empty) paths. */
+    Geom::PathVector const &pathv = curve->get_pathvector();
+    guint length = curve->get_segment_count();
+    for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit) {
+        length += pit->empty() ? 0 : 1;
+    }
+
     gchar const *nodetypes = np->repr->attribute(np->repr_nodetypes_key);
     Inkscape::NodePath::NodeType *typestr = parse_nodetypes(nodetypes, length);
 
     // create the subpath(s) from the bpath
-//    NArtBpath const *bpath = curve->get_bpath();
-//    NArtBpath const *b = bpath;
-//    while (b->code != NR_END) {
-//        b = subpath_from_bpath(np, b, typestr + (b - bpath));
-//    }
-    subpaths_from_pathvector(np, curve->get_pathvector(), typestr);
+    subpaths_from_pathvector(np, pathv, typestr);
 
     // reverse the list, because sp_nodepath_subpath_new() used g_list_prepend instead of append (for speed)
     np->subpaths = g_list_reverse(np->subpaths);
@@ -456,54 +456,6 @@ static void sp_nodepath_cleanup(Inkscape::NodePath::Path *nodepath)
 }
 
 /**
- * Create new nodepath from b, make it subpath of np.
- * \param t The node type.
- */
-static NArtBpath const * subpath_from_bpath(Inkscape::NodePath::Path *np, NArtBpath const *b, Inkscape::NodePath::NodeType const *t)
-{
-    NR::Point ppos, pos, npos;
-
-    g_assert((b->code == NR_MOVETO) || (b->code == NR_MOVETO_OPEN));
-
-    Inkscape::NodePath::SubPath *sp = sp_nodepath_subpath_new(np);
-    bool const closed = (b->code == NR_MOVETO);
-
-    pos = NR::Point(b->x3, b->y3) * np->i2d;
-    if (b[1].code == NR_CURVETO) {
-        npos = NR::Point(b[1].x1, b[1].y1) * np->i2d;
-    } else {
-        npos = pos;
-    }
-    Inkscape::NodePath::Node *n;
-    n = sp_nodepath_node_new(sp, NULL, *t, NR_MOVETO, &pos, &pos, &npos);
-    g_assert(sp->first == n);
-    g_assert(sp->last  == n);
-
-    b++;
-    t++;
-    while ((b->code == NR_CURVETO) || (b->code == NR_LINETO)) {
-        pos = NR::Point(b->x3, b->y3) * np->i2d;
-        if (b->code == NR_CURVETO) {
-            ppos = NR::Point(b->x2, b->y2) * np->i2d;
-        } else {
-            ppos = pos;
-        }
-        if (b[1].code == NR_CURVETO) {
-            npos = NR::Point(b[1].x1, b[1].y1) * np->i2d;
-        } else {
-            npos = pos;
-        }
-        n = sp_nodepath_node_new(sp, NULL, (Inkscape::NodePath::NodeType)*t, b->code, &ppos, &pos, &npos);
-        b++;
-        t++;
-    }
-
-    if (closed) sp_nodepath_subpath_close(sp);
-
-    return b;
-}
-
-/**
  * Create new nodepaths from pathvector, make it subpaths of np.
  * \param t The node type array.
  */
@@ -573,16 +525,14 @@ static void add_curve_to_subpath(Inkscape::NodePath::Path *np, Inkscape::NodePat
  * Convert from sodipodi:nodetypes to new style type array.
  */
 static
-Inkscape::NodePath::NodeType * parse_nodetypes(gchar const *types, gint length)
+Inkscape::NodePath::NodeType * parse_nodetypes(gchar const *types, guint length)
 {
-    g_assert(length > 0);
-
     Inkscape::NodePath::NodeType *typestr = new Inkscape::NodePath::NodeType[length + 1];
 
-    gint pos = 0;
+    guint pos = 0;
 
     if (types) {
-        for (gint i = 0; types[i] && ( i < length ); i++) {
+        for (guint i = 0; types[i] && ( i < length ); i++) {
             while ((types[i] > '\0') && (types[i] <= ' ')) i++;
             if (types[i] != '\0') {
                 switch (types[i]) {
