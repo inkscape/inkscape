@@ -275,6 +275,14 @@ private:
     /// @return Returns true if the image loaded successfully
     bool set_image_preview();
 
+    /// Loads the preview for a meta file
+    /// Main app thread only.
+    /// @return Returns true if the image loaded successfully
+    bool set_emf_preview();
+
+    /// This flag is set true when a meta file is previewed 
+    bool _preview_emf_image;
+
     /// Renders the unshrunk preview image to a windows HTBITMAP
     /// which can be painted in the preview pain.
     /// Main app thread only.

@@ -165,6 +165,7 @@ FileOpenDialogImplWin32::FileOpenDialogImplWin32(Gtk::Window &parent,
     _preview_document_height = 0;
     _preview_image_width = 0;
     _preview_image_height = 0;
+    _preview_emf_image = false;
 	
 	_mutex = NULL;
 
@@ -790,6 +791,8 @@ void FileOpenDialogImplWin32::load_preview()
     // Prepare to render a preview
     const Glib::ustring svg = ".svg";
     const Glib::ustring svgz = ".svgz";
+    const Glib::ustring emf = ".emf";
+    const Glib::ustring wmf = ".wmf";
     const Glib::ustring path = utf16_to_ustring(_path_string);
 
     bool success = false;
@@ -799,6 +802,8 @@ void FileOpenDialogImplWin32::load_preview()
     if ((dialogType == SVG_TYPES || dialogType == IMPORT_TYPES) &&
             (hasSuffix(path, svg) || hasSuffix(path, svgz)))
         success = set_svg_preview();
+    else if (hasSuffix(path, emf) || hasSuffix(path, wmf))
+        success = set_emf_preview();
     else if (isValidImageFile(path))
         success = set_image_preview();
     else {
@@ -822,6 +827,7 @@ void FileOpenDialogImplWin32::free_preview()
     _preview_file_icon = NULL;
 
     _preview_bitmap_image.clear();
+    _preview_emf_image = false;
     _mutex->unlock();
 }
 
@@ -960,6 +966,172 @@ bool FileOpenDialogImplWin32::set_image_preview()
     return successful;
 }
 
+// Aldus Placeable Header ===================================================
+// Since we are a 32bit app, we have to be sure this structure compiles to
+// be identical to a 16 bit app's version. To do this, we use the #pragma
+// to adjust packing, we use a WORD for the hmf handle, and a SMALL_RECT
+// for the bbox rectangle.
+#pragma pack( push )
+#pragma pack( 2 )
+typedef struct
+{
+    DWORD       dwKey;
+    WORD        hmf;
+    SMALL_RECT  bbox;
+    WORD        wInch;
+    DWORD       dwReserved;
+    WORD        wCheckSum;
+} APMHEADER, *PAPMHEADER;
+#pragma pack( pop )
+
+
+static HENHMETAFILE
+MyGetEnhMetaFileW( const WCHAR *filename )
+{
+    // Try open as Enhanced Metafile
+    HENHMETAFILE hemf = GetEnhMetaFileW(filename);
+
+    if (!hemf) {
+        // Try open as Windows Metafile
+        HMETAFILE hmf = GetMetaFileW(filename);
+
+        METAFILEPICT mp;
+        HDC hDC;
+
+        if (!hmf) {
+            WCHAR szTemp[MAX_PATH];
+
+            DWORD dw = GetShortPathNameW( filename, szTemp, MAX_PATH );
+            if (dw) {
+                hmf = GetMetaFileW( szTemp );
+            }
+        }
+
+        if (hmf) {
+            // Convert Windows Metafile to Enhanced Metafile
+            DWORD nSize = GetMetaFileBitsEx( hmf, 0, NULL );
+            
+            if (nSize) {
+                BYTE *lpvData = new BYTE[nSize];
+                if (lpvData) {
+                    DWORD dw = GetMetaFileBitsEx( hmf, nSize, lpvData );
+                    if (dw) {
+                        // Fill out a METAFILEPICT structure
+                        mp.mm = MM_ANISOTROPIC;
+                        mp.xExt = 1000;
+                        mp.yExt = 1000;
+                        mp.hMF = NULL;
+                        // Get a reference DC
+                        hDC = GetDC( NULL );
+                        // Make an enhanced metafile from the windows metafile
+                        hemf = SetWinMetaFileBits( nSize, lpvData, hDC, &mp );
+                        // Clean up
+                        ReleaseDC( NULL, hDC );
+                        DeleteMetaFile( hmf );
+                    }
+                    delete[] lpvData;
+                }
+                else {
+                    DeleteMetaFile( hmf );
+                }
+            }
+            else {
+                DeleteMetaFile( hmf );
+            }
+        }
+        else {
+            // Try open as Aldus Placeable Metafile
+            HANDLE hFile;
+            hFile = CreateFileW( filename, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+
+            if (hFile != INVALID_HANDLE_VALUE) {
+                DWORD nSize = GetFileSize( hFile, NULL );
+                if (nSize) {
+                    BYTE *lpvData = new BYTE[nSize];
+                    if (lpvData) {
+                        DWORD dw = ReadFile( hFile, lpvData, nSize, &nSize, NULL );
+                        if (dw) {
+                            if ( ((PAPMHEADER)lpvData)->dwKey == 0x9ac6cdd7l ) {
+                                // Fill out a METAFILEPICT structure
+                                mp.mm = MM_ANISOTROPIC;
+                                mp.xExt = ((PAPMHEADER)lpvData)->bbox.Right - ((PAPMHEADER)lpvData)->bbox.Left;
+                                mp.xExt = ( mp.xExt * 2540l ) / (DWORD)(((PAPMHEADER)lpvData)->wInch);
+                                mp.yExt = ((PAPMHEADER)lpvData)->bbox.Bottom - ((PAPMHEADER)lpvData)->bbox.Top;
+                                mp.yExt = ( mp.yExt * 2540l ) / (DWORD)(((PAPMHEADER)lpvData)->wInch);
+                                mp.hMF = NULL;
+                                // Get a reference DC
+                                hDC = GetDC( NULL );
+                                // Create an enhanced metafile from the bits
+                                hemf = SetWinMetaFileBits( nSize, lpvData+sizeof(APMHEADER), hDC, &mp );
+                                // Clean up
+                                ReleaseDC( NULL, hDC );
+                            }
+                        }
+                        delete[] lpvData;
+                    }
+                }
+                CloseHandle( hFile );
+            }
+        }
+    }
+
+    return hemf;
+}
+
+
+bool FileOpenDialogImplWin32::set_emf_preview()
+{
+    _mutex->lock();
+
+    BOOL ok = FALSE;
+
+    DWORD w = 0;
+    DWORD h = 0;
+
+    HENHMETAFILE hemf = MyGetEnhMetaFileW( _path_string );
+
+    if (hemf)
+    {
+        ENHMETAHEADER emh;
+        ZeroMemory(&emh, sizeof(emh));
+        ok = GetEnhMetaFileHeader(hemf, sizeof(emh), &emh) != 0;
+
+        w = (emh.rclFrame.right - emh.rclFrame.left);
+        h = (emh.rclFrame.bottom - emh.rclFrame.top);
+
+        DeleteEnhMetaFile(hemf);
+    }
+
+    if (ok)
+    {
+        const int PreviewSize = 512;
+
+        // Get the size of the document
+        const double emfWidth = w;
+        const double emfHeight = h;
+
+        // Find the minimum scale to fit the image inside the preview area
+        const double scaleFactorX =    PreviewSize / emfWidth;
+        const double scaleFactorY =    PreviewSize / emfHeight;
+        const double scaleFactor = (scaleFactorX > scaleFactorY) ? scaleFactorY : scaleFactorX;
+
+        // Now get the resized values
+        const double scaledEmfWidth  = scaleFactor * emfWidth;
+        const double scaledEmfHeight = scaleFactor * emfHeight;
+
+        _preview_document_width = scaledEmfWidth;
+        _preview_document_height = scaledEmfHeight;
+        _preview_image_width = emfWidth;
+        _preview_image_height = emfHeight;
+
+        _preview_emf_image = true;
+    }
+
+    _mutex->unlock();
+
+    return ok;
+}
+
 void FileOpenDialogImplWin32::render_preview()
 {
     double x, y;
@@ -977,7 +1149,7 @@ void FileOpenDialogImplWin32::render_preview()
     // Do we have anything to render?
     _mutex->lock();
 
-    if(!_preview_bitmap_image)
+    if(!_preview_bitmap_image && !_preview_emf_image)
     {
         _mutex->unlock();
         return;
@@ -1175,6 +1347,20 @@ void FileOpenDialogImplWin32::render_preview()
 
     // Finish drawing
     surface->finish();
+
+    if (_preview_emf_image) {
+        HENHMETAFILE hemf = MyGetEnhMetaFileW(_path_string);
+        if (hemf) {
+            RECT rc;
+            rc.top = svgY+2;
+            rc.left = svgX+2;
+            rc.bottom = scaledSvgHeight-2;
+            rc.right = scaledSvgWidth-2;
+            PlayEnhMetaFile(hMemDC, hemf, &rc);
+            DeleteEnhMetaFile(hemf);
+        }
+    }
+
     SelectObject(hMemDC, hOldBitmap) ;
     DeleteDC(hMemDC);
 
