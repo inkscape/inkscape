@@ -435,7 +435,7 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
 
     // Prevent empty paths from being added to the document
     // otherwise we end up with zomby markup in the SVG file
-    if(curve->get_length() <= 0)
+    if(curve->is_empty())
     {
         curve->unref();
         return NULL;
