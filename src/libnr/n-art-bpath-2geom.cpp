@@ -34,7 +34,7 @@ BPath_to_2GeomPath(NArtBpath const * bpath)
         {   // about to start a new path, correct the current path: nartbpath manually adds the closing line segment so erase it for closed path.
             if (current->closed() && !current->empty()) {
                 // but only remove this last segment if it is a *linesegment*:
-                if ( typeid(current->back()) == typeid(Geom::LineSegment) ) {
+                if ( dynamic_cast<Geom::LineSegment const *>(&current->back()) ) {
                     current->erase_last();
                 }
             }
@@ -72,7 +72,7 @@ BPath_to_2GeomPath(NArtBpath const * bpath)
     if ( current && current->closed() && !current->empty() ) {
         // correct the current path: nartbpath manually adds the closing line segment so erase it for closed path.
         // but only remove this last segment if it is a *linesegment*:
-        if ( typeid(current->back()) == typeid(Geom::LineSegment) ) {
+        if ( dynamic_cast<Geom::LineSegment const *>(&current->back()) ) {
             current->erase_last();
         }
     }
