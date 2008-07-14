@@ -399,7 +399,7 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
         for (GSList *l = dc->white_curves; l != NULL; l = l->next) {
             SPCurve *c;
             c = (SPCurve*)l->data;
-            g_return_if_fail( c->get_segment_count() > 1 );
+            g_return_if_fail( c->get_segment_count() > 0 );
             if ( !c->is_closed() ) {
                 SPDrawAnchor *a;
                 a = sp_draw_anchor_new(dc, c, TRUE, c->first_point());
