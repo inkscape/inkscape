@@ -59,17 +59,15 @@ NodeType get_nodetype(Curve const &c_incoming, Curve const &c_outgoing)
             return NODE_SMOOTH;
     }
 
-    double const angle1 = Geom::atan2(-deriv1[n1]);
-    double const angle2 = Geom::atan2(deriv2[n2]);
+    if ( are_near( Geom::cross(deriv1[n1], deriv2[n2]), 0) && (Geom::dot(-deriv1[n1], deriv2[n2]) > 0) ) {
+        // Apparently, the derivatives are colinear and in same direction but does the order of the derivatives match?
+        if (n1 != n2)
+            return NODE_SMOOTH;
+        else
+            return NODE_SYMM;
+    }
 
-    if ( !are_near(angle1, angle2) )
-        return NODE_CUSP;   // derivatives are not colinear
-
-    // Apparently, the derivatives are colinear but does the order of the derivatives match?
-    if (n1 != n2)
-        return NODE_SMOOTH;
-    else
-        return NODE_SYMM;
+    return NODE_CUSP;
 }
 
 }
