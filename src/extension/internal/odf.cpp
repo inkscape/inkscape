@@ -51,7 +51,9 @@
 #include "inkscape.h"
 #include <style.h>
 #include "display/curve.h"
-#include "libnr/n-art-bpath.h"
+#include <2geom/pathvector.h>
+#include <2geom/transforms.h>
+#include <helper/geom.h>
 #include "extension/system.h"
 
 #include "xml/repr.h"
@@ -1475,72 +1477,59 @@ bool OdfOutput::writeStyle(ZipFile &zf)
 
 
 /**
- * Writes an SVG path as an ODF <draw:path>
+ * Writes an SVG path as an ODF <draw:path> and returns the number of points written
  */
 static int
-writePath(Writer &outs, NArtBpath const *bpath,
-          NR::Matrix &tf, double xoff, double yoff)
+writePath(Writer &outs, Geom::PathVector const &pathv,
+          Geom::Matrix const &tf, double xoff, double yoff)
 {
-    bool closed   = false;
+    using Geom::X;
+    using Geom::Y;
+
     int nrPoints  = 0;
-    NArtBpath *bp = (NArtBpath *)bpath;
 
-    double destx = 0.0;
-    double desty = 0.0;
-    int code = -1;
+    // convert the path to only lineto's and cubic curveto's:
+    Geom::PathVector pv = pathv_to_linear_and_cubic_beziers(pathv * tf * Geom::Translate(xoff, yoff) * Geom::Scale(1000.));
 
-    for (  ; bp->code != NR_END; bp++)
-        {
-        code = bp->code;
+        for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit) {
 
-        NR::Point const p1(bp->c(1) * tf);
-        NR::Point const p2(bp->c(2) * tf);
-        NR::Point const p3(bp->c(3) * tf);
-        double x1 = (p1[NR::X] - xoff) * 1000.0;
-        if (fabs(x1)<1.0) x1=0.0;
-        double y1 = (p1[NR::Y] - yoff) * 1000.0;
-        if (fabs(y1)<1.0) y1=0.0;
-        double x2 = (p2[NR::X] - xoff) * 1000.0;
-        if (fabs(x2)<1.0) x2=0.0;
-        double y2 = (p2[NR::Y] - yoff) * 1000.0;
-        if (fabs(y2)<1.0) y2=0.0;
-        double x3 = (p3[NR::X] - xoff) * 1000.0;
-        if (fabs(x3)<1.0) x3=0.0;
-        double y3 = (p3[NR::Y] - yoff) * 1000.0;
-        if (fabs(y3)<1.0) y3=0.0;
-        destx = x3;
-        desty = y3;
+            double destx = pit->initialPoint()[X];
+            double desty = pit->initialPoint()[Y];
+            if (fabs(destx)<1.0) destx = 0.0;   // Why is this needed? Shouldn't we just round all numbers then?
+            if (fabs(desty)<1.0) desty = 0.0;
+            outs.printf("M %.3f %.3f ", destx, desty);
+            nrPoints++;
 
-        switch (code)
-            {
-            case NR_LINETO:
-                outs.printf("L %.3f %.3f ",  destx, desty);
-                break;
+            for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit) {
 
-            case NR_CURVETO:
-                outs.printf("C %.3f %.3f %.3f %.3f %.3f %.3f ",
-                              x1, y1, x2, y2, destx, desty);
-                break;
+                if( dynamic_cast<Geom::LineSegment const *> (&*cit) ||
+                    dynamic_cast<Geom::HLineSegment const *>(&*cit) ||
+                    dynamic_cast<Geom::VLineSegment const *>(&*cit) )
+                {
+                    double destx = cit->finalPoint()[X];
+                    double desty = cit->finalPoint()[Y];
+                    if (fabs(destx)<1.0) destx = 0.0;   // Why is this needed? Shouldn't we just round all numbers then?
+                    if (fabs(desty)<1.0) desty = 0.0;
+                    outs.printf("L %.3f %.3f ",  destx, desty);
+                }
+                else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit)) {
+                    std::vector<Geom::Point> points = cubic->points();
+                    for (unsigned i = 1; i <= 3; i++) {
+                        if (fabs(points[i][X])<1.0) points[i][X] = 0.0;   // Why is this needed? Shouldn't we just round all numbers then?
+                        if (fabs(points[i][Y])<1.0) points[i][Y] = 0.0;
+                    }
+                    outs.printf("C %.3f %.3f %.3f %.3f %.3f %.3f ", points[1][X],points[1][Y], points[2][X],points[2][Y], points[3][X],points[3][Y]);
+                }
+                else {
+                    g_error ("logical error, because pathv_to_linear_and_cubic_beziers was used");
+                }
 
-            case NR_MOVETO_OPEN:
-            case NR_MOVETO:
-                if (closed)
-                    outs.printf("Z ");
-                closed = ( code == NR_MOVETO );
-                outs.printf("M %.3f %.3f ",  destx, desty);
-                break;
-
-            default:
-                break;
-
+                nrPoints++;
             }
 
-        nrPoints++;
-        }
-
-    if (closed)
-        {
-        outs.printf("Z");
+            if (pit->closed()) {
+                outs.printf("Z");
+            }
         }
 
     return nrPoints;
@@ -2050,8 +2039,8 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
                        bbox_width * 1000.0, bbox_height * 1000.0);
 
         couts.printf("    svg:d=\"");
-        int nrPoints = writePath(couts, curve->get_bpath(),
-                             tf, bbox_x, bbox_y);
+        int nrPoints = writePath(couts, curve->get_pathvector(),
+                             to_2geom(tf), bbox_x, bbox_y);
         couts.printf("\"");
 
         couts.printf(">\n");
