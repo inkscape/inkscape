@@ -627,6 +627,10 @@ static void update_object(Inkscape::NodePath::Path *np)
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(np->helper_path), helper_curve);
         helper_curve->unref();
     }
+
+    // now that nodepath and knotholder can be enabled simultaneously, we must update the knotholder, too
+    // TODO: this should be done from ShapeEditor!! nodepath should be oblivious of knotholder!
+    np->shape_editor->update_knotholder();
 }
 
 /**

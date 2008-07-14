@@ -162,7 +162,8 @@ sp_node_context_setup(SPEventContext *ec)
     nc->current_state = SP_NODE_CONTEXT_INACTIVE;
 
     if (item) {
-        nc->shape_editor->set_item(item);
+        nc->shape_editor->set_item(item, SH_NODEPATH);
+        nc->shape_editor->set_item(item, SH_KNOTHOLDER);
     }
 
     if (prefs_get_int_attribute("tools.nodes", "selcue", 0) != 0) {
@@ -211,9 +212,11 @@ sp_node_context_selection_changed(Inkscape::Selection *selection, gpointer data)
     SPNodeContext *nc = SP_NODE_CONTEXT(data);
 
     // TODO: update ShapeEditorsCollective instead
-    nc->shape_editor->unset_item();
+    nc->shape_editor->unset_item(SH_NODEPATH);
+    nc->shape_editor->unset_item(SH_KNOTHOLDER);
     SPItem *item = selection->singleItem(); 
-    nc->shape_editor->set_item(item);
+    nc->shape_editor->set_item(item, SH_NODEPATH);
+    nc->shape_editor->set_item(item, SH_KNOTHOLDER);
     nc->shape_editor->update_statusbar();
 }
 

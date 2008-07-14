@@ -1683,7 +1683,9 @@ void sp_selection_edit_clip_or_mask(SPDesktop * dt, bool clip)
                         }
 
                         ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;
-                        shape_editor->set_item(SP_ITEM(child));
+                        // TODO: should we set the item for nodepath or knotholder or both? seems to work with both.
+                        shape_editor->set_item(SP_ITEM(child), SH_NODEPATH);
+                        shape_editor->set_item(SP_ITEM(child), SH_KNOTHOLDER);
                         Inkscape::NodePath::Path *np = shape_editor->get_nodepath();
                         if (np) {
                             // take colors from prefs (same as used in outline mode)

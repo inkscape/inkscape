@@ -27,25 +27,31 @@ class SPDesktop;
 class SPNodeContext;
 class ShapeEditorsCollective;
 
+enum SubType{
+    SH_NODEPATH,
+    SH_KNOTHOLDER
+};
+
 class ShapeEditor {
 public:
 
     ShapeEditor(SPDesktop *desktop);
     ~ShapeEditor();
 
-    void set_item (SPItem *item);
+    void set_item (SPItem *item, SubType type, bool keep_knotholder = false);
     void set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject, const char * key);
     void set_knotholder(KnotHolder * knot_holder);
-    void reset_item ();
-    void unset_item ();
+    void reset_item (SubType type, bool keep_knotholder = true);
+    void unset_item (SubType type, bool keep_knotholder = false);
 
-    SPItem *get_item ();
+    SPItem *get_item (SubType type);
 
     bool has_nodepath ();
     bool has_knotholder ();
+    void update_knotholder ();
 
-    bool has_local_change ();
-    void decrement_local_change ();
+    bool has_local_change (SubType type);
+    void decrement_local_change (SubType type);
 
     GList *save_nodepath_selection ();
     void restore_nodepath_selection (GList *saved);

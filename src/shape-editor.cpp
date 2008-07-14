@@ -55,35 +55,37 @@ ShapeEditor::ShapeEditor(SPDesktop *dt) {
 }
 
 ShapeEditor::~ShapeEditor() {
-    unset_item();
+    unset_item(SH_KNOTHOLDER);
+    unset_item(SH_NODEPATH);
 }
 
-void ShapeEditor::unset_item() {
-
+void ShapeEditor::unset_item(SubType type, bool keep_knotholder) {
     Inkscape::XML::Node *old_repr = NULL;
 
-    if (this->nodepath) {
-        old_repr = this->nodepath->repr;
-    }
+    switch (type) {
+        case SH_NODEPATH:
+            if (this->nodepath) {
+                old_repr = this->nodepath->repr;
+                sp_repr_remove_listener_by_data(old_repr, this);
+                Inkscape::GC::release(old_repr);
 
-    if (!old_repr && this->knotholder) {
-        old_repr = this->knotholder->repr;
-    }
+                this->grab_node = -1;
+                sp_nodepath_destroy(this->nodepath);
+                this->nodepath = NULL;
+            }
+            break;
+        case SH_KNOTHOLDER:
+            if (this->knotholder) {
+                old_repr = this->knotholder->repr;
+                sp_repr_remove_listener_by_data(old_repr, this);
+                Inkscape::GC::release(old_repr);
 
-    if (old_repr) { // remove old listener
-        sp_repr_remove_listener_by_data(old_repr, this);
-        Inkscape::GC::release(old_repr);
-    }
-
-    if (this->nodepath) {
-        this->grab_node = -1;
-        sp_nodepath_destroy(this->nodepath);
-        this->nodepath = NULL;
-    }
-
-    if (this->knotholder) {
-        delete this->knotholder;
-        this->knotholder = NULL;
+                if (!keep_knotholder) {
+                    delete this->knotholder;
+                    this->knotholder = NULL;
+                }
+            }
+            break;
     }
 }
 
@@ -95,25 +97,52 @@ bool ShapeEditor::has_knotholder () {
     return (this->knotholder != NULL);
 }
 
-bool ShapeEditor::has_local_change () {
-    return ((this->nodepath && this->nodepath->local_change) ||
-            (this->knotholder && this->knotholder->local_change != 0));
+void ShapeEditor::update_knotholder () {
+    if (this->knotholder)
+        this->knotholder->update_knots();
 }
 
-void ShapeEditor::decrement_local_change () {
-    if (this->nodepath && this->nodepath->local_change > 0) {
-        this->nodepath->local_change--;
-    } else if (this->knotholder) {
-        this->knotholder->local_change = FALSE;
+bool ShapeEditor::has_local_change (SubType type) {
+    switch (type) {
+        case SH_NODEPATH:
+            return (this->nodepath && this->nodepath->local_change);
+        case SH_KNOTHOLDER:
+            return (this->knotholder && this->knotholder->local_change != 0);
+        default:
+            g_assert_not_reached();
     }
 }
 
-SPItem *ShapeEditor::get_item () {
+void ShapeEditor::decrement_local_change (SubType type) {
+    switch (type) {
+        case SH_NODEPATH:
+            if (this->nodepath && this->nodepath->local_change > 0) {
+                this->nodepath->local_change--;
+            }
+            break;
+        case SH_KNOTHOLDER:
+            if (this->knotholder) {
+                this->knotholder->local_change = FALSE;
+            }
+            break;
+        default:
+            g_assert_not_reached();
+    }
+}
+
+SPItem *ShapeEditor::get_item (SubType type) {
     SPItem *item = NULL;
-    if (this->has_nodepath()) {
-        item = this->nodepath->item;
-    } else if (this->has_knotholder()) {
-        item = SP_ITEM(this->knotholder->item);
+    switch (type) {
+        case SH_NODEPATH:
+            if (this->has_nodepath()) {
+                item = this->nodepath->item;
+            }
+            break;
+        case SH_KNOTHOLDER:
+            if (this->has_knotholder()) {
+                item = this->nodepath->item;
+            }
+            break;
     }
     return item;
 }
@@ -141,28 +170,42 @@ static void shapeeditor_event_attr_changed(Inkscape::XML::Node */*repr*/, gchar 
                                            gchar const */*old_value*/, gchar const */*new_value*/,
                                            bool /*is_interactive*/, gpointer data)
 {
-    gboolean changed = FALSE;
+    gboolean changed_np = FALSE;
+    gboolean changed_kh = FALSE;
 
     g_assert(data);
     ShapeEditor *sh = ((ShapeEditor *) data);
 
-    if ( sh->has_knotholder() || ( sh->has_nodepath() && sh->nodepath_edits_repr_key(name) ) )
+    if (sh->has_nodepath() && sh->nodepath_edits_repr_key(name))
     {
-        changed = !sh->has_local_change();
-        sh->decrement_local_change();
+        changed_np = !sh->has_local_change(SH_NODEPATH);
+        sh->decrement_local_change(SH_NODEPATH);
+
     }
 
-    if (changed) {
+    if (changed_np) {
         GList *saved = NULL;
         if (sh->has_nodepath()) {
             saved = sh->save_nodepath_selection();
         }
 
-        sh->reset_item ();
+        sh->reset_item(SH_NODEPATH);
 
         if (sh->has_nodepath() && saved) {
             sh->restore_nodepath_selection(saved);
             g_list_free (saved);
+        }
+    }
+
+
+    if (sh->has_knotholder())
+    {
+        changed_kh = !sh->has_local_change(SH_KNOTHOLDER);
+        sh->decrement_local_change(SH_KNOTHOLDER);
+        if (changed_kh) {
+            // this can happen if an LPEItem's knotholder handle was dragged, in which case we want
+            // to keep the knotholder; in all other cases (e.g., if the LPE itself changes) we delete it
+            sh->reset_item(SH_KNOTHOLDER, !strcmp(name, "d"));
         }
     }
 
@@ -178,42 +221,52 @@ static Inkscape::XML::NodeEventVector shapeeditor_repr_events = {
 };
 
 
-void ShapeEditor::set_item(SPItem *item) {
-
-    unset_item();
+void ShapeEditor::set_item(SPItem *item, SubType type, bool keep_knotholder) {
+    // this happens (and should only happen) when for an LPEItem having both knotholder and nodepath the knotholder
+    // is adapted; in this case we don't want to delete the knotholder since this freezes the handles
+    unset_item(type, keep_knotholder);
 
     this->grab_node = -1;
 
     if (item) {
-        if (SP_IS_LPE_ITEM(item)) {
-            SPLPEItem *lpeitem = SP_LPE_ITEM(item);
-            Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(lpeitem);
-            if (!(lpe && lpe->isVisible() && lpe->providesKnotholder())) {
-                // only create nodepath if the item either doesn't have an LPE
-                // or the LPE is invisible or it doesn't provide a knotholder itself
-                this->nodepath = sp_nodepath_new(desktop, item,
-                                                 (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0));
-            } else if (lpe && lpe->isVisible()) {
-                sp_lpe_item_add_temporary_canvasitems(lpeitem, desktop);
-            }
-        }
+        Inkscape::XML::Node *repr;
+        switch(type) {
+            case SH_NODEPATH:
+                if (SP_IS_LPE_ITEM(item)) {
+                    //SPLPEItem *lpeitem = SP_LPE_ITEM(item);
+                    //Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(lpeitem);
+                    //if (!(lpe && lpe->isVisible() && lpe->providesKnotholder())) {
+                        // only create nodepath if the item either doesn't have an LPE
+                        // or the LPE is invisible or it doesn't provide a knotholder itself
+                        this->nodepath = sp_nodepath_new(desktop, item,
+                                                         (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0));
+                    //} else if (lpe && lpe->isVisible()) {
+                    //    sp_lpe_item_add_temporary_canvasitems(lpeitem, desktop);
+                    //}
+                }
+                if (this->nodepath) {
+                    this->nodepath->shape_editor = this;
 
-        if (this->nodepath) {
-            this->nodepath->shape_editor = this;
-        }
-        this->knotholder = sp_item_knot_holder(item, desktop);
+                    // setting new listener
+                    repr = SP_OBJECT_REPR(item);
+                    Inkscape::GC::anchor(repr);
+                    sp_repr_add_listener(repr, &shapeeditor_repr_events, this);
+                }
+                break;
 
-        if (this->nodepath || this->knotholder) {
-            // setting new listener
-            Inkscape::XML::Node *repr;
-            if (this->knotholder)
-                repr = this->knotholder->repr;
-            else
-                repr = SP_OBJECT_REPR(item);
-            if (repr) {
-                Inkscape::GC::anchor(repr);
-                sp_repr_add_listener(repr, &shapeeditor_repr_events, this);
-            }
+            case SH_KNOTHOLDER:
+                if (!this->knotholder) {
+                    // only recreate knotholder if none is present
+                    this->knotholder = sp_item_knot_holder(item, desktop);
+                }
+                if (this->knotholder) {
+                    this->knotholder->update_knots();
+                    // setting new listener
+                    repr = this->knotholder->repr;
+                    Inkscape::GC::anchor(repr);
+                    sp_repr_add_listener(repr, &shapeeditor_repr_events, this);
+                }
+                break;
         }
     }
 }
@@ -223,7 +276,7 @@ void ShapeEditor::set_item(SPItem *item) {
 */
 void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject, const char * key)
 {
-    unset_item();
+    unset_item(SH_NODEPATH);
 
     this->grab_node = -1;
 
@@ -250,7 +303,7 @@ void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject,
 void
 ShapeEditor::set_knotholder(KnotHolder * knot_holder)
 {
-    unset_item();
+    unset_item(SH_KNOTHOLDER);
 
     this->grab_node = -1;
 
@@ -262,17 +315,24 @@ ShapeEditor::set_knotholder(KnotHolder * knot_holder)
 
 /** FIXME: think about this. Is this thing only called when the item needs to be updated?
    Why not make a reload function in NodePath and in KnotHolder? */
-void ShapeEditor::reset_item ()
+void ShapeEditor::reset_item (SubType type, bool keep_knotholder)
 {
-    if ( (this->nodepath) && (IS_LIVEPATHEFFECT(this->nodepath->object)) ) {
-        SPItem * item = this->nodepath->item;
-        SPObject *obj = this->nodepath->object;
-        char * key = g_strdup(this->nodepath->repr_key);
-        set_item_lpe_path_parameter(item, obj, key); // the above checks for nodepath, so it is indeed a path that we are editing
-        g_free(key);
-    } else {
-        SPItem * item = get_item();
-        set_item(item);
+    switch (type) {
+        case SH_NODEPATH:
+            if ( (this->nodepath) && (IS_LIVEPATHEFFECT(this->nodepath->object)) ) {
+                SPItem * item = this->nodepath->item;
+                SPObject *obj = this->nodepath->object;
+                char * key = g_strdup(this->nodepath->repr_key);
+                set_item_lpe_path_parameter(item, obj, key); // the above checks for nodepath, so it is indeed a path that we are editing
+                g_free(key);
+            }            
+            break;
+        case SH_KNOTHOLDER:
+            if (this->knotholder) {
+                SPItem * item = get_item(SH_KNOTHOLDER);
+                set_item(item, SH_KNOTHOLDER, keep_knotholder);
+            }
+            break;
     }
 }
 
@@ -290,7 +350,7 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
     if (!this->nodepath)
         return false; // no stroke in knotholder
 
-    SPItem *item = get_item();
+    SPItem *item = get_item(SH_NODEPATH);
 
     //Translate click point into proper coord system
     this->curvepoint_doc = desktop->w2d(event_p);
@@ -339,7 +399,8 @@ void ShapeEditor::add_node_near_point() {
 void ShapeEditor::select_segment_near_point(bool toggle) {
     if (this->nodepath) {
         sp_nodepath_select_segment_near_point(this->nodepath, this->curvepoint_doc, toggle);
-    } else if (this->knotholder) {
+    }
+    if (this->knotholder) {
         // we do not select segments in knotholder... yet?
     }
 }
@@ -382,7 +443,8 @@ void ShapeEditor::curve_drag(gdouble eventx, gdouble eventy) {
         this->curvepoint_event[NR::X] = x;
         this->curvepoint_event[NR::Y] = y;
 
-    } else if (this->knotholder) {
+    }
+    if (this->knotholder) {
         // we do not drag curve in knotholder
     }
 

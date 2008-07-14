@@ -56,7 +56,13 @@ KnotHolderEntity::create(SPDesktop *desktop, SPItem *item, KnotHolder *parent, c
 KnotHolderEntity::~KnotHolderEntity()
 {
     /* unref should call destroy */
-    g_object_unref(knot);
+    if (knot) {
+        g_object_unref(knot);
+    } else {
+        // FIXME: This shouldn't occur. Perhaps it is caused by LPE PointParams being knotholder entities, too
+        //        If so, it will likely be fixed with upcoming refactoring efforts.
+        g_return_if_fail(knot);
+    }
 }
 
 void
