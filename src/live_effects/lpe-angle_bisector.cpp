@@ -60,9 +60,8 @@ LPEAngleBisector::LPEAngleBisector(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&length_left) );
     registerParameter( dynamic_cast<Parameter *>(&length_right) );
 
-    /* we disable the handles until we support both knotholders and nodepaths */
-    //registerKnotHolderHandle(new AB::KnotHolderEntityLeftEnd(), _("Adjust the \"right\" end of the bisector"));
-    //registerKnotHolderHandle(new AB::KnotHolderEntityRightEnd(), _("Adjust the point of attachment of the bisector"));
+    registerKnotHolderHandle(new AB::KnotHolderEntityLeftEnd(), _("Adjust the \"right\" end of the bisector"));
+    registerKnotHolderHandle(new AB::KnotHolderEntityRightEnd(), _("Adjust the point of attachment of the bisector"));
 }
 
 LPEAngleBisector::~LPEAngleBisector()
