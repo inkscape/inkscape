@@ -35,7 +35,7 @@
 #include "libnr/nr-point-matrix-ops.h"
 #include "libnr/nr-rect.h"
 #include "libnr/nr-matrix.h"
-#include "libnr/nr-matrix-ops.h" 
+#include "libnr/nr-matrix-ops.h"
 #include "libnr/nr-matrix-scale-ops.h"
 #include "libnr/nr-matrix-translate-ops.h"
 #include "libnr/nr-scale-translate-ops.h"
@@ -113,7 +113,7 @@ PrintEmfWin32::~PrintEmfWin32 (void)
 #if !defined(_WIN32) && !defined(__WIN32__)
     (void) signal(SIGPIPE, SIG_DFL);
 #endif
-	return;
+    return;
 }
 
 
@@ -173,11 +173,35 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
     // Get a Reference DC
     HDC hScreenDC = GetDC( NULL );
 
-    // Create the Metafile
-    if (PrintWin32::is_os_wide())
-        hdc = CreateEnhMetaFileW( hScreenDC, unicode_uri, &rc, NULL );
+    // Get the physical characteristics of the reference DC
+    int PixelsX = GetDeviceCaps( hScreenDC, HORZRES );
+    int PixelsY = GetDeviceCaps( hScreenDC, VERTRES );
+    int MMX = GetDeviceCaps( hScreenDC, HORZSIZE );
+    int MMY = GetDeviceCaps( hScreenDC, VERTSIZE );
+
+    CHAR buff[1024];
+    ZeroMemory(buff, sizeof(buff));
+    snprintf(buff, sizeof(buff)-1, "Inkscape %s (%s)", INKSCAPE_VERSION, __DATE__);
+    INT len = strlen(buff);
+    CHAR *p1 = strrchr(ansi_uri, '\\');
+    CHAR *p2 = strrchr(ansi_uri, '/');
+    CHAR *p = MAX(p1, p2);
+    if (p)
+        p++;
     else
-        hdc = CreateEnhMetaFileA( hScreenDC, ansi_uri, &rc, NULL );
+        p = ansi_uri;
+    snprintf(buff+len+1, sizeof(buff)-len-2, "%s", p);
+    
+    // Create the Metafile
+    if (PrintWin32::is_os_wide()) {
+        WCHAR wbuff[1024];
+        ZeroMemory(wbuff, sizeof(wbuff));
+        MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, buff, sizeof(buff)/sizeof(buff[0]), wbuff, sizeof(wbuff)/sizeof(wbuff[0]));
+        hdc = CreateEnhMetaFileW( hScreenDC, unicode_uri, &rc, wbuff );
+    }
+    else {
+        hdc = CreateEnhMetaFileA( hScreenDC, ansi_uri, &rc, buff );
+    }
 
     // Release the reference DC
     ReleaseDC( NULL, hScreenDC );
@@ -194,14 +218,23 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
     SetMapMode( hdc, MM_ANISOTROPIC );
 
     // Set the Windows extent
-    SetWindowExtEx( hdc, (int) (dwInchesX*dwDPI), (int) (dwInchesY*dwDPI), NULL );
+    int windowextX = (int) ceil(dwInchesX*dwDPI);
+    int windowextY = (int) ceil(dwInchesY*dwDPI);
+    SetWindowExtEx( hdc, windowextX, windowextY, NULL );
 
     // Set the viewport extent to reflect
     // dwInchesX" x dwInchesY" in device units
-    SetViewportExtEx( hdc,
-                      (int) ((float) dwInchesX*25.4f*PX_PER_MM),
-                      (int) ((float) dwInchesY*25.4f*PX_PER_MM),
-                      NULL );
+    int viewportextX = (int)((float)dwInchesX*25.4f*(float)PixelsX/(float)MMX);
+    int viewportextY = (int)((float)dwInchesY*25.4f*(float)PixelsY/(float)MMY);
+    SetViewportExtEx( hdc, viewportextX, viewportextY, NULL );
+
+    if (1) {
+        snprintf(buff, sizeof(buff)-1, "Screen=%dx%dpx, %dx%dmm", PixelsX, PixelsY, MMX, MMY);
+        GdiComment(hdc, strlen(buff), (BYTE*) buff);
+
+        snprintf(buff, sizeof(buff)-1, "Drawing=%.1lfx%.1lfpx, %.1lfx%.1lfmm", _width, _height, dwInchesX * MM_PER_IN, dwInchesY * MM_PER_IN);
+        GdiComment(hdc, strlen(buff), (BYTE*) buff);
+    }
 
     SetRect( &rc, 0, 0, (int) ceil(dwInchesX*dwDPI), (int) ceil(dwInchesY*dwDPI) );
 
@@ -209,6 +242,7 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
     g_free(unicode_fn);
 
     m_tr_stack.push( NR::scale(1, -1) * NR::translate(0, sp_document_height(doc)));
+
     return 0;
 }
 
@@ -655,14 +689,26 @@ PrintEmfWin32::print_simple_shape(const NArtBpath *bpath, const NR::Matrix *tran
     }
 
     bool done = false;
-    bool circular = (lpPoints[0].x == lpPoints[i-1].x) && (lpPoints[0].y == lpPoints[i-1].y);
+    bool closed = (lpPoints[0].x == lpPoints[i-1].x) && (lpPoints[0].y == lpPoints[i-1].y);
     bool polygon = false;
+    bool polyline = false;
+    bool rectangle = false;
     bool ellipse = false;
     
-    if (moves == 1 && moves+lines == nodes && circular) {
+    if (moves == 1 && moves+lines == nodes && closed) {
         polygon = true;
+        if (nodes==5) {
+            if (lpPoints[0].x == lpPoints[3].x && lpPoints[1].x == lpPoints[2].x &&
+                lpPoints[0].y == lpPoints[1].y && lpPoints[2].y == lpPoints[3].y)
+            {
+                rectangle = true;
+            }
+        }
     }
-    else if (moves == 1 && nodes == 5 && moves+curves == nodes && circular) {
+    else if (moves == 1 && moves+lines == nodes) {
+        polyline = true;
+    }
+    else if (moves == 1 && nodes == 5 && moves+curves == nodes && closed) {
         if (lpPoints[0].x == lpPoints[1].x && lpPoints[1].x == lpPoints[11].x &&
             lpPoints[5].x == lpPoints[6].x && lpPoints[6].x == lpPoints[7].x &&
             lpPoints[2].x == lpPoints[10].x && lpPoints[3].x == lpPoints[9].x && lpPoints[4].x == lpPoints[8].x &&
@@ -674,7 +720,7 @@ PrintEmfWin32::print_simple_shape(const NArtBpath *bpath, const NR::Matrix *tran
         }
     }
 
-    if (polygon || ellipse) {
+    if (polygon || polyline || ellipse) {
         HPEN hpenTmp = NULL;
         HPEN hpenOld = NULL;
         HBRUSH hbrushTmp = NULL;
@@ -692,7 +738,13 @@ PrintEmfWin32::print_simple_shape(const NArtBpath *bpath, const NR::Matrix *tran
         }
 
         if (polygon) {
-            Polygon( hdc, lpPoints, nodes );
+            if (rectangle)
+                Rectangle( hdc, lpPoints[0].x, lpPoints[0].y, lpPoints[2].x, lpPoints[2].y );
+            else
+                Polygon( hdc, lpPoints, nodes );
+        }
+        else if (polyline) {
+            Polyline( hdc, lpPoints, nodes );
         }
         else if (ellipse) {
             Ellipse( hdc, lpPoints[6].x, lpPoints[3].y, lpPoints[0].x, lpPoints[9].y);
