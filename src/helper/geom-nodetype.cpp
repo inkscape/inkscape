@@ -23,6 +23,10 @@ namespace Geom {
  * Returns the nodetype between c_incoming and c_outgoing. Location of the node is
  * at c_incoming.pointAt(1) == c_outgoing.pointAt(0). If these two are unequal, 
  * the returned type is NODE_NONE.
+ * If one of the curves has zero length, but the other doesn't, then the returned type
+ * is NODE_SMOOTH. If both have zero length, the returned type is NODE_SYMM. There is no
+ * good reason for this. Feel free to change, but check all uses of this method such
+ * that it doesn't break anything!
  * This method uses exact floating point comparison, so the final and initial points of
  * the two input curves should match exactly!
  */
@@ -39,12 +43,20 @@ NodeType get_nodetype(Curve const &c_incoming, Curve const &c_outgoing)
 
     // Determine lowest derivative that is non-zero
     int n1 = 1;
-    while ( (deriv1[n1] == Point(0,0)) && (n1 < 3) ) {
+    while ( (deriv1[n1] == Point(0,0)) && (n1 <= 3) ) {
         n1++;
     }
     int n2 = 1;
-    while ( (deriv2[n2] == Point(0,0)) && (n2 < 3) ) {
+    while ( (deriv2[n2] == Point(0,0)) && (n2 <= 3) ) {
         n2++;
+    }
+
+    // if one of the paths still has zero derivative
+    if ( (n1 > 3) || (n2 > 3) ) {
+        if (n1 == n2)
+            return NODE_SYMM;
+        else
+            return NODE_SMOOTH;
     }
 
     double const angle1 = Geom::atan2(-deriv1[n1]);
