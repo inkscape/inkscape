@@ -1708,7 +1708,7 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
                                       x0 - canvas->x0, y0 - canvas->y0,
                                       x1 - x0, y1 - y0,
                                       GDK_RGB_DITHER_MAX,
-                                      b3.data.px,
+                                      NR_PIXBLOCK_PX(&b3),
                                       sw * 3,
                                       x0 - canvas->x0, y0 - canvas->y0);
 
