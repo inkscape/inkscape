@@ -5,17 +5,18 @@
  */
 
 #include "live_effects/lpe-spiro.h"
+
 #include "display/curve.h"
-#include <libnr/n-art-bpath.h>
 #include "nodepath.h"
+#include <typeinfo>
+#include <2geom/pathvector.h>
+#include <2geom/matrix.h>
 
 #include "live_effects/bezctx.h"
 #include "live_effects/bezctx_intf.h"
 #include "live_effects/spiro.h"
 
 // For handling un-continuous paths:
-#include <2geom/pathvector.h>
-#include <2geom/matrix.h>
 #include "message-stack.h"
 #include "inkscape.h"
 #include "desktop.h"
@@ -101,109 +102,114 @@ LPESpiro::setup_nodepath(Inkscape::NodePath::Path *np)
 void
 LPESpiro::doEffect(SPCurve * curve)
 {
-    Geom::PathVector original_pathv = curve->get_pathvector();
+    using Geom::X;
+    using Geom::Y;
 
-    SPCurve *csrc = curve->copy();
+    // Make copy of old path as it is changed during processing
+    Geom::PathVector const original_pathv = curve->get_pathvector();
+    guint len = curve->get_segment_count() + 2;
+
     curve->reset();
     bezctx *bc = new_bezctx_ink(curve);
-    int len = SP_CURVE_LENGTH(csrc);
-    spiro_cp *path = g_new (spiro_cp, len + 1);
-    NArtBpath const *bpath = csrc->get_bpath();
-    int ib = 0;
+    spiro_cp *path = g_new (spiro_cp, len);
     int ip = 0;
-    bool closed = false;
-    NR::Point pt(0, 0);
-    NArtBpath const *first_in_subpath = NULL;
-    while(ib <= len) {
-        path [ip].x = bpath[ib].x3;
-        path [ip].y = bpath[ib].y3;
-        // std::cout << "==" << bpath[ib].code << "   ip" << ip << "  ib" << ib << "\n";
-        if (bpath[ib].code == NR_END || bpath[ib].code == NR_MOVETO_OPEN || bpath[ib].code == NR_MOVETO) {
-            if (ip != 0) { // run prev subpath
-                int sp_len = 0;
-                if (!closed) {
-                     path[ip - 1].ty = '}';
-                    sp_len = ip;
+
+    for(Geom::PathVector::const_iterator path_it = original_pathv.begin(); path_it != original_pathv.end(); ++path_it) {
+        if (path_it->empty())
+            continue;
+
+        // start of path
+        {
+            Geom::Point p = path_it->front().pointAt(0);
+            path[ip].x = p[X];
+            path[ip].y = p[Y];
+            path[ip].ty = path_it->closed() ? 'c' : '{' ;  // this is changed later when the path is closed
+            ip++;
+        }
+
+        // midpoints
+        Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
+        Geom::Path::const_iterator curve_it2 = ++(path_it->begin());         // outgoing curve
+
+        int d = 1;
+        while ( curve_it2 != path_it->end_default() )
+        {
+            /* This deals with the node between curve_it1 and curve_it2.
+             * Loop to end_default (so without last segment), loop ends when curve_it2 hits the end
+             * and then curve_it1 points to end or closing segment */
+            Geom::Point p = curve_it1->finalPoint();
+            path[ip].x = p[X];
+            path[ip].y = p[Y];
+
+            // Determine type of spiro node this is, determined by the tangents (angles) of the curves
+            // TODO: see if this can be simplified by using /helpers/geom-nodetype.cpp:get_nodetype
+            bool this_is_line = ( dynamic_cast<Geom::LineSegment const *>(&*curve_it1)  ||
+                                  dynamic_cast<Geom::HLineSegment const *>(&*curve_it1) ||
+                                  dynamic_cast<Geom::VLineSegment const *>(&*curve_it1) );
+            bool next_is_line = ( dynamic_cast<Geom::LineSegment const *>(&*curve_it2)  ||
+                                  dynamic_cast<Geom::HLineSegment const *>(&*curve_it2) ||
+                                  dynamic_cast<Geom::VLineSegment const *>(&*curve_it2) );
+            Geom::Point deriv_1 = curve_it1->unitTangentAt(1);
+            Geom::Point deriv_2 = curve_it2->unitTangentAt(0);
+            double this_angle_L2 = Geom::L2(deriv_1);
+            double next_angle_L2 = Geom::L2(deriv_2);
+            double both_angles_L2 = Geom::L2(deriv_1 + deriv_2);
+            if ( (this_angle_L2 > 1e-6) &&
+                 (next_angle_L2 > 1e-6) &&
+                 ((this_angle_L2 + next_angle_L2 - both_angles_L2) < 1e-3) )
+            {
+                if (this_is_line && !next_is_line) {
+                    path[ip].ty = ']';
+                } else if (next_is_line && !this_is_line) {
+                    path[ip].ty = '[';
                 } else {
-                    sp_len = ip - 1;
+                    path[ip].ty = 'c';
                 }
-                spiro_seg *s = NULL;
-                //for (int j = 0; j <= sp_len; j ++) printf ("%c\n", path[j].ty);
-                s = run_spiro(path, sp_len);
-                spiro_to_bpath(s, sp_len, bc);
-                free(s);
-                path[0].x = path[ip].x;
-                path[0].y = path[ip].y;
-                ip = 0;
-            }
-            if (bpath[ib].code == NR_MOVETO_OPEN) {
-                closed = false;
-                path[ip].ty = '{';
             } else {
-                closed = true;
-                if (ib  < len)
-                    first_in_subpath = &(bpath[ib + 1]);
-                path[ip].ty = 'c';
+                path[ip].ty = 'v';
+            }
+
+            ++curve_it1;
+            ++curve_it2;
+            ip++;
+        }
+
+        if (path_it->closed()) {
+            // curve_it1 points to closing segment, which is always a straight line
+            if (curve_it1->initialPoint() == curve_it1->finalPoint()) {
+                // zero length closing segment, so  last handled seg already closed the path
+                // When the original path was *not* visibly closed by the straight line "svgd-'z'" segment (default closing segment)
+                // this means the last handled segment already closed the original path.
+                // FIXME: how to correctly handle this case??
+                path[0].ty = path[ip-1].ty;
+            } else {
+                // When the original path was visibly closed by the straight line "svgd-'z'" segment (default closing segment)
+                // then close the spiro path with the same straight line path
+                path[0].ty = 'v';
             }
         } else {
-                // this point is not last, so makes sense to find a proper type for it
-                NArtBpath const *next = NULL;
-                if (ib < len && (bpath[ib+1].code == NR_END || bpath[ib+1].code == NR_MOVETO_OPEN || bpath[ib+1].code == NR_MOVETO)) { // end of subpath
-                    if (closed)
-                        next = first_in_subpath;
-                } else {
-                    if (ib < len)
-                        next = &(bpath[ib+1]);
-                    else if (closed)
-                        next = first_in_subpath;
-                }
-                if (next) {
-                    bool this_is_line = bpath[ib].code == NR_LINETO ||
-                        (NR::L2(NR::Point(bpath[ib].x3, bpath[ib].y3) - NR::Point(bpath[ib].x2, bpath[ib].y2)) < 1e-6);
-                    bool next_is_line = next->code == NR_LINETO ||
-                        (NR::L2(NR::Point(bpath[ib].x3, bpath[ib].y3) - NR::Point(next->x1, next->y1)) < 1e-6);
-                    NR::Point this_angle (0, 0);
-                    if (this_is_line) {
-                        this_angle = NR::Point (bpath[ib].x3 - pt[NR::X], bpath[ib].y3 - pt[NR::Y]);
-                    } else if (bpath[ib].code == NR_CURVETO) {
-                        this_angle = NR::Point (bpath[ib].x3 - bpath[ib].x2, bpath[ib].y3 - bpath[ib].y2);
-                    }
-                    NR::Point next_angle (0, 0);
-                    if (next_is_line) {
-                        next_angle = NR::Point (next->x3 - bpath[ib].x3, next->y3 - bpath[ib].y3);
-                    } else if (next->code == NR_CURVETO) {
-                        next_angle = NR::Point (next->x1 - bpath[ib].x3, next->y1 - bpath[ib].y3);
-                    }
-                    double this_angle_L2 = NR::L2(this_angle);
-                    double next_angle_L2 = NR::L2(next_angle);
-                    double both_angles_L2 = NR::L2(this_angle + next_angle);
-                    if (this_angle_L2 > 1e-6 &&
-                        next_angle_L2 > 1e-6 &&
-                        this_angle_L2 + next_angle_L2 - both_angles_L2 < 1e-3) {
-                        if (this_is_line && !next_is_line) {
-                            path[ip].ty = ']';
-                        } else if (next_is_line && !this_is_line) {
-                            path[ip].ty = '[';
-                        } else {
-                            path[ip].ty = 'c';
-                        }
-                    } else {
-                        path[ip].ty = 'v';
-
-                    }
-                    if (closed && next == first_in_subpath) {
-                        path[0].ty = path[ip].ty;
-                    }
-                }
+            // add point to the path
+            Geom::Point p = curve_it1->finalPoint();
+            path[ip].x = p[X];
+            path[ip].y = p[Y];
+            path[ip].ty = '}';
+            ip++;
         }
-        pt  = NR::Point(bpath[ib].x3, bpath[ib].y3);
-        ip++;
-        ib++;
+
+        // run subpath through spiro
+        int sp_len = ip;
+        spiro_seg *s = run_spiro(path, sp_len);
+        spiro_to_bpath(s, sp_len, bc);
+        free(s);
+        ip = 0;
     }
+
     g_free (path);
 
     // FIXME: refactor the spiro code such that it cannot generate non-continous paths!
-    // sometimes, the code above generates a path that is not continuous. if so, undo the effect by resetting the original path.
+    // sometimes, the code above generates a path that is not continuous: caused by chaotic algorithm?
+    // The continuity error always happens after a lot of curveto calls (a big path probably that spins to infinity?)
+    // if so, undo the effect by resetting the original path.
     try {
         curve->get_pathvector() * Geom::identity(); // tests for continuity, this makes LPE Spiro slower of course :-(
     }
