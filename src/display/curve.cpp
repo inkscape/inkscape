@@ -445,7 +445,9 @@ SPCurve::reset()
     _pathv.clear();
 }
 
-/* Several consecutive movetos are ALLOWED */
+/** Several consecutive movetos are ALLOWED
+ *  Ref: http://www.w3.org/TR/SVG11/implnote.html#PathElementImplementationNotes
+ * (first subitem of the item about zero-length path segments) */
 
 /**
  * Calls SPCurve::moveto() with point made of given coordinates.
