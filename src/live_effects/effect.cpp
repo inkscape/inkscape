@@ -61,6 +61,7 @@
 #include "live_effects/lpe-parallel.h"
 #include "live_effects/lpe-copy_rotate.h"
 #include "live_effects/lpe-offset.h"
+#include "live_effects/lpe-ruler.h"
 // end of includes
 
 namespace Inkscape {
@@ -93,6 +94,7 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {PARALLEL, N_("Parallel"), "parallel"},
     {COPY_ROTATE, N_("Rotate copies"), "copy_rotate"},
     {OFFSET, N_("Offset"), "offset"},
+    {RULER, N_("Ruler"), "ruler"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
@@ -168,6 +170,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case OFFSET:
             neweffect = static_cast<Effect*> ( new LPEOffset(lpeobj) );
+            break;
+        case RULER:
+            neweffect = static_cast<Effect*> ( new LPERuler(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);

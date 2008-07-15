@@ -75,6 +75,7 @@ enum EffectType {
     PARALLEL,
     COPY_ROTATE,
     OFFSET,
+    RULER,
     INVALID_LPE // This must be last
 };
 
