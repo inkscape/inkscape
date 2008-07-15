@@ -626,9 +626,9 @@ fit_and_split(SPPencilContext *pc)
 {
     g_assert( pc->npoints > 1 );
 
-    double const tolerance_sq = 0.02 * square( NR::expansion(pc->desktop->w2d())
-                                        * prefs_get_double_attribute_limited("tools.freehand.pencil",
-                                                                   "tolerance", 10.0, 1.0, 100.0) );
+    double const tol = prefs_get_double_attribute_limited("tools.freehand.pencil",                                                                             "tolerance", 10.0, 1.0, 100.0);
+    double const tolerance_sq = 0.02 * square( NR::expansion(pc->desktop->w2d()) * tol) 
+        * exp(0.2*tol - 2);
 
     NR::Point b[4];
     g_assert(is_zero(pc->req_tangent)
