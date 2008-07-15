@@ -17,6 +17,8 @@
 #include <gtk/gtkstock.h>
 #include <gtk/gtkmain.h>
 
+#include <gtkmm/icontheme.h>
+
 #include "inkscape.h"
 
 #include "layers-panel.h"
@@ -80,25 +82,22 @@ public:
         _property_pixbuf_off(*this, "pixbuf_off", Glib::RefPtr<Gdk::Pixbuf>(0))
     {
         property_mode() = Gtk::CELL_RENDERER_MODE_ACTIVATABLE;
+        int phys = sp_icon_get_phys_size((int)Inkscape::ICON_SIZE_DECORATION);
 
-        Gtk::Widget* thingie = sp_icon_get_icon(_pixOnName.c_str(), Inkscape::ICON_SIZE_DECORATION);
-        if ( thingie ) {
-            if ( SP_IS_ICON(thingie->gobj()) ) {
-                SPIcon* icon = SP_ICON(thingie->gobj());
-                sp_icon_fetch_pixbuf( icon );
-                _property_pixbuf_on = Glib::wrap( icon->pb, true );
-            }
-            delete thingie;
+        Glib::RefPtr<Gdk::Pixbuf> pbmm = Gtk::IconTheme::get_default()->load_icon(_pixOnName, phys, (Gtk::IconLookupFlags)0);
+        if ( pbmm ) {
+            GdkPixbuf* pb = gdk_pixbuf_copy(pbmm->gobj());
+            _property_pixbuf_on = Glib::wrap( pb );
+            pbmm->unreference();
         }
-        thingie = sp_icon_get_icon(_pixOffName.c_str(), Inkscape::ICON_SIZE_DECORATION);
-        if ( thingie ) {
-            if ( SP_IS_ICON(thingie->gobj()) ) {
-                SPIcon* icon = SP_ICON(thingie->gobj());
-                sp_icon_fetch_pixbuf( icon );
-                _property_pixbuf_off = Glib::wrap( icon->pb, true );
-            }
-            delete thingie;
+
+        pbmm = Gtk::IconTheme::get_default()->load_icon(_pixOffName, phys, (Gtk::IconLookupFlags)0);
+        if ( pbmm ) {
+            GdkPixbuf* pb = gdk_pixbuf_copy(pbmm->gobj());
+            _property_pixbuf_off = Glib::wrap( pb );
+            pbmm->unreference();
         }
+
         property_pixbuf() = _property_pixbuf_off.get_value();
     }
 
