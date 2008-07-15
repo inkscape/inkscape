@@ -139,7 +139,7 @@ sp_canvas_bpath_render (SPCanvasItem *item, SPCanvasBuf *buf)
 
     if ( !cbp->curve  || 
          ((cbp->stroke_rgba & 0xff) == 0 && (cbp->fill_rgba & 0xff) == 0 ) || 
-         cbp->curve->get_length() <= 1)
+         cbp->curve->get_segment_count() < 1)
         return;
 
     if (!buf->ct)
@@ -182,7 +182,7 @@ sp_canvas_bpath_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_it
 
     if ( !cbp->curve  || 
          ((cbp->stroke_rgba & 0xff) == 0 && (cbp->fill_rgba & 0xff) == 0 ) || 
-         cbp->curve->get_length() <= 1)
+         cbp->curve->get_segment_count() < 1)
         return NR_HUGE;
 
     double width = 0.5;
