@@ -270,11 +270,18 @@ public:
     Piecewise<D2<SBasis> > ret;
     ret.push_cut(0);
     unsigned i = 1;
+    bool degenerate = true;
     // pw<d2<>> is always open. so if path is closed, add closing segment as well to pwd2.
     for(const_iterator it = begin(); it != end_default(); ++it) {
       if (!it->isDegenerate()) {
         ret.push(it->toSBasis(), i++);
+        degenerate = false;
       }
+    }
+    if (degenerate) {
+      // if path only contains degenerate curves, no second cut is added
+      // so we need to create at least one segment manually
+      ret = Piecewise<D2<SBasis> >(initialPoint());
     }
     return ret;
   }
