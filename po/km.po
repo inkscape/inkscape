@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-07-14 14:15+0700\n"
+"PO-Revision-Date: 2008-07-15 16:52+0700\n"
 "Last-Translator: Eng Vannak <evannak@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -3432,7 +3432,7 @@ msgstr ""
 #. ID -- should be unique
 #: ../src/extension/internal/filter/frost.h:24
 msgid "Frost"
-msgstr ""
+msgstr "កំណក"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/ink-bleed.h:24
@@ -3457,7 +3457,7 @@ msgstr "ហ្អឹម... ឆ្ងាញ់​ណាស់ ។"
 #. ID -- should be unique
 #: ../src/extension/internal/filter/jigsaw-piece.h:24
 msgid "JigsawPiece"
-msgstr ""
+msgstr "JigsawPiece"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/jigsaw-piece.h:25
@@ -3502,7 +3502,7 @@ msgstr ""
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/motion-blur.h:25
 msgid "Hmm, fast vectors"
-msgstr ""
+msgstr "ហ្អឹម វ៉ិចទ័រ​លឿន"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/oil-slick.h:24
@@ -3538,12 +3538,12 @@ msgstr "ជ្រួញ"
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/ripple.h:25
 msgid "You're 80% water"
-msgstr ""
+msgstr "អ្នក​មាន​កម្រិត​ទឹ ៨០%"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/roughen.h:24
 msgid "Roughen"
-msgstr ""
+msgstr "ធ្វើ​ឲ្យ​គ្រើម"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/roughen.h:25
