@@ -185,12 +185,13 @@ src/live_effects/lpe-envelope.cpp
 src/live_effects/lpe-gears.cpp
 src/live_effects/lpe-knot.cpp
 src/live_effects/lpe-lattice.cpp
-src/live_effects/lpe-mirror_reflect.cpp
+src/live_effects/lpe-mirror_symmetry.cpp
 src/live_effects/lpe-offset.cpp
 src/live_effects/lpe-parallel.cpp
 src/live_effects/lpe-patternalongpath.cpp
 src/live_effects/lpe-perp_bisector.cpp
 src/live_effects/lpe-perspective_path.cpp
+src/live_effects/lpe-ruler.cpp
 src/live_effects/lpe-skeleton.cpp
 src/live_effects/lpe-sketch.cpp
 src/live_effects/lpe-tangent_to_curve.cpp
