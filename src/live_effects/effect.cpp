@@ -72,6 +72,7 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     // {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
     {BEND_PATH,             N_("Bend"),                  "bend_path"},
     {PATTERN_ALONG_PATH,    N_("Pattern Along Path"),    "skeletal"},   // for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
+    {FREEHAND_SHAPE,        N_("Freehand Shape"),        "freehand_shape"}, // this is actually a special type of PatternAlongPath, used to paste shapes in pen/pencil tool
     {SKETCH,                N_("Sketch"),                "sketch"},
     {VONKOCH,               N_("VonKoch"),               "vonkoch"},
     {KNOT,                  N_("Knot"),                  "knot"},
@@ -105,6 +106,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
     switch (lpenr) {
         case PATTERN_ALONG_PATH:
             neweffect = static_cast<Effect*> ( new LPEPatternAlongPath(lpeobj) );
+            break;
+        case FREEHAND_SHAPE:
+            neweffect = static_cast<Effect*> ( new LPEFreehandShape(lpeobj) );
             break;
         case BEND_PATH:
             neweffect = static_cast<Effect*> ( new LPEBendPath(lpeobj) );

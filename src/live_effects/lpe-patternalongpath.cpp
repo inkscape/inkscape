@@ -7,6 +7,7 @@
  */
 
 #include "live_effects/lpe-patternalongpath.h"
+#include "live_effects/lpeobject.h"
 #include "sp-shape.h"
 #include "display/curve.h"
 #include <libnr/n-art-bpath.h>
@@ -203,6 +204,9 @@ LPEPatternAlongPath::transform_multiply(Geom::Matrix const& postmul, bool set)
     Effect::transform_multiply(postmul, set);
 }
 
+LPEFreehandShape::LPEFreehandShape(LivePathEffectObject *lpeobject) : LPEPatternAlongPath(lpeobject)
+{
+}
 
 } // namespace LivePathEffect
 } /* namespace Inkscape */

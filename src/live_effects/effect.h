@@ -53,6 +53,7 @@ namespace LivePathEffect {
 enum EffectType {
     BEND_PATH = 0,
     PATTERN_ALONG_PATH,
+    FREEHAND_SHAPE,
     SKETCH,
     VONKOCH,
     KNOT,

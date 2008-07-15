@@ -248,13 +248,13 @@ sp_draw_context_root_handler(SPEventContext *ec, GdkEvent *event)
 }
 
 static void
-spdc_paste_curve_as_param_path(const SPCurve *c, SPDrawContext *dc, SPItem *item)
+spdc_paste_curve_as_freehand_shape(const SPCurve *c, SPDrawContext *dc, SPItem *item)
 {
     using namespace Inkscape::LivePathEffect;
 
     // TODO: Don't paste path if nothing is on the clipboard
 
-    Effect::createAndApply(Inkscape::LivePathEffect::PATTERN_ALONG_PATH, dc->desktop->doc(), item);
+    Effect::createAndApply(Inkscape::LivePathEffect::FREEHAND_SHAPE, dc->desktop->doc(), item);
     Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
     gchar *svgd = sp_svg_write_path(c->get_pathvector());
     static_cast<LPEPatternAlongPath*>(lpe)->pattern.paste_param_path(svgd);
@@ -269,7 +269,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
 {
     using namespace Inkscape::LivePathEffect;
 
-    if (item) {
+    if (item && SP_IS_LPE_ITEM(item)) {
         if (prefs_get_int_attribute("tools.freehand", "spiro-spline-mode", 0)) {
             Effect::createAndApply(SPIRO, dc->desktop->doc(), item);
         }
@@ -286,7 +286,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
             case 1:
             {
                 // take shape from clipboard; TODO: catch the case where clipboard is empty
-                Effect::createAndApply(PATTERN_ALONG_PATH, dc->desktop->doc(), item);
+                Effect::createAndApply(FREEHAND_SHAPE, dc->desktop->doc(), item);
                 Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
                 static_cast<LPEPatternAlongPath*>(lpe)->pattern.on_paste_button_click();
 
@@ -303,7 +303,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
                 c->lineto(200,10);
                 c->lineto(200,0);
                 c->closepath();
-                spdc_paste_curve_as_param_path(c, dc, item);
+                spdc_paste_curve_as_freehand_shape(c, dc, item);
                 c->unref();
 
                 shape_applied = true;
@@ -319,7 +319,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
                 c->lineto(0,10);
                 c->lineto(200,5);
                 c->closepath();
-                spdc_paste_curve_as_param_path(c, dc, item);
+                spdc_paste_curve_as_freehand_shape(c, dc, item);
                 c->unref();
 
                 shape_applied = true;
@@ -355,10 +355,6 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
 static void
 spdc_selection_changed(Inkscape::Selection *sel, SPDrawContext *dc)
 {
-    // note: in draw context, selection_changed() is only called with a valid item as argument when
-    // a new item was created; otherwise the following function call would yield wrong results
-    spdc_check_for_and_apply_waiting_LPE(dc, sel->singleItem());
-
     if (dc->attach) {
         spdc_attach_selection(dc, sel);
     }
@@ -651,6 +647,11 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
             item->transform = from_2geom(i2i_affine(desktop->currentRoot(), desktop->currentLayer()));
             item->updateRepr();
         }
+
+
+        // we finished the path; now apply any waiting LPEs or freehand shapes
+        // FIXME: placing this here seems to cause issues with undo!
+        spdc_check_for_and_apply_waiting_LPE(dc, dc->selection->singleItem());
 
         sp_document_done(doc, SP_IS_PEN_CONTEXT(dc)? SP_VERB_CONTEXT_PEN : SP_VERB_CONTEXT_PENCIL, 
                          _("Draw path"));

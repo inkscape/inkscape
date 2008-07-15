@@ -574,6 +574,30 @@ bool sp_lpe_item_has_path_effect_recursive(SPLPEItem *lpeitem)
     }
 }
 
+Inkscape::LivePathEffect::Effect*
+sp_lpe_item_has_path_effect_of_type(SPLPEItem *lpeitem, int type)
+{
+    std::list<Inkscape::LivePathEffect::LPEObjectReference *>::iterator i;
+    for (i = lpeitem->path_effect_list->begin(); i != lpeitem->path_effect_list->end(); ++i) {
+        if ((*i)->lpeobject->lpe->effectType() == type) {
+            return (*i)->lpeobject->lpe;
+        }
+    }
+    return NULL;
+}
+
+/* Return false if the item is not a path or already has a shape applied */
+bool sp_lpe_item_can_accept_freehand_shape(SPLPEItem *lpeitem)
+{
+    if (!SP_IS_PATH(lpeitem))
+        return false;
+
+    if (sp_lpe_item_has_path_effect_of_type(lpeitem, Inkscape::LivePathEffect::FREEHAND_SHAPE))
+        return false;
+
+    return true;
+}
+
 void sp_lpe_item_edit_next_param_oncanvas(SPLPEItem *lpeitem, SPDesktop *dt)
 {
     Inkscape::LivePathEffect::LPEObjectReference *lperef = sp_lpe_item_get_current_lpereference(lpeitem);

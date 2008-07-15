@@ -68,6 +68,8 @@ void sp_lpe_item_down_current_path_effect(SPLPEItem *lpeitem);
 void sp_lpe_item_up_current_path_effect(SPLPEItem *lpeitem);
 bool sp_lpe_item_has_path_effect(SPLPEItem *lpeitem);
 bool sp_lpe_item_has_path_effect_recursive(SPLPEItem *lpeitem);
+Inkscape::LivePathEffect::Effect* sp_lpe_item_has_path_effect_of_type(SPLPEItem *lpeitem, int type);
+bool sp_lpe_item_can_accept_freehand_shape(SPLPEItem *lpeitem);
 void sp_lpe_item_edit_next_param_oncanvas(SPLPEItem *lpeitem, SPDesktop *dt);
 PathEffectList sp_lpe_item_get_effect_list(SPLPEItem *lpeitem);
 Inkscape::LivePathEffect::LPEObjectReference* sp_lpe_item_get_current_lpereference(SPLPEItem *lpeitem);
