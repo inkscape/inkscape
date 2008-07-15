@@ -1,4 +1,4 @@
-# translation of km.po to khmer
+# translation of km.po to Khmer
 # Auk Piseth <piseth_dv@khmeros.info>, 2006.
 # Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007, 2008.
 # Khoem Sokhem<khoemsokhem@khmeros.info>,2008-02-22 08:56+0700.
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-07-15 16:52+0700\n"
-"Last-Translator: Eng Vannak <evannak@khmeros.info>\n"
-"Language-Team: khmer <support@khmeros.info>\n"
+"PO-Revision-Date: 2008-07-15 17:05+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -8853,7 +8853,8 @@ msgid "translator-credits"
 msgstr ""
 "Khoem Sokhem (khoemsokhem@khmeros.info)\n"
 "Auk Piseth (piseth_dv@khmeros.info)\n"
-"Eng Vannak (evannak@khmeros.info)"
+"Eng Vannak (evannak@khmeros.info)\n"
+"Ly Soursdey (soursdey@khmeros.info)"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:234
 #: ../src/ui/dialog/align-and-distribute.cpp:776
