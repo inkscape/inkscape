@@ -73,11 +73,24 @@
 #include "libnr/n-art-bpath-2geom.h"
 #include "path-chemistry.h"
 #include "id-clash.h"
+#include "unit-constants.h"
+#include "helper/png-write.h"
+#include "svg/svg-color.h"
 
 /// @brief Made up mimetype to represent Gdk::Pixbuf clipboard contents
 #define CLIPBOARD_GDK_PIXBUF_TARGET "image/x-gdk-pixbuf"
 
 #define CLIPBOARD_TEXT_TARGET "text/plain"
+
+#ifdef WIN32
+#include <windows.h>
+// Clipboard Formats: http://msdn.microsoft.com/en-us/library/ms649013(VS.85).aspx
+// On Windows, most graphical applications can handle CF_DIB/CF_BITMAP and/or CF_ENHMETAFILE
+// GTK automatically presents an "image/bmp" target as CF_DIB/CF_BITMAP
+// Presenting "image/x-emf" as CF_ENHMETAFILE must be done by Inkscape ?
+#define CLIPBOARD_WIN32_EMF_TARGET "CF_ENHMETAFILE"
+#define CLIPBOARD_WIN32_EMF_MIME   "image/x-emf"
+#endif
 
 namespace Inkscape {
 namespace UI {
@@ -156,7 +169,7 @@ ClipboardManagerImpl::ClipboardManagerImpl()
     _preferred_targets.push_back("image/svg+xml");
     _preferred_targets.push_back("image/svg+xml-compressed");
 #ifdef WIN32
-    _preferred_targets.push_back("image/x-emf");
+    _preferred_targets.push_back(CLIPBOARD_WIN32_EMF_MIME);
 #endif
     _preferred_targets.push_back("application/pdf");
     _preferred_targets.push_back("image/x-adobe-illustrator");
@@ -943,16 +956,47 @@ SPDocument *ClipboardManagerImpl::_retrieveClipboard(Glib::ustring required_targ
         return NULL;
     }
 
-    if ( !_clipboard->wait_is_target_available(best_target) ) {
-        return NULL;
-    }
+    // FIXME: Temporary hack until we add memory input.
+    // Save the clipboard contents to some file, then read it
+    gchar *filename = g_build_filename( g_get_tmp_dir(), "inkscape-clipboard-import", NULL );
 
-    // doing this synchronously makes better sense
-    // TODO: use another method because this one is badly broken imo.
-    // from documentation: "Returns: A SelectionData object, which will be invalid if retrieving the given target failed."
-    // I don't know how to check whether an object is 'valid' or not, unusable if that's not possible...
-    Gtk::SelectionData sel = _clipboard->wait_for_contents(best_target);
-    Glib::ustring target = sel.get_target();  // this can crash if the result was invalid of last function. No way to check for this :(
+    bool file_saved = false;
+    Glib::ustring target = best_target;
+
+#ifdef WIN32
+    if (best_target == CLIPBOARD_WIN32_EMF_TARGET)
+    {   // Try to save clipboard data as en emf file (using win32 api)
+        if (OpenClipboard(NULL)) {
+            HGLOBAL hglb = GetClipboardData(CF_ENHMETAFILE);
+            if (hglb) {
+                HENHMETAFILE hemf = CopyEnhMetaFile((HENHMETAFILE) hglb, filename);
+                if (hemf) {
+                    file_saved = true;
+                    target = CLIPBOARD_WIN32_EMF_MIME;
+                    DeleteEnhMetaFile(hemf);
+                }
+            }
+            CloseClipboard();
+        }
+    }
+#endif
+
+    if (!file_saved) {
+        if ( !_clipboard->wait_is_target_available(best_target) ) {
+            return NULL;
+        }
+
+        // doing this synchronously makes better sense
+        // TODO: use another method because this one is badly broken imo.
+        // from documentation: "Returns: A SelectionData object, which will be invalid if retrieving the given target failed."
+        // I don't know how to check whether an object is 'valid' or not, unusable if that's not possible...
+        Gtk::SelectionData sel = _clipboard->wait_for_contents(best_target);
+        target = sel.get_target();  // this can crash if the result was invalid of last function. No way to check for this :(
+
+        // FIXME: Temporary hack until we add memory input.
+        // Save the clipboard contents to some file, then read it
+        g_file_set_contents(filename, (const gchar *) sel.get_data(), sel.get_length(), NULL);
+    }
 
     // there is no specific plain SVG input extension, so if we can paste the Inkscape SVG format,
     // we use the image/svg+xml mimetype to look up the input extension
@@ -966,12 +1010,11 @@ SPDocument *ClipboardManagerImpl::_retrieveClipboard(Glib::ustring required_targ
     if ( in == inlist.end() )
         return NULL; // this shouldn't happen unless _getBestTarget returns something bogus
 
-    // FIXME: Temporary hack until we add memory input.
-    // Save the clipboard contents to some file, then read it
-    gchar *filename = g_build_filename( g_get_tmp_dir(), "inkscape-clipboard-import", NULL );
-    g_file_set_contents(filename, (const gchar *) sel.get_data(), sel.get_length(), NULL);
-
-    SPDocument *tempdoc = (*in)->open(filename);
+    SPDocument *tempdoc = NULL;
+    try {
+        tempdoc = (*in)->open(filename);
+    } catch (...) {
+    }
     g_unlink(filename);
     g_free(filename);
 
@@ -996,19 +1039,49 @@ void ClipboardManagerImpl::_onGet(Gtk::SelectionData &sel, guint /*info*/)
     Inkscape::Extension::db.get_output_list(outlist);
     Inkscape::Extension::DB::OutputList::const_iterator out = outlist.begin();
     for ( ; out != outlist.end() && target != (*out)->get_mimetype() ; ++out);
-    if ( out == outlist.end() ) return; // this also shouldn't happen
+    if ( out == outlist.end() && target != "image/png") return; // this also shouldn't happen
 
     // FIXME: Temporary hack until we add support for memory output.
     // Save to a temporary file, read it back and then set the clipboard contents
     gchar *filename = g_build_filename( g_get_tmp_dir(), "inkscape-clipboard-export", NULL );
     gsize len; gchar *data;
 
-    (*out)->save(_clipboardSPDoc, filename);
-    g_file_get_contents(filename, &data, &len, NULL);
+    try {
+        if (out == outlist.end() && target == "image/png")
+        {
+            NRRect area;
+            gdouble dpi = PX_PER_IN;
+            guint32 bgcolor = 0x00000000;
+
+            area.x0 = SP_ROOT(_clipboardSPDoc->root)->x.computed;
+            area.y0 = SP_ROOT(_clipboardSPDoc->root)->y.computed;
+            area.x1 = area.x0 + sp_document_width (_clipboardSPDoc);
+            area.y1 = area.y0 + sp_document_height (_clipboardSPDoc);
+
+            unsigned long int width = (unsigned long int) ((area.x1 - area.x0) * dpi / PX_PER_IN + 0.5);
+            unsigned long int height = (unsigned long int) ((area.y1 - area.y0) * dpi / PX_PER_IN + 0.5);
+
+            // read from namedview
+            Inkscape::XML::Node *nv = sp_repr_lookup_name (_clipboardSPDoc->rroot, "sodipodi:namedview");
+            if (nv && nv->attribute("pagecolor"))
+                bgcolor = sp_svg_read_color(nv->attribute("pagecolor"), 0xffffff00);
+            if (nv && nv->attribute("inkscape:pageopacity"))
+                bgcolor |= SP_COLOR_F_TO_U(sp_repr_get_double_attribute (nv, "inkscape:pageopacity", 1.0));
+
+            sp_export_png_file(_clipboardSPDoc, filename, area.x0, area.y0, area.x1, area.y1, width, height, dpi, dpi, bgcolor, NULL, NULL, true, NULL);
+        }
+        else
+        {
+            (*out)->save(_clipboardSPDoc, filename);
+        }
+        g_file_get_contents(filename, &data, &len, NULL);
+
+        sel.set(8, (guint8 const *) data, len);
+    } catch (...) {
+    }
+
     g_unlink(filename); // delete the temporary file
     g_free(filename);
-
-    sel.set(8, (guint8 const *) data, len);
 }
 
 
@@ -1107,6 +1180,26 @@ Glib::ustring ClipboardManagerImpl::_getBestTarget()
         if ( std::find(targets.begin(), targets.end(), *i) != targets.end() )
             return *i;
     }
+#ifdef WIN32
+    if (OpenClipboard(NULL))
+    {   // If both bitmap and metafile are present, pick the one that was exported first.
+        UINT format = EnumClipboardFormats(0);
+        while (format) {
+            if (format == CF_ENHMETAFILE || format == CF_DIB || format == CF_BITMAP)
+                break;
+            format = EnumClipboardFormats(format);
+        }
+        CloseClipboard();
+        
+        if (format == CF_ENHMETAFILE)
+            return CLIPBOARD_WIN32_EMF_TARGET;
+        if (format == CF_DIB || format == CF_BITMAP)
+            return CLIPBOARD_GDK_PIXBUF_TARGET;
+    }
+    
+    if (IsClipboardFormatAvailable(CF_ENHMETAFILE))
+        return CLIPBOARD_WIN32_EMF_TARGET;
+#endif
     if (_clipboard->wait_is_image_available())
         return CLIPBOARD_GDK_PIXBUF_TARGET;
     if (_clipboard->wait_is_text_available())
@@ -1128,9 +1221,55 @@ void ClipboardManagerImpl::_setClipboardTargets()
         target_list.push_back(Gtk::TargetEntry( (*out)->get_mimetype() ));
     }
 
+    // Add PNG export explicitly since there is no extension for this...
+    // On Windows, GTK will also present this as a CF_DIB/CF_BITMAP
+    target_list.push_back(Gtk::TargetEntry( "image/png" ));
+
     _clipboard->set(target_list,
         sigc::mem_fun(*this, &ClipboardManagerImpl::_onGet),
         sigc::mem_fun(*this, &ClipboardManagerImpl::_onClear));
+
+#ifdef WIN32
+    // If the "image/x-emf" target handled by the emf extension would be
+    // presented as a CF_ENHMETAFILE automatically (just like an "image/bmp"
+    // is presented as a CF_BITMAP) this code would not be needed.. ???
+    // Or maybe there is some other way to achieve the same?
+
+    // Note: Metafile is the only format that is rendered and stored in clipboard
+    // on Copy, all other formats are rendered only when needed by a Paste command.
+
+    // FIXME: This should at least be rewritten to use "delayed rendering".
+    //        If possible make it delayed rendering by using GTK API only.
+
+    if (OpenClipboard(NULL)) {
+        if ( _clipboardSPDoc != NULL ) {
+            const Glib::ustring target = CLIPBOARD_WIN32_EMF_MIME;
+
+            Inkscape::Extension::DB::OutputList outlist;
+            Inkscape::Extension::db.get_output_list(outlist);
+            Inkscape::Extension::DB::OutputList::const_iterator out = outlist.begin();
+            for ( ; out != outlist.end() && target != (*out)->get_mimetype() ; ++out);
+            if ( out != outlist.end() ) {
+                // FIXME: Temporary hack until we add support for memory output.
+                // Save to a temporary file, read it back and then set the clipboard contents
+                gchar *filename = g_build_filename( g_get_tmp_dir(), "inkscape-clipboard-export.emf", NULL );
+
+                try {
+                    (*out)->save(_clipboardSPDoc, filename);
+                    HENHMETAFILE hemf = GetEnhMetaFileA(filename);
+                    if (hemf) {
+                        SetClipboardData(CF_ENHMETAFILE, hemf);
+                        DeleteEnhMetaFile(hemf);
+                    }
+                } catch (...) {
+                }
+                g_unlink(filename); // delete the temporary file
+                g_free(filename);
+            }
+        }
+        CloseClipboard();
+    }
+#endif
 }
 
 
