@@ -15,6 +15,7 @@
 
 #include <2geom/curve.h>
 #include <2geom/point.h>
+#include <glib.h>
 #include <vector>
 
 namespace Geom {
@@ -43,11 +44,11 @@ NodeType get_nodetype(Curve const &c_incoming, Curve const &c_outgoing)
 
     // Determine lowest derivative that is non-zero
     int n1 = 1;
-    while ( (deriv1[n1] == Point(0,0)) && (n1 <= 3) ) {
+    while ( (deriv1[n1] == Point(0.,0.)) && (n1 <= 3) ) {
         n1++;
     }
     int n2 = 1;
-    while ( (deriv2[n2] == Point(0,0)) && (n2 <= 3) ) {
+    while ( (deriv2[n2] == Point(0.,0.)) && (n2 <= 3) ) {
         n2++;
     }
 
@@ -59,12 +60,17 @@ NodeType get_nodetype(Curve const &c_incoming, Curve const &c_outgoing)
             return NODE_SMOOTH;
     }
 
-    if ( are_near( Geom::cross(deriv1[n1], deriv2[n2]), 0) && (Geom::dot(-deriv1[n1], deriv2[n2]) > 0) ) {
-        // Apparently, the derivatives are colinear and in same direction but does the order of the derivatives match?
-        if (n1 != n2)
-            return NODE_SMOOTH;
-        else
+    // get unit derivatives, so the errors do not depend on absolute lengths of derivatives
+    Geom::Point const d1 = - deriv1[n1] / deriv1[n1].length(); // reverse sign because it is taken in "wrong direction"
+    Geom::Point const d2 = deriv2[n2]  / deriv2[n2].length();
+
+    double crossproduct = Geom::cross(d1, d2);
+    if ( are_near( crossproduct , 0.) && (Geom::dot(d1, d2) > 0.) ) {
+        // Apparently, the derivatives are colinear and in same direction but do they match exactly?
+        if ( (n1 == n2) && (Geom::are_near(-deriv1[n1], deriv2[n2])) )
             return NODE_SYMM;
+        else
+            return NODE_SMOOTH;
     }
 
     return NODE_CUSP;
