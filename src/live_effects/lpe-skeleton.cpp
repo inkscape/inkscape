@@ -84,6 +84,7 @@ LPESkeleton::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
  *  Define the classes for your knotholder handles here
  */
 
+/**
 namespace Skeleton {
 
 class KnotHolderEntityMyHandle : public KnotHolderEntity
@@ -98,6 +99,7 @@ public:
 };
 
 } // namespace Skeleton
+**/
 
 /* ######################## */
 
