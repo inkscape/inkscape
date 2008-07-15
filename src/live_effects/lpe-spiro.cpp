@@ -138,7 +138,6 @@ LPESpiro::doEffect(SPCurve * curve)
             if (path_it->back_closed().isDegenerate()) {
                 // the closing line segment has zero-length. So stop before that one!
                 curve_endit = path_it->end_open();
-                                    g_message("degen");
             }
         }
 
@@ -198,12 +197,9 @@ LPESpiro::doEffect(SPCurve * curve)
                     break;
                 case Geom::NODE_CUSP:
                     path[0].ty = path[ip].ty = 'v';
-                    g_message("cusp");
                     break;
                 case Geom::NODE_SMOOTH:
-                    g_message("smooth");
                 case Geom::NODE_SYMM:
-                    g_message("symm");
                     path[0].ty = path[ip].ty = 'c';
                     break;
             }

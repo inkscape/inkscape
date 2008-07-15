@@ -15,7 +15,6 @@
 
 #include <2geom/curve.h>
 #include <2geom/point.h>
-#include <glib.h>
 #include <vector>
 
 namespace Geom {
