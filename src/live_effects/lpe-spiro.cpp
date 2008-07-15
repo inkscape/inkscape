@@ -11,6 +11,7 @@
 #include <typeinfo>
 #include <2geom/pathvector.h>
 #include <2geom/matrix.h>
+#include "helper/geom-nodetype.h"
 
 #include "live_effects/bezctx.h"
 #include "live_effects/bezctx_intf.h"
@@ -123,7 +124,7 @@ LPESpiro::doEffect(SPCurve * curve)
             Geom::Point p = path_it->front().pointAt(0);
             path[ip].x = p[X];
             path[ip].y = p[Y];
-            path[ip].ty = path_it->closed() ? 'c' : '{' ;  // this is changed later when the path is closed
+            path[ip].ty = path_it->closed() ? 'c' : '{' ;  // for closed paths, this might change depending on whether the closing is smooth or not
             ip++;
         }
 
@@ -131,8 +132,17 @@ LPESpiro::doEffect(SPCurve * curve)
         Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
         Geom::Path::const_iterator curve_it2 = ++(path_it->begin());         // outgoing curve
 
-        int d = 1;
-        while ( curve_it2 != path_it->end_default() )
+        Geom::Path::const_iterator curve_endit = path_it->end_default(); // this determines when the loop has to stop
+        if (path_it->closed()) {
+            // if the path is closed, maybe we have to stop a bit earlier because the closing line segment has zerolength.
+            if (path_it->back_closed().isDegenerate()) {
+                // the closing line segment has zero-length. So stop before that one!
+                curve_endit = path_it->end_open();
+                                    g_message("degen");
+            }
+        }
+
+        while ( curve_it2 != curve_endit )
         {
             /* This deals with the node between curve_it1 and curve_it2.
              * Loop to end_default (so without last segment), loop ends when curve_it2 hits the end
@@ -174,24 +184,31 @@ LPESpiro::doEffect(SPCurve * curve)
             ip++;
         }
 
+        // add last point to the spiropath
+        Geom::Point p = curve_it1->finalPoint();
+        path[ip].x = p[X];
+        path[ip].y = p[Y];
         if (path_it->closed()) {
-            // curve_it1 points to closing segment, which is always a straight line
-            if (curve_it1->initialPoint() == curve_it1->finalPoint()) {
-                // zero length closing segment, so  last handled seg already closed the path
-                // When the original path was *not* visibly closed by the straight line "svgd-'z'" segment (default closing segment)
-                // this means the last handled segment already closed the original path.
-                // FIXME: how to correctly handle this case??
-                path[0].ty = path[ip-1].ty;
-            } else {
-                // When the original path was visibly closed by the straight line "svgd-'z'" segment (default closing segment)
-                // then close the spiro path with the same straight line path
-                path[0].ty = 'v';
+            // curve_it1 points to the (visually) closing segment. determine the match between first and this last segment (the closing node)
+            Geom::NodeType nodetype = Geom::get_nodetype(*curve_it1, path_it->front());
+            switch (nodetype) {
+                case Geom::NODE_NONE: // can't happen! but if it does, it means the path isn't closed :-)
+                    path[ip].ty = '}';
+                    ip++;
+                    break;
+                case Geom::NODE_CUSP:
+                    path[0].ty = path[ip].ty = 'v';
+                    g_message("cusp");
+                    break;
+                case Geom::NODE_SMOOTH:
+                    g_message("smooth");
+                case Geom::NODE_SYMM:
+                    g_message("symm");
+                    path[0].ty = path[ip].ty = 'c';
+                    break;
             }
         } else {
-            // add point to the path
-            Geom::Point p = curve_it1->finalPoint();
-            path[ip].x = p[X];
-            path[ip].y = p[Y];
+            // set type to path closer
             path[ip].ty = '}';
             ip++;
         }
