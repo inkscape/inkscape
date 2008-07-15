@@ -599,6 +599,7 @@ PrintCairoPDF::fill(Inkscape::Extension::Print *mod, Geom::PathVector const &pat
 
         print_fill_style(cr, style, pbox);
 
+        cairo_new_path(cr);
         feed_pathvector_to_cairo(cr, pathv);
 
         if (style->fill_rule.computed == SP_WIND_RULE_EVENODD) {
@@ -697,6 +698,7 @@ PrintCairoPDF::stroke(Inkscape::Extension::Print *mod, Geom::PathVector const &p
 
         cairo_save(cr);
 
+        cairo_new_path(cr);
         print_stroke_style(cr, style, pbox);
 
         feed_pathvector_to_cairo(cr, pathv);
