@@ -125,19 +125,25 @@ find_references(SPObject *elem, refmap_type *refmap)
     for (unsigned i = 0; i < NUM_SPIPAINT_PROPERTIES; ++i) {
         const SPIPaint SPStyle::*prop = SPIPaint_members[i];
         const SPIPaint *paint = &(style->*prop);
-        if (paint->isPaintserver()) {
-            const gchar *id = SP_OBJECT_ID(paint->value.href->getObject());
-            IdReference idref = { REF_STYLE, elem, SPIPaint_properties[i] };
-            (*refmap)[id].push_back(idref);
+        if (paint->isPaintserver() && paint->value.href) {
+            const SPObject *obj = paint->value.href->getObject();
+            if (obj) {
+                const gchar *id = SP_OBJECT_ID(obj);
+                IdReference idref = { REF_STYLE, elem, SPIPaint_properties[i] };
+                (*refmap)[id].push_back(idref);
+            }
         }
     }
 
     /* check for url(#...) references in 'filter' */
     const SPIFilter *filter = &(style->filter);
     if (filter->href) {
-        const gchar *id = SP_OBJECT_ID(filter->href->getObject());
-        IdReference idref = { REF_STYLE, elem, "filter" };
-        (*refmap)[id].push_back(idref);
+        const SPObject *obj = filter->href->getObject();
+        if (obj) {
+            const gchar *id = SP_OBJECT_ID(obj);
+            IdReference idref = { REF_STYLE, elem, "filter" };
+            (*refmap)[id].push_back(idref);
+        }
     }
 
     /* check for other url(#...) references */
