@@ -3,6 +3,8 @@
 
 /*** implementation of the Durand-Kerner method.  seems buggy*/
 
+namespace Geom {
+
 std::complex<double> evalu(Poly const & p, std::complex<double> x) {
     std::complex<double> result = 0;
     std::complex<double> xx = 1;
@@ -51,6 +53,7 @@ std::vector<std::complex<double> > DK(Poly const & ply, const double tol) {
     return roots;
 }
 
+} // namespace Geom
 
 /*
   Local Variables:

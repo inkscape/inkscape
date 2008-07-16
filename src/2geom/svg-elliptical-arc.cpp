@@ -915,7 +915,29 @@ D2<SBasis> SVGEllipticalArc::toSBasis() const
     SBasis arc_y = ray(Y) * sin(param,4);
     arc[0] = arc_x * cos_rot_angle - arc_y * sin_rot_angle + Linear(center(X),center(X));
     arc[1] = arc_x * sin_rot_angle + arc_y * cos_rot_angle + Linear(center(Y),center(Y));
+
+    // ensure that endpoints remain exact
+    for ( int d = 0 ; d < 2 ; d++ ) {
+        arc[d][0][0] = initialPoint()[d];
+        arc[d][0][1] = finalPoint()[d];
+    }
+
     return arc;
+}
+
+
+Curve* SVGEllipticalArc::transformed(Matrix const& m) const
+{
+    // return SBasisCurve(toSBasis()).transformed(m);
+
+    Ellipse e(center(X), center(Y), ray(X), ray(Y), rotation_angle());
+    Ellipse et = e.transformed(m);
+    Point inner_point = pointAt(0.5);
+    SVGEllipticalArc ea = et.arc( initialPoint() * m,
+                                  inner_point * m,
+                                  finalPoint() * m,
+                                  is_svg_compliant() );
+    return ea.duplicate();
 }
 
 

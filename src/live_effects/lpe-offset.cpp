@@ -49,7 +49,7 @@ static void append_half_circle(Geom::Piecewise<Geom::D2<Geom::SBasis> > &pwd2,
     using namespace Geom;
 
     double r = L2(dir);
-    EllipticalArc cap(center + dir, r, r, angle_between(Point(1,0), dir), false, false, center - dir);
+    SVGEllipticalArc cap(center + dir, r, r, angle_between(Point(1,0), dir), false, false, center - dir);
     Piecewise<D2<SBasis> > cap_pwd2(cap.toSBasis());
     pwd2.continuousConcat(cap_pwd2);
 }

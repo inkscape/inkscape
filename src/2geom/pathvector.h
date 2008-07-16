@@ -38,13 +38,55 @@
 #include <2geom/forward.h>
 #include <2geom/path.h>
 #include <2geom/rect.h>
+#include <2geom/transforms.h>
 
 namespace Geom {
 
 typedef std::vector<Geom::Path> PathVector;
 
+/* general path transformation: */
+inline
+void operator*= (PathVector & path_in, Matrix const &m) {
+    for(PathVector::iterator it = path_in.begin(); it != path_in.end(); ++it) {
+        (*it) *= m;
+    }
+}
+inline
+PathVector operator*(PathVector const & path_in, Matrix const &m) {
+    PathVector ret(path_in);
+    ret *= m;
+    return ret;
+}
 
-PathVector operator* (PathVector const & path_in, Matrix const &m);
+/* specific path transformations: Translation: 
+ * This makes it possible to make optimized implementations for Translate transforms */
+inline
+void operator*= (PathVector & path_in, Translate const &m) {
+    for(PathVector::iterator it = path_in.begin(); it != path_in.end(); ++it) {
+        (*it) *= m;
+    }
+}
+inline
+PathVector operator*(PathVector const & path_in, Translate const &m) {
+    PathVector ret(path_in);
+    ret *= m;
+    return ret;
+}
+
+/* user friendly approach to Translate transforms: just add an offset Point to the whole path */
+inline
+void operator+=(PathVector &path_in, Point const &p) {
+    for(PathVector::iterator it = path_in.begin(); it != path_in.end(); ++it) {
+        (*it) *= Translate(p);
+    }
+}
+inline
+PathVector operator+(PathVector const &path_in, Point const &p) {
+    PathVector ret(path_in);
+    ret *= Translate(p);
+    return ret;
+}
+
 
 PathVector reverse_paths_and_order (PathVector const & path_in);
 

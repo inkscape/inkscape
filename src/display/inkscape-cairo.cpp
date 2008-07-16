@@ -218,7 +218,7 @@ feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Matrix const & tran
             }
         }
     }
-//    else if(Geom::EllipticalArc const *svg_elliptical_arc = dynamic_cast<Geom::EllipticalArc *>(c)) {
+//    else if(Geom::SVGEllipticalArc const *svg_elliptical_arc = dynamic_cast<Geom::SVGEllipticalArc *>(c)) {
 //        //TODO: get at the innards and spit them out to cairo
 //    }
     else {

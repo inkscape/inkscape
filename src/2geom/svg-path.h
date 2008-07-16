@@ -65,15 +65,15 @@ public:
         _in_path = true;
     }
 //TODO: what if _in_path = false?
-    
+
     void hlineTo(Coord v) {
     	_path.template appendNew<HLineSegment>(Point(v, _path.finalPoint()[Y]));
     }
-    
+
     void vlineTo(Coord v) {
     	_path.template appendNew<VLineSegment>(Point(_path.finalPoint()[X], v));
     }
-    
+
     void lineTo(Point p) {
         _path.template appendNew<LineSegment>(p);
     }
@@ -89,7 +89,7 @@ public:
     void arcTo(double rx, double ry, double angle,
                bool large_arc, bool sweep, Point p)
     {
-        _path.template appendNew<EllipticalArc>(rx, ry, angle,
+        _path.template appendNew<SVGEllipticalArc>(rx, ry, angle,
                                                  large_arc, sweep, p);
     }
 

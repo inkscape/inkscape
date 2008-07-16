@@ -1,9 +1,9 @@
 /*
- * forward - this file contains forward declarations of 2geom types
+ * Circle Curve
  *
  * Authors:
- *  Johan Engelen <goejendaagh@zonnet.nl>
- * 
+ *      Marco Cecchetti <mrcekets at gmail.com>
+ *
  * Copyright 2008  authors
  *
  * This library is free software; you can redistribute it and/or
@@ -30,65 +30,78 @@
  * the specific language governing rights and limitations.
  */
 
-#ifndef SEEN_GEOM_FORWARD_H
-#define SEEN_GEOM_FORWARD_H
 
-#include <vector>   // include this dependency so PathVector can be defined more explicitly
+#include <2geom/circle.h>
+#include <2geom/ellipse.h>
+#include <2geom/svg-elliptical-arc.h>
+#include <2geom/numeric/fitting-tool.h>
+#include <2geom/numeric/fitting-model.h>
 
-namespace Geom {
 
-template <unsigned> class BezierCurve;
-template<> class BezierCurve<0>;
-typedef BezierCurve<2> QuadraticBezier;
-typedef BezierCurve<1> LineSegment;
-typedef BezierCurve<3> CubicBezier;
-class EllipticalArc;
-class SVGEllipticalArc;
 
-class HLineSegment;
-class VLineSegment;
+namespace Geom
+{
 
-typedef double Coord;
-class Point;
+void Circle::set(double A, double B, double C, double D)
+{
+    if (A == 0)
+    {
+        THROW_RANGEERROR("square term coefficient == 0");
+    }
 
-class Exception;
-class LogicalError;
-class RangeError;
-class NotImplemented;
-class InvariantsViolation;
-class NotInvertible;
-class ContinuityError;
+    //std::cerr << "B = " << B << "  C = " << C << "  D = " << D << std::endl;
 
-class Interval;
-class Linear;
-class Hat;
-class Tri;
+    double b = B / A;
+    double c = C / A;
+    double d = D / A;
 
-class Matrix;
-class Translate;
-class Rotate;
-class Scale;
+    m_centre[X] = -b/2;
+    m_centre[Y] = -c/2;
+    double r2 = m_centre[X] * m_centre[X] + m_centre[Y] * m_centre[Y] - d;
 
-class Curve;
-class Path;
-typedef std::vector<Path> PathVector;
+    if (r2 < 0)
+    {
+        THROW_RANGEERROR("ray^2 < 0");
+    }
 
-template <class> class D2;
-template <typename> class Piecewise;
-class SBasis;
-class SBasisCurve;
-
-typedef D2<Interval> Rect;
-
-class Shape;
-class Region;
-
-class SVGPathSink;
-template <typename> class SVGPathGenerator;
-
+    m_ray = std::sqrt(r2);
 }
 
-#endif // SEEN_GEOM_FORWARD_H
+
+void Circle::set(std::vector<Point> const& points)
+{
+    size_t sz = points.size();
+    if (sz < 3)
+    {
+        THROW_RANGEERROR("fitting error: too few points passed");
+    }
+    NL::LFMCircle model;
+    NL::least_squeares_fitter<NL::LFMCircle> fitter(model, sz);
+
+    for (size_t i = 0; i < sz; ++i)
+    {
+        fitter.append(points[i]);
+    }
+    fitter.update();
+
+    NL::Vector z(sz, 0.0);
+    model.instance(*this, fitter.result(z));
+}
+
+
+SVGEllipticalArc
+Circle::arc(Point const& initial, Point const& inner, Point const& final,
+             bool _svg_compliant)
+{
+    Ellipse e(center(X), center(Y), ray(), ray(), 0);
+    return e.arc(initial, inner, final, _svg_compliant);
+}
+
+
+}  // end namespace Geom
+
+
+
 
 /*
   Local Variables:

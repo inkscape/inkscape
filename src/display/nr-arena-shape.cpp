@@ -12,8 +12,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-
-
+#include <2geom/svg-path.h>
+#include <2geom/svg-path-parser.h>
 #include <display/canvas-arena.h>
 #include <display/nr-arena.h>
 #include <display/nr-arena-shape.h>
@@ -39,6 +39,10 @@
 #include "display/nr-filter.h"
 #include <typeinfo>
 #include <cairo.h>
+
+#include <glib.h>
+#include "svg/svg.h"
+#include <fenv.h>
 
 //int  showRuns=0;
 void nr_pixblock_render_shape_mask_or(NRPixBlock &m,Shape* theS);

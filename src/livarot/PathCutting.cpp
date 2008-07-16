@@ -395,7 +395,7 @@ void  Path::AddCurve(Geom::Curve const &c)
         Geom::Point tme = 3 * ((*cubic_bezier)[3] - (*cubic_bezier)[2]);
         CubicTo (from_2geom(tmp), from_2geom(tms), from_2geom(tme));
     }
-    else if(Geom::EllipticalArc const *svg_elliptical_arc = dynamic_cast<Geom::EllipticalArc const *>(&c)) {
+    else if(Geom::SVGEllipticalArc const *svg_elliptical_arc = dynamic_cast<Geom::SVGEllipticalArc const *>(&c)) {
         ArcTo( from_2geom(svg_elliptical_arc->finalPoint()),
                svg_elliptical_arc->ray(0), svg_elliptical_arc->ray(1),
                svg_elliptical_arc->rotation_angle(),

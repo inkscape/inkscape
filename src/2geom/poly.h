@@ -1,5 +1,5 @@
-#ifndef SEEN_POLY_H
-#define SEEN_POLY_H
+#ifndef LIB2GEOM_SEEN_POLY_H
+#define LIB2GEOM_SEEN_POLY_H
 #include <assert.h>
 #include <vector>
 #include <iostream>
@@ -7,22 +7,24 @@
 #include <complex>
 #include <2geom/utils.h>
 
+namespace Geom {
+
 class Poly : public std::vector<double>{
 public:
     // coeff; // sum x^i*coeff[i]
-    
+
     //unsigned size() const { return coeff.size();}
     unsigned degree() const { return size()-1;}
 
     //double operator[](const int i) const { return (*this)[i];}
     //double& operator[](const int i) { return (*this)[i];}
-    
+
     Poly operator+(const Poly& p) const {
         Poly result;
         const unsigned out_size = std::max(size(), p.size());
         const unsigned min_size = std::min(size(), p.size());
         //result.reserve(out_size);
-        
+
         for(unsigned i = 0; i < min_size; i++) {
             result.push_back((*this)[i] + p[i]);
         }
@@ -38,7 +40,7 @@ public:
         const unsigned out_size = std::max(size(), p.size());
         const unsigned min_size = std::min(size(), p.size());
         result.reserve(out_size);
-        
+
         for(unsigned i = 0; i < min_size; i++) {
             result.push_back((*this)[i] - p[i]);
         }
@@ -53,7 +55,7 @@ public:
         const unsigned out_size = std::max(size(), p.size());
         const unsigned min_size = std::min(size(), p.size());
         resize(out_size);
-        
+
         for(unsigned i = 0; i < min_size; i++) {
             (*this)[i] -= p[i];
         }
@@ -65,7 +67,7 @@ public:
         Poly result;
         const unsigned out_size = size();
         result.reserve(out_size);
-        
+
         for(unsigned i = 0; i < out_size; i++) {
             result.push_back((*this)[i]);
         }
@@ -75,7 +77,7 @@ public:
     Poly operator-() const {
         Poly result;
         result.resize(size());
-        
+
         for(unsigned i = 0; i < size(); i++) {
             result[i] = -(*this)[i];
         }
@@ -85,29 +87,27 @@ public:
         Poly result;
         const unsigned out_size = size();
         result.reserve(out_size);
-        
+
         for(unsigned i = 0; i < out_size; i++) {
             result.push_back((*this)[i]*p);
         }
         assert(result.size() == out_size);
         return result;
     }
-
-    /** Equivalent to multiply by x^terms. */
+    // equivalent to multiply by x^terms, negative terms are disallowed
     Poly shifted(unsigned const terms) const {
         Poly result;
         size_type const out_size = size() + terms;
         result.reserve(out_size);
 
-	result.resize(terms, 0.0);
-	result.insert(result.end(), this->begin(), this->end());
+        result.resize(terms, 0.0);
+        result.insert(result.end(), this->begin(), this->end());
 
         assert(result.size() == out_size);
         return result;
     }
-
     Poly operator*(const Poly& p) const;
-    
+
     template <typename T>
     T eval(T x) const {
         T r = 0;
@@ -116,17 +116,17 @@ public:
         }
         return r;
     }
-    
+
     template <typename T>
     T operator()(T t) const { return (T)eval(t);}
-    
+
     void normalize();
-    
+
     void monicify();
     Poly() {}
     Poly(const Poly& p) : std::vector<double>(p) {}
     Poly(const double a) {push_back(a);}
-    
+
 public:
     template <class T, class U>
     void val_and_deriv(T x, U &pd) const {
@@ -147,7 +147,7 @@ public:
             pd[i] *= cnst;
         }
     }
-    
+
     static Poly linear(double ax, double b) {
         Poly p;
         p.push_back(b);
@@ -191,12 +191,15 @@ inline std::ostream &operator<< (std::ostream &out_file, const Poly &in_poly) {
                 out_file << " + ";
             } else
                 out_file << in_poly[i];
-            
+
         }
     }
     return out_file;
 }
 
+} // namespace Geom
+
+#endif //LIB2GEOM_SEEN_POLY_H
 
 /*
   Local Variables:
@@ -208,4 +211,3 @@ inline std::ostream &operator<< (std::ostream &out_file, const Poly &in_poly) {
   End:
 */
 // vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
-#endif

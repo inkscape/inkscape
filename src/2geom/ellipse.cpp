@@ -56,7 +56,7 @@ void Ellipse::set(double A, double B, double C, double D, double E, double F)
     double num =   A * sqr(m_centre[X])
                  + B * m_centre[X] * m_centre[Y]
                  + C * sqr(m_centre[Y])
-                 - A * F;
+                 - F;
 
 
     //evaluate ellipse rotation angle
@@ -117,6 +117,35 @@ void Ellipse::set(double A, double B, double C, double D, double E, double F)
     m_ray[X] = rx;
     m_ray[Y] = ry;
     m_angle = rot;
+}
+
+
+std::vector<double> Ellipse::implicit_form_coefficients() const
+{
+    if (ray(X) == 0 || ray(Y) == 0)
+    {
+        THROW_LOGICALERROR("a degenerate ellipse doesn't own an implicit form");
+    }
+
+    std::vector<double> coeff(6);
+    double cosrot = std::cos(rot_angle());
+    double sinrot = std::sin(rot_angle());
+    double cos2 = cosrot * cosrot;
+    double sin2 = sinrot * sinrot;
+    double cossin = cosrot * sinrot;
+    double invrx2 = 1 / (ray(X) * ray(X));
+    double invry2 = 1 / (ray(Y) * ray(Y));
+
+    coeff[0] = invrx2 * cos2 + invry2 * sin2;
+    coeff[1] = 2 * (invrx2 - invry2) * cossin;
+    coeff[2] = invrx2 * sin2 + invry2 * cos2;
+    coeff[3] = -(2 * coeff[0] * center(X) + coeff[1] * center(Y));
+    coeff[4] = -(2 * coeff[2] * center(Y) + coeff[1] * center(X));
+    coeff[5] = coeff[0] * center(X) * center(X)
+             + coeff[1] * center(X) * center(Y)
+             + coeff[2] * center(Y) * center(Y)
+             - 1;
+    return coeff;
 }
 
 
@@ -188,6 +217,52 @@ Ellipse::arc(Point const& initial, Point const& inner, Point const& final,
     return ea;
 }
 
+Ellipse Ellipse::transformed(Matrix const& m) const
+{
+    double cosrot = std::cos(rot_angle());
+    double sinrot = std::sin(rot_angle());
+    Matrix A(  ray(X) * cosrot, ray(X) * sinrot,
+              -ray(Y) * sinrot, ray(Y) * cosrot,
+               0,               0                );
+    Point new_center = center() * m;
+    Matrix M = m.without_translation();
+    Matrix AM = A * M;
+    if ( are_near(AM.det(), 0) )
+    {
+        double angle;
+        if (AM[0] != 0)
+        {
+            angle = std::atan2(AM[2], AM[0]);
+        }
+        else if (AM[1] != 0)
+        {
+            angle = std::atan2(AM[3], AM[1]);
+        }
+        else
+        {
+            angle = M_PI/2;
+        }
+        Point V(std::cos(angle), std::sin(angle));
+        V *= AM;
+        double rx = L2(V);
+        angle = atan2(V);
+        return Ellipse(new_center[X], new_center[Y], rx, 0, angle);
+    }
+
+    std::vector<double> coeff = implicit_form_coefficients();
+    Matrix Q( coeff[0],   coeff[1]/2,
+              coeff[1]/2, coeff[2],
+              0,          0   );
+
+    Matrix invm = M.inverse();
+    Q = invm * Q ;
+    std::swap( invm[1], invm[2] );
+    Q *= invm;
+    Ellipse e(Q[0], 2*Q[1], Q[3], 0, 0, -1);
+    e.m_centre = new_center;
+
+    return e;
+}
 
 }  // end namespace Geom
 

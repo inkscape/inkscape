@@ -42,7 +42,7 @@
 #include <2geom/sbasis-curve.h>
 #include <2geom/bezier-curve.h>
 #include <2geom/hvlinesegment.h>
-#include <2geom/elliptical-arc.h>
+//#include <2geom/elliptical-arc.h>
 #include <2geom/svg-elliptical-arc.h>
 
 

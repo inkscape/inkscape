@@ -38,117 +38,99 @@
 #define SEEN_GEOM_PATH_H
 
 
+#include <boost/shared_ptr.hpp>
 #include <2geom/curves.h>
 
 #include <iterator>
+#include <algorithm>
 
 
 namespace Geom
 {
 
-// Conditional expression for types. If true, first, if false, second.
-template<bool _Cond, typename _Iftrue, typename _Iffalse>
-  struct __conditional_type
-  { typedef _Iftrue __type; };
+class Path;
 
-template<typename _Iftrue, typename _Iffalse>
-  struct __conditional_type<false, _Iftrue, _Iffalse>
-  { typedef _Iffalse __type; };
+namespace PathInternal {
 
+typedef std::vector<boost::shared_ptr<Curve const> > Sequence;
 
-template <typename IteratorImpl>
-class BaseIterator
-: public std::iterator<std::forward_iterator_tag, Curve const>
-{
+template <typename C, typename P>
+class BaseIterator {
+protected:
+  BaseIterator() : path(NULL), index(0) {}
+  BaseIterator(P *p, unsigned i) : path(p), index(i) {}
+  // default copy, default assign
+
 public:
-  BaseIterator() {}
-
-  // default construct
-  // default copy
-
-  // Allow Sequence::iterator to Sequence::const_iterator conversion
-  // unfortunately I do not know how to imitate the way __normal_iterator 
-  // does it, because I don't see a way to get the typename of the container 
-  // IteratorImpl is pointing at...
-  typedef std::vector<Curve *> Sequence;
-  BaseIterator (  typename __conditional_type<
-                    (std::__are_same<IteratorImpl, Sequence::const_iterator >::__value),  // check if this instantiation is of const_iterator type
-                    const BaseIterator< Sequence::iterator >,     // if true:  accept iterator in const_iterator instantiation
-                    const BaseIterator<IteratorImpl> > ::__type   // if false: default to standard copy constructor
-                  & __other)
-    : impl_(__other.impl_) { }
-  friend class BaseIterator< Sequence::const_iterator >;
-
-
   bool operator==(BaseIterator const &other) {
-    return other.impl_ == impl_;
+    return path == other.path && index == other.index;
   }
   bool operator!=(BaseIterator const &other) {
-    return other.impl_ != impl_;
+    return path != other.path || index != other.index;
   }
 
-  Curve const &operator*() const { return **impl_; }
-  Curve const *operator->() const { return *impl_; }
-
-  BaseIterator &operator++() {
-    ++impl_;
-    return *this;
+  Curve const &operator*() const { return (*path)[index]; }
+  Curve const *operator->() const { return &(*path)[index]; }
+  boost::shared_ptr<Curve const> get_ref() const {
+    return path->get_ref_at_index(index);
   }
 
-  BaseIterator operator++(int) {
-    BaseIterator old=*this;
+  C &operator++() {
+    ++index;
+    return static_cast<C &>(*this);
+  }
+  C operator++(int) {
+    C old(static_cast<C &>(*this));
     ++(*this);
     return old;
   }
 
-  BaseIterator &operator--() {
-    --impl_;
-    return *this;
+  C &operator--() {
+    --index;
+    return static_cast<C &>(*this);
   }
-
-  BaseIterator operator--(int) {
-    BaseIterator old=*this;
+  C operator--(int) {
+    C old(static_cast<C &>(*this));
     --(*this);
     return old;
   }
 
 private:
-  BaseIterator(IteratorImpl const &pos) : impl_(pos) {}
+  P *path;
+  unsigned index;
 
-  IteratorImpl impl_;
-  friend class Path;
+  friend class ::Geom::Path;
 };
 
-template <typename Iterator>
-class DuplicatingIterator
-: public std::iterator<std::input_iterator_tag, Curve *>
-{
+class ConstIterator : public BaseIterator<ConstIterator, Path const> {
 public:
-  DuplicatingIterator() {}
-  DuplicatingIterator(Iterator const &iter) : impl_(iter) {}
+  typedef BaseIterator<ConstIterator, Path const> Base;
 
-  bool operator==(DuplicatingIterator const &other) {
-    return other.impl_ == impl_;
-  }
-  bool operator!=(DuplicatingIterator const &other) {
-    return other.impl_ != impl_;
-  }
+  ConstIterator() : Base() {}
+  // default copy, default assign
 
-  Curve *operator*() const { return (*impl_)->duplicate(); }
+private:
+  ConstIterator(Path const &p, unsigned i) : Base(&p, i) {}
+  friend class ::Geom::Path;
+};
 
-  DuplicatingIterator &operator++() {
-    ++impl_;
-    return *this;
-  }
-  DuplicatingIterator operator++(int) {
-    DuplicatingIterator old=*this;
-    ++(*this);
-    return old;
+class Iterator : public BaseIterator<Iterator, Path> {
+public:
+  typedef BaseIterator<Iterator, Path> Base;
+
+  Iterator() : Base() {}
+  // default copy, default assign
+
+  operator ConstIterator const &() const {
+    return reinterpret_cast<ConstIterator const &>(*this);
   }
 
 private:
-  Iterator impl_;
+  Iterator(Path &p, unsigned i) : Base(&p, i) {}
+  friend class ::Geom::Path;
 };
+
+}
 
 /*
  * Open and closed paths: all paths, whether open or closed, store a final
@@ -159,19 +141,21 @@ private:
  * Conversely, the range [begin(), end_closed()) always contains the "extra"
  * closing segment.
  *
- * The only difference between a closed and an open path is whether end()
- * returns end_closed() or end_open().  The idea behind this is to let
- * any path be stroked using [begin(), end_default()), and filled using
- * [begin(), end_closed()), without requiring a separate "filled" version
+ * The only difference between a closed and an open path is whether
+ * end_default() returns end_closed() or end_open().  The idea behind this
+ * is to let any path be stroked using [begin(), end_default()), and filled
+ * using [begin(), end_closed()), without requiring a separate "filled" version
  * of the path to use for filling.
+ *
+ * \invariant : curves_ always contains at least one segment. The last segment
+ *              is always of type ClosingSegment. All constructors take care of this.
+                (curves_.size() > 0) && dynamic_cast<ClosingSegment>(curves_.back())
  */
 class Path {
-private:
-  typedef std::vector<Curve *> Sequence;
-
 public:
-  typedef BaseIterator<Sequence::iterator> iterator;
-  typedef BaseIterator<Sequence::const_iterator> const_iterator;
+  typedef PathInternal::Sequence Sequence;
+  typedef PathInternal::Iterator iterator;
+  typedef PathInternal::ConstIterator const_iterator;
   typedef Sequence::size_type size_type;
   typedef Sequence::difference_type difference_type;
 
@@ -180,6 +164,7 @@ public:
     ClosingSegment() : LineSegment() {}
     ClosingSegment(Point const &p1, Point const &p2) : LineSegment(p1, p2) {}
     virtual Curve *duplicate() const { return new ClosingSegment(*this); }
+    virtual Curve *reverse() const { return new ClosingSegment((*this)[1], (*this)[0]); }
   };
 
   enum Stitching {
@@ -192,74 +177,77 @@ public:
     StitchSegment() : LineSegment() {}
     StitchSegment(Point const &p1, Point const &p2) : LineSegment(p1, p2) {}
     virtual Curve *duplicate() const { return new StitchSegment(*this); }
+    virtual Curve *reverse() const { return new StitchSegment((*this)[1], (*this)[0]); }
   };
 
-  Path()
-  : final_(new ClosingSegment()), closed_(false)
+  // Path(Path const &other) - use default copy constructor
+
+  explicit Path(Point p=Point())
+  : curves_(boost::shared_ptr<Sequence>(new Sequence(1, boost::shared_ptr<Curve>()))),
+    final_(new ClosingSegment(p, p)),
+    closed_(false)
   {
-    curves_.push_back(final_);
+    get_curves().back() = boost::shared_ptr<Curve>(final_);
   }
 
-  Path(Path const &other)
-  : final_(new ClosingSegment()), closed_(other.closed_)
+  Path(const_iterator const &first,
+       const_iterator const &last,
+       bool closed=false)
+  : curves_(boost::shared_ptr<Sequence>(new Sequence(seq_iter(first),
+                                                     seq_iter(last)))),
+    closed_(closed)
   {
-    curves_.push_back(final_);
-    insert(begin(), other.begin(), other.end());
+    if (!get_curves().empty()) {
+      final_ = new ClosingSegment(get_curves().back()->finalPoint(),
+                                  get_curves().front()->initialPoint());
+    } else {
+      final_ = new ClosingSegment();
+    }
+    get_curves().push_back(boost::shared_ptr<Curve>(final_));
   }
 
-  explicit Path(Point p)
-  : final_(new ClosingSegment(p, p)), closed_(false)
-  {
-    curves_.push_back(final_);
+  virtual ~Path() {}
+  
+  // Path &operator=(Path const &other) - use default assignment operator
+
+  void swap(Path &other) {
+    std::swap(other.curves_, curves_);
+    std::swap(other.final_, final_);
+    std::swap(other.closed_, closed_);
   }
 
-  template <typename Impl>
-  Path(BaseIterator<Impl> first, BaseIterator<Impl> last, bool closed=false)
-  : closed_(closed), final_(new ClosingSegment())
-  {
-    curves_.push_back(final_);
-    insert(begin(), first, last);
+  Curve const &operator[](unsigned i) const { return *get_curves()[i]; }
+  Curve const &at_index(unsigned i) const { return *get_curves()[i]; }
+  boost::shared_ptr<Curve const> get_ref_at_index(unsigned i) {
+    return get_curves()[i];
   }
 
-  virtual ~Path() {
-      delete_range(curves_.begin(), curves_.end()-1);
-      delete final_;
+  Curve const &front() const { return *get_curves()[0]; }
+  Curve const &back() const { return back_open(); }
+  Curve const &back_open() const {
+    if (empty()) { THROW_RANGEERROR("Path contains not enough segments"); }
+    return *get_curves()[get_curves().size()-2];
   }
-
-  Path &operator=(Path const &other) {
-    clear();
-    insert(begin(), other.begin(), other.end());
-    close(other.closed_);
-    return *this;
-  }
-
-  void swap(Path &other);
-
-  Curve const &operator[](unsigned i) const { return *curves_[i]; }
-
-  Curve const &front() const { return *curves_[0]; }
-  Curve const &back() const { return *curves_[curves_.size()-2]; }
-  Curve const &back_open() const { return *curves_[curves_.size()-2]; }
-  Curve const &back_closed() const { return *curves_[curves_.size()-1]; }
+  Curve const &back_closed() const { return *get_curves()[get_curves().size()-1]; }
   Curve const &back_default() const {
     return ( closed_ ? back_closed() : back_open() );
   }
 
-  const_iterator begin() const { return curves_.begin(); }
-  const_iterator end() const { return curves_.end()-1; }
-  iterator begin() { return curves_.begin(); }
-  iterator end() { return curves_.end()-1; }
+  const_iterator begin() const { return const_iterator(*this, 0); }
+  const_iterator end() const { return const_iterator(*this, size()); }
+  iterator begin() { return iterator(*this, 0); }
+  iterator end() { return iterator(*this, size()); }
 
-  const_iterator end_open() const { return curves_.end()-1; }
-  const_iterator end_closed() const { return curves_.end(); }
+  const_iterator end_open() const { return const_iterator(*this, size()); }
+  const_iterator end_closed() const { return const_iterator(*this, size()+1); }
   const_iterator end_default() const {
     return ( closed_ ? end_closed() : end_open() );
   }
 
-  size_type size() const { return curves_.size()-1; }
-  size_type max_size() const { return curves_.max_size()-1; }
+  size_type size() const { return get_curves().size()-1; }
+  size_type max_size() const { return get_curves().max_size()-1; }
 
-  bool empty() const { return curves_.size() == 1; }
+  bool empty() const { return get_curves().size() == 1; }
   bool closed() const { return closed_; }
   void close(bool closed=true) { closed_ = closed; }
 
@@ -286,66 +274,22 @@ public:
     return ret;
   }
 
-  bool operator==(Path const &m) const {
-      if (size() != m.size() || closed() != m.closed())
-          return false;
-      const_iterator it2 = m.curves_.begin();
-    for(const_iterator it = curves_.begin(); it != curves_.end(); ++it) {
-        const Curve& a = (*it);
-        const Curve& b = (*it2);
-        if(!(a == b))
-            return false;
-        ++it2;
-    }
-    return true;
+  bool operator==(Path const &other) const {
+    if (this == &other) return true;
+    if (closed_ != other.closed_) return false;
+    return get_curves() == other.get_curves();
+  }
+  bool operator!=(Path const &other) const {
+    return !( *this == other );
   }
 
-  /*
-     Path operator*=(Matrix)
-     This is not possible without at least partly regenerating the curves of 
-     the path, because a path can consist of many types of curves, 
-     e.g. a HLineSegment.
-     Such a segment cannot be transformed and stay a HLineSegment in general 
-     (take for example rotations).
-     This means that these curves of the path have to be replaced with 
-     LineSegments: new Curves.
-     So an implementation of this method should check the curve's type to see 
-     whether operator*= is doable for that curve type, ...
-  */
   Path operator*(Matrix const &m) const {
-    Path ret;
-    ret.curves_.reserve(curves_.size());
-    for(const_iterator it = begin(); it != end(); ++it) {
-      Curve *curve = it->transformed(m);
-      ret.do_append(curve);
-    }
-    ret.close(closed_);
+    Path ret(*this);
+    ret *= m;
     return ret;
   }
 
-  /*
-  // this should be even quickier but it works at low level
-  Path operator*(Matrix const &m) const
-  {
-      Path result;
-      size_t sz = curves_.size() - 1;
-      if (sz == 0) return result;
-      result.curves_.resize(curves_.size());
-      result.curves_.back() = result.final_;
-      result.curves_[0] = (curves_[0])->transformed(m);
-      for (size_t i = 1; i < sz; ++i)
-      {
-          result.curves_[i] = (curves_[i])->transformed(m);
-          if ( result.curves_[i]->initialPoint() != result.curves_[i-1]->finalPoint() ) {
-              THROW_CONTINUITYERROR();
-          }
-      }
-      result.final_->setInitial( (result.curves_[sz])->finalPoint() );
-      result.final_->setFinal( (result.curves_[0])->initialPoint() );
-      result.closed_ = closed_;
-      return result;
-  }
-  */
+  Path &operator*=(Matrix const &m);
   
   Point pointAt(double t) const 
   {
@@ -433,137 +377,130 @@ public:
   Path portion(Interval i) const { return portion(i.min(), i.max()); }
 
   Path reverse() const {
-    Path ret;
-    ret.close(closed_);
-    for(int i = size() - (closed_ ? 0 : 1); i >= 0; i--) {
-      Curve *temp = (*this)[i].reverse();
-      ret.append(*temp);
-      // delete since append makes a copy
-      delete temp;
+    Path ret(*this);
+    ret.unshare();
+    for ( Sequence::iterator iter = ret.get_curves().begin() ;
+          iter != ret.get_curves().end()-1 ; ++iter )
+    {
+      *iter = boost::shared_ptr<Curve>((*iter)->reverse());
     }
+    std::reverse(ret.get_curves().begin(), ret.get_curves().end()-1);
+    ret.final_ = static_cast<ClosingSegment *>(ret.final_->reverse());
+    ret.get_curves().back() = boost::shared_ptr<Curve>(ret.final_);
     return ret;
   }
 
-  void insert(iterator pos, Curve const &curve, Stitching stitching=NO_STITCHING) {
-    Sequence source(1, curve.duplicate());
-    try {
-      if (stitching) stitch(pos.impl_, pos.impl_, source);
-      do_update(pos.impl_, pos.impl_, source.begin(), source.end());
-    } catch (...) {
-      delete_range(source.begin(), source.end());
-      throw;
-    }
+  void insert(iterator const &pos,
+              Curve const &curve, Stitching stitching=NO_STITCHING)
+  {
+    unshare();
+    Sequence::iterator seq_pos(seq_iter(pos));
+    Sequence source(1, boost::shared_ptr<Curve>(curve.duplicate()));
+    if (stitching) stitch(seq_pos, seq_pos, source);
+    do_update(seq_pos, seq_pos, source.begin(), source.end());
   }
 
-  template <typename Impl>
-  void insert(iterator pos, BaseIterator<Impl> first, BaseIterator<Impl> last, Stitching stitching=NO_STITCHING)
+  void insert(iterator const &pos,
+              const_iterator const &first,
+              const_iterator const &last,
+              Stitching stitching=NO_STITCHING)
   {
-    Sequence source(DuplicatingIterator<Impl>(first.impl_),
-                    DuplicatingIterator<Impl>(last.impl_));
-    try {
-      if (stitching) stitch(pos.impl_, pos.impl_, source);
-      do_update(pos.impl_, pos.impl_, source.begin(), source.end());
-    } catch (...) {
-      delete_range(source.begin(), source.end());
-      throw;
-    }
+    unshare();
+    Sequence::iterator seq_pos(seq_iter(pos));
+    Sequence source(seq_iter(first), seq_iter(last));
+    if (stitching) stitch(seq_pos, seq_pos, source);
+    do_update(seq_pos, seq_pos, source.begin(), source.end());
   }
 
   void clear() {
-    do_update(curves_.begin(), curves_.end()-1,
-              curves_.begin(), curves_.begin());
+    unshare();
+    do_update(get_curves().begin(), get_curves().end()-1,
+              get_curves().begin(), get_curves().begin());
   }
 
-  void erase(iterator pos, Stitching stitching=NO_STITCHING) {
+  void erase(iterator const &pos, Stitching stitching=NO_STITCHING) {
+    unshare();
+    Sequence::iterator seq_pos(seq_iter(pos));
     if (stitching) {
       Sequence stitched;
-      stitch(pos.impl_, pos.impl_+1, stitched);
-      try {
-        do_update(pos.impl_, pos.impl_+1, stitched.begin(), stitched.end());
-      } catch (...) {
-        delete_range(stitched.begin(), stitched.end());
-        throw;
-      }
+      stitch(seq_pos, seq_pos+1, stitched);
+      do_update(seq_pos, seq_pos+1, stitched.begin(), stitched.end());
     } else {
-      do_update(pos.impl_, pos.impl_+1, curves_.begin(), curves_.begin());
+      do_update(seq_pos, seq_pos+1, get_curves().begin(), get_curves().begin());
     }
   }
 
-  void erase(iterator first, iterator last, Stitching stitching=NO_STITCHING) {
+  void erase(iterator const &first,
+             iterator const &last,
+             Stitching stitching=NO_STITCHING)
+  {
+    unshare();
+    Sequence::iterator seq_first=seq_iter(first);
+    Sequence::iterator seq_last=seq_iter(last);
     if (stitching) {
       Sequence stitched;
-      stitch(first.impl_, last.impl_, stitched);
-      try {
-        do_update(first.impl_, last.impl_, stitched.begin(), stitched.end());
-      } catch (...) {
-        delete_range(stitched.begin(), stitched.end());
-        throw;
-      }
+      stitch(seq_first, seq_last, stitched);
+      do_update(seq_first, seq_last, stitched.begin(), stitched.end());
     } else {
-      do_update(first.impl_, last.impl_, curves_.begin(), curves_.begin());
+      do_update(seq_first, seq_last,
+                get_curves().begin(), get_curves().begin());
     }
   }
 
   // erase last segment of path
   void erase_last() {
-    erase(curves_.end()-2);
+    erase(iterator(*this, size()-1));
   }
 
-  void replace(iterator replaced, Curve const &curve, Stitching stitching=NO_STITCHING) {
-    Sequence source(1, curve.duplicate());
-    try {
-      if (stitching) stitch(replaced.impl_, replaced.impl_+1, source);
-      do_update(replaced.impl_, replaced.impl_+1, source.begin(), source.end());
-    } catch (...) {
-      delete_range(source.begin(), source.end());
-      throw;
-    }
+  void replace(iterator const &replaced,
+               Curve const &curve,
+               Stitching stitching=NO_STITCHING)
+  {
+    unshare();
+    Sequence::iterator seq_replaced(seq_iter(replaced));
+    Sequence source(1, boost::shared_ptr<Curve>(curve.duplicate()));
+    if (stitching) stitch(seq_replaced, seq_replaced+1, source);
+    do_update(seq_replaced, seq_replaced+1, source.begin(), source.end());
   }
 
-  void replace(iterator first_replaced, iterator last_replaced,
+  void replace(iterator const &first_replaced,
+               iterator const &last_replaced,
                Curve const &curve, Stitching stitching=NO_STITCHING)
   {
-    Sequence source(1, curve.duplicate());
-    try {
-      if (stitching) stitch(first_replaced.impl_, last_replaced.impl_, source);
-      do_update(first_replaced.impl_, last_replaced.impl_,
-                source.begin(), source.end());
-    } catch (...) {
-      delete_range(source.begin(), source.end());
-      throw;
-    }
+    unshare();
+    Sequence::iterator seq_first_replaced(seq_iter(first_replaced));
+    Sequence::iterator seq_last_replaced(seq_iter(last_replaced));
+    Sequence source(1, boost::shared_ptr<Curve>(curve.duplicate()));
+    if (stitching) stitch(seq_first_replaced, seq_last_replaced, source);
+    do_update(seq_first_replaced, seq_last_replaced,
+              source.begin(), source.end());
   }
 
-  template <typename Impl>
-  void replace(iterator replaced,
-               BaseIterator<Impl> first, BaseIterator<Impl> last,
+  void replace(iterator const &replaced,
+               const_iterator const &first,
+               const_iterator const &last,
                Stitching stitching=NO_STITCHING)
   {
-    Sequence source(DuplicatingIterator<Impl>(first.impl_),
-                    DuplicatingIterator<Impl>(last.impl_));
-    try {
-      if (stitching) stitch(replaced.impl_, replaced.impl_+1, source);
-      do_update(replaced.impl_, replaced.impl_+1, source.begin(), source.end());
-    } catch (...) {
-      delete_range(source.begin(), source.end());
-      throw;
-    }
+    unshare();
+    Sequence::iterator seq_replaced(seq_iter(replaced));
+    Sequence source(seq_iter(first), seq_iter(last));
+    if (stitching) stitch(seq_replaced, seq_replaced+1, source);
+    do_update(seq_replaced, seq_replaced+1, source.begin(), source.end());
   }
 
-  template <typename Impl>
-  void replace(iterator first_replaced, iterator last_replaced,
-               BaseIterator<Impl> first, BaseIterator<Impl> last,
+  void replace(iterator const &first_replaced,
+               iterator const &last_replaced,
+               const_iterator const &first,
+               const_iterator const &last,
                Stitching stitching=NO_STITCHING)
   {
-    Sequence source(first.impl_, last.impl_);
-    try {
-      if (stitching) stitch(first_replaced.impl_, last_replaced.impl_, source);
-      do_update(first_replaced.impl_, last_replaced.impl_,
-                source.begin(), source.end());
-    } catch (...) {
-      delete_range(source.begin(), source.end());
-      throw;
-    }
+    unshare();
+    Sequence::iterator seq_first_replaced(seq_iter(first_replaced));
+    Sequence::iterator seq_last_replaced(seq_iter(last_replaced));
+    Sequence source(seq_iter(first), seq_iter(last));
+    if (stitching) stitch(seq_first_replaced, seq_last_replaced, source);
+    do_update(seq_first_replaced, seq_last_replaced,
+              source.begin(), source.end());
   }
 
   void start(Point p) {
@@ -578,44 +515,32 @@ public:
   void setInitial(Point const& p)
   {
 	  if ( empty() ) return;
-	  Curve* head = front().duplicate();
+          unshare();
+	  boost::shared_ptr<Curve> head(front().duplicate());
 	  head->setInitial(p);
-	  Sequence::iterator replaced = curves_.begin();
+	  Sequence::iterator replaced = get_curves().begin();
 	  Sequence source(1, head);
-	  try 
-	  {
-		  do_update(replaced, replaced + 1, source.begin(), source.end());
-	  } 
-	  catch (...) 
-	  {
-		  delete_range(source.begin(), source.end());
-		  throw;
-	  }
+	  do_update(replaced, replaced + 1, source.begin(), source.end());
   }
 
   void setFinal(Point const& p)
   {
 	  if ( empty() ) return;
-	  Curve* tail = back().duplicate();
+          unshare();
+	  boost::shared_ptr<Curve> tail(back().duplicate());
 	  tail->setFinal(p);
-	  Sequence::iterator replaced = curves_.end() - 2;
+	  Sequence::iterator replaced = get_curves().end() - 2;
 	  Sequence source(1, tail);
-	  try 
-	  {
-		  do_update(replaced, replaced + 1, source.begin(), source.end());
-	  } 
-	  catch (...) 
-	  {
-		  delete_range(source.begin(), source.end());
-		  throw;
-	  }	 
+	  do_update(replaced, replaced + 1, source.begin(), source.end());
   }
 
   void append(Curve const &curve, Stitching stitching=NO_STITCHING) {
+    unshare();
     if (stitching) stitchTo(curve.initialPoint());
     do_append(curve.duplicate());
   }
   void append(D2<SBasis> const &curve, Stitching stitching=NO_STITCHING) {
+    unshare();
     if (stitching) stitchTo(Point(curve[X][0][0], curve[Y][0][0]));
     do_append(new SBasisCurve(curve));
   }
@@ -625,40 +550,47 @@ public:
 
   void stitchTo(Point const &p) {
     if (!empty() && finalPoint() != p) {
+      unshare();
       do_append(new StitchSegment(finalPoint(), p));
     }
   }
 
   template <typename CurveType, typename A>
   void appendNew(A a) {
+    unshare();
     do_append(new CurveType(finalPoint(), a));
   }
 
   template <typename CurveType, typename A, typename B>
   void appendNew(A a, B b) {
+    unshare();
     do_append(new CurveType(finalPoint(), a, b));
   }
 
   template <typename CurveType, typename A, typename B, typename C>
   void appendNew(A a, B b, C c) {
+    unshare();
     do_append(new CurveType(finalPoint(), a, b, c));
   }
 
   template <typename CurveType, typename A, typename B, typename C,
                                 typename D>
   void appendNew(A a, B b, C c, D d) {
+    unshare();
     do_append(new CurveType(finalPoint(), a, b, c, d));
   }
 
   template <typename CurveType, typename A, typename B, typename C,
                                 typename D, typename E>
   void appendNew(A a, B b, C c, D d, E e) {
+    unshare();
     do_append(new CurveType(finalPoint(), a, b, c, d, e));
   }
 
   template <typename CurveType, typename A, typename B, typename C,
                                 typename D, typename E, typename F>
   void appendNew(A a, B b, C c, D d, E e, F f) {
+    unshare();
     do_append(new CurveType(finalPoint(), a, b, c, d, e, f));
   }
 
@@ -666,6 +598,7 @@ public:
                                 typename D, typename E, typename F,
                                 typename G>
   void appendNew(A a, B b, C c, D d, E e, F f, G g) {
+    unshare();
     do_append(new CurveType(finalPoint(), a, b, c, d, e, f, g));
   }
 
@@ -673,6 +606,7 @@ public:
                                 typename D, typename E, typename F,
                                 typename G, typename H>
   void appendNew(A a, B b, C c, D d, E e, F f, G g, H h) {
+    unshare();
     do_append(new CurveType(finalPoint(), a, b, c, d, e, f, g, h));
   }
 
@@ -680,10 +614,31 @@ public:
                                 typename D, typename E, typename F,
                                 typename G, typename H, typename I>
   void appendNew(A a, B b, C c, D d, E e, F f, G g, H h, I i) {
+    unshare();
     do_append(new CurveType(finalPoint(), a, b, c, d, e, f, g, h, i));
   }
 
 private:
+  static Sequence::iterator seq_iter(iterator const &iter) {
+    return iter.path->get_curves().begin() + iter.index;
+  }
+  static Sequence::const_iterator seq_iter(const_iterator const &iter) {
+    return iter.path->get_curves().begin() + iter.index;
+  }
+
+  Sequence &get_curves() { return *curves_; }
+  Sequence const &get_curves() const { return *curves_; }
+
+  void unshare() {
+    if (!curves_.unique()) {
+      curves_ = boost::shared_ptr<Sequence>(new Sequence(*curves_));
+    }
+    if (!get_curves().back().unique()) {
+      final_ = static_cast<ClosingSegment *>(final_->duplicate());
+      get_curves().back() = boost::shared_ptr<Curve>(final_);
+    }
+  }
+
   void stitch(Sequence::iterator first_replaced,
               Sequence::iterator last_replaced,
               Sequence &sequence);
@@ -693,19 +648,17 @@ private:
                  Sequence::iterator first,
                  Sequence::iterator last);
 
+  // n.b. takes ownership of curve object
   void do_append(Curve *curve);
-
-  static void delete_range(Sequence::iterator first, Sequence::iterator last);
 
   void check_continuity(Sequence::iterator first_replaced,
                         Sequence::iterator last_replaced,
                         Sequence::iterator first,
                         Sequence::iterator last);
 
-  Sequence curves_;
+  boost::shared_ptr<Sequence> curves_;
   ClosingSegment *final_;
   bool closed_;
-  
 };  // end class Path
 
 inline static Piecewise<D2<SBasis> > paths_to_pw(std::vector<Path> paths) {
@@ -733,7 +686,6 @@ inline void swap<Geom::Path>(Geom::Path &a, Geom::Path &b)
 }
 
 }  // end namespace std
-
 
 #endif // SEEN_GEOM_PATH_H
 

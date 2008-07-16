@@ -9,6 +9,8 @@
 	2geom/basic-intersection.cpp	\
 	2geom/bezier-utils.cpp	\
 	2geom/circle-circle.cpp	\
+	2geom/circle.cpp	\
+	2geom/circle.h	\
 	2geom/conjugate_gradient.cpp	\
 	2geom/convex-cover.cpp	\
 	2geom/crossing.cpp	\

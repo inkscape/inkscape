@@ -36,17 +36,10 @@
 
 #include <2geom/path.h>
 
+using namespace Geom::PathInternal;
 
 namespace Geom 
 {
-
-void Path::swap(Path &other) {
-  std::swap(curves_, other.curves_);
-  std::swap(closed_, other.closed_);
-  std::swap(*final_, *other.final_);
-  curves_[curves_.size()-1] = final_;
-  other.curves_[other.curves_.size()-1] = other.final_;
-}
 
 Rect Path::boundsFast() const {
   Rect bounds;
@@ -74,39 +67,35 @@ Rect Path::boundsExact() const {
   return bounds;
 }
 
-/*
-Rect Path::boundsFast()
-{
-    Rect bound;
-    if (empty()) return bound;
-    
-    bound = begin()->boundsFast();
-    for (iterator it = ++begin(); it != end(); ++it)
-    {
-        bound.unionWith(it->boundsFast());
-    }
-    return bound;
-}
-
-Rect Path::boundsExact()
-{
-    Rect bound;
-    if (empty()) return bound;
-    
-    bound = begin()->boundsExact();
-    for (iterator it = ++begin(); it != end(); ++it)
-    {
-        bound.unionWith(it->boundsExact());
-    }
-    return bound;
-    }*/
-
 template<typename iter>
 iter inc(iter const &x, unsigned n) {
   iter ret = x;
   for(unsigned i = 0; i < n; i++)
     ret++;
   return ret;
+}
+
+Path &Path::operator*=(Matrix const &m) {
+  unshare();
+  Sequence::iterator last = get_curves().end() - 1;
+  Sequence::iterator it;
+  Point prev;
+  for (it = get_curves().begin() ; it != last ; ++it) {
+    *it = boost::shared_ptr<Curve>((*it)->transformed(m));
+    if ( it != get_curves().begin() && (*it)->initialPoint() != prev ) {
+      THROW_CONTINUITYERROR();
+    }
+    prev = (*it)->finalPoint();
+  }
+  for ( int i = 0 ; i < 2 ; ++i ) {
+    final_->setPoint(i, (*final_)[i] * m);
+  }
+  if (get_curves().size() > 1) {
+    if ( front().initialPoint() != initialPoint() || back().finalPoint() != finalPoint() ) {
+      THROW_CONTINUITYERROR();
+    }
+  }
+  return *this;
 }
 
 std::vector<double> 
@@ -311,37 +300,31 @@ void Path::do_update(Sequence::iterator first_replaced,
 {
   // note: modifies the contents of [first,last)
   check_continuity(first_replaced, last_replaced, first, last);
-  delete_range(first_replaced, last_replaced);
   if ( ( last - first ) == ( last_replaced - first_replaced ) ) {
     std::copy(first, last, first_replaced);
   } else {
     // this approach depends on std::vector's behavior WRT iterator stability
-    curves_.erase(first_replaced, last_replaced);
-    curves_.insert(first_replaced, first, last);
+    get_curves().erase(first_replaced, last_replaced);
+    get_curves().insert(first_replaced, first, last);
   }
 
-  if ( curves_.front() != final_ ) {
+  if ( get_curves().front().get() != final_ ) {
     final_->setPoint(0, back().finalPoint());
     final_->setPoint(1, front().initialPoint());
   }
 }
 
-void Path::do_append(Curve *curve) {
-  if ( curves_.front() == final_ ) {
+void Path::do_append(Curve *c) {
+  boost::shared_ptr<Curve> curve(c);
+  if ( get_curves().front().get() == final_ ) {
     final_->setPoint(1, curve->initialPoint());
   } else {
     if (curve->initialPoint() != finalPoint()) {
       THROW_CONTINUITYERROR();
     }
   }
-  curves_.insert(curves_.end()-1, curve);
+  get_curves().insert(get_curves().end()-1, curve);
   final_->setPoint(0, curve->finalPoint());
-}
-
-void Path::delete_range(Sequence::iterator first, Sequence::iterator last) {
-  for ( Sequence::iterator iter=first ; iter != last ; ++iter ) {
-    delete *iter;
-  }
 }
 
 void Path::stitch(Sequence::iterator first_replaced,
@@ -349,19 +332,25 @@ void Path::stitch(Sequence::iterator first_replaced,
                   Sequence &source)
 {
   if (!source.empty()) {
-    if ( first_replaced != curves_.begin() ) {
+    if ( first_replaced != get_curves().begin() ) {
       if ( (*first_replaced)->initialPoint() != source.front()->initialPoint() ) {
-        source.insert(source.begin(), new StitchSegment((*first_replaced)->initialPoint(), source.front()->initialPoint()));
+        Curve *stitch = new StitchSegment((*first_replaced)->initialPoint(),
+                                          source.front()->initialPoint());
+        source.insert(source.begin(), boost::shared_ptr<Curve>(stitch));
       }
     }
-    if ( last_replaced != (curves_.end()-1) ) {
+    if ( last_replaced != (get_curves().end()-1) ) {
       if ( (*last_replaced)->finalPoint() != source.back()->finalPoint() ) {
-        source.insert(source.end(), new StitchSegment(source.back()->finalPoint(), (*last_replaced)->finalPoint()));
+        Curve *stitch = new StitchSegment(source.back()->finalPoint(),
+                                          (*last_replaced)->finalPoint());
+        source.insert(source.end(), boost::shared_ptr<Curve>(stitch));
       }
     }
-  } else if ( first_replaced != last_replaced && first_replaced != curves_.begin() && last_replaced != curves_.end()-1) {
+  } else if ( first_replaced != last_replaced && first_replaced != get_curves().begin() && last_replaced != get_curves().end()-1) {
     if ( (*first_replaced)->initialPoint() != (*(last_replaced-1))->finalPoint() ) {
-      source.insert(source.begin(), new StitchSegment((*(last_replaced-1))->finalPoint(), (*first_replaced)->initialPoint()));
+      Curve *stitch = new StitchSegment((*(last_replaced-1))->finalPoint(),
+                                        (*first_replaced)->initialPoint());
+      source.insert(source.begin(), boost::shared_ptr<Curve>(stitch));
     }
   }
 }
@@ -372,17 +361,17 @@ void Path::check_continuity(Sequence::iterator first_replaced,
                             Sequence::iterator last)
 {
   if ( first != last ) {
-    if ( first_replaced != curves_.begin() ) {
+    if ( first_replaced != get_curves().begin() ) {
       if ( (*first_replaced)->initialPoint() != (*first)->initialPoint() ) {
         THROW_CONTINUITYERROR();
       }
     }
-    if ( last_replaced != (curves_.end()-1) ) {
+    if ( last_replaced != (get_curves().end()-1) ) {
       if ( (*(last_replaced-1))->finalPoint() != (*(last-1))->finalPoint() ) {
         THROW_CONTINUITYERROR();
       }
     }
-  } else if ( first_replaced != last_replaced && first_replaced != curves_.begin() && last_replaced != curves_.end()-1) {
+  } else if ( first_replaced != last_replaced && first_replaced != get_curves().begin() && last_replaced != get_curves().end()-1) {
     if ( (*first_replaced)->initialPoint() != (*(last_replaced-1))->finalPoint() ) {
       THROW_CONTINUITYERROR();
     }

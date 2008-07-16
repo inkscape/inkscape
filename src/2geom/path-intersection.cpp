@@ -4,6 +4,8 @@
 
 //for path_direction:
 #include <2geom/sbasis-geometric.h>
+#include <gsl/gsl_vector.h>
+#include <gsl/gsl_multiroots.h>
 
 namespace Geom {
 
@@ -171,6 +173,88 @@ linear_intersect(Point A0, Point A1, Point B0, Point B1,
     }
 }
 
+
+typedef union dbl_64{
+    long long i64;
+    double d64;
+};
+
+static double EpsilonOf(double value)
+{
+    dbl_64 s;
+    s.d64 = value;
+    if(s.i64 == 0)
+    {
+        s.i64++;
+        return s.d64 - value;
+    }
+    else if(s.i64-- < 0)
+        return s.d64 - value;
+    else
+        return value - s.d64;
+}
+
+struct rparams {
+    Curve const &A;
+    Curve const &B;
+};
+
+static int
+intersect_polish_f (const gsl_vector * x, void *params,
+                    gsl_vector * f)
+{
+    const double x0 = gsl_vector_get (x, 0);
+    const double x1 = gsl_vector_get (x, 1);
+     
+    Geom::Point dx = ((struct rparams *) params)->A(x0) - 
+        ((struct rparams *) params)->B(x1);
+     
+    gsl_vector_set (f, 0, dx[0]);
+    gsl_vector_set (f, 1, dx[1]);
+     
+    return GSL_SUCCESS;
+}
+
+static void 
+intersect_polish_root (Curve const &A, double &s,
+                       Curve const &B, double &t) {
+    int status;
+    size_t iter = 0;
+     
+    const size_t n = 2;
+    struct rparams p = {A, B};
+    gsl_multiroot_function f = {&intersect_polish_f, n, &p};
+     
+    double x_init[2] = {s, t};
+    gsl_vector *x = gsl_vector_alloc (n);
+     
+    gsl_vector_set (x, 0, x_init[0]);
+    gsl_vector_set (x, 1, x_init[1]);
+     
+    const gsl_multiroot_fsolver_type *T = gsl_multiroot_fsolver_hybrids;
+    gsl_multiroot_fsolver *sol = gsl_multiroot_fsolver_alloc (T, 2);
+    gsl_multiroot_fsolver_set (sol, &f, x);
+     
+    do
+    {
+        iter++;
+        status = gsl_multiroot_fsolver_iterate (sol);
+     
+        if (status)   /* check if solver is stuck */
+            break;
+     
+        status =
+            gsl_multiroot_test_residual (sol->f, 1e-12);
+    }
+    while (status == GSL_CONTINUE && iter < 1000);
+    
+    s = gsl_vector_get (sol->x, 0);
+    t = gsl_vector_get (sol->x, 1);
+    
+    gsl_multiroot_fsolver_free (sol);
+    gsl_vector_free (x);
+}
+
 /* This uses the local bounds functions of curves to generically intersect two.
  * It passes in the curves, time intervals, and keeps track of depth, while
  * returning the results through the Crossings parameter.
@@ -196,6 +280,8 @@ void pair_intersect(Curve const & A, double Al, double Ah,
                             tA, tB, c)) {
             tA = tA * (Ah - Al) + Al;
             tB = tB * (Bh - Bl) + Bl;
+            intersect_polish_root(A, tA,
+                                  B, tB);
             if(depth % 2)
                 ret.push_back(Crossing(tB, tA, c < 0));
             else
@@ -212,7 +298,6 @@ void pair_intersect(Curve const & A, double Al, double Ah,
                     A, Al, Ah,
                     ret, depth+1);
 }
-
 // A simple wrapper around pair_intersect
 Crossings SimpleCrosser::crossings(Curve const &a, Curve const &b) {
     Crossings ret;

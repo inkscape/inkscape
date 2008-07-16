@@ -43,15 +43,21 @@
 
 namespace Geom {
 
-//
+/* Although an Interval where _b[0] > _b[1] is considered empty, for proper functioning of other methods,
+ * a proper empty Interval is [+COORD_HUGE, -COORD_HUGE]. Then, expandTo(p) will set the interval to [p,p].
+ */
 class Interval {
 private:
-    Coord _b[2]; // this should always hold: _b[0] <= _b[1], otherwise the interval is empty.
+    Coord _b[2];
 
 public:
-    //TODO: I just know this'll pop up somewhere, starting off someone's interval at 0...  I can't see how to avoid this.
-    explicit Interval() { _b[0] = _b[1] = 0; }    
+    // The default constructor creates an empty interval, that ranges from +COORD_HUGE to -COORD_HUGE.
+    // Doing an expandTo(p) on this empty interval will correctly set the whole interval to [p,p].
+    explicit Interval() { _b[0] = +COORD_HUGE;  _b[1] = -COORD_HUGE; }
     explicit Interval(Coord u) { _b[0] = _b[1] = u; }
+    /* When creating an Interval using the constructor specifying the exact range, the created interval
+     * will be [u,v] when u<=v ; and will be [v,u] when v < u !!!
+     */
     Interval(Coord u, Coord v) {
         if(u < v) {
             _b[0] = u; _b[1] = v;
@@ -71,7 +77,7 @@ public:
     inline Coord extent() const { return _b[1] - _b[0]; }
     inline Coord middle() const { return (_b[1] + _b[0]) * 0.5; }
     
-    inline bool isEmpty() const { return _b[0] >= _b[1]; }
+    inline bool isEmpty() const { return _b[0] > _b[1]; }
     inline bool contains(Coord val) const { return _b[0] <= val && val <= _b[1]; }
     bool contains(const Interval & val) const { return _b[0] <= val._b[0] && val._b[1] <= _b[1]; }
     bool intersects(const Interval & val) const {

@@ -44,15 +44,6 @@ namespace Geom {
 
 // TODO: see which of these functions can be inlined for optimization
 
-PathVector operator* (PathVector const & path_in, Matrix const &m)
-{
-    PathVector path_out;
-    for(PathVector::const_iterator it = path_in.begin(); it != path_in.end(); ++it) {
-        path_out.push_back( (*it) * m );
-    }
-    return path_out;
-}
-
 /**
  * Reverses all Paths and the order of paths in the vector as well
  **/
@@ -65,6 +56,7 @@ PathVector reverse_paths_and_order (PathVector const & path_in)
     return path_out;
 }
 
+// FIXME: this function does not work for empty paths, because Rect cannot be initialized empty yet. check rect.h
 Rect bounds_fast( PathVector const& pv )
 {
     typedef PathVector::const_iterator const_iterator;
@@ -80,6 +72,7 @@ Rect bounds_fast( PathVector const& pv )
     return bound;
 }
 
+// FIXME: this function does not work for empty paths, because Rect cannot be initialized empty yet. check rect.h
 Rect bounds_exact( PathVector const& pv )
 {
     typedef PathVector::const_iterator const_iterator;

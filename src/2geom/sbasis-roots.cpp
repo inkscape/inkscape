@@ -62,8 +62,10 @@ Interval bounds_exact(SBasis const &a) {
     return result;
 }
 
+// I have no idea how this works, some clever bounding argument by jfb.
 Interval bounds_fast(const SBasis &sb, int order) {
-    Interval res;
+    Interval res(0,0); // an empty sbasis is 0.
+
     for(int j = sb.size()-1; j>=order; j--) {
         double a=sb[j][0];
         double b=sb[j][1];

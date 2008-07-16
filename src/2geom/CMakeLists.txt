@@ -1,6 +1,7 @@
 SET(2geom_SRC
 basic-intersection.cpp
 bezier-utils.cpp
+circle.cpp
 circle-circle.cpp
 conjugate_gradient.cpp
 convex-cover.cpp

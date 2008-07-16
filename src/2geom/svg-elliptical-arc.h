@@ -219,11 +219,7 @@ class SVGEllipticalArc : public Curve
 
     Curve *derivative() const;
 
-    // TODO: native implementation of the following methods
-    Curve *transformed(Matrix const &m) const
-    {
-        return SBasisCurve(toSBasis()).transformed(m);
-    }
+    Curve *transformed(Matrix const &m) const;
 
     std::vector<Point> pointAndDerivatives(Coord t, unsigned int n) const;
 
@@ -388,14 +384,9 @@ class make_elliptical_arc
         return svg_compliant;
     }
 
-    void svg_compliant_on()
+    void svg_compliant_flag(bool _svg_compliant)
     {
-        svg_compliant = true;
-    }
-
-    void svg_compliant_off()
-    {
-        svg_compliant = false;
+        svg_compliant = _svg_compliant;
     }
 
   private:

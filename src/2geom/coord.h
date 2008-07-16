@@ -45,6 +45,7 @@ namespace Geom {
 typedef double Coord;
 
 const Coord EPSILON = 1e-5; //1e-18;
+const Coord COORD_HUGE = 1e18;
 
 //IMPL: NearConcept
 inline bool are_near(Coord a, Coord b, double eps=EPSILON) { return fabs(a-b) <= eps; }

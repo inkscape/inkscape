@@ -1,8 +1,17 @@
+#ifndef LIB2GEOM_SEEN_POLY_DK_SOLVE_H
+#define LIB2GEOM_SEEN_POLY_DK_SOLVE_H
+
 #include <2geom/poly.h>
 #include <complex>
 
+namespace Geom {
+
 std::vector<std::complex<double> > 
 DK(Poly const & ply, const double tol=1e-10);
+
+} // namespace Geom
+
+#endif // LIB2GEOM_SEEN_POLY_DK_SOLVE_H
 
 /*
   Local Variables:

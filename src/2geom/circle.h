@@ -1,7 +1,10 @@
 /*
- * choose.h
+ * Circle Curve
  *
- * Copyright 2006 Nathan Hurst <njh@mail.csse.monash.edu.au>
+ * Authors:
+ *      Marco Cecchetti <mrcekets at gmail.com>
+ *
+ * Copyright 2008  authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -25,56 +28,92 @@
  * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY
  * OF ANY KIND, either express or implied. See the LGPL or the MPL for
  * the specific language governing rights and limitations.
- *
  */
 
-#ifndef _CHOOSE_H
-#define _CHOOSE_H
-#include <vector>
 
-// XXX: Can we keep only the left terms easily? 
-// this would more than halve the array
-// row index becomes n2 = n/2, row2 = n2*(n2+1)/2, row = row2*2+(n&1)?n2:0
-// we could also leave off the ones
+#ifndef _2GEOM_CIRCLE_H_
+#define _2GEOM_CIRCLE_H_
 
-template <typename T>
-T choose(unsigned n, unsigned k) {
-    static std::vector<T> pascals_triangle;
-    static unsigned rows_done = 0;
-    // indexing is (0,0,), (1,0), (1,1), (2, 0)...
-    // to get (i, j) i*(i+1)/2 + j
-    if(/*k < 0 ||*/ k > n) return 0;
-    if(rows_done <= n) {// we haven't got there yet
-        if(rows_done == 0) {
-            pascals_triangle.push_back(1);
-            rows_done = 1;
-        }
-        while(rows_done <= n) {
-            unsigned p = pascals_triangle.size() - rows_done;
-            pascals_triangle.push_back(1);
-            for(unsigned i = 0; i < rows_done-1; i++) {
-                pascals_triangle.push_back(pascals_triangle[p] 
-                                           + pascals_triangle[p+1]);
-		p++;
-            }
-            pascals_triangle.push_back(1);
-            rows_done ++;
-        }
+
+#include <2geom/point.h>
+#include <2geom/exception.h>
+
+
+namespace Geom
+{
+
+class SVGEllipticalArc;
+
+class Circle
+{
+  public:
+    Circle()
+    {}
+
+    Circle(double cx, double cy, double r)
+        : m_centre(cx, cy), m_ray(r)
+    {
     }
-    unsigned row = (n*(n+1))/2;
-    return pascals_triangle[row+k];
-}
 
-// Is it faster to store them or compute them on demand?
-/*template <typename T>
-T choose(unsigned n, unsigned k) {
-	T r = 1;
-	for(unsigned i = 1; i <= k; i++)
-		r = (r*(n-k+i))/i;
-	return r;
-	}*/
+    Circle(double A, double B, double C, double D)
+    {
+        set(A, B, C, D);
+    }
 
-#endif
+    Circle(std::vector<Point> const& points)
+    {
+        set(points);
+    }
+
+    void set(double cx, double cy, double r)
+    {
+        m_centre[X] = cx;
+        m_centre[Y] = cy;
+        m_ray = r;
+    }
+
+
+    // build a circle by its implicit equation:
+    // Ax^2 + Ay^2 + Bx + Cy + D = 0
+    void set(double A, double B, double C, double D);
+
+    // build up the best fitting circle wrt the passed points
+    // prerequisite: at least 3 points must be passed
+    void set(std::vector<Point> const& points);
+
+    SVGEllipticalArc
+    arc(Point const& initial, Point const& inner, Point const& final,
+        bool _svg_compliant = true);
+
+    Point center() const
+    {
+        return m_centre;
+    }
+
+    Coord center(Dim2 d) const
+    {
+        return m_centre[d];
+    }
+
+    Coord ray() const
+    {
+        return m_ray;
+    }
+
+
+  private:
+    Point m_centre;
+    Coord m_ray;
+    Coord m_angle;
+};
+
+
+} // end namespace Geom
+
+
+
+#endif // _2GEOM_CIRCLE_H_
+
 
 /*
   Local Variables:

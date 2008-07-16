@@ -76,7 +76,7 @@ inline Point operator*(Point const &p, Scale const &s) { return Point(p[X] * s[X
 **/
 class Rotate {
   private:
-    Rotate();
+    Rotate() {}
     Point vec;
   public:    
     explicit Rotate(Coord theta) : vec(std::cos(theta), std::sin(theta)) {}
@@ -89,7 +89,11 @@ class Rotate {
     inline bool operator==(Rotate const &o) const { return vec == o.vec; }
     inline bool operator!=(Rotate const &o) const { return vec != o.vec; }
 
-    Rotate inverse() const { return Rotate( Point(vec[X], -vec[Y]) ); }
+    inline Rotate inverse() const {
+        Rotate r;
+        r.vec = Point(vec[X], -vec[Y]); 
+        return r;
+    }
     static Rotate from_degrees(Coord deg) {
         Coord rad = (deg / 180.0) * M_PI;
         return Rotate(rad);

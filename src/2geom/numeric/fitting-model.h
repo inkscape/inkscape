@@ -41,6 +41,7 @@
 #include <2geom/bezier-curve.h>
 #include <2geom/poly.h>
 #include <2geom/ellipse.h>
+#include <2geom/circle.h>
 #include <2geom/utils.h>
 
 
@@ -235,6 +236,41 @@ class LFMEllipse
     void instance(Ellipse & e, ConstVectorView const& coeff) const
     {
         e.set(1, coeff[0], coeff[1], coeff[2], coeff[3], coeff[4]);
+    }
+};
+
+
+// incomplete model, it can be inherited to make up different kinds of
+// instance type; the raw data is a vector of coefficients of the equation
+// of a circle curve
+template< typename InstanceType >
+class LFMCircleEquation
+    : public LinearFittingModelWithFixedTerms<Point, double, InstanceType>
+{
+  public:
+    void feed( VectorView & coeff, double & fixed_term, Point const& p ) const
+    {
+        coeff[0] = p[X];
+        coeff[1] = p[Y];
+        coeff[2] = 1;
+        fixed_term = p[X] * p[X] + p[Y] * p[Y];
+    }
+
+    size_t size() const
+    {
+        return 3;
+    }
+};
+
+
+// this model generates Ellipse curves
+class LFMCircle
+    : public LFMCircleEquation<Circle>
+{
+  public:
+    void instance(Circle & c, ConstVectorView const& coeff) const
+    {
+        c.set(1, coeff[0], coeff[1], coeff[2]);
     }
 };
 

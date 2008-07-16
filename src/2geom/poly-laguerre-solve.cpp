@@ -1,6 +1,9 @@
 #include <2geom/poly-laguerre-solve.h>
 #include <iterator>
 
+
+namespace Geom {
+
 typedef std::complex<double> cdouble;
 
 cdouble laguerre_internal_complex(Poly const & p,
@@ -139,6 +142,8 @@ laguerre_real_interval(Poly const & /*ply*/,
     std::vector<double> result;
     return result;
 }
+
+} // namespace Geom
 
 /*
   Local Variables:

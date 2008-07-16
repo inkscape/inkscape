@@ -44,12 +44,13 @@ namespace Geom {
 void parse_svg_path(char const *str, SVGPathSink &sink) throw(SVGPathParseError);
 
 inline std::vector<Path> parse_svg_path(char const *str) throw(SVGPathParseError) {
-    /*PathBuilder b;
-    parse_svg_path(str, b);
-    return b.peek();*/
-    std::vector<Path> subpaths;
-    std::back_insert_iterator<std::vector<Path> > iter(subpaths);
-    SVGPathGenerator<std::back_insert_iterator<std::vector<Path> > > generator(iter);
+    typedef std::vector<Path> Subpaths;
+    typedef std::back_insert_iterator<Subpaths> Inserter;
+    
+    Subpaths subpaths;
+    Inserter iter(subpaths);
+    SVGPathGenerator<Inserter> generator(iter);
+
     parse_svg_path(str, generator);
     return subpaths;
 }

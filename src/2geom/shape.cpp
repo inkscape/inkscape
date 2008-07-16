@@ -432,7 +432,7 @@ std::vector<Path> inner_sanitize(std::vector<Path> const & ps) {
                 std::cout << "r" << ix << "[" << from.getTime(ix)  << ", " << to.getTime(ix) << "]\n";
                 Path p = ps[ix].portion(from.getTime(ix), to.getTime(ix)).reverse();
                 for(unsigned i = 0; i < p.size(); i++)
-                    res.append(p[i]);
+                    res.append(p[i], Path::STITCH_DISCONTINUOUS);
             } else {
                 // forwards
                 std::cout << "f" << ix << "[" << from.getTime(ix) << ", " << to.getTime(ix) << "]\n";
