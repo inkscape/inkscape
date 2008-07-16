@@ -1467,7 +1467,7 @@ int FilterEffectsDialog::PrimitiveList::init_text()
     _vertical_layout = Pango::Layout::create(context);
 
     int maxfont = 0;
-    for(int i = 0; i < FPInputConverter.end; ++i) {
+    for(unsigned int i = 0; i < FPInputConverter._length; ++i) {
         _vertical_layout->set_text(_(FPInputConverter.get_label((FilterPrimitiveInput)i).c_str()));
         int fontw, fonth;
         _vertical_layout->get_pixel_size(fontw, fonth);
@@ -1591,8 +1591,8 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
         int vis_x, vis_y;
         tree_to_widget_coords(vis.get_x(), vis.get_y(), vis_x, vis_y);
 
-        text_start_x = rct.get_x() + rct.get_width() - _connection_cell.get_text_width() * (FPInputConverter.end + 1) + 1;
-        for(int i = 0; i < FPInputConverter.end; ++i) {
+        text_start_x = rct.get_x() + rct.get_width() - _connection_cell.get_text_width() * (FPInputConverter._length + 1) + 1;
+        for(unsigned int i = 0; i < FPInputConverter._length; ++i) {
             _vertical_layout->set_text(_(FPInputConverter.get_label((FilterPrimitiveInput)i).c_str()));
             const int x = text_start_x + _connection_cell.get_text_width() * (i + 1);
             get_bin_window()->draw_rectangle(get_style()->get_bg_gc(Gtk::STATE_NORMAL), true, x, vis_y, _connection_cell.get_text_width(), vis.get_height());
@@ -1898,13 +1898,13 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
             Gdk::Rectangle rct;
             get_cell_area(path, *col, rct);
             const int twidth = _connection_cell.get_text_width();
-            const int sources_x = rct.get_width() - twidth * FPInputConverter.end;
+            const int sources_x = rct.get_width() - twidth * FPInputConverter._length;
             if(cx > sources_x) {
                 int src = (cx - sources_x) / twidth;
                 if(src < 0)
                     src = 0;
-                else if(src >= FPInputConverter.end)
-                    src = FPInputConverter.end - 1;
+                else if(src >= FPInputConverter._length)
+                    src = FPInputConverter._length - 1;
                 result = FPInputConverter.get_key((FilterPrimitiveInput)src);
                 in_val = result.c_str();
             }

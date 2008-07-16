@@ -37,7 +37,7 @@ public:
         pack_start(_columns.label);
 
         // Initialize list
-        for(int i = 0; i < _converter.end; ++i) {
+        for(int i = 0; i < _converter._length; ++i) {
             Gtk::TreeModel::Row row = *_model->append();
             const Util::EnumData<E>* data = &_converter.data(i);
             row[_columns.data] = data;
@@ -57,7 +57,7 @@ public:
         pack_start(_columns.label);
 
         // Initialize list
-        for(int i = 0; i < _converter.end; ++i) {
+        for(unsigned int i = 0; i < _converter._length; ++i) {
             Gtk::TreeModel::Row row = *_model->append();
             const Util::EnumData<E>* data = &_converter.data(i);
             row[_columns.data] = data;
@@ -76,7 +76,7 @@ public:
         setProgrammatically = true;
         const gchar* val = attribute_value(o);
         if(val)
-            set_active(_converter.get_id_from_key(val));
+            set_active_by_id(_converter.get_id_from_key(val));
         else
             set_active(get_default()->as_uint());
     }
