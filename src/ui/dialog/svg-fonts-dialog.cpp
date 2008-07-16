@@ -46,7 +46,7 @@ bool SvgFontDrawingArea::on_expose_event (GdkEventExpose *event){
     Glib::RefPtr<Gdk::Window> window = get_window();
     Cairo::RefPtr<Cairo::Context> cr = window->create_cairo_context();
     cr->set_font_face( Cairo::RefPtr<Cairo::FontFace>(new Cairo::FontFace(this->svgfont->get_font_face(), false /* does not have reference */)) );
-    cr->set_font_size (this->y);
+    cr->set_font_size (this->y-20);
     cr->move_to (10, 10);
     cr->show_text (this->text.c_str());
   }
@@ -183,7 +183,9 @@ SvgFontsDialog::SvgFontsDialog()
     _font_settings.add(*kernvbox);
     kernvbox->add(*Gtk::manage(new Gtk::Label("Kerning Setup:")));
     Gtk::HBox* kerning_selector = Gtk::manage(new Gtk::HBox());
+    kerning_selector->add(*Gtk::manage(new Gtk::Label("1st Glyph:")));
     kerning_selector->add(first_glyph);
+    kerning_selector->add(*Gtk::manage(new Gtk::Label("2nd Glyph:")));
     kerning_selector->add(second_glyph);
     first_glyph.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_glyphs_changed));
     second_glyph.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_glyphs_changed));
@@ -191,18 +193,26 @@ SvgFontsDialog::SvgFontsDialog()
 
     kernvbox->add(*kerning_selector);
     kernvbox->add((Gtk::Widget&) kerning_preview);
-    kernvbox->add(kerning_spin);
 
-    kerning_preview.set_size(300, 150);
-    _font_da.set_size(150, 50);
+    Gtk::HBox* kerning_amount_hbox = Gtk::manage(new Gtk::HBox());
+    kernvbox->add(*kerning_amount_hbox);
+    kerning_amount_hbox->add(*Gtk::manage(new Gtk::Label("Kerning value:")));
+    kerning_amount_hbox->add(kerning_spin);
+
+    kerning_preview.set_size(300 + 20, 150 + 20);
+    _font_da.set_size(150 + 20, 50 + 20);
 
 //Text Preview:
     _preview_entry.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_preview_text_changed));
-    _getContents()->add(*Gtk::manage(new Gtk::Label("Preview Text:")));
     _getContents()->add((Gtk::Widget&) _font_da);
     _preview_entry.set_text("Sample Text");
     _font_da.set_text("Sample Text");
-    _getContents()->add(_preview_entry);
+
+    Gtk::HBox* preview_entry_hbox = Gtk::manage(new Gtk::HBox());
+    _getContents()->add(*preview_entry_hbox);
+    preview_entry_hbox->add(*Gtk::manage(new Gtk::Label("Preview Text:")));
+    preview_entry_hbox->add(_preview_entry);
+
     _getContents()->show_all();
 }
 
