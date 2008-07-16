@@ -711,7 +711,7 @@ NArtBpath const* Inkscape::ObjectSnapper::_getBorderBPath() const
     Geom::Rect const border_rect = Geom::Rect(Geom::Point(0,0), Geom::Point(sp_document_width(_named_view->document),sp_document_height(_named_view->document)));
     SPCurve const *border_curve = SPCurve::new_from_rect(border_rect);
     if (border_curve) {
-        border_bpath = SP_CURVE_BPATH(border_curve); 
+        border_bpath = BPath_from_2GeomPath(border_curve->get_pathvector()); 
     }
         
     return border_bpath;

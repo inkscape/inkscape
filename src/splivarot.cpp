@@ -53,6 +53,7 @@
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-translate-ops.h>
 #include <libnr/nr-scale-matrix-ops.h>
+#include <libnr/n-art-bpath-2geom.h>
 
 #include "livarot/Path.h"
 #include "livarot/Shape.h"
@@ -1777,7 +1778,7 @@ bpath_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transf
     if (curve == NULL)
         return NULL;
 
-    NArtBpath const *bpath = SP_CURVE_BPATH(curve);
+    NArtBpath *bpath = BPath_from_2GeomPath(curve->get_pathvector());
     if (bpath == NULL) {
         return NULL;
     }
@@ -1793,6 +1794,7 @@ bpath_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transf
         new_bpath = nr_artpath_affine(bpath, NR::identity());
     }
 
+    g_free(bpath);
     return new_bpath;
 }
 

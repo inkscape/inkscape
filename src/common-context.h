@@ -22,6 +22,7 @@
 #include "event-context.h"
 #include "display/curve.h"
 #include "display/display-forward.h"
+#include <libnr/nr-point.h>
 
 #define SP_TYPE_COMMON_CONTEXT (sp_common_context_get_type())
 #define SP_COMMON_CONTEXT(o) (GTK_CHECK_CAST((o), SP_TYPE_COMMON_CONTEXT, SPCommonContext))

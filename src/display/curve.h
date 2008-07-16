@@ -21,7 +21,6 @@
 #include <2geom/forward.h>
 
 #include "libnr/nr-forward.h"
-#include "libnr/nr-rect.h"
 
 #define SP_CURVE_LENSTEP 32
 
@@ -33,8 +32,6 @@ public:
     /* Constructors */
     explicit SPCurve(guint length = SP_CURVE_LENSTEP);
     explicit SPCurve(Geom::PathVector const& pathv);
-    static SPCurve * new_from_bpath(NArtBpath *bpath);
-    static SPCurve * new_from_foreign_bpath(NArtBpath const *bpath);
     static SPCurve * new_from_rect(Geom::Rect const &rect);
 
     virtual ~SPCurve();
@@ -43,8 +40,8 @@ public:
     NArtBpath const * get_bpath() const;
     Geom::PathVector const & get_pathvector() const;
 
-    guint get_length() const;
     guint get_segment_count() const;
+    guint nodes_in_path() const;
 
     SPCurve * ref();
     SPCurve * unref();
@@ -76,7 +73,6 @@ public:
 
     bool is_empty() const;
     bool is_closed() const;
-    NArtBpath const * last_bpath() const;
     Geom::Curve const * last_segment() const;
     Geom::Path const * last_path() const;
     Geom::Curve const * first_segment() const;
@@ -85,7 +81,6 @@ public:
     NR::Point last_point() const;
     NR::Point second_point() const;
     NR::Point penultimate_point() const;
-    guint nodes_in_path() const;
 
     void append(SPCurve const *curve2, bool use_lineto);
     SPCurve * create_reverse() const;
@@ -93,62 +88,16 @@ public:
 
     static SPCurve * concat(GSList const *list);
 
-    void ensure_space(guint space);
-
 protected:
     gint _refcount;
 
-    NArtBpath *_bpath;
     Geom::PathVector _pathv;
-
-    /// Index in bpath[] of NR_END element.
-    guint _end;
-
-    /// Allocated size (i.e., capacity) of bpath[] array.  Not to be confused 
-    /// with the SP_CURVE_LENGTH macro, which returns the logical length of 
-    /// the path (i.e., index of NR_END).
-    guint _length;
-
-    /// Index in bpath[] of the start (i.e., moveto element) of the last 
-    /// subpath in this path.
-    guint _substart;
-
-    /// Previous moveto position.
-    /// \note This is used for coalescing moveto's, whereas if we're to 
-    /// conform to the SVG spec then we mustn't coalesce movetos if we have 
-    /// midpoint markers.  Ref:
-    /// http://www.w3.org/TR/SVG11/implnote.html#PathElementImplementationNotes
-    /// (first subitem of the item about zero-length path segments)
-    NR::Point _movePos;
-
-    /// True iff current point is defined.  Initially false for a new curve; 
-    /// becomes true after moveto; becomes false on closepath.  Curveto, 
-    /// lineto etc. require hascpt; hascpt remains true after lineto/curveto.
-    bool _hascpt : 1;
-    
-    /// True iff previous was moveto.
-    bool _posSet : 1;
-
-    /// True iff bpath end is moving.
-    bool _moving : 1;
-    
-    /// True iff all subpaths are closed.
-    bool _closed : 1;
 
 private:
     // Don't implement these:
     SPCurve(const SPCurve&);
     SPCurve& operator=(const SPCurve&);
-
-//friends:
-    friend double sp_curve_distance_including_space(SPCurve const *const curve, double seg2len[]);
-    friend double sp_curve_nonzero_distance_including_space(SPCurve const *const curve, double seg2len[]);
-    template<class M> friend void tmpl_curve_transform(SPCurve * curve, M const &m);
 };
-
-#define SP_CURVE_LENGTH(c) (((SPCurve const *)(c))->get_length())
-#define SP_CURVE_BPATH(c) (((SPCurve const *)(c))->get_bpath())
-
 
 #endif /* !SEEN_DISPLAY_CURVE_H */
 
