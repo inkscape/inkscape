@@ -77,6 +77,7 @@ enum EffectType {
     COPY_ROTATE,
     OFFSET,
     RULER,
+    BOOLOPS,
     INVALID_LPE // This must be last
 };
 

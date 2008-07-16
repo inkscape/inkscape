@@ -62,6 +62,7 @@
 #include "live_effects/lpe-copy_rotate.h"
 #include "live_effects/lpe-offset.h"
 #include "live_effects/lpe-ruler.h"
+#include "live_effects/lpe-boolops.h"
 // end of includes
 
 namespace Inkscape {
@@ -96,6 +97,7 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {COPY_ROTATE, N_("Rotate copies"), "copy_rotate"},
     {OFFSET, N_("Offset"), "offset"},
     {RULER, N_("Ruler"), "ruler"},
+    {BOOLOPS, N_("Boolops"), "boolops"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
@@ -177,6 +179,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case RULER:
             neweffect = static_cast<Effect*> ( new LPERuler(lpeobj) );
+            break;
+        case BOOLOPS:
+            neweffect = static_cast<Effect*> ( new LPEBoolops(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);

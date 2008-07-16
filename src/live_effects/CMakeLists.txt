@@ -2,6 +2,7 @@ SET(live_effects_SRC
 bezctx.cpp
 effect.cpp
 lpe-bendpath.cpp
+lpe-boolops.cpp
 lpe-circle_with_radius.cpp
 lpe-constructgrid.cpp
 lpe-curvestitch.cpp
