@@ -2352,7 +2352,7 @@ Shape::AssembleAretes (FillRule directed)
   }
 }
 void
-Shape::GetWindings (Shape * a, Shape * b, BooleanOp mod, bool brutal)
+Shape::GetWindings (Shape * /*a*/, Shape * /*b*/, BooleanOp /*mod*/, bool brutal)
 {
   // preparation du parcours
   for (int i = 0; i < numberOfEdges(); i++)
@@ -2510,7 +2510,7 @@ Shape::GetWindings (Shape * a, Shape * b, BooleanOp mod, bool brutal)
 bool
 Shape::TesteIntersection (Shape * ils, Shape * irs, int ilb, int irb,
                           NR::Point &atx, double &atL, double &atR,
-			  bool onlyDiff)
+			  bool /*onlyDiff*/)
 {
   int lSt = ils->getEdge(ilb).st, lEn = ils->getEdge(ilb).en;
   int rSt = irs->getEdge(irb).st, rEn = irs->getEdge(irb).en;
@@ -2720,8 +2720,8 @@ Shape::TesteAdjacency (Shape * a, int no, const NR::Point atx, int nPt,
 }
 
 void
-Shape::CheckAdjacencies (int lastPointNo, int lastChgtPt, Shape * shapeHead,
-			 int edgeHead)
+Shape::CheckAdjacencies (int lastPointNo, int lastChgtPt, Shape * /*shapeHead*/,
+			 int /*edgeHead*/)
 {
   for (unsigned int cCh = 0; cCh < chgts.size(); cCh++)
     {
@@ -3111,7 +3111,7 @@ Shape::CheckEdges (int lastPointNo, int lastChgtPt, Shape * a, Shape * b,
 }
 
 void
-Shape::Avance (int lastPointNo, int lastChgtPt, Shape * lS, int lB, Shape * a,
+Shape::Avance (int lastPointNo, int lastChgtPt, Shape * lS, int lB, Shape * /*a*/,
 	       Shape * b, BooleanOp mod)
 {
   double dd = HalfRound (1);

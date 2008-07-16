@@ -54,7 +54,7 @@ LPERuler::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_i
     g_print ("Distance: %8.2f\n", length);
 
     Point C, D;
-    for (int i = 0; i < length; i+=mark_distance) {
+    for (int i = 0; i < length; i += static_cast<int>(mark_distance)) {
         C = A + dir * i;
         D = C + n;
         Piecewise<D2<SBasis> > seg(D2<SBasis>(Linear(C[X], D[X]), Linear(C[Y], D[Y])));

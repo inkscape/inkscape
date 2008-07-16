@@ -1036,7 +1036,7 @@ gboolean icon_prerender_task(gpointer /*data*/) {
     }
 }
 
-void imageMapCB(GtkWidget* widget, gpointer user_data) {
+void imageMapCB(GtkWidget* widget, gpointer /*user_data*/) {
     gchar* id = 0;
     GtkIconSize size = GTK_ICON_SIZE_INVALID;
     gtk_image_get_stock(GTK_IMAGE(widget), &id, &size);

@@ -736,7 +736,7 @@ jstring JNICALL documentGet(JNIEnv *env, jobject /*obj*/, jlong /*ptr*/)
  * This is provided to scripts can load an XML tree into Inkscape.
  * If anyone has a smarter way of doing this, please implement. 
  */    
-jboolean JNICALL documentSet(JNIEnv *env, jobject /*obj*/, jlong /*ptr*/, jstring /*jstr*/)
+jboolean JNICALL documentSet(JNIEnv */*env*/, jobject /*obj*/, jlong /*ptr*/, jstring /*jstr*/)
 {
     /*
     JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;

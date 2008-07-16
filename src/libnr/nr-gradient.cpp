@@ -105,8 +105,8 @@ static void compose(NRPixBlock *pb, unsigned char *dest,
 template <>
 struct Compose<NR_PIXBLOCK_MODE_R8G8B8A8N, true> {
 static const unsigned bpp=4;
-static void compose(NRPixBlock *pb, unsigned char *dest,
-                    NRPixBlock *spb, unsigned char const *src)
+static void compose(NRPixBlock */*pb*/, unsigned char *dest,
+                    NRPixBlock */*spb*/, unsigned char const *src)
 {
     std::memcpy(dest, src, 4);
 }
@@ -115,8 +115,8 @@ static void compose(NRPixBlock *pb, unsigned char *dest,
 template <>
 struct Compose<NR_PIXBLOCK_MODE_R8G8B8A8P, true> {
 static const unsigned bpp=4;
-static void compose(NRPixBlock *pb, unsigned char *dest,
-                    NRPixBlock *spb, unsigned char const *src)
+static void compose(NRPixBlock */*pb*/, unsigned char *dest,
+                    NRPixBlock */*spb*/, unsigned char const *src)
 {
     dest[0] = NR_PREMUL_111(src[0], src[3]);
     dest[1] = NR_PREMUL_111(src[1], src[3]);
@@ -128,8 +128,8 @@ static void compose(NRPixBlock *pb, unsigned char *dest,
 template <>
 struct Compose<NR_PIXBLOCK_MODE_R8G8B8, true> {
 static const unsigned bpp=3;
-static void compose(NRPixBlock *pb, unsigned char *dest,
-                    NRPixBlock *spb, unsigned char const *src)
+static void compose(NRPixBlock */*pb*/, unsigned char *dest,
+                    NRPixBlock */*spb*/, unsigned char const *src)
 {
     dest[0] = NR_COMPOSEN11_1111(src[0], src[3], 255);
     dest[1] = NR_COMPOSEN11_1111(src[1], src[3], 255);
@@ -140,8 +140,8 @@ static void compose(NRPixBlock *pb, unsigned char *dest,
 template <>
 struct Compose<NR_PIXBLOCK_MODE_A8, true> {
 static const unsigned bpp=1;
-static void compose(NRPixBlock *pb, unsigned char *dest,
-                    NRPixBlock *spb, unsigned char const *src)
+static void compose(NRPixBlock */*pb*/, unsigned char *dest,
+                    NRPixBlock */*spb*/, unsigned char const *src)
 {
     dest[0] = src[3];
 }
@@ -150,8 +150,8 @@ static void compose(NRPixBlock *pb, unsigned char *dest,
 template <>
 struct Compose<NR_PIXBLOCK_MODE_R8G8B8A8N, false> {
 static const unsigned bpp=4;
-static void compose(NRPixBlock *pb, unsigned char *dest,
-                    NRPixBlock *spb, unsigned char const *src)
+static void compose(NRPixBlock */*pb*/, unsigned char *dest,
+                    NRPixBlock */*spb*/, unsigned char const *src)
 {
     unsigned int ca;
     ca = NR_COMPOSEA_112(src[3], dest[3]);
@@ -165,8 +165,8 @@ static void compose(NRPixBlock *pb, unsigned char *dest,
 template <>
 struct Compose<NR_PIXBLOCK_MODE_R8G8B8A8P, false> {
 static const unsigned bpp=4;
-static void compose(NRPixBlock *pb, unsigned char *dest,
-                    NRPixBlock *spb, unsigned char const *src)
+static void compose(NRPixBlock */*pb*/, unsigned char *dest,
+                    NRPixBlock */*spb*/, unsigned char const *src)
 {
     dest[0] = NR_COMPOSENPP_1111(src[0], src[3], dest[0]);
     dest[1] = NR_COMPOSENPP_1111(src[1], src[3], dest[1]);
@@ -178,8 +178,8 @@ static void compose(NRPixBlock *pb, unsigned char *dest,
 template <>
 struct Compose<NR_PIXBLOCK_MODE_R8G8B8, false> {
 static const unsigned bpp=3;
-static void compose(NRPixBlock *pb, unsigned char *dest,
-                    NRPixBlock *spb, unsigned char const *src)
+static void compose(NRPixBlock */*pb*/, unsigned char *dest,
+                    NRPixBlock */*spb*/, unsigned char const *src)
 {
     dest[0] = NR_COMPOSEN11_1111(src[0], src[3], dest[0]);
     dest[1] = NR_COMPOSEN11_1111(src[1], src[3], dest[1]);
@@ -233,11 +233,9 @@ render_spread(NRGradientRenderer *gr, NRPixBlock *pb)
 
 template <typename Subtype>
 static void
-render(NRRenderer *r, NRPixBlock *pb, NRPixBlock *m)
+render(NRRenderer *r, NRPixBlock *pb, NRPixBlock */*m*/)
 {
-    NRGradientRenderer *gr;
-
-    gr = static_cast<NRGradientRenderer *>(r);
+    NRGradientRenderer *gr = static_cast<NRGradientRenderer *>(r);
 
     switch (gr->spread) {
     case NR_GRADIENT_SPREAD_REPEAT:

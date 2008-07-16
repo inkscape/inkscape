@@ -79,7 +79,7 @@ void
 PointParamKnotHolder::add_knot (
     Geom::Point         & p,
 // TODO: check if knot_click being ignored is bad:
-    PointParamKnotHolderClickedFunc knot_click,
+    PointParamKnotHolderClickedFunc /*knot_click*/,
     SPKnotShapeType     shape,
     SPKnotModeType      mode,
     guint32             color,

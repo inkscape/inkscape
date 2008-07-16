@@ -273,7 +273,7 @@ void Shape::Scan(float &pos, int &curP, float to, float step)
 
     
 
-void Shape::QuickScan(float &pos,int &curP, float to, bool doSort, float step)
+void Shape::QuickScan(float &pos,int &curP, float to, bool /*doSort*/, float step)
 {
     if ( numberOfEdges() <= 1 ) {
         return;
@@ -706,7 +706,7 @@ void Shape::DirectScan(float &pos, int &curP, float to, float step)
 
 
     
-void Shape::DirectQuickScan(float &pos, int &curP, float to, bool doSort, float step)
+void Shape::DirectQuickScan(float &pos, int &curP, float to, bool /*doSort*/, float step)
 {
     if ( numberOfEdges() <= 1 ) {
         return;

@@ -35,6 +35,7 @@ static bool isApproximatelyClosed(GnomeCanvasBpathDef *bpd) {
 	int const initial = bpd->moveto_idx;
 	int const current = bpd->n_bpath - 1;
     NR::Point distToInit(distTo(bpd, current, initial));
+    // TODO check the double to int conversion in the abs() call:
     return
         distToInit[NR::X] <= abs(bpd->bpath[current].c(3)[NR::X])*precision &&
         distToInit[NR::Y] <= abs(bpd->bpath[current].c(3)[NR::Y])*precision;

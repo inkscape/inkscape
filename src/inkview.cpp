@@ -113,14 +113,14 @@ int sp_main_gui (int, char const**) { return 0; }
 int sp_main_console (int, char const**) { return 0; }
 
 static int
-sp_svgview_main_delete (GtkWidget *widget, GdkEvent *event, struct SPSlideShow *ss)
+sp_svgview_main_delete (GtkWidget */*widget*/, GdkEvent */*event*/, struct SPSlideShow */*ss*/)
 {
     gtk_main_quit ();
     return FALSE;
 }
 
 static int
-sp_svgview_main_key_press (GtkWidget *widget, GdkEventKey *event, struct SPSlideShow *ss)
+sp_svgview_main_key_press (GtkWidget */*widget*/, GdkEventKey *event, struct SPSlideShow *ss)
 {
     switch (event->keyval) {
     case GDK_Up:
@@ -337,7 +337,7 @@ main (int argc, const char **argv)
 }
 
 static int
-sp_svgview_ctrlwin_delete (GtkWidget *widget, GdkEvent *event, void *data)
+sp_svgview_ctrlwin_delete (GtkWidget */*widget*/, GdkEvent */*event*/, void */*data*/)
 {
     ctrlwin = NULL;
     return FALSE;
@@ -387,28 +387,28 @@ sp_svgview_control_show (struct SPSlideShow *ss)
 }
 
 static int
-sp_svgview_show_next_cb (GtkWidget *widget, void *data)
+sp_svgview_show_next_cb (GtkWidget */*widget*/, void *data)
 {
     sp_svgview_show_next(static_cast<struct SPSlideShow *>(data));
     return FALSE;
 }
 
 static int
-sp_svgview_show_prev_cb (GtkWidget *widget, void *data)
+sp_svgview_show_prev_cb (GtkWidget */*widget*/, void *data)
 {
     sp_svgview_show_prev(static_cast<struct SPSlideShow *>(data));
     return FALSE;
 }
 
 static int
-sp_svgview_goto_first_cb (GtkWidget *widget, void *data)
+sp_svgview_goto_first_cb (GtkWidget */*widget*/, void *data)
 {
     sp_svgview_goto_first(static_cast<struct SPSlideShow *>(data));
     return FALSE;
 }
 
 static int
-sp_svgview_goto_last_cb (GtkWidget *widget, void *data)
+sp_svgview_goto_last_cb (GtkWidget */*widget*/, void *data)
 {
     sp_svgview_goto_last(static_cast<struct SPSlideShow *>(data));
     return FALSE;

@@ -314,7 +314,7 @@ SweepTree::Insert(SweepTreeList &list, SweepEventQueue &queue,
 
 int
 SweepTree::InsertAt(SweepTreeList &list, SweepEventQueue &queue,
-                    Shape *iDst, SweepTree *insNode, int fromPt,
+                    Shape */*iDst*/, SweepTree *insNode, int fromPt,
                     bool rebalance, bool sweepSens)
 {
   if (list.racine == NULL)
@@ -489,8 +489,9 @@ SweepTree::Relocate(SweepTree * to)
     evt[RIGHT]->sweep[LEFT] = to;
 }
 
+// TODO check if ignoring these parameters is bad
 void
-SweepTree::SwapWithRight(SweepTreeList &list, SweepEventQueue &queue)
+SweepTree::SwapWithRight(SweepTreeList &/*list*/, SweepEventQueue &/*queue*/)
 {
     SweepTree *tL = this;
     SweepTree *tR = static_cast<SweepTree *>(elem[RIGHT]);
@@ -522,7 +523,7 @@ SweepTree::SwapWithRight(SweepTreeList &list, SweepEventQueue &queue)
 }
 
 void
-SweepTree::Avance(Shape *dstPts, int curPoint, Shape *a, Shape *b)
+SweepTree::Avance(Shape */*dstPts*/, int /*curPoint*/, Shape */*a*/, Shape */*b*/)
 {
     return;
 /*	if ( curPoint != startPoint ) {

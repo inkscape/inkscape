@@ -982,7 +982,7 @@ Shape::AddContour (Path * dest, int nbP, Path * *orig, int startBord, int curBor
 }
 
 int
-Shape::ReFormeLineTo (int bord, int curBord, Path * dest, Path * orig)
+Shape::ReFormeLineTo (int bord, int /*curBord*/, Path * dest, Path * /*orig*/)
 {
   int nPiece = ebData[bord].pieceID;
   int nPath = ebData[bord].pathID;
@@ -1016,7 +1016,7 @@ Shape::ReFormeLineTo (int bord, int curBord, Path * dest, Path * orig)
 }
 
 int
-Shape::ReFormeArcTo (int bord, int curBord, Path * dest, Path * from)
+Shape::ReFormeArcTo (int bord, int /*curBord*/, Path * dest, Path * from)
 {
   int nPiece = ebData[bord].pieceID;
   int nPath = ebData[bord].pathID;
@@ -1094,7 +1094,7 @@ Shape::ReFormeArcTo (int bord, int curBord, Path * dest, Path * from)
 }
 
 int
-Shape::ReFormeCubicTo (int bord, int curBord, Path * dest, Path * from)
+Shape::ReFormeCubicTo (int bord, int /*curBord*/, Path * dest, Path * from)
 {
   int nPiece = ebData[bord].pieceID;
   int nPath = ebData[bord].pathID;
@@ -1140,7 +1140,7 @@ Shape::ReFormeCubicTo (int bord, int curBord, Path * dest, Path * from)
 }
 
 int
-Shape::ReFormeBezierTo (int bord, int curBord, Path * dest, Path * from)
+Shape::ReFormeBezierTo (int bord, int /*curBord*/, Path * dest, Path * from)
 {
   int nPiece = ebData[bord].pieceID;
   int nPath = ebData[bord].pathID;

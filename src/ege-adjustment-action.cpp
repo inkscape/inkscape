@@ -771,6 +771,7 @@ static gboolean event_cb( EgeAdjustmentAction* act, GdkEvent* evt )
 static gchar*
 slider_format_falue (GtkScale* scale, gdouble value, gchar *label)
 {
+    (void)scale;
     return g_strdup_printf("%s %d", label, (int) round(value));
 }
 

@@ -6,7 +6,7 @@ PathDescr *PathDescrMoveTo::clone() const
     return new PathDescrMoveTo(*this);
 }
 
-void PathDescrMoveTo::dumpSVG(Inkscape::SVGOStringStream& s, NR::Point const &last) const
+void PathDescrMoveTo::dumpSVG(Inkscape::SVGOStringStream& s, NR::Point const &/*last*/) const
 {
     s << "M " << p[NR::X] << " " << p[NR::Y] << " ";
 }
@@ -22,7 +22,7 @@ void PathDescrMoveTo::dump(std::ostream &s) const
     s << "  m " << p[NR::X] << " " << p[NR::Y];
 }
 
-void PathDescrLineTo::dumpSVG(Inkscape::SVGOStringStream& s, NR::Point const &last) const
+void PathDescrLineTo::dumpSVG(Inkscape::SVGOStringStream& s, NR::Point const &/*last*/) const
 {
     s << "L " << p[NR::X] << " " << p[NR::Y] << " ";
 }
@@ -110,7 +110,7 @@ void PathDescrCubicTo::transform(NR::Matrix const& t)
     p = p * t;
 }
 
-void PathDescrArcTo::dumpSVG(Inkscape::SVGOStringStream& s, NR::Point const &last) const
+void PathDescrArcTo::dumpSVG(Inkscape::SVGOStringStream& s, NR::Point const &/*last*/) const
 {
     s << "A "
       << rx << " "
@@ -148,7 +148,7 @@ PathDescr *PathDescrForced::clone() const
     return new PathDescrForced(*this);
 }
 
-void PathDescrClose::dumpSVG(Inkscape::SVGOStringStream& s, NR::Point const &last) const
+void PathDescrClose::dumpSVG(Inkscape::SVGOStringStream& s, NR::Point const &/*last*/) const
 {
     s << "z ";
 }

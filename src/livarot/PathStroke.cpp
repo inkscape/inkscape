@@ -91,7 +91,7 @@ void Path::Stroke(Shape *dest, bool doClose, double width, JoinType join,
 }
 
 void Path::DoStroke(int off, int N, Shape *dest, bool doClose, double width, JoinType join,
-        ButtType butt, double miter, bool justAdd)
+		    ButtType butt, double miter, bool /*justAdd*/)
 {
     if (N <= 1) {
         return;
@@ -286,7 +286,7 @@ void Path::DoButt(Shape *dest, double width, ButtType butt, NR::Point pos, NR::P
 
 
 void Path::DoJoin (Shape *dest, double width, JoinType join, NR::Point pos, NR::Point prev,
-        NR::Point next, double miter, double prevL, double nextL,
+        NR::Point next, double miter, double /*prevL*/, double /*nextL*/,
         int *stNo, int *enNo)
 {
     NR::Point pnor = prev.ccw();
@@ -410,7 +410,7 @@ void Path::DoJoin (Shape *dest, double width, JoinType join, NR::Point pos, NR::
 
     void
 Path::DoLeftJoin (Shape * dest, double width, JoinType join, NR::Point pos,
-        NR::Point prev, NR::Point next, double miter, double prevL, double nextL,
+        NR::Point prev, NR::Point next, double miter, double /*prevL*/, double /*nextL*/,
         int &leftStNo, int &leftEnNo,int pathID,int pieceID,double tID)
 {
     NR::Point pnor=prev.ccw();
@@ -553,8 +553,8 @@ Path::DoLeftJoin (Shape * dest, double width, JoinType join, NR::Point pos,
 }
     void
 Path::DoRightJoin (Shape * dest, double width, JoinType join, NR::Point pos,
-        NR::Point prev, NR::Point next, double miter, double prevL,
-        double nextL, int &rightStNo, int &rightEnNo,int pathID,int pieceID,double tID)
+        NR::Point prev, NR::Point next, double miter, double /*prevL*/,
+        double /*nextL*/, int &rightStNo, int &rightEnNo,int pathID,int pieceID,double tID)
 {
     const NR::Point pnor=prev.ccw();
     const NR::Point nnor=next.ccw();

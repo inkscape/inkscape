@@ -503,6 +503,7 @@ pathv_to_linear_and_cubic_beziers( Geom::PathVector const &pathv )
                 output.back().append(*cit);
             }
             else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const*>(&*cit)) {
+                (void)cubic_bezier;
                 output.back().append(*cit);
             }
             else {
