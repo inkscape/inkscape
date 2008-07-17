@@ -130,6 +130,8 @@ public:
         return Geom::Point(_pt[X], _pt[Y]);
     }
 
+    inline operator Geom::Point() const { return Geom::Point(_pt[X], _pt[Y]); }
+
 private:
     Coord _pt[2];
 };
