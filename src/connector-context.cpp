@@ -275,10 +275,10 @@ sp_connector_context_setup(SPEventContext *ec)
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(cc->red_bpath), 0x00000000,
             SP_WIND_RULE_NONZERO);
     /* Create red curve */
-    cc->red_curve = new SPCurve(4);
+    cc->red_curve = new SPCurve();
 
     /* Create green curve */
-    cc->green_curve = new SPCurve(64);
+    cc->green_curve = new SPCurve();
 
     // Notice the initial selection.
     cc_selection_changed(cc->selection, (gpointer) cc);
@@ -613,7 +613,7 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
     SPDesktop *const dt = cc->desktop;
 
     /* Find desktop coordinates */
-    NR::Point p = dt->w2d(event_w);
+    Geom::Point p = to_2geom(dt->w2d(event_w));
 
     switch (cc->state) {
         case SP_CONNECTOR_CONTEXT_DRAGGING:
@@ -622,7 +622,7 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
 
             if ( cc->npoints > 0 ) {
                 cc->selection->clear();
-                spcc_connector_set_subsequent_point(cc, p);
+                spcc_connector_set_subsequent_point(cc, from_2geom(p));
                 ret = TRUE;
             }
             break;
@@ -632,16 +632,16 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
             g_assert( SP_IS_PATH(cc->clickeditem));
 
             // Update the hidden path
-            NR::Matrix i2d = from_2geom(sp_item_i2d_affine(cc->clickeditem));
-            NR::Matrix d2i = i2d.inverse();
+            Geom::Matrix i2d = sp_item_i2d_affine(cc->clickeditem);
+            Geom::Matrix d2i = i2d.inverse();
             SPPath *path = SP_PATH(cc->clickeditem);
             SPCurve *curve = (SP_SHAPE(path))->curve;
             if (cc->clickedhandle == cc->endpt_handle[0]) {
-                NR::Point o = cc->endpt_handle[1]->pos;
+                Geom::Point o = to_2geom(cc->endpt_handle[1]->pos);
                 curve->stretch_endpoints(p * d2i, o * d2i);
             }
             else {
-                NR::Point o = cc->endpt_handle[0]->pos;
+                Geom::Point o = to_2geom(cc->endpt_handle[0]->pos);
                 curve->stretch_endpoints(o * d2i, p * d2i);
             }
             sp_conn_adjust_path(path);
@@ -857,7 +857,7 @@ spcc_connector_set_subsequent_point(SPConnectorContext *const cc, NR::Point cons
         NR::Point p(route.ps[i].x, route.ps[i].y);
         cc->red_curve->lineto(p);
     }
-    cc->red_curve->transform(dt->doc2dt());
+    cc->red_curve->transform(to_2geom(dt->doc2dt()));
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), cc->red_curve);
 }
 
@@ -871,7 +871,7 @@ static void
 spcc_concat_colors_and_flush(SPConnectorContext *cc)
 {
     SPCurve *c = cc->green_curve;
-    cc->green_curve = new SPCurve(64);
+    cc->green_curve = new SPCurve();
 
     cc->red_curve->reset();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), NULL);
@@ -908,7 +908,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
     }
 
     /* Now we have to go back to item coordinates at last */
-    c->transform(sp_desktop_dt2root_affine(SP_EVENT_CONTEXT_DESKTOP(cc)));
+    c->transform(to_2geom(sp_desktop_dt2root_affine(SP_EVENT_CONTEXT_DESKTOP(cc))));
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
     SPDocument *doc = sp_desktop_document(desktop);
@@ -1078,7 +1078,7 @@ endpt_handler(SPKnot */*knot*/, GdkEvent *event, SPConnectorContext *cc)
 
                 // Show the red path for dragging.
                 cc->red_curve = SP_PATH(cc->clickeditem)->curve->copy();
-                NR::Matrix i2d = from_2geom(sp_item_i2d_affine(cc->clickeditem));
+                Geom::Matrix i2d = sp_item_i2d_affine(cc->clickeditem);
                 cc->red_curve->transform(i2d);
                 sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), cc->red_curve);
 

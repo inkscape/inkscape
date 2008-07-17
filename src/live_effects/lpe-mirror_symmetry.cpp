@@ -46,8 +46,8 @@ LPEMirrorSymmetry::acceptParamPath (SPPath *param_path) {
     using namespace Geom;
 
     SPCurve* curve = sp_path_get_curve_for_edit (param_path);
-    Geom::Point A(curve->first_point().to_2geom());
-    Geom::Point B(curve->last_point().to_2geom());
+    Geom::Point A(curve->first_point());
+    Geom::Point B(curve->last_point());
     
     Piecewise<D2<SBasis> > rline = Piecewise<D2<SBasis> >(D2<SBasis>(Linear(A[X], B[X]), Linear(A[Y], B[Y])));
     reflection_line.param_set_and_write_new_value(rline);

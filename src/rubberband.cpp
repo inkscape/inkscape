@@ -28,7 +28,7 @@ Inkscape::Rubberband::Rubberband()
 {
     _points.clear();
     _mode = RUBBERBAND_MODE_RECT;
-    _touchpath_curve = new SPCurve(2000);
+    _touchpath_curve = new SPCurve();
 }
 
 void Inkscape::Rubberband::delete_canvas_items()

@@ -163,11 +163,11 @@ sp_eraser_context_setup(SPEventContext *ec)
     if (((SPEventContextClass *) eraser_parent_class)->setup)
         ((SPEventContextClass *) eraser_parent_class)->setup(ec);
 
-    erc->accumulated = new SPCurve(32);
-    erc->currentcurve = new SPCurve(4);
+    erc->accumulated = new SPCurve();
+    erc->currentcurve = new SPCurve();
 
-    erc->cal1 = new SPCurve(32);
-    erc->cal2 = new SPCurve(32);
+    erc->cal1 = new SPCurve();
+    erc->cal2 = new SPCurve();
 
     erc->currentshape = sp_canvas_item_new(sp_desktop_sketch(ec->desktop), SP_TYPE_CANVAS_BPATH, NULL);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(erc->currentshape), ERC_RED_RGBA, SP_WIND_RULE_EVENODD);

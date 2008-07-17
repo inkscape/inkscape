@@ -115,7 +115,7 @@ sp_selected_path_combine(void)
             //c->transform(item->transform);
             curve = c;
         } else {
-            c->transform(item->getRelativeTransform(SP_OBJECT(first)));
+            c->transform(to_2geom(item->getRelativeTransform(SP_OBJECT(first))));
             curve->append(c, false);
             c->unref();
         }

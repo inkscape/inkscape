@@ -19,36 +19,21 @@
 
 #include "display/curve.h"
 
-#include <string.h>
-#include "libnr/nr-point.h"
-#include "libnr/nr-rect.h"
-#include <libnr/nr-point-matrix-ops.h>
-#include <libnr/nr-convert2geom.h>
-#include <cstring>
-#include <string>
+#include <glib/gmessages.h>
 #include <2geom/pathvector.h>
 #include <2geom/sbasis-geometric.h>
 #include <2geom/sbasis-to-bezier.h>
-#include "svg/svg.h"
 #include <2geom/point.h>
 
 /* Constructors */
 
 /**
  * The returned curve's state is as if SPCurve::reset has just been called on it.
- * \param length Initial number of NArtBpath elements allocated for bpath (including NR_END
- *    element).
- * 2GEOMproof
  */
-SPCurve::SPCurve(guint length)
+SPCurve::SPCurve()
   : _refcount(1),
     _pathv()
 {
-    if (length <= 0) {
-        g_error("SPCurve::SPCurve called with invalid length parameter");
-        throw;
-    }
-
     _pathv.clear();
 }
 
@@ -63,7 +48,7 @@ SPCurve::new_from_rect(Geom::Rect const &rect)
 {
     SPCurve *c =  new SPCurve();
 
-    NR::Point p = rect.corner(0);
+    Geom::Point p = rect.corner(0);
     c->moveto(p);
 
     for (int i=3; i>=0; i--) {
@@ -182,25 +167,18 @@ SPCurve::split() const
     return l;
 }
 
-
-void
-SPCurve::transform(NR::Matrix const &m)
-{
-    transform(to_2geom(m));
-};
-
-    
 /**
  * Transform all paths in curve using matrix.
  */
 void
 SPCurve::transform(Geom::Matrix const &m)
 {
-    _pathv = _pathv * m;
+    _pathv *= m;
 }
 
 /**
  * Set curve to empty curve.
+ * In more detail: this clears the internal pathvector from all its paths.
  */
 void
 SPCurve::reset()
@@ -218,24 +196,16 @@ SPCurve::reset()
 void
 SPCurve::moveto(gdouble x, gdouble y)
 {
-    moveto(NR::Point(x, y));
-}
-/**
- * Calls SPCurve::moveto() with point made of given coordinates.
- */
-void
-SPCurve::moveto(Geom::Point const &p)
-{
-    moveto(from_2geom(p));
+    moveto(Geom::Point(x, y));
 }
 /**
  * Perform a moveto to a point, thus starting a new subpath.
  */
 void
-SPCurve::moveto(NR::Point const &p)
+SPCurve::moveto(Geom::Point const &p)
 {
     _pathv.push_back( Geom::Path() );  // for some reason Geom::Path(p) does not work...
-    _pathv.back().start(to_2geom(p));
+    _pathv.back().start(p);
 }
 
 /**
@@ -245,14 +215,6 @@ void
 SPCurve::lineto(Geom::Point const &p)
 {
     lineto(p[Geom::X], p[Geom::Y]);
-}
-/**
- * Calls SPCurve::lineto() with a point's coordinates.
- */
-void
-SPCurve::lineto(NR::Point const &p)
-{
-    lineto(p[NR::X], p[NR::Y]);
 }
 /**
  * Adds a line to the current subpath.
@@ -277,20 +239,7 @@ SPCurve::curveto(Geom::Point const &p0, Geom::Point const &p1, Geom::Point const
              p2[X], p2[Y] );
 }
 /**
- * Calls SPCurve::curveto() with coordinates of three points.
- */
-void
-SPCurve::curveto(NR::Point const &p0, NR::Point const &p1, NR::Point const &p2)
-{
-    using NR::X;
-    using NR::Y;
-    curveto( p0[X], p0[Y],
-             p1[X], p1[Y],
-             p2[X], p2[Y] );
-}
-/**
  * Adds a bezier segment to the current subpath.
- * 2GEOMified
  */
 void
 SPCurve::curveto(gdouble x0, gdouble y0, gdouble x1, gdouble y1, gdouble x2, gdouble y2)
@@ -413,13 +362,13 @@ SPCurve::first_path() const
 /**
  * Return first point of first subpath or (0,0).  TODO: shouldn't this be (NR_HUGE, NR_HUGE) to be able to tell it apart from normal (0,0) ?
  */
-NR::Point
+Geom::Point
 SPCurve::first_point() const
 {
     if (is_empty())
-        return NR::Point(0, 0);
+        return Geom::Point(0, 0);
 
-    return from_2geom( _pathv.front().initialPoint() );
+    return _pathv.front().initialPoint();
 }
 
 /**
@@ -430,11 +379,11 @@ SPCurve::first_point() const
  *
  * FIXME: for empty paths shouldn't this return (NR_HUGE,NR_HUGE)
  */
-NR::Point
+Geom::Point
 SPCurve::second_point() const
 {
     if (is_empty()) {
-        return NR::Point(0,0);
+        return Geom::Point(0,0);
     }
     else if (_pathv.front().empty()) {
         // first path is only a moveto
@@ -452,25 +401,24 @@ SPCurve::second_point() const
 /**
  * TODO: fix comment: Return the second-last point of last subpath or _movePos if curve too short.
  */
-NR::Point
+Geom::Point
 SPCurve::penultimate_point() const
 {
     Geom::Curve const& back = _pathv.back().back_default();
-    Geom::Point p = back.initialPoint();
-    return from_2geom(p);
+    return back.initialPoint();
 }
 
 /**
  * Return last point of last subpath or (0,0).  TODO: shouldn't this be (NR_HUGE, NR_HUGE) to be able to tell it apart from normal (0,0) ?
  * If the last path is only a moveto, then return that point.
  */
-NR::Point
+Geom::Point
 SPCurve::last_point() const
 {
     if (is_empty())
-        return NR::Point(0, 0);
+        return Geom::Point(0, 0);
 
-    return from_2geom( _pathv.back().finalPoint() );
+    return _pathv.back().finalPoint();
 }
 
 /**
@@ -587,14 +535,14 @@ SPCurve::backspace()
  * TODO: add comments about what this method does and what assumptions are made and requirements are put on SPCurve
  */
 void
-SPCurve::stretch_endpoints(NR::Point const &new_p0, NR::Point const &new_p1)
+SPCurve::stretch_endpoints(Geom::Point const &new_p0, Geom::Point const &new_p1)
 {
     if (is_empty()) {
         return;
     }
 
-    NR::Point const offset0( new_p0 - first_point() );
-    NR::Point const offset1( new_p1 - last_point() );
+    Geom::Point const offset0( new_p0 - first_point() );
+    Geom::Point const offset1( new_p1 - last_point() );
 
     Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2 = _pathv.front().toPwSb();
     Geom::Piecewise<Geom::SBasis> arclength = Geom::arcLengthSb(pwd2);
@@ -603,8 +551,8 @@ SPCurve::stretch_endpoints(NR::Point const &new_p0, NR::Point const &new_p1)
         throw;
     }
     arclength *= 1./arclength.lastValue();
-    Geom::Point const A( to_2geom(offset0) );
-    Geom::Point const B( to_2geom(offset1) );
+    Geom::Point const A( offset0 );
+    Geom::Point const B( offset1 );
     Geom::Piecewise<Geom::SBasis> offsetx = (arclength*-1.+1)*A[0] + arclength*B[0];
     Geom::Piecewise<Geom::SBasis> offsety = (arclength*-1.+1)*A[1] + arclength*B[1];
     Geom::Piecewise<Geom::D2<Geom::SBasis> > offsetpath = Geom::sectionize( Geom::D2<Geom::Piecewise<Geom::SBasis> >(offsetx, offsety) );
@@ -616,13 +564,13 @@ SPCurve::stretch_endpoints(NR::Point const &new_p0, NR::Point const &new_p1)
  *  sets start of first path to new_p0, and end of first path to  new_p1
  */
 void
-SPCurve::move_endpoints(NR::Point const &new_p0, NR::Point const &new_p1)
+SPCurve::move_endpoints(Geom::Point const &new_p0, Geom::Point const &new_p1)
 {
     if (is_empty()) {
         return;
     }
-    _pathv.front().setInitial(to_2geom(new_p0));
-    _pathv.front().setFinal(to_2geom(new_p1));
+    _pathv.front().setInitial(new_p0);
+    _pathv.front().setFinal(new_p1);
 }
 
 /**

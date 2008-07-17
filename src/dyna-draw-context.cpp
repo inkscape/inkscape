@@ -194,11 +194,11 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
     if (((SPEventContextClass *) dd_parent_class)->setup)
         ((SPEventContextClass *) dd_parent_class)->setup(ec);
 
-    ddc->accumulated = new SPCurve(32);
-    ddc->currentcurve = new SPCurve(4);
+    ddc->accumulated = new SPCurve();
+    ddc->currentcurve = new SPCurve();
 
-    ddc->cal1 = new SPCurve(32);
-    ddc->cal2 = new SPCurve(32);
+    ddc->cal1 = new SPCurve();
+    ddc->cal2 = new SPCurve();
 
     ddc->currentshape = sp_canvas_item_new(sp_desktop_sketch(ec->desktop), SP_TYPE_CANVAS_BPATH, NULL);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(ddc->currentshape), DDC_RED_RGBA, SP_WIND_RULE_EVENODD);
@@ -1021,7 +1021,7 @@ add_cap(SPCurve *curve,
         double mag = NR::L2(vel);
 
         NR::Point v = mag * NR::rot90( to - from ) / NR::L2( to - from );
-        curve->curveto(from + v, to + v, to);
+        curve->curveto(to_2geom(from + v), to_2geom(to + v), to_2geom(to));
     }
 }
 
@@ -1121,8 +1121,8 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
             dc->cal1->reset();
             dc->cal2->reset();
 
-            dc->cal1->moveto(dc->point1[0]);
-            dc->cal2->moveto(dc->point2[0]);
+            dc->cal1->moveto(to_2geom(dc->point1[0]));
+            dc->cal2->moveto(to_2geom(dc->point2[0]));
         }
 
         NR::Point b1[BEZIER_MAX_LENGTH];
@@ -1143,14 +1143,13 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
             /* CanvasShape */
             if (! release) {
                 dc->currentcurve->reset();
-                dc->currentcurve->moveto(b1[0]);
+                dc->currentcurve->moveto(to_2geom(b1[0]));
                 for (NR::Point *bp1 = b1; bp1 < b1 + BEZIER_SIZE * nb1; bp1 += BEZIER_SIZE) {
-                    dc->currentcurve->curveto(bp1[1],
-                                     bp1[2], bp1[3]);
+                    dc->currentcurve->curveto(to_2geom(bp1[1]), to_2geom(bp1[2]), to_2geom(bp1[3]));
                 }
                 dc->currentcurve->lineto(b2[BEZIER_SIZE*(nb2-1) + 3]);
                 for (NR::Point *bp2 = b2 + BEZIER_SIZE * ( nb2 - 1 ); bp2 >= b2; bp2 -= BEZIER_SIZE) {
-                    dc->currentcurve->curveto(bp2[2], bp2[1], bp2[0]);
+                    dc->currentcurve->curveto(to_2geom(bp2[2]), to_2geom(bp2[1]), to_2geom(bp2[0]));
                 }
                 // FIXME: dc->segments is always NULL at this point??
                 if (!dc->segments) { // first segment

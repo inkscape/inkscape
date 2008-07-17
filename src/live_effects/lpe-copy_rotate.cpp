@@ -69,8 +69,8 @@ LPECopyRotate::doOnApply(SPLPEItem *lpeitem)
 {
     SPCurve *curve = SP_SHAPE(lpeitem)->curve;
 
-    A = curve->first_point().to_2geom();
-    B = curve->last_point().to_2geom();
+    A = curve->first_point();
+    B = curve->last_point();
 
     origin.param_setValue(A);
 

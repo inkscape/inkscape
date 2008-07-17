@@ -361,10 +361,10 @@ sp_path_set_transform(SPItem *item, NR::Matrix const &xform)
 
     // Transform the original-d path or the (ordinary) path
     if (path->original_curve) {
-        path->original_curve->transform(xform);
+        path->original_curve->transform(to_2geom(xform));
         sp_lpe_item_update_patheffect(path, true, true);
     } else {
-        shape->curve->transform(xform);
+        shape->curve->transform(to_2geom(xform));
     }
 
     // Adjust stroke

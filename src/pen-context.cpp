@@ -1104,7 +1104,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
                     pc->p[1] = pc->p[0];
                 }
                 NR::Point const pt(( pc->npoints < 4
-                                     ? crv->finalPoint()
+                                     ? from_2geom(crv->finalPoint())
                                      : pc->p[3] ));
                 pc->npoints = 2;
                 pc->green_curve->backspace();

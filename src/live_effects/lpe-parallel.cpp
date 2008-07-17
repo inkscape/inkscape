@@ -71,8 +71,8 @@ LPEParallel::doOnApply (SPLPEItem *lpeitem)
 {
     SPCurve *curve = SP_SHAPE(lpeitem)->curve;
 
-    A = curve->first_point().to_2geom();
-    B = curve->last_point().to_2geom();
+    A = curve->first_point();
+    B = curve->last_point();
     dir = unit_vector(B - A);
 
     offset_pt.param_set_and_write_new_value((A + B)/2 + dir.ccw() * 100);

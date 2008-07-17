@@ -171,16 +171,16 @@ sp_draw_context_setup(SPEventContext *ec)
     dc->red_bpath = sp_canvas_bpath_new(sp_desktop_sketch(ec->desktop), NULL);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->red_bpath), dc->red_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     /* Create red curve */
-    dc->red_curve = new SPCurve(4);
+    dc->red_curve = new SPCurve();
 
     /* Create blue bpath */
     dc->blue_bpath = sp_canvas_bpath_new(sp_desktop_sketch(ec->desktop), NULL);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->blue_bpath), dc->blue_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     /* Create blue curve */
-    dc->blue_curve = new SPCurve(8);
+    dc->blue_curve = new SPCurve();
 
     /* Create green curve */
-    dc->green_curve = new SPCurve(64);
+    dc->green_curve = new SPCurve();
     /* No green anchor by default */
     dc->green_anchor = NULL;
     dc->green_closed = FALSE;
@@ -387,7 +387,7 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
         /* Curve list */
         /* We keep it in desktop coordinates to eliminate calculation errors */
         SPCurve *norm = sp_path_get_curve_for_edit (SP_PATH(item));
-        norm->transform(from_2geom(sp_item_i2d_affine(dc->white_item)));
+        norm->transform(sp_item_i2d_affine(dc->white_item));
         g_return_if_fail( norm != NULL );
         dc->white_curves = g_slist_reverse(norm->split());
         norm->unref();
@@ -496,7 +496,7 @@ spdc_concat_colors_and_flush(SPDrawContext *dc, gboolean forceclosed)
     SPCurve *c = dc->green_curve;
 
     /* Green */
-    dc->green_curve = new SPCurve(64);
+    dc->green_curve = new SPCurve();
     while (dc->green_bpaths) {
         gtk_object_destroy(GTK_OBJECT(dc->green_bpaths->data));
         dc->green_bpaths = g_slist_remove(dc->green_bpaths, dc->green_bpaths->data);
@@ -610,8 +610,8 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
 
     /* Now we have to go back to item coordinates at last */
     c->transform(( dc->white_item
-                            ? from_2geom(sp_item_dt2i_affine(dc->white_item))
-                            : sp_desktop_dt2root_affine(SP_EVENT_CONTEXT_DESKTOP(dc)) ));
+                            ? sp_item_dt2i_affine(dc->white_item)
+                            : to_2geom(sp_desktop_dt2root_affine(SP_EVENT_CONTEXT_DESKTOP(dc))) ));
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
     SPDocument *doc = sp_desktop_document(desktop);
