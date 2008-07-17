@@ -5,6 +5,7 @@
 #include "nr-compose-reference.h"
 #include <glib.h>
 #include <memory.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 static inline unsigned int DIV_ROUND(unsigned int v, unsigned int divisor) { return (v+divisor/2)/divisor; }

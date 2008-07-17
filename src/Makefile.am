@@ -117,9 +117,12 @@ noinst_LIBRARIES =	\
 	libinkpost.a
 
 check_LIBRARIES =	\
+	display/libtest-display.a	\
+	helper/libtest-helper.a	\
 	libnr/libtest-nr.a	\
 	svg/libtest-svg.a	\
 	svg/libtest-stubs.a	\
+	util/libtest-util.a	\
 	xml/libtest-xml.a
 
 DISTCLEANFILES =	\
@@ -191,10 +194,12 @@ EXTRA_PROGRAMS =	\
 	libnr/testnr
 
 TESTS =	\
-	test-all$(EXEEXT)	\
+	test-src$(EXEEXT)	\
 	style-test$(EXEEXT)	\
 	display/bezier-utils-test$(EXEEXT)	\
+	display/test-display$(EXEEXT)	\
 	helper/units-test$(EXEEXT)	\
+	helper/test-helper$(EXEEXT)	\
 	libnr/in-svg-plane-test$(EXEEXT)	\
 	libnr/nr-matrix-test$(EXEEXT)	\
 	libnr/nr-point-fns-test$(EXEEXT)	\
@@ -206,14 +211,15 @@ TESTS =	\
 	libnr/test-nr$(EXEEXT)	\
 	svg/test-svg$(EXEEXT)	\
 	util/list-container-test$(EXEEXT)	\
+	util/test-util$(EXEEXT)	\
 	xml/test-xml$(EXEEXT)	\
 	xml/quote-test$(EXEEXT)	\
 	xml/repr-action-test$(EXEEXT)
 
 # As of 2007-01-13, these are failing...
-XFAIL_TESTS = \
-	test-all$(EXEEXT)	\
-	style-test$(EXEEXT)
+#XFAIL_TESTS = \
+#	test-src$(EXEEXT)	\
+#	style-test$(EXEEXT)
 
 # streamtest is unfinished and can't handle the relocations done during
 # "make distcheck".  Not needed for the 0.41 release.
@@ -223,10 +229,12 @@ XFAIL_TESTS = \
 # TESTS items can be scripts etc.
 
 check_PROGRAMS =	\
-	test-all	\
+	test-src	\
 	style-test	\
 	display/bezier-utils-test	\
+	display/test-display	\
 	helper/units-test	\
+	helper/test-helper	\
 	libnr/in-svg-plane-test	\
 	libnr/nr-matrix-test	\
 	libnr/nr-point-fns-test	\
@@ -238,6 +246,7 @@ check_PROGRAMS =	\
 	libnr/test-nr	\
 	svg/test-svg	\
 	util/list-container-test	\
+	util/test-util	\
 	xml/test-xml	\
 	xml/quote-test	\
 	xml/repr-action-test
@@ -245,29 +254,17 @@ check_PROGRAMS =	\
 #	io/streamtest
 
 
-test-all.cpp: \
-		$(libnr_test_nr_a_SOURCES)	\
-		$(svg_test_svg_a_SOURCES)	\
-		$(xml_test_xml_a_SOURCES)	\
-		$(libnr_test_nr_includes)	\
-		$(svg_test_svg_includes)	\
-		$(xml_test_xml_includes)	\
-		$(test_all_includes)
-		$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o test-all.cpp	\
-		$(libnr_test_nr_includes)	\
-		$(svg_test_svg_includes)	\
-		$(xml_test_xml_includes)	\
-		$(test_all_includes)
+test-src.cpp: \
+		$(test_src_includes)
+		$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o test-src.cpp	\
+		$(test_src_includes)
 
-test_all_SOURCES = \
-	test-all.cpp $(test_all_includes)
+test_src_SOURCES = \
+	test-src.cpp $(test_src_includes)
 
 
-test_all_LDADD =	\
+test_src_LDADD =	\
 	$(all_libs)	\
-	$(svg_test_svg_LDADD)	\
-	$(libnr_test_nr_LDADD)	\
-	$(xml_test_xml_LDADD) \
 	io/libio.a	
 
 
@@ -282,4 +279,4 @@ dist-hook:
 	cp $(srcdir)/pixmaps/*xpm $(distdir)/pixmaps
 
 distclean-local:
-	rm -f libnr/test-nr.xml libnr/test-nr.log svg/test-svg.xml svg/test-svg.log xml/test-xml.xml xml/test-xml.log test-all.xml test-all.log
+	rm -f display/test-display.xml display/test-display.log helper/test-helper.xml helper/test-helper.log libnr/test-nr.xml libnr/test-nr.log svg/test-svg.xml svg/test-svg.log util/test-util.xml util/test-util.log xml/test-xml.xml xml/test-xml.log test-src.xml test-src.log

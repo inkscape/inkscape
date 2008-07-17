@@ -113,6 +113,7 @@ libnr/test-nr.cpp: $(libnr_test_nr_includes)
 	$(top_srcdir)/cxxtest/cxxtestgen.pl -part -o libnr/test-nr.cpp $(libnr_test_nr_includes)
 
 libnr_test_nr_includes = \
+	$(srcdir)/libnr/nr-compose-test.h	\
 	$(srcdir)/libnr/nr-types-test.h	\
 	$(srcdir)/libnr/nr-translate-test.h	\
 	$(srcdir)/libnr/nr-rotate-test.h	\
@@ -124,6 +125,8 @@ libnr_test_nr_includes = \
 
 libnr_libtest_nr_a_SOURCES =	\
 	libnr/test-nr.cpp \
+	libnr/nr-compose-reference.cpp \
+	libnr/nr-compose-reference.h \
 	$(libnr_test_nr_includes)
 
 libnr_test_nr_SOURCES =	\

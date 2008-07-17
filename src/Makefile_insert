@@ -433,12 +433,12 @@ style_test_LDADD = $(all_libs)
 inkscape_version.h: ../configure.ac
 	echo '#define INKSCAPE_VERSION "$(VERSION)"' > inkscape_version.h
 
-test_all_includes = \
-		$(srcdir)/attributes-test.h	\
-		$(srcdir)/color-profile-test.h	\
+test_src_includes = \
 		$(srcdir)/MultiPrinter.h  \
 		$(srcdir)/TRPIFormatter.h \
 		$(srcdir)/PylogFormatter.h \
+		$(srcdir)/attributes-test.h	\
+		$(srcdir)/color-profile-test.h	\
 		$(srcdir)/dir-util-test.h	\
 		$(srcdir)/extract-uri-test.h	\
 		$(srcdir)/mod360-test.h	\

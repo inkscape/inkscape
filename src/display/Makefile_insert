@@ -130,3 +130,27 @@ display_libspdisplay_a_SOURCES = \
 
 display_bezier_utils_test_SOURCES = display/bezier-utils-test.cpp
 display_bezier_utils_test_LDADD = libnr/libnr.a -lglib-2.0
+
+# Copy/paste from libnr
+display/test-display-main.cpp: display/test-display.cpp
+	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o display/test-display-main.cpp $(display_test_display_includes)
+
+display/test-display.cpp: $(display_test_display_includes)
+	$(top_srcdir)/cxxtest/cxxtestgen.pl -part -o display/test-display.cpp $(display_test_display_includes)
+
+display_test_display_includes = \
+	$(srcdir)/display/bezier-utils-test.h
+
+display_libtest_display_a_SOURCES = \
+	display/test-display.cpp \
+	$(display_test_display_includes)
+
+display_test_display_SOURCES = \
+	display/test-display-main.cpp \
+	$(display_test_display_includes)
+
+display_test_display_LDADD = \
+	libnr/libnr.a \
+	display/libtest-display.a \
+	-lglib-2.0
+

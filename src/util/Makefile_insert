@@ -27,3 +27,25 @@ util_libinkutil_a_SOURCES = \
 util_list_container_test_SOURCES = util/list-container-test.cpp
 util_list_container_test_LDADD = gc.o $(INKSCAPE_LIBS)
 
+# Copy/paste from libnr
+util/test-util-main.cpp: util/test-util.cpp
+	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o util/test-util-main.cpp $(util_test_util_includes)
+
+util/test-util.cpp: $(util_test_util_includes)
+	$(top_srcdir)/cxxtest/cxxtestgen.pl -part -o util/test-util.cpp $(util_test_util_includes)
+
+util_test_util_includes = \
+	$(srcdir)/util/list-container-test.h
+
+util_libtest_util_a_SOURCES = \
+	util/test-util.cpp \
+	$(util_test_util_includes)
+
+util_test_util_SOURCES = \
+	util/test-util-main.cpp \
+	$(util_test_util_includes)
+
+util_test_util_LDADD = \
+	util/libtest-util.a \
+	gc.o $(INKSCAPE_LIBS)
+
