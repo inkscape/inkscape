@@ -170,7 +170,7 @@ sp_item_widget_new (void)
     g_signal_connect ( G_OBJECT (tf), "activate", G_CALLBACK (sp_item_widget_label_changed), spw);
 
     /* Create the label for the object title */
-    l = gtk_label_new (_("Title"));
+    l = gtk_label_new_with_mnemonic (_("_Title"));
     gtk_misc_set_alignment (GTK_MISC (l), 1, 0.5);
     gtk_table_attach ( GTK_TABLE (t), l, 0, 1, 2, 3,
                        (GtkAttachOptions)( GTK_SHRINK | GTK_FILL ),
@@ -185,9 +185,12 @@ sp_item_widget_new (void)
                        (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
                        (GtkAttachOptions)0, 0, 0 );
     gtk_object_set_data (GTK_OBJECT (spw), "title", tf);
+    gtk_label_set_mnemonic_widget (GTK_LABEL(l), tf);
 
     /* Create the frame for the object description */
-    f = gtk_frame_new (_("Description"));
+    l = gtk_label_new_with_mnemonic (_("_Description"));
+    f = gtk_frame_new (NULL);
+    gtk_frame_set_label_widget (GTK_FRAME (f),l);
     gtk_table_attach ( GTK_TABLE (t), f, 0, 3, 3, 4,
                        (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
                        (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ), 0, 0 );
@@ -206,6 +209,7 @@ sp_item_widget_new (void)
     gtk_text_buffer_set_text(desc_buffer, "", -1);
     gtk_container_add (GTK_CONTAINER (textframe), tf);
     gtk_object_set_data (GTK_OBJECT (spw), "desc", tf);
+    gtk_label_set_mnemonic_widget (GTK_LABEL (gtk_frame_get_label_widget (GTK_FRAME (f))), tf);
 
     /* Check boxes */
     GtkWidget *hb_cb = gtk_hbox_new (FALSE, 0);
