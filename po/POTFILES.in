@@ -176,6 +176,7 @@ src/libnrtype/FontFactory.cpp
 src/live_effects/effect.cpp
 src/live_effects/lpe-angle_bisector.cpp
 src/live_effects/lpe-bendpath.cpp
+src/live_effects/lpe-boolops.cpp
 src/live_effects/lpe-circle_3pts.cpp
 src/live_effects/lpe-circle_with_radius.cpp
 src/live_effects/lpe-constructgrid.cpp
