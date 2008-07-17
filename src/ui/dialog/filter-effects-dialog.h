@@ -223,16 +223,12 @@ private:
     void update_color_matrix();
     void update_primitive_infobox();
 
-    // Filter effect selection
-    FilterModifier _filter_modifier;
-
     // Primitives Info Box  
     Gtk::Label _infobox_desc;
     Gtk::Image _infobox_icon;
 
     // View/add primitives
     Gtk::VBox _primitive_box;
-    PrimitiveList _primitive_list;
     UI::Widget::ComboBoxEnum<NR::FilterPrimitiveType> _add_primitive_type;
     Gtk::Button _add_primitive;
 
@@ -267,6 +263,11 @@ private:
     // To prevent unwanted signals
     bool _locked;
     bool _attr_lock;
+
+    // These go last since they depend on the prior initialization of
+    // other FilterEffectsDialog members
+    FilterModifier _filter_modifier;
+    PrimitiveList _primitive_list;
 
     FilterEffectsDialog(FilterEffectsDialog const &d);
     FilterEffectsDialog& operator=(FilterEffectsDialog const &d);

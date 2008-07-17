@@ -2086,15 +2086,15 @@ int FilterEffectsDialog::PrimitiveList::primitive_count() const
 
 FilterEffectsDialog::FilterEffectsDialog()
     : UI::Widget::Panel("", "dialogs.filtereffects", SP_VERB_DIALOG_FILTER_EFFECTS),
-      _filter_modifier(*this),
-      _primitive_list(*this),
       _add_primitive_type(FPConverter),
       _add_primitive(_("Add Effect:")),
       _empty_settings(_("No effect selected"), Gtk::ALIGN_LEFT),
       _no_filter_selected(_("No filter selected"), Gtk::ALIGN_LEFT),
       _settings_initialized(false),
       _locked(false),
-      _attr_lock(false)
+      _attr_lock(false),
+      _filter_modifier(*this),
+      _primitive_list(*this)
 {
     _settings = new Settings(*this, _settings_tab1, sigc::mem_fun(*this, &FilterEffectsDialog::set_attr_direct),
                              NR_FILTER_ENDPRIMITIVETYPE);
