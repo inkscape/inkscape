@@ -102,6 +102,8 @@ sp_ctrlline_render (SPCanvasItem *item, SPCanvasBuf *buf)
     if (!buf->ct)
         return;
 
+    sp_canvas_prepare_buffer (buf);
+
     guint32 rgba = cl->rgba;
     cairo_set_source_rgba(buf->ct, SP_RGBA32_B_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_R_F(rgba), SP_RGBA32_A_F(rgba));
 
@@ -134,10 +136,10 @@ sp_ctrlline_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int f
     NR::Point s = cl->s * affine;
     NR::Point e = cl->e * affine;
 
-    item->x1 = (int)(MIN(s[NR::X], e[NR::X]) - 1);
-    item->y1 = (int)(MIN(s[NR::Y], e[NR::Y]) - 1);
-    item->x2 = (int)(MAX(s[NR::X], e[NR::X]) + 1);
-    item->y2 = (int)(MAX(s[NR::Y], e[NR::Y]) + 1);
+    item->x1 = round(MIN(s[NR::X], e[NR::X]) - 1);
+    item->y1 = round(MIN(s[NR::Y], e[NR::Y]) - 1);
+    item->x2 = round(MAX(s[NR::X], e[NR::X]) + 1);
+    item->y2 = round(MAX(s[NR::Y], e[NR::Y]) + 1);
 
     sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 }
