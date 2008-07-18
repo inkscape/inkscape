@@ -1285,7 +1285,8 @@ with the segment; another Shift+S will expand a second handle</note>
 <mouse><key><ctrl/><up-arrow/></key> <key><ctrl/><down-arrow/></key> <action>move cursor by one paragraph</action></mouse>
 <keys><key><misc f="Home"/></key> <key><misc f="End"/></key> <action>go to beginning/end of line</action></keys>
 <keys><key><ctrl/><misc f="Home"/></key> <key><ctrl/><misc f="End"/></key> <action>go to beginning/end of text</action></keys>
-<note>All these commands cancel current text selection, if any.</note>
+<keys><key><misc f="PgUp"/></key> <key><misc f="PgDn"/></key> <action>move cursor by one screen</action></keys>
+<note>All these commands cancel current text selection, if any. Use them with Shift to extend selection instead.</note>
 </group>
 
 <group>
@@ -1337,6 +1338,7 @@ with the segment; another Shift+S will expand a second handle</note>
 <mouse><key><ctrl/><shift/><arrows/></key> <action>select text by word</action></mouse>
 <keys><key><shift/><misc f="Home"/></key> <key><shift/><misc f="End"/></key> <action>select to beginning/end of line</action></keys>
 <keys><key><ctrl/><shift/><misc f="Home"/></key> <key><ctrl/><shift/><misc f="End"/></key> <action>select to beginning/end of text</action></keys>
+<keys><key><shift/><misc f="PgUp"/></key> <key><shift/><misc f="PgDn"/></key> <action>select one screen up/down</action></keys>
 <mouse><key><left-click/><left-click/></key> <action>select word</action></mouse>
 <mouse><key><left-click/><left-click/><left-click/></key> <action>select line</action></mouse>
 <keys><key><ctrl/>A</key>	 <action>select all text</action></keys>
