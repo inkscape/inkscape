@@ -813,6 +813,14 @@ void Path::FastBBox(double &l,double &t,double &r,double &b)
 		}
 	    }
 	    
+/* bug 249665: "...the calculation of the bounding-box for cubic-paths
+has some extra steps to make it work corretly in Win32 that unfortunately
+are unnecessary in Linux, generating wrong results. This only shows in 
+Type1 fonts because they use cubic-paths instead of the
+bezier-paths used by True-Type fonts."
+*/
+
+#ifdef WIN32
 	    NR::Point np = nData->p - nData->end;
 	    if ( np[NR::X] < l ) {
 		l = np[NR::X];
@@ -840,6 +848,8 @@ void Path::FastBBox(double &l,double &t,double &r,double &b)
 	    if ( np[NR::Y] > b ) {
 		b = np[NR::Y];
 	    }
+#endif
+
 	    lastP = nData->p;
 	}
         break;
