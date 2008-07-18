@@ -109,18 +109,6 @@ static void sp_font_build(SPObject *object, SPDocument *document, Inkscape::XML:
 
 static void sp_font_children_modified(SPFont *sp_font)
 {
-    SPObject* node = sp_font->children;
-    for(;node;node=node->next){
-        if (SP_IS_GLYPH(node)){
-            g_warning("We have a <glyph> childnode:\n\td=%s\n\tvert-origin-x=%f\n\tvert-origin-y=%f\n\tvert-adv-y=%f", ((SPGlyph*)node)->d, ((SPGlyph*)node)->vert_origin_x, ((SPGlyph*)node)->vert_origin_y, ((SPGlyph*)node)->vert_adv_y );
-            
-        }
-        if (SP_IS_MISSING_GLYPH(node)){
-g_warning("We have a <missing-glyph> childnode:\n\td=%s\n\thoriz-origin-x=%f\n\thoriz-origin-y=%f\n\thoriz-adv-x=%f", ((SPMissingGlyph*)node)->d, ((SPMissingGlyph*)node)->vert_origin_x, ((SPMissingGlyph*)node)->vert_origin_y, ((SPMissingGlyph*)node)->vert_adv_y );
-        }
-//        if (SP_IS_FONT_FACE_SRC(node)){
-//        }
-    }
 }
 
 /**
@@ -173,7 +161,6 @@ static void sp_font_set(SPObject *object, unsigned int key, const gchar *value)
             number = helperfns_read_number(value);
             if (number != font->horiz_origin_x){
                 font->horiz_origin_x = number;
-g_warning("<font>: SP_ATTR_HORIZ_ORIGIN_X: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -181,7 +168,6 @@ g_warning("<font>: SP_ATTR_HORIZ_ORIGIN_X: %f", number);
             number = helperfns_read_number(value);
             if (number != font->horiz_origin_y){
                 font->horiz_origin_y = number;
-g_warning("<font>: SP_ATTR_HORIZ_ORIGIN_Y: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -189,7 +175,6 @@ g_warning("<font>: SP_ATTR_HORIZ_ORIGIN_Y: %f", number);
             number = helperfns_read_number(value);
             if (number != font->horiz_adv_x){
                 font->horiz_adv_x = number;
-g_warning("<font>: SP_ATTR_HORIZ_ADV_X: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -197,7 +182,6 @@ g_warning("<font>: SP_ATTR_HORIZ_ADV_X: %f", number);
             number = helperfns_read_number(value);
             if (number != font->vert_origin_x){
                 font->vert_origin_x = number;
-g_warning("<font>: SP_ATTR_VERT_ORIGIN_X: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -205,7 +189,6 @@ g_warning("<font>: SP_ATTR_VERT_ORIGIN_X: %f", number);
             number = helperfns_read_number(value);
             if (number != font->vert_origin_y){
                 font->vert_origin_y = number;
-g_warning("<font>: SP_ATTR_VERT_ORIGIN_Y: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -213,7 +196,6 @@ g_warning("<font>: SP_ATTR_VERT_ORIGIN_Y: %f", number);
             number = helperfns_read_number(value);
             if (number != font->vert_adv_y){
                 font->vert_adv_y = number;
-g_warning("<font>: SP_ATTR_VERT_ADV_Y: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;

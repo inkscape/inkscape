@@ -150,38 +150,32 @@ static void sp_glyph_kerning_set(SPObject *object, unsigned int key, const gchar
 {
     SPGlyphKerning * glyphkern = (SPGlyphKerning*) object; //even if it is a VKern this will work. I did it this way just to avoind warnings.
     double number;
-    const char* tag = (SP_IS_HKERN(object) ? "hkern" : "vkern");
 
     switch (key) {
         case SP_ATTR_U1:
             if (glyphkern->u1) delete glyphkern->u1;
             glyphkern->u1 = new UnicodeRange(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-g_warning("<%s>: SP_ATTR_U1: %s", tag, value);
-             break;
+            break;
         case SP_ATTR_U2:
             if (glyphkern->u2) delete glyphkern->u2;
             glyphkern->u2 = new UnicodeRange(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-g_warning("<%s>: SP_ATTR_U2: %s", tag, value);
-             break;
+            break;
         case SP_ATTR_G1:
             if (glyphkern->g1) delete glyphkern->g1;
             glyphkern->g1 = new GlyphNames(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-g_warning("<%s>: SP_ATTR_G1: %s", tag, value);
-             break;
+            break;
         case SP_ATTR_G2:
             if (glyphkern->g2) delete glyphkern->g2;
             glyphkern->g2 = new GlyphNames(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-g_warning("<%s>: SP_ATTR_G2: %s", tag, value);
              break;
 	case SP_ATTR_K:
             number = helperfns_read_number(value);
             if (number != glyphkern->k){
                 glyphkern->k = number;
-g_warning("<%s>: SP_ATTR_K: %f", tag, number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -191,7 +185,6 @@ g_warning("<%s>: SP_ATTR_K: %f", tag, number);
             }
             break;
     }
-///should free tag?
 }
 
 /**
@@ -206,7 +199,6 @@ sp_glyph_kerning_update(SPObject *object, SPCtx *ctx, guint flags)
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         /* do something to trigger redisplay, updates? */
             sp_object_read_attr(object, "u1");
-            sp_object_read_attr(object, "g1");
             sp_object_read_attr(object, "u2");
             sp_object_read_attr(object, "g2");
             sp_object_read_attr(object, "k");

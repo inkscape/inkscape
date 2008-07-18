@@ -109,13 +109,11 @@ static void sp_missing_glyph_set(SPObject *object, unsigned int key, const gchar
             if (glyph->d) g_free(glyph->d);
             glyph->d = g_strdup(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-g_warning("<missing-glyph>: SP_ATTR_D: %s", value);
             break;
 	case SP_ATTR_HORIZ_ADV_X:
             number = helperfns_read_number(value);
             if (number != glyph->horiz_adv_x){
                 glyph->horiz_adv_x = number;
-g_warning("<missing-glyph>: SP_ATTR_HORIZ_ADV_X: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -123,7 +121,6 @@ g_warning("<missing-glyph>: SP_ATTR_HORIZ_ADV_X: %f", number);
             number = helperfns_read_number(value);
             if (number != glyph->vert_origin_x){
                 glyph->vert_origin_x = number;
-g_warning("<missing-glyph>: SP_ATTR_VERT_ORIGIN_X: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -131,7 +128,6 @@ g_warning("<missing-glyph>: SP_ATTR_VERT_ORIGIN_X: %f", number);
             number = helperfns_read_number(value);
             if (number != glyph->vert_origin_y){
                 glyph->vert_origin_y = number;
-g_warning("<missing-glyph>: SP_ATTR_VERT_ORIGIN_Y: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -139,7 +135,6 @@ g_warning("<missing-glyph>: SP_ATTR_VERT_ORIGIN_Y: %f", number);
             number = helperfns_read_number(value);
             if (number != glyph->vert_adv_y){
                 glyph->vert_adv_y = number;
-g_warning("<missing-glyph>: SP_ATTR_VERT_ADV_Y: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;

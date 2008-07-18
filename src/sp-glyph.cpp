@@ -154,19 +154,16 @@ static void sp_glyph_set(SPObject *object, unsigned int key, const gchar *value)
             if (glyph->unicode) g_free(glyph->unicode);
             glyph->unicode = g_strdup(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-g_warning("<glyph>: SP_ATTR_UNICODE: %s", value);
-             break;
+            break;
         case SP_ATTR_GLYPH_NAME:
             if (glyph->glyph_name) g_free(glyph->glyph_name);
             glyph->glyph_name = g_strdup(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-g_warning("<glyph>: SP_ATTR_GLYPH_NAME: %s", value);
-             break;
+            break;
         case SP_ATTR_D:
             if (glyph->d) g_free(glyph->d);
             glyph->d = g_strdup(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-g_warning("<glyph>: SP_ATTR_D: %s", value);
             break;
         case SP_ATTR_ORIENTATION:
             orient = sp_glyph_read_orientation(value);
@@ -174,7 +171,6 @@ g_warning("<glyph>: SP_ATTR_D: %s", value);
                 glyph->orientation = orient;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
-g_warning("<glyph>: SP_ATTR_ORIENTATION: %d", orient);
             break;
         case SP_ATTR_ARABIC_FORM:
             form = sp_glyph_read_arabic_form(value);
@@ -182,19 +178,16 @@ g_warning("<glyph>: SP_ATTR_ORIENTATION: %d", orient);
                 glyph->arabic_form = form;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
-g_warning("<glyph>: SP_ATTR_ARABIC_FORM: %d", glyph->arabic_form);
             break;
         case SP_ATTR_LANG:
             if (glyph->lang) g_free(glyph->lang);
             glyph->lang = g_strdup(value);
-g_warning("<glyph>: SP_ATTR_LANG: %s", value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	case SP_ATTR_HORIZ_ADV_X:
             number = helperfns_read_number(value);
             if (number != glyph->horiz_adv_x){
                 glyph->horiz_adv_x = number;
-g_warning("<glyph>: SP_ATTR_HORIZ_ADV_X: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -202,7 +195,6 @@ g_warning("<glyph>: SP_ATTR_HORIZ_ADV_X: %f", number);
             number = helperfns_read_number(value);
             if (number != glyph->vert_origin_x){
                 glyph->vert_origin_x = number;
-g_warning("<glyph>: SP_ATTR_VERT_ORIGIN_X: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -210,7 +202,6 @@ g_warning("<glyph>: SP_ATTR_VERT_ORIGIN_X: %f", number);
             number = helperfns_read_number(value);
             if (number != glyph->vert_origin_y){
                 glyph->vert_origin_y = number;
-g_warning("<glyph>: SP_ATTR_VERT_ORIGIN_Y: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -218,7 +209,6 @@ g_warning("<glyph>: SP_ATTR_VERT_ORIGIN_Y: %f", number);
             number = helperfns_read_number(value);
             if (number != glyph->vert_adv_y){
                 glyph->vert_adv_y = number;
-g_warning("<glyph>: SP_ATTR_VERT_ADV_Y: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;

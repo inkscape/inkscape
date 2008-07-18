@@ -496,19 +496,11 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
             style = sp_read_fontFaceStyleType(value);
             if (face->font_style.size() != style.size()){
                 face->font_style = style;
-g_warning("<font-face>: SP_ATTR_FONT_STYLE:");
-                for (unsigned int i=0;i<style.size();i++){
-                    g_warning("enum value: %d", style[i]);
-                }
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             } else {
                 for (unsigned int i=0;i<style.size();i++){
                     if(style[i] != face->font_style[i]){
                         face->font_style = style;
-g_warning("<font-face>: SP_ATTR_FONT_STYLE:");
-                        for (unsigned int i=0;i<style.size();i++){
-                            g_warning("enum value: %d", style[i]);
-                        }
                         object->requestModified(SP_OBJECT_MODIFIED_FLAG);
                         break;
                     }
@@ -519,19 +511,11 @@ g_warning("<font-face>: SP_ATTR_FONT_STYLE:");
             variant = sp_read_fontFaceVariantType(value);
             if (face->font_variant.size() != variant.size()){
                 face->font_variant = variant;
-g_warning("<font-face>: SP_ATTR_FONT_VARIANT:");
-                for (unsigned int i=0;i<variant.size();i++){
-                    g_warning("enum value: %d", variant[i]);
-                }
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             } else {
                 for (unsigned int i=0;i<variant.size();i++){
                     if(variant[i] != face->font_variant[i]){
                         face->font_variant = variant;
-g_warning("<font-face>: SP_ATTR_FONT_VARIANT:");
-                        for (unsigned int i=0;i<variant.size();i++){
-                            g_warning("- %d", variant[i]);
-                        }
                         object->requestModified(SP_OBJECT_MODIFIED_FLAG);
                         break;
                     }
@@ -542,19 +526,11 @@ g_warning("<font-face>: SP_ATTR_FONT_VARIANT:");
             weight = sp_read_fontFaceWeightType(value);
             if (face->font_weight.size() != weight.size()){
                 face->font_weight = weight;
-g_warning("<font-face>: SP_ATTR_FONT_WEIGHT:");
-                for (unsigned int i=0;i<weight.size();i++){
-                    g_warning("enum value: %d", weight[i]);
-                }
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             } else {
                 for (unsigned int i=0;i<weight.size();i++){
                     if(weight[i] != face->font_weight[i]){
                         face->font_weight = weight;
-g_warning("<font-face>: SP_ATTR_FONT_WEIGHT:");
-                        for (unsigned int i=0;i<weight.size();i++){
-                            g_warning("enum value: %d", weight[i]);
-                        }
                         object->requestModified(SP_OBJECT_MODIFIED_FLAG);
                         break;
                     }
@@ -565,19 +541,11 @@ g_warning("<font-face>: SP_ATTR_FONT_WEIGHT:");
             stretch = sp_read_fontFaceStretchType(value);
             if (face->font_stretch.size() != stretch.size()){
                 face->font_stretch = stretch;
-g_warning("<font-face>: SP_ATTR_FONT_STRETCH:");
-                for (unsigned int i=0;i<stretch.size();i++){
-                    g_warning("enum value: %d", stretch[i]);
-                }
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             } else {
                 for (unsigned int i=0;i<stretch.size();i++){
                     if(stretch[i] != face->font_stretch[i]){
                         face->font_stretch = stretch;
-g_warning("<font-face>: SP_ATTR_FONT_STRETCH:");
-                        for (unsigned int i=0;i<stretch.size();i++){
-                            g_warning("enum value: %d", stretch[i]);
-                        }
                         object->requestModified(SP_OBJECT_MODIFIED_FLAG);
                         break;
                     }
@@ -588,7 +556,6 @@ g_warning("<font-face>: SP_ATTR_FONT_STRETCH:");
             number = helperfns_read_number(value);
             if (number != face->units_per_em){
                 face->units_per_em = number;
-g_warning("<font-face>: SP_ATTR_UNITS_PER_EM: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -596,7 +563,6 @@ g_warning("<font-face>: SP_ATTR_UNITS_PER_EM: %f", number);
             number = helperfns_read_number(value);
             if (number != face->stemv){
                 face->stemv = number;
-g_warning("<font-face>: SP_ATTR_STEMV: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -604,7 +570,6 @@ g_warning("<font-face>: SP_ATTR_STEMV: %f", number);
             number = helperfns_read_number(value);
             if (number != face->stemh){
                 face->stemh = number;
-g_warning("<font-face>: SP_ATTR_STEMH: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -612,7 +577,6 @@ g_warning("<font-face>: SP_ATTR_STEMH: %f", number);
             number = helperfns_read_number(value);
             if (number != face->slope){
                 face->slope = number;
-g_warning("<font-face>: SP_ATTR_SLOPE: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -620,7 +584,6 @@ g_warning("<font-face>: SP_ATTR_SLOPE: %f", number);
             number = helperfns_read_number(value);
             if (number != face->cap_height){
                 face->cap_height = number;
-g_warning("<font-face>: SP_ATTR_CAP_HEIGHT: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -628,7 +591,6 @@ g_warning("<font-face>: SP_ATTR_CAP_HEIGHT: %f", number);
             number = helperfns_read_number(value);
             if (number != face->x_height){
                 face->x_height = number;
-g_warning("<font-face>: SP_ATTR_X_HEIGHT: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -636,7 +598,6 @@ g_warning("<font-face>: SP_ATTR_X_HEIGHT: %f", number);
             number = helperfns_read_number(value);
             if (number != face->accent_height){
                 face->accent_height = number;
-g_warning("<font-face>: SP_ATTR_ACCENT_HEIGHT: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -644,7 +605,6 @@ g_warning("<font-face>: SP_ATTR_ACCENT_HEIGHT: %f", number);
             number = helperfns_read_number(value);
             if (number != face->ascent){
                 face->ascent = number;
-g_warning("<font-face>: SP_ATTR_ASCENT: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -652,7 +612,6 @@ g_warning("<font-face>: SP_ATTR_ASCENT: %f", number);
             number = helperfns_read_number(value);
             if (number != face->descent){
                 face->descent = number;
-g_warning("<font-face>: SP_ATTR_DESCENT: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -660,7 +619,6 @@ g_warning("<font-face>: SP_ATTR_DESCENT: %f", number);
             number = helperfns_read_number(value);
             if (number != face->ideographic){
                 face->ideographic = number;
-g_warning("<font-face>: SP_ATTR_IDEOGRAPHIC: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -668,7 +626,6 @@ g_warning("<font-face>: SP_ATTR_IDEOGRAPHIC: %f", number);
             number = helperfns_read_number(value);
             if (number != face->alphabetic){
                 face->alphabetic = number;
-g_warning("<font-face>: SP_ATTR_ALPHABETIC: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -676,7 +633,6 @@ g_warning("<font-face>: SP_ATTR_ALPHABETIC: %f", number);
             number = helperfns_read_number(value);
             if (number != face->mathematical){
                 face->mathematical = number;
-g_warning("<font-face>: SP_ATTR_MATHEMATICAL: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -684,7 +640,6 @@ g_warning("<font-face>: SP_ATTR_MATHEMATICAL: %f", number);
             number = helperfns_read_number(value);
             if (number != face->hanging){
                 face->hanging = number;
-g_warning("<font-face>: SP_ATTR_HANGING: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -692,7 +647,6 @@ g_warning("<font-face>: SP_ATTR_HANGING: %f", number);
             number = helperfns_read_number(value);
             if (number != face->v_ideographic){
                 face->v_ideographic = number;
-g_warning("<font-face>: SP_ATTR_V_IDEOGRAPHIC: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -700,7 +654,6 @@ g_warning("<font-face>: SP_ATTR_V_IDEOGRAPHIC: %f", number);
             number = helperfns_read_number(value);
             if (number != face->v_alphabetic){
                 face->v_alphabetic = number;
-g_warning("<font-face>: SP_ATTR_V_ALPHABETIC: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -708,7 +661,6 @@ g_warning("<font-face>: SP_ATTR_V_ALPHABETIC: %f", number);
             number = helperfns_read_number(value);
             if (number != face->v_mathematical){
                 face->v_mathematical = number;
-g_warning("<font-face>: SP_ATTR_V_MATHEMATICAL: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -716,7 +668,6 @@ g_warning("<font-face>: SP_ATTR_V_MATHEMATICAL: %f", number);
             number = helperfns_read_number(value);
             if (number != face->v_hanging){
                 face->v_hanging = number;
-g_warning("<font-face>: SP_ATTR_V_HANGING: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -724,7 +675,6 @@ g_warning("<font-face>: SP_ATTR_V_HANGING: %f", number);
             number = helperfns_read_number(value);
             if (number != face->underline_position){
                 face->underline_position = number;
-g_warning("<font-face>: SP_ATTR_UNDERLINE_POSITION: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -732,7 +682,6 @@ g_warning("<font-face>: SP_ATTR_UNDERLINE_POSITION: %f", number);
             number = helperfns_read_number(value);
             if (number != face->underline_thickness){
                 face->underline_thickness = number;
-g_warning("<font-face>: SP_ATTR_UNDERLINE_THICKNESS: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -740,7 +689,6 @@ g_warning("<font-face>: SP_ATTR_UNDERLINE_THICKNESS: %f", number);
             number = helperfns_read_number(value);
             if (number != face->strikethrough_position){
                 face->strikethrough_position = number;
-g_warning("<font-face>: SP_ATTR_STRIKETHROUGH_POSITION: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -748,7 +696,6 @@ g_warning("<font-face>: SP_ATTR_STRIKETHROUGH_POSITION: %f", number);
             number = helperfns_read_number(value);
             if (number != face->strikethrough_thickness){
                 face->strikethrough_thickness = number;
-g_warning("<font-face>: SP_ATTR_STRIKETHROUGH_THICKNESS: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -756,7 +703,6 @@ g_warning("<font-face>: SP_ATTR_STRIKETHROUGH_THICKNESS: %f", number);
             number = helperfns_read_number(value);
             if (number != face->overline_position){
                 face->overline_position = number;
-g_warning("<font-face>: SP_ATTR_OVERLINE_POSITION: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
@@ -764,7 +710,6 @@ g_warning("<font-face>: SP_ATTR_OVERLINE_POSITION: %f", number);
             number = helperfns_read_number(value);
             if (number != face->overline_thickness){
                 face->overline_thickness = number;
-g_warning("<font-face>: SP_ATTR_OVERLINE_THICKNESS: %f", number);
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
