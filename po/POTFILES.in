@@ -274,6 +274,7 @@ src/ui/dialog/ocaldialogs.cpp
 src/ui/dialog/print.cpp
 src/ui/dialog/scriptdialog.cpp
 src/ui/dialog/session-player.cpp
+src/ui/dialog/svg-fonts-dialog.cpp
 src/ui/dialog/tracedialog.cpp
 src/ui/dialog/transformation.cpp
 src/ui/dialog/whiteboard-connect.cpp

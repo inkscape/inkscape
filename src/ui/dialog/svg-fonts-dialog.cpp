@@ -183,7 +183,7 @@ SvgFontsDialog::SvgFontsDialog()
 //List of SVGFonts declared in a document:
     _model = Gtk::ListStore::create(_columns);
     _font_list.set_model(_model);
-    _font_list.append_column_editable("_Font", _columns.label);
+    _font_list.append_column_editable(_("_Font"), _columns.label);
     _font_list.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_font_selection_changed));
 
     this->update_fonts();
@@ -194,7 +194,7 @@ SvgFontsDialog::SvgFontsDialog()
 
 //Set Width (horiz_adv_x):
     Gtk::HBox* setwidth_hbox = Gtk::manage(new Gtk::HBox());
-    setwidth_hbox->add(*Gtk::manage(new Gtk::Label("Set width (not working yet):")));
+    setwidth_hbox->add(*Gtk::manage(new Gtk::Label(_("Set width (not working yet):"))));
     setwidth_hbox->add(setwidth_spin);
 
     setwidth_spin.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_setwidth_changed));
@@ -203,11 +203,11 @@ SvgFontsDialog::SvgFontsDialog()
     _font_settings.add(*setwidth_hbox);
 
 //Kerning Setup:
-    kernvbox->add(*Gtk::manage(new Gtk::Label("Kerning Setup:")));
+    kernvbox->add(*Gtk::manage(new Gtk::Label(_("Kerning Setup:"))));
     Gtk::HBox* kerning_selector = Gtk::manage(new Gtk::HBox());
-    kerning_selector->add(*Gtk::manage(new Gtk::Label("1st Glyph:")));
+    kerning_selector->add(*Gtk::manage(new Gtk::Label(_("1st Glyph:"))));
     kerning_selector->add(first_glyph);
-    kerning_selector->add(*Gtk::manage(new Gtk::Label("2nd Glyph:")));
+    kerning_selector->add(*Gtk::manage(new Gtk::Label(_("2nd Glyph:"))));
     kerning_selector->add(second_glyph);
     first_glyph.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_glyphs_changed));
     second_glyph.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_glyphs_changed));
@@ -218,7 +218,7 @@ SvgFontsDialog::SvgFontsDialog()
 
     Gtk::HBox* kerning_amount_hbox = Gtk::manage(new Gtk::HBox());
     kernvbox->add(*kerning_amount_hbox);
-    kerning_amount_hbox->add(*Gtk::manage(new Gtk::Label("Kerning value:")));
+    kerning_amount_hbox->add(*Gtk::manage(new Gtk::Label(_("Kerning value:"))));
     kerning_amount_hbox->add(kerning_spin);
 
     kerning_preview.set_size(300 + 20, 150 + 20);
@@ -232,7 +232,7 @@ SvgFontsDialog::SvgFontsDialog()
 
     Gtk::HBox* preview_entry_hbox = Gtk::manage(new Gtk::HBox());
     _getContents()->add(*preview_entry_hbox);
-    preview_entry_hbox->add(*Gtk::manage(new Gtk::Label("Preview Text:")));
+    preview_entry_hbox->add(*Gtk::manage(new Gtk::Label(_("Preview Text:"))));
     preview_entry_hbox->add(_preview_entry);
 
     _getContents()->show_all();
