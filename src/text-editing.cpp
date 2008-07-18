@@ -1086,6 +1086,19 @@ sp_te_adjust_tspan_letterspacing_screen(SPItem *text, Inkscape::Text::Layout::it
     text->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
 }
 
+double
+sp_te_get_average_linespacing (SPItem *text)
+{
+    Inkscape::Text::Layout const *layout = te_get_layout(text);
+    if (!layout)
+        return 0;
+
+    unsigned line_count = layout->lineIndex(layout->end());
+    double all_lines_height = layout->characterAnchorPoint(layout->end())[NR::Y] - layout->characterAnchorPoint(layout->begin())[NR::Y];
+    double average_line_height = all_lines_height / (line_count == 0 ? 1 : line_count);
+    return average_line_height;
+}
+
 void
 sp_te_adjust_linespacing_screen (SPItem *text, Inkscape::Text::Layout::iterator const &/*start*/, Inkscape::Text::Layout::iterator const &/*end*/, SPDesktop *desktop, gdouble by)
 {

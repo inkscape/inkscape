@@ -36,6 +36,8 @@ std::vector<NR::Point> sp_te_create_selection_quads(SPItem const *item, Inkscape
 
 Inkscape::Text::Layout::iterator sp_te_get_position_by_coords (SPItem const *item, NR::Point &i_p);
 void sp_te_get_cursor_coords (SPItem const *item, Inkscape::Text::Layout::iterator const &position, NR::Point &p0, NR::Point &p1);
+double sp_te_get_average_linespacing (SPItem *text);
+
 
 SPStyle const * sp_te_style_at_position(SPItem const *text, Inkscape::Text::Layout::iterator const &position);
 
