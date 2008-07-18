@@ -1,4 +1,4 @@
-# translation of km.po to Khmer
+# translation of km.po to khmer
 # Auk Piseth <piseth_dv@khmeros.info>, 2006.
 # Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007, 2008.
 # Khoem Sokhem<khoemsokhem@khmeros.info>,2008-02-22 08:56+0700.
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-07-15 17:05+0700\n"
-"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
-"Language-Team: Khmer <support@khmeros.info>\n"
+"PO-Revision-Date: 2008-07-17 18:19+0700\n"
+"Last-Translator: Eng Vannak <evannak@khmeros.info>\n"
+"Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3417,17 +3417,17 @@ msgstr "ផ្ទាល់ខ្លួន"
 
 #: ../src/extension/internal/filter/filter-file.cpp:44
 msgid "Null external module directory name.  Filters will not be loaded."
-msgstr ""
+msgstr "ឈ្មោះ​ថត​ម៉ូឌុល​ខាង​ក្រៅ​ទទេ ។  តម្រង​នឹង​មិន​ត្រូវ​បាន​ផ្ទុក​ទេ ។"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/fire.h:24
 msgid "Fire"
-msgstr ""
+msgstr "ភ្លើង"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/fire.h:25
 msgid "Artist on fire"
-msgstr ""
+msgstr "សិល្បៈ​លើ​ភ្លើង"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/frost.h:24
@@ -3437,7 +3437,7 @@ msgstr "កំណក"
 #. ID -- should be unique
 #: ../src/extension/internal/filter/ink-bleed.h:24
 msgid "InkBleed"
-msgstr ""
+msgstr "ទឹក​ថ្នាំ​ខ្មៅ"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/ink-bleed.h:25
@@ -3497,7 +3497,7 @@ msgstr ""
 #. ID -- should be unique
 #: ../src/extension/internal/filter/motion-blur.h:24
 msgid "Motion Blur"
-msgstr ""
+msgstr "ចលនា​ព្រិល"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/motion-blur.h:25
@@ -3507,7 +3507,7 @@ msgstr "ហ្អឹម វ៉ិចទ័រ​លឿន"
 #. ID -- should be unique
 #: ../src/extension/internal/filter/oil-slick.h:24
 msgid "OilSlick"
-msgstr ""
+msgstr "រអិល​ប្រេង"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/oil-slick.h:25
@@ -3517,7 +3517,7 @@ msgstr "អ៊ូប! រអិល!"
 #. ID -- should be unique
 #: ../src/extension/internal/filter/patterned-glass.h:24
 msgid "PatternedGlass"
-msgstr ""
+msgstr "កែវ​បែបផែន"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/patterned-glass.h:25
@@ -3526,9 +3526,8 @@ msgstr "មិន​ធ្វើការ​ទេ កំហុស"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/ridged-border.h:24
-#, fuzzy
 msgid "Ridged Border"
-msgstr "របៀប​គែម​"
+msgstr ""
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/ripple.h:24
@@ -3538,7 +3537,7 @@ msgstr "ជ្រួញ"
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/ripple.h:25
 msgid "You're 80% water"
-msgstr "អ្នក​មាន​កម្រិត​ទឹ ៨០%"
+msgstr "អ្នក​មាន​កម្រិត​ទឹក ៨០%"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/roughen.h:24
@@ -3552,9 +3551,8 @@ msgstr ""
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/rubber-stamp.h:24
-#, fuzzy
 msgid "RubberStamp"
-msgstr "ជ័រ​លាត​"
+msgstr ""
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/rubber-stamp.h:25
@@ -3563,23 +3561,21 @@ msgstr "ប្រើ​នេះ​ដើម្បី​បង្កើត​ល
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/sepia.h:24
-#, fuzzy
 msgid "Sepia"
-msgstr "គួច"
+msgstr "ពណ៌​ប្រផេះ​ចាស់"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/sepia.h:25
 msgid "Turn all the colors to be sepia tones"
-msgstr ""
+msgstr "ប្ដូរ​ពណ៌​ទាំងអស់​ទៅ​ជា​ពណ៌​ប្រផេះ​ចាស់"
 
 #: ../src/extension/internal/filter/snow.h:32
 msgid "Snow"
 msgstr "ព្រិល"
 
 #: ../src/extension/internal/filter/snow.h:34
-#, fuzzy
 msgid "Drift Size"
-msgstr "ទំហំ​ចំណុច"
+msgstr ""
 
 #: ../src/extension/internal/filter/snow.h:40
 msgid "When the weather outside is frightening..."
@@ -3587,14 +3583,13 @@ msgstr "នៅ​ពេល​ដែល​អាកាសធាតុ​ខាង
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/speckle.h:24
-#, fuzzy
 msgid "Speckle"
-msgstr "គ្មាន​ចំណុច​តូចៗ"
+msgstr "ចំណុច​អុចៗ"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/speckle.h:25
 msgid "You look cute with speckles"
-msgstr "អ្នក​កាន់តែ​ស្អាត​ជាមួយ​នឹង​ស្នាម​អុជៗ"
+msgstr "អ្នក​កាន់​តែ​ស្អាត​ជាមួយ​នឹង​ស្នាម​អុជៗ"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/zebra.h:24
@@ -4990,7 +4985,7 @@ msgstr "ជំនួស"
 #: ../src/io/sys.cpp:411 ../src/io/sys.cpp:419
 #, c-format
 msgid "Failed to read from child pipe (%s)"
-msgstr ""
+msgstr "បរាជ័យ​ក្នុង​ការ​អាន​បំពង់​កូន (%s)"
 
 #: ../src/io/sys.cpp:443
 #, c-format
@@ -5020,7 +5015,7 @@ msgstr "ខ្សែ​អក្សរ​មិន​ត្រឹមត្រូ
 #: ../src/io/sys.cpp:704
 #, c-format
 msgid "Failed to create pipe for communicating with child process (%s)"
-msgstr ""
+msgstr "បរាជ័យ​ក្នុង​ការ​បង្កើត​បំពង់​សម្រាប់​ទំនាក់ទំនង​ជាមួយ​ដំណើរ​ការ​កូន (%s)"
 
 #: ../src/io/sys.cpp:917
 #, c-format
@@ -5059,7 +5054,7 @@ msgstr "<b>%1</b> បាន​អញ្ជើញ​អ្នក​ទៅ​ស�
 
 #: ../src/jabber_whiteboard/session-manager.cpp:310
 msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr "តើ​អ្នក​ចង់​ទទួលការអញ្ជើញ​សម័យ​ក្ដារខៀន​របស់ <b>%1</b> ឬ​ទេ ?"
+msgstr "តើ​អ្នក​ចង់​ទទួលការអញ្ជើញ​សម័យ​ក្ដារខៀន​របស់ <b>%1</b> ឬ​ទេ?"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:314
 msgid "Accept invitation"
@@ -5092,7 +5087,7 @@ msgstr "<b>ផ្លាស់ទី​</b>បំពេញ​លំនាំខ�
 
 #: ../src/knotholder.cpp:231
 msgid "<b>Scale</b> the pattern fill uniformly"
-msgstr "<b>ធ្វើមាត្រដ្ឋាន​</b> បំពេញ​លំនាំ​ដែល​មាន​សភាព​ដូច​គ្នា​"
+msgstr "<b>ធ្វើ​មាត្រដ្ឋាន​</b> បំពេញ​លំនាំ​ដែល​មាន​សភាព​ដូច​គ្នា​"
 
 #: ../src/knotholder.cpp:234
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
@@ -5531,20 +5526,19 @@ msgstr "រង្វង់ (ផ្ចិត + កាំ)"
 
 #: ../src/live_effects/effect.cpp:79
 msgid "Perspective path"
-msgstr ""
+msgstr "ផ្លូវ​យថាទស្សន៍"
 
 #: ../src/live_effects/effect.cpp:80
 msgid "Spiro spline"
 msgstr "Spiro spline"
 
 #: ../src/live_effects/effect.cpp:81
-#, fuzzy
 msgid "Lattice Deformation"
-msgstr "ប្រភេទ​បង្ខូច​ទ្រង់ទ្រាយ ៖"
+msgstr "ការ​បង្ខូច​ទ្រង់ទ្រាយ​បន្ទះ​ឈើ"
 
 #: ../src/live_effects/effect.cpp:82
 msgid "Envelope Deformation"
-msgstr ""
+msgstr "ការ​បង្ខូច​ទ្រង់ទ្រាយ​ស្រោម​សំបុត្រ"
 
 #: ../src/live_effects/effect.cpp:83
 msgid "Construct grid"
@@ -5555,13 +5549,12 @@ msgid "Perpendicular bisector"
 msgstr ""
 
 #: ../src/live_effects/effect.cpp:85
-#, fuzzy
 msgid "Tangent to curve"
-msgstr "អូស​ខ្សែកោង​"
+msgstr ""
 
 #: ../src/live_effects/effect.cpp:86
 msgid "Mirror reflection"
-msgstr ""
+msgstr "ការ​ឆ្លុះ​តាម​កញ្ចក់"
 
 #: ../src/live_effects/effect.cpp:178
 msgid "Create and apply path effect"
@@ -5575,7 +5568,7 @@ msgstr "អាច​មើល​ឃើញ?"
 msgid ""
 "If unchecked, the effect remains applied to the object but is temporarily "
 "disabled on canvas"
-msgstr ""
+msgstr "បើ​ដោះ​ធីក បែបផែន​នៅ​តែ​ត្រូវ​បាន​អនុវត្ត​ទៅ​លើ​វត្ថុ ប៉ុន្តែ​ត្រូវ​បាន​បិទ​បណ្ដោះ​អាសន្ន​លើ​ផ្ទាំង​កំណាត់"
 
 #: ../src/live_effects/effect.cpp:207
 msgid "No effect"
@@ -5584,16 +5577,16 @@ msgstr "គ្មាន​បែបផែន​"
 #: ../src/live_effects/effect.cpp:254
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
-msgstr ""
+msgstr "សូម​បញ្ជាក់​ផ្លូវ​ប៉ារ៉ាម៉ែត្រ​សម្រាប់ LPE '%s' ជាមួយ​ការ​ចុច​កណ្ដុរ %d"
 
 #: ../src/live_effects/effect.cpp:294
 msgid "An exception occurred during execution of the Path Effect."
-msgstr "ករណីលើកលែង​បាន​កើត​ឡើង​កំឡុង​ពេល​ប្រតិបត្តិ​បែបផែន​ផ្លូវ ។"
+msgstr "ករណី​លើកលែង​បាន​កើត​ឡើង​កំឡុង​ពេល​ប្រតិបត្តិ​បែបផែន​ផ្លូវ ។"
 
 #: ../src/live_effects/effect.cpp:512
 #, c-format
 msgid "Editing parameter <b>%s</b>."
-msgstr "កែសម្រួល​ប៉ារ៉ាម៉ែត្រ <b>%s</b> ។"
+msgstr "កែ​សម្រួល​ប៉ារ៉ាម៉ែត្រ <b>%s</b> ។"
 
 #: ../src/live_effects/effect.cpp:517
 msgid "None of the applied path effect's parameters can be edited on-canvas."
@@ -5805,7 +5798,7 @@ msgstr "ទទឹង​ចន្លោះ"
 
 #: ../src/live_effects/lpe-knot.cpp:27
 msgid "The width of the gap in the path where it self-intersects"
-msgstr ""
+msgstr "ទទឹង​នៃ​គម្លាត​ក្នុង​ផ្លូវ ដែល​វា​បែងចែក​ខ្លួន​វា"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-lattice.cpp:45
@@ -5832,88 +5825,72 @@ msgid "Tadah"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice.cpp:46
-#, fuzzy
 msgid "Control handle 1"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice.cpp:47
-#, fuzzy
 msgid "Control handle 2"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice.cpp:48
-#, fuzzy
 msgid "Control handle 3"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice.cpp:49
-#, fuzzy
 msgid "Control handle 4"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice.cpp:50
-#, fuzzy
 msgid "Control handle 5"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice.cpp:51
-#, fuzzy
 msgid "Control handle 6"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice.cpp:52
-#, fuzzy
 msgid "Control handle 7"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice.cpp:53
-#, fuzzy
 msgid "Control handle 8"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice.cpp:54
-#, fuzzy
 msgid "Control handle 9"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice.cpp:55
-#, fuzzy
 msgid "Control handle 10"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice.cpp:56
-#, fuzzy
 msgid "Control handle 11"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice.cpp:57
-#, fuzzy
 msgid "Control handle 12"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice.cpp:58
-#, fuzzy
 msgid "Control handle 13"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice.cpp:59
-#, fuzzy
 msgid "Control handle 14"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr ""
 
 #: ../src/live_effects/lpe-lattice.cpp:60
-#, fuzzy
 msgid "Control handle 15"
-msgstr "ផ្លាស់ទី​ចំណុច​ទាញ​ថ្នាំង​"
+msgstr ""
 
 #: ../src/live_effects/lpe-mirror_reflect.cpp:30
-#, fuzzy
 msgid "Reflection line"
-msgstr "ជម្រើស"
+msgstr "បន្ទាត់​ឆ្លុះ"
 
 #: ../src/live_effects/lpe-mirror_reflect.cpp:30
 msgid "Line which serves as 'mirror' for the reflection"
-msgstr ""
+msgstr "បន្ទាត់​ដែល​មាន​តួ​នាទី​ជា 'កញ្ចក់' សម្រាប់​ឆ្លុះ"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:53
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -5928,7 +5905,7 @@ msgstr "តែ​មួយ​គត់ ទាញ​ឲ្យ​វែង"
 #: ../src/live_effects/lpe-patternalongpath.cpp:55
 #: ../share/extensions/pathalongpath.inx.h:8
 msgid "Repeated"
-msgstr "បាន​ធ្វើម្តង​ទៀត"
+msgstr "បាន​ធ្វើ ម្តង​ទៀត"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:56
 #: ../share/extensions/pathalongpath.inx.h:9
@@ -5968,7 +5945,7 @@ msgstr "ការ​ដាក់​ចន្លោះ"
 msgid ""
 "Space between copies of the pattern. Negative values allowed, but are "
 "limited to -90% of pattern width."
-msgstr ""
+msgstr "ចន្លោះ​រវាង​ច្បាប់​ចម្លង​នៃ​លំនាំ ។ តម្លៃ​អវិជ្ជមាន​អនុញ្ញាត ប៉ុន្តែ​ត្រូវ​បាន​កំណត់​ដល់ -90% នៃ​ទទឹង​លំនាំ ។"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:67
 #: ../share/extensions/pathalongpath.inx.h:5
@@ -5984,7 +5961,7 @@ msgstr "អុហ្វសិត​តង់សង់​"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:69
 msgid "Offsets in unit of pattern size"
-msgstr ""
+msgstr "អុហ្វសិត​ក្នុង​ឯកសារ​នៃ​ទំហំ​លំនាំ"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:69
 msgid ""
@@ -6009,7 +5986,7 @@ msgstr "ប្រវែង​ខាងឆ្វេង"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:156
 msgid "Specifies the left end of the bisector"
-msgstr ""
+msgstr "បញ្ជាក់​ចុង​ខាង​ឆ្វេង​នៃ​ភាគ​ស្មើ​គ្នា​ទាំងពីរ"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:157
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:66
@@ -6017,17 +5994,16 @@ msgid "Length right"
 msgstr "ប្រវែង​ខាងស្ដាំ"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:157
-#, fuzzy
 msgid "Specifies the right end of the bisector"
-msgstr "យក​ពន្លឺ​របស់​ពណ៌"
+msgstr "បញ្ជាក់​ចុង​ខាង​ស្ដាំ​នៃ​ភាគ​ស្មើ​គ្នា​ទាំងពីរ"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:164
 msgid "Lala"
-msgstr ""
+msgstr "Lala"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:165
 msgid "Lolo"
-msgstr ""
+msgstr "Lolo"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-perspective_path.cpp:42
@@ -6036,7 +6012,7 @@ msgstr "មាត្រដ្ឋាន x"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:42
 msgid "Scale factor in x direction"
-msgstr ""
+msgstr "កត្តា​មាត្រដ្ឋាន​ក្នុង​ទិស x"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:43
 msgid "Scale y"
@@ -6044,7 +6020,7 @@ msgstr "មាត្រដ្ឋាន y"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:43
 msgid "Scale factor in y direction"
-msgstr ""
+msgstr "កត្តា​មាត្រដ្ឋាន​ក្នុង​ទិស y"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:44
 msgid "Offset x"
@@ -6052,7 +6028,7 @@ msgstr "អុហ្វសិត x"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:44
 msgid "Offset in x direction"
-msgstr ""
+msgstr "អុហ្វសិត​ក្នុង​ទិស x"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:45
 msgid "Offset y"
@@ -6060,26 +6036,26 @@ msgstr "អុហ្វសិត​ y"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:45
 msgid "Offset in y direction"
-msgstr ""
+msgstr "អុហ្វសិត​ក្នុង​ទិស y"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:46
 msgid "Uses XY plane?"
-msgstr ""
+msgstr "ប្រើ​ប្លង់ XY?"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:46
 msgid ""
 "If true, put the path on the left side of an imaginary box, otherwise on the "
 "right side"
-msgstr ""
+msgstr "បើ​ពិត ដាក់​ផ្លូវ​នៅ​ខាង​ឆ្វេង​នៃ​ប្រអប់​មនោគតិ មិន​ដូច្នោះ​ទេ​នៅ​ខាង​ស្ដាំ"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-skeleton.cpp:33
 msgid "Float parameter"
-msgstr ""
+msgstr "ប៉ារ៉ាម៉ែត្រ​ចំនួន​ទសភាគ"
 
 #: ../src/live_effects/lpe-skeleton.cpp:33
 msgid "just a real number like 1.4!"
-msgstr ""
+msgstr "ជា​ចំនួន​ពិត​ដូច​ជា 1.4!"
 
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
@@ -6101,11 +6077,11 @@ msgstr "ប្រវែង​​អតិបរមា​​​របស់​ជ
 
 #: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Stroke length variation"
-msgstr ""
+msgstr "បំរែបំរួល​ប្រវែង​ខ្វាច់"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr ""
+msgstr "បំរែបំរួល​​ចៃដន្យ​នៃ​ប្រវែង​ខ្វាច់ (ទំនាក់ទំនង​ទៅ​ប្រវែង​អតិបរមា)"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
@@ -6134,39 +6110,36 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:46
-#, fuzzy
 msgid "Parallel offset"
-msgstr "អុហ្វសិត​​ធម្មតា​"
+msgstr "អុហ្វសិត​​ប៉ារ៉ាឡែល​"
 
 #: ../src/live_effects/lpe-sketch.cpp:47
 msgid "Average distance from approximating path to original path"
-msgstr ""
+msgstr "ចម្ងាយ​មធ្យម​ពី​ផ្លូវ​ប៉ានស្មាន​ទៅ​ផ្លូវ​ដើម"
 
 #: ../src/live_effects/lpe-sketch.cpp:48
 msgid "Max. tremble"
-msgstr ""
+msgstr "ញ័រ​អតិបរមា"
 
 #: ../src/live_effects/lpe-sketch.cpp:49
 msgid "Maximum tremble magnitude"
-msgstr ""
+msgstr "ទំហំ​ញ័រ​អតិបរមា"
 
 #: ../src/live_effects/lpe-sketch.cpp:50
-#, fuzzy
 msgid "Tremble frequency"
-msgstr "ប្រេកង់​មូលដ្ឋាន"
+msgstr "ប្រេកង់​ញ័រ"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
 msgid "Avreage number of tremble periods in an approximating stroke"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:52
-#, fuzzy
 msgid "Construction lines"
-msgstr "បន្ទាត់​កណ្តាល​"
+msgstr "បន្ទាត់​សំណង់"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
 msgid "How many construction lines (tangents) to draw"
-msgstr ""
+msgstr "ចំនួន​បន្ទាត់​សំណង់​ដែល​ត្រូវ​គូស (តង់ហ្សង់)"
 
 #: ../src/live_effects/lpe-sketch.cpp:54 ../src/selection-chemistry.cpp:1450
 #: ../src/seltrans.cpp:454 ../src/ui/dialog/filter-effects-dialog.cpp:2235
@@ -6178,7 +6151,7 @@ msgstr "មាត្រដ្ឋាន"
 msgid ""
 "Scale factor relating curvature and length of construction lines (try "
 "5*offset)"
-msgstr ""
+msgstr "កត្តា​ធ្វើ​មាត្រដ្ឋាន​ដែល​ទាក់ទង​និង​កំណោង និង​ប្រវែង​នៃ​បន្ទាត់​សំណង់ (សាកល្បង 5*offset)"
 
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Max. length"
@@ -6186,15 +6159,15 @@ msgstr "ប្រវែង​អតិបរមា"
 
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Maximum length of construction lines"
-msgstr ""
+msgstr "ប្រវែង​អតិបរមា​នៃ​បន្ទាត់​សំណង់"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Length variation"
-msgstr ""
+msgstr "បំរែបំរួល​ប្រវែង"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Random variation of the length of construction lines"
-msgstr ""
+msgstr "បំរែបំរួល​ប្រវែង​ចៃដន្យ​នៃ​បន្ទាត់​សំណង់"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:63
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
@@ -6203,11 +6176,11 @@ msgstr "មុំ"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:63
 msgid "Additional angle between tangent and curve"
-msgstr ""
+msgstr "មុំ​បន្ថែម​ចន្លោះ​តង់ហ្សង់ និង​ខ្សែ​កោង"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:64
 msgid "Location along curve"
-msgstr ""
+msgstr "ទីតាំង​តាម​ខ្សែ​កោង"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:64
 msgid ""
@@ -6217,23 +6190,23 @@ msgstr ""
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:65
 msgid "Specifies the left end of the tangent"
-msgstr ""
+msgstr "បញ្ជាក់​ចុង​ខាង​ឆ្វេង​នៃ​តង់ហ្សង់"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:66
 msgid "Specifies the right end of the tangent"
-msgstr ""
+msgstr "បញ្ជាក់​ចុង​ខាង​ស្ដាំ​នៃ​តង់ហ្សង់"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:73
 msgid "Adjust the \"left\" end of the tangent"
-msgstr ""
+msgstr "លៃ​តម្រូវ​ចុង \"ខាង​ឆ្វេង\" នៃ​តង់ហ្សង់"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:74
 msgid "Adjust the \"right\" end of the tangent"
-msgstr ""
+msgstr "លៃ​តម្រូវ​ចំណុច​បញ្ចប់ \"ខាង​ស្ដាំ\" របស់​តង់ហ្សង់"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:75
 msgid "Adjust the point of attachment of the tangent"
-msgstr ""
+msgstr "លៃ​តម្រូវ​ចំណុច​ភ្ជាប់​របស់​តង់ហ្សង់"
 
 #: ../src/live_effects/lpe-test-doEffect-stack.cpp:23
 msgid "Stack step"
@@ -6241,11 +6214,11 @@ msgstr "ជំហាន​ជង់"
 
 #: ../src/live_effects/lpe-test-doEffect-stack.cpp:24
 msgid "point param"
-msgstr ""
+msgstr "ប៉ារ៉ាម៉ែត្រ​ចំណុច"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:42
 msgid "Bounding box"
-msgstr ""
+msgstr "ព្រំ​ដែន​ប្រអប់"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:43
 msgid "Last gen. segment"
@@ -6253,7 +6226,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
 msgid "Nb of generations"
-msgstr ""
+msgstr "Nb នៃ​ការ​បង្កើត"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
 msgid "Depth of the recursion --- keep low!!"
@@ -6261,19 +6234,19 @@ msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:50
 msgid "Generating path"
-msgstr ""
+msgstr "បង្កើត​ផ្លូវ"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:50
 msgid "Path whos segments define the fractal"
-msgstr ""
+msgstr "ផ្លូវ​ដែល​ភាគ​របស់​វា​កំណត់​ប្រភាគ"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:51
 msgid "Draw all generations"
-msgstr ""
+msgstr "គូស​ការ​បង្កើត​ទាំងអស់"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:51
 msgid "If unchecked, draw only the last generation"
-msgstr ""
+msgstr "បើ​មិន​ធីក គូស​តែ​ការ​បង្កើត​ចុងក្រោយ"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
 msgid "Reference"
@@ -6287,11 +6260,11 @@ msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:53
 msgid "Max complexity"
-msgstr ""
+msgstr "ភាព​ស្មុគស្មាញ​អតិបរមា"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:53
 msgid "Disable effect if the output is too complex"
-msgstr ""
+msgstr "បិទ​បែបផែន បើ​ទិន្នផល​ស្មុគស្មាញ"
 
 #: ../src/live_effects/parameter/bool.cpp:69
 msgid "Change bool parameter"
@@ -6336,7 +6309,7 @@ msgstr "ផ្លាស់ប្ដូរ​ប៉ារ៉ាម៉ែត្រ
 
 #: ../src/live_effects/parameter/pointparam-knotholder.cpp:134
 msgid "Change LPE point parameter"
-msgstr ""
+msgstr "ផ្លាស់ប្ដូរ​ប៉ារ៉ាម៉ែត្រ​ចំណុច LPE"
 
 #: ../src/live_effects/parameter/random.cpp:137
 msgid "Change random parameter"
@@ -6380,7 +6353,7 @@ msgstr "បោះពុម្ព​ឯកសារ​ទៅ​ឯកសារ​
 
 #: ../src/main.cpp:243
 msgid "Export document to a PNG file"
-msgstr "នាំចេញ​ឯកសារ​ទៅ​ជាឯកសារ PNG"
+msgstr "នាំចេញ​ឯកសារ​ទៅ​ជា​ឯកសារ PNG"
 
 #: ../src/main.cpp:248
 msgid "The resolution used for exporting SVG into bitmap (default 90)"
@@ -9201,7 +9174,7 @@ msgstr "បើក​កា​រខ្ទាស់"
 
 #: ../src/ui/dialog/document-properties.cpp:104
 msgid "After snapping, a symbol is drawn at the point that has snapped"
-msgstr ""
+msgstr "បន្ទាប់​ពី​ខ្ទាស់ និមិត្ត​សញ្ញា​ត្រូវ​បាន​គូស​នៅ​ចំណុច​ដែល​បាន​ខ្ទាស់"
 
 #: ../src/ui/dialog/document-properties.cpp:105
 msgid "_Bounding box corners"
@@ -9211,9 +9184,7 @@ msgstr "ជ្រុង​ប្រអប់​ព្រំដែន"
 msgid ""
 "Only available in the selector tool: snap bounding box corners to guides, to "
 "grids, and to other bounding boxes (but not to nodes or paths)"
-msgstr ""
-"ខ្ទាស់​ជ្រុង​ប្រអប់​ព្រំដែន​ទៅ​​បន្ទាត់​ក្រឡាចត្រង្គ ទៅ​បន្ទាត់​នាំផ្លូវ និង​ទៅ​ប្រអប់​ព្រំដែន​ផ្សេងៗ​ទៀត (អាច​អនុវត្ត​"
-"បានតែ​ទៅ​ឧបករណ៍​កម្មវិធី​ជ្រើស​ប៉ុណ្ណោះ)"
+msgstr "ខ្ទាស់​ជ្រុង​ប្រអប់​ព្រំដែន​ទៅ​​បន្ទាត់​ក្រឡាចត្រង្គ ទៅ​បន្ទាត់​នាំផ្លូវ និង​ទៅ​ប្រអប់​ព្រំដែន​ផ្សេងៗ​ទៀត (អាច​អនុវត្ត​បានតែ​ទៅ​ឧបករណ៍​កម្មវិធី​ជ្រើស​ប៉ុណ្ណោះ)"
 
 #: ../src/ui/dialog/document-properties.cpp:107
 msgid "_Nodes"
@@ -9361,7 +9332,7 @@ msgstr "ខ្ទាស់​តែនៅ​ពេល​ជិត​ជាង​
 #: ../src/ui/dialog/document-properties.cpp:284
 #: ../src/ui/dialog/document-properties.cpp:290
 msgid "Always snap"
-msgstr ""
+msgstr "ខ្ទាស់​ជានិច្ច"
 
 #: ../src/ui/dialog/document-properties.cpp:279
 msgid "Snapping distance, in screen pixels, for snapping to objects"
@@ -9369,7 +9340,7 @@ msgstr "ចម្ងាយ​ខ្ទាស់ ក្នុង​ភីកស�
 
 #: ../src/ui/dialog/document-properties.cpp:279
 msgid "Always snap to objects, regardless of their distance"
-msgstr ""
+msgstr "ខ្ទាស់​ទៅ​វត្ថុ​ជានិច្ច ដោយ​មិន​គិត​ពី​ចម្ងាយ​របស់​វា"
 
 #: ../src/ui/dialog/document-properties.cpp:280
 msgid ""
@@ -9392,7 +9363,7 @@ msgstr "ចម្ងាយខ្ទាស់ ក្នុង​ភីកសែ�
 
 #: ../src/ui/dialog/document-properties.cpp:285
 msgid "Always snap to grids, regardless of the distance"
-msgstr ""
+msgstr "ខ្ទាស់​ទៅ​ក្រឡា​ចត្រង្គ​ជានិច្ច ដោយ​មិន​គិត​ពី​ចម្ងាយ"
 
 #: ../src/ui/dialog/document-properties.cpp:286
 msgid ""
@@ -9415,7 +9386,7 @@ msgstr "ចម្ងាយ​ខ្ទាស់ ក្នុង​ភីកស�
 
 #: ../src/ui/dialog/document-properties.cpp:291
 msgid "Always snap to guides, regardless of the distance"
-msgstr ""
+msgstr "ខ្ទាស់​ទៅ​មគ្គុទ្ទេសក៏​ជានិច្ច ដោយ​មិន​គិត​ពី​ចម្ងាយ"
 
 #: ../src/ui/dialog/document-properties.cpp:292
 msgid ""
@@ -9445,12 +9416,11 @@ msgstr "<b>ខ្ទាស់​ទៅ​បន្ទាត់​នាំផ្
 
 #: ../src/ui/dialog/document-properties.cpp:361
 msgid "<b>Snapping to intersections of</b>"
-msgstr "<b>ខ្ទាស់​ទៅ​អន្តរប្រសព្វ​របស់</b>"
+msgstr "<b>ខ្ទាស់​ទៅ​អន្តរ​ប្រសព្វ​របស់</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:363
-#, fuzzy
 msgid "<b>Special points to consider</b>"
-msgstr "<b>ខ្ទាស់​ទៅ​បន្ទាត់​នាំផ្លូវ</b>"
+msgstr "<b>ចំណុច​ពិសេស​ត្រូវ​ពិចារណា</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:433
 msgid "<b>Creation</b>"
@@ -9458,7 +9428,7 @@ msgstr "<b>ការ​បង្កើត</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:434
 msgid "<b>Defined grids</b>"
-msgstr "<b>ក្រឡាចត្រង្គ​ដែល​បានកំណត់</b>"
+msgstr "<b>ក្រឡាចត្រង្គ​ដែល​បាន​កំណត់</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:650
 msgid "Remove grid"
@@ -9483,11 +9453,11 @@ msgstr "ប៉ារ៉ាម៉ែត្រ"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:382
 msgid "No preview"
-msgstr "គ្មាន​ទិដ្ឋភាព​មើល​ជា​មុន"
+msgstr "គ្មាន​ទិដ្ឋភាព​មើល​ជាមុន"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:488
 msgid "too large for preview"
-msgstr "ធំពេក​សម្រាប់​មើលជា​មុន"
+msgstr "ធំពេក​សម្រាប់​មើល​ជាមុន"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:577
 msgid "Enable preview"
@@ -9539,7 +9509,7 @@ msgstr "គែម​ស្ដាំ​របស់​ប្រភព"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1318
 msgid "Bottom edge of source"
-msgstr "គែម​បាត​របស់ប្រភព"
+msgstr "គែម​បាត​របស់​ប្រភព"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1319
 msgid "Source width"
@@ -9584,24 +9554,21 @@ msgstr "ប្រឆាំង​ភាព​រឆេតរឆូត"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1418
 msgid "Background"
-msgstr "ផ្ទៃខាងក្រោយ​"
+msgstr "ផ្ទៃ​ខាងក្រោយ​"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1441
 msgid "Destination"
 msgstr "ទិសដៅ​"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:199
-#, fuzzy
 msgid "All Image Files"
-msgstr "រូបភាព​ទាំងអស់"
+msgstr "ឯកសារ​រូបភាព​ទាំងអស់"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:428
-#, fuzzy
 msgid "Show Preview"
-msgstr "មើល​ជា​មុន"
+msgstr "បង្ហាញ​មើល​ជា​មុន"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:564
-#, fuzzy
 msgid "No file selected"
 msgstr "គ្មាន​តម្រង​បាន​ជ្រើស"
 
@@ -9611,7 +9578,7 @@ msgstr "បំពេញ"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:54
 msgid "Stroke _paint"
-msgstr "កា​រគូរខ្វាច់​"
+msgstr "ការ​គូរ​ខ្វាច់​"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:55
 msgid "Stroke st_yle"
@@ -9623,10 +9590,7 @@ msgid ""
 "one of the color components. Each column determines how much of each color "
 "component from the input is passed to the output. The last column does not "
 "depend on input colors, so can be used to adjust a constant component value."
-msgstr ""
-"ម៉ាទ្រីស​នេះ​កំណត់​ការ​ប្លែង​លីនេអ៊ែរ​នៅ​លើ​ចន្លោះ​ពណ៌ ។ បែបផែន​បន្ទាត់​នីមួយៗ​នៃ​សមាសភាគ​ពណ៌​មួយ​ក្នុង​ចំណោម​ពណ៌​"
-"ទាំងអស់ ។ ជួរឈរ​នីមួយៗ​កំណត់​ថាតើ​​សមាសភាគ​ពណ៌​នីមួយៗ​មាន​ទំហំប៉ុន្មាន​ពី​ការ​បញ្ចូល​ត្រូវ​បាន​ចម្លង​ទៅ​លទ្ធផល ។ "
-"ជួរឈរ​ចុងក្រោយ​មិន​អាស្រ័យយ​លើ​ពណ៌​បញ្ចូល​ទេ ដូច្នេះ​អាច​ត្រូវ​បានប្រើ​ដើម្បី​លៃតម្រូវ​តម្លៃ​សមាភាគ​ថេរ ។"
+msgstr "ម៉ាទ្រីស​នេះ​កំណត់​ការ​ប្លែង​លីនេអ៊ែរ​នៅ​លើ​ចន្លោះ​ពណ៌ ។ បែបផែន​បន្ទាត់​នីមួយៗ​នៃ​សមាសភាគ​ពណ៌​មួយ​ក្នុង​ចំណោម​ពណ៌​ទាំងអស់ ។ ជួរឈរ​នីមួយៗ​កំណត់​ថាតើ​​សមាសភាគ​ពណ៌​នីមួយៗ​មាន​ទំហំប៉ុន្មាន​ពី​ការ​បញ្ចូល​ត្រូវ​បាន​ចម្លង​ទៅ​លទ្ធផល ។ ជួរឈរ​ចុងក្រោយ​មិន​អាស្រ័យយ​លើ​ពណ៌​បញ្ចូល​ទេ ដូច្នេះ​អាច​ត្រូវ​បានប្រើ​ដើម្បី​លៃតម្រូវ​តម្លៃ​សមាភាគ​ថេរ ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:614
 msgid "Image File"
@@ -9659,7 +9623,7 @@ msgstr "មុំ​ទិស​សម្រាប់​ប្រភព​ពន
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:993
 msgid "Direction angle for the light source on the YZ plane, in degrees"
-msgstr "មុំ​ទិស​សម្រាប់​ប្រភពពន្លឺ​នៅ​លើផ្ទៃ YZ គិតជាដឺក្រេ"
+msgstr "មុំ​ទិស​សម្រាប់​ប្រភព​ពន្លឺ​នៅ​លើផ្ទៃ YZ គិតជា​ដឺក្រេ"
 
 #. default x:
 #. default y:
@@ -10607,7 +10571,7 @@ msgstr "បង្កើត​ចំណុច​តែ​មួយ"
 msgid ""
 "Treat groups as a single object during conversion to guides rather than "
 "converting each child separately."
-msgstr ""
+msgstr "ចាត់​ទុក​ក្រុម​ជា​វត្ថុ​តែ​មួយ​កំឡុង​ពេល​សន្ទនា​ជាមួយ​មគ្គុទ្ទេសក៏ ជា​ជាង​បម្លែង​កូន​នីមួយៗ​ដោយ​ឡែក​ពី​គ្នា ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:359
 msgid "Width is in absolute units"
@@ -10693,22 +10657,22 @@ msgstr "ជ្រើស​ពណ៌​ដែល​​បាន​ប្រើ​
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:392
 msgid "Path outline flash on mouse-over"
-msgstr ""
+msgstr "គ្រោង​ផ្លូវ​បញ្ចេញ​ពន្លឺ​ពេល​កណ្ដុរ​នៅ​ពី​លើ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:393
 msgid "When hovering over a path, briefly flash its outline."
-msgstr ""
+msgstr "ពេល​សំកាំង​លើ​ផ្លូវ បញ្ហាញ​គ្រោង​របស់​វា​ដោយ​សង្ខេប ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:395
 msgid "Flash time"
-msgstr ""
+msgstr "ពេល​វេលា​បង្ហាញ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:395
 msgid ""
 "Specifies how long the path outline will be visible after a mouse-over (in "
 "milliseconds). Specify 0 to have the outline shown until mouse leaves the "
 "path."
-msgstr ""
+msgstr "បញ្ជាក់​រយៈ​ពេល​ប៉ុន្មាន​ដែល​គ្រោង​ផ្លូវ​នឹង​មើល​ឃើញ​បន្ទាប់​ពី​កណ្ដុរ​នៅ​លើ (គិត​ជា​មិល្លី​វិនាទី) ។ បញ្ជាក់ 0 ដើម្បី​បង្ហាញ​គ្រោង​រហូត​ដល់​កណ្ដុរ​ចេញ​ពី​ផ្លូវ ។"
 
 #. Tweak
 #: ../src/ui/dialog/inkscape-preferences.cpp:398 ../src/verbs.cpp:2419
@@ -10760,9 +10724,7 @@ msgstr "អក្សរ​វិចិត្រ​សាស្ត្រ​"
 msgid ""
 "If on, pen width is in absolute units (px) independent of zoom; otherwise "
 "pen width depends on zoom so that it looks the same at any zoom"
-msgstr ""
-"ប្រសិន​បើ​បើក ទទឹង​ប៊ិក​ស្ថិត​ក្នុង​ឯកតា​ដាច់​ខាត (ភីកសែល) ពង្រីក​ដោយ​ឯករាជ្យ បើ​មិន​ដូច្នេះ​ទេ ទទឹង​ប៊ិក​អាស្រ័យ​"
-"លើ​ពេល​ពង្រីក ដូច្នេះ​វា​មើល​ទៅ ដូចគ្នា​នឹង​ការ​ពង្រីក​ផ្សេង​ទៀត​ដែរ ។"
+msgstr "ប្រសិន​បើ​បើក ទទឹង​ប៊ិក​ស្ថិត​ក្នុង​ឯកតា​ដាច់​ខាត (ភីកសែល) ពង្រីក​ដោយ​ឯករាជ្យ បើ​មិន​ដូច្នេះ​ទេ ទទឹង​ប៊ិក​អាស្រ័យ​លើ​ពេល​ពង្រីក ដូច្នេះ​វា​មើល​ទៅ ដូចគ្នា​នឹង​ការ​ពង្រីក​ផ្សេង​ទៀត​ដែរ ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:458
 msgid ""
@@ -11407,45 +11369,39 @@ msgstr "កំណត់​ពណ៌​ដែល​បាន​ជ្រើស​
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:911
 msgid "If set, write the CSS name of the color instead of it's numeric value."
-msgstr ""
+msgstr "បើ​កំណត់ សរសេរ​ឈ្មោះ CSS របស់​ពណ៌​ជំនួស​ឲ្យ​តម្លៃ​ជា​លេខ​របស់​វា ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:913
 msgid "XML looks"
-msgstr ""
+msgstr "រូបរាង XML"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:915
-#, fuzzy
 msgid "Inline attributes"
-msgstr "កំណត់​​គុណលក្ខណៈ​"
+msgstr "​គុណលក្ខណៈ​​ក្នុង​តួ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:916
-#, fuzzy
 msgid "Inline the XML attributes"
-msgstr "លុប​​គុណលក្ខណៈ​"
+msgstr "លក្ខណៈ​សម្បត្តិ XML ក្នុង​តួ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:919
-#, fuzzy
 msgid "Indent spaces"
-msgstr "ចូល​បន្ទាត់​ថ្នាំង"
+msgstr "ចន្លោះ​ចូល​បន្ទាត់"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:919
-#, fuzzy
 msgid "The number of spaces to use for indentation."
-msgstr "ចំនួន​ផ្លូវ​ដែលនឹង​ត្រូវ​បានបង្កើត ។"
+msgstr "ចំនួន​ចន្លោះ​ដែល​ត្រូវ​បង្កើត​សម្រាប់​ចុះ​បន្ទាត់ ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:921
-#, fuzzy
 msgid "Path string"
-msgstr "  ខ្សែអក្សរ ៖"
+msgstr "ខ្សែ​អក្សរ​ផ្លូវ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:923
-#, fuzzy
 msgid "Allow relative coordinates"
-msgstr "ប្រើកូអរដោនេ​ប៉ូល"
+msgstr "អនុញ្ញាត​កូអរដោណេ​ទំនាក់ទំនង"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:924
 msgid "If set, relative coordinates may be used in path data"
-msgstr ""
+msgstr "បើ​កំណត់ កូអរដោណេ​ទំនាក់ទំនង​អាច​ត្រូវ​បាន​ប្រើ​ក្នុង​ទំនាក់ទំនង​ផ្លូវ"
 
 #. seems this is never used in Inkscape code
 #. _svgoutput_allowshorthands.init( _("Allow shorthands"), "options.svgoutput", "allowshorthands", true);
@@ -11453,37 +11409,37 @@ msgstr ""
 #.
 #: ../src/ui/dialog/inkscape-preferences.cpp:931
 msgid "Force repeat commands"
-msgstr ""
+msgstr "បង្ខំ​ពាក្យ​បញ្ជា​ធ្វើ​ម្ដង​ទៀត"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:932
 msgid ""
 "If set, force repeating of the same command (i.e. output 'L 1,2 L 3,4' "
 "instead of 'L 1,2 3,4')."
 msgstr ""
+"បើ​កំណត់ បង្ខំ​ធ្វើ​ម្ដង​ទៀត​នៃ​ពាក្យ​បញ្ជា​ដូច​គ្នា (ឧ. ទិន្នផល 'L 1,2 L 3,4' "
+"ជំនួស​ឲ្យ 'L 1,2 3,4') ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:934
 msgid "Numeric data"
-msgstr ""
+msgstr "ទិន្នន័យ​លេខ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:937
-#, fuzzy
 msgid "Numeric precision"
-msgstr "ភាព​ច្បាស់លាស់"
+msgstr "ចំនួន​ខ្ទង់​លេខ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:937
 msgid "The number of digits to use behind the comma."
-msgstr ""
+msgstr "ចំនួន​លេខ​ត្រូវ​ប្រើ​នៅ​ពី​ក្រោយ​សញ្ញា​ក្បៀស ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:940
-#, fuzzy
 msgid "Minimum exponent"
-msgstr "ទំហំ​អតិបរមា"
+msgstr "និទស្សន្ត​អប្បបរមា"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:940
 msgid ""
 "The minimum size of a number (10 to the power of this exponent), smaller "
 "numbers will be written as zero."
-msgstr ""
+msgstr "ទំហំ​អប្បបរមា​នៃ​ចំនួន (10 ទៅ​ស្វ័យគុណ​នៃ​និទស្សន្ត​នេះ) ចំនួន​តូច​ជាង​នឹង​ត្រូវ​បាន​សរសេរ​ជា សូន្យ ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:947
 msgid "Add label comments to printing output"
@@ -11493,9 +11449,7 @@ msgstr "បន្ថែម​សេចក្ដី​អធិប្បាយ​
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
-msgstr ""
-"នៅ​ពេល​បើក សេចក្ដី​អធិប្បាយ​នឹង​ត្រូវ​បានបន្ថែម​ទៅ​លទ្ធផល​បោះពុម្ព​ដើម ដោយ​សម្គាល់​លទ្ធផល​ដែល​បាន​បង្ហាញ​"
-"សម្រាប់​វត្ថុ​ដែល​​មាន​ស្លាក​របស់​វា"
+msgstr "នៅ​ពេល​បើក សេចក្ដី​អធិប្បាយ​នឹង​ត្រូវ​បានបន្ថែម​ទៅ​លទ្ធផល​បោះពុម្ព​ដើម ដោយ​សម្គាល់​លទ្ធផល​ដែល​បាន​បង្ហាញ​សម្រាប់​វត្ថុ​ដែល​​មាន​ស្លាក​របស់​វា"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:951
 msgid "Prevent sharing of gradient definitions"
@@ -11506,10 +11460,7 @@ msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
 "may affect other objects using the same gradient"
-msgstr ""
-"នៅ​ពេល​ដែល​បើក ការ​កំណត់​ជម្រាល​ដែល​បាន​ចែក​រំលែក​ត្រូវ​បានប្រើ​ដោយ​ស្វ័យប្រវត្តិ​នៅ​ពេល​ផ្លាស់ប្ដូរ មិនគូស​ធីក​"
-"ដើម្បី​អនុញ្ញាត​កា​រចែករំលែក​របស់​ការកំណត់​ជម្រាល ដូច្នេះ​កែសម្រួល​វត្ថុ​មួយ​អាច​ប៉ះពាល់​ដល់​វត្ថុ​ផ្សេង​ ដោយ​ប្រើ​"
-"ជម្រាល​ដូច​គ្នា"
+msgstr "នៅ​ពេល​ដែល​បើក ការ​កំណត់​ជម្រាល​ដែល​បាន​ចែក​រំលែក​ត្រូវ​បានប្រើ​ដោយ​ស្វ័យប្រវត្តិ​នៅ​ពេល​ផ្លាស់ប្ដូរ មិនគូស​ធីក​ដើម្បី​អនុញ្ញាត​កា​រចែករំលែក​របស់​ការកំណត់​ជម្រាល ដូច្នេះ​កែសម្រួល​វត្ថុ​មួយ​អាច​ប៉ះពាល់​ដល់​វត្ថុ​ផ្សេង​ ដោយ​ប្រើ​ជម្រាល​ដូច​គ្នា"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:955
 msgid "Simplification threshold:"
@@ -11592,7 +11543,7 @@ msgstr "ដាន ៖ គ្មាន​ឯកសារ​សកម្ម"
 msgid ""
 "Automatically saves the current document to disk at a given interval, thus "
 "minimizing loss at a crash"
-msgstr ""
+msgstr "រក្សា​ទុក​ឯកសារ​បច្ចុប្បន្ន​ទៅ​ថា​នៅ​ចន្លោះ​ពេល​ដែល​ផ្ដល់​ឲ្យ ផ្ទុយ​ទៅ​វិញ​អាច​បាត់បង់​នៅ​ពេល​គាំង"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:993
 msgid "Interval (in minutes):"
@@ -11611,18 +11562,17 @@ msgstr "ផ្លូវ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:995
 msgid "Sets the directory where autosaves will be written"
-msgstr ""
+msgstr "កំណត់​ថត​ដែល​ការ​រក្សា​ទុក​ស្វ័យ​ប្រវត្តិ​នឹង​ត្រូវ​បាន​រក្សា​ទុក"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:997
-#, fuzzy
 msgid "Maximum number of autosaves"
-msgstr "ចំនួន​ឯកសារ​បច្ចុប្បន្ន​អតិបរមា ៖"
+msgstr "ចំនួន​រក្សា​ទុក​ស្វ័យ​ប្រវត្តិ​អតិបរមា"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:997
 msgid ""
 "Allows for limiting the space used by autosaves, by setting a maximum number "
 "of allowed files"
-msgstr ""
+msgstr "អនុញ្ញាត​សម្រាប់​កំណត់​ទំហំ​ដែល​ប្រើ​ដោយ​ការ​រក្សា​ទុក​ស្វ័យ​ប្រវត្តិ ដោយ​កំណត់​ចំនួន​ឯកសារ​ដែល​អនុញ្ញាត​អតិបរមា"
 
 #. When changing the interval or enabling/disabling the autosave function,
 #. * update our running configuration
@@ -11640,16 +11590,15 @@ msgstr ""
 #. -----------
 #: ../src/ui/dialog/inkscape-preferences.cpp:1015
 msgid "Automatically reload bitmaps"
-msgstr ""
+msgstr "ផ្ទុក​រូបភាព​ឡើង​វិញ​ស្វ័យ​ប្រវត្តិ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1017
 msgid "Enbles automatic reload of linked images when changed on disk."
-msgstr ""
+msgstr "អនុញ្ញាត​ការ​ផ្ទុក​រូបភាព​ដែល​តភ្ជាប់​ស្វ័យ​ប្រវត្តិ ពេល​ផ្លាស់ប្ដូរ​លើ​ថាស ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1030
-#, fuzzy
 msgid "Bitmap editor:"
-msgstr "ជម្រើស​រូបភាព"
+msgstr "កម្មវិធី​និពន្ធ​រូបភាព ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1036
 msgid "Misc"
@@ -11664,9 +11613,8 @@ msgid "Current effect"
 msgstr "បែបផែន​បច្ចុប្បន្ន"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:76
-#, fuzzy
 msgid "Effect list"
-msgstr "ប្រសិទ្ធ​ភាព​"
+msgstr "បញ្ជី​បែបផែន"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:239
 msgid "Unknown effect is applied"
@@ -11677,13 +11625,12 @@ msgid "No effect applied"
 msgstr "គ្មាន​បែបផែន​បាន​អនុវត្ត"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:248
-#, fuzzy
 msgid "Item is not a path or shape"
 msgstr "ធាតុ​មិនមែន​ជា​រូបរាង ឬ​ផ្លូវ"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:252
 msgid "Only one item can be selected"
-msgstr "មាន​ធាតុ​តែមួយ​ប៉ុណ្ណោះ​អាច​ត្រូវ​បាន​អនុវត្ត"
+msgstr "មាន​ធាតុ​តែ​មួយ​ប៉ុណ្ណោះ​អាច​ត្រូវ​បាន​អនុវត្ត"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:256
 msgid "Empty selection"
@@ -11694,12 +11641,10 @@ msgid "Remove path effect"
 msgstr "យក​បែបផែន​ផ្លូវ​ចេញ"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:366
-#, fuzzy
 msgid "Move path effect up"
 msgstr "យក​បែបផែន​ផ្លូវ​ចេញ"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:384
-#, fuzzy
 msgid "Move path effect down"
 msgstr "យក​បែបផែន​ផ្លូវ​ចេញ"
 
@@ -11851,67 +11796,59 @@ msgstr "សរសេរ​ឯកសារ​សម័យ ៖"
 
 #: ../src/ui/dialog/session-player.cpp:74
 msgid "Playback controls"
-msgstr ""
+msgstr "វត្ថុ​បញ្ជា​ចាក់​សារ​ថ្មី"
 
 #: ../src/ui/dialog/session-player.cpp:75
-#, fuzzy
 msgid "Message information"
-msgstr "ព័ត៌មាន​អំពី​ប្រើ​​សតិ​"
+msgstr "ព័ត៌មាន​សារ"
 
 #. Active session file display
 #. fixme: Does this mean the active file for the session, or the file for the active session?
 #. Please indicate which with a TRANSLATORS comment.
 #: ../src/ui/dialog/session-player.cpp:85
-#, fuzzy
 msgid "Active session file:"
-msgstr "សរសេរ​ឯកសារ​សម័យ ៖"
+msgstr "ឯកសារ​សម័យ​សកម្ម ៖"
 
 #: ../src/ui/dialog/session-player.cpp:86
 msgid "Delay (milliseconds):"
-msgstr ""
+msgstr "ពន្យារ (មិល្លីវិនាទី) ៖"
 
 #. Unload/load buttons
 #: ../src/ui/dialog/session-player.cpp:94
-#, fuzzy
 msgid "Close file"
-msgstr "បិទ"
+msgstr "បិទ​ឯកសារ"
 
 #: ../src/ui/dialog/session-player.cpp:95
-#, fuzzy
 msgid "Open new file"
-msgstr "ប្ដូរ​ឈ្មោះ​តម្រង​"
+msgstr "បើក​ឯកសារ​ថ្មី"
 
 #: ../src/ui/dialog/session-player.cpp:96
-#, fuzzy
 msgid "Set delay"
-msgstr "កំណត់​អាល់ហ្វា​"
+msgstr "កំណត់​ការ​ពន្យារ"
 
 #: ../src/ui/dialog/session-player.cpp:138
-#, fuzzy
 msgid "Rewind"
-msgstr "បង្ហាញ​"
+msgstr "ខារ​ថយក្រោយ"
 
 #: ../src/ui/dialog/session-player.cpp:139
 msgid "Go back one change"
-msgstr ""
+msgstr "ត្រឡប់​ទៅ​ក្រោយ​ការ​ផ្លាស់ប្ដូរ​មួយ"
 
 #: ../src/ui/dialog/session-player.cpp:140
-#, fuzzy
 msgid "Pause"
-msgstr "បិទភ្ជាប់​"
+msgstr "ផ្អាក"
 
 #: ../src/ui/dialog/session-player.cpp:141
 msgid "Go forward one change"
-msgstr ""
+msgstr "ទៅ​មុខ​មុន​ការ​ផ្លាស់ប្ដូរ​មួយ"
 
 #: ../src/ui/dialog/session-player.cpp:142
 msgid "Play"
-msgstr ""
+msgstr "ចាក់"
 
 #: ../src/ui/dialog/session-player.cpp:177
-#, fuzzy
 msgid "Open session file"
-msgstr "សរសេរ​ឯកសារ​សម័យ ៖"
+msgstr "បើក​ឯកសារ​សម័យ"
 
 #. #### begin left panel
 #. ### begin notebook
@@ -11924,7 +11861,7 @@ msgstr "កាត់​ពន្លឺ"
 
 #: ../src/ui/dialog/tracedialog.cpp:400
 msgid "Trace by a given brightness level"
-msgstr "តាមដាន​ដោយផ្ដល់​កម្រិត​ពន្លឺ​"
+msgstr "តាម​ដាន​ដោយ​ផ្ដល់​កម្រិត​ពន្លឺ​"
 
 #: ../src/ui/dialog/tracedialog.cpp:408
 msgid "Brightness cutoff for black/white"
@@ -11938,15 +11875,15 @@ msgstr "ស្កេន​តែ​ម្ដង ៖ បង្កើត​ផ្
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
 #: ../src/ui/dialog/tracedialog.cpp:420
 msgid "Edge detection"
-msgstr "រកឃើញ​គែម​"
+msgstr "រក​ឃើញ​គែម​"
 
 #: ../src/ui/dialog/tracedialog.cpp:424
 msgid "Trace with optimal edge detection by J. Canny's algorithm"
-msgstr "ដាន​ដែល​មាន​ការ​រកឃើញ​គែម​ប្រសើរ​បំផុត​ដោយ J. Canny's"
+msgstr "ដាន​ដែល​មាន​ការ​រកឃើញ​គែម​ប្រសើរ​បំផុត​ដោយ​ក្បួន​ដោះស្រាយ​របស់ J. Canny"
 
 #: ../src/ui/dialog/tracedialog.cpp:441
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
-msgstr "កាត់​ពន្លឺ​សម្រាប់​ភីកសែល​ដែលជាប់​គ្នា (កំណត់ភាព​ក្រាស់​របស់​គែម)"
+msgstr "កាត់​ពន្លឺ​សម្រាប់​ភីកសែល​ដែល​ជាប់​គ្នា (កំណត់ភាព​ក្រាស់​របស់​គែម)"
 
 #. quantization
 #. TRANSLATORS: Color Quantization: the process of reducing the number
@@ -11958,7 +11895,7 @@ msgstr "កំណត់​បរិមាណ​ពណ៌​"
 
 #: ../src/ui/dialog/tracedialog.cpp:457
 msgid "Trace along the boundaries of reduced colors"
-msgstr "ដាន​តាម​ព្រំដែន​របស់​ពណ៌​ដែល​បានកាត់​បន្ថយ"
+msgstr "ដាន​តាម​ព្រំដែន​របស់​ពណ៌​ដែល​បាន​កាត់​បន្ថយ"
 
 #: ../src/ui/dialog/tracedialog.cpp:465
 msgid "The number of reduced colors"
@@ -11985,7 +11922,7 @@ msgstr "ជំហាន​ពន្លឺ"
 
 #: ../src/ui/dialog/tracedialog.cpp:491
 msgid "Trace the given number of brightness levels"
-msgstr "ដាន​​របស់ចំនួន​កម្រិត​ពន្លឺ​ដែល​បាន​ផ្ដល់"
+msgstr "ដាន​​របស់​ចំនួន​កម្រិត​ពន្លឺ​ដែល​បាន​ផ្ដល់"
 
 #: ../src/ui/dialog/tracedialog.cpp:498
 msgid "Scans:"
@@ -12001,7 +11938,7 @@ msgstr "​ពណ៌"
 
 #: ../src/ui/dialog/tracedialog.cpp:509
 msgid "Trace the given number of reduced colors"
-msgstr "ដាន​របស់​ចំនួន​ពណ៌​ដែល​បានកាត់​បន្ថយ​ដែល​បាន​ផ្ដល់"
+msgstr "ដាន​របស់​ចំនួន​ពណ៌​ដែល​បាន​កាត់​បន្ថយ​ដែល​បាន​ផ្ដល់"
 
 #: ../src/ui/dialog/tracedialog.cpp:513
 msgid "Grays"
@@ -12286,123 +12223,113 @@ msgstr "កែសម្រួល​ម៉ាទ្រីស​ប្លែង"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:44
 msgid "_Use SSL"
-msgstr ""
+msgstr "ប្រើ SSL"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:44
-#, fuzzy
 msgid "_Register"
-msgstr "លើកឡើង"
+msgstr "ចុះ​ឈ្មោះ"
 
 #. Construct dialog interface
 #: ../src/ui/dialog/whiteboard-connect.cpp:75
-#, fuzzy
 msgid "_Server:"
-msgstr "ដាក់​បញ្ច្រាស់​"
+msgstr "ម៉ាស៊ីន​បម្រើ ៖"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:76
-#, fuzzy
 msgid "_Username:"
 msgstr "ឈ្មោះ​អ្នក​ប្រើ​ ៖"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:77
-#, fuzzy
 msgid "_Password:"
 msgstr "ពាក្យ​សម្ងាត់​ ៖"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:78
-#, fuzzy
 msgid "P_ort:"
-msgstr "នាំចេញ "
+msgstr "ច្រក ៖"
 
 #. Buttons
 #: ../src/ui/dialog/whiteboard-connect.cpp:113
-#, fuzzy
 msgid "Connect"
-msgstr "បន្ទាត់​តភ្ជាប់​"
+msgstr "តភ្ជាប់​"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:144
 msgid "Establishing connection to Jabber server <b>%1</b>"
-msgstr ""
+msgstr "បង្កើត​ការ​តភ្ជាប់​ទៅ​ម៉ាស៊ីន​បម្រើ Jabber <b>%1</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:171
 #: ../src/ui/dialog/whiteboard-connect.cpp:216
 #: ../src/ui/dialog/whiteboard-connect.cpp:254
 msgid "Failed to establish connection to Jabber server <b>%1</b>"
-msgstr ""
+msgstr "បរាជ័យ​ក្នុង​ការ​បង្កើត​ការ​តភ្ជាប់​ទៅ​ម៉ាស៊ីន​បម្រើ Jabber <b>%1</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:209
 msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
-msgstr ""
+msgstr "បង្កើត​ការ​តភ្ជាប់​ទៅ​ម៉ាស៊ីន​បម្រើ Jabber <b>%1</b> ជា​អ្នក​ប្រើ <b>%2</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:221
 msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
+msgstr "ការ​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ​បរាជ័យ​លើ​ម៉ាស៊ីន​បម្រើ Jabber <b>%1</b> ជា <b>%2</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:226
 #: ../src/ui/dialog/whiteboard-connect.cpp:264
 msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
-msgstr ""
+msgstr "ការ​ចាប់ផ្ដើម SSL បរាជ័យ ពេល​តភ្ជាប់​ទៅ​ម៉ាស៊ីន​បម្រើ Jabber <b>%1</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:232
 #: ../src/ui/dialog/whiteboard-connect.cpp:270
 msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
+msgstr "បាន​តភ្ជាប់​ទៅ​ម៉ាស៊ីន​បម្រើ Jabber <b>%1</b> ជា <b>%2</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:259
 msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
+msgstr "ការ​ចុះ​ឈ្មោះ​បាន​បរាជ័យ​លើ​ម៉ាស៊ីន​បម្រើ Jabber <b>%1</b> ជា <b>%2</b>"
 
 #. Construct labels
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:75
-#, fuzzy
 msgid "Chatroom _name:"
-msgstr "ឈ្មោះស្រទាប់ ៖"
+msgstr "ឈ្មោះ​បន្ទប់​ជជែក​កំសាន្ត ៖"
 
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
 msgid "Chatroom _server:"
-msgstr ""
+msgstr "ម៉ាស៊ីន​បម្រើ​ជជែក​កំសាន្ត ៖"
 
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:77
 msgid "Chatroom _password:"
-msgstr ""
+msgstr "ពាក្យ​សម្ងាត់​បន្ទប់​ជជែក​កំសាន្ត ៖"
 
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:78
-#, fuzzy
 msgid "Chatroom _handle:"
-msgstr "ផ្លាស់ប្ដូរ​ចំណុច​ទាញ​"
+msgstr "ចំណុច​ទាញ​បន្ទប់​ជជែក​កំសាន្ត ៖"
 
 #. Button setup and callback registration
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:102
-#, fuzzy
 msgid "Connect to chatroom"
-msgstr "បន្ទាត់​តភ្ជាប់​"
+msgstr "តភ្ជាប់​ទៅ​បន្ទប់​ជជែក​កំសាន្ត"
 
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:137
 msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
-msgstr ""
+msgstr "ធ្វើ​សមកាលកម្ម​ជាមួយ​បន្ទប់​ជជែក​កំសាន្ត <b>%1@%2</b> ដោយ​ប្រើ​ចំនុច​ទាញ <b>%3</b>"
 
 #. Construct dialog interface
 #: ../src/ui/dialog/whiteboard-sharewithuser.cpp:76
 msgid "_User's Jabber ID:"
-msgstr ""
+msgstr "លេខ​សម្គាល់ Jabber របស់​អ្នក​ប្រើ ៖"
 
 #. Buttons
 #: ../src/ui/dialog/whiteboard-sharewithuser.cpp:80
 msgid "_Invite user"
-msgstr ""
+msgstr "អញ្ជើញ​អ្នក​ប្រើ"
 
 #: ../src/ui/dialog/whiteboard-sharewithuser.cpp:81
-#, fuzzy
 msgid "_Cancel"
 msgstr "បោះបង់"
 
 #: ../src/ui/dialog/whiteboard-sharewithuser.cpp:92
 msgid "Buddy List"
-msgstr ""
+msgstr "បញ្ជី​មិត្ត​ជិត​ស្និទ្ធ​"
 
 #: ../src/ui/dialog/whiteboard-sharewithuser.cpp:181
 msgid "Sending whiteboard invitation to <b>%1</b>"
-msgstr ""
+msgstr "ផ្ញើ​ការ​អញ្ជើញ​ទៅ <b>%1</b>​"
 
 #. FIXME: strings are replaced by placeholders, NOT to be translated until the code is enabled
 #. See http://sourceforge.net/mailarchive/message.php?msg_id=11746016 for details
@@ -12543,16 +12470,14 @@ msgstr "ពង្រីក​គំនូរ​ប្រសិន​បើ​ផ
 
 #: ../src/ui/view/edit-widget.cpp:1083 ../src/widgets/desktop-widget.cpp:510
 msgid "Cursor coordinates"
-msgstr "កោអរដោនេ​​ទស្សទ្រនិច​"
+msgstr "កូអរដោនេ​​ទស្សទ្រនិច​"
 
 #. display the initial welcome message in the statusbar
 #: ../src/ui/view/edit-widget.cpp:1100 ../src/widgets/desktop-widget.cpp:558
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
-msgstr ""
-"<b>សូម​ស្វាគមន៍​មក​កាន់ Inkscape !</b> ប្រើ​រូបរាង ឬ​ឧបករណ៍​សេរី​ដើម្បី​វត្ថុ ប្រើ​ឧបករណ៍​ជ្រើស (ព្រួញ) "
-"ដើម្បី​ផ្លាស់ទី ឬ​ប្លែង​ពួកវា ។"
+msgstr "<b>សូម​ស្វាគមន៍​មក​កាន់ Inkscape !</b> ប្រើ​រូបរាង ឬ​ឧបករណ៍​សេរី​ដើម្បី​វត្ថុ ប្រើ​ឧបករណ៍​ជ្រើស (ព្រួញ) ដើម្បី​ផ្លាស់ទី ឬ​ប្លែង​ពួកវា ។"
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/widgets/desktop-widget.cpp:844
 #, c-format
@@ -12587,7 +12512,7 @@ msgstr ""
 
 #: ../src/ui/view/edit-widget.cpp:1272 ../src/widgets/desktop-widget.cpp:910
 msgid "_Save as SVG"
-msgstr "រក្សាទុក​ជា SVG "
+msgstr "រក្សា​ទុក​ជា SVG"
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:25
 msgid "_Blend mode:"
@@ -12599,7 +12524,7 @@ msgstr "ព្រិលៗ ៖"
 
 #: ../src/ui/widget/licensor.cpp:35
 msgid "Proprietary"
-msgstr "មានកម្មសិទ្ធិ​"
+msgstr "មាន​កម្មសិទ្ធិ​"
 
 #: ../src/ui/widget/licensor.cpp:38
 msgid "Other"
@@ -12709,13 +12634,12 @@ msgid "swatches|Width"
 msgstr "ផ្ទាំង​ក្រណាត់|មធ្យម"
 
 #: ../src/ui/widget/panel.cpp:179
-#, fuzzy
 msgid "narrower"
-msgstr "ទាប​ជាង"
+msgstr "ចង្អៀត​ជាង"
 
 #: ../src/ui/widget/panel.cpp:180
 msgid "narrow"
-msgstr ""
+msgstr "ចង្អៀត"
 
 #. TRANSLATORS: Translate only the word "medium". Indicates width of colour swatches
 #: ../src/ui/widget/panel.cpp:182
@@ -12724,14 +12648,12 @@ msgid "swatchesWidth|medium"
 msgstr "ផ្ទាំង​ក្រណាត់|មធ្យម"
 
 #: ../src/ui/widget/panel.cpp:183
-#, fuzzy
 msgid "wide"
-msgstr "លាក់​"
+msgstr "ទូលាយ"
 
 #: ../src/ui/widget/panel.cpp:184
-#, fuzzy
 msgid "wider"
-msgstr "លាក់​"
+msgstr "ទូលាយ​ជាង"
 
 #. TRANSLATORS: Translate only the word "Wrap". Indicates how colour swatches are displayed
 #: ../src/ui/widget/panel.cpp:215
@@ -12751,7 +12673,7 @@ msgstr "បង្កើត​កម្មវិធី​បង្កើត​ល
 
 #: ../src/ui/widget/rendering-options.cpp:39
 msgid "Backend"
-msgstr "ផ្ទៃខាងក្រោយ​"
+msgstr "ខាងក្រោយ​"
 
 #: ../src/ui/widget/rendering-options.cpp:40
 msgid "Vector"
@@ -12774,19 +12696,14 @@ msgid ""
 "Render using Cairo vector operations.  The resulting image is usually "
 "smaller in file size and can be arbitrarily scaled, but some filter effects "
 "will not be correctly rendered."
-msgstr ""
-"បង្ហាញ​ដោយ​ប្រើ​ប្រតិបត្តិការ​វ៉ិចទ័រ Cairo ។ រូបភាព​លទ្ធផល​តាមធម្មតា​តូចជាង​​នៅ​ក្នុងទំហំ ឯកសារ និងអាច​"
-"ត្រូវ​បាន​ធ្វើមាត្រដ្ឋាន​ដោយ​បង្ខំ ប៉ុន្តែ​បែបផែន​តម្រង​មួយ​នឹង​មិន​អាច​ត្រូវ​បានបង្ហាញ​ត្រឹមត្រូវ​ទេ ។"
+msgstr "បង្ហាញ​ដោយ​ប្រើ​ប្រតិបត្តិការ​វ៉ិចទ័រ Cairo ។ រូបភាព​លទ្ធផល​តាមធម្មតា​តូចជាង​​នៅ​ក្នុងទំហំ ឯកសារ និងអាច​ត្រូវ​បាន​ធ្វើមាត្រដ្ឋាន​ដោយ​បង្ខំ ប៉ុន្តែ​បែបផែន​តម្រង​មួយ​នឹង​មិន​អាច​ត្រូវ​បានបង្ហាញ​ត្រឹមត្រូវ​ទេ ។"
 
 #: ../src/ui/widget/rendering-options.cpp:57
 msgid ""
 "Render everything as bitmap.  The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
 "will be rendered exactly as displayed."
-msgstr ""
-"បោះពុម្ព​អ្វីៗ​ទាំង​អស់​ជា​រូបភាព ។​ លទ្ធផល​របស់​រូបភាព​តាម​ធម្មតា​ធំជាង​នៅ​ក្នុង​ទំហំ​ឯកសារ និង​មិន​អាច​ធ្វើ​"
-"មាត្រដ្ឋាន​ដោយ​បង្ខំ​​ដោយ​មិន​បាត់បង់​គុណភាព​បាន​ទេ ប៉ុន្តែ​វត្ថុ​ទាំង​អស់​នឹង​ត្រូវ​បាន​បង្ហាញ​ជាក់លាក់​ដូច​នឹង​អ្វី​ដែល​"
-"បាន​បង្ហាញ ។"
+msgstr "បោះពុម្ព​អ្វីៗ​ទាំង​អស់​ជា​រូបភាព ។​ លទ្ធផល​របស់​រូបភាព​តាម​ធម្មតា​ធំជាង​នៅ​ក្នុង​ទំហំ​ឯកសារ និង​មិន​អាច​ធ្វើ​មាត្រដ្ឋាន​ដោយ​បង្ខំ​​ដោយ​មិន​បាត់បង់​គុណភាព​បាន​ទេ ប៉ុន្តែ​វត្ថុ​ទាំង​អស់​នឹង​ត្រូវ​បាន​បង្ហាញ​ជាក់លាក់​ដូច​នឹង​អ្វី​ដែល​បាន​បង្ហាញ ។"
 
 #: ../src/ui/widget/selected-style.cpp:106
 #: ../src/ui/widget/style-swatch.cpp:110
@@ -12872,7 +12789,7 @@ msgstr "ខ្វាច់​ជម្រាល​មូល​"
 
 #: ../src/ui/widget/selected-style.cpp:185
 msgid "Different"
-msgstr "ផ្សេង​គ្នា្នា​"
+msgstr "ផ្សេង​គ្នា"
 
 #: ../src/ui/widget/selected-style.cpp:188
 msgid "Different fills"
@@ -12893,7 +12810,7 @@ msgstr "បំពេញ​ពណ៌​រាបស្មើ"
 
 #: ../src/ui/widget/selected-style.cpp:196
 msgid "Flat color stroke"
-msgstr "ខ្វាច់ពណ៌​រាបស្មើ"
+msgstr "ខ្វាច់​ពណ៌​រាបស្មើ"
 
 #. TRANSLATOR COMMENT: A means "Averaged"
 #: ../src/ui/widget/selected-style.cpp:199
@@ -12923,11 +12840,11 @@ msgstr "ខ្វាច់​វត្ថុ​ដែល​បាន​ជ្រ
 
 #: ../src/ui/widget/selected-style.cpp:210
 msgid "Edit fill..."
-msgstr "កែសម្រួល​បំពេញ..."
+msgstr "កែ​សម្រួល​បំពេញ..."
 
 #: ../src/ui/widget/selected-style.cpp:210
 msgid "Edit stroke..."
-msgstr "កែសម្រួលខ្វាច់..."
+msgstr "កែ​សម្រួល​ខ្វាច់..."
 
 #: ../src/ui/widget/selected-style.cpp:214
 msgid "Last set color"
@@ -12943,7 +12860,7 @@ msgstr "ដាក់​បញ្ច្រាស"
 
 #: ../src/ui/widget/selected-style.cpp:226
 msgid "White"
-msgstr "ពណ៌ស"
+msgstr "ពណ៌​ស"
 
 #: ../src/ui/widget/selected-style.cpp:230
 #: ../src/widgets/sp-color-icc-selector.cpp:237
@@ -12981,15 +12898,15 @@ msgstr "យក​ចេញ"
 
 #: ../src/ui/widget/selected-style.cpp:543
 msgid "Apply last set color to fill"
-msgstr "អនុវត្ត​ការ​កំណត់​ពណ៌​ចុង​ក្រោយ​ដើម្បីបំពេញ"
+msgstr "អនុវត្ត​ការ​កំណត់​ពណ៌​ចុង​ក្រោយ​ដើម្បី​បំពេញ"
 
 #: ../src/ui/widget/selected-style.cpp:555
 msgid "Apply last set color to stroke"
-msgstr "អនុវត្ត​ការ​កំណត់​ពណ៌​ចុងក្រោយដើម្បី​ខ្វាច់​"
+msgstr "អនុវត្ត​ការ​កំណត់​ពណ៌​ចុងក្រោយ​ដើម្បី​ខ្វាច់​"
 
 #: ../src/ui/widget/selected-style.cpp:566
 msgid "Apply last selected color to fill"
-msgstr "អនុវត្ត​ពណ៌​ដែល​បាន​​ជ្រើស​ចុងក្រោយ​ដើម្បីបំពេញ"
+msgstr "អនុវត្ត​ពណ៌​ដែល​បាន​​ជ្រើស​ចុងក្រោយ​ដើម្បី​បំពេញ"
 
 #: ../src/ui/widget/selected-style.cpp:577
 msgid "Apply last selected color to stroke"
@@ -12997,7 +12914,7 @@ msgstr "អនុវត្ត​ពណ៌​ដែល​បាន​​ជ្រ
 
 #: ../src/ui/widget/selected-style.cpp:597
 msgid "Invert fill"
-msgstr "ដាក់​បញ្ច្រាស​កា​របំពេញ"
+msgstr "ដាក់​បញ្ច្រាស​ការ​បំពេញ"
 
 #: ../src/ui/widget/selected-style.cpp:617
 msgid "Invert stroke"
@@ -13005,7 +12922,7 @@ msgstr "ដាក់​បញ្ច្រាស​ខ្វាច់"
 
 #: ../src/ui/widget/selected-style.cpp:629
 msgid "White fill"
-msgstr "បំពេញ​ពណ៌ស"
+msgstr "បំពេញ​ពណ៌​ស"
 
 #: ../src/ui/widget/selected-style.cpp:641
 msgid "White stroke"
@@ -13025,7 +12942,7 @@ msgstr "បិទភ្ជាប់​ការ​បំពេញ"
 
 #: ../src/ui/widget/selected-style.cpp:726
 msgid "Paste stroke"
-msgstr "បិទភ្ជាប់ខ្វាច់"
+msgstr "បិទភ្ជាប់​ខ្វាច់"
 
 #: ../src/ui/widget/selected-style.cpp:890
 msgid "Change stroke width"
@@ -13033,7 +12950,7 @@ msgstr "ផ្លាស់ប្ដូរ​ទទឹង​ខ្វាច់​
 
 #: ../src/ui/widget/selected-style.cpp:985
 msgid ", drag to adjust"
-msgstr ", អូស​ដើម្បី​លៃតម្រូវ"
+msgstr " អូស​ដើម្បី​លៃ​តម្រូវ"
 
 #: ../src/ui/widget/selected-style.cpp:1066
 #, c-format
