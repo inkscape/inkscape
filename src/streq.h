@@ -11,6 +11,12 @@ streq(char const *a, char const *b)
     return std::strcmp(a, b) == 0;
 }
 
+struct streq_rel {
+    bool operator()(char const *a, char const *b) const
+    {
+        return (std::strcmp(a, b) == 0);
+    }
+};
 
 #endif /* !INKSCAPE_STREQ_H */
 

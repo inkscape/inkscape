@@ -17,6 +17,8 @@
 #define SEEN_INKSCAPE_SVG_PATH_STRING_H
 
 #include <glibmm/ustring.h>
+#include <string>
+#include <stdio.h>
 #include "libnr/nr-point.h"
 #include "libnr/nr-point-ops.h"
 
@@ -31,16 +33,24 @@ public:
     // default copy
     // default assign
 
-    Glib::ustring const &ustring() const {
-        return (_abs_state <= _rel_state || !allow_relative_coordinates) ? _abs_state.str : _rel_state.str;
+    std::string const &string() {
+        std::string const &t = tail();
+        final.reserve(commonbase.size()+t.size());
+        final = commonbase;
+        final += tail();
+        return final;
     }
 
-    operator Glib::ustring const &() const {
-        return ustring();
+    operator std::string const &() {
+        return string();
     }
 
-    char const *c_str() const {
-        return ustring().c_str();
+    operator Glib::ustring const () const {
+        return commonbase + tail();
+    }
+
+    char const *c_str() {
+        return string().c_str();
     }
 
     PathString &moveTo(NR::Coord x, NR::Coord y) {
@@ -167,14 +177,14 @@ private:
         State() { prevop = 0; switches = 0; }
 
         void appendOp(char op) {
-            if (!str.empty()) str.append(1, ' ');
-            str.append(1, op);
-            prevop = op == 'M' ? 'L' : op == 'm' ? 'l' : op;
+            if (prevop != 0) str += ' ';
+            str += op;
+            prevop = ( op == 'M' ? 'L' : op == 'm' ? 'l' : op );
         }
 
         void append(bool flag) {
-            str.append(1, ' ');
-            str.append(1, ( flag ? '1' : '0' ));
+            str += ' ';
+            str += ( flag ? '1' : '0' );
         }
 
         void append(NR::Coord v);
@@ -192,16 +202,32 @@ private:
             return true;
         }
 
-        Glib::ustring str;
+        // Note: changing this to Glib::ustring might cause problems in path-string.cpp because it assumes that
+        //       size() returns the size of the string in BYTES (and Glib::ustring::resize is terribly slow)
+        std::string str;
         unsigned int switches;
         char prevop;
+
+    private:
+        void appendNumber(double v, int precision=numericprecision, int minexp=minimumexponent);
+        void appendNumber(double v, double &rv, int precision=numericprecision, int minexp=minimumexponent);
+        void appendRelativeCoord(NR::Coord v, NR::Coord r);
     } _abs_state, _rel_state; // State with the last operator being an absolute/relative operator
 
     NR::Point _initial_point;
     NR::Point _current_point;
 
+    // If both states have a common prefix it is stored here.
+    // Separating out the common prefix prevents repeated copying between the states
+    // to cause a quadratic time complexity (in the number of characters/operators)
+    std::string commonbase;
+    std::string final;
+    std::string const &tail() const { return ((_abs_state <= _rel_state || !allow_relative_coordinates) ? _abs_state.str : _rel_state.str); }
+
     bool const allow_relative_coordinates;
     bool const force_repeat_commands;
+    static int numericprecision;
+    static int minimumexponent;
 };
 
 }

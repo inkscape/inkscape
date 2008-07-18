@@ -2,6 +2,8 @@
 #include "libnr/n-art-bpath.h"
 #include "svg/svg.h"
 #include "2geom/coord.h"
+#include "prefs-utils.h"
+#include "streq.h"
 #include <string>
 #include <vector>
 #include <glib/gmem.h>
@@ -433,6 +435,20 @@ public:
         new_bpath = sp_svg_read_path(path_str);
         TS_ASSERT(bpathEqual(bpath, new_bpath, 1e-17));
         g_free(bpath); g_free(path_str); g_free(new_bpath);
+    }
+
+    void testMinexpPrecision() {
+        NArtBpath * bpath;
+        char * path_str;
+        // Default values
+        prefs_set_int_attribute("options.svgoutput", "allowrelativecoordinates", 1);
+        prefs_set_int_attribute("options.svgoutput", "forcerepeatcommands", 0);
+        prefs_set_int_attribute("options.svgoutput", "numericprecision", 8);
+        prefs_set_int_attribute("options.svgoutput", "minimumexponent", -8);
+        bpath = sp_svg_read_path("M 123456781,1.23456781e-8 L 123456782,1.23456782e-8 L 123456785,1.23456785e-8 L 10123456400,1.23456785e-8 L 123456789,1.23456789e-8 L 123456789,101.234564e-8 L 123456789,1.23456789e-8");
+        path_str = sp_svg_write_path(bpath);
+        TS_ASSERT_RELATION( streq_rel , "m 123456780,1.2345678e-8 0,0 10,1e-15 9999999210,0 -9999999210,0 0,9.99999921e-7 0,-9.99999921e-7" , path_str );
+        g_free(bpath); g_free(path_str);
     }
 
 private:

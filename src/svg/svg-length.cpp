@@ -64,29 +64,38 @@ unsigned int sp_svg_number_read_d(gchar const *str, double *val)
     return 1;
 }
 
+static unsigned int sp_svg_number_write_ui(gchar *buf, unsigned int val)
+{
+    unsigned int i = 0;
+    char c[16u];
+    do {
+        c[16u - (++i)] = '0' + (val % 10u);
+        val /= 10u;
+    } while (val > 0u);
+    
+    memcpy(buf, &c[16u - i], i);
+    buf[i] = 0;
+    
+    return i;
+}
+
 static unsigned int sp_svg_number_write_i(gchar *buf, int val)
 {
     int p = 0;
+    unsigned int uval;
     if (val < 0) {
         buf[p++] = '-';
-        val = -val;
+        uval = (unsigned int)-val;
+    } else {
+        uval = (unsigned int)val;
     }
-    
-    int i = 0;
-    char c[32];
-    do {
-        c[32 - (++i)] = '0' + (val % 10);
-        val /= 10;
-    } while (val > 0);
-    
-    memcpy(buf + p, &c[32 - i], i);
-    p += i;
-    buf[p] = 0;
+
+    p += sp_svg_number_write_ui(buf+p, uval);
     
     return p;
 }
 
-static unsigned sp_svg_number_write_d(gchar *buf, double val, unsigned int tprec, unsigned int fprec, unsigned int padf)
+static unsigned sp_svg_number_write_d(gchar *buf, double val, unsigned int tprec, unsigned int fprec)
 {
     /* Process sign */
     int i = 0;
@@ -98,23 +107,30 @@ static unsigned sp_svg_number_write_d(gchar *buf, double val, unsigned int tprec
     /* Determine number of integral digits */
     int idigits = 0;
     if (val >= 1.0) {
-        idigits = (int) floor(log10(val));
+        idigits = (int) floor(log10(val)) + 1;
     }
     
     /* Determine the actual number of fractional digits */
-    fprec = MAX(fprec, tprec - idigits - 1);
+    fprec = MAX(fprec, tprec - idigits);
     /* Round value */
-    val += 0.5 * pow(10.0, - ((double) fprec));
+    val += 0.5 / pow(10.0, fprec);
     /* Extract integral and fractional parts */
     double dival = floor(val);
-    int ival = (int) dival;
     double fval = val - dival;
     /* Write integra */
-    i += sp_svg_number_write_i(buf + i, ival);
+    if (idigits > (int)tprec) {
+        i += sp_svg_number_write_ui(buf + i, (unsigned int)floor(dival/pow(10.0, idigits-tprec) + .5));
+        for(unsigned int j=0; j<(unsigned int)idigits-tprec; j++) {
+            buf[i+j] = '0';
+        }
+        i += idigits-tprec;
+    } else {
+        i += sp_svg_number_write_ui(buf + i, (unsigned int)dival);
+    }
     int end_i = i;
-    if (fprec > 0 && (padf || fval > 0.0)) {
+    if (fprec > 0 && fval > 0.0) {
         buf[i++] = '.';
-        while ((fprec > 0) && (padf || (fval > 0.0))) {
+        do {
             fval *= 10.0;
             dival = floor(fval);
             fval -= dival;
@@ -124,27 +140,31 @@ static unsigned sp_svg_number_write_d(gchar *buf, double val, unsigned int tprec
                 end_i = i;
             }
             fprec -= 1;
-        }
+        } while(fprec > 0 && fval > 0.0);
     }
     buf[end_i] = 0;
     return end_i;
 }
 
-unsigned int sp_svg_number_write_de(gchar *buf, double val, unsigned int tprec, int min_exp, unsigned int padf)
+unsigned int sp_svg_number_write_de(gchar *buf, double val, unsigned int tprec, int min_exp)
 {
-    if (val == 0.0 || (fabs(val) >= 0.1 && fabs(val) < 10000000)) {
-        return sp_svg_number_write_d(buf, val, tprec, 0, padf);
+    int eval = (int)floor(log10(fabs(val)));
+    if (val == 0.0 || eval < min_exp) {
+        return sp_svg_number_write_ui(buf, 0);
+    }
+    unsigned int maxnumdigitsWithoutExp = // This doesn't include the sign because it is included in either representation
+        eval<0?tprec+(unsigned int)-eval+1:
+        eval+1<(int)tprec?tprec+1:
+        (unsigned int)eval+1;
+    unsigned int maxnumdigitsWithExp = tprec + ( eval<0 ? 4 : 3 ); // It's not necessary to take larger exponents into account, because then maxnumdigitsWithoutExp is DEFINITELY larger
+    if (maxnumdigitsWithoutExp <= maxnumdigitsWithExp) {
+        return sp_svg_number_write_d(buf, val, tprec, 0);
     } else {
-        double eval = floor(log10(fabs(val)));
-        if ((int) eval < min_exp) {
-            return sp_svg_number_write_d(buf, 0, tprec, 0, padf);
-        } else {
-            val = val / pow(10.0, eval);
-            int p = sp_svg_number_write_d(buf, val, tprec, 0, padf);
-            buf[p++] = 'e';
-            p += sp_svg_number_write_i(buf + p, (int) eval);
-            return p;
-        }
+        val = eval < 0 ? val * pow(10.0, -eval) : val / pow(10.0, eval);
+        int p = sp_svg_number_write_d(buf, val, tprec, 0);
+        buf[p++] = 'e';
+        p += sp_svg_number_write_i(buf + p, eval);
+        return p;
     }
 }
 

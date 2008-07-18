@@ -406,7 +406,7 @@ PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
     if ( nodeCount)
         *nodeCount = thisNodeCount;
 
-    return data.ustring();
+    return data.string();
 }
 
 

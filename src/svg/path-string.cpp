@@ -18,10 +18,21 @@
 #include "prefs-utils.h"
 #include <algorithm>
 
+// 1<=numericprecision<=16, doubles are only accurate upto (slightly less than) 16 digits (and less than one digit doesn't make sense)
+// Please note that these constants are used to allocate sufficient space to hold serialized numbers
+static int const minprec = 1;
+static int const maxprec = 16;
+
+int Inkscape::SVG::PathString::numericprecision;
+int Inkscape::SVG::PathString::minimumexponent;
+
 Inkscape::SVG::PathString::PathString() :
     allow_relative_coordinates(0 != prefs_get_int_attribute("options.svgoutput", "allowrelativecoordinates", 1)),
     force_repeat_commands(0 != prefs_get_int_attribute("options.svgoutput", "forcerepeatcommands", 0))
-{}
+{
+    numericprecision = std::max<int>(minprec,std::min<int>(maxprec,prefs_get_int_attribute("options.svgoutput", "numericprecision", 8)));
+    minimumexponent = prefs_get_int_attribute("options.svgoutput", "minimumexponent", -8);
+}
 
 void Inkscape::SVG::PathString::_appendOp(char abs_op, char rel_op) {
     bool abs_op_repeated = _abs_state.prevop == abs_op && !force_repeat_commands;
@@ -29,6 +40,9 @@ void Inkscape::SVG::PathString::_appendOp(char abs_op, char rel_op) {
     unsigned int const abs_added_size = abs_op_repeated ? 0 : 2;
     unsigned int const rel_added_size = rel_op_repeated ? 0 : 2;
     if ( _rel_state.str.size()+2 < _abs_state.str.size()+abs_added_size && allow_relative_coordinates ) {
+        // Store common prefix
+        commonbase += _rel_state.str;
+        _rel_state.str.clear();
         // Copy rel to abs
         _abs_state = _rel_state;
         _abs_state.switches++;
@@ -38,6 +52,9 @@ void Inkscape::SVG::PathString::_appendOp(char abs_op, char rel_op) {
         //   _rel_state.str.size()+rel_added_size < _abs_state.str.size()+2
         //   _abs_state.str.size()+2 > _rel_state.str.size()+rel_added_size
     } else if ( _abs_state.str.size()+2 < _rel_state.str.size()+rel_added_size ) {
+        // Store common prefix
+        commonbase += _abs_state.str;
+        _abs_state.str.clear();
         // Copy abs to rel
         _rel_state = _abs_state;
         _abs_state.switches++;
@@ -48,104 +65,78 @@ void Inkscape::SVG::PathString::_appendOp(char abs_op, char rel_op) {
 }
 
 void Inkscape::SVG::PathString::State::append(NR::Coord v) {
-    SVGOStringStream os;
-    os << ' ' << v;
-    str.append(os.str());
+    str += ' ';
+    appendNumber(v);
 }
 
 void Inkscape::SVG::PathString::State::append(NR::Point p) {
-    SVGOStringStream os;
-    os << ' ' << p[NR::X] << ',' << p[NR::Y];
-    str.append(os.str());
-}
-
-static void appendCoord(Glib::ustring& str, NR::Coord v, NR::Coord &rv) {
-    Inkscape::SVGOStringStream os;
-    os << v;
-    str += os.str();
-    double c;
-    sp_svg_number_read_d(os.str().c_str(), &c);
-    rv = c;
-    /*{
-        Inkscape::SVGOStringStream ost;
-        ost << rv;
-        if (ost.str()!=os.str()) {
-            FILE* file = fopen("pathstring log.txt","at");
-            fprintf(file, "v: %g, rv: %g\n", v, rv);
-            fclose(file);
-        }
-    }*/
-}
-
-void Inkscape::SVG::PathString::State::append(NR::Point p, NR::Point &rp) {
     str += ' ';
-    appendCoord(str, p[NR::X], rp[NR::X]);
+    appendNumber(p[NR::X]);
     str += ',';
-    appendCoord(str, p[NR::Y], rp[NR::Y]);
+    appendNumber(p[NR::Y]);
 }
 
 void Inkscape::SVG::PathString::State::append(NR::Coord v, NR::Coord& rv) {
     str += ' ';
-    appendCoord(str, v, rv);
+    appendNumber(v, rv);
 }
 
-// NOTE: The following two appendRelative methods will not be exact if the total number of digits needed
+void Inkscape::SVG::PathString::State::append(NR::Point p, NR::Point &rp) {
+    str += ' ';
+    appendNumber(p[NR::X], rp[NR::X]);
+    str += ',';
+    appendNumber(p[NR::Y], rp[NR::Y]);
+}
+
+// NOTE: The following appendRelativeCoord function will not be exact if the total number of digits needed
 // to represent the difference exceeds the precision of a double. This is not very likely though, and if
 // it does happen the imprecise value is not likely to be chosen (because it will probably be a lot longer
 // than the absolute value).
 
-static void appendRelativeCoord(Glib::ustring& str, NR::Coord v, NR::Coord r) {
-    Inkscape::SVGOStringStream os;
-    int precision = (int)os.precision();
-    int digitsEnd   = (int)floor(log10(std::min(fabs(v),fabs(r)))) - precision; // Position just beyond the last significant digit of the smallest (in absolute sense) number
-    double roundeddiff = floor((v-r)*pow(10.,-digitsEnd-1)+.5);
-    int numDigits = (int)floor(log10(fabs(roundeddiff)))+1; // Number of digits in roundeddiff
+// NOTE: This assumes v and r are already rounded (this includes flushing to zero if they are < 10^minexp)
+void Inkscape::SVG::PathString::State::appendRelativeCoord(NR::Coord v, NR::Coord r) {
+    int const minexp = minimumexponent-numericprecision+1;
+    int const digitsEnd = (int)floor(log10(std::min(fabs(v),fabs(r)))) - numericprecision; // Position just beyond the last significant digit of the smallest (in absolute sense) number
+    double const roundeddiff = floor((v-r)*pow(10.,-digitsEnd-1)+.5);
+    int const numDigits = (int)floor(log10(fabs(roundeddiff)))+1; // Number of digits in roundeddiff
     if (r == 0) {
-        os.precision(precision);
-        os << v;
+        appendNumber(v, numericprecision, minexp);
     } else if (v == 0) {
-        os.precision(precision);
-        os << -r;
+        appendNumber(-r, numericprecision, minexp);
     } else if (numDigits>0) {
-        os.precision(numDigits);
-        os << (v-r);
+        appendNumber(v-r, numDigits, minexp);
     } else {
         // This assumes the input numbers are already rounded to 'precision' digits
-        os << '0';
-    }
-    str.append(os.str());
-    {
-        /*double c;
-        sp_svg_number_read_d(os.str().c_str(), &c);
-        if (fabs((v-r)-c)>5.*pow(10.,digitsEnd)) {
-            FILE* file = fopen("pathstring log.txt","at");
-            fprintf(file, "bad, v: %.9g, r: %.9g, os: %s, c: %.12g, roundeddiff: %.12g, precision: %d, digitsEnd: %d, numDigits: %d\n", v, r, os.str().c_str(), c, roundeddiff, precision, digitsEnd, numDigits);
-            fclose(file);
-        }
-        Inkscape::SVGOStringStream ostr1, ostr2;
-        ostr1 << v;
-        ostr2 << (r+c);
-        if (ostr1.str() != ostr2.str()) {
-            FILE* file = fopen("pathstring log.txt","at");
-            fprintf(file, "bad, v: %.9g, r: %.9g, os: %s, c: %.12g, ostr1: %s, ostr2: %s, roundeddiff: %.12g\n", v, r, os.str().c_str(), c, ostr1.str().c_str(), ostr2.str().c_str(), roundeddiff);
-            fclose(file);
-        }*/
-        /*FILE* file = fopen("pathstring log.txt","at");
-        fprintf(file, "good, v: %.9g, r: %.9g, os: %s, c: %.12g, roundeddiff: %.12g, precision: %d, digitsEnd: %d, numDigits: %d\n", v, r, os.str().c_str(), c, roundeddiff, precision, digitsEnd, numDigits);
-        fclose(file);*/
+        str += '0';
     }
 }
 
 void Inkscape::SVG::PathString::State::appendRelative(NR::Point p, NR::Point r) {
     str += ' ';
-    appendRelativeCoord(str, p[NR::X], r[NR::X]);
+    appendRelativeCoord(p[NR::X], r[NR::X]);
     str += ',';
-    appendRelativeCoord(str, p[NR::Y], r[NR::Y]);
+    appendRelativeCoord(p[NR::Y], r[NR::Y]);
 }
 
 void Inkscape::SVG::PathString::State::appendRelative(NR::Coord v, NR::Coord r) {
     str += ' ';
-    appendRelativeCoord(str, v, r);
+    appendRelativeCoord(v, r);
+}
+
+void Inkscape::SVG::PathString::State::appendNumber(double v, int precision, int minexp) {
+    size_t const reserve = precision+1+1+1+1+3; // Just large enough to hold the maximum number of digits plus a sign, a period, the letter 'e', another sign and three digits for the exponent
+    size_t const oldsize = str.size();
+    str.append(reserve, (char)0);
+    char* begin_of_num = const_cast<char*>(str.data()+oldsize); // Slightly evil, I know (but std::string should be storing its data in one big block of memory, so...)
+    size_t added = sp_svg_number_write_de(begin_of_num, v, precision, minexp);
+    str.resize(oldsize+added); // remove any trailing characters
+}
+
+void Inkscape::SVG::PathString::State::appendNumber(double v, double &rv, int precision, int minexp) {
+    size_t const oldsize = str.size();
+    appendNumber(v, precision, minexp);
+    char* begin_of_num = const_cast<char*>(str.data()+oldsize); // Slightly evil, I know (but std::string should be storing its data in one big block of memory, so...)
+    sp_svg_number_read_d(begin_of_num, &rv);
 }
 
 /*

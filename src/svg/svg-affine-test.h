@@ -1,21 +1,13 @@
 #include <cxxtest/TestSuite.h>
 
 #include "svg/svg.h"
+#include "streq.h"
 #include <2geom/matrix.h>
 #include <algorithm>
 #include <glib.h>
 #include <iostream>
 #include <math.h>
 #include <utility>
-
-struct streq_free2 {
-    bool operator()(char const *exp, char const *got) const
-    {
-        bool const ret = (strcmp(exp, got) == 0);
-        g_free((void*)got);
-        return ret;
-    }
-};
 
 struct approx_equal {
     bool operator()(Geom::Matrix const &ref, Geom::Matrix const &cm) const
@@ -122,35 +114,45 @@ public:
     void testWriteMatrix()
     {
         for(size_t i=0; i<G_N_ELEMENTS(write_matrix_tests); i++) {
-            TS_ASSERT_RELATION(streq_free2 , sp_svg_transform_write(write_matrix_tests[i].matrix) , write_matrix_tests[i].str);
+            char * str = sp_svg_transform_write(write_matrix_tests[i].matrix);
+            TS_ASSERT_RELATION(streq_rel , str , write_matrix_tests[i].str);
+            g_free(str);
         }
     }
 
     void testWriteTranslate()
     {
         for(size_t i=0; i<G_N_ELEMENTS(write_translate_tests); i++) {
-            TS_ASSERT_RELATION(streq_free2 , sp_svg_transform_write(write_translate_tests[i].matrix) , write_translate_tests[i].str);
+            char * str = sp_svg_transform_write(write_translate_tests[i].matrix);
+            TS_ASSERT_RELATION(streq_rel , str , write_translate_tests[i].str);
+            g_free(str);
         }
     }
 
     void testWriteScale()
     {
         for(size_t i=0; i<G_N_ELEMENTS(write_scale_tests); i++) {
-            TS_ASSERT_RELATION(streq_free2 , sp_svg_transform_write(write_scale_tests[i].matrix) , write_scale_tests[i].str);
+            char * str = sp_svg_transform_write(write_scale_tests[i].matrix);
+            TS_ASSERT_RELATION(streq_rel , str , write_scale_tests[i].str);
+            g_free(str);
         }
     }
 
     void testWriteRotate()
     {
         for(size_t i=0; i<G_N_ELEMENTS(write_rotate_tests); i++) {
-            TS_ASSERT_RELATION(streq_free2 , sp_svg_transform_write(write_rotate_tests[i].matrix) , write_rotate_tests[i].str);
+            char * str = sp_svg_transform_write(write_rotate_tests[i].matrix);
+            TS_ASSERT_RELATION(streq_rel , str , write_rotate_tests[i].str);
+            g_free(str);
         }
     }
 
     void testWriteSkew()
     {
         for(size_t i=0; i<G_N_ELEMENTS(write_skew_tests); i++) {
-            TS_ASSERT_RELATION(streq_free2 , sp_svg_transform_write(write_skew_tests[i].matrix) , write_skew_tests[i].str);
+            char * str = sp_svg_transform_write(write_skew_tests[i].matrix);
+            TS_ASSERT_RELATION(streq_rel , str , write_skew_tests[i].str);
+            g_free(str);
         }
     }
 

@@ -1,4 +1,5 @@
 #include <cxxtest/TestSuite.h>
+#include "streq.h"
 
 /* Initial author: Peter Moulder.
    Hereby released into the Public Domain. */
@@ -10,15 +11,6 @@
    static functions.  The main disadvantages are that we retain any
    #define's and `using' directives of the included file. */
 #include "quote.cpp"
-
-struct streq_free2 {
-    bool operator()(char const *exp, char *got) const
-    {
-        bool const ret = (strcmp(exp, got) == 0);
-        g_free(got);
-        return ret;
-    }
-};
 
 class XmlQuoteTest : public CxxTest::TestSuite
 {
@@ -71,7 +63,9 @@ public:
             {"a\"b<c>d;!@#$%^*(\\)?", "a&quot;b&lt;c&gt;d;!@#$%^*(\\)?"}
         };
         for(size_t i=0; i<G_N_ELEMENTS(cases); i++) {
-            TS_ASSERT_RELATION( streq_free2, cases[i].s2, xml_quote_strdup(cases[i].s1) );
+            char* str = xml_quote_strdup(cases[i].s1);
+            TS_ASSERT_RELATION( streq_rel, cases[i].s2, str );
+            g_free(str);
         }
     }
 };
