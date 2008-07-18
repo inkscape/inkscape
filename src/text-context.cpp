@@ -224,7 +224,7 @@ sp_text_context_setup(SPEventContext *ec)
     SP_CTRLRECT(tc->frame)->setColor(0x0000ff7f, false, 0);
     sp_canvas_item_hide(tc->frame);
 
-    tc->timeout = gtk_timeout_add(250, (GtkFunction) sp_text_context_timeout, ec);
+    tc->timeout = gtk_timeout_add(200, (GtkFunction) sp_text_context_timeout, ec);
 
     tc->imc = gtk_im_multicontext_new();
     if (tc->imc) {
@@ -809,7 +809,17 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                             }
                         }
 
-                        bool (Inkscape::Text::Layout::iterator::*cursor_movement_operator)() = NULL;
+                        Inkscape::Text::Layout::iterator old_start = tc->text_sel_start;
+                        Inkscape::Text::Layout::iterator old_end = tc->text_sel_end;
+                        bool cursor_moved = false;
+                        int screenlines = 1;
+                        if (tc->text) {
+                            double spacing = sp_te_get_average_linespacing(tc->text);
+                            NR::Rect const d = desktop->get_display_area();
+                            screenlines = (int) floor(fabs(d.min()[NR::Y] - d.max()[NR::Y])/spacing) - 1;
+                            if (screenlines <= 0)
+                                screenlines = 1;
+                        }
 
                         /* Neither unimode nor IM consumed key; process text tool shortcuts */
                         switch (group0_keyval) {
@@ -1010,8 +1020,11 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                                         sp_document_maybe_done(sp_desktop_document(desktop), "kern:left", SP_VERB_CONTEXT_TEXT,
                                                                _("Kern to the left"));
                                     } else {
-                                        cursor_movement_operator = MOD__CTRL ? &Inkscape::Text::Layout::iterator::cursorLeftWithControl
-                                                                             : &Inkscape::Text::Layout::iterator::cursorLeft;
+                                        if (MOD__CTRL) 
+                                            tc->text_sel_end.cursorLeftWithControl();
+                                        else
+                                            tc->text_sel_end.cursorLeft();
+                                        cursor_moved = true;
                                         break;
                                     }
                                 }
@@ -1032,8 +1045,11 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                                         sp_document_maybe_done(sp_desktop_document(desktop), "kern:right", SP_VERB_CONTEXT_TEXT,
                                                                _("Kern to the right"));
                                     } else {
-                                        cursor_movement_operator = MOD__CTRL ? &Inkscape::Text::Layout::iterator::cursorRightWithControl
-                                                                             : &Inkscape::Text::Layout::iterator::cursorRight;
+                                        if (MOD__CTRL)
+                                            tc->text_sel_end.cursorRightWithControl();
+                                        else
+                                            tc->text_sel_end.cursorRight();
+                                        cursor_moved = true;
                                         break;
                                     }
                                 }
@@ -1055,8 +1071,11 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                                                                _("Kern up"));
 
                                     } else {
-                                        cursor_movement_operator = MOD__CTRL ? &Inkscape::Text::Layout::iterator::cursorUpWithControl
-                                                                             : &Inkscape::Text::Layout::iterator::cursorUp;
+                                        if (MOD__CTRL)
+                                            tc->text_sel_end.cursorUpWithControl();
+                                        else
+                                            tc->text_sel_end.cursorUp();
+                                        cursor_moved = true;
                                         break;
                                     }
                                 }
@@ -1078,8 +1097,11 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                                                                _("Kern down"));
 
                                     } else {
-                                        cursor_movement_operator = MOD__CTRL ? &Inkscape::Text::Layout::iterator::cursorDownWithControl
-                                                                             : &Inkscape::Text::Layout::iterator::cursorDown;
+                                        if (MOD__CTRL)
+                                            tc->text_sel_end.cursorDownWithControl();
+                                        else
+                                            tc->text_sel_end.cursorDown();
+                                        cursor_moved = true;
                                         break;
                                     }
                                 }
@@ -1088,9 +1110,10 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                             case GDK_KP_Home:
                                 if (tc->text) {
                                     if (MOD__CTRL)
-                                        cursor_movement_operator = &Inkscape::Text::Layout::iterator::thisStartOfShape;
+                                        tc->text_sel_end.thisStartOfShape();
                                     else
-                                        cursor_movement_operator = &Inkscape::Text::Layout::iterator::thisStartOfLine;
+                                        tc->text_sel_end.thisStartOfLine();
+                                    cursor_moved = true;
                                     break;
                                 }
                                 return TRUE;
@@ -1098,9 +1121,26 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                             case GDK_KP_End:
                                 if (tc->text) {
                                     if (MOD__CTRL)
-                                        cursor_movement_operator = &Inkscape::Text::Layout::iterator::nextStartOfShape;
+                                        tc->text_sel_end.nextStartOfShape();
                                     else
-                                        cursor_movement_operator = &Inkscape::Text::Layout::iterator::thisEndOfLine;
+                                        tc->text_sel_end.thisEndOfLine();
+                                    cursor_moved = true;
+                                    break;
+                                }
+                                return TRUE;
+                            case GDK_Page_Down:
+                            case GDK_KP_Page_Down:
+                                if (tc->text) {
+                                    tc->text_sel_end.cursorDown(screenlines);
+                                    cursor_moved = true;
+                                    break;
+                                }
+                                return TRUE;
+                            case GDK_Page_Up:
+                            case GDK_KP_Page_Up:
+                                if (tc->text) {
+                                    tc->text_sel_end.cursorUp(screenlines);
+                                    cursor_moved = true;
                                     break;
                                 }
                                 return TRUE;
@@ -1217,10 +1257,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                                 break;
                         }
 
-                        if (cursor_movement_operator) {
-                            Inkscape::Text::Layout::iterator old_start = tc->text_sel_start;
-                            Inkscape::Text::Layout::iterator old_end = tc->text_sel_end;
-                            (tc->text_sel_end.*cursor_movement_operator)();
+                        if (cursor_moved) {
                             if (!MOD__SHIFT)
                                 tc->text_sel_start = tc->text_sel_end;
                             if (old_start != tc->text_sel_start || old_end != tc->text_sel_end) {
@@ -1512,9 +1549,12 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
 
         // scroll to show cursor
         if (scroll_to_see) {
-            NR::Point const dm = (d0 + d1) / 2;
-            // unlike mouse moves, here we must scroll all the way at first shot, so we override the autoscrollspeed
-            SP_EVENT_CONTEXT(tc)->desktop->scroll_to_point(&dm, 1.0);
+            NR::Point const center = SP_EVENT_CONTEXT(tc)->desktop->get_display_area().midpoint();
+            if (NR::L2(d0 - center) > NR::L2(d1 - center))
+                // unlike mouse moves, here we must scroll all the way at first shot, so we override the autoscrollspeed
+                SP_EVENT_CONTEXT(tc)->desktop->scroll_to_point(&d0, 1.0);
+            else
+                SP_EVENT_CONTEXT(tc)->desktop->scroll_to_point(&d1, 1.0);
         }
 
         sp_canvas_item_show(tc->cursor);
