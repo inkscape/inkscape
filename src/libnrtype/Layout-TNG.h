@@ -852,8 +852,8 @@ public:
 
     bool nextCursorPosition();
     bool prevCursorPosition();
-    bool nextLineCursor();
-    bool prevLineCursor();
+    bool nextLineCursor(int n = 1);
+    bool prevLineCursor(int n = 1);
 
     //words
     bool nextStartOfWord();
@@ -879,8 +879,8 @@ public:
     bool nextStartOfSource();
 
     //logical cursor movement
-    bool cursorUp();
-    bool cursorDown();
+    bool cursorUp(int n = 1);
+    bool cursorDown(int n = 1);
     bool cursorLeft();
     bool cursorRight();
 

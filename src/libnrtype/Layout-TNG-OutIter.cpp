@@ -693,25 +693,28 @@ void Layout::iterator::beginCursorUpDown()
     _cursor_moving_vertically = true;
 }
 
-bool Layout::iterator::nextLineCursor()
+bool Layout::iterator::nextLineCursor(int n)
 {
     if (!_cursor_moving_vertically)
         beginCursorUpDown();
     if (_char_index == _parent_layout->_characters.size())
         return false;
     unsigned line_index = _parent_layout->_characters[_char_index].chunk(_parent_layout).in_line;
-    if (line_index == _parent_layout->_lines.size() - 1) return false;
-    if (_parent_layout->_lines[line_index + 1].in_shape != _parent_layout->_lines[line_index].in_shape) {
+    if (line_index == _parent_layout->_lines.size() - 1) 
+        return false; // nowhere to go
+		else
+        n = MIN (n, _parent_layout->_lines.size() - 1 - line_index);
+    if (_parent_layout->_lines[line_index + n].in_shape != _parent_layout->_lines[line_index].in_shape) {
         // switching between shapes: adjust the stored x to compensate
-        _x_coordinate +=   _parent_layout->_chunks[_parent_layout->_spans[_parent_layout->_lineToSpan(line_index + 1)].in_chunk].left_x
+        _x_coordinate +=   _parent_layout->_chunks[_parent_layout->_spans[_parent_layout->_lineToSpan(line_index + n)].in_chunk].left_x
                          - _parent_layout->_chunks[_parent_layout->_spans[_parent_layout->_lineToSpan(line_index)].in_chunk].left_x;
     }
-    _char_index = _parent_layout->_cursorXOnLineToIterator(line_index + 1, _x_coordinate)._char_index;
+    _char_index = _parent_layout->_cursorXOnLineToIterator(line_index + n, _x_coordinate)._char_index;
     _glyph_index = _parent_layout->_characters[_char_index].in_glyph;
     return true;
 }
 
-bool Layout::iterator::prevLineCursor()
+bool Layout::iterator::prevLineCursor(int n)
 {
     if (!_cursor_moving_vertically)
         beginCursorUpDown();
@@ -720,13 +723,16 @@ bool Layout::iterator::prevLineCursor()
         line_index = _parent_layout->_lines.size() - 1;
     else
         line_index = _parent_layout->_characters[_char_index].chunk(_parent_layout).in_line;
-    if (line_index == 0) return false;
-    if (_parent_layout->_lines[line_index - 1].in_shape != _parent_layout->_lines[line_index].in_shape) {
+    if (line_index == 0) 
+        return false; // nowhere to go
+		else 
+        n = MIN (n, line_index);
+    if (_parent_layout->_lines[line_index - n].in_shape != _parent_layout->_lines[line_index].in_shape) {
         // switching between shapes: adjust the stored x to compensate
-        _x_coordinate +=   _parent_layout->_chunks[_parent_layout->_spans[_parent_layout->_lineToSpan(line_index - 1)].in_chunk].left_x
+        _x_coordinate +=   _parent_layout->_chunks[_parent_layout->_spans[_parent_layout->_lineToSpan(line_index - n)].in_chunk].left_x
                          - _parent_layout->_chunks[_parent_layout->_spans[_parent_layout->_lineToSpan(line_index)].in_chunk].left_x;
     }
-    _char_index = _parent_layout->_cursorXOnLineToIterator(line_index - 1, _x_coordinate)._char_index;
+    _char_index = _parent_layout->_cursorXOnLineToIterator(line_index - n, _x_coordinate)._char_index;
     _glyph_index = _parent_layout->_characters[_char_index].in_glyph;
     return true;
 }
@@ -903,24 +909,24 @@ bool Layout::iterator::_cursorLeftOrRightLocalXByWord(Direction direction)
     return r;
 }
 
-bool Layout::iterator::cursorUp()
+bool Layout::iterator::cursorUp(int n)
 {
     Direction block_progression = _parent_layout->_blockProgression();
     if(block_progression == TOP_TO_BOTTOM)
-        return prevLineCursor();
+        return prevLineCursor(n);
     else if(block_progression == BOTTOM_TO_TOP)
-        return nextLineCursor();
+        return nextLineCursor(n);
     else
         return _cursorLeftOrRightLocalX(RIGHT_TO_LEFT);
 }
 
-bool Layout::iterator::cursorDown()
+bool Layout::iterator::cursorDown(int n)
 {
     Direction block_progression = _parent_layout->_blockProgression();
     if(block_progression == TOP_TO_BOTTOM)
-        return nextLineCursor();
+        return nextLineCursor(n);
     else if(block_progression == BOTTOM_TO_TOP)
-        return prevLineCursor();
+        return prevLineCursor(n);
     else
         return _cursorLeftOrRightLocalX(LEFT_TO_RIGHT);
 }
