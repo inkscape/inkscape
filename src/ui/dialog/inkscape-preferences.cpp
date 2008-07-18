@@ -1027,6 +1027,10 @@ void InkscapePreferences::initPageBitmaps()
         g_strfreev(splits);
     }
 
+    _bitmap_copy_res.init("options.createbitmap", "resolution", 1.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
+    _page_bitmaps.add_line( false, _("Resolution for Create Bitmap Copy:"), _bitmap_copy_res, _("dpi"),
+                            _("Resolution used by the Create Bitmap Copy command"), false);
+
     this->AddPage(_page_bitmaps, _("Bitmaps"), PREFS_PAGE_BITMAPS);
 }
 

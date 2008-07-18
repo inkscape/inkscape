@@ -171,6 +171,7 @@ protected:
     PrefCombo       _misc_overs_bitmap;
     PrefCombo       _misc_bitmap_editor;
     PrefCheckButton _misc_bitmap_autoreload;
+    PrefSpinButton  _bitmap_copy_res;
 
     PrefCheckButton _autosave_autosave_enable;
     PrefSpinButton  _autosave_autosave_interval;
