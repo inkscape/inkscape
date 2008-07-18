@@ -927,11 +927,6 @@ void InkscapePreferences::initPageSVGOutput()
     _svgoutput_allowrelativecoordinates.init( _("Allow relative coordinates"), "options.svgoutput", "allowrelativecoordinates", true);
     _page_svgoutput.add_line( false, "", _svgoutput_allowrelativecoordinates, "", _("If set, relative coordinates may be used in path data"), false);
 
-    /* seems this is never used in Inkscape code
-    _svgoutput_allowshorthands.init( _("Allow shorthands"), "options.svgoutput", "allowshorthands", true);
-    _page_svgoutput.add_line( false, "", _svgoutput_allowshorthands, "", _(""), false);
-    */
-
     _svgoutput_forcerepeatcommands.init( _("Force repeat commands"), "options.svgoutput", "forcerepeatcommands", false);
     _page_svgoutput.add_line( false, "", _svgoutput_forcerepeatcommands, "", _("Force repeating of the same path command (for example, 'L 1,2 L 3,4' instead of 'L 1,2 3,4')"), false);
 

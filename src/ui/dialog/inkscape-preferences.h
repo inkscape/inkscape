@@ -220,7 +220,6 @@ protected:
     PrefCheckButton   _svgoutput_inlineattrs;
     PrefSpinButton    _svgoutput_indent;
     PrefCheckButton   _svgoutput_allowrelativecoordinates;
-    PrefCheckButton   _svgoutput_allowshorthands;
     PrefCheckButton   _svgoutput_forcerepeatcommands;
 
     PrefEntryButtonHBox _importexport_ocal_url;
