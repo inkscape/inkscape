@@ -141,9 +141,19 @@ void SvgFontsDialog::on_font_selection_changed(){
 
     int steps = 50;
     double set_width = spfont->horiz_adv_x;
+    setwidth_spin.set_value(set_width);
+
     kerning_spin.set_range(0,set_width);
     kerning_spin.set_increments(int(set_width/steps),2*int(set_width/steps));
     kerning_spin.set_value(0);
+}
+
+void SvgFontsDialog::on_setwidth_changed(){
+    SPFont* spfont = this->get_selected_spfont();
+    if (spfont){
+        spfont->horiz_adv_x = setwidth_spin.get_value();
+        //TODO: tell cairo that the glyphs cache has to be invalidated
+    }
 }
 
 SvgFont* SvgFontsDialog::get_selected_svgfont()
@@ -181,6 +191,18 @@ SvgFontsDialog::SvgFontsDialog()
 //kerning setup:
     Gtk::VBox* kernvbox = Gtk::manage(new Gtk::VBox());
     _font_settings.add(*kernvbox);
+
+//Set Width (horiz_adv_x):
+    Gtk::HBox* setwidth_hbox = Gtk::manage(new Gtk::HBox());
+    setwidth_hbox->add(*Gtk::manage(new Gtk::Label("Set width (not working yet):")));
+    setwidth_hbox->add(setwidth_spin);
+
+    setwidth_spin.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_setwidth_changed));
+    setwidth_spin.set_range(0, 4096);
+    setwidth_spin.set_increments(10, 100);
+    _font_settings.add(*setwidth_hbox);
+
+//Kerning Setup:
     kernvbox->add(*Gtk::manage(new Gtk::Label("Kerning Setup:")));
     Gtk::HBox* kerning_selector = Gtk::manage(new Gtk::HBox());
     kerning_selector->add(*Gtk::manage(new Gtk::Label("1st Glyph:")));

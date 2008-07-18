@@ -68,6 +68,8 @@ public:
     void on_preview_text_changed();
     void on_glyphs_changed();
     void on_kerning_changed();
+    void on_setwidth_changed();
+
 private:
     class Columns : public Gtk::TreeModel::ColumnRecord
         {
@@ -91,7 +93,7 @@ private:
     SvgFontDrawingArea _font_da, kerning_preview;
     GlyphComboBox first_glyph, second_glyph;
     SPGlyphKerning* kerning_pair;
-    Gtk::SpinButton kerning_spin;
+    Gtk::SpinButton kerning_spin, setwidth_spin;
 
     class EntryWidget : public Gtk::HBox
         {
