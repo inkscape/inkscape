@@ -15,11 +15,23 @@
 #endif
 
 #include "svg/test-stubs.h"
+#include <map>
+#include <string>
+
+std::map<std::string,long long int> int_prefs;
+
+void
+prefs_set_int_attribute(gchar const *path, gchar const *attr, long long int val)
+{
+    int_prefs[std::string(path) + '/' + std::string(attr)] = val;
+}
 
 long long int
 prefs_get_int_attribute(gchar const *path, gchar const *attr, long long int def)
 {
-    return def;
+    std::map<std::string,long long int>::const_iterator it=int_prefs.find(std::string(path) + '/' + std::string(attr));
+    long long int ret = it==int_prefs.end() ? def : it->second;
+    return ret;
 }
 
 /*
