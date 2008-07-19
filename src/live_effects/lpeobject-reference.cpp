@@ -128,17 +128,10 @@ lpeobjectreference_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, LPEObj
 static void
 lpeobjectreference_delete_self(SPObject */*deleted*/, LPEObjectReference *lpeobjref)
 {
-    guint const mode = prefs_get_int_attribute("options.cloneorphans", "value", SP_CLONE_ORPHANS_UNLINK);
-
-    if (mode == SP_CLONE_ORPHANS_UNLINK) {
-        // leave it be. just forget about the source
         lpeobjref->quit_listening();
         lpeobjref->unlink();
         if (lpeobjref->user_unlink)
-            lpeobjref->user_unlink(lpeobjref->owner);
-    } else if (mode == SP_CLONE_ORPHANS_DELETE) {
-        lpeobjref->owner->deleteObject();
-    }
+            lpeobjref->user_unlink(lpeobjref, lpeobjref->owner);
 }
 
 static void

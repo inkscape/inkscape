@@ -46,7 +46,7 @@ public:
     void            start_listening(LivePathEffectObject* to);
     void            quit_listening(void);
 
-    void (*user_unlink) (SPObject *user);
+    void (*user_unlink) (LPEObjectReference *me, SPObject *user);
 
 protected:
     bool _acceptObject(SPObject * const obj) const;
