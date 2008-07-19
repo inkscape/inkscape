@@ -1275,14 +1275,9 @@ void SPDesktop::setWaitingCursor()
     GdkCursor *waiting = gdk_cursor_new(GDK_WATCH);
     gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(this))->window, waiting);
     gdk_cursor_unref(waiting);
+    // GDK needs the flush for the cursor change to take effect
+    gdk_flush();
     waiting_cursor = true;
-
-    // Stupidly broken GDK cannot just set the new cursor right now - it needs some main loop iterations for that
-    // Since setting waiting_cursor is usually immediately followed by some Real Work, we must run the iterations here
-    // CAUTION: iterations may redraw, and redraw may be interrupted, so you cannot assume that anything is the same
-    // after the call to setWaitingCursor as it was before
-    while( Gtk::Main::events_pending() )
-       Gtk::Main::iteration();
 }
 
 void SPDesktop::clearWaitingCursor()
