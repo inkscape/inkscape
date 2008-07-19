@@ -551,6 +551,12 @@ fi
 AC_SUBST(POPPLER_CFLAGS)
 AC_SUBST(POPPLER_LIBS)
 
+ink_svd_CPPFLAGS="$CPPFLAGS"
+CPPFLAGS="$POPPLER_CFLAGS $CPPFLAGS"
+AC_MSG_CHECKING([whether libpoppler has new getNextChar])
+AC_EGREP_CPP([Unicode ..u. int .uLen], [#include "GfxFont.h"], AC_DEFINE([POPPLER_NEW_GFXFONT], [], [True iff libpoppler is 0.8.3 or newer.]) AC_MSG_RESULT(yes), AC_MSG_RESULT(no))
+CPPFLAGS="$ink_svd_CPPFLAGS"
+
 dnl ******************************
 dnl Inkboard dependency checking
 dnl ******************************
