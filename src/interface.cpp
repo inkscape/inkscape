@@ -152,6 +152,9 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
 
     Gtk::Window *win = Inkscape::UI::window_new("", TRUE);
 
+    gtk_container_add(GTK_CONTAINER(win->gobj()), GTK_WIDGET(vw));
+    gtk_widget_show(GTK_WIDGET(vw));
+
     if (editable) {
 		g_object_set_data(G_OBJECT(vw), "window", win);
 		
@@ -166,7 +169,7 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
         win->signal_delete_event().connect(sigc::mem_fun(*(SPDesktop*)vw->view, &SPDesktop::onDeleteUI));
 		win->signal_window_state_event().connect(sigc::mem_fun(*desktop, &SPDesktop::onWindowStateEvent));
 		win->signal_focus_in_event().connect(sigc::mem_fun(*desktop_widget, &SPDesktopWidget::onFocusInEvent));
-		
+	
         gint prefs_geometry = 
             (2==prefs_get_int_attribute("options.savewindowgeometry", "value", 0));
         if (prefs_geometry) {
@@ -213,9 +216,6 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
     } else {
         gtk_window_set_policy(GTK_WINDOW(win->gobj()), TRUE, TRUE, TRUE);
     }
-
-    gtk_container_add(GTK_CONTAINER(win->gobj()), GTK_WIDGET(vw));
-    gtk_widget_show(GTK_WIDGET(vw));
 
     if ( completeDropTargets == 0 || completeDropTargetsCount == 0 )
     {
