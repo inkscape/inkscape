@@ -415,15 +415,15 @@
            <exclude name="winmain.o"/>
            <exclude name="inkview.o"/>
            <!-- CxxTest -->
-           <exclude name="obj/test-main.o"/>
-           <exclude name="obj/test-src.o"/>
-           <exclude name="obj/display/test-display.o"/>
-           <exclude name="obj/helper/test-helper.o"/>
-           <exclude name="obj/libnr/nr-compose-reference.o"/>
-           <exclude name="obj/libnr/test-nr.o"/>
-           <exclude name="obj/svg/test-svg.o"/>
-           <exclude name="obj/util/test-util.o"/>
-           <exclude name="obj/xml/test-xml.o"/>
+           <exclude name="test-main.o"/>
+           <exclude name="test-src.o"/>
+           <exclude name="display/test-display.o"/>
+           <exclude name="helper/test-helper.o"/>
+           <exclude name="libnr/nr-compose-reference.o"/>
+           <exclude name="libnr/test-nr.o"/>
+           <exclude name="svg/test-svg.o"/>
+           <exclude name="util/test-util.o"/>
+           <exclude name="xml/test-xml.o"/>
        </fileset>
     </staticlib>
   </target>
