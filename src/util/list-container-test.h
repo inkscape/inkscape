@@ -35,6 +35,11 @@ public:
     }
     virtual ~ListContainerTest() {}
 
+// createSuite and destroySuite get us per-suite setup and teardown
+// without us having to worry about static initialization order, etc.
+    static ListContainerTest *createSuite() { return new ListContainerTest(); }
+    static void destroySuite( ListContainerTest *suite ) { delete suite; }
+
     void testRangeConstructor()
     {
         int const values[]={1,2,3,4};

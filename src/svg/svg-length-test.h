@@ -17,6 +17,11 @@ public:
     SvgLengthTest() {
     }
 
+// createSuite and destroySuite get us per-suite setup and teardown
+// without us having to worry about static initialization order, etc.
+    static SvgLengthTest *createSuite() { return new SvgLengthTest(); }
+    static void destroySuite( SvgLengthTest *suite ) { delete suite; }
+
     void testRead()
     {
         for(size_t i=0; i<G_N_ELEMENTS(absolute_tests); i++) {

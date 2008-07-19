@@ -36,6 +36,11 @@ public:
     }
     virtual ~UnitsTest() {}
 
+// createSuite and destroySuite get us per-suite setup and teardown
+// without us having to worry about static initialization order, etc.
+    static UnitsTest *createSuite() { return new UnitsTest(); }
+    static void destroySuite( UnitsTest *suite ) { delete suite; }
+
     void testConversions()
     {
         struct Case { double x; char const *abbr; double pts; } const tests[] = {

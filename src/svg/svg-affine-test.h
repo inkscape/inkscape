@@ -32,7 +32,7 @@ private:
     static test_t const read_scale_tests[3];
     static test_t const read_rotate_tests[4];
     static test_t const read_skew_tests[3];
-    static char const * read_fail_tests[25];
+    static char const * const read_fail_tests[25];
     static test_t const write_matrix_tests[2];
     static test_t const write_translate_tests[3];
     static test_t const write_scale_tests[2];
@@ -41,6 +41,11 @@ private:
 public:
     SvgAffineTest() {
     }
+
+// createSuite and destroySuite get us per-suite setup and teardown
+// without us having to worry about static initialization order, etc.
+    static SvgAffineTest *createSuite() { return new SvgAffineTest(); }
+    static void destroySuite( SvgAffineTest *suite ) { delete suite; }
 
     void testReadIdentity()
     {
@@ -200,7 +205,7 @@ SvgAffineTest::test_t const SvgAffineTest::read_skew_tests[3] = {
     {"skewX( 30)",Geom::Matrix(1,0,tan(30.*DEGREE),1,0,0)},
     {"skewX(-30)",Geom::Matrix(1,0,tan(-30.*DEGREE),1,0,0)},
     {"skewY(390)",Geom::Matrix(1,tan(30.*DEGREE),0,1,0,0)}};
-char const * SvgAffineTest::read_fail_tests[25] = {
+char const * const SvgAffineTest::read_fail_tests[25] = {
     "matrix((1,2,3,4,5,6)",
     "matrix((1,2,3,4,5,6))",
     "matrix(1,2,3,4,5,6))",

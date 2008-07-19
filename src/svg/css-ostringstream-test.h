@@ -20,6 +20,12 @@ css_test_float(float const x, std::string const &exp_str)
 class CSSOStringStreamTest : public CxxTest::TestSuite
 {
 public:
+
+// createSuite and destroySuite get us per-suite setup and teardown
+// without us having to worry about static initialization order, etc.
+    static CSSOStringStreamTest *createSuite() { return new CSSOStringStreamTest(); }
+    static void destroySuite( CSSOStringStreamTest *suite ) { delete suite; }
+
     void testFloats()
     {
         css_test_float(4.5, "4.5");

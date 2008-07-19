@@ -51,6 +51,11 @@ public:
         // TODO: Also test some (smooth) cubic/quadratic beziers and elliptical arcs
     }
 
+// createSuite and destroySuite get us per-suite setup and teardown
+// without us having to worry about static initialization order, etc.
+    static SvgPathTest *createSuite() { return new SvgPathTest(); }
+    static void destroySuite( SvgPathTest *suite ) { delete suite; }
+
     void testReadRectanglesAbsoluteClosed()
     {
         rectangleBpath[0].code = NR_MOVETO;

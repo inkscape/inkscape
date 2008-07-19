@@ -21,6 +21,12 @@ svg_test_float(float const x, std::string const &exp_str)
 class StringStreamTest : public CxxTest::TestSuite
 {
 public:
+
+// createSuite and destroySuite get us per-suite setup and teardown
+// without us having to worry about static initialization order, etc.
+    static StringStreamTest *createSuite() { return new StringStreamTest(); }
+    static void destroySuite( StringStreamTest *suite ) { delete suite; }
+
     void testFloats()
     {
         svg_test_float(4.5, "4.5");

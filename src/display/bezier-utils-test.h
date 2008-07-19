@@ -104,6 +104,11 @@ public:
     }
     virtual ~BezierUtilsTest() {}
 
+// createSuite and destroySuite get us per-suite setup and teardown
+// without us having to worry about static initialization order, etc.
+    static BezierUtilsTest *createSuite() { return new BezierUtilsTest(); }
+    static void destroySuite( BezierUtilsTest *suite ) { delete suite; }
+
     void testCopyWithoutNansOrAdjacentDuplicates()
     {
         NR::Point const src[] = {

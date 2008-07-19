@@ -105,6 +105,11 @@ public:
         delete[] mask;
     }
 
+// createSuite and destroySuite get us per-suite setup and teardown
+// without us having to worry about static initialization order, etc.
+    static NrComposeTest *createSuite() { return new NrComposeTest(); }
+    static void destroySuite( NrComposeTest *suite ) { delete suite; }
+
     // FINAL DST SRC
 
     void testnr_R8G8B8A8_N_EMPTY_R8G8B8A8_N()

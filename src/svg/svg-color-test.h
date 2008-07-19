@@ -23,6 +23,11 @@ public:
                          rgb24 << 8);
     }
 
+// createSuite and destroySuite get us per-suite setup and teardown
+// without us having to worry about static initialization order, etc.
+    static SVGColorTest *createSuite() { return new SVGColorTest(); }
+    static void destroySuite( SVGColorTest *suite ) { delete suite; }
+
     void testWrite()
     {
         unsigned const components[] = {0, 0x80, 0xff, 0xc0, 0x77};
