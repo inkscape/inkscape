@@ -129,8 +129,6 @@ sp_lpe_item_finalize(GObject *object)
     if (((GObjectClass *) (parent_class))->finalize) {
         (* ((GObjectClass *) (parent_class))->finalize)(object);
     }
-
-    delete SP_LPE_ITEM(object)->path_effect_list;
 }
 
 /**
@@ -154,11 +152,20 @@ sp_lpe_item_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *r
 static void
 sp_lpe_item_release(SPObject *object)
 {
-    SPLPEItem *lpeitem;
-    lpeitem = (SPLPEItem *) object;
+    SPLPEItem *lpeitem = (SPLPEItem *) object;
 
     lpeitem->lpe_modified_connection.disconnect();
     lpeitem->lpe_modified_connection.~connection();
+
+    PathEffectList::iterator it = lpeitem->path_effect_list->begin();
+    while ( it != lpeitem->path_effect_list->end() ) {
+        // unlink and delete all references in the list
+        (*it)->unlink();
+        delete *it;
+        it = lpeitem->path_effect_list->erase(it);
+    }
+    // delete the list itself
+    delete SP_LPE_ITEM(object)->path_effect_list;
 
     if (((SPObjectClass *) parent_class)->release)
         ((SPObjectClass *) parent_class)->release(object);
