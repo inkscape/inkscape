@@ -198,6 +198,7 @@ sp_event_context_update_cursor(SPEventContext *ec)
             }
         }
         gdk_window_set_cursor(w->window, ec->cursor);
+        gdk_flush();
     }
     ec->desktop->waiting_cursor = false;
 }
