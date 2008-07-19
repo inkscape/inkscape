@@ -40,6 +40,13 @@ cubic_bbox (Geom::Coord x000, Geom::Coord y000, Geom::Coord x001, Geom::Coord y0
     bbox[0].extendTo(x111);
     bbox[1].extendTo(y111);
 
+    // It already contains (x000,y000) and (x111,y111)
+    // All points of the Bezier lie in the convex hull of (x000,y000), (x001,y001), (x011,y011) and (x111,y111)
+    // So, if it also contains (x001,y001) and (x011,y011) we don't have to compute anything else!
+    // Note that we compute it for the X and Y range separately to make it easier to use them below
+    bool containsXrange = bbox[0].contains(x001) && bbox[0].contains(x011);
+    bool containsYrange = bbox[0].contains(y001) && bbox[0].contains(y011);
+
     /*
      * xttt = s * (s * (s * x000 + t * x001) + t * (s * x001 + t * x011)) + t * (s * (s * x001 + t * x011) + t * (s * x011 + t * x111))
      * xttt = s * (s2 * x000 + s * t * x001 + t * s * x001 + t2 * x011) + t * (s2 * x001 + s * t * x011 + t * s * x011 + t2 * x111)
@@ -57,79 +64,83 @@ cubic_bbox (Geom::Coord x000, Geom::Coord y000, Geom::Coord x001, Geom::Coord y0
      *         (                       3 * x011 - 3 * x111)
      */
 
-    a = 3 * x000 - 9 * x001 + 9 * x011 - 3 * x111;
-    b = 6 * x001 - 12 * x011 + 6 * x111;
-    c = 3 * x011 - 3 * x111;
+    if (!containsXrange) {
+        a = 3 * x000 - 9 * x001 + 9 * x011 - 3 * x111;
+        b = 6 * x001 - 12 * x011 + 6 * x111;
+        c = 3 * x011 - 3 * x111;
 
-    /*
-     * s = (-b +/- sqrt (b * b - 4 * a * c)) / 2 * a;
-     */
-    if (fabs (a) < Geom::EPSILON) {
-        /* s = -c / b */
-        if (fabs (b) > Geom::EPSILON) {
-            double s, t, xttt;
-            s = -c / b;
-            if ((s > 0.0) && (s < 1.0)) {
-                t = 1.0 - s;
-                xttt = s * s * s * x000 + 3 * s * s * t * x001 + 3 * s * t * t * x011 + t * t * t * x111;
-                bbox[0].extendTo(xttt);
+        /*
+        * s = (-b +/- sqrt (b * b - 4 * a * c)) / 2 * a;
+        */
+        if (fabs (a) < Geom::EPSILON) {
+            /* s = -c / b */
+            if (fabs (b) > Geom::EPSILON) {
+                double s, t, xttt;
+                s = -c / b;
+                if ((s > 0.0) && (s < 1.0)) {
+                    t = 1.0 - s;
+                    xttt = s * s * s * x000 + 3 * s * s * t * x001 + 3 * s * t * t * x011 + t * t * t * x111;
+                    bbox[0].extendTo(xttt);
+                }
             }
-        }
-    } else {
-        /* s = (-b +/- sqrt (b * b - 4 * a * c)) / 2 * a; */
-        D = b * b - 4 * a * c;
-        if (D >= 0.0) {
-            Geom::Coord d, s, t, xttt;
-            /* Have solution */
-            d = sqrt (D);
-            s = (-b + d) / (2 * a);
-            if ((s > 0.0) && (s < 1.0)) {
-                t = 1.0 - s;
-                xttt = s * s * s * x000 + 3 * s * s * t * x001 + 3 * s * t * t * x011 + t * t * t * x111;
-                bbox[0].extendTo(xttt);
-            }
-            s = (-b - d) / (2 * a);
-            if ((s > 0.0) && (s < 1.0)) {
-                t = 1.0 - s;
-                xttt = s * s * s * x000 + 3 * s * s * t * x001 + 3 * s * t * t * x011 + t * t * t * x111;
-                bbox[0].extendTo(xttt);
+        } else {
+            /* s = (-b +/- sqrt (b * b - 4 * a * c)) / 2 * a; */
+            D = b * b - 4 * a * c;
+            if (D >= 0.0) {
+                Geom::Coord d, s, t, xttt;
+                /* Have solution */
+                d = sqrt (D);
+                s = (-b + d) / (2 * a);
+                if ((s > 0.0) && (s < 1.0)) {
+                    t = 1.0 - s;
+                    xttt = s * s * s * x000 + 3 * s * s * t * x001 + 3 * s * t * t * x011 + t * t * t * x111;
+                    bbox[0].extendTo(xttt);
+                }
+                s = (-b - d) / (2 * a);
+                if ((s > 0.0) && (s < 1.0)) {
+                    t = 1.0 - s;
+                    xttt = s * s * s * x000 + 3 * s * s * t * x001 + 3 * s * t * t * x011 + t * t * t * x111;
+                    bbox[0].extendTo(xttt);
+                }
             }
         }
     }
 
-    a = 3 * y000 - 9 * y001 + 9 * y011 - 3 * y111;
-    b = 6 * y001 - 12 * y011 + 6 * y111;
-    c = 3 * y011 - 3 * y111;
+    if (!containsYrange) {
+        a = 3 * y000 - 9 * y001 + 9 * y011 - 3 * y111;
+        b = 6 * y001 - 12 * y011 + 6 * y111;
+        c = 3 * y011 - 3 * y111;
 
-    if (fabs (a) < Geom::EPSILON) {
-        /* s = -c / b */
-        if (fabs (b) > Geom::EPSILON) {
-            double s, t, yttt;
-            s = -c / b;
-            if ((s > 0.0) && (s < 1.0)) {
-                t = 1.0 - s;
-                yttt = s * s * s * y000 + 3 * s * s * t * y001 + 3 * s * t * t * y011 + t * t * t * y111;
-                bbox[1].extendTo(yttt);
+        if (fabs (a) < Geom::EPSILON) {
+            /* s = -c / b */
+            if (fabs (b) > Geom::EPSILON) {
+                double s, t, yttt;
+                s = -c / b;
+                if ((s > 0.0) && (s < 1.0)) {
+                    t = 1.0 - s;
+                    yttt = s * s * s * y000 + 3 * s * s * t * y001 + 3 * s * t * t * y011 + t * t * t * y111;
+                    bbox[1].extendTo(yttt);
+                }
             }
-        }
-    } else {
-        /* s = (-b +/- sqrt (b * b - 4 * a * c)) / 2 * a; */
-        D = b * b - 4 * a * c;
-        if (D >= 0.0) {
-            Geom::Coord d, s, t, yttt;
-            /* Have solution */
-            d = sqrt (D);
-            s = (-b + d) / (2 * a);
-            if ((s > 0.0) && (s < 1.0)) {
-                t = 1.0 - s;
-                yttt = s * s * s * y000 + 3 * s * s * t * y001 + 3 * s * t * t * y011 + t * t * t * y111;
-                bbox[1].extendTo(yttt);
-            }
-            s = (-b - d) / (2 * a);
-            if ((s > 0.0) && (s < 1.0)) {
-                t = 1.0 - s;
-                yttt = s * s * s * y000 + 3 * s * s * t * y001 + 3 * s * t * t * y011 + t * t * t * y111;
-                bbox[1].extendTo(yttt);
+        } else {
+            /* s = (-b +/- sqrt (b * b - 4 * a * c)) / 2 * a; */
+            D = b * b - 4 * a * c;
+            if (D >= 0.0) {
+                Geom::Coord d, s, t, yttt;
+                /* Have solution */
+                d = sqrt (D);
+                s = (-b + d) / (2 * a);
+                if ((s > 0.0) && (s < 1.0)) {
+                    t = 1.0 - s;
+                    yttt = s * s * s * y000 + 3 * s * s * t * y001 + 3 * s * t * t * y011 + t * t * t * y111;
+                    bbox[1].extendTo(yttt);
+                }
+                s = (-b - d) / (2 * a);
+                if ((s > 0.0) && (s < 1.0)) {
+                    t = 1.0 - s;
+                    yttt = s * s * s * y000 + 3 * s * s * t * y001 + 3 * s * t * t * y011 + t * t * t * y111;
+                    bbox[1].extendTo(yttt);
+                }
             }
         }
     }
