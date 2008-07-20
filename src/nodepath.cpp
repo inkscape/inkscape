@@ -53,6 +53,7 @@
 #include "live_effects/lpeobject.h"
 #include "live_effects/effect.h"
 #include "live_effects/parameter/parameter.h"
+#include "live_effects/parameter/path.h"
 #include "util/mathfns.h"
 #include "display/snap-indicator.h"
 #include "snapped-point.h"
@@ -4762,13 +4763,11 @@ void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve) {
             sp_shape_set_curve(SP_SHAPE(np->object), curve, true);
         }
     } else if ( IS_LIVEPATHEFFECT(np->object) ) {
-        // FIXME: this writing to string and then reading from string is bound to be slow.
-        // create a method to convert from curve directly to 2geom...
-        gchar *svgpath = sp_svg_write_path( np->curve->get_pathvector() );
-        LIVEPATHEFFECT(np->object)->lpe->setParameter(np->repr_key, svgpath);
-        g_free(svgpath);
-
-        np->object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        Inkscape::LivePathEffect::PathParam *pathparam = dynamic_cast<Inkscape::LivePathEffect::PathParam *>( LIVEPATHEFFECT(np->object)->lpe->getParameter(np->repr_key) );
+        if (pathparam) {
+            pathparam->set_new_value(np->curve->get_pathvector(), false); // do not write to SVG
+            np->object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        }
     }
 }
 
