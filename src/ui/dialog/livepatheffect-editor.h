@@ -57,7 +57,7 @@ private:
     void showText(Glib::ustring const &str);
 
    // void add_entry(const char* name );
-    void effect_list_update(SPLPEItem *lpeitem);
+    void effect_list_reload(SPLPEItem *lpeitem);
 
     // callback methods for buttons on grids page.
     void onApply();

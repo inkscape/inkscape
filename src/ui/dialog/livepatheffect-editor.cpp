@@ -66,7 +66,7 @@ static void lpeeditor_selection_modified (Inkscape::Selection * selection, guint
  * LivePathEffectEditor
  */
 
-LivePathEffectEditor::LivePathEffectEditor() 
+LivePathEffectEditor::LivePathEffectEditor()
     : UI::Widget::Panel("", "dialogs.livepatheffect", SP_VERB_DIALOG_LIVE_PATH_EFFECT),
       combo_effecttype(Inkscape::LivePathEffect::LPETypeConverter),
       effectwidget(NULL),
@@ -108,18 +108,18 @@ LivePathEffectEditor::LivePathEffectEditor()
  //   button_hbox.pack_start(button_up, true, true);
  //   button_hbox.pack_start(button_down, true, true);
  //   button_hbox.pack_end(button_remove, true, true);
-	toolbar.set_toolbar_style(Gtk::TOOLBAR_ICONS);	
+    toolbar.set_toolbar_style(Gtk::TOOLBAR_ICONS);
  // Add toolbar items to toolbar
-  toolbar.append(button_up);
-  toolbar.append(button_down);
-  toolbar.append(button_remove);
+    toolbar.append(button_up);
+    toolbar.append(button_down);
+    toolbar.append(button_remove);
 
-  
-  // Add toolbar
-  //add_toolbar(toolbar);
-  toolbar.show_all(); //Show the toolbar and all its child widgets.
 
-      
+    // Add toolbar
+    //add_toolbar(toolbar);
+    toolbar.show_all(); //Show the toolbar and all its child widgets.
+
+
     //Create the Tree model:
     effectlist_store = Gtk::ListStore::create(columns);
     effectlist_view.set_model(effectlist_store);
@@ -151,7 +151,7 @@ LivePathEffectEditor::LivePathEffectEditor()
     //button_remove.hide();
 }
 
-LivePathEffectEditor::~LivePathEffectEditor() 
+LivePathEffectEditor::~LivePathEffectEditor()
 {
     if (effectwidget) {
         effectcontrol_vbox.remove(*effectwidget);
@@ -224,10 +224,10 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
             if ( SP_IS_LPE_ITEM(item) ) {
                 SPLPEItem *lpeitem = SP_LPE_ITEM(item);
 
-                effect_list_update(lpeitem);
+                effect_list_reload(lpeitem);
 
                 current_lpeitem = lpeitem;
-                
+
                 set_sensitize_all(true);
                 if ( sp_lpe_item_has_path_effect(lpeitem) ) {
                     Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(lpeitem);
@@ -240,9 +240,7 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
                     showText(_("No effect applied"));
                     button_remove.set_sensitive(false);
                 }
-            }
-              else
-            {
+            } else {
                 showText(_("Item is not a path or shape"));
                 set_sensitize_all(false);
             }
@@ -256,11 +254,14 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
     }
 }
 
+/*
+ * First clears the effectlist_store, then appends all effects from the effectlist.
+ */
 void
-LivePathEffectEditor::effect_list_update(SPLPEItem *lpeitem)
+LivePathEffectEditor::effect_list_reload(SPLPEItem *lpeitem)
 {
     effectlist_store->clear();
-    
+
     PathEffectList effectlist = sp_lpe_item_get_effect_list(lpeitem);
     PathEffectList::iterator it;
     for( it = effectlist.begin() ; it!=effectlist.end(); it++ )
@@ -272,7 +273,7 @@ LivePathEffectEditor::effect_list_update(SPLPEItem *lpeitem)
 }
 
 
-void 
+void
 LivePathEffectEditor::setDesktop(SPDesktop *desktop)
 {
     Panel::setDesktop(desktop);
@@ -345,46 +346,43 @@ LivePathEffectEditor::onRemove()
         SPItem *item = sel->singleItem();
         if ( item && SP_IS_LPE_ITEM(item) ) {
             sp_lpe_item_remove_current_path_effect(SP_LPE_ITEM(item), false);
-            
-            sp_document_done ( sp_desktop_document (current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
+
+            sp_document_done ( sp_desktop_document (current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
                                _("Remove path effect") );
 
-            effect_list_update(SP_LPE_ITEM(item));
+            effect_list_reload(SP_LPE_ITEM(item));
         }
     }
 }
 
 void LivePathEffectEditor::onUp()
 {
-	Inkscape::Selection *sel = _getSelection();
+    Inkscape::Selection *sel = _getSelection();
     if ( sel && !sel->isEmpty() ) {
         SPItem *item = sel->singleItem();
         if ( item && SP_IS_LPE_ITEM(item) ) {
-            
-			      sp_lpe_item_up_current_path_effect(SP_LPE_ITEM(item));
-            
-            sp_document_done ( sp_desktop_document (current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
+            sp_lpe_item_up_current_path_effect(SP_LPE_ITEM(item));
+
+            sp_document_done ( sp_desktop_document (current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
                                _("Move path effect up") );
 
-            effect_list_update(SP_LPE_ITEM(item));
+            effect_list_reload(SP_LPE_ITEM(item));
         }
     }
-	
 }
 
 void LivePathEffectEditor::onDown()
 {
-	Inkscape::Selection *sel = _getSelection();
+    Inkscape::Selection *sel = _getSelection();
     if ( sel && !sel->isEmpty() ) {
         SPItem *item = sel->singleItem();
         if ( item && SP_IS_LPE_ITEM(item) ) {
-            
-      			sp_lpe_item_down_current_path_effect(SP_LPE_ITEM(item));
-            
-            sp_document_done ( sp_desktop_document (current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
+            sp_lpe_item_down_current_path_effect(SP_LPE_ITEM(item));
+
+            sp_document_done ( sp_desktop_document (current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
                                _("Move path effect down") );
 
-            effect_list_update(SP_LPE_ITEM(item));
+            effect_list_reload(SP_LPE_ITEM(item));
         }
     }
 }
