@@ -11,6 +11,7 @@ filter-effect-chooser.cpp
 handlebox.cpp
 icon-widget.cpp
 imageicon.cpp
+imagetoggler.cpp
 labelled.cpp
 licensor.cpp
 notebook-page.cpp

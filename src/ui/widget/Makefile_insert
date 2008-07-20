@@ -32,6 +32,8 @@ ui_widget_libuiwidget_a_SOURCES =	\
 	ui/widget/icon-widget.h		\
 	ui/widget/imageicon.cpp		\
 	ui/widget/imageicon.h		\
+	ui/widget/imagetoggler.cpp		\
+	ui/widget/imagetoggler.h		\
 	ui/widget/labelled.cpp		\
 	ui/widget/labelled.h		\
 	ui/widget/licensor.cpp          \

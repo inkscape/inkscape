@@ -34,6 +34,7 @@
 #include "sp-object.h"
 #include "sp-item.h"
 #include "widgets/icon.h"
+#include "ui/widget/imagetoggler.h"
 #include <gtkmm/widget.h>
 #include "prefs-utils.h"
 #include "xml/repr.h"
@@ -67,112 +68,6 @@ enum {
     BUTTON_DUPLICATE,
     BUTTON_DELETE,
     BUTTON_SOLO
-};
-
-class ImageToggler : public Gtk::CellRendererPixbuf {
-public:
-    ImageToggler( char const* on, char const* off) :
-        Glib::ObjectBase(typeid(ImageToggler)),
-        Gtk::CellRendererPixbuf(),
-        _pixOnName(on),
-        _pixOffName(off),
-        _property_active(*this, "active", false),
-        _property_activatable(*this, "activatable", true),
-        _property_pixbuf_on(*this, "pixbuf_on", Glib::RefPtr<Gdk::Pixbuf>(0)),
-        _property_pixbuf_off(*this, "pixbuf_off", Glib::RefPtr<Gdk::Pixbuf>(0))
-    {
-        property_mode() = Gtk::CELL_RENDERER_MODE_ACTIVATABLE;
-        int phys = sp_icon_get_phys_size((int)Inkscape::ICON_SIZE_DECORATION);
-
-        Glib::RefPtr<Gdk::Pixbuf> pbmm = Gtk::IconTheme::get_default()->load_icon(_pixOnName, phys, (Gtk::IconLookupFlags)0);
-        if ( pbmm ) {
-            GdkPixbuf* pb = gdk_pixbuf_copy(pbmm->gobj());
-            _property_pixbuf_on = Glib::wrap( pb );
-            pbmm->unreference();
-        }
-
-        pbmm = Gtk::IconTheme::get_default()->load_icon(_pixOffName, phys, (Gtk::IconLookupFlags)0);
-        if ( pbmm ) {
-            GdkPixbuf* pb = gdk_pixbuf_copy(pbmm->gobj());
-            _property_pixbuf_off = Glib::wrap( pb );
-            pbmm->unreference();
-        }
-
-        property_pixbuf() = _property_pixbuf_off.get_value();
-    }
-
-    sigc::signal<void, const Glib::ustring&> signal_toggled()
-    {
-        return _signal_toggled;
-    }
-
-    sigc::signal<void, GdkEvent const *> signal_pre_toggle()
-    {
-        return _signal_pre_toggle;
-    }
-
-    Glib::PropertyProxy<bool> property_active() { return _property_active.get_proxy(); }
-    Glib::PropertyProxy<bool> property_activatable() { return _property_activatable.get_proxy(); }
-    Glib::PropertyProxy< Glib::RefPtr<Gdk::Pixbuf> > property_pixbuf_on();
-    Glib::PropertyProxy< Glib::RefPtr<Gdk::Pixbuf> > property_pixbuf_off();
-//  virtual Glib::PropertyProxy_Base _property_renderable(); //override
-
-protected:
-
-    virtual void get_size_vfunc( Gtk::Widget& widget,
-                                 const Gdk::Rectangle* cell_area,
-                                 int* x_offset,
-                                 int* y_offset,
-                                 int* width,
-                                 int* height ) const
-    {
-        Gtk::CellRendererPixbuf::get_size_vfunc( widget, cell_area, x_offset, y_offset, width, height );
-
-        if ( width ) {
-            *width += (*width) >> 1;
-        }
-        if ( height ) {
-            *height += (*height) >> 1;
-        }
-    }
-
-
-    virtual void render_vfunc( const Glib::RefPtr<Gdk::Drawable>& window,
-                               Gtk::Widget& widget,
-                               const Gdk::Rectangle& background_area,
-                               const Gdk::Rectangle& cell_area,
-                               const Gdk::Rectangle& expose_area,
-                               Gtk::CellRendererState flags )
-    {
-        property_pixbuf() = _property_active.get_value() ? _property_pixbuf_on : _property_pixbuf_off;
-        Gtk::CellRendererPixbuf::render_vfunc( window, widget, background_area, cell_area, expose_area, flags );
-    }
-
-    virtual bool activate_vfunc(GdkEvent* event,
-                                Gtk::Widget& /*widget*/,
-                                const Glib::ustring& path,
-                                const Gdk::Rectangle& /*background_area*/,
-                                const Gdk::Rectangle& /*cell_area*/,
-                                Gtk::CellRendererState /*flags*/)
-    {
-        _signal_pre_toggle.emit(event);
-        _signal_toggled.emit(path);
-
-        return false;
-    }
-
-
-private:
-    Glib::ustring _pixOnName;
-    Glib::ustring _pixOffName;
-
-    Glib::Property<bool> _property_active;
-    Glib::Property<bool> _property_activatable;
-    Glib::Property< Glib::RefPtr<Gdk::Pixbuf> > _property_pixbuf_on;
-    Glib::Property< Glib::RefPtr<Gdk::Pixbuf> > _property_pixbuf_off;
-
-    sigc::signal<void, const Glib::ustring&> _signal_toggled;
-    sigc::signal<void, GdkEvent const *> _signal_pre_toggle;
 };
 
 class LayersPanel::InternalUIBounce
@@ -694,7 +589,7 @@ LayersPanel::LayersPanel() :
     _tree.set_model( _store );
     _tree.set_headers_visible(false);
 
-    ImageToggler* eyeRenderer = manage( new ImageToggler("visible", "hidden") );
+    Inkscape::UI::Widget::ImageToggler *eyeRenderer = manage( new Inkscape::UI::Widget::ImageToggler("visible", "hidden") );
     int visibleColNum = _tree.append_column("vis", *eyeRenderer) - 1;
     eyeRenderer->signal_pre_toggle().connect( sigc::mem_fun(*this, &LayersPanel::_preToggle) );
     eyeRenderer->signal_toggled().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_toggled), (int)COL_VISIBLE) );
@@ -704,7 +599,7 @@ LayersPanel::LayersPanel() :
         col->add_attribute( eyeRenderer->property_active(), _model->_colVisible );
     }
 
-    ImageToggler * renderer = manage( new ImageToggler("width_height_lock", "lock_unlocked") );
+    Inkscape::UI::Widget::ImageToggler * renderer = manage( new Inkscape::UI::Widget::ImageToggler("width_height_lock", "lock_unlocked") );
     int lockedColNum = _tree.append_column("lock", *renderer) - 1;
     renderer->signal_pre_toggle().connect( sigc::mem_fun(*this, &LayersPanel::_preToggle) );
     renderer->signal_toggled().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_toggled), (int)COL_LOCKED) );
