@@ -68,16 +68,17 @@ private:
 
     class ModelColumns : public Gtk::TreeModel::ColumnRecord
     {
-         public:
-         ModelColumns()
-         {
+      public:
+        ModelColumns()
+        {
             add(col_name);
             add(lperef);
-         }
+        }
+        virtual ~ModelColumns() {}
 
-         Gtk::TreeModelColumn<Glib::ustring> col_name;
-         Gtk::TreeModelColumn<LivePathEffect::LPEObjectReference *> lperef;
-     };
+        Gtk::TreeModelColumn<Glib::ustring> col_name;
+        Gtk::TreeModelColumn<LivePathEffect::LPEObjectReference *> lperef;
+    };
 
     Inkscape::UI::Widget::ComboBoxEnum<LivePathEffect::EffectType> combo_effecttype;
     
