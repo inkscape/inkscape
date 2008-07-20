@@ -125,14 +125,12 @@ LivePathEffectEditor::LivePathEffectEditor()
     effectlist_view.set_model(effectlist_store);
 
     effectlist_view.set_rules_hint();
-    effectlist_view.set_headers_clickable(true);
-    effectlist_view.set_headers_visible(true);
+    effectlist_view.set_headers_visible(false);
 
     // Handle tree selections
     effectlist_selection = effectlist_view.get_selection();
     effectlist_selection->signal_changed().connect( sigc::mem_fun(*this, &LivePathEffectEditor::on_effect_selection_changed) );
 
-    effectlist_view.set_headers_visible(false);
     //Add the TreeView's view columns:
     effectlist_view.append_column("Effect", columns.col_name);
 
