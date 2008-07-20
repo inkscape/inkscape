@@ -746,7 +746,10 @@ gchar *sp_svg_write_path(NArtBpath const *bpath)
 
 static void sp_svg_write_curve(Inkscape::SVG::PathString & str, Geom::Curve const * c) {
     if(Geom::LineSegment const *line_segment = dynamic_cast<Geom::LineSegment const  *>(c)) {
-        str.lineTo( (*line_segment)[1][0], (*line_segment)[1][1] );
+        // don't serialize stitch segments
+        if (!dynamic_cast<Geom::Path::StitchSegment const *>(c)) {
+            str.lineTo( (*line_segment)[1][0], (*line_segment)[1][1] );
+        }
     }
     else if(Geom::QuadraticBezier const *quadratic_bezier = dynamic_cast<Geom::QuadraticBezier const  *>(c)) {
         str.quadTo( (*quadratic_bezier)[1][0], (*quadratic_bezier)[1][1],
