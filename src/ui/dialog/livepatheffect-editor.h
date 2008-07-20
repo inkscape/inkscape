@@ -98,7 +98,9 @@ private:
     Gtk::TreeView effectlist_view;
     Glib::RefPtr<Gtk::ListStore> effectlist_store;
     Glib::RefPtr<Gtk::TreeSelection> effectlist_selection;
-    
+
+    void on_visibility_toggled( Glib::ustring const& str );
+
     Gtk::Toolbar toolbar;
     Gtk::ToolButton button_up;
     Gtk::ToolButton button_down;

@@ -135,8 +135,7 @@ LivePathEffectEditor::LivePathEffectEditor()
     //Add the visibility icon column:
     Inkscape::UI::Widget::ImageToggler *eyeRenderer = manage( new Inkscape::UI::Widget::ImageToggler("visible", "hidden") );
     int visibleColNum = effectlist_view.append_column("is_visible", *eyeRenderer) - 1;
-//    eyeRenderer->signal_pre_toggle().connect( sigc::mem_fun(*this, &LayersPanel::_preToggle) );
-//    eyeRenderer->signal_toggled().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_toggled), (int)COL_VISIBLE) );
+    eyeRenderer->signal_toggled().connect( sigc::mem_fun(*this, &LivePathEffectEditor::on_visibility_toggled) );
     eyeRenderer->property_activatable() = true;
     Gtk::TreeViewColumn* col = effectlist_view.get_column(visibleColNum);
     if ( col ) {
@@ -414,6 +413,23 @@ void LivePathEffectEditor::on_effect_selection_changed()
     }
 }
 
+void LivePathEffectEditor::on_visibility_toggled( Glib::ustring const& str )
+{
+    Gtk::TreeModel::Children::iterator iter = effectlist_view.get_model()->get_iter(str);
+    Gtk::TreeModel::Row row = *iter;
+
+    LivePathEffect::LPEObjectReference * lpeobjref = row[columns.lperef];
+
+    if ( lpeobjref ) {
+        bool newValue = !row[columns.col_visible];
+        row[columns.col_visible] = newValue;
+        /* FIXME: this explicit writing to SVG is wrong. The lpe_item should have a method to disable/enable an effect within its stack.
+         * So one can call:  lpe_item->setActive(lpeobjref->lpeobject); */
+        lpeobjref->lpeobject->lpe->getRepr()->setAttribute("is_visible", newValue ? "true" : "false");
+        sp_document_done( sp_desktop_document(current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
+                          _("Change path effect's visibility") );
+    }
+}
 
 } // namespace Dialog
 } // namespace UI
