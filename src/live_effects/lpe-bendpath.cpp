@@ -134,7 +134,7 @@ LPEBendPath::resetDefaults(SPItem * item)
     Geom::Path path;
     path.start( start );
     path.appendNew<Geom::LineSegment>( end );
-    bend_path.param_set_and_write_new_value( path.toPwSb() );
+    bend_path.set_new_value( path.toPwSb(), true );
 }
 
 void

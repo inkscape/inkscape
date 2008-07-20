@@ -50,7 +50,7 @@ LPEMirrorSymmetry::acceptParamPath (SPPath *param_path) {
     Geom::Point B(curve->last_point());
     
     Piecewise<D2<SBasis> > rline = Piecewise<D2<SBasis> >(D2<SBasis>(Linear(A[X], B[X]), Linear(A[Y], B[Y])));
-    reflection_line.param_set_and_write_new_value(rline);
+    reflection_line.set_new_value( rline, true );
 
     SP_OBJECT(param_path)->deleteObject(true);
 

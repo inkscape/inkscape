@@ -12,6 +12,7 @@
 #include "svg/svg.h"
 #include <2geom/svg-path-parser.h>
 #include <2geom/sbasis-to-bezier.h>
+#include <2geom/pathvector.h>
 #include <2geom/d2.h>
 
 #include "ui/widget/point.h"
@@ -216,41 +217,68 @@ PathParam::param_setup_nodepath(Inkscape::NodePath::Path *np)
     np->helperpath_width = 1.0;
 }
 
+/*
+ * Only applies transform when not referring to other path!
+ */
 void
 PathParam::param_transform_multiply(Geom::Matrix const& postmul, bool /*set*/)
 {
+    // only apply transform when not referring to other path
     if (!href) {
-        // TODO: recode this to apply transform to _pathvector instead?
-
-        // only apply transform when not referring to other path
-        ensure_pwd2();
-        param_set_and_write_new_value( _pwd2 * postmul );
+        set_new_value( _pathvector * postmul, true );
     }
 }
 
+/*
+ * See comments for set_new_value(std::vector<Geom::Path>).
+ */
 void
-PathParam::param_set_and_write_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & newpath)
+PathParam::set_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & newpath, bool write_to_svg)
 {
     remove_link();
     _pathvector = Geom::path_from_piecewise(newpath, LPE_CONVERSION_TOLERANCE);
-    gchar * svgd = sp_svg_write_path( _pathvector );
-    param_write_to_repr(svgd);
-    g_free(svgd);
-    // force value upon pwd2 and don't recalculate.
-    _pwd2 = newpath;
-    must_recalculate_pwd2 = false;
+
+    if (write_to_svg) {
+        gchar * svgd = sp_svg_write_path( _pathvector );
+        param_write_to_repr(svgd);
+        g_free(svgd);
+
+        // After the whole "writing to svg avalanche of function calling": force value upon pwd2 and don't recalculate.
+        _pwd2 = newpath;
+        must_recalculate_pwd2 = false;
+    } else {
+        _pwd2 = newpath;
+        must_recalculate_pwd2 = false;
+        signal_path_changed.emit();
+    }
 }
 
+/*
+ * This method sets new path data. 
+ * If this PathParam refers to another path, this link is removed (and replaced with explicit path data).
+ *
+ * If write_to_svg = true :
+ *          The new path data is written to SVG. In this case the signal_path_changed signal
+ *          is not directly emited in this method, because writing to SVG
+ *          triggers the LPEObject to which this belongs to call Effect::setParameter which calls
+ *          PathParam::readSVGValue, which finally emits the signal_path_changed signal.
+ * If write_to_svg = false :
+ *          The new path data is not written to SVG. This method will emit the signal_path_changed signal.
+ */
 void
-PathParam::param_set_and_write_new_value (std::vector<Geom::Path> const & newpath)
+PathParam::set_new_value (std::vector<Geom::Path> const &newpath, bool write_to_svg)
 {
     remove_link();
     _pathvector = newpath;
     must_recalculate_pwd2 = true;
 
-    gchar * svgd = sp_svg_write_path( _pathvector );
-    param_write_to_repr(svgd);
-    g_free(svgd);
+    if (write_to_svg) {
+        gchar * svgd = sp_svg_write_path( _pathvector );
+        param_write_to_repr(svgd);
+        g_free(svgd);
+    } else {
+        signal_path_changed.emit();
+    }
 }
 
 void
@@ -308,7 +336,7 @@ PathParam::linked_delete(SPObject */*deleted*/)
 {
     quit_listening();
     remove_link();
-    param_set_and_write_new_value (_pathvector);
+    set_new_value (_pathvector, true);
 }
 
 void

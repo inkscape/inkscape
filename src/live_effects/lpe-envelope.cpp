@@ -233,22 +233,22 @@ LPEEnvelope::resetDefaults(SPItem * item)
     Geom::Path path1;
     path1.start( Up_Left );
     path1.appendNew<Geom::LineSegment>( Up_Right );
-    bend_path1.param_set_and_write_new_value( path1.toPwSb() );
+    bend_path1.set_new_value( path1.toPwSb(), true );
 
     Geom::Path path2;
     path2.start( Up_Right );
     path2.appendNew<Geom::LineSegment>( Down_Right );
-    bend_path2.param_set_and_write_new_value( path2.toPwSb() );
+    bend_path2.set_new_value( path2.toPwSb(), true );
 
     Geom::Path path3;
     path3.start( Down_Left );
     path3.appendNew<Geom::LineSegment>( Down_Right );
-    bend_path3.param_set_and_write_new_value( path3.toPwSb() );
+    bend_path3.set_new_value( path3.toPwSb(), true );
 
     Geom::Path path4;
     path4.start( Up_Left );
     path4.appendNew<Geom::LineSegment>( Down_Left );
-    bend_path4.param_set_and_write_new_value( path4.toPwSb() );
+    bend_path4.set_new_value( path4.toPwSb(), true );
 }
 
 void

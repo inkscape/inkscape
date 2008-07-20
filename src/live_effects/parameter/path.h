@@ -39,13 +39,13 @@ public:
 
     virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
 
-    bool param_readSVGValue(const gchar * strvalue);
-    gchar * param_getSVGValue() const;
+    virtual bool param_readSVGValue(const gchar * strvalue);
+    virtual gchar * param_getSVGValue() const;
 
-    void param_set_default();
+    virtual void param_set_default();
     void param_set_and_write_default();
-    void param_set_and_write_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & newpath);
-    void param_set_and_write_new_value (std::vector<Geom::Path> const & newpath);
+    void set_new_value (std::vector<Geom::Path> const &newpath, bool write_to_svg);
+    void set_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &newpath, bool write_to_svg);
 
     virtual void param_editOncanvas(SPItem * item, SPDesktop * dt);
     virtual void param_setup_nodepath(Inkscape::NodePath::Path *np);

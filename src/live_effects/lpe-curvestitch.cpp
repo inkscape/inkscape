@@ -172,7 +172,7 @@ LPECurveStitch::resetDefaults(SPItem * item)
         Geom::Path path;
         path.start( start );
         path.appendNew<Geom::LineSegment>( end );
-        strokepath.param_set_and_write_new_value( path.toPwSb() );
+        strokepath.set_new_value( path.toPwSb(), true );
     } else {
         // bounding box is too small to make decent path. set to default default. :-)
         strokepath.param_set_and_write_default();

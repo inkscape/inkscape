@@ -179,8 +179,7 @@ LPEVonKoch::resetDefaults(SPItem * item)
     paths.push_back(path * Matrix(1./3,0,0,1./3,  end[X]*2./3,  end[Y]*2./3 + bndsY.extent()/2));
     paths.push_back(path);
 
-    //generator.param_set_and_write_new_value( path.toPwSb() );
-    generator.param_set_and_write_new_value( paths_to_pw(paths) );
+    generator.set_new_value(paths, true);
 
     
 
@@ -188,7 +187,7 @@ LPEVonKoch::resetDefaults(SPItem * item)
 //     Piecewise<D2<SBasis> > default_gen;
 //     default_gen.concat(Piecewise<D2<SBasis> >(D2<SBasis>(Linear(bndsX.min(),bndsX.max()),Linear((bndsY.min()+bndsY.max())/2))));
 //     default_gen.concat(Piecewise<D2<SBasis> >(D2<SBasis>(Linear(bndsX.max(),bndsX.max()+bndsX.extent()/2),Linear((bndsY.min()+bndsY.max())/2))));
-//     generator.param_set_and_write_new_value( default_gen );
+//     generator.set_new_value(default_gen, true);
 }
 
 void
