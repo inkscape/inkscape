@@ -431,8 +431,7 @@ void
 Effect::addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
     using namespace Inkscape::LivePathEffect;
     for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
-        if ((*p)->paramType() == POINT_PARAM) {
-            PointParam *pparam = static_cast<PointParam *>(*p);
+        if ( Inkscape::LivePathEffect::PointParam *pparam = dynamic_cast<Inkscape::LivePathEffect::PointParam*>(*p) ) {
             KnotHolderEntity *e = dynamic_cast<KnotHolderEntity *>(*p);
             e->create(desktop, item, knotholder, pparam->handleTip(),
                       pparam->knotShape(), pparam->knotMode(), pparam->knotColor());
@@ -457,8 +456,8 @@ Effect::addHelperPaths(SPLPEItem *lpeitem, SPDesktop *desktop)
     }
 
     for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
-        if ((*p)->paramType() == Inkscape::LivePathEffect::PATH_PARAM) {
-            SPCurve *c = new SPCurve(static_cast<Inkscape::LivePathEffect::PathParam*>(*p)->get_pathvector());
+        if ( Inkscape::LivePathEffect::PathParam *pathparam = dynamic_cast<Inkscape::LivePathEffect::PathParam*>(*p) ) {
+            SPCurve *c = new SPCurve(pathparam->get_pathvector());
 
             // TODO: factor this out (also the copied code above); see also lpe-lattice.cpp
             SPCanvasItem *canvasitem = sp_nodepath_generate_helperpath(desktop, c, SP_ITEM(lpeitem), 0x009000ff);
@@ -617,7 +616,7 @@ Effect::providesKnotholder()
 
     // otherwise: are there any PointParams?
     for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
-        if ((*p)->paramType() == Inkscape::LivePathEffect::POINT_PARAM) {
+        if ( Inkscape::LivePathEffect::PointParam *pointparam = dynamic_cast<Inkscape::LivePathEffect::PointParam*>(*p) ) {
             return true;
         }
     }

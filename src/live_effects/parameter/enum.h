@@ -40,8 +40,6 @@ public:
 
     virtual ~EnumParam() { };
 
-    virtual ParamType paramType() { return ENUM_PARAM; }
-
     virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * /*tooltips*/) {
         Inkscape::UI::Widget::RegisteredEnum<E> *regenum = Gtk::manage ( 
             new Inkscape::UI::Widget::RegisteredEnum<E>( param_label, param_tooltip,

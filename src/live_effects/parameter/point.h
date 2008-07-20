@@ -34,8 +34,6 @@ public:
 		Geom::Point default_value = Geom::Point(0,0) ); // tip for automatically associated on-canvas handle
     virtual ~PointParam();
 
-    virtual ParamType paramType() { return POINT_PARAM; }
-
     virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
 
     bool param_readSVGValue(const gchar * strvalue);

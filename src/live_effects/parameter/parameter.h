@@ -36,17 +36,6 @@ namespace LivePathEffect {
 
 class Effect;
 
-enum ParamType {
-    GENERAL_PARAM,
-    SCALAR_PARAM,
-    BOOL_PARAM,
-    PATH_PARAM,
-    POINT_PARAM,
-    RANDOM_PARAM,
-    ENUM_PARAM,
-    INVALID_PARAM
-};
-
 class Parameter {
 public:
     Parameter(  const Glib::ustring& label,
@@ -61,9 +50,6 @@ public:
     void write_to_SVG() { param_write_to_repr(param_getSVGValue()); }
  
     virtual void param_set_default() = 0;
-
-    void printTypeName();
-    virtual ParamType paramType() { return GENERAL_PARAM; }
 
     // This creates a new widget (newed with Gtk::manage(new ...);)
     virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips) = 0;
@@ -103,8 +89,6 @@ public:
                 Effect* effect,
                 gdouble default_value = 1.0);
     virtual ~ScalarParam();
-
-    virtual ParamType paramType() { return SCALAR_PARAM; }
 
     virtual bool param_readSVGValue(const gchar * strvalue);
     virtual gchar * param_getSVGValue() const;

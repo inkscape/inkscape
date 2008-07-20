@@ -29,8 +29,6 @@ public:
                 long default_seed = 0);
     virtual ~RandomParam();
 
-    virtual ParamType paramType() { return RANDOM_PARAM; }
-
     virtual bool param_readSVGValue(const gchar * strvalue);
     virtual gchar * param_getSVGValue() const;
     virtual void param_set_default();

@@ -28,8 +28,6 @@ public:
                bool default_value = false);
     virtual ~BoolParam();
 
-    virtual ParamType paramType() { return BOOL_PARAM; }
-
     virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
 
     virtual bool param_readSVGValue(const gchar * strvalue);
