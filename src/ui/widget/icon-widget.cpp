@@ -28,14 +28,14 @@ namespace Widget {
  *
  *    An icon widget is a ...
  */
-  
-IconWidget::IconWidget() 
+
+IconWidget::IconWidget()
 {
     _pb = NULL;
     _size = 0;
 }
 
-IconWidget::IconWidget(int unsigned size, int unsigned scale, gchar const *name) 
+IconWidget::IconWidget(int unsigned size, int unsigned scale, gchar const *name)
 {
     _size = std::max((int unsigned)128, std::min(size, (int unsigned)1));
 
@@ -48,19 +48,19 @@ IconWidget::IconWidget(int unsigned size, int unsigned scale, gchar const *name)
         _pb = NULL;
     } else {
         /* TODO
-        _pb = gdk_pixbuf_new_from_data(pixels, GDK_COLORSPACE_RGB, 
-                                       TRUE, 8, _size, _size, _size * 4, 
+        _pb = gdk_pixbuf_new_from_data(pixels, GDK_COLORSPACE_RGB,
+                                       TRUE, 8, _size, _size, _size * 4,
                                        (GdkPixbufDestroyNotify)g_free, NULL);
         */
     }
 }
 
-IconWidget::IconWidget(int unsigned size, guchar const *px)
+IconWidget::IconWidget(int unsigned size, guchar const */*px*/)
 {
     _size = std::max((int unsigned)128, std::min(size, (int unsigned)1));
 
     /*
-    _pb = gdk_pixbuf_new_from_data((guchar *)px, GDK_COLORSPACE_RGB, 
+    _pb = gdk_pixbuf_new_from_data((guchar *)px, GDK_COLORSPACE_RGB,
                                    TRUE, 8, _size, _size, _size * 4, NULL, NULL);
     */
 }
@@ -132,19 +132,19 @@ guchar* IconWidget::image_load(gchar const *name, int unsigned size, int unsigne
     return px;
 }
 
-guchar* IconWidget::image_load_pixmap(gchar const *name, int unsigned size, int unsigned scale)
+guchar* IconWidget::image_load_pixmap(gchar const */*name*/, int unsigned /*size*/, int unsigned /*scale*/)
 {
     // TODO
     return NULL;
 }
 
-guchar* IconWidget::image_load_svg(gchar const *name, int unsigned size, int unsigned scale)
+guchar* IconWidget::image_load_svg(gchar const */*name*/, int unsigned /*size*/, int unsigned /*scale*/)
 {
     // TODO
     return NULL;
 }
 
-guchar* IconWidget::image_load_gtk(gchar const *name, int unsigned size, int unsigned scale)
+guchar* IconWidget::image_load_gtk(gchar const */*name*/, int unsigned /*size*/, int unsigned /*scale*/)
 {
     // TODO
     return NULL;
@@ -154,7 +154,7 @@ guchar* IconWidget::image_load_gtk(gchar const *name, int unsigned size, int uns
 } // namespace UI
 } // namespace Inkscape
 
-/* 
+/*
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"

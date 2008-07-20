@@ -125,13 +125,13 @@ ImageMagickDocCache::readImage(const char *xlink, Magick::Image *image)
 }
 
 bool
-ImageMagick::load(Inkscape::Extension::Extension *module)
+ImageMagick::load(Inkscape::Extension::Extension */*module*/)
 {
 	return true;
 }
 
 Inkscape::Extension::Implementation::ImplementationDocumentCache *
-ImageMagick::newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * view) {
+ImageMagick::newDocCache (Inkscape::Extension::Extension * /*ext*/, Inkscape::UI::View::View * view) {
 	return new ImageMagickDocCache(view);
 }
 
@@ -211,7 +211,7 @@ ImageMagick::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::Vi
     Uses AutoGUI for creating the GUI.
 */
 Gtk::Widget *
-ImageMagick::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache)
+ImageMagick::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, Inkscape::Extension::Implementation::ImplementationDocumentCache * /*docCache*/)
 {
     SPDocument * current_document = view->doc();
 

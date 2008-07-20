@@ -172,7 +172,7 @@ struct unmarked_record_satisfying {
 };
 
 template <typename Predicate>
-bool mark_one(ObserverRecordList &observers, unsigned &marked_count,
+bool mark_one(ObserverRecordList &observers, unsigned &/*marked_count*/,
               Predicate p)
 {
     ObserverRecordList::iterator found=std::find_if(
@@ -189,7 +189,7 @@ bool mark_one(ObserverRecordList &observers, unsigned &marked_count,
 }
 
 template <typename Predicate>
-bool remove_one(ObserverRecordList &observers, unsigned &marked_count,
+bool remove_one(ObserverRecordList &observers, unsigned &/*marked_count*/,
                 Predicate p)
 {
     if (observers.empty()) {

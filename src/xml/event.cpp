@@ -95,25 +95,25 @@ public:
 		parent.addChild(&child, ref);
 	}
 
-	void notifyChildRemoved(Node &parent, Node &child, Node *old_ref) {
+	void notifyChildRemoved(Node &parent, Node &child, Node */*old_ref*/) {
 		parent.removeChild(&child);
 	}
 
 	void notifyChildOrderChanged(Node &parent, Node &child,
-			             Node *old_ref, Node *new_ref)
+			             Node */*old_ref*/, Node *new_ref)
 	{
 		parent.changeOrder(&child, new_ref);
 	}
 
 	void notifyAttributeChanged(Node &node, GQuark name,
-			            Inkscape::Util::ptr_shared<char> old_value,
+			            Inkscape::Util::ptr_shared<char> /*old_value*/,
 				    Inkscape::Util::ptr_shared<char> new_value)
 	{
 		node.setAttribute(g_quark_to_string(name), new_value);
 	}
 
 	void notifyContentChanged(Node &node,
-			          Inkscape::Util::ptr_shared<char> old_value,
+			          Inkscape::Util::ptr_shared<char> /*old_value*/,
 				  Inkscape::Util::ptr_shared<char> new_value)
 	{
 		node.setContent(new_value);
@@ -435,18 +435,18 @@ public:
 		g_warning("Event: Added %s to %s after %s", node_to_string(parent).c_str(), node_to_string(child).c_str(), ref_to_string(ref).c_str());
 	}
 
-	void notifyChildRemoved(Node &parent, Node &child, Node *ref) {
+	void notifyChildRemoved(Node &parent, Node &child, Node */*ref*/) {
 		g_warning("Event: Removed %s from %s", node_to_string(parent).c_str(), node_to_string(child).c_str());
 	}
 
 	void notifyChildOrderChanged(Node &parent, Node &child,
-	                             Node *old_ref, Node *new_ref)
+	                             Node */*old_ref*/, Node *new_ref)
 	{
 		g_warning("Event: Moved %s after %s in %s", node_to_string(child).c_str(), ref_to_string(new_ref).c_str(), node_to_string(parent).c_str());
 	}
 
 	void notifyAttributeChanged(Node &node, GQuark name,
-	                            Inkscape::Util::ptr_shared<char> old_value,
+	                            Inkscape::Util::ptr_shared<char> /*old_value*/,
 				    Inkscape::Util::ptr_shared<char> new_value)
 	{
 		if (new_value) {
@@ -457,7 +457,7 @@ public:
 	}
 
 	void notifyContentChanged(Node &node,
-			          Inkscape::Util::ptr_shared<char> old_value,
+			          Inkscape::Util::ptr_shared<char> /*old_value*/,
 				  Inkscape::Util::ptr_shared<char> new_value)
 	{
 		if (new_value) {

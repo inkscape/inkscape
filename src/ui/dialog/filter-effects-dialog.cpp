@@ -209,17 +209,19 @@ template< typename T> class ComboWithTooltip : public Gtk::EventBox
 public:
     ComboWithTooltip<T>(T default_value, const Util::EnumDataConverter<T>& c, const SPAttributeEnum a = SP_ATTR_INVALID, char* tip_text = NULL)
     {
-        if (tip_text) _tt.set_tip(*this, tip_text);
+        if (tip_text) {
+            _tt.set_tip(*this, tip_text);
+        }
         combo = new ComboBoxEnum<T>(default_value, c, a);
         add(*combo);
         show_all();
     }
-    
+
     ~ComboWithTooltip()
     {
         delete combo;
     }
-    
+
     ComboBoxEnum<T>* get_attrwidget()
     {
         return combo;
@@ -315,7 +317,7 @@ public:
         }
         _s1.set_value(n.getNumber());
         _s2.set_value(n.getOptNumber());
-        
+
     }
 private:
     Gtk::SpinButton _s1, _s2;
@@ -869,7 +871,7 @@ public:
         std::vector<double> default_values;
         default_values.push_back(def1);
         default_values.push_back(def2);
-        
+
         std::vector<char*> tips;
         tips.push_back(tip1);
         tips.push_back(tip2);
@@ -1901,10 +1903,11 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
             const int sources_x = rct.get_width() - twidth * FPInputConverter._length;
             if(cx > sources_x) {
                 int src = (cx - sources_x) / twidth;
-                if(src < 0)
+                if (src < 0) {
                     src = 0;
-                else if(src >= FPInputConverter._length)
+                } else if(src >= static_cast<int>(FPInputConverter._length)) {
                     src = FPInputConverter._length - 1;
+                }
                 result = FPInputConverter.get_key((FilterPrimitiveInput)src);
                 in_val = result.c_str();
             }
@@ -2178,7 +2181,7 @@ void FilterEffectsDialog::init_settings_widgets()
 
     _empty_settings.set_sensitive(false);
     _settings_tab1.pack_start(_empty_settings);
-    
+
     _no_filter_selected.set_sensitive(false);
     _settings_tab2.pack_start(_no_filter_selected);
     _settings_initialized = true;
@@ -2482,7 +2485,7 @@ void FilterEffectsDialog::update_settings_view()
         _infobox_icon.hide();
         _infobox_desc.hide();
     }
-    
+
     SPFilterPrimitive* prim = _primitive_list.get_selected();
 
     if(prim) {

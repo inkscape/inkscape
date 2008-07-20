@@ -37,7 +37,7 @@ public:
         pack_start(_columns.label);
 
         // Initialize list
-        for(int i = 0; i < _converter._length; ++i) {
+        for(int i = 0; i < static_cast<int>(_converter._length); ++i) {
             Gtk::TreeModel::Row row = *_model->append();
             const Util::EnumData<E>* data = &_converter.data(i);
             row[_columns.data] = data;

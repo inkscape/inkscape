@@ -703,7 +703,7 @@ bool Layout::iterator::nextLineCursor(int n)
     if (line_index == _parent_layout->_lines.size() - 1) 
         return false; // nowhere to go
 		else
-        n = MIN (n, _parent_layout->_lines.size() - 1 - line_index);
+        n = MIN (n, static_cast<int>(_parent_layout->_lines.size() - 1 - line_index));
     if (_parent_layout->_lines[line_index + n].in_shape != _parent_layout->_lines[line_index].in_shape) {
         // switching between shapes: adjust the stored x to compensate
         _x_coordinate +=   _parent_layout->_chunks[_parent_layout->_spans[_parent_layout->_lineToSpan(line_index + n)].in_chunk].left_x
@@ -726,7 +726,7 @@ bool Layout::iterator::prevLineCursor(int n)
     if (line_index == 0) 
         return false; // nowhere to go
 		else 
-        n = MIN (n, line_index);
+        n = MIN (n, static_cast<int>(line_index));
     if (_parent_layout->_lines[line_index - n].in_shape != _parent_layout->_lines[line_index].in_shape) {
         // switching between shapes: adjust the stored x to compensate
         _x_coordinate +=   _parent_layout->_chunks[_parent_layout->_spans[_parent_layout->_lineToSpan(line_index - n)].in_chunk].left_x

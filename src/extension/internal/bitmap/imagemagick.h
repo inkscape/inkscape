@@ -20,15 +20,15 @@ namespace Bitmap {
 
 class ImageMagick : public Inkscape::Extension::Implementation::Implementation {
 public:
-	/* Functions to be implemented by subclasses */
-	virtual void applyEffect(Magick::Image *image) { };
-	virtual void refreshParameters(Inkscape::Extension::Effect *module) { };
+    /* Functions to be implemented by subclasses */
+    virtual void applyEffect(Magick::Image */*image*/) { };
+    virtual void refreshParameters(Inkscape::Extension::Effect */*module*/) { };
 
-	/* Functions implemented from ::Implementation */
-	bool load(Inkscape::Extension::Extension *module);
-	Inkscape::Extension::Implementation::ImplementationDocumentCache * newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * doc);
-	void effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache);
-	Gtk::Widget* prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache);
+    /* Functions implemented from ::Implementation */
+    bool load(Inkscape::Extension::Extension *module);
+    Inkscape::Extension::Implementation::ImplementationDocumentCache * newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * doc);
+    void effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache);
+    Gtk::Widget* prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache);
 };
 
 }; /* namespace Bitmap */
