@@ -73,11 +73,13 @@ private:
         {
             add(col_name);
             add(lperef);
+            add(col_visible);
         }
         virtual ~ModelColumns() {}
 
         Gtk::TreeModelColumn<Glib::ustring> col_name;
         Gtk::TreeModelColumn<LivePathEffect::LPEObjectReference *> lperef;
+        Gtk::TreeModelColumn<bool> col_visible;
     };
 
     Inkscape::UI::Widget::ComboBoxEnum<LivePathEffect::EffectType> combo_effecttype;

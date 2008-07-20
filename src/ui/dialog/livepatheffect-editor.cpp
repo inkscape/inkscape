@@ -17,6 +17,7 @@
 
 #include <glibmm/i18n.h>
 #include "livepatheffect-editor.h"
+#include "ui/widget/imagetoggler.h"
 #include "verbs.h"
 #include "selection.h"
 #include "sp-shape.h"
@@ -131,9 +132,19 @@ LivePathEffectEditor::LivePathEffectEditor()
     effectlist_selection = effectlist_view.get_selection();
     effectlist_selection->signal_changed().connect( sigc::mem_fun(*this, &LivePathEffectEditor::on_effect_selection_changed) );
 
-    //Add the TreeView's view columns:
-    effectlist_view.append_column("Effect", columns.col_name);
+    //Add the visibility icon column:
+    Inkscape::UI::Widget::ImageToggler *eyeRenderer = manage( new Inkscape::UI::Widget::ImageToggler("visible", "hidden") );
+    int visibleColNum = effectlist_view.append_column("is_visible", *eyeRenderer) - 1;
+//    eyeRenderer->signal_pre_toggle().connect( sigc::mem_fun(*this, &LayersPanel::_preToggle) );
+//    eyeRenderer->signal_toggled().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_toggled), (int)COL_VISIBLE) );
+    eyeRenderer->property_activatable() = true;
+    Gtk::TreeViewColumn* col = effectlist_view.get_column(visibleColNum);
+    if ( col ) {
+        col->add_attribute( eyeRenderer->property_active(), columns.col_visible );
+    }
 
+    //Add the effect name column:
+    effectlist_view.append_column("Effect", columns.col_name);
 
     contents->pack_start(effectapplication_frame, false, false);
     contents->pack_start(effectlist_frame, true, true);
@@ -269,6 +280,7 @@ LivePathEffectEditor::effect_list_reload(SPLPEItem *lpeitem)
          Gtk::TreeModel::Row row = *(effectlist_store->append());
          row[columns.col_name] = (*it)->lpeobject->lpe->getName();
          row[columns.lperef] = *it;
+         row[columns.col_visible] = (*it)->lpeobject->lpe->isVisible();
     }
 }
 
