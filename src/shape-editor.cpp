@@ -130,8 +130,8 @@ void ShapeEditor::decrement_local_change (SubType type) {
     }
 }
 
-SPItem *ShapeEditor::get_item (SubType type) {
-    SPItem *item = NULL;
+const SPItem *ShapeEditor::get_item (SubType type) {
+    const SPItem *item = NULL;
     switch (type) {
         case SH_NODEPATH:
             if (this->has_nodepath()) {
@@ -140,7 +140,7 @@ SPItem *ShapeEditor::get_item (SubType type) {
             break;
         case SH_KNOTHOLDER:
             if (this->has_knotholder()) {
-                item = this->nodepath->item;
+                item = this->knotholder->getItem();
             }
             break;
     }
@@ -329,8 +329,8 @@ void ShapeEditor::reset_item (SubType type, bool keep_knotholder)
             break;
         case SH_KNOTHOLDER:
             if (this->knotholder) {
-                SPItem * item = get_item(SH_KNOTHOLDER);
-                set_item(item, SH_KNOTHOLDER, keep_knotholder);
+                const SPItem * item = get_item(SH_KNOTHOLDER);
+                set_item((SPItem *) item, SH_KNOTHOLDER, keep_knotholder);
             }
             break;
     }
@@ -350,7 +350,7 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
     if (!this->nodepath)
         return false; // no stroke in knotholder
 
-    SPItem *item = get_item(SH_NODEPATH);
+    const SPItem *item = get_item(SH_NODEPATH);
 
     //Translate click point into proper coord system
     this->curvepoint_doc = desktop->w2d(event_p);

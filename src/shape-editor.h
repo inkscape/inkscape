@@ -44,7 +44,7 @@ public:
     void reset_item (SubType type, bool keep_knotholder = true);
     void unset_item (SubType type, bool keep_knotholder = false);
 
-    SPItem *get_item (SubType type);
+    const SPItem *get_item (SubType type);
 
     bool has_nodepath ();
     bool has_knotholder ();
