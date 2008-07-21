@@ -10,17 +10,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
- //TODO:  we don't need all these include files here!
-#include <gtk/gtkstock.h>
-#include <gtk/gtkmain.h>
-
-#include <gtkmm/icontheme.h>
-
-#include "inkscape.h"
-
-#include "dialogs/layers-panel.h"
-
-#include "widgets/icon.h"
+#include <gtkmm/cellrendererpixbuf.h>
 #include <gtkmm/widget.h>
 
 namespace Inkscape {

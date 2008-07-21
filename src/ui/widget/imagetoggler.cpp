@@ -10,14 +10,10 @@
 
 
 #include "ui/widget/imagetoggler.h"
- 
-#include <gtk/gtkstock.h>
-#include <gtk/gtkmain.h>
 
 #include <gtkmm/icontheme.h>
 
 #include "widgets/icon.h"
-#include <gtkmm/widget.h>
 
 namespace Inkscape {
 namespace UI {
