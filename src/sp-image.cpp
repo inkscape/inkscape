@@ -1306,6 +1306,7 @@ static void sp_image_snappoints(SPItem const *item, SnapPointsIter p)
     if (item->clip_ref->getObject()) {
         //We are looking at a clipped image: do not return any snappoints, as these might be
         //far far away from the visible part from the clipped image
+    	//TODO Do return snappoints, but only when within visual bounding box
     } else {
         // The image has not been clipped: return its corners, which might be rotated for example
         SPImage &image = *SP_IMAGE(item);

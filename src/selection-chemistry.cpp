@@ -2751,7 +2751,9 @@ void sp_selection_unset_mask(bool apply_clip_path) {
     sp_document_ensure_up_to_date(doc);
 
     gchar const *attributeName = apply_clip_path ? "clip-path" : "mask";
-    std::map<SPObject*,SPItem*> referenced_objects;
+    std::map<SPObject*,SPItem*> referenced_objects; 
+    // SPObject* refers to a group containing the clipped path or mask itself, 
+    // whereas SPItem* refers to the item being clipped or masked
     for (GSList const *i = selection->itemList(); NULL != i; i = i->next) {
         if (remove_original) {
             // remember referenced mask/clippath, so orphaned masks can be moved back to document
@@ -2775,9 +2777,10 @@ void sp_selection_unset_mask(bool apply_clip_path) {
 
     // restore mask objects into a document
     for ( std::map<SPObject*,SPItem*>::iterator it = referenced_objects.begin() ; it != referenced_objects.end() ; ++it) {
-        SPObject *obj = (*it).first;
+        SPObject *obj = (*it).first; // Group containing the clipped paths or masks
         GSList *items_to_move = NULL;
         for (SPObject *child = sp_object_first_child(obj) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            // Collect all clipped paths and masks within a single group 
             Inkscape::XML::Node *copy = SP_OBJECT_REPR(child)->duplicate(xml_doc);
             items_to_move = g_slist_prepend (items_to_move, copy);
         }
@@ -2791,6 +2794,7 @@ void sp_selection_unset_mask(bool apply_clip_path) {
         Inkscape::XML::Node *parent = SP_OBJECT_REPR((*it).second)->parent();
         gint pos = SP_OBJECT_REPR((*it).second)->position();
 
+        // Iterate through all clipped paths / masks
         for (GSList *i = items_to_move; NULL != i; i = i->next) {
             Inkscape::XML::Node *repr = (Inkscape::XML::Node *)i->data;
 

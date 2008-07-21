@@ -11,6 +11,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "svg/svg.h"
 #include "libnr/n-art-bpath.h"
 #include "libnr/nr-path.h"
 #include "libnr/nr-rect-ops.h"
@@ -32,13 +33,24 @@
 #include "sp-text.h"
 #include "sp-flowtext.h"
 #include "text-editing.h"
+#include "sp-clippath.h"
+#include "sp-mask.h"
+
+Inkscape::SnapCandidate::SnapCandidate(SPItem* item, bool clip_or_mask, NR::Matrix additional_affine)
+	: item(item), clip_or_mask(clip_or_mask), additional_affine(additional_affine)
+{	
+}
+
+Inkscape::SnapCandidate::~SnapCandidate()
+{	
+}
 
 Inkscape::ObjectSnapper::ObjectSnapper(SPNamedView const *nv, NR::Coord const d)
     : Snapper(nv, d), _snap_to_itemnode(true), _snap_to_itempath(true),
       _snap_to_bboxnode(true), _snap_to_bboxpath(true), _snap_to_page_border(false),
       _strict_snapping(true), _include_item_center(false)
 {
-    _candidates = new std::vector<SPItem*>;
+    _candidates = new std::vector<SnapCandidate>;
     _points_to_snap_to = new std::vector<NR::Point>;
     _bpaths_to_snap_to = new std::vector<NArtBpath*>;
     _paths_to_snap_to = new std::vector<Path*>;
@@ -46,7 +58,7 @@ Inkscape::ObjectSnapper::ObjectSnapper(SPNamedView const *nv, NR::Coord const d)
 
 Inkscape::ObjectSnapper::~ObjectSnapper()
 {
-    _candidates->clear(); //Don't delete the candidates themselves, as these are not ours!
+    _candidates->clear();
     delete _candidates;
 
     _points_to_snap_to->clear();
@@ -59,18 +71,20 @@ Inkscape::ObjectSnapper::~ObjectSnapper()
 
 /**
  *  Find all items within snapping range.
- *  \param r Pointer to the current document
+ *  \param parent Pointer to the document's root, or to a clipped path or mask object
  *  \param it List of items to ignore
  *  \param first_point If true then this point is the first one from a whole bunch of points
  *  \param bbox_to_snap Bounding box hulling the whole bunch of points, all from the same selection and having the same transformation
  *  \param DimensionToSnap Snap in X, Y, or both directions.
  */
 
-void Inkscape::ObjectSnapper::_findCandidates(SPObject* r,
+void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                                               std::vector<SPItem const *> const *it,
                                               bool const &first_point,
                                               NR::Rect const &bbox_to_snap,
-                                              DimensionToSnap const snap_dim) const
+                                              DimensionToSnap const snap_dim,
+                                              bool const clip_or_mask,
+                                              NR::Matrix const additional_affine) const // transformation of the item being clipped / masked
 {
     bool const c1 = (snap_dim == TRANSL_SNAP_XY) && ThisSnapperMightSnap();
     bool const c2 = (snap_dim != TRANSL_SNAP_XY) && GuidesMightSnap();
@@ -89,9 +103,10 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* r,
     NR::Rect bbox_to_snap_incl = bbox_to_snap; // _incl means: will include the snapper tolerance
     bbox_to_snap_incl.growBy(getSnapperTolerance()); // see?
     
-    for (SPObject* o = sp_object_first_child(r); o != NULL; o = SP_OBJECT_NEXT(o)) {
-        if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !desktop->itemIsHidden(SP_ITEM(o))) {
-
+    for (SPObject* o = sp_object_first_child(parent); o != NULL; o = SP_OBJECT_NEXT(o)) {
+        if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !(desktop->itemIsHidden(SP_ITEM(o)) && !clip_or_mask)) {
+            // Don't snap to locked items, and
+            // don't snap to hidden objects, unless they're a clipped path or a mask
             /* See if this item is on the ignore list */
             std::vector<SPItem const *>::const_iterator i;
             if (it != NULL) {
@@ -100,17 +115,51 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* r,
                     i++;
                 }
             }
-
+            
             if (it == NULL || i == it->end()) {
-                /* See if the item is within range */
+                SPItem *item = SP_ITEM(o); 
+                NR::Matrix transform = NR::identity();
+                if (item) {
+                    SPObject *obj = NULL;
+                    if (clip_or_mask) { // If the current item is a clipping path or a mask
+                        // then store the transformation of the clipped path or mask itself
+                    	// but also take into account the additional affine of the object 
+                    	// being clipped / masked
+                    	transform = item->transform * additional_affine;
+                    } else { // cannot clip or mask more than once                     
+                        // The current item is not a clipping path or a mask, but might
+                    	// still be the subject of clipping or masking itself ; if so, then
+                    	// we should also consider that path or mask for snapping to
+                    	obj = SP_OBJECT(item->clip_ref->getObject());
+                        if (obj) {
+                            _findCandidates(obj, it, false, bbox_to_snap, snap_dim, true, item->transform);
+                        } 
+                        obj = SP_OBJECT(item->mask_ref->getObject());
+                        if (obj) {
+                            _findCandidates(obj, it, false, bbox_to_snap, snap_dim, true, item->transform);
+                        }
+                    }
+                }            
+                
                 if (SP_IS_GROUP(o)) {
-                    _findCandidates(o, it, false, bbox_to_snap, snap_dim);
+                    _findCandidates(o, it, false, bbox_to_snap, snap_dim, false, NR::identity());
                 } else {
-                    bbox_of_item = sp_item_bbox_desktop(SP_ITEM(o));
+                    if (clip_or_mask) {
+                        // Oh oh, this will get ugly. We cannot use sp_item_i2d_affine directly because we need to
+                    	// insert an additional transformation in document coordinates (code copied from sp_item_i2d_affine)
+                    	sp_item_invoke_bbox(item, 
+                			&bbox_of_item, 
+                			from_2geom(sp_item_i2doc_affine(item) * matrix_to_desktop(to_2geom(additional_affine), item)),
+                			true);
+                    	
+                    } else {
+                        sp_item_invoke_bbox(item, &bbox_of_item, from_2geom(sp_item_i2d_affine(item)), true);
+                    }                    
+                    // See if the item is within range                                    
                     if (bbox_of_item) {
                         if (bbox_to_snap_incl.intersects(*bbox_of_item)) {
-                            //This item is within snapping range, so record it as a candidate
-                            _candidates->push_back(SP_ITEM(o));
+                            // This item is within snapping range, so record it as a candidate
+                            _candidates->push_back(SnapCandidate(item, clip_or_mask, additional_affine));
                         }
                     }
                 }
@@ -141,15 +190,15 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::Snapper::PointType const &
         
         if (_snap_to_bboxnode) {
             int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
-            bbox_type = (prefs_bbox ==0)? 
+            bbox_type = (prefs_bbox == 0)? 
                 SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
         }
 
-        for (std::vector<SPItem*>::const_iterator i = _candidates->begin(); i != _candidates->end(); i++) {
+        for (std::vector<SnapCandidate>::const_iterator i = _candidates->begin(); i != _candidates->end(); i++) {
             //NR::Matrix i2doc(NR::identity());
-            SPItem *root_item = *i;
-            if (SP_IS_USE(*i)) {
-                root_item = sp_use_root(SP_USE(*i));
+            SPItem *root_item = (*i).item;
+            if (SP_IS_USE((*i).item)) {
+                root_item = sp_use_root(SP_USE((*i).item));
             }
             g_return_if_fail(root_item);
 
@@ -163,10 +212,14 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::Snapper::PointType const &
             //Collect the bounding box's corners so we can snap to them
             if (_snap_to_bboxnode) {
                 if (!(_strict_snapping && !p_is_a_bbox) || p_is_a_guide) {
-                    NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(root_item, bbox_type);
-                    if (b) {
-                        for ( unsigned k = 0 ; k < 4 ; k++ ) {
-                            _points_to_snap_to->push_back(b->corner(k));
+                	// Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
+                	// of the item AND the bbox of the clipping path at the same time
+                	if (!(*i).clip_or_mask) {  
+                        NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(root_item, bbox_type);
+                        if (b) {
+                            for ( unsigned k = 0 ; k < 4 ; k++ ) {
+                                _points_to_snap_to->push_back(b->corner(k));
+                            }
                         }
                     }
                 }
@@ -280,21 +333,21 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
             _bpaths_to_snap_to->push_back(new_bpath);    
         }
         
-        for (std::vector<SPItem*>::const_iterator i = _candidates->begin(); i != _candidates->end(); i++) {
+        for (std::vector<SnapCandidate>::const_iterator i = _candidates->begin(); i != _candidates->end(); i++) {
 
             /* Transform the requested snap point to this item's coordinates */
             NR::Matrix i2doc(NR::identity());
             SPItem *root_item = NULL;
             /* We might have a clone at hand, so make sure we get the root item */
-            if (SP_IS_USE(*i)) {
-                i2doc = sp_use_get_root_transform(SP_USE(*i));
-                root_item = sp_use_root(SP_USE(*i));
+            if (SP_IS_USE((*i).item)) {
+                i2doc = sp_use_get_root_transform(SP_USE((*i).item));
+                root_item = sp_use_root(SP_USE((*i).item));
                 g_return_if_fail(root_item);
             } else {
-                i2doc = from_2geom(sp_item_i2doc_affine(*i));
-                root_item = *i;
+                i2doc = from_2geom(sp_item_i2doc_affine((*i).item));
+                root_item = (*i).item;
             }
-
+            
             //Build a list of all paths considered for snapping to
 
             //Add the item's path to snap to
@@ -322,8 +375,20 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
                     if (!very_lenghty_prose && !very_complex_path) {
                         SPCurve *curve = curve_for_item(root_item); 
                         if (curve) {
-                            NArtBpath *bpath = bpath_for_curve(root_item, curve, true, true); // perhaps for speed, get a reference to the Geom::pathvector, and store the transformation besides it. apply transformation on the snap points, instead of generating whole new path
+                            NArtBpath *bpath = bpath_for_curve(root_item, curve, true, true, 
+                            								   NR::identity(),
+                            								   (*i).additional_affine); 
+                            // Perhaps for speed, get a reference to the Geom::pathvector, and store the transformation besides it. 
                             _bpaths_to_snap_to->push_back(bpath); // we will get a dupe of the path, which must be freed at some point
+                            
+                            /*std::vector<Geom::Path> pathv;
+                            char *svgpath = sp_svg_write_path(bpath);
+                            if (svgpath) {
+                                std::cout << "path = " << svgpath << std::endl;
+                            }
+                            g_free(svgpath);
+                            */
+                            
                             curve->unref();
                         }
                     }
@@ -333,10 +398,14 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
             //Add the item's bounding box to snap to
             if (_snap_to_bboxpath) {
                 if (!(_strict_snapping && p_is_a_node)) {
-                    NRRect rect;
-                    sp_item_invoke_bbox(root_item, &rect, i2doc, TRUE, bbox_type);
-                    NArtBpath *bpath = nr_path_from_rect(rect);
-                    _bpaths_to_snap_to->push_back(bpath);
+                	// Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
+                	// of the item AND the bbox of the clipping path at the same time
+                	if (!(*i).clip_or_mask) { 
+                        NRRect rect;
+                        sp_item_invoke_bbox(root_item, &rect, i2doc, TRUE, bbox_type);
+                        NArtBpath *bpath = nr_path_from_rect(rect);
+                        _bpaths_to_snap_to->push_back(bpath);                        
+                    }
                 }
             }
         }
@@ -375,7 +444,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
         if (node_tool_active) {        
             SPCurve *curve = curve_for_item(SP_ITEM(selected_path)); 
             if (curve) {
-                NArtBpath *bpath = bpath_for_curve(SP_ITEM(selected_path), curve, true, true);
+                NArtBpath *bpath = bpath_for_curve(SP_ITEM(selected_path), curve, true, true, NR::identity(), NR::identity());
                 _bpaths_to_snap_to->push_back(bpath); // we will get a dupe of the path, which must be freed at some point
                 curve->unref();
             }
@@ -575,7 +644,7 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
     /* Get a list of all the SPItems that we will try to snap to */
     if (first_point) {
         NR::Rect const local_bbox_to_snap = bbox_to_snap ? *bbox_to_snap : NR::Rect(p, p);
-        _findCandidates(sp_document_root(_named_view->document), it, first_point, local_bbox_to_snap, TRANSL_SNAP_XY);
+        _findCandidates(sp_document_root(_named_view->document), it, first_point, local_bbox_to_snap, TRANSL_SNAP_XY, false, NR::identity());
     }
     
     if (_snap_to_itemnode || _snap_to_bboxnode) {
@@ -621,7 +690,7 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
     /* Get a list of all the SPItems that we will try to snap to */
     if (first_point) {
         NR::Rect const local_bbox_to_snap = bbox_to_snap ? *bbox_to_snap : NR::Rect(p, p);
-        _findCandidates(sp_document_root(_named_view->document), it, first_point, local_bbox_to_snap, TRANSL_SNAP_XY);
+        _findCandidates(sp_document_root(_named_view->document), it, first_point, local_bbox_to_snap, TRANSL_SNAP_XY, false, NR::identity());
     }
     
     // A constrained snap, is a snap in only one degree of freedom (specified by the constraint line).
@@ -671,7 +740,7 @@ void Inkscape::ObjectSnapper::guideSnap(SnappedConstraints &sc,
     // second time on an object; but should this point then be constrained to the
     // line, or can it be located anywhere?)
     
-    _findCandidates(sp_document_root(_named_view->document), &it, true, NR::Rect(p, p), snap_dim);
+    _findCandidates(sp_document_root(_named_view->document), &it, true, NR::Rect(p, p), snap_dim, false, NR::identity());
 	_snapTranslatingGuideToNodes(sc, Inkscape::Snapper::SNAPPOINT_GUIDE, p, guide_normal);
     
     // _snapRotatingGuideToNodes has not been implemented yet. 

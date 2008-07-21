@@ -933,16 +933,43 @@ static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p)
 
 void sp_item_snappoints(SPItem const *item, bool includeItemCenter, SnapPointsIter p)
 {
-    g_assert (item != NULL);
+	g_assert (item != NULL);
     g_assert (SP_IS_ITEM(item));
 
+    // Get the snappoints of the item
     SPItemClass const &item_class = *(SPItemClass const *) G_OBJECT_GET_CLASS(item);
     if (item_class.snappoints) {
         item_class.snappoints(item, p);
     }
 
+    // Get the snappoints at the item's center
     if (includeItemCenter) {
     	*p = item->getCenter();
+    }    
+    
+    // Get the snappoints of clipping paths and mask, if any
+    std::list<SPObject const *> clips_and_masks;
+    
+    clips_and_masks.push_back(SP_OBJECT(item->clip_ref->getObject()));
+    clips_and_masks.push_back(SP_OBJECT(item->mask_ref->getObject()));
+    
+    for (std::list<SPObject const *>::const_iterator o = clips_and_masks.begin(); o != clips_and_masks.end(); o++) {
+    	if (*o) {
+	    	// obj is a group object, the children are the actual clippers
+	        for (SPObject *child = (*o)->children ; child ; child = child->next) {
+	            if (SP_IS_ITEM(child)) {
+	            	std::vector<NR::Point> p_clip_or_mask;	            	    
+	            	// Please note the recursive call here!
+	            	sp_item_snappoints(SP_ITEM(child), includeItemCenter, SnapPointsIter(p_clip_or_mask));
+	            	// Take into account the transformation of the item being clipped or masked
+	            	for (std::vector<NR::Point>::const_iterator p_orig = p_clip_or_mask.begin(); p_orig != p_clip_or_mask.end(); p_orig++) {
+            	    	// All snappoints are in desktop coordinates, but the item's transformation is
+	            		// in document coordinates. Hence the awkward construction below
+	            		*p = (*p_orig) * from_2geom(matrix_to_desktop (matrix_from_desktop (to_2geom(item->transform), item), item));
+            	    }
+	            }
+	    	}
+    	}
     }
 }
 

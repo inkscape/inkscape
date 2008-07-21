@@ -1755,7 +1755,9 @@ Path *
 Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
 {
     SPCurve *curve = curve_for_item(item);
-    if (curve == NULL) {
+    NArtBpath *bpath = bpath_for_curve(item, curve, doTransformation, transformFull, NR::identity(), NR::identity());
+    
+    if (bpath == NULL) {
         return NULL;
     }
 
@@ -1773,7 +1775,7 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
  * This function always returns a new NArtBpath, the caller must g_free the returned path!
 */
 NArtBpath *
-bpath_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transformFull)
+bpath_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transformFull, NR::Matrix extraPreAffine, NR::Matrix extraPostAffine)
 {
     if (curve == NULL)
         return NULL;
@@ -1786,12 +1788,12 @@ bpath_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transf
     NArtBpath *new_bpath; // we will get a duplicate which has to be freed at some point!
     if (doTransformation) {
         if (transformFull) {
-            new_bpath = nr_artpath_affine(bpath, from_2geom(sp_item_i2doc_affine(item)));
+            new_bpath = nr_artpath_affine(bpath, extraPreAffine * from_2geom(sp_item_i2doc_affine(item)) * extraPostAffine);
         } else {
-            new_bpath = nr_artpath_affine(bpath, item->transform);
+            new_bpath = nr_artpath_affine(bpath, extraPreAffine * item->transform * extraPostAffine);
         }
     } else {
-        new_bpath = nr_artpath_affine(bpath, NR::identity());
+        new_bpath = nr_artpath_affine(bpath, extraPreAffine * NR::identity() * extraPostAffine);
     }
 
     g_free(bpath);
@@ -1821,14 +1823,14 @@ pathvector_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool t
 
 SPCurve* curve_for_item(SPItem *item)
 {
-    if (!item)
-        return NULL;
+    if (!item) {
+    	return NULL;
+    }
 
     SPCurve *curve = NULL;
-
     if (SP_IS_SHAPE(item)) {
         if (SP_IS_PATH(item)) {
-            curve = sp_path_get_curve_for_edit(SP_PATH(item));
+    		curve = sp_path_get_curve_for_edit(SP_PATH(item));
         } else {
             curve = sp_shape_get_curve(SP_SHAPE(item));
         }
@@ -1839,7 +1841,7 @@ SPCurve* curve_for_item(SPItem *item)
     }
     else if (SP_IS_IMAGE(item))
     {
-        curve = sp_image_get_curve(SP_IMAGE(item));
+    	curve = sp_image_get_curve(SP_IMAGE(item));
     }
     
     return curve; // do not forget to unref the curve at some point!
