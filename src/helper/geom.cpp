@@ -45,7 +45,7 @@ cubic_bbox (Geom::Coord x000, Geom::Coord y000, Geom::Coord x001, Geom::Coord y0
     // So, if it also contains (x001,y001) and (x011,y011) we don't have to compute anything else!
     // Note that we compute it for the X and Y range separately to make it easier to use them below
     bool containsXrange = bbox[0].contains(x001) && bbox[0].contains(x011);
-    bool containsYrange = bbox[0].contains(y001) && bbox[0].contains(y011);
+    bool containsYrange = bbox[1].contains(y001) && bbox[1].contains(y011);
 
     /*
      * xttt = s * (s * (s * x000 + t * x001) + t * (s * x001 + t * x011)) + t * (s * (s * x001 + t * x011) + t * (s * x011 + t * x111))
