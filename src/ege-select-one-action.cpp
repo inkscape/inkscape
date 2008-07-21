@@ -732,7 +732,7 @@ void combo_changed_cb( GtkComboBox* widget, gpointer user_data )
 {
     EgeSelectOneAction* act = EGE_SELECT_ONE_ACTION(user_data);
     gint newActive = gtk_combo_box_get_active(widget);
-    if (newActive != act->private_data->active) {
+    if (newActive != act->private_data->active && newActive != -1) {
         g_object_set( G_OBJECT(act), "active", newActive, NULL );
     }
 }
