@@ -16,10 +16,6 @@
 
 #include <gtkmm/icontheme.h>
 
-#include "document.h"
-#include "desktop.h"
-#include "sp-object.h"
-#include "sp-item.h"
 #include "widgets/icon.h"
 #include <gtkmm/widget.h>
 

@@ -18,13 +18,7 @@
 
 #include "inkscape.h"
 
-#include "layers-panel.h"
-
-#include "layer-manager.h"
-#include "layer-fns.h"
-
-#include "verbs.h"
-#include "helper/action.h"
+#include "dialogs/layers-panel.h"
 
 #include "widgets/icon.h"
 #include <gtkmm/widget.h>
