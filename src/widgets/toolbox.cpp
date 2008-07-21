@@ -386,7 +386,6 @@ static gchar const * ui_descr =
         "  <toolbar name='CalligraphyToolbar'>"
         "    <separator />"
         "    <toolitem action='SetProfileAction'/>"
-        "    <toolitem action='SaveDeleteProfileAction'/>"
         "    <separator />"
         "    <toolitem action='CalligraphyWidthAction' />"
         "    <toolitem action='PressureAction' />"
@@ -3805,14 +3804,14 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 //########################
 //##     Calligraphy    ##
 //########################
-static void update_presets_list(GObject *dataKludge ){
+static void update_presets_list (GObject *tbl){
 
-    if (g_object_get_data(dataKludge, "presets_blocked")) 
+    if (g_object_get_data(tbl, "presets_blocked")) 
         return;
 
-    EgeSelectOneAction *sel = static_cast<EgeSelectOneAction *>(g_object_get_data(dataKludge, "profile_selector"));
+    EgeSelectOneAction *sel = static_cast<EgeSelectOneAction *>(g_object_get_data(tbl, "profile_selector"));
     if (sel) {
-        ege_select_one_action_set_active(sel, 0 );
+        ege_select_one_action_set_active(sel, 0);
     }
 }
 
@@ -3886,84 +3885,141 @@ static void sp_ddc_tilt_state_changed( GtkToggleAction *act, GObject*  tbl )
 }
 
 
-#define PROFILE_FLOAT_SIZE 7
-#define PROFILE_INT_SIZE 4
-struct ProfileFloatElement {
-    char const *name;
-    double def;
-    double min;
-    double max;
-};
-struct ProfileIntElement {
-    char const *name;
-    int def;
-    int min;
-    int max;
-};
-
-
-
-static ProfileFloatElement f_profile[PROFILE_FLOAT_SIZE] = {
-    {"mass",2, 0.0, 100},
-    {"wiggle",0.0, 0.0, 100},
-    {"angle",30.0, -90.0, 90.0},
-    {"thinning",10, -100, 100},
-    {"tremor",0.0, 0.0, 100},
-    {"flatness",90, 0.0, 100},
-    {"cap_rounding",0.0, 0.0, 5.0}
-};
-static ProfileIntElement i_profile[PROFILE_INT_SIZE] = {
-    {"width",15, 1, 100},
-    {"usepressure",1,0,1},
-    {"tracebackground",0,0,1},
-    {"usetilt",1,0,1},
+#define NUMBER_OF_PRESET_PARAMS 11
+static gchar * widget_names[NUMBER_OF_PRESET_PARAMS] = {
+    "width",
+    "mass",
+    "wiggle",
+    "angle",
+    "thinning",
+    "tremor",
+    "flatness",
+    "cap_rounding",
+    "usepressure",
+    "tracebackground",
+    "usetilt"
 };
 
 
+static void sp_dcc_build_presets_list(GObject *tbl) 
+{
+    EgeSelectOneAction* selector = static_cast<EgeSelectOneAction *>(g_object_get_data(tbl, "profile_selector"));
+    GtkListStore* model = GTK_LIST_STORE(ege_select_one_action_get_model(selector));
+    gtk_list_store_clear (model);
 
-static void sp_dcc_save_profile( GtkWidget */*widget*/, GObject *dataKludge ){
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
+    {
+        GtkTreeIter iter;
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter, 0, _("No preset"), 1, 0, -1 );
+    }
+
+    //TODO: switch back to prefs API
+    Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE, "tools.calligraphic.preset" );
+    Inkscape::XML::Node *child_repr = sp_repr_children(repr);
+    int ii=1;
+    while (child_repr) {
+        GtkTreeIter iter;
+        char *preset_name = (char *) child_repr->attribute("name");
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter, 0, preset_name, 1, ++ii, -1 );
+        child_repr = sp_repr_next(child_repr);
+    }
+
+    {
+        GtkTreeIter iter;
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter, 0, _("Save..."), 1, ii, -1 );
+        g_object_set_data(tbl, "save_presets_index", GINT_TO_POINTER(ii));
+    }
+
+    update_presets_list (tbl);
+}
+
+static void sp_dcc_save_profile (GtkWidget */*widget*/, GObject *tbl)
+{
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop" );
     if (! desktop) return;
 
-    if (g_object_get_data(dataKludge, "presets_blocked")) 
+    if (g_object_get_data(tbl, "presets_blocked")) 
         return;
 
     Inkscape::UI::Dialogs::CalligraphicProfileDialog::show(desktop);
-    if ( ! Inkscape::UI::Dialogs::CalligraphicProfileDialog::applied()) return;
+    if ( ! Inkscape::UI::Dialogs::CalligraphicProfileDialog::applied()) {
+        // dialog cancelled
+        update_presets_list (tbl);
+        return;
+    }
     Glib::ustring profile_name = Inkscape::UI::Dialogs::CalligraphicProfileDialog::getProfileName();
 
-    unsigned int new_index = pref_path_number_of_children("tools.calligraphic.preset") +1;
-    gchar *profile_id = g_strdup_printf("dcc%d", new_index);
-    gchar *pref_path = create_pref("tools.calligraphic.preset",profile_id);
-
-    for (unsigned i = 0; i < PROFILE_FLOAT_SIZE; ++i) {
-        ProfileFloatElement const &pe = f_profile[i];
-        double v = prefs_get_double_attribute_limited("tools.calligraphic",pe.name, pe.def, pe.min, pe.max);
-        prefs_set_double_attribute(pref_path,pe.name,v);
+    if (!profile_name.c_str() || *profile_name.c_str() == 0) {
+        // empty name entered
+        update_presets_list (tbl);
+        return;
     }
-    for (unsigned i = 0; i < PROFILE_INT_SIZE; ++i) {
-        ProfileIntElement const &pe = i_profile[i];
-        int v = prefs_get_int_attribute_limited("tools.calligraphic",pe.name, pe.def,pe.min, pe.max);
-        prefs_set_int_attribute(pref_path,pe.name,v);
+
+    int new_index = -1;
+    gchar *pref_path = NULL;
+    int total_prefs = pref_path_number_of_children("tools.calligraphic.preset");
+
+    for (int i = 1; i <= total_prefs; i++) {
+        gchar *path = get_pref_nth_child("tools.calligraphic.preset", i);
+        const gchar *name = prefs_get_string_attribute(path, "name");
+        if (name && !strcmp(name, profile_name.c_str())) {
+            // we already have preset with this name, replace its values
+            new_index = i;
+            pref_path = g_strdup(path);
+            break;
+        }
     }
-    prefs_set_string_attribute(pref_path,"name",profile_name.c_str());
 
-    EgeSelectOneAction* selector = static_cast<EgeSelectOneAction *>(g_object_get_data(dataKludge, "profile_selector"));
-    GtkListStore* model = GTK_LIST_STORE(ege_select_one_action_get_model(selector));
-    GtkTreeIter iter;
-    gtk_list_store_append( model, &iter );
-    gtk_list_store_set( model, &iter, 0, profile_name.c_str(), 1, new_index, -1 );
+    if (new_index == -1) {
+        // no preset with this name, create 
+        new_index = total_prefs + 1;
+        gchar *profile_id = g_strdup_printf("dcc%d", new_index);
+        pref_path = create_pref("tools.calligraphic.preset", profile_id);
+        free(profile_id);
+    }
 
-    free(profile_id);
-    free(pref_path);
+    for (unsigned i = 0; i < NUMBER_OF_PRESET_PARAMS; ++i) {
+        gchar *widget_name = widget_names[i];
+        void *widget = g_object_get_data(tbl, widget_name);
+        if (widget) {
+            if (GTK_IS_ADJUSTMENT(widget)) {
+                GtkAdjustment* adj = static_cast<GtkAdjustment *>(widget);
+                double v = gtk_adjustment_get_value(adj);
+                prefs_set_double_attribute(pref_path, widget_name, v);
+                //std::cout << "wrote adj " << widget_name << ": " << v << "\n";
+            } else if (GTK_IS_TOGGLE_ACTION(widget)) {
+                GtkToggleAction* toggle = static_cast<GtkToggleAction *>(widget);
+                int v = gtk_toggle_action_get_active(toggle);
+                prefs_set_int_attribute(pref_path, widget_name, v);
+                //std::cout << "wrote tog " << widget_name << ": " << v << "\n";
+            } else {
+               g_warning("Unknown widget type for preset: %s\n", widget_name);
+            }
+        } else {
+            g_warning("Bad key when writing preset: %s\n", widget_name);
+        }
+    }
+    prefs_set_string_attribute(pref_path, "name", profile_name.c_str());
 
-    ege_select_one_action_set_active(selector, new_index);
+    sp_dcc_build_presets_list (tbl);
+
+    free (pref_path);
 }
 
 
 static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl) {
 
     gint preset_index = ege_select_one_action_get_active( act );
+    gint save_presets_index = GPOINTER_TO_INT(g_object_get_data(tbl, "save_presets_index"));
+
+    if (preset_index == save_presets_index) {
+        // this is the Save command
+        sp_dcc_save_profile(NULL, tbl);
+        return;
+    }
+
     gchar *preset_path = get_pref_nth_child("tools.calligraphic.preset", preset_index);
 
     if (preset_path) {
@@ -3993,7 +4049,7 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl) {
                     g_warning("Unknown widget type for preset: %s\n", attr_name);
                 }
             } else {
-                g_warning("Bad key found in preset: %s\n", attr_name);
+                g_warning("Bad key found in a preset record: %s\n", attr_name);
             }
         }
         free(preset_path);
@@ -4187,47 +4243,15 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
 
         /*calligraphic profile */
         {
-            GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_INT );
-            gchar *pref_path;
+            GtkListStore* model = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+            EgeSelectOneAction* act1 = ege_select_one_action_new ("SetProfileAction", "" , (_("Change calligraphic profile")), NULL, GTK_TREE_MODEL(model));
+            ege_select_one_action_set_appearance (act1, "compact");
+            g_object_set_data (holder, "profile_selector", act1 );
 
+            sp_dcc_build_presets_list (holder);
 
-            GtkTreeIter iter;
-            gtk_list_store_append( model, &iter );
-            gtk_list_store_set( model, &iter, 0, _("No preset"), 1, 0, -1 );
-
-            //TODO: switch back to prefs API
-            Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE, "tools.calligraphic.preset" );
-            Inkscape::XML::Node *child_repr = sp_repr_children(repr);
-            int ii=1;
-            while (child_repr) {
-                GtkTreeIter iter;
-                char *preset_name = (char *) child_repr->attribute("name");
-                gtk_list_store_append( model, &iter );
-                gtk_list_store_set( model, &iter, 0, preset_name, 1, ++ii, -1 );
-                child_repr = sp_repr_next(child_repr);
-            }
-
-            pref_path = NULL;
-            EgeSelectOneAction* act1 = ege_select_one_action_new( "SetProfileAction", "" , (_("Change calligraphic profile")), NULL, GTK_TREE_MODEL(model) );
-            ege_select_one_action_set_appearance( act1, "compact" );
-            g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK(sp_ddc_change_profile), holder );
-            gtk_action_group_add_action( mainActions, GTK_ACTION(act1) );
-            g_object_set_data( holder, "profile_selector", act1 );
-
-        }
-
-        /*Save or delete calligraphic profile */
-        {
-            GtkAction* act = gtk_action_new( "SaveDeleteProfileAction",
-                                             _("Defaults"),
-                                             _("Save current settings as new profile"),
-                                             GTK_STOCK_SAVE );
-            g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(sp_dcc_save_profile), holder );
-
-
-            gtk_action_group_add_action( mainActions, act );
-            gtk_action_set_sensitive( act, TRUE );
-            g_object_set_data( holder, "profile_save_delete", act );
+            g_signal_connect(G_OBJECT(act1), "changed", G_CALLBACK(sp_ddc_change_profile), holder);
+            gtk_action_group_add_action(mainActions, GTK_ACTION(act1));
         }
     }
 }
@@ -4796,18 +4820,24 @@ sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *
     gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));
 
     // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
-    if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING || result_numbers == QUERY_STYLE_NOTHING)
-    {
+    if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING || result_numbers == QUERY_STYLE_NOTHING) {
+        // there are no texts in selection, read from prefs
+ 
         Inkscape::XML::Node *repr = inkscape_get_repr (INKSCAPE, "tools.text");
-
-        if (repr)
-        {
+        if (repr) {
             sp_style_read_from_repr (query, repr);
-        }
-        else
-        {
+            if (g_object_get_data(tbl, "text_style_from_prefs")) {
+                // do not reset the toolbar style from prefs if we already did it last time
+                sp_style_unref(query);
+                return;
+            }
+            g_object_set_data(tbl, "text_style_from_prefs", GINT_TO_POINTER(TRUE));
+        } else {
+            sp_style_unref(query);
             return;
         }
+    } else {
+        g_object_set_data(tbl, "text_style_from_prefs", GINT_TO_POINTER(FALSE));
     }
 
     if (query->text)
@@ -4837,6 +4867,7 @@ sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *
                 path = Inkscape::FontLister::get_instance()->get_row_for_font (familyName);
             } catch (...) {
                 g_warning("Family name %s does not have an entry in the font lister.", familyName.c_str());
+                sp_style_unref(query);
                 return;
             }
 
@@ -6043,7 +6074,7 @@ static void paintbucket_offset_changed(GtkAdjustment *adj, GObject *tbl)
     prefs_set_string_attribute("tools.paintbucket", "offsetunits", sp_unit_get_abbreviation(unit));
 }
 
-static void paintbucket_defaults(GtkWidget *, GObject *dataKludge)
+static void paintbucket_defaults (GtkWidget *, GObject *tbl)
 {
     // FIXME: make defaults settable via Inkscape Options
     struct KeyValue {
@@ -6056,15 +6087,15 @@ static void paintbucket_defaults(GtkWidget *, GObject *dataKludge)
 
     for (unsigned i = 0; i < G_N_ELEMENTS(key_values); ++i) {
         KeyValue const &kv = key_values[i];
-        GtkAdjustment* adj = static_cast<GtkAdjustment *>(g_object_get_data(dataKludge, kv.key));
+        GtkAdjustment* adj = static_cast<GtkAdjustment *>(g_object_get_data(tbl, kv.key));
         if ( adj ) {
             gtk_adjustment_set_value(adj, kv.value);
         }
     }
 
-    EgeSelectOneAction* channels_action = EGE_SELECT_ONE_ACTION( g_object_get_data( dataKludge, "channels_action" ) );
+    EgeSelectOneAction* channels_action = EGE_SELECT_ONE_ACTION( g_object_get_data (tbl, "channels_action" ) );
     ege_select_one_action_set_active( channels_action, FLOOD_CHANNELS_RGB );
-    EgeSelectOneAction* autogap_action = EGE_SELECT_ONE_ACTION( g_object_get_data( dataKludge, "autogap_action" ) );
+    EgeSelectOneAction* autogap_action = EGE_SELECT_ONE_ACTION( g_object_get_data (tbl, "autogap_action" ) );
     ege_select_one_action_set_active( autogap_action, 0 );
 }
 
