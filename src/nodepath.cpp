@@ -3702,7 +3702,7 @@ static void node_handle_ungrabbed(SPKnot *knot, guint state, gpointer data)
 /**
  * Node handle "request" signal callback.
  */
-static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint /*state*/, gpointer data)
+static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint state, gpointer data)
 {
     Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
@@ -3725,7 +3725,13 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint /*state*/,
     SPDesktop *desktop = n->subpath->nodepath->desktop;
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, n->subpath->nodepath->item);
-    Inkscape::SnappedPoint s ;
+    Inkscape::SnappedPoint s;
+    
+    if ((state & GDK_SHIFT_MASK) != 0) {
+    	// We will not try to snap when the shift-key is pressed
+    	// so remove the old snap indicator and don't wait for it to time-out  
+    	desktop->snapindicator->remove_snappoint();   	
+    }
 
     Inkscape::NodePath::Node *othernode = opposite->other;
     if (othernode) {
@@ -3740,12 +3746,18 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint /*state*/,
                 NR::Coord const scal = dot(delta, ndelta) / linelen;
                 (*p) = n->pos + (scal / linelen) * ndelta;
             }
-            s = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, Inkscape::Snapper::ConstraintLine(*p, ndelta));
+            if ((state & GDK_SHIFT_MASK) == 0) {
+            	s = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, Inkscape::Snapper::ConstraintLine(*p, ndelta));
+            }
         } else {
-            s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p);
+        	if ((state & GDK_SHIFT_MASK) == 0) {
+        		s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p);
+        	}
         }
     } else {
-        s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p);
+    	if ((state & GDK_SHIFT_MASK) == 0) {
+    		s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p);
+    	}
     }
     
     s.getPoint(*p);
