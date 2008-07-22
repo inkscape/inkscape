@@ -3297,15 +3297,15 @@ static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, bo
             GtkTreeIter iter;
             gtk_list_store_append( model, &iter );
             gtk_list_store_set( model, &iter,
-                                0, _("Bézier"),
-                                1, _("Regular Bézier mode"),
+                                0, _("Bezier"),
+                                1, _("Create regular Bezier path"),
                                 2, "bezier_mode",
                                 -1 );
 
             gtk_list_store_append( model, &iter );
             gtk_list_store_set( model, &iter,
                                 0, _("Spiro"),
-                                1, _("Spiro splines mode"),
+                                1, _("Create Spiro path"),
                                 2, "spiro_splines_mode",
                                 -1 );
 
@@ -3340,9 +3340,10 @@ GList * freehand_shape_dropdown_items_list() {
     GList *glist = NULL;
 
     glist = g_list_append (glist, _("None"));
-    glist = g_list_append (glist, _("Clipboard"));
-    glist = g_list_append (glist, _("Crescendo"));
-    glist = g_list_append (glist, _("Decrescendo"));
+    glist = g_list_append (glist, _("Triangle in"));
+    glist = g_list_append (glist, _("Triangle out"));
+    glist = g_list_append (glist, _("Ellipse"));
+    glist = g_list_append (glist, _("From clipboard"));
 
     return glist;
 }

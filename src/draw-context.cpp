@@ -287,29 +287,36 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
         SPCSSAttr *css_item = sp_css_attr_from_object (SP_OBJECT(item), SP_STYLE_FLAG_ALWAYS);
         const char *cstroke = sp_repr_css_property(css_item, "stroke", "none");
 
+#define SHAPE_LENGTH 100
+#define SHAPE_HEIGHT 10
+
         switch (shape) {
             case 0:
                 // don't apply any shape
                 break;
             case 1:
             {
-                // take shape from clipboard; TODO: catch the case where clipboard is empty
-                Effect::createAndApply(FREEHAND_SHAPE, dc->desktop->doc(), item);
-                Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
-                static_cast<LPEPatternAlongPath*>(lpe)->pattern.on_paste_button_click();
+                // "triangle in"
+                // TODO: this is only for illustration (we create a "decrescendo"-shaped path
+                //       manually; eventually we should read the path from a separate file)
+                SPCurve *c = new SPCurve();
+                c->moveto(0,0);
+                c->lineto(0, SHAPE_HEIGHT);
+                c->lineto(SHAPE_LENGTH, SHAPE_HEIGHT/2);
+                c->closepath();
+                spdc_paste_curve_as_freehand_shape(c, dc, item);
+                c->unref();
 
                 shape_applied = true;
                 break;
             }
             case 2:
             {
-                // "crescendo"
-                // TODO: this is only for illustration (we create a "crescendo"-shaped path
-                //       manually; eventually we should read the path from a separate file)
+                // "triangle out"
                 SPCurve *c = new SPCurve();
-                c->moveto(0,5);
-                c->lineto(200,10);
-                c->lineto(200,0);
+                c->moveto(0, SHAPE_HEIGHT/2);
+                c->lineto(SHAPE_LENGTH, SHAPE_HEIGHT);
+                c->lineto(SHAPE_LENGTH, 0);
                 c->closepath();
                 spdc_paste_curve_as_freehand_shape(c, dc, item);
                 c->unref();
@@ -319,16 +326,26 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
             }
             case 3:
             {
-                // "decrescendo"
-                // TODO: this is only for illustration (we create a "decrescendo"-shaped path
-                //       manually; eventually we should read the path from a separate file)
+                // "ellipse"
                 SPCurve *c = new SPCurve();
-                c->moveto(0,0);
-                c->lineto(0,10);
-                c->lineto(200,5);
+                const double C1 = 0.552;
+                c->moveto(0, SHAPE_HEIGHT/2);
+                c->curveto(0, (1 - C1) * SHAPE_HEIGHT/2, (1 - C1) * SHAPE_LENGTH/2, 0, SHAPE_LENGTH/2, 0);
+                c->curveto((1 + C1) * SHAPE_LENGTH/2, 0, SHAPE_LENGTH, (1 - C1) * SHAPE_HEIGHT/2, SHAPE_LENGTH, SHAPE_HEIGHT/2);
+                c->curveto(SHAPE_LENGTH, (1 + C1) * SHAPE_HEIGHT/2, (1 + C1) * SHAPE_LENGTH/2, SHAPE_HEIGHT, SHAPE_LENGTH/2, SHAPE_HEIGHT);
+                c->curveto((1 - C1) * SHAPE_LENGTH/2, SHAPE_HEIGHT, 0, (1 + C1) * SHAPE_HEIGHT/2, 0, SHAPE_HEIGHT/2);
                 c->closepath();
                 spdc_paste_curve_as_freehand_shape(c, dc, item);
                 c->unref();
+                shape_applied = true;
+                break;
+            }
+            case 4:
+            {
+                // take shape from clipboard; TODO: catch the case where clipboard is empty
+                Effect::createAndApply(FREEHAND_SHAPE, dc->desktop->doc(), item);
+                Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+                static_cast<LPEPatternAlongPath*>(lpe)->pattern.on_paste_button_click();
 
                 shape_applied = true;
                 break;
