@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-07-17 18:19+0700\n"
+"PO-Revision-Date: 2008-07-21 16:41+0700\n"
 "Last-Translator: Eng Vannak <evannak@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -5977,7 +5977,7 @@ msgstr "លំនាំ​បញ្ឈរ​​"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
 msgid "Rotate pattern 90 deg before applying"
-msgstr ""
+msgstr "ត្រឡប់​លំនាំ 90 ដឺក្រេ មុន​ពេល​អនុវត្ត"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:156
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:65
@@ -6186,7 +6186,7 @@ msgstr "ទីតាំង​តាម​ខ្សែ​កោង"
 msgid ""
 "Location of the point of attachment along the curve (between 0.0 and number-"
 "of-segments)"
-msgstr ""
+msgstr "ទីតាំង​ចំណុច​នៃ​ការ​ភ្ជាប់​ជាមួយ​ខ្សែ​កោង (ចន្លោះ ០.០ និង​ចំនួន​ភាគ)"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:65
 msgid "Specifies the left end of the tangent"
@@ -6281,7 +6281,7 @@ msgstr "ផ្លាស់ប្ដូរ​ប៉ារ៉ាម៉ែត្រ
 #: ../src/live_effects/parameter/path.cpp:157
 #: ../src/live_effects/parameter/point.cpp:110
 msgid "Edit on-canvas"
-msgstr "កែសម្រួល​លើ​ផ្ទាំង​ក្រណាត់"
+msgstr "កែ​សម្រួល​លើ​ផ្ទាំង​ក្រណាត់"
 
 #: ../src/live_effects/parameter/path.cpp:167
 msgid "Copy path"
@@ -11547,18 +11547,17 @@ msgstr "រក្សា​ទុក​ឯកសារ​បច្ចុប្ប
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:993
 msgid "Interval (in minutes):"
-msgstr ""
+msgstr "ចន្លោះ​ពេល (គិត​ជា​នាទី) ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:993
 msgid ""
 "Sets the interval (in minutes) at which a workspace will be automatically "
 "saved to disk"
-msgstr ""
+msgstr "កំណត់​ចន្លោះ​ពេល (គិត​ជា​នាទី) ដែល​ទំហំ​ការងារ​នឹង​ត្រូវ​បាន​រក្សា​ទុក​ទៅ​ថាស"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:995
-#, fuzzy
 msgid "Path:"
-msgstr "ផ្លូវ"
+msgstr "ផ្លូវ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:995
 msgid "Sets the directory where autosaves will be written"
@@ -11618,7 +11617,7 @@ msgstr "បញ្ជី​បែបផែន"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:239
 msgid "Unknown effect is applied"
-msgstr "បែបផែន​ដែល​មិនស្គាល់​ត្រូវ​បាន​អនុវត្ត"
+msgstr "បែបផែន​ដែល​មិន​ស្គាល់​ត្រូវ​បាន​អនុវត្ត"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:242
 msgid "No effect applied"
@@ -13017,12 +13016,12 @@ msgstr "ទទឹង​ខ្វាច់"
 #: ../src/ui/widget/selected-style.cpp:1392
 #, c-format
 msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
-msgstr ""
+msgstr "លៃ​តម្រូវ <b>ទទឹង​ខ្វាច់</b> ៖ ពី​មុន %.3g ឥឡូវ <b>%.3g</b> (diff %.3g)"
 
 #. TRANSLATORS: Only translate the word "Link" - means to _link_ two sliders together
 #: ../src/ui/widget/spin-slider.cpp:118
 msgid "sliders|Link"
-msgstr ""
+msgstr "គ្រាប់​រំកិល|តំណ"
 
 #: ../src/ui/widget/style-swatch.cpp:301
 msgid "L Gradient"
@@ -13098,7 +13097,7 @@ msgid "shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(
 msgid_plural ""
 "shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box"
 "(es)"
-msgstr[0] "បាន​ចែករំលែកប្រអប់ <b>%d</b> អូស​ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​បំបែក​ប្រអប់​ដែល​បាន​ជ្រើស"
+msgstr[0] "បាន​ចែក​រំលែក​ប្រអប់ <b>%d</b> អូស​ដោយ​ប្រើ <b>ប្ដូរ (Shift)</b> ដើម្បី​បំបែក​ប្រអប់​ដែល​បាន​ជ្រើស"
 
 #: ../src/verbs.cpp:1134
 msgid "Switch to next layer"
@@ -13270,11 +13269,11 @@ msgstr "រក្សាទុក​ឯកសារ​ដោយ​ដាក់​
 
 #: ../src/verbs.cpp:2169
 msgid "Save a Cop_y..."
-msgstr "រក្សាទុក​​ច្បាប់​ចម្លង..."
+msgstr "រក្សា​ទុក​​ច្បាប់​ចម្លង..."
 
 #: ../src/verbs.cpp:2170
 msgid "Save a copy of the document under a new name"
-msgstr "រក្សាទុក​ច្បាប់​ចម្លង​ឯកសារ​ដោយដាក់​ឈ្មោះ​ថ្មី​មួយ"
+msgstr "រក្សាទុក​ច្បាប់​ចម្លង​ឯកសារ​ដោយ​ដាក់​ឈ្មោះ​ថ្មី​មួយ"
 
 #: ../src/verbs.cpp:2171
 msgid "_Print..."
@@ -13293,7 +13292,7 @@ msgstr "Vacuum Defs"
 msgid ""
 "Remove unused definitions (such as gradients or clipping paths) from the &lt;"
 "defs&gt; of the document"
-msgstr "យក​ការកំណត់​ដែល​មិនប្រើ​ចេញ (ដូចជា ជម្រាល ឬ​ផ្លូវ​ច្រឹប) ពី &lt;defs&gt; នៃ​ឯកសារ"
+msgstr "យក​ការ​កំណត់​ដែល​មិន​ប្រើ​ចេញ (ដូចជា ជម្រាល ឬ​ផ្លូវ​ច្រឹប) ពី &lt;defs&gt; នៃ​ឯកសារ"
 
 #: ../src/verbs.cpp:2176
 msgid "Print Previe_w"
@@ -13301,11 +13300,11 @@ msgstr "មើល​មុន​បោះពុម្ព"
 
 #: ../src/verbs.cpp:2177
 msgid "Preview document printout"
-msgstr "មើល​សន្លឹក​បោះពុម្ព​ឯកសារ​ជា​មុន​"
+msgstr "មើល​សន្លឹក​បោះពុម្ព​ឯកសារ​ជាមុន​"
 
 #: ../src/verbs.cpp:2178
 msgid "_Import..."
-msgstr "នាំចូល​..."
+msgstr "នាំចូល..."
 
 #: ../src/verbs.cpp:2179
 msgid "Import a bitmap or SVG image into this document"
@@ -13633,7 +13632,7 @@ msgstr "មិន​ជ្រើស​វត្ថុ ឬថ្នាំង​�
 
 #: ../src/verbs.cpp:2263
 msgid "_Guides around page"
-msgstr ""
+msgstr "មគ្គុទ្ទេសក៏​ជុំវិញ​ទំព័រ"
 
 #: ../src/verbs.cpp:2264
 msgid "Create four guides aligned with the page borders"
@@ -13645,7 +13644,7 @@ msgstr "ប៉ារ៉ាម៉ែត្រ​បែបផែន​ផ្លូ
 
 #: ../src/verbs.cpp:2266
 msgid "Show next Path Effect parameter for editing"
-msgstr "បង្ហាញ​ប៉ារ៉ាម៉ែត្រ​បែបផែន​ផ្លូវ​បន្ទាប់​សម្រាប់កែសម្រួល"
+msgstr "បង្ហាញ​ប៉ារ៉ាម៉ែត្រ​បែបផែន​ផ្លូវ​បន្ទាប់​សម្រាប់​កែ​សម្រួល"
 
 #. Selection
 #: ../src/verbs.cpp:2269
@@ -13702,13 +13701,13 @@ msgstr "យកចេញ​ពី​ផ្លូវ"
 
 #: ../src/verbs.cpp:2286
 msgid "Remove Manual _Kerns"
-msgstr "យក​ការ​សម្រួល​​ចន្លោះ​តួអក្សរ​ចេញ​ដោយដៃ​"
+msgstr "យក​ការ​សម្រួល​​ចន្លោះ​តួ​អក្សរ​ចេញ​ដោយ​ដៃ​"
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
 #: ../src/verbs.cpp:2289
 msgid "Remove all manual kerns and glyph rotations from a text object"
-msgstr "យក​ការ​សម្រួល​ចន្លោះ​តួអក្សរ​ និង​ការ​បង្វិល​ចម្លាក់ខូង​ចេញ​ដោយ​ដៃ​ពី​វត្ថុ​អត្ថបទ"
+msgstr "យក​ការ​សម្រួល​ចន្លោះ​តួអក្សរ​ និង​ការ​បង្វិល​ចម្លាក់​ខូង​ចេញ​ដោយ​ដៃ​ពី​វត្ថុ​អត្ថបទ"
 
 #: ../src/verbs.cpp:2291
 msgid "_Union"
@@ -18050,14 +18049,12 @@ msgid "Model File"
 msgstr "ឯកសារ​ទាំងអស់"
 
 #: ../share/extensions/polyhedron_3d.inx.h:29
-#, fuzzy
 msgid "Object Type"
-msgstr "វត្ថុ"
+msgstr "ប្រភេទ​វត្ថុ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:30
-#, fuzzy
 msgid "Object:"
-msgstr "វត្ថុ"
+msgstr "វត្ថុ ៖"
 
 #: ../share/extensions/polyhedron_3d.inx.h:31
 #, fuzzy
@@ -18065,29 +18062,24 @@ msgid "Octahedron"
 msgstr "ផ្សេងៗ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
-#, fuzzy
 msgid "Report Normal Vector Information"
-msgstr "ព័ត៌មាន​អំពី​ប្រើ​​សតិ​"
+msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
-#, fuzzy
 msgid "Rotate Around:"
-msgstr "បង្វិល​ថ្នាំង​"
+msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:35
-#, fuzzy
 msgid "Rotation / Degrees"
-msgstr "បង្វិល (deg)"
+msgstr "បង្វិល / ដឺក្រេ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:36
-#, fuzzy
 msgid "Scaling Factor"
-msgstr "កត្តា​ទ្រេត"
+msgstr "កត្តា​ធ្វើ​មាត្រដ្ឋាន"
 
 #: ../share/extensions/polyhedron_3d.inx.h:37
-#, fuzzy
 msgid "Shading"
-msgstr "ការ​ដាក់​ចន្លោះ"
+msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Small Triambic Icosahedron"
@@ -18102,18 +18094,17 @@ msgid "Snub Dodecahedron"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:43
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Stroke Opacity/ %"
-msgstr "កា​រគូរខ្វាច់​"
+msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Tetrahedron"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
-#, fuzzy
 msgid "Then Rotate Around:"
-msgstr "មិន​បាន​ធ្វើ​ឲ្យ​មូល​"
+msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Cube"
@@ -18136,22 +18127,20 @@ msgid "Truncated Tetrahedron"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:52
-#, fuzzy
 msgid "Vertices"
-msgstr "បញ្ឈរ​"
+msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:53
-#, fuzzy
 msgid "View"
 msgstr "មើល"
 
 #: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "X-Axis"
-msgstr ""
+msgstr "អ័ក្ស X"
 
 #: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Y-Axis"
-msgstr ""
+msgstr "អ័ក្ស Y"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Axis"
@@ -18178,14 +18167,12 @@ msgid "Jitter nodes"
 msgstr "ថ្នាំង​មិនល្អ​"
 
 #: ../share/extensions/radiusrand.inx.h:2
-#, fuzzy
 msgid "Maximum displacement in X, px"
-msgstr "ផ្លាស់ប្ដូរ​អតិបរមា ភីកសែល"
+msgstr ""
 
 #: ../share/extensions/radiusrand.inx.h:3
-#, fuzzy
 msgid "Maximum displacement in Y, px"
-msgstr "ផ្លាស់ប្ដូរ​អតិបរមា ភីកសែល"
+msgstr ""
 
 #: ../share/extensions/radiusrand.inx.h:5
 msgid "Shift node handles"
@@ -18242,64 +18229,55 @@ msgstr "បាត"
 
 #: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
-msgstr ""
+msgstr "បាត​ទៅ​កំពូល (៩០)"
 
 #: ../share/extensions/restack.inx.h:6
-#, fuzzy
 msgid "Horizontal Point:"
-msgstr "អត្ថបទ​​ផ្តេក​"
+msgstr "ចំណុច​ផ្ដេក ៖"
 
 #: ../share/extensions/restack.inx.h:7
-#, fuzzy
 msgid "Left"
-msgstr "ft"
+msgstr "ឆ្វេង"
 
 #: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
-msgstr ""
+msgstr "ឆ្វេង​ទៅ​ស្ដាំ (០)"
 
 #: ../share/extensions/restack.inx.h:9
-#, fuzzy
 msgid "Middle"
-msgstr "ក្រឡា​ក្បឿង"
+msgstr "កណ្ដាល"
 
 #: ../share/extensions/restack.inx.h:10
-#, fuzzy
 msgid "Radial Inward"
-msgstr "ជម្រាល​មូល​"
+msgstr ""
 
 #: ../share/extensions/restack.inx.h:11
-#, fuzzy
 msgid "Radial Outward"
-msgstr "ជម្រាល​មូល​"
+msgstr ""
 
 #: ../share/extensions/restack.inx.h:12
-#, fuzzy
 msgid "Restack"
-msgstr "កំណត់​ឡើង​វិញ​"
+msgstr ""
 
 #: ../share/extensions/restack.inx.h:13
 msgid "Restack Direction:"
 msgstr ""
 
 #: ../share/extensions/restack.inx.h:14
-#, fuzzy
 msgid "Right"
-msgstr "សិទ្ធិ"
+msgstr "ស្ដាំ"
 
 #: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
-msgstr ""
+msgstr "ពី​ស្ដាំ​ទៅ​ឆ្វេង (១៨០)"
 
 #: ../share/extensions/restack.inx.h:17
-#, fuzzy
 msgid "Top to Bottom (270)"
-msgstr "បន្ទាប​ទៅ​បាត​"
+msgstr "ពី​កំពូល​ទៅ​បាត (២៧០)"
 
 #: ../share/extensions/restack.inx.h:18
-#, fuzzy
 msgid "Vertical Point:"
-msgstr "អត្ថបទ​​បញ្ឈរ​"
+msgstr "ចំណុច​​បញ្ឈរ​ ៖"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -18328,17 +18306,16 @@ msgid "Strength (%):"
 msgstr "រឹងប៉ឹង (%) ៖"
 
 #: ../share/extensions/sk1_input.inx.h:1
-#, fuzzy
 msgid "Open files saved in sK1 vector graphics editor"
-msgstr "កម្មវិធី​កែសម្រួល​ក្រាហ្វិក​វ៉ិចទ័រ Inkscape"
+msgstr "បើក​ឯកសារ​ដែល​រក្សា​ទុក​ក្នុង​កម្មវិធី​និពន្ធ​ក្រាហ្វិក​វ៉ិចទ័រ sK1"
 
 #: ../share/extensions/sk1_input.inx.h:2
 msgid "sK1 vector graphics files (.sk1)"
-msgstr ""
+msgstr "ឯកសារ​ក្រាហ្វិក​វ៉ិចទ័រ sK1 (.sk1)"
 
 #: ../share/extensions/sk1_input.inx.h:3
 msgid "sK1 vector graphics files input"
-msgstr ""
+msgstr "ព័ត៌មាន​បញ្ចូល​ឯកសារ​ក្រាហ្វិក​វ៉ិចទ័រ sK1"
 
 #: ../share/extensions/sk_input.inx.h:1
 msgid "A diagram created with the program Sketch"
@@ -18444,9 +18421,8 @@ msgid "rANdOm CasE"
 msgstr "rANdOm CasE"
 
 #: ../share/extensions/text_replace.inx.h:1
-#, fuzzy
 msgid "By:"
-msgstr "Ry ៖"
+msgstr "ដោយ ៖"
 
 #: ../share/extensions/text_replace.inx.h:2
 #, fuzzy
@@ -18471,39 +18447,36 @@ msgid "UPPERCASE"
 msgstr "អក្សរ​ធំ"
 
 #: ../share/extensions/triangle.inx.h:1
-#, fuzzy
 msgid "Angle a / deg"
-msgstr "មុំ (ដឺក្រេ) ៖"
+msgstr "មុំ a / ដឺក្រេ ៖"
 
 #: ../share/extensions/triangle.inx.h:2
-#, fuzzy
 msgid "Angle b / deg"
-msgstr "មុំ (ដឺក្រេ) ៖"
+msgstr "មុំ b / ដឺក្រេ"
 
 #: ../share/extensions/triangle.inx.h:3
-#, fuzzy
 msgid "Angle c / deg"
-msgstr "មុំ (ដឺក្រេ) ៖"
+msgstr "មុំ c / ដឺក្រេ"
 
 #: ../share/extensions/triangle.inx.h:4
 msgid "From Side a and Angles a, b"
-msgstr ""
+msgstr "ពី​ជ្រុង a និង​មុំ a b"
 
 #: ../share/extensions/triangle.inx.h:5
 msgid "From Side c and Angles a, b"
-msgstr ""
+msgstr "ពី​ជ្រុង c និង​មុំ a b"
 
 #: ../share/extensions/triangle.inx.h:6
 msgid "From Sides a, b and Angle a"
-msgstr ""
+msgstr "ពី​ជ្រុង a b និង​មុំ a"
 
 #: ../share/extensions/triangle.inx.h:7
 msgid "From Sides a, b and Angle c"
-msgstr ""
+msgstr "ពី​ជ្រុង a b និង​មុំ c"
 
 #: ../share/extensions/triangle.inx.h:8
 msgid "From Three Sides"
-msgstr ""
+msgstr "ពី​ជ្រុង​ទាំងបី"
 
 #: ../share/extensions/triangle.inx.h:11
 #, fuzzy
