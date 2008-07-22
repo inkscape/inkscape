@@ -80,6 +80,7 @@
 #include "sp-clippath.h"
 #include "sp-mask.h"
 #include "style.h"
+#include "tools-switch.h"
 #include "selection.h"
 #include "selection-chemistry.h"
 #include "document-private.h"
@@ -3267,9 +3268,18 @@ static void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
 //##     Pen/Pencil    ##
 //########################
 
-static void sp_pc_spiro_spline_mode_changed(EgeSelectOneAction* act, GObject* /*tbl*/)
+static char const *
+freehand_tool_name(GObject *dataKludge)
 {
-    prefs_set_int_attribute("tools.freehand", "spiro-spline-mode", ege_select_one_action_get_active(act));
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data(dataKludge, "desktop");
+    return ( tools_isactive(desktop, TOOLS_FREEHAND_PENCIL)
+             ? "tools.freehand.pencil"
+             : "tools.freehand.pen" );
+}
+
+static void sp_pc_spiro_spline_mode_changed(EgeSelectOneAction* act, GObject* tbl)
+{
+    prefs_set_int_attribute(freehand_tool_name(tbl), "spiro-spline-mode", ege_select_one_action_get_active(act));
 }
 
 static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, bool tool_is_pencil)
@@ -3278,7 +3288,7 @@ static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, bo
     {
         //gchar const *flatsidedstr = prefs_get_string_attribute( "tools.shapes.star", "isflatsided" );
         //bool isSpiroMode = flatsidedstr ? (strcmp(flatsidedstr, "false") != 0) : true;
-        guint spiroMode = prefs_get_int_attribute("tools.freehand", "spiro-spline-mode", 0);
+        guint spiroMode = prefs_get_int_attribute(freehand_tool_name(holder), "spiro-spline-mode", 0);
         Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
 
         {

@@ -247,6 +247,14 @@ sp_draw_context_root_handler(SPEventContext *ec, GdkEvent *event)
     return ret;
 }
 
+static char const *
+tool_name(SPDrawContext *dc)
+{
+    return ( SP_IS_PEN_CONTEXT(dc)
+             ? "tools.freehand.pen"
+             : "tools.freehand.pencil" );
+}
+
 static void
 spdc_paste_curve_as_freehand_shape(const SPCurve *c, SPDrawContext *dc, SPItem *item)
 {
@@ -270,7 +278,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
     using namespace Inkscape::LivePathEffect;
 
     if (item && SP_IS_LPE_ITEM(item)) {
-        if (prefs_get_int_attribute("tools.freehand", "spiro-spline-mode", 0)) {
+        if (prefs_get_int_attribute(tool_name(dc), "spiro-spline-mode", 0)) {
             Effect::createAndApply(SPIRO, dc->desktop->doc(), item);
         }
 
@@ -570,14 +578,6 @@ spdc_concat_colors_and_flush(SPDrawContext *dc, gboolean forceclosed)
     spdc_flush_white(dc, c);
 
     c->unref();
-}
-
-static char const *
-tool_name(SPDrawContext *dc)
-{
-    return ( SP_IS_PEN_CONTEXT(dc)
-             ? "tools.freehand.pen"
-             : "tools.freehand.pencil" );
 }
 
 /*
