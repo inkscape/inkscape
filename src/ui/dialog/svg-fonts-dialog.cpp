@@ -16,6 +16,7 @@
 #ifdef ENABLE_SVG_FONTS
 
 #include "svg-fonts-dialog.h"
+#include <glibmm/i18n.h>
 #include <string.h>
 
 SvgFontDrawingArea::SvgFontDrawingArea(){
