@@ -23,10 +23,12 @@ namespace LivePathEffect {
 LPERuler::LPERuler(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     mark_distance(_("Mark distance"), _("Distance between ruler marks"), "mark_distance", &wr, this, 50),
-    mark_length(_("Mark length"), _("Length of ruler marks"), "mark_length", &wr, this, 10)
+    mark_length(_("Mark length"), _("Length of ruler marks"), "mark_length", &wr, this, 10),
+    scale(_("Scale"), _("Scale factor for ruler distance"), "scale", &wr, this, 1.0)
 {
     registerParameter(dynamic_cast<Parameter *>(&mark_distance));
     registerParameter(dynamic_cast<Parameter *>(&mark_length));
+    registerParameter(dynamic_cast<Parameter *>(&scale));
 
     mark_distance.param_make_integer();
     mark_length.param_make_integer();
@@ -51,7 +53,7 @@ LPERuler::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_i
     Point n(-rot90(dir) * mark_length);
     double length = L2(B - A);
 
-    g_print ("Distance: %8.2f\n", length);
+    g_print ("Distance: %8.2f\n", length * scale);
 
     Point C, D;
     for (int i = 0; i < length; i += static_cast<int>(mark_distance)) {

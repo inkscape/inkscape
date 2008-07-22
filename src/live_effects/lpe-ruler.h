@@ -31,6 +31,7 @@ public:
 private:
     ScalarParam mark_distance;
     ScalarParam mark_length;
+    ScalarParam scale;
     LPERuler(const LPERuler&);
     LPERuler& operator=(const LPERuler&);
 };
