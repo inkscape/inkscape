@@ -366,14 +366,12 @@ static gchar const * ui_descr =
         "  </toolbar>"
 
         "  <toolbar name='PenToolbar'>"
-        "    <toolitem action='FreehandModeActionPenTemp' />"
         "    <toolitem action='FreehandModeActionPen' />"
         "    <separator />"
         "    <toolitem action='SetPenShapeAction'/>"
         "  </toolbar>"
 
         "  <toolbar name='PencilToolbar'>"
-        "    <toolitem action='FreehandModeActionPencilTemp' />"
         "    <toolitem action='FreehandModeActionPencil' />"
         "    <separator />"
         "    <toolitem action='PencilToleranceAction' />"
@@ -3276,19 +3274,6 @@ static void sp_pc_spiro_spline_mode_changed(EgeSelectOneAction* act, GObject* /*
 
 static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, bool tool_is_pencil)
 {
-    // FIXME: No action is needed, we only want a simple label. But sp_toolbox_add_label() always
-    //        adds the label at the end of the toolbar, whence this workarund. How to avoid this?
-    {
-        EgeOutputAction* act = ege_output_action_new(
-            tool_is_pencil ?
-            "FreehandModeActionPencilTemp" :
-            "FreehandModeActionPenTemp",
-            _("<b>Mode:</b>"), "", 0 );
-        ege_output_action_set_use_markup( act, TRUE );
-        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-        g_object_set_data( holder, "freehand_mode_action", act );
-    }
-
     /* Freehand mode toggle buttons */
     {
         //gchar const *flatsidedstr = prefs_get_string_attribute( "tools.shapes.star", "isflatsided" );
@@ -3317,9 +3302,8 @@ static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, bo
             EgeSelectOneAction* act = ege_select_one_action_new(tool_is_pencil ?
                                                                 "FreehandModeActionPencil" :
                                                                 "FreehandModeActionPen",
-                                                                (""), (""), NULL, GTK_TREE_MODEL(model) );
+                                                                ("Mode:"), ("Mode"), NULL, GTK_TREE_MODEL(model) );
             gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
-            g_object_set_data( holder, "freehande_mode_action", act );
 
             ege_select_one_action_set_appearance( act, "full" );
             ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
