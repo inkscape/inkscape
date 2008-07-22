@@ -3328,9 +3328,9 @@ static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, bo
     }
 }
 
-static void sp_freehand_change_shape(EgeSelectOneAction* act, GObject */*dataKludge*/) {
+static void sp_freehand_change_shape(EgeSelectOneAction* act, GObject *dataKludge) {
     gint shape = ege_select_one_action_get_active( act );
-    prefs_set_int_attribute("tools.freehand", "shape", shape);
+    prefs_set_int_attribute(freehand_tool_name(dataKludge), "shape", shape);
 }
 
 /**
@@ -3366,10 +3366,10 @@ sp_freehand_add_advanced_shape_options(GtkActionGroup* mainActions, GObject* hol
         items = 0;
         EgeSelectOneAction* act1 = ege_select_one_action_new(
             tool_is_pencil ? "SetPencilShapeAction" : "SetPenShapeAction",
-            _("Shape:"), (""), NULL, GTK_TREE_MODEL(model));
+            _("Shape:"), ("Shape"), NULL, GTK_TREE_MODEL(model));
         g_object_set( act1, "short_label", _("Shape:"), NULL );
         ege_select_one_action_set_appearance( act1, "compact" );
-        ege_select_one_action_set_active( act1, prefs_get_int_attribute("tools.freehand", "shape", 0) );
+        ege_select_one_action_set_active( act1, prefs_get_int_attribute(freehand_tool_name(holder), "shape", 0) );
         g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK(sp_freehand_change_shape), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act1) );
         g_object_set_data( holder, "shape_action", act1 );

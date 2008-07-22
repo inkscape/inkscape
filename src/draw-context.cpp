@@ -282,7 +282,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
             Effect::createAndApply(SPIRO, dc->desktop->doc(), item);
         }
 
-        int shape = prefs_get_int_attribute("tools.freehand", "shape", 0);
+        int shape = prefs_get_int_attribute(tool_name(dc), "shape", 0);
         bool shape_applied = false;
         SPCSSAttr *css_item = sp_css_attr_from_object (SP_OBJECT(item), SP_STYLE_FLAG_ALWAYS);
         const char *cstroke = sp_repr_css_property(css_item, "stroke", "none");
