@@ -18,6 +18,7 @@
 #include "canvas-text.h"
 #include "display/inkscape-cairo.h"
 #include <sstream>
+#include <string.h>
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
@@ -43,7 +44,7 @@ sp_canvastext_get_type (void)
 
     if (!type) {
         GtkTypeInfo info = {
-            "SPCanvasText",
+            (gchar *)"SPCanvasText",
             sizeof (SPCanvasText),
             sizeof (SPCanvasTextClass),
             (GtkClassInitFunc) sp_canvastext_class_init,
