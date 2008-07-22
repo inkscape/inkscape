@@ -51,6 +51,8 @@ struct SPRoot : public SPGroup {
     /** Child to parent additional transform. */
     NR::Matrix c2p;
 
+    gchar *onload;
+
     /**
      * Primary \<defs\> element where we put new defs (patterns, gradients etc.).
      *

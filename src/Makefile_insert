@@ -258,6 +258,7 @@ libinkpre_a_SOURCES =	\
 	sp-radial-gradient.h	\
 	sp-rect.cpp sp-rect.h	\
 	sp-root.cpp sp-root.h	\
+	sp-script.cpp sp-script.h	\
 	sp-shape.cpp sp-shape.h	\
 	sp-spiral.cpp sp-spiral.h	\
 	sp-star.cpp sp-star.h	\

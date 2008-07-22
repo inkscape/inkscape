@@ -162,6 +162,7 @@ sp_root_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
     sp_object_read_attr(object, "height");
     sp_object_read_attr(object, "viewBox");
     sp_object_read_attr(object, "preserveAspectRatio");
+    sp_object_read_attr(object, "onload");
 
     if (((SPObjectClass *) parent_class)->build)
         (* ((SPObjectClass *) parent_class)->build) (object, document, repr);
@@ -334,6 +335,9 @@ sp_root_set(SPObject *object, unsigned int key, gchar const *value)
                 root->aspect_align = align;
                 root->aspect_clip = clip;
             }
+            break;
+        case SP_ATTR_ONLOAD:
+            root->onload = (char *) value;
             break;
         default:
             /* Pass the set event to the parent */

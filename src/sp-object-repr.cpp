@@ -43,6 +43,7 @@
 #include "sp-flowdiv.h"
 #include "sp-flowregion.h"
 #include "sp-flowtext.h"
+#include "sp-script.h"
 #include "config.h"
 
 #ifdef ENABLE_SVG_FONTS
@@ -195,6 +196,7 @@ populate_dtables()
         { "svg:radialGradient", SP_TYPE_RADIALGRADIENT },
         { "svg:rect", SP_TYPE_RECT },
         { "svg:stop", SP_TYPE_STOP },
+        { "svg:script", SP_TYPE_SCRIPT },
         { "svg:svg", SP_TYPE_ROOT },
         { "svg:style", SP_TYPE_STYLE_ELEM },
         { "svg:switch", SP_TYPE_SWITCH },

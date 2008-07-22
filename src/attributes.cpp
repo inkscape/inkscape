@@ -59,6 +59,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_PRESERVEASPECTRATIO, "preserveAspectRatio"},
     {SP_ATTR_SODIPODI_VERSION, "sodipodi:version"},
     {SP_ATTR_INKSCAPE_VERSION, "inkscape:version"},
+    {SP_ATTR_ONLOAD, "onload"},
     /* SPNamedView */
     {SP_ATTR_VIEWONLY, "viewonly"},
     {SP_ATTR_SHOWGUIDES, "showguides"},
