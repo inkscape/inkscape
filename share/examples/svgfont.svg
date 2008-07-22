@@ -6,7 +6,7 @@
 
 <!-- Fonts are declared inside defs tag -->
 
-    <font id="FirstExample" horiz-adv-x="1000">
+    <font id="FirstExample" horiz-adv-x="1010">
        <font-face font-family="Super Sans" font-style="oblique" font-stretch="ultra-expanded" />
 
        <!-- This font has 2 glyphs (one for "@" and one for "!"): -->
