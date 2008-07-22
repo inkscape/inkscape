@@ -3272,9 +3272,9 @@ static char const *
 freehand_tool_name(GObject *dataKludge)
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data(dataKludge, "desktop");
-    return ( tools_isactive(desktop, TOOLS_FREEHAND_PENCIL)
-             ? "tools.freehand.pencil"
-             : "tools.freehand.pen" );
+    return ( tools_isactive(desktop, TOOLS_FREEHAND_PEN)
+             ? "tools.freehand.pen"
+             : "tools.freehand.pencil" );
 }
 
 static void sp_pc_spiro_spline_mode_changed(EgeSelectOneAction* act, GObject* tbl)
@@ -3286,8 +3286,8 @@ static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, bo
 {
     /* Freehand mode toggle buttons */
     {
-        //gchar const *flatsidedstr = prefs_get_string_attribute( "tools.shapes.star", "isflatsided" );
-        //bool isSpiroMode = flatsidedstr ? (strcmp(flatsidedstr, "false") != 0) : true;
+        // FIXME: spiroMode seems not to be read correctly here during startup, although the
+        //        correct mode is used in pen/pencil tool later on; same for freehand shapes
         guint spiroMode = prefs_get_int_attribute(freehand_tool_name(holder), "spiro-spline-mode", 0);
         Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
 
