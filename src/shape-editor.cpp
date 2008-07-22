@@ -325,12 +325,15 @@ void ShapeEditor::reset_item (SubType type, bool keep_knotholder)
                 char * key = g_strdup(this->nodepath->repr_key);
                 set_item_lpe_path_parameter(item, obj, key); // the above checks for nodepath, so it is indeed a path that we are editing
                 g_free(key);
-            }            
+            } else {
+                SPItem * item = (SPItem *) get_item(SH_NODEPATH);
+                set_item(item, SH_NODEPATH);
+            }                
             break;
         case SH_KNOTHOLDER:
             if (this->knotholder) {
-                const SPItem * item = get_item(SH_KNOTHOLDER);
-                set_item((SPItem *) item, SH_KNOTHOLDER, keep_knotholder);
+                SPItem * item = (SPItem *) get_item(SH_KNOTHOLDER);
+                set_item(item, SH_KNOTHOLDER, keep_knotholder);
             }
             break;
     }
