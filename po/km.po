@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-07-22 16:20+0700\n"
+"PO-Revision-Date: 2008-07-23 16:14+0700\n"
 "Last-Translator: Eng Vannak <evannak@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -3688,7 +3688,7 @@ msgstr "ទិសដៅ​បោះពុម្ព"
 #: ../src/extension/internal/pdf-cairo.cpp:142
 #: ../src/extension/internal/ps.cpp:162
 msgid "Print properties"
-msgstr "លក្ខណៈសម្បត្តិ​​បោះពុម្ព​"
+msgstr "លក្ខណៈ​សម្បត្តិ​​​បោះពុម្ព​"
 
 #: ../src/extension/internal/pdf-cairo.cpp:149
 msgid "Print using PDF operators"
@@ -3698,9 +3698,7 @@ msgstr "បោះពុម្ព​ដោយ​ប្រើ​ប្រតិប
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
 "size and can be arbitrarily scaled, but patterns will be lost."
-msgstr ""
-"ប្រើ​សញ្ញា​ប្រតិបត្តិ​វ៉ិចទ័រ​របស់ PDF ។ លទ្ធផល​រូបភាព​ធម្មតាតូច​ជាង​នៅ​ក្នុង​ទំហំ​ឯកសារ និង​អាច​ត្រូវ​បាន​ធ្វើ​"
-"មាត្រដ្ឋាន​ដោយ​បង្ខំ ប៉ុន្តែ​លំនាំ​នឹង​បាត់បង់ ។"
+msgstr "ប្រើ​សញ្ញា​ប្រតិបត្តិ​វ៉ិចទ័រ​របស់ PDF ។ លទ្ធផល​រូបភាព​ធម្មតាតូច​ជាង​នៅ​ក្នុង​ទំហំ​ឯកសារ និង​អាច​ត្រូវ​បាន​ធ្វើ​មាត្រដ្ឋាន​ដោយ​បង្ខំ ប៉ុន្តែ​លំនាំ​នឹង​បាត់បង់ ។"
 
 #: ../src/extension/internal/pdf-cairo.cpp:156
 #: ../src/extension/internal/ps.cpp:176
@@ -3713,12 +3711,12 @@ msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
 "will be rendered exactly as displayed."
-msgstr "បោះពុម្ព​អ្វីៗ​ទាំង​អស់​ជា​រូបភាប ។​ លទ្ធផល​របស់​រូបភាព​តាម​ធម្មតា​ធំជាង​នៅ​ក្នុង​ទំហំ​ឯកសារ និង​មិន​អាច​ធ្វើ​មាត្រដ្ឋាន​ដោយ​បង្ខំ​​ដោយ​មិន​បាត់បង់​គុណភាព​បាន​ទេ ប៉ុន្តែ​វត្ថុ​ទាំង​អស់​នឹង​ត្រូវ​បាន​បង្ហាញ​ជាក់លាក់​ដូច​នឹង​អ្វី​ដែល​បាន​បង្ហាញ ។"
+msgstr "បោះពុម្ព​អ្វីៗ​ទាំង​អស់​ជា​រូបភាព ។​ លទ្ធផល​របស់​រូបភាព​តាម​ធម្មតា​ធំជាង​នៅ​ក្នុង​ទំហំ​ឯកសារ និង​មិន​អាច​ធ្វើ​មាត្រដ្ឋាន​ដោយ​បង្ខំ​​ដោយ​មិន​បាត់បង់​គុណភាព​បាន​ទេ ប៉ុន្តែ​វត្ថុ​ទាំង​អស់​នឹង​ត្រូវ​បាន​បង្ហាញ​ជាក់លាក់​ដូច​នឹង​អ្វី​ដែល​បាន​បង្ហាញ ។"
 
 #: ../src/extension/internal/pdf-cairo.cpp:172
 #: ../src/extension/internal/ps.cpp:192
 msgid "Preferred resolution (dots per inch) of bitmap"
-msgstr "គុណភាព​បង្ហាញ​​ដែល​ពេញចិត្ត (dots per inch) របស់​​រូបភាព​"
+msgstr "គុណភាព​បង្ហាញ​​ដែល​ពេញចិត្ត (ចំណុច​ក្នុង​មួយ​អ៊ិន្ឈ៍) របស់​​រូបភាព​"
 
 #: ../src/extension/internal/pdf-cairo.cpp:186
 #: ../src/extension/internal/ps.cpp:206
@@ -3746,7 +3744,7 @@ msgstr ""
 
 #: ../src/extension/internal/pdf-cairo.cpp:1060
 msgid "PDF Print"
-msgstr "បោះពុម្ពជា​ឯកសារ​ PDF"
+msgstr "បោះពុម្ព​ជា​ឯកសារ​ PDF"
 
 #. TRANSLATORS: The following are document crop settings for PDF import
 #. more info: http://www.acrobatusers.com/tech_corners/javascript_corner/tips/2006/page_bounds/
@@ -3807,7 +3805,7 @@ msgstr "គគ្រើម"
 #. Text options
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:116
 msgid "Text handling:"
-msgstr "ការគ្រប់គ្រង​អត្ថបទ ៖"
+msgstr "ការ​គ្រប់គ្រង​អត្ថបទ ៖"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:118
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:119
@@ -3860,7 +3858,7 @@ msgstr "Adobe Illustrator 9.0 និង​ខ្ពស់​ជាង​នេ�
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:758
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
-msgstr "បើក​ឯកសារ​ដែល​បាន​រក្សាទុក​​ក្នុង​កំណែ Adobe Illustrator 9.0 និង​ថ្មី​ជា​ង​នេះ"
+msgstr "បើក​ឯកសារ​ដែល​បាន​រក្សា​ទុក​​ក្នុង​កំណែ Adobe Illustrator 9.0 និង​ថ្មី​ជា​ង​នេះ"
 
 #: ../src/extension/internal/pov-out.cpp:666
 msgid "PovRay Output"
@@ -3876,7 +3874,7 @@ msgstr "ឯកសារ PovRay Raytracer"
 
 #: ../src/extension/internal/ps.cpp:147
 msgid "Print Configuration"
-msgstr "ការកំណត់​រចនាសម្ព័ន្ធ​បោះពុម្ព"
+msgstr "ការ​កំណត់​រចនា​សម្ព័ន្ធ​បោះពុម្ព"
 
 #: ../src/extension/internal/ps.cpp:169
 msgid "Print using PostScript operators"
@@ -3889,7 +3887,7 @@ msgid ""
 "will be lost."
 msgstr ""
 "ប្រើ​ប្រតិបត្តិការ​វ៉ិចទ័រ PostScript ។ លទ្ធផល​ជា​រូបភាព​តាម​ធម្មតា​តូច​ជាង​ទំហំ​ឯកសារ និង​អាច​ត្រូវ​បាន​"
-"ធ្វើមាត្រដ្ឋាន​ដោយបង្ខំ ប៉ុន្តែ​ភាព​ថ្លា​របស់​អាល់ហ្វា និង​លំនាំ​នឹង​បាត់បង់ ។"
+"ធ្វើ​មាត្រដ្ឋាន​ដោយ​បង្ខំ ប៉ុន្តែ​ភាព​ថ្លា​របស់​អាល់ហ្វា និង​លំនាំ​នឹង​បាត់បង់ ។"
 
 #: ../src/extension/internal/ps.cpp:1753
 msgid "Postscript Print"
@@ -17567,17 +17565,15 @@ msgstr "គូរ​ចំណុច​ទាញ​"
 
 #: ../share/extensions/hpgl_output.inx.h:1
 msgid "Export to an HP Graphics Language file"
-msgstr ""
+msgstr "នាំចេញ​ទៅ​ឯកសារ​ភាសា​ក្រាហ្វិក HP"
 
 #: ../share/extensions/hpgl_output.inx.h:2
-#, fuzzy
 msgid "HP Graphics Language file (*.hpgl)"
-msgstr "ឯកសារ​ក្រាហ្វិក XFIG (*.fig)"
+msgstr "ឯកសារ​ក្រាហ្វិក HP (*.hpgl)"
 
 #: ../share/extensions/hpgl_output.inx.h:3
-#, fuzzy
 msgid "HPGL Output"
-msgstr "លទ្ធផល SVG"
+msgstr "ទិន្នផល HPGL"
 
 #: ../share/extensions/inkscape_help_askaquestion.inx.h:1
 msgid "Ask Us a Question"
@@ -17677,7 +17673,7 @@ msgid ""
 "of A,B,C,D,E,F: draw forward Any of G,H,I,J,K,L: move forward +: turn left "
 "-: turn right |: turn 180 degrees [: remember poing ]: return to remembered "
 "point"
-msgstr ""
+msgstr "ផ្លូវ​ត្រូវ​បាន​បង្កើត​ឡើង​ដោយ​អនុវត្ត​ការ​ជំនួស​នៃ​ច្បាប់​និង Axiom, លំដាប់​ពេល​វេលា ។ ពាក្យ​បញ្ជា​ខាងក្រោម​ត្រូវ​បាន​ទទួល​ស្គាល់​ក្នុង Axiom និង Rules ៖ A,B,C,D,E,F ៖ ទាញ​ទៅ​មុខ G,H,I,J,K,L ៖ ផ្លាស់ទី​ទៅ​មុខ + ៖ បត់​ឆ្វេង - ៖ បត់​ស្ដាំ | ៖ បត់ ១៨០ ដឺក្រេ [ ៖ ចំណុច​ចងចាំ ] ៖ ត្រឡប់​ទៅ​ចំណុច​ដែល​ចងចាំ"
 
 #: ../share/extensions/lorem_ipsum.inx.h:1
 msgid "Lorem ipsum"
@@ -17758,7 +17754,7 @@ msgstr "ទំហំ"
 
 #: ../share/extensions/outline2svg.inx.h:1
 msgid "ASCII Text with outline markup"
-msgstr "អត្ថបទ ASCII ដែលមានគ្រោង markup"
+msgstr "អត្ថបទ ASCII ដែល​មាន​គ្រោង markup"
 
 #: ../share/extensions/outline2svg.inx.h:2
 msgid "Text Outline File (*.outline)"
@@ -17766,7 +17762,7 @@ msgstr "ឯកសារ​គ្រោង​​អត្ថបទ (*.outline)"
 
 #: ../share/extensions/outline2svg.inx.h:3
 msgid "Text Outline Input"
-msgstr "ការបញ្ចូល​គ្រោង​អត្ថបទ​"
+msgstr "ការ​បញ្ចូល​គ្រោង​អត្ថបទ​"
 
 #: ../share/extensions/pathalongpath.inx.h:1
 msgid "Copies of the pattern:"
@@ -17787,7 +17783,7 @@ msgstr "លំនាំ​តាម​ផ្លូវ​"
 
 #: ../share/extensions/pathalongpath.inx.h:10
 msgid "Ribbon"
-msgstr ""
+msgstr "បូ"
 
 #: ../share/extensions/pathalongpath.inx.h:13
 msgid "Snake"
@@ -17846,7 +17842,7 @@ msgstr ""
 
 #: ../share/extensions/perfectboundcover.inx.h:1
 msgid "Bleed (in)"
-msgstr "សម្រក់"
+msgstr "សម្រក់​ឈាម (ក្នុង)"
 
 #: ../share/extensions/perfectboundcover.inx.h:2
 msgid "Bond Weight #"
@@ -17994,14 +17990,12 @@ msgid "Light x-Position"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-#, fuzzy
 msgid "Light y-Position"
-msgstr "ទីតាំង"
+msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-#, fuzzy
 msgid "Light z-Position"
-msgstr "ទីតាំង"
+msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
 msgid "Line Thickness / px"
@@ -18138,7 +18132,7 @@ msgstr "Postscript (*.ps)"
 
 #: ../share/extensions/ps_input.inx.h:3
 msgid "Postscript Input"
-msgstr "ការបញ្ចូល Postscript"
+msgstr "ការ​បញ្ចូល Postscript"
 
 #: ../share/extensions/radiusrand.inx.h:1
 msgid "Jitter nodes"
@@ -18146,11 +18140,11 @@ msgstr "ថ្នាំង​មិនល្អ​"
 
 #: ../share/extensions/radiusrand.inx.h:2
 msgid "Maximum displacement in X, px"
-msgstr ""
+msgstr "ការ​ផ្លាស់កន្លែង​អតិបរមា​ក្នុង X, px"
 
 #: ../share/extensions/radiusrand.inx.h:3
 msgid "Maximum displacement in Y, px"
-msgstr ""
+msgstr "ការ​ផ្លាស់កន្លែង​អតិបរមា​ក្នុង Y, px"
 
 #: ../share/extensions/radiusrand.inx.h:5
 msgid "Shift node handles"
@@ -18358,7 +18352,7 @@ msgstr "Microsoft XAML (*.xaml)"
 
 #: ../share/extensions/svg2xaml.inx.h:2 ../share/extensions/xaml2svg.inx.h:2
 msgid "Microsoft's GUI definition format"
-msgstr "ទ្រង់ទ្រាយ​ការកំណត់​ចំណុច​ប្រទាក់​របស់​ម៉ៃក្រូសូហ្វ"
+msgstr "ទ្រង់ទ្រាយ​ការ​កំណត់​ចំណុច​ប្រទាក់​របស់​ម៉ៃក្រូសូហ្វ"
 
 #: ../share/extensions/svg2xaml.inx.h:3
 msgid "XAML Output"
@@ -18403,13 +18397,12 @@ msgid "Replace text"
 msgstr "ជំនួស​អត្ថបទ"
 
 #: ../share/extensions/text_replace.inx.h:3
-#, fuzzy
 msgid "Replace:"
-msgstr "ជំនួស"
+msgstr "ជំនួស ៖"
 
 #: ../share/extensions/text_sentencecase.inx.h:1
 msgid "Sentence case"
-msgstr "ប្រយោគ"
+msgstr "លក្ខណៈ​អក្សរ​ប្រយោគ"
 
 #: ../share/extensions/text_titlecase.inx.h:2
 msgid "Title Case"
@@ -18452,24 +18445,20 @@ msgid "From Three Sides"
 msgstr "ពី​ជ្រុង​ទាំងបី"
 
 #: ../share/extensions/triangle.inx.h:11
-#, fuzzy
 msgid "Side Length a / px"
-msgstr "ប្រវែងជំហាន (ភីកសែល)"
+msgstr "ប្រវែង​ជ្រុង a / ភីកសែល"
 
 #: ../share/extensions/triangle.inx.h:12
-#, fuzzy
 msgid "Side Length b / px"
-msgstr "ប្រវែងជំហាន (ភីកសែល)"
+msgstr "ប្រវែង​ជ្រុង b / ភីកសែល"
 
 #: ../share/extensions/triangle.inx.h:13
-#, fuzzy
 msgid "Side Length c / px"
-msgstr "ប្រវែងជំហាន (ភីកសែល)"
+msgstr "ប្រវែង ជ្រុង c / ភីកសែល"
 
 #: ../share/extensions/triangle.inx.h:14
-#, fuzzy
 msgid "Triangle"
-msgstr "តែ​មួយ​គត់"
+msgstr "ត្រីកោណ"
 
 #: ../share/extensions/txt2svg.inx.h:1
 msgid "ASCII Text"
