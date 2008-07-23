@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-07-21 16:41+0700\n"
+"PO-Revision-Date: 2008-07-22 16:20+0700\n"
 "Last-Translator: Eng Vannak <evannak@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -5590,7 +5590,7 @@ msgstr "កែ​សម្រួល​ប៉ារ៉ាម៉ែត្រ <b>%s
 
 #: ../src/live_effects/effect.cpp:517
 msgid "None of the applied path effect's parameters can be edited on-canvas."
-msgstr "គ្មានផ្លូវ​ដែល​បាន​អនុវត្ត​របស់​ប៉ារ៉ាម៉ត្រ​របស់​បែបផែន​អាច​ត្រូវ​បានកែសម្រួល​នៅ​លើ​ផ្ទាំង​ក្រណាត់ ។"
+msgstr "គ្មានផ្លូវ​ដែល​បាន​អនុវត្ត​របស់​ប៉ារ៉ាម៉ត្រ​របស់​បែបផែន​អាច​ត្រូវ​បានកែ​សម្រួល​នៅ​លើ​ផ្ទាំង​ក្រណាត់ ។"
 
 #: ../src/live_effects/lpe-bendpath.cpp:57
 msgid "Bend path"
@@ -5934,7 +5934,7 @@ msgstr "ទទឹង​លំនាំ​"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:65
 msgid "Scale the width of the pattern in units of its length"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​ទទឹង​របស់​លំនាំ​ក្នុង​ឯកតា​នៃ​ប្រវែង​របស់​វា"
+msgstr "ធ្វើ​មាត្រដ្ឋាន​លំនាំ​ជា​ឯកកត្តា​​នៃ​ប្រវែង​របស់​វា"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:66
 msgid "Spacing"
@@ -6077,27 +6077,27 @@ msgstr "ប្រវែង​​អតិបរមា​​​របស់​ជ
 
 #: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Stroke length variation"
-msgstr "បំរែបំរួល​ប្រវែង​ខ្វាច់"
+msgstr "បម្រែបម្រួល​ប្រវែង​ខ្វាច់"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr "បំរែបំរួល​​ចៃដន្យ​នៃ​ប្រវែង​ខ្វាច់ (ទំនាក់ទំនង​ទៅ​ប្រវែង​អតិបរមា)"
+msgstr "បម្រែបម្រួល​​ចៃដន្យ​នៃ​ប្រវែង​ខ្វាច់ (ទំនាក់ទំនង​ទៅ​ប្រវែង​អតិបរមា)"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
-msgstr ""
+msgstr "តម្រួត​លើ​គ្នា​អតិ."
 
 #: ../src/live_effects/lpe-sketch.cpp:41
 msgid "How much successive strokes should overlap (relative to maximum length)."
-msgstr ""
+msgstr "ចំនួន​ខ្វាច់​ដែល​បន្ត​គ្នា​ប៉ុន្មាន​ដែល​គួរ​ត្រួត​លើ​គ្នា (ទាក់ទង​ទៅ​និង​ប្រវែង​អតិបរមា) ។"
 
 #: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Overlap variation"
-msgstr ""
+msgstr "បម្រែបម្រួល​តម្រួត​លើ​គ្មា"
 
 #: ../src/live_effects/lpe-sketch.cpp:43
 msgid "Random variation of overlap (relative to maximum overlap)"
-msgstr ""
+msgstr "បម្រែបម្រួល​នៃ​តម្រួត​លើ​គ្មា​ចៃដន្យ (ទាក់ទង​ទៅ​និង​តម្រួត​អតិបរមា)"
 
 #: ../src/live_effects/lpe-sketch.cpp:44
 msgid "Max. end tolerance"
@@ -6163,11 +6163,11 @@ msgstr "ប្រវែង​អតិបរមា​នៃ​បន្ទាត
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Length variation"
-msgstr "បំរែបំរួល​ប្រវែង"
+msgstr "បម្រែបម្រួល​ប្រវែង"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Random variation of the length of construction lines"
-msgstr "បំរែបំរួល​ប្រវែង​ចៃដន្យ​នៃ​បន្ទាត់​សំណង់"
+msgstr "បម្រែបម្រួល​ប្រវែង​ចៃដន្យ​នៃ​បន្ទាត់​សំណង់"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:63
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
@@ -15463,7 +15463,7 @@ msgstr "រចនាប័ទ្ម​របស់​ខ្វាចប់​អ
 
 #: ../src/widgets/toolbox.cpp:207
 msgid "TBD"
-msgstr ""
+msgstr "TBD"
 
 #: ../src/widgets/toolbox.cpp:217
 msgid "Style of Paint Bucket fill objects"
@@ -17746,11 +17746,7 @@ msgid ""
 "from the text to the path. The Scale factor can be used to make measurements "
 "in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the "
 "real world, Scale must be set to 250."
-msgstr ""
-"រង្វាស់​បែបផែន​នេះ​ ប្រវែង​របស់​ផ្លូវ​​ដែល​បាន​ជ្រើស​ និង​បន្ថែម​វា​ជា​វត្ថុ​អត្ថបទ​នៅ​លើ​ផ្លូវ​ជា​មួយ​នឹង​ឯកតា​ដែល​"
-"បានជ្រើស ។ ចំនួន​តួលេខ​សំខាន់​អាច​ត្រូវ​បាន​ត្រួតពិនិត្យ​ដោយ​វាល​ទសភាគ ។ វាល​អុហ្វសិត​ត្រួតពិនិត្យ​ចម្ងាយ​ពី​អត្ថបទ​"
-"ទៅ​ផ្លូវ ។ កត្តា​មាត្រដ្ឋាន​អាច​ត្រូវ​បាន​ប្រើ​ដើម្បី​បង្កើត​រង្វាស់​នៅ​ក្នុង​គំនូរ​មាន​មាត្រដ្ឋាន ។ ឧទាហរណ៍ "
-"ប្រសិន​បើ ១ ស.ម. នៅ​ក្នុង​គំនូរ​ស្មើ​នឹង ២.៥. ម. នៅ​ក្នុង​ពិភព​ពិតៗ មាត្រដ្ឋាន​ត្រូវ​បានកំណត់​ទៅ ២៥០ ។"
+msgstr "រង្វាស់​បែបផែន​នេះ​ ប្រវែង​របស់​ផ្លូវ​​ដែល​បាន​ជ្រើស​ និង​បន្ថែម​វា​ជា​វត្ថុ​អត្ថបទ​នៅ​លើ​ផ្លូវ​ជា​មួយ​នឹង​ឯកតា​ដែល​បានជ្រើស ។ ចំនួន​តួលេខ​សំខាន់​អាច​ត្រូវ​បាន​ត្រួតពិនិត្យ​ដោយ​វាល​ទសភាគ ។ វាល​អុហ្វសិត​ត្រួតពិនិត្យ​ចម្ងាយ​ពី​អត្ថបទ​ទៅ​ផ្លូវ ។ កត្តា​មាត្រដ្ឋាន​អាច​ត្រូវ​បាន​ប្រើ​ដើម្បី​បង្កើត​រង្វាស់​នៅ​ក្នុង​គំនូរ​មាន​មាត្រដ្ឋាន ។ ឧទាហរណ៍ ប្រសិន​បើ ១ ស.ម. នៅ​ក្នុង​គំនូរ​ស្មើ​នឹង ២.៥. ម. នៅ​ក្នុង​ពិភព​ពិតៗ មាត្រដ្ឋាន​ត្រូវ​បានកំណត់​ទៅ ២៥០ ។"
 
 #: ../share/extensions/motion.inx.h:2
 msgid "Extrude"
@@ -17794,14 +17790,13 @@ msgid "Ribbon"
 msgstr ""
 
 #: ../share/extensions/pathalongpath.inx.h:13
-#, fuzzy
 msgid "Snake"
-msgstr "ឆៀង"
+msgstr "ពស់"
 
 #: ../share/extensions/pathalongpath.inx.h:14
 #: ../share/extensions/pathscatter.inx.h:11
 msgid "Space between copies:"
-msgstr "ចន្លោះ​រវាង​ចម្បាប់​ចម្លង ៖"
+msgstr "ចន្លោះ​រវាង​ច្បាប់​ចម្លង ៖"
 
 #: ../share/extensions/pathalongpath.inx.h:16
 msgid ""
@@ -17813,41 +17808,34 @@ msgstr ""
 "(ក្រុម​របស់​ផ្លូវ /shapes/clones... បាន​អនុញ្ញាត)"
 
 #: ../share/extensions/pathscatter.inx.h:1
-#, fuzzy
 msgid "Cloned"
 msgstr "ក្លូន​"
 
 #: ../share/extensions/pathscatter.inx.h:2
-#, fuzzy
 msgid "Copied"
-msgstr "បានផ្សំ"
+msgstr "បាន​ចម្លង"
 
 #: ../share/extensions/pathscatter.inx.h:4
-#, fuzzy
 msgid "Follow path orientation."
-msgstr "ទិស​ទំព័រ ៖"
+msgstr "ធ្វើ​តាម​ទិស​ផ្លូវ ៖"
 
 #: ../share/extensions/pathscatter.inx.h:6
-#, fuzzy
 msgid "Moved"
-msgstr "ផ្លាស់ទី​"
+msgstr "បាន​ផ្លាស់ទី​"
 
 #: ../share/extensions/pathscatter.inx.h:8
-#, fuzzy
 msgid "Original pattern will be:"
-msgstr "ផ្លូវ​ដើម​គឺ​បញ្ឈរ"
+msgstr "ផ្លូវ​ដើម​នឹង​ជា ៖"
 
 #: ../share/extensions/pathscatter.inx.h:10
-#, fuzzy
 msgid "Scatter"
-msgstr "លំនាំ"
+msgstr ""
 
 #: ../share/extensions/pathscatter.inx.h:12
 msgid "Stretch spaces to fit skeleton length"
 msgstr ""
 
 #: ../share/extensions/pathscatter.inx.h:14
-#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
 "pattern is the top most object in the selection. (groups of paths/shapes/"
@@ -17870,7 +17858,7 @@ msgstr "កម្ពស់​សៀវភៅ (អ៊ិន្ឈ៍)"
 
 #: ../share/extensions/perfectboundcover.inx.h:4
 msgid "Book Properties"
-msgstr "លក្ខណៈសម្បត្តិ​សៀវភៅ"
+msgstr "លក្ខណៈ​សម្បត្តិ​សៀវភៅ"
 
 #: ../share/extensions/perfectboundcover.inx.h:5
 msgid "Book Width (inches)"
@@ -17898,7 +17886,7 @@ msgstr "ទំព័រ​ខាង​ក្នុង"
 
 #: ../share/extensions/perfectboundcover.inx.h:11
 msgid "Note: Bond Weight # calculations are a best-guess estimate."
-msgstr "ចំណាំ ៖ ទម្ងន់ចំណង # ការ​គណនា​គឺ​ជា​ការ​​ប៉ាន់ស្មាន​ដ៏​ល្អ​បំផុត ។"
+msgstr "ចំណាំ ៖ ទម្ងន់​ចំណង # ការ​គណនា​គឺ​ជា​ការ​​ប៉ាន់ស្មាន​ដ៏​ល្អ​បំផុត ។"
 
 #: ../share/extensions/perfectboundcover.inx.h:12
 msgid "Number of Pages"
@@ -17914,11 +17902,11 @@ msgstr "រង្វាស់​ក្រដាស​ក្រាស់"
 
 #: ../share/extensions/perfectboundcover.inx.h:15
 msgid "Perfect-Bound Cover"
-msgstr "គម្រប​បាន​ចង​ល្អឥតខ្ចោះ"
+msgstr "គម្រប​បាន​ចង​ល្អ​ឥត​ខ្ចោះ"
 
 #: ../share/extensions/perfectboundcover.inx.h:17
 msgid "Remove existing guides"
-msgstr "យក​បន្ទាត់​នាំផ្លូវ​ដែល​មាន​ស្រាប់​ចេញ​"
+msgstr "យក​បន្ទាត់​នាំ​ផ្លូវ​ដែល​មាន​ស្រាប់​ចេញ​"
 
 #: ../share/extensions/perfectboundcover.inx.h:18
 msgid "Specify Width"
@@ -17929,18 +17917,16 @@ msgid "Perspective"
 msgstr "យថាទស្សន៍"
 
 #: ../share/extensions/polyhedron_3d.inx.h:1
-#, fuzzy
 msgid "3D Polyhedron"
-msgstr "ពហុកោណ"
+msgstr "ពហុកោណ​ត្រីមាត្រ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-#, fuzzy
 msgid "Clockwise Wound Object"
-msgstr "មិន​ចាក់សោ​វត្ថុ"
+msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:3
 msgid "Cube"
-msgstr ""
+msgstr "គូប"
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
 msgid "Cuboctohedron"
@@ -17959,40 +17945,37 @@ msgid "Edge-Specified"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:8
-#, fuzzy
 msgid "Edges"
-msgstr "គែម\t"
+msgstr "គែម"
 
 #: ../share/extensions/polyhedron_3d.inx.h:9
 msgid "Face-Specified"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:10
-#, fuzzy
 msgid "Faces"
-msgstr "ភាព​រាប​ស្មើ​"
+msgstr "មុខ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:11
-#, fuzzy
 msgid "Filename:"
-msgstr "កំណត់​ឈ្មោះ​ឯកសារ"
+msgstr "ឈ្មោះ​ឯកសារ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
 msgid "Fill Colour (Blue)"
-msgstr ""
+msgstr "បំពេញ​ពណ៌ (ខៀវ)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
 msgid "Fill Colour (Green)"
-msgstr ""
+msgstr "បំពេញ​ពណ៌ (បៃតង)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
 msgid "Fill Colour (Red)"
-msgstr ""
+msgstr "បំពេញ​ពណ៌ (ក្រហម)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Fill Opacity/ %"
-msgstr "ភាព​ស្រអាប់ %"
+msgstr "បំពេញ​ភាព​ស្រអាប់/ %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
 msgid "Great Dodecahedron"
@@ -18007,9 +17990,8 @@ msgid "Icosahedron"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-#, fuzzy
 msgid "Light x-Position"
-msgstr "ទីតាំង"
+msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
 #, fuzzy
@@ -18023,30 +18005,27 @@ msgstr "ទីតាំង"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
 msgid "Line Thickness / px"
-msgstr ""
+msgstr "កម្រាស់​បន្ទាត់ / px"
 
 #: ../share/extensions/polyhedron_3d.inx.h:24
 msgid "Load From File"
-msgstr ""
+msgstr "ផ្ទុក​ពី​ឯកសារ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:25
-#, fuzzy
 msgid "Maximum"
-msgstr "មធ្យម"
+msgstr "អតិបរមា"
 
 #: ../share/extensions/polyhedron_3d.inx.h:26
 msgid "Mean"
-msgstr ""
+msgstr "មធ្យម"
 
 #: ../share/extensions/polyhedron_3d.inx.h:27
-#, fuzzy
 msgid "Minimum"
-msgstr "ទំហំ​អតិបរមា"
+msgstr "អប្បបរមា"
 
 #: ../share/extensions/polyhedron_3d.inx.h:28
-#, fuzzy
 msgid "Model File"
-msgstr "ឯកសារ​ទាំងអស់"
+msgstr "ឯកសារ​គំរូ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:29
 msgid "Object Type"
@@ -18057,17 +18036,16 @@ msgid "Object:"
 msgstr "វត្ថុ ៖"
 
 #: ../share/extensions/polyhedron_3d.inx.h:31
-#, fuzzy
 msgid "Octahedron"
-msgstr "ផ្សេងៗ"
+msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
 msgid "Report Normal Vector Information"
-msgstr ""
+msgstr "រាយការណ៍​ព័ត៌មាន​វ៉ិចទ័រ​ធម្មតា"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
 msgid "Rotate Around:"
-msgstr ""
+msgstr "បង្វិល​ជុំវិញ ៖"
 
 #: ../share/extensions/polyhedron_3d.inx.h:35
 msgid "Rotation / Degrees"
@@ -18096,7 +18074,7 @@ msgstr ""
 #: ../share/extensions/polyhedron_3d.inx.h:43
 #, no-c-format
 msgid "Stroke Opacity/ %"
-msgstr ""
+msgstr "ភាព​ស្រអាប់​ខ្វាច់/ %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Tetrahedron"
@@ -18104,11 +18082,11 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Then Rotate Around:"
-msgstr ""
+msgstr "ដូច្នេះ​បង្វិល​ជុំវិញ ៖"
 
 #: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Cube"
-msgstr ""
+msgstr "កាត់​គូប​ឲ្យ​ខ្លី"
 
 #: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Dodecahedron"
@@ -18197,9 +18175,8 @@ msgid "Alphabet Soup"
 msgstr ""
 
 #: ../share/extensions/render_alphabetsoup.inx.h:2
-#, fuzzy
 msgid "Random Seed"
-msgstr "មែក​ធាង​ចៃដន្យ​"
+msgstr "គ្រាប់​ចៃដន្យ"
 
 #: ../share/extensions/render_barcode.inx.h:1
 msgid "Bar Height:"
@@ -18218,12 +18195,10 @@ msgid "Barcode Type:"
 msgstr "ប្រភេទ​កូដ​ផលិតផល ៖"
 
 #: ../share/extensions/restack.inx.h:2
-#, fuzzy
 msgid "Arbitrary Angle:"
-msgstr "រៀបចំ"
+msgstr ""
 
 #: ../share/extensions/restack.inx.h:4
-#, fuzzy
 msgid "Bottom"
 msgstr "បាត"
 
@@ -18404,9 +18379,8 @@ msgid "ZIP Output"
 msgstr "លទ្ធផល ZIP"
 
 #: ../share/extensions/text_braille.inx.h:1
-#, fuzzy
 msgid "Convert to Braille"
-msgstr "បម្លែង​ទៅ​​អត្ថបទ"
+msgstr "បម្លែង​ទៅ Braille"
 
 #: ../share/extensions/text_flipcase.inx.h:2
 msgid "fLIP cASE"
@@ -18422,12 +18396,11 @@ msgstr "rANdOm CasE"
 
 #: ../share/extensions/text_replace.inx.h:1
 msgid "By:"
-msgstr "ដោយ ៖"
+msgstr "ដោយ ៖"
 
 #: ../share/extensions/text_replace.inx.h:2
-#, fuzzy
 msgid "Replace text"
-msgstr "ជំនួស​អត្ថបទ...សាយ​"
+msgstr "ជំនួស​អត្ថបទ"
 
 #: ../share/extensions/text_replace.inx.h:3
 #, fuzzy
