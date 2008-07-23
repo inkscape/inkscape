@@ -428,11 +428,17 @@ void  Path::LoadPath(Geom::Path const &path, Geom::Matrix const &tr, bool doTran
 
     MoveTo( from_2geom(pathtr.initialPoint()) );
 
-    for(Geom::Path::const_iterator cit = pathtr.begin(); cit != pathtr.end_default(); ++cit) {
+    for(Geom::Path::const_iterator cit = pathtr.begin(); cit != pathtr.end_open(); ++cit) {
         AddCurve(*cit);
     }
 
     if (pathtr.closed()) {
+        // check if closing segment is empty before adding it
+        Geom::Curve const &crv = pathtr.back_closed();
+        if ( !crv.isDegenerate() ) {
+            AddCurve(crv);
+        }
+
         Close();
     }
 }
