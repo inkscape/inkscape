@@ -3465,7 +3465,7 @@ static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
         gchar const* labels[] = {_("(many nodes, rough)"), ("(default)"), 0, 0, 0, 0, ("(few nodes, smooth)")};
         gdouble values[] = {1, 10, 20, 30, 50, 75, 100};
         eact = create_adjustment_action( "PencilToleranceAction",
-                                         _("Smoothing:"), _("Smoothing"),
+                                         _("Smoothing:"), _("Smoothing: "),
                  _("How much smoothing (simplifying) is applied to the line"),
                                          "tools.freehand.pencil", "tolerance",
                                          3.0,
