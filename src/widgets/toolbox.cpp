@@ -3312,7 +3312,7 @@ static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, bo
             EgeSelectOneAction* act = ege_select_one_action_new(tool_is_pencil ?
                                                                 "FreehandModeActionPencil" :
                                                                 "FreehandModeActionPen",
-                                                                ("Mode:"), ("Mode"), NULL, GTK_TREE_MODEL(model) );
+                                                                (_("Mode:")), ("Mode"), NULL, GTK_TREE_MODEL(model) );
             gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
 
             ege_select_one_action_set_appearance( act, "full" );
