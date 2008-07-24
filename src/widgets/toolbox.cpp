@@ -3799,15 +3799,64 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 //########################
 //##     Calligraphy    ##
 //########################
-static void update_presets_list (GObject *tbl){
-
+static void update_presets_list (GObject *tbl) 
+{
     if (g_object_get_data(tbl, "presets_blocked")) 
         return;
 
     EgeSelectOneAction *sel = static_cast<EgeSelectOneAction *>(g_object_get_data(tbl, "profile_selector"));
-    if (sel) {
+    if (!sel) {
         ege_select_one_action_set_active(sel, 0);
+        return;
     }
+
+    int total_prefs = pref_path_number_of_children("tools.calligraphic.preset");
+
+    for (int i = 1; i <= total_prefs; i++) {
+        gchar *preset_path = get_pref_nth_child("tools.calligraphic.preset", i);
+        Inkscape::XML::Node *preset_repr = inkscape_get_repr(INKSCAPE, preset_path);
+
+        bool match = true;
+
+        for ( Inkscape::Util::List<Inkscape::XML::AttributeRecord const> iter = preset_repr->attributeList();
+              iter; 
+              ++iter ) {
+            const gchar *attr_name = g_quark_to_string(iter->key);
+            if (!strcmp(attr_name, "id") || !strcmp(attr_name, "name"))
+                continue;
+            void *widget = g_object_get_data(tbl, attr_name);
+            if (widget) {
+                if (GTK_IS_ADJUSTMENT(widget)) {
+                    double v = prefs_get_double_attribute(preset_path, attr_name, 0); // fixme: no min/max checks here, add?
+                    GtkAdjustment* adj = static_cast<GtkAdjustment *>(widget);
+                    //std::cout << "compared adj " << attr_name << gtk_adjustment_get_value(adj) << " to " << v << "\n";
+                    if (fabs(gtk_adjustment_get_value(adj) - v) > 1e-6) {
+                        match = false;
+                        break;
+                    }
+                } else if (GTK_IS_TOGGLE_ACTION(widget)) {
+                    int v = prefs_get_int_attribute(preset_path, attr_name, 0); // fixme: no min/max checks here, add?
+                    GtkToggleAction* toggle = static_cast<GtkToggleAction *>(widget);
+                    //std::cout << "compared toggle " << attr_name << gtk_toggle_action_get_active(toggle) << " to " << v << "\n";
+                    if (gtk_toggle_action_get_active(toggle) != v) {
+                        match = false;
+                        break;
+                    }
+                } 
+            } 
+        }
+
+        if (match) {
+            // newly added item is at the same index as the 
+            // save command, so we need to change twice for it to take effect
+            ege_select_one_action_set_active(sel, 0);
+            ege_select_one_action_set_active(sel, i);
+            return;
+        }
+    }
+
+    // no match found
+    ege_select_one_action_set_active(sel, 0);
 }
 
 static void sp_ddc_mass_value_changed( GtkAdjustment *adj, GObject* tbl )
@@ -3898,6 +3947,8 @@ static gchar * widget_names[NUMBER_OF_PRESET_PARAMS] = {
 
 static void sp_dcc_build_presets_list(GObject *tbl) 
 {
+    g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(TRUE));
+
     EgeSelectOneAction* selector = static_cast<EgeSelectOneAction *>(g_object_get_data(tbl, "profile_selector"));
     GtkListStore* model = GTK_LIST_STORE(ege_select_one_action_get_model(selector));
     gtk_list_store_clear (model);
@@ -3927,6 +3978,8 @@ static void sp_dcc_build_presets_list(GObject *tbl)
         g_object_set_data(tbl, "save_presets_index", GINT_TO_POINTER(ii));
     }
 
+    g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(FALSE));
+
     update_presets_list (tbl);
 }
 
@@ -3951,6 +4004,8 @@ static void sp_dcc_save_profile (GtkWidget */*widget*/, GObject *tbl)
         update_presets_list (tbl);
         return;
     }
+
+    g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(TRUE));
 
     int new_index = -1;
     gchar *pref_path = NULL;
@@ -3998,6 +4053,8 @@ static void sp_dcc_save_profile (GtkWidget */*widget*/, GObject *tbl)
     }
     prefs_set_string_attribute(pref_path, "name", profile_name.c_str());
 
+    g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(FALSE));
+
     sp_dcc_build_presets_list (tbl);
 
     free (pref_path);
@@ -4014,6 +4071,9 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl) {
         sp_dcc_save_profile(NULL, tbl);
         return;
     }
+
+    if (g_object_get_data(tbl, "presets_blocked")) 
+        return;
 
     gchar *preset_path = get_pref_nth_child("tools.calligraphic.preset", preset_index);
 
@@ -4057,6 +4117,8 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl) {
 static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     {
+        g_object_set_data(holder, "presets_blocked", GINT_TO_POINTER(TRUE));
+
         EgeAdjustmentAction* calligraphy_angle = 0;
 
         {
@@ -4242,6 +4304,8 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             EgeSelectOneAction* act1 = ege_select_one_action_new ("SetProfileAction", "" , (_("Change calligraphic profile")), NULL, GTK_TREE_MODEL(model));
             ege_select_one_action_set_appearance (act1, "compact");
             g_object_set_data (holder, "profile_selector", act1 );
+
+            g_object_set_data(holder, "presets_blocked", GINT_TO_POINTER(FALSE));
 
             sp_dcc_build_presets_list (holder);
 
