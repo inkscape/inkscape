@@ -193,6 +193,11 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::Snapper::PointType const &
             bbox_type = (prefs_bbox == 0)? 
                 SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
         }
+        
+        // Consider the page border for snapping
+        if (_snap_to_page_border) {
+        	_getBorderNodes(_points_to_snap_to);	        
+        }
 
         for (std::vector<SnapCandidate>::const_iterator i = _candidates->begin(); i != _candidates->end(); i++) {
             //NR::Matrix i2doc(NR::identity());
@@ -302,8 +307,7 @@ static unsigned sp_bpath_length(NArtBpath const bpath[])
 }
 
 void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &t,
-                                         bool const &first_point,
-                                         NArtBpath const *border_bpath) const
+                                         bool const &first_point) const
 {
     // Now, let's first collect all paths to snap to. If we have a whole bunch of points to snap,
     // e.g. when translating an item using the selector tool, then we will only do this for the
@@ -323,14 +327,17 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
         }
         
         // Consider the page border for snapping
-        if (border_bpath != NULL) {
-            // make our own copy of the const*
-            NArtBpath *new_bpath;
-            unsigned const len = sp_bpath_length(border_bpath);
-            new_bpath = g_new(NArtBpath, len);
-            memcpy(new_bpath, border_bpath, len * sizeof(NArtBpath));
-
-            _bpaths_to_snap_to->push_back(new_bpath);    
+        if (_snap_to_page_border) {
+        	NArtBpath const *border_bpath = _getBorderBPath();   
+        	if (border_bpath != NULL) {
+	            // make our own copy of the const*
+	            NArtBpath *new_bpath;
+	            unsigned const len = sp_bpath_length(border_bpath);
+	            new_bpath = g_new(NArtBpath, len);
+	            memcpy(new_bpath, border_bpath, len * sizeof(NArtBpath));
+	
+	            _bpaths_to_snap_to->push_back(new_bpath);
+        	}
         }
         
         for (std::vector<SnapCandidate>::const_iterator i = _candidates->begin(); i != _candidates->end(); i++) {
@@ -417,10 +424,9 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                                      NR::Point const &p,
                                      bool const &first_point,
                                      std::vector<NR::Point> *unselected_nodes,
-                                     SPPath const *selected_path,
-                                     NArtBpath const *border_bpath) const
+                                     SPPath const *selected_path) const
 {
-    _collectPaths(t, first_point, border_bpath);
+    _collectPaths(t, first_point);
     // Now we can finally do the real snapping, using the paths collected above
     SnappedPoint s;
     bool success = false;
@@ -568,10 +574,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
                                      ConstraintLine const &c) const
 {
     
-    // Consider the page's border for snapping to
-    NArtBpath const *border_bpath = _snap_to_page_border ? _getBorderBPath() : NULL;
-    
-    _collectPaths(t, first_point, border_bpath);
+    _collectPaths(t, first_point);
     
     // Now we can finally do the real snapping, using the paths collected above
     
@@ -647,12 +650,9 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
         _findCandidates(sp_document_root(_named_view->document), it, first_point, local_bbox_to_snap, TRANSL_SNAP_XY, false, NR::identity());
     }
     
-    if (_snap_to_itemnode || _snap_to_bboxnode) {
+    if (_snap_to_itemnode || _snap_to_bboxnode || _snap_to_page_border) {
         _snapNodes(sc, t, p, first_point, unselected_nodes);
     }
-    
-    // Consider the page's border for snapping to
-    NArtBpath const *border_bpath = _snap_to_page_border ? _getBorderBPath() : NULL;   
     
     if (_snap_to_itempath || _snap_to_bboxpath || _snap_to_page_border) {
         unsigned n = (unselected_nodes == NULL) ? 0 : unselected_nodes->size();
@@ -668,9 +668,9 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
                 g_assert(it->size() == 1);
                 path = SP_PATH(*it->begin());
             }
-            _snapPaths(sc, t, p, first_point, unselected_nodes, path, border_bpath);                
+            _snapPaths(sc, t, p, first_point, unselected_nodes, path);                
         } else {
-            _snapPaths(sc, t, p, first_point, NULL, NULL, border_bpath);   
+            _snapPaths(sc, t, p, first_point, NULL, NULL);   
         }        
     }
 }
@@ -742,7 +742,6 @@ void Inkscape::ObjectSnapper::guideSnap(SnappedConstraints &sc,
     
     _findCandidates(sp_document_root(_named_view->document), &it, true, NR::Rect(p, p), snap_dim, false, NR::identity());
 	_snapTranslatingGuideToNodes(sc, Inkscape::Snapper::SNAPPOINT_GUIDE, p, guide_normal);
-    
     // _snapRotatingGuideToNodes has not been implemented yet. 
 }
 
@@ -784,6 +783,16 @@ NArtBpath const* Inkscape::ObjectSnapper::_getBorderBPath() const
     }
         
     return border_bpath;
+}
+
+void Inkscape::ObjectSnapper::_getBorderNodes(std::vector<NR::Point> *points) const
+{
+	Geom::Coord w = sp_document_width(_named_view->document);
+	Geom::Coord h = sp_document_height(_named_view->document);
+	points->push_back(from_2geom(Geom::Point(0,0)));
+	points->push_back(from_2geom(Geom::Point(0,h)));
+	points->push_back(from_2geom(Geom::Point(w,h)));
+	points->push_back(from_2geom(Geom::Point(w,0)));
 }
 /*
   Local Variables:
