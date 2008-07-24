@@ -4,8 +4,9 @@
  * Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Gustav Broberg <broberg@kth.se>
+ *   Niko Kiirala <niko@kiirala.com>
  *
- * Copyright (C) 2004--2007 Authors
+ * Copyright (C) 2004--2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -122,7 +123,7 @@ ObjectCompositeSettings::_blendBlurValueChanged()
         radius = 0;
     }
 
-    //const Glib::ustring blendmode = _fe_cb.get_blend_mode();
+    const Glib::ustring blendmode = _fe_cb.get_blend_mode();
 
     //apply created filter to every selected item
     for (StyleSubject::iterator i = _subject->begin() ; i != _subject->end() ; ++i ) {
@@ -134,11 +135,16 @@ ObjectCompositeSettings::_blendBlurValueChanged()
         SPStyle *style = SP_OBJECT_STYLE(item);
         g_assert(style != NULL);
 
+        if (blendmode != "normal") {
+            SPFilter *filter = new_filter_simple_from_item(document, item, blendmode.c_str(), radius);
+            sp_style_set_property_url(item, "filter", filter, false);
+        }
+
         if (radius == 0 && item->style->filter.set
             && filter_is_single_gaussian_blur(SP_FILTER(item->style->getFilter()))) {
             remove_filter(item, false);
         }
-        else {
+        else if (radius != 0) {
             SPFilter *filter = modify_filter_gaussian_blur_from_item(document, item, radius);
             sp_style_set_property_url(item, "filter", filter, false);
         }

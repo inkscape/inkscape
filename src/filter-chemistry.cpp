@@ -8,7 +8,7 @@
  *   bulia byak
  *   Niko Kiirala
  *
- * Copyright (C) 2006,2007 authors
+ * Copyright (C) 2006-2008 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
