@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-07-18 00:07+0400\n"
-"PO-Revision-Date: 2008-07-18 15:39+0300\n"
+"POT-Creation-Date: 2008-07-24 21:23+0400\n"
+"PO-Revision-Date: 2008-07-24 21:35+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -110,12 +110,12 @@ msgid "Select <b>at least one non-connector object</b>."
 msgstr "Выделите <b>как минимум один объект (не соединительную линию)</b>."
 
 #: ../src/connector-context.cpp:1319
-#: ../src/widgets/toolbox.cpp:5915
+#: ../src/widgets/toolbox.cpp:6005
 msgid "Make connectors avoid selected objects"
 msgstr "Линии обходят выделенные объекты"
 
 #: ../src/connector-context.cpp:1320
-#: ../src/widgets/toolbox.cpp:5925
+#: ../src/widgets/toolbox.cpp:6015
 msgid "Make connectors ignore selected objects"
 msgstr "Линии игнорируют выделенные объекты"
 
@@ -734,8 +734,8 @@ msgstr "Взять видимый цвет (без прозрачности) в 
 #: ../src/dialogs/clonetiler.cpp:2761
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/extension/internal/bitmap/opacity.cpp:39
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2241
-#: ../src/widgets/toolbox.cpp:3757
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2244
+#: ../src/widgets/toolbox.cpp:3751
 msgid "Opacity"
 msgstr "Непрозрачность"
 
@@ -838,7 +838,7 @@ msgid "Each clone is created with the probability determined by the picked value
 msgstr "Вероятность появления каждого клона определяется значением, взятым в данной точке"
 
 #: ../src/dialogs/clonetiler.cpp:2741
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2219
 msgid "Size"
 msgstr "Размер"
 
@@ -1014,9 +1014,9 @@ msgstr "x_1"
 #: ../src/dialogs/object-attributes.cpp:60
 #: ../src/dialogs/object-attributes.cpp:68
 #: ../src/dialogs/stroke-style.cpp:1090
-#: ../src/widgets/toolbox.cpp:3591
-#: ../src/widgets/toolbox.cpp:4016
-#: ../src/widgets/toolbox.cpp:4693
+#: ../src/widgets/toolbox.cpp:3585
+#: ../src/widgets/toolbox.cpp:4129
+#: ../src/widgets/toolbox.cpp:4776
 msgid "Width:"
 msgstr "Ширина:"
 
@@ -1055,6 +1055,7 @@ msgstr "dp_i"
 
 #: ../src/dialogs/export.cpp:508
 #: ../src/ui/dialog/inkscape-preferences.cpp:677
+#: ../src/ui/dialog/inkscape-preferences.cpp:1031
 msgid "dpi"
 msgstr "dpi"
 
@@ -1424,14 +1425,14 @@ msgstr "Единица измерения:"
 #: ../src/dialogs/guidelinedialog.cpp:45
 #: ../src/dialogs/object-attributes.cpp:58
 #: ../src/dialogs/object-attributes.cpp:66
-#: ../src/widgets/toolbox.cpp:1413
+#: ../src/widgets/toolbox.cpp:1411
 msgid "X:"
 msgstr "X:"
 
 #: ../src/dialogs/guidelinedialog.cpp:46
 #: ../src/dialogs/object-attributes.cpp:59
 #: ../src/dialogs/object-attributes.cpp:67
-#: ../src/widgets/toolbox.cpp:1431
+#: ../src/widgets/toolbox.cpp:1429
 msgid "Y:"
 msgstr "Y:"
 
@@ -1640,52 +1641,52 @@ msgstr "_Добавить"
 msgid "New layer created."
 msgstr "Создание нового слоя."
 
-#: ../src/dialogs/layers-panel.cpp:588
+#: ../src/dialogs/layers-panel.cpp:483
 #: ../src/widgets/layer-selector.cpp:595
 msgid "Unhide layer"
 msgstr "Раскрытие объекта"
 
-#: ../src/dialogs/layers-panel.cpp:588
+#: ../src/dialogs/layers-panel.cpp:483
 #: ../src/widgets/layer-selector.cpp:595
 msgid "Hide layer"
 msgstr "Сокрытие слоя"
 
-#: ../src/dialogs/layers-panel.cpp:599
+#: ../src/dialogs/layers-panel.cpp:494
 #: ../src/widgets/layer-selector.cpp:587
 msgid "Lock layer"
 msgstr "Запирание слоя"
 
-#: ../src/dialogs/layers-panel.cpp:599
+#: ../src/dialogs/layers-panel.cpp:494
 #: ../src/widgets/layer-selector.cpp:587
 msgid "Unlock layer"
 msgstr "Отпирание слоя"
 
-#: ../src/dialogs/layers-panel.cpp:739
+#: ../src/dialogs/layers-panel.cpp:634
 msgid "Layers"
 msgstr "Слои"
 
-#: ../src/dialogs/layers-panel.cpp:748
+#: ../src/dialogs/layers-panel.cpp:643
 msgid "New"
 msgstr "Новый"
 
-#: ../src/dialogs/layers-panel.cpp:753
+#: ../src/dialogs/layers-panel.cpp:648
 #: ../share/extensions/restack.inx.h:16
 msgid "Top"
 msgstr "Верх"
 
-#: ../src/dialogs/layers-panel.cpp:759
+#: ../src/dialogs/layers-panel.cpp:654
 msgid "Up"
 msgstr "Выше"
 
-#: ../src/dialogs/layers-panel.cpp:765
+#: ../src/dialogs/layers-panel.cpp:660
 msgid "Dn"
 msgstr "Ниже"
 
-#: ../src/dialogs/layers-panel.cpp:771
+#: ../src/dialogs/layers-panel.cpp:666
 msgid "Bot"
 msgstr "Низ"
 
-#: ../src/dialogs/layers-panel.cpp:781
+#: ../src/dialogs/layers-panel.cpp:676
 msgid "X"
 msgstr "X"
 
@@ -1800,8 +1801,8 @@ msgstr "Физическое или цифровое представление 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/dialogs/rdf.cpp:247
 #: ../src/extension/internal/bitmap/addNoise.cpp:46
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2273
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2276
 msgid "Type"
 msgstr "Тип"
 
@@ -1959,13 +1960,13 @@ msgstr "Снятие обводки"
 #: ../src/filter-enums.cpp:95
 #: ../src/flood-context.cpp:289
 #: ../src/interface.cpp:826
-#: ../src/ui/dialog/filter-effects-dialog.cpp:507
+#: ../src/ui/dialog/filter-effects-dialog.cpp:509
 #: ../src/ui/dialog/inkscape-preferences.cpp:219
 #: ../src/ui/dialog/inkscape-preferences.cpp:383
 #: ../src/ui/dialog/inkscape-preferences.cpp:505
-#: ../src/ui/dialog/inkscape-preferences.cpp:1008
+#: ../src/ui/dialog/inkscape-preferences.cpp:1003
 #: ../src/verbs.cpp:2197
-#: ../src/widgets/toolbox.cpp:3349
+#: ../src/widgets/toolbox.cpp:3342
 #: ../share/extensions/grid_polar.inx.h:16
 msgid "None"
 msgstr "Нет"
@@ -2134,12 +2135,12 @@ msgid "Justify lines"
 msgstr "Выключить строки по ширине"
 
 #: ../src/dialogs/text-edit.cpp:302
-#: ../src/widgets/toolbox.cpp:5715
+#: ../src/widgets/toolbox.cpp:5805
 msgid "Horizontal text"
 msgstr "Горизонтальный текст"
 
 #: ../src/dialogs/text-edit.cpp:316
-#: ../src/widgets/toolbox.cpp:5727
+#: ../src/widgets/toolbox.cpp:5817
 msgid "Vertical text"
 msgstr "Вертикальный текст"
 
@@ -2170,7 +2171,7 @@ msgid "Set as default"
 msgstr "Сохранить как умолчание"
 
 #: ../src/dialogs/text-edit.cpp:665
-#: ../src/text-context.cpp:1437
+#: ../src/text-context.cpp:1474
 msgid "Set text style"
 msgstr "Смена стиля текста"
 
@@ -2272,14 +2273,14 @@ msgstr "Создать ветвь с текстом"
 
 #: ../src/dialogs/xml-tree.cpp:347
 #: ../src/dialogs/xml-tree.cpp:1424
-#: ../src/nodepath.cpp:2068
+#: ../src/nodepath.cpp:2069
 msgid "Duplicate node"
 msgstr "Дублирование ветви"
 
 #: ../src/dialogs/xml-tree.cpp:368
 #: ../src/dialogs/xml-tree.cpp:1441
-#: ../src/nodepath.cpp:3317
-#: ../src/widgets/toolbox.cpp:1251
+#: ../src/nodepath.cpp:3318
+#: ../src/widgets/toolbox.cpp:1249
 msgid "Delete node"
 msgstr "Удаление ветви"
 
@@ -2393,7 +2394,7 @@ msgid "Base length of z-axis"
 msgstr "Основная длина оси Z"
 
 #: ../src/display/canvas-axonomgrid.cpp:398
-#: ../src/widgets/toolbox.cpp:2909
+#: ../src/widgets/toolbox.cpp:2907
 msgid "Angle X:"
 msgstr "Угол X:"
 
@@ -2403,7 +2404,7 @@ msgid "Angle of x-axis"
 msgstr "Угол оси X"
 
 #: ../src/display/canvas-axonomgrid.cpp:400
-#: ../src/widgets/toolbox.cpp:2988
+#: ../src/widgets/toolbox.cpp:2986
 msgid "Angle Z:"
 msgstr "Угол Z:"
 
@@ -2526,16 +2527,16 @@ msgid "Unnamed document %d"
 msgstr "Безымянный документ %d"
 
 #. We hit green anchor, closing Green-Blue-Red
-#: ../src/draw-context.cpp:523
+#: ../src/draw-context.cpp:548
 msgid "Path is closed."
 msgstr "Контур закрыт."
 
 #. We hit bot start and end of single curve, closing paths
-#: ../src/draw-context.cpp:538
+#: ../src/draw-context.cpp:563
 msgid "Closing path."
 msgstr "Закрываем контур"
 
-#: ../src/draw-context.cpp:657
+#: ../src/draw-context.cpp:674
 msgid "Draw path"
 msgstr "Создание контура"
 
@@ -2603,7 +2604,7 @@ msgstr "<b>Рисуется</b> стирающий штрих ластика"
 msgid "Draw eraser stroke"
 msgstr "Стирание ластиком"
 
-#: ../src/event-context.cpp:595
+#: ../src/event-context.cpp:596
 msgid "<b>Space+mouse drag</b> to pan canvas"
 msgstr "<b>Нажмите пробел и перетаскивайте курсор мыши</b> для перемещения по холсту"
 
@@ -2763,8 +2764,8 @@ msgstr "Адаптивная постеризация"
 #: ../src/libgdl/gdl-dock-placeholder.c:169
 #: ../src/live_effects/lpe-bendpath.cpp:58
 #: ../src/live_effects/lpe-patternalongpath.cpp:65
-#: ../src/widgets/toolbox.cpp:2582
-#: ../src/widgets/toolbox.cpp:3591
+#: ../src/widgets/toolbox.cpp:2580
+#: ../src/widgets/toolbox.cpp:3585
 msgid "Width"
 msgstr "Ширина"
 
@@ -2773,7 +2774,7 @@ msgstr "Ширина"
 #: ../src/extension/internal/bitmap/sample.cpp:41
 #: ../src/libgdl/gdl-dock.c:198
 #: ../src/libgdl/gdl-dock-placeholder.c:177
-#: ../src/widgets/toolbox.cpp:2599
+#: ../src/widgets/toolbox.cpp:2597
 msgid "Height"
 msgstr "Высота"
 
@@ -2872,7 +2873,7 @@ msgstr "Размывание"
 #: ../src/extension/internal/bitmap/oilPaint.cpp:38
 #: ../src/extension/internal/bitmap/sharpen.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2251
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2254
 msgid "Radius"
 msgstr "Радиус"
 
@@ -3128,7 +3129,7 @@ msgstr "Яркость"
 #: ../src/widgets/sp-color-icc-selector.cpp:236
 #: ../src/widgets/sp-color-scales.cpp:427
 #: ../src/widgets/sp-color-scales.cpp:428
-#: ../src/widgets/toolbox.cpp:3727
+#: ../src/widgets/toolbox.cpp:3721
 #: ../share/extensions/color_randomize.inx.h:5
 msgid "Saturation"
 msgstr "Насыщенность"
@@ -3139,7 +3140,7 @@ msgstr "Насыщенность"
 #: ../src/widgets/sp-color-icc-selector.cpp:236
 #: ../src/widgets/sp-color-scales.cpp:424
 #: ../src/widgets/sp-color-scales.cpp:425
-#: ../src/widgets/toolbox.cpp:3712
+#: ../src/widgets/toolbox.cpp:3706
 #: ../share/extensions/color_randomize.inx.h:2
 msgid "Hue"
 msgstr "Тон"
@@ -3209,12 +3210,12 @@ msgid "Shade"
 msgstr "Тень"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/ui/dialog/filter-effects-dialog.cpp:992
+#: ../src/ui/dialog/filter-effects-dialog.cpp:994
 msgid "Azimuth"
 msgstr "Азимут"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:993
+#: ../src/ui/dialog/filter-effects-dialog.cpp:995
 msgid "Elevation"
 msgstr "Высота"
 
@@ -3515,7 +3516,7 @@ msgid "Blur radius, px"
 msgstr "Радиус размывания, px"
 
 #: ../src/extension/internal/filter/drop-shadow.h:38
-#: ../src/ui/widget/object-composite-settings.cpp:51
+#: ../src/ui/widget/object-composite-settings.cpp:52
 #: ../src/ui/widget/selected-style.cpp:1031
 #: ../src/ui/widget/selected-style.cpp:1032
 msgid "Opacity, %"
@@ -3557,7 +3558,7 @@ msgstr "Закругление"
 
 #: ../src/extension/internal/filter/filter-file.cpp:33
 msgid "Personal"
-msgstr ""
+msgstr "Личное"
 
 #: ../src/extension/internal/filter/filter-file.cpp:44
 #, fuzzy
@@ -4529,18 +4530,18 @@ msgstr "Видимые цвета"
 #: ../src/widgets/sp-color-icc-selector.cpp:236
 #: ../src/widgets/sp-color-scales.cpp:430
 #: ../src/widgets/sp-color-scales.cpp:431
-#: ../src/widgets/toolbox.cpp:3742
+#: ../src/widgets/toolbox.cpp:3736
 #: ../share/extensions/color_randomize.inx.h:3
 msgid "Lightness"
 msgstr "Яркость"
 
 #: ../src/flood-context.cpp:290
-#: ../src/ui/dialog/inkscape-preferences.cpp:951
+#: ../src/ui/dialog/inkscape-preferences.cpp:946
 msgid "Small"
 msgstr "Маленькие"
 
 #: ../src/flood-context.cpp:291
-#: ../src/ui/dialog/inkscape-preferences.cpp:951
+#: ../src/ui/dialog/inkscape-preferences.cpp:946
 msgid "Medium"
 msgstr "Средние"
 
@@ -4787,9 +4788,9 @@ msgstr "Единица"
 #. Add the units menu.
 #: ../src/helper/units.cpp:37
 #: ../src/widgets/select-toolbar.cpp:490
-#: ../src/widgets/toolbox.cpp:1445
-#: ../src/widgets/toolbox.cpp:2643
-#: ../src/widgets/toolbox.cpp:6120
+#: ../src/widgets/toolbox.cpp:1443
+#: ../src/widgets/toolbox.cpp:2641
+#: ../src/widgets/toolbox.cpp:6210
 msgid "Units"
 msgstr "Единицы"
 
@@ -5666,7 +5667,7 @@ msgstr "Скелетная кисть"
 #. this is actually a special type of PatternAlongPath, used to paste shapes in pen/pencil tool
 #: ../src/live_effects/effect.cpp:77
 msgid "Sketch"
-msgstr "Эскиз"
+msgstr "Карандашный набросок"
 
 #: ../src/live_effects/effect.cpp:78
 msgid "VonKoch"
@@ -5698,7 +5699,7 @@ msgstr "Контур в перспективе"
 
 #: ../src/live_effects/effect.cpp:87
 msgid "Spiro spline"
-msgstr "Спиро"
+msgstr "Кривая Спиро"
 
 #: ../src/live_effects/effect.cpp:88
 msgid "Lattice Deformation"
@@ -5765,12 +5766,12 @@ msgstr "Без эффекта"
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:576
+#: ../src/live_effects/effect.cpp:575
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr "Правка параметра <b>%s</b>."
 
-#: ../src/live_effects/effect.cpp:581
+#: ../src/live_effects/effect.cpp:580
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "Ни один из параметров примененного эффекта не может быть изменен на холсте."
 
@@ -5887,7 +5888,7 @@ msgstr "Тип операции"
 
 #: ../src/live_effects/lpe-boolops.cpp:37
 msgid "Determines which kind of boolop will be performed."
-msgstr ""
+msgstr "Какой тип логической операции будет использован"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:28
 msgid "Size X"
@@ -5910,7 +5911,7 @@ msgstr "Число ячеек сетки по оси Y"
 #: ../share/extensions/motion.inx.h:1
 #: ../share/extensions/restack.inx.h:1
 msgid "Angle"
-msgstr "Угол"
+msgstr "Угол:"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:42
 msgid "Number of copies"
@@ -5921,23 +5922,20 @@ msgid "Number of copies of the original path"
 msgstr "Количество копий исходного контура"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:43
-#, fuzzy
 msgid "Origin"
-msgstr "Точка отсчёта по X"
+msgstr "Точка отсчета"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:43
-#, fuzzy
 msgid "Origin of the rotation"
-msgstr "Ориентация"
+msgstr "Точка отсчета для вращения"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:44
 msgid "Include original?"
 msgstr "Включая оригинал"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:55
-#, fuzzy
 msgid "Adjust the angle"
-msgstr "Коррекция тона"
+msgstr "Изменить угол"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "Stitch path"
@@ -6070,7 +6068,7 @@ msgstr "Угол давления зубцов (обычно равен 20-25°)
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:27
 msgid "Gap width"
-msgstr "Ширина интервала"
+msgstr "Ширина интервала:"
 
 #: ../src/live_effects/lpe-knot.cpp:27
 msgid "The width of the gap in the path where it self-intersects"
@@ -6163,29 +6161,24 @@ msgid "Handle to control the distance of the offset from the curve"
 msgstr ""
 
 #: ../src/live_effects/lpe-parallel.cpp:50
-#, fuzzy
 msgid "Adjust the offset"
-msgstr "Коррекция тона"
+msgstr "Изменить смещение"
 
 #: ../src/live_effects/lpe-parallel.cpp:51
-#, fuzzy
 msgid "Specifies the left end of the parallel"
-msgstr "Определяет левый конец биссектрисы"
+msgstr "Определяет левый конец параллели"
 
 #: ../src/live_effects/lpe-parallel.cpp:52
-#, fuzzy
 msgid "Specifies the right end of the parallel"
-msgstr "Определяет правый конец биссектрисы"
+msgstr "Определяет правый конец параллели"
 
 #: ../src/live_effects/lpe-parallel.cpp:60
-#, fuzzy
 msgid "Adjust the \"left\" end of the parallel"
-msgstr "Определяет цвет источника света"
+msgstr "Изменить левый конец параллели"
 
 #: ../src/live_effects/lpe-parallel.cpp:61
-#, fuzzy
 msgid "Adjust the \"right\" end of the parallel"
-msgstr "Взять яркость цвета"
+msgstr "Изменить правый конец параллели"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:54
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -6209,7 +6202,7 @@ msgstr "Повторяются и растягиваются"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:63
 msgid "Pattern source"
-msgstr "Источник текстуры"
+msgstr "Текстура (кисть)"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:63
 msgid "Path to put along the skeleton path"
@@ -6217,7 +6210,7 @@ msgstr "Текстура, направляемая по скелетному к�
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:64
 msgid "Pattern copies"
-msgstr "Копии текстуры"
+msgstr "Копии:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:64
 msgid "How many pattern copies to place along the skeleton path"
@@ -6233,7 +6226,7 @@ msgstr "Измерять ширину текстуры в единицах, ра
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:67
 msgid "Spacing"
-msgstr "Интервал"
+msgstr "Интервал:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:67
 #, c-format
@@ -6244,13 +6237,13 @@ msgstr "Интервал между копиями текстуры. Можно 
 #: ../share/extensions/pathalongpath.inx.h:5
 #: ../share/extensions/pathscatter.inx.h:7
 msgid "Normal offset"
-msgstr "Обычное смещение"
+msgstr "Обычное смещение:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:69
 #: ../share/extensions/pathalongpath.inx.h:15
 #: ../share/extensions/pathscatter.inx.h:13
 msgid "Tangential offset"
-msgstr "Тангенциальное смещение"
+msgstr "Смещение по касательной:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
 msgid "Offsets in unit of pattern size"
@@ -6302,9 +6295,8 @@ msgid "Scale factor in y direction"
 msgstr "Состояние точек схода в направлении X"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:56
-#, fuzzy
 msgid "Offset x"
-msgstr "Смещение"
+msgstr "Смещение по X"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:56
 #, fuzzy
@@ -6312,9 +6304,8 @@ msgid "Offset in x direction"
 msgstr "Угол в направлении X"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:57
-#, fuzzy
 msgid "Offset y"
-msgstr "Смещение"
+msgstr "Смещение по Y"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:57
 #, fuzzy
@@ -6340,9 +6331,8 @@ msgid "Mark distance"
 msgstr "Радиус _прилипания"
 
 #: ../src/live_effects/lpe-ruler.cpp:25
-#, fuzzy
 msgid "Distance between ruler marks"
-msgstr "Расстояние между вертикальными линиями сетки"
+msgstr "Расстояние между метками линейки"
 
 #: ../src/live_effects/lpe-ruler.cpp:26
 #, fuzzy
@@ -6352,6 +6342,20 @@ msgstr "Макс. длина"
 #: ../src/live_effects/lpe-ruler.cpp:26
 msgid "Length of ruler marks"
 msgstr "Длина меток линейки"
+
+#: ../src/live_effects/lpe-ruler.cpp:27
+#: ../src/live_effects/lpe-sketch.cpp:54
+#: ../src/selection-chemistry.cpp:1456
+#: ../src/seltrans.cpp:453
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2238
+#: ../src/ui/dialog/transformation.cpp:736
+msgid "Scale"
+msgstr "Масштабирование"
+
+#: ../src/live_effects/lpe-ruler.cpp:27
+#, fuzzy
+msgid "Scale factor for ruler distance"
+msgstr "Состояние точек схода в направлении X"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-skeleton.cpp:33
@@ -6441,19 +6445,11 @@ msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:52
 msgid "Construction lines"
-msgstr "Линий конструкции"
+msgstr "Линий конструкции:"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
 msgid "How many construction lines (tangents) to draw"
 msgstr ""
-
-#: ../src/live_effects/lpe-sketch.cpp:54
-#: ../src/selection-chemistry.cpp:1456
-#: ../src/seltrans.cpp:453
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
-#: ../src/ui/dialog/transformation.cpp:736
-msgid "Scale"
-msgstr "Масштабирование"
 
 #: ../src/live_effects/lpe-sketch.cpp:55
 msgid "Scale factor relating curvature and length of construction lines (try 5*offset)"
@@ -6461,23 +6457,23 @@ msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Max. length"
-msgstr "Макс. длина"
+msgstr "Макс. длина:"
 
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Maximum length of construction lines"
-msgstr ""
+msgstr "Максимальная длина карандашных штрихов"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Length variation"
-msgstr "Вариативность длины"
+msgstr "Вариативность длины:"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Random variation of the length of construction lines"
-msgstr ""
+msgstr "Случайно варьирование длины карандашных штрихов"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:63
 msgid "Additional angle between tangent and curve"
-msgstr ""
+msgstr "Дополнительный угол между касательной и кривой"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:64
 msgid "Location along curve"
@@ -6552,7 +6548,7 @@ msgstr "Если отключено, рисовать только послед�
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
 msgid "Reference"
-msgstr "На что ориентироваться"
+msgstr "Ориентир:"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
 msgid "Generating path segments define transforms in reference to bbox or last segment"
@@ -6570,7 +6566,7 @@ msgstr "Отключить эффект, если вывод слишком сл
 msgid "Change bool parameter"
 msgstr "Смена логического параметра"
 
-#: ../src/live_effects/parameter/enum.h:52
+#: ../src/live_effects/parameter/enum.h:50
 msgid "Change enumeration parameter"
 msgstr "Смена параметра перечня"
 
@@ -6578,28 +6574,28 @@ msgstr "Смена параметра перечня"
 msgid "Change scalar parameter"
 msgstr "Смена скалярного параметра"
 
-#: ../src/live_effects/parameter/path.cpp:157
+#: ../src/live_effects/parameter/path.cpp:158
 msgid "Edit on-canvas"
-msgstr "Правка на холсте"
+msgstr "Изменить на холсте"
 
-#: ../src/live_effects/parameter/path.cpp:167
+#: ../src/live_effects/parameter/path.cpp:168
 msgid "Copy path"
 msgstr "Скопировать контур"
 
-#: ../src/live_effects/parameter/path.cpp:177
+#: ../src/live_effects/parameter/path.cpp:178
 msgid "Paste path"
 msgstr "Вставить контур"
 
-#: ../src/live_effects/parameter/path.cpp:187
+#: ../src/live_effects/parameter/path.cpp:188
 #, fuzzy
 msgid "Link to path"
 msgstr "Прилипать к _контурам"
 
-#: ../src/live_effects/parameter/path.cpp:368
+#: ../src/live_effects/parameter/path.cpp:396
 msgid "Paste path parameter"
 msgstr "Вставить параметр контура"
 
-#: ../src/live_effects/parameter/path.cpp:400
+#: ../src/live_effects/parameter/path.cpp:428
 #, fuzzy
 msgid "Link path parameter to path"
 msgstr "Вставить параметр контура"
@@ -6940,182 +6936,182 @@ msgstr "<b>Shift</b>: выделить/развыделить узел, откл
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b>: зафиксировать длину рычага; <b>Ctrl+Alt</b>: двигать вдоль рычагов"
 
-#: ../src/nodepath.cpp:687
+#: ../src/nodepath.cpp:688
 #: ../src/seltrans.cpp:546
 msgid "Stamp"
 msgstr "Штамповка"
 
-#: ../src/nodepath.cpp:1528
-#: ../src/nodepath.cpp:1555
+#: ../src/nodepath.cpp:1529
+#: ../src/nodepath.cpp:1556
 msgid "Move nodes vertically"
 msgstr "Смещение узлов по вертикали"
 
-#: ../src/nodepath.cpp:1530
-#: ../src/nodepath.cpp:1557
+#: ../src/nodepath.cpp:1531
+#: ../src/nodepath.cpp:1558
 msgid "Move nodes horizontally"
 msgstr "Смещение узлов по горизонтали"
 
-#: ../src/nodepath.cpp:1532
-#: ../src/nodepath.cpp:1559
-#: ../src/nodepath.cpp:1574
-#: ../src/nodepath.cpp:3403
+#: ../src/nodepath.cpp:1533
+#: ../src/nodepath.cpp:1560
+#: ../src/nodepath.cpp:1575
+#: ../src/nodepath.cpp:3404
 msgid "Move nodes"
 msgstr "Смещение узлов"
 
-#: ../src/nodepath.cpp:1612
+#: ../src/nodepath.cpp:1613
 msgid "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
 msgstr "<b>Рычаг узла</b>: перетаскивание с <b>Ctrl</b> ограничивает угол; с <b>Alt</b> фиксирует длину; с <b>Shift</b> синхронно вращает противоположный рычаг"
 
-#: ../src/nodepath.cpp:1782
+#: ../src/nodepath.cpp:1783
 msgid "Align nodes"
 msgstr "Выровнять узлы"
 
-#: ../src/nodepath.cpp:1844
+#: ../src/nodepath.cpp:1845
 msgid "Distribute nodes"
 msgstr "Расстановка узлов"
 
-#: ../src/nodepath.cpp:1882
+#: ../src/nodepath.cpp:1883
 msgid "Add nodes"
 msgstr "Добавление узлов"
 
-#: ../src/nodepath.cpp:1884
-#: ../src/nodepath.cpp:1956
+#: ../src/nodepath.cpp:1885
+#: ../src/nodepath.cpp:1957
 msgid "Add node"
 msgstr "Добавление узла"
 
-#: ../src/nodepath.cpp:2039
+#: ../src/nodepath.cpp:2040
 msgid "Break path"
 msgstr "Разбитие контура"
 
-#: ../src/nodepath.cpp:2095
+#: ../src/nodepath.cpp:2096
 msgid "Close subpath"
 msgstr "Закрытие подконтура"
 
-#: ../src/nodepath.cpp:2156
+#: ../src/nodepath.cpp:2157
 msgid "Join nodes"
 msgstr "Соединение узлов"
 
-#: ../src/nodepath.cpp:2183
+#: ../src/nodepath.cpp:2184
 msgid "Close subpath by segment"
 msgstr "Закрытие подконтура сегментом"
 
-#: ../src/nodepath.cpp:2237
+#: ../src/nodepath.cpp:2238
 msgid "Join nodes by segment"
 msgstr "Соединение узлов сегментом"
 
-#: ../src/nodepath.cpp:2250
-#: ../src/nodepath.cpp:2265
+#: ../src/nodepath.cpp:2251
+#: ../src/nodepath.cpp:2266
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Для соединения выделите <b>два оконечных узла</b>."
 
-#: ../src/nodepath.cpp:2422
-#: ../src/nodepath.cpp:2458
-#: ../src/nodepath.cpp:2462
+#: ../src/nodepath.cpp:2423
+#: ../src/nodepath.cpp:2459
+#: ../src/nodepath.cpp:2463
 msgid "Delete nodes"
 msgstr "Удаление узлов"
 
-#: ../src/nodepath.cpp:2424
+#: ../src/nodepath.cpp:2425
 msgid "Delete nodes preserving shape"
 msgstr "Удаление узлов без смены формы"
 
-#: ../src/nodepath.cpp:2481
-#: ../src/nodepath.cpp:2495
+#: ../src/nodepath.cpp:2482
+#: ../src/nodepath.cpp:2496
 msgid "Select <b>two non-endpoint nodes</b> on a path between which to delete segments."
 msgstr "Выделите <b>два неоконечных узла</b> контура, чтобы удалить сегменты между ними"
 
-#: ../src/nodepath.cpp:2591
+#: ../src/nodepath.cpp:2592
 msgid "Cannot find path between nodes."
 msgstr "Невозможно найти контур между узлами."
 
-#: ../src/nodepath.cpp:2623
-#: ../src/widgets/toolbox.cpp:1294
+#: ../src/nodepath.cpp:2624
+#: ../src/widgets/toolbox.cpp:1292
 msgid "Delete segment"
 msgstr "Удаление сегмента"
 
-#: ../src/nodepath.cpp:2644
+#: ../src/nodepath.cpp:2645
 msgid "Change segment type"
 msgstr "Смена типа сегмента"
 
-#: ../src/nodepath.cpp:2661
-#: ../src/nodepath.cpp:3361
+#: ../src/nodepath.cpp:2662
+#: ../src/nodepath.cpp:3362
 msgid "Change node type"
 msgstr "Смена типа узла"
 
-#: ../src/nodepath.cpp:3649
+#: ../src/nodepath.cpp:3650
 msgid "Retract handle"
 msgstr "Втяжка узла"
 
-#: ../src/nodepath.cpp:3698
+#: ../src/nodepath.cpp:3699
 msgid "Move node handle"
 msgstr "Смещение рычага узла"
 
-#: ../src/nodepath.cpp:3867
+#: ../src/nodepath.cpp:3880
 #, c-format
 msgid "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
 msgstr "<b>Рычаг узла</b> под углом %0.2f&#176;, длина %s; перетаскивание с <b>Ctrl</b> ограничивает угол; с <b>Alt</b> фиксирует длину; с <b>Shift</b> синхронно вращает противоположный рычаг"
 
-#: ../src/nodepath.cpp:4061
+#: ../src/nodepath.cpp:4074
 msgid "Rotate nodes"
 msgstr "Вращение узлов"
 
-#: ../src/nodepath.cpp:4192
+#: ../src/nodepath.cpp:4205
 msgid "Scale nodes"
 msgstr "Масштабирование узлов"
 
-#: ../src/nodepath.cpp:4236
+#: ../src/nodepath.cpp:4249
 msgid "Flip nodes"
 msgstr "Зеркалирование узлов"
 
-#: ../src/nodepath.cpp:4405
+#: ../src/nodepath.cpp:4418
 msgid "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
 msgstr "<b>Узел</b>: перетаскивание при нажатой клавише <b>Ctrl</b> — с прилипанием по горизонтали/вертикали; с <b>Ctrl+Alt</b> — вдоль рычагов"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4631
+#: ../src/nodepath.cpp:4644
 msgid "end node"
 msgstr "оконечный узел"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4636
+#: ../src/nodepath.cpp:4649
 msgid "cusp"
 msgstr "острый"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4639
+#: ../src/nodepath.cpp:4652
 msgid "smooth"
 msgstr "гладкий"
 
-#: ../src/nodepath.cpp:4641
+#: ../src/nodepath.cpp:4654
 msgid "symmetric"
 msgstr "симметричный"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4647
+#: ../src/nodepath.cpp:4660
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "оконечный узел, рычаг втянут (вытаскивается с <b>Shift</b>)"
 
-#: ../src/nodepath.cpp:4649
+#: ../src/nodepath.cpp:4662
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "один рычаг втянут (вытаскивается с <b>Shift</b>)"
 
-#: ../src/nodepath.cpp:4652
+#: ../src/nodepath.cpp:4665
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "оба рычага втянуты (вытаскиваются с <b>Shift</b>)"
 
-#: ../src/nodepath.cpp:4664
+#: ../src/nodepath.cpp:4677
 msgid "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; <b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to rotate"
 msgstr "<b>Перетаскивайте</b> узлы или рычаги; <b>Alt+перетаскивание</b> узлов для лепки; клавиши <b>со стрелками</b> для смещения узлов, <b>&lt; &gt;</b> для масштабирования, <b>[ ]</b> для вращения"
 
-#: ../src/nodepath.cpp:4665
+#: ../src/nodepath.cpp:4678
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr "Перетаскивайте узел или его рычаги; клавиши-стрелки двигают узел"
 
-#: ../src/nodepath.cpp:4690
-#: ../src/nodepath.cpp:4702
+#: ../src/nodepath.cpp:4703
+#: ../src/nodepath.cpp:4715
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Выберите один объект для изменения его узлов или рычагов."
 
-#: ../src/nodepath.cpp:4694
+#: ../src/nodepath.cpp:4707
 #, c-format
 msgid "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select."
 msgid_plural "<b>0</b> out of <b>%i</b> nodes selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select."
@@ -7123,11 +7119,11 @@ msgstr[0] "Выделен <b>0</b> из <b>%i</b> узлов. Для выдел�
 msgstr[1] "Выделено <b>0</b> из <b>%i</b> узлов.  Для выделения узлов используйте щелчок, Shift+щелчок, либо обведение рамкой."
 msgstr[2] "Выделено <b>0</b> из <b>%i</b> узлов.  Для выделения узлов используйте щелчок, Shift+щелчок, либо обведение рамкой."
 
-#: ../src/nodepath.cpp:4700
+#: ../src/nodepath.cpp:4713
 msgid "Drag the handles of the object to modify it."
 msgstr "Двигайте ручки фигуры, чтобы изменить ее."
 
-#: ../src/nodepath.cpp:4708
+#: ../src/nodepath.cpp:4721
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
@@ -7135,7 +7131,7 @@ msgstr[0] "<b>%i</b> из <b>%i</b> узла выделен; %s. %s."
 msgstr[1] "<b>%i</b> из <b>%i</b> узлов выделено; %s. %s."
 msgstr[2] "<b>%i</b> из <b>%i</b> узлов выделено; %s. %s."
 
-#: ../src/nodepath.cpp:4715
+#: ../src/nodepath.cpp:4728
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -7143,7 +7139,7 @@ msgstr[0] "<b>%i</b> из <b>%i</b> узла выделен в <b>%i</b> из <b
 msgstr[1] "<b>%i</b> из <b>%i</b> узлов выделено в <b>%i</b> из <b>%i</b> субконтуров. %s."
 msgstr[2] "<b>%i</b> из <b>%i</b> узлов выделено в <b>%i</b> из <b>%i</b> субконтуров. %s."
 
-#: ../src/nodepath.cpp:4721
+#: ../src/nodepath.cpp:4734
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -7457,9 +7453,9 @@ msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Ничего</b> не удалено."
 
 #: ../src/selection-chemistry.cpp:220
-#: ../src/text-context.cpp:994
-#: ../src/widgets/toolbox.cpp:1255
-#: ../src/widgets/toolbox.cpp:4711
+#: ../src/text-context.cpp:1004
+#: ../src/widgets/toolbox.cpp:1253
+#: ../src/widgets/toolbox.cpp:4794
 msgid "Delete"
 msgstr "Удаление"
 
@@ -7568,7 +7564,7 @@ msgid "Select <b>object(s)</b> to remove filters from."
 msgstr "Выделите <b>текст</b> для удаления ручного кернинга."
 
 #: ../src/selection-chemistry.cpp:945
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1363
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1365
 msgid "Remove filter"
 msgstr "Удаление фильтра"
 
@@ -7757,9 +7753,8 @@ msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Выделите <b>объект(ы)</b> для создания растровой копии."
 
 #: ../src/selection-chemistry.cpp:2425
-#, fuzzy
 msgid "Rendering bitmap..."
-msgstr "Выполняется разворот контуров..."
+msgstr "Создается растровая копия..."
 
 #: ../src/selection-chemistry.cpp:2588
 msgid "Create bitmap"
@@ -7785,30 +7780,30 @@ msgstr "Установлена маска"
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Выделите <b>объект(ы)</b>, с которых нужно снять обтравочный контур или маску."
 
-#: ../src/selection-chemistry.cpp:2814
+#: ../src/selection-chemistry.cpp:2818
 msgid "Release clipping path"
 msgstr "Обтравочный контур снят"
 
-#: ../src/selection-chemistry.cpp:2816
+#: ../src/selection-chemistry.cpp:2820
 msgid "Release mask"
 msgstr "Маска снята"
 
-#: ../src/selection-chemistry.cpp:2832
+#: ../src/selection-chemistry.cpp:2836
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr "Выделите <b>объект</b>, по  размеру которого подогнать холст."
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:2852
+#: ../src/selection-chemistry.cpp:2856
 #: ../src/verbs.cpp:2675
 msgid "Fit Page to Selection"
 msgstr "Cтраница до выделения"
 
-#: ../src/selection-chemistry.cpp:2877
+#: ../src/selection-chemistry.cpp:2881
 #: ../src/verbs.cpp:2677
 msgid "Fit Page to Drawing"
 msgstr "Откадрировать холст до рисунка"
 
-#: ../src/selection-chemistry.cpp:2893
+#: ../src/selection-chemistry.cpp:2897
 #: ../src/verbs.cpp:2679
 msgid "Fit Page to Selection or Drawing"
 msgstr "Откадрировать холст до выделения или рисунка"
@@ -7827,6 +7822,7 @@ msgstr "Окружность"
 #: ../src/selection-describer.cpp:73
 #: ../src/ui/dialog/inkscape-preferences.cpp:432
 #: ../src/verbs.cpp:2472
+#: ../src/widgets/toolbox.cpp:3345
 msgid "Ellipse"
 msgstr "Эллипс"
 
@@ -7839,12 +7835,12 @@ msgid "Line"
 msgstr "Линия"
 
 #: ../src/selection-describer.cpp:57
-#: ../src/ui/dialog/inkscape-preferences.cpp:982
+#: ../src/ui/dialog/inkscape-preferences.cpp:977
 msgid "Path"
 msgstr "Контур"
 
 #: ../src/selection-describer.cpp:59
-#: ../src/widgets/toolbox.cpp:2214
+#: ../src/widgets/toolbox.cpp:2212
 msgid "Polygon"
 msgstr "Многоугольник"
 
@@ -7885,7 +7881,7 @@ msgstr "Спираль"
 #: ../src/selection-describer.cpp:79
 #: ../src/ui/dialog/inkscape-preferences.cpp:436
 #: ../src/verbs.cpp:2474
-#: ../src/widgets/toolbox.cpp:2221
+#: ../src/widgets/toolbox.cpp:2219
 msgid "Star"
 msgstr "Звезда"
 
@@ -8068,7 +8064,7 @@ msgstr "Переместить <b>центр</b> в %s, %s"
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
 msgstr "<b>Перемещение</b> на %s, %s; с <b>Ctrl</b> только по горизонтали/вертикали; с <b>Shift</b> без прилипания"
 
-#: ../src/shape-editor.cpp:455
+#: ../src/shape-editor.cpp:458
 msgid "Drag curve"
 msgstr "Перетаскивание кривой"
 
@@ -8179,21 +8175,21 @@ msgstr "<b>Спираль</b>: радиус %s, угол %5g&#176;; <b>Ctrl</b> 
 msgid "Create spiral"
 msgstr "Создание спирали"
 
-#: ../src/sp-item.cpp:970
+#: ../src/sp-item.cpp:997
 msgid "Object"
 msgstr "Объект"
 
-#: ../src/sp-item.cpp:987
+#: ../src/sp-item.cpp:1014
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr "%s; <i>под обтравочным контуром</i>"
 
-#: ../src/sp-item.cpp:992
+#: ../src/sp-item.cpp:1019
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr "%s; <i>маскирован</i>"
 
-#: ../src/sp-item.cpp:997
+#: ../src/sp-item.cpp:1024
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr "%s; <i>с фильтром</i>"
@@ -8577,7 +8573,7 @@ msgid "Unicode (<b>Enter</b> to finish): %s: %s"
 msgstr "Юникод (нажмите <b>Ввод</b> для завершения): %s: %s"
 
 #: ../src/text-context.cpp:584
-#: ../src/text-context.cpp:848
+#: ../src/text-context.cpp:858
 msgid "Unicode (<b>Enter</b> to finish): "
 msgstr "Юникод (нажмите <b>Ввод</b> для завершения): "
 
@@ -8587,7 +8583,7 @@ msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Рамка для текста</b>: %s &#215; %s"
 
 #: ../src/text-context.cpp:690
-#: ../src/text-context.cpp:1543
+#: ../src/text-context.cpp:1583
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Вводите текст; <b>Enter</b> начинает новый абзац."
 
@@ -8603,84 +8599,84 @@ msgstr "Создание текстового блока"
 msgid "The frame is <b>too small</b> for the current font size. Flowed text not created."
 msgstr "Рамка <b>слишком мала</b> для текущего размера шрифта. Невозможно создать текст в рамке."
 
-#: ../src/text-context.cpp:833
+#: ../src/text-context.cpp:843
 msgid "No-break space"
 msgstr "Неразрывный пробел"
 
-#: ../src/text-context.cpp:835
+#: ../src/text-context.cpp:845
 msgid "Insert no-break space"
 msgstr "Вставка неразрывного пробела"
 
-#: ../src/text-context.cpp:872
+#: ../src/text-context.cpp:882
 msgid "Make bold"
 msgstr "Полужирное начертание"
 
-#: ../src/text-context.cpp:890
+#: ../src/text-context.cpp:900
 msgid "Make italic"
 msgstr "Курсивное начертание"
 
-#: ../src/text-context.cpp:929
+#: ../src/text-context.cpp:939
 msgid "New line"
 msgstr "Новая строка"
 
-#: ../src/text-context.cpp:963
+#: ../src/text-context.cpp:973
 msgid "Backspace"
 msgstr "Забой"
 
-#: ../src/text-context.cpp:1011
+#: ../src/text-context.cpp:1021
 msgid "Kern to the left"
 msgstr "Кернинг влево"
 
-#: ../src/text-context.cpp:1033
+#: ../src/text-context.cpp:1046
 msgid "Kern to the right"
 msgstr "Кернинг вправо"
 
-#: ../src/text-context.cpp:1055
+#: ../src/text-context.cpp:1071
 msgid "Kern up"
 msgstr "Кернинг вверх"
 
-#: ../src/text-context.cpp:1078
+#: ../src/text-context.cpp:1097
 msgid "Kern down"
 msgstr "Кернинг вниз"
 
-#: ../src/text-context.cpp:1134
+#: ../src/text-context.cpp:1174
 msgid "Rotate counterclockwise"
 msgstr "Поворот против часовой стрелки"
 
-#: ../src/text-context.cpp:1155
+#: ../src/text-context.cpp:1195
 msgid "Rotate clockwise"
 msgstr "Поворот по часовой стрелке"
 
-#: ../src/text-context.cpp:1172
+#: ../src/text-context.cpp:1212
 msgid "Contract line spacing"
 msgstr "Сокращение межстрочного интервала"
 
-#: ../src/text-context.cpp:1180
+#: ../src/text-context.cpp:1220
 msgid "Contract letter spacing"
 msgstr "Сокращение межбуквенного интервала"
 
-#: ../src/text-context.cpp:1199
+#: ../src/text-context.cpp:1239
 msgid "Expand line spacing"
 msgstr "Увеличение межстрочного интервала"
 
-#: ../src/text-context.cpp:1207
+#: ../src/text-context.cpp:1247
 msgid "Expand letter spacing"
 msgstr "Увеличение межбуквенного интервала"
 
-#: ../src/text-context.cpp:1311
+#: ../src/text-context.cpp:1348
 msgid "Paste text"
 msgstr "Вставка стиля"
 
-#: ../src/text-context.cpp:1541
+#: ../src/text-context.cpp:1581
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr "Набирайте завёрстанный текст; <b>Ввод</b> начинает новый абзац"
 
-#: ../src/text-context.cpp:1551
+#: ../src/text-context.cpp:1591
 #: ../src/tools-switch.cpp:211
 msgid "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; then type."
 msgstr "<b>Щелчок</b> выделяет или создает текст, <b>перетаскивание</b> создает текст в рамке; после этого можно набирать текст."
 
-#: ../src/text-context.cpp:1660
+#: ../src/text-context.cpp:1700
 msgid "Type text"
 msgstr "Ввод текста"
 
@@ -8725,7 +8721,8 @@ msgid "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> 
 msgstr "<b>Щелчок</b> и <b>щелчок с перетаскиванием</b> начинают контур. С <b>Shift</b> линия добавляется к выделенному контуру. <b>Ctrl+щелчок</b> рисует точку."
 
 #: ../src/tools-switch.cpp:205
-msgid "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide, with <b>Alt</b> to thin/thicken. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."
+#, fuzzy
+msgid "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide path. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."
 msgstr "<b>Перетаскивание</b> рисует каллиграфический штрих; с <b>Ctrl</b> — отслеживание направления, с <b>Alt</b> — утоньшение/утолщение. Клавиши-стрелки меняют ширину (<b>влево</b>/<b>вправо</b>) и угол (<b>вверх</b>/<b>вниз</b>) пера."
 
 #: ../src/tools-switch.cpp:217
@@ -9074,12 +9071,12 @@ msgstr "В:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:501
 #: ../src/ui/dialog/align-and-distribute.cpp:778
-#: ../src/widgets/toolbox.cpp:5987
+#: ../src/widgets/toolbox.cpp:6077
 msgid "Remove overlaps"
 msgstr "Убрать перекрытия"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:531
-#: ../src/widgets/toolbox.cpp:5845
+#: ../src/widgets/toolbox.cpp:5935
 msgid "Arrange connector network"
 msgstr "Гармоничная расстановка связанных объектов"
 
@@ -9109,7 +9106,7 @@ msgstr "Узлы"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:786
 msgid "Relative to: "
-msgstr "Относительно: "
+msgstr "Ориентир: "
 
 #: ../src/ui/dialog/align-and-distribute.cpp:791
 msgid "Align right sides of objects to left side of anchor"
@@ -9212,7 +9209,7 @@ msgid "Move objects as little as possible so that their bounding boxes do not ov
 msgstr "Переместить объекты так, чтобы их рамки едва-едва не пересекались"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:880
-#: ../src/widgets/toolbox.cpp:5949
+#: ../src/widgets/toolbox.cpp:6039
 msgid "Nicely arrange selected connector network"
 msgstr "Гармонично расставить связанные коннектором объекты"
 
@@ -9235,19 +9232,19 @@ msgstr "Распределить выделенные узлы по вертик
 #. Rest of the widgetry
 #: ../src/ui/dialog/align-and-distribute.cpp:899
 msgid "Last selected"
-msgstr "Последнего выделенного"
+msgstr "Последний выделенный"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:900
 msgid "First selected"
-msgstr "Первого выделенного"
+msgstr "Первый выделенный"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:901
 msgid "Biggest item"
-msgstr "Наибольшего объекта"
+msgstr "Наибольший объект"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:902
 msgid "Smallest item"
-msgstr "Наименьшего объекта"
+msgstr "Наименьший объект"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:904
 #: ../src/widgets/desktop-widget.cpp:1548
@@ -9776,373 +9773,373 @@ msgstr "Об_водка"
 msgid "Stroke st_yle"
 msgstr "_Стиль обводки"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:504
+#: ../src/ui/dialog/filter-effects-dialog.cpp:506
 msgid "This matrix determines a linear transform on colour space. Each line affects one of the color components. Each column determines how much of each color component from the input is passed to the output. The last column does not depend on input colors, so can be used to adjust a constant component value."
 msgstr "«"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:614
+#: ../src/ui/dialog/filter-effects-dialog.cpp:616
 msgid "Image File"
 msgstr "Файл..."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:617
+#: ../src/ui/dialog/filter-effects-dialog.cpp:619
 msgid "Selected SVG Element"
 msgstr "Выбранный элемент SVG"
 
 #. TODO: any image, not justy svg
-#: ../src/ui/dialog/filter-effects-dialog.cpp:686
+#: ../src/ui/dialog/filter-effects-dialog.cpp:688
 msgid "Select an image to be used as feImage input"
 msgstr "Выберите изображение, используемое на входе feImage"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:778
+#: ../src/ui/dialog/filter-effects-dialog.cpp:780
 msgid "This SVG filter effect does not require any parameters."
 msgstr "У этого примитива эффектов SVG нет параметров."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:784
+#: ../src/ui/dialog/filter-effects-dialog.cpp:786
 msgid "This SVG filter effect is not yet implemented in Inkscape."
 msgstr "Этот примитив фильтра SVG еще не реализован в Inkscape."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:975
+#: ../src/ui/dialog/filter-effects-dialog.cpp:977
 msgid "Light Source:"
 msgstr "Источник света:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:992
+#: ../src/ui/dialog/filter-effects-dialog.cpp:994
 msgid "Direction angle for the light source on the XY plane, in degrees"
 msgstr "Угол, под которым источник света находится к плоскости XY (в градусах)"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:993
+#: ../src/ui/dialog/filter-effects-dialog.cpp:995
 msgid "Direction angle for the light source on the YZ plane, in degrees"
 msgstr "Угол, под которым источник света находится к плоскости YZ (в градусах)"
 
 #. default x:
 #. default y:
 #. default z:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:996
-#: ../src/ui/dialog/filter-effects-dialog.cpp:999
+#: ../src/ui/dialog/filter-effects-dialog.cpp:998
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1001
 msgid "Location"
 msgstr "Расположение"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:996
-#: ../src/ui/dialog/filter-effects-dialog.cpp:999
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1002
+#: ../src/ui/dialog/filter-effects-dialog.cpp:998
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1001
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1004
 msgid "X coordinate"
 msgstr "Координата X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:996
-#: ../src/ui/dialog/filter-effects-dialog.cpp:999
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1002
+#: ../src/ui/dialog/filter-effects-dialog.cpp:998
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1001
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1004
 msgid "Y coordinate"
 msgstr "Координата Y"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:996
-#: ../src/ui/dialog/filter-effects-dialog.cpp:999
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1002
+#: ../src/ui/dialog/filter-effects-dialog.cpp:998
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1001
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1004
 msgid "Z coordinate"
 msgstr "Координата Z"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1002
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1004
 msgid "Points At"
 msgstr "Указывает на"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1003
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1005
 msgid "Specular Exponent"
 msgstr "Степень отражения"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1003
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1005
 msgid "Exponent value controlling the focus for the light source"
 msgstr "Значение экспоненты, контролирующей фокус источника света"
 
 #. TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1005
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1007
 msgid "Cone Angle"
 msgstr "Угол конуса"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1005
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1007
 msgid "This is the angle between the spot light axis (i.e. the axis between the light source and the point to which it is pointing at) and the spot light cone. No light is projected outside this cone."
 msgstr "Угол между осью источника света (т.е. осью, проходящей через источник света и точку, на которую он указывает) и конусом прожектора. За пределы конуса свет не проецируется."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1065
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1067
 msgid "New light source"
 msgstr "Новый источник света"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1106
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1108
 msgid "_Duplicate"
 msgstr "_Продублировать"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1132
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1134
 msgid "_Filter"
 msgstr "_Фильтры"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1146
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1148
 msgid "R_ename"
 msgstr "Пере_именовать"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1240
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1242
 msgid "Rename filter"
 msgstr "Переименовать фильтр"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1276
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1278
 msgid "Apply filter"
 msgstr "Применение фильтра"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1352
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1354
 msgid "Add filter"
 msgstr "Добавление фильтра"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1378
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1380
 msgid "Duplicate filter"
 msgstr "Дублирование фильтра"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1445
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1447
 msgid "_Effect"
 msgstr "Эффе_кт"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1453
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1455
 msgid "Connections"
 msgstr "Cоединения"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1569
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1571
 msgid "Remove filter primitive"
 msgstr "Удаление примитива фильтра"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1940
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1943
 msgid "Remove merge node"
 msgstr "Удалить объединяющий узел"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2056
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2059
 msgid "Reorder filter primitive"
 msgstr "Смена порядка примитивов фильтра"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2092
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2093
 msgid "Add Effect:"
 msgstr "Добавить:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2093
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2094
 msgid "No effect selected"
 msgstr "Ни один эффект не выбран"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2094
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2095
 msgid "No filter selected"
 msgstr "Ни один фильтр не выбран"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2130
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2133
 msgid "Effect parameters"
 msgstr "Параметры эффекта"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2131
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2134
 msgid "Filter General Settings"
 msgstr "Общие параметры фильтра"
 
 #. default x:
 #. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2187
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "Coordinates"
 msgstr "Координаты"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2187
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "X coordinate of the left corners of filter effects region"
 msgstr "Координата X левых углов области действия фильтра эффектов"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2187
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "Y coordinate of the upper corners of filter effects region"
 msgstr "Координата X верхних углов области действия фильтра эффектов"
 
 #. default width:
 #. default height:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2188
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 #: ../share/extensions/dimension.inx.h:1
 msgid "Dimensions"
 msgstr "Размеры"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2188
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid "Width of filter effects region"
 msgstr "Ширина области действия фильтра эффектов"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2188
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid "Height of filter effects region"
 msgstr "Высота области действия фильтра эффектов"
 
 #. # end multiple scan
 #. ## end mode page
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
 #: ../src/ui/dialog/tracedialog.cpp:553
-#: ../src/widgets/toolbox.cpp:3680
+#: ../src/widgets/toolbox.cpp:3674
 #: ../share/extensions/triangle.inx.h:9
 msgid "Mode"
 msgstr "Режим"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
 msgid "Indicates the type of matrix operation. The keyword 'matrix' indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used color operations to be performed without specifying a complete matrix."
 msgstr "Тип матричной операции. Слово «матрица» означает, что будет предоставлена полная матрица значений размером 5×4. Остальные варианты — это простой способ выполнить наиболее популярные операции, не задавая все значения матрицы вручную."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid "Value(s)"
 msgstr "Значение(-я)"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2250
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2212
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2253
 msgid "Operator"
 msgstr "Оператор"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2210
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
 msgid "K1"
 msgstr "K1"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2210
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2211
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2212
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2213
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2214
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
 msgid "If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."
 msgstr "Если выбран арифметический оператор, каждый получаемый пиксел вычисляется по формуле k1*i1*i2 + k2*i1 + k3*i2 + k4, где i1 и i2 — пикселы первого и второго входов соответственно."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2211
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2214
 msgid "K2"
 msgstr "K2"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2212
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
 msgid "K3"
 msgstr "K3"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
 msgid "K4"
 msgstr "K4"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2219
 msgid "width of the convolve matrix"
 msgstr "Ширина матрицы свёртки"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2219
 msgid "height of the convolve matrix"
 msgstr "Высота матрицы свёртки"
 
 #. default x:
 #. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2220
 msgid "Target"
 msgstr "Цель"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2220
 msgid "X coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."
 msgstr "Координата X конечной точки матрицы свертки. Свертка применяется к пикселам вокруг этой точки."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2220
 msgid "Y coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."
 msgstr "Координата Y конечной точки матрицы свертки. Свертка применяется к пикселам вокруг этой точки."
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2219
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
 msgid "Kernel"
 msgstr "Ядро"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2219
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
 msgid "This matrix describes the convolve operation that is applied to the input image in order to calculate the pixel colors at the output. Different arrangements of values in this matrix result in various possible visual effects. An identity matrix would lead to a motion blur effect (parallel to the matrix diagonal) while a matrix filled with a constant non-zero value would lead to a common blur effect."
 msgstr "Эта матрица описывает операцию свертки, которая будет применена к входящему изображению для вычисления цветов пикселов на выходе. Различные комбинации значений дают различные визуальные эффекты. Тождественная матрица даст эффект размывания движением, в то время как матрица, заполненная постоянным ненулевым значением даст обычный эффект размывания."
 
 #. TODO: svg spec: The default value is the sum of all values in kernelMatrix, with the exception that if the sum is zero, then the divisor is set to 1.
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2225
 msgid "Divisor"
 msgstr "Делитель"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2225
 msgid "After applying the kernelMatrix to the input image to yield a number, that number is divided by divisor to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result."
 msgstr "После применения kernelMatrix к входящему изображению для получения числа, это число делится на делитель для получения конечного значения цвета. Делитель, являющийся суммой всех значений матрицы, имеет тенденцию приглушать общую интенсивность цветов в конечной картинке."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2226
 msgid "Bias"
 msgstr "Смещение"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2226
 msgid "This value is added to each component. This is useful to define a constant value as the zero response of the filter."
 msgstr "Это значение добавляется к каждому компоненту. Полезно для задания константы как нулевого отклика фильтра."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2224
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2227
 msgid "Edge Mode"
 msgstr "Режим краёв"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2224
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2227
 msgid "Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image."
 msgstr "Определяет, как расширить входящие изображение цветными пикселами, чтобы матричные операции могли работать с ядром, расположенным на крае изображения или близко к нему."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2225
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2228
 msgid "Preserve Alpha"
 msgstr "Сохранять альфа-канал"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2225
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2228
 msgid "If set, the alpha channel won't be altered by this filter primitive."
 msgstr "Если включено, альфа-канал не будет изменен этим примитивом фильтра."
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2228
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
 msgid "Diffuse Color"
 msgstr "Цвет диффузии"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2228
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2261
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2264
 msgid "Defines the color of the light source"
 msgstr "Определяет цвет источника света"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2262
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2232
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2265
 msgid "Surface Scale"
 msgstr "Коэфф. высоты поверхности"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2262
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2232
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2265
 msgid "This value amplifies the heights of the bump map defined by the input alpha channel"
 msgstr "На это значение умножается высота карты рельефа, определенная входящим альфа-каналом"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2263
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2233
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2266
 msgid "Constant"
 msgstr "Константа диффузии"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2263
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2233
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2266
 msgid "This constant affects the Phong lighting model."
 msgstr "Эта константа касается модели освещения Фонга"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2265
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2268
 msgid "Kernel Unit Length"
 msgstr "Длина единицы ядра"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2238
 msgid "This defines the intensity of the displacement effect."
 msgstr "Определяет интенсивность эффекта смещения"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2239
 msgid "X displacement"
 msgstr "Смещение по X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2239
 msgid "Color component that controls the displacement in the X direction"
 msgstr "Цветовой компонент, контролирующий смещение по оси X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2240
 msgid "Y displacement"
 msgstr "Смещение по Y"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2240
 msgid "Color component that controls the displacement in the Y direction"
 msgstr "Цветовой компонент, контролирующий смещение по оси Y"
 
 #. default: black
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2240
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2243
 msgid "Flood Color"
 msgstr "Цвет заливки"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2240
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2243
 msgid "The whole filter region will be filled with this color."
 msgstr "Вся область действия фильтра будет залита этим цветом"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2244
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2247
 msgid "Standard Deviation"
 msgstr "Стандартное отклонение"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2244
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2247
 msgid "The standard deviation for the blur operation."
 msgstr "Стандартное отклонение при размывании, выражается в процентах"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2250
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2253
 msgid ""
 "Erode: performs \"thinning\" of input image.\n"
 "Dilate: performs \"fattenning\" of input image."
@@ -10150,133 +10147,133 @@ msgstr ""
 "Эрозия: «утоньшает» входящее изображение\n"
 "Дилатация: «утолщает» входящее изображение"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2254
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2257
 msgid "Source of Image"
 msgstr "Источник изображения"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2257
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2260
 msgid "Delta X"
 msgstr "Дельта X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2257
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2260
 msgid "This is how far the input image gets shifted to the right"
 msgstr "Как далеко входящее изображение смещается вправо"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2258
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2261
 msgid "Delta Y"
 msgstr "Дельта Y"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2258
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2261
 msgid "This is how far the input image gets shifted downwards"
 msgstr "Как далеко входящее изображение смещается вниз"
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2261
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2264
 msgid "Specular Color"
 msgstr "Цвет отражения"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2264
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2267
 #: ../share/extensions/interp.inx.h:2
 msgid "Exponent"
 msgstr "Экспонента"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2264
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2267
 msgid "Exponent for specular term, larger is more \"shiny\"."
 msgstr "Экспонента отражения: чем больше значение, тем ярче отражение"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2273
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2276
 msgid "Indicates whether the filter primitive should perform a noise or turbulence function."
 msgstr "Должен ли примитив выполнять функцию создания турбулентности или же шума"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2274
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2277
 msgid "Base Frequency"
 msgstr "Основная частота"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2275
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2278
 msgid "Octaves"
 msgstr "Числа Кейли"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2276
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2279
 msgid "Seed"
 msgstr "Случайное значение"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2276
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2279
 msgid "The starting number for the pseudo random number generator."
 msgstr "Начальное число для генератора псевдослучайных чисел"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2288
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2291
 msgid "Add filter primitive"
 msgstr "Добавление примитива фильтра"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2304
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2307
 msgid "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, multiply, darken and lighten."
 msgstr "Примитив <b>feBlend</b> дает 4 режима наложения: экран, умножение, затемнение и осветление."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2308
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2311
 msgid "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to colour of each rendered pixel. This allows for effects like turning object to grayscale, modifying colour saturation and changing colour hue."
 msgstr "Примитив <b>feColorMatrix</b> применяет матричное преобразование для раскрашивания каждого пиксела. Таким образом можно обесцвечивать, повышать насыщенность и менять тон."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2312
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2315
 msgid "The <b>feComponentTransfer</b> filter primitive manipulates the input's color components (red, green, blue, and alpha) according to particular transfer functions, allowing operations like brightness and contrast adjustment, color balance, and thresholding."
 msgstr "Примитив <b>feComponentTransfer</b> позволяет манипулировать цветовыми компонентами входящего объекта (красный, зеленый, синий и альфа-каналы) в соответствии с определенными функциями передачи, допуская операции вроде коррекции яркости и контраста, цветового баланса и порога."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2316
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2319
 msgid "The <b>feComposite</b> filter primitive composites two images using one of the Porter-Duff blending modes or the aritmetic mode described in SVG standard. Porter-Duff blending modes are essentially logical operations between the corresponding pixel values of the images."
 msgstr "Примитив <b>feComposite</b> совмещает два изображения, используя один из режимов наложения Портера-Даффа или арифметический оператор из стандарта SVG. Режимы наложения Портера-Даффа — по сути,логические операции между значениями соответствующих пикселов этих изображений."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2320
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2323
 msgid "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on the image. Common effects created using convolution matrices are blur, sharpening, embossing and edge detection. Note that while gaussian blur can be created using this filter primitive, the special gaussian blur primitive is faster and resolution-independent."
 msgstr "Примитив <b>feConvolveMatrix</b> позволяет указать свертку, применяемую к изображению. Типичные эффекты, создаваемые при помощи матрицы свертки — размывание, повышение резкости, создание рельефа и определение краев. Хотя гауссово размывание можно выполнить и этим примитивом, специализированный примитив работает быстрее и не зависит от разрешения."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2324
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2327
 msgid "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
 msgstr "Примитивы <b>feDiffuseLighting</b> и feSpecularLighting создают рельефные тени.  Входящий альфа-канал используется для предоставления информации о глубине: чем выше непрозрачность, тем выше рельеф и, соответственно, тем ближе к наблюдателю верхняя точка этого рельефа."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2328
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2331
 msgid "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the first input using the second input as a displacement map, that shows from how far the pixel should come from. Classical examples are whirl and pinch effects."
 msgstr "Примитив <b>feDisplacementMap</b> смещает пикселы первого входа, используя пикселы второго в качестве карты смещения, показывающей, как далеко должны отойти пикселы. Типичные эффекты, создаваемые при помощи карты смещения — завихрение и щипок."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2332
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2335
 msgid "The <b>feFlood</b> filter primitive fills the region with a given color and opacity.  It is usually used as an input to other filters to apply color to a graphic."
 msgstr "Примитив <b>feFlood</b> заливает область заданным цветом и непрозрачностью. Обычно он используется как вход для других фильтров, применяющих цвет."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2336
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2339
 msgid "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is commonly used together with feOffset to create a drop shadow effect."
 msgstr "Примитив <b>feGaussianBlur</b> равномерно размывает объекты на входе. Фильтр часто используется с feOffset для создания эффекта отбрасываемой тени."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2340
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2343
 msgid "The <b>feImage</b> filter primitive fills the region with an external image or another part of the document."
 msgstr "Примитив <b>feImage</b> заполняет область внешним изображением или другой частью документа."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2344
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2347
 msgid "The <b>feMerge</b> filter primitive composites several temporary images inside the filter primitive to a single image. It uses normal alpha compositing for this. This is equivalent to using several feBlend primitives in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr "Примитив <b>feMerge</b> сводит несколько временных изображений в одно, используя обычное альфа‑совмещение. Получаемый эффект эквивалентен нескольким примитивам feBlend в режиме «Обычный» или нескольким примитивам feComposite в режиме «Над» (over)."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2348
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2351
 msgid "The <b>feMorphology</b> filter primitive provides erode and dilate effects. For single-colour objects erode makes the object thinner and dilate makes it thicker."
 msgstr "Примитив <b>feMorphology</b> позволяет применить эффект эрозии и дилатации. Объекты с плоской заливкой при эрозии становятся тоньше, а с дилатацией — толще."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2352
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2355
 msgid "The <b>feOffset</b> filter primitive offsets the image by an user-defined amount. For example, this is useful for drop shadows, where the shadow is in a slightly different position than the actual object."
-msgstr "Примитив <b>feOffset</b> смещает изображение на заданное расстояние. Он используется, к примеру, для создания эффекта отбрасывемой тени, где тень слегка смещена относительно исходного объекта."
+msgstr "Примитив <b>feOffset</b> смещает изображение на заданное расстояние. Он используется, к примеру, для создания эффекта отбрасываемой тени, где тень слегка смещена относительно исходного объекта."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2356
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2359
 msgid "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
 msgstr "Примитивы feDiffuseLighting и <b>feSpecularLighting</b> создают рельефные тени.  Входящий альфа-канал используется для предоставления информации о глубине: чем выше непрозрачность, тем выше рельеф и, соответственно, тем ближе к наблюдателю верхняя точка этого рельефа."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2360
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2363
 msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr "Примитив <b>feTile</b> заполняет область мозаикой из входящего изображения."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2364
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2367
 msgid "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of noise is useful in simulating several nature phenomena like clouds, fire and smoke and in generating complex textures like marble or granite."
 msgstr "Примитив <b>feTurbulence</b> создает перлинов шум. Этот тип шума полезен для имитации различных природных явлений вроде облаков, огня и дыма, а также для создания сложных текстур наподобие мрамора или гранита."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2382
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2385
 msgid "Duplicate filter primitive"
 msgstr "Дубликация примитива фильтра"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2435
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2438
 msgid "Set filter primitive attribute"
 msgstr "Смена атрибута примитива фильтра"
 
@@ -10378,7 +10375,7 @@ msgstr "С какой скоростью будет происходить пр�
 #: ../src/ui/dialog/tracedialog.cpp:410
 #: ../src/ui/dialog/tracedialog.cpp:443
 #: ../src/ui/dialog/tracedialog.cpp:586
-#: ../src/widgets/toolbox.cpp:6102
+#: ../src/widgets/toolbox.cpp:6192
 msgid "Threshold:"
 msgstr "Порог:"
 
@@ -10795,7 +10792,7 @@ msgid "Show close button on dialogs"
 msgstr "Показывать кнопку «Закрыть» во всех диалогах"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:506
-#: ../src/ui/dialog/inkscape-preferences.cpp:951
+#: ../src/ui/dialog/inkscape-preferences.cpp:946
 msgid "Normal"
 msgstr "Нормальный"
 
@@ -11301,13 +11298,11 @@ msgstr "Интервал по Y:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:881
 #: ../src/ui/dialog/inkscape-preferences.cpp:903
-#, fuzzy
 msgid "Color used for normal grid lines"
-msgstr "Выберите цвет обычных линий сетки."
+msgstr "Цвет обычных линий сетки"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:883
 #: ../src/ui/dialog/inkscape-preferences.cpp:905
-#, fuzzy
 msgid "Color used for major (highlighted) grid lines"
 msgstr "Цвет основных линий сетки"
 
@@ -11375,104 +11370,100 @@ msgstr "Разрешать относительные координаты"
 msgid "If set, relative coordinates may be used in path data"
 msgstr "Если включено, в данных контура могут использоваться относительные координаты"
 
-#. seems this is never used in Inkscape code
-#. _svgoutput_allowshorthands.init( _("Allow shorthands"), "options.svgoutput", "allowshorthands", true);
-#. _page_svgoutput.add_line( false, "", _svgoutput_allowshorthands, "", _(""), false);
-#.
-#: ../src/ui/dialog/inkscape-preferences.cpp:935
+#: ../src/ui/dialog/inkscape-preferences.cpp:930
 msgid "Force repeat commands"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:936
+#: ../src/ui/dialog/inkscape-preferences.cpp:931
 msgid "Force repeating of the same path command (for example, 'L 1,2 L 3,4' instead of 'L 1,2 3,4')"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:938
+#: ../src/ui/dialog/inkscape-preferences.cpp:933
 msgid "Numbers"
 msgstr "Числа"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:941
+#: ../src/ui/dialog/inkscape-preferences.cpp:936
 msgid "Numeric precision"
 msgstr "Точность чисел"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:941
+#: ../src/ui/dialog/inkscape-preferences.cpp:936
 msgid "How many digits to write after the decimal dot"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:944
+#: ../src/ui/dialog/inkscape-preferences.cpp:939
 msgid "Minimum exponent"
 msgstr "Минимальная экспонента"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:944
+#: ../src/ui/dialog/inkscape-preferences.cpp:939
 msgid "The smallest number written to SVG is 10 to the power of this exponent; anything smaller is written as zero."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:946
+#: ../src/ui/dialog/inkscape-preferences.cpp:941
 msgid "SVG output"
 msgstr "Экспорт в SVG"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:955
+#: ../src/ui/dialog/inkscape-preferences.cpp:950
 msgid "Commands bar icon size"
 msgstr "Размер значков на панели команд"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:956
+#: ../src/ui/dialog/inkscape-preferences.cpp:951
 msgid "Set the size for the commands toolbar to use (requires restart)"
 msgstr "Изменить размер значков в панели команд (требует перезапуска программы)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:959
+#: ../src/ui/dialog/inkscape-preferences.cpp:954
 msgid "Tool controls bar icon size"
 msgstr "Размер значков на панели параметров"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:960
+#: ../src/ui/dialog/inkscape-preferences.cpp:955
 msgid "Set the size for the secondary toolbar to use (requires restart)"
 msgstr "Изменить размер значков в панели параметров инструментов (требует перезапуска программы)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:963
+#: ../src/ui/dialog/inkscape-preferences.cpp:958
 msgid "Main toolbar icon size"
 msgstr "Размер значков на панели инструментов"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:964
+#: ../src/ui/dialog/inkscape-preferences.cpp:959
 msgid "Set the size for the main tools to use (requires restart)"
 msgstr "Изменить размер значков в панели инструментов (требует перезапуска программы)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:967
+#: ../src/ui/dialog/inkscape-preferences.cpp:962
 msgid "Maximum documents in Open Recent:"
 msgstr "Недавних документов в меню:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:968
+#: ../src/ui/dialog/inkscape-preferences.cpp:963
 msgid "The maximum length of the Open Recent list in the File menu"
 msgstr "Сколько недавно открывавшихся документов помнить"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:970
+#: ../src/ui/dialog/inkscape-preferences.cpp:965
 msgid "Interface"
 msgstr "Интерфейс"
 
 #. Autosave options
-#: ../src/ui/dialog/inkscape-preferences.cpp:977
+#: ../src/ui/dialog/inkscape-preferences.cpp:972
 msgid "Enable autosave (requires restart)"
 msgstr "Включить автосохранение (требует перезапуска программы)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:978
+#: ../src/ui/dialog/inkscape-preferences.cpp:973
 msgid "Automatically save the current document(s) at a given interval, thus minimizing loss in case of a crash"
-msgstr ""
+msgstr "Автоматически сохранять текущий документ через заданный временной интервал, минимизируя риск потери данных"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:980
+#: ../src/ui/dialog/inkscape-preferences.cpp:975
 msgid "Interval (in minutes)"
 msgstr "Интервал (в минутах)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:980
+#: ../src/ui/dialog/inkscape-preferences.cpp:975
 msgid "Interval (in minutes) at which document will be autosaved"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:982
+#: ../src/ui/dialog/inkscape-preferences.cpp:977
 msgid "The directory where autosaves will be written"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:984
+#: ../src/ui/dialog/inkscape-preferences.cpp:979
 msgid "Maximum number of autosaves"
 msgstr "Максимальное число автосохранений"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:984
+#: ../src/ui/dialog/inkscape-preferences.cpp:979
 msgid "Maximum number of autosaved files; use this to limit the storage space used"
 msgstr ""
 
@@ -11490,121 +11481,134 @@ msgstr ""
 #. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
 #.
 #. -----------
-#: ../src/ui/dialog/inkscape-preferences.cpp:1002
+#: ../src/ui/dialog/inkscape-preferences.cpp:997
 msgid "Autosave"
 msgstr "Автосохранение"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1008
+#: ../src/ui/dialog/inkscape-preferences.cpp:1003
 msgid "2x2"
 msgstr "2×2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1008
+#: ../src/ui/dialog/inkscape-preferences.cpp:1003
 msgid "4x4"
 msgstr "4×4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1008
+#: ../src/ui/dialog/inkscape-preferences.cpp:1003
 msgid "8x8"
 msgstr "8×8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1008
+#: ../src/ui/dialog/inkscape-preferences.cpp:1003
 msgid "16x16"
 msgstr "16×16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1012
+#: ../src/ui/dialog/inkscape-preferences.cpp:1007
 msgid "Oversample bitmaps:"
 msgstr "Усреднять растр по точкам:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1015
+#: ../src/ui/dialog/inkscape-preferences.cpp:1010
 msgid "Automatically reload bitmaps"
 msgstr "Автоматически перезагружать растровые файлы"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1017
+#: ../src/ui/dialog/inkscape-preferences.cpp:1012
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1030
+#: ../src/ui/dialog/inkscape-preferences.cpp:1025
 msgid "Bitmap editor:"
 msgstr "Редактор растровых файлов:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1035
+#: ../src/ui/dialog/inkscape-preferences.cpp:1031
+msgid "Resolution for Create Bitmap Copy:"
+msgstr "Разрешение растровой копии:"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1032
+msgid "Resolution used by the Create Bitmap Copy command"
+msgstr "Разрешение растра при создании растровой копии выделения"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1034
 msgid "Bitmaps"
 msgstr "Растр"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1041
+#: ../src/ui/dialog/inkscape-preferences.cpp:1040
 msgid "Add label comments to printing output"
 msgstr "Добавлять метки в виде комментариев при выводе на печать"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1043
+#: ../src/ui/dialog/inkscape-preferences.cpp:1042
 msgid "When on, a comment will be added to the raw print output, marking the rendered output for an object with its label"
 msgstr "С этой опцией при выводе на печать будут добавляться комментарии, содержащие метки для каждого объекта"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1045
+#: ../src/ui/dialog/inkscape-preferences.cpp:1044
 msgid "Prevent sharing of gradient definitions"
 msgstr "Не разделять определения градиентов между объектами"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1046
 msgid "When on, shared gradient definitions are automatically forked on change; uncheck to allow sharing of gradient definitions so that editing one object may affect other objects using the same gradient"
 msgstr "Если параметр включен, разделяемые определения (defs) градиентов при изменении копируются в новые; если выключен, определения разделяются между объектами, так что изменение градиента для одного объекта может сказаться на другом объекте."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1049
 msgid "Simplification threshold:"
 msgstr "Порог упрощения:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1051
+#: ../src/ui/dialog/inkscape-preferences.cpp:1050
 msgid "How strong is the Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."
 msgstr "Степень упрощения по команде Упростить. Если вызывать эту команду несколько раз подряд, она будет действовать с каждым разом все более агрессивно; чтобы вернуться к значению по умолчанию, сделайте паузу перед очередным вызовом команды."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Misc"
 msgstr "Прочее"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:74
+#: ../src/ui/dialog/livepatheffect-editor.cpp:75
 msgid "Apply new effect"
 msgstr "Применить новый эффект"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:75
+#: ../src/ui/dialog/livepatheffect-editor.cpp:76
 msgid "Current effect"
 msgstr "Текущий эффект"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:76
+#: ../src/ui/dialog/livepatheffect-editor.cpp:77
 msgid "Effect list"
 msgstr "Список эффектов"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:239
+#: ../src/ui/dialog/livepatheffect-editor.cpp:247
 msgid "Unknown effect is applied"
 msgstr "Применен неизвестный эффект"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:242
+#: ../src/ui/dialog/livepatheffect-editor.cpp:250
 msgid "No effect applied"
 msgstr "Нет примененных эффектов"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:248
+#: ../src/ui/dialog/livepatheffect-editor.cpp:254
 msgid "Item is not a path or shape"
 msgstr "Объект не является контуром или фигурой"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:252
+#: ../src/ui/dialog/livepatheffect-editor.cpp:258
 msgid "Only one item can be selected"
 msgstr "Можно выбрать только один объект"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:256
+#: ../src/ui/dialog/livepatheffect-editor.cpp:262
 msgid "Empty selection"
 msgstr "Выделение пусто"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:335
+#: ../src/ui/dialog/livepatheffect-editor.cpp:345
 msgid "Create and apply path effect"
 msgstr "Создание контурного эффекта"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:352
+#: ../src/ui/dialog/livepatheffect-editor.cpp:362
 msgid "Remove path effect"
 msgstr "Удаление контурного эффекта"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:369
+#: ../src/ui/dialog/livepatheffect-editor.cpp:378
 msgid "Move path effect up"
 msgstr "Повысить контурный эффект"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:387
+#: ../src/ui/dialog/livepatheffect-editor.cpp:394
 msgid "Move path effect down"
 msgstr "Понизить контурный эффект"
+
+#: ../src/ui/dialog/livepatheffect-editor.cpp:430
+#, fuzzy
+msgid "Change path effect's visibility"
+msgstr "Управление контурными эффектами"
 
 #: ../src/ui/dialog/memory.cpp:94
 msgid "Heap"
@@ -11804,6 +11808,37 @@ msgstr "Воспроизвести"
 #: ../src/ui/dialog/session-player.cpp:177
 msgid "Open session file"
 msgstr "Открыть файл сессии"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:187
+msgid "_Font"
+msgstr "_Шрифт"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:198
+msgid "Set width (not working yet):"
+msgstr ""
+
+#. Kerning Setup:
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:207
+#, fuzzy
+msgid "Kerning Setup:"
+msgstr "Кернинг вверх"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:209
+msgid "1st Glyph:"
+msgstr "Первый глиф:"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:211
+msgid "2nd Glyph:"
+msgstr "Второй глиф:"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:222
+msgid "Kerning value:"
+msgstr "Значение кернинга:"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:236
+#, fuzzy
+msgid "Preview Text:"
+msgstr "Предпросмотр"
 
 #. #### begin left panel
 #. ### begin notebook
@@ -12593,11 +12628,11 @@ msgstr "Проприетарная"
 msgid "Other"
 msgstr "Другая"
 
-#: ../src/ui/widget/object-composite-settings.cpp:152
+#: ../src/ui/widget/object-composite-settings.cpp:158
 msgid "Change blur"
 msgstr "Смена размывания"
 
-#: ../src/ui/widget/object-composite-settings.cpp:192
+#: ../src/ui/widget/object-composite-settings.cpp:198
 #: ../src/ui/widget/selected-style.cpp:855
 #: ../src/ui/widget/selected-style.cpp:1149
 msgid "Change opacity"
@@ -14156,7 +14191,7 @@ msgid "Apply clipping path to selection (using the topmost object as clipping pa
 msgstr "Применить самый верхний объект выделения к нему как обтравочный контур"
 
 #: ../src/verbs.cpp:2457
-#: ../src/widgets/toolbox.cpp:1387
+#: ../src/widgets/toolbox.cpp:1385
 msgid "Edit clipping path"
 msgstr "Изменить обтравочный контур"
 
@@ -14964,7 +14999,7 @@ msgstr "Кегль шрифта:"
 #. * some representative characters that users of your locale will be
 #. * interested in.
 #: ../src/widgets/font-selector.cpp:636
-#: ../src/widgets/toolbox.cpp:5493
+#: ../src/widgets/toolbox.cpp:5583
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "АаБбВвГгЁёФфЩщЯя$€¢?.;/()"
 
@@ -15015,14 +15050,14 @@ msgid "Edit the stops of the gradient"
 msgstr "Изменить опорные точки в градиенте"
 
 #: ../src/widgets/gradient-toolbar.cpp:522
-#: ../src/widgets/toolbox.cpp:2118
-#: ../src/widgets/toolbox.cpp:2196
-#: ../src/widgets/toolbox.cpp:2526
-#: ../src/widgets/toolbox.cpp:2564
-#: ../src/widgets/toolbox.cpp:3178
-#: ../src/widgets/toolbox.cpp:3202
-#: ../src/widgets/toolbox.cpp:4485
-#: ../src/widgets/toolbox.cpp:4512
+#: ../src/widgets/toolbox.cpp:2116
+#: ../src/widgets/toolbox.cpp:2194
+#: ../src/widgets/toolbox.cpp:2524
+#: ../src/widgets/toolbox.cpp:2562
+#: ../src/widgets/toolbox.cpp:3176
+#: ../src/widgets/toolbox.cpp:3200
+#: ../src/widgets/toolbox.cpp:4568
+#: ../src/widgets/toolbox.cpp:4595
 msgid "<b>New:</b>"
 msgstr "<b>Новый:</b>"
 
@@ -15050,13 +15085,13 @@ msgstr "Создать градиент в обводке"
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
 #: ../src/widgets/gradient-toolbar.cpp:605
-#: ../src/widgets/toolbox.cpp:2120
-#: ../src/widgets/toolbox.cpp:2534
-#: ../src/widgets/toolbox.cpp:2552
-#: ../src/widgets/toolbox.cpp:3180
-#: ../src/widgets/toolbox.cpp:3191
-#: ../src/widgets/toolbox.cpp:4488
-#: ../src/widgets/toolbox.cpp:4499
+#: ../src/widgets/toolbox.cpp:2118
+#: ../src/widgets/toolbox.cpp:2532
+#: ../src/widgets/toolbox.cpp:2550
+#: ../src/widgets/toolbox.cpp:3178
+#: ../src/widgets/toolbox.cpp:3189
+#: ../src/widgets/toolbox.cpp:4571
+#: ../src/widgets/toolbox.cpp:4582
 msgid "<b>Change:</b>"
 msgstr "<b>Менять:</b>"
 
@@ -15454,1306 +15489,1302 @@ msgstr "Значение"
 msgid "Type text in a text node"
 msgstr "Ввод текста в текстовую ветвь"
 
-#: ../src/widgets/toolbox.cpp:190
+#: ../src/widgets/toolbox.cpp:191
 msgid "Color/opacity used for color tweaking"
 msgstr "Цвет/непрозрачность, используемые для коррекции цвета"
 
-#: ../src/widgets/toolbox.cpp:194
+#: ../src/widgets/toolbox.cpp:195
 msgid "Style of new stars"
 msgstr "Стиль новых звёзд"
 
-#: ../src/widgets/toolbox.cpp:196
+#: ../src/widgets/toolbox.cpp:197
 msgid "Style of new rectangles"
 msgstr "Стиль новых прямоугольников"
 
-#: ../src/widgets/toolbox.cpp:198
+#: ../src/widgets/toolbox.cpp:199
 msgid "Style of new 3D boxes"
 msgstr "Стиль новых паралеллепипедов"
 
-#: ../src/widgets/toolbox.cpp:200
+#: ../src/widgets/toolbox.cpp:201
 msgid "Style of new ellipses"
 msgstr "Стиль новых эллипсов"
 
-#: ../src/widgets/toolbox.cpp:202
+#: ../src/widgets/toolbox.cpp:203
 msgid "Style of new spirals"
 msgstr "Стиль новых спиралей"
 
-#: ../src/widgets/toolbox.cpp:204
+#: ../src/widgets/toolbox.cpp:205
 msgid "Style of new paths created by Pencil"
 msgstr "Стиль новых контуров, созданных Карандашом"
 
-#: ../src/widgets/toolbox.cpp:206
+#: ../src/widgets/toolbox.cpp:207
 msgid "Style of new paths created by Pen"
 msgstr "Стиль новых контуров, созданных Пером"
 
-#: ../src/widgets/toolbox.cpp:208
+#: ../src/widgets/toolbox.cpp:209
 msgid "Style of new calligraphic strokes"
 msgstr "Стиль новых каллиграфических штрихов"
 
-#: ../src/widgets/toolbox.cpp:210
+#: ../src/widgets/toolbox.cpp:211
 msgid "TBD"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:220
+#: ../src/widgets/toolbox.cpp:221
 msgid "Style of Paint Bucket fill objects"
 msgstr "Стиль заливки новых объектов, созданных инструментом заливки"
 
-#: ../src/widgets/toolbox.cpp:1240
+#: ../src/widgets/toolbox.cpp:1238
 msgid "Insert node"
 msgstr "Вставка узла"
 
-#: ../src/widgets/toolbox.cpp:1241
+#: ../src/widgets/toolbox.cpp:1239
 msgid "Insert new nodes into selected segments"
 msgstr "Вставить новые узлы в выделенные сегменты"
 
-#: ../src/widgets/toolbox.cpp:1244
+#: ../src/widgets/toolbox.cpp:1242
 msgid "Insert"
 msgstr "Вставить"
 
-#: ../src/widgets/toolbox.cpp:1252
+#: ../src/widgets/toolbox.cpp:1250
 msgid "Delete selected nodes"
 msgstr "Удалить выделенные узлы"
 
-#: ../src/widgets/toolbox.cpp:1262
+#: ../src/widgets/toolbox.cpp:1260
 msgid "Join endnodes"
 msgstr "Соединение оконечных узлов"
 
-#: ../src/widgets/toolbox.cpp:1263
+#: ../src/widgets/toolbox.cpp:1261
 msgid "Join selected endnodes"
 msgstr "Соединить контуры по выделенным оконечным узлам"
 
-#: ../src/widgets/toolbox.cpp:1266
+#: ../src/widgets/toolbox.cpp:1264
 msgid "Join"
 msgstr "Соединение"
 
-#: ../src/widgets/toolbox.cpp:1273
+#: ../src/widgets/toolbox.cpp:1271
 #, fuzzy
 msgid "Break nodes"
 msgstr "Перемещение узлов"
 
-#: ../src/widgets/toolbox.cpp:1274
+#: ../src/widgets/toolbox.cpp:1272
 msgid "Break path at selected nodes"
 msgstr "Разорвать контур в выделенном узле"
 
-#: ../src/widgets/toolbox.cpp:1284
+#: ../src/widgets/toolbox.cpp:1282
 #, fuzzy
 msgid "Join with segment"
 msgstr "Соединение узлов сегментом"
 
-#: ../src/widgets/toolbox.cpp:1285
+#: ../src/widgets/toolbox.cpp:1283
 msgid "Join selected endnodes with a new segment"
 msgstr "Соединить контуры по выделенным оконечным узлам новым сегментом"
 
-#: ../src/widgets/toolbox.cpp:1295
+#: ../src/widgets/toolbox.cpp:1293
 msgid "Delete segment between two non-endpoint nodes"
 msgstr "Удалить сегмент между двумя неоконечными узлами"
 
-#: ../src/widgets/toolbox.cpp:1304
+#: ../src/widgets/toolbox.cpp:1302
 msgid "Node Cusp"
 msgstr "Острые узлы"
 
-#: ../src/widgets/toolbox.cpp:1305
+#: ../src/widgets/toolbox.cpp:1303
 msgid "Make selected nodes corner"
 msgstr "Сделать выделенные узлы острыми"
 
-#: ../src/widgets/toolbox.cpp:1314
+#: ../src/widgets/toolbox.cpp:1312
 msgid "Node Smooth"
 msgstr "Гладкие узлы"
 
-#: ../src/widgets/toolbox.cpp:1315
+#: ../src/widgets/toolbox.cpp:1313
 msgid "Make selected nodes smooth"
 msgstr "Сделать выделенные узлы сглаженными"
 
-#: ../src/widgets/toolbox.cpp:1324
+#: ../src/widgets/toolbox.cpp:1322
 msgid "Node Symmetric"
 msgstr "Симметричные узлы"
 
-#: ../src/widgets/toolbox.cpp:1325
+#: ../src/widgets/toolbox.cpp:1323
 msgid "Make selected nodes symmetric"
 msgstr "Сделать выделенные узлы симметричными"
 
-#: ../src/widgets/toolbox.cpp:1334
+#: ../src/widgets/toolbox.cpp:1332
 msgid "Node Line"
 msgstr "Линия по узлам"
 
-#: ../src/widgets/toolbox.cpp:1335
+#: ../src/widgets/toolbox.cpp:1333
 msgid "Make selected segments lines"
 msgstr "Сделать выделенные сегменты прямыми"
 
-#: ../src/widgets/toolbox.cpp:1344
+#: ../src/widgets/toolbox.cpp:1342
 msgid "Node Curve"
 msgstr "Кривая по узлам"
 
-#: ../src/widgets/toolbox.cpp:1345
+#: ../src/widgets/toolbox.cpp:1343
 msgid "Make selected segments curves"
 msgstr "Сделать выделенные сегменты кривыми"
 
-#: ../src/widgets/toolbox.cpp:1354
+#: ../src/widgets/toolbox.cpp:1352
 msgid "Show Handles"
 msgstr "Показывать рычаги"
 
-#: ../src/widgets/toolbox.cpp:1355
+#: ../src/widgets/toolbox.cpp:1353
 msgid "Show the Bezier handles of selected nodes"
 msgstr "Показывать рычаги выбранных узлов"
 
-#: ../src/widgets/toolbox.cpp:1365
+#: ../src/widgets/toolbox.cpp:1363
 msgid "Show Outline"
 msgstr "Показать контур"
 
-#: ../src/widgets/toolbox.cpp:1366
+#: ../src/widgets/toolbox.cpp:1364
 msgid "Show the outline of the path"
 msgstr "Показать очертания контура"
 
-#: ../src/widgets/toolbox.cpp:1376
+#: ../src/widgets/toolbox.cpp:1374
 msgid "Next path effect parameter"
 msgstr "Следующий параметр контурного эффекта"
 
-#: ../src/widgets/toolbox.cpp:1377
+#: ../src/widgets/toolbox.cpp:1375
 msgid "Show next path effect parameter for editing"
 msgstr "Показать следующий редактируемый параметр динамического эффекта"
 
-#: ../src/widgets/toolbox.cpp:1388
+#: ../src/widgets/toolbox.cpp:1386
 msgid "Edit the clipping path of the object"
 msgstr "Изменить обтравочный контур объекта"
 
-#: ../src/widgets/toolbox.cpp:1398
+#: ../src/widgets/toolbox.cpp:1396
 msgid "Edit mask path"
 msgstr "Изменить контур маски"
 
-#: ../src/widgets/toolbox.cpp:1399
+#: ../src/widgets/toolbox.cpp:1397
 msgid "Edit the mask of the object"
 msgstr "Изменить маску объекта"
 
-#: ../src/widgets/toolbox.cpp:1413
+#: ../src/widgets/toolbox.cpp:1411
 msgid "X coordinate:"
 msgstr "Координата по X:"
 
-#: ../src/widgets/toolbox.cpp:1413
+#: ../src/widgets/toolbox.cpp:1411
 msgid "X coordinate of selected node(s)"
 msgstr "Координата X выбранных узлов"
 
-#: ../src/widgets/toolbox.cpp:1431
+#: ../src/widgets/toolbox.cpp:1429
 msgid "Y coordinate:"
 msgstr "Координата по Y:"
 
-#: ../src/widgets/toolbox.cpp:1431
+#: ../src/widgets/toolbox.cpp:1429
 msgid "Y coordinate of selected node(s)"
 msgstr "Координата Y выбранных узлов"
 
-#: ../src/widgets/toolbox.cpp:1870
+#: ../src/widgets/toolbox.cpp:1868
 msgid "Star: Change number of corners"
 msgstr "Смена количества лучей"
 
-#: ../src/widgets/toolbox.cpp:1912
+#: ../src/widgets/toolbox.cpp:1910
 msgid "Star: Change spoke ratio"
 msgstr "Смена отношения радиусов"
 
-#: ../src/widgets/toolbox.cpp:1955
+#: ../src/widgets/toolbox.cpp:1953
 msgid "Make polygon"
 msgstr "Звезда → многоугольник"
 
-#: ../src/widgets/toolbox.cpp:1955
+#: ../src/widgets/toolbox.cpp:1953
 msgid "Make star"
 msgstr "Многоугольник → звезда"
 
-#: ../src/widgets/toolbox.cpp:1990
+#: ../src/widgets/toolbox.cpp:1988
 msgid "Star: Change rounding"
 msgstr "Смена закругления"
 
-#: ../src/widgets/toolbox.cpp:2024
+#: ../src/widgets/toolbox.cpp:2022
 msgid "Star: Change randomization"
 msgstr "Смена случайности искажения"
 
-#: ../src/widgets/toolbox.cpp:2215
+#: ../src/widgets/toolbox.cpp:2213
 msgid "Regular polygon (with one handle) instead of a star"
 msgstr "Правильный многоугольник, а не звезда"
 
-#: ../src/widgets/toolbox.cpp:2222
+#: ../src/widgets/toolbox.cpp:2220
 msgid "Star instead of a regular polygon (with one handle)"
 msgstr "Звезда вместо обычного многоугольника (с одним рычагом)"
 
-#: ../src/widgets/toolbox.cpp:2243
+#: ../src/widgets/toolbox.cpp:2241
 msgid "triangle/tri-star"
 msgstr "треугольник/звезда с 3 лучами"
 
-#: ../src/widgets/toolbox.cpp:2243
+#: ../src/widgets/toolbox.cpp:2241
 msgid "square/quad-star"
 msgstr "квадрат/звезда с 4 лучами"
 
-#: ../src/widgets/toolbox.cpp:2243
+#: ../src/widgets/toolbox.cpp:2241
 msgid "pentagon/five-pointed star"
 msgstr "пятиугольник/звезда с 5 лучами"
 
-#: ../src/widgets/toolbox.cpp:2243
+#: ../src/widgets/toolbox.cpp:2241
 msgid "hexagon/six-pointed star"
 msgstr "шестиугольник/звезда с 6 лучами"
 
-#: ../src/widgets/toolbox.cpp:2246
+#: ../src/widgets/toolbox.cpp:2244
 msgid "Corners"
 msgstr "Углы"
 
-#: ../src/widgets/toolbox.cpp:2246
+#: ../src/widgets/toolbox.cpp:2244
 msgid "Corners:"
 msgstr "Углы:"
 
-#: ../src/widgets/toolbox.cpp:2246
+#: ../src/widgets/toolbox.cpp:2244
 msgid "Number of corners of a polygon or star"
 msgstr "Количество вершин многоугольника или звезды"
 
-#: ../src/widgets/toolbox.cpp:2259
+#: ../src/widgets/toolbox.cpp:2257
 msgid "thin-ray star"
 msgstr "звезда с тонкими лучами"
 
-#: ../src/widgets/toolbox.cpp:2259
+#: ../src/widgets/toolbox.cpp:2257
 msgid "pentagram"
 msgstr "пентаграмма"
 
-#: ../src/widgets/toolbox.cpp:2259
+#: ../src/widgets/toolbox.cpp:2257
 msgid "hexagram"
 msgstr "гексаграмма"
 
-#: ../src/widgets/toolbox.cpp:2259
+#: ../src/widgets/toolbox.cpp:2257
 msgid "heptagram"
 msgstr "гептаграмма"
 
-#: ../src/widgets/toolbox.cpp:2259
+#: ../src/widgets/toolbox.cpp:2257
 msgid "octagram"
 msgstr "октограмма"
 
-#: ../src/widgets/toolbox.cpp:2259
+#: ../src/widgets/toolbox.cpp:2257
 msgid "regular polygon"
 msgstr "обычный многоугольник"
 
-#: ../src/widgets/toolbox.cpp:2262
+#: ../src/widgets/toolbox.cpp:2260
 msgid "Spoke ratio"
 msgstr "Отношение радиусов"
 
-#: ../src/widgets/toolbox.cpp:2262
+#: ../src/widgets/toolbox.cpp:2260
 msgid "Spoke ratio:"
 msgstr "Отношение радиусов:"
 
 #. TRANSLATORS: Tip radius of a star is the distance from the center to the farthest handle.
 #. Base radius is the same for the closest handle.
-#: ../src/widgets/toolbox.cpp:2265
+#: ../src/widgets/toolbox.cpp:2263
 msgid "Base radius to tip radius ratio"
 msgstr "Отношение радиусов основания и вершины луча"
 
-#: ../src/widgets/toolbox.cpp:2283
+#: ../src/widgets/toolbox.cpp:2281
 msgid "stretched"
 msgstr "растянуто"
 
-#: ../src/widgets/toolbox.cpp:2283
+#: ../src/widgets/toolbox.cpp:2281
 msgid "twisted"
 msgstr "извилисто"
 
-#: ../src/widgets/toolbox.cpp:2283
+#: ../src/widgets/toolbox.cpp:2281
 msgid "slightly pinched"
 msgstr "слегка прищемлено"
 
-#: ../src/widgets/toolbox.cpp:2283
+#: ../src/widgets/toolbox.cpp:2281
 msgid "NOT rounded"
 msgstr "БЕЗ закругления"
 
-#: ../src/widgets/toolbox.cpp:2283
+#: ../src/widgets/toolbox.cpp:2281
 msgid "slightly rounded"
 msgstr "небольшое закругление"
 
-#: ../src/widgets/toolbox.cpp:2283
+#: ../src/widgets/toolbox.cpp:2281
 msgid "visibly rounded"
 msgstr "заметное закругление"
 
-#: ../src/widgets/toolbox.cpp:2283
+#: ../src/widgets/toolbox.cpp:2281
 msgid "well rounded"
 msgstr "порядочное закругление"
 
-#: ../src/widgets/toolbox.cpp:2283
+#: ../src/widgets/toolbox.cpp:2281
 msgid "amply rounded"
 msgstr "изрядное закругление"
 
-#: ../src/widgets/toolbox.cpp:2283
-#: ../src/widgets/toolbox.cpp:2298
+#: ../src/widgets/toolbox.cpp:2281
+#: ../src/widgets/toolbox.cpp:2296
 msgid "blown up"
 msgstr "безумное"
 
-#: ../src/widgets/toolbox.cpp:2286
+#: ../src/widgets/toolbox.cpp:2284
 msgid "Rounded"
 msgstr "Закругление"
 
-#: ../src/widgets/toolbox.cpp:2286
+#: ../src/widgets/toolbox.cpp:2284
 msgid "Rounded:"
 msgstr "Закругление:"
 
-#: ../src/widgets/toolbox.cpp:2286
+#: ../src/widgets/toolbox.cpp:2284
 msgid "How much rounded are the corners (0 for sharp)"
 msgstr "Насколько сглажены углы (0 — острые)"
 
-#: ../src/widgets/toolbox.cpp:2298
+#: ../src/widgets/toolbox.cpp:2296
 msgid "NOT randomized"
 msgstr "без случайности"
 
-#: ../src/widgets/toolbox.cpp:2298
+#: ../src/widgets/toolbox.cpp:2296
 msgid "slightly irregular"
 msgstr "едва беспорядочно"
 
-#: ../src/widgets/toolbox.cpp:2298
+#: ../src/widgets/toolbox.cpp:2296
 msgid "visibly randomized"
 msgstr "заметная случайность"
 
-#: ../src/widgets/toolbox.cpp:2298
+#: ../src/widgets/toolbox.cpp:2296
 msgid "strongly randomized"
 msgstr "изрядная случайность"
 
-#: ../src/widgets/toolbox.cpp:2301
+#: ../src/widgets/toolbox.cpp:2299
 msgid "Randomized"
 msgstr "Случайность"
 
-#: ../src/widgets/toolbox.cpp:2301
+#: ../src/widgets/toolbox.cpp:2299
 msgid "Randomized:"
 msgstr "Искажение:"
 
-#: ../src/widgets/toolbox.cpp:2301
+#: ../src/widgets/toolbox.cpp:2299
 msgid "Scatter randomly the corners and angles"
 msgstr "Случайным образом смещать вершины и вращать углы"
 
-#: ../src/widgets/toolbox.cpp:2316
-#: ../src/widgets/toolbox.cpp:3253
-#: ../src/widgets/toolbox.cpp:3500
-#: ../src/widgets/toolbox.cpp:4222
-#: ../src/widgets/toolbox.cpp:6166
+#: ../src/widgets/toolbox.cpp:2314
+#: ../src/widgets/toolbox.cpp:3251
+#: ../src/widgets/toolbox.cpp:3494
+#: ../src/widgets/toolbox.cpp:6256
 msgid "Defaults"
 msgstr "По умолчанию"
 
-#: ../src/widgets/toolbox.cpp:2317
-#: ../src/widgets/toolbox.cpp:3254
+#: ../src/widgets/toolbox.cpp:2315
+#: ../src/widgets/toolbox.cpp:3252
 msgid "Reset shape parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
 msgstr "Сбросить параметры фигуры к значениям по умолчанию (параметры по умолчанию можно изменить в настройках Inkscape)"
 
-#: ../src/widgets/toolbox.cpp:2389
+#: ../src/widgets/toolbox.cpp:2387
 msgid "Change rectangle"
 msgstr "Удаление закругления"
 
-#: ../src/widgets/toolbox.cpp:2582
+#: ../src/widgets/toolbox.cpp:2580
 msgid "W:"
 msgstr "Ш:"
 
-#: ../src/widgets/toolbox.cpp:2582
+#: ../src/widgets/toolbox.cpp:2580
 msgid "Width of rectangle"
 msgstr "Ширина прямоугольника"
 
-#: ../src/widgets/toolbox.cpp:2599
+#: ../src/widgets/toolbox.cpp:2597
 msgid "H:"
 msgstr "Г:"
 
-#: ../src/widgets/toolbox.cpp:2599
+#: ../src/widgets/toolbox.cpp:2597
 msgid "Height of rectangle"
 msgstr "Высота прямоугольника"
 
-#: ../src/widgets/toolbox.cpp:2613
-#: ../src/widgets/toolbox.cpp:2628
+#: ../src/widgets/toolbox.cpp:2611
+#: ../src/widgets/toolbox.cpp:2626
 msgid "not rounded"
 msgstr "без закругления"
 
-#: ../src/widgets/toolbox.cpp:2616
+#: ../src/widgets/toolbox.cpp:2614
 msgid "Horizontal radius"
 msgstr "Горизонтальный радиус"
 
-#: ../src/widgets/toolbox.cpp:2616
+#: ../src/widgets/toolbox.cpp:2614
 msgid "Rx:"
 msgstr "Гор. радиус:"
 
-#: ../src/widgets/toolbox.cpp:2616
+#: ../src/widgets/toolbox.cpp:2614
 msgid "Horizontal radius of rounded corners"
 msgstr "Горизонтальный радиус закругленных углов"
 
-#: ../src/widgets/toolbox.cpp:2631
+#: ../src/widgets/toolbox.cpp:2629
 msgid "Vertical radius"
 msgstr "Вертикальный радиус"
 
-#: ../src/widgets/toolbox.cpp:2631
+#: ../src/widgets/toolbox.cpp:2629
 msgid "Ry:"
 msgstr "Верт. радиус:"
 
-#: ../src/widgets/toolbox.cpp:2631
+#: ../src/widgets/toolbox.cpp:2629
 msgid "Vertical radius of rounded corners"
 msgstr "Вертикальный радиус закругленных углов"
 
-#: ../src/widgets/toolbox.cpp:2650
+#: ../src/widgets/toolbox.cpp:2648
 msgid "Not rounded"
 msgstr "Не закруглён"
 
-#: ../src/widgets/toolbox.cpp:2651
+#: ../src/widgets/toolbox.cpp:2649
 msgid "Make corners sharp"
 msgstr "Убрать закругление углов"
 
 #. TODO: use the correct axis here, too
-#: ../src/widgets/toolbox.cpp:2840
+#: ../src/widgets/toolbox.cpp:2838
 msgid "3D Box: Change perspective (angle of infinite axis)"
 msgstr "Паралеллепипед: смена перспективы"
 
-#: ../src/widgets/toolbox.cpp:2909
+#: ../src/widgets/toolbox.cpp:2907
 msgid "Angle in X direction"
 msgstr "Угол в направлении X"
 
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:2911
+#: ../src/widgets/toolbox.cpp:2909
 msgid "Angle of PLs in X direction"
 msgstr "Угол ПЛ в направлении X"
 
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:2933
+#: ../src/widgets/toolbox.cpp:2931
 msgid "State of VP in X direction"
 msgstr "Состояние точек схода в направлении X"
 
-#: ../src/widgets/toolbox.cpp:2934
+#: ../src/widgets/toolbox.cpp:2932
 msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
 msgstr "Переключить точку схода в направлении X между «конечной» и «бесконечной» (=параллельной)"
 
-#: ../src/widgets/toolbox.cpp:2949
+#: ../src/widgets/toolbox.cpp:2947
 msgid "Angle in Y direction"
 msgstr "Угол в направлении Y"
 
-#: ../src/widgets/toolbox.cpp:2949
+#: ../src/widgets/toolbox.cpp:2947
 msgid "Angle Y:"
 msgstr "Угол Y:"
 
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:2951
+#: ../src/widgets/toolbox.cpp:2949
 msgid "Angle of PLs in Y direction"
 msgstr "Угол ПЛ в направлении Y"
 
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:2972
+#: ../src/widgets/toolbox.cpp:2970
 msgid "State of VP in Y direction"
 msgstr "Состояние точек схода в направлении Y"
 
-#: ../src/widgets/toolbox.cpp:2973
+#: ../src/widgets/toolbox.cpp:2971
 msgid "Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"
 msgstr "Переключить точку схода в направлении Y между «конечной» и «бесконечной» (=параллельной)"
 
-#: ../src/widgets/toolbox.cpp:2988
+#: ../src/widgets/toolbox.cpp:2986
 msgid "Angle in Z direction"
 msgstr "Угол в направлении Z"
 
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:2990
+#: ../src/widgets/toolbox.cpp:2988
 msgid "Angle of PLs in Z direction"
 msgstr "Угол ПЛ в направлении Z"
 
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:3011
+#: ../src/widgets/toolbox.cpp:3009
 msgid "State of VP in Z direction"
 msgstr "Состояние точек схода в направлении Z"
 
-#: ../src/widgets/toolbox.cpp:3012
+#: ../src/widgets/toolbox.cpp:3010
 msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
 msgstr "Переключить точку схода в направлении Z между «конечной» и «бесконечной» (=параллельной)"
 
-#: ../src/widgets/toolbox.cpp:3069
+#: ../src/widgets/toolbox.cpp:3067
 msgid "Change spiral"
 msgstr "Сброс изменений спирали"
 
-#: ../src/widgets/toolbox.cpp:3210
+#: ../src/widgets/toolbox.cpp:3208
 msgid "just a curve"
 msgstr "просто кривая"
 
-#: ../src/widgets/toolbox.cpp:3210
+#: ../src/widgets/toolbox.cpp:3208
 msgid "one full revolution"
 msgstr "один полный оборот"
 
-#: ../src/widgets/toolbox.cpp:3213
+#: ../src/widgets/toolbox.cpp:3211
 msgid "Number of turns"
 msgstr "Количество поворотов"
 
-#: ../src/widgets/toolbox.cpp:3213
+#: ../src/widgets/toolbox.cpp:3211
 msgid "Turns:"
 msgstr "Витков:"
 
-#: ../src/widgets/toolbox.cpp:3213
+#: ../src/widgets/toolbox.cpp:3211
 msgid "Number of revolutions"
 msgstr "Количество витков"
 
-#: ../src/widgets/toolbox.cpp:3224
+#: ../src/widgets/toolbox.cpp:3222
 msgid "circle"
 msgstr "окружность"
 
-#: ../src/widgets/toolbox.cpp:3224
+#: ../src/widgets/toolbox.cpp:3222
 msgid "edge is much denser"
 msgstr "край намного плотнее"
 
-#: ../src/widgets/toolbox.cpp:3224
+#: ../src/widgets/toolbox.cpp:3222
 msgid "edge is denser"
 msgstr "центр плотнее"
 
-#: ../src/widgets/toolbox.cpp:3224
+#: ../src/widgets/toolbox.cpp:3222
 msgid "even"
 msgstr "ровная спираль"
 
-#: ../src/widgets/toolbox.cpp:3224
+#: ../src/widgets/toolbox.cpp:3222
 msgid "center is denser"
 msgstr "центр плотнее"
 
-#: ../src/widgets/toolbox.cpp:3224
+#: ../src/widgets/toolbox.cpp:3222
 msgid "center is much denser"
 msgstr "центр намного плотнее"
 
-#: ../src/widgets/toolbox.cpp:3227
+#: ../src/widgets/toolbox.cpp:3225
 msgid "Divergence"
 msgstr "Отклонение"
 
-#: ../src/widgets/toolbox.cpp:3227
+#: ../src/widgets/toolbox.cpp:3225
 msgid "Divergence:"
 msgstr "Нелинейность:"
 
-#: ../src/widgets/toolbox.cpp:3227
+#: ../src/widgets/toolbox.cpp:3225
 msgid "How much denser/sparser are outer revolutions; 1 = uniform"
 msgstr "Насколько постепенно увеличивать или уменьшать расстояния между витками; 1 = равномерно"
 
-#: ../src/widgets/toolbox.cpp:3238
+#: ../src/widgets/toolbox.cpp:3236
 msgid "starts from center"
 msgstr "начинается из центра"
 
-#: ../src/widgets/toolbox.cpp:3238
+#: ../src/widgets/toolbox.cpp:3236
 msgid "starts mid-way"
 msgstr "начинается с середины"
 
-#: ../src/widgets/toolbox.cpp:3238
+#: ../src/widgets/toolbox.cpp:3236
 msgid "starts near edge"
 msgstr "начинается с края"
 
-#: ../src/widgets/toolbox.cpp:3241
+#: ../src/widgets/toolbox.cpp:3239
 msgid "Inner radius"
 msgstr "Внутренний радиус"
 
-#: ../src/widgets/toolbox.cpp:3241
+#: ../src/widgets/toolbox.cpp:3239
 msgid "Inner radius:"
 msgstr "Внутренний радиус:"
 
-#: ../src/widgets/toolbox.cpp:3241
+#: ../src/widgets/toolbox.cpp:3239
 msgid "Radius of the innermost revolution (relative to the spiral size)"
 msgstr "Радиус первого изнутри витка (относительно размера спирали)"
 
-#: ../src/widgets/toolbox.cpp:3287
-msgid "<b>Mode:</b>"
-msgstr "<b>Режим:</b>"
-
-#: ../src/widgets/toolbox.cpp:3306
-msgid "Bézier"
+#: ../src/widgets/toolbox.cpp:3300
+msgid "Bezier"
 msgstr "Безье"
 
+#: ../src/widgets/toolbox.cpp:3301
+msgid "Create regular Bezier path"
+msgstr "Рисовать кривую Безье"
+
 #: ../src/widgets/toolbox.cpp:3307
-msgid "Regular Bézier mode"
-msgstr "Рисование обычных кривых Безье"
-
-#: ../src/widgets/toolbox.cpp:3313
 msgid "Spiro"
-msgstr "Спайро"
+msgstr "Спиро"
 
-#: ../src/widgets/toolbox.cpp:3314
-msgid "Spiro splines mode"
-msgstr "Рисование спиралевидных кривых"
+#: ../src/widgets/toolbox.cpp:3308
+msgid "Create Spiro path"
+msgstr "Рисовать кривую Спиро"
 
-#: ../src/widgets/toolbox.cpp:3350
-msgid "Clipboard"
-msgstr "Из буфера обмена"
+#: ../src/widgets/toolbox.cpp:3315
+#: ../src/widgets/toolbox.cpp:3675
+msgid "Mode:"
+msgstr "Режим:"
 
-#: ../src/widgets/toolbox.cpp:3351
-msgid "Crescendo"
-msgstr "Крещендо"
-
-#: ../src/widgets/toolbox.cpp:3352
-msgid "Decrescendo"
+#: ../src/widgets/toolbox.cpp:3343
+msgid "Triangle in"
 msgstr "Декрещендо"
 
-#: ../src/widgets/toolbox.cpp:3376
-#: ../src/widgets/toolbox.cpp:3377
+#: ../src/widgets/toolbox.cpp:3344
+msgid "Triangle out"
+msgstr "Крещендо"
+
+#: ../src/widgets/toolbox.cpp:3346
+msgid "From clipboard"
+msgstr "Из буфера обмена"
+
+#: ../src/widgets/toolbox.cpp:3370
+#: ../src/widgets/toolbox.cpp:3371
 msgid "Shape:"
 msgstr "Форма:"
 
-#: ../src/widgets/toolbox.cpp:3471
+#: ../src/widgets/toolbox.cpp:3465
 msgid "(many nodes, rough)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3474
+#: ../src/widgets/toolbox.cpp:3468
 msgid "Smoothing:"
 msgstr "Сглаживание:"
 
-#: ../src/widgets/toolbox.cpp:3474
-msgid "Smoothing"
+#: ../src/widgets/toolbox.cpp:3468
+msgid "Smoothing: "
 msgstr "Сглаживание:"
 
-#: ../src/widgets/toolbox.cpp:3475
+#: ../src/widgets/toolbox.cpp:3469
 msgid "How much smoothing (simplifying) is applied to the line"
 msgstr "Как сильно сглаживается (упрощается) рисуемая от руки линия"
 
-#: ../src/widgets/toolbox.cpp:3501
+#: ../src/widgets/toolbox.cpp:3495
 msgid "Reset pencil parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
 msgstr "Сбросить параметры карандаша к значениям по умолчанию (параметры по умолчанию можно изменить в диалоге настройки Inkscape)"
 
 #. Width
-#: ../src/widgets/toolbox.cpp:3588
+#: ../src/widgets/toolbox.cpp:3582
 msgid "(pinch tweak)"
 msgstr "(узкая кисть)"
 
-#: ../src/widgets/toolbox.cpp:3588
-#: ../src/widgets/toolbox.cpp:3605
-#: ../src/widgets/toolbox.cpp:3772
-#: ../src/widgets/toolbox.cpp:4013
-#: ../src/widgets/toolbox.cpp:4046
-#: ../src/widgets/toolbox.cpp:4690
+#: ../src/widgets/toolbox.cpp:3582
+#: ../src/widgets/toolbox.cpp:3599
+#: ../src/widgets/toolbox.cpp:3766
+#: ../src/widgets/toolbox.cpp:4126
+#: ../src/widgets/toolbox.cpp:4159
+#: ../src/widgets/toolbox.cpp:4773
 msgid "(default)"
 msgstr "(по умолчанию)"
 
-#: ../src/widgets/toolbox.cpp:3588
+#: ../src/widgets/toolbox.cpp:3582
 msgid "(broad tweak)"
 msgstr "(широкая кисть)"
 
-#: ../src/widgets/toolbox.cpp:3591
+#: ../src/widgets/toolbox.cpp:3585
 msgid "The width of the tweak area (relative to the visible canvas area)"
 msgstr "Ширина области коррекции (относительно видимой области холста)"
 
 #. Force
-#: ../src/widgets/toolbox.cpp:3605
+#: ../src/widgets/toolbox.cpp:3599
 msgid "(minimum force)"
 msgstr "(минимальная)"
 
-#: ../src/widgets/toolbox.cpp:3605
+#: ../src/widgets/toolbox.cpp:3599
 msgid "(maximum force)"
 msgstr "(максимальная)"
 
-#: ../src/widgets/toolbox.cpp:3608
+#: ../src/widgets/toolbox.cpp:3602
 msgid "Force"
 msgstr "Сила"
 
-#: ../src/widgets/toolbox.cpp:3608
+#: ../src/widgets/toolbox.cpp:3602
 msgid "Force:"
 msgstr "Сила:"
 
-#: ../src/widgets/toolbox.cpp:3608
+#: ../src/widgets/toolbox.cpp:3602
 msgid "The force of the tweak action"
 msgstr "Сила действия инструмента коррекции"
 
-#: ../src/widgets/toolbox.cpp:3626
+#: ../src/widgets/toolbox.cpp:3620
 msgid "Push mode"
 msgstr "Режим толкания"
 
-#: ../src/widgets/toolbox.cpp:3627
+#: ../src/widgets/toolbox.cpp:3621
 msgid "Push parts of paths in any direction"
 msgstr "Выталкивание частей контуров"
 
-#: ../src/widgets/toolbox.cpp:3633
+#: ../src/widgets/toolbox.cpp:3627
 msgid "Shrink mode"
 msgstr "Режим сокращения объёма"
 
-#: ../src/widgets/toolbox.cpp:3634
+#: ../src/widgets/toolbox.cpp:3628
 msgid "Shrink (inset) parts of paths"
 msgstr "Втяжка части контуров"
 
-#: ../src/widgets/toolbox.cpp:3640
+#: ../src/widgets/toolbox.cpp:3634
 msgid "Grow mode"
 msgstr "Режим наращивания объёма"
 
-#: ../src/widgets/toolbox.cpp:3641
+#: ../src/widgets/toolbox.cpp:3635
 msgid "Grow (outset) parts of paths"
 msgstr "Наращивание частей контуров"
 
-#: ../src/widgets/toolbox.cpp:3647
+#: ../src/widgets/toolbox.cpp:3641
 msgid "Attract mode"
 msgstr "Режим притягивания"
 
-#: ../src/widgets/toolbox.cpp:3648
+#: ../src/widgets/toolbox.cpp:3642
 msgid "Attract parts of paths towards cursor"
 msgstr "Притяжение частей контуров к курсору"
 
-#: ../src/widgets/toolbox.cpp:3654
+#: ../src/widgets/toolbox.cpp:3648
 msgid "Repel mode"
 msgstr "Режим отталкивания"
 
-#: ../src/widgets/toolbox.cpp:3655
+#: ../src/widgets/toolbox.cpp:3649
 msgid "Repel parts of paths from cursor"
 msgstr "Отталкивание частей контуров от курсора"
 
-#: ../src/widgets/toolbox.cpp:3661
+#: ../src/widgets/toolbox.cpp:3655
 msgid "Roughen mode"
 msgstr "Режим огрубления"
 
-#: ../src/widgets/toolbox.cpp:3662
+#: ../src/widgets/toolbox.cpp:3656
 msgid "Roughen parts of paths"
 msgstr "Огрубление частей контуров"
 
-#: ../src/widgets/toolbox.cpp:3668
+#: ../src/widgets/toolbox.cpp:3662
 msgid "Color paint mode"
 msgstr "Режим рисования цветом"
 
-#: ../src/widgets/toolbox.cpp:3669
+#: ../src/widgets/toolbox.cpp:3663
 msgid "Paint the tool's color upon selected objects"
 msgstr "Рисовать цветом инструмента по выбранным объектам"
 
-#: ../src/widgets/toolbox.cpp:3675
+#: ../src/widgets/toolbox.cpp:3669
 msgid "Color jitter mode"
 msgstr "Режим перебора цветов"
 
-#: ../src/widgets/toolbox.cpp:3676
+#: ../src/widgets/toolbox.cpp:3670
 msgid "Jitter the colors of selected objects"
 msgstr "Перебирать цвета выделенных объектов"
 
-#: ../src/widgets/toolbox.cpp:3681
-msgid "Mode:"
-msgstr "Режим:"
-
-#: ../src/widgets/toolbox.cpp:3702
+#: ../src/widgets/toolbox.cpp:3696
 msgid "Channels:"
 msgstr "Каналы:"
 
-#: ../src/widgets/toolbox.cpp:3713
+#: ../src/widgets/toolbox.cpp:3707
 msgid "In color mode, act on objects' hue"
 msgstr "В режиме изменения цвета влиять на тон объектов"
 
 #. TRANSLATORS:  "H" here stands for hue
-#: ../src/widgets/toolbox.cpp:3717
+#: ../src/widgets/toolbox.cpp:3711
 msgid "H"
 msgstr "H"
 
-#: ../src/widgets/toolbox.cpp:3728
+#: ../src/widgets/toolbox.cpp:3722
 msgid "In color mode, act on objects' saturation"
 msgstr "В режиме изменения цвета влиять на насыщенность объектов"
 
 #. TRANSLATORS: "S" here stands for Saturation
-#: ../src/widgets/toolbox.cpp:3732
+#: ../src/widgets/toolbox.cpp:3726
 msgid "S"
 msgstr "S"
 
-#: ../src/widgets/toolbox.cpp:3743
+#: ../src/widgets/toolbox.cpp:3737
 msgid "In color mode, act on objects' lightness"
 msgstr "В режиме изменения цвета влиять на яркость объектов"
 
 #. TRANSLATORS: "L" here stands for Lightness
-#: ../src/widgets/toolbox.cpp:3747
+#: ../src/widgets/toolbox.cpp:3741
 msgid "L"
 msgstr "L"
 
-#: ../src/widgets/toolbox.cpp:3758
+#: ../src/widgets/toolbox.cpp:3752
 msgid "In color mode, act on objects' opacity"
 msgstr "В режиме изменения цвета влиять на непрозрачность объектов"
 
 #. TRANSLATORS: "O" here stands for Opacity
-#: ../src/widgets/toolbox.cpp:3762
+#: ../src/widgets/toolbox.cpp:3756
 msgid "O"
 msgstr "O"
 
 #. Fidelity
-#: ../src/widgets/toolbox.cpp:3772
+#: ../src/widgets/toolbox.cpp:3766
 msgid "(rough, simplified)"
 msgstr "(грубо, упрощённо)"
 
-#: ../src/widgets/toolbox.cpp:3772
+#: ../src/widgets/toolbox.cpp:3766
 msgid "(fine, but many nodes)"
 msgstr "(точно, но много узлов)"
 
-#: ../src/widgets/toolbox.cpp:3775
+#: ../src/widgets/toolbox.cpp:3769
 msgid "Fidelity"
 msgstr "Точность"
 
-#: ../src/widgets/toolbox.cpp:3775
+#: ../src/widgets/toolbox.cpp:3769
 msgid "Fidelity:"
 msgstr "Точность:"
 
-#: ../src/widgets/toolbox.cpp:3776
+#: ../src/widgets/toolbox.cpp:3770
 msgid "Low fidelity simplifies paths; high fidelity preserves path features but may generate a lot of new nodes"
 msgstr "Низкая точность упрощает контуры; высокая точность сохраняет общую форму неизменной части контура, но добавляет новые узлы"
 
-#: ../src/widgets/toolbox.cpp:3793
-#: ../src/widgets/toolbox.cpp:4164
+#: ../src/widgets/toolbox.cpp:3787
+#: ../src/widgets/toolbox.cpp:4277
 msgid "Pressure"
 msgstr "Нажим"
 
-#: ../src/widgets/toolbox.cpp:3794
+#: ../src/widgets/toolbox.cpp:3788
 msgid "Use the pressure of the input device to alter the force of tweak action"
 msgstr "Нажим устройства ввода изменяет силу корректирующего действия"
 
+#: ../src/widgets/toolbox.cpp:3959
+msgid "No preset"
+msgstr "Не выбрана"
+
+#: ../src/widgets/toolbox.cpp:3977
+msgid "Save..."
+msgstr "Сохранить..."
+
 #. Width
-#: ../src/widgets/toolbox.cpp:4013
-#: ../src/widgets/toolbox.cpp:4690
+#: ../src/widgets/toolbox.cpp:4126
+#: ../src/widgets/toolbox.cpp:4773
 msgid "(hairline)"
 msgstr "(волосок)"
 
-#: ../src/widgets/toolbox.cpp:4013
-#: ../src/widgets/toolbox.cpp:4690
+#: ../src/widgets/toolbox.cpp:4126
+#: ../src/widgets/toolbox.cpp:4773
 msgid "(broad stroke)"
 msgstr "(широкий штрих)"
 
-#: ../src/widgets/toolbox.cpp:4016
-#: ../src/widgets/toolbox.cpp:4693
+#: ../src/widgets/toolbox.cpp:4129
+#: ../src/widgets/toolbox.cpp:4776
 msgid "Pen Width"
 msgstr "Толщина пера"
 
-#: ../src/widgets/toolbox.cpp:4017
+#: ../src/widgets/toolbox.cpp:4130
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
 msgstr "Ширина каллиграфического пера (относительно видимой области холста)"
 
 #. Thinning
-#: ../src/widgets/toolbox.cpp:4030
+#: ../src/widgets/toolbox.cpp:4143
 msgid "(speed blows up stroke)"
 msgstr "(скорость утолщает штрих)"
 
-#: ../src/widgets/toolbox.cpp:4030
+#: ../src/widgets/toolbox.cpp:4143
 msgid "(slight widening)"
 msgstr "(легкое утолщение)"
 
-#: ../src/widgets/toolbox.cpp:4030
+#: ../src/widgets/toolbox.cpp:4143
 msgid "(constant width)"
 msgstr "(постоянная ширина)"
 
-#: ../src/widgets/toolbox.cpp:4030
+#: ../src/widgets/toolbox.cpp:4143
 msgid "(slight thinning, default)"
 msgstr "(легкое утоньшение, по умолчанию)"
 
-#: ../src/widgets/toolbox.cpp:4030
+#: ../src/widgets/toolbox.cpp:4143
 msgid "(speed deflates stroke)"
 msgstr "(скорость обнуляет штрих)"
 
-#: ../src/widgets/toolbox.cpp:4033
+#: ../src/widgets/toolbox.cpp:4146
 msgid "Stroke Thinning"
 msgstr "Утоньшение штриха"
 
-#: ../src/widgets/toolbox.cpp:4033
+#: ../src/widgets/toolbox.cpp:4146
 msgid "Thinning:"
 msgstr "Сужение:"
 
-#: ../src/widgets/toolbox.cpp:4034
+#: ../src/widgets/toolbox.cpp:4147
 msgid "How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 makes them broader, 0 makes width independent of velocity)"
 msgstr "Как сильно скорость сужает штрих (> 0: быстрые штрихи уже, < 0: быстрые штрихи шире; при 0 ширина штриха не зависит от скорости)"
 
 #. Angle
-#: ../src/widgets/toolbox.cpp:4046
+#: ../src/widgets/toolbox.cpp:4159
 msgid "(left edge up)"
 msgstr "(левый угол вверху)"
 
-#: ../src/widgets/toolbox.cpp:4046
+#: ../src/widgets/toolbox.cpp:4159
 msgid "(horizontal)"
 msgstr "(перо горизонтально)"
 
-#: ../src/widgets/toolbox.cpp:4046
+#: ../src/widgets/toolbox.cpp:4159
 msgid "(right edge up)"
 msgstr "(правый угол вверху)"
 
-#: ../src/widgets/toolbox.cpp:4049
+#: ../src/widgets/toolbox.cpp:4162
 msgid "Pen Angle"
 msgstr "Угол пера"
 
-#: ../src/widgets/toolbox.cpp:4049
+#: ../src/widgets/toolbox.cpp:4162
 msgid "Angle:"
 msgstr "Угол:"
 
-#: ../src/widgets/toolbox.cpp:4050
+#: ../src/widgets/toolbox.cpp:4163
 msgid "The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if fixation = 0)"
 msgstr "Угол пера (в градусах; 0 = горизонтально; при нулевой фиксации значения не имеет)"
 
 #. Fixation
-#: ../src/widgets/toolbox.cpp:4064
+#: ../src/widgets/toolbox.cpp:4177
 msgid "(perpendicular to stroke, \"brush\")"
 msgstr "(перпендикулярно штриху)"
 
-#: ../src/widgets/toolbox.cpp:4064
+#: ../src/widgets/toolbox.cpp:4177
 msgid "(almost fixed, default)"
 msgstr "(почти полная, значение по умолчанию)"
 
-#: ../src/widgets/toolbox.cpp:4064
+#: ../src/widgets/toolbox.cpp:4177
 msgid "(fixed by Angle, \"pen\")"
 msgstr "(угол зафиксирован)"
 
-#: ../src/widgets/toolbox.cpp:4067
+#: ../src/widgets/toolbox.cpp:4180
 msgid "Fixation"
 msgstr "Фиксация"
 
-#: ../src/widgets/toolbox.cpp:4067
+#: ../src/widgets/toolbox.cpp:4180
 msgid "Fixation:"
 msgstr "Фиксация:"
 
-#: ../src/widgets/toolbox.cpp:4068
+#: ../src/widgets/toolbox.cpp:4181
 msgid "Angle behavior (0 = nib always perpendicular to stroke direction, 1 = fixed angle)"
 msgstr "Фиксация угла (0 = перо всегда перпендикулярно направлению штриха, 1 = угол не меняется)"
 
 #. Cap Rounding
-#: ../src/widgets/toolbox.cpp:4080
+#: ../src/widgets/toolbox.cpp:4193
 msgid "(blunt caps, default)"
 msgstr "(плоские концы, значение по умолчанию)"
 
-#: ../src/widgets/toolbox.cpp:4080
+#: ../src/widgets/toolbox.cpp:4193
 msgid "(slightly bulging)"
 msgstr "(слегка закругленные)"
 
-#: ../src/widgets/toolbox.cpp:4080
+#: ../src/widgets/toolbox.cpp:4193
 msgid "(approximately round)"
 msgstr "(примерно круглые)"
 
-#: ../src/widgets/toolbox.cpp:4080
+#: ../src/widgets/toolbox.cpp:4193
 msgid "(long protruding caps)"
 msgstr "(округлые, далеко выдающиеся концы)"
 
-#: ../src/widgets/toolbox.cpp:4084
+#: ../src/widgets/toolbox.cpp:4197
 msgid "Cap rounding"
 msgstr "Закругление концов"
 
-#: ../src/widgets/toolbox.cpp:4084
+#: ../src/widgets/toolbox.cpp:4197
 msgid "Caps:"
 msgstr "Концы:"
 
-#: ../src/widgets/toolbox.cpp:4085
+#: ../src/widgets/toolbox.cpp:4198
 msgid "Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = round caps)"
 msgstr "Увеличение значения дает далеко выдающиеся концы (0=без концов, 1=округлые концы)"
 
 #. Tremor
-#: ../src/widgets/toolbox.cpp:4097
+#: ../src/widgets/toolbox.cpp:4210
 msgid "(smooth line)"
 msgstr "(гладкая линия)"
 
-#: ../src/widgets/toolbox.cpp:4097
+#: ../src/widgets/toolbox.cpp:4210
 msgid "(slight tremor)"
 msgstr "(легкое дрожание)"
 
-#: ../src/widgets/toolbox.cpp:4097
+#: ../src/widgets/toolbox.cpp:4210
 msgid "(noticeable tremor)"
 msgstr "(заметное дрожание)"
 
-#: ../src/widgets/toolbox.cpp:4097
+#: ../src/widgets/toolbox.cpp:4210
 msgid "(maximum tremor)"
 msgstr "(максимальное дрожание)"
 
-#: ../src/widgets/toolbox.cpp:4100
+#: ../src/widgets/toolbox.cpp:4213
 msgid "Stroke Tremor"
 msgstr "Дрожание штриха"
 
-#: ../src/widgets/toolbox.cpp:4100
+#: ../src/widgets/toolbox.cpp:4213
 msgid "Tremor:"
 msgstr "Дрожание:"
 
-#: ../src/widgets/toolbox.cpp:4101
+#: ../src/widgets/toolbox.cpp:4214
 msgid "Increase to make strokes rugged and trembling"
 msgstr "Увеличение значения делает штрихи дрожащими"
 
 #. Wiggle
-#: ../src/widgets/toolbox.cpp:4115
+#: ../src/widgets/toolbox.cpp:4228
 msgid "(no wiggle)"
 msgstr "(без виляния)"
 
-#: ../src/widgets/toolbox.cpp:4115
+#: ../src/widgets/toolbox.cpp:4228
 msgid "(slight deviation)"
 msgstr "(легкое отклонение)"
 
-#: ../src/widgets/toolbox.cpp:4115
+#: ../src/widgets/toolbox.cpp:4228
 msgid "(wild waves and curls)"
 msgstr "(сумасшедшее вихляние)"
 
-#: ../src/widgets/toolbox.cpp:4118
+#: ../src/widgets/toolbox.cpp:4231
 msgid "Pen Wiggle"
 msgstr "Виляние пером"
 
-#: ../src/widgets/toolbox.cpp:4118
+#: ../src/widgets/toolbox.cpp:4231
 msgid "Wiggle:"
 msgstr "Виляние:"
 
-#: ../src/widgets/toolbox.cpp:4119
+#: ../src/widgets/toolbox.cpp:4232
 msgid "Increase to make the pen waver and wiggle"
 msgstr "Увеличение значения делает штрихи виляющими"
 
 #. Mass
-#: ../src/widgets/toolbox.cpp:4132
+#: ../src/widgets/toolbox.cpp:4245
 msgid "(no inertia)"
 msgstr "(без инерции)"
 
-#: ../src/widgets/toolbox.cpp:4132
+#: ../src/widgets/toolbox.cpp:4245
 msgid "(slight smoothing, default)"
 msgstr "(легкое отставание, по умолчанию)"
 
-#: ../src/widgets/toolbox.cpp:4132
+#: ../src/widgets/toolbox.cpp:4245
 msgid "(noticeable lagging)"
 msgstr "(заметное отставание)"
 
-#: ../src/widgets/toolbox.cpp:4132
+#: ../src/widgets/toolbox.cpp:4245
 msgid "(maximum inertia)"
 msgstr "(максимальная инерция)"
 
-#: ../src/widgets/toolbox.cpp:4135
+#: ../src/widgets/toolbox.cpp:4248
 msgid "Pen Mass"
 msgstr "Масса пера"
 
-#: ../src/widgets/toolbox.cpp:4135
+#: ../src/widgets/toolbox.cpp:4248
 msgid "Mass:"
 msgstr "Масса:"
 
-#: ../src/widgets/toolbox.cpp:4136
+#: ../src/widgets/toolbox.cpp:4249
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
 msgstr "Увеличение значения затормаживает перо, словно оно очень инертно"
 
-#: ../src/widgets/toolbox.cpp:4151
+#: ../src/widgets/toolbox.cpp:4264
 msgid "Trace Background"
 msgstr "Трассировать фон"
 
-#: ../src/widgets/toolbox.cpp:4152
+#: ../src/widgets/toolbox.cpp:4265
 msgid "Trace the lightness of the background by the width of the pen (white - minimum width, black - maximum width)"
 msgstr "Трассировать освещенность фона толщиной линии пера (белый — минимальная толщина, черный — максимальная толщина)"
 
-#: ../src/widgets/toolbox.cpp:4165
+#: ../src/widgets/toolbox.cpp:4278
 msgid "Use the pressure of the input device to alter the width of the pen"
 msgstr "Нажим (pressure) устройства ввода изменяет ширину пера"
 
-#: ../src/widgets/toolbox.cpp:4177
+#: ../src/widgets/toolbox.cpp:4290
 msgid "Tilt"
 msgstr "Наклон"
 
-#: ../src/widgets/toolbox.cpp:4178
+#: ../src/widgets/toolbox.cpp:4291
 msgid "Use the tilt of the input device to alter the angle of the pen's nib"
 msgstr "Наклон (tilt) устройства ввода изменяет угол пера"
 
-#: ../src/widgets/toolbox.cpp:4196
-msgid "No preset"
-msgstr "Не выбрана"
-
-#: ../src/widgets/toolbox.cpp:4211
+#: ../src/widgets/toolbox.cpp:4304
 msgid "Change calligraphic profile"
 msgstr "Выбрать предустановку каллиграфического пера"
 
-#: ../src/widgets/toolbox.cpp:4223
-msgid "Save current settings as new profile"
-msgstr "Сохранить текущие параметры как предустановку"
-
-#: ../src/widgets/toolbox.cpp:4308
+#: ../src/widgets/toolbox.cpp:4391
 msgid "Arc: Change start/end"
 msgstr "Дуга: изменить начало/конец"
 
-#: ../src/widgets/toolbox.cpp:4397
+#: ../src/widgets/toolbox.cpp:4480
 msgid "Arc: Change open/closed"
 msgstr "Дуга: Изменить открытость/закрытость"
 
-#: ../src/widgets/toolbox.cpp:4521
+#: ../src/widgets/toolbox.cpp:4604
 msgid "Start"
 msgstr "Начало"
 
-#: ../src/widgets/toolbox.cpp:4521
+#: ../src/widgets/toolbox.cpp:4604
 msgid "Start:"
 msgstr "Начало:"
 
-#: ../src/widgets/toolbox.cpp:4522
+#: ../src/widgets/toolbox.cpp:4605
 msgid "The angle (in degrees) from the horizontal to the arc's start point"
 msgstr "Угол (в градусах) от горизонтали до начальной точки дуги"
 
-#: ../src/widgets/toolbox.cpp:4534
+#: ../src/widgets/toolbox.cpp:4617
 msgid "End"
 msgstr "Конец"
 
-#: ../src/widgets/toolbox.cpp:4534
+#: ../src/widgets/toolbox.cpp:4617
 msgid "End:"
 msgstr "Конец:"
 
-#: ../src/widgets/toolbox.cpp:4535
+#: ../src/widgets/toolbox.cpp:4618
 msgid "The angle (in degrees) from the horizontal to the arc's end point"
 msgstr "Угол (в градусах) от горизонтали до конечной точки дуги"
 
-#: ../src/widgets/toolbox.cpp:4551
+#: ../src/widgets/toolbox.cpp:4634
 msgid "Closed arc"
 msgstr "Закрытая дуга"
 
-#: ../src/widgets/toolbox.cpp:4552
+#: ../src/widgets/toolbox.cpp:4635
 msgid "Switch to segment (closed shape with two radii)"
 msgstr "Переключиться на сегмент (закрытый эллипс с двумя радиусами)"
 
-#: ../src/widgets/toolbox.cpp:4558
+#: ../src/widgets/toolbox.cpp:4641
 msgid "Open Arc"
 msgstr "Открытая дуга"
 
-#: ../src/widgets/toolbox.cpp:4559
+#: ../src/widgets/toolbox.cpp:4642
 msgid "Switch to arc (unclosed shape)"
 msgstr "Переключиться на дугу (незакрытый эллипс)"
 
-#: ../src/widgets/toolbox.cpp:4583
+#: ../src/widgets/toolbox.cpp:4666
 msgid "Make whole"
 msgstr "Сделать целым"
 
-#: ../src/widgets/toolbox.cpp:4584
+#: ../src/widgets/toolbox.cpp:4667
 msgid "Make the shape a whole ellipse, not arc or segment"
 msgstr "Сделать фигуру целым эллипсом, а не дугой или сегментом"
 
-#: ../src/widgets/toolbox.cpp:4650
+#: ../src/widgets/toolbox.cpp:4733
 msgid "Opacity:"
 msgstr "Непрозрачность:"
 
-#: ../src/widgets/toolbox.cpp:4657
+#: ../src/widgets/toolbox.cpp:4740
 msgid "Pick opacity"
 msgstr "Снять непрозрачность"
 
-#: ../src/widgets/toolbox.cpp:4658
+#: ../src/widgets/toolbox.cpp:4741
 msgid "Pick both the color and the alpha (transparency) under cursor; otherwise, pick only the visible color premultiplied by alpha"
 msgstr "Снимать значение альфа-канала (полупрозрачности) под курсором; если отключено, снимается только видимый цвет"
 
-#: ../src/widgets/toolbox.cpp:4661
+#: ../src/widgets/toolbox.cpp:4744
 msgid "Pick"
 msgstr "Снять"
 
-#: ../src/widgets/toolbox.cpp:4670
+#: ../src/widgets/toolbox.cpp:4753
 msgid "Assign opacity"
 msgstr "Назначить непрозрачность"
 
-#: ../src/widgets/toolbox.cpp:4671
+#: ../src/widgets/toolbox.cpp:4754
 msgid "If alpha was picked, assign it to selection as fill or stroke transparency"
 msgstr "Если полупрозрачность снята, назначать её заливке или обводке в выделении"
 
-#: ../src/widgets/toolbox.cpp:4674
+#: ../src/widgets/toolbox.cpp:4757
 msgid "Assign"
 msgstr "Назначить"
 
-#: ../src/widgets/toolbox.cpp:4694
+#: ../src/widgets/toolbox.cpp:4777
 msgid "The width of the eraser pen (relative to the visible canvas area)"
 msgstr "Толщина пера ластика (относительно видимой области холста)"
 
-#: ../src/widgets/toolbox.cpp:4712
+#: ../src/widgets/toolbox.cpp:4795
 msgid "Delete objects touched by the eraser"
 msgstr "Удалять объекты, которых коснулся ластик"
 
-#: ../src/widgets/toolbox.cpp:4718
+#: ../src/widgets/toolbox.cpp:4801
 msgid "Cut"
 msgstr "Вырезать"
 
-#: ../src/widgets/toolbox.cpp:4719
+#: ../src/widgets/toolbox.cpp:4802
 msgid "Cut out from objects"
 msgstr "Вырезать из объектов"
 
-#: ../src/widgets/toolbox.cpp:5053
+#: ../src/widgets/toolbox.cpp:5143
 msgid "Text: Change font family"
 msgstr "Текст: сменить гарнитуру"
 
-#: ../src/widgets/toolbox.cpp:5138
+#: ../src/widgets/toolbox.cpp:5228
 msgid "Text: Change alignment"
 msgstr "Текст: сменить выключку"
 
-#: ../src/widgets/toolbox.cpp:5216
+#: ../src/widgets/toolbox.cpp:5306
 msgid "Text: Change font style"
 msgstr "Текст: сменить начертание"
 
-#: ../src/widgets/toolbox.cpp:5263
+#: ../src/widgets/toolbox.cpp:5353
 msgid "Text: Change orientation"
 msgstr "Текст: сменить ориентацию"
 
-#: ../src/widgets/toolbox.cpp:5362
+#: ../src/widgets/toolbox.cpp:5452
 msgid "Text: Change font size"
 msgstr "Текст: сменить кегль"
 
-#: ../src/widgets/toolbox.cpp:5600
+#: ../src/widgets/toolbox.cpp:5690
 msgid "This font is currently not installed on your system. Inkscape will use the default font instead."
 msgstr "Этот шрифт сейчас отсутствует в системе. Вместо него Inkscape использует шрифт по умолчанию."
 
-#: ../src/widgets/toolbox.cpp:5634
+#: ../src/widgets/toolbox.cpp:5724
 msgid "Align left"
 msgstr "Выключка влево"
 
-#: ../src/widgets/toolbox.cpp:5645
+#: ../src/widgets/toolbox.cpp:5735
 msgid "Center"
 msgstr "Выключка по центру"
 
-#: ../src/widgets/toolbox.cpp:5656
+#: ../src/widgets/toolbox.cpp:5746
 msgid "Align right"
 msgstr "Выключка вправо"
 
-#: ../src/widgets/toolbox.cpp:5667
+#: ../src/widgets/toolbox.cpp:5757
 msgid "Justify"
 msgstr "Выключка по ширине"
 
-#: ../src/widgets/toolbox.cpp:5682
+#: ../src/widgets/toolbox.cpp:5772
 msgid "Bold"
 msgstr "Полужирное"
 
-#: ../src/widgets/toolbox.cpp:5693
+#: ../src/widgets/toolbox.cpp:5783
 msgid "Italic"
 msgstr "Наклонное"
 
-#: ../src/widgets/toolbox.cpp:5826
+#: ../src/widgets/toolbox.cpp:5916
 msgid "Change connector spacing"
 msgstr "Смена интервала линии соединения"
 
-#: ../src/widgets/toolbox.cpp:5914
+#: ../src/widgets/toolbox.cpp:6004
 msgid "Avoid"
 msgstr "Избегать"
 
-#: ../src/widgets/toolbox.cpp:5924
+#: ../src/widgets/toolbox.cpp:6014
 msgid "Ignore"
 msgstr "Игнорировать"
 
-#: ../src/widgets/toolbox.cpp:5936
+#: ../src/widgets/toolbox.cpp:6026
 msgid "Connector Spacing"
 msgstr "Интервал линии соединения"
 
-#: ../src/widgets/toolbox.cpp:5936
+#: ../src/widgets/toolbox.cpp:6026
 msgid "Spacing:"
 msgstr "Интервал:"
 
-#: ../src/widgets/toolbox.cpp:5937
+#: ../src/widgets/toolbox.cpp:6027
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Оставшееся пространство вокруг объектов при автосоединении"
 
-#: ../src/widgets/toolbox.cpp:5948
+#: ../src/widgets/toolbox.cpp:6038
 msgid "Graph"
 msgstr "Граф"
 
-#: ../src/widgets/toolbox.cpp:5958
+#: ../src/widgets/toolbox.cpp:6048
 msgid "Connector Length"
 msgstr "Длина линии соединения"
 
-#: ../src/widgets/toolbox.cpp:5958
+#: ../src/widgets/toolbox.cpp:6048
 msgid "Length:"
 msgstr "Длина:"
 
-#: ../src/widgets/toolbox.cpp:5959
+#: ../src/widgets/toolbox.cpp:6049
 msgid "Ideal length for connectors when layout is applied"
 msgstr "Идеальная длина при использовании оптимизации внешнего вида линий соединения"
 
-#: ../src/widgets/toolbox.cpp:5971
+#: ../src/widgets/toolbox.cpp:6061
 msgid "Downwards"
 msgstr "Вниз"
 
-#: ../src/widgets/toolbox.cpp:5972
+#: ../src/widgets/toolbox.cpp:6062
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Линии соединения со стрелками указывают вниз"
 
-#: ../src/widgets/toolbox.cpp:5988
+#: ../src/widgets/toolbox.cpp:6078
 msgid "Do not allow overlapping shapes"
 msgstr "Не допускать перекрытия фигур"
 
-#: ../src/widgets/toolbox.cpp:6089
+#: ../src/widgets/toolbox.cpp:6179
 msgid "Fill by"
 msgstr "Чем залить"
 
-#: ../src/widgets/toolbox.cpp:6090
+#: ../src/widgets/toolbox.cpp:6180
 msgid "Fill by:"
 msgstr "Чем залить:"
 
-#: ../src/widgets/toolbox.cpp:6102
+#: ../src/widgets/toolbox.cpp:6192
 msgid "Fill Threshold"
 msgstr "Порог заливки"
 
-#: ../src/widgets/toolbox.cpp:6103
+#: ../src/widgets/toolbox.cpp:6193
 msgid "The maximum allowed difference between the clicked pixel and the neighboring pixels to be counted in the fill"
 msgstr "Максимально допустимая разница между щелкнутым пикселом и соседними пикселами, попадающими в заливку"
 
-#: ../src/widgets/toolbox.cpp:6128
+#: ../src/widgets/toolbox.cpp:6218
 msgid "Grow/shrink by"
 msgstr "Увеличить/уменьшить на"
 
-#: ../src/widgets/toolbox.cpp:6128
+#: ../src/widgets/toolbox.cpp:6218
 msgid "Grow/shrink by:"
 msgstr "Увеличить/уменьшить на:"
 
-#: ../src/widgets/toolbox.cpp:6129
+#: ../src/widgets/toolbox.cpp:6219
 msgid "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr "Насколько увеличить (положительное число) или уменьшить (отрицательное число) создаваемый контур с заливкой"
 
-#: ../src/widgets/toolbox.cpp:6154
+#: ../src/widgets/toolbox.cpp:6244
 msgid "Close gaps"
 msgstr "Закрыть интервалы"
 
-#: ../src/widgets/toolbox.cpp:6155
+#: ../src/widgets/toolbox.cpp:6245
 msgid "Close gaps:"
 msgstr "Закрыть интервалы:"
 
-#: ../src/widgets/toolbox.cpp:6167
+#: ../src/widgets/toolbox.cpp:6257
 msgid "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
 msgstr "Сбросить параметры заливки к значениям по умолчанию (параметры по умолчанию можно изменить через диалог настройки Inkscape)"
 
@@ -16781,7 +16812,7 @@ msgstr ""
 
 #: ../share/extensions/extractimage.py:66
 msgid "Difficulty finding the image data."
-msgstr ""
+msgstr "Возникли сложности с нахождением растровых данных."
 
 #: ../share/extensions/inkex.py:61
 msgid "The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore this extension. Please download and install the latest version from http://cheeseshop.python.org/pypi/lxml/, or install it through your package manager by a command like: sudo apt-get install python-lxml"
@@ -16795,7 +16826,7 @@ msgstr "Нет узла, подходящего условиям запроса:
 #: ../share/extensions/markers_strokepaint.py:41
 #, python-format
 msgid "No style attribute found for id: %s"
-msgstr ""
+msgstr "Для ID %s не найден атрибут стиля"
 
 #: ../share/extensions/markers_strokepaint.py:56
 #, python-format
@@ -18079,7 +18110,6 @@ msgid "PostScript"
 msgstr "PostScript Level 3"
 
 #: ../share/extensions/ps_input.inx.h:3
-#, fuzzy
 msgid "PostScript Input"
 msgstr "Импорт файлов Postscript"
 
@@ -18140,32 +18170,28 @@ msgid "Arbitrary Angle:"
 msgstr "Произвольный угол:"
 
 #: ../share/extensions/restack.inx.h:4
-#, fuzzy
 msgid "Bottom"
-msgstr "Низ"
+msgstr "Внизу"
 
 #: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr "Снизу вверх (90)"
 
 #: ../share/extensions/restack.inx.h:6
-#, fuzzy
 msgid "Horizontal Point:"
-msgstr "Горизонтальный текст"
+msgstr "Горизонтальная точка:"
 
 #: ../share/extensions/restack.inx.h:7
-#, fuzzy
 msgid "Left"
-msgstr "ft"
+msgstr "Слева"
 
 #: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
 msgstr "Слева направо (0)"
 
 #: ../share/extensions/restack.inx.h:9
-#, fuzzy
 msgid "Middle"
-msgstr "Мозаика"
+msgstr "Посередине"
 
 #: ../share/extensions/restack.inx.h:10
 #, fuzzy
@@ -18186,22 +18212,20 @@ msgid "Restack Direction:"
 msgstr "Направление перестановки:"
 
 #: ../share/extensions/restack.inx.h:14
-#, fuzzy
 msgid "Right"
-msgstr "Права"
+msgstr "Справа"
 
 #: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
 msgstr "Справа налево (180)"
 
 #: ../share/extensions/restack.inx.h:17
-#, fuzzy
 msgid "Top to Bottom (270)"
-msgstr "Опустить на _задний план"
+msgstr "Сверху вниз (270°)"
 
 #: ../share/extensions/restack.inx.h:18
 msgid "Vertical Point:"
-msgstr ""
+msgstr "Вертикальная точка:"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -18456,6 +18480,20 @@ msgstr "Импорт файлов Windows Metafile"
 msgid "XAML Input"
 msgstr "Импорт XAML"
 
+#~ msgid "<b>Mode:</b>"
+#~ msgstr "<b>Режим:</b>"
+#~ msgid "Regular Bézier mode"
+#~ msgstr "Рисование обычных кривых Безье"
+#~ msgid "Spiro splines mode"
+#~ msgstr "Рисование спиралевидных кривых"
+#~ msgid "Crescendo"
+#~ msgstr "Крещендо"
+#~ msgid "Decrescendo"
+#~ msgstr "Декрещендо"
+#~ msgid "Smoothing"
+#~ msgstr "Сглаживание:"
+#~ msgid "Save current settings as new profile"
+#~ msgstr "Сохранить текущие параметры как предустановку"
 #~ msgid "Amount of Blur"
 #~ msgstr "Величина размывания"
 #~ msgid "I hate text"
