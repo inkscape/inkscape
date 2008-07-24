@@ -2016,9 +2016,6 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
 
         if (!style->filter.set || style->filter.inherit)
         {
-            // FIXME:
-            // instead of just copying over, we need to _really merge_ the two filters by combining their
-            // filter primitives
             sp_style_merge_ifilter(style, &parent->filter);
         }
 
@@ -2163,12 +2160,22 @@ sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent)
 static void
 sp_style_merge_ifilter(SPStyle *style, SPIFilter const *parent)
 {
+    // FIXME:
+    // instead of just copying over, we need to _really merge_ the two filters by combining their
+    // filter primitives
+
     sp_style_filter_clear(style);
     style->filter.set = parent->set;
     style->filter.inherit = parent->inherit;
 
     if (style->filter.href && style->filter.href->getObject())
        style->filter.href->detach();
+
+    // it may be that this style has not yet created its SPFilterReference
+    if (!style->filter.href && style->object && SP_OBJECT_DOCUMENT(style->object)) {
+            style->filter.href = new SPFilterReference(SP_OBJECT_DOCUMENT(style->object));
+            style->filter.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), style));
+    }
 
     if (style->filter.href && parent->href) {
         try {
@@ -2488,12 +2495,18 @@ sp_style_clear(SPStyle *style)
     style->stroke.clear();
     sp_style_filter_clear(style);
 
-    if (style->fill.value.href)
+    if (style->fill.value.href) {
         delete style->fill.value.href;
-    if (style->stroke.value.href)
+        style->fill.value.href = NULL;
+    }
+    if (style->stroke.value.href) {
         delete style->stroke.value.href;
-    if (style->filter.href)
+        style->stroke.value.href = NULL;
+    }
+    if (style->filter.href) {
         delete style->filter.href;
+        style->filter.href = NULL;
+    }
 
     if (style->stroke_dash.dash) {
         g_free(style->stroke_dash.dash);
