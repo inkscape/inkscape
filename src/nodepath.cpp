@@ -1901,15 +1901,23 @@ sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, NR::Po
         return;
     }
 
-    sp_nodepath_ensure_livarot_path(nodepath);
-    NR::Maybe<Path::cut_position> maybe_position = get_nearest_position_on_Path(nodepath->livarot_path, p);
-    if (!maybe_position) {
-        return;
+    SPCurve *curve = create_curve(nodepath);   // perhaps we can use nodepath->curve here instead?
+    Geom::PathVector const &pathv = curve->get_pathvector();
+    Geom::PathVectorPosition pvpos = Geom::nearestPoint(pathv, p);
+
+    // calculate index for nodepath's representation.
+    unsigned int segment_index = floor(pvpos.t) + 1;
+    for (unsigned int i = 0; i < pvpos.path_nr; ++i) {
+        segment_index += pathv[i].size() + 1;
+        if (pathv[i].closed()) {
+            segment_index += 1;
+        }
     }
-    Path::cut_position position = *maybe_position;
+
+    curve->unref();
 
     //find segment to segment
-    Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(position.piece);
+    Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(segment_index);
 
     //fixme: this can return NULL, so check before proceeding.
     g_return_if_fail(e != NULL);
@@ -1939,7 +1947,7 @@ sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p)
 
     SPCurve *curve = create_curve(nodepath);   // perhaps we can use nodepath->curve here instead?
     Geom::PathVector const &pathv = curve->get_pathvector();
-    Geom::PathVectorPosition pvpos = nearestPoint(pathv, p);
+    Geom::PathVectorPosition pvpos = Geom::nearestPoint(pathv, p);
 
     // calculate index for nodepath's representation.
     double int_part;
