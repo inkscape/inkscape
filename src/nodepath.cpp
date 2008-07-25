@@ -51,6 +51,7 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
+#include <cmath>
 #include <string>
 #include "live_effects/lpeobject.h"
 #include "live_effects/effect.h"
@@ -1936,21 +1937,32 @@ sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p)
         return;
     }
 
-    sp_nodepath_ensure_livarot_path(nodepath);
-    NR::Maybe<Path::cut_position> maybe_position = get_nearest_position_on_Path(nodepath->livarot_path, p);
-    if (!maybe_position) {
-        return;
+    SPCurve *curve = create_curve(nodepath);   // perhaps we can use nodepath->curve here instead?
+    Geom::PathVector const &pathv = curve->get_pathvector();
+    Geom::PathVectorPosition pvpos = nearestPoint(pathv, p);
+
+    // calculate index for nodepath's representation.
+    double int_part;
+    double t = std::modf(pvpos.t, &int_part);
+    unsigned int segment_index = (unsigned int)int_part + 1;
+    for (unsigned int i = 0; i < pvpos.path_nr; ++i) {
+        segment_index += pathv[i].size() + 1;
+        if (pathv[i].closed()) {
+            segment_index += 1;
+        }
     }
-    Path::cut_position position = *maybe_position;
+
+    curve->unref();
 
     //find segment to split
-    Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(position.piece);
+    Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(segment_index);
 
     //don't know why but t seems to flip for lines
     if (sp_node_path_code_from_side(e, sp_node_get_side(e, -1)) == NR_LINETO) {
-        position.t = 1.0 - position.t;
+        t = 1.0 - t;
     }
-    Inkscape::NodePath::Node *n = sp_nodepath_line_add_node(e, position.t);
+
+    Inkscape::NodePath::Node *n = sp_nodepath_line_add_node(e, t);
     sp_nodepath_node_select(n, FALSE, TRUE);
 
     /* fixme: adjust ? */
