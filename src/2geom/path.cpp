@@ -194,7 +194,7 @@ Path::allNearestPoints(Point const& _point, double from, double to) const
 	return all_nearest;	
 }
 
-double Path::nearestPoint(Point const& _point, double from, double to) const
+double Path::nearestPoint(Point const &_point, double from, double to, double *distance_squared) const
 {
 	if ( from > to ) std::swap(from, to);
 	const Path& _path = *this;
@@ -220,10 +220,11 @@ double Path::nearestPoint(Point const& _point, double from, double to) const
 	}
 	if ( si == ei )
 	{
-		double nearest =
-			_path[si].nearestPoint(_point, st, et);
+		double nearest = _path[si].nearestPoint(_point, st, et);
+        *distance_squared = distanceSq(_point, _path[si].pointAt(nearest));
 		return si + nearest;
 	}
+
 	double t;
 	double nearest = _path[si].nearestPoint(_point, st);
 	unsigned int ni = si;
@@ -254,8 +255,13 @@ double Path::nearestPoint(Point const& _point, double from, double to) const
 		{
 			nearest = t;
 			ni = ei;
+			mindistsq = dsq;
 		}
 	}
+
+    if (distance_squared) {
+        *distance_squared = mindistsq;
+    }
 	return ni + nearest;
 }
 

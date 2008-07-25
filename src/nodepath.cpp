@@ -23,6 +23,8 @@
 #include <glibmm/i18n.h>
 #include <2geom/pathvector.h>
 #include <2geom/sbasis-to-bezier.h>
+#include <2geom/bezier-curve.h>
+#include <2geom/hvlinesegment.h>
 #include "helper/units.h"
 #include "knot.h"
 #include "inkscape.h"

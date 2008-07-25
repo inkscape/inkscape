@@ -78,6 +78,8 @@
 #include <cmath>
 
 #include <2geom/sbasis-to-bezier.h>
+#include <2geom/bezier-curve.h>
+#include <2geom/hvlinesegment.h>
 
 /*
 using std::atof;

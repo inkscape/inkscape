@@ -92,7 +92,16 @@ PathVector reverse_paths_and_order (PathVector const & path_in);
 
 Rect bounds_fast( PathVector const & pv );
 Rect bounds_exact( PathVector const & pv );
-}
+
+struct PathVectorPosition {
+    // pathvector[path_nr].pointAt(t) is the position
+    unsigned int path_nr;
+    double       t;
+};
+PathVectorPosition nearestPoint(PathVector const & path_in, Point const& _point, double *distance_squared = NULL);
+
+
+} // end namespace Geom
 
 #endif // SEEN_GEOM_PATHVECTOR_H
 

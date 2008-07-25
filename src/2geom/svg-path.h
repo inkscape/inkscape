@@ -32,6 +32,7 @@
 #define SEEN_SVG_PATH_H
 
 #include <2geom/path.h>
+#include <2geom/curves.h>
 #include <iterator>
 
 namespace Geom {

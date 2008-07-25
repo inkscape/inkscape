@@ -88,6 +88,32 @@ Rect bounds_exact( PathVector const& pv )
     return bound;
 }
 
+/* Note: undefined for empty pathvectors or pathvectors with empty paths.
+ * */
+PathVectorPosition nearestPoint(PathVector const & path_in, Point const& _point, double *distance_squared)
+{
+    PathVectorPosition retval;
+
+    double mindsq = infinity();
+    unsigned int i = 0;
+    for (Geom::PathVector::const_iterator pit = path_in.begin(); pit != path_in.end(); ++pit) {
+        double dsq;
+        double t = pit->nearestPoint(_point, &dsq);
+        if (dsq < mindsq) {
+            mindsq = dsq;
+            retval.path_nr = i;
+            retval.t       = t;
+        }
+
+        ++i;
+    }
+
+    if (distance_squared) {
+        *distance_squared = mindsq;
+    }
+    return retval;
+}
+
 } // namespace Geom
 
 #endif // SEEN_GEOM_PATHVECTOR_CPP

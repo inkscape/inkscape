@@ -30,6 +30,8 @@
 #include <extension/system.h>
 #include <2geom/pathvector.h>
 #include <2geom/rect.h>
+#include <2geom/bezier-curve.h>
+#include <2geom/hvlinesegment.h>
 #include "helper/geom.h"
 #include <io/sys.h>
 

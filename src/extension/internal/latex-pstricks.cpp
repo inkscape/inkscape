@@ -29,6 +29,8 @@
 #include <libnr/nr-matrix-fns.h>
 #include <2geom/pathvector.h>
 #include <2geom/sbasis-to-bezier.h>
+#include <2geom/bezier-curve.h>
+#include <2geom/hvlinesegment.h>
 
 #include "sp-item.h"
 

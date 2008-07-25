@@ -433,6 +433,66 @@ ConvexHull graham_merge(ConvexHull a, ConvexHull b) {
     }
 }*/
 
+double ConvexHull::centroid_and_area(Geom::Point& centroid) const {
+    const unsigned n = boundary.size();
+    if (n < 2)
+        return 0;
+    if(n < 3) {
+        centroid = (boundary[0] + boundary[1])/2;
+        return 0;
+    }
+    Geom::Point centroid_tmp(0,0);
+    double atmp = 0;
+    for (unsigned i = n-1, j = 0; j < n; i = j, j++) {
+        const double ai = -cross(boundary[j], boundary[i]);
+        atmp += ai;
+        centroid_tmp += (boundary[j] + boundary[i])*ai; // first moment.
+    }
+    if (atmp != 0) {
+        centroid = centroid_tmp / (3 * atmp);
+    }
+    return atmp / 2;
+}
+
+// TODO: This can be made lg(n) using golden section/fibonacci search three starting points, say 0,
+// n/2, n-1 construct a new point, say (n/2 + n)/2 throw away the furthest boundary point iterate
+// until interval is a single value
+Point const * ConvexHull::furthest(Point direction) const {
+    Point const * p = &boundary[0];
+    double d = dot(*p, direction);
+    for(unsigned i = 1; i < boundary.size(); i++) {
+        double dd = dot(boundary[i], direction);
+        if(d < dd) {
+            p = &boundary[i];
+            d = dd;
+        }
+    }
+    return p;
+}
+
+
+// returns (a, (b,c)), three points which define the narrowest diameter of the hull as the pair of
+// lines going through b,c, and through a, parallel to b,c TODO: This can be made linear time by
+// moving point tc incrementally from the previous value (it can only move in one direction).  It
+// is currently n*O(furthest)
+double ConvexHull::narrowest_diameter(Point &a, Point &b, Point &c) {
+    Point tb = boundary.back();
+    double d = INFINITY;
+    for(unsigned i = 0; i < boundary.size(); i++) {
+        Point tc = boundary[i];
+        Point n = -rot90(tb-tc);
+        Point ta = *furthest(n);
+        double td = dot(n, ta-tb)/dot(n,n);
+        if(td < d) {
+            a = ta;
+            b = tb;
+            c = tc;
+            d = td;
+        }
+        tb = tc;
+    }
+    return d;
+}
 
 };
 

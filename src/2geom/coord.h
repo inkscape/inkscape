@@ -32,6 +32,7 @@
 #define SEEN_Geom_COORD_H
 
 #include <cmath>
+#include <limits>
 
 namespace Geom {
 
@@ -45,7 +46,8 @@ namespace Geom {
 typedef double Coord;
 
 const Coord EPSILON = 1e-5; //1e-18;
-const Coord COORD_HUGE = 1e18;
+
+inline Coord infinity() {  return std::numeric_limits<Coord>::infinity();  }
 
 //IMPL: NearConcept
 inline bool are_near(Coord a, Coord b, double eps=EPSILON) { return fabs(a-b) <= eps; }

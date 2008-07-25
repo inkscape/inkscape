@@ -52,6 +52,8 @@
 #include <style.h>
 #include "display/curve.h"
 #include <2geom/pathvector.h>
+#include <2geom/bezier-curve.h>
+#include <2geom/hvlinesegment.h>
 #include <2geom/transforms.h>
 #include <helper/geom.h>
 #include "extension/system.h"

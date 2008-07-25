@@ -41,10 +41,12 @@
 
 #include <2geom/pathvector.h>
 #include <2geom/path.h>
+#include <2geom/curves.h>
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/svg-path.h>
 #include <2geom/svg-path-parser.h>
 #include <2geom/exception.h>
+
 
 /* This module parses an SVG path element into an RsvgBpathDef.
 

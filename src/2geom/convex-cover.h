@@ -106,13 +106,18 @@ public:
     bool is_degenerate() const;
     
     // area of the convex hull
-    double area() const;
+    double centroid_and_area(Geom::Point& centroid) const;
+    double area() const {
+        Point tmp;
+        return centroid_and_area(tmp);
+    }
     
     // furthest point in a direction (lg time) 
     Point const * furthest(Point direction) const;
 
     bool is_left(Point p, int n);
     int find_left(Point p);
+    double narrowest_diameter(Point &a, Point &b, Point &c);
 };
 
 // do two convex hulls intersect?

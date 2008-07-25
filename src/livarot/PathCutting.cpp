@@ -26,6 +26,7 @@
 #include <2geom/point.h>
 #include <2geom/matrix.h>
 #include <2geom/sbasis-to-bezier.h>
+#include <2geom/curves.h>
 #include "../display/canvas-bpath.h"
 
 void  Path::DashPolyline(float head,float tail,float body,int nbD,float *dashs,bool stPlain,float stOffset)

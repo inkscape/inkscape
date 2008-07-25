@@ -11,6 +11,8 @@
 #include <typeinfo>
 #include <2geom/pathvector.h>
 #include <2geom/matrix.h>
+#include <2geom/bezier-curve.h>
+#include <2geom/hvlinesegment.h>
 #include "helper/geom-nodetype.h"
 
 #include "live_effects/bezctx.h"

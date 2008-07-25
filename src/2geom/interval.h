@@ -44,16 +44,16 @@
 namespace Geom {
 
 /* Although an Interval where _b[0] > _b[1] is considered empty, for proper functioning of other methods,
- * a proper empty Interval is [+COORD_HUGE, -COORD_HUGE]. Then, expandTo(p) will set the interval to [p,p].
+ * a proper empty Interval is [+infinity, -infinity]. Then, expandTo(p) will set the interval to [p,p].
  */
 class Interval {
 private:
     Coord _b[2];
 
 public:
-    // The default constructor creates an empty interval, that ranges from +COORD_HUGE to -COORD_HUGE.
+    // The default constructor creates an empty interval, that ranges from +infinity to -infinity.
     // Doing an expandTo(p) on this empty interval will correctly set the whole interval to [p,p].
-    explicit Interval() { _b[0] = +COORD_HUGE;  _b[1] = -COORD_HUGE; }
+    explicit Interval() { _b[0] = +infinity();  _b[1] = -infinity(); }
     explicit Interval(Coord u) { _b[0] = _b[1] = u; }
     /* When creating an Interval using the constructor specifying the exact range, the created interval
      * will be [u,v] when u<=v ; and will be [v,u] when v < u !!!

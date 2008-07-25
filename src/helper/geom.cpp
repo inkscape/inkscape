@@ -15,6 +15,8 @@
 #include <typeinfo>
 #include <2geom/pathvector.h>
 #include <2geom/path.h>
+#include <2geom/bezier-curve.h>
+#include <2geom/hvlinesegment.h>
 #include <2geom/transforms.h>
 #include <2geom/rect.h>
 #include <2geom/coord.h>

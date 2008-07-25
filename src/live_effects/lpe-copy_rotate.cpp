@@ -19,6 +19,7 @@
 #include <2geom/path.h>
 #include <2geom/transforms.h>
 #include <2geom/d2-sbasis.h>
+#include <2geom/angle.h>
 
 namespace Inkscape {
 namespace LivePathEffect {

@@ -22,6 +22,8 @@
 #include "nr-arena.h"
 #include "sp-canvas.h"
 #include <2geom/pathvector.h>
+#include <2geom/bezier-curve.h>
+#include <2geom/hvlinesegment.h>
 #include <2geom/matrix.h>
 #include <2geom/point.h>
 #include <2geom/path.h>
