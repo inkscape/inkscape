@@ -27,8 +27,9 @@
 #include "xml/node-event-vector.h"
 #include "prefs-utils.h"
 #include "object-edit.h"
-#include "splivarot.h"
 #include "style.h"
+#include "display/curve.h"
+#include <2geom/pathvector.h>
 
 #include "shape-editor.h"
 
@@ -359,14 +360,11 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
     this->curvepoint_doc = desktop->w2d(event_p);
     this->curvepoint_doc *= from_2geom(sp_item_dt2i_affine(item));
 
-    sp_nodepath_ensure_livarot_path(this->nodepath);
+    SPCurve *curve = this->nodepath->curve;   // not sure if np->curve is always up to date...
+    Geom::PathVector const &pathv = curve->get_pathvector();
+    Geom::PathVectorPosition pvpos = Geom::nearestPoint(pathv, this->curvepoint_doc);
 
-    NR::Maybe<Path::cut_position> position = get_nearest_position_on_Path(this->nodepath->livarot_path, this->curvepoint_doc);
-    if (!position) {
-        return false;
-    }
-
-    NR::Point nearest = get_point_on_Path(this->nodepath->livarot_path, position->piece, position->t);
+    NR::Point nearest = pathv[pvpos.path_nr].pointAt(pvpos.t);
     NR::Point delta = nearest - this->curvepoint_doc;
 
     delta = desktop->d2w(delta);
@@ -381,11 +379,21 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
     bool close = (NR::L2 (delta) < stroke_tolerance);
 
     if (remember && close) {
+        // calculate index for nodepath's representation.
+        double int_part;
+        double t = std::modf(pvpos.t, &int_part);
+        unsigned int segment_index = (unsigned int)int_part + 1;
+        for (unsigned int i = 0; i < pvpos.path_nr; ++i) {
+            segment_index += pathv[i].size() + 1;
+            if (pathv[i].closed())
+                segment_index += 1;
+        }
+
         this->curvepoint_event[NR::X] = (gint) event_p [NR::X];
         this->curvepoint_event[NR::Y] = (gint) event_p [NR::Y];
         this->hit = true;
-        this->grab_t = position->t;
-        this->grab_node = position->piece;
+        this->grab_t = t;
+        this->grab_node = segment_index;
     }
 
     return close;
