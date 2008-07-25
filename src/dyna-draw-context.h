@@ -19,6 +19,7 @@
  */
 
 #include "common-context.h"
+#include "splivarot.h"
 
 #define SP_TYPE_DYNA_DRAW_CONTEXT (sp_dyna_draw_context_get_type())
 #define SP_DYNA_DRAW_CONTEXT(o) (GTK_CHECK_CAST((o), SP_TYPE_DYNA_DRAW_CONTEXT, SPDynaDrawContext))

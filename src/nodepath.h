@@ -16,7 +16,6 @@
 //#include "sp-path.h"
 //#include "desktop-handles.h"
 #include "libnr/nr-path-code.h"
-#include "livarot/Path.h"
 #include <glibmm/ustring.h>
 #include <gdk/gdkevents.h>
 #include <list>
@@ -237,9 +236,6 @@ class Path {
 	guint numSelected() {return (selected? g_list_length(selected) : 0);}
 	NR::Point& singleSelectedCoords() {return (((Node *) selected->data)->pos);}
 
-      /// livarot library is used for "point on path" and "nearest position on path", so we need to maintain its path representation as well
-	::Path *livarot_path;
-    
     /// draw a "sketch" of the path by using these variables
     SPCanvasItem *helper_path;
     SPCurve *curve;
@@ -274,7 +270,6 @@ enum {
 // Do function documentation in nodepath.cpp
 Inkscape::NodePath::Path * sp_nodepath_new (SPDesktop * desktop, SPObject *object, bool show_handles, const char * repr_key = NULL, SPItem *item = NULL);
 void sp_nodepath_destroy (Inkscape::NodePath::Path * nodepath);
-void sp_nodepath_ensure_livarot_path(Inkscape::NodePath::Path *np);
 void sp_nodepath_deselect (Inkscape::NodePath::Path *nodepath);
 void sp_nodepath_select_all (Inkscape::NodePath::Path *nodepath, bool invert);
 void sp_nodepath_select_all_from_subpath(Inkscape::NodePath::Path *nodepath, bool invert);

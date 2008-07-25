@@ -44,7 +44,6 @@
 #include "sp-metrics.h"
 #include "sp-path.h"
 #include "libnr/nr-matrix-ops.h"
-#include "splivarot.h"
 #include "svg/svg.h"
 #include "verbs.h"
 #include "display/bezier-utils.h"
@@ -219,7 +218,6 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     np->subpaths    = NULL;
     np->selected    = NULL;
     np->shape_editor = NULL; //Let the shapeeditor that makes this set it
-    np->livarot_path = NULL;
     np->local_change = 0;
     np->show_handles = show_handles;
     np->helper_path = NULL;
@@ -291,9 +289,6 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     delete[] typestr;
     curve->unref();
 
-    // create the livarot representation from the same item
-    sp_nodepath_ensure_livarot_path(np);
-
     sp_nodepath_draw_helper_curve(np, desktop);
 
     return np;
@@ -316,11 +311,6 @@ void sp_nodepath_destroy(Inkscape::NodePath::Path *np) {
         np->shape_editor->nodepath_destroyed();
 
     g_assert(!np->selected);
-
-    if (np->livarot_path) {
-        delete np->livarot_path;
-        np->livarot_path = NULL;
-    }
 
     if (np->helper_path) {
         GtkObject *temp = np->helper_path;
@@ -345,22 +335,6 @@ void sp_nodepath_destroy(Inkscape::NodePath::Path *np) {
 
     g_free(np);
 }
-
-
-void sp_nodepath_ensure_livarot_path(Inkscape::NodePath::Path *np)
-{
-    if (np && np->livarot_path == NULL) {
-        SPCurve *curve = create_curve(np);
-        np->livarot_path = new Path;
-        np->livarot_path->LoadPathVector(curve->get_pathvector());
-
-        if (np->livarot_path)
-            np->livarot_path->ConvertWithBackData(0.01);
-
-        curve->unref();
-    }
-}
-
 
 /**
  *  Return the node count of a given NodeSubPath.
@@ -632,11 +606,6 @@ void sp_nodepath_update_repr(Inkscape::NodePath::Path *np, const gchar *annotati
     //fixme: np can be NULL, so check before proceeding
     g_return_if_fail(np != NULL);
 
-    if (np->livarot_path) {
-        delete np->livarot_path;
-        np->livarot_path = NULL;
-    }
-
     update_repr_internal(np);
     sp_canvas_end_forced_full_redraws(np->desktop->canvas);
 
@@ -649,11 +618,6 @@ void sp_nodepath_update_repr(Inkscape::NodePath::Path *np, const gchar *annotati
  */
 static void sp_nodepath_update_repr_keyed(Inkscape::NodePath::Path *np, gchar const *key, const gchar *annotation)
 {
-    if (np->livarot_path) {
-        delete np->livarot_path;
-        np->livarot_path = NULL;
-    }
-
     update_repr_internal(np);
     sp_document_maybe_done(sp_desktop_document(np->desktop), key, SP_VERB_CONTEXT_NODE,
                            annotation);
