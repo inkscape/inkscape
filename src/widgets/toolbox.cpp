@@ -4301,7 +4301,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
         /*calligraphic profile */
         {
             GtkListStore* model = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-            EgeSelectOneAction* act1 = ege_select_one_action_new ("SetProfileAction", "" , (_("Change calligraphic profile")), NULL, GTK_TREE_MODEL(model));
+            EgeSelectOneAction* act1 = ege_select_one_action_new ("SetProfileAction", "" , (_("Choose a preset")), NULL, GTK_TREE_MODEL(model));
             ege_select_one_action_set_appearance (act1, "compact");
             g_object_set_data (holder, "profile_selector", act1 );
 
