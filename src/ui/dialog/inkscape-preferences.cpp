@@ -306,11 +306,12 @@ void StyleFromSelectionToTool(gchar const *prefs_path, StyleSwatch *swatch)
     }
 }
 
-void InkscapePreferences::AddNewObjectsStyle(DialogPage& p, const std::string& prefs_path)
+void InkscapePreferences::AddNewObjectsStyle(DialogPage& p, const std::string& prefs_path, const gchar* banner)
 {
-
-
-    p.add_group_header( _("Create new objects with:"));
+    if (banner)
+        p.add_group_header(banner);
+    else
+        p.add_group_header( _("Create new objects with:"));
     PrefRadioButton* current = Gtk::manage( new PrefRadioButton);
     current->init ( _("Last used style"), prefs_path, "usecurrent", 1, true, 0);
     p.add_line( true, "", *current, "",
@@ -404,6 +405,7 @@ void InkscapePreferences::initPageTools()
 
     //Tweak
     this->AddPage(_page_tweak, _("Tweak"), iter_tools, PREFS_PAGE_TOOLS_NODE);
+    this->AddNewObjectsStyle(_page_tweak, "tools.tweak", _("Paint objects with:"));
     AddSelcueCheckbox(_page_tweak, "tools.tweak", true);
     AddGradientCheckbox(_page_tweak, "tools.tweak", false);
 
