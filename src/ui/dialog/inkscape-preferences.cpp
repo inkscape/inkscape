@@ -1049,6 +1049,11 @@ void InkscapePreferences::initPageMisc()
     _page_misc.add_line( false, _("Simplification threshold:"), _misc_simpl, "",
                            _("How strong is the Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."), false);
 
+    _misc_latency_skew.init("debug.latency", "skew", 0.5, 2.0, 0.01, 0.10, 1.0, false, false);
+    _page_misc.add_line( false, _("Latency skew:"), _misc_latency_skew, _("(requires restart)"),
+                           _("Factor by which the event clock is skewed from the actual time (0.9766 on some systems)."), false);
+
+
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
 }
 

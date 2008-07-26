@@ -388,6 +388,9 @@ static char const preferences_skeleton[] =
 "    <group id = \"server\" name = \"jabber.org\" port = \"5222\" username = \"\" ssl = \"0\"/>\n"
 "    <group id = \"room\" name = \"inkboard\" server = \"gristle.org\"/>\n"
 "  </group>\n"
+"  <group id=\"debug\">\n"
+"    <group id=\"latency\" skew=\"1\"/>\n"
+"  </group>\n"
 "\n"
 "</inkscape>\n";
 

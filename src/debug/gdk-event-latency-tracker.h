@@ -33,6 +33,7 @@ private:
 
     double start_seconds;
     double max_latency;
+    double skew;
     Glib::Timer elapsed;
 };
 

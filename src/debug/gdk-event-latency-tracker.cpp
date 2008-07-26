@@ -10,12 +10,13 @@
  */
 
 #include "debug/gdk-event-latency-tracker.h"
+#include "prefs-utils.h"
 
 namespace Inkscape {
 namespace Debug {
 
 GdkEventLatencyTracker::GdkEventLatencyTracker()
-: start_seconds(0.0), max_latency(0.0)
+    : start_seconds(0.0), max_latency(0.0), skew(1.0)
 {
     elapsed.stop();
     elapsed.reset();
@@ -31,9 +32,10 @@ boost::optional<double> GdkEventLatencyTracker::process(GdkEvent const *event) {
     if (start_seconds == 0.0) {
         elapsed.start();
         start_seconds = timestamp_seconds;
+        skew = prefs_get_double_attribute_limited("debug.latency", "skew", 1.0, 0.5, 2.0);
         return boost::optional<double>(0.0);
     } else {
-        double const current_seconds = elapsed.elapsed() + start_seconds;
+        double const current_seconds = (elapsed.elapsed() * skew) + start_seconds;
         double delta = current_seconds - timestamp_seconds;
         if (delta < 0.0) {
             start_seconds += -delta;
