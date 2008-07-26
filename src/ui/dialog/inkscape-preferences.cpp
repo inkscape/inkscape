@@ -404,7 +404,7 @@ void InkscapePreferences::initPageTools()
     _page_node.add_line( false, _("Flash time"), _t_node_pathflash_timeout, "ms", _("Specifies how long the path outline will be visible after a mouse-over (in milliseconds). Specify 0 to have the outline shown until mouse leaves the path."), false);
 
     //Tweak
-    this->AddPage(_page_tweak, _("Tweak"), iter_tools, PREFS_PAGE_TOOLS_NODE);
+    this->AddPage(_page_tweak, _("Tweak"), iter_tools, PREFS_PAGE_TOOLS_TWEAK);
     this->AddNewObjectsStyle(_page_tweak, "tools.tweak", _("Paint objects with:"));
     AddSelcueCheckbox(_page_tweak, "tools.tweak", true);
     AddGradientCheckbox(_page_tweak, "tools.tweak", false);
