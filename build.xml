@@ -31,7 +31,7 @@
 ## P R O J E C T   :   I N K S C A P E
 ########################################################################
 -->
-<project name="Inkscape" default="dist" basedir=".">
+<project name="Inkscape" default="dist-inkscape" basedir=".">
     <description>
         Build file for the Inkscape SVG editor.  This file
         was written for GTK-2.10 on Win32, but it should work
@@ -52,7 +52,7 @@
   <!-- -->
   <property name="arch"          value="mingw32-"/>
   <property name="archutil"      value=""/>
-  <property name="devlibs"       location="c:/devlibs"/>
+  <property name="devlibs"       location="e:/Inkscape/devlibs"/>
   <property name="cxxtest"       location="cxxtest"/>
   <!-- -->
 
@@ -522,6 +522,7 @@
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
        <flags>
+           -mwindows
        </flags>
        <fileset dir="${build}">
            <include name="inkviewres.o"/>
@@ -530,23 +531,20 @@
        </fileset>
        <libs>
            -L${devlibs}/lib
-           -lpoppler-cairo -lpoppler-glib -lpoppler.dll 
-           ${pcl.gtkmm-2.4}
-           <!-- PERL -->
-           -L${devlibs}/perl/lib/CORE -lperl58
-           <!-- PYTHON -->
-           -L${devlibs}/python/libs -lpython25
+           ${pcl.poppler-cairo} ${pcl.poppler-glib} ${pcl.poppler} 
+           ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${pcl.gthread-2.0}
            ${devlibs}/bin/libxml2.dll
            ${devlibs}/bin/libxslt.dll
+           ${pcl.cairo} ${pcl.cairomm-1.0}
+           ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
            ${devlibs}/lib/iconv.lib
-           -lcairo.dll -lcairomm-1.0.dll
-           -lwpg-0.1.dll -lwpg-stream-0.1.dll
-           -lMagick++ -lWand -lMagick
-           -lfreetype.dll -lfontconfig.dll
-           -llcms.dll
+           ${pcl.ImageMagick++}
+           ${pcl.fontconfig} ${pcl.freetype2}
            -lssl -lcrypto
+           ${pcl.lcms}
+           ${pcl.gsl}
            -lpng -ljpeg.dll -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
-           -lgc -mwindows
+           -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
        </libs>
     </link>
@@ -604,15 +602,13 @@
 
   <!--
   ########################################################################
-  ## T A R G E T    :    D I S T
+  ## T A R G E T    :    D I S T B A S E
   ########################################################################
   -->
-  <target name="dist" depends="link,i18n"
+  <target name="distbase" depends="i18n"
       description="generate the distribution directory with all needed files">
 
     <!-- Create the distribution directory -->
-    <copy todir="${dist}" file="${build}/inkscape.exe"/>
-    <copy todir="${dist}" file="${build}/inkscape.dbg"/>
     <copy todir="${dist}" file="AUTHORS"/>
     <copy todir="${dist}" file="COPYING"/>
     <copy todir="${dist}" file="COPYING.LIB"/>
@@ -761,6 +757,48 @@
 
   <!--
   ########################################################################
+  ## T A R G E T    :    D I S T - I N K S C A P E
+  ########################################################################
+  -->
+  <target name="dist-inkscape" depends="link,distbase"
+      description="copy inkscape to the distribution directory">
+
+    <!-- Create the distribution directory -->
+    <copy todir="${dist}" file="${build}/inkscape.exe"/>
+    <copy todir="${dist}" file="${build}/inkscape.dbg"/>
+  </target>
+
+
+  <!--
+  ########################################################################
+  ## T A R G E T    :    D I S T - I N K V I E W
+  ########################################################################
+  -->
+  <target name="dist-inkview" depends="linkinkview,distbase"
+      description="copy inkview to the distribution directory">
+
+    <!-- Create the distribution directory -->
+    <copy todir="${dist}" file="${build}/inkview.exe"/>
+    <copy todir="${dist}" file="${build}/inkview.dbg"/>
+  </target>
+
+
+  <!--
+  ########################################################################
+  ## T A R G E T    :    D I S T - C X X T E S T S
+  ########################################################################
+  -->
+  <target name="dist-cxxtests" depends="linkcxxtests,distbase"
+      description="copy cxxtests to the distribution directory">
+
+    <!-- Create the distribution directory -->
+    <copy todir="${dist}" file="${build}/cxxtests.exe"/>
+    <copy todir="${dist}" file="${build}/cxxtests.dbg"/>
+  </target>
+
+
+  <!--
+  ########################################################################
   ## T A R G E T    :    JAVAC
   ########################################################################
   -->
@@ -811,11 +849,20 @@
   ## T A R G E T    :    D I S T - A L L
   ########################################################################
   -->
-  <target name="dist-all" depends="dist"
+  <target name="dist-all" depends="dist-inkscape,dist-inkview"
         description="generate the distribution, along with inkview" >
+  </target>
 
-    <copy file="${build}/inkview.exe" todir="${dist}"/>
-    <copy file="${build}/inkview.dbg" todir="${dist}"/>
+
+
+
+  <!--
+  ########################################################################
+  ## T A R G E T    :    D I S T - A L L - E X T R A
+  ########################################################################
+  -->
+  <target name="dist-all-extra" depends="dist-all,dist-cxxtests"
+        description="generate the distribution, along with inkview and cxxtests" >
   </target>
 
 
