@@ -243,10 +243,12 @@ sp_desktop_get_color(SPDesktop *desktop, bool is_fill)
 }
 
 double
-sp_desktop_get_master_opacity_tool(SPDesktop *desktop, char const *tool)
+sp_desktop_get_master_opacity_tool(SPDesktop *desktop, char const *tool, bool *has_opacity)
 {
     SPCSSAttr *css = NULL;
     gfloat value = 1.0; // default if nothing else found
+    if (has_opacity)
+        *has_opacity = false;
     if (prefs_get_double_attribute(tool, "usecurrent", 0) != 0) {
         css = sp_desktop_get_style(desktop, true);
     } else { 
@@ -262,6 +264,9 @@ sp_desktop_get_master_opacity_tool(SPDesktop *desktop, char const *tool)
         if (desktop->current && property) { // if there is style and the property in it,
             if ( !sp_svg_number_read_f(property, &value) ) {
                 value = 1.0; // things failed. set back to the default
+            } else {
+                if (has_opacity)
+                   *has_opacity = false;
             }
         }
 
@@ -298,11 +303,14 @@ sp_desktop_get_opacity_tool(SPDesktop *desktop, char const *tool, bool is_fill)
 
     return value;
 }
+
 guint32
-sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill)
+sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill, bool *has_color)
 {
     SPCSSAttr *css = NULL;
     guint32 r = 0; // if there's no color, return black
+    if (has_color)
+        *has_color = false;
     if (prefs_get_int_attribute(tool, "usecurrent", 0) != 0) {
         css = sp_desktop_get_style(desktop, true);
     } else {
@@ -316,9 +324,11 @@ sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill)
         gchar const *property = sp_repr_css_property(css, is_fill ? "fill" : "stroke", "#000");
            
         if (desktop->current && property) { // if there is style and the property in it,
-            if (strncmp(property, "url", 3)) { // and if it's not url,
+            if (strncmp(property, "url", 3) && strncmp(property, "none", 4)) { // and if it's not url or none,
                 // read it
                 r = sp_svg_read_color(property, r);
+                if (has_color)
+                    *has_color = true;
             }
         }
 
@@ -327,6 +337,7 @@ sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill)
 
     return r | 0xff;
 }
+
 /**
  * Apply the desktop's current style or the tool style to repr.
  */
