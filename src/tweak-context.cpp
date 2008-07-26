@@ -801,6 +801,7 @@ bool
 sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point vector)
 {
     Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(tc)->desktop);
+    SPDesktop *desktop = SP_EVENT_CONTEXT(tc)->desktop;
 
     if (selection->isEmpty()) {
         return false;
@@ -815,30 +816,11 @@ sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point v
     double color_force = MIN(sqrt(force)/20.0, 1);
 
     SPItem *item_at_point = SP_EVENT_CONTEXT(tc)->desktop->item_at_point(event_p, TRUE);
-    Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, "tools.tweak");
-    SPCSSAttr *css = sp_repr_css_attr_inherited(tool_repr, "style");
-    if (tc->mode == TWEAK_MODE_COLORPAINT && !css)
-        return false;
 
     bool do_fill = false, do_stroke = false, do_opacity = false;
-    guint32 fill_goal = 0, stroke_goal = 0;
-    float opacity_goal = 1;
-
-    const gchar *fill_prop = sp_repr_css_property(css, "fill", NULL);
-    if (fill_prop && strcmp(fill_prop, "none")) {
-        do_fill = true;
-        fill_goal = sp_svg_read_color(fill_prop, 0);
-    }
-    const gchar *stroke_prop = sp_repr_css_property(css, "stroke", NULL);
-    if (stroke_prop && strcmp(stroke_prop, "none")) {
-        do_stroke = true;
-        stroke_goal = sp_svg_read_color(stroke_prop, 0);
-    }
-    const gchar *opacity_prop = sp_repr_css_property(css, "opacity", NULL);
-    if (opacity_prop) {
-        do_opacity = true;
-        sp_svg_number_read_f(opacity_prop, &opacity_goal);
-    }
+    guint32 fill_goal = sp_desktop_get_color_tool(desktop, "tools.tweak", true, &do_fill);
+    guint32 stroke_goal = sp_desktop_get_color_tool(desktop, "tools.tweak", false, &do_stroke);
+    double opacity_goal = sp_desktop_get_master_opacity_tool(desktop, "tools.tweak", &do_opacity);
 
     for (GSList *items = g_slist_copy((GSList *) selection->itemList());
          items != NULL;
