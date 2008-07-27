@@ -72,34 +72,34 @@ namespace LivePathEffect {
 
 const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     // {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
-    {BEND_PATH,             N_("Bend"),                  "bend_path"},
-    {PATTERN_ALONG_PATH,    N_("Pattern Along Path"),    "skeletal"},   // for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-    {FREEHAND_SHAPE,        N_("Freehand Shape"),        "freehand_shape"}, // this is actually a special type of PatternAlongPath, used to paste shapes in pen/pencil tool
-    {SKETCH,                N_("Sketch"),                "sketch"},
-    {VONKOCH,               N_("VonKoch"),               "vonkoch"},
-    {KNOT,                  N_("Knot"),                  "knot"},
+    {ANGLE_BISECTOR,        N_("Angle bisector"),          "angle_bisector"},
+    {BEND_PATH,             N_("Bend"),                     "bend_path"},
+    {BOOLOPS,               N_("Boolops"),                 "boolops"},
+    {CIRCLE_WITH_RADIUS,    N_("Circle (center+radius)"),   "circle_with_radius"},
+    {CIRCLE_3PTS,           N_("Circle through 3 points"), "circle_3pts"},
+    {CONSTRUCT_GRID,        N_("Construct grid"),          "construct_grid"},
 #ifdef LPE_ENABLE_TEST_EFFECTS
-    {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),   "doeffectstacktest"},
+    {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),     "doeffectstacktest"},
 #endif
-    {GEARS,                 N_("Gears"),                 "gears"},
-    {CURVE_STITCH,          N_("Stitch Sub-Paths"),       "curvestitching"},
-    {CIRCLE_WITH_RADIUS,    N_("Circle (center+radius)"), "circle_with_radius"},
-    {PERSPECTIVE_PATH,      N_("Perspective path"),      "perspective_path"},
-    {SPIRO,      N_("Spiro spline"),      "spiro"},
-    {LATTICE,               N_("Lattice Deformation"),   "lattice"},
-    {ENVELOPE,              N_("Envelope Deformation"),  "envelope"},
-    {CONSTRUCT_GRID,        N_("Construct grid"),        "construct_grid"},
-    {PERP_BISECTOR, N_("Perpendicular bisector"), "perp_bisector"},
-    {TANGENT_TO_CURVE, N_("Tangent to curve"), "tangent_to_curve"},
-    {MIRROR_SYMMETRY, N_("Mirror symmetry"), "mirror_symmetry"},
-    {CIRCLE_3PTS, N_("Circle through 3 points"), "circle_3pts"},
-    {ANGLE_BISECTOR, N_("Angle bisector"), "angle_bisector"},
-    {PARALLEL, N_("Parallel"), "parallel"},
-    {COPY_ROTATE, N_("Rotate copies"), "copy_rotate"},
-    {OFFSET, N_("Offset"), "offset"},
-    {RULER, N_("Ruler"), "ruler"},
-    {BOOLOPS, N_("Boolops"), "boolops"},
-    {INTERPOLATE, N_("Interpolate Sub-Paths"), "interpolate"},
+    {ENVELOPE,              N_("Envelope Deformation"),    "envelope"},
+    {FREEHAND_SHAPE,        N_("Freehand Shape"),          "freehand_shape"}, // this is actually a special type of PatternAlongPath, used to paste shapes in pen/pencil tool
+    {GEARS,                 N_("Gears"),                   "gears"},
+    {INTERPOLATE,           N_("Interpolate Sub-Paths"),   "interpolate"},
+    {KNOT,                  N_("Knot"),                    "knot"},
+    {LATTICE,               N_("Lattice Deformation"),     "lattice"},
+    {MIRROR_SYMMETRY,       N_("Mirror symmetry"),         "mirror_symmetry"},
+    {OFFSET,                N_("Offset"),                  "offset"},
+    {PARALLEL,              N_("Parallel"),                "parallel"},
+    {PATTERN_ALONG_PATH,    N_("Pattern Along Path"),      "skeletal"},   // for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
+    {PERP_BISECTOR,         N_("Perpendicular bisector"),  "perp_bisector"},
+    {PERSPECTIVE_PATH,      N_("Perspective path"),        "perspective_path"},
+    {COPY_ROTATE,           N_("Rotate copies"),           "copy_rotate"},
+    {RULER,                 N_("Ruler"),                   "ruler"},
+    {SKETCH,                N_("Sketch"),                  "sketch"},
+    {SPIRO,                 N_("Spiro spline"),            "spiro"},
+    {CURVE_STITCH,          N_("Stitch Sub-Paths"),        "curvestitching"},
+    {TANGENT_TO_CURVE,      N_("Tangent to curve"),        "tangent_to_curve"},
+    {VONKOCH,               N_("VonKoch"),                 "vonkoch"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
