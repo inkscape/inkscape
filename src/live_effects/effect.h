@@ -82,7 +82,7 @@ enum EffectType {
     INVALID_LPE // This must be last
 };
 
-extern const Util::EnumData<EffectType> LPETypeData[INVALID_LPE];
+extern const Util::EnumData<EffectType> LPETypeData[];
 extern const Util::EnumDataConverter<EffectType> LPETypeConverter;
 
 enum LPEPathFlashType {

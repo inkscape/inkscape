@@ -70,7 +70,7 @@ namespace Inkscape {
 
 namespace LivePathEffect {
 
-const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
+const Util::EnumData<EffectType> LPETypeData[] = {
     // {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
     {ANGLE_BISECTOR,        N_("Angle bisector"),          "angle_bisector"},
     {BEND_PATH,             N_("Bend"),                     "bend_path"},
@@ -101,7 +101,7 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {TANGENT_TO_CURVE,      N_("Tangent to curve"),        "tangent_to_curve"},
     {VONKOCH,               N_("VonKoch"),                 "vonkoch"},
 };
-const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
+const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, sizeof(LPETypeData)/sizeof(*LPETypeData));
 
 Effect*
 Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
@@ -243,7 +243,7 @@ Effect::~Effect()
 Glib::ustring
 Effect::getName()
 {
-    if (lpeobj->effecttype_set && lpeobj->effecttype < INVALID_LPE)
+    if (lpeobj->effecttype_set && LPETypeConverter.is_valid_id(lpeobj->effecttype) )
         return Glib::ustring( _(LPETypeConverter.get_label(lpeobj->effecttype).c_str()) );
     else
         return Glib::ustring( _("No effect") );
