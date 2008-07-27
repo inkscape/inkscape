@@ -1,6 +1,6 @@
 #define INKSCAPE_LPE_INTERPOLATE_CPP
 /** \file
- * LPE boolops implementation
+ * LPE interpolate implementation
  */
 /*
  * Authors:
@@ -17,6 +17,7 @@
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/d2-sbasis.h>
 #include <2geom/piecewise.h>
+#include <2geom/sbasis-geometric.h>
 
 #include "sp-path.h"
 #include "display/curve.h"
@@ -26,13 +27,14 @@ namespace LivePathEffect {
 
 LPEInterpolate::LPEInterpolate(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    interpolate_path(_("Interpolate trajectory"), _("Path along which intermediate steps are created."), "trajectory", &wr, this, "M0,0 L0,0"),
+    trajectory_path(_("Trajectory"), _("Path along which intermediate steps are created."), "trajectory", &wr, this, "M0,0 L0,0"),
     number_of_steps(_("Steps"), _("Determines the number of steps from start to end path."), "steps", &wr, this, 5),
-    spacing(_("Spacing"), _("Determines the spacing between intermediate steps."), "spacing", &wr, this, 1)
+    equidistant_spacing(_("Equidistant spacing"), _("If true, the spacing between intermediates is constant along the length of the path. If false, the distance depends on the location of the nodes of the trajectory path."), "equidistant_spacing", &wr, this, true)
 {
     show_orig_path = true;
 
-    registerParameter( dynamic_cast<Parameter *>(&interpolate_path) );
+    registerParameter( dynamic_cast<Parameter *>(&trajectory_path) );
+    registerParameter( dynamic_cast<Parameter *>(&equidistant_spacing) );
     registerParameter( dynamic_cast<Parameter *>(&number_of_steps) );
 
     number_of_steps.param_make_integer();
@@ -67,14 +69,17 @@ LPEInterpolate::doEffect_path (Geom::PathVector const & path_in)
     Geom::Piecewise<Geom::D2<Geom::SBasis> > pA = Geom::partition(pwd2_A, pwd2_B.cuts);
     Geom::Piecewise<Geom::D2<Geom::SBasis> > pB = Geom::partition(pwd2_B, pwd2_A.cuts);
 
-    Geom::Path const &trajectory = interpolate_path.get_pathvector()[0];
-    double trajectory_length = trajectory.size();
+    Geom::Piecewise<Geom::D2<Geom::SBasis> > trajectory = trajectory_path.get_pathvector()[0].toPwSb();
+    if (equidistant_spacing)
+        trajectory = Geom::arc_length_parametrization(trajectory);
+
+    Geom::Interval trajectory_domain = trajectory.domain();
 
     for (int i = 0; i < number_of_steps; ++i) {
         double fraction = i / (number_of_steps-1);
 
-        Geom::Piecewise<Geom::D2<Geom::SBasis> > pResult = pA*fraction  +  pB*(1-fraction);
-        pResult += trajectory.pointAt((1.-fraction)*trajectory_length);
+        Geom::Piecewise<Geom::D2<Geom::SBasis> > pResult = pA*(1-fraction)  +  pB*fraction;
+        pResult += trajectory.valueAt(trajectory_domain.min() + fraction*trajectory_domain.extent());
 
         Geom::PathVector pathv = Geom::path_from_piecewise(pResult, LPE_CONVERSION_TOLERANCE);
         path_out.push_back( pathv[0] );
@@ -101,7 +106,7 @@ LPEInterpolate::resetDefaults(SPItem * item)
     traj_pathv.push_back( Geom::Path() );
     traj_pathv[0].start( bounds_A.midpoint() );
     traj_pathv[0].appendNew<Geom::LineSegment>( bounds_B.midpoint() );
-    interpolate_path.set_new_value( traj_pathv, true );
+    trajectory_path.set_new_value( traj_pathv, true );
 }
 
 } //namespace LivePathEffect

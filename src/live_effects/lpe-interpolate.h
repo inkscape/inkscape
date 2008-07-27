@@ -17,6 +17,7 @@
 #include "live_effects/effect.h"
 #include "live_effects/parameter/parameter.h"
 #include "live_effects/parameter/path.h"
+#include "live_effects/parameter/bool.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -30,9 +31,9 @@ public:
 
     virtual void resetDefaults(SPItem * item);
 private:
-    PathParam   interpolate_path;
+    PathParam   trajectory_path;
     ScalarParam number_of_steps;
-    ScalarParam spacing;
+    BoolParam   equidistant_spacing;
 
     LPEInterpolate(const LPEInterpolate&);
     LPEInterpolate& operator=(const LPEInterpolate&);
