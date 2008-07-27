@@ -52,7 +52,7 @@
   <!-- -->
   <property name="arch"          value="mingw32-"/>
   <property name="archutil"      value=""/>
-  <property name="devlibs"       location="e:/Inkscape/devlibs"/>
+  <property name="devlibs"       location="c:/devlibs"/>
   <property name="cxxtest"       location="cxxtest"/>
   <!-- -->
 
