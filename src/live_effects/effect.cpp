@@ -99,7 +99,7 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {OFFSET, N_("Offset"), "offset"},
     {RULER, N_("Ruler"), "ruler"},
     {BOOLOPS, N_("Boolops"), "boolops"},
-    {INTERPOLATE, N_("Interpolate"), "interpolate"},
+    {INTERPOLATE, N_("Interpolate Sub-Paths"), "interpolate"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
