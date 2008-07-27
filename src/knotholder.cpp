@@ -227,10 +227,10 @@ KnotHolder::add_pattern_knotholder()
                           // TRANSLATORS: This refers to the pattern that's inside the object
                           _("<b>Move</b> the pattern fill inside the object"),
                           SP_KNOT_SHAPE_CROSS);
-        entity_angle->create(desktop, item, this,
+        entity_scale->create(desktop, item, this,
                              _("<b>Scale</b> the pattern fill uniformly"),
                              SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR);
-        entity_scale->create(desktop, item, this,
+        entity_angle->create(desktop, item, this,
                              _("<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"),
                              SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR);
         entity.push_back(entity_xy);
