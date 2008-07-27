@@ -161,26 +161,24 @@ KnotHolder::knot_ungrabbed_handler(SPKnot *knot)
         this->released(this->item);
     } else {
         SPObject *object = (SPObject *) this->item;
+
+        // Caution: this call involves a screen update, which may process events, and as a
+        // result the knotholder may be destructed. So, after the updateRepr, we cannot use any
+        // fields of this knotholder (such as this->item), but only values we have saved beforehand
+        // (such as object).
         object->updateRepr();
 
         /* do cleanup tasks (e.g., for LPE items write the parameter values
          * that were changed by dragging the handle to SVG)
          */
-        if (SP_IS_LPE_ITEM(item)) {
-            // This writes all parameters to SVG. Is this sufficiently efficient or should we only write
-            // the ones that were changed (e.g., via the individual handles' onKnotUngrabbed() method?            
-            Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+        if (SP_IS_LPE_ITEM(object)) {
+            // This writes all parameters to SVG. Is this sufficiently efficient or should we only
+            // write the ones that were changed?
+
+            Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(object));
             if (lpe) {
                 LivePathEffectObject *lpeobj = lpe->getLPEObj();
                 SP_OBJECT(lpeobj)->updateRepr();
-            }
-        }
-        // this was once used to write individual parameter values to SVG but this is now done globally above;
-        // we leave the calls to onKnotUngrabbed, anyway, in case any other cleanup tasks need to be done
-        for(std::list<KnotHolderEntity *>::iterator i = this->entity.begin(); i != this->entity.end(); ++i) {
-            KnotHolderEntity *e = *i;
-            if (e->knot == knot) {
-                e->onKnotUngrabbed(); // for most KnotHolderEntitys this does nothing
             }
         }
 

@@ -55,6 +55,10 @@ KnotHolderEntity::create(SPDesktop *desktop, SPItem *item, KnotHolder *parent, c
 
 KnotHolderEntity::~KnotHolderEntity()
 {
+    _moved_connection.disconnect();
+    _click_connection.disconnect();
+    _ungrabbed_connection.disconnect();
+
     /* unref should call destroy */
     if (knot) {
         g_object_unref(knot);
