@@ -24,6 +24,7 @@ public:
     GdkEventLatencyTracker();
     boost::optional<double> process(GdkEvent const *e);
     double maxLatency() const { return max_latency; }
+    double getSkew();
 
     static GdkEventLatencyTracker &default_tracker();
 
@@ -34,6 +35,8 @@ private:
     double start_seconds;
     double max_latency;
     double skew;
+    double last_elapsed;
+    double last_seconds;
     Glib::Timer elapsed;
 };
 

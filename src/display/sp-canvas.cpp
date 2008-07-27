@@ -1105,7 +1105,7 @@ static void track_latency(GdkEvent const *event) {
     GdkEventLatencyTracker &tracker = GdkEventLatencyTracker::default_tracker();
     boost::optional<double> latency = tracker.process(event);
     if (latency && *latency > 2.0) {
-        g_warning("Event latency reached %f sec", *latency);
+        g_warning("Event latency reached %f sec (%1.4f)", *latency, tracker.getSkew());
     }
 }
 
