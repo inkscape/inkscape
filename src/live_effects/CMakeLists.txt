@@ -9,6 +9,7 @@ lpe-curvestitch.cpp
 lpe-envelope.cpp
 lpe-gears.cpp
 lpegroupbbox.cpp
+lpe-interpolate.cpp
 lpe-knot.cpp
 lpe-lattice.cpp
 lpe-mirror_symmetry.cpp

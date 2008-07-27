@@ -63,6 +63,7 @@
 #include "live_effects/lpe-offset.h"
 #include "live_effects/lpe-ruler.h"
 #include "live_effects/lpe-boolops.h"
+#include "live_effects/lpe-interpolate.h"
 // end of includes
 
 namespace Inkscape {
@@ -98,6 +99,7 @@ const Util::EnumData<EffectType> LPETypeData[INVALID_LPE] = {
     {OFFSET, N_("Offset"), "offset"},
     {RULER, N_("Ruler"), "ruler"},
     {BOOLOPS, N_("Boolops"), "boolops"},
+    {INTERPOLATE, N_("Interpolate"), "interpolate"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, INVALID_LPE);
 
@@ -182,6 +184,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case BOOLOPS:
             neweffect = static_cast<Effect*> ( new LPEBoolops(lpeobj) );
+            break;
+        case INTERPOLATE:
+            neweffect = static_cast<Effect*> ( new LPEInterpolate(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);

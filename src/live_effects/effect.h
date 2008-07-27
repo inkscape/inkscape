@@ -78,6 +78,7 @@ enum EffectType {
     OFFSET,
     RULER,
     BOOLOPS,
+    INTERPOLATE,
     INVALID_LPE // This must be last
 };
 

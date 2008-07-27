@@ -32,6 +32,8 @@ live_effects_liblive_effects_a_SOURCES = \
 	live_effects/lpe-constructgrid.h	\
 	live_effects/lpe-gears.cpp	\
 	live_effects/lpe-gears.h	\
+	live_effects/lpe-interpolate.cpp	\
+	live_effects/lpe-interpolate.h	\
 	live_effects/lpe-test-doEffect-stack.cpp	\
 	live_effects/lpe-test-doEffect-stack.h	\
 	live_effects/lpe-lattice.cpp	\
