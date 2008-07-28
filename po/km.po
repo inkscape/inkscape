@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-07-23 16:14+0700\n"
+"PO-Revision-Date: 2008-07-24 10:18+0700\n"
 "Last-Translator: Eng Vannak <evannak@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -17634,7 +17634,7 @@ msgstr "ស្វ័យស័ត្ស​"
 
 #: ../share/extensions/lindenmayer.inx.h:2
 msgid "Axiom and rules"
-msgstr ""
+msgstr "Axiom និង​ច្បាប់"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "L-system"
@@ -17664,7 +17664,7 @@ msgstr "បន្ទាត់"
 
 #: ../share/extensions/lindenmayer.inx.h:14
 msgid "Step length (px)"
-msgstr "ប្រវែងជំហាន (ភីកសែល)"
+msgstr "ប្រវែង​ជំហាន (ភីកសែល)"
 
 #: ../share/extensions/lindenmayer.inx.h:15
 msgid ""
@@ -17707,7 +17707,7 @@ msgstr "ឧបករណ៍​សម្គាល់​ពណ៌​ទៅ​ខ្
 
 #: ../share/extensions/measure.inx.h:1
 msgid "Font size [px]"
-msgstr "ទំហំ​ពុម្ពអក្សរ [ភីកសែល]"
+msgstr "ទំហំ​ពុម្ព អក្សរ [ភីកសែល]"
 
 #. <param name="unit" type="string" _gui-text="Unit {km|m|cm|mm|in|px|pt}">mm</param>
 #: ../share/extensions/measure.inx.h:4
@@ -17829,7 +17829,7 @@ msgstr ""
 
 #: ../share/extensions/pathscatter.inx.h:12
 msgid "Stretch spaces to fit skeleton length"
-msgstr ""
+msgstr "ទាញ​ទំហំ​ឲ្យ​សម​និង​ប្រវែង​គ្រោង​ឆ្អឹង"
 
 #: ../share/extensions/pathscatter.inx.h:14
 msgid ""
@@ -18116,7 +18116,7 @@ msgstr "អ័ក្ស Y"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Axis"
-msgstr ""
+msgstr "អ័ក្ស Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:57
 msgid "Z-Sort Faces By:"
