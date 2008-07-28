@@ -2743,6 +2743,20 @@ bool URI::parse(const String &str)
 //########################################################################
 
 //########################################################################
+//# Stat cache to speed up stat requests
+//########################################################################
+typedef std::map<String, std::pair<int,struct stat> > statCacheType;
+static statCacheType statCache;
+static int cachedStat(const String &f, struct stat *s) {
+    std::pair<statCacheType::iterator, bool> result = statCache.insert(statCacheType::value_type(f, std::pair<int,struct stat>()));
+    if (result.second) {
+        result.first->second.first = stat(f.c_str(), &(result.first->second.second));
+    }
+    *s = result.first->second.second;
+    return result.first->second.first;
+}
+
+//########################################################################
 //# F I L E S E T
 //########################################################################
 /**
@@ -4218,7 +4232,7 @@ bool MakeBase::listDirectories(const String &baseName,
         fullChildPath.append(childName);
         struct stat finfo;
         String childNative = getNativePath(fullChildPath);
-        if (stat(childNative.c_str(), &finfo)<0)
+        if (cachedStat(childNative, &finfo)<0)
             {
             error("cannot stat file:%s", childNative.c_str());
             }
@@ -4808,7 +4822,7 @@ bool MakeBase::createDirectory(const String &dirname)
     if (strlen(cnative)==2 && cnative[1]==':')
         return true;
 #endif
-    if (stat(cnative, &finfo)==0)
+    if (cachedStat(nativeDir, &finfo)==0)
         {
         if (!S_ISDIR(finfo.st_mode))
             {
@@ -4887,7 +4901,7 @@ bool MakeBase::removeDirectory(const String &dirName)
         struct stat finfo;
         String childNative = getNativePath(childName);
         char *cnative = (char *)childNative.c_str();
-        if (stat(cnative, &finfo)<0)
+        if (cachedStat(childNative, &finfo)<0)
             {
             error("cannot stat file:%s", cnative);
             }
@@ -4938,7 +4952,7 @@ bool MakeBase::copyFile(const String &srcFile, const String &destFile)
     //# 1 Check up-to-date times
     String srcNative = getNativePath(srcFile);
     struct stat srcinfo;
-    if (stat(srcNative.c_str(), &srcinfo)<0)
+    if (cachedStat(srcNative, &srcinfo)<0)
         {
         error("source file %s for copy does not exist",
                  srcNative.c_str());
@@ -4947,7 +4961,7 @@ bool MakeBase::copyFile(const String &srcFile, const String &destFile)
 
     String destNative = getNativePath(destFile);
     struct stat destinfo;
-    if (stat(destNative.c_str(), &destinfo)==0)
+    if (cachedStat(destNative, &destinfo)==0)
         {
         if (destinfo.st_mtime >= srcinfo.st_mtime)
             return true;
@@ -5015,7 +5029,7 @@ bool MakeBase::isRegularFile(const String &fileName)
     struct stat finfo;
     
     //Exists?
-    if (stat(native.c_str(), &finfo)<0)
+    if (cachedStat(native, &finfo)<0)
         return false;
 
 
@@ -5035,7 +5049,7 @@ bool MakeBase::isDirectory(const String &fileName)
     struct stat finfo;
     
     //Exists?
-    if (stat(native.c_str(), &finfo)<0)
+    if (cachedStat(native, &finfo)<0)
         return false;
 
 
@@ -5057,7 +5071,7 @@ bool MakeBase::isNewerThan(const String &fileA, const String &fileB)
     String nativeA = getNativePath(fileA);
     struct stat infoA;
     //IF source does not exist, NOT newer
-    if (stat(nativeA.c_str(), &infoA)<0)
+    if (cachedStat(nativeA, &infoA)<0)
         {
         return false;
         }
@@ -5065,7 +5079,7 @@ bool MakeBase::isNewerThan(const String &fileA, const String &fileB)
     String nativeB = getNativePath(fileB);
     struct stat infoB;
     //IF dest does not exist, YES, newer
-    if (stat(nativeB.c_str(), &infoB)<0)
+    if (cachedStat(nativeB, &infoB)<0)
         {
         return true;
         }
@@ -7326,7 +7340,7 @@ public:
                 if (!quiet && verbose)
                     taskstatus("path: %s", fname);
                 //does not exist
-                if (stat(fname, &finfo)<0)
+                if (cachedStat(fullName, &finfo)<0)
                     {
                     if (failOnError)
                         return false;
