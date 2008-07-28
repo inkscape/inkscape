@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-07-20 17:21+0100\n"
+"PO-Revision-Date: 2008-07-28 17:21+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -2908,9 +2908,8 @@ msgstr "Rozšíriť rozdiely v intenzite zvolených bitmáp."
 
 #. TRANSLATORS: see http://docs.gimp.org/en/gimp-tool-convolve.html
 #: ../src/extension/internal/bitmap/convolve.cpp:50
-#, fuzzy
 msgid "Convolve"
-msgstr "Konvolučná matica"
+msgstr "Konvolúcia"
 
 #: ../src/extension/internal/bitmap/convolve.cpp:52
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:41
@@ -3398,9 +3397,8 @@ msgstr "Nie som si istý čo toto slovo znamená"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/bloom.h:24
-#, fuzzy
 msgid "Bloom"
-msgstr "Lupa"
+msgstr "Kvitnutie"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/bloom.h:25
@@ -3409,21 +3407,18 @@ msgstr "Nie som si istý, nikto mi tieto veci nehovorí"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/clouds.h:24
-#, fuzzy
 msgid "Clouds"
-msgstr "Zatvoriť"
+msgstr "Oblaky"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/clouds.h:25
-#, fuzzy
 msgid "Yes, more descriptions"
-msgstr "Nastaviť popis objektu"
+msgstr "Áno, viac popisov"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/crystal.h:24
-#, fuzzy
 msgid "Crystal"
-msgstr "Stupne šedej"
+msgstr "Kryštál"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/crystal.h:25
@@ -3432,28 +3427,24 @@ msgstr "Umelec, sem vlož údaje"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/cutout.h:24
-#, fuzzy
 msgid "Coutout"
-msgstr "posun von"
+msgstr "Výrez"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/cutout.h:25
 #: ../src/extension/internal/filter/etched-glass.h:25
 #: ../src/extension/internal/filter/frost.h:25
 #: ../src/extension/internal/filter/ridged-border.h:25
-#, fuzzy
 msgid "Artist text"
-msgstr "Zvislý text"
+msgstr "Umelecký text"
 
 #: ../src/extension/internal/filter/drop-shadow.h:35
-#, fuzzy
 msgid "Drop Shadow"
-msgstr "Vypustiť SVG"
+msgstr "Tieň"
 
 #: ../src/extension/internal/filter/drop-shadow.h:37
-#, fuzzy
 msgid "Amount of Blur"
-msgstr "Množstvo zvírenia"
+msgstr "Množstvo rozostrenia"
 
 #: ../src/extension/internal/filter/drop-shadow.h:38
 #: ../src/extension/internal/grid.cpp:197
@@ -3488,18 +3479,16 @@ msgid "Etched Glass"
 msgstr "Leptané sklo"
 
 #: ../src/extension/internal/filter/filter-file.cpp:32
-#, fuzzy
 msgid "Bundled"
-msgstr "Zaoblené"
+msgstr "Pribalené"
 
 #: ../src/extension/internal/filter/filter-file.cpp:33
 msgid "Personal"
 msgstr "Osobné"
 
 #: ../src/extension/internal/filter/filter-file.cpp:44
-#, fuzzy
 msgid "Null external module directory name.  Filters will not be loaded."
-msgstr "Prázdny názov adresára externých modulov. Moduly nebudú načítané."
+msgstr "Prázdny názov adresára externých modulov. Filtre nebudú načítané."
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/fire.h:24
@@ -3573,9 +3562,8 @@ msgstr "Kov"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/metal.h:25
-#, fuzzy
 msgid "Iron Man vector objects"
-msgstr "Rozmiestniť zvolené objekty"
+msgstr "Vektorové objekty Iron Man"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/motion-blur.h:24
@@ -3600,9 +3588,8 @@ msgstr "Ops, klzké!"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/patterned-glass.h:24
-#, fuzzy
 msgid "PatternedGlass"
-msgstr "Vzorka"
+msgstr "LeptanéSklo"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/patterned-glass.h:25
@@ -3617,9 +3604,8 @@ msgstr "Režim hrany"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/ripple.h:24
-#, fuzzy
 msgid "Ripple"
-msgstr "Nahradiť"
+msgstr "Vlna"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/ripple.h:25
@@ -3628,9 +3614,8 @@ msgstr "Ste z 80 % voda"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/roughen.h:24
-#, fuzzy
 msgid "Roughen"
-msgstr "Režim zdrsnenia"
+msgstr "Zdrsniť"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/roughen.h:25
@@ -3639,9 +3624,8 @@ msgstr "Ako strnisko Brada Pitta"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/rubber-stamp.h:24
-#, fuzzy
 msgid "RubberStamp"
-msgstr "Natiahnutie gumy"
+msgstr "Pečiatka"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/rubber-stamp.h:25
@@ -5587,9 +5571,8 @@ msgstr "Ignoruje sa písmo bez rodiny, ktoré by spôsobilo pád Panga"
 
 #. {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
 #: ../src/live_effects/effect.cpp:68
-#, fuzzy
 msgid "Bend"
-msgstr "Zmiešať"
+msgstr "Ohnúť"
 
 #: ../src/live_effects/effect.cpp:69
 msgid "Pattern Along Path"
@@ -5720,29 +5703,24 @@ msgid "Rotates the original 90 degrees, before bending it along the bend path"
 msgstr "Otáča originál o 90 stupňov predtým, než ho ohne pozdĺž cesty"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:28
-#, fuzzy
 msgid "Size X"
-msgstr "Veľkosť"
+msgstr "Veľkosť X"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:28
-#, fuzzy
 msgid "The size of the grid in X direction."
-msgstr "Stav spojnice v smere X"
+msgstr "Veľkosť mriežky v smere X."
 
 #: ../src/live_effects/lpe-constructgrid.cpp:29
-#, fuzzy
 msgid "Size Y"
-msgstr "Veľkosť"
+msgstr "Veľkosť Y"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:29
-#, fuzzy
 msgid "The size of the grid in Y direction."
-msgstr "Stav spojnice v smere Y"
+msgstr "Veľkosť mriežky v smere Y."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
-#, fuzzy
 msgid "Stitch path"
-msgstr "Zošiť podcesty"
+msgstr "Zošiť cestu"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "The path that will be used as stitch."
@@ -5794,19 +5772,16 @@ msgid "Scale width"
 msgstr "Šírka mierky"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
-#, fuzzy
 msgid "Scale the width of the stitch path"
-msgstr "Zmena mierky šírky cesty ťahu"
+msgstr "Zmena mierky šírky zošitej cesty"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
-#, fuzzy
 msgid "Scale width relative to length"
-msgstr "Relatívna zmena mierky "
+msgstr "Zmena mierky relatívne k dĺžke"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
-#, fuzzy
 msgid "Scale the width of the stitch path relative to its length"
-msgstr "Zmena mierky šírky cesty ťahu relatívne k jej dĺžke"
+msgstr "Zmena mierky šírky zošitej cesty relatívne k jej dĺžke"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
 #, fuzzy
@@ -5884,9 +5859,8 @@ msgstr "Uhol tlaku zubu (zvučajne 20-25 stupňov). Pomer zubov, ktoré nie sú 
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:27
-#, fuzzy
 msgid "Gap width"
-msgstr "Rovnaká šírka:"
+msgstr "Šírka medzery"
 
 #: ../src/live_effects/lpe-knot.cpp:27
 msgid "The width of the gap in the path where it self-intersects"
@@ -5894,9 +5868,8 @@ msgstr "Šírka medzery v ceste, kde pretína sama seba"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-lattice.cpp:45
-#, fuzzy
 msgid "Control handle 0"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 0"
 
 #: ../src/live_effects/lpe-lattice.cpp:45
 #: ../src/live_effects/lpe-lattice.cpp:46
@@ -5918,84 +5891,68 @@ msgid "Tadah"
 msgstr "Tadá"
 
 #: ../src/live_effects/lpe-lattice.cpp:46
-#, fuzzy
 msgid "Control handle 1"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 1"
 
 #: ../src/live_effects/lpe-lattice.cpp:47
-#, fuzzy
 msgid "Control handle 2"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 2"
 
 #: ../src/live_effects/lpe-lattice.cpp:48
-#, fuzzy
 msgid "Control handle 3"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 3"
 
 #: ../src/live_effects/lpe-lattice.cpp:49
-#, fuzzy
 msgid "Control handle 4"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 4"
 
 #: ../src/live_effects/lpe-lattice.cpp:50
-#, fuzzy
 msgid "Control handle 5"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 5"
 
 #: ../src/live_effects/lpe-lattice.cpp:51
-#, fuzzy
 msgid "Control handle 6"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 6"
 
 #: ../src/live_effects/lpe-lattice.cpp:52
-#, fuzzy
 msgid "Control handle 7"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 7"
 
 #: ../src/live_effects/lpe-lattice.cpp:53
-#, fuzzy
 msgid "Control handle 8"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 8"
 
 #: ../src/live_effects/lpe-lattice.cpp:54
-#, fuzzy
 msgid "Control handle 9"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 9"
 
 #: ../src/live_effects/lpe-lattice.cpp:55
-#, fuzzy
 msgid "Control handle 10"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 10"
 
 #: ../src/live_effects/lpe-lattice.cpp:56
-#, fuzzy
 msgid "Control handle 11"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 11"
 
 #: ../src/live_effects/lpe-lattice.cpp:57
-#, fuzzy
 msgid "Control handle 12"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 12"
 
 #: ../src/live_effects/lpe-lattice.cpp:58
-#, fuzzy
 msgid "Control handle 13"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 13"
 
 #: ../src/live_effects/lpe-lattice.cpp:59
-#, fuzzy
 msgid "Control handle 14"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 14"
 
 #: ../src/live_effects/lpe-lattice.cpp:60
-#, fuzzy
 msgid "Control handle 15"
-msgstr "Posúvať úchop uzla"
+msgstr "Riadiaci úchop 15"
 
 #: ../src/live_effects/lpe-mirror_reflect.cpp:30
-#, fuzzy
 msgid "Reflection line"
-msgstr "Výber"
+msgstr "Čiara odrazu"
 
 #: ../src/live_effects/lpe-mirror_reflect.cpp:30
 msgid "Line which serves as 'mirror' for the reflection"
@@ -6069,9 +6026,8 @@ msgid "Tangential offset"
 msgstr "Tangenciálne posunutie"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:69
-#, fuzzy
 msgid "Offsets in unit of pattern size"
-msgstr "Objekty do vzorky"
+msgstr "Posunutie v jednotkách veľkosti vzorky"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:69
 msgid "Spacing, tangential and normal offset are expressed as a ratio of width/height"
@@ -6089,25 +6045,21 @@ msgstr "Pre použitím otočiť vzorku o 90 stupňov"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:156
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:65
-#, fuzzy
 msgid "Length left"
-msgstr "Kerning doľava"
+msgstr "Dĺžka vľavo"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:156
-#, fuzzy
 msgid "Specifies the left end of the bisector"
-msgstr "Definuje farbu svetelného zdroja"
+msgstr "Definuje ľavý koniec sečníka"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:157
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:66
-#, fuzzy
 msgid "Length right"
-msgstr "Jednotka dĺžky: "
+msgstr "Dĺžka vpravo"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:157
-#, fuzzy
 msgid "Specifies the right end of the bisector"
-msgstr "Zvoľte svetlosť farby"
+msgstr "Definuje pravý koniec sečníka"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:164
 #, fuzzy
@@ -6121,44 +6073,36 @@ msgstr "Farba"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-perspective_path.cpp:42
-#, fuzzy
 msgid "Scale x"
-msgstr "Zmena mierky"
+msgstr "Mierka X"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:42
-#, fuzzy
 msgid "Scale factor in x direction"
-msgstr "Stav spojnice v smere X"
+msgstr "Mierka v smere X"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:43
-#, fuzzy
 msgid "Scale y"
-msgstr "Zmena mierky"
+msgstr "Mierka Y"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:43
-#, fuzzy
 msgid "Scale factor in y direction"
-msgstr "Stav spojnice v smere X"
+msgstr "Mierka v smere Y"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:44
-#, fuzzy
 msgid "Offset x"
-msgstr "Posun"
+msgstr "Posunutie X"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:44
-#, fuzzy
 msgid "Offset in x direction"
-msgstr "Uhol v smere X"
+msgstr "Posunutie v smere X"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:45
-#, fuzzy
 msgid "Offset y"
-msgstr "Posun"
+msgstr "Posunutie Y"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:45
-#, fuzzy
 msgid "Offset in y direction"
-msgstr "Uhol v smere X"
+msgstr "Posunutie v smere Y"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:46
 msgid "Uses XY plane?"
@@ -6181,33 +6125,28 @@ msgstr "len reálne číslo ako 1,4!"
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
 #: ../src/live_effects/lpe-sketch.cpp:35
-#, fuzzy
 msgid "Strokes"
-msgstr "Ťah:"
+msgstr "Ťahy"
 
 #: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Draw that many approximating strokes"
 msgstr "Nakresliť toľko aproximujúcich ťahov"
 
 #: ../src/live_effects/lpe-sketch.cpp:36
-#, fuzzy
 msgid "Max stroke length"
-msgstr "Zmeniť mierku šírky ťahu"
+msgstr "Max. dĺžka ťahu"
 
 #: ../src/live_effects/lpe-sketch.cpp:37
-#, fuzzy
 msgid "Maximum length of approximating strokes"
-msgstr "Maximálna dĺžka ostrosti rohu (v jednotkách šírky ťahu)"
+msgstr "Maximálna dĺžka aproximujúcich ťahov"
 
 #: ../src/live_effects/lpe-sketch.cpp:38
-#, fuzzy
 msgid "Stroke length variation"
-msgstr "Variancia počiatočnej hrany"
+msgstr "Variancia dĺžky ťahu"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
-#, fuzzy
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr "Zmena mierky šírky cesty ťahu relatívne k jej dĺžke"
+msgstr "Náhodná variancia dĺžky ťahu (relatívne k jeho max. dĺžke)"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
@@ -6234,9 +6173,8 @@ msgid "Maximum distance between ends of original and approximating paths (relati
 msgstr "Maximálna vzdialenosť medzi koncami pôvodnej a aproximujúcej cesty (relatívne k maximálnej dĺžke)"
 
 #: ../src/live_effects/lpe-sketch.cpp:46
-#, fuzzy
 msgid "Parallel offset"
-msgstr "Normálny posun"
+msgstr "Paralelný posun"
 
 #: ../src/live_effects/lpe-sketch.cpp:47
 msgid "Average distance from approximating path to original path"
@@ -6251,18 +6189,16 @@ msgid "Maximum tremble magnitude"
 msgstr "Max. amplitúda chvenia"
 
 #: ../src/live_effects/lpe-sketch.cpp:50
-#, fuzzy
 msgid "Tremble frequency"
-msgstr "Základná frekvencia"
+msgstr "Frekvencia chvenia"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
 msgid "Avreage number of tremble periods in an approximating stroke"
 msgstr "Priemerný počet periód chvenia v aproximujúcom ťahu"
 
 #: ../src/live_effects/lpe-sketch.cpp:52
-#, fuzzy
 msgid "Construction lines"
-msgstr "Centrovať čiary"
+msgstr "Konštrukčné čiary"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
 msgid "How many construction lines (tangents) to draw"
@@ -6281,18 +6217,16 @@ msgid "Scale factor relating curvature and length of construction lines (try 5*o
 msgstr "Mierka vzťahu zakrivenia a dĺžky konštrukčných čiar (skúste 5*posunutie)"
 
 #: ../src/live_effects/lpe-sketch.cpp:56
-#, fuzzy
 msgid "Max. length"
-msgstr "Vlnová dĺžka"
+msgstr "Max. dĺžka"
 
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Maximum length of construction lines"
 msgstr "Maximálna dĺžka konštrukčných čiar"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
-#, fuzzy
 msgid "Length variation"
-msgstr "Menej sýtosti"
+msgstr "Variancia dĺžky"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Random variation of the length of construction lines"
@@ -6342,9 +6276,8 @@ msgid "Stack step"
 msgstr "Veľkosť kroku pri skladaní"
 
 #: ../src/live_effects/lpe-test-doEffect-stack.cpp:24
-#, fuzzy
 msgid "point param"
-msgstr "pätuholník"
+msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:42
 msgid "Bounding box"
@@ -7158,14 +7091,14 @@ msgid "<b>Click</b> or <b>click and drag</b> to continue the path from this poin
 msgstr "<b>Kliknutím</b> alebo <b>kliknutím a ťahaním</b> pokračovať v ceste z tohto bodu."
 
 #: ../src/pen-context.cpp:1177
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr "<b>%s</b>: uhol %3.2f&#176;, vzdialenosť %s; s <b>Ctrl</b> na prichytávanie k uhlu; <b>Enter</b> na ukončenie cesty"
+msgstr "<b>Úsek krivky</b>: uhol %3.2f&#176;, vzdialenosť %s; s <b>Ctrl</b> na prichytávanie k uhlu; <b>Enter</b> na ukončenie cesty"
 
 #: ../src/pen-context.cpp:1178
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr "<b>%s</b>: uhol %3.2f&#176;, vzdialenosť %s; s <b>Ctrl</b> na prichytávanie k uhlu; <b>Enter</b> na ukončenie cesty"
+msgstr "<b>Úsek čiary</b>: uhol %3.2f&#176;, vzdialenosť %s; s <b>Ctrl</b> na prichytávanie k uhlu; <b>Enter</b> na ukončenie cesty"
 
 #: ../src/pen-context.cpp:1196
 #, c-format
@@ -7173,14 +7106,14 @@ msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to sn
 msgstr "<b>Úchop krivky</b>: uhol %3.2f&#176;, dĺžka %s; s <b>Ctrl</b> prichytávanie k uhlu"
 
 #: ../src/pen-context.cpp:1218
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr "<b>%s</b>: uhol %3.2f&#176;, dĺžka %s; s <b>Ctrl</b> na prichytávanie k uhlu; so <b>Shift</b> na posun iba tohto úchopu"
+msgstr "<b>Úchop krivky, symetrický</b>: uhol %3.2f&#176;, dĺžka %s; s <b>Ctrl</b> na prichytávanie k uhlu; so <b>Shift</b> na posun iba tohto úchopu"
 
 #: ../src/pen-context.cpp:1219
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr "<b>%s</b>: uhol %3.2f&#176;, dĺžka %s; s <b>Ctrl</b> na prichytávanie k uhlu; so <b>Shift</b> na posun iba tohto úchopu"
+msgstr "<b>Úchop krivky</b>: uhol %3.2f&#176;, dĺžka %s; s <b>Ctrl</b> na prichytávanie k uhlu; so <b>Shift</b> na posun iba tohto úchopu"
 
 #: ../src/pen-context.cpp:1259
 msgid "Drawing finished"
@@ -12799,9 +12732,8 @@ msgstr "Doladenie <b>odtieňa</b>: bol %.3g, teraz <b>%.3g</b> (rozdiel %.3g); s
 
 #: ../src/ui/widget/selected-style.cpp:1391
 #: ../src/ui/widget/selected-style.cpp:1405
-#, fuzzy
 msgid "Adjust stroke width"
-msgstr "Šírka ťahu"
+msgstr "Nastaviť šírku ťahu"
 
 #: ../src/ui/widget/selected-style.cpp:1392
 #, c-format
@@ -13258,14 +13190,12 @@ msgid "Apply the path effect of the copied object to selection"
 msgstr "Použije efekt cesty kopírovaných objektov na výber"
 
 #: ../src/verbs.cpp:2221
-#, fuzzy
 msgid "Remove Path _Effect"
-msgstr "Odstrániť efekt cesty"
+msgstr "Odstrániť _efekt cesty"
 
 #: ../src/verbs.cpp:2222
-#, fuzzy
 msgid "Remove any path effects from selected objects"
-msgstr "Odstrániť efekt z výberu"
+msgstr "Odstrániť všetky efekty cesty z vybraných objektov"
 
 #: ../src/verbs.cpp:2223
 msgid "Remove Filter"
@@ -13966,9 +13896,8 @@ msgid "Edit Live Path Effect parameters"
 msgstr "Parameter efektu ďalšej cesty"
 
 #: ../src/verbs.cpp:2452
-#, fuzzy
 msgid "Erase existing paths"
-msgstr "Uvoľniť orezávaciu cestu"
+msgstr "Zmazať existujúce cesty"
 
 #. Tool prefs
 #: ../src/verbs.cpp:2454
@@ -14110,14 +14039,12 @@ msgid "Open Preferences for the Paint Bucket tool"
 msgstr "Otvorí Nastavenia pre nástroj Vedro s farbou"
 
 #: ../src/verbs.cpp:2488
-#, fuzzy
 msgid "Eraser Preferences"
-msgstr "Nastavenia hviezdy"
+msgstr "Nastavenia gumy"
 
 #: ../src/verbs.cpp:2489
-#, fuzzy
 msgid "Open Preferences for the Eraser tool"
-msgstr "Otvorí Nastavenia pre nástroj Hviezda"
+msgstr "Otvorí Nastavenia nástroja Guma"
 
 #. Zoom/View
 #: ../src/verbs.cpp:2492
@@ -15252,27 +15179,24 @@ msgid "Join"
 msgstr "Spojiť"
 
 #: ../src/widgets/toolbox.cpp:1108
-#, fuzzy
 msgid "Break nodes"
-msgstr "Posúvať uzly"
+msgstr "Rozdeliť uzly"
 
 #: ../src/widgets/toolbox.cpp:1109
 msgid "Break path at selected nodes"
 msgstr "Rozdeliť cestu v zvolenom uzle"
 
 #: ../src/widgets/toolbox.cpp:1119
-#, fuzzy
 msgid "Join with segment"
-msgstr "Spojiť segment"
+msgstr "Spojiť s úsekom"
 
 #: ../src/widgets/toolbox.cpp:1120
 msgid "Join selected endnodes with a new segment"
 msgstr "Spojiť vybrané koncové uzly novým segmentom"
 
 #: ../src/widgets/toolbox.cpp:1130
-#, fuzzy
 msgid "Delete segment between two non-endpoint nodes"
-msgstr "Rozdeliť cestu medzi dvomi vnútornými uzlami"
+msgstr "Zmazať úsek medzi dvomi vnútornými uzlami"
 
 #: ../src/widgets/toolbox.cpp:1139
 msgid "Node Cusp"
@@ -15331,14 +15255,12 @@ msgid "Show the outline of the path"
 msgstr "Zobraziť obrys cesty"
 
 #: ../src/widgets/toolbox.cpp:1211
-#, fuzzy
 msgid "Next path effect parameter"
-msgstr "Parameter efektu ďalšej cesty"
+msgstr "Ďalší parameter efektu cesty"
 
 #: ../src/widgets/toolbox.cpp:1212
-#, fuzzy
 msgid "Show next path effect parameter for editing"
-msgstr "Zobraziť na úpravu ďalší parameter Efektu cesty"
+msgstr "Zobraziť na úpravu ďalší parameter efektu cesty"
 
 #: ../src/widgets/toolbox.cpp:1223
 msgid "Edit the clipping path of the object"
@@ -16299,23 +16221,20 @@ msgstr "Priradiť"
 
 # TODO: check
 #: ../src/widgets/toolbox.cpp:4319
-#, fuzzy
 msgid "The width of the eraser pen (relative to the visible canvas area)"
-msgstr "Šírka plochy ladenia (v pomere k ploche viditeľného plátna)"
+msgstr "Šírka gumy (v pomere k ploche viditeľného plátna)"
 
 #: ../src/widgets/toolbox.cpp:4336
 msgid "Delete objects touched by the eraser"
 msgstr "Zmazať objekty, ktorých sa dotkne guma"
 
 #: ../src/widgets/toolbox.cpp:4342
-#, fuzzy
 msgid "Cut"
-msgstr "Vys_trihnúť"
+msgstr "Vystrihnúť"
 
 #: ../src/widgets/toolbox.cpp:4343
-#, fuzzy
 msgid "Cut out from objects"
-msgstr "Vzorka pre objekty"
+msgstr "Vystrihnúť z objektov"
 
 #: ../src/widgets/toolbox.cpp:4678
 msgid "Text: Change font family"
@@ -16508,9 +16427,8 @@ msgstr "nebolo možné nájsť zakončenie čiary: %s"
 #: ../share/extensions/pathscatter.py:208
 #: ../share/extensions/perspective.py:55
 #: ../share/extensions/summersnight.py:30
-#, fuzzy
 msgid "This extension requires two selected paths."
-msgstr "Vytvorí zjednotenie zvolených ciest"
+msgstr "Toto rozšírenie vyžaduje, aby boli vybrané dve cesty."
 
 #: ../share/extensions/pathmodifier.py:229
 #, python-format
@@ -16519,24 +16437,24 @@ msgstr "Prosím, najskôr skonverujte objekty na cesty!  (Dostali sme [%s].)"
 
 #: ../share/extensions/perspective.py:29
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."
-msgstr ""
+msgstr "Nepodarilo sa importovať moduly numpy alebo numpy.linalg. Toto rozšírenie vyžaduje tieto moduly. Prosím, nainštalujte ich a skúste to znova. Na Debianovskom systéme sa to robí príkazom sudo apt-get install python-numpy."
 
 #: ../share/extensions/perspective.py:64
 msgid "This extension requires that the second selected path be four nodes long."
-msgstr ""
+msgstr "Toto rozšírenie vyžaduje, aby druhá zvolená cesta mala štyri uzly."
 
 #: ../share/extensions/polyhedron_3d.py:60
 msgid "Failed to import the numpy module. This module is required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."
-msgstr ""
+msgstr "Nepodarilo sa importovať modul numpy. Toto rozšírenie vyžaduje tento modul. Prosím, nainštalujte ich a skúste to znova. Na Debianovskom systéme sa to robí príkazom sudo apt-get install python-numpy."
 
 #: ../share/extensions/summersnight.py:32
 msgid "The second path must be exactly four nodes long."
 msgstr "Druhá cesta musí mať dĺžku presne štyri uzly."
 
 #: ../share/extensions/svg_and_media_zip_output.py:103
-#, fuzzy, python-format
+#, python-format
 msgid "Could not locate file: %s"
-msgstr "Nebolo možné exportovať do súboru s názvom %s.\n"
+msgstr "Nebolo možné nájsť súbor: %s"
 
 #. vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
 #: ../share/extensions/addnodes.inx.h:1
@@ -16544,19 +16462,16 @@ msgid "Add Nodes"
 msgstr "Pridať uzly"
 
 #: ../share/extensions/addnodes.inx.h:2
-#, fuzzy
 msgid "By max. segment length"
-msgstr "Maximálna dĺžka úseku (px)"
+msgstr "Podľa max. dĺžky úseku (px)"
 
 #: ../share/extensions/addnodes.inx.h:3
-#, fuzzy
 msgid "By number of segments"
-msgstr "Počet zubov"
+msgstr "Podľa počtu úsekov"
 
 #: ../share/extensions/addnodes.inx.h:4
-#, fuzzy
 msgid "Division method"
-msgstr "Rozdelenie"
+msgstr "Metóda delenia"
 
 #: ../share/extensions/addnodes.inx.h:5
 msgid "Maximum segment length (px)"
@@ -16577,9 +16492,8 @@ msgid "Modify Path"
 msgstr "Zmeniť cestu"
 
 #: ../share/extensions/addnodes.inx.h:7
-#, fuzzy
 msgid "Number of segments"
-msgstr "Počet krokov"
+msgstr "Počet úsekov"
 
 #: ../share/extensions/ai_input.inx.h:1
 msgid "AI 8.0 Input"
@@ -16619,23 +16533,23 @@ msgstr "Vyčistiť zbytočnosti z Adobe Illustrator SVG pred otvorením"
 
 #: ../share/extensions/ccx_input.inx.h:1
 msgid "Corel DRAW Compressed Exchange files (.ccx)"
-msgstr ""
+msgstr "Corel DRAW Compressed Exchange súbory (.ccx)"
 
 #: ../share/extensions/ccx_input.inx.h:2
 msgid "Corel DRAW Compressed Exchange files input"
-msgstr ""
+msgstr "Vstup Corel DRAW Compressed Exchange súbory"
 
 #: ../share/extensions/ccx_input.inx.h:3
 msgid "Open compressed exchange files saved in Corel DRAW"
-msgstr ""
+msgstr "Open compressed exchange súbory uložené v Corel DRAW"
 
 #: ../share/extensions/cdr_input.inx.h:1
 msgid "Corel DRAW 7-X4 files (*.cdr)"
-msgstr ""
+msgstr "Corel DRAW 7-X4 súbory (*.cdr)"
 
 #: ../share/extensions/cdr_input.inx.h:2
 msgid "Corel DRAW Input"
-msgstr ""
+msgstr "Vstup Corel DRAW"
 
 #: ../share/extensions/cdr_input.inx.h:3
 msgid "Open files saved in Corel DRAW 7-X4"
@@ -16643,11 +16557,11 @@ msgstr "Otvoriť súbory uložené v Corel DRAW 7-X4"
 
 #: ../share/extensions/cdt_input.inx.h:1
 msgid "Corel DRAW 7-13 template files (.cdt)"
-msgstr ""
+msgstr "Corel DRAW 7-13 súbory šablón (.cdt)"
 
 #: ../share/extensions/cdt_input.inx.h:2
 msgid "Corel DRAW templates input"
-msgstr ""
+msgstr "Vstup Corel DRAW šablón"
 
 #: ../share/extensions/cdt_input.inx.h:3
 msgid "Open files saved in Corel DRAW 7-13"
@@ -16655,27 +16569,27 @@ msgstr "Otvoriť súbory uložené v Corel DRAW 7-13"
 
 #: ../share/extensions/cgm_input.inx.h:1
 msgid "Computer Graphics Metafile files (.cgm)"
-msgstr ""
+msgstr "Computer Graphics Metafile súbory (.cgm)"
 
 #: ../share/extensions/cgm_input.inx.h:2
 msgid "Computer Graphics Metafile files input"
-msgstr ""
+msgstr "Vstup Computer Graphics Metafile súbory"
 
 #: ../share/extensions/cgm_input.inx.h:3
 msgid "Open Computer Graphics Metafile files"
-msgstr ""
+msgstr "Open Computer Graphics Metafile súbory"
 
 #: ../share/extensions/cmx_input.inx.h:1
 msgid "Corel DRAW Presentation Exchange files (.cmx)"
-msgstr ""
+msgstr "Corel DRAW Presentation Exchange súbory (.cmx)"
 
 #: ../share/extensions/cmx_input.inx.h:2
 msgid "Corel DRAW Presentation Exchange files input"
-msgstr ""
+msgstr "Vstup Corel DRAW Presentation Exchange súbory"
 
 #: ../share/extensions/cmx_input.inx.h:3
 msgid "Open presentation exchange files saved in Corel DRAW"
-msgstr ""
+msgstr "Open presentation exchange súbory uložené v Corel DRAW"
 
 #: ../share/extensions/color_brighter.inx.h:1
 msgid "Brighter"
@@ -17018,14 +16932,12 @@ msgid "Samples"
 msgstr "Vzorky"
 
 #: ../share/extensions/funcplot.inx.h:14
-#, fuzzy
 msgid "Select a rectangle before calling the extension, it will determine X and Y scales. With polar coordinates: Start and end X values define the angle range in radians. X scale is set so that left and right edges of rectangle are at +/-1. Isotropic scaling is disabled. First derivative is always determined numerically."
-msgstr "Pred zavolaním efektu vytvorte obdĺžnik. Obdĺžnik určí veľkosti x a y. Pri polárnych súradniciach: x-hodnoty Začiatok: a Koniec: definujú rozsah uhla v radiánoch. Mierka x je nastavená tak, aby pravé a ľave okraje obdĺžnika boli na +/-1. Izotropická zmena veľkosti je vypnutá. Prvá derivácia sa vždy určuje numericky."
+msgstr "Pred zavolaním rozšírenia vytvorte obdĺžnik. Obdĺžnik určí veľkosti x a y. Pri polárnych súradniciach: x-hodnoty Začiatok: a Koniec: definujú rozsah uhla v radiánoch. Mierka x je nastavená tak, aby pravé a ľavé okraje obdĺžnika boli na +/-1. Izotropická zmena veľkosti je vypnutá. Prvá derivácia sa vždy určuje numericky."
 
 #: ../share/extensions/funcplot.inx.h:15
-#, fuzzy
 msgid "Standard Python math functions are available: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and e are also available."
-msgstr "Sú dostupné štandardné Pythonové matematické funkcie: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). Tiež sú dostupné konštanty pi a e."
+msgstr "Sú dostupné štandardné matematické funkcie Pythonu: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). Tiež sú dostupné konštanty pi a e."
 
 #: ../share/extensions/funcplot.inx.h:16
 msgid "Start X value"
@@ -17073,7 +16985,7 @@ msgstr "GIMP XCF so zachovaním vrstiev (*.XCF)"
 
 #: ../share/extensions/gimp_xcf.inx.h:3
 msgid "Save Grid:"
-msgstr ""
+msgstr "Uložiť mriežku:"
 
 #: ../share/extensions/gimp_xcf.inx.h:4
 msgid "Save Guides:"
@@ -17081,7 +16993,7 @@ msgstr "Uložiť vodidlá:"
 
 #: ../share/extensions/grid_cartesian.inx.h:1
 msgid "Border Thickness / px"
-msgstr ""
+msgstr "Hrúbka okraja / px"
 
 #: ../share/extensions/grid_cartesian.inx.h:2
 msgid "Cartesian Grid"
@@ -17089,46 +17001,43 @@ msgstr "Karteziánska mriežka"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
+msgstr "Poliť X podpodrozd. Frekvencia po „n” podrozd. (iba záznam)"
 
 #: ../share/extensions/grid_cartesian.inx.h:4
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
+msgstr "Poliť Y podpodrozd. Frekvencia po „n” podrozd. (iba záznam)"
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Logaritmické X podrozd. (základ podľa vyššie uvedeného)"
 
 #: ../share/extensions/grid_cartesian.inx.h:6
 msgid "Logarithmic Y Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Logaritmické Y podrozd. (základ podľa vyššie uvedeného)"
 
 #: ../share/extensions/grid_cartesian.inx.h:7
 msgid "Major X Division Thickness / px"
 msgstr ""
 
 #: ../share/extensions/grid_cartesian.inx.h:8
-#, fuzzy
 msgid "Major X Divisions"
-msgstr "Rozdelenie"
+msgstr "Hlavné rozdelenie X"
 
 #: ../share/extensions/grid_cartesian.inx.h:9
 msgid "Major X Divsion Spacing / px"
 msgstr ""
 
 #: ../share/extensions/grid_cartesian.inx.h:10
-#, fuzzy
 msgid "Major Y Division Spacing"
-msgstr "Horizontálne medzery"
+msgstr "Medzery hlavného rozdelenia X"
 
 #: ../share/extensions/grid_cartesian.inx.h:11
 msgid "Major Y Division Thickness / px"
 msgstr ""
 
 #: ../share/extensions/grid_cartesian.inx.h:12
-#, fuzzy
 msgid "Major Y Divisions"
-msgstr "Rozdelenie"
+msgstr "Hlavné rozdelenie Y"
 
 #: ../share/extensions/grid_cartesian.inx.h:13
 msgid "Minor X Division Thickness / px"
@@ -17163,9 +17072,8 @@ msgid "Subsubdivs. per Y Subdivision"
 msgstr ""
 
 #: ../share/extensions/grid_polar.inx.h:1
-#, fuzzy
 msgid "Angle Divisions"
-msgstr "Rozdelenie"
+msgstr "Rozdelenia uhla"
 
 #: ../share/extensions/grid_polar.inx.h:2
 msgid "Angle Divisions at Centre"
@@ -17221,7 +17129,7 @@ msgstr ""
 
 #: ../share/extensions/grid_polar.inx.h:17
 msgid "Polar Grid"
-msgstr ""
+msgstr "Polárna mriežka"
 
 #: ../share/extensions/grid_polar.inx.h:19
 msgid "Subdivisions per Major Angular Division"
@@ -17240,14 +17148,12 @@ msgid "Export to an HP Graphics Language file"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:2
-#, fuzzy
 msgid "HP Graphics Language file (*.hpgl)"
-msgstr "Súbor Grafika XFIG (*.fig)"
+msgstr "HP Graphics Language súbor (*.hpgl)"
 
 #: ../share/extensions/hpgl_output.inx.h:3
-#, fuzzy
 msgid "HPGL Output"
-msgstr "Výstup SVG"
+msgstr "Výstup HPGL"
 
 #: ../share/extensions/inkscape_help_askaquestion.inx.h:1
 msgid "Ask Us a Question"
@@ -17290,9 +17196,8 @@ msgid "Interpolate"
 msgstr "Interpolácia"
 
 #: ../share/extensions/interp.inx.h:5
-#, fuzzy
 msgid "Interpolate style"
-msgstr "Interpolácia"
+msgstr "Štýl interpolácie"
 
 #: ../share/extensions/interp.inx.h:6
 msgid "Interpolation method"
@@ -17308,7 +17213,7 @@ msgstr "Axióma"
 
 #: ../share/extensions/lindenmayer.inx.h:2
 msgid "Axiom and rules"
-msgstr ""
+msgstr "Axióma a pravidlá"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "L-system"
@@ -17342,7 +17247,7 @@ msgstr "Dĺžka kroku (px)"
 
 #: ../share/extensions/lindenmayer.inx.h:15
 msgid "The path is generated by applying the substitutions of Rules to the Axiom, Order times. The following commands are recognized in Axiom and Rules: Any of A,B,C,D,E,F: draw forward Any of G,H,I,J,K,L: move forward +: turn left -: turn right |: turn 180 degrees [: remember poing ]: return to remembered point"
-msgstr ""
+msgstr "Cesta sa tvorí aplikáciou substitúcií pravidiel na axiómu Poradie-krát. V axióme a pravidlách sa rozoznávajú nasledovné príkazy: Ktorékoľvek z A,B,C,D,E,F: kresliť vpred Ktorékoľvek z G,H,I,J,K,L: posunúť vpred +: otočiť vľavo -: otočiť vpravo |: otočiť o180 stupňov [: zapamätať bod ]: návrat na zapamätaný bod"
 
 #: ../share/extensions/lorem_ipsum.inx.h:1
 msgid "Lorem ipsum"
@@ -17440,12 +17345,11 @@ msgstr "Vzorka pozdĺž cesty"
 
 #: ../share/extensions/pathalongpath.inx.h:10
 msgid "Ribbon"
-msgstr ""
+msgstr "Stuha"
 
 #: ../share/extensions/pathalongpath.inx.h:13
-#, fuzzy
 msgid "Snake"
-msgstr "Skosenie"
+msgstr "Had"
 
 #: ../share/extensions/pathalongpath.inx.h:14
 #: ../share/extensions/pathscatter.inx.h:11
@@ -17457,43 +17361,36 @@ msgid "This effect bends a pattern object along arbitrary \"skeleton\" paths. Th
 msgstr "Tento efekt ohýba vzorový objekt pozdĺž ľubovoľnej „kostry“, ktorou je cesta. Vzorka je najvrchnejší objekt výberu. (skupiny ciest/tvarov/klonov sú povolené)"
 
 #: ../share/extensions/pathscatter.inx.h:1
-#, fuzzy
 msgid "Cloned"
-msgstr "Klony"
+msgstr "Klonované"
 
 #: ../share/extensions/pathscatter.inx.h:2
-#, fuzzy
 msgid "Copied"
-msgstr "Kombinácia"
+msgstr "Skopírované"
 
 #: ../share/extensions/pathscatter.inx.h:4
-#, fuzzy
 msgid "Follow path orientation."
-msgstr "Orientácia stránky:"
+msgstr "Sledovať orientáciu cesty."
 
 #: ../share/extensions/pathscatter.inx.h:6
-#, fuzzy
 msgid "Moved"
-msgstr "Presunúť"
+msgstr "Presunuté"
 
 #: ../share/extensions/pathscatter.inx.h:8
-#, fuzzy
 msgid "Original pattern will be:"
-msgstr "Pôvodná cesta je zvisle"
+msgstr "Pôvodná vzorka bude:"
 
 #: ../share/extensions/pathscatter.inx.h:10
-#, fuzzy
 msgid "Scatter"
-msgstr "Vzorka"
+msgstr "Roztrúsiť"
 
 #: ../share/extensions/pathscatter.inx.h:12
 msgid "Stretch spaces to fit skeleton length"
-msgstr ""
+msgstr "Roztiahnuť medzery, aby zodpovedali dĺžke kostry"
 
 #: ../share/extensions/pathscatter.inx.h:14
-#, fuzzy
 msgid "This effect scatters a pattern along arbitrary \"skeleton\" paths. The pattern is the top most object in the selection. (groups of paths/shapes/clones... allowed)"
-msgstr "Tento efekt ohýba vzorový objekt pozdĺž ľubovoľnej „kostry“, ktorou je cesta. Vzorka je najvrchnejší objekt výberu. (skupiny ciest/tvarov/klonov sú povolené)"
+msgstr "Tento efekt roztrúsi vzorový objekt pozdĺž ľubovoľnej „kostry“, ktorou je cesta. Vzorka je najvrchnejší objekt výberu. (skupiny ciest/tvarov/klonov sú povolené)"
 
 # TODO: check
 #: ../share/extensions/perfectboundcover.inx.h:1
@@ -17570,9 +17467,8 @@ msgid "Perspective"
 msgstr "Perspektíva"
 
 #: ../share/extensions/polyhedron_3d.inx.h:1
-#, fuzzy
 msgid "3D Polyhedron"
-msgstr "Mnohouholník"
+msgstr "3D polyhedrón"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
 #, fuzzy
@@ -17581,7 +17477,7 @@ msgstr "Odomknúť objekt"
 
 #: ../share/extensions/polyhedron_3d.inx.h:3
 msgid "Cube"
-msgstr ""
+msgstr "Kocka"
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
 msgid "Cuboctohedron"
@@ -17593,11 +17489,11 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
 msgid "Draw Back-Facing Polygons"
-msgstr ""
+msgstr "Nakresliť mnohouholníky otočené chrbtom"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
 msgid "Edge-Specified"
-msgstr ""
+msgstr "Hranovo-definované"
 
 #: ../share/extensions/polyhedron_3d.inx.h:8
 #, fuzzy
@@ -17606,7 +17502,7 @@ msgstr "Hrany"
 
 #: ../share/extensions/polyhedron_3d.inx.h:9
 msgid "Face-Specified"
-msgstr ""
+msgstr "Stranovo-definované"
 
 #: ../share/extensions/polyhedron_3d.inx.h:10
 #, fuzzy
@@ -17614,26 +17510,25 @@ msgid "Faces"
 msgstr "Hladkosť"
 
 #: ../share/extensions/polyhedron_3d.inx.h:11
-#, fuzzy
 msgid "Filename:"
-msgstr "Nastaviť názov súboru"
+msgstr "Názov súboru:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
 msgid "Fill Colour (Blue)"
-msgstr ""
+msgstr "Farba výplne (modrá)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
 msgid "Fill Colour (Green)"
-msgstr ""
+msgstr "Farba výplne (zelená)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
 msgid "Fill Colour (Red)"
-msgstr ""
+msgstr "Farba výplne (červená)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Fill Opacity/ %"
-msgstr "Krytie, %"
+msgstr "Krytie výplne/ %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
 msgid "Great Dodecahedron"
@@ -17648,86 +17543,72 @@ msgid "Icosahedron"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-#, fuzzy
 msgid "Light x-Position"
-msgstr "Poloha"
+msgstr "Poloha X svetla"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-#, fuzzy
 msgid "Light y-Position"
-msgstr "Poloha"
+msgstr "Poloha Y svetla"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-#, fuzzy
 msgid "Light z-Position"
-msgstr "Poloha"
+msgstr "Poloha Z svetla"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
 msgid "Line Thickness / px"
-msgstr ""
+msgstr "Hrúbka čiary / px"
 
 #: ../share/extensions/polyhedron_3d.inx.h:24
 msgid "Load From File"
-msgstr ""
+msgstr "Načítať zo súboru"
 
 #: ../share/extensions/polyhedron_3d.inx.h:25
-#, fuzzy
 msgid "Maximum"
-msgstr "stredný"
+msgstr "Maximum"
 
 #: ../share/extensions/polyhedron_3d.inx.h:26
 msgid "Mean"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:27
-#, fuzzy
 msgid "Minimum"
-msgstr "Minimálna veľkosť"
+msgstr "Minimum"
 
 #: ../share/extensions/polyhedron_3d.inx.h:28
-#, fuzzy
 msgid "Model File"
-msgstr "Všetky súbory"
+msgstr "Súbor modelu"
 
 #: ../share/extensions/polyhedron_3d.inx.h:29
-#, fuzzy
 msgid "Object Type"
-msgstr "Objekt"
+msgstr "Typ objektu"
 
 #: ../share/extensions/polyhedron_3d.inx.h:30
-#, fuzzy
 msgid "Object:"
-msgstr "Objekt"
+msgstr "Objekt:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:31
-#, fuzzy
 msgid "Octahedron"
-msgstr "Ďalšie"
+msgstr "Oktahedrón"
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
-#, fuzzy
 msgid "Report Normal Vector Information"
-msgstr "Informácie o využití pamäte"
+msgstr "Informácie o normálových vektoroch"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
-#, fuzzy
 msgid "Rotate Around:"
-msgstr "Otáčať uzly"
+msgstr "Otáčať okolo:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:35
-#, fuzzy
 msgid "Rotation / Degrees"
-msgstr "Rotácia (stupne)"
+msgstr "Rotácia / stupne"
 
 #: ../share/extensions/polyhedron_3d.inx.h:36
-#, fuzzy
 msgid "Scaling Factor"
-msgstr "Koeficient šikmosti"
+msgstr "Koeficient zväčšenia"
 
 #: ../share/extensions/polyhedron_3d.inx.h:37
-#, fuzzy
 msgid "Shading"
-msgstr "Rozostup"
+msgstr "Tieňovanie"
 
 #: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Small Triambic Icosahedron"
@@ -17742,18 +17623,17 @@ msgid "Snub Dodecahedron"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:43
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Stroke Opacity/ %"
-msgstr "_Farba ťahu"
+msgstr "Krytie ťahu/ %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Tetrahedron"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
-#, fuzzy
 msgid "Then Rotate Around:"
-msgstr "nezaoblený"
+msgstr "Potom otáčať okolo:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Cube"
@@ -17776,30 +17656,28 @@ msgid "Truncated Tetrahedron"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:52
-#, fuzzy
 msgid "Vertices"
-msgstr "_Zvislý"
+msgstr "Vrcholy"
 
 #: ../share/extensions/polyhedron_3d.inx.h:53
-#, fuzzy
 msgid "View"
-msgstr "_Zobraziť"
+msgstr "Zobraziť"
 
 #: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "X-Axis"
-msgstr ""
+msgstr "os X"
 
 #: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Y-Axis"
-msgstr ""
+msgstr "os Y"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Axis"
-msgstr ""
+msgstr "os Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:57
 msgid "Z-Sort Faces By:"
-msgstr ""
+msgstr "zoradiť na osi z podľa:"
 
 #: ../share/extensions/ps_input.inx.h:1
 msgid "Postscript"
@@ -17818,14 +17696,12 @@ msgid "Jitter nodes"
 msgstr "Chvenie uzlov"
 
 #: ../share/extensions/radiusrand.inx.h:2
-#, fuzzy
 msgid "Maximum displacement in X, px"
-msgstr "Maximálne posunutie (v px)"
+msgstr "Maximálne posunutie X (v px)"
 
 #: ../share/extensions/radiusrand.inx.h:3
-#, fuzzy
 msgid "Maximum displacement in Y, px"
-msgstr "Maximálne posunutie (v px)"
+msgstr "Maximálne posunutie Y (v px)"
 
 #: ../share/extensions/radiusrand.inx.h:5
 msgid "Shift node handles"
@@ -17845,12 +17721,11 @@ msgstr "Použiť normálne rozdelenie"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:1
 msgid "Alphabet Soup"
-msgstr ""
+msgstr "Písmenková polievka"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:2
-#, fuzzy
 msgid "Random Seed"
-msgstr "Náhodný strom"
+msgstr "Báza generátora náhod. č."
 
 #: ../share/extensions/render_barcode.inx.h:1
 msgid "Bar Height:"
@@ -17869,9 +17744,8 @@ msgid "Barcode Type:"
 msgstr "Typ čiarového kódu:"
 
 #: ../share/extensions/restack.inx.h:2
-#, fuzzy
 msgid "Arbitrary Angle:"
-msgstr "Rozmiestniť"
+msgstr "ľubovoľný uhol:"
 
 #: ../share/extensions/restack.inx.h:4
 #, fuzzy
@@ -17880,7 +17754,7 @@ msgstr "Naspodok"
 
 #: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
-msgstr ""
+msgstr "Odspodu navrch (90)"
 
 #: ../share/extensions/restack.inx.h:6
 #, fuzzy
@@ -17894,7 +17768,7 @@ msgstr "st"
 
 #: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
-msgstr ""
+msgstr "Zľava doprava (0)"
 
 #: ../share/extensions/restack.inx.h:9
 #, fuzzy
@@ -17902,14 +17776,12 @@ msgid "Middle"
 msgstr "Dláždiť"
 
 #: ../share/extensions/restack.inx.h:10
-#, fuzzy
 msgid "Radial Inward"
-msgstr "Radiálny farebný prechod"
+msgstr "Radiálne smerom dnu"
 
 #: ../share/extensions/restack.inx.h:11
-#, fuzzy
 msgid "Radial Outward"
-msgstr "Radiálny farebný prechod"
+msgstr "Radiálne smerom von"
 
 #: ../share/extensions/restack.inx.h:12
 #, fuzzy
@@ -17928,7 +17800,7 @@ msgstr "Práva"
 
 #: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
-msgstr ""
+msgstr "Sprava doľava (180)"
 
 #: ../share/extensions/restack.inx.h:17
 #, fuzzy
@@ -17936,9 +17808,8 @@ msgid "Top to Bottom (270)"
 msgstr "P_resunúť výber na spodok"
 
 #: ../share/extensions/restack.inx.h:18
-#, fuzzy
 msgid "Vertical Point:"
-msgstr "Zvislý text"
+msgstr "Zvislý bod:"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -17968,17 +17839,16 @@ msgid "Strength (%):"
 msgstr "Sila (%)"
 
 #: ../share/extensions/sk1_input.inx.h:1
-#, fuzzy
 msgid "Open files saved in sK1 vector graphics editor"
-msgstr "Inkscape - editor vektorovej grafiky"
+msgstr "Otvoriť súbory uložené vo vektorovom grafickom editore sK1"
 
 #: ../share/extensions/sk1_input.inx.h:2
 msgid "sK1 vector graphics files (.sk1)"
-msgstr ""
+msgstr "Vektorové grafické súbory sK1 (.sk1)"
 
 #: ../share/extensions/sk1_input.inx.h:3
 msgid "sK1 vector graphics files input"
-msgstr ""
+msgstr "Vstup vektorové grafické súbory sK1"
 
 #: ../share/extensions/sk_input.inx.h:1
 msgid "A diagram created with the program Sketch"
@@ -18067,9 +17937,8 @@ msgid "ZIP Output"
 msgstr "ZIP výstup"
 
 #: ../share/extensions/text_braille.inx.h:1
-#, fuzzy
 msgid "Convert to Braille"
-msgstr "_Konvertovať na text"
+msgstr "Konvertovať na Brailleovo"
 
 #: ../share/extensions/text_flipcase.inx.h:2
 msgid "fLIP cASE"
@@ -18089,14 +17958,12 @@ msgid "By:"
 msgstr "Ry:"
 
 #: ../share/extensions/text_replace.inx.h:2
-#, fuzzy
 msgid "Replace text"
-msgstr "Nahradiť text..."
+msgstr "Nahradiť text"
 
 #: ../share/extensions/text_replace.inx.h:3
-#, fuzzy
 msgid "Replace:"
-msgstr "Nahradiť"
+msgstr "Nahradiť:"
 
 #: ../share/extensions/text_sentencecase.inx.h:1
 msgid "Sentence case"
@@ -18111,59 +17978,52 @@ msgid "UPPERCASE"
 msgstr "VEĽKĚ PÍSMENÁ"
 
 #: ../share/extensions/triangle.inx.h:1
-#, fuzzy
 msgid "Angle a / deg"
-msgstr "Uhol (v stupňoch):"
+msgstr "Uhol a (v stupňoch):"
 
 #: ../share/extensions/triangle.inx.h:2
-#, fuzzy
 msgid "Angle b / deg"
-msgstr "Uhol (v stupňoch):"
+msgstr "Uhol b (v stupňoch):"
 
 #: ../share/extensions/triangle.inx.h:3
-#, fuzzy
 msgid "Angle c / deg"
-msgstr "Uhol (v stupňoch):"
+msgstr "Uhol c (v stupňoch):"
 
 #: ../share/extensions/triangle.inx.h:4
 msgid "From Side a and Angles a, b"
-msgstr ""
+msgstr "Zo strany a a uhlov a, b"
 
 #: ../share/extensions/triangle.inx.h:5
 msgid "From Side c and Angles a, b"
-msgstr ""
+msgstr "Zo strany c a uhlov a, b"
 
 #: ../share/extensions/triangle.inx.h:6
 msgid "From Sides a, b and Angle a"
-msgstr ""
+msgstr "Zo strán a, b a uhla a"
 
 #: ../share/extensions/triangle.inx.h:7
 msgid "From Sides a, b and Angle c"
-msgstr ""
+msgstr "Zo strán a, b a uhla c"
 
 #: ../share/extensions/triangle.inx.h:8
 msgid "From Three Sides"
-msgstr ""
+msgstr "Z troch strán"
 
 #: ../share/extensions/triangle.inx.h:11
-#, fuzzy
 msgid "Side Length a / px"
-msgstr "Dĺžka kroku (px)"
+msgstr "Dĺžka strany a (px)"
 
 #: ../share/extensions/triangle.inx.h:12
-#, fuzzy
 msgid "Side Length b / px"
-msgstr "Dĺžka kroku (px)"
+msgstr "Dĺžka strany b (px)"
 
 #: ../share/extensions/triangle.inx.h:13
-#, fuzzy
 msgid "Side Length c / px"
-msgstr "Dĺžka kroku (px)"
+msgstr "Dĺžka strany c (px)"
 
 #: ../share/extensions/triangle.inx.h:14
-#, fuzzy
 msgid "Triangle"
-msgstr "Jednotlivá"
+msgstr "Trojuholník"
 
 #: ../share/extensions/txt2svg.inx.h:1
 msgid "ASCII Text"
