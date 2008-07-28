@@ -1440,6 +1440,7 @@ static bool tidy_operator_empty_spans(SPObject **item)
 the repeated strings will be merged by another operator. */
 static bool tidy_operator_inexplicable_spans(SPObject **item)
 {
+    if (*item && sp_repr_is_meta_element((*item)->repr)) return false;
     if (SP_IS_STRING(*item)) return false;
     if (is_line_break_object(*item)) return false;
     TextTagAttributes *attrs = attributes_for_object(*item);
