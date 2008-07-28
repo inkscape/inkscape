@@ -184,6 +184,7 @@ src/live_effects/lpe-copy_rotate.cpp
 src/live_effects/lpe-curvestitch.cpp
 src/live_effects/lpe-envelope.cpp
 src/live_effects/lpe-gears.cpp
+src/live_effects/lpe-interpolate.cpp
 src/live_effects/lpe-knot.cpp
 src/live_effects/lpe-lattice.cpp
 src/live_effects/lpe-mirror_symmetry.cpp
