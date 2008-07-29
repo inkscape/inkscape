@@ -199,8 +199,9 @@ sp_nodepath_create_helperpaths(Inkscape::NodePath::Path *np) {
     SPLPEItem *lpeitem = SP_LPE_ITEM(np->item);
     PathEffectList lpelist = sp_lpe_item_get_effect_list(lpeitem);
     for (PathEffectList::iterator i = lpelist.begin(); i != lpelist.end(); ++i) {
-        Inkscape::LivePathEffect::Effect *lpe = (*i)->lpeobject->lpe;
-        g_print ("Processing LPE %s\n", SP_OBJECT_REPR((*i)->lpeobject)->attribute("id"));
+        Inkscape::LivePathEffect::LPEObjectReference *lperef = (*i);
+        Inkscape::LivePathEffect::Effect *lpe = lperef->lpeobject->lpe;
+        g_print ("Processing LPE %s\n", SP_OBJECT_REPR(lperef->lpeobject)->attribute("id"));
         // create new canvas items from the effect's helper paths
         std::vector<Geom::PathVector> hpaths = lpe->getHelperPaths(lpeitem);
         for (std::vector<Geom::PathVector>::iterator j = hpaths.begin(); j != hpaths.end(); ++j) {
