@@ -242,8 +242,6 @@ sp_lpe_item_update(SPObject *object, SPCtx *ctx, guint flags)
         ((SPObjectClass *) parent_class)->update(object, ctx, flags);
     }
 
-    g_print ("sp_lpe_item_update()\n");
-
     // update the helperpaths of all LPEs applied to the item
     // TODO: is there a more canonical place for this, since we don't have instant access to the item's nodepath?
     // FIXME: this is called multiple (at least 3) times; how can we avoid this?
@@ -266,8 +264,6 @@ sp_lpe_item_update(SPObject *object, SPCtx *ctx, guint flags)
 static void
 sp_lpe_item_modified (SPObject *object, unsigned int flags)
 {
-    g_print ("sp_lpe_item_modified()\n");
-
     if (SP_IS_GROUP(object) && (flags & SP_OBJECT_MODIFIED_FLAG) && (flags & SP_OBJECT_USER_MODIFIED_FLAG_B)) {
         sp_lpe_item_update_patheffect(SP_LPE_ITEM(object), true, true);
     }

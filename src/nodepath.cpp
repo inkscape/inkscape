@@ -160,7 +160,6 @@ Inkscape::NodePath::Node * Inkscape::NodePath::Path::active_node = NULL;
 
 static SPCanvasItem *
 sp_nodepath_make_helper_item(Inkscape::NodePath::Path *np, /*SPDesktop *desktop, */const SPCurve *curve, bool show = false) {
-    g_print ("sp_nodepath_make_helper_item()\n");
     SPCurve *helper_curve = curve->copy();
     helper_curve->transform(to_2geom(np->i2d));
     SPCanvasItem *helper_path = sp_canvas_bpath_new(sp_desktop_controls(np->desktop), helper_curve);
@@ -176,21 +175,13 @@ sp_nodepath_make_helper_item(Inkscape::NodePath::Path *np, /*SPDesktop *desktop,
 
 static SPCanvasItem *
 canvasitem_from_pathvec(Inkscape::NodePath::Path *np, Geom::PathVector const &pathv, bool show) {
-    g_print ("canvasitem_from_pathvec()\n");
     SPCurve *helper_curve = new SPCurve(pathv);
     return sp_nodepath_make_helper_item(np, helper_curve, show);
 }
 
 static void
 sp_nodepath_create_helperpaths(Inkscape::NodePath::Path *np) {
-    g_print ("sp_nodepath_create_helperpaths()\n");
     //std::map<Inkscape::LivePathEffect::Effect *, std::vector<SPCanvasItem *> >* helper_path_vec;
-    if (np->item) {
-        g_print ("np->item: %s\n", SP_OBJECT_REPR(np->item)->attribute("id"));
-    } else {
-        g_print ("np->item == NULL!\n");
-    }
-
     if (!SP_IS_LPE_ITEM(np->item)) {
         g_print ("Only LPEItems can have helperpaths!\n");
         return;
@@ -201,20 +192,16 @@ sp_nodepath_create_helperpaths(Inkscape::NodePath::Path *np) {
     for (PathEffectList::iterator i = lpelist.begin(); i != lpelist.end(); ++i) {
         Inkscape::LivePathEffect::LPEObjectReference *lperef = (*i);
         Inkscape::LivePathEffect::Effect *lpe = lperef->lpeobject->lpe;
-        g_print ("Processing LPE %s\n", SP_OBJECT_REPR(lperef->lpeobject)->attribute("id"));
         // create new canvas items from the effect's helper paths
         std::vector<Geom::PathVector> hpaths = lpe->getHelperPaths(lpeitem);
         for (std::vector<Geom::PathVector>::iterator j = hpaths.begin(); j != hpaths.end(); ++j) {
-            g_print ("   ... creating helper path\n");
             (*np->helper_path_vec)[lpe].push_back(canvasitem_from_pathvec(np, *j, true));
         }
     }
-    g_print ("\n");
 }
 
 void
 sp_nodepath_update_helperpaths(Inkscape::NodePath::Path *np) {
-    g_print ("sp_nodepath_update_helperpaths()\n");
     //std::map<Inkscape::LivePathEffect::Effect *, std::vector<SPCanvasItem *> >* helper_path_vec;
     if (!SP_IS_LPE_ITEM(np->item)) {
         g_print ("Only LPEItems can have helperpaths!\n");
@@ -225,36 +212,29 @@ sp_nodepath_update_helperpaths(Inkscape::NodePath::Path *np) {
     PathEffectList lpelist = sp_lpe_item_get_effect_list(lpeitem);
     for (PathEffectList::iterator i = lpelist.begin(); i != lpelist.end(); ++i) {
         Inkscape::LivePathEffect::Effect *lpe = (*i)->lpeobject->lpe;
-        g_print ("Processing LPE %s\n", SP_OBJECT_REPR((*i)->lpeobject)->attribute("id"));
         /* update canvas items from the effect's helper paths; note that this code relies on the
          * fact that getHelperPaths() will always return the same number of helperpaths in the same
          * order as during their creation in sp_nodepath_create_helperpaths
          */
         std::vector<Geom::PathVector> hpaths = lpe->getHelperPaths(lpeitem);
         for (unsigned int j = 0; j < hpaths.size(); ++j) {
-            g_print ("   ... updating helper path\n");
             SPCurve *curve = new SPCurve(hpaths[j]);
             curve->transform(to_2geom(np->i2d));
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(((*np->helper_path_vec)[lpe])[j]), curve);
             curve = curve->unref();
         }
     }
-    g_print ("\n");
 }
 
 static void
 sp_nodepath_destroy_helperpaths(Inkscape::NodePath::Path *np) {
-    g_print ("sp_nodepath_destroy_helperpaths()\n");
     for (HelperPathList::iterator i = np->helper_path_vec->begin(); i != np->helper_path_vec->end(); ++i) {
-        g_print ("processing helper paths for LPE %s\n", SP_OBJECT_REPR((*i).first->getLPEObj())->attribute("id"));
         for (std::vector<SPCanvasItem *>::iterator j = (*i).second.begin(); j != (*i).second.end(); ++j) {
-            g_print ("   ... destroying helper path\n");
             GtkObject *temp = *j;
             *j = NULL;
             gtk_object_destroy(temp);
         }
     }
-    g_print ("\n");
 }
 
 
