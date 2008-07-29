@@ -54,9 +54,6 @@ public:
 
     virtual void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
-    // TODO: ditch this!
-    virtual bool isLPEParam() { return true; }
-
 private:
     PointParam(const PointParam&);
     PointParam& operator=(const PointParam&);

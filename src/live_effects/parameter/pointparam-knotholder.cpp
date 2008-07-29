@@ -60,7 +60,7 @@ PointParamKnotHolder::~PointParamKnotHolder()
     g_object_unref(G_OBJECT(this->lpeobject));
 }
 
-class KnotHolderEntityPointParam : public KnotHolderEntity {
+class KnotHolderEntityPointParam : public LPEKnotHolderEntity {
 public:
     virtual NR::Point knot_get();
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);

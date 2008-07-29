@@ -152,7 +152,7 @@ PointParam::set_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint
     knot_color = color;
 }
 
-class PointParamKnotHolderEntity : public KnotHolderEntity {
+class PointParamKnotHolderEntity : public LPEKnotHolderEntity {
 public:
     PointParamKnotHolderEntity(PointParam *p) { this->pparam = p; }
     virtual ~PointParamKnotHolderEntity() {}

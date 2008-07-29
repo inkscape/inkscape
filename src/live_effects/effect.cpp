@@ -425,6 +425,21 @@ Effect::addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
     using namespace Inkscape::LivePathEffect;
 
     // add handles provided by the effect itself
+    addKnotHolderEntities(knotholder, desktop, item);
+
+    // add handles provided by the effect's parameters (if any)
+    for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
+        (*p)->addKnotHolderEntities(knotholder, desktop, item);
+    }
+}
+
+void
+Effect::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
+    // TODO: The entities in kh_entity_vector are already instantiated during the call
+    //       to registerKnotHolderHandle(), but they are recreated here. Also, we must not
+    //       delete them when the knotholder is destroyed, whence the clumsy function
+    //       isDeletable(). If we could create entities of different classes dynamically,
+    //       this would be much nicer. How to do this?
     std::vector<std::pair<KnotHolderEntity*, const char*> >::iterator i;
     for (i = kh_entity_vector.begin(); i != kh_entity_vector.end(); ++i) {
         KnotHolderEntity *entity = i->first;
@@ -432,11 +447,6 @@ Effect::addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
 
         entity->create(desktop, item, knotholder, descr);
         knotholder->add(entity);
-    }
-
-    // add handles provided by the effect's parameters (if any)
-    for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
-        (*p)->addKnotHolderEntities(knotholder, desktop, item);
     }
 }
 

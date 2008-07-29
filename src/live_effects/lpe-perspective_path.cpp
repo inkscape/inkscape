@@ -37,11 +37,9 @@ namespace LivePathEffect {
 
 namespace PP {
 
-class KnotHolderEntityOffset : public KnotHolderEntity
+class KnotHolderEntityOffset : public LPEKnotHolderEntity
 {
 public:
-    virtual bool isLPEParam() { return true; }
-
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
     virtual NR::Point knot_get();
 };

@@ -87,11 +87,9 @@ LPESkeleton::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
 /**
 namespace Skeleton {
 
-class KnotHolderEntityMyHandle : public KnotHolderEntity
+class KnotHolderEntityMyHandle : public LPEKnotHolderEntity
 {
 public:
-    virtual bool isLPEParam() { return true; } // this is always needed
-
     // the set() and get() methods must be implemented, click() is optional
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
     virtual NR::Point knot_get();

@@ -41,10 +41,11 @@ public:
                         SPKnotModeType mode = SP_KNOT_MODE_XOR,
                         guint32 color = 0xffffff00);
 
-    /* derived classes like PointParam for LPEs use this, e.g., to indicate that we must not call
-       delete on their pointer when a knotholder is destroyed */
-    // TODO: purge this now that PointParams are not KnotHolderEntities any more!
-    virtual bool isLPEParam() { return false; }
+    /* derived classes used for LPE knotholder handles use this to indicate that they
+       must not be deleted when a knotholder is destroyed */
+    // TODO: it would be nice to ditch this but then we need to dynamically create instances of different
+    //       KnotHolderEntity classes in Effect::addKnotHolderEntities. How to do this???
+    virtual bool isDeletable() { return true; }
 
     /* the get/set/click handlers are virtual functions; each handler class for a knot
        should be derived from KnotHolderEntity and override these functions */
@@ -73,6 +74,11 @@ public:
     sigc::connection _moved_connection;
     sigc::connection _click_connection;
     sigc::connection _ungrabbed_connection;
+};
+
+// derived KnotHolderEntity class for LPEs
+class LPEKnotHolderEntity : public KnotHolderEntity {
+    virtual bool isDeletable() { return false; }
 };
 
 /* pattern manipulation */

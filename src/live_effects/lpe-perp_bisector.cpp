@@ -25,20 +25,16 @@ namespace Inkscape {
 namespace LivePathEffect {
 namespace PB {
 
-class KnotHolderEntityLeftEnd : public KnotHolderEntity
+class KnotHolderEntityLeftEnd : public LPEKnotHolderEntity
 {
 public:
-    virtual bool isLPEParam() { return true; }
-
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
     virtual NR::Point knot_get();
 };
 
-class KnotHolderEntityRightEnd : public KnotHolderEntity
+class KnotHolderEntityRightEnd : public LPEKnotHolderEntity
 {
 public:
-    virtual bool isLPEParam() { return true; }
-
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
     virtual NR::Point knot_get();
 };

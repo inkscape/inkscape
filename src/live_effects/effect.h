@@ -129,7 +129,6 @@ public:
     //       (but spiro lpe still needs it!)
     virtual LPEPathFlashType pathFlashType() { return DEFAULT; }
     void addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
-    void addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
     void addHelperPaths(SPLPEItem *lpeitem, SPDesktop *desktop);
     inline bool providesOwnFlashPaths() {
@@ -167,6 +166,7 @@ protected:
     void registerKnotHolderHandle(KnotHolderEntity* entity, const char* descr);
     Parameter * getNextOncanvasEditableParam();
 
+    void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
     virtual void addHelperPathsImpl(SPLPEItem *lpeitem, SPDesktop *desktop);
 
     std::vector<Parameter *> param_vector;
@@ -192,7 +192,6 @@ private:
     Effect(const Effect&);
     Effect& operator=(const Effect&);
 };
-
 
 } //namespace LivePathEffect
 } //namespace Inkscape
