@@ -42,9 +42,6 @@ struct SPLPEItem : public SPItem {
     Inkscape::LivePathEffect::LPEObjectReference* current_path_effect;
     std::vector<Inkscape::Display::TemporaryItem*> lpe_helperpaths;
 
-    bool adding_helperpaths;
-    bool removing_helperpaths;
-
     sigc::connection lpe_modified_connection;
 };
 
@@ -76,8 +73,6 @@ Inkscape::LivePathEffect::LPEObjectReference* sp_lpe_item_get_current_lpereferen
 Inkscape::LivePathEffect::Effect* sp_lpe_item_get_current_lpe(SPLPEItem *lpeitem);
 bool sp_lpe_item_set_current_path_effect(SPLPEItem *lpeitem, Inkscape::LivePathEffect::LPEObjectReference* lperef);
 bool sp_lpe_item_path_effects_enabled(SPLPEItem *lpeitem);
-void sp_lpe_item_add_temporary_canvasitems(SPLPEItem *lpeitem, SPDesktop *desktop);
-void sp_lpe_item_remove_temporary_canvasitems(SPLPEItem *lpeitem, SPDesktop *desktop);
 
 #endif /* !SP_LPE_ITEM_H_SEEN */
 

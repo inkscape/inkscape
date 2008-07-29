@@ -234,16 +234,7 @@ void ShapeEditor::set_item(SPItem *item, SubType type, bool keep_knotholder) {
         switch(type) {
             case SH_NODEPATH:
                 if (SP_IS_LPE_ITEM(item)) {
-                    //SPLPEItem *lpeitem = SP_LPE_ITEM(item);
-                    //Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(lpeitem);
-                    //if (!(lpe && lpe->isVisible() && lpe->providesKnotholder())) {
-                        // only create nodepath if the item either doesn't have an LPE
-                        // or the LPE is invisible or it doesn't provide a knotholder itself
-                        this->nodepath = sp_nodepath_new(desktop, item,
-                                                         (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0));
-                    //} else if (lpe && lpe->isVisible()) {
-                    //    sp_lpe_item_add_temporary_canvasitems(lpeitem, desktop);
-                    //}
+                    this->nodepath = sp_nodepath_new(desktop, item, (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0));
                 }
                 if (this->nodepath) {
                     this->nodepath->shape_editor = this;

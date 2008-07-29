@@ -120,9 +120,6 @@ sp_lpe_item_init(SPLPEItem *lpeitem)
     lpeitem->current_path_effect = NULL;
 
     new (&lpeitem->lpe_modified_connection) sigc::connection();
-
-    lpeitem->adding_helperpaths = false;
-    lpeitem->removing_helperpaths = false;
 }
 
 static void
@@ -373,13 +370,6 @@ sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write)
     }
     else {
         top = lpeitem;
-    }
-
-    // TODO: ditch inkscape_active_desktop()
-    SPDesktop *desktop = inkscape_active_desktop();
-    if (desktop) {
-        //sp_lpe_item_remove_temporary_canvasitems(lpeitem, desktop);
-        //sp_lpe_item_add_temporary_canvasitems(lpeitem, desktop);
     }
 
     if (SP_LPE_ITEM_CLASS (G_OBJECT_GET_CLASS (top))->update_patheffect) {
@@ -767,43 +757,6 @@ static void sp_lpe_item_enable_path_effects(SPLPEItem *lpeitem, bool enable)
 bool sp_lpe_item_path_effects_enabled(SPLPEItem *lpeitem)
 {
     return lpeitem->path_effects_enabled > 0;
-}
-
-void
-sp_lpe_item_add_temporary_canvasitems(SPLPEItem *lpeitem, SPDesktop *desktop)
-{
-    if (lpeitem->adding_helperpaths) {
-        return;
-    }
-    lpeitem->adding_helperpaths = true;
-    // FIXME: for some reason it seems that we must create the variable lpe AFTER checking
-    //        for adding_helperpaths == true; otherwise we get a crash on startup. why??
-    Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(lpeitem);
-    if (lpe) {
-        // TODO: can we just update the tempitem's SPCurve instead of recreating it each time?
-        lpe->addHelperPaths(lpeitem, desktop);
-    }
-    lpeitem->adding_helperpaths = false;
-}
-
-void
-sp_lpe_item_remove_temporary_canvasitems(SPLPEItem *lpeitem, SPDesktop *desktop)
-{
-    g_return_if_fail(lpeitem);
-    g_return_if_fail(desktop);
-
-    if (lpeitem->removing_helperpaths) {
-        return;
-    }
-    lpeitem->removing_helperpaths = true;
-
-    // destroy all temporary canvasitems created by LPEs
-    std::vector<Inkscape::Display::TemporaryItem*>::iterator i;
-    for (i = lpeitem->lpe_helperpaths.begin(); i != lpeitem->lpe_helperpaths.end(); ++i) {
-        desktop->remove_temporary_canvasitem(*i);
-    }
-
-    lpeitem->removing_helperpaths = false;
 }
 
 /*

@@ -192,10 +192,6 @@ void Selection::_add(SPObject *obj) {
 
     add_3D_boxes_recursively(obj);
 
-    if (SP_IS_LPE_ITEM(obj)) {
-        sp_lpe_item_add_temporary_canvasitems(SP_LPE_ITEM(obj), desktop());
-    }
-
     _release_connections[obj] = obj->connectRelease(sigc::mem_fun(*this, (void (Selection::*)(SPObject *))&Selection::remove));
     _modified_connections[obj] = obj->connectModified(sigc::mem_fun(*this, &Selection::_schedule_modified));
 }
@@ -261,10 +257,6 @@ void Selection::_remove(SPObject *obj) {
     _release_connections.erase(obj);
 
     remove_3D_boxes_recursively(obj);
-
-    if (SP_IS_LPE_ITEM(obj)) {
-        sp_lpe_item_remove_temporary_canvasitems(SP_LPE_ITEM(obj), desktop());
-    }
 
     _objs = g_slist_remove(_objs, obj);
 }

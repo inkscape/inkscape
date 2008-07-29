@@ -121,12 +121,6 @@ sp_node_context_dispose(GObject *object)
     nc->sel_changed_connection.disconnect();
     nc->sel_changed_connection.~connection();
 
-    // TODO: should this be here?
-    SPItem *item = sp_desktop_selection(ec->desktop)->singleItem();
-    if (item && SP_IS_LPE_ITEM(item)) {
-        sp_lpe_item_remove_temporary_canvasitems(SP_LPE_ITEM(item), ec->desktop);
-    }
-
     delete nc->shape_editor;
 
     if (nc->_node_message_context) {
