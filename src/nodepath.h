@@ -30,11 +30,16 @@ class SPKnot;
 class LivePathEffectObject;
 
 namespace Inkscape {
-namespace XML {
-class Node;
-}
+  namespace XML {
+    class Node;
+  }
+
+  namespace LivePathEffect {
+    class Effect;
+  }
 }
 
+typedef std::map<Inkscape::LivePathEffect::Effect *, std::vector<SPCanvasItem *> > HelperPathList;
 
 /**
  * Radial objects are represented by an angle and a distance from
@@ -243,6 +248,9 @@ class Path {
     guint32 helperpath_rgba;
     gdouble helperpath_width;
 
+    // the helperpaths provided by all LPEs (and their paramaters) of the current item
+    HelperPathList* helper_path_vec;
+
       /// true if we changed repr, to tell this change from an external one such as from undo, simplify, or another desktop
 	unsigned int local_change;
 
@@ -308,8 +316,9 @@ NR::Rect sp_node_selected_bbox (Inkscape::NodePath::Path *nodepath);
 NR::Maybe<NR::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis);
 
 void sp_nodepath_show_handles(Inkscape::NodePath::Path *nodepath, bool show);
-SPCanvasItem *sp_nodepath_generate_helperpath(SPDesktop *desktop, SPCurve *curve, const SPItem *item, guint32 color);
-SPCanvasItem *sp_nodepath_generate_helperpath(SPDesktop *desktop, SPPath *path);
+//SPCanvasItem *sp_nodepath_generate_helperpath(SPDesktop *desktop, SPCurve *curve, const SPItem *item, guint32 color);
+//SPCanvasItem *sp_nodepath_generate_helperpath(SPDesktop *desktop, SPPath *path);
+SPCanvasItem *sp_nodepath_helperpath_from_path(SPDesktop *desktop, SPPath *path);
 void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *nodepath, bool show);
 void sp_nodepath_make_straight_path(Inkscape::NodePath::Path *np);
 

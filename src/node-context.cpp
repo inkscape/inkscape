@@ -183,6 +183,7 @@ sp_node_context_setup(SPEventContext *ec)
 
 static void
 sp_node_context_flash_path(SPEventContext *event_context, SPItem *item, guint timeout) {
+    g_print ("-----> sp_node_context_flash_path(): TODO: generate the helper path!!\n");
     SPNodeContext *nc = SP_NODE_CONTEXT(event_context);
 
     nc->remove_flash_counter = 3; // for some reason root_handler is called twice after each item_handler...
@@ -196,7 +197,7 @@ sp_node_context_flash_path(SPEventContext *event_context, SPItem *item, guint ti
         }
 
         if (SP_IS_PATH(item)) {
-            SPCanvasItem *canvasitem = sp_nodepath_generate_helperpath(desktop, SP_PATH(item));
+            SPCanvasItem *canvasitem = sp_nodepath_helperpath_from_path(desktop, SP_PATH(item));
             nc->flash_tempitem = desktop->add_temporary_canvasitem (canvasitem, timeout);
         }
     }

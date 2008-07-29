@@ -53,6 +53,7 @@
 #include <cmath>
 #include <string>
 #include "live_effects/lpeobject.h"
+#include "live_effects/lpeobject-reference.h"
 #include "live_effects/effect.h"
 #include "live_effects/parameter/parameter.h"
 #include "live_effects/parameter/path.h"
@@ -158,19 +159,75 @@ static void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve)
 Inkscape::NodePath::Node * Inkscape::NodePath::Path::active_node = NULL;
 
 static SPCanvasItem *
-sp_nodepath_make_helper_curve(Inkscape::NodePath::Path *np, SPDesktop *desktop, const SPCurve *curve, bool show = false) {
-    SPCurve *canvasitem = curve->copy();
-    canvasitem->transform(to_2geom(np->i2d));
-    SPCanvasItem *helper_path = sp_canvas_bpath_new(sp_desktop_controls(desktop), canvasitem);
+sp_nodepath_make_helper_item(Inkscape::NodePath::Path *np, /*SPDesktop *desktop, */const SPCurve *curve, bool show = false) {
+    g_print ("sp_nodepath_make_helper_item()\n");
+    SPCurve *helper_curve = curve->copy();
+    helper_curve->transform(to_2geom(np->i2d));
+    SPCanvasItem *helper_path = sp_canvas_bpath_new(sp_desktop_controls(np->desktop), helper_curve);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(helper_path), np->helperpath_rgba, np->helperpath_width, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(helper_path), 0, SP_WIND_RULE_NONZERO);
     sp_canvas_item_move_to_z(helper_path, 0);
     if (show) {
         sp_canvas_item_show(helper_path);
     }
-    canvasitem->unref();
-    return canvasitem;
+    helper_curve->unref();
+    return helper_path;
 }
+
+static SPCanvasItem *
+canvasitem_from_pathvec(Inkscape::NodePath::Path *np, Geom::PathVector const &pathv, bool show) {
+    g_print ("canvasitem_from_pathvec()\n");
+    SPCurve *helper_curve = new SPCurve(pathv);
+    return sp_nodepath_make_helper_item(np, helper_curve, show);
+}
+
+static void
+sp_nodepath_create_helperpaths(Inkscape::NodePath::Path *np) {
+    g_print ("sp_nodepath_create_helperpaths()\n");
+    //std::map<Inkscape::LivePathEffect::Effect *, std::vector<SPCanvasItem *> >* helper_path_vec;
+    if (np->item) {
+        g_print ("np->item: %s\n", SP_OBJECT_REPR(np->item)->attribute("id"));
+    } else {
+        g_print ("np->item == NULL!\n");
+    }
+
+    if (!SP_IS_LPE_ITEM(np->item)) {
+        g_print ("Only LPEItems can have helperpaths!\n");
+        return;
+    }
+
+    SPLPEItem *lpeitem = SP_LPE_ITEM(np->item);
+    PathEffectList lpelist = sp_lpe_item_get_effect_list(lpeitem);
+    for (PathEffectList::iterator i = lpelist.begin(); i != lpelist.end(); ++i) {
+        Inkscape::LivePathEffect::Effect *lpe = (*i)->lpeobject->lpe;
+        g_print ("Processing LPE %s\n", SP_OBJECT_REPR((*i)->lpeobject)->attribute("id"));
+        // create new canvas items from the effect's helper paths
+        std::vector<Geom::PathVector> hpaths = lpe->getHelperPaths(lpeitem);
+        for (std::vector<Geom::PathVector>::iterator j = hpaths.begin(); j != hpaths.end(); ++j) {
+            g_print ("   ... creating helper path\n");
+            (*np->helper_path_vec)[lpe].push_back(canvasitem_from_pathvec(np, *j, true));
+        }
+    }
+    g_print ("\n");
+}
+
+//typedef std::map<Inkscape::LivePathEffect::Effect *, std::vector<SPCanvasItem *> > HelperPathList;
+
+static void
+sp_nodepath_destroy_helperpaths(Inkscape::NodePath::Path *np) {
+    g_print ("sp_nodepath_destroy_helperpaths()\n");
+    for (HelperPathList::iterator i = np->helper_path_vec->begin(); i != np->helper_path_vec->end(); ++i) {
+        g_print ("processing helper paths for LPE %s\n", SP_OBJECT_REPR((*i).first->getLPEObj())->attribute("id"));
+        for (std::vector<SPCanvasItem *>::iterator j = (*i).second.begin(); j != (*i).second.end(); ++j) {
+            g_print ("   ... destroying helper path\n");
+            GtkObject *temp = *j;
+            *j = NULL;
+            gtk_object_destroy(temp);
+        }
+    }
+    g_print ("\n");
+}
+
 
 /**
  * \brief Creates new nodepath from item
@@ -222,6 +279,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     np->local_change = 0;
     np->show_handles = show_handles;
     np->helper_path = NULL;
+    np->helper_path_vec = new HelperPathList;
     np->helperpath_rgba = prefs_get_int_attribute("tools.nodes", "highlight_color", 0xff0000ff);
     np->helperpath_width = 1.0;
     np->curve = curve->copy();
@@ -292,8 +350,10 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
 
     // Draw helper curve
     if (np->show_helperpath) {
-        np->helper_path = sp_nodepath_make_helper_curve(np, desktop, np->curve, true);
+        np->helper_path = sp_nodepath_make_helper_item(np, /*desktop, */np->curve, true);
     }
+
+    sp_nodepath_create_helperpaths(np);
 
     return np;
 }
@@ -334,6 +394,10 @@ void sp_nodepath_destroy(Inkscape::NodePath::Path *np) {
         g_free(np->repr_nodetypes_key);
         np->repr_nodetypes_key = NULL;
     }
+
+    sp_nodepath_destroy_helperpaths(np);
+    delete np->helper_path_vec;
+    np->helper_path_vec = NULL;
 
     np->desktop = NULL;
 
@@ -4773,10 +4837,12 @@ void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve) {
     }
 }
 
+/**
 SPCanvasItem *
-sp_nodepath_to_canvasitem(Inkscape::NodePath::Path *np, SPDesktop *desktop, SPPath *path) {
-    return sp_nodepath_make_helper_curve(np, desktop, sp_path_get_curve_for_edit(path));
+sp_nodepath_path_to_canvasitem(Inkscape::NodePath::Path *np, SPPath *path) {
+    return sp_nodepath_make_helper_item(np, sp_path_get_curve_for_edit(path));
 }
+**/
 
 /**
 SPCanvasItem *
@@ -4801,7 +4867,23 @@ sp_nodepath_generate_helperpath(SPDesktop *desktop, SPPath *path) {
 }
 **/
 
-// TODO: Merge this with sp_nodepath_make_helper_curve()!
+SPCanvasItem *
+sp_nodepath_helperpath_from_path(SPDesktop *desktop, SPPath *path) {
+    SPCurve *flash_curve = sp_path_get_curve_for_edit(path)->copy();
+    Geom::Matrix i2d = sp_item_i2d_affine(SP_ITEM(path));
+    flash_curve->transform(i2d);
+    SPCanvasItem * canvasitem = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), flash_curve);
+    // would be nice if its color could be XORed or something, now it is invisible for red stroked objects...
+    // unless we also flash the nodes...
+    guint32 color = prefs_get_int_attribute("tools.nodes", "highlight_color", 0xff0000ff);
+    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvasitem), color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+    sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(canvasitem), 0, SP_WIND_RULE_NONZERO);
+    sp_canvas_item_show(canvasitem);
+    flash_curve->unref();
+    return canvasitem;
+}
+
+// TODO: Merge this with sp_nodepath_make_helper_item()!
 void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *np, bool show) {
     np->show_helperpath = show;
 
@@ -4809,7 +4891,7 @@ void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *np, bool show) {
         SPCurve *helper_curve = np->curve->copy();
         helper_curve->transform(to_2geom(np->i2d));
         if (!np->helper_path) {
-            //np->helper_path = sp_nodepath_make_helper_curve(np, desktop, helper_curve, true); // Caution: this applies the transform np->i2d twice!!
+            //np->helper_path = sp_nodepath_make_helper_item(np, desktop, helper_curve, true); // Caution: this applies the transform np->i2d twice!!
 
             np->helper_path = sp_canvas_bpath_new(sp_desktop_controls(np->desktop), helper_curve);
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(np->helper_path), np->helperpath_rgba, np->helperpath_width, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
