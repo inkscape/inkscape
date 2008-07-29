@@ -24,6 +24,7 @@
 #include "ui/widget/scalar.h"
 #include "ui/widget/scalar-unit.h"
 #include "ui/widget/point.h"
+#include "ui/widget/text.h"
 #include "ui/widget/random.h"
 #include "ui/widget/unit-menu.h"
 #include "ui/widget/color-picker.h"
@@ -208,6 +209,21 @@ public:
 protected:
     sigc::connection  _value_changed_connection;
     void on_value_changed();
+};
+
+class RegisteredText : public RegisteredWidget<Text> {
+public:
+    virtual ~RegisteredText();
+    RegisteredText (const Glib::ustring& label,
+            const Glib::ustring& tip,
+            const Glib::ustring& key,
+            Registry& wr,
+            Inkscape::XML::Node* repr_in = NULL,
+            SPDocument *doc_in = NULL );
+
+protected:
+    sigc::connection  _activate_connection;
+    void on_activate();
 };
 
 class RegisteredColorPicker : public RegisteredWidget<ColorPicker> {

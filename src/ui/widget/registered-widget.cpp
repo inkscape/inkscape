@@ -234,6 +234,50 @@ RegisteredScalar::on_value_changed()
 
 
 /*#########################################
+ * Registered TEXT
+ */
+
+RegisteredText::~RegisteredText()
+{
+    _activate_connection.disconnect();
+}
+
+RegisteredText::RegisteredText ( const Glib::ustring& label, const Glib::ustring& tip,
+                         const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
+                         SPDocument * doc_in )
+    : RegisteredWidget<Text>(label, tip)
+{
+    init_parent(key, wr, repr_in, doc_in);
+
+    setText("");
+    _activate_connection = signal_activate().connect (sigc::mem_fun (*this, &RegisteredText::on_activate));
+}
+
+void
+RegisteredText::on_activate()
+{
+    if (setProgrammatically) {
+        setProgrammatically = false;
+        return;
+    }
+
+    if (_wr->isUpdating()) {
+        return;
+    }
+    _wr->setUpdating (true);
+
+    Inkscape::SVGOStringStream os;
+    os << getText();
+
+    set_sensitive(false);
+    write_to_xml(os.str().c_str());
+    set_sensitive(true);
+
+    _wr->setUpdating (false);
+}
+
+
+/*#########################################
  * Registered COLORPICKER
  */
 
