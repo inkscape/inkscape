@@ -43,6 +43,7 @@ public:
 
     /* derived classes like PointParam for LPEs use this, e.g., to indicate that we must not call
        delete on their pointer when a knotholder is destroyed */
+    // TODO: purge this now that PointParams are not KnotHolderEntities any more!
     virtual bool isLPEParam() { return false; }
 
     /* the get/set/click handlers are virtual functions; each handler class for a knot

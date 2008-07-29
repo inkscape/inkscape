@@ -23,7 +23,7 @@ namespace Inkscape {
 namespace LivePathEffect {
 
 
-class PointParam : public Geom::Point, public Parameter, public KnotHolderEntity {
+class PointParam : public Geom::Point, public Parameter {
 public:
     PointParam( const Glib::ustring& label,
                 const Glib::ustring& tip,
@@ -45,6 +45,7 @@ public:
 
     void param_set_and_write_new_value(Geom::Point newpoint);
 
+    // TODO: ditch this
     virtual void param_editOncanvas(SPItem * item, SPDesktop * dt);
 
     virtual void param_transform_multiply(Geom::Matrix const& /*postmul*/, bool /*set*/);
@@ -54,11 +55,9 @@ public:
     SPKnotModeType knotMode() { return knot_mode; }
     guint32 knotColor() { return knot_color; }
 
-    /* these are overloaded from KnotHolderEntity */
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get();
-    virtual void knot_click(guint state);
+    virtual void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
+    // TODO: ditch this!
     virtual bool isLPEParam() { return true; }
 
 private:

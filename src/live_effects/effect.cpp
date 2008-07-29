@@ -422,6 +422,9 @@ Effect::registerKnotHolderHandle(KnotHolderEntity* entity, const char* descr)
  */
 void
 Effect::addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
+    using namespace Inkscape::LivePathEffect;
+
+    // add handles provided by the effect itself
     std::vector<std::pair<KnotHolderEntity*, const char*> >::iterator i;
     for (i = kh_entity_vector.begin(); i != kh_entity_vector.end(); ++i) {
         KnotHolderEntity *entity = i->first;
@@ -430,18 +433,10 @@ Effect::addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
         entity->create(desktop, item, knotholder, descr);
         knotholder->add(entity);
     }
-}
 
-void
-Effect::addPointParamHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
-    using namespace Inkscape::LivePathEffect;
+    // add handles provided by the effect's parameters (if any)
     for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
-        if ( Inkscape::LivePathEffect::PointParam *pparam = dynamic_cast<Inkscape::LivePathEffect::PointParam*>(*p) ) {
-            KnotHolderEntity *e = dynamic_cast<KnotHolderEntity *>(*p);
-            e->create(desktop, item, knotholder, pparam->handleTip(),
-                      pparam->knotShape(), pparam->knotMode(), pparam->knotColor());
-            knotholder->add(e);
-        }
+        (*p)->addKnotHolderEntities(knotholder, desktop, item);
     }
 }
 
@@ -612,6 +607,7 @@ Effect::transform_multiply(Geom::Matrix const& postmul, bool set)
     }
 }
 
+// TODO: take _all_ parameters into account, not only PointParams
 bool
 Effect::providesKnotholder()
 {

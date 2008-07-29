@@ -152,23 +152,46 @@ PointParam::set_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint
     knot_color = color;
 }
 
+class PointParamKnotHolderEntity : public KnotHolderEntity {
+public:
+    PointParamKnotHolderEntity(PointParam *p) { this->pparam = p; }
+    virtual ~PointParamKnotHolderEntity() {}
+
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+    virtual void knot_click(guint state);
+
+private:
+    PointParam *pparam;
+};
+
 void
-PointParam::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
+PointParamKnotHolderEntity::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
 {
-    param_setValue(p.to_2geom());
+    pparam->param_setValue(p.to_2geom());
     sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
 }
 
 NR::Point
-PointParam::knot_get()
+PointParamKnotHolderEntity::knot_get()
 {
-    return *this;
+    return *pparam;
 }
 
 void
-PointParam::knot_click(guint /*state*/)
+PointParamKnotHolderEntity::knot_click(guint /*state*/)
 {
-    g_print ("This is the handle associated to the parameter '%s'\n", param_key.c_str());
+    g_print ("This is the handle associated to parameter '%s'\n", pparam->param_key.c_str());
+}
+
+void
+PointParam::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
+{
+    PointParamKnotHolderEntity *e = new PointParamKnotHolderEntity(this);
+    // TODO: can we ditch handleTip() etc. because we have access to handle_tip etc. itself???
+    e->create(desktop, item, knotholder, handleTip(), knotShape(), knotMode(), knotColor());
+    knotholder->add(e);
+
 }
 
 } /* namespace LivePathEffect */

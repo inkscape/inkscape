@@ -12,6 +12,7 @@
 #include <glibmm/ustring.h>
 #include <2geom/forward.h>
 
+class KnotHolder;
 struct SPDesktop;
 struct SPItem;
 
@@ -55,6 +56,8 @@ public:
     virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips) = 0;
 
     virtual Glib::ustring * param_getTooltip() { return &param_tooltip; };
+
+    virtual void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {}
 
     virtual void param_editOncanvas(SPItem * /*item*/, SPDesktop * /*dt*/) {};
     virtual void param_setup_nodepath(Inkscape::NodePath::Path */*np*/) {};
