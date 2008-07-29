@@ -75,6 +75,7 @@ TextParam::param_getSVGValue() const
 Gtk::Widget *
 TextParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
 {
+    /**
     Inkscape::UI::Widget::RegisteredText *rsu = Gtk::manage(new Inkscape::UI::Widget::RegisteredText(
         param_label, param_tooltip, param_key, *param_wr, param_effect->getRepr(), param_effect->getSPDoc()));
 
@@ -84,6 +85,10 @@ TextParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
     rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change text parameter"));
 
     return dynamic_cast<Gtk::Widget *> (rsu);
+    **/
+
+    // widget is disabled until it works correctly
+    return NULL;
 }
 
 void
