@@ -157,18 +157,19 @@ static void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve)
 // active_node indicates mouseover node
 Inkscape::NodePath::Node * Inkscape::NodePath::Path::active_node = NULL;
 
-static void sp_nodepath_draw_helper_curve(Inkscape::NodePath::Path *np, SPDesktop *desktop) {
-    // Draw helper curve
-    if (np->show_helperpath) {
-        SPCurve *helper_curve = np->curve->copy();
-        helper_curve->transform(to_2geom(np->i2d));
-        np->helper_path = sp_canvas_bpath_new(sp_desktop_controls(desktop), helper_curve);
-        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(np->helper_path), np->helperpath_rgba, np->helperpath_width, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-        sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(np->helper_path), 0, SP_WIND_RULE_NONZERO);
-        sp_canvas_item_move_to_z(np->helper_path, 0);
-        sp_canvas_item_show(np->helper_path);
-        helper_curve->unref();
+static SPCanvasItem *
+sp_nodepath_make_helper_curve(Inkscape::NodePath::Path *np, SPDesktop *desktop, const SPCurve *curve, bool show = false) {
+    SPCurve *canvasitem = curve->copy();
+    canvasitem->transform(to_2geom(np->i2d));
+    SPCanvasItem *helper_path = sp_canvas_bpath_new(sp_desktop_controls(desktop), canvasitem);
+    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(helper_path), np->helperpath_rgba, np->helperpath_width, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+    sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(helper_path), 0, SP_WIND_RULE_NONZERO);
+    sp_canvas_item_move_to_z(helper_path, 0);
+    if (show) {
+        sp_canvas_item_show(helper_path);
     }
+    canvasitem->unref();
+    return canvasitem;
 }
 
 /**
@@ -289,7 +290,10 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     delete[] typestr;
     curve->unref();
 
-    sp_nodepath_draw_helper_curve(np, desktop);
+    // Draw helper curve
+    if (np->show_helperpath) {
+        np->helper_path = sp_nodepath_make_helper_curve(np, desktop, np->curve, true);
+    }
 
     return np;
 }
@@ -4770,6 +4774,12 @@ void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve) {
 }
 
 SPCanvasItem *
+sp_nodepath_to_canvasitem(Inkscape::NodePath::Path *np, SPDesktop *desktop, SPPath *path) {
+    return sp_nodepath_make_helper_curve(np, desktop, sp_path_get_curve_for_edit(path));
+}
+
+/**
+SPCanvasItem *
 sp_nodepath_generate_helperpath(SPDesktop *desktop, SPCurve *curve, const SPItem *item, guint32 color = 0xff0000ff) {
     SPCurve *flash_curve = curve->copy();
     Geom::Matrix i2d = item ? sp_item_i2d_affine(item) : Geom::identity();
@@ -4789,7 +4799,9 @@ sp_nodepath_generate_helperpath(SPDesktop *desktop, SPPath *path) {
     return sp_nodepath_generate_helperpath(desktop, sp_path_get_curve_for_edit(path), SP_ITEM(path),
                                            prefs_get_int_attribute("tools.nodes", "highlight_color", 0xff0000ff));
 }
+**/
 
+// TODO: Merge this with sp_nodepath_make_helper_curve()!
 void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *np, bool show) {
     np->show_helperpath = show;
 
@@ -4797,6 +4809,8 @@ void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *np, bool show) {
         SPCurve *helper_curve = np->curve->copy();
         helper_curve->transform(to_2geom(np->i2d));
         if (!np->helper_path) {
+            //np->helper_path = sp_nodepath_make_helper_curve(np, desktop, helper_curve, true); // Caution: this applies the transform np->i2d twice!!
+
             np->helper_path = sp_canvas_bpath_new(sp_desktop_controls(np->desktop), helper_curve);
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(np->helper_path), np->helperpath_rgba, np->helperpath_width, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
             sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(np->helper_path), 0, SP_WIND_RULE_NONZERO);
