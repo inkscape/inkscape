@@ -189,7 +189,7 @@ PointParam::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SP
 {
     PointParamKnotHolderEntity *e = new PointParamKnotHolderEntity(this);
     // TODO: can we ditch handleTip() etc. because we have access to handle_tip etc. itself???
-    e->create(desktop, item, knotholder, handleTip(), knotShape(), knotMode(), knotColor());
+    e->create(desktop, item, knotholder, handleTip(), knot_shape, knot_mode, knot_color);
     knotholder->add(e);
 
 }
