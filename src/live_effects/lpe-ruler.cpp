@@ -16,19 +16,23 @@
 
 #include "live_effects/lpe-ruler.h"
 #include <2geom/piecewise.h>
+#include "inkscape.h"
+#include "desktop.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
 
 LPERuler::LPERuler(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    mark_distance(_("Mark distance"), _("Distance between ruler marks"), "mark_distance", &wr, this, 50),
+    mark_distance(_("Mark distance"), _("Distance between ruler marks"), "mark_distance", &wr, this, 20),
     mark_length(_("Mark length"), _("Length of ruler marks"), "mark_length", &wr, this, 10),
-    scale(_("Scale"), _("Scale factor for ruler distance"), "scale", &wr, this, 1.0)
+    scale(_("Scale factor"), _("Scale factor for ruler distance (only affects on-canvas display of ruler length)"), "scale", &wr, this, 1.0),
+    info_text(_("Info text"), _("Parameter for text creation"), "info_text", &wr, this, "")
 {
     registerParameter(dynamic_cast<Parameter *>(&mark_distance));
     registerParameter(dynamic_cast<Parameter *>(&mark_length));
     registerParameter(dynamic_cast<Parameter *>(&scale));
+    registerParameter(dynamic_cast<Parameter *>(&info_text));
 
     mark_distance.param_make_integer();
     mark_length.param_make_integer();
@@ -37,6 +41,37 @@ LPERuler::LPERuler(LivePathEffectObject *lpeobject) :
 LPERuler::~LPERuler()
 {
 
+}
+
+enum MarkType {
+    RULER_MARK_BORDER,
+    RULER_MARK_MAJOR,
+    RULER_MARK_MINOR
+};
+
+static Geom::Piecewise<Geom::D2<Geom::SBasis> >
+ruler_mark(Geom::Point A, Geom::Point n, MarkType marktype)
+{
+    using namespace Geom;
+
+    Point C, D;
+    switch (marktype) {
+        case RULER_MARK_BORDER:
+            C = A - 1.5 * n;
+            D = A + 1.5 * n;
+            break;
+        case RULER_MARK_MAJOR:
+            C = A;
+            D = A + 1.5 * n;
+            break;
+        case RULER_MARK_MINOR:
+            C = A;
+            D = A + n;
+            break;
+    }
+
+    Piecewise<D2<SBasis> > seg(D2<SBasis>(Linear(C[X], D[X]), Linear(C[Y], D[Y])));
+    return seg;
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
@@ -53,15 +88,27 @@ LPERuler::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_i
     Point n(-rot90(dir) * mark_length);
     double length = L2(B - A);
 
-    g_print ("Distance: %8.2f\n", length * scale);
+    gchar *dist = g_strdup_printf("%8.2f", length * scale);
+    info_text.param_setValue(dist);
+    g_free(dist);
+
+    double angle = Geom::angle_between(dir, Geom::Point(1,0));
+    info_text.setPos(inkscape_active_desktop()->doc2dt((A + B) / 2 + 2.0 * n).to_2geom());
+    info_text.setAnchor(std::sin(angle), -std::cos(angle));
 
     Point C, D;
-    for (int i = 0; i < length; i += static_cast<int>(mark_distance)) {
-        C = A + dir * i;
-        D = C + n;
-        Piecewise<D2<SBasis> > seg(D2<SBasis>(Linear(C[X], D[X]), Linear(C[Y], D[Y])));
-        output.concat(seg);
+    C = A - n;
+    D = A + n;
+    output.concat (ruler_mark(A, n, RULER_MARK_BORDER));
+    int j = 0;
+    for (double i = 0; i < length; i += mark_distance, ++j) {
+        if ((j % 5) == 0) {
+            output.concat (ruler_mark(A + dir * i, n, RULER_MARK_MAJOR));
+        } else {
+            output.concat (ruler_mark(A + dir * i, n, RULER_MARK_MINOR));
+        }
     }
+    output.concat (ruler_mark(B, n, RULER_MARK_BORDER));
 
     return output;
 }

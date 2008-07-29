@@ -16,7 +16,7 @@
  */
 
 #include "live_effects/effect.h"
-#include "live_effects/parameter/parameter.h"
+#include "live_effects/parameter/text.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -32,6 +32,7 @@ private:
     ScalarParam mark_distance;
     ScalarParam mark_length;
     ScalarParam scale;
+    TextParam info_text;
     LPERuler(const LPERuler&);
     LPERuler& operator=(const LPERuler&);
 };
