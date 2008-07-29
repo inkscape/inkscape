@@ -36,7 +36,7 @@
 
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/matrix.h>
-
+#include <2geom/pathvector.h>
 
 // include effects:
 #include "live_effects/lpe-patternalongpath.h"
@@ -450,41 +450,48 @@ Effect::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem
     }
 }
 
-void
-Effect::addHelperPaths(SPLPEItem *lpeitem, SPDesktop *desktop)
+/**
+ * Return a vector of PathVectors which contain all helperpaths that should be drawn by the effect.
+ * This is the function called by external code like SPLPEItem.
+ */
+std::vector<Geom::PathVector>
+Effect::getHelperPaths(SPLPEItem *lpeitem)
 {
-    g_return_if_fail(desktop);
-    g_return_if_fail(SP_IS_PATH(lpeitem));
+    std::vector<Geom::PathVector> hp_vec;
 
-    if (providesKnotholder() && showOrigPath()) {
-        // TODO: we assume that if the LPE provides its own knotholder, there is no nodepath so we
-        // must create the helper curve for the original path manually; once we allow nodepaths and
-        // knotholders alongside each other, this needs to be rethought!
-        SPCanvasItem *canvasitem = sp_nodepath_generate_helperpath(desktop, SP_PATH(lpeitem));
-        Inkscape::Display::TemporaryItem* tmpitem = desktop->add_temporary_canvasitem (canvasitem, 0);
-        lpeitem->lpe_helperpaths.push_back(tmpitem);
+    if (!SP_IS_SHAPE(lpeitem)) {
+        g_print ("How to handle helperpaths for non-shapes?\n");
+        return hp_vec;
     }
 
+    // TODO: we can probably optimize this by using a lot more references
+    //       rather than copying PathVectors all over the place
+    if (show_orig_path) {
+        // add original path to helperpaths
+        SPCurve* curve = sp_shape_get_curve (SP_SHAPE(lpeitem));
+        hp_vec.push_back(curve->get_pathvector());
+    }
+
+    // add other helperpaths provided by the effect itself
+    addCanvasIndicators(lpeitem, hp_vec);
+
+    // add helperpaths provided by the effect's parameters
     for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
-        if ( Inkscape::LivePathEffect::PathParam *pathparam = dynamic_cast<Inkscape::LivePathEffect::PathParam*>(*p) ) {
-            SPCurve *c = new SPCurve(pathparam->get_pathvector());
-
-            // TODO: factor this out (also the copied code above); see also lpe-lattice.cpp
-            SPCanvasItem *canvasitem = sp_nodepath_generate_helperpath(desktop, c, SP_ITEM(lpeitem), 0x009000ff);
-            Inkscape::Display::TemporaryItem* tmpitem = desktop->add_temporary_canvasitem (canvasitem, 0);
-            lpeitem->lpe_helperpaths.push_back(tmpitem);
-        }
+        (*p)->addCanvasIndicators(lpeitem, hp_vec);
     }
 
-    addHelperPathsImpl(lpeitem, desktop);
+    return hp_vec;
 }
 
+/**
+ * Add possible canvas indicators (i.e., helperpaths other than the original path) to \a hp_vec
+ * This function should be overwritten by derived effects if they want to provide their own helperpaths.
+ */
 void
-Effect::addHelperPathsImpl(SPLPEItem */*lpeitem*/, SPDesktop */*desktop*/)
+Effect::addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec)
 {
-    // if this method is overloaded in derived classes, provides_own_flash_paths will be true
-    provides_own_flash_paths = false;
 }
+
 
 /**
  * This *creates* a new widget, management of deletion should be done by the caller
@@ -627,7 +634,8 @@ Effect::providesKnotholder()
 
     // otherwise: are there any PointParams?
     for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
-        if ( Inkscape::LivePathEffect::PointParam *pointparam = dynamic_cast<Inkscape::LivePathEffect::PointParam*>(*p) ) {
+//        if ( Inkscape::LivePathEffect::PointParam *pointparam = dynamic_cast<Inkscape::LivePathEffect::PointParam*>(*p) ) {
+        if (dynamic_cast<Inkscape::LivePathEffect::PointParam*>(*p)) {
             return true;
         }
     }

@@ -129,8 +129,8 @@ public:
     //       (but spiro lpe still needs it!)
     virtual LPEPathFlashType pathFlashType() { return DEFAULT; }
     void addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
+    std::vector<Geom::PathVector> getHelperPaths(SPLPEItem *lpeitem);
 
-    void addHelperPaths(SPLPEItem *lpeitem, SPDesktop *desktop);
     inline bool providesOwnFlashPaths() {
         return provides_own_flash_paths || show_orig_path;
     }
@@ -167,7 +167,10 @@ protected:
     Parameter * getNextOncanvasEditableParam();
 
     void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
-    virtual void addHelperPathsImpl(SPLPEItem *lpeitem, SPDesktop *desktop);
+
+    //virtual std::vector<Geom::PathVector> getCanvasIndicators(SPLPEItem *lpeitem);
+    virtual void addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec);
+
 
     std::vector<Parameter *> param_vector;
     std::vector<std::pair<KnotHolderEntity*, const char*> > kh_entity_vector;

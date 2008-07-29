@@ -236,6 +236,7 @@ LPELattice::resetDefaults(SPItem * item)
     grid_point15[Geom::Y] = 2.0/3*boundingbox_Y.max()+1.0/3*boundingbox_Y.min();
 }
 
+/**
 void
 LPELattice::addHelperPathsImpl(SPLPEItem *lpeitem, SPDesktop *desktop)
 {
@@ -288,6 +289,7 @@ LPELattice::addHelperPathsImpl(SPLPEItem *lpeitem, SPDesktop *desktop)
 
     c->unref();
 }
+**/
 
 /* ######################## */
 
