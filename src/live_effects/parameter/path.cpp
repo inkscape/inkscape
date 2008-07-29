@@ -217,6 +217,12 @@ PathParam::param_setup_nodepath(Inkscape::NodePath::Path *np)
     np->helperpath_width = 1.0;
 }
 
+void
+PathParam::addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec)
+{
+    hp_vec.push_back(_pathvector);
+}
+
 /*
  * Only applies transform when not referring to other path!
  */
