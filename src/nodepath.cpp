@@ -211,6 +211,36 @@ sp_nodepath_create_helperpaths(Inkscape::NodePath::Path *np) {
     g_print ("\n");
 }
 
+static void
+sp_nodepath_update_helperpaths(Inkscape::NodePath::Path *np) {
+    g_print ("sp_nodepath_update_helperpaths()\n");
+    //std::map<Inkscape::LivePathEffect::Effect *, std::vector<SPCanvasItem *> >* helper_path_vec;
+    if (!SP_IS_LPE_ITEM(np->item)) {
+        g_print ("Only LPEItems can have helperpaths!\n");
+        return;
+    }
+
+    SPLPEItem *lpeitem = SP_LPE_ITEM(np->item);
+    PathEffectList lpelist = sp_lpe_item_get_effect_list(lpeitem);
+    for (PathEffectList::iterator i = lpelist.begin(); i != lpelist.end(); ++i) {
+        Inkscape::LivePathEffect::Effect *lpe = (*i)->lpeobject->lpe;
+        g_print ("Processing LPE %s\n", SP_OBJECT_REPR((*i)->lpeobject)->attribute("id"));
+        /* update canvas items from the effect's helper paths; note that this code relies on the
+         * fact that getHelperPaths() will always return the same number of helperpaths in the same
+         * order as during their creation in sp_nodepath_create_helperpaths
+         */
+        std::vector<Geom::PathVector> hpaths = lpe->getHelperPaths(lpeitem);
+        for (unsigned int j = 0; j < hpaths.size(); ++j) {
+            g_print ("   ... updating helper path\n");
+            SPCurve *curve = new SPCurve(hpaths[j]);
+            curve->transform(to_2geom(np->i2d));
+            sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(((*np->helper_path_vec)[lpe])[j]), curve);
+            curve = curve->unref();
+        }
+    }
+    g_print ("\n");
+}
+
 //typedef std::map<Inkscape::LivePathEffect::Effect *, std::vector<SPCanvasItem *> > HelperPathList;
 
 static void
@@ -624,6 +654,8 @@ static void update_object(Inkscape::NodePath::Path *np)
         helper_curve->unref();
     }
 
+    sp_nodepath_update_helperpaths(np);
+
     // now that nodepath and knotholder can be enabled simultaneously, we must update the knotholder, too
     // TODO: this should be done from ShapeEditor!! nodepath should be oblivious of knotholder!
     np->shape_editor->update_knotholder();
@@ -664,7 +696,10 @@ static void update_repr_internal(Inkscape::NodePath::Path *np)
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(np->helper_path), helper_curve);
         helper_curve->unref();
     }
- }
+
+    // TODO: do we need this call here? after all, update_object() should have been called just before
+    //sp_nodepath_update_helperpaths(np);
+}
 
 /**
  * Update XML path node with data from path object, commit changes forever.
