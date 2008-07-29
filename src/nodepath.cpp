@@ -241,8 +241,6 @@ sp_nodepath_update_helperpaths(Inkscape::NodePath::Path *np) {
     g_print ("\n");
 }
 
-//typedef std::map<Inkscape::LivePathEffect::Effect *, std::vector<SPCanvasItem *> > HelperPathList;
-
 static void
 sp_nodepath_destroy_helperpaths(Inkscape::NodePath::Path *np) {
     g_print ("sp_nodepath_destroy_helperpaths()\n");
