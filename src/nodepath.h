@@ -320,6 +320,7 @@ void sp_nodepath_show_handles(Inkscape::NodePath::Path *nodepath, bool show);
 //SPCanvasItem *sp_nodepath_generate_helperpath(SPDesktop *desktop, SPPath *path);
 SPCanvasItem *sp_nodepath_helperpath_from_path(SPDesktop *desktop, SPPath *path);
 void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *nodepath, bool show);
+void sp_nodepath_update_helperpaths(Inkscape::NodePath::Path *np);
 void sp_nodepath_make_straight_path(Inkscape::NodePath::Path *np);
 
 void sp_nodepath_selected_nodes_rotate (Inkscape::NodePath::Path * nodepath, gdouble angle, int which, bool screen);

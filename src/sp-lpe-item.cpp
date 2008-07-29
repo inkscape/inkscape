@@ -32,6 +32,8 @@
 #include "message-stack.h"
 #include "inkscape.h"
 #include "desktop.h"
+#include "node-context.h"
+#include "shape-editor.h"
 
 #include <algorithm>
 
@@ -242,6 +244,23 @@ sp_lpe_item_update(SPObject *object, SPCtx *ctx, guint flags)
     if (((SPObjectClass *) parent_class)->update) {
         ((SPObjectClass *) parent_class)->update(object, ctx, flags);
     }
+
+    g_print ("sp_lpe_item_update()\n");
+
+    // update the helperpaths of all LPEs applied to the item
+    // TODO: is there a more canonical place for this, since we don't have instant access to the item's nodepath?
+    // FIXME: this is called multiple (at least 3) times; how can we avoid this?
+
+    // FIXME: ditch inkscape_active_event_context()
+    SPEventContext *ec = inkscape_active_event_context();
+    if (!SP_IS_NODE_CONTEXT(ec)) return;
+    SPNodeContext *nc = SP_NODE_CONTEXT(ec);
+    ShapeEditor *sh = nc->shape_editor;
+    g_assert(sh);
+    if (!sh->has_nodepath()) return;
+
+    Inkscape::NodePath::Path *np = sh->get_nodepath();
+    sp_nodepath_update_helperpaths(np);
 }
 
 /**
@@ -250,6 +269,7 @@ sp_lpe_item_update(SPObject *object, SPCtx *ctx, guint flags)
 static void
 sp_lpe_item_modified (SPObject *object, unsigned int flags)
 {
+    g_print ("sp_lpe_item_modified()\n");
 
     if (SP_IS_GROUP(object) && (flags & SP_OBJECT_MODIFIED_FLAG) && (flags & SP_OBJECT_USER_MODIFIED_FLAG_B)) {
         sp_lpe_item_update_patheffect(SP_LPE_ITEM(object), true, true);

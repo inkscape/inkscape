@@ -212,7 +212,7 @@ sp_nodepath_create_helperpaths(Inkscape::NodePath::Path *np) {
     g_print ("\n");
 }
 
-static void
+void
 sp_nodepath_update_helperpaths(Inkscape::NodePath::Path *np) {
     g_print ("sp_nodepath_update_helperpaths()\n");
     //std::map<Inkscape::LivePathEffect::Effect *, std::vector<SPCanvasItem *> >* helper_path_vec;
@@ -653,7 +653,8 @@ static void update_object(Inkscape::NodePath::Path *np)
         helper_curve->unref();
     }
 
-    sp_nodepath_update_helperpaths(np);
+    // updating helperpaths of LPEItems is now done in sp_lpe_item_update();
+    //sp_nodepath_update_helperpaths(np);
 
     // now that nodepath and knotholder can be enabled simultaneously, we must update the knotholder, too
     // TODO: this should be done from ShapeEditor!! nodepath should be oblivious of knotholder!
