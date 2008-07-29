@@ -8,7 +8,6 @@
 
 #include "live_effects/effect.h"
 
-#include "display/display-forward.h"
 #include "xml/node-event-vector.h"
 #include "sp-object.h"
 #include "attributes.h"
