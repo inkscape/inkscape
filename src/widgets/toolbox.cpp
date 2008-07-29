@@ -3799,9 +3799,9 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 //########################
 //##     Calligraphy    ##
 //########################
-static void update_presets_list (GObject *tbl) 
+static void update_presets_list (GObject *tbl)
 {
-    if (g_object_get_data(tbl, "presets_blocked")) 
+    if (g_object_get_data(tbl, "presets_blocked"))
         return;
 
     EgeSelectOneAction *sel = static_cast<EgeSelectOneAction *>(g_object_get_data(tbl, "profile_selector"));
@@ -4027,7 +4027,7 @@ static void sp_dcc_save_profile (GtkWidget */*widget*/, GObject *tbl)
         new_index = total_prefs + 1;
         gchar *profile_id = g_strdup_printf("dcc%d", new_index);
         pref_path = create_pref("tools.calligraphic.preset", profile_id);
-        free(profile_id);
+        g_free(profile_id);
     }
 
     for (unsigned i = 0; i < NUMBER_OF_PRESET_PARAMS; ++i) {
@@ -4057,7 +4057,7 @@ static void sp_dcc_save_profile (GtkWidget */*widget*/, GObject *tbl)
 
     sp_dcc_build_presets_list (tbl);
 
-    free (pref_path);
+    g_free(pref_path);
 }
 
 
