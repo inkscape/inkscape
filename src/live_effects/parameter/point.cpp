@@ -119,25 +119,6 @@ PointParam::param_set_and_write_new_value (Geom::Point newpoint)
 }
 
 void
-PointParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
-{
-    // If not already in nodecontext, goto it!
-    if (!tools_isactive(dt, TOOLS_NODES)) {
-        tools_switch_current(TOOLS_NODES);
-    }
-
-    PointParamKnotHolder * kh =  new PointParamKnotHolder(dt, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str(), item);
-    if (kh) {
-        kh->add_knot(* dynamic_cast<Geom::Point *>( this ), NULL, knot_shape, knot_mode, knot_color, param_getTooltip()->c_str() );
-
-        ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;
-        shape_editor->set_knotholder(kh);
-    }
-}
-
-
-
-void
 PointParam::param_transform_multiply(Geom::Matrix const& postmul, bool /*set*/)
 {
     param_set_and_write_new_value( (*this) * postmul );
