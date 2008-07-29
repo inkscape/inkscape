@@ -3929,8 +3929,7 @@ static void sp_ddc_tilt_state_changed( GtkToggleAction *act, GObject*  tbl )
 }
 
 
-#define NUMBER_OF_PRESET_PARAMS 11
-static gchar * widget_names[NUMBER_OF_PRESET_PARAMS] = {
+static gchar const *const widget_names[] = {
     "width",
     "mass",
     "wiggle",
@@ -4030,8 +4029,8 @@ static void sp_dcc_save_profile (GtkWidget */*widget*/, GObject *tbl)
         g_free(profile_id);
     }
 
-    for (unsigned i = 0; i < NUMBER_OF_PRESET_PARAMS; ++i) {
-        gchar *widget_name = widget_names[i];
+    for (unsigned i = 0; i < G_N_ELEMENTS(widget_names); ++i) {
+        gchar const *const widget_name = widget_names[i];
         void *widget = g_object_get_data(tbl, widget_name);
         if (widget) {
             if (GTK_IS_ADJUSTMENT(widget)) {
@@ -4075,7 +4074,7 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl) {
     if (g_object_get_data(tbl, "presets_blocked")) 
         return;
 
-    gchar *preset_path = get_pref_nth_child("tools.calligraphic.preset", preset_index);
+    gchar *const preset_path = get_pref_nth_child("tools.calligraphic.preset", preset_index);
 
     if (preset_path) {
         g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(TRUE)); //temporarily block the selector so no one will updadte it while we're reading it
@@ -4107,7 +4106,7 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl) {
                 g_warning("Bad key found in a preset record: %s\n", attr_name);
             }
         }
-        free(preset_path);
+        g_free(preset_path);
         g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(FALSE));
     }
 
@@ -4942,12 +4941,14 @@ sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *
         }
 
         //Size
-        GtkWidget *cbox = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "combo-box-size"));
-        char *str = g_strdup_printf ("%.5g", query->font_size.computed);
-        g_object_set_data (tbl, "size-block", gpointer(1));
-        gtk_entry_set_text (GTK_ENTRY(GTK_BIN (cbox)->child), str);
-        g_object_set_data (tbl, "size-block", gpointer(0));
-        free (str);
+        {
+            GtkWidget *cbox = GTK_WIDGET(g_object_get_data(G_OBJECT(tbl), "combo-box-size"));
+            gchar *const str = g_strdup_printf("%.5g", query->font_size.computed);
+            g_object_set_data(tbl, "size-block", gpointer(1));
+            gtk_entry_set_text(GTK_ENTRY(GTK_BIN(cbox)->child), str);
+            g_object_set_data(tbl, "size-block", gpointer(0));
+            g_free(str);
+        }
 
         //Anchor
         if (query->text_align.computed == SP_CSS_TEXT_ALIGN_JUSTIFY)
@@ -5142,7 +5143,7 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
                                    _("Text: Change font family"));
     sp_repr_css_attr_unref (css);
-    free (family);
+    g_free(family);
     gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));
 
     gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
@@ -5416,14 +5417,17 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
     if (gtk_combo_box_get_active (cbox) < 0 && !g_object_get_data (tbl, "enter-pressed"))
         return;
 
-    gchar *endptr;
     gdouble value = -1;
-    char *text = gtk_combo_box_get_active_text (cbox);
-    if (text) {
-        value = g_strtod (text, &endptr);
-        if (endptr == text) // conversion failed, non-numeric input
-            value = -1;
-        free (text);
+    {
+        gchar *endptr;
+        gchar *const text = gtk_combo_box_get_active_text(cbox);
+        if (text) {
+            value = g_strtod(text, &endptr);
+            if (endptr == text) {  // Conversion failed, non-numeric input.
+                value = -1;
+            }
+            g_free(text);
+        }
     }
     if (value <= 0) {
         return; // could not parse value
@@ -5576,24 +5580,21 @@ cell_data_func  (GtkTreeViewColumn */*column*/,
                  GtkTreeIter       *iter,
                  gpointer           /*data*/)
 {
-    char        *family,
-        *family_escaped,
-        *sample_escaped;
+    gchar *family;
+    gtk_tree_model_get(tree_model, iter, 0, &family, -1);
+    gchar *const family_escaped = g_markup_escape_text(family, -1);
 
-    static const char *sample = _("AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()");
-
-    gtk_tree_model_get (tree_model, iter, 0, &family, -1);
-
-    family_escaped = g_markup_escape_text (family, -1);
-    sample_escaped = g_markup_escape_text (sample, -1);
+    static char const *const sample = _("AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()");
+    gchar *const sample_escaped = g_markup_escape_text(sample, -1);
 
     std::stringstream markup;
-    markup << family_escaped << "  <span foreground='darkgray' font_family='" << family_escaped << "'>" << sample_escaped << "</span>";
+    markup << family_escaped << "  <span foreground='darkgray' font_family='"
+           << family_escaped << "'>" << sample_escaped << "</span>";
     g_object_set (G_OBJECT (cell), "markup", markup.str().c_str(), NULL);
 
-    free (family);
-    free (family_escaped);
-    free (sample_escaped);
+    g_free(family);
+    g_free(family_escaped);
+    g_free(sample_escaped);
 }
 
 static void delete_completion(GObject */*obj*/, GtkWidget *entry) {
@@ -5692,14 +5693,16 @@ sp_text_toolbox_new (SPDesktop *desktop)
     g_signal_connect_swapped (G_OBJECT (tbl), "show", G_CALLBACK (gtk_widget_hide), box);
 
     ////////////Size
-    const char *sizes[] = {
+    gchar const *const sizes[] = {
         "4", "6", "8", "9", "10", "11", "12", "13", "14",
         "16", "18", "20", "22", "24", "28",
         "32", "36", "40", "48", "56", "64", "72", "144"
     };
 
     GtkWidget *cbox = gtk_combo_box_entry_new_text ();
-    for (unsigned int n = 0; n < G_N_ELEMENTS (sizes); gtk_combo_box_append_text (GTK_COMBO_BOX(cbox), sizes[n++]));
+    for (unsigned int i = 0; i < G_N_ELEMENTS(sizes); ++i) {
+        gtk_combo_box_append_text(GTK_COMBO_BOX(cbox), sizes[i]);
+    }
     gtk_widget_set_size_request (cbox, 80, -1);
     gtk_toolbar_append_widget( tbl, cbox, "", "");
     g_object_set_data (G_OBJECT (tbl), "combo-box-size", cbox);
