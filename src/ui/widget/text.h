@@ -40,7 +40,7 @@ public:
 
     Glib::SignalProxy0<void> signal_activate();
 
-    bool setProgrammatically; // true if the value was set by setValue, not changed by the user; 
+    bool setProgrammatically; // true if the value was set by setValue, not changed by the user;
                               // if a callback checks it, it must reset it back to false
 };
 
