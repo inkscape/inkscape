@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-07-24 10:18+0700\n"
+"PO-Revision-Date: 2008-07-29 16:03+0700\n"
 "Last-Translator: Eng Vannak <evannak@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -16746,21 +16746,23 @@ msgid ""
 "%s is not of type image/png, image/jpeg, image/bmp, image/gif, image/tiff, "
 "or image/x-icon"
 msgstr ""
+"%s មិន​មែន​ជា​ប្រភេទ image/png, image/jpeg, image/bmp, image/gif, image/tiff, "
+"ឬ image/x-icon ទេ"
 
 #: ../share/extensions/embedimage.py:106
 #, python-format
 msgid "Sorry we could not locate %s"
-msgstr ""
+msgstr "សូម​អភ័យ​ទោស យើង​មិន​អាច​ដាក់​ទីតាំង %s"
 
 #: ../share/extensions/export_gimp_palette.py:14
 msgid ""
 "The export_gpl.py module requires PyXML.  Please download the latest version "
 "from http://pyxml.sourceforge.net/."
-msgstr ""
+msgstr "ម៉ូឌុល export_gpl.py ទាមទារ PyXML ។  សូម​ទាញយក​កំណែ​ចុង​ក្រោយ​បំផុត​ពី http://pyxml.sourceforge.net/ ។"
 
 #: ../share/extensions/extractimage.py:66
 msgid "Difficulty finding the image data."
-msgstr ""
+msgstr "ការ​លំបាក​ក្នុង​ការ​រក​ទិន្នន័យ​រូបភាព ។"
 
 #: ../share/extensions/inkex.py:61
 msgid ""
@@ -16773,30 +16775,29 @@ msgstr ""
 #: ../share/extensions/inkex.py:187
 #, python-format
 msgid "No matching node for expression: %s"
-msgstr ""
+msgstr "គ្មាន​ថ្នាំង​ដែល​ផ្គូផ្គង​សម្រាប់​កន្សោម ៖ %s"
 
 #: ../share/extensions/markers_strokepaint.py:41
 #, python-format
 msgid "No style attribute found for id: %s"
-msgstr ""
+msgstr "រក​មិន​ឃើញ​គុណ​លក្ខណៈ​រចនាប័ទ្ម​សម្រាប់​លេខ​សម្គាល់ ៖ %s"
 
 #: ../share/extensions/markers_strokepaint.py:56
 #, python-format
 msgid "unable to locate marker: %s"
-msgstr ""
+msgstr "មិន​អាច​ដាក់​សញ្ញា​សម្គាល់ ៖ %s"
 
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
 #: ../share/extensions/perspective.py:55
 #: ../share/extensions/summersnight.py:30
-#, fuzzy
 msgid "This extension requires two selected paths."
-msgstr "បង្កើត​សហភាព​របស់​​ផ្លូវ​ដែល​បាន​ជ្រើស​"
+msgstr "ផ្នែក​បន្ថែម​នេះ​ទាមទារ​ផ្លូវ​ដែល​ជ្រើស​ពីរ ។"
 
 #: ../share/extensions/pathmodifier.py:229
 #, python-format
 msgid "Please first convert objects to paths!  (Got [%s].)"
-msgstr ""
+msgstr "សូម​បម្លែង​វត្ថុ​ទៅ​ជា​ផ្លូវ​ជាមុន​សិន!  (យក [%s] ។)"
 
 #: ../share/extensions/perspective.py:29
 msgid ""
@@ -16804,22 +16805,22 @@ msgid ""
 "required by this extension. Please install them and try again.  On a Debian-"
 "like system this can be done with the command, sudo apt-get install python-"
 "numpy."
-msgstr ""
+msgstr "បរាជ័យ​ក្នុង​ការ​នាំចូល​ម៉ូឌុល numpy ឬ numpy.linalg ។ ម៉ូឌុល​ទាំងនេះ​ត្រូវ​បាន​ទាមទារ​ដោយ​ផ្នែក​បន្ថែម​នេះ ។ សូម​ដំឡើង​ពួក​វា និង​ព្យាយាម​ម្ដង​ទៀត ។  នៅ​លើ​ប្រព័ន្ធ​ដូច Debian នេះ​អាច​ត្រូវ​បាន​ធ្វើ​ដោយ​ប្រើ​ពាក្យ​បញ្ជា sudo apt-get install python-numpy ។"
 
 #: ../share/extensions/perspective.py:64
 msgid "This extension requires that the second selected path be four nodes long."
-msgstr ""
+msgstr "ផ្នែក​បន្ថែម​នេះ​ទាមទារផ្លូវ​ដែល​ជ្រើស​ទីពីរ​ឲ្យ​មាន​ប្រវែង​បួន​ថ្នាំង ។"
 
 #: ../share/extensions/polyhedron_3d.py:60
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install them and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
-msgstr ""
+msgstr "បរាជ័យ​ក្នុង​ការ​នាំចូល​ម៉ូឌុល numpy ។ ម៉ូឌុល​នេះ​ទាមទារ​ដោយ​ផ្នែក​បន្ថែម​នេះ ។ សូម​ដំឡើង​ពួក​វា នឹង​ព្យាយាម​ម្ដង​ទៀត ។  នៅ​លើ​ប្រព័ន្ធ​ដូច Debian នេះ​អាច​ត្រូវ​បាន​ធ្វើ​ដោយ​ប្រើ​ពាក្យ​បញ្ជា sudo apt-get install python-numpy ។"
 
 #: ../share/extensions/summersnight.py:32
 msgid "The second path must be exactly four nodes long."
-msgstr ""
+msgstr "ផ្លូវ​ទី​ពីរ​ត្រូវ​តែ​មាន​ប្រវែង​៤​ថ្នាំង ។"
 
 #: ../share/extensions/svg_and_media_zip_output.py:103
 #, fuzzy, python-format
@@ -16904,65 +16905,63 @@ msgstr "សម្អាត​ភាព​មិន​បាន​ការ​រ
 
 #: ../share/extensions/ccx_input.inx.h:1
 msgid "Corel DRAW Compressed Exchange files (.ccx)"
-msgstr ""
+msgstr "ឯកសារ​ផ្លាស់ប្ដូរ​ដែល​បាន​បង្ហាប់ Corel DRAW (.ccx)"
 
 #: ../share/extensions/ccx_input.inx.h:2
 msgid "Corel DRAW Compressed Exchange files input"
-msgstr ""
+msgstr "ព័ត៌មាន​បញ្ចូល​ឯកសារ​ផ្លាស់ប្ដូរ ដែល​បាន​បង្ហាប់ Corel DRAW"
 
 #: ../share/extensions/ccx_input.inx.h:3
 msgid "Open compressed exchange files saved in Corel DRAW"
-msgstr ""
+msgstr "បើក​ឯកសារ​ផ្លាស់ប្ដូរ​ដែល​បង្ហាប់ ដែល​រក្សា​ទុក​ក្នុង Corel DRAW"
 
 #: ../share/extensions/cdr_input.inx.h:1
 msgid "Corel DRAW 7-X4 files (*.cdr)"
-msgstr ""
+msgstr "ឯកសារ Corel DRAW 7-X4 (*.cdr)"
 
 #: ../share/extensions/cdr_input.inx.h:2
 msgid "Corel DRAW Input"
-msgstr ""
+msgstr "ព័ត៌មាន​បញ្ចូល Corel DRAW"
 
 #: ../share/extensions/cdr_input.inx.h:3
-#, fuzzy
 msgid "Open files saved in Corel DRAW 7-X4"
-msgstr "បើក​ឯកសារ​ដែល​បាន​រក្សាទុក​ជាមួយ XFIG"
+msgstr "បើក​ឯកសារ​ដែល​បាន​រក្សាទុក​ជាមួយ Corel DRAW 7-X4"
 
 #: ../share/extensions/cdt_input.inx.h:1
 msgid "Corel DRAW 7-13 template files (.cdt)"
-msgstr ""
+msgstr "ឯកសារ​ពុម្ព Corel DRAW 7-13 (.cdt)"
 
 #: ../share/extensions/cdt_input.inx.h:2
 msgid "Corel DRAW templates input"
-msgstr ""
+msgstr "ព័ត៌មាន​បញ្ចូល​ពុម្ព Corel DRAW"
 
 #: ../share/extensions/cdt_input.inx.h:3
-#, fuzzy
 msgid "Open files saved in Corel DRAW 7-13"
-msgstr "បើក​ឯកសារ​ដែល​បាន​រក្សាទុក​ជាមួយ XFIG"
+msgstr "បើក​ឯកសារ​ដែល​បាន​រក្សាទុក​ជាមួយ Corel DRAW 7-13"
 
 #: ../share/extensions/cgm_input.inx.h:1
 msgid "Computer Graphics Metafile files (.cgm)"
-msgstr ""
+msgstr "ឯកសារ​ឯកសារ​មេតា​ក្រាហ្វិក​កុំព្យូទ័រ (.cgm)"
 
 #: ../share/extensions/cgm_input.inx.h:2
 msgid "Computer Graphics Metafile files input"
-msgstr ""
+msgstr "ព័ត៌មាន​បញ្ចូល​ឯកសារ​ឯកសារ​មេតា​ក្រាហ្វិក​កុំព្យូទ័រ"
 
 #: ../share/extensions/cgm_input.inx.h:3
 msgid "Open Computer Graphics Metafile files"
-msgstr ""
+msgstr "បើក​ឯកសារ​ឯកសារ​មេតា​ក្រាហ្វិក​កុំព្យូទ័រ"
 
 #: ../share/extensions/cmx_input.inx.h:1
 msgid "Corel DRAW Presentation Exchange files (.cmx)"
-msgstr ""
+msgstr "ឯកសារ​ផ្លាស់ប្ដូរ​ការ​បង្ហាញ Corel DRAW (.cmx)"
 
 #: ../share/extensions/cmx_input.inx.h:2
 msgid "Corel DRAW Presentation Exchange files input"
-msgstr ""
+msgstr "ព័ត៌មាន​បញ្ចូល​ឯកសារ​ផ្លាស់ប្ដូរ​ការ​បង្ហាញ Corel DRAW"
 
 #: ../share/extensions/cmx_input.inx.h:3
 msgid "Open presentation exchange files saved in Corel DRAW"
-msgstr ""
+msgstr "បើក​ឯកសារ​ផ្លាស់ប្ដូរ​ការ​បង្ហាញ​ដែល​រក្សា​ទុក​ក្នុង Corel DRAW"
 
 #: ../share/extensions/color_brighter.inx.h:1
 msgid "Brighter"
@@ -16970,7 +16969,7 @@ msgstr "ភ្លឺជាង"
 
 #: ../share/extensions/color_custom.inx.h:1
 msgid "Blue Function"
-msgstr "មុខងារ​ពណ៌ខៀវារ"
+msgstr "មុខងារ​ពណ៌ខៀវ"
 
 #: ../share/extensions/color_custom.inx.h:4
 msgid "Green Function"
@@ -16982,7 +16981,7 @@ msgstr "មុខងារ​ពណ៌​ក្រហម"
 
 #: ../share/extensions/color_darker.inx.h:2
 msgid "Darker"
-msgstr "ងងឹតជាង្តក់​"
+msgstr "ងងឹត​ជាង​"
 
 #: ../share/extensions/color_desaturate.inx.h:2
 msgid "Desaturate"
@@ -17239,7 +17238,7 @@ msgstr "ផ្លូវ​ត្រូវ​​រក្សាទុករូប
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
-msgstr "បើក​ឯកសារ​ដែល​បាន​រក្សាទុក​ជាមួយ XFIG"
+msgstr "បើក​ឯកសារ​ដែល​បាន​រក្សា​ទុក​ជាមួយ XFIG"
 
 #: ../share/extensions/fig_input.inx.h:2
 msgid "XFIG Graphics File (*.fig)"
@@ -17255,7 +17254,7 @@ msgstr "ភាព​រាប​ស្មើ​"
 
 #: ../share/extensions/flatten.inx.h:2
 msgid "Flatten Beziers"
-msgstr "ធ្វើឲ្យ Beziers រាប​ស្មើ"
+msgstr "ធ្វើ​ឲ្យ Beziers រាប​ស្មើ"
 
 #: ../share/extensions/fractalize.inx.h:1
 msgid "Fractalize"
@@ -17267,11 +17266,11 @@ msgstr "ភាព​រលោង"
 
 #: ../share/extensions/fractalize.inx.h:4
 msgid "Subdivisions"
-msgstr "ការបែងចែក​"
+msgstr "ការ​បែងចែក​"
 
 #: ../share/extensions/funcplot.inx.h:1
 msgid "Calculate first derivative numerically"
-msgstr "ដំបូង​គណនា​​​ដែល​បានមក​ពីលេខ"
+msgstr "ដំបូង​គណនា​​​ដែល​បាន​មក​ពីលេខ"
 
 #: ../share/extensions/funcplot.inx.h:2
 msgid "Draw Axes"
@@ -17299,14 +17298,12 @@ msgid "Functions"
 msgstr "មុខងារ"
 
 #: ../share/extensions/funcplot.inx.h:8
-#, fuzzy
 msgid "Isotropic scaling (uses smallest of width/xrange or height/yrange)"
-msgstr "ការ​កំណត់​មាត្រដ្ឋាន Isotropic (ប្រើ​តូចបំផុត ៖ ទទឹង/ជួរ x ឬ​កម្ពស់/ជួរ y)"
+msgstr "ការ​កំណត់​មាត្រដ្ឋាន Isotropic (ប្រើ​តូច​បំផុត​នៃ ទទឹង/ជួរ x ឬ​កម្ពស់/ជួរ y)"
 
 #: ../share/extensions/funcplot.inx.h:9
-#, fuzzy
 msgid "Multiply X range by 2*pi"
-msgstr "គុណជួរ x ដោយ 2*pi"
+msgstr "គុណ​ជួរ x ដោយ 2*pi"
 
 #: ../share/extensions/funcplot.inx.h:10
 #, fuzzy
@@ -17315,14 +17312,13 @@ msgstr "ជួរ និង​គំរូ"
 
 #: ../share/extensions/funcplot.inx.h:11
 msgid "Remove rectangle"
-msgstr "យក​ចតុកោណកែង​ចេញ"
+msgstr "យក​ចតុកោណ​កែង​ចេញ"
 
 #: ../share/extensions/funcplot.inx.h:13
 msgid "Samples"
 msgstr "គំរូ"
 
 #: ../share/extensions/funcplot.inx.h:14
-#, fuzzy
 msgid ""
 "Select a rectangle before calling the extension, it will determine X and Y "
 "scales. With polar coordinates: Start and end X values define the angle "
@@ -17330,13 +17326,12 @@ msgid ""
 "are at +/-1. Isotropic scaling is disabled. First derivative is always "
 "determined numerically."
 msgstr ""
-"ជ្រើស​ចតុកោណកែង​មុន​ពេលហៅ​បែបផែន ។ ចតុកោណកែង​កំណត់មាត្រដ្ឋាន x និង y ។ ជា​មួយ​នឹង​អរដោណេ​ប៉ូល ៖ "
-"តម្លៃ​ x ចាប់ផ្ដើម និង​បញ្ចប់​កំណត់​ជួរមុំ​គិត​ជា​រ៉ាដ្យង់ ។ មាត្រដ្ឋាន x ត្រូវ​បាន​កំណត់ ដូច្នេះ​គែម​ខាង​ឆ្វេង "
-"និង​ស្ដាំ​របស់​ចតុកោណកែង​នៅ+/-1 ។ ការ​កំណត់​មាត្រដ្ឋាន Isotropic ត្រូវ​បាន​បិទ ។ អ្វី​ដែល​បាន​មកដំបូង​"
-"តែងតែត្រូវ​បាន​កំណត់​ជា​លេខ​ជា​និច្ច ​។"
+"ជ្រើស​ចតុកោណ​កែង​មុន​ពេល​ហៅ​ផ្នែក​បន្ថែម វា​នឹង​កំណត់​មាត្រដ្ឋាន X និង Y ។ ជាមួយ​កូអរដោនេ​នៃ​ប៉ូល ៖ Start and end X values define the angle "
+"range in radians. X scale is set so that left and right edges of rectangle "
+"are at +/-1. Isotropic scaling is disabled. First derivative is always "
+"determined numerically."
 
 #: ../share/extensions/funcplot.inx.h:15
-#, fuzzy
 msgid ""
 "Standard Python math functions are available: ceil(x); fabs(x); floor(x); "
 "fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); "
@@ -17344,14 +17339,12 @@ msgid ""
 "(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The "
 "constants pi and e are also available."
 msgstr ""
-"មាន​អនុគមន៍​គណិត python ស្តង់ដារ ៖ ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); "
-"ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); "
-"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); "
-"degrees(x); radians(x); cosh(x); sinh(x); tanh(x). ចំនួន​ថេរ pi និង e ក៏​អាច​ប្រើ​បាន​"
-"ដែរ ។"
+"អនុគមន៍​គណិត​វិទ្យា Python ស្តង់ដារ​ដែល​មាន ៖ ceil(x); fabs(x); floor(x); "
+"fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); "
+"pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos"
+"(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x) ។ តម្លៃ​ថេរ pi និង e ក៏​មាន​ផង​ដែរ ។"
 
 #: ../share/extensions/funcplot.inx.h:16
-#, fuzzy
 msgid "Start X value"
 msgstr "តម្លៃ x ចាប់ផ្ដើម"
 
@@ -17399,21 +17392,19 @@ msgstr "GIMP XCF ថែទាំ​ស្រទាប់ (*.XCF)"
 
 #: ../share/extensions/gimp_xcf.inx.h:3
 msgid "Save Grid:"
-msgstr ""
+msgstr "រក្សា​ទុក​ក្រឡា​ចត្រង្គ ៖"
 
 #: ../share/extensions/gimp_xcf.inx.h:4
-#, fuzzy
 msgid "Save Guides:"
-msgstr "បន្ទាត់នាំផ្លូវ​"
+msgstr "រក្សា​ទុក​មគ្គុទ្ទេសក៏ ៖"
 
 #: ../share/extensions/grid_cartesian.inx.h:1
 msgid "Border Thickness / px"
-msgstr ""
+msgstr "កម្រាស់​ស៊ុម / ភីកសែល"
 
 #: ../share/extensions/grid_cartesian.inx.h:2
-#, fuzzy
 msgid "Cartesian Grid"
-msgstr "បង្កើត​ក្រឡាចត្រង្គ​ថ្មី"
+msgstr "ក្រឡាចត្រង្គ"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
@@ -17436,27 +17427,24 @@ msgid "Major X Division Thickness / px"
 msgstr ""
 
 #: ../share/extensions/grid_cartesian.inx.h:8
-#, fuzzy
 msgid "Major X Divisions"
-msgstr "ការ​ចែក"
+msgstr ""
 
 #: ../share/extensions/grid_cartesian.inx.h:9
 msgid "Major X Divsion Spacing / px"
 msgstr ""
 
 #: ../share/extensions/grid_cartesian.inx.h:10
-#, fuzzy
 msgid "Major Y Division Spacing"
-msgstr "ចន្លោះ​ផ្ដេក​"
+msgstr ""
 
 #: ../share/extensions/grid_cartesian.inx.h:11
 msgid "Major Y Division Thickness / px"
 msgstr ""
 
 #: ../share/extensions/grid_cartesian.inx.h:12
-#, fuzzy
 msgid "Major Y Divisions"
-msgstr "ការ​ចែក"
+msgstr ""
 
 #: ../share/extensions/grid_cartesian.inx.h:13
 msgid "Minor X Division Thickness / px"
@@ -17825,7 +17813,7 @@ msgstr "ផ្លូវ​ដើម​នឹង​ជា ៖"
 
 #: ../share/extensions/pathscatter.inx.h:10
 msgid "Scatter"
-msgstr ""
+msgstr "ពង្រាយ"
 
 #: ../share/extensions/pathscatter.inx.h:12
 msgid "Stretch spaces to fit skeleton length"
@@ -17890,7 +17878,7 @@ msgstr "ចំនួន​ទំព័រ​"
 
 #: ../share/extensions/perfectboundcover.inx.h:13
 msgid "Pages Per Inch (PPI)"
-msgstr "Pages Per Inch (PPI)"
+msgstr "ទំព័រ​ក្នុង​មួយ​អ៊ិន្ឈ៍ (PPI)"
 
 #: ../share/extensions/perfectboundcover.inx.h:14
 msgid "Paper Thickness Measurement"
@@ -17918,7 +17906,7 @@ msgstr "ពហុកោណ​ត្រីមាត្រ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
 msgid "Clockwise Wound Object"
-msgstr ""
+msgstr "វត្ថុ​ដែល​មាន​ទិស​ស្រប់​នាឡិកា"
 
 #: ../share/extensions/polyhedron_3d.inx.h:3
 msgid "Cube"
@@ -17930,7 +17918,7 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
 msgid "Dodecahedron"
-msgstr ""
+msgstr "ទ្វាទសត័ល"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
 msgid "Draw Back-Facing Polygons"
@@ -17946,7 +17934,7 @@ msgstr "គែម"
 
 #: ../share/extensions/polyhedron_3d.inx.h:9
 msgid "Face-Specified"
-msgstr ""
+msgstr "មុខ​ជាក់លាក់"
 
 #: ../share/extensions/polyhedron_3d.inx.h:10
 msgid "Faces"
@@ -17975,11 +17963,11 @@ msgstr "បំពេញ​ភាព​ស្រអាប់/ %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
 msgid "Great Dodecahedron"
-msgstr ""
+msgstr "ទ្វាទសត័ល​ធំ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:18
 msgid "Great Stellated Dodecahedron"
-msgstr ""
+msgstr "ទ្វាទសត័ល​មាន​រាង​ដូច​ផ្កាយ​ធំ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:19
 msgid "Icosahedron"
@@ -18031,7 +18019,7 @@ msgstr "វត្ថុ ៖"
 
 #: ../share/extensions/polyhedron_3d.inx.h:31
 msgid "Octahedron"
-msgstr ""
+msgstr "អដ្ឋត័ល"
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
 msgid "Report Normal Vector Information"
@@ -18051,7 +18039,7 @@ msgstr "កត្តា​ធ្វើ​មាត្រដ្ឋាន"
 
 #: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Shading"
-msgstr ""
+msgstr "Shading"
 
 #: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Small Triambic Icosahedron"
@@ -18059,11 +18047,11 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Cube"
-msgstr ""
+msgstr "គូប​ខ្លី"
 
 #: ../share/extensions/polyhedron_3d.inx.h:41
 msgid "Snub Dodecahedron"
-msgstr ""
+msgstr "ទ្វាទសត័ល​ខ្លី"
 
 #: ../share/extensions/polyhedron_3d.inx.h:43
 #, no-c-format
@@ -18072,7 +18060,7 @@ msgstr "ភាព​ស្រអាប់​ខ្វាច់/ %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Tetrahedron"
-msgstr ""
+msgstr "ចតុត័ល"
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Then Rotate Around:"
@@ -18084,7 +18072,7 @@ msgstr "កាត់​គូប​ឲ្យ​ខ្លី"
 
 #: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Dodecahedron"
-msgstr ""
+msgstr "កាត់​ទ្វាទសត័ល​ឲ្យ​ខ្លី"
 
 #: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Icosahedron"
@@ -18092,11 +18080,11 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Octahedron"
-msgstr ""
+msgstr "កាត់​អដ្ឋត័ល​ឲ្យ​ខ្លី"
 
 #: ../share/extensions/polyhedron_3d.inx.h:51
 msgid "Truncated Tetrahedron"
-msgstr ""
+msgstr "កាត់​ចតុត័ល​ឲ្យ​ខ្លី"
 
 #: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "Vertices"
@@ -18120,7 +18108,7 @@ msgstr "អ័ក្ស Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:57
 msgid "Z-Sort Faces By:"
-msgstr ""
+msgstr "មុខ​តម្រៀប Z តាម ៖"
 
 #: ../share/extensions/ps_input.inx.h:1
 msgid "Postscript"
@@ -18140,7 +18128,7 @@ msgstr "ថ្នាំង​មិនល្អ​"
 
 #: ../share/extensions/radiusrand.inx.h:2
 msgid "Maximum displacement in X, px"
-msgstr "ការ​ផ្លាស់កន្លែង​អតិបរមា​ក្នុង X, px"
+msgstr "ការ​ផ្លាស់​កន្លែង​អតិបរមា​ក្នុង X, px"
 
 #: ../share/extensions/radiusrand.inx.h:3
 msgid "Maximum displacement in Y, px"
