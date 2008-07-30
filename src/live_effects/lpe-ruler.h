@@ -32,7 +32,7 @@ private:
     ScalarParam mark_distance;
     ScalarParam mark_length;
     ScalarParam scale;
-    TextParam info_text;
+    TextParamInternal info_text;
     LPERuler(const LPERuler&);
     LPERuler& operator=(const LPERuler&);
 };

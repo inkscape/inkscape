@@ -31,7 +31,7 @@ public:
                Inkscape::UI::Widget::Registry* wr,
                Effect* effect,
                const Glib::ustring default_value = "");
-    virtual ~TextParam();
+    virtual ~TextParam() {}
 
     virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
 
@@ -57,9 +57,37 @@ private:
     SPCanvasText *canvas_text;
 };
 
+/*
+ * This parameter does not display a widget in the LPE dialog; LPEs can use it to display text that
+ * should not be settable by the user
+ */
+class TextParamInternal : public TextParam {
+public:
+    TextParamInternal(const Glib::ustring& label,
+                      const Glib::ustring& tip,
+                      const Glib::ustring& key,
+                      Inkscape::UI::Widget::Registry* wr,
+                      Effect* effect,
+                      const Glib::ustring default_value = "") :
+        TextParam(label, tip, key, wr, effect, default_value) {}
+    //virtual ~TextParamInternal() {}
+
+    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips) { return NULL; }
+};
 
 } //namespace LivePathEffect
 
 } //namespace Inkscape
 
 #endif
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

@@ -36,10 +36,6 @@ TextParam::TextParam( const Glib::ustring& label, const Glib::ustring& tip,
     sp_canvastext_set_coords (canvas_text, 0, 0);
 }
 
-TextParam::~TextParam()
-{
-}
-
 void
 TextParam::param_set_default()
 {
