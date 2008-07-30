@@ -3277,18 +3277,19 @@ freehand_tool_name(GObject *dataKludge)
              : "tools.freehand.pencil" );
 }
 
-static void sp_pc_spiro_spline_mode_changed(EgeSelectOneAction* act, GObject* tbl)
+static void sp_pc_freehand_mode_changed(EgeSelectOneAction* act, GObject* tbl)
 {
-    prefs_set_int_attribute(freehand_tool_name(tbl), "spiro-spline-mode", ege_select_one_action_get_active(act));
+    prefs_set_int_attribute(freehand_tool_name(tbl), "freehand-mode", ege_select_one_action_get_active(act));
 }
 
-static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, bool tool_is_pencil)
+static void sp_add_freehand_mode_toggle(GtkActionGroup* mainActions, GObject* holder, bool tool_is_pencil)
 {
     /* Freehand mode toggle buttons */
     {
-        // FIXME: spiroMode seems not to be read correctly here during startup, although the
-        //        correct mode is used in pen/pencil tool later on; same for freehand shapes
-        guint spiroMode = prefs_get_int_attribute(freehand_tool_name(holder), "spiro-spline-mode", 0);
+        // FIXME: freehandMode seems not to be read correctly here during startup (resulting the wrong
+        //        icon being selected), although the correct mode is used in pen/pencil tool later on;
+        //        same for freehand shapes
+        guint freehandMode = prefs_get_int_attribute(freehand_tool_name(holder), "freehand-mode", 0);
         Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
 
         {
@@ -3322,8 +3323,8 @@ static void sp_add_spiro_toggle(GtkActionGroup* mainActions, GObject* holder, bo
             ege_select_one_action_set_icon_size( act, secondarySize );
             ege_select_one_action_set_tooltip_column( act, 1  );
 
-            ege_select_one_action_set_active( act, spiroMode);
-            g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_pc_spiro_spline_mode_changed), holder);
+            ege_select_one_action_set_active( act, freehandMode);
+            g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_pc_freehand_mode_changed), holder);
         }
     }
 }
@@ -3379,7 +3380,7 @@ sp_freehand_add_advanced_shape_options(GtkActionGroup* mainActions, GObject* hol
 
 static void sp_pen_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* mainActions, GObject* holder)
 {
-    sp_add_spiro_toggle(mainActions, holder, false);
+    sp_add_freehand_mode_toggle(mainActions, holder, false);
     sp_freehand_add_advanced_shape_options(mainActions, holder, false);
 }
 
@@ -3456,7 +3457,7 @@ static Inkscape::XML::NodeEventVector pencil_node_events =
 
 static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
-    sp_add_spiro_toggle(mainActions, holder, true);
+    sp_add_freehand_mode_toggle(mainActions, holder, true);
 
     EgeAdjustmentAction* eact = 0;
 

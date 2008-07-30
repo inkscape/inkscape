@@ -278,7 +278,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
     using namespace Inkscape::LivePathEffect;
 
     if (item && SP_IS_LPE_ITEM(item)) {
-        if (prefs_get_int_attribute(tool_name(dc), "spiro-spline-mode", 0)) {
+        if (prefs_get_int_attribute(tool_name(dc), "freehand-mode", 0)) {
             Effect::createAndApply(SPIRO, dc->desktop->doc(), item);
         }
 
