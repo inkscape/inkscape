@@ -38,24 +38,23 @@ LPEMirrorSymmetry::LPEMirrorSymmetry(LivePathEffectObject *lpeobject) :
 
 LPEMirrorSymmetry::~LPEMirrorSymmetry()
 {
-
 }
 
 void
-LPEMirrorSymmetry::acceptParamPath (SPPath *param_path) {
+LPEMirrorSymmetry::doOnApply (SPLPEItem *lpeitem)
+{
     using namespace Geom;
 
-    SPCurve* curve = sp_path_get_curve_for_edit (param_path);
-    Geom::Point A(curve->first_point());
-    Geom::Point B(curve->last_point());
-    
+    SPItem *item = SP_ITEM(lpeitem);
+    Geom::Matrix t = sp_item_i2d_affine(item);
+    NR::Maybe<Geom::Rect> bbox = item->getBounds(t);
+
+    Point A(bbox->left(), bbox->bottom());
+    Point B(bbox->left(), bbox->top());
+    A *= t;
+    B *= t;
     Piecewise<D2<SBasis> > rline = Piecewise<D2<SBasis> >(D2<SBasis>(Linear(A[X], B[X]), Linear(A[Y], B[Y])));
-    reflection_line.set_new_value( rline, true );
-
-    SP_OBJECT(param_path)->deleteObject(true);
-
-    // don't remove this; needed for cleanup tasks
-    Effect::acceptParamPath(param_path);
+    reflection_line.set_new_value(rline, true);
 }
 
 std::vector<Geom::Path>
@@ -89,8 +88,6 @@ LPEMirrorSymmetry::doEffect_path (std::vector<Geom::Path> const & path_in)
 
     return path_out;
 }
-
-/* ######################## */
 
 } //namespace LivePathEffect
 } /* namespace Inkscape */

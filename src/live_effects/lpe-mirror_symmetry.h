@@ -28,8 +28,7 @@ public:
     LPEMirrorSymmetry(LivePathEffectObject *lpeobject);
     virtual ~LPEMirrorSymmetry();
 
-    virtual void acceptParamPath (SPPath *param_path);
-    virtual int acceptsNumParams() { return 2; }
+    virtual void doOnApply (SPLPEItem *lpeitem);
 
     virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
 
