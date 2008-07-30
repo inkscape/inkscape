@@ -190,6 +190,7 @@ src/live_effects/lpe-lattice.cpp
 src/live_effects/lpe-mirror_symmetry.cpp
 src/live_effects/lpe-offset.cpp
 src/live_effects/lpe-parallel.cpp
+src/live_effects/lpe-path_length.cpp
 src/live_effects/lpe-patternalongpath.cpp
 src/live_effects/lpe-perp_bisector.cpp
 src/live_effects/lpe-perspective_path.cpp
