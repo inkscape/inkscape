@@ -578,6 +578,9 @@ persp3d_has_all_boxes_in_selection (Persp3D *persp) {
     return true;
 }
 
+/**
+ * For each perspective having a box in \a selection, determine all its unselected boxes.
+ */
 // TODO: Check where we can use pass-by-reference (or so) instead of recreating all the lists afresh.
 std::map<Persp3D *, std::list<SPBox3D *> >
 persp3d_unselected_boxes(Inkscape::Selection *selection) {
@@ -601,6 +604,10 @@ persp3d_unselected_boxes(Inkscape::Selection *selection) {
     return punsel;
 }
 
+/**
+ * Split all perspectives with a box in \a selection by moving their unselected boxes to newly
+ * created perspectives.
+ */
 void
 persp3d_split_perspectives_according_to_selection(Inkscape::Selection *selection) {
     std::map<Persp3D *, std::list<SPBox3D *> > punsel = persp3d_unselected_boxes(selection);
