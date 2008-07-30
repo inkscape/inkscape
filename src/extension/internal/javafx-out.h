@@ -84,17 +84,17 @@ private:
     /**
      * Output the file header
      */
-	bool doHeader(gchar const *uri);
+	bool doHeader(const String &name);
 
     /**
      * Output the SVG document's curve data as POV curves
      */
-	bool doCurves(SPDocument *doc, gchar const *uri);
+	bool doCurves(SPDocument *doc, const String &name);
 
     /**
      * Output the file footer
      */
-	bool doTail(gchar const *uri);
+	bool doTail(const String &name);
 
 
 

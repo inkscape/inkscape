@@ -109,7 +109,7 @@ void JavaFXOutput::out(const char *fmt, ...)
 /**
  * Output the file header
  */
-bool JavaFXOutput::doHeader(gchar const *uri)
+bool JavaFXOutput::doHeader(const String &name)
 {
     time_t tim = time(NULL);
     out("/*###################################################################\n");
@@ -140,10 +140,10 @@ bool JavaFXOutput::doHeader(gchar const *uri)
     out("import javafx.ui.UIElement;\n");
     out("import javafx.ui.*;\n");
     out("import javafx.ui.canvas.*;\n");
-    out("\n");
-    out("public class %s extends CompositeNode {\n", uri);
-    out("\n");
-    out("\n\n\n");
+    out("\n\n");
+    out("public class %s extends CompositeNode {\n", name.c_str());
+    out("}\n");
+    out("\n\n");
     return true;
 }
 
@@ -152,12 +152,11 @@ bool JavaFXOutput::doHeader(gchar const *uri)
 /**
  *  Output the file footer
  */
-bool JavaFXOutput::doTail(gchar const *uri)
+bool JavaFXOutput::doTail(const String &name)
 {
-    out("} // end class $s\n", uri);
-    out("\n\n");
+    out("\n\n\n\n");
     out("/*###################################################################\n");
-    out("### E N D    F I L E\n");
+    out("### E N D   C L A S S    %s\n", name.c_str());
     out("###################################################################*/\n");
     out("\n\n");
     return true;
@@ -168,7 +167,7 @@ bool JavaFXOutput::doTail(gchar const *uri)
 /**
  *  Output the curve data to buffer
  */
-bool JavaFXOutput::doCurves(SPDocument *doc, gchar const *uri)
+bool JavaFXOutput::doCurves(SPDocument *doc, const String &name)
 {
     using Geom::X;
     using Geom::Y;
@@ -180,8 +179,7 @@ bool JavaFXOutput::doCurves(SPDocument *doc, gchar const *uri)
     if (results.size() == 0)
         return true;
 
-    out("function composeNode()\n");
-    out("{\n");
+    out("function %s.composeNode() =\n", name.c_str());
     out("Group\n");
     out("    {\n");
     out("    content:\n");
@@ -223,23 +221,35 @@ bool JavaFXOutput::doCurves(SPDocument *doc, gchar const *uri)
         out("        ###################################################*/\n");
         out("        Path \n");
         out("        {\n");
-        out("        name : \"%s\"\n", id.c_str());
+        out("        id : \"%s\"\n", id.c_str());
 
-        //Try to get the fill color of the shape
+        /**
+         * Get the fill and stroke of the shape
+         */
         SPStyle *style = SP_OBJECT_STYLE(shape);
-        /* fixme: Handle other fill types, even if this means translating gradients to a single
-           flat colour. */
-        if (style && (style->fill.isColor()))
+        if (style)
             {
-            // see color.h for how to parse SPColor
-            gint alpha = 0xffffffff;
-            guint32 rgba = style->fill.value.color.toRGBA32(alpha);
-            unsigned int r = SP_RGBA32_R_U(rgba);
-            unsigned int g = SP_RGBA32_G_U(rgba);
-            unsigned int b = SP_RGBA32_B_U(rgba);
-            unsigned int a = SP_RGBA32_A_U(rgba);
-            out("        fill: rgba(0x%02x, 0x%02x, 0x%02x, 0x%02x)\n",
+            /**
+             * Fill
+             */
+            if (style->fill.isColor())
+                {
+                // see color.h for how to parse SPColor
+                gint alpha = 0xffffffff;
+                guint32 rgba = style->fill.value.color.toRGBA32(alpha);
+                unsigned int r = SP_RGBA32_R_U(rgba);
+                unsigned int g = SP_RGBA32_G_U(rgba);
+                unsigned int b = SP_RGBA32_B_U(rgba);
+                unsigned int a = SP_RGBA32_A_U(rgba);
+                out("        fill: rgba(0x%02x, 0x%02x, 0x%02x, 0x%02x)\n",
                                    r, g, b, a);
+                }
+            /**
+             * Stroke
+             */
+            /**
+             * TODO:  stroke code here
+             */
             }
 
 
@@ -257,7 +267,7 @@ bool JavaFXOutput::doCurves(SPDocument *doc, gchar const *uri)
         out("        d :\n");
         out("            [\n");
 
-        int segmentNr = 0;
+        unsigned int segmentNr = 0;
 
         nrSegments += segmentCount;
 
@@ -306,7 +316,7 @@ bool JavaFXOutput::doCurves(SPDocument *doc, gchar const *uri)
         }
 
         out("            ] // d\n");
-        out("        } // Path\n");
+        out("        }, // Path\n");
 
                      
         out("        /*###################################################\n");
@@ -316,8 +326,8 @@ bool JavaFXOutput::doCurves(SPDocument *doc, gchar const *uri)
         }//for
 
     out("        ] // content\n");
-    out("    } // Group\n");
-    out("} // function composeNode()\n");
+    out("    }; // Group\n");
+    out("// end function %s.composeNode()\n", name.c_str());
 
     return true;
 
@@ -352,19 +362,27 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *uri)
 {
     reset();
 
+
+    String name = Glib::path_get_basename(uri);
+    int pos = name.find('.');
+    if (pos > 0)
+        name = name.substr(0, pos);
+
+
     //###### SAVE IN POV FORMAT TO BUFFER
     //# Lets do the curves first, to get the stats
-    if (!doCurves(doc, uri))
+    
+    if (!doCurves(doc, name))
         return false;
     String curveBuf = outbuf;
     outbuf.clear();
 
-    if (!doHeader(uri))
+    if (!doHeader(name))
         return false;
     
     outbuf.append(curveBuf);
     
-    if (!doTail(uri))
+    if (!doTail(name))
         return false;
 
 
