@@ -101,6 +101,7 @@ void sp_canvas_bpath_set_stroke (SPCanvasBPath *cbp, guint32 rgba, gdouble width
  */
 
 struct SPItem;
+struct SPDesktop;
 
 #define SP_TYPE_CANVASTEXT (sp_canvastext_get_type ())
 #define SP_CANVASTEXT(obj) (GTK_CHECK_CAST ((obj), SP_TYPE_CANVASTEXT, SPCanvasText))
@@ -109,6 +110,7 @@ struct SPItem;
 struct SPCanvasText : public SPCanvasItem{
     SPItem *item;  // the item to which this line belongs in some sense; may be NULL for some users
     guint32 rgba;
+    SPDesktop *desktop; // the desktop to which this text is attached; needed for coordinate transforms (TODO: these should be eliminated)
 
     char* text;
     NR::Point s;
@@ -121,7 +123,7 @@ struct SPCanvasTextClass : public SPCanvasItemClass{};
 
 GtkType sp_canvastext_get_type (void);
 
-SPCanvasItem *sp_canvastext_new(SPCanvasGroup *parent, Geom::Point pos, char *text);
+SPCanvasItem *sp_canvastext_new(SPCanvasGroup *parent, SPDesktop *desktop, Geom::Point pos, char *text);
 
 void sp_canvastext_set_rgba32 (SPCanvasText *ct, guint32 rgba);
 void sp_canvastext_set_coords (SPCanvasText *ct, gdouble x0, gdouble y0);

@@ -42,6 +42,7 @@
 **/
 #include <sstream>
 #include <string.h>
+#include <desktop.h>
 
 /**
 #ifdef HAVE_CONFIG_H
@@ -336,6 +337,7 @@ sp_canvastext_init (SPCanvasText *canvastext)
     canvastext->affine = NR::identity();
     canvastext->fontsize = 10.0;
     canvastext->item = NULL;
+    canvastext->desktop = NULL;
     canvastext->text = NULL;
 }
 
@@ -426,11 +428,13 @@ sp_canvastext_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int
 }
 
 SPCanvasItem *
-sp_canvastext_new(SPCanvasGroup *parent, Geom::Point pos, char *new_text)
+sp_canvastext_new(SPCanvasGroup *parent, SPDesktop *desktop, Geom::Point pos, char *new_text)
 {
     SPCanvasItem *item = sp_canvas_item_new(parent, SP_TYPE_CANVASTEXT, NULL);
 
     SPCanvasText *ct = SP_CANVASTEXT(item);
+
+    ct->desktop = desktop;
 
     ct->s = pos;
     g_free(ct->text);
@@ -463,21 +467,23 @@ sp_canvastext_set_rgba32 (SPCanvasText *ct, guint32 rgba)
 void
 sp_canvastext_set_coords (SPCanvasText *ct, gdouble x0, gdouble y0)
 {
-    g_return_if_fail (ct != NULL);
-    g_return_if_fail (SP_IS_CANVASTEXT (ct));
-
-    if (DIFFER (x0, ct->s[NR::X]) || DIFFER (y0, ct->s[NR::Y])) {
-        ct->s[NR::X] = x0;
-        ct->s[NR::Y] = y0;
-        sp_canvas_item_request_update (SP_CANVAS_ITEM (ct));
-    }
-    sp_canvas_item_request_update (SP_CANVAS_ITEM (ct));
+    sp_canvastext_set_coords(ct, NR::Point(x0, y0));
 }
 
 void
 sp_canvastext_set_coords (SPCanvasText *ct, const NR::Point start)
 {
-    sp_canvastext_set_coords(ct, start[0], start[1]);
+    NR::Point pos = ct->desktop->doc2dt(start);
+
+    g_return_if_fail (ct != NULL);
+    g_return_if_fail (SP_IS_CANVASTEXT (ct));
+
+    if (DIFFER (pos[0], ct->s[NR::X]) || DIFFER (pos[1], ct->s[NR::Y])) {
+        ct->s[NR::X] = pos[0];
+        ct->s[NR::Y] = pos[1];
+        sp_canvas_item_request_update (SP_CANVAS_ITEM (ct));
+    }
+    sp_canvas_item_request_update (SP_CANVAS_ITEM (ct));
 }
 
 void

@@ -93,7 +93,7 @@ LPERuler::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_i
     g_free(dist);
 
     double angle = Geom::angle_between(dir, Geom::Point(1,0));
-    info_text.setPos(inkscape_active_desktop()->doc2dt((A + B) / 2 + 2.0 * n).to_2geom());
+    info_text.setPos((A + B) / 2 + 2.0 * n);
     info_text.setAnchor(std::sin(angle), -std::cos(angle));
 
     Point C, D;
