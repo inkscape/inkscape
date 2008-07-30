@@ -39,7 +39,6 @@ Text::Text(Glib::ustring const &label, Glib::ustring const &tooltip,
     : Labelled(label, tooltip, new Gtk::Entry(), suffix, icon, mnemonic),
       setProgrammatically(false)
 {
-    //static_cast<Gtk::Entry*>(_widget)->set_numeric();
 }
 
 /** Get the text in the entry */
@@ -47,17 +46,15 @@ const char *
 Text::getText() const
 {
     g_assert(_widget != NULL);
-    //return g_strdup_printf("%f", static_cast<Gtk::SpinButton*>(_widget)->get_value());
     return static_cast<Gtk::Entry*>(_widget)->get_text().c_str();
 }
 
 /** Sets the text of the text entry */
 void
-Text::setText(char* text)
+Text::setText(const char* text)
 {
     g_assert(_widget != NULL);
     setProgrammatically = true; // callback is supposed to reset back, if it cares
-    //static_cast<Gtk::SpinButton*>(_widget)->set_value(42.43); // FIXME: set correctly
     static_cast<Gtk::Entry*>(_widget)->set_text(text); // FIXME: set correctly
 }
 
@@ -65,7 +62,6 @@ Text::setText(char* text)
 Glib::SignalProxy0<void>
 Text::signal_activate()
 {
-    //return static_cast<Gtk::SpinButton*>(_widget)->signal_value_changed();
     return static_cast<Gtk::Entry*>(_widget)->signal_activate();
 }
 

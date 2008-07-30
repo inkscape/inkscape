@@ -34,7 +34,7 @@ public:
 
     const char* getText() const;
 
-    void setText(char* text);
+    void setText(const char* text);
 
     void update();
 

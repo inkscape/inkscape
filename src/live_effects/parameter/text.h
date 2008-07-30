@@ -51,6 +51,7 @@ private:
     double anchor_x;
     double anchor_y;
 
+    Glib::ustring value;
     Glib::ustring defvalue;
 
     SPCanvasText *canvas_text;

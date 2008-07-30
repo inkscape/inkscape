@@ -273,6 +273,8 @@ RegisteredText::on_activate()
     write_to_xml(os.str().c_str());
     set_sensitive(true);
 
+    setText(os.str().c_str());
+
     _wr->setUpdating (false);
 }
 

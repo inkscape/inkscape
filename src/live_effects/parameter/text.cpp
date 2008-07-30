@@ -28,6 +28,7 @@ TextParam::TextParam( const Glib::ustring& label, const Glib::ustring& tip,
                       const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
                       Effect* effect, const Glib::ustring default_value )
     : Parameter(label, tip, key, wr, effect),
+      value(default_value),
       defvalue(default_value)
 {
     canvas_text = (SPCanvasText *) sp_canvastext_new(sp_desktop_tempgroup(inkscape_active_desktop()), Geom::Point(0,0), "");
@@ -69,32 +70,27 @@ TextParam::param_readSVGValue(const gchar * strvalue)
 gchar *
 TextParam::param_getSVGValue() const
 {
-    return (gchar *) defvalue.c_str();
+    return (gchar *) value.c_str();
 }
 
 Gtk::Widget *
 TextParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
 {
-    /**
     Inkscape::UI::Widget::RegisteredText *rsu = Gtk::manage(new Inkscape::UI::Widget::RegisteredText(
         param_label, param_tooltip, param_key, *param_wr, param_effect->getRepr(), param_effect->getSPDoc()));
 
-    rsu->setText("");
+    rsu->setText(value.c_str());
     rsu->setProgrammatically = false;
 
     rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change text parameter"));
 
     return dynamic_cast<Gtk::Widget *> (rsu);
-    **/
-
-    // widget is disabled until it works correctly
-    return NULL;
 }
 
 void
 TextParam::param_setValue(const Glib::ustring newvalue)
 {
-    defvalue = newvalue;
+    value = newvalue;
 
     sp_canvastext_set_text (canvas_text, newvalue.c_str());
 }
