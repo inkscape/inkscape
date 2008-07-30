@@ -69,6 +69,7 @@ static void lpeeditor_selection_modified (Inkscape::Selection * selection, guint
 
 LivePathEffectEditor::LivePathEffectEditor()
     : UI::Widget::Panel("", "dialogs.livepatheffect", SP_VERB_DIALOG_LIVE_PATH_EFFECT),
+      lpe_list_locked(false),
       combo_effecttype(Inkscape::LivePathEffect::LPETypeConverter),
       effectwidget(NULL),
       explain_label("", Gtk::ALIGN_CENTER),
@@ -125,7 +126,6 @@ LivePathEffectEditor::LivePathEffectEditor()
     effectlist_store = Gtk::ListStore::create(columns);
     effectlist_view.set_model(effectlist_store);
 
-    effectlist_view.set_rules_hint();
     effectlist_view.set_headers_visible(false);
 
     // Handle tree selections
@@ -196,6 +196,17 @@ LivePathEffectEditor::showParams(LivePathEffect::Effect* effect)
 }
 
 void
+LivePathEffectEditor::selectInList(LivePathEffect::Effect* effect)
+{
+    Gtk::TreeNodeChildren chi = effectlist_view.get_model()->children();
+    for (Gtk::TreeIter ci = chi.begin() ; ci != chi.end(); ci++) {
+        if (ci->get_value(columns.lperef)->lpeobject->lpe == effect)
+            effectlist_view.get_selection()->select(ci);
+    }
+}
+
+
+void
 LivePathEffectEditor::showText(Glib::ustring const &str)
 {
     if (effectwidget) {
@@ -225,6 +236,12 @@ LivePathEffectEditor::set_sensitize_all(bool sensitive)
 void
 LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
 {
+    if (lpe_list_locked) {
+        // this was triggered by selecting a row in the list, so skip reloading
+        lpe_list_locked = false;
+        return;
+    } 
+
     effectlist_store->clear();
     current_lpeitem = NULL;
 
@@ -243,6 +260,8 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
                     Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(lpeitem);
                     if (lpe) {
                         showParams(lpe);
+                        lpe_list_locked = true; 
+                        selectInList(lpe);
                     } else {
                         showText(_("Unknown effect is applied"));
                     }
@@ -408,6 +427,7 @@ void LivePathEffectEditor::on_effect_selection_changed()
     LivePathEffect::LPEObjectReference * lperef = (*it)[columns.lperef];
 
     if (lperef && current_lpeitem) {
+        lpe_list_locked = true; // prevent reload of the list which would lose selection
         sp_lpe_item_set_current_path_effect(current_lpeitem, lperef);
         showParams(lperef->lpeobject->lpe);
     }
@@ -427,7 +447,7 @@ void LivePathEffectEditor::on_visibility_toggled( Glib::ustring const& str )
          * So one can call:  lpe_item->setActive(lpeobjref->lpeobject); */
         lpeobjref->lpeobject->lpe->getRepr()->setAttribute("is_visible", newValue ? "true" : "false");
         sp_document_done( sp_desktop_document(current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
-                          _("Change path effect's visibility") );
+                          newValue ? _("Activate path effect") : _("Deactivate path effect"));
     }
 }
 

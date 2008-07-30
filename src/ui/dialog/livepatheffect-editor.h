@@ -55,6 +55,7 @@ private:
 
     void showParams(LivePathEffect::Effect* effect);
     void showText(Glib::ustring const &str);
+    void selectInList(LivePathEffect::Effect* effect);
 
    // void add_entry(const char* name );
     void effect_list_reload(SPLPEItem *lpeitem);
@@ -81,6 +82,8 @@ private:
         Gtk::TreeModelColumn<LivePathEffect::LPEObjectReference *> lperef;
         Gtk::TreeModelColumn<bool> col_visible;
     };
+
+    bool lpe_list_locked;
 
     Inkscape::UI::Widget::ComboBoxEnum<LivePathEffect::EffectType> combo_effecttype;
     
