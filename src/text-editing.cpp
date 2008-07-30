@@ -1669,10 +1669,14 @@ static bool tidy_operator_styled_whitespace(SPObject **item)
         for ( ; ; ) {   // go up one item in the xml
             test_item = SP_OBJECT_PARENT(test_item);
             if (is_line_break_object(test_item)) break;
-            SPObject *next = SP_OBJECT_NEXT(test_item);
-            if (next) {
-                test_item = next;
-                break;
+            if (test_item) {
+                SPObject *next = SP_OBJECT_NEXT(test_item);
+                if (next) {
+                    test_item = next;
+                    break;
+                }
+            } else {
+                return false;
             }
         }
         if (is_line_break_object(test_item)) {  // no next string, see if there's a prev string
