@@ -199,6 +199,7 @@ src/live_effects/lpe-skeleton.cpp
 src/live_effects/lpe-sketch.cpp
 src/live_effects/lpe-tangent_to_curve.cpp
 src/live_effects/lpe-test-doEffect-stack.cpp
+src/live_effects/lpe-text_label.cpp
 src/live_effects/lpe-vonkoch.cpp
 src/live_effects/parameter/bool.cpp
 src/live_effects/parameter/enum.h
