@@ -80,6 +80,7 @@ enum EffectType {
     BOOLOPS,
     INTERPOLATE,
     TEXT_LABEL,
+    PATH_LENGTH,
     INVALID_LPE // This must be last
 };
 

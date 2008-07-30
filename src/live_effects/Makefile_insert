@@ -70,5 +70,6 @@ live_effects_liblive_effects_a_SOURCES = \
 	live_effects/lpe-ruler.cpp	\
 	live_effects/lpe-ruler.h	\
 	live_effects/lpe-text_label.cpp	\
-	live_effects/lpe-text_label.h
-
+	live_effects/lpe-text_label.h	\
+	live_effects/lpe-path_length.cpp	\
+	live_effects/lpe-path_length.h

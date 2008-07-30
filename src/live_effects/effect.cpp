@@ -64,6 +64,7 @@
 #include "live_effects/lpe-boolops.h"
 #include "live_effects/lpe-interpolate.h"
 #include "live_effects/lpe-text_label.h"
+#include "live_effects/lpe-path_length.h"
 // end of includes
 
 namespace Inkscape {
@@ -90,6 +91,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {MIRROR_SYMMETRY,       N_("Mirror symmetry"),         "mirror_symmetry"},
     {OFFSET,                N_("Offset"),                  "offset"},
     {PARALLEL,              N_("Parallel"),                "parallel"},
+    {PATH_LENGTH,           N_("Path length"),             "path_length"},
     {PATTERN_ALONG_PATH,    N_("Pattern Along Path"),      "skeletal"},   // for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
     {PERP_BISECTOR,         N_("Perpendicular bisector"),  "perp_bisector"},
     {PERSPECTIVE_PATH,      N_("Perspective path"),        "perspective_path"},
@@ -191,6 +193,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case TEXT_LABEL:
             neweffect = static_cast<Effect*> ( new LPETextLabel(lpeobj) );
+            break;
+        case PATH_LENGTH:
+            neweffect = static_cast<Effect*> ( new LPEPathLength(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);
