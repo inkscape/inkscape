@@ -120,6 +120,8 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/cairo-png-out.cpp \
 	extension/internal/eps-out.h	\
 	extension/internal/eps-out.cpp	\
+	extension/internal/javafx-out.cpp	\
+	extension/internal/javafx-out.h	\
 	extension/internal/gdkpixbuf-input.h	\
 	extension/internal/gdkpixbuf-input.cpp	\
 	extension/internal/pdfinput/svg-builder.h \

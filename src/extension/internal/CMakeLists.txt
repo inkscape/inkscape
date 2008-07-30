@@ -25,6 +25,7 @@ pdf-cairo.cpp
 pdfinput
 pdf-input-cairo.cpp
 pov-out.cpp
+javafx-out.cpp
 ps.cpp
 ps-out.cpp
 svg.cpp

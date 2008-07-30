@@ -47,6 +47,7 @@
 # include "internal/pdf-input-cairo.h"
 #endif
 #include "internal/pov-out.h"
+#include "internal/javafx-out.h"
 #include "internal/odf.h"
 #include "internal/latex-pstricks-out.h"
 #include "internal/latex-pstricks.h"
@@ -182,6 +183,7 @@ init()
     Internal::EmfWin32::init();
 #endif
     Internal::PovOutput::init();
+    Internal::JavaFXOutput::init();
     Internal::OdfOutput::init();
     Internal::PrintLatex::init();
     Internal::LatexOutput::init();
