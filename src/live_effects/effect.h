@@ -79,6 +79,7 @@ enum EffectType {
     RULER,
     BOOLOPS,
     INTERPOLATE,
+    TEXT_LABEL,
     INVALID_LPE // This must be last
 };
 

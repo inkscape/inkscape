@@ -63,6 +63,7 @@
 #include "live_effects/lpe-ruler.h"
 #include "live_effects/lpe-boolops.h"
 #include "live_effects/lpe-interpolate.h"
+#include "live_effects/lpe-text_label.h"
 // end of includes
 
 namespace Inkscape {
@@ -98,6 +99,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {SPIRO,                 N_("Spiro spline"),            "spiro"},
     {CURVE_STITCH,          N_("Stitch Sub-Paths"),        "curvestitching"},
     {TANGENT_TO_CURVE,      N_("Tangent to curve"),        "tangent_to_curve"},
+    {TEXT_LABEL,            N_("Text label"),              "text_label"},
     {VONKOCH,               N_("VonKoch"),                 "vonkoch"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, sizeof(LPETypeData)/sizeof(*LPETypeData));
@@ -186,6 +188,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case INTERPOLATE:
             neweffect = static_cast<Effect*> ( new LPEInterpolate(lpeobj) );
+            break;
+        case TEXT_LABEL:
+            neweffect = static_cast<Effect*> ( new LPETextLabel(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);
