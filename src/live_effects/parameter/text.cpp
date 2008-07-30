@@ -19,6 +19,7 @@
 #include "ui/widget/registered-widget.h"
 #include "inkscape.h"
 #include "verbs.h"
+#include <2geom/sbasis-geometric.h>
 
 namespace Inkscape {
 
@@ -47,6 +48,23 @@ void
 TextParam::setPos(Geom::Point pos)
 {
     sp_canvastext_set_coords (canvas_text, pos);
+}
+
+void
+TextParam::setPosAndAnchor(const Geom::Piecewise<Geom::D2<Geom::SBasis> > &pwd2,
+                           const double t, const double length, bool use_curvature)
+{
+    using namespace Geom;
+
+    Piecewise<D2<SBasis> > pwd2_reparam = arc_length_parametrization(pwd2, 2 , 0.1);
+    double t_reparam = pwd2_reparam.cuts.back() * t;
+    Point pos = pwd2_reparam.valueAt(t_reparam);
+    Point dir = unit_vector(derivative(pwd2_reparam).valueAt(t_reparam));
+    Point n = -rot90(dir);
+    double angle = Geom::angle_between(dir, Point(1,0));
+
+    sp_canvastext_set_coords(canvas_text, pos + n * length);
+    sp_canvastext_set_anchor(canvas_text, std::sin(angle), -std::cos(angle));
 }
 
 void

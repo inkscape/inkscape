@@ -41,6 +41,8 @@ public:
     void param_setValue(const Glib::ustring newvalue);
     virtual void param_set_default();
     void setPos(Geom::Point pos);
+    void setPosAndAnchor(const Geom::Piecewise<Geom::D2<Geom::SBasis> > &pwd2,
+			 const double t, const double length, bool use_curvature = false);
     void setAnchor(double x_value, double y_value);
 
     const Glib::ustring get_value() { return defvalue; };
