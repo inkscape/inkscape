@@ -22,7 +22,7 @@ namespace LivePathEffect {
 
 LPEPathLength::LPEPathLength(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    info_text(_("Info text"), _("Parameter for text creation"), "info_text", &wr, this, ""),
+    info_text(this),
     unit(_("Unit"), _("Unit"), "unit", &wr, this)
 {
     registerParameter(dynamic_cast<Parameter *>(&info_text));
@@ -44,7 +44,7 @@ LPEPathLength::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
     gboolean success = sp_convert_distance(&lengthval, &sp_unit_get_by_id(SP_UNIT_PX), unit);
 
     /* ... set it as the canvas text ... */
-    gchar *arc_length = g_strdup_printf("%8.2f %s", lengthval, success ? unit.get_abbreviation() : "px");
+    gchar *arc_length = g_strdup_printf("%.2f %s", lengthval, success ? unit.get_abbreviation() : "px");
     info_text.param_setValue(arc_length);
     g_free(arc_length);
 
@@ -56,7 +56,7 @@ LPEPathLength::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
     Point c;
     double area;
     if (centroid(pwd2_in, c, area)) {
-        g_print ("Area is zero\n");
+        //g_print ("Area is zero\n");
     }
     //g_print ("Area: %f\n", area);
 

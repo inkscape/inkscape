@@ -95,7 +95,7 @@ LPERuler::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_i
     gboolean success = sp_convert_distance(&lengthval, &sp_unit_get_by_id(SP_UNIT_PX), unit);
 
     /* ... set it as the canvas text ... */
-    gchar *dist = g_strdup_printf("%8.2f %s", lengthval, success ? unit.get_abbreviation() : "px");
+    gchar *dist = g_strdup_printf("%.2f %s", lengthval, success ? unit.get_abbreviation() : "px");
     info_text.param_setValue(dist);
     g_free(dist);
 

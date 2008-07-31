@@ -31,7 +31,7 @@ public:
 private:
     LPEPathLength(const LPEPathLength&);
     LPEPathLength& operator=(const LPEPathLength&);
-    TextParam info_text;
+    TextParamInternal info_text;
     UnitParam unit;
 };
 
