@@ -27,7 +27,7 @@ LPERuler::LPERuler(LivePathEffectObject *lpeobject) :
     mark_distance(_("Mark distance"), _("Distance between ruler marks"), "mark_distance", &wr, this, 20),
     mark_length(_("Mark length"), _("Length of ruler marks"), "mark_length", &wr, this, 10),
     scale(_("Scale factor"), _("Scale factor for ruler distance (only affects on-canvas display of ruler length)"), "scale", &wr, this, 1.0),
-    info_text(_("Info text"), _("Parameter for text creation"), "info_text", &wr, this, ""),
+    info_text(this),
     unit(_("Unit"), _("Unit"), "unit", &wr, this)
 {
     registerParameter(dynamic_cast<Parameter *>(&mark_distance));

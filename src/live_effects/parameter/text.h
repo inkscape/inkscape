@@ -60,19 +60,15 @@ private:
 };
 
 /*
- * This parameter does not display a widget in the LPE dialog; LPEs can use it to display text that
- * should not be settable by the user
+ * This parameter does not display a widget in the LPE dialog; LPEs can use it to display on-canvas
+ * text that should not be settable by the user. Note that since no widget is provided, the
+ * parameter must be initialized differently than usual (only with a pointer to the parent effect;
+ * no label, no tooltip, etc.).
  */
 class TextParamInternal : public TextParam {
 public:
-    TextParamInternal(const Glib::ustring& label,
-                      const Glib::ustring& tip,
-                      const Glib::ustring& key,
-                      Inkscape::UI::Widget::Registry* wr,
-                      Effect* effect,
-                      const Glib::ustring default_value = "") :
-        TextParam(label, tip, key, wr, effect, default_value) {}
-    //virtual ~TextParamInternal() {}
+    TextParamInternal(Effect* effect) :
+        TextParam("", "", "", NULL, effect) {}
 
     virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips) { return NULL; }
 };
