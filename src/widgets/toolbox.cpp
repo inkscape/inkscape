@@ -66,7 +66,7 @@
 
 #include "connector-context.h"
 #include "node-context.h"
-#include "draw-context.h"
+#include "pen-context.h"
 #include "shape-editor.h"
 #include "tweak-context.h"
 #include "sp-rect.h"
@@ -3279,7 +3279,15 @@ freehand_tool_name(GObject *dataKludge)
 
 static void sp_pc_freehand_mode_changed(EgeSelectOneAction* act, GObject* tbl)
 {
-    prefs_set_int_attribute(freehand_tool_name(tbl), "freehand-mode", ege_select_one_action_get_active(act));
+    gint mode = ege_select_one_action_get_active(act);
+
+    prefs_set_int_attribute(freehand_tool_name(tbl), "freehand-mode", mode);
+
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop");
+    if (SP_IS_PEN_CONTEXT(desktop->event_context)) {
+        SPPenContext *pc = SP_PEN_CONTEXT(desktop->event_context);
+        pc->polylines_only = (mode == 2);
+    }
 }
 
 static void sp_add_freehand_mode_toggle(GtkActionGroup* mainActions, GObject* holder, bool tool_is_pencil)
@@ -3306,6 +3314,15 @@ static void sp_add_freehand_mode_toggle(GtkActionGroup* mainActions, GObject* ho
                                 1, _("Create Spiro path"),
                                 2, "spiro_splines_mode",
                                 -1 );
+
+            if (!tool_is_pencil) {
+                gtk_list_store_append( model, &iter );
+                gtk_list_store_set( model, &iter,
+                                    0, _("Zigzag"),
+                                    1, _("Create a sequence of straight line segments"),
+                                    2, "polylines_mode",
+                                    -1 );
+            }
 
             EgeSelectOneAction* act = ege_select_one_action_new(tool_is_pencil ?
                                                                 "FreehandModeActionPencil" :

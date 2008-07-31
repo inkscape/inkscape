@@ -145,7 +145,7 @@ sp_pen_context_init(SPPenContext *pc)
     
     pc->events_disabled = 0;
 
-    pc->polylines_only = false;
+    pc->polylines_only = prefs_get_int_attribute("tools.freehand.pen", "freehand-mode", 0);
     pc->waiting_LPE = NULL;
 }
 
@@ -178,8 +178,6 @@ sp_pen_context_dispose(GObject *object)
 
     G_OBJECT_CLASS(pen_parent_class)->dispose(object);
 
-    pc->polylines_only = false;
-    pc->waiting_LPE = NULL;
     if (pc->expecting_clicks_for_LPE > 0) {
         // we received too few clicks to sanely set the parameter path so we remove the LPE from the item
         sp_lpe_item_remove_current_path_effect(pc->waiting_item, false);
@@ -783,7 +781,7 @@ pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent)
     // TODO: can we be sure that the path was created correctly?
     // TODO: should we offer an option to collect the clicks in a list?
     if (pc->expecting_clicks_for_LPE == 0 && sp_pen_context_has_waiting_LPE(pc)) {
-        pc->polylines_only = false;
+        pc->polylines_only = prefs_get_int_attribute("tools.freehand.pen", "freehand-mode", 0);
 
         SPEventContext *ec = SP_EVENT_CONTEXT(pc);
         Inkscape::Selection *selection = sp_desktop_selection (ec->desktop);
@@ -793,7 +791,7 @@ pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent)
             pc->waiting_LPE->acceptParamPath(SP_PATH(selection->singleItem()));
             selection->add(SP_OBJECT(pc->waiting_item));
             pc->waiting_LPE = NULL;
-            pc->polylines_only = false;
+            pc->polylines_only = prefs_get_int_attribute("tools.freehand.pen", "freehand-mode", 0);
         } else {
             // the case that we need to create a new LPE and apply it to the just-drawn path is
             // handled in spdc_check_for_and_apply_waiting_LPE() in draw-context.cpp
