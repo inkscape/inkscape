@@ -3286,10 +3286,7 @@ static void sp_add_freehand_mode_toggle(GtkActionGroup* mainActions, GObject* ho
 {
     /* Freehand mode toggle buttons */
     {
-        // FIXME: freehandMode seems not to be read correctly here during startup (resulting the wrong
-        //        icon being selected), although the correct mode is used in pen/pencil tool later on;
-        //        same for freehand shapes
-        guint freehandMode = prefs_get_int_attribute(freehand_tool_name(holder), "freehand-mode", 0);
+        guint freehandMode = prefs_get_int_attribute(tool_is_pencil ? "tools.freehand.pencil" : "tools.freehand.pen", "freehand-mode", 0);
         Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
 
         {
@@ -3371,7 +3368,7 @@ sp_freehand_add_advanced_shape_options(GtkActionGroup* mainActions, GObject* hol
             _("Shape:"), ("Shape"), NULL, GTK_TREE_MODEL(model));
         g_object_set( act1, "short_label", _("Shape:"), NULL );
         ege_select_one_action_set_appearance( act1, "compact" );
-        ege_select_one_action_set_active( act1, prefs_get_int_attribute(freehand_tool_name(holder), "shape", 0) );
+        ege_select_one_action_set_active( act1, prefs_get_int_attribute(tool_is_pencil ? "tools.freehand.pencil" : "tools.freehand.pen", "shape", 0) );
         g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK(sp_freehand_change_shape), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act1) );
         g_object_set_data( holder, "shape_action", act1 );
