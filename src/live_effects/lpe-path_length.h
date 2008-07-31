@@ -8,7 +8,6 @@
 /*
  * Authors:
  *   Maximilian Albert <maximilian.albert@gmail.com>
- *   Johan Engelen
  *
  * Copyright (C) 2007-2008 Authors
  *
@@ -17,6 +16,7 @@
 
 #include "live_effects/effect.h"
 #include "live_effects/parameter/text.h"
+#include "live_effects/parameter/unit.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -32,6 +32,7 @@ private:
     LPEPathLength(const LPEPathLength&);
     LPEPathLength& operator=(const LPEPathLength&);
     TextParam info_text;
+    UnitParam unit;
 };
 
 } //namespace LivePathEffect

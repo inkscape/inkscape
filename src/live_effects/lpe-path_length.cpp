@@ -13,6 +13,7 @@
  */
 
 #include "live_effects/lpe-path_length.h"
+#include "sp-metrics.h"
 
 #include "2geom/sbasis-geometric.h"
 
@@ -21,13 +22,11 @@ namespace LivePathEffect {
 
 LPEPathLength::LPEPathLength(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    info_text(_("Info text"), _("Parameter for text creation"), "info_text", &wr, this, "")
+    info_text(_("Info text"), _("Parameter for text creation"), "info_text", &wr, this, ""),
+    unit(_("Unit"), _("Unit"), "unit", &wr, this)
 {
-    /* uncomment the next line if you want the original path to be
-       permanently displayed as a helperpath while the item is selected */
-    //show_orig_path = true;
-
     registerParameter(dynamic_cast<Parameter *>(&info_text));
+    registerParameter(dynamic_cast<Parameter *>(&unit));
 }
 
 LPEPathLength::~LPEPathLength()
@@ -40,12 +39,19 @@ LPEPathLength::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
 {
     using namespace Geom;
 
-    gchar *arc_length = g_strdup_printf("%.2f", Geom::length(pwd2_in));
+    /* convert the measured length to the correct unit ... */
+    double lengthval = Geom::length(pwd2_in);
+    gboolean success = sp_convert_distance(&lengthval, &sp_unit_get_by_id(SP_UNIT_PX), unit);
+
+    /* ... set it as the canvas text ... */
+    gchar *arc_length = g_strdup_printf("%8.2f %s", lengthval, success ? unit.get_abbreviation() : "px");
     info_text.param_setValue(arc_length);
     g_free(arc_length);
 
-    info_text.setPosAndAnchor(pwd2_in, 0.5, 20);
+    info_text.setPosAndAnchor(pwd2_in, 0.5, 10);
 
+    // TODO: how can we compute the area (such that cw turns don't count negative)?
+    //       should we display the area here, too, or write a new LPE for this?
     Piecewise<D2<SBasis> > A = integral(pwd2_in);
     Point c;
     double area;
