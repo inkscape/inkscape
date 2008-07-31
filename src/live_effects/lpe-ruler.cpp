@@ -27,12 +27,14 @@ LPERuler::LPERuler(LivePathEffectObject *lpeobject) :
     mark_distance(_("Mark distance"), _("Distance between ruler marks"), "mark_distance", &wr, this, 20),
     mark_length(_("Mark length"), _("Length of ruler marks"), "mark_length", &wr, this, 10),
     scale(_("Scale factor"), _("Scale factor for ruler distance (only affects on-canvas display of ruler length)"), "scale", &wr, this, 1.0),
-    info_text(_("Info text"), _("Parameter for text creation"), "info_text", &wr, this, "")
+    info_text(_("Info text"), _("Parameter for text creation"), "info_text", &wr, this, ""),
+    unit(_("Unit"), _("Unit"), "unit", &wr, this)
 {
     registerParameter(dynamic_cast<Parameter *>(&mark_distance));
     registerParameter(dynamic_cast<Parameter *>(&mark_length));
     registerParameter(dynamic_cast<Parameter *>(&scale));
     registerParameter(dynamic_cast<Parameter *>(&info_text));
+    registerParameter(dynamic_cast<Parameter *>(&unit));
 
     mark_distance.param_make_integer();
     mark_length.param_make_integer();
@@ -88,14 +90,21 @@ LPERuler::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_i
     Point n(-rot90(dir) * mark_length);
     double length = L2(B - A);
 
-    gchar *dist = g_strdup_printf("%8.2f", length * scale);
+    /* convert the measured length to the correct unit ... */
+    double lengthval = length * scale;
+    gboolean success = sp_convert_distance(&lengthval, &sp_unit_get_by_id(SP_UNIT_PX), unit);
+
+    /* ... set it as the canvas text ... */
+    gchar *dist = g_strdup_printf("%8.2f %s", lengthval, success ? unit.get_abbreviation() : "px");
     info_text.param_setValue(dist);
     g_free(dist);
 
+    /* ... and adjust the text's position on canvas */
     double angle = Geom::angle_between(dir, Geom::Point(1,0));
     info_text.setPos((A + B) / 2 + 2.0 * n);
     info_text.setAnchor(std::sin(angle), -std::cos(angle));
 
+    /* draw the actual ruler */
     Point C, D;
     C = A - n;
     D = A + n;

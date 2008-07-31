@@ -208,6 +208,9 @@ src/live_effects/parameter/path.cpp
 src/live_effects/parameter/point.cpp
 src/live_effects/parameter/pointparam-knotholder.cpp
 src/live_effects/parameter/random.cpp
+src/live_effects/parameter/random.cpp
+src/live_effects/parameter/text.cpp
+src/live_effects/parameter/unit.cpp
 src/main-cmdlineact.cpp
 src/main.cpp
 src/menus-skeleton.h
