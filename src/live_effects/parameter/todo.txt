@@ -1,6 +1,0 @@
-reminder list
-
-- add more types! 
-straightlinepaths: for example for the gears effect. (curves are not important there)
-
-
