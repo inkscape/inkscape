@@ -18,6 +18,8 @@
 
 #include <glib.h>
 #include "extension/implementation/implementation.h"
+#include <sp-path.h>
+
 
 namespace Inkscape
 {
@@ -117,6 +119,8 @@ private:
     /**
      * Output the SVG document's curve data as POV curves
      */
+    bool doCurve(SPItem *item, const String &id);
+    bool doCurvesRecursive(SPDocument *doc, Inkscape::XML::Node *node);
     bool doCurves(SPDocument *doc);
 
     /**
@@ -160,6 +164,11 @@ private:
     int nrNodes;
     int nrSegments;
     int nrShapes;
+    
+    double minx;
+    double miny;
+    double maxx;
+    double maxy;
 
 };
 

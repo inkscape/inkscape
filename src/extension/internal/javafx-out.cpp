@@ -47,32 +47,6 @@ namespace Internal
 
 
 //########################################################################
-//# U T I L I T Y
-//########################################################################
-
-
-
-/**
- * This function searches the Repr tree recursively from the given node,
- * and adds refs to all nodes with the given name, to the result vector
- */
-static void
-findElementsByTagName(std::vector<Inkscape::XML::Node *> &results,
-                      Inkscape::XML::Node *node,
-                      char const *name)
-{
-    if ( !name || strcmp(node->name(), name) == 0 )
-        results.push_back(node);
-
-    for (Inkscape::XML::Node *child = node->firstChild() ; child ;
-              child = child->next())
-        findElementsByTagName( results, child, name );
-
-}
-
-
-
-//########################################################################
 //# OUTPUT FORMATTING
 //########################################################################
 
@@ -146,6 +120,11 @@ bool JavaFXOutput::doHeader(const String &name)
     out("public class %s extends CompositeNode {\n", name.c_str());
     out("}\n");
     out("\n\n");
+    out("function %s.composeNode() =\n", name.c_str());
+    out("Group\n");
+    out("    {\n");
+    out("    content:\n");
+    out("        [\n");
     return true;
 }
 
@@ -156,6 +135,9 @@ bool JavaFXOutput::doHeader(const String &name)
  */
 bool JavaFXOutput::doTail(const String &name)
 {
+    out("        ] // content\n");
+    out("    }; // Group\n");
+    out("// end function %s.composeNode()\n", name.c_str());
     out("\n\n\n\n");
     out("Frame {\n");
     out("    title: \"Test\"\n");
@@ -178,180 +160,200 @@ bool JavaFXOutput::doTail(const String &name)
 }
 
 
+/**
+ *  Output the curve data to buffer
+ */
+bool JavaFXOutput::doCurve(SPItem *item, const String &id)
+{
+    using Geom::X;
+    using Geom::Y;
+
+    Geom::Matrix tf = sp_item_i2d_affine(item);
+
+    //### Get the Shape
+    if (!SP_IS_SHAPE(item))//Bulia's suggestion.  Allow all shapes
+        return true;
+
+    SPShape *shape = SP_SHAPE(item);
+    SPCurve *curve = shape->curve;
+    if (curve->is_empty())
+        return true;
+
+    nrShapes++;
+
+    out("        /*###################################################\n");
+    out("        ### PATH:  %s\n", id.c_str());
+    out("        ###################################################*/\n");
+    out("        Path \n");
+    out("        {\n");
+    out("        id: \"%s\"\n", id.c_str());
+
+    /**
+     * Get the fill and stroke of the shape
+     */
+    SPStyle *style = SP_OBJECT_STYLE(shape);
+    if (style)
+        {
+        /**
+         * Fill
+         */
+        if (style->fill.isColor())
+            {
+            // see color.h for how to parse SPColor
+            gint alpha = 0xffffffff;
+            guint32 rgba = style->fill.value.color.toRGBA32(alpha);
+            unsigned int r = SP_RGBA32_R_U(rgba);
+            unsigned int g = SP_RGBA32_G_U(rgba);
+            unsigned int b = SP_RGBA32_B_U(rgba);
+            unsigned int a = SP_RGBA32_A_U(rgba);
+            out("        fill: rgba(0x%02x, 0x%02x, 0x%02x, 0x%02x)\n",
+                               r, g, b, a);
+            }
+        /**
+         * Stroke
+         */
+        /**
+         * TODO:  stroke code here
+         */
+        }
+
+
+    // convert the path to only lineto's and cubic curveto's:
+    Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curve->get_pathvector() * tf );
+
+    //Count the NR_CURVETOs/LINETOs (including closing line segment)
+    guint segmentCount = 0;
+    for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it) {
+        segmentCount += (*it).size();
+        if (it->closed())
+            segmentCount += 1;
+    }
+
+    out("        d:\n");
+    out("            [\n");
+
+    unsigned int segmentNr = 0;
+
+    nrSegments += segmentCount;
+
+    /**
+     * For all Subpaths in the <path>
+     */	     
+    for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit)
+        {
+        Geom::Point p = pit->front().initialPoint() * tf;
+        out("            MoveTo {\n");
+        out("                x: %s\n", dstr(p[X]).c_str());
+        out("                y: %s\n", dstr(p[Y]).c_str());
+        out("                absolute: true\n");
+        out("                },\n");
+        
+        /**
+         * For all segments in the subpath
+         */		         
+        for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit)
+            {
+            //### LINE
+            if( dynamic_cast<Geom::LineSegment const *> (&*cit) ||
+                dynamic_cast<Geom::HLineSegment const *>(&*cit) ||
+                dynamic_cast<Geom::VLineSegment const *>(&*cit) )
+                {
+                Geom::Point p = cit->initialPoint() * tf;
+                out("            LineTo {\n");
+                out("                x: %s\n", dstr(p[X]).c_str());
+                out("                y: %s\n", dstr(p[Y]).c_str());
+                out("                absolute: true\n");
+                out("                },\n");
+                nrNodes++;
+                }
+            //### BEZIER
+            else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit))
+                {
+                std::vector<Geom::Point> points = cubic->points();
+                Geom::Point p0 = points[1] * tf;
+                Geom::Point p1 = points[2] * tf;
+                Geom::Point p2 = points[3] * tf;
+                out("            CurveTo {\n");
+                out("                x1: %s\n", dstr(p0[X]).c_str());
+                out("                y1: %s\n", dstr(p0[Y]).c_str());
+                out("                x2: %s\n", dstr(p1[X]).c_str());
+                out("                y2: %s\n", dstr(p1[Y]).c_str());
+                out("                x3: %s\n", dstr(p2[X]).c_str());
+                out("                y3: %s\n", dstr(p2[Y]).c_str());
+                out("                absolute: true\n");
+                out("                },\n");
+                nrNodes++;
+                }
+            else
+                {
+                g_error ("logical error, because pathv_to_linear_and_cubic_beziers was used");
+                }
+            segmentNr++;
+            }
+        if (pit->closed())
+            {
+            out("            ClosePath {},\n");
+            }
+        }
+
+    out("            ] // d\n");
+    out("        }, // Path\n");
+
+                 
+    out("        /*###################################################\n");
+    out("        ### end path %s\n", id.c_str());
+    out("        ###################################################*/\n\n\n\n");
+
+    return true;
+}
+
 
 /**
  *  Output the curve data to buffer
  */
-bool JavaFXOutput::doCurves(SPDocument *doc, const String &name)
+bool JavaFXOutput::doCurvesRecursive(SPDocument *doc, Inkscape::XML::Node *node)
 {
-    using Geom::X;
-    using Geom::Y;
-    
-
-    std::vector<Inkscape::XML::Node *>results;
-    findElementsByTagName(results, doc->rroot, NULL);
-    //findElementsByTagName(results, SP_ACTIVE_DOCUMENT->rroot, NULL);
-    if (results.size() == 0)
-        return true;
-
-    out("function %s.composeNode() =\n", name.c_str());
-    out("Group\n");
-    out("    {\n");
-    out("    content:\n");
-    out("        [\n");
-
-    for (unsigned int indx = 0; indx < results.size() ; indx++)
+    /**
+     * If the object is an Item, try processing it
+     */	     
+    char *str  = (char *) node->attribute("id");
+    SPObject *reprobj = doc->getObjectByRepr(node);
+    if (SP_IS_ITEM(reprobj) && str)
         {
-        //### Fetch the object from the repr info
-        Inkscape::XML::Node *rpath = results[indx];
-        char *str  = (char *) rpath->attribute("id");
-        if (!str)
-            continue;
-
-        String id = str;
-        SPObject *reprobj = SP_ACTIVE_DOCUMENT->getObjectByRepr(rpath);
-        if (!reprobj)
-            continue;
-
-        //### Get the transform of the item
-        if (!SP_IS_ITEM(reprobj))
-            continue;
-
         SPItem *item = SP_ITEM(reprobj);
-        Geom::Matrix tf = sp_item_i2d_affine(item);
-
-        //### Get the Shape
-        if (!SP_IS_SHAPE(reprobj))//Bulia's suggestion.  Allow all shapes
-            continue;
-
-        SPShape *shape = SP_SHAPE(reprobj);
-        SPCurve *curve = shape->curve;
-        if (curve->is_empty())
-            continue;
-            
-        nrShapes++;
-
-        out("        /*###################################################\n");
-        out("        ### PATH:  %s\n", id.c_str());
-        out("        ###################################################*/\n");
-        out("        Path \n");
-        out("        {\n");
-        out("        id: \"%s\"\n", id.c_str());
-
-        /**
-         * Get the fill and stroke of the shape
-         */
-        SPStyle *style = SP_OBJECT_STYLE(shape);
-        if (style)
-            {
-            /**
-             * Fill
-             */
-            if (style->fill.isColor())
-                {
-                // see color.h for how to parse SPColor
-                gint alpha = 0xffffffff;
-                guint32 rgba = style->fill.value.color.toRGBA32(alpha);
-                unsigned int r = SP_RGBA32_R_U(rgba);
-                unsigned int g = SP_RGBA32_G_U(rgba);
-                unsigned int b = SP_RGBA32_B_U(rgba);
-                unsigned int a = SP_RGBA32_A_U(rgba);
-                out("        fill: rgba(0x%02x, 0x%02x, 0x%02x, 0x%02x)\n",
-                                   r, g, b, a);
-                }
-            /**
-             * Stroke
-             */
-            /**
-             * TODO:  stroke code here
-             */
-            }
-
-
-        // convert the path to only lineto's and cubic curveto's:
-        Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curve->get_pathvector() * tf );
-
-        //Count the NR_CURVETOs/LINETOs (including closing line segment)
-        guint segmentCount = 0;
-        for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it) {
-            segmentCount += (*it).size();
-            if (it->closed())
-                segmentCount += 1;
+        String id = str;
+        if (!doCurve(item, id))
+            return false;
         }
 
-        out("        d:\n");
-        out("            [\n");
+    /**
+     * Descend into children
+     */	     
+    for (Inkscape::XML::Node *child = node->firstChild() ; child ;
+              child = child->next())
+        {
+		if (!doCurvesRecursive(doc, child))
+		    return false;
+		}
 
-        unsigned int segmentNr = 0;
+    return true;
+}
 
-        nrSegments += segmentCount;
 
-        for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit)
-            {
-            Geom::Point p = pit->front().initialPoint() * tf;
-            out("            MoveTo {\n");
-            out("                x: %s\n", dstr(p[X]).c_str());
-            out("                y: %s\n", dstr(p[Y]).c_str());
-            out("                absolute: true\n");
-            out("                },\n");
-            for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit)
-                {
-                //### LINE
-                if( dynamic_cast<Geom::LineSegment const *> (&*cit) ||
-                    dynamic_cast<Geom::HLineSegment const *>(&*cit) ||
-                    dynamic_cast<Geom::VLineSegment const *>(&*cit) )
-                    {
-                    Geom::Point p = cit->initialPoint() * tf;
-                    out("            LineTo {\n");
-                    out("                x: %s\n", dstr(p[X]).c_str());
-                    out("                y: %s\n", dstr(p[Y]).c_str());
-                    out("                absolute: true\n");
-                    out("                },\n");
-                    nrNodes++;
-                    }
-                //### BEZIER
-                else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit))
-                    {
-                    std::vector<Geom::Point> points = cubic->points();
-                    Geom::Point p0 = points[0] * tf;
-                    Geom::Point p1 = points[1] * tf;
-                    Geom::Point p2 = points[2] * tf;
-                    out("            CurveTo {\n");
-                    out("                x1: %s\n", dstr(p0[X]).c_str());
-                    out("                y1: %s\n", dstr(p0[Y]).c_str());
-                    out("                x2: %s\n", dstr(p1[X]).c_str());
-                    out("                y2: %s\n", dstr(p1[Y]).c_str());
-                    out("                x3: %s\n", dstr(p2[X]).c_str());
-                    out("                y3: %s\n", dstr(p2[Y]).c_str());
-                    out("                smooth: false\n");
-                    out("                absolute: true\n");
-                    out("                },\n");
-                    nrNodes++;
-                    }
-                else
-                    {
-                    g_error ("logical error, because pathv_to_linear_and_cubic_beziers was used");
-                    }
-                }
-            if (pit->closed())
-                {
-                out("            ClosePath {},\n");
-                }
-            }
+/**
+ *  Output the curve data to buffer
+ */
+bool JavaFXOutput::doCurves(SPDocument *doc)
+{
 
-        out("            ] // d\n");
-        out("        }, // Path\n");
+    double bignum = 1000000.0;
+    minx  =  bignum;
+    maxx  = -bignum;
+    miny  =  bignum;
+    maxy  = -bignum;
 
-                     
-        out("        /*###################################################\n");
-        out("        ### end path %s\n", id.c_str());
-        out("        ###################################################*/\n\n\n\n");
-
-        }//for
-
-    out("        ] // content\n");
-    out("    }; // Group\n");
-    out("// end function %s.composeNode()\n", name.c_str());
+    if (!doCurvesRecursive(doc, doc->rroot))
+        return false;
 
     return true;
 
@@ -396,7 +398,7 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *uri)
     //###### SAVE IN POV FORMAT TO BUFFER
     //# Lets do the curves first, to get the stats
     
-    if (!doCurves(doc, name))
+    if (!doCurves(doc))
         return false;
     String curveBuf = outbuf;
     outbuf.clear();

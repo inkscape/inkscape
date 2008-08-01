@@ -261,63 +261,35 @@ bool PovOutput::doTail()
 /**
  *  Output the curve data to buffer
  */
-bool PovOutput::doCurves(SPDocument *doc)
+bool PovOutput::doCurve(SPItem *item, const String &id)
 {
     using Geom::X;
     using Geom::Y;
 
-    std::vector<Inkscape::XML::Node *>results;
-    //findElementsByTagName(results, SP_ACTIVE_DOCUMENT->rroot, "path");
-    findElementsByTagName(results, SP_ACTIVE_DOCUMENT->rroot, NULL);
-    if (results.size() == 0)
+    Geom::Matrix tf = sp_item_i2d_affine(item);
+
+    //### Get the Shape
+    if (!SP_IS_SHAPE(item))//Bulia's suggestion.  Allow all shapes
         return true;
 
-    double bignum = 1000000.0;
-    double minx  =  bignum;
-    double maxx  = -bignum;
-    double miny  =  bignum;
-    double maxy  = -bignum;
+    SPShape *shape = SP_SHAPE(item);
+    SPCurve *curve = shape->curve;
+    if (curve->is_empty())
+        return true;
 
-    for (unsigned int indx = 0; indx < results.size() ; indx++)
-        {
-        //### Fetch the object from the repr info
-        Inkscape::XML::Node *rpath = results[indx];
-        char *str  = (char *) rpath->attribute("id");
-        if (!str)
-            continue;
+    nrShapes++;
 
-        String id = str;
-        SPObject *reprobj = SP_ACTIVE_DOCUMENT->getObjectByRepr(rpath);
-        if (!reprobj)
-            continue;
+    PovShapeInfo shapeInfo;
+    shapeInfo.id    = id;
+    shapeInfo.color = "";
 
-        //### Get the transform of the item
-        if (!SP_IS_ITEM(reprobj))
-            continue;
-
-        SPItem *item = SP_ITEM(reprobj);
-        Geom::Matrix tf = sp_item_i2d_affine(item);
-
-        //### Get the Shape
-        if (!SP_IS_SHAPE(reprobj))//Bulia's suggestion.  Allow all shapes
-            continue;
-
-        SPShape *shape = SP_SHAPE(reprobj);
-        SPCurve *curve = shape->curve;
-        if (curve->is_empty())
-            continue;
-
-        nrShapes++;
-
-        PovShapeInfo shapeInfo;
-        shapeInfo.id    = id;
-        shapeInfo.color = "";
-
-        //Try to get the fill color of the shape
-        SPStyle *style = SP_OBJECT_STYLE(shape);
-        /* fixme: Handle other fill types, even if this means translating gradients to a single
+    //Try to get the fill color of the shape
+    SPStyle *style = SP_OBJECT_STYLE(shape);
+    /* fixme: Handle other fill types, even if this means translating gradients to a single
            flat colour. */
-        if (style && (style->fill.isColor()))
+    if (style)
+        {
+        if (style->fill.isColor())
             {
             // see color.h for how to parse SPColor
             float rgb[3];
@@ -333,117 +305,170 @@ bool PovOutput::doCurves(SPDocument *doc)
             rgbf.append(dstr(1.0 - dopacity)); rgbf.append(">");
             shapeInfo.color += rgbf;
             }
-
-        povShapes.push_back(shapeInfo); //passed all tests.  save the info
-
-        // convert the path to only lineto's and cubic curveto's:
-        Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curve->get_pathvector() * tf );
-
-        //Count the NR_CURVETOs/LINETOs (including closing line segment)
-        guint segmentCount = 0;
-        for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it) {
-            segmentCount += (*it).size();
-            if (it->closed())
-                segmentCount += 1;
         }
 
-        out("/*###################################################\n");
-        out("### PRISM:  %s\n", id.c_str());
-        out("###################################################*/\n");
-        out("#declare %s = prism {\n", id.c_str());
-        out("    linear_sweep\n");
-        out("    bezier_spline\n");
-        out("    1.0, //top\n");
-        out("    0.0, //bottom\n");
-        out("    %d //nr points\n", segmentCount * 4);
-        int segmentNr = 0;
+    povShapes.push_back(shapeInfo); //passed all tests.  save the info
 
-        nrSegments += segmentCount;
+    // convert the path to only lineto's and cubic curveto's:
+    Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curve->get_pathvector() * tf );
 
-        Geom::Rect cminmax( pathv.front().initialPoint(), pathv.front().initialPoint() );  // at moment of writing, 2geom lacks proper initialization of empty intervals in rect...
+    //Count the NR_CURVETOs/LINETOs (including closing line segment)
+    int segmentCount = 0;
+    for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it)
+	    {
+        segmentCount += (*it).size();
+        if (it->closed())
+            segmentCount += 1;
+        }
+
+    out("/*###################################################\n");
+    out("### PRISM:  %s\n", id.c_str());
+    out("###################################################*/\n");
+    out("#declare %s = prism {\n", id.c_str());
+    out("    linear_sweep\n");
+    out("    bezier_spline\n");
+    out("    1.0, //top\n");
+    out("    0.0, //bottom\n");
+    out("    %d //nr points\n", segmentCount * 4);
+    int segmentNr = 0;
+
+    nrSegments += segmentCount;
+
+    /**
+     *	 at moment of writing, 2geom lacks proper initialization of empty intervals in rect...
+     */     
+    Geom::Rect cminmax( pathv.front().initialPoint(), pathv.front().initialPoint() ); 
    
    
-        for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit)
+    /**
+     * For all Subpaths in the <path>
+     */	     
+    for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit)
+        {
+
+        cminmax.expandTo(pit->initialPoint());
+
+        /**
+         * For all segments in the subpath
+         */		         
+        for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit)
 		    {
 
-            cminmax.expandTo(pit->initialPoint());
-
-            for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit)
-			    {
-
-                if( dynamic_cast<Geom::LineSegment const *> (&*cit) ||
+            if( dynamic_cast<Geom::LineSegment const *> (&*cit) ||
                     dynamic_cast<Geom::HLineSegment const *>(&*cit) ||
                     dynamic_cast<Geom::VLineSegment const *>(&*cit) )
-                    {
-                    Geom::Point p0 = cit->initialPoint() * tf;
-                    Geom::Point p1 = cit->finalPoint()   * tf;
-                    segment(segmentNr++,
-                            p0[X], p0[Y], p0[X], p0[Y], p1[X], p1[Y], p1[X], p1[Y] );
-                    nrNodes += 8;
-                    }
-                else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit))
-				    {
-                    std::vector<Geom::Point> points = cubic->points();
-                    Geom::Point p0 = points[0] * tf;
-                    Geom::Point p1 = points[1] * tf;
-                    Geom::Point p2 = points[2] * tf;
-                    Geom::Point p3 = points[3] * tf;
-                    segment(segmentNr++,
+                {
+                Geom::Point p0 = cit->initialPoint();
+                Geom::Point p1 = cit->finalPoint();
+                segment(segmentNr++,
+                        p0[X], p0[Y], p0[X], p0[Y], p1[X], p1[Y], p1[X], p1[Y] );
+                nrNodes += 8;
+                }
+            else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit))
+			    {
+                std::vector<Geom::Point> points = cubic->points();
+                Geom::Point p0 = points[0];
+                Geom::Point p1 = points[1];
+                Geom::Point p2 = points[2];
+                Geom::Point p3 = points[3];
+                segment(segmentNr++,
                             p0[X],p0[Y], p1[X],p1[Y], p2[X],p2[Y], p3[X],p3[Y]);
-                    nrNodes += 8;
-                    }
-                else
-				    {
-                    g_warning("logical error, because pathv_to_linear_and_cubic_beziers was used");
-                    return false;
-                    }
+                nrNodes += 8;
+                }
+            else
+			    {
+                g_warning("logical error, because pathv_to_linear_and_cubic_beziers was used");
+                return false;
+                }
 
-                if (segmentNr <= static_cast<int>(segmentCount))
-                    out(",\n");
-                else
-                    out("\n");
+            if (segmentNr < segmentCount)
+                out(",\n");
+            else
+                out("\n");
 
-                cminmax.expandTo(cit->finalPoint());
+            cminmax.expandTo(cit->finalPoint());
 
             }
         }
 
-        out("}\n");
+    out("}\n");
 
-        double cminx = cminmax.min()[X];
-        double cmaxx = cminmax.max()[X];
-        double cminy = cminmax.min()[Y];
-        double cmaxy = cminmax.max()[Y];
+    double cminx = cminmax.min()[X];
+    double cmaxx = cminmax.max()[X];
+    double cminy = cminmax.min()[Y];
+    double cmaxy = cminmax.max()[Y];
 
-        //# prefix for following declarations
-        char *pfx = (char *)id.c_str();
+    out("#declare %s_MIN_X    = %s;\n", id.c_str(), dstr(cminx).c_str());
+    out("#declare %s_CENTER_X = %s;\n", id.c_str(), dstr((cmaxx+cminx)/2.0).c_str());
+    out("#declare %s_MAX_X    = %s;\n", id.c_str(), dstr(cmaxx).c_str());
+    out("#declare %s_WIDTH    = %s;\n", id.c_str(), dstr(cmaxx-cminx).c_str());
+    out("#declare %s_MIN_Y    = %s;\n", id.c_str(), dstr(cminy).c_str());
+    out("#declare %s_CENTER_Y = %s;\n", id.c_str(), dstr((cmaxy+cminy)/2.0).c_str());
+    out("#declare %s_MAX_Y    = %s;\n", id.c_str(), dstr(cmaxy).c_str());
+    out("#declare %s_HEIGHT   = %s;\n", id.c_str(), dstr(cmaxy-cminy).c_str());
+    if (shapeInfo.color.length()>0)
+        out("#declare %s_COLOR    = %s;\n",
+                id.c_str(), shapeInfo.color.c_str());
+    out("/*###################################################\n");
+    out("### end %s\n", id.c_str());
+    out("###################################################*/\n\n\n\n");
 
-        out("#declare %s_MIN_X    = %s;\n", pfx, dstr(cminx).c_str());
-        out("#declare %s_CENTER_X = %s;\n", pfx, dstr((cmaxx+cminx)/2.0).c_str());
-        out("#declare %s_MAX_X    = %s;\n", pfx, dstr(cmaxx).c_str());
-        out("#declare %s_WIDTH    = %s;\n", pfx, dstr(cmaxx-cminx).c_str());
-        out("#declare %s_MIN_Y    = %s;\n", pfx, dstr(cminy).c_str());
-        out("#declare %s_CENTER_Y = %s;\n", pfx, dstr((cmaxy+cminy)/2.0).c_str());
-        out("#declare %s_MAX_Y    = %s;\n", pfx, dstr(cmaxy).c_str());
-        out("#declare %s_HEIGHT   = %s;\n", pfx, dstr(cmaxy-cminy).c_str());
-        if (shapeInfo.color.length()>0)
-            out("#declare %s_COLOR    = %s;\n",
-                    pfx, shapeInfo.color.c_str());
-        out("/*###################################################\n");
-        out("### end %s\n", id.c_str());
-        out("###################################################*/\n\n\n\n");
-        if (cminx < minx)
-            minx = cminx;
-        if (cmaxx > maxx)
-            maxx = cmaxx;
-        if (cminy < miny)
-            miny = cminy;
-        if (cmaxy > maxy)
-            maxy = cmaxy;
+    if (cminx < minx)
+        minx = cminx;
+    if (cmaxx > maxx)
+        maxx = cmaxx;
+    if (cminy < miny)
+        miny = cminy;
+    if (cmaxy > maxy)
+        maxy = cmaxy;
 
-        }//for
+    return true;
+}
 
+/**
+ *  Output the curve data to buffer
+ */
+bool PovOutput::doCurvesRecursive(SPDocument *doc, Inkscape::XML::Node *node)
+{
+    /**
+     * If the object is an Item, try processing it
+     */	     
+    char *str  = (char *) node->attribute("id");
+    SPObject *reprobj = doc->getObjectByRepr(node);
+    if (SP_IS_ITEM(reprobj) && str)
+        {
+        SPItem *item = SP_ITEM(reprobj);
+        String id = str;
+        if (!doCurve(item, id))
+            return false;
+        }
 
+    /**
+     * Descend into children
+     */	     
+    for (Inkscape::XML::Node *child = node->firstChild() ; child ;
+              child = child->next())
+        {
+		if (!doCurvesRecursive(doc, child))
+		    return false;
+		}
+
+    return true;
+}
+
+/**
+ *  Output the curve data to buffer
+ */
+bool PovOutput::doCurves(SPDocument *doc)
+{
+    double bignum = 1000000.0;
+    minx  =  bignum;
+    maxx  = -bignum;
+    miny  =  bignum;
+    maxy  = -bignum;
+
+    if (!doCurvesRecursive(doc, doc->rroot))
+        return false;
 
     //## Let's make a union of all of the Shapes
     if (povShapes.size()>0)
@@ -530,8 +555,6 @@ bool PovOutput::doCurves(SPDocument *doc)
 
     return true;
 }
-
-
 
 
 //########################################################################

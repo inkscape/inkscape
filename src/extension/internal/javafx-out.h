@@ -89,7 +89,9 @@ private:
     /**
      * Output the SVG document's curve data as POV curves
      */
-	bool doCurves(SPDocument *doc, const String &name);
+    bool doCurve(SPItem *item, const String &id);
+    bool doCurvesRecursive(SPDocument *doc, Inkscape::XML::Node *node);
+    bool doCurves(SPDocument *doc);
 
     /**
      * Output the file footer
@@ -107,6 +109,11 @@ private:
     int nrNodes;
     int nrSegments;
     int nrShapes;
+
+    double minx;
+    double miny;
+    double maxx;
+    double maxy;
 
 };
 
