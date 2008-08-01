@@ -26,8 +26,6 @@
 #include "sp-offset.h"
 #include "sp-flowtext.h"
 #include "prefs-utils.h"
-#include "inkscape.h"
-#include "snap.h"
 #include "desktop-affine.h"
 #include "style.h"
 #include "desktop.h"
@@ -117,6 +115,9 @@ class RectKnotHolderEntityWH : public KnotHolderEntity {
 public:
     virtual NR::Point knot_get();
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+
+protected:
+    void set_internal(NR::Point const &p, NR::Point const &origin, guint state);
 };
 
 /* handle for x/y adjustment */
@@ -125,17 +126,6 @@ public:
     virtual NR::Point knot_get();
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
 };
-
-static NR::Point snap_knot_position(SPItem *item, NR::Point const &p)
-{
-    SPDesktop const *desktop = inkscape_active_desktop();
-    NR::Matrix const i2d (from_2geom(sp_item_i2d_affine (item)));
-    NR::Point s = p * i2d;
-    SnapManager &m = desktop->namedview->snap_manager;
-    m.setup(desktop, item);
-    m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, s);
-    return s * i2d.inverse();
-}
 
 NR::Point
 RectKnotHolderEntityRX::knot_get()
@@ -264,9 +254,11 @@ RectKnotHolderEntityWH::knot_get()
     return NR::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed);
 }
 
-static void sp_rect_wh_set_internal(SPRect *rect, NR::Point const &p, NR::Point const &origin, guint state)
+void
+RectKnotHolderEntityWH::set_internal(NR::Point const &p, NR::Point const &origin, guint state)
 {
-    NR::Point const s = snap_knot_position(rect, p);
+    SPRect *rect = SP_RECT(item);
+    NR::Point const s = snap_knot_position(p);
 
     if (state & GDK_CONTROL_MASK) {
         // original width/height when drag started
@@ -321,10 +313,7 @@ static void sp_rect_wh_set_internal(SPRect *rect, NR::Point const &p, NR::Point 
 void
 RectKnotHolderEntityWH::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
 {
-    SPRect *rect = SP_RECT(item);
-
-    sp_rect_wh_set_internal(rect, p, origin, state);
-
+    set_internal(p, origin, state);
     update_knot();
 }
 
@@ -349,7 +338,7 @@ RectKnotHolderEntityXY::knot_set(NR::Point const &p, NR::Point const &origin, gu
     gdouble w_orig = opposite_x - origin[NR::X];
     gdouble h_orig = opposite_y - origin[NR::Y];
 
-    NR::Point const s = snap_knot_position(rect, p);
+    NR::Point const s = snap_knot_position(p);
 
     // mouse displacement since drag started
     gdouble minx = s[NR::X] - origin[NR::X];
@@ -447,8 +436,8 @@ public:
     virtual NR::Point knot_get() = 0;
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state) = 0;
 
-    static NR::Point knot_get_generic(SPItem *item, unsigned int knot_id);
-    static void knot_set_generic(SPItem *item, unsigned int knot_id, NR::Point const &p, guint state);
+    NR::Point knot_get_generic(SPItem *item, unsigned int knot_id);
+    void knot_set_generic(SPItem *item, unsigned int knot_id, NR::Point const &p, guint state);
 };
 
 NR::Point
@@ -460,7 +449,7 @@ Box3DKnotHolderEntity::knot_get_generic(SPItem *item, unsigned int knot_id)
 void
 Box3DKnotHolderEntity::knot_set_generic(SPItem *item, unsigned int knot_id, NR::Point const &new_pos, guint state)
 {
-    NR::Point const s = snap_knot_position(item, new_pos);
+    NR::Point const s = snap_knot_position(new_pos);
 
     g_assert(item != NULL);
     SPBox3D *box = SP_BOX3D(item);
@@ -637,7 +626,7 @@ Box3DKnotHolderEntity7::knot_set(NR::Point const &new_pos, NR::Point const &/*or
 void
 Box3DKnotHolderEntityCenter::knot_set(NR::Point const &new_pos, NR::Point const &origin, guint state)
 {
-    NR::Point const s = snap_knot_position(item, new_pos);
+    NR::Point const s = snap_knot_position(new_pos);
 
     SPBox3D *box = SP_BOX3D(item);
     NR::Matrix const i2d (from_2geom(sp_item_i2d_affine (item)));
@@ -829,9 +818,8 @@ void
 ArcKnotHolderEntityRX::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
-    SPArc *arc = SP_ARC(item);
 
-    NR::Point const s = snap_knot_position(arc, p);
+    NR::Point const s = snap_knot_position(p);
 
     ge->rx.computed = fabs( ge->cx.computed - s[NR::X] );
 
@@ -839,7 +827,7 @@ ArcKnotHolderEntityRX::knot_set(NR::Point const &p, NR::Point const &/*origin*/,
         ge->ry.computed = ge->rx.computed;
     }
 
-    ((SPObject *)arc)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    ((SPObject *)item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 NR::Point
@@ -865,9 +853,8 @@ void
 ArcKnotHolderEntityRY::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
-    SPArc *arc = SP_ARC(item);
 
-    NR::Point const s = snap_knot_position(arc, p);
+    NR::Point const s = snap_knot_position(p);
 
     ge->ry.computed = fabs( ge->cy.computed - s[NR::Y] );
 
@@ -875,7 +862,7 @@ ArcKnotHolderEntityRY::knot_set(NR::Point const &p, NR::Point const &/*origin*/,
         ge->rx.computed = ge->ry.computed;
     }
 
-    ((SPObject *)arc)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    ((SPObject *)item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 NR::Point
@@ -947,7 +934,7 @@ StarKnotHolderEntity1::knot_set(NR::Point const &p, NR::Point const &/*origin*/,
 {
     SPStar *star = SP_STAR(item);
 
-    NR::Point const s = snap_knot_position(star, p);
+    NR::Point const s = snap_knot_position(p);
 
     NR::Point d = s - star->center;
 
@@ -973,7 +960,7 @@ StarKnotHolderEntity2::knot_set(NR::Point const &p, NR::Point const &/*origin*/,
 {
     SPStar *star = SP_STAR(item);
 
-    NR::Point const s = snap_knot_position(star, p);
+    NR::Point const s = snap_knot_position(p);
 
     if (star->flatsided == false) {
         NR::Point d = s - star->center;
@@ -1295,7 +1282,10 @@ OffsetKnotHolder::OffsetKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolde
     add_pattern_knotholder();
 }
 
-class FlowtextKnotHolderEntity : public KnotHolderEntity {
+// TODO: this is derived from RectKnotHolderEntityWH because it used the same static function
+// set_internal as the latter before KnotHolderEntity was C++ified. Check whether this also makes
+// sense logically.
+class FlowtextKnotHolderEntity : public RectKnotHolderEntityWH {
 public:
     virtual NR::Point knot_get();
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
@@ -1312,9 +1302,7 @@ FlowtextKnotHolderEntity::knot_get()
 void
 FlowtextKnotHolderEntity::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
 {
-    SPRect *rect = SP_RECT(item);
-
-    sp_rect_wh_set_internal(rect, p, origin, state);
+    set_internal(p, origin, state);
 }
 
 FlowtextKnotHolder::FlowtextKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler) :

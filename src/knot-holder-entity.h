@@ -56,8 +56,11 @@ public:
     void update_knot();
 
 //private:
+    NR::Point snap_knot_position(NR::Point const &p);
+
     SPKnot *knot;
     SPItem *item;
+    SPDesktop *desktop;
 
     KnotHolder *parent_holder;
 

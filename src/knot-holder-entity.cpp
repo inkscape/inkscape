@@ -23,11 +23,8 @@
 #include "macros.h"
 #include <libnr/nr-matrix-ops.h>
 #include "sp-pattern.h"
-#include "inkscape.h"
 #include "snap.h"
-#include "desktop-affine.h"
 #include "desktop.h"
-#include "desktop-handles.h"
 #include "sp-namedview.h"
 #include <2geom/matrix.h>
 
@@ -41,6 +38,7 @@ KnotHolderEntity::create(SPDesktop *desktop, SPItem *item, KnotHolder *parent, c
 
     this->parent_holder = parent;
     this->item = item; // TODO: remove the item either from here or from knotholder.cpp
+    this->desktop = desktop;
 
     my_counter = KnotHolderEntity::counter++;
 
@@ -87,6 +85,18 @@ KnotHolderEntity::update_knot()
     _moved_connection.unblock();
 }
 
+NR::Point
+KnotHolderEntity::snap_knot_position(NR::Point const &p)
+{
+    NR::Matrix const i2d (from_2geom(sp_item_i2d_affine(item)));
+    NR::Point s = p * i2d;
+    SnapManager &m = desktop->namedview->snap_manager;
+    m.setup(desktop, item);
+    m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, s);
+    return s * i2d.inverse();
+}
+
+
 /* Pattern manipulation */
 
 static gdouble sp_pattern_extract_theta(SPPattern *pat, NR::Point scale)
@@ -107,23 +117,12 @@ static NR::Point sp_pattern_extract_trans(SPPattern const *pat)
     return NR::Point(pat->patternTransform[4], pat->patternTransform[5]);
 }
 
-static NR::Point snap_knot_position(SPItem *item, NR::Point const &p)
-{
-    SPDesktop const *desktop = inkscape_active_desktop();
-    NR::Matrix const i2d (from_2geom(sp_item_i2d_affine (item)));
-    NR::Point s = p * i2d;
-    SnapManager &m = desktop->namedview->snap_manager;
-    m.setup(desktop, item);
-    m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, s);
-    return s * i2d.inverse();
-}
-
 void
 PatternKnotHolderEntityXY::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
 {
     SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 
-    NR::Point p_snapped = snap_knot_position(item, p);
+    NR::Point p_snapped = snap_knot_position(p);
 
     if ( state & GDK_CONTROL_MASK ) {
         if (fabs((p - origin)[NR::X]) > fabs((p - origin)[NR::Y])) {
@@ -193,7 +192,7 @@ PatternKnotHolderEntityScale::knot_set(NR::Point const &p, NR::Point const &/*or
 {
     SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 
-    NR::Point p_snapped = snap_knot_position(item, p);
+    NR::Point p_snapped = snap_knot_position(p);
 
     // get angle from current transform, (need get current scale first to calculate angle)
     NR::Point oldscale = sp_pattern_extract_scale(pat);
