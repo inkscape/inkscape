@@ -93,7 +93,7 @@ test_unit_table()
 }
 
 int
-main(int argc, char *argv[])
+main(int /*argc*/, char */*argv*/[])
 {
     int const ret = ( ( test_conversions()
                         && test_unit_table() )

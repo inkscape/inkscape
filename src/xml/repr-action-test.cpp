@@ -8,7 +8,7 @@
 int sp_main_gui (int, char const**) { return 0; }
 int sp_main_console (int, char const**) { return 0; }
 
-int main(int argc, char *argv[]) {
+int main(int /*argc*/, char */*argv*/[]) {
 	Inkscape::XML::Document *document;
 	Inkscape::XML::Node *a, *b, *c, *root;
 

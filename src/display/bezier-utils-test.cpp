@@ -82,7 +82,7 @@ static void compare_rms(Point const est_b[], double const t[], Point const d[], 
     }
 }
 
-int main(int argc, char *argv[]) {
+int main(int /*argc*/, char */*argv*/[]) {
     utest_start("bezier-utils.cpp");
 
     UTEST_TEST("copy_without_nans_or_adjacent_duplicates") {

@@ -240,7 +240,7 @@ static void handleSecondaryClick( GtkWidget* widget, gint arg1, gpointer callbac
     }
 }
 
-static gboolean handleEnterNotify( GtkWidget* widget, GdkEventCrossing* event, gpointer callback_data ) {
+static gboolean handleEnterNotify( GtkWidget* /*widget*/, GdkEventCrossing* /*event*/, gpointer callback_data ) {
     ColorItem* item = reinterpret_cast<ColorItem*>(callback_data);
     if ( item ) {
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -254,7 +254,7 @@ static gboolean handleEnterNotify( GtkWidget* widget, GdkEventCrossing* event, g
     return FALSE;
 }
 
-static gboolean handleLeaveNotify( GtkWidget* widget, GdkEventCrossing* event, gpointer callback_data ) {
+static gboolean handleLeaveNotify( GtkWidget* /*widget*/, GdkEventCrossing* /*event*/, gpointer callback_data ) {
     ColorItem* item = reinterpret_cast<ColorItem*>(callback_data);
     if ( item ) {
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;

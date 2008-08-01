@@ -26,7 +26,7 @@ static bool check_values(ListContainer<int> const &c, unsigned n_values, ...) {
 	return ret && n_values == 0 && iter == c.end();
 }
 
-int main(int argc, char *argv[]) {
+int main(int /*argc*/, char */*argv*/[]) {
 	Inkscape::GC::init();
 	utest_start("List Container");
 	UTEST_TEST("range constructor") {

@@ -69,15 +69,15 @@ static void sp_script_release(SPObject *object)
     }
 }
 
-static void sp_script_update(SPObject *object, SPCtx *ctx, guint flags)
+static void sp_script_update(SPObject */*object*/, SPCtx */*ctx*/, guint /*flags*/)
 {
 }
 
-static void sp_script_modified(SPObject *object, guint flags)
+static void sp_script_modified(SPObject */*object*/, guint /*flags*/)
 {
 }
 
-static Inkscape::XML::Node *sp_script_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node *sp_script_write(SPObject */*object*/, Inkscape::XML::Document */*xml_doc*/, Inkscape::XML::Node *repr, guint /*flags*/)
 {
 /*
 TODO:

@@ -7,7 +7,7 @@ using NR::X;
 using NR::Y;
 
 
-int main(int argc, char *argv[]) {
+int main(int /*argc*/, char */*argv*/[]) {
 	utest_start("Basic NR::Point operations");
 
 	UTEST_TEST("X,Y values") {

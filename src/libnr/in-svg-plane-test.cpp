@@ -5,7 +5,7 @@
 #include "utest/utest.h"
 #include "2geom/isnan.h"
 
-int main(int argc, char *argv[])
+int main(int /*argc*/, char */*argv*/[])
 {
     utest_start("in-svg-plane.h");
 

@@ -245,7 +245,7 @@ node_data_free (gpointer ptr) {
 }
 
 void
-element_child_added (Inkscape::XML::Node * repr, Inkscape::XML::Node * child, Inkscape::XML::Node * ref, gpointer ptr)
+element_child_added (Inkscape::XML::Node * /*repr*/, Inkscape::XML::Node * child, Inkscape::XML::Node * ref, gpointer ptr)
 {
 	NodeData * data;
 	GtkCTreeNode * before;
@@ -260,7 +260,7 @@ element_child_added (Inkscape::XML::Node * repr, Inkscape::XML::Node * child, In
 }
 
 void
-element_attr_changed (Inkscape::XML::Node * repr, const gchar * key, const gchar * old_value, const gchar * new_value, bool is_interactive, gpointer ptr)
+element_attr_changed (Inkscape::XML::Node * repr, const gchar * key, const gchar * /*old_value*/, const gchar * new_value, bool /*is_interactive*/, gpointer ptr)
 {
 	NodeData * data;
 	gchar *label;
@@ -270,7 +270,7 @@ element_attr_changed (Inkscape::XML::Node * repr, const gchar * key, const gchar
 	if (data->tree->blocked) return;
 
 	if (strcmp (key, "id")) return;
-	
+
 	if (new_value) {
 		label = g_strdup_printf ("<%s id=\"%s\">", repr->name(), new_value);
 	} else {
@@ -281,7 +281,7 @@ element_attr_changed (Inkscape::XML::Node * repr, const gchar * key, const gchar
 }
 
 void
-element_child_removed (Inkscape::XML::Node * repr, Inkscape::XML::Node * child, Inkscape::XML::Node * ref, gpointer ptr)
+element_child_removed (Inkscape::XML::Node * /*repr*/, Inkscape::XML::Node * child, Inkscape::XML::Node * /*ref*/, gpointer ptr)
 {
 	NodeData * data;
 
@@ -293,7 +293,7 @@ element_child_removed (Inkscape::XML::Node * repr, Inkscape::XML::Node * child, 
 }
 
 void
-element_order_changed (Inkscape::XML::Node * repr, Inkscape::XML::Node * child, Inkscape::XML::Node * oldref, Inkscape::XML::Node * newref, gpointer ptr)
+element_order_changed (Inkscape::XML::Node * /*repr*/, Inkscape::XML::Node * child, Inkscape::XML::Node * /*oldref*/, Inkscape::XML::Node * newref, gpointer ptr)
 {
 	NodeData * data;
 	GtkCTreeNode * before, * node;
@@ -311,7 +311,7 @@ element_order_changed (Inkscape::XML::Node * repr, Inkscape::XML::Node * child, 
 }
 
 void
-text_content_changed (Inkscape::XML::Node * repr, const gchar * old_content, const gchar * new_content, gpointer ptr)
+text_content_changed (Inkscape::XML::Node * /*repr*/, const gchar * /*old_content*/, const gchar * new_content, gpointer ptr)
 {
 	NodeData *data;
 	gchar *label;
@@ -326,7 +326,7 @@ text_content_changed (Inkscape::XML::Node * repr, const gchar * old_content, con
 }
 
 void
-comment_content_changed (Inkscape::XML::Node *repr, const gchar * old_content, const gchar *new_content, gpointer ptr)
+comment_content_changed (Inkscape::XML::Node */*repr*/, const gchar * /*old_content*/, const gchar *new_content, gpointer ptr)
 {
 	NodeData *data;
 	gchar *label;
@@ -341,7 +341,7 @@ comment_content_changed (Inkscape::XML::Node *repr, const gchar * old_content, c
 }
 
 void
-pi_content_changed(Inkscape::XML::Node *repr, const gchar * old_content, const gchar *new_content, gpointer ptr)
+pi_content_changed(Inkscape::XML::Node *repr, const gchar * /*old_content*/, const gchar *new_content, gpointer ptr)
 {
 	NodeData *data;
 	gchar *label;
@@ -386,7 +386,7 @@ ref_to_sibling (GtkCTreeNode * parent, Inkscape::XML::Node * ref)
 {
 	if (ref) {
 		GtkCTreeNode * before;
-		before = repr_to_child (parent, ref); 
+		before = repr_to_child (parent, ref);
 		g_assert (before != NULL);
 		before = GTK_CTREE_ROW (before)->sibling;
 		return before;
@@ -419,7 +419,7 @@ sibling_to_ref (GtkCTreeNode * parent, GtkCTreeNode * sibling)
 }
 
 gboolean
-check_drag (GtkCTree * tree, GtkCTreeNode * node, GtkCTreeNode * new_parent, GtkCTreeNode * new_sibling)
+check_drag (GtkCTree * /*tree*/, GtkCTreeNode * node, GtkCTreeNode * new_parent, GtkCTreeNode * /*new_sibling*/)
 {
 	GtkCTreeNode * old_parent;
 
@@ -434,7 +434,7 @@ check_drag (GtkCTree * tree, GtkCTreeNode * node, GtkCTreeNode * new_parent, Gtk
 }
 
 Inkscape::XML::Node *
-sp_xmlview_tree_node_get_repr (SPXMLViewTree * tree, GtkCTreeNode * node)
+sp_xmlview_tree_node_get_repr (SPXMLViewTree * /*tree*/, GtkCTreeNode * node)
 {
 	return NODE_DATA (node)->repr;
 }

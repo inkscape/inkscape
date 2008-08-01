@@ -304,7 +304,7 @@ void PovOutput::doCurves(SPDocument *doc)
         SPCurve *curve = shape->curve;
         if (curve->is_empty())
             continue;
-            
+
         nrShapes++;
 
         PovShapeInfo shapeInfo;
@@ -384,7 +384,7 @@ void PovOutput::doCurves(SPDocument *doc)
                     g_error ("logical error, because pathv_to_linear_and_cubic_beziers was used");
                 }
 
-                if (segmentNr <= segmentCount)
+                if (segmentNr <= static_cast<int>(segmentCount))
                     out(",\n");
                 else
                     out("\n");
@@ -400,7 +400,7 @@ void PovOutput::doCurves(SPDocument *doc)
         double cmaxx = cminmax.max()[X];
         double cminy = cminmax.min()[Y];
         double cmaxy = cminmax.max()[Y];
-                     
+
         //# prefix for following declarations
         char *pfx = (char *)id.c_str();
 
@@ -553,9 +553,9 @@ void PovOutput::saveDocument(SPDocument *doc, gchar const *uri)
     outbuf.clear();
 
     doHeader();
-    
+
     outbuf.append(curveBuf);
-    
+
     doTail();
 
 
@@ -572,7 +572,7 @@ void PovOutput::saveDocument(SPDocument *doc, gchar const *uri)
         int ch = *iter;
         fputc(ch, f);
         }
-        
+
     fclose(f);
 }
 

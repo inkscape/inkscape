@@ -497,7 +497,7 @@ Effect::getHelperPaths(SPLPEItem *lpeitem)
  * This function should be overwritten by derived effects if they want to provide their own helperpaths.
  */
 void
-Effect::addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec)
+Effect::addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::PathVector> &/*hp_vec*/)
 {
 }
 

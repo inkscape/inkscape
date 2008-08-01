@@ -70,7 +70,7 @@ public:
     TextParamInternal(Effect* effect) :
         TextParam("", "", "", NULL, effect) {}
 
-    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips) { return NULL; }
+    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * /*tooltips*/) { return NULL; }
 };
 
 } //namespace LivePathEffect

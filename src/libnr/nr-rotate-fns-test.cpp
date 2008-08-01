@@ -4,7 +4,7 @@
 #include <libnr/nr-rotate-fns.h>
 #include <utest/utest.h>
 
-int main(int argc, char *argv[])
+int main(int /*argc*/, char */*argv*/[])
 {
     utest_start("rotate-fns");
 

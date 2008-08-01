@@ -22,7 +22,7 @@ inline bool point_equalp(NR::Point const &a, NR::Point const &b)
              NR_DF_TEST_CLOSE(a[Y], b[Y], 1e-5)   );
 }
 
-int main(int argc, char *argv[])
+int main(int /*argc*/, char */*argv*/[])
 {
     int rc = EXIT_SUCCESS;
 

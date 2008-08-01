@@ -10,7 +10,7 @@ using NR::X;
 using NR::Y;
 
 
-int main(int argc, char *argv[])
+int main(int /*argc*/, char */*argv*/[])
 {
     utest_start("translate");
 

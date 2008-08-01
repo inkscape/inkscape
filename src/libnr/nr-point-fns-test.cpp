@@ -9,7 +9,7 @@
 
 using NR::Point;
 
-int main(int argc, char *argv[])
+int main(int /*argc*/, char */*argv*/[])
 {
     utest_start("nr-point-fns");
 

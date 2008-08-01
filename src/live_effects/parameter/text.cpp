@@ -52,7 +52,7 @@ TextParam::setPos(Geom::Point pos)
 
 void
 TextParam::setPosAndAnchor(const Geom::Piecewise<Geom::D2<Geom::SBasis> > &pwd2,
-                           const double t, const double length, bool use_curvature)
+                           const double t, const double length, bool /*use_curvature*/)
 {
     using namespace Geom;
 
