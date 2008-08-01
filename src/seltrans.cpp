@@ -610,7 +610,7 @@ void Inkscape::SelTrans::_updateHandles()
         sp_knot_hide(_chandle);
     } else {
         sp_knot_show(_chandle);
-        sp_knot_moveto(_chandle, &*_center);
+        sp_knot_moveto(_chandle, *_center);
     }
 }
 
@@ -681,7 +681,7 @@ void Inkscape::SelTrans::_showHandles(SPKnot *knot[], SPSelTransHandle const han
                      + ( _bbox->dimensions()
                          * NR::scale(handle_pt) ) );
 
-        sp_knot_moveto(knot[i], &p);
+        sp_knot_moveto(knot[i], p);
     }
 }
 
@@ -807,7 +807,7 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, NR::Point *position, gu
         return TRUE;
     }
     if (handle.request(this, handle, *position, state)) {
-        sp_knot_set_position(knot, position, state);
+        sp_knot_set_position(knot, *position, state);
         SP_CTRL(_grip)->moveto(*position);
         SP_CTRL(_norm)->moveto(_origin);
     }

@@ -1705,11 +1705,11 @@ static void sp_node_update_handle(Inkscape::NodePath::Node *node, gint which, gb
             sp_ctrlline_set_coords(SP_CTRLLINE(side->line), node->pos, side->pos);
             sp_knot_show(side->knot);
         } else {
-            if (side->knot->pos != side->pos) { // only if it's really moved
+            if (side->knot->pos != to_2geom(side->pos)) { // only if it's really moved
                 if (fire_move_signals) {
-                    sp_knot_set_position(side->knot, &side->pos, 0); // this will set coords of the line as well
+                    sp_knot_set_position(side->knot, side->pos, 0); // this will set coords of the line as well
                 } else {
-                    sp_knot_moveto(side->knot, &side->pos);
+                    sp_knot_moveto(side->knot, side->pos);
                     sp_ctrlline_set_coords(SP_CTRLLINE(side->line), node->pos, side->pos);
                 }
             }
@@ -1744,11 +1744,11 @@ static void sp_node_update_handles(Inkscape::NodePath::Node *node, bool fire_mov
         sp_knot_show(node->knot);
     }
 
-    if (node->knot->pos != node->pos) { // visible knot is in a different position, need to update
+    if (node->knot->pos != to_2geom(node->pos)) { // visible knot is in a different position, need to update
         if (fire_move_signals)
-            sp_knot_set_position(node->knot, &node->pos, 0);
+            sp_knot_set_position(node->knot, node->pos, 0);
         else
-            sp_knot_moveto(node->knot, &node->pos);
+            sp_knot_moveto(node->knot, node->pos);
     }
 
     gboolean show_handles = node->selected;
@@ -3757,10 +3757,10 @@ static void node_handle_ungrabbed(SPKnot *knot, guint state, gpointer data)
     // forget origin and set knot position once more (because it can be wrong now due to restrictions)
     if (n->p.knot == knot) {
         n->p.origin_radial.a = 0;
-        sp_knot_set_position(knot, &n->p.pos, state);
+        sp_knot_set_position(knot, n->p.pos, state);
     } else if (n->n.knot == knot) {
         n->n.origin_radial.a = 0;
-        sp_knot_set_position(knot, &n->n.pos, state);
+        sp_knot_set_position(knot, n->n.pos, state);
     } else {
         g_assert_not_reached();
     }
@@ -3916,7 +3916,7 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
         other->pos = NR::Point(rother) + n->pos;
         if (other->knot) {
             sp_ctrlline_set_coords(SP_CTRLLINE(other->line), n->pos, other->pos);
-            sp_knot_moveto(other->knot, &other->pos);
+            sp_knot_moveto(other->knot, other->pos);
         }
     }
 
@@ -3925,7 +3925,7 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
 
     // move knot, but without emitting the signal:
     // we cannot emit a "moved" signal because we're now processing it
-    sp_knot_moveto(me->knot, &(me->pos));
+    sp_knot_moveto(me->knot, me->pos);
 
     update_object(n->subpath->nodepath);
 
@@ -4485,7 +4485,7 @@ sp_nodepath_node_new(Inkscape::NodePath::SubPath *sp, Inkscape::NodePath::Node *
     n->n.other = next;
 
     n->knot = sp_knot_new(sp->nodepath->desktop, _("<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"));
-    sp_knot_set_position(n->knot, pos, 0);
+    sp_knot_set_position(n->knot, *pos, 0);
 
     n->knot->setShape ((n->type == Inkscape::NodePath::NODE_CUSP)? SP_KNOT_SHAPE_DIAMOND : SP_KNOT_SHAPE_SQUARE);
     n->knot->setSize ((n->type == Inkscape::NodePath::NODE_CUSP)? 9 : 7);

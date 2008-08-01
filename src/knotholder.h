@@ -21,6 +21,7 @@
 #include "knot-enums.h"
 #include "forward.h"
 #include "libnr/nr-forward.h"
+#include <2geom/forward.h>
 #include "knot-holder-entity.h"
 #include <list>
 
@@ -44,7 +45,7 @@ public:
 
     void update_knots();
 
-    void knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state);
+    void knot_moved_handler(SPKnot *knot, Geom::Point const &p, guint state);
     void knot_clicked_handler(SPKnot *knot, guint state);
     void knot_ungrabbed_handler(SPKnot *knot);
 

@@ -81,7 +81,7 @@ KnotHolderEntity::update_knot()
     NR::Point dp(knot_get() * i2d);
 
     _moved_connection.block();
-    sp_knot_set_position(knot, &dp, SP_KNOT_STATE_NORMAL); 
+    sp_knot_set_position(knot, dp, SP_KNOT_STATE_NORMAL); 
     _moved_connection.unblock();
 }
 

@@ -18,7 +18,7 @@
 #include <gtk/gtkenums.h>
 #include "display/display-forward.h"
 #include "forward.h"
-#include <libnr/nr-point.h>
+#include <2geom/point.h>
 #include "knot-enums.h"
 #include <sigc++/sigc++.h>
 
@@ -43,9 +43,9 @@ struct SPKnot : GObject {
     guint flags;
 
     guint size;      /**< Always square. */
-    NR::Point pos;   /**< Our desktop coordinates. */
-    NR::Point grabbed_rel_pos;  /**< Grabbed relative position. */
-    NR::Point drag_origin;      /**< Origin of drag. */
+    Geom::Point pos;   /**< Our desktop coordinates. */
+    Geom::Point grabbed_rel_pos;  /**< Grabbed relative position. */
+    Geom::Point drag_origin;      /**< Origin of drag. */
     GtkAnchorType anchor;    /**< Anchor. */
 
     SPKnotShapeType shape;   /**< Shape type. */
@@ -68,11 +68,11 @@ struct SPKnot : GObject {
 
     // C++ signals
     /**
-    sigc::signal<void, NR::Point const &, NR::Point const &, guint> _moved_signal;
+    sigc::signal<void, Geom::Point const &, Geom::Point const &, guint> _moved_signal;
     sigc::signal<void, guint> _click_signal;
-    sigc::signal<NR::Point> _ungrabbed_signal;
+    sigc::signal<Geom::Point> _ungrabbed_signal;
     **/
-    sigc::signal<void, SPKnot *, NR::Point const *, guint> _moved_signal;
+    sigc::signal<void, SPKnot *, Geom::Point const &, guint> _moved_signal;
     sigc::signal<void, SPKnot *, guint> _click_signal;
     sigc::signal<void, SPKnot *> _ungrabbed_signal;
 
@@ -138,14 +138,14 @@ struct SPKnotClass {
     void (* doubleclicked) (SPKnot *knot, guint state);
     void (* grabbed) (SPKnot *knot, guint state);
     void (* ungrabbed) (SPKnot *knot, guint state);
-    void (* moved) (SPKnot *knot, NR::Point *position, guint state);
+    void (* moved) (SPKnot *knot, Geom::Point const &position, guint state);
     void (* stamped) (SPKnot *know, guint state);
 
     /** Request knot to move to absolute position. */
-    bool (* request) (SPKnot *knot, NR::Point *pos, guint state);
+    bool (* request) (SPKnot *knot, Geom::Point const &pos, guint state);
 
     /** Find complex distance from knot to point. */
-    gdouble (* distance) (SPKnot *knot, NR::Point *pos, guint state);
+    gdouble (* distance) (SPKnot *knot, Geom::Point const &pos, guint state);
 };
 
 GType sp_knot_get_type();
@@ -163,18 +163,18 @@ void sp_knot_hide(SPKnot *knot);
 void sp_knot_set_flag(SPKnot *knot, guint flag, bool set);
 void sp_knot_update_ctrl(SPKnot *knot);
 
-void sp_knot_request_position(SPKnot *knot, NR::Point *pos, guint state);
-gdouble sp_knot_distance(SPKnot *knot, NR::Point *p, guint state);
+void sp_knot_request_position(SPKnot *knot, Geom::Point const &pos, guint state);
+gdouble sp_knot_distance(SPKnot *knot, Geom::Point const &p, guint state);
 
-void sp_knot_start_dragging(SPKnot *knot, NR::Point p, gint x, gint y, guint32 etime);
+void sp_knot_start_dragging(SPKnot *knot, Geom::Point const &p, gint x, gint y, guint32 etime);
 
 /** Moves knot and emits "moved" signal. */
-void sp_knot_set_position(SPKnot *knot, NR::Point *p, guint state);
+void sp_knot_set_position(SPKnot *knot, Geom::Point const &p, guint state);
 
 /** Moves knot without any signal. */
-void sp_knot_moveto(SPKnot *knot, NR::Point *p);
+void sp_knot_moveto(SPKnot *knot, Geom::Point const &p);
 
-NR::Point sp_knot_position(SPKnot const *knot);
+Geom::Point sp_knot_position(SPKnot const *knot);
 
 
 #endif /* !__SP_KNOT_H__ */

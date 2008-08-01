@@ -12,6 +12,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <2geom/point.h>
 #include "libnr/nr-point.h"
 #include "libnr/nr-values.h"
 #include <gtk/gtk.h>
@@ -26,6 +27,7 @@ public:
     Pt2 () { pt[0] = 0; pt[1] = 0; pt[2] = 1.0; } // we default to (0 : 0 : 1)
     Pt2 (double x, double y, double w) { pt[0] = x; pt[1] = y; pt[2] = w; }
     Pt2 (NR::Point const &point) { pt[0] = point[NR::X]; pt[1] = point[NR::Y]; pt[2] = 1; }
+    Pt2 (Geom::Point const &point) { pt[0] = point[Geom::X]; pt[1] = point[Geom::Y]; pt[2] = 1; }
     Pt2 (const gchar *coord_str);
 
     inline double operator[] (unsigned int index) const {

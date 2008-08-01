@@ -132,7 +132,7 @@ KnotHolder::knot_clicked_handler(SPKnot *knot, guint state)
 }
 
 void
-KnotHolder::knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state)
+KnotHolder::knot_moved_handler(SPKnot *knot, Geom::Point const &p, guint state)
 {
     // this was a local change and the knotholder does not need to be recreated:
     this->local_change = TRUE;
@@ -140,7 +140,7 @@ KnotHolder::knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state)
     for(std::list<KnotHolderEntity *>::iterator i = this->entity.begin(); i != this->entity.end(); ++i) {
         KnotHolderEntity *e = *i;
         if (e->knot == knot) {
-            NR::Point const q = *p / from_2geom(sp_item_i2d_affine(item));
+            NR::Point const q = p / from_2geom(sp_item_i2d_affine(item));
             e->knot_set(q, e->knot->drag_origin / from_2geom(sp_item_i2d_affine(item)), state);
             break;
         }

@@ -266,7 +266,7 @@ VPDragger::VPDragger(VPDrag *parent, NR::Point p, VanishingPoint &vp)
         sp_knot_update_ctrl(this->knot);
 
         // move knot to the given point
-        sp_knot_set_position (this->knot, &this->point, SP_KNOT_STATE_NORMAL);
+        sp_knot_set_position (this->knot, this->point, SP_KNOT_STATE_NORMAL);
         sp_knot_show (this->knot);
 
         // connect knot's signals

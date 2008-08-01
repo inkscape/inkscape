@@ -93,7 +93,7 @@ PointParamKnotHolder::add_knot (
 
     // Move to current point.
     NR::Point dp = p * from_2geom(sp_item_i2d_affine(item));
-    sp_knot_set_position(e->knot, &dp, SP_KNOT_STATE_NORMAL);
+    sp_knot_set_position(e->knot, dp, SP_KNOT_STATE_NORMAL);
 
     e->handler_id = g_signal_connect(e->knot, "moved", G_CALLBACK(pointparam_knot_moved_handler), this);
     e->_click_handler_id = g_signal_connect(e->knot, "clicked", G_CALLBACK(pointparam_knot_clicked_handler), this);

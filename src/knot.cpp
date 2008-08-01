@@ -189,8 +189,8 @@ static void sp_knot_init(SPKnot *knot)
     knot->flags = 0;
 
     knot->size = 8;
-    knot->pos = NR::Point(0, 0);
-    knot->grabbed_rel_pos = NR::Point(0, 0);
+    knot->pos = Geom::Point(0, 0);
+    knot->grabbed_rel_pos = Geom::Point(0, 0);
     knot->anchor = GTK_ANCHOR_CENTER;
     knot->shape = SP_KNOT_SHAPE_SQUARE;
     knot->mode = SP_KNOT_MODE_XOR;
@@ -261,7 +261,7 @@ static void sp_knot_dispose(GObject *object)
 /**
  * Update knot for dragging and tell canvas an item was grabbed.
  */
-void sp_knot_start_dragging(SPKnot *knot, NR::Point p, gint x, gint y, guint32 etime)
+void sp_knot_start_dragging(SPKnot *knot, Geom::Point const &p, gint x, gint y, guint32 etime)
 {
     // save drag origin
     xp = x;
@@ -313,7 +313,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
             break;
 	case GDK_BUTTON_PRESS:
             if (event->button.button == 1 && !knot->desktop->event_context->space_panning) {
-                NR::Point const p = knot->desktop->w2d(NR::Point(event->button.x, event->button.y));
+                Geom::Point const p = knot->desktop->w2d(Geom::Point(event->button.x, event->button.y));
                 sp_knot_start_dragging(knot, p, (gint) event->button.x, (gint) event->button.y, event->button.time);
                 consumed = TRUE;
             }
@@ -377,10 +377,10 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                                      SP_KNOT_DRAGGING,
                                      TRUE);
                 }
-                NR::Point const motion_w(event->motion.x, event->motion.y);
+                Geom::Point const motion_w(event->motion.x, event->motion.y);
                 NR::Point const motion_dt = knot->desktop->w2d(motion_w);
-                NR::Point p = motion_dt - knot->grabbed_rel_pos;
-                sp_knot_request_position (knot, &p, event->motion.state);
+                Geom::Point p = motion_dt - knot->grabbed_rel_pos;
+                sp_knot_request_position (knot, p, event->motion.state);
                 knot->desktop->scroll_to_point (&motion_dt);
                 knot->desktop->set_coordinate_status(knot->pos); // display the coordinate of knot, not cursor - they may be different!
                 if (event->motion.state & GDK_BUTTON1_MASK)
@@ -506,7 +506,7 @@ void sp_knot_hide(SPKnot *knot)
 /**
  * Request or set new position for knot.
  */
-void sp_knot_request_position(SPKnot *knot, NR::Point *p, guint state)
+void sp_knot_request_position(SPKnot *knot, Geom::Point const &p, guint state)
 {
     g_return_if_fail(knot != NULL);
     g_return_if_fail(SP_IS_KNOT(knot));
@@ -515,7 +515,7 @@ void sp_knot_request_position(SPKnot *knot, NR::Point *p, guint state)
 
     g_signal_emit(knot,
                   knot_signals[REQUEST], 0,
-                  p,
+                  &p,
                   state,
                   &done);
 
@@ -529,16 +529,16 @@ void sp_knot_request_position(SPKnot *knot, NR::Point *p, guint state)
 /**
  * Return distance of point to knot's position; unused.
  */
-gdouble sp_knot_distance(SPKnot * knot, NR::Point *p, guint state)
+gdouble sp_knot_distance(SPKnot * knot, Geom::Point const &p, guint state)
 {
     g_return_val_if_fail(knot != NULL, 1e18);
     g_return_val_if_fail(SP_IS_KNOT(knot), 1e18);
 
-    gdouble distance = NR::L2(*p - knot->pos);
+    gdouble distance = Geom::L2(p - knot->pos);
 
     g_signal_emit(knot,
                   knot_signals[DISTANCE], 0,
-                  p,
+                  &p,
                   state,
                   &distance);
 
@@ -548,20 +548,20 @@ gdouble sp_knot_distance(SPKnot * knot, NR::Point *p, guint state)
 /**
  * Move knot to new position.
  */
-void sp_knot_set_position(SPKnot *knot, NR::Point *p, guint state)
+void sp_knot_set_position(SPKnot *knot, Geom::Point const &p, guint state)
 {
     g_return_if_fail(knot != NULL);
     g_return_if_fail(SP_IS_KNOT (knot));
 
-    knot->pos = *p;
+    knot->pos = p;
 
     if (knot->item) {
-        SP_CTRL(knot->item)->moveto (*p);
+        SP_CTRL(knot->item)->moveto (p);
     }
 
     g_signal_emit(knot,
                   knot_signals[MOVED], 0,
-                  p,
+                  &p,
                   state);
     knot->_moved_signal.emit(knot, p, state);
 }
@@ -569,22 +569,22 @@ void sp_knot_set_position(SPKnot *knot, NR::Point *p, guint state)
 /**
  * Move knot to new position, without emitting a MOVED signal. 
  */
-void sp_knot_moveto(SPKnot *knot, NR::Point *p)
+void sp_knot_moveto(SPKnot *knot, Geom::Point const &p)
 {
     g_return_if_fail(knot != NULL);
     g_return_if_fail(SP_IS_KNOT(knot));
 
-    knot->pos = *p;
+    knot->pos = p;
 
     if (knot->item) {
-        SP_CTRL(knot->item)->moveto (*p);
+        SP_CTRL(knot->item)->moveto (p);
     }
 }
 
 /**
  * Returns position of knot.
  */
-NR::Point sp_knot_position(SPKnot const *knot)
+Geom::Point sp_knot_position(SPKnot const *knot)
 {
     g_assert(knot != NULL);
     g_assert(SP_IS_KNOT (knot));

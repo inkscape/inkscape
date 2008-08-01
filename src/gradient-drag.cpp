@@ -584,7 +584,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
         Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p);
         if (s.getSnapped()) {
             p = s.getPoint();
-            sp_knot_moveto (knot, &p);
+            sp_knot_moveto (knot, p);
         } else {
             bool was_snapped = false;
             double dist = NR_HUGE;
@@ -595,7 +595,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
                     p[NR::Y] = dragger->parent->hor_levels[i];
                     s = Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_GRADIENT, dist, snap_dist, false);
                     was_snapped = true;
-                    sp_knot_moveto (knot, &p);
+                    sp_knot_moveto (knot, p);
                 }
             }
             for (guint i = 0; i < dragger->parent->vert_levels.size(); i++) {
@@ -604,7 +604,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
                     p[NR::X] = dragger->parent->vert_levels[i];
                     s = Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_GRADIENT, dist, snap_dist, false);
                     was_snapped = true;
-                    sp_knot_moveto (knot, &p);
+                    sp_knot_moveto (knot, p);
                 }
             }
             if (was_snapped) {
@@ -685,7 +685,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
         }
         if (move[NR::X] < 9999) {
             p += move;
-            sp_knot_moveto (knot, &p);
+            sp_knot_moveto (knot, p);
         }
 
         g_slist_free(snap_vectors);
@@ -837,7 +837,7 @@ gr_knot_moved_midpoint_handler(SPKnot */*knot*/, NR::Point const *ppointer, guin
             }
         }
         drg->point += this_move;
-        sp_knot_moveto (drgknot, & drg->point);
+        sp_knot_moveto (drgknot, drg->point);
         drg->fireDraggables (false);
         drg->updateDependencies(false);
     }
@@ -1168,7 +1168,7 @@ GrDragger::moveThisToDraggable (SPItem *item, gint point_type, gint point_i, boo
     this->point = sp_item_gradient_get_coords (item, point_type, point_i, fill_or_stroke);
     this->point_original = this->point;
 
-    sp_knot_moveto (this->knot, &(this->point));
+    sp_knot_moveto (this->knot, this->point);
 
     for (GSList const* i = this->draggables; i != NULL; i = i->next) {
         GrDraggable *da = (GrDraggable *) i->data;
@@ -1286,7 +1286,7 @@ GrDragger::GrDragger (GrDrag *parent, NR::Point p, GrDraggable *draggable)
     sp_knot_update_ctrl(this->knot);
 
     // move knot to the given point
-    sp_knot_set_position (this->knot, &p, SP_KNOT_STATE_NORMAL);
+    sp_knot_set_position (this->knot, p, SP_KNOT_STATE_NORMAL);
     sp_knot_show (this->knot);
 
     // connect knot's signals
@@ -1792,7 +1792,7 @@ GrDrag::selected_move (double x, double y, bool write_repr, bool scale_radial)
             did = true;
             d->point += NR::Point (x, y);
             d->point_original = d->point;
-            sp_knot_moveto (d->knot, &(d->point));
+            sp_knot_moveto (d->knot, d->point);
 
             d->fireDraggables (write_repr, scale_radial);
 
@@ -1828,7 +1828,7 @@ GrDrag::selected_move (double x, double y, bool write_repr, bool scale_radial)
             GrDragger *drg = (GrDragger*) i->data;
             SPKnot *drgknot = drg->knot;
             drg->point += displacement;
-            sp_knot_moveto (drgknot, & drg->point);
+            sp_knot_moveto (drgknot, drg->point);
             drg->fireDraggables (true);
             drg->updateDependencies(true);
             did = true;

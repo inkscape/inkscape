@@ -1151,7 +1151,7 @@ static void cc_set_active_shape(SPConnectorContext *cc, SPItem *item)
     NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(cc->active_shape);
     if (bbox) {
         NR::Point center = bbox->midpoint();
-        sp_knot_set_position(cc->connpthandle, &center, 0);
+        sp_knot_set_position(cc->connpthandle, center, 0);
         sp_knot_show(cc->connpthandle);
     } else {
         sp_knot_hide(cc->connpthandle);
@@ -1171,10 +1171,10 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
     {
         // Just adjust handle positions.
         NR::Point startpt = curve->first_point() * i2d;
-        sp_knot_set_position(cc->endpt_handle[0], &startpt, 0);
+        sp_knot_set_position(cc->endpt_handle[0], startpt, 0);
 
         NR::Point endpt = curve->last_point() * i2d;
-        sp_knot_set_position(cc->endpt_handle[1], &endpt, 0);
+        sp_knot_set_position(cc->endpt_handle[1], endpt, 0);
 
         return;
     }
@@ -1238,10 +1238,10 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
     }
 
     NR::Point startpt = curve->first_point() * i2d;
-    sp_knot_set_position(cc->endpt_handle[0], &startpt, 0);
+    sp_knot_set_position(cc->endpt_handle[0], startpt, 0);
 
     NR::Point endpt = curve->last_point() * i2d;
-    sp_knot_set_position(cc->endpt_handle[1], &endpt, 0);
+    sp_knot_set_position(cc->endpt_handle[1], endpt, 0);
 
     sp_knot_show(cc->endpt_handle[0]);
     sp_knot_show(cc->endpt_handle[1]);
