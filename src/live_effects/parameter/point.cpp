@@ -149,7 +149,8 @@ private:
 void
 PointParamKnotHolderEntity::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
 {
-    pparam->param_setValue(p.to_2geom());
+    NR::Point const s = snap_knot_position(p);
+    pparam->param_setValue(s.to_2geom());
     sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
 }
 
