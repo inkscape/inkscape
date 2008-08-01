@@ -553,7 +553,7 @@ static void add_curve_to_subpath(Inkscape::NodePath::Path *np, Inkscape::NodePat
         dynamic_cast<Geom::VLineSegment const*>(&c) )
     {
         NR::Point pos = from_2geom(c.initialPoint()) * np->i2d;
-        sp_nodepath_node_new(sp, NULL, t[i++], pcode, &ppos, &pos, &pos);
+        sp_nodepath_node_new(sp, NULL, t[i++], pcode, &pos, &pos, &pos);
         ppos = from_2geom(c.finalPoint());
         pcode = NR_LINETO;
     }
