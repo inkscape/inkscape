@@ -47,10 +47,10 @@ LPEMirrorSymmetry::doOnApply (SPLPEItem *lpeitem)
 
     SPItem *item = SP_ITEM(lpeitem);
     Geom::Matrix t = sp_item_i2d_affine(item);
-    NR::Maybe<Geom::Rect> bbox = item->getBounds(t);
+    Geom::Rect bbox = item->getBounds(t);
 
-    Point A(bbox->left(), bbox->bottom());
-    Point B(bbox->left(), bbox->top());
+    Point A(bbox.left(), bbox.bottom());
+    Point B(bbox.left(), bbox.top());
     A *= t;
     B *= t;
     Piecewise<D2<SBasis> > rline = Piecewise<D2<SBasis> >(D2<SBasis>(Linear(A[X], B[X]), Linear(A[Y], B[Y])));

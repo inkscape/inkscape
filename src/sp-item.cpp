@@ -702,13 +702,20 @@ NR::Maybe<NR::Rect> SPItem::getBounds(NR::Matrix const &transform,
     return r;
 }
 
-NR::Maybe<Geom::Rect>
+/*
+ * If the item is empty, or has an empty boundingbox for another reason, this method will
+ * return an empty rectangle. I.e. "getBounds(...).isEmpty() == true".
+ */
+Geom::Rect
 SPItem::getBounds(Geom::Matrix const &transform, SPItem::BBoxType type, unsigned int /*dkey*/)
 const
 {
     NR::Maybe<NR::Rect> r = NR::Nothing();
     sp_item_invoke_bbox_full(this, &r, from_2geom(transform), type, TRUE);
-    return NR::Maybe<Geom::Rect>(to_2geom(*r));
+    if (r)
+        return to_2geom(*r);
+    else
+        return Geom::Rect(); // return empty rectangle
 }
 
 void

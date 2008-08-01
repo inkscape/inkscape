@@ -28,13 +28,10 @@ GroupBBoxEffect::original_bbox(SPLPEItem *lpeitem, bool absolute)
     else {
         transform = Geom::identity();
     }
-    
-    NR::Maybe<NR::Rect> itemBBox = item->getBounds(from_2geom(transform), SPItem::GEOMETRIC_BBOX);
 
-    // NR to Geom glue
-    Geom::Rect geomBBox = Geom::Rect(itemBBox->min(), itemBBox->max());
-    boundingbox_X = geomBBox[Geom::X];
-    boundingbox_Y = geomBBox[Geom::Y];
+    Geom::Rect itemBBox = item->getBounds(transform, SPItem::GEOMETRIC_BBOX);
+    boundingbox_X = itemBBox[Geom::X];
+    boundingbox_Y = itemBBox[Geom::Y];
 }
 
 } // namespace LivePathEffect
