@@ -23,7 +23,12 @@
 #include "macros.h"
 #include <libnr/nr-matrix-ops.h>
 #include "sp-pattern.h"
-
+#include "inkscape.h"
+#include "snap.h"
+#include "desktop-affine.h"
+#include "desktop.h"
+#include "desktop-handles.h"
+#include "sp-namedview.h"
 
 int KnotHolderEntity::counter = 0;
 
@@ -103,12 +108,23 @@ static NR::Point sp_pattern_extract_trans(SPPattern const *pat)
     return NR::Point(pat->patternTransform[4], pat->patternTransform[5]);
 }
 
+static NR::Point snap_knot_position(SPItem *item, NR::Point const &p)
+{
+    SPDesktop const *desktop = inkscape_active_desktop();
+    NR::Matrix const i2d (from_2geom(sp_item_i2d_affine (item)));
+    NR::Point s = p * i2d;
+    SnapManager &m = desktop->namedview->snap_manager;
+    m.setup(desktop, item);
+    m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, s);
+    return s * i2d.inverse();
+}
+
 void
 PatternKnotHolderEntityXY::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
 {
     SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 
-    NR::Point p_snapped = p;
+    NR::Point p_snapped = snap_knot_position(item, p); //p;
 
     if ( state & GDK_CONTROL_MASK ) {
         if (fabs((p - origin)[NR::X]) > fabs((p - origin)[NR::Y])) {
