@@ -135,21 +135,24 @@ bool JavaFXOutput::doHeader(const String &name)
  */
 bool JavaFXOutput::doTail(const String &name)
 {
+    int border = 25.0;
     out("        ] // content\n");
+    out("    transform: [ translate(%s, %s), ]\n",
+	          dstr((-minx) + border).c_str(), dstr((-miny) + border).c_str());
     out("    }; // Group\n");
     out("// end function %s.composeNode()\n", name.c_str());
     out("\n\n\n\n");
     out("Frame {\n");
     out("    title: \"Test\"\n");
-    out("    width: 500\n");
-    out("    height: 500\n");
+    out("    width: %s\n", dstr(maxx-minx + border * 2.0).c_str());
+    out("    height: %s\n", dstr(maxy-miny + border * 2.0).c_str());
     out("    onClose: function()\n");
     out("        {\n");
     out("        return System.exit( 0 );\n");
     out("        }\n");
     out("    visible: true\n");
     out("    content: Canvas {\n");
-    out("        content: tux{}\n");
+    out("        content: %s{}\n", name.c_str());
     out("    }\n");
     out("}\n");
     out("/*###################################################################\n");
@@ -167,8 +170,6 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
 {
     using Geom::X;
     using Geom::Y;
-
-    Geom::Matrix tf = sp_item_i2d_affine(item);
 
     //### Get the Shape
     if (!SP_IS_SHAPE(item))//Bulia's suggestion.  Allow all shapes
@@ -213,12 +214,37 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
          * Stroke
          */
         /**
-         * TODO:  stroke code here
+         *NOTE:  Things in style we can use:
+	     * SPIPaint stroke;
+	     * SPILength stroke_width;
+	     * SPIEnum stroke_linecap;
+	     * SPIEnum stroke_linejoin;
+	     * SPIFloat stroke_miterlimit;
+	     * NRVpathDash stroke_dash;
+	     * unsigned stroke_dasharray_set : 1;
+	     * unsigned stroke_dasharray_inherit : 1;
+	     * unsigned stroke_dashoffset_set : 1;
+	     * SPIScale24 stroke_opacity;
          */
+        if (style->stroke_opacity.value > 0)
+            {
+            gint alpha = 0xffffffff;
+            guint32 rgba = style->stroke.value.color.toRGBA32(alpha);
+            unsigned int r = SP_RGBA32_R_U(rgba);
+            unsigned int g = SP_RGBA32_G_U(rgba);
+            unsigned int b = SP_RGBA32_B_U(rgba);
+            unsigned int a = SP_RGBA32_A_U(rgba);
+            out("        stroke: rgba(0x%02x, 0x%02x, 0x%02x, 0x%02x)\n",
+                               r, g, b, a);
+            double strokewidth = style->stroke_width.value;
+            out("        strokeWidth: %s\n", dstr(strokewidth).c_str());
+            }
         }
 
 
     // convert the path to only lineto's and cubic curveto's:
+    Geom::Scale yflip(1.0, -1.0);
+    Geom::Matrix tf = sp_item_i2d_affine(item) * yflip;
     Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curve->get_pathvector() * tf );
 
     //Count the NR_CURVETOs/LINETOs (including closing line segment)
@@ -236,12 +262,15 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
 
     nrSegments += segmentCount;
 
+    Geom::Rect cminmax( pathv.front().initialPoint(), pathv.front().initialPoint() ); 
+
     /**
      * For all Subpaths in the <path>
      */	     
     for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit)
         {
-        Geom::Point p = pit->front().initialPoint() * tf;
+        Geom::Point p = pit->front().initialPoint();
+        cminmax.expandTo(p);
         out("            MoveTo {\n");
         out("                x: %s\n", dstr(p[X]).c_str());
         out("                y: %s\n", dstr(p[Y]).c_str());
@@ -258,7 +287,7 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
                 dynamic_cast<Geom::HLineSegment const *>(&*cit) ||
                 dynamic_cast<Geom::VLineSegment const *>(&*cit) )
                 {
-                Geom::Point p = cit->initialPoint() * tf;
+                Geom::Point p = cit->finalPoint();
                 out("            LineTo {\n");
                 out("                x: %s\n", dstr(p[X]).c_str());
                 out("                y: %s\n", dstr(p[Y]).c_str());
@@ -270,16 +299,16 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
             else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit))
                 {
                 std::vector<Geom::Point> points = cubic->points();
-                Geom::Point p0 = points[1] * tf;
-                Geom::Point p1 = points[2] * tf;
-                Geom::Point p2 = points[3] * tf;
+                Geom::Point p1 = points[1];
+                Geom::Point p2 = points[2];
+                Geom::Point p3 = points[3];
                 out("            CurveTo {\n");
-                out("                x1: %s\n", dstr(p0[X]).c_str());
-                out("                y1: %s\n", dstr(p0[Y]).c_str());
-                out("                x2: %s\n", dstr(p1[X]).c_str());
-                out("                y2: %s\n", dstr(p1[Y]).c_str());
-                out("                x3: %s\n", dstr(p2[X]).c_str());
-                out("                y3: %s\n", dstr(p2[Y]).c_str());
+                out("                x1: %s\n", dstr(p1[X]).c_str());
+                out("                y1: %s\n", dstr(p1[Y]).c_str());
+                out("                x2: %s\n", dstr(p2[X]).c_str());
+                out("                y2: %s\n", dstr(p2[Y]).c_str());
+                out("                x3: %s\n", dstr(p3[X]).c_str());
+                out("                y3: %s\n", dstr(p3[Y]).c_str());
                 out("                absolute: true\n");
                 out("                },\n");
                 nrNodes++;
@@ -289,6 +318,7 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
                 g_error ("logical error, because pathv_to_linear_and_cubic_beziers was used");
                 }
             segmentNr++;
+            cminmax.expandTo(cit->finalPoint());
             }
         if (pit->closed())
             {
@@ -303,6 +333,20 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
     out("        /*###################################################\n");
     out("        ### end path %s\n", id.c_str());
     out("        ###################################################*/\n\n\n\n");
+
+    double cminx = cminmax.min()[X];
+    double cmaxx = cminmax.max()[X];
+    double cminy = cminmax.min()[Y];
+    double cmaxy = cminmax.max()[Y];
+
+    if (cminx < minx)
+        minx = cminx;
+    if (cmaxx > maxx)
+        maxx = cmaxx;
+    if (cminy < miny)
+        miny = cminy;
+    if (cmaxy > maxy)
+        maxy = cmaxy;
 
     return true;
 }

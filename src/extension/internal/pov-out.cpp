@@ -266,8 +266,6 @@ bool PovOutput::doCurve(SPItem *item, const String &id)
     using Geom::X;
     using Geom::Y;
 
-    Geom::Matrix tf = sp_item_i2d_affine(item);
-
     //### Get the Shape
     if (!SP_IS_SHAPE(item))//Bulia's suggestion.  Allow all shapes
         return true;
@@ -310,6 +308,7 @@ bool PovOutput::doCurve(SPItem *item, const String &id)
     povShapes.push_back(shapeInfo); //passed all tests.  save the info
 
     // convert the path to only lineto's and cubic curveto's:
+    Geom::Matrix tf = sp_item_i2d_affine(item);
     Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curve->get_pathvector() * tf );
 
     //Count the NR_CURVETOs/LINETOs (including closing line segment)
