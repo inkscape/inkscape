@@ -26,7 +26,14 @@ namespace LivePathEffect {
 
 namespace CR {
 
-class KnotHolderEntityAngle : public LPEKnotHolderEntity
+class KnotHolderEntityStartingAngle : public LPEKnotHolderEntity
+{
+public:
+    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual NR::Point knot_get();
+};
+
+class KnotHolderEntityRotationAngle : public LPEKnotHolderEntity
 {
 public:
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
@@ -37,21 +44,22 @@ public:
 
 LPECopyRotate::LPECopyRotate(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    angle(_("Angle"), _("Angle"), "angle", &wr, this, 30.0),
-    num_copies(_("Number of copies"), _("Number of copies of the original path"), "num_copies", &wr, this, 1),
+    starting_angle(_("Starting"), _("Angle of the first copy"), "starting_angle", &wr, this, 0.0),
+    rotation_angle(_("Rotation angle"), _("Angle between two successive copies"), "rotation_angle", &wr, this, 30.0),
+    num_copies(_("Number of copies"), _("Number of copies of the original path"), "num_copies", &wr, this, 5),
     origin(_("Origin"), _("Origin of the rotation"), "origin", &wr, this, "Adjust the origin of the rotation"),
-    include_original(_("Include original?"), _(""), "include_original", &wr, this, true),
     dist_angle_handle(100)
 {
     show_orig_path = true;
 
     // register all your parameters here, so Inkscape knows which parameters this effect has:
-    registerParameter( dynamic_cast<Parameter *>(&include_original) );
-    registerParameter( dynamic_cast<Parameter *>(&angle) );
+    registerParameter( dynamic_cast<Parameter *>(&starting_angle) );
+    registerParameter( dynamic_cast<Parameter *>(&rotation_angle) );
     registerParameter( dynamic_cast<Parameter *>(&num_copies) );
     registerParameter( dynamic_cast<Parameter *>(&origin) );
 
-    registerKnotHolderHandle(new CR::KnotHolderEntityAngle(), _("Adjust the angle"));
+    registerKnotHolderHandle(new CR::KnotHolderEntityStartingAngle(), _("Adjust the starting angle"));
+    registerKnotHolderHandle(new CR::KnotHolderEntityRotationAngle(), _("Adjust the rotation angle"));
 
     num_copies.param_make_integer(true);
     num_copies.param_set_range(0, 1000);
@@ -88,15 +96,12 @@ LPECopyRotate::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
 
     Piecewise<D2<SBasis> > output;
 
-    if (include_original) {
-        output = pwd2_in;
-    }
-
-    for (int i = 1; i <= num_copies; ++i) {
+    Matrix pre = Translate(-origin) * Rotate(-deg_to_rad(starting_angle));
+    for (int i = 0; i < num_copies; ++i) {
         // I first suspected the minus sign to be a bug in 2geom but it is
         // likely due to SVG's choice of coordinate system orientation (max)
-        Rotate rot(-deg_to_rad(angle * i));
-        Matrix t = Translate(-origin) * rot * Translate(origin);
+        Rotate rot(-deg_to_rad(rotation_angle * i));
+        Matrix t = pre * rot * Translate(origin);
         output.concat(pwd2_in * t);
     }
 
@@ -120,7 +125,7 @@ get_effect(SPItem *item)
 }
 
 void
-KnotHolderEntityAngle::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
+KnotHolderEntityStartingAngle::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
 {
     LPECopyRotate* lpe = get_effect(item);
 
@@ -128,7 +133,27 @@ KnotHolderEntityAngle::knot_set(NR::Point const &p, NR::Point const &/*origin*/,
 
     // I first suspected the minus sign to be a bug in 2geom but it is
     // likely due to SVG's choice of coordinate system orientation (max)
-    lpe->angle.param_set_value(rad_to_deg(-angle_between(lpe->dir, s.to_2geom() - lpe->origin)));
+    lpe->starting_angle.param_set_value(rad_to_deg(-angle_between(lpe->dir, s.to_2geom() - lpe->origin)));
+    if (state & GDK_SHIFT_MASK) {
+        lpe->dist_angle_handle = L2(lpe->B - lpe->A);
+    } else {
+        lpe->dist_angle_handle = L2(p - lpe->origin);
+    }
+
+    // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
+    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
+}
+
+void
+KnotHolderEntityRotationAngle::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
+{
+    LPECopyRotate* lpe = get_effect(item);
+
+    NR::Point const s = snap_knot_position(p);
+
+    // I first suspected the minus sign to be a bug in 2geom but it is
+    // likely due to SVG's choice of coordinate system orientation (max)
+    lpe->rotation_angle.param_set_value(rad_to_deg(-angle_between(lpe->dir, s.to_2geom() - lpe->origin)) - lpe->starting_angle);
     if (state & GDK_SHIFT_MASK) {
         lpe->dist_angle_handle = L2(lpe->B - lpe->A);
     } else {
@@ -140,12 +165,23 @@ KnotHolderEntityAngle::knot_set(NR::Point const &p, NR::Point const &/*origin*/,
 }
 
 NR::Point
-KnotHolderEntityAngle::knot_get()
+KnotHolderEntityStartingAngle::knot_get()
 {
     LPECopyRotate* lpe = get_effect(item);
     // I first suspected the minus sign to be a bug in 2geom but it is
     // likely due to SVG's choice of coordinate system orientation (max)
-    Point d = lpe->dir * Rotate(-deg_to_rad(lpe->angle)) * lpe->dist_angle_handle;
+    Point d = lpe->dir * Rotate(-deg_to_rad(lpe->starting_angle)) * lpe->dist_angle_handle;
+
+    return snap_knot_position(lpe->origin + d);
+}
+
+NR::Point
+KnotHolderEntityRotationAngle::knot_get()
+{
+    LPECopyRotate* lpe = get_effect(item);
+    // I first suspected the minus sign to be a bug in 2geom but it is
+    // likely due to SVG's choice of coordinate system orientation (max)
+    Point d = lpe->dir * Rotate(-deg_to_rad(lpe->starting_angle + lpe->rotation_angle)) * lpe->dist_angle_handle;
 
     return snap_knot_position(lpe->origin + d);
 }

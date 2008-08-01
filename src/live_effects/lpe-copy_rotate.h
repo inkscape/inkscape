@@ -22,7 +22,8 @@ namespace LivePathEffect {
 
 namespace CR {
   // we need a separate namespace to avoid clashes with LPEPerpBisector
-  class KnotHolderEntityAngle;
+  class KnotHolderEntityStartingAngle;
+  class KnotHolderEntityRotationAngle;
 }
 
 class LPECopyRotate : public Effect {
@@ -35,14 +36,15 @@ public:
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
     /* the knotholder entity classes must be declared friends */
-    friend class CR::KnotHolderEntityAngle;
+    friend class CR::KnotHolderEntityStartingAngle;
+    friend class CR::KnotHolderEntityRotationAngle;
 
 private:
-    ScalarParam angle;
+    ScalarParam starting_angle;
+    ScalarParam rotation_angle;
     ScalarParam num_copies;
 
     PointParam origin;
-    BoolParam include_original;
 
     Geom::Point A;
     Geom::Point B;
