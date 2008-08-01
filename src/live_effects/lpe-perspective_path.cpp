@@ -170,8 +170,8 @@ KnotHolderEntityOffset::knot_set(Geom::Point const &p, Geom::Point const &origin
 
     Geom::Point const s = snap_knot_position(p);
 
-    lpe->offsetx.param_set_value((s - origin)[NR::X]);
-    lpe->offsety.param_set_value(-(s - origin)[NR::Y]); // additional minus sign is due to coordinate system flipping
+    lpe->offsetx.param_set_value((s - origin)[Geom::X]);
+    lpe->offsety.param_set_value(-(s - origin)[Geom::Y]); // additional minus sign is due to coordinate system flipping
 
     // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);

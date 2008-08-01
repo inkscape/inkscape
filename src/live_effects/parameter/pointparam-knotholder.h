@@ -28,8 +28,8 @@ class Node;
 
 
 
-typedef void (* PointParamKnotHolderSetFunc) (SPItem *item, NR::Point const &p, NR::Point const &origin, guint state);
-typedef NR::Point (* PointParamKnotHolderGetFunc) (SPItem *item);
+typedef void (* PointParamKnotHolderSetFunc) (SPItem *item, Geom::Point const &p, Geom::Point const &origin, guint state);
+typedef Geom::Point (* PointParamKnotHolderGetFunc) (SPItem *item);
 typedef void (* PointParamKnotHolderClickedFunc) (SPItem *item, guint state);
 
 class PointParamKnotHolder : public KnotHolder {

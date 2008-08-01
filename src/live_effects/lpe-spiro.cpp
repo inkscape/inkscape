@@ -50,9 +50,9 @@ void bezctx_ink_quadto(bezctx *bc, double xm, double ym, double x3, double y3)
     double x1, y1;
     double x2, y2;
 
-    NR::Point last = bi->curve->last_point();
-    x0 = last[NR::X];
-    y0 = last[NR::Y];
+    Geom::Point last = bi->curve->last_point();
+    x0 = last[Geom::X];
+    y0 = last[Geom::Y];
     x1 = xm + (1./3) * (x0 - xm);
     y1 = ym + (1./3) * (y0 - ym);
     x2 = xm + (1./3) * (x3 - xm);

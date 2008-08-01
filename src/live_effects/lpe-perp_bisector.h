@@ -27,7 +27,7 @@ namespace PB {
   class KnotHolderEntityEnd;
   class KnotHolderEntityLeftEnd;
   class KnotHolderEntityRightEnd;
-  void bisector_end_set(SPItem *item, NR::Point const &p, bool left);
+  void bisector_end_set(SPItem *item, Geom::Point const &p, bool left);
 }
 
 class LPEPerpBisector : public Effect {
@@ -46,7 +46,7 @@ public:
     friend class PB::KnotHolderEntityEnd;
     friend class PB::KnotHolderEntityLeftEnd;
     friend class PB::KnotHolderEntityRightEnd;
-    friend void PB::bisector_end_set(SPItem *item, NR::Point const &p, bool left = true);
+    friend void PB::bisector_end_set(SPItem *item, Geom::Point const &p, bool left = true);
 
 private:
     ScalarParam length_left;

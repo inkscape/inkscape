@@ -21,15 +21,15 @@ GroupBBoxEffect::original_bbox(SPLPEItem *lpeitem, bool absolute)
     // Get item bounding box
     SPItem* item = SP_ITEM(lpeitem);
     
-    NR::Matrix transform;
+    Geom::Matrix transform;
     if (absolute) {
-        transform = from_2geom(sp_item_i2doc_affine(item));
+        transform = sp_item_i2doc_affine(item);
     }
     else {
-        transform = NR::identity();
+        transform = Geom::identity();
     }
     
-    NR::Maybe<NR::Rect> itemBBox = item->getBounds(transform, SPItem::GEOMETRIC_BBOX);
+    NR::Maybe<NR::Rect> itemBBox = item->getBounds(from_2geom(transform), SPItem::GEOMETRIC_BBOX);
 
     // NR to Geom glue
     Geom::Rect geomBBox = Geom::Rect(itemBBox->min(), itemBBox->max());
