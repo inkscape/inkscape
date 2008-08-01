@@ -55,11 +55,9 @@ class D2<Interval> {
   private:
     Interval f[2];
   public:
-    /* The default constructor creates a rect that contains the point (0,0). Isn't it better to have it be empty?
-     * i.e.  f[X] = f[Y] = Interval(); .  Don't use Interval(+COORD_HUGE, -COORD_HUGE) !! because the arguments
-     * will be interchanged to Interval(-COORD_HUGE, +COORD_HUGE)!!
+    /* The default constructor creates an empty rect, constructed of two empty Intervals. (users rely on this!)
      */
-    D2<Interval>() { f[X] = f[Y] = Interval(0, 0); }
+    D2<Interval>() { f[X] = f[Y] = Interval(); }
     
     D2<Interval>(Interval const &a, Interval const &b) {
         f[X] = a;

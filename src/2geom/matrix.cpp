@@ -148,7 +148,7 @@ bool Matrix::isUniformScale(Coord const eps) const {
  \return A bool representing yes/no.
  */
 bool Matrix::isRotation(Coord const eps) const {
-    return !are_near(_c[0], _c[3], eps) && are_near(_c[1], -_c[2], eps) &&
+    return are_near(_c[0], _c[3], eps) && are_near(_c[1], -_c[2], eps) &&
            are_near(_c[4], 0.0, eps) && are_near(_c[5], 0.0, eps) &&
            are_near(_c[0]*_c[0] + _c[1]*_c[1], 1.0, eps);
 }
