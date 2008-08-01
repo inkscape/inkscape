@@ -19,7 +19,7 @@
 
 
 #include <display/curve.h>
-#include <libnr/nr-matrix-div.h>
+#include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-fns.h>
 
 #include "inkscape.h"
@@ -385,10 +385,10 @@ sp_rect_set_transform(SPItem *item, NR::Matrix const &xform)
     sp_item_adjust_stroke(item, sqrt(fabs(sw * sh)));
 
     // Adjust pattern fill
-    sp_item_adjust_pattern(item, xform / ret);
+    sp_item_adjust_pattern(item, xform * ret.inverse());
 
     // Adjust gradient fill
-    sp_item_adjust_gradient(item, xform / ret);
+    sp_item_adjust_gradient(item, xform * ret.inverse());
 
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
 

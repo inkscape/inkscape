@@ -56,7 +56,6 @@
 #include "filter-chemistry.h"
 #include "sp-guide.h"
 
-#include "libnr/nr-matrix-div.h"
 #include "libnr/nr-matrix-fns.h"
 #include "libnr/nr-matrix-scale-ops.h"
 #include "libnr/nr-matrix-translate-ops.h"
@@ -1514,7 +1513,7 @@ Geom::Matrix
 i2i_affine(SPObject const *src, SPObject const *dest) {
     g_return_val_if_fail(src != NULL && dest != NULL, Geom::identity());
     SPObject const *ancestor = src->nearestCommonAncestor(dest);
-    return to_2geom( from_2geom(i2anc_affine(src, ancestor)) / from_2geom(i2anc_affine(dest, ancestor)) );
+    return i2anc_affine(src, ancestor) * i2anc_affine(dest, ancestor).inverse();
 }
 
 NR::Matrix SPItem::getRelativeTransform(SPObject const *dest) const {

@@ -41,7 +41,6 @@
 #include "object-edit.h"
 
 #include <libnr/nr-scale-ops.h>
-#include <libnr/nr-matrix-div.h>
 
 #include "xml/repr.h"
 

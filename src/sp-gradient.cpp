@@ -21,7 +21,6 @@
 #include <cstring>
 #include <string>
 
-#include <libnr/nr-matrix-div.h>
 #include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-scale-ops.h>
@@ -1279,7 +1278,7 @@ void
 sp_gradient_set_gs2d_matrix(SPGradient *gr, NR::Matrix const &ctm,
                             NR::Rect const &bbox, NR::Matrix const &gs2d)
 {
-    gr->gradientTransform = gs2d / ctm;
+    gr->gradientTransform = gs2d * ctm.inverse();
     if (gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX ) {
         gr->gradientTransform = ( gr->gradientTransform
                                   / NR::translate(bbox.min())

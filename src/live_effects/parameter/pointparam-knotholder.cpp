@@ -19,7 +19,6 @@
 #include "knotholder.h"
 #include "knot-holder-entity.h"
 
-#include <libnr/nr-matrix-div.h>
 #include <glibmm/i18n.h>
 #include <2geom/point.h>
 #include <2geom/matrix.h>
@@ -92,7 +91,7 @@ PointParamKnotHolder::add_knot (
     entity.push_back(e);
 
     // Move to current point.
-    NR::Point dp = p * from_2geom(sp_item_i2d_affine(item));
+    Geom::Point dp = p * sp_item_i2d_affine(item);
     sp_knot_set_position(e->knot, dp, SP_KNOT_STATE_NORMAL);
 
     e->handler_id = g_signal_connect(e->knot, "moved", G_CALLBACK(pointparam_knot_moved_handler), this);
@@ -113,22 +112,22 @@ static void pointparam_knot_clicked_handler(SPKnot */*knot*/, guint /*state*/, P
  */
 static void pointparam_knot_moved_handler(SPKnot */*knot*/, NR::Point const *p, guint /*state*/, PointParamKnotHolder *kh)
 {
-    NR::Matrix const i2d(from_2geom(sp_item_i2d_affine(kh->getItem())));
-    NR::Point pos = (*p) / i2d;
+    Geom::Matrix const i2d(sp_item_i2d_affine(kh->getItem()));
+    Geom::Point pos = (*p) * i2d.inverse();
 
     Inkscape::SVGOStringStream os;
-    os << pos.to_2geom();
+    os << pos;
 
     kh->lpeobject->lpe->setParameter(kh->repr_key, os.str().c_str());
 }
 
 static void pointparam_knot_ungrabbed_handler(SPKnot *knot, unsigned int /*state*/, PointParamKnotHolder *kh)
 {
-    NR::Matrix const i2d(from_2geom(sp_item_i2d_affine(kh->getItem())));
-    NR::Point pos = sp_knot_position(knot) / i2d;
+    Geom::Matrix const i2d(sp_item_i2d_affine(kh->getItem()));
+    Geom::Point pos = sp_knot_position(knot) * i2d.inverse();
 
     Inkscape::SVGOStringStream os;
-    os << pos.to_2geom();
+    os << pos;
 
     kh->repr->setAttribute(kh->repr_key , os.str().c_str());
 

@@ -3,7 +3,6 @@
 #include <string>
 
 #include "display/curve.h"
-#include "libnr/nr-matrix-div.h"
 #include "libnr/nr-matrix-fns.h"
 #include "xml/repr.h"
 #include "sp-conn-end.h"
@@ -91,8 +90,8 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
         NR::Point h2endPt_pcoordsys[2];
         for (unsigned h = 0; h < 2; ++h) {
             h2endPt_icoordsys[h] = calc_bbox_conn_pt(h2bbox_icoordsys[h],
-                                         ( last_seg_endPt[h] / h2i2anc[h] ));
-            h2endPt_pcoordsys[h] = h2endPt_icoordsys[h] * h2i2anc[h] / path2anc;
+                                         ( last_seg_endPt[h] * h2i2anc[h].inverse() ));
+            h2endPt_pcoordsys[h] = h2endPt_icoordsys[h] * h2i2anc[h] * path2anc.inverse();
         }
         change_endpts(path->curve, h2endPt_pcoordsys);
     } else {
@@ -135,8 +134,8 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
         // on the edge of the bbox.
         NR::Point h2endPt_pcoordsys[2];
         h2endPt_icoordsys[ind] = calc_bbox_conn_pt(h2bbox_icoordsys[ind],
-                                                 ( last_seg_pt / h2i2anc ));
-        h2endPt_pcoordsys[ind] = h2endPt_icoordsys[ind] * h2i2anc / path2anc;
+                                                 ( last_seg_pt * h2i2anc.inverse() ));
+        h2endPt_pcoordsys[ind] = h2endPt_icoordsys[ind] * h2i2anc * path2anc.inverse();
 
         // Leave the other where it is.
         h2endPt_pcoordsys[!ind] = other_endpt;

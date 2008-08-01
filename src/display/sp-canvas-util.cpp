@@ -13,7 +13,7 @@
  */
 
 
-#include "libnr/nr-matrix-div.h"
+#include "libnr/nr-matrix-ops.h"
 #include "libnr/nr-pixops.h"
 #include "sp-canvas-util.h"
 #include <string.h>  /* for memset */
@@ -90,14 +90,14 @@ NR::Matrix  sp_canvas_item_i2i_affine (SPCanvasItem * from, SPCanvasItem * to)
     g_assert (from != NULL);
     g_assert (to != NULL);
 
-    return sp_canvas_item_i2w_affine(from) / sp_canvas_item_i2w_affine(to);
+    return sp_canvas_item_i2w_affine(from) * sp_canvas_item_i2w_affine(to).inverse();
 }
 
 void sp_canvas_item_set_i2w_affine (SPCanvasItem * item,  NR::Matrix const &i2w)
 {
     g_assert (item != NULL);
 
-    sp_canvas_item_affine_absolute(item, i2w / sp_canvas_item_i2w_affine(item->parent));
+    sp_canvas_item_affine_absolute(item, i2w * sp_canvas_item_i2w_affine(item->parent).inverse());
 }
 
 void sp_canvas_item_move_to_z (SPCanvasItem * item, gint z)

@@ -79,7 +79,6 @@
 #include "display/sp-canvas-util.h"
 #include "display/canvas-temporary-item-list.h"
 #include "display/snap-indicator.h"
-#include "libnr/nr-matrix-div.h"
 #include "libnr/nr-rect-ops.h"
 #include "ui/dialog/dialog-manager.h"
 #include "xml/repr.h"
@@ -1680,7 +1679,7 @@ NR::Point SPDesktop::doc2dt(NR::Point const &p) const
 
 NR::Point SPDesktop::dt2doc(NR::Point const &p) const
 {
-    return p / _doc2dt;
+    return p * _doc2dt.inverse();
 }
 
 
