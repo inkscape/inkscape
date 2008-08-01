@@ -569,8 +569,8 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
 
     NR::Maybe<NR::Rect> size = selection->bounds();
     if (size) {
-        sp_repr_set_point(_clipnode, "min", size->min().to_2geom());
-        sp_repr_set_point(_clipnode, "max", size->max().to_2geom());
+        sp_repr_set_point(_clipnode, "min", size->min());
+        sp_repr_set_point(_clipnode, "max", size->max());
     }
 
     g_slist_free(sorted_items);

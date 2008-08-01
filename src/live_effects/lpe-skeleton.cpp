@@ -91,8 +91,8 @@ class KnotHolderEntityMyHandle : public LPEKnotHolderEntity
 {
 public:
     // the set() and get() methods must be implemented, click() is optional
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
     //virtual void knot_click(guint state);
 };
 

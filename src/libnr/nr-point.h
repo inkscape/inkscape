@@ -126,10 +126,6 @@ public:
 
     friend inline std::ostream &operator<< (std::ostream &out_file, const NR::Point &in_pnt);
 
-    inline Geom::Point to_2geom() const {
-        return Geom::Point(_pt[X], _pt[Y]);
-    }
-
     inline operator Geom::Point() const { return Geom::Point(_pt[X], _pt[Y]); }
 
 private:

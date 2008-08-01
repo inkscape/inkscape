@@ -31,12 +31,6 @@ class Node;
 }
 }
 
-
-typedef void (* SPKnotHolderSetFunc) (SPItem *item, NR::Point const &p, NR::Point const &origin, guint state);
-typedef NR::Point (* SPKnotHolderGetFunc) (SPItem *item);
-/* fixme: Think how to make callbacks most sensitive (Lauris) */
-typedef void (* SPKnotHolderReleasedFunc) (SPItem *item);
-
 class KnotHolder {
 public:
     KnotHolder() {} // do nothing in the default constructor

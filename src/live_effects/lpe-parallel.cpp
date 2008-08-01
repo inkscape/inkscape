@@ -27,15 +27,15 @@ namespace Pl {
 class KnotHolderEntityLeftEnd : public LPEKnotHolderEntity
 {
 public:
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
 };
 
 class KnotHolderEntityRightEnd : public LPEKnotHolderEntity
 {
 public:
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
 };
 
 } // namespace Pl
@@ -108,43 +108,43 @@ get_effect(SPItem *item)
 }
 
 void
-KnotHolderEntityLeftEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
+KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
     using namespace Geom;
 
     LPEParallel *lpe = get_effect(item);
     
-    NR::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p);
 
-    double lambda = L2(s - lpe->offset_pt) * sgn(dot(s.to_2geom() - lpe->offset_pt, lpe->dir));
+    double lambda = L2(s - lpe->offset_pt) * sgn(dot(s - lpe->offset_pt, lpe->dir));
     lpe->length_left.param_set_value(-lambda);
 
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
 }
 
 void
-KnotHolderEntityRightEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
+KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
     using namespace Geom;
 
     LPEParallel *lpe = get_effect(item);
     
-    NR::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p);
 
-    double lambda = L2(s - lpe->offset_pt) * sgn(dot(s.to_2geom() - lpe->offset_pt, lpe->dir));
+    double lambda = L2(s - lpe->offset_pt) * sgn(dot(s - lpe->offset_pt, lpe->dir));
     lpe->length_right.param_set_value(lambda);
 
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
 }
 
-NR::Point
+Geom::Point
 KnotHolderEntityLeftEnd::knot_get()
 {
     LPEParallel *lpe = get_effect(item);
     return lpe->C;
 }
 
-NR::Point
+Geom::Point
 KnotHolderEntityRightEnd::knot_get()
 {
     LPEParallel *lpe = get_effect(item);

@@ -129,7 +129,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                     }
                 }
 
-                guide = sp_guideline_new(desktop->guides, event_dt.to_2geom(), normal);
+                guide = sp_guideline_new(desktop->guides, event_dt, normal);
                 sp_guideline_set_color(SP_GUIDELINE(guide), desktop->namedview->guidehicolor);
                 gdk_pointer_grab(widget->window, FALSE,
                                  (GdkEventMask)(GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK ),
@@ -146,7 +146,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 m.setup(desktop);
                 m.guideSnap(event_dt, normal);
                 
-                sp_guideline_set_position(SP_GUIDELINE(guide), event_dt.to_2geom());
+                sp_guideline_set_position(SP_GUIDELINE(guide), event_dt);
                 desktop->set_coordinate_status(event_dt);
                 desktop->setPosition (event_dt);                
             }
@@ -168,7 +168,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
                     Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
                     sp_repr_set_point(repr, "orientation", normal);
-                    sp_repr_set_point(repr, "position", event_dt.to_2geom());
+                    sp_repr_set_point(repr, "position", event_dt);
                     SP_OBJECT_REPR(desktop->namedview)->appendChild(repr);
                     Inkscape::GC::release(repr);
                     sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
@@ -244,7 +244,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 m.setup(desktop);
                 m.guideSnap(motion_dt, guide->normal_to_line);
                 
-                sp_guide_moveto(*guide, motion_dt.to_2geom(), false);
+                sp_guide_moveto(*guide, motion_dt, false);
                 moved = true;
                 desktop->set_coordinate_status(motion_dt);
                 desktop->setPosition (motion_dt);
@@ -264,7 +264,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     m.guideSnap(event_dt, guide->normal_to_line);
 
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {
-                        sp_guide_moveto(*guide, event_dt.to_2geom(), true);
+                        sp_guide_moveto(*guide, event_dt, true);
                         sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE,
                                      _("Move guide"));
                     } else {

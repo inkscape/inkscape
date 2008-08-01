@@ -32,7 +32,7 @@ GroupBBoxEffect::original_bbox(SPLPEItem *lpeitem, bool absolute)
     NR::Maybe<NR::Rect> itemBBox = item->getBounds(transform, SPItem::GEOMETRIC_BBOX);
 
     // NR to Geom glue
-    Geom::Rect geomBBox = Geom::Rect(itemBBox->min().to_2geom(), itemBBox->max().to_2geom());
+    Geom::Rect geomBBox = Geom::Rect(itemBBox->min(), itemBBox->max());
     boundingbox_X = geomBBox[Geom::X];
     boundingbox_Y = geomBBox[Geom::Y];
 }

@@ -33,15 +33,15 @@ namespace AB {
 class KnotHolderEntityLeftEnd : public LPEKnotHolderEntity
 {
 public:
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
 };
 
 class KnotHolderEntityRightEnd : public LPEKnotHolderEntity
 {
 public:
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
 };
 
 } // namespace TtC
@@ -102,39 +102,39 @@ get_effect(SPItem *item)
 }
 
 void
-KnotHolderEntityLeftEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
+KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
     LPEAngleBisector *lpe = get_effect(item);
     
-    NR::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p);
 
-    double lambda = Geom::nearest_point(s.to_2geom(), lpe->ptA, lpe->dir);
+    double lambda = Geom::nearest_point(s, lpe->ptA, lpe->dir);
     lpe->length_left.param_set_value(-lambda);
 
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
 }
 
 void
-KnotHolderEntityRightEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
+KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
     LPEAngleBisector *lpe = get_effect(item);
     
-    NR::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p);
 
-    double lambda = Geom::nearest_point(s.to_2geom(), lpe->ptA, lpe->dir);
+    double lambda = Geom::nearest_point(s, lpe->ptA, lpe->dir);
     lpe->length_right.param_set_value(lambda);
 
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
 }
 
-NR::Point
+Geom::Point
 KnotHolderEntityLeftEnd::knot_get()
 {
     LPEAngleBisector *lpe = get_effect(item);
     return lpe->ptA - lpe->dir * lpe->length_left;
 }
 
-NR::Point
+Geom::Point
 KnotHolderEntityRightEnd::knot_get()
 {
     LPEAngleBisector *lpe = get_effect(item);

@@ -17,7 +17,6 @@
 #include "sp-shape.h"
 #include "knot.h"
 #include "knotholder.h"
-#include "knot-holder-entity.h"
 
 #include <glibmm/i18n.h>
 #include <2geom/point.h>
@@ -30,7 +29,7 @@ class SPDesktop;
 namespace Inkscape {
 
 static void pointparam_knot_clicked_handler (SPKnot *knot, guint state, PointParamKnotHolder *kh);
-static void pointparam_knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state, PointParamKnotHolder *kh);
+static void pointparam_knot_moved_handler(SPKnot *knot, Geom::Point const *p, guint state, PointParamKnotHolder *kh);
 static void pointparam_knot_ungrabbed_handler (SPKnot *knot, unsigned int state, PointParamKnotHolder *kh);
 
 PointParamKnotHolder::PointParamKnotHolder(SPDesktop *desktop, SPObject *lpeobject, const gchar * key, SPItem *item)
@@ -61,17 +60,17 @@ PointParamKnotHolder::~PointParamKnotHolder()
 
 class KnotHolderEntityPointParam : public LPEKnotHolderEntity {
 public:
-    virtual NR::Point knot_get();
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
 };
 
-NR::Point
+Geom::Point
 KnotHolderEntityPointParam::knot_get() {
-    return NR::Point(0,0);
+    return Geom::Point(0,0);
 }
 
 void
-KnotHolderEntityPointParam::knot_set(NR::Point const &/*p*/, NR::Point const &/*origin*/, guint /*state*/) {
+KnotHolderEntityPointParam::knot_set(Geom::Point const &/*p*/, Geom::Point const &/*origin*/, guint /*state*/) {
 }
 
 void
@@ -110,7 +109,7 @@ static void pointparam_knot_clicked_handler(SPKnot */*knot*/, guint /*state*/, P
  * \param p In desktop coordinates.
  *  This function does not write to XML, but tries to write directly to the PointParam to quickly live update the effect
  */
-static void pointparam_knot_moved_handler(SPKnot */*knot*/, NR::Point const *p, guint /*state*/, PointParamKnotHolder *kh)
+static void pointparam_knot_moved_handler(SPKnot */*knot*/, Geom::Point const *p, guint /*state*/, PointParamKnotHolder *kh)
 {
     Geom::Matrix const i2d(sp_item_i2d_affine(kh->getItem()));
     Geom::Point pos = (*p) * i2d.inverse();

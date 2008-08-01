@@ -937,9 +937,9 @@ sp_offset_distance_to_original (SPOffset * offset, NR::Point px)
  * \return the topmost point on the offset.
  */
 void
-sp_offset_top_point (SPOffset * offset, NR::Point *px)
+sp_offset_top_point (SPOffset * offset, Geom::Point *px)
 {
-    (*px) = NR::Point(0, 0);
+    (*px) = Geom::Point(0, 0);
     if (offset == NULL)
         return;
 

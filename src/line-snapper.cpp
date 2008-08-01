@@ -87,7 +87,7 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
     
             /* Try to intersect this line with the target line */
             Geom::Point t_2geom(NR_HUGE, NR_HUGE);
-            Geom::IntersectorKind const k = Geom::line_intersection(n.to_2geom(), q0, i->first.to_2geom(), q1, t_2geom);
+            Geom::IntersectorKind const k = Geom::line_intersection(n, q0, i->first, q1, t_2geom);
             NR::Point t(t_2geom);
     
             if (k == Geom::intersects) {

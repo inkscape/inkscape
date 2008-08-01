@@ -138,8 +138,8 @@ public:
     PointParamKnotHolderEntity(PointParam *p) { this->pparam = p; }
     virtual ~PointParamKnotHolderEntity() {}
 
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
     virtual void knot_click(guint state);
 
 private:
@@ -147,14 +147,14 @@ private:
 };
 
 void
-PointParamKnotHolderEntity::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
+PointParamKnotHolderEntity::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
-    NR::Point const s = snap_knot_position(p);
-    pparam->param_setValue(s.to_2geom());
+    Geom::Point const s = snap_knot_position(p);
+    pparam->param_setValue(s);
     sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
 }
 
-NR::Point
+Geom::Point
 PointParamKnotHolderEntity::knot_get()
 {
     return *pparam;

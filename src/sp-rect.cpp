@@ -586,10 +586,10 @@ sp_rect_convert_to_guides(SPItem *item) {
     NR::Point A3(NR::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2d);
     NR::Point A4(NR::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2d);
 
-    pts.push_back(std::make_pair(A1.to_2geom(), A2.to_2geom()));
-    pts.push_back(std::make_pair(A2.to_2geom(), A3.to_2geom()));
-    pts.push_back(std::make_pair(A3.to_2geom(), A4.to_2geom()));
-    pts.push_back(std::make_pair(A4.to_2geom(), A1.to_2geom()));
+    pts.push_back(std::make_pair(A1, A2));
+    pts.push_back(std::make_pair(A2, A3));
+    pts.push_back(std::make_pair(A3, A4));
+    pts.push_back(std::make_pair(A4, A1));
 
     sp_guide_pt_pairs_to_guides(inkscape_active_desktop(), pts);
 }

@@ -27,19 +27,19 @@ namespace PB {
 
 class KnotHolderEntityEnd : public LPEKnotHolderEntity {
 public:
-    void bisector_end_set(NR::Point const &p, bool left = true);
+    void bisector_end_set(Geom::Point const &p, bool left = true);
 };
 
 class KnotHolderEntityLeftEnd : public KnotHolderEntityEnd {
 public:
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
 };
 
 class KnotHolderEntityRightEnd : public KnotHolderEntityEnd {
 public:
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
 };
 
 // TODO: Make this more generic
@@ -54,27 +54,27 @@ get_effect(SPItem *item)
     return static_cast<LPEPerpBisector *>(effect);
 }
 
-NR::Point
+Geom::Point
 KnotHolderEntityLeftEnd::knot_get() {
     Inkscape::LivePathEffect::LPEPerpBisector *lpe = get_effect(item);
-    return NR::Point(lpe->C);
+    return Geom::Point(lpe->C);
 }
 
-NR::Point
+Geom::Point
 KnotHolderEntityRightEnd::knot_get() {
     Inkscape::LivePathEffect::LPEPerpBisector *lpe = get_effect(item);
-    return NR::Point(lpe->D);
+    return Geom::Point(lpe->D);
 }
 
 void
-KnotHolderEntityEnd::bisector_end_set(NR::Point const &p, bool left) {
+KnotHolderEntityEnd::bisector_end_set(Geom::Point const &p, bool left) {
     Inkscape::LivePathEffect::LPEPerpBisector *lpe =
         dynamic_cast<Inkscape::LivePathEffect::LPEPerpBisector *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
     if (!lpe) return;
 
-    NR::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p);
 
-    double lambda = Geom::nearest_point(s.to_2geom(), lpe->M, lpe->perp_dir);
+    double lambda = Geom::nearest_point(s, lpe->M, lpe->perp_dir);
     if (left) {
         lpe->C = lpe->M + lpe->perp_dir * lambda;
         lpe->length_left.param_set_value(lambda);
@@ -88,48 +88,48 @@ KnotHolderEntityEnd::bisector_end_set(NR::Point const &p, bool left) {
 }
 
 void
-KnotHolderEntityLeftEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/) {
+KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/) {
     bisector_end_set(p);
 }
 
 void
-KnotHolderEntityRightEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/) {
+KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/) {
     bisector_end_set(p, false);
 }
 
 /**
-NR::Point path_start_get(SPItem *item) {
+Geom::Point path_start_get(SPItem *item) {
     Inkscape::LivePathEffect::LPEPerpBisector *lpe =
         dynamic_cast<Inkscape::LivePathEffect::LPEPerpBisector *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
 
     if (lpe)
-        return NR::Point(lpe->A);
+        return Geom::Point(lpe->A);
     else
-        return NR::Point(0,0);
+        return Geom::Point(0,0);
 }
 
-NR::Point path_end_get(SPItem *item) {
+Geom::Point path_end_get(SPItem *item) {
     Inkscape::LivePathEffect::LPEPerpBisector *lpe =
         dynamic_cast<Inkscape::LivePathEffect::LPEPerpBisector *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
 
     if (lpe)
-        return NR::Point(lpe->B);
+        return Geom::Point(lpe->B);
     else
-        return NR::Point(0,0);
+        return Geom::Point(0,0);
 }
 
 void
-path_set_start_end(SPItem *item, NR::Point const &p, bool start) {
+path_set_start_end(SPItem *item, Geom::Point const &p, bool start) {
     SPCurve* curve = sp_path_get_curve_for_edit (SP_PATH(item)); // TODO: Should we use sp_shape_get_curve()?
     Geom::Matrix const i2d (sp_item_i2d_affine (SP_ITEM(item)));
 
     Geom::Point A, B;
     if (start) {
-        A = p.to_2geom();
-        B = (curve->last_point()).to_2geom();
+        A = p;
+        B = curve->last_point();
     } else {
-        A = (curve->first_point()).to_2geom();
-        B = (p.to_2geom());
+        A = curve->first_point();
+        B = p;
     }
 
     SPCurve *c = new SPCurve();
@@ -140,11 +140,11 @@ path_set_start_end(SPItem *item, NR::Point const &p, bool start) {
 }
 **/
 
-//void path_start_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/) {
+//void path_start_set(SPItem *item, Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/) {
 //    path_set_start_end(item, p);
 //}
 
-//void path_end_set(SPItem *item, NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/) {
+//void path_end_set(SPItem *item, Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/) {
 //    path_set_start_end(item, p, false);
 //}
 
@@ -183,8 +183,8 @@ LPEPerpBisector::doOnApply (SPLPEItem */*lpeitem*/)
     /**
     SPCurve* curve = sp_path_get_curve_for_edit (SP_PATH(lpeitem)); // TODO: Should we use sp_shape_get_curve()?
 
-    Geom::Point A((curve->first_point()).to_2geom());
-    Geom::Point B((curve->last_point()).to_2geom());
+    Geom::Point A(curve->first_point());
+    Geom::Point B(curve->last_point());
 
     SPCurve *c = new SPCurve();
     c->moveto(A);

@@ -601,8 +601,8 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
     
     Geom::Path cl;
     std::vector<Geom::Path> clv;    
-    cl.start(p_min_on_cl.to_2geom());
-    cl.appendNew<Geom::LineSegment>(p_max_on_cl.to_2geom());
+    cl.start(p_min_on_cl);
+    cl.appendNew<Geom::LineSegment>(p_max_on_cl);
     clv.push_back(cl);
     
     for (std::vector<NArtBpath*>::const_iterator k = _bpaths_to_snap_to->begin(); k != _bpaths_to_snap_to->end(); k++) {

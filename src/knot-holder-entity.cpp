@@ -27,6 +27,7 @@
 #include "desktop.h"
 #include "sp-namedview.h"
 #include <2geom/matrix.h>
+#include <2geom/transforms.h>
 
 int KnotHolderEntity::counter = 0;
 
@@ -78,15 +79,15 @@ KnotHolderEntity::update_knot()
 {
     NR::Matrix const i2d(from_2geom(sp_item_i2d_affine(item)));
 
-    NR::Point dp(knot_get() * i2d);
+    Geom::Point dp(knot_get() * i2d);
 
     _moved_connection.block();
     sp_knot_set_position(knot, dp, SP_KNOT_STATE_NORMAL); 
     _moved_connection.unblock();
 }
 
-NR::Point
-KnotHolderEntity::snap_knot_position(NR::Point const &p)
+Geom::Point
+KnotHolderEntity::snap_knot_position(Geom::Point const &p)
 {
     NR::Matrix const i2d (from_2geom(sp_item_i2d_affine(item)));
     NR::Point s = p * i2d;
@@ -99,30 +100,30 @@ KnotHolderEntity::snap_knot_position(NR::Point const &p)
 
 /* Pattern manipulation */
 
-static gdouble sp_pattern_extract_theta(SPPattern *pat, NR::Point scale)
+static gdouble sp_pattern_extract_theta(SPPattern *pat, Geom::Point scale)
 {
     gdouble theta = asin(pat->patternTransform[1] / scale[NR::X]);
     if (pat->patternTransform[0] < 0) theta = M_PI - theta ;
     return theta;
 }
 
-static NR::Point sp_pattern_extract_scale(SPPattern *pat)
+static Geom::Point sp_pattern_extract_scale(SPPattern *pat)
 {
     Geom::Matrix transf = to_2geom(pat->patternTransform);
-    return NR::Point( transf.expansionX(), transf.expansionY() );
+    return Geom::Point( transf.expansionX(), transf.expansionY() );
 }
 
-static NR::Point sp_pattern_extract_trans(SPPattern const *pat)
+static Geom::Point sp_pattern_extract_trans(SPPattern const *pat)
 {
-    return NR::Point(pat->patternTransform[4], pat->patternTransform[5]);
+    return Geom::Point(pat->patternTransform[4], pat->patternTransform[5]);
 }
 
 void
-PatternKnotHolderEntityXY::knot_set(NR::Point const &p, NR::Point const &origin, guint state)
+PatternKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &origin, guint state)
 {
     SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 
-    NR::Point p_snapped = snap_knot_position(p);
+    Geom::Point p_snapped = snap_knot_position(p);
 
     if ( state & GDK_CONTROL_MASK ) {
         if (fabs((p - origin)[NR::X]) > fabs((p - origin)[NR::Y])) {
@@ -133,29 +134,29 @@ PatternKnotHolderEntityXY::knot_set(NR::Point const &p, NR::Point const &origin,
     }
 
     if (state)  {
-        NR::Point const q = p_snapped - sp_pattern_extract_trans(pat);
+        Geom::Point const q = p_snapped - sp_pattern_extract_trans(pat);
         sp_item_adjust_pattern(item, NR::Matrix(NR::translate(q)));
     }
 
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-NR::Point
+Geom::Point
 PatternKnotHolderEntityXY::knot_get()
 {
     SPPattern const *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
     return sp_pattern_extract_trans(pat);
 }
 
-NR::Point
+Geom::Point
 PatternKnotHolderEntityAngle::knot_get()
 {
     SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 
     gdouble x = (pattern_width(pat));
     gdouble y = 0;
-    NR::Point delta = NR::Point(x,y);
-    NR::Point scale = sp_pattern_extract_scale(pat);
+    Geom::Point delta = Geom::Point(x,y);
+    Geom::Point scale = sp_pattern_extract_scale(pat);
     gdouble theta = sp_pattern_extract_theta(pat, scale);
     delta = delta * NR::Matrix(NR::scale(scale))*NR::Matrix(NR::rotate(theta));
     delta = delta + sp_pattern_extract_trans(pat);
@@ -163,14 +164,14 @@ PatternKnotHolderEntityAngle::knot_get()
 }
 
 void
-PatternKnotHolderEntityAngle::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
+PatternKnotHolderEntityAngle::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
     int const snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
     SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 
     // get the angle from pattern 0,0 to the cursor pos
-    NR::Point delta = p - sp_pattern_extract_trans(pat);
+    Geom::Point delta = p - sp_pattern_extract_trans(pat);
     gdouble theta = atan2(delta);
 
     if ( state & GDK_CONTROL_MASK ) {
@@ -178,9 +179,9 @@ PatternKnotHolderEntityAngle::knot_set(NR::Point const &p, NR::Point const &/*or
     }
 
     // get the scale from the current transform so we can keep it.
-    NR::Point scl = sp_pattern_extract_scale(pat);
+    Geom::Point scl = sp_pattern_extract_scale(pat);
     NR::Matrix rot = NR::Matrix(NR::scale(scl)) * NR::Matrix(NR::rotate(theta));
-    NR::Point const t = sp_pattern_extract_trans(pat);
+    Geom::Point const t = sp_pattern_extract_trans(pat);
     rot[4] = t[NR::X];
     rot[5] = t[NR::Y];
     sp_item_adjust_pattern(item, rot, true);
@@ -188,26 +189,26 @@ PatternKnotHolderEntityAngle::knot_set(NR::Point const &p, NR::Point const &/*or
 }
 
 void
-PatternKnotHolderEntityScale::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
+PatternKnotHolderEntityScale::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
     SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 
-    NR::Point p_snapped = snap_knot_position(p);
+    Geom::Point p_snapped = snap_knot_position(p);
 
     // get angle from current transform, (need get current scale first to calculate angle)
-    NR::Point oldscale = sp_pattern_extract_scale(pat);
+    Geom::Point oldscale = sp_pattern_extract_scale(pat);
     gdouble theta = sp_pattern_extract_theta(pat,oldscale);
 
     // Get the new scale from the position of the knotholder
-    NR::Point d = p_snapped - sp_pattern_extract_trans(pat);
-    d *= NR::Matrix(NR::rotate(-theta));
+    Geom::Point d = p_snapped - sp_pattern_extract_trans(pat);
+    d *= Geom::Rotate(-theta);
     gdouble pat_x = pattern_width(pat);
     gdouble pat_y = pattern_height(pat);
-    NR::Point scl (d[NR::X] / pat_x, d[NR::Y] / pat_y);
+    Geom::Point scl (d[NR::X] / pat_x, d[NR::Y] / pat_y);
 
     NR::Matrix rot =  NR::Matrix(NR::scale(scl)) * NR::Matrix(NR::rotate(theta));
 
-    NR::Point const t = sp_pattern_extract_trans(pat);
+    Geom::Point const t = sp_pattern_extract_trans(pat);
     rot[4] = t[NR::X];
     rot[5] = t[NR::Y];
     sp_item_adjust_pattern(item, rot, true);
@@ -215,14 +216,14 @@ PatternKnotHolderEntityScale::knot_set(NR::Point const &p, NR::Point const &/*or
 }
 
 
-NR::Point
+Geom::Point
 PatternKnotHolderEntityScale::knot_get()
 {
     SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 
     gdouble x = pattern_width(pat);
     gdouble y = pattern_height(pat);
-    NR::Point delta = NR::Point(x,y);
+    Geom::Point delta = Geom::Point(x,y);
     NR::Matrix a = pat->patternTransform;
     a[4] = 0;
     a[5] = 0;

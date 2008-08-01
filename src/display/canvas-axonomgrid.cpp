@@ -708,8 +708,8 @@ CanvasAxonomGridSnapper::_getSnapLines(NR::Point const &p) const
     // The vertical grid line is at the intersection of two angled grid lines. 
     // Now go find that intersection!
     Geom::Point result;
-    Geom::IntersectorKind is = line_intersection(norm_x.to_2geom(), norm_x[NR::Y]*y_proj_along_x_max,
-                                           norm_z.to_2geom(), norm_z[NR::Y]*y_proj_along_z_max,
+    Geom::IntersectorKind is = line_intersection(norm_x, norm_x[NR::Y]*y_proj_along_x_max,
+                                           norm_z, norm_z[NR::Y]*y_proj_along_z_max,
                                            result);
                          
     // Determine which half of the parallellogram to use 

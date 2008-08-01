@@ -1722,10 +1722,10 @@ sp_item_convert_to_guides(SPItem *item) {
     NR::Point B(A[NR::X], C[NR::Y]);
     NR::Point D(C[NR::X], A[NR::Y]);
 
-    pts.push_back(std::make_pair(A.to_2geom(), B.to_2geom()));
-    pts.push_back(std::make_pair(B.to_2geom(), C.to_2geom()));
-    pts.push_back(std::make_pair(C.to_2geom(), D.to_2geom()));
-    pts.push_back(std::make_pair(D.to_2geom(), A.to_2geom()));
+    pts.push_back(std::make_pair(A, B));
+    pts.push_back(std::make_pair(B, C));
+    pts.push_back(std::make_pair(C, D));
+    pts.push_back(std::make_pair(D, A));
 
     sp_guide_pt_pairs_to_guides(dt, pts);
 }

@@ -200,7 +200,7 @@ static double sp_guideline_point(SPCanvasItem *item, NR::Point p, SPCanvasItem *
     *actual_item = item;
 
     Geom::Point vec(gl->normal_to_line[Geom::X], - gl->normal_to_line[Geom::Y]);
-    double distance = Geom::dot((p.to_2geom() - gl->point_on_line), vec);
+    double distance = Geom::dot((p - gl->point_on_line), vec);
     return MAX(fabs(distance)-1, 0);
 }
 

@@ -29,15 +29,15 @@ namespace CR {
 class KnotHolderEntityStartingAngle : public LPEKnotHolderEntity
 {
 public:
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
 };
 
 class KnotHolderEntityRotationAngle : public LPEKnotHolderEntity
 {
 public:
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
 };
 
 } // namespace CR
@@ -144,15 +144,15 @@ get_effect(SPItem *item)
 }
 
 void
-KnotHolderEntityStartingAngle::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
+KnotHolderEntityStartingAngle::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
     LPECopyRotate* lpe = get_effect(item);
 
-    NR::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p);
 
     // I first suspected the minus sign to be a bug in 2geom but it is
     // likely due to SVG's choice of coordinate system orientation (max)
-    lpe->starting_angle.param_set_value(rad_to_deg(-angle_between(lpe->dir, s.to_2geom() - lpe->origin)));
+    lpe->starting_angle.param_set_value(rad_to_deg(-angle_between(lpe->dir, s - lpe->origin)));
     if (state & GDK_SHIFT_MASK) {
         lpe->dist_angle_handle = L2(lpe->B - lpe->A);
     } else {
@@ -164,15 +164,15 @@ KnotHolderEntityStartingAngle::knot_set(NR::Point const &p, NR::Point const &/*o
 }
 
 void
-KnotHolderEntityRotationAngle::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint state)
+KnotHolderEntityRotationAngle::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
     LPECopyRotate* lpe = get_effect(item);
 
-    NR::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p);
 
     // I first suspected the minus sign to be a bug in 2geom but it is
     // likely due to SVG's choice of coordinate system orientation (max)
-    lpe->rotation_angle.param_set_value(rad_to_deg(-angle_between(lpe->dir, s.to_2geom() - lpe->origin)) - lpe->starting_angle);
+    lpe->rotation_angle.param_set_value(rad_to_deg(-angle_between(lpe->dir, s - lpe->origin)) - lpe->starting_angle);
     if (state & GDK_SHIFT_MASK) {
         lpe->dist_angle_handle = L2(lpe->B - lpe->A);
     } else {
@@ -183,14 +183,14 @@ KnotHolderEntityRotationAngle::knot_set(NR::Point const &p, NR::Point const &/*o
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
 }
 
-NR::Point
+Geom::Point
 KnotHolderEntityStartingAngle::knot_get()
 {
     LPECopyRotate* lpe = get_effect(item);
     return snap_knot_position(lpe->start_pos);
 }
 
-NR::Point
+Geom::Point
 KnotHolderEntityRotationAngle::knot_get()
 {
     LPECopyRotate* lpe = get_effect(item);

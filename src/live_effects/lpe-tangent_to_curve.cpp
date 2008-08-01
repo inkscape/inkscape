@@ -32,22 +32,22 @@ namespace TtC {
 class KnotHolderEntityAttachPt : public LPEKnotHolderEntity
 {
 public:
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
 };
 
 class KnotHolderEntityLeftEnd : public LPEKnotHolderEntity
 {
 public:
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
 };
 
 class KnotHolderEntityRightEnd : public LPEKnotHolderEntity
 {
 public:
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
 };
 
 } // namespace TtC
@@ -111,13 +111,13 @@ get_effect(SPItem *item)
 }
 
 void
-KnotHolderEntityAttachPt::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
+KnotHolderEntityAttachPt::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
     using namespace Geom;
 
     LPETangentToCurve* lpe = get_effect(item);
 
-    NR::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p);
 
     // FIXME: There must be a better way of converting the path's SPCurve* to pwd2.
     SPCurve *curve = sp_path_get_curve_for_edit (SP_PATH(item));
@@ -127,7 +127,7 @@ KnotHolderEntityAttachPt::knot_set(NR::Point const &p, NR::Point const &/*origin
         pwd2.concat(pathv[i].toPwSb());
     }
 
-    double t0 = nearest_point(s.to_2geom(), pwd2);
+    double t0 = nearest_point(s, pwd2);
     lpe->t_attach.param_set_value(t0);
 
     // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
@@ -135,46 +135,46 @@ KnotHolderEntityAttachPt::knot_set(NR::Point const &p, NR::Point const &/*origin
 }
 
 void
-KnotHolderEntityLeftEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
+KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
     LPETangentToCurve *lpe = get_effect(item);
 
-    NR::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p);
 
-    double lambda = Geom::nearest_point(s.to_2geom(), lpe->ptA, lpe->derivA);
+    double lambda = Geom::nearest_point(s, lpe->ptA, lpe->derivA);
     lpe->length_left.param_set_value(-lambda);
 
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
 }
 
 void
-KnotHolderEntityRightEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/)
+KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
     LPETangentToCurve *lpe = get_effect(item);
     
-    NR::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p);
 
-    double lambda = Geom::nearest_point(s.to_2geom(), lpe->ptA, lpe->derivA);
+    double lambda = Geom::nearest_point(s, lpe->ptA, lpe->derivA);
     lpe->length_right.param_set_value(lambda);
 
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
 }
 
-NR::Point
+Geom::Point
 KnotHolderEntityAttachPt::knot_get()
 {
     LPETangentToCurve* lpe = get_effect(item);
     return lpe->ptA;
 }
 
-NR::Point
+Geom::Point
 KnotHolderEntityLeftEnd::knot_get()
 {
     LPETangentToCurve *lpe = get_effect(item);
     return lpe->C;
 }
 
-NR::Point
+Geom::Point
 KnotHolderEntityRightEnd::knot_get()
 {
     LPETangentToCurve *lpe = get_effect(item);

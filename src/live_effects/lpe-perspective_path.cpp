@@ -40,8 +40,8 @@ namespace PP {
 class KnotHolderEntityOffset : public LPEKnotHolderEntity
 {
 public:
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
-    virtual NR::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
 };
 
 } // namespace PP
@@ -162,13 +162,13 @@ get_effect(SPItem *item)
 }
 
 void
-KnotHolderEntityOffset::knot_set(NR::Point const &p, NR::Point const &origin, guint /*state*/)
+KnotHolderEntityOffset::knot_set(Geom::Point const &p, Geom::Point const &origin, guint /*state*/)
 {
     using namespace Geom;
  
     LPEPerspectivePath* lpe = get_effect(item);
 
-    NR::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p);
 
     lpe->offsetx.param_set_value((s - origin)[NR::X]);
     lpe->offsety.param_set_value(-(s - origin)[NR::Y]); // additional minus sign is due to coordinate system flipping
@@ -177,7 +177,7 @@ KnotHolderEntityOffset::knot_set(NR::Point const &p, NR::Point const &origin, gu
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
 }
 
-NR::Point
+Geom::Point
 KnotHolderEntityOffset::knot_get()
 {
     LPEPerspectivePath* lpe = get_effect(item);

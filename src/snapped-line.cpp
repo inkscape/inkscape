@@ -47,8 +47,8 @@ Inkscape::SnappedLineSegment::~SnappedLineSegment()
 Inkscape::SnappedPoint Inkscape::SnappedLineSegment::intersect(SnappedLineSegment const &line) const 
 {
 	Geom::Point intersection_2geom(NR_HUGE, NR_HUGE);
-	Geom::IntersectorKind result = segment_intersect(_start_point_of_line.to_2geom(), _end_point_of_line.to_2geom(),
-                              						 line._start_point_of_line.to_2geom(), line._end_point_of_line.to_2geom(),
+	Geom::IntersectorKind result = segment_intersect(_start_point_of_line, _end_point_of_line,
+                              						 line._start_point_of_line, line._end_point_of_line,
                               						 intersection_2geom);
   	NR::Point intersection(intersection_2geom);
 	
@@ -115,8 +115,8 @@ Inkscape::SnappedPoint Inkscape::SnappedLine::intersect(SnappedLine const &line)
 	// The point of intersection should be considered for snapping, but might be outside the snapping range
 	
 	Geom::Point intersection_2geom(NR_HUGE, NR_HUGE);
-	Geom::IntersectorKind result = Geom::line_intersection(getNormal().to_2geom(), getConstTerm(), 
-                                   line.getNormal().to_2geom(), line.getConstTerm(), intersection_2geom);
+	Geom::IntersectorKind result = Geom::line_intersection(getNormal(), getConstTerm(), 
+                                   line.getNormal(), line.getConstTerm(), intersection_2geom);
 	NR::Point intersection(intersection_2geom);
 	 
 	if (result == Geom::intersects) {

@@ -19,7 +19,7 @@
 
 #include <glib/gtypes.h>
 #include "knot.h"
-#include <libnr/nr-forward.h>
+#include <2geom/forward.h>
 
 struct SPItem;
 struct SPKnot;
@@ -27,8 +27,8 @@ struct SPKnot;
 class SPDesktop;
 class KnotHolder;
 
-typedef void (* SPKnotHolderSetFunc) (SPItem *item, NR::Point const &p, NR::Point const &origin, guint state);
-typedef NR::Point (* SPKnotHolderGetFunc) (SPItem *item);
+typedef void (* SPKnotHolderSetFunc) (SPItem *item, Geom::Point const &p, Geom::Point const &origin, guint state);
+typedef Geom::Point (* SPKnotHolderGetFunc) (SPItem *item);
 /* fixme: Think how to make callbacks most sensitive (Lauris) */
 typedef void (* SPKnotHolderReleasedFunc) (SPItem *item);
 
@@ -49,14 +49,14 @@ public:
 
     /* the get/set/click handlers are virtual functions; each handler class for a knot
        should be derived from KnotHolderEntity and override these functions */
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state) = 0;
-    virtual NR::Point knot_get() = 0;
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state) = 0;
+    virtual Geom::Point knot_get() = 0;
     virtual void knot_click(guint /*state*/) {}
 
     void update_knot();
 
 //private:
-    NR::Point snap_knot_position(NR::Point const &p);
+    Geom::Point snap_knot_position(Geom::Point const &p);
 
     SPKnot *knot;
     SPItem *item;
@@ -88,20 +88,20 @@ class LPEKnotHolderEntity : public KnotHolderEntity {
 
 class PatternKnotHolderEntityXY : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get();
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
 };
 
 class PatternKnotHolderEntityAngle : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get();
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
 };
 
 class PatternKnotHolderEntityScale : public KnotHolderEntity {
 public:
-    virtual NR::Point knot_get();
-    virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
+    virtual Geom::Point knot_get();
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
 };
 
 #endif /* !SEEN_KNOT_HOLDER_ENTITY_H */

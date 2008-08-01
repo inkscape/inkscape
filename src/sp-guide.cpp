@@ -206,7 +206,7 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
                 // default to vertical line for bad arguments
                 guide->normal_to_line = component_vectors[NR::X];
             }
-            sp_guide_set_normal(*guide, guide->normal_to_line.to_2geom(), false);
+            sp_guide_set_normal(*guide, guide->normal_to_line, false);
         }
         break;
     case SP_ATTR_POSITION:
@@ -289,7 +289,7 @@ sp_guide_create_guides_around_page(SPDesktop *dt) {
 
 void sp_guide_show(SPGuide *guide, SPCanvasGroup *group, GCallback handler)
 {
-    SPCanvasItem *item = sp_guideline_new(group, guide->point_on_line, guide->normal_to_line.to_2geom());
+    SPCanvasItem *item = sp_guideline_new(group, guide->point_on_line, guide->normal_to_line);
     sp_guideline_set_color(SP_GUIDELINE(item), guide->color);
 
     g_signal_connect(G_OBJECT(item), "event", G_CALLBACK(handler), guide);
@@ -334,7 +334,7 @@ void sp_guide_sensitize(SPGuide *guide, SPCanvas *canvas, gboolean sensitive)
 
 Geom::Point sp_guide_position_from_pt(SPGuide const *guide, NR::Point const &pt)
 {
-    return -(pt.to_2geom() - guide->point_on_line);
+    return -(pt - guide->point_on_line);
 }
 
 double sp_guide_distance_from_pt(SPGuide const *guide, Geom::Point const &pt)
