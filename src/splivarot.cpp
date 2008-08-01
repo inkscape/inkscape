@@ -658,30 +658,25 @@ sp_selected_path_outline()
                 continue;
         }
 
-        {   // pas de stroke pas de chocolat
-            SPCSSAttr *css = sp_repr_css_attr_inherited(SP_OBJECT_REPR(item), "style");
-            gchar const *val = sp_repr_css_property(css, "stroke", NULL);
-
-            if (val == NULL || strcmp(val, "none") == 0) {
-                curve->unref();
-                continue;
-            }
+        // pas de stroke pas de chocolat
+        if (!SP_OBJECT_STYLE(item) || SP_OBJECT_STYLE(item)->stroke.noneSet) {
+            curve->unref();
+            continue;
         }
 
         // remember old stroke style, to be set on fill
+        SPStyle *i_style = SP_OBJECT_STYLE(item);
         SPCSSAttr *ncss;
         {
-            SPCSSAttr *ocss = sp_repr_css_attr_inherited(SP_OBJECT_REPR(item), "style");
-            gchar const *val = sp_repr_css_property(ocss, "stroke", NULL);
-            gchar const *opac = sp_repr_css_property(ocss, "stroke-opacity", NULL);
-
-            ncss = sp_repr_css_attr_new();
+            ncss = sp_css_attr_from_style(i_style, SP_STYLE_FLAG_ALWAYS);
+            gchar const *s_val = sp_repr_css_property(ncss, "stroke", NULL);
+            gchar const *s_opac = sp_repr_css_property(ncss, "stroke-opacity", NULL);
 
             sp_repr_css_set_property(ncss, "stroke", "none");
             sp_repr_css_set_property(ncss, "stroke-opacity", "1.0");
-            sp_repr_css_set_property(ncss, "fill", val);
-            if ( opac ) {
-                sp_repr_css_set_property(ncss, "fill-opacity", opac);
+            sp_repr_css_set_property(ncss, "fill", s_val);
+            if ( s_opac ) {
+                sp_repr_css_set_property(ncss, "fill-opacity", s_opac);
             } else {
                 sp_repr_css_set_property(ncss, "fill-opacity", "1.0");
             }
@@ -692,8 +687,6 @@ sp_selected_path_outline()
 
         NR::Matrix const transform(item->transform);
         float const scale = NR::expansion(transform);
-        gchar *style = g_strdup(SP_OBJECT_REPR(item)->attribute("style"));
-        SPStyle *i_style = SP_OBJECT(item)->style;
         gchar const *mask = SP_OBJECT_REPR(item)->attribute("mask");
         gchar const *clip_path = SP_OBJECT_REPR(item)->attribute("clip-path");
 
@@ -739,7 +732,6 @@ sp_selected_path_outline()
 
         Path *orig = Path_for_item(item, false);
         if (orig == NULL) {
-            g_free(style);
             curve->unref();
             continue;
         }
@@ -798,7 +790,6 @@ sp_selected_path_outline()
             // ca a merd, ou bien le resultat est vide
             delete res;
             delete orig;
-            g_free(style);
             continue;
         }
 
@@ -817,10 +808,7 @@ sp_selected_path_outline()
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
             Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
-            // restore old style
-            repr->setAttribute("style", style);
-
-            // set old stroke style on fill
+            // restore old style, but set old stroke style on fill
             sp_repr_css_change(repr, ncss, "style");
 
             sp_repr_css_attr_unref(ncss);
@@ -919,8 +907,6 @@ sp_selected_path_outline()
 
         delete res;
         delete orig;
-        g_free(style);
-
     }
 
     if (did) {
