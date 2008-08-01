@@ -140,6 +140,8 @@ bool JavaFXOutput::doHeader(const String &name)
     out("import javafx.ui.UIElement;\n");
     out("import javafx.ui.*;\n");
     out("import javafx.ui.canvas.*;\n");
+    out("\n");
+    out("import java.lang.System;\n");
     out("\n\n");
     out("public class %s extends CompositeNode {\n", name.c_str());
     out("}\n");
@@ -155,6 +157,19 @@ bool JavaFXOutput::doHeader(const String &name)
 bool JavaFXOutput::doTail(const String &name)
 {
     out("\n\n\n\n");
+    out("Frame {\n");
+    out("    title: \"Test\"\n");
+    out("    width: 500\n");
+    out("    height: 500\n");
+    out("    onClose: function()\n");
+    out("        {\n");
+    out("        return System.exit( 0 );\n");
+    out("        }\n");
+    out("    visible: true\n");
+    out("    content: Canvas {\n");
+    out("        content: tux{}\n");
+    out("    }\n");
+    out("}\n");
     out("/*###################################################################\n");
     out("### E N D   C L A S S    %s\n", name.c_str());
     out("###################################################################*/\n");
@@ -221,7 +236,7 @@ bool JavaFXOutput::doCurves(SPDocument *doc, const String &name)
         out("        ###################################################*/\n");
         out("        Path \n");
         out("        {\n");
-        out("        id : \"%s\"\n", id.c_str());
+        out("        id: \"%s\"\n", id.c_str());
 
         /**
          * Get the fill and stroke of the shape
@@ -264,56 +279,65 @@ bool JavaFXOutput::doCurves(SPDocument *doc, const String &name)
                 segmentCount += 1;
         }
 
-        out("        d :\n");
+        out("        d:\n");
         out("            [\n");
 
         unsigned int segmentNr = 0;
 
         nrSegments += segmentCount;
 
-        for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit) {
-
-
-            for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit) {
-
+        for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit)
+            {
+            Geom::Point p = pit->initialPoint() * tf;
+            out("            MoveTo {\n");
+            out("                x: %s\n", dstr(p[X]).c_str());
+            out("                y: %s\n", dstr(p[Y]).c_str());
+            out("                absolute: true\n");
+            out("                },\n");
+            for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit)
+                {
                 //### LINE
                 if( dynamic_cast<Geom::LineSegment const *> (&*cit) ||
                     dynamic_cast<Geom::HLineSegment const *>(&*cit) ||
                     dynamic_cast<Geom::VLineSegment const *>(&*cit) )
-                {
+                    {
+                    Geom::Point p = cit->initialPoint() * tf;
                     out("            LineTo {\n");
-                    out("                x: %s\n", dstr(cit->initialPoint()[X]).c_str());
-                    out("                y: %s\n", dstr(cit->initialPoint()[Y]).c_str());
+                    out("                x: %s\n", dstr(p[X]).c_str());
+                    out("                y: %s\n", dstr(p[Y]).c_str());
                     out("                absolute: true\n");
-                    out("                }");
+                    out("                },\n");
                     nrNodes++;
-                }
+                    }
                 //### BEZIER
-                else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit)) {
+                else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit))
+                    {
                     std::vector<Geom::Point> points = cubic->points();
+                    Geom::Point p0 = points[0] * tf;
+                    Geom::Point p1 = points[1] * tf;
+                    Geom::Point p2 = points[2] * tf;
                     out("            CurveTo {\n");
-                    out("                x1: %s\n", dstr(points[0][X]).c_str());
-                    out("                y1: %s\n", dstr(points[0][Y]).c_str());
-                    out("                x2: %s\n", dstr(points[1][X]).c_str());
-                    out("                y2: %s\n", dstr(points[1][Y]).c_str());
-                    out("                x3: %s\n", dstr(points[2][X]).c_str());
-                    out("                y3: %s\n", dstr(points[3][Y]).c_str());
+                    out("                x1: %s\n", dstr(p0[X]).c_str());
+                    out("                y1: %s\n", dstr(p0[Y]).c_str());
+                    out("                x2: %s\n", dstr(p1[X]).c_str());
+                    out("                y2: %s\n", dstr(p1[Y]).c_str());
+                    out("                x3: %s\n", dstr(p2[X]).c_str());
+                    out("                y3: %s\n", dstr(p2[Y]).c_str());
                     out("                smooth: false\n");
                     out("                absolute: true\n");
-                    out("                }");
+                    out("                },\n");
                     nrNodes++;
-                }
-                else {
-                    g_error ("logical error, because pathv_to_linear_and_cubic_beziers was used");
-                }
-
-                if (segmentNr <= segmentCount)
-                    out(",\n");
+                    }
                 else
-                    out("\n");
-
+                    {
+                    g_error ("logical error, because pathv_to_linear_and_cubic_beziers was used");
+                    }
+                }
+            if (pit->closed())
+                {
+                out("            ClosePath {},\n");
+                }
             }
-        }
 
         out("            ] // d\n");
         out("        }, // Path\n");
