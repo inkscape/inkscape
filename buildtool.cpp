@@ -207,7 +207,7 @@ TREX_API TRexBool trex_getsubexp(TRex* exp, int n, TRexMatch *subexp);
 #include <setjmp.h>
 //#include "trex.h"
 
-#ifdef _UINCODE
+#ifdef _UNICODE
 #define scisprint iswprint
 #define scstrlen wcslen
 #define scprintf wprintf
