@@ -288,7 +288,7 @@ bool JavaFXOutput::doCurves(SPDocument *doc, const String &name)
 
         for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit)
             {
-            Geom::Point p = pit->initialPoint() * tf;
+            Geom::Point p = pit->front().initialPoint() * tf;
             out("            MoveTo {\n");
             out("                x: %s\n", dstr(p[X]).c_str());
             out("                y: %s\n", dstr(p[Y]).c_str());

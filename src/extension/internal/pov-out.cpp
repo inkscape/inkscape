@@ -202,7 +202,7 @@ void PovOutput::segment(int segNr,
 /**
  * Output the file header
  */
-void PovOutput::doHeader()
+bool PovOutput::doHeader()
 {
     time_t tim = time(NULL);
     out("/*###################################################################\n");
@@ -238,6 +238,7 @@ void PovOutput::doHeader()
     out("##    Nodes    : %d\n", nrNodes);
     out("###################################################################*/\n");
     out("\n\n\n");
+    return true;
 }
 
 
@@ -245,13 +246,14 @@ void PovOutput::doHeader()
 /**
  *  Output the file footer
  */
-void PovOutput::doTail()
+bool PovOutput::doTail()
 {
     out("\n\n");
     out("/*###################################################################\n");
     out("### E N D    F I L E\n");
     out("###################################################################*/\n");
     out("\n\n");
+    return true;
 }
 
 
@@ -259,7 +261,7 @@ void PovOutput::doTail()
 /**
  *  Output the curve data to buffer
  */
-void PovOutput::doCurves(SPDocument *doc)
+bool PovOutput::doCurves(SPDocument *doc)
 {
     using Geom::X;
     using Geom::Y;
@@ -268,7 +270,7 @@ void PovOutput::doCurves(SPDocument *doc)
     //findElementsByTagName(results, SP_ACTIVE_DOCUMENT->rroot, "path");
     findElementsByTagName(results, SP_ACTIVE_DOCUMENT->rroot, NULL);
     if (results.size() == 0)
-        return;
+        return true;
 
     double bignum = 1000000.0;
     double minx  =  bignum;
@@ -359,30 +361,42 @@ void PovOutput::doCurves(SPDocument *doc)
         nrSegments += segmentCount;
 
         Geom::Rect cminmax( pathv.front().initialPoint(), pathv.front().initialPoint() );  // at moment of writing, 2geom lacks proper initialization of empty intervals in rect...
-        for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit) {
+   
+   
+        for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit)
+		    {
 
             cminmax.expandTo(pit->initialPoint());
 
-            for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit) {
+            for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit)
+			    {
 
                 if( dynamic_cast<Geom::LineSegment const *> (&*cit) ||
                     dynamic_cast<Geom::HLineSegment const *>(&*cit) ||
                     dynamic_cast<Geom::VLineSegment const *>(&*cit) )
-                {
+                    {
+                    Geom::Point p0 = cit->initialPoint() * tf;
+                    Geom::Point p1 = cit->finalPoint()   * tf;
                     segment(segmentNr++,
-                            cit->initialPoint()[X], cit->initialPoint()[Y], cit->initialPoint()[X], cit->initialPoint()[Y],
-                            cit->finalPoint()[X], cit->finalPoint()[Y], cit->finalPoint()[X], cit->finalPoint()[Y] );
+                            p0[X], p0[Y], p0[X], p0[Y], p1[X], p1[Y], p1[X], p1[Y] );
                     nrNodes += 8;
-                }
-                else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit)) {
+                    }
+                else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit))
+				    {
                     std::vector<Geom::Point> points = cubic->points();
+                    Geom::Point p0 = points[0] * tf;
+                    Geom::Point p1 = points[1] * tf;
+                    Geom::Point p2 = points[2] * tf;
+                    Geom::Point p3 = points[3] * tf;
                     segment(segmentNr++,
-                            points[0][X],points[0][Y], points[1][X],points[1][Y], points[2][X],points[2][Y], points[3][X],points[3][Y]);
+                            p0[X],p0[Y], p1[X],p1[Y], p2[X],p2[Y], p3[X],p3[Y]);
                     nrNodes += 8;
-                }
-                else {
-                    g_error ("logical error, because pathv_to_linear_and_cubic_beziers was used");
-                }
+                    }
+                else
+				    {
+                    g_warning("logical error, because pathv_to_linear_and_cubic_beziers was used");
+                    return false;
+                    }
 
                 if (segmentNr <= static_cast<int>(segmentCount))
                     out(",\n");
@@ -514,6 +528,7 @@ void PovOutput::doCurves(SPDocument *doc)
         out("\n\n");
         }
 
+    return true;
 }
 
 
@@ -540,7 +555,7 @@ void PovOutput::reset()
 
 
 /**
- * Saves the <paths> of an Inkscape SVG file as PovRay spline definitions
+ * Saves the Shapes of an Inkscape SVG file as PovRay spline definitions
  */
 void PovOutput::saveDocument(SPDocument *doc, gchar const *uri)
 {
@@ -548,15 +563,28 @@ void PovOutput::saveDocument(SPDocument *doc, gchar const *uri)
 
     //###### SAVE IN POV FORMAT TO BUFFER
     //# Lets do the curves first, to get the stats
-    doCurves(doc);
+    if (!doCurves(doc))
+        {
+        g_warning("Could not output curves for %s\n", uri);
+        return;
+        }
+        
     String curveBuf = outbuf;
     outbuf.clear();
 
-    doHeader();
+    if (!doHeader())
+        {
+        g_warning("Could not write header for %s\n", uri);
+        return;
+        }
 
     outbuf.append(curveBuf);
 
-    doTail();
+    if (!doTail())
+        {
+        g_warning("Could not write footer for %s\n", uri);
+        return;
+        }
 
 
 

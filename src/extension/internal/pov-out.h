@@ -107,17 +107,17 @@ private:
     /**
      * Output the file header
      */
-    void doHeader();
+    bool doHeader();
 
     /**
      * Output the file footer
      */
-    void doTail();
+    bool doTail();
 
     /**
      * Output the SVG document's curve data as POV curves
      */
-    void doCurves(SPDocument *doc);
+    bool doCurves(SPDocument *doc);
 
     /**
      * Actual method to save document
