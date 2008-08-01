@@ -4,6 +4,9 @@
 #include <glib.h>
 #include <utility>
 
+// function internal to svg-length.cpp:
+gchar const *sp_svg_length_get_css_units(SVGLength::Unit unit);
+
 class SvgLengthTest : public CxxTest::TestSuite
 {
 private:
@@ -88,6 +91,47 @@ public:
             SVGLength l;
             TSM_ASSERT(fail_tests[i] , !l.readAbsolute(fail_tests[i]));
         }
+    }
+
+    void testEnumMappedToString()
+    {
+        for ( int i = (static_cast<int>(SVGLength::NONE) + 1); i <= static_cast<int>(SVGLength::LAST_UNIT); i++ ) {
+            SVGLength::Unit target = static_cast<SVGLength::Unit>(i);
+            // PX is a special case where we don't have a unit string
+            if ( (target != SVGLength::PX) && (target != SVGLength::FOOT) ) {
+                gchar const* val = sp_svg_length_get_css_units(target);
+                TSM_ASSERT_DIFFERS(i, val, "");
+            }
+        }
+    }
+
+    // Ensure that all unit suffix strings used are allowed by SVG
+    void testStringsAreValidSVG()
+    {
+        gchar const* valid[] = {"", "em", "ex", "px", "pt", "pc", "cm", "mm", "in", "%"};
+        std::set<std::string> validStrings(valid, valid + G_N_ELEMENTS(valid));
+        for ( int i = (static_cast<int>(SVGLength::NONE) + 1); i <= static_cast<int>(SVGLength::LAST_UNIT); i++ ) {
+            SVGLength::Unit target = static_cast<SVGLength::Unit>(i);
+            gchar const* val = sp_svg_length_get_css_units(target);
+            TSM_ASSERT(i, validStrings.find(std::string(val)) != validStrings.end());
+        }
+    }
+
+    // Ensure that all unit suffix strings allowed by SVG are covered by enum
+    void testValidSVGStringsSupported()
+    {
+        // Note that "px" is ommitted from the list, as it will be assumed to be so if not explicitly set.
+        gchar const* valid[] = {"em", "ex", "pt", "pc", "cm", "mm", "in", "%"};
+        std::set<std::string> validStrings(valid, valid + G_N_ELEMENTS(valid));
+        for ( int i = (static_cast<int>(SVGLength::NONE) + 1); i <= static_cast<int>(SVGLength::LAST_UNIT); i++ ) {
+            SVGLength::Unit target = static_cast<SVGLength::Unit>(i);
+            gchar const* val = sp_svg_length_get_css_units(target);
+            std::set<std::string>::iterator iter = validStrings.find(std::string(val));
+            if (iter != validStrings.end()) {
+                validStrings.erase(iter);
+            }
+        }
+        TSM_ASSERT_EQUALS(validStrings, validStrings.size(), 0);
     }
 
     // TODO: More tests

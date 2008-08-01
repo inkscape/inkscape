@@ -1,5 +1,5 @@
-#ifndef __SP_SVG_LENGTH_H__
-#define __SP_SVG_LENGTH_H__
+#ifndef SEEN_SP_SVG_LENGTH_H
+#define SEEN_SP_SVG_LENGTH_H
 
 /**
  *  \file src/svg/svg-length.h
@@ -21,19 +21,20 @@
 class SVGLength
 {
 public:
-  
+
     enum Unit {
         NONE,
-	PX,
-	PT,
-	PC,
-	MM,
-	CM,
-	INCH,
-	FOOT,
-	EM,
-	EX,
-	PERCENT
+        PX,
+        PT,
+        PC,
+        MM,
+        CM,
+        INCH,
+        FOOT,
+        EM,
+        EX,
+        PERCENT,
+        LAST_UNIT = PERCENT
     };
 
     bool _set;
@@ -43,9 +44,9 @@ public:
 
     float operator=(float v) {
         _set = true;
-	unit = NONE;
-	value = computed = v;
-	return v;
+        unit = NONE;
+        value = computed = v;
+        return v;
     }
 
     bool read(gchar const *str);
@@ -56,7 +57,7 @@ public:
     void update(double em, double ex, double scale);
 };
 
-#endif
+#endif // SEEN_SP_SVG_LENGTH_H
 
 /*
   Local Variables:

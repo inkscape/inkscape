@@ -508,6 +508,7 @@ gchar const *sp_svg_length_get_css_units(SVGLength::Unit unit)
         case SVGLength::MM: return "mm";
         case SVGLength::CM: return "cm";
         case SVGLength::INCH: return "in";
+        case SVGLength::FOOT: return ""; // Does not have a "foot" unit string in the SVG spec
         case SVGLength::EM: return "em";
         case SVGLength::EX: return "ex";
         case SVGLength::PERCENT: return "%";
