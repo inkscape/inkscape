@@ -39,6 +39,9 @@ public:
     friend class CR::KnotHolderEntityStartingAngle;
     friend class CR::KnotHolderEntityRotationAngle;
 
+protected:
+    virtual void addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec);
+
 private:
     ScalarParam starting_angle;
     ScalarParam rotation_angle;

@@ -108,6 +108,23 @@ LPECopyRotate::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
     return output;
 }
 
+void
+LPECopyRotate::addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec)
+{
+    using namespace Geom;
+
+    Point start_pos = origin + dir * Rotate(-deg_to_rad(starting_angle)) * dist_angle_handle;
+    Point rot_pos = origin + dir * Rotate(-deg_to_rad(starting_angle + rotation_angle)) * dist_angle_handle;
+
+    Path path(start_pos);
+    path.appendNew<LineSegment>((Geom::Point) origin);
+    path.appendNew<LineSegment>(rot_pos);
+
+    PathVector pathv;
+    pathv.push_back(path);
+    hp_vec.push_back(pathv);
+}
+
 namespace CR {
 
 using namespace Geom;
