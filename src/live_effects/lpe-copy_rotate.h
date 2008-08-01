@@ -52,6 +52,9 @@ private:
     Geom::Point A;
     Geom::Point B;
     Geom::Point dir;
+
+    Geom::Point start_pos;
+    Geom::Point rot_pos;
     double dist_angle_handle;
 
     LPECopyRotate(const LPECopyRotate&);

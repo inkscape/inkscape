@@ -90,6 +90,11 @@ LPECopyRotate::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
 {
     using namespace Geom;
 
+    // I first suspected the minus sign to be a bug in 2geom but it is
+    // likely due to SVG's choice of coordinate system orientation (max)
+    start_pos = origin + dir * Rotate(-deg_to_rad(starting_angle)) * dist_angle_handle;
+    rot_pos = origin + dir * Rotate(-deg_to_rad(starting_angle + rotation_angle)) * dist_angle_handle;
+
     A = pwd2_in.firstValue();
     B = pwd2_in.lastValue();
     dir = unit_vector(B - A);
@@ -112,9 +117,6 @@ void
 LPECopyRotate::addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec)
 {
     using namespace Geom;
-
-    Point start_pos = origin + dir * Rotate(-deg_to_rad(starting_angle)) * dist_angle_handle;
-    Point rot_pos = origin + dir * Rotate(-deg_to_rad(starting_angle + rotation_angle)) * dist_angle_handle;
 
     Path path(start_pos);
     path.appendNew<LineSegment>((Geom::Point) origin);
@@ -185,22 +187,14 @@ NR::Point
 KnotHolderEntityStartingAngle::knot_get()
 {
     LPECopyRotate* lpe = get_effect(item);
-    // I first suspected the minus sign to be a bug in 2geom but it is
-    // likely due to SVG's choice of coordinate system orientation (max)
-    Point d = lpe->dir * Rotate(-deg_to_rad(lpe->starting_angle)) * lpe->dist_angle_handle;
-
-    return snap_knot_position(lpe->origin + d);
+    return snap_knot_position(lpe->start_pos);
 }
 
 NR::Point
 KnotHolderEntityRotationAngle::knot_get()
 {
     LPECopyRotate* lpe = get_effect(item);
-    // I first suspected the minus sign to be a bug in 2geom but it is
-    // likely due to SVG's choice of coordinate system orientation (max)
-    Point d = lpe->dir * Rotate(-deg_to_rad(lpe->starting_angle + lpe->rotation_angle)) * lpe->dist_angle_handle;
-
-    return snap_knot_position(lpe->origin + d);
+    return snap_knot_position(lpe->rot_pos);
 }
 
 } // namespace CR
