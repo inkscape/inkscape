@@ -106,7 +106,9 @@ KnotHolderEntityLeftEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*
 {
     LPEAngleBisector *lpe = get_effect(item);
     
-    double lambda = Geom::nearest_point(p.to_2geom(), lpe->ptA, lpe->dir);
+    NR::Point const s = snap_knot_position(p);
+
+    double lambda = Geom::nearest_point(s.to_2geom(), lpe->ptA, lpe->dir);
     lpe->length_left.param_set_value(-lambda);
 
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
@@ -117,7 +119,9 @@ KnotHolderEntityRightEnd::knot_set(NR::Point const &p, NR::Point const &/*origin
 {
     LPEAngleBisector *lpe = get_effect(item);
     
-    double lambda = Geom::nearest_point(p.to_2geom(), lpe->ptA, lpe->dir);
+    NR::Point const s = snap_knot_position(p);
+
+    double lambda = Geom::nearest_point(s.to_2geom(), lpe->ptA, lpe->dir);
     lpe->length_right.param_set_value(lambda);
 
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);

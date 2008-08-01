@@ -25,15 +25,18 @@ namespace Inkscape {
 namespace LivePathEffect {
 namespace PB {
 
-class KnotHolderEntityLeftEnd : public LPEKnotHolderEntity
-{
+class KnotHolderEntityEnd : public LPEKnotHolderEntity {
+public:
+    void bisector_end_set(NR::Point const &p, bool left = true);
+};
+
+class KnotHolderEntityLeftEnd : public KnotHolderEntityEnd {
 public:
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
     virtual NR::Point knot_get();
 };
 
-class KnotHolderEntityRightEnd : public LPEKnotHolderEntity
-{
+class KnotHolderEntityRightEnd : public KnotHolderEntityEnd {
 public:
     virtual void knot_set(NR::Point const &p, NR::Point const &origin, guint state);
     virtual NR::Point knot_get();
@@ -64,14 +67,14 @@ KnotHolderEntityRightEnd::knot_get() {
 }
 
 void
-bisector_end_set(SPItem *item, NR::Point const &p, bool left) {
+KnotHolderEntityEnd::bisector_end_set(NR::Point const &p, bool left) {
     Inkscape::LivePathEffect::LPEPerpBisector *lpe =
         dynamic_cast<Inkscape::LivePathEffect::LPEPerpBisector *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
+    if (!lpe) return;
 
-    if (!lpe)
-        return;
+    NR::Point const s = snap_knot_position(p);
 
-    double lambda = Geom::nearest_point(p.to_2geom(), lpe->M, lpe->perp_dir);
+    double lambda = Geom::nearest_point(s.to_2geom(), lpe->M, lpe->perp_dir);
     if (left) {
         lpe->C = lpe->M + lpe->perp_dir * lambda;
         lpe->length_left.param_set_value(lambda);
@@ -86,12 +89,12 @@ bisector_end_set(SPItem *item, NR::Point const &p, bool left) {
 
 void
 KnotHolderEntityLeftEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/) {
-    bisector_end_set(item, p);
+    bisector_end_set(p);
 }
 
 void
 KnotHolderEntityRightEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*/, guint /*state*/) {
-    bisector_end_set(item, p, false);
+    bisector_end_set(p, false);
 }
 
 /**

@@ -124,9 +124,11 @@ KnotHolderEntityAngle::knot_set(NR::Point const &p, NR::Point const &/*origin*/,
 {
     LPECopyRotate* lpe = get_effect(item);
 
+    NR::Point const s = snap_knot_position(p);
+
     // I first suspected the minus sign to be a bug in 2geom but it is
     // likely due to SVG's choice of coordinate system orientation (max)
-    lpe->angle.param_set_value(rad_to_deg(-angle_between(lpe->dir, p.to_2geom() - lpe->origin)));
+    lpe->angle.param_set_value(rad_to_deg(-angle_between(lpe->dir, s.to_2geom() - lpe->origin)));
     if (state & GDK_SHIFT_MASK) {
         lpe->dist_angle_handle = L2(lpe->B - lpe->A);
     } else {
@@ -144,7 +146,8 @@ KnotHolderEntityAngle::knot_get()
     // I first suspected the minus sign to be a bug in 2geom but it is
     // likely due to SVG's choice of coordinate system orientation (max)
     Point d = lpe->dir * Rotate(-deg_to_rad(lpe->angle)) * lpe->dist_angle_handle;
-    return lpe->origin + d;
+
+    return snap_knot_position(lpe->origin + d);
 }
 
 } // namespace CR

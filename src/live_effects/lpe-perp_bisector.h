@@ -24,6 +24,7 @@ namespace LivePathEffect {
 
 namespace PB {
   // we need a separate namespace to avoid clashes with LPETangentToCurve
+  class KnotHolderEntityEnd;
   class KnotHolderEntityLeftEnd;
   class KnotHolderEntityRightEnd;
   void bisector_end_set(SPItem *item, NR::Point const &p, bool left);
@@ -42,6 +43,7 @@ public:
       doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
     /* the knotholder entity functions must be declared friends */
+    friend class PB::KnotHolderEntityEnd;
     friend class PB::KnotHolderEntityLeftEnd;
     friend class PB::KnotHolderEntityRightEnd;
     friend void PB::bisector_end_set(SPItem *item, NR::Point const &p, bool left = true);

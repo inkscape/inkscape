@@ -114,7 +114,9 @@ KnotHolderEntityLeftEnd::knot_set(NR::Point const &p, NR::Point const &/*origin*
 
     LPEParallel *lpe = get_effect(item);
     
-    double lambda = L2(p - lpe->offset_pt) * sgn(dot(p.to_2geom() - lpe->offset_pt, lpe->dir));
+    NR::Point const s = snap_knot_position(p);
+
+    double lambda = L2(s - lpe->offset_pt) * sgn(dot(s.to_2geom() - lpe->offset_pt, lpe->dir));
     lpe->length_left.param_set_value(-lambda);
 
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
@@ -127,7 +129,9 @@ KnotHolderEntityRightEnd::knot_set(NR::Point const &p, NR::Point const &/*origin
 
     LPEParallel *lpe = get_effect(item);
     
-    double lambda = L2(p - lpe->offset_pt) * sgn(dot(p.to_2geom() - lpe->offset_pt, lpe->dir));
+    NR::Point const s = snap_knot_position(p);
+
+    double lambda = L2(s - lpe->offset_pt) * sgn(dot(s.to_2geom() - lpe->offset_pt, lpe->dir));
     lpe->length_right.param_set_value(lambda);
 
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
