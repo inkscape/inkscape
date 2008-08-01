@@ -15,6 +15,7 @@
 
 #ifdef ENABLE_SVG_FONTS
 
+#include <gtkmm/notebook.h>
 #include "svg-fonts-dialog.h"
 #include <glibmm/i18n.h>
 #include <string.h>
@@ -173,35 +174,31 @@ SPFont* SvgFontsDialog::get_selected_spfont()
     return NULL;
 }
 
-SvgFontsDialog::SvgFontsDialog()
- : UI::Widget::Panel("", "dialogs.svgfonts", SP_VERB_DIALOG_SVG_FONTS)
-{
-    Gtk::HBox* hbox = Gtk::manage(new Gtk::HBox());
-    hbox->add(_font_list);
-    hbox->add(_font_settings);
-    _getContents()->add(*hbox);
-
-//List of SVGFonts declared in a document:
-    _model = Gtk::ListStore::create(_columns);
-    _font_list.set_model(_model);
-    _font_list.append_column_editable(_("_Font"), _columns.label);
-    _font_list.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_font_selection_changed));
-
-    this->update_fonts();
-
-//kerning setup:
-    Gtk::VBox* kernvbox = Gtk::manage(new Gtk::VBox());
-    _font_settings.add(*kernvbox);
+Gtk::VBox* SvgFontsDialog::global_settings_tab(){
+    Gtk::VBox* global_vbox = Gtk::manage(new Gtk::VBox());
 
 //Set Width (horiz_adv_x):
     Gtk::HBox* setwidth_hbox = Gtk::manage(new Gtk::HBox());
-    setwidth_hbox->add(*Gtk::manage(new Gtk::Label(_("Set width (not working yet):"))));
+    setwidth_hbox->add(*Gtk::manage(new Gtk::Label(_("Set width:"))));
     setwidth_hbox->add(setwidth_spin);
 
     setwidth_spin.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_setwidth_changed));
     setwidth_spin.set_range(0, 4096);
     setwidth_spin.set_increments(10, 100);
-    _font_settings.add(*setwidth_hbox);
+    global_vbox->add(*setwidth_hbox);
+
+    return global_vbox;
+}
+
+Gtk::VBox* SvgFontsDialog::glyphs_tab(){
+    Gtk::VBox* glyphs_vbox = Gtk::manage(new Gtk::VBox());
+    return glyphs_vbox;
+}
+
+Gtk::VBox* SvgFontsDialog::kerning_tab(){
+
+//kerning setup:
+    Gtk::VBox* kernvbox = Gtk::manage(new Gtk::VBox());
 
 //Kerning Setup:
     kernvbox->add(*Gtk::manage(new Gtk::Label(_("Kerning Setup:"))));
@@ -224,6 +221,34 @@ SvgFontsDialog::SvgFontsDialog()
 
     kerning_preview.set_size(300 + 20, 150 + 20);
     _font_da.set_size(150 + 20, 50 + 20);
+
+    return kernvbox;
+}
+
+SvgFontsDialog::SvgFontsDialog()
+ : UI::Widget::Panel("", "dialogs.svgfonts", SP_VERB_DIALOG_SVG_FONTS)
+{
+    Gtk::HBox* hbox = Gtk::manage(new Gtk::HBox());
+    hbox->add(_font_list);
+    hbox->add(_font_settings);
+    _getContents()->add(*hbox);
+
+//List of SVGFonts declared in a document:
+    _model = Gtk::ListStore::create(_columns);
+    _font_list.set_model(_model);
+    _font_list.append_column_editable(_("_Font"), _columns.label);
+    _font_list.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_font_selection_changed));
+
+    this->update_fonts();
+
+    Gtk::Notebook *tabs = Gtk::manage(new Gtk::Notebook());
+    tabs->set_scrollable();
+
+    tabs->append_page(*global_settings_tab(), _("_Global Settings"), true);
+    tabs->append_page(*glyphs_tab(), _("_Glyphs"), true);
+    tabs->append_page(*kerning_tab(), _("_Kerning"), true);
+
+    _font_settings.add(*tabs);
 
 //Text Preview:
     _preview_entry.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_preview_text_changed));
