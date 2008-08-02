@@ -100,11 +100,12 @@ KnotHolderEntity::snap_knot_position(Geom::Point const &p)
 
 /* Pattern manipulation */
 
-static gdouble sp_pattern_extract_theta(SPPattern *pat, Geom::Point scale)
+/*  TODO: this pattern manipulation is not able to handle general transformation matrices. Only matrices that are the result of a pure scale times a pure rotation. */
+
+static gdouble sp_pattern_extract_theta(SPPattern *pat)
 {
-    gdouble theta = asin(pat->patternTransform[1] / scale[NR::X]);
-    if (pat->patternTransform[0] < 0) theta = M_PI - theta ;
-    return theta;
+    Geom::Matrix transf = to_2geom(pat->patternTransform);
+    return Geom::atan2(transf.xAxis());
 }
 
 static Geom::Point sp_pattern_extract_scale(SPPattern *pat)
@@ -123,6 +124,7 @@ PatternKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &ori
 {
     SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 
+    // FIXME: this snapping should be done together with knowing whether control was pressed. If GDK_CONTROL_MASK, then constrained snapping should be used.
     Geom::Point p_snapped = snap_knot_position(p);
 
     if ( state & GDK_CONTROL_MASK ) {
@@ -157,7 +159,7 @@ PatternKnotHolderEntityAngle::knot_get()
     gdouble y = 0;
     Geom::Point delta = Geom::Point(x,y);
     Geom::Point scale = sp_pattern_extract_scale(pat);
-    gdouble theta = sp_pattern_extract_theta(pat, scale);
+    gdouble theta = sp_pattern_extract_theta(pat);
     delta = delta * NR::Matrix(NR::scale(scale))*NR::Matrix(NR::rotate(theta));
     delta = delta + sp_pattern_extract_trans(pat);
     return delta;
@@ -189,24 +191,31 @@ PatternKnotHolderEntityAngle::knot_set(Geom::Point const &p, Geom::Point const &
 }
 
 void
-PatternKnotHolderEntityScale::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
+PatternKnotHolderEntityScale::knot_set(Geom::Point const &p, Geom::Point const &origin, guint state)
 {
     SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 
+    // FIXME: this snapping should be done together with knowing whether control was pressed. If GDK_CONTROL_MASK, then constrained snapping should be used.
     Geom::Point p_snapped = snap_knot_position(p);
 
-    // get angle from current transform, (need get current scale first to calculate angle)
-    Geom::Point oldscale = sp_pattern_extract_scale(pat);
-    gdouble theta = sp_pattern_extract_theta(pat,oldscale);
+    // get angle from current transform
+    gdouble theta = sp_pattern_extract_theta(pat);
 
     // Get the new scale from the position of the knotholder
     Geom::Point d = p_snapped - sp_pattern_extract_trans(pat);
-    d *= Geom::Rotate(-theta);
     gdouble pat_x = pattern_width(pat);
     gdouble pat_y = pattern_height(pat);
-    Geom::Point scl (d[NR::X] / pat_x, d[NR::Y] / pat_y);
+    Geom::Scale scl(1);
+    if ( state & GDK_CONTROL_MASK ) {
+        // if ctrl is pressed: use 1:1 scaling
+        gdouble pat_h = hypot(pat_x, pat_y);
+        scl = Geom::Scale(d.length() / pat_h);
+    } else {
+        d *= Geom::Rotate(-theta);
+        scl = Geom::Scale(d[NR::X] / pat_x, d[NR::Y] / pat_y);
+    }
 
-    NR::Matrix rot =  NR::Matrix(NR::scale(scl)) * NR::Matrix(NR::rotate(theta));
+    NR::Matrix rot = from_2geom(scl) * NR::Matrix(NR::rotate(theta));
 
     Geom::Point const t = sp_pattern_extract_trans(pat);
     rot[4] = t[NR::X];
