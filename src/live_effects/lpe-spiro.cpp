@@ -14,6 +14,7 @@
 #include <2geom/bezier-curve.h>
 #include <2geom/hvlinesegment.h>
 #include "helper/geom-nodetype.h"
+#include "helper/geom-curves.h"
 
 #include "live_effects/bezctx.h"
 #include "live_effects/bezctx_intf.h"
@@ -154,12 +155,8 @@ LPESpiro::doEffect(SPCurve * curve)
 
             // Determine type of spiro node this is, determined by the tangents (angles) of the curves
             // TODO: see if this can be simplified by using /helpers/geom-nodetype.cpp:get_nodetype
-            bool this_is_line = ( dynamic_cast<Geom::LineSegment const *>(&*curve_it1)  ||
-                                  dynamic_cast<Geom::HLineSegment const *>(&*curve_it1) ||
-                                  dynamic_cast<Geom::VLineSegment const *>(&*curve_it1) );
-            bool next_is_line = ( dynamic_cast<Geom::LineSegment const *>(&*curve_it2)  ||
-                                  dynamic_cast<Geom::HLineSegment const *>(&*curve_it2) ||
-                                  dynamic_cast<Geom::VLineSegment const *>(&*curve_it2) );
+            bool this_is_line = is_straight_curve(*curve_it1);
+            bool next_is_line = is_straight_curve(*curve_it2);
 
             Geom::NodeType nodetype = Geom::get_nodetype(*curve_it1, *curve_it2);
 
