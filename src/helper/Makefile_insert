@@ -18,6 +18,7 @@ helper_libspchelp_a_SOURCES =	\
 	helper/action.h	\
 	helper/geom.cpp	\
 	helper/geom.h	\
+	helper/geom-curves.h	\
 	helper/geom-nodetype.cpp	\
 	helper/geom-nodetype.h	\
 	helper/gnome-utils.cpp	\
