@@ -3265,9 +3265,10 @@ static void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
 }
 
 //########################
-//##     Pen/Pencil    ##
+//##     Pen/Pencil     ##
 //########################
 
+/* This is used in generic functions below to share large portions of code between pen and pencil tool */
 static char const *
 freehand_tool_name(GObject *dataKludge)
 {
@@ -3277,13 +3278,16 @@ freehand_tool_name(GObject *dataKludge)
              : "tools.freehand.pencil" );
 }
 
-static void sp_pc_freehand_mode_changed(EgeSelectOneAction* act, GObject* tbl)
+static void freehand_mode_changed(EgeSelectOneAction* act, GObject* tbl)
 {
     gint mode = ege_select_one_action_get_active(act);
 
     prefs_set_int_attribute(freehand_tool_name(tbl), "freehand-mode", mode);
 
     SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop");
+
+    // in pen tool we have more options than in pencil tool; if one of them was chosen, we do any
+    // preparatory work here
     if (SP_IS_PEN_CONTEXT(desktop->event_context)) {
         SPPenContext *pc = SP_PEN_CONTEXT(desktop->event_context);
         pc->polylines_only = (mode == 2);
@@ -3338,12 +3342,12 @@ static void sp_add_freehand_mode_toggle(GtkActionGroup* mainActions, GObject* ho
             ege_select_one_action_set_tooltip_column( act, 1  );
 
             ege_select_one_action_set_active( act, freehandMode);
-            g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_pc_freehand_mode_changed), holder);
+            g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(freehand_mode_changed), holder);
         }
     }
 }
 
-static void sp_freehand_change_shape(EgeSelectOneAction* act, GObject *dataKludge) {
+static void freehand_change_shape(EgeSelectOneAction* act, GObject *dataKludge) {
     gint shape = ege_select_one_action_get_active( act );
     prefs_set_int_attribute(freehand_tool_name(dataKludge), "shape", shape);
 }
@@ -3364,7 +3368,7 @@ GList * freehand_shape_dropdown_items_list() {
 }
 
 static void
-sp_freehand_add_advanced_shape_options(GtkActionGroup* mainActions, GObject* holder, bool tool_is_pencil) {
+freehand_add_advanced_shape_options(GtkActionGroup* mainActions, GObject* holder, bool tool_is_pencil) {
     /*advanced shape options */
     {
         GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_INT );
@@ -3386,7 +3390,7 @@ sp_freehand_add_advanced_shape_options(GtkActionGroup* mainActions, GObject* hol
         g_object_set( act1, "short_label", _("Shape:"), NULL );
         ege_select_one_action_set_appearance( act1, "compact" );
         ege_select_one_action_set_active( act1, prefs_get_int_attribute(tool_is_pencil ? "tools.freehand.pencil" : "tools.freehand.pen", "shape", 0) );
-        g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK(sp_freehand_change_shape), holder );
+        g_signal_connect( G_OBJECT(act1), "changed", G_CALLBACK(freehand_change_shape), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act1) );
         g_object_set_data( holder, "shape_action", act1 );
     }
@@ -3395,7 +3399,7 @@ sp_freehand_add_advanced_shape_options(GtkActionGroup* mainActions, GObject* hol
 static void sp_pen_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* mainActions, GObject* holder)
 {
     sp_add_freehand_mode_toggle(mainActions, holder, false);
-    sp_freehand_add_advanced_shape_options(mainActions, holder, false);
+    freehand_add_advanced_shape_options(mainActions, holder, false);
 }
 
 
@@ -3501,7 +3505,7 @@ static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
     }
 
     /* advanced shape options */
-    sp_freehand_add_advanced_shape_options(mainActions, holder, true);
+    freehand_add_advanced_shape_options(mainActions, holder, true);
 
     /* Reset */
     {
