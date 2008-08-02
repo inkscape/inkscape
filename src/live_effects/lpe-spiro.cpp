@@ -126,7 +126,7 @@ LPESpiro::doEffect(SPCurve * curve)
             Geom::Point p = path_it->front().pointAt(0);
             path[ip].x = p[X];
             path[ip].y = p[Y];
-            path[ip].ty = path_it->closed() ? 'c' : '{' ;  // for closed paths, this might change depending on whether the closing is smooth or not
+            path[ip].ty = '{' ;  // for closed paths, this is overwritten
             ip++;
         }
 
