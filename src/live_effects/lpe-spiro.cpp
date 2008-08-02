@@ -160,14 +160,10 @@ LPESpiro::doEffect(SPCurve * curve)
             bool next_is_line = ( dynamic_cast<Geom::LineSegment const *>(&*curve_it2)  ||
                                   dynamic_cast<Geom::HLineSegment const *>(&*curve_it2) ||
                                   dynamic_cast<Geom::VLineSegment const *>(&*curve_it2) );
-            Geom::Point deriv_1 = curve_it1->unitTangentAt(1);
-            Geom::Point deriv_2 = curve_it2->unitTangentAt(0);
-            double this_angle_L2 = Geom::L2(deriv_1);
-            double next_angle_L2 = Geom::L2(deriv_2);
-            double both_angles_L2 = Geom::L2(deriv_1 + deriv_2);
-            if ( (this_angle_L2 > 1e-6) &&
-                 (next_angle_L2 > 1e-6) &&
-                 ((this_angle_L2 + next_angle_L2 - both_angles_L2) < 1e-3) )
+
+            Geom::NodeType nodetype = Geom::get_nodetype(*curve_it1, *curve_it2);
+
+            if ( nodetype == Geom::NODE_SMOOTH || nodetype == Geom::NODE_SYMM )
             {
                 if (this_is_line && !next_is_line) {
                     path[ip].ty = ']';
