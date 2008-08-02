@@ -1,10 +1,7 @@
 /*
- * A simple utility for exporting Inkscape svg Shapes as PovRay bezier
- * prisms.  Note that this is output-only, and would thus seem to be
- * better placed as an 'export' rather than 'output'.  However, Export
- * handles all or partial documents, while this outputs ALL shapes in
- * the current SVG document.
- *
+ * A simple utility for exporting an Inkscape svg image as a JavaFX
+ * scene tree.
+\ *
  * Authors:
  *   Bob Jamison <ishmal@inkscape.org>
  *
@@ -18,6 +15,8 @@
 
 #include <glib.h>
 #include "extension/implementation/implementation.h"
+#include <document.h>
+#include <sp-gradient.h>
 
 namespace Inkscape
 {
@@ -69,22 +68,40 @@ public:
 	
 private:
 
-    
+    //output class name
+    String name;
+
     //For formatted output
-	String outbuf;
-	
+	String outbuf;   //main output buffer
+	String foutbuf;  //header function buffer
+
 
 	/**
 	 * Format text to our output buffer
 	 */
 	void out(const char *fmt, ...) G_GNUC_PRINTF(2,3);
 
+	/**
+	 * Format text to our function output buffer
+	 */
+	void fout(const char *fmt, ...) G_GNUC_PRINTF(2,3);
+
 	//Output the parts of the file
 
     /**
      * Output the file header
      */
-	bool doHeader(const String &name);
+	bool doHeader();
+
+    /**
+     *  Output gradient information to the buffer
+     */
+    bool doGradient(SPGradient *grad, const String &id);
+
+    /**
+     *  Output an element's style attribute
+     */
+    bool doStyle(SPStyle *style);
 
     /**
      * Output the SVG document's curve data as POV curves
@@ -96,7 +113,7 @@ private:
     /**
      * Output the file footer
      */
-	bool doTail(const String &name);
+	bool doTail();
 
 
 
@@ -109,11 +126,16 @@ private:
     int nrNodes;
     int nrSegments;
     int nrShapes;
+    
+    int idindex;
 
     double minx;
     double miny;
     double maxx;
     double maxy;
+    
+    std::vector<String> linearGradients;
+    std::vector<String> radialGradients;
 
 };
 

@@ -20,6 +20,8 @@
 #include <inkscape.h>
 #include <inkscape_version.h>
 #include <sp-path.h>
+#include <sp-linear-gradient.h>
+#include <sp-radial-gradient.h>
 #include <style.h>
 #include <display/curve.h>
 #include <libnr/n-art-bpath.h>
@@ -30,6 +32,7 @@
 #include <2geom/hvlinesegment.h>
 #include "helper/geom.h"
 #include <io/sys.h>
+
 
 #include <string>
 #include <stdio.h>
@@ -45,6 +48,44 @@ namespace Internal
 
 
 
+
+//########################################################################
+//# M E S S A G E S
+//########################################################################
+
+static void err(const char *fmt, ...)
+{
+    va_list args;
+    va_start(args, fmt);
+    g_logv(NULL, G_LOG_LEVEL_WARNING, fmt, args);
+    va_end(args);
+}
+
+
+//########################################################################
+//# U T I L I T Y
+//########################################################################
+
+/**
+ * Got this method from Bulia, and modified it a bit.  It basically
+ * starts with this style, gets its SPObject parent, walks up the object
+ * tree and finds all of the opacities and multiplies them.
+ *
+ * We use this for our "flat" object output.  If the code is modified
+ * to reflect a tree of <groups>, then this will be unneccessary.
+ */
+static double effective_opacity(const SPStyle *style)
+{
+    double val = 1.0;
+    for (SPObject const *obj = style->object; obj ; obj = obj->parent)
+        {
+        style = SP_OBJECT_STYLE(obj);
+        if (!style)
+            return val;
+        val *= SP_SCALE24_TO_FLOAT(style->opacity.value);
+        }
+    return val;
+}
 
 //########################################################################
 //# OUTPUT FORMATTING
@@ -65,6 +106,33 @@ static JavaFXOutput::String dstr(double d)
 
 
 
+/**
+ * Format an rgba() string
+ */
+static JavaFXOutput::String rgba(guint32 rgba)
+{
+    unsigned int r = SP_RGBA32_R_U(rgba);
+    unsigned int g = SP_RGBA32_G_U(rgba);
+    unsigned int b = SP_RGBA32_B_U(rgba);
+    unsigned int a = SP_RGBA32_A_U(rgba);
+    char buf[80];
+    snprintf(buf, 79, "rgba(0x%02x, 0x%02x, 0x%02x, 0x%02x)",
+                           r, g, b, a);
+    JavaFXOutput::String s = buf;
+    return s;
+}
+
+
+/**
+ * Format an rgba() string for a color and a 0.0-1.0 alpha
+ */
+static JavaFXOutput::String rgba(SPColor color, gdouble alpha)
+{
+    return rgba(color.toRGBA32(alpha));
+}
+
+
+
 
 /**
  *  Output data to the buffer, printf()-style
@@ -79,11 +147,24 @@ void JavaFXOutput::out(const char *fmt, ...)
     g_free(output);
 }
 
+/**
+ *  Output header data to the buffer, printf()-style
+ */
+void JavaFXOutput::fout(const char *fmt, ...)
+{
+    va_list args;
+    va_start(args, fmt);
+    gchar *output = g_strdup_vprintf(fmt, args);
+    va_end(args);
+    foutbuf.append(output);
+    g_free(output);
+}
+
 
 /**
  * Output the file header
  */
-bool JavaFXOutput::doHeader(const String &name)
+bool JavaFXOutput::doHeader()
 {
     time_t tim = time(NULL);
     out("/*###################################################################\n");
@@ -118,7 +199,19 @@ bool JavaFXOutput::doHeader(const String &name)
     out("import java.lang.System;\n");
     out("\n\n");
     out("public class %s extends CompositeNode {\n", name.c_str());
+    for (unsigned int i = 0 ; i < linearGradients.size() ; i++)
+        {
+        out("    public function %s(): LinearGradient;\n",
+            linearGradients[i].c_str());
+        }
+    for (unsigned int i = 0 ; i < radialGradients.size() ; i++)
+        {
+        out("    public function %s(): RadialGradient;\n",
+            radialGradients[i].c_str());
+        }
     out("}\n");
+    out("\n\n");
+    outbuf.append(foutbuf);
     out("\n\n");
     out("function %s.composeNode() =\n", name.c_str());
     out("Group\n");
@@ -133,7 +226,7 @@ bool JavaFXOutput::doHeader(const String &name)
 /**
  *  Output the file footer
  */
-bool JavaFXOutput::doTail(const String &name)
+bool JavaFXOutput::doTail()
 {
     int border = 25.0;
     out("        ] // content\n");
@@ -163,6 +256,151 @@ bool JavaFXOutput::doTail(const String &name)
 }
 
 
+
+/**
+ *  Output gradient information to the buffer
+ */
+bool JavaFXOutput::doGradient(SPGradient *grad, const String &id)
+{
+    if (SP_IS_LINEARGRADIENT(grad))
+        {
+        SPLinearGradient *g = SP_LINEARGRADIENT(grad);
+        linearGradients.push_back(id);
+        fout("function %s.%s() =\n", name.c_str(), id.c_str());
+        fout("    [\n");
+        fout("    LinearGradient\n");
+        fout("        {\n");
+        std::vector<SPGradientStop> stops = g->vector.stops;
+        if (stops.size() > 0)
+            {
+            fout("        stops:\n");
+            fout("            [\n");
+            for (unsigned int i = 0 ; i<stops.size() ; i++)
+                {
+                SPGradientStop stop = stops[i];
+                fout("            Stop\n");
+                fout("                {\n");
+                fout("                offset: %s\n", dstr(stop.offset).c_str());
+                fout("                color: %s\n", rgba(stop.color, stop.opacity).c_str());
+                fout("                },\n");
+                }
+            fout("            ]\n");
+            }
+        fout("        },\n");
+        fout("    ];\n");
+        fout("\n\n");
+        }
+    else if (SP_IS_RADIALGRADIENT(grad))
+        {
+        SPRadialGradient *g = SP_RADIALGRADIENT(grad);
+        radialGradients.push_back(id);
+        fout("function %s.%s() =\n", name.c_str(), id.c_str());
+        fout("    [\n");
+        fout("    RadialGradient\n");
+        fout("        {\n");
+        fout("        cx: %s\n", dstr(g->cx.value).c_str());
+        fout("        cy: %s\n", dstr(g->cy.value).c_str());
+        fout("        focusX: %s\n", dstr(g->fx.value).c_str());
+        fout("        focusY: %s\n", dstr(g->fy.value).c_str());
+        fout("        radius: %s\n", dstr(g->r.value).c_str());
+        fout("        gradientUnits: OBJECT_BOUNDING_BOX\n");
+        fout("        spreadMethod: PAD\n");
+        std::vector<SPGradientStop> stops = g->vector.stops;
+        if (stops.size() > 0)
+            {
+            fout("        stops:\n");
+            fout("            [\n");
+            for (unsigned int i = 0 ; i<stops.size() ; i++)
+                {
+                SPGradientStop stop = stops[i];
+                fout("            Stop\n");
+                fout("                {\n");
+                fout("                offset: %s\n", dstr(stop.offset).c_str());
+                fout("                color: %s\n", rgba(stop.color, stop.opacity).c_str());
+                fout("                },\n");
+                }
+            fout("            ]\n");
+            }
+        fout("        },\n");
+        fout("    ];\n");
+        fout("\n\n");
+        }
+    else
+        {
+        err("Unknown gradient type for '%s'\n", id.c_str());
+        return false;
+        }
+
+
+    return true;
+}
+
+
+
+
+/**
+ *  Output an element's style attribute
+ */
+bool JavaFXOutput::doStyle(SPStyle *style)
+{
+    if (!style)
+        return true;
+
+    out("        opacity: %s\n", dstr(effective_opacity(style)).c_str());
+
+    /**
+     * Fill
+     */
+    SPIPaint fill = style->fill;
+    if (fill.isColor())
+        {
+        // see color.h for how to parse SPColor
+        out("        fill: %s\n",
+            rgba(fill.value.color, SP_SCALE24_TO_FLOAT(style->fill_opacity.value)).c_str());
+        }
+    else if (fill.isPaintserver())
+        {
+        if (fill.value.href && fill.value.href->getURI() )
+            {
+            String uri = fill.value.href->getURI()->toString();
+            if (uri.size()>0 && uri[0]=='#')
+                uri = uri.substr(1);
+            out("        fill: %s()\n", uri.c_str());
+            }
+        }
+
+
+    /**
+     * Stroke
+     */
+    /**
+     *NOTE:  Things in style we can use:
+     * SPIPaint stroke;
+     * SPILength stroke_width;
+     * SPIEnum stroke_linecap;
+     * SPIEnum stroke_linejoin;
+     * SPIFloat stroke_miterlimit;
+     * NRVpathDash stroke_dash;
+     * unsigned stroke_dasharray_set : 1;
+     * unsigned stroke_dasharray_inherit : 1;
+     * unsigned stroke_dashoffset_set : 1;
+     * SPIScale24 stroke_opacity;
+     */
+    if (style->stroke_opacity.value > 0)
+        {
+        SPIPaint stroke = style->stroke;
+        out("        stroke: %s\n",
+            rgba(stroke.value.color, SP_SCALE24_TO_FLOAT(style->stroke_opacity.value)).c_str());
+        double strokewidth = style->stroke_width.value;
+        out("        strokeWidth: %s\n", dstr(strokewidth).c_str());
+        }
+
+    return true;
+}
+
+
+
+
 /**
  *  Output the curve data to buffer
  */
@@ -190,57 +428,10 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
     out("        id: \"%s\"\n", id.c_str());
 
     /**
-     * Get the fill and stroke of the shape
+     * Output the style information
      */
-    SPStyle *style = SP_OBJECT_STYLE(shape);
-    if (style)
-        {
-        /**
-         * Fill
-         */
-        if (style->fill.isColor())
-            {
-            // see color.h for how to parse SPColor
-            gint alpha = 0xffffffff;
-            guint32 rgba = style->fill.value.color.toRGBA32(alpha);
-            unsigned int r = SP_RGBA32_R_U(rgba);
-            unsigned int g = SP_RGBA32_G_U(rgba);
-            unsigned int b = SP_RGBA32_B_U(rgba);
-            unsigned int a = SP_RGBA32_A_U(rgba);
-            out("        fill: rgba(0x%02x, 0x%02x, 0x%02x, 0x%02x)\n",
-                               r, g, b, a);
-            }
-        /**
-         * Stroke
-         */
-        /**
-         *NOTE:  Things in style we can use:
-	     * SPIPaint stroke;
-	     * SPILength stroke_width;
-	     * SPIEnum stroke_linecap;
-	     * SPIEnum stroke_linejoin;
-	     * SPIFloat stroke_miterlimit;
-	     * NRVpathDash stroke_dash;
-	     * unsigned stroke_dasharray_set : 1;
-	     * unsigned stroke_dasharray_inherit : 1;
-	     * unsigned stroke_dashoffset_set : 1;
-	     * SPIScale24 stroke_opacity;
-         */
-        if (style->stroke_opacity.value > 0)
-            {
-            gint alpha = 0xffffffff;
-            guint32 rgba = style->stroke.value.color.toRGBA32(alpha);
-            unsigned int r = SP_RGBA32_R_U(rgba);
-            unsigned int g = SP_RGBA32_G_U(rgba);
-            unsigned int b = SP_RGBA32_B_U(rgba);
-            unsigned int a = SP_RGBA32_A_U(rgba);
-            out("        stroke: rgba(0x%02x, 0x%02x, 0x%02x, 0x%02x)\n",
-                               r, g, b, a);
-            double strokewidth = style->stroke_width.value;
-            out("        strokeWidth: %s\n", dstr(strokewidth).c_str());
-            }
-        }
-
+    if (!doStyle(SP_OBJECT_STYLE(shape)))
+        return false;
 
     // convert the path to only lineto's and cubic curveto's:
     Geom::Scale yflip(1.0, -1.0);
@@ -358,15 +549,31 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
 bool JavaFXOutput::doCurvesRecursive(SPDocument *doc, Inkscape::XML::Node *node)
 {
     /**
-     * If the object is an Item, try processing it
-     */	     
-    char *str  = (char *) node->attribute("id");
+     * Check the type of node and process
+     */
+    String id;
+    char *idstr = (char *) node->attribute("id");
+    if (!idstr)
+        {
+        char buf[16];
+        sprintf(buf, "id%d", idindex++);
+        id = buf;
+        }
+    else
+        {
+        id = idstr;
+        }
     SPObject *reprobj = doc->getObjectByRepr(node);
-    if (SP_IS_ITEM(reprobj) && str)
+    if (SP_IS_ITEM(reprobj))
         {
         SPItem *item = SP_ITEM(reprobj);
-        String id = str;
         if (!doCurve(item, id))
+            return false;
+        }
+    else if (SP_IS_GRADIENT(reprobj))
+        {
+        SPGradient *grad = SP_GRADIENT(reprobj);
+        if (!doGradient(grad, id))
             return false;
         }
 
@@ -420,7 +627,12 @@ void JavaFXOutput::reset()
     nrNodes    = 0;
     nrSegments = 0;
     nrShapes   = 0;
+    idindex    = 0;
+    name.clear();
     outbuf.clear();
+    foutbuf.clear();
+    linearGradients.clear();
+    radialGradients.clear();
 }
 
 
@@ -433,7 +645,7 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *uri)
     reset();
 
 
-    String name = Glib::path_get_basename(uri);
+    name = Glib::path_get_basename(uri);
     int pos = name.find('.');
     if (pos > 0)
         name = name.substr(0, pos);
@@ -447,12 +659,12 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *uri)
     String curveBuf = outbuf;
     outbuf.clear();
 
-    if (!doHeader(name))
+    if (!doHeader())
         return false;
     
     outbuf.append(curveBuf);
-    
-    if (!doTail(name))
+
+    if (!doTail())
         return false;
 
 
@@ -462,7 +674,7 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *uri)
     FILE *f = Inkscape::IO::fopen_utf8name(uri, "w");
     if (!f)
         {
-        g_warning("Could open JavaFX file '%s' for writing", uri);
+        err("Could open JavaFX file '%s' for writing", uri);
         return false;
         }
 
