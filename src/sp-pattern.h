@@ -36,48 +36,49 @@ class SPPatternClass;
 
 class SPPatternReference : public Inkscape::URIReference {
 public:
-        SPPatternReference (SPObject *obj) : URIReference(obj) {}
-        SPPattern *getObject() const {
-                return (SPPattern *)URIReference::getObject();
-        }
+    SPPatternReference (SPObject *obj) : URIReference(obj) {}
+    SPPattern *getObject() const {
+        return (SPPattern *)URIReference::getObject();
+    }
+
 protected:
-        virtual bool _acceptObject(SPObject *obj) const {
-                return SP_IS_PATTERN (obj);
-        }
+    virtual bool _acceptObject(SPObject *obj) const {
+        return SP_IS_PATTERN (obj);
+    }
 };
 
 enum {
-	SP_PATTERN_UNITS_USERSPACEONUSE,
-	SP_PATTERN_UNITS_OBJECTBOUNDINGBOX
+    SP_PATTERN_UNITS_USERSPACEONUSE,
+    SP_PATTERN_UNITS_OBJECTBOUNDINGBOX
 };
 
 struct SPPattern : public SPPaintServer {
-	/* Reference (href) */
-	gchar *href;
-	SPPatternReference *ref;
+    /* Reference (href) */
+    gchar *href;
+    SPPatternReference *ref;
 
-	/* patternUnits and patternContentUnits attribute */
-	guint patternUnits : 1;
-	guint patternUnits_set : 1;
-	guint patternContentUnits : 1;
-	guint patternContentUnits_set : 1;
-	/* patternTransform attribute */
-	NR::Matrix patternTransform;
-	guint patternTransform_set : 1;
-	/* Tile rectangle */
-	SVGLength x;
-	SVGLength y;
-	SVGLength width;
-	SVGLength height;
-	/* VieBox */
-	NRRect viewBox;
-	guint viewBox_set : 1;
+    /* patternUnits and patternContentUnits attribute */
+    guint patternUnits : 1;
+    guint patternUnits_set : 1;
+    guint patternContentUnits : 1;
+    guint patternContentUnits_set : 1;
+    /* patternTransform attribute */
+    NR::Matrix patternTransform;
+    guint patternTransform_set : 1;
+    /* Tile rectangle */
+    SVGLength x;
+    SVGLength y;
+    SVGLength width;
+    SVGLength height;
+    /* VieBox */
+    NRRect viewBox;
+    guint viewBox_set : 1;
 
-	sigc::connection modified_connection;
+    sigc::connection modified_connection;
 };
 
 struct SPPatternClass {
-	SPPaintServerClass parent_class;
+    SPPaintServerClass parent_class;
 };
 
 guint pattern_users (SPPattern *pattern);
@@ -98,5 +99,15 @@ gdouble pattern_width (SPPattern *pat);
 gdouble pattern_height (SPPattern *pat);
 NRRect *pattern_viewBox (SPPattern *pat);
 
+#endif //__SP_PATTERN_H__
 
-#endif
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
