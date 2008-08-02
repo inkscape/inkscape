@@ -31,7 +31,9 @@ NodeType get_nodetype(Curve const &c_incoming, Curve const &c_outgoing)
     if ( !are_near(c_incoming.pointAt(1), c_outgoing.pointAt(0)) )
         return NODE_NONE;
 
-    Geom::Point deriv_1 = c_incoming.unitTangentAt(1);
+    Geom::Curve *crv = c_incoming.reverse();
+    Geom::Point deriv_1 = -crv->unitTangentAt(0);
+    delete crv;
     Geom::Point deriv_2 = c_outgoing.unitTangentAt(0);
     double this_angle_L2 = Geom::L2(deriv_1);
     double next_angle_L2 = Geom::L2(deriv_2);
