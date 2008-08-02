@@ -100,8 +100,6 @@ static GMemChunk *nodechunk = NULL;
 /* Creation from object */
 
 static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVector const & pathv, Inkscape::NodePath::NodeType const *t);
-static void add_curve_to_subpath( Inkscape::NodePath::Path *np, Inkscape::NodePath::SubPath *sp, Geom::Curve const & c,
-                                  Inkscape::NodePath::NodeType const *t, guint & i, NR::Point & ppos, NRPathcode & pcode  );
 static Inkscape::NodePath::NodeType * parse_nodetypes(gchar const *types, guint length);
 Geom::PathVector sp_nodepath_sanitize_path(Geom::PathVector const &pathv_in);
 
@@ -528,8 +526,25 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
         NR::Point ppos = from_2geom(pit->initialPoint()) * np->i2d;
         NRPathcode pcode = NR_MOVETO;
 
+        /* Johan: Note that this is pretty arcane code. I am pretty sure it is working correctly, be very certain to change it! (better to just rewrite this whole method)*/
         for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit) {
-            add_curve_to_subpath(np, sp, *cit, t, i, ppos, pcode);
+            if( dynamic_cast<Geom::LineSegment const*>(&*cit) ||
+                dynamic_cast<Geom::HLineSegment const*>(&*cit) ||
+                dynamic_cast<Geom::VLineSegment const*>(&*cit) )
+            {
+                NR::Point pos = from_2geom(cit->initialPoint()) * np->i2d;
+                sp_nodepath_node_new(sp, NULL, t[i++], pcode, &ppos, &pos, &pos);
+                ppos = from_2geom(cit->finalPoint());
+                pcode = NR_LINETO;
+            }
+            else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const*>(&*cit)) {
+                std::vector<Geom::Point> points = cubic_bezier->points();
+                NR::Point pos = from_2geom(points[0]) * np->i2d;
+                NR::Point npos = from_2geom(points[1]) * np->i2d;
+                sp_nodepath_node_new(sp, NULL, t[i++], pcode, &ppos, &pos, &npos);
+                ppos = from_2geom(points[2]) * np->i2d;
+                pcode = NR_CURVETO;
+            }
         }
 
         if (pit->closed()) {
@@ -546,37 +561,6 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
         }
     }
 }
-// should add initial point of curve with type of previous curve:
-static void add_curve_to_subpath(Inkscape::NodePath::Path *np, Inkscape::NodePath::SubPath *sp, Geom::Curve const & c, Inkscape::NodePath::NodeType const *t, guint & i,
-                                 NR::Point & ppos, NRPathcode & pcode)
-{
-    if( dynamic_cast<Geom::LineSegment const*>(&c) ||
-        dynamic_cast<Geom::HLineSegment const*>(&c) ||
-        dynamic_cast<Geom::VLineSegment const*>(&c) )
-    {
-        NR::Point pos = from_2geom(c.initialPoint()) * np->i2d;
-        sp_nodepath_node_new(sp, NULL, t[i++], pcode, &pos, &pos, &pos);
-        ppos = from_2geom(c.finalPoint());
-        pcode = NR_LINETO;
-    }
-    else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const*>(&c)) {
-        std::vector<Geom::Point> points = cubic_bezier->points();
-        NR::Point pos = from_2geom(points[0]) * np->i2d;
-        NR::Point npos = from_2geom(points[1]) * np->i2d;
-        sp_nodepath_node_new(sp, NULL, t[i++], pcode, &ppos, &pos, &npos);
-        ppos = from_2geom(points[2]) * np->i2d;
-        pcode = NR_CURVETO;
-    }
-    else {
-        //this case handles sbasis as well as all other curve types
-        Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(c.toSBasis(), 0.1);
-
-        for(Geom::Path::iterator iter = sbasis_path.begin(); iter != sbasis_path.end(); ++iter) {
-            add_curve_to_subpath(np, sp, *iter, t, i, ppos, pcode);
-        }
-    }
-}
-
 
 /**
  * Convert from sodipodi:nodetypes to new style type array.
