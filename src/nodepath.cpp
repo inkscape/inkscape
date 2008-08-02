@@ -103,6 +103,7 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
 static void add_curve_to_subpath( Inkscape::NodePath::Path *np, Inkscape::NodePath::SubPath *sp, Geom::Curve const & c,
                                   Inkscape::NodePath::NodeType const *t, guint & i, NR::Point & ppos, NRPathcode & pcode  );
 static Inkscape::NodePath::NodeType * parse_nodetypes(gchar const *types, guint length);
+Geom::PathVector sp_nodepath_sanitize_path(Geom::PathVector const &pathv_in);
 
 /* Object updating */
 
@@ -339,9 +340,10 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     /* Calculate length of the nodetype string. The closing/starting point for closed paths is counted twice.
      * So for example a closed rectangle has a nodetypestring of length 5.
      * To get the correct count, one can count all segments in the paths, and then add the total number of (non-empty) paths. */
-    Geom::PathVector const &pathv = curve->get_pathvector();
-    guint length = curve->get_segment_count();
-    for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit) {
+    Geom::PathVector pathv_sanitized = sp_nodepath_sanitize_path(np->curve->get_pathvector());
+    np->curve->set_pathvector(pathv_sanitized);
+    guint length = np->curve->get_segment_count();
+    for (Geom::PathVector::const_iterator pit = pathv_sanitized.begin(); pit != pathv_sanitized.end(); ++pit) {
         length += pit->empty() ? 0 : 1;
     }
 
@@ -349,7 +351,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     Inkscape::NodePath::NodeType *typestr = parse_nodetypes(nodetypes, length);
 
     // create the subpath(s) from the bpath
-    subpaths_from_pathvector(np, pathv, typestr);
+    subpaths_from_pathvector(np, pathv_sanitized, typestr);
 
     // reverse the list, because sp_nodepath_subpath_new() used g_list_prepend instead of append (for speed)
     np->subpaths = g_list_reverse(np->subpaths);
@@ -526,7 +528,7 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
         NR::Point ppos = from_2geom(pit->initialPoint()) * np->i2d;
         NRPathcode pcode = NR_MOVETO;
 
-        for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit) {
+        for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_open(); ++cit) {
             add_curve_to_subpath(np, sp, *cit, t, i, ppos, pcode);
         }
 
@@ -4939,6 +4941,34 @@ void sp_nodepath_make_straight_path(Inkscape::NodePath::Path *np) {
     // coding tip: search for this text : "Make selected segments lines"
 }
 
+/* convert all curve types to LineSegment or CubicBezier, because nodepath cannot handle other segment types */
+Geom::PathVector sp_nodepath_sanitize_path(Geom::PathVector const &pathv_in) {
+    Geom::PathVector pathv;
+
+    for (Geom::PathVector::const_iterator pit = pathv_in.begin(); pit != pathv_in.end(); ++pit) {
+        pathv.push_back( Geom::Path() );
+        Geom::Path &newpath = pathv.back();
+        newpath.start(pit->initialPoint());
+        newpath.close(pit->closed());
+
+        for (Geom::Path::const_iterator c = pit->begin(); c != pit->end_open(); ++c) {
+            if( dynamic_cast<Geom::CubicBezier const*>(&*c) ||
+                dynamic_cast<Geom::LineSegment const*>(&*c) ||
+                dynamic_cast<Geom::HLineSegment const*>(&*c) ||
+                dynamic_cast<Geom::VLineSegment const*>(&*c) )
+            {
+                newpath.append(*c);
+            }
+            else {
+                //this case handles sbasis as well as all other curve types
+                Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(c->toSBasis(), 0.1);
+                newpath.append(sbasis_path);
+            }
+        }
+    }
+
+    return pathv;
+}
 
 /*
   Local Variables:
