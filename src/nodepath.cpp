@@ -26,6 +26,7 @@
 #include <2geom/bezier-curve.h>
 #include <2geom/hvlinesegment.h>
 #include "helper/units.h"
+#include "helper/geom.h"
 #include "knot.h"
 #include "inkscape.h"
 #include "document.h"
@@ -101,7 +102,6 @@ static GMemChunk *nodechunk = NULL;
 
 static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVector const & pathv, Inkscape::NodePath::NodeType const *t);
 static Inkscape::NodePath::NodeType * parse_nodetypes(gchar const *types, guint length);
-Geom::PathVector sp_nodepath_sanitize_path(Geom::PathVector const &pathv_in);
 
 /* Object updating */
 
@@ -338,7 +338,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     /* Calculate length of the nodetype string. The closing/starting point for closed paths is counted twice.
      * So for example a closed rectangle has a nodetypestring of length 5.
      * To get the correct count, one can count all segments in the paths, and then add the total number of (non-empty) paths. */
-    Geom::PathVector pathv_sanitized = sp_nodepath_sanitize_path(np->curve->get_pathvector());
+    Geom::PathVector pathv_sanitized = pathv_to_linear_and_cubic_beziers(np->curve->get_pathvector());
     np->curve->set_pathvector(pathv_sanitized);
     guint length = np->curve->get_segment_count();
     for (Geom::PathVector::const_iterator pit = pathv_sanitized.begin(); pit != pathv_sanitized.end(); ++pit) {
@@ -4923,35 +4923,6 @@ void sp_nodepath_make_straight_path(Inkscape::NodePath::Path *np) {
     g_message("add code to make the path straight.");
     // do sp_nodepath_convert_node_type on all nodes?
     // coding tip: search for this text : "Make selected segments lines"
-}
-
-/* convert all curve types to LineSegment or CubicBezier, because nodepath cannot handle other segment types */
-Geom::PathVector sp_nodepath_sanitize_path(Geom::PathVector const &pathv_in) {
-    Geom::PathVector pathv;
-
-    for (Geom::PathVector::const_iterator pit = pathv_in.begin(); pit != pathv_in.end(); ++pit) {
-        pathv.push_back( Geom::Path() );
-        Geom::Path &newpath = pathv.back();
-        newpath.start(pit->initialPoint());
-        newpath.close(pit->closed());
-
-        for (Geom::Path::const_iterator c = pit->begin(); c != pit->end_open(); ++c) {
-            if( dynamic_cast<Geom::CubicBezier const*>(&*c) ||
-                dynamic_cast<Geom::LineSegment const*>(&*c) ||
-                dynamic_cast<Geom::HLineSegment const*>(&*c) ||
-                dynamic_cast<Geom::VLineSegment const*>(&*c) )
-            {
-                newpath.append(*c);
-            }
-            else {
-                //this case handles sbasis as well as all other curve types
-                Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(c->toSBasis(), 0.1);
-                newpath.append(sbasis_path);
-            }
-        }
-    }
-
-    return pathv;
 }
 
 /*
