@@ -2743,6 +2743,29 @@ bool URI::parse(const String &str)
 //########################################################################
 
 //########################################################################
+//# Stat cache to speed up stat requests
+//########################################################################
+struct StatResult {
+    int result;
+    struct stat statInfo;
+};
+typedef std::map<String, StatResult> statCacheType;
+static statCacheType statCache;
+static int cachedStat(const String &f, struct stat *s) {
+    //printf("Stat path: %s\n", f.c_str());
+    std::pair<statCacheType::iterator, bool> result = statCache.insert(statCacheType::value_type(f, StatResult()));
+    if (result.second) {
+        result.first->second.result = stat(f.c_str(), &(result.first->second.statInfo));
+    }
+    *s = result.first->second.statInfo;
+    return result.first->second.result;
+}
+static void removeFromStatCache(const String f) {
+    //printf("Removing from cache: %s\n", f.c_str());
+    statCache.erase(f);
+}
+
+//########################################################################
 //# F I L E S E T
 //########################################################################
 /**
@@ -3244,6 +3267,16 @@ protected:
      * Copy a file from one name to another. Perform only if needed
      */ 
     bool copyFile(const String &srcFile, const String &destFile);
+
+    /**
+     * Delete a file
+     */ 
+    bool removeFile(const String &file);
+
+    /**
+     * Tests if the file exists
+     */ 
+    bool fileExists(const String &fileName);
 
     /**
      * Tests if the file exists and is a regular file
@@ -4195,7 +4228,7 @@ bool MakeBase::listDirectories(const String &baseName,
     String fullPath = baseName;
     if (dirName.size()>0)
         {
-        fullPath.append("/");
+        if (dirName[0]!='/') fullPath.append("/");
         fullPath.append(dirName);
         }
     DIR *dir = opendir(fullPath.c_str());
@@ -4218,7 +4251,7 @@ bool MakeBase::listDirectories(const String &baseName,
         fullChildPath.append(childName);
         struct stat finfo;
         String childNative = getNativePath(fullChildPath);
-        if (stat(childNative.c_str(), &finfo)<0)
+        if (cachedStat(childNative, &finfo)<0)
             {
             error("cannot stat file:%s", childNative.c_str());
             }
@@ -4808,7 +4841,7 @@ bool MakeBase::createDirectory(const String &dirname)
     if (strlen(cnative)==2 && cnative[1]==':')
         return true;
 #endif
-    if (stat(cnative, &finfo)==0)
+    if (cachedStat(nativeDir, &finfo)==0)
         {
         if (!S_ISDIR(finfo.st_mode))
             {
@@ -4844,6 +4877,8 @@ bool MakeBase::createDirectory(const String &dirname)
                  cnative, strerror(errno));
         return false;
         }
+
+    removeFromStatCache(nativeDir);
         
     return true;
 }
@@ -4887,7 +4922,7 @@ bool MakeBase::removeDirectory(const String &dirName)
         struct stat finfo;
         String childNative = getNativePath(childName);
         char *cnative = (char *)childNative.c_str();
-        if (stat(cnative, &finfo)<0)
+        if (cachedStat(childNative, &finfo)<0)
             {
             error("cannot stat file:%s", cnative);
             }
@@ -4906,10 +4941,8 @@ bool MakeBase::removeDirectory(const String &dirName)
         else
             {
             //trace("DEL file: %s", childName.c_str());
-            if (remove(cnative)<0)
+            if (!removeFile(childName))
                 {
-                error("error deleting %s : %s",
-                     cnative, strerror(errno));
                 return false;
                 }
             }
@@ -4925,6 +4958,8 @@ bool MakeBase::removeDirectory(const String &dirName)
         return false;
         }
 
+    removeFromStatCache(native);
+
     return true;
     
 }
@@ -4938,7 +4973,7 @@ bool MakeBase::copyFile(const String &srcFile, const String &destFile)
     //# 1 Check up-to-date times
     String srcNative = getNativePath(srcFile);
     struct stat srcinfo;
-    if (stat(srcNative.c_str(), &srcinfo)<0)
+    if (cachedStat(srcNative, &srcinfo)<0)
         {
         error("source file %s for copy does not exist",
                  srcNative.c_str());
@@ -4947,7 +4982,7 @@ bool MakeBase::copyFile(const String &srcFile, const String &destFile)
 
     String destNative = getNativePath(destFile);
     struct stat destinfo;
-    if (stat(destNative.c_str(), &destinfo)==0)
+    if (cachedStat(destNative, &destinfo)==0)
         {
         if (destinfo.st_mtime >= srcinfo.st_mtime)
             return true;
@@ -5000,10 +5035,88 @@ bool MakeBase::copyFile(const String &srcFile, const String &destFile)
         
 #endif /* __WIN32__ */
 
+    removeFromStatCache(destNative);
 
     return true;
 }
 
+
+/**
+ * Delete a file
+ */ 
+bool MakeBase::removeFile(const String &file)
+{
+    String native = getNativePath(file);
+
+    if (!fileExists(native))
+        {
+        return true;
+        }
+
+#ifdef WIN32
+    // On Windows 'remove' will only delete files
+
+    if (remove(native.c_str())<0)
+        {
+        if (errno==EACCES)
+            {
+            error("File %s is read-only", native.c_str());
+            }
+        else if (errno==ENOENT)
+            {
+            error("File %s does not exist or is a directory", native.c_str());
+            }
+        else
+            {
+            error("Failed to delete file %s: %s", native.c_str(), strerror(errno));
+            }
+        return false;
+        }
+
+#else
+
+    if (!isRegularFile(native))
+        {
+        error("File %s does not exist or is not a regular file", native.c_str());
+        return false;
+        }
+
+    if (remove(native.c_str())<0)
+        {
+        if (errno==EACCES)
+            {
+            error("File %s is read-only", native.c_str());
+            }
+        else
+            {
+            error(
+                errno==EACCES ? "File %s is read-only" :
+                errno==ENOENT ? "File %s does not exist or is a directory" :
+                "Failed to delete file %s: %s", native.c_str());
+            }
+        return false;
+        }
+
+#endif
+
+    removeFromStatCache(native);
+}
+
+
+/**
+ * Tests if the file exists
+ */ 
+bool MakeBase::fileExists(const String &fileName)
+{
+    String native = getNativePath(fileName);
+    struct stat finfo;
+    
+    //Exists?
+    if (cachedStat(native, &finfo)<0)
+        return false;
+
+    return true;
+}
 
 
 /**
@@ -5015,7 +5128,7 @@ bool MakeBase::isRegularFile(const String &fileName)
     struct stat finfo;
     
     //Exists?
-    if (stat(native.c_str(), &finfo)<0)
+    if (cachedStat(native, &finfo)<0)
         return false;
 
 
@@ -5035,7 +5148,7 @@ bool MakeBase::isDirectory(const String &fileName)
     struct stat finfo;
     
     //Exists?
-    if (stat(native.c_str(), &finfo)<0)
+    if (cachedStat(native, &finfo)<0)
         return false;
 
 
@@ -5057,7 +5170,7 @@ bool MakeBase::isNewerThan(const String &fileA, const String &fileB)
     String nativeA = getNativePath(fileA);
     struct stat infoA;
     //IF source does not exist, NOT newer
-    if (stat(nativeA.c_str(), &infoA)<0)
+    if (cachedStat(nativeA, &infoA)<0)
         {
         return false;
         }
@@ -5065,7 +5178,7 @@ bool MakeBase::isNewerThan(const String &fileA, const String &fileB)
     String nativeB = getNativePath(fileB);
     struct stat infoB;
     //IF dest does not exist, YES, newer
-    if (stat(nativeB.c_str(), &infoB)<0)
+    if (cachedStat(nativeB, &infoB)<0)
         {
         return true;
         }
@@ -6753,6 +6866,8 @@ public:
                 }
             if (errorOccurred && !continueOnError)
                 break;
+
+            removeFromStatCache(getNativePath(destFullName));
             }
 
         if (f)
@@ -7143,6 +7258,7 @@ public:
                 error("<cxxtestpart> problem: %s", errString.c_str());
                 return false;
                 }
+            removeFromStatCache(getNativePath(fullDest));
         }
 
         return true;
@@ -7246,6 +7362,7 @@ public:
                 error("<cxxtestroot> problem: %s", errString.c_str());
                 return false;
                 }
+            removeFromStatCache(getNativePath(fullDest));
         }
 
         return true;
@@ -7325,26 +7442,7 @@ public:
                 char *fname = (char *)fullName.c_str();
                 if (!quiet && verbose)
                     taskstatus("path: %s", fname);
-                //does not exist
-                if (stat(fname, &finfo)<0)
-                    {
-                    if (failOnError)
-                        return false;
-                    else
-                        return true;
-                    }
-                //exists but is not a regular file
-                if (!S_ISREG(finfo.st_mode))
-                    {
-                    error("<delete> failed. '%s' exists and is not a regular file",
-                          fname);
-                    return false;
-                    }
-                if (remove(fname)<0)
-                    {
-                    error("<delete> failed: %s", strerror(errno));
-                    return false;
-                    }
+                if (!removeFile(fullName)) return false;
                 return true;
                 }
             case DEL_DIR:
@@ -7484,6 +7582,7 @@ public:
                                       execCmd.c_str(), errString.c_str());
             return false;
             }
+        removeFromStatCache(getNativePath(destfile));
         return true;
         }
 
@@ -7601,6 +7700,8 @@ public:
                                       execCmd.c_str(), errString.c_str());
             return false;
             }
+        // TODO: 
+        //removeFromStatCache(getNativePath(........));
         return true;
         }
 
@@ -7703,6 +7804,7 @@ public:
             error("LINK problem: %s", errbuf.c_str());
             return false;
             }
+        removeFromStatCache(getNativePath(fullTarget));
 
         if (symFileName.size()>0)
             {
@@ -7717,6 +7819,7 @@ public:
                 error("<strip> symbol file failed : %s", errbuf.c_str());
                 return false;
                 }
+            removeFromStatCache(getNativePath(symFullName));
             }
             
         if (doStrip)
@@ -7729,6 +7832,7 @@ public:
                error("<strip> failed : %s", errbuf.c_str());
                return false;
                }
+            removeFromStatCache(getNativePath(fullTarget));
             }
 
         return true;
@@ -7830,6 +7934,7 @@ public:
             fputc(text[i], f);
         fputc('\n', f);
         fclose(f);
+        removeFromStatCache(fullNative);
         return true;
         }
 
@@ -7996,6 +8101,7 @@ public:
                 error("<msgfmt> problem: %s", errString.c_str());
                 return false;
                 }
+            removeFromStatCache(getNativePath(fullDest));
             }
 
         return true;
@@ -8170,6 +8276,8 @@ public:
         String outbuf, errbuf;
         if (!executeCommand(cmd, "", outbuf, errbuf))
             return false;
+        // TODO:
+        //removeFromStatCache(getNativePath(fullDest));
         return true;
         }
 
@@ -8233,6 +8341,7 @@ public:
             error("RC problem: %s", errString.c_str());
             return false;
             }
+        removeFromStatCache(getNativePath(fullOut));
         return true;
         }
 
@@ -8358,7 +8467,7 @@ public:
             error("<sharedlib> problem: %s", errString.c_str());
             return false;
             }
-
+        removeFromStatCache(getNativePath(fullOut));
         return true;
         }
 
@@ -8479,7 +8588,7 @@ public:
             error("<staticlib> problem: %s", errString.c_str());
             return false;
             }
-
+        removeFromStatCache(getNativePath(fullOut));
         return true;
         }
 
@@ -8562,6 +8671,7 @@ public:
             error("<strip> failed : %s", errbuf.c_str());
             return false;
             }
+        removeFromStatCache(getNativePath(fullName));
         return true;
         }
 
@@ -8627,6 +8737,7 @@ public:
                 nativeFile.c_str(), strerror(ret));
             return false;
             }
+        removeFromStatCache(nativeFile);
         return true;
         }
 
