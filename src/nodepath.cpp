@@ -528,7 +528,7 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
         NR::Point ppos = from_2geom(pit->initialPoint()) * np->i2d;
         NRPathcode pcode = NR_MOVETO;
 
-        for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_open(); ++cit) {
+        for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit) {
             add_curve_to_subpath(np, sp, *cit, t, i, ppos, pcode);
         }
 
