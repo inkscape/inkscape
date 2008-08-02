@@ -110,7 +110,7 @@ libnr/test-nr-main.cpp: libnr/test-nr.cpp
 	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o libnr/test-nr-main.cpp $(libnr_test_nr_includes)
 
 libnr/test-nr.cpp: $(libnr_test_nr_includes)
-	$(top_srcdir)/cxxtest/cxxtestgen.pl -part -o libnr/test-nr.cpp $(libnr_test_nr_includes)
+	$(top_srcdir)/cxxtest/cxxtestgen.pl --have-eh -part -o libnr/test-nr.cpp $(libnr_test_nr_includes)
 
 libnr_test_nr_includes = \
 	$(srcdir)/libnr/nr-compose-test.h	\

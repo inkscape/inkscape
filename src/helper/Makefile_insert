@@ -61,7 +61,7 @@ helper/test-helper-main.cpp: helper/test-helper.cpp
 	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o helper/test-helper-main.cpp $(helper_test_helper_includes)
 
 helper/test-helper.cpp: $(helper_test_helper_includes)
-	$(top_srcdir)/cxxtest/cxxtestgen.pl -part -o helper/test-helper.cpp $(helper_test_helper_includes)
+	$(top_srcdir)/cxxtest/cxxtestgen.pl --have-eh -part -o helper/test-helper.cpp $(helper_test_helper_includes)
 
 helper_test_helper_includes = \
 	$(srcdir)/helper/units-test.h

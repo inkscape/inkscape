@@ -136,7 +136,7 @@ display/test-display-main.cpp: display/test-display.cpp
 	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o display/test-display-main.cpp $(display_test_display_includes)
 
 display/test-display.cpp: $(display_test_display_includes)
-	$(top_srcdir)/cxxtest/cxxtestgen.pl -part -o display/test-display.cpp $(display_test_display_includes)
+	$(top_srcdir)/cxxtest/cxxtestgen.pl --have-eh -part -o display/test-display.cpp $(display_test_display_includes)
 
 display_test_display_includes = \
 	$(srcdir)/display/bezier-utils-test.h \

@@ -42,7 +42,7 @@ svg/test-svg-main.cpp: svg/test-svg.cpp
 	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o svg/test-svg-main.cpp $(svg_test_svg_includes)
 
 svg/test-svg.cpp: $(svg_test_svg_includes) svg/Makefile_insert
-	$(top_srcdir)/cxxtest/cxxtestgen.pl -part -o svg/test-svg.cpp $(svg_test_svg_includes)
+	$(top_srcdir)/cxxtest/cxxtestgen.pl --have-eh -part -o svg/test-svg.cpp $(svg_test_svg_includes)
 
 svg_test_svg_includes = \
 	$(srcdir)/svg/css-ostringstream-test.h	\

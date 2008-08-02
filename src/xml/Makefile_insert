@@ -56,7 +56,7 @@ xml/test-xml-main.cpp: xml/test-xml.cpp $(xml_test_xml_includes)
 	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o xml/test-xml-main.cpp $(xml_test_xml_includes)
 
 xml/test-xml.cpp: $(xml_test_xml_includes)
-	$(top_srcdir)/cxxtest/cxxtestgen.pl -part -o xml/test-xml.cpp $(xml_test_xml_includes)
+	$(top_srcdir)/cxxtest/cxxtestgen.pl --have-eh -part -o xml/test-xml.cpp $(xml_test_xml_includes)
 
 xml_test_xml_includes = \
 	$(srcdir)/xml/repr-action-test.h	\

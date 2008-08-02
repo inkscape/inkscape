@@ -256,7 +256,7 @@ check_PROGRAMS =	\
 
 test-src.cpp: \
 		$(test_src_includes)
-		$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o test-src.cpp	\
+		$(top_srcdir)/cxxtest/cxxtestgen.pl --have-eh --template=$(srcdir)/selfname.tpl -root -o test-src.cpp	\
 		$(test_src_includes)
 
 test_src_SOURCES = \
