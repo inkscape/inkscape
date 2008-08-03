@@ -302,7 +302,7 @@ Path::MakePathVector()
             {
                 /* TODO: add testcase for this descr_arcto case */
                 PathDescrArcTo *nData = dynamic_cast<PathDescrArcTo *>(descr_cmd[i]);
-                currentpath->appendNew<Geom::SVGEllipticalArc>( nData->rx, nData->ry, nData->angle, nData->large, nData->clockwise, to_2geom(nData->p) );
+                currentpath->appendNew<Geom::SVGEllipticalArc>( nData->rx, nData->ry, nData->angle, nData->large, !nData->clockwise, to_2geom(nData->p) );
                 lastP = nData->p;
             }
             break;
@@ -400,7 +400,7 @@ void  Path::AddCurve(Geom::Curve const &c)
         ArcTo( from_2geom(svg_elliptical_arc->finalPoint()),
                svg_elliptical_arc->ray(0), svg_elliptical_arc->ray(1),
                svg_elliptical_arc->rotation_angle(),
-               svg_elliptical_arc->large_arc_flag(), svg_elliptical_arc->sweep_flag() );
+               svg_elliptical_arc->large_arc_flag(), !svg_elliptical_arc->sweep_flag() );
     } else { 
         //this case handles sbasis as well as all other curve types
         Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(c.toSBasis(), 0.1);
