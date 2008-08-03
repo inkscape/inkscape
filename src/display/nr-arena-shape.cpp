@@ -299,7 +299,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
     shape->approx_bbox.y0 = (gint32)(boundingbox[1][0] - 1.0F);
     shape->approx_bbox.x1 = (gint32)(boundingbox[0][1] + 1.9999F);
     shape->approx_bbox.y1 = (gint32)(boundingbox[1][1] + 1.9999F);
-    if ( area && nr_rect_l_test_intersect(area, &shape->approx_bbox) ) shape->delayed_shp=false;
+    if ( area && nr_rect_l_test_intersect_ptr(area, &shape->approx_bbox) ) shape->delayed_shp=false;
 
     /* Release state data */
     if (TRUE || !NR::transform_equalp(gc->transform, shape->ctm, NR_EPSILON)) {
@@ -850,7 +850,7 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
     } else {
 
     if ( shape->delayed_shp ) {
-        if ( nr_rect_l_test_intersect(area, &item->bbox) ) {
+        if ( nr_rect_l_test_intersect_ptr(area, &item->bbox) ) {
             NRGC   tempGC(NULL);
             tempGC.transform=shape->ctm;
             shape->delayed_shp = false;
@@ -1015,7 +1015,7 @@ nr_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
     if (!shape->curve) return item->state;
 
     if ( shape->delayed_shp || shape->fill_shp == NULL) { // we need a fill shape no matter what
-        if ( nr_rect_l_test_intersect(area, &item->bbox) ) {
+        if ( nr_rect_l_test_intersect_ptr(area, &item->bbox) ) {
             NRGC   tempGC(NULL);
             tempGC.transform=shape->ctm;
             shape->delayed_shp = false;

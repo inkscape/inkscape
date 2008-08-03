@@ -29,7 +29,7 @@ NRRect::NRRect(NR::Maybe<NR::Rect> const &rect) {
 }
 
 NR::Maybe<NR::Rect> NRRect::upgrade() const {
-    if (nr_rect_d_test_empty(this)) {
+    if (nr_rect_d_test_empty_ptr(this)) {
         return NR::Nothing();
     } else {
         return NR::Rect(NR::Point(x0, y0), NR::Point(x1, y1));
@@ -204,7 +204,7 @@ nr_rect_d_matrix_transform(NRRect *d, NRRect const *const s, NR::Matrix const &m
     using NR::X;
     using NR::Y;
 
-    if (nr_rect_d_test_empty(s)) {
+    if (nr_rect_d_test_empty_ptr(s)) {
         nr_rect_d_set_empty(d);
     } else {
         NR::Point const c00(NR::Point(s->x0, s->y0) * m);

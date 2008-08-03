@@ -211,7 +211,7 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL */*area*/, NRGC *gc, guint /*s
             bbox.y1 = narea.y1 + glyphs->y;
         }
     }
-    if (nr_rect_d_test_empty(&bbox)) return NR_ARENA_ITEM_STATE_ALL;
+    if (nr_rect_d_test_empty(bbox)) return NR_ARENA_ITEM_STATE_ALL;
 
     item->bbox.x0 = (gint32)(bbox.x0 - 1.0);
     item->bbox.y0 = (gint32)(bbox.y0 - 1.0);
@@ -296,7 +296,7 @@ nr_arena_glyphs_fill_mask(NRArenaGlyphs *glyphs, NRRectL *area, NRPixBlock *m)
 
     NRArenaItem *item = NR_ARENA_ITEM(glyphs);
 
-    if (glyphs->rfont && nr_rect_l_test_intersect(area, &item->bbox)) {
+    if (glyphs->rfont && nr_rect_l_test_intersect_ptr(area, &item->bbox)) {
         raster_glyph *g = glyphs->rfont->GetGlyph(glyphs->glyph);
         if ( g ) g->Blit(NR::Point(glyphs->x, glyphs->y), *m);
     }
@@ -308,7 +308,7 @@ static guint
 nr_arena_glyphs_stroke_mask(NRArenaGlyphs *glyphs, NRRectL *area, NRPixBlock *m)
 {
     NRArenaItem *item = NR_ARENA_ITEM(glyphs);
-    if (glyphs->sfont && nr_rect_l_test_intersect(area, &item->bbox)) {
+    if (glyphs->sfont && nr_rect_l_test_intersect_ptr(area, &item->bbox)) {
         raster_glyph *g=glyphs->sfont->GetGlyph(glyphs->glyph);
         if ( g ) g->Blit(NR::Point(glyphs->x, glyphs->y),*m);
     }

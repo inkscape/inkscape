@@ -28,7 +28,7 @@ nr_pixblock_render_gray_noise (NRPixBlock *pb, NRPixBlock *mask)
 	if (mask) {
 		if (mask->empty) return;
 		nr_rect_l_intersect (&clip, &pb->area, &mask->area);
-		if (nr_rect_l_test_empty (&clip)) return;
+		if (nr_rect_l_test_empty(clip)) return;
 	} else {
 		clip = pb->area;
 	}

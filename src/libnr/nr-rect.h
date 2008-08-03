@@ -268,15 +268,25 @@ struct NRRect {
 #define nr_rect_l_set_empty(r) (*(r) = NR_RECT_L_EMPTY)
 
 /** "Empty" here includes the case of zero width or zero height. */
-#define nr_rect_d_test_empty(r) ((r) && NR_RECT_DFLS_TEST_EMPTY(r))
-#define nr_rect_l_test_empty(r) ((r) && NR_RECT_DFLS_TEST_EMPTY(r))
+// TODO convert to static overloaded functions (pointer and ref) once performance can be tested:
+#define nr_rect_d_test_empty_ptr(r) ((r) && NR_RECT_DFLS_TEST_EMPTY(r))
+#define nr_rect_d_test_empty(r) NR_RECT_DFLS_TEST_EMPTY_REF(r)
+
+// TODO convert to static overloaded functions (pointer and ref) once performance can be tested:
+#define nr_rect_l_test_empty_ptr(r) ((r) && NR_RECT_DFLS_TEST_EMPTY(r))
+#define nr_rect_l_test_empty(r) NR_RECT_DFLS_TEST_EMPTY_REF(r)
 
 #define nr_rect_d_test_intersect(r0,r1) \
         (!nr_rect_d_test_empty(r0) && !nr_rect_d_test_empty(r1) && \
          !((r0) && (r1) && !NR_RECT_DFLS_TEST_INTERSECT(r0, r1)))
+
+// TODO convert to static overloaded functions (pointer and ref) once performance can be tested:
+#define nr_rect_l_test_intersect_ptr(r0,r1) \
+        (!nr_rect_l_test_empty_ptr(r0) && !nr_rect_l_test_empty_ptr(r1) && \
+         !((r0) && (r1) && !NR_RECT_DFLS_TEST_INTERSECT(r0, r1)))
 #define nr_rect_l_test_intersect(r0,r1) \
         (!nr_rect_l_test_empty(r0) && !nr_rect_l_test_empty(r1) && \
-         !((r0) && (r1) && !NR_RECT_DFLS_TEST_INTERSECT(r0, r1)))
+         !(!NR_RECT_DFLS_TEST_INTERSECT_REF(r0, r1)))
 
 #define nr_rect_d_point_d_test_inside(r,p) ((p) && (!(r) || (!NR_RECT_DF_TEST_EMPTY(r) && NR_RECT_DF_POINT_DF_TEST_INSIDE(r,p))))
 #define nr_rect_l_point_l_test_inside(r,p) ((p) && (!(r) || (!NR_RECT_DFLS_TEST_EMPTY(r) && NR_RECT_LS_POINT_LS_TEST_INSIDE(r,p))))

@@ -32,7 +32,7 @@
 cairo_t *
 nr_create_cairo_context_for_data (NRRectL *area, NRRectL *buf_area, unsigned char *px, unsigned int rowstride)
 {
-    if (!nr_rect_l_test_intersect (buf_area, area))
+    if (!nr_rect_l_test_intersect_ptr(buf_area, area))
         return NULL;
 
     NRRectL clip;

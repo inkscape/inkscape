@@ -236,7 +236,7 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
         return item->state;
     /* Test whether to return immediately */
     if (area && (item->state & NR_ARENA_ITEM_STATE_BBOX)) {
-        if (!nr_rect_l_test_intersect (area, &item->bbox))
+        if (!nr_rect_l_test_intersect_ptr(area, &item->bbox))
             return item->state;
     }
 
@@ -321,7 +321,7 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
 
     NRRectL carea;
     nr_rect_l_intersect (&carea, area, &item->bbox);
-    if (nr_rect_l_test_empty (&carea))
+    if (nr_rect_l_test_empty(carea))
         return item->state | NR_ARENA_ITEM_STATE_RENDER;
     if (item->filter && filter) {
         item->filter->area_enlarge (carea, item->ctm);
@@ -607,7 +607,7 @@ nr_arena_item_invoke_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
             (&item->bbox)->y0, (&item->bbox)->x1, (&item->bbox)->y1);
 #endif
 
-    if (item->visible && nr_rect_l_test_intersect (area, &item->bbox)) {
+    if (item->visible && nr_rect_l_test_intersect_ptr(area, &item->bbox)) {
         /* Need render that item */
         if (((NRArenaItemClass *) NR_OBJECT_GET_CLASS (item))->clip) {
             return ((NRArenaItemClass *) NR_OBJECT_GET_CLASS (item))->
