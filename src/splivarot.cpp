@@ -54,6 +54,7 @@
 #include <libnr/nr-matrix-translate-ops.h>
 #include <libnr/nr-scale-matrix-ops.h>
 #include <libnr/n-art-bpath-2geom.h>
+#include "helper/geom.h"
 
 #include "livarot/Path.h"
 #include "livarot/Shape.h"
@@ -730,11 +731,17 @@ sp_selected_path_outline()
             o_miter = i_style->stroke_miterlimit.value * o_width;
         }
 
-        Path *orig = Path_for_item(item, false);
-        if (orig == NULL) {
+        SPCurve *curvetemp = curve_for_item(item);
+        if (curvetemp == NULL) {
             curve->unref();
             continue;
         }
+        // Livarots outline of arcs is broken. So convert the path to linear and cubics only, for which the outline is created correctly.
+        Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curvetemp->get_pathvector() );
+        curvetemp->unref();
+
+        Path *orig = new Path;
+        orig->LoadPathVector(pathv);
 
         Path *res = new Path;
         res->SetBackData(false);
