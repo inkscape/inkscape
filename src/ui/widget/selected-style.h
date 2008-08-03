@@ -59,9 +59,14 @@ class SelectedStyle;
 class RotateableSwatch: public Rotateable 
 {
 public:
-    RotateableSwatch(guint mode);
+    RotateableSwatch(SelectedStyle *parent, guint mode);
     ~RotateableSwatch();
 
+    double color_adjust (float *hsl, double by, guint32 cc, guint state);
+    virtual void do_motion (double by, guint state);
+    virtual void do_release (double by, guint state);
+
+private:
     guint fillstroke;
 
     SelectedStyle *parent;
@@ -69,35 +74,32 @@ public:
     guint32 startcolor;
     bool startcolor_set;
 
-    gchar *undokey;
+    gchar const *undokey;
 
     GdkCursor *cr;
     bool cr_set;
-
-    double color_adjust (float *hsl, double by, guint32 cc, guint state);
-    virtual void do_motion (double by, guint state);
-    virtual void do_release (double by, guint state);
 };
 
 class RotateableStrokeWidth: public Rotateable 
 {
 public:
-    RotateableStrokeWidth();
+    RotateableStrokeWidth(SelectedStyle *parent);
     ~RotateableStrokeWidth();
 
+    double value_adjust(double current, double by, guint modifier, bool final);
+    virtual void do_motion (double by, guint state);
+    virtual void do_release (double by, guint state);
+
+private:
     SelectedStyle *parent;
 
     double startvalue;
     bool startvalue_set;
 
-    gchar *undokey;
+    gchar const *undokey;
 
     GdkCursor *cr;
     bool cr_set;
-
-    double value_adjust(double current, double by, guint modifier, bool final);
-    virtual void do_motion (double by, guint state);
-    virtual void do_release (double by, guint state);
 };
 
 class SelectedStyle : public Gtk::HBox

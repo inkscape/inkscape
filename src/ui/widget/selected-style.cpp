@@ -107,8 +107,8 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
       _stroke_label (_("Stroke:")),
       _opacity_label (_("O:")),
 
-      _fill_place (SS_FILL),
-      _stroke_place (SS_STROKE),
+      _fill_place(this, SS_FILL),
+      _stroke_place(this, SS_STROKE),
 
       _fill_flag_place (),
       _stroke_flag_place (),
@@ -118,7 +118,7 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
       _opacity_sb (0.02, 0),
 
       _stroke (),
-      _stroke_width_place(),
+      _stroke_width_place(this),
       _stroke_width (""),
 
       _opacity_blocked (false),
@@ -379,10 +379,6 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
                      "drag_data_received",
                      G_CALLBACK(dragDataReceived),
                      _drop[SS_FILL]);
-
-    _fill_place.parent = this;
-    _stroke_place.parent = this;
-    _stroke_width_place.parent = this;
 }
 
 SelectedStyle::~SelectedStyle()
@@ -1155,12 +1151,16 @@ void SelectedStyle::on_opacity_changed () {
 
 /* =============================================  RotateableSwatch  */
 
-RotateableSwatch::RotateableSwatch(guint mode) {
-    fillstroke = mode;
-    startcolor_set = false;
-    undokey = "ssrot1";
-    cr = NULL;
-    cr_set = false;
+RotateableSwatch::RotateableSwatch(SelectedStyle *parent, guint mode) :
+    fillstroke(mode),
+    parent(parent),
+    startcolor(0),
+    startcolor_set(false),
+    undokey("ssrot1"),
+    cr(0),
+    cr_set(false)
+    
+{
 }
 
 RotateableSwatch::~RotateableSwatch() {
@@ -1332,11 +1332,14 @@ RotateableSwatch::do_release(double by, guint modifier) {
 
 /* =============================================  RotateableStrokeWidth  */
 
-RotateableStrokeWidth::RotateableStrokeWidth() {
-    undokey = "swrot1";
-    startvalue_set = false;
-    cr = NULL;
-    cr_set = false;
+RotateableStrokeWidth::RotateableStrokeWidth(SelectedStyle *parent) :
+    parent(parent),
+    startvalue(0),
+    startvalue_set(false),
+    undokey("swrot1"),
+    cr(0),
+    cr_set(false)
+{
 }
 
 RotateableStrokeWidth::~RotateableStrokeWidth() {
