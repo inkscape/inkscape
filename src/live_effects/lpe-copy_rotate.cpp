@@ -114,7 +114,7 @@ LPECopyRotate::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
 }
 
 void
-LPECopyRotate::addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec)
+LPECopyRotate::addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec)
 {
     using namespace Geom;
 
