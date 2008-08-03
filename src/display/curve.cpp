@@ -509,7 +509,7 @@ SPCurve::append_continuous(SPCurve const *c1, gdouble tolerance)
         }
 
     } else {
-        append(c1, false);
+        append(c1, true);
     }
 
     return this;
