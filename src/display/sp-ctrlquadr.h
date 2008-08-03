@@ -23,7 +23,7 @@
 struct SPCtrlQuadr;
 struct SPCtrlQuadrClass;
 
-GtkType sp_ctrlquadr_get_type (void);
+GType sp_ctrlquadr_get_type (void);
 
 void sp_ctrlquadr_set_rgba32 (SPCtrlQuadr *cl, guint32 rgba);
 void sp_ctrlquadr_set_coords (SPCtrlQuadr *cl, const NR::Point p1, const NR::Point p2, const NR::Point p3, const NR::Point p4);

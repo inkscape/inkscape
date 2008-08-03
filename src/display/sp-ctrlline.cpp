@@ -39,21 +39,22 @@ static void sp_ctrlline_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass *parent_class;
 
-GtkType
+GType
 sp_ctrlline_get_type (void)
 {
-    static GtkType type = 0;
-
+    static GType type = 0;
     if (!type) {
-        GtkTypeInfo info = {
-            "SPCtrlLine",
-            sizeof (SPCtrlLine),
-            sizeof (SPCtrlLineClass),
-            (GtkClassInitFunc) sp_ctrlline_class_init,
-            (GtkObjectInitFunc) sp_ctrlline_init,
-            NULL, NULL, NULL
+        GTypeInfo info = {
+            sizeof(SPCtrlLineClass),
+            NULL, NULL,
+            (GClassInitFunc) sp_ctrlline_class_init,
+            NULL, NULL,
+            sizeof(SPCtrlLine),
+            0,
+            (GInstanceInitFunc) sp_ctrlline_init,
+            NULL
         };
-        type = gtk_type_unique (SP_TYPE_CANVAS_ITEM, &info);
+        type = g_type_register_static(SP_TYPE_CANVAS_ITEM, "SPCtrlLine", &info, (GTypeFlags)0);
     }
     return type;
 }

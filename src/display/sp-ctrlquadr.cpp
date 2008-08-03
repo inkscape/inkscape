@@ -38,21 +38,22 @@ static void sp_ctrlquadr_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass *parent_class;
 
-GtkType
+GType
 sp_ctrlquadr_get_type (void)
 {
-    static GtkType type = 0;
-
+    static GType type = 0;
     if (!type) {
-        GtkTypeInfo info = {
-            "SPCtrlQuadr",
-            sizeof (SPCtrlQuadr),
-            sizeof (SPCtrlQuadrClass),
-            (GtkClassInitFunc) sp_ctrlquadr_class_init,
-            (GtkObjectInitFunc) sp_ctrlquadr_init,
-            NULL, NULL, NULL
+        GTypeInfo info = {
+            sizeof(SPCtrlQuadrClass),
+            NULL, NULL,
+            (GClassInitFunc) sp_ctrlquadr_class_init,
+            NULL, NULL,
+            sizeof(SPCtrlQuadr),
+            0,
+            (GInstanceInitFunc) sp_ctrlquadr_init,
+            NULL
         };
-        type = gtk_type_unique (SP_TYPE_CANVAS_ITEM, &info);
+        type = g_type_register_static(SP_TYPE_CANVAS_ITEM, "SPCtrlQuadr", &info, (GTypeFlags)0);
     }
     return type;
 }

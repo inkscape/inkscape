@@ -30,7 +30,7 @@ struct SPCtrlLine : public SPCanvasItem{
 };
 struct SPCtrlLineClass : public SPCanvasItemClass{};
 
-GtkType sp_ctrlline_get_type (void);
+GType sp_ctrlline_get_type (void);
 
 void sp_ctrlline_set_rgba32 (SPCtrlLine *cl, guint32 rgba);
 void sp_ctrlline_set_coords (SPCtrlLine *cl, gdouble x0, gdouble y0, gdouble x1, gdouble y1);
