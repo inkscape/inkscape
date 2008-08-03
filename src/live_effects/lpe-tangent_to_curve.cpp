@@ -19,7 +19,6 @@
 //        There must be a more convenient way to achieve this.
 #include "sp-path.h"
 #include "display/curve.h"
-#include "libnr/n-art-bpath-2geom.h"
 
 #include <2geom/path.h>
 #include <2geom/transforms.h>

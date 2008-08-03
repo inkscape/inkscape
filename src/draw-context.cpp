@@ -24,7 +24,6 @@
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include <glibmm/i18n.h>
-#include "libnr/n-art-bpath.h"
 #include "display/curve.h"
 #include "desktop.h"
 #include "desktop-affine.h"

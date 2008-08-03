@@ -17,8 +17,6 @@
 # include <config.h>
 #endif
 #include <libnr/nr-blit.h>
-#include <libnr/nr-path.h>
-#include <libnr/n-art-bpath.h>
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-convert2geom.h>

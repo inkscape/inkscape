@@ -22,7 +22,6 @@
 #include <gtkmm/clipboard.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libnr/n-art-bpath.h"
 #include "macros.h"
 #include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
@@ -43,17 +42,6 @@
 #include "dropper-context.h"
 #include "message-context.h"
 #include "libnr/nr-scale-translate-ops.h"
-
-#define C1 0.552
-static NArtBpath const spdc_circle[] = {
-    { NR_MOVETO, 0, 0, 0, 0, -1, 0 },
-    { NR_CURVETO, -1, C1, -C1, 1, 0, 1 },
-    { NR_CURVETO, C1, 1, 1, C1, 1, 0 },
-    { NR_CURVETO, 1, -C1, C1, -1, 0, -1 },
-    { NR_CURVETO, -C1, -1, -1, -C1, -1, 0 },
-    { NR_END, 0, 0, 0, 0, 0, 0 }
-};
-#undef C1
 
 static void sp_dropper_context_class_init(SPDropperContextClass *klass);
 static void sp_dropper_context_init(SPDropperContext *dc);

@@ -31,9 +31,7 @@
 #include <signal.h>
 #include <errno.h>
 
-#include <libnr/n-art-bpath.h>
 #include <libnr/nr-matrix-fns.h>
-#include <libnr/n-art-bpath-2geom.h>
 
 #include <glib/gmem.h>
 #include <glib/gstrfuncs.h>

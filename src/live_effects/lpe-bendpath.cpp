@@ -12,8 +12,6 @@
 #include "sp-item.h"
 #include "sp-path.h"
 #include "sp-item-group.h"
-//#include <libnr/n-art-bpath.h>
-#include "libnr/n-art-bpath-2geom.h"
 #include "svg/svg.h"
 #include "ui/widget/scalar.h"
 

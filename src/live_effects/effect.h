@@ -29,7 +29,6 @@ struct SPDocument;
 struct SPDesktop;
 struct SPItem;
 class SPNodeContext;
-class NArtBpath;
 struct LivePathEffectObject;
 
 namespace Gtk {

@@ -21,7 +21,6 @@
 #include "sp-item.h"
 #include "sp-path.h"
 #include "display/curve.h"
-#include "libnr/n-art-bpath-2geom.h"
 #include "svg/svg.h"
 #include "nodepath.h"
 

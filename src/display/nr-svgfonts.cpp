@@ -12,7 +12,6 @@
  * Read the file 'COPYING' for more information.
  */
 
-#include <libnr/n-art-bpath-2geom.h>
 #include <2geom/pathvector.h>
 #include <2geom/transforms.h>
 #include "../style.h"

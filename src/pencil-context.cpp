@@ -34,7 +34,6 @@
 #include "display/canvas-bpath.h"
 #include <glibmm/i18n.h>
 #include "libnr/in-svg-plane.h"
-#include "libnr/n-art-bpath.h"
 #include "context-fns.h"
 #include "sp-namedview.h"
 #include "xml/repr.h"

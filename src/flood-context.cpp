@@ -63,7 +63,6 @@
 #include "splivarot.h"
 #include "livarot/Path.h"
 #include "livarot/Shape.h"
-#include "libnr/n-art-bpath.h"
 #include "svg/svg.h"
 #include "color.h"
 

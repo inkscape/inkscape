@@ -18,8 +18,6 @@
 #include <display/nr-arena.h>
 #include <display/nr-arena-shape.h>
 #include "display/curve.h"
-#include <libnr/n-art-bpath.h>
-#include <libnr/nr-path.h>
 #include <libnr/nr-pixops.h>
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-fns.h>

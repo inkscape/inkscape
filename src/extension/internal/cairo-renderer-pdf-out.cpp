@@ -28,8 +28,6 @@
 #include "display/nr-arena.h"
 #include "display/nr-arena-item.h"
 
-#include <libnr/n-art-bpath.h>
-
 #include "display/curve.h"
 #include "display/canvas-bpath.h"
 #include "sp-item.h"

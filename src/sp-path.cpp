@@ -21,8 +21,6 @@
 #include <glibmm/i18n.h>
 
 #include <display/curve.h>
-#include <libnr/n-art-bpath.h>
-#include <libnr/nr-path.h>
 #include <libnr/nr-matrix-fns.h>
 #include <2geom/pathvector.h>
 #include <2geom/bezier-curve.h>

@@ -28,7 +28,6 @@
 #include <signal.h>
 #include <errno.h>
 
-#include <libnr/n-art-bpath.h>
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-matrix-translate-ops.h>

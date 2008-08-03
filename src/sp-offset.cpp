@@ -37,7 +37,6 @@
 #include "sp-use-reference.h"
 #include "uri.h"
 
-#include "libnr/n-art-bpath.h"
 #include <libnr/nr-matrix-fns.h>
 #include <2geom/pathvector.h>
 

@@ -15,7 +15,6 @@
 
 #include "live_effects/lpe-perp_bisector.h"
 #include "display/curve.h"
-#include <libnr/n-art-bpath.h>
 #include "sp-path.h"
 #include "line-geometry.h"
 #include "sp-lpe-item.h"

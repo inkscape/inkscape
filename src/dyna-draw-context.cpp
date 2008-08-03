@@ -48,8 +48,6 @@
 #include "message-context.h"
 #include "prefs-utils.h"
 #include "pixmaps/cursor-calligraphy.xpm"
-#include "libnr/n-art-bpath.h"
-#include "libnr/nr-path.h"
 #include "libnr/nr-matrix-ops.h"
 #include "libnr/nr-scale-translate-ops.h"
 #include "libnr/nr-convert2geom.h"

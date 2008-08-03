@@ -70,7 +70,6 @@
 #include "text-context.h"
 #include "text-editing.h"
 #include "tools-switch.h"
-#include "libnr/n-art-bpath-2geom.h"
 #include "path-chemistry.h"
 #include "id-clash.h"
 #include "unit-constants.h"

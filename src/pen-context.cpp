@@ -37,7 +37,6 @@
 #include "display/sp-ctrlline.h"
 #include "display/sodipodi-ctrl.h"
 #include <glibmm/i18n.h>
-#include "libnr/n-art-bpath.h"
 #include "libnr/nr-point-ops.h"
 #include "helper/units.h"
 #include "macros.h"

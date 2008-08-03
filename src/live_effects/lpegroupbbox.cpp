@@ -9,8 +9,6 @@
 #include "live_effects/lpegroupbbox.h"
 
 #include "sp-item.h"
-#include "libnr/nr-matrix-fns.h"
-#include "libnr/n-art-bpath-2geom.h"
 
 namespace Inkscape {
 namespace LivePathEffect {

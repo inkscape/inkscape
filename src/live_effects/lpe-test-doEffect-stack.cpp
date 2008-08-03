@@ -10,7 +10,6 @@
 
 #include <2geom/piecewise.h>
 #include <vector>
-#include <libnr/n-art-bpath.h>
 #include <cstring>
 using std::memcpy;
 

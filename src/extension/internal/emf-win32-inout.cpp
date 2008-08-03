@@ -35,7 +35,6 @@
 #include "style.h"
 #include "color.h"
 #include "display/curve.h"
-#include "libnr/n-art-bpath.h"
 #include "libnr/nr-point-matrix-ops.h"
 #include "gtk/gtk.h"
 #include "print.h"

@@ -40,8 +40,6 @@
 #include "pixmaps/cursor-push.xpm"
 #include "pixmaps/cursor-roughen.xpm"
 #include "pixmaps/cursor-color.xpm"
-#include "libnr/n-art-bpath.h"
-#include "libnr/nr-path.h"
 #include "libnr/nr-maybe.h"
 #include "libnr/nr-matrix-ops.h"
 #include "libnr/nr-scale-translate-ops.h"

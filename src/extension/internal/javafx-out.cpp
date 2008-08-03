@@ -24,7 +24,6 @@
 #include <sp-radial-gradient.h>
 #include <style.h>
 #include <display/curve.h>
-#include <libnr/n-art-bpath.h>
 #include <extension/system.h>
 #include <2geom/pathvector.h>
 #include <2geom/rect.h>

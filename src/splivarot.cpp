@@ -1741,11 +1741,8 @@ Path *
 Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
 {
     SPCurve *curve = curve_for_item(item);
-    NArtBpath *bpath = bpath_for_curve(item, curve, doTransformation, transformFull, NR::identity(), NR::identity());
-    
-    if (bpath == NULL) {
+    if (curve == NULL)
         return NULL;
-    }
 
     Geom::PathVector pathv = pathvector_for_curve(item, curve, doTransformation, transformFull);
 
