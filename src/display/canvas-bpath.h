@@ -112,7 +112,7 @@ struct SPCanvasText : public SPCanvasItem{
     guint32 rgba;
     SPDesktop *desktop; // the desktop to which this text is attached; needed for coordinate transforms (TODO: these should be eliminated)
 
-    char* text;
+    gchar* text;
     NR::Point s;
     NR::Matrix affine;
     double fontsize;
@@ -123,12 +123,12 @@ struct SPCanvasTextClass : public SPCanvasItemClass{};
 
 GtkType sp_canvastext_get_type (void);
 
-SPCanvasItem *sp_canvastext_new(SPCanvasGroup *parent, SPDesktop *desktop, Geom::Point pos, char *text);
+SPCanvasItem *sp_canvastext_new(SPCanvasGroup *parent, SPDesktop *desktop, Geom::Point pos, gchar const *text);
 
 void sp_canvastext_set_rgba32 (SPCanvasText *ct, guint32 rgba);
 void sp_canvastext_set_coords (SPCanvasText *ct, gdouble x0, gdouble y0);
 void sp_canvastext_set_coords (SPCanvasText *ct, const NR::Point start);
-void sp_canvastext_set_text (SPCanvasText *ct, const char* new_text);
+void sp_canvastext_set_text (SPCanvasText *ct, gchar const* new_text);
 void sp_canvastext_set_number_as_text (SPCanvasText *ct, int num);
 void sp_canvastext_set_fontsize (SPCanvasText *ct, double size);
 void sp_canvastext_set_anchor (SPCanvasText *ct, double anchor_x, double anchor_y);

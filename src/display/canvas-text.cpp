@@ -168,7 +168,7 @@ sp_canvastext_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int
 }
 
 SPCanvasItem *
-sp_canvastext_new(SPCanvasGroup *parent, Geom::Point pos, char *new_text)
+sp_canvastext_new(SPCanvasGroup *parent, Geom::Point pos, gchar const *new_text)
 {
     SPCanvasItem *item = sp_canvas_item_new(parent, SP_TYPE_CANVASTEXT, NULL);
 
@@ -223,7 +223,7 @@ sp_canvastext_set_coords (SPCanvasText *ct, const NR::Point start)
 }
 
 void
-sp_canvastext_set_text (SPCanvasText *ct, const char* new_text)
+sp_canvastext_set_text (SPCanvasText *ct, gchar const* new_text)
 {
     g_free (ct->text);
     ct->text = g_strdup(new_text);
