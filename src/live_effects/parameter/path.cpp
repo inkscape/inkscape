@@ -259,7 +259,7 @@ PathParam::set_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & newpa
 }
 
 /*
- * This method sets new path data. 
+ * This method sets new path data.
  * If this PathParam refers to another path, this link is removed (and replaced with explicit path data).
  *
  * If write_to_svg = true :
@@ -381,14 +381,14 @@ PathParam::on_edit_button_click()
 void
 PathParam::paste_param_path(const char *svgd)
 {
-    if (svgd == "")
-        return;
+    // only recognize a non-null, non-empty string
+    if (svgd && *svgd) {
+        // remove possible link to path
+        remove_link();
 
-    // remove possible link to path
-    remove_link();
-
-    param_write_to_repr(svgd);
-    signal_path_pasted.emit();
+        param_write_to_repr(svgd);
+        signal_path_pasted.emit();
+    }
 }
 
 void
@@ -397,7 +397,7 @@ PathParam::on_paste_button_click()
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
     Glib::ustring svgd = cm->getPathParameter();
     paste_param_path(svgd.data());
-    sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
+    sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
                      _("Paste path parameter"));
 }
 
@@ -429,7 +429,7 @@ PathParam::on_link_button_click()
         // check if linking to object to which LPE is applied (maybe delegated to PathReference
 
         param_write_to_repr(pathid.c_str());
-        sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, 
+        sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
                          _("Link path parameter to path"));
     }
 }
