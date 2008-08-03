@@ -534,7 +534,8 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
             {
                 NR::Point pos = from_2geom(cit->initialPoint()) * np->i2d;
                 sp_nodepath_node_new(sp, NULL, t[i++], pcode, &ppos, &pos, &pos);
-                ppos = from_2geom(cit->finalPoint());
+
+                ppos = from_2geom(cit->finalPoint()) * np->i2d;
                 pcode = NR_LINETO;
             }
             else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const*>(&*cit)) {
@@ -542,6 +543,7 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
                 NR::Point pos = from_2geom(points[0]) * np->i2d;
                 NR::Point npos = from_2geom(points[1]) * np->i2d;
                 sp_nodepath_node_new(sp, NULL, t[i++], pcode, &ppos, &pos, &npos);
+
                 ppos = from_2geom(points[2]) * np->i2d;
                 pcode = NR_CURVETO;
             }
