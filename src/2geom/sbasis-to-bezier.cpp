@@ -225,12 +225,13 @@ path_from_piecewise(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &B, double to
         if(i+1 == B.size() || !are_near(B[i+1].at0(), B[i].at1(), tol)) {
             //start of a new path
             if(are_near(start, B[i].at1()) && sbasis_size(B[i]) <= 1) {
-                //last line seg already there
+                pb.closePath();
+                //last line seg already there (because of .closePath())
                 goto no_add;
             }
             build_from_sbasis(pb, B[i], tol, only_cubicbeziers);
             if(are_near(start, B[i].at1())) {
-                //it's closed
+                //it's closed, the last closing segment was not a straight line so it needed to be added, but still make it closed here with degenerate straight line.
                 pb.closePath();
             }
           no_add:
