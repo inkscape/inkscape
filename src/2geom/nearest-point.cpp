@@ -2,9 +2,9 @@
  * nearest point routines for D2<SBasis> and Piecewise<D2<SBasis>>
  *
  * Authors:
- * 		
+ *
  * 		Marco Cecchetti <mrcekets at gmail.com>
- * 
+ *
  * Copyright 2007-2008  authors
  *
  * This library is free software; you can redistribute it and/or
@@ -33,6 +33,8 @@
 
 
 #include <2geom/nearest-point.h>
+#include <algorithm>
+
 
 namespace Geom
 {
@@ -41,15 +43,15 @@ namespace Geom
 // D2<SBasis> versions
 
 /*
- * Return the parameter t of a nearest point on the portion of the curve "c", 
+ * Return the parameter t of a nearest point on the portion of the curve "c",
  * related to the interval [from, to], to the point "p".
  * The needed curve derivative "dc" is passed as parameter.
  * The function return the first nearest point to "p" that is found.
  */
 
-double nearest_point( Point const& p, 
-					  D2<SBasis> const& c, 
-					  D2<SBasis> const& dc, 
+double nearest_point( Point const& p,
+					  D2<SBasis> const& c,
+					  D2<SBasis> const& dc,
 		              double from, double to )
 {
 	if ( from > to ) std::swap(from, to);
@@ -57,10 +59,10 @@ double nearest_point( Point const& p,
 	{
 		THROW_RANGEERROR("[from,to] interval out of bounds");
 	}
-
-	SBasis dd = dot(c - p, dc);	
+	if (c.isConstant()) return from;
+	SBasis dd = dot(c - p, dc);
 	std::vector<double> zeros = Geom::roots(dd);
-	
+
 	double closest = from;
 	double min_dist_sq = L2sq(c(from) - p);
 	double distsq;
@@ -80,15 +82,15 @@ double nearest_point( Point const& p,
 }
 
 /*
- * Return the parameters t of all the nearest points on the portion of 
+ * Return the parameters t of all the nearest points on the portion of
  * the curve "c", related to the interval [from, to], to the point "p".
  * The needed curve derivative "dc" is passed as parameter.
  */
 
-std::vector<double> 
-all_nearest_points( Point const& p, 
-		    D2<SBasis> const& c, 
-		    D2<SBasis> const& /*dc*/, 
+std::vector<double>
+all_nearest_points( Point const& p,
+		    D2<SBasis> const& c,
+		    D2<SBasis> const& dc,
 		    double from, double to )
 {
 	std::swap(from, to);
@@ -99,8 +101,13 @@ all_nearest_points( Point const& p,
 	}
 
 	std::vector<double> result;
-	SBasis dd = dot(c - p, Geom::derivative(c));
-	
+	if (c.isConstant())
+	{
+	    result.push_back(from);
+	    return result;
+	}
+	SBasis dd = dot(c - p, dc);
+
 	std::vector<double> zeros = Geom::roots(dd);
 	std::vector<double> candidates;
 	candidates.push_back(from);
@@ -137,7 +144,7 @@ all_nearest_points( Point const& p,
 // Piecewise< D2<SBasis> > versions
 
 
-double nearest_point( Point const& p,  
+double nearest_point( Point const& p,
 					  Piecewise< D2<SBasis> > const& c,
 		              double from, double to )
 {
@@ -146,7 +153,7 @@ double nearest_point( Point const& p,
 	{
 		THROW_RANGEERROR("[from,to] interval out of bounds");
 	}
-	
+
 	unsigned int si = c.segN(from);
 	unsigned int ei = c.segN(to);
 	if ( si == ei )
@@ -190,9 +197,9 @@ double nearest_point( Point const& p,
 	return c.mapToDomain(nearest, ni);
 }
 
-std::vector<double> 
-all_nearest_points( Point const& p, 
-                    Piecewise< D2<SBasis> > const& c, 
+std::vector<double>
+all_nearest_points( Point const& p,
+                    Piecewise< D2<SBasis> > const& c,
 		            double from, double to )
 {
 	if ( from > to ) std::swap(from, to);
@@ -200,12 +207,12 @@ all_nearest_points( Point const& p,
 	{
 		THROW_RANGEERROR("[from,to] interval out of bounds");
 	}
-	
+
 	unsigned int si = c.segN(from);
 	unsigned int ei = c.segN(to);
 	if ( si == ei )
 	{
-		std::vector<double>	all_nearest = 
+		std::vector<double>	all_nearest =
 			all_nearest_points(p, c[si], c.segT(from, si), c.segT(to, si));
 		for ( unsigned int i = 0; i < all_nearest.size(); ++i )
 		{
@@ -270,6 +277,8 @@ all_nearest_points( Point const& p,
 			all_nearest.push_back( c.mapToDomain(all_np[i][j], ni[i]) );
 		}
 	}
+	all_nearest.erase(std::unique(all_nearest.begin(), all_nearest.end()),
+	                  all_nearest.end());
 	return all_nearest;
 }
 

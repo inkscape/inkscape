@@ -73,13 +73,15 @@ class Matrix {
 
     Point xAxis() const;
     Point yAxis() const;
-    Point translation() const;
     void setXAxis(Point const &vec);
     void setYAxis(Point const &vec);
+
+    Point translation() const;
     void setTranslation(Point const &loc);
 
     double expansionX() const;
     double expansionY() const;
+    inline Point expansion() const { return Point(expansionX(), expansionY()); }
     void setExpansionX(double val);
     void setExpansionY(double val);
 

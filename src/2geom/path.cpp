@@ -4,7 +4,7 @@
  * Authors:
  * 		MenTaLguY <mental@rydia.net>
  * 		Marco Cecchetti <mrcekets at gmail.com>
- * 
+ *
  * Copyright 2007-2008  authors
  *
  * This library is free software; you can redistribute it and/or
@@ -35,10 +35,12 @@
 
 
 #include <2geom/path.h>
+#include <algorithm>
+
 
 using namespace Geom::PathInternal;
 
-namespace Geom 
+namespace Geom
 {
 
 Rect Path::boundsFast() const {
@@ -98,7 +100,7 @@ Path &Path::operator*=(Matrix const &m) {
   return *this;
 }
 
-std::vector<double> 
+std::vector<double>
 Path::allNearestPoints(Point const& _point, double from, double to) const
 {
 	if ( from > to ) std::swap(from, to);
@@ -125,7 +127,7 @@ Path::allNearestPoints(Point const& _point, double from, double to) const
 	}
 	if ( si == ei )
 	{
-		std::vector<double>	all_nearest = 
+		std::vector<double>	all_nearest =
 			_path[si].allNearestPoints(_point, st, et);
 		for ( unsigned int i = 0; i < all_nearest.size(); ++i )
 		{
@@ -139,7 +141,7 @@ Path::allNearestPoints(Point const& _point, double from, double to) const
 	std::vector<unsigned int> ni;
 	ni.push_back(si);
 	double dsq;
-	double mindistsq 
+	double mindistsq
 		= distanceSq( _point, _path[si].pointAt( all_np.front().front() ) );
 	Rect bb;
 	for ( unsigned int i = si + 1; i < ei; ++i )
@@ -191,7 +193,9 @@ Path::allNearestPoints(Point const& _point, double from, double to) const
 			all_nearest.push_back( ni[i] + all_np[i][j] );
 		}
 	}
-	return all_nearest;	
+	all_nearest.erase(std::unique(all_nearest.begin(), all_nearest.end()),
+	                  all_nearest.end());
+	return all_nearest;
 }
 
 double Path::nearestPoint(Point const &_point, double from, double to, double *distance_squared) const
@@ -221,7 +225,8 @@ double Path::nearestPoint(Point const &_point, double from, double to, double *d
 	if ( si == ei )
 	{
 		double nearest = _path[si].nearestPoint(_point, st, et);
-        *distance_squared = distanceSq(_point, _path[si].pointAt(nearest));
+		if (distance_squared != NULL)
+		    *distance_squared = distanceSq(_point, _path[si].pointAt(nearest));
 		return si + nearest;
 	}
 
@@ -259,9 +264,9 @@ double Path::nearestPoint(Point const &_point, double from, double to, double *d
 		}
 	}
 
-    if (distance_squared) {
+    if (distance_squared != NULL)
         *distance_squared = mindistsq;
-    }
+
 	return ni + nearest;
 }
 

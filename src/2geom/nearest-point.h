@@ -3,9 +3,9 @@
  *
  *
  * Authors:
- * 		
+ *
  * 		Marco Cecchetti <mrcekets at gmail.com>
- * 
+ *
  * Copyright 2007-2008  authors
  *
  * This library is free software; you can redistribute it and/or
@@ -63,37 +63,37 @@ inline double nearest_point(Point const &p, Point const &A, Point const &v)
 // D2<SBasis> versions
 
 /*
- * Return the parameter t of a nearest point on the portion of the curve "c", 
+ * Return the parameter t of a nearest point on the portion of the curve "c",
  * related to the interval [from, to], to the point "p".
  * The needed curve derivative "dc" is passed as parameter.
  * The function return the first nearest point to "p" that is found.
  */
 double nearest_point( Point const& p,
-		              D2<SBasis> const& c, D2<SBasis> const& dc, 
+		              D2<SBasis> const& c, D2<SBasis> const& dc,
 		              double from = 0, double to = 1 );
 
 inline
-double nearest_point( Point const& p, 
-		              D2<SBasis> const& c, 
+double nearest_point( Point const& p,
+		              D2<SBasis> const& c,
 		              double from = 0, double to = 1 )
 {
 	return nearest_point(p, c, Geom::derivative(c), from, to);
 }
 
 /*
- * Return the parameters t of all the nearest points on the portion of 
+ * Return the parameters t of all the nearest points on the portion of
  * the curve "c", related to the interval [from, to], to the point "p".
  * The needed curve derivative "dc" is passed as parameter.
  */
-std::vector<double> 
-all_nearest_points( Point const& p, 
-		            D2<SBasis> const& c, D2<SBasis> const& dc, 
+std::vector<double>
+all_nearest_points( Point const& p,
+		            D2<SBasis> const& c, D2<SBasis> const& dc,
 		            double from = 0, double to = 1 );
 
 inline
-std::vector<double> 
-all_nearest_points( Point const& p, 
-		            D2<SBasis> const& c, 
+std::vector<double>
+all_nearest_points( Point const& p,
+		            D2<SBasis> const& c,
 		            double from = 0, double to = 1 )
 {
 	return all_nearest_points(p, c,  Geom::derivative(c), from, to);
@@ -103,25 +103,25 @@ all_nearest_points( Point const& p,
 ////////////////////////////////////////////////////////////////////////////////
 // Piecewise< D2<SBasis> > versions
 
-double nearest_point( Point const& p, 
-		              Piecewise< D2<SBasis> > const& c, 
+double nearest_point( Point const& p,
+		              Piecewise< D2<SBasis> > const& c,
 		              double from, double to );
 
 inline
-double nearest_point( Point const& p, Piecewise< D2<SBasis> > const& c ) 
+double nearest_point( Point const& p, Piecewise< D2<SBasis> > const& c )
 {
 	return nearest_point(p, c, c.cuts[0], c.cuts[c.size()]);
 }
 
 
-std::vector<double> 
-all_nearest_points( Point const& p, 
-					Piecewise< D2<SBasis> > const& c, 
+std::vector<double>
+all_nearest_points( Point const& p,
+					Piecewise< D2<SBasis> > const& c,
 		            double from, double to );
 
 inline
-std::vector<double> 
-all_nearest_points( Point const& p, Piecewise< D2<SBasis> > const& c ) 
+std::vector<double>
+all_nearest_points( Point const& p, Piecewise< D2<SBasis> > const& c )
 {
 	return all_nearest_points(p, c, c.cuts[0], c.cuts[c.size()]);
 }
