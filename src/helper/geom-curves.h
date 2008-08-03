@@ -2,7 +2,7 @@
 #define INKSCAPE_HELPER_GEOM_CURVES_H
 
 /**
- * Specific curve type functions for Inkscape, not provided my lib2geom.
+ * Specific curve type functions for Inkscape, not provided by lib2geom.
  *
  * Author:
  *   Johan Engelen <goejendaagh@zonnet.nl>

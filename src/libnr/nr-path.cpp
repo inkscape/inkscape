@@ -500,23 +500,3 @@ nr_path_matrix_bbox_union(const_NRBPath *bpath, NR::Matrix const &m,
 	}
     }
 }
-
-NArtBpath *nr_path_from_rect(NRRect const &r)
-{
-    NArtBpath *path = g_new (NArtBpath, 6);
-
-    path[0].code = NR_MOVETO;
-    path[0].setC(3, NR::Point(r.x0, r.y0));
-    path[1].code = NR_LINETO;
-    path[1].setC(3, NR::Point(r.x1, r.y0)); 
-    path[2].code = NR_LINETO;
-    path[2].setC(3, NR::Point(r.x1, r.y1)); 
-    path[3].code = NR_LINETO;
-    path[3].setC(3, NR::Point(r.x0, r.y1));
-    path[4].code = NR_LINETO;
-    path[4].setC(3, NR::Point(r.x0, r.y0));    
-    path[5].code = NR_END;
-
-    return path;
-}
-

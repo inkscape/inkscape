@@ -51,8 +51,6 @@ void nr_path_matrix_point_bbox_wind_distance (const_NRBPath const *bpath, NR::Ma
 
 void nr_path_matrix_bbox_union(const_NRBPath *bpath, NR::Matrix const &m, NRRect *bbox);
 
-NArtBpath *nr_path_from_rect(NRRect const &r);
-
 #endif
 
 /*

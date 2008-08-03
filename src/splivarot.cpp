@@ -1748,79 +1748,55 @@ Path *
 Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
 {
     SPCurve *curve = curve_for_item(item);
+
     if (curve == NULL)
         return NULL;
-
-    Geom::PathVector pathv = pathvector_for_curve(item, curve, doTransformation, transformFull);
-
-    Path *dest = new Path;
-    dest->LoadPathVector(pathv);
-
+    
+    Geom::PathVector *pathv = pathvector_for_curve(item, curve, doTransformation, transformFull, Geom::identity(), Geom::identity());
     curve->unref();
     
+    Path *dest = new Path;
+    dest->LoadPathVector(*pathv);    
+    delete pathv;
+    
     return dest;
-}
-
-/* 
- * This function always returns a new NArtBpath, the caller must g_free the returned path!
-*/
-NArtBpath *
-bpath_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transformFull, NR::Matrix extraPreAffine, NR::Matrix extraPostAffine)
-{
-    if (curve == NULL)
-        return NULL;
-
-    NArtBpath *bpath = BPath_from_2GeomPath(curve->get_pathvector());
-    if (bpath == NULL) {
-        return NULL;
-    }
-
-    NArtBpath *new_bpath; // we will get a duplicate which has to be freed at some point!
-    if (doTransformation) {
-        if (transformFull) {
-            new_bpath = nr_artpath_affine(bpath, extraPreAffine * from_2geom(sp_item_i2doc_affine(item)) * extraPostAffine);
-        } else {
-            new_bpath = nr_artpath_affine(bpath, extraPreAffine * item->transform * extraPostAffine);
-        }
-    } else {
-        new_bpath = nr_artpath_affine(bpath, extraPreAffine * NR::identity() * extraPostAffine);
-    }
-
-    g_free(bpath);
-    return new_bpath;
 }
 
 /* 
  * NOTE: Returns empty pathvector if curve == NULL
  * TODO: see if calling this method can be optimized. All the pathvector copying might be slow.
  */
-Geom::PathVector
-pathvector_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transformFull)
+Geom::PathVector*
+pathvector_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transformFull, Geom::Matrix extraPreAffine, Geom::Matrix extraPostAffine)
 {
     if (curve == NULL)
-        return Geom::PathVector();
+        return NULL;
 
+    Geom::PathVector *dest = new Geom::PathVector;    
+    *dest = curve->get_pathvector(); // Make a copy; must be freed by the caller!
+    
     if (doTransformation) {
         if (transformFull) {
-            return (curve->get_pathvector()) * sp_item_i2doc_affine(item);
+            *dest *= extraPreAffine * sp_item_i2doc_affine(item) * extraPostAffine;
         } else {
-            return (curve->get_pathvector()) * to_2geom(item->transform);
+            *dest *= extraPreAffine * to_2geom(item->transform) * extraPostAffine;
         }
     } else {
-        return curve->get_pathvector();
+        *dest *= extraPreAffine * extraPostAffine;
     }
+    
+    return dest;
 }
 
 SPCurve* curve_for_item(SPItem *item)
 {
-    if (!item) {
-    	return NULL;
-    }
-
+    if (!item) 
+        return NULL;
+    
     SPCurve *curve = NULL;
     if (SP_IS_SHAPE(item)) {
         if (SP_IS_PATH(item)) {
-    		curve = sp_path_get_curve_for_edit(SP_PATH(item));
+            curve = sp_path_get_curve_for_edit(SP_PATH(item));
         } else {
             curve = sp_shape_get_curve(SP_SHAPE(item));
         }
@@ -1831,13 +1807,14 @@ SPCurve* curve_for_item(SPItem *item)
     }
     else if (SP_IS_IMAGE(item))
     {
-    	curve = sp_image_get_curve(SP_IMAGE(item));
+    curve = sp_image_get_curve(SP_IMAGE(item));
     }
     
     return curve; // do not forget to unref the curve at some point!
 }
 
-Path *bpath_to_Path(NArtBpath const *bpath) {
+Path *bpath_to_Path(NArtBpath const *bpath) 
+{
     Path *dest = new Path;
     dest->SetBackData(false);
     {
