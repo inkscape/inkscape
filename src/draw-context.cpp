@@ -445,11 +445,6 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
 void spdc_endpoint_snap_rotation(SPEventContext const *const ec, NR::Point &p, NR::Point const o,
                                  guint state)
 {
-    /* Control must be down for this snap to work */
-    if ((state & GDK_CONTROL_MASK) == 0) {
-        return;
-    }
-
     unsigned const snaps = abs(prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12));
     /* 0 means no snapping. */
 
@@ -480,21 +475,20 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, NR::Point &p, N
     if (fabs(bdot) > 0) {
         p = o + bdot * best;
 
-        /* Snap it along best vector */
-        SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
-        m.setup(SP_EVENT_CONTEXT_DESKTOP(ec), NULL);
-        m.constrainedSnapReturnByRef( Inkscape::Snapper::SNAPPOINT_NODE, p, Inkscape::Snapper::ConstraintLine(best));
+        if (!(state & GDK_SHIFT_MASK)) { //SHIFT disables all snapping, except the angular snapping above
+                                         //After all, the user explicitely asked for angular snapping by
+                                         //pressing CTRL
+            /* Snap it along best vector */
+            SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
+            m.setup(SP_EVENT_CONTEXT_DESKTOP(ec), NULL);
+            m.constrainedSnapReturnByRef( Inkscape::Snapper::SNAPPOINT_NODE, p, Inkscape::Snapper::ConstraintLine(best));
+        }
     }
 }
 
 
-void spdc_endpoint_snap_free(SPEventContext const * const ec, NR::Point& p, guint const state)
+void spdc_endpoint_snap_free(SPEventContext const * const ec, NR::Point& p, guint const /*state*/)
 {
-    /* Shift disables this snap */
-    if (state & GDK_SHIFT_MASK) {
-        return;
-    }
-
     SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
     m.setup(SP_EVENT_CONTEXT_DESKTOP(ec), NULL);
     m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, p);
