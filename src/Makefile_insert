@@ -358,7 +358,6 @@ inkscape_private_libs =	\
 	helper/libspchelp.a	\
 	libcroco/libcroco.a	\
 	libnrtype/libnrtype.a	\
-	libnr/libnr.a		\
 	libavoid/libavoid.a	\
 	livarot/libvarot.a	\
 	live_effects/liblive_effects.a	\
@@ -374,6 +373,7 @@ inkscape_private_libs =	\
 	extension/libextension.a	\
 	extension/implementation/libimplementation.a	\
 	extension/internal/libinternal.a	\
+	libnr/libnr.a		\
 	extension/script/libscript.a	\
 	bind/libbind.a	\
 	dom/libdom.a            \
