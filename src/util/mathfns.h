@@ -12,6 +12,7 @@
 #ifndef SEEN_INKSCAPE_UTIL_MATHFNS_H
 #define SEEN_INKSCAPE_UTIL_MATHFNS_H
 
+#include <2geom/point.h>
 
 namespace Inkscape {
 
@@ -21,9 +22,11 @@ namespace Util {
  * Returns area in triangle given by points; may be negative.
  */
 inline double
-triangle_area (NR::Point p1, NR::Point p2, NR::Point p3)
+triangle_area (Geom::Point p1, Geom::Point p2, Geom::Point p3)
 {
-    return (p1[NR::X]*p2[NR::Y] + p1[NR::Y]*p3[NR::X] + p2[NR::X]*p3[NR::Y] - p2[NR::Y]*p3[NR::X] - p1[NR::Y]*p2[NR::X] - p1[NR::X]*p3[NR::Y]);
+    using Geom::X;
+    using Geom::Y;
+    return (p1[X]*p2[Y] + p1[Y]*p3[X] + p2[X]*p3[Y] - p2[Y]*p3[X] - p1[Y]*p2[X] - p1[X]*p3[Y]);
 }
 
 /**
