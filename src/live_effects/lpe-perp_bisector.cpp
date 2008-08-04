@@ -96,57 +96,6 @@ KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*or
     bisector_end_set(p, false);
 }
 
-/**
-Geom::Point path_start_get(SPItem *item) {
-    Inkscape::LivePathEffect::LPEPerpBisector *lpe =
-        dynamic_cast<Inkscape::LivePathEffect::LPEPerpBisector *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
-
-    if (lpe)
-        return Geom::Point(lpe->A);
-    else
-        return Geom::Point(0,0);
-}
-
-Geom::Point path_end_get(SPItem *item) {
-    Inkscape::LivePathEffect::LPEPerpBisector *lpe =
-        dynamic_cast<Inkscape::LivePathEffect::LPEPerpBisector *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
-
-    if (lpe)
-        return Geom::Point(lpe->B);
-    else
-        return Geom::Point(0,0);
-}
-
-void
-path_set_start_end(SPItem *item, Geom::Point const &p, bool start) {
-    SPCurve* curve = sp_path_get_curve_for_edit (SP_PATH(item)); // TODO: Should we use sp_shape_get_curve()?
-    Geom::Matrix const i2d (sp_item_i2d_affine (SP_ITEM(item)));
-
-    Geom::Point A, B;
-    if (start) {
-        A = p;
-        B = curve->last_point();
-    } else {
-        A = curve->first_point();
-        B = p;
-    }
-
-    SPCurve *c = new SPCurve();
-    c->moveto(A);
-    c->lineto(B);
-    sp_path_set_original_curve(SP_PATH(item), c, TRUE, true);
-    c->unref();
-}
-**/
-
-//void path_start_set(SPItem *item, Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/) {
-//    path_set_start_end(item, p);
-//}
-
-//void path_end_set(SPItem *item, Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/) {
-//    path_set_start_end(item, p, false);
-//}
-
 } //namescape PB
 
 LPEPerpBisector::LPEPerpBisector(LivePathEffectObject *lpeobject) :
@@ -163,12 +112,6 @@ LPEPerpBisector::LPEPerpBisector(LivePathEffectObject *lpeobject) :
 
     registerKnotHolderHandle(new PB::KnotHolderEntityLeftEnd(), _("Adjust the bisector's \"left\" end"));
     registerKnotHolderHandle(new PB::KnotHolderEntityRightEnd(), _("Adjust the bisector's \"right\" end"));
-/**
-    registerKnotHolderHandle(path_start_set, path_start_get);
-    registerKnotHolderHandle(path_end_set, path_end_get);
-    registerKnotHolderHandle(bisector_left_end_set, bisector_left_end_get);
-    registerKnotHolderHandle(bisector_right_end_set, bisector_right_end_get);
-**/
 }
 
 LPEPerpBisector::~LPEPerpBisector()
