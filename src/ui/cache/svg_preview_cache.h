@@ -11,7 +11,7 @@
  *
  */
 
-GdkPixbuf* render_pixbuf(NRArenaItem* root, double scale_factor, const NR::Rect& dbox, unsigned psize);
+GdkPixbuf* render_pixbuf(NRArenaItem* root, double scale_factor, const Geom::Rect& dbox, unsigned psize);
 
 namespace Inkscape {
 namespace UI {

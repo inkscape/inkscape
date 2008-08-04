@@ -1149,9 +1149,9 @@ EditWidget::setSize (gint w, gint h)
 }
 
 void
-EditWidget::setPosition (NR::Point p)
+EditWidget::setPosition (Geom::Point p)
 {
-    move (int(p[NR::X]), int(p[NR::Y]));
+    move (int(p[Geom::X]), int(p[Geom::Y]));
 }
 
 /// \param p is already gobj()!
@@ -1163,12 +1163,12 @@ EditWidget::setTransient (void* p, int i)
         this->Gtk::Window::present();
 }
 
-NR::Point
+Geom::Point
 EditWidget::getPointer()
 {
     int x, y;
     get_pointer (x, y);
-    return NR::Point (x, y);
+    return Geom::Point (x, y);
 }
 
 void
@@ -1357,34 +1357,34 @@ EditWidget::deactivateDesktop()
 }
 
 void
-EditWidget::viewSetPosition (NR::Point p)
+EditWidget::viewSetPosition (Geom::Point p)
 {
     // p -= _namedview->gridorigin;    
     /// \todo Why was the origin corrected for the grid origin? (johan)
     
     double lo, up, pos, max;
     _top_ruler.get_range (lo, up, pos, max);
-    _top_ruler.set_range (lo, up, p[NR::X], max);
+    _top_ruler.set_range (lo, up, p[Geom::X], max);
     _left_ruler.get_range (lo, up, pos, max);
-    _left_ruler.set_range (lo, up, p[NR::Y], max);
+    _left_ruler.set_range (lo, up, p[Geom::Y], max);
 }
 
 void
 EditWidget::updateRulers()
 {
-    //NR::Point gridorigin = _namedview->gridorigin;
+    //Geom::Point gridorigin = _namedview->gridorigin;
     /// \todo Why was the origin corrected for the grid origin? (johan)
     
-    NR::Rect const viewbox = _svg_canvas.spobj()->getViewbox();
+    Geom::Rect const viewbox = to_2geom(_svg_canvas.spobj()->getViewbox());
     double lo, up, pos, max;
     double const scale = _desktop->current_zoom();
-    double s = viewbox.min()[NR::X] / scale; //- gridorigin[NR::X];
-    double e = viewbox.max()[NR::X] / scale; //- gridorigin[NR::X];
+    double s = viewbox.min()[Geom::X] / scale; //- gridorigin[Geom::X];
+    double e = viewbox.max()[Geom::X] / scale; //- gridorigin[Geom::X];
     _top_ruler.get_range(lo, up, pos, max);
     _top_ruler.set_range(s, e, pos, e);
-    s = viewbox.min()[NR::Y] / -scale; //- gridorigin[NR::Y];
-    e = viewbox.max()[NR::Y] / -scale; //- gridorigin[NR::Y];
-    _left_ruler.set_range(s, e, 0 /*gridorigin[NR::Y]*/, e);
+    s = viewbox.min()[Geom::Y] / -scale; //- gridorigin[Geom::Y];
+    e = viewbox.max()[Geom::Y] / -scale; //- gridorigin[Geom::Y];
+    _left_ruler.set_range(s, e, 0 /*gridorigin[Geom::Y]*/, e);
     /// \todo is that correct?
 }
 
@@ -1400,17 +1400,13 @@ EditWidget::updateScrollbars (double scale)
 
     /* The desktop region we always show unconditionally */
     SPDocument *doc = _desktop->doc();
-    NR::Rect darea = NR::Rect(NR::Point(-sp_document_width(doc),
-                                        -sp_document_height(doc)),
-                              NR::Point(2 * sp_document_width(doc),
-                                        2 * sp_document_height(doc)));
+    NR::Rect darea ( Geom::Point(-sp_document_width(doc), -sp_document_height(doc)),
+                     Geom::Point(2 * sp_document_width(doc), 2 * sp_document_height(doc))  );
     darea = NR::union_bounds(darea, sp_item_bbox_desktop(SP_ITEM(SP_DOCUMENT_ROOT(doc))));
 
     /* Canvas region we always show unconditionally */
-    NR::Rect carea(NR::Point(darea.min()[NR::X] * scale - 64,
-                             darea.max()[NR::Y] * -scale - 64),
-                   NR::Point(darea.max()[NR::X] * scale + 64,
-                             darea.min()[NR::Y] * -scale + 64));
+    NR::Rect carea( Geom::Point(darea.min()[Geom::X] * scale - 64, darea.max()[Geom::Y] * -scale - 64),
+                    Geom::Point(darea.max()[Geom::X] * scale + 64, darea.min()[Geom::Y] * -scale + 64)  );
 
     NR::Rect const viewbox = _svg_canvas.spobj()->getViewbox();
 
@@ -1418,20 +1414,20 @@ EditWidget::updateScrollbars (double scale)
     carea = NR::union_bounds(carea, viewbox);
 
     Gtk::Adjustment *adj = _bottom_scrollbar.get_adjustment();
-    adj->set_value(viewbox.min()[NR::X]);
-    adj->set_lower(carea.min()[NR::X]);
-    adj->set_upper(carea.max()[NR::X]);
-    adj->set_page_increment(viewbox.dimensions()[NR::X]);
-    adj->set_step_increment(0.1 * (viewbox.dimensions()[NR::X]));
-    adj->set_page_size(viewbox.dimensions()[NR::X]);
+    adj->set_value(viewbox.min()[Geom::X]);
+    adj->set_lower(carea.min()[Geom::X]);
+    adj->set_upper(carea.max()[Geom::X]);
+    adj->set_page_increment(viewbox.dimensions()[Geom::X]);
+    adj->set_step_increment(0.1 * (viewbox.dimensions()[Geom::X]));
+    adj->set_page_size(viewbox.dimensions()[Geom::X]);
 
     adj = _right_scrollbar.get_adjustment();
-    adj->set_value(viewbox.min()[NR::Y]);
-    adj->set_lower(carea.min()[NR::Y]);
-    adj->set_upper(carea.max()[NR::Y]);
-    adj->set_page_increment(viewbox.dimensions()[NR::Y]);
-    adj->set_step_increment(0.1 * viewbox.dimensions()[NR::Y]);
-    adj->set_page_size(viewbox.dimensions()[NR::Y]);
+    adj->set_value(viewbox.min()[Geom::Y]);
+    adj->set_lower(carea.min()[Geom::Y]);
+    adj->set_upper(carea.max()[Geom::Y]);
+    adj->set_page_increment(viewbox.dimensions()[Geom::Y]);
+    adj->set_step_increment(0.1 * viewbox.dimensions()[Geom::Y]);
+    adj->set_page_size(viewbox.dimensions()[Geom::Y]);
 
     _update_s_f = false;
 }
@@ -1509,12 +1505,12 @@ EditWidget::isToolboxButtonActive (gchar const*)
 }
 
 void
-EditWidget::setCoordinateStatus (NR::Point p)
+EditWidget::setCoordinateStatus (Geom::Point p)
 {
-    gchar *cstr = g_strdup_printf ("%6.2f", _dt2r * p[NR::X]);
+    gchar *cstr = g_strdup_printf ("%6.2f", _dt2r * p[Geom::X]);
     _coord_status_x.property_label() = cstr;
     g_free (cstr);
-    cstr = g_strdup_printf ("%6.2f", _dt2r * p[NR::Y]);
+    cstr = g_strdup_printf ("%6.2f", _dt2r * p[Geom::Y]);
     _coord_status_y.property_label() = cstr;
     g_free (cstr);
 }
@@ -1646,32 +1642,32 @@ EditWidget::onWindowSizeAllocate (Gtk::Allocation &newall)
         return;
     }
 
-    NR::Rect const area = _desktop->get_display_area();
+    Geom::Rect const area = to_2geom(_desktop->get_display_area());
     double zoom = _desktop->current_zoom();
 
     if (_sticky_zoom.get_active()) {
         /* Calculate zoom per pixel */
-        double const zpsp = zoom / hypot(area.dimensions()[NR::X], area.dimensions()[NR::Y]);
+        double const zpsp = zoom / hypot(area.dimensions()[Geom::X], area.dimensions()[Geom::Y]);
         /* Find new visible area */
-        NR::Rect const newarea = _desktop->get_display_area();
+        Geom::Rect const newarea = to_2geom(_desktop->get_display_area());
         /* Calculate adjusted zoom */
-        zoom = zpsp * hypot(newarea.dimensions()[NR::X], newarea.dimensions()[NR::Y]);
+        zoom = zpsp * hypot(newarea.dimensions()[Geom::X], newarea.dimensions()[Geom::Y]);
     }
 
-    _desktop->zoom_absolute(area.midpoint()[NR::X], area.midpoint()[NR::Y], zoom);
+    _desktop->zoom_absolute(area.midpoint()[Geom::X], area.midpoint()[Geom::Y], zoom);
 }
 
 void
 EditWidget::onWindowRealize()
 {
-    NR::Rect d(NR::Point(0, 0),
-               NR::Point(sp_document_width(_desktop->doc()), sp_document_height(_desktop->doc())));
+    NR::Rect d(Geom::Point(0, 0),
+               Geom::Point(sp_document_width(_desktop->doc()), sp_document_height(_desktop->doc())));
 
     if (d.isEmpty(1.0)) {
         return;
     }
 
-    _desktop->set_display_area(d.min()[NR::X], d.min()[NR::Y], d.max()[NR::X], d.max()[NR::Y], 10);
+    _desktop->set_display_area(d.min()[Geom::X], d.min()[Geom::Y], d.max()[Geom::X], d.max()[Geom::Y], 10);
     _namedview_modified(_desktop->namedview, SP_OBJECT_MODIFIED_FLAG);
     setTitle (SP_DOCUMENT_NAME(_desktop->doc()));
 }

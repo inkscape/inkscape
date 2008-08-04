@@ -20,6 +20,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "widgets/spw-utilities.h"
+#include "libnr/nr-convert2geom.h"
 
 namespace Inkscape {
 namespace UI {
@@ -107,8 +108,8 @@ ZoomStatus::on_value_changed()
     _upd_f = true;
     g_assert(_dt);
     double zoom_factor = pow(2, get_value());
-    NR::Rect const d =_dt->get_display_area();
-    _dt->zoom_absolute(d.midpoint()[NR::X], d.midpoint()[NR::Y], zoom_factor);
+    Geom::Rect const d = to_2geom(_dt->get_display_area());
+    _dt->zoom_absolute(d.midpoint()[Geom::X], d.midpoint()[Geom::Y], zoom_factor);
     gtk_widget_grab_focus(static_cast<GtkWidget*>((void*)_dt->canvas));   /// \todo this no love song
     _upd_f = false;
 }

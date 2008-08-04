@@ -21,6 +21,7 @@
 #include "gc-finalized.h"
 #include "gc-anchored.h"
 #include <libnr/nr-forward.h>
+#include <2geom/forward.h>
 
 /**
  * Iterates until true or returns false.
@@ -89,7 +90,7 @@ public:
       { return _tips_message_context; }
 
     void setPosition(gdouble x, gdouble y);
-    void setPosition(NR::Point const &p);
+    void setPosition(Geom::Point const &p);
     void emitResized(gdouble width, gdouble height);
     void requestRedraw();
 

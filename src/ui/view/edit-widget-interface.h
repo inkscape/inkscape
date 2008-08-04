@@ -50,13 +50,13 @@ struct EditWidgetInterface
     virtual void setSize (gint w, gint h) = 0;
 
     /// Move widget to specified position
-    virtual void setPosition (NR::Point p) = 0;
+    virtual void setPosition (Geom::Point p) = 0;
 
     /// Transientize widget
     virtual void setTransient (void*, int) = 0;
 
     /// Return mouse position in widget
-    virtual NR::Point getPointer() = 0;
+    virtual Geom::Point getPointer() = 0;
 
     /// Make widget iconified
     virtual void setIconified() = 0;
@@ -96,7 +96,7 @@ struct EditWidgetInterface
     virtual void deactivateDesktop() = 0;
 
     /// Set rulers to position
-    virtual void viewSetPosition (NR::Point p) = 0;
+    virtual void viewSetPosition (Geom::Point p) = 0;
 
     /// Update rulers from current values
     virtual void updateRulers() = 0;
@@ -132,7 +132,7 @@ struct EditWidgetInterface
     virtual bool isToolboxButtonActive (gchar const*) = 0;
 
     /// Set the coordinate display
-    virtual void setCoordinateStatus (NR::Point p) = 0;
+    virtual void setCoordinateStatus (Geom::Point p) = 0;
 
     /// Message widget will get no content
     virtual void setMessage (Inkscape::MessageType type, gchar const* msg) = 0;

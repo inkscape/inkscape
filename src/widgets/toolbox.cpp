@@ -1097,18 +1097,18 @@ sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tbl)
         } else {
             gtk_action_set_sensitive(xact, TRUE);
             gtk_action_set_sensitive(yact, TRUE);
-            NR::Coord oldx = sp_units_get_pixels(gtk_adjustment_get_value(xadj), *unit);
-            NR::Coord oldy = sp_units_get_pixels(gtk_adjustment_get_value(xadj), *unit);
+            Geom::Coord oldx = sp_units_get_pixels(gtk_adjustment_get_value(xadj), *unit);
+            Geom::Coord oldy = sp_units_get_pixels(gtk_adjustment_get_value(xadj), *unit);
 
             if (n_selected == 1) {
-                NR::Point sel_node = nodepath->singleSelectedCoords();
-                if (oldx != sel_node[NR::X] || oldy != sel_node[NR::Y]) {
-                    gtk_adjustment_set_value(xadj, sp_pixels_get_units(sel_node[NR::X], *unit));
-                    gtk_adjustment_set_value(yadj, sp_pixels_get_units(sel_node[NR::Y], *unit));
+                Geom::Point sel_node = nodepath->singleSelectedCoords();
+                if (oldx != sel_node[Geom::X] || oldy != sel_node[Geom::Y]) {
+                    gtk_adjustment_set_value(xadj, sp_pixels_get_units(sel_node[Geom::X], *unit));
+                    gtk_adjustment_set_value(yadj, sp_pixels_get_units(sel_node[Geom::Y], *unit));
                 }
             } else {
-                NR::Maybe<NR::Coord> x = sp_node_selected_common_coord(nodepath, NR::X);
-                NR::Maybe<NR::Coord> y = sp_node_selected_common_coord(nodepath, NR::Y);
+                NR::Maybe<Geom::Coord> x = sp_node_selected_common_coord(nodepath, Geom::X);
+                NR::Maybe<Geom::Coord> y = sp_node_selected_common_coord(nodepath, Geom::Y);
                 if ((x && ((*x) != oldx)) || (y && ((*y) != oldy))) {
                     /* Note: Currently x and y will always have a value, even if the coordinates of the
                        selected nodes don't coincide (in this case we use the coordinates of the center
@@ -1153,10 +1153,10 @@ sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *value_
     if (shape_editor && shape_editor->has_nodepath()) {
         double val = sp_units_get_pixels(gtk_adjustment_get_value(adj), *unit);
         if (!strcmp(value_name, "x")) {
-            sp_node_selected_move_absolute(shape_editor->get_nodepath(), val, NR::X);
+            sp_node_selected_move_absolute(shape_editor->get_nodepath(), val, Geom::X);
         }
         if (!strcmp(value_name, "y")) {
-            sp_node_selected_move_absolute(shape_editor->get_nodepath(), val, NR::Y);
+            sp_node_selected_move_absolute(shape_editor->get_nodepath(), val, Geom::Y);
         }
     }
 

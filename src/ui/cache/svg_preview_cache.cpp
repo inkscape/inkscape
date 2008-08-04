@@ -32,11 +32,11 @@
 
 #include "ui/cache/svg_preview_cache.h"
 
-GdkPixbuf* render_pixbuf(NRArenaItem* root, double scale_factor, const NR::Rect& dbox, unsigned psize) {
+GdkPixbuf* render_pixbuf(NRArenaItem* root, double scale_factor, const Geom::Rect& dbox, unsigned psize) {
     NRGC gc(NULL);
 
-    NR::Matrix t(NR::scale(scale_factor, scale_factor));
-    nr_arena_item_set_transform(root, t);
+    Geom::Matrix t(Geom::Scale(scale_factor, scale_factor));
+    nr_arena_item_set_transform(root, from_2geom(t));
 
     gc.transform.set_identity();
     nr_arena_item_invoke_update( root, NULL, &gc,
@@ -45,10 +45,10 @@ GdkPixbuf* render_pixbuf(NRArenaItem* root, double scale_factor, const NR::Rect&
 
     /* Item integer bbox in points */
     NRRectL ibox;
-    ibox.x0 = (int) floor(scale_factor * dbox.min()[NR::X] + 0.5);
-    ibox.y0 = (int) floor(scale_factor * dbox.min()[NR::Y] + 0.5);
-    ibox.x1 = (int) floor(scale_factor * dbox.max()[NR::X] + 0.5);
-    ibox.y1 = (int) floor(scale_factor * dbox.max()[NR::Y] + 0.5);
+    ibox.x0 = (int) floor(scale_factor * dbox.min()[Geom::X] + 0.5);
+    ibox.y0 = (int) floor(scale_factor * dbox.min()[Geom::Y] + 0.5);
+    ibox.x1 = (int) floor(scale_factor * dbox.max()[Geom::X] + 0.5);
+    ibox.y1 = (int) floor(scale_factor * dbox.max()[Geom::Y] + 0.5);
 
     /* Find visible area */
     int width = ibox.x1 - ibox.x0;

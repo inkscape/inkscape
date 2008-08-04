@@ -49,6 +49,7 @@
 #include "ege-adjustment-action.h"
 #include "ege-output-action.h"
 #include "ink-action.h"
+#include <2geom/rect.h>
 
 using Inkscape::UnitTracker;
 
@@ -61,8 +62,8 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
 
     g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(TRUE));
 
-    using NR::X;
-    using NR::Y;
+    using Geom::X;
+    using Geom::Y;
     if ( sel && !sel->isEmpty() ) {
         int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
         SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
@@ -181,35 +182,35 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         x0 = sp_units_get_pixels (a_x->value, unit);
         y0 = sp_units_get_pixels (a_y->value, unit);
         x1 = x0 + sp_units_get_pixels (a_w->value, unit);
-        xrel = sp_units_get_pixels (a_w->value, unit) / bbox->extent(NR::X);
+        xrel = sp_units_get_pixels (a_w->value, unit) / bbox->extent(Geom::X);
         y1 = y0 + sp_units_get_pixels (a_h->value, unit);
-        yrel = sp_units_get_pixels (a_h->value, unit) / bbox->extent(NR::Y);
+        yrel = sp_units_get_pixels (a_h->value, unit) / bbox->extent(Geom::Y);
     } else {
         double const x0_propn = a_x->value * unit.unittobase;
-        x0 = bbox->min()[NR::X] * x0_propn;
+        x0 = bbox->min()[Geom::X] * x0_propn;
         double const y0_propn = a_y->value * unit.unittobase;
-        y0 = y0_propn * bbox->min()[NR::Y];
+        y0 = y0_propn * bbox->min()[Geom::Y];
         xrel = a_w->value * unit.unittobase;
-        x1 = x0 + xrel * bbox->extent(NR::X);
+        x1 = x0 + xrel * bbox->extent(Geom::X);
         yrel = a_h->value * unit.unittobase;
-        y1 = y0 + yrel * bbox->extent(NR::Y);
+        y1 = y0 + yrel * bbox->extent(Geom::Y);
     }
 
     // Keep proportions if lock is on
     GtkToggleAction *lock = GTK_TOGGLE_ACTION( g_object_get_data(G_OBJECT(spw), "lock") );
     if ( gtk_toggle_action_get_active(lock) ) {
         if (adj == a_h) {
-            x1 = x0 + yrel * bbox->extent(NR::X);
+            x1 = x0 + yrel * bbox->extent(Geom::X);
         } else if (adj == a_w) {
-            y1 = y0 + xrel * bbox->extent(NR::Y);
+            y1 = y0 + xrel * bbox->extent(Geom::Y);
         }
     }
 
     // scales and moves, in px
-    double mh = fabs(x0 - bbox->min()[NR::X]);
-    double sh = fabs(x1 - bbox->max()[NR::X]);
-    double mv = fabs(y0 - bbox->min()[NR::Y]);
-    double sv = fabs(y1 - bbox->max()[NR::Y]);
+    double mh = fabs(x0 - bbox->min()[Geom::X]);
+    double sh = fabs(x1 - bbox->max()[Geom::X]);
+    double mv = fabs(y0 - bbox->min()[Geom::Y]);
+    double sv = fabs(y1 - bbox->max()[Geom::Y]);
 
     // unless the unit is %, convert the scales and moves to the unit
     if (unit.base == SP_UNIT_ABSOLUTE || unit.base == SP_UNIT_DEVICE) {

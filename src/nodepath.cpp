@@ -1602,11 +1602,11 @@ sp_node_selected_move_screen(Inkscape::NodePath::Path *nodepath, gdouble dx, gdo
 /**
  * Move selected nodes to the absolute position given
  */
-void sp_node_selected_move_absolute(Inkscape::NodePath::Path *nodepath, NR::Coord val, NR::Dim2 axis)
+void sp_node_selected_move_absolute(Inkscape::NodePath::Path *nodepath, Geom::Coord val, Geom::Dim2 axis)
 {
     for (GList *l = nodepath->selected; l != NULL; l = l->next) {
         Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
-        NR::Point npos(axis == NR::X ? val : n->pos[NR::X], axis == NR::Y ? val : n->pos[NR::Y]);
+        Geom::Point npos(axis == Geom::X ? val : n->pos[Geom::X], axis == Geom::Y ? val : n->pos[Geom::Y]);
         sp_node_moveto(n, npos);
     }
 
@@ -1616,9 +1616,9 @@ void sp_node_selected_move_absolute(Inkscape::NodePath::Path *nodepath, NR::Coor
 /**
  * If the coordinates of all selected nodes coincide, return the common coordinate; otherwise return NR::Nothing
  */
-NR::Maybe<NR::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis)
+NR::Maybe<Geom::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *nodepath, Geom::Dim2 axis)
 {
-    NR::Maybe<NR::Coord> no_coord = NR::Nothing();
+    NR::Maybe<Geom::Coord> no_coord = NR::Nothing();
     g_return_val_if_fail(nodepath->selected, no_coord);
 
     // determine coordinate of first selected node
@@ -1637,7 +1637,7 @@ NR::Maybe<NR::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *no
     if (coincide) {
         return coord;
     } else {
-        NR::Rect bbox = sp_node_selected_bbox(nodepath);
+        Geom::Rect bbox = sp_node_selected_bbox(nodepath);
         // currently we return the coordinate of the bounding box midpoint because I don't know how
         // to erase the spin button entry field :), but maybe this can be useful behaviour anyway
         return bbox.midpoint()[axis];
@@ -4285,9 +4285,9 @@ void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis, NR::Ma
     } else {
         // scale nodes as an "object":
 
-        NR::Rect box = sp_node_selected_bbox (nodepath);
+        Geom::Rect box = sp_node_selected_bbox (nodepath);
         if (!center) {
-            center = box.midpoint();
+            center = from_2geom(box.midpoint());
         }
         NR::Matrix t =
             NR::Matrix (NR::translate(- *center)) *
@@ -4306,12 +4306,12 @@ void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis, NR::Ma
     sp_nodepath_update_repr(nodepath, _("Flip nodes"));
 }
 
-NR::Rect sp_node_selected_bbox (Inkscape::NodePath::Path *nodepath)
+Geom::Rect sp_node_selected_bbox (Inkscape::NodePath::Path *nodepath)
 {
     g_assert (nodepath->selected);
 
     Inkscape::NodePath::Node *n0 = (Inkscape::NodePath::Node *) nodepath->selected->data;
-    NR::Rect box (n0->pos, n0->pos); // originally includes the first selected node
+    Geom::Rect box (n0->pos, n0->pos); // originally includes the first selected node
     for (GList *l = nodepath->selected; l != NULL; l = l->next) {
         Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
         box.expandTo (n->pos); // contain all selected nodes

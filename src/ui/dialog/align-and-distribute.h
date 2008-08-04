@@ -65,18 +65,18 @@ public:
     std::list<SPItem *>::iterator find_master(std::list <SPItem *> &list, bool horizontal);
     void setMode(bool nodeEdit);
 
-    NR::Maybe<NR::Rect> randomize_bbox;
+    NR::Maybe<Geom::Rect> randomize_bbox;
 
 protected:
 
     void on_ref_change();
     void addDistributeButton(const Glib::ustring &id, const Glib::ustring tiptext, 
                                       guint row, guint col, bool onInterSpace, 
-                                      NR::Dim2 orientation, float kBegin, float kEnd);
+                                      Geom::Dim2 orientation, float kBegin, float kEnd);
     void addAlignButton(const Glib::ustring &id, const Glib::ustring tiptext, 
                         guint row, guint col);
     void addNodeButton(const Glib::ustring &id, const Glib::ustring tiptext, 
-                        guint col, NR::Dim2 orientation, bool distribute);
+                        guint col, Geom::Dim2 orientation, bool distribute);
     void addRemoveOverlapsButton(const Glib::ustring &id,
                         const Glib::ustring tiptext,
                         guint row, guint col);
@@ -88,7 +88,7 @@ protected:
     void addRandomizeButton(const Glib::ustring &id, const Glib::ustring tiptext, 
                         guint row, guint col);
     void addBaselineButton(const Glib::ustring &id, const Glib::ustring tiptext,
-                           guint row, guint col, Gtk::Table &table, NR::Dim2 orientation, bool distribute);
+                           guint row, guint col, Gtk::Table &table, Geom::Dim2 orientation, bool distribute);
 
     std::list<Action *> _actionList;
     Gtk::Frame _alignFrame, _distributeFrame, _removeOverlapFrame, _graphLayoutFrame, _nodesFrame;
@@ -109,8 +109,8 @@ struct BBoxSort
 {
     SPItem *item;
     float anchor;
-    NR::Rect bbox;
-    BBoxSort(SPItem *pItem, NR::Rect bounds, NR::Dim2 orientation, double kBegin, double kEnd);
+    Geom::Rect bbox;
+    BBoxSort(SPItem *pItem, Geom::Rect bounds, Geom::Dim2 orientation, double kBegin, double kEnd);
     BBoxSort(const BBoxSort &rhs);
 };
 bool operator< (const BBoxSort &a, const BBoxSort &b);

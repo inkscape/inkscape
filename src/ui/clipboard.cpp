@@ -44,6 +44,9 @@
 #include "extension/output.h"
 #include "selection-chemistry.h"
 #include "libnr/nr-rect.h"
+#include "libnr/nr-convert2geom.h"
+#include <2geom/rect.h>
+#include <2geom/transforms.h>
 #include "box3d.h"
 #include "gradient-drag.h"
 #include "sp-item.h"
@@ -137,7 +140,7 @@ private:
     void _createInternalClipboard();
     void _discardInternalClipboard();
     Inkscape::XML::Node *_createClipNode();
-    NR::scale _getScale(Geom::Point &, Geom::Point &, NR::Rect &, bool, bool);
+    NR::scale _getScale(Geom::Point const &, Geom::Point const &, Geom::Rect const &, bool, bool);
     Glib::ustring _getBestTarget();
     void _setClipboardTargets();
     void _setClipboardColor(guint32);
@@ -404,7 +407,7 @@ bool ClipboardManagerImpl::pasteSize(bool separately, bool apply_x, bool apply_y
                 SPItem *item = SP_ITEM(i->data);
                 NR::Maybe<NR::Rect> obj_size = sp_item_bbox_desktop(item);
                 if ( !obj_size || obj_size->isEmpty() ) continue;
-                sp_item_scale_rel(item, _getScale(min, max, *obj_size, apply_x, apply_y));
+                sp_item_scale_rel(item, _getScale(min, max, to_2geom(*obj_size), apply_x, apply_y));
             }
         }
         // resize the selection as a whole
@@ -412,7 +415,7 @@ bool ClipboardManagerImpl::pasteSize(bool separately, bool apply_x, bool apply_y
             NR::Maybe<NR::Rect> sel_size = selection->bounds();
             if ( sel_size && !sel_size->isEmpty() ) {
                 sp_selection_scale_relative(selection, sel_size->midpoint(),
-                    _getScale(min, max, *sel_size, apply_x, apply_y));
+                    _getScale(min, max, to_2geom(*sel_size), apply_x, apply_y));
             }
         }
         pasted = true;
@@ -765,7 +768,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
 
             // this formula was discovered empyrically
             min[Geom::Y] += ((max[Geom::Y] - min[Geom::Y]) - sp_document_height(target_document));
-            sp_selection_move_relative(selection, NR::Point(min));
+            sp_selection_move_relative(selection, Geom::Point(min));
         }
     }
     // copied from former sp_selection_paste in selection-chemistry.cpp
@@ -773,7 +776,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
         sp_document_ensure_up_to_date(target_document);
         NR::Maybe<NR::Rect> sel_size = selection->bounds();
 
-        NR::Point m( desktop->point() );
+        Geom::Point m( desktop->point() );
         if (sel_size) {
             m -= sel_size->midpoint();
         }
@@ -1135,17 +1138,17 @@ void ClipboardManagerImpl::_discardInternalClipboard()
 /**
  * @brief Get the scale to resize an item, based on the command and desktop state
  */
-NR::scale ClipboardManagerImpl::_getScale(Geom::Point &min, Geom::Point &max, NR::Rect &obj_rect, bool apply_x, bool apply_y)
+NR::scale ClipboardManagerImpl::_getScale(Geom::Point const &min, Geom::Point const &max, Geom::Rect const &obj_rect, bool apply_x, bool apply_y)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     double scale_x = 1.0;
     double scale_y = 1.0;
 
     if (apply_x) {
-        scale_x = (max[Geom::X] - min[Geom::X]) / obj_rect.extent(NR::X);
+        scale_x = (max[Geom::X] - min[Geom::X]) / obj_rect[Geom::X].extent();
     }
     if (apply_y) {
-        scale_y = (max[Geom::Y] - min[Geom::Y]) / obj_rect.extent(NR::Y);
+        scale_y = (max[Geom::Y] - min[Geom::Y]) / obj_rect[Geom::Y].extent();
     }
     // If the "lock aspect ratio" button is pressed and we paste only a single coordinate,
     // resize the second one by the same ratio too

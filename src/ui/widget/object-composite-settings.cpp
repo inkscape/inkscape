@@ -117,7 +117,7 @@ ObjectCompositeSettings::_blendBlurValueChanged()
     NR::Maybe<NR::Rect> bbox = _subject->getBounds(SPItem::GEOMETRIC_BBOX);
     double radius;
     if (bbox) {
-        double perimeter = bbox->extent(NR::X) + bbox->extent(NR::Y);
+        double perimeter = bbox->extent(Geom::X) + bbox->extent(Geom::Y);
         radius = _fe_cb.get_blur_value() * perimeter / 400;
     } else {
         radius = 0;
@@ -262,7 +262,7 @@ ObjectCompositeSettings::_subjectChanged() {
             case QUERY_STYLE_MULTIPLE_SAME:
                 NR::Maybe<NR::Rect> bbox = _subject->getBounds(SPItem::GEOMETRIC_BBOX);
                 if (bbox) {
-                    double perimeter = bbox->extent(NR::X) + bbox->extent(NR::Y);
+                    double perimeter = bbox->extent(Geom::X) + bbox->extent(Geom::Y);
                     _fe_cb.set_blur_sensitive(true);
                     //update blur widget value
                     float radius = query->filter_gaussianBlur_deviation.value;

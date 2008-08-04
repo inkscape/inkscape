@@ -21,12 +21,15 @@
 #endif
 
 #include <libnr/nr-blit.h>
+#include <libnr/nr-convert2geom.h>
 #include <libnrtype/font-instance.h>
 #include <libnrtype/raster-glyph.h>
 #include <libnrtype/RasterFont.h>
 #include <libnrtype/TextWrapper.h>
 #include <libnrtype/one-glyph.h>
 #include <libnrtype/font-lister.h>
+
+#include <2geom/transforms.h>
 
 #include <gtk/gtk.h>
 #include <gtk/gtkframe.h>
@@ -661,7 +664,7 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
                                 pango_font_description_free(pfd);
                             }
                         }
-                        NR::Point base_pt(str_text->glyph_text[i].x, str_text->glyph_text[i].y);
+                        Geom::Point base_pt(str_text->glyph_text[i].x, str_text->glyph_text[i].y);
                         base_pt *= theSize;
 
                         glyphs[len] = str_text->glyph_text[i].gl;
@@ -670,10 +673,10 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
                         if ( curF ) {
                             NR::Maybe<NR::Rect> nbbox = curF->BBox(str_text->glyph_text[i].gl);
                             if (nbbox) {
-                                bbox.x0 = MIN(bbox.x0, base_pt[NR::X] + theSize * (nbbox->min())[0]);
-                                bbox.y0 = MIN(bbox.y0, base_pt[NR::Y] - theSize * (nbbox->max())[1]);
-                                bbox.x1 = MAX(bbox.x1, base_pt[NR::X] + theSize * (nbbox->max())[0]);
-                                bbox.y1 = MAX(bbox.y1, base_pt[NR::Y] - theSize * (nbbox->min())[1]);
+                                bbox.x0 = MIN(bbox.x0, base_pt[Geom::X] + theSize * (nbbox->min())[0]);
+                                bbox.y0 = MIN(bbox.y0, base_pt[Geom::Y] - theSize * (nbbox->max())[1]);
+                                bbox.x1 = MAX(bbox.x1, base_pt[Geom::X] + theSize * (nbbox->max())[0]);
+                                bbox.y1 = MAX(bbox.y1, base_pt[Geom::Y] - theSize * (nbbox->min())[1]);
                             }
                         }
                     }
@@ -690,13 +693,13 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
                                 unival = g_utf8_get_char (p);
                                 glyphs[len] =  tface->MapUnicodeChar( unival);
                                 hpos[len] = (int)px;
-                                NR::Point adv = fprev->rfont->Advance(glyphs[len]);
+                                Geom::Point adv = fprev->rfont->Advance(glyphs[len]);
                                 fprev->rfont->BBox( glyphs[len], &gbox);
                                 bbox.x0 = MIN (px + gbox.x0, bbox.x0);
                                 bbox.y0 = MIN (py + gbox.y0, bbox.y0);
                                 bbox.x1 = MAX (px + gbox.x1, bbox.x1);
                                 bbox.y1 = MAX (py + gbox.y1, bbox.y1);
-                                px += adv[NR::X];
+                                px += adv[Geom::X];
                                 len += 1;
                                 p = g_utf8_next_char (p);
                                 }*/
@@ -741,7 +744,7 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
                         }
                         raster_glyph *g = (curRF) ? curRF->GetGlyph(glyphs[i]) : NULL;
                         if ( g ) {
-                            g->Blit(NR::Point(hpos[i] + startx, starty), m);
+                            g->Blit(Geom::Point(hpos[i] + startx, starty), m);
                         }
                     }
                     if (curRF) {
@@ -802,8 +805,8 @@ void sp_font_preview_set_font(SPFontPreview *fprev, font_instance *font, SPFontS
 
         if (fprev->font)
         {
-            NR::Matrix flip(NR::scale(fsel->fontsize, -fsel->fontsize));
-            fprev->rfont = fprev->font->RasterFont(flip, 0);
+            Geom::Matrix flip(Geom::Scale(fsel->fontsize, -fsel->fontsize));
+            fprev->rfont = fprev->font->RasterFont(from_2geom(flip), 0);
         }
 
         if (GTK_WIDGET_DRAWABLE (fprev)) gtk_widget_queue_draw (GTK_WIDGET (fprev));

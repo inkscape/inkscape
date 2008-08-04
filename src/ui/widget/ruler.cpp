@@ -84,13 +84,13 @@ Ruler::canvas_get_pointer(int &x, int &y)
     (void) _canvas_widget->get_window()->get_pointer(x, y, mask);
 }
 
-NR::Point
+Geom::Point
 Ruler::get_event_dt()
 {
     int wx, wy;
     canvas_get_pointer(wx, wy);
-    NR::Point const event_win(wx, wy);
-    NR::Point const event_w(sp_canvas_window_to_world(_dt->canvas, event_win));
+    Geom::Point const event_win(wx, wy);
+    Geom::Point const event_w(sp_canvas_window_to_world(_dt->canvas, event_win));
     return _dt->w2d(event_w);
 }
 
@@ -98,7 +98,7 @@ bool
 Ruler::on_button_press_event(GdkEventButton *evb)
 {
     g_assert(_dt);
-    NR::Point const &event_dt = get_event_dt();
+    Geom::Point const &event_dt = get_event_dt();
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(_dt->namedview);
 
     if (evb->button == 1) {
@@ -120,7 +120,7 @@ bool
 Ruler::on_motion_notify_event(GdkEventMotion *)
 {
     g_assert(_dt);
-    NR::Point const &event_dt = get_event_dt();
+    Geom::Point const &event_dt = get_event_dt();
 
     if (_dragging) {
         sp_guideline_set_position(SP_GUIDELINE(_guide), event_dt);
@@ -136,7 +136,7 @@ Ruler::on_button_release_event(GdkEventButton *evb)
     g_assert(_dt);
     int wx, wy;
     canvas_get_pointer(wx, wy);
-    NR::Point const &event_dt = get_event_dt();
+    Geom::Point const &event_dt = get_event_dt();
 
     if (_dragging && evb->button == 1) {
         Gdk::Window::pointer_ungrab(evb->time);
@@ -148,7 +148,7 @@ Ruler::on_button_release_event(GdkEventButton *evb)
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(_dt->doc());
             Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
             repr->setAttribute("orientation", _horiz_f ? "horizontal" : "vertical");
-            double const guide_pos_dt = event_dt[ _horiz_f ? NR::Y : NR::X ];
+            double const guide_pos_dt = event_dt[ _horiz_f ? Geom::Y : Geom::X ];
             sp_repr_set_svg_double(repr, "position", guide_pos_dt);
             SP_OBJECT_REPR(_dt->namedview)->appendChild(repr);
             Inkscape::GC::release(repr);

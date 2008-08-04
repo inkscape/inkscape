@@ -127,7 +127,7 @@ private :
         selected.insert<GSListConstIterator<SPItem *> >(selected.end(), selection->itemList(), NULL);
         if (selected.empty()) return;
 
-        NR::Point mp; //Anchor point
+        Geom::Point mp; //Anchor point
         AlignAndDistribute::AlignTarget target = _dialog.getAlignTarget();
         const Coeffs &a= _allCoeffs[_index];
         switch (target)
@@ -155,8 +155,8 @@ private :
             //Compute the anchor point
             NR::Maybe<NR::Rect> b = sp_item_bbox_desktop (thing);
             if (b) {
-                mp = NR::Point(a.mx0 * b->min()[NR::X] + a.mx1 * b->max()[NR::X],
-                               a.my0 * b->min()[NR::Y] + a.my1 * b->max()[NR::Y]);
+                mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
+                               a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
             } else {
                 return;
             }
@@ -164,7 +164,7 @@ private :
         }
 
         case AlignAndDistribute::PAGE:
-            mp = NR::Point(a.mx1 * sp_document_width(sp_desktop_document(desktop)),
+            mp = Geom::Point(a.mx1 * sp_document_width(sp_desktop_document(desktop)),
                            a.my1 * sp_document_height(sp_desktop_document(desktop)));
             break;
 
@@ -173,8 +173,8 @@ private :
             NR::Maybe<NR::Rect> b = sp_item_bbox_desktop
                 ( (SPItem *) sp_document_root (sp_desktop_document (desktop)) );
             if (b) {
-                mp = NR::Point(a.mx0 * b->min()[NR::X] + a.mx1 * b->max()[NR::X],
-                               a.my0 * b->min()[NR::Y] + a.my1 * b->max()[NR::Y]);
+                mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
+                               a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
             } else {
                 return;
             }
@@ -185,8 +185,8 @@ private :
         {
             NR::Maybe<NR::Rect> b =  selection->bounds();
             if (b) {
-                mp = NR::Point(a.mx0 * b->min()[NR::X] + a.mx1 * b->max()[NR::X],
-                               a.my0 * b->min()[NR::Y] + a.my1 * b->max()[NR::Y]);
+                mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
+                               a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
             } else {
                 return;
             }
@@ -216,9 +216,9 @@ private :
             sp_document_ensure_up_to_date(sp_desktop_document (desktop));
             NR::Maybe<NR::Rect> b = sp_item_bbox_desktop (*it);
             if (b) {
-                NR::Point const sp(a.sx0 * b->min()[NR::X] + a.sx1 * b->max()[NR::X],
-                                   a.sy0 * b->min()[NR::Y] + a.sy1 * b->max()[NR::Y]);
-                NR::Point const mp_rel( mp - sp );
+                Geom::Point const sp(a.sx0 * b->min()[Geom::X] + a.sx1 * b->max()[Geom::X],
+                                   a.sy0 * b->min()[Geom::Y] + a.sy1 * b->max()[Geom::Y]);
+                Geom::Point const mp_rel( mp - sp );
                 if (LInfty(mp_rel) > 1e-9) {
                     sp_item_move_rel(*it, NR::translate(mp_rel));
                     changed = true;
@@ -255,7 +255,7 @@ ActionAlign::Coeffs const ActionAlign::_allCoeffs[10] = {
     {0., 0., 1., 0., 0., 0., 0., 1.}
 };
 
-BBoxSort::BBoxSort(SPItem *pItem, NR::Rect bounds, NR::Dim2 orientation, double kBegin, double kEnd) :
+BBoxSort::BBoxSort(SPItem *pItem, Geom::Rect bounds, Geom::Dim2 orientation, double kBegin, double kEnd) :
         item(pItem),
         bbox (bounds)
 {
@@ -281,7 +281,7 @@ public :
                      guint row, guint column,
                      AlignAndDistribute &dialog,
                      bool onInterSpace,
-                     NR::Dim2 orientation,
+                     Geom::Dim2 orientation,
                      double kBegin, double kEnd
         ):
         Action(id, tiptext, row, column,
@@ -320,7 +320,7 @@ private :
         {
             NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(*it);
             if (bbox) {
-                sorted.push_back(BBoxSort(*it, *bbox, _orientation, _kBegin, _kEnd));
+                sorted.push_back(BBoxSort(*it, to_2geom(*bbox), _orientation, _kBegin, _kEnd));
             }
         }
         //sort bbox by anchors
@@ -341,7 +341,7 @@ private :
             float span = 0;
             for (unsigned int i = 0; i < len; i++)
             {
-                span += sorted[i].bbox.extent(_orientation);
+                span += sorted[i].bbox[_orientation].extent();
             }
             //new distance between each bbox
             float step = (dist - span) / (len - 1);
@@ -351,12 +351,12 @@ private :
                   it ++ )
             {
                 if (!NR_DF_TEST_CLOSE (pos, it->bbox.min()[_orientation], 1e-6)) {
-                    NR::Point t(0.0, 0.0);
+                    Geom::Point t(0.0, 0.0);
                     t[_orientation] = pos - it->bbox.min()[_orientation];
                     sp_item_move_rel(it->item, NR::translate(t));
                     changed = true;
                 }
-                pos += it->bbox.extent(_orientation);
+                pos += it->bbox[_orientation].extent();
                 pos += step;
             }
         }
@@ -375,7 +375,7 @@ private :
                 //Don't move if we are really close
                 if (!NR_DF_TEST_CLOSE (pos, it.anchor, 1e-6)) {
                     //Compute translation
-                    NR::Point t(0.0, 0.0);
+                    Geom::Point t(0.0, 0.0);
                     t[_orientation] = pos - it.anchor;
                     //translate
                     sp_item_move_rel(it.item, NR::translate(t));
@@ -395,7 +395,7 @@ private :
     guint _index;
     AlignAndDistribute &_dialog;
     bool _onInterSpace;
-    NR::Dim2 _orientation;
+    Geom::Dim2 _orientation;
 
     double _kBegin;
     double _kEnd;
@@ -409,7 +409,7 @@ public :
                const Glib::ustring &tiptext,
                guint column,
                AlignAndDistribute &dialog,
-               NR::Dim2 orientation, bool distribute):
+               Geom::Dim2 orientation, bool distribute):
         Action(id, tiptext, 0, column,
                dialog.nodes_table(), dialog.tooltips(), dialog),
         _orientation(orientation),
@@ -417,7 +417,7 @@ public :
     {}
 
 private :
-    NR::Dim2 _orientation;
+    Geom::Dim2 _orientation;
     bool _distribute;
     virtual void on_button_click()
     {
@@ -427,9 +427,9 @@ private :
         if (!SP_IS_NODE_CONTEXT (event_context)) return ;
 
         if (_distribute)
-            SP_NODE_CONTEXT (event_context)->shape_editor->distribute(_orientation);
+            SP_NODE_CONTEXT (event_context)->shape_editor->distribute((NR::Dim2)_orientation);
         else
-            SP_NODE_CONTEXT (event_context)->shape_editor->align(_orientation);
+            SP_NODE_CONTEXT (event_context)->shape_editor->align((NR::Dim2)_orientation);
 
     }
 };
@@ -599,7 +599,7 @@ private :
         // nor drift on sequential randomizations. Discard cache on global (or better active
         // desktop's) selection_change signal.
         if (!_dialog.randomize_bbox) {
-            _dialog.randomize_bbox = *sel_bbox;
+            _dialog.randomize_bbox = to_2geom(*sel_bbox);
         }
 
         // see comment in ActionAlign above
@@ -614,10 +614,10 @@ private :
             NR::Maybe<NR::Rect> item_box = sp_item_bbox_desktop (*it);
             if (item_box) {
                 // find new center, staying within bbox
-                double x = _dialog.randomize_bbox->min()[NR::X] + item_box->extent(NR::X)/2 +
-                    g_random_double_range (0, _dialog.randomize_bbox->extent(NR::X) - item_box->extent(NR::X));
-                double y = _dialog.randomize_bbox->min()[NR::Y] + item_box->extent(NR::Y)/2 +
-                    g_random_double_range (0, _dialog.randomize_bbox->extent(NR::Y) - item_box->extent(NR::Y));
+                double x = _dialog.randomize_bbox->min()[Geom::X] + (*item_box).extent(Geom::X)/2 +
+                    g_random_double_range (0, (*_dialog.randomize_bbox)[Geom::X].extent() - (*item_box).extent(Geom::X));
+                double y = _dialog.randomize_bbox->min()[Geom::Y] + (*item_box).extent(Geom::Y)/2 +
+                    g_random_double_range (0, (*_dialog.randomize_bbox)[Geom::Y].extent() - (*item_box).extent(Geom::Y));
                 // displacement is the new center minus old:
                 NR::Point t = NR::Point (x, y) - 0.5*(item_box->max() + item_box->min());
                 sp_item_move_rel(*it, NR::translate(t));
@@ -635,9 +635,9 @@ private :
 struct Baselines
 {
     SPItem *_item;
-    NR::Point _base;
-    NR::Dim2 _orientation;
-    Baselines(SPItem *item, NR::Point base, NR::Dim2 orientation) :
+    Geom::Point _base;
+    Geom::Dim2 _orientation;
+    Baselines(SPItem *item, Geom::Point base, Geom::Dim2 orientation) :
         _item (item),
         _base (base),
         _orientation (orientation)
@@ -657,7 +657,7 @@ public :
                guint column,
                AlignAndDistribute &dialog,
                Gtk::Table &table,
-               NR::Dim2 orientation, bool distribute):
+               Geom::Dim2 orientation, bool distribute):
         Action(id, tiptext, row, column,
                table, dialog.tooltips(), dialog),
         _orientation(orientation),
@@ -665,7 +665,7 @@ public :
     {}
 
 private :
-    NR::Dim2 _orientation;
+    Geom::Dim2 _orientation;
     bool _distribute;
     virtual void on_button_click()
     {
@@ -683,8 +683,8 @@ private :
         //Check 2 or more selected objects
         if (selected.size() < 2) return;
 
-        NR::Point b_min = NR::Point (HUGE_VAL, HUGE_VAL);
-        NR::Point b_max = NR::Point (-HUGE_VAL, -HUGE_VAL);
+        Geom::Point b_min = Geom::Point (HUGE_VAL, HUGE_VAL);
+        Geom::Point b_max = Geom::Point (-HUGE_VAL, -HUGE_VAL);
 
         std::vector<Baselines> sorted;
 
@@ -694,11 +694,11 @@ private :
         {
             if (SP_IS_TEXT (*it) || SP_IS_FLOWTEXT (*it)) {
                 Inkscape::Text::Layout const *layout = te_get_layout(*it);
-                NR::Point base = layout->characterAnchorPoint(layout->begin()) * from_2geom(sp_item_i2d_affine(*it));
-                if (base[NR::X] < b_min[NR::X]) b_min[NR::X] = base[NR::X];
-                if (base[NR::Y] < b_min[NR::Y]) b_min[NR::Y] = base[NR::Y];
-                if (base[NR::X] > b_max[NR::X]) b_max[NR::X] = base[NR::X];
-                if (base[NR::Y] > b_max[NR::Y]) b_max[NR::Y] = base[NR::Y];
+                Geom::Point base = layout->characterAnchorPoint(layout->begin()) * from_2geom(sp_item_i2d_affine(*it));
+                if (base[Geom::X] < b_min[Geom::X]) b_min[Geom::X] = base[Geom::X];
+                if (base[Geom::Y] < b_min[Geom::Y]) b_min[Geom::Y] = base[Geom::Y];
+                if (base[Geom::X] > b_max[Geom::X]) b_max[Geom::X] = base[Geom::X];
+                if (base[Geom::Y] > b_max[Geom::Y]) b_max[Geom::Y] = base[Geom::Y];
 
                 Baselines b (*it, base, _orientation);
                 sorted.push_back(b);
@@ -716,8 +716,8 @@ private :
             double step = (b_max[_orientation] - b_min[_orientation])/(sorted.size() - 1);
             for (unsigned int i = 0; i < sorted.size(); i++) {
                 SPItem *item = sorted[i]._item;
-                NR::Point base = sorted[i]._base;
-                NR::Point t(0.0, 0.0);
+                Geom::Point base = sorted[i]._base;
+                Geom::Point t(0.0, 0.0);
                 t[_orientation] = b_min[_orientation] + step * i - base[_orientation];
                 sp_item_move_rel(item, NR::translate(t));
                 changed = true;
@@ -735,8 +735,8 @@ private :
             {
                 if (SP_IS_TEXT (*it) || SP_IS_FLOWTEXT (*it)) {
                     Inkscape::Text::Layout const *layout = te_get_layout(*it);
-                    NR::Point base = layout->characterAnchorPoint(layout->begin()) * from_2geom(sp_item_i2d_affine(*it));
-                    NR::Point t(0.0, 0.0);
+                    Geom::Point base = layout->characterAnchorPoint(layout->begin()) * from_2geom(sp_item_i2d_affine(*it));
+                    Geom::Point t(0.0, 0.0);
                     t[_orientation] = b_min[_orientation] - base[_orientation];
                     sp_item_move_rel(*it, NR::translate(t));
                     changed = true;
@@ -821,47 +821,47 @@ AlignAndDistribute::AlignAndDistribute()
     //Baseline aligns
     addBaselineButton("al_baselines_vert",
                    _("Align baseline anchors of texts vertically"),
-                      0, 5, this->align_table(), NR::X, false);
+                      0, 5, this->align_table(), Geom::X, false);
     addBaselineButton("al_baselines_hor",
                    _("Align baseline anchors of texts horizontally"),
-                     1, 5, this->align_table(), NR::Y, false);
+                     1, 5, this->align_table(), Geom::Y, false);
 
     //The distribute buttons
     addDistributeButton("distribute_hdist",
                         _("Make horizontal gaps between objects equal"),
-                        0, 4, true, NR::X, .5, .5);
+                        0, 4, true, Geom::X, .5, .5);
 
     addDistributeButton("distribute_left",
                         _("Distribute left sides equidistantly"),
-                        0, 1, false, NR::X, 1., 0.);
+                        0, 1, false, Geom::X, 1., 0.);
     addDistributeButton("distribute_hcentre",
                         _("Distribute centers equidistantly horizontally"),
-                        0, 2, false, NR::X, .5, .5);
+                        0, 2, false, Geom::X, .5, .5);
     addDistributeButton("distribute_right",
                         _("Distribute right sides equidistantly"),
-                        0, 3, false, NR::X, 0., 1.);
+                        0, 3, false, Geom::X, 0., 1.);
 
     addDistributeButton("distribute_vdist",
                         _("Make vertical gaps between objects equal"),
-                        1, 4, true, NR::Y, .5, .5);
+                        1, 4, true, Geom::Y, .5, .5);
 
     addDistributeButton("distribute_top",
                         _("Distribute tops equidistantly"),
-                        1, 1, false, NR::Y, 0, 1);
+                        1, 1, false, Geom::Y, 0, 1);
     addDistributeButton("distribute_vcentre",
                         _("Distribute centers equidistantly vertically"),
-                        1, 2, false, NR::Y, .5, .5);
+                        1, 2, false, Geom::Y, .5, .5);
     addDistributeButton("distribute_bottom",
                         _("Distribute bottoms equidistantly"),
-                        1, 3, false, NR::Y, 1., 0.);
+                        1, 3, false, Geom::Y, 1., 0.);
 
     //Baseline distribs
     addBaselineButton("distribute_baselines_hor",
                    _("Distribute baseline anchors of texts horizontally"),
-                      0, 5, this->distribute_table(), NR::X, true);
+                      0, 5, this->distribute_table(), Geom::X, true);
     addBaselineButton("distribute_baselines_vert",
                    _("Distribute baseline anchors of texts vertically"),
-                     1, 5, this->distribute_table(), NR::Y, true);
+                     1, 5, this->distribute_table(), Geom::Y, true);
 
     //Randomize & Unclump
     addRandomizeButton("distribute_randomize",
@@ -883,16 +883,16 @@ AlignAndDistribute::AlignAndDistribute()
     //Node Mode buttons
     addNodeButton("node_halign",
                   _("Align selected nodes horizontally"),
-                  0, NR::X, false);
+                  0, Geom::X, false);
     addNodeButton("node_valign",
                   _("Align selected nodes vertically"),
-                  1, NR::Y, false);
+                  1, Geom::Y, false);
     addNodeButton("node_hdistribute",
                   _("Distribute selected nodes horizontally"),
-                  2, NR::X, true);
+                  2, Geom::X, true);
     addNodeButton("node_vdistribute",
                   _("Distribute selected nodes vertically"),
-                  3, NR::Y, true);
+                  3, Geom::Y, true);
 
     //Rest of the widgetry
 
@@ -990,7 +990,7 @@ void AlignAndDistribute::addAlignButton(const Glib::ustring &id, const Glib::ust
 }
 void AlignAndDistribute::addDistributeButton(const Glib::ustring &id, const Glib::ustring tiptext,
                                       guint row, guint col, bool onInterSpace,
-                                      NR::Dim2 orientation, float kBegin, float kEnd)
+                                      Geom::Dim2 orientation, float kBegin, float kEnd)
 {
     _actionList.push_back(
         new ActionDistribute(
@@ -1002,7 +1002,7 @@ void AlignAndDistribute::addDistributeButton(const Glib::ustring &id, const Glib
 }
 
 void AlignAndDistribute::addNodeButton(const Glib::ustring &id, const Glib::ustring tiptext,
-                   guint col, NR::Dim2 orientation, bool distribute)
+                   guint col, Geom::Dim2 orientation, bool distribute)
 {
     _actionList.push_back(
         new ActionNode(
@@ -1047,7 +1047,7 @@ void AlignAndDistribute::addRandomizeButton(const Glib::ustring &id, const Glib:
 }
 
 void AlignAndDistribute::addBaselineButton(const Glib::ustring &id, const Glib::ustring tiptext,
-                                    guint row, guint col, Gtk::Table &table, NR::Dim2 orientation, bool distribute)
+                                    guint row, guint col, Gtk::Table &table, Geom::Dim2 orientation, bool distribute)
 {
     _actionList.push_back(
         new ActionBaseline(
@@ -1075,7 +1075,7 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
             NR::Maybe<NR::Rect> b = sp_item_bbox_desktop (*it);
             if (b) {
-                gdouble dim = b->extent(horizontal ? NR::X : NR::Y);
+                gdouble dim = (*b).extent(horizontal ? Geom::X : Geom::Y);
                 if (dim > max) {
                     max = dim;
                     master = it;
@@ -1092,7 +1092,7 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
             NR::Maybe<NR::Rect> b = sp_item_bbox_desktop (*it);
             if (b) {
-                gdouble dim = b->extent(horizontal ? NR::X : NR::Y);
+                gdouble dim = (*b).extent(horizontal ? Geom::X : Geom::Y);
                 if (dim < max) {
                     max = dim;
                     master = it;

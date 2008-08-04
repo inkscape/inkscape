@@ -459,8 +459,8 @@ Transformation::updatePageMove(Inkscape::Selection *selection)
         if (!_check_move_relative.get_active()) {
             NR::Maybe<NR::Rect> bbox = selection->bounds();
             if (bbox) {
-                double x = bbox->min()[NR::X];
-                double y = bbox->min()[NR::Y];
+                double x = bbox->min()[Geom::X];
+                double y = bbox->min()[Geom::Y];
 
                 _scalar_move_horizontal.setValue(x, "px");
                 _scalar_move_vertical.setValue(y, "px");
@@ -480,8 +480,8 @@ Transformation::updatePageScale(Inkscape::Selection *selection)
     if (selection && !selection->isEmpty()) {
         NR::Maybe<NR::Rect> bbox = selection->bounds();
         if (bbox) {
-            double w = bbox->extent(NR::X);
-            double h = bbox->extent(NR::Y);
+            double w = bbox->extent(Geom::X);
+            double h = bbox->extent(Geom::Y);
             _scalar_scale_horizontal.setHundredPercent(w);
             _scalar_scale_vertical.setHundredPercent(h);
             onScaleXValueChanged(); // to update x/y proportionality if switch is on
@@ -510,8 +510,8 @@ Transformation::updatePageSkew(Inkscape::Selection *selection)
     if (selection && !selection->isEmpty()) {
         NR::Maybe<NR::Rect> bbox = selection->bounds();
         if (bbox) {
-            double w = bbox->extent(NR::X);
-            double h = bbox->extent(NR::Y);
+            double w = bbox->extent(Geom::X);
+            double h = bbox->extent(Geom::Y);
             _scalar_skew_vertical.setHundredPercent(w);
             _scalar_skew_horizontal.setHundredPercent(h);
             _page_skew.set_sensitive(true);
@@ -528,9 +528,9 @@ Transformation::updatePageTransform(Inkscape::Selection *selection)
 {
     if (selection && !selection->isEmpty()) {
         if (_check_replace_matrix.get_active()) {
-            NR::Matrix current (SP_ITEM(selection->itemList()->data)->transform); // take from the first item in selection
+            Geom::Matrix current (to_2geom(SP_ITEM(selection->itemList()->data)->transform)); // take from the first item in selection
 
-            NR::Matrix new_displayed = current;
+            Geom::Matrix new_displayed = current;
 
             _scalar_transform_a.setValue(new_displayed[0]);
             _scalar_transform_b.setValue(new_displayed[1]);
@@ -607,7 +607,7 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
             NR::Maybe<NR::Rect> bbox = selection->bounds();
             if (bbox) {
                 sp_selection_move_relative(selection,
-                                           x - bbox->min()[NR::X], y - bbox->min()[NR::Y]);
+                                           x - bbox->min()[Geom::X], y - bbox->min()[Geom::Y]);
             }
         }
     } else {
@@ -627,7 +627,7 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
                 {
                     NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(*it);
                     if (bbox) {
-                        sorted.push_back(BBoxSort(*it, *bbox, NR::X, x > 0? 1. : 0., x > 0? 0. : 1.));
+                        sorted.push_back(BBoxSort(*it, to_2geom(*bbox), Geom::X, x > 0? 1. : 0., x > 0? 0. : 1.));
                     }
                 }
                 //sort bbox by anchors
@@ -651,7 +651,7 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
                 {
                     NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(*it);
                     if (bbox) {
-                        sorted.push_back(BBoxSort(*it, *bbox, NR::Y, y > 0? 1. : 0., y > 0? 0. : 1.));
+                        sorted.push_back(BBoxSort(*it, to_2geom(*bbox), Geom::Y, y > 0? 1. : 0., y > 0? 0. : 1.));
                     }
                 }
                 //sort bbox by anchors
@@ -671,7 +671,7 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
             NR::Maybe<NR::Rect> bbox = selection->bounds();
             if (bbox) {
                 sp_selection_move_relative(selection,
-                                           x - bbox->min()[NR::X], y - bbox->min()[NR::Y]);
+                                           x - bbox->min()[Geom::X], y - bbox->min()[Geom::Y]);
             }
         }
     }
@@ -698,7 +698,7 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
                     if (fabs(new_width) < 1e-6) new_width = 1e-6; // not 0, as this would result in a nasty no-bbox object
                     double new_height = scaleY;
                     if (fabs(new_height) < 1e-6) new_height = 1e-6;
-                    scale = NR::scale(new_width / bbox->extent(NR::X), new_height / bbox->extent(NR::Y));
+                    scale = NR::scale(new_width / bbox->extent(Geom::X), new_height / bbox->extent(Geom::Y));
                 }
             } else {
                 double new_width = scaleX;
@@ -712,7 +712,7 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
     } else {
         NR::Maybe<NR::Rect> bbox(selection->bounds());
         if (bbox) {
-            NR::Point center(bbox->midpoint()); // use rotation center?
+            Geom::Point center(bbox->midpoint()); // use rotation center?
             NR::scale scale (0,0);
             // the values are increments!
             if (_units_scale.isAbsolute()) {
@@ -720,7 +720,7 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
                 if (fabs(new_width) < 1e-6) new_width = 1e-6;
                 double new_height = scaleY;
                 if (fabs(new_height) < 1e-6) new_height = 1e-6;
-                scale = NR::scale(new_width / bbox->extent(NR::X), new_height / bbox->extent(NR::Y));
+                scale = NR::scale(new_width / bbox->extent(Geom::X), new_height / bbox->extent(Geom::Y));
             } else {
                 double new_width = scaleX;
                 if (fabs(new_width) < 1e-6) new_width = 1e-6;
@@ -779,8 +779,8 @@ Transformation::applyPageSkew(Inkscape::Selection *selection)
                 double skewY = _scalar_skew_vertical.getValue("px");
                 NR::Maybe<NR::Rect> bbox(sp_item_bbox_desktop(item));
                 if (bbox) {
-                    double width = bbox->extent(NR::X);
-                    double height = bbox->extent(NR::Y);
+                    double width = bbox->extent(Geom::X);
+                    double height = bbox->extent(Geom::Y);
                     sp_item_skew_rel (item, skewX/height, skewY/width);
                 }
             }
@@ -790,8 +790,8 @@ Transformation::applyPageSkew(Inkscape::Selection *selection)
         NR::Maybe<NR::Point> center = selection->center();
 
         if ( bbox && center ) {
-            double width  = bbox->extent(NR::X);
-            double height = bbox->extent(NR::Y);
+            double width  = bbox->extent(Geom::X);
+            double height = bbox->extent(Geom::Y);
 
             if (!_units_skew.isAbsolute()) { // percentage
                 double skewX = _scalar_skew_horizontal.getValue("%");
@@ -874,12 +874,12 @@ Transformation::onMoveRelativeToggled()
     if (bbox) {
         if (_check_move_relative.get_active()) {
             // From absolute to relative
-            _scalar_move_horizontal.setValue(x - bbox->min()[NR::X], "px");
-            _scalar_move_vertical.setValue(  y - bbox->min()[NR::Y], "px");
+            _scalar_move_horizontal.setValue(x - bbox->min()[Geom::X], "px");
+            _scalar_move_vertical.setValue(  y - bbox->min()[Geom::Y], "px");
         } else {
             // From relative to absolute
-            _scalar_move_horizontal.setValue(bbox->min()[NR::X] + x, "px");
-            _scalar_move_vertical.setValue(  bbox->min()[NR::Y] + y, "px");
+            _scalar_move_horizontal.setValue(bbox->min()[Geom::X] + x, "px");
+            _scalar_move_vertical.setValue(  bbox->min()[Geom::Y] + y, "px");
         }
     }
 
@@ -972,10 +972,10 @@ Transformation::onReplaceMatrixToggled()
     double e = _scalar_transform_e.getValue();
     double f = _scalar_transform_f.getValue();
 
-    NR::Matrix displayed (a, b, c, d, e, f);
-    NR::Matrix current (SP_ITEM(selection->itemList()->data)->transform); // take from the first item in selection
+    Geom::Matrix displayed (a, b, c, d, e, f);
+    Geom::Matrix current = to_2geom(SP_ITEM(selection->itemList()->data)->transform); // take from the first item in selection
 
-    NR::Matrix new_displayed;
+    Geom::Matrix new_displayed;
     if (_check_replace_matrix.get_active()) {
         new_displayed = current;
     } else {
@@ -1011,8 +1011,8 @@ Transformation::onClear()
         } else {
             NR::Maybe<NR::Rect> bbox = selection->bounds();
             if (bbox) {
-                _scalar_move_horizontal.setValue(bbox->min()[NR::X], "px");
-                _scalar_move_vertical.setValue(bbox->min()[NR::Y], "px");
+                _scalar_move_horizontal.setValue(bbox->min()[Geom::X], "px");
+                _scalar_move_vertical.setValue(bbox->min()[Geom::Y], "px");
             }
         }
         break;

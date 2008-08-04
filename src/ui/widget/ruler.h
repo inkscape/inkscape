@@ -49,7 +49,7 @@ protected:
 
 private:
     void canvas_get_pointer (int&, int&);
-    NR::Point get_event_dt();
+    Geom::Point get_event_dt();
 };
 
 /// Horizontal ruler

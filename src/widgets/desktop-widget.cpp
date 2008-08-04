@@ -233,12 +233,12 @@ SPDesktopWidget::setMessage (Inkscape::MessageType type, const gchar *message)
     gtk_tooltips_set_tip (this->tt, this->select_status_eventbox, gtk_label_get_text (sb) , NULL);
 }
 
-NR::Point
+Geom::Point
 SPDesktopWidget::window_get_pointer()
 {
     gint x,y;
     gdk_window_get_pointer (GTK_WIDGET (canvas)->window, &x, &y, NULL);
-    return NR::Point(x,y);
+    return Geom::Point(x,y);
 }
 
 /**
@@ -657,7 +657,7 @@ sp_desktop_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
     }
 
     if (GTK_WIDGET_REALIZED (widget)) {
-        NR::Rect const area = dtw->desktop->get_display_area();
+        Geom::Rect const area = to_2geom(dtw->desktop->get_display_area());
         double zoom = dtw->desktop->current_zoom();
 
         if (GTK_WIDGET_CLASS(dtw_parent_class)->size_allocate) {
@@ -666,14 +666,14 @@ sp_desktop_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 
         if (SP_BUTTON_IS_DOWN(dtw->sticky_zoom)) {
             /* Calculate zoom per pixel */
-            double const zpsp = zoom / hypot (area.dimensions()[NR::X], area.dimensions()[NR::Y]);
+            double const zpsp = zoom / hypot (area.dimensions()[Geom::X], area.dimensions()[Geom::Y]);
             /* Find new visible area */
-            NR::Rect newarea = dtw->desktop->get_display_area();
+            Geom::Rect newarea = to_2geom(dtw->desktop->get_display_area());
             /* Calculate adjusted zoom */
-            zoom = zpsp * hypot(newarea.dimensions()[NR::X], newarea.dimensions()[NR::Y]);
-            dtw->desktop->zoom_absolute(newarea.midpoint()[NR::X], newarea.midpoint()[NR::Y], zoom);
+            zoom = zpsp * hypot(newarea.dimensions()[Geom::X], newarea.dimensions()[Geom::Y]);
+            dtw->desktop->zoom_absolute(newarea.midpoint()[Geom::X], newarea.midpoint()[Geom::Y], zoom);
         } else {
-            dtw->desktop->zoom_absolute(area.midpoint()[NR::X], area.midpoint()[NR::Y], zoom);
+            dtw->desktop->zoom_absolute(area.midpoint()[Geom::X], area.midpoint()[Geom::Y], zoom);
         }
 
     } else {
@@ -1010,14 +1010,14 @@ SPDesktopWidget::disableInteraction()
 }
 
 void
-SPDesktopWidget::setCoordinateStatus(NR::Point p)
+SPDesktopWidget::setCoordinateStatus(Geom::Point p)
 {
     gchar *cstr;
-    cstr = g_strdup_printf("<tt>%7.2f </tt>", dt2r * p[NR::X]);
+    cstr = g_strdup_printf("<tt>%7.2f </tt>", dt2r * p[Geom::X]);
     gtk_label_set_markup( GTK_LABEL(this->coord_status_x), cstr );
     g_free(cstr);
 
-    cstr = g_strdup_printf("<tt>%7.2f </tt>", dt2r * p[NR::Y]);
+    cstr = g_strdup_printf("<tt>%7.2f </tt>", dt2r * p[Geom::Y]);
     gtk_label_set_markup( GTK_LABEL(this->coord_status_y), cstr );
     g_free(cstr);
 }
@@ -1045,13 +1045,13 @@ SPDesktopWidget::getWindowGeometry (gint &x, gint &y, gint &w, gint &h)
 }
 
 void
-SPDesktopWidget::setWindowPosition (NR::Point p)
+SPDesktopWidget::setWindowPosition (Geom::Point p)
 {
     Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
 
     if (window)
     {
-        window->move (gint(round(p[NR::X])), gint(round(p[NR::Y])));
+        window->move (gint(round(p[Geom::X])), gint(round(p[Geom::Y])));
     }
 }
 
@@ -1312,7 +1312,7 @@ sp_desktop_widget_new (SPNamedView *namedview)
 
     dtw->dt2r = 1.0 / namedview->doc_units->unittobase;
 
-    dtw->ruler_origin = NR::Point(0,0); //namedview->gridorigin;   Why was the grid origin used here?
+    dtw->ruler_origin = Geom::Point(0,0); //namedview->gridorigin;   Why was the grid origin used here?
 
     dtw->desktop = new SPDesktop();
     dtw->stub = new SPDesktopWidget::WidgetStub (dtw);
@@ -1350,14 +1350,14 @@ sp_desktop_widget_new (SPNamedView *namedview)
 }
 
 void
-SPDesktopWidget::viewSetPosition (NR::Point p)
+SPDesktopWidget::viewSetPosition (Geom::Point p)
 {
-    NR::Point const origin = ( p - ruler_origin );
+    Geom::Point const origin = ( p - ruler_origin );
 
     /// \todo fixme:
-    GTK_RULER(hruler)->position = origin[NR::X];
+    GTK_RULER(hruler)->position = origin[Geom::X];
     gtk_ruler_draw_pos (GTK_RULER (hruler));
-    GTK_RULER(vruler)->position = origin[NR::Y];
+    GTK_RULER(vruler)->position = origin[Geom::Y];
     gtk_ruler_draw_pos (GTK_RULER (vruler));
 }
 
@@ -1379,8 +1379,8 @@ sp_desktop_widget_update_hruler (SPDesktopWidget *dtw)
     NR::IRect viewbox = dtw->canvas->getViewboxIntegers();
 
     double const scale = dtw->desktop->current_zoom();
-    double s = viewbox.min()[NR::X] / scale - dtw->ruler_origin[NR::X];
-    double e = viewbox.max()[NR::X] / scale - dtw->ruler_origin[NR::X];
+    double s = viewbox.min()[Geom::X] / scale - dtw->ruler_origin[Geom::X];
+    double e = viewbox.max()[Geom::X] / scale - dtw->ruler_origin[Geom::X];
     gtk_ruler_set_range(GTK_RULER(dtw->hruler), s,  e, GTK_RULER(dtw->hruler)->position, (e - s));
 }
 
@@ -1395,8 +1395,8 @@ sp_desktop_widget_update_vruler (SPDesktopWidget *dtw)
     NR::IRect viewbox = dtw->canvas->getViewboxIntegers();
 
     double const scale = dtw->desktop->current_zoom();
-    double s = viewbox.min()[NR::Y] / -scale - dtw->ruler_origin[NR::Y];
-    double e = viewbox.max()[NR::Y] / -scale - dtw->ruler_origin[NR::Y];
+    double s = viewbox.min()[Geom::Y] / -scale - dtw->ruler_origin[Geom::Y];
+    double e = viewbox.max()[Geom::Y] / -scale - dtw->ruler_origin[Geom::Y];
     gtk_ruler_set_range(GTK_RULER(dtw->vruler), s, e, GTK_RULER(dtw->vruler)->position, (e - s));
 }
 
@@ -1407,7 +1407,7 @@ sp_desktop_widget_namedview_modified (SPObject *obj, guint flags, SPDesktopWidge
     SPNamedView *nv=SP_NAMEDVIEW(obj);
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         dtw->dt2r = 1.0 / nv->doc_units->unittobase;
-        dtw->ruler_origin = NR::Point(0,0); //nv->gridorigin;   Why was the grid origin used here?
+        dtw->ruler_origin = Geom::Point(0,0); //nv->gridorigin;   Why was the grid origin used here?
 
         sp_ruler_set_metric (GTK_RULER (dtw->vruler), nv->getDefaultMetric());
         sp_ruler_set_metric (GTK_RULER (dtw->hruler), nv->getDefaultMetric());
@@ -1503,9 +1503,9 @@ sp_dtw_zoom_value_changed (GtkSpinButton *spin, gpointer data)
     SPDesktopWidget *dtw = SP_DESKTOP_WIDGET (data);
     SPDesktop *desktop = dtw->desktop;
 
-    NR::Rect const d = desktop->get_display_area();
+    Geom::Rect const d = to_2geom(desktop->get_display_area());
     g_signal_handler_block (spin, dtw->zoom_update);
-    desktop->zoom_absolute (d.midpoint()[NR::X], d.midpoint()[NR::Y], zoom_factor);
+    desktop->zoom_absolute (d.midpoint()[Geom::X], d.midpoint()[Geom::Y], zoom_factor);
     g_signal_handler_unblock (spin, dtw->zoom_update);
 
     spinbutton_defocus (GTK_OBJECT (spin));
@@ -1558,8 +1558,8 @@ sp_dtw_zoom_populate_popup (GtkEntry */*entry*/, GtkMenu *menu, gpointer data)
 static void
 sp_dtw_zoom_menu_handler (SPDesktop *dt, gdouble factor)
 {
-    NR::Rect const d = dt->get_display_area();
-    dt->zoom_absolute(d.midpoint()[NR::X], d.midpoint()[NR::Y], factor);
+    Geom::Rect const d = to_2geom(dt->get_display_area());
+    dt->zoom_absolute(d.midpoint()[Geom::X], d.midpoint()[Geom::Y], factor);
 }
 
 static void
@@ -1693,32 +1693,32 @@ sp_desktop_widget_update_scrollbars (SPDesktopWidget *dtw, double scale)
 
     /* The desktop region we always show unconditionally */
     SPDocument *doc = dtw->desktop->doc();
-    NR::Rect darea(NR::Point(-sp_document_width(doc), -sp_document_height(doc)),
-                   NR::Point(2 * sp_document_width(doc), 2 * sp_document_height(doc)));
+    NR::Rect darea(Geom::Point(-sp_document_width(doc), -sp_document_height(doc)),
+                   Geom::Point(2 * sp_document_width(doc), 2 * sp_document_height(doc)));
     darea = NR::union_bounds(darea, sp_item_bbox_desktop(SP_ITEM(SP_DOCUMENT_ROOT(doc))));
 
     /* Canvas region we always show unconditionally */
-    NR::Rect carea(NR::Point(darea.min()[NR::X] * scale - 64,
-                             darea.max()[NR::Y] * -scale - 64),
-                   NR::Point(darea.max()[NR::X] * scale + 64,
-                             darea.min()[NR::Y] * -scale + 64));
+    NR::Rect carea(Geom::Point(darea.min()[Geom::X] * scale - 64,
+                             darea.max()[Geom::Y] * -scale - 64),
+                   Geom::Point(darea.max()[Geom::X] * scale + 64,
+                             darea.min()[Geom::Y] * -scale + 64));
 
     NR::Rect viewbox = dtw->canvas->getViewbox();
 
     /* Viewbox is always included into scrollable region */
     carea = NR::union_bounds(carea, viewbox);
 
-    set_adjustment(dtw->hadj, carea.min()[NR::X], carea.max()[NR::X],
-                   viewbox.dimensions()[NR::X],
-                   0.1 * viewbox.dimensions()[NR::X],
-                   viewbox.dimensions()[NR::X]);
-    gtk_adjustment_set_value(dtw->hadj, viewbox.min()[NR::X]);
+    set_adjustment(dtw->hadj, carea.min()[Geom::X], carea.max()[Geom::X],
+                   viewbox.dimensions()[Geom::X],
+                   0.1 * viewbox.dimensions()[Geom::X],
+                   viewbox.dimensions()[Geom::X]);
+    gtk_adjustment_set_value(dtw->hadj, viewbox.min()[Geom::X]);
 
-    set_adjustment(dtw->vadj, carea.min()[NR::Y], carea.max()[NR::Y],
-                   viewbox.dimensions()[NR::Y],
-                   0.1 * viewbox.dimensions()[NR::Y],
-                   viewbox.dimensions()[NR::Y]);
-    gtk_adjustment_set_value(dtw->vadj, viewbox.min()[NR::Y]);
+    set_adjustment(dtw->vadj, carea.min()[Geom::Y], carea.max()[Geom::Y],
+                   viewbox.dimensions()[Geom::Y],
+                   0.1 * viewbox.dimensions()[Geom::Y],
+                   viewbox.dimensions()[Geom::Y]);
+    gtk_adjustment_set_value(dtw->vadj, viewbox.min()[Geom::Y]);
 
     dtw->update = 0;
 }

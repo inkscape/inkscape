@@ -109,7 +109,7 @@ struct SPDesktopWidget {
     unsigned int _interaction_disabled_counter;
 
     SPCanvas *canvas;
-    NR::Point ruler_origin;
+    Geom::Point ruler_origin;
     double dt2r;
 
     GtkAdjustment *hadj, *vadj;
@@ -135,11 +135,11 @@ struct SPDesktopWidget {
             { _dtw->getWindowGeometry (x, y, w, h); }
         virtual void setSize (gint w, gint h)
             { _dtw->setWindowSize (w, h); }
-        virtual void setPosition (NR::Point p)
+        virtual void setPosition (Geom::Point p)
             { _dtw->setWindowPosition (p); }
         virtual void setTransient (void* p, int transient_policy)
             { _dtw->setWindowTransient (p, transient_policy); }
-        virtual NR::Point getPointer()
+        virtual Geom::Point getPointer()
             { return _dtw->window_get_pointer(); }
         virtual void setIconified()
             { sp_desktop_widget_iconify (_dtw); }
@@ -168,7 +168,7 @@ struct SPDesktopWidget {
             { sp_dtw_desktop_activate (_dtw); }
         virtual void deactivateDesktop()
             { sp_dtw_desktop_deactivate (_dtw); }
-        virtual void viewSetPosition (NR::Point p)
+        virtual void viewSetPosition (Geom::Point p)
             { _dtw->viewSetPosition (p); }
         virtual void updateRulers()
             { sp_desktop_widget_update_rulers (_dtw); }
@@ -192,7 +192,7 @@ struct SPDesktopWidget {
             { _dtw->setToolboxSelectOneValue (id, val); }
         virtual bool isToolboxButtonActive (gchar const* id)
             { return _dtw->isToolboxButtonActive (id); }
-        virtual void setCoordinateStatus (NR::Point p)
+        virtual void setCoordinateStatus (Geom::Point p)
             { _dtw->setCoordinateStatus (p); }
         virtual void setMessage (Inkscape::MessageType type, gchar const* msg)
             { _dtw->setMessage (type, msg); }
@@ -205,12 +205,12 @@ struct SPDesktopWidget {
     WidgetStub *stub;
 
     void setMessage(Inkscape::MessageType type, gchar const *message);
-    NR::Point window_get_pointer();
+    Geom::Point window_get_pointer();
     bool shutdown();
-    void viewSetPosition (NR::Point p);
+    void viewSetPosition (Geom::Point p);
     void letZoomGrabFocus();
     void getWindowGeometry (gint &x, gint &y, gint &w, gint &h);
-    void setWindowPosition (NR::Point p);
+    void setWindowPosition (Geom::Point p);
     void setWindowSize (gint w, gint h);
     void setWindowTransient (void *p, int transient_policy);
     void presentWindow();
@@ -219,7 +219,7 @@ struct SPDesktopWidget {
     void setToolboxAdjustmentValue (gchar const * id, double value);
     void setToolboxSelectOneValue (gchar const * id, gint value);
     bool isToolboxButtonActive (gchar const *id);
-    void setCoordinateStatus(NR::Point p);
+    void setCoordinateStatus(Geom::Point p);
     void requestCanvasUpdate();
     void requestCanvasUpdateAndWait();
     void enableInteraction();

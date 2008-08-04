@@ -112,9 +112,9 @@ void View::setPosition (double x, double y)
     _position_set_signal.emit (x,y);
 }
 
-void View::setPosition(NR::Point const &p) 
+void View::setPosition(Geom::Point const &p) 
 { 
-    setPosition (double(p[NR::X]), double(p[NR::Y])); 
+    setPosition (double(p[Geom::X]), double(p[Geom::Y])); 
 }
 
 void View::emitResized (double width, double height)

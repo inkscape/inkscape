@@ -104,9 +104,9 @@ public:
     virtual void present();
     virtual void getGeometry (gint &x, gint &y, gint &w, gint &h);
     virtual void setSize (gint w, gint h);
-    virtual void setPosition (NR::Point p);
+    virtual void setPosition (Geom::Point p);
     virtual void setTransient (void*, int);
-    virtual NR::Point getPointer();
+    virtual Geom::Point getPointer();
     virtual void setIconified();
     virtual void setMaximized();
     virtual void setFullscreen();
@@ -118,7 +118,7 @@ public:
     virtual void disableInteraction();
     virtual void activateDesktop();
     virtual void deactivateDesktop();
-    virtual void viewSetPosition (NR::Point p);
+    virtual void viewSetPosition (Geom::Point p);
     virtual void updateRulers();
     virtual void updateScrollbars (double scale);
     virtual void toggleRulers();
@@ -130,7 +130,7 @@ public:
     virtual void setToolboxAdjustmentValue (const gchar *, double);
     virtual void setToolboxSelectOneValue (const gchar *, gint);
     virtual bool isToolboxButtonActive (gchar const*);
-    virtual void setCoordinateStatus (NR::Point p);
+    virtual void setCoordinateStatus (Geom::Point p);
     virtual void setMessage (Inkscape::MessageType type, gchar const* msg);
     virtual bool warnDialog (gchar*);
 

@@ -622,13 +622,13 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
         SPObject *object = doc->getObjectById(name);
         if (object && SP_IS_ITEM(object)) {
             /* Find bbox in document */
-            NR::Matrix const i2doc(from_2geom(sp_item_i2doc_affine(SP_ITEM(object))));
-            NR::Maybe<NR::Rect> dbox = SP_ITEM(object)->getBounds(i2doc);
+            Geom::Matrix const i2doc(sp_item_i2doc_affine(SP_ITEM(object)));
+            NR::Maybe<Geom::Rect> dbox = SP_ITEM(object)->getBounds(i2doc);
 
             if ( SP_OBJECT_PARENT(object) == NULL )
             {
-                dbox = NR::Rect(NR::Point(0, 0),
-                                NR::Point(sp_document_width(doc), sp_document_height(doc)));
+                dbox = Geom::Rect(Geom::Point(0, 0),
+                                Geom::Point(sp_document_width(doc), sp_document_height(doc)));
             }
 
             /* This is in document coordinates, i.e. pixels */
@@ -636,17 +636,17 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                 NRGC gc(NULL);
                 /* Update to renderable state */
                 double sf = 1.0;
-                nr_arena_item_set_transform(root, NR::Matrix(NR::scale(sf, sf)));
+                nr_arena_item_set_transform(root, from_2geom(Geom::Scale(sf, sf)));
                 gc.transform.set_identity();
                 nr_arena_item_invoke_update( root, NULL, &gc,
                                              NR_ARENA_ITEM_STATE_ALL,
                                              NR_ARENA_ITEM_STATE_NONE );
                 /* Item integer bbox in points */
                 NRRectL ibox;
-                ibox.x0 = (int) floor(sf * dbox->min()[NR::X] + 0.5);
-                ibox.y0 = (int) floor(sf * dbox->min()[NR::Y] + 0.5);
-                ibox.x1 = (int) floor(sf * dbox->max()[NR::X] + 0.5);
-                ibox.y1 = (int) floor(sf * dbox->max()[NR::Y] + 0.5);
+                ibox.x0 = (int) floor(sf * dbox->min()[Geom::X] + 0.5);
+                ibox.y0 = (int) floor(sf * dbox->min()[Geom::Y] + 0.5);
+                ibox.x1 = (int) floor(sf * dbox->max()[Geom::X] + 0.5);
+                ibox.y1 = (int) floor(sf * dbox->max()[Geom::Y] + 0.5);
 
                 if ( dump ) {
                     g_message( "   box    --'%s'  (%f,%f)-(%f,%f)", name, (double)ibox.x0, (double)ibox.y0, (double)ibox.x1, (double)ibox.y1 );
@@ -668,16 +668,16 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                         }
                         sf = (double)psize / (double)block;
 
-                        nr_arena_item_set_transform(root, NR::Matrix(NR::scale(sf, sf)));
+                        nr_arena_item_set_transform(root, from_2geom(Geom::Scale(sf, sf)));
                         gc.transform.set_identity();
                         nr_arena_item_invoke_update( root, NULL, &gc,
                                                      NR_ARENA_ITEM_STATE_ALL,
                                                      NR_ARENA_ITEM_STATE_NONE );
                         /* Item integer bbox in points */
-                        ibox.x0 = (int) floor(sf * dbox->min()[NR::X] + 0.5);
-                        ibox.y0 = (int) floor(sf * dbox->min()[NR::Y] + 0.5);
-                        ibox.x1 = (int) floor(sf * dbox->max()[NR::X] + 0.5);
-                        ibox.y1 = (int) floor(sf * dbox->max()[NR::Y] + 0.5);
+                        ibox.x0 = (int) floor(sf * dbox->min()[Geom::X] + 0.5);
+                        ibox.y0 = (int) floor(sf * dbox->min()[Geom::Y] + 0.5);
+                        ibox.x1 = (int) floor(sf * dbox->max()[Geom::X] + 0.5);
+                        ibox.y1 = (int) floor(sf * dbox->max()[Geom::Y] + 0.5);
 
                         if ( dump ) {
                             g_message( "   box2   --'%s'  (%f,%f)-(%f,%f)", name, (double)ibox.x0, (double)ibox.y0, (double)ibox.x1, (double)ibox.y1 );

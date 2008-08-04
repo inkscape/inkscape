@@ -861,12 +861,12 @@ bool FileOpenDialogImplWin32::set_svg_preview()
     const double scaledSvgWidth  = scaleFactor * svgWidth;
     const double scaledSvgHeight = scaleFactor * svgHeight;
 
-    NR::Rect area(NR::Point(0, 0), NR::Point(scaledSvgWidth, scaledSvgHeight));
+    Geom::Rect area(Geom::Point(0, 0), Geom::Point(scaledSvgWidth, scaledSvgHeight));
     NRRectL areaL = {0, 0, scaledSvgWidth, scaledSvgHeight};
     NRRectL bbox = {0, 0, scaledSvgWidth, scaledSvgHeight};
 
     // write object bbox to area
-    NR::Maybe<NR::Rect> maybeArea(area);
+    NR::Maybe<NR::Rect> maybeArea(from_2geom(area));
     sp_document_ensure_up_to_date (svgDoc);
     sp_item_invoke_bbox((SPItem *) svgDoc->root, &maybeArea,
         from_2geom(sp_item_i2r_affine((SPItem *)(svgDoc->root))), TRUE);
@@ -879,7 +879,7 @@ bool FileOpenDialogImplWin32::set_svg_preview()
         arena, key, SP_ITEM_SHOW_DISPLAY);
 
     NRGC gc(NULL);
-    gc.transform = NR::Matrix(NR::scale(scaleFactor, scaleFactor));
+    gc.transform = from_2geom(Geom::Matrix(Geom::Scale(scaleFactor, scaleFactor)));
 
     nr_arena_item_invoke_update (root, NULL, &gc,
         NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);

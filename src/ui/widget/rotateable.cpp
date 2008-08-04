@@ -86,7 +86,7 @@ guint Rotateable::get_single_modifier(guint old, guint state) {
 
 bool Rotateable::on_motion(GdkEventMotion *event) {
 		if (dragging) {
-        double dist = NR::L2(NR::Point(event->x, event->y) - NR::Point(drag_started_x, drag_started_y));
+        double dist = Geom::L2(Geom::Point(event->x, event->y) - Geom::Point(drag_started_x, drag_started_y));
         double angle = atan2(event->y - drag_started_y, event->x - drag_started_x);
         if (dist > 20) {
             working = true;

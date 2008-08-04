@@ -631,7 +631,7 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
     pixbuf = svg_preview_cache.get_preview_from_cache(key);
 
     if (pixbuf == NULL) {
-        pixbuf = render_pixbuf(root, sf, *dbox, psize);
+        pixbuf = render_pixbuf(root, sf, to_2geom(*dbox), psize);
         svg_preview_cache.set_preview_in_cache(key, pixbuf);
     }
 
