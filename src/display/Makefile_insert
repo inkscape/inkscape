@@ -153,5 +153,6 @@ display_test_display_SOURCES = \
 display_test_display_LDADD = \
 	libnr/libnr.a \
 	display/libtest-display.a \
-	-lglib-2.0
+	$(inkscape_private_libs) \
+	$(INKSCAPE_LIBS)
 
