@@ -883,21 +883,17 @@ PrintEmfWin32::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
             lf->lfEscapement = 0;
             lf->lfOrientation = 0;
             lf->lfWeight =
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_100 ? FW_THIN :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_200 ? FW_EXTRALIGHT :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_300 ? FW_LIGHT :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_400 ? FW_NORMAL :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_500 ? FW_MEDIUM :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_600 ? FW_SEMIBOLD :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_700 ? FW_BOLD :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_800 ? FW_EXTRABOLD :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_900 ? FW_HEAVY :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_NORMAL ? FW_NORMAL :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_BOLD ? FW_BOLD :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_LIGHTER ? FW_EXTRALIGHT :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_BOLDER ? FW_EXTRABOLD :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_100 ? FW_THIN :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_200 ? FW_EXTRALIGHT :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_300 ? FW_LIGHT :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_400 ? FW_NORMAL :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_500 ? FW_MEDIUM :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_600 ? FW_SEMIBOLD :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_700 ? FW_BOLD :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_800 ? FW_EXTRABOLD :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_900 ? FW_HEAVY :
                 FW_NORMAL;
-            lf->lfItalic = (style->font_style.value == SP_CSS_FONT_STYLE_ITALIC);
+            lf->lfItalic = (style->font_style.computed == SP_CSS_FONT_STYLE_ITALIC);
             lf->lfUnderline = style->text_decoration.underline;
             lf->lfStrikeOut = style->text_decoration.line_through;
             lf->lfCharSet = DEFAULT_CHARSET;
@@ -923,21 +919,17 @@ PrintEmfWin32::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
             lf->lfEscapement = 0;
             lf->lfOrientation = 0;
             lf->lfWeight =
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_100 ? FW_THIN :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_200 ? FW_EXTRALIGHT :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_300 ? FW_LIGHT :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_400 ? FW_NORMAL :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_500 ? FW_MEDIUM :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_600 ? FW_SEMIBOLD :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_700 ? FW_BOLD :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_800 ? FW_EXTRABOLD :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_900 ? FW_HEAVY :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_NORMAL ? FW_NORMAL :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_BOLD ? FW_BOLD :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_LIGHTER ? FW_EXTRALIGHT :
-                style->font_weight.value == SP_CSS_FONT_WEIGHT_BOLDER ? FW_EXTRABOLD :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_100 ? FW_THIN :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_200 ? FW_EXTRALIGHT :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_300 ? FW_LIGHT :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_400 ? FW_NORMAL :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_500 ? FW_MEDIUM :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_600 ? FW_SEMIBOLD :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_700 ? FW_BOLD :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_800 ? FW_EXTRABOLD :
+                style->font_weight.computed == SP_CSS_FONT_WEIGHT_900 ? FW_HEAVY :
                 FW_NORMAL;
-            lf->lfItalic = (style->font_style.value == SP_CSS_FONT_STYLE_ITALIC);
+            lf->lfItalic = (style->font_style.computed == SP_CSS_FONT_STYLE_ITALIC);
             lf->lfUnderline = style->text_decoration.underline;
             lf->lfStrikeOut = style->text_decoration.line_through;
             lf->lfCharSet = DEFAULT_CHARSET;
@@ -960,10 +952,13 @@ PrintEmfWin32::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
     sp_color_get_rgb_floatv( &style->fill.value.color, rgb );
     SetTextColor(hdc, RGB(255*rgb[0], 255*rgb[1], 255*rgb[2]));
 
-    int align =
-        style->text_align.value == SP_CSS_TEXT_ALIGN_RIGHT ? TA_RIGHT :
-        style->text_align.value == SP_CSS_TEXT_ALIGN_CENTER ? TA_CENTER : TA_LEFT;
-    SetTextAlign(hdc, TA_BASELINE | align);
+    // Text alignment:
+    //   - (x,y) coordinates received by this filter are those of the point where the text
+    //     actually starts, and already takes into account the text object's alignment;
+    //   - for this reason, the EMF text alignment must always be TA_BASELINE|TA_LEFT.
+    SetTextAlign(hdc, TA_BASELINE | TA_LEFT);
+
+    // Transparent text background
     SetBkMode(hdc, TRANSPARENT);
 
     NR::Matrix tf = m_tr_stack.top();
