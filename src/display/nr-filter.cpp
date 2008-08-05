@@ -115,9 +115,9 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     FilterSlot slot(_slot_count, item);
 
     Rect item_bbox;
-    try {
-        item_bbox = *item->item_bbox;
-    } catch (NR::IsNothing) {
+    if (item->item_bbox) {
+        item_bbox = *(item->item_bbox);
+    } else {
         // Bounding box might not exist, so create a dummy one.
         Point zero(0, 0);
         item_bbox = Rect(zero, zero);
