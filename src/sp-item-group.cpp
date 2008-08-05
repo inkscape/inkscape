@@ -701,7 +701,7 @@ void CGroup::calculateBBox(NRRect *bbox, NR::Matrix const &transform, unsigned c
     GSList *l = _group->childList(false, SPObject::ActionBBox);
     while (l) {
         SPObject *o = SP_OBJECT (l->data);
-        if (SP_IS_ITEM(o)) {
+        if (SP_IS_ITEM(o) && !SP_ITEM(o)->isHidden()) {
             SPItem *child = SP_ITEM(o);
             NR::Matrix const ct(child->transform * transform);
             sp_item_invoke_bbox_full(child, &dummy_bbox, ct, flags, FALSE);
